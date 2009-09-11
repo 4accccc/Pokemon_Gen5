@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-31T14:35:47"/>
+	<create user="matsumiya" host="W00207" date="2009-09-11T18:33:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="177" right="949" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="169" right="707" bottom="788" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="526"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="539"/>
@@ -292,19 +292,118 @@
 	</lock>
 
 
-	<row id="msg_c01r0501_inventor_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀</comment>
-		<attribute name="キャラ指定">発明家</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c01r0501_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・フィールド技の説明（必須）
+・posを踏むと主人公に隣接して
+　メッセージ表示
+・はい/いいえの選択肢表示
+　はい→msg_c01r0501_glasses_03
+　いいえ→msg_c01r0501_glasses_02</comment>
+		<attribute name="キャラ指定">GLASSES</attribute>
+		<language name="JPN" width="256">わかき　トレーナーよ！[BE:01:ページ切り替え（クリア）]
+ポケモンの　わざについて
+いいことを　おしえて　あげましょうか</language>
+		<language name="JPN_KANJI" width="256">若き　トレーナーよ！[BE:01:ページ切り替え（クリア）]
+ポケモンの　技について
+いいことを　教えてあげましょうか</language>
 	</row>
 
-	<row id="msg_c01r0501_inventor_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・Ｃギア機能追加</comment>
-		<attribute name="キャラ指定">発明家</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c01r0501_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・いいえ選択時
+・再度話しかけると
+　msg_c01r0501_glasses_01から</comment>
+		<language name="JPN" width="256">きいてくれたら
+いいものを　あげるのに……</language>
+		<language name="JPN_KANJI" width="256">聞いてくれたら
+いいものを　あげるのに……</language>
+	</row>
+
+	<row id="msg_c01r0501_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・はい選択時
+・アイテム入手処理へ</comment>
+		<language name="JPN" width="256">なんと！　なんとですよ[BE:01:ページ切り替え（クリア）]
+ポケモンが　おぼえる　わざには
+たたかっていない　ときでも[BE:00:ページ切り替え（行送り）]
+つかえる　わざが　あるのです[BE:01:ページ切り替え（クリア）]
+これを　フィールドわざと
+わたしは　よんでおります[BE:00:ページ切り替え（行送り）]
+たとえば
+「あまいかおり」という　わざ[BE:01:ページ切り替え（クリア）]
+たたかっているときに　つかえば
+あいてに　わざが　あたりやすくなり[BE:01:ページ切り替え（クリア）]
+くさむらで　つかえば
+やせいポケモンが　ちかよってきます[BE:01:ページ切り替え（クリア）]
+ということで　はなしを　きいてくれた
+おれいに　この　わざマシンを[BE:00:ページ切り替え（行送り）]
+プレゼント　しましょう！</language>
+		<language name="JPN_KANJI" width="256">なんと！　なんとですよ[BE:01:ページ切り替え（クリア）]
+ポケモンが　おぼえる　技には
+たたかっていない　ときでも[BE:00:ページ切り替え（行送り）]
+使える　技が　あるのです[BE:01:ページ切り替え（クリア）]
+これを　フィールド技と
+わたしは　呼んでおります[BE:00:ページ切り替え（行送り）]
+たとえば
+「あまいかおり」という　技[BE:01:ページ切り替え（クリア）]
+たたかっているときに　使えば
+相手に　技が　当たりやすくなり[BE:01:ページ切り替え（クリア）]
+くさむらで　使えば
+野生のポケモンが　近寄ってきます[BE:01:ページ切り替え（クリア）]
+ということで　話を　聞いてくれた
+お礼に　この　わざマシンを[BE:00:ページ切り替え（行送り）]
+プレゼント　しましょう！</language>
+	</row>
+
+	<row id="msg_c01r0501_glasses_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・アイテム入手後
+　以降、繰り返し</comment>
+		<language name="JPN" width="256">ちなみに　わざマシンは
+なんどだって　つかえます！[BE:01:ページ切り替え（クリア）]
+ですから　きになる　わざマシンは
+まず　おぼえさせるのも　ひとつですね</language>
+		<language name="JPN_KANJI" width="256">ちなみに　わざマシンは
+何度だって　使えます！[BE:01:ページ切り替え（クリア）]
+ですから　気になる　わざマシンは
+まず　覚えさせるのも　ひとつですね</language>
+	</row>
+
+	<row id="msg_c01r0501_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・0＝主人公名
+・ジム挑戦可能フラグ</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">クロック『おっ　[1:00:トレーナー名:0]
+ポケモンジムに　ちょうせん　するまえに[BE:00:ページ切り替え（行送り）]
+ここで　べんきょう　するのかい？[BE:01:ページ切り替え（クリア）]
+さっきまで　ここに
+ジムリーダーが　いてさ[BE:00:ページ切り替え（行送り）]
+タイプのこと　おしえてもらったんだ</language>
+		<language name="JPN_KANJI" width="256">クロック『おっ　[1:00:トレーナー名:0]
+ポケモンジムに　挑戦する前に[BE:00:ページ切り替え（行送り）]
+ここで　勉強するのかい？[BE:01:ページ切り替え（クリア）]
+さっきまで　ここに
+ジムリーダーが　いてさ[BE:00:ページ切り替え（行送り）]
+タイプのこと　教えてもらったんだ</language>
+	</row>
+
+	<row id="msg_c01r0501_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・msg_c01r0501_black_01表示後
+・c01ジムバッジ取得でここから削除</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">クロック『ジムに　ちょうせん　するなら
+できるかぎり　いろんな　タイプの[BE:00:ページ切り替え（行送り）]
+ポケモンを　そろえたほうが　いいな[BE:01:ページ切り替え（クリア）]
+あと　キズぐすりも　たくさん
+もっていたほうが　あんしん　かもな</language>
+		<language name="JPN_KANJI" width="256">クロック『ジムに　挑戦するなら
+できるかぎり　いろんな　タイプの[BE:00:ページ切り替え（行送り）]
+ポケモンを　そろえたほうが　いいな[BE:01:ページ切り替え（クリア）]
+あと　キズぐすり　とかも
+たくさん　持っていたほうが　安心だな</language>
 	</row>
 
 	<row id="msg_c01r0501_gentleman_01">
@@ -321,7 +420,7 @@
 	</row>
 
 	<row id="msg_c01r0501_girl1_01">
-		<comment>♂</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
 		<language name="JPN" width="256">ポケモンの　タイプは
 ぜんぶで　１７しゅるい！[BE:01:ページ切り替え（クリア）]
@@ -336,7 +435,7 @@
 	</row>
 
 	<row id="msg_c01r0501_boy2_01">
-		<comment>♀</comment>
+		<comment>♂</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">しんかキャンセル　という
 テクニックが　あるんだよね[BE:01:ページ切り替え（クリア）]
@@ -350,8 +449,10 @@
 ポケモンが　驚き　進化をやめる</language>
 	</row>
 
-	<row id="msg_c01r0501_trainerm_01">
-		<comment>♀</comment>
+	<row id="msg_c01r0501_trainerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・メッセージ修正予定
+・技マシンは何度でも使える</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
 		<language name="JPN" width="256">わざマシンを　つかうことでしか
 おぼえない　わざも　ある[BE:01:ページ切り替え（クリア）]
@@ -365,7 +466,7 @@
 使うべきか　迷うんだよなあ……</language>
 	</row>
 
-	<row id="msg_c01r0501_boy3_01">
+	<row id="msg_c01r0501_boy3_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・状態異常のクイズ（予定）</comment>
 		<attribute name="キャラ指定">BOY3
@@ -386,10 +487,10 @@
 たたかっているときに　おこる[BE:01:ページ切り替え（クリア）]
 たいちょうの　へんかに
 ついて　かかれてます[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">こくばんに　ポケモンが
-たたかっているときに　おこる[BE:01:ページ切り替え（クリア）]
-たいちょうの　へんかに
-ついて　かかれてます[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">黒板に　ポケモンが
+戦っているときに　おこる[BE:01:ページ切り替え（クリア）]
+体調の　変化に
+ついて　書かれています[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01r0501_board_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -398,7 +499,7 @@
 　どく・まひ・ねむり・やけど・こおり・やめる</comment>
 		<attribute name="キャラ指定">黒板</attribute>
 		<language name="JPN" width="256">どれについて　みますか？</language>
-		<language name="JPN_KANJI" width="256">どれについて　みますか？</language>
+		<language name="JPN_KANJI" width="256">どれについて　見ますか？</language>
 	</row>
 
 	<row id="msg_c01r0501_board_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -412,10 +513,10 @@
 あるくと　たいりょくが　へります[BE:01:ページ切り替え（クリア）]
 どくけしで　なおしましょう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">どくを　うけると
-たいりょくが　へっていきます[BE:01:ページ切り替え（クリア）]
-せんとうの　あとも　どくは　のこって
-あるくと　たいりょくが　へります[BE:01:ページ切り替え（クリア）]
-どくけしで　なおしましょう[BE:01:ページ切り替え（クリア）]</language>
+体力が　減っていきます[BE:01:ページ切り替え（クリア）]
+戦闘のあとも　どくは　残って
+歩くと　体力が　減ります[BE:01:ページ切り替え（クリア）]
+どくけしで　治しましょう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01r0501_board_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -425,14 +526,14 @@
 		<attribute name="キャラ指定">黒板</attribute>
 		<language name="JPN" width="256">まひすると　すばやさが　さがり
 ときどき　わざが　だせなくなります[BE:01:ページ切り替え（クリア）]
-せんとうのあとも
+せんとうの　あとも
 まひした　ままです[BE:01:ページ切り替え（クリア）]
 まひなおしで　なおしましょう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">まひすると　すばやさが　さがり
-ときどき　わざが　だせなくなります[BE:01:ページ切り替え（クリア）]
-せんとうのあとも
+ときどき　技が　だせなくなります[BE:01:ページ切り替え（クリア）]
+戦闘のあとも
 まひした　ままです[BE:01:ページ切り替え（クリア）]
-まひなおしで　なおしましょう[BE:01:ページ切り替え（クリア）]</language>
+まひなおしで　治しましょう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01r0501_board_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -448,10 +549,10 @@
 ねむけざましで　おこしましょう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ねむって　しまうと
 その　あいだ　こうげき　できません[BE:01:ページ切り替え（クリア）]
-じぶんで　おきることも　ありますが
-ねむったまま　せんとうが　おわると[BE:00:ページ切り替え（行送り）]
+じぶんで　起きることも　ありますが
+ねむったまま　戦闘が　終わると[BE:00:ページ切り替え（行送り）]
 ずっと　ねむっています[BE:01:ページ切り替え（クリア）]
-ねむけざましで　おこしましょう[BE:01:ページ切り替え（クリア）]</language>
+ねむけざましで　起こしましょう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01r0501_board_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -467,10 +568,10 @@
 やけどなおしで　なおしましょう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">やけどに　なると
 こうげきりょくが　さがるだけでなく[BE:00:ページ切り替え（行送り）]
-たいりょくも　どんどん　へります[BE:01:ページ切り替え（クリア）]
-せんとうが　おわっても
+体力も　どんどん　減ります[BE:01:ページ切り替え（クリア）]
+戦闘が　終わっても
 やけどの　ままです[BE:01:ページ切り替え（クリア）]
-やけどなおしで　なおしましょう[BE:01:ページ切り替え（クリア）]</language>
+やけどなおしで　治しましょう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01r0501_board_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -486,10 +587,10 @@
 こおりなおしで　とかしましょう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">こおって　しまうと
 なにも　できなくなります[BE:01:ページ切り替え（クリア）]
-しぜんに　とけることも　ありますが
-こおったまま　せんとうが　おわると[BE:00:ページ切り替え（行送り）]
+自然に　溶けることも　ありますが
+こおったまま　戦闘が　終わると[BE:00:ページ切り替え（行送り）]
 こおりついた　ままです[BE:01:ページ切り替え（クリア）]
-こおりなおしで　とかしましょう[BE:01:ページ切り替え（クリア）]</language>
+こおりなおしで　溶かしましょう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>

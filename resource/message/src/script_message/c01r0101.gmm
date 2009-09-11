@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-30T17:47:29"/>
+	<create user="matsumiya" host="W00207" date="2009-09-11T19:11:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="227"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,7 +292,80 @@
 	</lock>
 
 
-	<row id="msg_c01r0101_bigman_01">
+	<row id="msg_c01r0101_inventor_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ表示後以降
+　Ｃギア表示開始（暫定）</comment>
+		<attribute name="キャラ指定">発明家</attribute>
+		<language name="JPN" width="256">マコモ『まず……
+Ｃギアを　プレゼントするね[BE:00:ページ切り替え（行送り）]
+（このくだりは仮です）</language>
+		<language name="JPN_KANJI" width="256">マコモ『まず……
+Ｃギアを　プレゼントするね[BE:00:ページ切り替え（行送り）]
+（このくだりは仮です）</language>
+	</row>
+
+	<row id="msg_c01r0101_inventor_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・msg_c01r0101_inventor_01表示後から
+　ジムバッジ取得まで</comment>
+		<language name="JPN" width="256">マコモ『あたしもね
+あなたたちと　おなじように[BE:00:ページ切り替え（行送り）]
+アララギ博士に　頼まれていてね[BE:00:ページ切り替え（行送り）]
+あるポケモンの　研究をしているの[BE:01:ページ切り替え（クリア）]
+ユメバクラって
+ポケモン　知ってるかな？[BE:01:ページ切り替え（クリア）]
+ユメバクラは
+夢と現実を混ぜると[BE:00:ページ切り替え（行送り）]
+いわれるポケモン[BE:01:ページ切り替え（クリア）]
+このまちの　はいきょにもいて
+その　不思議な力を解明したいのね</language>
+		<language name="JPN_KANJI" width="256">マコモ『あたしもね
+あなたたちと　おなじように[BE:00:ページ切り替え（行送り）]
+アララギ博士に　頼まれていてね[BE:00:ページ切り替え（行送り）]
+あるポケモンの　研究をしているの[BE:01:ページ切り替え（クリア）]
+ユメバクラって
+ポケモン　知ってるかな？[BE:01:ページ切り替え（クリア）]
+ユメバクラは
+夢と現実を混ぜると[BE:00:ページ切り替え（行送り）]
+いわれるポケモン[BE:01:ページ切り替え（クリア）]
+このまちの　はいきょにもいて
+その　不思議な力を解明したいのね</language>
+	</row>
+
+	<row id="msg_c01r0101_inventor_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ジムバッジ入手後
+・メッセージ表示後以降
+　ＰＤＷの仕様開始（暫定）</comment>
+		<language name="JPN" width="256">マコモ『この特殊なベッドで　眠ると
+夢の世界に　入れるのよ！[BE:01:ページ切り替え（クリア）]
+名づけるなら
+ポケモンドリームワールド　ね！[BE:00:ページ切り替え（行送り）]
+（このくだりは仮です）</language>
+		<language name="JPN_KANJI" width="256">マコモ『この特殊なベッドで　眠ると
+夢の世界に　入れるのよ！[BE:01:ページ切り替え（クリア）]
+名づけるなら
+ポケモンドリームワールド　ね！[BE:00:ページ切り替え（行送り）]
+（このくだりは仮です）</language>
+	</row>
+
+	<row id="msg_c01r0101_inventor_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c01r0101_books_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>本棚
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">本棚</attribute>
+		<language name="JPN" width="256">Ｃギアの　マニュアル</language>
+		<language name="JPN_KANJI" width="256">Ｃギアの　マニュアル</language>
+	</row>
+
+	<row id="msg_c01r0101_bigman_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BIGMAN
 太った青年</attribute>
@@ -306,7 +379,7 @@
 姿かたちが　変わったんだ！</language>
 	</row>
 
-	<row id="msg_c01r0101_woman1_01">
+	<row id="msg_c01r0101_woman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">WOMAN1
 女性</attribute>
@@ -318,7 +391,7 @@
 不思議な　生き物　よね……</language>
 	</row>
 
-	<row id="msg_c01r0101_boy3_01">
+	<row id="msg_c01r0101_boy3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BOY3
 少年（聡明）</attribute>

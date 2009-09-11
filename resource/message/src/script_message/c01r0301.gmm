@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-11T13:24:18"/>
+	<create user="matsumiya" host="W00207" date="2009-09-11T19:27:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="224"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="113">
 		</attribute>
@@ -304,20 +304,77 @@
 トレーナーの　強さが　わかるのよ</language>
 	</row>
 
-	<row id="msg_c01r0301_man1_01">
-		<comment>♂</comment>
-		<attribute name="キャラ指定">MAN1
+	<row id="msg_c01r0301_man2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・ポケモン交換前
+・はい／いいえの選択肢表示
+　はい　→ポケモン選択画面
+　いいえ→msg_c01r0301_man2_04
+
+0＝「１２３４５」プレイヤーが渡すポケモン
+1＝「６７８９０」プレイヤーがもらうポケモン</comment>
+		<attribute name="キャラ指定">MAN2
 青年</attribute>
-		<language name="JPN" width="256">イッシュちほうに　ある
-８つの　ポケモンジム[BE:01:ページ切り替え（クリア）]
-どれだけ　つよくなったか
-うでだめしを　するのに[BE:00:ページ切り替え（行送り）]
-ぴったりの　ばしょさ</language>
-		<language name="JPN_KANJI" width="256">イッシュ地方に　ある
-８つの　ポケモンジム[BE:01:ページ切り替え（クリア）]
-どれだけ　強くなったか
-腕試しを　するのに[BE:00:ページ切り替え（行送り）]
-ぴったりの　場所さ</language>
+		<language name="JPN" width="256">ねえ　きみ
+１２３４５　って　ポケモン　もってる？[BE:01:ページ切り替え（クリア）]
+よかったら　ぼくの　１２３４５と
+きみの　１２３４５　こうかん　しようぜ</language>
+		<language name="JPN_KANJI" width="256">ねえ　君
+１２３４５　って　ポケモン　持ってる？[BE:01:ページ切り替え（クリア）]
+よかったら　僕の　６７８９０と
+君の　１２３４５　交換しようぜ</language>
+	</row>
+
+	<row id="msg_c01r0301_man2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・はい選択
+　ポケモン選択画面で条件を満たすポケモンを選択
+　交換デモ開始
+　終了後、以下のメッセージを自動表示
+
+0＝「１２３４５」プレイヤーが渡すポケモン</comment>
+		<language name="JPN" width="256">サンキュー！
+そいつのこと　だいじに　してくれよ！[BE:01:ページ切り替え（クリア）]
+ぼくも　もらった
+１２３４５　たいせつに　するから！</language>
+		<language name="JPN_KANJI" width="256">サンキュー！
+そいつのこと　大事にしてくれよ！[BE:01:ページ切り替え（クリア）]
+僕も　もらった
+１２３４５　大切に　するから！</language>
+	</row>
+
+	<row id="msg_c01r0301_man2_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・はい選択
+　ポケモン選択画面で条件を満たしていない
+　ポケモンを選択
+
+0＝「１２３４５」プレイヤーが渡すポケモン</comment>
+		<language name="JPN" width="256">こうかん　してほしいのは
+１２３４５　なんだけどさ……</language>
+		<language name="JPN_KANJI" width="256">交換してほしいのは
+１２３４５　なんだけどさ……</language>
+	</row>
+
+	<row id="msg_c01r0301_man2_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・いいえ選択
+　もしくはポケモン選択画面で「やめる」を選択</comment>
+		<language name="JPN" width="256">だめなら　しかたない▼
+でも　きが　かわったら
+ポケモンこうかん　してくれよな！</language>
+		<language name="JPN_KANJI" width="256">だめなら　しかたない▼
+でも　気が　変わったら
+ポケモン交換　してくれよな！</language>
+	</row>
+
+	<row id="msg_c01r0301_man2_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・ポケモン交換終了後</comment>
+		<language name="JPN" width="256">ポケモンこうかんを　したから
+きみと　ぼく　ともだち　だよな！</language>
+		<language name="JPN_KANJI" width="256">ポケモン交換を　したから
+君と　僕　友達だよな！</language>
 	</row>
 
 	<row id="msg_c01r0301_boy2_01">
@@ -332,6 +389,22 @@
 モデルが　いるんだ[BE:01:ページ切り替え（クリア）]
 カミツレさん　っていうんだけど
 ポケモンも　強いんだぜ！</language>
+	</row>
+
+	<row id="msg_c01r0301_man1_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">イッシュちほうに　ある
+８つの　ポケモンジム[BE:01:ページ切り替え（クリア）]
+どれだけ　つよくなったか
+うでだめしを　するのに[BE:00:ページ切り替え（行送り）]
+ぴったりの　ばしょさ</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方に　ある
+８つの　ポケモンジム[BE:01:ページ切り替え（クリア）]
+どれだけ　強くなったか
+腕試しを　するのに[BE:00:ページ切り替え（行送り）]
+ぴったりの　場所さ</language>
 	</row>
 
 	<flowchart-group-list>
