@@ -76,6 +76,22 @@ extern GMEVENT * DEBUG_EVENT_ChangeMapDefaultPosByWarp(GAMESYS_WORK * gsys,
 
 //------------------------------------------------------------------
 /**
+ * @brief	流砂によるマップ遷移イベント生成（座標指定）
+ * @param	gsys		ゲームシステムへのポインタ
+ * @param	fieldmap	フィールドシステムへのポインタ
+ * @param disappear_pos 流砂中心点の座標
+ * @param	zone_id		遷移するマップのZONE指定
+ * @param appear 遷移先での座標
+ * @param dir 遷移先での向き指定
+ * @return	GMEVENT		生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+extern GMEVENT * DEBUG_EVENT_ChangeMapBySandStream(
+    GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, 
+    const VecFx32* disappear_pos, u16 zone_id, const VecFx32* appear_pos, u16 dir );
+
+//------------------------------------------------------------------
+/**
  */
 //------------------------------------------------------------------
 extern GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK *fieldmap);

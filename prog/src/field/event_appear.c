@@ -14,6 +14,7 @@
 #include "fieldmap.h"
 #include "field_player.h"
 #include "fieldmap_tcb.h"
+#include "fldeff_kemuri.h"
 
 
 //==========================================================================================
@@ -222,12 +223,17 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Fall( GMEVENT* event, int* seq, void* wo
     break;
   // タスクの終了待ち
   case 2:
-    if( 60 < ew->frame++ )
+    if( 40 < ew->frame++ )
     {
+      // 砂埃を出す
+      MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player );
+      FLDEFF_CTRL*  fectrl = FIELDMAP_GetFldEffCtrl( ew->pFieldmap );
+      FLDEFF_KEMURI_SetMMdl( mmdl, fectrl );
       ++( *seq );
     }
     break;
-  case 3:
+  // 砂埃
+  case 3: 
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;

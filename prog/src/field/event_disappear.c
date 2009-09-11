@@ -14,6 +14,8 @@
 #include "fieldmap.h"
 #include "field_player.h"
 #include "fieldmap_tcb.h"
+#include "fldeff_kemuri.h"
+#include "fldeff_gyoe.h"
 
 
 //==========================================================================================
@@ -36,6 +38,7 @@ typedef struct
 {
   int                frame;   // フレーム数カウンタ
   FIELDMAP_WORK* pFieldmap;   // 動作フィールドマップ
+  VecFx32    sandStreamPos;   // 流砂中心部の位置( 流砂イベントのみ使用 )
 }
 EVENT_WORK;
 
@@ -61,14 +64,16 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
 /**
  * @brief 退場イベントを作成する( 流砂 )
  *
- * @param parent   親イベント
- * @param gsys     ゲームシステム
- * @param fieldmap フィールドマップ
+ * @param parent     親イベント
+ * @param gsys       ゲームシステム
+ * @param fieldmap   フィールドマップ
+ * @param stream_pos 流砂中心部の座標
  *
  * @return 作成したイベント
  */
 //------------------------------------------------------------------------------------------
-GMEVENT* EVENT_DISAPPEAR_FallInSand( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_DISAPPEAR_FallInSand( 
+    GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, const VecFx32* stream_pos )
 {
   GMEVENT*   event;
   EVENT_WORK* work;
@@ -80,6 +85,7 @@ GMEVENT* EVENT_DISAPPEAR_FallInSand( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDM
   work            = (EVENT_WORK*)GMEVENT_GetEventWork( event );
   work->pFieldmap = fieldmap;
   work->frame     = 0;
+  VEC_Set( &work->sandStreamPos, stream_pos->x, stream_pos->y, stream_pos->z );
 
   // 作成したイベントを返す
   return event;
@@ -213,18 +219,50 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
 {
   EVENT_WORK*       ew = (EVENT_WORK*)work;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ew->pFieldmap );
+  MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player );
+  FLDEFF_CTRL*  fectrl = FIELDMAP_GetFldEffCtrl( ew->pFieldmap );
+
+  static FLDEFF_TASK* task;
 
   switch( *seq )
   {
   // タスクの追加
   case 0:
+    FIELDMAP_TCB_AddTask_MovePlayer( ew->pFieldmap, 60, &ew->sandStreamPos );  // 自機移動
+    FLDEFF_GYOE_SetMMdlNonDepend( fectrl, mmdl, FLDEFF_GYOETYPE_GYOE, TRUE );
+    ew->frame = 0;
+    ++( *seq );
+    break;
+  // タスク終了待ち&砂埃
+  case 1:
+    // 向きを変える
+    {
+      int key = GFL_UI_KEY_GetCont();
+      if( key & PAD_KEY_UP )    MMDL_SetAcmd( mmdl, AC_STAY_WALK_U_4F );
+      if( key & PAD_KEY_DOWN )  MMDL_SetAcmd( mmdl, AC_STAY_WALK_D_4F );
+      if( key & PAD_KEY_LEFT )  MMDL_SetAcmd( mmdl, AC_STAY_WALK_L_4F );
+      if( key & PAD_KEY_RIGHT ) MMDL_SetAcmd( mmdl, AC_STAY_WALK_R_4F );
+    }
+    // 砂埃
+    if( ew->frame % 10 == 0 )
+    {
+      FLDEFF_KEMURI_SetMMdl( mmdl, fectrl );
+    }
+    if( 60 < ew->frame++ )
+    {
+      ew->frame = 0;
+      ++( *seq );
+    }
+    break;
+  // タスクの追加
+  case 2:
     FIELDMAP_TCB_AddTask_DisappearPlayer_LinearUp( ew->pFieldmap, 80, -50 );  // 自機移動
     FIELDMAP_TCB_AddTask_RotatePlayer( ew->pFieldmap, 80, 10 );               // 回転
     FIELDMAP_TCB_AddTask_CameraZoom( ew->pFieldmap, 30, -50<<FX32_SHIFT );    // ズームイン
     ++( *seq );
     break;
   // フェードアウト開始
-  case 1:
+  case 3:
     if( 30 < ew->frame++ )
     {
       GFL_FADE_SetMasterBrightReq(
@@ -233,13 +271,13 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
     }
     break;
   // タスクの終了待ち
-  case 2:
+  case 4:
     if( 80 < ew->frame++ )
     {
       ++( *seq );
     }
     break;
-  case 3:
+  case 5:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

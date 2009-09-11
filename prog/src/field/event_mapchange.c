@@ -209,6 +209,7 @@ typedef struct {
   u16 before_zone_id;         ///<遷移前マップID
 	LOCATION loc_req;           ///<遷移先指定
   EXIT_TYPE exit_type;
+  VecFx32 stream_pos;  ///<流砂遷移時にのみ使用
 }MAPCHANGE_WORK;
 
 typedef MAPCHANGE_WORK* MAPCHANGE_WORK_PTR;
@@ -345,7 +346,6 @@ static GMEVENT_RESULT EVENT_MapChangeByWarp(GMEVENT * event, int *seq, void*work
     {
       GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Warp( event, gsys, fieldmap ) );
     }
-    //GMEVENT_CallEvent( event, EVENT_DISAPPEAR_FallInSand( event, gsys, fieldmap ) );  // TEST:
 		(*seq)++;
 		break;
   case 2:
@@ -356,7 +356,40 @@ static GMEVENT_RESULT EVENT_MapChangeByWarp(GMEVENT * event, int *seq, void*work
 	case 3:
     // ワープ登場イベント
     GMEVENT_CallEvent( event, EVENT_APPEAR_Warp( event, gsys, fieldmap ) );
-    //GMEVENT_CallEvent( event, EVENT_APPEAR_Fall( event, gsys, fieldmap ) );   // TEST:
+		(*seq) ++;
+		break;
+  case 4:
+		return GMEVENT_RES_FINISH; 
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeBySandStream(GMEVENT * event, int *seq, void*work)
+{
+	MAPCHANGE_WORK*       mcw = work;
+	GAMESYS_WORK*        gsys = mcw->gsys;
+	FIELD_MAIN_WORK* fieldmap = mcw->fieldmap;
+	GAMEDATA*        gamedata = mcw->gamedata;
+
+	switch (*seq)
+  {
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
+    (*seq) ++;
+    break;
+	case 1: // 流砂退場イベント
+    GMEVENT_CallEvent( 
+        event, EVENT_DISAPPEAR_FallInSand( event, gsys, fieldmap, &mcw->stream_pos ) );
+		(*seq)++;
+		break;
+  case 2: // マップチェンジ・コア・イベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+		(*seq)++;
+    break;
+	case 3: // 流砂登場イベント
+    GMEVENT_CallEvent( event, EVENT_APPEAR_Fall( event, gsys, fieldmap ) );
 		(*seq) ++;
 		break;
   case 4:
@@ -427,6 +460,25 @@ GMEVENT * DEBUG_EVENT_ChangeMapDefaultPosByWarp(GAMESYS_WORK * gsys,
 
 	LOCATION_DEBUG_SetDefaultPos(&mcw->loc_req, zone_id);
   mcw->exit_type = EXIT_TYPE_NONE;
+	return event;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * DEBUG_EVENT_ChangeMapBySandStream(
+    GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, 
+    const VecFx32* disappear_pos, u16 zone_id, const VecFx32* appear_pos, u16 dir )
+{
+	MAPCHANGE_WORK * mcw;
+	GMEVENT * event;
+
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeBySandStream, sizeof(MAPCHANGE_WORK));
+	mcw = GMEVENT_GetEventWork(event);
+  MAPCHANGE_WORK_init( mcw, gsys ); 
+	LOCATION_SetDirect(
+      &mcw->loc_req, zone_id, dir, appear_pos->x, appear_pos->y, appear_pos->z);
+  mcw->exit_type = EXIT_TYPE_NONE;
+  VEC_Set( &mcw->stream_pos, disappear_pos->x, disappear_pos->y, disappear_pos->z );
 	return event;
 }
 
