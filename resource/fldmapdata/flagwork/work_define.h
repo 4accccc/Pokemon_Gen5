@@ -127,17 +127,17 @@
 
 /* flags "scene_work.xls" 16496 ～ 16687 */
 
-#define WK_0907ROMAREA_START             16496 /* 0x4070  */
+#define WK_SCENE_AREA_START              16496 /* 0x4070  */
 
-#define WK_0907ROM00                     16496 /* 0x4070 wb 0907ROM用スクリプトセーブワーク */
-#define WK_0907ROM01                     16497 /* 0x4071 wb 0907ROM用スクリプトセーブワーク */
-#define WK_0907ROM02                     16498 /* 0x4072 wb 0907ROM用スクリプトセーブワーク */
-#define WK_0907ROM03                     16499 /* 0x4073 wb 0907ROM用スクリプトセーブワーク */
-#define WK_0907ROM04                     16500 /* 0x4074 wb 0907ROM用スクリプトセーブワーク */
-#define WK_0907ROM05                     16501 /* 0x4075 wb 0907ROM用スクリプトセーブワーク */
-#define WK_0907ROM06                     16502 /* 0x4076 wb 0907ROM用スクリプトセーブワーク */
-#define WK_0907ROM07                     16503 /* 0x4077 wb 0907ROM用スクリプトセーブワーク */
-		/* not used 16504(0x4078) */
+#define WK_SCENE_0907ROM00               16496 /* 0x4070 wb 0907ROM用スクリプトセーブワーク */
+#define WK_SCENE_0907ROM01               16497 /* 0x4071 wb 0907ROM用スクリプトセーブワーク */
+#define WK_SCENE_0907ROM02               16498 /* 0x4072 wb 0907ROM用スクリプトセーブワーク */
+#define WK_SCENE_0907ROM03               16499 /* 0x4073 wb 0907ROM用スクリプトセーブワーク */
+#define WK_SCENE_0907ROM04               16500 /* 0x4074 wb 0907ROM用スクリプトセーブワーク */
+#define WK_SCENE_0907ROM05               16501 /* 0x4075 wb 0907ROM用スクリプトセーブワーク */
+#define WK_SCENE_0907ROM06               16502 /* 0x4076 wb 0907ROM用スクリプトセーブワーク */
+#define WK_SCENE_0907ROM07               16503 /* 0x4077 wb 0907ROM用スクリプトセーブワーク */
+#define WK_SCENE_T01R0201                16504 /* 0x4078 友達♀の自宅イベント用ワーク */
 		/* not used 16505(0x4079) */
 		/* not used 16506(0x407a) */
 		/* not used 16507(0x407b) */
@@ -170,7 +170,7 @@
 		/* not used 16534(0x4096) */
 		/* not used 16535(0x4097) */
 
-#define WK_0907ROMAREA_END               16687 /* 0x412f  */
+#define WK_SCENE_AREA_END                16687 /* 0x412f  */
 
 
 /* flags "other_work.xls" 16688 ～ 16702 */

@@ -29,16 +29,16 @@ _EVENT_DATA_END
 //ev_t01r0202_flag_change:
 //  _END
 
-/**************************************************************/
-/*  T01R0202 PCのBG用イベントスクリプト*/
-/**************************************************************/
+/************************************************************/
+/*					サポートのパソコン						*/
+/************************************************************/
 EVENT_START   ev_t01r0202_pc
-  _TALK_START_SE_PLAY()
-  
-  _PLAYER_NAME( 0 ) //プレイヤー名を反映
-  _TALKWIN_OPEN()
-  _TALKMSG(msg_t01r0202_pc_01)
-  _AB_KEYWAIT()
-  _TALKWIN_CLOSE()
-  
+	_TALK_START_SE_PLAY()
+
+	_PLAYER_NAME( 0 ) //プレイヤー名を反映
+	_TALKWIN_OPEN()
+	_TALKMSG( msg_t01r0202_pc_01 )
+	_AB_KEYWAIT()
+	_TALKWIN_CLOSE()
+
 EVENT_END

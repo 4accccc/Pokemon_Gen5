@@ -2664,7 +2664,7 @@
 #define ZONE_T01_EVC_H
 
 #define T01_BIGMAN                         0
-#define T01_WOMAN02                        1
+#define T01_WOMAN2_01                      1
 #define T01_BABYGIRL1                      2
 
 #endif //ZONE_T01_EVC_H
@@ -2720,8 +2720,9 @@
 #ifndef ZONE_T01R0201_EVC_H
 #define ZONE_T01R0201_EVC_H
 
-#define T01R0201_MIDDLEMAN1                0
-#define T01R0201_MIDDLEWOMAN1              1
+#define T01R0201_MIDDLEMAN1_01             0
+#define T01R0201_MIDDLEWOMAN1_01           1
+#define T01R0201_SUPPORT_01                2
 
 #endif //ZONE_T01R0201_EVC_H
 //#include "tmp/t01r0202.h"
@@ -10648,53 +10649,13 @@ const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 };
 const int ObjCount_R01 = NELEMS(OBJ_EVENT_R01);
 const POS_EVENT_DATA POS_EVENT_R01[] = {
-	{//POSID_R01_GETDEMO_06 = 0
-		SCRID_R01_POKE_GETDEMO,
-		791, 729,
-		1, 1,
-		0,  //height
-		0,
-		WK_0907ROM02,
-	},
-	{//POSID_R01_GETDEMO_05 = 1
-		SCRID_R01_POKE_GETDEMO,
-		790, 729,
-		1, 1,
-		0,  //height
-		0,
-		WK_0907ROM02,
-	},
-	{//POSID_R01_GETDEMO_02 = 2
-		SCRID_R01_POKE_GETDEMO,
-		787, 729,
-		1, 1,
-		0,  //height
-		0,
-		WK_0907ROM02,
-	},
-	{//POSID_R01_GETDEMO_01 = 3
+	{//POSID_R01_GETDEMO_01 = 0
 		SCRID_R01_POKE_GETDEMO,
 		786, 729,
-		1, 1,
+		6, 1,
 		0,  //height
 		0,
-		WK_0907ROM02,
-	},
-	{//POSID_R01_GETDEMO_04 = 4
-		SCRID_R01_POKE_GETDEMO,
-		789, 729,
-		1, 1,
-		0,  //height
-		0,
-		WK_0907ROM02,
-	},
-	{//POSID_R01_GETDEMO_03 = 5
-		SCRID_R01_POKE_GETDEMO,
-		788, 729,
-		1, 1,
-		0,  //height
-		0,
-		WK_0907ROM02,
+		WK_SCENE_0907ROM02,
 	},
 };
 const int PosCount_R01 = NELEMS(POS_EVENT_R01);
@@ -10703,7 +10664,7 @@ static const EVENTDATA_TABLE event_r01 = {
 	0,
 	6,
 	0,
-	6,
+	1,
 	(void *)NULL,
 	(void *)&OBJ_EVENT_R01,
 	(void *)NULL,
@@ -11801,12 +11762,12 @@ const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 		0,
 	},
 	{
-		T01_WOMAN02,
+		T01_WOMAN2_01,
 		WOMAN2,
 		MV_RND,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_T01_TALKOBJ_WOMAN02,
+		SCRID_T01_TALKOBJ_WOMAN2_01,
 		DIR_DOWN,
 		0,
 		0,
@@ -11896,21 +11857,13 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0101[] = {
 };
 const int ObjCount_T01R0101 = NELEMS(OBJ_EVENT_T01R0101);
 const POS_EVENT_DATA POS_EVENT_T01R0101[] = {
-	{//POSID_T01R0101_02 = 0
-		SCRID_T01R0101_MAMA_FIRST,
-		4, 3,
-		1, 1,
-		0,  //height
-		0,
-		WK_0907ROM07,
-	},
-	{//POSID_T01R0101_01 = 1
+	{//POSID_T01R0101_01 = 0
 		SCRID_T01R0101_MAMA_FIRST,
 		3, 3,
-		1, 1,
+		2, 1,
 		0,  //height
 		0,
-		WK_0907ROM07,
+		WK_SCENE_0907ROM07,
 	},
 };
 const int PosCount_T01R0101 = NELEMS(POS_EVENT_T01R0101);
@@ -11919,7 +11872,7 @@ static const EVENTDATA_TABLE event_t01r0101 = {
 	0,
 	1,
 	4,
-	2,
+	1,
 	(void *)NULL,
 	(void *)&OBJ_EVENT_T01R0101,
 	(void *)&DOOR_EVENT_T01R0101,
@@ -12123,30 +12076,30 @@ const CONNECT_DATA DOOR_EVENT_T01R0201[] = {
 const int ConnectCount_T01R0201 = NELEMS(DOOR_EVENT_T01R0201);
 const FLDMMDL_HEADER OBJ_EVENT_T01R0201[] = {
 	{
-		T01R0201_MIDDLEMAN1,
+		T01R0201_MIDDLEMAN1_01,
 		MIDDLEMAN1,
 		MV_RND,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_T01R0201_MIDDLEMAN1,
-		DIR_DOWN,
+		SCRID_T01R0201_MIDDLEMAN1_01,
+		DIR_LEFT,
 		0,
 		0,
 		0,
 		0,
 		0,
-		5,
-		7,
+		8,
+		4,
 		0,
 	},
 	{
-		T01R0201_MIDDLEWOMAN1,
+		T01R0201_MIDDLEWOMAN1_01,
 		MIDDLEWOMAN1,
-		MV_RND,
+		MV_UP,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_T01R0201_MIDDLEWOMAN1,
-		DIR_DOWN,
+		SCRID_T01R0201_MIDDLEWOMAN1_01,
+		DIR_UP,
 		0,
 		0,
 		0,
@@ -12156,12 +12109,29 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0201[] = {
 		3,
 		0,
 	},
+	{
+		T01R0201_SUPPORT_01,
+		HEROINE,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		FV_T01R0201_SUPPORT,
+		SCRID_DUMMY,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		6,
+		4,
+		0,
+	},
 };
 const int ObjCount_T01R0201 = NELEMS(OBJ_EVENT_T01R0201);
 
 static const EVENTDATA_TABLE event_t01r0201 = {
 	0,
-	2,
+	3,
 	4,
 	0,
 	(void *)NULL,
@@ -12390,7 +12360,7 @@ const POS_EVENT_DATA POS_EVENT_T01R0401[] = {
 		1, 1,
 		0,  //height
 		0,
-		WK_0907ROM01,
+		WK_SCENE_0907ROM01,
 	},
 };
 const int PosCount_T01R0401 = NELEMS(POS_EVENT_T01R0401);
@@ -12641,26 +12611,10 @@ const POS_EVENT_DATA POS_EVENT_T02PC0101[] = {
 	{//POSID_T02PC0101_01 = 0
 		SCRID_T02PC0101_DOCTOR_GUIDE,
 		6, 18,
-		1, 1,
+		3, 1,
 		0,  //height
 		0,
-		WK_0907ROM04,
-	},
-	{//POSID_T02PC0101_03 = 1
-		SCRID_T02PC0101_DOCTOR_GUIDE,
-		8, 18,
-		1, 1,
-		0,  //height
-		0,
-		WK_0907ROM04,
-	},
-	{//POSID_T02PC0101_02 = 2
-		SCRID_T02PC0101_DOCTOR_GUIDE,
-		7, 18,
-		1, 1,
-		0,  //height
-		0,
-		WK_0907ROM04,
+		WK_SCENE_0907ROM04,
 	},
 };
 const int PosCount_T02PC0101 = NELEMS(POS_EVENT_T02PC0101);
@@ -12669,7 +12623,7 @@ static const EVENTDATA_TABLE event_t02pc0101 = {
 	0,
 	4,
 	4,
-	3,
+	1,
 	(void *)NULL,
 	(void *)&OBJ_EVENT_T02PC0101,
 	(void *)&DOOR_EVENT_T02PC0101,

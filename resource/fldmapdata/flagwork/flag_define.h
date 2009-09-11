@@ -529,11 +529,11 @@
 #define FV_T01R0401_HAKASE                 505 /* 0x01f9 2009年7月ロム用設定 */
 #define FV_T01R0401_RIVAL                  506 /* 0x01fa 2009年7月ロム用設定 */
 #define FV_T01R0401_SUPPORT                507 /* 0x01fb 2009年7月ロム用設定 */
-#define FV_R01_HAKASE                      508 /* 0x01fc T21ヨシノ */
-#define FV_R01_RIVAL                       509 /* 0x01fd 30番道路の対戦デモ後のトレーナー */
-#define FV_R01_SUPPORT                     510 /* 0x01fe T22のジョバンニ先生 */
-#define FV_T02PC0101_HAKASE                511 /* 0x01ff スクール内のジョバンニ先生 */
-		/* not used   512(0x0200) */
+#define FV_R01_HAKASE                      508 /* 0x01fc １番道路の博士 */
+#define FV_R01_RIVAL                       509 /* 0x01fd １番道路のライバル */
+#define FV_R01_SUPPORT                     510 /* 0x01fe １番道路のサポート */
+#define FV_T02PC0101_HAKASE                511 /* 0x01ff カラクサタウンＰＣの博士 */
+#define FV_T01R0201_SUPPORT                512 /* 0x0200 サポートの自宅：出発イベントのサポート */
 		/* not used   513(0x0201) */
 		/* not used   514(0x0202) */
 		/* not used   515(0x0203) */

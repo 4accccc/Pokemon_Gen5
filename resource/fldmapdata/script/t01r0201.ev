@@ -15,44 +15,119 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t01r0201_middleman1
-_EVENT_DATA    ev_t01r0201_middlewoman1
+_EVENT_DATA    ev_t01r0201_middleman1_01
+_EVENT_DATA    ev_t01r0201_middlewoman1_01
+_EVENT_DATA    ev_t01r0201_scene_change_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/*
- * 注意！(06.02.09現在)
- * EV_SCRIPT_WORKを確保していないので、
- * SCWK_ANSWERなどのワークは使用することが出来ない！
- * LOCALWORK0などを使用するようにする！
- *
- * 共通スクリプトについては現状使用不可！
- * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
- * あまりつかわないかも？
- */
-/**************************************************************/
-//ev_t01r0201_flag_change:
-//  _END
+/************************************************************/
+/*					SCENE_CHANGE_LABEL						*/
+/************************************************************/
+EVENT_START	ev_t01r0201_scene_change_01
+//初めてサポートの家に入ったとき、出発イベント
 
-/**************************************************************/
-/*   T01R0201 サポート父                                      */
-/**************************************************************/
-EVENT_START   ev_t01r0201_middleman1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0201_middleman1_02 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	//主人公：前へ歩く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01 )
+	_OBJ_ANIME_WAIT()
+
+	//サポート：その場歩き（視線誘導）
+	_OBJ_ANIME( T01R0201_SUPPORT_01, anm_heroine_move_01 )
+	_OBJ_ANIME_WAIT()
+
+	//あたしだって…
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0201_white_01 , T01R0201_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+
+	//サポート：外に出ようとする
+	_OBJ_ANIME( T01R0201_SUPPORT_01, anm_heroine_goaway_01 )
+	_OBJ_ANIME_WAIT()
+
+	//あっ　～～くん！
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0201_white_02 , T01R0201_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+
+	//サポート：退出
+	_OBJ_ANIME( T01R0201_SUPPORT_01, anm_heroine_goaway_02 )
+	_TIME_WAIT( 32 )
+	//主人公：見送る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_02 )
+	_OBJ_ANIME_WAIT()
+
+	//サポート：消す（バニッシュフラグもたちます）
+	_OBJ_DEL_EV( T01R0201_SUPPORT_01 )
+
+//================フラグ操作==================//
+
+	//友達出発イベント見た
+	$WK_SCENE_T01R0201 = 1
+
+//============================================//
+
 EVENT_END
 
-/**************************************************************/
-/*   T01R0201 サポート母                                      */
-/**************************************************************/
-EVENT_START   ev_t01r0201_middlewoman1
-  _TALK_OBJ_START()
+
+//--------------------------------------------------------------------
+//主人公：前へ歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_01
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ヒロイン：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_heroine_move_01
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：外に出ようとする
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_heroine_goaway_01
+	_ANIME_DATA	AC_WALK_D_8F,2
+//	_ANIME_DATA	AC_MARK_GYOE,1	//【仮】！マーク中に足が動いたままになるので外します
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：退室
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_heroine_goaway_02
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：見送る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_02
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*						サポート父							*/
+/************************************************************/
+EVENT_START   ev_t01r0201_middleman1_01
+	_TALK_OBJ_START()
+
+	//【仮】図鑑入手までこのメッセージ
+	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0201_middleman1_02 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*						サポート母							*/
+/************************************************************/
+EVENT_START   ev_t01r0201_middlewoman1_01
+	_TALK_OBJ_START()
+
+	//【仮】図鑑入手までこのメッセージ
 	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0201_middlewoman1_02 )
 	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_BALLOONWIN_CLOSE()
 EVENT_END
 

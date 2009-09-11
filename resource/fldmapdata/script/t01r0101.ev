@@ -47,9 +47,9 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START ev_t01r0101_mama_first
 
-  IF $WK_0907ROM07 == 0 THEN
+  IF $WK_SCENE_0907ROM07 == 0 THEN
     _CALL mama_first
-    $WK_0907ROM07 = 1
+    $WK_SCENE_0907ROM07 = 1
   ENDIF
 
 	_TURN_HERO_SITE()
