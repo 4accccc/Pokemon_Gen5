@@ -31,7 +31,7 @@ include	$(PROJECT_RSCDIR)\macro_define
 
 CONVERTDATA = ica_test_data2.bin \
 							houou_test.nsbmd houou_test.nsbca houou_test.nsbta \
-							trailer.nsbmd t1_house_01.nsbmd
+							trailer.nsbmd t1_house_01.nsbmd h01_ship.nsbmd
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -56,6 +56,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g3dcvtr houou_test.ita
 	g3dcvtr trailer.imd
 	g3dcvtr t1_house_01.imd
+	g3dcvtr h01_ship.imd
 endif
 
 
