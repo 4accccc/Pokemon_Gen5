@@ -217,6 +217,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   DEF_CMD EV_SEQ_GET_RND
   DEF_CMD EV_SEQ_GET_NOW_MSG_ARCID
 
+  //マップ遷移関連
+  DEF_CMD EV_SEQ_MAP_CHANGE_SAND_STREAM
+
 //======================================================================
 // イベントデータ関連
 //======================================================================
@@ -2300,6 +2303,21 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .short  EV_SEQ_GET_NOW_MSG_ARCID
   .short  \work
   .endm
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+#define _MAP_CHANGE_SAND_STREAM( zone_id, gx, gz )  \
+    _ASM_MAP_CHANGE_SAND_STREAM zone_id, gx, gz
+
+  .macro  _ASM_MAP_CHANGE_SAND_STREAM zone_id, gx, gz
+  .short  EV_SEQ_MAP_CHANGE_SAND_STREAM
+  .short  \zone_id
+  .short  \gx
+  .short  \gz
+  .endm
+
 
 //======================================================================
 //
