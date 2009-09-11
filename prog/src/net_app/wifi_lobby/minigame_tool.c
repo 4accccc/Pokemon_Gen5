@@ -6615,7 +6615,7 @@ static void MNGM_COUNT_MskInit( MNGM_COUNT_MSKWK* p_wk, MNGM_CLACTRESOBJ* p_reso
 
 
   // 下はフリップさせる
-  GFL_CLACT_WK_SetFlip( p_wk->p_msk[ MNGM_COUNT_MSK_OAM_BTTM ], CLWK_FLIP_V, TRUE );
+  GFL_CLACT_WK_SetFlip( p_wk->p_msk[ MNGM_COUNT_MSK_OAM_BTTM ], CLWK_FLIP_H, TRUE );
 
   // マスク設定
   MNGM_COUNT_MskSetMsk( p_wk );
