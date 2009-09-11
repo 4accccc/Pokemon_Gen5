@@ -11,6 +11,9 @@
 #include <gflib.h>
 #include "ica_anime.h"
 
+// デバッグ出力スイッチ
+//#define ICA_ANIME_DEBUG
+
 
 //===================================================================================
 /**
@@ -276,4 +279,8 @@ void UpdateBuf( ICA_ANIME* anime, fx32 start_frame )
 
   // バッファ開始フレーム位置を記憶
   anime->bufStartFrame = start_frame >> FX32_SHIFT;
+
+#ifdef ICA_ANIME_DEBUG
+  OBATA_Printf( "update ica anime buffer\n" );
+#endif
 }
