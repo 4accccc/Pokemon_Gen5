@@ -6,9 +6,6 @@
 #include "arc/debug_obata.naix"
 
 
-
-VecFx32 pos = { 0, FX32_ONE * 300, -500 * FX32_ONE };
-
 //============================================================================================
 /**
  * @brief 3Dデータ
@@ -84,7 +81,7 @@ static void Draw( PROC_WORK* work );
  * @brief 初期化関数
  */
 //============================================================================================
-static GFL_PROC_RESULT DEBUG_OBATA_MainProcFunc_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+static GFL_PROC_RESULT DEBUG_OBATA_DEMO_TEST_MainProcFunc_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
 	PROC_WORK* work = NULL;
 
@@ -107,7 +104,7 @@ static GFL_PROC_RESULT DEBUG_OBATA_MainProcFunc_Init( GFL_PROC* proc, int* seq, 
  * @brief メイン関数
  */
 //============================================================================================
-static GFL_PROC_RESULT DEBUG_OBATA_MainProcFunc_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+static GFL_PROC_RESULT DEBUG_OBATA_DEMO_TEST_MainProcFunc_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
 	PROC_WORK* work = mywk;
   BOOL end = FALSE;
@@ -135,7 +132,7 @@ static GFL_PROC_RESULT DEBUG_OBATA_MainProcFunc_Main( GFL_PROC* proc, int* seq, 
  * @brief 終了関数
  */
 //============================================================================================
-static GFL_PROC_RESULT DEBUG_OBATA_MainProcFunc_End( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+static GFL_PROC_RESULT DEBUG_OBATA_DEMO_TEST_MainProcFunc_End( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
 	PROC_WORK* work = mywk;
 
@@ -160,11 +157,11 @@ static GFL_PROC_RESULT DEBUG_OBATA_MainProcFunc_End( GFL_PROC* proc, int* seq, v
  * @brief プロセス定義データ
  */
 //============================================================================================
-const GFL_PROC_DATA DebugObataMainProcData = 
+const GFL_PROC_DATA DebugObataDemoTestMainProcData = 
 {
-	DEBUG_OBATA_MainProcFunc_Init,
-	DEBUG_OBATA_MainProcFunc_Main,
-	DEBUG_OBATA_MainProcFunc_End,
+	DEBUG_OBATA_DEMO_TEST_MainProcFunc_Init,
+	DEBUG_OBATA_DEMO_TEST_MainProcFunc_Main,
+	DEBUG_OBATA_DEMO_TEST_MainProcFunc_End,
 };
 
 
@@ -253,10 +250,6 @@ static BOOL Main( PROC_WORK* work )
   int trg = GFL_UI_KEY_GetTrg();
   int key = GFL_UI_KEY_GetCont();
 
-  if( key & PAD_KEY_UP ) pos.z += FX32_ONE * 10;
-  if( key & PAD_KEY_DOWN ) pos.z -= FX32_ONE * 10;
-
-
   // セレクトで終了
   if( trg & PAD_BUTTON_SELECT ) return TRUE;
   return FALSE;
@@ -286,15 +279,6 @@ static void Draw( PROC_WORK* work )
     fx32 far = FX32_ONE * 4096;
     GFL_G3D_CAMERA_SetFar( work->camera, &far );
   }
-  /*
-  {
-    VecFx32 target;
-    VEC_Set( &target, 0, 0, 0 );
-    GFL_G3D_CAMERA_SetPos( work->camera, &pos );
-    GFL_G3D_CAMERA_SetTarget( work->camera, &target );
-    GFL_G3D_CAMERA_Switching( work->camera );
-  }
-  */
 
   // アニメーション更新
   {

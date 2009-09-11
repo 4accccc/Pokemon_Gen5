@@ -91,7 +91,7 @@ static const GFL_G3D_LIGHT_DATA light_data[] = {
 	{ 3, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
 };
 static const GFL_G3D_LIGHTSET_SETUP light_setup = { light_data, NELEMS(light_data) };
-GFL_G3D_LIGHTSET* g_lightSet;
+static GFL_G3D_LIGHTSET* g_lightSet;
 
 
 //-------------------------------------------------------------------------------------------
