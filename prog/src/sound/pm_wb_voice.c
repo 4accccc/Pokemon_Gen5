@@ -77,7 +77,7 @@ BOOL PMV_CustomVoiceWave(	u32 pokeNo,			// [in]ポケモンナンバー
 {
 	PMV_REF* pmvRef;
 
-	if( userParam != NULL ){ return FALSE; }	// 既存waveのみ使用
+	if( userParam == NULL ){ return FALSE; }	// 既存waveのみ使用
 
 	//参照ユーザーパラメータ設定
 	pmvRef = (PMV_REF*)userParam;
