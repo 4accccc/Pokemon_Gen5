@@ -219,6 +219,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 
   //マップ遷移関連
   DEF_CMD EV_SEQ_MAP_CHANGE_SAND_STREAM
+  DEF_CMD EV_SEQ_MAP_CHANGE
 
 //======================================================================
 // イベントデータ関連
@@ -2307,6 +2308,12 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
+/**
+ * マップ遷移コマンド（流砂）
+ * @param zone_id   移動先ゾーンID指定
+ * @param gx        移動先Ｘ位置指定（グリッド単位）
+ * @param gz        移動先Ｙ位置指定（グリッド単位）
+ */
 //--------------------------------------------------------------
 #define _MAP_CHANGE_SAND_STREAM( zone_id, gx, gz )  \
     _ASM_MAP_CHANGE_SAND_STREAM zone_id, gx, gz
@@ -2316,6 +2323,26 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .short  \zone_id
   .short  \gx
   .short  \gz
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * マップ遷移コマンド
+ * @param zone_id   移動先ゾーンID指定
+ * @param gx        移動先Ｘ位置指定（グリッド単位）
+ * @param gz        移動先Ｙ位置指定（グリッド単位）
+ * @param dir       移動後の向き
+ */
+//--------------------------------------------------------------
+#define _MAP_CHANGE( zone_id, gx, gz )  \
+    _ASM_MAP_CHANGE zone_id, gx, gz, dir
+
+  .macro  _ASM_MAP_CHANGE zone_id, gx, gz, dir
+  .short  EV_SEQ_MAP_CHANGE
+  .short  \zone_id
+  .short  \gx
+  .short  \gz
+  .short  \dir
   .endm
 
 
