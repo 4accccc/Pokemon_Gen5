@@ -18,9 +18,9 @@
 //特殊スクリプト定義
 #define SP_SCRID_NONE				(0)
 #define SP_SCRID_SCENE_CHANGE		(1)
-#define SP_SCRID_FLAG_CHANGE		(2)
-#define SP_SCRID_OBJ_CHANGE			(3)			//注意！　フィールド初期化で呼ばれる
-#define SP_SCRID_INIT_CHANGE		(4)
+#define SP_SCRID_ZONE_CHANGE		(2)
+#define SP_SCRID_FIELD_RECOVER	(3)			//注意！　フィールド初期化で呼ばれる
+#define SP_SCRID_FIELD_INIT 		(4)
 
 //エイリアス識別用スクリプトID
 #define SP_SCRID_ALIES				(0xffff)

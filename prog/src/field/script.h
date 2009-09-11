@@ -97,43 +97,11 @@ enum{
   ID_EVSCR_WK_TEMP_HEAPID,
 
 
-	//↓↓↓↓↓ここはワークの数に影響するので注意！↓↓↓↓↓
-	//スクリプトとプログラムのデータ交換用
-	ID_EVSCR_WK_START,				//ワークの開始ID
-
-	ID_EVSCR_WK_PARAM0 = ID_EVSCR_WK_START,				
-	ID_EVSCR_WK_PARAM1,
-	ID_EVSCR_WK_PARAM2,
-	ID_EVSCR_WK_PARAM3,
-	ID_EVSCR_WK_PARAM4,
-	ID_EVSCR_WK_PARAM5,
-	ID_EVSCR_WK_PARAM6,
-	ID_EVSCR_WK_PARAM7,
-
-	//スクリプトでのテンポラリ
-	ID_EVSCR_WK_TEMP0,					
-	ID_EVSCR_WK_TEMP1,
-	ID_EVSCR_WK_TEMP2,
-	ID_EVSCR_WK_TEMP3,
-
-	//スクリプト内部での処理用
-	ID_EVSCR_WK_REG0,					
-	ID_EVSCR_WK_REG1,
-	ID_EVSCR_WK_REG2,
-	ID_EVSCR_WK_REG3,
-
-	//スクリプトに答えを返す汎用ワーク
-	ID_EVSCR_WK_ANSWER,
-
-	//話しかけ対象のOBJID(変更不可！)
-	ID_EVSCR_WK_TARGET_OBJID,
-
 	ID_EVSCR_WK_END,				//ワークの終了ID
 
 	//↑↑↑↑↑ここはワークの数に影響するので注意！↑↑↑↑↑
 };
 
-#define EVSCR_WORK_MAX	(ID_EVSCR_WK_END-ID_EVSCR_WK_START)	//ワークの数
 
 //仮想マシンのナンバー
 typedef enum{
@@ -225,16 +193,6 @@ extern BOOL SCRIPT_GetVMExists( SCRIPT_WORK *sc, VMHANDLE_ID vm_id );
 //======================================================================
 //	スクリプト制御ワークのメンバーアクセス
 //======================================================================
-//--------------------------------------------------------------
-/**
- * スクリプト制御ワークのメンバーアドレス取得
- * @param	sc		SCRIPT型のポインタ
- * @param	id		取得するメンバID(script.h参照)
- * @return	"アドレス"
- */
-//--------------------------------------------------------------
-extern void * SCRIPT_GetSubMemberWork( SCRIPT_WORK * sc, u32 id );
-
 //--------------------------------------------------------------
 /**
  * スクリプト制御ワークのメンバーアドレス取得
@@ -509,8 +467,9 @@ extern void SCRIPT_CallGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heapID );
  * @return	"TRUE=特殊スクリプト実行、FALSE=何もしない"
  */
 //------------------------------------------------------------------
-extern GMEVENT * SCRIPT_SearchSceneScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key );
-extern BOOL SCRIPT_SearchMapInitScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key);
+extern GMEVENT * SCRIPT_SearchSceneScript( GAMESYS_WORK * gsys, HEAPID heapID);
+extern BOOL SCRIPT_CallFieldInitScript( GAMESYS_WORK * gsys, HEAPID heapID );
+extern BOOL SCRIPT_CallFieldRecoverScript( GAMESYS_WORK * gsys, HEAPID heapID );
 
 
 

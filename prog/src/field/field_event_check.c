@@ -167,7 +167,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 #endif //debug
 	
 //☆☆☆特殊スクリプト起動チェックがここに入る
-  event = SCRIPT_SearchSceneScript( gsys, req.heapID, SP_SCRID_SCENE_CHANGE );
+  event = SCRIPT_SearchSceneScript( gsys, req.heapID );
   if (event) return event;
 
 
