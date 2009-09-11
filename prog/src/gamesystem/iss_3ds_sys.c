@@ -161,7 +161,7 @@ void ISS_3DS_SYS_DeleteUnit( ISS_3DS_SYS* system, u8 index )
   // 指定インデックスにユニットが登録されていたら削除する
   if( system->unit[index] != NULL )
   {
-    u16 track = ISS_3DS_UNIT_GetTrackBit( system->unit[i] );
+    u16 track = ISS_3DS_UNIT_GetTrackBit( system->unit[index] );
 
     // 操作していたBGMステータスを元に戻す
     PMSND_SetStatusBGM_EX( track, 256, 0, 0 );
