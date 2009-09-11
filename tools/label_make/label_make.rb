@@ -1,11 +1,9 @@
-
+#! ruby -Ks
 #=====================================================================================
 #
 # ローマ字変換ラベル生成スクリプト
 #
 #=====================================================================================
-
-  $KCODE = "Shift-JIS"
 
 class LabelMake
 
@@ -57,8 +55,6 @@ class LabelMake
             tu_flag = 1
           when ":"
             if split_dic[ DIC_DST ][ 1 ].chr == "H"
-              p "H"
-              p mini_flag
               case mini_flag
               when U_FLAG
                 label_str[ label_str.size - 1 ] = "W"
