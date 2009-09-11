@@ -61,7 +61,7 @@ VMCMD_RESULT EvCmdMapChangeBySandStream( VMHANDLE *core, void *wk )
   u16 next_z = VMGetU16(core);  //2byte read  Z位置グリッド単位
   
   {
-    FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldMap );
+    FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
     MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
     u16 x = MMDL_GetGridPosX( mmdl );
     u16 y = MMDL_GetGridPosY( mmdl );
