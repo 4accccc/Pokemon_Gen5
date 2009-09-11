@@ -344,6 +344,11 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_namipoke.c \
         field/event_trainer_eye.c \
         field/scrcmd_trainer.c \
+        field/scrcmd_sound.c \
+        field/scrcmd_musical.c \
+        field/scrcmd_item.c \
+        field/scrcmd_word.c \
+        field/scrcmd_mapchange.c \
 				field/rail_editor.c \
         field/field_rail.c \
         field/field_rail_func.c \
@@ -351,11 +356,9 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/field_nogrid_mapper.c \
         field/fldeff_gyoe.c \
         field/fieldmap_func.c \
-        field/scrcmd_sound.c \
         net_app/union/union_subdisp.c \
         field/fldeff_footmark.c \
         field/fldeff_reflect.c \
-        field/scrcmd_musical.c \
         field/field_place_name.c \
         field/calender_encount.c \
         field/calender_hatch.c \
@@ -371,13 +374,10 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fieldmap_tcb_camera_zoom.c \
         field/fieldmap_tcb_camera_rot.c \
         field/fieldmap_tcb_rot_player.c \
-        field/fieldmap_tcb_warp_player.c \
         field/fieldmap_tcb_move_player.c \
         field/fieldmap_tcb_warp_player.c \
         field/event_appear.c \
         field/event_disappear.c \
-        field/scrcmd_item.c \
-        field/scrcmd_word.c \
         field/height_ex.c
 
 # フィールド天気

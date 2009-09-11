@@ -18,6 +18,7 @@
 //SCRID_TRAINER_MOVE_BATTLE 
 #include "../../../resource/fldmapdata/script/trainer_def.h"
 
+#include "script_def.h"
 //======================================================================
 //  define
 //======================================================================

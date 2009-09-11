@@ -41,6 +41,7 @@
 #include "scrcmd_musical.h"
 #include "scrcmd_word.h"
 #include "scrcmd_item.h"
+#include "scrcmd_mapchange.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
@@ -2728,6 +2729,9 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdChangeLangID,
   EvCmdGetRand,
   EvCmdGetNowMsgArcID,
+
+  //ƒ}ƒbƒv‘JˆÚ
+  EvCmdMapChangeBySandStream,
 };
 
 

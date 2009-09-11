@@ -16,10 +16,8 @@
 #include <gflib.h>
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
-#include "system/vm.h"
 #include "eventwork.h"
 
-#include "script_def.h"
 
 #include "field/fieldmap_proc.h"
 #include "field/field_msgbg.h"
@@ -213,6 +211,9 @@ extern void * SCRIPT_GetMemberWork( SCRIPT_WORK *sc, u32 id );
 #ifndef SCRIPT_PL_NULL
 extern void SCRIPT_SetNextScript( FLDCOMMON_WORK* fsys );
 #endif
+
+extern GMEVENT * SCRIPT_GetEvent( SCRIPT_WORK * sc );
+extern GAMESYS_WORK * SCRIPT_GetGameSysWork( SCRIPT_WORK * sc );
 
 //======================================================================
 //	
