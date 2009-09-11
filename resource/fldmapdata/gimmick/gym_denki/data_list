@@ -1,0 +1,27 @@
+DATA_LIST = \
+     gym04_cart.nsbmd \
+     gym04_cart.nsbta \
+     gym04_switch.nsbmd \
+		 gym04_s_ao.nsbta \
+		 gym04_s_mizu.nsbta \
+		 gym04_s_kimi.nsbta \
+		 gym04_s_kiiro.nsbta \
+		 gym04_s_mura.nsbta \
+		 gym04_s_ore.nsbta \
+		 gym04_s_aka.nsbta \
+		 gym04_s_pin.nsbta \
+		 gym04_rail_01a.nsbca \
+		 gym04_rail_01b.nsbca \
+		 gym04_rail_01.nsbmd \
+		 gym04_rail_02.nsbmd \
+		 gym04_rail_03.nsbmd \
+		 gym04_rail_04.nsbmd \
+		 gym04_rail_01a.nsbta \
+		 gym04_rail_01b.nsbta \
+		 gym04_rail_02a.nsbta \
+		 gym04_rail_02b.nsbta \
+		 gym04_rail_03a.nsbta \
+		 gym04_rail_03b.nsbta \
+		 gym04_rail_04a.nsbta \
+		 gym04_rail_04b.nsbta
+
