@@ -242,7 +242,7 @@ const SCENE_DATA resistMapTbl[] = {
 		{
 			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
-      3,3,
+      2,3,
       FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_FLDMAP_LANDDATA,
 
@@ -426,6 +426,27 @@ const SCENE_DATA resistMapTbl[] = {
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
 		},
 		&FieldMapCtrl_C3P02Functions,
+		TRUE,
+	},
+  //RSC_GRID_MUSICAL = 0,
+	{	//実験マップ グリッド移動
+		{
+			FLDMAPPER_FILETYPE_NORMAL,
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      1,1,
+      FLDMAPPER_MODE_SCROLL_XZ, 
+			ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
+			{0,2},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+		},
+		&FieldMapCtrl_GridFunctions,
 		TRUE,
 	},
 };
