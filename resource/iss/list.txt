@@ -1,2 +1,3 @@
 "city.bin"
 "dungeon.bin"
+"3d_sound_h01.bin"
