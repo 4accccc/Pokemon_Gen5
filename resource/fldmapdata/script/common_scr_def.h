@@ -5,7 +5,7 @@
 #define _COMMON_SCR_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_NOTHING (2000)
+#define SCRID_DUMMY (2000)
 #define SCRID_HEAL_P01 (2001)
 #define SCRID_SHOP_START_TALK (2002)
 #define SCRID_ITEM_EVENT_SUCCESS (2003)
