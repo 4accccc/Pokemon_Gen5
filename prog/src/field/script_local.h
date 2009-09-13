@@ -162,17 +162,6 @@ extern BOOL SCRIPT_GetVMExists( SCRIPT_WORK *sc, VMHANDLE_ID vm_id );
 //--------------------------------------------------------------
 extern void * SCRIPT_GetMemberWork( SCRIPT_WORK *sc, u32 id );
 
-//--------------------------------------------------------------
-/**
- * スクリプト制御ワークの"next_func"にメニュー呼び出しをセット
- * @return	none
- * フィールドメニュー呼び出し限定！
- * 流れが把握しずらくなるので、汎用的に使えないようにしている！
- */
-//--------------------------------------------------------------
-#ifndef SCRIPT_PL_NULL
-extern void SCRIPT_SetNextScript( FLDCOMMON_WORK* fsys );
-#endif
 
 extern GMEVENT * SCRIPT_GetEvent( SCRIPT_WORK * sc );
 extern GAMESYS_WORK * SCRIPT_GetGameSysWork( SCRIPT_WORK * sc );

@@ -16,30 +16,33 @@
 #include "system/vm.h"
 #include "system/vm_cmd.h"
 
-#include "field/zonedata.h"
-
-#include "script_message.naix"
-#include "print/wordset.h"
-
-#include "arc/fieldmap/zone_id.h"
-
 #include "script.h"
 #include "script_local.h"
 
 #include "script_def.h"
-#include "scrcmd.h"
+#include "scrcmd.h"     //ScriptCmdTbl  ScriptCmdMax
 #include "scrcmd_work.h"
 #include "eventwork_def.h"
+
+#include "field/zonedata.h"
+
+#include "print/wordset.h"    //WORDSET
+
+
 #include "trainer_eye_data.h"   //EV_TRAINER_EYE_HITDATA
 #include "field/eventdata_system.h" //EVENTDATA_GetSpecialScriptData
 
 #include "fieldmap.h"   //FIELDMAP_GetFldMsgBG
 
-#include "arc/fieldmap/script_seq.naix"
+
 #include "system/main.h"  //HEAPID_PROC
 
-#include "../../../resource/fldmapdata/script/scrid_offset/scr_offset_id.h"
 #include "../../../resource/fldmapdata/script/init_scr_def.h" //SCRID_INIT_SCRIPT
+
+// scr_offset.cdat内で参照
+#include "../../../resource/fldmapdata/script/scrid_offset/scr_offset_id.h"
+#include "script_message.naix"
+#include "arc/fieldmap/script_seq.naix"
 
 //======================================================================
 //  define
@@ -62,7 +65,9 @@ enum
 #define SCRIPT_NOT_EXIST_ID (0xffff)
 
 enum {
-  SCWK_AREA_SIZE = SCWK_AREA_END - SCWK_AREA_START,
+  TEMP_WORK_START = SCWK_AREA_START,
+  TEMP_WORK_END = USERWK_AREA_END,
+  TEMP_WORK_SIZE = SCWK_AREA_END - TEMP_WORK_START,
 };
 
 //======================================================================
@@ -105,7 +110,7 @@ struct _TAG_SCRIPT_WORK
   u16 start_zone_id;
 	MMDL *target_obj;
 
-	HEAPID heapID;
+	HEAPID main_heapID;
   HEAPID temp_heapID;
 
 	GAMESYS_WORK *gsys;
@@ -141,7 +146,7 @@ struct _TAG_SCRIPT_WORK
 	//トレーナー視線情報
 	EV_TRAINER_EYE_HITDATA eye_hitdata[TRAINER_EYE_HITMAX];
 	
-	u16 scrTempWork[SCWK_AREA_SIZE];		//ワーク(ANSWORK,TMPWORKなどの代わり)
+	u16 scrTempWork[TEMP_WORK_SIZE];		//ワーク(ANSWORK,TMPWORKなどの代わり)
 	
 
   /*
@@ -177,7 +182,7 @@ typedef struct
 //======================================================================
 //	プロトタイプ宣言
 //======================================================================
-static SCRIPT_WORK * SCRIPTWORK_Create( HEAPID heapID, HEAPID temp_heapID,
+static SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID, HEAPID temp_heapID,
     GAMESYS_WORK * gsys, u16 scr_id, MMDL *obj, void* ret_wk);
 static void SCRIPTWORK_Delete( SCRIPT_WORK * sc );
 static void SCRIPTSYS_AddVM(SCRIPTSYS * scr_sys, VMHANDLE * vm, VMHANDLE_ID vm_id);
@@ -189,14 +194,9 @@ static u16 loadScriptData( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16 i
 static void loadScriptDataDirect(
 	SCRCMD_WORK *work, VMHANDLE* core, u32 scr_id, u32 msg_id, HEAPID heapID );
 
-static void EventDataIDJump( VMHANDLE * core, u16 ev_id );
-
-
 
 //イベント
 static GMEVENT * FldScript_CreateControlEvent( SCRIPT_WORK *sc );
-static void FldScript_CallControlEvent( SCRIPT_WORK *sc, GMEVENT *event );
-static GMEVENT * FldScript_ChangeControlEvent( SCRIPT_WORK *sc, GMEVENT *event );
 
 //イベントワーク、スクリプトワークアクセス関数
 static void * SCRIPT_GetSubMemberWork( SCRIPT_WORK * sc, u32 id );
@@ -206,7 +206,7 @@ static void initFldParam(SCRIPT_FLDPARAM * fparam, GAMESYS_WORK * gsys);
 
 
 //特殊スクリプト
-static BOOL SCRIPT_SearchMapInitScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key);
+static BOOL searchMapInitScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key);
 static u16 searchSpecialScript( const u8 * p, u8 key );
 static u16 searchSceneScript( GAMEDATA * gamedata, const u8 * p, u8 key );
 
@@ -248,32 +248,8 @@ GMEVENT * SCRIPT_SetEventScript( GAMESYS_WORK *gsys, u16 scr_id, MMDL *obj,
 	SCRIPT_WORK *sc;
 
   sc = SCRIPTWORK_Create( HEAPID_PROC, temp_heapID, gsys, scr_id, obj, NULL );
-	initFldParam( &sc->fld_param, gsys );
 	event = FldScript_CreateControlEvent( sc );
 	return( event );
-}
-
-//--------------------------------------------------------------
-/**
- * トレーナー視線情報を格納 事前にSCRIPT_SetEventScript()を起動しておく事
- * @param	event SCRIPT_SetEventScript()戻り値。
- * @param	mmdl 視線がヒットしたFIELD_OBJ_PTR
- * @param	range		グリッド単位の視線距離
- * @param	dir			移動方向
- * @param	scr_id		視線ヒットしたスクリプトID
- * @param	tr_id		視線ヒットしたトレーナーID
- * @param	tr_type		トレーナータイプ　シングル、ダブル、タッグ識別
- * @param	tr_no		何番目にヒットしたトレーナーなのか
- */
-//--------------------------------------------------------------
-void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
-    s16 range, u16 dir, u16 scr_id, u16 tr_id, int tr_type, int tr_no )
-{
-  EVENT_SCRIPT_WORK *ev_sc = GMEVENT_GetEventWork( event );
-  SCRIPT_WORK *sc = ev_sc->sc;
-	EV_TRAINER_EYE_HITDATA *eye = &sc->eye_hitdata[tr_no];
-  
-  TRAINER_EYE_HITDATA_Set(eye, mmdl, range, dir, scr_id, tr_id, tr_type, tr_no );
 }
 
 //--------------------------------------------------------------
@@ -287,11 +263,15 @@ void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
  */
 //--------------------------------------------------------------
 void SCRIPT_CallScript( GMEVENT *event,
-	u16 scr_id, MMDL *obj, void *ret_script_wk, HEAPID heapID )
+	u16 scr_id, MMDL *obj, void *ret_script_wk, HEAPID temp_heapID )
 {
-  SCRIPT_WORK *sc = SCRIPTWORK_Create( HEAPID_PROC, heapID,
+	GMEVENT *sc_event;
+	SCRIPT_WORK *sc;
+
+  sc = SCRIPTWORK_Create( HEAPID_PROC, temp_heapID,
       GMEVENT_GetGameSysWork(event), scr_id, obj, ret_script_wk);
-	FldScript_CallControlEvent( sc, event );
+	sc_event = FldScript_CreateControlEvent( sc );
+	GMEVENT_CallEvent( event, sc_event );
 }
 
 //--------------------------------------------------------------
@@ -308,11 +288,15 @@ void SCRIPT_CallScript( GMEVENT *event,
  */
 //--------------------------------------------------------------
 void SCRIPT_ChangeScript( GMEVENT *event,
-		u16 scr_id, MMDL *obj, HEAPID heapID )
+		u16 scr_id, MMDL *obj, HEAPID temp_heapID )
 {
-  SCRIPT_WORK *sc = SCRIPTWORK_Create( HEAPID_PROC, heapID,
+	GMEVENT *sc_event;
+  SCRIPT_WORK *sc;
+
+  sc = SCRIPTWORK_Create( HEAPID_PROC, temp_heapID,
       GMEVENT_GetGameSysWork(event), scr_id, obj, NULL);
-	FldScript_ChangeControlEvent( sc, event );
+  sc_event = FldScript_CreateControlEvent( sc );
+  GMEVENT_ChangeEvent( event, sc_event );
 }
 
 //========================================================================
@@ -383,14 +367,14 @@ BOOL SCRIPT_GetVMExists( SCRIPT_WORK *sc, VMHANDLE_ID vm_id )
  * @return	SCRIPT_WORK			SCRIPT型のポインタ
  */
 //--------------------------------------------------------------
-static SCRIPT_WORK * SCRIPTWORK_Create( HEAPID heapID, HEAPID temp_heapID,
+static SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID, HEAPID temp_heapID,
     GAMESYS_WORK * gsys, u16 scr_id, MMDL *obj, void* ret_wk)
 {
   SCRIPT_WORK * sc;
 
-	sc = GFL_HEAP_AllocClearMemory( heapID, sizeof(SCRIPT_WORK) );
+	sc = GFL_HEAP_AllocClearMemory( main_heapID, sizeof(SCRIPT_WORK) );
 	sc->magic_no = SCRIPT_MAGIC_NO;
-	sc->heapID = heapID;
+	sc->main_heapID = main_heapID;
   sc->temp_heapID = temp_heapID;
 
 	sc->gsys = gsys;
@@ -408,14 +392,16 @@ static SCRIPT_WORK * SCRIPTWORK_Create( HEAPID heapID, HEAPID temp_heapID,
     objid = getTempWork( sc, SCWK_TARGET_OBJID );
 		*objid = MMDL_GetOBJID( obj ); //話しかけ対象OBJIDのセット
 	}
-  sc->scr_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(SCRIPTSYS) );
+  sc->scr_sys = GFL_HEAP_AllocClearMemory( main_heapID, sizeof(SCRIPTSYS) );
 
   //メッセージ関連
   sc->wordset = WORDSET_CreateEx(
-    WORDSET_SCRIPT_SETNUM, WORDSET_SCRIPT_BUFLEN, sc->heapID );
-  sc->msg_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, sc->heapID );
-  sc->tmp_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, sc->heapID );
+    WORDSET_SCRIPT_SETNUM, WORDSET_SCRIPT_BUFLEN, main_heapID );
+  sc->msg_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, main_heapID );
+  sc->tmp_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, main_heapID );
 
+  //フィールドパラメータ生成
+	initFldParam( &sc->fld_param, gsys );
 #ifndef SCRIPT_PL_NULL
 	//隠しアイテムのスクリプトIDだったら(あとで移動する予定)
 	if( (scr_id >= ID_HIDE_ITEM_OFFSET) &&
@@ -503,22 +489,25 @@ static VMHANDLE * SCRVM_Create( SCRIPT_WORK *sc, u16 zone_id, u16 scr_id )
 	head.mmdlsys = GAMEDATA_GetMMdlSys( head.gdata );
 	head.script = sc;
 	
-	work = SCRCMD_WORK_Create( &head, sc->heapID, sc->temp_heapID );
+	work = SCRCMD_WORK_Create( &head, sc->main_heapID, sc->temp_heapID );
 	
 	init.stack_size = 0x0100;
 	init.reg_size = 0x040;
 	init.command_table = ScriptCmdTbl;
 	init.command_max  = ScriptCmdMax;
 	
-	core = VM_Create( sc->heapID, &init );	//仮想マシン初期化
+	core = VM_Create( sc->main_heapID, &init );	//仮想マシン初期化
 	
 	VM_Init( core, work );
   {
     u16 local_scr_id;
     //スクリプトデータ、メッセージデータ読み込み
-    local_scr_id = loadScriptData( work, core, zone_id, scr_id, sc->heapID );
+    local_scr_id = loadScriptData( work, core, zone_id, scr_id, sc->main_heapID );
     VM_Start( core, core->pScript ); //仮想マシンにコード設定
-    EventDataIDJump( core, local_scr_id );
+    //スクリプトの先頭部分はテーブルになっているので、
+    //オフセットで実際の開始位置を設定する
+    core->adrs += (local_scr_id * sizeof(u32));			//ID分進める(adrsがlongなので*4)
+    core->adrs += VMGetU32( core );		//ラベルオフセット分進める
   }
 #ifdef DEBUG_SCRIPT
 {
@@ -717,7 +706,7 @@ static void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
 
 	//HEAPID wb
 	case ID_EVSCR_WK_HEAPID:
-		return &sc->heapID;
+		return &sc->main_heapID;
   //TEMP_HEAPID wb
   case ID_EVSCR_WK_TEMP_HEAPID:
     return &sc->temp_heapID;
@@ -740,49 +729,6 @@ static void * SCRIPT_GetSubMemberWork( SCRIPT_WORK *sc, u32 id )
   case ID_EVSCR_TRAINER1:
 		return &sc->eye_hitdata[1];
 
-/*
-#ifndef SCRIPT_PL_NULL
-	//共通スクリプト切り替えフラグのポインタ
-	case ID_EVSCR_COMMON_SCR_FLAG:
-		return &sc->common_scr_flag;
-	//追加した仮想マシンの数のポインタ
-	case ID_EVSCR_VMHANDLE_COUNT:
-		return &sc->vm_machine_count;
-	case ID_EVSCR_VM_MAIN:
-		return &sc->vm[VMHANDLE_MAIN];
-	//仮想マシン(サブ)のポインタ
-	case ID_EVSCR_VM_SUB1:
-		return &sc->vm[VMHANDLE_SUB1];
-	//イベント起動時の主人公の向き
-	case ID_EVSCR_PLAYER_DIR:
-		return &sc->player_dir;
-	//イベントウィンドウワークのポインタ
-	case ID_EVSCR_EVWIN:
-		return &sc->ev_win;
-	//会話ウィンドウビットマップデータのポインタ
-	case ID_EVSCR_MSGWINDAT:
-		return &sc->MsgWinDat;
-	//待機アイコンのポインタ
-	case ID_EVSCR_WAITICON:
-		return &sc->waiticon;
-	//フィールドエフェクトへのポインタ
-	case ID_EVSCR_EOA:
-		return &sc->eoa;
-	//自機形態レポートTCBのポインタ
-	case ID_EVSCR_PLAYER_TCB:
-		return &sc->player_tcb;
-	//コインウィンドウビットマップデータのポインタ
-	case ID_EVSCR_COINWINDAT:
-		return &sc->CoinWinDat;
-	//お金ウィンドウビットマップデータのポインタ
-	case ID_EVSCR_GOLDWINDAT:
-		return &sc->GoldWinDat;
-	//レポート情報表示ウィンドウ制御ワークへのポインタ
-	case ID_EVSCR_REPORTWIN:
-		return &sc->riw;
-
-#endif
-*/
 	};
 	
 	//エラー
@@ -804,42 +750,6 @@ void * SCRIPT_GetMemberWork( SCRIPT_WORK *sc, u32 id )
 		GF_ASSERT_MSG(0, "起動(確保)していないスクリプトのワークにアクセスしています！" );
 	}
 	return SCRIPT_GetSubMemberWork( sc, id );
-}
-
-//--------------------------------------------------------------
-/**
- * スクリプト制御ワークの"next_func"にメニュー呼び出しをセット
- * @param	fsys	FLDCOMMON_WORK型のポインタ
- * @return	none
- * フィールドメニュー呼び出し限定！
- * 流れが把握しずらくなるので、汎用的に使えないようにしている！
- */
-//--------------------------------------------------------------
-#ifndef SCRIPT_PL_NULL
-void SCRIPT_SetNextScript( FLDCOMMON_WORK *fsys )
-{
-	SCRIPT_WORK *sc = FieldEvent_GetSpecialWork( fsys->event );
-	
-	if( FieldMenuCallCheck( fsys ) == TRUE ){	//「なぞのばしょ」チェック 2006/10/24 by nakahiro
-		sc->scr_sys->next_func = FieldMenuEvChg;
-	}
-	return;
-}
-#endif
-
-//--------------------------------------------------------------
-/**
- * IDジャンプ
- * @param	core	VMHANDLE型のポインタ
- * @param	id		スクリプトID
- * @return	none
- */
-//--------------------------------------------------------------
-static void EventDataIDJump( VMHANDLE * core, u16 ev_id )
-{
-	core->adrs += (ev_id * 4);			//ID分進める(adrsがlongなので*4)
-	core->adrs += VMGetU32( core );		//ラベルオフセット分進める
-	return;
 }
 
 
@@ -938,41 +848,6 @@ static GMEVENT * FldScript_CreateControlEvent( SCRIPT_WORK *sc )
 	return event;
 }
 
-//--------------------------------------------------------------
-/**
- * スクリプトイベントコール
- * @param	sc	SCRIPT_WORK*
- * @param	
- * @retval
- */
-//--------------------------------------------------------------
-static void FldScript_CallControlEvent( SCRIPT_WORK *sc, GMEVENT *event )
-{
-	GMEVENT *sc_event;
-	sc_event = FldScript_CreateControlEvent( sc );
-	GMEVENT_CallEvent( event, sc_event );
-}
-
-//--------------------------------------------------------------
-/**
- * スクリプトイベントチェンジ
- * @param	sc	SCRIPT_WORK*
- * @param	
- * @retval
- */
-//--------------------------------------------------------------
-static GMEVENT * FldScript_ChangeControlEvent( SCRIPT_WORK *sc, GMEVENT *event )
-{
-	EVENT_SCRIPT_WORK *ev_sc;
-	
-	GMEVENT_Change( event,
-		FldScriptEvent_ControlScript, sizeof(EVENT_SCRIPT_WORK) );
-	ev_sc = GMEVENT_GetEventWork( event );
-  FldScriptEvent_InitWork( ev_sc, sc );
-
-	return event;
-}
-
 //======================================================================
 //	イベントワーク
 //======================================================================
@@ -980,9 +855,9 @@ static GMEVENT * FldScript_ChangeControlEvent( SCRIPT_WORK *sc, GMEVENT *event )
 //------------------------------------------------------------------
 static u16 * getTempWork( SCRIPT_WORK * sc, u16 work_no )
 {
-  GF_ASSERT( work_no >= SCWK_AREA_START );
-  GF_ASSERT( work_no < SCWK_AREA_END );
-  return &(sc->scrTempWork[ work_no - SCWK_AREA_START ]);
+  GF_ASSERT( work_no >= TEMP_WORK_START );
+  GF_ASSERT( work_no < TEMP_WORK_END );
+  return &(sc->scrTempWork[ work_no - TEMP_WORK_START ]);
 }
 //------------------------------------------------------------------
 /**
@@ -1258,6 +1133,29 @@ void SCRIPT_ResetEventFlagTrainer( EVENTWORK *ev, u16 tr_id )
 	EVENTWORK_ResetEventFlag( ev, GET_TRAINER_FLAG(tr_id) );
 }
 
+//--------------------------------------------------------------
+/**
+ * トレーナー視線情報を格納 事前にSCRIPT_SetEventScript()を起動しておく事
+ * @param	event SCRIPT_SetEventScript()戻り値。
+ * @param	mmdl 視線がヒットしたFIELD_OBJ_PTR
+ * @param	range		グリッド単位の視線距離
+ * @param	dir			移動方向
+ * @param	scr_id		視線ヒットしたスクリプトID
+ * @param	tr_id		視線ヒットしたトレーナーID
+ * @param	tr_type		トレーナータイプ　シングル、ダブル、タッグ識別
+ * @param	tr_no		何番目にヒットしたトレーナーなのか
+ */
+//--------------------------------------------------------------
+void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
+    s16 range, u16 dir, u16 scr_id, u16 tr_id, int tr_type, int tr_no )
+{
+  EVENT_SCRIPT_WORK *ev_sc = GMEVENT_GetEventWork( event );
+  SCRIPT_WORK *sc = ev_sc->sc;
+	EV_TRAINER_EYE_HITDATA *eye = &sc->eye_hitdata[tr_no];
+  
+  TRAINER_EYE_HITDATA_Set(eye, mmdl, range, dir, scr_id, tr_id, tr_type, tr_no );
+}
+
 //======================================================================
 //	特殊スクリプト関連
 //======================================================================
@@ -1299,7 +1197,7 @@ void SCRIPT_CallSpecialScript( GAMESYS_WORK *gsys, HEAPID heapID, u16 script_id 
  * @return	"TRUE=特殊スクリプト実行、FALSE=何もしない"
  */
 //------------------------------------------------------------------
-static BOOL SCRIPT_SearchMapInitScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key)
+static BOOL searchMapInitScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key)
 {
   u16 scr_id;
 
@@ -1322,21 +1220,21 @@ static BOOL SCRIPT_SearchMapInitScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 k
 //------------------------------------------------------------------
 BOOL SCRIPT_CallFieldInitScript( GAMESYS_WORK * gsys, HEAPID heapID )
 {
-  return SCRIPT_SearchMapInitScript( gsys, heapID, SP_SCRID_FIELD_INIT );
+  return searchMapInitScript( gsys, heapID, SP_SCRID_FIELD_INIT );
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 BOOL SCRIPT_CallFieldRecoverScript( GAMESYS_WORK * gsys, HEAPID heapID )
 {
-  return SCRIPT_SearchMapInitScript( gsys, heapID, SP_SCRID_FIELD_RECOVER );
+  return searchMapInitScript( gsys, heapID, SP_SCRID_FIELD_RECOVER );
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 BOOL SCRIPT_CallZoneChangeScript( GAMESYS_WORK * gsys, HEAPID heapID)
 {
-  return SCRIPT_SearchMapInitScript( gsys, heapID, SP_SCRID_ZONE_CHANGE );
+  return searchMapInitScript( gsys, heapID, SP_SCRID_ZONE_CHANGE );
 }
 
 //------------------------------------------------------------------

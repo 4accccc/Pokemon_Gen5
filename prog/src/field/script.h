@@ -51,9 +51,6 @@ extern GMEVENT * SCRIPT_SetEventScript(
 		GAMESYS_WORK *gsys, u16 scr_id, MMDL *obj,
 		HEAPID temp_heapID );
 
-extern void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
-    s16 range, u16 dir, u16 scr_id, u16 tr_id, int tr_type, int tr_no );
-
 //--------------------------------------------------------------
 /**
  * スクリプトイベントコール
@@ -65,7 +62,7 @@ extern void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
  */
 //--------------------------------------------------------------
 extern void SCRIPT_CallScript( GMEVENT *event,
-	u16 scr_id, MMDL *obj, void *ret_script_wk, HEAPID heapID );
+	u16 scr_id, MMDL *obj, void *ret_script_wk, HEAPID temp_heapID );
 
 //--------------------------------------------------------------
 /**
@@ -78,7 +75,7 @@ extern void SCRIPT_CallScript( GMEVENT *event,
  */
 //--------------------------------------------------------------
 extern void SCRIPT_ChangeScript( GMEVENT *event,
-		u16 scr_id, MMDL *obj, HEAPID heapID );
+		u16 scr_id, MMDL *obj, HEAPID temp_heapID );
 
 
 //======================================================================
@@ -118,6 +115,17 @@ extern BOOL SCRIPT_CallFieldInitScript( GAMESYS_WORK * gsys, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
+ * @brief 特殊スクリプト呼び出し：ゾーン切り替え
+ * @param gsys
+ * @param heapID
+ * @retval  TRUE    特殊スクリプトを実行した
+ * @retval  FALSE   特殊スクリプトは存在しない
+ */
+//------------------------------------------------------------------
+extern BOOL SCRIPT_CallZoneChangeScript( GAMESYS_WORK * gsys, HEAPID heapID);
+
+//------------------------------------------------------------------
+/**
  * @brief 特殊スクリプト呼び出し：フィールド復帰
  * @param gsys
  * @param heapID
@@ -130,8 +138,8 @@ extern BOOL SCRIPT_CallFieldRecoverScript( GAMESYS_WORK * gsys, HEAPID heapID );
 //------------------------------------------------------------------
 /**
  * @brief	シーン起動スクリプトの検索
- *
- *
+ * @param gsys
+ * @param heapID
  * @retval  NULL      現在はシーン起動スクリプトが存在しない
  * @retval  GMEVENT   起動するべきスクリプトをキーに生成されたイベントへのポインタ
  */
@@ -267,6 +275,9 @@ extern void SCRIPT_SetEventFlagTrainer( EVENTWORK *ev, u16 tr_id );
 //------------------------------------------------------------------
 extern void SCRIPT_ResetEventFlagTrainer( EVENTWORK *ev, u16 tr_id );
 
+
+extern void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
+    s16 range, u16 dir, u16 scr_id, u16 tr_id, int tr_type, int tr_no );
 
 
 #endif	/* SCRIPT_H */
