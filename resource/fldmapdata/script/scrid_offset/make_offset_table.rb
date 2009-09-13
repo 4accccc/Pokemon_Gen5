@@ -214,7 +214,7 @@ scrData.ofsdatas.reverse_each{|data|
     msgidx = "NARC_script_message_#{data.msgfile.sub(/\.gmm/,"_dat")}"
     output += sprintf("    {//#{data.comment}\n")
     output += sprintf("      %-32s//(%5d),\n", start_id, data.startno)
-    output += sprintf("      %-32s//(%5d),\n", start_id, data.endno)
+    output += sprintf("      %-32s//(%5d),\n", end_id, data.endno)
     output += sprintf("      %s,\n", scridx)
     output += sprintf("      %s\n", msgidx)
     output += sprintf("    },\n")
