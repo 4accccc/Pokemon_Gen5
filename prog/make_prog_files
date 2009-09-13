@@ -139,6 +139,7 @@ SRCS  +=    $(SOUNDSRC) \
         system/talkmsgwin.c \
         net_app/wifi_earth/wifi_country.c \
         field/script.c \
+        field/script_hideitem.c \
         field/scrcmd.c \
         field/eventwork.c \
         field/scrcmd_work.c \
