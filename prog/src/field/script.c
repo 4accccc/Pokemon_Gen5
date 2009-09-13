@@ -652,7 +652,7 @@ static u16 loadScriptData( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16 s
   //SCRID_NULL(0)‚ª“n‚³‚ê‚½Žž
   }
   loadScriptDataDirect( work, core,
-      NARC_script_seq_dummy_scr_bin,
+      NARC_script_seq_common_scr_bin,
       NARC_script_message_common_scr_dat, heapID );
   local_scr_id = 0;
   return local_scr_id;
