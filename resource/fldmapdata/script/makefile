@@ -39,7 +39,8 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 EV_DEF = ruby ./scr_tools/ev_def.rb
 
 #script_offset_id.h
-SCR_OFFS_ID_H = ../../../prog/src/field/script_offset_id.h
+#SCR_OFFS_ID_H = ../../../prog/src/field/script_offset_id.h
+SCR_OFFS_ID_H	= scrid_offset/scr_offset_id.h
 
 #eventdata WB NULL
 #IPATH	=	-I../eventdata

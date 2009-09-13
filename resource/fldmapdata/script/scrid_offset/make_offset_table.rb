@@ -165,8 +165,11 @@ output = head_string.sub(/DATE_STRING/,date_string)
 scrData.ofsdatas.each{|data|
   start_id = "ID_#{data.name.upcase}_OFFSET"
   end_id = "ID_#{data.name.upcase}_OFFSET_END"
-  output += sprintf("#define %-32s (%5d) //%s\n",start_id, data.startno, data.comment)
-  output += sprintf("#define %-32s (%5d)\n",  end_id, data.endno)
+  startno = "(#{data.startno})"
+  endno = "(#{data.endno})"
+
+  output += sprintf("#define %-32s %5s //%s\n",start_id, startno, data.comment)
+  output += sprintf("#define %-32s %5s\n",  end_id, endno)
   output += "\n"
 }
 
@@ -202,14 +205,16 @@ output = String.new
 output = head_string.sub(/DATE_STRING/,date_string)
 
 scrData.ofsdatas.reverse_each{|data|
-  start_id = "ID_#{data.name.upcase}_OFFSET"
+  start_id = "ID_#{data.name.upcase}_OFFSET,"
+  end_id = "ID_#{data.name.upcase}_OFFSET_END,"
   data.scriptfile
   data.msgfile
   if data.scriptfile != nil && data.msgfile != nil
     scridx = "NARC_script_seq_#{data.scriptfile.sub(/\.ev$/,"_bin")}"
     msgidx = "NARC_script_message_#{data.msgfile.sub(/\.gmm/,"_dat")}"
     output += sprintf("    {//#{data.comment}\n")
-    output += sprintf("      %s,\n", start_id)
+    output += sprintf("      %-32s//(%5d),\n", start_id, data.startno)
+    output += sprintf("      %-32s//(%5d),\n", start_id, data.endno)
     output += sprintf("      %s,\n", scridx)
     output += sprintf("      %s\n", msgidx)
     output += sprintf("    },\n")
@@ -226,12 +231,10 @@ scrData =ScrOfsData.new(ARGV[0])
 
 
 
-=begin
 File.open("scr_offset_id.h","w"){|file|
   header = make_offset_header(scrData)
   file.puts header
 }
-=end
 
 File.open("scr_offset.cdat","w"){|file|
   table = make_cdat_table(scrData)
