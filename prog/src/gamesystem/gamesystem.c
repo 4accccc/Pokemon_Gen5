@@ -416,7 +416,7 @@ void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT * event)
 //------------------------------------------------------------------
 void * GAMESYSTEM_GetFieldMapWork(GAMESYS_WORK * gsys)
 {
-	GF_ASSERT(gsys->fieldmap != NULL);
+	//GF_ASSERT(gsys->fieldmap != NULL);
 	return gsys->fieldmap;
 }
 
