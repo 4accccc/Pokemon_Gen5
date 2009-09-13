@@ -75,17 +75,8 @@ enum {
 #include "header/maptype.h"
 
 enum {
-	//sp_scr_dummy = NARC_scr_seq_sp_dummy_bin,
-	//sp_scr_dummy = NARC_scr_seq_sp_c01_bin,
-	//scr_dummy = NARC_scr_seq_c01_bin,
-	sp_scr_dummy = 0xf000,
-	scr_dummy = NARC_script_seq_dummy_bin,
-
 	//event_dummy = NARC_zone_event_zone_dummy_total_bin,
 	event_dummy = 0xd000,
-
-	//msg_dummy = NARC_msg_c01_dat,
-	msg_dummy = 0,      //とりあえず、メッセージがない場合は０を当てておく
 
 	enc_dummy = 0xffff
 };
