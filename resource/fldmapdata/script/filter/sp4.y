@@ -196,6 +196,8 @@ rule
 				| callfunc
         | switch_stmt
         | while_stmt
+        | def_local
+        | undef_local
 
 	#---------------------------------------------
 	#	「関数呼び出し」は下記のいずれか：
@@ -449,6 +451,19 @@ rule
           }
 
 	#---------------------------------------------
+  # 「ローカル変数定義」は
+  #   「DEFINE_LOCAL」「識別子」
+	#---------------------------------------------
+  def_local : DEFINE_LOCAL IDENT
+          {
+            result = DefLocalVarNode.new( val[1] )
+          }
+
+  undef_local : UNDEF_LOCAL IDENT
+          {
+            result = UndefLocalVarNode.new( val[1] )
+          }
+	#---------------------------------------------
 	#	「数式」は
 	#		「数式」「+」「数式」
 	#		「数式」「-」「数式」
@@ -551,7 +566,9 @@ RESERVED = {
   'CASE' => :CASE,
   'ENDSWITCH' => :ENDSWITCH,
   'WHILE' => :WHILE,
-  'ENDWHILE' => :ENDWHILE
+  'ENDWHILE' => :ENDWHILE,
+  'DEFINE_LOCAL' => :DEFINE_LOCAL,
+  'UNDEF_LOCAL' => :UNDEF_LOCAL
 };
 
 #予約型定義

@@ -28,6 +28,9 @@ module PmScript
       @switch_stack = Array.new
 
 			@ftable = Hash.new
+
+      @alias_count = 0
+      @alias_stack = Hash.new
 		end
 
     #---------------------------------------------
@@ -38,6 +41,27 @@ module PmScript
 			@label_count += 1
 			label
 		end
+
+    #---------------------------------------------
+    # ローカル変数定義
+    #---------------------------------------------
+    def define_var_alias( varname )
+      if @alias_stack.has_key?( varname ) then
+        raise CompileError, "#{@fname}:#{@lineno}: 同じ名前（#{varname}）が複数回定義されています"
+      end
+      realname = sprintf("USERWK_%02d", @alias_count)
+      @alias_stack[varname] = realname
+      @alias_count += 1
+      return realname
+    end
+
+    def undef_var_alias( varname )
+      if @alias_stack.has_key?( varname )
+        return @alias_stack.delete( varname )
+      else
+        raise CompileError, "#{@fname}:#{@lineno}: undef variable not exist!"
+      end
+    end
 
     #---------------------------------------------
     # 変数定義
@@ -427,6 +451,39 @@ module PmScript
 
 		end
 	end
+
+  #---------------------------------------------
+  # ローカル変数定義
+  #---------------------------------------------
+	class DefLocalVarNode < Node
+
+		def initialize( varname )
+			@varname = varname
+		end
+
+		def compile( intp )
+			realname = intp.define_var_alias( @varname )
+      printf("#ifdef  %-32s\n", @varname)
+      printf("#error local variable %-32s\n", @varname)
+      printf("#endif\n")
+      printf("#define %-32s %s\n",@varname, realname )
+			#printf ( "%-32s = %s\n",@varname, realname )
+		end
+	end
+
+  #---------------------------------------------
+  # ローカル変数定義取り消し
+  #---------------------------------------------
+  class UndefLocalVarNode < Node
+    def initialize( varname )
+      @varname = varname
+    end
+
+    def compile( intp )
+      realname = intp.undef_var_alias( @varname )
+      printf("#undef %-32s //%s\n", @varname, realname)
+    end
+  end
 
 
 end   # end of module PmScript
