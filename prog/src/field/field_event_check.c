@@ -191,10 +191,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     id = EVENTDATA_CheckPosEvent( req.evdata, evwork, &pos );
     
     if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-      SCRIPT_FLDPARAM fparam;
-      fparam.fieldMap = fieldWork;
-      fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
-      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
       return event;
     }
 
@@ -259,10 +256,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
       id = EVENTDATA_CheckTalkBoardEvent( req.evdata, evwork, &pos, dir );
       
       if( id != EVENTDATA_ID_NONE ){
-        SCRIPT_FLDPARAM fparam;
-        fparam.fieldMap = fieldWork;
-        fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
-        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
       }
     }
   }
@@ -330,10 +324,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
         id = EVENTDATA_CheckTalkBGEvent( req.evdata, evwork, &pos, dir );
         
         if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-          SCRIPT_FLDPARAM fparam;
-          fparam.fieldMap = fieldWork;
-          fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
-          event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+          event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
           return event;
         }
       }
@@ -341,10 +332,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
       { //BG Attribute 話しかけ
         u16 id = checkTalkAttrEvent( &req, fieldWork );
         if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-          SCRIPT_FLDPARAM fparam;
-          fparam.fieldMap = fieldWork;
-          fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
-          event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+          event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
           return event;
         }
 
@@ -517,10 +505,7 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
     id = EVENTDATA_CheckPosEvent( req.evdata, evwork, &pos );
     
     if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-      SCRIPT_FLDPARAM fparam;
-      fparam.fieldMap = fieldWork;
-      fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
-      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
       return event;
     }
 
@@ -619,10 +604,7 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
     id = EVENTDATA_CheckPosEvent( req.evdata, evwork, &pos );
     
     if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-      SCRIPT_FLDPARAM fparam;
-      fparam.fieldMap = fieldWork;
-      fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
-      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
       return event;
     }
     //*/
@@ -680,10 +662,7 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
     id = EVENTDATA_CheckTalkBoardEvent( req.evdata, evwork, &pos, dir );
     
     if( id != EVENTDATA_ID_NONE ){
-      SCRIPT_FLDPARAM fparam;
-      fparam.fieldMap = fieldWork;
-      fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
-      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
     }
     //*/
   }
@@ -746,10 +725,7 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
       id = EVENTDATA_CheckTalkBGEvent( req.evdata, evwork, &pos, dir );
       
       if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-        SCRIPT_FLDPARAM fparam;
-        fparam.fieldMap = fieldWork;
-        fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
-        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
         return event;
       }
     }
@@ -757,10 +733,7 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
     { //BG Attribute 話しかけ
       u16 id = checkTalkAttrEvent( &req, fieldWork );
       if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-        SCRIPT_FLDPARAM fparam;
-        fparam.fieldMap = fieldWork;
-        fparam.msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
-        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID, &fparam );
+        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
         return event;
       }
 

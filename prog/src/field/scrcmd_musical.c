@@ -18,6 +18,7 @@
 #include "fieldmap.h"
 
 #include "script.h"
+#include "script_local.h"
 #include "script_def.h"
 #include "scrcmd.h"
 #include "scrcmd_work.h"
@@ -74,7 +75,7 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   
   call_event = GMEVENT_Create(
       gsys, NULL, event_Musical, sizeof(EVENT_MUSICAL_WORK) );
@@ -93,11 +94,8 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
 //    NO_OVERLAY_ID, &Musical_ProcData, init );
   ev_musical_work->event = MUSICAL_CreateEvent( gsys, gdata , fparam->fieldMap, FALSE );
    
-  {
-    GMEVENT **sc_event = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_GMEVENT );
-    //GMEVENT_CallEvent( *sc_event, call_event );
-    GMEVENT_ChangeEvent( *sc_event, call_event );
-  }
+  //スクリプト終了後、指定したイベントに遷移する
+  SCRIPT_EntryNextEvent( sc, call_event );
   
   {
     FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
@@ -106,8 +104,9 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
   //  PMSND_FadeOutBGM( 30 );
   }
   
-  return VMCMD_RESULT_CONTINUE;;
-  //return VMCMD_RESULT_SUSPEND;;
+  VM_End( core );
+  //return VMCMD_RESULT_CONTINUE;;
+  return VMCMD_RESULT_SUSPEND;;
 }
 
 //======================================================================

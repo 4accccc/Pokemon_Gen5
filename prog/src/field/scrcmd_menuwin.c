@@ -14,6 +14,7 @@
 #include "system/vm_cmd.h"
 
 #include "scrcmd.h"
+#include "script_local.h"
 #include "scrcmd_work.h"
 #include "scrcmd_menuwin.h"
 
@@ -64,7 +65,7 @@ VMCMD_RESULT EvCmdYesNoWin( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   FLDMENUFUNC **mw  = SCRIPT_GetMemberWork( sc, ID_EVSCR_MENUWORK );
   u16 wk_id      = VMGetU16( core );
   
@@ -252,7 +253,7 @@ static VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   u8 msg_id = VMGetU8(core);
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   
   fmmdl = MMDLSYS_SearchOBJID( SCRCMD_WORK_GetMMdlSys(work), 0xff );
   MMDL_GetVectorPos( fmmdl, &pos );
@@ -342,7 +343,7 @@ VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
   u8 *win_open_flag;
   
   sc = SCRCMD_WORK_GetScriptWork( work );
-  fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+  fparam = SCRIPT_GetFieldParam( sc );
   msgData = SCRCMD_WORK_GetMsgData( work );
   msgWin = FLDMSGWIN_STREAM_AddTalkWin( fparam->msgBG, msgData );
   SCRCMD_WORK_SetFldMsgWinStream( work, msgWin );
@@ -398,7 +399,7 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work, u16 objID, u16 arcID, u16 msgID
   FLDTALKMSGWIN *tmsg;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   MMDL *jiki = MMDLSYS_SearchOBJID( mmdlsys, MMDL_ID_PLAYER );
   MMDL *npc = MMDLSYS_SearchOBJID( mmdlsys, objID );
@@ -601,8 +602,7 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
     {
       FLDTALKMSGWIN *tmsg;
       FLDTALKMSGWIN_IDX idx = FLDTALKMSGWIN_IDX_LOWER;
-      SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork(
-          sc, ID_EVSCR_WK_FLDPARAM );
+      SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
       
       if( dir == DIR_UP ){
         idx = FLDTALKMSGWIN_IDX_UPPER;

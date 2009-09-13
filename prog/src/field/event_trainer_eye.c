@@ -1021,13 +1021,10 @@ static MMDL * tr_CheckPairTrainer( const MMDL *tr_mmdl, u16 tr_id )
 static GMEVENT * tr_SetEventScript( FIELDMAP_WORK *fieldMap, MMDL *mmdl )
 {
   GMEVENT *event;
-  SCRIPT_FLDPARAM param;
   GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
   HEAPID heapID = FIELDMAP_GetHeapID( fieldMap );
-  param.fieldMap = fieldMap;
-  param.msgBG = FIELDMAP_GetFldMsgBG( fieldMap );
   event = SCRIPT_SetEventScript(
-      gsys, SCRID_TRAINER_MOVE_BATTLE, mmdl, GFL_HEAPID_APP, &param );
+      gsys, SCRID_TRAINER_MOVE_BATTLE, mmdl, GFL_HEAPID_APP );
   return( event );
 }
 

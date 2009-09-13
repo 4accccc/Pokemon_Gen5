@@ -16,6 +16,7 @@
 #include "fieldmap.h"
 
 #include "script.h"
+#include "script_local.h"
 #include "script_def.h"
 #include "scrcmd.h"
 #include "scrcmd_work.h"
@@ -66,7 +67,7 @@ VMCMD_RESULT EvCmdEyeTrainerMoveSet( VMHANDLE *core, void *wk )
 	MMDL **mmdl;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
 	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
   
 	if( pos == 0 ){ //視線0
@@ -93,7 +94,7 @@ VMCMD_RESULT EvCmdEyeTrainerMoveSet( VMHANDLE *core, void *wk )
 
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
 	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
   //GMEVENT **ev_eye_move;
   EV_TRAINER_EYE_HITDATA * eye;
@@ -341,7 +342,7 @@ VMCMD_RESULT EvCmdTrainerIdGet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
 	u16 *script_id = SCRIPT_GetMemberWork( sc, ID_EVSCR_SCRIPT_ID );
 	u16 *ret_wk = SCRCMD_GetVMWork( core, work );
   
@@ -388,16 +389,11 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
 	partner_id = 0;
 	
   {
-    GAMESYS_WORK **gsys =
-      SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_GAMESYS_WORK );
-    GMEVENT **event =
-      SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_GMEVENT );
-    SCRIPT_FLDPARAM *fparam =
-      SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+    GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+    SCRIPT_FLDPARAM * fparam = SCRIPT_GetFieldParam( sc );
     GMEVENT *ev_battle =
-//      DEBUG_EVENT_Battle( *gsys, fparam->fieldMap );
-      EVENT_TrainerBattle( *gsys, fparam->fieldMap, tr_id_0 );
-    GMEVENT_CallEvent( *event, ev_battle );
+      EVENT_TrainerBattle( gsys, fparam->fieldMap, tr_id_0 );
+    SCRIPT_CallEvent( sc, ev_battle );
   }
 	return VMCMD_RESULT_SUSPEND;
 #endif

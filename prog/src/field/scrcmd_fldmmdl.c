@@ -18,6 +18,7 @@
 #include "scrcmd_fldmmdl.h"
 
 #include "script_def.h" //SCR_OBJID_
+#include "script_local.h"
 #include "field_player.h" //FIELD_PLAYER
 #include "fieldmap.h"     //FIELDMAP_
 #include "eventdata_local.h"
@@ -219,7 +220,7 @@ VMCMD_RESULT EvCmdPlayerPosGet( VMHANDLE *core, void *wk )
   u16 *x,*z;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fparam->fieldMap );
   MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
   
@@ -242,7 +243,7 @@ VMCMD_RESULT EvCmdObjAdd( VMHANDLE *core, void *wk )
   MMDL *mmdl;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetMemberWork( sc, ID_EVSCR_WK_FLDPARAM );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   u16 gx = VMGetU16( core );
   u16 gz = VMGetU16( core );
   u16 dir = VMGetU16( core );

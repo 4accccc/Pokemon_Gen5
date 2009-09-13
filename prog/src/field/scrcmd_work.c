@@ -6,6 +6,8 @@
  * @data	05.07.13
  */
 //======================================================================
+#include <gflib.h>
+#include "fieldmap.h"
 #include "scrcmd_work.h"
 #include "arc_def.h"
 

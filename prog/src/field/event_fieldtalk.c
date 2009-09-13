@@ -71,12 +71,7 @@ GMEVENT * EVENT_FieldTalk(
 		MMDL *fmmdl_player, MMDL *fmmdl_talk, HEAPID heapID )
 {
 	GMEVENT *event;
-	SCRIPT_FLDPARAM fparam;
-	FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG( fieldWork );
-	
-	fparam.msgBG = msgBG;
-	event = SCRIPT_SetEventScript(
-		gsys, scr_id, fmmdl_talk, heapID, &fparam );
+	event = SCRIPT_SetEventScript( gsys, scr_id, fmmdl_talk, heapID );
 	return( event );
 }
 

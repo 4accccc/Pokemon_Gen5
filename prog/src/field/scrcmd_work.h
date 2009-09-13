@@ -17,6 +17,8 @@
 #include "field/fldmmdl.h"
 #include "field/script.h"
 #include "field/field_msgbg.h"
+#include "field/fieldmap_proc.h"
+
 
 //======================================================================
 //	define

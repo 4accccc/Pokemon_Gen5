@@ -16,6 +16,7 @@
 #include "fieldmap.h"
 
 #include "script.h"
+#include "script_local.h"
 //#include "script_def.h"
 #include "scrcmd.h"
 #include "scrcmd_work.h"
