@@ -221,9 +221,49 @@
 #define SCWK_AREA_END                    32799 /* 0x801f  */
 
 
+/* flags "user_work.xls" 32800 ～ 32831 */
+
+#define USERWK_AREA_START                32800 /* 0x8020  */
+
+		/* not used 32800(0x8020) */
+		/* not used 32801(0x8021) */
+		/* not used 32802(0x8022) */
+		/* not used 32803(0x8023) */
+		/* not used 32804(0x8024) */
+		/* not used 32805(0x8025) */
+		/* not used 32806(0x8026) */
+		/* not used 32807(0x8027) */
+		/* not used 32808(0x8028) */
+		/* not used 32809(0x8029) */
+		/* not used 32810(0x802a) */
+		/* not used 32811(0x802b) */
+		/* not used 32812(0x802c) */
+		/* not used 32813(0x802d) */
+		/* not used 32814(0x802e) */
+		/* not used 32815(0x802f) */
+		/* not used 32816(0x8030) */
+		/* not used 32817(0x8031) */
+		/* not used 32818(0x8032) */
+		/* not used 32819(0x8033) */
+		/* not used 32820(0x8034) */
+		/* not used 32821(0x8035) */
+		/* not used 32822(0x8036) */
+		/* not used 32823(0x8037) */
+		/* not used 32824(0x8038) */
+		/* not used 32825(0x8039) */
+		/* not used 32826(0x803a) */
+		/* not used 32827(0x803b) */
+		/* not used 32828(0x803c) */
+		/* not used 32829(0x803d) */
+		/* not used 32830(0x803e) */
+		/* not used 32831(0x803f) */
+
+#define USERWK_AREA_END                  32831 /* 0x803f  */
 
 
-#define WORKS_TOTAL_MAX  32800 /* 0x8020 */
+
+
+#define WORKS_TOTAL_MAX  32832 /* 0x8040 */
 
 
 /* 自動生成フラグ定義ファイル 終了*/
