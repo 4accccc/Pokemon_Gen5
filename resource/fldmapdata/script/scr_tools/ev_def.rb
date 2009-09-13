@@ -86,6 +86,10 @@ if( fname_ev == nil )
   exit 1
 end
 
+if( fname_ev =~ /^sp_.*.ev/ )
+  #sp_～.evは特殊スクリプトなのでSCRIDを生成する必要がない
+  exit 0
+end
 fname_id = ARGV[1]
 
 if( fname_id == nil )
@@ -155,3 +159,7 @@ file_def_h.printf( "\n#endif \/\/_%s_DEF_H_", fname_ev_big )
 file_def_h.close
 file_id.close
 file_ev.close
+
+#なぜかunix行末コード（LF)になっている環境があるため、強制変換
+system("unix2dos -D " + fname_def_h )
+

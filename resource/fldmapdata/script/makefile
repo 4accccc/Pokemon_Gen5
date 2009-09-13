@@ -93,7 +93,6 @@ ifeq ($(CONVERTUSER),true) #CONVERTUSER
 	@rm $*.o $*.elf
 	@rm temp_$*.s
 	@$(EV_DEF) $< $(SCR_OFFS_ID_H)
-	@unix2dos -D $*_def.h
 endif #CONVERTUSER
 
 
