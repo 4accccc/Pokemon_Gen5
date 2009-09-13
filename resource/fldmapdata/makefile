@@ -10,6 +10,7 @@ SUBDIRS	=	zonetable/zoneindex \
 					area_data \
 					land_data \
 					camera_data \
+					gimmick \
 					map_matrix \
 					build_model \
 					mm_list \
