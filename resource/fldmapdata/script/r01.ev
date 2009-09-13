@@ -50,17 +50,17 @@ _EVENT_DATA_END
 //ev_r01_r01_flag_change:
 //  _END
 
+DEFINE_LOCAL  TEMP_00 //ローカル変数定義を宣言
 /**************************************************************/
 /*   R01　ポケモン捕獲デモ                                    */
 /**************************************************************/
 ev_dummy:
 EVENT_START   ev_r01_poke_getdemo
 //POSイベント、POSごとに主人公移動アニメ
-  {
-    DEFINE_LOCAL  POSX   
-    DEFINE_LOCAL  POSZ  
-    $POSX = 0
-    $POSZ = 0
+  { //ここからローカル変数の参照制限範囲開始
+    DEFINE_LOCAL  POSX   /* ローカル変数定義 */
+    DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
+
     _PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
     SWITCH $POSX
     CASE 786 THEN
@@ -79,9 +79,10 @@ EVENT_START   ev_r01_poke_getdemo
         _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00e )
         _OBJ_ANIME_WAIT()
     ENDSWITCH
-  }
-  _PLAYER_POS_GET( POSX, POSZ )
+  } //ローカル変数の参照制限範囲、ここまで。
 
+  //ここではPOSX,POSZは参照できないが、TEMP_00は参照できる
+  _PLAYER_POS_GET( TEMP_00, LOCALWORK0 )
 ev_dummy_end:
 /*
   IF $POSX == 786 THEN
