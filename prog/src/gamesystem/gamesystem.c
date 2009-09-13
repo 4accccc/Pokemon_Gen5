@@ -33,14 +33,31 @@
 //============================================================================================
 //============================================================================================
 enum {
-	HEAPID_GAMESYS = HEAPID_PROC,
-	
-	HEAPSIZE_GAMESYS = 0x8000,
-	//x200000
-};
+  /**
+   * @brief 永続情報用HEAP領域
+   */
+  HEAPSIZE_WORLD = 0x18000,
 
-///HEAPID_UNIONのヒープサイズ
-#define HEAPSIZE_APP_CONTROL      (0x1000)
+  /**
+   * @brief イベント用HEAP領域
+   *
+   * 個別のイベントごとに確保し、イベント終了で解放されるメモリは
+   * このHEAPから確保する
+   */
+	HEAPSIZE_PROC = 0x8000,
+
+  /**
+   * @brief イベントコントローラー用HEAP領域
+   * 常にではないが、イベントとイベントをまたぐような形で
+   * 存在するメモリ（ユニオンルームやバトルタワーのコントロール）は
+   * このHEAPから取得する
+   */
+  HEAPSIZE_APP_CONTROL  =      (0x1000),
+
+  HEAPID_GAMESYS = HEAPID_WORLD,
+	//HEAPID_GAMESYS = HEAPID_PROC,
+	
+};
 
 //------------------------------------------------------------------
 /**
@@ -92,7 +109,10 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	u32 work_size = GAMESYS_WORK_GetSize();
 	GAME_INIT_WORK *game_init = pwk;
 	
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMESYS, HEAPSIZE_GAMESYS );
+  //ゲーム中、永続的に保持する必要のあるデータはこのHEAPで
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WORLD, HEAPSIZE_WORLD );
+  //ゲームイベント中に生成するべきメモリ（イベント終了で解放）の場合はこのHEAPで
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PROC, HEAPSIZE_PROC );
 	//パレスしながら戦闘もフィールドもするのでここで確保
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_APP_CONTROL, HEAPSIZE_APP_CONTROL );
 	

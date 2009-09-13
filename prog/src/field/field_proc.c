@@ -56,11 +56,11 @@ static GFL_PROC_RESULT FieldMapProcInit
       u16 zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
       if (ZONEDATA_IsUnionRoom(zone_id) || ZONEDATA_IsColosseum(zone_id) )
       {
-        heap_size = 0x140000;
+        heap_size = 0x140000 - 0x18000;
       }
       else
       {
-        heap_size = 0x148000;
+        heap_size = 0x148000 - 0x18000;
       }
     }
   	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELDMAP, heap_size );
