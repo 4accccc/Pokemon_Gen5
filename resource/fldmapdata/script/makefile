@@ -15,11 +15,12 @@ SUBDIRS =
 #対象ヘッダーファイル
 DEPENDHEADERS = usescript.h scr_seq_def.h
 
-#マップ依存のスクリプト：定義ファイルは自動生成
-include zone_script.list
-
+SCRIPTFILES	=
 #マップに依存しないスクリプトはここに追加してください
 include uniq_script.list
+
+#マップ依存のスクリプト：定義ファイルは自動生成
+include zone_script.list
 
 
 SCRSRCS_BIN = $(SCRIPTFILES:.ev=.bin)

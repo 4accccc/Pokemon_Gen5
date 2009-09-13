@@ -1,5 +1,5 @@
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list æ“ª
-SCRIPTFILES = \
+SCRIPTFILES += \
 	t01.ev \
 	sp_t01.ev \
 	r01.ev \

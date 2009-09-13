@@ -3,7 +3,5 @@ SCRIPTFILES	+= \
 	c99.ev	\
 	common_scr.ev	\
   bg_attr.ev \
-	dummy.ev	\
-	dummy_scr.ev	\
 	trainer.ev \
   init_scr.ev
