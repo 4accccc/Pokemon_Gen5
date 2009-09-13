@@ -107,6 +107,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 
   //キー入力関連
   DEF_CMD EV_SEQ_ABKEYWAIT
+  DEF_CMD EV_SEQ_LASTKEYWAIT
   
   //会話ウィンドウ
   DEF_CMD EV_SEQ_TALKMSG
@@ -1061,6 +1062,20 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 
   .macro  _ASM_AB_KEYWAIT
   .short  EV_SEQ_ABKEYWAIT
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ *  _LAST_KEYWAIT メッセージ最後のキー待ち
+ *
+ *  ※ABキーだけでなく、十字キーでも抜けることができる
+ */
+//--------------------------------------------------------------
+#define _LAST_KEYWAIT() _ASM_LAST_KEYWAIT
+
+  .macro  _ASM_LAST_KEYWAIT
+  .short  EV_SEQ_LASTKEYWAIT
   .endm
 
 //======================================================================
@@ -2364,7 +2379,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   _ASM_TALK_START_SE_PLAY
   _ASM_TALKWIN_OPEN
   _ASM_TALKMSG_ALLPUT \msg_id
-  _ASM_AB_KEYWAIT
+  _ASM_LAST_KEYWAIT
   _ASM_TALKWIN_CLOSE
   .endm
 
@@ -2381,7 +2396,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   _ASM_TALK_START_SE_PLAY
   _ASM_TURN_HERO_SITE   
   _ASM_BALLOONWIN_TALKOBJ_OPEN \msg_id 
-  _ASM_AB_KEYWAIT      
+  _ASM_LAST_KEYWAIT      
   _ASM_BALLOONWIN_CLOSE
   .endm
 
