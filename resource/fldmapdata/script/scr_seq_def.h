@@ -2334,7 +2334,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  * @param dir       ˆÚ“®Œã‚ÌŒü‚«
  */
 //--------------------------------------------------------------
-#define _MAP_CHANGE( zone_id, gx, gz )  \
+#define _MAP_CHANGE( zone_id, gx, gz, dir )  \
     _ASM_MAP_CHANGE zone_id, gx, gz, dir
 
   .macro  _ASM_MAP_CHANGE zone_id, gx, gz, dir
