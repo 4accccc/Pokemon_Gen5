@@ -24,7 +24,7 @@
 #include "arc/fieldmap/zone_id.h"
 
 #include "script.h"
-#include "script_offset_id.h" //スクリプトIDオフセット
+
 #include "script_def.h"
 #include "scrcmd.h"
 #include "scrcmd_work.h"
@@ -37,6 +37,7 @@
 #include "arc/fieldmap/script_seq.naix"
 #include "system/main.h"  //HEAPID_PROC
 
+#include "../../../resource/fldmapdata/script/scrid_offset/scr_offset_id.h"
 #include "../../../resource/fldmapdata/script/init_scr_def.h" //SCRID_INIT_SCRIPT
 
 //======================================================================
@@ -536,83 +537,15 @@ static void SCRVM_Delete( VMHANDLE *core )
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-
 typedef struct {
-	u16 scr_id;
+	u16 scr_id_start;
+  u16 scr_id_end;
 	u16 scr_arc_id;
 	u16 msg_arc_id;
 }SCRIPT_ARC_TABLE;
 
-//※スクリプトIDが大きい順に定義すること！！！
-static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
-  //初期化スクリプトのIDが渡されたとき
-  { ID_INIT_SCR_OFFSET, NARC_script_seq_init_scr_bin, NARC_script_message_common_scr_dat },
-	//トレーナースクリプトのIDが渡された時
-  { ID_TRAINER_OFFSET ,NARC_script_seq_trainer_bin, NARC_script_message_common_scr_dat },
-	//BGスクリプトのIDが渡された時
-  { ID_BG_ATTR_OFFSET ,NARC_script_seq_bg_attr_bin, NARC_script_message_bg_attr_dat },
-	//共通スクリプトのIDが渡された時
-  { ID_COMMON_SCR_OFFSET ,NARC_script_seq_common_scr_bin, NARC_script_message_common_scr_dat },
-
-	//フロンティア成績スクリプトのIDが渡された時
-	//{ ID_SEISEKI_OFFSET, NARC_scr_seq_seiseki_bin, NARC_msg_bf_seiseki_dat },
-	//ドサ周りスクリプトのIDが渡された時
-	//{ ID_DOSA_OFFSET, NARC_scr_seq_dosa_bin, NARC_msg_circuit_trainer_dat },
-	//サポートスクリプトのIDが渡された時
-	//{ ID_SUPPORT_OFFSET, NARC_scr_seq_support_bin, NARC_msg_support_dat },
-	//配達員スクリプトのIDが渡された時
-	//{ ID_HAITATU_OFFSET, NARC_scr_seq_haitatu_bin, NARC_msg_haitatu_dat },
-	//TVインタビュースクリプトのIDが渡された時
-	//{ ID_TV_INTERVIEW_OFFSET, NARC_scr_seq_tv_interview_bin, NARC_msg_tv_interview_dat },
-	//TVスクリプトのIDが渡された時
-	//{ ID_TV_OFFSET, NARC_scr_seq_tv_bin, NARC_msg_tv_program_dat },
-	//秘伝スクリプトのIDが渡された時
-	//{ ID_HIDEN_OFFSET, NARC_scr_seq_hiden_bin, NARC_msg_hiden_dat },
-	//評価スクリプトのIDが渡された時
-	//{ ID_HYOUKA_SCR_OFFSET, NARC_scr_seq_hyouka_scr_bin, NARC_msg_hyouka_dat },
-	//デバックスクリプトのIDが渡された時
-	//{ ID_DEBUG_SCR_OFFSET, NARC_scr_seq_debug_scr_bin, NARC_msg_common_scr_dat },
-	//コンテスト受付スクリプトのIDが渡された時
-	//{ ID_CON_RECEPTION_OFFSET, NARC_scr_seq_con_reception_bin, NARC_msg_con_reception_dat },
-	//連れ歩きスクリプトのIDが渡された時
-	//{ ID_PAIR_SCR_OFFSET, NARC_scr_seq_pair_scr_bin, NARC_msg_pair_scr_dat },
-	//ゲーム開始スクリプトのIDが渡された時
-	//{ ID_INIT_SCR_OFFSET, NARC_scr_seq_init_scr_bin, NARC_msg_common_scr_dat },
-	//育て屋スクリプトのIDが渡された時
-	//{ ID_SODATEYA_OFFSET, NARC_scr_seq_sodateya_bin, NARC_msg_sodateya_dat },
-	//ポルトミニゲームスクリプトのIDが渡された時
-	//{ ID_PORUTO_SCR_OFFSET, NARC_scr_seq_poruto_scr_bin, NARC_msg_pgamestart_dat },
-	//グループスクリプトのIDが渡された時
-	//{ ID_GROUP_OFFSET, NARC_scr_seq_group_bin, NARC_msg_group_dat },
-	//ポケセン地下スクリプトのIDが渡された時
-	//{ ID_PC_UG_OFFSET, NARC_scr_seq_pc_ug_bin, NARC_msg_pc_ug_dat },
-	//コロシアムスクリプトのIDが渡された時
-	//{ ID_BATTLE_ROOM_OFFSET, NARC_scr_seq_battle_room_bin, NARC_msg_battle_room_dat },
-	//通信スクリプトのIDが渡された時
-	//{ ID_CONNECT_OFFSET, NARC_scr_seq_connect_bin, NARC_msg_connect_dat },
-	//ポケサーチャースクリプトのIDが渡された時
-	//{ ID_POKESEARCHER_OFFSET, NARC_scr_seq_pokesearcher_bin, NARC_msg_bag_dat },
-	//再戦スクリプトのIDが渡された時
-	//{ ID_SAISEN_OFFSET, NARC_scr_seq_saisen_bin, NARC_msg_saisen_dat },
-	//ペラップスクリプトのIDが渡された時
-	//{ ID_PERAP_OFFSET, NARC_scr_seq_perap_bin, NARC_msg_perap_dat },
-	//サファリスクリプトのIDが渡された時
-	//{ ID_SAFARI_OFFSET, NARC_scr_seq_safari_bin, NARC_msg_safari_dat },
-	//隠しアイテムスクリプトのIDが渡された時
-	//{ ID_HIDE_ITEM_OFFSET, NARC_scr_seq_hide_item_bin, NARC_msg_hide_item_dat },
-	//フィールドアイテムスクリプトのIDが渡された時
-	//{ ID_FLD_ITEM_OFFSET, NARC_scr_seq_fld_item_bin, NARC_msg_fld_item_dat },
-	//2vs2トレーナースクリプトのIDが渡された時
-	//{ ID_TRAINER_2VS2_OFFSET, NARC_scr_seq_trainer_bin, NARC_msg_common_scr_dat },
-	//トレーナースクリプトのIDが渡された時
-	//{ ID_TRAINER_OFFSET, NARC_scr_seq_trainer_bin, NARC_msg_common_scr_dat },
-	//きのみスクリプトのIDが渡された時
-	//{ ID_KINOMI_OFFSET, NARC_scr_seq_kinomi_bin, NARC_msg_kinomi_dat },
-	//BGスクリプトのIDが渡された時
-	//{ ID_BG_ATTR_OFFSET, NARC_scr_seq_bg_attr_bin, NARC_msg_bg_attr_dat },
-	//共通スクリプトのIDが渡された時
-	//{ ID_COMMON_SCR_OFFSET, NARC_scr_seq_common_scr_bin, NARC_msg_common_scr_dat },
-};
+//ScriptArcTableを定義するファイル
+#include "../../../resource/fldmapdata/script/scrid_offset/scr_offset.cdat"
 
 //--------------------------------------------------------------
 /**
@@ -631,9 +564,10 @@ static u16 loadScriptData( SCRCMD_WORK *work, VMHANDLE* core, u32 zone_id, u16 s
   const SCRIPT_ARC_TABLE * tbl = ScriptArcTable;
 
   for (i = 0; i < NELEMS(ScriptArcTable); i++) {
-    if (scr_id >= tbl[i].scr_id) {
+    if (scr_id >= tbl[i].scr_id_start) {
+      GF_ASSERT(scr_id <= tbl[i].scr_id_end);
       loadScriptDataDirect(work, core, tbl[i].scr_arc_id, tbl[i].msg_arc_id, heapID);
-      local_scr_id -= tbl[i].scr_id;
+      local_scr_id -= tbl[i].scr_id_start;
       OS_Printf( "共通スクリプト起動 scr_arc_idx = %d, msg_idx = %d, scr_id = %d\n",
         tbl[i].scr_arc_id, tbl[i].msg_arc_id, local_scr_id );
       return local_scr_id;
