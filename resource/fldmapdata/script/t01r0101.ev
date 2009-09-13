@@ -62,11 +62,13 @@ EVENT_END
 
 mama_first:
 {
-	_PLAYER_POS_GET( SCWK_TEMP0,SCWK_TEMP1 ) //自機座標取得
-  IF $SCWK_TEMP0 == 3 THEN
+  DEFINE_LOCAL  POSX    /* ローカル変数POSXを定義 */
+  DEFINE_LOCAL  POSZ    /* ローカル変数POSZを定義 */
+	_PLAYER_POS_GET( POSX, POSZ ) //自機座標取得
+  IF $POSX == 3 THEN
     _OBJ_ANIME( T01R0101_MAMA,mama_first_3 ) //主人公に隣接
     _OBJ_ANIME_WAIT()
-  ELSIF $SCWK_TEMP0 == 4 THEN
+  ELSIF $POSX == 4 THEN
     _OBJ_ANIME( T01R0101_MAMA,mama_first_4 )//主人公に隣接
     _OBJ_ANIME_WAIT()
   ENDIF

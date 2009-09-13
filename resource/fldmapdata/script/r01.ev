@@ -56,39 +56,47 @@ _EVENT_DATA_END
 ev_dummy:
 EVENT_START   ev_r01_poke_getdemo
 //POSイベント、POSごとに主人公移動アニメ
-	_PLAYER_POS_GET( SCWK_TEMP0,SCWK_TEMP1 ) //自機座標取得
-  SWITCH $SCWK_TEMP0
-  CASE 786 THEN
-      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00a )
-      _OBJ_ANIME_WAIT()
-  CASE 787, 788, 100 THEN
-      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00b )
-      _OBJ_ANIME_WAIT()
-  CASE 789 THEN
-      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00c )
-      _OBJ_ANIME_WAIT()
-  CASE 790 THEN
-      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00d )
-      _OBJ_ANIME_WAIT()
-  CASE 791 THEN
-      _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00e )
-      _OBJ_ANIME_WAIT()
-  ENDSWITCH
+  {
+    DEFINE_LOCAL  POSX   
+    DEFINE_LOCAL  POSZ  
+    $POSX = 0
+    $POSZ = 0
+    _PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+    SWITCH $POSX
+    CASE 786 THEN
+        _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00a )
+        _OBJ_ANIME_WAIT()
+    CASE 787, 788, 100 THEN
+        _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00b )
+        _OBJ_ANIME_WAIT()
+    CASE 789 THEN
+        _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00c )
+        _OBJ_ANIME_WAIT()
+    CASE 790 THEN
+        _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00d )
+        _OBJ_ANIME_WAIT()
+    CASE 791 THEN
+        _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00e )
+        _OBJ_ANIME_WAIT()
+    ENDSWITCH
+  }
+  _PLAYER_POS_GET( POSX, POSZ )
+
 ev_dummy_end:
 /*
-  IF $SCWK_TEMP0 == 786 THEN
+  IF $POSX == 786 THEN
       _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00a )
       _OBJ_ANIME_WAIT()
-  ELSIF $SCWK_TEMP0 == 787 THEN
+  ELSIF $POSX == 787 THEN
       _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00b )
       _OBJ_ANIME_WAIT()
-  ELSIF $SCWK_TEMP0 == 789 THEN
+  ELSIF $POSX == 789 THEN
       _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00c )
       _OBJ_ANIME_WAIT()
-  ELSIF $SCWK_TEMP0 == 790 THEN
+  ELSIF $POSX == 790 THEN
       _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00d )
       _OBJ_ANIME_WAIT()
-  ELSIF $SCWK_TEMP0 == 791 THEN
+  ELSIF $POSX == 791 THEN
       _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00e )
       _OBJ_ANIME_WAIT()
   ENDIF
