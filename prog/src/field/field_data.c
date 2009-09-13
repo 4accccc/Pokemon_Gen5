@@ -86,68 +86,6 @@ const DEPEND_FUNCTIONS * FIELDDATA_GetFieldFunctions(u16 mapid)
 //============================================================================================
 //============================================================================================
 
-#if 0
-//------------------------------------------------------------------
-/// land_data_ex
-//------------------------------------------------------------------
-#define	NARC_nogrid_mapblock_h01a_dummy	NARC_nogrid_mapblock_h01a_00_01_ngpack
-#include "fieldmap/nogrid_mapblock.naix"
-static const FLDMAPPER_MAPDATA newbridgemap[] = {
-	{ NARC_nogrid_mapblock_h01a_00_00_ngpack }, //{ NARC_nogrid_mapblock_h01a_dummy },
-	{ NARC_nogrid_mapblock_h01a_01_00_ngpack },
-
-	{ NARC_nogrid_mapblock_h01a_00_01_ngpack },
-	{ NARC_nogrid_mapblock_h01a_01_01_ngpack },
-
-	{ NARC_nogrid_mapblock_h01a_00_02_ngpack },
-	{ NARC_nogrid_mapblock_h01a_01_02_ngpack },
-};
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static const FLDMAPPER_MAPDATA test_c3map[] = {
-	{ NARC_nogrid_mapblock_C3_00_01_ngpack },
-	{ NARC_nogrid_mapblock_C3_00_02_ngpack },
-	{ NARC_nogrid_mapblock_C3_01_01_ngpack },
-	{ NARC_nogrid_mapblock_C3_01_02_ngpack },
-};
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static const FLDMAPPER_MAPDATA loopbridgemap[] = {
-	{ NARC_nogrid_mapblock_m_test2_01_01_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_02_01_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_03_01_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_04_01_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_01_02_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_02_02_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_03_02_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_04_02_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_01_03_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_02_03_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_03_03_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_04_03_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_01_04_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_02_04_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_03_04_ngpack },
-	{ NARC_nogrid_mapblock_m_test2_04_04_ngpack },
-};
-
-static const FLDMAPPER_MAPDATA samplebridge[] = {
-	{ NARC_nogrid_mapblock_m_test_01_01_ngpack },
-	{ NARC_nogrid_mapblock_m_test_02_01_ngpack },
-	{ NARC_nogrid_mapblock_m_test_01_02_ngpack },
-	{ NARC_nogrid_mapblock_m_test_02_02_ngpack },
-	{ NARC_nogrid_mapblock_m_test_01_03_ngpack },
-	{ NARC_nogrid_mapblock_m_test_02_03_ngpack },
-	{ NARC_nogrid_mapblock_m_test_01_04_ngpack },
-	{ NARC_nogrid_mapblock_m_test_02_04_ngpack },
-	{ NARC_nogrid_mapblock_m_test_01_05_ngpack },
-	{ NARC_nogrid_mapblock_m_test_02_05_ngpack },
-	{ NARC_nogrid_mapblock_m_test_01_06_ngpack },
-	{ NARC_nogrid_mapblock_m_test_02_06_ngpack },
-};
-#else
 //------------------------------------------------------------------
 /// land_data
 //------------------------------------------------------------------
@@ -173,62 +111,7 @@ static const FLDMAPPER_MAPDATA test_c3map[] = {
 	{ NARC_map_land_data_C3_01_02_ngpack },
 };
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static const FLDMAPPER_MAPDATA loopbridgemap[] = {
-	{ NARC_map_land_data_m_test2_01_01_ngpack },
-	{ NARC_map_land_data_m_test2_02_01_ngpack },
-	{ NARC_map_land_data_m_test2_03_01_ngpack },
-	{ NARC_map_land_data_m_test2_04_01_ngpack },
-	{ NARC_map_land_data_m_test2_01_02_ngpack },
-	{ NARC_map_land_data_m_test2_02_02_ngpack },
-	{ NARC_map_land_data_m_test2_03_02_ngpack },
-	{ NARC_map_land_data_m_test2_04_02_ngpack },
-	{ NARC_map_land_data_m_test2_01_03_ngpack },
-	{ NARC_map_land_data_m_test2_02_03_ngpack },
-	{ NARC_map_land_data_m_test2_03_03_ngpack },
-	{ NARC_map_land_data_m_test2_04_03_ngpack },
-	{ NARC_map_land_data_m_test2_01_04_ngpack },
-	{ NARC_map_land_data_m_test2_02_04_ngpack },
-	{ NARC_map_land_data_m_test2_03_04_ngpack },
-	{ NARC_map_land_data_m_test2_04_04_ngpack },
-};
 
-static const FLDMAPPER_MAPDATA samplebridge[] = {
-	{ NARC_map_land_data_m_test_01_01_ngpack },
-	{ NARC_map_land_data_m_test_02_01_ngpack },
-	{ NARC_map_land_data_m_test_01_02_ngpack },
-	{ NARC_map_land_data_m_test_02_02_ngpack },
-	{ NARC_map_land_data_m_test_01_03_ngpack },
-	{ NARC_map_land_data_m_test_02_03_ngpack },
-	{ NARC_map_land_data_m_test_01_04_ngpack },
-	{ NARC_map_land_data_m_test_02_04_ngpack },
-	{ NARC_map_land_data_m_test_01_05_ngpack },
-	{ NARC_map_land_data_m_test_02_05_ngpack },
-	{ NARC_map_land_data_m_test_01_06_ngpack },
-	{ NARC_map_land_data_m_test_02_06_ngpack },
-};
-#endif
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-
-#if 0
-//グローバルテクスチャサンプル（金銀マップテクスチャ）
-#define DATID_GSMAP_GTEX (3)
-static const FLDMAPPER_RESIST_TEX	gtexData = {
-	ARCID_GSTEX, DATID_GSMAP_GTEX, 
-};
-#endif
-
-static const FLDMAPPER_MAPDATA GSMap[] = {
-	{ 21 }, { 22 },
-	{ 23 }, { 24 },
-	{ 25 }, { 26 },
-	{ FLDMAPPER_MAPDATA_NULL }, { 27 },
-	{ FLDMAPPER_MAPDATA_NULL }, { 28 },
-	{ FLDMAPPER_MAPDATA_NULL }, { 29 },
-};
 
 
 //------------------------------------------------------------------
@@ -269,8 +152,6 @@ const SCENE_DATA resistMapTbl[] = {
 
 			2,	3, NELEMS(newbridgemap),
 			newbridgemap,
-		//	4,  4, NELEMS(loopbridgemap),
-		//	loopbridgemap, 
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
 			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
