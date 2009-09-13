@@ -102,7 +102,7 @@ end
 def makeScriptsIndex( zone_ids )
   File.open("../script/zone_script.list","w"){|file|
     file.puts "#©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list æ“ª"
-    file.puts "SCRIPTFILES = \\"
+    file.puts "SCRIPTFILES += \\"
     zone_ids.each{|id|
       file.puts "\t#{id}.ev \\"
       file.puts "\tsp_#{id}.ev \\"
