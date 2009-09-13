@@ -1071,6 +1071,39 @@ static VMCMD_RESULT EvCmdABKeyWait( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * ウェイトルーチン：最後のキー待ち
+ * @retval  TRUE=終了
+ * @retval  FALSE=待ち状態のまま
+ */
+//--------------------------------------------------------------
+static BOOL evWaitLastKey( VMHANDLE * core, void *wk )
+{
+  enum {
+    WAIT_AB_KEY = PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL,
+    WAIT_PAD_KEY = PAD_KEY_UP | PAD_KEY_DOWN | PAD_KEY_LEFT | PAD_KEY_RIGHT,
+    WAIT_LAST_KEY = WAIT_AB_KEY | WAIT_PAD_KEY 
+  };
+  
+  u32 trg = GFL_UI_KEY_GetTrg();
+  if( (trg & WAIT_LAST_KEY) != 0)
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+//--------------------------------------------------------------
+/**
+ * スクリプトコマンド：最後のキーウェイト
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdLastKeyWait( VMHANDLE * core, void *wk )
+{
+  VMCMD_SetWait( core, evWaitLastKey );
+  return VMCMD_RESULT_SUSPEND;
+}
+
 //======================================================================
 // トレーナーフラグ関連
 //======================================================================
@@ -1354,6 +1387,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
 
   //キー入力関連
   EvCmdABKeyWait,
+  EvCmdLastKeyWait,
   
   //会話ウィンドウ
   EvCmdTalkMsg,
