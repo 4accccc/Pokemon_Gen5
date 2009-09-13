@@ -63,7 +63,7 @@ module PmScript
     #---------------------------------------------
     def undef_all_var_alias( count )
       names = Array.new
-      while count <= @alias_count
+      while count < @alias_count
         @alias_count -= 1
         names << @alias_stack[@alias_count]
         @alias_stack.delete_at(@alias_count)
@@ -351,6 +351,7 @@ module PmScript
       #Šo‚¦‚Ä‚¨‚¢‚½’è‹`ˆÊ’u‚Ü‚Å‚·‚×‚ÄUndef‚·‚é
       undefs = intp.undef_all_var_alias( count )
       undefs.each{|name|
+        puts "\t_ASM_LDVAL  #{name}, 0"
         puts "#undef #{name}"
       }
     end
@@ -479,6 +480,7 @@ module PmScript
       printf("#error local variable %-32s\n", @varname)
       printf("#endif\n")
       printf("#define %-32s %s\n",@varname, realname )
+      printf("\t_ASM_LDVAL  %s, 0\n", @varname )
 			#printf ( "%-32s = %s\n",@varname, realname )
 		end
 	end
