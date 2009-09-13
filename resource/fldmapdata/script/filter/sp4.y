@@ -88,25 +88,20 @@ rule
 	#		「変数定義リスト」「終端」
 	#		「変数定義リスト」「変数定義」「終端」
 	#---------------------------------------------
-	defvar_list	:
-					{
-						result = []
-					}
-				| defvar_list EOL
-				| defvar_list def_var EOL
-					{
-						result.push val[1]
-					}
-
-	#---------------------------------------------
-	#	「変数定義」は：
-	#		「DEFVAR」「定義キーワード」「識別子」
-	#---------------------------------------------
-	def_var		: DEFVAR TYPE IDENT
-					{
-						result = DefVarNode.new(val[1], val[2])
-					}
-
+  def_local_list :
+          {
+            result = []
+          }
+        | def_local_list EOL
+        | def_local_list comments EOL
+        | def_local_list def_local EOL
+          {
+            result.push val[1]
+          }
+        | def_local_list def_local comments EOL
+          {
+            result.push val[1]
+          }
 	#---------------------------------------------
 	#	「関数定義」は下記のいずれか：
 	#		「DEFFUNC」「定義キーワード」「識別子」「(」「パラメータ」「)」「終端」「ブロック」
@@ -139,7 +134,8 @@ rule
 	#	「ブロック」は
 	#		「ブロック開始」「」「」「ブロック終了」
 	#---------------------------------------------
-	stmt_block	: block_start defvar_list stmt_list block_end
+	#stmt_block	: block_start defvar_list stmt_list block_end
+  stmt_block  : block_start def_local_list stmt_list block_end
 					{
 						result = BlockNode.new(val[1], val[2])
 					}
@@ -197,7 +193,6 @@ rule
         | switch_stmt
         | while_stmt
         | def_local
-        | undef_local
 
 	#---------------------------------------------
 	#	「関数呼び出し」は下記のいずれか：
@@ -459,10 +454,6 @@ rule
             result = DefLocalVarNode.new( val[1] )
           }
 
-  undef_local : UNDEF_LOCAL IDENT
-          {
-            result = UndefLocalVarNode.new( val[1] )
-          }
 	#---------------------------------------------
 	#	「数式」は
 	#		「数式」「+」「数式」
@@ -568,7 +559,6 @@ RESERVED = {
   'WHILE' => :WHILE,
   'ENDWHILE' => :ENDWHILE,
   'DEFINE_LOCAL' => :DEFINE_LOCAL,
-  'UNDEF_LOCAL' => :UNDEF_LOCAL
 };
 
 #予約型定義

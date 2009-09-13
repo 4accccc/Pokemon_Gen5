@@ -30,7 +30,7 @@ module PmScript
 			@ftable = Hash.new
 
       @alias_count = 0
-      @alias_stack = Hash.new
+      @alias_stack = Array.new
 		end
 
     #---------------------------------------------
@@ -42,25 +42,33 @@ module PmScript
 			label
 		end
 
+    def get_var_alias_count
+      return @alias_count
+    end
     #---------------------------------------------
     # ローカル変数定義
     #---------------------------------------------
     def define_var_alias( varname )
-      if @alias_stack.has_key?( varname ) then
+      if @alias_stack.index( varname ) != nil then
         raise CompileError, "#{@fname}:#{@lineno}: 同じ名前（#{varname}）が複数回定義されています"
       end
       realname = sprintf("USERWK_%02d", @alias_count)
-      @alias_stack[varname] = realname
+      @alias_stack << varname
       @alias_count += 1
       return realname
     end
 
-    def undef_var_alias( varname )
-      if @alias_stack.has_key?( varname )
-        return @alias_stack.delete( varname )
-      else
-        raise CompileError, "#{@fname}:#{@lineno}: undef variable not exist!"
+    #---------------------------------------------
+    # ローカル変数定義取り消し
+    #---------------------------------------------
+    def undef_all_var_alias( count )
+      names = Array.new
+      while count <= @alias_count
+        @alias_count -= 1
+        names << @alias_stack[@alias_count]
+        @alias_stack.delete_at(@alias_count)
       end
+      return names
     end
 
     #---------------------------------------------
@@ -333,15 +341,19 @@ module PmScript
 			@stmts = stmts
 		end
 
-		def compile( intp )
-			sp = intp.get_lvar_stack_count
-			put_list( intp, @vardefs )
-			put_list( intp, @stmts )
-			while sp != intp.get_lvar_stack_count
-				intp.remove_var(intp.get_lvar_stack_count - 1)
-				puts "\t_POP_STACK"
-			end
-		end
+    def compile( intp )
+      #現在のローカル変数定義位置を覚えておく
+      count = intp.get_var_alias_count
+      #ローカル変数定義リスト実行
+      put_list( intp, @vardefs )
+      #通常文実行
+      put_list( intp, @stmts )
+      #覚えておいた定義位置まですべてUndefする
+      undefs = intp.undef_all_var_alias( count )
+      undefs.each{|name|
+        puts "#undef #{name}"
+      }
+    end
 	end
 
   #---------------------------------------------
@@ -471,19 +483,6 @@ module PmScript
 		end
 	end
 
-  #---------------------------------------------
-  # ローカル変数定義取り消し
-  #---------------------------------------------
-  class UndefLocalVarNode < Node
-    def initialize( varname )
-      @varname = varname
-    end
-
-    def compile( intp )
-      realname = intp.undef_var_alias( @varname )
-      printf("#undef %-32s //%s\n", @varname, realname)
-    end
-  end
 
 
 end   # end of module PmScript
