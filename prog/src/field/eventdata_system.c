@@ -21,6 +21,7 @@
 
 #include "fldmmdl.h"
 #include "script.h"
+#include "script_hideitem.h"
 
 #include "fieldmap/zone_id.h"
 
