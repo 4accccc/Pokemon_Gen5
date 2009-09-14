@@ -225,38 +225,38 @@
 
 #define USERWK_AREA_START                32800 /* 0x8020  */
 
-		/* not used 32800(0x8020) */
-		/* not used 32801(0x8021) */
-		/* not used 32802(0x8022) */
-		/* not used 32803(0x8023) */
-		/* not used 32804(0x8024) */
-		/* not used 32805(0x8025) */
-		/* not used 32806(0x8026) */
-		/* not used 32807(0x8027) */
-		/* not used 32808(0x8028) */
-		/* not used 32809(0x8029) */
-		/* not used 32810(0x802a) */
-		/* not used 32811(0x802b) */
-		/* not used 32812(0x802c) */
-		/* not used 32813(0x802d) */
-		/* not used 32814(0x802e) */
-		/* not used 32815(0x802f) */
-		/* not used 32816(0x8030) */
-		/* not used 32817(0x8031) */
-		/* not used 32818(0x8032) */
-		/* not used 32819(0x8033) */
-		/* not used 32820(0x8034) */
-		/* not used 32821(0x8035) */
-		/* not used 32822(0x8036) */
-		/* not used 32823(0x8037) */
-		/* not used 32824(0x8038) */
-		/* not used 32825(0x8039) */
-		/* not used 32826(0x803a) */
-		/* not used 32827(0x803b) */
-		/* not used 32828(0x803c) */
-		/* not used 32829(0x803d) */
-		/* not used 32830(0x803e) */
-		/* not used 32831(0x803f) */
+#define USERWK_00                        32800 /* 0x8020 イベント起動中のみ機能するフラグ */
+#define USERWK_01                        32801 /* 0x8021 イベント起動中のみ機能するフラグ */
+#define USERWK_02                        32802 /* 0x8022 イベント起動中のみ機能するフラグ */
+#define USERWK_03                        32803 /* 0x8023 イベント起動中のみ機能するフラグ */
+#define USERWK_04                        32804 /* 0x8024 イベント起動中のみ機能するフラグ */
+#define USERWK_05                        32805 /* 0x8025 イベント起動中のみ機能するフラグ */
+#define USERWK_06                        32806 /* 0x8026 イベント起動中のみ機能するフラグ */
+#define USERWK_07                        32807 /* 0x8027 イベント起動中のみ機能するフラグ */
+#define USERWK_08                        32808 /* 0x8028 イベント起動中のみ機能するフラグ */
+#define USERWK_09                        32809 /* 0x8029 イベント起動中のみ機能するフラグ */
+#define USERWK_10                        32810 /* 0x802a イベント起動中のみ機能するフラグ */
+#define USERWK_11                        32811 /* 0x802b イベント起動中のみ機能するフラグ */
+#define USERWK_12                        32812 /* 0x802c イベント起動中のみ機能するフラグ */
+#define USERWK_13                        32813 /* 0x802d イベント起動中のみ機能するフラグ */
+#define USERWK_14                        32814 /* 0x802e イベント起動中のみ機能するフラグ */
+#define USERWK_15                        32815 /* 0x802f イベント起動中のみ機能するフラグ */
+#define USERWK_16                        32816 /* 0x8030 イベント起動中のみ機能するフラグ */
+#define USERWK_17                        32817 /* 0x8031 イベント起動中のみ機能するフラグ */
+#define USERWK_18                        32818 /* 0x8032 イベント起動中のみ機能するフラグ */
+#define USERWK_19                        32819 /* 0x8033 イベント起動中のみ機能するフラグ */
+#define USERWK_20                        32820 /* 0x8034 イベント起動中のみ機能するフラグ */
+#define USERWK_21                        32821 /* 0x8035 イベント起動中のみ機能するフラグ */
+#define USERWK_22                        32822 /* 0x8036 イベント起動中のみ機能するフラグ */
+#define USERWK_23                        32823 /* 0x8037 イベント起動中のみ機能するフラグ */
+#define USERWK_24                        32824 /* 0x8038 イベント起動中のみ機能するフラグ */
+#define USERWK_25                        32825 /* 0x8039 イベント起動中のみ機能するフラグ */
+#define USERWK_26                        32826 /* 0x803a イベント起動中のみ機能するフラグ */
+#define USERWK_27                        32827 /* 0x803b イベント起動中のみ機能するフラグ */
+#define USERWK_28                        32828 /* 0x803c イベント起動中のみ機能するフラグ */
+#define USERWK_29                        32829 /* 0x803d イベント起動中のみ機能するフラグ */
+#define USERWK_30                        32830 /* 0x803e イベント起動中のみ機能するフラグ */
+#define USERWK_31                        32831 /* 0x803f イベント起動中のみ機能するフラグ */
 
 #define USERWK_AREA_END                  32831 /* 0x803f  */
 
