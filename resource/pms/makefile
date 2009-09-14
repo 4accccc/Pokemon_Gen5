@@ -38,7 +38,7 @@ clean:
 	-rm $(INPUT_DAT_FILE)
 
 
-$(SOURCE_LIST): $(SOURCE)
+$(SOURCE_LIST):
 	perl pmsconv.pl  $(SOURCE_LIST)
 
 

@@ -14,7 +14,6 @@ SUBDIRS	=	wmi \
 		  regulation \
 			test_layout \
 			test_graphic\
-			message\
 			place_name \
 			field_weather \
 			field_weather_light \
@@ -43,6 +42,7 @@ SUBDIRS	=	wmi \
 			yn_touch \
 			balloon \
 			mysign \
+			message\
 			pms \
 			pms_gra \
 			compatible \
