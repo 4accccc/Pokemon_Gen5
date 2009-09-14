@@ -266,7 +266,7 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 //	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_APP_TEST, 0x70000 );
 //	dat->heap = HEAPID_BATTLE_APP_TEST;
 	// シューターモードテスト
-//	dat->mode = BBAG_MODE_SHOOTER;
+	dat->mode = BBAG_MODE_SHOOTER;
 
 	wk = GFL_HEAP_AllocClearMemory( dat->heap, sizeof(BBAG_WORK) );
 
@@ -315,6 +315,8 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 //	wk->dat->used_item = 2;
 //	wk->dat->used_poke = 1;
 
+	wk->dat->energy = 7;
+	wk->dat->reserved_energy = 3;
 
 /*
 	if( BattleWorkFightTypeGet(wk->dat->bw) & FIGHT_TYPE_GET_DEMO ){
@@ -687,6 +689,19 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_ItemUse( BBAG_WORK * wk )
 {
+	BBAG_DATA * dat = wk->dat;
+
+	// シューター時
+	if( dat->mode == BBAG_MODE_SHOOTER ){
+		// エネルギーが足りない
+		if( dat->energy < BBAGITEM_GetCost( dat->ret_item ) ){
+			GFL_MSG_GetString( wk->mman, mes_b_bag_m16, wk->msg_buf );
+			BattleBag_TalkMsgSet( wk );
+			wk->ret_seq = SEQ_BBAG_ERR;
+			return SEQ_BBAG_MSG_WAIT;
+		}
+	}
+
 /*
 	// エラーメッセージテスト
 	GFL_MSG_GetString( wk->mman, mes_b_bag_m01, wk->msg_buf );

@@ -105,6 +105,8 @@ static void BBAG_ClactGetDemoCursorAdd( BBAG_WORK * wk );
 static void BBAG_GetDemoCursorDel( BBAG_WORK * wk );
 static void CostResLoad( BBAG_WORK * wk );
 
+static void CostObjPut( BBAG_WORK * wk, u16 idx, u8 ene, u8 res_ene, const GFL_CLACTPOS * pos );
+
 
 //============================================================================================
 //	グローバル変数
@@ -118,23 +120,22 @@ static const GFL_CLACTPOS P1_ItemIconPos = { 36, 180 };
 static const GFL_CLACTPOS P2_ItemIconPos[] =
 {
 	// アイテムアイコン
-	{  36,  45 }, { 164,  45 },
-	{  36,  93 }, { 164,  93 },
-	{  36, 141 }, { 164, 141 },
-
+	{ 36,  45 }, { 164,  45 },
+	{ 36,  93 }, { 164,  93 },
+	{ 36, 141 }, { 164, 141 },
 	// コスト
-	{  84,  41 }, { 212,  41 },
-	{  84,  89 }, { 212,  89 },
-	{  84, 137 }, { 212, 137 },
+	{ 48+4,  41 }, { 176+4,  41 },
+	{ 48+4,  89 }, { 176+4,  89 },
+	{ 48+4, 137 }, { 176+4, 137 },
 	// エネルギー
-	{ 124, 172 },
+	{ 88+4, 172 },
 };
 
 // ページ３のポケモンアイコンの座標
 static const GFL_CLACTPOS P3_ItemIconPos[] =
 {
 	{  40, 44 },
-	{ 200, 40 },
+	{ 168, 40 },
 };
 
 // セルアクターのデータ
@@ -155,6 +156,62 @@ static const u32 ClactDat[][3] =
 	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
 	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
 	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+	{ BBAG_CHRRES_COST, BBAG_PALRES_COST, BBAG_CELRES_COST },
+
 //	{ CHR_ID_GETDEMO, PAL_ID_GETDEMO, CEL_ID_GETDEMO, ANM_ID_GETDEMO, 0 }
 };
 
@@ -647,14 +704,16 @@ static void BBAG_Page2ObjSet( BBAG_WORK * wk )
 		BBAG_ClactOn( wk->clwk[BBAG_CA_ITEM1+i], &P2_ItemIconPos[i] );
 
 		if( wk->dat->mode == BBAG_MODE_SHOOTER ){
-			BBAG_ClactOn( wk->clwk[BBAG_CA_COST1+i], &P2_ItemIconPos[6+i] );
-			GFL_CLACT_WK_SetAnmSeq( wk->clwk[BBAG_CA_COST1+i], BBAGITEM_GetCost(item)-1 );
+			CostObjPut( wk, BBAG_CA_COST1_NUM+i*8, BBAGITEM_GetCost(item), 0, &P2_ItemIconPos[6+i] );
+//			BBAG_ClactOn( wk->clwk[BBAG_CA_COST1+i], &P2_ItemIconPos[6+i] );
+//			GFL_CLACT_WK_SetAnmSeq( wk->clwk[BBAG_CA_COST1+i], BBAGITEM_GetCost(item)-1 );
 		}
 	}
 
 	if( wk->dat->mode == BBAG_MODE_SHOOTER ){
-		BBAG_ClactOn( wk->clwk[BBAG_CA_ENERGIE], &P2_ItemIconPos[6+i] );
-		GFL_CLACT_WK_SetAnmSeq( wk->clwk[BBAG_CA_ENERGIE], 13 );
+		CostObjPut( wk, BBAG_CA_ENERGIE_NUM, wk->dat->energy, wk->dat->reserved_energy, &P2_ItemIconPos[6+i] );
+//		BBAG_ClactOn( wk->clwk[BBAG_CA_ENERGIE], &P2_ItemIconPos[6+i] );
+//		GFL_CLACT_WK_SetAnmSeq( wk->clwk[BBAG_CA_ENERGIE], 13 );
 	}
 
 /*
@@ -683,8 +742,9 @@ static void BBAG_Page3ObjSet( BBAG_WORK * wk )
 	BBAG_ClactOn( wk->clwk[BBAG_CA_ITEM7], &P3_ItemIconPos[0] );
 
 	if( wk->dat->mode == BBAG_MODE_SHOOTER ){
-		BBAG_ClactOn( wk->clwk[BBAG_CA_COST1], &P3_ItemIconPos[1] );
-		GFL_CLACT_WK_SetAnmSeq( wk->clwk[BBAG_CA_COST1], BBAGITEM_GetCost(item)-1 );
+			CostObjPut( wk, BBAG_CA_COST1_NUM, BBAGITEM_GetCost(item), 0, &P3_ItemIconPos[1] );
+//		BBAG_ClactOn( wk->clwk[BBAG_CA_COST1], &P3_ItemIconPos[1] );
+//		GFL_CLACT_WK_SetAnmSeq( wk->clwk[BBAG_CA_COST1], BBAGITEM_GetCost(item)-1 );
 	}
 
 /*
@@ -981,4 +1041,56 @@ void BBAG_GetDemoCursorSet( BBAG_WORK * wk, u8 page )
 		FINGER_OFF( wk->finger );
 	}
 */
+}
+
+#define	COST_ANM_ENE_NONE			( 15 )
+#define	COST_ANM_ENE_ONE			( 16 )
+#define	COST_ANM_ENE_TWO			( 17 )
+#define	COST_ANM_ENE_RES_ONE	( 18 )
+#define	COST_ANM_RES_ONE			( 19 )
+#define	COST_ANM_RES_TWO			( 20 )
+
+static void CostObjPut( BBAG_WORK * wk, u16 idx, u8 ene, u8 res_ene, const GFL_CLACTPOS * pos )
+{
+	GFL_CLACTPOS	mvp;
+	u16	i;
+	s8	te, re;
+
+	// 数字
+	BBAG_ClactOn( wk->clwk[idx], pos );
+	GFL_CLACT_WK_SetAnmSeq( wk->clwk[idx], ene );
+
+	// ゲージ
+	idx++;
+	te = ene;
+	re = res_ene;
+	mvp = *pos;
+	mvp.x += 12;
+	for( i=0; i<7; i++ ){
+		if( te <= 0 ){
+			if( re <= 0 ){
+				GFL_CLACT_WK_SetAnmSeq( wk->clwk[idx], COST_ANM_ENE_NONE );
+			}else if( re == 1 ){
+				GFL_CLACT_WK_SetAnmSeq( wk->clwk[idx], COST_ANM_RES_ONE );
+				re -= 1;
+			}else{
+				GFL_CLACT_WK_SetAnmSeq( wk->clwk[idx], COST_ANM_RES_TWO );
+				re -= 2;
+			}
+		}else if( te == 1 ){
+			if( re == 0 ){
+				GFL_CLACT_WK_SetAnmSeq( wk->clwk[idx], COST_ANM_ENE_ONE );
+			}else if( re > 0 ){
+				GFL_CLACT_WK_SetAnmSeq( wk->clwk[idx], COST_ANM_ENE_RES_ONE );
+				re -= 1;
+			}
+			te -= 1;
+		}else{
+			GFL_CLACT_WK_SetAnmSeq( wk->clwk[idx], COST_ANM_ENE_TWO );
+			te -= 2;
+		}
+		BBAG_ClactOn( wk->clwk[idx], &mvp );
+		mvp.x += 8;
+		idx++;
+	}
 }
