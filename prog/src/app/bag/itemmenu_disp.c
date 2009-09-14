@@ -44,6 +44,8 @@
 #include "savedata/mystatus.h"
 #include "itemmenu_local.h"
 
+#include "bag_parts_d_NANR_LBLDEFS.h"
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 #include "system/main.h"			//GFL_HEAPID_APP参照
@@ -1010,13 +1012,6 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
 
 
 
-#define    NANR_bag_parts_d_taisetsu    0 //
-#define    NANR_bag_parts_d_waza    1 //
-#define    NANR_bag_parts_d_kinomi    2 //
-#define    NANR_bag_parts_d_kaifuku    3 //
-#define    NANR_bag_parts_d_dougu    4 //
-
-
 
 //------------------------------------------------------------------------------
 /**
@@ -1064,11 +1059,23 @@ static GFL_CLACTPOS pokectCellPos[]={
 void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno )
 {
   int anm[] = {
-    NANR_bag_parts_d_dougu,
+    NANR_bag_parts_d_dougu_f, // デフォルト女
     NANR_bag_parts_d_kaifuku,
     NANR_bag_parts_d_waza,
     NANR_bag_parts_d_kinomi,
-    NANR_bag_parts_d_taisetsu};
+    NANR_bag_parts_d_taisetsu
+  };
+
+  // 男女でバッグアイコン表示切替
+  { 
+    u32 sex = MyStatus_GetMySex( pWork->mystatus );
+
+    // 男
+    if( sex == PTL_SEX_MALE )
+    {
+      anm[0] = NANR_bag_parts_d_dougu_m;
+    }
+  }
 
   GFL_CLACT_WK_SetAnmSeq(pWork->clwkPocketIcon, anm[pocketno]);
   GFL_CLACT_WK_SetPos( pWork->clwkPocketIcon ,  &pokectCellPos[pocketno], CLWK_SETSF_NONE );
