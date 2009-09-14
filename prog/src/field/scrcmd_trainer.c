@@ -25,7 +25,7 @@
 
 #include "event_trainer_eye.h"
 
-#include "poke_tool/trainer_tool.h"		//TT_TrainerMessageGet
+#include "tr_tool/tr_tool.h"		//TT_TrainerMessageGet
 
 #include "event_battle.h"
 
