@@ -4,7 +4,6 @@
   require File.dirname(__FILE__) + '/../gmm_make/gmm_make'
   require File.dirname(__FILE__) + '/../constant'
   require 'date'
-  require 'kconv'
 
 =begin
   u8    basic_hp;       //基本ＨＰ
@@ -449,7 +448,6 @@ end
   fp_monsno.print( "//============================================================================================\n" )
   fp_monsno.print( "\n#pragma once\n\n" )
 
-  gmm.make_header
   gmm.make_row_index( "MONSNAME_", 0, "ーーーーー" )
 
   cnt = 1
@@ -520,7 +518,6 @@ end
   }
 
   #gmmファイルの後始末
-  gmm.make_footer
   gmm.close_gmm
 
   #タマゴは独自の持ち方をする
