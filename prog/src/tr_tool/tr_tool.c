@@ -33,7 +33,6 @@
  * プロトタイプ宣言
  */
 //============================================================================================
-//static	void	TT_EncountTrainerPokeDataMake( BATTLE_SETUP_PARAM *bsp, int num, int heapID );
 static	void	TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID heapID );
 static	void	RndTmpGet( int mons_no, int form_no, int para, u32* rnd_tmp, HEAPID heapID );
 static	void	PokeParaSetFriend( POKEMON_PARAM *pp );
@@ -48,46 +47,13 @@ static inline u32 TTL_SETUP_POW_PACK( u8 pow );
  *  @param[in]      heapID	メモリ確保するためのヒープID
  */
 //============================================================================================
-//一応とっておく
-#if 0
-void	TT_EncountTrainerDataMake( BATTLE_SETUP_PARAM *bsp, const SAVEDATA * sv, HEAPID heapID )
-{
-	TRAINER_DATA	td;
-	int				num;
-	MSGDATA_MANAGER *man = MSGMAN_Create(MSGMAN_TYPE_DIRECT, ARC_MSG, NARC_msg_trname_dat, heapID);
-	STRBUF			*name;
-	const STRCODE * rivalname = MISC_GetRivalName(SaveData_GetMiscReadOnly(sv));
-
-	for(num=0;num<CLIENT_MAX;num++){
-		if(bp->trainer_id[num]){
-			TT_TrainerDataGet(bp->trainer_id[num],&td);
-			bp->trainer_data[num]=td;
-			if(td.tr_type==TRTYPE_RIVAL){
-				PM_strcpy(&bp->trainer_data[num].name[0],rivalname);			
-			}
-			else{
-				name=MSGMAN_AllocString(man,bp->trainer_id[num]);
-				STRBUF_GetStringCode(name,&bp->trainer_data[num].name[0],BUFLEN_PERSON_NAME);
-				STRBUF_Delete(name);
-			}
-			TT_EncountTrainerPokeDataMake(bp,num,heapID);
-		}
-	}
-
-	bp->fight_type|=td.fight_type;
-
-	MSGMAN_Delete(man);
-}
-#else
 void	TT_EncountTrainerDataMake( BATTLE_SETUP_PARAM *bsp, HEAPID heapID )
 {
   //いろいろなトレーナーデータの処理をbspに対してやるはず
 
-
   //手持ちポケモンデータ生成
 	TT_EncountTrainerPokeDataMake( bsp->trID, bsp->partyEnemy1, heapID );
 }
-#endif
 
 //============================================================================================
 /**
@@ -113,9 +79,6 @@ u32 TT_TrainerDataParaGet( TrainerID tr_id, int id )
 	case ID_TD_tr_type:			//トレーナー分類
 		ret = td.tr_type;
 		break;
-	case ID_TD_tr_gra:			//トレーナーグラフィック
-		ret = td.tr_gra;
-		break;
 	case ID_TD_poke_count:	//所持ポケモン数
 		ret = td.poke_count;
 		break;
@@ -127,9 +90,6 @@ u32 TT_TrainerDataParaGet( TrainerID tr_id, int id )
 		break;
 	case ID_TD_aibit:			  //AIパターン
 		ret = td.aibit;
-		break;
-	case ID_TD_fight_type:	//戦闘タイプ（1vs1or2vs2）
-		ret = td.fight_type;
 		break;
 	}
 	return ret;
@@ -192,7 +152,7 @@ void	TT_TrainerMessageGet( TrainerID tr_id, int kindID, STRBUF* str, HEAPID heap
 	int           size;
 	u16           ofs;
 	u16           data[ 2 ];
-  GFL_MSGDATA*  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,NARC_message_trmsg_dat, heapID );
+  GFL_MSGDATA*  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trmsg_dat, heapID );
 
 	size = GFL_ARC_GetDataSize( ARCID_TRTBL, 0 );
 	GFL_ARC_LoadDataOfs( &ofs, ARCID_TRTBL_OFS, 0, tr_id * 2, 2 );
@@ -268,7 +228,6 @@ u8	TT_TrainerTypeSexGet( int trtype )
  *  @param[in]      heapID	メモリ確保するためのヒープID
  */
 //============================================================================================
-//static	void	TT_EncountTrainerPokeDataMake( BATTLE_PARAM *bp, int num, int heapID )
 static	void	TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID heapID )
 {
   TRAINER_DATA*   td;
