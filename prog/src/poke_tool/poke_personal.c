@@ -147,103 +147,124 @@ u32 POKE_PERSONAL_GetParam( POKEMON_PERSONAL_DATA *ppd, PokePersonalParamID para
 	GF_ASSERT( ppd );
 
 	switch( paramID ){
-	case POKEPER_ID_basic_hp:		//基本ＨＰ
+	case POKEPER_ID_basic_hp:		      //基本ＨＰ
 		ret = ppd->basic_hp;
 		break;
-	case POKEPER_ID_basic_pow:		//基本攻撃力
+	case POKEPER_ID_basic_pow:		    //基本攻撃力
 		ret = ppd->basic_pow;
 		break;
-	case POKEPER_ID_basic_def:		//基本防御力
+	case POKEPER_ID_basic_def:		    //基本防御力
 		ret = ppd->basic_def;
 		break;
-	case POKEPER_ID_basic_agi:		//基本素早さ
+	case POKEPER_ID_basic_agi:		    //基本素早さ
 		ret = ppd->basic_agi;
 		break;
-	case POKEPER_ID_basic_spepow:	//基本特殊攻撃力
+	case POKEPER_ID_basic_spepow:	    //基本特殊攻撃力
 		ret = ppd->basic_spepow;
 		break;
-	case POKEPER_ID_basic_spedef:	//基本特殊防御力
+	case POKEPER_ID_basic_spedef:	    //基本特殊防御力
 		ret = ppd->basic_spedef;
 		break;
-	case POKEPER_ID_type1:			//属性１
+	case POKEPER_ID_type1:			      //属性１
 		ret = ppd->type1;
 		break;
-	case POKEPER_ID_type2:			//属性２
+	case POKEPER_ID_type2:			      //属性２
 		ret = ppd->type2;
 		break;
-	case POKEPER_ID_get_rate:		//捕獲率
+	case POKEPER_ID_get_rate:		      //捕獲率
 		ret = ppd->get_rate;
 		break;
-	case POKEPER_ID_give_exp:		//贈与経験値
+	case POKEPER_ID_give_exp:		      //贈与経験値
 		ret = ppd->give_exp;
 		break;
-	case POKEPER_ID_pains_hp:		//贈与努力値ＨＰ
+	case POKEPER_ID_pains_hp:		      //贈与努力値ＨＰ
 		ret = ppd->pains_hp;
 		break;
-	case POKEPER_ID_pains_pow:		//贈与努力値攻撃力
+	case POKEPER_ID_pains_pow:		    //贈与努力値攻撃力
 		ret = ppd->pains_pow;
 		break;
-	case POKEPER_ID_pains_def:		//贈与努力値防御力
+	case POKEPER_ID_pains_def:		    //贈与努力値防御力
 		ret = ppd->pains_def;
 		break;
-	case POKEPER_ID_pains_agi:		//贈与努力値素早さ
+	case POKEPER_ID_pains_agi:		    //贈与努力値素早さ
 		ret = ppd->pains_agi;
 		break;
-	case POKEPER_ID_pains_spepow:	//贈与努力値特殊攻撃力
+	case POKEPER_ID_pains_spepow:	    //贈与努力値特殊攻撃力
 		ret = ppd->pains_spepow;
 		break;
-	case POKEPER_ID_pains_spedef:	//贈与努力値特殊防御力
+	case POKEPER_ID_pains_spedef:	    //贈与努力値特殊防御力
 		ret = ppd->pains_spedef;
 		break;
-	case POKEPER_ID_item1:			//アイテム１
+	case POKEPER_ID_item1:			      //アイテム１
 		ret = ppd->item1;
 		break;
-	case POKEPER_ID_item2:			//アイテム２
+	case POKEPER_ID_item2:			      //アイテム２
 		ret = ppd->item2;
 		break;
-	case POKEPER_ID_sex:			//性別ベクトル
+	case POKEPER_ID_item3:			      //アイテム３
+		ret = ppd->item3;
+		break;
+	case POKEPER_ID_sex:			        //性別ベクトル
 		ret = ppd->sex;
 		break;
-	case POKEPER_ID_egg_birth:		//タマゴの孵化歩数
+	case POKEPER_ID_egg_birth:		    //タマゴの孵化歩数
 		ret = ppd->egg_birth;
 		break;
-	case POKEPER_ID_friend:			//なつき度初期値
+	case POKEPER_ID_friend:			      //なつき度初期値
 		ret = ppd->friend;
 		break;
-	case POKEPER_ID_grow:			//成長曲線識別
+	case POKEPER_ID_grow:			        //成長曲線識別
 		ret = ppd->grow;
 		break;
-	case POKEPER_ID_egg_group1:		//こづくりグループ1
+	case POKEPER_ID_egg_group1:		    //こづくりグループ1
 		ret = ppd->egg_group1;
 		break;
-	case POKEPER_ID_egg_group2:		//こづくりグループ2
+	case POKEPER_ID_egg_group2:		    //こづくりグループ2
 		ret = ppd->egg_group2;
 		break;
-	case POKEPER_ID_speabi1:		//特殊能力１
+	case POKEPER_ID_speabi1:		      //特殊能力１
 		ret = ppd->speabi1;
 		break;
-	case POKEPER_ID_speabi2:		//特殊能力２
+	case POKEPER_ID_speabi2:		      //特殊能力２
 		ret = ppd->speabi2;
 		break;
-	case POKEPER_ID_escape:			//逃げる率
+	case POKEPER_ID_speabi3:		      //特殊能力３
+		ret = ppd->speabi3;
+		break;
+	case POKEPER_ID_escape:			      //逃げる率
 		ret = ppd->escape;
 		break;
-	case POKEPER_ID_color:			//色（図鑑で使用）
+  case POKEPER_ID_form_index:       //別フォルムパーソナルデータ開始位置
+		ret = ppd->form_index;
+		break;
+  case POKEPER_ID_form_gra_index:   //別フォルムグラフィックデータ開始位置
+		ret = ppd->form_gra_index;
+		break;
+  case POKEPER_ID_form_max:         //別フォルムMAX
+		ret = ppd->form_max;
+		break;
+	case POKEPER_ID_color:			      //色（図鑑で使用）
 		ret = ppd->color;
 		break;
-	case POKEPER_ID_reverse:		//反転フラグ
+	case POKEPER_ID_reverse:		      //反転フラグ
 		ret = ppd->reverse;
 		break;
-	case POKEPER_ID_machine1:		//技マシンフラグ１
+  case POKEPER_ID_rank:             //ポケモンランク
+		ret = ppd->rank;
+		break;
+  case POKEPER_ID_padding:          //パディング
+		ret = ppd->padding;
+		break;
+	case POKEPER_ID_machine1:		      //技マシンフラグ１
 		ret = ppd->machine1;
 		break;
-	case POKEPER_ID_machine2:		//技マシンフラグ２
+	case POKEPER_ID_machine2:		      //技マシンフラグ２
 		ret = ppd->machine2;
 		break;
-	case POKEPER_ID_machine3:		//技マシンフラグ３
+	case POKEPER_ID_machine3:		      //技マシンフラグ３
 		ret = ppd->machine3;
 		break;
-	case POKEPER_ID_machine4:		//技マシンフラグ４
+	case POKEPER_ID_machine4:		      //技マシンフラグ４
 		ret = ppd->machine4;
 		break;
 	default:
@@ -272,39 +293,21 @@ u32 POKE_PERSONAL_GetParam( POKEMON_PERSONAL_DATA *ppd, PokePersonalParamID para
 //--------------------------------------------------------------------------
 static u16 get_personalID( u16 mons_no, u16 form_no )
 {
-	//フォルムによって、パーソナルが変化するものをチェック
-	switch( mons_no ){
-	case MONSNO_DEOKISISU:
-		if( ( form_no ) && ( form_no <= FORMNO_DEOKISISU_MAX ) ){
-			mons_no = DEOKISISU_OTHER_FORM_PERSONAL + form_no;
-		}
-		break;
-	case MONSNO_MINOMADAMU:
-		if( ( form_no ) && ( form_no <= FORMNO_MINOMUTTI_MAX ) ){
-			mons_no = MINOMESU_OTHER_FORM_PERSONAL + form_no;
-		}
-		break;
-		
-	case MONSNO_GIRATHINA:
-		if( ( form_no ) && ( form_no <= FORMNO_GIRATINA_MAX ) ){
-			mons_no = GIRATINA_OTHER_FORM_PERSONAL + form_no;
-		}
-		break;
-	case MONSNO_SHEIMI:
-		if( ( form_no ) && ( form_no <= FORMNO_SHEIMI_MAX ) ){
-			mons_no = SHEIMI_OTHER_FORM_PERSONAL + form_no;
-		}
-		break;
-	case MONSNO_ROTOMU:
-		if( ( form_no ) && ( form_no <= FORMNO_ROTOMU_MAX ) ){
-			mons_no = ROTOMU_OTHER_FORM_PERSONAL + form_no;
-		}
-		break;
-	
-	default:
-		break;
-	}
+  POKEMON_PERSONAL_DATA ppd;
+	u32 data_ofs;
+
+	data_ofs = GFL_ARC_GetDataOfsByHandle( ArcHandle, mons_no );
+	GFL_ARC_SeekDataByHandle( ArcHandle, data_ofs );
+	GFL_ARC_LoadDataByHandleContinue( ArcHandle, sizeof(POKEMON_PERSONAL_DATA), &ppd );
+
+  if( ( ppd.form_index == 0 ) || ( ppd.form_max <= form_no ) )
+  { 
+    return mons_no;
+  }
+
+  mons_no = ppd.form_index + form_no;
 
 	return mons_no;
 
 }
+
