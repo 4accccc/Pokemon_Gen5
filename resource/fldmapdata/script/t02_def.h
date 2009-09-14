@@ -10,5 +10,8 @@
 #define SCRID_T02_OLDMAN1_1 (3)
 #define SCRID_T02_OLDWOMAN1_1 (4)
 #define SCRID_T02_TALKOBJ_BIGMAN (5)
+#define SCRID_T02_HAKAIM_01 (6)
+#define SCRID_T02_HAKAIW_01 (7)
+#define SCRID_POS_T02_HAKAI_STOP (8)
 
 #endif //_T02_DEF_H_

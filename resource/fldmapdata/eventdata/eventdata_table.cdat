@@ -2812,6 +2812,8 @@
 #define T02_OLDWOMAN1_1                    2
 #define T02_OLDMAN1_1                      3
 #define T02_BABYGIRL1_1                    4
+#define T02_HAKAIM_01                      5
+#define T02_HAKAIW_01                      6
 
 #endif //ZONE_T02_EVC_H
 //#include "tmp/t02pc0101.h"
@@ -12621,18 +12623,63 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		661,
 		0,
 	},
+	{
+		T02_HAKAIM_01,
+		HAKAIM,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T02_HAKAIM_01,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		771,
+		648,
+		0,
+	},
+	{
+		T02_HAKAIW_01,
+		HAKAIW,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T02_HAKAIW_01,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		771,
+		650,
+		0,
+	},
 };
 const int ObjCount_T02 = NELEMS(OBJ_EVENT_T02);
+const POS_EVENT_DATA POS_EVENT_T02[] = {
+	{//POSID_T02_HAKAI_STOP = 0
+		SCRID_POS_T02_HAKAI_STOP,
+		771, 648,
+		1, 7,
+		0,  //height
+		0,
+		WK_SCENE_T02,
+	},
+};
+const int PosCount_T02 = NELEMS(POS_EVENT_T02);
 
 static const EVENTDATA_TABLE event_t02 = {
 	0,
+	7,
 	5,
-	5,
-	0,
+	1,
 	(void *)NULL,
 	(void *)&OBJ_EVENT_T02,
 	(void *)&DOOR_EVENT_T02,
-	(void *)NULL,
+	(void *)&POS_EVENT_T02,
 };
 #include "../script/t02pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_T02PC0101[] = {

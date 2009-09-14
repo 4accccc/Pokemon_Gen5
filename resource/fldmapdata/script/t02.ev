@@ -20,6 +20,9 @@ _EVENT_DATA ev_t02_talkobj_woman1
 _EVENT_DATA ev_t02_oldman1_1
 _EVENT_DATA ev_t02_oldwoman1_1
 _EVENT_DATA ev_t02_talkobj_bigman
+_EVENT_DATA ev_t02_hakaim_01
+_EVENT_DATA ev_t02_hakaiw_01
+_EVENT_DATA ev_pos_t02_hakai_stop
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -107,4 +110,125 @@ _ANIME_LABEL test01anime
 	_ANIME_DATA AC_WALK_U_8F,2
 	_ANIME_DATA AC_WALK_D_8F,2
 	_ANIME_DATA ACMD_END,0
+
+/************************************************************/
+/*			エターニティ団員♂	ストッパー					*/
+/************************************************************/
+EVENT_START   ev_t02_hakaim_01
+	_TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_t02_hakaim_stop_01 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*			エターニティ団員♀	ストッパー					*/
+/************************************************************/
+EVENT_START   ev_t02_hakaiw_01
+	_TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_t02_hakaiw_stop_01 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*			エターニティ団員♀	Ｒ０２側ストッパー			*/
+/************************************************************/
+EVENT_START   ev_pos_t02_hakai_stop
+
+	//したっぱ：きづく
+	_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_kiduku )
+	_OBJ_ANIME_WAIT()
+
+	//ローカル変数を定義
+	DEFINE_LOCAL	HERO_X
+	DEFINE_LOCAL	HERO_Z
+	
+	//したっぱ：自機前に移動
+	_PLAYER_POS_GET( HERO_X,HERO_Z )		//主人公位置取得
+	IF $HERO_Z == 649 THEN
+		//Z軸が649なら
+		_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_idoa )
+	ELSIF $HERO_Z == 651 THEN
+		//Z軸が651なら
+		_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_idob )
+	ELSIF $HERO_Z == 652 THEN
+		//Z軸が652なら
+		_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_idoc )
+	ELSE
+		//Z軸が653なら
+		_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_idod )
+	ENDIF
+	
+	//したっぱ：メッセージ
+	_BALLOONWIN_OBJMSG_OPEN( msg_t02_hakaiw_stop_02,T02_HAKAIW_01 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+	//したっぱ：主人公押し出し
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+	_OBJ_ANIME_WAIT()
+
+
+	//したっぱ：元の場所に戻る
+	_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_modoru )
+	_OBJ_ANIME_WAIT()
+
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	エターニティ団員♀　気付く
+//--------------------------------------------------------------
+_ANIME_LABEL anm_hakai_kiduku
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------
+//	エターニティ団員♀　自機前に移動a
+//--------------------------------------------------------------
+_ANIME_LABEL anm_hakai_idoa
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+	
+_ANIME_LABEL anm_hakai_idob
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakai_idoc
+	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakai_idod
+	_ANIME_DATA		AC_WALK_D_8F,3
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------
+//	主人公　押し出される
+//--------------------------------------------------------------
+_ANIME_LABEL anm_player_back
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_JUMP_R_1G_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------
+//	エターニティ団員♀　主人公押し出し
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+//	エターニティ団員♀　元に戻る
+//--------------------------------------------------------------
+_ANIME_LABEL anm_hakai_modoru
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+
+
 
