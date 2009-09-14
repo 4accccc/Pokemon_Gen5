@@ -1,7 +1,5 @@
 #include "../script/c99_def.h"
 #include "../script/common_scr_def.h"
-#include "../script/dummy_def.h"
-#include "../script/dummy_scr_def.h"
 #include "../script/trainer_def.h"
 //#include "tmp/bcwftest.h"
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Ídata/bcwftest.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
