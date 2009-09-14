@@ -499,7 +499,7 @@ static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys)
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
 
-	PP_Setup(pp, MONSNO_TIRATTI, 100, 123456);
+	PP_Setup(pp, MONSNO_KABITTI, 100, 123456);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
