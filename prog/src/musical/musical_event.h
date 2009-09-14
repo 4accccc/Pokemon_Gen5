@@ -9,4 +9,4 @@
  */
 //======================================================================
 
-extern GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , FIELD_MAIN_WORK *fieldWork , const BOOL isComm );
+extern GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const BOOL isComm );

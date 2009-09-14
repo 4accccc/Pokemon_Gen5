@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-04-23T11:49:53"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-09-14T12:37:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,13 +294,13 @@
 		</language>
 	</columns>
 
-	<dialog left="-64" top="182" right="641" bottom="803" maximized="no" rayout="Vertical2">
+	<dialog left="1610" top="160" right="2251" bottom="781" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="466"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="633"/>
+		<band id="3" index="3" style="0000" width="633"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,723 +335,723 @@
 	</row>
 
 	<row id="ITEM_NAME_000">
-		<language name="JPN" width="256">毛玉(オレンジ)</language>
+		<language name="JPN" width="256">ピンクの髪留め</language>
 	</row>
 
 	<row id="ITEM_NAME_001">
-		<language name="JPN" width="256">毛玉(白)</language>
+		<language name="JPN" width="256">ブルーの髪留め</language>
 	</row>
 
 	<row id="ITEM_NAME_002">
-		<language name="JPN" width="256">星</language>
+		<language name="JPN" width="256">真っ赤な髪留め</language>
 	</row>
 
 	<row id="ITEM_NAME_003">
-		<language name="JPN" width="256">輪</language>
+		<language name="JPN" width="256">青い花</language>
 	</row>
 
 	<row id="ITEM_NAME_004">
-		<language name="JPN" width="256">花(オレンジ)</language>
+		<language name="JPN" width="256">赤いスカーフ</language>
 	</row>
 
 	<row id="ITEM_NAME_005">
-		<language name="JPN" width="256">花(青)</language>
+		<language name="JPN" width="256">赤い花</language>
 	</row>
 
 	<row id="ITEM_NAME_006">
-		<language name="JPN" width="256">チューリップ</language>
+		<language name="JPN" width="256">大きな髪留め</language>
 	</row>
 
 	<row id="ITEM_NAME_007">
-		<language name="JPN" width="256">小リボン</language>
-	</row>
-
-	<row id="ITEM_NAME_008">
-		<language name="JPN" width="256">大リボン(赤)</language>
-	</row>
-
-	<row id="ITEM_NAME_009">
-		<language name="JPN" width="256">大リボン(青)</language>
-	</row>
-
-	<row id="ITEM_NAME_010">
-		<language name="JPN" width="256">星風船</language>
-	</row>
-
-	<row id="ITEM_NAME_011">
-		<language name="JPN" width="256">サングラス</language>
-	</row>
-
-	<row id="ITEM_NAME_012">
-		<language name="JPN" width="256">ファッショングラス</language>
-	</row>
-
-	<row id="ITEM_NAME_013">
-		<language name="JPN" width="256">番がさ</language>
-	</row>
-
-	<row id="ITEM_NAME_014">
-		<language name="JPN" width="256">くん章</language>
-	</row>
-
-	<row id="ITEM_NAME_015">
-		<language name="JPN" width="256">学士ぼう</language>
-	</row>
-
-	<row id="ITEM_NAME_016">
 		<language name="JPN" width="256">カチューシャ</language>
 	</row>
 
+	<row id="ITEM_NAME_008">
+		<language name="JPN" width="256">四角いメガネ</language>
+	</row>
+
+	<row id="ITEM_NAME_009">
+		<language name="JPN" width="256">しましま髪留め</language>
+	</row>
+
+	<row id="ITEM_NAME_010">
+		<language name="JPN" width="256">小さな髪留め</language>
+	</row>
+
+	<row id="ITEM_NAME_011">
+		<language name="JPN" width="256">リボンの飾り</language>
+	</row>
+
+	<row id="ITEM_NAME_012">
+		<language name="JPN" width="256">トートバッグ</language>
+	</row>
+
+	<row id="ITEM_NAME_013">
+		<language name="JPN" width="256">ネックレス</language>
+	</row>
+
+	<row id="ITEM_NAME_014">
+		<language name="JPN" width="256">派手な花</language>
+	</row>
+
+	<row id="ITEM_NAME_015">
+		<language name="JPN" width="256">丸いボタン</language>
+	</row>
+
+	<row id="ITEM_NAME_016">
+		<language name="JPN" width="256">緑の髪留め</language>
+	</row>
+
 	<row id="ITEM_NAME_017">
-		<language name="JPN" width="256">ひもリボン</language>
+		<language name="JPN" width="256">麦わら帽子</language>
 	</row>
 
 	<row id="ITEM_NAME_018">
-		<language name="JPN" width="256">シルクハット</language>
+		<language name="JPN" width="256">雪の結晶</language>
 	</row>
 
 	<row id="ITEM_NAME_019">
-		<language name="JPN" width="256">王かん</language>
+		<language name="JPN" width="256">一輪の花</language>
 	</row>
 
 	<row id="ITEM_NAME_020">
-		<language name="JPN" width="256">ティアラ</language>
+		<language name="JPN" width="256">絵筆</language>
 	</row>
 
 	<row id="ITEM_NAME_021">
-		<language name="JPN" width="256">ヒコザル面</language>
+		<language name="JPN" width="256">ベレー帽</language>
 	</row>
 
 	<row id="ITEM_NAME_022">
-		<language name="JPN" width="256">ポッチャマ面</language>
+		<language name="JPN" width="256">泡立て</language>
 	</row>
 
 	<row id="ITEM_NAME_023">
-		<language name="JPN" width="256">ナエトル面</language>
+		<language name="JPN" width="256">おたま</language>
 	</row>
 
 	<row id="ITEM_NAME_024">
-		<language name="JPN" width="256">ヴェール</language>
+		<language name="JPN" width="256">ケーキの模型</language>
 	</row>
 
 	<row id="ITEM_NAME_025">
-		<language name="JPN" width="256">はち巻(黄)</language>
+		<language name="JPN" width="256">コック帽子</language>
 	</row>
 
 	<row id="ITEM_NAME_026">
-		<language name="JPN" width="256">はち巻(むらさき)</language>
+		<language name="JPN" width="256">フライパン</language>
 	</row>
 
 	<row id="ITEM_NAME_027">
-		<language name="JPN" width="256">マント</language>
+		<language name="JPN" width="256">前掛け</language>
 	</row>
 
 	<row id="ITEM_NAME_028">
-		<language name="JPN" width="256">風船</language>
+		<language name="JPN" width="256">赤い傘</language>
 	</row>
 
 	<row id="ITEM_NAME_029">
-		<language name="JPN" width="256">旗</language>
+		<language name="JPN" width="256">風邪マスク</language>
 	</row>
 
 	<row id="ITEM_NAME_030">
-		<language name="JPN" width="256">マイク</language>
+		<language name="JPN" width="256">金槌</language>
 	</row>
 
 	<row id="ITEM_NAME_031">
-		<language name="JPN" width="256">かさ</language>
+		<language name="JPN" width="256">カラフルパラソル</language>
 	</row>
 
 	<row id="ITEM_NAME_032">
-		<language name="JPN" width="256">デバッグ用十字</language>
+		<language name="JPN" width="256">スパナ</language>
 	</row>
 
 	<row id="ITEM_NAME_033">
-		<language name="JPN" width="256">アイテム33</language>
+		<language name="JPN" width="256">手持ちランプ</language>
 	</row>
 
 	<row id="ITEM_NAME_034">
-		<language name="JPN" width="256">アイテム34</language>
+		<language name="JPN" width="256">ネジ</language>
 	</row>
 
 	<row id="ITEM_NAME_035">
-		<language name="JPN" width="256">アイテム35</language>
+		<language name="JPN" width="256">ヘルメット</language>
 	</row>
 
 	<row id="ITEM_NAME_036">
-		<language name="JPN" width="256">アイテム36</language>
+		<language name="JPN" width="256">ドレスエプロン</language>
 	</row>
 
 	<row id="ITEM_NAME_037">
-		<language name="JPN" width="256">アイテム37</language>
+		<language name="JPN" width="256">ドレスタイ</language>
 	</row>
 
 	<row id="ITEM_NAME_038">
-		<language name="JPN" width="256">アイテム38</language>
+		<language name="JPN" width="256">ヘッドドレス</language>
 	</row>
 
 	<row id="ITEM_NAME_039">
-		<language name="JPN" width="256">アイテム39</language>
+		<language name="JPN" width="256">赤いマント</language>
 	</row>
 
 	<row id="ITEM_NAME_040">
-		<language name="JPN" width="256">アイテム40</language>
+		<language name="JPN" width="256">玩具の刀</language>
 	</row>
 
 	<row id="ITEM_NAME_041">
-		<language name="JPN" width="256">アイテム41</language>
+		<language name="JPN" width="256">玩具の剣</language>
 	</row>
 
 	<row id="ITEM_NAME_042">
-		<language name="JPN" width="256">アイテム42</language>
+		<language name="JPN" width="256">海賊帽子</language>
 	</row>
 
 	<row id="ITEM_NAME_043">
-		<language name="JPN" width="256">アイテム43</language>
+		<language name="JPN" width="256">カウボーイハット</language>
 	</row>
 
 	<row id="ITEM_NAME_044">
-		<language name="JPN" width="256">アイテム44</language>
+		<language name="JPN" width="256">硬い盾</language>
 	</row>
 
 	<row id="ITEM_NAME_045">
-		<language name="JPN" width="256">アイテム45</language>
+		<language name="JPN" width="256">黒い翼</language>
 	</row>
 
 	<row id="ITEM_NAME_046">
-		<language name="JPN" width="256">アイテム46</language>
+		<language name="JPN" width="256">三角帽子</language>
 	</row>
 
 	<row id="ITEM_NAME_047">
-		<language name="JPN" width="256">アイテム47</language>
+		<language name="JPN" width="256">白い翼</language>
 	</row>
 
 	<row id="ITEM_NAME_048">
-		<language name="JPN" width="256">アイテム48</language>
+		<language name="JPN" width="256">茶色いバックル</language>
 	</row>
 
 	<row id="ITEM_NAME_049">
-		<language name="JPN" width="256">アイテム49</language>
+		<language name="JPN" width="256">角かぶと</language>
 	</row>
 
 	<row id="ITEM_NAME_050">
-		<language name="JPN" width="256">アイテム50</language>
+		<language name="JPN" width="256">細い槍</language>
 	</row>
 
 	<row id="ITEM_NAME_051">
-		<language name="JPN" width="256">アイテム51</language>
+		<language name="JPN" width="256">魔法の杖</language>
 	</row>
 
 	<row id="ITEM_NAME_052">
-		<language name="JPN" width="256">アイテム52</language>
+		<language name="JPN" width="256">赤鼻</language>
 	</row>
 
 	<row id="ITEM_NAME_053">
-		<language name="JPN" width="256">アイテム53</language>
+		<language name="JPN" width="256">カラフル帽子</language>
 	</row>
 
 	<row id="ITEM_NAME_054">
-		<language name="JPN" width="256">アイテム54</language>
+		<language name="JPN" width="256">ぐるぐるメガネ</language>
 	</row>
 
 	<row id="ITEM_NAME_055">
-		<language name="JPN" width="256">アイテム55</language>
+		<language name="JPN" width="256">クラウン</language>
 	</row>
 
 	<row id="ITEM_NAME_056">
-		<language name="JPN" width="256">アイテム56</language>
+		<language name="JPN" width="256">黒いネクタイ</language>
 	</row>
 
 	<row id="ITEM_NAME_057">
-		<language name="JPN" width="256">アイテム57</language>
+		<language name="JPN" width="256">黒いマント</language>
 	</row>
 
 	<row id="ITEM_NAME_058">
-		<language name="JPN" width="256">アイテム58</language>
+		<language name="JPN" width="256">ゴージャスメガネ</language>
 	</row>
 
 	<row id="ITEM_NAME_059">
-		<language name="JPN" width="256">アイテム59</language>
+		<language name="JPN" width="256">シルクハット</language>
 	</row>
 
 	<row id="ITEM_NAME_060">
-		<language name="JPN" width="256">アイテム60</language>
+		<language name="JPN" width="256">白い仮面</language>
 	</row>
 
 	<row id="ITEM_NAME_061">
-		<language name="JPN" width="256">アイテム61</language>
+		<language name="JPN" width="256">白いマント</language>
 	</row>
 
 	<row id="ITEM_NAME_062">
-		<language name="JPN" width="256">アイテム62</language>
+		<language name="JPN" width="256">紳士の帽子</language>
 	</row>
 
 	<row id="ITEM_NAME_063">
-		<language name="JPN" width="256">アイテム63</language>
+		<language name="JPN" width="256">ステッキ</language>
 	</row>
 
 	<row id="ITEM_NAME_064">
-		<language name="JPN" width="256">アイテム64</language>
+		<language name="JPN" width="256">たてじまネクタイ</language>
 	</row>
 
 	<row id="ITEM_NAME_065">
-		<language name="JPN" width="256">アイテム65</language>
+		<language name="JPN" width="256">小さな時計</language>
 	</row>
 
 	<row id="ITEM_NAME_066">
-		<language name="JPN" width="256">アイテム66</language>
+		<language name="JPN" width="256">蝶ネクタイ</language>
 	</row>
 
 	<row id="ITEM_NAME_067">
-		<language name="JPN" width="256">アイテム67</language>
+		<language name="JPN" width="256">ティアラ</language>
 	</row>
 
 	<row id="ITEM_NAME_068">
-		<language name="JPN" width="256">アイテム68</language>
+		<language name="JPN" width="256">バラの花束</language>
 	</row>
 
 	<row id="ITEM_NAME_069">
-		<language name="JPN" width="256">アイテム69</language>
+		<language name="JPN" width="256">モノクル</language>
 	</row>
 
 	<row id="ITEM_NAME_070">
-		<language name="JPN" width="256">アイテム70</language>
+		<language name="JPN" width="256">よこじまネクタイ</language>
 	</row>
 
 	<row id="ITEM_NAME_071">
-		<language name="JPN" width="256">アイテム71</language>
+		<language name="JPN" width="256">カツラ</language>
 	</row>
 
 	<row id="ITEM_NAME_072">
-		<language name="JPN" width="256">アイテム72</language>
+		<language name="JPN" width="256">スタンドマイク</language>
 	</row>
 
 	<row id="ITEM_NAME_073">
-		<language name="JPN" width="256">アイテム73</language>
+		<language name="JPN" width="256">ピンクぼんぼん</language>
 	</row>
 
 	<row id="ITEM_NAME_074">
-		<language name="JPN" width="256">アイテム74</language>
+		<language name="JPN" width="256">ちいさなぼうし</language>
 	</row>
 
 	<row id="ITEM_NAME_075">
-		<language name="JPN" width="256">アイテム75</language>
+		<language name="JPN" width="256">マイク</language>
 	</row>
 
 	<row id="ITEM_NAME_076">
-		<language name="JPN" width="256">アイテム76</language>
+		<language name="JPN" width="256">マラカス</language>
 	</row>
 
 	<row id="ITEM_NAME_077">
-		<language name="JPN" width="256">アイテム77</language>
+		<language name="JPN" width="256">ラッパ</language>
 	</row>
 
 	<row id="ITEM_NAME_078">
-		<language name="JPN" width="256">アイテム78</language>
+		<language name="JPN" width="256">草冠</language>
 	</row>
 
 	<row id="ITEM_NAME_079">
-		<language name="JPN" width="256">アイテム79</language>
+		<language name="JPN" width="256">しろいぼんぼん</language>
 	</row>
 
 	<row id="ITEM_NAME_080">
-		<language name="JPN" width="256">アイテム80</language>
+		<language name="JPN" width="256">フラッグ</language>
 	</row>
 
 	<row id="ITEM_NAME_081">
-		<language name="JPN" width="256">アイテム81</language>
+		<language name="JPN" width="256">ボール</language>
 	</row>
 
 	<row id="ITEM_NAME_082">
-		<language name="JPN" width="256">アイテム82</language>
+		<language name="JPN" width="256">優勝ベルト</language>
 	</row>
 
 	<row id="ITEM_NAME_083">
-		<language name="JPN" width="256">アイテム83</language>
+		<language name="JPN" width="256">ラケット</language>
 	</row>
 
 	<row id="ITEM_NAME_084">
-		<language name="JPN" width="256">アイテム84</language>
+		<language name="JPN" width="256">C-ギア</language>
 	</row>
 
 	<row id="ITEM_NAME_085">
-		<language name="JPN" width="256">アイテム85</language>
+		<language name="JPN" width="256">玩具の釣竿</language>
 	</row>
 
 	<row id="ITEM_NAME_086">
-		<language name="JPN" width="256">アイテム86</language>
+		<language name="JPN" width="256">にこにこおめん</language>
 	</row>
 
 	<row id="ITEM_NAME_087">
-		<language name="JPN" width="256">アイテム87</language>
+		<language name="JPN" width="256">おへそボタン</language>
 	</row>
 
 	<row id="ITEM_NAME_088">
-		<language name="JPN" width="256">アイテム88</language>
+		<language name="JPN" width="256">博士の帽子</language>
 	</row>
 
 	<row id="ITEM_NAME_089">
-		<language name="JPN" width="256">アイテム89</language>
+		<language name="JPN" width="256">葉っぱのスカート</language>
 	</row>
 
 	<row id="ITEM_NAME_090">
-		<language name="JPN" width="256">アイテム90</language>
+		<language name="JPN" width="256">分厚い本</language>
 	</row>
 
 	<row id="ITEM_NAME_091">
-		<language name="JPN" width="256">アイテム91</language>
+		<language name="JPN" width="256">ブーケ</language>
 	</row>
 
 	<row id="ITEM_NAME_092">
-		<language name="JPN" width="256">アイテム92</language>
+		<language name="JPN" width="256">骨のレプリカ</language>
 	</row>
 
 	<row id="ITEM_NAME_093">
-		<language name="JPN" width="256">アイテム93</language>
+		<language name="JPN" width="256">まんまるきのこ</language>
 	</row>
 
 	<row id="ITEM_NAME_094">
-		<language name="JPN" width="256">アイテム94</language>
+		<language name="JPN" width="256">レプリカバッジ</language>
 	</row>
 
 	<row id="ITEM_NAME_095">
-		<language name="JPN" width="256">アイテム95</language>
+		<language name="JPN" width="256">赤い帽子</language>
 	</row>
 
 	<row id="ITEM_NAME_096">
-		<language name="JPN" width="256">アイテム96</language>
+		<language name="JPN" width="256">大きな袋</language>
 	</row>
 
 	<row id="ITEM_NAME_097">
-		<language name="JPN" width="256">アイテム97</language>
+		<language name="JPN" width="256">キャンディ</language>
 	</row>
 
 	<row id="ITEM_NAME_098">
-		<language name="JPN" width="256">アイテム98</language>
+		<language name="JPN" width="256">ふさふさのひげ</language>
 	</row>
 
 	<row id="ITEM_NAME_099">
-		<language name="JPN" width="256">アイテム99</language>
+		<language name="JPN" width="256">プレゼント箱</language>
 	</row>
 
 	<row id="ITEM_NAME_100">
-		<language name="JPN" width="256">アイテム100</language>
+		<language name="JPN" width="256">青いキャップ</language>
 	</row>
 
 	<row id="ITEM_NAME_101">
-		<language name="JPN" width="256">アイテム101</language>
+		<language name="JPN" width="256">青い風船</language>
 	</row>
 
 	<row id="ITEM_NAME_102">
-		<language name="JPN" width="256">アイテム102</language>
+		<language name="JPN" width="256">赤い風船</language>
 	</row>
 
 	<row id="ITEM_NAME_103">
-		<language name="JPN" width="256">アイテム103</language>
+		<language name="JPN" width="256">黄色の髪留め</language>
 	</row>
 
 	<row id="ITEM_NAME_104">
-		<language name="JPN" width="256">アイテム104</language>
+		<language name="JPN" width="256">黄色の風船</language>
 	</row>
 
 	<row id="ITEM_NAME_105">
-		<language name="JPN" width="256">アイテム105</language>
+		<language name="JPN" width="256">クラブボタン</language>
 	</row>
 
 	<row id="ITEM_NAME_106">
-		<language name="JPN" width="256">アイテム106</language>
+		<language name="JPN" width="256">黒いバックル</language>
 	</row>
 
 	<row id="ITEM_NAME_107">
-		<language name="JPN" width="256">アイテム107</language>
+		<language name="JPN" width="256">真珠の飾り</language>
 	</row>
 
 	<row id="ITEM_NAME_108">
-		<language name="JPN" width="256">アイテム108</language>
+		<language name="JPN" width="256">スペードボタン</language>
 	</row>
 
 	<row id="ITEM_NAME_109">
-		<language name="JPN" width="256">アイテム109</language>
+		<language name="JPN" width="256">扇子</language>
 	</row>
 
 	<row id="ITEM_NAME_110">
-		<language name="JPN" width="256">アイテム110</language>
+		<language name="JPN" width="256">ダイヤボタン</language>
 	</row>
 
 	<row id="ITEM_NAME_111">
-		<language name="JPN" width="256">アイテム111</language>
+		<language name="JPN" width="256">ハートボタン</language>
 	</row>
 
 	<row id="ITEM_NAME_112">
-		<language name="JPN" width="256">アイテム112</language>
+		<language name="JPN" width="256">ビキニ</language>
 	</row>
 
 	<row id="ITEM_NAME_113">
-		<language name="JPN" width="256">アイテム113</language>
+		<language name="JPN" width="256">ピンクのバックル</language>
 	</row>
 
 	<row id="ITEM_NAME_114">
-		<language name="JPN" width="256">アイテム114</language>
+		<language name="JPN" width="256">ふわふわ帽子</language>
 	</row>
 
 	<row id="ITEM_NAME_115">
-		<language name="JPN" width="256">アイテム115</language>
+		<language name="JPN" width="256">ポンチョ</language>
 	</row>
 
 	<row id="ITEM_NAME_116">
-		<language name="JPN" width="256">アイテム116</language>
+		<language name="JPN" width="256">黄色の花</language>
 	</row>
 
 	<row id="ITEM_NAME_117">
-		<language name="JPN" width="256">アイテム117</language>
+		<language name="JPN" width="256">白い花</language>
 	</row>
 
 	<row id="ITEM_NAME_118">
-		<language name="JPN" width="256">アイテム118</language>
+		<language name="JPN" width="256">ピンクの花</language>
 	</row>
 
 	<row id="ITEM_NAME_119">
-		<language name="JPN" width="256">アイテム119</language>
+		<language name="JPN" width="256">ビン</language>
 	</row>
 
 	<row id="ITEM_NAME_120">
-		<language name="JPN" width="256">アイテム120</language>
+		<language name="JPN" width="256">ポット</language>
 	</row>
 
 	<row id="ITEM_NAME_121">
-		<language name="JPN" width="256">アイテム121</language>
+		<language name="JPN" width="256">うちわ</language>
 	</row>
 
 	<row id="ITEM_NAME_122">
-		<language name="JPN" width="256">アイテム122</language>
+		<language name="JPN" width="256">カギ</language>
 	</row>
 
 	<row id="ITEM_NAME_123">
-		<language name="JPN" width="256">アイテム123</language>
+		<language name="JPN" width="256">じょうろ</language>
 	</row>
 
 	<row id="ITEM_NAME_124">
-		<language name="JPN" width="256">アイテム124</language>
+		<language name="JPN" width="256">ねじり鉢巻</language>
 	</row>
 
 	<row id="ITEM_NAME_125">
-		<language name="JPN" width="256">アイテム125</language>
+		<language name="JPN" width="256">赤いかぶと</language>
 	</row>
 
 	<row id="ITEM_NAME_126">
-		<language name="JPN" width="256">アイテム126</language>
+		<language name="JPN" width="256">貝の楽器</language>
 	</row>
 
 	<row id="ITEM_NAME_127">
-		<language name="JPN" width="256">アイテム127</language>
+		<language name="JPN" width="256">笠帽子</language>
 	</row>
 
 	<row id="ITEM_NAME_128">
-		<language name="JPN" width="256">アイテム128</language>
+		<language name="JPN" width="256">唐傘</language>
 	</row>
 
 	<row id="ITEM_NAME_129">
-		<language name="JPN" width="256">アイテム129</language>
+		<language name="JPN" width="256">かんざし</language>
 	</row>
 
 	<row id="ITEM_NAME_130">
-		<language name="JPN" width="256">アイテム130</language>
+		<language name="JPN" width="256">手裏剣</language>
 	</row>
 
 	<row id="ITEM_NAME_131">
-		<language name="JPN" width="256">アイテム131</language>
+		<language name="JPN" width="256">手錠</language>
 	</row>
 
 	<row id="ITEM_NAME_132">
-		<language name="JPN" width="256">アイテム132</language>
+		<language name="JPN" width="256">星型の杖</language>
 	</row>
 
 	<row id="ITEM_NAME_133">
-		<language name="JPN" width="256">アイテム133</language>
+		<language name="JPN" width="256">弓矢</language>
 	</row>
 
 	<row id="ITEM_NAME_134">
-		<language name="JPN" width="256">アイテム134</language>
+		<language name="JPN" width="256">黒いちょびひげ</language>
 	</row>
 
 	<row id="ITEM_NAME_135">
-		<language name="JPN" width="256">アイテム135</language>
+		<language name="JPN" width="256">白いネクタイ</language>
 	</row>
 
 	<row id="ITEM_NAME_136">
-		<language name="JPN" width="256">アイテム136</language>
+		<language name="JPN" width="256">ブローチ</language>
 	</row>
 
 	<row id="ITEM_NAME_137">
-		<language name="JPN" width="256">アイテム137</language>
+		<language name="JPN" width="256">エレキギター</language>
 	</row>
 
 	<row id="ITEM_NAME_138">
-		<language name="JPN" width="256">アイテム138</language>
+		<language name="JPN" width="256">バイオリン</language>
 	</row>
 
 	<row id="ITEM_NAME_139">
-		<language name="JPN" width="256">アイテム139</language>
+		<language name="JPN" width="256">ゴーグル</language>
 	</row>
 
 	<row id="ITEM_NAME_140">
-		<language name="JPN" width="256">アイテム140</language>
+		<language name="JPN" width="256">情熱の布</language>
 	</row>
 
 	<row id="ITEM_NAME_141">
-		<language name="JPN" width="256">アイテム141</language>
+		<language name="JPN" width="256">バット</language>
 	</row>
 
 	<row id="ITEM_NAME_142">
-		<language name="JPN" width="256">アイテム142</language>
+		<language name="JPN" width="256">メガホン</language>
 	</row>
 
 	<row id="ITEM_NAME_143">
-		<language name="JPN" width="256">アイテム143</language>
+		<language name="JPN" width="256">大きな葉っぱ</language>
 	</row>
 
 	<row id="ITEM_NAME_144">
-		<language name="JPN" width="256">アイテム144</language>
+		<language name="JPN" width="256">こしみの</language>
 	</row>
 
 	<row id="ITEM_NAME_145">
-		<language name="JPN" width="256">アイテム145</language>
+		<language name="JPN" width="256">付け角</language>
 	</row>
 
 	<row id="ITEM_NAME_146">
-		<language name="JPN" width="256">アイテム146</language>
+		<language name="JPN" width="256">星のシール</language>
 	</row>
 
 	<row id="ITEM_NAME_147">
-		<language name="JPN" width="256">アイテム147</language>
+		<language name="JPN" width="256">虫くいはっぱ</language>
 	</row>
 
 	<row id="ITEM_NAME_148">
-		<language name="JPN" width="256">アイテム148</language>
+		<language name="JPN" width="256">触覚</language>
 	</row>
 
 	<row id="ITEM_NAME_149">
-		<language name="JPN" width="256">アイテム149</language>
+		<language name="JPN" width="256">謎のボタン</language>
 	</row>
 
 	<row id="ITEM_NAME_150">
-		<language name="JPN" width="256">アイテム150</language>
+		<language name="JPN" width="256">青い帽子</language>
 	</row>
 
 	<row id="ITEM_NAME_151">
-		<language name="JPN" width="256">アイテム151</language>
+		<language name="JPN" width="256">赤いキャップ</language>
 	</row>
 
 	<row id="ITEM_NAME_152">
-		<language name="JPN" width="256">アイテム152</language>
+		<language name="JPN" width="256">赤い綿毛</language>
 	</row>
 
 	<row id="ITEM_NAME_153">
-		<language name="JPN" width="256">アイテム153</language>
+		<language name="JPN" width="256">黄色の綿毛</language>
 	</row>
 
 	<row id="ITEM_NAME_154">
-		<language name="JPN" width="256">アイテム154</language>
+		<language name="JPN" width="256">絹のベール</language>
 	</row>
 
 	<row id="ITEM_NAME_155">
-		<language name="JPN" width="256">アイテム155</language>
+		<language name="JPN" width="256">黒い帽子</language>
 	</row>
 
 	<row id="ITEM_NAME_156">
-		<language name="JPN" width="256">アイテム156</language>
+		<language name="JPN" width="256">黒い綿毛</language>
 	</row>
 
 	<row id="ITEM_NAME_157">
-		<language name="JPN" width="256">アイテム157</language>
+		<language name="JPN" width="256">強面メガネ</language>
 	</row>
 
 	<row id="ITEM_NAME_158">
-		<language name="JPN" width="256">アイテム158</language>
+		<language name="JPN" width="256">シルクリボン</language>
 	</row>
 
 	<row id="ITEM_NAME_159">
-		<language name="JPN" width="256">アイテム159</language>
+		<language name="JPN" width="256">白い綿毛</language>
 	</row>
 
 	<row id="ITEM_NAME_160">
-		<language name="JPN" width="256">アイテム160</language>
+		<language name="JPN" width="256">白ニット帽</language>
 	</row>
 
 	<row id="ITEM_NAME_161">
-		<language name="JPN" width="256">アイテム161</language>
+		<language name="JPN" width="256">ストール</language>
 	</row>
 
 	<row id="ITEM_NAME_162">
-		<language name="JPN" width="256">アイテム162</language>
+		<language name="JPN" width="256">ハートマーク</language>
 	</row>
 
 	<row id="ITEM_NAME_163">
-		<language name="JPN" width="256">アイテム163</language>
+		<language name="JPN" width="256">ハンチング</language>
 	</row>
 
 	<row id="ITEM_NAME_164">
-		<language name="JPN" width="256">アイテム164</language>
+		<language name="JPN" width="256">まんまるネガネ</language>
 	</row>
 
 	<row id="ITEM_NAME_165">
-		<language name="JPN" width="256">アイテム165</language>
+		<language name="JPN" width="256">緑の綿毛</language>
 	</row>
 
 	<row id="ITEM_NAME_166">
-		<language name="JPN" width="256">アイテム166</language>
+		<language name="JPN" width="256">ナイフ</language>
 	</row>
 
 	<row id="ITEM_NAME_167">
-		<language name="JPN" width="256">アイテム167</language>
+		<language name="JPN" width="256">フォーク</language>
 	</row>
 
 	<row id="ITEM_NAME_168">
-		<language name="JPN" width="256">アイテム168</language>
+		<language name="JPN" width="256">マグカップ</language>
 	</row>
 
 	<row id="ITEM_NAME_169">
-		<language name="JPN" width="256">アイテム169</language>
+		<language name="JPN" width="256">貝殻バックル</language>
 	</row>
 
 	<row id="ITEM_NAME_170">
-		<language name="JPN" width="256">アイテム170</language>
+		<language name="JPN" width="256">つるのなわ</language>
 	</row>
 
 	<row id="ITEM_NAME_171">
-		<language name="JPN" width="256">アイテム171</language>
+		<language name="JPN" width="256">黒い仮面</language>
 	</row>
 
 	<row id="ITEM_NAME_172">
-		<language name="JPN" width="256">アイテム172</language>
+		<language name="JPN" width="256">白いちょびひげ</language>
 	</row>
 
 	<row id="ITEM_NAME_173">
-		<language name="JPN" width="256">アイテム173</language>
+		<language name="JPN" width="256">スーツケース</language>
 	</row>
 
 	<row id="ITEM_NAME_174">
-		<language name="JPN" width="256">アイテム174</language>
+		<language name="JPN" width="256">もみあげ</language>
 	</row>
 
 	<row id="ITEM_NAME_175">
-		<language name="JPN" width="256">アイテム175</language>
+		<language name="JPN" width="256">ヒラヒラスカート</language>
 	</row>
 
 	<row id="ITEM_NAME_176">
-		<language name="JPN" width="256">アイテム176</language>
+		<language name="JPN" width="256">木の枝</language>
 	</row>
 
 	<row id="ITEM_NAME_177">
-		<language name="JPN" width="256">アイテム177</language>
+		<language name="JPN" width="256">綺麗な円盤</language>
 	</row>
 
 	<row id="ITEM_NAME_178">
-		<language name="JPN" width="256">アイテム178</language>
+		<language name="JPN" width="256">何かの雑誌</language>
 	</row>
 
 	<row id="ITEM_NAME_179">
-		<language name="JPN" width="256">アイテム179</language>
+		<language name="JPN" width="256">渦巻き模様</language>
 	</row>
 
 	<row id="ITEM_NAME_180">

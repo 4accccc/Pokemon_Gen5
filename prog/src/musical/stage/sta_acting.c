@@ -266,6 +266,7 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   //注目ポケ系初期化
   work->isUpdateAttention = TRUE;
   work->lightUpPoke = MUSICAL_POKE_MAX;
+  work->attentionPoke = MUSICAL_POKE_MAX; //カメラはデフォルト
   //アイテム使用系初期化
   work->useItemPoke = MUSICAL_POKE_MAX;
   work->useItemCnt = 0;
@@ -383,7 +384,7 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
       {
         GFL_HEAP_FreeMemory( work->scriptData );
       }
-      work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_mus_002_001_bin , FALSE , work->heapId );
+      work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_we_001_bin , FALSE , work->heapId );
       STA_ACT_StartScript( work );
     }
   }
@@ -423,7 +424,7 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
         {
           GFL_HEAP_FreeMemory( work->scriptData );
         }
-        work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_mus_002_001_bin , FALSE , work->heapId );
+        work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_we_001_bin , FALSE , work->heapId );
         STA_ACT_StartScript( work );
         vcount = OS_GetVBlankCount(); 
         isStartCnt++;
@@ -476,7 +477,7 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
     break;
   
   case AMS_ACTING_START:
-    work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_mus_002_001_bin , FALSE , work->heapId );
+    work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_we_001_bin , FALSE , work->heapId );
     STA_ACT_StartScript( work );
     work->mainSeq = AMS_ACTING_MAIN;
     break;
@@ -942,19 +943,22 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
       lookTarget = work->attentionPoke;
     }
     
-    STA_POKE_GetPosition( work->pokeSys , work->pokeWork[lookTarget] , &pos );
-    scroll = FX_FX32_TO_F32( pos.x )-128;
-    if( scroll > ACT_BG_SCROLL_MAX )
+    if( work->pokeWork[lookTarget] != NULL )
     {
-      scroll = ACT_BG_SCROLL_MAX;
-    }
-    else if( scroll < 0 )
-    {
-      scroll = 0;
-    }
-    if( scroll != work->scrollOffset )
-    {
-      work->scrollOffsetTrget = scroll;
+      STA_POKE_GetPosition( work->pokeSys , work->pokeWork[lookTarget] , &pos );
+      scroll = FX_FX32_TO_F32( pos.x )-128;
+      if( scroll > ACT_BG_SCROLL_MAX )
+      {
+        scroll = ACT_BG_SCROLL_MAX;
+      }
+      else if( scroll < 0 )
+      {
+        scroll = 0;
+      }
+      if( scroll != work->scrollOffset )
+      {
+        work->scrollOffsetTrget = scroll;
+      }
     }
   }
   

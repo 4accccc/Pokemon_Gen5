@@ -58,6 +58,10 @@ static GFL_PROC_RESULT FieldMapProcInit
       {
         heap_size = 0x140000 - 0x18000;
       }
+      else if ( ZONEDATA_IsMusicalWaitingRoom(zone_id) )
+      {
+        heap_size = 0xC0000 - 0x18000;
+      }
       else
       {
         heap_size = 0x148000 - 0x18000;

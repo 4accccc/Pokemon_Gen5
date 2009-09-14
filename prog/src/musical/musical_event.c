@@ -12,14 +12,19 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 
+#include "arc/fieldmap/zone_id.h"
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_comm.h"
 #include "poke_tool/monsno_def.h"
 #include "field/fieldmap.h"
 #include "field/event_fieldmap_control.h"
+#include "field/event_mapchange.h"
+#include "field/script.h"
+#include "field/script_local.h"
 #include "savedata/save_control.h"
 #include "savedata/musical_save.h"
+#include "sound/pm_sndsys.h"
 #include "musical/musical_system.h"
 #include "musical/musical_local.h"
 #include "musical/musical_program.h"
@@ -59,6 +64,19 @@ typedef enum
 
   MES_RETURN_FIELD,
   MES_FINIHS_EVENT,
+
+  MES_ENTER_WAITROOM_FIRST,
+  MES_WAITROOM_FIRST,
+  MES_EXIT_WAITROOM_FIRST,
+
+  MES_ENTER_WAITROOM_SECOND,
+  MES_WAITROOM_SECOND,
+  MES_EXIT_WAITROOM_SECOND,
+
+  MES_ENTER_WAITROOM_THIRD,
+  MES_WAITROOM_THIRD,
+  MES_EXIT_WAITROOM_THIRD,
+
 }MUSICAL_EVENT_STATE;
 
 
@@ -70,11 +88,9 @@ typedef enum
 typedef struct
 {
   GAMESYS_WORK *gsys;
-  FIELD_MAIN_WORK *fieldWork;
 
   MUSICAL_EVENT_STATE state;
   u8 subSeq;
-
   
   BOOL          isComm;
   POKEMON_PARAM *pokePara;
@@ -97,21 +113,23 @@ typedef struct
 //======================================================================
 #pragma mark [> proto
 static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work );
-static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *evWork );
-static const BOOL MUSICAL_EVENT_ExitField( GMEVENT *event, MUSICAL_EVENT_WORK *evWork );
 
 static void MUSICAL_EVENT_InitMusical( MUSICAL_EVENT_WORK *evWork );
 static void MUSICAL_EVENT_TermMusical( MUSICAL_EVENT_WORK *evWork );
-
 static void MUSICAL_EVENT_InitDressUp( MUSICAL_EVENT_WORK *evWork );
 static void MUSICAL_EVENT_TermDressUp( MUSICAL_EVENT_WORK *evWork );
-
 static void MUSICAL_EVENT_InitActing( MUSICAL_EVENT_WORK *evWork );
 static void MUSICAL_EVENT_TermActing( MUSICAL_EVENT_WORK *evWork );
+
+static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *evWork );
+static const BOOL MUSICAL_EVENT_ExitField( GMEVENT *event, MUSICAL_EVENT_WORK *evWork );
+static const void MUSICAL_EVENT_JumpWaitingRoom( GMEVENT *event, MUSICAL_EVENT_WORK *evWork );
+static const void MUSICAL_EVENT_JumpMusicalHall( GMEVENT *event, MUSICAL_EVENT_WORK *evWork );
+static const void MUSICAL_EVENT_RunScript( GMEVENT *event, MUSICAL_EVENT_WORK *evWork , u16 scriptId );
 //--------------------------------------------------------------
 //  イベント作成
 //--------------------------------------------------------------
-GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , FIELD_MAIN_WORK *fieldWork , const BOOL isComm )
+GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const BOOL isComm )
 {
   GMEVENT *event;
   MUSICAL_EVENT_WORK *evWork;
@@ -121,7 +139,6 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , FIELD_MAIN
   evWork = GMEVENT_GetEventWork( event );
   
   evWork->gsys = gsys;
-  evWork->fieldWork = fieldWork;
   evWork->isComm = isComm;
 
   evWork->saveCtrl = GAMEDATA_GetSaveControlWork( gdata );
@@ -133,7 +150,7 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , FIELD_MAIN
   evWork->dupInitWork = NULL;
   evWork->actInitWork = NULL;
 
-  evWork->state = MES_EXIT_FIELD;
+  evWork->state = MES_ENTER_WAITROOM_FIRST;
   evWork->subSeq = 0;
 
   return event;
@@ -147,7 +164,19 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   MUSICAL_EVENT_WORK *evWork = work;
   switch( evWork->state )
   {
-  //会場から抜ける
+  case MES_ENTER_WAITROOM_FIRST:
+    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_PROC );
+    MUSICAL_EVENT_JumpWaitingRoom( event , evWork );
+    evWork->state = MES_WAITROOM_FIRST;
+    break;
+
+  case MES_WAITROOM_FIRST:
+    MUSICAL_EVENT_RunScript( event , evWork , 1 );
+    evWork->state = MES_EXIT_FIELD;
+    break;
+    
+  //フィールドから抜ける
+  //------------------------------
   case MES_EXIT_FIELD:
     {
       const BOOL isFinish = MUSICAL_EVENT_ExitField( event , evWork );
@@ -160,15 +189,16 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     break;
 
   //最初の初期化
+  //------------------------------
   case MES_INIT_MUSICAL:
     {
       MUSICAL_EVENT_InitMusical( evWork );
-      //本当は待合室へ
       evWork->state = MES_INIT_DRESSUP;
     }
     break;
 
   case MES_INIT_DRESSUP:
+    PMSND_StopBGM();
     MUSICAL_EVENT_InitDressUp( evWork );
     GAMESYSTEM_CallProc( evWork->gsys , NO_OVERLAY_ID, &DressUp_ProcData, evWork->dupInitWork );
     evWork->state = MES_TERM_DRESSUP;
@@ -178,12 +208,43 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     if( GAMESYSTEM_IsProcExists(evWork->gsys) == GFL_PROC_MAIN_NULL )
     {
       MUSICAL_EVENT_TermDressUp( evWork );
-      //本当は待合室へ
-      evWork->state = MES_INIT_ACTING;
+      evWork->state = MES_ENTER_WAITROOM_SECOND;
+    }
+    break;
+
+  //ドレスアップ→ショーパート間の控え室
+  //------------------------------
+  case MES_ENTER_WAITROOM_SECOND:
+    {
+      const BOOL isFinish = MUSICAL_EVENT_InitField( event , evWork );
+      if( isFinish == TRUE )
+      {
+        evWork->subSeq = 0;
+        evWork->state = MES_WAITROOM_SECOND;
+      }
     }
     break;
     
+  case MES_WAITROOM_SECOND:
+    MUSICAL_EVENT_RunScript( event , evWork , 2 );
+    evWork->state = MES_EXIT_WAITROOM_SECOND;
+    break;
+    
+  case MES_EXIT_WAITROOM_SECOND:
+    {
+      const BOOL isFinish = MUSICAL_EVENT_ExitField( event , evWork );
+      if( isFinish == TRUE )
+      {
+        evWork->subSeq = 0;
+        evWork->state = MES_INIT_ACTING;
+      }
+    }
+    break;
+    
+  //ショーパート
+  //------------------------------
   case MES_INIT_ACTING:
+    PMSND_StopBGM();
     MUSICAL_EVENT_InitActing( evWork );
     GAMESYSTEM_CallProc( evWork->gsys , NO_OVERLAY_ID, &MusicalStage_ProcData, evWork->actInitWork );
     evWork->state = MES_TERM_ACTING;
@@ -193,16 +254,50 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     if( GAMESYSTEM_IsProcExists(evWork->gsys) == GFL_PROC_MAIN_NULL )
     {
       MUSICAL_EVENT_TermActing( evWork );
-      //本当は待合室へ
-      evWork->state = MES_TERM_MUSICAL;
+      evWork->state = MES_ENTER_WAITROOM_THIRD;
     }
     break;
-  
+
+  //最後の控え室
+  //------------------------------
+  case MES_ENTER_WAITROOM_THIRD:
+    {
+      const BOOL isFinish = MUSICAL_EVENT_InitField( event , evWork );
+      if( isFinish == TRUE )
+      {
+        evWork->subSeq = 0;
+        evWork->state = MES_WAITROOM_THIRD;
+      }
+    }
+    break;
+    
+  case MES_WAITROOM_THIRD:
+    MUSICAL_EVENT_RunScript( event , evWork , 3 );
+    //evWork->state = MES_EXIT_WAITROOM_THIRD;
+    evWork->state = MES_TERM_MUSICAL;
+    break;
+    
+  case MES_EXIT_WAITROOM_THIRD:
+    {
+      const BOOL isFinish = MUSICAL_EVENT_ExitField( event , evWork );
+      if( isFinish == TRUE )
+      {
+        evWork->subSeq = 0;
+        evWork->state = MES_TERM_MUSICAL;
+      }
+    }
+    break;
+    
+  //諸々の開放
+  //------------------------------
   case MES_TERM_MUSICAL:
     MUSICAL_EVENT_TermMusical( evWork );
-    evWork->state = MES_RETURN_FIELD;
+    MUSICAL_EVENT_JumpMusicalHall( event , evWork );
+    evWork->state = MES_FINIHS_EVENT;
     break;
   
+  //フィールドへ戻る
+  //------------------------------
   case MES_RETURN_FIELD:
     {
       const BOOL isFinish = MUSICAL_EVENT_InitField( event , evWork );
@@ -217,6 +312,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   case MES_FINIHS_EVENT:
     //FIXME 仮生成処理
     GFL_HEAP_FreeMemory( evWork->pokePara );
+    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_PROC );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -340,8 +436,11 @@ static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
     evWork->subSeq++;
     break;
   case 1:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(evWork->gsys, evWork->fieldWork, 0));
-    evWork->subSeq++;
+    {
+      FIELD_MAIN_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
+      GMEVENT_CallEvent(event, EVENT_FieldFadeIn(evWork->gsys, fieldWork, 0));
+      evWork->subSeq++;
+    }
     break;
   case 2:
     return TRUE;
@@ -355,14 +454,15 @@ static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
 //--------------------------------------------------------------
 static const BOOL MUSICAL_EVENT_ExitField( GMEVENT *event, MUSICAL_EVENT_WORK *evWork )
 {
+  FIELD_MAIN_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
   switch( evWork->subSeq )
   {
   case 0:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(evWork->gsys, evWork->fieldWork, 0));
+    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(evWork->gsys, fieldWork, 0));
     evWork->subSeq++;
     break;
   case 1:
-    GMEVENT_CallEvent(event, EVENT_FieldClose(evWork->gsys, evWork->fieldWork));
+    GMEVENT_CallEvent(event, EVENT_FieldClose(evWork->gsys, fieldWork));
     evWork->subSeq++;
     break;
   case 2:
@@ -372,4 +472,45 @@ static const BOOL MUSICAL_EVENT_ExitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
   return FALSE;
 }
 
+//--------------------------------------------------------------
+//  待合室へ移動
+//--------------------------------------------------------------
+static const void MUSICAL_EVENT_JumpWaitingRoom( GMEVENT *event, MUSICAL_EVENT_WORK *evWork )
+{
+  GMEVENT *newEvent;
+  FIELD_MAIN_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
+  const VecFx32 pos = { FX32_CONST(88.0f) , 0 , FX32_CONST(72.0f) };
+  
+  newEvent = DEBUG_EVENT_ChangeMapPos( evWork->gsys, fieldWork ,
+                ZONE_ID_C04R0202 , &pos , 0 );
+  GMEVENT_CallEvent(event, newEvent);
+}
+
+//--------------------------------------------------------------
+//  会場へ移動
+//--------------------------------------------------------------
+static const void MUSICAL_EVENT_JumpMusicalHall( GMEVENT *event, MUSICAL_EVENT_WORK *evWork )
+{
+  GMEVENT *newEvent;
+  FIELD_MAIN_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
+
+  const VecFx32 pos = { FX32_CONST(12536.0f) , 0 , FX32_CONST(9432.0f) };
+  
+  newEvent = DEBUG_EVENT_ChangeMapPos( evWork->gsys, fieldWork ,
+                ZONE_ID_C01 , &pos , 2 );
+  GMEVENT_CallEvent(event, newEvent);
+}
+
+//--------------------------------------------------------------
+//  スクリプトを呼ぶ
+//--------------------------------------------------------------
+static const void MUSICAL_EVENT_RunScript( GMEVENT *event, MUSICAL_EVENT_WORK *evWork , u16 scriptId )
+{
+  GMEVENT *newEvent;
+  SCRIPT_FLDPARAM fparam;
+
+  newEvent = SCRIPT_SetEventScript( evWork->gsys, scriptId , NULL ,
+                HEAPID_FIELDMAP );
+  GMEVENT_CallEvent(event, newEvent);
+}
 

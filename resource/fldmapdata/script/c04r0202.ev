@@ -19,7 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c04r0202
+_EVENT_DATA    ev_c04r0202_mus_1st
+_EVENT_DATA    ev_c04r0202_mus_2nd
+_EVENT_DATA    ev_c04r0202_mus_3rd
 _EVENT_DATA_END
 
 
@@ -30,9 +32,28 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+//	ミュージカル台詞　開始時
 /**************************************************************/
-ev_c04r0202:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START ev_c04r0202_mus_1st
+	_BALLOONWIN_OBJMSG_OPEN( msg_mus_01_001 , MMDL_ID_PLAYER )
+	_AB_KEYWAIT()     //キー待ち
+	_BALLOONWIN_CLOSE()
+EVENT_END
 
+/**************************************************************/
+//	ミュージカル台詞　ショー前
+/**************************************************************/
+EVENT_START ev_c04r0202_mus_2nd
+	_BALLOONWIN_OBJMSG_OPEN( msg_mus_02_001 , MMDL_ID_PLAYER )
+	_AB_KEYWAIT()     //キー待ち
+	_BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+//	ミュージカル台詞　終了時
+/**************************************************************/
+EVENT_START ev_c04r0202_mus_3rd
+	_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_001 , MMDL_ID_PLAYER )
+	_AB_KEYWAIT()     //キー待ち
+	_BALLOONWIN_CLOSE()
+EVENT_END

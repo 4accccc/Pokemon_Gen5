@@ -92,7 +92,7 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
   
 //  ev_musical_work->event = EVENT_FieldSubProc( gsys, fparam->fieldMap,
 //    NO_OVERLAY_ID, &Musical_ProcData, init );
-  ev_musical_work->event = MUSICAL_CreateEvent( gsys, gdata , fparam->fieldMap, FALSE );
+  ev_musical_work->event = MUSICAL_CreateEvent( gsys, gdata , FALSE );
    
   //スクリプト終了後、指定したイベントに遷移する
   SCRIPT_EntryNextEvent( sc, call_event );
