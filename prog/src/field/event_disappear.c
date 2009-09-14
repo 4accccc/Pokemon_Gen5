@@ -254,6 +254,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
     break;
   // タスクの追加
   case 2:
+    MMDL_OnStatusBit( mmdl, MMDL_STABIT_SHADOW_VANISH );     // 影を消す
     FIELDMAP_TCB_AddTask_DisappearPlayer_LinearUp( ew->pFieldmap, 80, -50 );  // 自機移動
     FIELDMAP_TCB_AddTask_RotatePlayer( ew->pFieldmap, 80, 10 );               // 回転
     FIELDMAP_TCB_AddTask_CameraZoom( ew->pFieldmap, 30, -50<<FX32_SHIFT );    // ズームイン
