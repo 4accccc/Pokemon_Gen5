@@ -1,7 +1,7 @@
 //======================================================================
 /**
- * @file	eventflag.c
- * @bfief	セーブフラグ、ワーク操作
+ * @file	eventwork.c
+ * @brief	セーブフラグ、ワーク操作
  * @author	Tamada
  * @author	Satoshi Nohara
  * @date	05.10.22
