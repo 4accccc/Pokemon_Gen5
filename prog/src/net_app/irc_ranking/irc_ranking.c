@@ -130,7 +130,7 @@ enum
 #define SCROLL_BAR_ALL_HEIGHT		(2)
 
 #define SCROLL_BAR_FONT_RANK_X		(3)
-#define SCROLL_BAR_FONT_PLAYER_X	(8)
+#define SCROLL_BAR_FONT_PLAYER_X	(7)
 #define SCROLL_BAR_FONT_SCORE_X		(17)
 #define SCROLL_BAR_FONT_COUNT_X		(24)
 
@@ -168,28 +168,28 @@ enum
 	BMPWIN_ID_MAX,
 } ;
 
-#define BMPWIN_TITLE_X				(2)
+#define BMPWIN_TITLE_X				(3)
 #define BMPWIN_TITLE_Y				(1)
-#define BMPWIN_TITLE_W				(28)
+#define BMPWIN_TITLE_W				(26)
 #define BMPWIN_TITLE_H				(2)
 
-#define BMPWIN_RANK_X					(2)
-#define BMPWIN_RANK_Y					(4)
+#define BMPWIN_RANK_X					(1)
+#define BMPWIN_RANK_Y					(5)
 #define BMPWIN_RANK_W					(6)
 #define BMPWIN_RANK_H					(2)
 
-#define BMPWIN_PLAYER_X				(9)
-#define BMPWIN_PLAYER_Y				(4)
+#define BMPWIN_PLAYER_X				(8)
+#define BMPWIN_PLAYER_Y				(5)
 #define BMPWIN_PLAYER_W				(6)
 #define BMPWIN_PLAYER_H				(2)
 
-#define BMPWIN_SCORE_X				(16)
-#define BMPWIN_SCORE_Y				(4)
+#define BMPWIN_SCORE_X				(15)
+#define BMPWIN_SCORE_Y				(5)
 #define BMPWIN_SCORE_W				(6)
 #define BMPWIN_SCORE_H				(2)
 
 #define BMPWIN_COUNT_X				(24)
-#define BMPWIN_COUNT_Y				(4)
+#define BMPWIN_COUNT_Y				(5)
 #define BMPWIN_COUNT_W				(6)
 #define BMPWIN_COUNT_H				(2)
 
@@ -1270,11 +1270,11 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAME_COMM_SYS_PTR	p_gamecomm
 
 		GFL_ARCHDL_UTIL_TransVramPalette( p_wk->p_handle, NARC_ircranking_gra_bg_NCLR,
 				PALTYPE_SUB_BG, RANKING_BG_PAL_S_00*0x20, 0, heapID );
-		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_wk->p_handle, NARC_ircranking_gra_back_NCGR,
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_wk->p_handle, NARC_ircranking_gra_top_NCGR,
 				GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_BACK_S), 0, 0, FALSE, heapID );
 
 
-		GFL_ARCHDL_UTIL_TransVramScreen( p_wk->p_handle, NARC_ircranking_gra_back_NSCR,
+		GFL_ARCHDL_UTIL_TransVramScreen( p_wk->p_handle, NARC_ircranking_gra_top2_NSCR,
 				GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_BACK_S), 0, 0, FALSE, heapID );
 
 
@@ -1309,6 +1309,7 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAME_COMM_SYS_PTR	p_gamecomm
 				NARC_message_irc_ranking_dat, heapID );
 		p_font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, 
 				GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+
 
 		p_wk->p_bmpwin[BMPWIN_ID_TITLE]	= GFL_BMPWIN_Create( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TOP_M),
 				BMPWIN_TITLE_X,BMPWIN_TITLE_Y,BMPWIN_TITLE_W,BMPWIN_TITLE_H,RANKING_BG_PAL_M_14,
@@ -2063,43 +2064,79 @@ static void Scroll_WriteRank( SCROLL_WORK *p_wk, const RANKING_DATA *cp_rank, co
 	}
 
 	//枠描画
+	//ランキング
 	//左上
 	GFL_BG_FillScreen( bar_frm, (start_char_num+0),
 					SCROLL_BAR_X, y_chr, 1, 1, cp_rank->plt );	
 	//左下
-	GFL_BG_FillScreen( bar_frm, (start_char_num+3),
-					SCROLL_BAR_X, y_chr+SCROLL_BAR_HEIGHT-1, 1, 1, cp_rank->plt );	
-	//右上
-	GFL_BG_FillScreen( bar_frm, (start_char_num+2),
-					SCROLL_BAR_X+SCROLL_BAR_WIDTH, y_chr, 1, 1, cp_rank->plt );	
-	//右下
-	GFL_BG_FillScreen( bar_frm, (start_char_num+5),
-					SCROLL_BAR_X+SCROLL_BAR_WIDTH, y_chr+SCROLL_BAR_HEIGHT-1, 1, 1, cp_rank->plt );	
-	//上
-	GFL_BG_FillScreen( bar_frm, (start_char_num+1),
-					SCROLL_BAR_X+1, y_chr, SCROLL_BAR_WIDTH-1, 1, cp_rank->plt );	
-	//下
 	GFL_BG_FillScreen( bar_frm, (start_char_num+4),
-					SCROLL_BAR_X+1, y_chr+SCROLL_BAR_HEIGHT-1, SCROLL_BAR_WIDTH-1, 1, cp_rank->plt );	
+					SCROLL_BAR_X, y_chr+SCROLL_BAR_HEIGHT-1, 1, 1, cp_rank->plt );	
 
+	//右上
+	GFL_BG_FillScreen( bar_frm, (start_char_num+3),
+					SCROLL_BAR_X+SCROLL_BAR_WIDTH-1, y_chr, 1, 1, cp_rank->plt );	
+	//右下
+	GFL_BG_FillScreen( bar_frm, (start_char_num+7),
+					SCROLL_BAR_X+SCROLL_BAR_WIDTH-1, y_chr+SCROLL_BAR_HEIGHT-1, 1, 1, cp_rank->plt );	
+
+	//順位空欄
+	//白上
+	GFL_BG_FillScreen( bar_frm, (start_char_num+1),
+					SCROLL_BAR_X+1, y_chr, 3, 1, cp_rank->plt );	
+	//白下
+	GFL_BG_FillScreen( bar_frm, (start_char_num+5),
+					SCROLL_BAR_X+1, y_chr+SCROLL_BAR_HEIGHT-1, 3, 1, cp_rank->plt );	
+
+	//しきい上
+	GFL_BG_FillScreen( bar_frm, (start_char_num+2),
+					SCROLL_BAR_X+4, y_chr, 1, 1, cp_rank->plt );	
+	//しきい下
+	GFL_BG_FillScreen( bar_frm, (start_char_num+6),
+					SCROLL_BAR_X+4, y_chr+SCROLL_BAR_HEIGHT-1, 1, 1, cp_rank->plt );
+
+	//名前空欄
+	//白上
+	GFL_BG_FillScreen( bar_frm, (start_char_num+1),
+					SCROLL_BAR_X+5, y_chr, 8, 1, cp_rank->plt );	
+	//白下
+	GFL_BG_FillScreen( bar_frm, (start_char_num+5),
+					SCROLL_BAR_X+5, y_chr+SCROLL_BAR_HEIGHT-1, 8, 1, cp_rank->plt );	
+
+	//しきい上
+	GFL_BG_FillScreen( bar_frm, (start_char_num+2),
+					SCROLL_BAR_X+13, y_chr, 1, 1, cp_rank->plt );	
+	//しきい下
+	GFL_BG_FillScreen( bar_frm, (start_char_num+6),
+					SCROLL_BAR_X+13, y_chr+SCROLL_BAR_HEIGHT-1, 1, 1, cp_rank->plt );
+
+	//点数空欄
+	//白上
+	GFL_BG_FillScreen( bar_frm, (start_char_num+1),
+					SCROLL_BAR_X+14, y_chr, 5, 1, cp_rank->plt );	
+	//白下
+	GFL_BG_FillScreen( bar_frm, (start_char_num+5),
+					SCROLL_BAR_X+14, y_chr+SCROLL_BAR_HEIGHT-1, 5, 1, cp_rank->plt );	
+
+
+	//カウント
 	//左上
 	GFL_BG_FillScreen( bar_frm, (start_char_num+0),
-					SCROLL_BAR_CNT_X, y_chr, 1, 1, cp_rank->plt );	
+					SCROLL_BAR_CNT_X-1, y_chr, 1, 1, cp_rank->plt );	
 	//左下
-	GFL_BG_FillScreen( bar_frm, (start_char_num+3),
-					SCROLL_BAR_CNT_X, y_chr+SCROLL_BAR_CNT_HEIGHT-1, 1, 1, cp_rank->plt );	
+	GFL_BG_FillScreen( bar_frm, (start_char_num+4),
+					SCROLL_BAR_CNT_X-1, y_chr+SCROLL_BAR_CNT_HEIGHT-1, 1, 1, cp_rank->plt );	
 	//右上
-	GFL_BG_FillScreen( bar_frm, (start_char_num+2),
+	GFL_BG_FillScreen( bar_frm, (start_char_num+3),
 					SCROLL_BAR_CNT_X+SCROLL_BAR_CNT_WIDTH, y_chr, 1, 1, cp_rank->plt );	
 	//右下
-	GFL_BG_FillScreen( bar_frm, (start_char_num+5),
+	GFL_BG_FillScreen( bar_frm, (start_char_num+7),
 					SCROLL_BAR_CNT_X+SCROLL_BAR_CNT_WIDTH, y_chr+SCROLL_BAR_CNT_HEIGHT-1, 1, 1, cp_rank->plt );	
-	//上
+	//白上
 	GFL_BG_FillScreen( bar_frm, (start_char_num+1),
-					SCROLL_BAR_CNT_X+1, y_chr, SCROLL_BAR_CNT_WIDTH-1, 1, cp_rank->plt );	
-	//下
-	GFL_BG_FillScreen( bar_frm, (start_char_num+4),
-					SCROLL_BAR_CNT_X+1, y_chr+SCROLL_BAR_CNT_HEIGHT-1, SCROLL_BAR_CNT_WIDTH-1, 1, cp_rank->plt );	
+					SCROLL_BAR_CNT_X, y_chr, SCROLL_BAR_CNT_WIDTH, 1, cp_rank->plt );	
+	//白下
+	GFL_BG_FillScreen( bar_frm, (start_char_num+5),
+					SCROLL_BAR_CNT_X, y_chr+SCROLL_BAR_CNT_HEIGHT-1, SCROLL_BAR_CNT_WIDTH, 1, cp_rank->plt );	
 	
 	//文字書き込み
 #if 0
@@ -2315,15 +2352,15 @@ static GFL_BMP_DATA **Scroll_CreateWriteData( SCROLL_WORK *p_wk, HEAPID heapID )
 			//文字描画
 			//ランク
 			WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_strbuf, p_wk->p_rank_buf );
-			PRINTSYS_Print( pp_bmp[i], SCROLL_BAR_FONT_RANK_X*GFL_BG_1CHRDOTSIZ, SCROLL_FONT_Y_OFS, p_wk->p_strbuf, p_wk->p_font );
+			PRINTSYS_Print( pp_bmp[i], SCROLL_BAR_FONT_RANK_X*GFL_BG_1CHRDOTSIZ+3, SCROLL_FONT_Y_OFS, p_wk->p_strbuf, p_wk->p_font );
 			//名前
-			PRINTSYS_Print( pp_bmp[i], SCROLL_BAR_FONT_PLAYER_X*GFL_BG_1CHRDOTSIZ, SCROLL_FONT_Y_OFS, p_wk->cp_data[i].p_name, p_wk->p_font );
+			PRINTSYS_Print( pp_bmp[i], SCROLL_BAR_FONT_PLAYER_X*GFL_BG_1CHRDOTSIZ+3, SCROLL_FONT_Y_OFS, p_wk->cp_data[i].p_name, p_wk->p_font );
 			//点数
 			WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_strbuf, p_wk->p_score_buf );
-			PRINTSYS_Print( pp_bmp[i], SCROLL_BAR_FONT_SCORE_X*GFL_BG_1CHRDOTSIZ, SCROLL_FONT_Y_OFS, p_wk->p_strbuf, p_wk->p_font );
+			PRINTSYS_Print( pp_bmp[i], SCROLL_BAR_FONT_SCORE_X*GFL_BG_1CHRDOTSIZ-3, SCROLL_FONT_Y_OFS, p_wk->p_strbuf, p_wk->p_font );
 			//回数
 			WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_strbuf, p_wk->p_count_buf );
-			PRINTSYS_Print( pp_bmp[i], SCROLL_BAR_FONT_COUNT_X*GFL_BG_1CHRDOTSIZ, SCROLL_FONT_Y_OFS, p_wk->p_strbuf, p_wk->p_font );
+			PRINTSYS_Print( pp_bmp[i], SCROLL_BAR_FONT_COUNT_X*GFL_BG_1CHRDOTSIZ+4, SCROLL_FONT_Y_OFS, p_wk->p_strbuf, p_wk->p_font );
 		}
 	}
 
@@ -2872,6 +2909,7 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, GFL_CLUNIT* p_unit, u8 bar_frm, u8 b
 	{
 		GFL_CLWK_DATA	cldata;
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+		cldata.anmseq	= APP_COMMON_BARICON_RETURN;
 		cldata.pos_x	= APPBAR_ICON_CLOSE_X;
 		cldata.pos_y	= APPBAR_ICON_Y;
 		p_wk->p_clwk	= GFL_CLACT_WK_Create( p_unit, 

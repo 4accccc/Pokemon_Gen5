@@ -338,6 +338,9 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	{	
 		L"GTS", LISTDATA_SEQ_PROC_GTS
 	},
+	{	
+		L"結果", LISTDATA_SEQ_PROC_RESULT,
+	},
 #if 0
 	{	
 		L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
@@ -349,13 +352,10 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 		L"リズム（ひとり）", LISTDATA_SEQ_PROC_RHYTHM_DEBUG
 	},
 	{	
-		L"結果", LISTDATA_SEQ_PROC_RESULT,
-	},
-#endif
-	{	
 		L"運命値チェック", LISTDATA_SEQ_PROC_NAME_DEBUG,
 	},
-#if 0
+#endif
+#if 1
 	{	
 		L"ランキング", LISTDATA_SEQ_PROC_RANKING_DEBUG,
 	},

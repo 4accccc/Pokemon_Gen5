@@ -53,6 +53,15 @@
 //#define DEBUG_RESULT_MSG	//デバッグメッセージを出す
 #endif //PM_DEBUG
 
+//#define OBJNUMBER_SCALE	//スケールする
+
+
+
+//-------------------------------------
+///	マクロ
+//=====================================
+//BGのスケールはOBJと逆なので同じにするマクロ
+#define SCALEBG_SET(a)	(FX_Div(FX32_ONE,(a)))
 
 //-------------------------------------
 ///	パレット
@@ -152,6 +161,10 @@ enum
 #define	MSGWND_SUB_W	(30)
 #define	MSGWND_SUB_H	(5)
 
+#define	MSGWND_TITLE_X	(9)
+#define	MSGWND_TITLE_Y	(4)
+#define	MSGWND_TITLE_W	(14)
+#define	MSGWND_TITLE_H	(2)
 //-------------------------------------
 ///	数
 //=====================================
@@ -180,9 +193,6 @@ enum
 	OBJREGID_PLT_M,
 	OBJREGID_CHR_M,
 	OBJREGID_CEL_M,
-	OBJREGID_PLT_S,
-	OBJREGID_CHR_S,
-	OBJREGID_CEL_S,
 	OBJREGID_MAX
 };
 
@@ -233,14 +243,13 @@ typedef enum
 //１つのOBJが動くまでのシンク
 #define BACKOBJ_MOVE_SYNC	(10)
 
-#define BACKOBJ_ONE_MOVE_SYNC_MIN	(110)
+#define BACKOBJ_ONE_MOVE_SYNC_MIN	(150)
 #define BACKOBJ_ONE_MOVE_SYNC_MAX	(160)
 #define BACKOBJ_ONE_MOVE_SYNC_DIF	(BACKOBJ_ONE_MOVE_SYNC_MAX-BACKOBJ_ONE_MOVE_SYNC_MIN)
 
 enum
 {
 	BACKOBJ_SYS_MAIN,
-	BACKOBJ_SYS_SUB,
 	BACKOBJ_SYS_NUM,
 } ;
 
@@ -252,10 +261,10 @@ typedef enum
 	CLWKID_NUMBER_TOP,
 	CLWKID_NUMBER_END	= CLWKID_NUMBER_TOP+CLWK_NUMBER_MAX,
 
-	CLWKID_BACKOBJ_TOP_S,
-	CLWKID_BACKOBJ_END_S	= CLWKID_BACKOBJ_TOP_S + BACKOBJ_CLWK_MAX,
 	CLWKID_BACKOBJ_TOP_M,
 	CLWKID_BACKOBJ_END_M	= CLWKID_BACKOBJ_TOP_M + BACKOBJ_CLWK_MAX,
+
+	CLWKID_ORIGIN,
 
 	CLWKID_MAX,
 }CLWKID;
@@ -311,6 +320,8 @@ typedef struct
 	GFL_BMPWIN*				p_bmpwin;
 	PRINT_UTIL        print_util;
 	STRBUF*						p_strbuf;
+	u16								clear_chr;
+	u16								dummy;
 } MSGWND_WORK;
 //-------------------------------------
 ///	BACKOBJ	背面ぴかぴか
@@ -332,7 +343,21 @@ typedef struct
 	BACKOBJ_COLOR			color;
 	u32								sync_now;	//１つのワークを開始するまでのシンク
 	u32								sync_max;
+	BOOL							is_start;
 } BACKOBJ_WORK;
+//-------------------------------------
+///	BG拡大縮小
+//=====================================
+typedef struct 
+{
+	u32		frm;
+	u16		sync_max;
+	u16		sync_now;
+	fx32	min;
+	fx32	max;
+	BOOL	is_start;
+} SCALEBG_WORK;
+
 //-------------------------------------
 ///	OBJ数字
 //=====================================
@@ -407,8 +432,11 @@ struct _RESULT_MAIN_WORK
 	MSG_WORK				msg;
 	MSGWND_WORK			msgwnd[MSGWNDID_MAX];
 
-	OBJNUMBER_WORK		number;
-	NUMBERSCROLL_WORK	numscroll;
+	MSGWND_WORK			msgtitle;	//タイトルメッセージ
+
+	OBJNUMBER_WORK	number;
+
+	SCALEBG_WORK		scalebg;
 
 	//下画面バー
 	APPBAR_WORK			*p_appbar;
@@ -423,7 +451,6 @@ struct _RESULT_MAIN_WORK
 
 	//その他汎用
 	u32		cnt;
-	s32		num;
 
 	//引数
 	IRC_RESULT_PARAM	*p_param;
@@ -470,12 +497,14 @@ static const GFL_MSGDATA * MSG_GetMsgDataConst( const MSG_WORK *cp_wk );
 static WORDSET * MSG_GetWordSet( const MSG_WORK *cp_wk );
 //MSG_WINDOW
 static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe, u8 x, u8 y, u8 w, u8 h, u8 plt, HEAPID heapID );
+static void MSGWND_InitEx( MSGWND_WORK* p_wk, u8 bgframe,
+		u8 x, u8 y, u8 w, u8 h, u8 plt, u16 clear_chr, u8 dir, HEAPID heapID );
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
 static BOOL MSGWND_Main( MSGWND_WORK *p_wk, MSG_WORK *p_msg );
 static void MSGWND_Print( MSGWND_WORK* p_wk,
 		const MSG_WORK *cp_msg, u32 strID, u16 x, u16 y );
 static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID );
-static void MSGWND_PrintNumberCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, 
+static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, 
 		u32 strID, u16 number, u16 buff_id );
 static void MSGWND_PrintBothNameCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, const MYSTATUS *cp_my, const MYSTATUS *cp_you );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
@@ -493,23 +522,22 @@ static BOOL OBJNUMBER_IsEnd( const OBJNUMBER_WORK *cp_wk, u16 fig );
 static u8 OBJNUMBER_GetFig( const OBJNUMBER_WORK *cp_wk, int fig );
 static s16 OBJNUMBER_GetFigPosX( const OBJNUMBER_WORK *cp_wk, int fig );
 static void ObjNumber_SetNumber( OBJNUMBER_WORK *p_wk, int number );
-//NUMBERSCROLL
-static void NUMBERSCROLL_Init( NUMBERSCROLL_WORK *p_wk, u8 frm );
-static void NUMBERSCROLL_Exit( NUMBERSCROLL_WORK *p_wk );
-static void NUMBERSCROLL_Main( NUMBERSCROLL_WORK *p_wk );
-static void NUMBERSCROLL_Start( NUMBERSCROLL_WORK *p_wk );
-static void NUMBERSCROLL_SetVisibleReq( NUMBERSCROLL_WORK *p_wk, BOOL is_vanish );
-static u8  NUMBERSCROLL_GetNumberOfs( const NUMBERSCROLL_WORK *cp_wk, u8 num );
-static s16 NUMBERSCROLL_GetPos( const NUMBERSCROLL_WORK *cp_wk );
+//SCALEBG
+static void SCALEBG_Init( SCALEBG_WORK *p_wk, u16 frm, fx32 min, fx32 max, u8 score, HEAPID heapID );
+static void SCALEBG_Exit( SCALEBG_WORK *p_wk );
+static void SCALEBG_Main( SCALEBG_WORK *p_wk );
+static void SCALEBG_Start( SCALEBG_WORK *p_wk, u16 sync );
+static BOOL SCALEBG_IsEnd( const SCALEBG_WORK *cp_wk );
 //BACKOBJ
 static void BACKOBJ_Init( BACKOBJ_WORK *p_wk, const GRAPHIC_WORK *cp_grp, BACKOBJ_MOVE_TYPE type, BACKOBJ_COLOR color, u32 clwk_ofs, int sf_type );
 static void BACKOBJ_Exit( BACKOBJ_WORK *p_wk );
 static void BACKOBJ_Main( BACKOBJ_WORK *p_wk );
-static void BACKOBJ_StartEmit( BACKOBJ_WORK *p_wk, const GFL_POINT *cp_pos );
+static void BACKOBJ_StartGather( BACKOBJ_WORK *p_wk, BOOL is_start );
+static BOOL BACKOBJ_IsEnd( const BACKOBJ_WORK *cp_wk );
 //BACKOBJ_ONE
 static void BACKOBJ_ONE_Init( BACKOBJ_ONE *p_wk, GFL_CLWK *p_clwk, BACKOBJ_COLOR color, int sf_type );
 static void BACKOBJ_ONE_Main( BACKOBJ_ONE *p_wk );
-static void BACKOBJ_ONE_Start( BACKOBJ_ONE *p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, u32 sync );
+static void BACKOBJ_ONE_Start( BACKOBJ_ONE *p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, BACKOBJ_COLOR color, u32 sync );
 static BOOL BACKOBJ_ONE_IsMove( const BACKOBJ_ONE *cp_wk );
 
 
@@ -556,16 +584,19 @@ const GFL_PROC_DATA IrcResult_ProcData	=
 typedef enum 
 {
 	GRAPHIC_BG_FRAME_M_INFOWIN,
-	GRAPHIC_BG_FRAME_M_NUMBER,
+	GRAPHIC_BG_FRAME_M_BOTTLE,
 	GRAPHIC_BG_FRAME_M_BACK,
+	GRAPHIC_BG_FRAME_M_HEART,
 	GRAPHIC_BG_FRAME_S_ROGO,
 	GRAPHIC_BG_FRAME_S_TEXT,
 	GRAPHIC_BG_FRAME_S_BACK,
+	GRAPHIC_BG_FRAME_S_TITLE,
 	GRAPHIC_BG_FRAME_MAX
 } GRAPHIC_BG_FRAME;
 static const u32 sc_bgcnt_frame[ GRAPHIC_BG_FRAME_MAX ] = 
 {
-	GFL_BG_FRAME0_M, GFL_BG_FRAME1_M, GFL_BG_FRAME2_M, GFL_BG_FRAME0_S, GFL_BG_FRAME1_S, GFL_BG_FRAME2_S,
+	GFL_BG_FRAME0_M, GFL_BG_FRAME1_M, GFL_BG_FRAME2_M, GFL_BG_FRAME3_M,
+	GFL_BG_FRAME0_S, GFL_BG_FRAME1_S, GFL_BG_FRAME2_S, GFL_BG_FRAME3_S,
 };
 static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] = 
 {
@@ -576,45 +607,60 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 		GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 	},
-	// GRAPHIC_BG_FRAME_M_NUMBER
+	// GRAPHIC_BG_FRAME_M_BOTTLE
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
-		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+		GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_M_BACK
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
-		GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
+	},
+	// GRAPHIC_BG_FRAME_M_HEART
+	{
+		0, 0, 0x0800, 0,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
+		GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
+		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_S_ROGO
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
-		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_S_TEXT
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
-		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+		GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 	},
 	// GRAPHIC_BG_FRAME_S_BACK
 	{
 		0, 0, 0x800, 0,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 		GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
-		GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+		GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
+	},
+	// GRAPHIC_BG_FRAME_S_TITLE
+	{
+		0, 0, 0x800, 0,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
+		GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x14000, GFL_BG_CHRSIZ256_128x128,
+		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 	},
 };
 static const u32 sc_bgmode[ GRAPHIC_BG_FRAME_MAX ] =
 {	
-	GFL_BG_MODE_TEXT,GFL_BG_MODE_TEXT,GFL_BG_MODE_TEXT,GFL_BG_MODE_TEXT,GFL_BG_MODE_TEXT,GFL_BG_MODE_TEXT
+	GFL_BG_MODE_TEXT,GFL_BG_MODE_TEXT,GFL_BG_MODE_TEXT, GFL_BG_MODE_AFFINE,
+	GFL_BG_MODE_TEXT,GFL_BG_MODE_TEXT,GFL_BG_MODE_TEXT, GFL_BG_MODE_AFFINE,
 };
 
 //=============================================================================
@@ -662,10 +708,18 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	BmpWinFrame_Write( p_wk->msgwnd[MSGWNDID_SUB].p_bmpwin, WINDOW_TRANS_ON, 
 			GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->grp.bg.frame_char), RESULT_BG_PAL_S_06 );
 
-	OBJNUMBER_Init( &p_wk->number, &p_wk->grp, p_wk->p_param->score );
-	NUMBERSCROLL_Init( &p_wk->numscroll, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_NUMBER] );
+	//タイトル文字列作成
+	MSGWND_InitEx( &p_wk->msgtitle, sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE],
+			MSGWND_TITLE_X, MSGWND_TITLE_Y, MSGWND_TITLE_W, MSGWND_TITLE_H, RESULT_BG_PAL_S_08, RESULT_BG_PAL_S_08*0x10+0xf, GFL_BMP_CHRAREA_GET_B, HEAPID_IRCRESULT );
+	MSGWND_PrintCenter( &p_wk->msgtitle, &p_wk->msg, RESULT_TITLE_000 );
+	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_SCALE_X_SET, TITLE_STR_SCALE_X );
+	GFL_BG_SetScaleReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_SCALE_Y_SET, TITLE_STR_SCALE_Y );
+	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_CENTER_X_SET, (MSGWND_TITLE_X + MSGWND_TITLE_W/2)*8 );
+	GFL_BG_SetRotateCenterReq( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_TITLE], GFL_BG_CENTER_Y_SET, (MSGWND_TITLE_Y + MSGWND_TITLE_H/2)*8 );
 
-	BACKOBJ_Init( &p_wk->backobj[BACKOBJ_SYS_SUB], &p_wk->grp, BACKOBJ_MOVE_TYPE_RAIN, BACKOBJ_COLOR_RED, CLWKID_BACKOBJ_TOP_S, CLSYS_DEFREND_SUB );
+	//OBJ数値
+	OBJNUMBER_Init( &p_wk->number, &p_wk->grp, p_wk->p_param->score );
+
 
 	BACKOBJ_Init( &p_wk->backobj[BACKOBJ_SYS_MAIN], &p_wk->grp, BACKOBJ_MOVE_TYPE_GATHER, BACKOBJ_COLOR_RED, CLWKID_BACKOBJ_TOP_M, CLSYS_DEFREND_MAIN );
 
@@ -679,16 +733,15 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 		MSGWND_PrintBothNameCenter( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, 
 				RESULT_STR_000, p_status, p_wk->p_param->p_you_status );
 	}
-	else	
-	{	
-		MSGWND_PrintCenter( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, RESULT_STR_000 );
-	}
 
 	//APPBAR
 	{	
 		GFL_CLUNIT	*p_unit	= GRAPHIC_GetClunit( &p_wk->grp );
-		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_CLOSE, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], RESULT_BG_PAL_M_13, RESULT_OBJ_PAL_M_13, APP_COMMON_MAPPING_128K, HEAPID_IRCRESULT );
+		p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_RETURN, p_unit, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_INFOWIN], RESULT_BG_PAL_M_13, RESULT_OBJ_PAL_M_13, APP_COMMON_MAPPING_128K, HEAPID_IRCRESULT );
 	}
+
+	//SCALEBG
+	SCALEBG_Init( &p_wk->scalebg, sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], SCALEBG_SET(FX32_CONST(0.2)), SCALEBG_SET(FX32_CONST(1)), p_wk->p_param->score, HEAPID_IRCRESULT );
 
 	//デバッグ
 	DEBUGPRINT_Init( sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], FALSE, HEAPID_IRCRESULT );
@@ -728,6 +781,10 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 	DEBUGPRINT_Close();
 	DEBUGPRINT_Exit();
 
+	SCALEBG_Exit( &p_wk->scalebg );
+
+	//モジュール破棄
+	MSGWND_Exit( &p_wk->msgtitle );
 	{		
 		int i;
 		for( i = 0; i < BACKOBJ_SYS_NUM; i++ )
@@ -739,7 +796,6 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 	//APPBAR
 	APPBAR_Exit( p_wk->p_appbar );
 
-	NUMBERSCROLL_Exit( &p_wk->numscroll );
 	//モジュール破棄
 	{	
 		int i;
@@ -850,22 +906,14 @@ static GFL_PROC_RESULT IRC_RESULT_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 		for( i = 0; i < MSGWNDID_MAX; i++ )
 		{	
 			MSGWND_Main( &p_wk->msgwnd[i], &p_wk->msg );
+			MSGWND_Main( &p_wk->msgtitle, &p_wk->msg );
 		}
 	}
 
-	{		
-		int i;
-		//１たん停止
-		/*
-		for( i = 0; i < BACKOBJ_SYS_NUM; i++ )
-		{	
-			BACKOBJ_Main( &p_wk->backobj[i] );
-		}*/
-		BACKOBJ_Main( &p_wk->backobj[BACKOBJ_SYS_MAIN]  );
-	}
 
+	BACKOBJ_Main( &p_wk->backobj[BACKOBJ_SYS_MAIN] );
 	GRAPHIC_Draw( &p_wk->grp );
-
+	SCALEBG_Main( &p_wk->scalebg );
 	APPBAR_Main( p_wk->p_appbar );
 
 	//ここでチェックしても遅れているのは相手なので進めることはしない
@@ -1040,7 +1088,7 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 	{
 		static const GFL_BG_SYS_HEADER sc_bg_sys_header = 
 		{
-			GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_2D
+			GX_DISPMODE_GRAPHICS,GX_BGMODE_1,GX_BGMODE_1,GX_BG0_AS_2D
 		};	
 		GFL_BG_SetBGMode( &sc_bg_sys_header );
 	}
@@ -1062,9 +1110,9 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 		ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
 
 		//パレット
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_irccompatible_gra_aura_bg_NCLR,
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_irccompatible_gra_result_bg_03_NCLR,
 				PALTYPE_MAIN_BG, RESULT_BG_PAL_M_00*0x20, 0, heapID );
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_irccompatible_gra_aura_bg_NCLR,
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_irccompatible_gra_result_bg_03_NCLR,
 				PALTYPE_SUB_BG, RESULT_BG_PAL_S_00*0x20, 0, heapID );
 
 		//キャラ
@@ -1074,18 +1122,19 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK* p_wk, HEAPID heapID )
 				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], 0, 0, FALSE, heapID );
 		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_title_rogo_NCGR,
 				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_ROGO], 0, 0, FALSE, heapID );
-		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_title_rogo_NCGR,
-				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_ROGO], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_01_NCGR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BOTTLE], 0, 0, FALSE, heapID );
 	
 		//スクリーン
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_aura_bg_hert_s_NSCR,
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_aura_bg_block_b_NSCR,
 				sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BACK], 0, 0, FALSE, heapID );
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_aura_bg_hert_s_NSCR,
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_aura_bg_block_b_NSCR,
 				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_BACK], 0, 0, FALSE, heapID );
 		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_title_ketsuka_NSCR,
 				sc_bgcnt_frame[GRAPHIC_BG_FRAME_S_ROGO], 0, 0, FALSE, heapID );
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_aura_bg_suji_NSCR,
-				sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_NUMBER], 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_01_NSCR,
+				sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BOTTLE], 0, 0, FALSE, heapID );
+
 
 		//ワク
 		GFL_BG_FillCharacter( sc_bgcnt_frame[ GRAPHIC_BG_FRAME_S_TEXT], 0, 1, 0 );
@@ -1183,15 +1232,6 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 				NARC_irccompatible_gra_aura_obj_NCER, 
 				NARC_irccompatible_gra_aura_obj_NANR, heapID );
 
-		p_wk->reg_id[OBJREGID_PLT_S]	= GFL_CLGRP_PLTT_Register( p_handle, 
-				NARC_irccompatible_gra_aura_obj_NCLR, CLSYS_DRAW_SUB, RESULT_OBJ_PAL_S_00*0x20, heapID );
-
-		p_wk->reg_id[OBJREGID_CHR_S]	= GFL_CLGRP_CGR_Register( p_handle,
-				NARC_irccompatible_gra_aura_obj_NCGR, FALSE, CLSYS_DRAW_SUB, heapID );
-
-		p_wk->reg_id[OBJREGID_CEL_S]	= GFL_CLGRP_CELLANIM_Register( p_handle,
-				NARC_irccompatible_gra_aura_obj_NCER, 
-				NARC_irccompatible_gra_aura_obj_NANR, heapID );
 
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
@@ -1214,21 +1254,6 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 				);
 		}
 
-		for( i = CLWKID_BACKOBJ_TOP_S; i < CLWKID_BACKOBJ_END_S; i++  )
-		{	
-			p_wk->p_clwk[i]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
-					p_wk->reg_id[OBJREGID_CHR_S],
-					p_wk->reg_id[OBJREGID_PLT_S],
-					p_wk->reg_id[OBJREGID_CEL_S],
-					&cldata,
-					CLSYS_DEFREND_SUB,
-					heapID
-					);
-			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
-			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 3 );
-			GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
-			GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], 0 );
-		}
 
 		for( i = CLWKID_BACKOBJ_TOP_M; i < CLWKID_BACKOBJ_END_M; i++  )
 		{	
@@ -1241,10 +1266,31 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 					heapID
 					);
 			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
-			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 3 );
+			GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[i], 2 );
 			GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
 			GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], 0 );
 		}
+	}
+
+	{	
+		GFL_CLWK_DATA	cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+		cldata.pos_x	= 128;
+		cldata.pos_y	= 96;
+		p_wk->p_clwk[CLWKID_ORIGIN]	= GFL_CLACT_WK_Create( p_wk->p_clunit, 
+				p_wk->reg_id[OBJREGID_CHR_M],
+				p_wk->reg_id[OBJREGID_PLT_M],
+				p_wk->reg_id[OBJREGID_CEL_M],
+				&cldata,
+				CLSYS_DEFREND_MAIN,
+				heapID
+				);
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[CLWKID_ORIGIN], FALSE );
+		GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[CLWKID_ORIGIN], 0 );
+		GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk[CLWKID_ORIGIN], 0 );
+		GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[CLWKID_ORIGIN], TRUE );
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[CLWKID_ORIGIN], 11 );
 	}
 
 	//CLWKの設定
@@ -1262,6 +1308,8 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 			GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk[i], 0 );
 		}
 	}
+
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -1291,9 +1339,6 @@ static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJREGID_CHR_M] );
 		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJREGID_CEL_M] );
 
-		GFL_CLGRP_PLTT_Release( p_wk->reg_id[OBJREGID_PLT_S] );
-		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJREGID_CHR_S] );
-		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJREGID_CEL_S] );
 	}
 
 	//システム破棄
@@ -1509,9 +1554,37 @@ static WORDSET * MSG_GetWordSet( const MSG_WORK *cp_wk )
 static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe, u8 x, u8 y, u8 w, u8 h, u8 plt, HEAPID heapID )
 {	
 	GFL_STD_MemClear( p_wk, sizeof(MSGWND_WORK) );
+	p_wk->clear_chr	= 0xF;
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( bgframe, x, y, w, h, plt, GFL_BMP_CHRAREA_GET_B );
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( TEXTSTR_BUFFER_LENGTH, heapID );
 	PRINT_UTIL_Setup( &p_wk->print_util, p_wk->p_bmpwin );
+	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージ表示面	初期化
+ *
+ *	@param	MSGWND_WORK* p_wk	ワーク
+ *	@param	bgframe						表示するBG面
+ *	@param	x									開始X位置（キャラ単位）
+ *	@param	y									開始Y位置（キャラ単位）
+ *	@param	w									幅（キャラ単位）
+ *	@param	h									高さ（キャラ単位）
+ *	@param	plt								パレット番号
+ *	@param	heapID						ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_InitEx( MSGWND_WORK* p_wk, u8 bgframe,
+		u8 x, u8 y, u8 w, u8 h, u8 plt, u16 clear_chr, u8 dir, HEAPID heapID )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(MSGWND_WORK) );
+	p_wk->clear_chr	= clear_chr;
+	p_wk->p_bmpwin	= GFL_BMPWIN_Create( bgframe, x, y, w, h, plt, dir );
+	p_wk->p_strbuf	= GFL_STR_CreateBuffer( TEXTSTR_BUFFER_LENGTH, heapID );
+	PRINT_UTIL_Setup( &p_wk->print_util, p_wk->p_bmpwin );
+
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
 	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
 }
 //----------------------------------------------------------------------------
@@ -1568,7 +1641,7 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, 
 	p_font	= MSG_GetFont( cp_msg );
 
 	//一端消去
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0xF );	
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
 
 	//文字列作成
 	GFL_MSG_GetString( cp_msgdata, strID, p_wk->p_strbuf );
@@ -1599,24 +1672,19 @@ static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
 	p_font	= MSG_GetFont( cp_msg );
 
 	//一端消去
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0xF );	
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
 
 	//文字列作成
 	GFL_MSG_GetString( cp_msgdata, strID, p_wk->p_strbuf );
 
 	//センター位置計算
-#if  0
 	x	= GFL_BMPWIN_GetSizeX( p_wk->p_bmpwin )*4;
 	y	= GFL_BMPWIN_GetSizeY( p_wk->p_bmpwin )*4;
 	x	-= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_font, 0 )/2;
 	y	-= PRINTSYS_GetStrHeight( p_wk->p_strbuf, p_font )/2;
-#else
-		x	= 0;
-		y	= 0;
-#endif
 
 	//表示
-	PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
+	PRINT_UTIL_PrintColor( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font,PRINTSYS_LSB_Make(0xf,0xe,4) );
 }
 
 //----------------------------------------------------------------------------
@@ -1632,13 +1700,13 @@ static void MSGWND_PrintCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 s
  *	@param	y									開始位置Y
  */
 //-----------------------------------------------------------------------------
-static void MSGWND_PrintNumberCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 number, u16 buff_id )
+static void MSGWND_PrintNumber( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg, u32 strID, u16 number, u16 buff_id )
 {
 	const GFL_MSGDATA* cp_msgdata;
 	WORDSET *p_wordset;
 	
 	//一端消去
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0xF );	
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
 
 	//モジュール取得
 	p_wordset		= MSG_GetWordSet( cp_msg );
@@ -1664,16 +1732,8 @@ static void MSGWND_PrintNumberCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_msg,
 		p_que		= MSG_GetPrintQue( cp_msg );
 		p_font	= MSG_GetFont( cp_msg );
 
-		//センター位置計算
-#if 0
-		x	= GFL_BMPWIN_GetSizeX( p_wk->p_bmpwin )*4;
-		y	= GFL_BMPWIN_GetSizeY( p_wk->p_bmpwin )*4;
-		x	-= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_font, 0 )/2;
-		y	-= PRINTSYS_GetStrHeight( p_wk->p_strbuf, p_font )/2;
-#else
 		x	= 0;
 		y	= 0;
-#endif
 
 		PRINT_UTIL_Print( &p_wk->print_util, p_que, x, y, p_wk->p_strbuf, p_font );
 	}
@@ -1695,7 +1755,7 @@ static void MSGWND_PrintBothNameCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_ms
 	u16 x, y;
 	
 	//一端消去
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0xF );	
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
 
 	//モジュール取得
 	p_wordset		= MSG_GetWordSet( cp_msg );
@@ -1743,7 +1803,7 @@ static void MSGWND_PrintBothNameCenter( MSGWND_WORK* p_wk, const MSG_WORK *cp_ms
 //-----------------------------------------------------------------------------
 static void MSGWND_Clear( MSGWND_WORK* p_wk )
 {	
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
 	GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
 }
 
@@ -1810,6 +1870,8 @@ static void SEQFUNC_StartGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		//セーブする
 		IRC_COMPATIBLE_SV_AddRanking( p_sv, MyStatus_GetMyName(p_you), score, MyStatus_GetID(p_you) );
 	}
+
+	BACKOBJ_StartGather( &p_wk->backobj[BACKOBJ_SYS_MAIN], FALSE );
 	SEQ_Change( p_wk, SEQFUNC_DecideScore );
 }
 //----------------------------------------------------------------------------
@@ -1824,77 +1886,95 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 {	
 	enum
 	{	
-		SEQ_INIT_WAIT,
-		SEQ_START_ALPHA,
-		SEQ_MAIN_WAIT,
+#if 0
+		SEQ_START_GATHER,	//集まり開始
+		SEQ_WAIT_GATHER,	//集まり中
+		SEQ_START_FLASHIN,//フラッシュ入り開始
+		SEQ_WAIT_FLASHIN,	//フラッシュ入り中
+		SEQ_START_FLASHOUT,//フラッシュ出開始
+		SEQ_WAIT_FLASHOUT,	//フラッシュ出中
+#endif
+		SEQ_START_SCALE,	//ハート拡大開始
+		SEQ_WAIT_SCALE,		//ハート拡大中
 		SEQ_MAIN,
-		SEQ_END_ALPHA,
+		SEQ_END_MSG,
 		SEQ_END_WAIT,
 	};
 
 	switch( *p_seq )
 	{	
-	case SEQ_INIT_WAIT:
-		if( p_wk->cnt++ > 100 )
+#if 0
+	case SEQ_START_GATHER:
+		if( p_wk->cnt++ > 200 )
 		{	
 			p_wk->cnt	= 0;
-			*p_seq		= SEQ_START_ALPHA;
+			BACKOBJ_StartGather( &p_wk->backobj[BACKOBJ_SYS_MAIN], FALSE );
+			*p_seq	= SEQ_WAIT_GATHER;
 		}
 		break;
 
-	case SEQ_START_ALPHA:
-		NUMBERSCROLL_Start( &p_wk->numscroll );
-		NUMBERSCROLL_SetVisibleReq( &p_wk->numscroll, TRUE );
-		*p_seq		= SEQ_MAIN_WAIT;
+	case SEQ_WAIT_GATHER:
+		if( BACKOBJ_IsEnd( &p_wk->backobj[BACKOBJ_SYS_MAIN] ) )
+		{
+			*p_seq	= SEQ_START_FLASHIN;
+		}
 		break;
 
-	case SEQ_MAIN_WAIT:
-		if( p_wk->cnt++ > 30 )
+
+	case SEQ_START_FLASHIN://フラッシュ入り開始
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, -2 );
+		*p_seq	= SEQ_WAIT_FLASHIN;
+		break;
+
+	case SEQ_WAIT_FLASHIN:	//フラッシュ入り中
+		if( !GFL_FADE_CheckFade() )
 		{	
-			p_wk->cnt	= 0;
-			p_wk->num	= 2;
-			*p_seq		= SEQ_MAIN;
+			GFL_CLWK*	p_clwk;
+			//ハートの元を消す
+			p_clwk	= GRAPHIC_GetClwk( &p_wk->grp, CLWKID_ORIGIN );
+			GFL_CLACT_WK_SetDrawEnable( p_clwk, FALSE );
+			*p_seq	= SEQ_START_FLASHOUT;
+		}
+		break;
+
+	case SEQ_START_FLASHOUT://フラッシュ出開始
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, -2 );
+		*p_seq	= SEQ_WAIT_FLASHOUT;
+		break;
+
+	case SEQ_WAIT_FLASHOUT:	//フラッシュ出中
+		if( !GFL_FADE_CheckFade() )
+		{	
+			*p_seq	= SEQ_START_SCALE;
+		}
+		break;
+#endif
+	case SEQ_START_SCALE:
+		SCALEBG_Start( &p_wk->scalebg, 90 );
+		*p_seq	= SEQ_WAIT_SCALE;
+		break;
+
+	case SEQ_WAIT_SCALE:
+		if( SCALEBG_IsEnd(&p_wk->scalebg) )
+		{	
+			OBJNUMBER_Start( &p_wk->number, 0 );
+			OBJNUMBER_Start( &p_wk->number, 1 );
+			OBJNUMBER_Start( &p_wk->number, 2 );
+			*p_seq	= SEQ_MAIN;
 		}
 		break;
 
 	case SEQ_MAIN:
+		if( OBJNUMBER_IsEnd( &p_wk->number, 0 ) 
+		 && OBJNUMBER_IsEnd( &p_wk->number, 1 )
+		 && OBJNUMBER_IsEnd( &p_wk->number, 2 ) )
 		{	
-			u8 target_num;
-			s16 ofs;
-			s16 now_pos;
-			s16 target_pos;
-
-			if( OBJNUMBER_IsEnd( &p_wk->number, p_wk->num ) )
-			{	
-				p_wk->num--;
-				if( p_wk->num == -1 )
-				{	
-					*p_seq	= SEQ_END_ALPHA;
-					break;
-				}
-			}
-
-			now_pos			= NUMBERSCROLL_GetPos( &p_wk->numscroll );
-
-			target_num	= OBJNUMBER_GetFig( &p_wk->number, p_wk->num );
-			target_pos	= OBJNUMBER_GetFigPosX( &p_wk->number, p_wk->num );	
-			ofs					= NUMBERSCROLL_GetNumberOfs( &p_wk->numscroll, target_num );
-			now_pos			+= ofs;
-
-			now_pos			= MATH_IAbs( now_pos );
-			now_pos			%= 256;
-			NAGI_Printf( " target%d now%d num%d ofs%d\n", target_pos, now_pos, target_num, ofs );
-
-			if( (target_pos-16 <= now_pos && now_pos <= target_pos+16) )
-			{	
-				OBJNUMBER_Start( &p_wk->number, p_wk->num );
-			}
-		}
+			*p_seq	= SEQ_END_MSG;
+		}		
 		break;
 		
-	case SEQ_END_ALPHA:
-		NUMBERSCROLL_SetVisibleReq( &p_wk->numscroll, FALSE );
-		MSGWND_PrintNumberCenter( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, RESULT_STR_001,
+	case SEQ_END_MSG:
+		MSGWND_PrintNumber( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, RESULT_STR_001,
 				p_wk->p_param->score, 2 );
 
 		*p_seq		= SEQ_END_WAIT;
@@ -1904,13 +1984,12 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 	}
 
-	if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_CLOSE )
+	if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
 	{	
 		SEQ_End( p_wk );
 	}
 
 	OBJNUMBER_Main( &p_wk->number );
-	NUMBERSCROLL_Main( &p_wk->numscroll );
 }
 
 //=============================================================================
@@ -1956,8 +2035,11 @@ static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, const GRAPHIC_WORK *cp_grp, in
 			}
 			clpos.y	= 92;
 			GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, 0 );
+
+#ifdef OBJNUMBER_SCALE
 			GFL_CLACT_WK_SetAffineParam( p_wk->p_clwk[i], NNS_G2D_RND_AFFINE_OVERWRITE_DOUBLE );
 			GFL_CLACT_WK_SetScale( p_wk->p_clwk[i],	&scale );
+#endif
 			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
 
 
@@ -1992,7 +2074,11 @@ static void OBJNUMBER_Start( OBJNUMBER_WORK *p_wk, int fig )
 		}
 		else
 		{	
+#ifdef OBJNUMBER_SCALE
 			p_wk->start[ fig ]	= TRUE;
+#else
+			p_wk->is_end[fig]	= TRUE;
+#endif
 			NAGI_Printf( "start! ID%d\n", fig );
 			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[ fig ], TRUE );
 		}
@@ -2013,6 +2099,7 @@ static void OBJNUMBER_Start( OBJNUMBER_WORK *p_wk, int fig )
 //-----------------------------------------------------------------------------
 static BOOL OBJNUMBER_Main( OBJNUMBER_WORK *p_wk )
 {	
+#ifdef OBJNUMBER_SCALE
 	int i;
 	GFL_CLSCALE		scale;
 	for( i = 0; i < CLWK_NUMBER_MAX; i++ )
@@ -2035,7 +2122,7 @@ static BOOL OBJNUMBER_Main( OBJNUMBER_WORK *p_wk )
 			GFL_CLACT_WK_SetScale( p_wk->p_clwk[i],	&scale );
 		}
 	}
-
+#endif
 	return FALSE;
 }
 
@@ -2150,162 +2237,152 @@ static void ObjNumber_SetNumber( OBJNUMBER_WORK *p_wk, int number )
 }
 //=============================================================================
 /**
- *			数字スクロール
+ *			SCALEBG
  */
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	初期化
+ *	@brief	拡大縮小BG	初期化
  *
- *	@param	NUMBERSCROLL_WORK *p_wk		ワーク
+ *	@param	SCALEBG_WORK *p_wk	ワーク
+ *	@param	frm									BGフレーム
+ *	@param	min									最小
+ *	@param	max									最大
+ *	@param	heapID							ヒープID
+ *
  */
 //-----------------------------------------------------------------------------
-static void NUMBERSCROLL_Init( NUMBERSCROLL_WORK *p_wk, u8 frm )
+static void SCALEBG_Init( SCALEBG_WORK *p_wk, u16 frm, fx32 min, fx32 max, u8 score, HEAPID heapID )
 {	
-	GFL_STD_MemClear( p_wk, sizeof(NUMBERSCROLL_WORK) );
-	p_wk->frm = frm;
+	GFL_STD_MemClear( p_wk, sizeof(SCALEBG_WORK) );
+	p_wk->frm	= frm;
+	p_wk->min	= min;
+	p_wk->max	= max;
+
+
+	{	
+		ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_IRCCOMPATIBLE, heapID );
 	
-	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1, GX_BLEND_PLANEMASK_BG2, 0, 0 );
-	GFL_BG_SetVisible( p_wk->frm, FALSE );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	破棄
- *
- *	@param	NUMBERSCROLL_WORK *p_wk		ワーク
- */
-//-----------------------------------------------------------------------------
-static void NUMBERSCROLL_Exit( NUMBERSCROLL_WORK *p_wk )
-{	
-	G2_BlendNone();
-
-	GFL_STD_MemClear( p_wk, sizeof(NUMBERSCROLL_WORK) );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	メイン処理
- *
- *	@param	NUMBERSCROLL_WORK *p_wk		ワーク
- */
-//-----------------------------------------------------------------------------
-static void NUMBERSCROLL_Main( NUMBERSCROLL_WORK *p_wk )
-{	
-	if( p_wk->is_move_req )
-	{	
-		GFL_BG_SetScrollReq( p_wk->frm, GFL_BG_SCROLL_X_INC, -3 );
-	}
-
-	if( p_wk->is_vanish_req )
-	{	
-		p_wk->alpha	+= p_wk->alpha_add;
-		if( p_wk->sync++ > NUMBERSCROLL_ALPHA_SYNC )
+		if( score == 100 )
 		{	
-			p_wk->alpha	= p_wk->alpha_end;
-			p_wk->is_vanish_req	= FALSE;
-			if( p_wk->is_vanish == FALSE )
-			{	
-				GFL_BG_SetVisible( p_wk->frm, FALSE );
-			}
+			//読み込み
+			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_03_NCGR,
+					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
+			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_03_NSCR,
+					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
 		}
-		G2_ChangeBlendAlpha( p_wk->alpha >> FX32_SHIFT, 0 );
-	}
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	開始
- *
- *	@param	NUMBERSCROLL_WORK *p_wk		ワーク
- *
- *	@return
- */
-//-----------------------------------------------------------------------------
-static void NUMBERSCROLL_Start( NUMBERSCROLL_WORK *p_wk )
-{	
-	p_wk->is_move_req		= TRUE;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	消える
- *
- *	@param	NUMBERSCROLL_WORK *p_wk		wワーク
- */
-//-----------------------------------------------------------------------------
-static void NUMBERSCROLL_SetVisibleReq( NUMBERSCROLL_WORK *p_wk, BOOL is_vanish )
-{	
-	if( p_wk->is_vanish != is_vanish )
-	{	
-		p_wk->is_vanish_req		= TRUE;
-		p_wk->is_vanish				= is_vanish;
-		p_wk->sync						= 0;
-
-		if( p_wk->is_vanish )
+		else if( 90 <= score && score < 100 )
 		{	
-			GFL_BG_SetVisible( p_wk->frm, TRUE );
-			p_wk->alpha			= 0;
-			p_wk->alpha_end	= FX32_CONST(NUMBERSCROLL_ALPHA);
+			//読み込み
+			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_04_NCGR,
+					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
+			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_04_NSCR,
+					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
+		}
+		else if( 80 <= score && score < 90 )
+		{	
+			//読み込み
+			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_05_NCGR,
+					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
+			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_05_NSCR,
+					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
+		}
+		else if( score == 0 )
+		{
+			//読み込み
+			GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_irccompatible_gra_result_bg_06_NCGR,
+					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );
+			GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_irccompatible_gra_result_bg_06_NSCR,
+					sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_HEART], 0, 0, FALSE, heapID );	
 		}
 		else
 		{	
-			p_wk->alpha			= FX32_CONST(NUMBERSCROLL_ALPHA);
-			p_wk->alpha_end	= 0;
+			GF_ASSERT(0);
 		}
-		p_wk->alpha_add	= (p_wk->alpha_end - p_wk->alpha) / NUMBERSCROLL_ALPHA_SYNC;
-	}
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	現在の数字取得
- *
- *	@param	const NUMBERSCROLL_WORK *cp_wk 
- *
- *	@return	座標取得
- */
-//-----------------------------------------------------------------------------
-static u8  NUMBERSCROLL_GetNumberOfs( const NUMBERSCROLL_WORK *cp_wk, u8 num )
-{	
-	static const sc_number_pos[]	=
-	{	
-		//0, 1,  2,  3,  4,   5,   6,   7,  8,   9
-		16, 40, 64, 86, 112, 136, 160, 184, 207, 231 
-	};
-
-#if 0
-	int i;
-	int x;
 	
-	x	= GFL_BG_GetScrollX( cp_wk->frm );
-	NAGI_Printf( "pos%d\n", x );
-	x	= MATH_IAbs(x);
-	NAGI_Printf( "pos%d\n", x );
-	x	%=	256;
-	NAGI_Printf( "pos%d\n", x );
-	for( i = 0; i < NELEMS(sc_number_pos) - 1; i++ )
-	{	
-		if( sc_number_pos[i] < x && x < sc_number_pos[i+1] )
-		{	
-			NAGI_Printf( "num%d\n", i );
-			return i;
-		}
+		GFL_ARC_CloseDataHandle( p_handle );
 	}
 
-	return 9;
-#else
-	GF_ASSERT( num < NELEMS(sc_number_pos) );
-	return sc_number_pos[ num ];
-#endif
+
+	//設定
+	GFL_BG_SetScaleReq( p_wk->frm, GFL_BG_SCALE_X_SET, p_wk->min );
+	GFL_BG_SetScaleReq( p_wk->frm, GFL_BG_SCALE_Y_SET, p_wk->min );
+	GFL_BG_SetRotateCenterReq( p_wk->frm, GFL_BG_CENTER_X_SET, 128 );
+	GFL_BG_SetRotateCenterReq( p_wk->frm, GFL_BG_CENTER_Y_SET, 96 );
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	座標を取得
+ *	@brief	拡大縮小BG	破棄
  *
- *	@param	const NUMBERSCROLL_WORK *cp_wk	ワーク
+ *	@param	SCALEBG_WORK *p_wk	ワーク
  *
- *	@return	座標を取得
  */
 //-----------------------------------------------------------------------------
-static s16 NUMBERSCROLL_GetPos( const NUMBERSCROLL_WORK *cp_wk )
+static void SCALEBG_Exit( SCALEBG_WORK *p_wk )
 {	
-	return GFL_BG_GetScrollX( cp_wk->frm );
+	GFL_STD_MemClear( p_wk, sizeof(SCALEBG_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	拡大縮小BG	メイン処理
+ *
+ *	@param	SCALEBG_WORK *p_wk	ワーク 
+ *
+ */
+//-----------------------------------------------------------------------------
+static void SCALEBG_Main( SCALEBG_WORK *p_wk )
+{	
+	fx32 now;
+	fx32 dif;
+	if( p_wk->is_start )
+	{	
+		dif	= p_wk->max - p_wk->min;
+		if( p_wk->sync_now++ < p_wk->sync_max )
+		{	
+			now	= p_wk->min + (dif * p_wk->sync_now / p_wk->sync_max);
+		}
+		else
+		{	
+			now	= p_wk->min + dif;
+		}
+		GFL_BG_SetScaleReq( p_wk->frm, GFL_BG_SCALE_X_SET, now );
+		GFL_BG_SetScaleReq( p_wk->frm, GFL_BG_SCALE_Y_SET, now );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	拡大縮小BG	拡縮開始
+ *
+ *	@param	SCALEBG_WORK *p_wk	ワーク
+ *	@param	rate	0ならばminのままFX32_ONEならばmax
+ *	@param	sync	シンク
+ */
+//-----------------------------------------------------------------------------
+static void SCALEBG_Start( SCALEBG_WORK *p_wk, u16 sync )
+{	
+	p_wk->is_start		= TRUE;
+	p_wk->sync_max		= sync;
+	p_wk->sync_now		= 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	拡大縮小BG　終了チェック
+ *
+ *	@param	const SCALEBG_WORK *cp_wk		ワーク
+ *
+ *	@return	TRUEならば終了	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL SCALEBG_IsEnd( const SCALEBG_WORK *cp_wk )
+{	
+	if( cp_wk->is_start )
+	{	
+		return !(cp_wk->sync_now < cp_wk->sync_max);
+	}
+	else
+	{	
+		return TRUE;
+	}
 }
 //=============================================================================
 /**
@@ -2367,62 +2444,82 @@ static void BACKOBJ_Main( BACKOBJ_WORK *p_wk )
 	GFL_POINT	start;
 	GFL_POINT	end;
 
-	//タイプ別移動
-	switch( p_wk->type )
+	if( p_wk->is_start )
 	{	
-	case BACKOBJ_MOVE_TYPE_RAIN:		//雨
-		if( p_wk->sync_now++ > p_wk->sync_max )
-		{	
-			p_wk->sync_now	= 0;
-			for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
-			{	
-				if( !BACKOBJ_ONE_IsMove( &p_wk->wk[i] ) )
-				{	
-					u8	up_or_down	= GFUser_GetPublicRand(2);
 
-					start.x	= GFUser_GetPublicRand(256);
-					start.y	= -36;
-					end.x		= start.x;
-					end.y		= 192 + 36;
-					sync	= BACKOBJ_ONE_MOVE_SYNC_MIN + GFUser_GetPublicRand(BACKOBJ_ONE_MOVE_SYNC_DIF);
-					if( up_or_down )
+		//タイプ別移動
+		switch( p_wk->type )
+		{	
+		case BACKOBJ_MOVE_TYPE_RAIN:		//雨
+			if( p_wk->sync_now++ > p_wk->sync_max )
+			{	
+				p_wk->sync_now	= 0;
+				for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
+				{	
+					if( !BACKOBJ_ONE_IsMove( &p_wk->wk[i] ) )
 					{	
-						BACKOBJ_ONE_Start( &p_wk->wk[i], &end, &start, sync );
+						u8	up_or_down	= GFUser_GetPublicRand(2);
+
+						start.x	= GFUser_GetPublicRand(256);
+						start.y	= -36;
+						end.x		= start.x;
+						end.y		= 192 + 36;
+						sync	= BACKOBJ_ONE_MOVE_SYNC_MIN + GFUser_GetPublicRand(BACKOBJ_ONE_MOVE_SYNC_DIF);
+						if( up_or_down )
+						{	
+							BACKOBJ_ONE_Start( &p_wk->wk[i], &end, &start, BACKOBJ_COLOR_RED, sync );
+						}
+						else
+						{	
+							BACKOBJ_ONE_Start( &p_wk->wk[i], &start, &end, BACKOBJ_COLOR_RED, sync );
+						}
+						break;
 					}
-					else
-					{	
-						BACKOBJ_ONE_Start( &p_wk->wk[i], &start, &end, sync );
-					}
-					break;
 				}
 			}
-		}
-		break;
+			break;
 
-	case BACKOBJ_MOVE_TYPE_EMITER:	//放出
-		/* BACKOBJ_StartEmitで行う  */
-		break;
+		case BACKOBJ_MOVE_TYPE_EMITER:	//放出
+			/* BACKOBJ_StartEmitで行う  */
+			break;
 
-	case BACKOBJ_MOVE_TYPE_GATHER:	//集中
-		if( p_wk->sync_now++ > p_wk->sync_max )
-		{	
-			p_wk->sync_now	= 0;
-			for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
+		case BACKOBJ_MOVE_TYPE_GATHER:	//集中
+			if( p_wk->sync_now++ > p_wk->sync_max )
 			{	
-				if( !BACKOBJ_ONE_IsMove( &p_wk->wk[i] ) )
+				p_wk->sync_now	= 0;
+				for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
 				{	
-					u16 rot	= GFUser_GetPublicRand(0xFFFF);
-					start.x	= (FX_SinIdx(rot) * 256) >> FX32_SHIFT;
-					start.y	= (FX_CosIdx(rot) * 256) >> FX32_SHIFT;
-					end.x		= 128;
-					end.y		= 96;
-					sync	= BACKOBJ_ONE_MOVE_SYNC_MIN + GFUser_GetPublicRand(BACKOBJ_ONE_MOVE_SYNC_DIF);
-					BACKOBJ_ONE_Start( &p_wk->wk[i], &start, &end, sync );
-					break;
+					if( !BACKOBJ_ONE_IsMove( &p_wk->wk[i] ) )
+					{	
+						BACKOBJ_COLOR	color;
+						u16 rot	= GFUser_GetPublicRand(0xFFFF);
+						start.x	= (FX_SinIdx(rot) * 256) >> FX32_SHIFT;
+						start.y	= (FX_CosIdx(rot) * 256) >> FX32_SHIFT;
+						end.x		= 128;
+						end.y		= 96;
+						sync	= BACKOBJ_ONE_MOVE_SYNC_MIN + GFUser_GetPublicRand(BACKOBJ_ONE_MOVE_SYNC_DIF);
+
+						{
+							static const BACKOBJ_COLOR	sc_color_tbl[]	=
+							{	
+								BACKOBJ_COLOR_RED,
+								BACKOBJ_COLOR_ORANGE,
+								BACKOBJ_COLOR_YELLOW,
+								BACKOBJ_COLOR_YEGREEN,
+								BACKOBJ_COLOR_GREEN,
+								BACKOBJ_COLOR_WATER,
+								BACKOBJ_COLOR_BLUE,
+							};
+							color	= sc_color_tbl[ GFUser_GetPublicRand(NELEMS(sc_color_tbl)) ];
+						}
+						BACKOBJ_ONE_Start( &p_wk->wk[i], &start, &end, color, sync );
+						break;
+					}
 				}
 			}
+			break;
 		}
-		break;
+
 	}
 
 
@@ -2442,23 +2539,32 @@ static void BACKOBJ_Main( BACKOBJ_WORK *p_wk )
  *	@param	GFL_POINT *cp_pos		放出開始座標
  */
 //-----------------------------------------------------------------------------
-static void BACKOBJ_StartEmit( BACKOBJ_WORK *p_wk, const GFL_POINT *cp_pos )
+static void BACKOBJ_StartGather( BACKOBJ_WORK *p_wk, BOOL is_start )
+{
+	p_wk->is_start	= is_start;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	後ろのOBJ処理終了したか
+ *
+ *	@param	const BACKOBJ_WORK *cp_wk		ワーク
+ *
+ *	@return	TRUEならば処理終了	FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL BACKOBJ_IsEnd( const BACKOBJ_WORK *cp_wk )
 {	
 	int i;
-	u32 sync;
-	u16 rot;
-	GFL_POINT	end;
+
 	for( i = 0; i < BACKOBJ_CLWK_MAX; i++ )
 	{	
-		if( !BACKOBJ_ONE_IsMove( &p_wk->wk[i] ) )
-		{
-			rot	= GFUser_GetPublicRand(0xFFFF);
-			end.x	= (FX_SinIdx(rot) * 256) >> FX32_SHIFT;
-			end.y	= (FX_CosIdx(rot) * 256) >> FX32_SHIFT;
-			sync	= BACKOBJ_ONE_MOVE_SYNC_MIN + GFUser_GetPublicRand(BACKOBJ_ONE_MOVE_SYNC_DIF);
-			BACKOBJ_ONE_Start( &p_wk->wk[i], cp_pos, &end, sync );
+		if( BACKOBJ_ONE_IsMove( &cp_wk->wk[i] ) )
+		{	
+			return FALSE;
 		}
 	}
+
+	return TRUE;
 }
 //=============================================================================
 /**
@@ -2528,7 +2634,7 @@ static void BACKOBJ_ONE_Main( BACKOBJ_ONE *p_wk )
  *	@param	sync								移動シンク
  */
 //-----------------------------------------------------------------------------
-static void BACKOBJ_ONE_Start( BACKOBJ_ONE *p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, u32 sync )
+static void BACKOBJ_ONE_Start( BACKOBJ_ONE *p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, BACKOBJ_COLOR color, u32 sync )
 {	
 	p_wk->is_req		= TRUE;
 	VEC_Set( &p_wk->start, FX32_CONST(cp_start->x), FX32_CONST(cp_start->y), 0 );
@@ -2536,6 +2642,7 @@ static void BACKOBJ_ONE_Start( BACKOBJ_ONE *p_wk, const GFL_POINT *cp_start, con
 	p_wk->sync_now	= 0;
 	p_wk->sync_max	= sync;
 	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
+	GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk, color, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 }
 
 //----------------------------------------------------------------------------
