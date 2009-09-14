@@ -19,10 +19,10 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_t01_talkobj_bigman
 _EVENT_DATA   ev_t01_talkobj_woman2_01
-_EVENT_DATA   ev_t01_talkobj_black_01
+_EVENT_DATA   ev_t01_rival_01
 _EVENT_DATA   ev_t01_talkobj_babygirl1
-_EVENT_DATA   ev_t01_posevent_test1
-_EVENT_DATA   ev_t01_bgevent_test1
+_EVENT_DATA   ev_pos_t01_rival_stop_01
+_EVENT_DATA   ev_t01_support_01
 _EVENT_DATA_END //データ終端を指定しています。
 
 
@@ -85,17 +85,18 @@ EVENT_START   ev_t01_talkobj_woman2_01
 EVENT_END
 
 /************************************************************/
-/*				クロック：研究所ストッパー					*/
+/*				ライバル：研究所ストッパー					*/
 /************************************************************/
-EVENT_START	ev_t01_talkobj_black_01
+EVENT_START	ev_t01_rival_01
 	_TALK_OBJ_START()
 
-	//ホワイティ宅のイベント前後で分岐
-	IF FLAG_ON( FH_01 ) THEN
+	//サポート宅のイベント前後で分岐
+	IF $WK_SCENE_T01R0201 >= 1 THEN
 		//イベント後なら研究所案内イベント
 
 		//ん…何かあった？
 		_BALLOONWIN_TALKOBJ_OPEN( msg_t01_black_03 )
+		_BALLOONWIN_CLOSE()
 
 		//友達ズ：研究所内へ入る
 //		_OBJ_ANIME( obj_id, anm_アニメラベル )
@@ -112,9 +113,32 @@ EVENT_START	ev_t01_talkobj_black_01
 
 EVENT_END
 
-/**************************************************************/
-/*  T01 BABYGIRL1の会話用イベントスクリプト                      */
-/**************************************************************/
+//--------------------------------------------------------------------
+//ライバル＆サポート：研究所内へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_labo_rival_move_01
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_labo_support_move_01
+	_ANIME_DATA	AC_WAIT_4F,3
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_R_6F,1
+	_ANIME_DATA	AC_WALK_U_6F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：研究所内へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_labo_player_move_01
+	_ANIME_DATA	AC_WAIT_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*						男の子								*/
+/************************************************************/
 EVENT_START   ev_t01_talkobj_babygirl1
 	_TALK_OBJ_START()
 
@@ -124,20 +148,21 @@ EVENT_START   ev_t01_talkobj_babygirl1
  	_BALLOONWIN_CLOSE()
 EVENT_END
 
-//-------------------------------------------------------------
-//  T01 テスト用座標イベントスクリプト
-//-------------------------------------------------------------
-EVENT_START ev_t01_posevent_test1
+
+/************************************************************/
+/*				ライバルpos：１番道路側ストッパー			*/
+/************************************************************/
+EVENT_START ev_pos_t01_rival_stop_01
 	//【仮】未仕様ラベル　後でリサイクルします
 EVENT_END
 
-//-------------------------------------------------------------
-//  T01 テスト用BG話し掛けイベントスクリプト
-//-------------------------------------------------------------
-EVENT_START ev_t01_bgevent_test1
-#if 0
-  _BALLOONWIN_TALKOBJ_OPEN( msg_t01_sign1_01 )
-  _AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-#endif
+
+/************************************************************/
+/*						サポート							*/
+/************************************************************/
+EVENT_START ev_t01_support_01
+	//まってたよ！
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01_white_01 )
 EVENT_END
+
+

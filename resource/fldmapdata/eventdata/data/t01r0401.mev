@@ -1,10 +1,10 @@
 #event data
-#save date:2009/09/11 15:02:44
+#save date:2009/09/12 15:34:29
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01r0401.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/09/11 15:02:44
+#save date:2009/09/12 15:34:29
 2
 #hold event type:
 1
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01r0401.wms
 #type
 1
 #ID name
-T01R0401_HAKASE2
+T01R0401_HAKASE2_01
 #OBJ CODE Number
 HAKASE2
 #MOVE CODE Number
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_T01R0401_HAKASE
 #Event Script Name
-SCRID_T01R0401_HAKASE2_ZUKAN
+SCRID_T01R0401_HAKASE2_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -43,7 +43,7 @@ DIR_DOWN
 #type
 1
 #ID name
-T01R0401_HEROINE
+T01R0401_SUPPORT_01
 #OBJ CODE Number
 HEROINE
 #MOVE CODE Number
@@ -53,9 +53,9 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_T01R0401_SUPPORT
 #Event Script Name
-SCRID_T01R0401_WHITE_01
+SCRID_DUMMY
 #Direction Type Number
-DIR_UP
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -67,12 +67,12 @@ DIR_UP
 #Move Limit Z Number
 0
 #position
--192 0 80
+-192 0 112
 #event number: 2
 #type
 1
 #ID name
-T01R0401_RIVAL
+T01R0401_RIVAL_01
 #OBJ CODE Number
 RIVEL
 #MOVE CODE Number
@@ -82,9 +82,9 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_T01R0401_RIVAL
 #Event Script Name
-SCRID_T01R0401_BLACK_01
+SCRID_DUMMY
 #Direction Type Number
-DIR_UP
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -96,12 +96,12 @@ DIR_UP
 #Move Limit Z Number
 0
 #position
--160 0 80
+-160 0 112
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/09/11 15:02:44
+#save date:2009/09/12 15:34:29
 2
 #hold event type:
 1
@@ -111,32 +111,17 @@ DIR_UP
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/09/11 15:02:44
+#save date:2009/09/12 15:34:29
 2
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#Pos Event Label
-POSID_T01R0401_ZUKAN
-#Pos Script Name
-SCRID_T01R0401_HAKASE2_ZUKAN
-#Event Trigger Work Name
-WK_SCENE_0907ROM01
-#Event Trigger Work Value
 0
-#Pos Event Size X
-1
-#Pos Event Size Z
-1
-#position
--176 0 96
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/09/11 15:02:44
+#save date:2009/09/12 15:34:29
 2
 #hold event type:
 1

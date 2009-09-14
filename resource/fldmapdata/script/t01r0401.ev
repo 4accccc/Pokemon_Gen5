@@ -15,10 +15,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t01r0401_hakase2_zukan
-_EVENT_DATA   ev_t01r0401_black_01
-_EVENT_DATA   ev_t01r0401_white_01
-/*_EVENT_DATA    ev_t01r0401_kabi32_1*/
+_EVENT_DATA		ev_t01r0401_scene_change_01		//図鑑入手イベント
+_EVENT_DATA		ev_t01r0401_hakase2_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -34,86 +32,69 @@ _EVENT_DATA_END
  * あまりつかわないかも？
  */
 /**************************************************************/
-//ev_t01r0401_flag_change:
-//  _END
 
-/**************************************************************/
-/*  T01R0401 ライバル会話用イベントスクリプト（図鑑入手前）　 */
-/**************************************************************/
-EVENT_START   ev_t01r0401_black_01
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0401_black_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-EVENT_END
 
-/**************************************************************/
-/*  T01R0401 サポート会話用イベントスクリプト（図鑑入手前）　 */
-/**************************************************************/
-EVENT_START   ev_t01r0401_white_01
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0401_white_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-EVENT_END
+/************************************************************/
+/*					SCENE_CHANGE_LABEL						*/
+/************************************************************/
+EVENT_START   ev_t01r0401_scene_change_01
+	//ポケモン図鑑入手イベント
 
-/**************************************************************/
-/*      ポケモン図鑑入手イベント                              */
-/**************************************************************/
-EVENT_START   ev_t01r0401_hakase2_zukan
-
- //博士の前に並ぶ
-	_OBJ_ANIME( MMDL_ID_PLAYER,anime_t01r0401_zukan01 )
-	_OBJ_ANIME( T01R0401_RIVAL,anime_t01r0401_zukan01a )
-	_OBJ_ANIME( T01R0401_HEROINE,anime_t01r0401_zukan01b )
-	_OBJ_ANIME_WAIT()
-  
-	_TURN_HERO_SITE()
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_01,T01R0401_HAKASE2 )
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_black_02,T01R0401_RIVAL ) //ライバル
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_02,T01R0401_HAKASE2 ) //博士
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-
- //博士、3人の前を移動
-	_OBJ_ANIME( T01R0401_HAKASE2,anime_t01r0401_zukan02 )
+	//３人：博士の前に並ぶ
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_walk_01 )
+	_OBJ_ANIME( T01R0401_RIVAL_01,anm_friends_walk_01 )
+	_OBJ_ANIME( T01R0401_SUPPORT_01,anm_friends_walk_01 )
 	_OBJ_ANIME_WAIT()
 
-	_TURN_HERO_SITE()
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_07,T01R0401_HAKASE2 )  //博士
-	_AB_KEYWAIT()
+	//おーきたきた！
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_01,T01R0401_HAKASE2_01 )
 	_BALLOONWIN_CLOSE()
 
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_black_03,T01R0401_RIVAL )  //ライバル
-	_AB_KEYWAIT()
+	//アララギ博士？どうしたんですか？
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_black_02,T01R0401_RIVAL_01 ) //ライバル
 	_BALLOONWIN_CLOSE()
 
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_white_02,T01R0401_HEROINE ) //サポート
-	_AB_KEYWAIT()
+	//まあまあ！今日は記念となる日だからね
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_02,T01R0401_HAKASE2_01 ) //博士
 	_BALLOONWIN_CLOSE()
 
-	_TURN_HERO_SITE()
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_08,T01R0401_HAKASE2 )  //博士
-	_AB_KEYWAIT()
+	 //博士：皆の顔を見る
+	_OBJ_ANIME( T01R0401_HAKASE2_01,anm_zukan_doc_look_01 )
+	_OBJ_ANIME_WAIT()
+
+	//【仮】ニックネーム処理が未実装
+
+
+
+	//ポケモンを進呈した理由だが…
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_07,T01R0401_HAKASE2_01 )  //博士
 	_BALLOONWIN_CLOSE()
 
-	_TURN_HERO_SITE()
+	//ポケモン図鑑ですよね！
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_black_03,T01R0401_RIVAL_01 )  //ライバル
+	_BALLOONWIN_CLOSE()
 
+	//サポート：右を向く
+//	_OBJ_ANIME( T01R0401_SUPPORT_01, anm_ )
+
+	//ずかん？
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_white_02,T01R0401_SUPPORT_01 ) //サポート
+	_BALLOONWIN_CLOSE()
+
+	//さすがだね！
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_08,T01R0401_HAKASE2_01 )  //博士
+	_BALLOONWIN_CLOSE()
+
+	//【仮】演出予定：その場で一回転など
+
+	//ポケモン図鑑とは！
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_09,T01R0401_HAKASE2 )  //博士
-	_AB_KEYWAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_09,T01R0401_HAKASE2_01 )  //博士
 	_BALLOONWIN_CLOSE()
 
-	_TURN_HERO_SITE()
+	//冒険の旅に出かけるかい？
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_10,T01R0401_HAKASE2 )  //博士
-	_AB_KEYWAIT()
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_10,T01R0401_HAKASE2_01 )  //博士
 
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
@@ -122,113 +103,109 @@ EVENT_START   ev_t01r0401_hakase2_zukan
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0401_hakase2_no
 
 t01r0401_hakase2_no:
+	//そんな返事は聞きたくない！
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_11,T01R0401_HAKASE2 ) 
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_11,T01R0401_HAKASE2_01 ) 
 	_AB_KEYWAIT()
 
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
 
+	//「はい」を選択するまで同じ質問を繰り返す
 	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0401_hakase2_yes
 	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0401_hakase2_no
 
 t01r0401_hakase2_yes:
-	_TURN_HERO_SITE()
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_12,T01R0401_HAKASE2 ) 
-	_AB_KEYWAIT()
+	//よし！最高の返事だ！
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_12,T01R0401_HAKASE2_01 ) 
 	_BALLOONWIN_CLOSE()
 
-	_TURN_HERO_SITE()
+//********************ポケモン図鑑入手処理*******************//
+	//【仮】ポケモン図鑑入手フラグが未実装
 
+	//ポケモンずかんを手に入れた！
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_13,T01R0401_HAKASE2 ) 
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_13,T01R0401_HAKASE2_01 ) 
 
 	//ME鳴らす
 	_ME_PLAY( SEQ_ME_KEYITEM )
 	_ME_WAIT()
 
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-	
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_14,T01R0401_HAKASE2 ) 
+	//【保留】ここに▼なしウェイトいれる？
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
+//***********************************************************//
 
- //博士、室外へ退場
-	_OBJ_ANIME( T01R0401_RIVAL,anime_t01r0401_zukan03a )
-	_OBJ_ANIME( MMDL_ID_PLAYER,anime_t01r0401_zukan03b )
-	_OBJ_ANIME( T01R0401_HAKASE2,anime_t01r0401_zukan03c )
-	_OBJ_ANIME_WAIT()
-
-	_OBJ_ANIME( T01R0401_RIVAL,anime_t01r0401_zukan03d )
-	_OBJ_ANIME( MMDL_ID_PLAYER,anime_t01r0401_zukan03e )
-	_OBJ_ANIME( T01R0401_HEROINE,anime_t01r0401_zukan03f )
-	_OBJ_ANIME_WAIT()
-
-	_OBJ_ANIME( T01R0401_HAKASE2,anime_t01r0401_zukan03g )
-	_OBJ_ANIME_WAIT()
-	_OBJ_DEL( T01R0401_HAKASE2 )
-
-	_OBJ_ANIME( T01R0401_RIVAL,anime_t01r0401_zukan03h )
-	_OBJ_ANIME( MMDL_ID_PLAYER,anime_t01r0401_zukan03i )
-	_OBJ_ANIME( T01R0401_HEROINE,anime_t01r0401_zukan03j )
-	_OBJ_ANIME_WAIT()
-
- //サポートたちの話
-	_TURN_HERO_SITE()
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_white_03,T01R0401_HEROINE )  //サポート
-	_AB_KEYWAIT()
+	//１番道路に来てくれよな！
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_14,T01R0401_HAKASE2_01 ) 	//博士
 	_BALLOONWIN_CLOSE()
 
-	_TURN_HERO_SITE()
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_black_04,T01R0401_RIVAL )  //ライバル
-	_AB_KEYWAIT()
+	//博士：退室へ（主人公＆ライバル道を開ける）
+	_OBJ_ANIME( T01R0401_SUPPORT_01,anm_zukan_player_move_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_zukan_player_move_01 )
+	_OBJ_ANIME( T01R0401_HAKASE2_01,anm_zukan_doc_goaway_01 )
+	_OBJ_ANIME_WAIT()
+
+	//博士：退室
+	_OBJ_ANIME( T01R0401_HAKASE2_01,anm_zukan_doc_goaway_02 )
+	//友達ズ：見送る
+	_OBJ_ANIME( T01R0401_RIVAL_01,anm_zukan_friends_look_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_zukan_friends_look_01 )
+	_OBJ_ANIME( T01R0401_SUPPORT_01,anm_zukan_friends_look_01 )
+	_OBJ_ANIME_WAIT()
+
+	//博士：消す（バニッシュフラグも立ちます）
+	_OBJ_DEL( T01R0401_HAKASE2_01 )
+
+	//頼まれたから　冒険しても　いいんだよね？
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_white_03,T01R0401_SUPPORT_01 )  //サポート
 	_BALLOONWIN_CLOSE()
 
- //サポートたち、室外へ退場
-	_OBJ_ANIME( T01R0401_RIVAL,anime_t01r0401_zukan04 )
-	_OBJ_ANIME( T01R0401_HEROINE,anime_t01r0401_zukan04a )
-	_OBJ_ANIME_WAIT()
-	_OBJ_DEL( T01R0401_RIVAL )
-	_OBJ_DEL( T01R0401_HEROINE )
+	//僕たちも１番道路に行こう！
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_black_04,T01R0401_RIVAL_01 )  //ライバル
+	_BALLOONWIN_CLOSE()
 
+	//サポート＆ライバル：退室
+	_OBJ_ANIME( T01R0401_RIVAL_01,anm_zukan_rival_goaway_01 )
+	_OBJ_ANIME( T01R0401_SUPPORT_01,anm_zukan_support_goaway_01 )
+	_OBJ_ANIME_WAIT()
+
+	//サポート＆ライバル：消す
+	_OBJ_DEL( T01R0401_RIVAL_01 )
+	_OBJ_DEL( T01R0401_SUPPORT_01 )
+
+//=====================フラグ操作========================//
+
+	//博士、サポート、ライバルのバニッシュフラグをセット
 	_FLAG_SET( FV_T01R0401_HAKASE )
 	_FLAG_SET( FV_T01R0401_RIVAL )
 	_FLAG_SET( FV_T01R0401_SUPPORT )
 
-  $WK_SCENE_0907ROM00 = 1
-  //$SVSCRWK_START = 1
-  $WK_SCENE_0907ROM01 = 1
+	//図鑑入手イベント終わった
+	$WK_SCENE_T01R0401 = 1
+
+//=======================================================//
 
 EVENT_END
 
 
-/**************************************************************/
-/*     主人公、博士の手前まで移動　　　　                     */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan01
-	_ANIME_DATA	AC_WALK_U_8F,4
-	_ANIME_DATA	ACMD_END,0
-
-/**************************************************************/
-/*     サポート、博士の手前まで移動　　　　                   */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan01a
+//--------------------------------------------------------------------
+//３人：博士の手前まで移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_walk_01
 	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	ACMD_END,0
 
-/**************************************************************/
-/*     ライバル、博士の手前まで移動　　　　                   */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan01b
-	_ANIME_DATA	AC_WALK_U_8F,5
+//友達２人のアニメ
+_ANIME_LABEL	anm_friends_walk_01
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
-/**************************************************************/
-/*     博士、みんなの顔を見る　　　　　　　                   */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan02
+//--------------------------------------------------------------------
+//博士：皆の顔を見る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_zukan_doc_look_01
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_WAIT_8F,2
@@ -240,91 +217,51 @@ _ANIME_LABEL	anime_t01r0401_zukan02
 	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-/**************************************************************/
-/*     博士、室外に退場（のためライバル移動）               */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan03a
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-/**************************************************************/
-/*     博士、室外に退場（のため主人公移動）               */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan03b
-	_ANIME_DATA	AC_WAIT_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-/**************************************************************/
-/*     博士、室外に退場（まず一歩下に）  　　　　             */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan03c
-	_ANIME_DATA	AC_WAIT_8F,2
+//--------------------------------------------------------------------
+//博士：室外へ（まず一歩下に）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_zukan_doc_goaway_01
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-/**************************************************************/
-/*     博士、室外に退場（ライバル左向き）  　　　　           */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan03d
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
-
-/**************************************************************/
-/*     博士、室外に退場（主人公左向き）  　　　　           */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan03e
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
-
-/**************************************************************/
-/*     博士、室外に退場（サポート右向き）  　　　　           */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan03f
+//--------------------------------------------------------------------
+//主人公＆サポート：道を開ける
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_zukan_player_move_01
 	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
-/**************************************************************/
-/*     博士、室外に退場　　　　　　　　  　　　　             */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan03g
+//--------------------------------------------------------------------
+//博士：退室
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_zukan_doc_goaway_02
 	_ANIME_DATA	AC_WALK_D_8F,7
 	_ANIME_DATA	ACMD_END,0
 
-/**************************************************************/
-/*     博士、室外に退場（ライバル下向き）  　　　　           */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan03h
+//--------------------------------------------------------------------
+//友達ズ：見送る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_zukan_friends_look_01
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
-/**************************************************************/
-/*     博士、室外に退場（主人公下向き）  　　　　           */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan03i
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
 
-/**************************************************************/
-/*     博士、室外に退場（サポート下向き）  　　　　           */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan03j
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
-/**************************************************************/
-/*     ライバル、室外に退場　　　　　　　　　　　　           */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan04
+//--------------------------------------------------------------------
+//ライバル：退室
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_zukan_rival_goaway_01
 	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
 
-/**************************************************************/
-/*     サポート、室外に退場　　　　　　　　　　　　           */
-/**************************************************************/
-_ANIME_LABEL	anime_t01r0401_zukan04a
+//--------------------------------------------------------------------
+//サポート：退室
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_zukan_support_goaway_01
 	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	AC_WAIT_8F,2
 	_ANIME_DATA	AC_WALK_R_8F,1
@@ -332,88 +269,15 @@ _ANIME_LABEL	anime_t01r0401_zukan04a
 	_ANIME_DATA	ACMD_END,0
 
 
-
-
-/**************************************************************/
-/*       5月ROM用                                             */
-/**************************************************************/
-/*
-EVENT_START   ev_t01r0401_kabi32_1
-	_TURN_HERO_SITE()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0401_doctor01_01 )
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-
-	_OBJ_ANIME( T01R0401_KABI32_1,test01anime ) //自己紹介アニメ
-	_OBJ_ANIME_WAIT()
-
-	_TURN_HERO_SITE()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0401_doctor01_02 )
-	_AB_KEYWAIT()
-
-	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
-
-	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0401_kabi32_yes
-	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0401_kabi32_no
-
-t01r0401_kabi32_yes:
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0401_doctor01_03 )
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-	_JUMP t01r0401_kabi32_2
-
-t01r0401_kabi32_no:
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0401_doctor01_04 )
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-
-t01r0401_kabi32_2:
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0401_doctor01_05 )
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-
-	_OBJ_ANIME( T01R0401_KABI32_1,test02anime ) //独り言アニメその１
-	_OBJ_ANIME_WAIT()
-
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0401_doctor01_06 )
-	_AB_KEYWAIT()
-  	_BALLOONWIN_CLOSE()
-
-	_OBJ_ANIME( T01R0401_KABI32_1,test03anime ) //独り言アニメその２
-	_OBJ_ANIME_WAIT()
-
-	_TURN_HERO_SITE()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0401_doctor01_07 )
-	_AB_KEYWAIT()
-  	_BALLOONWIN_CLOSE()
+/************************************************************/
+/*						アララギ博士						*/
+/************************************************************/
+EVENT_START   ev_t01r0401_hakase2_01
 
 EVENT_END
-	*/
 
-//--------------------------------------------------------------
-//	アニメーションデータ
-//--------------------------------------------------------------
-/*
-_ANIME_LABEL test01anime //自己紹介アニメ
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_DIR_D,1
-	_ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL test02anime //独り言アニメその１
-	_ANIME_DATA AC_WALK_U_8F,2
-	_ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL test03anime //独り言アニメその２
-	_ANIME_DATA AC_WALK_D_8F,2
-	_ANIME_DATA ACMD_END,0
-	*/
+
+
+

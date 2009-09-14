@@ -534,8 +534,8 @@
 #define FV_R01_SUPPORT                     510 /* 0x01fe １番道路のサポート */
 #define FV_T02PC0101_HAKASE                511 /* 0x01ff カラクサタウンＰＣの博士 */
 #define FV_T01R0201_SUPPORT                512 /* 0x0200 サポートの自宅：出発イベントのサポート */
-		/* not used   513(0x0201) */
-		/* not used   514(0x0202) */
+#define FV_T01_RIVAL                       513 /* 0x0201 研究所前：ストッパーのライバル */
+#define FV_T01_SUPPORT                     514 /* 0x0202 研究所前：サポート */
 		/* not used   515(0x0203) */
 		/* not used   516(0x0204) */
 		/* not used   517(0x0205) */
