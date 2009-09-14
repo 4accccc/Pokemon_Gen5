@@ -136,7 +136,7 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
 
-			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+			FLD_MAPPER_CROSSBLOCK_MEMSIZE,	// 1ブロックメモリサイズ(立体交差用アトリビュートサイズ込み) by iwasawa 090910
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,

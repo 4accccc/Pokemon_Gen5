@@ -11,7 +11,8 @@
 #define _DP3FORMAT_H_
 
 #define DP3PACK_HEADER (0x4433)   //"3D"をひっくり返した
-#define WBGRIDPACK_HEADER 'BW'
+#define WBGRIDPACK_HEADER 'BW'  //"WB"の逆 標準グリッドマップ用
+#define WBGCROSSPACK_HEADER 'CG' //"GC" GridCrossの逆 グリッド立体交差マップ用
 
 /// 高さデータ取得用
 typedef struct {
@@ -27,7 +28,7 @@ typedef struct {
 	fx32	vecN2_D;
 
 	u32		attr:31;          //アトリビュートビット    0-15がvalue 16-30がflg
-	u32		tryangleType:1;   //三角形の形のタイプ  ＼ = 0  ／ = 1
+	u32		tryangleType:1;   //三角形の形のタイプ  ／ = 0 左:vecN1,右:vecN2  ＼ = 1 右:vecN1,左:vecN2
 } NormalVtxSt;
 
 typedef struct{
@@ -70,7 +71,7 @@ typedef struct {
 
 
 /// 全部をパックしたファイルのヘッダー
-//WBグリッドマップ用
+//WBグリッドマップ用(標準)
 typedef struct {
     u16 DataID;         ////< DP3PACK_HEADER
     u16 dummy1;
@@ -81,6 +82,17 @@ typedef struct {
     u32 positionOffset; ///< ファイルの先頭からポジションの場所までのOFFSET
     u32 endPos;         ///< ファイルの先頭からポジションの最後までのOFFSET
 } WBGridMapPackHeaderSt;
+
+//WBグリッド立体交差マップ用(グリッド拡張型)
+typedef struct {
+    u16 DataID;         ////< DP3PACK_HEADER
+    u16 dummy1;
+    u32 nsbmdOffset;    ///< ファイルの先頭からnsbmdの場所までのOFFSET
+    u32 vertexOffset;   ///< ファイルの先頭から法線＋アトリビュートの場所までのOFFSET
+    u32 exAttrOffset;   ///< ファイルの先頭からエキストラアトリビュートまでのOFFSET
+    u32 positionOffset; ///< ファイルの先頭からポジションの場所までのOFFSET
+    u32 endPos;         ///< ファイルの先頭からポジションの最後までのOFFSET
+} WBGridCrossMapPackHeaderSt;
 
 
 

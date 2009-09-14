@@ -46,6 +46,7 @@ FNAME_DMYFILE_NOGRID_H_IMD = "dummy_h_ng.imd"
 
 #マップタイプ
 MAPTYPESTR_GRID = "MAPTYPE_GRID"
+MAPTYPESTR_CROSS = "MAPTYPE_CROSS"
 MAPTYPESTR_NOGRID = "MAPTYPE_NOGRID"
 
 #4byte補正rubyファイル名
@@ -135,6 +136,78 @@ def file_write_grid( name,
   check = DIR_RES + "/" + name + ".bin"
   if( FileTest.exist?(check) != true )
     printf( "%s.binをダミーファイルから生成します\n", name )
+    file_copy( DIR_RES+"/"+FNAME_DMYFILE_GRID_BIN, check )
+  end
+  
+  check = DIR_RES + "/" + name + ".3dmd"
+  if( FileTest.exist?(check) != true )
+    printf( "%s.3dmdをダミーファイルから生成します\n", name )
+    file_copy( DIR_RES+"/"+FNAME_DMYFILE_GRID_3DMD, check )
+  end
+end
+
+#=======================================================================
+# マップタイプ　グリッド立体交差用一覧、出力ルール書き込み
+#=======================================================================
+def file_write_cross( name,
+  file_output_list, file_temp_list, file_depend_list, file_make_depend )
+  #land_output_list
+	file_output_list.printf( "\"%s/%s.3dppack\"\n", DIR_OUTPUT, name )
+  
+  #land_temp_list
+	file_temp_list.printf( "\t%s/%s.nsbmd", DIRSTR_TEMP, name )
+  
+  #land_depend_list
+	file_depend_list.printf( "\t%s/%s.3dppack", DIRSTR_OUTPUT, name )
+  
+  #land_make_depend 3dppack
+  file_make_depend.printf( "#%s\n", name )
+   
+  file_make_depend.printf(
+    "%s/%s.3dppack: %s/%s.nsbmd %s/%s.bin %s/%s_ex.bin %s/%s.3dmd\n",
+    DIRSTR_OUTPUT, name,
+    DIRSTR_TEMP, name,
+    DIRSTR_RES, name,
+    DIRSTR_RES, name,
+    DIRSTR_RES, name )
+  
+  file_make_depend.printf( "\t@echo create 3dppack %s\n", name )
+  
+  file_make_depend.printf(
+    "\t@%s %s/%s.nsbmd %s/%s.bin %s/%s_ex.bin %s/%s.3dmd %s/%s.3dppack GC\n\n",
+    STR_BINLINKER,
+    DIRSTR_TEMP, name,
+    DIRSTR_RES, name,
+    DIRSTR_RES, name,
+    DIRSTR_RES, name,
+    DIRSTR_OUTPUT, name )
+  
+  #land_make_depend nsbmd
+  file_make_depend.printf( "%s/%s.nsbmd: %s/%s.imd\n",
+    DIRSTR_TEMP, name,
+    DIRSTR_RES, name )
+
+  file_make_depend.printf( "\t@echo create_nsbmd %s\n", name )
+  
+  file_make_depend.printf( "\t@%s %s/%s.imd -o %s/%s.nsbmd\n\n",
+    STR_G3DCVTR, DIRSTR_RES, name, DIRSTR_TEMP, name )
+  
+  #land_make_depend exist file check
+  check = DIR_RES + "/" + name + ".imd"
+  if( FileTest.exist?(check) != true )
+    printf( "%s.imdをダミーファイルから生成します\n", name )
+    file_copy( DIR_RES+"/"+FNAME_DMYFILE_GRID_IMD, check )
+  end
+  #デフォルトアトリビュート 
+  check = DIR_RES + "/" + name + ".bin"
+  if( FileTest.exist?(check) != true )
+    printf( "%s.binをダミーファイルから生成します\n", name )
+    file_copy( DIR_RES+"/"+FNAME_DMYFILE_GRID_BIN, check )
+  end
+  #Exアトリビュート(立体交差用)
+  check = DIR_RES + "/" + name + "_ex.bin"
+  if( FileTest.exist?(check) != true )
+    printf( "%s_ex.binをダミーファイルから生成します\n", name )
     file_copy( DIR_RES+"/"+FNAME_DMYFILE_GRID_BIN, check )
   end
   
@@ -265,6 +338,10 @@ while file_name = ARGV.shift
     
     if( type == MAPTYPESTR_GRID )
       file_write_grid( name,
+        file_output_list, file_temp_list,
+        file_depend_list, file_make_depend )
+    elsif( type == MAPTYPESTR_CROSS )
+      file_write_cross( name,
         file_output_list, file_temp_list,
         file_depend_list, file_make_depend )
     elsif( type == MAPTYPESTR_NOGRID )

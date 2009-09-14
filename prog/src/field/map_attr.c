@@ -71,6 +71,31 @@ MAPATTR_FLAG MAPATTR_GetAttrFlag( const MAPATTR attr )
   return( flag );
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief MAPATTRから進入可不可状態を取得
+ *
+ * @param attr MAPATTR
+ * @retval TRUE 進入不可
+ * @retval FALSE 進入可
+ *
+ * @com アトリビュート無効値も進入不可と返すため、純粋にHitchフラグのみを返しているのではありません
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_GetHitchFlag( const MAPATTR attr )
+{
+  u16 val = MAPATTR_GetAttrValue( attr );
+  u16 flag = MAPATTR_GetAttrFlag( attr );
+
+  //アトリビュートそのもの、もしくはValueが無効か、進入不可フラグがOnなら通れない
+  if( (attr == MAPATTR_ERROR) ||
+      (val == MAPATTR_VAL_ERR) ||
+      (flag & MAPATTR_FLAGBIT_HITCH)){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //======================================================================
 //  アトリビュートバリュー　識別
 //======================================================================
