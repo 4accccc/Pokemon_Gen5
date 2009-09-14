@@ -16,7 +16,7 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../../prog/include/poke_tool/trainer_tool.h"
+  .include  "../../../prog/include/tr_tool/tr_tool.h"
 
 //--------------------------------------------------------------------
 //              スクリプト本体
