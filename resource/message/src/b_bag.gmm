@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2009-08-27T16:45:45"/>
+	<create user="hiro_nakamura" host="W00144" date="2009-09-14T17:12:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -718,6 +718,12 @@
 ねらいが　さだまらない……！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">だめだ！　ポケモンが　みえなくて
 ねらいが　さだまらない……！</language>
+	</row>
+
+	<row id="mes_b_bag_m16">
+		<comment>シューター時にエネルギーが足りないとき</comment>
+		<language name="JPN" font=" 1:small" width="216">エネルギーが　たりません</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">エネルギーが　たりません</language>
 	</row>
 
 	<flowchart-group-list>
