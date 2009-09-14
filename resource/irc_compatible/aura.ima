@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="kitakaze_tomohiro" host="W00198" date="2009-09-14T16:07:38" source="aura_03.mb"/>
+	<create user="kitakaze_tomohiro" host="W00198" date="2009-09-14T20:12:14" source="aura_03.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -20,7 +20,7 @@
 	tolerance_color="2"
 />
 
-<mat_color_data size="713">
+<mat_color_data size="714">
 	12 12 12 12 12 12 12 12 12 12
 	12 12 12 12 12 12 12 12 12 12
 	12 12 12 12 12 12 12 12 12 12
@@ -41,7 +41,7 @@
 	20 20 20 20 20 20 20 19 19 19
 	19 19 19 19 19 19 19 18 18 18
 	18 18 18 18 18 18 18 18 18 17
-	17 17 17 23 31 29 0 30 10 0
+	17 17 17 23 31 29 0 13 10 0
 	0 0 0 0 0 0 0 1 1 1
 	1 1 2 2 2 2 3 3 3 3
 	4 4 4 5 5 5 5 6 6 6
@@ -92,7 +92,7 @@
 	22 22 22 22 22 22 22 22 22 22
 	22 22 22 22 22 22 22 22 22 21
 	21 21 21 21 21 21 21 21 21 21
-	21 21 21
+	21 21 21 30
 </mat_color_data>
 
 <mat_color_anm_array size="4">
@@ -106,10 +106,10 @@
 		<specular_r frame_step="1" data_size="1" data_head="206"/>
 		<specular_g frame_step="1" data_size="1" data_head="206"/>
 		<specular_b frame_step="1" data_size="1" data_head="206"/>
-		<emission_r frame_step="1" data_size="1" data_head="48"/>
-		<emission_g frame_step="1" data_size="1" data_head="48"/>
-		<emission_b frame_step="1" data_size="1" data_head="48"/>
-		<polygon_alpha frame_step="1" data_size="1" data_head="207"/>
+		<emission_r frame_step="1" data_size="1" data_head="207"/>
+		<emission_g frame_step="1" data_size="1" data_head="207"/>
+		<emission_b frame_step="1" data_size="1" data_head="207"/>
+		<polygon_alpha frame_step="1" data_size="1" data_head="102"/>
 	</mat_color_anm>
 	<mat_color_anm index="1" material_name="lambert2">
 		<diffuse_r frame_step="1" data_size="101" data_head="208"/>
@@ -154,7 +154,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="50"/>
 		<emission_g frame_step="1" data_size="1" data_head="50"/>
 		<emission_b frame_step="1" data_size="1" data_head="50"/>
-		<polygon_alpha frame_step="1" data_size="1" data_head="207"/>
+		<polygon_alpha frame_step="1" data_size="1" data_head="713"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
