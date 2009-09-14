@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-07-09T17:11:35"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-09-11T17:39:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -383,13 +383,13 @@
 		<language name="JPN_KANJI" width="256">もどる</language>
 	</row>
 
-	<row id="AURA_DEBUG_001">
+	<row id="AURA_DEBUG_001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>デバッグ用</comment>
 		<language name="JPN" width="256">あいての　ばん　です</language>
 		<language name="JPN_KANJI" width="256">相手の番です</language>
 	</row>
 
-	<row id="AURA_DEBUG_002">
+	<row id="AURA_DEBUG_002" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>デバッグ用</comment>
 		<language name="JPN" width="256">しゅうりょうです
 ありがとうございました</language>
@@ -397,7 +397,7 @@
 ありがとうございました</language>
 	</row>
 
-	<row id="AURA_DEBUG_003">
+	<row id="AURA_DEBUG_003" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>デバッグ用</comment>
 		<language name="JPN" width="256">シーンが　ずれました
 さきへ　すすみます</language>
@@ -428,6 +428,11 @@
 	<row id="AURA_RESMSG_002">
 		<language name="JPN" width="256">リラックスしているみたい</language>
 		<language name="JPN_KANJI" width="256">リラックスしているみたい</language>
+	</row>
+
+	<row id="AURA_TITLE_000">
+		<language name="JPN" width="256">オーラチェック</language>
+		<language name="JPN_KANJI" width="256">オーラチェック</language>
 	</row>
 
 	<flowchart-group-list>

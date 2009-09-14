@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-07-09T17:12:01"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-09-14T15:41:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1252" top="141" right="-547" bottom="769" maximized="no" rayout="Vertical2">
+	<dialog left="-1122" top="250" right="-417" bottom="878" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -335,9 +335,9 @@
 
 	<row id="RHYTHM_STR_000">
 		<language name="JPN" width="256">[FF:00:色:3][1:00:トレーナー名:0][FF:00:色:0]さんとの　[FF:00:色:2]リズム[FF:00:色:0]を　しらべます
-すきなように　１０かい　タッチしましょう！</language>
+すきなように　タッチしましょう！</language>
 		<language name="JPN_KANJI" width="256">[FF:00:色:3][1:00:トレーナー名:0][FF:00:色:0]さんとの　[FF:00:色:2]リズム[FF:00:色:0]を　調べます
-好きなように　１０回　タッチしましょう！</language>
+好きなように　タッチしましょう！</language>
 	</row>
 
 	<row id="RHYTHM_STR_001">
@@ -371,19 +371,19 @@
 		<language name="JPN_KANJI" width="256">とじる</language>
 	</row>
 
-	<row id="RHYTHM_DEBUG_001">
+	<row id="RHYTHM_DEBUG_001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>デバッグ用</comment>
 		<language name="JPN" width="256">あいての　ばん　です</language>
 		<language name="JPN_KANJI" width="256">相手の番です</language>
 	</row>
 
-	<row id="RHYTHM_DEBUG_002">
+	<row id="RHYTHM_DEBUG_002" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>デバッグ用</comment>
 		<language name="JPN" width="256">チェックを　おわります。</language>
 		<language name="JPN_KANJI" width="256">チェックを　終わります。</language>
 	</row>
 
-	<row id="RHYTHM_DEBUG_003">
+	<row id="RHYTHM_DEBUG_003" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>デバッグ用</comment>
 		<language name="JPN" width="256">シーンが　ずれました
 さきへ　すすみます</language>
@@ -409,6 +409,11 @@
 	<row id="RHYTHM_RESMSG_002">
 		<language name="JPN" width="256">リラックスしているみたい</language>
 		<language name="JPN_KANJI" width="256">リラックスしているみたい</language>
+	</row>
+
+	<row id="RHYTHM_TITLE_000">
+		<language name="JPN" width="256">リズムチェック</language>
+		<language name="JPN_KANJI" width="256">リズムチェック</language>
 	</row>
 
 	<flowchart-group-list>
