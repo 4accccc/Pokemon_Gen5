@@ -2,12 +2,14 @@
 /**
  * @file	trtype_sex.h
  * @bfief	トレーナー性別定義
+ * @author	TrainerDataConverter
+ * @date	2009-09-14
  * @author	このファイルは、コンバータが吐き出したファイルです
- */
+*/
 //============================================================================================
 
-#ifndef __TRTYPE_SEX_H_
-#define __TRTYPE_SEX_H_
+#pragma once
+
 
 static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//男主人公
@@ -20,4 +22,3 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//フットボーラー
 };
 
-#endif __TRTYPE_SEX_H_

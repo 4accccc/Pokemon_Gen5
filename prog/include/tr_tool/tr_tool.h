@@ -37,14 +37,19 @@
 //トレーナーデータを取得するときのID定義
 #define	ID_TD_data_type		(0)		//データタイプ
 #define	ID_TD_tr_type		  (1)		//トレーナー分類
-#define	ID_TD_tr_gra		  (2)		//トレーナーグラフィック
+#define	ID_TD_fight_type	(2)		//戦闘タイプ（1vs1or2vs2）
 #define	ID_TD_poke_count	(3)		//所持ポケモン数
 #define	ID_TD_use_item1		(4)		//使用道具1
 #define	ID_TD_use_item2		(5)		//使用道具2
 #define	ID_TD_use_item3		(6)		//使用道具3
 #define	ID_TD_use_item4		(7)		//使用道具4
 #define	ID_TD_aibit			  (8)		//AIパターン
-#define	ID_TD_fight_type	(9)		//戦闘タイプ（1vs1or2vs2）
+
+//トレーナー持ちポケモンパラメータ
+#define DATATYPE_NORMAL   ( 0 )
+#define DATATYPE_WAZA     ( 1 )
+#define DATATYPE_ITEM     ( 2 )
+#define DATATYPE_MULTI    ( 3 )
 
 //アセンブラでincludeされている場合は、下の宣言を無視できるようにifndefで囲んである
 #ifndef	__ASM_NO_DEF_
@@ -56,27 +61,17 @@
 typedef struct{
 	u8			data_type;        //データタイプ
 	u8			tr_type;					//トレーナー分類
-	u8			tr_gra;						//トレーナーグラフィック
+  u8      fight_type;       //1vs1or2vs2 
 	u8			poke_count;       //所持ポケモン数
 
 	u16			use_item[4];      //使用道具
 
 	u32			aibit;						//AIパターン
-	u32			fight_type;				//戦闘タイプ（1vs1or2vs2）
 
 	STRCODE		name[ BUFLEN_PERSON_NAME ];	//トレーナー名
 //	PMS_DATA	win_word;
 //	PMS_DATA	lose_word;
 }TRAINER_DATA;
-
-
-//トレーナー持ちポケモンパラメータ
-enum{
-	DATATYPE_NORMAL=0,
-	DATATYPE_WAZA,
-	DATATYPE_ITEM,
-	DATATYPE_MULTI
-};
 
 //トレーナー持ちポケモンパラメータ（データタイプノーマル）
 typedef	struct
@@ -114,7 +109,6 @@ typedef	struct
 	u16		waza[ PTL_WAZA_MAX ];		//持ってる技
 }POKEDATA_TYPE_MULTI;
 
-//extern	void	TT_EncountTrainerDataMake( BATTLE_SETUP_PARAM *bsp, const SAVEDATA * sv, HEAPID heapID );
 extern	void	TT_EncountTrainerDataMake( BATTLE_SETUP_PARAM* bsp, HEAPID heapID );
 extern	u32		TT_TrainerDataParaGet( int tr_id, int id );
 extern	BOOL	TT_TrainerMessageCheck( int tr_id, int kindID, HEAPID heapID );
