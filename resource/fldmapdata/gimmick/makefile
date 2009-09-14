@@ -1,6 +1,9 @@
 
 include $(PROJECT_RSCDIR)\macro_define
 
+#複雑な依存関係があるため、順序を入れ替えないこと。
+#zonetable/zoneindexが先頭、
+#zonetableが末尾、という順番は変更してはいけない。
 
 SUBDIRS	=	gym_denki
 

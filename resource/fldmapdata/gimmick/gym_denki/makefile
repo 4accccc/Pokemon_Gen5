@@ -30,7 +30,7 @@ include data_list
 #------------------------------------------------------------------------------
 ARCLIST = arc_list.txt
 
-LDIRT_CLEAN = $(TARGETDIR)$(targetname).narc $(TARGETDIR)$(targetname).naix
+LDIRT_CLEAN = $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
 LDIRT_CLEAN += $(targetname).narc $(targetname).naix arc_result.txt
@@ -42,20 +42,25 @@ LINCLUDES	+= $(dir $<)
 INCPATH	= -I$(NITROSDK_ROOT)/include
 
 
-.PHONY:	do-build subdir
+.PHONY:	do-build clean
 
 
 
-do-build: subdir $(TARGETDIR)$(targetname).narc
+do-build: $(TARGETDIR)/$(targetname).narc
 
 
 
 
-subdir:
-	@$(MAKE_SUBDIR)
+clean:
+	@rm -f $(TARGETDIR)/$(targetname).narc
+	@rm -f $(TARGETDIR)/$(targetname).naix
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+	@rm -f $(targetname).narc
+	@rm -f $(targetname).naix
+endif
 
 #コピー実行する
-$(TARGETDIR)$(targetname).narc:  $(targetname).narc 
+$(TARGETDIR)/$(targetname).narc:  $(targetname).narc 
 	@echo copying $(targetname).narc
 	@$(COPY) $(targetname).narc $(TARGETDIR)
 	@$(COPY) $(targetname).naix $(TARGETDIR)

@@ -21,8 +21,10 @@ SUBDIRS	=	zonetable/zoneindex \
 					scenearea \
 					zonefog_table \
 					zonelight_table \
-					zonetable \
-					fld_gimmick_assign
+					fld_gimmick_assign \
+					gimmick \
+					zonetable
+					
 
 .PHONY:	do-build clean
 

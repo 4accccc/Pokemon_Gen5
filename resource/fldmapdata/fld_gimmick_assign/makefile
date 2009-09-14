@@ -60,15 +60,20 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
 
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
-.PHONY:	do-build subdir
+.PHONY:	do-build clean
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	$(TARGETDIR)/$(targetname).narc
 
-subdir:
-	@$(MAKE_SUBDIR)
+clean:
+	@rm -f $(TARGETDIR)/$(targetname).narc
+	@rm -f $(TARGETDIR)/$(targetname).naix
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+	@rm -f $(targetname).narc
+	@rm -f $(targetname).naix
+endif
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc:  $(targetname).narc 
