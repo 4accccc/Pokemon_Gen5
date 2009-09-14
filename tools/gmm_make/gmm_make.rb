@@ -1,4 +1,7 @@
 #! ruby -Ks
+
+  require 'kconv'
+
 #=====================================================================================
 #
 # gmm生成スクリプト
@@ -6,9 +9,7 @@
 # ex)
 # gmm = GMM::new
 # gmm.open_gmm( "template.gmm", "monsname.gmm" )
-# gmm.make_header
 # gmm.make_row_index( "MONSNAME_", 1, "フシギダネ" )
-# gmm.make_footer
 # gmm.close_gmm
 #
 #=====================================================================================
@@ -46,6 +47,7 @@ class GMM
     end
     @fp_gmm_w = open( write_file, "w" )
     @file_open_flag = 1
+    make_header
   end
 
   #===========================================================================
@@ -129,6 +131,7 @@ class GMM
   #
   #===========================================================================
   def close_gmm
+    make_footer
     @fp_gmm_r.close
     @fp_gmm_w.close
     @file_open_flag = 0
