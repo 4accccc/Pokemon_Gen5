@@ -67,7 +67,7 @@ enum
 enum {
   TEMP_WORK_START = SCWK_AREA_START,
   TEMP_WORK_END = USERWK_AREA_END,
-  TEMP_WORK_SIZE = SCWK_AREA_END - TEMP_WORK_START,
+  TEMP_WORK_SIZE = TEMP_WORK_END - TEMP_WORK_START,
 };
 
 //======================================================================
