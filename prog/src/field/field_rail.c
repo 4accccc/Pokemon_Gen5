@@ -1024,8 +1024,11 @@ void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
 
 		if (set_key != RAIL_KEY_NULL)
 		{
-			OS_TPrintf("RAIL:%s :line_ofs=%d line_ofs_max=%d width_ofs=%d\n",
-					debugGetRailKeyName(set_key), work->line_ofs, work->line_ofs_max, work->width_ofs);
+			OS_TPrintf("RAIL:%s :line_ofs=%d line_ofs_max=%d width_ofs=%d width_ofs_max=%d\n",
+					debugGetRailKeyName(set_key), 
+          RAIL_OFS_TO_GRID(work->line_ofs), RAIL_OFS_TO_GRID(work->line_ofs_max), 
+          RAIL_OFS_TO_GRID(work->width_ofs) + RAIL_OFS_TO_GRID(work->width_ofs_max), 
+          (RAIL_OFS_TO_GRID(work->width_ofs_max)*2) );
 
       work->last_key    = set_key;
       work->last_frame  = work->save_move_frame;

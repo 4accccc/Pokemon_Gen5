@@ -341,6 +341,21 @@ const FLD_SCENEAREA_LOADER* FLDNOGRID_MAPPER_GetSceneAreaLoader( const FLDNOGRID
   return cp_mapper->p_areaLoader;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アトリビュートデータの取得
+ *
+ *	@param	cp_mapper   マッパー
+ *
+ *	@return アトリビュートデータ
+ */
+//-----------------------------------------------------------------------------
+const RAIL_ATTR_DATA* FLDNOGRID_MAPPER_GetRailAttrData( const FLDNOGRID_MAPPER* cp_mapper )
+{
+  GF_ASSERT( cp_mapper );
+  return cp_mapper->p_attr;
+}
+
 
 // デバック用
 #ifdef PM_DEBUG
@@ -388,6 +403,19 @@ void FLDNOGRID_MAPPER_DEBUG_LoadAreaBynary( FLDNOGRID_MAPPER* p_mapper, void* p_
 			FLD_SCENEAREA_LOADER_GetData( p_mapper->p_areaLoader ),
 			FLD_SCENEAREA_LOADER_GetDataNum( p_mapper->p_areaLoader ),
 			FLD_SCENEAREA_LOADER_GetFunc( p_mapper->p_areaLoader ) );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アトリビュートbinaryの読み込み
+ */
+//-----------------------------------------------------------------------------
+void FLDNOGRID_MAPPER_DEBUG_LoadAttrBynary( FLDNOGRID_MAPPER* p_mapper, void* p_dat, u32 size, u32 heapID )
+{
+  RAIL_ATTR_Release( p_mapper->p_attr );
+  
+  RAIL_ATTR_DEBUG_LoadBynary( p_mapper->p_attr, p_dat, size, heapID );
 }
 
 

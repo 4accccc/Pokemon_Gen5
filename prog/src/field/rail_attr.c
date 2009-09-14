@@ -60,6 +60,7 @@ struct _RAIL_ATTR_DATA
 {
   // ファイルヘッダー
   RAIL_ATTR_RESOURCE* p_file;
+  u32 datasize;
   
   // ラインアトリビュート情報
   u32 line_max;
@@ -125,7 +126,7 @@ void RAIL_ATTR_Load( RAIL_ATTR_DATA* p_work, u32 datano, u32 heapID )
   GF_ASSERT( p_work->p_file == NULL );
   
   // 情報の読み込み
-  p_work->p_file = GFL_ARC_UTIL_Load( RAIL_ATTR_ARCID, datano, FALSE, heapID );
+  p_work->p_file = GFL_ARC_UTIL_LoadEx( RAIL_ATTR_ARCID, datano, FALSE, heapID, &p_work->datasize );
 
   // ライン分のバッファを生成
   p_work->line_max  = p_work->p_file->line_num;
@@ -238,3 +239,61 @@ MAPATTR RAIL_ATTR_GetAttribute( const RAIL_ATTR_DATA* cp_work, const RAIL_LOCATI
 
 
 
+#ifdef PM_DEBUG
+void RAIL_ATTR_DEBUG_LoadBynary( RAIL_ATTR_DATA* p_work, void* p_data, u32 datasize, u32 heapID )
+{
+  int i;
+  u32 size;
+  
+  GF_ASSERT( p_work );
+  GF_ASSERT( p_work->p_file == NULL );
+  
+  // 情報の読み込み
+  p_work->p_file = p_data;
+  p_work->datasize = datasize;
+
+  // ライン分のバッファを生成
+  p_work->line_max  = p_work->p_file->line_num;
+  p_work->pp_line   = GFL_HEAP_AllocClearMemory( heapID, sizeof(RAIL_ATTR_LINE*)*p_work->line_max );
+
+  TOMOYA_Printf( "rail attr linemax = %d\n", p_work->line_max );
+
+  // ポインタを設定
+  size = sizeof( RAIL_ATTR_RESOURCE );
+  for( i=0; i<p_work->line_max; i++ )
+  {
+    p_work->pp_line[i] = (RAIL_ATTR_LINE*)( ((u8*)p_work->p_file) + size );
+    TOMOYA_Printf( "index %d x=[%d] z=[%d]\n", i, p_work->pp_line[i]->x, p_work->pp_line[i]->z );
+    size += 4 + ( sizeof(MAPATTR) * (p_work->pp_line[i]->x * p_work->pp_line[i]->z) );
+  }
+
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データの取得
+ */
+//-----------------------------------------------------------------------------
+const void* RAIL_ATTR_DEBUG_GetData( const RAIL_ATTR_DATA* cp_work )
+{
+  GF_ASSERT( cp_work );
+  GF_ASSERT( cp_work->p_file );
+
+  return  cp_work->p_file;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データサイズの取得
+ */
+//-----------------------------------------------------------------------------
+u32 RAIL_ATTR_DEBUG_GetDataSize( const RAIL_ATTR_DATA* cp_work )
+{
+  GF_ASSERT( cp_work );
+  GF_ASSERT( cp_work->p_file );
+
+  return  cp_work->datasize;
+}
+#endif

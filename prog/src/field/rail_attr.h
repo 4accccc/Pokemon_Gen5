@@ -54,6 +54,11 @@ extern BOOL RAIL_ATTR_IsLoadData( const RAIL_ATTR_DATA* cp_work );
 // レールのアトリビュート取得
 extern MAPATTR RAIL_ATTR_GetAttribute( const RAIL_ATTR_DATA* cp_work, const RAIL_LOCATION* cp_location );
 
+#ifdef PM_DEBUG
+extern void RAIL_ATTR_DEBUG_LoadBynary( RAIL_ATTR_DATA* p_work, void* p_data, u32 datasize, u32 heapID );
+extern const void* RAIL_ATTR_DEBUG_GetData( const RAIL_ATTR_DATA* cp_work );
+extern u32 RAIL_ATTR_DEBUG_GetDataSize( const RAIL_ATTR_DATA* cp_work );
+#endif
 
 #ifdef _cplusplus
 }	// extern "C"{

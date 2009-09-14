@@ -374,6 +374,7 @@ fx32 FIELD_RAIL_LINE_DIST_FUNC_CircleLine( const RAIL_POINT * point_s, const RAI
 	center.y = cp_wk->y;
 	center.z = cp_wk->z;
 
+
 	// ’†S‚©‚ç‚Ì‹——£‚É•ÏX
 	VEC_Subtract( &p0, &center, &p0 );
 	VEC_Subtract( &p1, &center, &p1 );
@@ -406,6 +407,7 @@ fx32 FIELD_RAIL_LINE_DIST_FUNC_CircleLine( const RAIL_POINT * point_s, const RAI
 	// ‰~ü‚©‚çA‹——£‚ğ‹‚ß‚é
 	dist = FX_Mul( r, FX32_CONST(3.140f) );
 	dist = FX_Mul( dist, circle_par );
+
 
 	return dist;
 }

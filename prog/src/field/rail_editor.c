@@ -72,6 +72,7 @@ enum {
 //=====================================
 #define RE_MCS_BUFF_RAIL_SIZE	( 0x3000 )
 #define RE_MCS_BUFF_AREA_SIZE	( 0x400 )
+#define RE_MCS_BUFF_ATTR_SIZE	( 0x3000 )
 
 
 //-------------------------------------
@@ -124,6 +125,7 @@ typedef struct {
 		{
 			u32	rail_recv:1;			// レール情報受信
 			u32	area_recv:1;			// エリア情報受信
+			u32	attr_recv:1;			// アトリビュート情報受信
 			u32	select_recv:1;		// 選択情報受信
 			u32	rail_req:1;				// レール情報送信リクエスト
 			u32	area_req:1;				// エリア情報送信リクエスト
@@ -132,7 +134,8 @@ typedef struct {
 			u32	reset_req:1;			// リセットリクエスト
 			u32 end_req:1;				// 終了リクエスト
 			u32 raillocation_req:1;	// レールロケーション送信リクエスト
-			u32	pad_data:22;
+			u32 attr_req:1;	      // アトリビュート送信リクエスト
+			u32	pad_data:20;
 		};
 		u32 flag;	
 	};
@@ -142,6 +145,8 @@ typedef struct {
 	u32 rail_size;
 	u32 area[RE_MCS_BUFF_AREA_SIZE/4];
 	u32 area_size;
+	u32 attr[RE_MCS_BUFF_ATTR_SIZE/4];
+	u32 attr_size;
 	RE_MCS_SELECT_DATA select;
 } RE_RECV_BUFF;
 
@@ -202,6 +207,9 @@ typedef struct {
 
 	// ターゲットの描画
 	BOOL	draw_target;
+
+  // レール表示のON　OFF
+  BOOL rail_draw_flag;
 	
 	// 描画オブジェ部
 	RE_RAIL_DRAW_OBJ draw_obj[ RM_DRAW_OBJ_MAX ];
@@ -267,11 +275,14 @@ static void RE_Recv_CameraDataReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data,
 static void RE_Recv_ResetReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size );
 static void RE_Recv_EndReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size );
 static void RE_Recv_RailLocationReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size );
+static void RE_Recv_Attr( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size );
+static void RE_Recv_AttrReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size );
 
 // 受信情報の反映
 static void RE_Reflect( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_Reflect_Rail( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_Reflect_Area( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_Reflect_Attr( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_Reflect_Select( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_JumpPoint( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_JumpLine( DEBUG_RAIL_EDITOR* p_wk );
@@ -307,6 +318,7 @@ static void RE_Send_AreaData( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_Send_PlayerData( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk );
 static void RE_Send_RailLocationData( DEBUG_RAIL_EDITOR* p_wk );
+static void RE_Send_AttrData( DEBUG_RAIL_EDITOR* p_wk );
 
 
 
@@ -395,6 +407,8 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
         p_drawwk->cp_parent = p_wk;
 
         RE_DRAW_SetUpData( p_drawwk, p_mapper );
+
+        p_drawwk->rail_draw_flag = TRUE;
       }
     }
 		
@@ -606,6 +620,19 @@ static void RE_DRAW_Delete(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldma
 //-----------------------------------------------------------------------------
 static void RE_DRAW_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK * p_fieldmap, void * p_work)
 {
+	RE_RAIL_DRAW_WORK* p_wk = p_work;
+
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+  {
+    if( p_wk->rail_draw_flag )
+    {
+      p_wk->rail_draw_flag = FALSE;
+    }
+    else
+    {
+      p_wk->rail_draw_flag = TRUE;
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -617,11 +644,17 @@ static void RE_DRAW_Draw(FLDMAPFUNC_WORK * p_funcwk, FIELDMAP_WORK * p_fieldmap,
 {
 	int i;
 	RE_RAIL_DRAW_WORK* p_wk = p_work;
-	// ワークの描画
-	for( i=0; i<RM_DRAW_OBJ_MAX; i++ )
-	{
-		RE_DRAW_DRAWOBJ_Draw( p_wk, &p_wk->draw_obj[i] );
-	}
+
+  if( p_wk->rail_draw_flag == FALSE )
+  {
+  
+    // ワークの描画
+    for( i=0; i<RM_DRAW_OBJ_MAX; i++ )
+    {
+      RE_DRAW_DRAWOBJ_Draw( p_wk, &p_wk->draw_obj[i] );
+    }
+
+  }
 	
 	// 主人公位置に置く
 	{
@@ -1075,11 +1108,13 @@ static void RE_RecvControl( DEBUG_RAIL_EDITOR* p_wk )
 		NULL,
 		RE_Recv_Rail,
 		RE_Recv_Area,
+    RE_Recv_Attr,
 		NULL,
 		NULL,
 		RE_Recv_SelectData,
 		RE_Recv_RailReq,
 		RE_Recv_AreaReq,
+    RE_Recv_AttrReq,
 		RE_Recv_PlayerDataReq,
 		RE_Recv_CameraDataReq,
 		RE_Recv_ResetReq,
@@ -1253,6 +1288,39 @@ static void RE_Recv_RailLocationReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_dat
 	p_wk->p_recv->raillocation_req = TRUE;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アトリビュート情報の受信
+ */
+//-----------------------------------------------------------------------------
+static void RE_Recv_Attr( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size )
+{
+	const RE_MCS_ATTR_DATA* cp_attr = cp_data;
+
+	GF_ASSERT( cp_attr->header.data_type == RE_MCS_DATA_ATTR );
+
+	p_wk->p_recv->attr_recv = TRUE;
+
+	GF_ASSERT( size < RE_MCS_BUFF_ATTR_SIZE );
+	GFL_STD_MemCopy( cp_attr, p_wk->p_recv->attr, size );
+	p_wk->p_recv->attr_size = size;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アトリビュート情報の送信　リクエスト受信
+ */
+//-----------------------------------------------------------------------------
+static void RE_Recv_AttrReq( DEBUG_RAIL_EDITOR* p_wk, const void* cp_data, u32 size )
+{
+	const RE_MCS_HEADER* cp_header = cp_data;
+
+	GF_ASSERT( cp_header->data_type == RE_MCS_DATA_ATTR_REQ );
+	p_wk->p_recv->attr_req = TRUE;
+}
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	受信情報を　反映	
@@ -1274,6 +1342,10 @@ static void RE_Reflect( DEBUG_RAIL_EDITOR* p_wk )
 	{
 		RE_Reflect_Select( p_wk );
 	}
+  if( p_wk->p_recv->attr_recv )
+  {
+    RE_Reflect_Attr( p_wk );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1329,6 +1401,28 @@ static void RE_Reflect_Area( DEBUG_RAIL_EDITOR* p_wk )
   // 設定
   FLDNOGRID_MAPPER_DEBUG_LoadAreaBynary( p_mapper, p_setdata, (p_wk->p_recv->area_size - 8) );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アトリビュート情報の反映
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void RE_Reflect_Attr( DEBUG_RAIL_EDITOR* p_wk )
+{
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
+	RE_MCS_ATTR_DATA* p_data = (RE_MCS_ATTR_DATA*)p_wk->p_recv->attr;	
+	void* p_setdata;
+
+	// areaローダーに設定
+	p_setdata = GFL_HEAP_AllocClearMemory( FIELDMAP_GetHeapID( p_wk->p_fieldmap ), (p_wk->p_recv->attr_size - 4) );
+	GFL_STD_MemCopy( p_data->attr, p_setdata, (p_wk->p_recv->attr_size - 4) );
+
+  // 設定
+  FLDNOGRID_MAPPER_DEBUG_LoadAttrBynary( p_mapper, p_setdata, (p_wk->p_recv->attr_size - 4), FIELDMAP_GetHeapID(p_wk->p_fieldmap) );
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -2262,6 +2356,30 @@ static void RE_Send_RailLocationData( DEBUG_RAIL_EDITOR* p_wk )
 
 	// 送信
 	result = GFL_MCS_Write( GFL_MCS_RAIL_EDITOR_CATEGORY_ID, p_senddata, sizeof(RE_MCS_RAILLOCATION_DATA) );
+	GF_ASSERT( result );	
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アトリビュート情報の送信
+ */
+//-----------------------------------------------------------------------------
+static void RE_Send_AttrData( DEBUG_RAIL_EDITOR* p_wk )
+{
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
+	const RAIL_ATTR_DATA* cp_attr = FLDNOGRID_MAPPER_GetRailAttrData( p_mapper );
+	const void* cp_data = RAIL_ATTR_DEBUG_GetData( cp_attr );
+	u32 datasize				= RAIL_ATTR_DEBUG_GetDataSize( cp_attr );
+	RE_MCS_ATTR_DATA* p_senddata = (RE_MCS_ATTR_DATA*)p_wk->p_tmp_buff;
+	BOOL result;
+
+	p_senddata->header.data_type = RE_MCS_DATA_ATTR;
+	GFL_STD_MemCopy( cp_data, p_senddata->attr, datasize );
+	
+  TOMOYA_Printf( "send attrdata data size = 0x%x\n", datasize+sizeof(RE_MCS_HEADER) );
+	
+	// 送信
+	result = GFL_MCS_Write( GFL_MCS_RAIL_EDITOR_CATEGORY_ID, p_senddata, datasize+sizeof(RE_MCS_HEADER) );
 	GF_ASSERT( result );	
 }
 

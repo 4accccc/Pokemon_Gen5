@@ -32,11 +32,13 @@ typedef enum {
 	RE_MCS_DATA_MCSUSE,			// ダミー
 	RE_MCS_DATA_RAIL,				// レール情報			DS<->PC
 	RE_MCS_DATA_AREA,				// エリア情報			DS<->PC
+	RE_MCS_DATA_ATTR,				// アトリビュート情報	DS<->PC
 	RE_MCS_DATA_PLAYERDATA,	// プレイヤー情報	DS->PC
 	RE_MCS_DATA_CAMERADATA,	// カメラ情報			DS->PC
 	RE_MCS_DATA_SELECTDATA,	// 選択情報				DS<-PC
 	RE_MCS_DATA_RAIL_REQ,		// レール情報吸出しリクエスト	DS<-PC
 	RE_MCS_DATA_AREA_REQ,		// エリア情報吸出しリクエスト	DS<-PC
+	RE_MCS_DATA_ATTR_REQ,		// アトリビュート情報吸出しリクエスト	DS<-PC
 	RE_MCS_DATA_PLAYER_REQ,	// 主人公情報吸出しリクエスト	DS<-PC
 	RE_MCS_DATA_CAMERA_REQ,	// カメラ情報吸出しリクエスト	DS<-PC
 	RE_MCS_DATA_RESET_REQ,	// 画面リセットリクエスト	DS<-PC
@@ -104,6 +106,14 @@ typedef struct {
 	u32				reset;	//DS側受信用　画面をいったんリセットします。
 	u32				area[];
 } RE_MCS_AREA_DATA;
+
+//-------------------------------------
+///	エリア情報構造体
+//=====================================
+typedef struct {
+	RE_MCS_HEADER header;
+	u32				attr[];
+} RE_MCS_ATTR_DATA;
 
 //-------------------------------------
 ///	プレイヤー情報構造体
