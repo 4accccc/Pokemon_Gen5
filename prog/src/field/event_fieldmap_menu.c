@@ -485,6 +485,7 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     break;
     
   case FMENUSTATE_FIELD_FADEIN:
+    mwk->fieldWork = GAMESYSTEM_GetFieldMapWork(mwk->gmSys);
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(mwk->gmSys, mwk->fieldWork, 0));
     if(mwk->bForceExit)
     {
