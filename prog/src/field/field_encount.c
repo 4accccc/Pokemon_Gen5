@@ -1522,7 +1522,7 @@ static const ENCOUNT_DATA dataTestEncountData =
     },
     {
       5,  //レベル
-      MONSNO_HAGOMORI,
+      MONSNO_KURUMIRU,
     },
     {
       5,  //レベル
@@ -1534,7 +1534,7 @@ static const ENCOUNT_DATA dataTestEncountData =
     },
     {
       5,  //レベル
-      MONSNO_MAMEBATO,
+      MONSNO_MAMEPATO,
     },
     {
       5,  //レベル
@@ -1562,7 +1562,7 @@ static const ENCOUNT_DATA dataTestEncountData =
     },
     {
       5,  //レベル
-      MONSNO_HAGAKURE,
+      MONSNO_KURUMAYU,
     },
     {
       5,  //レベル
@@ -1586,7 +1586,7 @@ static const ENCOUNT_DATA dataTestEncountData =
     },
     {
       5,  //レベル
-      MONSNO_TIRATTI,
+      MONSNO_KABITTI,
     },
     {
       5,  //レベル
@@ -1594,7 +1594,7 @@ static const ENCOUNT_DATA dataTestEncountData =
     },
     {
       5,  //レベル
-      MONSNO_NASUKATTI,
+      MONSNO_NASUKADORI,
     },
     {
       5,  //レベル
@@ -1798,7 +1798,7 @@ static const ENCOUNT_DATA dataTestEncountData01 =
     },
     {
       15,  //レベル
-      MONSNO_HAKISIIDO,
+      MONSNO_HAHAKOMORI,
     },
     {
       15,  //レベル
@@ -1838,7 +1838,7 @@ static const ENCOUNT_DATA dataTestEncountData01 =
     },
     {
       15,  //レベル
-      MONSNO_TIRANII,
+      MONSNO_KABIINI,
     },
     {
       15,  //レベル
