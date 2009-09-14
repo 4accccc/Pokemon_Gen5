@@ -4298,7 +4298,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02PC0101[] = {
 		0,
 		0,
 		0,
-		1,
+		2,
 		14,
 		0,
 	},
