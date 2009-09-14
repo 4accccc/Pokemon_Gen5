@@ -5,6 +5,6 @@
 #define _D04R2801_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_D04R2801 (1)
+#define SCRID_MAPCHANGE (1)
 
 #endif //_D04R2801_DEF_H_

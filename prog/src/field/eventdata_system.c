@@ -446,6 +446,48 @@ u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata )
  * @param	evdata イベントデータへのポインタ
  * @param evwork イベントワークへのポインタ 
  * @param pos チェックする座標
+ * @retval POS_EVENT_DATA* (NULL = イベントなし)
+ */
+//------------------------------------------------------------------
+const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos )
+{
+  const POS_EVENT_DATA *data = evdata->pos_data;
+  
+  if( data != NULL )
+  {
+    u16 i = 0;
+    u16 *work_val;
+    u16 max = evdata->pos_count;
+    int gx = SIZE_GRID_FX32( pos->x );
+    int gz = SIZE_GRID_FX32( pos->z );
+    
+    for( ; i < max; i++, data++ )
+    {
+      if( gz >= data->gz && gz < (data->gz+data->sz) )
+      {
+        if( gx >= data->gx && gx < (data->gx+data->sx) )
+        {
+          work_val = EVENTWORK_GetEventWorkAdrs( evwork, data->workID );
+
+          if( (*work_val) == data->param )
+          {
+            return data;
+          }
+        }
+      }
+    }
+  }
+  
+  return NULL;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	座標イベントチェック
+ * @param	evdata イベントデータへのポインタ
+ * @param evwork イベントワークへのポインタ 
+ * @param pos チェックする座標
  * @retval u16 EVENTDATA_ID_NONE = イベントなし
  */
 //------------------------------------------------------------------

@@ -8842,16 +8842,51 @@ const CONNECT_DATA DOOR_EVENT_D04R0101[] = {
 	},
 };
 const int ConnectCount_D04R0101 = NELEMS(DOOR_EVENT_D04R0101);
+const POS_EVENT_DATA POS_EVENT_D04R0101[] = {
+	{//POSID_MAPCHANGE2 = 0
+		SCRID_MAPCHANGE2,
+		34, 7,
+		3, 3,
+		0,  //height
+		0,
+		LOCALWORK0,
+	},
+	{//POSID_MAPCHANGE1 = 1
+		SCRID_MAPCHANGE1,
+		40, 5,
+		3, 3,
+		0,  //height
+		0,
+		LOCALWORK0,
+	},
+	{//POSID_MAPCHANGE4 = 2
+		SCRID_MAPCHANGE4,
+		40, 23,
+		3, 3,
+		0,  //height
+		0,
+		LOCALWORK0,
+	},
+	{//POSID_MAPCHANGE3 = 3
+		SCRID_MAPCHANGE3,
+		33, 19,
+		3, 3,
+		0,  //height
+		0,
+		LOCALWORK0,
+	},
+};
+const int PosCount_D04R0101 = NELEMS(POS_EVENT_D04R0101);
 
 static const EVENTDATA_TABLE event_d04r0101 = {
 	0,
 	0,
 	2,
-	0,
+	4,
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_D04R0101,
-	(void *)NULL,
+	(void *)&POS_EVENT_D04R0101,
 };
 #include "../script/d04r0201_def.h"
 const CONNECT_DATA DOOR_EVENT_D04R0201[] = {
@@ -8881,16 +8916,35 @@ const CONNECT_DATA DOOR_EVENT_D04R0201[] = {
 	},
 };
 const int ConnectCount_D04R0201 = NELEMS(DOOR_EVENT_D04R0201);
+const POS_EVENT_DATA POS_EVENT_D04R0201[] = {
+	{//POSID_MAPCHANGE1 = 0
+		SCRID_MAPCHANGE1,
+		47, 15,
+		3, 3,
+		0,  //height
+		0,
+		LOCALWORK0,
+	},
+	{//POSID_MAPCHANGE2 = 1
+		SCRID_MAPCHANGE2,
+		47, 22,
+		3, 3,
+		0,  //height
+		0,
+		LOCALWORK0,
+	},
+};
+const int PosCount_D04R0201 = NELEMS(POS_EVENT_D04R0201);
 
 static const EVENTDATA_TABLE event_d04r0201 = {
 	0,
 	0,
 	4,
-	0,
+	2,
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_D04R0201,
-	(void *)NULL,
+	(void *)&POS_EVENT_D04R0201,
 };
 #include "../script/d04r0301_def.h"
 const CONNECT_DATA DOOR_EVENT_D04R0301[] = {
@@ -8920,16 +8974,43 @@ const CONNECT_DATA DOOR_EVENT_D04R0301[] = {
 	},
 };
 const int ConnectCount_D04R0301 = NELEMS(DOOR_EVENT_D04R0301);
+const POS_EVENT_DATA POS_EVENT_D04R0301[] = {
+	{//POSID_MAPCHANGE1 = 0
+		SCRID_MAPCHANGE1,
+		26, 22,
+		3, 3,
+		0,  //height
+		0,
+		LOCALWORK0,
+	},
+	{//POSID_MAPCHANGE2 = 1
+		SCRID_MAPCHANGE2,
+		34, 27,
+		3, 3,
+		0,  //height
+		0,
+		LOCALWORK0,
+	},
+	{//POSID_MAPCHANGE3 = 2
+		SCRID_MAPCHANGE3,
+		44, 29,
+		3, 3,
+		0,  //height
+		0,
+		LOCALWORK0,
+	},
+};
+const int PosCount_D04R0301 = NELEMS(POS_EVENT_D04R0301);
 
 static const EVENTDATA_TABLE event_d04r0301 = {
 	0,
 	0,
 	4,
-	0,
+	3,
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_D04R0301,
-	(void *)NULL,
+	(void *)&POS_EVENT_D04R0301,
 };
 #include "../script/d04r0401_def.h"
 const CONNECT_DATA DOOR_EVENT_D04R0401[] = {
@@ -8953,16 +9034,27 @@ const CONNECT_DATA DOOR_EVENT_D04R0401[] = {
 	},
 };
 const int ConnectCount_D04R0401 = NELEMS(DOOR_EVENT_D04R0401);
+const POS_EVENT_DATA POS_EVENT_D04R0401[] = {
+	{//POSID_MAPCHANGE = 0
+		SCRID_MAPCHANGE,
+		43, 16,
+		3, 3,
+		0,  //height
+		0,
+		LOCALWORK0,
+	},
+};
+const int PosCount_D04R0401 = NELEMS(POS_EVENT_D04R0401);
 
 static const EVENTDATA_TABLE event_d04r0401 = {
 	0,
 	0,
 	3,
-	0,
+	1,
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_D04R0401,
-	(void *)NULL,
+	(void *)&POS_EVENT_D04R0401,
 };
 #include "../script/d04r0501_def.h"
 const CONNECT_DATA DOOR_EVENT_D04R0501[] = {
@@ -9586,16 +9678,27 @@ const CONNECT_DATA DOOR_EVENT_D04R2801[] = {
 	},
 };
 const int ConnectCount_D04R2801 = NELEMS(DOOR_EVENT_D04R2801);
+const POS_EVENT_DATA POS_EVENT_D04R2801[] = {
+	{//POSID_MAPCHANGE = 0
+		SCRID_MAPCHANGE,
+		13, 14,
+		3, 3,
+		0,  //height
+		0,
+		LOCALWORK0,
+	},
+};
+const int PosCount_D04R2801 = NELEMS(POS_EVENT_D04R2801);
 
 static const EVENTDATA_TABLE event_d04r2801 = {
 	0,
 	0,
 	1,
-	0,
+	1,
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_D04R2801,
-	(void *)NULL,
+	(void *)&POS_EVENT_D04R2801,
 };
 #include "../script/d04r2901_def.h"
 const CONNECT_DATA DOOR_EVENT_D04R2901[] = {

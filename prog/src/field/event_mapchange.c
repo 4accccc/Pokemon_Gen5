@@ -465,9 +465,9 @@ GMEVENT * DEBUG_EVENT_ChangeMapDefaultPosByWarp(GAMESYS_WORK * gsys,
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_ChangeMapBySandStream(
+GMEVENT * EVENT_ChangeMapBySandStream(
     GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, 
-    const VecFx32* disappear_pos, u16 zone_id, const VecFx32* appear_pos, u16 dir )
+    const VecFx32* disappear_pos, u16 zone_id, const VecFx32* appear_pos )
 {
 	MAPCHANGE_WORK * mcw;
 	GMEVENT * event;
@@ -476,7 +476,7 @@ GMEVENT * DEBUG_EVENT_ChangeMapBySandStream(
 	mcw = GMEVENT_GetEventWork(event);
   MAPCHANGE_WORK_init( mcw, gsys ); 
 	LOCATION_SetDirect(
-      &mcw->loc_req, zone_id, dir, appear_pos->x, appear_pos->y, appear_pos->z);
+      &mcw->loc_req, zone_id, DIR_DOWN, appear_pos->x, appear_pos->y, appear_pos->z);
   mcw->exit_type = EXIT_TYPE_NONE;
   VEC_Set( &mcw->stream_pos, disappear_pos->x, disappear_pos->y, disappear_pos->z );
 	return event;

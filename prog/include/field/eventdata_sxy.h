@@ -118,3 +118,15 @@ extern const MMDL_HEADER * EVENTDATA_GetNpcData( const EVENTDATA_SYSTEM *evdata 
 //------------------------------------------------------------------
 extern u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata );
 
+
+//------------------------------------------------------------------
+/**
+ * @brief	座標イベントを取得
+ * @param	evdata イベントデータへのポインタ
+ * @param evwork イベントワークへのポインタ 
+ * @param pos チェックする座標
+ * @retval NULL = イベントなし
+ */
+//------------------------------------------------------------------
+extern const POS_EVENT_DATA * EVENTDATA_GetPosEvent( 
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos );

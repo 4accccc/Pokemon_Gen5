@@ -10,6 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d04r0101.h"
+	.include  "../zonetable/zone_id.h"
   //.include  "d04r0101.h"
 
 //--------------------------------------------------------------
@@ -19,7 +20,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d04r0101
+_EVENT_DATA    ev_mapchange1
+_EVENT_DATA    ev_mapchange2
+_EVENT_DATA    ev_mapchange3
+_EVENT_DATA    ev_mapchange4
 _EVENT_DATA_END
 
 
@@ -32,7 +36,18 @@ _EVENT_DATA_END
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-ev_d04r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START ev_mapchange1
+	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0201, 37, 6 )
+EVENT_END
 
+EVENT_START ev_mapchange2
+	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0201, 44, 4 )
+EVENT_END
+
+EVENT_START ev_mapchange3
+	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0201, 34, 21 )
+EVENT_END
+
+EVENT_START ev_mapchange4
+	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0201, 42, 29 )
+EVENT_END

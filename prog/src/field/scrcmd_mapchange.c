@@ -24,6 +24,7 @@
 
 #include "event_mapchange.h"
 #include "field/field_const.h"  //FIELD_CONST_GRID_SIZE
+#include "eventdata_local.h"
 //======================================================================
 //  define
 //======================================================================
@@ -68,7 +69,7 @@ VMCMD_RESULT EvCmdMapChange( VMHANDLE *core, void *wk )
   {
     GMEVENT * mapchange_event;
     GMEVENT * parent_event;
-    u16 dir = 0;                  //仮  仕様としてはどうするべきなのか？
+    u16 dir = 0;
 
     VEC_Set(&appear_pos,
         GRID_TO_FX32(next_x),
@@ -109,19 +110,26 @@ VMCMD_RESULT EvCmdMapChangeBySandStream( VMHANDLE *core, void *wk )
   u16 next_x = VMGetU16(core);  //2byte read  X位置グリッド単位
   u16 next_z = VMGetU16(core);  //2byte read  Z位置グリッド単位
   
+  // 流砂中心位置を求める
   {
-    FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-    MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-    u16 x = MMDL_GetGridPosX( mmdl );
-    u16 y = MMDL_GetGridPosY( mmdl );
-    u16 z = MMDL_GetGridPosZ( mmdl );
-    VEC_Set(&disappear_pos, GRID_TO_FX32(x), GRID_TO_FX32(y), GRID_TO_FX32(z)); 
+    VecFx32 pos;
+    const POS_EVENT_DATA* event;
+    GAMEDATA *       gamedata = GAMESYSTEM_GetGameData( gsys );
+    EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData( gamedata );
+    EVENTWORK *        evwork = GAMEDATA_GetEventWork( gamedata );
+    FIELD_PLAYER *     player = FIELDMAP_GetFieldPlayer( fieldmap );
+    FIELD_PLAYER_GetPos( player, &pos );
+    event = EVENTDATA_GetPosEvent( evdata, evwork, &pos );
+    if( event )
+    {
+      disappear_pos.x = GRID_TO_FX32( event->gx ) + FX_Div( GRID_TO_FX32( event->sx ), 2<<FX32_SHIFT );
+      disappear_pos.z = GRID_TO_FX32( event->gz ) + FX_Div( GRID_TO_FX32( event->sz ), 2<<FX32_SHIFT );
+    }
   }
   
   {
     GMEVENT * mapchange_event;
     GMEVENT * parent_event;
-    u16 dir = 0;                  //仮  仕様としてはどうするべきなのか？
 
     VEC_Set(&appear_pos,
         GRID_TO_FX32(next_x),
@@ -130,8 +138,8 @@ VMCMD_RESULT EvCmdMapChangeBySandStream( VMHANDLE *core, void *wk )
         ); 
     
     parent_event = GAMESYSTEM_GetEvent( gsys ); //現在のイベント
-    mapchange_event = DEBUG_EVENT_ChangeMapBySandStream( gsys, fieldmap,
-        &disappear_pos, zone_id, &appear_pos, dir );
+    mapchange_event = EVENT_ChangeMapBySandStream( gsys, fieldmap,
+        &disappear_pos, zone_id, &appear_pos );
     GMEVENT_CallEvent( parent_event, mapchange_event );
   }
 

@@ -222,8 +222,6 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
   MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player );
   FLDEFF_CTRL*  fectrl = FIELDMAP_GetFldEffCtrl( ew->pFieldmap );
 
-  static FLDEFF_TASK* task;
-
   switch( *seq )
   {
   // É^ÉXÉNÇÃí«â¡
