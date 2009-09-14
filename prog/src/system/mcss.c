@@ -596,37 +596,37 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
  	G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
  	G3_RestoreMtx( MCSS_SHADOW_MTX );
 
-  if( mcss->shadow_vanish_flag == 0 )
+  if( ( mcss->shadow_vanish_flag == 0 ) && ( shadow_alpha ) )
   { 
- 	G3_TexPlttBase( shadow_palette->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN], shadow_palette->fmt);
- 	G3_PolygonAttr( GX_LIGHTMASK_NONE,				// no lights
-       				    GX_POLYGONMODE_MODULATE,	// modulation mode
-       				    GX_CULL_NONE,					    // cull back
-       				    1,								        // polygon ID(0 - 63)
-       				    shadow_alpha,             // alpha(0 - 31)
-       				    GX_POLYGON_ATTR_MISC_FOG	// OR of GXPolygonAttrMisc's value
-       				   );
+   	G3_TexPlttBase( shadow_palette->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN], shadow_palette->fmt);
+  	G3_PolygonAttr( GX_LIGHTMASK_NONE,				// no lights
+        				    GX_POLYGONMODE_MODULATE,	// modulation mode
+        				    GX_CULL_NONE,					    // cull back
+        				    1,								        // polygon ID(0 - 63)
+        				    shadow_alpha,             // alpha(0 - 31)
+        				    GX_POLYGON_ATTR_MISC_FOG	// OR of GXPolygonAttrMisc's value
+        				   );
 
- 	G3_Translate( pos.x, pos.y, 0 );
+  	G3_Translate( pos.x, pos.y, 0 );
 
- 	G3_RotZ( -FX_SinIdx( anim_SRT_c->rotZ ), FX_CosIdx( anim_SRT_c->rotZ ) );
+  	G3_RotZ( -FX_SinIdx( anim_SRT_c->rotZ ), FX_CosIdx( anim_SRT_c->rotZ ) );
 
- 	G3_Scale( anim_SRT_c->sx, anim_SRT_c->sy, FX32_ONE );
+  	G3_Scale( anim_SRT_c->sx, anim_SRT_c->sy, FX32_ONE );
 
- 	G3_Translate( pos_x, pos_y, 0 );
+  	G3_Translate( pos_x, pos_y, 0 );
 
- 	G3_Scale( scale_x, scale_y, FX32_ONE );
+  	G3_Scale( scale_x, scale_y, FX32_ONE );
 
- 	G3_Begin(GX_BEGIN_QUADS);
- 	G3_TexCoord( tex_s,				tex_t );
- 	G3_Vtx( 0, 0, 0 );
- 	G3_TexCoord( tex_s + scale_x,	tex_t );
- 	G3_Vtx( MCSS_DEFAULT_LINE, 0, 0 );
- 	G3_TexCoord( tex_s + scale_x,	tex_t + scale_y );
- 	G3_Vtx( MCSS_DEFAULT_LINE, -MCSS_DEFAULT_LINE, 0 );
- 	G3_TexCoord( tex_s,				tex_t + scale_y );
- 	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
- 	G3_End();
+  	G3_Begin(GX_BEGIN_QUADS);
+  	G3_TexCoord( tex_s,				tex_t );
+  	G3_Vtx( 0, 0, 0 );
+  	G3_TexCoord( tex_s + scale_x,	tex_t );
+  	G3_Vtx( MCSS_DEFAULT_LINE, 0, 0 );
+  	G3_TexCoord( tex_s + scale_x,	tex_t + scale_y );
+  	G3_Vtx( MCSS_DEFAULT_LINE, -MCSS_DEFAULT_LINE, 0 );
+  	G3_TexCoord( tex_s,				tex_t + scale_y );
+  	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
+  	G3_End();
   }
 
 	if( mcss_ortho_mode == 0 ){
@@ -1548,6 +1548,7 @@ MCSS_WORK*	MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	
 			mcss_sys->mcss[ count ]->ofs_scale.y = FX32_ONE;
 			mcss_sys->mcss[ count ]->ofs_scale.z = FX32_ONE;
 			mcss_sys->mcss[ count ]->alpha = 31;
+			mcss_sys->mcss[ count ]->shadow_alpha = MCSS_SHADOW_ALPHA_AUTO;
 			mcss_sys->mcss[ count ]->vanish_flag = MCSS_VANISH_OFF;
 			mcss_sys->mcss[ count ]->shadow_rotate = MCSS_DEFAULT_SHADOW_ROTATE;
 			mcss_sys->mcss[ count ]->shadow_offset.x = 0;
