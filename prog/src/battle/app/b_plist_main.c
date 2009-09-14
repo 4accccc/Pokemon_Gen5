@@ -192,7 +192,7 @@ static BOOL BPL_SeqEnd( GFL_TCB* tcb, BPLIST_WORK * wk );
 /*↑[GS_CONVERT_TAG]*/
 static int BPL_SeqWazaSelect( BPLIST_WORK * wk );
 
-static u8 BPL_PokeItemUse( BPLIST_WORK * wk );
+static int BPL_PokeItemUse( BPLIST_WORK * wk );
 
 //static void BPL_VramInit(void);
 static void BPL_BgInit( BPLIST_WORK * dat );
@@ -420,8 +420,12 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 
 
 /*** テスト ***/
+//	wk->dat->mode = BPL_MODE_NORMAL;			// 通常のポケモン選択
+//	wk->dat->mode = BPL_MODE_NO_CANCEL;		// キャンセル不可
+//	wk->dat->mode = BPL_MODE_ITEMUSE;			// アイテム使用
+//	wk->dat->item = 38;
+//	wk->dat->mode = BPL_MODE_WAZASET;			// 技忘れ
 //	wk->dat->chg_waza = 20;
-//	wk->dat->mode = BPL_MODE_WAZASET;
 //	wk->page = BPLIST_PAGE_PP_RCV;		// PP回復技選択ページ
 /**************/
 }
@@ -450,7 +454,7 @@ static void BattlePokeList_Main( GFL_TCB* tcb, void * work )
 		}
 	}
 
-//	GFL_TCBL_Main( wk->tcbl );
+	GFL_TCBL_Main( wk->tcbl );
 //	BPL_PokeIconAnime( wk );
 
 //	GFL_CLACT_SYS_Main( wk->crp );
@@ -594,6 +598,8 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 
 	G2S_BlendNone();
 
+	wk->tcbl = GFL_TCBL_Init( wk->dat->heap, wk->dat->heap, 1, 4 );
+
 	GFL_STD_MemFill((void*)HW_OBJ_VRAM, 0, HW_OBJ_VRAM_SIZE);
 
 
@@ -690,8 +696,28 @@ static int BPL_SeqPokeSelect( BPLIST_WORK * wk )
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
-static u8 BPL_PokeItemUse( BPLIST_WORK * wk )
+static int BPL_PokeItemUse( BPLIST_WORK * wk )
 {
+	BPLIST_DATA * dat = wk->dat;
+
+	// とりあえず、タマゴには使えないようにしておく
+	if( wk->poke[dat->sel_poke].egg != 0 ){
+		GFL_MSG_GetString( wk->mman, mes_b_plist_m06, wk->msg_buf );
+		BattlePokeList_TalkMsgSet( wk );
+		wk->dat->sel_poke = BPL_SEL_EXIT;
+		wk->ret_seq = SEQ_BPL_ENDSET;
+		return SEQ_BPL_MSG_WAIT;
+	}
+
+	// １つの技のPP回復
+	if( ITEM_GetParam( dat->item, ITEM_PRM_PP_RCV, dat->heap ) != 0 &&
+			ITEM_GetParam( dat->item, ITEM_PRM_ALL_PP_RCV, dat->heap ) == 0 ){
+		wk->ret_seq = SEQ_BPL_PAGECHG_PPRCV;
+		return SEQ_BPL_BUTTON_WAIT;
+	}
+
+	return SEQ_BPL_ENDSET;
+
 #if 0
 	BPLIST_DATA * dat = wk->dat;
 
@@ -1102,6 +1128,7 @@ static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
 	case 1:
 	case 2:
 	case 3:
+/*
 		if( wk->poke[dat->sel_poke].waza[ret].id == 0 ){ break; }
 		wk->dat->sel_wp = (u8)ret;
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );
@@ -1119,6 +1146,12 @@ static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
 			return SEQ_BPL_MSG_WAIT;
 		}
 		break;
+*/
+		if( wk->poke[dat->sel_poke].waza[ret].id == 0 ){ break; }
+		wk->dat->sel_wp = (u8)ret;
+//		Snd_SePlay( SEQ_SE_DP_DECIDE );
+		BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZARCV1+ret );
+		return SEQ_BPL_ENDSET;
 
 	case 4:		// キャンセル
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );
@@ -1530,18 +1563,19 @@ static BOOL BPL_SeqEnd( GFL_TCB * tcb, BPLIST_WORK * wk )
 		return FALSE;
 	}
 
+	wk->dat->end_flg = 1;
+	wk->dat->cursor_flg = BAPP_CursorMvWkGetFlag( wk->cmv_wk );
+
 	BPL_MsgManExit( wk );
 	BattlePokeList_ObjFree( wk );
 	BattlePokeList_BmpFreeAll( wk );
 	BPL_BgExit();
 
-	wk->dat->cursor_flg = BAPP_CursorMvWkGetFlag( wk->cmv_wk );
-
+	GFL_TCBL_Exit( wk->tcbl );
 	BAPP_CursorMoveWorkFree( wk->cmv_wk );
 
 //	FontProc_UnloadFont( FONT_TOUCH );
 
-	wk->dat->end_flg = 1;
 	GFL_TCB_DeleteTask( tcb );
 	GFL_HEAP_FreeMemory( wk );
 

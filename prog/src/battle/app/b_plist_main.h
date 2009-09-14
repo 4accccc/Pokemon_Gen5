@@ -420,8 +420,8 @@ typedef struct {
 
 	u8	init_poke;		// 入れ替え対象のポケモン位置
 
-	u8	seq;			// メインシーケンス
-	u8	ret_seq;		// 復帰シーケンス
+	int	seq;			// メインシーケンス
+	int	ret_seq;		// 復帰シーケンス
 	u8	page;			// 現在のページ
 	u8	midx;			// メッセージインデックス
 
