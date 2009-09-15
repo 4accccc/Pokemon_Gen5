@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-05-29T16:08:38"/>
+	<create user="taya" host="W00146" date="2009-08-25T15:53:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -289,22 +289,22 @@
 
 
 	<row id="DEBUG_TAYA_MENU1">
-		<language name="JPN" width="256">あたらしいバトルシステム</language>
-		<language name="JPN_KANJI" width="256">新しいバトルシステム</language>
+		<language name="JPN" width="256">얇겎</language>
+		<language name="JPN_KANJI" width="256">＋－±×÷</language>
 	</row>
 
 	<row id="DEBUG_TAYA_MENU2">
-		<language name="JPN" width="256">ポケモンさくせい</language>
+		<language name="JPN" width="256">。，．・：；</language>
 		<language name="JPN_KANJI" width="256">ポケモン作成</language>
 	</row>
 
 	<row id="DEBUG_TAYA_MENU3">
-		<language name="JPN" width="256">つうしんバトル</language>
+		<language name="JPN" width="256">？！゛゜´｀¨＾</language>
 		<language name="JPN_KANJI" width="256">通信バトル</language>
 	</row>
 
 	<row id="DEBUG_TAYA_MENU4">
-		<language name="JPN" width="256">マルチバトル　おや</language>
+		<language name="JPN" width="256">￠￡％＃＆＊＠</language>
 		<language name="JPN_KANJI" width="256">マルチバトル　親</language>
 	</row>
 
