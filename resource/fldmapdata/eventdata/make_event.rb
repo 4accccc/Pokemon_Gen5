@@ -90,7 +90,8 @@ class EventHeader
   end
 
   def calcXgridOfs x
-    return x / GRID_SIZE + (@blockSizeX / 2 + @x_ofs * @blockSizeX) - 1
+    return x / GRID_SIZE + (@blockSizeX / 2 + @x_ofs * @blockSizeX)
+    #return x / GRID_SIZE + (@blockSizeX / 2 + @x_ofs * @blockSizeX) - 1
   end
 
   def calcZgridOfs z
