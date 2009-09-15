@@ -442,11 +442,12 @@ static BOOL EvWaitVoicePlay(VMHANDLE *core, void *wk)
  * 鳴き声終了待ち
  * @param  core    仮想マシン制御構造体へのポインタ
  * @return  VMCMD_RESULT
+ * @todo  現状、鳴き声のためのヒープがHEAPID_APPから確保できないため、鳴き声フック
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdVoiceWait( VMHANDLE *core, void *wk )
 {
-  VMCMD_SetWait( core, EvWaitVoicePlay );
+//  VMCMD_SetWait( core, EvWaitVoicePlay );
   return VMCMD_RESULT_SUSPEND;
 }
 
