@@ -23,6 +23,7 @@ SUBDIRS	=	zonetable/zoneindex \
 					zonelight_table \
 					fld_gimmick_assign \
 					gimmick \
+					camera_scroll \
 					zonetable
 					
 
