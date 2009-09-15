@@ -128,6 +128,7 @@ static void ms_set_std( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rank_limit( STRBUF* dst, u16 strID, const int* args );
+static void ms_set_useitem( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_poke( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_poke2poke( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_trace( STRBUF* dst, u16 strID, const int* args );
@@ -340,52 +341,6 @@ void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID, u32 numArgs, ... )
 //=============================================================================================
 void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const int* args )
 {
-  #if 0
-  static const struct {
-    BtlStrID_STD   strID;
-    void  (* const func)( STRBUF* buf, BtlStrID_STD strID, const int* args );
-  }funcTbl[] = {
-    { BTL_STRID_STD_Encount_Wild1,    ms_encount },
-    { BTL_STRID_STD_Encount_Wild2,    ms_encount_double },
-    { BTL_STRID_STD_Encount_NPC1,     ms_encount_tr1 },
-    { BTL_STRID_STD_PutSingle,        ms_put_single },
-    { BTL_STRID_STD_PutDouble,        ms_put_double },
-    { BTL_STRID_STD_PutSingle_NPC1,   ms_put_single_npc },
-    { BTL_STRID_STD_UseItem_Player,   ms_put_tr_item },
-    { BTL_STRID_STD_MemberOut1,       ms_out_member1 },
-    { BTL_STRID_STD_SelectAction,     ms_select_action_ready },
-    { BTL_STRID_STD_KodawariLock,     ms_kodawari_lock },
-    { BTL_STRID_STD_WazaLock,         ms_waza_lock },
-    { BTL_STRID_STD_YubiWoFuru,       ms_waza_only },
-    { BTL_STRID_STD_SizenNoTikara,    ms_waza_only },
-    { BTL_STRID_STD_Reflector,        ms_side_eff },
-    { BTL_STRID_STD_ReflectorOff,     ms_side_eff },
-    { BTL_STRID_STD_HikariNoKabe,     ms_side_eff },
-    { BTL_STRID_STD_HikariNoKabeOff,  ms_side_eff },
-    { BTL_STRID_STD_SinpiNoMamori,    ms_side_eff },
-    { BTL_STRID_STD_SinpiNoMamoriOff, ms_side_eff },
-    { BTL_STRID_STD_SiroiKiri,        ms_side_eff },
-    { BTL_STRID_STD_SiroiKiriOff,     ms_side_eff },
-    { BTL_STRID_STD_Oikaze,           ms_side_eff },
-    { BTL_STRID_STD_OikazeOff,        ms_side_eff },
-    { BTL_STRID_STD_Omajinai,         ms_side_eff },
-    { BTL_STRID_STD_OmajinaiOff,      ms_side_eff },
-    { BTL_STRID_STD_StealthRock,      ms_side_eff },
-    { BTL_STRID_STD_Makibisi,         ms_side_eff },
-    { BTL_STRID_STD_Dokubisi,         ms_side_eff },
-  };
-  u32 i;
-
-  for(i=0; i<NELEMS(funcTbl); ++i)
-  {
-    if( funcTbl[i].strID == strID )
-    {
-      funcTbl[i].func( buf, strID, args );
-      return;
-    }
-  }
-  #endif
-
   ms_std_simple( buf, strID, args );
 }
 
@@ -529,6 +484,7 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     { BTL_STRID_SET_Rankdown_ATK,         ms_set_rankdown         },
     { BTL_STRID_SET_RankupMax_ATK,        ms_set_rank_limit       },
     { BTL_STRID_SET_RankdownMin_ATK,      ms_set_rank_limit       },
+    { BTL_STRID_STD_UseItem_Self,         ms_set_useitem          },
     #if 0
     { BTL_STRID_SET_Trace,                ms_set_trace            },
     { BTL_STRID_SET_YotimuExe,            ms_set_yotimu           },
@@ -737,6 +693,27 @@ static void ms_set_rank_limit( STRBUF* dst, u16 strID, const int* args )
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
+static void ms_set_useitem( STRBUF* dst, u16 strID, const int* args )
+{
+  u8 clientID = args[0];
+
+  if( BTL_MAIN_GetPlayerClientID(SysWork.mainModule) != clientID )
+  {
+    if( BTL_MAIN_GetCompetitor(SysWork.mainModule) == BTL_COMPETITOR_COMM ){
+      strID = BTL_STRID_STD_UseItem_Player;
+    }else{
+      strID = BTL_STRID_STD_UseItem_NPC;
+    }
+  }
+  else{
+    strID = BTL_STRID_STD_UseItem_Self;
+  }
+
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
+  registerWords( SysWork.tmpBuf, args, SysWork.wset );
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+
 //--------------------------------------------------------------
 /**
  *  ››‚Í~~‚É‚Ë‚ç‚¢‚ð‚³‚¾‚ß‚½I@“™

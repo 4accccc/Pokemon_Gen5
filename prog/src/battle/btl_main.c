@@ -1820,8 +1820,6 @@ static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon )
     }
   }
 }
-
-
 static int PokeCon_FindPokemon( const BTL_POKE_CONTAINER* pokecon, u8 clientID, u8 pokeID )
 {
   const BTL_POKEPARAM* bpp;
@@ -1869,7 +1867,6 @@ const BTL_POKEPARAM* BTL_POKECON_GetFrontPokeDataConst( const BTL_POKE_CONTAINER
   u8 clientID, posIdx;
 
   btlPos_to_cliendID_and_posIdx( wk->mainModule, pos, &clientID, &posIdx );
-
   party = &wk->party[ clientID ];
 
   BTL_Printf("戦闘位置[%d] = クライアント[%d]の %d 番目のポケを返す\n", pos, clientID, posIdx );
@@ -1910,14 +1907,12 @@ const BTL_POKEPARAM* BTL_POKECON_GetClientPokeDataConst( const BTL_POKE_CONTAINE
   party = &wk->party[ clientID ];
   return BTL_PARTY_GetMemberDataConst( party, memberIdx );
 }
-
 BTL_POKEPARAM* BTL_POKECON_GetPokeParam( BTL_POKE_CONTAINER* wk, u8 pokeID )
 {
   GF_ASSERT(pokeID<BTL_COMMITMENT_POKE_MAX);
   GF_ASSERT(wk->pokeParam[pokeID]);
   return wk->pokeParam[ pokeID ];
 }
-
 const BTL_POKEPARAM* BTL_POKECON_GetPokeParamConst( const BTL_POKE_CONTAINER* wk, u8 pokeID )
 {
   GF_ASSERT(pokeID<BTL_COMMITMENT_POKE_MAX);
@@ -1925,6 +1920,8 @@ const BTL_POKEPARAM* BTL_POKECON_GetPokeParamConst( const BTL_POKE_CONTAINER* wk
 
   return wk->pokeParam[ pokeID ];
 }
+
+
 
 //=============================================================================================
 /**
@@ -2069,6 +2066,11 @@ s16 BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param )
 POKEPARTY* BTL_MAIN_GetPlayerPokeParty( BTL_MAIN_MODULE* wk )
 {
   return PokeCon_GetSrcParty( &wk->pokeconForClient, wk->myClientID );
+}
+
+u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk )
+{
+  return wk->myClientID;
 }
 
 

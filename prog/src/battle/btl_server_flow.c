@@ -1644,12 +1644,11 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
     target = BTL_PARTY_GetMemberData( party, targetIdx );
   }
 
-  // @@@ ポケモンID渡してるが、クライアントIDにすべきか、あるいは両方かも？
   {
     int arg[2];
-    arg[0] = BPP_GetID(bpp);
+    arg[0] = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
     arg[1] = itemID;
-    scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem_Player, 2, arg );
+    scPut_Message_SetEx( wk, BTL_STRID_STD_UseItem_Self, 2, arg );
   }
 
   hem_state = Hem_PushState( &wk->HEManager );
@@ -1657,7 +1656,10 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
   for(i=0; i<NELEMS(ItemEffectTbl); ++i){
     itemParam = BTL_CALC_ITEM_GetParam( itemID, ItemEffectTbl[i].effect );
     if( itemParam ){
-      ItemEffectTbl[i].func( wk, target, itemID, itemParam, actParam );
+      if( !ItemEffectTbl[i].func(wk, target, itemID, itemParam, actParam) )
+      {
+        scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem_NoEffect, 0, NULL );
+      }
     }
   }
   scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
@@ -1842,15 +1844,18 @@ static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
  */
 static u8 ItemEff_Common_Cure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, WazaSick sickID )
 {
-  if( BPP_CheckSick(bpp, sickID) )
+  if( !BPP_IsDead(bpp) )
   {
-    BTL_HANDEX_PARAM_CURE_SICK* param;
-    u8 pokeID = BPP_GetID( bpp );
-    param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_CURE_SICK, pokeID );
-    param->poke_cnt = 1;
-    param->pokeID[0] = pokeID;
-    param->sickCode = sickID;
-    return TRUE;
+    if( BPP_CheckSick(bpp, sickID) )
+    {
+      BTL_HANDEX_PARAM_CURE_SICK* param;
+      u8 pokeID = BPP_GetID( bpp );
+      param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_CURE_SICK, pokeID );
+      param->poke_cnt = 1;
+      param->pokeID[0] = pokeID;
+      param->sickCode = sickID;
+      return TRUE;
+    }
   }
   return FALSE;
 }
@@ -1859,17 +1864,27 @@ static u8 ItemEff_Common_Cure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
  */
 static u8 ItemEff_Common_Rank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, BppValueID rankType )
 {
-  if( BPP_IsRankEffectValid(bpp, rankType, itemParam) )
-  {
-    u8 pokeID = BPP_GetID( bpp );
-    BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_RANK_EFFECT, pokeID );
-    param->poke_cnt = 1;
-    param->pokeID[0] = pokeID;
-    param->rankType = rankType;
-    param->rankVolume = itemParam;
-    param->fAlmost = TRUE;
-    return 1;
+  u8 pokeID = BPP_GetID( bpp );
+
+  if( (BTL_SVFLOW_CheckExistFrontPokeID(wk, pokeID) != BTL_POS_MAX)
+  &&  !BPP_IsDead(bpp)
+  ){
+    if( BPP_IsRankEffectValid(bpp, rankType, itemParam) )
+    {
+      BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVFLOW_HANDLERWORK_Push( wk, BTL_HANDEX_RANK_EFFECT, pokeID );
+      param->poke_cnt = 1;
+      param->pokeID[0] = pokeID;
+      param->rankType = rankType;
+      param->rankVolume = itemParam;
+      param->fAlmost = TRUE;
+      return 1;
+    }
   }
+  else
+  {
+    BTL_Printf("場に出ていないのでランク効果なし\n");
+  }
+
   return 0;
 }
 
@@ -7328,8 +7343,9 @@ BtlPokePos BTL_SVFLOW_CheckExistFrontPokeID( BTL_SVFLOW_WORK* wk, u8 pokeID )
   for(i=0; i<BTL_CLIENT_MAX; ++i)
   {
     clwk = BTL_SERVER_GetClientWork( wk->server, i );
-    if( clwk->numCoverPos )
-    {
+    if( (clwk != NULL)
+    &&  (clwk->numCoverPos)
+    ){
       int p;
       for(p=0; p<clwk->numCoverPos; ++p)
       {

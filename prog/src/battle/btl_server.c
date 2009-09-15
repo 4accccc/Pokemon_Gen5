@@ -558,7 +558,6 @@ SVCL_WORK* BTL_SERVER_GetClientWorkIfEnable( BTL_SERVER* server, u8 clientID )
   }
   return NULL;
 }
-
 u8 BTL_SVCL_GetNumActPoke( SVCL_WORK* clwk )
 {
   GF_ASSERT(clwk->adapter);
@@ -575,6 +574,7 @@ const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx )
     return action;
   }
 }
+
 
 
 //----------------------------------------------
