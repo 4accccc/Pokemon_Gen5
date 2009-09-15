@@ -50,7 +50,7 @@ subdir:
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # コンバート
-	ruby ica_conv.rb camera_null2.ica ica_test_data2.bin
+	ruby ica_converter.rb -rt camera_null2.ica ica_test_data2.bin
 	g3dcvtr houou_test.imd
 	g3dcvtr houou_test.ica
 	g3dcvtr houou_test.ita
