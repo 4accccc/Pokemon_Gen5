@@ -406,6 +406,7 @@ VMCMD_RESULT EvCmdMeWait(VMHANDLE *core, void *wk )
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  *
+ * @todo  現状、鳴き声のためのヒープがHEAPID_APPから確保できないため、鳴き声フック
  * @todo  色々懸念があった模様なので、サウンドとすり合わせる
  *
   //ぺラップ再生テスト
@@ -422,7 +423,7 @@ VMCMD_RESULT EvCmdVoicePlay( VMHANDLE *core, void *wk )
   u8 formno = VMGetU8(core);
   u8 ptn = VMGetU8(core);     //今は捨てている
 
-  core->vm_register[0] = PMV_PlayVoice( monsno, formno );
+  //core->vm_register[0] = PMV_PlayVoice( monsno, formno );
 
   return VMCMD_RESULT_CONTINUE;
 }
