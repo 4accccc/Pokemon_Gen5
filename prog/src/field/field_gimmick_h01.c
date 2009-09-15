@@ -184,7 +184,7 @@ void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
       int i;
       for( i=0; i<ICA_NUM; i++ )
       {
-        h01work->icaAnime[i] = ICA_ANIME_CreateStreaming( 
+        h01work->icaAnime[i] = ICA_ANIME_CreateStreamingAlloc( 
             heap_id, ARCID_OBATA_DEBUG, NARC_debug_obata_ica_test_data2_bin, 10 );
       }
     }
