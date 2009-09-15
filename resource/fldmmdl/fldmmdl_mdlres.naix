@@ -21,7 +21,8 @@ enum {
 	NARC_fldmmdl_mdlres_girl1_nsbtx = 7,
 	NARC_fldmmdl_mdlres_icpo_nsbtx = 8,
 	NARC_fldmmdl_mdlres_obj_kabi32_nsbtx = 9,
-	NARC_fldmmdl_mdlres_accordion_nsbtx = 10
+	NARC_fldmmdl_mdlres_accordion_nsbtx = 10,
+	NARC_fldmmdl_mdlres_support_nsbtx = 11
 };
 
 /* NARC_FLDMMDL_MDLRES_NAIX_ */

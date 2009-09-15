@@ -9,4 +9,5 @@ FMMDL_RESLIST_NCGIMD = \
 	girl1.imd \
 	icpo.imd \
 	obj_kabi32.imd \
-	accordion.imd
+	accordion.imd \
+	support.imd

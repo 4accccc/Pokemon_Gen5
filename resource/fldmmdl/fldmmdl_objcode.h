@@ -152,6 +152,7 @@
 #define POKE20 (0x93) //147 ポケモン２０
 #define ACCORDION (0x94) //148 アコーディオン奏者
 #define BASKETM (0x95) //149 バスケ選手
-#define OBJCODEMAX (0x96) //150 最大
+#define SUPPORT (0x96) //150 サポート
+#define OBJCODEMAX (0x97) //151 最大
 
 #endif
