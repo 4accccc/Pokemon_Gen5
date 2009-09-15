@@ -118,6 +118,12 @@ extern void FLDMAPPER_GetSize( const FLDMAPPER* g3Dmapper, fx32* x, fx32* z );
 extern void FLDMAPPER_SetDrawOffset( FLDMAPPER *g3Dmapper, const VecFx32 *offs );
 extern void FLDMAPPER_GetDrawOffset( const FLDMAPPER *g3Dmapper, VecFx32 *offs );
 
+//------------------------------------------------------------------
+/**
+ * @brief ブロック位置取得
+ */
+//------------------------------------------------------------------
+extern void FLDMAPPER_GetBlockXZPos( const FLDMAPPER * g3Dmapper, u32 * blockx, u32 * blockz );
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------

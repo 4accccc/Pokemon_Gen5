@@ -1019,6 +1019,20 @@ void FLDMAPPER_GetSize( const FLDMAPPER* g3Dmapper, fx32* x, fx32* z )
 	return;
 }
 
+//----------------------------------------------------------------------------
+/**
+ * @brief ブロック単位でのXZ位置を取得
+ * @param	g3Dmapper     フィールドマッパーポインタ
+ * @param blockx      X位置を受け取るためのポインタ
+ * @param blockz      Z位置を受け取るためのポインタ
+ */
+//----------------------------------------------------------------------------
+void FLDMAPPER_GetBlockXZPos( const FLDMAPPER * g3Dmapper, u32 * blockx, u32 * blockz )
+{
+  *blockx = FX_Whole( FX_Div( g3Dmapper->posCont.x, g3Dmapper->blockWidth ) );
+  *blockz = FX_Whole( FX_Div( g3Dmapper->posCont.z, g3Dmapper->blockWidth ) );
+}
+
 #if 0
 //--------------------------------------------------------------
 /**

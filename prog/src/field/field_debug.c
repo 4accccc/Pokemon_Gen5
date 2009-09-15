@@ -423,22 +423,30 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 	GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( work->pFieldMainWork );
 	PLAYER_WORK *player = GAMESYSTEM_GetMyPlayerWork( gsys );
 	const VecFx32 *pos = PLAYERWORK_getPosition( player );
+  FLDMAPPER * g3Dmapper = FIELDMAP_GetFieldG3Dmapper( work->pFieldMainWork );
 	
 	{	//座標表示
+    u32 gx, gz;
+
 		DebugFont_ClearLine( work, 0 );
-		sprintf( str, "X %d %xH GRID %d",
+		sprintf( str, "X %d %xH GRID %d BLOCK %d",
 			FX_Whole(pos->x), pos->x, SIZE_GRID_FX32(pos->x) );
 		DebugFont_Print( work, 0, 0, str );
 		
 		DebugFont_ClearLine( work, 1 );
-		sprintf( str, "Y %d %xH GRID %d",
+		sprintf( str, "Y %d %xH GRID %d BLOCK %d",
 			FX_Whole(pos->y), pos->y, SIZE_GRID_FX32(pos->y) );
 		DebugFont_Print( work, 0, 1, str );
 		
 		DebugFont_ClearLine( work, 2 );
-		sprintf( str, "Z %d %xH GRID %d",
+		sprintf( str, "Z %d %xH GRID %d BLOCK %d",
 			FX_Whole(pos->z), pos->z, SIZE_GRID_FX32(pos->z) );
 		DebugFont_Print( work, 0, 2, str );
+
+		DebugFont_ClearLine( work, 3 );
+    FLDMAPPER_GetBlockXZPos( g3Dmapper, &gx, &gz );
+    sprintf( str, "BLOCK (%d,%d)", gx, gz );
+    DebugFont_Print( work, 0, 3, str );
 	}
 	
 	{	//マップアトリビュート表示
@@ -455,13 +463,13 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 		}
 		
 		sprintf( str, "ATTRIBUTE" );
-		DebugFont_ClearLine( work, 3 );
-		DebugFont_Print( work, 0, 3, str );
+		DebugFont_ClearLine( work, 4 );
+		DebugFont_Print( work, 0, 4, str );
 		
 		a_pos = *pos;
 		a_pos.z -= GRID_SIZE_FX32( 1 );
 		
-		for( z = 0, y = 4; z < 3; z++, y++, a_pos.z += GRID_SIZE_FX32(1) ){
+		for( z = 0, y = 5; z < 3; z++, y++, a_pos.z += GRID_SIZE_FX32(1) ){
 			DebugFont_ClearLine( work, y );
 			for( x = 0, a_pos.x = pos->x - GRID_SIZE_FX32(1);
 					x < 3*10; x += 10, a_pos.x += GRID_SIZE_FX32(1) ){
