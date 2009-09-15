@@ -52,7 +52,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--240 0 -192
+-248 0 -200
 #event number: 1
 #Door Event Label
 DOOR_ID_BCWFTEST_R15_EXIT01
@@ -65,7 +65,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--240 0 -176
+-248 0 -184
 #event number: 2
 #Door Event Label
 DOOR_ID_BCWFTEST_R15_EXIT03
@@ -78,6 +78,6 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--240 0 -208
+-248 0 -216
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

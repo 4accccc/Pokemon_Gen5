@@ -38,7 +38,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-192 0 96
+184 0 88
 #event number: 1
 #type
 1
@@ -67,7 +67,7 @@ DIR_DOWN
 #Move Limit Z Number
 2
 #position
-272 0 -128
+264 0 -136
 #event number: 2
 #type
 1
@@ -96,7 +96,7 @@ DIR_DOWN
 #Move Limit Z Number
 3
 #position
-496 0 -96
+488 0 -104
 #event number: 3
 #type
 1
@@ -125,7 +125,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-592 0 80
+584 0 72
 #event number: 4
 #type
 1
@@ -154,7 +154,7 @@ DIR_LEFT
 #Move Limit Z Number
 0
 #position
-48 0 -160
+40 0 -168
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -197,7 +197,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
-528 0 112
+520 0 104
 #event number: 1
 #Door Event Label
 DOOR_ID_C02_C02R0101_EXIT01
@@ -210,7 +210,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
-560 0 -80
+552 0 -88
 #event number: 2
 #Door Event Label
 DOOR_ID_C02_C02R0301_EXIT01
@@ -223,7 +223,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
-304 0 -80
+296 0 -88
 #event number: 3
 #Door Event Label
 DOOR_ID_C02_C02R0401_EXIT01
@@ -236,7 +236,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
-16 0 -80
+8 0 -88
 #event number: 4
 #Door Event Label
 DOOR_ID_C02_C02R0501_EXIT01
@@ -249,7 +249,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
--64 0 -80
+-72 0 -88
 #event number: 5
 #Door Event Label
 DOOR_ID_C02_C02PC0101_EXIT01
@@ -262,7 +262,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
-192 0 -96
+184 0 -104
 #event number: 6
 #Door Event Label
 DOOR_ID_C02_C02R0601_EXIT01
@@ -275,7 +275,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
-16 0 144
+8 0 136
 #event number: 7
 #Door Event Label
 DOOR_ID_C02_C02R0401_EXIT02
@@ -288,7 +288,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
-64 32 -32
+56 32 -40
 #event number: 8
 #Door Event Label
 DOOR_ID_C02_C02R0301_EXIT02
@@ -301,7 +301,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
-352 32 -32
+344 32 -40
 #event number: 9
 #Door Event Label
 DOOR_ID_C02_C02R0201_EXIT02
@@ -314,7 +314,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
-576 32 160
+568 32 152
 #event number: 10
 #Door Event Label
 DOOR_ID_C02_C02R0701_EXIT03
@@ -327,7 +327,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_NONE
 #position
-720 0 -128
+712 0 -136
 #event number: 11
 #Door Event Label
 DOOR_ID_C02_C02R0701_EXIT04
@@ -340,7 +340,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_NONE
 #position
-720 0 -144
+712 0 -152
 #event number: 12
 #Door Event Label
 DOOR_ID_C02_C02R0701_EXIT02
@@ -353,7 +353,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_NONE
 #position
-720 0 -112
+712 0 -120
 #event number: 13
 #Door Event Label
 DOOR_ID_C02_C02R0701_EXIT01
@@ -366,7 +366,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_NONE
 #position
-720 0 -96
+712 0 -104
 #event number: 14
 #Door Event Label
 DOOR_ID_C02_C02GYM0101_EXIT01
@@ -379,6 +379,6 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
-336 0 144
+328 0 136
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

@@ -52,7 +52,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-608 0 112
+600 0 104
 #event number: 1
 #Door Event Label
 DOOR_ID_R08_R09_EXIT04
@@ -65,7 +65,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-608 0 64
+600 0 56
 #event number: 2
 #Door Event Label
 DOOR_ID_R08_R09_EXIT03
@@ -78,7 +78,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-608 0 80
+600 0 72
 #event number: 3
 #Door Event Label
 DOOR_ID_R08_R09_EXIT02
@@ -91,6 +91,6 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-608 0 96
+600 0 88
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

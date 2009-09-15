@@ -38,7 +38,7 @@ DIR_UP
 #Move Limit Z Number
 0
 #position
--176 0 160
+-184 0 152
 #event number: 1
 #type
 1
@@ -67,7 +67,7 @@ DIR_UP
 #Move Limit Z Number
 0
 #position
--160 0 160
+-168 0 152
 #event number: 2
 #type
 1
@@ -96,7 +96,7 @@ DIR_UP
 #Move Limit Z Number
 0
 #position
--192 0 160
+-200 0 152
 #event number: 3
 #type
 1
@@ -125,7 +125,7 @@ DIR_LEFT
 #Move Limit Z Number
 0
 #position
--112 0 224
+-120 0 216
 #event number: 4
 #type
 1
@@ -154,7 +154,7 @@ DIR_LEFT
 #Move Limit Z Number
 0
 #position
--144 0 160
+-152 0 152
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -175,7 +175,7 @@ BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_T01R0102_TV
 #position
--176 0 224
+-184 0 216
 #event number: 1
 #Bg Event Label
 BGID_T01R0102_TV
@@ -186,7 +186,7 @@ BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_T01R0102_TV
 #position
--192 0 224
+-200 0 216
 #event number: 2
 #Bg Event Label
 BGID_T01R0102_TV
@@ -197,7 +197,7 @@ BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_T01R0102_TV
 #position
--160 0 224
+-168 0 216
 #event number: 3
 #Bg Event Label
 BGID_T01R0102_PC
@@ -208,7 +208,7 @@ BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_T01R0102_PC
 #position
--224 0 128
+-232 0 120
 #event number: 4
 #Bg Event Label
 BGID_T01R0102_BED
@@ -219,7 +219,7 @@ BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_T01R0102_BED
 #position
--112 0 144
+-120 0 136
 #event number: 5
 #Bg Event Label
 BGID_T01R0102_BED
@@ -230,7 +230,7 @@ BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_T01R0102_BED
 #position
--112 0 128
+-120 0 120
 #event number: 6
 #Bg Event Label
 BGID_T01R0102_BED
@@ -241,7 +241,7 @@ BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_T01R0102_BED
 #position
--96 0 144
+-104 0 136
 #event number: 7
 #Bg Event Label
 BGID_T01R0102_GAME
@@ -252,7 +252,7 @@ BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_T01R0102_GAME
 #position
--192 0 208
+-200 0 200
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -285,6 +285,6 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
--96 0 224
+-104 0 216
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

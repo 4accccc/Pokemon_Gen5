@@ -38,7 +38,7 @@ DIR_LEFT
 #Move Limit Z Number
 3
 #position
--64 0 160
+-72 0 152
 #event number: 1
 #type
 1
@@ -67,7 +67,7 @@ DIR_UP
 #Move Limit Z Number
 0
 #position
--144 0 176
+-152 0 168
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -110,6 +110,6 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
--80 0 224
+-88 0 216
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

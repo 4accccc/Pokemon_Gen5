@@ -52,7 +52,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-0 0 -752
+-8 0 -760
 #event number: 1
 #Door Event Label
 DOOR_ID_C04_R04_EXIT02
@@ -65,7 +65,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-16 0 -752
+8 0 -760
 #event number: 2
 #Door Event Label
 DOOR_ID_C04_R04_EXIT04
@@ -78,7 +78,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-48 0 -752
+40 0 -760
 #event number: 3
 #Door Event Label
 DOOR_ID_C04_R04_EXIT03
@@ -91,7 +91,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-32 0 -752
+24 0 -760
 #event number: 4
 #Door Event Label
 DOOR_ID_C04_R05_EXIT01
@@ -104,7 +104,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--16 0 -688
+-24 0 -696
 #event number: 5
 #Door Event Label
 DOOR_ID_C04_R05_EXIT03
@@ -117,7 +117,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--16 0 -720
+-24 0 -728
 #event number: 6
 #Door Event Label
 DOOR_ID_C04_R05_EXIT02
@@ -130,7 +130,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--16 0 -704
+-24 0 -712
 #event number: 7
 #Door Event Label
 DOOR_ID_C04_R05_EXIT04
@@ -143,7 +143,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--16 0 -736
+-24 0 -744
 #event number: 8
 #Door Event Label
 DOOR_ID_C04_R16_EXIT01
@@ -156,7 +156,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_NONE
 #position
-64 0 -704
+56 0 -712
 #event number: 9
 #Door Event Label
 DOOR_ID_C04_R16_EXIT02
@@ -169,7 +169,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_NONE
 #position
-64 0 -720
+56 0 -728
 #event number: 10
 #Door Event Label
 DOOR_ID_C04_R16_EXIT03
@@ -182,6 +182,6 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_NONE
 #position
-64 0 -736
+56 0 -744
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

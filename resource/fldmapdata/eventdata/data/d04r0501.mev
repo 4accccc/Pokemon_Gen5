@@ -52,6 +52,6 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
--80 0 -48
+-88 0 -56
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

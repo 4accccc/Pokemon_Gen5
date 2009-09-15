@@ -38,7 +38,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--96 0 176
+-104 0 168
 #event number: 1
 #type
 1
@@ -67,7 +67,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--176 0 192
+-184 0 184
 #event number: 2
 #type
 1
@@ -96,7 +96,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--192 0 144
+-200 0 136
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -139,7 +139,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--128 0 96
+-136 0 88
 #event number: 1
 #Door Event Label
 DOOR_ID_T02R0101_EXIT01
@@ -152,7 +152,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--144 0 96
+-152 0 88
 #event number: 2
 #Door Event Label
 DOOR_ID_T02R0101_EXIT03
@@ -165,7 +165,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--112 0 96
+-120 0 88
 #event number: 3
 #Door Event Label
 DOOR_ID_T02R0101_EXIT04
@@ -178,6 +178,6 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
--112 0 224
+-120 0 216
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

@@ -52,7 +52,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
--48 0 144
+-56 0 136
 #event number: 1
 #Door Event Label
 DOOR_ID_D04R1401_D04R0901_EXIT01
@@ -65,6 +65,6 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
--240 0 144
+-248 0 136
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

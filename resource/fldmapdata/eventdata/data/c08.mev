@@ -52,7 +52,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
--192 0 -288
+-200 0 -296
 #event number: 1
 #Door Event Label
 DOOR_ID_C08_R09_EXIT04
@@ -65,7 +65,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
--192 0 -336
+-200 0 -344
 #event number: 2
 #Door Event Label
 DOOR_ID_C08_R09_EXIT03
@@ -78,7 +78,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
--192 0 -320
+-200 0 -328
 #event number: 3
 #Door Event Label
 DOOR_ID_C08_R09_EXIT02
@@ -91,7 +91,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
--192 0 -304
+-200 0 -312
 #event number: 4
 #Door Event Label
 DOOR_ID_C08_R11_EXIT01
@@ -104,7 +104,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_NONE
 #position
--96 0 -288
+-104 0 -296
 #event number: 5
 #Door Event Label
 DOOR_ID_C08_R11_EXIT02
@@ -117,7 +117,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_NONE
 #position
--96 0 -304
+-104 0 -312
 #event number: 6
 #Door Event Label
 DOOR_ID_C08_R11_EXIT03
@@ -130,7 +130,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_NONE
 #position
--96 0 -320
+-104 0 -328
 #event number: 7
 #Door Event Label
 DOOR_ID_C08_R11_EXIT04
@@ -143,6 +143,6 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_NONE
 #position
--96 0 -336
+-104 0 -344
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

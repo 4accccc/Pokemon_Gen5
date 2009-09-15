@@ -38,7 +38,7 @@ DIR_UP
 #Move Limit Z Number
 0
 #position
--32 0 64
+-40 0 56
 #event number: 1
 #type
 1
@@ -67,7 +67,7 @@ DIR_UP
 #Move Limit Z Number
 0
 #position
--208 0 64
+-216 0 56
 #event number: 2
 #type
 1
@@ -96,7 +96,7 @@ DIR_RIGHT
 #Move Limit Z Number
 0
 #position
--176 0 192
+-184 0 184
 #event number: 3
 #type
 1
@@ -125,7 +125,7 @@ DIR_LEFT
 #Move Limit Z Number
 0
 #position
--48 0 32
+-56 0 24
 #event number: 4
 #type
 1
@@ -154,7 +154,7 @@ DIR_DOWN
 #Move Limit Z Number
 1
 #position
--16 0 160
+-24 0 152
 #event number: 5
 #type
 1
@@ -183,7 +183,7 @@ DIR_UP
 #Move Limit Z Number
 0
 #position
--176 0 144
+-184 0 136
 #event number: 6
 #type
 1
@@ -212,7 +212,7 @@ DIR_DOWN
 #Move Limit Z Number
 4
 #position
--80 0 112
+-88 0 104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -255,7 +255,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--112 0 -32
+-120 0 -40
 #event number: 1
 #Door Event Label
 DOOR_ID_C05R0601_EXIT02
@@ -268,7 +268,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--96 0 -32
+-104 0 -40
 #event number: 2
 #Door Event Label
 DOOR_ID_C05R0601_EXIT03
@@ -281,7 +281,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--80 0 -32
+-88 0 -40
 #event number: 3
 #Door Event Label
 DOOR_ID_C05R0601_EXIT04
@@ -294,7 +294,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-48 0 96
+40 0 88
 #event number: 4
 #Door Event Label
 DOOR_ID_C05R0601_EXIT05
@@ -307,7 +307,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-48 0 112
+40 0 104
 #event number: 5
 #Door Event Label
 DOOR_ID_C05R0601_EXIT06
@@ -320,7 +320,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-48 0 128
+40 0 120
 #event number: 6
 #Door Event Label
 DOOR_ID_C05R0601_EXIT09
@@ -333,7 +333,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_MAT
 #position
--112 0 256
+-120 0 248
 #event number: 7
 #Door Event Label
 DOOR_ID_C05R0601_EXIT08
@@ -346,7 +346,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_MAT
 #position
--96 0 256
+-104 0 248
 #event number: 8
 #Door Event Label
 DOOR_ID_C05R0601_EXIT07
@@ -359,6 +359,6 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_MAT
 #position
--80 0 256
+-88 0 248
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

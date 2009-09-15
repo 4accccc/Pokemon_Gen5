@@ -44,7 +44,7 @@ LOCALWORK0
 #Pos Event Size Z
 3
 #position
--32 0 32
+-40 0 24
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -67,6 +67,6 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
-32 0 112
+24 0 104
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

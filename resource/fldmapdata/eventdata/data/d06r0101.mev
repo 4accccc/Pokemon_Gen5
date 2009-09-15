@@ -52,7 +52,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--128 0 -672
+-136 0 -680
 #event number: 1
 #Door Event Label
 DOOR_ID_D06R0101_C06_EXIT01
@@ -65,7 +65,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_MAT
 #position
-960 0 160
+952 0 152
 #event number: 2
 #Door Event Label
 DOOR_ID_D06R0101_D06R0201_EXIT03
@@ -78,7 +78,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
-736 0 -544
+728 0 -552
 #event number: 3
 #Door Event Label
 DOOR_ID_D06R0101_D06R0201_EXIT01
@@ -91,7 +91,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
-160 0 -448
+152 0 -456
 #event number: 4
 #Door Event Label
 DOOR_ID_D06R0101_D06R0201_EXIT02
@@ -104,6 +104,6 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
-672 0 176
+664 0 168
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

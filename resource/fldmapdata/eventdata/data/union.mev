@@ -52,7 +52,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
--80 0 16
+-88 0 8
 #event number: 1
 #Door Event Label
 DOOR_ID_UNION_T02PC0101_EXIT02
@@ -65,7 +65,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
--96 0 16
+-104 0 8
 #event number: 2
 #Door Event Label
 DOOR_ID_UNION_T02PC0101_EXIT03
@@ -78,6 +78,6 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
--64 0 16
+-72 0 8
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

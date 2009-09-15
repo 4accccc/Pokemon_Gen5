@@ -52,7 +52,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
-32 0 -112
+24 0 -120
 #event number: 1
 #Door Event Label
 DOOR_ID_C06R0101_EXIT02
@@ -65,7 +65,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
-48 0 -112
+40 0 -120
 #event number: 2
 #Door Event Label
 DOOR_ID_C06R0101_EXIT03
@@ -78,6 +78,6 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
-64 0 -112
+56 0 -120
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

@@ -52,7 +52,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
--80 0 -16
+-88 0 -24
 #event number: 1
 #Door Event Label
 DOOR_ID_D04R2601_D04R2501_EXIT01
@@ -65,6 +65,6 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
-96 0 144
+88 0 136
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

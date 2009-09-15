@@ -52,7 +52,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--32 0 48
+-40 0 40
 #event number: 1
 #Door Event Label
 DOOR_ID_R12_R11_EXIT04
@@ -65,7 +65,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--32 0 0
+-40 0 -8
 #event number: 2
 #Door Event Label
 DOOR_ID_R12_R11_EXIT03
@@ -78,7 +78,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--32 0 16
+-40 0 8
 #event number: 3
 #Door Event Label
 DOOR_ID_R12_R11_EXIT02
@@ -91,6 +91,6 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_NONE
 #position
--32 0 32
+-40 0 24
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

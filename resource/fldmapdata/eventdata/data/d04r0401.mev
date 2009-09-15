@@ -44,7 +44,7 @@ LOCALWORK0
 #Pos Event Size Z
 3
 #position
-448 0 0
+440 0 -8
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -67,7 +67,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
-112 0 0
+104 0 -8
 #event number: 1
 #Door Event Label
 DOOR_ID_D04R0401_D04R0501_EXIT01
@@ -80,7 +80,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
--112 0 208
+-120 0 200
 #event number: 2
 #Door Event Label
 DOOR_ID_D04R0401_D04R0301_EXIT02
@@ -93,6 +93,6 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_STAIRS
 #position
--176 0 208
+-184 0 200
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

@@ -38,7 +38,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--64 0 160
+-72 0 152
 #event number: 1
 #type
 1
@@ -67,7 +67,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--208 0 112
+-216 0 104
 #event number: 2
 #type
 1
@@ -96,7 +96,7 @@ DIR_DOWN
 #Move Limit Z Number
 1
 #position
--48 0 96
+-56 0 88
 #event number: 3
 #type
 1
@@ -125,7 +125,7 @@ DIR_LEFT
 #Move Limit Z Number
 0
 #position
--112 0 80
+-120 0 72
 #event number: 4
 #type
 1
@@ -154,7 +154,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--144 0 48
+-152 0 40
 #event number: 5
 #type
 1
@@ -183,7 +183,7 @@ DIR_DOWN
 #Move Limit Z Number
 1
 #position
--208 0 0
+-216 0 -8
 #event number: 6
 #type
 1
@@ -212,7 +212,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--144 0 144
+-152 0 136
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -255,7 +255,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--144 0 -32
+-152 0 -40
 #event number: 1
 #Door Event Label
 DOOR_ID_C05R0501_EXIT02
@@ -268,7 +268,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--128 0 -32
+-136 0 -40
 #event number: 2
 #Door Event Label
 DOOR_ID_C05R0501_EXIT03
@@ -281,6 +281,6 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--112 0 -32
+-120 0 -40
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

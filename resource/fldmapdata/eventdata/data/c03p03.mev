@@ -52,7 +52,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
-0 0 160
+-8 0 152
 #event number: 1
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT04
@@ -65,7 +65,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
--64 0 160
+-72 0 152
 #event number: 2
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT02
@@ -78,7 +78,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
--96 0 160
+-104 0 152
 #event number: 3
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT03
@@ -91,7 +91,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
--80 0 160
+-88 0 152
 #event number: 4
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT05
@@ -104,7 +104,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
--48 0 160
+-56 0 152
 #event number: 5
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT08
@@ -117,7 +117,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
-16 0 160
+8 0 152
 #event number: 6
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT06
@@ -130,7 +130,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
--32 0 160
+-40 0 152
 #event number: 7
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT07
@@ -143,7 +143,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
--16 0 160
+-24 0 152
 #event number: 8
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT09
@@ -156,7 +156,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
-32 0 160
+24 0 152
 #event number: 9
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT12
@@ -169,7 +169,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
-80 0 160
+72 0 152
 #event number: 10
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT13
@@ -182,7 +182,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
-96 0 160
+88 0 152
 #event number: 11
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT14
@@ -195,7 +195,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
-112 0 160
+104 0 152
 #event number: 12
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT11
@@ -208,7 +208,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
-64 0 160
+56 0 152
 #event number: 13
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT10
@@ -221,7 +221,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
-48 0 160
+40 0 152
 #event number: 14
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT15
@@ -234,7 +234,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
-128 0 160
+120 0 152
 #event number: 15
 #Door Event Label
 DOOR_ID_C03P03_C03P02_EXIT00
@@ -247,7 +247,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
--112 0 160
+-120 0 152
 #event number: 16
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT01
@@ -260,7 +260,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-0 0 -144
+-8 0 -152
 #event number: 17
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT02
@@ -273,7 +273,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
--112 0 -144
+-120 0 -152
 #event number: 18
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT03
@@ -286,7 +286,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
--96 0 -144
+-104 0 -152
 #event number: 19
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT04
@@ -299,7 +299,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
--80 0 -144
+-88 0 -152
 #event number: 20
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT05
@@ -312,7 +312,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
--64 0 -144
+-72 0 -152
 #event number: 21
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT06
@@ -325,7 +325,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
--48 0 -144
+-56 0 -152
 #event number: 22
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT07
@@ -338,7 +338,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
--32 0 -144
+-40 0 -152
 #event number: 23
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT08
@@ -351,7 +351,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
--16 0 -144
+-24 0 -152
 #event number: 24
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT09
@@ -364,7 +364,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-16 0 -144
+8 0 -152
 #event number: 25
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT10
@@ -377,7 +377,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-32 0 -144
+24 0 -152
 #event number: 26
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT11
@@ -390,7 +390,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-48 0 -144
+40 0 -152
 #event number: 27
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT12
@@ -403,7 +403,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-64 0 -144
+56 0 -152
 #event number: 28
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT13
@@ -416,7 +416,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-80 0 -144
+72 0 -152
 #event number: 29
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT14
@@ -429,7 +429,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-96 0 -144
+88 0 -152
 #event number: 30
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT15
@@ -442,7 +442,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-112 0 -144
+104 0 -152
 #event number: 31
 #Door Event Label
 DOOR_ID_C03P03_C03_EXIT16
@@ -455,7 +455,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-128 0 -144
+120 0 -152
 #event number: 32
 #Door Event Label
 DOOR_ID_C03P03_C03GYM0101_EXIT01
@@ -468,7 +468,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_DOOR
 #position
-160 0 16
+152 0 8
 #event number: 33
 #Door Event Label
 DOOR_ID_C03P03_C03GYM0101_EXIT02
@@ -481,7 +481,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_DOOR
 #position
-160 0 0
+152 0 -8
 #event number: 34
 #Door Event Label
 DOOR_ID_C03P03_C03GYM0101_EXIT03
@@ -494,6 +494,6 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_DOOR
 #position
-160 0 -16
+152 0 -24
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

@@ -38,7 +38,7 @@ DIR_LEFT
 #Move Limit Z Number
 0
 #position
--64 0 -16
+-72 0 -24
 #event number: 1
 #type
 1
@@ -67,7 +67,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--128 0 96
+-136 0 88
 #event number: 2
 #type
 1
@@ -96,7 +96,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--128 0 0
+-136 0 -8
 #event number: 3
 #type
 1
@@ -125,7 +125,7 @@ DIR_RIGHT
 #Move Limit Z Number
 0
 #position
--208 0 16
+-216 0 8
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -160,7 +160,7 @@ WK_SCENE_0907ROM04
 #Pos Event Size Z
 1
 #position
--144 0 -32
+-152 0 -40
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -183,7 +183,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--144 0 -48
+-152 0 -56
 #event number: 1
 #Door Event Label
 DOOR_ID_T02PC0101_EXIT02
@@ -196,7 +196,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--128 0 -48
+-136 0 -56
 #event number: 2
 #Door Event Label
 DOOR_ID_T02PC0101_EXIT03
@@ -209,7 +209,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_MAT
 #position
--112 0 -48
+-120 0 -56
 #event number: 3
 #Door Event Label
 DOOR_ID_T02PC0101_UNION_EXIT01
@@ -222,6 +222,6 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_NONE
 #position
--176 48 192
+-184 48 184
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

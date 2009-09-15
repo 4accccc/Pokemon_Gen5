@@ -38,7 +38,7 @@ DIR_DOWN
 #Move Limit Z Number
 4
 #position
-448 0 -80
+440 0 -88
 #event number: 1
 #type
 1
@@ -67,7 +67,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-416 0 48
+408 0 40
 #event number: 2
 #type
 1
@@ -96,7 +96,7 @@ DIR_DOWN
 #Move Limit Z Number
 2
 #position
-320 0 -32
+312 0 -40
 #event number: 3
 #type
 1
@@ -125,7 +125,7 @@ DIR_RIGHT
 #Move Limit Z Number
 2
 #position
-48 0 48
+40 0 40
 #event number: 4
 #type
 1
@@ -154,7 +154,7 @@ DIR_DOWN
 #Move Limit Z Number
 2
 #position
-560 0 -32
+552 0 -40
 #event number: 5
 #type
 1
@@ -183,7 +183,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-512 0 64
+504 0 56
 #event number: 6
 #type
 1
@@ -212,7 +212,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-656 0 96
+648 0 88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -255,7 +255,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
-480 0 80
+472 0 72
 #event number: 1
 #Door Event Label
 DOOR_ID_C01_EXIT01
@@ -268,7 +268,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_DOOR
 #position
-608 0 -32
+600 0 -40
 #event number: 2
 #Door Event Label
 DOOR_ID_C01_EXIT03
@@ -281,7 +281,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_DOOR
 #position
-608 0 -112
+600 0 -120
 #event number: 3
 #Door Event Label
 DOOR_ID_C01_EXIT05
@@ -294,7 +294,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_DOOR
 #position
-368 0 -96
+360 0 -104
 #event number: 4
 #Door Event Label
 DOOR_ID_C01_EXIT12
@@ -307,7 +307,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-544 0 -176
+536 0 -184
 #event number: 5
 #Door Event Label
 DOOR_ID_C01_EXIT14
@@ -320,7 +320,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-576 0 -176
+568 0 -184
 #event number: 6
 #Door Event Label
 DOOR_ID_C01_EXIT13
@@ -333,7 +333,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-560 0 -176
+552 0 -184
 #event number: 7
 #Door Event Label
 DOOR_ID_C01_EXIT15
@@ -346,7 +346,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-592 0 -176
+584 0 -184
 #event number: 8
 #Door Event Label
 DOOR_ID_C01_EXIT11
@@ -359,7 +359,7 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
-368 0 96
+360 0 88
 #event number: 9
 #Door Event Label
 DOOR_ID_C01_C01GYM0101_EXIT01
@@ -372,6 +372,6 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_DOOR
 #position
-592 0 96
+584 0 88
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

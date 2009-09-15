@@ -52,7 +52,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
--80 0 -16
+-88 0 -24
 #event number: 1
 #Door Event Label
 DOOR_ID_R05_C05_EXIT02
@@ -65,7 +65,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
--80 0 0
+-88 0 -8
 #event number: 2
 #Door Event Label
 DOOR_ID_R05_C05_EXIT01
@@ -78,7 +78,7 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
--80 0 16
+-88 0 8
 #event number: 3
 #Door Event Label
 DOOR_ID_R05_C04_EXIT01
@@ -91,7 +91,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-560 0 32
+552 0 24
 #event number: 4
 #Door Event Label
 DOOR_ID_R05_C04_EXIT02
@@ -104,7 +104,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-560 0 16
+552 0 8
 #event number: 5
 #Door Event Label
 DOOR_ID_R05_C04_EXIT03
@@ -117,7 +117,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-560 0 0
+552 0 -8
 #event number: 6
 #Door Event Label
 DOOR_ID_R05_C04_EXIT04
@@ -130,6 +130,6 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-560 0 -16
+552 0 -24
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

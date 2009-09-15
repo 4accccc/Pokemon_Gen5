@@ -52,6 +52,6 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_MAT
 #position
--160 16 -112
+-168 16 -120
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

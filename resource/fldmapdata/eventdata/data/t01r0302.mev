@@ -30,7 +30,7 @@ BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_T01R0302_PC
 #position
--224 0 128
+-232 0 120
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -63,6 +63,6 @@ EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_DOOR
 #position
--208 0 224
+-216 0 216
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

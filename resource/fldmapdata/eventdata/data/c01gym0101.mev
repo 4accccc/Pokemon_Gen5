@@ -52,7 +52,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-48 0 -240
+40 0 -248
 #event number: 1
 #Door Event Label
 DOOR_ID_C01GYM0101_C01_EXIT02
@@ -65,7 +65,7 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-64 0 -240
+56 0 -248
 #event number: 2
 #Door Event Label
 DOOR_ID_C01GYM0101_C01_EXIT03
@@ -78,6 +78,6 @@ EXIT_DIR_UP
 #Door Type
 EXIT_TYPE_NONE
 #position
-80 0 -240
+72 0 -248
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
