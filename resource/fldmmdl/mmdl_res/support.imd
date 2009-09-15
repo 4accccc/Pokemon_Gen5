@@ -18,11 +18,11 @@
 <tex_image_array size='7'>
 	<tex_image name='woman1.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.1.tga' palette_name='woman1' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
-			0000 e0ee e0e0 e00e 000e e00e e00e 00ee 
-			e000 e000 e0e0 e0e0 e0e0 e0e0 00e0 000e 
-			e000 e0ee e0e0 e00e e00e e0e0 000e 000e 
-			0000 e0e0 e0e0 e000 e000 e0e0 00e0 000e 
-			e000 000e e00e e000 0000 e00e 00e0 000e 
+			0000 f0ff f0f0 f00f 000f f00f f00f 00ff 
+			f000 f000 f0f0 f0f0 f0f0 f0f0 00f0 000f 
+			f000 f0ff f0f0 f00f f00f f0f0 000f 000f 
+			0000 f0f0 f0f0 f000 f000 f0f0 00f0 000f 
+			f000 000f f00f f000 0000 f00f 00f0 000f 
 			0000 0000 4f00 5563 3655 00f4 0000 0000 
 			0000 0000 34f0 3556 6553 0f43 0000 0000 
 			0000 0000 34f0 3356 6533 0f43 0000 0000 
@@ -54,11 +54,11 @@
 	</tex_image>
 	<tex_image name='woman1.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.2.tga' palette_name='woman1' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
-			0000 e0ee e0e0 e00e 000e e00e e00e 00ee 
-			e000 e000 e0e0 e0e0 e0e0 e0e0 00e0 000e 
-			e000 e0ee e0e0 e00e e00e e0e0 000e 000e 
-			0000 e0e0 e0e0 e000 e000 e0e0 00e0 000e 
-			e000 000e e00e e000 0000 e00e 00e0 000e 
+			0000 f0ff f0f0 f00f 000f f00f f00f 00ff 
+			f000 f000 f0f0 f0f0 f0f0 f0f0 00f0 000f 
+			f000 f0ff f0f0 f00f f00f f0f0 000f 000f 
+			0000 f0f0 f0f0 f000 f000 f0f0 00f0 000f 
+			f000 000f f00f f000 0000 f00f 00f0 000f 
 			0000 0000 34f0 3556 6553 0f43 0000 0000 
 			0000 0000 34f0 3356 6533 0f43 0000 0000 
 			0000 0000 347f 3556 6553 f743 0000 0000 
@@ -90,11 +90,11 @@
 	</tex_image>
 	<tex_image name='woman1.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.3.tga' palette_name='woman1' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
-			0000 e0ee e0e0 e00e 000e e00e e00e 00ee 
-			e000 e000 e0e0 e0e0 e0e0 e0e0 00e0 000e 
-			e000 e0ee e0e0 e00e e00e e0e0 000e 000e 
-			0000 e0e0 e0e0 e000 e000 e0e0 00e0 000e 
-			e000 000e e00e e000 0000 e00e 00e0 000e 
+			0000 f0ff f0f0 f00f 000f f00f f00f 00ff 
+			f000 f000 f0f0 f0f0 f0f0 f0f0 00f0 000f 
+			f000 f0ff f0f0 f00f f00f f0f0 000f 000f 
+			0000 f0f0 f0f0 f000 f000 f0f0 00f0 000f 
+			f000 000f f00f f000 0000 f00f 00f0 000f 
 			0000 0000 4f00 5563 3655 00f4 0000 0000 
 			0000 0000 34f0 3556 6553 0f43 0000 0000 
 			0000 0000 34f0 3356 6533 0f43 0000 0000 
@@ -126,11 +126,11 @@
 	</tex_image>
 	<tex_image name='woman1.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.4.tga' palette_name='woman1' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
-			0000 e0ee e0e0 e00e 000e e00e e00e 00ee 
-			e000 e000 e0e0 e0e0 e0e0 e0e0 00e0 000e 
-			e000 e0ee e0e0 e00e e00e e0e0 000e 000e 
-			0000 e0e0 e0e0 e000 e000 e0e0 00e0 000e 
-			e000 000e e00e e000 0000 e00e 00e0 000e 
+			0000 f0ff f0f0 f00f 000f f00f f00f 00ff 
+			f000 f000 f0f0 f0f0 f0f0 f0f0 00f0 000f 
+			f000 f0ff f0f0 f00f f00f f0f0 000f 000f 
+			0000 f0f0 f0f0 f000 f000 f0f0 00f0 000f 
+			f000 000f f00f f000 0000 f00f 00f0 000f 
 			0000 0000 34f0 3556 6553 0f43 0000 0000 
 			0000 0000 34f0 3356 6533 0f43 0000 0000 
 			0000 0000 347f 3556 6553 f743 0000 0000 
@@ -162,11 +162,11 @@
 	</tex_image>
 	<tex_image name='woman1.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.5.tga' palette_name='woman1' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
-			0000 e0ee e0e0 e00e 000e e00e e00e 00ee 
-			e000 e000 e0e0 e0e0 e0e0 e0e0 00e0 000e 
-			e000 e0ee e0e0 e00e e00e e0e0 000e 000e 
-			0000 e0e0 e0e0 e000 e000 e0e0 00e0 000e 
-			e000 000e e00e e000 0000 e00e 00e0 000e 
+			0000 f0ff f0f0 f00f 000f f00f f00f 00ff 
+			f000 f000 f0f0 f0f0 f0f0 f0f0 00f0 000f 
+			f000 f0ff f0f0 f00f f00f f0f0 000f 000f 
+			0000 f0f0 f0f0 f000 f000 f0f0 00f0 000f 
+			f000 000f f00f f000 0000 f00f 00f0 000f 
 			0000 0000 5f00 3556 5553 00f3 0000 0000 
 			0000 0000 65f0 3356 5533 0f75 0000 0000 
 			0000 0000 653f 3556 5553 0f35 0000 0000 
@@ -198,11 +198,11 @@
 	</tex_image>
 	<tex_image name='woman1.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.6.tga' palette_name='woman1' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
-			0000 e0ee e0e0 e00e 000e e00e e00e 00ee 
-			e000 e000 e0e0 e0e0 e0e0 e0e0 00e0 000e 
-			e000 e0ee e0e0 e00e e00e e0e0 000e 000e 
-			0000 e0e0 e0e0 e000 e000 e0e0 00e0 000e 
-			e000 000e e00e e000 0000 e00e 00e0 000e 
+			0000 f0ff f0f0 f00f 000f f00f f00f 00ff 
+			f000 f000 f0f0 f0f0 f0f0 f0f0 00f0 000f 
+			f000 f0ff f0f0 f00f f00f f0f0 000f 000f 
+			0000 f0f0 f0f0 f000 f000 f0f0 00f0 000f 
+			f000 000f f00f f000 0000 f00f 00f0 000f 
 			0000 0000 65f0 3356 5533 0f75 0000 0000 
 			0000 0000 653f 3556 5553 0f35 0000 0000 
 			0000 0000 533f 5566 5555 f733 0000 0000 
@@ -234,11 +234,11 @@
 	</tex_image>
 	<tex_image name='woman1.7' format='palette16' original_width='32' original_height='32' index='6' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.7.tga' palette_name='woman1' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
-			0000 e0ee e0e0 e00e 000e e00e e00e 00ee 
-			e000 e000 e0e0 e0e0 e0e0 e0e0 00e0 000e 
-			e000 e0ee e0e0 e00e e00e e0e0 000e 000e 
-			0000 e0e0 e0e0 e000 e000 e0e0 00e0 000e 
-			e000 000e e00e e000 0000 e00e 00e0 000e 
+			0000 f0ff f0f0 f00f 000f f00f f00f 00ff 
+			f000 f000 f0f0 f0f0 f0f0 f0f0 00f0 000f 
+			f000 f0ff f0f0 f00f f00f f0f0 000f 000f 
+			0000 f0f0 f0f0 f000 f000 f0f0 00f0 000f 
+			f000 000f f00f f000 0000 f00f 00f0 000f 
 			0000 0000 65f0 3356 5533 0f75 0000 0000 
 			0000 0000 653f 3556 5553 0f35 0000 0000 
 			0000 0000 533f 5566 5555 f733 0000 0000 
