@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_NdCancelAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__nd_8h_15c3d33475672f692d85e6540d5ab3a46" align="left">DWC_NdCancelAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_NdCancelAsync(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">成功。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">失敗、あるいはキャンセルすべき非同期処理がなかった。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>現在ダウンロードライブラリが実行中の非同期処理を中断します。</p><p><a href="DWC_NdGetFileListNumAsync.html#dwc__nd_8h_1483c69a99e25ec6e6a8396603d3d391c">DWC_NdGetFileListNumAsync</a>関数、<a href="DWC_NdGetFileListAsync.html#dwc__nd_8h_10ed762cf6ee79a732867a356f18d4733">DWC_NdGetFileListAsync</a>関数、<a href="DWC_NdGetFileAsync.html#dwc__nd_8h_1e35dbd5de31151be1f0887a0ad2572f7">DWC_NdGetFileAsync</a>関数の処理をキャンセルします。</p><p>TRUEを返したときは完了時に<a href="DWC_NdInitAsync.html#dwc__nd_8h_10f7fb2775c6aa081cdaadbc1247363d3">DWC_NdInitAsync</a>関数で指定した<a href="DWCNdCallback.html#dwc__nd_8h_13ab334b8de8158333fe68797a4031d04">DWCNdCallback</a>型のコールバック関数が呼び出されます。このとき、コールバック関数の引数errorとして<a href="Macro.html#dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f61e4c41c8945905f1a227cca8eec830234">DWC_ND_ERROR_CANCELED</a>が入ります。</p><p>キャンセルに失敗もしくはキャンセルすべき非同期処理がなかった場合、FALSEが返されます。<br>キャンセルに失敗した場合、キャンセルしようとした非同期関数が完了するのを待たなければならないことに注意してください。</p><p><a href="DWC_NdInitAsync.html#dwc__nd_8h_10f7fb2775c6aa081cdaadbc1247363d3">DWC_NdInitAsync</a>関数と<a href="DWC_NdCleanupAsync.html#dwc__nd_8h_1b5866639aee7fb3a9d693a1411625ee0">DWC_NdCleanupAsync</a>関数はキャンセルできません。これらの関数をキャンセルしようとしたときは必ずFALSEが返ります。</p><p><b>本関数は、内部で呼ばれるSOC_Shutdown関数の処理を待つため、カレントスレッドを1、2秒ブロックすることがあります。</b></p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_NdGetFileListNumAsync.html#dwc__nd_8h_1483c69a99e25ec6e6a8396603d3d391c">DWC_NdGetFileListNumAsync</a></CODE>
+
+  <CODE><a href="DWC_NdGetFileListAsync.html#dwc__nd_8h_10ed762cf6ee79a732867a356f18d4733">DWC_NdGetFileListAsync</a></CODE>
+
+  <CODE><a href="DWC_NdGetFileAsync.html#dwc__nd_8h_1e35dbd5de31151be1f0887a0ad2572f7">DWC_NdGetFileAsync</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_NdCancelAsync_tag">こちら</a>　　</p>
+</body>
+</html>

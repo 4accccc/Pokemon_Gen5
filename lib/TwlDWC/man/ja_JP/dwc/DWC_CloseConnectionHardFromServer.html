@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_CloseConnectionHardFromServer</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__main_8h_1df34486b89230c973c3a264dbc7874d7" align="left">DWC_CloseConnectionHardFromServer</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>int DWC_CloseConnectionHardFromServer(u8 aid);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>aid</STRONG></EM></TD>
+      <TD width="87%">クローズしたいホストのAID</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>0</STRONG></EM></TD>
+      <TD width="87%">クローズ処理完了</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>-1</STRONG></EM></TD>
+      <TD width="87%">接続完了後でない、もしくはエラー発生時なので何もしなかった。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>-2</STRONG></EM></TD>
+      <TD width="87%">既にクローズ済みのAIDが指定されたので何もしなかった。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>-3</STRONG></EM></TD>
+      <TD width="87%">自分がサーバホストでない状態で呼び出した。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>この関数はサーバホストからのみ呼び出すことができます。</p><p>指定のAIDとのコネクションを強制的にクローズします。クローズ処理は本関数内で完了し、本関数を抜ける前に<a href="DWC_SetConnectionClosedCallback.html#dwc__main_8h_15518aed6ceb946c61b4e8df326715f65">DWC_SetConnectionClosedCallback</a>関数で設定したコールバック関数が呼び出されます。</p><p>ニンテンドーWi-Fiコネクションにはログインしたままとなります。</p><p>このクローズは相手ホストにも通知され、相手ホストではクローズコールバック<a href="DWCConnectionClosedCallback.html#dwc__main_8h_137c062a13b38d3c691a1c3b1d7391657">DWCConnectionClosedCallback</a>が呼び出されます。ただし、このクローズ通知はUDP通信で一度しか送信されないため、通信路の状況などによっては相手に届かない可能性もあります。</p><p>電源を切るなどの理由で通信不能になったホストに対し、コネクションをクローズするというような、異常状態処理の用途を想定しています。</p><p><a href="DWC_CloseConnectionHardBitmapFromServer.html#dwc__main_8h_11ed07e606aaef5436b55b2155ed51492">DWC_CloseConnectionHardBitmapFromServer</a>関数を使えば、複数のAIDへのコネクションを一度にクローズすることができます。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_CloseConnectionHardFromServer_tag">こちら</a>　　</p>
+</body>
+</html>

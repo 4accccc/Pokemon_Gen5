@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_ConnectToGameServerByGroupID</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__main_8h_116b3b3faa8c7b9ee600fa77820ee1f57" align="left">DWC_ConnectToGameServerByGroupID</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_ConnectToGameServerByGroupID(<a href="Macro.html#dwc__match_8h_1c3ba6e33e5dd79e1d13350b71fa22250">DWCTopologyType</a> topology,
+                                      u32 groupID,
+                                      <a href="DWCMatchedSCCallback.html#dwc__match_8h_169fa2126df86bf98f54258f5ccab9beb">DWCMatchedSCCallback</a> matchedCallback,
+                                      void *matchedParam,
+                                      <a href="DWCNewClientCallback.html#dwc__match_8h_133da3ed06ce23a3dbab8f2e0b9aedc96">DWCNewClientCallback</a> newClientCallback,
+                                      void *newClientParam,
+                                      <a href="DWCConnectAttemptCallback.html#dwc__match_8h_11f5ec37975abd1264f03e7d9247c34bf">DWCConnectAttemptCallback</a> attemptCallback,
+                                      u8 *connectionUserData,
+                                      void *attemptParam);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>topology</STRONG></EM></TD>
+      <TD width="87%">接続形態。<a href="Macro.html#dwc__match_8h_1c3ba6e33e5dd79e1d13350b71fa22250">DWCTopologyType</a>の中から一つ指定します。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>groupID</STRONG></EM></TD>
+      <TD width="87%">接続するグループID</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>matchedCallback</STRONG></EM></TD>
+      <TD width="87%">接続完了コールバック関数へのポインタ。１人接続するごとに呼ばれる。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>matchedParam</STRONG></EM></TD>
+      <TD width="87%">接続完了コールバック用パラメータ。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>newClientCallback</STRONG></EM></TD>
+      <TD width="87%">新規接続クライアント通知コールバック関数へのポインタ。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>newClientParam</STRONG></EM></TD>
+      <TD width="87%">新規接続クライアント通知コールバック用パラメータ。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>attemptCallback</STRONG></EM></TD>
+      <TD width="87%">接続受付判定コールバック関数へのポインタ。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>connectionUserData</STRONG></EM></TD>
+      <TD width="87%">自分の接続受付判定用パラメータバッファへのポインタ。u8[<a href="Macro.html#dwc__match_8h_1767334491be60055db279f50c050c695">DWC_CONNECTION_USERDATA_LEN</a>]分のバッファであること。このバッファの内容は、ライブラリにコピーされるので、本関数呼出し後は開放されていても構わない。NULLを指定した場合、自分の接続受付判定用バッファの内容はすべて0に設定される。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>attemptParam</STRONG></EM></TD>
+      <TD width="87%">接続受付判定コールバック用パラメータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">処理開始。コールバック関数で結果が通知される。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">本関数を呼んで良い状態ではない</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>指定されたグループIDを持つサーバホストに再接続を試みます。現在自分が参加しているグループのIDは、<a href="DWC_GetGroupID.html#dwc__match_8h_108509cea9e99e5bf301e93cf612f1142">DWC_GetGroupID</a>関数で取得することができますので、マッチメイクを行って誰かと接続した際にこのIDを保存しておくと、一度切断しても、そのグループがクライアントホストを受け付けている限りは再接続することができます。</p><p>グループが友達指定ピアマッチメイクやサーバクライアントマッチメイクで形成されている場合、最初のサーバホストが切断して抜けたグループは、クライアントホストを受け付けなくなることに留意してください。ただし、友達指定ピアマッチメイクのときにサーバホストが一人きりになった場合は受付を再開します。</p><p>また、グループIDによる接続は、自分が参加していたかどうかは問われないため、友達の状態としてグループIDを友達に公開しておくと、それを使って友達が参加しているグループに接続することも可能になります。<br>ただし、参加しようとしてるグループが友達限定であることを想定していた場合、次のような問題が発生します。<br>通常、友達指定ピアマッチメイクやサーバクライアントマッチメイクでは、「友達」か「友達の友達」しかグループに存在しないため、相互に友達同士としての通信が可能ですが、このようなグループIDによる接続を何も考慮せずに実装すると、「友達の友達の友達」のような、友達同士としての通信が不可能な関係が同じグループに発生する可能性があります。相互に友達同士としての通信を保つためには、合流しようとしている友達がグループのサーバホストであることを確認しておく必要があります。自分がサーバホストであるかどうかは<a href="DWC_IsServerMyself.html#dwc__main_8h_1b23d5543742ed140e597f88cadf7bb73">DWC_IsServerMyself</a>関数で確認できます。</p><p>接続不良などの原因によりサーバ交代が発生した場合、同じグループIDを持つサーバホストが複数見つかることがあります。この場合は最も接続人数が多いグループに接続します。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_ConnectToGameServerByGroupID_tag">こちら</a>　　</p>
+</body>
+</html>

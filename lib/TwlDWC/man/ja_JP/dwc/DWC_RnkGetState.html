@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_RnkGetState</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__ranking_8h_1e75ecfaae58d6e26966c97f8ae0def48" align="left">DWC_RnkGetState</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895f">DWCRnkState</a> DWC_RnkGetState();</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895f834d6877f549753f2574a1a4aacb0bd1">DWC_RNK_STATE_NOTREADY</a></STRONG></EM></TD>
+      <TD width="87%">未初期化状態</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895fee396b177ab53c71f49d44a3d15f718a">DWC_RNK_STATE_INITIALIZED</a></STRONG></EM></TD>
+      <TD width="87%">初期化完了</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895fde8ecfd9ccabbda747f0fd12993e22b8">DWC_RNK_STATE_PUT_ASYNC</a></STRONG></EM></TD>
+      <TD width="87%">PUT非同期処理中</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895f93ea430beadd39d260579f2897254bee">DWC_RNK_STATE_GET_ASYNC</a></STRONG></EM></TD>
+      <TD width="87%">GET非同期処理中</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895f510bb977fc09cd27865ff1d92fcdfe6a">DWC_RNK_STATE_COMPLETED</a></STRONG></EM></TD>
+      <TD width="87%">非同期処理完了</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11103f24ff80fe1419472d4765ab4895f34e2f7d8e4ec0e8348ddced3c81d6223">DWC_RNK_STATE_ERROR</a></STRONG></EM></TD>
+      <TD width="87%">エラー発生</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>現在の処理状態を取得します。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_RnkGetState_tag">こちら</a>　　</p>
+</body>
+</html>

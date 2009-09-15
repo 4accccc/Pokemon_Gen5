@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetConnectionKeepAliveTime</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__transport_8h_1bfe776edf0f2de1ed780bd781b8523b8" align="left">DWC_GetConnectionKeepAliveTime</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>u32 DWC_GetConnectionKeepAliveTime(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>0以外</STRONG></EM></TD>
+      <TD width="87%">設定されているタイムアウト時間(msec)</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>0</STRONG></EM></TD>
+      <TD width="87%">FriendsMatchライブラリ非動作中で取得失敗</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>一定時間reliable/unreliable通信の無い接続相手を切断するための判断基準となる、タイムアウト時間を取得します。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetConnectionKeepAliveTime_tag">こちら</a>　　</p>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_NdGetFileAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__nd_8h_1e35dbd5de31151be1f0887a0ad2572f7" align="left">DWC_NdGetFileAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_NdGetFileAsync(<a href="DWCNdFileInfo.html#struct_d_w_c_nd_file_info">DWCNdFileInfo</a> *fileinfo,
+                        char *buf,
+                        unsigned int size);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>fileinfo</STRONG></EM></TD>
+      <TD width="87%">ダウンロードする対象のファイル情報へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>buf</STRONG></EM></TD>
+      <TD width="87%">ダウンロードしたデータを書き込むバッファへのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>size</STRONG></EM></TD>
+      <TD width="87%">ダウンロードしたデータを書き込むバッファのサイズ。fileinfoのsizeメンバ以上の値を指定してください。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">成功。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">失敗。<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数を使用してエラーの情報を取得してください</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>ファイルのダウンロードを開始します。</p><p>すでにダウンロードサーバと通信中の場合は失敗します。<br></p><p>ライブラリではタイムアウト処理を行っていませんので、必要に応じてタイムアウト処理をアプリケーション側で行うかキャンセルできるようにしてください。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_NdInitAsync.html#dwc__nd_8h_10f7fb2775c6aa081cdaadbc1247363d3">DWC_NdInitAsync</a></CODE>
+
+  <CODE><a href="DWC_NdProcess.html#dwc__nd_8h_194c5a22f39af6cd1bce2988daa1ac41d">DWC_NdProcess</a></CODE>
+
+  <CODE><a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1pr2</DT>
+<DD>引数sizeの説明で&quot;最低128バイト&quot;の記述を削除。タイムアウト処理の必要性について記述</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_NdGetFileAsync_tag">こちら</a>　　</p>
+</body>
+</html>

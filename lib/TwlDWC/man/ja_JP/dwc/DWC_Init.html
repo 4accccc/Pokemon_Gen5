@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_Init</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__init_8h_12a34d048f06aa38b81263aa47d79eab1" align="left">DWC_Init</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>int DWC_Init(void *work);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>work</STRONG></EM></TD>
+      <TD width="87%">初期化用バッファのポインタ<br>32BytesアライメントされたDWC_INIT_WORK_SIZE分のバッファを指定してください。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_INIT_RESULT_NOERROR</STRONG></EM></TD>
+      <TD width="87%">初期化成功。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_INIT_RESULT_CREATE_USERID</STRONG></EM></TD>
+      <TD width="87%">DS本体に仮のユーザIDを生成しました。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_INIT_RESULT_DESTROY_USERID</STRONG></EM></TD>
+      <TD width="87%">DS本体のユーザIDが破壊されていた可能性があるので、仮のユーザIDを生成しました。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>DWC_INIT_RESULT_DESTROY_OTHER_SETTING</STRONG></EM></TD>
+      <TD width="87%">DS本体の接続先設定が破壊された可能性があります。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>DWCライブラリを初期化する関数です。DS本体に保存するユーザIDのチェック・作成などを行います。DWCライブラリに含まれる他のAPIを呼び出す前に一回呼び出して下さい。</p><p>戻り値に応じて、適切なメッセージを表示するようにしてください。メッセージについては、「NitendoWi-FiConnectionプログラミングガイドライン」をご確認ください。</p><p>workに指定したバッファは、この関数終了後、解放しても構いません。<br><b>このバッファはARM7からアクセスするため、メインメモリ等のARM7からアクセス可能な領域に指定してください。</b></p><p>本関数を呼び出す前に、OS_Init関数を呼んでおく必要があります。<br>※OS_InitTick関数、OS_InitAlarm関数、RTC_Init関数が<a href="DWC_Init.html#dwc__init_8h_12a34d048f06aa38b81263aa47d79eab1">DWC_Init</a>関数内で呼ばれます。</p><p><b>この関数は同期を取る為にPXI割り込みを待ちますので、PXI割り込みを禁止した状態で呼び出さないようにして下さい。</b></p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_CreateUserData.html#dwc__account_8h_1ef31a2e89b3af8871ad404b08b55f269">DWC_CreateUserData</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1</DT>
+<DD><a href="DWC_Init.html#dwc__init_8h_12a34d048f06aa38b81263aa47d79eab1">DWC_Init</a>関数の使用前に呼ばなければいけない関数は、OS_Init関数だけである点について修正して記載</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_Init_tag">こちら</a>　　</p>
+</body>
+</html>

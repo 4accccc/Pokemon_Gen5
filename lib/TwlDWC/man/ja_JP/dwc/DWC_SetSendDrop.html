@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_SetSendDrop</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__transport_8h_1554af14df3e9728601da95cba1ec2a28" align="left">DWC_SetSendDrop</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_SetSendDrop(u8 drop,
+                     u8 aid);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>drop</STRONG></EM></TD>
+      <TD width="87%">パケットロス率。0～100のパーセンテージで指定できます。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>aid</STRONG></EM></TD>
+      <TD width="87%">送信先のAID</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">パケットロス率設定成功</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">FriendsMatchライブラリ非動作中、無効なAID指定、メモリ確保の失敗により設定失敗、もしくはFINALROMビルドで動作中</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p><a href="DWC_SendUnreliable.html#dwc__transport_8h_1b95f23de902cbad010e65eea8051ab27">DWC_SendUnreliable</a>/<a href="DWC_SendUnreliableBitmap.html#dwc__transport_8h_1d30a735ab4beb91f8923fa5d08bed597">DWC_SendUnreliableBitmap</a>関数によるデータ送信時のパケットロス率を設定する関数です。</p><p>これはデバッグ用の関数です。最終ROM版（FINALROM）ライブラリでは何も動作を行いません。</p><p>本関数で設定した内容は、Reliable通信には影響しません。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1</DT>
+<DD>Reliable通信には対応していない旨を追記。</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_SetSendDrop_tag">こちら</a>　　</p>
+</body>
+</html>

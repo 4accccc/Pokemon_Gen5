@@ -1,0 +1,59 @@
+#! make -f
+#----------------------------------------------------------------------------
+# Project:  TWLDWC
+#
+# Copyright 2005-2009 Nintendo.  All rights reserved.
+#
+# These coded instructions, statements, and computer programs contain
+# proprietary information of Nintendo of America Inc. and/or Nintendo
+# Company Ltd., and are protected by Federal copyright law.  They may
+# not be disclosed to third parties or copied or duplicated in any form,
+# in whole or in part, without the prior written consent of Nintendo.
+#----------------------------------------------------------------------------
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# TWL-WIFIの場合               #
+
+TWLWIFI_ROOT		?= $(TWLDWC_ROOT)
+
+ifdef TWLSYSTEM_ROOT
+
+    include $(TWLSYSTEM_ROOT)/build/buildtools/commondefs
+
+else
+
+    include $(TWLSDK_ROOT)/build/buildtools/commondefs
+
+endif
+
+
+ifdef TWLWIFI_ROOT
+
+    include $(TWLWIFI_ROOT)/build/buildtools/commondefs.WiFi
+
+MACRO_FLAGS += -DTWL_SO_WIFI
+MACRO_FLAGS += -DTWL_SSL_CPS
+
+# AOSS とらくらくのライブラリが TWL-WIFI に対応するまでは
+# 一時的にこれらを切り離す
+MACRO_FLAGS += -DDWC_PURGE_AOSS
+MACRO_FLAGS += -DDWC_PURGE_RAKU
+
+#--------
+# TWL-INET でも TWL-WIFI でもない場合はソケットはインクルードされない。
+#--------
+
+endif
+
+#________________________________#
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# TWL-DWC は最後に指定       #
+
+#   export TWLDWC_NOGS=TRUE
+    include $(TWLDWC_ROOT)/build/buildtools/commondefs.dwc
+
+#________________________________#
+
+
+#===== End of commondefs =====

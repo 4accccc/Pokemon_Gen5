@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_NdProcess</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__nd_8h_194c5a22f39af6cd1bce2988daa1ac41d" align="left">DWC_NdProcess</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>void DWC_NdProcess(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p>ダウンロードライブラリの処理を進めます。</p><p>ダウンロード処理を進める関数です。アプリケーションでは最初に<a href="DWC_NASLoginAsync.html#dwc__nas_8h_13c2dd14803b38aae98ee1b04118d8fb8">DWC_NASLoginAsync</a>関数または、<a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a>関数でWi-Fiコネクションに接続し、<a href="DWC_NdInitAsync.html#dwc__nd_8h_10f7fb2775c6aa081cdaadbc1247363d3">DWC_NdInitAsync</a>関数を呼び出した後、ネットワークに接続している間毎ゲームフレーム程度の頻度で本関数を呼び出してください。</p><p>非同期関数の終了時には<a href="DWC_NdInitAsync.html#dwc__nd_8h_10f7fb2775c6aa081cdaadbc1247363d3">DWC_NdInitAsync</a>関数でセットしたコールバックが呼ばれます。<a href="DWCNdCallback.html#dwc__nd_8h_13ab334b8de8158333fe68797a4031d04">DWCNdCallback</a>コールバックのerrorパラメータが、<a href="Macro.html#dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f613afc2fa5c21e4f49592cce997a16cace">DWC_ND_ERROR_NONE</a>以外の場合、<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数でエラー情報を取得し、エラー処理タイプに応じてエラーメッセージとともにエラーコードを表示、及びライブラリの終了を行ってください。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_NdInitAsync.html#dwc__nd_8h_10f7fb2775c6aa081cdaadbc1247363d3">DWC_NdInitAsync</a></CODE>
+
+  <CODE><a href="DWCNdCallback.html#dwc__nd_8h_13ab334b8de8158333fe68797a4031d04">DWCNdCallback</a></CODE>
+
+  <CODE><a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a></CODE>
+
+  <CODE><a href="DWC_NASLoginAsync.html#dwc__nas_8h_13c2dd14803b38aae98ee1b04118d8fb8">DWC_NASLoginAsync</a></CODE>
+
+  <CODE><a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_NdProcess_tag">こちら</a>　　</p>
+</body>
+</html>

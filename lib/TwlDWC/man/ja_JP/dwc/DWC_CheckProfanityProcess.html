@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_CheckProfanityProcess</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__prof_8h_1cf829b09d9ec8b42bf3987266e9983ca" align="left">DWC_CheckProfanityProcess</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfb">DWCProfState</a> DWC_CheckProfanityProcess(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfb61eb8980f00f7d18b646142be9bf5bbb">DWC_PROF_STATE_NOT_INITIALIZED</a></STRONG></EM></TD>
+      <TD width="87%"><a href="DWC_CheckProfanityAsync.html#dwc__prof_8h_16e8029f668632188e74681738be0aa20">DWC_CheckProfanityAsync</a>関数が呼び出されていない</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfb026cff1ac63027198caac09f7763b68b">DWC_PROF_STATE_OPERATING</a></STRONG></EM></TD>
+      <TD width="87%">不正文字列チェックが処理中</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfbee4fe0c0d0890ad73863e1ca1592fb5f">DWC_PROF_STATE_SUCCESS</a></STRONG></EM></TD>
+      <TD width="87%">不正文字列チェックが成功終了した</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfb1a7fba9ba3d3ab2bc701e953090c9d2a">DWC_PROF_STATE_FAIL</a></STRONG></EM></TD>
+      <TD width="87%">不正文字列チェックが失敗終了した<br><a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数の結果に従ってエラーコードの表示とエラーに対する対処を行ってください</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>不正文字列チェック処理を進行させます。<a href="DWC_CheckProfanityAsync.html#dwc__prof_8h_16e8029f668632188e74681738be0aa20">DWC_CheckProfanityAsync</a>関数を呼び出した後、本関数を毎ゲームフレーム程度の頻度で呼び出してください。</p><p>返り値に<a href="Macro.html#dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfbee4fe0c0d0890ad73863e1ca1592fb5f">DWC_PROF_STATE_SUCCESS</a>が得られた場合、<a href="DWC_CheckProfanityAsync.html#dwc__prof_8h_16e8029f668632188e74681738be0aa20">DWC_CheckProfanityAsync</a>関数で指定したresultからチェック結果を取得できます。</p><p>不正文字列チェック処理が終了して<a href="Macro.html#dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfbee4fe0c0d0890ad73863e1ca1592fb5f">DWC_PROF_STATE_SUCCESS</a>、<a href="Macro.html#dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfb1a7fba9ba3d3ab2bc701e953090c9d2a">DWC_PROF_STATE_FAIL</a>が返された時点で、処理が開始されていない状態に戻ります。このため、再度<a href="DWC_CheckProfanityAsync.html#dwc__prof_8h_16e8029f668632188e74681738be0aa20">DWC_CheckProfanityAsync</a>関数や<a href="DWC_CheckProfanityExAsync.html#dwc__prof_8h_1583a36ef6c630987c29f68ac67a3d482">DWC_CheckProfanityExAsync</a>関数で処理を開始しない限り、以降は<a href="Macro.html#dwc__prof_8h_1ff8674b700d1c8e3b2531e7d0a9aecfb61eb8980f00f7d18b646142be9bf5bbb">DWC_PROF_STATE_NOT_INITIALIZED</a>を返すことに注意してください。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1pr2</DT>
+<DD>処理が終了したときの返り値に関する説明を追加</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_CheckProfanityProcess_tag">こちら</a>　　</p>
+</body>
+</html>

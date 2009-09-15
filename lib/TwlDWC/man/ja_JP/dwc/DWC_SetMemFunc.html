@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_SetMemFunc</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__memfunc_8h_113607e1bcf007e9a7e28202c1a372e69" align="left">DWC_SetMemFunc</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>void DWC_SetMemFunc(<a href="DWCAllocEx.html#dwc__memfunc_8h_1b5f2b223b85ed60bd0d8e2e762b29eca">DWCAllocEx</a> alloc,
+                    <a href="DWCFreeEx.html#dwc__memfunc_8h_11be107310163287289a67f7d768cd535">DWCFreeEx</a> free);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>alloc</STRONG></EM></TD>
+      <TD width="87%">メモリ確保関数<a href="DWCAllocEx.html#dwc__memfunc_8h_1b5f2b223b85ed60bd0d8e2e762b29eca">DWCAllocEx</a>へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>free</STRONG></EM></TD>
+      <TD width="87%">メモリ解放関数<a href="DWCFreeEx.html#dwc__memfunc_8h_11be107310163287289a67f7d768cd535">DWCFreeEx</a>へのポインタ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p>DWCライブラリ全体で使用するメモリ確保／解放関数を設定します。</p><p><h3>メモリ確保関数<computeroutput><a href="DWCAllocEx.html#dwc__memfunc_8h_1b5f2b223b85ed60bd0d8e2e762b29eca">DWCAllocEx</a></computeroutput></h3></p><p>メモリ確保関数は、alignバイトアライメントされたsizeバイト分のバッファへのポインタを返し、メモリ確保に失敗した場合は、NULLを返してください。</p><p><b>TWLモードで動作させる場合、メインメモリ上の拡張アリーナから領域を確保する関数は指定できません。</b></p><p>nameには、DWCライブラリ開発用の情報が含まれていますので、無視してください。</p><p><h3>メモリ解放関数<computeroutput><a href="DWCFreeEx.html#dwc__memfunc_8h_11be107310163287289a67f7d768cd535">DWCFreeEx</a></computeroutput></h3></p><p>メモリ解放関数は、ptrで指定された、メモリ確保関数で確保されたバッファを解放してください。</p><p>nameには、DWCライブラリ開発用の情報が含まれていますので、無視してください。</p><p>sizeには、DWCライブラリ開発用の情報で正確な値が格納されていない場合がありますので、無視してください。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_Init.html#dwc__init_8h_12a34d048f06aa38b81263aa47d79eab1">DWC_Init</a></CODE>
+
+  <CODE><a href="DWC_InitFriendsMatch.html#dwc__main_8h_186c2f56943c3a20c05d73d4a2abad609">DWC_InitFriendsMatch</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1patch1</DT>
+<DD>TWLモードで動作させる場合、メインメモリ上の拡張アリーナから領域を確保する関数は指定できない旨を追記</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_SetMemFunc_tag">こちら</a>　　</p>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCNdCallback</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__nd_8h_13ab334b8de8158333fe68797a4031d04" align="left">DWCNdCallback</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>typedef void(*) DWCNdCallback(<a href="Macro.html#dwc__nd_8h_12589cc4824e67625368ff4b3b6353087">DWCNdCallbackReason</a> reason,
+             <a href="Macro.html#dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f61">DWCNdError</a> error,
+             int servererror);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>reason</parametername></STRONG></EM></TD>
+      <TD width="87%">通知コールバック関数が呼び出された際どのような処理が実行中であったかを示す値</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>error</parametername></STRONG></EM></TD>
+      <TD width="87%">通知コールバック関数が呼び出された際に発生したエラーを示す値</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>servererror</parametername></STRONG></EM></TD>
+      <TD width="87%">サーバから通知されたエラーコード。<br>errorが<a href="Macro.html#dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f611664b66e43e076177f2113d69dc449e1">DWC_ND_ERROR_DLSERVER</a>ではないときは-1となります。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p>ダウンロードライブラリによって呼び出される通知コールバック関数型です。非同期処理の結果が通知されます。<br>本コールバックのerrorパラメータが、<a href="Macro.html#dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f613afc2fa5c21e4f49592cce997a16cace">DWC_ND_ERROR_NONE</a>以外のとき、<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数でエラー情報を取得し、エラー処理タイプに応じてエラーメッセージとともにエラーコードを表示、及びライブラリの終了を行ってください。</p><p>本コールバック中もダウンロードライブラリの関数を呼ぶことができます。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_NdProcess.html#dwc__nd_8h_194c5a22f39af6cd1bce2988daa1ac41d">DWC_NdProcess</a></CODE>
+
+  <CODE><a href="DWC_NdInitAsync.html#dwc__nd_8h_10f7fb2775c6aa081cdaadbc1247363d3">DWC_NdInitAsync</a></CODE>
+
+  <CODE><a href="DWC_NdCleanupAsync.html#dwc__nd_8h_1b5866639aee7fb3a9d693a1411625ee0">DWC_NdCleanupAsync</a></CODE>
+
+  <CODE><a href="Macro.html#dwc__nd_8h_12589cc4824e67625368ff4b3b6353087">DWCNdCallbackReason</a></CODE>
+
+  <CODE><a href="Macro.html#dwc__nd_8h_15516f9a01edfa95b9587f88bfdbd9f61">DWCNdError</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCNdCallback_tag">こちら</a>　　</p>
+</body>
+</html>

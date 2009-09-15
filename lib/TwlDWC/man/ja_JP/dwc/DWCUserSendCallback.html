@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCUserSendCallback</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__transport_8h_1fd9001583a199f90843f5a8853666f8f" align="left">DWCUserSendCallback</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>typedef void(*) DWCUserSendCallback(int size,
+             u8 aid,
+             void *param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>size</parametername></STRONG></EM></TD>
+      <TD width="87%">送信したデータのサイズ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>aid</parametername></STRONG></EM></TD>
+      <TD width="87%">送信先のAID</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>param</parametername></STRONG></EM></TD>
+      <TD width="87%">コールバック用パラメータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p><a href="DWC_SendReliable.html#dwc__transport_8h_18af931f880aadbc50700c6c212ec64cc">DWC_SendReliable</a>/<a href="DWC_SendReliableBitmap.html#dwc__transport_8h_1ea79c20d9a54d219287cd7c1b906dd82">DWC_SendReliableBitmap</a>/<a href="DWC_SendUnreliable.html#dwc__transport_8h_1b95f23de902cbad010e65eea8051ab27">DWC_SendUnreliable</a>/<a href="DWC_SendUnreliableBitmap.html#dwc__transport_8h_1d30a735ab4beb91f8923fa5d08bed597">DWC_SendUnreliableBitmap</a>関数によるデータの送信が完了した時に呼び出されます</p><p>AIDのビットマップによる送信を行った場合は、1つのAIDに対する送信が完了する度に、コールバックが呼び出されます。</p><p>本コールバック関数は<a href="DWC_SetUserSendCallback.html#dwc__transport_8h_1425a597b5b1fa10e0bde22d02e3dce6c">DWC_SetUserSendCallback</a>関数によって設定することができます。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCUserSendCallback_tag">こちら</a>　　</p>
+</body>
+</html>

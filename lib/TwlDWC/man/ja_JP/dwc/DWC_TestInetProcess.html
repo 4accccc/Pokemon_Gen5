@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_TestInetProcess</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__connectinet_8h_162b7d89eb16a423fd4d0441ae113c8a0" align="left">DWC_TestInetProcess</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__connectinet_8h_19b2a4f07ca42debd525043023f96c8e2">DWCTestInetResult</a> DWC_TestInetProcess(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__connectinet_8h_19b2a4f07ca42debd525043023f96c8e28ece6e9e48004904cf3a7edf3f23c0ec">DWC_TESTINET_NOT_INITIALIZED</a></STRONG></EM></TD>
+      <TD width="87%"><a href="DWC_TestInetAsync.html#dwc__connectinet_8h_1d94b5d6953396eb2bd0785f5fac81b4d">DWC_TestInetAsync</a>関数が呼び出されていません</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__connectinet_8h_19b2a4f07ca42debd525043023f96c8e214efd66d7b44cd25c54206531d13dde8">DWC_TESTINET_OPERATING</a></STRONG></EM></TD>
+      <TD width="87%">通信処理を実行中です</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__connectinet_8h_19b2a4f07ca42debd525043023f96c8e2ce28d0d4cd9671ab8bcf691606fd6e5d">DWC_TESTINET_CONNECTED</a></STRONG></EM></TD>
+      <TD width="87%">インターネットに接続されていることが確認されました</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__connectinet_8h_19b2a4f07ca42debd525043023f96c8e29fc4f9c8c12651b41bfa9597b0bd3b36">DWC_TESTINET_DISCONNECTED</a></STRONG></EM></TD>
+      <TD width="87%">インターネットに接続されていないことが確認されました<br><a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数の結果に従ってエラーコードの表示とエラーに対する対処を行ってください</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>インターネットとの接続テストの通信処理を実行し、その結果を取得します。</p><p><a href="DWC_TestInetAsync.html#dwc__connectinet_8h_1d94b5d6953396eb2bd0785f5fac81b4d">DWC_TestInetAsync</a>関数を呼び出した後、本関数の返り値が<a href="Macro.html#dwc__connectinet_8h_19b2a4f07ca42debd525043023f96c8e214efd66d7b44cd25c54206531d13dde8">DWC_TESTINET_OPERATING</a>の間、毎ゲームフレーム程度の頻度で呼び出してください。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_TestInetAsync.html#dwc__connectinet_8h_1d94b5d6953396eb2bd0785f5fac81b4d">DWC_TestInetAsync</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_TestInetProcess_tag">こちら</a>　　</p>
+</body>
+</html>

@@ -1,0 +1,60 @@
+#! make -f
+#----------------------------------------------------------------------------
+# Project:  TWLDWC
+#
+# Copyright 2005-2009 Nintendo.  All rights reserved.
+#
+# These coded instructions, statements, and computer programs contain
+# proprietary information of Nintendo of America Inc. and/or Nintendo
+# Company Ltd., and are protected by Federal copyright law.  They may
+# not be disclosed to third parties or copied or duplicated in any form,
+# in whole or in part, without the prior written consent of Nintendo.
+#----------------------------------------------------------------------------
+
+
+SRCS    = $(wildcard src/*.c)
+
+
+TARGET_BIN                      = $(shell basename $(CURDIR)).srl
+
+#----------------------------------------------------------------------------
+# overlay for util library
+ifeq ($(TWLDWC_DEMOS_UTILOVERLAY),TRUE)
+TWLDWC_LIB_MODULES_   = ac auth bm account common nonport nas nd enc ghttp ranking gdb match
+endif
+
+ifeq ($(TWLDWC_DL_DEMOS_UTILOVERLAY),TRUE)
+TWLDWC_LIB_MODULES_   = ac auth bm common nonport nas nd
+endif
+
+#----------------------------------------------------------------------------
+include	$(TWLDWC_ROOT)/build/buildtools/commondefs
+
+
+TWLDWC_DEMOS_ROOT               = $(TWLDWC_ROOT_)/build/demos
+
+LDEPENDS_NEF = $(TWLDWC_LIB_DEPENDS)
+
+LINCLUDES       += $(TWLDWC_DEMOS_ROOT)/dbs/include
+
+ifeq ($(TARGET_PLATFORM),TWL)
+LLIBRARIES      += libdwcdbs$(TWL_LIBSUFFIX).a
+LLIBRARY_DIRS   += $(TWLDWC_DEMOS_ROOT)/dbs/lib/$(TWL_BUILDTYPE)
+ROM_SPEC	= $(TWLDWC_DEMOS_ROOT)/dwcdemo.TWL.rsf
+LCFILE_SPEC     = $(TWLDWC_DEMOS_ROOT)/dwcdemo.TWL.lsf
+else
+LLIBRARIES      += libdwcdbs$(NITRO_LIBSUFFIX).a
+LLIBRARY_DIRS   += $(TWLDWC_DEMOS_ROOT)/dbs/lib/$(NITRO_BUILDTYPE)
+ROM_SPEC        = $(TWLDWC_DEMOS_ROOT)/dwcdemo.rsf
+LCFILE_SPEC     = $(TWLDWC_DEMOS_ROOT)/dwcdemo.lsf
+endif
+
+
+CCFLAGS_MSGSTYLE = -msgstyle gcc
+
+do-build:		$(TARGETS)
+
+
+include	$(TWLDWC_ROOT)/build/buildtools/modulerules
+
+#===== End of Makefile =====

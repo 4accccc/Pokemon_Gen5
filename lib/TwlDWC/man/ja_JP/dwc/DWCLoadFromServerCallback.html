@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCLoadFromServerCallback</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__datastorage_8h_1c068a1ce8c34605ee8f01518edd6b4e3" align="left">DWCLoadFromServerCallback</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>typedef void(*) DWCLoadFromServerCallback(BOOL success,
+             int index,
+             char *data,
+             int len,
+             void *param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>success</parametername></STRONG></EM></TD>
+      <TD width="87%">TRUE:通信成功FALSE:通信エラー</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>index</parametername></STRONG></EM></TD>
+      <TD width="87%">ロード元データ保持者の友達リストインデックス自分の場合と、ロード完了前に友達でなくなった場合は-1になる。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>data</parametername></STRONG></EM></TD>
+      <TD width="87%">ロードしたデータ（key/value組の文字列）</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>len</parametername></STRONG></EM></TD>
+      <TD width="87%">ロードデータ長</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>param</parametername></STRONG></EM></TD>
+      <TD width="87%"><a href="DWC_LoadOwnPrivateDataAsync.html#dwc__datastorage_8h_16e5d43d5b96b77bc36632fcfeac46260">DWC_LoadOwnPrivateDataAsync</a>/<a href="DWC_LoadOthersDataAsync.html#dwc__datastorage_8h_173f74fbd1c8a762a00b4e49a77b01d2e">DWC_LoadOthersDataAsync</a>関数で指定したコールバック用パラメータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p>ロード関数で指定したキーが存在しなかった場合や、他人が<a href="DWC_SavePrivateDataAsync.html#dwc__datastorage_8h_1982adb8b9c1f01095b7acf2496f3390a">DWC_SavePrivateDataAsync</a>()でセーブしたキーを読もうとした場合はsuccessがTRUE、dataが&quot;&quot;(空文字列)、lenが0になります。</p><p>本コールバック関数は<a href="DWC_SetStorageServerCallback.html#dwc__datastorage_8h_153f76956532fbc241610e47948be92a1">DWC_SetStorageServerCallback</a>関数によって設定することができます。</p><p><a href="DWC_LogoutFromStorageServer.html#dwc__datastorage_8h_1d20a8093058076e510b2bbdb3689acb3">DWC_LogoutFromStorageServer</a>()をコールバック内で呼び出さないでください。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1pr2</DT>
+<DD>DWC_LoadOwnDataAsync関数の廃止に伴い、DWC_LoadOwnDataAsyncを<a href="DWC_LoadOwnPrivateDataAsync.html#dwc__datastorage_8h_16e5d43d5b96b77bc36632fcfeac46260">DWC_LoadOwnPrivateDataAsync</a>に置換</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCLoadFromServerCallback_tag">こちら</a>　　</p>
+</body>
+</html>

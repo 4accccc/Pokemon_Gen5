@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetNumConnectionHost</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__main_8h_1563f5011844cdc82781955484e977329" align="left">DWC_GetNumConnectionHost</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>int DWC_GetNumConnectionHost(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<p>自分も含めた接続中ホスト数。マッチメイク途中の接続数もカウントされます。<br>FriendsMatchライブラリ非動作中に本関数を呼び出した場合は0を返します。</p>
+
+<H2>説明</H2>
+
+<p>自分も含めた接続中ホスト数を取得します。</p><p>まだ誰とも接続したことが無い状態では0が返ります。<a href="DWCMatchedSCCallback.html#dwc__match_8h_169fa2126df86bf98f54258f5ccab9beb">DWCMatchedSCCallback</a>のerrorが<a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19e183029cab4bcfb2768bf5e52c81ce0a">DWC_ERROR_NONE</a>で呼び出された後は必ず有効な値が取得できます。</p><p><a href="DWC_SetupGameServer.html#dwc__main_8h_1230f0bb02b234d806cc51470e67647f1">DWC_SetupGameServer</a>でサーバとして起動したホストについては、誰とも繋がったことの無い状態でも、<a href="DWC_SetupGameServer.html#dwc__main_8h_1230f0bb02b234d806cc51470e67647f1">DWC_SetupGameServer</a>呼出し後しばらくしてから1を返すようになります。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetNumConnectionHost_tag">こちら</a>　　</p>
+</body>
+</html>

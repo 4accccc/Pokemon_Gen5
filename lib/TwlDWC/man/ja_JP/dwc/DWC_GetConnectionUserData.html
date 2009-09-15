@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetConnectionUserData</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__match_8h_1577cae4a5e85518c7f385458b836732c" align="left">DWC_GetConnectionUserData</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_GetConnectionUserData(u8 aid,
+                               u8 *userData);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>aid</STRONG></EM></TD>
+      <TD width="87%">接続時のconnectionUserDataを取得したい相手のホストのAID</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>userData</STRONG></EM></TD>
+      <TD width="87%">connectionUserDataを受け取るバッファ。u8[<a href="Macro.html#dwc__match_8h_1767334491be60055db279f50c050c695">DWC_CONNECTION_USERDATA_LEN</a>]分のサイズが必要。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">userDataの取得に成功した。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">userDataの取得に失敗した。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>既に接続済みのホストが接続時に設定していたconnectionUserDataを取得します。本関数は、<a href="DWCConnectAttemptCallback.html#dwc__match_8h_11f5ec37975abd1264f03e7d9247c34bf">DWCConnectAttemptCallback</a>内で、新規接続ホストの受け入れ可否を判断するための材料として使用されることを想定しています。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetConnectionUserData_tag">こちら</a>　　</p>
+</body>
+</html>

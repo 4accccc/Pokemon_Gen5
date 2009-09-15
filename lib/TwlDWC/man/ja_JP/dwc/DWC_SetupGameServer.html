@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_SetupGameServer</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__main_8h_1230f0bb02b234d806cc51470e67647f1" align="left">DWC_SetupGameServer</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_SetupGameServer(<a href="Macro.html#dwc__match_8h_1c3ba6e33e5dd79e1d13350b71fa22250">DWCTopologyType</a> topology,
+                         u8 maxEntry,
+                         <a href="DWCMatchedSCCallback.html#dwc__match_8h_169fa2126df86bf98f54258f5ccab9beb">DWCMatchedSCCallback</a> matchedCallback,
+                         void *matchedParam,
+                         <a href="DWCNewClientCallback.html#dwc__match_8h_133da3ed06ce23a3dbab8f2e0b9aedc96">DWCNewClientCallback</a> newClientCallback,
+                         void *newClientParam,
+                         <a href="DWCConnectAttemptCallback.html#dwc__match_8h_11f5ec37975abd1264f03e7d9247c34bf">DWCConnectAttemptCallback</a> attemptCallback,
+                         u8 *connectionUserData,
+                         void *attemptParam);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>topology</STRONG></EM></TD>
+      <TD width="87%">接続形態。<a href="Macro.html#dwc__match_8h_1c3ba6e33e5dd79e1d13350b71fa22250">DWCTopologyType</a>の中から一つ指定します。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>maxEntry</STRONG></EM></TD>
+      <TD width="87%">最大接続人数（自分を含む）。2～32の値が設定できる。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>matchedCallback</STRONG></EM></TD>
+      <TD width="87%">接続完了コールバック関数へのポインタ。１人接続するごとに呼ばれる。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>matchedParam</STRONG></EM></TD>
+      <TD width="87%">接続完了コールバック用パラメータ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>newClientCallback</STRONG></EM></TD>
+      <TD width="87%">新規接続クライアント通知コールバック関数へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>newClientParam</STRONG></EM></TD>
+      <TD width="87%">新規接続クライアント通知コールバック用パラメータ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>attemptCallback</STRONG></EM></TD>
+      <TD width="87%">接続受付判定コールバック関数へのポインタ。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>connectionUserData</STRONG></EM></TD>
+      <TD width="87%">自分の接続受付判定用パラメータバッファへのポインタ。u8[<a href="Macro.html#dwc__match_8h_1767334491be60055db279f50c050c695">DWC_CONNECTION_USERDATA_LEN</a>]分のバッファであること。このバッファの内容は、ライブラリにコピーされるので、本関数呼出し後は開放されていても構わない。NULLを指定した場合、自分の接続受付判定用バッファの内容はすべて0に設定される。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>attemptParam</STRONG></EM></TD>
+      <TD width="87%">接続受付判定コールバック用パラメータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">処理完了</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">本関数を呼んで良い状態ではない</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>自らをサーバホストとして動作させ、クライアントホストからの要求があれば、コネクションの接続・切断処理を行います。ここでのサーバホストとは、このサーバクライアントマッチメイクにおいて、※ＤＳワイヤレス通信の親機のような働きをするホストのことです。</p><p>本関数は、サーバクライアントマッチメイクを開始するための関数であり、<a href="DWC_CloseAllConnectionsHard.html#dwc__main_8h_1123f5a62315e3eae575e961c8a2133e3">DWC_CloseAllConnectionsHard</a>関数、もしくは<a href="DWC_ShutdownFriendsMatch.html#dwc__main_8h_1765b5089893c6d3bf5f3011723b96278">DWC_ShutdownFriendsMatch</a>関数が呼ばれるまでは、クライアントホストからの接続を受け付けます。そして、自分に接続を開始したクライアントホストを検知すれば、新規接続クライアント通知コールバックが呼ばれ、そのクライアントホストの接続処理が完了すれば、接続完了コールバックが呼ばれます。</p><p>クライアントホストは<a href="DWC_ConnectToGameServerAsync.html#dwc__main_8h_1254f419a2e97ad73074d232c4160cfd2">DWC_ConnectToGameServerAsync</a>関数を用いて、サーバホストに接続します。</p><p>ネットワーク接続状況により、関数からしばらく処理が戻らずブロックすることがあります。</p><p>※ＤＳワイヤレス通信・・・NintendoDSでのローカル無線通信を指します。APを経由せずに独自のプロトコルで直接DS同士が通信を行います。一台の親機とそれに繋がる複数の子機で構成されます。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_SetupGameServer_tag">こちら</a>　　</p>
+</body>
+</html>

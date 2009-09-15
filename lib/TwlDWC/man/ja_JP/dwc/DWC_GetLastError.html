@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetLastError</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__error_8h_1e28843471b163eb88af3d202726e329c" align="left">DWC_GetLastError</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19">DWCError</a> DWC_GetLastError(int *errorCode);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>errorCode</STRONG></EM></TD>
+      <TD width="87%">エラーコード格納先ポインタ。取得の必要がない場合は、NULLを指定してください</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p><table border="1"><tbody><tr><td width="25%"></td><td width="75%"><div style="text-align: center;"><em><strong>説明</strong></em></div></td><td><div style="text-align: center;"><em><strong>対応するエラー処理タイプ</strong></em></div></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19e183029cab4bcfb2768bf5e52c81ce0a">DWC_ERROR_NONE</a></code></strong></em></td><td width="75%">エラーなし</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ec1c4e4efe043c01aea23f51816564f208">DWC_ETYPE_NO_ERROR</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed1902ab14be4de1ebce11878de81209174a">DWC_ERROR_FRIENDS_SHORTAGE</a></code></strong></em></td><td width="75%">指定の人数の有効な友達がいないのに友達指定ピアマッチメイクを始めようとした</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ec7fd11b5dbab905e8c567a552c1f8ded0">DWC_ETYPE_LIGHT</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed196e4598fa6c83842fcd061a2e3884c656">DWC_ERROR_NOT_FRIEND_SERVER</a></code></strong></em></td><td width="75%">サーバクライアントマッチメイクで、サーバDSに指定した友達が相互に友達ではない、もしくはサーバを立てていない</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ec7fd11b5dbab905e8c567a552c1f8ded0">DWC_ETYPE_LIGHT</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19d7f75811bb4ea335859571310347c8ee">DWC_ERROR_SC_CONNECT_BLOCK</a></code></strong></em></td><td width="75%">サーバクライアントマッチメイクで、クライアントがサーバから接続を拒否された</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ec7fd11b5dbab905e8c567a552c1f8ded0">DWC_ETYPE_LIGHT</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19b0925ef701e6a75c12e9029dc003b449">DWC_ERROR_SERVER_FULL</a></code></strong></em></td><td width="75%">サーバクライアントマッチメイクのサーバDSが定員オーバー</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ec7fd11b5dbab905e8c567a552c1f8ded0">DWC_ETYPE_LIGHT</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed1905f08e3b78f61fe4eed88f782f0022e5">DWC_ERROR_SVL_ANY</a></code></strong></em></td><td width="75%">サービスロケータ情報取得中のその他のエラー</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ec28aa2c307d1f494c0c8d85c88843b8bc">DWC_ETYPE_SHOW_ERROR</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed194761d89c7876cef47a7f8b721c924e86">DWC_ERROR_PROF_ANY</a></code></strong></em></td><td width="75%">不正文字列チェックライブラリのその他のエラー</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ec28aa2c307d1f494c0c8d85c88843b8bc">DWC_ETYPE_SHOW_ERROR</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed191b1ef43d343226245c1f79cf57f43600">DWC_ERROR_GDB_ANY</a></code></strong></em></td><td width="75%">GDBライブラリのエラー。通常のDWCでは発生しません。</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ec28aa2c307d1f494c0c8d85c88843b8bc">DWC_ETYPE_SHOW_ERROR</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19d30ab70be645ed6846895062843fa684">DWC_ERROR_NETWORK</a></code></strong></em></td><td width="75%">その他のネットワークエラー</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ec2921aab6fee667dbf19f614fbfbb6479">DWC_ETYPE_SHUTDOWN_FM</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed1900c43d4042bea3a9fa5265d63f187b4c">DWC_ERROR_GHTTP_ANY</a></code></strong></em></td><td width="75%">HTTP通信(GameSpyHTTP)のエラー</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ecc93feff488a5a9f62e3670aa98200668">DWC_ETYPE_SHUTDOWN_GHTTP</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed197b16c42e52c0d0caf68b2e65e23f31a3">DWC_ERROR_ND_ANY</a></code></strong></em></td><td width="75%">ダウンロードライブラリのその他のエラー</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ec7ca0871d2a61f90c4cd2e75be00eda28">DWC_ETYPE_SHUTDOWN_ND</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19de3db39312c2e6559343236c3e5d124b">DWC_ERROR_AUTH_ANY</a></code></strong></em></td><td width="75%">認証に関するエラー</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ece7fbe686b8425dd25dbb63014eb92862">DWC_ETYPE_DISCONNECT</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed1902d53ffd4065f16526075401f89f7140">DWC_ERROR_AUTH_OUT_OF_SERVICE</a></code></strong></em></td><td width="75%">サービス終了</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ece7fbe686b8425dd25dbb63014eb92862">DWC_ETYPE_DISCONNECT</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed196e7fb055c9ea4ef36a1d72f87526a97f">DWC_ERROR_AUTH_STOP_SERVICE</a></code></strong></em></td><td width="75%">サービス一時中断中</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ece7fbe686b8425dd25dbb63014eb92862">DWC_ETYPE_DISCONNECT</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed1964b54550a1807865742c2ab36153f999">DWC_ERROR_AC_ANY</a></code></strong></em></td><td width="75%">自動接続に関するエラー</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ece7fbe686b8425dd25dbb63014eb92862">DWC_ETYPE_DISCONNECT</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed197dde3e3cb7c85bb5425f350eb9e1b228">DWC_ERROR_DISCONNECTED</a></code></strong></em></td><td width="75%">切断された</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ece7fbe686b8425dd25dbb63014eb92862">DWC_ETYPE_DISCONNECT</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19f07d4042b051b83fbb4602267d7a3988">DWC_ERROR_ND_HTTP</a></code></strong></em></td><td width="75%">ダウンロードライブラリのHTTP通信エラー</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ece7fbe686b8425dd25dbb63014eb92862">DWC_ETYPE_DISCONNECT</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19c442bf174e8c087607ccbb6093350a85">DWC_ERROR_SVL_HTTP</a></code></strong></em></td><td width="75%">サービスロケータ情報取得中のHTTP通信エラー</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ece7fbe686b8425dd25dbb63014eb92862">DWC_ETYPE_DISCONNECT</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed198efc43ba11249b95e6f57f6e9f69fe1b">DWC_ERROR_PROF_HTTP</a></code></strong></em></td><td width="75%">不正文字列チェックライブラリのHTTP通信エラー</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ece7fbe686b8425dd25dbb63014eb92862">DWC_ETYPE_DISCONNECT</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed1910a2bc3b5506355994951c32a62f2f73">DWC_ERROR_DS_MEMORY_ANY</a></code></strong></em></td><td width="75%">本体セーブデータに関するエラー</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ec36d72083baf18ae8b6678ebddba98f14">DWC_ETYPE_FATAL</a></code></strong></em></td></tr><tr><td width="25%"><em><strong><code><a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19971dfe41649d84d3b0a1f0234174e4f0">DWC_ERROR_FATAL</a></code></strong></em></td><td width="75%">致命的なエラー</td><td><em><strong><code><a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ec36d72083baf18ae8b6678ebddba98f14">DWC_ETYPE_FATAL</a></code></strong></em></td></tr></tbody></table></p>
+
+<H2>説明</H2>
+
+<p>最後の通信エラー種別を取得します。<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数からエラー処理タイプを取得する機能を除いたものです。<br>エラー処理タイプ（<a href="Macro.html#dwc__error_8h_168ff183290bdb65d992a516a2496c5ec">DWCErrorType</a>）を同時に取得できる<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数の使用をお勧めします。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_ClearError.html#dwc__error_8h_1325e43a6b7d8d0a914a044c52e8cfda6">DWC_ClearError</a></CODE>
+
+  <CODE><a href="DWC_ShutdownFriendsMatch.html#dwc__main_8h_1765b5089893c6d3bf5f3011723b96278">DWC_ShutdownFriendsMatch</a></CODE>
+
+  <CODE><a href="DWC_NdCleanupAsync.html#dwc__nd_8h_1b5866639aee7fb3a9d693a1411625ee0">DWC_NdCleanupAsync</a></CODE>
+
+  <CODE><a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1pr2</DT>
+<DD>返り値の説明に<a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19a58810de58a0ef045aebd719df8a9c30">DWC_ERROR_NETWORK_LIGHT</a>を追加</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetLastError_tag">こちら</a>　　</p>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_RnkResGetTotal</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__ranking_8h_1718a5bac010998418da110d0f2dc068f" align="left">DWC_RnkResGetTotal</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910">DWCRnkError</a> DWC_RnkResGetTotal(u32 *total);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>total</STRONG></EM></TD>
+      <TD width="87%">母数を取得する変数のポインタ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace591031d9ef7155e9c704fd07f83f72ad0077">DWC_RNK_SUCCESS</a></STRONG></EM></TD>
+      <TD width="87%">成功</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910a4e6c6033f467d88496af91163df0345">DWC_RNK_IN_ERROR</a></STRONG></EM></TD>
+      <TD width="87%">エラー発生中</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910ede038616942f938cdf5e287edf52728">DWC_RNK_ERROR_INVALID_PARAMETER</a></STRONG></EM></TD>
+      <TD width="87%">不正なパラメータ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace5910c31f98c0f7509036f00873e6b1b87eaf">DWC_RNK_ERROR_NOTCOMPLETED</a></STRONG></EM></TD>
+      <TD width="87%">通信未完了</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__ranking_8h_11e26643f8161b162f689f7031ace591049363d66152318b102f2cb1acea8aa0c">DWC_RNK_ERROR_EMPTY_RESPONSE</a></STRONG></EM></TD>
+      <TD width="87%">空のレスポンス</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p><a href="DWC_RnkGetScoreAsync.html#dwc__ranking_8h_198665927b3a87b3218c1f58f6f3394ba">DWC_RnkGetScoreAsync</a>関数の呼び出しで指定したフィルタリングの条件に合致したスコアの数(母数)を取得します。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_RnkResGetTotal_tag">こちら</a>　　</p>
+</body>
+</html>

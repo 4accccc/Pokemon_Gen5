@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetOwnStatusString</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__friend_8h_102c7ea3da0c73733bbdfdc14e3085ca5" align="left">DWC_GetOwnStatusString</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_GetOwnStatusString(char *statusString);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>statusString</STRONG></EM></TD>
+      <TD width="87%">status文字列格納先ポインタ。最大<a href="Macro.html#dwc__friend_8h_102dc5b4389418a1a27f1c512a63aaf01">DWC_FRIEND_STATUS_STRING_LEN</a>文字(NULL終端含む)。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">取得成功</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">ログイン前などで取得失敗</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>現在の自分の通信状態のうち、status文字列を取得します。</p><p>プレイヤーの通信状態は、プレイヤーのオンライン、オフライン等の状態を表すstatusフラグと、引数statusStringで表されるstatus文字列から成っており、GameSpyサーバ上で管理されています。statusフラグはDWCライブラリが自動的にセットしますが、status文字列は<a href="DWC_SetOwnStatusString.html#dwc__friend_8h_14cd20cf1fd60674999b9496e9cccbb5d">DWC_SetOwnStatusString</a>関数を用いてアプリケーションが設定することができます。statusフラグの種別については<a href="DWC_GetFriendStatus.html#dwc__friend_8h_195e1edb244064d397cd6eb586b08bc5e">DWC_GetFriendStatus</a>関数の返り値の欄を参照してください。</p><p>本関数では、DWCライブラリ内に保存されている自分のStatus文字列を取得するため、通信は行いません。</p><p>この関数を使うためには、<a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a>関数によるログインまでを完了させておく必要があります。</p><p>文字列ではなくバイナリデータを設定／取得したい場合は、<a href="DWC_SetOwnStatusData.html#dwc__friend_8h_1681fddad129f4c6b6aba352392b6e715">DWC_SetOwnStatusData</a>/<a href="DWC_GetOwnStatusData.html#dwc__friend_8h_196bd7d16e4968e2b45a4892e1c6817f6">DWC_GetOwnStatusData</a>関数を使用してください。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetOwnStatusString_tag">こちら</a>　　</p>
+</body>
+</html>

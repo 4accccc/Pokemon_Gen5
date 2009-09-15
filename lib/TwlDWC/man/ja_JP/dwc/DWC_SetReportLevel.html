@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_SetReportLevel</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__report_8h_1a2e6e8d6f0619e3184050ee01d6e955a" align="left">DWC_SetReportLevel</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>void DWC_SetReportLevel(u32 level);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>level</STRONG></EM></TD>
+      <TD width="87%">DWCライブラリのデバッグ表示を行う項目の選択。ORで複数の条件を選択できます。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p>DWCライブラリがコンソールに表示するデバッグプリントの種別（デバッグレポートレベル）を調整する関数です。レポートレベルは、<a href="Macro.html#dwc__report_8h_134e9367035075892d6458b4175e11f59">DWCReportFlag</a>で定義されています。デバッグ用途に応じて必要な表示のみをORをとって選択できます。</p><p>なお、TWL-DWC-DLでは<a href="Macro.html#dwc__report_8h_134e9367035075892d6458b4175e11f59ab68fabd6786db644dc6132f6270bd02">DWC_REPORTFLAG_GAMESPY</a>を指定しても該当の機能がないため意味がありません。</p><p>デバッグレポートは何か問題が起きた時に解析するためのログとして使用されます。</p><p>デバックプリントには100文字あたり平均3msec要します。デバッグプリントの種別によっては大量のログを出力し、ゲームに遅延を生じさせる恐れがあるため、用途に応じて適切なデバックレポートレベルを設定してください。もしくは、デバックプリント処理内部で呼び出しているOS_TVPrintf関数はWeakシンボルでコンパイルされますので、独自にOS_TVPrintf関数を定義することでログ出力の負荷を抑えることも可能です。</p><p>初期状態では<a href="Macro.html#dwc__report_8h_134e9367035075892d6458b4175e11f5971e85650fe52d47ca9ddcfb778be822a">DWC_REPORTFLAG_ALL</a>が指定されています。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.2</DT>
+<DD>デバックプリントの種別によりゲームに遅延が発生する恐れがあることを追記</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_SetReportLevel_tag">こちら</a>　　</p>
+</body>
+</html>

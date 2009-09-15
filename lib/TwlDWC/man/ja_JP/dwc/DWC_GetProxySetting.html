@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetProxySetting</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__connectinet_8h_1d2d381c369845b609cde5940ecf09a56" align="left">DWC_GetProxySetting</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_GetProxySetting(<a href="DWCProxySetting.html#struct_d_w_c_proxy_setting">DWCProxySetting</a> *proxy);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>proxy</STRONG></EM></TD>
+      <TD width="87%">取得したproxy設定情報を書き込む領域へのポインタ。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">proxy設定の情報の取得に成功しました。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">proxy設定の情報の取得に失敗しました。<br>失敗の原因は、ユーザー設定４～６で接続されていない場合、もしくは、proxy設定されていない場合になります。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>接続中の接続設定のProxy設定を取得します。<br>※ただし、proxy設定が可能なユーザー設定４～６で接続している場合に限られます。</p><p>本関数は、自動接続処理で接続状態を監視する<a href="DWC_GetInetStatus.html#dwc__connectinet_8h_1dc3e39b117b96fe0e2facbb529ffee10">DWC_GetInetStatus</a>関数が、<a href="Macro.html#dwc__connectinet_8h_17e3ebb7f6d65d55dc39f66b2c05fb8c13473267b96b4884231fbf8a075f4446d">DWC_CONNECTINET_STATE_CONNECTED</a>を返すようになった時点から、<a href="DWC_CleanupInet.html#dwc__connectinet_8h_14d7f46fc1822bb3f39eed3b087e629c6">DWC_CleanupInet</a>/<a href="DWC_CleanupInetAsync.html#dwc__connectinet_8h_100a9f2169ae3e5c145607630710674ac">DWC_CleanupInetAsync</a>関数を呼ぶまでの間で使用できます。<br>それ以外で呼び出した場合、引数に対してなにも行わずFALSEを返します。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWCProxySetting.html#struct_d_w_c_proxy_setting">DWCProxySetting</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetProxySetting_tag">こちら</a>　　</p>
+</body>
+</html>

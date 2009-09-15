@@ -1,0 +1,131 @@
+#! make -f
+#----------------------------------------------------------------------------
+# Project:  TWLDWC
+#
+# Copyright 2005-2009 Nintendo.  All rights reserved.
+#
+# These coded instructions, statements, and computer programs contain
+# proprietary information of Nintendo of America Inc. and/or Nintendo
+# Company Ltd., and are protected by Federal copyright law.  They may
+# not be disclosed to third parties or copied or duplicated in any form,
+# in whole or in part, without the prior written consent of Nintendo.
+#----------------------------------------------------------------------------
+
+ifndef TWLDWC_COMMONDEFS_
+TWLDWC_COMMONDEFS_ := TRUE
+
+#----------------------------------------------------------------------------
+#
+# TwlDWC Root directory
+#
+TWLDWC_ROOT		?= C:/TwlDWC
+
+ifndef TWLDWC_NOGS
+TWLGS_VERSION	?= 0.01
+endif
+
+#----------------------------------------------------------------------------
+#
+# TwlDWC Path
+#
+ifndef TWLDWC_NOGS
+TWLDWC_LIB_MODULES_   ?= ac auth bm account common nonport nas nd util enc ghttp ranking gdb match
+else
+TWLDWC_LIB_MODULES_   ?= ac auth bm common nonport nas nd util
+endif
+
+ifndef TWLDWC_NOGS
+TWLDWC_LIB_GSMODULES_ ?= common ghttp gp gstats gt2 natneg qr2 serverbrowsing sake chat
+endif
+
+# peer, gsoap modules are not supported now.
+
+
+TWLDWC_ROOT_			:= $(call eupath,$(TWLDWC_ROOT))
+
+TWLDWC_BUILDTOOLSDIR	:= $(TWLDWC_ROOT_)/build/buildtools
+TWLDWC_TOOLSDIR			:= $(TWLDWC_ROOT_)/tools
+TWLDWC_INCDIR			:= $(addprefix $(TWLDWC_ROOT_)/include/,$(TWLDWC_LIB_MODULES_)) \
+						   $(TWLDWC_ROOT_)/include
+ifndef TWLDWC_NOGS
+TWLDWC_INCDIR			:= $(TWLDWC_INCDIR) $(TWLDWC_ROOT_)/include/gs
+else
+TWLDWC_INCDIR			:= $(TWLDWC_INCDIR)
+endif
+
+TWLDWC_LIB_PREFIX		:= dwc
+
+TWLDWC_LIBDIR			:= $(TWLDWC_ROOT_)/lib/$(TWL_LIBTYPE)
+ifndef TWLDWC_NOGS
+TWLDWC_GSLIBDIR			:= $(TWLDWC_ROOT_)/lib/gamespy/$(TWL_LIBTYPE)
+endif
+
+#----------------------------------------------------------------------------
+#
+# TwlDWC Library
+#
+TWLDWC_LIBS		:= $(addsuffix $(TWL_LIBSUFFIX).a,$(addprefix lib$(TWLDWC_LIB_PREFIX),$(TWLDWC_LIB_MODULES_)))
+ifndef TWLDWC_NOGS
+TWLDWC_GSLIBS	:= $(addsuffix $(TWL_LIBSUFFIX).a,$(addprefix lib$(TWLDWC_LIB_PREFIX)gs,$(TWLDWC_LIB_GSMODULES_)))
+endif
+
+#----------------------------------------------------------------------------
+#
+# TWLDWC_INSTALL_ROOT
+#
+
+TWLDWC_INSTALL_ROOT 		?= $(TWLDWC_ROOT_)
+
+TWLDWC_INSTALL_TOOLSDIR		 = $(TWLDWC_INSTALL_ROOT)/tools
+TWLDWC_INSTALL_INCDIR		 = $(TWLDWC_INSTALL_ROOT)/include
+TWLDWC_INSTALL_LIBDIR		 = $(TWLDWC_INSTALL_ROOT)/lib/$(TWL_LIBTYPE)
+
+#----------------------------------------------------------------------------
+# %.nefのリンク時にオブジェクト／ライブラリを依存させられたら便利。
+# もしかのときのため、定義だけ入れておく。
+TWLDWC_LIB_DEPENDS	+= $(addprefix $(TWLDWC_LIBDIR)/,$(TWLDWC_LIBS)) \
+						$(addprefix $(TWLDWC_GSLIBDIR)/,$(TWLDWC_GSLIBS))
+
+#----------------------------------------------------------------------------
+##LLIBRARY_DIRS、LLIBRARIESに追加します。
+LLIBRARY_DIRS   += $(TWLDWC_LIBDIR) $(TWLDWC_GSLIBDIR)
+LLIBRARIES      += $(TWLDWC_LIBS) $(TWLDWC_GSLIBS)
+
+# NHTTP library
+LLIBRARIES     += libnhttp$(TWIFI_LIBSUFFIX).a
+LLIBRARY_DIRS  += $(TWIFI_ROOT)/lib/$(TWIFI_LIBTYPE)
+
+
+#----------------------------------------------------------------------------
+##LINCLUDESに追加します。
+LINCLUDES		+= $(TWLDWC_LIBDIR)
+
+#----------------------------------------------------------------------------
+## gamespy用のNITRO定義
+MACRO_FLAGS += -D_NITRO
+CCFLAGS_WARNING 	+= -w nonotused -w nopadding
+
+##MACRO_FLAGS += -D_NITRO -DGSI_MEM_MANAGED -w nonotused -w nopadding
+##CCFLAGS += -D_NITRO -DGSI_MEM_MANAGED -DSB_ICMP_SUPPORT -w nonotused -w nopadding
+
+## 不具合の吸収のため。
+#MACRO_FLAGS += -DDWC_BUG_WIFI_DELAY_SEND
+
+ifdef TWLDWC_NOGS
+MACRO_FLAGS += -DTWLDWC_NOGS -DDWC_NOGS
+endif
+
+ifndef TWL_FINALROM
+ifndef TWLDWC_NOGS
+MACRO_FLAGS += -DGSI_COMMON_DEBUG
+endif
+endif
+
+ifdef DWC_WAYPORT
+MACRO_FLAGS += -DDWC_NETCHECK_WAYPORT
+endif
+
+# TWLDWC_COMMONDEFS_
+endif
+
+#----- End of commondefs -----

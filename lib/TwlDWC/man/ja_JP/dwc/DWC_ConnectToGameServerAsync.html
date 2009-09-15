@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_ConnectToGameServerAsync</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__main_8h_1254f419a2e97ad73074d232c4160cfd2" align="left">DWC_ConnectToGameServerAsync</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_ConnectToGameServerAsync(<a href="Macro.html#dwc__match_8h_1c3ba6e33e5dd79e1d13350b71fa22250">DWCTopologyType</a> topology,
+                                  int serverIndex,
+                                  <a href="DWCMatchedSCCallback.html#dwc__match_8h_169fa2126df86bf98f54258f5ccab9beb">DWCMatchedSCCallback</a> matchedCallback,
+                                  void *matchedParam,
+                                  <a href="DWCNewClientCallback.html#dwc__match_8h_133da3ed06ce23a3dbab8f2e0b9aedc96">DWCNewClientCallback</a> newClientCallback,
+                                  void *newClientParam,
+                                  <a href="DWCConnectAttemptCallback.html#dwc__match_8h_11f5ec37975abd1264f03e7d9247c34bf">DWCConnectAttemptCallback</a> attemptCallback,
+                                  u8 *connectionUserData,
+                                  void *attemptParam);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>topology</STRONG></EM></TD>
+      <TD width="87%">接続形態。<a href="Macro.html#dwc__match_8h_1c3ba6e33e5dd79e1d13350b71fa22250">DWCTopologyType</a>の中から一つ指定します。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>serverIndex</STRONG></EM></TD>
+      <TD width="87%">接続先サーバホストの友達リストインデックス</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>matchedCallback</STRONG></EM></TD>
+      <TD width="87%">接続完了コールバック関数へのポインタ。１人接続するごとに呼ばれる。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>matchedParam</STRONG></EM></TD>
+      <TD width="87%">接続完了コールバック用パラメータ。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>newClientCallback</STRONG></EM></TD>
+      <TD width="87%">新規接続クライアント通知コールバック関数へのポインタ。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>newClientParam</STRONG></EM></TD>
+      <TD width="87%">新規接続クライアント通知コールバック用パラメータ。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>attemptCallback</STRONG></EM></TD>
+      <TD width="87%">互換性のために残されています。NULLを指定してください。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>connectionUserData</STRONG></EM></TD>
+      <TD width="87%">自分の接続受付判定用パラメータバッファへのポインタ。u8[<a href="Macro.html#dwc__match_8h_1767334491be60055db279f50c050c695">DWC_CONNECTION_USERDATA_LEN</a>]分のバッファである必要があります。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>attemptParam</STRONG></EM></TD>
+      <TD width="87%">互換性のために残されています。NULLを指定してください。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">処理開始。コールバック関数で結果が通知される。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">本関数を呼んで良い状態ではない</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>友達リストのインデックスで接続するサーバホストを指定し、そこへ接続します。サーバホストとは、このサーバクライアントマッチメイクにおける<a href="DWC_SetupGameServer.html#dwc__main_8h_1230f0bb02b234d806cc51470e67647f1">DWC_SetupGameServer</a>関数を呼び出し、クライアントホストの接続を待っているホストのことを指します。本関数呼出し後、<a href="DWC_ProcessFriendsMatch.html#dwc__main_8h_1c7b64bfd61e6c336a1d382fb6d1ea2d8">DWC_ProcessFriendsMatch</a>関数を呼び続ければマッチメイク処理が進行し、マッチメイクが成功、エラー、キャンセルのいずれかの状態で完了すれば、マッチメイク完了コールバックが呼び出されます。</p><p>サーバホストへの接続後は、サーバホストへ新たに接続に来たクライアントホストがあれば、新規接続クライアント通知コールバックが呼び出されます。また、その新規接続クライアントの接続処理が完了すれば、再びマッチメイク完了コールバックが呼び出されます。</p><p>ネットワーク接続状況により、関数からしばらく処理が戻らずブロックすることがあります。</p><p><a href="DWCMatchedSCCallback.html#dwc__match_8h_169fa2126df86bf98f54258f5ccab9beb">DWCMatchedSCCallback</a>が呼び出されないことがあるため、アプリケーション側で適切なタイムアウトを設けてください。タイムアウト時間は、正常に接続できるケースの２～３倍を目安にして下さい。</p><p>接続形態がフルメッシュ型もしくはハイブリッド型のときは、サーバホストが切断したときにサーバ交代が発生します。スター型では発生しません。ハイブリッド型の場合、新しいサーバホストに接続できるのは新しいサーバホストと直接接続されていたホストのみで、それ以外のホストは切断されます。一度でもサーバ交代が起こった後は、そのグループに新規クライアントホストは参加できなくなります。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_ConnectToGameServerAsync_tag">こちら</a>　　</p>
+</body>
+</html>

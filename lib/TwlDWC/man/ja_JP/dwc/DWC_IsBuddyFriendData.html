@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_IsBuddyFriendData</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__account_8h_1ef07ab1dfe0f60811c29c0fe2396abe6" align="left">DWC_IsBuddyFriendData</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_IsBuddyFriendData(const DWCFriendData *frienddata);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>frienddata</STRONG></EM></TD>
+      <TD width="87%">友達情報の格納されたDWCFriendData構造体のバッファへのポインタ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">友達関係が成立している。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">友達関係が成立していない。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>frienddataで指定された友達情報について、既にGameSpyサーバ上で友達関係が成立しているかを調べます。</p><p>GameSpyサーバ上で友達関係が成立すると、友達情報内の友達成立フラグがセットされます。<br>また、友達情報内の「相手は自分を友達と思っているか」を調べるフラグが、<br><a href="DWC_UpdateServersAsync.html#dwc__main_8h_185472e3beb4ea521c7614ea13c9b0671">DWC_UpdateServersAsync</a>関数を呼んだとき、及び相手から来た、「友達関係を結ぶ為のリクエスト」を<br>承認する際に更新されます。</p><p>これら２つのフラグをチェックして、友達関係の成立／不成立を調べています。<br>よって、お互いに相手を友達として認めている場合にのみTRUE(成立している)を返しますが、<br>相手の友達情報のフラグは、上記の通りリアルタイムに更新されているものではないことに注意してください。(本関数は通信を行いません)</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_UpdateServersAsync.html#dwc__main_8h_185472e3beb4ea521c7614ea13c9b0671">DWC_UpdateServersAsync</a></CODE>
+
+  <CODE><a href="DWC_WasBuddyFriendData.html#dwc__account_8h_15680f424e4c763f82bf5883df7f66524">DWC_WasBuddyFriendData</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_IsBuddyFriendData_tag">こちら</a>　　</p>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_SetAuthServer</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__connectinet_8h_1da96c96907e26b1362d663720e6a48e0" align="left">DWC_SetAuthServer</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>void DWC_SetAuthServer(<a href="Macro.html#dwc__connectinet_8h_16502b0658bb61602a25181e70e0e7891">DWCInetAuthType</a> type);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>type</STRONG></EM></TD>
+      <TD width="87%">使用する認証サーバの種類を設定します。<br><ul><li>
+<a href="Macro.html#dwc__connectinet_8h_16502b0658bb61602a25181e70e0e7891828772158e97f488b511962fc0630d26">DWC_CONNECTINET_AUTH_TEST</a>　:　開発向け認証サーバを使用します。
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_16502b0658bb61602a25181e70e0e7891663ca18d64b0313c219464a4eb6578b9">DWC_CONNECTINET_AUTH_RELEASE</a>　:　製品向け認証サーバを使用します。
+</li><li>
+<a href="Macro.html#dwc__connectinet_8h_16502b0658bb61602a25181e70e0e78912eb48a45d5c772f31ab1e0a12ec3e39f">DWC_CONNECTINET_AUTH_DEVELOP</a>　:　ライブラリの開発用に使用します。アプリケーションは使用しないでください。
+</li></ul></TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<p>なし</p>
+
+<H2>説明</H2>
+
+<p><b>DWCを使用するタイトルは全て必ず本関数を使って、インターネット接続前及びWiFiコネクション設定起動前に、製品向けあるいは開発向けサーバのどちらを使うかを指定する必要があります。</b></p><p>この関数は、ニンテンドーDSに設定されたWi-FiConnectionIDを認証し、GameSpy社のサーバに接続する為の情報を発行する任天堂の認証サーバを設定します。</p><p>認証サーバは、開発向けと製品向けの２種類のものを提供しています。</p><p>開発・デバッグ時には開発向け認証サーバを使用し、最終ROM作成時に製品向け認証サーバに切り替えて動作確認を行ってください。開発中のテスト段階では製品向け認証サーバを使用しないようにしてください。</p><p>なお、開発向け認証サーバを指定した場合は、ホットスポットからの認証サーバへの接続ができません。</p><p>本関数によって認証サーバを切り替えることで、汎用ランキングやダウンロードで使用するサーバも製品向けと開発向けのサーバを切り替えることができます。</p><p>ただし、<b>友達管理やマッチメイク処理、データストレージサーバは開発向けと製品向けサーバの区別がないことに注意してください。</b>開発向けと製品向けサーバの区別がないため、リマスター版やローカライズ版の開発でマッチメイクのテストを行なう際に、本関数で製品向け認証サーバに設定していても、既に一般市場で発売しているタイトルとマッチメイクしてしまう可能性があります。</p><p>これを避けるには、友達無指定ピアマッチメイクで指定できるマッチメイクの候補として検索するプレイヤーの条件によって「製品版」と「デバッグ・開発版」をマッチメイクしないように区別する必要があります。</p><p><b>本関数は、以下のタイミングで呼び出すようにしてください。</b></p><p><H3>インターネット接続前</H3><CODE>...<BR><a href="DWC_InitInet.html#dwc__connectinet_8h_1c9ae10a55929127c552c808ebb103cc8">DWC_InitInet</a>(&stConnCtrl);<BR><a href="DWC_SetAuthServer.html#dwc__connectinet_8h_1da96c96907e26b1362d663720e6a48e0">DWC_SetAuthServer</a>(<a href="Macro.html#dwc__connectinet_8h_16502b0658bb61602a25181e70e0e7891663ca18d64b0313c219464a4eb6578b9">DWC_CONNECTINET_AUTH_RELEASE</a>);//<a href="DWC_InitInet.html#dwc__connectinet_8h_1c9ae10a55929127c552c808ebb103cc8">DWC_InitInet</a>()の後、<a href="DWC_ConnectInetAsync.html#dwc__connectinet_8h_1ed6360e949bbab87f49275bac0a381cc">DWC_ConnectInetAsync</a>()より前に呼び出す。<BR><a href="DWC_ConnectInetAsync.html#dwc__connectinet_8h_1ed6360e949bbab87f49275bac0a381cc">DWC_ConnectInetAsync</a>();<BR>...</CODE><BR><H3>Wi-Fiコネクション設定使用前</H3><CODE>...<BR><a href="DWC_SetAuthServer.html#dwc__connectinet_8h_1da96c96907e26b1362d663720e6a48e0">DWC_SetAuthServer</a>(<a href="Macro.html#dwc__connectinet_8h_16502b0658bb61602a25181e70e0e7891663ca18d64b0313c219464a4eb6578b9">DWC_CONNECTINET_AUTH_RELEASE</a>);//<a href="DWC_StartUtility.html#dwc__utility_8h_1a6e388b33fe6c8344210c25f8acca085">DWC_StartUtility</a>()の前に呼び出す。<BR><a href="DWC_StartUtility.html#dwc__utility_8h_1a6e388b33fe6c8344210c25f8acca085">DWC_StartUtility</a>(...);<BR>...<BR></CODE></p><p>ビルドタイプがFINALROM版の場合、Wi-Fiコネクション設定内では、必ず製品向け認証サーバを使用します。<br></p><p><h3>認証サーバの稼働状況</h3></p><p>各認証サーバの稼働状況の確認は、下記のリンクを参照し、「AuthServerisup」という文字列が表示されれば稼動中と判断出来ます。</p><p><table border="1"><tr><td><a href="https://nas.nintendowifi.net/nastest.jsp">製品向け認証サーバ</a></td><td><a href="https://nas.test.nintendowifi.net/nastest.jsp">開発向け認証サーバ</a></td></tr></table></p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_InitInet.html#dwc__connectinet_8h_1c9ae10a55929127c552c808ebb103cc8">DWC_InitInet</a></CODE>
+
+  <CODE><a href="DWC_ConnectInetAsync.html#dwc__connectinet_8h_1ed6360e949bbab87f49275bac0a381cc">DWC_ConnectInetAsync</a></CODE>
+
+  <CODE><a href="DWC_CheckInet.html#dwc__connectinet_8h_1525ebb2790477ec1a4d430dd94d29fc7">DWC_CheckInet</a></CODE>
+
+  <CODE><a href="DWC_ProcessInet.html#dwc__connectinet_8h_1c2a3fd1d79fee387ca123f5eb1cf0660">DWC_ProcessInet</a></CODE>
+
+  <CODE><a href="DWC_GetInetStatus.html#dwc__connectinet_8h_1dc3e39b117b96fe0e2facbb529ffee10">DWC_GetInetStatus</a></CODE>
+
+  <CODE><a href="DWC_CleanupInet.html#dwc__connectinet_8h_14d7f46fc1822bb3f39eed3b087e629c6">DWC_CleanupInet</a></CODE>
+
+  <CODE><a href="DWC_CleanupInetAsync.html#dwc__connectinet_8h_100a9f2169ae3e5c145607630710674ac">DWC_CleanupInetAsync</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.2patch1</DT>
+<DD>本関数を呼びださなかった場合のデフォルト設定がなくなり、呼び出しが必須になったことについて修正</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_SetAuthServer_tag">こちら</a>　　</p>
+</body>
+</html>

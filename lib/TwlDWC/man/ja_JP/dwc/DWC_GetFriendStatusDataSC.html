@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_GetFriendStatusDataSC</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__friend_8h_1e94f890276bde93d42a0f85207b625bd" align="left">DWC_GetFriendStatusDataSC</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>u8 DWC_GetFriendStatusDataSC(const DWCFriendData *friendData,
+                             u8 *maxEntry,
+                             u8 *numEntry,
+                             char *statusData,
+                             int *size);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>friendData</STRONG></EM></TD>
+      <TD width="87%">DWCFriendData型の友達情報へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>maxEntry</STRONG></EM></TD>
+      <TD width="87%">相手がサーバクライアントマッチメイクのサーバホストの場合に、最大接続可能台数を取得して格納するためのポインタ。それ以外の場合は、0</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>numEntry</STRONG></EM></TD>
+      <TD width="87%">相手がサーバクライアントマッチメイクのサーバホストの場合に、現在の接続台数を取得して格納するためのポインタ。それ以外の場合は、0</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>statusData</STRONG></EM></TD>
+      <TD width="87%">友達のstatusデータ格納先ポインタ。NULLを渡せばデータのコピーは行わない。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>size</STRONG></EM></TD>
+      <TD width="87%">友達のstatusデータ長の格納先ポインタ。無効なデータの場合は-1が格納される。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b04bd9f9adfdcaf17f1221ae2558ad6056b">DWC_STATUS_OFFLINE</a></STRONG></EM></TD>
+      <TD width="87%">オフライン<br>自分がオフラインの時、または相手と友達関係が成立していないとき</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b0404108a1958f9698113f90b0f1b094bb1">DWC_STATUS_ONLINE</a></STRONG></EM></TD>
+      <TD width="87%">オンライン（Wi-Fiコネクションサーバにログイン済み）</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b0404bd28525dc056805bf02df28ede0279">DWC_STATUS_PLAYING</a></STRONG></EM></TD>
+      <TD width="87%">・クライアントとしてゲームプレイ中（マッチメイクタイプの種類によらない）<br>・友達指定マッチメイク又はサーバクライアントマッチメイクで、一度でもサーバ交代が起こった後のサーバとしてゲームプレイ中<br>上記2状態は共通して、この相手に対して接続に行くことは出来ない事を示している。(PLAYING状態は受付可能な状態では無い)</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b046c2b74def19358ffebd07d0490a1d890">DWC_STATUS_MATCH_ANYBODY</a></STRONG></EM></TD>
+      <TD width="87%">・友達無指定ピアマッチメイク中で接続相手を検索中<br>・友達無指定ピアマッチメイク中でサーバとしてゲームプレイ中</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b0438175c08c13c94e683990f4d59299408">DWC_STATUS_MATCH_FRIEND</a></STRONG></EM></TD>
+      <TD width="87%">・友達指定ピアマッチメイク中で接続相手を検索中<br>・友達指定ピアマッチメイク中でサーバとしてゲームプレイ中</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b04ef029ab10b7668f67c32fa66f55b8e68">DWC_STATUS_MATCH_SC_CL</a></STRONG></EM></TD>
+      <TD width="87%">・サーバクライアントマッチメイク中のクライアントホストとして、サーバと接続処理中<br>・グループID接続のクライアントホストとして、サーバと接続処理中</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><a href="Macro.html#dwc__friend_8h_1bc6126af1d45847bc59afa0aa3216b0499e36405c9849a73e1cc96fb084000c2">DWC_STATUS_MATCH_SC_SV</a></STRONG></EM></TD>
+      <TD width="87%">・サーバクライアントマッチメイク中のサーバホストとしてゲームプレイ中</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>friendDataで指定された友達の通信状態を取得します。友達の通信状態は変化がある度にGameSpyサーバから通知され、DWCライブラリ内のキャッシュに保存されるので、本関数ではそれを参照し、通信は行いません。</p><p>プレイヤーの通信状態は、本関数の返り値で表されるstatusフラグと、status文字列というものから成っており、GameSpyサーバ上で管理されています。本関数では、status文字列をBase64でエンコードされた文字列と見なし、デコードしてstatusデータ（引数statusData）を取得します。サーバクライアントマッチメイク時は、これらに加えてサーバホスト特有の情報も含まれています。statusフラグとサーバホスト特有の情報はDWCライブラリが自動的にセットしますが、statusデータは<a href="DWC_SetOwnStatusData.html#dwc__friend_8h_1681fddad129f4c6b6aba352392b6e715">DWC_SetOwnStatusData</a>関数を用いてアプリケーションが設定することができます。この関数で指定されたデータがBase64エンコードされ、status文字列としてGameSpyサーバに送信されます。</p><p>サーバクライアントマッチメイクに特有の情報が必要ない場合は、<a href="DWC_GetFriendStatusData.html#dwc__friend_8h_1e3237078b128320e11e3ee31291b93a2">DWC_GetFriendStatusData</a>関数を使用してください。また、statusDataのようなバイナリデータではなく、文字列を<a href="DWC_SetOwnStatusString.html#dwc__friend_8h_14cd20cf1fd60674999b9496e9cccbb5d">DWC_SetOwnStatusString</a>関数でセットしているアプリケーションの場合は、<a href="DWC_GetFriendStatus.html#dwc__friend_8h_195e1edb244064d397cd6eb586b08bc5e">DWC_GetFriendStatus</a>/<a href="DWC_GetFriendStatusSC.html#dwc__friend_8h_153cfc54e21a73f2fb78a2ab37f6fbad6">DWC_GetFriendStatusSC</a>関数を使用して文字列データを取得してください。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_GetFriendStatusDataSC_tag">こちら</a>　　</p>
+</body>
+</html>

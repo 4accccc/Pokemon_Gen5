@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_SetOwnStatusData</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__friend_8h_1681fddad129f4c6b6aba352392b6e715" align="left">DWC_SetOwnStatusData</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_SetOwnStatusData(const char *statusData,
+                          u32 size);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>statusData</STRONG></EM></TD>
+      <TD width="87%">statusデータにセットするバイナリデータへのポインタ。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>size</STRONG></EM></TD>
+      <TD width="87%">バイナリデータのサイズ。最大容量は189Byteまで。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">セット成功</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">ログイン前、容量オーバーなどでセット失敗</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>自分の通信状態のうち、statusデータをセットします。</p><p>プレイヤーの通信状態は、プレイヤーのオンライン、オフライン等の状態を表すstatusフラグと、アプリケーションが設定できるstatus文字列から成っており、GameSpyサーバ上で管理されています。本関数では、statusDataで指定されたバイナリデータ（statusデータと呼びます）をBase64でエンコードし、status文字列としてGameSpyサーバに送信しています。statusフラグの種別については<a href="DWC_GetFriendStatus.html#dwc__friend_8h_195e1edb244064d397cd6eb586b08bc5e">DWC_GetFriendStatus</a>関数の返り値の欄を参照してください。</p><p>この関数を使うためには、<a href="DWC_LoginAsync.html#dwc__main_8h_1ac1f7f301938afe8408be88dfa65f217">DWC_LoginAsync</a>関数によるログインまでを完了させておく必要があります。</p><p>セットされたデータは、他のホストから<a href="DWC_GetFriendStatusData.html#dwc__friend_8h_1e3237078b128320e11e3ee31291b93a2">DWC_GetFriendStatusData</a>*関数で取得することができます。</p><p>バイナリデータではなく文字列をセットしたい場合は、<a href="DWC_SetOwnStatusString.html#dwc__friend_8h_14cd20cf1fd60674999b9496e9cccbb5d">DWC_SetOwnStatusString</a>関数を使用してください。</p><p>セットされた文字列は、<a href="DWC_ShutdownFriendsMatch.html#dwc__main_8h_1765b5089893c6d3bf5f3011723b96278">DWC_ShutdownFriendsMatch</a>関数を呼び出した時にクリアされます。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_SetOwnStatusData_tag">こちら</a>　　</p>
+</body>
+</html>

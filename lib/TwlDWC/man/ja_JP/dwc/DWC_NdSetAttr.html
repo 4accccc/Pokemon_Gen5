@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_NdSetAttr</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__nd_8h_1bd4be75a25d160506b7a4a9232ee2b40" align="left">DWC_NdSetAttr</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_NdSetAttr(const char *attr1,
+                   const char *attr2,
+                   const char *attr3);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>attr1</STRONG></EM></TD>
+      <TD width="87%">設定する属性文字列1へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>attr2</STRONG></EM></TD>
+      <TD width="87%">設定する属性文字列2へのポインタ</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>attr3</STRONG></EM></TD>
+      <TD width="87%">設定する属性文字列3へのポインタ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">成功</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">失敗。<a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a>関数を使用してエラーの情報を取得してください。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>ダウンロードライブラリに対して属性文字列を設定します。属性文字列はそれぞれ10文字以内のヌル文字終端したASCII文字列を指定してください。</p><p>属性文字列はダウンロードサーバがダウンロード可能なファイルを選択する際の基準となります。<br>3つの属性文字列は以下のような方法で評価され、3つの属性文字列の全てでダウンロード可能と評価されたときにそのファイルはダウンロード可能なものとして扱われます。<br></p><p><UL><LI>属性文字列に値が設定されている場合は、その属性文字列がサーバ側で設定された属性文字列と完全一致した場合にダウンロード可能と評価されます。<LI>属性文字列が空文字列の場合は、無条件でダウンロード可能と評価されます。</P></UL></p><p>この関数を呼び出さずに<a href="DWC_NdGetFileListNumAsync.html#dwc__nd_8h_1483c69a99e25ec6e6a8396603d3d391c">DWC_NdGetFileListNumAsync</a>関数、<a href="DWC_NdGetFileListAsync.html#dwc__nd_8h_10ed762cf6ee79a732867a356f18d4733">DWC_NdGetFileListAsync</a>関数、<a href="DWC_NdGetFileAsync.html#dwc__nd_8h_1e35dbd5de31151be1f0887a0ad2572f7">DWC_NdGetFileAsync</a>関数の各関数を呼び出した場合は、全ての属性に空文字列が設定された状態で動作します。</p>
+
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_NdGetFileListNumAsync.html#dwc__nd_8h_1483c69a99e25ec6e6a8396603d3d391c">DWC_NdGetFileListNumAsync</a></CODE>
+
+  <CODE><a href="DWC_NdGetFileListAsync.html#dwc__nd_8h_10ed762cf6ee79a732867a356f18d4733">DWC_NdGetFileListAsync</a></CODE>
+
+  <CODE><a href="DWC_NdGetFileAsync.html#dwc__nd_8h_1e35dbd5de31151be1f0887a0ad2572f7">DWC_NdGetFileAsync</a></CODE>
+
+  <CODE><a href="DWC_GetLastErrorEx.html#dwc__error_8h_118bd79f5d5151259c19c4e552e5e633b">DWC_GetLastErrorEx</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_NdSetAttr_tag">こちら</a>　　</p>
+</body>
+</html>

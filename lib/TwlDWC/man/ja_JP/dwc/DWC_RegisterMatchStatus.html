@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWC_RegisterMatchStatus</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__match_8h_1270cd2dd2012beff7bba2fd2148bca1f" align="left">DWC_RegisterMatchStatus</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>BOOL DWC_RegisterMatchStatus(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<p>なし</p>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">マッチメイキングサーバにマッチメイクステータスが登録された。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">ログイン前、もしくはエラーのため登録されなかった。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>自分のマッチメイクのための情報（以下マッチメイクステータス）をマッチメイキングサーバに登録します。この関数が呼ばれてから最短15秒程で、マッチメイキングサーバにアクセスした他ホストから、自分の状態が見えるようになり、マッチメイクを進められるようになります。</p><p>ピアマッチメイクにおいては、マッチメイク開始関数（<a href="DWC_ConnectToAnybodyAsync.html#dwc__main_8h_10c4e2a60e98dfa82a16b5e896d3a2203">DWC_ConnectToAnybodyAsync</a>/<a href="DWC_ConnectToFriendsAsync.html#dwc__main_8h_1dcb8be27412df5c9d5e0d9b9d035079b">DWC_ConnectToFriendsAsync</a>）内でこのマッチメイクステータス登録処理が行われているため、本関数の呼び出しは必須ではありません。しかし、マッチメイクが終わったり、キャンセルした時点でマッチメイキングサーバからこのマッチメイクステータスが消去されるため、次回マッチメイク開始時にはまた15秒程の待ち時間が発生します。この待ち時間をできるだけ減らしたい場合に、マッチメイク開始前の適当なタイミングで本関数を呼び出してください。</p><p>例えば、ピアマッチメイクが完了した後、1ゲーム遊び終えて、ゲームを続けることを選んだ時点で本関数を呼び出す、といった使い方が考えられます。</p><p>なお、マッチメイクステータスは<a href="DWC_ShutdownFriendsMatch.html#dwc__main_8h_1765b5089893c6d3bf5f3011723b96278">DWC_ShutdownFriendsMatch</a>関数を呼んだ時にも消去されます。また、Wi-Fiコネクション接続後1回目のマッチメイクを早く終わらせるために、Wi-Fiコネクションへの接続が完了した時点で、ライブラリがマッチメイクステータスの登録を行っています。</p><p>サーバクライアントマッチメイクでは、ピアマッチメイクと同様にマッチメイク開始関数（<a href="DWC_SetupGameServer.html#dwc__main_8h_1230f0bb02b234d806cc51470e67647f1">DWC_SetupGameServer</a>/<a href="DWC_ConnectToGameServerAsync.html#dwc__main_8h_1254f419a2e97ad73074d232c4160cfd2">DWC_ConnectToGameServerAsync</a>）内でマッチメイクステータス登録処理が行われていますが、<a href="DWC_ShutdownFriendsMatch.html#dwc__main_8h_1765b5089893c6d3bf5f3011723b96278">DWC_ShutdownFriendsMatch</a>関数が呼ばれるまでマッチメイクステータスが消去されることはありません。そのため、本関数を呼び出す必要はありません。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWC_RegisterMatchStatus_tag">こちら</a>　　</p>
+</body>
+</html>

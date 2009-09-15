@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCRnkGetParam</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 id="struct_d_w_c_rnk_get_param" align="left">
+DWCRnkGetParam
+</h1>
+<h2>定義</h2>
+
+<dl>
+  <dd>
+<PRE><code>
+#include &lt;dwc.h&gt;
+
+typedef struct DWCRnkGetParam {
+    u32 size;
+    union {
+        <a href="DWCRnkGetParam_order.html#struct_d_w_c_rnk_get_param__order">DWCRnkGetParam_order</a> order;
+        <a href="DWCRnkGetParam_toplist.html#struct_d_w_c_rnk_get_param__toplist">DWCRnkGetParam_toplist</a> toplist;
+        <a href="DWCRnkGetParam_nearby.html#struct_d_w_c_rnk_get_param__nearby">DWCRnkGetParam_nearby</a> nearby;
+        <a href="DWCRnkGetParam_friends.html#struct_d_w_c_rnk_get_param__friends">DWCRnkGetParam_friends</a> friends;
+        u32 data;
+    };
+} DWCRnkGetParam;</code></PRE></dd>
+</dl>
+<H2>説明</H2>
+<p><a href="DWC_RnkGetScoreAsync.html#dwc__ranking_8h_198665927b3a87b3218c1f58f6f3394ba">DWC_RnkGetScoreAsync</a>でスコアを取得するときに指定するパラメータです。<a href="DWC_RnkGetScoreAsync.html#dwc__ranking_8h_198665927b3a87b3218c1f58f6f3394ba">DWC_RnkGetScoreAsync</a>で指定するスコア取得モードに応じて適切なパラメータを設定してください。</p>
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>size</STRONG></EM></TD>
+      <TD width="87%">byte単位のサイズ。取得モードに応じたパラメータのサイズを指定します。<br>例：順位取得モードのときは、sizeof(<a href="DWCRnkGetParam_order.html#struct_d_w_c_rnk_get_param__order">DWCRnkGetParam_order</a>)を指定します。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>order</STRONG></EM></TD>
+      <TD width="87%">モード=<a href="Macro.html#dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b192780d834ce449ab6c433688a1301e6d2">DWC_RNK_GET_MODE_ORDER</a>のときに指定</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>toplist</STRONG></EM></TD>
+      <TD width="87%">モード=<a href="Macro.html#dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b196a28982348d7e68f741fe17f02119472">DWC_RNK_GET_MODE_TOPLIST</a>のときに指定</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>nearby</STRONG></EM></TD>
+      <TD width="87%">モード=DWC_RNK_GET_MODE_NEAR_*のときに指定</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>friends</STRONG></EM></TD>
+      <TD width="87%">モード=<a href="Macro.html#dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b19dabfeed2395ed84700e7d7510b46ca00">DWC_RNK_GET_MODE_FRIENDS</a>のときに指定</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>data</STRONG></EM></TD>
+      <TD width="87%">ライブラリ内で使用</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>参照</h2>
+<p>
+
+  <CODE><a href="DWC_RnkGetScoreAsync.html#dwc__ranking_8h_198665927b3a87b3218c1f58f6f3394ba">DWC_RnkGetScoreAsync</a></CODE>
+
+</p>
+
+<H2>履歴</H2>
+<DL>
+
+<DT>5.1pr2</DT>
+<DD>limitに設定できる範囲の上限が、取得モードが<a href="Macro.html#dwc__ranking_8h_1b024592ea57f7ecd5b76caee1edc5b19dabfeed2395ed84700e7d7510b46ca00">DWC_RNK_GET_MODE_FRIENDS</a>の場合は65(<a href="Macro.html#dwc__ranking_8h_1913f4aa84f44c33e7a5dfbf0b48cd92d">DWC_RNK_FRIENDS_MAX</a>+1)になることについて追記</DD>
+
+<DT>5.1pr2</DT>
+<DD>共用体の定義に実際の定義と違う箇所があったので訂正。near→nearbyなど。</DD>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCRnkGetParam_tag">こちら</a>　　</p>
+</body>
+</html>

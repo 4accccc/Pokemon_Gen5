@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>DWCConnectAttemptCallback</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 id="dwc__match_8h_11f5ec37975abd1264f03e7d9247c34bf" align="left">DWCConnectAttemptCallback</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;dwc.h&gt;</CODE></PRE>
+  <PRE><CODE>typedef BOOL(*) DWCConnectAttemptCallback(u8 *newClientUserData,
+             void *param);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>newClientUserData</parametername></STRONG></EM></TD>
+      <TD width="87%">新規接続クライアントが、<a href="DWC_ConnectToAnybodyAsync.html#dwc__main_8h_10c4e2a60e98dfa82a16b5e896d3a2203">DWC_ConnectToAnybodyAsync</a>/<a href="DWC_ConnectToFriendsAsync.html#dwc__main_8h_1dcb8be27412df5c9d5e0d9b9d035079b">DWC_ConnectToFriendsAsync</a>/<a href="DWC_SetupGameServer.html#dwc__main_8h_1230f0bb02b234d806cc51470e67647f1">DWC_SetupGameServer</a>/<a href="DWC_ConnectToGameServerAsync.html#dwc__main_8h_1254f419a2e97ad73074d232c4160cfd2">DWC_ConnectToGameServerAsync</a>/<a href="DWC_ConnectToGameServerByGroupID.html#dwc__main_8h_116b3b3faa8c7b9ee600fa77820ee1f57">DWC_ConnectToGameServerByGroupID</a>関数のconnectionUserDataに設定した値を格納しているバッファへのポインタ。u8[<a href="Macro.html#dwc__match_8h_1767334491be60055db279f50c050c695">DWC_CONNECTION_USERDATA_LEN</a>]分のサイズ。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG><parametername>param</parametername></STRONG></EM></TD>
+      <TD width="87%">コールバック用パラメータ</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>TRUE</STRONG></EM></TD>
+      <TD width="87%">新規接続クライアントを受け入れる。</TD>
+    </TR>
+
+    <TR>
+      <TD width="13%"><EM><STRONG>FALSE</STRONG></EM></TD>
+      <TD width="87%">新規接続クライアントの受け入れを拒否する。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+
+<p>新規接続クライアントの参加を決定する最終段階で、アプリケーション側に判断を求めるために呼び出されるコールバックです。(人数が一杯である場合や、受付拒否状態などの場合はこのコールバックは呼び出されません)新規接続クライアントを受け入れるかどうかの判断は、newClientUserData引数から取得できる新規接続クライアントの接続ユーザデータ、及び<a href="DWC_GetConnectionUserData.html#dwc__match_8h_1577cae4a5e85518c7f385458b836732c">DWC_GetConnectionUserData</a>で取得できる、接続済みクライアントの接続ユーザデータを考慮して判断してください。クライアント側が<a href="DWC_ConnectToGameServerAsync.html#dwc__main_8h_1254f419a2e97ad73074d232c4160cfd2">DWC_ConnectToGameServerAsync</a>か<a href="DWC_ConnectToGameServerByGroupID.html#dwc__main_8h_116b3b3faa8c7b9ee600fa77820ee1f57">DWC_ConnectToGameServerByGroupID</a>で接続しようとして、サーバ側で呼ばれたこの関数がFALSEを返した場合、クライアント側ではエラーとして<a href="Macro.html#dwc__error_8h_1c049360b665a730f7f639f014a4fed19d7f75811bb4ea335859571310347c8ee">DWC_ERROR_SC_CONNECT_BLOCK</a>がセットされます。</p>
+
+
+<H2>履歴</H2>
+<DL>
+
+</DL>
+<p style="margin-top:1em; text-align:right;">5.1pr2より前の変更履歴は<a href="../_TWL_CHANGELOG_.html#DWCConnectAttemptCallback_tag">こちら</a>　　</p>
+</body>
+</html>
