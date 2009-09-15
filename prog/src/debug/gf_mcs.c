@@ -524,16 +524,6 @@ void	GFL_MCS_Init( void )
 
 	// “à•”§Œäƒ[ƒN‚Ì‰Šú‰»
 	gflMCS->deviceOpen = FALSE;
-	for(i=0; i<MCS_LINK_MAX; i++){
-		GFL_MCS_LINKSTATUS* linkStatus = &gflMCS->linkStatus[i];
-		linkStatus->key.categoryID = 0;
-		linkStatus->key.channelID1 = MCS_CHANNEL15;
-		linkStatus->key.channelID2 = MCS_CHANNEL15;
-
-		linkStatus->rParam.size = 0;
-		linkStatus->rParam.split = FALSE;
-		linkStatus->rParam.getInfo = FALSE;
-	}
 }
 
 //============================================================================================
@@ -756,6 +746,17 @@ BOOL	GFL_MCS_Open( void )
 		//NNS_McsRegisterRecvCallback(&mchCH->recvCBInfo, channelID, MCS_DataRecvCallback, NULL); 
 
 		mcsCH->resist = TRUE;
+	}
+	// ƒŠƒ“ƒNî•ñ‚Ì‰Šú‰»
+	for(i=0; i<MCS_LINK_MAX; i++){
+		GFL_MCS_LINKSTATUS* linkStatus = &gflMCS->linkStatus[i];
+		linkStatus->key.categoryID = 0;
+		linkStatus->key.channelID1 = MCS_CHANNEL15;
+		linkStatus->key.channelID2 = MCS_CHANNEL15;
+
+		linkStatus->rParam.size = 0;
+		linkStatus->rParam.split = FALSE;
+		linkStatus->rParam.getInfo = FALSE;
 	}
 	gflMCS->deviceOpen = TRUE;
 
