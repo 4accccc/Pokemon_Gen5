@@ -41,6 +41,7 @@
 #include "scrcmd_mapchange.h"
 #include "scrcmd_menuwin.h"
 #include "scrcmd_fldmmdl.h"
+#include "scrcmd_gym.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
@@ -1501,7 +1502,10 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
 
   //マップ遷移
   EvCmdMapChangeBySandStream,
-  EvCmdMapChange
+  EvCmdMapChange,
+
+  //ジムギミック関連
+  EvCmdGymElec_PushSw,
 };
 
 

@@ -86,6 +86,7 @@
 #include "fieldmap_ctrl_nogrid_work.h"
 
 #include "field_gimmick.h"
+#include "gmk_tmp_wk.h"
 
 //======================================================================
 //	define
@@ -153,6 +154,14 @@ enum {
 /// FLDMAPFUNCシステムのタスク最大数
 #define FLDMAPFUNC_TASK_MAX	( 32 )
 
+//ギミックテンポラリワーク未アサインＩＤ
+#define GMK_TMP_NO_ASSIGN_ID  (0xffffffff)
+//拡張ＯＢＪリソース最大登録数
+#define EXP_OBJ_RES_MAX   (60)
+//拡張ＯＢＪ登録最大数
+#define EXP_OBJ_MAX   (30)
+
+
 //--------------------------------------------------------------
 /**
  * @brief フィールドマップシーケンス動作関数の戻り値
@@ -173,6 +182,13 @@ typedef enum {
 /// フィールドマップシーケンス動作関数の型定義
 //--------------------------------------------------------------
 typedef MAINSEQ_RESULT (*FIELDMAP_MAIN_FUNC)(GAMESYS_WORK*,FIELDMAP_WORK*);
+
+//フィールド用ギミックテンポラリワーク
+typedef struct GMK_TMP_WORK_tag
+{
+  u32 AssignID;
+  void * Work;
+}GMK_TMP_WORK;
 
 //--------------------------------------------------------------
 ///	FIELDMAP_WORK
@@ -238,6 +254,8 @@ struct _FIELDMAP_WORK
 
   GFL_TCBSYS* fieldmapTCB;
   void* fieldmapTCBSysWork;
+  GMK_TMP_WORK  GmkTmpWork;     //ギミックテンポラリワークポインタ
+
 };
 
 fx32	fldWipeScale;
@@ -317,6 +335,8 @@ static const u32 fldmapdata_fogColorTable[8];
 static const u16 fldmapdata_bgColorTable[16];
 
 static void FIELDMAP_CommBoot(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAPID heapID);
+
+static void InitGmkTmpWork(GMK_TMP_WORK *tmpWork);
 
 //======================================================================
 //	フィールドマップ　生成　削除
@@ -549,12 +569,15 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     TAMADA_Printf( "Start Dir = %04x\n", pw->direction );
   }
 
+  //ギミックテンポラリワーク初期化
+  InitGmkTmpWork(&fieldWork->GmkTmpWork);
+
   //拡張3Ｄオブジェクトモジュール作成
-  fieldWork->ExpObjCntPtr = FLD_EXP_OBJ_Create ( 10, 10, fieldWork->heapID );
+  fieldWork->ExpObjCntPtr = FLD_EXP_OBJ_Create ( EXP_OBJ_RES_MAX, EXP_OBJ_MAX, fieldWork->heapID );
   
   //フィールドギミックセットアップ
   FLDGMK_SetUpFieldGimmick(fieldWork);
-  
+ 
   //エッジマーキング設定セットアップ
   FIELD_EDGEMARK_Setup( fieldWork->areadata );
 
@@ -609,7 +632,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   DEBUGWIN_ChangeLetterColor( 31,31,31 );
   FIELD_FUNC_RANDOM_GENERATE_InitDebug( fieldWork->heapID );
 #endif  //USE_DEBUGWIN_SYSTEM
-
 
   return MAINSEQ_RESULT_NEXTSEQ;
 }
@@ -2178,3 +2200,104 @@ static const u32 fldmapdata_fogColorTable[8] = {
 static const u16 fldmapdata_bgColorTable[16] = { 
   FIELD_DEFAULT_BG_COLOR, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
+
+//--フィールド用ギミックテンポラリワーク操作関数群--//
+//==================================================================
+/**
+ * ギミックテンポラリワーク初期化関数
+ *
+ * @param   tmpWork     テンポラリワークポインタ
+ */
+//==================================================================
+static void InitGmkTmpWork(GMK_TMP_WORK *tmpWork)
+{
+  tmpWork->AssignID = GMK_TMP_NO_ASSIGN_ID;
+  tmpWork->Work = NULL;
+}
+
+//==================================================================
+/**
+ * ギミックテンポラリワークメモリアロック関数
+ *
+ * @todo  使用の際はgmk_tmp_wk.hを参照のこと
+ *
+ * @param   fieldWork   フィールドワークポインタ
+ * @param   inAssinID   アサインＩＤ
+ * @param   inHeapID    ヒープＩＤ
+ * @param   inSize      確保メモリ
+ */
+//==================================================================
+void GMK_TMP_WK_AllocWork
+      (FIELDMAP_WORK *fieldWork, const u32 inAssignID, const HEAPID inHeapID, const u32 inSize)
+{
+  GMK_TMP_WORK *tmpWork;
+  tmpWork = &fieldWork->GmkTmpWork;
+  if (inAssignID == GMK_TMP_NO_ASSIGN_ID){
+    GF_ASSERT(0);
+    return;
+  }
+  if (tmpWork->AssignID != GMK_TMP_NO_ASSIGN_ID){
+    GF_ASSERT_MSG(0,"Alrady Assigned %d\n",tmpWork->AssignID);
+    return;
+  }
+  
+  tmpWork->AssignID = inAssignID;
+  tmpWork->Work = GFL_HEAP_AllocClearMemory( inHeapID, inSize );
+}
+
+//==================================================================
+/**
+ * ギミックテンポラリワークメモリ解放関数
+ *
+ * @todo  使用の際はgmk_tmp_wk.hを参照のこと
+ *
+ * @param   fieldWork   フィールドワークポインタ
+ * @param   inAssinID   アサインＩＤ
+ * @param   inHeapID    ヒープＩＤ
+ * @param   inSize      確保メモリ
+ */
+//==================================================================
+void GMK_TMP_WK_FreeWork
+      (FIELDMAP_WORK *fieldWork, const u32 inAssignID)
+{
+  GMK_TMP_WORK *tmpWork;
+  tmpWork = &fieldWork->GmkTmpWork;
+  if (inAssignID == GMK_TMP_NO_ASSIGN_ID){
+    GF_ASSERT(0);
+    return;
+  }
+  if (tmpWork->AssignID != inAssignID){
+    GF_ASSERT_MSG(0,"AssignID Diff %d_%d\n",tmpWork->AssignID, inAssignID);
+  }
+
+  GFL_HEAP_FreeMemory( tmpWork->Work );
+  tmpWork->AssignID = GMK_TMP_NO_ASSIGN_ID;
+}
+
+
+//==================================================================
+/**
+ * ギミックテンポラリワーク取得関数
+ *
+ * @todo  使用の際はgmk_tmp_wk.hを参照のこと
+ *
+ * @param   fieldWork   フィールドワークポインタ
+ * @param   inAssinID   アサインＩＤ
+ *
+ * @return void*    メモリポインタ
+ */
+//==================================================================
+void *GMK_TMP_WK_GetWork(FIELDMAP_WORK *fieldWork, const u32 inAssignID)
+{
+  GMK_TMP_WORK *tmpWork;
+  tmpWork = &fieldWork->GmkTmpWork;
+  if (inAssignID == GMK_TMP_NO_ASSIGN_ID){
+    GF_ASSERT(0);
+    return NULL;
+  }
+  if (inAssignID != tmpWork->AssignID){
+    GF_ASSERT(0);
+    return NULL;
+  }
+  return tmpWork->Work;
+}

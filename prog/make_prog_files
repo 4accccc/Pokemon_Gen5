@@ -353,6 +353,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_mapchange.c \
         field/scrcmd_menuwin.c \
         field/scrcmd_fldmmdl.c \
+        field/scrcmd_gym.c \
 				field/rail_editor.c \
         field/field_rail.c \
         field/field_rail_func.c \
@@ -382,7 +383,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fieldmap_tcb_warp_player.c \
         field/event_appear.c \
         field/event_disappear.c \
-        field/height_ex.c
+        field/height_ex.c \
+        field/gym_elec.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP

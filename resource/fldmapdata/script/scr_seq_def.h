@@ -222,6 +222,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   DEF_CMD EV_SEQ_MAP_CHANGE_SAND_STREAM
   DEF_CMD EV_SEQ_MAP_CHANGE
 
+  //ジムギミック関連
+  DEF_CMD EV_SEQ_GYM_ELEC_PUSH_SW
+
 //======================================================================
 // イベントデータ関連
 //======================================================================
@@ -2360,6 +2363,19 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .short  \dir
   .endm
 
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　電気ジムスイッチ
+ * @param sw_idx   スイッチインデックス0～3
+ */
+//--------------------------------------------------------------
+#define _GYM_ELEC_PUSH_SW( sw_idx ) \
+    _GYM_ELEC_PUSH_SW sw_idx 
+
+  .macro  _GYM_ELEC_PUSH_SW sw_idx
+  .short  EV_SEQ_GYM_ELEC_PUSH_Sw
+  .short  \sw_idx
+  .endm
 
 //======================================================================
 //
