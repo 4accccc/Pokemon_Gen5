@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<job>
+    <script language="JScript">
+        <![CDATA[
+// このスクリプトは、NITROVIEWER_ROOTの設定をおこない、viewerのsrlを起動します。
+// NITROVIEWER_ROOTの環境変数は、NITRO-CHARACTERを使用する場合に必要となります。
+
+var envKind = /*"SYSTEM"*/"USER";
+var strViewerRoot = "NITROVIEWER_ROOT";
+
+var wsh = WScript.CreateObject("WScript.Shell");
+var fso = WScript.CreateObject("Scripting.FileSystemObject");
+
+var strViewerRootPath = fso.GetParentFolderName(fso.GetParentFolderName(WScript.ScriptFullName));
+
+
+wsh.Environment(envKind).item(strViewerRoot) = strViewerRootPath;
+
+// WScript.Echo("environment varialble" + strViewerRoot + "to\"" + strViewerRootPath + "\".");
+
+var objArgs = WScript.Arguments;
+
+var commandLine = "%TWLSYSTEM_ROOT%\\tools\\NitroViewer\\controller\\nvctlr.exe";
+
+for ( var i = 0; i < objArgs.Count(); i++ )
+{
+  commandLine += " " +  objArgs.Item( i );
+}
+
+wsh.Exec( commandLine );
+
+        ]]>
+    </script>
+</job>

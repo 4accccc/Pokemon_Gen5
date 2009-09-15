@@ -1,0 +1,114 @@
+-------------------------------------------------------------------------------
+  Project:  TWL-System
+  File:     SourceTreeMap.txt
+
+  Copyright 2004-2009 Nintendo.  All rights reserved.
+
+  These coded instructions, statements, and computer programs contain
+  proprietary information of Nintendo of America Inc. and/or Nintendo
+  Company Ltd., and are protected by Federal copyright law.  They may
+  not be disclosed to third parties or copied or duplicated in any form,
+  in whole or in part, without the prior written consent of Nintendo.
+
+  $Revision: 1230 $
+-------------------------------------------------------------------------------
+
+■TWL-Systemパッケージのディレクトリ構成図
+
+
+ TwlSystem                  TWL-Systemのトップ
+ │
+ ├─docs                       ドキュメント
+ │  │
+ │  ├─ReleaseNotes.html      -  TWL-System リリースに関するドキュメント
+ │  ├─QuickStart.pdf         -  TWL-System クイックスタートドキュメント
+ │  │
+ │  ├─Changelog              -  各ライブラリとツールの更新履歴
+ │  ├─Overview               -  各開発環境の概要説明書
+ │  ├─TechnicalNotes         -  技術説明書
+ │  ├─Xerces-C++             -  Xerces-C++のライセンス書類
+ │  ├─Foundation             -  Foundationライブラリのドキュメント
+ │  ├─GraphicsFoundation     -  GraphicsFoundationライブラリのドキュメント
+ │  ├─G2D                    -  2DGraphicsライブラリのドキュメント
+ │  ├─G3D                    -  3DGraphicsライブラリのドキュメント
+ │  ├─NitroComposer          -  NITRO-Composerのドキュメント
+ │  ├─mcs                    -  Multiple Channel Streamライブラリのドキュメント
+ │  ├─3DFileFormat           -  ３Ｄファイルフォーマットのドキュメント
+ │  ├─3DMaterialEditor       -  NNS-3DMaterialEditorのドキュメント
+ │  ├─NitroSoundMaker        -  NITRO-SoundMakerのドキュメント
+ │  ├─NitroPlayer            -  NITRO-Playerのドキュメント
+ │  ├─NitroViewer            -  NITRO-Viewerのドキュメント
+ │  └─3DPlugins              -  プラグインのドキュメント
+ │      │
+ │      ├─Maya               -  -  MAYAプラグインのドキュメント
+ │      ├─3dsmax             -  -  3dsmaxプラグインのドキュメント
+ │      ├─SoftimageXSI       -  -  Softimage|XSIプラグインのドキュメント
+ │      └─Photoshop          -  -  Photoshopプラグインのドキュメント
+ │
+ │
+ ├─build                      ビルドディレクトリ
+ │  │
+ │  ├─buildtools             -  ビルドに必要なファイル
+ │  │
+ │  ├─demos                  -  デモアプリケーション
+ │  │  │
+ │  │  ├─fnd                -  -  Foundationライブラリのデモ
+ │  │  ├─gfd                -  -  GraphicsFoundationライブラリのデモ
+ │  │  ├─g2d                -  -  2DGraphicsライブラリのデモ
+ │  │  ├─g3d                -  -  3DGraphicsライブラリのデモ
+ │  │  ├─snd                -  -  NITRO-Composerライブラリのデモ
+ │  │  └─mcs                -  -  Muitiple Channel Streamライブラリのデモ
+ │  │
+ │  └─libraries              -  ライブラリのソース
+ │      │
+ │      ├─fnd                -  -  Foundationライブラリのソース
+ │      ├─gfd                -  -  GraphincsFoundationライブラリのソース
+ │      ├─g2d                -  -  2DGraphicsライブラリのソース
+ │      ├─g3d                -  -  3DGraphicsライブラリのソース
+ │      ├─snd                -  -  NITRO-Composerライブラリのソース
+ │      └─mcs                -  -  Muitiple Channel Streamライブラリのソース
+ │
+ │
+ ├─include                    インクルードファイル
+ │  │
+ │  └─nnsys                  - TWL-System用ヘッダファイル
+ │      │
+ │      ├─fnd                -  -  Foundationヘッダファイル
+ │      ├─gfd                -  -  GraphincsFoundationヘッダファイル
+ │      ├─g2d                -  -  2DGraphicsヘッダファイル
+ │      ├─g3d                -  -  3DGraphicsヘッダファイル
+ │      ├─snd                -  -  NITRO-Composerヘッダファイル
+ │      └─mcs                -  -  Muitiple Channel Streamヘッダファイル
+ │
+ │
+ ├─man                        リファレンスマニュアル（HTML）
+ │  │
+ │  └─ja_JP                  -  日本語
+ │
+ │
+ ├─lib                        ライブラリの作成先
+ │  │  
+ │  └─ARM9-TS                -  メインプロセッサ TS以降用ライブラリ
+ │      │
+ │      ├─Debug              -  -  Debug   版
+ │      ├─Release            -  -  Release 版
+ │      └─Rom                -  -  最終ROM 版
+ │
+ │
+ └─tools                      TWL-Systemツール
+     │
+     ├─bin                    -  コンバータ等の実行ファイル
+     ├─fontcvtr               -  フォントコンバータ
+     ├─mcsserver              -  mcsサーバ
+     ├─NNS_3DMaterialEditor   -  NNS-3DMaterialEditor
+     ├─NitroSoundMaker        -  NITRO-SoundMaker
+     ├─SoundPlayer            -  サウンドプレイヤ
+     ├─NitroPlayer            -  NITRO-Player
+     ├─NitroViewer            -  NITRO-Viewer
+     └─3DPlugins              -  3Dプラグイン
+         │
+         ├─Maya               -  -  MAYAプラグイン
+         ├─3dsmax             -  -  3dsmaxプラグイン
+         ├─SoftimageXSI       -  -  Softimage|XSIプラグイン
+         └─Photoshop          -  -  Photoshopプラグイン
+

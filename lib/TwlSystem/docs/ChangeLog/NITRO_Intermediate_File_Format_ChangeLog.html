@@ -1,0 +1,374 @@
+<html>
+<head>
+<title>TWL-System NITRO中間ファイルフォーマット 更新履歴</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-style-type" content="text/css" />
+<style type="text/css">
+<!--
+    
+H1
+{
+    font-weight         : bold;
+    font-size           : 250%;
+    text-align          : left;
+    color               : #46f;
+    margin              : 0em 0em 0.5em 0em;
+}
+
+H2
+{
+    font-weight         : bold;
+    font-size           : 150%;
+    text-align          : left;
+    margin              : 2em 0em 0.5em 0em;
+    padding-top         : 8pt;
+    border-top-style    : double;
+    border-top-width    : 3px;
+}
+
+H3
+{
+    font-weight         : bold;
+    font-size           : 120%;
+    margin              : 1em 0em 0.5em 0em;
+    padding-top         : 8pt;
+    border-top-style    : solid;
+    border-top-width    : 1px;
+}
+
+H4
+{
+    font-weight         : normal;
+    font-size           : 100%;
+    margin              : 0em 0em 0em 0.5em;
+}
+
+DIV.date
+{
+    font-size           : normal;
+    text-align          : right;
+    margin              : 0pt 0pt 12pt 0pt;
+}
+
+DIV.licence
+{
+    margin: 0em;
+    border-style : solid;
+    border-width : 1px;
+}
+
+P
+{
+    font-size           : normal;
+    margin              : 0em 1em 0.5em 1em;
+    line-height         : 150%;
+}
+
+PRE
+{
+    font-size           : normal;
+    margin              : 0em 0em 1em 2em;
+    line-height         : 120%;
+}
+
+DT
+{
+    margin              : 1em 0em 0em 1em;
+}
+DD
+{
+    margin-left         : 3em;
+}
+UL
+{
+    margin-top         : 0em;
+}
+
+-->
+</style>
+</head>
+<body>
+
+<h1>TWL-System NITRO中間ファイルフォーマット 更新履歴</h1>
+
+<h2>■ インデックス</h2>
+
+<h3><a href="#version_20070518">■ 2007年5月18日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_67-N01">ノート 67-N01:  imdファイルの&lt;box_test&gt;の属性の説明を修正</a></li>
+</ul>
+<h3><a href="#version_20050202">■ 2005年2月2日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_40-N01">ノート 40-N01:  imdファイルに属性を追加/削除</a></li>
+<li><a href="#note_40-N02">ノート 40-N02:  imdファイルの説明を加筆</a></li>
+<li><a href="#note_40-N03">ノート 40-N03:  「6.1.4 isdの補足」の説明を修正</a></li>
+</ul>
+<h3><a href="#version_20041213">■ 2004年12月13日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_35-N01">ノート 35-N01:  imdファイルに要素,属性を追加</a></li>
+<li><a href="#note_35-N02">ノート 35-N02:  isdファイルに要素,属性を追加</a></li>
+<li><a href="#note_35-N03">ノート 35-N03:  「5.2.4 icaの補足」の&quot;G3Dライブラリで再生する際の注意&quot;を修正</a></li>
+</ul>
+<h3><a href="#version_20041025">■ 2004年10月25日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_29-N01">ノート 29-N01:  「表4-12 &lt;material&gt;要素の属性」のlight0の説明を修正</a></li>
+<li><a href="#note_29-N02">ノート 29-N02:  icaファイル,imaファイル,itaファイルの属性interpolationの説明を修正、補足を加筆</a></li>
+</ul>
+<h3><a href="#version_20040830">■ 2004年8月30日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_19-N01">ノート 19-N01:  imdファイルの&lt;node&gt;要素の属性scale_compensateの出力条件を変更</a></li>
+<li><a href="#note_19-N02">ノート 19-N02:  「NINTENDO NITRO-Systemでのエンベロープ表記について」の説明を追加</a></li>
+<li><a href="#note_19-N03">ノート 19-N03:  「頂点位置座標を変換する行列について」に法線ベクトルに関する説明を加筆</a></li>
+</ul>
+<h3><a href="#version_20040802">■ 2004年8月2日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_15-N01">ノート 15-N01:  XSI, 3ds max 対応に伴い、加筆</a></li>
+<li><a href="#note_15-N02">ノート 15-N02:  imdファイル,icaファイルの&lt;***_info&gt;要素の属性scaling_ruleの説明を修正</a></li>
+<li><a href="#note_15-N03">ノート 15-N03:  imdファイル,itaファイルの&lt;***_info&gt;要素の属性tex_matrix_modeのとる値にxsi,3dsmaxを追加</a></li>
+<li><a href="#note_15-N04">ノート 15-N04:  imdファイルの&lt;polygon&gt;要素の属性nameの説明を加筆</a></li>
+</ul>
+<h3><a href="#version_20040630">■ 2004年6月30日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_12-N01">ノート 12-N01:  imdファイルの&lt;polygon&gt;要素の属性nameの説明を修正</a></li>
+<li><a href="#note_12-N02">ノート 12-N02:  isdファイルの&lt;camera&gt;要素の属性twistの説明を修正</a></li>
+<li><a href="#note_12-N03">ノート 12-N03:  「6.1.4 isdの補足」に加筆</a></li>
+</ul>
+<h3><a href="#version_20040524">■ 2004年5月24日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_07-N01">ノート 07-N01:  icaファイルの&lt;node_anm_info&gt;要素に属性scaling_ruleを追加</a></li>
+<li><a href="#note_07-N02">ノート 07-N02:  「5.5.3.4 &lt;palette_name&gt;要素」の出力条件を訂正</a></li>
+<li><a href="#note_07-N03">ノート 07-N03:  「6.1.3.1 &lt;camera&gt;要素」の説明に加筆、図を追加</a></li>
+</ul>
+<h3><a href="#version_20040412">■ 2004年4月12日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_05-N01">ノート 05-N01:  グラフィックスシーン用中間ファイル（isd）を追加</a></li>
+<li><a href="#note_05-N02">ノート 05-N02:  「表3-2 &lt;create&gt;要素の属性」の属性sourceの出力条件を変更</a></li>
+<li><a href="#note_05-N03">ノート 05-N03:  「3.4.5 &lt;comment&gt;」要素の説明を修正</a></li>
+<li><a href="#note_05-N04">ノート 05-N04:  imdファイルの&lt;material&gt;要素の属性polygon_modeのとる値、toon_hilightをtoon_highlightに修正</a></li>
+<li><a href="#note_05-N05">ノート 05-N05:  ３Ｄマテリアルエディタ対応に伴い修正、加筆</a></li>
+</ul>
+<h3><a href="#version_20040325">■ 2004年3月25日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_04-N01">ノート 04-N01:  SOFTIMAGE|3D対応に伴い、加筆</a></li>
+<li><a href="#note_04-N02">ノート 04-N02:  「表6-1 ノード削減の種類」に加筆</a></li>
+</ul>
+<h3><a href="#version_20040301">■ 2004年3月1日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_03-N01">ノート 03-N01:  imdファイルの&lt;model_info&gt;要素に属性use_primitive_stripを追加</a></li>
+<li><a href="#note_03-N02">ノート 03-N02:  A3I5半透明テクスチャに対応</a></li>
+<li><a href="#note_03-N03">ノート 03-N03:  imdファイルの&lt;tex_palette&gt;要素の属性color_sizeがとる値から2を削除</a></li>
+<li><a href="#note_03-N04">ノート 03-N04:  名前の制限が15文字以内になっていたのを16文字以内に修正</a></li>
+<li><a href="#note_03-N05">ノート 03-N05:  「6.3 ポリゴンの連結化」の説明文を修正</a></li>
+<li><a href="#note_03-N06">ノート 03-N06:  「7.1.1　ノードの行列の計算方法」の説明文を修正</a></li>
+</ul>
+
+
+<h2 id="version_20070518">■ 2007年5月18日版での変更点</h2>
+<h3 id="note_67-N01">ノート 67-N01:  imdファイルの&lt;box_test&gt;の属性の説明を修正</h3>
+<p>imdファイルの&lt;box_test&gt;の属性の説明を修正しました。
+</p>
+<h2 id="version_20050202">■ 2005年2月2日版での変更点</h2>
+<h3 id="note_40-N01">ノート 40-N01:  imdファイルに属性を追加/削除</h3>
+<p>imdファイルに属性を追加/削除しました。
+</p>
+<ul><li> &lt;material&gt;要素に属性tex_effect_mtxを追加しました。
+</li>
+<li> &lt;material&gt;要素の属性tex_gen_stを削除しました。
+</li>
+</ul>
+<h3 id="note_40-N02">ノート 40-N02:  imdファイルの説明を加筆</h3>
+<p>imdファイルの説明を加筆しました。
+</p>
+<ul><li> &lt;model_info&gt;要素の属性 tool_start_frameの説明を加筆しました。
+</li>
+<li> &lt;material&gt;要素の属性 tex_gen_mode, tex_gen_st_src, の説明を修正、加筆しました。
+</li>
+<li> &lt;tex&gt;要素の出力条件を修正しました。
+</li>
+<li> ドキュメントの「4.1.4 imdの補足」に&quot;環境/投影マッピングについて&quot;の説明を追加しました。
+</li>
+</ul>
+<h3 id="note_40-N03">ノート 40-N03:  「6.1.4 isdの補足」の説明を修正</h3>
+<p>ドキュメントの「6.1.4 isdの補足」の説明を修正しました。
+</p>
+<h2 id="version_20041213">■ 2004年12月13日版での変更点</h2>
+<h3 id="note_35-N01">ノート 35-N01:  imdファイルに要素,属性を追加</h3>
+<p>imdファイルに要素,属性を追加しました。
+</p>
+<ul><li> &lt;original_create&gt;, &lt;original_generator&gt;要素を追加しました。
+</li>
+<li> &lt;material&gt;要素に属性depth_test_decal, render_1_pixel, far_clipping, translucent_update_depthを追加しました。
+</li>
+<li> &lt;display&gt;要素に属性priorityを追加、描画優先度に関する説明を加筆しました。
+</li>
+</ul>
+<h3 id="note_35-N02">ノート 35-N02:  isdファイルに要素,属性を追加</h3>
+<p>isdファイルに要素,属性を追加しました。
+</p>
+<ul><li> &lt;y_sorting&gt;要素を追加しました。
+</li>
+<li> &lt;render_1_pixel_depth&gt;要素を追加しました。
+</li>
+<li> &lt;camera&gt;要素に属性depth_buffer, scale_wを追加しました。
+</li>
+</ul>
+<h3 id="note_35-N03">ノート 35-N03:  「5.2.4 icaの補足」の&quot;G3Dライブラリで再生する際の注意&quot;を修正</h3>
+<p>ドキュメントの「5.2.4 icaの補足」の&quot;G3Dライブラリで再生する際の注意&quot;を修正しました。
+</p>
+<h2 id="version_20041025">■ 2004年10月25日版での変更点</h2>
+<h3 id="note_29-N01">ノート 29-N01:  「表4-12 &lt;material&gt;要素の属性」のlight0の説明を修正</h3>
+<p>ドキュメントの「表4-12 &lt;material&gt;要素の属性」のlight0の説明を修正しました。
+</p>
+<h3 id="note_29-N02">ノート 29-N02:  icaファイル,imaファイル,itaファイルの属性interpolationの説明を修正、補足を加筆</h3>
+<p>icaファイル,imaファイル,itaファイルの属性interpolationの説明を修正、補足を加筆しました。
+</p>
+<h2 id="version_20040830">■ 2004年8月30日版での変更点</h2>
+<h3 id="note_19-N01">ノート 19-N01:  imdファイルの&lt;node&gt;要素の属性scale_compensateの出力条件を変更</h3>
+<p>imdファイルの&lt;node&gt;要素の属性scale_compensateの出力条件を変更しました。
+</p>
+<h3 id="note_19-N02">ノート 19-N02:  「NINTENDO NITRO-Systemでのエンベロープ表記について」の説明を追加</h3>
+<p>ドキュメントに「NINTENDO NITRO-Systemでのエンベロープ表記について」の説明を追加しました。
+</p>
+<h3 id="note_19-N03">ノート 19-N03:  「頂点位置座標を変換する行列について」に法線ベクトルに関する説明を加筆</h3>
+<p>ドキュメントに「頂点位置座標を変換する行列について」に法線ベクトルに関する説明を加筆しました。
+</p>
+<h2 id="version_20040802">■ 2004年8月2日版での変更点</h2>
+<h3 id="note_15-N01">ノート 15-N01:  XSI, 3ds max 対応に伴い、加筆</h3>
+<p>NITRO中間ファイルプラグインfor SOFTIMAGE|XSI、NITRO中間ファイルプラグインfor 3ds max 対応に伴い、加筆しました。
+</p>
+<h3 id="note_15-N02">ノート 15-N02:  imdファイル,icaファイルの&lt;***_info&gt;要素の属性scaling_ruleの説明を修正</h3>
+<p>imdファイル,icaファイルの&lt;***_info&gt;要素の属性scaling_ruleの説明を修正しました。
+</p>
+<h3 id="note_15-N03">ノート 15-N03:  imdファイル,itaファイルの&lt;***_info&gt;要素の属性tex_matrix_modeのとる値にxsi,3dsmaxを追加</h3>
+<p>imdファイル,itaファイルの&lt;***_info&gt;要素の属性tex_matrix_modeのとる値にxsi,3dsmaxを追加しました。
+</p>
+<h3 id="note_15-N04">ノート 15-N04:  imdファイルの&lt;polygon&gt;要素の属性nameの説明を加筆</h3>
+<p>imdファイルの&lt;polygon&gt;要素の属性nameの説明を加筆しました。
+</p>
+<h2 id="version_20040630">■ 2004年6月30日版での変更点</h2>
+<h3 id="note_12-N01">ノート 12-N01:  imdファイルの&lt;polygon&gt;要素の属性nameの説明を修正</h3>
+<p>imdファイルの&lt;polygon&gt;要素の属性nameの説明を修正しました。
+</p>
+<h3 id="note_12-N02">ノート 12-N02:  isdファイルの&lt;camera&gt;要素の属性twistの説明を修正</h3>
+<p>isdファイルの&lt;camera&gt;要素の属性twistの説明を修正しました。
+</p>
+<h3 id="note_12-N03">ノート 12-N03:  「6.1.4 isdの補足」に加筆</h3>
+<p>「6.1.4 isdの補足」に加筆しました。
+</p>
+<h2 id="version_20040524">■ 2004年5月24日版での変更点</h2>
+<h3 id="note_07-N01">ノート 07-N01:  icaファイルの&lt;node_anm_info&gt;要素に属性scaling_ruleを追加</h3>
+<p>icaファイルの&lt;node_anm_info&gt;要素に属性scaling_ruleを追加しました。
+</p>
+<h3 id="note_07-N02">ノート 07-N02:  「5.5.3.4 &lt;palette_name&gt;要素」の出力条件を訂正</h3>
+<p>「5.5.3.4 &lt;palette_name&gt;要素」の出力条件を訂正しました。
+</p>
+<h3 id="note_07-N03">ノート 07-N03:  「6.1.3.1 &lt;camera&gt;要素」の説明に加筆、図を追加</h3>
+<p>「6.1.3.1 &lt;camera&gt;要素」の説明に加筆、図を追加しました。
+</p>
+<h2 id="version_20040412">■ 2004年4月12日版での変更点</h2>
+<h3 id="note_05-N01">ノート 05-N01:  グラフィックスシーン用中間ファイル（isd）を追加</h3>
+<p>グラフィックスシーン用中間ファイル（isd）を追加しました。
+</p>
+<h3 id="note_05-N02">ノート 05-N02:  「表3-2 &lt;create&gt;要素の属性」の属性sourceの出力条件を変更</h3>
+<p>「表3-2 &lt;create&gt;要素の属性」の属性sourceの出力条件を変更しました。
+</p>
+<h3 id="note_05-N03">ノート 05-N03:  「3.4.5 &lt;comment&gt;」要素の説明を修正</h3>
+<p>「3.4.5 &lt;comment&gt;」要素の説明を修正しました。
+</p>
+<h3 id="note_05-N04">ノート 05-N04:  imdファイルの&lt;material&gt;要素の属性polygon_modeのとる値、toon_hilightをtoon_highlightに修正</h3>
+<p>imdファイルの&lt;material&gt;要素の属性polygon_modeのとる値、toon_hilightをtoon_highlightに修正しました。
+</p>
+<h3 id="note_05-N05">ノート 05-N05:  ３Ｄマテリアルエディタ対応に伴い修正、加筆</h3>
+<p>３Ｄマテリアルエディタ対応に伴い修正、加筆しました。
+</p>
+<ul><li> 説明文を修正しました。
+</li>
+<li> imdファイルに３Ｄマテリアルエディタ専用の要素及び属性を追加しました。
+</li>
+</ul>
+<h2 id="version_20040325">■ 2004年3月25日版での変更点</h2>
+<h3 id="note_04-N01">ノート 04-N01:  SOFTIMAGE|3D対応に伴い、加筆</h3>
+<p>中間ファイル出力プラグインfor SOFTIMAGE|3D対応に伴い、加筆しました。
+</p>
+<h3 id="note_04-N02">ノート 04-N02:  「表6-1 ノード削減の種類」に加筆</h3>
+<p>「表6-1 ノード削減の種類」に加筆しました。
+</p>
+<h2 id="version_20040301">■ 2004年3月1日版での変更点</h2>
+<h3 id="note_03-N01">ノート 03-N01:  imdファイルの&lt;model_info&gt;要素に属性use_primitive_stripを追加</h3>
+<p>imdファイルの&lt;model_info&gt;要素に属性use_primitive_stripを追加しました。
+</p>
+<h3 id="note_03-N02">ノート 03-N02:  A3I5半透明テクスチャに対応</h3>
+<p>A3I5半透明テクスチャに対応しました。
+</p>
+<h3 id="note_03-N03">ノート 03-N03:  imdファイルの&lt;tex_palette&gt;要素の属性color_sizeがとる値から2を削除</h3>
+<p>imdファイルの&lt;tex_palette&gt;要素の属性color_sizeがとる値から2を削除しました。
+</p>
+<h3 id="note_03-N04">ノート 03-N04:  名前の制限が15文字以内になっていたのを16文字以内に修正</h3>
+<p>マニュアル内でNINTENDO NITRO-Systemライブラリを使用する場合の名前の制限が15文字以内になっていたのを16文字以内に修正しました。
+</p>
+<h3 id="note_03-N05">ノート 03-N05:  「6.3 ポリゴンの連結化」の説明文を修正</h3>
+<p>「6.3 ポリゴンの連結化」の説明文を修正しました。
+</p>
+<h3 id="note_03-N06">ノート 03-N06:  「7.1.1　ノードの行列の計算方法」の説明文を修正</h3>
+<p>「7.1.1　ノードの行列の計算方法」の説明文を修正しました。
+</p>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+</body>
+</html>

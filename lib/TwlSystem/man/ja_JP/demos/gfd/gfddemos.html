@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<LINK rel="stylesheet" type="text/css" href="../../css/nitro.css">
+<TITLE>Snd Demos</TITLE>
+</HEAD>
+
+<BODY>
+<H1>Gfdサンプルデモ</H1>
+<H2>場所</H2>
+<P><CODE>$TwlSystem/build/demos/gfd/</CODE></P>
+
+<H2>コンパイル方法</H2>
+<P><CODE>$TwlSystem/build/demos/gfd/</CODE> ディレクトリに移り、</P>
+<BLOCKQUOTE><CODE>% make</CODE></BLOCKQUOTE>
+<P>と入力します。コンパイルが始まり、実行ファイルである <CODE>.srl</CODE> ファイルやバイナリ情報を記述した <CODE>.nef</CODE> または <CODE>.tef</CODE> ファイルが、</P>
+<BLOCKQUOTE><CODE>$TwlSystem/build/demos/gfd/samples/VramManager/(サンプル名)/bin/(プラットフォーム)/(ターゲット)/</CODE></BLOCKQUOTE>
+<P>の下に生成されます。例えば、</P>
+<BLOCKQUOTE><CODE>$TwlSystem/build/demos/gfd/samples/VramManager/FrameTexVramMan/bin/ARM9-TS.HYB/Release/</CODE></BLOCKQUOTE>
+<P>には <CODE>FrameTexVramMan</CODE> デモのNITRO/TWLハイブリッド用リリース版の実行ファイルが生成されます。</P>
+
+
+<H2>実行方法</H2>
+<P><CODE>$TwlSystem/build/demos/gfd/samples/VramManager/(サンプル名)/bin/(プラットフォーム)/(ターゲット)/</CODE> ディレクトリに移ります。
+ビルドしたROMの種類によって、下記のいずれかの方法で実行します。</P>
+
+<H3>NITRO ROM の場合</H3>
+
+<P>Ensata エミュレータを用いる場合</P>
+<UL>
+  <LI>ensata で <CODE>*.nef</CODE>, <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-NITRO-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<H3>TWL/NITRO HYBRID ROM の場合</H3>
+<P>IS-NITRO-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<H3>TWL LIMITED ROM の場合</H3>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+
+
+<H2>説明</H2>
+<H4>サンプル</H4>
+<TABLE width="800">
+  <TBODY>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE><A href="../../../../build/demos/gfd/samples/VRamManager/FrameTexVramMan/src/main.c">FrameTexVramMan</A></CODE></STRONG></EM></TD>
+      <TD width="576">フレームVRAMマネージャ(テクスチャイメージ)を使用するサンプルです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE><A href="../../../../build/demos/gfd/samples/VRamManager/FramePlttVramMan/src/main.c">FramePlttVramMan</A></CODE></STRONG></EM></TD>
+      <TD width="576">フレームVRAMマネージャ(テクスチャパレット)を使用するサンプルです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE><A href="../../../../build/demos/gfd/samples/VRamManager/LinkedListTexVramMan/src/main.c">LinkedListTexVramMan</A></CODE></STRONG></EM></TD>
+      <TD width="576">リンクドリストVRAMマネージャの内部モジュールの動作をテストします。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>動作環境</H2>
+<P>すべてのサンプルについて、IS-TWL-DEBUGGER, IS-NITRO-EMULATORでの正常動作を確認しています。</P>
+<p>現バージョンの ensata では動作させることができません。</p>
+<H2>参照</H2>
+<P><A href="../../gfd/list_gfd.html"><CODE>Gfd関数一覧</CODE></A></P>
+<H2>履歴</H2>
+<P>
+2008/06/20 コンパイル方法および実行方法をTWLに対応。<br>
+2006/05/29 初版
+</P>
+</BODY>
+</HTML>
+

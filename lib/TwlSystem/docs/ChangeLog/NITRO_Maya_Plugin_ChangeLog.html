@@ -1,0 +1,754 @@
+<html>
+<head>
+<title>TWL-System Mayaプラグイン 更新履歴</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-style-type" content="text/css" />
+<style type="text/css">
+<!--
+    
+H1
+{
+    font-weight         : bold;
+    font-size           : 250%;
+    text-align          : left;
+    color               : #46f;
+    margin              : 0em 0em 0.5em 0em;
+}
+
+H2
+{
+    font-weight         : bold;
+    font-size           : 150%;
+    text-align          : left;
+    margin              : 2em 0em 0.5em 0em;
+    padding-top         : 8pt;
+    border-top-style    : double;
+    border-top-width    : 3px;
+}
+
+H3
+{
+    font-weight         : bold;
+    font-size           : 120%;
+    margin              : 1em 0em 0.5em 0em;
+    padding-top         : 8pt;
+    border-top-style    : solid;
+    border-top-width    : 1px;
+}
+
+H4
+{
+    font-weight         : normal;
+    font-size           : 100%;
+    margin              : 0em 0em 0em 0.5em;
+}
+
+DIV.date
+{
+    font-size           : normal;
+    text-align          : right;
+    margin              : 0pt 0pt 12pt 0pt;
+}
+
+DIV.licence
+{
+    margin: 0em;
+    border-style : solid;
+    border-width : 1px;
+}
+
+P
+{
+    font-size           : normal;
+    margin              : 0em 1em 0.5em 1em;
+    line-height         : 150%;
+}
+
+PRE
+{
+    font-size           : normal;
+    margin              : 0em 0em 1em 2em;
+    line-height         : 120%;
+}
+
+DT
+{
+    margin              : 1em 0em 0em 1em;
+}
+DD
+{
+    margin-left         : 3em;
+}
+UL
+{
+    margin-top         : 0em;
+}
+
+-->
+</style>
+</head>
+<body>
+
+<h1>TWL-System Mayaプラグイン 更新履歴</h1>
+
+<h2>■ インデックス</h2>
+
+<h3><a href="#version_2_1_0">■ 2.1.0</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-Y01">ノート 81-Y01:  出力プラグインに Remove Namespace オプションを追加</a></li>
+<li><a href="#note_81-Y02">ノート 81-Y02:  NITRO Rename Over 16 Characters プラグインに Remove Namespace オプションを追加</a></li>
+<li><a href="#note_81-Y03">ノート 81-Y03:  Output Folder 選択ダイアログのサイズを変更できるように修正</a></li>
+<li><a href="#note_81-Y04">ノート 81-Y04:  n3es ファイルフォーマットを更新</a></li>
+</ul>
+<h3><a href="#version_2_0_0">■ 2.0.0</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_80-Y01">ノート 80-Y01:  Maya 2009 に対応</a></li>
+<li><a href="#note_80-Y02">ノート 80-Y02:  (マニュアル) 「対応機能一覧」を加筆</a></li>
+<li><a href="#note_80-Y03">ノート 80-Y03:  (マニュアル) 「テクスチャパターンアニメーション」を加筆</a></li>
+</ul>
+<h3><a href="#version_2_0_0_1">■ 2.0.0 RC2</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_79-Y01">ノート 79-Y01:  Maya 2008 の動作環境を変更</a></li>
+<li><a href="#note_79-Y02">ノート 79-Y02:  Maya 7.0 のサポートを終了</a></li>
+<li><a href="#note_79-Y03">ノート 79-Y03:  (マニュアル) NITRO-System の名称変更による修正</a></li>
+<li><a href="#note_79-Y04">ノート 79-Y04:  (マニュアル) 「imd ファイルに出力される値」を加筆</a></li>
+</ul>
+<h3><a href="#version_20080408">■ 2008年4月8日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_76-Y01">ノート 76-Y01:  (マニュアル) 改訂履歴の書式変更と表題と副題を修正</a></li>
+</ul>
+<h3><a href="#version_20080324">■ 2008年3月24日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_75-Y01">ノート 75-Y01:  (マニュアル) 「対応機能一覧」を追加</a></li>
+<li><a href="#note_75-Y02">ノート 75-Y02:  (マニュアル) スキンを設定したモデルのインスタンスに関する注意を加筆</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_75-Y03">ノート 75-Y03:  Search Animation ボタンの不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20071010">■ 2007年10月10日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_70-Y01">ノート 70-Y01:  Maya2008に対応</a></li>
+<li><a href="#note_70-Y02">ノート 70-Y02:  (マニュアル) 「スキニング」の注意事項を修正</a></li>
+</ul>
+<h3><a href="#version_20070910">■ 2007年9月10日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_69-Y01">ノート 69-Y01:  新規プロジェクト作成時に、NINTENDO_NITRO_System フォルダを作成しないように変更</a></li>
+<li><a href="#note_69-Y02">ノート 69-Y02:  「File &gt; Export All / Export Selection」から出力する機能を廃止</a></li>
+<li><a href="#note_69-Y03">ノート 69-Y03:  プラグインのメインメニューの名前を NITRO-System に変更</a></li>
+<li><a href="#note_69-Y04">ノート 69-Y04:  出力オプションウィンドウを NITRO Export with Settings... メニューから表示するように変更</a></li>
+<li><a href="#note_69-Y05">ノート 69-Y05:  出力時のエラーと警告をスクリプトエディタにも表示するように変更</a></li>
+<li><a href="#note_69-Y06">ノート 69-Y06:  出力オプションの Output Options で使用できない文字に &quot;=&quot; と &quot;;&quot; を追加</a></li>
+</ul>
+<h3><a href="#version_20070518">■ 2007年5月18日版</a></h3>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_67-Y01">ノート 67-Y01:  Maya8.5用プラグインが動作しない不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20070423">■ 2007年4月23日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_65-Y01">ノート 65-Y01:  Maya 8.5 に対応</a></li>
+<li><a href="#note_65-Y02">ノート 65-Y02:  テクスチャパターンアニメーションで、ドリブンキーやエクスプレッションを使用した場合に対応</a></li>
+<li><a href="#note_65-Y03">ノート 65-Y03:  NITRO Set Material Attribute プラグインを更新</a></li>
+<li><a href="#note_65-Y04">ノート 65-Y04:  該当するシェーディンググループに接続されたマテリアルも選択するように変更</a></li>
+<li><a href="#note_65-Y05">ノート 65-Y05:  NITRO Set Render Priority プラグインと NITRO Show Render Priority プラグインを統合</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_65-Y06">ノート 65-Y06:  シーンをインポートまたはリファレンスした際に、現在のシーンの出力オプション設定が上書きされないように修正</a></li>
+<li><a href="#note_65-Y07">ノート 65-Y07:  テクスチャパターンアニメーションで、テクスチャファイルの拡張子の前の数字が 0 から始まる場合に対応</a></li>
+<li><a href="#note_65-Y08">ノート 65-Y08:  Frame Extension に対応するテクスチャファイルが存在しなかった場合、警告を表示するように修正</a></li>
+</ul>
+<h3><a href="#version_20070129">■ 2007年1月29日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_63-Y01">ノート 63-Y01:  Maya 5.0.1、Maya 6.0.1、Maya 6.5 のサポートを終了</a></li>
+<li><a href="#note_63-Y02">ノート 63-Y02:  Output File Selection 欄に Search Animation ボタンを追加</a></li>
+<li><a href="#note_63-Y03">ノート 63-Y03:  バッチエクスポートに n3be ファイルで出力オプションの一部を指定する機能を追加</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_63-Y04">ノート 63-Y04:  imd ファイルの &lt;polygon&gt; の volume_min/max が正しく出力されない不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20061003">■ 2006年10月3日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_61-Y01">ノート 61-Y01:  Maya 8.0 に対応</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_61-Y02">ノート 61-Y02:  不要な出力オプション設定ノードがシーン中に蓄積する場合があった不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20060417">■ 2006年4月17日版</a></h3>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_57-Y01">ノート 57-Y01:  ノードに非均一な Scale 値が設定されている場合に、法線が正しく出力されない不具合を修正</a></li>
+<li><a href="#note_57-Y02">ノート 57-Y02:  出力プラグインのオプション設定を保存したシーンをインポートすると、オプション設定をシーンに保存できない不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20051128">■ 2005年11月28日版</a></h3>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_53-Y01">ノート 53-Y01:  imd ファイルの &lt;box_test&gt; が正しく出力されるように修正</a></li>
+</ul>
+<h3><a href="#version_20050912">■ 2005年9月12日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_51-Y01">ノート 51-Y01:  Maya 7.0 に対応</a></li>
+<li><a href="#note_51-Y02">ノート 51-Y02:  (マニュアル) 「頂点カラー」の説明に Maya 7.0 に関する注意を追加</a></li>
+</ul>
+<h3><a href="#version_20050620">■ 2005年6月20日版</a></h3>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_47-Y01">ノート 47-Y01:  キャラクタセットを使用したアニメーションが出力されるように修正</a></li>
+<li><a href="#note_47-Y02">ノート 47-Y02:  4 x 4 テクセル圧縮テクスチャを作成する際に、部分的に色が暗くなる場合があったのを修正</a></li>
+</ul>
+<h3><a href="#version_20050324">■ 2005年3月24日版</a></h3>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_42-Y01">ノート 42-Y01:  リファレンスファイルを含むシーンが正しくセーブされない不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20050228">■ 2005年2月28日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_41-Y01">ノート 41-Y01:  Maya 6.5 に対応</a></li>
+</ul>
+<h3><a href="#version_20050202">■ 2005年2月2日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_40-Y01">ノート 40-Y01:  中間ファイルフォーマット Ver 1.6.0 に対応</a></li>
+<li><a href="#note_40-Y02">ノート 40-Y02:  NITRO Set Material Attribute を更新</a></li>
+</ul>
+<h3><a href="#version_20050114">■ 2005年1月14日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_37-Y01">ノート 37-Y01:  中間ファイルのバッチエクスポート機能を追加</a></li>
+</ul>
+<h3><a href="#version_20041213">■ 2004年12月13日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_35-Y01">ノート 35-Y01:  中間ファイルフォーマット Ver 1.5.0 に対応</a></li>
+<li><a href="#note_35-Y02">ノート 35-Y02:  警告を追加</a></li>
+<li><a href="#note_35-Y03">ノート 35-Y03:  NITRO Set Material Attribute プラグインを更新</a></li>
+<li><a href="#note_35-Y04">ノート 35-Y04:  NITRO Set Render Priority プラグインを追加</a></li>
+<li><a href="#note_35-Y05">ノート 35-Y05:  NITRO Show Render Priority プラグインを追加</a></li>
+<li><a href="#note_35-Y06">ノート 35-Y06:  (マニュアル) 「2.7.9 ポリゴンの描画優先度」を追加</a></li>
+<li><a href="#note_35-Y07">ノート 35-Y07:  (マニュアル) 「3.2.2 General Options」の Unite and Combine Polygon の説明を修正</a></li>
+<li><a href="#note_35-Y08">ノート 35-Y08:  (マニュアル) 「3.2.5 Animation Options」の Interpolation の説明を修正</a></li>
+</ul>
+<h3><a href="#version_20041025">■ 2004年10月25日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_29-Y01">ノート 29-Y01:  NITRO Set Material Attribute プラグインを更新</a></li>
+<li><a href="#note_29-Y02">ノート 29-Y02:  NITRO Show Lighting プラグインを更新</a></li>
+<li><a href="#note_29-Y03">ノート 29-Y03:  (マニュアル) 「2.7.3 頂点カラー」の説明を修正</a></li>
+<li><a href="#note_29-Y04">ノート 29-Y04:  (マニュアル) 中間ファイル出力プラグインのオプション Interpolation の説明を修正</a></li>
+</ul>
+<h3><a href="#version_20040830">■ 2004年8月30日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_19-Y01">ノート 19-Y01:  Maya 6.0.1 に対応</a></li>
+<li><a href="#note_19-Y02">ノート 19-Y02:  imd ファイルの scale_compensate を出力する条件を変更</a></li>
+<li><a href="#note_19-Y03">ノート 19-Y03:  (マニュアル) Maya のバージョンによる imd ファイルの頂点データの違いに関する注意を追加</a></li>
+<li><a href="#note_19-Y04">ノート 19-Y04:  (マニュアル) Maya 6.0.1 のテクスチャパターンアニメーションに関する注意を追加</a></li>
+<li><a href="#note_19-Y05">ノート 19-Y05:  (マニュアル) NINTENDO NITRO-Systemでのエンベロープ表記についての説明を追加</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_19-Y06">ノート 19-Y06:  Layered Texture の最上位レイヤに接続されたテクスチャが出力されない不具合を修正</a></li>
+<li><a href="#note_19-Y07">ノート 19-Y07:  NITRO Rename Over 16 Characters プラグインを修正</a></li>
+</ul>
+<h3><a href="#version_20040726">■ 2004年7月26日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_14-Y01">ノート 14-Y01:  中間ファイルに出力する名前が 16 文字を超えている場合の警告を追加</a></li>
+<li><a href="#note_14-Y02">ノート 14-Y02:  NITRO Replace Character プラグインを追加</a></li>
+<li><a href="#note_14-Y03">ノート 14-Y03:  NITRO Rename Over 16 Characters プラグインを追加</a></li>
+<li><a href="#note_14-Y04">ノート 14-Y04:  (マニュアル) 頂点座標と Translate 値の単位に関する注意を追加</a></li>
+</ul>
+<h3><a href="#version_20040630">■ 2004年6月30日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_12-Y01">ノート 12-Y01:  imd ファイルの &lt;polygon&gt; の命名規則を変更</a></li>
+<li><a href="#note_12-Y02">ノート 12-Y02:  中間ファイル出力時のエラーと警告を追加</a></li>
+</ul>
+<h3><a href="#version_20040524">■ 2004年5月24日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_07-Y01">ノート 07-Y01:  NINTENDO NITRO-System 用の付加情報が付いた TGA ファイルと PIC ファイルに対応</a></li>
+<li><a href="#note_07-Y02">ノート 07-Y02:  中間ファイル出力プラグインに n3es ファイルの入出力機能を追加</a></li>
+<li><a href="#note_07-Y03">ノート 07-Y03:  ica ファイルの &lt;node_anm_info&gt; に scaling_rule を追加</a></li>
+</ul>
+<h3><a href="#version_20040420">■ 2004年4月20日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_06-Y01">ノート 06-Y01:  (マニュアル) 「1 中間ファイルの種類」の中間ファイルのバージョンを修正</a></li>
+</ul>
+<h3><a href="#version_20040412">■ 2004年4月12日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_05-Y01">ノート 05-Y01:  NINTENDO NITRO-System メニューの NITRO Export から中間ファイルを出力するように変更</a></li>
+<li><a href="#note_05-Y02">ノート 05-Y02:  ３Ｄマテリアルエディタにデータを転送する機能を追加</a></li>
+<li><a href="#note_05-Y03">ノート 05-Y03:  中間ファイル出力プラグインのオプションの設定をシーンに保存する機能を追加</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_05-Y04">ノート 05-Y04:  imd ファイルの polygon_mode に誤った値が出力される不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20040325">■ 2004年3月25日版</a></h3>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_04-Y01">ノート 04-Y01:  頂点カラーありの &lt;polygon&gt; と頂点カラーなしの &lt;polygon&gt; が結合されないように修正</a></li>
+<li><a href="#note_04-Y02">ノート 04-Y02:  Merge Useless Node の処理がマニュアルのアルゴリズムと同じにならない不具合を修正</a></li>
+<li><a href="#note_04-Y03">ノート 04-Y03:  &lt;box_test&gt; の pos_scale が必要以上に大きくなる場合があったのを修正</a></li>
+</ul>
+<h3><a href="#version_20040301">■ 2004年3月1日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_03-Y01">ノート 03-Y01:  出力オプションの Imd Options に Use Primitive Strip を追加</a></li>
+<li><a href="#note_03-Y02">ノート 03-Y02:  A3I5 半透明テクスチャに対応</a></li>
+<li><a href="#note_03-Y03">ノート 03-Y03:  テクスチャファイルのアルファ値が 128 以上のテクセルを不透明とみなすように修正</a></li>
+<li><a href="#note_03-Y04">ノート 03-Y04:  NITRO-System ライブラリを使用する場合の名前の制限を修正</a></li>
+<li><a href="#note_03-Y05">ノート 03-Y05:  (マニュアル) 「2.12.5 imd ファイルに出力されるポリゴンの形状」を追加</a></li>
+<li><a href="#note_03-Y06">ノート 03-Y06:  (マニュアル) 「5.3 Maya のテクスチャ行列」のコードを修正</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_03-Y07">ノート 03-Y07:  カラーインデックス形式でアルファありの TGA ファイルを正しく処理するように修正</a></li>
+<li><a href="#note_03-Y08">ノート 03-Y08:  imd ファイルの volume_min、volume_max、volume_r が正しく出力されない不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20040212">■ 2004年2月12日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_02-Y01">ノート 02-Y01:  Maya 上の四角形ポリゴンはすべて四角形として出力するように変更</a></li>
+<li><a href="#note_02-Y02">ノート 02-Y02:  スキニング後に面数を変えた場合に対応</a></li>
+<li><a href="#note_02-Y03">ノート 02-Y03:  4 x 4 テクセル圧縮テクスチャのパレットの色数が 32768 色を超える場合の処理を変更</a></li>
+</ul>
+<h3><a href="#version_20040202">■ 2004年2月2日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_01-Y01">ノート 01-Y01:  出力オプションの Magnify と Tolerance（Color 以外）の有効桁数を小数第 4 位までに変更</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_01-Y02">ノート 01-Y02:  アニメーションの出力状況によってMaya が落ちる不具合を修正</a></li>
+</ul>
+
+
+<h2 id="version_2_1_0">■ 2.1.0での変更点</h2>
+<h3 id="note_81-Y01">ノート 81-Y01:  出力プラグインに Remove Namespace オプションを追加</h3>
+<p>出力プラグインに Remove Namespace オプションを追加しました。
+</p>
+<h3 id="note_81-Y02">ノート 81-Y02:  NITRO Rename Over 16 Characters プラグインに Remove Namespace オプションを追加</h3>
+<p>NITRO Rename Over 16 Characters プラグインに Remove Namespace オプションを追加しました。
+</p>
+<h3 id="note_81-Y03">ノート 81-Y03:  Output Folder 選択ダイアログのサイズを変更できるように修正</h3>
+<p>出力オプションウィンドウで、Output Folder 選択ダイアログのサイズを変更できるように修正しました。
+</p>
+<h3 id="note_81-Y04">ノート 81-Y04:  n3es ファイルフォーマットを更新</h3>
+<p>n3es ファイルフォーマットを更新しました。
+</p>
+<ul><li>settings_version を 1.1 に変更。
+</li>
+<li>remove_namespace を追加。
+</li>
+</ul>
+<h2 id="version_2_0_0">■ 2.0.0での変更点</h2>
+<h3 id="note_80-Y01">ノート 80-Y01:  Maya 2009 に対応</h3>
+<p>Maya 2009 に対応しました。
+</p>
+<h3 id="note_80-Y02">ノート 80-Y02:  (マニュアル) 「対応機能一覧」を加筆</h3>
+<p>「対応機能一覧」を加筆しました。
+</p>
+<h3 id="note_80-Y03">ノート 80-Y03:  (マニュアル) 「テクスチャパターンアニメーション」を加筆</h3>
+<p>「テクスチャパターンアニメーション」に、アニメーションレイヤについて加筆しました。
+</p>
+<h2 id="version_2_0_0_1">■ 2.0.0 RC2での変更点</h2>
+<h3 id="note_79-Y01">ノート 79-Y01:  Maya 2008 の動作環境を変更</h3>
+<p>Maya 2008 の動作環境を Maya 2008 Service Pack 1 または Maya 2008 Extension 2 に変更しました。
+</p>
+<h3 id="note_79-Y02">ノート 79-Y02:  Maya 7.0 のサポートを終了</h3>
+<p>Maya 7.0 のサポートを終了しました。
+</p>
+<h3 id="note_79-Y03">ノート 79-Y03:  (マニュアル) NITRO-System の名称変更による修正</h3>
+<p>NITRO-System を TWL-System に変更しました。
+</p>
+<h3 id="note_79-Y04">ノート 79-Y04:  (マニュアル) 「imd ファイルに出力される値」を加筆</h3>
+<p>「imd ファイルに出力される値」にテクスチャパターンアニメーションについて加筆しました。
+</p>
+<h2 id="version_20080408">■ 2008年4月8日版での変更点</h2>
+<h3 id="note_76-Y01">ノート 76-Y01:  (マニュアル) 改訂履歴の書式変更と表題と副題を修正</h3>
+<p>NITRO_MayaPlugin.pdfの改訂履歴の書式を変更しました。
+また、ドキュメントの表題と副題を修正しました。
+</p>
+<h2 id="version_20080324">■ 2008年3月24日版での変更点</h2>
+<h3 id="note_75-Y01">ノート 75-Y01:  (マニュアル) 「対応機能一覧」を追加</h3>
+<p>「対応機能一覧」の章を追加しました。
+</p>
+<h3 id="note_75-Y02">ノート 75-Y02:  (マニュアル) スキンを設定したモデルのインスタンスに関する注意を加筆</h3>
+<p>スキンを設定したモデルのインスタンスに関する注意を加筆しました。
+</p>
+<h3 id="note_75-Y03">ノート 75-Y03:  Search Animation ボタンの不具合を修正</h3>
+<p>出力オプションウィンドウの Search Animation ボタンで、出力されないノードのアニメーションを検出しないように修正しました。
+</p>
+<h2 id="version_20071010">■ 2007年10月10日版での変更点</h2>
+<h3 id="note_70-Y01">ノート 70-Y01:  Maya2008に対応</h3>
+<p>Maya2008 に対応しました。
+複数のバインドポーズを使用する機能には対応していません。
+</p>
+<h3 id="note_70-Y02">ノート 70-Y02:  (マニュアル) 「スキニング」の注意事項を修正</h3>
+<p>「スキニング」の注意事項を修正しました。
+</p>
+<h2 id="version_20070910">■ 2007年9月10日版での変更点</h2>
+<h3 id="note_69-Y01">ノート 69-Y01:  新規プロジェクト作成時に、NINTENDO_NITRO_System フォルダを作成しないように変更</h3>
+<p>新規プロジェクト作成時に、NINTENDO_NITRO_System フォルダを作成しないように変更しました。
+</p>
+<h3 id="note_69-Y02">ノート 69-Y02:  「File &gt; Export All / Export Selection」から出力する機能を廃止</h3>
+<p>「ファイル &gt; すべてエクスポート / 選択項目のエクスポート（File &gt; Export All / Export Selection）」から出力する機能を廃止しました。
+</p>
+<h3 id="note_69-Y03">ノート 69-Y03:  プラグインのメインメニューの名前を NITRO-System に変更</h3>
+<p>プラグインのメインメニューの名前を NITRO-System に変更しました。
+</p>
+<h3 id="note_69-Y04">ノート 69-Y04:  出力オプションウィンドウを NITRO Export with Settings... メニューから表示するように変更</h3>
+<p>出力オプションウィンドウを NITRO Export with Settings... メニューから表示するように変更しました。
+</p>
+<h3 id="note_69-Y05">ノート 69-Y05:  出力時のエラーと警告をスクリプトエディタにも表示するように変更</h3>
+<p>出力時のエラーと警告をスクリプトエディタにも表示するように変更しました。
+</p>
+<h3 id="note_69-Y06">ノート 69-Y06:  出力オプションの Output Options で使用できない文字に &quot;=&quot; と &quot;;&quot; を追加</h3>
+<p>出力オプションの Output Options で使用できない文字に &quot;=&quot; と &quot;;&quot; を追加しました。
+</p>
+<h2 id="version_20070518">■ 2007年5月18日版での変更点</h2>
+<h3 id="note_67-Y01">ノート 67-Y01:  Maya8.5用プラグインが動作しない不具合を修正</h3>
+<p>Windows の環境によっては Maya 8.5 用プラグインが動作しない場合があった不具合を修正しました。
+</p>
+<h2 id="version_20070423">■ 2007年4月23日版での変更点</h2>
+<h3 id="note_65-Y01">ノート 65-Y01:  Maya 8.5 に対応</h3>
+<p>Maya 8.5 に対応しました。
+</p>
+<h3 id="note_65-Y02">ノート 65-Y02:  テクスチャパターンアニメーションで、ドリブンキーやエクスプレッションを使用した場合に対応</h3>
+<p>テクスチャパターンアニメーションで、ドリブンキーやエクスプレッションを使用した場合に対応しました。
+</p>
+<h3 id="note_65-Y03">ノート 65-Y03:  NITRO Set Material Attribute プラグインを更新</h3>
+<p>NITRO Set Material Attribute プラグインを更新しました。
+</p>
+<ul><li> マテリアル名をウィンドウに表示するように変更しました。
+</li>
+</ul>
+<h3 id="note_65-Y04">ノート 65-Y04:  該当するシェーディンググループに接続されたマテリアルも選択するように変更</h3>
+<p>NITRO Show Lighting プラグインと NITRO Show Display Face プラグインで、該当するシェーディンググループに接続されたマテリアルも選択するように変更しました。
+</p>
+<h3 id="note_65-Y05">ノート 65-Y05:  NITRO Set Render Priority プラグインと NITRO Show Render Priority プラグインを統合</h3>
+<p>NITRO Set Render Priority プラグインと NITRO Show Render Priority プラグインを統合し、リスト形式で設定する機能を追加しました。
+</p>
+<h3 id="note_65-Y06">ノート 65-Y06:  シーンをインポートまたはリファレンスした際に、現在のシーンの出力オプション設定が上書きされないように修正</h3>
+<p>シーンをインポートまたはリファレンスした際に、現在のシーンの出力オプション設定が上書きされないように修正しました。
+</p>
+<h3 id="note_65-Y07">ノート 65-Y07:  テクスチャパターンアニメーションで、テクスチャファイルの拡張子の前の数字が 0 から始まる場合に対応</h3>
+<p>テクスチャパターンアニメーションで、テクスチャファイルの拡張子の前の数字が &quot;01&quot;、&quot;001&quot;、&quot;0001&quot; のように 0 から始まる場合に対応しました。
+</p>
+<h3 id="note_65-Y08">ノート 65-Y08:  Frame Extension に対応するテクスチャファイルが存在しなかった場合、警告を表示するように修正</h3>
+<p>テクスチャパターンアニメーションで、Frame Extension に対応するテクスチャファイルが存在しなかった場合、エラーではなく警告を表示するように修正しました。
+ただし、Frame Extension に対応するテクスチャファイルが１つも存在しない場合はエラーになります。
+</p>
+<h2 id="version_20070129">■ 2007年1月29日版での変更点</h2>
+<h3 id="note_63-Y01">ノート 63-Y01:  Maya 5.0.1、Maya 6.0.1、Maya 6.5 のサポートを終了</h3>
+<p>Maya 5.0.1、Maya 6.0.1、Maya 6.5 のサポートを終了しました。
+</p>
+<h3 id="note_63-Y02">ノート 63-Y02:  Output File Selection 欄に Search Animation ボタンを追加</h3>
+<p>出力オプションウィンドウの Output File Selection 欄に Search Animation ボタンを追加しました。
+</p>
+<h3 id="note_63-Y03">ノート 63-Y03:  バッチエクスポートに n3be ファイルで出力オプションの一部を指定する機能を追加</h3>
+<p>バッチエクスポートに n3be ファイルで出力オプションの一部を指定する機能を追加しました。
+合わせて、n3be ファイルフォーマットが更新されました。
+</p>
+<h3 id="note_63-Y04">ノート 63-Y04:  imd ファイルの &lt;polygon&gt; の volume_min/max が正しく出力されない不具合を修正</h3>
+<p>imd ファイルの &lt;polygon&gt; の volume_min/max が正しく出力されない場合があった不具合を修正しました。
+</p>
+<h2 id="version_20061003">■ 2006年10月3日版での変更点</h2>
+<h3 id="note_61-Y01">ノート 61-Y01:  Maya 8.0 に対応</h3>
+<p>Maya 8.0 に対応しました。
+</p>
+<h3 id="note_61-Y02">ノート 61-Y02:  不要な出力オプション設定ノードがシーン中に蓄積する場合があった不具合を修正</h3>
+<ul><li> 不要な出力オプション設定ノードがシーン中に蓄積する場合があった不具合を修正しました。
+</li>
+</ul>
+<h2 id="version_20060417">■ 2006年4月17日版での変更点</h2>
+<h3 id="note_57-Y01">ノート 57-Y01:  ノードに非均一な Scale 値が設定されている場合に、法線が正しく出力されない不具合を修正</h3>
+<p>ノードに非均一な（X、Y、Z の値が同じでない）Scale 値が設定されている場合に、法線が正しく出力されない不具合を修正しました。
+</p>
+<h3 id="note_57-Y02">ノート 57-Y02:  出力プラグインのオプション設定を保存したシーンをインポートすると、オプション設定をシーンに保存できない不具合を修正</h3>
+<p>出力プラグインのオプション設定を保存したシーンをインポートすると、オプション設定をシーンに保存できない不具合を修正しました。
+</p>
+<h2 id="version_20051128">■ 2005年11月28日版での変更点</h2>
+<h3 id="note_53-Y01">ノート 53-Y01:  imd ファイルの &lt;box_test&gt; が正しく出力されるように修正</h3>
+<p>imd ファイルの &lt;box_test&gt; が正しく出力されるように修正しました。
+</p>
+<h2 id="version_20050912">■ 2005年9月12日版での変更点</h2>
+<h3 id="note_51-Y01">ノート 51-Y01:  Maya 7.0 に対応</h3>
+<p>Maya 7.0 に対応しました。
+</p>
+<h3 id="note_51-Y02">ノート 51-Y02:  (マニュアル) 「頂点カラー」の説明に Maya 7.0 に関する注意を追加</h3>
+<p>「頂点カラー」の説明に Maya 7.0 に関する注意を追加しました。
+</p>
+<h2 id="version_20050620">■ 2005年6月20日版での変更点</h2>
+<h3 id="note_47-Y01">ノート 47-Y01:  キャラクタセットを使用したアニメーションが出力されるように修正</h3>
+<p>キャラクタセットを使用したマテリアルカラーアニメーションとテクスチャ SRT アニメーションが出力されるように修正しました。
+</p>
+<h3 id="note_47-Y02">ノート 47-Y02:  4 x 4 テクセル圧縮テクスチャを作成する際に、部分的に色が暗くなる場合があったのを修正</h3>
+<p>ファイル名が &quot;_cmp4&quot; で終わっている付加情報のないテクスチャファイルから 4 x 4 テクセル圧縮テクスチャを作成する際に、部分的に色が暗くなる場合があったのを修正しました。
+パレットデータ量が以前のバージョンと較べて増加する場合があります。
+</p>
+<h2 id="version_20050324">■ 2005年3月24日版での変更点</h2>
+<h3 id="note_42-Y01">ノート 42-Y01:  リファレンスファイルを含むシーンが正しくセーブされない不具合を修正</h3>
+<p>出力プラグインの影響で、リファレンスファイルを含むシーンが正しくセーブされない場合があったのを修正しました。
+</p>
+<h2 id="version_20050228">■ 2005年2月28日版での変更点</h2>
+<h3 id="note_41-Y01">ノート 41-Y01:  Maya 6.5 に対応</h3>
+<p>Maya 6.5 に対応しました。
+</p>
+<h2 id="version_20050202">■ 2005年2月2日版での変更点</h2>
+<h3 id="note_40-Y01">ノート 40-Y01:  中間ファイルフォーマット Ver 1.6.0 に対応</h3>
+<p>中間ファイルフォーマット Ver 1.6.0 に対応しました。
+</p>
+<h3 id="note_40-Y02">ノート 40-Y02:  NITRO Set Material Attribute を更新</h3>
+<ul><li> Texture Effect Matrix を追加しました。
+</li>
+<li> Tex Gen ST を削除しました。
+</li>
+</ul>
+<h2 id="version_20050114">■ 2005年1月14日版での変更点</h2>
+<h3 id="note_37-Y01">ノート 37-Y01:  中間ファイルのバッチエクスポート機能を追加</h3>
+<p>中間ファイルのバッチエクスポート機能を追加しました。
+</p>
+<h2 id="version_20041213">■ 2004年12月13日版での変更点</h2>
+<h3 id="note_35-Y01">ノート 35-Y01:  中間ファイルフォーマット Ver 1.5.0 に対応</h3>
+<p>中間ファイルフォーマット Ver 1.5.0 に対応しました。
+</p>
+<h3 id="note_35-Y02">ノート 35-Y02:  警告を追加</h3>
+<p>警告を追加しました。
+</p>
+<h3 id="note_35-Y03">ノート 35-Y03:  NITRO Set Material Attribute プラグインを更新</h3>
+<p>NITRO Set Material Attribute プラグインを更新しました。
+</p>
+<ul><li> 設定できるアトリビュートを追加しました。
+</li>
+</ul>
+<h3 id="note_35-Y04">ノート 35-Y04:  NITRO Set Render Priority プラグインを追加</h3>
+<p>NITRO Set Render Priority プラグインを追加しました。
+</p>
+<h3 id="note_35-Y05">ノート 35-Y05:  NITRO Show Render Priority プラグインを追加</h3>
+<p>NITRO Set Material Attribute プラグインを追加しました。
+</p>
+<h3 id="note_35-Y06">ノート 35-Y06:  (マニュアル) 「2.7.9 ポリゴンの描画優先度」を追加</h3>
+<p>「2.7.9 ポリゴンの描画優先度」の説明を追加しました。
+</p>
+<h3 id="note_35-Y07">ノート 35-Y07:  (マニュアル) 「3.2.2 General Options」の Unite and Combine Polygon の説明を修正</h3>
+<p>「3.2.2 General Options」の Unite and Combine Polygon の説明を修正しました。
+</p>
+<h3 id="note_35-Y08">ノート 35-Y08:  (マニュアル) 「3.2.5 Animation Options」の Interpolation の説明を修正</h3>
+<p>「3.2.5 Animation Options」の Interpolation の説明を修正しました。
+</p>
+<h2 id="version_20041025">■ 2004年10月25日版での変更点</h2>
+<h3 id="note_29-Y01">ノート 29-Y01:  NITRO Set Material Attribute プラグインを更新</h3>
+<p>NITRO Set Material Attribute プラグインを更新しました。
+</p>
+<ul><li> 設定できるアトリビュートを追加しました。
+</li>
+<li> Lighting を Light0 に名称変更しました。
+</li>
+</ul>
+<h3 id="note_29-Y02">ノート 29-Y02:  NITRO Show Lighting プラグインを更新</h3>
+<p>NITRO Show Lighting プラグインを更新しました。
+</p>
+<ul><li> ４つのライトを個別に確認できるように変更しました。
+</li>
+</ul>
+<h3 id="note_29-Y03">ノート 29-Y03:  (マニュアル) 「2.7.3 頂点カラー」の説明を修正</h3>
+<p>「2.7.3 頂点カラー」の説明を修正しました。
+</p>
+<h3 id="note_29-Y04">ノート 29-Y04:  (マニュアル) 中間ファイル出力プラグインのオプション Interpolation の説明を修正</h3>
+<p>中間ファイル出力プラグインのオプション Interpolation の説明を修正しました。
+</p>
+<h2 id="version_20040830">■ 2004年8月30日版での変更点</h2>
+<h3 id="note_19-Y01">ノート 19-Y01:  Maya 6.0.1 に対応</h3>
+<p>Maya 6.0.1 に対応しました。
+</p>
+<h3 id="note_19-Y02">ノート 19-Y02:  imd ファイルの scale_compensate を出力する条件を変更</h3>
+<p>imd ファイルで、&lt;model_info&gt; の scaling_rule が maya のときのみ、&lt;node&gt; の scale_compensate を出力するように変更しました。
+</p>
+<h3 id="note_19-Y03">ノート 19-Y03:  (マニュアル) Maya のバージョンによる imd ファイルの頂点データの違いに関する注意を追加</h3>
+<p>Maya のバージョンによる imd ファイルの頂点データの違いに関する注意を追加しました。
+</p>
+<h3 id="note_19-Y04">ノート 19-Y04:  (マニュアル) Maya 6.0.1 のテクスチャパターンアニメーションに関する注意を追加</h3>
+<p>Maya 6.0.1 のテクスチャパターンアニメーションに関する注意を追加しました。
+</p>
+<h3 id="note_19-Y05">ノート 19-Y05:  (マニュアル) NINTENDO NITRO-Systemでのエンベロープ表記についての説明を追加</h3>
+<p>NINTENDO NITRO-Systemでのエンベロープ表記についての説明を追加しました。
+</p>
+<h3 id="note_19-Y06">ノート 19-Y06:  Layered Texture の最上位レイヤに接続されたテクスチャが出力されない不具合を修正</h3>
+<p>Layered Texture の最上位レイヤに接続されたテクスチャが出力されない不具合を修正しました。
+</p>
+<h3 id="note_19-Y07">ノート 19-Y07:  NITRO Rename Over 16 Characters プラグインを修正</h3>
+<p>NITRO Rename Over 16 Characters プラグインで、テクスチャファイルが開けない場合などに警告を表示するように修正しました。
+</p>
+<h2 id="version_20040726">■ 2004年7月26日版での変更点</h2>
+<h3 id="note_14-Y01">ノート 14-Y01:  中間ファイルに出力する名前が 16 文字を超えている場合の警告を追加</h3>
+<p>中間ファイルに出力する名前が 16 文字を超えている場合の警告を追加しました。
+</p>
+<h3 id="note_14-Y02">ノート 14-Y02:  NITRO Replace Character プラグインを追加</h3>
+<p>エレメント名の文字列置換を行う NITRO Replace Character プラグインを追加しました。
+</p>
+<h3 id="note_14-Y03">ノート 14-Y03:  NITRO Rename Over 16 Characters プラグインを追加</h3>
+<p>16 文字を超えるエレメント名の変更する NITRO Rename Over 16 Characters プラグインを追加しました。
+</p>
+<h3 id="note_14-Y04">ノート 14-Y04:  (マニュアル) 頂点座標と Translate 値の単位に関する注意を追加</h3>
+<p>頂点座標と Translate 値の単位に関する注意を追加しました。
+</p>
+<h2 id="version_20040630">■ 2004年6月30日版での変更点</h2>
+<h3 id="note_12-Y01">ノート 12-Y01:  imd ファイルの &lt;polygon&gt; の命名規則を変更</h3>
+<p>imd ファイルの &lt;polygon&gt; の命名規則を「polygon + 通し番号」に変更しました。
+</p>
+<h3 id="note_12-Y02">ノート 12-Y02:  中間ファイル出力時のエラーと警告を追加</h3>
+<p>中間ファイル出力時のエラーと警告を数個追加しました。
+</p>
+<h2 id="version_20040524">■ 2004年5月24日版での変更点</h2>
+<h3 id="note_07-Y01">ノート 07-Y01:  NINTENDO NITRO-System 用の付加情報が付いた TGA ファイルと PIC ファイルに対応</h3>
+<p>NINTENDO NITRO-System 用の付加情報が付いた TGA ファイルと PIC ファイルに対応しました。
+</p>
+<h3 id="note_07-Y02">ノート 07-Y02:  中間ファイル出力プラグインに n3es ファイルの入出力機能を追加</h3>
+<p>中間ファイル出力プラグインのオプションの設定を n3es ファイルとして入出力する機能を追加しました。
+</p>
+<h3 id="note_07-Y03">ノート 07-Y03:  ica ファイルの &lt;node_anm_info&gt; に scaling_rule を追加</h3>
+<p>ica ファイルの &lt;node_anm_info&gt; に scaling_rule を追加しました。
+</p>
+<h2 id="version_20040420">■ 2004年4月20日版での変更点</h2>
+<h3 id="note_06-Y01">ノート 06-Y01:  (マニュアル) 「1 中間ファイルの種類」の中間ファイルのバージョンを修正</h3>
+<p>「1 中間ファイルの種類」で、出力できる中間ファイルのバージョンが &quot;Ver 1.1.0&quot; になっていたのを &quot;Ver 1.2.0&quot; に修正しました。
+</p>
+<h2 id="version_20040412">■ 2004年4月12日版での変更点</h2>
+<h3 id="note_05-Y01">ノート 05-Y01:  NINTENDO NITRO-System メニューの NITRO Export から中間ファイルを出力するように変更</h3>
+<p>NINTENDO NITRO-System メニューの NITRO Export から中間ファイルを出力するように変更しました。
+</p>
+<h3 id="note_05-Y02">ノート 05-Y02:  ３Ｄマテリアルエディタにデータを転送する機能を追加</h3>
+<p>中間ファイル出力プラグインに、３Ｄマテリアルエディタにデータを転送する機能を追加しました。
+</p>
+<h3 id="note_05-Y03">ノート 05-Y03:  中間ファイル出力プラグインのオプションの設定をシーンに保存する機能を追加</h3>
+<p>中間ファイル出力プラグインのオプションの設定をシーンに保存する機能を追加しました。
+</p>
+<h3 id="note_05-Y04">ノート 05-Y04:  imd ファイルの polygon_mode に誤った値が出力される不具合を修正</h3>
+<p>imd ファイルで、&lt;material&gt; の polygon_mode が &quot;toon_hilight&quot; になっていたのを &quot;toon_highlight&quot; に修正しました。
+</p>
+<h2 id="version_20040325">■ 2004年3月25日版での変更点</h2>
+<h3 id="note_04-Y01">ノート 04-Y01:  頂点カラーありの &lt;polygon&gt; と頂点カラーなしの &lt;polygon&gt; が結合されないように修正</h3>
+<p>Compress Node が Unite and Combine Polygon の場合や、Compress Material が Compress の場合に、頂点カラーありの &lt;polygon&gt; と頂点カラーなしの &lt;polygon&gt; が結合されないように修正しました。
+</p>
+<h3 id="note_04-Y02">ノート 04-Y02:  Merge Useless Node の処理がマニュアルのアルゴリズムと同じにならない不具合を修正</h3>
+<p>Merge Useless Node の処理がマニュアルのアルゴリズムと同じにならない場合があったのを修正しました。
+以前のバージョンで出力した imd ファイルのルートノードが &quot;world_root&quot; であった場合、別のノードに変わることがあります。
+ノードの総数や階層構造は変化しないので ica ファイルや iva ファイルを再出力する必要はありません。
+</p>
+<h3 id="note_04-Y03">ノート 04-Y03:  &lt;box_test&gt; の pos_scale が必要以上に大きくなる場合があったのを修正</h3>
+<p>&lt;box_test&gt; の pos_scale が必要以上に大きくなる場合があったのを修正しました。
+</p>
+<h2 id="version_20040301">■ 2004年3月1日版での変更点</h2>
+<h3 id="note_03-Y01">ノート 03-Y01:  出力オプションの Imd Options に Use Primitive Strip を追加</h3>
+<p>出力オプションの Imd Options に Use Primitive Strip を追加しました。
+</p>
+<h3 id="note_03-Y02">ノート 03-Y02:  A3I5 半透明テクスチャに対応</h3>
+<p>A3I5 半透明テクスチャに対応しました。
+</p>
+<h3 id="note_03-Y03">ノート 03-Y03:  テクスチャファイルのアルファ値が 128 以上のテクセルを不透明とみなすように修正</h3>
+<p>半透明テクスチャ以外の場合、テクスチャファイルのアルファ値が 128 以上のテクセルを不透明とみなすように修正しました。
+</p>
+<h3 id="note_03-Y04">ノート 03-Y04:  NITRO-System ライブラリを使用する場合の名前の制限を修正</h3>
+<p>プラグインマニュアルで、NINTENDO NITRO-System ライブラリを使用する場合の名前（ノード名、マテリアル名、テクスチャ名、パレット名）の制限が最大 15 文字になっていたのを最大 16 文字に修正しました。
+</p>
+<h3 id="note_03-Y05">ノート 03-Y05:  (マニュアル) 「2.12.5 imd ファイルに出力されるポリゴンの形状」を追加</h3>
+<p>「2.12.5 imd ファイルに出力されるポリゴンの形状」を追加しました。
+</p>
+<h3 id="note_03-Y06">ノート 03-Y06:  (マニュアル) 「5.3 Maya のテクスチャ行列」のコードを修正</h3>
+<p>「5.3 Maya のテクスチャ行列」のコードを修正しました（m[15] のみ）。
+</p>
+<h3 id="note_03-Y07">ノート 03-Y07:  カラーインデックス形式でアルファありの TGA ファイルを正しく処理するように修正</h3>
+<p>カラーインデックス形式でアルファありの TGA ファイルを正しく処理するように修正しました。
+</p>
+<h3 id="note_03-Y08">ノート 03-Y08:  imd ファイルの volume_min、volume_max、volume_r が正しく出力されない不具合を修正</h3>
+<p>imd ファイルで、&lt;node&gt; の volume_min、volume_max、volume_r が（2 の pos_scale 乗）を掛けた値になっていたのを、掛けない値に修正しました。
+</p>
+<h2 id="version_20040212">■ 2004年2月12日版での変更点</h2>
+<h3 id="note_02-Y01">ノート 02-Y01:  Maya 上の四角形ポリゴンはすべて四角形として出力するように変更</h3>
+<p>全頂点が同一平面上にない四角形ポリゴンや凹型四角形ポリゴンを三角形分割して出力するのをやめ、Maya 上の四角形ポリゴンはすべて四角形として出力するように変更しました。
+実機で正しく表示されない場合は、Maya 上で適切な三角形分割をおこなってください。
+</p>
+<h3 id="note_02-Y02">ノート 02-Y02:  スキニング後に面数を変えた場合に対応</h3>
+<p>スキニング後に面数を変えた場合に対応しました。
+スキニング後の三角形分割などが可能になりました。
+ただし、頂点数の変更は従来どおり禁止です。
+</p>
+<h3 id="note_02-Y03">ノート 02-Y03:  4 x 4 テクセル圧縮テクスチャのパレットの色数が 32768 色を超える場合の処理を変更</h3>
+<p>4 x 4 テクセル圧縮テクスチャのパレットの色数が 32768 色を超える場合は、画質を落としてパレットを 32768 色以下に圧縮するように修正しました。
+</p>
+<h2 id="version_20040202">■ 2004年2月2日版での変更点</h2>
+<h3 id="note_01-Y01">ノート 01-Y01:  出力オプションの Magnify と Tolerance（Color 以外）の有効桁数を小数第 4 位までに変更</h3>
+<p>出力オプションの Magnify と Tolerance（Color 以外）の有効桁数を小数第 4 位までに変更しました。
+</p>
+<h3 id="note_01-Y02">ノート 01-Y02:  アニメーションの出力状況によってMaya が落ちる不具合を修正</h3>
+<p>テクスチャ SRT アニメーションが設定されている場合に、ita を出力せずに他のアニメーションファイルを出力するとMaya が落ちる不具合を修正しました。
+</p>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+</body>
+</html>

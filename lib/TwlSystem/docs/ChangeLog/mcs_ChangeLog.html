@@ -1,0 +1,316 @@
+<html>
+<head>
+<title>TWL-System Muitiple Channel Stream 更新履歴</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-style-type" content="text/css" />
+<style type="text/css">
+<!--
+    
+H1
+{
+    font-weight         : bold;
+    font-size           : 250%;
+    text-align          : left;
+    color               : #46f;
+    margin              : 0em 0em 0.5em 0em;
+}
+
+H2
+{
+    font-weight         : bold;
+    font-size           : 150%;
+    text-align          : left;
+    margin              : 2em 0em 0.5em 0em;
+    padding-top         : 8pt;
+    border-top-style    : double;
+    border-top-width    : 3px;
+}
+
+H3
+{
+    font-weight         : bold;
+    font-size           : 120%;
+    margin              : 1em 0em 0.5em 0em;
+    padding-top         : 8pt;
+    border-top-style    : solid;
+    border-top-width    : 1px;
+}
+
+H4
+{
+    font-weight         : normal;
+    font-size           : 100%;
+    margin              : 0em 0em 0em 0.5em;
+}
+
+DIV.date
+{
+    font-size           : normal;
+    text-align          : right;
+    margin              : 0pt 0pt 12pt 0pt;
+}
+
+DIV.licence
+{
+    margin: 0em;
+    border-style : solid;
+    border-width : 1px;
+}
+
+P
+{
+    font-size           : normal;
+    margin              : 0em 1em 0.5em 1em;
+    line-height         : 150%;
+}
+
+PRE
+{
+    font-size           : normal;
+    margin              : 0em 0em 1em 2em;
+    line-height         : 120%;
+}
+
+DT
+{
+    margin              : 1em 0em 0em 1em;
+}
+DD
+{
+    margin-left         : 3em;
+}
+UL
+{
+    margin-top         : 0em;
+}
+
+-->
+</style>
+</head>
+<body>
+
+<h1>TWL-System Muitiple Channel Stream 更新履歴</h1>
+
+<h2>■ インデックス</h2>
+
+<h3><a href="#version_2_1_0">■ 2.1.0</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-C01">ノート 81-C01:  (mcsサーバ) IS-TWL-DEBUGGER ハードウェアと接続している際の「TWLSDK_PLATFORM=NITRO」でビルドされたプログラム(srlファイル)の対応</a></li>
+<li><a href="#note_81-C02">ノート 81-C02:  (mcsサーバ) デバッガシェアリング機能の正式対応</a></li>
+</ul>
+<h3><a href="#version_2_0_0_1">■ 2.0.0 RC2</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_79-C01">ノート 79-C01:  (ライブラリ) mcsサンプルデモ&quot;basic&quot;のWindows側プログラムが動作しない不具合を修正</a></li>
+</ul>
+<h3><a href="#version_2_0_0_0">■ 2.0.0 RC</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_78-C01">ノート 78-C01:  (ライブラリ) mcsサンプルデモ&quot;basic&quot;にC#版を追加</a></li>
+</ul>
+<h3><a href="#version_20080408">■ 2008年4月8日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_76-C01">ノート 76-C01:  (マニュアル) 改訂履歴の書式変更</a></li>
+<li><a href="#note_76-C02">ノート 76-C02:  (ライブラリ, mcsサーバ) TWL対応</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_76-C03">ノート 76-C03:  (ライブラリ) ファイル入出力関数に関する不具合修正</a></li>
+</ul>
+<h3><a href="#version_20071126">■ 2007年11月26日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_71-C01">ノート 71-C01:  (ライブラリ) 関数の引数の変更</a></li>
+</ul>
+<h3><a href="#version_20070314">■ 2007年3月14日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_64-C01">ノート 64-C01:  (ライブラリ) DSカード差込口の電源をONに対応</a></li>
+</ul>
+<h3><a href="#version_20060529">■ 2006年5月29日版</a></h3>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_59-C01">ノート 59-C01:  (ライブラリ) ファイルの読み込み時にサイズを正しく返していない不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20050901">■ 2005年9月1日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_50-C01">ノート 50-C01:  (ライブラリ) DEBUGGER SHARINGの対応</a></li>
+</ul>
+<h3><a href="#version_20050328">■ 2005年3月28日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_43-C01">ノート 43-C01:  (ライブラリ) 関数の追加</a></li>
+<li><a href="#note_43-C02">ノート 43-C02:  (mcsサーバ) 機能の追加</a></li>
+</ul>
+<h3><a href="#version_20050131">■ 2005年1月31日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_39-C01">ノート 39-C01:  (ライブラリ) 関数の挙動の変更</a></li>
+<li><a href="#note_39-C02">ノート 39-C02:  (ライブラリ) 関数の追加</a></li>
+<li><a href="#note_39-C03">ノート 39-C03:  (ライブラリ) 関数名の変更</a></li>
+</ul>
+<h3><a href="#version_20041110">■ 2004年11月10日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_31-C01">ノート 31-C01:  (ライブラリ) 関数名の変更</a></li>
+<li><a href="#note_31-C02">ノート 31-C02:  (ライブラリ) 機能の強化</a></li>
+</ul>
+<h3><a href="#version_20040902">■ 2004年9月2日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_20-C01">ノート 20-C01:  (ライブラリ) 関数名の変更</a></li>
+<li><a href="#note_20-C02">ノート 20-C02:  (ライブラリ) 引数の型の変更</a></li>
+</ul>
+
+
+<h2 id="version_2_1_0">■ 2.1.0での変更点</h2>
+<h3 id="note_81-C01">ノート 81-C01:  (mcsサーバ) IS-TWL-DEBUGGER ハードウェアと接続している際の「TWLSDK_PLATFORM=NITRO」でビルドされたプログラム(srlファイル)の対応</h3>
+<p>従来は、mcsサーバがIS-TWL-DEBUGGER ハードウェアと接続している場合は
+「TWLSDK_PLATFORM=NITRO」でビルドされたプログラム(srlファイル)を
+動作させているときには通信ができませんでした。
+</p>
+<p>今回のMCSライブラリおよびIS-TWL-DEBUGGER ソフトウェア 0.76以降の
+組み合わせでは、IS-TWL-DEBUGGER ハードウェアと接続した状態で
+「TWLSDK_PLATFORM=NITRO」でビルドされたプログラム(srlファイル)において
+通信を行うことが出来ます。
+</p>
+<h3 id="note_81-C02">ノート 81-C02:  (mcsサーバ) デバッガシェアリング機能の正式対応</h3>
+<p>IS-TWL-DEBUGGER ソフトウェア 1.01 以降のデバッガシェアリング機能に正式に対応しました。
+</p>
+<h2 id="version_2_0_0_1">■ 2.0.0 RC2での変更点</h2>
+<h3 id="note_79-C01">ノート 79-C01:  (ライブラリ) mcsサンプルデモ&quot;basic&quot;のWindows側プログラムが動作しない不具合を修正</h3>
+<p>mcsサンプルデモ&quot;basic&quot;のWindows側プログラムが正しく動作しない不具合がありました。この不具合を修正しました。
+</p>
+<h2 id="version_2_0_0_0">■ 2.0.0 RCでの変更点</h2>
+<h3 id="note_78-C01">ノート 78-C01:  (ライブラリ) mcsサンプルデモ&quot;basic&quot;にC#版を追加</h3>
+<p>mcsサンプルデモ&quot;basic&quot;において、従来はWindows側プログラムのサンプルとして C++で記述したものを用意していましたが、
+今回より C# で記述したものを追加しました。
+</p>
+<h2 id="version_20080408">■ 2008年4月8日版での変更点</h2>
+<h3 id="note_76-C01">ノート 76-C01:  (マニュアル) 改訂履歴の書式変更</h3>
+<p>mcs.pdfの改訂履歴の書式を変更しました。
+</p>
+<h3 id="note_76-C02">ノート 76-C02:  (ライブラリ, mcsサーバ) TWL対応</h3>
+<p>TWL-TSボードへの対応を行いました。
+</p>
+<h3 id="note_76-C03">ノート 76-C03:  (ライブラリ) ファイル入出力関数に関する不具合修正</h3>
+<p>ファイル入出力関数において、MCSサーバとの接続状態によっては、無限ループに陥ってしまう不具合がありました。
+この不具合を修正しました。
+</p>
+<h2 id="version_20071126">■ 2007年11月26日版での変更点</h2>
+<h3 id="note_71-C01">ノート 71-C01:  (ライブラリ) 関数の引数の変更</h3>
+<p>従来は、mcsライブラリが使用するワークメモリをライブラリ内で静的に確保していましたが、
+今回のバージョンよりワーク用メモリを初期化時に指定するように変更しました。
+この仕様の変更により、ニンテンドーDS用関数NNS_McsInit、NNS_McsInitFileIOの引数が変更になっています。
+</p>
+<h2 id="version_20070314">■ 2007年3月14日版での変更点</h2>
+<h3 id="note_64-C01">ノート 64-C01:  (ライブラリ) DSカード差込口の電源をONに対応</h3>
+<p>DSカード差込口の電源をONにするコマンドラインオプションを追加しました。
+</p>
+<h2 id="version_20060529">■ 2006年5月29日版での変更点</h2>
+<h3 id="note_59-C01">ノート 59-C01:  (ライブラリ) ファイルの読み込み時にサイズを正しく返していない不具合を修正</h3>
+<p>ニンテンドーDS用関数NNS_McsReadFileにおいて、
+読み込んだサイズを正しく返していない不具合を修正しました。
+</p>
+<h2 id="version_20050901">■ 2005年9月1日版での変更点</h2>
+<h3 id="note_50-C01">ノート 50-C01:  (ライブラリ) DEBUGGER SHARINGの対応</h3>
+<p>IS-NITRO-DEBUGGER 1.56 以降の DEBUGGER SHARINGに対応しました。
+</p>
+<h2 id="version_20050328">■ 2005年3月28日版での変更点</h2>
+<h3 id="note_43-C01">ノート 43-C01:  (ライブラリ) 関数の追加</h3>
+<p>現在のファイルポインタの位置を変更する関数NNS_McsSeekFileを追加しました。
+</p>
+<h3 id="note_43-C02">ノート 43-C02:  (mcsサーバ) 機能の追加</h3>
+<p>mcsサーバアプリケーションにおいて、
+ニンテンドーDSからのデータを取得する時間間隔を
+オプションダイアログにて変更できるようにしました。
+</p>
+<h2 id="version_20050131">■ 2005年1月31日版での変更点</h2>
+<h3 id="note_39-C01">ノート 39-C01:  (ライブラリ) 関数の挙動の変更</h3>
+<p>従来では、関数NNS_McsOpenFileとNNS_McsFindFirstFileは、
+mcsサーバがニンテンドーDSハードウェアに対して接続していないときは、
+接続されるまでブロックしていました。
+今回のリリースから、接続されていない場合はすぐにエラーとして抜けるようになりました。
+</p>
+<h3 id="note_39-C02">ノート 39-C02:  (ライブラリ) 関数の追加</h3>
+<p>次の関数を追加しました。
+</p>
+<ul><li> mcsサーバのコンソールに文字列を出力するための関数NNS_McsInitPrint, NNS_McsPutString, NNS_McsPrintf
+</li>
+<li> mcsサーバの接続状態を判断する関数NNS_McsIsServerConnect
+</li>
+<li> ファイル入出力においてWindows側で発生したエラーのエラーコードを取得する関数NNS_McsGetServerErrorCode
+</li>
+</ul>
+<h3 id="note_39-C03">ノート 39-C03:  (ライブラリ) 関数名の変更</h3>
+<p>関数NNS_McsUnregisterRecvResouceを関数NNS_McsUnregisterRecvResourceとしました。
+</p>
+<h2 id="version_20041110">■ 2004年11月10日版での変更点</h2>
+<h3 id="note_31-C01">ノート 31-C01:  (ライブラリ) 関数名の変更</h3>
+<p>関数“NNS_McsGetTotaStreamReadableSize”を“NNS_McsGetTotalStreamReadableSize”としました。
+</p>
+<h3 id="note_31-C02">ノート 31-C02:  (ライブラリ) 機能の強化</h3>
+<p>関数NNS_McsOpenFile()で指定するファイル名と関数NNS_McsFindFirstFile()で指定するファイル名パターンに
+パソコンの環境変数を含めることが出来るようになりました。
+</p>
+<h2 id="version_20040902">■ 2004年9月2日版での変更点</h2>
+<h3 id="note_20-C01">ノート 20-C01:  (ライブラリ) 関数名の変更</h3>
+<p>関数“NNS_McsGetStreamlReadbleSize”を“NNS_McsGetStreamReadableSize”としました。
+また、関数“NNS_ McsGetTotaStreamlReadbleSize”を“NNS_McsGetTotaStreamReadableSize”としました。
+</p>
+<h3 id="note_20-C02">ノート 20-C02:  (ライブラリ) 引数の型の変更</h3>
+<p>従来は、ユーザー任意に決められるデータ送信の識別用の値の型をu32としていましが、
+16bit分しか有効ではなかったため、型をu16へと変更しました。
+</p>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+</body>
+</html>

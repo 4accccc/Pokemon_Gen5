@@ -1,0 +1,743 @@
+<html>
+<head>
+<title>TWL-System 3ds Max プラグイン 更新履歴</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-style-type" content="text/css" />
+<style type="text/css">
+<!--
+    
+H1
+{
+    font-weight         : bold;
+    font-size           : 250%;
+    text-align          : left;
+    color               : #46f;
+    margin              : 0em 0em 0.5em 0em;
+}
+
+H2
+{
+    font-weight         : bold;
+    font-size           : 150%;
+    text-align          : left;
+    margin              : 2em 0em 0.5em 0em;
+    padding-top         : 8pt;
+    border-top-style    : double;
+    border-top-width    : 3px;
+}
+
+H3
+{
+    font-weight         : bold;
+    font-size           : 120%;
+    margin              : 1em 0em 0.5em 0em;
+    padding-top         : 8pt;
+    border-top-style    : solid;
+    border-top-width    : 1px;
+}
+
+H4
+{
+    font-weight         : normal;
+    font-size           : 100%;
+    margin              : 0em 0em 0em 0.5em;
+}
+
+DIV.date
+{
+    font-size           : normal;
+    text-align          : right;
+    margin              : 0pt 0pt 12pt 0pt;
+}
+
+DIV.licence
+{
+    margin: 0em;
+    border-style : solid;
+    border-width : 1px;
+}
+
+P
+{
+    font-size           : normal;
+    margin              : 0em 1em 0.5em 1em;
+    line-height         : 150%;
+}
+
+PRE
+{
+    font-size           : normal;
+    margin              : 0em 0em 1em 2em;
+    line-height         : 120%;
+}
+
+DT
+{
+    margin              : 1em 0em 0em 1em;
+}
+DD
+{
+    margin-left         : 3em;
+}
+UL
+{
+    margin-top         : 0em;
+}
+
+-->
+</style>
+</head>
+<body>
+
+<h1>TWL-System 3ds Max プラグイン 更新履歴</h1>
+
+<h2>■ インデックス</h2>
+
+<h3><a href="#version_2_1_1">■ 2.1.1</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_82-X01">ノート 82-X01:  3ds Max のバージョンについて</a></li>
+<li><a href="#note_82-X02">ノート 82-X02:  3ds Max 2010（Windows 32bit 版）に対応</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_82-X03">ノート 82-X03:  NITRO Replace Character、NITRO Rename Over 16 Characters の不具合を修正</a></li>
+</ul>
+<h3><a href="#version_2_1_0">■ 2.1.0</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-X01">ノート 81-X01:  (マニュアル) 「マテリアルの種類とアトリビュート」を修正</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-X02">ノート 81-X02:  ノード名またはマテリアル名が空文字の場合にエラーを発生するように修正</a></li>
+<li><a href="#note_81-X03">ノート 81-X03:  メッシュがポリゴンを持たない場合は警告を表示し、null として出力するように修正</a></li>
+<li><a href="#note_81-X04">ノート 81-X04:  モディファイヤが無効になる不具合を修正</a></li>
+<li><a href="#note_81-X05">ノート 81-X05:  Physique 出力の不具合を修正</a></li>
+</ul>
+<h3><a href="#version_2_0_0">■ 2.0.0</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_80-X01">ノート 80-X01:  フレームの範囲を指定して出力する場合の処理を高速化</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_80-X02">ノート 80-X02:  Merge Useless Node 指定時の不具合を修正</a></li>
+<li><a href="#note_80-X03">ノート 80-X03:  Physique 出力の不具合を修正</a></li>
+</ul>
+<h3><a href="#version_2_0_0_1">■ 2.0.0 RC2</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_79-X01">ノート 79-X01:  (マニュアル) NITRO-System の名称変更による修正</a></li>
+</ul>
+<h3><a href="#version_2_0_0_0">■ 2.0.0 RC</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_78-X01">ノート 78-X01:  (マニュアル) 「3.2.2 出力されないノード」を修正</a></li>
+<li><a href="#note_78-X02">ノート 78-X02:  (マニュアル) 「3.4 オブジェクトのアニメーション」を修正</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_78-X03">ノート 78-X03:  Compress Node = Unite の不具合を修正</a></li>
+<li><a href="#note_78-X04">ノート 78-X04:  警告 UV range over の不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20080618">■ 2008年6月18日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_77-X01">ノート 77-X01:  3ds Max 2009（Windows 32bit 版）に対応</a></li>
+<li><a href="#note_77-X02">ノート 77-X02:  3ds Max 7.0 のサポートを終了</a></li>
+<li><a href="#note_77-X03">ノート 77-X03:  (マニュアル) プラグインの設定ファイルについて記述</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_77-X04">ノート 77-X04:  Save/Load Scene Settings の不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20080408">■ 2008年4月8日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_76-X01">ノート 76-X01:  (マニュアル) 改訂履歴の書式変更と表題と副題を修正</a></li>
+</ul>
+<h3><a href="#version_20080324">■ 2008年3月24日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_75-X01">ノート 75-X01:  中間ファイルのバッチエクスポート機能を追加</a></li>
+<li><a href="#note_75-X02">ノート 75-X02:  テクスチャファイルのパスが絶対パスでない場合に対応</a></li>
+<li><a href="#note_75-X03">ノート 75-X03:  (マニュアル)「対応機能一覧」を追加</a></li>
+<li><a href="#note_75-X04">ノート 75-X04:  (マニュアル)「3.7 NURBS モデル」を修正</a></li>
+<li><a href="#note_75-X05">ノート 75-X05:  (マニュアル)「3.8 サブディビジョン サーフェス」を修正</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_75-X06">ノート 75-X06:  法線／頂点カラー／テクスチャ座標が正しく出力されない場合があった不具合を修正</a></li>
+<li><a href="#note_75-X07">ノート 75-X07:  テクスチャパターンアニメーションが正しく出力されなかった不具合を修正</a></li>
+<li><a href="#note_75-X08">ノート 75-X08:  &lt;material&gt; の tex_palette_idx が正しく出力されなかった不具合を修正</a></li>
+<li><a href="#note_75-X09">ノート 75-X09:  不正な ica / ima / ita ファイルが出力される場合があった不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20080123">■ 2008年1月23日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_73-X01">ノート 73-X01:  3ds Max 2008 に対応</a></li>
+</ul>
+<h3><a href="#version_20071217">■ 2007年12月17日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_72-X01">ノート 72-X01:  NITRO Set Render Priority プラグインを追加</a></li>
+<li><a href="#note_72-X02">ノート 72-X02:  (マニュアル)「2.11 スキニング」を修正</a></li>
+<li><a href="#note_72-X03">ノート 72-X03:  (マニュアル) 「2.12 Biped」を追加</a></li>
+<li><a href="#note_72-X04">ノート 72-X04:  (マニュアル) 「2.13 Physique」を追加</a></li>
+<li><a href="#note_72-X05">ノート 72-X05:  (マニュアル) 「Character Studio」の節を削除</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_72-X06">ノート 72-X06:  Biped を使った時の不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20071126">■ 2007年11月26日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_71-X01">ノート 71-X01:  (マニュアル) 「2.10.5 テクスチャパターンアニメーション」に IFL ファイルのループ出力について加筆</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_71-X02">ノート 71-X02:  Max 上の開始時間が 0 でない場合に正しく動作しなかった不具合を修正</a></li>
+<li><a href="#note_71-X03">ノート 71-X03:  出力オプションの Start Frame における値で出力されない不具合を修正</a></li>
+<li><a href="#note_71-X04">ノート 71-X04:  imd ファイルを出力しないで itp ファイルを出力した場合に正しく動作しない不具合を修正</a></li>
+<li><a href="#note_71-X05">ノート 71-X05:  出力するフレームが IFL ファイルで指定したフレームの範囲外の場合に正しく動作しない不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20070618">■ 2007年6月18日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_68-X01">ノート 68-X01:  プラグインのメインメニューの名前を NITRO-System に変更</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_68-X02">ノート 68-X02:  Triangulation オプションの状態によって Max が異常終了する場合があった不具合を修正</a></li>
+<li><a href="#note_68-X03">ノート 68-X03:  スキニングを使用したモデルが正しく出力されなかった不具合を修正</a></li>
+<li><a href="#note_68-X04">ノート 68-X04:  微小なウェイト値が設定されているモデルが正しく出力されない場合があった不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20070518">■ 2007年5月18日版</a></h3>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_67-X01">ノート 67-X01:  &lt;tex_image&gt;、&lt;tex_palette&gt;、&lt;material&gt; がアルファベット順に格納されない不具合を修正</a></li>
+<li><a href="#note_67-X02">ノート 67-X02:  ノードおよびマテリアルの名前が重複していないのに名前が変更される不具合を修正</a></li>
+<li><a href="#note_67-X03">ノート 67-X03:  マテリアルの名前が重複していた場合に、警告を表示するように修正</a></li>
+</ul>
+<h3><a href="#version_20070423">■ 2007年4月23日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_65-X01">ノート 65-X01:  3ds Max 7.0 及び 3ds Max 8.0 に正式対応</a></li>
+<li><a href="#note_65-X02">ノート 65-X02:  3ds Max6のサポートを終了</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_65-X03">ノート 65-X03:  ica ファイルが正しく出力されない場合があった不具合を修正</a></li>
+<li><a href="#note_65-X04">ノート 65-X04:  itp ファイルが正しく出力されない場合があった不具合修正</a></li>
+<li><a href="#note_65-X05">ノート 65-X05:  エラー&quot;Wrong weighted vertices exist&quot;発生時に、問題のある頂点のインデックスを表示するように修正</a></li>
+<li><a href="#note_65-X06">ノート 65-X06:  エラー&quot;Wrong weighted vertices exist&quot;の判定に不具合があったのを修正</a></li>
+</ul>
+<h3><a href="#version_20070123">■ 2007年1月23日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_62-X01">ノート 62-X01:  3ds Max 9.0に対応</a></li>
+<li><a href="#note_62-X02">ノート 62-X02:  (マニュアル) 「2.1 3ds Max のバージョン」を加筆</a></li>
+<li><a href="#note_62-X03">ノート 62-X03:  (マニュアル) 「2.1.1 3ds Max 9.0に関する注意事項」を加筆</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_62-X04">ノート 62-X04:  ita ファイルで、テクスチャのないマテリアルの &lt;tex_srt_anm&gt; を出力しないように修正</a></li>
+</ul>
+<h3><a href="#version_20060714">■ 2006年7月14日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_60-X01">ノート 60-X01:  (マニュアル) 「既知のバグリスト」にbiped出力時の問題についての説明を追記</a></li>
+<li><a href="#note_60-X02">ノート 60-X02:  (マニュアル) 「5.4 カスタムアトリビュート」のアトリビュート名を修正</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_60-X03">ノート 60-X03:  マルチ/サブ オブジェクト マテリアルを使った際、3dsMaxがクラッシュする場合があった不具合を修正</a></li>
+<li><a href="#note_60-X04">ノート 60-X04:  diffuse mapのパスが誤ったパスに設定されてしまっていた不具合を修正</a></li>
+<li><a href="#note_60-X05">ノート 60-X05:  UVの値が-2048から2047の許容範囲を超えたときに警告が出力されなかった不具合を修正</a></li>
+<li><a href="#note_60-X06">ノート 60-X06:  Targaフォーマットのファイルをチェックする処理で、ファイルハンドルの解放が適切でなかった不具合を修正</a></li>
+<li><a href="#note_60-X07">ノート 60-X07:  &lt;mtx_idx&gt;の値の変更に関わらず、&lt;nrm&gt;タグが常に出力されていた不具合を修正</a></li>
+<li><a href="#note_60-X08">ノート 60-X08:  行列計算時の丸め処理を以前の設定に変更</a></li>
+</ul>
+<h3><a href="#version_20051215">■ 2005年12月15日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_54-X01">ノート 54-X01:  &lt;material_array&gt;,&lt;matrix_array&gt;,&lt;polygon_array&gt;要素のsizeが&quot;0&quot;のとき、これらの要素を出力しないように修正</a></li>
+<li><a href="#note_54-X02">ノート 54-X02:  imdファイルの&lt;box_test&gt;要素が間違った値で出力されていたのを修正</a></li>
+<li><a href="#note_54-X03">ノート 54-X03:  不必要であった行列計算時の丸め処理を削除</a></li>
+</ul>
+<h3><a href="#version_20050708">■ 2005年7月8日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_48-X01">ノート 48-X01:  中間ファイルフォーマット Ver 1.6.0に対応</a></li>
+<li><a href="#note_48-X02">ノート 48-X02:  4 x 4 テクセル圧縮テクスチャを作成する際に、部分的に色が暗くなる場合があったのを修正</a></li>
+<li><a href="#note_48-X03">ノート 48-X03:  NITRO Set Material Attribute プラグインを更新</a></li>
+<li><a href="#note_48-X04">ノート 48-X04:  (マニュアル) 「既知の不具合リスト」を追加</a></li>
+<li><a href="#note_48-X05">ノート 48-X05:  (マニュアル) NITRO Morpher マテリアルよりもIFL ファイルを使うように勧める文言を追記</a></li>
+</ul>
+<h3><a href="#version_20050121">■ 2005年1月21日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_38-X01">ノート 38-X01:  中間ファイルフォーマット Ver 1.5.0に対応</a></li>
+<li><a href="#note_38-X02">ノート 38-X02:  NITRO Set Material Attribute プラグインを更新</a></li>
+<li><a href="#note_38-X03">ノート 38-X03:  NITRO Show Render Priority プラグインを追加</a></li>
+<li><a href="#note_38-X04">ノート 38-X04:  (マニュアル)「2.6.8 ポリゴンの描画優先度」を追加</a></li>
+<li><a href="#note_38-X05">ノート 38-X05:  (マニュアル) 「3.2.5 Animation Options」の Interpolation の説明を修正</a></li>
+<li><a href="#note_38-X06">ノート 38-X06:  (マニュアル) 「5.4 カスタムアトリビュート」にアトリビュートを追加</a></li>
+<li><a href="#note_38-X07">ノート 38-X07:  (マニュアル) 警告を追加</a></li>
+</ul>
+<h3><a href="#version_20041224">■ 2004年12月24日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_36-X01">ノート 36-X01:  日本語版を作成</a></li>
+</ul>
+<h3><a href="#version_20041026">■ 2004年10月26日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_30-X01">ノート 30-X01:  (マニュアル) imd Options の図を更新</a></li>
+<li><a href="#note_30-X02">ノート 30-X02:  (マニュアル) imd Options の中の TriangulationForce のオプションを更新</a></li>
+</ul>
+<h3><a href="#version_20041014">■ 2004年10月14日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_27-X01">ノート 27-X01:  (マニュアル) imd Options の図を更新</a></li>
+<li><a href="#note_27-X02">ノート 27-X02:  (マニュアル) imd Options の中の TriangulationForce のオプションを更新</a></li>
+</ul>
+<h3><a href="#version_20041011">■ 2004年10月11日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_25-X01">ノート 25-X01:  Force Quadsのオプションの場所を移動</a></li>
+<li><a href="#note_25-X02">ノート 25-X02:  中間ファイル出力時の警告を追加</a></li>
+</ul>
+<h3><a href="#version_20041004">■ 2004年10月4日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_23-X01">ノート 23-X01:  (マニュアル) サポートしているCharacter Studioの機能についての説明を追加</a></li>
+</ul>
+<h3><a href="#version_20040916">■ 2004年9月16日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_21-X01">ノート 21-X01:  NITRO Replace Character プラグインを追加</a></li>
+<li><a href="#note_21-X02">ノート 21-X02:  NITRO Rename Over 16 Characters プラグインを追加</a></li>
+</ul>
+<h3><a href="#version_20040819">■ 2004年8月19日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_18-X01">ノート 18-X01:  Apply ボタンから出力する場合のプログレスバーをダイアログに追加</a></li>
+</ul>
+<h3><a href="#version_20040810">■ 2004年8月10日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_16-X01">ノート 16-X01:  s,t座標を計算するためのテクスチャ行列の計算を修正</a></li>
+<li><a href="#note_16-X02">ノート 16-X02:  (マニュアル) 任意のノードの頂点カラーを出力しない場合の説明を追加</a></li>
+</ul>
+<h3><a href="#version_20040802">■ 2004年8月2日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_15-X01">ノート 15-X01:  NINTENDO NITRO-System 用の付加情報が付いた TGA ファイルに対応</a></li>
+<li><a href="#note_15-X02">ノート 15-X02:  ica ファイルの &lt;node_anm_info&gt; に scaling_rule を追加</a></li>
+<li><a href="#note_15-X03">ノート 15-X03:  中間ファイル出力時のエラーと警告を追加</a></li>
+<li><a href="#note_15-X04">ノート 15-X04:  ドキュメント内の単語を3ds Maxのユーザーインターフェイスに合うよう変更</a></li>
+<li><a href="#note_15-X05">ノート 15-X05:  IFLファイルをサポート</a></li>
+<li><a href="#note_15-X06">ノート 15-X06:  中間ファイル出力プラグインに n3es ファイルの入出力機能を追加</a></li>
+</ul>
+
+
+<h2 id="version_2_1_1">■ 2.1.1での変更点</h2>
+<h3 id="note_82-X01">ノート 82-X01:  3ds Max のバージョンについて</h3>
+<p>今回の更新には、3ds Max 8.0 用プラグインは含まれません。
+また、次回更新時よりサポート対象は、3ds Max 9.0 以降とさせて頂く予定です。
+</p>
+<h3 id="note_82-X02">ノート 82-X02:  3ds Max 2010（Windows 32bit 版）に対応</h3>
+<p>3ds Max 2010（Windows 32bit 版）に対応しました。
+</p>
+<h3 id="note_82-X03">ノート 82-X03:  NITRO Replace Character、NITRO Rename Over 16 Characters の不具合を修正</h3>
+<p>NITRO Replace Character、NITRO Rename Over 16 Characters で、親ノードを持つノードに適用されたマテリアルの名前を変更できなかった不具合を修正しました。
+</p>
+<h2 id="version_2_1_0">■ 2.1.0での変更点</h2>
+<h3 id="note_81-X01">ノート 81-X01:  (マニュアル) 「マテリアルの種類とアトリビュート」を修正</h3>
+<p>「マテリアルの種類とアトリビュート」の不透明度に関する注意を修正しました。
+</p>
+<h3 id="note_81-X02">ノート 81-X02:  ノード名またはマテリアル名が空文字の場合にエラーを発生するように修正</h3>
+<p>ノード名またはマテリアル名が空文字の場合にエラーを発生するように修正しました。
+</p>
+<h3 id="note_81-X03">ノート 81-X03:  メッシュがポリゴンを持たない場合は警告を表示し、null として出力するように修正</h3>
+<p>メッシュがポリゴンを持たない場合は警告を表示し、null として出力するように修正しました。
+</p>
+<h3 id="note_81-X04">ノート 81-X04:  モディファイヤが無効になる不具合を修正</h3>
+<p>出力時にエラーが発生するとモディファイヤが無効になる場合があった不具合を修正しました。
+</p>
+<h3 id="note_81-X05">ノート 81-X05:  Physique 出力の不具合を修正</h3>
+<p>Physique を使用したモデルで imd ファイルのポーズが正しく出力されない場合があ
+った不具合を修正しました。
+</p>
+<h2 id="version_2_0_0">■ 2.0.0での変更点</h2>
+<h3 id="note_80-X01">ノート 80-X01:  フレームの範囲を指定して出力する場合の処理を高速化</h3>
+<p>フレームの範囲を指定して出力する場合の処理を高速化しました。
+</p>
+<h3 id="note_80-X02">ノート 80-X02:  Merge Useless Node 指定時の不具合を修正</h3>
+<p>Merge Useless Node 指定時に &lt;node&gt; の child が正しく出力されない場合があった不具合を修正しました。
+</p>
+<h3 id="note_80-X03">ノート 80-X03:  Physique 出力の不具合を修正</h3>
+<p>Physique を使用したモデルで imd ファイルのポーズが正しく出力されなかった不具合を修正しました。
+</p>
+<h2 id="version_2_0_0_1">■ 2.0.0 RC2での変更点</h2>
+<h3 id="note_79-X01">ノート 79-X01:  (マニュアル) NITRO-System の名称変更による修正</h3>
+<p>NITRO-System を TWL-System に変更しました。
+</p>
+<h2 id="version_2_0_0_0">■ 2.0.0 RCでの変更点</h2>
+<h3 id="note_78-X01">ノート 78-X01:  (マニュアル) 「3.2.2 出力されないノード」を修正</h3>
+<p>「3.2.2 出力されないノード」を修正しました。
+</p>
+<h3 id="note_78-X02">ノート 78-X02:  (マニュアル) 「3.4 オブジェクトのアニメーション」を修正</h3>
+<p>「3.4 オブジェクトのアニメーション」の非表示に関する説明を修正しました。
+</p>
+<h3 id="note_78-X03">ノート 78-X03:  Compress Node = Unite の不具合を修正</h3>
+<p>Compress Node が Unite のとき、&lt;polygon&gt; の volume_r が正しく出力されなかった不具合を修正しました。
+</p>
+<h3 id="note_78-X04">ノート 78-X04:  警告 UV range over の不具合を修正</h3>
+<p>警告 UV range over の判定が正しくない場合があった不具合を修正しました。
+</p>
+<h2 id="version_20080618">■ 2008年6月18日版での変更点</h2>
+<h3 id="note_77-X01">ノート 77-X01:  3ds Max 2009（Windows 32bit 版）に対応</h3>
+<p>3ds Max 2009（Windows 32bit 版）に対応しました。
+</p>
+<h3 id="note_77-X02">ノート 77-X02:  3ds Max 7.0 のサポートを終了</h3>
+<p>3ds Max 7.0 のサポートを終了しました。
+</p>
+<h3 id="note_77-X03">ノート 77-X03:  (マニュアル) プラグインの設定ファイルについて記述</h3>
+<p>プラグインの設定ファイル max.n3es、menusettings.bin について記述しました。
+</p>
+<h3 id="note_77-X04">ノート 77-X04:  Save/Load Scene Settings の不具合を修正</h3>
+<p>シーンを新規作成し、出力プラグインを実行しないで保存した場合に Save/Load Scene Settings がオフになっていた不具合を修正しました。
+</p>
+<h2 id="version_20080408">■ 2008年4月8日版での変更点</h2>
+<h3 id="note_76-X01">ノート 76-X01:  (マニュアル) 改訂履歴の書式変更と表題と副題を修正</h3>
+<p>NITRO_MaxPlugin.pdfの改訂履歴の書式を変更しました。
+また、ドキュメントの表題と副題を修正しました。
+</p>
+<h2 id="version_20080324">■ 2008年3月24日版での変更点</h2>
+<h3 id="note_75-X01">ノート 75-X01:  中間ファイルのバッチエクスポート機能を追加</h3>
+<p>中間ファイルのバッチエクスポート機能を追加しました。
+</p>
+<h3 id="note_75-X02">ノート 75-X02:  テクスチャファイルのパスが絶対パスでない場合に対応</h3>
+<p>テクスチャファイルのパスが絶対パスでない場合に対応しました。
+</p>
+<h3 id="note_75-X03">ノート 75-X03:  (マニュアル)「対応機能一覧」を追加</h3>
+<p>「対応機能一覧」を追加しました。
+</p>
+<h3 id="note_75-X04">ノート 75-X04:  (マニュアル)「3.7 NURBS モデル」を修正</h3>
+<p>「3.7 NURBS モデル」を修正しました。
+</p>
+<h3 id="note_75-X05">ノート 75-X05:  (マニュアル)「3.8 サブディビジョン サーフェス」を修正</h3>
+<p>「3.8 サブディビジョン サーフェス」を修正しました。
+</p>
+<h3 id="note_75-X06">ノート 75-X06:  法線／頂点カラー／テクスチャ座標が正しく出力されない場合があった不具合を修正</h3>
+<p>Use Primitive Strip がオンのとき、法線／頂点カラー／テクスチャ座標が正しく出力されない場合があった不具合を修正しました。
+</p>
+<h3 id="note_75-X07">ノート 75-X07:  テクスチャパターンアニメーションが正しく出力されなかった不具合を修正</h3>
+<p>複数のマテリアルで同じテクスチャを使用している場合にテクスチャパターンアニメーションが正しく出力されなかった不具合を修正しました。
+</p>
+<h3 id="note_75-X08">ノート 75-X08:  &lt;material&gt; の tex_palette_idx が正しく出力されなかった不具合を修正</h3>
+<p>複数のマテリアルで同名のテクスチャパレットを使用している場合に &lt;material&gt; の tex_palette_idx が正しく出力されなかった不具合を修正しました。
+</p>
+<h3 id="note_75-X09">ノート 75-X09:  不正な ica / ima / ita ファイルが出力される場合があった不具合を修正</h3>
+<p>不正な ica / ima / ita ファイルが出力される場合があった不具合を修正しました。
+</p>
+<h2 id="version_20080123">■ 2008年1月23日版での変更点</h2>
+<h3 id="note_73-X01">ノート 73-X01:  3ds Max 2008 に対応</h3>
+<p>3ds Max 2008(Windows 32bit 版)に対応しました。
+</p>
+<h2 id="version_20071217">■ 2007年12月17日版での変更点</h2>
+<h3 id="note_72-X01">ノート 72-X01:  NITRO Set Render Priority プラグインを追加</h3>
+<p>描画優先度を編集する NITRO Set Render Priority プラグインを追加しました。
+</p>
+<h3 id="note_72-X02">ノート 72-X02:  (マニュアル)「2.11 スキニング」を修正</h3>
+<p>「2.11 スキニング」を修正しました。
+</p>
+<h3 id="note_72-X03">ノート 72-X03:  (マニュアル) 「2.12 Biped」を追加</h3>
+<p>「2.12 Biped」を追加しました。
+</p>
+<h3 id="note_72-X04">ノート 72-X04:  (マニュアル) 「2.13 Physique」を追加</h3>
+<p>「2.13 Physique」を追加しました。
+</p>
+<h3 id="note_72-X05">ノート 72-X05:  (マニュアル) 「Character Studio」の節を削除</h3>
+<p>「Character Studio」の節を削除しました。
+</p>
+<h3 id="note_72-X06">ノート 72-X06:  Biped を使った時の不具合を修正</h3>
+<ul><li> Biped を使用している場合に、imd ファイルがスキンを適用したときのポーズで出力されない不具合を修正しました。
+</li>
+<li> Biped のアニメーションで、最初のフレームが正しく出力されない場合があった不具合を修正しました。
+</li>
+</ul>
+<h2 id="version_20071126">■ 2007年11月26日版での変更点</h2>
+<h3 id="note_71-X01">ノート 71-X01:  (マニュアル) 「2.10.5 テクスチャパターンアニメーション」に IFL ファイルのループ出力について加筆</h3>
+<p>プラグインマニュアルの「2.10.5 テクスチャパターンアニメーション」に IFL ファイルのループ出力について加筆しました。
+</p>
+<h3 id="note_71-X02">ノート 71-X02:  Max 上の開始時間が 0 でない場合に正しく動作しなかった不具合を修正</h3>
+<p>Max 上の開始時間が 0 でない場合に正しく動作しなかった不具合を修正しました。
+</p>
+<h3 id="note_71-X03">ノート 71-X03:  出力オプションの Start Frame における値で出力されない不具合を修正</h3>
+<p>imd ファイルのマテリアルカラーとテクスチャ SRT が出力オプションの Start Frame における値になっていなかった不具合を修正しました。
+</p>
+<h3 id="note_71-X04">ノート 71-X04:  imd ファイルを出力しないで itp ファイルを出力した場合に正しく動作しない不具合を修正</h3>
+<p>imd ファイルを出力しないで itp ファイルを出力した場合に正しく動作しない不具合を修正しました。
+</p>
+<h3 id="note_71-X05">ノート 71-X05:  出力するフレームが IFL ファイルで指定したフレームの範囲外の場合に正しく動作しない不具合を修正</h3>
+<p>テクスチャパターンアニメーションで、出力するフレームが IFL ファイルで指定したフレームの範囲外の場合に正しく動作しない不具合を修正しました。
+</p>
+<h2 id="version_20070618">■ 2007年6月18日版での変更点</h2>
+<h3 id="note_68-X01">ノート 68-X01:  プラグインのメインメニューの名前を NITRO-System に変更</h3>
+<p>プラグインのメインメニューの名前を NITRO-System に変更しました。
+</p>
+<h3 id="note_68-X02">ノート 68-X02:  Triangulation オプションの状態によって Max が異常終了する場合があった不具合を修正</h3>
+<p>Triangulation オプションを As Is または As Is With Quad Checking にして出力した際に Max が異常終了する場合があった不具合を修正しました。
+</p>
+<h3 id="note_68-X03">ノート 68-X03:  スキニングを使用したモデルが正しく出力されなかった不具合を修正</h3>
+<p>Triangulation オプションを Generate Quads にした際に、スキニングを使用したモデルが正しく出力されなかった不具合を修正しました。
+</p>
+<h3 id="note_68-X04">ノート 68-X04:  微小なウェイト値が設定されているモデルが正しく出力されない場合があった不具合を修正</h3>
+<p>Force Full Weight オプションをオンにした際に、微小なウェイト値が設定されているモデルが正しく出力されない場合があった不具合を修正しました。
+</p>
+<h2 id="version_20070518">■ 2007年5月18日版での変更点</h2>
+<h3 id="note_67-X01">ノート 67-X01:  &lt;tex_image&gt;、&lt;tex_palette&gt;、&lt;material&gt; がアルファベット順に格納されない不具合を修正</h3>
+<p>imd ファイルの &lt;tex_image&gt;、&lt;tex_palette&gt;、&lt;material&gt; が名前のアルファベット順に格納されていなかった不具合を修正しました。
+</p>
+<h3 id="note_67-X02">ノート 67-X02:  ノードおよびマテリアルの名前が重複していないのに名前が変更される不具合を修正</h3>
+<p>ノードおよびマテリアルの名前が重複していないのに名前が変更される場合があった不具合を修正しました。
+</p>
+<h3 id="note_67-X03">ノート 67-X03:  マテリアルの名前が重複していた場合に、警告を表示するように修正</h3>
+<p>マテリアルの名前が重複していた場合に、警告 &quot;Material name changed&quot; を表示するように修正しました。
+</p>
+<h2 id="version_20070423">■ 2007年4月23日版での変更点</h2>
+<h3 id="note_65-X01">ノート 65-X01:  3ds Max 7.0 及び 3ds Max 8.0 に正式対応</h3>
+<p>3ds Max 7.0 及び 3ds Max8.0 に正式対応しました。
+これまで3ds Max6用プラグインを7.0 / 7.5 / 8.0で使用されていた場合は必ずセットアップマニュアルの注意書きを参照ください。
+</p>
+<h3 id="note_65-X02">ノート 65-X02:  3ds Max6のサポートを終了</h3>
+<p>3ds Max6のサポートを終了しました。
+</p>
+<h3 id="note_65-X03">ノート 65-X03:  ica ファイルが正しく出力されない場合があった不具合を修正</h3>
+<p>Compress Node が Merge Useless Node の場合に、ica ファイルが正しく出力されない場合があった不具合を修正しました。
+</p>
+<h3 id="note_65-X04">ノート 65-X04:  itp ファイルが正しく出力されない場合があった不具合修正</h3>
+<p>IFL ファイルで指定したテクスチャファイルがフルパスでない時に、itp ファイルが正しく出力されない場合があった不具合を修正しました。
+</p>
+<h3 id="note_65-X05">ノート 65-X05:  エラー&quot;Wrong weighted vertices exist&quot;発生時に、問題のある頂点のインデックスを表示するように修正</h3>
+<p>エラー&quot;Wrong weighted vertices exist&quot; 発生時に、問題のある頂点のインデックスを表示するように修正しました。
+</p>
+<h3 id="note_65-X06">ノート 65-X06:  エラー&quot;Wrong weighted vertices exist&quot;の判定に不具合があったのを修正</h3>
+<p>エラー&quot;Wrong weighted vertices exist&quot; の判定に不具合があったのを修正しました。
+</p>
+<h2 id="version_20070123">■ 2007年1月23日版での変更点</h2>
+<h3 id="note_62-X01">ノート 62-X01:  3ds Max 9.0に対応</h3>
+<p>3ds Max 9.0(32ビット版)に対応しました。
+</p>
+<h3 id="note_62-X02">ノート 62-X02:  (マニュアル) 「2.1 3ds Max のバージョン」を加筆</h3>
+<p>「2.1 3ds Max のバージョン」を加筆しました。
+</p>
+<h3 id="note_62-X03">ノート 62-X03:  (マニュアル) 「2.1.1 3ds Max 9.0に関する注意事項」を加筆</h3>
+<p>「2.1.1 3ds Max 9.0に関する注意事項」を加筆しました。
+</p>
+<h3 id="note_62-X04">ノート 62-X04:  ita ファイルで、テクスチャのないマテリアルの &lt;tex_srt_anm&gt; を出力しないように修正</h3>
+<p>ita ファイルで、テクスチャのないマテリアルの &lt;tex_srt_anm&gt; を出力しないように修正しました。
+</p>
+<h2 id="version_20060714">■ 2006年7月14日版での変更点</h2>
+<h3 id="note_60-X01">ノート 60-X01:  (マニュアル) 「既知のバグリスト」にbiped出力時の問題についての説明を追記</h3>
+<p>「既知のバグリスト」にbiped出力時の問題についての説明を追記しました。
+</p>
+<h3 id="note_60-X02">ノート 60-X02:  (マニュアル) 「5.4 カスタムアトリビュート」のアトリビュート名を修正</h3>
+<p>カスタムアトリビュート一覧のアトリビュート名を修正しました。
+</p>
+<h3 id="note_60-X03">ノート 60-X03:  マルチ/サブ オブジェクト マテリアルを使った際、3dsMaxがクラッシュする場合があった不具合を修正</h3>
+<p>マルチ/サブ オブジェクト マテリアルが割り当てられたモデルが3dsMaxビュー上にあるとき、&quot;NITRO Show Lighting&quot;,&quot;NITRO Show Display Face&quot;を実行すると3dsMaxがクラッシュしていた問題を修正しました。
+</p>
+<h3 id="note_60-X04">ノート 60-X04:  diffuse mapのパスが誤ったパスに設定されてしまっていた不具合を修正</h3>
+<p>スクリプトを使って連続でExportするとき、diffuse mapのパスが誤ったパスに設定されてしまっていた不具合を修正しました。
+</p>
+<h3 id="note_60-X05">ノート 60-X05:  UVの値が-2048から2047の許容範囲を超えたときに警告が出力されなかった不具合を修正</h3>
+<p>UVの値が-2048から2047の許容範囲を超えたときに警告が出力されなかった不具合を修正しました。
+</p>
+<h3 id="note_60-X06">ノート 60-X06:  Targaフォーマットのファイルをチェックする処理で、ファイルハンドルの解放が適切でなかった不具合を修正</h3>
+<p>Targaフォーマットのファイルをチェックする処理で、ファイルハンドルの解放が適切でなかった不具合を修正しました。
+</p>
+<h3 id="note_60-X07">ノート 60-X07:  &lt;mtx_idx&gt;の値の変更に関わらず、&lt;nrm&gt;タグが常に出力されていた不具合を修正</h3>
+<p>imd ファイルの &lt;mtx_idx&gt; の値の変更に関わらず、&lt;nrm&gt;タグが常に出力されていた不具合を修正しました。
+</p>
+<h3 id="note_60-X08">ノート 60-X08:  行列計算時の丸め処理を以前の設定に変更</h3>
+<p>ポリゴンに亀裂が生じる可能性があるため、行列計算時の丸め処理を以前の設定に戻しました。
+</p>
+<h2 id="version_20051215">■ 2005年12月15日版での変更点</h2>
+<h3 id="note_54-X01">ノート 54-X01:  &lt;material_array&gt;,&lt;matrix_array&gt;,&lt;polygon_array&gt;要素のsizeが&quot;0&quot;のとき、これらの要素を出力しないように修正</h3>
+<p>imdファイルの&lt;material_array&gt;,&lt;matrix_array&gt;,&lt;polygon_array&gt;要素のsizeが&quot;0&quot;のとき、これらの要素を出力しないように修正しました。
+</p>
+<h3 id="note_54-X02">ノート 54-X02:  imdファイルの&lt;box_test&gt;要素が間違った値で出力されていたのを修正</h3>
+<p>imdファイルの&lt;box_test&gt;要素が間違った値で出力されていたのを修正しました。
+</p>
+<h3 id="note_54-X03">ノート 54-X03:  不必要であった行列計算時の丸め処理を削除</h3>
+<p>不必要であった行列計算時の丸め処理を削除しました。
+これにより中間ファイルに出力されるfloatの値はより正確になりました。
+</p>
+<h2 id="version_20050708">■ 2005年7月8日版での変更点</h2>
+<h3 id="note_48-X01">ノート 48-X01:  中間ファイルフォーマット Ver 1.6.0に対応</h3>
+<p>中間ファイルフォーマット Ver 1.6.0に対応しました。
+</p>
+<h3 id="note_48-X02">ノート 48-X02:  4 x 4 テクセル圧縮テクスチャを作成する際に、部分的に色が暗くなる場合があったのを修正</h3>
+<p>ファイル名が &quot;_cmp4&quot; で終わっている付加情報のないテクスチャファイルから 4 x 4 テクセル圧縮テクスチャを作成する際に、部分的に色が暗くなる場合があったのを修正しました。
+パレットデータ量が以前のバージョンと較べて増加する場合があります。
+</p>
+<h3 id="note_48-X03">ノート 48-X03:  NITRO Set Material Attribute プラグインを更新</h3>
+<p>NITRO Set Material Attribute プラグインを更新しました。
+</p>
+<ul><li> Texture Effect Matrix を追加しました。
+</li>
+<li> Tex Gen ST を削除しました。
+</li>
+</ul>
+<h3 id="note_48-X04">ノート 48-X04:  (マニュアル) 「既知の不具合リスト」を追加</h3>
+<p>「既知の不具合リスト」を追加しました。
+</p>
+<h3 id="note_48-X05">ノート 48-X05:  (マニュアル) NITRO Morpher マテリアルよりもIFL ファイルを使うように勧める文言を追記</h3>
+<p>NITRO Morpher マテリアルよりもIFL ファイルを使うように勧める文言を追記しました。
+</p>
+<h2 id="version_20050121">■ 2005年1月21日版での変更点</h2>
+<h3 id="note_38-X01">ノート 38-X01:  中間ファイルフォーマット Ver 1.5.0に対応</h3>
+<p>中間ファイルフォーマット Ver 1.5.0に対応しました。
+</p>
+<h3 id="note_38-X02">ノート 38-X02:  NITRO Set Material Attribute プラグインを更新</h3>
+<p>NITRO Set Material Attribute プラグインを更新しました。
+</p>
+<ul><li> 設定できるアトリビュートを追加しました。
+</li>
+</ul>
+<h3 id="note_38-X03">ノート 38-X03:  NITRO Show Render Priority プラグインを追加</h3>
+<p>NITRO Show Render Priority プラグインを追加しました。
+</p>
+<h3 id="note_38-X04">ノート 38-X04:  (マニュアル)「2.6.8 ポリゴンの描画優先度」を追加</h3>
+<p>「2.6.8 ポリゴンの描画優先度」を追加しました。
+</p>
+<h3 id="note_38-X05">ノート 38-X05:  (マニュアル) 「3.2.5 Animation Options」の Interpolation の説明を修正</h3>
+<p>「3.2.5 Animation Options」の Interpolation の説明を修正しました。
+</p>
+<h3 id="note_38-X06">ノート 38-X06:  (マニュアル) 「5.4 カスタムアトリビュート」にアトリビュートを追加</h3>
+<p>「5.4 カスタムアトリビュート」にアトリビュートを追加しました。
+</p>
+<h3 id="note_38-X07">ノート 38-X07:  (マニュアル) 警告を追加</h3>
+<p>警告を追加しました。
+</p>
+<h2 id="version_20041224">■ 2004年12月24日版での変更点</h2>
+<h3 id="note_36-X01">ノート 36-X01:  日本語版を作成</h3>
+<p>日本語版を作成しました。
+</p>
+<h2 id="version_20041026">■ 2004年10月26日版での変更点</h2>
+<h3 id="note_30-X01">ノート 30-X01:  (マニュアル) imd Options の図を更新</h3>
+<p>imd Options の図を更新しました。
+</p>
+<h3 id="note_30-X02">ノート 30-X02:  (マニュアル) imd Options の中の TriangulationForce のオプションを更新</h3>
+<p>imd Options の中の TriangulationForce のオプションを更新しました。
+</p>
+<h2 id="version_20041014">■ 2004年10月14日版での変更点</h2>
+<h3 id="note_27-X01">ノート 27-X01:  (マニュアル) imd Options の図を更新</h3>
+<p>imd Options の図を更新しました。
+</p>
+<h3 id="note_27-X02">ノート 27-X02:  (マニュアル) imd Options の中の TriangulationForce のオプションを更新</h3>
+<p>imd Options の中の TriangulationForce のオプションを更新しました。
+</p>
+<h2 id="version_20041011">■ 2004年10月11日版での変更点</h2>
+<h3 id="note_25-X01">ノート 25-X01:  Force Quadsのオプションの場所を移動</h3>
+<p>中間ファイル出力プラグインのForce Quadsのオプションの場所を移動しました。
+</p>
+<h3 id="note_25-X02">ノート 25-X02:  中間ファイル出力時の警告を追加</h3>
+<p>中間ファイル出力時の警告を追加しました。
+</p>
+<h2 id="version_20041004">■ 2004年10月4日版での変更点</h2>
+<h3 id="note_23-X01">ノート 23-X01:  (マニュアル) サポートしているCharacter Studioの機能についての説明を追加</h3>
+<p>サポートしているCharacter Studioの機能についての説明を追加しました。
+</p>
+<h2 id="version_20040916">■ 2004年9月16日版での変更点</h2>
+<h3 id="note_21-X01">ノート 21-X01:  NITRO Replace Character プラグインを追加</h3>
+<p>エレメント名の文字列置換するNITRO Replace Character プラグインを追加しました。
+</p>
+<h3 id="note_21-X02">ノート 21-X02:  NITRO Rename Over 16 Characters プラグインを追加</h3>
+<p>16 文字を超えるエレメント名の変更する NITRO Rename Over 16 Characters プラグインを追加しました。
+</p>
+<h2 id="version_20040819">■ 2004年8月19日版での変更点</h2>
+<h3 id="note_18-X01">ノート 18-X01:  Apply ボタンから出力する場合のプログレスバーをダイアログに追加</h3>
+<p>Apply ボタンから出力する場合のプログレスバーをダイアログに追加しました。
+</p>
+<h2 id="version_20040810">■ 2004年8月10日版での変更点</h2>
+<h3 id="note_16-X01">ノート 16-X01:  s,t座標を計算するためのテクスチャ行列の計算を修正</h3>
+<p>s,t座標を計算するためのテクスチャ行列の計算を修正しました。
+</p>
+<h3 id="note_16-X02">ノート 16-X02:  (マニュアル) 任意のノードの頂点カラーを出力しない場合の説明を追加</h3>
+<p>任意のノードの頂点カラーを出力しない場合の説明を追加しました。
+</p>
+<h2 id="version_20040802">■ 2004年8月2日版での変更点</h2>
+<h3 id="note_15-X01">ノート 15-X01:  NINTENDO NITRO-System 用の付加情報が付いた TGA ファイルに対応</h3>
+<p>NINTENDO NITRO-System 用の付加情報が付いた TGA ファイルに対応しました。
+</p>
+<h3 id="note_15-X02">ノート 15-X02:  ica ファイルの &lt;node_anm_info&gt; に scaling_rule を追加</h3>
+<p>ica ファイルの &lt;node_anm_info&gt; に scaling_rule を追加しました。
+</p>
+<h3 id="note_15-X03">ノート 15-X03:  中間ファイル出力時のエラーと警告を追加</h3>
+<p>中間ファイル出力時のエラーと警告を追加しました。
+</p>
+<h3 id="note_15-X04">ノート 15-X04:  ドキュメント内の単語を3ds Maxのユーザーインターフェイスに合うよう変更</h3>
+<p>ドキュメント内の単語を3ds Maxのユーザーインターフェイスに合うよう変更しました。
+</p>
+<h3 id="note_15-X05">ノート 15-X05:  IFLファイルをサポート</h3>
+<p>IFLファイルを使った itp ファイルの出力に対応しました。
+</p>
+<h3 id="note_15-X06">ノート 15-X06:  中間ファイル出力プラグインに n3es ファイルの入出力機能を追加</h3>
+<p>中間ファイル出力プラグインのオプションの設定を n3es ファイルとして入出力する機能を追加しました。
+</p>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+</body>
+</html>

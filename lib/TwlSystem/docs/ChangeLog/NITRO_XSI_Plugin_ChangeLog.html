@@ -1,0 +1,567 @@
+<html>
+<head>
+<title>TWL-System SOFTIMAGE|XSI プラグイン 更新履歴</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-style-type" content="text/css" />
+<style type="text/css">
+<!--
+    
+H1
+{
+    font-weight         : bold;
+    font-size           : 250%;
+    text-align          : left;
+    color               : #46f;
+    margin              : 0em 0em 0.5em 0em;
+}
+
+H2
+{
+    font-weight         : bold;
+    font-size           : 150%;
+    text-align          : left;
+    margin              : 2em 0em 0.5em 0em;
+    padding-top         : 8pt;
+    border-top-style    : double;
+    border-top-width    : 3px;
+}
+
+H3
+{
+    font-weight         : bold;
+    font-size           : 120%;
+    margin              : 1em 0em 0.5em 0em;
+    padding-top         : 8pt;
+    border-top-style    : solid;
+    border-top-width    : 1px;
+}
+
+H4
+{
+    font-weight         : normal;
+    font-size           : 100%;
+    margin              : 0em 0em 0em 0.5em;
+}
+
+DIV.date
+{
+    font-size           : normal;
+    text-align          : right;
+    margin              : 0pt 0pt 12pt 0pt;
+}
+
+DIV.licence
+{
+    margin: 0em;
+    border-style : solid;
+    border-width : 1px;
+}
+
+P
+{
+    font-size           : normal;
+    margin              : 0em 1em 0.5em 1em;
+    line-height         : 150%;
+}
+
+PRE
+{
+    font-size           : normal;
+    margin              : 0em 0em 1em 2em;
+    line-height         : 120%;
+}
+
+DT
+{
+    margin              : 1em 0em 0em 1em;
+}
+DD
+{
+    margin-left         : 3em;
+}
+UL
+{
+    margin-top         : 0em;
+}
+
+-->
+</style>
+</head>
+<body>
+
+<h1>TWL-System SOFTIMAGE|XSI プラグイン 更新履歴</h1>
+
+<h2>■ インデックス</h2>
+
+<h3><a href="#version_2_1_1">■ 2.1.1</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_82-I01">ノート 82-I01:  Softimage 7.5（Windows 32bit 版）に対応</a></li>
+</ul>
+<h3><a href="#version_2_1_0">■ 2.1.0</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-I01">ノート 81-I01:  (マニュアル) マニュアルを更新</a></li>
+</ul>
+<h3><a href="#version_2_0_0_1">■ 2.0.0 RC2</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_79-I01">ノート 79-I01:  XSI 7.0 に対応</a></li>
+<li><a href="#note_79-I02">ノート 79-I02:  XSI 5.11 のサポートを終了</a></li>
+<li><a href="#note_79-I03">ノート 79-I03:  (マニュアル) NITRO-System の名称変更による修正</a></li>
+</ul>
+<h3><a href="#version_20080618">■ 2008年6月18日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_77-I01">ノート 77-I01:  (マニュアル) マニュアルの不備を修正</a></li>
+</ul>
+<h3><a href="#version_20080408">■ 2008年4月8日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_76-I01">ノート 76-I01:  (マニュアル) 改訂履歴の書式変更と表題と副題を修正</a></li>
+</ul>
+<h3><a href="#version_20080324">■ 2008年3月24日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_75-I01">ノート 75-I01:  (マニュアル) 「対応機能一覧」を追加</a></li>
+</ul>
+<h3><a href="#version_20080123">■ 2008年1月23日版</a></h3>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_73-I01">ノート 73-I01:  マテリアルのカラー及びアルファ成分に1.0を越える値を設定した場合、1.0として出力するように修正</a></li>
+</ul>
+<h3><a href="#version_20071126">■ 2007年11月26日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_71-I01">ノート 71-I01:  NNS_TexPatternPSetに保存されたテクスチャのパスを一括変更するスクリプトを追加</a></li>
+<li><a href="#note_71-I02">ノート 71-I02:  XSIのメインメニューにプラグインメニューを追加</a></li>
+<li><a href="#note_71-I03">ノート 71-I03:  (マニュアル) スクリプトコマンド出力の補足を加筆</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_71-I04">ノート 71-I04:  キャラクタアニメーションデータが正しく出力されない不具合を修正</a></li>
+<li><a href="#note_71-I05">ノート 71-I05:  シーン内に保存された出力オプション設定が正しく反映されない不具合を修正</a></li>
+<li><a href="#note_71-I06">ノート 71-I06:  NITRO Set Texture Pattern Animation プラグインでテクスチャの順序が正しく出力されない不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20071010">■ 2007年10月10日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_70-I01">ノート 70-I01:  XSIver.6.02、6.5に対応</a></li>
+</ul>
+<h3><a href="#version_20070910">■ 2007年9月10日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_69-I01">ノート 69-I01:  中間ファイル出力設定のファイルバージョンを間違ったバージョンに保存するときがあった不具合を修正</a></li>
+<li><a href="#note_69-I02">ノート 69-I02:  XSIver.5.0、5.1のサポートを終了</a></li>
+</ul>
+<h3><a href="#version_20070618">■ 2007年6月18日版</a></h3>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_68-I01">ノート 68-I01:  &lt;display&gt;のpriorityが常に0が出力される不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20070518">■ 2007年5月18日版</a></h3>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_67-I01">ノート 67-I01:  imdに格納する&lt;box_test&gt;が適切に出力されない不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20070423">■ 2007年4月23日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_65-I01">ノート 65-I01:  XSIver.6.0.1に対応</a></li>
+</ul>
+<h3><a href="#version_20070129">■ 2007年1月29日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_63-I01">ノート 63-I01:  ユーザ法線の出力に対応</a></li>
+<li><a href="#note_63-I02">ノート 63-I02:  XSIver.4.0、4.2のサポートを終了</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_63-I03">ノート 63-I03:  imd ファイルの&lt;polugon&gt;、&lt;node&gt;のvolume_min、volume_maxが正しく出力されない不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20061003">■ 2006年10月3日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_61-I01">ノート 61-I01:  XSIver.5.11に対応</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_61-I02">ノート 61-I02:  XSIver.5.1以降で、マテリアルのカラーが正しく取得できない不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20060529">■ 2006年5月29日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_59-I01">ノート 59-I01:  XSIver.5.0、5.1に対応</a></li>
+</ul>
+<h3><a href="#version_20060417">■ 2006年4月17日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_57-I01">ノート 57-I01:  (マニュアル) PlayControlのFrameIn以前にKayFrameが設定されている場合の注意事項を追加</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_57-I02">ノート 57-I02:  PlayControlのFrameInがプラグイン実行時に書き換わる不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20051128">■ 2005年11月28日版</a></h3>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_53-I01">ノート 53-I01:  imd ファイルの &lt;box_test&gt; が正しく出力されるように修正</a></li>
+</ul>
+<h3><a href="#version_20051024">■ 2005年10月24日版</a></h3>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_52-I01">ノート 52-I01:  エンベロープモデルをExportした時にモデルの位置がずれる不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20050620">■ 2005年6月20日版</a></h3>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_47-I01">ノート 47-I01:  4 x 4 テクセル圧縮テクスチャを作成する際に、部分的に色が暗くなる場合があったのを修正</a></li>
+</ul>
+<h3><a href="#version_20050202">■ 2005年2月2日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_40-I01">ノート 40-I01:  中間ファイルフォーマット Ver 1.6.0 に対応</a></li>
+<li><a href="#note_40-I02">ノート 40-I02:  NITRO Exportをスクリプトから実行するためのコマンド &quot;NITRO_ExportCmd&quot;を追加</a></li>
+<li><a href="#note_40-I03">ノート 40-I03:  NITRO Set Material Attribute プラグインを更新</a></li>
+</ul>
+<h3><a href="#version_20050114">■ 2005年1月14日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_37-I01">ノート 37-I01:  XSIver.4.2に対応</a></li>
+<li><a href="#note_37-I02">ノート 37-I02:  中間ファイルのバッチエクスポート機能を追加</a></li>
+</ul>
+<h3><a href="#version_20041213">■ 2004年12月13日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_35-I01">ノート 35-I01:  中間ファイルフォーマットVer1.5.0に対応</a></li>
+<li><a href="#note_35-I02">ノート 35-I02:  NITRO Set Material Attribute プラグインを更新</a></li>
+<li><a href="#note_35-I03">ノート 35-I03:  NITRO Set Render Priority プラグインを追加</a></li>
+<li><a href="#note_35-I04">ノート 35-I04:  NITRO Show Render Priority プラグインを追加</a></li>
+<li><a href="#note_35-I05">ノート 35-I05:  警告を追加</a></li>
+<li><a href="#note_35-I06">ノート 35-I06:  (マニュアル) 「2.2.5.4 ポリゴンの描画優先度」を追加</a></li>
+<li><a href="#note_35-I07">ノート 35-I07:  (マニュアル) 「3.2.2 General Options」の Unite and Combine Polygon の説明を修正</a></li>
+<li><a href="#note_35-I08">ノート 35-I08:  (マニュアル) 「3.2.5 Animation Options」の Interpolation の説明を修正</a></li>
+</ul>
+<h4>不具合修正</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_35-I09">ノート 35-I09:  中間ファイル出力プラグインの不具合を修正</a></li>
+</ul>
+<h3><a href="#version_20041025">■ 2004年10月25日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_29-I01">ノート 29-I01:  NITRO Set Material Attribute プラグインを更新</a></li>
+<li><a href="#note_29-I02">ノート 29-I02:  NITRO Show Lighting プラグインを更新</a></li>
+<li><a href="#note_29-I03">ノート 29-I03:  (マニュアル) 「2.2.5.3 頂点カラー」の説明を修正</a></li>
+<li><a href="#note_29-I04">ノート 29-I04:  (マニュアル) 中間ファイル出力プラグインのオプション Interpolation の説明を修正</a></li>
+</ul>
+<h3><a href="#version_20041006">■ 2004年10月6日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_24-I01">ノート 24-I01:  NITRO Rename Over 16 Characters プラグインを追加</a></li>
+</ul>
+<h3><a href="#version_20040927">■ 2004年9月27日版</a></h3>
+<h4>追加・変更された機能</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_22-I01">ノート 22-I01:   中間ファイル出力プラグインを更新</a></li>
+<li><a href="#note_22-I02">ノート 22-I02:  NITRO Set Texture Pattern Animation プラグインを追加</a></li>
+<li><a href="#note_22-I03">ノート 22-I03:  NITRO Set Hierarchical Scaling プラグインを追加</a></li>
+<li><a href="#note_22-I04">ノート 22-I04:  NITRO Select Polygon プラグインを追加</a></li>
+<li><a href="#note_22-I05">ノート 22-I05:  NITRO Replace Character プラグインを追加</a></li>
+<li><a href="#note_22-I06">ノート 22-I06:  (マニュアル) 「2.2.1 ノード」に説明を加筆</a></li>
+<li><a href="#note_22-I07">ノート 22-I07:  (マニュアル) 「2.4.5 UVの制限」に説明を加筆</a></li>
+<li><a href="#note_22-I08">ノート 22-I08:  (マニュアル) 「2.8.3 NINTENDO NITRO-Systemでのエンベロープ表記について」の説明を追加</a></li>
+<li><a href="#note_22-I09">ノート 22-I09:  (マニュアル) 「2.9 SI3Dで作成したシーン/モデルの読み込み」の説明を修正</a></li>
+<li><a href="#note_22-I10">ノート 22-I10:  (マニュアル) 「2.10 カスタムパラメータセット」の説明を追加</a></li>
+</ul>
+
+
+<h2 id="version_2_1_1">■ 2.1.1での変更点</h2>
+<h3 id="note_82-I01">ノート 82-I01:  Softimage 7.5（Windows 32bit 版）に対応</h3>
+<p>Softimage 7.5（Windows 32bit 版）に対応しました。
+今回の更新にはアドオンファイルは含まれません。
+Softimage 7.5 には、XSI 7用のアドオンファイルをお使いください。
+</p>
+<h2 id="version_2_1_0">■ 2.1.0での変更点</h2>
+<h3 id="note_81-I01">ノート 81-I01:  (マニュアル) マニュアルを更新</h3>
+<p>NITRO_SoftimageXSI_Plugin.pdf及びSetup_SoftimageXSI_Plugin.pdfに、XSI 7.01に関する補足を加筆しました。
+</p>
+<h2 id="version_2_0_0_1">■ 2.0.0 RC2での変更点</h2>
+<h3 id="note_79-I01">ノート 79-I01:  XSI 7.0 に対応</h3>
+<p>XSI 7.0 に対応しました。
+</p>
+<h3 id="note_79-I02">ノート 79-I02:  XSI 5.11 のサポートを終了</h3>
+<p>XSI 5.11 のサポートを終了しました。
+</p>
+<h3 id="note_79-I03">ノート 79-I03:  (マニュアル) NITRO-System の名称変更による修正</h3>
+<p>NITRO-System を TWL-System に変更しました。
+</p>
+<h2 id="version_20080618">■ 2008年6月18日版での変更点</h2>
+<h3 id="note_77-I01">ノート 77-I01:  (マニュアル) マニュアルの不備を修正</h3>
+<p>NITRO_SoftimageXSI_Plugin.pdfの不備を修正しました。
+</p>
+<h2 id="version_20080408">■ 2008年4月8日版での変更点</h2>
+<h3 id="note_76-I01">ノート 76-I01:  (マニュアル) 改訂履歴の書式変更と表題と副題を修正</h3>
+<p>NITRO_SoftimageXSI_Plugin.pdfの改訂履歴の書式を変更しました。
+また、ドキュメントの表題と副題を修正しました。
+</p>
+<h2 id="version_20080324">■ 2008年3月24日版での変更点</h2>
+<h3 id="note_75-I01">ノート 75-I01:  (マニュアル) 「対応機能一覧」を追加</h3>
+<p>「対応機能一覧」の章を追加しました。
+</p>
+<h2 id="version_20080123">■ 2008年1月23日版での変更点</h2>
+<h3 id="note_73-I01">ノート 73-I01:  マテリアルのカラー及びアルファ成分に1.0を越える値を設定した場合、1.0として出力するように修正</h3>
+<p>XSI上でマテリアルのカラー及びアルファ成分（Diffuse, Ambient, Specular, Alpha）に1.0を越える値を設定した場合、1.0として出力するように修正しました。
+</p>
+<h2 id="version_20071126">■ 2007年11月26日版での変更点</h2>
+<h3 id="note_71-I01">ノート 71-I01:  NNS_TexPatternPSetに保存されたテクスチャのパスを一括変更するスクリプトを追加</h3>
+<p>NNS_TexPatternPSetに保存されたテクスチャのパスを一括変更するスクリプトを追加しました。
+</p>
+<h3 id="note_71-I02">ノート 71-I02:  XSIのメインメニューにプラグインメニューを追加</h3>
+<p>XSIのメインメニューにプラグインメニューを追加しました。
+</p>
+<h3 id="note_71-I03">ノート 71-I03:  (マニュアル) スクリプトコマンド出力の補足を加筆</h3>
+<p>プラグインマニュアルに、スクリプトコマンド出力の補足を加筆しました。
+</p>
+<h3 id="note_71-I04">ノート 71-I04:  キャラクタアニメーションデータが正しく出力されない不具合を修正</h3>
+<p>icaに格納されるキャラクタアニメーションデータが正しく出力されない場合があった不具合を修正しました。
+</p>
+<h3 id="note_71-I05">ノート 71-I05:  シーン内に保存された出力オプション設定が正しく反映されない不具合を修正</h3>
+<p>シーン内に保存された出力オプション設定が、出力オプションウインドウを開いた時に正しく反映されない不具合を修正しました。
+</p>
+<h3 id="note_71-I06">ノート 71-I06:  NITRO Set Texture Pattern Animation プラグインでテクスチャの順序が正しく出力されない不具合を修正</h3>
+<p>NITRO Set Texture Pattern Animation を使ってscrファイルを作成する際に、テクスチャの順序が正しく出力されない場合があった不具合を修正しました。
+</p>
+<h2 id="version_20071010">■ 2007年10月10日版での変更点</h2>
+<h3 id="note_70-I01">ノート 70-I01:  XSIver.6.02、6.5に対応</h3>
+<p>XSIver.6.02、6.5に対応しました。
+アドオンファイルは前回から変更されていません。
+</p>
+<h2 id="version_20070910">■ 2007年9月10日版での変更点</h2>
+<h3 id="note_69-I01">ノート 69-I01:  中間ファイル出力設定のファイルバージョンを間違ったバージョンに保存するときがあった不具合を修正</h3>
+<p>中間ファイル出力設定のファイルバージョンを間違ったバージョンに保存するときがあった不具合を修正しました。
+</p>
+<h3 id="note_69-I02">ノート 69-I02:  XSIver.5.0、5.1のサポートを終了</h3>
+<p>XSIver.5.0、5.1のサポートを終了しました。
+</p>
+<h2 id="version_20070618">■ 2007年6月18日版での変更点</h2>
+<h3 id="note_68-I01">ノート 68-I01:  &lt;display&gt;のpriorityが常に0が出力される不具合を修正</h3>
+<p>頂点カラーが設定されているマテリアルで&lt;display&gt;のpriorityが常に0が出力される不具合を修正しました。
+</p>
+<h2 id="version_20070518">■ 2007年5月18日版での変更点</h2>
+<h3 id="note_67-I01">ノート 67-I01:  imdに格納する&lt;box_test&gt;が適切に出力されない不具合を修正</h3>
+<p>imdに格納する&lt;box_test&gt;が適切に出力されない不具合を修正しました。
+</p>
+<h2 id="version_20070423">■ 2007年4月23日版での変更点</h2>
+<h3 id="note_65-I01">ノート 65-I01:  XSIver.6.0.1に対応</h3>
+<p>XSIver.6.0.1に対応しました。
+アドオンファイルは前回から変更されていません。
+</p>
+<h2 id="version_20070129">■ 2007年1月29日版での変更点</h2>
+<h3 id="note_63-I01">ノート 63-I01:  ユーザ法線の出力に対応</h3>
+<p>ユーザ法線の出力に対応しました。
+</p>
+<h3 id="note_63-I02">ノート 63-I02:  XSIver.4.0、4.2のサポートを終了</h3>
+<p>XSIver.4.0、4.2のサポートを終了しました。
+</p>
+<h3 id="note_63-I03">ノート 63-I03:  imd ファイルの&lt;polugon&gt;、&lt;node&gt;のvolume_min、volume_maxが正しく出力されない不具合を修正</h3>
+<p>エンベローブモデルの時、imd ファイルの&lt;polugon&gt;、&lt;node&gt;のvolume_min、volume_maxが正しく出力されない不具合を修正しました。
+</p>
+<h2 id="version_20061003">■ 2006年10月3日版での変更点</h2>
+<h3 id="note_61-I01">ノート 61-I01:  XSIver.5.11に対応</h3>
+<p>XSIver.5.11に対応しました。
+</p>
+<h3 id="note_61-I02">ノート 61-I02:  XSIver.5.1以降で、マテリアルのカラーが正しく取得できない不具合を修正</h3>
+<p>XSIver.5.1以降のXSIを使用するとき、マテリアルのカラーが正しく取得できない不具合を修正しました。
+</p>
+<h2 id="version_20060529">■ 2006年5月29日版での変更点</h2>
+<h3 id="note_59-I01">ノート 59-I01:  XSIver.5.0、5.1に対応</h3>
+<p>XSIver.5.0、5.1に対応しました。
+アドオンファイルは前回から変更されていません。
+</p>
+<h2 id="version_20060417">■ 2006年4月17日版での変更点</h2>
+<h3 id="note_57-I01">ノート 57-I01:  (マニュアル) PlayControlのFrameIn以前にKayFrameが設定されている場合の注意事項を追加</h3>
+<p>PlayControlのFrameIn以前にKayFrameが設定されている場合の注意事項を追加しました。
+</p>
+<h3 id="note_57-I02">ノート 57-I02:  PlayControlのFrameInがプラグイン実行時に書き換わる不具合を修正</h3>
+<p>PlayControlのFrameInがプラグイン実行時に書き換わる不具合を修正しました。
+</p>
+<h2 id="version_20051128">■ 2005年11月28日版での変更点</h2>
+<h3 id="note_53-I01">ノート 53-I01:  imd ファイルの &lt;box_test&gt; が正しく出力されるように修正</h3>
+<p>imd ファイルの &lt;box_test&gt; が正しく出力されるように修正しました。
+</p>
+<h2 id="version_20051024">■ 2005年10月24日版での変更点</h2>
+<h3 id="note_52-I01">ノート 52-I01:  エンベロープモデルをExportした時にモデルの位置がずれる不具合を修正</h3>
+<p>コンストレイントを多用したエンベロープモデルをExportした時にモデルの位置がずれる不具合を修正しました。
+</p>
+<h2 id="version_20050620">■ 2005年6月20日版での変更点</h2>
+<h3 id="note_47-I01">ノート 47-I01:  4 x 4 テクセル圧縮テクスチャを作成する際に、部分的に色が暗くなる場合があったのを修正</h3>
+<p>ファイル名が &quot;_cmp4&quot; で終わっている付加情報のないテクスチャファイルから 4 x 4 テクセル圧縮テクスチャを作成する際に、部分的に色が暗くなる場合があったのを修正しました。
+パレットデータ量が以前のバージョンと較べて増加する場合があります。
+</p>
+<h2 id="version_20050202">■ 2005年2月2日版での変更点</h2>
+<h3 id="note_40-I01">ノート 40-I01:  中間ファイルフォーマット Ver 1.6.0 に対応</h3>
+<p>中間ファイルフォーマット Ver 1.6.0 に対応しました。
+</p>
+<h3 id="note_40-I02">ノート 40-I02:  NITRO Exportをスクリプトから実行するためのコマンド &quot;NITRO_ExportCmd&quot;を追加</h3>
+<p>NITRO Exportをスクリプトから実行するためのコマンド &quot;NITRO_ExportCmd&quot;を追加しました。
+</p>
+<h3 id="note_40-I03">ノート 40-I03:  NITRO Set Material Attribute プラグインを更新</h3>
+<p>NITRO Set Material Attribute プラグインを更新しました。
+</p>
+<ul><li> Texture Effect Matrixを追加しました。
+</li>
+<li> TexGenSTを削除しました。
+</li>
+</ul>
+<h2 id="version_20050114">■ 2005年1月14日版での変更点</h2>
+<h3 id="note_37-I01">ノート 37-I01:  XSIver.4.2に対応</h3>
+<p>XSIver.4.2に対応しました。
+</p>
+<h3 id="note_37-I02">ノート 37-I02:  中間ファイルのバッチエクスポート機能を追加</h3>
+<p>中間ファイルのバッチエクスポート機能を追加しました。
+</p>
+<h2 id="version_20041213">■ 2004年12月13日版での変更点</h2>
+<h3 id="note_35-I01">ノート 35-I01:  中間ファイルフォーマットVer1.5.0に対応</h3>
+<p>中間ファイルフォーマットVer1.5.0に対応しました。
+</p>
+<h3 id="note_35-I02">ノート 35-I02:  NITRO Set Material Attribute プラグインを更新</h3>
+<p>NITRO Set Material Attribute プラグインを更新しました。
+</p>
+<ul><li> 設定できるアトリビュートを追加しました。
+</li>
+</ul>
+<h3 id="note_35-I03">ノート 35-I03:  NITRO Set Render Priority プラグインを追加</h3>
+<p>NITRO Set Render Priority プラグインを追加しました。
+</p>
+<h3 id="note_35-I04">ノート 35-I04:  NITRO Show Render Priority プラグインを追加</h3>
+<p>NITRO Show Render Priority プラグインを追加しました。
+</p>
+<h3 id="note_35-I05">ノート 35-I05:  警告を追加</h3>
+<p>警告を追加しました。
+</p>
+<h3 id="note_35-I06">ノート 35-I06:  (マニュアル) 「2.2.5.4 ポリゴンの描画優先度」を追加</h3>
+<p>「2.2.5.4 ポリゴンの描画優先度」を追加しました。
+</p>
+<h3 id="note_35-I07">ノート 35-I07:  (マニュアル) 「3.2.2 General Options」の Unite and Combine Polygon の説明を修正</h3>
+<p>「3.2.2 General Options」の Unite and Combine Polygon の説明を修正しました。
+</p>
+<h3 id="note_35-I08">ノート 35-I08:  (マニュアル) 「3.2.5 Animation Options」の Interpolation の説明を修正</h3>
+<p>「3.2.5 Animation Options」の Interpolation の説明を修正しました。
+</p>
+<h3 id="note_35-I09">ノート 35-I09:  中間ファイル出力プラグインの不具合を修正</h3>
+<p>頂点座標の大きなモデルを中間ファイル出力した時（＝imdファイルの属性 pos_scale が大きい時）、頂点座標の小数部下位の精度が落ちる不具合を修正しました。
+</p>
+<h2 id="version_20041025">■ 2004年10月25日版での変更点</h2>
+<h3 id="note_29-I01">ノート 29-I01:  NITRO Set Material Attribute プラグインを更新</h3>
+<p>NITRO Set Material Attribute プラグインを更新しました。
+</p>
+<ul><li> 設定できるアトリビュートを追加しました。
+</li>
+<li> Lighting を Light0 に名称変更しました。
+</li>
+</ul>
+<h3 id="note_29-I02">ノート 29-I02:  NITRO Show Lighting プラグインを更新</h3>
+<p>NITRO Show Lighting プラグインを更新しました。
+</p>
+<ul><li> ４つのライトを個別に確認できるように変更しました。
+</li>
+</ul>
+<h3 id="note_29-I03">ノート 29-I03:  (マニュアル) 「2.2.5.3 頂点カラー」の説明を修正</h3>
+<p>「2.2.5.3 頂点カラー」の説明を修正しました。
+</p>
+<h3 id="note_29-I04">ノート 29-I04:  (マニュアル) 中間ファイル出力プラグインのオプション Interpolation の説明を修正</h3>
+<p>中間ファイル出力プラグインのオプション Interpolation の説明を修正しました。
+</p>
+<h2 id="version_20041006">■ 2004年10月6日版での変更点</h2>
+<h3 id="note_24-I01">ノート 24-I01:  NITRO Rename Over 16 Characters プラグインを追加</h3>
+<p>NITRO Rename Over 16 Characters プラグインを追加しました。
+</p>
+<h2 id="version_20040927">■ 2004年9月27日版での変更点</h2>
+<h3 id="note_22-I01">ノート 22-I01:   中間ファイル出力プラグインを更新</h3>
+<p>中間ファイル出力プラグインを更新しました。
+</p>
+<ul><li> ima、itp、itaファイルの出力に対応しました。
+</li>
+<li> noIconテクスチャが貼られたモデルを出力する際、エラー処理から警告に変更しました。
+</li>
+<li> 兄弟関係にあるノードがアルファベット順に出力されていなかったバグを修正しました。
+</li>
+<li> クラスタ単位でテクスチャを設定した場合に、中間ファイルに正常に出力されない場合があったバグを修正しました。
+</li>
+</ul>
+<h3 id="note_22-I02">ノート 22-I02:  NITRO Set Texture Pattern Animation プラグインを追加</h3>
+<p>NITRO Set Texture Pattern Animation プラグインを追加しました。
+</p>
+<h3 id="note_22-I03">ノート 22-I03:  NITRO Set Hierarchical Scaling プラグインを追加</h3>
+<p>NITRO Set Hierarchical Scaling プラグインを追加しました。
+</p>
+<h3 id="note_22-I04">ノート 22-I04:  NITRO Select Polygon プラグインを追加</h3>
+<p>NITRO Select Polygon プラグインを追加しました。
+</p>
+<h3 id="note_22-I05">ノート 22-I05:  NITRO Replace Character プラグインを追加</h3>
+<p>NITRO Replace Character プラグインを追加しました。
+</p>
+<h3 id="note_22-I06">ノート 22-I06:  (マニュアル) 「2.2.1 ノード」に説明を加筆</h3>
+<p>「2.2.1 ノード」に説明を加筆しました。
+</p>
+<h3 id="note_22-I07">ノート 22-I07:  (マニュアル) 「2.4.5 UVの制限」に説明を加筆</h3>
+<p>「2.4.5 UVの制限」に説明を加筆しました。
+</p>
+<h3 id="note_22-I08">ノート 22-I08:  (マニュアル) 「2.8.3 NINTENDO NITRO-Systemでのエンベロープ表記について」の説明を追加</h3>
+<p>「2.8.3 NINTENDO NITRO-Systemでのエンベロープ表記について」の説明を追加しました。
+</p>
+<h3 id="note_22-I09">ノート 22-I09:  (マニュアル) 「2.9 SI3Dで作成したシーン/モデルの読み込み」の説明を修正</h3>
+<p>「2.9 SI3Dで作成したシーン/モデルの読み込み」の説明を修正しました。
+</p>
+<h3 id="note_22-I10">ノート 22-I10:  (マニュアル) 「2.10 カスタムパラメータセット」の説明を追加</h3>
+<p>「2.10 カスタムパラメータセット」の説明を追加しました。
+</p>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+</body>
+</html>

@@ -1,0 +1,898 @@
+<html>
+<head>
+<title>TWL-System 2.1.1 リリースノート</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta http-equiv="content-style-type" content="text/css" />
+<style type="text/css">
+<!--
+    
+H1
+{
+    font-weight         : bold;
+    font-size           : 250%;
+    text-align          : left;
+    color               : #46f;
+    margin              : 0em 0em 0.5em 0em;
+}
+
+H2
+{
+    font-weight         : bold;
+    font-size           : 150%;
+    text-align          : left;
+    margin              : 2em 0em 0.5em 0em;
+    padding-top         : 8pt;
+    border-top-style    : double;
+    border-top-width    : 3px;
+}
+
+H3
+{
+    font-weight         : bold;
+    font-size           : 120%;
+    margin              : 1em 0em 0.5em 0em;
+    padding-top         : 8pt;
+    border-top-style    : solid;
+    border-top-width    : 1px;
+}
+
+H4
+{
+    font-weight         : normal;
+    font-size           : 100%;
+    margin              : 0em 0em 0em 0.5em;
+}
+
+DIV.date
+{
+    font-size           : normal;
+    text-align          : right;
+    margin              : 0pt 0pt 12pt 0pt;
+}
+
+DIV.licence
+{
+    padding: 0em;
+    margin: 1em;
+    border-style : solid;
+    border-width : 1px;
+}
+
+DIV.caution
+{
+    padding: 0.5em;
+    margin: 1em;
+    border-style : solid;
+    border-width : 1px;
+}
+
+P
+{
+    font-size           : normal;
+    margin              : 0em 1em 0.5em 1em;
+    line-height         : 150%;
+}
+
+PRE
+{
+    font-size           : normal;
+    margin              : 1em;
+    line-height         : 120%;
+}
+
+DT
+{
+    margin              : 1em 0em 0em 1em;
+}
+DD
+{
+    margin-left         : 3em;
+}
+UL
+{
+    margin              : 0em 0em 1em 1em;
+    padding             : 0;
+}
+LI
+{
+    margin              : 0em 0em 0em 1em;
+}
+
+-->
+</style>
+</head>
+<body>
+
+<h1>TWL-System 2.1.1 リリースノート</h1>
+
+<div class="date">2009年5月28日</div>
+
+<h2>はじめに</h2>
+<p>本パッケージは、NINTENDO TWL-System 2.1.1です。</p>
+
+<p>  
+NINTENDO TWL-System は、ニンテンドーＤＳシリーズ用ゲームソフトの開発に使用できる基本的なツール＆ライブラリ群の総称です。
+この文書は、NINTENDO TWL-System 2.1.1のリリースノートです。
+</p>
+
+<h2>目次</h2>
+<ul style="list-style-type: none;">
+<li><a href="#subject_package">パッケージの内容</a></li>
+<li><a href="#subject_software_requirement">ソフトウェア要件</a></li>
+<li><a href="#subject_changelog_2_1_1">2.1.1での変更点</a></li>
+<li><a href="#subject_changelog_2_1_0">2.1.0での変更点</a></li>
+
+<li><a href="#subject_knownissues">既知の問題点</a></li>
+<li><a href="#subject_info">TWL-System に関する情報</a></li>
+<li><a href="#subject_note">注意事項</a></li>
+</ul>
+
+
+
+<h2 id="subject_package">パッケージの内容</h2>
+
+<p>
+NINTENDO TWL-System パッケージには、下記に示すライブラリやツールが含まれています。
+</p>
+
+<ul>
+  <li>Foundation ライブラリ（Fnd ライブラリ）</li>
+  <li>Graphics Foundation ライブラリ（Gfd ライブラリ）</li>
+  <li>２Ｄグラフィックスライブラリ（G2D ライブラリ）</li>
+  <li>３Ｄグラフィックスライブラリ（G３D ライブラリ）</li>
+  <li>NITRO-Composer（Sound ライブラリ）</li>
+  <li>Multiple Channel Stream ライブラリ（mcs ライブラリ）</li>
+  <li>３Ｄマテリアルエディタ（3DMaterialEdtior）</li>
+  <li>NITRO-SoundMaker</li>
+  <li>NITRO-Player</li>
+  <li>NITRO-Viewer</li>
+  <li>各種データコンバータ</li>
+  <li>各種CGツール用のプラグイン</li>
+  <li>各種マニュアル及び関数リファレンス</li>
+</ul>
+
+<h3>TWL-System パッケージの展開</h3>
+<p>
+NINTENDO TWL-System のパッケージをローカルディスクの任意の場所に展開します。
+NINTENDO TWL-System のパッケージはzip 形式で圧縮されていますので、各種解凍ツールを用いて展開してください。
+パッケージを展開しますと、TwlSystem という名前のディレクトリが作成されます。
+</p>
+<p>
+NINTENDO TWL-Systemを使用する場合には、環境変数TWLSYSTEM_ROOTが設定されている必要があります。 
+環境変数TWLSYSTEM_ROOT に、展開されたディレクトリTwlSystem の絶対パスを設定してください。
+環境変数TWLSYSTEM_ROOT が指定されていない場合には、C:\TwlSystem が設定されたものとして扱われます。
+</p>
+
+
+<h2 id="subject_software_requirement">ソフトウェア要件</h2>
+<ul>
+  <li>対応するSDKは、TWL-SDK 5.1 patch6です。</li>
+  <li>IS-TWL-DEBUGGERバージョン1.06以降または、IS-NITRO-DEBUGGERバージョン1.94以降が必要です。</li>
+  <li>各種ライブラリを使用するには、CodeWarrior for NINTENDO DS v2.0 SP2 Patch3以降が必要です。</li>
+  <li>NITRO-SoundMakerを使用するには、.NET framework 1.1が必要です。</li>
+  <li>Photoshopプラグインを使用するには、Windows版 Adobe Photoshop (CS / CS2 / CS3 / CS4 のいずれか)が必要です。</li>
+  <li>Mayaプラグインを使用するには、Windows版 Maya (8.0 / 8.5 / 2008 ServicePack1 / 2008 Extension2 / 2009 のいずれか)が必要です。</li>
+  <li>3ds Maxプラグインを使用するには、3ds Max (8.0 / 9.0 / 2008 / 2009 / 2010 のいずれか)が必要です。</li>
+  <li>SOFTIMAGE|XSIプラグインを使用するには、SOFTIMAGE|XSI (6.02 / 6.5 / 7 / 7.5 のいずれか)が必要です。</li>
+</ul>
+
+
+<h2 id="subject_changelog_2_1_1">2.1.1での変更点</h2>
+<h3>追加・変更された機能</h3>
+<h4>NITRO-Viewer</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_82-V01">ノート 82-V01:  (NITRO-Viewer) TWL-Systemライブラリ(2.1.1)に対応</a></li>
+</ul>
+<h4>3ds Max プラグイン</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_82-X01">ノート 82-X01:  3ds Max のバージョンについて</a></li>
+<li><a href="#note_82-X02">ノート 82-X02:  3ds Max 2010（Windows 32bit 版）に対応</a></li>
+</ul>
+<h4>SOFTIMAGE|XSI プラグイン</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_82-I01">ノート 82-I01:  Softimage 7.5（Windows 32bit 版）に対応</a></li>
+</ul>
+<h3>不具合修正</h3>
+<h4>G3Dライブラリ</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_82-R01">ノート 82-R01:  (ライブラリ) マテリアルスキップに関する修正の巻き戻し</a></li>
+</ul>
+<h4>3ds Max プラグイン</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_82-X03">ノート 82-X03:  NITRO Replace Character、NITRO Rename Over 16 Characters の不具合を修正</a></li>
+</ul>
+<h3 id="note_82-R01">ノート 82-R01:  (ライブラリ) マテリアルスキップに関する修正の巻き戻し</h3>
+<p>ノート 81-R03: (ライブラリ) マテリアルスキップの不具合を修正の影響により、マテリアルの状態が一部正常に更新されずにポリゴンに不正な色がかかってしまう場合があるため、この修正を暫定的に巻き戻します。
+</p>
+<h3 id="note_82-V01">ノート 82-V01:  (NITRO-Viewer) TWL-Systemライブラリ(2.1.1)に対応</h3>
+<p>TWL-Systemライブラリ(2.1.1)での変更を反映しました。
+</p>
+<h3 id="note_82-X01">ノート 82-X01:  3ds Max のバージョンについて</h3>
+<p>今回の更新には、3ds Max 8.0 用プラグインは含まれません。
+また、次回更新時よりサポート対象は、3ds Max 9.0 以降とさせて頂く予定です。
+</p>
+<h3 id="note_82-X02">ノート 82-X02:  3ds Max 2010（Windows 32bit 版）に対応</h3>
+<p>3ds Max 2010（Windows 32bit 版）に対応しました。
+</p>
+<h3 id="note_82-X03">ノート 82-X03:  NITRO Replace Character、NITRO Rename Over 16 Characters の不具合を修正</h3>
+<p>NITRO Replace Character、NITRO Rename Over 16 Characters で、親ノードを持つノードに適用されたマテリアルの名前を変更できなかった不具合を修正しました。
+</p>
+<h3 id="note_82-I01">ノート 82-I01:  Softimage 7.5（Windows 32bit 版）に対応</h3>
+<p>Softimage 7.5（Windows 32bit 版）に対応しました。
+今回の更新にはアドオンファイルは含まれません。
+Softimage 7.5 には、XSI 7用のアドオンファイルをお使いください。
+</p>
+<h2 id="subject_changelog_2_1_0">2.1.0での変更点</h2>
+<h3>追加・変更された機能</h3>
+<h4>開発環境全般</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-D01">ノート 81-D01:  version.h の Makefile対応</a></li>
+<li><a href="#note_81-D02">ノート 81-D02:  IDEサンプルデモの削除</a></li>
+</ul>
+<h4>G2Dライブラリ</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-B01">ノート 81-B01:  (コンバータ) フォントコンバータのエラーメッセージ修正</a></li>
+<li><a href="#note_81-B02">ノート 81-B02:  (ドキュメント) fontcvtr_Manualの修正</a></li>
+</ul>
+<h4>G3Dライブラリ</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-R01">ノート 81-R01:  (ライブラリ) シェイプ最大数のデフォルト値を変更</a></li>
+<li><a href="#note_81-R02">ノート 81-R02:  (コンバータ) オプションの追加</a></li>
+</ul>
+<h4>NITRO-Composer</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-S02">ノート 81-S02:  (ドキュメント) NNS_SndArcInitOnMemory の説明追加</a></li>
+<li><a href="#note_81-S03">ノート 81-S03:  (ライブラリ) NNS_SndWaveOutStart 関数の IMA-ADPCM 対応</a></li>
+<li><a href="#note_81-S05">ノート 81-S05:  (ドキュメント) NNS_SndArcInit* の説明追加</a></li>
+<li><a href="#note_81-S07">ノート 81-S07:  (ドキュメント) SoundPlayer の TWL 対応についての説明追加</a></li>
+<li><a href="#note_81-S08">ノート 81-S08:  (ドキュメント) サンプルデータディレクトリのパス間違いを修正</a></li>
+<li><a href="#note_81-S09">ノート 81-S09:  (ドキュメント) TWL-SDKのSND/SNDEX/DSP関数使用時の注意書き追加</a></li>
+</ul>
+<h4>Muitiple Channel Stream</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-C01">ノート 81-C01:  (mcsサーバ) IS-TWL-DEBUGGER ハードウェアと接続している際の「TWLSDK_PLATFORM=NITRO」でビルドされたプログラム(srlファイル)の対応</a></li>
+<li><a href="#note_81-C02">ノート 81-C02:  (mcsサーバ) デバッガシェアリング機能の正式対応</a></li>
+</ul>
+<h4>NITRO-Viewer</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-V01">ノート 81-V01:  (NITRO-Viewer) TWL-Systemライブラリ(2.1.0 正式版)に対応</a></li>
+<li><a href="#note_81-V02">ノート 81-V02:  (NITRO-Viewer) IS-NITRO-UIC経由での動作に対応</a></li>
+</ul>
+<h4>NITRO-Player</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-P02">ノート 81-P02:  IS-NITRO-UIC との通信修正</a></li>
+<li><a href="#note_81-P03">ノート 81-P03:  IS-TWL-MIDI 対応</a></li>
+<li><a href="#note_81-P04">ノート 81-P04:  ハードウェアボリューム値の表示</a></li>
+</ul>
+<h4>Photoshopプラグイン</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-H01">ノート 81-H01:  Windows 32bit 版 Adobe Photoshop CS4 に対応</a></li>
+</ul>
+<h4>Mayaプラグイン</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-Y01">ノート 81-Y01:  出力プラグインに Remove Namespace オプションを追加</a></li>
+<li><a href="#note_81-Y02">ノート 81-Y02:  NITRO Rename Over 16 Characters プラグインに Remove Namespace オプションを追加</a></li>
+<li><a href="#note_81-Y03">ノート 81-Y03:  Output Folder 選択ダイアログのサイズを変更できるように修正</a></li>
+<li><a href="#note_81-Y04">ノート 81-Y04:  n3es ファイルフォーマットを更新</a></li>
+</ul>
+<h4>3ds Max プラグイン</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-X01">ノート 81-X01:  (マニュアル) 「マテリアルの種類とアトリビュート」を修正</a></li>
+</ul>
+<h4>SOFTIMAGE|XSI プラグイン</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-I01">ノート 81-I01:  (マニュアル) マニュアルを更新</a></li>
+</ul>
+<h3>不具合修正</h3>
+<h4>G3Dライブラリ</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-R03">ノート 81-R03:  (ライブラリ) マテリアルスキップの不具合を修正</a></li>
+<li><a href="#note_81-R04">ノート 81-R04:  (ライブラリ) NNS_G3D_GET_ANM マクロに関する不具合を修正</a></li>
+<li><a href="#note_81-R05">ノート 81-R05:  (コンバータ) g3dcvtrからデバッグ用のチェックを削除</a></li>
+<li><a href="#note_81-R06">ノート 81-R06:  (コンバータ) 中間ファイル中の要素サイズが大きい場合にエラーとなる不具合を修正</a></li>
+<li><a href="#note_81-R07">ノート 81-R07:  (コンバータ) 名前が空の場合にエラーが正しく出力されない不具合を修正</a></li>
+</ul>
+<h4>NITRO-Composer</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-S01">ノート 81-S01:  (コンバータ) 日本語フォルダに格納されたデータのコンバート対応</a></li>
+<li><a href="#note_81-S04">ノート 81-S04:  (コンバータ) データサイズのアライメント不具合修正</a></li>
+<li><a href="#note_81-S06">ノート 81-S06:  (コンバータ) 不正なループ情報を波形コンバート時の対応</a></li>
+</ul>
+<h4>NITRO-Player</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-P01">ノート 81-P01:  sarc ファイルのサイズが 0 byte になる問題の修正</a></li>
+<li><a href="#note_81-P05">ノート 81-P05:  サイズの大きなデータ転送に関する不具合修正</a></li>
+</ul>
+<h4>NITRO-SoundMaker</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-K01">ノート 81-K01:  NITRO-Player 起動時の不具合修正</a></li>
+</ul>
+<h4>3Dマテリアルエディタ</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-M01">ノート 81-M01:  中間ファイル中の要素サイズが大きい場合にエラーとなる不具合を修正</a></li>
+</ul>
+<h4>3ds Max プラグイン</h4>
+<ul style="list-style-type:none;">
+<li><a href="#note_81-X02">ノート 81-X02:  ノード名またはマテリアル名が空文字の場合にエラーを発生するように修正</a></li>
+<li><a href="#note_81-X03">ノート 81-X03:  メッシュがポリゴンを持たない場合は警告を表示し、null として出力するように修正</a></li>
+<li><a href="#note_81-X04">ノート 81-X04:  モディファイヤが無効になる不具合を修正</a></li>
+<li><a href="#note_81-X05">ノート 81-X05:  Physique 出力の不具合を修正</a></li>
+</ul>
+<h3 id="note_81-D01">ノート 81-D01:  version.h の Makefile対応</h3>
+<p>$TwlSystem/include/nnsys/version.h ファイルをMakefileからインクルードして、
+バージョン情報を取得することができるようにしました。
+</p>
+<h3 id="note_81-D02">ノート 81-D02:  IDEサンプルデモの削除</h3>
+<p>これまでTWL-Systemパッケージに、IDEサンプルデモ及び、IDEビルドガイドが
+含まれていましたが、これらは別のパッケージとしてリリースするため、
+TWL-Systemパッケージから削除しました。
+</p>
+<h3 id="note_81-B01">ノート 81-B01:  (コンバータ) フォントコンバータのエラーメッセージ修正</h3>
+<p>フォントコンバータ(fontcvtr.exe)の出力されるエラーメッセージを修正しました。
+</p>
+<h3 id="note_81-B02">ノート 81-B02:  (ドキュメント) fontcvtr_Manualの修正</h3>
+<p>エラーメッセージの記述を修正しました。
+</p>
+<h3 id="note_81-R01">ノート 81-R01:  (ライブラリ) シェイプ最大数のデフォルト値を変更</h3>
+<p>特に制限する必要がないため、1つのモデル内の最大シェイプ数を64から256に変更しました。
+</p>
+<h3 id="note_81-R02">ノート 81-R02:  (コンバータ) オプションの追加</h3>
+<p>警告をエラーとして扱うオプション -we を追加しました。
+</p>
+<h3 id="note_81-R03">ノート 81-R03:  (ライブラリ) マテリアルスキップの不具合を修正</h3>
+<p>マテリアルの更新処理において、非表示もしくは直前のマテリアルと同一であっても更新処理のスキップが行われない場合がある不具合を修正しました。
+</p>
+<h3 id="note_81-R04">ノート 81-R04:  (ライブラリ) NNS_G3D_GET_ANM マクロに関する不具合を修正</h3>
+<p>NNS_G3D_GET_ANM マクロにおいて引数として定義されていない変数を使用している不具合を修正しました。
+</p>
+<h3 id="note_81-R05">ノート 81-R05:  (コンバータ) g3dcvtrからデバッグ用のチェックを削除</h3>
+<p>リリースパッケージ中のg3dcvtrでデバッグ用のチェックが有効になっていた為に、以前はコンバート可能であったデータがエラーとなる場合がありました。これを修正しました。
+</p>
+<h3 id="note_81-R06">ノート 81-R06:  (コンバータ) 中間ファイル中の要素サイズが大きい場合にエラーとなる不具合を修正</h3>
+<p>中間ファイルに2MBを超えるコンテントを持つ要素が含まれていた際にエラーとなる不具合を修正しました。
+</p>
+<h3 id="note_81-R07">ノート 81-R07:  (コンバータ) 名前が空の場合にエラーが正しく出力されない不具合を修正</h3>
+<p>ノードやマテリアルの名前が空の場合にエラーが正しく出力されない不具合を修正しました。
+</p>
+<h3 id="note_81-S01">ノート 81-S01:  (コンバータ) 日本語フォルダに格納されたデータのコンバート対応</h3>
+<p>日本語名フォルダに格納されたサウンドデータを
+SoundMaker などでコンバートするとエラーになりましたが、これを修正しました。
+</p>
+<h3 id="note_81-S02">ノート 81-S02:  (ドキュメント) NNS_SndArcInitOnMemory の説明追加</h3>
+<p>サウンドアーカイブを破棄し、異なるサウンドアーカイブを
+同じアドレスにロードして使用する場合の注意書きを追加しました。
+</p>
+<h3 id="note_81-S03">ノート 81-S03:  (ライブラリ) NNS_SndWaveOutStart 関数の IMA-ADPCM 対応</h3>
+<p>NNS_SndWaveOutStart 関数で扱える波形データフォーマットとして
+IMA-ADPCM が追加されました。
+</p>
+<h3 id="note_81-S04">ノート 81-S04:  (コンバータ) データサイズのアライメント不具合修正</h3>
+<p>sndarc.exe の --align オプションで指定したアライメントサイズが
+反映されなくなっていましたが、これを修正しました。
+あわせて、サウンドマップファイルに出力されるサイズ値も
+正しくありませんでしたので、修正しました。
+</p>
+<h3 id="note_81-S05">ノート 81-S05:  (ドキュメント) NNS_SndArcInit* の説明追加</h3>
+<p>NNS_SndArcInit* 関数のリファレンスに、
+NAND アーカイブおよび、SD カードアーカイブ上のサウンドアーカイブデータを
+使用できない旨を追記しました。
+</p>
+<h3 id="note_81-S06">ノート 81-S06:  (コンバータ) 不正なループ情報を波形コンバート時の対応</h3>
+<p>waveconv.exe で不正なループ情報を持つ波形ファイルを
+コンバートしたときに、エラーを出力するようにしました。
+</p>
+<h3 id="note_81-S07">ノート 81-S07:  (ドキュメント) SoundPlayer の TWL 対応についての説明追加</h3>
+<p>「サウンドデザイナーガイド」に
+SoundPlayer を TWL または IS-TWL-DEUBBGER で利用した場合に、
+ハードウェアボリュームが表示される旨、説明を追加しました。
+また、IS-TWL-MIDI 対応についても説明を追加しました。
+</p>
+<h3 id="note_81-S08">ノート 81-S08:  (ドキュメント) サンプルデータディレクトリのパス間違いを修正</h3>
+<p>「クイックスタートガイド」「サウンドデザイナーガイド」で
+サンプルデータが含まれるディレクトリのパスが間違って書かれていました。
+これを修正しました。
+</p>
+<h3 id="note_81-S09">ノート 81-S09:  (ドキュメント) TWL-SDKのSND/SNDEX/DSP関数使用時の注意書き追加</h3>
+<p>「サウンドプログラマガイド」に
+TWL-SDKのSND/SNDEX/DSP関数使用時の注意書きを追加しました。
+</p>
+<h3 id="note_81-C01">ノート 81-C01:  (mcsサーバ) IS-TWL-DEBUGGER ハードウェアと接続している際の「TWLSDK_PLATFORM=NITRO」でビルドされたプログラム(srlファイル)の対応</h3>
+<p>従来は、mcsサーバがIS-TWL-DEBUGGER ハードウェアと接続している場合は
+「TWLSDK_PLATFORM=NITRO」でビルドされたプログラム(srlファイル)を
+動作させているときには通信ができませんでした。
+</p>
+<p>今回のMCSライブラリおよびIS-TWL-DEBUGGER ソフトウェア 0.76以降の
+組み合わせでは、IS-TWL-DEBUGGER ハードウェアと接続した状態で
+「TWLSDK_PLATFORM=NITRO」でビルドされたプログラム(srlファイル)において
+通信を行うことが出来ます。
+</p>
+<h3 id="note_81-C02">ノート 81-C02:  (mcsサーバ) デバッガシェアリング機能の正式対応</h3>
+<p>IS-TWL-DEBUGGER ソフトウェア 1.01 以降のデバッガシェアリング機能に正式に対応しました。
+</p>
+<h3 id="note_81-V01">ノート 81-V01:  (NITRO-Viewer) TWL-Systemライブラリ(2.1.0 正式版)に対応</h3>
+<p>TWL-Systemライブラリ(2.1.0 正式版)での変更を反映しました。
+</p>
+<h3 id="note_81-V02">ノート 81-V02:  (NITRO-Viewer) IS-NITRO-UIC経由での動作に対応</h3>
+<p>IS-NITRO-UICを使用したDS実機でのプレビューに対応しました。
+</p>
+<h3 id="note_81-P01">ノート 81-P01:  sarc ファイルのサイズが 0 byte になる問題の修正</h3>
+<p>NitroPlayer.exe に sarc ファイルを読み込ませた状態で Ctrl + s を押すと、
+sarc ファイルのサイズが 0 byte になる問題がありましたが、
+これを修正しました。
+</p>
+<h3 id="note_81-P02">ノート 81-P02:  IS-NITRO-UIC との通信修正</h3>
+<p>NitroPlayer.srl を DS 実機で起動した場合、IS-NITRO-UIC が正常に動作しま
+せんでしたが、正常に動作する NitroPlayerUIC.srl を追加しました。
+詳しくは NITRO-Player ユーザーマニュアルをご参照ください。
+</p>
+<h3 id="note_81-P03">ノート 81-P03:  IS-TWL-MIDI 対応</h3>
+<p>IS-TWL-DEBUGGER と IS-TWL-MIDI の組み合わせで、
+リアルタイム MIDI 再生が可能になりました。
+詳しくは NITRO-Player ユーザーマニュアルをご参照ください。
+</p>
+<h3 id="note_81-P04">ノート 81-P04:  ハードウェアボリューム値の表示</h3>
+<p>DSi (または IS-TWL-DEBUGGER) で実行した場合、
+下画面にハードウェアボリュームが表示されるようになりました。
+</p>
+<h3 id="note_81-P05">ノート 81-P05:  サイズの大きなデータ転送に関する不具合修正</h3>
+<p>サイズの大きなデータを、実機側アプリケーションに転送しようとすると、
+通信が切断されてしまうことがある問題がありましたが、これを修正しました。
+</p>
+<h3 id="note_81-K01">ノート 81-K01:  NITRO-Player 起動時の不具合修正</h3>
+<p>NITRO-Player をあらかじめ起動しておき、
+日本語フォルダに格納されたサウンドプロジェクトを使用中に、
+[NITRO-Player を起動] ボタンを押すと、
+NITRO-Player 側で「○○には無効なパスが含まれています」と表示され、
+エラーになりましたが、これを修正しました。
+</p>
+<h3 id="note_81-M01">ノート 81-M01:  中間ファイル中の要素サイズが大きい場合にエラーとなる不具合を修正</h3>
+<p>中間ファイルに2MBを超えるコンテントを持つ要素が含まれていた際にエラーとなる不具合を修正しました。
+</p>
+<h3 id="note_81-H01">ノート 81-H01:  Windows 32bit 版 Adobe Photoshop CS4 に対応</h3>
+<p>Windows 32bit 版 Adobe Photoshop CS4 に対応しました。
+</p>
+<h3 id="note_81-Y01">ノート 81-Y01:  出力プラグインに Remove Namespace オプションを追加</h3>
+<p>出力プラグインに Remove Namespace オプションを追加しました。
+</p>
+<h3 id="note_81-Y02">ノート 81-Y02:  NITRO Rename Over 16 Characters プラグインに Remove Namespace オプションを追加</h3>
+<p>NITRO Rename Over 16 Characters プラグインに Remove Namespace オプションを追加しました。
+</p>
+<h3 id="note_81-Y03">ノート 81-Y03:  Output Folder 選択ダイアログのサイズを変更できるように修正</h3>
+<p>出力オプションウィンドウで、Output Folder 選択ダイアログのサイズを変更できるように修正しました。
+</p>
+<h3 id="note_81-Y04">ノート 81-Y04:  n3es ファイルフォーマットを更新</h3>
+<p>n3es ファイルフォーマットを更新しました。
+</p>
+<ul><li>settings_version を 1.1 に変更。
+</li>
+<li>remove_namespace を追加。
+</li>
+</ul>
+<h3 id="note_81-X01">ノート 81-X01:  (マニュアル) 「マテリアルの種類とアトリビュート」を修正</h3>
+<p>「マテリアルの種類とアトリビュート」の不透明度に関する注意を修正しました。
+</p>
+<h3 id="note_81-X02">ノート 81-X02:  ノード名またはマテリアル名が空文字の場合にエラーを発生するように修正</h3>
+<p>ノード名またはマテリアル名が空文字の場合にエラーを発生するように修正しました。
+</p>
+<h3 id="note_81-X03">ノート 81-X03:  メッシュがポリゴンを持たない場合は警告を表示し、null として出力するように修正</h3>
+<p>メッシュがポリゴンを持たない場合は警告を表示し、null として出力するように修正しました。
+</p>
+<h3 id="note_81-X04">ノート 81-X04:  モディファイヤが無効になる不具合を修正</h3>
+<p>出力時にエラーが発生するとモディファイヤが無効になる場合があった不具合を修正しました。
+</p>
+<h3 id="note_81-X05">ノート 81-X05:  Physique 出力の不具合を修正</h3>
+<p>Physique を使用したモデルで imd ファイルのポーズが正しく出力されない場合があ
+った不具合を修正しました。
+</p>
+<h3 id="note_81-I01">ノート 81-I01:  (マニュアル) マニュアルを更新</h3>
+<p>NITRO_SoftimageXSI_Plugin.pdf及びSetup_SoftimageXSI_Plugin.pdfに、XSI 7.01に関する補足を加筆しました。
+</p>
+
+
+
+<h2 id="subject_knownissues">既知の問題点</h2>
+
+<ul style="list-style-type:none;">
+<li><a href="#knownissues_00-R01">[G3Dライブラリ]  (ライブラリ) テクスチャブロックのサイズの制限</a></li>
+<li><a href="#knownissues_00-R02">[G3Dライブラリ]  (ライブラリ) スケールを含むジョイントアニメーションをブレンドした場合の不具合</a></li>
+<li><a href="#knownissues_00-R03">[G3Dライブラリ]  (ライブラリ) マテリアル送信処理の不具合</a></li>
+<li><a href="#knownissues_00-V01">[NITRO-Viewer]  ３Ｄプレビューについて</a></li>
+<li><a href="#knownissues_00-P01">[NITRO-Player]  ストリーム再生の音途切れ</a></li>
+<li><a href="#knownissues_00-K01">[NITRO-SoundMaker]  instrumentリージョンが、読み込み時に結合される不具合</a></li>
+</ul>
+<h3 id="knownissues_00-R01">[G3Dライブラリ]  (ライブラリ) テクスチャブロックのサイズの制限</h3>
+<p>.nsbmd, .nsbtxファイルが持つテクスチャブロックのサイズの上限は、524272バイトになります。
+つまり、512キロバイトには16バイト足りないサイズになります。
+これは、VRAMキー内部のサイズ部が15ビットのフィールドを4ビット左シフトしたものであることが原因となっています。
+</p>
+<h3 id="knownissues_00-R02">[G3Dライブラリ]  (ライブラリ) スケールを含むジョイントアニメーションをブレンドした場合の不具合</h3>
+<p>MayaにおけるSSC(Segment Scale Compensate)もしくはSOFTIMAGE|XSIのHierarchical Scalingを使用したモデルに対して、スケール(特に強いスケールがかかったもの)アニメーションを含む複数のアニメーションをブレンドさせた場合、ブレンド後のスケールが不適切になることがあります。
+この問題に対しては、以下のような対応策があります。
+</p>
+<ul><li> スケールを含むアニメーションのブレンドを行なう場合は、MayaのSSC及びSOFTIMAGE|XSIのHierarchical Scalingを使用しないモデルを使う。
+</li>
+<li> それができない場合は、あまり強いスケールがかからないアニメーションをブレンドするようにする。
+</li>
+<li> 次の箇所のコメントを外し、ライブラリを再ビルドしてください。ただし、計算負荷が増加します。
+</li>
+</ul>
+<pre>TwlSystem/build/libraries/g3d/src/anm.c 31行目
+//#define FIX_SCALEEX_BLEND_BUG
+</pre>
+<h3 id="knownissues_00-R03">[G3Dライブラリ]  (ライブラリ) マテリアル送信処理の不具合</h3>
+<p>同一のマテリアルを再送信しないように判定する処理に不具合があるため、
+マテリアルの不要な更新処理のコストがかかります。
+関連: ノート 81-R03、ノート 82-R01
+</p>
+<h3 id="knownissues_00-V01">[NITRO-Viewer]  ３Ｄプレビューについて</h3>
+<ul><li> マテリアルのテクスチャ変換行列のST値の指定には対応していません。
+</li>
+<li> ima, itaアニメーションデータの小数フレームに対する線形補間については未対応です。元アニメーションデータに小数フレームに対する線形補間属性（interpolation = linear の状態）が設定されていたとしても、小数フレームを切り捨てて整数フレームとして扱って再生します。
+</li>
+</ul>
+<h3 id="knownissues_00-P01">[NITRO-Player]  ストリーム再生の音途切れ</h3>
+<p>NITRO-Playerでのストリーム再生は、実際にはROMからリアルタイムにデータをロードするものを、PCから転送することで実現しています。従って、ストリーム再生中に音の途切れが生じる場合があります。特にADPCMデータの再生時には、顕著に発生します。
+</p>
+<p>また逆に、NITRO-Player上で音の途切れが発生しないとしても、ゲーム中での再生時に音の途切れが発生しない保証にはなりませんので、注意してください。
+</p>
+<p>ストリーム再生の確認には、SoundPlayerのご利用をお勧めします。
+</p>
+<h3 id="knownissues_00-K01">[NITRO-SoundMaker]  instrumentリージョンが、読み込み時に結合される不具合</h3>
+<p>以下の３つの条件を満たしたとき、最後の２つのリージョンが読み込み時に１つのリージョンに結合されてしまう不具合があります。
+</p>
+<ul><li> リージョンが９個以上
+</li>
+<li> 最後の２つのリージョンの中身が全く同じ
+</li>
+<li> 最後のリージョンの幅が１
+</li>
+</ul>
+<p>ただし、結合される前と後とで、出力されるデータや音に、違いはありません。
+</p>
+
+
+
+
+<h2 id="subject_info">TWL-System に関する情報</h2>
+
+<p>
+NINTENDO TWL-System に関する情報は、TWL-System ソースツリーのdocs ディレクトリの中に収められています。
+まずは、下記の文書からご覧ください。
+</p>
+
+<ul>
+  
+  <li>クイックスタート (<a href="QuickStart.pdf">QuickStart.pdf</a>)</li>
+<p>
+TWL-System のセットアップ方法と、
+TWL-System ライブラリとデモプログラムをビルドする為の手順について説明しています。
+</p>
+
+<li>オーバービュー</li>
+<p>
+TWL-Systemに関する概要を説明しています。
+</p>
+<ul>
+  <li>TWL-System オーバービュー (<a href="Overview/TWL-System-Overview.pdf">TWL-System-Overview.pdf</a>)</li>
+  <li>G2Dライブラリ オーバービュー (<a href="Overview/G2D_Overview.pdf">G2D_Overview.pdf</a>)</li>
+  <li>G3Dライブラリ オーバービュー (<a href="Overview/G3D_Overview.pdf">G3D_Overview.pdf</a>)</li>
+  <li>NITRO-Composer オーバービュー (<a href="Overview/NITRO_Composer_Overview.pdf">NITRO_Composer_Overview.pdf</a>)</li>
+</ul>
+
+
+<li>更新履歴</li>
+<p>
+  以前のバージョンまでの変更点が記載されています。
+</p>
+<ul>
+<li>開発環境全般 更新履歴 (<a href="ChangeLog/DevelopmentEnvironment_ChangeLog.html">DevelopmentEnvironment_ChangeLog.html</a>)</li>
+<li>Foundationライブラリ 更新履歴 (<a href="ChangeLog/Foundation_ChangeLog.html">Foundation_ChangeLog.html</a>)</li>
+<li>GraphicsFoundationライブラリ 更新履歴 (<a href="ChangeLog/GraphicsFoundation_ChangeLog.html">GraphicsFoundation_ChangeLog.html</a>)</li>
+<li>G2Dライブラリ 更新履歴 (<a href="ChangeLog/G2D_ChangeLog.html">G2D_ChangeLog.html</a>)</li>
+<li>G3Dライブラリ 更新履歴 (<a href="ChangeLog/G3D_ChangeLog.html">G3D_ChangeLog.html</a>)</li>
+<li>NITRO-Composer 更新履歴 (<a href="ChangeLog/NITRO_Composer_ChangeLog.html">NITRO_Composer_ChangeLog.html</a>)</li>
+<li>Muitiple Channel Stream 更新履歴 (<a href="ChangeLog/mcs_ChangeLog.html">mcs_ChangeLog.html</a>)</li>
+<li>NITRO-Viewer 更新履歴 (<a href="ChangeLog/NITRO_Viewer_ChangeLog.html">NITRO_Viewer_ChangeLog.html</a>)</li>
+<li>NITRO-Player 更新履歴 (<a href="ChangeLog/NITRO_Player_ChangeLog.html">NITRO_Player_ChangeLog.html</a>)</li>
+<li>NITRO-SoundMaker 更新履歴 (<a href="ChangeLog/NITRO_SoundMaker_ChangeLog.html">NITRO_SoundMaker_ChangeLog.html</a>)</li>
+<li>3Dマテリアルエディタ 更新履歴 (<a href="ChangeLog/3DMaterialEditor_ChangeLog.html">3DMaterialEditor_ChangeLog.html</a>)</li>
+<li>Photoshopプラグイン 更新履歴 (<a href="ChangeLog/NITRO_Photoshop_Plugin_ChangeLog.html">NITRO_Photoshop_Plugin_ChangeLog.html</a>)</li>
+<li>Mayaプラグイン 更新履歴 (<a href="ChangeLog/NITRO_Maya_Plugin_ChangeLog.html">NITRO_Maya_Plugin_ChangeLog.html</a>)</li>
+<li>3ds Max プラグイン 更新履歴 (<a href="ChangeLog/NITRO_3dsmax_Plugin_ChangeLog.html">NITRO_3dsmax_Plugin_ChangeLog.html</a>)</li>
+<li>SOFTIMAGE|XSI プラグイン 更新履歴 (<a href="ChangeLog/NITRO_XSI_Plugin_ChangeLog.html">NITRO_XSI_Plugin_ChangeLog.html</a>)</li>
+<li>NITRO中間ファイルフォーマット 更新履歴 (<a href="ChangeLog/NITRO_Intermediate_File_Format_ChangeLog.html">NITRO_Intermediate_File_Format_ChangeLog.html</a>)</li>
+
+</ul>
+
+</ul>
+
+
+
+<h2 id="subject_note">注意事項</h2>
+
+<h3>マルチスレッドでの動作について</h3>
+
+<p>
+TWL-System ライブラリは、基本的にスレッドセーフ（マルチスレッドに対応した形）に設計されていません。
+このため、TWL-System の各ライブラリのAPI を割り込みハンドラや異なるスレッドから呼び出した場合、
+正常に動作しない可能性があります。
+</p>
+<p>
+ただし、サウンドドライバ(SND)の関数はスレッドセーフですので、
+割り込みハンドラや異なるスレッドから呼び出すことができます。
+</p>
+
+
+<h3>除算器の使用について</h3>
+
+<p>
+TWL-System のG2D およびG3D ライブラリでは除算器を使用しています。
+そのため、割り込み処理内で除算器の状態の退避/復元を行わずにTWL-System を使用しますと、
+割り込み元の演算結果を破壊してしまう可能性があります。
+</p>
+<p>
+割り込み処理でTWL-System を使用する場合には、TWL-SDK のCP_SaveContext(),
+CP_RestoreContext() を使用して、除算器の状態を退避・復元するようにしてください。
+</p>
+
+<h3>サンプルの画像データや音楽データについて</h3>
+
+<p>
+このパッケージに含まれるデモプログラムやサンプルプログラム等で使用されています画像データや音楽データの著作権は、
+任天堂株式会社に有ります。
+これらのデータは、デモプログラムやサンプルプログラム以外ではご使用頂けませんのでご了承ください。
+</p>
+
+
+<h3>フォントのライセンスについて</h3>
+
+<p>
+NINTENDO TWL-System には、フォントコンバータfontcvtr が集録されています。
+このfontcvtr を使用しますと、PC にインストールされている任意のフォントをニンテンドーDS で利用できるようなりますが、
+これらのフォントを利用したソフトを発売するには、利用するフォントのライセンスが必要になります。
+各ゲームソフトごとに適切なライセンスを取得してください。
+fontcvtr およびTWL-System にはLC フォントを含め、いかなるフォントのライセンスも付属しません。
+</p>
+
+
+<h3>3DCGツール及びPhotoshop用プラグインについて</h3>
+
+<p>
+TWL-System に含まれる3DCGツール及びPhotoshop用プラグインは、TWL-System でも NITRO-System でもご利用頂けます。
+</p>
+
+<p>
+なお、各アプリケーション上での表示は NITRO-System となりますのでご注意ください。
+</p>
+
+
+<h3>Xerces-C++について</h3>
+<p>
+	このパッケージには、Apache Software Foundation (http://www.apache.org/) により開発されたソフトウェアが組み込まれています。
+	Xerces-C++のNOTICEファイルとライセンスファイルのコピーは、下記のディレクトリに収録しています。
+</p>
+<ul>
+	<li><a href="./Xerces-C++/NOTICE">TwlSystem/docs/Xerces-C++/NOTICE</a>
+	<li><a href="./Xerces-C++/LICENSE">TwlSystem/docs/Xerces-C++/LICENSE</a>
+</ul>
+
+<div class="licence" style="width:64em">
+<pre>
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "[]"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright [yyyy] [name of copyright owner]
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+</pre>
+</div>
+
+<div class="licence" style="width:27em">
+<pre>
+&copy; 2005-2009 Nintendo
+&copy; 2005-2009 HAL Laboratory, Inc.
+  
+任天堂株式会社の許諾を得ることなく、本書に記載
+されている内容の一部あるいは全部を無断で複製・
+複写・転写・頒布・貸与することを禁じます。
+</pre>
+</div>
+
+</body>
+</html>
