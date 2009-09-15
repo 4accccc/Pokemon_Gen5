@@ -47,7 +47,7 @@ enum {
 // リストデータ
 typedef struct {
 	POKEPARTY * pp;		// ポケモンデータ
-	void * myitem;		// アイテムデータ
+//	void * myitem;		// アイテムデータ
 
 //	BATTLE_WORK * bw;		// 戦闘用ワーク
 

@@ -150,3 +150,44 @@ const u32 APP_COMMON_GetBarScrnArcIdx( void )
 {	
 	return NARC_app_menu_common_menu_bar_NSCR;
 }
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		状態異常アイコンのアニメ番号を取得
+ *
+ * @param		pp		POKEMON_PARAM
+ *
+ * @return	アニメ番号
+ *
+ * @li	ポケルスはチェックしてません
+ */
+//--------------------------------------------------------------------------------------------
+u32 APP_COMMON_GetStatusIconAnime( POKEMON_PARAM * pp )
+{
+	// 瀕死
+	if( PP_Get( pp, ID_PARA_hp, NULL ) == 0 ){
+		return APP_COMMON_ST_ICON_HINSI;
+	}else{
+		u32	prm = PP_Get( pp, ID_PARA_condition, NULL );
+
+		// 毒
+		if( ( prm & (PTL_CONDITION_DOKU|PTL_CONDITION_DOKUDOKU) ) != 0 ){
+			return APP_COMMON_ST_ICON_DOKU;
+		// 眠り
+		}else if( ( prm & PTL_CONDITION_NEMURI ) != 0 ){
+			return APP_COMMON_ST_ICON_NEMURI;
+		// 火傷
+		}else if( ( prm & PTL_CONDITION_YAKEDO ) != 0 ){
+			return APP_COMMON_ST_ICON_YAKEDO;
+		// 氷
+		}else if( ( prm & PTL_CONDITION_KOORI ) != 0 ){
+			return APP_COMMON_ST_ICON_KOORI;
+		// 麻痺
+		}else if( ( prm & PTL_CONDITION_MAHI ) != 0 ){
+			return APP_COMMON_ST_ICON_MAHI;
+		}
+		// なし
+		return APP_COMMON_ST_ICON_NONE;
+	}
+}

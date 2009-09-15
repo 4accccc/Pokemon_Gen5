@@ -16,6 +16,7 @@
 #include "font/font.naix"
 #include "waza_tool/waza_tool.h"
 //#include    "waza_tool/wazadata.h"
+#include "app/app_menu_common.h"
 
 #include "../btlv/btlv_effect.h"
 
@@ -455,7 +456,7 @@ static void BattlePokeList_Main( GFL_TCB* tcb, void * work )
 	}
 
 	GFL_TCBL_Main( wk->tcbl );
-//	BPL_PokeIconAnime( wk );
+	BPL_PokeIconAnime( wk );
 
 //	GFL_CLACT_SYS_Main( wk->crp );
 	BattlePokeList_ButtonAnmMain( wk );
@@ -599,9 +600,6 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 	G2S_BlendNone();
 
 	wk->tcbl = GFL_TCBL_Init( wk->dat->heap, wk->dat->heap, 1, 4 );
-
-	GFL_STD_MemFill((void*)HW_OBJ_VRAM, 0, HW_OBJ_VRAM_SIZE);
-
 
 	if( wk->dat->mode == BPL_MODE_WAZASET ){
 		wk->page = BPLIST_PAGE_WAZASET_BS;
@@ -1416,11 +1414,8 @@ static int BPL_SeqStRcv( BPLIST_WORK * wk )
 			wk->rcv_pp[0] = PP_Get( wk->poke[dat->sel_poke].pp,ID_PARA_pp1+dat->sel_wp,NULL);
 			wk->rcv_seq = 2;
 		}else{
-//			wk->poke[dat->sel_poke].st = BadStatusIconAnmGet( wk->poke[dat->sel_poke].pp );
-//			wk->poke[dat->sel_poke].st = ST_ICON_NONE;
-			wk->poke[dat->sel_poke].st = 0;
-//			if( wk->poke[dat->sel_poke].st == ST_ICON_NONE ){
-			if( 0 ){
+			wk->poke[dat->sel_poke].st = APP_COMMON_GetStatusIconAnime( wk->poke[dat->sel_poke].pp );
+			if( wk->poke[dat->sel_poke].st == APP_COMMON_ST_ICON_NONE ){
 //				GFL_CLACT_UNIT_SetDrawEnableCap( wk->cap[BPL_CA_STATUS1+dat->sel_poke], 0 );
 				BattlePokeList_P1_LvPut( wk, dat->sel_poke );
 			}
@@ -1879,9 +1874,7 @@ static void BPL_PokeDataMake( BPLIST_WORK * wk )
 			wk->poke[i].sex_put = 1;
 		}
 		wk->poke[i].sex = PP_GetSex( wk->poke[i].pp );
-//		wk->poke[i].st  = BadStatusIconAnmGet( wk->poke[i].pp );
-//		wk->poke[i].st  = ST_ICON_NONE;
-		wk->poke[i].st  = 0;
+		wk->poke[i].st  = APP_COMMON_GetStatusIconAnime( wk->poke[i].pp );
 		wk->poke[i].egg = (u8)PP_Get( wk->poke[i].pp, ID_PARA_tamago_flag, NULL );
 
 		wk->poke[i].spa  = (u16)PP_Get( wk->poke[i].pp, ID_PARA_speabino, NULL );

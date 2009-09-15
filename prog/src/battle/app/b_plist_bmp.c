@@ -14,6 +14,7 @@
 #include "gamesystem/msgspeed.h"
 #include "waza_tool/waza_tool.h"
 #include "system/bmp_winframe.h"
+#include "app/app_menu_common.h"
 
 /*ª[GS_CONVERT_TAG]*/
 //#include "system/procsys.h"
@@ -2218,8 +2219,7 @@ static void BPL_Page1BmpWrite( BPLIST_WORK * wk )
 			BattlePokeList_P1_HPPut( wk, i );
 		}
 
-//		if( BadStatusIconAnmGet( wk->poke[i].pp ) != ST_ICON_NONE ){
-		if( 0 ){
+		if( APP_COMMON_GetStatusIconAnime( wk->poke[i].pp ) != APP_COMMON_ST_ICON_NONE ){
 			continue;
 		}
 

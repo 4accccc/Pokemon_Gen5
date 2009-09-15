@@ -10,6 +10,7 @@
 
 #include "arc_def.h"
 #include "pokeicon/pokeicon.h"
+#include "app/app_menu_common.h"
 
 /*↑[GS_CONVERT_TAG]*/
 //#include "system/procsys.h"
@@ -36,7 +37,7 @@
 #include "b_app_tool.h"
 */
 
-#include "pokelist_gra.naix"
+#include "app_menu_common.naix"
 
 #include "b_plist.h"
 #include "b_plist_main.h"
@@ -143,9 +144,8 @@ static void BPL_Page7ObjSet( BPLIST_WORK * wk );
 //static void BPL_Page9ObjSet( BPLIST_WORK * wk );
 
 static void BPL_BattleWazaTypeSet( BPLIST_WORK * wk );
-static void BPL_ContestWazaTypeSet( BPLIST_WORK * wk );
 
-static void BPL_EzConditionPut( BPLIST_WORK * wk );
+//static void BPL_EzConditionPut( BPLIST_WORK * wk );
 
 static void BPL_ClactCursorAdd( BPLIST_WORK * wk );
 static void BPL_CursorDel( BPLIST_WORK * wk );
@@ -449,42 +449,23 @@ static void BPL_ClactStatusLoad( BPLIST_WORK * wk )
 {
   ARCHANDLE * ah;
 
-/*	キャラデータチェック
-	ah = GFL_ARC_OpenDataHandle( ARCID_POKELIST,  wk->dat->heap );
-	{
-		void * buf;
-		NNSG2dCharacterData * dat;
-		u8 * chr;
-		u16	i, j;
-		buf = GFL_ARC_LoadDataAllocByHandle( ah, NARC_pokelist_gra_p_st_ijou_NCGR, wk->dat->heap );
-		NNS_G2dGetUnpackedCharacterData( buf, &dat );
-		chr = (u8 *)dat->pRawData;
-		for( i=0; i<8; i++ ){
-			for( j=0; j<4; j++ ){
-				OS_Printf( "%2x, ", chr[0x20*2+i*4+j] );
-			}
-			OS_Printf( "\n" );
-		}
-	}
-  GFL_ARC_CloseDataHandle( ah );
-*/
-
-	ah = GFL_ARC_OpenDataHandle( ARCID_B_PLIST_GRA, wk->dat->heap );
+	ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, wk->dat->heap );
 
 	// キャラ
 	wk->chrRes[BPLIST_CHRRES_STATUS] = GFL_CLGRP_CGR_Register(
-																			ah, NARC_b_plist_gra_p_st_ijou_NCGR,
+																			ah, NARC_app_menu_common_p_st_ijou_NCGR,
 																			FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
 	// パレット
   wk->palRes[BPLIST_PALRES_STATUS] = GFL_CLGRP_PLTT_Register(
-																			ah, NARC_b_plist_gra_p_st_ijou_NCLR,
+																			ah, NARC_app_menu_common_p_st_ijou_NCLR,
 																			CLSYS_DRAW_SUB, 0x20*3, wk->dat->heap );
 	// セル・アニメ
   wk->celRes[BPLIST_CELRES_STATUS] = GFL_CLGRP_CELLANIM_Register(
 																			ah,
-																			NARC_b_plist_gra_p_st_ijou_NCER,
-																			NARC_b_plist_gra_p_st_ijou_NANR,
+																			NARC_app_menu_common_p_st_ijou_32k_NCER,
+																			NARC_app_menu_common_p_st_ijou_32k_NANR,
 																			wk->dat->heap );
+
   GFL_ARC_CloseDataHandle( ah );
 
 /*
@@ -851,8 +832,7 @@ static void BPL_KindIconChange( BPLIST_WORK * wk, CATS_ACT_PTR cap, u32 kind )
 //--------------------------------------------------------------------------------------------
 static void BPL_StIconPut( u16 st, GFL_CLWK * clwk, const GFL_CLACTPOS * pos )
 {
-//	if( st == ST_ICON_NONE ){ return; }
-	return;
+	if( st == APP_COMMON_ST_ICON_NONE ){ return; }
 
 	GFL_CLACT_WK_SetAnmSeq( clwk, st );
 	BPL_ClactOn( clwk, pos );
@@ -1394,42 +1374,6 @@ static void BPL_BattleWazaTypeSet( BPLIST_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 技アイコンセット：コンテスト
- *
- * @param	wk		ワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void BPL_ContestWazaTypeSet( BPLIST_WORK * wk )
-{
-/*
-	BPL_POKEDATA * pd;
-	u16	i;
-
-	pd = &wk->poke[wk->dat->sel_poke];
-
-	// 技タイプ
-	for( i=0; i<4; i++ ){
-		if( pd->waza[i].id == 0 ){ continue; }
-
-		BPL_TypeIconChange(
-			wk, wk->cap[BPL_CA_WAZATYPE1+i], CHR_ID_WAZATYPE1+i,
-			WT_WazaDataParaGet(pd->waza[i].id,ID_WTD_contype)+ICONTYPE_STYLE );
-		BPL_ClactOn( wk->cap[BPL_CA_WAZATYPE1+i], P5_WazaTypePos[i][0], P5_WazaTypePos[i][1] );
-	}
-
-	if( wk->dat->chg_waza != 0 ){
-		BPL_TypeIconChange(
-			wk, wk->cap[BPL_CA_WAZATYPE5], CHR_ID_WAZATYPE5,
-			WT_WazaDataParaGet(wk->dat->chg_waza,ID_WTD_contype)+ICONTYPE_STYLE );
-		BPL_ClactOn( wk->cap[BPL_CA_WAZATYPE5], P5_WazaTypePos[4][0], P5_WazaTypePos[4][1] );
-	}
-*/
-}
-
-//--------------------------------------------------------------------------------------------
-/**
  * 技アイコンセット：戦闘 or コンテスト
  *
  * @param	wk		ワーク
@@ -1455,14 +1399,18 @@ void BattlePokelist_WazaTypeSet( BPLIST_WORK * wk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-/*
-static void BPL_PokeIconAnmChg( CATS_ACT_PTR cap, u8 anm )
+static void BPL_PokeIconAnmChg( GFL_CLWK * clwk, u16 anm )
 {
+/*
 	if( CATS_ObjectAnimeSeqGetCap( cap ) == anm ){ return; }
 	GFL_CLACT_WK_SetAnmFrameCap( cap, 0 );
 	GFL_CLACT_WK_SetAnmSeq( cap, anm );
-}
 */
+	if( GFL_CLACT_WK_GetAnmSeq( clwk ) == anm ){ return; }
+
+	GFL_CLACT_WK_SetAnmFrame( clwk, 0 );
+	GFL_CLACT_WK_SetAnmSeq( clwk, anm );
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1480,7 +1428,7 @@ static u8 BPL_PokeIconAnmCheck( BPL_POKEDATA * pd )
 		return POKEICON_ANM_DEATH;
 	}
 
-	if( pd->st != ST_ICON_NONE && pd->st != ST_ICON_HINSI ){
+	if( pd->st != APP_COMMON_ST_ICON_NONE && pd->st != APP_COMMON_ST_ICON_HINSI ){
 		return POKEICON_ANM_STCHG;
 	}
 
@@ -1497,7 +1445,7 @@ static u8 BPL_PokeIconAnmCheck( BPL_POKEDATA * pd )
 
 	return POKEICON_ANM_DEATH;
 */
-	return 0;
+	return 1;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1511,7 +1459,6 @@ static u8 BPL_PokeIconAnmCheck( BPL_POKEDATA * pd )
 //--------------------------------------------------------------------------------------------
 void BPL_PokeIconAnime( BPLIST_WORK * wk )
 {
-/*
 	u16	i;
 	u16	anm;
 
@@ -1521,15 +1468,16 @@ void BPL_PokeIconAnime( BPLIST_WORK * wk )
 
 		anm = BPL_PokeIconAnmCheck( &wk->poke[i] );
 
-		BPL_PokeIconAnmChg( wk->cap[BPL_CA_POKE1+i], anm );
-		GFL_CLACT_WK_AddAnmFrameNumCap( wk->cap[BPL_CA_POKE1+i], FX32_ONE );
+		BPL_PokeIconAnmChg( wk->clwk[BPL_CA_POKE1+i], anm );
+		GFL_CLACT_WK_AddAnmFrame( wk->clwk[BPL_CA_POKE1+i], FX32_ONE );
+//		GFL_CLACT_WK_AddAnmFrameNumCap( wk->cap[BPL_CA_POKE1+i], FX32_ONE );
 	}
-*/
 }
 
 //============================================================================================
 //	簡易コンディション
 //============================================================================================
+/*
 #define	EZCON1_MIN_X	( 144 )
 #define	EZCON1_MAX_X	( 144 )
 #define	EZCON1_MIN_Y	( 24 )
@@ -1583,7 +1531,7 @@ void BPL_PokeIconAnime( BPLIST_WORK * wk )
 
 #define	EZCND_MAX_RPM	( 300 )
 #define	EZCND_DEF_RPM	( 44 )		// 300 = 256 + EZCND_DEF_RPM
-
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1624,9 +1572,9 @@ static s16 BPL_EzCndPosGet( u32 prm, s16 max, s16 min )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BPL_EzConditionPut( BPLIST_WORK * wk )
 {
-/*
 	BPL_POKEDATA * pd;
 	u16	i;
 
@@ -1658,8 +1606,8 @@ static void BPL_EzConditionPut( BPLIST_WORK * wk )
 		wk->cap[BPL_CA_CND5],
 		BPL_EzCndPosGet( pd->strong, EZCON5_MAX_X, EZCON5_MIN_X ),
 		BPL_EzCndPosGet( pd->strong, EZCON5_MAX_Y, EZCON5_MIN_Y ) );
-*/
 }
+*/
 
 
 //============================================================================================

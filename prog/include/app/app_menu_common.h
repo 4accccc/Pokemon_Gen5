@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "poke_tool/poke_tool.h"
 #include "poke_tool/poketype.h"
 
 //==============================================================================
@@ -71,6 +72,19 @@ typedef enum
   APP_COMMON_MAPPING_128K,
 }APP_COMMON_MAPPING;
 
+// 状態異常アイコンのアニメ番号
+enum {
+	APP_COMMON_ST_ICON_POKERUS = 0,	// ポケルス
+	APP_COMMON_ST_ICON_MAHI,				// 麻痺
+	APP_COMMON_ST_ICON_KOORI,				// 氷
+	APP_COMMON_ST_ICON_NEMURI,			// 眠り
+	APP_COMMON_ST_ICON_DOKU,				// 毒
+	APP_COMMON_ST_ICON_YAKEDO,			// 火傷
+	APP_COMMON_ST_ICON_HINSI,				// 瀕死
+	APP_COMMON_ST_ICON_NONE					// なし（アニメ番号的にもなし）
+};
+
+
 //ARCIDの取得
 extern const u32 APP_COMMON_GetArcId(void);
 
@@ -96,3 +110,6 @@ extern const u32 APP_COMMON_GetBarIconAnimeArcIdx( const APP_COMMON_MAPPING mapp
 extern const u32 APP_COMMON_GetBarPltArcIdx( void );
 extern const u32 APP_COMMON_GetBarCharArcIdx( void );
 extern const u32 APP_COMMON_GetBarScrnArcIdx( void );
+
+// 状態異常アイコン
+extern u32 APP_COMMON_GetStatusIconAnime( POKEMON_PARAM * pp );
