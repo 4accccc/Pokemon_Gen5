@@ -260,7 +260,7 @@ void UpdateBuf( ICA_ANIME* anime, fx32 start_frame )
 {
   int    i, j;
   int    frame     = (start_frame >> FX32_SHIFT) % anime->frameSize;
-  int    ofs       = 112 + sizeof(float) * 6 * frame;
+  int    ofs       = 4 + sizeof(float) * 6 * frame;
   int    data_size = sizeof(float) * 6 * anime->bufSize;
   void* data       = GFL_HEAP_AllocMemoryLo( anime->heapID, data_size );
 
