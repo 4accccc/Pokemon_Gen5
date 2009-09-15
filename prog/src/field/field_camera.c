@@ -1192,6 +1192,20 @@ static void cameraArea_UpdateTarget( const FIELD_CAMERA_AREA * cp_area, VecFx32*
 //-----------------------------------------------------------------------------
 static void cameraArea_UpdateCamPos( const FIELD_CAMERA_AREA * cp_area, VecFx32* p_camera )
 {
+  VecFx32* p_pos;
+
+  GF_ASSERT( cp_area->area_type < FIELD_CAMERA_AREA_MAX );
+  GF_ASSERT( cp_area->area_cont < FIELD_CAMERA_AREA_CONT_MAX );
+
+  if( cp_area->area_cont == FIELD_CAMERA_AREA_CONT_CAMERA )
+  {
+    p_pos = p_camera;
+
+    if( pIsAreaFunc[cp_area->area_type] )
+    {
+      pIsAreaFunc[cp_area->area_type]( cp_area, p_pos, p_pos );
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1269,6 +1283,10 @@ static BOOL cameraArea_IsAreaCircle( const FIELD_CAMERA_AREA* cp_area, const Vec
   VecFx32 normal; // 回転方向検出用
   BOOL ret = FALSE;
 
+  p_pos->x = cp_pos->x;
+  p_pos->y = cp_pos->y;
+  p_pos->z = cp_pos->z;
+
   // 中心座標を求める
   center.x = cp_area->circle.center_x;
   center.y = 0;
@@ -1294,7 +1312,7 @@ static BOOL cameraArea_IsAreaCircle( const FIELD_CAMERA_AREA* cp_area, const Vec
   }
 
   // 距離の範囲外チェック
-  if( len < cp_area->circle.r )
+  if( len > cp_area->circle.r )
   {
     len = cp_area->circle.r;
     ret = TRUE;
@@ -1308,27 +1326,45 @@ static BOOL cameraArea_IsAreaCircle( const FIELD_CAMERA_AREA* cp_area, const Vec
       // 360度を通過する方が　可動範囲
       min_rot = cp_area->circle.max_rot;
       max_rot = cp_area->circle.min_rot;
+
+      //  チェック
+      if( (min_rot < rot_now) && (max_rot >= rot_now) )
+      {
+        // 近いほう
+        if( MATH_ABS(min_rot - rot_now) > MATH_ABS(max_rot - rot_now) )
+        {
+          rot_now = max_rot;
+          ret = TRUE;
+        }
+        else
+        {
+          rot_now = min_rot;
+          ret = TRUE;
+        }
+      }
     }
     else
     {
       // 通常の　可動範囲
       min_rot = cp_area->circle.min_rot;
       max_rot = cp_area->circle.max_rot;
+
+      //  チェック
+      if( min_rot > rot_now )
+      {
+        rot_now = min_rot;
+        ret = TRUE;
+      }
+      else if( max_rot < rot_now )
+      {
+        rot_now = max_rot;
+        ret = TRUE;
+      }
     }
   }
 
 
-  //  チェック
-  if( min_rot > rot_now )
-  {
-    rot_now = min_rot;
-    ret = TRUE;
-  }
-  else if( max_rot < rot_now )
-  {
-    rot_now = max_rot;
-    ret = TRUE;
-  }
+//  TOMOYA_Printf( "rot_now=%d  min_rot=%d max_rot=%d\n", rot_now, min_rot, max_rot );
 
 
   // 座標の再計算

@@ -288,7 +288,7 @@ static BOOL C3_SCENEAREA_CheckArea( const FLD_SCENEAREA* cp_sys, const FLD_SCENE
     // rot_end - rot_start‚ª180“xˆÈã‚È‚çA‚O‚ð’Ê‰ß‚·‚é‚P‚W‚O‚ÌŠp“x
     if( cp_param->rot_end < cp_param->rot_start )
     {
-      TOMOYA_Printf( "rot_end %d rot_start %d rotate %d\n", cp_param->rot_end, cp_param->rot_start, rotate );
+//      TOMOYA_Printf( "rot_end %d rot_start %d rotate %d\n", cp_param->rot_end, cp_param->rot_start, rotate );
       if( ((cp_param->rot_end >= rotate) && (rotate >= 0)) ||
           ((0x10000 > rotate) && (rotate >= cp_param->rot_start)) )
       {

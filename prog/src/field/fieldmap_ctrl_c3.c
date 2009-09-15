@@ -28,6 +28,24 @@
 
 
 //======================================================================
+//	範囲情報
+//======================================================================
+static FIELD_CAMERA_AREA s_FIELD_CAMERA_AREA = 
+{
+  FIELD_CAMERA_AREA_CIRCLE,
+  FIELD_CAMERA_AREA_CONT_CAMERA,
+};
+
+static const FIELD_CAMERA_CIRCLE sc_FIELD_CAMERA_CIRCLE = 
+{
+  3108662,3150850,
+  FX32_CONST(0x500),
+  45047,
+  28971,
+};
+
+
+//======================================================================
 //	シーンエリア情報
 //======================================================================
 
@@ -39,9 +57,6 @@
 
 #define CAMERA_DEF_PITCH  ( 0x100 )
 #define CAMERA_DEF_LEN    ( 0x38D000 )
-#define CAMERA_DEF_TARGET_X ( 0x2f6f36 )
-#define CAMERA_DEF_TARGET_Y ( 0x4000 )
-#define CAMERA_DEF_TARGET_Z ( 0x301402 )
 
 // C3カメラ可動範囲
 static const VecFx32 sc_RAIL_CAMERA_MOVE_AREA_START = { 0x464cf6, 0, 0x202210 };
@@ -164,6 +179,13 @@ static void mapCtrlC3_Create(
 
 	FIELD_PLAYER_SetPos( fld_player, pos);
 	FIELD_PLAYER_SetDir( fld_player, dir );
+
+
+  //  カメラ範囲
+  {
+    s_FIELD_CAMERA_AREA.circle = sc_FIELD_CAMERA_CIRCLE;
+    FIELD_CAMERA_SetCameraArea( FIELDMAP_GetFieldCamera( fieldWork ), &s_FIELD_CAMERA_AREA );
+  }
 }
 
 //--------------------------------------------------------------
@@ -219,7 +241,7 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
   if (rail_flag)
   {
     // カメラ動作限界管理
-    cameraRailAreaControl( FIELDMAP_GetFieldCamera( fieldWork ) );
+//    cameraRailAreaControl( FIELDMAP_GetFieldCamera( fieldWork ) );
 
 		// 移動方向の設定
 		FIELDMAP_CTRL_NOGRID_WORK_Main( p_ngridwork );
