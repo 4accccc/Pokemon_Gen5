@@ -159,16 +159,17 @@ EVENT_START   ev_pos_t02_hakai_stop
 		//Z軸が653なら
 		_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_idod )
 	ENDIF
+	_OBJ_ANIME_WAIT()
 	
 	//したっぱ：メッセージ
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_hakaiw_stop_02,T02_HAKAIW_01 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
+	
 	//したっぱ：主人公押し出し
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
 	_OBJ_ANIME_WAIT()
-
-
+	
 	//したっぱ：元の場所に戻る
 	_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_modoru )
 	_OBJ_ANIME_WAIT()
@@ -217,10 +218,6 @@ _ANIME_LABEL anm_player_back
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
-//	エターニティ団員♀　主人公押し出し
-//--------------------------------------------------------------
-
-//--------------------------------------------------------------
 //	エターニティ団員♀　元に戻る
 //--------------------------------------------------------------
 _ANIME_LABEL anm_hakai_modoru
@@ -228,7 +225,3 @@ _ANIME_LABEL anm_hakai_modoru
 	_ANIME_DATA		AC_WALK_R_8F,1
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
-
-
-
-
