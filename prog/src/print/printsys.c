@@ -191,7 +191,8 @@ static const STRCODE* ctrlSystemTag( PRINT_JOB* wk, const STRCODE* sp );
 static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs );
 static void ctrlStreamTag( PRINT_STREAM* wk );
 static u32 get_line_width( const STRCODE* sp, GFL_FONT* font, u16 margin, const STRCODE** endPtr );
-static inline u16 STR_TOOL_GetTagType( const STRCODE* sp );
+static inline u8 STR_TOOL_GetTagGroup( const STRCODE* sp );
+static inline u8 STR_TOOL_GetTagIndex( const STRCODE* sp );
 static inline u16 STR_TOOL_GetTagParam( const STRCODE* sp, u16 paramIndex );
 static inline const STRCODE* STR_TOOL_SkipTag( const STRCODE* sp );
 static inline u16 STR_TOOL_GetTagNumber( const STRCODE* sp );
@@ -737,7 +738,7 @@ static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp )
       break;
 
     case SPCODE_TAG_START_:
-      switch( STR_TOOL_GetTagType(sp) ){
+      switch( STR_TOOL_GetTagGroup(sp) ){
       case TAGTYPE_GENERAL_CTRL:
         sp = ctrlGeneralTag( wk, sp );
         break;
@@ -1164,7 +1165,7 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
           break;
 
         case SPCODE_TAG_START_:
-          if( STR_TOOL_GetTagType(wk->sp) == TAGTYPE_STREAM_CTRL )
+          if( STR_TOOL_GetTagGroup(wk->sp) == TAGTYPE_STREAM_CTRL )
           {
             ctrlStreamTag( wk );
             if( wk->state != PRINTSTREAM_STATE_RUNNING ){
@@ -1437,7 +1438,7 @@ u16 PRINTSYS_GetTagCount( const STRBUF* str )
   {
     if( *sp == SPCODE_TAG_START_ )
     {
-      if( PRINTSYS_IsWordSetTagType(sp) )
+      if( PRINTSYS_IsWordSetTagGroup(sp) )
       {
         cnt++;
       }
@@ -1470,10 +1471,38 @@ STRCODE PRINTSYS_GetTagStartCode( void )
  * @retval  BOOL    単語セット用タグコードならTRUE
  */
 //=============================================================================================
-BOOL PRINTSYS_IsWordSetTagType( const STRCODE* sp )
+BOOL PRINTSYS_IsWordSetTagGroup( const STRCODE* sp )
 {
-  u16 type = STR_TOOL_GetTagType( sp );
+  u16 type = STR_TOOL_GetTagGroup( sp );
   return (type == TAGTYPE_WORD) || (type==TAGTYPE_NUMBER);
+}
+
+
+//=============================================================================================
+/**
+ * タググループ取得
+ *
+ * @param   sp    文字列ポインタ（タグ開始コードをポイントしていること）
+ *
+ * @retval  PrintSys_TagGroup   タググループ（gmm の ポケモンWB（単語），ポケモンWB（数値）等）
+ */
+//=============================================================================================
+PrintSys_TagGroup PRINTSYS_GetTagGroup( const STRCODE* sp )
+{
+  return STR_TOOL_GetTagGroup( sp );
+}
+//=============================================================================================
+/**
+ * タグインデックス取得
+ *
+ * @param   sp    文字列ポインタ（タグ開始コードをポイントしていること）
+ *
+ * @retval  u16   タグインデックス
+ */
+//=============================================================================================
+u8 PRINTSYS_GetTagIndex( const STRCODE* sp )
+{
+  return STR_TOOL_GetTagIndex( sp );
 }
 
 //=============================================================================================
@@ -1510,16 +1539,16 @@ const STRCODE* PRINTSYS_SkipTag( const STRCODE* sp )
 
 
 
-//============================================================================================
+//----------------------------------------------------------------------------------
 /**
- * 文字列ポインタの指しているタグコード・パラメータ部から、タグタイプを取得
+ * タグ開始コードを指している文字列から、そのタグのグループを取得
  *
  * @param   sp    文字列ポインタ（タグ開始コードを指している必要がある）
  *
- * @retval  u16   タグ種類
+ * @retval  u8    タググループ
  */
-//============================================================================================
-static inline u16 STR_TOOL_GetTagType( const STRCODE* sp )
+//----------------------------------------------------------------------------------
+static inline u8 STR_TOOL_GetTagGroup( const STRCODE* sp )
 {
   GF_ASSERT( *sp == SPCODE_TAG_START_ );
 
@@ -1531,16 +1560,37 @@ static inline u16 STR_TOOL_GetTagType( const STRCODE* sp )
 
   return 0xffff;
 }
-//============================================================================================
+//----------------------------------------------------------------------------------
 /**
- * 文字列ポインタのさしているタグコード・パラメータ部から、パラメータ値を取得
+ * タグ開始コードを指している文字列から、そのタグのグループ内インデックスを返す
  *
- * @param   sp        文字列ポインタ（タグ開始コードを指している必要がある）
+ * @param   sp    文字列ポインタ（タグ開始コードを指している必要がある）
+ *
+ * @retval  u8    グループ内インデックス
+ */
+//----------------------------------------------------------------------------------
+static inline u8 STR_TOOL_GetTagIndex( const STRCODE* sp )
+{
+  GF_ASSERT( *sp == SPCODE_TAG_START_ );
+
+  if( *sp == SPCODE_TAG_START_ )
+  {
+    sp++;
+    return ((*sp)&0xff);
+  }
+
+  return 0xffff;
+}
+//----------------------------------------------------------------------------------
+/**
+ * タグ開始コードを指している文字列から、そのタグのタイプを取得
+ *
+ * @param   sp            文字列ポインタ（タグ開始コードを指している必要がある）
  * @param   paramIndex    パラメータインデックス
  *
- * @retval  u16       パラメータ値
+ * @retval  u16   タグタイプ
  */
-//============================================================================================
+//----------------------------------------------------------------------------------
 static inline u16 STR_TOOL_GetTagParam( const STRCODE* sp, u16 paramIndex )
 {
   GF_ASSERT( *sp == SPCODE_TAG_START_ );

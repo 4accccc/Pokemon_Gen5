@@ -524,12 +524,19 @@ inline BOOL PRINT_UTIL_Trans( PRINT_UTIL* wk, PRINT_QUE* que )
 
 
 
+//------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------
 
-
+typedef enum {
+  TAGGROUP_WORD = 1,
+  TAGGROUP_NUMBER = 2,
+}PrintSys_TagGroup;
 
 
 extern STRCODE PRINTSYS_GetTagStartCode( void );
-extern BOOL PRINTSYS_IsWordSetTagType( const STRCODE* sp );
+extern BOOL PRINTSYS_IsWordSetTagGroup( const STRCODE* sp );
+extern PrintSys_TagGroup  PRINTSYS_GetTagGroup( const STRCODE* sp );
+extern u8  PRINTSYS_GetTagIndex( const STRCODE* sp );
 extern u16 PRINTSYS_GetTagParam( const STRCODE* sp, u16 paramIdx );
 extern const STRCODE* PRINTSYS_SkipTag( const STRCODE* sp );
 
