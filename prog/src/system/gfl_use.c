@@ -74,6 +74,7 @@ BOOL  mcs_recv_auto;
 static void mcsRecv( void );
 #endif
 
+extern void	GFL_MCS_Resident(void);
 //=============================================================================================
 //
 //      ä÷êî
@@ -206,6 +207,7 @@ void GFLUser_Main(void)
   if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
 	  GFL_MCS_Main();
 	  GFL_MCS_SNDVIEWER_Main();
+		GFL_MCS_Resident();
   }
 #endif
 }
