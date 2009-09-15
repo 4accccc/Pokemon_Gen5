@@ -9,6 +9,8 @@ RESOURCE_MACRO	= $(PROJECT_RSCDIR)\macro_define
 
 SUBDIRS	=	wmi \
 			personal\
+			trdata \
+			trmsg \
 			sound \
 			bag \
 		  trade \
@@ -80,8 +82,6 @@ SUBDIRS	=	wmi \
 			unionroom \
 			winframe \
 			trgra \
-			trdata \
-			trmsg \
 			irc_compatible \
 			worldtrade \
 			balance_ball \
