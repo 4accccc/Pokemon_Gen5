@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= ariizumi_nobuhiko
+USERS	= ariizumi_nobuhiko mori toyama
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -98,7 +98,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif
-	rm -f $(TARGETDIR)/$(targetname).narc
-	rm -f $(TARGETDIR)/$(targetname).naix
+#	rm -f $(TARGETDIR)/$(targetname).narc
+#	rm -f $(TARGETDIR)/$(targetname).naix
 
 
