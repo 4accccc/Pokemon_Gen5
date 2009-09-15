@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>DSP_LoadGraphics</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>DSP_LoadGraphics <IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<pre><code>
+BOOL DSP_LoadGraphics(FSFile *file, int slotB, int slotC);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>file</strong></em></td>
+<td style="width:87%">グラフィックスコンポーネントのファイル。<br />
+あらかじめROMに収録しておいた$TwlSDK/dspcomponents/graphics/graphics.aのファイルイメージを開くか、
+<code><a href="DSP_OpenStaticComponentGraphics.html">DSP_OpenStaticComponentGraphics()</a></code> で用意する必要があります。<br />
+ファイルはこの関数内でのみ使用されますので、呼び出し後にファイルを保持しておく必要はありません。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>slotB</strong></em></td>
+<td style="width:87%">DSPのコードメモリのために使用してもよいWRAM-Bのスロットを示すビット集合。<br />
+たとえばスロット4,5,6をDSPのために用意しているなら(1&lt;&lt;4)|(1&lt;&lt;5)|(1&lt;&lt;6)=0x70を指定します。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>slotC</strong></em></td>
+<td style="width:87%">DSPのコードメモリのために使用してもよいWRAM-Cのスロットを示すビット集合。<br />
+たとえばスロット4,5,6をDSPのために用意しているなら(1&lt;&lt;4)|(1&lt;&lt;5)|(1&lt;&lt;6)=0x70を指定します。</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>返り値</h2>
+<p>グラフィックスコンポーネントが正しくDSPへロードされればTRUEを返します。<br />
+WRAM-BおよびWRAM-Cの空きスロット数が不足してロードに失敗した場合はFALSEを返します。</p>
+
+<h2>説明</h2>
+<p>画像データの拡縮、色空間の変換をサポートするコンポーネントをDSPへロードします。<br/>
+この関数を呼び出すことによって以下の関数群が利用可能になります。</p>
+<ul><code>
+<li><a href="DSP_ConvertYuvToRgb.html">DSP_ConvertYuvToRgb()</a></li>
+<li><a href="DSP_Scaling.html">DSP_Scaling()</a></li>
+<li><a href="DSP_Scaling.html">DSP_ScalingEx()</a></li>
+<li><a href="DSP_Scaling.html">DSP_ScalingAsync()</a></li>
+<li><a href="DSP_Scaling.html">DSP_ScalingAsyncEx()</a></li>
+</code></ul>
+<p>ロード時に、必要なだけのWRAM-BおよびWRAM-Cをライブラリ内部で自動的に確保されます。<br />
+必要なWRAM-BおよびWRAM-Cのスロット数は、それぞれ以下のマクロで定義されています。</p>
+<ul>
+<li>DSP_SLOT_B_COMPONENT_GRAPHICS</li>
+<li>DSP_SLOT_C_COMPONENT_GRAPHICS</li>
+</ul>
+<p>グラフィックスコンポーネントが不要になれば <code><a href="DSP_UnloadGraphics.html">DSP_UnloadGraphics()</a></code> を使用してアンロードすることができます。</p>
+
+<h2>注意</h2>
+<ul>
+<li>指定するコンポーネントファイルは、使用しているSDKのライブラリに収録されているものを必ずご使用下さい。
+互いのバージョンが異なる場合、動作は保証されません。</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="DSP_OpenStaticComponentGraphics.html">DSP_OpenStaticComponentGraphics</a>,
+<a href="DSP_UnloadGraphics.html">DSP_UnloadGraphics</a>,
+<a href="DSP_ConvertYuvToRgb.html">DSP_ConvertYuvToRgb</a>,
+<a href="DSP_ConvertYuvToRgb.html">DSP_ConvertYuvToRgbAsync</a>,<br>
+<a href="DSP_Scaling.html">DSP_Scaling</a>,
+<a href="DSP_Scaling.html">DSP_ScalingEx</a>,
+<a href="DSP_Scaling.html">DSP_ScalingAsync</a>,
+<a href="DSP_Scaling.html">DSP_ScalingAsyncEx</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/06/13 コンポーネントのロードに必要なWRAMスロット数の定義を追記<br />
+2008/05/22 初版
+</p>
+</body>
+</html>

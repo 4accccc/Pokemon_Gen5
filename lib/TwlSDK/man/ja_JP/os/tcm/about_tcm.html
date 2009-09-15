@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>TCM (overview) </TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">TCM (overview) <IMG src="../../image/NTR.gif" width="24" height="12" border="0" align="middle"><IMG src="../../image/TWL.gif" width="24" height="12" border="0" align="middle"></H1>
+<P>TCM は Tightly-Coupled Memory の略で、直接 ARM9 コアと接続された高速なメモリです。ARM9バスに接続されていませんので、DMA
+中であっても TCM を使用してARM9 が処理を行なうことが出来ます。</P>
+<P>TCM には、命令TCM ( ITCM ) とデータTCM ( DTCM ) の２種類があります。ITCM
+は 32KByte、DTCM は 16KByte の容量を持ちます。ITCM には命令とデータを配置することが可能です。DTCM
+にはデータのみを配置することは出来、命令を配置することは出来ません。</P>
+<H2>イネーブル・ディセーブル</H2>
+<P>以下の関数で、ITCM、DTCM をそれぞれイネーブル、ディセーブルとすることが出来ます。</P>
+<P><CODE><A href="OS_EnableITCM.html">OS_EnableITCM()</A></CODE> ITCM をイネーブルにする。<BR>
+<CODE><A href="OS_DisableITCM.html">OS_DisableITCM()</A></CODE> ITCM をディセーブルにする。<BR>
+<CODE><A href="OS_EnableDTCM.html">OS_EnableDTCM()</A></CODE>　DTCMをイネーブルにする<BR>
+<CODE><A href="OS_DisableDTCM.html">OS_DisableDTCM()</A></CODE> DTCM をディセーブルにする。</P>
+<H2>マッピング</H2>
+<P>ITCM は 32KByte の倍数のアドレスに、DTCM は 16KByte の倍数のアドレスにマッピングすることが可能です。</P>
+<P>配置アドレスは以下のようになります。<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>TCM種類</TH>
+      <TH>大きさ</TH>
+      <TH>用途</TH>
+      <TH>アドレス</TH>
+    </TR>
+    <TR>
+      <TD>ITCM</TD>
+      <TD>32KB</TD>
+      <TD>命令コード／データ</TD>
+      <TD>0x01FF8000 ～0x01FFFFFF</TD>
+    </TR>
+    <TR>
+      <TD>DTCM</TD>
+      <TD>16KB</TD>
+      <TD>データ<BR>
+      </TD>
+      <TD>0x027E0000 ～0x027E3FFF<BR>
+      (NITRO ROM の場合) <B><FONT color="#ff0000">(注1)</FONT></B><BR>
+      0x02FE0000 ～0x02FE3FFF<BR>
+      (HYBRID / LIMITED ROMの場合) <B><FONT color="#ff0000">(注2)</FONT></B></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+<B><FONT color="#ff0000">(注1)</FONT></B> NITRO ROM では、DTCM は 0x027E0000 からとなります。<BR>
+NITRO ROM を NITRO ハードウェアで動作させるか、TWL ハードウェアで動作させるかは関係ありません。</P>
+<P><B><FONT color="#ff0000">(注2)</FONT></B> HYBRID ROM、LIMITED ROM では、DTCM は 0x02FE0000 からとなります。<BR>
+TWL モードで動作する場合はもちろんですが、HYBRID ROM をハードに関係なく
+NITRO モードで動作させる場合も該当します。</P>
+<P>このように、DTCM のアドレスは、動作モードによるものではなく、ROM の種類によるものであることにご注意ください。</P>
+<H3>ITCM アドレス取得関数</H3>
+<P>ITCM については取得関数として、<CODE><A href="OS_GetITCMAddress.html">OS_GetITCMAddress()</A></CODE> が用意されており、定数 <CODE>HW_ITCM</CODE> が取得できます。定数 <CODE>HW_ITCM</CODE> は デフォルト ITCM の開始アドレスである 0x01FF8000 として定義されています。</P>
+<H3>DTCM アドレス取得関数</H3>
+<P>DTCM については、<CODE><A href="OS_GetDTCMAddress.html">OS_GetDTCMAddress()</A></CODE> という関数でマッピングされているアドレスを取得することが出来ます。アドレスを設定する関数は
+<CODE><A href="OS_SetDTCMAddress.html">OS_SetDTCMAddress()</A></CODE> です。DTCM はスタック領域や各種フックベクタなどがマッピングされていており、プログラム動作中にマッピング位置を変更すると暴走する恐れがありますので、一つのプログラムで頻繁に変更することは避けてください。</P>
+<H2>TCMに関するCP15設定</H2>
+<P>ITCM や DTCM の設定は、コプロセッサ15 (CP15) の内部レジスタの設定に依ります。TWL-SDK
+ではこのレジスタに直接アクセスするAPIを用意しています。ITCM と DTCM それぞれに、レジスタに与える(あるいは読み込む)パラメータの設定関数と取得関数が用意されていますが、これらの関数、特に設定関数の使用に当たっては動作原理を十分に理解する必要があります。</P>
+<P><CODE><A href="OS_SetITCMParam.html">OS_SetITCMParam()</A></CODE> ITCM のパラメータを設定する。<BR>
+<CODE><A href="OS_GetITCMParam.html">OS_GetITCMParam()</A></CODE> ITCM のパラメータを取得する。<BR>
+<CODE><A href="OS_SetDTCMParam.html">OS_SetDTCMParam()</A></CODE> DTCM のパラメータを設定する。<BR>
+<CODE><A href="OS_GetDTCMParam.html">OS_GetDTCMParam()</A></CODE> DTCM のパラメータを取得する。</P>
+<H2>参照</H2>
+<P><CODE>
+<A href="../list_os.html#Tcm">OS関数一覧(TCM)</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2009/04/13 DTCM のアドレスの間違いを修正<BR>
+2007/11/28 TWLモードに関する記述を追加<BR>
+2005/04/13 DTCMのデフォルトアドレスを変更<BR>
+2004/12/14 用語や語尾など修正<BR>
+2004/11/09 初版</P>
+</BODY>
+</HTML>

@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_GetArchiveResource</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+<h1>FS_GetArchiveResource <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+BOOL FS_GetArchiveResource(const char *path, <a href="../FSArchiveResource.html">FSArchiveResource</a> *resource);
+</code></pre>
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>path</strong></em></td>
+<td style="width:87%">アーカイブを特定できるパス名</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>resource</strong></em></td>
+<td style="width:87%">取得したリソース情報を格納する<a href="../FSArchiveResource.html">FSArchiveResource</a>構造体</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>リソース情報が正常に取得できればTRUEを、失敗すればFALSEを返します。<br />
+失敗時の詳細なエラーは<code><a href="../archive/FS_GetArchiveResultCode.html">FS_GetArchiveResultCode()</a></code>で取得することができます。</p>
+
+<h2>説明</h2>
+<p>指定したパスが属するアーカイブの現在のリソース情報を取得します。</p>
+<p>この関数は主に、<a href="../overview/about_Archive.html#FAT">FATフォーマット</a>のアーカイブに対して空き容量を確認するために利用します。NANDアプリのセーブデータサイズを決定する際には、別途<a href="../../tools/SaveDataSize.html">「セーブデータサイズ一覧」</a>の情報もご参考ください。</p>
+
+<h2>注意</h2>
+<ul>
+<li>この関数を割り込みハンドラ(IRQモード)から呼び出すことはできません。<br />
+また、割り込みを禁止したままの状態にあると処理が完了しない場合がある点に注意して下さい。</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="../../tools/SaveDataSize.html">セーブデータサイズ一覧</a><br />
+<a href="../FSArchiveResource.html">FSArchiveResource</a> 
+<a href="../archive/FS_GetArchiveResultCode.html">FS_GetArchiveResultCode</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/01/13 「セーブデータサイズ一覧」へのリンクを追加。<br />
+2007/12/17 初版<br />
+</p>
+</body>
+</html>

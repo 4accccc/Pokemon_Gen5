@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>OS_GetRunningConsoleType</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">OS_GetRunningConsoleType <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD><CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>u32 OS_GetRunningConsoleType( void );</CODE>
+</DL>
+<H2>引数</H2>
+<P>なし。</P>
+<H2>返り値</H2>
+<P>プログラムの実行環境によるu32型の値です。<BR>
+説明の項を参照してください。</P>
+<H2>説明</H2>
+<P>プログラムの実行環境に従い、その環境を表すu32型の値を返します。</P>
+<P>この <CODE>OS_GetRunningConsoleType()</CODE> は動作環境によって処理を動的に切り替えたい場合に有効です。この関数によって複数の動作環境で共通のプログラムを作成することができます。</P>
+<P><CODE>OS_GetRunningConsoleType()</CODE> は、<FONT color="#ff0000">「動作している環境」を取得するための関数であり、「動作しているモード」を調べるための関数ではありません。</FONT>動作モードを調べる関数は <CODE><A href="OS_IsRunOnTwl.html">OS_IsRunOnTwl()</A></CODE> です。例えば NTR 用のゲームは NTR でも遊べますし、TWL で遊ぶことも出来ます。どちらの場合でも「NTRモード」でプログラムは動いていますが、動作しているハードウェアは
+NTR であったり TWL であったりと異なります。</P>
+<P><CODE>OS_GetRunningConsoleType()</CODE> は、1回目の呼び出しではデバイスやメモリ等を調査して値を決定しますが、2回目の呼び出しからは以前返した値と同じものをそのまま返しますので呼び出しによるオーバーヘッドは殆どありません。</P>
+<H3><BR>
+<BR>
+類似の関数</H3>
+<P>同様の関数に、<CODE><A href="OS_GetConsoleType.html">OS_GetConsoleType()</A></CODE> があります。こちらは 最終版ROM (FINALROM) では必ず実機を表す値を返します。しかし本関数 <CODE>OS_GetRunningConsoleType()</CODE> は最終版ROM(FINALROM)であっても実際にハードウェア構成を調べて値を返します。</P>
+<P>最終版ROM にこれらの動作環境取得の関数が残る場合、<CODE>OS_GetRunningConsoleType()</CODE> よりは <CODE><A href="OS_GetConsoleType.html">OS_GetConsoleType()</A></CODE> の方が無難です。製品となった状況を想定すると、最終ROM は実機でしか動作しないはずで、「動作している環境はデバッガである」など実機で有りえない値が返る可能性は排除しておきたいからです。そういう意味では
+<CODE>OS_GetRunningConsoleType()</CODE> はデバッグ用途にのみ使用するのに留めておくのがよいでしょう。</P>
+<H3><BR>
+<BR>
+取得できる値について<BR>
+環境やビルドによる実際の値<BR>
+NITRO モードでの動作環境識別</H3>
+<P><CODE><A href="OS_GetConsoleType.html">OS_GetConsoleType()</A></CODE> の説明を参照してください。</P>
+<H2>参照</H2>
+<P><CODE><A href="OS_IsRunOnEmulator.html">OS_IsRunOnEmulator</A>, <A href="OS_GetConsoleType.html">OS_GetConsoleType</A></CODE></P>
+<H2>履歴</H2>
+<P>2007/11/05 <CODE>OS_GetConsoleType()</CODE> から移行<BR>
+2007/10/29 TWL環境での値について記述<BR>
+2004/10/12 FINALROM 版で定数を返すことを説明<BR>
+2004/08/17 IS-NITRO-EMULATORについての表記を統一<BR>
+2004/06/08 初版</P>
+</BODY>
+</HTML>

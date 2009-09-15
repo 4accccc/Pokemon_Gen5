@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_WriteFile</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+
+<body>
+
+<h1>FS_WriteFile <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+s32	FS_WriteFile(<A href="../fs_file_type.html">FSFile</a>* p_file, const void *src, s32 len);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>file</strong></em></td>
+<td style="width:87%">開いたファイルを指す<A href="../fs_file_type.html">FSFile</a>構造体</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>src</strong></em></td>
+<td style="width:87%">転送元バッファ<br />
+事前にキャッシュをストアしておく必要は特にありません。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>len</strong></em></td>
+<td style="width:87%">書き込むデータのバイト長</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>データが正しく書き込めればそのバイト数を, そうでないなら -1 を返します。</p>
+
+<h2>説明</h2>
+<p>ファイルポインタの現在位置から指定サイズのデータを書き込みます。<br />
+終端を越えるようにサイズ指定した場合、通常は終端まで書き込んでそのサイズを返します。<br />
+アーカイブの実装によっては、自動的にサイズ拡張を行うことができる場合があります。</p>
+
+<h2>注意</h2>
+<ul style="color:Red">
+<li>この関数は処理の完了を待つためにスレッドを休止させることがあるため、割り込みハンドラ(IRQモード)から呼び出すことはできません。</li>
+<li>割り込みを禁止したままの状態にあると処理が完了しない場合があります。</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="../fs_file_type.html">FSFile</a> 
+<a href="FS_OpenFileEx.html">FS_OpenFileEx</a> 
+<a href="FS_OpenFileFast.html">FS_OpenFileFast</a> 
+<a href="FS_CloseFile.html">FS_CloseFile</a> 
+<a href="FS_GetFileLength.html">FS_GetFileLength</a> 
+<a href="FS_SeekFile.html">FS_SeekFile</a> 
+<a href="FS_SeekFileToBegin.html">FS_SeekFileToBegin</a> 
+<a href="FS_SeekFileToEnd.html">FS_SeekFileToEnd</a> 
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/10/02 参照リストを一部更新<br />
+2008/02/27 書き込みデータのキャッシュストアが不要な点を追記。<br />
+2004/09/24 呼び出し時および完了の条件についての注意を記述追加<br />
+2004/07/13 初版
+</p>
+
+</body>
+</html>

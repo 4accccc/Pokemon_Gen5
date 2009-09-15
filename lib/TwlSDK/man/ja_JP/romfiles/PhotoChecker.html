@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>PhotoChecker</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+pre
+{
+  display: compact;
+  font-family	: "Courier New", monospace;
+  font-weight	: normal;
+  font-size     : normal;
+
+/*  margin		: 0pt 0pt 6pt 50pt;*/
+  padding		: 2pt 8pt 2pt 8pt;
+  background-color	: #eee;
+
+  border-style		: solid;
+  border-width		: 1px;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD,TH{
+  border-color	: #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+div.screen
+{
+    float: left;
+    padding: 2px;
+    background-color: black;
+    margin: 0 0.5em 1em 1em;
+}
+ol, ul
+{
+    padding-left: 4em;
+    margin-left: 0pt;
+}
+
+div.screen img.main
+{
+    margin-bottom: 10px;
+}
+.warning
+{
+    color: red;
+}
+table
+{
+    left: 0;
+}
+table.plain td
+{
+    border: none;
+    background-color: transparent;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+
+<H1 align="left">PhotoChecker</H1>
+
+
+<H2>概要</H2>
+<P>
+<CODE>PhotoChecker</CODE> は、TWL 本体内の photo 領域をチェックする TWL アプリケーションです。<br>
+TCL ライブラリ経由で書き込まれていない不正なファイルが存在していないかどうかをチェックすることが可能です。
+</P>
+
+
+<H2>実行</H2>
+<H3></H3>
+<P>
+以下のいずれかの方法で実行することができます。
+</P>
+<ul>
+<li>IS-TWL-DEBUGGER ソフトウェアを使用して PhotoChecker.srl を実行する。
+<li>PhotoChecker.srl を TWL カードに書き込んで実行する。
+</ul>
+<P>
+実行を開始すると、photo: 以下に存在する画像が上画面に、ファイル名が下画面に次々と表示されていきます。<br>
+photo: 以下が不正な状態であった場合、上画面が赤色になります。<br>
+正常な状態であった場合は、上画面が緑色になります。<br>
+<br>
+以下のような場合、不正な状態とみなされます。
+</P>
+<ul>
+<li>DSi カメラを一度も起動していない等の理由で管理ファイルが存在しないにも関わらず、その他のファイルが存在した場合
+<li>管理ファイルの情報が不正な場合
+<li>DSi カメラ、及び TCL を経由せずに書き込んだファイルが存在した場合
+<li>DSi カメラ、及び TCL を経由して書き込んだファイルを DSi カメラを経由せずに削除した場合
+</ul>
+<P>
+具体的には以下のエラーメッセージが表示されます。<br>
+<br>
+<table border="1" width="100%">
+<tr><td width="350"><em>There is no file which suited the management file.</em></td>
+    <td width="650">管理ファイルに登録されているファイルが見つからなかった場合。</td></tr>
+<tr><td width="350"><em>There is no management file and there are other files.</em></td>
+    <td width="650">管理ファイルが存在しないにも関わらず、その他のファイル、ディレクトリが見つかった場合。</td></tr>
+<tr><td width="350"><em>There is a file which is not in the management file.</em></td>
+    <td width="650">管理ファイルに登録されていないファイルが見つかった場合。</td></tr>
+<tr><td width="350"><em>There is a file of an illegal pathname.</em></td>
+    <td width="650">DSiカメラの命名規則に則っていない名前のファイルが見つかった場合。</td></tr>
+<tr><td width="350"><em>There is a directory of an illegal pathname.</em></td>
+    <td width="650">DSiカメラの命名規則に則っていない名前のディレクトリが見つかった場合。</td></tr>
+<tr><td width="350"><em>This management file is not right.</em></td>
+    <td width="650">管理ファイルの内容が正常でなかった場合。</td></tr>
+<tr><td width="350"><em>This picture is illegal size.</em></td>
+    <td width="650">デコードに成功した画像のサイズがDSiカメラが定めるサイズ(640x480)ではなかった場合。</td></tr>
+<tr><td width="350"><em>The signature is not added to this JPEG file.</em></td>
+    <td width="650">電子署名が付加されていなかった場合、もしくは電子署名は付加されているがデコードできない画像だった場合。</td></tr>
+<tr><td width="350"><em>Memory allocation error.</em></td>
+    <td width="650">通常発生しないエラー。</td></tr>
+<tr><td width="350"><em>Can not open JPEG file.</em></td>
+    <td width="650">通常発生しないエラー。</td></tr>
+<tr><td width="350"><em>Can not read JPEG file.</em></td>
+    <td width="650">通常発生しないエラー。</td></tr>
+<tr><td width="350"><em>Can not read management file.</em></td>
+    <td width="650">通常発生しないエラー。</td></tr>
+<tr><td width="350"><em>Can not open directory.</em></td>
+    <td width="650">通常発生しないエラー。</td></tr>
+<tr><td width="350"><em>The return of entry information went wrong.</em></td>
+    <td width="650">通常発生しないエラー。</td></tr>
+<tr><td width="350"><em>Does not reach so far.</em></td>
+    <td width="650">通常発生しないエラー。</td></tr>
+</table>
+
+<H2>場所</H2>
+<P>
+<CODE>$TwlSDK/bin/ARM9-TS/Release/PhotoChecker.srl</CODE><br>
+</P>
+
+<H2>履歴</H2>
+<P>
+2009/05/18 エラーメッセージについての説明追加<br>
+2009/03/16 初版
+</P>
+
+
+</BODY>
+</HTML>

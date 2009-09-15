@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>ENV_Init</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">ENV_Init<img src="../image/NTR.gif"align="middle"><img src="../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;nitro/env.h&gt;</CODE></PRE>
+  <PRE><CODE>void ENV_Init( void );
+ </CODE></PRE>
+</DL>
+<H2>引数</H2>
+<P>なし</P>
+<H2>返り値</H2>
+<P>なし。</P>
+<H2>説明</H2>
+<P>リソース管理システムを初期化します。</P>
+<P><CODE>ENV_Init()</CODE> ではリソース配列を以下のように、 <CODE>ENVResource* resourceArray[]</CODE> 配列で指定しています。</P>
+<BLOCKQUOTE style="background:#ffffcc"><CODE><FONT color="#ff0000">SDK_WEAK_SYMBOL</FONT> ENVResource *<FONT color="#ff0000">resourceArray</FONT>[] = { NULL };<BR>
+<BR>
+void ENV_Init(void)<BR>
+{<BR>
+　　　　：<BR>
+　<FONT color="#ff0000">ENV_SetResourceSetArray( resourceArray );</FONT><BR>
+}</CODE></BLOCKQUOTE>
+
+
+<P><CODE>resourceArray[]</CODE> はリソース配列を持つ配列です。システムでは WEAK シンボルとして NULL メンバの配列になっていますので、アプリ側が自分でこの配列を定義すればそちらが有効になります。<CODE>resourceArray[]</CODE> はリソース配列の配列なので、必要なリソース配列を複数まとめることで一度に指定することができます。</P>
+<P><FONT color="#ff0000">リソース配列を記述する際には、最後に ENV_RESOURCE_END を配置するようにして下さい。</FONT></P>
+<P>システム内では、複数の配列をリストで結合し、保持することが可能です (最大
+<CODE>ENV_RESOURCE_SET_MAX</CODE> 個です)。 複数の配列を保持している場合、すべての中から検索されます。リストを操作するのは、<CODE><A href="ENV_SetResourceSet.html">ENV_SetResourceSet()</A>, <A href="ENV_AppendResourceSet.html">ENV_AppendResourceSet()</A>, <A href="ENV_PrependResourceSet.html">ENV_PrependResourceSet()</A>, <A href="ENV_InsertResourceSet.html">ENV_InsertResourceSet()</A></CODE> が用いられます。</P>
+<P><CODE>resourceArray[]</CODE> の記述例です。</P>
+<BLOCKQUOTE style="background-color:#ffffcc"><CODE><B>(例)</B><BR>
+<BR>
+ENVResource myResource1[] = {<BR>
+　　　&quot;res1.data1&quot;,　　ENV_U32( 300 ),<BR>
+　　　&quot;res1.data2&quot;,　　ENV_STRING( &quot;abcde&quot; ),<BR>
+　　　&quot;res1.data3&quot;,　　ENV_S32( -100 ),<BR>
+　　　<B><FONT color="#ff0033">ENV_RESOUCE_END</FONT></B><BR>
+};<BR>
+<BR>
+ENVResource myResource2[] = {<BR>
+　　　&quot;res2.data1&quot;,　　ENV_U32( 500 ),<BR>
+　　　&quot;res2.data2&quot;,　　ENV_S32( -800 ),<BR>
+　　　<B><FONT color="#ff0033">ENV_RESOUCE_END</FONT></B><BR>
+};<BR>
+<BR>
+
+ENVResource* resourceArray[]={ myResource1, myResource2, NULL };
+</CODE><BR>
+<BR>
+</BLOCKQUOTE>
+<P><BR>
+<CODE>ENV_Init()</CODE> は他の ENV 関数を呼び出す前に呼び出しておいてください。<CODE><A href="../os/init/OS_Init.html">OS_Init()</A></CODE> からは呼び出されません。</P>
+<H2>参照</H2>
+<P><CODE><A href="ENV_SetResourceSetArray.html">ENV_SetResourceSetArray</A>,<BR>
+<A href="ENV_SetResourceSet.html">ENV_SetResourceSet</A>, <A href="ENV_AppendResourceSet.html">ENV_AppendResourceSet</A>, <A href="ENV_PrependResourceSet.html">ENV_PrependResourceSet</A>, <A href="ENV_InsertResourceSet.html">ENV_InsertResourceSet</A>,<BR>
+<A href="ENV_GetXXX.html">ENV_Get*</A></CODE></P>
+<H2>履歴</H2>
+<P>2008/12/19 例を追加<BR>
+2005/08/29 複数の配列について記述<BR>
+2005/08/16 初版</P>
+</BODY>
+</HTML>

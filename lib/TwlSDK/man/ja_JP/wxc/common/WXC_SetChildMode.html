@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 8.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>WXC_SetChildMode</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">WXC_SetChildMode <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/wxc.h&gt;</CODE><BR>
+  <BR>
+  <CODE>void WXC_SetChildMode(BOOL enable);</CODE><br>
+  <br>
+  </dd>
+</dl>
+<h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>enable</STRONG></EM></TD>
+      <TD width="87%">子機側でしか起動させない場合は TRUE を指定します。<br>
+	  通常の設定に戻す場合は FALSE を指定します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<h2>返り値</h2>
+<p>なし</p>
+
+<H2>説明</H2>
+<P>ワイヤレスを子機側としてしか起動させないよう設定します。<BR>
+この関数は<A href="WXC_Start.html">WXC_Start</A>関数より前に呼び出す必要があります。<BR>
+通常の用途においてはこの関数を使用する必要はありません。
+</p>
+<h2>参照</h2>
+<p><CODE>
+<A href="WXC_Init.html">WXC_Init</A> 
+<A href="WXC_Start.html">WXC_Start</A> 
+<A href="WXC_End.html">WXC_End</A> 
+<BR></CODE></P>
+<H2>履歴</H2>
+<P>
+2005/08/04 初版<br>
+</P>
+</body>
+</html>

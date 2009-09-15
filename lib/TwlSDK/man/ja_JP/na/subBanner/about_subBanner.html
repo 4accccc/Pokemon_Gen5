@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>サブバナー (overview)</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD,TH{
+  border-color	: #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+
+<H1 align="left">サブバナー (overview)</H1>
+
+<H2>説明</H2>
+<P>
+TWL のランチャーでは、アプリのバナーが表示されますが、
+<CODE><A href="../../tools/makerom.html">ROM スペックファイル</A></CODE> で指定したバナーとは別に、サブバナーと呼ばれる別のバナーを表示することが可能です。<BR>
+サブバナーはNAND アプリから書き換えることができるため、たとえばゲームの進行に応じてバナー画像が変化する
+といったことを実現できます。<BR>
+但し、バナーのゲームタイトルは変更できません。
+</P>
+<P>
+ランチャーではサブバナーが存在すれば、優先的にサブバナーを表示し、サブバナーが存在しなければ、<BR>
+通常のバナーが表示されます。これは本体設定のソフト管理画面においても、同じ動作になります。
+</P>
+<P>
+サブバナーは、NAND ファイルとして存在しますので、
+一旦サブバナーを設定しますとその状態が電源を切っても保存され、<BR>
+未設定にしない限り常にサブバナーが表示されます。
+</P>
+<P>
+サブバナーファイルを作成するためには、通常のバナーと同じように<A href="../../tools/bannercvtr.html">bannercvtr</A> で出力されたグラフィックデータや<BR>
+<A href="../../tools/ntexconv.html">ntexconv</A> で出力されたグラフィックデータとバナーコメントを設定した<CODE>bsf</CODE> ファイルを用意します。<BR>
+<CODE><A href="../../tools/makebannerTWL.html">makebanner.TWL</A></CODE>に、<CODE>-s</CODE> オプションを指定することでサブバナーを作成することができます。<BR>
+通常のバナーの作成方法は<A href="../../tools/about_Banner.html">バナー (overview)</A>を参照してください。
+</P>
+<P>
+サブバナーは、NAND アプリでのみ使用でき、カードアプリでは使用できません。
+</P>
+<H2>アプリへの実装</H2>
+<P>サブバナーは<CODE><A href="../../tools/makerom.html">ROM スペックファイル</A></CODE> *.rsf の<CODE>SubBannerFile</CODE> に<I>TRUE</I> を指定することで
+利用が可能となります。
+<BLOCKQUOTE>
+<PRE class="sample_source"><CODE>   #  ROM SPEC FILE
+
+AppendProperty
+{
+    ....
+    #
+    # Enable SubBannerFile
+    SubBannerFile    TRUE
+}</CODE></PRE>
+</BLOCKQUOTE>
+<P>
+サブバナーを表示するには、<CODE><A href="../../na/subBanner/NA_SaveSubBanner.html">NA_SaveSubBanner</A></CODE> を使用します。
+<CODE><A href="../../na/subBanner/NA_SaveSubBanner.html">NA_SaveSubBanner</A></CODE> が成功すれば、それ以降サブバナーが表示されます。
+一方、サブバナーを非表示にするには<CODE><A href="../../na/subBanner/NA_DeleteSubBanner.html">NA_DeleteSubBanner</A></CODE> を使用します。
+</P>
+<P>
+サブバナーをプログラムで動的に作成することも可能です。
+<CODE><A href="../../na/subBanner/NASubBanner.html">NASubBanner</A></CODE> 構造体の<CODE>anime</CODE> メンバーを編集します。
+<CODE>header</CODE> メンバーは、<CODE><A href="../../na/subBanner/NA_MakeSubBannerHeader.html">NA_MakeSubBannerHeader</A></CODE> を使用して設定します。
+サブバナー構造体については<CODE><A href="../../na/subBanner/NASubBanner.html">NASubBanner</A></CODE> を参照してください。
+</P>
+<P>
+現在設定されているサブバナーを取得するためには、<CODE><A href="../../na/subBanner/NA_LoadSubBanner.html">NA_LoadSubBanner</A></CODE> を使用します。
+</P>
+<H2>参照</H2>
+<P><CODE>
+<A href="../list_na.html#subBanner">NA関数一覧(サブバナー)</A>,
+<A href="../../demos/nandApp/nandAppdemos.html">NAND アプリサンプルデモ</A>,
+<A href="../../tools/about_Banner.html">バナー (overview)</A>
+</CODE></P>
+
+<H2>履歴</H2>
+<P>
+2009/03/10 サブバナーの作成方法を修正<BR>
+2008/10/30 NANDアプリから書き換え可能であることを追記<BR>
+2008/09/26 ソフト管理画面について追記<BR>
+2008/09/25 RSF, バナー (overview)へのリンク追加<BR>
+2008/09/16 初版
+</P>
+</BODY>
+</HTML>

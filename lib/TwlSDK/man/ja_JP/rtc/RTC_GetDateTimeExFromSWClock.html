@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>RTC_GetDateTimeExFromSWClock</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">RTC_GetDateTimeExFromSWClock <img src="../image/NTR.gif" align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/rtc.h&gt;</CODE><BR>
+  <PRE><CODE><A href="RTCResult.html">RTCResult</A> RTC_GetDateTimeExFromSWClock( <A href="RTCDate.html">RTCDate</A>* date ,<A href="RTCTimeEx.html">RTCTimeEx</A>* time );</CODE></PRE>
+  </dd>
+
+</dl><h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="300"><em><strong><font face="Courier New">date</font></strong></em></TD>
+      <TD width="700">日付データを取得するバッファへのポインタ</TD>
+    </TR>
+    <TR>
+      <TD><em><strong><font face="Courier New">timeEx</font></strong></em></TD>
+      <TD>時刻データを取得するバッファへのポインタ</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<P>
+最後に呼び出された <code><A href="RTC_SyncSWClock.html">RTC_SyncSWClock()</A></code> の結果を返します。<BR>
+0 以外が返ってきた場合はソフトウェアクロックの同期に失敗しています。
+</P>
+
+<h2>説明</h2>
+<P>
+ソフトウェアクロックを利用して日付データ及び時刻データを取得します。<code><A href="RTC_GetDateTime.html">RTC_GetDateTime()</A></code> と類似した形式ですが、時刻データが格納されるバッファは <code><A href="RTCTime.html">RTCTime()</A></code> ではなく <code><A href="RTCTimeEx.html">RTCTimeEx()</A></code> を指定します。<code><A href="RTCTimeEx.html">RTCTimeEx()</A></code> にはミリ秒精度の時刻データが格納されます。
+</P>
+
+<h2>参照</h2>
+<P><CODE>
+<A href="RTC_SyncSWClock.html">RTC_SyncSWClock</A>,
+<A href="RTCResult.html">RTCResult</A>,
+<A href="RTCDate.html">RTCDate</A>,
+<A href="RTCTimeEx.html">RTCTimeEx</A>
+</CODE></P>
+
+<H2>履歴</H2>
+<P>
+2008/04/17 初版
+</P>
+</body>
+</html>

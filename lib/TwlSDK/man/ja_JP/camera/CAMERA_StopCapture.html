@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>CAMERA_StopCapture</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">CAMERA_StopCapture <IMG src="../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <CODE>#include &lt;twl/camera.h&gt;</CODE><BR>
+  <BR>
+  <CODE>void CAMERA_StopCapture( void );</CODE>
+</DL>
+<H2>引数</H2>
+<P>なし</P>
+
+<H2>返り値</H2>
+<P>なし</P>
+
+<H2>説明</H2>
+<P>
+キャプチャを終了します。<BR>
+本関数を呼び出したフレーム(カメラVブランクの開始)までは、画像データを取得します。<BR>
+そのため、実際に<code><a href="CAMERA_DmaRecvAsync.html">CAMERA_DmaRecvAsync()</a></code>等で設定したバッファへの
+データ送信が停止されるのは、次のカメラVブランクからとなります。<br>
+再度キャプチャを開始する際には、<code><a href="CAMERA_IsBusy.html">CAMERA_IsBusy()</a></code>がFALSEになるまで待つなど、
+以前のキャプチャが停止していることを確認してから
+<code><a href="CAMERA_StartCapture.html">CAMERA_StartCapture()</a></code>を呼んで下さい。<br>
+また、カメラのVブランクはLCD(GX)のVブランクとは別物であることに注意してください。
+<BR><BR>
+本関数は起動しているカメラに対して、ラインバッファへの画像データの保存を停止する関数であり、
+カメラモジュール自体を停止(スタンバイ状態)にするには <code><A href="CAMERA_I2CActivate.html">CAMERA_I2CActivate()</A></code> を CAMERA_SELECT_NONE で呼び出す必要があります。
+
+</P>
+
+<H2>参照</H2>
+<P><code><A href="CAMERA_StartCapture.html">CAMERA_StartCapture</A>、<A href="CAMERA_I2CActivate.html">CAMERA_I2CActivate</A>、<a href="CAMERA_DmaRecvAsync.html">CAMERA_DmaRecvAsync</a>、<a href="CAMERA_IsBusy.html">CAMERA_IsBusy</a></code></P>
+<H2>履歴</H2>
+<P>
+2008/11/21 実際にデータ送信が停止するタイミングについて追記<br>
+2007/10/22 説明追加<BR>
+2007/10/02 初版</P>
+</BODY>
+</HTML>

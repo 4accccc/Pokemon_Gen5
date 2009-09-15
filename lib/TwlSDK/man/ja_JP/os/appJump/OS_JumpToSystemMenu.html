@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>OS_JumpToSystemMenu</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">OS_JumpToSystemMenu <img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD><CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <code>BOOL OS_JumpToSystemMenu( void );</CODE>
+</DL>
+<H2>引数</H2>
+<P>なし。</P>
+<H2>返り値</H2>
+<P>NITRO モードで実行した場合 には FALSE を返します。<BR>
+<font color="#ff0000"><B>TWL モードでは必ず成功しますが、成功した場合にはこの関数から戻ることはありません。</B></font></P>
+<H2>説明</H2>
+<P>ハードウェアリセットを行い、システムメニューに戻ります。</P>
+<P><font color="#ff0000"><B>この関数を割り込み禁止の状態で呼び出すことはできません。<BR>
+また、この関数は終了処理中に呼び出すことは出来ませんので<CODE><A href="../../spi/pm/PM_AppendExitCallback.html">PM_Append*ExitCallback</A></CODE>などで登録する終了コールバックから実行されないよう注意してください。</B></font></P>
+
+<P>本関数の内部では、<CODE><A href="../../spi/pm/PM_ForceToResetHardware.html">PM_ForceToResetHardware()</A></CODE> が使用されています。直接 <CODE><A href="../../spi/pm/PM_ForceToResetHardware.html">PM_ForceToResetHardware()</A></CODE> が呼ばれても通常は同様にシステムメニューに戻る動作となりますが、TWL には、メインRAM の先頭部分にパラメータを書き込んでハードウェアリセット後の動作を変更する仕組みが存在します (そのパラメータはシステムが使用します) 。従って、たまたま そのパラメータが意味のある値になっているときに <CODE><A href="../../spi/pm/PM_ForceToResetHardware.html">PM_ForceToResetHardware()</A></CODE> が呼ばれるとシステムメニューに戻らず別の動作になることがありますので、<FONT color="#ff0000">システムメニューに戻るのであれば本関数を呼んでください。</FONT></P>
+<H2>参照</H2>
+<P><CODE><A href="../../spi/pm/PM_ForceToResetHardware.html">PM_ForceToResetHardware</A></CODE>, <BR>
+   <CODE><A href="../../spi/pm/PM_AppendExitCallback.html">PM_Append*ExitCallback</A></CODE>,
+   <CODE><A href="../../spi/pm/PM_AppendExitCallback.html">PM_Prepend*ExitCallback</A></CODE>,
+   <CODE><A href="../../spi/pm/PM_AppendExitCallback.html">PM_Insert*ExitCallback</A></CODE></P>
+<H2>履歴</H2>
+<P>2008/10/22 終了処理中の実行を禁止する旨を追加<BR>
+2008/09/08 アイコンを修正<BR>
+2008/08/05 初版</P>
+</BODY>
+</HTML>

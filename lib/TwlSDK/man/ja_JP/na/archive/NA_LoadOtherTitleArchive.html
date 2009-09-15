@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>NA_LoadOtherTitleArchive</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">NA_LoadOtherTitleArchive　<IMG src="../../image/TWL.gif" width="23" height="12" border="0" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <pre><CODE>#include &lt;twl/na.h&gt;
+
+<a href="../../fs/fs_result_const.html">FSResult</a> NA_LoadOtherTitleArchive( const char*    initialCode,
+                                   <a href="NATitleArchive.html">NATitleArchive</a> archive);
+</CODE></pre>
+</dd>
+</dl>
+
+<h2>引数</h2>
+<TABLE border="1" width="100%" class="arguments">
+  <TBODY>
+    <TR>
+      <TH>initialCode</TH>
+      <TD>対象の NAND アプリのイニシャルコードを ASCII 4 文字で指定します。
+          NUL 終端している必要はありません。</TD>
+    </TR>
+    <TR>
+      <TH>archive</TH>
+      <TD>ロードするセーブデータの種別を指定します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>
+正しく処理が完了した場合は <code>FS_RESULT_SUCCESS</code> が返ります。
+<br>
+そのほかの値はエラーです。
+特に以下の値は固有の意味を持ちます。
+</p>
+
+<table class="table">
+<tr><th>FS_RESULT_ALREADY_DONE<td>すでに他の NAND アプリのセーブデータがロードされています。
+<tr><th>FS_RESULT_PERMISSION_DENIED<td>会社コードが異なる NAND アプリです。
+<tr><th>FS_RESULT_UNSUPPORTED<td>ニンテンドー DS 上で動作しているため使用できません。
+</table>
+
+
+<H2>説明</H2>
+<P>
+指定した NAND アプリのセーブデータ領域をファイルシステムにロードします。
+</p>
+<P>
+ロードすることができるのは自身の会社コードと同じ会社コードの NAND アプリのセーブデータのみです。
+異なる会社コードの NAND アプリのセーブデータはロードできません。
+</p>
+<P>
+<span class="argument">archive</span> が <code>NA_TITLE_ARCHIVE_DATAPUB</code> の場合は
+「otherPub」アーカイブとして、
+<code>NA_TITLE_ARCHIVE_DATAPRV</code> の場合は「otherPrv」アーカイブとして
+それぞれロードされます。
+</p>
+<P>
+ロードできる他の NAND アプリのセーブデータは同時に 1 つまでです。
+2 つ以上のセーブデータにアクセスする場合には 1 つにアクセスするごとに
+<code><a href="NA_UnloadOtherTitleArchive.html">NA_UnloadOtherTitleArchive()</a></code>
+を呼び出してアンロードする必要があります。
+</p>
+
+<h2>参照</h2>
+<p><CODE>
+<A href="NA_UnloadOtherTitleArchive.html">NA_UnloadOtherTitleArchive</A>
+</CODE></p>
+
+<H2>履歴</H2>
+<P>
+2009/05/13 参照を追加<br>
+2008/09/16 返り値に FS_RESULT_UNSUPPORTED を追加<br>
+2008/07/14 初版
+</P>
+</body>
+</html>

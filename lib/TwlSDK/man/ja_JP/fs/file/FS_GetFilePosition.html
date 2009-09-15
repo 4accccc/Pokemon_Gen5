@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_GetFilePosition</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1 align="left">FS_GetFilePosition <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+u32	FS_GetFilePosition(<A href="../fs_file_type.html">FSFile</a> *file);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>file</strong></em></td>
+<td style="width:87%">ファイルハンドルを保持した<A href="../fs_file_type.html">FSFile</a>構造体</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>ファイルの現在のシーク位置を返します。</p>
+
+<h2>説明</h2>
+<P>開いているファイルの現在のシーク位置を取得します。</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="FS_OpenFileEx.html">FS_OpenFileEx</a>
+<a href="FS_GetFileLength.html">FS_GetFileLength</a>
+<a href="FS_SeekFile.html">FS_SeekFile</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/12/04 引数のconst修飾を削除<br />
+2007/09/18 初版<br />
+</p>
+</body>
+</html>

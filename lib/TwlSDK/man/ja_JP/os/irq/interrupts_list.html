@@ -1,0 +1,305 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>interrupts list</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">割り込みの種類 <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></h1>
+<H2>説明</H2>
+<P>割り込みの要因は、動作モード(NITROモード、TWLモード) や、プロセッサ(ARM9、ARM7)
+によって異なります。以下は ARM9 の NITRO モードと TWL モードでの割り込みです。ARM7
+については割愛します。</P>
+<H3><B>NITRO モードでの割り込み(ARM9)</B> <IMG src="../../image/NTR.gif" align="middle"><BR>
+</H3>
+<TABLE>
+<TBODY>
+<TR>
+<TH>値</TH>
+<TH>割り込みの種類</TH>
+      <TH>ビット(2^n)</TH>
+    </TR>
+    <TR>
+      <TD>OS_IE_V_BLANK</TD>
+      <TD>Vブランク割り込み</TD>
+      <TD>0</TD>
+    </TR>
+    <TR>
+<TD bgColor=#eeeeee>OS_IE_H_BLANK</TD>
+<TD bgColor=#eeeeee>Hブランク割り込み</TD>
+      <TD>1</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_V_COUNT</TD>
+<TD bgColor=#eeeeee>Vカウンター割り込み</TD>
+      <TD>2</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_TIMER0</TD>
+<TD bgColor=#eeeeee>タイマー0割り込み</TD>
+      <TD>3</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_TIMER1</TD>
+<TD bgColor=#eeeeee>タイマー1割り込み</TD>
+      <TD>4</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_TIMER2</TD>
+<TD bgColor=#eeeeee>タイマー2割り込み</TD>
+      <TD>5</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_TIMER3</TD>
+<TD bgColor=#eeeeee>タイマー3割り込み</TD>
+      <TD>6 <B><FONT color="#ff0033"> *2</FONT></B></TD>
+    </TR>
+    <TR>
+<TD bgColor=#eeeeee>OS_IE_DMA0</TD>
+<TD bgColor=#eeeeee>DMA0割り込み</TD>
+      <TD>8 <B><FONT color="#ff0033"> *2</FONT></B></TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_DMA1</TD>
+<TD bgColor=#eeeeee>DMA1割り込み</TD>
+      <TD>9</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_DMA2</TD>
+<TD bgColor=#eeeeee>DMA2割り込み</TD>
+      <TD>10</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_DMA3</TD>
+<TD bgColor=#eeeeee>DMA3割り込み</TD>
+      <TD>11</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_KEY<B><FONT color="#ff0033"> *1</FONT></B></TD>
+<TD bgColor=#eeeeee>キー割り込み </TD>
+      <TD>12</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_CARTRIDGE</TD>
+<TD bgColor=#eeeeee>カートリッジIREQ/DREQ割り込み</TD>
+      <TD>13</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_SUBP</TD>
+<TD bgColor=#eeeeee>ARM7割り込み</TD>
+      <TD>16</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_SPFIFO_SEND</TD>
+<TD bgColor=#eeeeee>ARM9・ARM7間送信FIFOエンプティ割り込み</TD>
+      <TD>17</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_SPFIFO_RECV</TD>
+<TD bgColor=#eeeeee>ARM9・ARM7間受信FIFOノットエンプティ割り込み</TD>
+      <TD>18</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_CARD_DATA</TD>
+<TD bgColor=#eeeeee>カードデータ転送終了割り込み</TD>
+      <TD>19</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_CARD_IREQ</TD>
+<TD bgColor=#eeeeee>カードIREQ割り込み</TD>
+      <TD>20</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_GXFIFO</TD>
+<TD bgColor=#eeeeee>ジオメトリコマンドFIFO割り込み</TD>
+      <TD>21</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><B><FONT color="#ff0033">*1</FONT></B>　キー割り込みはハードウェアの仕様上、使用しないで下さい。ただし、スリープからの復帰に使用することは可能です。<BR>
+<B><FONT color="#ff0033">*2　 </FONT></B>ビット=2^7 に相当する割り込みはありません。</P>
+<H3><BR>
+<BR>
+<B>TWL モードでの割り込み(ARM9)</B> <IMG src="../../image/TWL.gif" align="middle"></H3>
+<P>表中、★のついたものはNITROと比較して新たに追加されたものです。</P>
+<TABLE>
+<TBODY>
+<TR>
+<TH>値</TH>
+<TH>割り込みの種類</TH>
+      <TH>ビット(2^n)</TH>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_V_BLANK</TD>
+<TD bgColor=#eeeeee>Vブランク割り込み</TD>
+      <TD>0</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_H_BLANK</TD>
+<TD bgColor=#eeeeee>Hブランク割り込み</TD>
+      <TD>1</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_V_COUNT</TD>
+<TD bgColor=#eeeeee>Vカウンター割り込み</TD>
+      <TD>2</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_TIMER0</TD>
+<TD bgColor=#eeeeee>タイマー0割り込み</TD>
+      <TD>3</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_TIMER1</TD>
+<TD bgColor=#eeeeee>タイマー1割り込み</TD>
+      <TD>4</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_TIMER2</TD>
+<TD bgColor=#eeeeee>タイマー2割り込み</TD>
+      <TD>5</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_TIMER3</TD>
+<TD bgColor=#eeeeee>タイマー3割り込み</TD>
+      <TD>6 <B><FONT color="#ff0033"> *5</FONT></B></TD>
+    </TR>
+    <TR>
+<TD bgColor=#eeeeee>OS_IE_DMA0</TD>
+<TD bgColor=#eeeeee>DMA0割り込み</TD>
+      <TD>8 <B><FONT color="#ff0033"> *5</FONT></B></TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_DMA1</TD>
+<TD bgColor=#eeeeee>DMA1割り込み</TD>
+      <TD>9</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_DMA2</TD>
+<TD bgColor=#eeeeee>DMA2割り込み</TD>
+      <TD>10</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_DMA3</TD>
+<TD bgColor=#eeeeee>DMA3割り込み</TD>
+      <TD>11</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_KEY<B><FONT color="#ff0033"> *3</FONT></B></TD>
+<TD bgColor=#eeeeee>キー割り込み </TD>
+      <TD>12</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_CARTRIDGE</TD>
+<TD bgColor=#eeeeee>カートリッジIREQ/DREQ割り込み</TD>
+      <TD>13</TD>
+    </TR>
+    <TR>
+      <TD>OS_IE_CARD_A_DET ★<B><FONT color="#ff0000">*4</FONT></B></TD>
+      <TD>メモリカードA MC_DET端子立ち下がり割り込み</TD>
+      <TD>14</TD>
+    </TR>
+    <TR>
+      <TD>OS_IE_CARD_B_DET ★<B><FONT color="#ff0000">*4</FONT></B></TD>
+      <TD>メモリカードB MC_DET端子立ち下がり割り込み</TD>
+      <TD>15</TD>
+    </TR>
+    <TR>
+<TD bgColor=#eeeeee>OS_IE_SUBP</TD>
+<TD bgColor=#eeeeee>ARM7割り込み</TD>
+      <TD>16</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_SPFIFO_SEND</TD>
+<TD bgColor=#eeeeee>ARM9・ARM7間送信FIFOエンプティ割り込み</TD>
+      <TD>17</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_SPFIFO_RECV</TD>
+<TD bgColor=#eeeeee>ARM9・ARM7間受信FIFOノットエンプティ割り込み</TD>
+      <TD>18</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_CARD_A_DATA (OS_IE_CARD_DATA) <B><FONT color="#ff0000">*4</FONT></B></TD>
+<TD bgColor=#eeeeee>カード[A] データ転送終了割り込み</TD>
+      <TD>19</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_CARD_A_IREQ (OS_IE_CARD_IREQ) <B><FONT color="#ff0000">*4</FONT></B></TD>
+<TD bgColor=#eeeeee>カード[A] IREQ割り込み</TD>
+      <TD>20</TD>
+    </TR>
+<TR>
+<TD bgColor=#eeeeee>OS_IE_GXFIFO</TD>
+<TD bgColor=#eeeeee>ジオメトリコマンドFIFO割り込み</TD>
+      <TD>21</TD>
+    </TR>
+    <TR>
+      <TD>OS_IE_DEBUG_RECV ★</TD>
+      <TD>DEBUG通信チャネル受信バッファリード可能割り込み</TD>
+      <TD>22</TD>
+    </TR>
+    <TR>
+      <TD>OS_IE_DEBUG_SEND ★</TD>
+      <TD>DEBUG通信チャネル送信バッファライト可能割り込み</TD>
+      <TD>23</TD>
+    </TR>
+    <TR>
+      <TD>OS_IE_DSP ★</TD>
+      <TD>DSP割り込み</TD>
+      <TD>24</TD>
+    </TR>
+    <TR>
+      <TD>OS_IE_CAMERA ★</TD>
+      <TD>カメラ割り込み</TD>
+      <TD>25</TD>
+    </TR>
+    <TR>
+      <TD>OS_IE_CARD_B_DATA ★<B><FONT color="#ff0000">*4</FONT></B></TD>
+      <TD>カード[B] データ転送終了割り込み</TD>
+      <TD>26</TD>
+    </TR>
+    <TR>
+      <TD>OS_IE_CARD_B_IREQ ★<B><FONT color="#ff0000">*4</FONT></B></TD>
+      <TD>カード[B] IREQ割り込み</TD>
+      <TD>27</TD>
+    </TR>
+    <TR>
+      <TD>OS_IE_NDMA0 ★</TD>
+      <TD>新規DMA0 割り込み</TD>
+      <TD>28</TD>
+    </TR>
+    <TR>
+      <TD>OS_IE_NDMA1 ★</TD>
+      <TD>新規DMA1 割り込み</TD>
+      <TD>29</TD>
+    </TR>
+    <TR>
+      <TD>OS_IE_NDMA2 ★</TD>
+      <TD>新規DMA2 割り込み</TD>
+      <TD>30</TD>
+    </TR>
+    <TR>
+      <TD>OS_IE_NDMA3 ★</TD>
+      <TD>新規DMA3 割り込み</TD>
+      <TD>31</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><B><FONT color="#ff0033">*3</FONT></B>　キー割り込みはハードウェアの仕様上、使用しないで下さい。ただし、スリープからの復帰に使用することは可能です。<BR>
+<B><FONT color="#ff0000">*4</FONT></B>　カードの A や B の名称は開発上の便宜的なものです。 B はデバッガ等開発機材で使用されるもので通常ユーザが使用することはありません。<BR>
+<B><FONT color="#ff0033">*5　</FONT></B>ビット=2^7 に相当する割り込みはありません。</P>
+
+<h2>参照</h2>
+<p><CODE><A href="OS_EnableIrqMask.html">OS_EnableIrqMask</A>, <A href="OS_DisableIrqMask.html">OS_DisableIrqMask</A>, <A href="OS_SetIrqMask.html">OS_SetIrqMask</A><br>
+</CODE></p>
+<H2>履歴</H2>
+<P>2008/05/30 初版</P>
+</body>
+</html>

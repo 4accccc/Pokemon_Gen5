@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--==========================================================================
+  Copyright 2008 Nintendo.  All rights reserved.
+
+  These coded instructions, statements, and computer programs contain
+  proprietary information of Nintendo of America Inc. and/or Nintendo
+  Company Ltd., and are protected by Federal copyright law.  They may
+  not be disclosed to third parties or copied or duplicated in any form,
+  in whole or in part, without the prior written consent of Nintendo.
+ ==========================================================================-->
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>aesconv</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+pre
+{
+  display: compact;
+  font-family	: "Courier New", monospace;
+  font-weight	: normal;
+  font-size     : normal;
+  width: 90%;
+
+  padding		: 2pt 8pt 2pt 8pt;
+  background-color	: #eee;
+
+  border-style		: solid;
+  border-width		: 1px;
+}
+TD,TH{
+  border-color  : #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+.arg{
+    font-style: italic;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+<H1 align="left">aesconv <IMG src="../image/NTR.gif" align="middle"><IMG src="../image/TWL.gif" align="middle"></H1>
+<H2>説明</H2>
+<P>　<CODE>aesconv</CODE> は、AES 暗号アルゴリズムに基づいた暗号化、復号化を行うツールです。</P>
+<H2>使用方法</H2>
+<H3>起動コマンド</H3>
+<P>
+<CODE>% aesconv -m ctr         -k <span class="arg">key</span> -c <span class="arg">counter</span> [-r] [-p <span class="arg">inputFile</span>] [-o <span class="arg">outputFile</span>]</CODE><BR>
+<CODE>% aesconv -m cbc_encrypt -k <span class="arg">key</span> -i <span class="arg">iv</span>      [-r] [-p <span class="arg">inputFile</span>] [-o <span class="arg">outputFile</span>]</CODE><BR>
+<CODE>% aesconv -m cbc_decrypt -k <span class="arg">key</span> -i <span class="arg">iv</span>      [-r] [-p <span class="arg">inputFile</span>] [-o <span class="arg">outputFile</span>]</CODE><BR>
+<CODE>% aesconv -m ccm_encrypt -k <span class="arg">key</span> -n <span class="arg">nonce</span>   [-r] [-p <span class="arg">inputFile</span>] [-o <span class="arg">outputFile</span>] [-a <span class="arg">Adata</span>] -t <span class="arg">taglen</span></CODE><BR>
+<CODE>% aesconv -m ccm_decrypt -k <span class="arg">key</span> -n <span class="arg">nonce</span>   [-r] [-p <span class="arg">inputFile</span>] [-o <span class="arg">outputFile</span>] [-a <span class="arg">Adata</span>] -t <span class="arg">tag</span></CODE><BR>
+</P>
+
+<P>
+<CODE>-m</code> オプションには使用する暗号モード、暗号化/復号化を指定します。
+指定できるのは以下の 5 種類です。
+</P>
+<table>
+<tr><th>指定する値<th>説明
+<tr><td>ctr<td>CTR モード
+<tr><td>cbc_encrypt<td>CBC モードの暗号化
+<tr><td>cbc_decrypt<td>CBC モードの復号化
+<tr><td>ccm_encrypt<td>CCM モードの暗号化
+<tr><td>ccm_decrypt<td>CCM モードの復号化
+</table>
+
+<P>
+<CODE><span class="arg">key</span></code> は暗号化/復号化に使用する鍵を指定します。
+鍵の指定方法は 2 種類あります。1 つめは "hex:" に続いて 32 桁の 16 進数で鍵を指定する方法で、
+例として鍵が 16 進数で
+    0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF
+ならば
+</P>
+<pre>
+    -k hex:00112233445566778899AABBCCDDEEFF
+</pre>
+<P>
+のように指定します。<br>
+もう 1 つの方法は鍵のバイナリが格納されたファイルのパスを指定します。
+</P>
+<pre>
+    -k key.bin
+</pre>
+<P>
+のように指定すると key.bin ファイルの先頭 16 バイトを鍵として使用します。
+</P>
+
+<P>
+<CODE><span class="arg">counter</span></code> は CTR モードのカウンタ初期値を指定します。
+指定方法は <CODE><span class="arg">key</span></code> と同様になります。
+</P>
+
+<P>
+<CODE><span class="arg">iv</span></code> は CBC モードの初期ベクタを指定します。
+指定方法は <CODE><span class="arg">key</span></code> と同様になります。
+</P>
+
+<P>
+<CODE><span class="arg">nonce</span></code> は CCM モードの Nonce を指定します。
+指定方法は <CODE><span class="arg">key</span></code> と同様になります。
+ただし、aesconv は 96 ビットの Nonce にのみ対応しているので
+hex 形式で指定する場合は 24 桁の 16 進数で指定し、ファイルで指定する場合は先頭 12 バイトを使用します。
+</P>
+
+<P>
+<CODE>-r</code> オプションを指定すると TWL の AES と互換性のある方式で暗号化/復号化を行います。
+</P>
+
+<P>
+<CODE><span class="arg">inputFile</span></code> には暗号化/復号化への入力となるデータが格納されたファイルを指定します。
+<CODE>-p</code> オプションが指定されなかった場合は入力を標準入力から受け取ります。
+</P>
+
+<P>
+<CODE><span class="arg">outputFile</span></code> は暗号化/復号化の出力先ファイルを指定します。
+<CODE>-o</code> オプションが指定されなかった場合は標準出力に出力します。
+</P>
+
+<P>
+<CODE><span class="arg">Adata</span></code> は CCM モードでの Adata を指定します。
+Adata の指定方法は 2 種類あります。1 つめは "stdin:" に続いて 10 進数で Adata のサイズを
+指定し、Adata を標準入力から渡す方法です。
+<CODE>-p</CODE> オプションを使用せず、入力データも標準入力から渡す場合には
+Adata を先に、入力データを後に渡します。
+例として Adata のサイズが 12345 バイトの場合は
+</P>
+<pre>
+    -a stdin:12345
+</pre>
+<P>
+のように指定します。<br>
+もう 1 つの方法は Adata バイナリが格納されたファイルのパスを指定します。
+</P>
+<pre>
+    -a adata.bin
+</pre>
+<P>
+のように指定すると adata.bin ファイルの全内容を Adata として使用します。<br>
+<CODE>-a</CODE> オプションが指定されなかった場合は Adata のサイズとして 0 が指定されたものとして扱います。
+</P>
+
+<P>
+<CODE><span class="arg">taglen</span></code> は CCM モード暗号化での MAC の長さを指定します。
+指定できる値は 4, 6, 8, 10, 12, 14, 16, のいずれかです。
+</P>
+
+<P>
+<CODE><span class="arg">tag</span></code> は CCM モード復号化での MAC を指定します。
+MAC の指定方法は 2 種類あります。1 つめは "hex:" に続き、MAC の長さにあわせて
+8, 12, 16, 20, 24, 28, 32 桁いずれかの長さの 16 進数で MAC を指定する方法です。
+例として MAC が 12 バイトであり、16 進数で
+    0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC
+ならば
+</P>
+<pre>
+    -t hex:00112233445566778899AABBCC
+</pre>
+<P>
+のように指定します。<br>
+もう 1 つの方法は MAC の長さを指定し、MAC を標準入力から渡す方法です。
+</P>
+<pre>
+    -t 12
+</pre>
+<P>
+のように指定すると標準入力から 12 バイトを読み取り MAC として使用します。
+指定できる MAC の長さは暗号化と同じく 4, 6, 8, 10, 12, 14, 16, のいずれかです。<br>
+<CODE>-p</CODE> オプションを使用せず、入力データも標準入力から渡す場合には
+入力データを先に、MAC を後に渡します。
+</P>
+
+<H2>場所</H2>
+<P><CODE>$TwlSDK/tools/bin/aesconv.exe</CODE></P>
+<H2>参照</H2>
+<P><CODE><A href="../aes/list_aes.html">AES ライブラリ関数一覧</A></CODE></P>
+<H2>履歴</H2>
+<P>2008/08/22 初版</P>
+</BODY>
+</HTML>

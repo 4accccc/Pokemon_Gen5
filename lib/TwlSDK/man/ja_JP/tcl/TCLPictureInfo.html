@@ -1,0 +1,68 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCLPictureInfo</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCLPictureInfo <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+typedef struct
+{
+    s64 second;
+    int favoriteOrder;
+
+    union
+    {
+        u32 bitField;
+        struct
+        {
+            u32 validity     :  1;
+            u32 dirIdx       : 10;
+            u32 fileIdx      :  7;
+            u32 favoriteType :  2;
+            u32 imageType    :  2;
+            u32 keyType      :  2;
+            u32 defaultFrame :  1;
+            u32 reserved     :  7;
+        };
+    };
+} TCLPictureInfo;
+	</code></pre>
+</dl>
+
+<h2>説明</h2>
+<p>管理ファイルに登録されている画像の情報を表す構造体です。</p>
+<p>各メンバをアプリ側で操作することは禁止されています。</p>
+<p>各メンバの内容は以下の通りです。</p>
+<table>
+<tr><td>second<td>写真が撮影されたときの時間を秒数で表したものです。
+<tr><td>favoriteOrder<td>お気に入りに指定されている場合のお気に入り順序です。
+<tr><td>validity<td>この写真情報の有効・無効を表します。
+<tr><td>dirIdx<td>この写真の保存されているディレクトリインデクスです。<br/>0の場合、 DCIM/100NIN02 というディレクトリに保存されています。
+<tr><td>fileIdx<td>この写真の保存されているファイルインデクスです。<br/>0の場合、HNI_0001.JPG というファイル名になります。
+<tr><td>favoriteType<td><a href="TCLFavoriteType.html"><code>TCLFavoriteType</code></a> で表されるお気に入りタイプを表します。
+<tr><td>keyType<td><a href="TCLKeyType.html"><code>TCLKeyType</code></a> で表される鍵タイプです。
+<tr><td>defaultFrame<td>内部で使用される値です。
+<tr><td>reserved<td>予約領域です。
+</table>
+
+<h2>参照</h2>
+<p><code>
+<a href="TCL_SearchNextPictureInfo.html">TCL_SearchNextPictureInfo</a> <a href="TCL_SearchPictureInfoByIndex.html">TCL_SearchPictureInfoByIndex</a> <a href="TCL_PrintPicturePath.html">TCL_PrintPicturePath</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/10/07 初版<br/>
+</p>
+
+</body>
+</html>

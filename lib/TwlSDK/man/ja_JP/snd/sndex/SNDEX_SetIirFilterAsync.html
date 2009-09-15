@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+	<HEAD>
+		<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+		<title>SNDEX_SetIirFilterAsync</title>
+		<link rel="stylesheet" href="../../css/nitro.css" type="text/css">
+	</HEAD>
+	<BODY>
+		<H1>SNDEX_SetIirFilterAsync <IMG src="../../image/TWL.gif" width="24" height="12" border="0" align=middle></H1>
+
+		<H2>定義</H2>
+		<DL>
+			<DD><CODE>#include &lt;twl/snd.h&gt;</CODE></DD>
+			<DD><PRE><CODE>SNDEXResult
+SNDEX_SetIirFilterAsync(SNDEXIirFilterTarget target,
+                        const SNDEXIirFilterParam* pParam,
+                        SNDEXCallback callback,
+                        void* arg)</CODE></PRE></DD>
+		</DL>
+
+		<H2>引数</H2>
+		<TABLE>
+			<TBODY>
+				<TR>
+					<TH width="25%">target</TH>
+					<TD width="75%">IIRフィルタをかける対象 <A href="SNDEXIirFilterTarget.html">SNDEXIirFilterTarget</A>列挙型。</TD>
+				</TR>
+				<TR>
+					<TH width="25%">pParam</TH>
+					<TD width="75%">IIRフィルタの性能を決定する <A href="SNDEXIirFilterParam.html">SNDEXIirFilterParam</A>構造体。</TD>
+				</TR>
+                <TR>
+                    <TH width="25%">callback</TH>
+                    <TD width="75%">IIRフィルタ設定後に呼ばれるコールバック関数。</TD>
+                </TR>
+                <TR>
+                    <TH width="25%">arg</TH>
+                    <TD width="75%">コールバック関数に渡す引数。</TD>
+                </TR>
+			</TBODY>
+		</TABLE>
+
+        <H2>返り値</H2>
+		<H3>関数への返り値</H3>
+		<TABLE>
+			<TBODY>
+				<TR>
+					<TH width="25%">SNDEX_RESULT_SUCCESS</TH>
+					<TD width="75%">非同期処理が正常に開始された場合に返ります。非同期処理の結果は<B>callback</B>に登録した関数の引数として通知されます。</TD>
+				</TR>
+				<TR>
+					<TH width="25%">SNDEX_RESULT_ILLEGAL_STATE</TH>
+					<TD width="75%">NITROプラットフォーム上で当関数を呼び出した場合、CODECをCODEC-DSモードで動作させている場合に返ります。</TD>
+				</TR>
+				<TR>
+					<TH width="25%">SNDEX_RESULT_BEFORE_INIT</TH>
+					<TD width="75%">サウンド拡張機能を<code><A href="SNDEX_Init.html">SNDEX_Init()</A></code>により初期化していない場合に返ります。</TD>
+				</TR>
+				<TR>
+					<TH width="25%">SNDEX_RESULT_EXCLUSIVE</TH>
+					<TD width="75%">他のサウンド拡張機能に関する処理を実行中の場合に返ります。
+					サウンド拡張機能に関する各処理は排他制御により同時には行えませんのでご注意下さい。<BR>
+                    <A href="./doc/aboutSNDEX.html">SNDEX ライブラリの概要</A>にある通り、シャッター音再生処理中もこのエラーを返します。</TD>
+				</TR>
+				<TR>
+					<TH width="25%">SNDEX_RESULT_PXI_SEND_ERROR</TH>
+					<TD width="75%">ARM7へのPXIコマンド発行に失敗した場合に返ります。
+					ARM7へのPXI送信キューが飽和した場合や、ハードウェアがエラーを検知した場合に発生するエラーですので、リトライすると状況が改善する可能性があります。</TD>
+				</TR>
+			</TBODY>
+		</TABLE>
+
+		<H3>非同期処理の結果</H3>
+		<TABLE>
+			<TBODY>
+				<TR>
+					<TH width="25%">SNDEX_RESULT_SUCCESS</TH>
+					<TD width="75%">一連の処理が正常に完了した場合に通知されます。</TD>
+				</TR>
+				<TR>
+					<TH width="25%">SNDEX_RESULT_ILLEGAL_STATE</TH>
+					<TD width="75%">NITROプラットフォーム上で当関数を呼び出した場合、CODECをCODEC-DSモードで動作させている場合、<BR>
+および <CODE><A href="../../dsp/common/DSP_PlayShutterSound.html">DSP_PlayShutterSound</A></CODE> によるシャッター音再生中の場合に返ります。</TD>
+				</TR>
+				<TR>
+					<TH width="25%">SNDEX_RESULT_EXCLUSIVE</TH>
+					<TD width="75%">ARM7内での排他制御エラーが発生した場合に通知されます。
+					ARM7内での処理進捗状況に依存したエラーですので、リトライすると状況が改善する可能性があります。</TD>
+				</TR>
+				<TR>
+					<TH width="25%">SNDEX_RESULT_DEVICE_ERROR</TH>
+					<TD width="75%">ARM7内で外部デバイスに対するスピーカー音量変更操作に失敗した場合に通知されます。
+					リトライすると状況が改善する可能性がありますが、数回リトライして失敗が続く場合には外部デバイスの暴走等の原因が考えられますので、
+					成功が通知された場合と同様に扱って構いません。</TD>
+				</TR>
+				<TR>
+					<TH width="25%">SNDEX_RESULT_FATAL_ERROR</TH>
+					<TD width="75%">通常起こり得ないエラーです。
+					ライブラリの状態管理を無視して直接不正なPXIコマンドを発行した場合、
+					ARM7コンポーネントとサウンド拡張機能ライブラリのバージョンが異なる場合、
+					メモリ破壊等によりライブラリの状態管理が異常な状態に陥った場合等に発生する可能性があります。
+					ランタイムに復旧する手段はありません。
+					</TD>
+				</TR>
+			</TBODY>
+		</TABLE>
+
+		<H2>説明</H2>
+		<P>
+			マイク入力もしくはスピーカー出力される音声データにかけるIIRフィルタ（1～5段）を設定します。<BR>
+            ただし、多段のフィルタを設定するには、本関数を段数分呼ぶ必要があります。<BR>
+            設定完了後、ユーザが指定したコールバック関数が呼ばれます。
+		</P>
+        <P>
+            $TwlSDK/docs/TechnicalNotes/IIR_FilterBuilder.xls を使うことで、ローパスフィルタ、ハイパスフィルタ、バンドパスフィルタ、<BR>
+            バンドエリミネーションフィルタのパラメータを作成することができます。ただし、特性を指定してパラメータを算出するといったことはできません。<BR>
+			詳しくは、<A href="doc/aboutIirFilterBuilder.html">IIR_FilterBuilder の使い方</A>をご覧下さい。
+        </P>
+        <P>
+          関数への返り値がSNDEX_RESULT_SUCCESSでない場合には、非同期処理は行われず、コールバックも発生しません。<BR>
+また、非同期処理の完了はPXI受信割込みによって通知されるため、PXI受信割込みを禁止しているとコールバックが発生しないことに注意して下さい。</P>
+
+        <P>また、シャッター音の再生音量を維持するために、<CODE><A href="../../dsp/common/DSP_PlayShutterSound.html">DSP_PlayShutterSound()</A></CODE> 実行中は<BR>
+SNDEX_RESULT_EXCLUSIVE を返して何もせずに終了します。<BR>
+さらに、シャッター音再生中はライブラリ側で IIR フィルタの設定を一時的に初期化し、再生後に再設定するようになっています。</P>
+
+        <P>IIR フィルタの設定が終了するまでスリープやハードウェアリセットの実行を待つようになっています。<BR>
+           詳しくは、<A href="../../spi/pm/about_sleep.html">スリープ</A>や<A href="../../spi/pm/about_exit.html">ハードウェアリセット・シャットダウン</A>の概要をご覧下さい。</P>
+		<H2>注意</H2>
+        <P>
+            IIR フィルタは一度に1段ずつしか設定できません。IIR フィルタ設定中に本関数を再度呼んでもエラー <CODE>SNDEX_RESULT_EXCLUSIVE</CODE> が返ります。
+        </P>
+        <P>IIR フィルタ1段の設定には 数10msec～100msec の時間がかかります。<FONT color="red">設定時に ARM7側で SPI の排他制御を行うため、この間は MIC のサンプリングや<BR>
+           TP のサンプリング、PM、NVRAM が待たされてしまい、遅延が発生します。</FONT><BR>
+           従って本関数と並行して、以上のデバイスを用いた処理を行う場合は注意する必要があります。</P>
+        <P>
+			<B><FONT color="red">IIR フィルタのパラメータ設定には十分に注意する必要があります。</FONT></B><BR>
+            IIRフィルタを、入力音声データのゲインを大きくするように設定した場合、<BR>
+            入力ソースによっては計算結果が飽和してしまい音が割れたりすることがあります。入力ソースが不定な場合は、基本的にゲインを小さくする方向で IIRフィルタを使用して下さい。<BR>
+		    また、IIR フィルタを複数段設定した場合は、各段ごとに飽和しないように注意する必要があります。<BR>
+			入力波形に対して、1段ずつ順番にフィルタがかかるためです（フィルタの適用順については <A href="SNDEXIirFilterTarget.html"><CODE>SNDEXIirFilterTarget</CODE></A> をご覧ください）。<BR>
+			特に、IIRフィルタは過去の出力データを利用するため、それらを増幅するようなパラメータを設定すると本体音量の値や <A href="SNDEX_SetMute.html"><CODE>SNDEX_SetMute()</CODE></A> による消音状態にかかわらず、スピーカーから音が鳴ることがあります。
+		</P>
+		<P>本関数の使用時には、フィルタを設定する対象<CODE> target </CODE>によって制限があります。</P>
+		<P><FONT color="red"><CODE>target</CODE> がマイク入力データの場合（SNDEX_IIR_FILTER_ADC_*）、設定時に A/D コンバータを停止させているため、正しいサンプリングデータを得ることができません。</FONT><BR>
+			その間のサンプリングデータを使用しないように気をつけていればよいため、マイクサンプリングそのものを停止させる必要はありません。</P>
+		<P><FONT color="red"><CODE>target </CODE> がスピーカー出力データの場合（SNDEX_IIR_FILTER_DAC_*)、設定時に D/A コンバータを停止させているため、再生中のサウンドが正常に出力されません。</FONT><BR>
+			具体的には、コンバータ停止中は音が途切れてしまいます。その後途中から再開されますが、タイミングによっては再開直後の音が<BR>
+			ノイズのように聞こえることもありますので、アプリケーション側でフェードイン（アウト）などの処理を行った方が綺麗に聞こえるかもしれません。</P>
+		</P>
+
+		<H2>参照</H2>
+		<P>
+			<CODE>
+				<A href="SNDEX_SetIirFilter.html">SNDEX_SetIirFilter</A>,
+                <A href="SNDEXIirFilterTarget.html">SNDEXIirFilterTarget</A>,
+                <A href="SNDEXIirFilterParam.html">SNDEXIirFilterParam</A>,
+				<A href="doc/aboutIirFilterBuilder.html">IIR_FilterBuilder の使い方</A>
+			</CODE>
+		</P>
+
+		<H2>履歴</H2>
+		<P>
+			2009/05/27 IIR フィルタのパラメータ設定に関しての注意を追記<BR>
+            2008/11/07 シャッター音再生処理時に SNDEX_RESULT_EXCLUSIVE が返ることを追記（2008/09/26 の記述を削除）<BR>
+            2008/11/06 「返り値」非同期処理の結果の誤記修正(SNDEX_RESULT_EXCLUSIVE)<BR>
+            2008/09/26 シャッター音再生時の挙動について追記<BR>
+            2008/09/16 スリープ、ハードウェアリセット・シャットダウンの概要ページへのリンク追加<BR>
+            2008/09/11 返り値の記述を修正。「注意」に処理時間や他のデバイスへの影響について追記<BR>
+			2008/09/06 IIR_FilterBuilder の使い方へのリンク追加<BR>
+			2008/08/26 関数実行時の制限事項について「注意」へ追記<BR>
+			2008/07/08 初版
+		</P>
+	</BODY>
+</HTML>

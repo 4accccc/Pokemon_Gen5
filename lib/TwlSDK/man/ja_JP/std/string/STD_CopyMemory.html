@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 8.0.2.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>STD_CopyMemory</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">STD_CopyMemory<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+<dl>
+  <dd><PRE><CODE>#include &lt;nitro/std.h&gt;
+
+void* STD_CopyMemory(void *destp, const void *srcp, u32 size);</CODE></PRE>
+<PRE><CODE>void* STD_MemCpy(void *destp, const void *srcp, u32 size);
+</CODE></PRE></dd>
+</dl>
+
+<h2>引数</h2>
+<table border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>src</STRONG></EM></TD>
+      <TD width="87%">転送元アドレス</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>dest</STRONG></EM></TD>
+      <TD width="87%">転送先アドレス</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG>size</STRONG></EM></TD>
+      <TD>転送サイズ
+      </TD>
+    </TR>
+  </TBODY>
+</table>
+
+<h2>返り値</h2>
+<p>
+<p>なし。</p>
+</p>
+
+<H2>説明</H2>
+<P>CPUでメモリコピーを行います。C標準関数の <CODE>memcpy()</CODE> と同じ動作をします。</P>
+<p><CODE>STD_MemCpy()</CODE> は <CODE>STD_CopyMemory()</CODE> の別名として define されています。</p>
+<p>VRAMにアクセスする際には、<CODE><A href="../../mi/memory/MI_CpuCopy.html">MI_CpuCopy8(), MI_CpuCopy16(), MI_CpuCopy32(), MI_CpuCopyFast()</A></CODE> の何れかを使って下さい。</p>
+
+<h2>参照</h2>
+<p><CODE><A href="../../mi/memory/MI_CpuCopy.html">MI_CpuCopy*</A>, <CODE><A href="STD_MoveMemory.html">STD_MoveMemory</A></p>
+
+<H2>履歴</H2>
+<P>
+2007/12/10 初版<BR>
+</P>
+</body>
+</html>

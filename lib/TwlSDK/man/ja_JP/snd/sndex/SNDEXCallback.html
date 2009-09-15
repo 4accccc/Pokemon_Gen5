@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+	<HEAD>
+		<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+		<title>SNDEXCallback</title>
+		<link rel="stylesheet" href="../../css/nitro.css" type="text/css">
+	</HEAD>
+	<BODY>
+		<H1>SNDEXCallback <IMG src="../../image/TWL.gif" width="24" height="12" border="0" align=middle></H1>
+
+		<H2>定義</H2>
+		<DL>
+			<DD><CODE>#include &lt;twl/snd.h&gt;</CODE></DD>
+			<DD><PRE><CODE>typedef void ( *SNDEXCallback ) ( SNDEXResult result, void* arg );</CODE></PRE></DD>
+		</DL>
+
+		<H2>引数</H2>
+		<TABLE>
+			<TBODY>
+				<TR>
+					<TH width="25%">result</TH>
+					<TD width="75%">非同期処理の結果を示すSNDEXResult列挙型の値です。
+					通知されうる値はコールバックの要因となる処理毎に異なりますので、各非同期関数の説明を参照して下さい。</TD>
+				</TR>
+				<TR>
+					<TH width="25%">arg</TH>
+					<TD width="75%">非同期関数を呼び出す際に指定された引数です。</TD>
+				</TR>
+			</TBODY>
+		</TABLE>
+
+		<H2>返り値</H2>
+		<P>
+			なし。
+		</P>
+
+		<H2>説明</H2>
+		<P>
+			サウンド拡張機能を非同期的に操作する関数によって起動された非同期処理が完了した際に呼び出されるユーザコールバック関数の型式です。
+			<B>result</B>引数にはSNDEXResult列挙型の処理結果が、<B>arg</B>引数には非同期関数を呼び出す際に指定した引数が、それぞれ渡されます。
+		</P>
+
+		<H2>参照</H2>
+		<P>
+			<CODE>
+				<A href="SNDEX_GetMuteAsync.html">SNDEX_GetMuteAsync</A>, <A href="SNDEX_GetI2SFrequencyAsync.html">SNDEX_GetI2SFrequencyAsync</A>, <A href="SNDEX_GetDSPMixRateAsync.html">SNDEX_GetDSPMixRateAsync</A>, <A href="SNDEX_GetVolumeAsync.html">SNDEX_GetVolumeAsync</A>,
+				<A href="SNDEX_SetMuteAsync.html">SNDEX_SetMuteAsync</A>, <A href="SNDEX_SetI2SFrequencyAsync.html">SNDEX_SetI2SFrequencyAsync</A>, <A href="SNDEX_SetDSPMixRateAsync.html">SNDEX_SetDSPMixRateAsync</A>, <A href="SNDEX_SetVolumeAsync.html">SNDEX_SetVolumeAsync</A>
+			</CODE>
+		</P>
+
+		<H2>履歴</H2>
+		<P>
+			2008/02/15 初版
+		</P>
+	</BODY>
+</HTML>

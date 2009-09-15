@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>OS_IsRunOnEmulator</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">OS_IsRunOnEmulator <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD><CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>BOOL OS_IsRunOnEmulator( void );</CODE>
+</DL>
+<H2>引数</H2>
+<P>なし。</P>
+<H2>返り値</H2>
+<P>プログラムが &quot;ensata NITRO Software Emulator&quot; 上で実行されていれば
+TRUE をそうでないなら FALSE を返します。</P>
+<H2>説明</H2>
+<P>プログラムが &quot;ensata NITRO Software Emulator&quot; (以下 ensata) 上で実行されているかどうか調べます。</P>
+<P>ensata と それ以外の場合とで処理を動的に切り替えたい場合に有効です。これにより
+ensata とそれ以外の実行環境において共通で動作するプログラムを作成することができます。</P>
+<P><A href="../debug/OS_Printf.html"><CODE>OS_Printf()</CODE></A> 関数ではこの API を使って出力先を制御しています。</P>
+<P>これはデバッグ用の関数ですので、最終ROM版(FINALROM)ライブラリでは常に FALSE
+を返します。</P>
+<H3><BR>
+<BR>
+類似の関数</H3>
+<P><CODE><A href="OS_IsRunOnDebugger.html">OS_IsRunOnDebugger()</A></CODE> も動作環境を調べる関数です。こちらは IS-NITRO-DEBUGGER または IS-TWL-DEBUGGER 上で実行されているかどうかを調べます。</P>
+<H3><BR>
+<BR>
+環境やビルドによる実際の値</H3>
+<P>下は動作環境の違いによる <CODE><A href="OS_IsRunOnDebugger.html">OS_IsRunOnDebugger()</A></CODE> と <CODE>OS_IsRunOnEmulator()</CODE> の返り値の表です。<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH colspan="4" style="background-color:#304040;"><FONT color="#ffffff">NITRO モードの場合</FONT></TH>
+    </TR>
+    <TR>
+      <TH>動作環境</TH>
+      <TH>ビルド</TH>
+      <TH><CODE>OS_IsRunOnDebugger()</CODE>の値</TH>
+      <TH><CODE>OS_IsRunOnEmulator() の値</CODE></TH>
+    </TR>
+    <TR>
+      <TD>DS実機</TD>
+      <TD>DEBUG<BR>
+      RELEASE<BR>
+      FINALROM</TD>
+      <TD><B>FALSE</B></TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD>TWL実機</TD>
+      <TD>DEBUG<BR>
+      RELEASE<BR>FINALROM</TD>
+      <TD><B>FALSE</B></TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD rowspan="2">IS-NITRO-DEBUGGER</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><B><FONT color="#ff0000">TRUE</FONT></B></TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD><B>FALSE</B></TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD rowspan="2">ENSATA EMULATOR</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><B>FALSE</B></TD>
+      <TD><B><FONT color="#ff0000">TRUE</FONT></B></TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD><B>FALSE</B></TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD rowspan="2">IS-TWL-DEBUGGER<BR>
+      (一般開発用: ARM9)</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><B><FONT color="#ff0000">TRUE</FONT></B></TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD><B>FALSE</B></TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD rowspan="2">IS-TWL-DEBUGGER<BR>
+      (コンポーネント開発用<BR>
+      ARM9 + ARM7)</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><B><FONT color="#ff0000">TRUE</FONT></B></TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD><B>FALSE</B></TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TH colspan="4" style="background-color:#304040;"><FONT color="#ffffff">TWL モードの場合</FONT></TH>
+    </TR>
+    <TR>
+      <TH>動作環境</TH>
+      <TH>ビルド</TH>
+      <TH><CODE>OS_IsRunOnDebugger()</CODE>の値</TH>
+      <TH><CODE>OS_IsRunOnEmulator() の値</CODE>の値</TH>
+    </TR>
+    <TR>
+      <TD>TWL実機</TD>
+      <TD>DEBUG<BR>
+      RELEASE<BR>
+      FINALROM</TD>
+      <TD><B>FALSE</B></TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD rowspan="2">IS-TWL-DEBUGGER<BR>
+      (一般開発用: ARM9)</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><B><FONT color="#ff0000">TRUE</FONT></B></TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD><B>FALSE</B></TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD rowspan="2">IS-TWL-DEBUGGER<BR>
+      (コンポーネント開発用<BR>
+      ARM9 + ARM7)</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><B><FONT color="#ff0000">TRUE</FONT></B></TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD><B>FALSE</B></TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>内部動作</H2>
+<P><CODE><A href="OS_GetConsoleType.html">OS_GetConsoleType()</A></CODE> の返り値と、OS_CONSOLE_ENSATA ビットとの論理和によって判定しています。</P>
+<H2>参照</H2>
+<P><CODE><A href="../debug/OS_Printf.html">OS_Printf</A>, <A href="OS_IsRunOnDebugger.html">OS_IsRunOnDebugger</A>, <A href="OS_GetConsoleType.html">OS_GetConsoleType</A></CODE></P>
+<H2>履歴</H2>
+<P>2008/04/15 表を追加<BR>
+2007/11/05 記述の変更<BR>
+2004/02/19 初版</P>
+</BODY>
+</HTML>

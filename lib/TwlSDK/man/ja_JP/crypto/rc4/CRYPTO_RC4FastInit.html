@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>CRYPTO_RC4FastInit</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">CRYPTO_RC4FastInit <IMG src="../../image/NTR.gif" width="23" height="12" border="0" align="middle"><IMG src="../../image/TWL.gif" width="23" height="12" border="0" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <pre><CODE>#include &lt;nitro/crypto.h&gt;
+
+void CRYPTO_RC4FastInit(<a href="CRYPTORC4FastContext.html">CRYPTORC4FastContext</a>* context, const void* key, u32 key_len);
+</CODE></pre>
+</dd>
+</dl>
+
+<h2>引数</h2>
+<TABLE border="1" width="100%" class="arguments">
+  <TBODY>
+    <TR>
+      <TH>context</TH>
+      <TD>RC4の鍵情報などを収めるコンテキスト構造体を指定します。</TD>
+    </TR>
+    <TR>
+      <TH>key</TH>
+      <TD>RC4 アルゴリズムによる暗号化/復号を行うための鍵のバイト列へのポインタを指定します。</TD>
+    </TR>
+    <TR>
+      <TH>key_len</TH>
+      <TD>key で指定した鍵の長さを指定します。鍵の長さは 16 バイト以下である必要があり、それより大きい場合は 16 バイトに切り詰められます。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>
+ありません。
+</p>
+
+<H2>説明</H2>
+<p>
+RC4 アルゴリズムによる暗号化を行うための構造体を初期化し、暗号化/復号で用いる鍵を設定します。
+</p>
+<p>
+ただし、<code><a href="CRYPTO_RC4Fast.html">CRYPTO_RC4Fast()</a></code> で処理を行う場合は関数内部からこの関数が呼び出されるので、呼び出し不要です。
+</p>
+<P>
+<code>CRYPTO_RC4*()</code> と <code>CRYPTO_RC4Fast*()</code> の違いは使用するメモリ量と処理速度です。<br>
+<code>CRYPTO_RC4*()</code> で使用する <code>CRYPTORC4Context</code> 構造体は 260 バイトですが、
+<code>CRYPTO_RC4Fast*()</code> で使用する <code>CRYPTORC4FastContext</code> 構造体は 1032 バイトを使用します。<br>
+また、十分大きなサイズのデータを扱う場合、<code><a href="CRYPTO_RC4FastEncrypt.html">CRYPTO_RC4FastEncrypt()</a></code> のほうが1.5倍程度速く処理を行います。
+</P>
+
+<h2>参照</h2>
+<p><CODE>
+	<A href="CRYPTO_RC4FastEncrypt.html">CRYPTO_RC4FastEncrypt</A>, <A href="CRYPTO_RC4Fast.html">CRYPTO_RC4Fast</A>, <A href="CRYPTO_RC4Init.html">CRYPTO_RC4Init</A>
+</CODE></p>
+
+<H2>履歴</H2>
+<P>
+2008/2/25 初版
+</P>
+</body>
+</html>

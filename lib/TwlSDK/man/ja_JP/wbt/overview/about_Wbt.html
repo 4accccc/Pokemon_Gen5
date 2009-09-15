@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>WBT全般 (overview)</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">WBT全般 (overview)</H1>
+<H2>説明</H2>
+<P>
+WMブロック転送プロトコル (WBT) は、MP通信上で利用するデータ転送専用のバッファ制御ライブラリです。<BR>
+データサイズを気にすることなく、複数の子機に効率的にデータを配信します。<BR>
+また子機から親機への転送も可能です。<BR>
+</P>
+<HR>
+<P><B>WBTの使い方</B></P>
+<P>
+WBTライブラリは、データをブロック単位に分割するプロトコルとしての機能しかなく、実際の無線送受信はおこないません。<BR>
+そのため、データをやり取りする際にはWMライブラリを用いる必要があり、あらかじめMP通信をアプリケーションで実装する必要があります。<BR>
+WBTライブラリは、MP通信の送受信バッファの一部 (あるいは全部) を利用して実現されます。<BR>
+<BR>
+WBTをMP通信に連動させるには、一連のWBTライブラリの関数呼び出しの流れとは別に、MP通信の送受信処理の前後などで
+WBTから送信バッファを受け取り、WBTに受信バッファを知らせる必要があります。<BR>
+具体的には、「MP通信の接続が確立された(<a href="../../wm/wm/WM_StartMP.html">WM_StartMP( )</a>の完了コールバック呼び出し時)」、
+「MPデータ送信が完了した(<a href="../../wm/wm/WM_SetMPData.html">WM_SetMPData( )</a>の完了コールバック呼び出し時)」、
+「MPデータ受信が完了した(<a href="../../wm/wm/WM_SetPortCallback.html">WM_SetPortCallback( )</a>で指定したコールバック呼び出し時)」
+などのWMコールバック関数内で、以下のWBT関数を呼び出します。<BR>
+
+</P>
+<UL>
+<LI><a href="../parent/WBT_MpParentSendHook.html">WBT_MpParentSendHook( )</a>  (親機の場合においての<a href="../../wm/wm/WM_StartMP.html">WM_StartMP( )</a>, <a href="../../wm/wm/WM_SetMPData.html">WM_SetMPData( )</a>の完了コールバック呼び出し時)
+<LI><a href="../child/WBT_MpChildSendHook.html">WBT_MpChildSendHook( )</a>   (子機の場合においての<a href="../../wm/wm/WM_StartMP.html">WM_StartMP( )</a>, <a href="../../wm/wm/WM_SetMPData.html">WM_SetMPData( )</a>の完了コールバック呼び出し時)
+<LI><a href="../parent/WBT_MpParentRecvHook.html">WBT_MpParentRecvHook( )</a>  (親機の場合においての<a href="../../wm/wm/WM_SetPortCallback.html">WM_SetPortCallback( )</a>で指定したコールバック呼び出し時)
+<LI><a href="../child/WBT_MpChildRecvHook.html">WBT_MpChildRecvHook( )</a>   (子機の場合においての<a href="../../wm/wm/WM_SetPortCallback.html">WM_SetPortCallback( )</a>で指定したコールバック呼び出し時)
+</UL>
+<P>
+例えば、MP通信親機において<a href="../../wm/wm/WM_SetMPData.html">WM_SetMPData( )</a>の完了コールバックで、次のMP通信のためのバッファを引数に
+<a href="../parent/WBT_MpParentSendHook.html">WBT_MpParentSendHook( )</a>を呼び出し、そのバッファをさらに<a href="../../wm/wm/WM_SetMPData.html">WM_SetMPData( )</a>でセットします。<BR>
+<CODE>
+　　　　data_size = <a href="../parent/WBT_MpParentSendHook.html">WBT_MpParentSendHook</a>(SendBuf, DATA_SIZE_MAX);<BR>
+　　　　<a href="../../wm/wm/WM_SetMPData.html">WM_SetMPData</a>(callback, SendBuf, data_size, 0, 0xffff);<BR></CODE>
+<BR>
+<FONT color="red">なお、これらの関数は基本的にMP通信の送受信バッファにデータを書いたり、読んだりするだけなので、
+厳密にここで指定した場面で呼び出す必要はなく、次にMP通信を行う前までに呼び出してもかまいません。</FONT><BR>
+</P>
+<P>
+なお、WBT のコマンド待ちうけキューの長さは 1 しかないため、一度に一つの WBT コマンドしか登録できません。<BR>
+（<a href="../command/WBT_RequestSync.html">WBT_RequestSync( )</a>、<a href="../command/WBT_GetBlockInfo.html">WBT_GetBlockInfo( )</a>、<a href="../command/WBT_GetBlock.html">WBT_GetBlock( )</a>、<a href="../command/WBT_PutUserData.html">WBT_PutUserData( )</a> ）<BR>
+実行した WBT コマンドが終了する前に、次の WBT コマンドを発行しても登録できないので注意が必要です。
+</P>
+<HR>
+<P><B>WBTの基本的なAPI呼び出しの流れ</B></P>
+<P>
+WBTを使用する際の起動から終了までの一連のAPI呼び出しの流れについて、以下に図として示します。
+</P>
+<BLOCKQUOTE><IMG src="image_WBT_API.GIF" border="0"></BLOCKQUOTE>
+<P>
+WBTの使い方の節でも述べましたが、WBTはあくまでプロトコルを提供しているだけであり、
+上記の図での親機と子機を繋ぐ矢印の部分で、実際に<a href="../../wm/wm/WM_SetMPData.html">WM_SetMPData( )</a>等を呼ぶ必要があります。<BR>
+また、MPデータ送信を行う前に、<a href="../parent/WBT_MpParentSendHook.html">WBT_MpParentSendHook( )</a>,<a href="../child/WBT_MpChildSendHook.html">WBT_MpChildSendHook( )</a>を呼び出し、送信するバッファを得る必要があり、
+MPデータ受信が完了した後に、<a href="../parent/WBT_MpParentRecvHook.html">WBT_MpParentRecvHook( )</a>,<a href="../child/WBT_MpChildRecvHook.html">WBT_MpChildRecvHook( )</a>を呼び出し、受信したバッファの内容を
+WBTに知らせる必要があります。<BR>
+</P>
+<HR>
+<P>
+<B>親機の処理の流れ</B>
+<OL>
+<LI><a href="../init/WBT_InitParent.html">WBT_InitParent( )</a> を呼び出し、親機と子機のパケットサイズ、コールバックを指定します。
+<LI><a href="../common/WBT_RegisterBlock.html">WBT_RegisterBlock( )</a> を呼び出し、ブロックデータを登録する。
+<LI>MP通信を開始します。(<a href="../../wm/wm/WM_StartMP.html">WM_StartMP( )</a> の完了まで行う)
+<LI>以下の処理を送信間隔毎に行います。
+<OL>
+<LI><a href="../parent/WBT_MpParentSendHook.html">WBT_MpParentSendHook( )</a> を呼び出し、相手に送信するバッファを得る。
+<LI><a href="../../wm/wm/WM_SetMPData.html">WM_SetMPData( )</a> で先ほど得たバッファをセットする。
+</OL>
+<LI>MP 受信コールバックが呼ばれたら、<a href="../parent/WBT_MpParentRecvHook.html">WBT_MpParentRecvHook( )</a> を呼び出し、受信バッファを WBT に伝える。<BR>
+受信バッファの内容とWBTの状態によって、<a href="../init/WBT_InitParent.html">WBT_InitParent( )</a> で設定したコールバックが受信したコマンド情報と共に呼ばれます。<BR>
+ただし、親機(ダウンロードされる側)の場合、このコールバック中に行う必要のある処理はありません。<BR>
+なお、コールバックが WBT_CMD_REQ_GET_BLOCK_DONE コマンドで呼び出された場合、一回のブロック転送が完了したことを示します。<BR>
+<LI>4.5.が繰り返されることで、処理が進んでいきます。<BR>
+</OL>
+</P>
+<HR>
+<P>
+<B>子機の処理の流れ</B>
+<OL>
+<LI><a href="../init/WBT_InitChild.html">WBT_InitChild( )</a> を呼び出し、コールバックを指定します。
+<LI>MP通信を開始します。(親機と接続し、<a href="../../wm/wm/WM_StartMP.html">WM_StartMP( )</a> の完了まで行う)
+<LI><a href="../child/WBT_SetOwnAid.html">WBT_SetOwnAid( )</a> を呼び出し、自分の AID 番号を WBT に伝えます。
+<LI><a href="../command/WBT_RequestSync.html">WBT_RequestSync( )</a> を呼び出し、コールバックを指定します。
+<LI>以下の処理を送信間隔毎に行います。
+<OL>
+<LI><a href="../child/WBT_MpChildSendHook.html">WBT_MpChildSendHook( )</a> を呼び出し、相手に送信するバッファを得る。
+<LI><a href="../../wm/wm/WM_SetMPData.html">WM_SetMPData( )</a> で先ほど得たバッファをセットする。
+</OL>
+<LI>MP 受信コールバックが呼ばれたら、<a href="../child/WBT_MpChildRecvHook.html">WBT_MpChildRecvHook( )</a> を呼び出し、受信バッファを WBT に伝える。<BR>
+受信バッファの内容とWBTの状態によって、<a href="../init/WBT_InitChild.html">WBT_InitChild( )</a> で設定したコールバックが受信したコマンド情報と共に呼ばれます。<BR>
+ただし、子機(ダウンロードする側)の場合、このコールバックでは行うことはなく、<a href="../command/WBT_RequestSync.html">WBT_RequestSync( )</a> 等の各々の WBT 関数で指定した
+コールバックのなかで処理を進めます。<BR>
+<LI>各々の WBT 関数で指定したコールバックが呼ばれた場合、次の WBT 関数を呼び出します。
+<OL>
+<LI><a href="../command/WBT_RequestSync.html">WBT_RequestSync( )</a> の完了コールバックの場合、<a href="../command/WBT_GetBlockInfo.html">WBT_GetBlockInfo( )</a> を呼び出し、自分が得たいブロック情報の番号を指定します。
+<LI><a href="../command/WBT_GetBlockInfo.html">WBT_GetBlockInfo( )</a> の完了コールバックの場合、<a href="../command/WBT_GetBlock.html">WBT_GetBlock( )</a> を呼び出し、<a href="../command/WBT_GetBlockInfo.html">WBT_GetBlockInfo( )</a> で得たブロックIDを指定します。
+<LI><a href="../command/WBT_GetBlock.html">WBT_GetBlock( )</a> の完了コールバックの場合、ブロック転送が完了したことになります。
+</OL>
+<LI>5.6.7.が繰り返されることで、処理が進んでいきます。<BR>
+</OL>
+
+</P>
+<H2>参照</H2>
+<P><CODE><A href="../list_wbt.html">WBT関数一覧</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>
+2006/03/13 初版</P>
+</BODY>
+</HTML>

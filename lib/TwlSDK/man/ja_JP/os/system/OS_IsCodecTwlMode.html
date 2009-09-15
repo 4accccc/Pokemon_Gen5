@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>OS_IsCodecTwlMode</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">OS_IsCodecTwlMode <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD><CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>BOOL OS_IsCodecTwlMode( void );</CODE>
+</DL>
+<H2>引数</H2>
+<P>なし。</P>
+<H2>返り値</H2>
+<P>TRUE なら CODEC は TWL モードで動作していることを表します。</P>
+<P>FALSE ならそれ以外のモード(すなわち NITRO モード)で動作していることを表します。</P>
+<P>NITRO 専用 ROM ではこの関数は定数 FALSE に置き換わります。</P>
+<H2>説明</H2>
+<P>CODECが TWLモードで動作しているかどうかを調べます。</P>
+<P>TWL/NITRO HYBRID ROM か、TWL 専用 ROM では動作モードや ROM ヘッダ等を調べて値を返しますが、NITRO
+専用 のROM では関数自体が定数 FALSE に置き換わるようになっています。</P>
+<H2>参照</H2>
+<P><CODE><A href="../consoleType/OS_GetConsoleType.html">OS_GetConsoleType</A></CODE></P>
+<H2>履歴</H2>
+<P>2008/10/08 初版</P>
+</BODY>
+</HTML>

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>PM_ForceToResetHardware</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">PM_ForceToResetHardware <IMG src="../../image/TWL.gif" width="24" height="12" border="0" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;twl/spi.h&gt;</CODE></PRE>
+  <PRE><CODE>void PM_ForceToResetHardware( void );
+</CODE></PRE>
+</DL>
+<H2>引数</H2>
+<P>なし。</P>
+<H2>返り値</H2>
+<P>なし。</P>
+<H2>説明</H2>
+<P>強制的にハードウェアリセットを行います。</P>
+<P><B><FONT color="#ff0000">この関数は基本的にアプリケーションが直接呼ぶべきではありません。</FONT></B><FONT color="#ff0000">自らをハードウェアリセットするという目的ならば、 <CODE><A href="../../os/appJump/OS_RebootSystem.html">OS_RebootSystem()</A></CODE> を呼んでください。また、システムメニューに戻る場合は <CODE><A href="../../os/appJump/OS_JumpToSystemMenu.html">OS_JumpToSystemMenu()</A></CODE> を呼んでください。</FONT>これらの関数は、メインメモリの先頭領域に動作を決定するパラメータを書き込んで本関数をを呼ぶという仕組みなので、何かの原因でそのパラメータが書き換えられていた場合には予期せぬ動作を引き起こす可能性があります。なので、本関数はハードウェアリセットを利用する別のシステム関数が使う関数です。(もちろん、メモリに書き込まれるパラメータをユーザがきちんと把握した上で本関数を呼び出し、意図した動作を行うことも出来ます。)</P>
+<P>この関数は ARM7 に該当動作を行うコマンドを PXI で送り、それを受け取った
+ARM7 側が PMIC を操作することで実行されます。</P>
+
+<P><CODE><A href="PM_AppendExitCallback.html">PM_AppendPreExitCallback()</A></CODE> などで設定した終了コールバック (Pre コールバック) は<FONT color="#ff0000">呼ばれません</FONT>。必要な終了処理を行ってからハードウェアリセットを行うようにしてください、。Post
+コールバックは呼ばれます。</P>
+<P>似た関数として <CODE><A href="../../os/reset/OS_ResetSystem.html">OS_ResetSystem()</A></CODE> があります。<CODE><A href="../../os/reset/OS_ResetSystem.html">OS_ResetSystem()</A></CODE> はハードウェアリセットではなく、必要なプログラムをロードしなおしてエントリーアドレスから再実行するソフトウェアリセット関数です。</P>
+<P>本関数は、他のデバイスが SPI を占有して BUSY 状態だった場合でも<FONT color="#ff0000">成功するまでリトライを繰り返します。</FONT></P>
+<H2>参照</H2>
+<P><CODE><A href="PM_Init.html">PM_Init</A>, <A href="PM_ForceToPowerOff.html">PM_ForceToPowerOff</A>, <A href="../../os/reset/OS_ResetSystem.html">OS_ResetSystem</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2009/06/03 <CODE>PM_Init()</CODE> についての記述を削除 (<CODE>OS_Init()</CODE> が必須となったため)<BR>
+2009/04/13 Post 終了コールバックは呼ばれると記述変更<BR>
+2008/08/23 BUSY 状態のことを追記<BR>
+2008/02/07 初版</P>
+</BODY>
+</HTML>

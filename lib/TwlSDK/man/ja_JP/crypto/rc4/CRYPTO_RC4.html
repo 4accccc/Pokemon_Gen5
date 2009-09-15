@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>CRYPTO_RC4</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">CRYPTO_RC4 <IMG src="../../image/NTR.gif" width="23" height="12" border="0" align="middle"><IMG src="../../image/TWL.gif" width="23" height="12" border="0" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <pre><CODE>#include &lt;nitro/crypto.h&gt;
+
+void CRYPTO_RC4(const void* key, u32 key_len, void* data, u32 data_len);
+</CODE></pre>
+</dd>
+</dl>
+
+<h2>引数</h2>
+<TABLE border="1" width="100%" class="arguments">
+  <TBODY>
+    <TR>
+      <TH>key</TH>
+      <TD>RC4 アルゴリズムによる暗号化/復号を行うための鍵のバイト列へのポインタを指定します。</TD>
+    </TR>
+    <TR>
+      <TH>key_len</TH>
+      <TD>key で指定した鍵の長さを指定します。鍵の長さは 16 バイト以下である必要があり、それより大きい場合は 16 バイトに切り詰められます。</TD>
+    </TR>
+    <TR>
+      <TH>data</TH>
+      <TD>RC4 アルゴリズムによる暗号化/復号を行う対象のデータへのポインタを指定します。</TD>
+    </TR>
+    <TR>
+      <TH>data_len</TH>
+      <TD>data で指定したデータの長さを指定します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>
+ありません。
+</p>
+
+<H2>説明</H2>
+<P>
+	共通鍵暗号である RC4 アルゴリズムによる暗号化/復号を行います。RC4 アルゴリズムは暗号化と復号を同一の関数で行います。<BR>
+	data に格納されているデータに対して、直接処理を行い、変換結果が上書きされます。<BR>
+	この関数は <code><a href="CRYPTO_RC4Init.html">CRYPTO_RC4Init()</a></code> と <code><a href="CRYPTO_RC4Encrypt.html">CRYPTO_RC4Encrypt()</a></code> を続けて呼び出すインライン関数として定義されています。
+</P>
+<P>
+	RC4 アルゴリズムを使用する際の詳細な注意事項に関しましては、「<A href="../overview/about_RC4.html">RC4 アルゴリズムによる暗号化の概要</A>」を参照してください。
+</P>
+
+<h2>参照</h2>
+<p><CODE>
+	<A href="CRYPTO_RC4Encrypt.html">CRYPTO_RC4Encrypt</A>, <A href="CRYPTO_RC4Init.html">CRYPTO_RC4Init</A>
+</CODE></p>
+
+<H2>履歴</H2>
+<P>
+2008/2/25 初版
+</P>
+</body>
+</html>

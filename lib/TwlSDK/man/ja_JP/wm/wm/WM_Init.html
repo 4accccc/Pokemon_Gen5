@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 8.0.2.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>WM_Init</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">WM_Init<img src="../../image/NTR.gif"><img src="../../image/TWL.gif"></H1>
+<h2>構文</h2>
+<dl>
+  <dd><PRE><CODE>#include &lt;nitro/wm.h&gt;
+
+<A href="WMErrCode.html">WMErrCode</A> WM_Init(
+        void*           wmSysBuf ,
+        u16             dmaNo
+);
+</CODE></PRE></dd>
+</dl>
+
+<h2>引数</h2>
+<table border="1" width="100%">
+  <tbody>
+    <TR>
+      <TD width="200"><EM><STRONG><FONT face="Courier New">wmSysBuf</FONT></STRONG></EM></TD>
+      <TD width="800">呼び出し元によって確保されたバッファへのポインタを指定します。
+      バッファのサイズはWM_SYSTEM_BUF_SIZEだけ必要であり、かつ32バイトアラインされている必要があります。<BR>
+      <font color="#ff0000"><B>また、VRAM、および 拡張メインメモリ(TWL モードのみ)に確保されたバッファを使用することは出来ません。
+必ずそれ以外の領域に確保してください。</font></B></TD>
+    </TR>
+    <TR>
+      <TD width="200"><EM><STRONG><FONT face="Courier New">dmaNo</FONT></STRONG></EM></TD>
+      <TD width="800">WMライブラリが使用するDMA番号を指定します。有効なDMA番号である 0 ～ 3 を指定して下さい。</TD>
+    </TR>
+  </tbody>
+</table>
+
+<h2>返り値</h2>
+<p><A href="WMErrCode.html">WMErrCode列挙型</A>の処理結果を返します。</p>
+
+<H2>説明</H2>
+<P>
+WMライブラリを初期化します。<A href="WM_Initialize.html">WM_Initialize( )</A>と異なり、ARM9側の初期化のみを行う同期関数です。
+WMは<A href="wm_state_diagram.html">READYステート</A>に初期化されます。通信を行う場合には、別途<A href="WM_Enable.html">WM_Enable( )</A>、<A href="WM_PowerOn.html">WM_PowerOn( )</A>を使用して
+無線ハードウェアを使用可能な状態にする必要があります。
+wmSysBufは、<A href="WM_Finish.html">WM_Finish( )</A>もしくは<A href="WM_End.html">WM_End( )</A>が成功終了するまでは開放しないで下さい。<BR>
+なお、この関数は<A href="WM_Initialize.html">WM_Initialize( )</A>の先頭で自動的に呼び出されます。
+</P>
+
+<h2>参照</h2>
+<p><CODE>
+<A href="WM_Enable.html">WM_Enable</A>, <A href="WM_PowerOn.html">WM_PowerOn</A>, <A href="WM_PowerOff.html">WM_PowerOff</A>, <A href="WM_Disable.html">WM_Disable</A>, <A href="WM_Finish.html">WM_Finish</A>, <A href="WM_Initialize.html">WM_Initialize</A>, <A href="WM_End.html">WM_End</A>
+</CODE></p>
+
+<H2>履歴</H2>
+<P>
+2009/04/13 特定の領域に確保されたバッファを指定することが出来ない旨を追記<BR>
+2005/03/02 dmaNo引数について指定可能範囲を追記<BR>
+2004/10/22 返り値の型を変更<BR>
+2004/09/11 初版<BR>
+</P>
+</body>
+</html>

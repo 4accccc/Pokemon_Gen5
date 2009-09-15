@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>SSP_ExtractJpegDecoderExif</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>SSP_ExtractJpegDecoderExif <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<pre><code>
+inline BOOL SSP_ExtractJpegDecoderExif(u8* data, u32 size);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>data</strong></em></td>
+<td style="width:87%">Exif情報を抽出するJPEGファイル</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>size</strong></em></td>
+<td style="width:87%">Exif情報を抽出するJPEGファイルのサイズ</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>返り値</h2>
+<p>成功ならば、TRUE を返す</p>
+
+<h2>説明</h2>
+<p>
+JPEGファイルから Exif 情報を抽出します。<br>
+デコード処理は行わないため <code><a href="SSP_StartJpegDecoder.html">SSP_StartJpegDecoder()</a></code> を呼び出した場合よりも早く取得できます。<br>
+<br>
+実際に Exif に含まれていた情報を取得するには、本関数を呼び出した後に、各々の Get 関数を使用してください。
+</p>
+
+<h2>履歴</h2>
+<p>
+2009/01/09 初版<br>
+</p>
+</body>
+</html>

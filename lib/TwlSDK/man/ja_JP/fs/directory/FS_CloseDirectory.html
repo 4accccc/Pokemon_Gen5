@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_CloseDirectory</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1 align="left">FS_CloseDirectory <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+BOOL FS_CloseDirectory(<a href="../fs_file_type.html">FSFile</a> *dir);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>dir</strong></em></td>
+<td style="width:87%"><code><a href="FS_OpenDirectory.html">FS_OpenDirectory()</a></code>で開いたディレクトリのハンドル</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>ディレクトリを正しく閉じればTRUEを、失敗すればFALSEを返します。<br />
+失敗時の詳細なエラーは<code><a href="../file/FS_GetResultCode.html">FS_GetResultCode()</a></code>で取得することができます。</p>
+
+<h2>説明</h2>
+<p>開いているディレクトリを閉じます。<br />
+</p>
+
+<h2>注意</h2>
+<ul>
+<li>この関数を割り込みハンドラ(IRQモード)から呼び出すことはできません。<br />
+また、割り込みを禁止したままの状態にあると処理が完了しない場合がある点に注意して下さい。</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="FS_OpenDirectory.html">FS_OpenDirectory</a>
+<a href="FS_ReadDirectory.html">FS_ReadDirectory</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2007/09/18 初版<br />
+</p>
+</body>
+</html>

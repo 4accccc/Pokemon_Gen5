@@ -1,0 +1,473 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>OS_GetConsoleType</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">OS_GetConsoleType <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD><CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>u32 OS_GetConsoleType( void );</CODE>
+</DL>
+<H2>引数</H2>
+<P>なし。</P>
+<H2>返り値</H2>
+<P>プログラムの実行環境による u32 型の値です。<BR>
+説明の項を参照してください。</P>
+<H2>説明</H2>
+<P>プログラムの実行環境を表す u32 型の値を返します。</P>
+<P>この <CODE>OS_GetConsoleType()</CODE> は動作環境によって処理を動的に切り替えたい場合に有効です。この関数によって複数の動作環境で共通のプログラムを作成することができます。</P>
+<P><CODE>OS_GetConsoleType()</CODE> は、<FONT color="#ff0000">「動作している環境」を取得するための関数であり、「動作しているモード」を調べるための関数ではありません。</FONT>動作モードを調べる関数は、<CODE><A href="OS_IsRunOnTwl.html">OS_IsRunOnTwl()</A></CODE> です。　例えばNTR 用のゲームは　NTRでも遊べますし、TWL で遊ぶことも出来ます。どちらの場合でも「NTRモード」でプログラムは動いていますが、動作しているハードウェアはNTR
+であったり TWL であったりと異なります。</P>
+<BLOCKQUOTE>
+<P>・<CODE><A href="OS_IsRunOnTwl.html">OS_IsRunOnTwl()</A></CODE> では、「動作モードがNTRモードか、TWLモードか」はわかります。しかしどちらのハードウェア上で動作しているかはわかりません。<BR>
+<BR>
+・<CODE>OS_GetConsoleType() </CODE>では、「NTRで動作しているか、TWLで動作しているか」はわかります。しかし動作モードはわかりません。<BR>
+　(但し、NITRO専用ROMの FINALROM版を TWL で動作させる場合、&quot;NTR で動作している&quot;
+ことを表す値が返ります。)</P>
+</BLOCKQUOTE>
+<P><CODE>OS_GetConsoleType()</CODE> は、1回目の呼び出しではデバイスやメモリ等を調査して値を決定しますが、2回目の呼び出しからは以前返した値と同じものをそのまま返しますので呼び出しによるオーバーヘッドは殆どありません。</P>
+<P><FONT color="#ff0000">最終版ROM (FINALROM) ライブラリでは返る値が限定されています。デバッガ上など実機以外で動作させていたときに、その環境を表す値以外の値を返すことがあります。</FONT></P>
+<H3><BR>
+<BR>
+<B>類似の関数</B></H3>
+<P>同様の関数として、<CODE><A href="OS_GetRunningConsoleType.html">OS_GetRunningConsoleType()</A></CODE> があります。こちらはは 最終版ROM (FINALROM)　でも実際にハードウェア構成を調べて値を返す点が違います。</P>
+<P>この違いは、例えば TWL 最終版ROM を IS-TWL-DEBUGGER で動作させた場合などに見ることが出来ます。IS-TWL-DEBUGGER
+にはメモリが 32MB 搭載されていますので<CODE>OS_GetRunningConsoleType()</CODE> &amp; <CODE>OS_CONSOLE_SIZE_MASK</CODE> の値は <CODE>OS_CONSOLE_SIZE_32MB</CODE> となりますが、<CODE>OS_GetConsoleType()</CODE> &amp; <CODE>OS_CONSOLE_SIZE_MASK</CODE> は <CODE>OS_CONSOLE_SIZE_16MB</CODE> となります。</P>
+<P>最終版ROM にこれらの動作環境取得の関数が残る場合、<CODE><A href="OS_GetRunningConsoleType.html">OS_GetRunningConsoleType()</A></CODE> よりは <CODE>OS_GetConsoleType()</CODE> の方が無難です。製品となった状況を想定すると、最終ROM は実機でしか動作しないはずなので、「動作している環境はデバッガである」など実機で有りえない値が返る可能性は排除しておきたいからです。そういう意味では
+<CODE><A href="OS_GetRunningConsoleType.html">OS_GetRunningConsoleType()</A></CODE> はデバッグ用途にのみ使用するのに留めておくのがよいでしょう。</P>
+<H3><BR>
+<BR>
+<B>取得できる値について</B></H3>
+<BLOCKQUOTE><B>・動作環境</B><BR>
+<BR>
+返り値と<CODE>OS_CONSOLE_MASK</CODE> の論理積は、動作環境によって以下の値を取ります。<BR>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>値</TH>
+      <TH>動作環境</TH>
+    </TR>
+    <TR>
+      <TD width="240"><CODE>OS_CONSOLE_TWL</CODE></TD>
+      <TD>TWL 実機で動作　<FONT color="#ff0000"><B>*1</B></FONT></TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_CONSOLE_NITRO</CODE></TD>
+      <TD>NITRO 実機で動作</TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_CONSOLE_TWLDEBUGGER</CODE></TD>
+      <TD>IS-TWL-DEBUGGER 上で動作　<FONT color="#ff0000"><B>*2</B></FONT></TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_CONSOLE_ISDEBUGGER</CODE></TD>
+      <TD>IS-NITRO-DEBUGGER 上で動作</TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_CONSOLE_ENSATA</CODE></TD>
+      <TD>ensata NITRO Software Emulator 上で動作</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<BR>
+TWL実機で動作していると判定された <FONT color="#ff0000"><B>*1</B></FONT> の場合、<CODE>OS_CONSOLE_TWLTYPE_MASK</CODE> との論理積でさらに分類されます。<BR>
+但し通常は <CODE>OS_CONSOLE_TWLTYPE_DEV</CODE> の考慮は不要です。<CODE>OS_CONSOLE_TWL</CODE> だけで TWL実機と見なして問題ありません。
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>値</TH>
+      <TH>TWL実機の種類</TH>
+    </TR>
+    <TR>
+      <TD width="240"><CODE>OS_CONSOLE_TWLTYPE_RETAIL</CODE></TD>
+      <TD>TWL 製品実機</TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_CONSOLE_TWLTYPE_DEV</CODE></TD>
+      <TD>開発用途にセキュリティー用の鍵が異なる TWL 実機</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<BR>
+IS-TWL-DEBUGGER で動作していると判断された <B><FONT color="#ff0000">*2</FONT></B> の場合、<CODE>OS_CONSOLE_BOARD_MASK</CODE> との論理積でさらに分類されます。
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>値</TH>
+      <TH>IS-TWL-DEBUGGER の種類</TH>
+    </TR>
+    <TR>
+      <TD width="240"><CODE>OS_CONSOLE_BOARD_A9_A7</CODE></TD>
+      <TD>コンポーネント開発用 ARM9 / ARM7 両対応デバッガ</TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_CONSOLE_BOARD_A9</CODE></TD>
+      <TD>アプリケーション開発用 ARM9 専用デバッガ</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<BR>
+</BLOCKQUOTE>
+<BLOCKQUOTE><B>・プログラムの読み込みデバイス</B><BR>
+<BR>
+返り値と<CODE>OS_CONSOLE_DEV_MASK</CODE> の論理積は プログラムデータの読み込みデバイスによって以下の値を取ります。
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>値</TH>
+      <TH>読み込みデバイス</TH>
+    </TR>
+    <TR>
+      <TD width="240"><CODE>OS_CONSOLE_DEV_CARD</CODE></TD>
+      <TD>カードバスから読み込み</TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_CONSOLE_DEV_CARTRIDGE</CODE></TD>
+      <TD>カートリッジバスから読み込み <FONT color="#ff0000"><B>*3</B></FONT></TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_CONSOLE_DEV_NAND</CODE></TD>
+      <TD>NANDから読み込み</TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_CONSOLE_DEV_SDCARD</CODE></TD>
+      <TD>SDカードから読み込み</TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_CONSOLE_DEV_MEMORY</CODE></TD>
+      <TD>メモリ上から読み込み</TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_CONSOLE_DEV_DOWNLOAD</CODE></TD>
+      <TD>ダウンロードでの読み込み</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<BR>
+<FONT color="#ff0000"><B>*3</B></FONT> …TWL本体にはカートリッジスロットが無いのでTWL プラットフォームでこの値を取ることはありません。<BR>
+</BLOCKQUOTE>
+<BLOCKQUOTE><B>・メモリサイズ</B><BR>
+<BR>
+返り値と<CODE>OS_CONSOLE_SIZE_MASK</CODE> の論理積は、実装されているメインメモリサイズによって以下の値を取ります。
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>値</TH>
+      <TH>メインメモリサイズ</TH>
+    </TR>
+    <TR>
+      <TD width="240"><CODE>OS_CONSOLE_SIZE_4MB</CODE></TD>
+      <TD>4MByte</TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_CONSOLE_SIZE_8MB</CODE></TD>
+      <TD>8MByte</TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_CONSOLE_SIZE_16MB</CODE></TD>
+      <TD>16MByte</TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_CONSOLE_SIZE_32MB</CODE></TD>
+      <TD>32MByte</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<BR>
+TWL実機でNITRO専用ROMを動作させた場合はビルド種類に依らずメモリサイズは
+4MB となります。</BLOCKQUOTE>
+<H3><B><BR>
+<BR>
+環境やビルドによる実際の値</B></H3>
+<P>以下は、<CODE>OS_GetConsoleType()</CODE> と <CODE><A href="OS_GetRunningConsoleType.html">OS_GetRunningConsoleType()</A></CODE> で取得できる値を表しています。表の項目の論理和が取得できる値となります。OS_CONSOLE_DEV_xxx
+は、実際にROMデータを読み込んだデバイスの値となります。<BR>
+<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH colspan="5" style="background-color:#304040;"><FONT color="#ffffff">NITRO モードの場合</FONT></TH>
+    </TR>
+    <TR>
+      <TH>動作環境</TH>
+      <TH>ビルド</TH>
+      <TH><CODE>OS_GetConsoleType()</CODE>の値</TH>
+      <TH><CODE>OS_GetRunningConsoleType()</CODE>の値</TH>
+      <TH>備考</TH>
+    </TR>
+    <TR>
+      <TD rowspan="2">NTR実機</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><B><FONT color="#990099">OS_CONSOLE_NITRO</FONT></B><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_4MB</FONT></B></TD>
+      <TD><B><FONT color="#990099">OS_CONSOLE_NITRO</FONT></B><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_4MB</FONT></B></TD>
+      <TD rowspan="2">4つとも<BR>
+      同じです。</TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD><B><FONT color="#990099">OS_CONSOLE_NITRO</FONT></B><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_4MB</FONT></B></TD>
+      <TD><B><FONT color="#990099">OS_CONSOLE_NITRO</FONT></B><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_4MB</FONT></B></TD>
+    </TR>
+    <TR>
+      <TD rowspan="2">TWL実機</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><B><FONT color="#990099">OS_CONSOLE_TWL<BR>
+      OS_CONSOLE_TWLTYPE_RETAIL</FONT></B><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_4MB</FONT></B></TD>
+      <TD><B><FONT color="#990099">OS_CONSOLE_TWL<BR>
+      OS_CONSOLE_TWLTYPE_RETAIL</FONT></B><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_4MB</FONT></B></TD>
+      <TD rowspan="2">FINALROMの<BR>
+      <CODE>OS_GetConsoleType()</CODE><BR>
+      だけ異なります。<BR>
+      <BR>
+      ビルドに関わらず、メモリ搭載<BR>
+      量は 4MB になります。</TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD style="background-color:#e0e0f0;"><B><FONT color="#990099"><FONT color="#990099">OS_CONSOLE_NITRO</FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <FONT color="#339900">OS_CONSOLE_SIZE_4MB</FONT></FONT></B></TD>
+      <TD><B><FONT color="#990099">OS_CONSOLE_TWL<BR>
+      OS_CONSOLE_TWLTYPE_RETAIL</FONT></B><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_4MB</FONT></B></TD>
+    </TR>
+    <TR>
+      <TD rowspan="2">IS-NITRO-DEBUGGER</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_ISDEBUGGER</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <FONT color="#339900"><B>OS_CONSOLE_SIZE_8MB</B></FONT></TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_ISDEBUGGER</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <FONT color="#339900"><B>OS_CONSOLE_SIZE_8MB</B></FONT></TD>
+      <TD rowspan="2">FINALROMの<BR>
+      <CODE>OS_GetConsoleType()</CODE><BR>
+      だけ異なります。</TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD style="background-color:#e0e0f0;"><FONT color="#990099"><B>OS_CONSOLE_NITRO</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_4MB</FONT></B></TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_ISDEBUGGER</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <FONT color="#339900"><B>OS_CONSOLE_SIZE_8MB</B></FONT></TD>
+    </TR>
+    <TR>
+      <TD rowspan="2">ENSATA EMULATOR</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_ISDEBUGGER</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <FONT color="#339900"><B>OS_CONSOLE_SIZE_8MB</B></FONT></TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_ISDEBUGGER</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <FONT color="#339900"><B>OS_CONSOLE_SIZE_8MB</B></FONT></TD>
+      <TD rowspan="2">FINALROMの<BR>
+      <CODE>OS_GetConsoleType()</CODE><BR>
+      だけ異なります。</TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD style="background-color:#e0e0f0;"><FONT color="#990099"><B>OS_CONSOLE_NITRO</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_4MB</FONT></B></TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_ISDEBUGGER</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <FONT color="#339900"><B>OS_CONSOLE_SIZE_8MB</B></FONT></TD>
+    </TR>
+    <TR>
+      <TD rowspan="2">IS-TWL-DEBUGGER<BR>
+      (一般開発用: ARM9)</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_TWLDEBUGGER<BR>
+      OS_CONSOLE_BOARD_A9</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_32MB</FONT></B></TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_TWLDEBUGGER<BR>
+      OS_CONSOLE_BOARD_A9</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_32MB</FONT></B></TD>
+      <TD rowspan="2">FINALROMの<BR>
+      <CODE>OS_GetConsoleType()</CODE><BR>
+      だけ異なります。</TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD style="background-color:#e0e0f0;"><B><FONT color="#990099">OS_CONSOLE_NITRO<BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <FONT color="#339900">OS_CONSOLE_SIZE_4MB</FONT></FONT></B></TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_TWLDEBUGGER<BR>
+      OS_CONSOLE_BOARD_A9</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_32MB</FONT></B></TD>
+    </TR>
+    <TR>
+      <TD rowspan="2">IS-TWL-DEBUGGER<BR>
+      (コンポーネント開発用<BR>
+      ARM9 + ARM7)</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_TWLDEBUGGER<BR>
+      OS_CONSOLE_BOARD_A9_A7</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_32MB</FONT></B></TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_TWLDEBUGGER<BR>
+      OS_CONSOLE_BOARD_A9_A7</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_32MB</FONT></B></TD>
+      <TD rowspan="2">FINALROMの<BR>
+      <CODE>OS_GetConsoleType()</CODE><BR>
+      だけ異なります。</TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD style="background-color:#e0e0f0;"><B><FONT color="#990099">OS_CONSOLE_NITRO<BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <FONT color="#339900">OS_CONSOLE_SIZE_4MB</FONT></FONT></B></TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_TWLDEBUGGER<BR>
+      OS_CONSOLE_BOARD_A9_A7</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_32MB</FONT></B></TD>
+    </TR>
+    <TR>
+      <TH colspan="5" style="background-color:#304040;"><FONT color="#ffffff">TWL モードの場合</FONT></TH>
+    </TR>
+    <TR>
+      <TH>動作環境</TH>
+      <TH>ビルド</TH>
+      <TH><CODE>OS_GetConsoleType()</CODE>の値</TH>
+      <TH><CODE>OS_GetRunningConsoleType()</CODE>の値</TH>
+      <TH>備考</TH>
+    </TR>
+    <TR>
+      <TD rowspan="2">TWL実機</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><B><FONT color="#990099">OS_CONSOLE_TWL<BR>
+      OS_CONSOLE_TWLTYPE_RETAIL</FONT></B><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_16MB</FONT></B></TD>
+      <TD><B><FONT color="#990099">OS_CONSOLE_TWL<BR>
+      OS_CONSOLE_TWLTYPE_RETAIL</FONT></B><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_16MB</FONT></B></TD>
+      <TD rowspan="2">4つとも<BR>
+      同じです。</TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD><B><FONT color="#990099">OS_CONSOLE_TWL<BR>
+      OS_CONSOLE_TWLTYPE_RETAIL</FONT></B><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_16MB</FONT></B></TD>
+      <TD><B><FONT color="#990099">OS_CONSOLE_TWL<BR>
+      OS_CONSOLE_TWLTYPE_RETAIL</FONT></B><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_16MB</FONT></B></TD>
+    </TR>
+    <TR>
+      <TD rowspan="2">IS-TWL-DEBUGGER<BR>
+      (一般開発用: ARM9)</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_TWLDEBUGGER<BR>
+      OS_CONSOLE_BOARD_A9</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_32MB</FONT></B></TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_TWLDEBUGGER<BR>
+      OS_CONSOLE_BOARD_A9</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_32MB</FONT></B></TD>
+      <TD rowspan="2">FINALROMの<BR>
+      <CODE>OS_GetConsoleType()</CODE><BR>
+      だけ異なります。</TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD style="background-color:#e0e0f0;"><B><FONT color="#990099">OS_CONSOLE_TWL<BR>
+      OS_CONSOLE_TWLTYPE_RETAIL</FONT></B><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_16MB</FONT></B></TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_TWLDEBUGGER<BR>
+      OS_CONSOLE_BOARD_A9</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_32MB</FONT></B></TD>
+    </TR>
+    <TR>
+      <TD rowspan="2">IS-TWL-DEBUGGER<BR>
+      (コンポーネント開発用<BR>
+      ARM9 + ARM7)</TD>
+      <TD>DEBUG<BR>
+      RELEASE</TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_TWLDEBUGGER<BR>
+      OS_CONSOLE_BOARD_A9_A7</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_32MB</FONT></B></TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_TWLDEBUGGER<BR>
+      OS_CONSOLE_BOARD_A9_A7</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_32MB</FONT></B></TD>
+      <TD rowspan="2">FINALROMの<BR>
+      <CODE>OS_GetConsoleType()</CODE><BR>
+      だけ異なります。</TD>
+    </TR>
+    <TR>
+      <TD>FINALROM</TD>
+      <TD style="background-color:#e0e0f0;"><B><FONT color="#990099">OS_CONSOLE_TWL<BR>
+      OS_CONSOLE_TWLTYPE_RETAIL</FONT></B><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_16MB</FONT></B></TD>
+      <TD><FONT color="#990099"><B>OS_CONSOLE_TWLDEBUGGER<BR>
+      OS_CONSOLE_BOARD_A9_A7</B></FONT><BR>
+      OS_CONSOLE_DEV_xxx<BR>
+      <B><FONT color="#339900">OS_CONSOLE_SIZE_32MB</FONT></B></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+</P>
+<P><BR>
+<BR>
+<B>NITRO モードでの動作環境識別</B></P>
+<P>NITRO モードで動作する場合、本関数 <CODE>OS_GetConsoleType()</CODE> だけではNTR本体と TWL 本体のどちらで動作しているかの判断が出来ません。これは、NITRO専用ROM
+を作成する開発者が TWL のことを知っているとは限らないためです。TWL について知らない
+NITRO 開発者は NITRO 専用ROM は最終的に NTR本体で動作されることしか想定していないため、<CODE>OS_GetConsoleType()</CODE> の返り値に TWLで動作している、という値がセットされていることは好ましくありません。
+</P>
+<P>但しこの２つをどうしても識別したい場合があるかもしれません。そのために、<CODE>OSi_IsNitroModeOnTwl()</CODE> が用意されています。この関数が TRUE を返すときは、TWL上で NITRO モードの
+ROM が動作していることになります。この関数は TWL の名が出ているため、非公開関数的な扱いとし、関数名にも
+OSi_ のように &quot;i&quot; をつけました。</P>
+<H2>参照</H2>
+<P><CODE><A href="OS_IsRunOnDebugger.html">OS_IsRunOnDebugger</A>, <A href="OS_IsRunOnEmulator.html">OS_IsRunOnEmulator</A>, <A href="OS_GetRunningConsoleType.html">OS_GetRunningConsoleType</A></CODE></P>
+<H2>履歴</H2>
+<P>2008/04/15 モードによって表を分割<BR>
+2008/03/27 環境やビルドによる実際の値を追加<BR>
+2007/11/16 記述追加<BR>
+2007/11/05 <CODE>OS_GetRunningConsoleType() </CODE>に移行</P>
+<P>&lt;</P>
+</BODY>
+</HTML>

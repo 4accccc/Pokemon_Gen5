@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>CAMERA_DmaPipeInfinity</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">CAMERA_DmaPipeInfinity <IMG src="../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <CODE>#include &lt;twl/camera.h&gt;</CODE><BR>
+  <BR>
+  <CODE>void CAMERA_DmaPipeInfinity(u32 dmaNo, void *dest, u32 unit, MINDmaCallback callback, void* arg);</CODE>
+</DL>
+<H2>引数</H2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>dmaNo</STRONG></EM></TD>
+      <TD width="87%">使用する新規DMAチャンネル(0～3)</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>dest</STRONG></EM></TD>
+      <TD width="87%">転送先アドレス</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>unit</STRONG></EM></TD>
+      <TD width="87%">1回の転送サイズ(横サイズ×ライン数)</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG>callback</STRONG></EM></TD>
+      <TD>新規DMA終了時のコールバック</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG>arg</STRONG></EM></TD>
+      <TD>新規DMA終了時のコールバック引数</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>返り値</H2>
+<P>なし</P>
+
+<H2>説明</H2>
+<P>
+非同期にカメラバッファからフレームデータを連続して受信します。<BR>
+本関数を一度呼び出すと、<code><A href="../mi/ndma/MI_StopNDma.html">MI_StopNDma(dmaNo)</A></code> を呼び出すまで、データを受信し続けます。
+<BR><BR>
+本関数は内部で新規DMAを用いてデータを受信しています。<BR>
+新規DMAについての詳しい説明は、<code><A href="../mi/ndma/MI_NDmaCopy.html">MI_NDmaCopy()</A></code> 等を参照してください。
+<BR><BR>
+1回の転送サイズを求める際に使用する横サイズ、ライン数は、それぞれ1ラインの転送バイト数と1回の転送ライン数を意味しています。<BR>
+転送バイト数は、1ピクセル2バイトになるので、横サイズ×2として計算してください。<BR>
+横サイズは、<code><A href="CAMERA_SetTrimmingParams.html">CAMERA_SetTrimmingParams()</A></code> 等を呼び出した場合は、そこで設定した幅となり、呼び出していなければ、<code><A href="CAMERA_I2CSize.html">CAMERA_I2CSize*()</A></code> で設定した幅となります。<BR>
+（どちらの関数も呼び出していない場合は、カメラ解像度の初期値の幅となります。初期値については<A href="about_camera.html">概要</A>を参照してください。）<BR>
+ライン数は <code><A href="CAMERA_SetTransferLines.html">CAMERA_SetTransferLines()</A></code> で設定したライン数で計算してください。<code><A href="CAMERA_SetTransferLines.html">CAMERA_SetTransferLines()</A></code> で値を設定しなかった場合の初期ライン数は 1 です。
+<BR><BR>
+また、最終的に指定する1回の転送サイズは 2KB (1024ピクセル) 以内になるように調整してください。
+<BR><BR>
+（注意）<BR>
+本関数は <code><A href="CAMERA_DmaRecv.html">CAMERA_DmaRecv()</A></code> 等と違い、転送先のアドレス dest は固定となり、一回の転送サイズ unit 分のデータがdest に転送され続ける動作になっています。<BR>
+そのため、フレーム全体のデータを得るためには、本関数で指定するコールバック関数内で別のフレームバッファに dest に転送された unit 分のデータをコピーする必要があります。
+<BR><BR>
+以下に具体的なコードを示します。
+<BLOCKQUOTE><B>(例)</B><BR>
+<BR>
+<CODE>
+#define WIDTH 256<BR>
+#define HEIGHT 192<BR>
+<BR>
+CAMERA_SetTrimmingParamsCenter(WIDTH, HEIGHT, 320, 240);<BR>
+CAMERA_SetTrimming(TRUE);<BR>
+CAMERA_SetTransferLines(CAMERA_GET_MAX_LINES(WIDTH));    /* 256*4=1024ピクセル */<BR>
+<BR>
+.<BR>
+.<BR>
+.<BR>
+<BR>
+CAMERA_DmaPipeInfinity(0, buffer, CAMERA_GetBytesAtOnce(WIDTH), NULL, NULL);
+</CODE><BR>
+</BLOCKQUOTE>
+
+</P>
+
+<H2>参照</H2>
+<P><CODE><A href="CAMERA_SetTransferLines.html">CAMERA_SetTransferLines</A>、<A href="../mi/ndma/MI_StopNDma.html">MI_StopNDma</A>、<A href="CAMERA_SetTrimmingParams.html">CAMERA_SetTrimmingParams</A>、<A href="CAMERA_SetTrimming.html">CAMERA_SetTrimming</A>、<A href="CAMERA_I2CSize.html">CAMERA_I2CSize*</A>、<A href="CAMERA_GetBytesAtOnce.html">CAMERA_GetBytesAtOnce</A>、<A href="CAMERA_GET_MAX_LINES.html">CAMERA_GET_MAX_LINES</A></CODE></P>
+<H2>履歴</H2>
+<P>
+2008/09/11 サンプルコードの変更<br>
+2007/11/14 横サイズの指定、<code>CAMERA_DmaRecv()</code>との違いについて説明修正<BR>
+2007/10/22 説明追加<BR>
+2007/10/02 初版</P>
+</BODY>
+</HTML>

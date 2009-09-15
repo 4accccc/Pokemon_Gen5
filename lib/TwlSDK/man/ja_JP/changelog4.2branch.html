@@ -1,0 +1,418 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>NITRO-SDK CHANGELOG</TITLE>
+</HEAD>
+<BODY>
+<HR>
+<H1>NITRO-SDK 4.2 シリーズ 変更履歴</H1>
+<HR>
+<DL>
+  <DT><A href="changelog.html">→ TWL-SDK 変更履歴</A>
+</DL>
+
+<DL>
+  <DT><A href="#sdk_4_02">■NITRO-SDK 4.2 正式版</A> (2007/12/10)
+  <DD><A href="#note51-01">Note 51-01: (WBT) WBT_CancelCurrentCommand 関数の不具合修正</A>
+  <DD><A href="#KnownIssues_4_02">SDK 4.2 正式版での既知の問題点</A>
+</DL>
+
+<DL>
+  <DT><A href="#sdk_4_02_rc">■NITRO-SDK 4.2 RC</A> (2007/11/28)
+  <DD><A href="#note50-01">Note 50-01: (MI) LZ77 圧縮の拡張フォーマットを追加</A>
+  <DD><A href="#note50-02">Note 50-02: (GX) GX_SetVCount 関数の修正</A>
+  <DD><A href="#note50-03">Note 50-03: (MATH) fft-2 サンプルデモの変更と修正</A>
+  <DD><A href="#note50-04">Note 50-04: (MI) ハフマン圧縮の不具合修正</A>
+  <DD><A href="#note50-05">Note 50-05: (OS) Vカウントアラームの不具合修正</A>
+  <DD><A href="#note50-06">Note 50-06: (PM) PM_GoSleepMode 関数前後のチック値不整合の修正</A>
+  <DD><A href="#note50-07">Note 50-07: (PRC) サンプルデモ用ツール pdic2c.pl の修正</A>
+  <DD><A href="#note50-08">Note 50-08: (TOOL) ntrcomp.exe での LZ77 圧縮に指定できるパラメータを廃止</A>
+  <DD><A href="#note50-09">Note 50-09: (TOOL) ntrcomp.exe でのテキスト出力時にエンディアン指定を追加</A>
+  <DD><A href="#note50-10">Note 50-10: (TOOL) ntrcomp.exe でのデータサイズアライメントに8,16,32を追加</A>
+  <DD><A href="#note50-11">Note 50-11: (TOOL) ntrcomp.exe に解凍オプションを追加</A>
+  <DD><A href="#note50-12">Note 50-12: (WBT) 複数子機へのブロック転送に関する不具合修正</A>
+  <DD><A href="#note50-13">Note 50-13: (WM) WM_SetMPDataToPort* 関数の送信サイズ制限の変更</A>
+  <DD><A href="#note50-14">Note 50-14: (WM) dataSharing-model サンプルデモの修正</A>
+  <DD><A href="#note50-15">Note 50-15: (WM) wmPadRead-child サンプルデモの変更と修正</A>
+  <DD><A href="#note50-16">Note 50-16: (WM) 子機送信容量の制限の緩和</A>
+  <DD><A href="#note50-17">Note 50-17: (WM) 受信専用モードの初期化関数の追加</A>
+  <DD><A href="#KnownIssues_4_02_rc">SDK 4.2 RCでの既知の問題点</A>
+</DL>
+
+<DL>
+  <DT><A href="#sdk_4_02_pr">■NITRO-SDK 4.2 PR</A> (2007/10/22)
+  <DD><A href="#note49-01">Note 49-01: (CARD) FLASH デバイス用書き込み関数の追加</A>
+  <DD><A href="#note49-02">Note 49-02: (CARD) 新規バックアップデバイスへの対応</A>
+  <DD><A href="#note49-03">Note 49-03: (CARD) 非同期バックアップ関数の不具合修正</A>
+  <DD><A href="#note49-04">Note 49-04: (DevEnv) make によるビルドにおけるファイル名の統合</A>
+  <DD><A href="#note49-05">Note 49-05: (GX) GX_SetVCount 関数の修正</A>
+  <DD><A href="#note49-06">Note 49-06: (MATH) thumb ライブラリにおける MATH_CountLeadingZeros 関数の実装の変更</A>
+  <DD><A href="#note49-07">Note 49-07: (MATH) サンプルデモの修正</A>
+  <DD><A href="#note49-08">Note 49-08: (MB) MB_EndToIdle 関数に関する不具合修正</A>
+  <DD><A href="#note49-09">Note 49-09: (MB) アイコンデータに関するドキュメント追記</A>
+  <DD><A href="#note49-10">Note 49-10: (MB) メモリファイルからの動的読み込みに関する不具合の修正</A>
+  <DD><A href="#note49-11">Note 49-11: (MB) 擬似マルチブート子機でのコールバック引数の値を修正</A>
+  <DD><A href="#note49-12">Note 49-12: (MB) 配信中のライブラリ終了に関する不具合修正</A>
+  <DD><A href="#note49-13">Note 49-13: (OS) OS_SetPeriodicVAlarm 関数の修正</A>
+  <DD><A href="#note49-14">Note 49-14: (OS) OS_SetThreadDestructor 関数のリファレンス修正</A>
+  <DD><A href="#note49-15">Note 49-15: (PM) LCD 制御関数の修正</A>
+  <DD><A href="#note49-16">Note 49-16: (PRC) 図形認識ライブラリ解説ドキュメントの更新</A>
+  <DD><A href="#note49-17">Note 49-17: (TP) 自動サンプリングで使用する V カウント割り込みの修正</A>
+  <DD><A href="#note49-18">Note 49-18: (WBT) ヘッダファイルの修正</A>
+  <DD><A href="#note49-19">Note 49-19: (WBT) 転送データ準備の遅延で生じる無限ループ不具合の修正</A>
+  <DD><A href="#note49-20">Note 49-20: (WFS) WFS 子機の終了処理に関する注意事項の追記</A>
+  <DD><A href="#note49-21">Note 49-21: (WFS) WFS_ExecuteRomServerThread 関数のメモリリーク修正</A>
+  <DD><A href="#note49-22">Note 49-22: (WFS) カードアクセス中のブロック転送処理に関する不具合修正</A>
+  <DD><A href="#note49-23">Note 49-23: (WM) MP 通信中のパラメータ変更に関する不具合修正</A>
+  <DD><A href="#note49-24">Note 49-24: (WM) V ブランク同期での V カウントの変動幅の調整</A>
+  <DD><A href="#note49-25">Note 49-25: (WM) ball サンプルデモの廃止</A>
+  <DD><A href="#note49-26">Note 49-26: (WM) サンプルデモの修正</A>
+  <DD><A href="#note49-27">Note 49-27: (WM) 接続直後の子機への Sequential 通信の不具合</A>
+  <DD><A href="#note49-28">Note 49-28: (その他) ヘッダファイル依存関係の不具合修正</A>
+  <DD><A href="#KnownIssues_4_02_pr">SDK 4.2 PRでの既知の問題点</A>
+</DL>
+
+
+<HR>
+<H2 style="line-height: 0"><A name="sdk_4_02" id="sdk_4_02">■ NITRO-SDK Version 4.2 正式版</A></H2>
+<DIV style="text-align: right">
+<P style="line-height: 0">(2007/12/10)</P>
+</DIV>
+
+<HR>
+<H3><A name="note51-01" id="note51-01">Note 51-01: (WBT) WBT_CancelCurrentCommand 関数の不具合修正</A></H3>
+<P>複数の相手に発行したコマンドが完了しないうちに WBT_CancelCurrentCommand 関数を呼び出すと、キャンセルされた相手から次に発行されるコマンドがいつまでも完了しなくなるという不具合があり、この問題を修正しました。
+</P>
+
+<HR>
+<H3><A name="KnownIssues_4_02" id="KnownIssues_4_02">SDK 4.2 正式版 での既知の問題点</A></H3>
+<P><UL>
+<LI>MATH_FFTReal 関数に不具合があり、正しい結果が得られません。<BR>
+修正されるまでの間は、MATH_FFT 関数の入力の虚数部に 0 を入れることで代用してください。</UL></P>
+
+<HR>
+<H2 style="line-height: 0"><A name="sdk_4_02_rc" id="sdk_4_02_rc">■ NITRO-SDK Version 4.2 RC</A></H2>
+<DIV style="text-align: right">
+<P style="line-height: 0">(2007/11/28)</P>
+</DIV>
+
+<HR>
+<H3><A name="note50-01" id="note50-01">Note 50-01: (MI) LZ77 圧縮の拡張フォーマットを追加</A></H3>
+<P>LZ77 圧縮の拡張フォーマットを追加しました。<BR>
+ntrcomp.exe で -lex オプションを使用して圧縮する、もしくは MI_CompressLZEx 関数、MI_CompressLZExFast 関数を使用することで LZ77 拡張圧縮が利用可能です。<BR>
+<BR>
+展開に関しては、これまでの LZ77 用の展開関数を使用して展開してください。<BR>
+<BR>
+旧来の LZ77 圧縮と比較してより高い圧縮率が期待できますが、圧縮速度のワーストケースを比較すると、旧来版の LZ77 圧縮よりも数倍の時間を費やすことがあります。<BR>
+<BR>
+展開速度は拡張版、旧来版ともに同等です。
+</P>
+
+<HR>
+<H3><A name="note50-02" id="note50-02">Note 50-02: (GX) GX_SetVCount 関数の修正</A></H3>
+<P><a href="changelog-nitro.html#note46-08">Note 46-08</a> の変更で加えた制限が不十分であったため修正し、制限を強化しました。<BR>
+また、それの変更に伴って関数リファレンスも修正しました。
+</P>
+
+<HR>
+<H3><A name="note50-03" id="note50-03">Note 50-03: (MATH) fft-2 サンプルデモの変更と修正</A></H3>
+<P>math/fft-2 サンプルデモの画面表示とフーリエ変換の処理内容に問題がありましたので修正しました。<BR>
+また、マイク入力のバーによるスペクトル表示の仕様を変更し、新規に、音階ごとに分けて表示するモードを追加しました。
+</P>
+
+<HR>
+<H3><A name="note50-04" id="note50-04">Note 50-04: (MI) ハフマン圧縮の不具合修正</A></H3>
+<P>ntrcomp ツール及び、MI_CompressHuffman 関数でのハフマン圧縮に不具合が見つかり、8bit の符号が 17bit 以上に符号化された場合に誤った圧縮結果となることがありました。<BR>
+この不具合を修正しました。
+</P>
+
+<HR>
+<H3><A name="note50-05" id="note50-05">Note 50-05: (OS) Vカウントアラームの不具合修正</A></H3>
+<P>周期的な Vカウントアラームを複数利用中にデバッガで中断と再開を繰り返すと、一部の Vカウントアラームが発生しなくなるという不具合がありましたので、これを修正しました。<BR>
+タッチパネルの自動サンプリングでは、この機能を使用していましたので同様に問題が修正されています。
+</P>
+
+<HR>
+<H3><A name="note50-06" id="note50-06">Note 50-06: (PM) PM_GoSleepMode 関数前後のチック値不整合の修正</A></H3>
+<P>PM_GoSleepMode 関数が 7.5 フレーム以上タイマー割込みを禁止しているために、スリープをする前後で OS_GetTick 関数で取得できるチック値に不整合が起こる場合がありましたが、これを修正しました。
+</P>
+
+<HR>
+<H3><A name="note50-07" id="note50-07">Note 50-07: (PRC) サンプルデモ用ツール pdic2c.pl の修正</A></H3>
+<P>サンプルデモ用ツールの pdic2c.pl に、入力データの各行にコメントが付いていないと正常に処理しないという不具合がありましたので、これを修正しました。
+</P>
+
+<HR>
+<H3><A name="note50-08" id="note50-08">Note 50-08: (TOOL) ntrcomp.exe での LZ77 圧縮に指定できるパラメータを廃止</A></H3>
+<P>ntrcomp ツールでは、LZ77 圧縮の際に文字列一致検索の開始オフセット値をオプションとして指定することができましたが、NitroSDK3.0 以降ではこのパラメータが使用されない状態となっていました。<BR>
+既にこのパラメータは不要となっていましたので、ドキュメントやヘルプから削除し正式に廃止しました。
+</P>
+
+<HR>
+<H3><A name="note50-09" id="note50-09">Note 50-09: (TOOL) ntrcomp.exe でのテキスト出力時にエンディアン指定を追加</A></H3>
+<P>ntrcomp ツールには、C言語の配列定義のテキストとして結果を出力する為の -t[width] オプションが存在しましたが、width に2又は4を指定した場合にはリトルエンディアン形式でデータが出力されていました。<BR>
+ビッグエンディアンでテキストデータを出力する為のオプションとして、-T[width] オプションを追加しました。
+</P>
+
+<HR>
+<H3><A name="note50-10" id="note50-10">Note 50-10: (TOOL) ntrcomp.exe でのデータサイズアライメントに8,16,32を追加</A></H3>
+<P>ntrcomp ツールでは -A4 オプションを付けることで圧縮後のデータサイズを 4Byte の倍数にアラインする機能がありましたが、-A8, -A16, -A32 を指定する事でアライメント指定に 8Byte, 16Byte, 32Byte を指定できるように変更しました。
+</P>
+
+<HR>
+<H3><A name="note50-11" id="note50-11">Note 50-11: (TOOL) ntrcomp.exe に解凍オプションを追加</A></H3>
+<P>ntrcomp.exe を用いて圧縮されたデータを PC 上で解凍する為に、ntrcomp のオプションとして -x オプションを追加しました。
+</P>
+
+<HR>
+<H3><A name="note50-12" id="note50-12">Note 50-12: (WBT) 複数子機へのブロック転送に関する不具合修正</A></H3>
+<P>同一の ID に対するブロック転送要求が複数の子機から同時に発生した場合、通信タイミングによっては一部の子機だけが正常な完了応答をいつまでも受け取れないことがあるという不具合があり、この問題を修正しました。
+</P>
+
+<HR>
+<H3><A name="note50-13" id="note50-13">Note 50-13: (WM) WM_SetMPDataToPort* 関数の送信サイズ制限の変更</A></H3>
+<P>これまでは、現在の自分の最大送信容量より大きなサイズのデータを WM_SetMPDataToPort* 関数で送信しようとすると WM_ERRCODE_INVALID_PARAM のエラーが返っていましたが、この制限を廃止しました。<BR>
+ただし、送信容量より大きなサイズのデータをセットしてしまうと送信キューを占有し続けますので注意が必要です。
+</P>
+
+<HR>
+<H3><A name="note50-14" id="note50-14">Note 50-14: (WM) dataSharing-model サンプルデモの修正</A></H3>
+<P>WM のサンプルデモについて以下の修正を行いました。
+<UL>
+<LI>$NitroSDK/build/demos/wm/dataSharing-model サンプルデモについてデータシェアリングが正確に行われていることをより良く確認できるよう、<a href="changelog4.2branch.html#note49-25">Note 49-25</a> で追加した表示処理を若干改善しました。
+</UL>
+</P>
+
+<HR>
+<H3><A name="note50-15" id="note50-15">Note 50-15: (WM) wmPadRead-child サンプルデモの変更と修正</A></H3>
+<P>Wii 側の対応する mpdlntr2rvl サンプルデモが DataSharing を使用するように変更になったことに伴い、wmPadRead-child サンプルデモの仕様を変更しました。<BR>
+また、これまでマルチブートされる子機プログラムとして適切な動作をしていませんでしたので、これを修正しました。<BR>
+その際に、使用する子機側のデモ用ライブラリを WC から WH に変更しました。
+</P>
+
+<HR>
+<H3><A name="note50-16" id="note50-16">Note 50-16: (WM) 子機送信容量の制限の緩和</A></H3>
+<P>これまでは、親機が WMParentParam.childMaxSize で指定した子機送信容量より大きな値をあとから子機送信容量として指定できませんでしたが、この制限を廃止しました。<BR>
+ただし、親機の受信バッファに収まらない値を設定すると、送受信が停止しますので注意が必要です。
+</P>
+
+<HR>
+<H3><A name="note50-17" id="note50-17">Note 50-17: (WM) 受信専用モードの初期化関数の追加</A></H3>
+<P>無線を受信専用モードで初期化する WM_EnableForListening 関数と WM_InitializeForListening 関数を追加しました。<BR>
+これらの関数を使用すると、電波を出すようなオペレーションが禁止される代わりに、電源 LED を変速点滅させずに周りのビーコンのパッシブスキャンを行うことが可能となります。
+</P>
+
+<HR>
+<H3><A name="KnownIssues_4_02_rc" id="KnownIssues_4_02_rc">SDK 4.2 RC での既知の問題点</A></H3>
+<P><UL>
+<LI>MATH_FFTReal 関数に不具合があり、正しい結果が得られません。<BR>
+修正されるまでの間は、MATH_FFT 関数の入力の虚数部に 0 を入れることで代用してください。</UL></P>
+
+<HR>
+<H2 style="line-height: 0"><A name="sdk_4_02_pr" id="sdk_4_02_pr">■ NITRO-SDK Version 4.2 PR</A></H2>
+<DIV style="text-align: right">
+<P style="line-height: 0">(2007/10/22)</P>
+</DIV>
+
+<HR>
+<H3><A name="note49-01" id="note49-01">Note 49-01: (CARD) FLASH デバイス用書き込み関数の追加</A></H3>
+<P>以下の FLASH デバイス用書き込み関数を追加しました。<BR>
+CARD_WriteFlash 関数を使用できない大容量 FLASH デバイスは、かわりにこれらの関数を使用する必要があります。
+<ul>
+<li>CARD_EraseFlashSector 
+<li>CARD_EraseFlashSectorAsync 
+<li>CARD_ProgramFlash 
+<li>CARD_ProgramFlashAsync 
+<li>CARD_ProgramAndVerifyFlash 
+<li>CARD_ProgramAndVerifyFlashAsync 
+<li>CARD_WriteFlashSector 
+<li>CARD_WriteFlashSectorAsync 
+<li>CARD_WriteAndVerifyFlashSector 
+<li>CARD_WriteAndVerifyFlashSectorAsync 
+</ul>
+</P>
+
+<HR>
+<H3><A name="note49-02" id="note49-02">Note 49-02: (CARD) 新規バックアップデバイスへの対応</A></H3>
+<P>CARD ライブラリが 64Mb-FLASH バックアップデバイスに対応し、CARD_BACKUP_TYPE_FLASH_64MBITS を CARDBackupType 列挙型に追加しました。<BR>
+関連して、リファレンスとサンプルデモも更新しました。
+</P>
+
+<HR>
+<H3><A name="note49-03" id="note49-03">Note 49-03: (CARD) 非同期バックアップ関数の不具合修正</A></H3>
+<P>CARD ライブラリ内部のスレッドより優先度の高いスレッドで非同期バックアップ関数の完了待ちを行いつつ、その後に同期バックアップ関数を続けて呼び出した場合、CARDライブラリ内部の状態管理が異常になることがあり、この問題を修正しました。
+</P>
+
+<HR>
+<H3><A name="note49-04" id="note49-04">Note 49-04: (DevEnv) make によるビルドにおけるファイル名の統合</A></H3>
+<P>make によるビルドにおいて TARGET_BIN で指定されるファイルと lsf ファイルの Static セクションの名称が一致していない場合にもエラーにならないように修正しました。<BR>
+これにより生成されるファイルの名称として、Static セクションの名称よりも makelcf のコマンドラインオプションで指定した TARGET_BIN から生成した名称が優先して使用されます。<BR>
+<BR>
+この機能はデフォルトでは現在は動作確認のため無効になっています。<BR>
+これを有効にするためには変数 NITRO_TRGNAME に何かの値が設定する必要があります。<BR>
+<BR>
+例 : <BR>
+   % make TARGET_BIN=myapp.srl clean<BR>
+   % make TARGET_BIN=myapp.srl NITRO_TRGNAME=TRUE
+</P>
+
+<HR>
+<H3><A name="note49-05" id="note49-05">Note 49-05: (GX) GX_SetVCount 関数の修正</A></H3>
+<P>実行時の制約チェックに漏れがありましたので、より適切に確認を行うよう修正しました。
+</P>
+
+<HR>
+<H3><A name="note49-06" id="note49-06">Note 49-06: (MATH) thumb ライブラリにおける MATH_CountLeadingZeros 関数の実装の変更</A></H3>
+<P>MATH_CountLeadingZeros 関数は、thumb コード用ライブラリではこれまで thumb コードで実装された関数を呼び出していましたが、ARM コードに動作を切り替えて CLZ 命令を呼び出すように変更しました。<BR>
+これにより、コードサイズも実行速度も改善しました。
+</P>
+
+<HR>
+<H3><A name="note49-07" id="note49-07">Note 49-07: (MATH) サンプルデモの修正</A></H3>
+<P>$NitroSDK/build/demos/math/qsort サンプルデモで、ソート用の比較関数が比較値を s32 で扱っていたため比較結果がオーバーフローする場合がありました。<BR>
+これを s64 で演算するよう修正しました。
+</P>
+
+<HR>
+<H3><A name="note49-08" id="note49-08">Note 49-08: (MB) MB_EndToIdle 関数に関する不具合修正</A></H3>
+<P>MB_EndToIdle 関数を呼び出して IDLE ステートのまま終了させた場合、ライブラリ内部で呼び出された WM_SetBeaconIndication 関数の設定が有効のまま残されてしまうという不具合があり、この問題を修正しました。
+</P>
+
+<HR>
+<H3><A name="note49-09" id="note49-09">Note 49-09: (MB) アイコンデータに関するドキュメント追記</A></H3>
+<P>DS ダウンロードプレイで使用するアイコンデータの画像フォーマットとその作成方法について、関連ドキュメントに追記しました。
+</P>
+
+<HR>
+<H3><A name="note49-10" id="note49-10">Note 49-10: (MB) メモリファイルからの動的読み込みに関する不具合の修正</A></H3>
+<P>FS_CreateFileFromMemory 関数で生成したメモリファイルを MB_ReadSegment 関数の引数として指定した場合に、プログラム配信処理が実行されないという不具合があり、この問題を修正しました。
+</P>
+
+<HR>
+<H3><A name="note49-11" id="note49-11">Note 49-11: (MB) 擬似マルチブート子機でのコールバック引数の値を修正</A></H3>
+<P>擬似マルチブート子機で親機をスキャンする際にコールバック引数から親機の情報が取得できますが、これまではコールバック種別が MB_FAKESCAN_PARENT_LOST の場合には MBFakeScanCallback 構造体の gameInfo と bssDesc に NULL が設定されていました。<BR>
+<BR>
+MB_FAKESCAN_PARENT_LOST の場合にも、最後に取得した親機情報を gameInfo, bssDesc に設定して返すように修正しました。
+</P>
+
+<HR>
+<H3><A name="note49-12" id="note49-12">Note 49-12: (MB) 配信中のライブラリ終了に関する不具合修正</A></H3>
+<P>MB_ReadSegment 関数で遅延ロードを指定したプログラムが実際に配信されている最中に MB_End 関数を呼び出した場合にライブラリ内部で条件判定に失敗して強制停止することがあり、この問題を修正しました。
+</P>
+
+<HR>
+<H3><A name="note49-13" id="note49-13">Note 49-13: (OS) OS_SetPeriodicVAlarm 関数の修正</A></H3>
+<P>OS_SetPeriodicVAlarm 関数の引数 delay に入れた値が正しい範囲であるかチェックする閾値が誤っていましたので、これを修正しました。
+</P>
+
+<HR>
+<H3><A name="note49-14" id="note49-14">Note 49-14: (OS) OS_SetThreadDestructor 関数のリファレンス修正</A></H3>
+<P>OS_SetThreadDestructor 関数のリファレンスにデストラクタ関数内での注意事項を追記しました。 
+</P>
+
+<HR>
+<H3><A name="note49-15" id="note49-15">Note 49-15: (PM) LCD 制御関数の修正</A></H3>
+<P>LCD OFF 時にはマイクの電源を OFF にし、LCD ON 時にはマイクの電源を元の状態に復帰させるように LCD 制御関数を修正しました。
+</P>
+
+<HR>
+<H3><A name="note49-16" id="note49-16">Note 49-16: (PRC) 図形認識ライブラリ解説ドキュメントの更新</A></H3>
+<P>手書き文字認識のみが必要な場合は「Decuma 手書き文字認識ライブラリ」が利用可能であることを追記しました。
+</P>
+
+<HR>
+<H3><A name="note49-17" id="note49-17">Note 49-17: (TP) 自動サンプリングで使用する V カウント割り込みの修正</A></H3>
+<P>タッチパネルの自動サンプリングでは V カウント割り込みを使用していますが、アプリケーションが GX_SetVCount 関数を呼んだ場合、不適切な動作を行う可能性がありました。<BR>
+そこで、200 ラインから 214 ラインまでの V カウント割り込みを使用しないように修正しました。<BR>
+200 ラインから 214 ラインの間で自動サンプリングが発生するような設定を行った場合、215 ラインでサンプリングを行います。
+</P>
+
+<HR>
+<H3><A name="note49-18" id="note49-18">Note 49-18: (WBT) ヘッダファイルの修正</A></H3>
+<P>$NitroSDK/include/nitro/wbt/context.h にて extern "C" の指定範囲を若干修正しました。<BR>
+実際のプログラムの挙動に変更はありません。
+</P>
+
+<HR>
+<H3><A name="note49-19" id="note49-19">Note 49-19: (WBT) 転送データ準備の遅延で生じる無限ループ不具合の修正</A></H3>
+<P>WBT ライブラリの WBT_CMD_PREPARE_SEND_DATA コールバックでアプリケーションが転送用データを準備せず遅延させた場合、その後の親機からの応答処理がライブラリ内部で無限ループして親機プログラムがフリーズしてしまうという不具合があり、この問題を修正しました。<BR>
+<BR>
+この不具合は、NITRO-SDK 4.1 PR 以降でのみ発生します。
+</P>
+
+<HR>
+<H3><A name="note49-20" id="note49-20">Note 49-20: (WFS) WFS 子機の終了処理に関する注意事項の追記</A></H3>
+<P>子機が WFS ライブラリを使用してファイルアクセスしている時にワイヤレス通信が終了した場合、WFS_EndClient 関数を呼び出してライブラリへ通信終了を通知しない限り処理がブロッキングし続けるという点について、注意事項として関数リファレンスへ追記しました。
+</P>
+
+<HR>
+<H3><A name="note49-21" id="note49-21">Note 49-21: (WFS) WFS_ExecuteRomServerThread 関数のメモリリーク修正</A></H3>
+<P>WFS_ExecuteRomServerThread 関数を呼び出して内部的に生成したスレッドのためのメモリが WFS_EndServer 関数を呼び出しても解放されないという不具合があり、この問題を修正しました。
+</P>
+
+<HR>
+<H3><A name="note49-22" id="note49-22">Note 49-22: (WFS) カードアクセス中のブロック転送処理に関する不具合修正</A></H3>
+<P>WFS 子機からのファイルアクセス要求中に親機のカードアクセスが待たされると、親機が呼び出す WFS_CallServerPacketSendHook 関数の内部で処理が無限ループしてしまう場合があり、この問題を修正しました。
+</P>
+
+<HR>
+<H3><A name="note49-23" id="note49-23">Note 49-23: (WM) MP 通信中のパラメータ変更に関する不具合修正</A></H3>
+<P>NITRO-SDK 4.1 PR における <a href="changelog-nitro.html#note46-23">Note 46-23</a> の変更の影響で、以下の2つの問題が発生していましたので、修正しました。
+<UL>
+<LI>WM_SetMPParameter 関数、及び WM_SetMPFrequency 関数で MP 通信中に MP 頻度が変更できなくなっていました。
+<LI>WM_SetMPParameter 関数で設定した WMMPParam.minFrequency, WMMPParam.maxFrequency, WMMPParam.defaultRetryCount の値が、次に WM_StartMP 関数を呼び出すまで反映されなくなっていました。
+</UL>
+</P>
+
+<HR>
+<H3><A name="note49-24" id="note49-24">Note 49-24: (WM) V ブランク同期での V カウントの変動幅の調整</A></H3>
+<P>MP 通信中はVブランク同期のために、Vカウント値が最大で 212 ラインから 202 ラインまで巻き戻る可能性がありましたが、この最大値を 210 ラインに調整しました。
+</P>
+
+<HR>
+<H3><A name="note49-25" id="note49-25">Note 49-25: (WM) ball サンプルデモの廃止</A></H3>
+<P>NITRO-SDK 初期のワイヤレス通信仕様に基づいて設計されたため現在ではサンプルデモとして適切でない内容となっていた $NitroSDK/build/demos/wm/ball サンプルデモを廃止しました。<BR>
+<BR>
+データシェアリングによるゲーム情報の共有を示す処理は $NitroSDK/build/demos/wm/dataSharing-model サンプルデモに同様の内容が追加されましたので今後はこちらをご参考ください。
+</P>
+
+<HR>
+<H3><A name="note49-26" id="note49-26">Note 49-26: (WM) サンプルデモの修正</A></H3>
+<P>WM のサンプルデモについて以下の修正を行いました。
+<ul>
+<li>$NitroSDK/build/demos/wireless_shared/wh/default/wh_config.h で WH_PARENT_MAX_SIZE マクロ内で説明なく使用していた定数 4 を WM_SIZE_DS_PARENT_HEADER に置き換えました。
+<li>$NitroSDK/build/demos/wireless_shared/wh のサンプルで用意されている void* ポインタを引数に取る関数のうち、実際にはポインタの内容を変更しないものは const void* へ変更しました。
+<li>$NitroSDK/build/demos/wireless_shared/ 以下に存在するワイヤレス制御サンプルを統合しました。<BR>
+WC サンプルは内部で WH サンプルを使用するようになりましたが、従来の機能はそのまま利用可能です。<BR>
+今後はワイヤレス制御サンプルが WH に一本化され、WC は段階的に廃止される予定です。
+<li>WH サンプルで親機のスキャンを行う際に使用する関数を、WM_StartScan 関数からWM_StartScanEx 関数に変更しました。<BR>
+AP が複数台立っているような無線環境下において、WM_StartScan 関数では親機を見つけるのに数十秒といった長い時間を要することがあります。<BR>
+特に Wii と接続する場合には WM_StartScanEx 関数の使用を推奨します。<BR>
+また、ワイヤレス通信ライブラリ解説にも追記しました。
+<li>$NitroSDK/bbuild/demos/wm/dataShare-model サンプルデモで、キー入力情報を取得してデータシェアリングで送信するまでがほぼ 1 フレーム分も空いており、本来は 2 フレームかかる遅延が実際には 3 フレームとなってしまうという不備があり、この問題を修正しました。
+</ul>
+</P>
+
+<HR>
+<H3><A name="note49-27" id="note49-27">Note 49-27: (WM) 接続直後の子機への Sequential 通信の不具合</A></H3>
+<P>接続直後の子機に Sequential 通信を行った場合、親機からは送信には成功したように見えるのに、子機にはデータが届いていないことがある、という不具合がありましたので、これを修正しました。
+</P>
+
+<HR>
+<H3><A name="note49-28" id="note49-28">Note 49-28: (その他) ヘッダファイル依存関係の不具合修正</A></H3>
+<P>プリコンパイルヘッダ機能を無効にした状態において nitro.h ではなく fx.h や gx.h などを直接インクルードした場合、いくつかの定数や関数が未定義エラーとなってしまう不具合があり、この問題を修正しました。
+</P>
+
+<HR>
+<H3><A name="KnownIssues_4_02_pr" id="KnownIssues_4_02_pr">SDK 4.2 PR での既知の問題点</A></H3>
+<P>　ありません。</P>
+
+<HR>
+<P style="text-align: right">NINTENDO Technical Support Center</P>
+<table border="0" height="100%"><tr><td style="background-color : white;"></td></tr></table>
+</BODY>
+</HTML>

@@ -1,0 +1,58 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCL_CreateTable</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCL_CreateTable <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+TCLResult TCL_CreateTable( TCLAccessor* pAccessor ,
+                           void* tableBuffer ,
+                           u32 tableBufferSize ,
+                           void* workBuffer ,
+                           u32 workBufferSize ,
+                           FSResult* pFSResult );
+	</code></pre>
+</dl>
+
+<h2>引数</h2>
+<p>
+<table>
+<tr><td>pAccessor<td><a href="TCLAccessor.html">アクセサ</a>
+<tr><td>tableBuffer<td>管理ファイル読み込みバッファ
+<tr><td>tableBufferSize<td>管理ファイル読み込みバッファサイズ
+<tr><td>workBuffer<td>ワークバッファ
+<tr><td>workBufferSize<td>ワークバッファサイズ
+<tr><td>pFSResult<td>関数内部で各種FS関数にエラーが発生した場合の処理結果
+</table>
+</p>
+
+<h2>返り値</h2>
+<p><a href="TCLResult.html">処理結果</a></p>
+
+<h2>説明</h2>
+<p><a href="TCL_LoadTable.html"><code>TCL_LoadTable</code></a> の返り値が <code>TCL_RESULT_ERROR_EXIST_OTHER_FILE</code> もしくは <code>TCL_RESULT_ERROR_ALREADY_MANAGED</code> 以外の場合、つまり、何らかのエラーが発生して全ての処理が行えない場合に、(既に管理ファイルが存在する場合は一旦削除してから)管理ファイルを生成します。</p>
+<p><code>tableBuffer</code> と <code>tableBufferSize</code> にはそれぞれ、<a href="TCL_GetTableBufferSize.html"><code>TCL_GetTableBufferSize</code></a> で表されるサイズのバッファとバッファサイズを指定して下さい。</p>
+<p><code>workBuffer</code> と <code>workBufferSize</code> にはそれぞれ、<a href="TCL_GetWorkBufferSize.html"><code>TCL_GetWorkBufferSize</code></a> で表されるサイズのバッファとバッファサイズを指定して下さい。</p>
+<p>管理ファイルを生成しなおすので、今まであったお気に入り情報などは全て消去されてしまいます。注意して呼び出して下さい。</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="TCL_LoadTable.html">TCL_LoadTable</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/10/07 初版<br/>
+</p>
+
+</body>
+</html>

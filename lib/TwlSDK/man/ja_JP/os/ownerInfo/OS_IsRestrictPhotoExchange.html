@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>OS_GetRegion</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">OS_IsRestrictPhotoExchange <IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;twl/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>BOOL OS_IsRestrictPhotoExchange(void);</CODE></dd>
+</dl>
+<h2>引数</h2>
+<P>なし。</P>
+<h2>返り値</h2>
+<P>本体設定のペアレンタルコントロール で設定した情報を参照し、写真データの交換に関する制限がかけられている場合は TRUE を返します。<BR>
+ペアレンタルコントロールの設定をしていない、もしくは写真データの交換に関する制限がかけられていない場合は FALSE を返します。</P>
+<H2>説明</H2>
+<P>本体設定のペアレンタルコントロール で設定した情報を参照し、システムメニューやニンテンドー DSi カメラ で撮影した写真データの交換に関する制限がかけられているかどうかの判定をします。<BR>
+ゲーム内で写真データの交換を行う場合には、事前にこの関数でチェックし、制限がかけられている場合にはパスワードの入力無しにデータの交換が行われないようにしてください。</P>
+<h2>参照</h2>
+<p><CODE>
+<a href="OS_IsRestrictPictoChatBoot.html">OS_IsRestrictPictoChatBoot</a></CODE>
+<a href="OS_IsRestrictDSDownloadBoot.html">OS_IsRestrictDSDownloadBoot</a></CODE>
+<a href="OS_IsRestrictBrowserBoot.html">OS_IsRestrictBrowserBoot</a></CODE>
+<a href="OS_IsRestrictPrepaidPoint.html">OS_IsRestrictPrepaidPoint</a></CODE>
+<a href="OS_IsRestrictUGC.html">OS_IsRestrictUGC</a></CODE>
+</p>
+
+<H2>履歴</H2>
+<P>2008/10/07 初版</P>
+</body>
+</html>

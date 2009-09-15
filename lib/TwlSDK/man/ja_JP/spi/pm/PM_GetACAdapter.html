@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>PM_GetACAdapter</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">PM_GetACAdapter <IMG src="../../image/TWL.gif" width="24" height="12" border="0" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;twl/spi.h&gt;</CODE></PRE>
+  <PRE><CODE>u32 PM_GetACAdapter( BOOL *isConnectedBuf );
+</CODE></PRE>
+</DL>
+<H2>引数</H2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>isConnectedBuf</STRONG></EM></TD>
+      <TD width="87%">ACアダプタで電源が供給されているかどうかを格納する領域</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>返り値</H2>
+<P>PM_RESULT_SUCCESS ならば、コマンドの実行が成功したことを表します。</P>
+<P>PM_RESULT_BUSY ならば、SPI が他の処理に占有されており処理できなかったことを示します。</P>
+<P>PM_RESULT_ERROR ならば、この関数が使用できないことを示します。これは、NITRO モードで動作中に呼ばれたことを示します。それ以外で返ることはありません。</P>
+<P>成功した場合、<B><I>isConnectedBuf</I></B> で示されるアドレスに、ACアダプタがDCコネクタに接続されていて通電状態かどうかを格納します。この値は
+BOOL 値で、TRUE ならば接続されていることを表し、FALSE ならば接続されていないことを表します。</P>
+<H2>説明</H2>
+<P>ACアダプタがDCコネクタに接続されて通電状態かどうかを調べます。</P>
+<P><B><I>isConnectedBuf</I></B> は <CODE>BOOL</CODE> 型へのポインタで、ここに結果が格納されます。この値が TRUE ならばACアダプタが接続されて通電されている状態であることを表しますが、<FONT color="#ff0000">接続されて通電されていることを知ることが出来るだけで現在充電しているかどうかを知ることは出来ません。</FONT>接続されていてもすでに満充電で充電されていない場合も TRUE となります。また、本体にACアダプタが接続されているが、それが通電状態でない(コンセントに差し込まれていない)
+場合は FALSE となります。</P>
+<P>この関数はARM7に該当動作を行うコマンドをPXIで送り、それを受け取ったARM7側がPMICを操作することで実行されます。</P>
+<P><FONT color="#ff0000">この関数は TWL のハードウェア上でTWLモードで動作しているときのみ動作します。</FONT>TWL ハードウェア上でNITROモードで動作している場合や、NITRO ハードウェア上で動作している場合は使用することが出来ません。この場合、PM_RESULT_ERROR
+を返します。</P>
+<P><B><BR>
+<BR>
+PM_RESULT_BUSY について</B></P>
+<P>SPI はPM以外にも様々な処理で使用されています。そのようなときに本関数を呼び出すと、ARM7
+までコマンドを送り、そこで BUSY という判定が行われ、処理は行われずに ARM9
+へ <CODE>PM_RESULT_BUSY</CODE> が通知されます。また他の PM 処理を行っている最中に本関数を呼び出すと、ARM9 側でそれを判断し <CODE>PM_RESULT_BUSY</CODE> を返します。(この場合は ARM7 への通知を行う前に判断します。)</P>
+<P>従って、確実に本関数を成功させようとすれば、次のように成功するまでループするようにしてください。(引数が間違っているというようなミスは考慮していません。)</P>
+<BLOCKQUOTE style="background-color:#ffffcc"><B>(例)</B><BR>
+<CODE>while( PM_GetACAdapter( ... ) != PM_RESULT_SUCCESS )<BR>
+{<BR>
+}</CODE></BLOCKQUOTE>
+<H2>参照</H2>
+<P><CODE><A href="PM_Init.html">PM_Init</A>, <A href="PM_GetBattery.html">PM_GetBattery</A>, <A href="PM_GetBatteryLevel.html">PM_GetBatteryLevel</A></CODE></P>
+<H2>履歴</H2>
+<P>2009/06/03 <CODE>PM_Init()</CODE> についての記述を削除 (<CODE>OS_Init()</CODE> が必須となったため)<BR>
+2008/08/23 PM_RESULT_BUSY について追記<BR>
+2008/01/24 初版</P>
+</BODY>
+</HTML>

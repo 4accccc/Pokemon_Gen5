@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>OS_SetUserExceptionHandler</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">OS_SetUserExceptionHandler <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;nitro/os.h&gt;</CODE></PRE>
+  <PRE><CODE>void OS_SetUserExceptionHandler(
+　　　　　　　     OSExceptionHandler  handler
+    　　　　　　　 void*               arg );
+  </CODE></PRE>
+</DL>
+<H2>引数</H2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>handler</STRONG></EM></TD>
+      <TD width="87%">例外発生時に呼ばれるユーザ関数</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>arg</STRONG></EM></TD>
+      <TD width="87%">ユーザ関数を呼び出すときの引数</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>返り値</H2>
+<P>なし。</P>
+<H2>説明</H2>
+<P>例外発生時に呼ばれるユーザ関数を設定します。</P>
+<P>ユーザ関数 <B><I>handler</I></B> は、</P>
+<BLOCKQUOTE><CODE>　typedef void (*OSExceptionHandler)( u32, void* );</CODE></BLOCKQUOTE>
+<P>で定義される、<CODE>OSExceptionHandler</CODE> 型の関数です。この関数は割り込み禁止状態で呼び出されます。</P>
+<P>ユーザ関数を呼び出すときの、第一引数は例外発生時のコンテキストを格納した構造体へのポインタアドレス となっています。第二引数は<CODE><A href="OS_SetUserExceptionHandler.html">OS_SetUserExceptionHandler()</A></CODE> の第二引数で指定した<B><I>arg</I></B> がそのまま渡されます。</P>
+<P><BR>
+<BR>
+<B>例外発生時のコンテキストについて</B></P>
+<P>第一引数で指定された先のコンテキストは OSExcpContext 型の構造体へのポインタとなっています。</P>
+<BLOCKQUOTE style="background-color:#ffffc0;">
+<CODE><BR>
+　typedef struct<BR>
+　{<BR>
+　　OSContext context;<BR>
+　　u32 cp15;<BR>
+　　u32 spsr;<BR>
+　　u32 exinfo;<BR>
+　} OSExcpContext;</CODE><BR>
+<BR>
+</BLOCKQUOTE>
+<P>
+・ <CODE>context</CODE> は OSContext 型構造体の値です<BR>
+・ <CODE>cp15</CODE> はコプロセッサの状態です。<BR>
+・ <CODE>spsr</CODE> は、SPSR です。SPSR のないモードについては不定となります。<BR>
+・ <CODE>exinfo</CODE> はリセットか例外かを表します。例外の場合は０で、リセットの場合は非０が格納されます。</P>
+<P><BR>
+<BR>
+<B>IS-TWL-DEBUGGER での例外について</B></P>
+<P><A href="about_exception.html">概要(例外)</A> にも記述してあるように、<FONT color="#ff0000"><B>IS-TWL-DEBUGGER では例外時のコンテキスト表示を行ったり、ユーザの例外ハンドラの呼び出しを行ったりすることが出来ません。IS-TWL-DEBUGGER
+上で TWL モードで動作しているときも、NITRO モードで動作しているときも同様に出来ません。</B></FONT>例外が発生したときはデバッガがそこでCPUを停止しますので、デバッガのレジスタウィンドウやコールスタックウィンドウなどの情報を元に調べるようにしてください。</P>
+<H2>参照</H2>
+<P><A href="about_exception.html">概要(例外)</A><BR>
+<CODE><A href="OS_InitException.html">OS_InitException</A>, <A href="../context/OS_InitContext.html">OS_InitContext</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2008/04/18 例外時のコンテキストについての説明を追加<BR>
+2005/03/08 用語統一 [割込み] → [割り込み]<br>
+2004/02/19 初版</P>
+</BODY>
+</HTML>

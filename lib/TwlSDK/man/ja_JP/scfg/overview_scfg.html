@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<BASE target="main">
+<TITLE>システムコンフィグ</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1>システムコンフィグ(SCFG) 概要 <IMG src="../image/TWL.gif" width="24" height="12" border="0" align="middle"></H1>
+<P>TWLでは、本体ハードウェアをブロックごとに設定する機能があります。クロックの供給の有無や旧DSとの互換動作設定などを制御することが出来ます。</P>
+<P>システムコンフィグ(SCFG) ブロックは NITRO ハードウェアには存在しませんので、基本的にこれらの関数は<FONT color="#ff0000"> TWL ハードウェア上で呼び出されることが前提となります</FONT>。但し <CODE><A href="scfg/SCFG_GetCpuSpeed.html">SCFG_GetCpuSpeed()</A></CODE> はどの環境で呼び出しても正しい値が返るように設計されています。</P>
+<H2>システムROM 設定</H2>
+
+<BLOCKQUOTE>TWLでは、ARM9用システムROMとして、TWL CPU 用の64KB ROM と、NITRO CPU 用の
+8KB ROM が用意されています。この切り替えはARM7で行います。ARM9 からはどちらに設定されているかを取得することが可能です。</BLOCKQUOTE>
+<BLOCKQUOTE>取得関数は <CODE><A href="scfg/SCFG_GetSystemRomType.html" target="_self">SCFG_GetSystemRomType()</A></CODE> です。</BLOCKQUOTE>
+<H2>セキュアROM設定</H2>
+<BLOCKQUOTE>ARM9 用セキュアROMに対し、AHBからアクセス可能かどうかを取得することが可能です。この設定は、ARM7で行います。</BLOCKQUOTE>
+<BLOCKQUOTE>取得関数は <CODE><A href="scfg/SCFG_IsSecureRomAccessible.html" target="_self">SCFG_IsSecureRomAccessible()</A></CODE> です。</BLOCKQUOTE>
+<H2>新規ブロックのクロック制御</H2>
+<P>TWL では、以下のブロックへのクロック供給を制御することが可能です。</P>
+<P>・<B>カメラ用 CAM_CKI</B> </P>
+<BLOCKQUOTE><CODE><A href="scfg/SCFG_SetCameraCKIClock.html" target="_self">SCFG_SetCameraCKIClock()</A></CODE> で設定し、 <CODE><A href="scfg/SCFG_IsCameraCKIClockEnable.html" target="_self">SCFG_IsCameraCKIClockEnable()</A></CODE> で状態取得します。</BLOCKQUOTE>
+<P>・<B>新規WRAM (WRAM-A/B/C) ブロック</B></P>
+<BLOCKQUOTE><CODE><A href="scfg/SCFG_IsClockSuppliedToWram.html" target="_self">SCFG_IsClockSuppliedToWram()</A></CODE> で状態取得します。<BR>
+設定は起動時に ARM7側から行って固定されるので変更は出来ません。</BLOCKQUOTE>
+<P>・<B>カメラI/F ブロック</B> </P>
+<BLOCKQUOTE><CODE><A href="scfg/SCFG_SupplyClockToCamera.html" target="_self">SCFG_SupplyClockToCamera()</A></CODE> で設定、<CODE><A href="scfg/SCFG_IsClockSuppliedToCamera.html" target="_self">SCFG_IsClockSuppliedToCamera()</A></CODE> で状態取得します。</BLOCKQUOTE>
+<P>・<B>DSP ブロック</B></P>
+<BLOCKQUOTE><CODE><A href="scfg/SCFG_SupplyClockToDSP.html" target="_self">SCFG_SupplyClockToDSP()</A></CODE> で設定、<CODE><A href="scfg/SCFG_IsClockSuppliedToDSP.html" target="_self">SCFG_IsClockSuppliedToDSP()</A></CODE> で状態取得します。</BLOCKQUOTE>
+<H2>ARM9動作周波数</H2>
+<BLOCKQUOTE>TWL では ARM9 プロセッサの動作周波数を以下の中から切り替えることが可能です。<BR>
+<BR>
+　　　・NITROと同じ 67.03MHz で動作させる<BR>
+　　　・倍速の 134.06MHz で動作させる<BR>
+<BR>
+<CODE><A href="scfg/SCFG_SetCpuSpeed.html" target="_self">SCFG_SetCpuSpeed()</A></CODE> で設定し、<CODE><A href="scfg/SCFG_GetCpuSpeed.html" target="_self">SCFG_GetCpuSpeed()</A></CODE> で状態を取得します。</BLOCKQUOTE>
+<BLOCKQUOTE>切り替えは ITCM上のコードで走り、かつ必要な空ループを挟んで安全に行われます。</BLOCKQUOTE>
+<BLOCKQUOTE>TWLモードの場合 <CODE>NitroMain()</CODE> に入った時点で倍速となっており、<CODE><A href="../os/init/OS_Init.html">OS_Init()</A></CODE> でもその設定は変更しません。</BLOCKQUOTE>
+<H2>アクセス設定</H2>
+<P><B>・システムコンフィグブロック</B></P>
+<BLOCKQUOTE>このSCFG ライブラリで行う、システムコンフィグブロックへのアクセスを制御することが可能です。<CODE><A href="scfg/SCFG_SetConfigBlockInaccessible.html" target="_self">SCFG_SetConfigBlockInaccessible()</A></CODE> でアクセスを不可能にします。<BR>
+<BR>
+<FONT color="#ff0000">一度不可能状態にすると、それ以降(このアクセス制御を含め)すべてのコンフィグブロックへのアクセスが出来なくなります。通常はアプリケーションから不可能状態にはしないようにしてください。</FONT>現在の状態を取得するには <CODE><A href="scfg/SCFG_IsConfigBlockAccessible.html" target="_self">SCFG_IsConfigBlockAccessible()</A></CODE> を呼んでください。</BLOCKQUOTE>
+<P><B>・新規WRAM (WRAM-A/B/C)</B></P>
+<BLOCKQUOTE>新規WRAM (WRAM-A/B/C) のアクセスを制御します。この設定は ARM7 から行いますので、ARM9
+からは <CODE><A href="scfg/SCFG_IsWramAccessible.html" target="_self">SCFG_IsWramAccessible()</A></CODE> で状態を読むことは可能ですが、変更はできません。</BLOCKQUOTE>
+<P><B>・新規DMA</B></P>
+<BLOCKQUOTE>新規DMAブロックへのアクセスを制御します。<BR>
+<CODE><A href="scfg/SCFG_SetNDmaAccessible.html" target="_self">SCFG_SetNDmaAccessible()</A></CODE> で設定を行い、<CODE><A href="scfg/SCFG_IsNDmaAccessible.html" target="_self">SCFG_IsNDmaAccessible()</A></CODE> で状態を取得します。<BR>
+TWLモードでは、初期値は 「アクセス可能」 となります。</BLOCKQUOTE>
+<P><B>・カメラ</B></P>
+<BLOCKQUOTE>カメラI/F ブロックへのアクセスを制御します。<BR>
+<CODE><A href="scfg/SCFG_SetCameraAccessible.html" target="_self">SCFG_SetCameraAccessible()</A></CODE> で設定を行い、<CODE><A href="scfg/SCFG_IsCameraAccessible.html" target="_self">SCFG_IsCameraAccessible()</A></CODE> で状態を取得します。<BR>
+TWLモードでは、初期値は 「アクセス可能」 となります。</BLOCKQUOTE>
+<P><B>・DSP</B></P>
+<BLOCKQUOTE>DSPブロックへのアクセスを制御します。<BR>
+<CODE><A href="scfg/SCFG_SetDSPAccessible.html" target="_self">SCFG_SetDSPAccessible()</A></CODE> で設定を行い、<CODE><A href="scfg/SCFG_IsDSPAccessible.html" target="_self">SCFG_IsDSPAccessible()</A></CODE> で状態を取得します。<BR>
+TWLモードでは、初期値は 「アクセス可能」 となります。</BLOCKQUOTE>
+<H2>拡張機能設定</H2>
+<P><B>・INTC 回路</B></P>
+<BLOCKQUOTE>ARM9 の割り込みコントローラを拡張するかどうか設定することが可能です。<BR>
+<CODE><A href="scfg/SCFG_SetIntcExpanded.html" target="_self">SCFG_SetIntcExpanded()</A></CODE> で設定を行い、<CODE><A href="scfg/SCFG_IsIntcExpanded.html" target="_self">SCFG_IsIntcExpanded()</A></CODE> で状態を取得します。<BR>
+TWLモードでは、初期値は 「拡張する」 となります。</BLOCKQUOTE>
+<P><B>・LCDC回路</B></P>
+<BLOCKQUOTE>LCDC回路を拡張する(INI 読み出し)するかどうか設定することが可能です。<BR>
+<CODE><A href="scfg/SCFG_SetLCDCExpanded.html" target="_self">SCFG_SetLCDCExpanded()</A></CODE> で設定を行い、<CODE><A href="scfg/SCFG_IsLCDCExpanded.html" target="_self">SCFG_IsLCDCExpanded()</A></CODE> で状態を取得します。<BR>TWLモードでは、初期値は 「拡張する」 となります。</BLOCKQUOTE>
+<P><B>・VRAMアクセス</B></P>
+<BLOCKQUOTE>VRAMアクセスを拡張する(Byte Write 可、NonWait Word Access) することが可能です。<BR>
+<CODE><A href="scfg/SCFG_SetVramExpanded.html" target="_self">SCFG_SetVramExpanded()</A></CODE> で設定を行い、<CODE><A href="scfg/SCFG_IsVramExpanded.html" target="_self">SCFG_IsVramExpanded()</A></CODE> で状態を取得します。<BR>TWLモードでは、初期値は 「拡張する」 となります。</BLOCKQUOTE>
+<H2>PSRAMアクセス境界</H2>
+<BLOCKQUOTE>
+<P>PSRAM アクセスの境界を設定することが可能です。4MB、16MB、32MB から選択します。<CODE><A href="scfg/SCFG_SetPsramBoundary.html" target="_self"><BR>
+<BR>
+SCFG_SetPsramBoundary()</A></CODE> で設定を行い、<CODE><A href="scfg/SCFG_GetPsramBoundary.html" target="_self">SCFG_GetPsramBoundary()</A></CODE> で状態を取得します。<BR>
+<FONT color="#ff0000">ただしこの設定はユーザが変更すべきではありません。</FONT></P>
+</BLOCKQUOTE>
+<H2>NITROブロック回路修正</H2>
+<P><B>・旧DMA 回路</B></P>
+<BLOCKQUOTE>NITROの 旧DMA 回路を修正した回路を使用することが可能です。<BR>
+<CODE><A href="scfg/SCFG_SetDmacFixed.html" target="_self">SCFG_SetDmacFixed()</A></CODE> で設定を行い、<CODE><A href="scfg/SCFG_IsDmacFixed.html" target="_self">SCFG_IsDmacFixed()</A></CODE> で状態を取得します。<BR>
+初期値は 「修正しない」 となります。 </BLOCKQUOTE>
+<P><B>・ジオメトリ回路</B></P>
+<BLOCKQUOTE>NITRO のジオメトリ回路を修正した回路を使用することが可能です。<BR>
+<CODE><A href="scfg/SCFG_SetGeometryFixed.html" target="_self">SCFG_SetGeometryFixed()</A></CODE> で設定を行い、<CODE><A href="scfg/SCFG_IsGeometryFixed.html" target="_self">SCFG_IsGeometryFixed()</A></CODE> で状態を取得します。<BR>初期値は 「修正しない」 となります。 </BLOCKQUOTE>
+<P><B>・レンダラー回路</B></P>
+<BLOCKQUOTE>NITRO のレンダラー回路を修正した回路を使用することが可能です。<BR>
+<CODE><A href="scfg/SCFG_SetRendererFixed.html" target="_self">SCFG_SetRendererFixed()</A></CODE> で設定を行い、<CODE><A href="scfg/SCFG_IsRendererFixed.html" target="_self">SCFG_IsRendererFixed()</A></CODE> で状態を取得します。<BR>初期値は 「修正しない」 となります。 </BLOCKQUOTE>
+<P><B>・2Dエンジン回路</B></P>
+<BLOCKQUOTE>NITRO の 2Dエンジン回路を修正した回路を使用することが可能です。<BR>
+<CODE><A href="scfg/SCFG_Set2DEngineFixed.html" target="_self">SCFG_Set2DEngineFixed()</A></CODE> で設定を行い、<CODE><A href="scfg/SCFG_Is2DEngineFixed.html" target="_self">SCFG_Is2DEngineFixed()</A></CODE> で状態を取得します。<BR>
+初期値は 「修正しない」 となります。 </BLOCKQUOTE>
+<P><B>・除算器回路</B></P>
+<BLOCKQUOTE>NITRO の除算器回路を修正した回路を使用することが可能です。<BR>
+<CODE><A href="scfg/SCFG_SetDividerFixed.html" target="_self">SCFG_SetDividerFixed()</A></CODE> で設定を行い、<CODE><A href="scfg/SCFG_IsDividerFixed.html" target="_self">SCFG_IsDividerFixed()</A></CODE> で状態を取得します。<BR>初期値は 「修正しない」 となります。 </BLOCKQUOTE>
+<P><B>・メモリカードI/F 回路</B></P>
+<BLOCKQUOTE>NITRO のメモリカードI/F 回路を修正した回路を使用することが可能です。<BR>
+<CODE><A href="scfg/SCFG_SetCardFixed.html" target="_self">SCFG_SetCardFixed()</A></CODE> で設定を行い、<CODE><A href="scfg/SCFG_IsCardFixed.html" target="_self">SCFG_IsCardFixed()</A></CODE> で状態を取得します。<BR>初期値は 「修正しない」 となります。 </BLOCKQUOTE>
+<P><BR>
+</P>
+<H2>参照</H2>
+<P><CODE><A href="list_scfg.html">SCFG関数一覧</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2009/01/19 ARM9動作周波数に関する説明を追加<BR>
+2008/07/15 参照及び履歴を追加<BR>
+2007/09/06 初版</P>
+<P><BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+</P>
+</BODY>
+</HTML>

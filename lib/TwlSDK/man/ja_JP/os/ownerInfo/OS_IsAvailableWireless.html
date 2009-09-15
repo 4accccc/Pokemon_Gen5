@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>OS_IsAvailableWireless</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">OS_IsAvailableWireless <IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;twl/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>BOOL OS_IsAvailableWireless(void);</CODE></dd>
+</dl>
+<h2>引数</h2>
+<P>なし。</P>
+<h2>返り値</h2>
+<p>TWL の本体設定で設定した無線通信機能の ON/OFF 情報を取得します。</p>
+<p>TRUE ならば現在無線通信が利用可能であることを表し、FALSE ならば利用できないことを表します。</p>
+<p>NITRO モードで動作している場合は 常にTRUE を返しますが、<BR>
+TWL の本体設定で設定した無線通信機能がOFF の場合は、実際には無線通信機能が使えません。</p>
+
+<H2>説明</H2>
+<p>TWL の本体設定の「無線通信」の項目で設定した無線通信機能の ON/OFF 情報を取得します。</P>
+<h2>参照</h2>
+<p><CODE>
+<a href="OSOwnerInfo.html">OSOwnerInfoEx</a></p>
+
+<H2>履歴</H2>
+<P>
+2009/03/11 NITRO モードで無線通信機能が使えないことを追記<BR>
+2008/12/18 かならず TRUE を返す条件が曖昧だったので文面を修正<BR>
+2008/10/29 返り値、説明の文章がわかりにくかったので、理解しやすいよう文章を変更<BR>
+2008/09/02 初版
+</P>
+</body>
+</html>

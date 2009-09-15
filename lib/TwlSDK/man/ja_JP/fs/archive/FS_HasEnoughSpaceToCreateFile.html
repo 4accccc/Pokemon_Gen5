@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_HasEnoughSpaceToCreateFile</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+<h1>FS_HasEnoughSpaceToCreateFile <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+BOOL FS_HasEnoughSpaceToCreateFile(<a href="../FSArchiveResource.html">FSArchiveResource</a> *resource, const char *path, u32 size);
+</code></pre>
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>resource</strong></em></td>
+<td style="width:87%">事前に<a href="FS_GetArchiveResource.html">FS_GetArchiveResource</a>関数で取得したアーカイブ情報</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>path</strong></em></td>
+<td style="width:87%">生成したいファイルのパス名<br />
+ディレクトリの生成判定なら終端に"/"を付与する必要があります。<br />
+空文字列""を指定した場合、ファイルが既存であるとみなしてパス名の判定を省略します。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>size</strong></em></td>
+<td style="width:87%">生成したいファイルのサイズ<br />
+ディレクトリの生成判定なら0を指定します。</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>指定したパス名とサイズを持つファイルが確実に生成可能であればTRUEを、失敗すればFALSEを返します。</p>
+
+<h2>説明</h2>
+<p>指定したパス名とサイズを持つファイルが確実に生成可能かどうか、空き容量から理論値を計算して判定します。<br />
+この関数は、<a href="../archive_nand_spec.html">NANDアーカイブ</a>や<a href="../archive_sdmc_spec.html">
+SDカードアーカイブ</a>などのFAT構造を持つメディアが内部で消費するクラスタ数なども考慮した上で、
+実際に必要とされる論理的な所要サイズを算出します。
+パスに含まれる各々のディレクトリ階層が実際に存在するかどうかに関わらず常に1クラスタずつ消費するものとみなして計算します。</p>
+<p style='color:Red'>この関数はドライブの実際の内部状態を確認することなしに確実に生成可能かどうかをすみやかに判定することが目的であるため、
+実際にはファイルが作成可能なケースであっても計算上100%成功するといえない状況ではFALSEを返す可能性があるという点に注意してください。
+時間をかけてでもなるべく厳密な判定結果を得たいという場合には、<code><a href="../directory/FS_GetPathInfo.html">FS_GetPathInfo( )</a></code> などの関数を併用して既存ディレクトリのサイズ判定を省略してもかまいません。</p>
+
+<p>NANDアプリのセーブデータサイズを決定する際には、別途<a href="../../tools/SaveDataSize.html">「セーブデータサイズ一覧」</a>の情報もご参考ください。</p>
+
+<p>この関数に引数として与えるアーカイブ情報は事前に<code><a href="FS_GetArchiveResource.html">FS_GetArchiveResource()</a></code>を呼び出して取得しておく必要があります。<br />
+この関数を呼び出してTRUEが返った場合、パス名とファイルサイズに応じて消費するであろうディスク容量がアーカイブ情報に反映され、availableSizeメンバとavailableClustersメンバが減少します。このアーカイブ情報を再び使用してこの関数を繰り返し呼び出すことによって、複数のファイルが全て生成可能かどうかも同様に判定することができます。<br />
+使用例を以下に示します。</p>
+<div style='width:80%;color:Black;border:solid 1px Black;padding: 20 0 20 20'><code><br />
+    <span style='color:#008000'>// まず現在のアーカイブ情報を取得。</span><br />
+    FSArchiveResource   resource[1];<br />
+    if (FS_GetArchiveResource("sdmc:/", resource))<br />
+    {<br />
+        <span style='color:#008000'>// 生成したいファイルのパス名とサイズを個別に判定。</span><br />
+        BOOL    enough = TRUE;<br />
+        enough &= FS_HasEnoughSpaceToCreateFile(resource, "sdmc:/foo/file1.txt", 1000);<br />
+        enough &= FS_HasEnoughSpaceToCreateFile(resource, "sdmc:/bar/file2.txt", 10000);<br />
+        if (enough)<br />
+        {<br />
+            <span style='color:#008000'>// すべて成功ならば指定した全てのファイルを生成できる充分な容量が存在している。</span><br />
+        }<br />
+    }<br />
+    return retval;<br />
+</code></div>
+
+<p>この関数はアーカイブへ実際にアクセスすることなしに論理的に充分なサイズをただちに算出します。
+そのため、実際には同じディレクトリを指しているようなパスを何回も指定した場合、
+そのディレクトリを生成するのに必要な消費サイズを何回も重複してカウントしてしまうことになります。
+ディレクトリは1階層ごとに1クラスタ分の容量を消費するため、
+指定するパスの階層が深ければこの重複サイズは非常に大きな値になってしまいます。<br />
+このような誤差を避けるには、パスの共通部分をまとめて1回だけ呼び出すようにします。<br />
+使用例を以下に示します。</p>
+<div style='width:80%;color:Black;border:solid 1px Black;padding: 20 0 20 20'><code><br />
+        <span style='color:#008000'>// 以下のような指定では"sdmc:/foo/bar/"の生成に必要なサイズを何度もカウントしてしまいます。</span><br />
+<span style='color:#008000'>//      enough &= FS_HasEnoughSpaceToCreateFile(resource, "sdmc:/foo/bar/file1.txt", 1000);</span><br />
+<span style='color:#008000'>//      enough &= FS_HasEnoughSpaceToCreateFile(resource, "sdmc:/foo/bar/file2.txt", 10000);</span><br />
+<span style='color:#008000'>//      enough &= FS_HasEnoughSpaceToCreateFile(resource, "sdmc:/foo/bar/file3.txt", 10);</span><br />
+<br />
+        <span style='color:#008000'>// サイズ計算の重複を避けるため、まず共通のディレクトリ部分について1回テストします。</span><br />
+        enough &= FS_HasEnoughSpaceToCreateFile(resource, "sdmc:/foo/bar/", 0);<br />
+        <span style='color:#008000'>// これ以降、"sdmc:/foo/bar/"は存在するものとみなして省略できます。</span> <br />
+        enough &= FS_HasEnoughSpaceToCreateFile(resource, "file1.txt", 1000);<br />
+        enough &= FS_HasEnoughSpaceToCreateFile(resource, "file2.txt", 10000);<br />
+        enough &= FS_HasEnoughSpaceToCreateFile(resource, "file3.txt", 10);<br />
+</code></div>
+
+<h2>参照</h2>
+<p><code>
+<a href="../../tools/SaveDataSize.html">セーブデータサイズ一覧</a><br />
+<a href="../FSArchiveResource.html">FSArchiveResource</a> 
+<a href="FS_GetArchiveResource.html">FS_GetArchiveResource</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/02/12 レイアウトを微調整。<br />
+2009/01/13 説明に若干の補足を追記。「セーブデータサイズ一覧」へのリンクを追加。<br />
+2008/12/12 返り値が厳密なものでない旨と代替手段の例を追記。<br />
+2008/09/16 消費サイズ計算の重複を避けるための説明と例を追加。<br />
+2008/02/21 <code>FSArchiveResource</code> を呼び出し側で用意するように仕様変更。<br />
+2008/01/24 初版<br />
+</p>
+</body>
+</html>

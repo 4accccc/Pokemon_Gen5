@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<LINK rel="stylesheet" type="text/css" href="../../css/nitro.css">
+<TITLE>nandApp Demos</TITLE>
+</HEAD>
+<BODY>
+<H1>NAND アプリサンプルデモ</H1>
+<H2>場所</H2>
+<P><CODE>$TwlSDK/build/demos.TWL/nandApp</CODE></P>
+<H2>コンパイル方法</H2>
+<P><CODE>$TwlSDK/build/demos.TWL/nandApp</CODE> ディレクトリに移り、</P>
+<BLOCKQUOTE><CODE>% make</CODE></BLOCKQUOTE>
+<P>
+と入力します。コンパイルが始まり、
+NAND アプリのインポート形式である <CODE>.tad</CODE> ファイルが、
+</P>
+<BLOCKQUOTE><CODE>$TwlSDK/build/demos.TWL/nandApp/(サンプル名)/bin/(プラットフォーム)/(ターゲット)/</CODE></BLOCKQUOTE>
+<P>
+の下に生成されます。例えば、
+</P>
+<BLOCKQUOTE><CODE>$TwlSDK/build/demos.TWL/nandApp/simple/bin/ARM9-TS.LTD/Release/simple.tad</CODE></BLOCKQUOTE>
+<P>
+が <CODE>simple</CODE> デモのインポート用ファイルとなります。
+</P>
+
+<H2>実行方法</H2>
+<P>以下のうちの一つを行います。</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER ソフトウェアで *.tad ファイルを開いてインポート/実行する。
+  <LI>$TwlSDK/bin/ARM9-TS/Release/TwlNmenu.srl を使用して、SD カードに格納した *.tad ファイルをインポートした後、起動する。
+</UL>
+
+<H2>説明</H2>
+<TABLE width="720">
+  <TBODY>
+    <TR>
+      <TH>デモ名</TH>
+      <TH>ディレクトリ</TH>
+      <TH>動作</TH>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>simple</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD width="525">ROM アーカイブを使用する単純な NAND アプリを作成するサンプルです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>backup</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD width="525">NAND アプリでセーブデータ領域を使用するサンプルです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>other_backup</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD width="525">他の NAND アプリのセーブデータ領域を使用するサンプルです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>sharedFont</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD width="525">本体内蔵フォントをロードするサンプルです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>SubBanner</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD width="525">サブバナーを使用するサンプルです。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>動作</H2>
+<P>ensata では正常動作しません。</P>
+<H2>参照</H2>
+<P>
+</P>
+<H2>履歴</H2>
+<P>
+2008/09/16 sharedFont を追加。現状に合わせて整理/更新<br>
+2008/07/11 SubBanner を追加<br>
+2007/12/01 初版</P>
+</BODY>
+</HTML>

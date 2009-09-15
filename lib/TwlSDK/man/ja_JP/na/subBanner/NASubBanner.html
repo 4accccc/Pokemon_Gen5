@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>NASubBanner</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+
+<H1 align="left">NASubBanner　<IMG src="../../image/BPT.gif" align=middle><IMG src="../../image/TWL.gif" align=middle></H1>
+<H2>定義</H2>
+<PRE><CODE>
+#define NA_SUBBANNER_PALETTE_NUM    16
+#define NA_SUBBANNER_CHARACTER_NUM  16
+#define NA_SUBBANNER_PATTERN_NUM    8
+#define NA_SUBBANNER_CONTROL_NUM    64
+
+typedef struct NASubBannerControl
+{
+    u8 frameCount : 8;
+
+    union
+    {
+        struct
+        {
+            u8 cellNo   : 3;
+            u8 plttNo   : 3;
+            u8 flipH    : 1;
+            u8 flipV    : 1;
+        }
+        frameInfo;
+
+        u8 animeType;
+    };
+}
+NASubBannerControl;
+
+typedef struct NASubBannerAnime
+{
+    GXCharFmt16         image   [ NA_SUBBANNER_PATTERN_NUM ][ NA_SUBBANNER_CHARACTER_NUM ];
+    GXRgb               pltt    [ NA_SUBBANNER_PATTERN_NUM ][ NA_SUBBANNER_PALETTE_NUM ];
+    NASubBannerControl  control [ NA_SUBBANNER_CONTROL_NUM ];
+}
+NASubBannerAnime;
+
+typedef struct NASubBanner
+{
+    NASubBannerHeader   header;
+    NASubBannerAnime    anime;
+}
+NASubBanner;
+
+</CODE></PRE>
+
+<H2>説明</H2>
+<P><CODE><A href="NA_SaveSubBanner.html">NA_SaveSubBanner</A></CODE> や<CODE><A href="NA_LoadSubBanner.html">NA_LoadSubBanner</A></CODE> で使用するサブバナー構造体です。<br />
+各メンバの内容は以下の通りです。</P>
+<H3>NASubBanner 構造体</H3>
+<TABLE>
+<TR><TD>header</TD><TD>サブバナーのヘッダーです<BR>サブバナーのCRCの値が設定されていますので、以下の<CODE>anime</CODE>メンバーを編集した際は、<BR>
+<CODE><A href="NA_MakeSubBannerHeader.html">NA_MakeSubBannerHeader</A></CODE> を使用して、正しい値を設定してください。</TD></TR>
+<TR><TD>anime</TD><TD>アニメーションのデータです。以下の項目を参照してください。</TD></TR>
+</TABLE>
+<H3>NASubBannerAnime 構造体</H3>
+<TABLE>
+<TR><TD>image</TD><TD>サブバナーのキャラクターデータです。<BR>
+フォーマットは、カラーパレットのインデックス値を4bitで設定します。<BR>
+表示される画像は<CODE><A href="../../gx/g2/G2_SetOBJAttr.html">G2_SetOBJAttr</A></CODE>の<CODE>shape</CODE>引数に<CODE>GX_OAM_SHAPE_32x32</CODE>を設定した場合と同じになります<BR>
+</TD></TR>
+<TR><TD>pltt</TD><TD>サブバナーのカラーパレットです。フォーマットは<CODE>GXRgb</CODE> 型になります。<BR>
+表示される画像は<CODE><A href="../../gx/g2/G2_SetOBJAttr.html">G2_SetOBJAttr</A></CODE>の<CODE>color</CODE>引数に<CODE>GX_OAM_COLORMODE_16</CODE>を設定した場合と同じになります<BR>
+<FONT color=#ff0000>使用できるカラーパレットは 16 色 x 1 パレットのみです。<BR>
+0 番パレットを使用して下さい。1 ～7 番のパレットは使用しないでください。</FONT></P>
+</TD></TR>
+<TR><TD>control</TD><TD>アニメーションのコントロールデータです。以下の項目を参照してください。</TD></TR>
+</TABLE>
+<CODE>image</CODE>、<CODE>pltt</CODE>に関しては詳細はプログラミングマニュアルの[OBJ] - [キャラクタOBJ] - [キャラクターデータフォーマット] - [16色モード]を参照してください
+<H3>NASubBannerControl 構造体</H3>
+<TABLE>
+<TR><TD>frameCount</TD><TD><CODE>frameCount</CODE> で設定されたフレームまで、以下のパラメータを使用します。<BR>
+終端のブロックには0 を設定します。</TD></TR>
+<TR><TD>cellNo</TD><TD><CODE>NASubBannerAnime</CODE> 構造体の何番目の<CODE>image</CODE>を使用するかを設定します。<BR>
+終端のブロックに0 を設定するとループ、1 を設定すると最後のコマで停止します。</TD></TR>
+<TR><TD>plttNo</TD><TD><CODE>NASubBannerAnime</CODE> 構造体の何番目の<CODE>pltt</CODE>を使用するかを設定します。<BR>
+<FONT color=#ff0000>常に0 番を設定してください。</FONT></TD></TR>
+<TR><TD>flipH</TD><TD>1 を設定するとH フリップします。<BR>
+<FONT color=#ff0000>前のコントロールデータと同じ<CODE>cellNo</CODE>でフリップのみ変更することはできません。<BR>
+フリップを変更した場合は、<CODE>image</CODE>も変更してください。<BR>
+ループ設定の場合は、最後のコントロールデータと最初のコントロールデータにも同じ制限があります。</FONT></TD></TR>
+<TR><TD>flipV</TD><TD>1 を設定するとV フリップします。<BR>
+<FONT color=#ff0000><CODE>flipH</CODE>と同じ制限があります。</FONT></TD></TR>
+</TABLE>
+<H2>参照</H2>
+<P>
+<CODE><A href="NA_MakeSubBannerHeader.html">NA_MakeSubBannerHeader</A></CODE>
+</P>
+
+<H2>履歴</H2>
+<P>
+2008/11/04 アニメーションの制限を追記。<BR>
+2008/09/17 flipType をflipH とflipV に分割。frameCount に追記。<BR>
+2008/09/16 初版
+</P>
+</BODY>
+</HTML>

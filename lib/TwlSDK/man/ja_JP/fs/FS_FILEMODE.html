@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_FILEMODE_*</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FS_FILEMODE_* <img src="../image/NTR.gif"align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+<h2>定義</h2>
+<pre><code>
+#define FS_FILEMODE_R               0x00000001UL
+#define FS_FILEMODE_W               0x00000002UL
+#define FS_FILEMODE_L               0x00000004UL
+#define FS_FILEMODE_RW              (FS_FILEMODE_R | FS_FILEMODE_W)
+#define FS_FILEMODE_RWL             (FS_FILEMODE_R | FS_FILEMODE_W | FS_FILEMODE_L)
+</code></pre>
+
+<h2>説明</h2>
+<p>ファイルシステムAPIでファイルやディレクトリを開く際のアクセスモードを指定する際に使用する定数です。</p>
+
+<table>
+<tr><td>FS_FILEMODE_R</td><td>読み込みアクセスのみを要求します。</td></tr>
+<tr><td>FS_FILEMODE_W</td><td>書き込みアクセスのみを要求します。<br />
+既存のファイルが存在する場合はその内容が破棄され、サイズ0で新規に生成されます。</td></tr>
+<tr><td>FS_FILEMODE_RW</td><td>読み書き両方のアクセスを要求します。</td></tr>
+<tr><td>FS_FILEMODE_RWL</td><td>読み書き両方のアクセスを要求しますが、開いた後にファイルサイズを変更する操作が禁止され、以下の内部チェックが自動的に有効になります。
+<ul>
+<li><code><a href="file/FS_WriteFile.html">FS_WriteFile()</a></code> による終端以降への追記操作が抑止されます。終端で呼び出すと0が返ります。</li>
+<li><code><a href="file/FS_SetFileLength.html">FS_SetFileLength()</a></code> によるサイズ変更操作が常に失敗し、<a href="fs_result_const.html">FS_RESULT_PERMISSION_DENIED</a>が返ります。</li>
+</ul></td></tr>
+</table>
+
+<h2>参照</h2>
+<p><code>
+<a href="file/FS_OpenFileEx.html">FS_OpenFileEx</a>
+<a href="directory/FS_OpenDirectory.html">FS_OpenDirectory</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/04/17 各オプションの詳細を追記<br />
+2008/04/14 FS_FILEMODE_Lオプションを追加<br />
+2007/09/18 初版<br />
+</p>
+</body>
+</html>

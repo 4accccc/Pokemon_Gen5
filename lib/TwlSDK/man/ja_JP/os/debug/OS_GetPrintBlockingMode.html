@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>OS_GetPrintBlockingMode</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">OS_GetPrintBlockingMode <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD><CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>BOOL OS_GetPrintBlockingMode( void );</CODE>
+</DL>
+<H2>引数</H2>
+<P>なし。</P>
+<H2>返り値</H2>
+<P>現在の設定値を返します。</P>
+<P>TRUE ならブロッキングモードで、FALSE なら非ブロッキングモードです。</P>
+<H2>説明</H2>
+<P>IS-TWL-DEBUGGER または IS-NITRO-DEBUGGER のデバッグ出力のブロッキングモードの設定を取得します。</P>
+<P>ブロッキングモードの説明は、ブロッキングモードを設定する関数 <CODE><A href="OS_SetPrintBlockingMode.html">OS_SetPrintBlockingMode()</A></CODE> を参照してください。</P>
+<P>これはデバッグ用の関数です。最終ROM版(FINALROM)ライブラリでは必ず FALSE
+を返します。</P>
+<P>ブロッキングモードの切り替え機能は、IS-TWL-DEBUGGER や IS-NITRO-DEBUGGER
+のバージョンによって実装されていない場合もあります。デバッガソフトウェアの更新履歴などでご確認ください。非対応の場合でも関数を呼び出すことは可能です。非対応の場合は
+<CODE>OS_GetPrintBlockingMode()</CODE> は常に FALSE を返します。</P>
+<P>何も設定していない場合の初期値はデバッガソフトウェアの実装によります。</P>
+<H2>参照</H2>
+<P><CODE><A href="OS_SetPrintBlockingMode.html">OS_SetPrintBlockingMode</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2009/04/21 ブロッキングモードの非対応時の値を修正<BR>
+2009/04/02 初版</P>
+</BODY>
+</HTML>

@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>OS_IsParentalControledApp</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">OS_IsParentalControledApp <IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;twl/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>BOOL OS_IsParentalControledApp(u8* appRatingInfo);</CODE></dd>
+</dl>
+<h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="33%"><EM><STRONG>appRatingInfo</STRONG></EM></TD>
+      <TD width="67%">レーティング情報へのポインタ。<BR>
+      アプリケーション ROM ヘッダのオフセット0x2f0 位置に埋め込まれている 16バイトがレーティング情報です。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>TRUE の場合、ペアレンタルコントロール制限を掛けて、パスワード入力を促すべきということを表します。</p>
+<p>FALSE の場合、制限をかけずに起動してよいアプリケーションであることを表します。</p>
+
+<H2>説明</H2>
+<p>アプリケーション起動に、ペアレンタルコントロール制限を掛けるべきかどうかを判定します。</P>
+<p><EM><STRONG>appRatingInfo</STRONG></EM> はレーティング情報へのポインタで、アプリケーション ROM ヘッダ内のオフセット
+<CODE>0x2f0</CODE> 位置に埋め込まれているのでこれを示してください。</P>
+<h2>参照</h2>
+<p><CODE>
+<a href="OSOwnerInfo.html">OSOwnerInfoEx</a></CODE></p>
+
+<H2>履歴</H2>
+<P>2008/09/02 初版</P>
+</body>
+</html>

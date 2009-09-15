@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<BASE target="main">
+<TITLE>SSPライブラリ(SSP) API 機能一覧</TITLE>
+<LINK rel="stylesheet" href="../css/apilist.css">
+</HEAD>
+<BODY>
+<H1>SSPライブラリ(SSP) API 機能一覧</H1>
+
+<H3><A name="JPEG_ENC">JPEG エンコード</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/SSP_SetJpegEncoderDateTime.html" target="_self">SSP_SetJpegEncoderDateTime</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>エンコード時に付加する撮影日時情報を設定します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/SSP_SetJpegEncoderDateTimeNow.html" target="_self">SSP_SetJpegEncoderDateTimeNow</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>エンコード時に付加する撮影日時情報に現在の日時を設定します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/SSP_GetDateTime.html" target="_self">SSP_GetDateTime</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>現在の日付と時刻を取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/SSP_SetJpegEncoderMakerNote.html" target="_self">SSP_SetJpegEncoderMakerNote</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>エンコード時にメーカーノート内に付加する DSiカメラ 用データを設定します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/SSP_SetJpegEncoderMakerNoteEx.html" target="_self">SSP_SetJpegEncoderMakerNoteEx</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>エンコード時にメーカーノート内に付加する各種データを設定します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/SSP_StartJpegEncoder.html" target="_self">SSP_StartJpegEncoder</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGエンコードを行います。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/SSP_GetJpegEncoderBufferSize.html" target="_self">SSP_GetJpegEncoderBufferSize</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>エンコードに必要なバッファサイズを取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/SSP_ConvertJpegEncodeData.html" target="_self">SSP_ConvertJpegEncodeData</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGエンコードする形式に入力データをコンバートします。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/SSP_StartJpegEncoderWithEncodeData.html" target="_self">SSP_StartJpegEncoderWithEncodeData</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>事前にコンバート済みのエンコード用データからJPEGエンコードを行います。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/SSP_StartJpegEncoderLite.html" target="_self">SSP_StartJpegEncoderLite</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD><code><a href="jpeg_enc/SSP_StartJpegEncoder.html">SSP_StartJpegEncoder()</a></code>よりも少量の作業バッファでJPEGエンコードを行います。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/SSP_GetJpegEncoderLiteBufferSize.html" target="_self">SSP_GetJpegEncoderLiteBufferSize</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD><code><a href="jpeg_enc/SSP_StartJpegEncoderLite.html">SSP_StartJpegEncoderLite()</a></code>を使用したエンコードに必要なバッファサイズを取得します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H3><A name="JPEG_DEC">JPEG デコード</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/SSP_GetJpegDecoderDateTime.html" target="_self">SSP_GetJpegDecoderDateTime</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>デコード時にJPEGデータから取り出した撮影日時情報を取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/SSP_GetJpegDecoderSoftware.html" target="_self">SSP_GetJpegDecoderSoftware</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>デコード時にJPEGデータから取り出したアプリケーションのイニシャルコードを取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/SSP_GetJpegDecoderMakerNoteAddr.html" target="_self">SSP_GetJpegDecoderMakerNoteAddr</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGデータ中のメーカーノート内に存在する DSiカメラ 用データの先頭アドレスを取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/SSP_GetJpegDecoderMakerNoteSize.html" target="_self">SSP_GetJpegDecoderMakerNoteSize</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGデータ中のメーカーノート内に存在する DSiカメラ 用データのサイズを取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/SSP_GetJpegDecoderMakerNoteAddrEx.html" target="_self">SSP_GetJpegDecoderMakerNoteAddrEx</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGデータ中のメーカーノート内に存在する各種データの先頭アドレスを取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/SSP_GetJpegDecoderMakerNoteSizeEx.html" target="_self">SSP_GetJpegDecoderMakerNoteSizeEx</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGデータ中のメーカーノート内に存在する各種データのサイズを取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/SSP_StartJpegDecoder.html" target="_self">SSP_StartJpegDecoder</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGデコードを行います。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/SSP_ExtractJpegDecoderExif.html" target="_self">SSP_ExtractJpegDecoderExif</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGファイルからExif情報だけを抽出します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H3><A name="BMP">BMP 変換</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="bmp_conv/SSP_GetBmpFileSize.html" target="_self">SSP_GetBmpFileSize</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>作成される BMP ファイルのサイズを取得する。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="bmp_conv/SSP_CreateBmpFile.html" target="_self">SSP_CreateBmpFile</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>BMP ファイルを作成する。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<table border="0" height="100%"><tr><td style="background-color : white;"></td></tr></table>
+
+</BODY>
+</HTML>

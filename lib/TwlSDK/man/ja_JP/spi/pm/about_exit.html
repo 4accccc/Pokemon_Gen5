@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>ハードウェアリセット・シャットダウン (overview)</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">ハードウェアリセット・シャットダウン (overview) <IMG src="../../image/TWL.gif" align=middle></H1>
+<P>このページは TWL ハードウェアでの動作に関わる説明となります。</P>
+<H2>説明</H2>
+<P>TWL ではアプリケーションが終了する状況として以下のものがあります。</P>
+<BLOCKQUOTE>
+<DL>
+  <DT>ハードウェアリセット
+  <DD>・電源ボタンを短押しする<BR>
+  ・<CODE><A href="PM_ForceToResetHardware.html">PM_ForceToResetHardware()</A></CODE> を呼び出す<BR>
+  これには、<CODE><A href="../../os/appJump/OS_RebootSystem.html">OS_RebootSystem()</A></CODE>、 <A href="../../os/appJump/OS_JumpToSystemMenu.html"><CODE>OS_JumpToSystemMenu()</CODE></A>、<A href="../../os/appJump/OS_JumpToWirelessSetting.html"><CODE>OS_JumpToWirelessSetting()</CODE></A>、<A href="../../os/appJump/OS_JumpToInternetSetting.html"><CODE>OS_JumpToInternetSetting()</CODE></A>、 <CODE><A href="../../os/appJump/OS_JumpToEULAViewer.html">OS_JumpToEULAViewer()</A></CODE> といった、内部で <CODE><A href="PM_ForceToResetHardware.html">PM_ForceToResetHardware()</A></CODE> を利用した関数も含まれます。これらを行うことでハードウェアリセットが発生します。ハードウェアリセット処理を行うとその後はシステムメニューに戻ったり、再び自身を起動したり、別のアプリケーションを起動したりします。<BR>
+  <BR>
+  <DT>シャットダウン
+  <DD>・電源ボタンを長押しする <BR>
+  ・<CODE><A href="PM_ForceToPowerOff.html">OS_ForceToPowerOff()</A></CODE> を呼び出す<BR>
+  ・充電池の電池残量がなくなる<BR>
+  ・スリープ中にカードが抜ける<BR>
+  こうした行為や状況ではシャットダウンが発生します。シャットダウン処理を行うと電源はオフ状態になります。(ただし、終了処理の必要のないアプリでは終了処理を行わずに電池を使い切るまで動作するため、急に電源が落ちるように見えます。)<BR>
+  <BR>
+  <DT>プログラムの停止(永久ループ)
+  <DD><CODE><A href="../../os/debug/OS_Panic.html">OS_Panic()</A></CODE> や <CODE><A href="../../os/system/OS_Terminate.html">OS_Terminate()</A></CODE> や <CODE><A href="../../os/system/OS_Exit.html">OS_Exit()</A></CODE> を呼び出すと、アプリケーションは停止します。実際はCPU を HALT 状態にしたりループしたりしてそれ以上アプリケーションが意味のある動作をしないようにしているだけです。DEBUG
+  ビルドに限りますが、<CODE><A href="../../os/debug/SDK_ASSERT.html">SDK_ASSERT()</A></CODE> で評価式が偽となって停止する場合も同様です。ただしこれらはすべて開発途中でデバッグ用途で呼び出したり、プログラム上の不具合で呼び出されるものなので、製品版になってからこの状態になることは一点を除いてないはずです。唯一あるのは、アプリケーション動作中にカードが抜けた場合で、このとき内部では
+  <CODE><A href="../../os/system/OS_Terminate.html">OS_Terminate()</A></CODE> が呼ばれます。<BR>
+  <BR>
+  <DT>デバッガによる停止
+  <DD>IS-TWL-DEBUGGER で動作させている場合に、誤ったアドレスをアクセスしたり未定義命令を実行しようとして例外が発生するとプログラムは停止します。実機で例外が発生した場合は例外ハンドラの中でループします。どちらにしても製品版では起こらないはずです。また当然ですが、開発者がプログラムを実行していてデバッガの停止ボタン押せば例外が発生しなくても停止します。<BR>
+  <BR>
+  <DT>その他
+  <DD>充電池で動作しているときに電池蓋を外していきなり充電池を取り除けば、電源供給がないため電源が落ちます。その他ハードウェアの故障など予測できない要因で停止する場合があるかもしれません。これらについてここでは考慮していません。<BR>
+</DL>
+このようにアプリケーションが「終了」する状況は様々ですが、終了処理という観点で考えるべきは、ハードウェアリセット または シャットダウン が発生する状況です。以下この2点に絞って説明します。</BLOCKQUOTE>
+<H2>電源ボタンについて</H2>
+<P>TWL では、電源ボタンを一定時間以上押して離すとその時間によって、ハードウェアリセット、シャットダウン、強制電源オフのいずれかが発生します。</P>
+<P>下の図で説明します。電源ボタンを押して 時間A までに離せば何も起こりませんが、A
+から B の間に離せばハードウェアリセット、B から C の間で話せばシャットダウン、C
+を超えて電源ボタンを押し続けていると即座に強制電源オフとなります。この強制電源オフだけ、ボタンを離さなくても発生します。</P>
+<P><IMG src="exit_PowerSw.gif" width="493" height="125" border="0" align="middle"></P>
+<P>なお、NITRO ハードウェアでは電源ボタンを押すと、押している時間に関係なくすぐに電源オフとなります。</P>
+<P>また、内部で <CODE><A href="PM_ForceToResetHardware.html">PM_ForceToResetHardware()</A></CODE> を呼び出す <CODE><A href="../../os/appJump/OS_RebootSystem.html">OS_RebootSystem()</A></CODE>、 <A href="../../os/appJump/OS_JumpToSystemMenu.html"><CODE>OS_JumpToSystemMenu()</CODE></A>、<A href="../../os/AppJump/OS_JumpToWirelessSetting.html"><CODE>OS_JumpToWirelessSetting()</CODE></A>、<A href="../../os/appJump/OS_JumpToInternetSetting.html"><CODE>OS_JumpToInternetSetting()</CODE></A>、 <CODE><A href="../../os/appJump/OS_JumpToEULAViewer.html">OS_JumpToEULAViewer()</A></CODE> といった関数を呼び出した場合、確実にリセットが行われる状況になった後は電源ボタンによるハードウェアリセットが無視されます。</P>
+<H2>終了コールバックリスト</H2>
+<P>終了コールバックは、<BR>
+　　　<CODE>typedef void (*PMGenCallback) (void *);</CODE><BR>
+で定義されるように、void* 引数を一つとる void 型関数です。</P>
+<P>ハードウェアリセットやシャットダウンが発生したときはこの終了コールバックが呼ばれます。終了コールバックは複数登録することが可能で、内部ではリスト形式で結合され、必要なときに順番に呼び出されます。前処理終了コールバックと後処理終了コールバックの2つが存在します。</P>
+<P>なお、終了コールバックの処理は一度しか行われません。例えば電源ボタンを押したり電圧低下などが原因で終了コールバックの処理をしている最中に、電源ボタンを押しなおしたとしてもそれは無視されます。</P>
+<P><IMG src="exit_List1.gif" width="345" height="216" border="0"></P>
+<P>2つのコールバックリストの関数がどのタイミングで呼ばれるかを説明します。</P>
+<H3><BR>
+電源ボタンを押した場合</H3>
+<P>前出「電源ボタンについて」の図で、電源ボタンを押したまま時間A が来たときにマイコンからARM7
+に割込みが入ります。この時点ではまだハードウェアリセットとなるか、シャットダウンとなるかはわかりませんが、ともかくアプリケーションが終了することは確定です。</P>
+<OL>
+  <LI>ARM7 から ARM9 に PXI で終了通知を行います。
+  <LI>ARM9 は終了通知を ARM7 から受け取ると、前処理終了コールバックを呼び出します。
+  <LI>ARM9 は終了準備が出来たことを ARM7 に通知します。通知の前に後処理コールバックを呼び出します。
+  <LI>ARM7 はARM9 の終了準備完了通知を受け取ります。ボタンを離すタイミングによって、ハードウェアリセットまたはシャットダウンを行います。
+</OL>
+<P>ただし、<CODE><A href="PM_SetAutoExit.html">PM_SetAutoExit()</A></CODE> によって自動終了しない設定になっていた場合、3. の動作(ARM9 がARM7 に終了準備完了通知を送る)
+は、アプリケーションが<A href="PM_ReadyToExit.html"><CODE>PM_ReadyToExit()</CODE></A> を呼び出すまで保留されます。<CODE><A href="PM_ReadyToExit.html">PM_ReadyToExit()</A></CODE> が呼ばれると、その中で後処理コールバックを呼び出し、ARM7 に終了準備完了通知を送ります。現在の設定がどうなっているかは <CODE><A href="PM_GetAutoExit.html">PM_GetAutoExit()</A></CODE> で取得することが出来ます。</P>
+<P>すなわち、</P>
+<UL>
+  <LI>前処理コールバックはアプリケーションの終了(ハードウェアリセットまたはシャットダウンのどちらか)
+  が決定したときにすぐに呼ばれます。割込みハンドラからの呼び出しとなります。
+  <LI>後処理コールバックは自動終了する設定になっていた場合は前処理コールバックに続いてすぐに呼ばれますが、そうでない場合、ユーザが「もう終了準備が整った」とするまで呼び出しは保留されます。前者は割込みハンドラからの呼び出しとなりますが、後者はユーザが呼ぶ
+  <CODE><A href="PM_ReadyToExit.html">PM_ReadyToExit()</A></CODE> から呼ばれます。なので、<CODE><A href="PM_ReadyToExit.html">PM_ReadyToExit()</A></CODE> と同じモードでの呼び出しになります。
+</UL>
+<P>ということになります。</P>
+<P>二点例外が存在します。まず、アプリケーションジャンプを使用する関数を呼び出した後に電源ボタンが押された場合です。この場合アプリケーションジャンプはキャンセルして電源ボタンを押したときの処理に移ります
+(ボタンを離すタイミングにより、ハードウェアリセットかシャットダウンを行います)
+が、前処理コールバックは呼ばれず後処理コールバックのみが呼ばれます。これはアプリケーションジャンプを使用する前にユーザがすでに前処理コールバックに該当する処理を行っているはずであるからです。もう一点は、アプリケーションジャンプを使用する関数を呼び出して実際にリセットがかかるまでにバッテリーの低下をマイコンが検出した場合です。この場合も前処理コールバックは呼ばれずにバッテリー低下によるシャットダウン処理に移ります。</P>
+<H3><BR>
+電池電圧の低下でシャットダウンする場合</H3>
+<P>詳細は、「<A href="about_battery.html">概要：バッテリー</A>」の「電池残量低下によるシャットダウン」を参照してください。</P>
+<P>この場合、内部的には、マイコンから ARM7 に割込みが入ります。ARM7 はARM9
+に終了通知を行い、あとは電源ボタンを押したときと同様の終了コールバック呼び出しが行われます。ただし、終了処理を必要としないカードのようなアプリケーションではこの終了処理は行われません
+(割り込みが発生しません)。</P>
+<H3><A href="PM_ForceToPowerOff.html"><BR>
+PM_ForceToPowerOff()</A> でシャットダウンする場合<BR>
+スリープ中にカード抜けが発生しシャットダウンする場合</H3>
+<P>後処理コールバックリストに登録されたコールバックが呼ばれます。その後ハードウェアの電源を落とします。<BR>
+前処理コールバックは呼ばれません。</P>
+<H3><A href="PM_ForceToResetHardware.html"><BR>
+PM_ForceToResetHardware()</A> でハードウェアリセットする場合<BR>
+<A href="../../os/appJump/OS_RebootSystem.html">OS_RebootSystem()</A> でハードウェアリセットする場合<BR>
+<A href="../../os/appJump/OS_JumpToSystemMenu.html">OS_JumpToSystemMenu()</A> でシステムメニューに戻る場合<BR>
+<A href="../../os/appJump/OS_JumpToWirelessSetting.html">OS_JumpToWirelessSetting()</A> で本体設定にジャンプする場合<BR>
+<A href="../../os/appJump/OS_JumpToInternetSetting.html">OS_JumpToInternetSetting()</A> で本体設定にジャンプする場合<BR>
+<A href="../../os/appJump/OS_JumpToEULAViewer.html">OS_JumpToEULAViewer()</A> で本体設定にジャンプする場合</H3>
+<P>後処理コールバックリストに登録されたコールバックが呼ばれます。その後ハードウェアリセットを行います。<BR>
+前処理コールバックは呼ばれません。</P>
+<H2>終了コールバックの登録</H2>
+<P>コールバックには優先度が設定されています。アプリケーションで使用できる優先度は
+-255 (<CODE>PM_CALLBACK_PRIORITY_MIN</CODE>) ～ 255 (<CODE>PM_CALLBACK_PRIORITY_MAX</CODE>) です。( SDKライブラリやミドルウェアなど、システムでは -65535 (<CODE>PM_CALLBACK_PRIORITY_SYSMIN</CODE>) ～65535 (<CODE>PM_CALLBACK_PRIORITY_SYSMAX</CODE>)の優先度を用いることができます。) この優先度はコールバックリストの順序を決定するのに用いるためにのみ使用されます。値の小さいものが、リスト中でより前に位置します。</P>
+<P>コールバック情報構造体 <CODE><A href="PM_SetExitCallbackInfo.html">PM_SetExitCallbackInfo()</A></CODE> でコールバック関数と引数を設定しその情報構造体をリストに登録します。</P>
+<P>登録は3種類の方法で行うことが出来ます。</P>
+<UL>
+  <LI><CODE><A href="PM_AppendExitCallback.html">PM_PrependPreExitCallback()</A>, <A href="PM_AppendExitCallback.html">PM_PrependPostExitCallback()</A></CODE><BR>
+  優先度 -255 でリストに登録します。すでに優先度 -255 のコールバックが登録されている場合には前に登録されます。<BR>
+  つまりアプリケーションが使用できる優先度のみを考えれば、リストの先頭に入れることになります。<BR>
+  <BR>
+  <LI><CODE><A href="PM_AppendExitCallback.html">PM_AppendPreExitCallback()</A>, <A href="PM_AppendExitCallback.html">PM_AppendPostExitCallback()</A></CODE><BR>
+  優先度 255 でリストに登録します。すでに優先度 255 のコールバックが登録されている場合には後ろに登録されます。<BR>
+  つまりアプリケーションが使用できる優先度のみを考えれば、リストの末尾に入れることになります。<BR>
+  <BR>
+  <LI><A href="PM_AppendExitCallback.html"><CODE>PM_InsertPreExitCallback()</CODE></A><CODE>, <A href="PM_AppendExitCallback.html">PM_InsertPostExitCallback()</A></CODE><BR>
+  優先度を指定して、適切な位置に登録します。同じ優先度のものがあれば後ろに登録されます。<BR>
+  <BR>
+</UL>
+<P><B>例</B></P>
+<BLOCKQUOTE>-1000, -255, 10, 10, 20, 255, 1000 という優先度の終了コールバックがリストになっているときに、<CODE>PM_Prepend～, PM_Append～, PM_Insert～</CODE> の各関数で終了コールバックを追加したときにどこに登録されるかを示します。<CODE>PM_Insert～</CODE> は、priority が -255, 10, 255 の場合をそれぞれ示します。<BR>
+</BLOCKQUOTE>
+<BLOCKQUOTE><IMG src="exit_List2.gif" border="0"></BLOCKQUOTE>
+<H2>終了コールバックの削除</H2>
+<P>設定したコールバックは <CODE><A href="PM_DeleteExitCallback.html">PM_DeletePreExitCallback()</A>, <A href="PM_DeleteExitCallback.html">PM_DeletePostExitCallback()</A></CODE> で削除することが出来ます。</P>
+<H2>終了コールバックの表示(デバッグ用)</H2>
+<P><CODE><A href="PM_DumpExitCallback.html">PM_DumpExitCallback()</A></CODE> は、デバッグ用途で、コールバックの一覧を表示する関数です。FINALROM ビルドでは何も行いません。</P>
+<H2>登録される終了コールバック</H2>
+<P>SDK で登録される終了コールバックでは以下の処理をこの順序で行います。</P>
+<UL>
+  <LI>カメラをスタンバイ状態にする。
+  <LI>DSP を停止する。
+  <LI>IIRフィルタの設定中ならば、処理の終了まで待つ。<CODE><A href="../../snd/sndex/SNDEX_SetIgnoreHWVolume.html">SNDEX_SetIgnoreHWVolume()</A></CODE> による保存値があればスピーカー音量を戻す。
+  <LI>NANDのフラッシュを行う。
+  <LI>TWL無線でWiFi通信中ならば、APとの接続を切断して無線通信を終了する。
+</UL>
+<P>これらは後処理コールバックリストに登録されますので、電源断や強制リセットなどでも必ず通過します。</P>
+<H2>履歴</H2>
+<P>2009/02/03 登録される終了コールバックに SNDEX における処理を追記<BR>
+2008/12/11 終了コールバックは一度しか呼ばれないことを追記<BR>
+2008/11/04 アプリケーションジャンプ途中に電源ボタンが押された場合について追記<BR>
+2008/09/12 バッテリーLOWコールバックに関する項目を追記<BR>
+2008/09/11 自動シャットダウンに関する項目を追記<BR>
+2008/07/15 ユーザに開放する優先度が0～255から-255～255になった<BR>
+2008/06/11 初版</P>
+</BODY>
+</HTML>

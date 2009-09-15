@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>compstatic</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  margin-left: 12pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD,TH{
+  border-color	: #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+<H1 align="left">compstatic <IMG src="../image/NTR.gif" align="middle"></H1>
+<H2>説明</H2>
+<P><FONT color="#ff0000">このコマンドは NITRO ROM 用のものです。TWL ROM については <CODE><A href="compstaticTWL.html">compstatic.TWL</A></CODE> を参照してください。</FONT></P>
+<P>　<CODE>compstatic</CODE> は、NITRO のアプリケーションの IPL によってロードされる常駐領域部分及びオーバーレイの
+ROM イメージを圧縮するためのツールです。これにより ROM 容量を節約できます。</P>
+<H2>使用方法</H2>
+<H3>起動コマンド</H3>
+<PRE><CODE>% compstatic [-d] [-9] [-c] [-a[FILE]] [-F|-eSUFFIX] [-lFILE] STATICMODULE OVERLAYDEFS [OVERLAYTABLE]</CODE></PRE>
+<P>または</P>
+<PRE><CODE>% compstatic [-d] [-9] [-c] [-a[FILE]] [-F|-eSUFFIX] [-lFILE] -f RESPONSE_FILE</CODE></PRE>
+<P><B><CODE>-9</CODE></B> オプションは、<CODE>STATICMODULE</CODE> で指定された ROM 常駐領域のファイルを ARM9 のコードと見なし圧縮するためのオプションです。展開処理は
+TWL-SDK の crt0.o および FS ライブラリと統合されているため、アプリケーション作成者は何も追加作業は必要ありません。</P>
+<P><CODE><B>-f</B></CODE> オプションは、圧縮処理対象の実行ファイルやオーバーレィ処理ファイル<CODE>(STATICMODULE OVERLAYDEFS および OVERLAYTABLE)</CODE>のファイル名をコマンドライン引数で指定する代わりに、処理対象のファイル名が記録されたファイル<CODE>(RESPONSE_FILE)</CODE>経由で指定するためのものです。この <CODE>-f</CODE> オプションに与える <CODE>RESPONSE_FILE</CODE> の内容は<CODE>STATICMODULE,OVERLAYDEFS,OVERLAYTABLE</CODE> の実際のファイル名を <CODE>'\0'</CODE> で終端処理し、順に格納したものとなっています。このときに指定するファイルは <CODE>RESPONSE_FILE</CODE> が置かれているディレクトリからの相対パスで指定されているとみなされます。</P>
+<P><B><CODE>-c</CODE></B> オプションが指定されている場合は <CODE>OVERLAYDEFS</CODE> で指定されているオーバーレイファイルも圧縮します。</P>
+<P><B><CODE>-e</CODE>,<CODE>-F</CODE></B> オプションで圧縮後のファイル名を制御します。これらのオプションがない場合は、元のファイル名に拡張子
+<CODE>_LZ</CODE> が後置された名前のファイルへ圧縮結果が出力されます。この後置子の <CODE>_LZ</CODE> を変更したいときは<CODE>-e</CODE> オプションで指定します。また、<CODE>-F</CODE> オプションが指定されると、元のファイルへ圧縮後のファイルを上書きします。</P>
+<P><B><CODE>-l</CODE></B> オプションは、<B><CODE>-c</CODE></B> と共に指定します。<a href="#list_format">後述</a>のリストファイルをパラメータで渡すことにより、圧縮から除外するオーバーレイモジュールを指定することができます。</P>
+<P><B><CODE>-a</CODE></B> オプションでオーバーレイのダイジェスト値を常駐領域に埋め込むことが可能です。これは無線などにより受け渡しを行なうオーバーレイモジュールの正当性を確認するために使用します。
+なお、ダイジェスト値を埋め込む領域は事前に確保しておく必要があります。LCF ファイルを作成する際に ARM9-TS-C.lcf.template を使用すると、必要な領域を確保するリンカスクリプトが生成されます。
+LCF ファイルの作成については、<CODE><A href="makelcf.html">makelcf</A></CODE> の説明を参照して下さい。</P>
+<P><B><CODE>-d</CODE></B> オプションは <CODE>compstatic</CODE> のデバグ用メッセージ出力用のオプションです。実行時にデバグ用メッセージを出力します。普段は指定する必要はありません。</P>
+<P>　現在 ARM7 の常駐領域の圧縮処理については、展開側のライブラリが対応していないため使用できません。</P>
+<P>　TWL-SDK の make 環境を使用している場合は、環境変数 TWL_COMPRESS に何らかの値が定義してある場合、ARM9
+の常駐領域およびオーバーレイの圧縮処理が有効になります。</P>
+
+<a name="list_format"></a>
+<H2>圧縮除外リストのフォーマット</H2>
+<P>下記のように、1行に <I>Overlayモジュールファイル名</I> と <I>圧縮指定文字</I> をカンマで区切って記述します。
+<PRE class="command_item">
+main_overlay_1.sbin, E
+main_overlay_2.sbin, E
+main_overlay_3.sbin, S
+</PRE>
+</P>
+<P><I>Overlayモジュールファイル名</I> には、実際に <CODE>$(BINDIR)</CODE> に出力される圧縮前のファイル名を記述します。</P>
+<P><I>圧縮指定文字</I> の意味は、それぞれ以下の通りです。
+<TABLE>
+<TBODY class="blockquoted_table">
+<TR>
+  <TH width="96"><CODE>圧縮指定文字</CODE></TH>
+  <TH>意味</TH>
+</TR>
+<TR>
+  <TD><CODE>S</CODE></TD>
+  <TD><CODE>SMART</CODE> の意味。<B><CODE>-c</CODE></B> のオプションに従い、圧縮をかけます。デフォルトの動作なので、この行は省略することができます。</TD>
+</TR>
+<TR>
+  <TD><CODE>E</CODE></TD>
+  <TD><CODE>EXCLUSION</CODE> の意味。圧縮対象から除外されます。</TD>
+</TR>
+</TBODY>
+</TABLE>
+</P>
+<P>
+　TWL-SDK の make 環境を使用している場合は、環境変数 TWL_COMPRESS と共に環境変数 COMPSTATIC_SPEC_FILE を定義します。
+<PRE class="command_item">
+TWL_COMPRESS         = TRUE
+COMPSTATIC_SPEC_FILE = <I>filename</I>
+</PRE>
+</P>
+
+<H2>場所</H2>
+<P><CODE>$TwlSDK/tools/bin/compstatic.exe</CODE></P>
+<H2>参照</H2>
+<P><CODE><A href="makerom.html">makerom</A>, <A href="makelcf.html">makelcf</A></CODE></P>
+<H2>履歴</H2>
+<P>
+2009/05/14 -l オプションの記述追加。それに伴い、「圧縮除外リストのフォーマット」の項目を追加。<BR>
+2008/10/28 -a オプションの説明を加筆修正<BR>
+2006/05/16 -f オプションの記述追加<BR>
+2004/09/21 初版作成</P>
+</BODY>
+</HTML>

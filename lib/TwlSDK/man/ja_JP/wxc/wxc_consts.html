@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>定数</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">WXC 関連の定数 <img src="../image/NTR.gif"align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+<h2>定義</h2>
+
+<pre>
+#define WXC_WORK_SIZE              0x4000
+
+/* ライブラリのMP送受信パケットサイズ */
+#define WXC_PACKET_SIZE_MIN        20
+#define WXC_PACKET_SIZE_MAX        WM_SIZE_MP_DATA_MAX
+#define WXC_REGISTER_DATA_MAX      16
+#define WXC_MAX_DATA_SIZE          (32 * 1024)
+</pre>
+
+<H2>説明</H2>
+<P>WXCライブラリで定義される各種の定数です。各々の意味は以下のとおりです。<BR>
+<TABLE border="0">
+  <TBODY>
+
+   <TR>
+      <TD>WXC_WORK_SIZE</TD>
+      <TD><A href="common/WXC_Init.html">WXC_Init</A>関数で割り当てるワークメモリに必要なサイズです。</TD>
+    </TR>
+   <TR>
+      <TD>WXC_PACKET_SIZE_MIN</TD>
+      <TD><A href="common/WXC_SetParentParameter.html">WXC_SetParentParameter</A>関数で指定できる送信サイズの下限です。</TD>
+    </TR>
+   <TR>
+      <TD>WXC_PACKET_SIZE_MAX</TD>
+      <TD><A href="common/WXC_SetParentParameter.html">WXC_SetParentParameter</A>関数で指定できる送信サイズの上限です。</TD>
+    </TR>
+   <TR>
+      <TD>WXC_REGISTER_DATA_MAX</TD>
+      <TD><A href="common/WXC_RegisterCommonData.html">WXC_RegisterCommonData</A>関数で登録できるデータブロック個数の上限です。</TD>
+    </TR>
+   <TR>
+      <TD>WXC_MAX_DATA_SIZE</TD>
+      <TD><A href="common/WXC_RegisterCommonData.html">WXC_RegisterCommonData</A>関数で指定できる送受信データサイズの上限です。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<BR>
+</P>
+<h2>参照</h2>
+<p><CODE>
+<A href="common/WXC_Init.html">WXC_Init</A> 
+<A href="common/WXC_Init.html">WXC_SetParentParameter</A> 
+</CODE></p>
+
+<H2>履歴</H2>
+<P>
+2006/08/10 リンク修正<br>
+2006/02/20 WXC_REGISTER_DATA_MAX, WXC_MAX_DATA_SIZE を追加<br>
+2005/08/09 WXC_PACKET_SIZE_MIN, WXC_PACKET_SIZE_MAX を追加<br>
+2005/08/04 初版<br>
+</P>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>OS_EnableInterrupts_IrqAndFiq</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">OS_EnableInterrupts_IrqAndFiq <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>OSIntrMode OS_EnableInterrupts_IrqAndFiq( void );</CODE></dd>
+</dl><h2>引数</h2>
+<P>なし。</P>
+<h2>返り値</h2>
+<p>この関数を呼ぶ前の状態を表す値を返します。</p>
+<p>返り値の型は <CODE>OSIntrMode</CODE> ( <CODE>u32</CODE> の typedef ) ですが、返る値は以下の <CODE>OSIntrMode_Irq</CODE> 列挙型の値と <CODE>OSIntrMode_Fiq</CODE>列挙型の値の論理和となります。<BR>
+<BR>
+<CODE>OSIntrMode_Irq</CODE> 列挙型</p>
+<TABLE cellspacing="2">
+  <TBODY>
+    <TR>
+      <TH>値</TH>
+      <TH>以前の状態</TH>
+    </TR>
+    <TR>
+      <TD>OS_INTRMODE_IRQ_DISABLE</TD>
+      <TD>IRQディセーブル(禁止)</TD>
+    </TR>
+    <TR>
+      <TD>OS_INTRMODE_IRQ_ENABLE</TD>
+      <TD>IRQイネーブル(許可)</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<p><BR>
+<CODE>OSIntrMode_Fiq</CODE> 列挙型</P>
+<TABLE cellspacing="2">
+  <TBODY>
+    <TR>
+      <TH>値</TH>
+      <TH>以前の状態</TH>
+    </TR>
+    <TR>
+      <TD>OS_INTRMODE_FIQ_DISABLE</TD>
+      <TD>FIQディセーブル(禁止)</TD>
+    </TR>
+    <TR>
+      <TD>OS_INTRMODE_FIQ_ENABLE</TD>
+      <TD>FIQイネーブル(許可)</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>説明</H2>
+<P>IRQ と FIQ の割り込みを許可します。</P>
+<P>ここで許可するのは、すべての割り込みのマスターイネーブルです。IRQ割り込み要因のイネーブルを個別にセットしていても、この関数でIRQ
+が許可になっていないと割り込みは発生しません。</P>
+<P>返り値は、この関数を呼ぶ以前の状態を表す値です。</P>
+<h2>内部動作</h2>
+<P>CPSRレジスタ(current program status register)の IRQとFIQ割り込みの制御ビットをリセット(リセットがイネーブル)にしています。</P>
+
+<h2>参照</h2>
+<p><CODE><A href="OS_DisableInterrupts_IrqAndFiq.html">OS_DisableInterrupts_IrqAndFiq</A>,
+ <A href="OS_RestoreInterrupts_IrqAndFiq.html">OS_RestoreInterrupts_IrqAndFiq</A>,
+ <A href="OS_EnableInterrupts.html">OS_EnableInterrupts</A><br>
+</CODE></p>
+
+<H2>履歴</H2>
+<P>
+2005/03/08 用語統一 [割込み] → [割り込み]<br>
+2004/03/04 <CODE>OS_EnableInterrupts</CODE> から移行</P>
+</body>
+</html>

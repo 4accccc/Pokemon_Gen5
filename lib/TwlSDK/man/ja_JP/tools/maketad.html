@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>maketad</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD,TH{
+  border-color	: #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+<H1 align="left">maketad</H1>
+<H2>説明</H2>
+
+<P>　<CODE>maketad</CODE> は、指定された srl ファイルから本体保存メモリにインポートするための TAD ファイル（<code>.tad</code>）を生成するツールです。</P>
+<P>
+このツールを用いて TWL 用に作成した TAD ファイルは、TWL の開発機上でのみインポート可能です。TWL-SDK の環境を用いて TWL 量産機上で動作可能な TAD ファイルを作成することはできません。
+</P>
+<P>
+maketad が動作するためにはバージョン 0.9.8b-1 以降の cygwin 用 openssl が必要です。
+</P>
+
+<H2>使用方法</H2>
+<H3>起動コマンド</H3>
+<P><CODE>% maketad [OPTION]... SRLFILE [-o outputFile]</CODE></P>
+<P><CODE>SRLFILE</CODE> は、 NAND フラッシュに インポートする ROM ファイルです。srl ファイルを指定します。</P>
+<P><CODE><B>-n</B></CODE> オプションで、 tad の代わりに tad を内包した srl を出力します。
+この srl を書き込んだ DS カードを TWL 本体の DS カードスロットに差し込んでから
+本体保存メモリにインポートした TwlNmenu を起動することで内包する tad からインポートを行うことができます。</P>
+<P><CODE><B>-o</B></CODE> オプションで、出力ファイルのファイル名を指定できます。
+何も指定しなかった場合には、
+<CODE><B>-n</B></CODE> オプションが指定されていないなら (srl ファイル内に保存されたタイトル名).tad
+という名前に、
+<CODE><B>-n</B></CODE> オプションが指定されているなら (srl ファイル内に保存されたタイトル名).tad.srl
+という名前になります。</P>
+<P><CODE><B>-h</B></CODE> オプションは、簡単な使い方を表示します。</P>
+<H2>場所</H2>
+<P><CODE>$TwlSDK/tools/bin/maketad.exe</CODE></P>
+<H2>参照</H2>
+<P>なし</P>
+<H2>履歴</H2>
+<P>
+2008/10/16 -n オプションを追加。openssl についての記述を追加。<br>
+2008/09/16 開発機/量産機での ROM 動作に関する記述を追加<br>
+2008/04/25 NAND アプリのバージョンに関する用語を統一。<br>
+2008/03/19 用語集への準拠。<br>
+2007/12/07 初版作成
+</P>
+</BODY>
+</HTML>

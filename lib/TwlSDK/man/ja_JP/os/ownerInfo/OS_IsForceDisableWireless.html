@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>OS_IsForceDisableWireless</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">OS_IsForceDisableWireless <IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;twl/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>BOOL OS_IsForceDisableWireless(void);</CODE></dd>
+</dl>
+<h2>引数</h2>
+<P>なし。</P>
+<h2>返り値</h2>
+<p>生産時に無線通信の使用を禁止した TWL であるかの情報を取得します。</p>
+<p>無線通信の使用を禁止した、特定用途向けの TWL で動作している場合には TRUE を、通常の TWL で動作している場合には FALSE を返します。</p>
+<p>TWL モードで動作していない場合、常に FALSE を返します。</p>
+<H2>説明</H2>
+<p>生産時に無線通信の使用を禁止した TWL であるかの情報を取得します。</P>
+<P>この関数は特殊な TWL 本体であるかを識別するため関数であり、通常のアプリケーションでは使用する必要はありません。<BR>
+TWL の本体設定で設定可能な無線通信機能の ON/OFF の状態を取得したい場合は <A href="OS_IsAvailableWireless.html">OS_IsAvailableWireless</A> を利用してください。</P>
+
+<p></P>
+<h2>参照</h2>
+<p><CODE>
+<a href="OSOwnerInfo.html">OSOwnerInfoEx</a>, <A href="OS_IsAvailableWireless.html">OS_IsAvailableWireless</A></CODE></p>
+
+<H2>履歴</H2>
+<P>2008/12/16 誤字修正</P>
+<P>2008/10/29 通常のアプリケーションでは使用する必要のない旨を追記</P>
+<P>2008/09/02 初版</P>
+</body>
+</html>

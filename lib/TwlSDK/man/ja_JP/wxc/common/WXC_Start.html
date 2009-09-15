@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 8.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>WXC_Start</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">WXC_Start <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/wxc.h&gt;</CODE><BR>
+  <BR>
+  <CODE>void WXC_Start(void);</CODE><br>
+  <br>
+  </dd>
+</dl>
+<h2>引数</h2>
+<p>なし</p>
+<h2>返り値</h2>
+<p>なし</p>
+
+<H2>説明</H2>
+<P>WXCライブラリ内部のワイヤレス駆動を開始します。<BR>
+２回以上呼び出された場合は何も行いません。<BR>
+この関数の呼び出しの中で、ライブラリの内部状態は<a href="../WXCStateCode.html">WXC_STATE_READY</a>から
+<a href="../WXCStateCode.html">WXC_STATE_ACTIVE</a>に遷移します。<br>
+<BR>
+ワイヤレスを起動する前でしか設定できない機能については、
+<A href="WXC_Init.html">WXC_Init</A>関数の呼び出しからこの関数の呼び出しまでの間に関数を呼び出します。<br>
+</p>
+<h2>参照</h2>
+<p><CODE>
+<A href="../WXCStateCode.html">WXCStateCode</A>
+<br>
+<A href="WXC_Init.html">WXC_Init</A> 
+<A href="WXC_End.html">WXC_End</A> 
+<A href="WXC_Stop.html">WXC_Stop</A> 
+<BR></CODE></P>
+<H2>履歴</H2>
+<P>
+2005/08/04 初版<br>
+</P>
+</body>
+</html>

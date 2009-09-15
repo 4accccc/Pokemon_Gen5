@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MI_GetWramReservation</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MI_GetWramReservation* <IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;twl/mi.h&gt;</CODE><BR>
+  <BR>
+  <CODE>MIWramProc MI_GetWramReservation( <A href="../mi_constant.html">MIWramPos</A> wram, int num )</CODE><br>
+  <BR>
+  <CODE>(define)</CODE><br>
+  <CODE>#define MI_GetWramReservation_A( num )</CODE><br>
+  <CODE>#define MI_GetWramReservation_B( num )</CODE><br>
+  <CODE>#define MI_GetWramReservation_C( num )</CODE><br>
+  </dd>
+</dl>
+<h2>引数</h2>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TD><B><I>wram</I></B></TD>
+      <TD>情報を取得するWRAM</TD>
+    </TR>
+    <TR>
+      <TD><B><I>num</I></B></TD>
+      <TD>情報を取得するWRAM のスロット番号</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<h2>返り値</h2>
+<p>指定のWRAMスロットがどのプロセッサのために予約されているかの情報が返ります。<BR>
+MI_WRAM_ARM7, MI_WRAM_ARM9, MI_WRAM_DSP のいずれかとなります。<BR>
+ただし、どこからも予約されていない場合、MI_WRAM_FREE が返ります。</p>
+<H2>説明</H2>
+<P>指定のWRAMスロットがどのプロセッサのために予約されているかを取得します。</P>
+<P><B><I>wram</I></B> は情報を取得する対象となる WRAM で、<CODE><A href="../mi_constant.html">MIWramPos</A></CODE> 型です。</P>
+<P><B><I>num</I></B> は対象の WRAM のスロット番号で、WRAM-A は 0～3、WRAM-B と WRAM-C は 0～7 
+となります。</P>
+<P><CODE>MI_GetWramReservation_A()</CODE> は <CODE>MI_GetWramReservation( MI_WRAM_A, ... )</CODE> の <CODE>define</CODE> です。<BR>
+<CODE>MI_GetWramReservation_B()</CODE> は <CODE>MI_GetWramReservation( MI_WRAM_B, ... )</CODE> の <CODE>define</CODE> です。<BR>
+<CODE>MI_GetWramReservation_C()</CODE> は <CODE>MI_GetWramReservation( MI_WRAM_C, ... )</CODE> の <CODE>define</CODE> です。<BR>
+
+<h2>内部動作</h2>
+<p>IOレジスタのMBK6～MBK8 にアクセスしています。</p>
+
+<h2>参照</h2>
+<P><A href="about_Wram.html">概要(ワークRAM)</A>、<A href="../mi_constant.html">MI関連の定数</A></P>
+
+<H2>履歴</H2>
+<P>2007/08/22 初版</P>
+</body>
+</html>

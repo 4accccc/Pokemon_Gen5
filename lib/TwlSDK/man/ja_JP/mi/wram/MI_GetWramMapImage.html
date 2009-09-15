@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MI_GetWramMapImage</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MI_GetWramMapImage <IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;twl/mi.h&gt;</CODE><BR>
+  <BR>
+  <CODE>MIWramImage MI_GetWramMapImage_A( void )</CODE><br>
+  <CODE>MIWramImage MI_GetWramMapImage_B( void )</CODE><br>
+  <CODE>MIWramImage MI_GetWramMapImage_C( void )</CODE><br>
+  </dd>
+</dl>
+<h2>引数</h2>
+<P>なし。</P>
+<h2>返り値</h2>
+<p>指定のWRAM領域のイメージ出現設定です。<BR>
+<CODE>MI_WRAM_IMAGE_xxxKB</CODE> で、xxx の部分は、<BR>
+WRAM-A の場合 64, 128, 256 のいずれかで、<BR>
+WRAM-B または WRAM-C の場合 32, 64, 128, 256 のいずれかです。</p>
+<P>WRAM-A の場合</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>返り値</TH>
+      <TH>意味</TH>
+    </TR>
+    <TR>
+      <TD><CODE><B>MI_WRAM_IMAGE_64KB</B></CODE></TD>
+      <TD>64KB単位で WRAM-A のスロット0 のイメージを繰り返す</TD>
+    </TR>
+    <TR>
+      <TD><CODE><B>MI_WRAM_IMAGE_128KB</B></CODE></TD>
+      <TD>128KB単位で WRAM-A のスロット0～1 のイメージを繰り返す</TD>
+    </TR>
+    <TR>
+      <TD><CODE><B>MI_WRAM_IMAGE_256KB</B></CODE></TD>
+      <TD>256KB単位で WRAM-A のスロット0～3 のイメージを繰り返す</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+<BR>
+WRAM-B または WRAM-C の場合</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>返り値</TH>
+      <TH>意味</TH>
+    </TR>
+    <TR>
+      <TD><CODE><B>MI_WRAM_IMAGE_32KB</B></CODE></TD>
+      <TD>32KB単位で WRAM-B(WRAM-C) のスロット0 のイメージを繰り返す</TD>
+    </TR>
+    <TR>
+      <TD><CODE><B>MI_WRAM_IMAGE_64KB</B></CODE></TD>
+      <TD>64KB単位で WRAM-B(WRAM-C) のスロット0～1 のイメージを繰り返す</TD>
+    </TR>
+    <TR>
+      <TD><CODE><B>MI_WRAM_IMAGE_128KB</B></CODE></TD>
+      <TD>128KB単位で WRAM-B(WRAM-C) のスロット0～3 のイメージを繰り返す</TD>
+    </TR>
+    <TR>
+      <TD><CODE><B>MI_WRAM_IMAGE_256KB</B></CODE></TD>
+      <TD>256KB単位で WRAM-B(WRAM-C) のスロット0～7 のイメージを繰り返す</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>説明</H2>
+<P>指定のWRAM領域のイメージ出現設定を取得します。</P>
+<P><CODE>MI_GetWramMapImage_A()</CODE> は WRAM-A について情報を取得します。<BR>
+<CODE>MI_GetWramMapImage_B()</CODE> は WRAM-B について情報を取得します。<BR>
+<CODE>MI_GetWramMapImage_C()</CODE> は WRAM-C について情報を取得します。</P>
+
+<h2>内部動作</h2>
+<p>IOレジスタのMBK6～MBK8 にアクセスしています。</p>
+
+<h2>参照</h2>
+<P><A href="about_Wram.html">概要(ワークRAM)</A>、<A href="../mi_constant.html">MI関連の定数</A></P>
+
+<H2>履歴</H2>
+<P>2007/08/22 初版</P>
+</body>
+</html>

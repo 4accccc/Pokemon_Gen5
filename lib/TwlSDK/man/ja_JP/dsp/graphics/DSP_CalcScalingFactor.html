@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>DSP_CalcScalingFactor</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>DSP_CalcScalingFactor* <IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>定義</H2>
+
+<pre><code>
+f32 DSP_CalcScalingFactorF32(
+		const u16 src_size,
+		const u16 dst_size
+	);
+
+fx32 DSP_CalcScalingFactorFx32(
+		const u16 src_size,
+		const u16 dst_size
+	);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>src_size</strong></em></td>
+<td style="width:87%">拡大（縮小）処理をかける元データのサイズ。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>dst_size</strong></em></td>
+<td style="width:87%">拡大（縮小）処理の出力データの希望するサイズ。</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>指定した値から逆算した、それぞれの型で表された倍率。
+</p>
+
+<h2>説明</h2>
+<p><code><a href="DSP_Scaling.html">DSP_Scaling*</a>、<a href="DSP_ScalingFx.html">DSP_ScalingFx*</a></code> によって出力させたいサイズを引数として渡すことで、倍率をそれぞれの型で逆算させて取得することができます。
+</p>
+<p>ただし、倍率の制約上（31～0.001、小数点第4位以下切捨て）、指定した入力と出力サイズの値によっては正しい倍率を取得できない場合があります。<br>
+例えば、元画像データの解像度が 1000 ピクセルを超える大きなものの場合、本関数で取得した倍率を指定しても 1, 2ラインほどの不足が誤差として現れることがあります。<br>
+その場合、元画像データの解像度または本関数に指定する出力サイズを調整してください。
+</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="DSP_Scaling.html">DSP_Scaling*</a>,
+<a href="DSP_ScalingFx.html">DSP_ScalingFx*</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/03/30 「説明」項に計算過程の誤差について追記<br>
+2008/08/28 初版
+</p>
+</body>
+</html>

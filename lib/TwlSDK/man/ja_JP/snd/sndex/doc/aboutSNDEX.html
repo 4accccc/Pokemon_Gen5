@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>TWL サウンド拡張機能 (overview) </TITLE>
+<LINK rel="stylesheet" href="../../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">TWL サウンド拡張機能 (overview) <IMG src="../../../image/TWL.gif"></H1>
+<P>TWL では、NitroSDK の SND ライブラリの機能に加え、いくつかの拡張機能を備えた <A href="../../list_snd.html#Extra">SNDEX ライブラリ</A>を使うことができます。</P>
+	<H2>CODEC モード</H2>
+    <P>TWL には、マイク入力やスピーカー出力、タッチスクリーンへの入力などを制御する CODEC というハードウェアが搭載されています。<BR>
+       この CODEC を扱う上で、TWL では NITRO との互換性のために以下の2つのモードを用意しています。<BR>
+       CODEC の詳細についてはプログラミングマニュアルを参照して下さい。</P>
+    <TABLE>
+        <TR>
+        <TD width="25%"><B>CODEC-DS</B></TD>
+        <TD width="75%">NITRO 本体のサウンド回路の環境と同等の環境です。<BR>
+NTR ROM が TWL上で動作する場合はこのモードで起動します。</TD>
+        </TR>
+        <TR>
+        <TD width="25%"><B>CODEC-TWL</B></TD>
+        <TD width="75%">TWL 本体固有のサウンド回路を使用する環境です。TWL ROM は基本的にこのモードで起動します。<BR>
+ROM スペックファイルでどちらの CODEC モードを使うか指定することができます。</TD>
+        </TR>
+    </TABLE>
+    <P><FONT color="red">CODEC モードをランタイムに切り替えることはできません。</FONT></P>
+    <P>TWL 本体のカメラ機能を使う場合、静止画撮影時や動画撮影開始・停止時に強制的に特定の音声を鳴らす必要があります。
+       音声強制出力機能は CODEC が CODEC-TWL モードで動作する場合にのみ使用できますので、
+       <FONT color="red"><A href="../../../camera/about_camera.html">カメラ操作用ライブラリ</A>は
+       CODEC が CODEC-TWL モードの場合にのみ使用可能である</FONT>点に注意して下さい。</P>
+
+<H2>拡張機能</H2>
+    <P>TWL では、以下のようなサウンド関連機能が追加されました。それぞれの詳細は、各関数の説明をご覧下さい。</P>
+    <UL>
+        <LI>ヘッドホンの接続状態の取得
+        <LI>消音状態の取得、設定変更
+        <LI>I2S 周波数の取得、変更
+        <LI>音声出力のDSP合成比の取得、変更
+        <LI>スピーカー音量の取得、変更
+        <LI>マイク入力データ、スピーカー出力データへの IIR フィルタの設定
+        <LI>TWL 本体の音量スイッチ押下によるコールバック設定
+    </UL>
+
+<H2>注意</H2>
+    <P>サウンド拡張機能に関する各処理は排他制御により同時には行えません。<BR>
+既に別の SNDEX 関数が処理を行っていたときには、<CODE>SNDEX_RESULT_EXCLUSIVE</CODE> を返して終了します。</P>
+    <P>シャッター音を再生する <CODE><A href="../../../dsp/common/DSP_PlayShutterSound.html">DSP_PlayShutterSound()</A></CODE> を実行すると、内部で自動的にサウンド拡張機能を用いた処理が行われます。<BR>
+    そのため、シャッター音再生が終了するまでの間、SNDEX 関数は <CODE>SNDEX_RESULT_EXCLUSIVE</CODE> を返して何も行わずに終了します。<BR>
+    ただし、<CODE><A href="../SNDEX_SetVolumeSwitchCallback.html">SNDEX_SetVolumeSwitchCallback() </A></CODE>は関数設定のみ行うために成功します。<BR>
+    シャッター音再生処理の終了は、<CODE><A href="../../../dsp/common/DSP_IsShutterSoundPlaying.html">DSP_IsShutterSoundPlaying() </A></CODE>により判定可能です。</P>
+    <P>処理の完了はPXI受信割込みにより検知しますので、PXI受信割込みを禁止していると SNDEX 関数内部でブロックし続けることに注意して下さい（非同期版の場合は、コールバックが返らなくなります）。</P>
+
+<H2>参照</H2>
+<P><A href="../../list_snd.html#Extra">SNDEX 機能一覧</A></P>
+
+<H2>履歴</H2>
+<P>
+    2009/01/22 開発には関係しない「音声強制出力設定の変更」に関する記述の削除<BR>
+    2008/11/07 「注意」にシャッター音再生処理時の排他制御について追記<BR>
+    2008/10/27 「音声強制出力設定の変更」機能の制限について追記<BR>
+    2008/09/30 CODEC モードに伴うカメラの使用制限について追記<BR>
+    2008/09/12 初版</P>
+</BODY>
+</HTML>
+
+
+<!-- <A href="../SNDEX_SetIirFilter.html">SNDEX_SetIirFilter[Async]()</A> -->
+

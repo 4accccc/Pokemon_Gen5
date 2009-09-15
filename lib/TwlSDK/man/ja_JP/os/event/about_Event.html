@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>イベント</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">イベント (overview) 　<IMG src="../../image/NTR.gif" align=middle><IMG src="../../image/TWL.gif" align=middle></H1>
+<P>スレッドの同期方法の一つにイベントによる制御があります。</P>
+<P>イベントはイベント構造体に対して与える情報で、SDKに用意された関数を呼び出すことでイベントを発生させてイベント待ちで停止しているスレッドに対してシグナルすることが出来ます。待っていたスレッドは指定の条件に合致すれば待機状態から動作可能状態へスレッド状態を変化させます。</P>
+<BLOCKQUOTE><IMG src="event_image1.gif" width="501" height="466" border="0"></BLOCKQUOTE>
+<H2>イベント構造体</H2>
+<P>イベント構造体は<CODE> OSEvent</CODE> 型のデータで、以下のメンバが存在します。<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>メンバ名</TH>
+      <TH>型</TH>
+      <TH>用途</TH>
+    </TR>
+    <TR>
+      <TD><CODE>flag</CODE></TD>
+      <TD><CODE>u32</CODE></TD>
+      <TD>イベントフラグ。与えられたイベントのフラグを格納する。</TD>
+    </TR>
+    <TR>
+      <TD><CODE>queue</CODE></TD>
+      <TD><CODE>OSThreadQueue</CODE></TD>
+      <TD>スレッドキュー。スレッドを待機させたり起動するために使用される。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>イベント構造体の初期化</H2>
+<P>スレッドをイベント待ちさせる前に、構造体の初期化を行う必要があります。<BR>
+初期化関数は <CODE><A href="OS_InitEvent.html">OS_InitEvent()</A></CODE> です。<BR>
+</P>
+<BLOCKQUOTE>
+<table style="width:80%">
+<tr>
+<td style="background-color:lightyellow"><CODE>OS_InitEvent( &amp;event );</CODE>
+</td>
+</tr>
+</table>
+</BLOCKQUOTE>
+<H2>イベント待ち</H2>
+<P>イベントを待つには、 <CODE><A href="OS_InitEvent.html">OS_InitEvent()</A></CODE> で初期化したイベント構造体を指定して <CODE><A href="OS_WaitEvent.html">OS_WaitEvent()</A></CODE> を呼び出してください。</P>
+<P><CODE><A href="OS_WaitEvent.html">OS_WaitEvent()</A></CODE> の引数で、イベント待ちの終了条件を指定することが出来ます。指定はビットのパターン
+<CODE>pattern</CODE> と、モード <CODE>mode</CODE> を指定します。モードによって、イベントフラグがビットパターンのビット全てが 1 となったときか、イベントフラグがビットパターンのいずれかのビットが 1 となったときに待ち終了となります。<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>mode の値</TH>
+      <TH>終了条件</TH>
+    </TR>
+    <TR>
+      <TD><CODE>OS_EVENT_MODE_AND</CODE></TD>
+      <TD>すべてのビットが 1 となったときに待ちを終了</TD>
+    </TR>
+    <TR>
+      <TD><CODE>OS_EVENT_MODE_OR</CODE></TD>
+      <TD>いずれかのビットが 1 となったときに待ちを終了</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+指定の条件を満たすまでこの関数を呼び出したスレッドは待機状態となります。正確には、条件が満たされているかを調べるために短時間起きることがありますが、条件が満たされていなければすぐに待機状態となります。つまり、<FONT color="#ff0000">この関数を呼び出しすと他のスレッドに処理が切り替わる可能性があります。</FONT></P>
+<P>条件を満たしたときにイベントフラグをクリアしたい場合は <CODE><A href="OS_WaitEvent.html">OS_WaitEventEx()</A></CODE> を使用してください。</P>
+<P>返り値は条件を満たしたときのイベントフラグの値となります。<CODE><A href="OS_WaitEvent.html">OS_WaitEventEx()</A></CODE> でイベントフラグをクリアする指定をしていた場合は、クリアする前のフラグ値を返します。<BR>
+</P>
+<BLOCKQUOTE>
+<table style="width:80%">
+  
+    <tr>
+      <td style="background-color:lightyellow"><CODE>OS_WaitEvent( &amp;event, pattern, mode );</CODE><BR>
+      <CODE>OS_WaitEventEx( &amp;event, pattern, mode, clearBit );<BR>
+      </CODE></td>
+    </tr>
+  
+</table>
+</BLOCKQUOTE>
+<P><BR>
+すでに終了条件を満たしていた場合はスレッド関数を呼び出すことなく即座に戻ります。<BR>
+</P>
+<H2>イベントフラグのセット</H2>
+<P>イベントフラグをセットして、待機状態のスレッドにシグナルするには <CODE><A href="OS_SignalEvent.html">OS_SignalEvent()</A></CODE> を呼び出してください。<BR>
+</P>
+<BLOCKQUOTE>
+<table style="width:80%">
+  
+    
+    <tr>
+      <td style="background-color:lightyellow"><CODE>OS_SignalEvent( &amp;event, setBit );</CODE></td>
+    </tr>
+  
+
+</table>
+</BLOCKQUOTE>
+<P><BR>
+内部では、イベントをセットした後にイベント構造体内部のスレッドキューを用いてスケジューリングしなおします。<FONT color="#ff0000">この関数を呼び出しすと他のスレッドに処理が切り替わる可能性があります。</FONT></P>
+<H2>イベントフラグのクリア</H2>
+<P>イベント構造体のイベントフラグの特定のビットをクリアする場合、<CODE><A href="OS_ClearEvent.html">OS_ClearEvent()</A></CODE> を呼んでください。すべてのビットをクリアする場合は <CODE><A href="OS_ClearEvent.html">OS_ClearAllEvent()</A></CODE> を呼んでください。<BR>
+</P>
+<BLOCKQUOTE>
+<table style="width:80%">
+  
+    
+    
+    <tr>
+      <td style="background-color:lightyellow"><CODE>OS_ClearEvent( &amp;event, clearBit );</CODE><BR>
+      <CODE>OS_ClearAllEvent( &amp;event )</CODE></td>
+    </tr>
+  
+
+
+</table>
+</BLOCKQUOTE>
+<P><BR>
+この関数によってスレッドが切り替わることはありません。</P>
+<H2>イベントフラグのポーリング</H2>
+<P>通常は <CODE><A href="OS_WaitEvent.html">OS_WaitEvent()</A></CODE> でスレッド関数によってイベント待ちを行いますが、自らが条件を満たしているかどうかを
+<CODE><A href="OS_PollEvent.html">OS_PollEvent()</A></CODE> でポーリングすることも可能です。<BR>
+</P>
+<BLOCKQUOTE>
+<table style="width:80%">
+  
+    
+    
+    
+    <tr>
+      <td style="background-color:lightyellow"><CODE>OS_PollEvent( &amp;event, pattern, mode );</CODE><BR>
+      <CODE>OS_PollEventEx( &amp;event, pattern, mode, clearBit );</CODE></td>
+    </tr>
+  
+
+
+
+</table>
+</BLOCKQUOTE>
+<P><BR>
+待ちの終了条件は、<CODE><A href="OS_WaitEvent.html">OS_WaitEvent*()</A></CODE> と同じです。</P>
+<P>返り値が <CODE>非0</CODE> の値であれば条件を満たしていたということになり、その値はイベントフラグの値となります。返り値が
+0 の場合は条件を満たしていないという意味になります。</P>
+<P><CODE><A href="OS_PollEvent.html">OS_PollEventEx()</A></CODE> では、<CODE><A href="OS_WaitEvent.html">OS_WaitEventEx()</A></CODE> 同様、条件を満たしていた場合にクリアフラグで指定のビットをクリアすることが可能です。</P>
+<H2>例1</H2>
+<P>イベント待ちをするスレッドと、スレッド1、スレッド2があり、イベント待ちをするスレッドは、スレッド1の <CODE>MY_EVENT1</CODE> と、スレッド2 の <CODE>MY_EVENT2</CODE> がシグナルされるのを待つ場合を考えます。両方されるまで待ち続けます。<BR>
+</P>
+<BLOCKQUOTE >
+<table style="width:80%"><tr><td style="background-color:lightyellow"><CODE>OSEvent event;<BR>
+      <BR>
+      #define MY_EVENT1 　0x00000001<BR>
+      #define MY_EVENT2 　0x00000002<BR>
+      #define MY_EVENT　　(MY_EVENT1 | MY_EVENT2)<BR>
+<BR>
+//-------- イベント待ちをするスレッド<BR>
+      func()<BR>
+{<BR>
+      　　　OS_InitEvent( &amp;event );<BR>
+      　　　　　　　　：<BR>
+      　　　(void)OS_WaitEvent( &amp;event, MY_EVENT, <FONT color="#ff0000">OS_EVENT_MODE_AND</FONT> );<BR>
+      　　　OS_Printf( &quot;signaled EVENT1 and EVENT2\n&quot; );<BR>
+      　　　　　　　　：<BR>
+}<BR>
+<BR>
+//-------- スレッド1<BR>
+thread1()<BR>
+{<BR>
+　　　　　　　　：<BR>
+      　　　OS_SignalEvent( &amp;event, MY_EVENT1 );<BR>
+　　　　　　　　：<BR>
+}<BR>
+<BR>
+//-------- スレッド2<BR>
+thread2()<BR>
+{<BR>
+　　　　　　　　：<BR>
+      　　　OS_SignalEvent( &amp;event, MY_EVENT2 );<BR>
+　　　　　　　　：<BR>
+}
+</CODE></td></tr></table>
+</BLOCKQUOTE>
+<P><BR>
+</P>
+<P>上の例は<CODE>MY_EVENT1</CODE> と <CODE>MY_EVENT2</CODE> の両方がシグナルされるのを待ちましたが、どちらか一方がシグナルされるまで待ち続ける場合は下のように一箇所だけを変更します。<BR>
+</P>
+<BLOCKQUOTE >
+<table style="width:80%"><tr><td style="background-color:lightyellow"><CODE>// </CODE>上の例の、<CODE>func()</CODE> の一部を以下のように変更<BR>
+      <BR>
+      <CODE>　　　(void)OS_WaitEvent( &amp;event, MY_EVENT, <FONT color="#ff0000">OS_EVENT_MODE_OR</FONT> );<BR>
+      　　　OS_Printf( &quot;signaled EVENT1 or EVENT2\n&quot; );<BR>
+      　<BR>
+      </CODE></td></tr></table>
+</BLOCKQUOTE>
+<H2>例2</H2>
+<P>イベント待ちをするスレッドと、定期的に <CODE>MY_EVENT1</CODE> をシグナルするスレッド1があります。イベント待ちスレッドは <CODE>MY_EVENT1</CODE> がシグナルされる度に起動され、処理が終わるとまたイベント待ちをして停止状態になります。<BR>
+<BR>
+<BLOCKQUOTE>
+<table style="width:80%"><tr><td style="background-color:lightyellow"><CODE>OSEvent event;<BR>
+      <BR>
+      #define MY_EVENT1 　0x00000001<BR>
+      <BR>
+//-------- イベント待ちをするスレッド<BR>
+      func()<BR>
+{<BR>
+      　　　OS_InitEvent( &amp;event );<BR>
+      　　　　　　　　：<BR>
+      　　　while(1)<BR>
+      　　　{<BR>
+      　　　　　　<FONT color="#ff0000">(void)OS_WaitEventEx( &amp;event, MY_EVENT1,<BR>
+      　　　　　　　　　　　　　　　　　　　OS_EVENT_MODE_AND,<BR>
+      　　　　　　　　　　　　　　　　　　　MY_EVENT1);</FONT><BR>
+      　　　　　　OS_Printf( &quot;signaled EVENT1\n&quot; );<BR>
+      　　　}<BR>
+      　　　　　　　　：<BR>
+      }<BR>
+<BR>
+//-------- スレッド1<BR>
+thread1()<BR>
+{<BR>
+　　　　　　　　：<BR>
+      　　　OS_SignalEvent( &amp;event, MY_EVENT1 );<BR>
+      　　　　　　　　：<BR>
+      　　　OS_SignalEvent( &amp;event, MY_EVENT1 );<BR>
+      　　　　　　　　：<BR>
+      }<BR>
+</CODE></td></tr></table>
+</BLOCKQUOTE>
+<BR>
+<P>この例では、<CODE><A href="OS_WaitEvent.html">OS_WaitEventEx()</A></CODE> を用いてイベント終了時に <CODE>MY_EVENT1</CODE> をクリアしています。これは再びイベントを受け取るためです。</P>
+<P>もしこれを <CODE><A href="OS_WaitEvent.html">OS_WaitEvent()</A></CODE> を用いてイベント待ちし、終了後に自分で <CODE>flag</CODE> をクリアするようにしたら、<CODE><A href="OS_WaitEvent.html">OS_WaitEvent()</A></CODE> の終了と <CODE>flag</CODE> クリアの間に割り込みが入ってそこで次の <CODE>MY_EVENT1</CODE> がシグナルされていた場合にそれを拾うことが出来ません。( 一連の流れを割込み禁止状態で囲めば大丈夫ですが、それは <CODE><A href="OS_WaitEvent.html">OS_WaitEventEx()</A></CODE> を用いるのと変わりません。)<BR>
+</P>
+<BLOCKQUOTE>
+<table style="width:80%"><tr><td style="background-color:lightyellow"><CODE>//func()</CODE> を以下のように変更すると、イベントを取りこぼすことがある。<BR>
+      <BR>
+      <CODE>
+func()<BR>
+{<BR>
+      　　　OS_InitEvent( &amp;event );<BR>
+      　　　　　　　　：<BR>
+      　　　while(1)<BR>
+      　　　{<BR>
+      　　　　　　<FONT color="#ff0000">(void)OS_WaitEvent( &amp;event, MY_EVENT1,<BR>
+      　　　　　　　　　　　　　　　　　OS_EVENT_MODE_AND );</FONT><BR>
+      　　　　　　// ここでイベントが発生した場合<BR>
+      　　　　　　// 下の行ですぐにクリアされてしまう。<BR>
+      　　　　　　<FONT color="#ff0000">event-&gt;flag = 0;</FONT>　　　　　　　　　　<BR>
+      　　　　　　OS_Printf( &quot;signaled EVENT1\n&quot; );<BR>
+      　　　}<BR>
+      　　　　　　　　：<BR>
+      }<BR>
+</CODE>
+</td></tr></table>
+</BLOCKQUOTE>
+<P><BR>
+</P>
+<H2>参照</H2>
+<P><CODE><A href="OS_InitEvent.html">OS_InitEvent</A>, <A href="OS_WaitEvent.html">OS_WaitEvent*</A>, <A href="OS_SignalEvent.html">OS_SignalEvent</A>, <A href="OS_ClearEvent.html">OS_Clear*Event</A>, <A href="OS_PollEvent.html">OS_PollEvent*</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2007/12/04 初版</P>
+</BODY>
+</HTML>

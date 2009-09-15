@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>TWLビットマップフォント</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+
+<H1 align="left">TWLビットマップフォント</H1>
+<H2>概要</H2>
+<P>
+TWL-SDK には TWL ビットマップフォントと呼ばれるフォントリソースが含まれています。
+</P>
+<P>
+TWL ビットマップフォントは TWL-System の NITRO フォント（NFTR） 形式となっています。
+NITRO フォント形式についての解説、および NITRO フォントを使用して文字を描画するライブラリは
+TWL-System に含まれています。
+別途 TWL-System を入手してください。
+</P>
+<P>
+TWL ビットマップフォントは本体内蔵フォントとして TWL 本体に内蔵されています。
+NAND アプリでは本体内蔵フォントを利用することができますので、
+SRL に含めることなく TWL ビットマップフォントを使用することができます。
+本体内蔵フォントについては「<a href="../na/sharedFont/about_sharedFont.html">本体内蔵フォント</a>」を参照してください。
+カードアプリでは本体内蔵フォントを利用できませんので SRL に含めてご使用ください。
+</P>
+
+<H2>ライセンス</H2>
+<P>
+TWL ビットマップフォントは NITRO / TWL アプリケーションであれば自由に使用することができます。
+また影入れ、ふちいれなどの加工を行って使用することも問題ありません。
+</P>
+
+<H2>場所</H2>
+<P>
+TWL ビットマップフォントは TWL-SDK の $TwlSDK/data/font ディレクトリにあります。<br>
+このディレクトリには 3 つの NFTR がありますが、それぞれグリフのデザインは同一であり、
+サイズだけが異なります。
+</P>
+
+<table class="table">
+<thead>
+<tr><th>ファイル名<th>内容
+</thead>
+<tbody>
+<tr><th>tbf_ww_l.NFTR<td>TWL ビットマップフォント 大
+<tr><th>tbf_ww_m.NFTR<td>TWL ビットマップフォント 中
+<tr><th>tbf_ww_s.NFTR<td>TWL ビットマップフォント 小
+</tbody>
+</table>
+
+<H2>フォントのパラメータ</H2>
+<P>
+TWL ビットマップフォントの NITRO フォントパラメータは下記の表のとおりです。
+それぞれの用語の意味については TWL-System のドキュメントを参照してください。
+</P>
+
+<table class="table">
+<thead>
+<tr><th>サイズ          <th>大<th>中<th>小
+</thead>
+<tbody>
+<tr><th>データサイズ    <td>618,676 bytes<td>353,536 bytes<td>220,968 bytes
+<tr><th>セル幅          <td>16 px<td>12 px<td>10 px
+<tr><th>セル高さ        <td>21 px<td>16 px<td>12 px
+<tr><th>ベースライン位置<td>17 px<td>13 px<td>11 px
+<tr><th>最大文字幅      <td>17 px<td>13 px<td>11 px
+<tr><th>改行幅          <td>21 px<td>16 px<td>12 px
+<tr><th>bpp             <td colspan="3">2 bit / pixel (4階調)
+<tr><th>代替文字        <td colspan="3">U+0020 (半角スペース)
+<tr><th>エンコーディング<td colspan="3">UTF-16
+</tbody>
+</table>
+
+<H2>文字セット</H2>
+<P>
+内蔵フォントはおおよそ以下の文字セットをカバーできます。
+エンコーディングは UTF-16 です。
+</P>
+<ul>
+<li>ASCII
+<li>ISO 8859-1
+<li>ISO 8859-7
+<li>CP 932
+<li>CP 1252
+<li>CP 1253
+<li>JIS X0201
+<li>JIS X0208
+<li>DS 外字
+<li>Wii 外字
+</ul>
+
+
+<H2>グリフイメージ</H2>
+<P>
+参考として各フォント内のグリフ一覧を掲載します。
+</P>
+<table class="table">
+<thead>
+<tr><th>グリフ種別<th>グリフ画像
+</thead>
+<tr><th>ASCII                   <td><a href="tbf/ascii_l.png">フォント大</a> <a href="tbf/ascii_m.png">フォント中</a> <a href="tbf/ascii_s.png">フォント小</a>
+<tr><th>欧州文字                <td><a href="tbf/european_l.png">フォント大</a> <a href="tbf/european_m.png">フォント中</a> <a href="tbf/european_s.png">フォント小</a>
+<tr><th>JIS X0201 かな          <td><a href="tbf/x0201_kana_l.png">フォント大</a> <a href="tbf/x0201_kana_m.png">フォント中</a> <a href="tbf/x0201_kana_s.png">フォント小</a>
+<tr><th>JIS X0208 かな記号      <td><a href="tbf/x0208_phonogram_l.png">フォント大</a> <a href="tbf/x0208_phonogram_m.png">フォント中</a> <a href="tbf/x0208_phonogram_s.png">フォント小</a>
+<tr><th>JIS X0208 第一水準漢字  <td><a href="tbf/x0208_level1_l.png">フォント大</a> <a href="tbf/x0208_level1_m.png">フォント中</a> <a href="tbf/x0208_level1_s.png">フォント小</a>
+<tr><th>JIS X0208 第二水準漢字  <td><a href="tbf/x0208_level2_l.png">フォント大</a> <a href="tbf/x0208_level2_m.png">フォント中</a> <a href="tbf/x0208_level2_s.png">フォント小</a>
+<tr><th>DS 外字                 <td><a href="tbf/ds_extension_l.png">フォント大</a> <a href="tbf/ds_extension_m.png">フォント中</a> <a href="tbf/ds_extension_s.png">フォント小</a>
+<tr><th>Wii 外字                <td><a href="tbf/wii_extension_l.png">フォント大</a> <a href="tbf/wii_extension_m.png">フォント中</a> <a href="tbf/wii_extension_s.png">フォント小</a>
+</table>
+
+
+<H2>履歴</H2>
+<P>
+2008/09/16 初版
+</P>
+
+</BODY>
+</HTML>

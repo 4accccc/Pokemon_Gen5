@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>MI_VBlankNDmaCopy*</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">MI_VBlankNDmaCopy* <IMG src="../../image/TWL.gif" width="24" height="12" border="0" align=middle></H1>
+<H2>構文</H2>
+<DL>
+  <DD><CODE>#include &lt;twl/mi.h&gt;</CODE><BR>
+  <BR>
+  
+  <DD><CODE>void MI_VBlankNDmaCopy( u32 ndmaNo,</CODE><BR>
+  　　　　　　　　　　　　　　　　　　　　　<CODE>const void *src,<BR>
+  　　　　　　　　　　　　　 void *dest,</CODE><BR>
+  　　　　　　　　　　　　　　　　　　　　　<CODE>u32 size );</CODE><BR>
+  <DD><CODE>void MI_VBlankNDmaCopyAsync( u32 ndmaNo,</CODE><BR>
+  　　　　　　　　　　　　　　　　　　　　　<CODE>const void *src,<BR>
+  　　　　　　　　　　　　　 void *dest,</CODE><BR>
+  　　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,<BR>
+  　　　　　　　　　　　　　 MINDmaCallback calback,<BR>
+  　　　　　　　　　　　　　 void* arg );</CODE><BR>
+</DL>
+<H2>引数</H2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD><B><I>ndmaNo</I></B></TD>
+      <TD>使用DMAチャンネル</TD>
+    </TR>
+    <TR>
+      <TD><B><I>src</I></B></TD>
+      <TD>転送元アドレス</TD>
+    </TR>
+    <TR>
+      <TD><B><I>dest</I></B></TD>
+      <TD>転送先アドレス</TD>
+    </TR>
+    <TR>
+      <TD><B><I>size</I></B></TD>
+      <TD>転送サイズ</TD>
+    </TR>
+    <TR>
+      <TD><B><I>callback</I></B></TD>
+      <TD>DMA終了時のコールバック</TD>
+    </TR>
+    <TR>
+      <TD><B><I>arg</I></B></TD>
+      <TD>DMA終了時のコールバック引数</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>返り値</H2>
+<P>なし。</P>
+<H2>説明</H2>
+<P>新規DMAを用いてVブランクコピーを行います。Vブランクが発生したときにDMAが起動します。</P>
+<P>新規DMAを用いてワード(4byte)単位でコピーを行います。転送元アドレス <B><I>src</I></B>、転送先アドレス<B><I>dest</I></B> は4バイトアラインメントする必要があります。転送サイズ <B><I>size</I></B> も4の倍数である必要があります。</P>
+<P><CODE>MI_VBlankNDmaCopy()</CODE> は Vブランク発生時にDMAを起動して終了します。<CODE>MI_VBlankNDmaCopyAsync()</CODE> は、Vブランク発生時にDMAを起動して、DMA終了時にコールバック <B><I>callback</I></B> を呼びます。コールバックは <CODE>MINDmaCallback</CODE>型 (void*引数１つを取る void型関数 ) です。<B><I>callback</I></B> はシステムの DMA割り込みハンドラ内から呼び出されますので、割り込み禁止状態で呼び出されます。</P>
+<P>Async型のAPIの機能を引き出すにはその使用法を十分に理解する必要があります。</P>
+<H2>内部動作</H2>
+<P>新規DMAレジスタにアクセスします。</P>
+<H2>参照</H2>
+<P><CODE><A href="MI_NDmaCopy.html">MI_NDmaCopy</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2007/10/04 初版</P>
+</BODY>
+</HTML>

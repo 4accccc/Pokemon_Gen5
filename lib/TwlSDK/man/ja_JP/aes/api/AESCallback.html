@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>AESCallback</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">AESCallback　<IMG src="../../image/TWL.gif" width="23" height="12" border="0" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <pre><CODE>#include &lt;twl/aes.h&gt;
+
+typedef void (*AESCallback)(<a href="AESResult.html">AESResult</a> result, void* arg);
+</CODE></pre><br>
+</dd>
+</dl>
+
+<H2>要素</H2>
+<TABLE border="1" width="100%" class="members">
+  <TBODY>
+    <TR>
+      <TH>result</TH>
+      <TD>AES 処理の実行結果。</TD>
+    </TR>
+    <TR>
+      <TH>arg</TH>
+      <TD>ユーザ定義のパラメータ。コールバック関数を引数とする関数において、コールバック関数の次の引数が渡されます。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+<P>
+AES の処理が完了したときに呼び出されるコールバック関数の型です。
+</P>
+<P>
+<span class="argument">result</span> には以下のいずれかの値が渡されます。
+</P>
+<ul>
+<li>AES_RESULT_SUCCESS
+<li>AES_RESULT_VERIFICATION_FAILED
+<li>AES_RESULT_BUSY
+</ul>
+
+<H2>履歴</H2>
+<P>
+2007/12/25 初版
+</P>
+</BODY>
+</HTML>

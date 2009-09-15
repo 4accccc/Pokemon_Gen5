@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>NA_FormatTitleArchive</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">NA_FormatTitleArchive　<IMG src="../../image/TWL.gif" width="23" height="12" border="0" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <pre><CODE>#include &lt;twl/na.h&gt;
+
+<a href="../../fs/fs_result_const.html">FSResult</a> NA_FormatTitleArchive(<a href="NATitleArchive.html">NATitleArchive</a> archive);
+</CODE></pre>
+</dd>
+</dl>
+
+<h2>引数</h2>
+<TABLE border="1" width="100%" class="arguments">
+  <TBODY>
+    <TR>
+      <TH>archive</TH>
+      <TD>初期化するセーブデータ領域を指定します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>
+正しく処理が完了した場合は <code>FS_RESULT_SUCCESS</code> が返ります。
+<br>
+そのほかの値はエラーです。
+特に以下の値は固有の意味を持ちます。
+</p>
+
+<table class="table">
+<tr><th>FS_RESULT_UNSUPPORTED<td>ニンテンドー DS 上で動作しているため使用できません。
+</table>
+
+
+<H2>説明</H2>
+<P>
+指定したセーブデータ領域を初期化します。<br>
+初期化できるのは自身のセーブデータ領域のみです。
+他のアプリのセーブデータ領域は初期化できません。
+</p>
+<P>
+セーブデータ領域の初期化を行うと、
+セーブデータ領域内の全てのディレクトリおよびファイルが削除されます。
+また FS ライブラリの関数で FS_RESULT_BAD_FORMAT が返ってくるような
+状況を回復します。
+</p>
+<P>
+この関数は初期化するセーブデータ領域の大きさに比例して処理に時間がかかります。
+おおよそ 1 MB につき 10 秒の時間がかかりますので、
+ガイドラインに従い適切な表示を行ってください。
+なお、この関数は同期関数であるため、処理が完了するまで制御を返さないことにご注意ください。
+</p>
+
+
+<h2>参照</h2>
+<p><CODE>
+</CODE></p>
+
+<H2>履歴</H2>
+<P>
+2008/11/26 同期関数であることを明記。<br>
+2008/09/26 初版
+</P>
+</body>
+</html>

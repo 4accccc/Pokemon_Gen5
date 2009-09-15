@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+	<HEAD>
+		<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+		<title>SNDEX_SetVolumeSwitchCallback</title>
+		<link rel="stylesheet" href="../../css/nitro.css" type="text/css">
+	</HEAD>
+	<BODY>
+		<H1>SNDEX_SetVolumeSwitchCallback <IMG src="../../image/TWL.gif" width="24" height="12" border="0" align=middle></H1>
+
+		<H2>構文</H2>
+		<DL>
+			<DD><CODE>#include &lt;twl/snd.h&gt;</CODE></DD>
+			<DD><PRE><CODE>void SNDEX_SetVolumeSwitchCallback( SNDEXCallback callback, void* arg );</CODE></PRE></DD>
+		</DL>
+
+		<H2>引数</H2>
+		<TABLE>
+			<TBODY>
+				<TR>
+					<TH width="25%">callback</TH>
+					<TD width="75%">TWL本体の音量スイッチ押下の通知を受ける<code><A href="SNDEXCallback.html">SNDEXCallback型</A></code>コールバック関数を指定します。</TD>
+				</TR>
+				<TR>
+					<TH width="25%">arg</TH>
+					<TD width="75%"><B>callback</B>に指定した関数に渡す引数を指定します。</TD>
+				</TR>
+			</TBODY>
+		</TABLE>
+		<H2>説明</H2>
+		<P>
+			TWL本体の音量スイッチを押下した際に通知を受けるコールバック関数を設定します。
+		</P>
+		<P>
+			音量スイッチ押下はPXI受信割込みによって通知されるため、PXI受信割込みを禁止しているとコールバックが発生しないことに注意して下さい。
+		</P>
+		<P>
+			音量スイッチ押下時に他のサウンド拡張機能に関する処理を実行中だとコールバックが発生しません。
+		</P>
+
+        <H2>注意</H2>
+        <P>コールバックの中では排他制御中のために SNDEX 関数を使用できません。呼び出しても <CODE>SNDEX_RESULT_EXCLUSIVE</CODE> を返します。
+
+		<H2>参照</H2>
+		<P>
+			<CODE>
+				<A href="SNDEXCallback.html">SNDEXCallback</A>
+			</CODE>
+		</P>
+
+		<H2>履歴</H2>
+		<P>
+            2008/10/10 用語の統一、コールバック中での制限について追記<BR>
+			2008/06/30 初版
+		</P>
+	</BODY>
+</HTML>

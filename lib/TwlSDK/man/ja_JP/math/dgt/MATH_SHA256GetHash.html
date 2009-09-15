@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MATH_SHA256GetHash</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MATH_SHA256GetHash<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;nitro/math/dgt.h&gt;
+
+static inline void MATH_SHA256GetHash( <A href="MATHSHA256Context.html">MATHSHA256Context</A> *context, void* digest );
+</CODE></PRE>
+  </dd>
+</dl><h2>引数</h2>
+
+<table border="1" width="100%">
+    <TR>
+      <TD width="176"><em><strong><font face="Courier New">context</font></strong></em></TD>
+      <TD width="670">SHA-256 生成用のコンテキスト構造体へのポインタ。</TD>
+    </TR>
+    <TR>
+      <TD width="176"><em><strong><font face="Courier New">digest</font></strong></em></TD>
+      <TD width="670">メッセージダイジェスト値を格納するメモリへのポインタ。</TD>
+    </TR>
+  </table>
+<h2>返り値</h2>
+<p>なし。</p>
+<H2>説明</H2>
+<P>この関数は、SHA-256 によるダイジェスト値を得ます。context 引数をあらかじめ <CODE><A href="MATH_SHA256Init.html">MATH_SHA256Init()</A></CODE>で初期化した上で、
+入力データを <CODE><A href="MATH_SHA256Update.html">MATH_SHA256Update()</A></CODE>で与えておく必要があります。<BR>
+生成されるメッセージダイジェスト値の長さは 256 bit、すなわち MATH_SHA256_DIGEST_SIZE (= 32) バイトです。このサイズが格納できる領域を digest 引数に渡すようにしてください。<BR>
+なお、この関数の内部で context を書き換えてしまいますので、同じ context を <CODE><A href="MATH_SHA256Update.html">MATH_SHA256Update()</A></CODE>で使いつづけることはできません。<BR>
+<BR>
+SHA-256 はメッセージダイジェスト値を求めるためのアルゴリズムです。詳細は FIPS (Federal Information Processing Standards) が発行している FIPS PUB 180-2 を参照してください。<BR>
+</P>
+<h2>参照</h2>
+<P><CODE><A href="MATH_SHA256Init.html">MATH_SHA256Init</A>, <A href="MATH_SHA256Update.html">MATH_SHA256Update</A></CODE></P>
+<H2>履歴</H2>
+<P>
+2008/05/23 初版<BR>
+</P>
+</body>
+</html>

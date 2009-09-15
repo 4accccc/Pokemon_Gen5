@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MI_SecureUnfilterDiff</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MI_SecureUnfilterDiff <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/mi.h&gt;</CODE><BR>
+  <BR>
+  <CODE>s32 MI_SecureUnfilterDiff( register const void *srcp, u32 srcSize, register void *destp, u32 dstSize);</CODE><br>
+</dl>
+<h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>srcp</STRONG></EM></TD>
+      <TD width="87%">差分フィルタがかけられたデータの格納されているソースアドレス</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>srcSize</STRONG></EM></TD>
+      <TD width="87%">ソースデータサイズ</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>destp</STRONG></EM></TD>
+      <TD width="87%">展開するディスティネーションアドレス。ソースアドレスと同じ領域でも構いません。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>dstSize</STRONG></EM></TD>
+      <TD width="87%">展開するディスティネーションサイズ</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>MI_ERR_SUCCESS</STRONG></EM></TD>
+      <TD width="87%">正常終了</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>MI_ERR_UNSUPPORTED</STRONG></EM></TD>
+      <TD width="87%">対応していない圧縮データタイプ</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>MI_ERR_SRC_SHORTAGE</STRONG></EM></TD>
+      <TD width="87%">ソースデータサイズが過小</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>MI_ERR_SRC_REMAINDER</STRONG></EM></TD>
+      <TD width="87%">ソースデータサイズが過大</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+<P>差分フィルタがかけられたデータを展開し、指定のメモリ領域に書き込みます。<BR>
+ソースアドレスは4byte 境界に合わせてください。<BR>
+<BR>
+ソースアドレスとデスティネーションアドレスに同じ領域へのポインタを渡しても構いません。</P>
+
+<h2>参照</h2>
+<p><CODE>
+<A href="MI_SecureUncompressHuffman.html">MI_SecureUncompressHuffman</A>,
+<A href="MI_SecureUncompressRL.html">MI_SecureUncompressRL</A>,
+<A href="MI_SecureUncompressLZ.html">MI_SecureUncompressLZ</A>
+</CODE></p>
+
+<H2>履歴</H2>
+<P>2008/05/22 初版</P>
+</body>
+</html>

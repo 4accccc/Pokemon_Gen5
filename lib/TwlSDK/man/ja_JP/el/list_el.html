@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<BASE target="main">
+<TITLE>ELFローダー(EL) API 機能一覧</TITLE>
+<LINK rel="stylesheet" href="../css/apilist.css">
+</HEAD>
+<BODY>
+<H1>ELFローダー(EL) API 機能一覧</H1>
+
+<H3><A name="Init">初期化</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_Init.html" target="_self">EL_Init</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ELライブラリを初期化します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H3><A name="Entry">動的モジュール登録</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_Link.html" target="_self">EL_Link</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ELFオブジェクトまたはそのアーカイブをユーザのリードAPIを通して再配置する。<br>
+          本関数は使用せず、<a href="EL_LinkEx.html">EL_LinkEx()</a> の使用を推奨します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_Link.html" target="_self">EL_LinkFile</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ELFオブジェクトまたはそのアーカイブをファイルからバッファに再配置する。<br>
+          本関数は使用せず、<a href="EL_LinkEx.html">EL_LinkFileEx()</a> の使用を推奨します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_Link.html" target="_self">EL_LinkImage</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ELFオブジェクトまたはそのアーカイブをメモリからバッファに再配置する。<br>
+          本関数は使用せず、<a href="EL_LinkEx.html">EL_LinkImageEx()</a> の使用を推奨します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_LinkEx.html" target="_self">EL_LinkEx</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ELFオブジェクトまたはそのアーカイブをユーザのリードAPIを通して再配置する。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_LinkEx.html" target="_self">EL_LinkFileEx</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ELFオブジェクトまたはそのアーカイブをファイルからバッファに再配置する。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_LinkEx.html" target="_self">EL_LinkImageEx</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ELFオブジェクトまたはそのアーカイブをメモリからバッファに再配置する。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_CalcEnoughBufferSizeforLink.html" target="_self">EL_CalcEnoughBufferSizeforLink</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>再配置に必要となるバッファサイズを求める。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_CalcEnoughBufferSizeforLink.html" target="_self">EL_CalcEnoughBufferSizeforLinkFile</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>再配置に必要となるバッファサイズを求める。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_CalcEnoughBufferSizeforLink.html" target="_self">EL_CalcEnoughBufferSizeforLinkImage</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>再配置に必要となるバッファサイズを求める。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+
+<H3><A name="Link">リンク処理</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_ResolveAll.html" target="_self">EL_ResolveAll</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>アドレステーブルを使って未解決のシンボルを解決する。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_Export.html" target="_self">EL_Export</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>アドレステーブルにエントリを追加する。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_AddStaticSym.html" target="_self">EL_AddStaticSym</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>アドレステーブルにスタティック側のエントリを追加する。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_GetGlobalAdr.html" target="_self">EL_GetGlobalAdr</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>アドレステーブルから指定文字列に該当するアドレスを返す。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_Unlink.html" target="_self">EL_Unlink</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>オブジェクトをアンリンクする。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H3><A name="Other">その他</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_IsResolved.html" target="_self">EL_IsResolved</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>オブジェクトに未解決な外部参照が残っていないかを調べる。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_GetLibSize.html" target="_self">EL_GetLibSize</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ELFオブジェクトのサイズを求める。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="EL_GetResultCode.html" target="_self">EL_GetResultCode</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>最後に行った処理の結果を取得します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H3><A name="Const">定数</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="ELResult.html" target="_self">ELResult</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>リンク処理の結果を表します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H3><A name="Struct">型・構造体</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="ELAdrEntry.html" target="_self">ELAdrEntry</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>エクスポートシンボル情報を格納するための構造体。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="ELAlloc.html" target="_self">ELAlloc</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ELライブラリに渡すメモリ確保のユーザAPI。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="ELFree.html" target="_self">ELFree</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ELライブラリに渡すメモリ開放のユーザAPI。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="ELReadImage.html" target="_self">ELReadImage</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>オブジェクトファイルを読み込みためのユーザAPI。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="ELLinkMode.html" target="_self">ELLinkMode</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>動的リンクをテストする際のモードを表す列挙型です。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<table border="0" height="100%"><tr><td style="background-color : white;"></td></tr></table>
+
+</BODY>
+</HTML>

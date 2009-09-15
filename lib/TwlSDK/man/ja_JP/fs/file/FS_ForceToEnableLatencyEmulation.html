@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>FS_ForceToEnableLatencyEmulation</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">FS_ForceToEnableLatencyEmulation <img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/fs.h&gt;</CODE><BR>
+  <BR>
+  <CODE>void FS_ForceToEnableLatencyEmulation( void );</CODE><br>
+  <br>
+  </dd>
+</dl>
+<h2>引数</h2>
+<p>なし</p>
+
+<h2>返り値</h2>
+<p>なし</p>
+
+<H2>説明</H2>
+<p>本体NANDメモリやSDカードへアクセスする際、劣化したデバイスで生じるランダムなウェイト時間をドライバで擬似的に再現させます。<br />
+このエミュレーション機能はDebugビルドまたはReleaseビルドでは常に有効ですが
+FinalROMビルド時にはデフォルトで無効となるため、入念にデバッグする場合はこの関数で明示的に指定する必要があります。</p>
+
+<H2>注意</H2>
+<p>真の製品環境(FinalROMビルドかつ量産実機上での動作)では、この関数を呼び出してもエミュレーション機能は有効になりません。</p>
+
+<h2>参照</h2>
+<p>
+<A href="../overview/about_Archive.html#FAT">FATアーカイブ</A>
+</p>
+
+<h2>履歴</h2>
+<p>
+2009/01/07 製品環境では常にエミュレーション機能が無効になる旨を追記<br />
+2008/11/27 初版<br />
+</p>
+
+</body>
+</html>

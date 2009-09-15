@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>OS_ResetRequestIrqMask</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">OS_ResetRequestIrqMask <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>OSIrqMask OS_ResetRequestIrqMask( OSIrqMask intr );</CODE></dd>
+</dl><h2>引数</h2>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TD><B><I>intr</I></B></TD>
+      <TD>リセットしたい IRQ割り込み要求の要因を論理和で示したもの。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<h2>返り値</h2>
+<p>この関数を呼ぶ前の、IRQ割り込み要求です。IRQ の種類については以下を参照してください。</p>
+<p>→ <A href="interrupts_list.html">割り込みの種類</A></p>
+
+<H2>説明</H2>
+<P>IRQ割り込み要求のうち、指定の要因だけをリセットします。</P>
+<P>この関数では、指定の割り込み要因に対応する値を IF レジスタに書き込みます。bit=1
+で書き込んだ要因がリセットされます。</P>
+<H3><BR>
+割り込みの種類</H3>
+<P> <B><I>intr</I></B> でリセットする割り込み要因を指定します。割り込みの種類については以下を参照してください。</P>
+<P>→ <A href="interrupts_list.html">割り込みの種類</A></P>
+<h2>参照</h2>
+<p><CODE><A href="OS_GetRequestIrqMask.html">OS_GetRequtestIrqMask</A><br>
+</CODE></p>
+
+<h2>内部動作</h2>
+<p>IOレジスタの、IF レジスタ(割り込み要求レジスタ)に書き込みを行ないます。</p>
+
+<H2>履歴</H2>
+<P>2008/05/30 割り込みの種類を別ページにした。<BR>
+2005/03/08 用語統一 [割込み] → [割り込み]<br>
+2004/12/08 OS_IE_KEY についての注意を追加<BR>
+2004/11/24 OS_IE_SIO を削除<BR>
+2004/09/01 「サブプロセッサ」を「ARM7」に、「サブプロセッサ間」を「ARM9・ARM7間」に変更<BR>
+2003/12/01 初版</P>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>ワークRAM (overview)</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">ワークRAM (overview)</H1>
+<H2>WRAMの種類</H2>
+<P>TWLには、以下のWRAMが搭載されています。表中のセルの背景色はすぐ下の図の同じ色の領域に対応しています。<BR>
+<TABLE>
+<TR>
+      <TH width=48>プラットフォーム</TH>
+      <TH width="276">マスタープロセッサ</TH>
+      <TH width="32">容<BR>
+      量<BR>
+      (KB)</TH>
+      <TH width="347">アドレス</TH>
+      <TH>A<BR>
+      R<BR>
+      M<BR>
+      9</TH>
+      <TH width="85">A<BR>
+      R<BR>
+      M<BR>
+      7</TH>
+      <TH width="200">呼び方</TH>
+    </TR>
+<TR>
+      <TD style="background-color: #ffccff;" width=48><img src="../../image/NTR.gif"><img src="../../image/TWL.gif"></TD>
+      <TD style="background-color: #ffccff;" width="276">ARM7専用</TD>
+      <TD style="background-color: #ffccff;" width="32">64</TD>
+      <TD style="background-color: #ffccff;" width="347">0x3800000～0x380FFFF</TD>
+      <TD style="background-color: #ffccff;" align="center">×</TD>
+      <TD style="background-color: #ffccff;" align="center" width="85">○</TD>
+      <TD style="background-color: #ffccff;" width="200">ARM7専用WRAM</TD>
+    </TR>
+<TR>
+      <TD style="background-color: #ffffcc;" width="48"><img src="../../image/NTR.gif"><img src="../../image/TWL.gif"></TD>
+      <TD style="background-color: #ffffcc;" width="276">ARM9<BR>
+      /ARM7共用<B><FONT color="#ff0000">*1</FONT></B></TD>
+      <TD style="background-color: #ffffcc;" width="32">32</TD>
+      <TD style="background-color: #ffffcc;" width="347"><B><FONT color="#3300ff">(NITRO)<BR>
+      </FONT></B>0x37F8000～0x37FFFFF<BR>
+      <B><FONT color="#3300ff">(TWL/NITRO)<BR>
+      </FONT></B>0x37F8000～0x37FFFFF<BR>
+      <B><FONT color="#3300ff">(TWL)<BR>
+      </FONT></B>0x3040000～0x3047FFF</TD>
+      <TD style="background-color: #ffffcc;" align="center">×</TD>
+      <TD style="background-color: #ffffcc;" align="center" width="85">○</TD>
+      <TD style="background-color: #ffffcc;" width="200">WRAM-0<BR>
+      /WRAM-1</TD>
+    </TR>
+    <TR>
+      <TD style="background-color: #ccccff;"><img src="../../image/BPT.gif"><img src="../../image/TWL.gif"></TD>
+      <TD style="background-color: #ccccff;" width="276">ARM9<BR>
+      /ARM7<BR>
+      /DSP(データ領域)共用</TD>
+      <TD style="background-color: #ccccff;" width="32">256</TD>
+      <TD style="background-color: #ccccff;" width="347">0x3700000～0x373FFFF</TD>
+      <TD style="background-color: #ccccff;" align="center">○</TD>
+      <TD style="background-color: #ccccff;" align="center" width="85">○</TD>
+      <TD style="background-color: #ccccff;" width="200">WRAM-C</TD>
+    </TR>
+<TR>
+      <TD style="background-color: #9999ff;"><img src="../../image/BPT.gif"><img src="../../image/TWL.gif"></TD>
+      <TD style="background-color: #9999ff;" width="276">ARM9<BR>
+      /ARM7<BR>
+      /DSP(コード領域)共用</TD>
+      <TD style="background-color: #9999ff;" width="32">256</TD>
+      <TD style="background-color: #9999ff;" width="347">0x3740000～0x377FFFF</TD>
+      <TD style="background-color: #9999ff;" align="center">○</TD>
+      <TD style="background-color: #9999ff;" align="center" width="85">○</TD>
+      <TD style="background-color: #9999ff;" width="200">WRAM-B</TD>
+    </TR>
+<TR>
+      <TD style="background-color: #99ccff;"><img src="../../image/BPT.gif"><img src="../../image/TWL.gif"></TD>
+      <TD style="background-color: #99ccff;" width="276">ARM9/ARM7共用<B><FONT color="#ff0000">*1</FONT></B></TD>
+      <TD style="background-color: #99ccff;" width="32">256</TD>
+      <TD style="background-color: #99ccff;" width="347"><FONT color="#3300ff"><B>(TWL/NITRO)</B></FONT><B><FONT color="#ff0000"><BR>
+      </FONT></B>0x3000000～0x303FFFF<BR>
+      <B><FONT color="#3300ff">(TWL)<BR>
+      </FONT></B>0x37C0000～0x37FFFFF</TD>
+      <TD style="background-color: #99ccff;" align="center">×</TD>
+      <TD style="background-color: #99ccff;" align="center" width="85">○</TD>
+      <TD style="background-color: #99ccff;" width="200">WRAM-A</TD>
+    </TR>
+</TABLE>
+<P><B><FONT color="#ff0000">　　　*1</B>　この領域はARM7に割り当てているため、ハードウェア的には可能でも SDK としてはARM9への切り替えは出来ません。</FONT></P>
+<BR>
+TWLで新たに追加された 3つの256KBのWRAMを、WRAM-A 、WRAM-B、WRAM-C と呼びます。それぞれのWRAMは決まった範囲である程度自由にメモリマップ上にマッピング出来ますが、
+TwlSDKでは上の表の位置に固定して使用します。<BR>
+<BR>
+<BR>
+<CENTER><IMG src="image_map1-0.gif" border="0"><IMG src="image_map1-1.gif" border="0"><IMG src="image_map1-2.gif" border="0"></CENTER>
+<BR><BR>
+<P>WRAM-A は 4つの64KBスロットを、WRAM-BとWRAM-C は8つの32KBスロットを持っており、
+それぞれを異なるプロセッサに割り当てたり、使用許可／不許可を変更することが可能です。
+ハードウェアの本来の機構的には スロットの割り当てアドレスをある範囲で変更できますが、TwlSDKでは以下のアドレスで固定とします。但し、TWL専用ROM時に、WRAM-B
+または WRAM-C のイメージ領域を利用してより大きなARM7コンポーネントを配置することがあります(後述)。<P align="center"><BR>
+<IMG src="image_map2.gif" border="0"></P>
+<H2>TWL専用ROMでのコンポーネント領域拡張</H2>
+<P>TWL専用ROMでは、WRAM-B のイメージ領域を利用してより大きな ARM7コンポーネントを配置することが可能です。<BR>
+(TWL/NITRO ハイブリッドROMでも WRAM-B または WRAM-C のイメージが存在しますが、ここで説明するような
+ARM7 コンポーネント置き場として使用するには不適切です。)</P>
+<P>下の図のように WRAM-B のイメージ領域が 0x03780000～0x037BFFFF に現れます。</P>
+<P><IMG src="image_map1-3.gif" border="0"></P>
+<P>通常、ARM7コンポーネントプログラム・システム領域・スタック領域は WRAM-A(256KB)
+と ARM7専用WRAM(64KB) を併せた領域に配置されますので、最大サイズは合計の
+320KB に制限されていました。しかし WRAM-B のイメージ領域が WRAM-A と連続した領域になっていることに注目して、WRAM-Bのイメージ領域(256KB)
+と WRAM-A(256KB) と ARM7専用WRAM(64KB) をこの目的で使用すれば、合計 586KB
+まで拡張することができることになります。ただしこの場合、WRAM-B をユーザが使用することは出来ません。</P>
+<P><IMG src="image_map1-4.gif" border="0"></P>
+<P>また、WRAM-B はどうしてもユーザが使用したいという場合は特別な設定により、WRAM-C
+のイメージを WRAM-A と連続させることで同様に通常より大きな ARM7コンポーネントプログラムの配置を行うことが出来ます。この場合、WRAM-C
+はユーザが使用することは出来ません。</P>
+<P><IMG src="image_map1-5.gif" border="0"></P>
+<P>このように WRAM-B もしくは WRAM-C のイメージを用いてより大きい ARM7 コンポーネントプログラムを使用する方法に関しては
+別ドキュメントを参照してください。(*まだ準備できていません)<BR>
+</P>
+<H2>WRAMマネージャ (WRAM-A/B/C)</H2>
+<P><BR>
+TwlSDKでは WRAM-A ～ WRAM-C を、ARM9、ARM7、DSP で効率よく使用するために
+WRAMマネージャが用意されています。<FONT color="#ff0000">但し、WRAM-A は ARM7が用いますので割り当てを変更することは出来ません。ARM9、DSP
+が使用できるのはWRAM-B と WRAM-C となります。</FONT><FONT color="#ff0000">また、WRAM-B または WRAM-C のイメージを ARM7のコンポーネントプログラム領域に割り当てている場合も、この部分の割り当てを変更することは出来ません。</FONT></P>
+<P>このWRAMマネージャは、WRAM-A～WRAM-C (ただしユーザが変更できない WRAM があることは前述の通りです。)
+を対象にしているので、以下WRAMマネージャに関する記述中「共有WRAM」という表現が出た場合、これら3つの256KBのWRAMのみを指し示します。更にそうしたものに対しては項タイトルのところに&quot;(WRAM-A/B/C)&quot;
+と記述しています。<BR>
+</P>
+<P>WRAMマネージャは、ARM9やARM7やDSPが勝手に共有WRAM を使用しないように各プロセッサの要求を調停する役割を果たします。具体的に
+WRAM マネージャが行う主な仕事は以下の通りです。<BR>
+<UL>
+<LI> プロセッサがある共有WRAMのスロットを使用することを予約して、他のプロセッサからの確保をさせないようにする
+<LI> プロセッサからの要求にしたがって WRAM を割り当てる
+</UL>
+<P>WRAMマネージャは <A href="MI_InitWramManager.html"><CODE>MI_InitWramManager()</CODE></A> で起動します。ARM9、ARM7の両方で起動されていなければなりません。この関数は、<CODE><A href="../../os/init/OS_Init.html">OS_Init()</A></CODE> で呼ばれますので、通常ユーザが呼ぶ必要はありません。
+<P><FONT color="#ff0000">初期化直後は、すべてのWRAM領域が ARM9 か ARM7 か DSP のいずれかに予約・確保されています。</FONT>これは WRAMの設定を行うレジスタの情報を反映させているものです。WRAMの各スロットはレジスタ上では必ずどこかの所有となるというハードウェアの仕様なので、「どこにも確保されていない」という状態である判断が(初期化直後は)出来ないのでこのようになっています。必要ならば解放したり予約キャンセルを行ってください。
+<H3><B>予約</B></H3>
+<P>WRAM マネージャに対し、プロセッサを指定して共有WRAM スロットを予約することが出来ます。予約したWRAMスロットは、指定のプロセッサ用に確保することしか出来ません。予約は共有WRAMの種類と、サイズの指定によって行います。<BR>
+<BR>
+予約先を指定しない場合、<CODE><A href="MI_ReserveWram.html">MI_ReserveWram()</A></CODE> または <CODE><A href="MI_ReserveWram.html">MI_ReserveWram_A()</A></CODE>、<CODE><A href="MI_ReserveWram.html">MI_ReserveWram_B()</A></CODE>、<CODE><A href="MI_ReserveWram.html">MI_ReserveWram_C()</A></CODE> によって予約を行うことができます。また、スロットを指定する場合は、関数は
+<CODE><A href="MI_ReserveWram.html">MI_ReserveWramSlot()</A></CODE> または <CODE><A href="MI_ReserveWram.html">MI_ReserveWramSlot_A()</A></CODE>、<CODE><A href="MI_ReserveWram.html">MI_ReserveWramSlot_B()</A></CODE>、<CODE><A href="MI_ReserveWram.html">MI_ReserveWramSlot_C()</A></CODE> です。<BR>
+<BR>
+すでに他のプロセッサ用に予約されている領域や、使用されている領域は予約の対象となりません。
+<P>(例)<BR>
+WRAM-B、WRAM-C が全く確保されていなく、予約されていない状態であるとします。<BR>
+WRAM-B の中から、場所を指定せずに128KB を ARM9 に、64KB を DSP に、32KB
+を ARM7 に予約します。<BR>
+
+<TABLE>
+    <TR>
+      <TD>
+      <PRE><CODE>
+addr1 = MI_ReserveWram_B( MI_WRAM_SIZE_128KB, MI_WRAM_ARM9 );
+addr2 = MI_ReserveWram_B( MI_WRAM_SIZE_64KB, MI_WRAM_DSP );
+addr3 = MI_ReserveWram_B( MI_WRAM_SIZE_64KB, MI_WRAM_ARM7 );
+
+OS_Printf(&quot;ARM9:%x DSP:%x ARM7:%x&quot;, addr1, addr2, addr3 );</CODE></PRE>
+      </TD>
+    </TR>
+</TABLE>
+<BLOCKQUOTE><IMG src="image_res1.gif"  border="0"></BLOCKQUOTE>
+<P><BR>
+<BR>
+(例)<BR>
+WRAM-B、WRAM-C が全く確保されていなく、予約されていない状態であるとします。<BR>
+WRAM-B の中から、スロット4から128KB を ARM9 に、スロット0から64KB を DSP
+に、スロット2から 32KB を ARM7 に予約します。<BR>
+</P>
+<TABLE>
+    
+    <TR>
+      <TD>
+      <PRE><CODE>
+addr1 = MI_ReserveWramSlot_B( 4, MI_WRAM_SIZE_128KB, MI_WRAM_ARM9 );
+addr2 = MI_ReserveWramSlot_B( 0, MI_WRAM_SIZE_64KB, MI_WRAM_DSP );
+addr3 = MI_ReserveWramSlot_B( 2, MI_WRAM_SIZE_32KB, MI_WRAM_ARM7 );
+
+OS_Printf(&quot;ARM9:%x DSP:%x ARM7:%x&quot;, addr1, addr2, addr3 );</CODE></PRE>
+      </TD>
+    </TR>
+  
+</TABLE>
+<BLOCKQUOTE><IMG src="image_res2.gif"  border="0"><BR>
+</BLOCKQUOTE>
+<H3>予約キャンセル</H3>
+<P>共有WRAMスロットの予約をキャンセルすることが出来ます。 そのスロットが使用されていても内部の予約情報を書き換えるだけなので現在の内容に影響なく予約キャンセルが行われます。<BR>
+<BR>
+指定のWRAMの中の指定のプロセッサ用に予約されている領域は <CODE><A href="MI_CancelWram.html">MI_CancelWram()</A></CODE> または <CODE><A href="MI_CancelWram.html">MI_CancelWram_A()</A></CODE>、<CODE><A href="MI_CancelWram.html">MI_CancelWram_B()</A></CODE>、<CODE><A href="MI_CancelWram.html">MI_CancelWram_C()</A></CODE> です。範囲を指定する場合は <CODE><A href="MI_CancelWram.html">MI_CancelWramSlot()</A></CODE> または <CODE><A href="MI_CancelWram.html">MI_CancelWramSlot_A()</A></CODE>、<CODE><A href="MI_CancelWram.html">MI_CancelWramSlot_B()</A></CODE>、<CODE><A href="MI_CancelWram.html">MI_CancelWramSlot_C()</A></CODE> です。
+<P>(例)<BR>
+WRAM-B の中の、ARM9に予約していたWRAMスロットをキャンセルします。<BR>
+
+<TABLE>
+    <TR>
+      <TD>
+      <PRE><CODE>
+MI_CancelWram_B( MI_WRAM_ARM9 );</CODE></PRE>
+      </TD>
+   </TR>
+</TABLE>
+<BLOCKQUOTE><IMG src="image_can1.gif"  border="0"></BLOCKQUOTE>
+<P><BR>
+<BR>
+(例)<BR>
+WRAM-B の中の、スロット1から128KB分のうち、ARM9に予約していたWRAMスロットをキャンセルします。<BR>
+
+
+
+<TABLE>
+    
+    <TR>
+      <TD>
+      <PRE><CODE>
+MI_CancelWramSlot_B( 1, MI_SIZE_128KB, MI_WRAM_ARM9 );</CODE></PRE>
+      </TD>
+   </TR>
+
+</TABLE>
+<BLOCKQUOTE><BR>
+<IMG src="image_can2.gif"  border="0"></BLOCKQUOTE>
+<H3>確保</H3>
+<P>WRAM領域が必要になった場合、WRAM マネージャに対し割り当てを要求することが出来ます。<BR>
+<BR>
+WRAM-A に対しては 64KB 単位で、WRAM-B、WRAM-C に対しては 32KB 単位で WRAM
+を確保することが出来ます。共有WRAMサイズを指定すると、そのWRAM のスロット番号の出来るだけ小さいほうから連続した指定サイズ分のWRAMを確保しようとします。<BR>
+<BR>
+まだ使用されていなく、どこからも予約されていないか、指定のプロセッサ用に予約されているスロットから確保します。<BR>
+<BR>
+範囲を指定しない場合、関数は <CODE><A href="MI_AllocWram.html">MI_AllocWram()</A></CODE> または <CODE><A href="MI_AllocWram.html">MI_AllocWram_A()</A></CODE>、<CODE><A href="MI_AllocWram.html">MI_AllocWram_B()</A></CODE>、<CODE><A href="MI_AllocWram.html">MI_AllocWram_C()</A></CODE> です。範囲を指定して確保する場合は <CODE><A href="MI_AllocWram.html">MI_AllocWramSlot()</A></CODE> または <CODE><A href="MI_AllocWram.html">MI_AllocWramSlot_A()</A></CODE>、<CODE><A href="MI_AllocWram.html">MI_AllocWramSlot_B()</A></CODE>、<CODE><A href="MI_AllocWram.html">MI_AllocWramSlot_C()</A></CODE> となります。
+<P>(例)<BR>
+WRAM-B の中から 96KB を ARM9 に確保します。<BR>
+
+<TABLE>
+    <TR>
+      <TD>
+      <PRE><CODE>
+addr = MI_AllocWram_B( MI_WRAM_SIZE_96KB, MI_WRAM_ARM9 );</CODE></PRE>
+      </TD>
+   </TR>
+</TABLE>
+<BLOCKQUOTE><IMG src="image_alloc1.gif"  border="0"></BLOCKQUOTE>
+<P><BR>
+<BR>
+(例)<BR>
+WRAM-B の中から スロット2からの64KB を ARM9 に確保します。<BR>
+
+
+
+<TABLE>
+    
+    <TR>
+      <TD>
+      <PRE><CODE>
+addr = MI_AllocWramSlot_B( 2, MI_WRAM_SIZE_64KB, MI_WRAM_ARM9 );</CODE></PRE>
+      </TD>
+   </TR>
+
+</TABLE>
+<BLOCKQUOTE><IMG src="image_alloc2.gif"  border="0"><BR>
+</BLOCKQUOTE>
+<P>
+(例)<BR>
+WRAM-B の中から スロット2からの96KB を ARM9 に確保します。<BR>
+
+
+
+
+<TABLE>
+    
+    
+    <TR>
+      <TD>
+      <PRE><CODE>
+addr = MI_AllocWramSlot_B( 2, MI_WRAM_SIZE_96KB, MI_WRAM_ARM9 );</CODE></PRE>
+      </TD>
+   </TR>
+
+
+</TABLE>
+<BLOCKQUOTE>下の図の場合、WRAM-B のスロット２から96KBをARM9 に確保できません。<BR>
+なぜなら、スロット4が DSP に予約されているからです。<BR>
+<IMG src="image_alloc3.gif"  border="0"></BLOCKQUOTE>
+<H3>解放</H3>
+<P>WRAM マネージャから割り当てられた共有WRAM を解放することが出来ます。但しあるWRAM
+が解放されても、そのWRAMの予約情報はキャンセルされることはありません。<BR>
+<BR>
+指定のWRAMの中の指定のプロセッサに割り当てられている領域を解放するのは
+<A href="MI_FreeWram.html"><CODE>MI_FreeWram()</CODE></A>または <A href="MI_FreeWram.html"><CODE>MI_FreeWram_A()</CODE></A>、<A href="MI_FreeWram.html"><CODE>MI_FreeWram_B()</CODE></A>、<A href="MI_FreeWram.html"><CODE>MI_FreeWram_C()</CODE></A>です。範囲を指定して解放する場合は <A href="MI_FreeWram.html"><CODE>MI_FreeWramSlot()</CODE></A>または <A href="MI_FreeWram.html"><CODE>MI_FreeWramSlot_A()</CODE></A>、<A href="MI_FreeWram.html"><CODE>MI_FreeWramSlot_B()</CODE></A>、<A href="MI_FreeWram.html"><CODE>MI_FreeWramSlot_C()</CODE></A>です。 
+<P>(例)<BR>
+WRAM_B の中の、ARM9 用に確保したWRAM領域を解放します。<BR>
+
+<TABLE>
+    <TR>
+      <TD>
+      <PRE><CODE>
+MI_FreeWram_B( MI_WRAM_ARM9 );</CODE></PRE>
+      </TD>
+   </TR>
+</TABLE>
+<BLOCKQUOTE><IMG src="image_free1.gif"  border="0"></BLOCKQUOTE>
+<BR>
+<P>(例)<BR>
+WRAM_B の中の、スロット1から128KB分のうち、ARM9 用に確保したWRAM領域を解放します。<BR>
+
+
+<TABLE>
+    
+    <TR>
+      <TD>
+      <PRE><CODE>
+MI_FreeWramSlot_B( 1, MI_WRAM_SIZE_128KB, MI_WRAM_ARM9 );</CODE></PRE>
+      </TD>
+   </TR>
+
+</TABLE>
+<BLOCKQUOTE><IMG src="image_free2.gif"  border="0"></BLOCKQUOTE>
+<BR>
+<H3>マスター切り替え</H3>
+<P>確保しているWRAMスロットを、現在の設定とは別のプロセッサ用に切り替えます。<BR>
+<BR>
+関数は <CODE><A href="MI_SwitchWram.html">MI_SwitchWram()</A></CODE>または <CODE><A href="MI_SwitchWram.html">MI_SwitchWram_A()</A></CODE>、<CODE><A href="MI_SwitchWram.html">MI_SwitchWram_B()</A></CODE>、<CODE><A href="MI_SwitchWram.html">MI_SwitchWram_C()</A></CODE>です。領域を指定して切り替える場合は <CODE><A href="MI_SwitchWram.html">MI_SwitchWramSlot()</A></CODE>または <CODE><A href="MI_SwitchWram.html">MI_SwitchWramSlot_A()</A></CODE>、<CODE><A href="MI_SwitchWram.html">MI_SwitchWramSlot_B()</A></CODE><CODE><A href="MI_SwitchWram.html">MI_SwitchWramSlot_C()</A></CODE>です。
+<P>(例) WRAM-B の中の、ARM9 に割り当てられている領域を DSP 用に切り替えます。<BR>
+
+
+<TABLE>
+    <TR>
+      <TD>
+      <PRE><CODE>
+MI_SwitchWram_B( MI_WRAM_ARM9, MI_WRAM_DSP );
+</CODE></PRE>
+      </TD>
+   </TR>
+</TABLE>
+<BLOCKQUOTE>下の図で、スロット0 と スロット1 はARM9 に予約されていますが、割り当てるプロセッサが変化しても、予約プロセッサは変わりません。<BR>
+(予約は、あくまで領域を確保するときの判定に使用されるのみです)<BR>
+<BR>
+<IMG src="image_swi1.gif" border="0"></BLOCKQUOTE>
+<P><BR>
+<BR>
+(例)<BR>
+WRAM-B の中の、スロット2から128KB 分のうち、ARM9 に割り当てられている領域を
+DSP 用に切り替えます。<BR>
+</P>
+<TABLE>
+    
+    <TR>
+      <TD>
+      <PRE><CODE>
+MI_SwitchWramSlot_B( 2, MI_WRAM_SIZE_128KB, MI_WRAM_ARM9, MI_WRAM_DSP );
+</CODE></PRE>
+      </TD>
+   </TR>
+
+</TABLE>
+<BLOCKQUOTE><IMG src="image_swi2.gif" border="0"></BLOCKQUOTE>
+<BR>
+<H2>共有WRAM状態の取得 (WRAM-A/B/C)</H2>
+<P><BR>
+共有WRAMの現在の設定を取得するため、以下の関数が用意されています。<BR>
+これらはIOレジスタの値を読むことで状態を取得しています。<BR>
+<BR>
+<CODE><A href="MI_GetWramBankMaster.html">MI_GetWramBankMaster()</A></CODE>　指定のWRAMスロットのマスタープロセッサ取得<BR>
+<CODE><A href="MI_GetWramBankEnable.html">MI_GetWramBankEnable()</A></CODE>　指定のWRAMスロットにアクセス可能かどうかを取得<BR>
+<CODE><A href="MI_GetWramBankOffset.html">MI_GetWramBankOffset()</A></CODE>　指定のWRAMスロットのオフセット取得<BR>
+<CODE><A href="MI_GetWramMapStart.html">MI_GetWramMapStart()</A></CODE>　指定のWRAMの開始マッピングアドレス取得<BR>
+<A href="MI_GetWramMapEnd.html"><CODE>MI_GetWramMapEnd()</CODE></A>　指定のWRAMの終了マッピングアドレス取得<BR>
+<CODE><A href="MI_GetWramMapImage.html">MI_GetWramMapImage()</A></CODE>　指定のWRAMのイメージ領域出現設定取得<BR>
+<CODE><A href="MI_IsWramSlotLocked.html">MI_IsWramSlotLocked()</A></CODE>　指定のWRAMスロットがロックされているかどうかを取得<BR>
+<BR>
+WRAMマネージャが保持している管理情報を取得するために以下の関数が用意されています。<BR>
+<BR>
+<CODE><A href="MI_IsWramSlotUsed.html">MI_IsWramSlotUsed()</A></CODE> 指定のWRAMスロットがすでに確保されているかを取得<BR>
+<CODE><A href="MI_GetWramReservation.html">MI_GetWramReservation()</A></CODE> 指定のWRAMスロットがどのプロセッサに予約されているかを取得<BR>
+<CODE><A href="MI_GetAllocatableWramSlot.html">MI_GetAllocatableWramSlot()</A></CODE> 指定のプロセッサが確保可能なWRAMのスロット情報をまとめて取得<BR>
+<CODE><A href="MI_GetFreeWramSlot.html">MI_GetFreeWramSlot()</A></CODE> 予約も確保もされていないフリーなWRAMのスロット情報をまとめて取得<BR>
+<CODE><A href="MI_GetFreeWramSlot.html">MI_GetUsedWramSlot()</A></CODE> どこかのプロセッサから確保されているWRAMのスロット情報をまとめて取得<BR>
+</P>
+<H2>状態の表示(WRAM-A/B/C)</H2>
+<P><BR>
+現在の割り当てを知るために、デバッグ用の関数として <A href="MI_DumpWramList.html"><CODE>MI_DumpWramList()</CODE></A>, <CODE><A href="MI_DumpWramList.html">MI_DumpWramListAll()</A></CODE> が用意されています。<BR>
+この関数は FINALROM では何も行いません。</P>
+<H2>参照</H2>
+<P><CODE><A href="../list_mi.html#Wram">MI関数一覧(ワークRAM設定)</A><BR></CODE></P>
+<H2>履歴</H2>
+<P>2008/03/03 WRAM のロック関数説明を削除<BR>
+2008/01/23 WRAMマッピング図修正<BR>
+2007/08/09 初版</P>
+</BODY></HTML>
+
+
+

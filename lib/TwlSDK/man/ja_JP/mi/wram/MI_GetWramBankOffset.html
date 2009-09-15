@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MI_GetWramBankOffset</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MI_GetWramBankOffset* <IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;twl/mi.h&gt;</CODE><BR>
+  <BR>
+  <CODE>MIWramOffset MI_GetWramBankOffset( <A href="../mi_constant.html">MIWramPos</A> wram, int num )</CODE><br>
+  <CODE>MIWramOffset MI_GetWramBankOffset_A( int num )</CODE><br>
+  <CODE>MIWramOffset MI_GetWramBankOffset_B( int num )</CODE><br>
+  <CODE>MIWramOffset MI_GetWramBankOffset_C( int num )</CODE><br>
+  </dd>
+</dl>
+<h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>wram</STRONG></EM></TD>
+      <TD width="87%">オフセット情報を取得する対象の WRAM</TD>
+    </TR>
+    <TR>
+      <TD><B><I>num</I></B></TD>
+      <TD>オフセット情報を取得する対象 WRAM のスロット番号</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>指定のWRAM領域のオフセット情報です。<BR>
+<CODE>MI_WRAM_OFFSET_xxxKB</CODE> が返ります。 ただし、xxx の部分には、<BR>
+WRAM-A の場合 0, 64, 128, 192 のいずれかが入ります。<BR>
+WRAM-B または WRAM-C の場合 0, 32, 64, 96, 128, 160, 192, 224 のいずれかが入ります。</p>
+
+<H2>説明</H2>
+<P>指定のWRAM領域が割り当てられているオフセット値を取得します。</P>
+<P><B><I>wram</I></B> は情報を取得する対象となる WRAM で、<CODE><A href="../mi_constant.html">MIWramPos</A></CODE> 型です。</P>
+<P><B><I>num</I></B> は対象の WRAM のスロット番号で、WRAM-A は 0～3、WRAM-B と WRAM-C は 0～7 となります。</P>
+<h2>内部動作</h2>
+<p>IOレジスタのMBK1～MBK5 にアクセスしています。</p>
+
+<h2>参照</h2>
+<P><A href="about_Wram.html">概要(ワークRAM)</A>、<A href="../mi_constant.html">MI関連の定数</A></P>
+
+<H2>履歴</H2>
+<P>2007/08/22 初版</P>
+</body>
+</html>

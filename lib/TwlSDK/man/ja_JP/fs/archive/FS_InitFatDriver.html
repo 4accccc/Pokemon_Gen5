@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_InitFatDriver</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1 align="left">FS_InitFatDriver <img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+void FS_InitFatDriver(void);
+</code></pre>
+
+<h2>引数</h2>
+<p>なし。</p>
+
+<h2>返り値</h2>
+<p>なし。</p>
+
+<h2>説明</h2>
+<p><a href="../overview/about_Archive.html#FAT">FATドライバ</a>を初期化します。<br />
+FATドライバは<a href="../overview/about_Archive.html#NAND">本体NANDメモリ</a>または<a href="../overview/about_Archive.html#SDMC">SDメモリカード</a>へアクセスするために必要です。
+この関数を呼び出すことによって、FATドライバでサポートされる各種のアーカイブがマウントされ実際に利用可能となります。<br />
+この関数は2回目以降の呼び出しでは何も行いません。</p>
+<p>
+なお、NANDアプリケーションの場合はNAライブラリ内部で暗黙的にこの関数が呼び出されるため、
+アプリケーション側で改めてFATドライバを初期化する必要はありません。</p>
+
+<h2>注意</h2>
+<ul>
+<li>この関数の呼び出しより前に<code><a href="../file/FS_Init.html">FS_Init()</a></code>によってFSライブラリが初期化されている必要があります。</li>
+<li>この関数を割り込みハンドラ(IRQモード)から呼び出すことはできません。<br />
+また、割り込みを禁止したままの状態にあると処理が完了しない場合がある点に注意して下さい。</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="../file/FS_Init.html">FS_Init</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/01/30 初版<br />
+</p>
+</body>
+</html>

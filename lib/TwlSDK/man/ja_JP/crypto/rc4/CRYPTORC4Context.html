@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>CRYPTORC4Context</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">CRYPTORC4Context　<IMG src="../../image/NTR.gif" width="23" height="12" border="0" align="middle"><IMG src="../../image/TWL.gif" width="23" height="12" border="0" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <pre><CODE>#include &lt;nitro/crypto.h&gt;
+
+typedef struct CRYPTORC4Context
+{
+    u8 i, j;
+    u8 padd[2];
+    u8 s[256];
+} CRYPTORC4Context;
+</CODE></pre><br>
+</dd>
+</dl>
+
+<H2>要素</H2>
+<TABLE border="1" width="100%" class="members">
+  <TBODY>
+    <TR>
+      <TH>i</TH>
+      <TD>内部使用変数</TD>
+    </TR>
+    <TR>
+      <TH>j</TH>
+      <TD>内部使用変数</TD>
+    </TR>
+    <TR>
+      <TH>padd</TH>
+      <TD>内部使用変数</TD>
+    </TR>
+    <TR>
+      <TH>s</TH>
+      <TD>内部使用変数</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+<P>
+RC4 暗号/復号化に用いる内部情報などを収めるコンテキスト構造体です。
+</P>
+
+<H2>履歴</H2>
+<P>
+2008/2/25 初版
+</P>
+</BODY>
+</HTML>

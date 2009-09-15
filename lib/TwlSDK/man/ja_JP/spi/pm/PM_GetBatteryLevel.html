@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>PM_GetBatteryLevel</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">PM_GetBatteryLevel <IMG src="../../image/TWL.gif" width="24" height="12" border="0" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;twl/spi.h&gt;</CODE></PRE>
+  <PRE><CODE>u32 PM_GetBatteryLevel( u16* levelBuf );
+</CODE></PRE>
+</DL>
+<H2>引数</H2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>levelBuf</STRONG></EM></TD>
+      <TD width="87%">バッテリパックの電池残量状況を書き込むバッファ</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>返り値</H2>
+<P>PM_RESULT_SUCCESS ならば、コマンドの実行が成功したことを表します。</P>
+<P>PM_RESULT_BUSY ならば、 SPI が他の処理に占有されており処理できなかったことを示します。</P>
+<P>PM_RESULT_ERROR ならば、この関数が使用できないことを示します。これは、NITRO
+モードで動作中に呼ばれたことを示します。それ以外で返ることはありません。</P>
+<P>コマンドが成功した場合、<B><I>levelBuf</I></B>で示されるアドレスにバッテリーパックの電池残量を表す値が格納されます。この値は
+0 (PM_BATTERY_LEVEL_MIN) から 5 (PM_BATTERY_LEVEL_MAX) の6段階で表され、値が小さいほど電池残量は少ないことを表します。</P>
+<H2>説明</H2>
+<P>バッテリーパックの電池残量を調べます。</P>
+<P>この関数はARM7に該当動作を行うコマンドをPXIで送り、それを受け取ったARM7側がPMICを操作することで実行されます。</P>
+<P>返り値が PM_RESULT_SUCCESS ならばコマンドの実行が成功したことを示し、u16型ポインタ<B><I>levelBuf</I></B> の先に結果が格納されます。この値は 0 (PM_BATTERY_LEVEL_MIN) から 5 (PM_BATTERY_LEVEL_MAX)
+の6段階で表され、値が小さいほど電池残量は少ないことを表します。<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH><B><I>levelBuf</I></B> に格納される値</TH>
+      <TH>電池残量(おおよその目安)</TH>
+      <TH>TWLでのLED色</TH>
+    </TR>
+    <TR>
+      <TD><B>　5</B> (PM_BATTERY_LEVEL_MAX)</TD>
+      <TD>100%</TD>
+      <TD rowspan="3"><FONT color="#0099ff">■</FONT>青 (点灯)</TD>
+    </TR>
+    <TR>
+      <TD><B>　4</B></TD>
+      <TD>60%</TD>
+    </TR>
+    <TR>
+      <TD><B>　3</B></TD>
+      <TD>30%</TD>
+    </TR>
+    <TR>
+      <TD><B>　2</B></TD>
+      <TD>10%</TD>
+      <TD><FONT color="#ff0000">■</FONT>赤 (点灯)</TD>
+    </TR>
+    <TR>
+      <TD><B>　1</B></TD>
+      <TD>1%</TD>
+      <TD rowspan="2"><FONT color="#ff0000">■</FONT><FONT color="#330000">■</FONT>赤 (点滅)</TD>
+    </TR>
+    <TR>
+      <TD><B>　0</B> (PM_BATTERY_LEVEL_MIN)</TD>
+      <TD>0%</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+LED の色や点灯/点滅状態をアプリケーション側で制御することは出来ません。</P>
+<P>電池残量は目安であり、バッテリーパックの個体差や劣化状況などで誤差があります。例えば
+levelBuf に格納される値 が 2 のところは 10% となっていますが、10% になったらこの値になる、という意味ではありません。<FONT color="#ff0000">大きく幅をもったおおよその目安ととらえるに留めておいてください。</FONT>実際には 20%かもしれませんし 5%かもしれません。 バッテリー残量を6段階に分けた、その
+TWL 個体でのみ通用する指標の一つです。従って、取得した段階からのバッテリー残時間の一般的な値を算出したりすることはできません。</P>
+<H3><BR>
+内部での値取得について</H3>
+<P>内部では、バッテリー残量はおおよそ<FONT color="#ff0000"> 1 秒に一度程度</FONT>でしか変わりません。バックライト輝度を最低の状態から一気に最高まで上げるような行為でハードウェア的には離散的に電池残量が変化した場合でも、電池残量を調べて結果を返すマイコンが連続値となるように調整します。</P>
+<P>ただしSD や NAND を使用せず終了処理を必要としない、電池残量を使い切るようなアプリケーション(カードアプリ)
+はその限りではなく、LOW コールバックを設定していても、その前の段階から強制シャットダウンとなるレベルまで一気に残量が減り、電源が落ちる可能性があります。</P>
+<H3><BR>
+コールバックについて</H3>
+<P>電池残量が値1 の状態を検知すると <CODE><A href="PM_SetBatteryLowCallback.html">PM_SetBatteryLowCallback()</A></CODE> で設定した、電池残量が少ないことを通知するためのコールバック関数が呼ばれます。　ただし、「内部での値取得について」で書いたように、カードアプリのような終了処理を必要としないアプリケーションでは、<FONT color="#ff0000">内部で離散的に値が変化して 値1 の状態を飛ばして値0 の状態となることもあり、そうした場合はコールバックは呼ばれません。</FONT></P>
+<P>NANDアプリのようにシャットダウン処理を必要とするアプリケーションではマイコンが調整するため離散的に変化してコールバックを呼び損ねるようなことはありません。電池残量が値0
+の状態を検知するとハードウェアはシャットダウン処理を行います。SDやNANDを使用しないアプリケーションの場合、シャットダウン処理は行われません。</P>
+<H3><BR>
+類似の関数</H3>
+<P><CODE>PM_GetBatteryLevel()</CODE> と類似の関数として <CODE><A href="PM_GetBattery.html">PM_GetBattery()</A></CODE> がありますが、<CODE><A href="PM_GetBattery.html">PM_GetBattery()</A></CODE> では電池残量を2段階でしか知ることが出来ません。NITROハードウェアでは電池残量を2段階でしか取得できなかったのでこのような構成になっています。</P>
+<H3><BR>
+エラー値を返す場合</H3>
+<P><FONT color="#ff0000">この関数は TWL のハードウェア上でTWLモードで動作しているときのみ動作します。</FONT>TWL ハードウェア上でNITROモードで動作している場合や、NITRO ハードウェア上で動作している場合は使用することが出来ません。関数を呼ぶことは出来ますが、PM_RESULT_ERROR
+を返します。TWL モードで PM_RESULT_ERROR を返すことはありません。</P>
+<H3><BR>
+PM_RESULT_BUSY について</H3>
+<P>SPI はPM以外にも様々な処理で使用されています。そのようなときに本関数を呼び出すと、ARM7
+までコマンドを送り、そこで BUSY という判定が行われ、処理は行われずに ARM9
+へ <CODE>PM_RESULT_BUSY</CODE> が通知されます。また他の PM 処理を行っている最中に本関数を呼び出すと、ARM9 側でそれを判断し <CODE>PM_RESULT_BUSY</CODE> を返します。(この場合は ARM7 への通知を行う前に判断します。)</P>
+<P>従って、確実に本関数を成功させようとすれば、次のように成功するまでループするようにしてください。(引数が間違っているというようなミスは考慮していません。)</P>
+<BLOCKQUOTE style="background-color:#ffffcc"><B>(例)</B><BR>
+<CODE>while( PM_GetBatteryLevel( ... ) != PM_RESULT_SUCCESS )<BR>
+{<BR>
+}</CODE></BLOCKQUOTE>
+<H2>参照</H2>
+<P><CODE><A href="PM_GetBattery.html">PM_GetBattery</A>, <A href="PM_SetBatteryLowCallback.html">PM_SetBatteryLowCallback</A></CODE></P>
+<H2>履歴</H2>
+<P>2009/06/03 <CODE>PM_Init()</CODE> についての記述を削除 (<CODE>OS_Init()</CODE> が必須となったため)<BR>
+2008/11/11 電池残量の目安を調整<BR>
+2008/08/23 PM_RESULT_BUSY について言及<BR>
+2008/04/09 電池残量の目安を調整<BR>
+2008/02/07 電池残量の目安を追加<BR>
+2008/01/24 初版</P>
+</BODY>
+</HTML>

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>SSP_SetJpegEncoderMakerNote</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>SSP_SetJpegEncoderMakerNote <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<pre><code>
+static inline void SSP_SetJpegEncoderMakerNote(u8 *buffer, u16 size);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>buffer</strong></em></td>
+<td style="width:87%">エンコード時に画像に埋め込む、DSiカメラ用のデータです。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>size</strong></em></td>
+<td style="width:87%">エンコード時に画像に埋め込む、DSiカメラ用のデータサイズです。</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>返り値</h2>
+<p>なし。</p>
+
+<h2>説明</h2>
+<p>JPEGのメーカーノート部分に埋め込むDSiカメラ用のデータを登録します。<BR>
+本関数は <code><a href="SSP_SetJpegEncoderMakerNoteEx.html">SSP_SetJpegEncoderMakerNoteEx()</a></code>を SSP_MAKERNOTE_PHOTO タグで
+呼び出した場合と同じ動作になります。<BR>
+ユーザー独自のデータを埋め込みたい場合には、<code><a href="SSP_SetJpegEncoderMakerNoteEx.html">SSP_SetJpegEncoderMakerNoteEx()</a></code>
+を SSP_MAKERNOTE_USER で使用するようにして下さい。<BR>
+<br>
+<font color="red">注意：</font><br>
+<code><a href="SSP_StartJpegEncoder.html">SSP_StartJpegEncoder()</a></code> の完了後に、エンコードの成功、失敗問わず本関数で設定されたデータはクリアされます。<br>
+複数の画像をエンコードする場合は、それぞれのエンコードの前にデータを登録する必要があることに注意してください。
+</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="SSP_StartJpegEncoder.html">SSP_StartJpegEncoder</a>
+<a href="SSP_SetJpegEncoderMakerNoteEx.html">SSP_SetJpegEncoderMakerNoteEx</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/11/04 設定した値がクリアされる条件について説明追加<br>
+2008/09/15 初版<br />
+</p>
+</body>
+</html>

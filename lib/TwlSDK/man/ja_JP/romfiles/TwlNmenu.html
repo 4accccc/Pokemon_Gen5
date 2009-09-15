@@ -1,0 +1,438 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>TwlNmenu</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+pre
+{
+  display: compact;
+  font-family	: "Courier New", monospace;
+  font-weight	: normal;
+  font-size     : normal;
+
+/*  margin		: 0pt 0pt 6pt 50pt;*/
+  padding		: 2pt 8pt 2pt 8pt;
+  background-color	: #eee;
+
+  border-style		: solid;
+  border-width		: 1px;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD,TH{
+  border-color	: #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+div.screen
+{
+    float: left;
+    padding: 2px;
+    background-color: black;
+    margin: 0 0.5em 1em 1em;
+}
+ol, ul
+{
+    padding-left: 4em;
+    margin-left: 0pt;
+}
+
+div.screen img.main
+{
+    margin-bottom: 10px;
+}
+.warning
+{
+    color: red;
+}
+table
+{
+    left: 0;
+}
+table.plain td
+{
+    border: none;
+    background-color: transparent;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+
+<H1 align="left">TwlNmenu</H1>
+
+
+<H2>概要</H2>
+<P>
+　<CODE>TwlNmenu</CODE> は、TWL 本体内の NAND アプリを管理する TWL アプリケーションです。
+SD カードまたは DS カード上の tad ファイルから NAND アプリを TWL 本体へインストールしたり、
+TWL 本体内の NAND アプリを 起動 / 削除 することができます。
+</P>
+
+
+<H2>実行</H2>
+<H3></H3>
+<P>
+以下のいずれかの方法で実行することができます。
+</P>
+<ul>
+<li>IS-TWL-DEBUGGER ソフトウェアを使用して TwlNmenu.srl を実行する。
+<li>IS-TWL-DEBUGGER ソフトウェアを使用して TwlNmenu.tad をインポート後、実行する。
+<li>TwlNmenu.srl を DS カードに書き込んで実行する。
+<li>TwlNmenu を使用して TwlNmenu.tad をインポート後、実行する。
+</ul>
+<P>
+IS-TWL-DEBUGGER ソフトウェアで実行する場合は
+「しばらくお待ちください」と書かれたダイアログが表示され、
+IS-TWL-DEBUGGER ソフトウェア上での操作はできなくなります。
+終了する場合はダイアログ上の「強制中断」ボタンを押してください。
+</P>
+
+<H2>DS カードへの tad の格納</h2>
+<p>
+「Card」モードでは DS カードに格納された tad ファイルから NAND アプリのインポートを行うことができます。
+このときに使用する DS カードの用意の方法について説明します。
+</p>
+<p>
+2 通りの方法があります。
+</p>
+
+<h5>maketad の -n オプションを使用する</h5>
+<p>
+<a href="../tools/maketad.html">maketad</a> は tad を作成するツールですが、-n オプションを追加すると、
+tad の代わりに tad を内包した SRL を作成します。
+この機能を使用して作成した SRL を DS カードに書き込むことで
+内包されている tad を「Card」モードから参照できます。
+</p>
+
+<h5>独自に SRL を作成する</h5>
+<p>
+以下の条件を満たす SRL を作成し、DS カードに書き込むことで
+SRL の ROM-FS に含まれる tad を「Card」モードで参照できます。
+</p>
+<ul>
+<li>NITRO ROM である。
+<li>会社コードが「YZ」である。
+</ul>
+
+
+<H2>操作方法</H2>
+<p>
+TwlNmenu では上画面に簡易操作説明や選択されているファイルの情報などを表示し、
+下画面でリストの表示/選択など行います。
+基本的には英語で表示されますが、本体の言語が日本語になっている場合
+（＝リージョンが日本の場合）は一部のメッセージが日本語で表示されます。<br>
+TwlNmenu は「NAND」「SD」「Card」の3つのモードに分かれています。
+ただし TwlNmenu をカードアプリとして起動した場合は「Card」モードはありません。
+各モードは下画面上部の灰色の箇所をタッチするか、
+十字ボタン左右で切り替わります。
+</p>
+
+<h4>「NAND」モード</h4>
+<div class="screen"><img class="main" src="TwlNmenu/NAND_main_0.png"><br><img src="TwlNmenu/NAND_sub_0.png"></div>
+<div class="screen"><img class="main" src="TwlNmenu/NAND_main_1.png"><br><img src="TwlNmenu/NAND_sub_1.png"></div>
+<p>
+「NAND」モードでは下画面に TWL 本体にインストールされている NAND アプリの一覧が表示されます。
+<br>
+このモードでは選択した NAND アプリの起動 / 削除を行うことができます。
+</p>
+<p>
+下画面に表示されるリストの各行は以下のようなフォーマットで各 NAND アプリごとに表示されます。
+</p>
+<table class="plain" style="width:0"><tr><td>
+<pre>
+03. 01 4BNA (3031 34424e41) Ver.1.0
+    -- ----  ---- --------      ---
+    1  2     3    4             5
+</pre>
+</td></tr></table>
+<table class="plain" style="width:25em"><tr><td>
+<ol>
+<li>会社コード（ASCII）
+<li>イニシャルコード（ASCII）
+<li>会社コード（16進）
+<li>イニシャルコード（16進）
+<li>NAND アプリバージョン
+</ol>
+</td></tr></table>
+<p>
+リスト上で文字色が水色で右端に deleted と表示された NAND アプリは削除された NAND アプリであることを示します。
+<br>
+リスト上で文字色が赤色で右端に error と表示された NAND アプリは不正な状態の NAND アプリであることを示します。
+一旦削除したのち再インポートしてください。
+</p>
+
+<br clear="left">
+
+<p>
+このモードでは以下の表のような操作ができます。
+</p>
+
+<table class="table">
+<tbody>
+<tr><th>ボタン<th>操作
+<tr><td>←→  <td>モードの切り替え
+<tr><td>↑↓  <td>NAND アプリの選択。
+<tr><td>START <td>選択されている NAND アプリを起動
+<tr><td>Y     <td>選択されている NAND アプリの private セーブデータをクリア
+<tr><td>X     <td>選択されている NAND アプリを削除
+<tr><td>R + X <td>選択されている NAND アプリと同種の NAND アプリを削除
+<tr><td>L     <td>上画面を次のページへ
+<tr><td>SELECT<td>操作説明の表示/非表示切り替え
+</tbody>
+</table>
+
+<p>
+上画面に表示される情報は以下のとおりです。
+</p>
+
+<p>
+１ページ目
+</p>
+<table class="table">
+<tbody>
+<tr><th colspan="2">項目<th>説明
+<tr><th colspan="2">Hardware<td>TWL 本体に関する情報を表示します。
+<tr><th>&nbsp;&nbsp;
+    <td>BoxCount<td>「used」はインストールされている NAND アプリの数を、
+                    「free」はインストールできる NAND アプリの数を表示します。
+<tr><th colspan="2">Media<td>本体内蔵メモリに関する情報を表示します。
+<tr><th rowspan="2">&nbsp;&nbsp;
+    <td>Free<td>空き容量をブロック単位と KB 単位で表示します。
+<tr><td>Total<td>総容量をブロック単位と KB 単位で表示します。
+</tbody>
+</table>
+
+<p>
+２ページ目
+</p>
+<table class="table">
+<tbody>
+<tr><th colspan="2">項目<th>説明
+<tr><th colspan="2">Title<td>選択されている NAND アプリに関する情報を表示します。
+<tr><th rowspan="8">&nbsp;&nbsp;
+    <td>CompanyCode<td>会社コードを ASCII と 16 進数で表示します。
+<tr><td>InitialCode<td>イニシャルコードを ASCII と 16 進数で表示します。
+<tr><td>GameVersion<td>ゲームバージョンを表示します。
+<tr><td>TitleSize<td>NAND アプリの占有サイズをブロック単位と KB 単位で表示します。
+<tr><td>AppSize<td>SRL のサイズをブロック単位と KB 単位で表示します。
+<tr><td>PublicSave<td>public セーブデータのサイズをブロック単位と KB 単位で表示します。
+<tr><td>PrivateSave<td>private セーブデータのサイズをブロック単位と KB 単位で表示します。
+<tr><td>SubBanner<td>サブバナーのサイズをブロック単位と KB 単位で表示します。<br>
+                     サブバナーを設定した場合は16KBの固定サイズ、設定していない場合は0KBと表示されます。
+</tbody>
+</table>
+<p>
+NANDアプリの占有サイズであるTitleSize は以下の計算式で算出されます。<br>
+表示されているブロック数の合計ではなく、バイト単位で合計した後にブロック数に換算した値になります。
+</p>
+<table class="plain" style="width:0"><tr><td>
+<pre>
+NANDアプリの占有サイズ(KB) = SRL のサイズ(KB)を16KBで切り上げた値 + 
+                           public セーブデータのサイズ(KB) + 
+                           private セーブデータのサイズ(KB) + 
+                           サブバナーのサイズ(KB) + 
+                           16KB 
+NANDアプリの占有サイズ(ブロック) = NANDアプリの占有サイズ(KB)を128KBで切り上げた値
+</pre>
+</td></tr></table>
+
+<h5>NAND アプリの起動</h5>
+<p>
+NAND アプリの起動は選択されている NAND アプリを実行します。
+NAND アプリが起動されると完全に TwlNmenu の制御を離れますので、
+TwlNmenu に戻ってくるには再度 TwlNmenu を実行しなければいけません。
+</p>
+
+<h5>NAND アプリの削除</h5>
+<p>
+NAND アプリの削除は選択されている NAND アプリを
+NAND からアンインストールします。
+NAND アプリを削除しても
+NAND アプリがインストールされたことがあるという情報が TWL 本体内に残ります。
+この状態では下画面のリストに水色でイニシャルコードのみが表示されます。
+さらにこの状態で「削除」を行うと完全に削除することができます。
+</p>
+
+<h5>NAND アプリの private セーブデータをクリア</h5>
+<p>
+選択されている NAND アプリの
+private セーブデータ内データを全て消去します。
+<br>
+TWL システムではユーザが NAND アプリを
+SD カードにバックアップする機能が提供されますが、
+private セーブデータはこの時にバックアップされないセーブデータ領域です。
+private セーブデータはバックアップされないためバックアップから
+本体保存メモリに書き戻した時にはクリアされた状態となります。
+そのため各 NAND アプリは private セーブデータだけがクリアされるケースを考慮する必要があります。
+<br>
+TwlNmenu で private セーブデータをクリアすることでこの状況を作り出すことができます。
+</p>
+
+<h5>同種の NAND アプリを削除</h5>
+<p>
+同種の NAND アプリを削除では
+「削除された NAND アプリかどうか」
+という観点から見て選択されている NAND アプリと同じ NAND アプリを全て削除します。
+例えば、削除されていない NAND アプリを選択した状態で行うと、
+削除されていない NAND アプリを全て削除します。
+</p>
+
+
+<br clear="all">
+
+<h4>「SD」モード<br>「Card」モード</h4>
+<div class="screen"><img class="main" src="TwlNmenu/SD_main_0.png"><br><img src="TwlNmenu/SD_sub_0.png"></div>
+<div class="screen"><img class="main" src="TwlNmenu/SD_main_1.png"><br><img src="TwlNmenu/SD_sub_1.png"></div>
+<p>
+「SD」モードおよび「Card」モードでは下画面に SD カード/ DS カード内に入っているファイルが表示されます。<br>
+このモードでは tad ファイルのインポートを行うことができます。<br>
+<FONT color=#ff0000>SJISに変換できない文字コードで書かれたファイル名またはディレクトリ名は表示されません</FONT>
+</p>
+<p>
+なお「Card」モードは NAND アプリとして TwlNmenu を起動したときにのみ使用できます。
+また、DS カードは TwlNmenu を起動する前にカードスロットに挿しておく必要があります。
+TwlNmenu 起動後に DS カードを挿しても認識しません。
+</p>
+<p>
+下画面に表示されるリストの各行は以下のようなフォーマットで各 NAND アプリごとに表示されます。
+</p>
+<table class="plain" style="width:0"><tr><td>
+<pre>
+05. 866,240  backupSample.tad
+    -------  ----------------
+    1        2
+</pre>
+</tr></td></table>
+<table class="plain" style="width:30em"><tr><td>
+<ol>
+<li>ファイルサイズまたはディレクトリ内の tad ファイル数
+<li>ファイル名またはディレクトリ名
+</ol>
+</tr></td></table>
+
+<br clear="left">
+
+<p>
+このモードでは以下の表のような操作ができます。
+</p>
+
+<table class="table">
+<tbody>
+<tr><th>ボタン<th>操作
+<tr><td>←→  <td>モードの切り替え。
+<tr><td>↑↓  <td>ファイルまたはディレクトリの選択。
+<tr><td>A     <td>tad ファイルが選択されている場合は tad ファイルをインポート<br>
+                  ディレクトリが選択されている場合はそのディレクトリへ移動
+<tr><td>B     <td>一つ上のディレクトリへ移動
+<tr><td>X     <td>ルートディレクトリへ移動。
+<tr><td>R + A <td>ディレクトリ内の全ての tad ファイルをインポート
+<tr><td>L     <td>上画面を次のページへ
+<tr><td>SELECT<td>操作説明の表示/非表示切り替え
+</tbody>
+</table>
+
+<p>
+上画面に表示される情報は以下のとおりです。
+</p>
+
+<p>
+１ページ目
+</p>
+<table class="table">
+<tbody>
+<tr><th colspan="2">項目<th>説明
+<tr><th colspan="2">Hardware<td>TWL 本体に関する情報を表示します。
+<tr><th>&nbsp;&nbsp;
+    <td>BoxCount<td>「used」はインストールされている NAND アプリの数を、
+                    「free」はインストールできる NAND アプリの数を表示します。
+<tr><th colspan="2">Media<td>メディアに関する情報を表示します。「Card」モードでは常に 0 です。
+<tr><th rowspan="2">&nbsp;&nbsp;
+    <td>Free<td>空き容量をブロック単位と KB 単位で表示します。
+<tr><td>Total<td>総容量をブロック単位と KB 単位で表示します。
+</tbody>
+</table>
+
+<p>
+２ページ目
+</p>
+<table class="table">
+<tbody>
+<tr><th colspan="2">File<td>選択されているファイルに関する情報を表示します。
+<tr><th rowspan="6">&nbsp;&nbsp;
+    <td>CompanyCode<td>会社コードを ASCII と 16 進数で表示します。
+<tr><td>InitialCode<td>イニシャルコードを ASCII と 16 進数で表示します。
+<tr><td>GameVersion<td>ゲームバージョンおよび本体内蔵メモリにインポートされているバージョンを表示します。
+<tr><td>FileName<td>ファイル名を表示します。
+<tr><td>LastUpdate<td>SD カード上での最終更新日を表示します。「Card」モードでは常に 0 です。
+</tbody>
+</table>
+
+<h5>tad ファイルのインポート</h5>
+<p>
+<a href="../tools/maketad.html">maketad</a> で作成した tad ファイルを TWL 本体にインストールします。
+既に同じイニシャルコードの NAND アプリがインストールされている場合は上書きします。
+</p>
+
+<h5>TwlNmenu 、NandFiler のインポート</h5>
+<p>
+$TwlSDK/bin/ARM9-TS/Rom 以下にありますTwlNmenu.tad 、NandFiler.tad をインポートした場合、
+以下のようなエラーが表示される場合があります。
+</p>
+<table class="plain" style="width:0"><tr><td>
+<pre>
+Failed to import ****.tad.
+Maybe broken data. (-1022)
+</pre>
+</tr></td></table>
+<p>
+この場合は、もう一度インポートすることで正常にインストールすることが可能です。
+</p>
+<H2>場所</H2>
+<P>
+<CODE>$TwlSDK/bin/ARM9-TS/Rom/TwlNmenu.srl</CODE><br>
+<CODE>$TwlSDK/bin/ARM9-TS/Rom/TwlNmenu.tad</CODE><br>
+</P>
+
+
+<H2>参照</H2>
+
+
+<H2>履歴</H2>
+<P>
+2009/05/27 TwlNmenu.tad、NandFiler.tadのインポートについて注意を追加<br>
+2009/05/22 「NAND」モードにSubBanner を追加。TitleSize の計算方法を追加<br>
+2009/04/30 SD モード時のファイル名、ディレクトリ名の注意を追加<br>
+2008/10/16 Card モード関連を追加、日本語表示について記述<br>
+2008/07/11 TwlNmenu の更新に対応<br>
+2008/04/25 ROM モード / バックアップ / リストアを削除。<br>
+2008/03/19 用語集への準拠。表現の調整。<br>
+2007/12/20 初版作成
+</P>
+
+
+</BODY>
+</HTML>

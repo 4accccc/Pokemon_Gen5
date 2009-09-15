@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MATHSHA256Context</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MATHSHA256Context<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<dl>
+  <dd>
+<PRE>
+<CODE>#include &lt;nitro/math/dgt.h&gt;<BR>
+struct MATHSHA256Context
+{
+    u32 h[8];
+    u32 Nl,Nh;
+    u8 data[MATHSHA256_CBLOCK];
+    int num;
+};
+</CODE></PRE>
+  </dd>
+</dl>
+<H2>要素</H2>
+<P>構造体の内部へ直接アクセスしないでください。</P>
+<H2>説明</H2>
+<P>SHA-256 を計算するために使用するコンテキスト構造体です。サイズは 108 バイトです。<BR>
+<CODE><A href="MATH_SHA256Init.html">MATH_SHA256Init()</A></CODE>で初期化した上で、
+入力データを <CODE><A href="MATH_SHA256Update.html">MATH_SHA256Update()</A></CODE>で与え、
+<CODE><A href="MATH_SHA256GetHash.html">MATH_SHA256GetHash()</A></CODE>でメッセージダイジェスト値を取り出します。<BR>
+<BR>
+SHA-256 はメッセージダイジェスト値を求めるためのアルゴリズムです。詳細は FIPS (Federal Information Processing Standards) が発行している FIPS PUB 180-2 を参照してください。<BR>
+</P>
+
+<h2>参照</h2>
+<P><CODE><A href="MATH_SHA256Init.html">MATH_SHA256Init</A>, <A href="MATH_SHA256Update.html">MATH_SHA256Update</A>, <A href="MATH_SHA256GetHash.html">MATH_SHA256GetHash</A></CODE></P>
+<H2>履歴</H2>
+<P>
+2008/05/23 初版<BR>
+</P>
+</body>
+</html>

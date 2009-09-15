@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>DSP_PlaySound</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>DSP_PlaySound <IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<pre><code>
+void DSP_PlaySound(const void *src, u32 len, BOOL stereo);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>src</strong></em></td>
+<td style="width:87%">元データとなるサンプリングデータ<br />
+16ビットPCMデータのみ指定可能で、サンプリングレートは <code><a href="../../snd/sndex/SNDEX_GetI2SFrequency.html">SNDEX_GetI2SFrequency()</a></code> で得られるI2S動作周波数と一致している必要があります。<br />
+<span style='color:Red'>指定するバッファには16ビットDMA転送と同様の制限があります。詳細は後述の「注意」をご参照ください。</span></td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>len</strong></em></td>
+<td style="width:87%">サンプリングデータのバイトサイズ</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>stereo</strong></em></td>
+<td style="width:87%">ステレオならTRUE、モノラルならFALSE</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>なし。</p>
+
+<h2>説明</h2>
+<p>任意のサウンドを DSP から再生させます。<br />
+再生中にこの関数を重ねて呼び出すと、以前のサウンドを中断して新しいサウンドを再生します。
+ただし <code><a href="DSP_PlayShutterSound.html">DSP_PlayShutterSound()</a></code> によってシャッター音を再生している間に呼び出した場合は無視されます。<br />
+この関数は、いずれかの DSP コンポーネントをロードしていれば、使用することができます。
+</p>
+
+<h2>注意</h2>
+<ul>
+<li><span style='color:Red'>指定するバッファはいずれも16ビットDMA転送と同等の条件を満たしている必要があります。</span>
+<ul>
+<li>アドレスは16bitの整数倍である必要があります。</li>
+<li>バッファの内容は、事前にキャッシュストアしておく必要があります。</li>
+</ul>
+</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="DSP_IsSoundPlaying.html">DSP_IsSoundPlaying</a>
+<a href="../g711/DSP_LoadG711.html">DSP_LoadG711</a>
+<!-- <a href="../jpeg_enc/DSP_LoadJpegEncoder.html">DSP_LoadJpegEncoder</a> -->
+<!-- <a href="../jpeg_dec/DSP_LoadJpegDecoder.html">DSP_LoadJpegDecoder</a> -->
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/09/25 サウンド出力が排他制御される旨を追記<br />
+2008/07/09 引数として受け取るサイズをハーフワードからバイト単位に変更<BR>
+2008/05/27 サンプリングデータの条件について追記<br />
+2008/04/22 初版<br />
+</p>
+</body>
+</html>

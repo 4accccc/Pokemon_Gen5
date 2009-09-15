@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FSDirectoryEntryInfo, FSDirectoryEntryInfo</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FSDirectoryEntryInfo(W) <img src="../image/NTR.gif"align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+<h2>定義</h2>
+<pre><code>
+#define	FS_ENTRY_SHORTNAME_MAX      16
+#define	FS_ENTRY_LONGNAME_MAX	    260
+
+typedef struct FSDirectoryEntryInfo
+{
+    char        shortname[FS_ENTRY_SHORTNAME_MAX];
+    u32         shortname_length;
+    char        longname[FS_ENTRY_LONGNAME_MAX];
+    u32         longname_length;
+    u32         <a href="FSPathInfo.html">attributes</a>;
+    <a href="FSDateTime.html">FSDateTime</a>  atime;
+    <a href="FSDateTime.html">FSDateTime</a>  mtime;
+    <a href="FSDateTime.html">FSDateTime</a>  ctime;
+    u32         filesize;
+    u32         id;
+}
+FSDirectoryEntryInfo;
+
+typedef struct FSDirectoryEntryInfoW
+{
+    u32         <a href="FSPathInfo.html">attributes</a>;
+    <a href="FSDateTime.html">FSDateTime</a>  atime;
+    <a href="FSDateTime.html">FSDateTime</a>  mtime;
+    <a href="FSDateTime.html">FSDateTime</a>  ctime;
+    u32         filesize;
+    u32         id;
+    u32         shortname_length;
+    u32         longname_length;
+    char        shortname[FS_ENTRY_SHORTNAME_MAX];
+    u16         longname[FS_ENTRY_LONGNAME_MAX];
+}
+FSDirectoryEntryInfoW;
+
+</code></pre>
+
+<h2>説明</h2>
+<p><code><a href="directory/FS_ReadDirectory.html">FS_ReadDirectory()</a></code>または<code><a href="directory/FS_ReadDirectory.html">FS_ReadDirectoryW()</a></code> で取得できるエントリ情報をあらわす構造体です。<br />
+各メンバの内容は以下の通りです。</p>
+<table>
+<tr><td>shortname</td><td>いわゆるFATフォーマットの8.3形式におけるエントリ名です。エントリが短縮された別名を持つ場合に限り、その文字列が格納されます。<br />そうでない場合は空文字列となります。<br />
+このフィールドの文字コードはファイルの作成環境に依存し、TWLで作成したファイルであればShift_JISになります。</td></tr>
+<tr><td>shortname_length</td><td>shortnameの有効文字数です。<br />shortnameは必ず終端に'\0'が付与されますが、利便性のために用意されています。</td></tr>
+<tr><td>longname</td><td>エントリ名です。<br />FSDirectoryEntryInfo構造体ではShift_JIS、FSDirectoryEntryInfoW構造体ではUTF16-LEとして格納されます。</td></tr>
+<tr><td>longname_length</td><td>longnameの有効文字数です。<br />longnameは必ず終端にL'\0'が付与されますが、利便性のために用意されています。</td></tr>
+<tr><td>attributes</td><td>エントリの属性です。各フラグの意味は<a href="FSPathInfo.html">FSPathInfo</a>のattributesと同じです。</td></tr>
+<tr><td>mtime</td><td><a href="FSDateTime.html">FSDateTime</a>型で表現されるエントリ最終更新時刻です。<br />
+時刻情報が有効でない場合は全てのメンバが0になります。</td></tr>
+<tr><td>filesize</td><td>ファイルサイズです。<br />エントリがファイルである場合にのみ有効です。</td></tr>
+<tr><td>id</td><td>ファイルまたはディレクトリのIDです。<br />得られた値は <code><a href="file/FS_OpenFileFast.html">FS_OpenFileFast()</a></code> などに使用することが出来ます。<br />
+<a href="archive_nand_spec.html">NANDアーカイブ</a>など、ファイルIDやディレクトリIDをサポートしていない場合は常にFS_INVALID_FILE_IDとなります。</td></tr>
+</table>
+
+<h2>参照</h2>
+<p><code>
+<a href="directory/FS_CreateFile.html">FS_CreateFile</a>
+<a href="directory/FS_CreateDirectory.html">FS_CreateDirectory</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/09/02 Unicode版の構造体について追記。<br />
+2008/06/13 attributesフラグの説明をFSPathInfoと統合しリンク先を追加<br />
+2007/09/18 初版<br />
+</p>
+</body>
+</html>

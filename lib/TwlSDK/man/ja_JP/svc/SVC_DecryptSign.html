@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>SVC_DecryptSign</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">SVC_DecryptSign <IMG src="../image/BPT.gif" align="middle"><IMG src="../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;twl/os/common/systemCall.h&gt;</CODE></PRE>
+  <PRE><CODE>void SVC_DecryptSign( const SVCSignHeapContext* acmemory_pool,
+                        void* buffer,
+                        const void* sgn_ptr,
+                        const void* key_ptr );</CODE></PRE>
+</DL>
+<H2>引数</H2>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TD><B><I>acmemory_pool</I></B></TD>
+      <TD>ヒープ情報へのポインタ</TD>
+    </TR>
+    <TR>
+      <TD><B><I>buffer</I></B></TD>
+      <TD>出力データ領域へのポインタ</TD>
+    </TR>
+    <TR>
+      <TD><B><I>sgn_ptr</I></B></TD>
+      <TD>電子署名データへのポインタ</TD>
+    </TR>
+    <TR>
+      <TD><B><I>key_ptr</I></B></TD>
+      <TD>公開鍵データへのポインタ</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>返り値</H2>
+<P>引数のポインタに NULL のものがある場合や、電子署名のパディングが不正な場合、FALSEを返します。<BR>
+その他の場合、TRUE を返します。</P>
+<H2>説明</H2>
+<P>指定の公開鍵で署名データを復号します。</P>
+<P><B><I>acmemory_pool</I></B> は処理で使用するヒープ領域の情報が格納されている SVCSignHeapContext 構造体へのポインタです。<CODE><A href="SVC_InitSignHeap.html">SVC_InitSignHeap()</A></CODE> で初期化したものです。</P>
+<P><B><I>buffer</I></B> は出力データ領域へのポインタです。復号されたデータはここに格納されます。<BR>※出力サイズはSVC_SHA1_DIGEST_SIZE（20バイト）固定です。</P>
+<P><B><I>sgn_ptr</I></B> は復号する電子署名データへのポインタです。</P>
+<P><B><I>key_ptr</I></B> は復号に用いる公開鍵データへのポインタです。</P>
+<P>公開鍵は1024bitの鍵長のもののみサポートしています。鍵の生成方法は<a href="../crypto/overview/about_RSA.html#make_key">CRYPTOのRSA暗号概要の鍵作成例</a>を参照してください。</P>
+<H2>参照</H2>
+<P><CODE><A href="SVC_InitSignHeap.html">SVC_InitSignHeap</A></CODE>, <A href="SVC_DecryptRSA.html"><CODE>SVC_DecryptRSA</CODE></A>, <CODE><A href="SVC_DecryptSignDER.html">SVC_DecryptSignDER</A></CODE></P>
+<H2>履歴</H2>
+<P>
+2008/09/18 鍵に関する解説追加<BR>
+2008/05/22 出力データサイズの注意事項追加<BR>
+2007/10/19 初版</P>
+</BODY>
+</HTML>

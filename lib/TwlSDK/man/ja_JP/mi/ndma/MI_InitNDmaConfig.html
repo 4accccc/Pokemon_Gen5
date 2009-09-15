@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>MI_InitNDmaConfig</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">MI_InitNDmaConfig <IMG src="../../image/TWL.gif" width="24" height="12" border="0" align=middle></H1>
+<H2>構文</H2>
+<DL>
+  <DD><CODE>#include &lt;twl/mi.h&gt;</CODE><BR>
+  <BR>
+  <CODE>void MI_InitNDmaConfig( void );</CODE>
+  </DL>
+<H2>引数</H2>
+<P>なし。</P>
+<H2>返り値</H2>
+<P>なし。</P>
+<H2>説明</H2>
+<P>新規DMAの動作を制御するDMA config 構造体を初期化します。</P>
+<P>この関数は、TWL モードで動作する時に、<CODE><A href="../../os/init/OS_Init.html">OS_Init()</A></CODE> で呼び出されます。その後何度呼び出しても構いません。その都度初期化を行います。</P>
+<P>DMA config 構造体とは DMAの動作APIで設定しきれないパラメータを入れておく場所です。実際のDMA
+の際にはその構造体を参照して動作を行います。構造体型は <CODE><A href="MINDmaConfig.html">MINDmaConfig</A></CODE> です。</P>
+<P>DMA config 構造体で設定できるものは以下の値です。</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>メンバ名</TH>
+      <TH>説明</TH>
+      <TH>関係するレジスタ</TH>
+      <TH>初期値</TH>
+    </TR>
+    <TR>
+      <TD><CODE>intervalTimer</CODE></TD>
+      <TD>ブロック転送のインターバルタイマーです。</TD>
+      <TD>DMAxBCNT の d15-0</TD>
+      <TD><CODE>1</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>prescaler</CODE></TD>
+      <TD>ブロック転送インターバルタイマーのプリスケーラです。</TD>
+      <TD>DMAxBCNT の d17-16</TD>
+      <TD><CODE>MI_NDMA_INTERVAL_PS_1</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>blockWord</CODE></TD>
+      <TD>ブロック転送ワード数です。</TD>
+      <TD>DMAx_CNT の d19-16</TD>
+      <TD><CODE>MI_NDMA_BWORD_16</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>wordCount</CODE></TD>
+      <TD>転送ワード数です。</TD>
+      <TD>DMAxWCNT</TD>
+      <TD><CODE>MI_NDMA_AT_A_TIME</CODE></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+<CODE>intervalTimer</CODE> と <CODE>prescaler</CODE> を設定する関数は <CODE><A href="MI_SetNDmaInterval.html">MI_SetNDmaInterval()</A></CODE> です。<BR>
+現在の <CODE>intervalTimer</CODE> の設定を取得する関数は <CODE><A href="MI_GetNDmaIntervalTimer.html">MI_GetNDmaIntervalTimer()</A></CODE> です。<BR>
+現在の <CODE>intervalPrescaler</CODE> の設定を取得する関数は <CODE><A href="MI_GetNDmaIntervalPrescaler.html">MI_GetNDmaIntervalPrescaler()</A></CODE> です。<BR>
+<BR>
+<CODE>blockWord</CODE> を設定する関数は <CODE><A href="MI_SetNDmaBlockWord.html">MI_SetNDmaBlockWord()</A></CODE> です。<BR>
+現在の <CODE>blockWord</CODE> の設定を取得する関数は <CODE><A href="MI_GetNDmaBlockWord.html">MI_GetNDmaBlockWord()</A></CODE> です。<BR>
+<BR>
+<CODE>wordCount</CODE> を設定する関数は <CODE><A href="MI_SetNDmaWordCount.html">MI_SetNDmaWordCount()</A></CODE> です。<BR>
+現在の <CODE>wordCount</CODE> の設定を取得する関数は <CODE><A href="MI_GetNDmaWordCount.html">MI_GetNDmaWordCount()</A></CODE> です。</P>
+<P>この関数は、デフォルトで使用される構造体を設定するためのものですが、ユーザの用意した構造体に値をコピーしたり、逆にユーザの用意した構造体から値をコピーしたりすることが可能です。<CODE><A href="MI_GetNDmaConfig.html">MI_GetNDmaConfg()</A></CODE> , <CODE><A href="MI_SetNDmaConfig.html">MI_SetNDmaConfig()</A></CODE> を参照してください。</P>
+<H2>内部動作</H2>
+<P>ライブラリ内の構造体に値を設定するのみで、実際にレジスタをアクセスすることはありません。</P>
+<H2>参照</H2>
+<P><CODE><A href="MI_GetNDmaConfig.html">MI_GetNDmaConfig</A>, <A href="MI_SetNDmaConfig.html">MI_SetNDmaConfig</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2007/09/07 初版</P>
+</BODY>
+</HTML>

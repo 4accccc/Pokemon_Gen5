@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>CARD_SetCacheFlushFlag</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+
+<body>
+
+<h1 align="left">CARD_SetCacheFlushFlag<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<dl>
+  <dd>
+<code>#include &lt;nitro/card.h&gt;</code><br />
+  <br />
+  <code>void CARD_SetCacheFlushFlag(BOOL icache, BOOL dcache);</code><br />
+  <br />
+  </dd>
+</dl>
+<h2>引数</h2>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="13%"><em><strong>icache</strong></em></td>
+      <td width="87%">命令キャッシュの自動無効化を有効にするならTRUE</td>
+    </tr>
+    <tr>
+      <td width="13%"><em><strong>dcache</strong></em></td>
+      <td width="87%">データキャッシュの自動無効化を有効にするならTRUE</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>返り値</h2>
+<p>なし。</p>
+
+<h2>説明</h2>
+<p>ライブラリ内部でROMデータの読み込みが発生した場合にキャッシュ無効化処理を自動的に行うかどうかを設定します。</p>
+<p>
+ROMデータをメモリへ読み込むときに最も安全なキャッシュ操作は
+命令キャッシュを常に無効化してDMA転送ならばデータキャッシュも無効化しておくことですが、
+キャッシュを考慮する必要のないことが明らかである場合にこれらの操作は冗長となります。
+この関数は、そのようなキャッシュ無効化処理の有無を変更することが出来ます。
+</p>
+
+<p>CARDライブラリがROMデータをメモリへ読み込む際、ここで設定した内容にしたがって自動的にキャッシュ操作を行います。<br />
+デフォルト設定では、icacheがFALSE、dcacheがTRUEになっています。
+これは、データキャッシュは無効化するが命令キャッシュは無効化しないことを示します。<br />
+特別な理由が無い限りはデフォルトの設定から変更する必要はありません。</p>
+
+<p>命令キャッシュはFSライブラリやELライブラリなどの上位ライブラリが実行コードを制御する場面でも同様に操作しているため、
+CARDライブラリでの読み込み時に考慮しなくとも特に問題が生じることはありません。</p>
+
+<p style='color:Red;'>
+データキャッシュについてはVRAM、DMA、ARM7など外部メモリデバイスを扱う全ての上位ライブラリへ影響がおよびますので、
+よほど限定された状況でない限りはデフォルトのTRUEから変更すべきではありません。</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="CARD_GetCacheFlushFlag.html">CARD_GetCacheFlushFlag</a> 
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/12/05 初版<br />
+</p>
+</body>
+</html>

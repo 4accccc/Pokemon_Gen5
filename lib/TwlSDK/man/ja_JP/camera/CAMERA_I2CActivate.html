@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>CAMERA_I2CActivate*</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">CAMERA_I2CActivate* <IMG src="../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <CODE>#include &lt;twl/camera.h&gt;</CODE><BR>
+  <BR>
+  <CODE><a href="CAMERAResult.html">CAMERAResult</a> CAMERA_I2CActivate(<A href="CAMERASelect.html">CAMERASelect</A> camera);</CODE>
+  <BR>
+  <CODE><a href="CAMERAResult.html">CAMERAResult</a> CAMERA_I2CActivateAsync(<A href="CAMERASelect.html">CAMERASelect</A> camera, <A href="CAMERACallback.html">CAMERACallback</A> callback, void *arg);</CODE>
+</DL>
+<H2>引数</H2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>camera</STRONG></EM></TD>
+      <TD width="87%">動作させるカメラ、もしくは両カメラともスタンバイ状態とすることを指定します。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>callback</STRONG></EM></TD>
+      <TD width="87%">完了時のコールバック関数<BR>
+	  必要ない場合は NULL を指定します。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>arg</STRONG></EM></TD>
+      <TD width="87%">完了時のコールバック関数に与える引数<BR>
+	  callback に NULL を指定した場合は単に無視されます</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+
+<H2>返り値</H2>
+<P>成功すれば CAMERA_RESULT_SUCCESS が返ってきます。失敗した場合は各エラーが返ってきます。</P>
+
+<H2>説明</H2>
+<P>
+カメラを起動、もしくはスタンバイ状態にします。<BR>
+<BR>
+本関数はカメラモジュール自体の起動であり、キャプチャ開始は <code><A href="CAMERA_StartCapture.html">CAMERA_StartCapture()</A></code> を呼び出す必要があります。
+<BR><BR>
+カメラは内側カメラ(CAMERA_SELECT_IN)と外側カメラ(CAMERA_SELECT_OUT)の2個が搭載されており、本関数で指定されたカメラが起動することになります。<BR>
+指定されなかった方のカメラは自動的にスタンバイ状態となります。
+<BR><BR>
+また CAMERA_SELECT_NONE を指定することにより、内側カメラ、外側カメラ両方ともスタンバイ状態にすることができます。<BR>
+節電のため、カメラを使用していない場合は CAMERA_SELECT_NONE を指定してスタンバイ状態になることを推奨します。
+<BR><BR>
+<code>CAMERA_I2CActivateAsync()</code> は <code>CAMERA_I2CActivate()</code> とは異なり、制御をすぐに戻し非同期で実行されます。<BR>
+処理の完了を確認するにはcallbackを利用してください。
+<BR><BR>
+（注意）<BR>
+カメラを起動した直後の4フレームは取得した画像が極端に暗い場合があります。<BR>
+また、カメラが起動した後に自動露出が安定するまでのフレームは上記の4フレームと合わせて、屋内で14フレーム、屋外で30フレーム程度となります。
+</P>
+
+<H2>参照</H2>
+<P><CODE><A href="CAMERA_StartCapture.html">CAMERA_StartCapture</A></CODE>、<CODE><A href="CAMERASelect.html">CAMERASelect</A>、<A href="CAMERACallback.html">CAMERACallback</A></CODE></P>
+<H2>履歴</H2>
+<P>
+2008/08/18 カメラ起動直後の露出調整の時間についての記述を修正<BR>
+2008/07/16 自動露出補正が安定するまでのフレーム数について追記<BR>
+2007/11/12 初版</P>
+</BODY>
+</HTML>

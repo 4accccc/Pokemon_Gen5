@@ -1,0 +1,1834 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>TWL-SDK CHANGELOG</TITLE>
+</HEAD>
+<BODY style="padding-bottom: 1600px;">
+<HR>
+<H1>TWL-SDK 変更履歴</H1>
+<HR>
+<DL>
+<DT>
+<A href="#sdk_5_2_%E6%AD%A3%E5%BC%8F%E7%89%88">■TWL-SDK 5.2&#160;正式版</A> (2009/06/10)</DT>
+<DD><A href="#note74-01">Note 74-01: (DevEnv) Changelog Note 73-01 の訂正</A></DD>
+<DD><A href="#note74-02">Note 74-02: (DevEnv) Copyright の更新</A></DD>
+<DD><A href="#note74-03">Note 74-03: (DevEnv) NAND アプリ開発マニュアルの修正</A></DD>
+<DD><A href="#note74-04">Note 74-04: (DevEnv) 関数リファレンスの a-z 変更</A></DD>
+<DD><A href="#note74-05">Note 74-05: (FS) TWL 専用領域に関する追記</A></DD>
+<DD><A href="#note74-06">Note 74-06: (TCL) TCL_EncodeAndWritePicture 関数の修正</A></DD>
+<DD><A href="#note74-07">Note 74-07: (TOOL) TwlNmenu の変更</A></DD>
+<DD><A href="#note74-08">Note 74-08: (TOOL) makebanner、makebanner.TWL における表示可能文字チェックの修正</A></DD>
+<DD><A href="#note74-09">Note 74-09: (WXC) ライブラリのデッドストリップ不具合修正</A></DD>
+<DD><A href="#KnownIssues_5_2_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK 5.2&#160;正式版での既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#sdk_5_2_RC">■TWL-SDK 5.2&#160;RC</A> (2009/05/29)</DT>
+<DD><A href="#note73-01">Note 73-01: (CAMERA) CAMERA_SwitchOffLED, CAMERA_SetLED 関数の修正</A></DD>
+<DD><A href="#note73-02">Note 73-02: (CARD) ROM アクセス中の抜け検出不具合の修正</A></DD>
+<DD><A href="#note73-03">Note 73-03: (DSP) マイクサンプリング機能の不具合修正</A></DD>
+<DD><A href="#note73-04">Note 73-04: (DevEnv) Changelog Note 72-07 の訂正</A></DD>
+<DD><A href="#note73-05">Note 73-05: (DevEnv) TWL-SDK 移行ガイドの修正</A></DD>
+<DD><A href="#note73-06">Note 73-06: (DevEnv) 公開ヘッダファイルから SDK_NITRO を削除</A></DD>
+<DD><A href="#note73-07">Note 73-07: (DevEnv) 拡張言語対応アプリケーション解説の修正</A></DD>
+<DD><A href="#note73-08">Note 73-08: (FS) NAND・SD カードアクセス時のコンポーネント負荷軽減</A></DD>
+<DD><A href="#note73-09">Note 73-09: (FS) NITRO ROM のオーバーレイが IS-TWL-DEBUGGER でデバッグできない不具合修正</A></DD>
+<DD><A href="#note73-10">Note 73-10: (FS) SD カードスロットの状態判定に関する追記</A></DD>
+<DD><A href="#note73-11">Note 73-11: (FS) セーブデータに関するエラー値の修正</A></DD>
+<DD><A href="#note73-12">Note 73-12: (FS) 複数アーカイブの競合使用に関する不具合修正</A></DD>
+<DD><A href="#note73-13">Note 73-13: (GX) DEMO ライブラリの修正</A></DD>
+<DD><A href="#note73-14">Note 73-14: (MIC) CODEC のモードによる自動サンプリング関数の動作について</A></DD>
+<DD><A href="#note73-15">Note 73-15: (OS) OS_InitChina 関数で表示される画面の仕様変更</A></DD>
+<DD><A href="#note73-16">Note 73-16: (OS) OS_IsBootFromSystemMenu 関数の追加</A></DD>
+<DD><A href="#note73-17">Note 73-17: (OS) デバッグ出力時のブロッキングモード設定関数の追加</A></DD>
+<DD><A href="#note73-18">Note 73-18: (PM) PM_SetLCDPower 関数内の V ブランク待ち方法の変更</A></DD>
+<DD><A href="#note73-19">Note 73-19: (SND) IIR フィルタ設定時の注意事項を追記</A></DD>
+<DD><A href="#note73-20">Note 73-20: (SSP) BMP ファイル作成関数の追加</A></DD>
+<DD><A href="#note73-21">Note 73-21: (SSP) JPEG エンコード関数の作業用バッファサイズの修正</A></DD>
+<DD><A href="#note73-22">Note 73-22: (SSP) JPEG デコード処理の修正</A></DD>
+<DD><A href="#note73-23">Note 73-23: (SSP) 省メモリ版 JPEG エンコード関数の追加</A></DD>
+<DD><A href="#note73-24">Note 73-24: (TCL) JPEG エンコード関数の省メモリ化</A></DD>
+<DD><A href="#note73-25">Note 73-25: (TCL) PhotoChecker の修正</A></DD>
+<DD><A href="#note73-26">Note 73-26: (TCL) TCL_EncodeAndWritePicture 関数の修正</A></DD>
+<DD><A href="#note73-27">Note 73-27: (TOOL) NandFiler の変更</A></DD>
+<DD><A href="#note73-28">Note 73-28: (TOOL) TwlNmenu の SD インポート時の不具合修正</A></DD>
+<DD><A href="#note73-29">Note 73-29: (TOOL) addbanner の中韓対応</A></DD>
+<DD><A href="#note73-30">Note 73-30: (TOOL) compstatic に -l オプションを追加</A></DD>
+<DD><A href="#note73-31">Note 73-31: (TOOL) makebanner、makebanner.TWL の中韓対応</A></DD>
+<DD><A href="#note73-32">Note 73-32: (WBT) WBT_RegisterBlock 関数の返り値修正</A></DD>
+<DD><A href="#note73-33">Note 73-33: (WBT) wbt-1 サンプルデモの不具合修正</A></DD>
+<DD><A href="#note73-34">Note 73-34: (WFS) 内部スレッドのスタックサイズ増加</A></DD>
+<DD><A href="#note73-35">Note 73-35: (WM) dataShare-Model, wep-1 サンプルデモの修正</A></DD>
+<DD><A href="#note73-36">Note 73-36: (WM) サンプルデモの修正</A></DD>
+<DD><A href="#note73-37">Note 73-37: (WM) 特定のタイミングで WM_Reset 関数を実行した場合にコールバックが呼ばれない不具合の修正</A></DD>
+<DD><A href="#note73-38">Note 73-38: (WXC) すれちがい通信ライブラリの追加</A></DD>
+<DD><A href="#KnownIssues_5_2_RC">SDK 5.2&#160;RCでの既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#sdk_5_2_PR">■TWL-SDK 5.2&#160;PR</A> (2009/04/16)</DT>
+<DD><A href="#note72-01">Note 72-01: (AES) 無線と同時に使用した場合の不具合修正</A></DD>
+<DD><A href="#note72-02">Note 72-02: (CAMERA) CAMERA_I2C* 関数の設定反映のタイミングについて追記</A></DD>
+<DD><A href="#note72-03">Note 72-03: (CAMERA) CAMERA_SwitchOffLED 関数のリファレンスへの注意書き追加</A></DD>
+<DD><A href="#note72-04">Note 72-04: (CAMERA) フレームレート値の追加</A></DD>
+<DD><A href="#note72-05">Note 72-05: (DSP) DSP_PlaySound 関数の不具合修正</A></DD>
+<DD><A href="#note72-06">Note 72-06: (DSP) DSP_Scaling* 関数の不具合修正</A></DD>
+<DD><A href="#note72-07">Note 72-07: (DevEnv) TWL-SDK 移行ガイドの修正</A></DD>
+<DD><A href="#note72-08">Note 72-08: (EL) EL_Link*Ex 関数の追加</A></DD>
+<DD><A href="#note72-09">Note 72-09: (FS) AboutFileSystem.pdf の更新</A></DD>
+<DD><A href="#note72-10">Note 72-10: (FS) NAND への書き込みを伴う API の修正</A></DD>
+<DD><A href="#note72-11">Note 72-11: (FS) async サンプルデモの修正</A></DD>
+<DD><A href="#note72-12">Note 72-12: (FS) システムシャットダウン時の不具合修正</A></DD>
+<DD><A href="#note72-13">Note 72-13: (FS) ニンテンドー DSi 対応 ROM の消費サイズに関する追記</A></DD>
+<DD><A href="#note72-14">Note 72-14: (FS) ファイルアクセス時のキャッシュ操作に関する修正</A></DD>
+<DD><A href="#note72-15">Note 72-15: (FS) フラッシュ処理での不必要なデバイスアクセスの修正</A></DD>
+<DD><A href="#note72-16">Note 72-16: (FS) マルチスレッドでのコマンド発行に関する不具合修正</A></DD>
+<DD><A href="#note72-17">Note 72-17: (GX) Sub_Double3D サンプルデモの説明追加</A></DD>
+<DD><A href="#note72-18">Note 72-18: (MB) multiboot-model, multiboot-wfs サンプルデモの子機プログラムのビルド方法の再修正</A></DD>
+<DD><A href="#note72-19">Note 72-19: (MB) 遅延ロード配信に関する不具合修正</A></DD>
+<DD><A href="#note72-20">Note 72-20: (NA) シェアドフォントライブラリの中韓対応</A></DD>
+<DD><A href="#note72-21">Note 72-21: (OS) HYBRID ROM の NITROモード時の未使用領域に関するヒープ関数の追加</A></DD>
+<DD><A href="#note72-22">Note 72-22: (OS) IRQ ハンドラの未定義命令修正</A></DD>
+<DD><A href="#note72-23">Note 72-23: (OS) ISBN 番号の17桁対応</A></DD>
+<DD><A href="#note72-24">Note 72-24: (OS) OS_GetCurrentThread 関数のリファレンスへの追記</A></DD>
+<DD><A href="#note72-25">Note 72-25: (OS) OS_IsOnMainMemory 関数および OS_IsOnWram 関数の追加</A></DD>
+<DD><A href="#note72-26">Note 72-26: (OS) TWL 専用 ROM 用の警告画面を追加</A></DD>
+<DD><A href="#note72-27">Note 72-27: (PM) PM ライブラリの排他不具合の修正</A></DD>
+<DD><A href="#note72-28">Note 72-28: (PM) 終了処理時のメインメモリ優先権の変更</A></DD>
+<DD><A href="#note72-29">Note 72-29: (PRC) 見本図形 DB の変更</A></DD>
+<DD><A href="#note72-30">Note 72-30: (RTC) RTC_GetDayOfWeek 関数リファレンスの追加</A></DD>
+<DD><A href="#note72-31">Note 72-31: (SND) DEMOLib, stream サンプルデモの WAVE データ読み込みに関する不具合修正</A></DD>
+<DD><A href="#note72-32">Note 72-32: (SND) SNDEX 終了コールバック処理の不具合修正</A></DD>
+<DD><A href="#note72-33">Note 72-33: (SSP) SSP_StartJpegEncoder* 関数の不具合修正</A></DD>
+<DD><A href="#note72-34">Note 72-34: (SSP) サムネイル作成用バッファのサイズ修正</A></DD>
+<DD><A href="#note72-35">Note 72-35: (TCL) TCL ライブラリの追加</A></DD>
+<DD><A href="#note72-36">Note 72-36: (TOOL) makerom の変更</A></DD>
+<DD><A href="#note72-37">Note 72-37: (TOOL) makerom.TWL の変更</A></DD>
+<DD><A href="#note72-38">Note 72-38: (TOOL) maketad の srl に内包される tad ファイルが不正になる問題の修正</A></DD>
+<DD><A href="#note72-39">Note 72-39: (TOOL) maketad, tad2rom の TWL カード対応</A></DD>
+<DD><A href="#note72-40">Note 72-40: (TOOL) ntrcomp の usage 修正</A></DD>
+<DD><A href="#note72-41">Note 72-41: (TOOL) 中国向けアプリケーションのバナー指定に関する説明追記</A></DD>
+<DD><A href="#note72-42">Note 72-42: (WM) WM_IsValidGameInfo、WM_IsValidGameBeacon 関数の判定を強化</A></DD>
+<DD><A href="#note72-43">Note 72-43: (WM) 無線ライブラリ初期化の際に指定するバッファの範囲制限の追加</A></DD>
+<DD><A href="#note72-44">Note 72-44: (その他) 豪州のレーティング審査団体名変更に対応</A></DD>
+<DD><A href="#KnownIssues_5_2_PR">SDK 5.2&#160;PRでの既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#sdk_5_1_%E6%AD%A3%E5%BC%8F%E7%89%88">■TWL-SDK 5.1&#160;正式版</A> (2009/02/27)</DT>
+<DD><A href="#note71-01">Note 71-01: (DSP) audio, graphics コンポーネントの更新</A></DD>
+<DD><A href="#note71-02">Note 71-02: (DevEnv) 拡張メインメモリのアリーナ領域の修正</A></DD>
+<DD><A href="#note71-03">Note 71-03: (GX) LCD 表示 OFF 状態で設定が無視される関数群を明記</A></DD>
+<DD><A href="#note71-04">Note 71-04: (MATH) TWL-SDK 移行ガイドの修正</A></DD>
+<DD><A href="#note71-05">Note 71-05: (MB) HYBRID カードアプリのクローンブート不具合修正</A></DD>
+<DD><A href="#note71-06">Note 71-06: (MB) multiboot-Model, fake_child サンプルデモの不具合修正</A></DD>
+<DD><A href="#note71-07">Note 71-07: (OS) コンテキスト読み込み時の除算器終了待ち処理を追加</A></DD>
+<DD><A href="#note71-08">Note 71-08: (PM) 特定条件での PM_ForceToPowerOff 関数不具合修正</A></DD>
+<DD><A href="#note71-09">Note 71-09: (SSP) JPEG デコード処理の修正</A></DD>
+<DD><A href="#note71-10">Note 71-10: (SSP) SSP_StartJpegEncoderWithEncodeData 関数の不具合修正</A></DD>
+<DD><A href="#note71-11">Note 71-11: (TOOL) tad2rom の修正</A></DD>
+<DD><A href="#note71-12">Note 71-12: (WM) サンプルデモの修正</A></DD>
+<DD><A href="#KnownIssues_5_1_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK 5.1&#160;正式版での既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#sdk_5_1_RC">■TWL-SDK 5.1&#160;RC</A> (2009/02/10)</DT>
+<DD><A href="#note70-01">Note 70-01: (CTRDG) CTRDG_Init 関数の weak 関数化</A></DD>
+<DD><A href="#note70-02">Note 70-02: (DevEnv) TWL-SDK 移行ガイドの修正</A></DD>
+<DD><A href="#note70-03">Note 70-03: (FS) FATドライバ初期化関数の分離</A></DD>
+<DD><A href="#note70-04">Note 70-04: (FS) FS_SetSeekCache 関数の不具合修正</A></DD>
+<DD><A href="#note70-05">Note 70-05: (FS) システムシャットダウンに関する不具合修正</A></DD>
+<DD><A href="#note70-06">Note 70-06: (FS) 長いパス名の操作に関する不具合修正</A></DD>
+<DD><A href="#note70-07">Note 70-07: (GX) GX_SetDefaultNDMA 関数の修正</A></DD>
+<DD><A href="#note70-08">Note 70-08: (MB) MB 親機を利用する際のメモリ使用量削減</A></DD>
+<DD><A href="#note70-09">Note 70-09: (PM) PM_SetLCDPower 関数のリファレンスに注意事項を追記</A></DD>
+<DD><A href="#note70-10">Note 70-10: (SND) 音量変更 API の追加</A></DD>
+<DD><A href="#note70-11">Note 70-11: (STD) STD_SearchChar* 関数の修正</A></DD>
+<DD><A href="#note70-12">Note 70-12: (TOOL) NandFiler の変更</A></DD>
+<DD><A href="#note70-13">Note 70-13: (TOOL) TwlNmenu に NAND アプリのサイズ表示方式を追加</A></DD>
+<DD><A href="#note70-14">Note 70-14: (TOOL) WMTestTool の修正</A></DD>
+<DD><A href="#note70-15">Note 70-15: (TOOL) makerom.TWL の変更</A></DD>
+<DD><A href="#note70-16">Note 70-16: (TOOL) mb_child_simple.srl の削除</A></DD>
+<DD><A href="#note70-17">Note 70-17: (TOOL) 動作環境別 mb_child の追加</A></DD>
+<DD><A href="#note70-18">Note 70-18: (WFS) 子機側終了処理の不具合修正</A></DD>
+<DD><A href="#note70-19">Note 70-19: (WM) WMPortRecvCallback 構造体に rssi メンバを追加</A></DD>
+<DD><A href="#note70-20">Note 70-20: (その他) サンプルデモの修正</A></DD>
+<DD><A href="#KnownIssues_5_1_RC">SDK 5.1&#160;RCでの既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#sdk_5_1_PR2">■TWL-SDK 5.1&#160;PR2</A> (2009/01/15)</DT>
+<DD><A href="#note69-01">Note 69-01: (CAMERA) デモの修正</A></DD>
+<DD><A href="#note69-02">Note 69-02: (CARD) カードアクセス判定の強化</A></DD>
+<DD><A href="#note69-03">Note 69-03: (DSP) DSP_PlayShutterSound 関数の変更</A></DD>
+<DD><A href="#note69-04">Note 69-04: (DevEnv) TWL-SDK 移行ガイドの更新</A></DD>
+<DD><A href="#note69-05">Note 69-05: (EL) EL_CalcEnoughBufferSizeforLink* 関数の追加</A></DD>
+<DD><A href="#note69-06">Note 69-06: (EL) EL_GetResultCode 関数の追加</A></DD>
+<DD><A href="#note69-07">Note 69-07: (EL) EL_Unlink 関数の修正</A></DD>
+<DD><A href="#note69-08">Note 69-08: (FS) FS_ForceToEnableLatencyEmulation 関数の追加</A></DD>
+<DD><A href="#note69-09">Note 69-09: (GX) Sub_Double3D サンプルデモの修正</A></DD>
+<DD><A href="#note69-10">Note 69-10: (MB) 擬似ダウンロードプレイ機能に関するドキュメント追加</A></DD>
+<DD><A href="#note69-11">Note 69-11: (NA) NAND アプリ開発マニュアルの更新</A></DD>
+<DD><A href="#note69-12">Note 69-12: (OS) OSMutex の拡張</A></DD>
+<DD><A href="#note69-13">Note 69-13: (PM) LCD オフ時の処理に関する修正</A></DD>
+<DD><A href="#note69-14">Note 69-14: (SND) SNDEX_GetCurrentVolume[Async] 関数の追加</A></DD>
+<DD><A href="#note69-15">Note 69-15: (SND) SNDEX_SetVolume[Async] 関数の連続実行制限の追加</A></DD>
+<DD><A href="#note69-16">Note 69-16: (SND) シャッター音連続再生時の排他制御方法の修正</A></DD>
+<DD><A href="#note69-17">Note 69-17: (SSP) SSP_ExtractJpegDecoderExif 関数の追加</A></DD>
+<DD><A href="#note69-18">Note 69-18: (SSP) SSP_StartJpegDecoder 関数の不具合修正</A></DD>
+<DD><A href="#note69-19">Note 69-19: (SSP) SSP_StartJpegDecoder 関数の不具合修正</A></DD>
+<DD><A href="#note69-20">Note 69-20: (SSP) デモの統合</A></DD>
+<DD><A href="#note69-21">Note 69-21: (TOOL) NandFiler にセーブデータのインポート/エクスポート機能を追加</A></DD>
+<DD><A href="#note69-22">Note 69-22: (TOOL) makerom.TWL の変更</A></DD>
+<DD><A href="#note69-23">Note 69-23: (TOOL) tad2rom ツールの追加</A></DD>
+<DD><A href="#note69-24">Note 69-24: (WM) WM_SetMPDataToPort 関数のコールバックが実行されない不具合の修正</A></DD>
+<DD><A href="#KnownIssues_5_1_PR2">SDK 5.1&#160;PR2での既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#sdk_5_1_PR">■TWL-SDK 5.1&#160;PR</A> (2008/12/10)</DT>
+<DD><A href="#note68-01">Note 68-01: (CAMERA) 特定の状況で CAMERA_Init 関数が無限ループに陥る不具合の修正</A></DD>
+<DD><A href="#note68-02">Note 68-02: (CARD) キャッシュ無効化操作のデフォルト設定変更</A></DD>
+<DD><A href="#note68-03">Note 68-03: (CARD) 動作モード判定関数の追加</A></DD>
+<DD><A href="#note68-04">Note 68-04: (CRYPTO) RSA 暗号処理の padding 方式変更</A></DD>
+<DD><A href="#note68-05">Note 68-05: (CRYPTO) ライブラリの配置セクション変更</A></DD>
+<DD><A href="#note68-06">Note 68-06: (DSP) DSP_PlaySound 関数の不具合修正</A></DD>
+<DD><A href="#note68-07">Note 68-07: (DSP) シャッター音再生タイミングの修正</A></DD>
+<DD><A href="#note68-08">Note 68-08: (DSP) ステレオ音声再生時の不具合修正</A></DD>
+<DD><A href="#note68-09">Note 68-09: (DSP) 再生可能なシャッター音データの制限</A></DD>
+<DD><A href="#note68-10">Note 68-10: (DevEnv) ARM7 コンポーネントに関するドキュメント追加</A></DD>
+<DD><A href="#note68-11">Note 68-11: (DevEnv) ARM7 コンポーネントの追加</A></DD>
+<DD><A href="#note68-12">Note 68-12: (DevEnv) BuildFinalRom デモの修正</A></DD>
+<DD><A href="#note68-13">Note 68-13: (DevEnv) IS-NITRO-DEBUGGER でのデバッグ機能を無効化するビルドスイッチの追加</A></DD>
+<DD><A href="#note68-14">Note 68-14: (DevEnv) NITRO ビルド時の Static セグメントに関する修正</A></DD>
+<DD><A href="#note68-15">Note 68-15: (DevEnv) NITRO-SDK からの移行ガイドの追加</A></DD>
+<DD><A href="#note68-16">Note 68-16: (ENV) ENV_SetResourceSetArray 関数の API 名の誤記修正</A></DD>
+<DD><A href="#note68-17">Note 68-17: (FS) FS_ATTRIBUTE_IS_OFFLINE フラグの追加</A></DD>
+<DD><A href="#note68-18">Note 68-18: (FS) FS_GetSeekCacheSize 関数の修正</A></DD>
+<DD><A href="#note68-19">Note 68-19: (FS) FS_SetSeekCache 関数および FS_SeekFile 関数の修正</A></DD>
+<DD><A href="#note68-20">Note 68-20: (FS) overlay-staticinit サンプルデモの修正</A></DD>
+<DD><A href="#note68-21">Note 68-21: (FS) アーカイブ状態判定関数の追加</A></DD>
+<DD><A href="#note68-22">Note 68-22: (FS) ファイルアクセス時のキャッシュ操作に関する修正</A></DD>
+<DD><A href="#note68-23">Note 68-23: (GX) Sub_Double3D サンプルデモの修正</A></DD>
+<DD><A href="#note68-24">Note 68-24: (MB) HYBRID プログラムによるクローンブート機能の正式対応</A></DD>
+<DD><A href="#note68-25">Note 68-25: (NA) NA_LoadSharedFontTable 関数の修正</A></DD>
+<DD><A href="#note68-26">Note 68-26: (OS) OS_GetSerialNo 関数の非公開化</A></DD>
+<DD><A href="#note68-27">Note 68-27: (OS) OS_ResetSystem 関数処理の変更</A></DD>
+<DD><A href="#note68-28">Note 68-28: (OS) アリーナ、プロテクションリージョンに関するリファレンスの修正</A></DD>
+<DD><A href="#note68-29">Note 68-29: (OS) ペアレンタルコントロール状態取得関数の修正</A></DD>
+<DD><A href="#note68-30">Note 68-30: (PM) pm-2 デモの追加</A></DD>
+<DD><A href="#note68-31">Note 68-31: (PM) ハードウェアリセットやアプリケーションジャンプの排他制御の追加</A></DD>
+<DD><A href="#note68-32">Note 68-32: (PM) 特定条件下でハードウェアリセットが完了しなくなる不具合の修正</A></DD>
+<DD><A href="#note68-33">Note 68-33: (SND) シャッター音再生中の DSPMixRate 変更の禁止</A></DD>
+<DD><A href="#note68-34">Note 68-34: (SND) シャッター音再生中の SNDEX 関数実行の禁止</A></DD>
+<DD><A href="#note68-35">Note 68-35: (SND) 複数の SNDEX 関数実行時に発生し得る不具合の修正</A></DD>
+<DD><A href="#note68-36">Note 68-36: (SND) 非同期関数のリファレンスにおける返り値の誤記修正</A></DD>
+<DD><A href="#note68-37">Note 68-37: (SSP) HYBRID ビルドの NITRO モード時の動作修正</A></DD>
+<DD><A href="#note68-38">Note 68-38: (SSP) JPEG エンコード、デコード時の署名機能の非公開化</A></DD>
+<DD><A href="#note68-39">Note 68-39: (SSP) SSP_ConvertJpegEncodeData, SSP_StartJpegEncoderWithEncodeData 関数の追加</A></DD>
+<DD><A href="#note68-40">Note 68-40: (TOOL) NandFiler の不具合修正</A></DD>
+<DD><A href="#note68-41">Note 68-41: (TOOL) TWL 版 mb_child.srl の追加</A></DD>
+<DD><A href="#note68-42">Note 68-42: (TOOL) addbanner に TWL 画面上のバナービューアを追加</A></DD>
+<DD><A href="#note68-43">Note 68-43: (TOOL) buryarg.TWL の修正</A></DD>
+<DD><A href="#note68-44">Note 68-44: (TOOL) cmptad の機能拡張</A></DD>
+<DD><A href="#note68-45">Note 68-45: (TOOL) compstatic ツールのエラーチェック機能強化</A></DD>
+<DD><A href="#note68-46">Note 68-46: (TOOL) makebanner, makebanner.TWLの修正</A></DD>
+<DD><A href="#note68-47">Note 68-47: (TOOL) makerom.TWL.exe の変更</A></DD>
+<DD><A href="#note68-48">Note 68-48: (TOOL) makerom.exe の変更</A></DD>
+<DD><A href="#note68-49">Note 68-49: (TOOL) showversion にビルドモード表示機能を追加</A></DD>
+<DD><A href="#note68-50">Note 68-50: (TOOL) バナーのプレビュー用の背景画像を追加</A></DD>
+<DD><A href="#note68-51">Note 68-51: (WM) コンポーネントの過負荷時に MP 通信が切れてしまう不具合の修正</A></DD>
+<DD><A href="#note68-52">Note 68-52: (WM) 無線 OFF モード時の挙動の変更</A></DD>
+<DD><A href="#note68-53">Note 68-53: (WVR) switchover デモの無線ライブラリ終了処理の不具合修正</A></DD>
+<DD><A href="#note68-54">Note 68-54: (その他) バナーフォーマットの一部変更</A></DD>
+<DD><A href="#KnownIssues_5_1_PR">SDK 5.1&#160;PRでの既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#sdk_5_0_%E6%AD%A3%E5%BC%8F%E7%89%88">■TWL-SDK 5.0&#160;正式版</A> (2008/10/23)</DT>
+<DD><A href="#note67-01">Note 67-01: (CAMERA) simpleShoot-1, simpleShoot-2 のエラーハンドリング修正</A></DD>
+<DD><A href="#note67-02">Note 67-02: (CAMERA) simpleShoot-2 デモの修正</A></DD>
+<DD><A href="#note67-03">Note 67-03: (CARD) 新規バックアップデバイスへの対応</A></DD>
+<DD><A href="#note67-04">Note 67-04: (DSP) DSP グラフィックスコンポーネントの同期版関数の修正</A></DD>
+<DD><A href="#note67-05">Note 67-05: (DSP) DSP_Scaling* 関数と DSP_CalcScalingFactor* 関数の結果不一致の修正</A></DD>
+<DD><A href="#note67-06">Note 67-06: (DSP) 各 DSP コンポーネントの終了処理修正</A></DD>
+<DD><A href="#note67-07">Note 67-07: (DevEnv) ビルドスイッチに関するドキュメントの更新</A></DD>
+<DD><A href="#note67-08">Note 67-08: (FS) TWL 専用ファイルのオープン判定強化</A></DD>
+<DD><A href="#note67-09">Note 67-09: (MB) multiboot-wfs 配信子機のビルドモードの切り替え追加</A></DD>
+<DD><A href="#note67-10">Note 67-10: (MI) MI_SendNDmaGXCommand* 関数の追加</A></DD>
+<DD><A href="#note67-11">Note 67-11: (OS) OS_IsCodecTwlMode 関数の追加</A></DD>
+<DD><A href="#note67-12">Note 67-12: (OS) OS_JumpTo* 関数のデモを追加</A></DD>
+<DD><A href="#note67-13">Note 67-13: (OS) ペアレンタルコントロールの状態取得関数の追加</A></DD>
+<DD><A href="#note67-14">Note 67-14: (OS) 関数リファレンスの [動作環境] の移動</A></DD>
+<DD><A href="#note67-15">Note 67-15: (PM) ハードウェアリセットとアプリケーションジャンプの排他制御の追加</A></DD>
+<DD><A href="#note67-16">Note 67-16: (PM) 電源ボタン処理の修正</A></DD>
+<DD><A href="#note67-17">Note 67-17: (SCFG) SCFG 関数の調整</A></DD>
+<DD><A href="#note67-18">Note 67-18: (SND) IIR フィルタ(マイク入力対象)設定時のヘッドホンミュートの撤廃</A></DD>
+<DD><A href="#note67-19">Note 67-19: (SND) SNDEX_SetVolumeSwitchCallback 関数の不具合修正</A></DD>
+<DD><A href="#note67-20">Note 67-20: (SND) extraFunc デモの機能追加</A></DD>
+<DD><A href="#note67-21">Note 67-21: (SSP) JPEG ライブラリの NITRO モード対応</A></DD>
+<DD><A href="#note67-22">Note 67-22: (SSP) SSP_StartJpegEncoder 関数のエラー処理の追加</A></DD>
+<DD><A href="#note67-23">Note 67-23: (STD) STD_CompareNString 関数が正しい値を返さない不具合対応</A></DD>
+<DD><A href="#note67-24">Note 67-24: (STD) STD_ConvertAsciiToInt, STD_ConvertAsciiToLong 関数の修正</A></DD>
+<DD><A href="#note67-25">Note 67-25: (STD) STD_TSNPrintf, STD_TSPrintf, STD_TVSNPrintf, STD_TVSPrintf 関数の修正</A></DD>
+<DD><A href="#note67-26">Note 67-26: (STD) STD_TSScanf, STD_TVSScanf 関数の修正</A></DD>
+<DD><A href="#note67-27">Note 67-27: (TOOL) NandFiler にセーブデータのバックアップ・リストア機能を追加</A></DD>
+<DD><A href="#note67-28">Note 67-28: (TOOL) TwlNmenu に DS カードからのインポート機能を追加</A></DD>
+<DD><A href="#note67-29">Note 67-29: (TOOL) cmptad ツールの追加</A></DD>
+<DD><A href="#note67-30">Note 67-30: (TOOL) makebanner.exe, makebanner.TWL.exe の警告の追加</A></DD>
+<DD><A href="#note67-31">Note 67-31: (TOOL) makelst, stripdebug のリファレンス追加</A></DD>
+<DD><A href="#note67-32">Note 67-32: (TOOL) makerom.TWL.exe の変更</A></DD>
+<DD><A href="#note67-33">Note 67-33: (TOOL) maketad に DS カード書き込み用 SRL ファイルの作成機能を追加</A></DD>
+<DD><A href="#note67-34">Note 67-34: (TWL 無線) TWL 無線による通信中にリセットした場合にハングアップする不具合の修正</A></DD>
+<DD><A href="#KnownIssues_5_0_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK 5.0&#160;正式版での既知の問題点</A></DD>
+</DL>
+<HR>
+<H2 style="line-height: 0"><A name="sdk_5_2_%E6%AD%A3%E5%BC%8F%E7%89%88">■ TWL-SDK Version 5.2&#160;正式版</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/06/10)</P></DIV>
+<HR>
+<H3><A name="note74-01">Note 74-01: (DevEnv) Changelog Note 73-01 の訂正</A></H3>
+<P><description>
+        <a href="changelog.html#note73-01">Note 73-01</a> の changelog の説明が不十分であったため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note74-02">Note 74-02: (DevEnv) Copyright の更新</A></H3>
+<P><description>
+        ライブラリおよびサンプルデモのソースコード全体で、Copyright を更新しました。
+      </description></P>
+<HR>
+<H3><A name="note74-03">Note 74-03: (DevEnv) NAND アプリ開発マニュアルの修正</A></H3>
+<P><description>
+        $TwlSDK/docs/TechnicalNotes/NandAppManual.pdf に以下の修正を行いました。
+        <ul>
+          <li>サブバナーを使用した場合アプリのサイズが 16KB 増加することを追記</li>
+          <li>写真データベースライブラリとして TCL ライブラリを追記</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note74-04">Note 74-04: (DevEnv) 関数リファレンスの a-z 変更</A></H3>
+<P><description>
+        複数の関数が一つのリファレンス内で記述されている場合、関数リファレンスの a-z では * や [] などを使用して表示していましたが、ワイルドカードなどは使用せず、リファレンスに含まれるすべての関数名を表示するように変更しました。
+      </description></P>
+<HR>
+<H3><A name="note74-05">Note 74-05: (FS) TWL 専用領域に関する追記</A></H3>
+<P><description>
+        ニンテンドー DSi 対応カードに用意されている TWL 専用領域とそこへのファイル配置に関して、FS ライブラリの概要に説明を追記しました。
+      </description></P>
+<HR>
+<H3><A name="note74-06">Note 74-06: (TCL) TCL_EncodeAndWritePicture 関数の修正</A></H3>
+<P><description>
+        TCL_EncodeAndWritePicture 関数内でエンコードに失敗した場合に行われるリトライ処理時において、生成される JPEG ファイルが不正なものになってしまう不具合があり、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note74-07">Note 74-07: (TOOL) TwlNmenu の変更</A></H3>
+<P><description>
+        TwlNmenu ツールに以下の変更を行いました。
+        <ul>
+          <li>「NAND」モード時にサブバナーのサイズを表示する機能を追加</li>
+          <li>TwlNmenu の関数リファレンスに NAND アプリのサイズの計算式を追記</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note74-08">Note 74-08: (TOOL) makebanner、makebanner.TWL における表示可能文字チェックの修正</A></H3>
+<P><description>
+        makebanner、makebanner.TWL には設定されたゲームタイトルが DS や DSi 本体で表示可能な文字であるかチェックする機能がありましたが、これまで許容する文字のチェックが DS バナーガイドライン に準拠していませんでしたので、準拠するように修正しました。
+      </description></P>
+<HR>
+<H3><A name="note74-09">Note 74-09: (WXC) ライブラリのデッドストリップ不具合修正</A></H3>
+<P><description>
+        WXC ライブラリを一切使用していない場合でも一部の内部モジュールが常にリンクされており、この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_5_2_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK 5.2&#160;正式版 での既知の問題点</A></H3>
+<knownissues>
+      <description>
+        <ul>
+          <li>HYBRID モードでビルドしたプログラムを NITRO 環境で実行した場合、buryarg ツールで埋め込んだ引数データへ正常にアクセスできません。</li>
+        </ul>
+      </description>
+    </knownissues><HR>
+<H2 style="line-height: 0"><A name="sdk_5_2_RC">■ TWL-SDK Version 5.2&#160;RC</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/05/29)</P></DIV>
+<HR>
+<H3><A name="note73-01">Note 73-01: (CAMERA) CAMERA_SwitchOffLED, CAMERA_SetLED 関数の修正</A></H3>
+<P><description>
+        外側 LED の点滅設定を呼び出す間隔が短すぎると、一度も消灯されない問題があったため、これを修正しました。<br><br>
+        また、この修正に伴い CAMERA_SwitchOffLED, CAMERA_SetLED 関数の動作に変更があったため、リファレンスに説明を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note73-02">Note 73-02: (CARD) ROM アクセス中の抜け検出不具合の修正</A></H3>
+<P><description>
+        TWL モードで動作中のカードアプリにおいて ROM データの読み込み中にカードが抜けると、カード抜けコールバックが通知されるより前に ROM ハッシュ異常として強制停止してしまうという不具合があり、この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-03">Note 73-03: (DSP) マイクサンプリング機能の不具合修正</A></H3>
+<P><description>
+        DSP_StartSampling 関数で指定するサンプリングバッファが4096サンプル分(8192バイト)の整数倍でない場合に終端を超えてデータを書き込んでしまう不具合があり、この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-04">Note 73-04: (DevEnv) Changelog Note 72-07 の訂正</A></H3>
+<P><description>
+        <a href="changelog.html#note72-07">Note 72-07</a> の changelog の 3番目の項目が間違っていましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-05">Note 73-05: (DevEnv) TWL-SDK 移行ガイドの修正</A></H3>
+<P><description>
+        $TwlSDK/docs/TechnicalNotes/AboutNitroToTwl.pdf に以下の修正を行いました。
+        <ul>
+          <li>比較対象の TWL-SDK を TWL-SDK 5.2 に修正</li>
+          <li>HYBRID の NITRO モードでメモリの先頭領域を使用する方法として、OS_CreateExtraHeap、OS_AddExtraAreaToHeap 関数の説明を追加</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note73-06">Note 73-06: (DevEnv) 公開ヘッダファイルから SDK_NITRO を削除</A></H3>
+<P><description>
+        CW for DS の IDE 上で TWL-SDK を使用する場合、SDK_NITRO が定義されていないため、そのままでは NITRO ビルドとして正常にビルドできませんでした。<br>
+        そのため、SDK_NITRO を使用していた箇所を SDK_TWL を使用するように変更しました。<br><br>
+        この変更はプログラムの動作自体に影響ありません。
+      </description></P>
+<HR>
+<H3><A name="note73-07">Note 73-07: (DevEnv) 拡張言語対応アプリケーション解説の修正</A></H3>
+<P><description>
+        $TwlSDK/docs/TechnicalNotes/AboutExtendedLanguage.pdf に中国向けのバナーで指定するゲームタイトルの説明を修正しました。<br>
+        これまでバナースペックファイル内に指定する全ての言語のタイトル名を中国語にすることができましたが、今後は中国語以外は英語で指定する必要があります。<br>
+        また中国向けのTWLアプリケーションを作成する場合は、バナースペックファイルにバージョン３を指定する必要があります
+      </description></P>
+<HR>
+<H3><A name="note73-08">Note 73-08: (FS) NAND・SD カードアクセス時のコンポーネント負荷軽減</A></H3>
+<P><description>
+        NAND や SD カードに対して読み書きを実行しているとサウンドなど他のコンポーネント上のデバイスで処理が遅延する場合がありましたが、この負荷をなるべく軽減できるようメモリ配置を改善しました。
+      </description></P>
+<HR>
+<H3><A name="note73-09">Note 73-09: (FS) NITRO ROM のオーバーレイが IS-TWL-DEBUGGER でデバッグできない不具合修正</A></H3>
+<P><description>
+        TWL-SDK を使用してビルドしたオーバーレイを含む NITRO ROM を IS-TWL-DEBUGGER で実行した際に、オーバーレイ内のブレーク機能が使用できなかったという不具合があり、これを修正しました。<br><br>
+        また、この変更は 5.2 PR で入っていましたが、changelog から漏れていました。
+      </description></P>
+<HR>
+<H3><A name="note73-10">Note 73-10: (FS) SD カードスロットの状態判定に関する追記</A></H3>
+<P><description>
+        SD カードの挿抜イベント監視やライトプロテクト判定など、SD カードスロットの状態を判定する手段について FS ライブラリの概要へ追記しました。
+      </description></P>
+<HR>
+<H3><A name="note73-11">Note 73-11: (FS) セーブデータに関するエラー値の修正</A></H3>
+<P><description>
+        FAT 管理情報が破損したセーブデータに対して FS_GetArchiveResource 関数を呼び出した場合、従来は FS_RESULT_ERROR が返されていましたが、FS_RESULT_BAD_FORMAT を返すよう修正しました。<br><br>
+        また、インポートが途中で失敗した NAND アプリでまれに生じる中途半端なセーブデータに対しては、常に FS_RESULT_NO_ENTRY を返すよう修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-12">Note 73-12: (FS) 複数アーカイブの競合使用に関する不具合修正</A></H3>
+<P><description>
+        FS_LoadArchive 関数でユーザが用意したアーカイブと ROM アーカイブに対して同時にコマンドが発行されるとタイミングによって異常停止してしまうことがあり、この不具合を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-13">Note 73-13: (GX) DEMO ライブラリの修正</A></H3>
+<P><description>
+        IS-TWL-DEBUGGER v1.06 以降で変更された ISTDFIOWrite 関数(デバッガ関数)の新しいプロトタイプに対応するため、$TwlSDK/build/demos/gx/UnitTours/DEMOLib を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-14">Note 73-14: (MIC) CODEC のモードによる自動サンプリング関数の動作について</A></H3>
+<P><description>
+        関数リファレンスにおいて、MIC_StartAutoSampling 関数を始めとする自動サンプリング関数の動作環境に関する記述を修正しました。<br><br>
+        NTR アイコンしか付けられていなかったこれらの関数は、TWL ROM (HYBRID や LIMITED) であっても使用することは可能なため、TWL アイコンを追加しました。<br>
+        また、TWL ROM の場合は CODEC が CODEC-DS モードでないと動作しない旨を追記しました。
+      </description></P>
+<HR>
+<H3><A name="note73-15">Note 73-15: (OS) OS_InitChina 関数で表示される画面の仕様変更</A></H3>
+<P><description>
+        中国向けアプリケーション起動時に表示される画面の画像と表示時間を変更しました。<br>
+        また、それに伴い OS_InitChina 関数に引数を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note73-16">Note 73-16: (OS) OS_IsBootFromSystemMenu 関数の追加</A></H3>
+<P><description>
+        現在実行中のアプリがシステムメニューから起動したかをチェックするための API、OS_IsBootFromSystemMenu 関数を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note73-17">Note 73-17: (OS) デバッグ出力時のブロッキングモード設定関数の追加</A></H3>
+<P><description>
+        IS-TWL-DEBUGGER と IS-NITRO-DEBUGGER のデバッグ出力時のブロッキングモードを設定する OS_SetPrintBlockingMode 関数を追加しました。<br>
+        また、現在の設定を取得するための OS_GetPrintBlockingMode 関数も追加しました。
+      </description></P>
+<HR>
+<H3><A name="note73-18">Note 73-18: (PM) PM_SetLCDPower 関数内の V ブランク待ち方法の変更</A></H3>
+<P><description>
+        PM_SetLCDPower 関数内で V ブランクを待つときに、V ブランク割込みではなく、V ブランクカウントの変化で待つようにしました。<br>
+        これは複数のスレッドから割込みによる V ブランク割込み待ちを行うと、割込みを検出できない場合があったためです。
+      </description></P>
+<HR>
+<H3><A name="note73-19">Note 73-19: (SND) IIR フィルタ設定時の注意事項を追記</A></H3>
+<P><description>
+        出力が不安定になるような IIR フィルタを設定した場合に起こる影響について関数リファレンスに注意を追記しました。
+      </description></P>
+<HR>
+<H3><A name="note73-20">Note 73-20: (SSP) BMP ファイル作成関数の追加</A></H3>
+<P><description>
+        RGB555 もしくは YUV422 形式の画像データから Windows 形式の BMP ファイルを作成する SSP_CreateBmpFile 関数、及びサイズを事前に取得する SSP_GetBmpFileSize 関数を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note73-21">Note 73-21: (SSP) JPEG エンコード関数の作業用バッファサイズの修正</A></H3>
+<P><description>
+        JPEG エンコード中のスタック使用量を削減するため、関数内部で確保していた一部の領域を作業用バッファへ移動しました。<br>
+        この修正により作業用バッファサイズが増加したため、あわせて SSP_GetJpegEncoderBufferSize 関数の返り値も増加しました。
+      </description></P>
+<HR>
+<H3><A name="note73-22">Note 73-22: (SSP) JPEG デコード処理の修正</A></H3>
+<P><description>
+        JPEG デコード処理において、一部脆弱性が見つかりましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-23">Note 73-23: (SSP) 省メモリ版 JPEG エンコード関数の追加</A></H3>
+<P><description>
+        従来の JPEG エンコード関数 (SSP_StartJpegEncoder 関数) より大幅に作業用バッファサイズを削減した、SSP_StartJpegEncoderLite 関数、及び作業用バッファサイズを取得する SSP_GetJpegEncoderLiteBufferSize 関数を追加しました。<br>
+        エンコード結果は従来のエンコード関数によるものと一致するとは限りませんので、注意してください。<br><br>
+        本関数は画像データを事前にコンバートする必要がないため、SSP_ConvertJpegEncodeData, SSP_StartJpegEncoderWithEncodeData 関数に対応する省メモリ版関数は存在しません。
+      </description></P>
+<HR>
+<H3><A name="note73-24">Note 73-24: (TCL) JPEG エンコード関数の省メモリ化</A></H3>
+<P><description>
+        TCL_EncodeAndWritePicture(Ex) 関数が内部で呼び出しているエンコード関数を、省メモリ版の SSP_StartJpegEncoderLite 関数に変更しました。<br>
+        これに伴い、TCL_GetJpegEncoderBufferSize 関数の返り値が減少しました。
+      </description></P>
+<HR>
+<H3><A name="note73-25">Note 73-25: (TCL) PhotoChecker の修正</A></H3>
+<P><description>
+        PhotoChecker ツールの不正ファイル検出部分の処理において一部不十分な点がありましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-26">Note 73-26: (TCL) TCL_EncodeAndWritePicture 関数の修正</A></H3>
+<P><description>
+        TCL_EncodeAndWritePicture 関数内でエンコードに失敗した場合、本来ならば quality を下げてリトライするはずでしたが、正常にリトライ処理されていなかったため、これを修正しました。<br><br>
+        また、PhotoAccess ReadWrite を指定せずに本関数を呼び出した場合のエラー処理が十分ではなかったので修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-27">Note 73-27: (TOOL) NandFiler の変更</A></H3>
+<P><description>
+        NandFiler ツールに以下の変更を行いました。
+        <ul>
+          <li>DSi ショップダウンロード時の電源断で発生するセーブデータやサブバナーが正常に確保できない状態を再現するために、セーブデータやサブバナーを削除する機能を追加<br>
+              但しアプリケーションがセーブデータ、サブバナーを削除されたことによるエラーに対処する方法は現在検討中です。</li>
+          <li>一旦削除してしまったデータを修復できるように、フォーマット機能を追加</li>
+          <li>NandFiler で SD カードからファイル一覧を表示する際に、SJIS に変換できない文字コードで書かれたディレクトリがあった場合、NandFiler がハングアップする不具合を修正</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note73-28">Note 73-28: (TOOL) TwlNmenu の SD インポート時の不具合修正</A></H3>
+<P><description>
+        TwlNmenu で SD カードからファイル一覧を表示する際に、SJIS に変換できない文字コードで書かれたディレクトリがあった場合、TwlNmenu がハングアップする不具合がありました。<br>
+        これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-29">Note 73-29: (TOOL) addbanner の中韓対応</A></H3>
+<P><description>
+        addbanner ツールを中国語、韓国語のゲームタイトルも表示できるように修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-30">Note 73-30: (TOOL) compstatic に -l オプションを追加</A></H3>
+<P><description>
+        compsatic、compstatic.TWL ツールにオーバーレイモジュールの圧縮除外リストを指定できるオプションを追加しました。
+      </description></P>
+<HR>
+<H3><A name="note73-31">Note 73-31: (TOOL) makebanner、makebanner.TWL の中韓対応</A></H3>
+<P><description>
+        makebanner、makebanner.TWL を中国語、韓国語のゲームタイトルの文字幅チェック、文字コードが存在するかのチェックも行うように修正しました。<br><br>
+        また、makebanner.TWL に関して、これまで TWL 向けタイトルの BSF ファイルには必ず中国語である CN、韓国語である HN を設定する必要がありましたが、NITRO からの移植性を考慮して、設定がない場合にはこれらの言語に自動で空欄を設定するよう修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-32">Note 73-32: (WBT) WBT_RegisterBlock 関数の返り値修正</A></H3>
+<P><description>
+        TWL-SDK 5.1 PR 以前、当該関数の挙動は関数リファレンスの記述と異なり、常に TRUE を返すようになっていました。<br>
+        これを、関数リファレンスの記述に沿って判定を行い、FALSE を返すように修正しました。<br>
+        また、FALSE を返す際は Warning をデバッガへ出力するようにしました。
+      </description></P>
+<HR>
+<H3><A name="note73-33">Note 73-33: (WBT) wbt-1 サンプルデモの不具合修正</A></H3>
+<P><description>
+        再接続時に、親機から子機へデータ送信が正常に行われないことがあり、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-34">Note 73-34: (WFS) 内部スレッドのスタックサイズ増加</A></H3>
+<P><description>
+        WFS ライブラリで用意する内部スレッドのスタックサイズを従来の 1kB から 4kB へ増加しました。
+      </description></P>
+<HR>
+<H3><A name="note73-35">Note 73-35: (WM) dataShare-Model, wep-1 サンプルデモの修正</A></H3>
+<P><description>
+        親機を選択した後、最初の親機・子機選択画面に戻れるように両サンプルを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-36">Note 73-36: (WM) サンプルデモの修正</A></H3>
+<P><description>
+        $TwlSDK/build/demos/wireless_shared/mbp のサンプルで用意されている MBP_Init 関数において、引数 tgid に MB_TGID_AUTO も指定できるよう型を u16 から u32 へ変更しました。
+      </description></P>
+<HR>
+<H3><A name="note73-37">Note 73-37: (WM) 特定のタイミングで WM_Reset 関数を実行した場合にコールバックが呼ばれない不具合の修正</A></H3>
+<P><description>
+        ノイズ環境下で通信中に、特定のタイミングで WM_Reset 関数を実行した場合に、登録したコールバックが呼ばれないという不具合がありましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note73-38">Note 73-38: (WXC) すれちがい通信ライブラリの追加</A></H3>
+<P><description>
+        すれちがい通信を行うための WXC ライブラリを追加しました。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_5_2_RC">SDK 5.2&#160;RC での既知の問題点</A></H3>
+<knownissues>
+      <description>
+        <ul>
+          <li>HYBRID モードでビルドしたプログラムを NITRO 環境で実行した場合、buryarg ツールで埋め込んだ引数データへ正常にアクセスできません。</li>
+          <li>TS ボード上で FINALROM のアプリジャンプが正常に動作しません。</li>
+        </ul>
+      </description>
+    </knownissues><HR>
+<H2 style="line-height: 0"><A name="sdk_5_2_PR">■ TWL-SDK Version 5.2&#160;PR</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/04/16)</P></DIV>
+<HR>
+<H3><A name="note72-01">Note 72-01: (AES) 無線と同時に使用した場合の不具合修正</A></H3>
+<P><description>
+        AES を無線と同時に使用した場合に、停止してしまう不具合がありましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-02">Note 72-02: (CAMERA) CAMERA_I2C* 関数の設定反映のタイミングについて追記</A></H3>
+<P><description>
+        CAMERA_I2C* 関数でカメラ設定を変更した場合、実際に値が反映されるタイミングが 1 フレーム程度ずれる可能性があるため、その点を関数リファレンスに追記しました。
+      </description></P>
+<HR>
+<H3><A name="note72-03">Note 72-03: (CAMERA) CAMERA_SwitchOffLED 関数のリファレンスへの注意書き追加</A></H3>
+<P><description>
+        CAMERA_SwitchOffLED 関数を使用した場合に、稀に LED が消灯しないことが判明しましたので、確実に消灯させるための手順を CAMERA_SwitchOffLED 関数と CAMERA_SetLED 関数のリファレンスに追加しました。<br><br>
+        また、この不具合は次回リリースされる TWL-SDK 5.2 RC では修正されるため、修正後の仕様についての説明も追加しました。
+      </description></P>
+<HR>
+<H3><A name="note72-04">Note 72-04: (CAMERA) フレームレート値の追加</A></H3>
+<P><description>
+        CAMERA_I2CFrameRate 関数で設定できるフレームレート値に以下のものを追加しました。
+        <ul>
+          <li>CAMERA_FRAME_RATE_15_TO_10</li>
+          <li>CAMERA_FRAME_RATE_20_TO_10</li>
+          <li>CAMERA_FRAME_RATE_30_TO_10</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note72-05">Note 72-05: (DSP) DSP_PlaySound 関数の不具合修正</A></H3>
+<P><description>
+        DSP_PlaySound 関数を連続で呼び出した場合や、再生終了のタイミングで再度呼び出した場合に停止してしまう不具合があったため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-06">Note 72-06: (DSP) DSP_Scaling* 関数の不具合修正</A></H3>
+<P><description>
+        拡大縮小モードに DSP_GRAPHICS_SCALING_MODE_BICUBIC を指定し、縦軸方向に縮小するような倍率を指定した際、入力画像のサイズや倍率が特定の条件を満たすと出力画像の末尾が1, 2ライン欠けてしまう、もしくは処理がいつまでも終了しない不具合があり、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-07">Note 72-07: (DevEnv) TWL-SDK 移行ガイドの修正</A></H3>
+<P><description>
+        $TwlSDK/docs/TechnicalNotes/AboutNitroToTwl.pdf に以下の修正を行いました。
+        <ul>
+          <li>比較対象の TWL-SDK を TWL-SDK 5.1 正式版に修正</li>
+          <li>カードアプリは RSF ファイルにカードリージョンの設定が必要であることを追記</li>
+          <li>NAND アプリにおいて RSF ファイルの RomSize は無視され、RomFootPadding は FALSE にする必要があることを追記</li>
+          <li>説明文の語句の統一や誤植を修正</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note72-08">Note 72-08: (EL) EL_Link*Ex 関数の追加</A></H3>
+<P><description>
+        EL_Link* 関数では正しいバッファサイズを指定しなかった場合、バッファオーバーフローが発生してしまうため、バッファのサイズを指定できるようにした EL_Link*Ex 関数を追加しました。<br>
+        EL_Link* 関数を使用している方へは EL_Link*Ex 関数への乗り換えを推奨します。
+      </description></P>
+<HR>
+<H3><A name="note72-09">Note 72-09: (FS) AboutFileSystem.pdf の更新</A></H3>
+<P><description>
+        NitroROM フォーマットに関する概要を $TwlSDK/docs/TechnicalNotes/AboutFileSystem.pdf に追記しました。
+      </description></P>
+<HR>
+<H3><A name="note72-10">Note 72-10: (FS) NAND への書き込みを伴う API の修正</A></H3>
+<P><description>
+        NAND への書き込み中に SD メモリカードを挿抜すると、タイミングによっては稀に FS から返って来なくなることがあったため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-11">Note 72-11: (FS) async サンプルデモの修正</A></H3>
+<P><description>
+        $TwlSDK/build/demos/fs/async のサンプルデモを TWL モードで実行すると、CARD ライブラリの内部キャッシュバッファに ROM ファイルイメージが全ておさまってしまうため、FS 関数の完了待ちやスレッド切り替えが発生せず、サンプルとして適切に動作していませんでした。<br><br>
+        FS 関数の呼び出し中に処理が終わらない程度に各 ROM ファイルのサイズを大きくすることでサンプルデモの動作を調整しました。
+      </description></P>
+<HR>
+<H3><A name="note72-12">Note 72-12: (FS) システムシャットダウン時の不具合修正</A></H3>
+<P><description>
+        NAND へのアクセスが電源ボタン押下によって中断されたとき、まれに AES が中途半端な状態のまま終了しなくなることがあり、FS ライブラリのシャットダウンシーケンスが終了しなくなるという不具合がありました。<br>
+        この問題を修正しました。<br><br>
+        なお、NA_FormatTitleArchive 関数も 2M バイト以上のセーブデータファイルを扱う場合は電源ボタン押下によって中断され得るため、本件の不具合対象となってしまう点に注意してください。
+      </description></P>
+<HR>
+<H3><A name="note72-13">Note 72-13: (FS) ニンテンドー DSi 対応 ROM の消費サイズに関する追記</A></H3>
+<P><description>
+        HYBRID および LIMITED ビルドしたニンテンドー DSi 対応 ROM は、セキュリティ用のハッシュテーブルが格納されるためその分の ROM 容量を追加で消費するという点を FS ライブラリの概要ページに追記しました。
+      </description></P>
+<HR>
+<H3><A name="note72-14">Note 72-14: (FS) ファイルアクセス時のキャッシュ操作に関する修正</A></H3>
+<P><description>
+        <a href="changelog.html#note68-22">Note 68-22</a> に関連して、ファイルアクセス時に転送バッファはキャッシュライン32バイト整合しつつ転送サイズが32バイト整合でないような場合に、バッファ終端付近だけキャッシュ化けを生じることがあり、この不具合を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-15">Note 72-15: (FS) フラッシュ処理での不必要なデバイスアクセスの修正</A></H3>
+<P><description>
+        アプリケーションで SD メモリカードや NAND に対して一度もアクセスを行っていない状況において、FAT ファイルシステムのフラッシュ処理で、本来必要のない長いリードアクセスが発生してしまっていました。<br><br>
+        このため、差さっている SD メモリカードによっては、未アクセスの場合、スリープやリセットに時間がかかることがありました。<br>
+        この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-16">Note 72-16: (FS) マルチスレッドでのコマンド発行に関する不具合修正</A></H3>
+<P><description>
+        低優先度のスレッドで FS ライブラリ関数を呼び出している間に、高優先度のスレッドからも FS ライブラリ関数を呼び出すと、まれに互いの処理がデッドロックしてしまう不具合があり、この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-17">Note 72-17: (GX) Sub_Double3D サンプルデモの説明追加</A></H3>
+<P><description>
+        Sub_Double3D サンプルデモのソース内のコメントとして、プログラミングガイドライン7.5.2 で説明されているちらつきに関連した現象の説明と、デモが行っている対処方法の説明を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note72-18">Note 72-18: (MB) multiboot-model, multiboot-wfs サンプルデモの子機プログラムのビルド方法の再修正</A></H3>
+<P><description>
+        <a href="changelog.html#note67-09">Note 67-09</a>, <a href="changelog.html#note71-06">Note 71-06</a> で修正した内容が不十分だったため、改めて multiboot-model, multiboot-wfs 両サンプルデモの Makefile を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-19">Note 72-19: (MB) 遅延ロード配信に関する不具合修正</A></H3>
+<P><description>
+        MB_ReadSegment 関数に小さなバッファを指定して遅延ロードで DS ダウンロードプレイを実行する場合、配信ファイルが ROM の終端付近に置かれていると、ROM 終端を越えた冗長なファイルアクセスによって CARD ライブラリのハッシュチェックに違反しプログラムが停止してしまう不具合があり、この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-20">Note 72-20: (NA) シェアドフォントライブラリの中韓対応</A></H3>
+<P><description>
+        中国および韓国向け本体内蔵のシェアドフォント（日米欧豪向け本体とは別物となる）のリードに対応しました。
+      </description></P>
+<HR>
+<H3><A name="note72-21">Note 72-21: (OS) HYBRID ROM の NITROモード時の未使用領域に関するヒープ関数の追加</A></H3>
+<P><description>
+        HYBRID ROM を NITRO モードで動作させたときメインメモリ先頭の 16KB が未使用でしたが、この動作環境(HYBRID ROM の NITROモード)のときに限り、未使用領域を新たなヒープとして使用したり、既存のヒープにフリーなメモリブロックとして追加できるようにしました。<br><br>
+        新たなヒープとして使用する関数は OS_CreateExtraHeap 関数です。<br>
+        既存のヒープにメモリブロックとして追加する関数は OS_AddExtraAreaToHeap 関数です。<br><br>
+        なおこれに伴い、OS_CreateExtraHeap 関数で作成したヒープの初期化関数として OS_ClearExtraHeap 関数も追加しました。
+      </description></P>
+<HR>
+<H3><A name="note72-22">Note 72-22: (OS) IRQ ハンドラの未定義命令修正</A></H3>
+<P><description>
+        IRQ ハンドラのインラインアセンブラコードに、ARM の命令体系で厳密には未定義命令となるコードがありました。<br>
+        これを定義されたコードで構成するよう修正しました。<br><br>
+        ただし、これまで未定義命令で書かれていたといっても CodeWarrior コンパイラや TWL CPU ではライブラリ設計上の想定通りの解釈をしていたので、修正前でも動作的な問題はありません。
+      </description></P>
+<HR>
+<H3><A name="note72-23">Note 72-23: (OS) ISBN 番号の17桁対応</A></H3>
+<P><description>
+        ISBN 番号が13桁から17桁に拡張されたことにともなって OS_InitChina 関数を ISBN 番号の17桁に対応させました。
+      </description></P>
+<HR>
+<H3><A name="note72-24">Note 72-24: (OS) OS_GetCurrentThread 関数のリファレンスへの追記</A></H3>
+<P><description>
+        OS_GetCurrentThread 関数を割込みハンドラから呼ばないことを推奨する旨、関数リファレンスに追記しました。
+      </description></P>
+<HR>
+<H3><A name="note72-25">Note 72-25: (OS) OS_IsOnMainMemory 関数および OS_IsOnWram 関数の追加</A></H3>
+<P><description>
+        ポインタの参照先アドレスをチェックし、どのメモリに配置されているかを判別するための API を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note72-26">Note 72-26: (OS) TWL 専用 ROM 用の警告画面を追加</A></H3>
+<P><description>
+        TWL 専用 ROM を NITRO モードで動かしたときに警告画面が表示されるように変更しました。<br>
+        (但し、中国語/韓国語用の画像はまだ用意されていません)
+      </description></P>
+<HR>
+<H3><A name="note72-27">Note 72-27: (PM) PM ライブラリの排他不具合の修正</A></H3>
+<P><description>
+        PM ライブラリでは複数スレッドからのタスクを排他するようにしていましたが、PM 関数を呼び出すタイミングによってデッドロックする不具合がありましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-28">Note 72-28: (PM) 終了処理時のメインメモリ優先権の変更</A></H3>
+<P><description>
+        シャットダウンやハードウェアリセットの終了処理で、GX_DispOff 関数を行った後に V ブランクカウントを読んで2フレーム待つ前に、確実に V ブランクカウントが更新されるようにメインメモリ優先権を ARM7 に設定するようにしました。
+      </description></P>
+<HR>
+<H3><A name="note72-29">Note 72-29: (PRC) 見本図形 DB の変更</A></H3>
+<P><description>
+        PRC のサンプルデモで使用している見本図形 DB からひらがなを削除し、新たに数種類の記号を追加しました。<br>
+        この変更に伴って $TwlSDK/docs/TechnicalNotes/AboutPatternRecognition.pdf も修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-30">Note 72-30: (RTC) RTC_GetDayOfWeek 関数リファレンスの追加</A></H3>
+<P><description>
+        指定の日付の曜日を取得するための RTC_GetDayOfWeek 関数のリファレンスを追加しました。
+      </description></P>
+<HR>
+<H3><A name="note72-31">Note 72-31: (SND) DEMOLib, stream サンプルデモの WAVE データ読み込みに関する不具合修正</A></H3>
+<P><description>
+        DEMOLib, stream サンプルデモ含まれている ReadWaveFormat 関数の中で、入力 WAVE データのフォーマットが不正なものであった場合、データアクセス例外で停止してしまうことがあり、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-32">Note 72-32: (SND) SNDEX 終了コールバック処理の不具合修正</A></H3>
+<P><description>
+        SNDEX_SetIgnoreHWVolume 関数実行後にハードウェアリセットが行われた場合、終了時の後処理コールバックの中で、音量値を自動的にリセットする処理（SNDEX_ResetIgnoreHWVolume 関数の実行と同じ処理）が入りますが、この音量変更処理に問題があり、いつまでもリセット処理が終了しない不具合がありました。<br>
+        これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-33">Note 72-33: (SSP) SSP_StartJpegEncoder* 関数の不具合修正</A></H3>
+<P><description>
+        SSP_StartJpegEncoder、SSP_StartJpegEncoderWithEncodeData 関数でサムネイルつきのエンコードを行う場合、quality が 70 以下だと正常にエンコードができない不具合があったため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-34">Note 72-34: (SSP) サムネイル作成用バッファのサイズ修正</A></H3>
+<P><description>
+        SSP_StartJpegEncoder 関数内部で使用しているサムネイルを作成するためのバッファのサイズが余分に確保されていたので、これを適切なサイズで確保するように修正しました。<br>
+        この変更により、SSP_GetJpegEncoderBufferSize 関数で得られるワークサイズが減少します。
+      </description></P>
+<HR>
+<H3><A name="note72-35">Note 72-35: (TCL) TCL ライブラリの追加</A></H3>
+<P><description>
+        DSi メニューや DSi カメラで撮影された写真データが保存されている photo 領域にアクセスする TCL ライブラリを追加しました。<br>
+        これに伴って photo 領域に TCL ライブラリが関与していないファイルが書き込まれていないかチェックするための PhotoChecker ツールを追加しました。<br>
+        また、TCL ライブラリ(TWL-SDK 5.1 正式版対応 20090319 版) からの変更点は以下です。
+        <ul>
+          <li>写真のパスから TCLPictureInfo を取得する TCL_GetPictureInfoFromPath 関数を追加</li>
+          <li>最後に書き出した画像の写真情報を取得する TCL_GetLastWrittenPictureInfo 関数を追加</li>
+          <li>TCL_DeletePicture 関数で写真を削除した場合のディレクトリの扱いを DSi カメラと同様となるように変更</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note72-36">Note 72-36: (TOOL) makerom の変更</A></H3>
+<P><description>
+        makerom に以下の変更を行いました。
+        <ul>
+          <li>Align と AlignAll プロパティが競合した際の動作として「より大きいほうの設定値が優先される」と関数リファレンスで説明していましたが、実際には常に Align が優先される動作であったため、説明文を修正しました</li>
+          <li>BannerFile プロパティを指定しなかった場合に ROM へ収録される最初の1個目のファイルだけ Align/AlignAll プロパティの設定が反映されないという不具合があり、この問題を修正しました。</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note72-37">Note 72-37: (TOOL) makerom.TWL の変更</A></H3>
+<P><description>
+        makerom.TWL に以下の変更を行いました。
+        <ul>
+          <li>Align と AlignAll プロパティが競合した際の動作として「より大きいほうの設定値が優先される」と関数リファレンスで説明していましたが、実際には常に Align が優先される動作であったため、説明文を修正しました</li>
+          <li>BannerFile プロパティを指定しなかった場合に ROM へ収録される最初の1個目のファイルだけ Align/AlignAll プロパティの設定が反映されないという不具合があり、この問題を修正しました。</li>
+          <li>DSi 対応プログラムでは Align と AlignAll プロパティどちらの設定値も最小1024バイトに内部補正されていましたが、この制限を廃止しました。</li>
+          <li>DigestParam プロパティを省略した際のデフォルト値が従来は "2048 256" でしたが、標準の RSF ファイルに合わせて "1024 32" となるよう修正しました。</li>
+          <li>PhotoAccess プロパティにライトアクセス指定が含まれる場合、JpegSign プロパティを自動的に TRUE とするよう処理を追加しました。<br>
+              TCL ライブラリのために JpegSign プロパティを設定していた場合、今後は PhotoAccess のみを適切に設定していただき JpegSign プロパティの明示を削除するようにしてください。</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note72-38">Note 72-38: (TOOL) maketad の srl に内包される tad ファイルが不正になる問題の修正</A></H3>
+<P><description>
+        maketad の -n オプションを使用して、tad ファイルを内包する srl ファイルを作成する際に -o オプションを使用して出力ファイル名を指定した際に、ディレクトリを含むファイル名を指定した場合に、TwlNmenu でファイルが見つからない問題がありました。<br>
+        これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-39">Note 72-39: (TOOL) maketad, tad2rom の TWL カード対応</A></H3>
+<P><description>
+        maketad または tad2rom を使用して tad ファイルを内包する srl を作成した場合に、TWL カードに焼いた場合のみ、TwlNmenu でインポートすることができない不具合がありました。<br>
+        これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-40">Note 72-40: (TOOL) ntrcomp の usage 修正</A></H3>
+<P><description>
+        ntrcomp の usage で、d オプションと h オプションの取る値が間違っていましたので、修正しました。
+      </description></P>
+<HR>
+<H3><A name="note72-41">Note 72-41: (TOOL) 中国向けアプリケーションのバナー指定に関する説明追記</A></H3>
+<P><description>
+        中国向けアプリケーションのバナー指定に関する説明にガイドラインと比べて不足している部分がありましたので、以下のファイルに説明を追記しました。
+        <ul>
+          <li>makebanner の関数リファレンス</li>
+          <li>makebanner.TWL の関数リファレンス</li>
+          <li>$TwlSDK/docs/TechnicalNotes/AboutExtendedLanguage.pdf 3.2.3</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note72-42">Note 72-42: (WM) WM_IsValidGameInfo、WM_IsValidGameBeacon 関数の判定を強化</A></H3>
+<P><description>
+        改ざんされた不正なビーコンをスキャンしてしまった際、WM_IsValidGameInfo 関数 および WM_IsValidGameBeacon 関数で改ざんを検出できない場合があることが判明しましたので、両関数の判定を強化し改ざんされたビーコン情報には FALSE を返すよう変更しました。
+      </description></P>
+<HR>
+<H3><A name="note72-43">Note 72-43: (WM) 無線ライブラリ初期化の際に指定するバッファの範囲制限の追加</A></H3>
+<P><description>
+        WM_Init 関数および、WM_Initialize 関数で指定するバッファ wmSysBuf が、IS-TWL-DEBUGGER (ハードウェア)の拡張メインメモリ、もしくは VRAM 上に確保された際に、ライブラリが正常に動作しないことが判りましたので、上記のメモリから確保された場合には初期化が失敗するように変更しました。
+      </description></P>
+<HR>
+<H3><A name="note72-44">Note 72-44: (その他) 豪州のレーティング審査団体名変更に対応</A></H3>
+<P><description>
+        豪州のレーティング審査団体の名称が変更されたことに伴って
+        以下を変更しました。
+        <ul>
+          <li>makerom.TWL の Rating セクションで豪州を指定する場合のプロパティを変更<br>
+              これに伴って makerom.TWL の関数リファレンスも修正</li>
+          <li>TWL 本体情報のペアレンタルコントロールに関する enum のメンバ名変更</li>
+          <li>各デモの rsf のコメント修正</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_5_2_PR">SDK 5.2&#160;PR での既知の問題点</A></H3>
+<knownissues>
+      <description>
+        <ul>
+          <li>HYBRID モードでビルドしたプログラムを NITRO 環境で実行した場合、buryarg ツールで埋め込んだ引数データへ正常にアクセスできません。</li>
+          <li>TS ボード上で FINALROM のアプリジャンプが正常に動作しません。</li>
+        </ul>
+      </description>
+    </knownissues><HR>
+<H2 style="line-height: 0"><A name="sdk_5_1_%E6%AD%A3%E5%BC%8F%E7%89%88">■ TWL-SDK Version 5.1&#160;正式版</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/02/27)</P></DIV>
+<HR>
+<H3><A name="note71-01">Note 71-01: (DSP) audio, graphics コンポーネントの更新</A></H3>
+<P><description>
+        DSP 内部の転送処理を更新したため、各コンポーネントを更新しました。
+      </description></P>
+<HR>
+<H3><A name="note71-02">Note 71-02: (DevEnv) 拡張メインメモリのアリーナ領域の修正</A></H3>
+<P><description>
+        TWL モードにおいて、拡張メインメモリにオートロードモジュールを配置した場合、拡張メインメモリアリーナはそのモジュール分を考慮せず拡張メインメモリの先頭から確保されていましたので、lcf template ファイルの修正により、この不具合を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note71-03">Note 71-03: (GX) LCD 表示 OFF 状態で設定が無視される関数群を明記</A></H3>
+<P><description>
+        LCD 表示 OFF 状態では GX 回路のクロックが一部停止するため、その間に設定した内容が無視される関数がいくつか存在します。<br><br>
+        条件に該当する以下の関数について、リファレンスへ明記しました。
+        <ul>
+          <li>GX_SetMasterBrightness.html</li>
+          <li>GXS_SetMasterBrightness.html</li>
+          <li>GX_SetCapture.html</li>
+          <li>GX_ResetCapture.html</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note71-04">Note 71-04: (MATH) TWL-SDK 移行ガイドの修正</A></H3>
+<P><description>
+        $TwlSDK/docs/TechnicalNotes/AboutNitroToTwl.pdf に「2.11 MATH の MD5 関数の非推奨化」を追記しました。
+      </description></P>
+<HR>
+<H3><A name="note71-05">Note 71-05: (MB) HYBRID カードアプリのクローンブート不具合修正</A></H3>
+<P><description>
+        HYBRID ビルドのカードアプリが実機環境で動作中にクローンブートを行うと、不必要な ROM アクセスによって CARD ライブラリの正当性チェックで強制停止してしまうという不具合があり、この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note71-06">Note 71-06: (MB) multiboot-Model, fake_child サンプルデモの不具合修正</A></H3>
+<P><description>
+        multiboot-Model, fake_child サンプルの初期化の中で、GX_VBlankIntr 関数を呼ぶタイミングが遅く、子機を mb_child_***.srl にした場合にブート後画面が表示されない不具合があり、これを修正しました。<br><br>
+        また、multiboot-Model では意味なくビルドモードを NITRO に制限していたので、これを削除しました。
+      </description></P>
+<HR>
+<H3><A name="note71-07">Note 71-07: (OS) コンテキスト読み込み時の除算器終了待ち処理を追加</A></H3>
+<P><description>
+        TWL モードで動作中に OS_LoadContext 関数を呼んだ場合、除算器のコンテキストを読み込んだ後に演算の終了を待たずに関数から抜けてしまうことがありましたので、TWL モード動作時には演算終了を待つように修正しました。
+      </description></P>
+<HR>
+<H3><A name="note71-08">Note 71-08: (PM) 特定条件での PM_ForceToPowerOff 関数不具合修正</A></H3>
+<P><description>
+        割込み禁止状態かつ LCD OFF 状態で PM_ForceToPowerOff 関数を呼び出すと電源が切れず、プログラムが停止していました。<br>
+        これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note71-09">Note 71-09: (SSP) JPEG デコード処理の修正</A></H3>
+<P><description>
+        JPEG デコード処理において、一部の画像が意図した通りのデコード結果にならないことがあったため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note71-10">Note 71-10: (SSP) SSP_StartJpegEncoderWithEncodeData 関数の不具合修正</A></H3>
+<P><description>
+        SSP_StartJpegEncoderWithEncodeData 関数を使用して JPEG エンコードを行った場合、サムネイルが正常に作成できない不具合があったため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note71-11">Note 71-11: (TOOL) tad2rom の修正</A></H3>
+<P><description>
+        引数に '/' が含まれない場合にプログラムがクラッシュする不具合を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note71-12">Note 71-12: (WM) サンプルデモの修正</A></H3>
+<P><description>
+        以下のサンプルデモと、Revolution SDK Extension に収録されている対応したデモの、無線通信を行う際に使用するポート番号が異なっており、 Wii - DS 間の通信が正常に行われない状態になっておりましたので、これを修正しました。
+        <ul>
+          <li>mp_simple1</li>
+          <li>datashare-1</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_5_1_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK 5.1&#160;正式版 での既知の問題点</A></H3>
+<knownissues>
+      <description>
+        <ul>
+          <li>HYBRID モードでビルドしたプログラムを NITRO 環境で実行した場合、buryarg ツールで埋め込んだ引数データへ正常にアクセスできません。</li>
+          <li>TS ボード上で FINALROM のアプリジャンプが正常に動作しません。</li>
+        </ul>
+      </description>
+    </knownissues><HR>
+<H2 style="line-height: 0"><A name="sdk_5_1_RC">■ TWL-SDK Version 5.1&#160;RC</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/02/10)</P></DIV>
+<HR>
+<H3><A name="note70-01">Note 70-01: (CTRDG) CTRDG_Init 関数の weak 関数化</A></H3>
+<P><description>
+        現在 CTRDG 関数を使用しなくても、OS_Init 関数から CTRDG_Init 関数を呼び出しているため、そこからいくつかの CTRDG 関数がリンクされてメモリを大きく占有していました。<br>
+        そこで、CTRDG_Init 関数を weak 関数とし、カートリッジにアクセスしないアプリケーションではこれを定義しなおすことで CTRDG ライブラリのメモリ占有量を抑えることができるようにしました。<br>
+        詳細は CTRDG_DummyInit 関数を参照してください。
+      </description></P>
+<HR>
+<H3><A name="note70-02">Note 70-02: (DevEnv) TWL-SDK 移行ガイドの修正</A></H3>
+<P><description>
+        $TwlSDK/docs/TechnicalNotes/AboutNitroToTwl.pdf の 3.1, 5.1 に、NitroSDK から TWL-SDK の NITRO または HYBRID ROM に移行する際にライブラリが使用するメモリの増加量について追記しました。
+      </description></P>
+<HR>
+<H3><A name="note70-03">Note 70-03: (FS) FATドライバ初期化関数の分離</A></H3>
+<P><description>
+        一般的なカードブートアプリケーションでは本体 NAND メモリや SD メモリカードを使用しないので、これらの FAT ドライバが不必要にリンクされないよう FAT ドライバ初期化関数を分離しました。<br>
+        HYBRID ビルドのカードブートアプリケーションが本体 NAND メモリや SD メモリカードを使用する場合、今後は FS_Init 関数に加えて FS_InitFatDriver 関数を呼び出す必要があります。
+      </description></P>
+<HR>
+<H3><A name="note70-04">Note 70-04: (FS) FS_SetSeekCache 関数の不具合修正</A></H3>
+<P><description>
+        FS_SetSeekCache 関数で指定するバッファの先端または終端のアドレスが、キャッシュライン境界に整合していないとその後のシーク操作が異常になる場合があり、この問題を修正しました。<br>
+        この修正に伴い、FS_GetSeekCacheSize 関数で得られるバッファサイズはキャッシュ境界の余白を考慮して64バイト大きな値を返すようになりました。
+      </description></P>
+<HR>
+<H3><A name="note70-05">Note 70-05: (FS) システムシャットダウンに関する不具合修正</A></H3>
+<P><description>
+        本体 NAND メモリに対して 2MB 以上の巨大な読み書きサイズでファイルアクセスしている間に電源ボタンを押下すると、ごくまれにシャットダウンシーケンスが完了しない場合があり、
+この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note70-06">Note 70-06: (FS) 長いパス名の操作に関する不具合修正</A></H3>
+<P><description>
+        FAT 仕様の上限である255文字に近いパス名を扱う際に、本来は成功する操作であっても FS_RESULT_NO_ENTRY を返して失敗してしまう場合があり、この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note70-07">Note 70-07: (GX) GX_SetDefaultNDMA 関数の修正</A></H3>
+<P><description>
+        HYBRID ビルドの NITRO モード時の動作において、GX_SetDefaultNDMA 関数が呼び出せてしまう問題があったため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note70-08">Note 70-08: (MB) MB 親機を利用する際のメモリ使用量削減</A></H3>
+<P><description>
+        MB 子機 (DS ダウンロードプレイ機能でのみ) が利用するスキャン用バッファが MB 親機機能を利用する際にもリンクされていましたので、不要な場合にはバッファがリンクされないよう修正し、メモリ使用量を削減しました。
+      </description></P>
+<HR>
+<H3><A name="note70-09">Note 70-09: (PM) PM_SetLCDPower 関数のリファレンスに注意事項を追記</A></H3>
+<P><description>
+        <a href="changelog.html#note69-13">Note 69-13</a> の修正により、PM_SetLCDPower 関数で LCD OFF の後に LCD ON にする場合、別途 GX_DispOn 関数を呼び出さなければならなくなりましたので、その旨を関数リファレンスに追記しました。
+      </description></P>
+<HR>
+<H3><A name="note70-10">Note 70-10: (SND) 音量変更 API の追加</A></H3>
+<P><description>
+        あらかじめ変更したい音量値を決めておき、一時的にその音量に変更し、再びもとの音量値に戻すことができる API として、SNDEX_SetIgnoreHWVolume 関数と SNDEX_ResetIgnoreHWVolume 関数を追加しました。<br>
+        なお、両関数はプログラミングガイドラインに沿って使用する必要があります。<br><br>
+        また、両関数を使用して、指定した時間後に設定した音量値でサウンドを鳴らすサンプルデモ $TwlSDK/build/demos.TWL/snd/ignoreHWVolumeDemo を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note70-11">Note 70-11: (STD) STD_SearchChar* 関数の修正</A></H3>
+<P><description>
+        STD_SearchChar 関数と STD_SearchCharReverse 関数を空文字が検索できるように修正しました。
+      </description></P>
+<HR>
+<H3><A name="note70-12">Note 70-12: (TOOL) NandFiler の変更</A></H3>
+<P><description>
+        NandFiler に以下の変更を行いました。
+        <ul>
+          <li>サイズが 0Byte のファイルを開くとフリーズするという不具合を修正</li>
+          <li>ディレクトリとファイルがソートされた状態で表示されるように変更</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note70-13">Note 70-13: (TOOL) TwlNmenu に NAND アプリのサイズ表示方式を追加</A></H3>
+<P><description>
+        インポート済みの NAND アプリの総サイズ (TitleSize) に KB 単位での表示を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note70-14">Note 70-14: (TOOL) WMTestTool の修正</A></H3>
+<P><description>
+        WMTestTool の scanEx test でフリーズすることがあるという不具合を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note70-15">Note 70-15: (TOOL) makerom.TWL の変更</A></H3>
+<P><description>
+        makerom.TWL に以下の変更を行いました。
+        <ul>
+          <li>wramMapping プロパティで、現在は使用できない MAP_TS_HYB, MAP_TS_LTD が指定可能になっていましたので、指定できないように変更</li>
+          <li>CardRegion プロパティで、以下のマルチリージョンを設定できるように変更
+            <ul>
+              <li>欧州と豪州 : EuropeAndAustralia</li>
+              <li>北米と豪州 : AmericaAndAustralia</li>
+              <li>北米と欧州と豪州 : AmericaAndEuropeAndAustralia</li>
+            </ul>
+          </li>
+          <li>Rating セクションに、レーティング不要を表す Unncecessary プロパティを追加<br>
+              また、審査団体によって定義されていない値が設定されたときに、エラーを出すように変更</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note70-16">Note 70-16: (TOOL) mb_child_simple.srl の削除</A></H3>
+<P><description>
+        製品に入っている DS ダウンロードプレイを元に認証チェック部分を外した mb_child のサポートに伴い、独自のダウンローダーである mb_child_simple.srl を削除しました。
+      </description></P>
+<HR>
+<H3><A name="note70-17">Note 70-17: (TOOL) 動作環境別 mb_child の追加</A></H3>
+<P><description>
+        IS-NITRO-EMULATOR などの NITRO 環境と IS-TWL-DEBUGGER などの TWL 環境、それぞれの DSダウンロードプレイと同等の仕組みである mb_child_[NITRO|TWL].srl を追加しました。<br>
+        なお、前回まで収録されていた mb_child は mb_child_TWL.srl と同一です。
+      </description></P>
+<HR>
+<H3><A name="note70-18">Note 70-18: (WFS) 子機側終了処理の不具合修正</A></H3>
+<P><description>
+        WFS_EndClient 関数を呼び出して WFS を終了した子機が、その後 ROM アーカイブへアクセスするとデータアクセス例外で停止してしまうことがあり、この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note70-19">Note 70-19: (WM) WMPortRecvCallback 構造体に rssi メンバを追加</A></H3>
+<P><description>
+        MP 通信中に受信したデータ(フレーム)の受信感度情報を取得できるよう WMPortRecvCallback 構造体に rssi メンバを追加しました。
+      </description></P>
+<HR>
+<H3><A name="note70-20">Note 70-20: (その他) サンプルデモの修正</A></H3>
+<P><description>
+        プログラム初期化時の割り込み制御のために OS_SetIrqMask を乱雑に呼び出していたいくつかのサンプルデモを修正しました。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_5_1_RC">SDK 5.1&#160;RC での既知の問題点</A></H3>
+<knownissues>
+      <description>
+        <ul>
+          <li>HYBRID モードでビルドしたプログラムを NITRO 環境で実行した場合、buryarg ツールで埋め込んだ引数データへ正常にアクセスできません。</li>
+          <li>TS ボード上で FINALROM のアプリジャンプが正常に動作しません。</li>
+        </ul>
+      </description>
+    </knownissues><HR>
+<H2 style="line-height: 0"><A name="sdk_5_1_PR2">■ TWL-SDK Version 5.1&#160;PR2</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/01/15)</P></DIV>
+<HR>
+<H3><A name="note69-01">Note 69-01: (CAMERA) デモの修正</A></H3>
+<P><description>
+        CAMERA ライブラリのデモにおいて、カメラの仕様に則していない部分がありましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note69-02">Note 69-02: (CARD) カードアクセス判定の強化</A></H3>
+<P><description>
+        カードブート以外のモードで起動したプログラムが不定な状態の DS カードへ不用意にアクセスしないよう、ライブラリの内部判定を強化しました。
+      </description></P>
+<HR>
+<H3><A name="note69-03">Note 69-03: (DSP) DSP_PlayShutterSound 関数の変更</A></H3>
+<P><description>
+        今までは DSP_PlayShutterSound 関数内のサウンド強制出力処理に失敗した場合 FALSE を返していましたが、これを関数内で成功するまでリトライするように変更しました。<br><br>
+        この修正により、DSP_PlayShutterSound 関数が FALSE を返す条件は I2S 動作周波数と一致しないシャッター音が指定された場合のみとなります。
+      </description></P>
+<HR>
+<H3><A name="note69-04">Note 69-04: (DevEnv) TWL-SDK 移行ガイドの更新</A></H3>
+<P><description>
+        $TwlSDK/docs/TechnicalNotes/AboutNitroToTwl.pdf に関して TWL-SDK 5.1 PR 以降では不要である NITRO ROM における Static モジュールの記述を削除しました。<br>
+        また NAND アプリにおける ROM アーカイブについての記述が一部不適切な部分がありましたので、修正、削除しました。
+      </description></P>
+<HR>
+<H3><A name="note69-05">Note 69-05: (EL) EL_CalcEnoughBufferSizeforLink* 関数の追加</A></H3>
+<P><description>
+        動的リンクに必要なバッファサイズについて、ある程度正確なサイズを取得できる以下の関数を追加しました。
+        <ul>
+          <li>EL_CalcEnoughBufferSizeforLink</li>
+          <li>EL_CalcEnoughBufferSizeforLinkFile</li>
+          <li>EL_CalcEnoughBufferSizeforLinkImage</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note69-06">Note 69-06: (EL) EL_GetResultCode 関数の追加</A></H3>
+<P><description>
+        EL が最後に行った処理の詳細な結果を取得できる EL_GetResultCode 関数を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note69-07">Note 69-07: (EL) EL_Unlink 関数の修正</A></H3>
+<P><description>
+        EL_Unlink 関数が結果の成否に関わらず常に 0 を返していたため、正しい値を返すように修正しました。
+      </description></P>
+<HR>
+<H3><A name="note69-08">Note 69-08: (FS) FS_ForceToEnableLatencyEmulation 関数の追加</A></H3>
+<P><description>
+        FINALROM ビルド時に無効となる擬似ウェイトエミュレーション機能を強制的に有効にする FS_ForceToEnableLatencyEmulation 関数を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note69-09">Note 69-09: (GX) Sub_Double3D サンプルデモの修正</A></H3>
+<P><description>
+        <a href="changelog.html#note68-23">Note 68-23</a> で加えた Sub_Double3D デモへの修正が不十分であったため、これを修正しました。<br>
+        また、合わせて DEMOLib にも同様の修正を行いました。
+      </description></P>
+<HR>
+<H3><A name="note69-10">Note 69-10: (MB) 擬似ダウンロードプレイ機能に関するドキュメント追加</A></H3>
+<P><description>
+        $TwlSDK/docs/technicalNotes/AboutMultiBoot.pdf にて、MB ライブラリの擬似ダウンロードプレイ機能に関する概略とそれを使用した fake_child サンプルの解説を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note69-11">Note 69-11: (NA) NAND アプリ開発マニュアルの更新</A></H3>
+<P><description>
+        $TwlSDK/docs/TechnicalNotes/NandAppManual.pdf「6.2 簡易的なデバッグ」に使用上の注意点を追記しました。<br>
+        NAND アプリを IS-TWL-DEBUGGER 上で SRL から実行した場合、通常と動作が異なるのでご注意ください。
+      </description></P>
+<HR>
+<H3><A name="note69-12">Note 69-12: (OS) OSMutex の拡張</A></H3>
+<P><description>
+        OS ライブラリの mutex に、read/write lock の実装を追加しました。<br>
+        追加された関数は以下です。
+        <ul>
+          <li>OS_LockMutexR</li>
+          <li>OS_LockMutexW</li>
+          <li>OS_UnlockMutexR</li>
+          <li>OS_UnlockMutexW</li>
+          <li>OS_UnlockMutexRW</li>
+          <li>OS_TryLockMutexR</li>
+          <li>OS_TryLockMutexW</li>
+          <li>OS_LockMutexFromRToW</li>
+          <li>OS_LockMutexFromWToR</li>
+          <li>OS_TryLockMutexFromRToW</li>
+          <li>OS_TryLockMutexFromWToR</li>
+        </ul>
+        この変更は 5.1PR で入っていましたが、changelog から漏れていました。
+      </description></P>
+<HR>
+<H3><A name="note69-13">Note 69-13: (PM) LCD オフ時の処理に関する修正</A></H3>
+<P><description>
+        PM_SetLCDPower 関数で LCD をオフにする場合、確実に GX_DispOff 関数を呼び出しておく必要があったため、アプリが GX_DispOff 関数を呼び出していない場合に限り、PM_SetLCDPower 関数内で GX_DispOff 関数を呼び出すように修正しました。
+      </description></P>
+<HR>
+<H3><A name="note69-14">Note 69-14: (SND) SNDEX_GetCurrentVolume[Async] 関数の追加</A></H3>
+<P><description>
+        <a href="changelog.html#note69-15">Note 69-15</a> の変更により、本体の音量と、保留中の音量の2種類の音量値が存在することなりました。<br>
+        このため、前者の値を取得する SNDEX_GetCurrentVolume[Async] 関数を追加しました。<br>
+        従来の SNDEX_GetVolume[Async] 関数は後者、保留状態でなければ前者を取得します。<br><br>
+        保留された音量値は数フレーム後には反映されるため、SNDEX_SetVolume[Async] 関数を頻繁に使用している、または本体の関数コール時の音量値を厳密に求めたい場合でなければ SNDEX_GetCurrentVolume[Async] 関数は特に使用する必要はありません。
+      </description></P>
+<HR>
+<H3><A name="note69-15">Note 69-15: (SND) SNDEX_SetVolume[Async] 関数の連続実行制限の追加</A></H3>
+<P><description>
+        音量値の保存の専用不揮発メモリへの書き込み回数は有限であるため、SNDEX_SetVolume[Async] 関数による音量設定から約10フレームの間は書き込み（保存）を保留し、保留時間終了の後に最新の保留値を書き込むように制限を設けました。
+      </description></P>
+<HR>
+<H3><A name="note69-16">Note 69-16: (SND) シャッター音連続再生時の排他制御方法の修正</A></H3>
+<P><description>
+        シャッター音の連続再生を繰り返していると、SND ライブラリ内部で排他制御が上手く働かず Panic で停止してしまう不具合があり、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note69-17">Note 69-17: (SSP) SSP_ExtractJpegDecoderExif 関数の追加</A></H3>
+<P><description>
+        JPEG ファイルから EXIF 情報のみを抽出する SSP_ExtractJpegDecoderExif 関数を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note69-18">Note 69-18: (SSP) SSP_StartJpegDecoder 関数の不具合修正</A></H3>
+<P><description>
+        特定のファイルに対して、SSP_StartJpegDecoder 関数を使用すると内部で停止してしまう問題があったため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note69-19">Note 69-19: (SSP) SSP_StartJpegDecoder 関数の不具合修正</A></H3>
+<P><description>
+        特定のファイルに対して、SSP_StartJpegDecoder 関数を使用すると内部でスタックオーバフローが発生する問題があったため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note69-20">Note 69-20: (SSP) デモの統合</A></H3>
+<P><description>
+        <a href="changelog.html#note68-37">Note 68-37</a> の変更により、SSP のデモを TWL 用と NITRO 用にわける必要がなくなったため、demos 以下にデモを統合しました。
+      </description></P>
+<HR>
+<H3><A name="note69-21">Note 69-21: (TOOL) NandFiler にセーブデータのインポート/エクスポート機能を追加</A></H3>
+<P><description>
+        ユーザ NAND アプリのセーブデータ領域・PHOTO ディレクトリと、SD カード間で、データのインポート/エクスポートを可能にしました。<br>
+        (ただし PHOTO ディレクトリはエクスポートのみ)<br>
+        これにより、デバッグの際に PC 等で改変したセーブデータを用いることができます。
+      </description></P>
+<HR>
+<H3><A name="note69-22">Note 69-22: (TOOL) makerom.TWL の変更</A></H3>
+<P><description>
+        makerom.TWL の JpegSign プロパティは通常 TRUE にする必要はないため非公開としました。<br>
+        この変更は 5.1 PR で入っていましたが、changelog から漏れていました。
+      </description></P>
+<HR>
+<H3><A name="note69-23">Note 69-23: (TOOL) tad2rom ツールの追加</A></H3>
+<P><description>
+        tad を内包した SRL を出力する tad2rom ツールを追加しました。<br>
+        maketad の -n オプションとの違いは、入力に tad を使用する点です。<br>
+        出力された SRL は TwlNmenu に追加された Card モードでのみ使用することができます。
+      </description></P>
+<HR>
+<H3><A name="note69-24">Note 69-24: (WM) WM_SetMPDataToPort 関数のコールバックが実行されない不具合の修正</A></H3>
+<P><description>
+        MP 通信中に親機がリセットして通信が途切れた場合などに WM_SetMPDataToPort 関数で登録したコールバックが実行されないままになってしまう不具合がありましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_5_1_PR2">SDK 5.1&#160;PR2 での既知の問題点</A></H3>
+<knownissues>
+      <description>
+        <ul>
+          <li>HYBRID モードでビルドしたプログラムを NITRO 環境で実行した場合、buryarg ツールで埋め込んだ引数データへ正常にアクセスできません。</li>
+          <li>TS ボード上で FINALROM のアプリジャンプが正常に動作しません。</li>
+          <li>一部の NTR タイトルに対して、mb_child_simple.srl がマルチブート子機として IS-TWL-DEBUGGER 上で動作しません。</li>
+        </ul>
+      </description>
+    </knownissues><HR>
+<H2 style="line-height: 0"><A name="sdk_5_1_PR">■ TWL-SDK Version 5.1&#160;PR</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2008/12/10)</P></DIV>
+<HR>
+<H3><A name="note68-01">Note 68-01: (CAMERA) 特定の状況で CAMERA_Init 関数が無限ループに陥る不具合の修正</A></H3>
+<P><description>
+        ARM7 コンポーネントに ferret.TWL を使用した場合など、TWL モードで動作しているにも関わらず、カメラが使用できない場合に CAMERA_Init 関数の内部処理中に無限ループに陥ることが判明しましたので、このような場合には初期化に失敗しエラーを返すように修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-02">Note 68-02: (CARD) キャッシュ無効化操作のデフォルト設定変更</A></H3>
+<P><description>
+        ROM データ読み込み処理の効率が向上するよう、デフォルトのキャッシュ無効化閾値を IC は 1kB、DC は 9kB に変更して命令キャッシュは無効化しないよう動作を変更しました。<br><br>
+        また、これらの設定をプログラムで切り替えられるよう CARD_SetCacheFlushFlag 関数を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note68-03">Note 68-03: (CARD) 動作モード判定関数の追加</A></H3>
+<P><description>
+        起動可能な動作モードを ROM ヘッダ情報から判定できるよう以下の関数群を追加しました。
+        <ul>
+          <li>CARD_IsExecutableOnNTR</li>
+          <li>CARD_IsExecutableOnTWL</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note68-04">Note 68-04: (CRYPTO) RSA 暗号処理の padding 方式変更</A></H3>
+<P><description>
+        RSA 暗号・復号処理が今まで padding していなかったのを PKCS#1 v1.5 でするように変更しました。<br>
+        今までの CRYPTO RSA で暗号化したデータはそのままでは復号できなくなりますので、ご注意ください。
+      </description></P>
+<HR>
+<H3><A name="note68-05">Note 68-05: (CRYPTO) ライブラリの配置セクション変更</A></H3>
+<P><description>
+        CRYPTOライブラリの一部について、配置する領域を ltdmain に変更しました。<br>
+        このため、メモリ各領域の使用量に影響があります。
+      </description></P>
+<HR>
+<H3><A name="note68-06">Note 68-06: (DSP) DSP_PlaySound 関数の不具合修正</A></H3>
+<P><description>
+        DSP_PlaySound 関数で再生した音声が実際には最大 10ms ほど終端部分が途切れて出力されない場合があり、この不具合を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-07">Note 68-07: (DSP) シャッター音再生タイミングの修正</A></H3>
+<P><description>
+        ヘッドフォン接続時にシャッター音の再生を行うと、シャッター音の音質が変わってしまう問題があることがわかりました。<br><br>
+        このため、シャッター音の再生前にウェイトを加えることでこの問題を回避するよう修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-08">Note 68-08: (DSP) ステレオ音声再生時の不具合修正</A></H3>
+<P><description>
+        DSP_PlaySound 関数や DSP_PlayShutterSound 関数を使用してステレオ音声を再生する際に、左右のチャンネルが入れ替わってしまうことがあるという不具合があり、この問題を修正しました。<br>
+        なお、SDK に収録されているカメラシャッター用音声はモノラルであるためこの不具合の影響はありません
+      </description></P>
+<HR>
+<H3><A name="note68-09">Note 68-09: (DSP) 再生可能なシャッター音データの制限</A></H3>
+<P><description>
+        シャッター音の再生がガイドラインで DSP 経由に限定されたため、I2S の設定と違った周波数のシャッター音が再生されないためのチェック処理を DSP_PlayShutterSound 関数に追加し、指定できるシャッター音データを WAVE 形式に限定しました。<br>
+        これに伴い、DSP_PlayShutterSound 関数の引数からステレオ、モノラルの指定を削除し、以下のシャッター音データを削除しました。
+        <ul>
+          <li>$TwlSDK/data/shutter_sound/shutter_sound_16000.raw</li>
+          <li>$TwlSDK/data/shutter_sound/shutter_sound_16000.wav</li>
+          <li>$TwlSDK/data/shutter_sound/shutter_sound_32730.raw</li>
+          <li>$TwlSDK/data/shutter_sound/shutter_sound_47610.raw</li>
+          <li>$TwlSDK/data/videorec_sound/videorec_sound_begin_32730.raw</li>
+          <li>$TwlSDK/data/videorec_sound/videorec_sound_begin_47610.raw</li>
+          <li>$TwlSDK/data/videorec_sound/videorec_sound_end_32730.raw</li>
+          <li>$TwlSDK/data/videorec_sound/videorec_sound_end_47610.raw</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note68-10">Note 68-10: (DevEnv) ARM7 コンポーネントに関するドキュメント追加</A></H3>
+<P><description>
+        ARM7 コンポーネントに関するドキュメントを以下に追加しました。<br>
+        $TwlSDK/docs/TechnicalNotes/AboutComponents.pdf
+      </description></P>
+<HR>
+<H3><A name="note68-11">Note 68-11: (DevEnv) ARM7 コンポーネントの追加</A></H3>
+<P><description>
+        ARM7 コンポーネントに ferret.TWL を追加しました。<br>
+        このコンポーネントは racoon.TWL と同様に TWL 専用のアプリケーションを作成する際にしか利用できません。<br>
+        ferret.TWL は racoon.TWL から無線通信機能、カメラを使用する為の機能を省いたもので、その分コンポーネントのサイズが小さく抑えられています。
+      </description></P>
+<HR>
+<H3><A name="note68-12">Note 68-12: (DevEnv) BuildFinalRom デモの修正</A></H3>
+<P><description>
+        libsyscall.twl.a は TWL-SDK 付属のものを使用することになっているため、$TwlSDK/build/demos/tips/BuildFinalRom から libsyscall.twl.a を削除しました。<br>
+        詳細は $TwlSDK/docs/TechnicalNotes/AboutTwlApplication.pdf TWL-SDK アプリ開発ガイドをご参照ください。
+      </description></P>
+<HR>
+<H3><A name="note68-13">Note 68-13: (DevEnv) IS-NITRO-DEBUGGER でのデバッグ機能を無効化するビルドスイッチの追加</A></H3>
+<P><description>
+        IS-TWL-DEBUGGER でのみデバッグを行うような開発環境で、TWL-SDK のメモリ使用量を削減したい場合に IS-NITRO-DEBUGGER でのデバッグ機能を無効化し、不要なライブラリのリンクを避けるビルドスイッチを追加しました。
+      </description></P>
+<HR>
+<H3><A name="note68-14">Note 68-14: (DevEnv) NITRO ビルド時の Static セグメントに関する修正</A></H3>
+<P><description>
+        NITRO 専用タイトルとしてビルドしたプログラムの Static セグメントのデフォルトの配置アドレスが従来は 0x02000400 と定義されていましたが、実際には 1kB の不使用領域が含まれていたため 0x02000000 へ修正しました。<br><br>
+        この修正でアプリケーションの動作に影響はありませんが、使用可能なアリーナ領域が 1kB 増加します。
+      </description></P>
+<HR>
+<H3><A name="note68-15">Note 68-15: (DevEnv) NITRO-SDK からの移行ガイドの追加</A></H3>
+<P><description>
+        NITRO-SDK から TWL-SDK へ乗り換え時の注意事項をまとめたドキュメントを以下に追加しました。<br>
+        $TwlSDK/docs/TechnicalNotes/AboutNitroToTwl.pdf
+      </description></P>
+<HR>
+<H3><A name="note68-16">Note 68-16: (ENV) ENV_SetResourceSetArray 関数の API 名の誤記修正</A></H3>
+<P><description>
+        ENV_SetResourceSetArray 関数の API 名が間違っていましたので、リファレンスと API 名を修正しました。<br><br>
+        なお、修正前の API 名も利用可能ですので、この変更でソースの修正を行う必要はありません。
+      </description></P>
+<HR>
+<H3><A name="note68-17">Note 68-17: (FS) FS_ATTRIBUTE_IS_OFFLINE フラグの追加</A></H3>
+<P><description>
+        TWL 専用領域に配置されたファイルかどうかを NTR モード環境で簡単に判定できるよう FS_ATTRIBUTE_IS_OFFLINE フラグを追加しました。<br><br>
+        このフラグは、FS_ReadDirectory 関数や FS_GetPathInfo 関数で取得するエントリ属性のひとつとして返されます。
+      </description></P>
+<HR>
+<H3><A name="note68-18">Note 68-18: (FS) FS_GetSeekCacheSize 関数の修正</A></H3>
+<P><description>
+        ファイルサイズがクラスタサイズで割り切れない大きさのとき、FS_GetSeekCacheSize 関数が 1 クラスタぶん少ない値を返す不具合があり、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-19">Note 68-19: (FS) FS_SetSeekCache 関数および FS_SeekFile 関数の修正</A></H3>
+<P><description>
+        FS_SetSeekCache 関数や FS_SeekFile 関数で、シークキャッシュに対して領域を超えた読み書きを行ってしまうケースがあり、この不具合を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-20">Note 68-20: (FS) overlay-staticinit サンプルデモの修正</A></H3>
+<P><description>
+        $TwlSDK/build/demos/fs/overlay-staticinit サンプルデモの表示画面が上下逆になっていたため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-21">Note 68-21: (FS) アーカイブ状態判定関数の追加</A></H3>
+<P><description>
+        アーカイブの存在や利用可能状態を判定できるよう以下の関数群を追加しました。
+        <ul>
+          <li>FS_OpenTopLevelDirectory 関数</li>
+          <li>FS_IsArchiveReady 関数</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note68-22">Note 68-22: (FS) ファイルアクセス時のキャッシュ操作に関する修正</A></H3>
+<P><description>
+        NAND・SD カードアーカイブで FS_ReadFileAsync 関数を使用してファイルを非同期で読み込む際に指定するバッファのアドレスが、 32 バイト境界整合していないとデータ先頭がキャッシュ化けしてしまうことがあり、この問題を修正しました。<br><br>
+        また、読み込み処理が完了する前にバッファを参照すると実データとキャッシュの整合性が取れなくなる点について関数リファレンスに記述を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note68-23">Note 68-23: (GX) Sub_Double3D サンプルデモの修正</A></H3>
+<P><description>
+        $TwlSDK/build/demos/gx/UnitTours/Sub_Double3D サンプルデモがキャプチャ画像と元画像を交互に表示すると発生する画面のちらつき対策に対応していなかったため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-24">Note 68-24: (MB) HYBRID プログラムによるクローンブート機能の正式対応</A></H3>
+<P><description>
+        HYBRID モードのプログラムでもクローンブート機能を使用できるよう MB ライブラリと emuchild.exe ツールの内部動作を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-25">Note 68-25: (NA) NA_LoadSharedFontTable 関数の修正</A></H3>
+<P><description>
+        NA_LoadSharedFontTable 関数を二度以上呼べるよう修正しました。<br>
+        この変更に伴って、本関数成功後に pBuffer が解放可能になりました。
+      </description></P>
+<HR>
+<H3><A name="note68-26">Note 68-26: (OS) OS_GetSerialNo 関数の非公開化</A></H3>
+<P><description>
+        WL 本体の製造シリアル番号を取得するための OS_GetSerialNo 関数は、アプリケーションで用いるのは適切では無いため非公開となりました。
+      </description></P>
+<HR>
+<H3><A name="note68-27">Note 68-27: (OS) OS_ResetSystem 関数処理の変更</A></H3>
+<P><description>
+        OS_ResetSystem 関数内では全 DMA の停止後に割り込み禁止にしていましたが、全 DMA の停止前に割り込み禁止にするよう、順序を変更しました。
+      </description></P>
+<HR>
+<H3><A name="note68-28">Note 68-28: (OS) アリーナ、プロテクションリージョンに関するリファレンスの修正</A></H3>
+<P><description>
+        OS リファレンスマニュアルのアリーナとプロテクションリージョンの概要のメモリマップの図を、メインメモリ先頭のシステム予約領域を考慮したものに修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-29">Note 68-29: (OS) ペアレンタルコントロール状態取得関数の修正</A></H3>
+<P><description>
+        以下のペアレンタルコントロール状態取得関数を、本体全体へのペアレンタルコントロールを設定していない場合は FALSE を返すように変更しました。
+        <ul>
+          <li>OS_IsRestrictPictoChatBoot</li>
+          <li>OS_IsRestrictDSDownloadBoot</li>
+          <li>OS_IsRestrictBrowserBoot</li>
+          <li>OS_IsRestrictPrepaidPoint</li>
+          <li>OS_IsRestrictPhotoExchange</li>
+          <li>OS_IsRestrictUGC</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note68-30">Note 68-30: (PM) pm-2 デモの追加</A></H3>
+<P><description>
+        サンプル $TwlSDK/build/demos.TWL/spi/pm-2 を追加しました。<br>
+        このサンプルデモでは PM_SetAutoExit 関数を用いて電源ボタンによるシャットダウンをユーザの処理が終了するまで遅延させるか、即座に終了するかを選択することが出来ます。
+      </description></P>
+<HR>
+<H3><A name="note68-31">Note 68-31: (PM) ハードウェアリセットやアプリケーションジャンプの排他制御の追加</A></H3>
+<P><description>
+        ハードウェアリセットやアプリケーションジャンプ中に、電源ボタンの押下やバッテリーエンプティの割込みを検知した場合には、後者の処理を優先するように修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-32">Note 68-32: (PM) 特定条件下でハードウェアリセットが完了しなくなる不具合の修正</A></H3>
+<P><description>
+        SNDEX_SetI2SFrequencyAsync 関数や SNDEX_SetIirFilterAsync 関数など一部の SNDEX 関数を実行している最中にハードウェアリセットを行った場合に、ハードウェアリセットが完了しなくなる不具合がありましたので修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-33">Note 68-33: (SND) シャッター音再生中の DSPMixRate 変更の禁止</A></H3>
+<P><description>
+        DSP_PlayShutterSound 関数によってシャッター音を鳴らす際に、ライブラリ内部で DSPMixRate の設定を一時的に変更していますが、アプリ側から SNDEX_SetDSPMixRate[Async] 関数を呼んだタイミングによっては、この設定が上書きされてしまうおそれがありました。
+        シャッター音の再生中に SNDEX_SetDSPMixRate[Async] 関数を呼ぶと、エラーコード SNDEX_RESULT_EXCLUSIVE を返すように修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-34">Note 68-34: (SND) シャッター音再生中の SNDEX 関数実行の禁止</A></H3>
+<P><description>
+        シャッター音再生前後には SNDEX 関数を用いた処理を行っており、この一連の処理の最中に他の SNDEX 関数が割り込むとタイミング次第ではユーザが意図しない設定になった状態のまま途中で失敗してしまう問題がありました。
+        このため、DSP_PlayShutterSound 関数によるシャッター音再生の間、SNDEX ライブラリの関数（一部例外あり）を実行しても SNDEX_RESULT_EXCLUSIVE を返して失敗するようにしました。<br><br>
+        本修正はシャッター音再生が確実に成功することを保証するものでなく、DSP_PlayShutterSound 関数を実行する際に SNDEX 関数が処理中であれば、SNDEX ライブラリの排他制御により失敗しますのでご注意ください。
+      </description></P>
+<HR>
+<H3><A name="note68-35">Note 68-35: (SND) 複数の SNDEX 関数実行時に発生し得る不具合の修正</A></H3>
+<P><description>
+        SNDEX ライブラリの排他制御が不完全だったため、複数の SNDEX 関数を並行に実行していると、タイミング次第で内部状態が不正なものとなってしまい ARM7 側での処理の成否に関わらず、必ずエラーを返してしまう不具合がありました。<br>
+        この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-36">Note 68-36: (SND) 非同期関数のリファレンスにおける返り値の誤記修正</A></H3>
+<P><description>
+        非同期処理の結果として返される値を、SNDEX_PXI_RESULT_EXCLUSIVE と記載していましたが、実際は SNDEX_RESULT_EXCLUSIVE の誤りでしたので、これを修正しました。<br>
+        なお、これら2つの定数は等しいため、誤記の通りに記述してしまっていても結果的に正しい動作になっていました。
+      </description></P>
+<HR>
+<H3><A name="note68-37">Note 68-37: (SSP) HYBRID ビルドの NITRO モード時の動作修正</A></H3>
+<P><description>
+        HYBRID ビルドの NITRO モード時に SSP ライブラリを使用することができませんでしたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-38">Note 68-38: (SSP) JPEG エンコード、デコード時の署名機能の非公開化</A></H3>
+<P><description>
+        ガイドラインに ROM アーカイブの JPEG ファイルに署名機能を使用してはいけないことが追加されたことを受け、以下の署名関係の関数を非公開としました。
+        <ul>
+          <li>SSP_SetJpegEncoderSignMode</li>
+          <li>SSP_SetJpegDecoderSignMode</li>
+          <li>SSP_CheckJpegDecoderSign</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note68-39">Note 68-39: (SSP) SSP_ConvertJpegEncodeData, SSP_StartJpegEncoderWithEncodeData 関数の追加</A></H3>
+<P><description>
+        エンコード処理を行う SSP_StartJpegEncoder 関数から、エンコードの前処理とエンコード自体の処理を分離した SSP_ConvertJpegEncodeData, SSP_StartJpegEncoderWithEncodeData 関数を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note68-40">Note 68-40: (TOOL) NandFiler の不具合修正</A></H3>
+<P><description>
+        イニシャルコードに '9' が含まれているタイトルについて、セーブデータのリストアが行えないという不具合があり、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-41">Note 68-41: (TOOL) TWL 版 mb_child.srl の追加</A></H3>
+<P><description>
+        DSi に入っている DS ダウンロードプレイとほぼ同じ挙動をする mb_child.srl を追加しました。<br>
+        ダウンロードした子機アプリの署名検証を省いており、開発機上でダウンロードプレイ子機を起動することが可能です。
+      </description></P>
+<HR>
+<H3><A name="note68-42">Note 68-42: (TOOL) addbanner に TWL 画面上のバナービューアを追加</A></H3>
+<P><description>
+        addbanner に TWL の本体画面上で、バナーの見た目を確認する機能を追加しました。<br>
+        詳細は addbanner マニュアルをご参照ください。
+      </description></P>
+<HR>
+<H3><A name="note68-43">Note 68-43: (TOOL) buryarg.TWL の修正</A></H3>
+<P><description>
+        buryarg.TWL で標準出力を出力先に指定していたときに引数データが正しく埋め込まれない不具合がありましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-44">Note 68-44: (TOOL) cmptad の機能拡張</A></H3>
+<P><description>
+        cmptad ツールに 指定された tad に含まれる SRL と、指定された SRL の同一性を判定する機能を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note68-45">Note 68-45: (TOOL) compstatic ツールのエラーチェック機能強化</A></H3>
+<P><description>
+        compstatic ツールはオーバーレイのダイジェスト値テーブルをバイナリファイルに埋め込む機能がサポートされていますが、埋め込むべき領域を用意せずにこの機能を使用すると、間違った領域を破壊して誤動作に繋がる場合があるという不具合がありました。<br>
+        この不具合を修正し、間違った使用法をエラーとして検出するようにしました。
+      </description></P>
+<HR>
+<H3><A name="note68-46">Note 68-46: (TOOL) makebanner, makebanner.TWLの修正</A></H3>
+<P><description>
+        バナーのゲームタイトルに漢字を使うことはできないため、漢字が含まれている場合は警告を表示するようにしました。<br>
+        ただし中国向けのバナー(バージョン２)ではチェックを行いません。
+      </description></P>
+<HR>
+<H3><A name="note68-47">Note 68-47: (TOOL) makerom.TWL.exe の変更</A></H3>
+<P><description>
+        makerom.TWL.exe に以下の変更を行いました。
+        <ul>
+          <li>バナー指定が TWL バナーでない場合はエラーとなるように変更しました。</li>
+          <li>ガイドラインでは SDCard へのアクセスは原則禁止ですが、デバッグ目的で DEBUG および RELEASE ビルドの場合のみ SDCard へのアクセスが可能になるように変更しました。<br>
+              デバッガの利用できない実機での不具合調査などにご利用ください。</li>
+          <li>JpegSign が利用できない場合に TRUE が指定されていたらエラーとなるように変更しました。<br>
+              JpegSing プロパティは SD カードまたは NAND へのアクセスが許可されている場合にのみ TRUE を指定できます。</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note68-48">Note 68-48: (TOOL) makerom.exe の変更</A></H3>
+<P><description>
+        バナー指定が NTR バナーでない場合はエラーとなるように変更しました。
+      </description></P>
+<HR>
+<H3><A name="note68-49">Note 68-49: (TOOL) showversion にビルドモード表示機能を追加</A></H3>
+<P><description>
+        既存の情報に加えて、ターゲット(ARM9, ARM7)とビルドモード(DEBUG, RELEASE, FINALROM)を表示するように変更しました。<br>
+        また、異なるビルドモードが混在している場合は、エラーを表示します。
+      </description></P>
+<HR>
+<H3><A name="note68-50">Note 68-50: (TOOL) バナーのプレビュー用の背景画像を追加</A></H3>
+<P><description>
+        作成したバナーを DSi メニューと同じ画面で TWL-System の NITRO-Viewer でプレビューできるように、背景画像を以下に追加しました。<br>
+        $TwlSDK/build/demos.TWL/tips/TWLBanner_anim1/banner/SDK_demo
+      </description></P>
+<HR>
+<H3><A name="note68-51">Note 68-51: (WM) コンポーネントの過負荷時に MP 通信が切れてしまう不具合の修正</A></H3>
+<P><description>
+        コンポーネントの負荷が非常に高くなると MP 通信が切れてしまうという不具合があり、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-52">Note 68-52: (WM) 無線 OFF モード時の挙動の変更</A></H3>
+<P><description>
+        無線 OFF モード時の TWL と、無線通信機能の使用が禁止された NITRO とで WM ライブラリがエラーを返すタイミングが異なっておりましたので、TWL でも NITRO と同様の処理で無線通信の使用禁止を判別できるように変更しました。
+      </description></P>
+<HR>
+<H3><A name="note68-53">Note 68-53: (WVR) switchover デモの無線ライブラリ終了処理の不具合修正</A></H3>
+<P><description>
+        WC ライブラリから WH ライブラリへの移行に伴って生じた、無線ライブラリの終了処理に関する不具合がありましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note68-54">Note 68-54: (その他) バナーフォーマットの一部変更</A></H3>
+<P><description>
+        バナーフォーマットの一部変更に伴い、設定するアニメーションデータのフォーマットが不正な場合にエラーになるように以下の関数やツールを修正しました。
+        <ul>
+          <li>NA_SaveSubBanner 関数</li>
+          <li>bannercvtr</li>
+          <li>makebanner.TWL</li>
+        </ul>
+        詳細は $TwlSDK/man/ja_JP/tools/bannercvtr マニュアルを参照ください。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_5_1_PR">SDK 5.1&#160;PR での既知の問題点</A></H3>
+<knownissues>
+      <description>
+        <ul>
+          <li>HYBRID モードでビルドしたプログラムを NITRO 環境で実行した場合、buryarg ツールで埋め込んだ引数データへ正常にアクセスできません。</li>
+          <li>TS ボード上で FINALROM のアプリジャンプが正常に動作しません。</li>
+          <li>一部の NTR タイトルに対して、mb_child_simple.srl がマルチブート子機として IS-TWL-DEBUGGER 上で動作しません。</li>
+        </ul>
+      </description>
+    </knownissues><HR>
+<H2 style="line-height: 0"><A name="sdk_5_0_%E6%AD%A3%E5%BC%8F%E7%89%88">■ TWL-SDK Version 5.0&#160;正式版</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2008/10/23)</P></DIV>
+<HR>
+<H3><A name="note67-01">Note 67-01: (CAMERA) simpleShoot-1, simpleShoot-2 のエラーハンドリング修正</A></H3>
+<P><description>
+        simpleShoot-1, simpleShoot-2 デモにおいて、カメラによる撮影を連続で行った場合、DSP_PlayShutterSound 関数が失敗することがありましたが、この失敗時に OS_Panic 関数で終了するようになっていました。<br>
+        しかし、実際に DSP_PlayShutterSound 関数を使う場面を想定した場合、成功するまで試行すべきと判断したため、そのように修正しました。<br><br>
+        この変更は 5.0RC3 で入っていましたが、changelog から漏れていました。
+      </description></P>
+<HR>
+<H3><A name="note67-02">Note 67-02: (CAMERA) simpleShoot-2 デモの修正</A></H3>
+<P><description>
+        動画撮影も行うデモである simpleShoot-2 にガイドラインに反する動作がありましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note67-03">Note 67-03: (CARD) 新規バックアップデバイスへの対応</A></H3>
+<P><description>
+        CARD ライブラリが 1Mb-EEPROM バックアップデバイスに対応し、CARD_BACKUP_TYPE_EEPROM_1MBITS を CARDBackupType 列挙型に追加しました。<br>
+        関連して、リファレンスとサンプルデモも更新しました。
+      </description></P>
+<HR>
+<H3><A name="note67-04">Note 67-04: (DSP) DSP グラフィックスコンポーネントの同期版関数の修正</A></H3>
+<P><description>
+        以下の2点の修正を加えました。
+        <ul>
+          <li>同期関数内で、DSP からの処理終了待ちの方法を、割り込みから該当レジスタへのポーリングに変更しました。</li>
+          <li>同期関数を優先度の高いスレッドで頻繁に実行すると、他の優先度が低いスレッドになかなか実行権が移らない問題があり、これを修正しました。</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note67-05">Note 67-05: (DSP) DSP_Scaling* 関数と DSP_CalcScalingFactor* 関数の結果不一致の修正</A></H3>
+<P><description>
+        DSP_Scaling* 関数を使って画像の拡大を行った際、入力画像のサイズと指定した倍率によっては、DSP_CalcScalingFactor* 関数と一致しない出力が得られることがあり、その不具合を修正しました。<br><br>
+        DSP_Scaling* 関数に渡す結果格納用バッファのサイズによっては、この問題が起こった際、バッファオーバーフローを起こす危険性がありました。
+      </description></P>
+<HR>
+<H3><A name="note67-06">Note 67-06: (DSP) 各 DSP コンポーネントの終了処理修正</A></H3>
+<P><description>
+        DSP コンポーネントの終了処理に一部不十分な点がありましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note67-07">Note 67-07: (DevEnv) ビルドスイッチに関するドキュメントの更新</A></H3>
+<P><description>
+        $TwlSDK/docs/SDKRules/Rule-Defines.html にビルドスイッチ *_BUILD_TYPE の説明を追加しました。<br><br>
+        また、"ビルドスイッチ使用表"に見難い箇所や一部間違いがあったため、変更しました。
+      </description></P>
+<HR>
+<H3><A name="note67-08">Note 67-08: (FS) TWL 専用ファイルのオープン判定強化</A></H3>
+<P><description>
+        HYBRID アプリが NITRO 環境で動作している時に、TWL 専用領域上のファイルをオープンしようとした場合、FS_RESULT_PERMISSION_DENIED で失敗するように FS ライブラリの内部判定を強化しました。
+      </description></P>
+<HR>
+<H3><A name="note67-09">Note 67-09: (MB) multiboot-wfs 配信子機のビルドモードの切り替え追加</A></H3>
+<P><description>
+        multiboot-wfs デモが配信する子機アプリを、NITRO 互換と HYBRID でそれぞれビルドできるように Makefile に修正を加えました。<br><br>
+        HYBRID でビルドした ROM を TWL 本体へ配信しても TWL 固有機能は使用できません。<br>
+        その件については、関数リファレンスの MB ライブラリの概要をご覧下さい。
+      </description></P>
+<HR>
+<H3><A name="note67-10">Note 67-10: (MI) MI_SendNDmaGXCommand* 関数の追加</A></H3>
+<P><description>
+        ディスプレイリスト(GX コマンド列)をコマンド FIFO に送る関数として、従来の DMA を用いるものがありましたが、新規 DMA を用いる関数を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note67-11">Note 67-11: (OS) OS_IsCodecTwlMode 関数の追加</A></H3>
+<P><description>
+        コーデックの動作モードを取得する OS_IsCodecTwlMode 関数を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note67-12">Note 67-12: (OS) OS_JumpTo* 関数のデモを追加</A></H3>
+<P><description>
+        OS_JumpToSystemMenu、OS_RebootSystem、OS_JumpToWirelessSetting、OS_JumpToInternetSetting、OS_JumpToEULAViewer 関数の動作を示すデモとして、$TwlSDK/build/demos.TWL/os/os_jump を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note67-13">Note 67-13: (OS) ペアレンタルコントロールの状態取得関数の追加</A></H3>
+<P><description>
+        TWL 本体設定にて行ったペアレンタルコントロールの情報をアプリケーションが取得するために以下の関数を追加しました。 
+        <ul>
+          <li>OS_IsRestrictPictoChatBoot</li>
+          <li>OS_IsRestrictDSDownloadBoot</li>
+          <li>OS_IsRestrictBrowserBoot</li>
+          <li>OS_IsRestrictPrepaidPoint</li>
+          <li>OS_IsRestrictPhotoExchange</li>
+          <li>OS_IsRestrictUGC</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note67-14">Note 67-14: (OS) 関数リファレンスの [動作環境] の移動</A></H3>
+<P><description>
+        TWL-SDK 関数リファレンスで、OS_GetConsoleType 関数のような動作環境に関するリファレンスは [OS/デバッグ(動作環境)] というカテゴリーで置かれていましたが、これらの関数はデバッグ用途だけでなく普通のアプリケーションでも使用されることが予想されるのでデバッグというカテゴリーから外して [OS/動作環境] としました。
+      </description></P>
+<HR>
+<H3><A name="note67-15">Note 67-15: (PM) ハードウェアリセットとアプリケーションジャンプの排他制御の追加</A></H3>
+<P><description>
+        アプリケーションジャンプと電源ボタンによるハードウェアリセットを排他するようにして、両者が同時に発生したときに想定外の動作を行う可能性を排除しました。
+      </description></P>
+<HR>
+<H3><A name="note67-16">Note 67-16: (PM) 電源ボタン処理の修正</A></H3>
+<P><description>
+        電源ボタンを長押ししてもシャットダウンとならずハードウェアリセットとなってしまう不具合を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note67-17">Note 67-17: (SCFG) SCFG 関数の調整</A></H3>
+<P><description>
+        関数リファレンスマニュアルでは SCFG_IsWramAccessible, SCFG_IsVramAccessible 関数となっていましたが、scfg.h の定義では SCFG_IsWRAMAccessible, SCFG_IsVRAMAccessible 関数となってしまっていました。<br>
+        これをリファレンス通りに SCFG_IsWramAccessible、SCFG_IsVramAccessible 関数としました。<br>
+        但しすでに SCFG_IsWRAMAccessble, SCFG_IsVRAMAccesslble 関数で記述している可能性を考慮して、こちらは対応する関数の #define として定義します。<br><br>
+        また、SCFG_GetPsramBoundary 関数が SCFG_GetPsramdBoundary 関数と誤ったスペルになっていましたので修正しました。
+      </description></P>
+<HR>
+<H3><A name="note67-18">Note 67-18: (SND) IIR フィルタ(マイク入力対象)設定時のヘッドホンミュートの撤廃</A></H3>
+<P><description>
+        SNDEX_SetIirFilter[Async] 関数を使用してマイク入力を対象とする IIR フィルタのパラメータを変更する際、不必要にヘッドホン出力を抑制していました。<br>
+        この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note67-19">Note 67-19: (SND) SNDEX_SetVolumeSwitchCallback 関数の不具合修正</A></H3>
+<P><description>
+        SNDEX_SetVolumeSwitchCallback 関数で登録したコールバックが正常に呼び出されない不具合があり、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note67-20">Note 67-20: (SND) extraFunc デモの機能追加</A></H3>
+<P><description>
+        extraFunc デモに、音量スイッチ押下通知コールバックとヘッドホン接続の有無をチェックする機能を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note67-21">Note 67-21: (SSP) JPEG ライブラリの NITRO モード対応</A></H3>
+<P><description>
+        SSP ライブラリの JPEG コーデックについて、署名機能を除いたものを NITRO モードでも使用できるようにしました。
+      </description></P>
+<HR>
+<H3><A name="note67-22">Note 67-22: (SSP) SSP_StartJpegEncoder 関数のエラー処理の追加</A></H3>
+<P><description>
+        SSP_StartJpegEncoder 関数でエンコードできない画像のサイズを指定された場合、今までは崩れた画像がエンコードされてしまっていたため、エラーを返すように修正しました。
+      </description></P>
+<HR>
+<H3><A name="note67-23">Note 67-23: (STD) STD_CompareNString 関数が正しい値を返さない不具合対応</A></H3>
+<P><description>
+        STD_CompareNString 関数が比較第一文字列の終端アドレスを 4byte 単位で切り上げたアドレスに保存されている値によっては一致していても正しい返り値を返していなかった不具合を修正した。
+      </description></P>
+<HR>
+<H3><A name="note67-24">Note 67-24: (STD) STD_ConvertAsciiToInt, STD_ConvertAsciiToLong 関数の修正</A></H3>
+<P><description>
+        整数オーバーフロー発生時において、対応する標準関数 atoi, atol と挙動が異なる点がありましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note67-25">Note 67-25: (STD) STD_TSNPrintf, STD_TSPrintf, STD_TVSNPrintf, STD_TVSPrintf 関数の修正</A></H3>
+<P><description>
+        セキュリティ上の問題から、%n 書式をサポートしないように修正しました。
+      </description></P>
+<HR>
+<H3><A name="note67-26">Note 67-26: (STD) STD_TSScanf, STD_TVSScanf 関数の修正</A></H3>
+<P><description>
+        ヌル文字をスキャンした際、標準関数の sscanf と挙動が異なっていましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note67-27">Note 67-27: (TOOL) NandFiler にセーブデータのバックアップ・リストア機能を追加</A></H3>
+<P><description>
+        NAND アプリのセーブデータを SD カードにバックアップできるように変更しました。<br>
+        これによって本体内のセーブデータを、バックアップ時の状態に復元することができます。
+      </description></P>
+<HR>
+<H3><A name="note67-28">Note 67-28: (TOOL) TwlNmenu に DS カードからのインポート機能を追加</A></H3>
+<P><description>
+        TwlNmenu に DS カードに書き込まれた tad を参照し、インポートを行う Card モードを追加しました。<br>
+        DS カードを SD カードの代わりとして使用することができます。
+      </description></P>
+<HR>
+<H3><A name="note67-29">Note 67-29: (TOOL) cmptad ツールの追加</A></H3>
+<P><description>
+        2 つの tad に含まれる SRL ファイルが同一かどうかを判定する cmptad ツールを追加しました。
+      </description></P>
+<HR>
+<H3><A name="note67-30">Note 67-30: (TOOL) makebanner.exe, makebanner.TWL.exe の警告の追加</A></H3>
+<P><description>
+        makebanner.exe, makebanner.TWL.exeに、ゲームタイトルが DS や TWL で表示可能な文字であるかどうかや、横幅が枠の範囲内に収まっているかどうかをチェックする機能を追加しました。<br>
+        不正な場合は、警告が表示されます。
+      </description></P>
+<HR>
+<H3><A name="note67-31">Note 67-31: (TOOL) makelst, stripdebug のリファレンス追加</A></H3>
+<P><description>
+        EL ライブラリを使用する際の補助ツールである makelst, stripdebug のリファレンスを追加しました。
+      </description></P>
+<HR>
+<H3><A name="note67-32">Note 67-32: (TOOL) makerom.TWL.exe の変更</A></H3>
+<P><description>
+        makerom.TWL.exe に以下の変更を行いました。
+        <ul>
+          <li>-D オプションの TARGET_PLATFORM 指定から 'NITRO' を削除し、HYB アプリビルド時の指定を 'TWL-HYB'に、LTD アプリビルド時の指定を 'TWL-LTD' に変更</li>
+          <li>TWL 専用領域に配置していた ROM アーカイブファイルがハッシュ対象になっていなかったのを修正</li>
+          <li>EULA バージョンと要 EULA 同意フラグを分離して設定できるよう変更</li>
+          <li>デフォルトで EULA バージョンを "1" に設定するよう変更</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note67-33">Note 67-33: (TOOL) maketad に DS カード書き込み用 SRL ファイルの作成機能を追加</A></H3>
+<P><description>
+        tad を内包した SRL ファイルを出力する機能を maketad に追加しました。<br>
+        この SRL ファイルは TwlNmenu に追加された Card モードでのみ使用することができます。
+      </description></P>
+<HR>
+<H3><A name="note67-34">Note 67-34: (TWL 無線) TWL 無線による通信中にリセットした場合にハングアップする不具合の修正</A></H3>
+<P><description>
+        TWL 無線による通信中にリセットした場合に、ごく稀にハングアップし、リセットが完了しない不具合が確認されましたので修正しました。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_5_0_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK 5.0&#160;正式版 での既知の問題点</A></H3>
+<knownissues>
+      <description>
+        <ul>
+          <li>HYBRID モードでビルドしたプログラムを NITRO 環境で実行した場合、buryarg ツールで埋め込んだ引数データへ正常にアクセスできません。</li>
+          <li>TS ボード上で FINALROM のアプリジャンプが正常に動作しません。</li>
+          <li>一部の NTR タイトルに対して、mb_child_simple.srl がマルチブート子機として IS-TWL-DEBUGGER 上で動作しません。</li>
+        </ul>
+      </description>
+    </knownissues><HR>
+</BODY>
+</HTML>

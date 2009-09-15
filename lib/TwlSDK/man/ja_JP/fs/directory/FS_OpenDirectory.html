@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_OpenDirectory[W]</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FS_OpenDirectory[W] <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+BOOL FS_OpenDirectory(<a href="../fs_file_type.html">FSFile</a> *dir, const char *path, u32 mode);
+BOOL FS_OpenDirectoryW(<a href="../fs_file_type.html">FSFile</a> *file, const u16 *path, u32 mode);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>dir</strong></em></td>
+<td style="width:87%">ハンドルを格納すべきFSFile構造体</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>path</strong></em></td>
+<td style="width:87%">ディレクトリのパス名</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>mode</strong></em></td>
+<td style="width:87%">ディレクトリへのアクセスモード<br /><a href="../FS_DIRMODE.html">FS_DIRMODE_*</a>のフラグを組み合わせて指定します。</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>ディレクトリハンドルが正しく開ければTRUEを、失敗すればFALSEを返します。<br />
+失敗時の詳細なエラーは<code><a href="../file/FS_GetResultCode.html">FS_GetResultCode()</a></code>で取得することができます。</p>
+
+<h2>説明</h2>
+<p>指定したディレクトリのハンドルを開きます。<br />
+パス名をShift_JISで指定する場合はFS_OpenDirectory()を、UTF16-LEで指定する場合はFS_OpenDirectoryW()を使用することができ、得られる結果は同じです。<br />
+得られたハンドルを使用して<code><a href="FS_ReadDirectory.html">FS_ReadDirectory()</a></code>を呼び出すことにより、ディレクトリ内のエントリ情報をひとつずつ列挙することができます。<br />
+ハンドルを使用した後は<code><a href="FS_CloseDirectory.html">FS_CloseDirectory()</a></code>を呼び出して解放する必要があります。<br />
+<br />
+以下の場合には失敗してFALSEを返します。
+</p>
+<ul>
+<li>対象となるアーカイブがディレクトリのオープンに対応できない場合</li>
+<li>指定したディレクトリが存在しない場合</li>
+</ul>
+
+<h2>注意</h2>
+<ul>
+<li>この関数を割り込みハンドラ(IRQモード)から呼び出すことはできません。<br />
+また、割り込みを禁止したままの状態にあると処理が完了しない場合がある点に注意して下さい。</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="../fs_file_type.html">FSFile</a>
+<a href="../FSDirectoryEntryInfo.html">FSDirectoryEntryInfo</a>
+<a href="../FSDirectoryEntryInfo.html">FSDirectoryEntryInfoW</a>
+<br />
+<a href="FS_ReadDirectory.html">FS_ReadDirectory</a>
+<a href="FS_CloseDirectory.html">FS_CloseDirectory</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/09/02 Unicode版の関数について追記。<br />
+2008/07/16 失敗時のエラーコード取得に関してFS_GetResultCode()を使用するよう記述を訂正。<br />
+2007/09/18 初版<br />
+</p>
+</body>
+</html>

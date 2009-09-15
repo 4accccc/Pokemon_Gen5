@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>NA_GetSharedFontTableSize</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+
+<H1 align="left">NA_GetSharedFontTableSize　<IMG src="../../image/BPT.gif" align=middle><IMG src="../../image/TWL.gif" align=middle></H1>
+
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;twl/na.h&gt;</CODE></PRE>
+  <PRE><CODE>int NA_GetSharedFontTableSize( void );</CODE></PRE>
+</DL>
+
+<H2>引数</H2>
+<P>
+なし。
+</P>
+
+<H2>返り値</H2>
+<P>
+正常に処理が完了した場合はバッファサイズが返ります。<BR>
+関数が失敗した場合は負の値が返ります。<br>
+</P>
+<P>
+関数が失敗する原因としては以下が考えられます。
+</P>
+<ul>
+<li><a href="NA_InitSharedFont.html"><code>NA_InitSharedFont()</code></a> が呼び出されていない。
+<li>アプリケーションが NAND アプリではない。
+<li>ニンテンドー DS 上で動作している。
+</ul>
+
+<H2>説明</H2>
+<P>
+内蔵フォントの読み込みに必要な管理情報を読み込むためのバッファサイズを取得します。<br>
+取得できるバッファサイズは、同一リージョンに限り将来的に変更されないことが保障されます。<br>
+この関数を呼び出す前に <a href="NA_InitSharedFont.html"><code>NA_InitSharedFont()</code></a> を呼ぶ必要があります。
+</P>
+<P>
+この関数は NAND アプリ専用です。カードアプリでは使用できません。
+</P>
+
+<H2>参照</H2>
+<P>
+</P>
+
+<H2>履歴</H2>
+<P>
+2008/11/06 返り値がリージョンごとに一定であることを追記<br>
+2008/09/16 初版
+</P>
+
+</BODY>
+</HTML>

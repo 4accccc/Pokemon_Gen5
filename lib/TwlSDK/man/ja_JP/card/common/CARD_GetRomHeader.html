@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>CARD_GetRomHeader</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">CARD_GetRomHeader<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/card.h&gt;</CODE><BR>
+  <BR>
+  <CODE>const u8* CARD_GetRomHeader( void );</CODE><br>
+  <br>
+  </dd>
+</dl>
+<h2>引数</h2>
+<p>なし。</p>
+
+<h2>返り値</h2>
+<p>実際に挿入されているカードのROMヘッダ情報が格納されたバッファへのポインタを返します。<br>
+このポインタは<a href="../card_rom_header_type.html">CARDRomHeader</a>構造体へのポインタにキャストすることができます。<br>
+このバッファに格納されている内容を変更することは出来ません。</p>
+
+<H2>説明</H2>
+<p>本体のDSカードスロットに実際に挿入されているカードのROMヘッダ情報を取得します。</p>
+<p>
+この関数は、ＤＳダウンロードプレイ子機やNANDアプリなどカードブート以外のプログラムが
+カードスロットに実際に挿入されているカードの内容を識別するためのものです。<br />
+通常のカードブートプログラムでこの関数を呼び出して得られる情報は、アドレス HW_ROM_HEADER_BUF 番地に格納されている自身のROMヘッダ情報と同じ内容になります。</p>
+<p style='color:Red;'>
+この関数はニンテンドーDSおよびニンテンドーDSiの実機上では正しい情報を得られますが、
+IS-NITRO-EMULATORやIS-TWL-EMULATORなどのデバッガ環境では正しい情報が得られないという点に注意してください。</p>
+<H2>履歴</H2>
+<P>
+2008/12/05 製品実機以外で正しい情報が取得できない点について詳細な追記<BR>
+2006/08/25 製品実機以外で正しい情報が取得できない旨を追記<BR>
+2006/06/22 返り値がCARDRomHeader構造体ポインタにキャスト可能な旨を追記<BR>
+2004/10/08 初版<BR>
+</P>
+</body>
+</html>

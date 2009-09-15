@@ -1,0 +1,39 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCL_GetCurrentSecond</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCL_GetCurrentSecond <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+s64 TCL_GetCurrentSecond( void );
+	</code></pre>
+</dl>
+
+<h2>引数</h2>
+<p>なし</p>
+
+<h2>返り値</h2>
+<p>現在時刻(秒)</p>
+
+<h2>説明</h2>
+<p>現在時刻(秒)を取得します。</p>
+<p>この関数は weak シンボルで定義されています。内部で <code>RTC_GetDateTime</code> を呼び出しますので RTC への排他処理などが必要な場合はこの関数を再定義してください。</p>
+
+<h2>参照</h2>
+
+<h2>履歴</h2>
+<p>
+2008/10/07 初版<br/>
+</p>
+
+</body>
+</html>

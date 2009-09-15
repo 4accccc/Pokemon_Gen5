@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>SSP_GetJpegDecoderMakerNoteAddr</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>SSP_GetJpegDecoderMakerNoteAddr <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<pre><code>
+static inline u8* SSP_GetJpegDecoderMakerNoteAddr(void);
+</code></pre>
+
+<h2>引数</h2>
+<p>なし</p>
+
+
+<h2>返り値</h2>
+<p>メーカーノート内のDSiカメラ用データの先頭アドレスを返します。</p>
+
+<h2>説明</h2>
+<p>デコードに使用したJPEGデータ中のDSiカメラ用データの先頭アドレスを取得します。<BR>
+本関数は <code><a href="SSP_GetJpegDecoderMakerNoteAddrEx.html">SSP_GetJpegDecoderMakerNoteAddrEx()</a></code>
+を SSP_MAKERNOTE_PHOTO タグで呼び出した場合と同じ動作になります。<BR>
+ユーザー独自のデータのアドレスを取得したい場合には、
+<code><a href="SSP_GetJpegDecoderMakerNoteAddrEx.html">SSP_GetJpegDecoderMakerNoteAddrEx()</a></code>を
+SSP_MAKERNOTE_USER で使用するようにして下さい。<BR>
+<BR>
+本関数はデコードに使用したデータ中のアドレスを返すため、<code><a href="SSP_StartJpegDecoder.html">SSP_StartJpegDecoder()</a></code> を
+呼び出した後にアプリケーションがJPEGデータを破棄した場合、正しいデータが取得できなくなるので注意してください。
+</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="SSP_GetJpegDecoderMakerNoteAddrEx.html">SSP_GetJpegDecoderMakerNoteAddrEx</a>
+<a href="SSP_StartJpegDecoder.html">SSP_StartJpegDecoder</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/09/15 初版<br />
+</p>
+</body>
+</html>

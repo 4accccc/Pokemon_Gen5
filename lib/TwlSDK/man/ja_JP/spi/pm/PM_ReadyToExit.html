@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>PM_SetAutoExit</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">PM_ReadyToExit <IMG src="../../image/TWL.gif" width="24" height="12" border="0" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;twl/spi.h&gt;</CODE></PRE>
+  <PRE><CODE>void PM_ReadyToExit( void );
+</CODE></PRE>
+</DL>
+<H2>引数</H2>
+<P>なし。</P>
+<H2>返り値</H2>
+<P>なし。　(この関数から戻ることはありません)</P>
+<H2>説明</H2>
+<P>終了処理後にARM9からARM7に終了準備が出来たことを知らせます。</P>
+<P>電源オフやハードウェアリセットのために、ARM9 で終了コールバック処理が終わった後、ユーザによって「ARM9 は終了する準備が出来た」ということをARM7 に伝えるための関数です。通常は、コールバック処理が終わると自動的にARM7に通達が行われて電源オフやハードウェアリセットが行われますが、<CODE><A href="PM_SetAutoExit.html">PM_SetAutoExit()</A></CODE> で 「自動で終了しない」 に設定していた場合、ユーザが明示的に通達を行わなければなりません。</P>
+<P>この関数は、終了コールバックが呼ばれた後に呼んでください。それ以外で呼ぶと何もせずに停止します。</P>
+<P>なお、どのような場合でもこの関数から戻ることはありません。</P>
+<H2>参照</H2>
+<P><CODE><A href="PM_SetAutoExit.html">PM_SetAutoExit</A></CODE></P>
+<H2>履歴</H2>
+<P>2008/02/08 初版</P>
+</BODY>
+</HTML>

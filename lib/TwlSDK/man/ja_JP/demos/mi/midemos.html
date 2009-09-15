@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<LINK rel="stylesheet" type="text/css" href="../../css/nitro.css">
+<TITLE>MI Demos</TITLE>
+</HEAD>
+<BODY>
+<H1>メモリインタフェース(MI)サンプルデモ</H1>
+<H2>場所</H2>
+<P><CODE>$TwlSDK/build/demos/mi<BR>
+$TwlSDK/build/demos.TWL/mi</CODE></P>
+<H2>コンパイル方法</H2>
+<P><CODE>$TwlSDK/build/demos/mi</CODE> (または<CODE>$TwlSDK/build/demos.TWL/mi</CODE>) ディレクトリに移り、</P>
+<BLOCKQUOTE><CODE>% make</CODE></BLOCKQUOTE>
+<P>と入力します。コンパイルが始まり、実行ファイルである <CODE>.srl</CODE> ファイルやバイナリ情報を記述した <CODE>.nef</CODE> または <CODE>.tef</CODE> ファイルが、</P>
+<BLOCKQUOTE><CODE>$TwlSDK/build/demos/mi/(サンプル名)/bin/(プラットフォーム)/(ターゲット)/</CODE><BR>
+<CODE>$TwlSDK/build/demos.TWL/mi/(サンプル名)/bin/(プラットフォーム)/(ターゲット)/</CODE></BLOCKQUOTE>
+<P>の下に生成されます。例えば、</P>
+<BLOCKQUOTE><CODE>$TwlSDK/build/demos/mi/dmaCallback-1/bin/ARM9-TS/Release/main.srl</CODE></BLOCKQUOTE>
+<P>が <CODE>dmaCallback-1</CODE> デモの実行ファイルとなります。</P>
+
+<H2>実行方法</H2>
+<H3>NITRO ROM の場合</H3>
+<P>Ensata エミュレータを用いる場合</P>
+<UL>
+  <LI>ensata で <CODE>*.nef</CODE>, <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-NITRO-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<H3>TWL/NITRO HYBRID ROM の場合</H3>
+<P>IS-NITRO-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<H3>TWL LIMITED ROM の場合</H3>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+
+<H2>説明</H2>
+<TABLE width="720">
+  <TBODY>
+    <TR>
+      <TH>デモ名</TH>
+      <TH>ディレクトリ</TH>
+      <TH>動作</TH>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>dmaCallback-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">Vブランク中にDMAコールバックを使用します。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>uncompressStream-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">圧縮された画像データをストリームから読んで展開します。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>uncompressBLZ</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">BLZ圧縮されたデータを展開するサンプルです。</TD>
+    </TR>
+<!--
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>UnComp_Stream_BmpBG</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">圧縮されたデータを分割して読み出しストリーミング展開を行います。</TD>
+    </TR>
+-->
+    <TR>
+      <TD><CODE><EM><STRONG><B>ndma-1</B></STRONG></EM></CODE></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD>新規DMA を使用します。</TD>
+    </TR>
+    <TR>
+      <TD><CODE><EM><STRONG><B>wramManager-1</B></STRONG></EM></CODE></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD>WRAM-A/B/C を対象とした WRAMマネージャを使用します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>動作</H2>
+<P><CODE>すべての動作環境で正常に動作します。</CODE></P>
+<H2>参照</H2>
+<P><A href="../../mi/list_mi.html"><CODE>MI関数一覧</CODE></A></P>
+<H2>履歴</H2>
+<P>2008/06/23 uncompressBLZ サンプルデモの説明を追加<BR>
+2008/05/22 UnComp_Stream_BmpBG → uncompressStream-1 に変更<BR>
+2008/04/25 表を一新。TWL用の一覧に変更。<BR>
+2005/05/10 UnComp_Stream_BmpBG サンプルデモの説明を追加。<br>
+2005/03/08 用語統一 [割込み] → [割り込み]<br>
+2005/03/02 記述内容を現在のサポート環境の状況に合うよう修正<BR>
+2004/08/17 IS-NITRO-EMULATORについての表記を統一<BR>
+2004/07/10 .bin から .srl へ変更。<BR>
+2004/01/18 初版</P>
+</BODY>
+</HTML>

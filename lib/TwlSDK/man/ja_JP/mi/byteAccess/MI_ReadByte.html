@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MI_ReadByte</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MI_ReadByte <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/mi.h&gt;</CODE><BR>
+  <BR>
+  <CODE>u8 MI_ReadByte( const void* address )</CODE><br>
+  </dd>
+</dl>
+<h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>address</STRONG></EM></TD>
+      <TD width="87%">バイトデータを読むアドレス(ポインタ)</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>指定アドレスのメモリ内容(<CODE>u8</CODE>)</p>
+
+<H2>説明</H2>
+<P><CODE>const void</CODE> 型ポインタで指定されたアドレス <B><I>address</I></B> の先のメモリ内容を<CODE>u8</CODE>データで取得します。</P>
+<P>この関数は過去のバージョンとの互換性のために用意されています。現在では単に
+<B><I>address</I></B> を u8ポインタとみなして <B><I>data</I></B> を読むという inline 関数でしかありません。</P>
+<H2>参照</H2>
+<P><CODE><A href="MI_WriteByte.html">MI_WritedByte</A></CODE></P>
+<H2>履歴</H2>
+<P>2008/07/09 現在の仕様に合わせリファレンス修正<BR>
+2004/04/06 引数 <B><I>address</I></B> の <CODE>const void*</CODE> への変更に伴う記述修正<BR>
+2004/03/30 初版
+</P>
+</body>
+</html>

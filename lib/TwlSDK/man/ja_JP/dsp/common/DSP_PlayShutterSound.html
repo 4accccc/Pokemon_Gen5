@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>DSP_PlayShutterSound</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>DSP_PlayShutterSound <IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<pre><code>
+BOOL DSP_PlayShutterSound(const void *src, u32 len);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>src</strong></em></td>
+<td style="width:87%">WAVE 形式のシャッター音データ<br />
+$TwlSDK/data/shutter_sound 以下と $TwlSDK/data/videorec_sound 以下にある 32730Hz,47610Hz のデータのみ指定可能で、サンプリングレートは <code><a href="../../snd/sndex/SNDEX_GetI2SFrequency.html">SNDEX_GetI2SFrequency()</a></code> で得られるI2S動作周波数と一致している必要があります。<br />
+<span style='color:Red'>指定するバッファには16ビットDMA転送と同様の制限があります。詳細は後述の「注意」をご参照ください。</span></td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>len</strong></em></td>
+<td style="width:87%">WAVE データのバイトサイズ</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>I2S動作周波数と一致しないシャッター音が指定された場合、不正なデータを指定した場合にFALSEを返します。</p>
+
+<h2>説明</h2>
+<p>シャッター音を DSP から再生させます。<br />
+この関数で指定された音声はあらゆるサウンド出力に優先して再生され、内部で以下のように排他制御されます。</p>
+<ul>
+<li>再生前に <code><a href="../../snd/sndex/SNDEX_GetI2SFrequency.html">SNDEX_GetI2SFrequency()</a></code> を呼び出し、I2S動作周波数と
+シャッター音のサンプリングレートが一致しているか確認した後に、スピーカーから強制的にDSPサウンドのみが再生されるように設定し、
+再生完了後に元の設定に戻します。</li>
+<li>再生中に <code><a href="DSP_PlaySound.html">DSP_PlaySound()</a></code> が呼び出されても無視します。</li>
+<li>再生処理中は SNDEX 関数を実行しても SNDEX_RESULT_EXCLUSIVE を返して何も行わずに終了します（一部例外があります）。</li>
+</ul>
+<p>
+この関数は、いずれかの DSP コンポーネントをロードしていれば、使用することができます。
+</p>
+<p>本関数は <A href="../../snd/sndex/doc/aboutSNDEX.html">SNDEX ライブラリ</A>を用いた前処理を行っています。<br>
+従って、プログラムの組み方によっては SNDEX ライブラリの持つ排他制御のためにこの前処理が失敗する可能性があります。<br>
+前処理が失敗した場合は、関数内部で成功するまでリトライし続けます。<br>
+リトライ処理のなかで <code><a href="../../os\thread\OS_Sleep.html">OS_Sleep()</a></code> を呼び出しています。<br>
+内部でリトライ処理を行わずシャッター音を確実に鳴らすためには、以下の方法で前処理が失敗する可能性を消しておく必要があります。</p>
+<ul>
+<li>他の SNDEX 関数の処理と重ならないように、<code><a href="../../os/mutex/OS_LockMutex.html">OS_LockMutex()</a></code> を用いるなどして本関数を排他的に実行させる。</li>
+</ul>
+
+<h2>注意</h2>
+<ul>
+<li><span style='color:Red'>指定するバッファはいずれも16ビットDMA転送と同等の条件を満たしている必要があります。</span>
+<ul>
+<li>アドレスは16bitの整数倍である必要があります。</li>
+<li>バッファの内容は、事前にキャッシュストアしておく必要があります。</li>
+</ul>
+</li>
+</ul>
+
+<ul>
+<li><code><A href="../../snd/sndex/SNDEX_SetIirFilter.html">SNDEX_SetIirFilter[Async]</A></code> によって設定された IIR フィルタは、シャッター音再生中の期間無効化されます。
+</li>
+</ul>
+
+<ul>
+<li>本関数で再生したシャッター音の再生完了を知るためには、<code><a href="DSP_IsShutterSoundPlaying.html">DSP_IsShutterSoundPlaying()</a></code>を使用してください。
+</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="DSP_IsShutterSoundPlaying.html">DSP_IsShutterSoundPlaying</a>
+<a href="../g711/DSP_LoadG711.html">DSP_LoadG711</a>
+<!-- <a href="../jpeg_enc/DSP_LoadJpegEncoder.html">DSP_LoadJpegEncoder</a> -->
+<!-- <a href="../jpeg_dec/DSP_LoadJpegDecoder.html">DSP_LoadJpegDecoder</a> -->
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/01/07 シャッター音の再生が成功するまで関数内部でリトライするように変更<br>
+2008/11/26 ステレオ、モノラル指定の削除<br>
+2008/11/14 指定できるシャッター音の種類について追記<br>
+2008/11/07 シャッター音再生処理中は SNDEX 関数を使用できないこと、シャッター音を確実に再生するための情報を追記<br>
+2008/10/23 シャッター音再生完了待ちに使用する関数について追記<br>
+2008/09/26 シャッター音再生中に IIR フィルタが無効化される旨を追記<br>
+2008/09/25 サウンド出力が排他制御される旨を追記<br />
+2008/07/09 引数として受け取るサイズをハーフワードからバイト単位に変更<BR>
+2008/06/24 初版<br />
+</p>
+</body>
+</html>

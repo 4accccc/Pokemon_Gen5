@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--==========================================================================
+  Copyright 2008 Nintendo.  All rights reserved.
+
+  These coded instructions, statements, and computer programs contain
+  proprietary information of Nintendo of America Inc. and/or Nintendo
+  Company Ltd., and are protected by Federal copyright law.  They may
+  not be disclosed to third parties or copied or duplicated in any form,
+  in whole or in part, without the prior written consent of Nintendo.
+ ==========================================================================-->
+<HTML>
+<HEAD>
+	<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+	<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+	<META http-equiv="Content-Style-Type" content="text/css">
+	<LINK rel="stylesheet" type="text/css" href="../../css/nitro.css">
+	<TITLE>CRYPTO Demos</TITLE>
+</HEAD>
+<BODY>
+<H1>CRYPTO ライブラリ(CRYPTO)サンプルデモ</H1>
+<H2>場所</H2>
+<P><CODE>$TwlSDK/build/demos/crypto</CODE></P>
+
+<H2>コンパイル方法</H2>
+<P><CODE>$TwlSDK/build/demos/crypto</CODE> (または<CODE>$TwlSDK/build/demos.TWL/crypto</CODE>) ディレクトリに移り、</P>
+<BLOCKQUOTE><CODE>% make</CODE></BLOCKQUOTE>
+<P>と入力します。コンパイルが始まり、実行ファイルである <CODE>.srl</CODE> ファイルやバイナリ情報を記述した <CODE>.nef</CODE> または <CODE>.tef</CODE> ファイルが、</P>
+<BLOCKQUOTE><CODE>$TwlSDK/build/demos/crypto/(サンプル名)/bin/(プラットフォーム)/(ターゲット)/</CODE><BR>
+<CODE>$TwlSDK/build/demos.TWL/crypto/(サンプル名)/bin/(プラットフォーム)/(ターゲット)/</CODE></BLOCKQUOTE>
+<P>の下に生成されます。例えば、</P>
+<BLOCKQUOTE><CODE>$TwlSDK/build/demos/crypto/rc4-1/bin/ARM9-TS/Release/main.srl</CODE></BLOCKQUOTE>
+<P>が <CODE>rc4-1</CODE> デモの実行ファイルとなります。</P>
+
+<H2>実行方法</H2>
+<H3>NITRO ROM の場合</H3>
+<P>Ensata エミュレータを用いる場合</P>
+<UL>
+  <LI>ensata で <CODE>*.nef</CODE>, <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-NITRO-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<H3>TWL/NITRO HYBRID ROM の場合</H3>
+<P>IS-NITRO-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<H3>TWL LIMITED ROM の場合</H3>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+
+<H2>説明</H2>
+<TABLE width="720">
+  <TBODY>
+    <TR>
+      <TH>デモ名</TH>
+      <TH>ディレクトリ</TH>
+      <TH>動作</TH>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>rc4-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">RC4 アルゴリズムによる暗号化・復号が正常に動作するかを確認するサンプルです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>rc4-2</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">2種類の RC4 関数の速度の違いを測定するサンプルです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>rc4-3</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">RC4 関数と SDK の SHA-1 関数を組み合わせて、安全性の高い暗号化を行うサンプルです。安全な IV の作成のために擬似乱数生成器 (PRNG) を作成しています。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>sign-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">電子署名検証関数が正常に動作するかを確認するサンプルです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>sign-2</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD width="525">電子署名作成関数が正常に動作するかを確認するサンプルです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>rsa-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD width="525">RSA アルゴリズムによる暗号化・復号が正常に動作するかを確認するサンプルです。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>動作</H2>
+<P><CODE>すべての動作環境で正常に動作します。</CODE></P>
+<H2>参照</H2>
+<P><A href="../../crypto/list_crypto.html"><CODE>CRYPTO関数一覧</CODE></A></P>
+<H2>履歴</H2>
+<P>
+2008/10/31 デモのディレクトリ名を変更<BR>
+2008/07/11 TWLに対応した記述に変更<BR>
+2006/04/22 sign-2追加<br>
+2007/03/27 TwlSDK移植版 初版<br>
+2006/03/08 初版<br>
+</P>
+</BODY>
+</HTML>

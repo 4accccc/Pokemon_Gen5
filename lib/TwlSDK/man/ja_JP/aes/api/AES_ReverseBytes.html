@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>AES_ReverseBytes</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">AES_ReverseBytes　<IMG src="../../image/TWL.gif" width="23" height="12" border="0" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <pre><CODE>#include &lt;twl/aes.h&gt;
+
+void AES_ReverseBytes(const void* src, void* dst, u32 size);
+</CODE></pre>
+</dd>
+</dl>
+
+<h2>引数</h2>
+<TABLE border="1" width="100%" class="arguments">
+  <TBODY>
+    <TR>
+      <TH>src</TH>
+      <TD>コピー元のデータへのポインタ。</TD>
+    </TR>
+    <TR>
+      <TH>dst</TH>
+      <TD>コピー先のバッファへのポインタ。<span class="argument">src</span> と同じポインタを指定することができます。</TD>
+    </TR>
+    <TR>
+      <TH>size</TH>
+      <TD>コピーするサイズ。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>
+なし。
+</p>
+
+<H2>説明</H2>
+<P>
+バイナリ列をバイト単位で逆順にしてコピーします。
+</p>
+
+<P>
+TWL-SDK AES ライブラリは一般的な AES と入出力値に互換性がありませんが、
+特定の前後処理を追加することで互換性のある暗号化/復号化を行うことができます。
+詳しくは <a href="../../demos/aes/aesdemos.html">ctr-compatible デモ、ccm-compatible デモ</a>を参照してください。
+</p>
+
+<h2>参照</h2>
+<p><CODE>
+</CODE></p>
+
+<H2>履歴</H2>
+<P>
+2007/12/25 初版
+</P>
+</body>
+</html>

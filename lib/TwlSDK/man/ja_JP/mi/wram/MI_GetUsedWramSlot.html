@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MI_GetUsedWramSlot</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MI_GetUsedWramSlot* <IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;twl/mi.h&gt;</CODE><BR>
+  <BR>
+  <CODE>u8 MI_GetUsedWramSlot( <A href="../mi_constant.html">MIWramPos</A> wram );</CODE><br>
+  <BR>
+  <CODE>(define)</CODE><br>
+  <CODE>#define MI_GetUsedWramSlot_A();</CODE><br>
+  <CODE>#define MI_GetUsedWramSlot_B();</CODE><br>
+  <CODE>#define MI_GetUsedWramSlot_C();</CODE><br>
+  </dd>
+</dl>
+<h2>引数</h2>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TD><B><I>wram</I></B></TD>
+      <TD>情報を取得するWRAM</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<h2>返り値</h2>
+<p>指定のWRAMの中で、どこかのプロセッサに確保されているスロットの情報を返します。WRAM-A
+に対してはスロット0～3、WRAM-B と WRAM-C に対してはスロット0～7 の情報が返ります。</p>
+<H2>説明</H2>
+<P>指定のWRAMに対し、どこかのプロセッサに確保されているスロットの情報を取得します。</P>
+<P>プロセッサからのWRAMスロットの予約状況は関係しません。</P>
+<P><BR>
+<B>返り値について</B></P>
+<p>u8 値の下位ビットより順に スロット0, スロット1,... を表しており、ビットが1となっているスロットは確保されているという意味です。</p>
+<p>例えば、<CODE>MI_GetFreeWramSlot( MI_WRAM_B )</CODE> の返り値が<CODE> 0xC0</CODE> ( 2進数で 11000000 )だった場合、WRAM-B のスロット 0,1,2,3,4,5 は どのプロセッサからも確保されていない(予約はされているかもしれない)ことを表し、スロット
+6,7 はどこかのプロセッサから確保されていることを表します。</p>
+<BLOCKQUOTE><IMG src="image_allocatable1.gif" width="226" height="163" border="0"></BLOCKQUOTE>
+<P><BR>
+<B>WRAM種類を関数名に含めた便利関数</B></P>
+<P><CODE>MI_GetUsedWramSlot_A(...)</CODE> は <CODE>MI_GetUsedWramSlot( MI_WRAM_A, ... )</CODE> の <CODE>define</CODE> です。<BR>
+<CODE>MI_GetUsedWramSlot_B(...)</CODE> は <CODE>MI_GetUsedWramSlot( MI_WRAM_B, ... )</CODE> の <CODE>define</CODE> です。<BR>
+<CODE>MI_GetUsedWramSlot_C(...)</CODE> は <CODE>MI_GetUsedWramSlot( MI_WRAM_C, ... )</CODE> の <CODE>define</CODE> です。<BR>
+
+
+<h2>内部動作</h2>
+<p>ARM9が管理している WRAMマネージャが返り値を決定します。<BR>
+ARM7からは PXI を通して ARM9 から値を取得します。</p>
+
+<h2>参照</h2>
+<P><A href="about_Wram.html">概要(ワークRAM)</A>、<A href="../mi_constant.html">MI関連の定数</A><BR>
+<CODE><A href="MI_GetAllocatableWramSlot.html">MI_GetAllocatableWramSlot</A>, <A href="MI_GetFreeWramSlot.html">MI_GetFreeWramSlot</A></CODE></P>
+
+<H2>履歴</H2>
+<P>2008/05/29 初版</P>
+</body>
+</html>

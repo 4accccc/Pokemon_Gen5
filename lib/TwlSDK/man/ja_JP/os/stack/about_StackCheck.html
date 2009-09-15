@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>デバッグ(スタック溢れチェック) (overview)</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">デバッグ(スタック溢れチェック) (overview) <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
+<P>プログラムが動作するときにはスタック領域を使用します。この領域はレジスタの退避であったり自動変数領域などで用いられますが、ユーザにはどのぐらい使われているか見えにくい部分になっていますし、用意した領域以上にスタックを消費してスタック溢れが起こっても、それが原因で不具合が発生するのは大抵プログラムがもっと進んでからであって、バグを追いにくいものにしています。</P>
+<P>このために TWL-SDK にはスタック溢れのチェック機構を用意しました。原理的には、スタック領域に特定の値を書き込んでおき、それが書き変わっているかをチェックすることで「その領域がスタックとして使われたか」を知ることが出来るというものです。TWL-SDK
+ではスタック最上位、スタック最下位、スタック中の任意の位置の3箇所にチェッカーを置くことが出来ます。このチェッカーのことをカナリア(canary)
+とも呼びます。</P>
+<P>チェッカーとして書き込む値は、アドレスとして余り用いられないようなマジックナンバーを選んでいます。</P>
+<BLOCKQUOTE><IMG src="image_Stack1.gif" width="366" height="332" border="0"></BLOCKQUOTE>
+<P>上の図で、チェッカー1 が書き換えられた場合、スタックアンダーフローを起こした可能性が高いと言えます。(もちろんスタックに全く関係しないプログラム上の別の不具合で書き換えられたという可能性は否定できません。以下も同様です。)</P>
+<P>チェッカー3 が書き換えられた場合、スタックオーバーフローを起こした可能性が高いと言えます。</P>
+<P>また、ユーザが自由に設定出来るチェッカーが用意されています。上の図のチェッカー2 に相当しますが、スタックオーバーフローが実際に起こってしまうとプログラム動作が不定になるのでその前に「スタックオーバーフローしそうだ」ということを検出するために、このように警戒水準位置としてスタック最下位の近くに配置するといった使用が考えられます。</P>
+<BLOCKQUOTE><IMG src="image_Stack2.gif" width="527" height="283" border="0"></BLOCKQUOTE>
+<H2>スレッドごとのスタックチェッカー</H2>
+<P>スレッドを作成すると、スタックの最上位と最下位には自動的にマジックナンバーが書き込まれます (上図の checker1 と checker3 に相当します)。 ユーザが自由に設定出来る警戒水準のチェッカー (上図の checker2 に相当します) は設定されません。必要ならば、<CODE><A href="OS_SetThreadStackWarningOffset.html">OS_SetThreadStackWarningOffset()</A></CODE> で設定してください。ただしすでにこの領域がスタックとして使用されているときに設定すると動作に影響が出ますので、通常はスタックがまだ使用されていない時
+(スレッドを作成した直後など) に設定してください。</P>
+<P>チェッカーはスレッドごとに作成されます。</P>
+<P>ローンチスレッド (<CODE><A href="../thread/OS_InitThread.html">OS_InitThread()</A></CODE> を呼び出した自らのスレッド) にもスタック最上位と最下位にチェッカーが置かれます。アイドルスレッドには置かれません。</P>
+<H2>スタック溢れチェック</H2>
+<P>書き込んだマジックナンバーが別の値になっているかどうかはアプリケーションから
+<CODE><A href="OS_CheckStack.html">OS_CheckStack()</A></CODE> を呼んで調べてください。３つのチェッカーが1つでも書き換えられている場合、<CODE><A href="../debug/OS_Panic.html">OS_Panic()</A></CODE> で停止します。FINALROM では何も影響しないコードに置き換えられます。</P>
+<P>また、<CODE><A href="../debug/OS_Panic.html">OS_Panic()</A></CODE> で停止するのではなく、関数の返り値で調べたい場合は <CODE><A href="OS_GetStackStatus.html">OS_GetStackStatus()</A></CODE> を呼んでください。こちらは FINALROM でも正確に情報を返します。</P>
+<P>これらのチェック関数は、カレントスレッドのスタックに対してのみ有効です。他のスレッドのスタック溢れは検出出来ません。</P>
+<H2>IRQ スタックについて</H2>
+<P>割り込みが起こったときに使用される IRQ スタックにもスタック溢れチェッカーを設定することが出来ます。</P>
+<P><CODE><A href="OS_SetIrqStackChecker.html">OS_SetIrqStackChecker()</A></CODE> IRQ スタックにチェックのためのマジックナンバーを書き込みます。<BR>
+<CODE><A href="OS_SetIrqStackWarningOffset.html">OS_SetIrqStackWarningOffset()</A></CODE> IRQ スタックの警戒水準位置を設定してマジックナンバーを書き込みます。<BR>
+<CODE><A href="OS_CheckIrqStack.html">OS_CheckIrqStack()</A></CODE> IRQスタックのチェッカーが書き換えられたかを調べ、書き換えられていたらプログラムを停止します。<BR>
+<CODE><A href="OS_GetIrqStackStatus.html">OS_GetIrqStackStatus()</A></CODE>  IRQスタックのチェッカーが書き換えられたかを調べ、結果を返します。</P>
+<H2>参照</H2>
+<P><CODE><A href="../list_os.html#Debug-Stack">OS関数一覧(デバッグ(スタックチェック))</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2008/09/16 初版</P>
+</BODY>
+</HTML>

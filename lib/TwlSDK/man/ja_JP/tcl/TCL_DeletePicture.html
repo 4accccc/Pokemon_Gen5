@@ -1,0 +1,57 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCL_DeletePicture</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCL_DeletePicture <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+TCLResult TCL_DeletePicture( <a href="TCLAccessor.html">TCLAccessor</a>* pAccessor ,
+                             const <a href="TCLPictureInfo.html">TCLPictureInfo</a>* pPicInfo ,
+                             FSResult* pFSResult );
+	</code></pre>
+</dl>
+
+<h2>引数</h2>
+<p>
+<table>
+<tr><td>pAccessor<td>アクセサ
+<tr><td>pPicInfo<td>写真情報
+<tr><td>pFSResult<td>FS関数でエラーが発生した場合の FSResult の格納先
+</table>
+</p>
+
+<h2>返り値</h2>
+<p><a href="TCLResult.html">処理結果</a></p>
+
+<h2>説明</h2>
+<p>
+写真データの削除を行います。<br>
+<br>
+<font color="red">注意：</font><br>
+削除してもよい写真データは、自社タイトルが作成したもののみとしてください。<br>
+また、自アプリが作成したもののみに限定してもらっても問題ありません。<br>
+写真データにはエンコードしたアプリケーションのイニシャルコードが含まれているため、
+<code><a href="TCL_DecodePicture.html">TCL_DecodePicture()</a></code> でデコードした後に
+<code><a href="../ssp/jpeg_dec/SSP_GetJpegDecoderSoftware.html">SSP_GetJpegDecoderSoftware()</a></code> を
+呼び出して取得したイニシャルコードと自社タイトルのイニシャルコードを比較して判断してください。
+</p>
+
+<h2>参照</h2>
+
+<h2>履歴</h2>
+<p>
+2009/04/13 削除データの判断方法について説明追加<br>
+2009/03/23 初版<br/>
+</p>
+
+</body>
+</html>

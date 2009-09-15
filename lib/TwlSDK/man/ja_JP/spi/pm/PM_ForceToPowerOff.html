@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>PM_ForceToPowerOff</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">PM_ForceToPowerOff* <IMG src="../../image/NTR.gif" width="24" height="12" border="0" align="middle"><IMG src="../../image/TWL.gif" width="24" height="12" border="0" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;nitro/spi.h&gt;</CODE></PRE>
+  <PRE><CODE>u32 PM_ForceToPowerOff( void );
+
+u32 PM_ForceToPowerOffAsync( PMCallback callback, void* arg );
+</CODE></PRE>
+</DL>
+<H2>引数</H2>
+<P><CODE><B>PM_ForceToPowerOff()</B></CODE><BR>
+引数はありません。</P>
+<P><CODE><B>PM_ForceToPowerOffAsync()</B></CODE></P>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD><EM><STRONG>callback</STRONG></EM></TD>
+      <TD>コマンドが終了したときに呼ばれるコールバック</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG>arg</STRONG></EM></TD>
+      <TD>コールバックを呼ぶ際の引数</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>返り値</H2>
+<P><CODE><B>PM_ForceToPowerOff()<BR>
+</B></CODE>以前との互換性のために u32 型の返り値を持つ関数となっていますが、内部で成功するまでリトライし、その後ループしますので実際はこの関数から戻ることはありません。従って返り値を取得したり何かと比較したりすることに意味はありません。</P>
+<P><CODE><B>PM_ForceToPowerOffAsync()<BR>
+</B></CODE>非同期関数の場合、PM_RESULT_SUCCESS ならば、コマンドをARM7に送信することに成功したことを表します。ただし、電源がオフとなりますので実質的にはPM_RESULT_SUCCESS
+の後に何かをすることは出来ないでしょう。</P>
+<P>PM_RESULT_BUSY を返した場合は、SPI が他の処理に占有されており処理できなかったことを示します。</P>
+
+<H2>説明</H2>
+<P>電源を強制的にオフにします。</P>
+<P>この関数は ARM7 に該当動作を行うコマンドを PXI で送り、それを受け取った
+ARM7 側が PMIC を操作することで実行されます。従って関数を呼び出して即時に動作されるわけではありません。動作の終了まで待つ同期型の関数と、コマンドを
+ARM7 に送るだけの非同期型の関数が用意されていますので動作目的に合わせて使用してください。(関数名に
+Async がついているものが非同期関数です。)</P>
+<P><FONT color="#ff0000">同期関数では、成功するまで内部でリトライを繰り返します。そして成功した後はその場でループしますので、関数から戻ることはありません。</FONT>戻らないのに関数の戻り値の型が
+u32 であるのは以前との互換性のためだけで、その値には意味はありませんし、関数から戻らないのでそもそも取得は出来ません。</P>
+<P>非同期関数を呼び出した場合、ARM7側での処理が終了したときに指定のコールバック
+<B><I>callback</I></B> が呼び出されます。コールバックの型 <CODE>PMCallback</CODE> は</P>
+<BLOCKQUOTE> <CODE>typedef void ( *PMCallback )( u32 result, void* arg );</CODE></BLOCKQUOTE>
+<P>で定義されます。このコールバックは PXI 割り込みハンドラから呼び出されます。</P>
+<P>コールバックの引数は、第一引数 result がコマンドの結果を表します。これは
+<CODE>PM_RESULT_SUCCESS</CODE> または <CODE>PM_RESULT_BUSY</CODE> となります。第二引数は <B><I>arg</I></B> を返します。</P>
+<P>ただし、ARM7側で電源オフの処理が成功するとそれ以上の処理は行えませんので、実際には処理が失敗したときのみコールバック関数が実行されることになります。</P>
+
+<P><FONT color="#ff0000">この関数は割込みハンドラから呼び出すことが可能です。割り込みハンドラ以外の割込み禁止状態から呼び出すことも可能です。</FONT></P>
+<P><BR>
+<BR>
+<B>PM_RESULT_BUSY について</B></P>
+<P>SPI はPM以外にも様々な処理で使用されています。そのようなときに本関数を呼び出すと、ARM7
+までコマンドを送り、そこで BUSY という判定が行われ、処理は行われずに ARM9
+へ <CODE>PM_RESULT_BUSY</CODE> が通知されます。また他の PM 処理を行っている最中に本関数を呼び出すと、ARM9 側でそれを判断し <CODE>PM_RESULT_BUSY</CODE> を返します。(この場合は ARM7 への通知を行う前に判断します。)</P>
+<P>同期関数では、それを考慮して成功するまで内部でリトライしますが、非同期関数では
+PM_RESULT_BUSY を返します。従って、非同期関数で確実に本関数を成功させようとすれば、BUSY
+だったときを考慮してリトライするようにしてください。</P>
+<H2>内部動作</H2>
+<P>PMIC のレジスタ PMIC_CTL を操作しています。</P>
+<H2>参照</H2>
+<P><CODE><A href="PM_Init.html">PM_Init</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2009/06/03 <CODE>PM_Init()</CODE> についての記述を削除 (<CODE>OS_Init()</CODE> が必須となったため)<BR>
+2008/08/23 PM_RESULT_BUSY について言及<BR>
+2005/07/07 返り値 PM_RESULT_ERRORについて言及した<BR>
+2005/06/02 コールバックの呼び元を明記した<BR>
+2004/07/31 初版</P>
+</BODY>
+</HTML>

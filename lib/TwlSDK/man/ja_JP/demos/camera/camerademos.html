@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<LINK rel="stylesheet" type="text/css" href="../../css/nitro.css">
+<TITLE>CAMERA Demos</TITLE>
+</HEAD>
+<BODY>
+<H1>カメラライブラリ(CAMERA)サンプルデモ</H1>
+<H2>場所</H2>
+<P><CODE>$TwlSDK/build/demos.TWL/camera</CODE></P>
+<H2>コンパイル方法</H2>
+<P><CODE>$TwlSDK/build/demos.TWL/camera</CODE> ディレクトリに移り、</P>
+<BLOCKQUOTE><CODE>% make</CODE></BLOCKQUOTE>
+<P>と入力します。コンパイルが始まり、実行ファイルである <CODE>.srl</CODE> ファイルやバイナリ情報を記述した <CODE>.tef</CODE> ファイルが、</P>
+<BLOCKQUOTE><CODE>$TwlSDK/build/demos.TWL/camera/(サンプル名)/bin/(プラットフォーム)/(ターゲット)/</CODE></BLOCKQUOTE>
+<P>の下に生成されます。例えば、</P>
+<BLOCKQUOTE><CODE>$TwlSDK/build/demos.TWL/camera/simpleShoot-1/bin/ARM9-TS/Release/main.srl</CODE></BLOCKQUOTE>
+<P>が <CODE>simpleShoot-1</CODE> デモの実行ファイルとなります。</P>
+
+<H2>実行方法</H2>
+<H3>TWL/NITRO HYBRID ROM の場合</H3>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<H3>TWL LIMITED ROM の場合</H3>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+
+<H2>説明</H2>
+<BR>
+<TABLE width="720">
+  <TBODY>
+    <TR>
+      <TH>デモ名</TH>
+      <TH>ディレクトリ</TH>
+      <TH>動作</TH>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>camera-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD width="525">基本的なカメラの使い方のデモです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>camera-2</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD width="525"><a href="../../camera/CAMERA_DmaPipeInfinity.html"><code>CAMERA_DmaPipeInfinity()</code></a> を使用するデモです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>camera-3</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD width="525">VRAMにバッファを3つ取るデモです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>camera-4</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD width="525">メインメモリにバッファを2つ、VRAMにバッファを1つ取るデモです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>simpleShoot-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD width="525">カメラで撮影している動画を静止画として切り取って表示し、シャッター音を再生するデモです。<BR>
+      BGMが鳴っている中で、強制的にシャッター音を再生します。<BR>
+      ヘッドホンをしている場合でも、スピーカーから強制的に出力します。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>simpleShoot-2</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD width="525">simpleShoot-1に動画撮影機能を追加したデモです。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>動作</H2>
+<P><CODE>CAMERA ライブラリのデモは、TWL モードでしか正常動作しません。</CODE></P>
+<H2>参照</H2>
+<P><A href="../../camera/list_camera.html"><CODE>CAMERA関数一覧</CODE></A></P>
+<H2>履歴</H2>
+<P>
+2008/12/12 mp_camera-1の削除<br>
+2008/09/16 simpleShoot-2の追加<br>
+2008/03/21 SD 関係のデモを削除、camera_shutterデモとsimpleShoot-1の統合<br>
+2008/03/13 saveShoot-3 デモの追加<br>
+2008/03/04 シャッター音のデモを追加<br />
+2007/11/15 初版
+</P>
+</BODY>
+</HTML>

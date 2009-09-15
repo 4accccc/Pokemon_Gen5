@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>OS_IsRunOnTwl</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">OS_IsRunOnTwl <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD><CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>BOOL OS_IsRunOnTwl( void );</CODE>
+</DL>
+<H2>引数</H2>
+<P>なし。</P>
+<H2>返り値</H2>
+<P>TRUE ならTWLモードで動作していることを表します。実際の動作環境は TWL実機であったり
+IS-TWL-DEBUGGER であったりするかもしれません。</P>
+<P>FALSE ならそれ以外のモード(すなわち NITRO モード)で動作していることを表します。実際の動作環境は
+NITRO実機であったり IS-NITRO-DEBUGGER であったりするかもしれません。また、IS-TWL-DEBUGGER
+を使い NITRO モードで動作している場合も該当します。</P>
+<H2>説明</H2>
+<P>プログラムが TWLモードで動作しているかどうかを調べます。</P>
+<P><CODE>OS_IsRunOnTwl()</CODE> は動作モードを判定する関数で、動作環境を判定するものではありません。たとえば、IS-TWL-DEBUGGER
+上で動作していても、この関数は TRUE を返す場合もあれば FALSE を返す場合もあります。すなわち、IS-TWL-DEBUGGER
+上ではプログラムが TWL モードで動作する場合があり、NITROモードで動作する場合もあります。</P>
+<P><CODE>OS_IsRunOnTwl()</CODE> は TWLとNITROのハイブリッドROMを作成するときに有用な関数です。ハイブリッドROM
+は TWL 上では TWL モードで動作し、NITRO 上では NITRO モードで動作するので、TWL
+上では TRUE を、NITRO 上ではFALSE を返します。これを利用して処理を動的に切り替えることが可能です。</P>
+
+<P>(例) NITRO/TWL ハイブリッド ROM に対応した処理の分け方</P>
+<BLOCKQUOTE style="background-color:#ffffc0"><CODE>if ( <FONT color="#ff0000">OS_IsRunOnTwl()</FONT> )<BR>
+{<BR>
+　　　　// TWLモードで実行したい処理<BR>
+}<BR>
+else<BR>
+{<BR>
+　　　　// NITROモードで実行したい処理<BR>
+}</CODE></BLOCKQUOTE>
+<P><BR>
+また通常のアプリケーション開発では余りないケースですが、ライブラリ開発などで
+「NITRO専用」「TWL専用」「NITRO/TWL ハイブリッド」の３種類のROM に対応するライブラリのソースを記述する場合などに、SDKで定義される
+define と合わせ、次のように記述することができます。</P>
+<P>(例) NITRO専用ROM、TWL専用ROM、NITRO/TWLハイブリッドROM に対応した処理の分け方</P>
+<BLOCKQUOTE style="background-color:#ffffc0"><CODE>if ( <FONT color="#ff0000">OS_IsRunOnTwl()</FONT> )<BR>
+{<BR>
+#ifdef <FONT color="#ff0000">SDK_TWL</FONT><BR>
+　　　// TWLモードで実行したい処理<BR>
+#endif<BR>
+}<BR>
+else<BR>
+{<BR>
+#ifndef <FONT color="#ff0000">SDK_TWLLTD</FONT><BR>
+　　　　// NITROモードで実行したい処理<BR>
+#endif<BR>
+}</CODE></BLOCKQUOTE>
+<P><CODE>OS_IsRunOnTwl()</CODE> はハイブリッド時にはランタイムにプラットフォームを判別しますが、NITRO専用時
+には定数 FALSE に、TWL専用時には定数 TRUE になります。NITRO専用ROMとTWL専用ROM
+を作成する場合には <CODE>if</CODE> 文の条件に合わない方はデッドストリップが期待出来ますが、デッドストリップされる側に書かれた関数の未定義エラーなどを避けるために <CODE>SDK_TWL</CODE> (TWL専用ROM と NITRO/TWL ハイブリッドROM のコンパイル時に定義されます) と <CODE>SDK_TWLLTD</CODE> (TWL 専用ROM のコンパイル時に定義されます) を用いています。</P>
+<H3><BR>
+<BR>
+環境による実際の値</H3>
+<P>以下は、<CODE>OS_IsRunOnTwl()</CODE> が返す値をまとめたものです。DEBUG, RELEASE, FINALROM といったビルドによる差はありません。<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH colspan="2" style="background-color:#304040;"><FONT color="#ffffff">NITRO モードの場合</FONT></TH>
+    </TR>
+    <TR>
+      <TH>動作環境</TH>
+      <TH><CODE>OS_IsRunOnTwl()</CODE>の値</TH>
+    </TR>
+    <TR>
+      <TD>DS実機</TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD>TWL実機</TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD>IS-NITRO-DEBUGGER</TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD>ENSATA EMULATOR</TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD>IS-TWL-DEBUGGER<BR>
+      (一般開発用: ARM9)</TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TD>IS-TWL-DEBUGGER<BR>
+      (コンポーネント開発用<BR>
+      ARM9 + ARM7)</TD>
+      <TD><B>FALSE</B></TD>
+    </TR>
+    <TR>
+      <TH colspan="2" style="background-color:#304040;"><FONT color="#ffffff">TWL モードの場合</FONT></TH>
+    </TR>
+    <TR>
+      <TH>動作環境</TH>
+      <TH><CODE>OS_IsRunOnTwl()</CODE>の値</TH>
+    </TR>
+    <TR>
+      <TD>TWL実機</TD>
+      <TD><FONT color="#ff0000"><B>TRUE</B></FONT></TD>
+    </TR>
+    <TR>
+      <TD>IS-TWL-DEBUGGER<BR>
+      (一般開発用: ARM9)</TD>
+      <TD><FONT color="#ff0000"><B>TRUE</B></FONT></TD>
+    </TR>
+    <TR>
+      <TD>IS-TWL-DEBUGGER<BR>
+      (コンポーネント開発用<BR>
+      ARM9 + ARM7)</TD>
+      <TD><FONT color="#ff0000"><B>TRUE</B></FONT></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+</P>
+<H2>内部動作</H2>
+<P>システム設定レジスタ由来の値を用いて判定します。</P>
+<H2>参照</H2>
+<P><CODE><A href="../debug/OS_Printf.html">OS_Printf</A>, <A href="OS_GetConsoleType.html">OS_GetConsoleType</A></CODE></P>
+<H2>履歴</H2>
+<P>2007/11/16 記述追加<BR>
+2007/11/06 初版</P>
+</BODY>
+</HTML>

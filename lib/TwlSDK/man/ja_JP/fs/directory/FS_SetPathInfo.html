@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_SetPathInfo</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FS_SetPathInfo <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+BOOL FS_SetPathInfo(const char *path, const <a href="../FSPathInfo.html">FSPathInfo</a> *info);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>path</strong></em></td>
+<td style="width:87%">情報を変更したいファイルまたはディレクトリのパス名</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>info</strong></em></td>
+<td style="width:87%">変更すべき情報が格納された<code><a href="../FSPathInfo.html">FSPathInfo</a></code>構造体へのポインタ</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>指定したパスのエントリ情報が正しく変更できればTRUEを、失敗すればFALSEを返します。<br />
+失敗時の詳細なエラーは<code><a href="../archive/FS_GetArchiveResultCode.html">FS_GetArchiveResultCode()</a></code>で取得することができます。</p>
+
+<h2>説明</h2>
+<p>指定したファイルまたはディレクトリのエントリ情報を変更します。<br />
+この関数は、指定したパスがファイルまたはディレクトリのどちらかとして存在すればそのエントリ情報を変更してTRUEを返します。<br />
+<br />
+以下の場合には失敗してFALSEを返します。
+</p>
+<ul>
+<li>指定したパスにファイルもディレクトリも存在しない場合</li>
+<li>アーカイブがエントリ情報の変更機能をサポートしていない場合</li>
+</ul>
+<p>エントリ情報の変更機能をサポートしているアーカイブは少なく、
+利用できたとしても<code><a href="FS_GetPathInfo.html">FS_GetPathInfo()</a></code>関数で得られる情報すべてを任意に変更できるとは限りません。
+たとえば<a href="../archive_nand_spec.html">NANDアーカイブ</a>や<a href="../archive_sdmc_spec.html">SDカードアーカイブ</a>では
+<code><a href="../FSPathInfo.html">FS_ATTRIBUTE_DOS_READONLY</a></code>ビットと<code><a href="../FSPathInfo.html">FS_ATTRIBUTE_DOS_ARCHIVE</a></code>ビット以外は変更できず、設定内容は無視されます。<br />
+簡単な使用例を以下に示します。</p>
+<pre><code>
+<span style="color:#008000">/* リードオンリー属性を解除する */</span>
+<a href="../FSPathInfo.html">FSPathInfo</a> info[1];
+if (FS_GetPathInfo(path, info))
+{
+    info->attributes &= ~FS_ATTRIBUTE_DOS_READONLY;
+    if (FS_SetPathInfo(path, info))
+    {
+        ...
+    }
+}
+</code></pre>
+
+<h2>注意</h2>
+<ul>
+<li>この関数を割り込みハンドラ(IRQモード)から呼び出すことはできません。<br />
+また、割り込みを禁止したままの状態にあると処理が完了しない場合がある点に注意して下さい。</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="../FSPathInfo.html">FSPathInfo</a>
+<br />
+<a href="FS_GetPathInfo.html">FS_GetPathInfo</a>
+<a href="../archive/FS_GetArchiveResultCode.html">FS_GetArchiveResultCode</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2007/07/18 初版<br />
+</p>
+</body>
+</html>

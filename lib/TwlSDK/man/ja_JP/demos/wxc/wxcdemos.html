@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<LINK rel="stylesheet" type="text/css" href="../../css/nitro.css">
+<TITLE>WXC Demos</TITLE>
+</HEAD>
+<BODY>
+<H1>すれちがい通信ライブラリ(WXC) サンプルデモ</H1>
+
+<H2>場所</H2>
+<P><CODE>$TwlSDK/build/demos/wxc</CODE></P>
+
+<H2>コンパイル方法</H2>
+<P><CODE>$TwlSDK/build/demos/wxc</CODE> ディレクトリに移り、</P>
+<BLOCKQUOTE><CODE>% make</CODE></BLOCKQUOTE>
+<P>と入力します。コンパイルが始まり、実行ファイルである <CODE>.srl</CODE> ファイルやバイナリ情報を記述した <CODE>.nef</CODE> または <CODE>.tef</CODE> ファイルが、</P>
+<BLOCKQUOTE><CODE>$TwlSDK/build/demos/wxc/(サンプル名)/bin/(プラットフォーム)/(ターゲット)/</CODE></BLOCKQUOTE>
+<P>の下に生成されます。例えば、</P>
+<BLOCKQUOTE><CODE>$TwlSDK/build/demos/wxc/simple-1/bin/ARM9-TS/Release/main.srl</CODE></BLOCKQUOTE>
+<P>が <CODE>simple-1</CODE> デモの実行ファイルとなります。</P>
+
+<H2>実行方法</H2>
+<H3>NITRO ROM の場合</H3>
+
+<P>IS-NITRO-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<H3>TWL/NITRO HYBRID ROM の場合</H3>
+<P>IS-NITRO-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<H3>TWL LIMITED ROM の場合</H3>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+
+<H2>説明</H2>
+<br>
+
+<TABLE width="720">
+  <TBODY>
+    <TR>
+      <TH>デモ名</TH>
+      <TH>ディレクトリ</TH>
+      <TH>動作</TH>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>simple-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">WXCの機能を示す単純なサンプルです。<br>
+                      同じ simple-1 サンプルを検索して、自動的にデータ交換を 1 回行い停止します。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>simple-2</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">基本的には simple-1 サンプルと同様ですが、複数のデータを選択して登録することができます。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>wxc-pm</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">基本的には simple-1 サンプルと同様ですが、データ交換完了後にスリープモードもしくは LCD OFF 状態へ移行します。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>unregister-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">基本的には simple-1 サンプルと同様ですが、得られた受信データを再登録して再びデータ交換します。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>wxc-dataShare</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">同じ wxc-dataShare サンプルとデータ交換を行った後、再接続してデータシェアリングを行うサンプルです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>relayStation-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">simple-2 または wxc-pm サンプルデモに対しての中継所として動作するサンプルです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>relayStation-2</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">simple-1 に対しての中継所として動作するサンプルです。<br>
+                      登録データの扱いを動的に設定できる点以外は relayStation-1 と同じです。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>動作</H2>
+<P><CODE>WXC ライブラリのデモは ensata では動作しません。</CODE></P>
+
+<H2>参照</H2>
+<P><A href="../../wxc/list_wxc.html"><CODE>WXC関数一覧</CODE></A></P>
+
+<H2>履歴</H2>
+<P>
+2009/04/23 初版<BR>
+</P>
+
+</BODY>
+</HTML>

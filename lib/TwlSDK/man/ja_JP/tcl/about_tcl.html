@@ -1,0 +1,236 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css" text="text/css">
+<title>DSi写真データベースライブラリ(TCL) について</title>
+<link rel="stylesheet" href="../css/nitro.css">
+</head>
+<body>
+<h1>DSi写真データベースライブラリ(TCL) について</h1>
+
+<h2>はじめに</h2>
+<p>TCLは、DSiカメラ等によってNAND上に保存されるjpeg画像の読み込みや、DSiカメラが読み込めるパスへのjpeg画像の書き出し等を行うライブラリです。</p>
+<p>jpeg画像の読み込み、書き出し処理は、画像ファイルとは別にメモリに保存されている管理ファイルを経由して行われます。</p>
+<p>TCLはNAND上のファイルを操作するため、NANDアプリでしか使用できません。</p>
+
+<h2>FS関係の処理に関するエラー対応について</h2>
+<p>TCLでは、内部で発生したFS関数でのエラーに対して特別な処理は行っていません。各種エラー処理は全てアプリ側に任されています。内部でFSを使用するAPIに関しては、引数を通じてそのエラーコードを返すようになっていますので、それらを使用して必要な処理を行ってください。</p>
+
+<h2>管理ファイルの読み込み処理とエラーについて</h2>
+<p>TCLの各種関数を使用するためには、まず管理ファイルの読み込みを行う必要があります。</p>
+<p>管理ファイルの読み込みに失敗した場合のエラー処理として、</p>
+<ul>
+<li><b>DSiカメラの起動とDSiカメラ上での本体メモリ参照を促すメッセージを出して以降の処理を終了する</b></li>
+<li>管理ファイルを作り直す</li>
+</ul>
+<p>本体メモリ上の管理ファイル読み込みに失敗する可能性は低く、また、その復旧はDSiカメラ上で行えるため、<b>基本的には前者のエラー処理で問題ありません</b>。その際、アプリの仕様上写真の読み込みしか行わない場合(書き出しは行わない場合)であれば、いくつかのエラーに関しては無視することが可能です。詳しくは <a href="TCL_LoadTable.html"><code>TCL_LoadTable</code></a> を参照してください。</p>
+<p>ゲーム性の都合などで管理ファイルの復旧を試みる場合について以下にそのシーケンスを示します。ただし、下記処理を行っても全ての場合で管理ファイルが復旧できるわけではありません。</p>
+
+<h2>読み込みに失敗した管理ファイルの復旧を試みるシーケンスについて</h2>
+<p>管理ファイルの読み込みに失敗し、それを復旧する場合、アプリ側の仕様に応じて二種類のエラーシーケンスが用意されています。具体的には、管理ファイルには画像の次回保存先、という情報が格納されています。この次回保存先が不正だった場合、画像の読み込みは行えますが、書き出しは行えません。それ以外の問題で管理ファイルの読み込みに失敗した場合は、画像の読み込み、書き出し処理共に行えません。</p>
+<p>それらを踏まえた二種類のシーケンスについて以下に示します。</p>
+<h3>画像の読み込みのみを行う場合</h3>
+<p>アプリ仕様として画像の読み込みのみを行う場合のエラー処理を含めた管理ファイル読み込みシーケンスです(各関数の内容に関してはそれらのマニュアルを参照して下さい)。</p>
+<p><pre style="border:1px solid; black; padding:8px;">
+// 管理ファイルの読み込み
+TCLResult result = TCL_LoadTable( &accessor ,
+                                  tableBuffer ,
+                                  tableBufferSize ,
+                                  workBuffer ,
+                                  workBufferSize ,
+                                  &fsResult );
+
+// 読み込み処理の結果
+switch ( result )
+{
+    case TCL_RESULT_SUCCESS:                // 読み込みに成功した
+    case TCL_RESULT_ERROR_EXIST_OTHER_FILE: // 次回保存先に既にファイルがある
+    case TCL_RESULT_ERROR_ALREADY_MANAGED:  // 次回保存先が既に管理されている
+        // 画像読み込み処理は行えるので特に何もする必要はない
+                     :
+        break;
+    default:
+        // 読み込み処理も行えないので管理ファイルを作り直す
+        result = TCL_CreateTable( &accessor ,
+                                  tableBuffer ,
+                                  tableBufferSize ,
+                                  workBuffer ,
+                                  workBufferSize ,
+                                  &fsResult );
+
+        if ( result == TCL_RESULT_SUCCESS )
+        {
+            // 画像読み込み、書き出し処理共に可能に
+                         :
+        }
+        else
+        {
+            // 画像読み込み、書き出し処理共に不可
+                         :
+        }
+    }
+}
+</pre></p>
+<h3>画像の読み込み、書き出し共に行う場合</h3>
+<p>アプリ仕様として画像の読み込み、書き出し共に行う場合のエラー処理を含めた管理ファイル読み込みシーケンスです。</p>
+<p><pre style="border:1px solid; black; padding:8px;">
+// 管理ファイルの読み込み
+TCLResult result = TCL_LoadTable( &accessor ,
+                                  tableBuffer ,
+                                  tableBufferSize ,
+                                  workBuffer ,
+                                  workBufferSize ,
+                                  &fsResult );
+
+// 読み込み処理の結果
+switch ( result )
+{
+    case TCL_RESULT_SUCCESS:                // 読み込みに成功した
+        // 画像読み込み、書き出し処理共に行えるので特に何もする必要はない
+                      :
+        break;
+
+    case TCL_RESULT_ERROR_EXIST_OTHER_FILE: // 次回保存先に既にファイルがある
+    case TCL_RESULT_ERROR_ALREADY_MANAGED:  // 次回保存先が既に管理されている
+        // 書き出し処理が行えないので次回保存先を再度計算する
+        result = TCL_RepairTable( &accessor , &fsResult );
+
+        if ( result == TCL_RESULT_SUCCESS )
+        {
+            // 画像読み込み、書き出し共に可能に
+                          :
+        }
+        else
+        {
+            // 画像書き出し処理が出来ない状態なので管理ファイルを作り直す
+            result = TCL_CreateTable( &accessor ,
+                                      tableBuffer ,
+                                      tableBufferSize ,
+                                      workBuffer ,
+                                      workBufferSize ,
+                                      &fsResult );
+
+            if ( result == TCL_RESULT_SUCCESS )
+            {
+                // 画像読み込み、書き出し処理共に可能に
+                              :
+            }
+            else
+            {
+                // 画像読み込み、書き出し処理共に不可
+                              :
+            }
+        }
+        break;
+    default:
+        // 読み込み処理も行えないので管理ファイルを作り直す
+        result = TCL_CreateTable( &accessor ,
+                                  tableBuffer ,
+                                  tableBufferSize ,
+                                  workBuffer ,
+                                  workBufferSize ,
+                                  &fsResult );
+
+        if ( result == TCL_RESULT_SUCCESS )
+        {
+            // 画像読み込み、書き出し処理共に可能に
+                         :
+        }
+        else
+        {
+            // 画像読み込み、書き出し処理共に不可
+                         :
+        }
+    }
+}
+</pre></p>
+
+<h2>管理ファイルの読み込みに失敗した場合のメッセージ例</h2>
+<p>管理ファイルの読み込みに失敗した場合、何らかのメッセージを表示して、写真を扱うことが出来ない旨や、管理ファイルの作り直しを行うこと、などを伝えたりする必要があるかもしれません。そのような場合を、DSiカメラでのメッセージを元に例示します。</p>
+<p>ただし、これらはあくまで参考例ですので、各アプリで適切と思われる処理を行ってください。</p>
+<h3>管理ファイルの読み込みに失敗し写真を取り扱うことが出来ない場合</h3>
+<p>残念ながらDSiカメラではこのような場合の特別なメッセージは用意されていません(FATALエラー扱いとなります)。そのため例示は出来ませんが、DSiカメラを起動して復旧を促すようなメッセージは有効かもしれません。</p>
+<h3>管理ファイルが存在しないので作成する場合</h3>
+<p><a href="TCL_LoadTable.html"><code>TCL_LoadTable</code></a> から <code>TCL_RESULT_ERROR_NO_TABLE_FILE</code> が返ってきた場合、それは管理ファイルが存在しないことを表します。そのような状況で管理ファイルを作成する場合は</p>
+<p><pre style="border:1px solid; black; padding:8px;">
+写真管理ファイルを
+つくっています…
+</pre></p>
+<p>というメッセージを表示していました。</p>
+<h3>管理ファイルが読み込めないので作成しなおす場合</h3>
+<p>それ以外の理由で管理ファイルを作成しなおす場合は</p>
+<p><pre style="border:1px solid; black; padding:8px;">
+写真管理ファイルが
+こわれていました。
+
+写真管理ファイルを
+つくり直します。
+</pre></p>
+<p>というメッセージを表示していました。</p>
+
+<h2>画像ファイルの書き出し処理</h2>
+<p>以下のような場合、画像ファイルの書き出しは行えません。</p>
+<dl>
+<dd>NAND容量が足りない場合
+<dd>既に管理できる最大数の写真を管理しているとき
+<dd>保存先として指定可能なパスが存在しないとき
+</dl>
+<p><a href="TCL_CalcNumEnableToTakePictures.html"><code>TCL_CalcNumEnableToTakePictures</code></a> はNAND容量と現在管理している写真の数から撮影可能枚数を計算しますが、指定可能なパスが存在しているかどうかは判別しません。実際に画像ファイルを書き出す場合は、それを加味して以下のような処理を行ってください。
+</p>
+
+<p><pre style="border:1px solid; black; padding:8px;">
+// 指定可能なパスがあるかどうかを保持するフラグ
+// TCL_RepairTable や TCL_CreateTable から TCL_RESULT_ERROR_NO_NEXT_INDEX が
+// 返ってきた場合は、指定可能なパスは存在しないので初期値を FALSE とする
+BOOL isEnableValidPath;
+
+// 実際に画像を保存する箇所
+// 撮影可能枚数が1枚以上で有効なパスが存在する場合のみ撮影
+if ( TCL_CalcNumEnableToTakePictures(,,) > 0 && isEnableValidPath != FALSE )
+{
+    result = TCL_EncodeAndWritePicture(,,);
+
+    // もし今回の保存の結果、有効なパスが存在しなくなったらそれを保持しておく
+    if ( result == TCL_RESULT_ERROR_NO_NEXT_INDEX )
+    {
+        isEnableValidPath = FALSE;
+    }
+}
+</pre></p>
+<p>
+詳しくはサンプル tcl-2 を参照してください。
+</p>
+
+<h2>jpegデコード処理に関して</h2>
+<p>jpegデコード処理を行う関数 <a href="TCL_DecodePicture.html"><code>TCL_DecodePicture</code></a> を用意しています。この関数は <code>SSP_StartJpegDecoder</code> のラッパ関数ですが、内部で必要なエラーチェック等行っていますので、直接 <code>SSP_StartJpegDecoder</code> を呼び出さずにこちらの関数を使ってデコードを行ってください。</p>
+
+<h2>画像タイプの判別に関して</h2>
+<p>DSiカメラの画像タイプには大きくわけて、通常の写真、と、フレームカメラ等で使用されるフレーム、という2種類が存在します。jpeg画像の中に自身の画像タイプが何か、という情報が保存されます(逆に、保存したファイル以外の書き出しは禁止されています)。</p>
+<p>それとは別に管理ファイル上でも画像タイプ情報を保持しています。そのため、ファイルの上書き等を行うことで、この整合性が崩れる可能性があります。</p>
+<p>そういった場合に、アプリ側としては、検索関数を使用して写真を取得したのに実際にはフレームが見つかる(検索は管理ファイル上のデータを元に行うため、そのような状況が起き得ます)といった意図しない結果になる可能性があります。</p>
+<p>そこで、管理ファイル上の画像タイプと、jpeg画像から得られる画像タイプを比較し、正しく処理可能な場合だけ処理を行って下さい。以下処理シーケンスです。</p>
+<p><pre style="border:1px solid; black; padding:8px;">
+// 管理ファイルから画像タイプを取得
+TCLPictureInfo* pPicInfo = NULL;
+TCL_SearchNextPictureInfo( ,, &pPicInfo ,, );
+
+// デコード後に得られるメーカーノートから取得するメーカーノート構造体
+// 取得方法は jpeg ライブラリを参照してください。
+// DSiカメラのメーカーノートを下記構造体へキャストしてください。
+TCLMakerNote* pMakerNote = ...;
+
+// 画像タイプが同じとみなせる場合のみ処理を行う
+if ( TCL_IsSameImageType( pPicInfo , pMakerNote ) != FALSE )
+{
+    :
+}
+</pre></p>
+<p>(但し、写真とフレームをわけずに処理を行いたい場合は、上記判別は不要となります)</p>
+
+<H2>履歴</H2>
+<P>
+2009/04/13 初版
+</p>
+
+</body>
+</html>

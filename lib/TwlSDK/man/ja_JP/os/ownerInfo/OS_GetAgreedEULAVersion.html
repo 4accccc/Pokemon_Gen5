@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>OS_GetAgreedEULAVersion</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">OS_GetAgreedEULAVersion <IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;twl/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>u8 OS_GetAgreedEULAVersion(void);</CODE></dd>
+</dl>
+<h2>引数</h2>
+<P>なし。</P>
+<h2>返り値</h2>
+<p>同意したEULAバージョンです。( 0 ～ 255 の数字です。)</p>
+
+<H2>説明</H2>
+<p>この本体で同意した EULA のバージョンを取得します。<BR>
+EULA 同意済みかどうかは、<CODE><A href="OS_IsAgreeEULA.html">OS_IsAgreeEULA()</A></CODE> で調べることが出来ます。</P>
+<P><B>ユーザーが同意している EULA(End User License Agreement) のバージョンが最新であるかは Wi-Fi コネクション接続時にTWL-DWC ライブラリが自動的にチェックしますので、通常アプリケーションがこの関数を呼び出す必要はありません。</B></P>
+
+
+<h2>参照</h2>
+<p><CODE>
+<a href="OSOwnerInfo.html">OSOwnerInfoEx</a>, <A href="OS_IsAgreeEULA.html">OS_IsAgreeEULA()</A></CODE></p>
+
+<H2>履歴</H2>
+<P>2008/09/02 初版</P>
+</body>
+</html>

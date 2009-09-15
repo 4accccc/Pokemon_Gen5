@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_OpenFileEx[W]</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FS_OpenFileEx[W] <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+BOOL FS_OpenFileEx(<a href="../fs_file_type.html">FSFile</a> *file, const char *path, u32 mode);
+BOOL FS_OpenFileExW(<a href="../fs_file_type.html">FSFile</a> *file, const u16 *path, u32 mode);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>file</strong></em></td>
+<td style="width:87%">ハンドルを格納すべき<a href="../fs_file_type.html">FSFile</a>構造体</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>path</strong></em></td>
+<td style="width:87%">ファイルのパス名</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>mode</strong></em></td>
+<td style="width:87%">ファイルへのアクセスモード<br /><a href="../FS_FILEMODE.html">FS_FILEMODE_*</a>のフラグを組み合わせて指定します。</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>ファイルハンドルが正しく開ければTRUEを、失敗すればFALSEを返します。<br />
+失敗時の詳細なエラーは<code><a href="FS_GetResultCode.html">FS_GetResultCode()</a></code>で取得することができます。</p>
+
+<h2>説明</h2>
+<p>指定したファイルのハンドルを開きます。<br />
+パス名をShift_JISで指定する場合はFS_OpenFileEx()を、UTF16-LEで指定する場合はFS_OpenFileExW()を使用することができ、得られる結果は同じです。<br />
+開くことの出来るファイルにはいくつかの条件があります。</p>
+<ul>
+<li><font color="red">ファイルは事前に存在している必要があり、<a href="../FS_FILEMODE.html">FS_FILEMODE_W</a>を指定してこの関数を呼び出しても自動的に生成されることはありません。<br /></font>ファイルを生成新規するには<code><a href="../directory/FS_CreateFile.html">FS_CreateFile()</a></code>を使用する必要があります。</li>
+<li>FSライブラリがサポートしているファイル操作関数は2Gバイトまでであることから、意図せぬ誤動作を防止するため、<font color="red">2Gバイト以上のファイルを開こうとした場合は常に<code><a href="../fs_result_const.html">FS_RESULT_PEMISSION_DENIED</a></code>を返して失敗します。</font></li>
+<li>NITROモードで動作しているときに<a href="../overview/about_Archive.html#ROM_LTDFILE">TWL専用ファイル</a>を開こうとした場合、<code><a href="../fs_result_const.html">FS_RESULT_PEMISSION_DENIED</a></code>を返して失敗します。</li>
+</ul>
+<p>得られたハンドルを使用してファイルアクセス用の各種関数を呼び出すことができます。<br />
+ハンドルを使用した後は<code><a href="FS_CloseFile.html">FS_CloseFile()</a></code>を呼び出して解放する必要があります。<br />
+</p>
+
+<h2>注意</h2>
+<ul>
+<li>この関数を割り込みハンドラ(IRQモード)から呼び出すことはできません。<br />
+また、割り込みを禁止したままの状態にあると処理が完了しない場合がある点に注意して下さい。</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="../fs_file_type.html">FSFile</a>
+<a href="../FSDirectoryEntryInfo.html">FSDirectoryEntryInfo</a>
+<br />
+<a href="FS_ReadFile.html">FS_ReadFile</a>
+<a href="FS_WriteFile.html">FS_WriteFile</a>
+<a href="FS_SeekFile.html">FS_SeekFile</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/06/08 TWL専用ファイルの説明へのリンクを追加。<br />
+2009/01/08 TWL専用ファイルに関する説明を追記。<br />
+2008/09/02 Unicode版の関数について追記。<br />
+2008/07/16 失敗時のエラーコード取得に関してFS_GetResultCode()を使用するよう記述を訂正。2Gバイトのサイズ制限に関して追記。<br />
+2008/06/10 ファイルが自動的に生成されない点について追記。<br />
+2007/09/18 初版<br />
+</p>
+</body>
+</html>

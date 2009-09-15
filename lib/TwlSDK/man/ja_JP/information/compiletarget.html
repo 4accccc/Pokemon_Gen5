@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<BASE target="main">
+<TITLE>コンパイルターゲット解説</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css">
+</HEAD>
+<BODY>
+<H1>コンパイルターゲット解説</H1>
+
+<H3><A name="Sinit">[TWL_FINALROM]</A></H3>
+<P>マスター提出時に製品版の作成目的で使用されるオプションです。</P>
+<P>※<font color="#ff0000">ROMを提出する際は必ずこのオプションでビルドする必要があります。</font></P>
+<ul>
+<li><A href="../os/debug/SDK_ASSERT.html">SDK_ASSERT()</A>, <A href="../os/debug/SDK_WARNING.html">SDK_WARNING()</A> が無効
+<li><A href="../os/debug/OS_Panic.html">OS_Panic()</A>, <A href="../os/debug/OS_TPanic.html">OS_TPanic()</A> はFINALROMライブラリではメッセージを出力しません。(何もしないでただ停止する関数 <A href="../os/system/OS_Terminate.html">OS_Terminate()</A> と同等となります。)
+<li>最適化ON
+<li>デバッグ用の関数のいくつかが、動作環境に関わらず一定の値を返したり、何もしない関数になります。</P>
+</ul>
+
+<H3><A name="System">[TWL_DEBUG]</A></H3>
+<P>TWL_FINALROM や TWL_RELEASE 使用時より入念なデバッグ目的で使用されるオプションです。</P>
+<ul>
+<li>OSのデバッグ文字列表示関数の <A href="../os/debug/OS_PutString.html">OS_PutString()</A> 等が有効。
+<li><A href="../os/argument/OS_GetArgc.html">OS_GetArgc()</A>, <A href="../os/argument/OS_GetArgv.html">OS_GetArgv()</A> 等が有効。
+<li><A href="../os/debug/OS_Panic.html">OS_Panic()</A>, <A href="../os/debug/OS_TPanic.html">OS_TPanic()</A> が有効。
+<li>デバッグのスタックチェック関数の <A href="../os/stack/OS_CheckStack.html">OS_CheckStack()</A>, <A href="../os/stack/OS_CheckIrqStack.html">OS_CheckIrqStack()</A> が有効。
+</ul>
+<P>具体的に関数の無効・有効の詳細は<A href="../os/list_os.html#Debug-Print" target="main">OSのデバッグ関数リファレンス</A>以下のデバッグ用関数を参照してください。</P>
+
+<H3><A name="Arch">[TWL_RELEASE]</A></H3>
+<P>TWL_DEBUG 使用時より製品版に近い条件でのデバッグ目的で使用されるオプションです。</P>
+<P>基本的には、上記 TWL_DEBUG/TWL_FINALROM の両方の特徴をマージしたものです。<br>
+以下に具体的なマージの内容を示します。</P>
+
+
+<style type="text/css">
+<!--
+.enable { background :#ffcccc; text-align : center }
+.disable { text-align : center }
+-->
+</style>
+<TABLE>
+  <TBODY>
+    <TR>
+      <TH>特徴</TH>
+      <TH style="background :#ccffcc">TWL_DEBUG</TH>
+      <TH style="background :#ccccff">TWL_RELEASE</TH>
+      <TH style="background :#cccccc">TWL_FINALROM</TH>
+    </TR>
+    <TR>
+      <TD>OSのデバッグ出力関数<br><CODE><A href="../os/debug/OS_PutString.html">OS_PutString()</A> 等</CODE></TD>
+      <TD colspan="2" class="enable">有効</TD>
+      <TD class="disable">無効</TD>
+    </TR>
+    <TR>
+      <TD>コンパイラの最適化</TD>
+      <TD class="disable">OFF</TD>
+      <TD colspan="2" class="enable">ON</TD>
+    </TR>
+    <TR>
+      <TD>SDK内部のデバッグコード</TD>
+      <TD colspan="2" class="enable">有効</TD>
+      <TD class="disable">無効</TD>
+    </TR>
+    <TR>
+      <TD><A href="../os/debug/SDK_ASSERT.html">SDK_ASSERT()</A> 等のアサート関数</TD>
+      <TD class="enable">有効</TD>
+      <TD colspan="2" class="disable">無効</TD>
+    </TR>
+    <TR>
+      <TD><A href="../os/debug/OS_Panic.html">OS_Panic()</A> 等の関数</TD>
+      <TD colspan="2" class="enable">有効</TD>
+      <TD class="disable"><A href="../os/system/OS_Terminate.html">OS_Terminate()</A> と同等</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+</BODY>
+</HTML>

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_GetSeekCacheSize</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FS_GetSeekCacheSize <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+u32 FS_GetSeekCacheSize(const char *path);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>path</strong></em></td>
+<td style="width:87%">シーク用キャッシュバッファを必要とするファイルのパス名</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>指定したパスが有効なファイルであれば必要なシーク用キャッシュバッファサイズを返し、そうでなければ0を返します。</p>
+
+<h2>説明</h2>
+<p><code><a href="FS_SetSeekCache.html">FS_SetSeekCache()</a></code>で指定するバッファの充分なサイズを算出します。</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="FS_SetSeekCache.html">FS_SetSeekCache</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/06/26 初版<br />
+</p>
+</body>
+</html>

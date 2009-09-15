@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>CAMERA_I2CSize*</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">CAMERA_I2CSize* <IMG src="../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <CODE>#include &lt;twl/camera.h&gt;</CODE><BR>
+  <BR>
+  <CODE><A href="CAMERAResult.html">CAMERAResult</A> CAMERA_I2CSize(<A href="CAMERASelect.html">CAMERASelect</A> camera, <A href="CAMERASize.html">CAMERASize</A> size);</CODE>
+  <BR>
+  <CODE><A href="CAMERAResult.html">CAMERAResult</A> CAMERA_I2CSizeAsync(<A href="CAMERASelect.html">CAMERASelect</A> camera, <A href="CAMERASize.html">CAMERASize</A> size, <A href="CAMERACallback.html">CAMERACallback</A> callback, void *arg);</CODE>
+  <BR>
+  <CODE><A href="CAMERAResult.html">CAMERAResult</A> CAMERA_I2CSizeEx(<A href="CAMERASelect.html">CAMERASelect</A> camera, <A href="CAMERAContext.html">CAMERAContext</A> context, <A href="CAMERASize.html">CAMERASize</A> size);</CODE>
+  <BR>
+  <CODE><A href="CAMERAResult.html">CAMERAResult</A> CAMERA_I2CSizeExAsync(<A href="CAMERASelect.html">CAMERASelect</A> camera, <A href="CAMERAContext.html">CAMERAContext</A> context, <A href="CAMERASize.html">CAMERASize</A> size, <A href="CAMERACallback.html">CAMERACallback</A> callback, void *arg);</CODE>
+</DL>
+<H2>引数</H2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>camera</STRONG></EM></TD>
+      <TD width="87%">設定するカメラ(CAMERA_SELECT_IN/CAMERA_SELECT_OUT/CAMERA_SELECT_BOTH)</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>context</STRONG></EM></TD>
+      <TD width="87%">変更するコンテキスト</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>size</STRONG></EM></TD>
+      <TD width="87%">カメラ解像度</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>callback</STRONG></EM></TD>
+      <TD width="87%">非同期処理が完了した際に呼び出す関数</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>arg</STRONG></EM></TD>
+      <TD width="87%">コールバック関数の呼び出し時の引数</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>返り値</H2>
+<P>設定に成功したらCAMERA_RESULT_SUCCESSを返します。</P>
+
+<H2>説明</H2>
+<P>
+カメラの解像度を変更します。<BR>
+<BR>
+<code>CAMERA_I2CSizeEx()</code> は、コンテキストを指定して設定を変更する場合に使用します。<BR>
+Exなしの関数は、コンテキストA/B両方の設定を変更します。<BR>
+コンテキストについては、<code><A href="CAMERAContext.html">CAMERAContext</A></code> を参照してください。<BR>
+<BR>
+<code>CAMERA_I2CSizeAsync()</code> は <code>CAMERA_I2CSize()</code> とは異なり、制御をすぐに戻し非同期で実行されます。<BR>
+処理の完了を確認するにはcallbackを利用してください。<BR>
+<BR>
+なお、<code><A href="CAMERA_I2CFrameRate.html">CAMERA_I2CFrameRate*()</A></code> で CAMERA_FRAME_RATE_30_TO_5 もしくは CAMERA_FRAME_RATE_30 を
+設定してある状態にもかかわらず、本関数で CAMERA_SIZE_VGA を設定するとキャプチャデータが受信できなくなりますので、この 2 つの設定を
+同時に使用しないようにしてください。<br>
+<br>
+<font color="red">注意：</font><br>
+<code>CAMERA_I2C*()</code> 系の関数でカメラ設定を変更した場合、変更内容が反映されるタイミングが 1 フレーム程度ずれる可能性があります。<br>
+そのため、キャプチャ中にカメラ設定を変更した場合、アプリが意図したタイミングで変更内容が反映された画像が取得できないことがある点に注意してください。
+</P>
+
+<H2>参照</H2>
+<P><CODE><A href="CAMERASelect.html">CAMERASelect</A>、<A href="CAMERAContext.html">CAMERAContext</A>、<A href="CAMERASize.html">CAMERASize</A>、<A href="CAMERACallback.html">CAMERACallback</A>、<A href="CAMERAResult.html">CAMERAResult</A></CODE></P>
+<H2>履歴</H2>
+<P>
+2009/03/25 キャプチャ動作中のカメラ設定の変更について追記<br>
+2008/10/30 CAMERA_SELECT_BOTHも指定できることを追記<br>
+2008/01/23 VGAサイズで30fpsのキャプチャができない件の説明追加<BR>
+2007/10/12 初版</P>
+</BODY>
+</HTML>

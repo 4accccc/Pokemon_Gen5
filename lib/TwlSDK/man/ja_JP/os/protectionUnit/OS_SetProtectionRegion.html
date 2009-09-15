@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>OS_SetProtectionRegion</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">OS_SetProtectionRegion* <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <P><CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  (<CODE>アドレスとサイズ指定</CODE>)<BR>
+  <CODE>#define OS_SetProtectionRegion( regionNo, address, sizeStr );</CODE><BR>
+  <CODE>void OS_SetProtectionRegionEx( int regionNo, u32 address, u32 sizeDef );</CODE><BR>
+  <BR>
+  (<CODE>パラメータ指定</CODE>)<BR>
+  <CODE>void OS_SetProtectionRegionParam( int regionNo, u32 param );</CODE><BR>
+  <CODE>void OS_SetProtectionRegion0( u32 param )</CODE>;<BR>
+  <CODE>void OS_SetProtectionRegion1( u32 param );</CODE><BR>
+  <CODE>void OS_SetProtectionRegion2( u32 param );</CODE><BR>
+  <CODE>void OS_SetProtectionRegion3( u32 param );</CODE><BR>
+  <CODE>void OS_SetProtectionRegion4( u32 param );</CODE><BR>
+  <CODE>void OS_SetProtectionRegion5( u32 param );</CODE><BR>
+  <CODE>void OS_SetProtectionRegion6( u32 param );</CODE><BR>
+  <CODE>void OS_SetProtectionRegion7( u32 param );</CODE><BR>
+</DL>
+<H2>引数</H2>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TD><B><I>regionNo</I></B></TD>
+      <TD>プロテクションリージョン番号です。0～7の値で指定してください。</TD>
+    </TR>
+    <TR>
+      <TD><B><I>address</I></B></TD>
+      <TD>ベースアドレス(開始アドレス)です。u32型で指定してください。</TD>
+    </TR>
+    <TR>
+      <TD><B><I>sizeStr</I></B></TD>
+      <TD>領域サイズを表す文字列です。4KB、8KB など特定の文字列のみ指定出来ます。</TD>
+    </TR>
+    <TR>
+      <TD><B><I>sizeDef</I></B></TD>
+      <TD>領域サイズを表す値です。OS_PR_SIZE_xxx (xxx=4KB, 8KB, ... 4GB) です。</TD>
+    </TR>
+    <TR>
+      <TD><B><I>param</I></B></TD>
+      <TD>ベースアドレスと領域サイズ指定値の論理和で、CP15に設定される値です。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>返り値</H2>
+<P>なし。</P>
+<H2>説明</H2>
+<P>プロテクションリージョンのベースアドレス(開始アドレス)とサイズを設定します。<BR>
+同時に <CODE>OS_SetProtectionRegion()</CODE> ではプロテクションユニットを有効と設定します。</P>
+<P><FONT color="#ff0033">プロテクションリージョンの設定はシステムの挙動に大きく関わってきます。プロテクションリージョンの仕組みと各領域の使用用途などを理解した上で設定を行なってください。</FONT></P>
+<H3><CODE>・OS_SetProtectionRegion() </CODE></H3>
+<P><CODE>OS_SetProtectionRegion()</CODE> はマクロとなっています。<B><I>regionNo</I></B>はセットするプロテクションリージョンのリージョン番号で、0～7の値を取ります。この引数は、マクロでそのまま文字列として使用しますので0～7の値を入れた変数の指定などは出来ません。0～7の値そのもので指定してください。</P>
+<P><B><I>address</I></B> はプロテクションリージョンを設定するベースアドレス(開始アドレス)です。u32型で指定してください。プロテクションリージョンの大きさによって、指定するアドレスのアラインメント制限が異なります。プロテクションリージョンの先頭アドレスは領域サイズの倍数にしなければならないので、例えば4KBのプロテクションリージョンならば、u32値で表されるアドレスの下位12ビットは0でなければなりません。</P>
+<P><B><I>sizeStr</I></B> はプロテクションリージョンの領域サイズを表す文字列で、指定できるものは以下のうちのひとつです。</P>
+<BLOCKQUOTE>
+<P>4KB 8KB 16KB 32KB 64KB 128KB 256KB 512KB<BR>
+1MB 2MB 4MB 8MB 16MB 32MB 64MB 128MB 256MB 512MB<BR>
+1GB 2GB 4GB</P>
+</BLOCKQUOTE>
+<BLOCKQUOTE>(例)<BR>
+　　　　　　　<CODE>OS_SetProtectionRegion( 2, 0x02080000, 32KB );</CODE><BR>
+</BLOCKQUOTE>
+<P><CODE>OS_SetProtectionRegion()</CODE> を呼ぶと、それを呼ぶ前の状態に関わらずリージョンは有効になります。</P>
+<H3><CODE>・OS_SetProtectionRegionEx()</CODE></H3>
+<P><CODE>OS_SetProtectionRegionEx()</CODE> は <CODE>OS_SetProtectionRegion()</CODE> がマクロだったために出来なかったリージョン番号の変数渡し等を可能にするために用意されました。</P>
+<P><B><I>regionNo</I></B> はセットするプロテクションリージョンのリージョン番号で、0～7の値を取ります。</P>
+<P><B><I>address</I></B> はプロテクションリージョンを設定するベースアドレス(開始アドレス)です。その他、<CODE>OS_SetProtectionRegion()</CODE> と同じです。</P>
+<P><B><I>sizeDef</I></B> は <CODE>OS_PR_SIZE_xxx</CODE> という値です。<CODE>xxx</CODE> には</P>
+<BLOCKQUOTE>4KB 8KB 16KB 32KB 64KB 128KB 256KB 512KB<BR>
+1MB 2MB 4MB 8MB 16MB 32MB 64MB 128MB 256MB 512MB<BR>
+1GB 2GB 4GB</BLOCKQUOTE>
+<P>のいずれかを指定することが出来ます。</P>
+<BLOCKQUOTE>(例)<BR>
+　　　　　　　<CODE>OS_SetProtectionRegionEx( 2, 0x02080000, OS_PR_SIZE_32KB );</CODE></BLOCKQUOTE>
+<H3><CODE>・OS_SetProtectionRegionParam()</CODE></H3>
+<P><CODE>OS_SetProtectionRegionParam()</CODE> は、ベースアドレスと領域サイズをプロテクションリージョンの内部パラメータ形式で指定するための関数です。<B><I>regionNo</I></B>  については <CODE>OS_SetProtectionRegionEx()</CODE> と同じです。パラメータ <B><I>param</I></B> は、ベースアドレスと、領域サイズを表す設定値 HW_C6_PR_SIZE_xxx との論理和です。xxx には上で<B><I>sizeStr</I></B> として挙げたもの(4KB または 8KB または…4GB) が入ります。またリージョンを有効にしたい場合は
+HW_C6_PR_ENABLE も論理和に含めてください。</P>
+<BLOCKQUOTE>(例)<BR>
+　　　　　　　<CODE>OS_SetProtectionRegionParam( 2, 0x02080000 | HW_C6_PR_32KB | HW_C6_PR_ENABLE
+);</CODE><BR>
+</BLOCKQUOTE>
+<H3><CODE>・OS_SetProtectionRegion0() ～ OS_SetProtectionRegion7()</CODE></H3>
+<P><CODE>OS_SetProtectionRegion0()</CODE> ～ <CODE>OS_SetProtectionRegion7()</CODE> は <CODE>OS_SetProtectionRegionParam()</CODE> のリージョン番号を関数名で指定するものです。param に関しては<CODE>OS_SetProtectionRegionParam()</CODE> と同様です。</P>
+<H2>内部動作</H2>
+<P>システム制御コプロセッサ CP15 のレジスタ6を操作します。</P>
+
+<H2>参照</H2>
+<P><CODE><A href="OS_EnableProtectionUnit.html">OS_EnableProtectionUnit</A>, <A href="OS_DisableProtectionUnit.html">OS_DisableProtectionUnit</A><BR>
+<A href="OS_GetProtectionRegion.html">OS_GetProtectionRegion*</A></CODE></P>
+<H2>履歴</H2>
+<P>2007/10/25 <CODE>OS_SetProtectionRegionEx()</CODE> を追加。その他記述も追加。<BR>
+2004/07/08 HW_C6_PR_ENABLE について記述<BR>
+2004/05/28 初版</P>
+</BODY>
+</HTML>

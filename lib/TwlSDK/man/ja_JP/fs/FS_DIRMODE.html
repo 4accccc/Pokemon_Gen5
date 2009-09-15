@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_DIRMODE_*</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FS_DIRMODE_* <img src="../image/NTR.gif"align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+<h2>定義</h2>
+<pre><code>
+#define FS_DIRMODE_SHORTNAME_ONLY   0x00001000UL
+</code></pre>
+
+<h2>説明</h2>
+<p>ファイルシステムAPIでディレクトリを開く際のアクセスモードを指定する際に使用する定数です。</p>
+
+<table>
+<tr><td>FS_DIRMODE_SHORTNAME_ONLY</td><td>短いファイル名のみを扱うように指示します。<br />
+<code><a href="directory/FS_ReadDirectory.html">FS_ReadDirectory()</a></code> で取得できる<a href="FSDirectoryEntryInfo.html">FSDirectoryEntryInfo</a>構造体のlongnameとlongname_lengthは無視されて空文字列になります。<br />
+この設定は<a href="archive_nand_spec.html">NANDアーカイブ</a>や<a href="archive_sdmc_spec.html">SDカードアーカイブ</a>などFATベースのアーカイブでディレクトリの列挙を高速に行うために有効ですが、<a href="archive_rom_spec.html">ROMアーカイブ</a>のように長いファイル名しか存在しない場合は無視されます。</td></tr>
+</table>
+
+<h2>参照</h2>
+<p><code>
+<a href="FSDirectoryEntryInfo.html">FSDirectoryEntryInfo</a>
+<br />
+<a href="directory/FS_OpenDirectory.html">FS_OpenDirectory</a>
+<a href="directory/FS_ReadDirectory.html">FS_ReadDirectory</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/07/09 初版<br />
+</p>
+</body>
+</html>

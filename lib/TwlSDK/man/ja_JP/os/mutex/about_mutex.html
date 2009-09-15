@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>排他制御(Mutex) (overview) </TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">排他制御(Mutex) (overview)</H1>
+<P>mutex (ミューテック または ミューテックス、mutual exclusion (service) )
+は、スレッド間の排他制御のための機構です。プログラムの特定の個所について複数のスレッドからの同時実行を抑制し、データやレジスタなどのリソースが同時に複数のスレッドからアクセスされないようにします。</P>
+<H2>mutex の初期化</H2>
+<P>mutex の初期化は <CODE><A href="OS_InitMutex.html">OS_InitMutex()</A></CODE> で行ないます。 1つの OSMutex 構造体のオブジェクトに1つの mutex を設定することが出来ます。</P>
+<H2>mutex の構造</H2>
+<P>OSMutex 構造体は、</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TD>
+<pre>struct OSMutex
+{
+    OSThreadQueue   queue;
+    OSThread*       thread; // the current owner
+    s32             count;  // lock count (notice: use upper 1byte as mutex type)
+
+    OSMutex*        prev;   // link for OSThread.queueMutex
+    OSMutex*        next;   // link for OSThread.queueMutex
+};</pre>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+となっています。このうち、prev と next は mutex をリスト構造で管理するためのメンバで、実質的に
+mutex の同期機能を構成するものは queue と thread と count です。</P>
+<P>queue は、この mutex によって待たされているスレッドが登録されるスレッドキューです。</P>
+<P>thread は、この mutex で他のスレッドをブロックしているカレントスレッドを登録するメンバです。</P>
+<P>count は、この mutex に対するロックのネストを管理するメンバです。ロックの回数をカウントします。ただし、最上位
+1 バイトは mutex のタイプを表すのに使用します。従ってカウンタ値として実際に使用できるのは
+24 ビット分となります。タイプを表すメンバを別に設定せず count に含めているのは、以前のバージョンで使用された
+mutex と互換を取るためです。 ( 注 ： カウント値の上限に関しては速度を重視するためにチェックを行っていません。一つの
+mutex を 24ビット分=約1677万段もネストすることはまずありえないと思われます。)</P>
+<P>mutex のタイプについては次の「mutex のタイプ」を参照してください。</P>
+<H2>mutex のタイプ</H2>
+<P>mutex のタイプは STD, R, W があります。(ヘッダでは OS_MUTEX_TYPE_STD などと定義していますが、以下の説明では解かりやすいように
+STD のように記します。)　まだ決定されていない場合を NONE と表します。</P>
+<P>通常のスレッド同期に使用するのは STD のタイプの mutex です。これは異なるスレッドの進入は無条件に許可しません。 </P>
+<P>R と W のタイプのものは read / write lock と呼ばれる mutex です。</P>
+<P>R タイプの read lock mutex は、他のスレッドが write lock (や通常の mutex
+ロックを) することは許可しませんが、read lock することは許可するというものです。
+これはデータの読込みを行う場面で使用することが出来ます。データの読込みは複数のスレッドから行っても問題はないですが、そこに書きこみが入ると整合性が取れなくなるからです。</P>
+<P>W タイプの write lock mutex は異なるスレッドデータの書きこみを行う場面で使用することが出来ます。書きこみは複数のスレッドから行うことは出来ませんし、書き込んでいる途中で他のスレッドから読込むことも許可することは出来ません。従って、W
+タイプの mutex はロックのポリシーに関しては STD の mutex と同等と言えます。(
+こちらには read lock と write lock を移行させる関数などがありますので、全く同じであるというわけではありません)</P>
+<P>R タイプ と W タイプの mutex は、そのmutex があるスレッドから一段だけロックされている場合に限り、R
+から W、または W から R へタイプを変更することが可能です。例えば以下のように、データを書き込んだ後、ロックを解放せずに読込みを行う(このときは他のスレッドからの読込みも許可する)
+にすぐに移行するような場合に使用します。</P>
+<BLOCKQUOTE style="background-color:#ffffcc"><CODE>OSMutex mutex;<BR>
+OS_InitMutex( &amp;mutex );<BR>
+<BR>
+<B>void write_and_read()</B><BR>
+{<BR>
+　OS_LockMutexW( &amp;mutex ); <FONT color="#ff0000">← write lock</FONT> <BR>
+　writeData();<BR>
+　OS_LockMutexFromWToR( &amp;mutex ); <FONT color="#ff0000">← write lock から read lock へ</FONT><BR>
+　readData();<BR>
+　OS_UnlockMutexR(); <FONT color="#ff0000">← read lock として unlock する</FONT><BR>
+}<BR>
+<BR>
+<B>void read()</B><BR>
+{<BR>
+　OS_LockMutexR( &amp;mutex );<BR>
+　readData();<BR>
+　OS_UnlockMutexR( &amp;mutex );<BR>
+}<BR>
+<BR>
+<BR>
+<B>thread1()</B><BR>
+{<BR>
+　write_and_read();<BR>
+}<BR>
+<BR>
+<B>thread2()</B><BR>
+{<BR>
+　read();<BR>
+}<BR>
+<BR>
+</CODE></BLOCKQUOTE>
+<H2>mutex の操作</H2>
+<P>初期化の終わった mutex に対する操作としては</P>
+<P>　・ロックする ( Lock 関数 )<BR>
+　　<CODE><A href="OS_LockMutex.html">OS_LockMutex()</A></CODE>, <CODE><A href="OS_LockMutexRW.html">OS_LockMutexR()</A></CODE>, <CODE><A href="OS_LockMutexRW.html">OS_LockMutexW()</A></CODE></P>
+<P>　・アンロックする ( Unlock 関数 )<BR>
+　　<CODE><A href="OS_UnlockMutex.html">OS_UnlockMutex()</A></CODE>, <CODE><A href="OS_UnlockMutexRW.html">OS_UnlockMutexR()</A></CODE>, <CODE><A href="OS_UnlockMutexRW.html">OS_UnlockMutexW()</A></CODE>, <CODE><A href="OS_UnlockMutexRW.html">OS_UnlockMutexRW()</A></CODE></P>
+<P>　・ロックを試みる ( TryLock 関数 )<BR>
+　　<CODE><A href="OS_TryLockMutex.html">OS_TryLockMutex()</A></CODE>, <CODE><A href="OS_TryLockMutexRW.html">OS_TryLockMutexR()</A></CODE>, <CODE><A href="OS_TryLockMutexRW.html">OS_TryLockMutexW()</A></CODE></P>
+<P>があります。</P>
+<P>mutex をロックをすると、同じ mutex に対しては別のスレッドからのロックでスレッドをブロックするようになります。ただし
+read lock 同士ではブロックしません。 ブロックされたスレッドは、mutex がアンロックされるまでそこで待たされます。</P>
+<P>ロックする関数 ( Lock 関数 )は、ロックを完了するまでそこで待たされますが、ロックを試みる関数(
+TryLock 関数 )では、ロック出来ても出来なくてもすぐに戻ります。成否は戻り値で知ることが出来ます。</P>
+<P>read / write lock の mutex に対しては、</P>
+<P>　・mutex のタイプを変更する<BR>
+　　<CODE><A href="OS_LockMutexFromToRW.html">OS_LockMutexFromRToW()</A></CODE>, <CODE><A href="OS_LockMutexFromToRW.html">OS_LockMutexFromWToR()</A></CODE></P>
+<P>　・mutex のタイプの変更を試みる<BR>
+　　<CODE><A href="OS_TryLockMutexFromToRW.html">OS_TryLockMutexFromRToW()</A></CODE>, <CODE><A href="OS_TryLockMutexFromToRW.html">OS_TryLockMutexFromWToR()</A></CODE></P>
+<P>が用意されています。</P>
+<H2>内部動作： mutex のロック</H2>
+<P>ここからは mutex ロックを行うときの内部動作について説明します。</P>
+<P><CODE><A href="OS_InitMutex.html">OS_InitMutex()</A></CODE> で Mutex を初期化したとき、OSMutex の スレッド所有者、カウンタ値、スレッドタイプ、スレッドキューは以下の値になっています。( OSMutex の count メンバはカウンタ値とmutex のタイプと2つの情報を含んでいるので、以下の図では count と type に分けました。)</P>
+<BLOCKQUOTE><IMG src="image_initial_member.gif" border="0"></BLOCKQUOTE>
+<P>ここでは read/write lock でない、通常の mutex による ロックで説明を行います。</P>
+<P>プログラムのある個所に <CODE><A href="OS_LockMutex.html">OS_LockMutex()</A></CODE> を記述すると、指定したmutex がその時点でロックに使用されていない場合、カレントスレッドを記憶してロックをかけます。</P>
+<P>すでにロックされている mutex を指定した <CODE><A href="OS_LockMutex.html">OS_LockMutex()</A></CODE> が実行されると、mutex が現在のスレッドと同じスレッドによってロックされている場合は
+mutex の count をインクリメントした上で関数から戻り、異なるスレッドであった場合はロックが解除されるまで現在のスレッドは一時停止状態になります。このときスレッドのリスケジューリングが発生します。</P>
+<P>例えば、下図のように Mutex1 と、それを使ってロックをかけるプログラムがある場合を考えます。</P>
+<BLOCKQUOTE><IMG src="image_mutex_l1.gif" border="0"></BLOCKQUOTE>
+<P>このプログラムを thread1 が実行しようとします。thread1 は mutex のロック関数
+<CODE><A href="OS_LockMutex.html">OS_LockMutex( &amp;Mutex1 )</A></CODE> を実行しますが、Mutex1 はこの時点でまだ使われていないので ( 使われていないという判断は
+Mutex1 の owner thread が NULL であることを利用しています。)、 thread1
+が Mutex1 の owner thread であることを記憶し、count を 1 にしてロック関数から戻ります。</P>
+<BLOCKQUOTE><IMG src="image_mutex_l2.gif" border="0"></BLOCKQUOTE>
+<P>ここで別のスレッド thread2 が同じプログラムを実行しようとした場合を考えます。thread2
+も <CODE><A href="OS_LockMutex.html">OS_LockMutex( &amp;Mutex1 )</A></CODE> を実行しますが、Mutex1 はすでにロックに使用されています。Mutex1 の owner
+thread　は thread2 ではないので thread2 はここから先に進むことが出来ません。結果、thread2
+は一時停止状態に入ります。この時、Mutex1 内の thread queue　にこのロックの解除を待っているスレッドとして、
+thread2 を登録しておきます。<BLOCKQUOTE><IMG src="image_mutex_l3.gif" border="0"></BLOCKQUOTE>
+<P>一方、therad1 が再びどこかの(同じ行であっても、別の行であっても) <CODE><A href="OS_LockMutex.html">OS_LockMutex( &amp;Mutex1 )</A></CODE> を実行する場合を考えます。Mutex1 はすでにロックに使用されていますが Mutex1　の
+owner thread は現在のスレッド thread1 と等しいので、そのまま通過することが出来ます。この時
+Mutex1 内の count をインクリメントします。<BLOCKQUOTE><IMG src="image_mutex_l4.gif" border="0"></BLOCKQUOTE>
+<P>なお、複数のスレッドが一つの mutex の thread queue に登録されることもあります。これらはすべてその
+mutex によってブロックされているスレッドです。すべてのスレッドが同じ行で一時停止状態になっているとは限りません。mutex
+のロックが解除されると、登録されている全てのスレッドは実行可能状態になります。<BLOCKQUOTE><IMG src="image_mutex_l5.gif" border="0"></BLOCKQUOTE>
+<H2>内部動作： mutex のロックの解放</H2>
+<P>ここからは mutex ロックの解放(アンロック)を行うときの内部動作について説明します。ここでも引き続き、(read/write
+lockでない)通常のmutex で説明を行います。</P>
+<P>mutex による ロックを解放する関数は <CODE><A href="OS_UnlockMutex.html">OS_UnlockMutex()</A>です。</CODE>ただし、この関数を呼んでも必ず解放するわけではなく、mutex 内部の count
+値をデクリメントした結果が 0 であるときのみロックを解放します。0 でない場合は、count
+値をデクリメントするだけで関数から戻ります。</P>
+<P>例えば、下図のように thread1 が Mutex1 を用いて thread2 をブロックしている状態で、thread1
+が <CODE><A href="OS_UnlockMutex.html">OS_UnlockMutex( &amp;Mutex1 )</A></CODE> を実行する場合を考えます。
+<BLOCKQUOTE><IMG src="image_mutex_u1.gif" border="0"></BLOCKQUOTE>
+<P>この時、count をデクリメントした結果0 となるので、thread queue に登録されているスレッドを実行可能状態にしてリスケジューリングします。この場合
+thread2 が実行可能状態になります。</P>
+<BLOCKQUOTE><IMG src="image_mutex_u2.gif" border="0"></BLOCKQUOTE>
+<P>もしも thread2 が thread1 より優先度の高いスレッドであればスレッドの切り替わりが発生します。すなわち
+thread1 が一時停止状態となって、 thread2 が実行状態となります。thread2
+は <CODE><A href="OS_LockMutex.html">OS_LockMutex( &amp;Mutex1 )</A></CODE> を実行しようとして thread1 にブロックされていたのですが、Mutex1 は解放され初期化されていますので、今度は
+thread2 が Mutex1 を用いて他のスレッドをブロックすることになります。<BLOCKQUOTE><IMG src="image_mutex_u3.gif" border="0"><BR>
+</BLOCKQUOTE>
+<P>thread1 が <CODE><A href="OS_UnlockMutex.html">OS_UnlockMutex()</A></CODE> を実行して、count 値をデクリメントしても 0 でない場合はまだ他のロックが解除されていないものと考え、そのままスルーします。この時はスレッドのリスケジューリングは発生しません。このように、ミューテックスロックはネスト(入れ子)構造が可能です。<BLOCKQUOTE><IMG src="image_mutex_u4.gif" border="0"></BLOCKQUOTE>
+<H2>mutex のロック試行</H2>
+<P><CODE><A href="OS_LockMutex.html">OS_LockMutex()</A></CODE> はロック出来るまで関数から戻りませんが、それに対し、ロックできればするが出来なければすぐに戻るという関数が
+<CODE><A href="OS_TryLockMutex.html">OS_TryLockMutex() </A></CODE>です。
+
+
+
+
+<P><CODE><A href="OS_TryLockMutex.html">OS_TryLockMutex()</A></CODE> は、その返り値によりロックに成功したかどうかを知ることが出来ます。
+
+
+
+
+<P>同様に以下の試行のための関数が用意されています。<P>　・<CODE><A href="OS_LockMutexRW.html">OS_LockMutexR()</A></CODE> に対して <CODE><A href="OS_TryLockMutexRW.html">OS_TryLockMutexR()</A></CODE> 
+<P>　・<CODE><A href="OS_LockMutexRW.html">OS_LockMutexW()</A></CODE> に対して <CODE><A href="OS_TryLockMutexRW.html">OS_TryLockMutexW()</A></CODE>
+<P>　・<CODE><A href="OS_LockMutexFromToRW.html">OS_LockMutexFromRToW()</A></CODE> に対して <CODE><A href="OS_TryLockMutexFromToRW.html">OS_TryLockMutexFromRToW()</A></CODE>
+
+<P>　・<CODE><A href="OS_LockMutexFromToRW.html">OS_LockMutexFromWToR()</A></CODE> に対して <CODE><A href="OS_TryLockMutexFromToRW.html">OS_TryLockMutexFromWToR()</A></CODE>
+
+<H2>スレッド終了時の処理</H2>
+<P>スレッドが終了するときは、そのスレッドがロックしていた mutex はすべて解放されます。通常の
+mutex のみでなく、read / write lock の mutex でも同様です。</P>
+<H2>警告メッセージ</H2>
+<P>関数に指定する mutex へのポインタが NULL であるなど明らかに呼び出し方がおかしいものは
+DEBUG ビルドでは <CODE><A href="../debug/SDK_ASSERT.html">SDK_ASSERT()</A></CODE> に引っかかります。その他、<FONT color="#ff0000">「Illegal unlock mutex」</FONT>という表示は Lock を行っていない Mutex に対して Unlock 関数を呼び出したというものです。これが表示された場合は
+Lock と Unlock の対応が正しく取れているか確認してください。なおこのメッセージは
+<CODE><A href="../debug/OS_TWarning.html">SDK_TWarning()</A></CODE> で出力していますのでプログラムが停止することはありません。</P>
+<H2>参照</H2>
+<P><CODE>
+<A href="../list_os.html#Mutex">OS関数一覧(排他制御)<BR>
+</A></CODE></P>
+<H2>履歴</H2>
+<P>2009/03/11 「ロック」「ブロック」の用語を統一。図中の文章を一部修正<BR>
+2008/12/17 read/write lock を考慮した内容に修正<BR>
+2004/12/14 用語や語尾など修正<BR>
+2004/11/11 初版</P>
+</BODY>
+</HTML>

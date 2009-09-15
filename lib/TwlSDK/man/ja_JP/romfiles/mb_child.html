@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>mb_child</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+
+</STYLE>
+</HEAD>
+<BODY>
+<H1 align="left">mb_child</H1>
+<H2>概要</H2>
+<P>mb_child はDSダウンロードプレイのみを抽出したプログラムです。<br>
+このプログラムは認証コードのチェックを行わずにプログラムをダウンロードしますので、開発時のテストなどにご使用ください。</P>
+<P>mb_child_NITRO.srl は DS、DSLite に入っている DS ダウンロードプレイを元にしています。<FONT color=red>IS-NITRO-EMULATOR など NITRO 環境ではこちらをお使い下さい。</FONT>なお、これは NitroSDK に含まれていた mb_child.srl と同じものです。<br>
+mb_child_TWL.srl は ニンテンドーDSiメニューに入っている DS ダウンロードプレイを元にしています。<FONT color=red>IS-TWL-DEBUGGER など TWL 環境ではこちらをお使い下さい。</FONT>
+</P>
+<H2>操作方法</H2>
+<P>起動すると、「ダウンロードできるソフトを探しています。」と表示されます。<br>
+その後DSダウンロードプレイ親機を発見するたびにアイコンとゲーム名などの情報が１つずつ増え、<br>
+逆に親機を一定時間以上見失い続けた場合には減ってゆきます。</P>
+<P>上下キーでゲームを選択し、Aボタンでダウンロードを決定します。</P>
+<P>その後は、ダウンロードの完了と親機からの再起動要求を受信するまで「ダウンロードしています。」と表示されます。<br>
+このときにBボタンを押すとダウンロードはキャンセルされ、最初の選択画面へ戻ります。</P>
+<P>親機からの再起動要求にともない自動的に再起動し、ダウンロードしたゲームを起動します。</P>
+<H2>場所</H2>
+<P><CODE>
+$TwlSDK/bin/ARM9-TS/Rom/mb_child_NITRO.srl<br>
+$TwlSDK/bin/ARM9-TS/Rom/mb_child_TWL.srl
+</CODE></P>
+
+<H2>補足</H2>
+<P>mb_child_NITRO.srl と mb_child_TWL.srl の各環境の動作の違いについて補足します。</P>
+<P>・mb_child_NITRO.srl<br>
+IS-NITRO-EMULATOR など NITRO環境　：問題なく動作します。<br>
+IS-TWL-DEBUGGER など TWL環境　　　：実行時、ARM9 側でデータアクセス例外により停止します。</P>
+
+<P>・mb_child_TWL.srl<br>
+IS-NITRO-EMULATOR など NITRO環境　：子機ブートは問題なく可能ですが、ブート後は IS-NITRO-DEBUGGER の停止が効きません。また、スキャン中に B ボタンを押して IPL に戻ろうとするとホワイトアウトしたままの状態になります。<br>
+IS-TWL-DEBUGGER など TWL環境　　　：問題なく動作します。</P>
+
+<P>上記のように、開発環境によって 対応する mb_child を使用する必要があります。</P>
+
+<H2>参照</H2>
+
+<H2>履歴</H2>
+<P>
+2009/01/28 mb_child の追加に伴い再公開、NITRO, TWL の違いについて追記<br>
+2005/03/08 初版作成<br>
+</P>
+</BODY>
+</HTML>

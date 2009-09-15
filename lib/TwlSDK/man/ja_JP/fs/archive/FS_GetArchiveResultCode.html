@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_GetArchiveResultCode</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1 style="text-align:left">FS_GetArchiveResultCode <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+<a href="../fs_result_const.html">FSResult</a> FS_GetArchiveResultCode(const void *path_or_archive);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+  <tbody>
+    <tr>
+      <td style="width:13%"><em><strong>path_or_archive</strong></em></td>
+      <td style="width:87%">FSArchive構造体へのポインタか、または対象アーカイブ名を含むパス文字列。<br />
+例えば "rom:" を指定した場合は<a href="../archive_rom_spec.html">ROMアーカイブ</a>を、"sdmc:/foo.txt" を指定した場合は<a href="../archive_sdmc_spec.html">SDカードアーカイブ</a>を指します。<br />
+<span style="color:Red">"rom"などのようにコロンを含まずアーカイブ名だけを指定すると相対パスになってしまうという点にご注意ください。</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>返り値</h2>
+<p>指定したアーカイブが最後に行った処理の結果を返します。<br />
+指定したポインタがアーカイブでも有効なパス文字列でもない場合は<a href="../fs_result_const.html">FS_RESULT_ERROR</a>を返します。
+</p>
+
+<h2>説明</h2>
+<p>指定したアーカイブが最後に行った処理の結果を返します。<br />
+指定したポインタがアーカイブでも有効なパス文字列でもない場合は<a href="../fs_result_const.html">FS_RESULT_ERROR</a>を返します。<br />
+処理中のアーカイブに対してこの関数を呼び出した場合、結果は未定義です。<br />
+</p>
+<p>特定のファイルハンドルが最後に行った処理の結果を取得したい場合は、<code><a href="../file/FS_GetResultCode.html">FS_GetResultCode()</a></code> をご使用ください。
+</p>
+
+
+<h2>参照</h2>
+<p><code>
+<a href="../fs_archive_type.html">FSArchive</a> 
+<a href="../fs_result_const.html">FSResult</a><br />
+<a href="../file/FS_GetResultCode.html">FS_GetResultCode</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/07/14 引数path_or_archiveに関する例示と注意事項の追記<br />
+2007/11/02 初版<br />
+</p>
+</body>
+</html>

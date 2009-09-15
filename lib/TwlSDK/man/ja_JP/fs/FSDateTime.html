@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FSDateTime</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FSDateTime <img src="../image/NTR.gif"align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+<h2>定義</h2>
+<pre><code>
+typedef struct FSDateTime
+{
+    u32     year;    // 0-
+    u32     month;   // 1-12
+    u32     day;     // 1-31
+    u32     hour;    // 0-23
+    u32     minute;  // 0-59
+    u32     second;  // 0-60
+}
+FSDateTime;
+
+</code></pre>
+
+<h2>説明</h2>
+<p>FSライブラリで扱う時刻情報をあらわす構造体です。<br />
+各メンバの内容は以下の通りです。</p>
+<table>
+<tr><td>year</td><td>年をあらわす0以上の値です。</td></tr>
+<tr><td>month</td><td>月をあらわす1から12の値です。</td></tr>
+<tr><td>day</td><td>日をあらわす1から31の値です。</td></tr>
+<tr><td>hour</td><td>時をあらわす0から23の値です。</td></tr>
+<tr><td>minute</td><td>分をあらわす0から59の値です。</td></tr>
+<tr><td>second</td><td>秒をあらわす0から60の値です。</td></tr>
+</table>
+
+<h2>参照</h2>
+<p><code>
+<a href="FSDirectoryEntryInfo.html">FSDirectoryEntryInfo</a>
+<br />
+<a href="directory/FS_ReadDirectory.html">FS_ReadDirectory</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2007/09/18 初版<br />
+</p>
+</body>
+</html>

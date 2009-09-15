@@ -1,0 +1,54 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCL_DecodePicture</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCL_DecodePicture <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+TCLResult TCL_DecodePicture( u8* fileBuffer ,
+                             u32 fileBufferSize ,
+                             void* imageBuffer ,
+                             s16 width ,
+                             s16 height ,
+                             u32 decodeOption );
+	</code></pre>
+</dl>
+
+<h2>引数</h2>
+<p>
+<table>
+<tr><td>fileBuffer<td>デコード元となるファイルバッファ
+<tr><td>fileBufferSize<td>デコード元となるファイルバッファサイズ
+<tr><td>imageBuffer<td>デコード後の画像を格納するバッファ<br/>本画像のデコードの場合は <code>TCL_JPEG_WIDTH</code> * <code>TCL_JPEG_HEIGHT</code> * 2 のサイズ</br>サムネイル画像をデコードする場合は <code>SSP_JPEG_THUMBNAIL_WIDTH</code> * <code>SSP_JPEG_THUMBNAIL_HEIGHT</code> * 2 のサイズのバッファが必要です
+<tr><td>width<td>デコードを許す画像の横幅
+<tr><td>height<td>デコードを許す画像の縦幅
+<tr><td>decodeOption<td><code>SSP_StartJpegDecoder</code> に渡すオプション
+</table>
+</p>
+
+<h2>返り値</h2>
+<p><a href="TCLResult.html">処理結果</a></p>
+
+<h2>説明</h2>
+<p>読み込んだファイルのjpegデコードを行います。この関数は <code>SSP_StartJpegDecoder</code> のラッパ関数となります。</p>
+<p>内部で、各種エラーチェックや必要ならば署名チェックを行いますので、必ずこの関数を用いてデコードを行うようにしてください。</p>
+<p>この関数が行うのはデコード処理だけですので、ファイル読み込み自体はFS関数等を使用してアプリ側で行ってください。</p>
+
+<h2>参照</h2>
+
+<h2>履歴</h2>
+<p>
+2009/03/04 初版<br/>
+</p>
+
+</body>
+</html>

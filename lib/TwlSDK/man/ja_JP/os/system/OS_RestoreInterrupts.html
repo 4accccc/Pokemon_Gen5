@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>OS_RestoreInterrupts</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">OS_RestoreInterrupts <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>OSIntrMode OS_RestoreInterrupts( OSIntrMode state );</CODE></dd>
+</dl>
+<h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>state</STRONG></EM></TD>
+      <TD width="87%">設定する割り込み状態。<BR>
+      <CODE>OSIntrMode</CODE> は <CODE>u32</CODE> の typedef です。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>この関数を呼ぶ前の状態を表す値を返します。</p>
+<p>返り値の型は <CODE>OSIntrMode</CODE> ( <CODE>u32</CODE> の typedef ) ですが、返り得る値は以下の <CODE>OSIntrMode_Irq</CODE> 列挙型　の値のどちらかです。<BR>
+</p>
+<TABLE cellspacing="2">
+  <TBODY>
+    <TR>
+      <TH>値</TH>
+      <TH>以前の状態</TH>
+    </TR>
+    <TR>
+      <TD>OS_INTRMODE_IRQ_DISABLE</TD>
+      <TD>IRQディセーブル(禁止)</TD>
+    </TR>
+    <TR>
+      <TD>OS_INTRMODE_IRQ_ENABLE</TD>
+      <TD>IRQイネーブル(許可)</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>説明</H2>
+<P>割り込み状態を設定します。</P>
+<P><B><I>state</I></B> で与えた割り込み状態にします。与える状態は <CODE>OSIntrMode_Irq</CODE> 列挙型で表されます。OS_INTRMODE_IRQ_ENABLE を指定すれば、割込み許可状態となり、OS_INTRMODE_IRQ_DISABLE
+を指定すれば、割込み禁止状態になります。</P>
+<P>ただし、通常 <B><I>state</I></B> には <CODE><A href="OS_EnableInterrupts.html">OS_EnableInterrupts()</A></CODE> や <CODE><A href="OS_DisableInterrupts.html">OS_DisableInterrupts()</A></CODE> の返り値を指定することが多く、以前の状態に戻す目的で使用することが想定されています。</P>
+<P>返り値は、この関数を呼ぶ以前の状態を表す値です。</P>
+<P><BR>
+<B>例</B></P>
+<BLOCKQUOTE style="background-color:#ffffd0;"><CODE>OSIntrMode e = OS_DisableInterrupts();<BR>
+<BR>
+　　// ここは割込み禁止状態<BR>
+<BR>
+(void)OS_RestoreInterrupts( e );</CODE></BLOCKQUOTE>
+<h2>内部動作</h2>
+<P>CPSRレジスタ(current program status register)の IRQ割り込みの制御ビットをセット／リセットします。</P>
+
+<h2>参照</h2>
+<p><CODE><A href="OS_EnableInterrupts.html">OS_EnableInterrupts</A>, <A href="OS_DisableInterrupts.html">OS_DisableInterrupts</A><br>
+</CODE></p>
+
+<H2>履歴</H2>
+<P>
+2005/03/08 用語統一 [割込み] → [割り込み]<br>
+2004/03/04 FIQ は処理に含めないようにした<BR>
+2004/01/14 FIQ も処理に含めるようにした<BR>
+2003/12/01 初版</P>
+</body>
+</html>

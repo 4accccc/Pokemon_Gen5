@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>SSP_ConvertJpegEncodeData</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>SSP_ConvertJpegEncodeData <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<pre><code>
+BOOL SSP_ConvertJpegEncodeData(const void* src, u8 *wrk, u32 width, u32 height, u32 sampling, u32 option);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>src</strong></em></td>
+<td style="width:87%">エンコードする画像データ (RGB555 もしくは YUV422)。4バイトアライメントでなければなりません。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>wrk</strong></em></td>
+<td style="width:87%">作業用バッファ。4バイトアライメントでなければなりません。<br>
+                      <code><a href="SSP_GetJpegEncoderBufferSize.html">SSP_GetJpegEncoderBufferSize()</a></code>で必要なサイズが計算できます。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>width</strong></em></td>
+<td style="width:87%">エンコードする画像の横幅(pixel)</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>height</strong></em></td>
+<td style="width:87%">エンコードする画像の縦幅(pixel)</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>sampling</strong></em></td>
+<td style="width:87%">エンコード時の主画像の出力形式 (SSP_JPEG_OUTPUT_YUV444 / SSP_JPEG_OUTPUT_YUV420 / SSP_JPEG_OUTPUT_YUV422)</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>option</strong></em></td>
+<td style="width:87%">エンコードオプション (SSP_JPEG_RGB555 / SSP_JPEG_YUV422 / SSP_JPEG_THUMBNAIL)</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>返り値</h2>
+<p>成功ならば TRUE</p>
+
+<h2>説明</h2>
+<p>画像データをJPEGファイルへのエンコードに使用する形式にコンバートします。<br>
+エンコードする画像データは RGB555、YUV422 が使用できます。YUV422 の画像データを <code>src</code> に指定した場合は、必ず <code>option</code> に <code>SSP_JPEG_YUV422</code> を指定するようにしてください。<br>
+サムネイル付きのエンコードを行いたい場合は、<code>SSP_JPEG_THUMBNAIL</code> を <code>option</code> に指定する必要があります。<br>
+そのため、YUV422 の画像をサムネイル付きでエンコードする場合は、<code>SSP_JPEG_YUV422|SSP_JPEG_THUMBNAIL</code> を <code>option</code> に指定します。<br>
+<br>
+エンコードできる画像の縦横サイズは <code>sampling</code> の値によって変わります。<br>
+<code>SSP_JPEG_OUTPUT_YUV444</code> を指定した場合は、縦横サイズがそれぞれ8の倍数である必要があります。<br>
+<code>SSP_JPEG_OUTPUT_YUV420</code> を指定した場合は、縦横サイズがそれぞれ16の倍数である必要があります。<br>
+<code>SSP_JPEG_OUTPUT_YUV422</code> を指定した場合は、縦サイズが8の倍数、横サイズが16の倍数である必要があります。<br>
+<br>
+実際のエンコードは<code><a href="SSP_StartJpegEncoderWithEncodeData.html">SSP_StartJpegEncoderWithEncodeData()</a></code>で行われるため、入力元データである<code>src</code>は、本関数終了時点で破棄して問題ありません。
+</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="SSP_StartJpegEncoderWithEncodeData.html">SSP_StartJpegEncoderWithEncodeData</a>, <a href="SSP_GetJpegEncoderBufferSize.html">SSP_GetJpegEncoderBufferSize()</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/04/28 アライメントの制限について追記<br>
+2008/11/14 初版
+</p>
+</body>
+</html>

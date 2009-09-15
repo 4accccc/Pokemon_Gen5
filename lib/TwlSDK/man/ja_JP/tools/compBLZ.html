@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 8.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>compBLZ</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD,TH{
+  border-color  : #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+<H1 align="left">compBLZ <IMG src="../image/NTR.gif" align="middle"><IMG src="../image/TWL.gif" align="middle"></H1>
+<H2>説明</H2>
+<P>　<CODE>compBLZ</CODE> は、<CODE><A href="../mi/uncompress/MI_SecureUncompressBLZ.html">MI_SecureUncompressBLZ()</A></CODE> コマンドで扱える形式の圧縮データを作成するツールです。<BR>
+　BLZ 形式は、後方展開によってメモリ消費量を抑えることができる、LZ形式を元にした圧縮形式です。</P>
+<P>　アプリ上での展開方法は、MIサンプルデモのuncompressBLZデモをご覧下さい。</P>
+<H2>使用方法</H2>
+<H3>起動コマンド</H3>
+<P><CODE>% compBLZ  [-d] [-e suffix] [-o outputFile]
+&lt;inputFile&gt;<BR>
+</P>
+
+<P>　inputFileで指定された入力ファイルを、BLZ形式で圧縮します。</P>
+<P>-d オプションは、圧縮時の途中経過メッセージを表示します。</P>
+<P>-e オプションは、圧縮後にファイル名に付加される拡張子を指定できます。デフォルトは _BLZ.bin です。<BR>
+<BR>
+-o オプションで、出力ファイルのファイル名を指定できます。 <BR>
+何も指定しなかった場合には、(入力ファイル名本体部)_(-e オプションで指定した拡張子)という名前の出力ファイルが作成されます。<BR>
+</P>
+
+<P>BLZデータには、以下のようなフッタが付加されています。<BR>
+各メンバは、BLZデータバッファの末尾アドレスが基準になっています。<BR>
+<BR>
+<CODE>typedef struct<BR>
+{<BR>
+　u32 bufferTop:24;　// 圧縮領域の先頭アドレスへのオフセット<BR>
+　u32 compressBottom:8;　// このフッタの先頭アドレスへのオフセット<BR>
+　u32 originalBottom;　// 展開後バッファの末尾アドレスへのオフセット<BR>
+} CompFooter;<BR></CODE></P>
+
+<H2>場所</H2>
+<P><CODE>$TwlSDK/tools/bin/compBLZ.exe</CODE></P>
+<H2>参照</H2>
+<P><CODE><A href="../mi/uncompress/MI_SecureUncompressBLZ.html">MI_SecureUncompressBLZ</A></CODE>, <A href="../demos/mi/midemos.html">MIサンプルデモ</A></P>
+<H2>履歴</H2>
+<P>2008/06/23 初版</P><BR>
+</BODY>
+</HTML>

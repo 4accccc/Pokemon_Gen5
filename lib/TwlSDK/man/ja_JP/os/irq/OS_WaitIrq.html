@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>OS_WaitIrq</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">OS_WaitIrq <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>void OS_WaitIrq( BOOL clear, OSIrqMask irqFlags );</CODE></dd>
+</dl><h2>引数</h2>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TD><B><I>clear</I></B></TD>
+      <TD>チェックフラグをクリアするかどうか</TD>
+    </TR>
+    <TR>
+      <TD><B><I>irqFlags</I></B></TD>
+      <TD>発生を待つ割り込みのマスク値。論理和で複数を指定可能</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<h2>返り値</h2>
+<p>なし。</p>
+<H2>説明</H2>
+<p>指定のIRQ割り込み要因の発生を待ちます。</p>
+<p><B><I>irqFlags</I></B> には複数の割り込み要因をマスク値の論理和で指定することが出来ます。この中のいずれかの割り込みが発生したときに関数から戻ります。割り込みの種類は以下を参照してください。</p>
+<p>→ <A href="interrupts_list.html">割り込みの種類</A></p>
+<BLOCKQUOTE style="background-color:#ffffcc;"><CODE>(例) VBLANK と TIMER0 のどちらかを待ちます。</CODE><BR>
+<BR>
+<CODE>OS_WaitIrq( TRUE, OS_IE_V_BLANK | OS_IE_TIMER0 );</CODE></BLOCKQUOTE>
+<p>割り込みが発生したかどうかは、割り込みチェックフラグがセットされているかどうかを見て判断しています。このフラグは割り込みハンドラの中でユーザが明示的に
+<A href="OS_SetIrqCheckFlag.html"><CODE>OS_SetIrqCheckFlag()</CODE></A> を呼んでセットする必要があります。</p>
+<p><B><I>clear</I></B> を TRUE にすると、割り込み発生待ちを行う前に、<B><I>irqFlags</I></B> で指定された割り込みチェックフラグをリセットします。FALSE ならリセットしません。リセットしない場合は、この関数に入った時点で待ちを行いたいチェックフラグがセットされているとすぐに関数から戻ることになります。</p>
+<H3><BR>
+<BR>
+<CODE><A href="../system/OS_WaitInterrupt.html">OS_WaitInterrupt()</A></CODE> と <CODE>OS_WaitIrq()</CODE> との違い</H3>
+<P><A href="../system/OS_WaitInterrupt.html"><CODE>OS_WaitInterrupt()</CODE></A> と <CODE>OS_WaitIrq()</CODE> との違いは、<CODE><A href="../system/OS_WaitInterrupt.html">OS_WaitInterrupt()</A></CODE> は割り込み要因を待つ間 <A href="../system/OS_Halt.html"><CODE>OS_Halt()</CODE></A> で停止しますが、<CODE>OS_WaitIrq() </CODE>は割り込み要因を待つ間は他のスレッドに処理を移し、割り込みが発生した後に動作を再開する、というものです。スレッドを使用しない場合は、両者は同じ動作をする関数となります。</P>
+<H3><BR>
+<BR>
+複数のスレッドが同じ割り込みを待つ場合</H3>
+<P>複数のスレッドが同じ割り込みを待つ場合には注意が必要です。一方のスレッドだけが実行され、他方が実行されないという状況が起こりえます。</P>
+<P>例えば、以下のようなプログラムを考えます。</P>
+<BLOCKQUOTE style="background-color:#ffffcc;"><CODE>void TwlMain(void)<BR>
+{<BR>
+　　:<BR>
+　OS_CreateThread( &amp;thread1, proc1, ..., 10 );<BR>
+　OS_CreateThread( &amp;thread2, proc2, ..., 11 );<BR>
+　　:<BR>
+}<BR>
+<BR>
+//---- Thread1<BR>
+void proc1(void* arg)<BR>
+{<BR>
+　while(1)<BR>
+　{<BR>
+　　OS_WaitIrq( TRUE, OS_IE_V_BLANK );<BR>
+　　OS_Printf(&quot;proc1\n&quot;);<BR>
+　}<BR>
+}<BR>
+<BR>
+//---- Thread2<BR>
+void proc2(void* arg)<BR>
+{<BR>
+　while(1)<BR>
+　{<BR>
+　　OS_WaitIrq( TRUE, OS_IE_V_BLANK );<BR>
+　　OS_Printf(&quot;proc2\n&quot;);<BR>
+　}<BR>
+}<BR>
+<BR>
+//---- VBlank interrupt handler<BR>
+void VBlankHandler( void )<BR>
+{<BR>
+　OS_SetIrqCheckFlag( OS_IE_V_BLANK );<BR>
+}</CODE></BLOCKQUOTE>
+<P>スレッド1 と スレッド2 が Vブランクを待ちます。Vブランクが発生するとハンドラ内で Vブランクの割り込みチェックフラグをセットしています。そして スレッド1 と スレッド2 が実行可能状態になりますが、スレッドの優先順から、スレッド1 が先に起きます。スレッド 1 では 「<CODE>proc1</CODE>」と表示した後再び <CODE>OS_WaitIrq()</CODE> に入り、Vブランク待ちを行います。この際、第一引数が TRUE なので、Vブランクの割り込みチェックフラグをリセットしてからスリープします。次にスレッド2 に実行権が移されますが、すでにVブランクの割り込みチェックフラグがクリアされているので <CODE>OS_WaitIrq()</CODE> から戻ることなく再びスリープします。次のVブランクでもこの繰り返しとなります。つまり、このプログラムはずっと「<CODE>proc1</CODE>」 が表示されるだけで 「<CODE>proc2</CODE>」と表示されることはありません。</P>
+<P>かといって、<CODE>OS_WaitIrq()</CODE> の第一引数を FALSE にすることは出来ません。もし FALSE にすれば、Vブランクが発生した後にいくら <CODE>OS_WaitIrq()</CODE> を呼んでも、すぐに戻ることになるからです。</P>
+<h2>参照</h2>
+<p><CODE><A href="OS_SetIrqCheckFlag.html">OS_SetIrqCheckFlag</A>, <A href="../system/OS_WaitInterrupt.html">OS_WaitInterrupt</A>, <A href="OS_WaitAnyIrq.html">OS_WaitAnyIrq</A><br>
+</CODE></p>
+<H2>履歴</H2>
+<P>2008/07/01 複数スレッドからの呼び出しの注意を追記<BR>
+2005/03/08 用語統一 [割込み] → [割り込み]<br>
+2004/05/24 <CODE>OS_WaitInterrupt()</CODE> との違いを明記<BR>
+2004/05/01 初版</P>
+</body>
+</html>

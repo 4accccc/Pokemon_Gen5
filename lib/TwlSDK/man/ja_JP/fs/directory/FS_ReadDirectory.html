@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_ReadDirectory[W]</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FS_ReadDirectory[W] <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+BOOL FS_ReadDirectory(<a href="../fs_file_type.html">FSFile</a> *dir, <a href="../FSDirectoryEntryInfo.html">FSDirectoryEntryInfo</a> *info);
+BOOL FS_ReadDirectoryW(<a href="../fs_file_type.html">FSFile</a> *file, <a href="../FSDirectoryEntryInfo.html">FSDirectoryEntryInfoW</a> *info);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>dir</strong></em></td>
+<td style="width:87%">ディレクトリハンドルを保持した<a href="../fs_file_type.html">FSFile</a>構造体</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>info</strong></em></td>
+<td style="width:87%">得られたエントリ情報を格納すべき<a href="../FSDirectoryEntryInfo.html">FSDirectoryEntryInfo</a>構造体または<a href="../FSDirectoryEntryInfo.html">FSDirectoryEntryInfoW</a>構造体</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>エントリ情報が正しく取得TRUEを、失敗すればFALSEを返します。<br />
+失敗時の詳細なエラーは<code><a href="../file/FS_GetResultCode.html">FS_GetResultCode()</a></code>で取得することができます。</p>
+
+<h2>説明</h2>
+<p>ディレクトリのハンドルから、エントリ情報を1個だけ読み進めます。<br />
+この関数を呼び出すたびにディレクトリの列挙位置は1個ずつ進んでいき、終端に達すると次からはFALSEを返します。<br />
+例えば３つのファイルを含むディレクトリを<code><a href="FS_OpenDirectory.html">FS_OpenDirectory()</a></code>で開き、
+そのハンドルを使用してこの関数を呼び出すと、３回TRUEを返して４回目以降はFALSEを返します。</p>
+<p>エントリ情報の<a href="../FSDirectoryEntryInfo.html">longname</a>フィールドをShift_JISで取得したい場合はFS_ReadDirectory()を、
+UTF16-LEで取得したい場合はFS_ReadDirectoryW()を使用することができます。
+<a href="../archive_sdmc_spec.html">SDカードアーカイブ</a>など、内部がFAT構造のファイルシステムではShift_JISで表現できない文字が使用されている場合があります。</p>
+<p><a href="../overview/about_Archive.html#ROM_LTDFILE">TWL専用ファイル</a>に関するエントリ情報はNITROモードで動作しているときでも取得することができます。実際にファイルへアクセス可能かどうかは<a href="../FSDirectoryEntryInfo.html">attributes</a>フィールドの<a href="../FSPathInfo.html">FS_ATTRIBUTE_IS_OFFLINE</a>フラグを確認することによって判定可能です。</p>
+
+<h2>注意</h2>
+<ul>
+<li>この関数を割り込みハンドラ(IRQモード)から呼び出すことはできません。<br />
+また、割り込みを禁止したままの状態にあると処理が完了しない場合がある点に注意して下さい。</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="../fs_file_type.html">FSFile</a>
+<a href="../FSDirectoryEntryInfo.html">FSDirectoryEntryInfo</a>
+<br />
+<a href="FS_OpenDirectory.html">FS_OpenDirectory</a>
+<a href="FS_CloseDirectory.html">FS_CloseDirectory</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/06/08 TWL専用ファイルの説明へのリンクを追加。<br />
+2009/01/08 TWL専用ファイルに関する説明を追記。<br />
+2008/09/02 Unicode版の関数について追記。<br />
+2007/09/18 初版<br />
+</p>
+</body>
+</html>

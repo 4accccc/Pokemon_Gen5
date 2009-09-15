@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 8.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>TPRequestResult</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">TPRequestResult <img src="../../image/NTR.gif"><img src="../../image/TWL.gif"></h1>
+
+<h2>定義</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/spi.h&gt;</CODE><BR>
+<PRE><CODE>typedef enum
+{
+    TP_RESULT_SUCCESS = 0,             // 成功
+    TP_RESULT_INVALID_PARAMETER,       // パラメータが異常
+    TP_RESULT_ILLEGAL_STATUS,          // 命令を受け付けられない状態
+    TP_RESULT_EXCLUSIVE,               // SPIデバイスがビジー中
+    TP_RESULT_PXI_BUSY                 // ARM7とのPXI通信がビジー中
+}
+TPRequestResult;</CODE></PRE>
+</dd>
+
+</dl><h2>要素</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="300"><em><strong><font face="Courier New">TP_RESULT_SUCCESS</font></strong></em></TD>
+      <TD width="700">処理が正常に完了したことを示します。</TD>
+    </TR>
+    <TR>
+      <TD><em><strong><font face="Courier New">TP_RESULT_INVALID_PARAMETER</font></strong></em></TD>
+      <TD>指定されたパラメータが不正であった為、要求は実行されなかったことを示します。</TD>
+    </TR>
+    <TR>
+      <TD><em><strong><font face="Courier New">TP_RESULT_ILLEGAL_STATUS</font></strong></em></TD>
+      <TD>MICライブラリ内部状態により、要求を実行できなかったことを示します。例えば、サンプリングを行っていない状態で <code>TP_RequestAutoSamplingStop()</code> をコールした場合です。<br>あるいは、同期関数を割り込みハンドラ内からコールしたため処理を中断したことを示します。</TD>
+    </TR>
+    <TR>
+      <TD width="300"><em><strong><font face="Courier New">MIC_RESULT_EXCLUSIVE</font></strong></em></TD>
+      <TD width="700">サンプリングの開始あるいは停止操作の予約に失敗したことを示します。</TD>
+    </TR>
+    <TR>
+      <TD><em><strong><font face="Courier New">TP_RESULT_PXI_BUSY</font></strong></em></TD>
+      <TD>ARM7 への PXIコマンド送信に失敗したことを示します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+<P>タッチパネルを操作する関数の結果を示す共通の列挙型です。<BR>
+同期型／非同期型関数の返り値、非同期型関数のユーザコールバックに渡される<B><I><FONT face="Courier New">result</FONT></I></B>引数として用いられます。</P>
+
+<h2>参照</h2>
+<P><CODE><A href="TPRecvCallback.html">TPRecvCallback</A></CODE></P>
+
+<H2>履歴</H2>
+<P>Ver. 2009/04/28 初版</P>
+</body>
+</html>

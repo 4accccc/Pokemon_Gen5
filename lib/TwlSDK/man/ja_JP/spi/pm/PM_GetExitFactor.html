@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>PM_GetExitFactor</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">PM_GetExitFactor <IMG src="../../image/TWL.gif" width="24" height="12" border="0" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;twl/spi.h&gt;</CODE></PRE>
+  <PRE><CODE>PMExitFactor PM_GetExitFactor( void );
+  </CODE></PRE>
+</DL>
+<H2>引数</H2>
+<P>なし。</P>
+<H2>返り値</H2>
+<P>終了処理に移行した要因です。</P>
+<H2>説明</H2>
+<P>終了処理に移行した要因を取得します。</P>
+<P>返り値は以下の意味を持ちます。終了処理に入っていない場合は、<CODE>PM_EXIT_FACTOR_NONE</CODE> となります。<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH><CODE>返り値</CODE></TH>
+      <TH>終了処理に移行した要因　　　　　　　</TH>
+    </TR>
+    <TR>
+      <TD><CODE>PM_EXIT_FACTOR_PWSW</CODE></TD>
+      <TD>電源ボタンが一定時間以上押されたことを検知したことによる</TD>
+    </TR>
+    <TR>
+      <TD><CODE>PM_EXIT_FACTOR_BATTERY</CODE></TD>
+      <TD>バッテリーの低下をARM7 が検知したことによる</TD>
+    </TR>
+    <TR>
+      <TD><CODE>PM_EXIT_FACTOR_USER</CODE></TD>
+      <TD>ユーザの強制ハードウェアリセット／強制パワーオフによる</TD>
+    </TR>
+    <TR>
+      <TD><CODE>PM_EXIT_FACTOR_NONE</CODE></TD>
+      <TD>( 終了処理に入っていない )</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><B><BR>
+<BR>
+リセット／電源オフ　への移行</B></P>
+<P><CODE>PM_EXIT_FACTOR_PWSW</CODE> の場合、この後ハードウェアリセットとなるか、電源オフとなるかは判りません。電源ボタンの押下が解除されるタイミングによります。</P>
+<P><CODE>PM_EXIT_FACTOR_BATTERY</CODE> の場合、電源オフのシーケンスに移ります。</P>
+<P><CODE>PM_EXIT_FACTOR_USER</CODE> の場合、<CODE><A href="PM_ForceToResetHardware.html">PM_ForceToResetHardware()</A></CODE> または <CODE><A href="PM_ForceToPowerOff.html">PM_ForceToPowerOff()</A></CODE> が呼び出されているのでこの後はハードウェアリセットやシャットダウンのシーケンスに移ります。</P>
+<P>いずれにしても終了コールバックは速やかに抜ける必要があります。</P>
+<P><BR>
+<BR>
+<B><CODE>返り値 PM_EXIT_FACTOR_USER について</CODE></B> </P>
+<P>この値がセットされるのは <CODE><A href="PM_ForceToResetHardware.html">PM_ForceToResetHardware()</A></CODE> や <CODE><A href="PM_ForceToPowerOff.html">PM_ForceToPowerOff()</A></CODE> を経由したときです。ユーザが直接呼び出す以外に、他のシステム関数から最終的にこれらの関数が呼ばれた場合も
+<CODE>PM_EXIT_FACTOR_USER</CODE> がセットされます。例えば <CODE><a href="../../os/appJump/OS_JumpToSystemMenu.html">OS_JumpToSystemMenu()</a></CODE> は最終的に <CODE><A href="PM_ForceToResetHardware.html">PM_ForceToResetHardware()</A></CODE> に到達します。</P>
+<H2>参照</H2>
+<P><CODE><A href="PM_SetExitCallbackInfo.html">PM_SetExitCallbackInfo</A>, <A href="PM_SetAutoExit.html">PM_SetAutoExit</A>, <A href="PM_GetAutoExit.html">PM_GetAutoExit</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2008/05/01 <CODE>PM_EXIT_FACTOR_USER</CODE> を追加<BR>
+2008/02/07 初版</P>
+</BODY>
+</HTML>

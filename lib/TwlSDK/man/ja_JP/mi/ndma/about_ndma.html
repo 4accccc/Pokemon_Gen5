@@ -1,0 +1,295 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>新規DMA (overview)</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">新規DMA (overview)<IMG src="../../image/TWL.gif" width="24" height="12" border="0" align=middle></H1>
+<P>TWL ハードウェアでは、NITRO で用意されていた4つの DMA に加え、さらに4つの新規DMA
+が用意されています。新規DMA では従来の DMA 以上に細かな設定を行うことができます。ここでは新規
+DMA について説明します。</P>
+<H2>MINDmaConfig構造体</H2>
+<P>新規DMA では、動作時に <A href="MINDmaConfig.html"><CODE>MINDmaConfig構造体</CODE></A>メンバをパラメータとして使用します。この構造体には全体の転送量や、転送元アドレス、転送先アドレスといった、その都度変わる値ではなく、通常は
+DMA動作ごとに変化がそれほどないと思われるものがここに含まれます。</P>
+<P>具体的には構造体に含まれるのは以下の値となります。<BR>
+</P>
+
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>メンバ名</TH>
+      <TH>説明</TH>
+      <TH>関係するレジスタ</TH>
+      <TH>初期値</TH>
+    </TR>
+    <TR>
+      <TD><CODE>intervalTimer</CODE></TD>
+      <TD>ブロック転送のインターバルタイマーです。</TD>
+      <TD>DMAxBCNT の d15-0</TD>
+      <TD><CODE>MI_NDMA_NO_INTERVAL</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>prescaler</CODE></TD>
+      <TD>ブロック転送インターバルタイマーのプリスケーラです。</TD>
+      <TD>DMAxBCNT の d17-16</TD>
+      <TD><CODE>MI_NDMA_INTERVAL_PS_1</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>blockWord</CODE></TD>
+      <TD>ブロック転送ワード数です。</TD>
+      <TD>DMAx_CNT の d19-16</TD>
+      <TD><CODE>MI_NDMA_BWORD_1</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>wordCount</CODE></TD>
+      <TD>転送ワード数です。</TD>
+      <TD>DMAxWCNT</TD>
+      <TD><CODE>MI_NDMA_AT_A_TIME</CODE></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+</P>
+<P>ライブラリ内部では、4つの新規DMA それぞれに構造体が与えられているので、それぞれが異なる設定でDMAを行うことが出来ます。</P>
+<P><IMG src="image_ndma-eachConfig.gif" width="517" height="192" border="0"></P>
+<P>すべての NDMA の <A href="MINDmaConfig.html"><CODE>MINDmaConfig</CODE>構造体</A>メンバを初期値に戻すのは、 <CODE><A href="MI_InitNDmaConfig.html">MI_InitNDmaConfig()</A></CODE> です。これは <CODE><A href="../../os/init/OS_Init.html">OS_Init()</A></CODE> から呼ばれる <CODE>MI_InitNDma()</CODE> から呼ばれますのでユーザが行う必要はありません。</P>
+<P><IMG src="image_ndma-init.gif" width="549" height="260" border="0"></P>
+<P>ユーザが用意した <A href="MINDmaConfig.html"><CODE>MINDmaConfig</CODE> 構造体</A>に、現在 新規 DMA に設定されている <A href="MINDmaConfig.html"><CODE>MINDmaConfig</CODE> 構造体</A>をコピーするのは <CODE><A href="MI_GetNDmaConfig.html">MI_GetNDmaConfig()</A></CODE> となります。またユーザが用意した <A href="MINDmaConfig.html"><CODE>MINDmaConfig</CODE> 構造体</A>を 新規 DMA に設定されている <A href="MINDmaConfig.html"><CODE>MINDmaConfig</CODE> 構造体</A>にコピーするのは <CODE><A href="MI_GetNDmaConfig.html">MI_SetNDmaConfig()</A></CODE> となります。</P>
+<P><IMG src="image_ndma-getput.gif" width="557" height="352" border="0"></P>
+<P>新規 DMA に設定されている <A href="MINDmaConfig.html"><CODE>MINDmaConfig</CODE> 構造体</A>の一部のメンバを書き換えたり取得するのならば、<CODE><A href="MI_SetNDmaInterval.html">MI_SetNDmaInterval()</A></CODE>, <CODE><A href="MI_GetNDmaIntervalTimer.html">MI_GetNDmaIntervalTimer()</A></CODE>, <CODE><A href="MI_GetNDmaIntervalPrescaler.html">MI_GetNDmaIntervalPrescaler()</A></CODE>, <CODE><A href="MI_SetNDmaBlockWord.html">MI_SetNDmaBlockWord()</A></CODE>, <CODE><A href="MI_GetNDmaBlockWord.html">MI_GetNDmaBlockWord()</A></CODE>, <CODE><A href="MI_SetNDmaWordCount.html">MI_SetNDmaWordCount()</A></CODE>, <CODE><A href="MI_GetNDmaWordCount.html">MI_GetNDmaWordCount()</A></CODE> となります。</P>
+<P><IMG src="image_ndma-rewritePartial.gif" width="546" height="347" border="0"></P>
+<P>書き換えた設定値は、前述の <CODE><A href="MI_InitNDmaConfig.html">MI_InitNDmaConfig()</A></CODE> を行えば初期値に戻ります。</P>
+<H2>DMA 動作命令</H2>
+<P>新規DMA には以下の命令が存在します。</P>
+<P><CODE><A href="MI_NDmaCopy.html">MI_NDmaCopy*()</A></CODE>　　新規DMA を用いてコピーを行います。<BR>
+<CODE><A href="MI_NDmaFill.html">MI_NDmaFill*()</A></CODE>　　新規DMAを用いて指定のデータで埋めます。<BR>
+<CODE><A href="MI_NDmaClear.html">MI_NDmaClear*()</A></CODE>　　新規DMAを用いて 0 で埋めます。<BR>
+<CODE><A href="MI_NDmaSend.html">MI_NDmaSend*()</A></CODE>　　新規DMAを用いて固定アドレスにデータを送り込みます。<BR>
+<CODE><A href="MI_NDmaRecv.html">MI_NDmaRecv*()</A></CODE>　　新規DMAを用いて固定アドレスからデータを読み込みます。<BR>
+<CODE><A href="MI_NDmaPipe.html">MI_NDmaPipe*()</A></CODE>　　新規DMAを用いて固定アドレスから固定アドレスへデータを送ります。</P>
+<P>固定アドレスからデータを読んだり書いたりするのは、しばしば I/O レジスタを対象にした動作で行われます。</P>
+<BLOCKQUOTE><IMG src="image_ndma-functions.gif" width="356" height="184" border="0"></BLOCKQUOTE>
+<P>それぞれに対し、細かな動作の違いで派生関数が存在します。以下、<CODE><A href="MI_NDmaCopy.html">MI_NDmaCopy*()</A></CODE> を例にとって説明しますが、その他の命名ルールも同様ですので必要に応じて読み替えてください。</P>
+<H3>(1) <CODE>MI_NDmaCopy()</CODE> と <CODE>MI_NDmaCopyAsync()</CODE></H3>
+<P>「<CODE>Async</CODE>」が付く関数は非同期関数です。一方付かない方は同期関数です。同期関数は新規
+DMA の終了を確実に待ちますが、非同期関数は終了を待たずに関数を抜けます。非同期関数には動作終了時に呼ばれるコールバック関数が設定出来るのでそれを使うか、その新規
+DMA チャンネルが使用中かどうかを知る <CODE><A href="MI_IsNDmaBusy.html">MI_IsNDmaBusy()</A></CODE> で終了を知ることが出来ます。また、その新規 DMA チャンネルが使用可能な状態になるまで待つ <CODE><A href="MI_WaitNDma.html">MI_WaitNDma()</A></CODE> が用意されています。</P>
+<H3>(2) <CODE>MI_NDmaCopy()</CODE> と <CODE>MI_NDmaCopyEx()</CODE></H3>
+<P>「<CODE>Ex</CODE>」が付く関数は <CODE>MINDmaConfig</CODE> 構造体を外から与えます。一方「<CODE>Ex</CODE>」が付かない関数はすでに設定されていて内部で保持している <CODE>MINDmaConfig</CODE> 構造体を用います。「<CODE>Ex</CODE>」付き関数は、一時的に通常使用するものと異なったパラメータでDMA動作をさせたい場合などに有効です。</P>
+<H3>(3) <CODE>MI_NDmaCopy()</CODE> と <CODE>MI_NDmaCopy_Dev()</CODE></H3>
+<P>「<CODE>_Dev</CODE>」が付く関数は周辺デバイスなどの割込みに同期してDMA動作を開始します。一方「<CODE>_Dev</CODE>」が付かない関数はすぐに動作を開始します。周辺デバイスとして指定できる値は後述の
+「DMA起動のタイミングについて」 を参照してください。</P>
+<H3>(4) <CODE>MI_NDmaCopy()</CODE> と <CODE>MI_NDmaCopy_SetUp()</CODE></H3>
+<P>「<CODE>_SetUp</CODE>」が付く関数は実際には DMA を行わず設定のみを行います。実際の DMA開始は
+<CODE><A href="MI_NDmaRestart.html">MI_NDmaRestart()</A></CODE> の呼び出し以降となります。</P>
+<P><BR>
+この4つの区別により、<CODE><A href="MI_NDmaCopy.html">MI_NDmaCopy*()</A></CODE> には 以下の16種類の関数が存在します。<BR>
+</P>
+<TABLE border=1>
+<TBODY>
+<TR>
+<TH>関数</TH>
+<TH>同期・非同期</TH>
+<TH>MINDmaConfig</TH>
+<TH>DMAの開始</TH>
+    </TR>
+<TR>
+      <TD colspan="4" style="background-color:#e0d0f0;"><CODE>_SetUp なし (DMA 実行)</CODE></TD>
+    </TR>
+<TR>
+<TD><CODE>MI_NDmaCopy()</CODE></TD>
+<TD>同期</TD>
+<TD>ライブラリ内部</TD>
+<TD>即時</TD>
+    </TR>
+<TR>
+<TD><CODE>MI_NDmaCopyAsync()</CODE></TD>
+<TD>非同期</TD>
+<TD>ライブラリ内部</TD>
+<TD>即時</TD>
+    </TR>
+<TR>
+<TD><CODE>MI_NDmaCopyEx()</CODE></TD>
+<TD>同期</TD>
+<TD>ユーザ指定</TD>
+<TD>即時</TD>
+    </TR>
+<TR>
+<TD><CODE>MI_NDmaCopyExAsync()</CODE></TD>
+<TD>非同期</TD>
+<TD>ユーザ指定</TD>
+<TD>即時</TD>
+    </TR>
+<TR>
+<TD><CODE>MI_NDmaCopy_Dev()</CODE></TD>
+<TD>同期</TD>
+<TD>ライブラリ内部</TD>
+<TD>周辺デバイスからの割り込み</TD>
+    </TR>
+<TR>
+<TD><CODE>MI_NDmaCopyAsync_Dev()</CODE></TD>
+<TD>非同期</TD>
+<TD>ライブラリ内部</TD>
+<TD>周辺デバイスからの割り込み</TD>
+    </TR>
+<TR>
+<TD><CODE>MI_NDmaCopyEx_Dev()</CODE></TD>
+<TD>同期</TD>
+<TD>ユーザ指定</TD>
+<TD>周辺デバイスからの割り込み</TD>
+    </TR>
+<TR>
+<TD><CODE>MI_NDmaCopyExAsync_Dev()</CODE></TD>
+<TD>非同期</TD>
+<TD>ユーザ指定</TD>
+<TD>周辺デバイスからの割り込み</TD>
+    </TR>
+<TR>
+      <TD colspan="4" style="background-color:#e0d0f0;"><CODE>_SetUp あり (DMA 実行のための設定のみ)</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaCopy_SetUp()</CODE></TD>
+      <TD>同期</TD>
+      <TD>ライブラリ内部</TD>
+      <TD>即時</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaCopyAsync_SetUp()</CODE></TD>
+      <TD>非同期</TD>
+      <TD>ライブラリ内部</TD>
+      <TD>即時</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaCopyEx_SetUp()</CODE></TD>
+      <TD>同期</TD>
+      <TD>ユーザ指定</TD>
+      <TD>即時</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaCopyExAsync_SetUp()</CODE></TD>
+      <TD>非同期</TD>
+      <TD>ユーザ指定</TD>
+      <TD>即時</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaCopy_Dev_SetUp()</CODE></TD>
+      <TD>同期</TD>
+      <TD>ライブラリ内部</TD>
+      <TD>周辺デバイスからの割り込み</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaCopyAsync_Dev_SetUp()</CODE></TD>
+      <TD>非同期</TD>
+      <TD>ライブラリ内部</TD>
+      <TD>周辺デバイスからの割り込み</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaCopyEx_Dev_SetUp()</CODE></TD>
+      <TD>同期</TD>
+      <TD>ユーザ指定</TD>
+      <TD>周辺デバイスからの割り込み</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaCopyExAsync_Dev_SetUp()</CODE></TD>
+      <TD>非同期</TD>
+      <TD>ユーザ指定</TD>
+      <TD>周辺デバイスからの割り込み</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>新規DMAの停止</H2>
+<P>指定の新規DMAを停止するには <CODE><A href="MI_StopNDma.html">MI_StopNDma()</A></CODE> を呼んでください。</P>
+<P>すべての新規DMAを停止するには <CODE><A href="MI_StopAllNDma.html">MI_StopAllNDma()</A></CODE> を呼んでください。新規DMA 0 ～3 に対し順に <CODE><A href="MI_StopNDma.html">MI_StopNDma()</A></CODE> を呼ぶ関数となっています。</P>
+<H2>調停方式</H2>
+<P>新規DMA の各チャンネル間の調停方式は、固定方式 と ラウンドロビン(循環)方式
+から選ぶことが出来ます。</P>
+<P>固定方式の場合、優先順位が固定で設定され、現在起動しているDMAチャンネルより優先度の高いDMAチャンネルの起動要求がかかると、指定の転送ワード数のブロックDMA転送の転送完了時に一時中断し、優先順位の高い
+DMA チャンネルのDMA転送が実行されます。逆に現在起動している DMAチャンネルより優先度の低い
+DMA チャンネルの起動要求がかかっても保留されます。</P>
+<P>ラウンドロビン(循環)方式の場合、起動要求中の DMA チャンネルを調べ、各汎用DMAの指定された転送ワード数のブロックDMA転送の転送完了時に、すべての
+DMA 転送要求中の DMA チャンネルおよびDSP、ARM9からのAHB バス要求を含め、DMA0,
+DMA1, DMA2, DMA3, DSP or ARM9, DMA0, DMA1, DMA2,… の順番に循環方式により
+AHBバスの所有権を切り替えます。</P>
+<P>ラウンドロビン(循環)方式の場合、DSP or ARM9 の AHB バス要求時にアクセス可能なサイクル数を設定することが出来ます。</P>
+<P>調停方式の設定と、ラウンドロビン時のアクセス可能サイクル数の設定は以下の関数で行います。<CODE><A href="MI_SetNDmaArbitrament.html"><BR>
+MI_SetNDmaArbitrament()</A></CODE></P>
+<P>現在設定されている値の取得は以下の関数で行います。<BR>
+<CODE><A href="MI_GetNDmaArbitrament.html">MI_GetNDmaArbitrament()</A></CODE><BR>
+<CODE><A href="MI_GetNDmaArbitramentRoundRobinCycle.html">MI_GetNDmaArbitramentRoundRobinCycle()</A></CODE></P>
+<H2>優先順位</H2>
+<P>AHBバスに対する優先順位は以下のようになります。</P>
+<P><B>DMAの調停方式を固定方式にした場合:</B></P>
+<P>　　旧DMAC0 &gt; 旧DMAC1 &gt; 旧DMAC2 ＞ 旧DMAC3 &gt; 新DMAC0 &gt; 新DMAC1
+&gt; 新DMAC2 &gt; 新DMA3 &gt; DSP &gt; ARM9</P>
+<P><B>DMAの調停方式をラウンドロビン方式にした場合:</B></P>
+<P>　　旧DMAC0 &gt; 旧DMAC1 &gt; 旧DMAC2 ＞ 旧DMAC3 &gt; (新DMAC0 = 新DMAC1
+= 新DMAC2 = 新DMA3) &gt; DSP &gt; ARM9<BR>
+　　のように、新規DMA では優先順位がなくなり、循環的にバス所有権が移動します。</P>
+
+<A NAME="MINDmaDevice"></a>
+<H2>DMA 起動のタイミングについて</H2>
+<P>新規DMA 関数のうち、<CODE><A href="MI_NDmaCopy.html">MI_NDmaCopy_Dev()</A></CODE> のように、「<CODE>_Dev</CODE>」 のつく関数はDMA の起動タイミングを周辺デバイスからの割込みなどによる起動要求に依存させることが出来ます。
+「<CODE>_Dev</CODE>」 の付かない関数は即時起動です。</P>
+<P>この指定は <CODE>MINDmaDevice</CODE> 型 (u32 の typedef です) の値を関数の引数として与えて行います。値と起動タイミングは以下の通りです。<BR>
+</P>
+<TABLE border=1>
+  <TBODY>
+    <TR>
+      <TH>MINDmaDevice 型の値</TH>
+      <TH>新規DMA の起動タイミング</TH>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDMA_TIMING_TIMER0</CODE></TD>
+      <TD>タイマー0 の DMA 起動要求による</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDMA_TIMING_TIMER1</CODE></TD>
+      <TD>タイマー1 の DMA 起動要求による</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDMA_TIMING_TIMER2</CODE></TD>
+      <TD>タイマー2 の DMA 起動要求による</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDMA_TIMING_TIMER3</CODE></TD>
+      <TD>タイマー3 の DMA 起動要求による</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDMA_TIMING_CARD</CODE></TD>
+      <TD>カードの DMA 起動要求による</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDMA_TIMING_V_BLANK</CODE></TD>
+      <TD>Vブランク の DMA 起動要求による</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDMA_TIMING_H_BLANK</CODE></TD>
+      <TD>Hブランク の DMA 起動要求による</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDMA_TIMING_DISP</CODE></TD>
+      <TD>表示に同期した DMA 起動要求による</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDMA_TIMING_DISP_MMEM</CODE></TD>
+      <TD>ワークRAM表示に同期した DMA 起動要求による</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDMA_TIMING_GXFIFO</CODE></TD>
+      <TD>ジオメトリコマンドFIFOの DMA 起動要求による</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDMA_TIMING_CAMERA</CODE></TD>
+      <TD>カメラ転送 の DMA 起動要求による</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>履歴</H2>
+<P>2008/11/19 起動タイミングの情報を追記<BR>
+2008/09/11 初版</P>
+</BODY>
+</HTML>

@@ -1,0 +1,326 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<BASE target="main">
+<TITLE>DSPライブラリ(DSP) API 機能一覧</TITLE>
+<LINK rel="stylesheet" href="../css/apilist.css">
+</HEAD>
+<BODY>
+<H1>DSPライブラリ(DSP) API 機能一覧</H1>
+
+<H3><A name="G711">G.711 エンコード/デコード</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="g711/DSP_OpenStaticComponentG711.html" target="_self">DSP_OpenStaticComponentG711</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>G.711コンポーネント用のメモリファイルを開きます。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="g711/DSP_LoadG711.html" target="_self">DSP_LoadG711</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>G.711 コンポーネントをロードします。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="g711/DSP_UnloadG711.html" target="_self">DSP_UnloadG711</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>G.711 コンポーネントをアンロードします。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="g711/DSP_EncodeG711.html" target="_self">DSP_EncodeG711</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>G.711 エンコードを行います。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="g711/DSP_DecodeG711.html" target="_self">DSP_DecodeG711</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>G.711 デコードを行います。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="g711/DSP_WaitForG711.html" target="_self">DSP_WaitForG711</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>G.711 エンコード/デコードの完了を待ちます。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="g711/DSP_TryWaitForG711.html" target="_self">DSP_TryWaitForG711</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>G.711 エンコード/デコードが完了しているかチェックします。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="g711/DSPAudioCodecMode.html" target="_self">DSPAudioCodecMode</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>DSP コンポーネントがサポートする符号化方式です。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<!--
+<H3><A name="JPEG_ENC">JPEG エンコード</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_OpenStaticComponentJpegEncoder.html" target="_self">DSP_OpenStaticComponentJpegEncoder</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEG エンコーダ用のメモリファイルを開きます。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_LoadJpegEncoder.html" target="_self">DSP_LoadJpegEncoder</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEG エンコーダをロードします。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_UnloadJpegEncoder.html" target="_self">DSP_UnloadJpegEncoder</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEG エンコーダをアンロードします。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_YUV422ToYUV420.html" target="_self">DSP_YUV422ToYUV420</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>YUV422 形式の画像データを YUV420 形式の画像データに変換してエンコード対象とします。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_RGB555ToYUV420.html" target="_self">DSP_RGB555ToYUV420</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>RGB555 形式の画像データを YUV420 形式の画像データに変換してエンコード対象とします。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_RGB888ToYUV420.html" target="_self">DSP_RGB888ToYUV420</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>RGB888 形式の画像データを YUV420 形式の画像データに変換してエンコード対象とします。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_SetJpegEncoderBuffer.html" target="_self">DSP_SetJpegEncoderBuffer</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>エンコード結果のJPEGファイルを格納するバッファを指定します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_SetJpegEncoderDateTime.html" target="_self">DSP_SetJpegEncoderDateTime</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>エンコード時に付加する撮影日時情報を設定します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_SetJpegEncoderDateTimeNow.html" target="_self">DSP_SetJpegEncoderDateTimeNow</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>エンコード時に付加する撮影日時情報に現在の日時を設定します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_GetDateTime.html" target="_self">DSP_GetDateTime</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>現在の日付と時刻を取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_SetJpegEncoderMakerNote.html" target="_self">DSP_SetJpegEncoderMakerNote</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>エンコード時にメーカーノート内に付加するDSiカメラ用データを設定します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_SetJpegEncoderMakerNoteEx.html" target="_self">DSP_SetJpegEncoderMakerNoteEx</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>エンコード時にメーカーノート内に付加する各種データを設定します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_SetJpegEncoderThumbnailBuffer.html" target="_self">DSP_SetJpegEncoderThumbnailBuffer</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>バイリニア補間使用時のサムネイル情報を格納するためのバッファを指定します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_SetJpegEncoderSignMode.html" target="_self">DSP_SetJpegEncoderSignMode</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>エンコード時に署名を付加する機能の有効/無効を切り替える。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_StartJpegEncoder.html" target="_self">DSP_StartJpegEncoder</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGエンコードを行います。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_enc/DSP_StartJpegEncoderEx.html" target="_self">DSP_StartJpegEncoderEx</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGエンコードを行います。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H3><A name="JPEG_DEC">JPEG デコード</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/DSP_OpenStaticComponentJpegDecoder.html" target="_self">DSP_OpenStaticComponentJpegDecoder</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEG デコーダ用のメモリファイルを開きます。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/DSP_LoadJpegDecoder.html" target="_self">DSP_LoadJpegDecoder</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEG デコーダをロードします。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/DSP_UnloadJpegDecoder.html" target="_self">DSP_UnloadJpegDecoder</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEG デコーダをアンロードします。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/DSP_SetJpegDecoderBuffer.html" target="_self">DSP_SetJpegDecoderBuffer</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>デコード処理に使用する一時バッファと、デコード結果の出力先バッファを指定します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/DSP_GetJpegDecoderDateTime.html" target="_self">DSP_GetJpegDecoderDateTime</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>デコード時にJPEGデータから取り出した撮影日時情報を取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/DSP_GetJpegDecoderSoftware.html" target="_self">DSP_GetJpegDecoderSoftware</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>デコード時にJPEGデータから取り出したアプリケーションのイニシャルコードを取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/DSP_GetJpegDecoderMakerNoteAddr.html" target="_self">DSP_GetJpegDecoderMakerNoteAddr</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGデータ中のメーカーノート内に存在するDSiカメラ用データの先頭アドレスを取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/DSP_GetJpegDecoderMakerNoteSize.html" target="_self">DSP_GetJpegDecoderMakerNoteSize</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGデータ中のメーカーノート内に存在するDSiカメラ用データのサイズを取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/DSP_GetJpegDecoderMakerNoteAddrEx.html" target="_self">DSP_GetJpegDecoderMakerNoteAddrEx</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGデータ中のメーカーノート内に存在する各種データの先頭アドレスを取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/DSP_GetJpegDecoderMakerNoteSizeEx.html" target="_self">DSP_GetJpegDecoderMakerNoteSizeEx</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGデータ中のメーカーノート内に存在する各種データのサイズを取得します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/DSP_SetJpegDecoderSignMode.html" target="_self">DSP_SetJpegDecoderSignMode</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>デコード時に署名をチェックする機能の有効/無効を切り替える。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/DSP_CheckJpegDecoderSign.html" target="_self">DSP_CheckJpegDecoderSign</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGファイルの署名チェックを行います。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/DSP_StartJpegDecoder.html" target="_self">DSP_StartJpegDecoder</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>JPEGデコードを行います。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="jpeg_dec/DSP_GetJpegDecoderBufferSize.html" target="_self">DSP_GetJpegDecoderBufferSize</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>デコード結果の出力先バッファとして必要となるサイズを取得します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+-->
+
+<H3><A name="Graphics">グラフィックス</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="graphics/DSP_OpenStaticComponentGraphics.html" target="_self">DSP_OpenStaticComponentGraphics</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>グラフィックスコンポーネント用のメモリファイルを開きます。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="graphics/DSP_LoadGraphics.html" target="_self">DSP_LoadGraphics</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>グラフィックスコンポーネントをロードします。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="graphics/DSP_UnloadGraphics.html" target="_self">DSP_UnloadGraphics</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>グラフィックスコンポーネントをアンロードします。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="graphics/DSP_ConvertYuvToRgb.html" target="_self">DSP_ConvertYuvToRgb</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>YUV422フォーマットの画像データをRGB555フォーマットにコンバートします。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="graphics/DSP_Scaling.html" target="_self">DSP_Scaling</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>画像(RGB555フォーマット)の拡大縮小を行います。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="graphics/DSP_ScalingFx.html" target="_self">DSP_ScalingFx</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>倍率を fx32型で指定し、画像(RGB555フォーマット)の拡大縮小を行います。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="graphics/DSP_CalcScalingFactor.html" target="_self">DSP_CalcScalingFactor</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>入力、出力後サイズから、DSP_Scaling に渡す倍率を逆算させて取得できます。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="graphics/DSP_Macro.html" target="_self">マクロ</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>グラフィックスコンポーネントのマクロ定義です。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H3><A name="Common">共通</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="common/DSP_PlaySound.html" target="_self">DSP_PlaySound</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>DSP からサウンドを再生します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="common/DSP_PlayShutterSound.html" target="_self">DSP_PlayShutterSound</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>DSP から強制的にサウンドを再生します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="common/DSP_StopSound.html" target="_self">DSP_StopSound</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>DSP からのサウンド再生を停止します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="common/DSP_IsSoundPlaying.html" target="_self">DSP_IsSoundPlaying</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>DSP からサウンドを再生中か判定します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="common/DSP_IsShutterSoundPlaying.html" target="_self">DSP_IsShutterSoundPlaying</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>DSP からシャッター音を再生中か判定します。</TD>
+    </TR>
+
+    <TR>
+      <TH nowrap width="25%"><A href="common/DSP_StartSampling.html" target="_self">DSP_StartSampling</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>DSP によるマイク入力の自動サンプリングを開始します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="common/DSP_StopSampling.html" target="_self">DSP_StopSampling</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>DSP によるマイク入力の自動サンプリングを停止します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="common/DSP_SyncSamplingBuffer.html" target="_self">DSP_SyncSamplingBuffer</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>DSP 内部の未読サンプリングデータをARM9のリングバッファへ転送します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="common/DSP_GetLastSamplingAddress.html" target="_self">DSP_GetLastSamplingAddress</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>リングバッファの最新サンプリング位置を取得します。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<table border="0" height="100%"><tr><td style="background-color : white;"></td></tr></table>
+
+</BODY>
+</HTML>

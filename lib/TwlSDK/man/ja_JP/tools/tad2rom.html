@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>maketad</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD,TH{
+  border-color	: #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+<H1 align="left">tad2rom</H1>
+<H2>説明</H2>
+
+<P>　<CODE>tad2rom</CODE> は、指定された tad ファイルを内包する srl （<code>.tad.srl</code>）を生成するツールです。</P>
+<P>　<CODE>maketad</CODE>の -n オプションと同等の処理を tad ファイルに対して行います。
+</P>
+<P>
+</P>
+
+<H2>使用方法</H2>
+<H3>起動コマンド</H3>
+<P><CODE>% tad2rom TADFILE </CODE></P>
+<P><CODE>TADFILE</CODE> は、 出力する srl ファイルに内包する tad ファイルです。TADFILE.srl というファイルを出力します。</P>
+　出力された srl を書き込んだ DS カードを TWL 本体の DS カードスロットに差し込んでから
+　本体保存メモリにインポートした TwlNmenu を起動することで、内包する tad からインポートを行うことができます。</P>
+<P><CODE><B>-h</B></CODE> オプションは、簡単な使い方を表示します。</P>
+<H2>場所</H2>
+<P><CODE>$TwlSDK/tools/bin/tad2rom.exe</CODE></P>
+<H2>参照</H2>
+<P>なし</P>
+<H2>履歴</H2>
+<P>
+2008/12/25 初版作成
+</P>
+</BODY>
+</HTML>

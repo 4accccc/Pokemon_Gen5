@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>AESCounter</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">AESCounter　<IMG src="../../image/TWL.gif" width="23" height="12" border="0" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <pre><CODE>#include &lt;twl/aes.h&gt;
+
+#define AES_COUNTER_SIZE        16  // 128 bit
+
+typedef union AESCounter
+{
+    u8  bytes[AES_COUNTER_SIZE];
+    u32 words[AES_COUNTER_SIZE/sizeof(u32)];
+}
+AESCounter;
+</CODE></pre><br>
+</dd>
+</dl>
+
+<H2>要素</H2>
+<TABLE border="1" width="100%" class="members">
+  <TBODY>
+    <TR>
+      <TH>bytes</TH>
+      <TD>バイト配列としての AES カウンタ初期値です。</TD>
+    </TR>
+    <TR>
+      <TH>words</TH>
+      <TD>ワード配列としての AES カウンタ初期値です。TWL はリトルエンディアンであることに注意してください。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+<P>
+CTR モードの AES で暗号化結果を撹乱するために用いられるカウンタ初期値を格納する共用体です。
+</P>
+
+<H2>履歴</H2>
+<P>
+2007/12/25 初版
+</P>
+</BODY>
+</HTML>

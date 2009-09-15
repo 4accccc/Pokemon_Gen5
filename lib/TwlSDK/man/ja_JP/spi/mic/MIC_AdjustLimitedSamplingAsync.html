@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 8.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+<TITLE>MIC_AdjustLimitedSamplingAsync</TITLE>
+</HEAD>
+
+<BODY>
+
+<H1 align="left">MIC_AdjustLimitedSamplingAsync <img src="../../image/TWL.gif"></H1>
+
+<H2>構文</H2>
+<DL>
+  <DD>
+<CODE>#include &lt;twl/spi.h&gt;</CODE><BR>
+  <PRE><CODE><A href="MICResult.html">MICResult</A> MIC_AdjustLimitedSamplingAsync(
+          u32             rate,
+          <A href="MICCallback.html">MICCallback</A>     callback,
+          void*           arg );</CODE></PRE>
+
+  </DD>
+</DL>
+
+<H2>引数</H2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="300"><em><strong><font face="Courier New">rate</font></strong></em></TD>
+      <TD width="700">サンプリング周期を指定します。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><FONT face="Courier New">callback</FONT></STRONG></EM></TD>
+      <TD>コールバック関数へのポインタを指定します。<br>このコールバックは割り込みハンドラ内から呼び出されます。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><FONT face="Courier New">arg</FONT></STRONG></EM></TD>
+      <TD>コールバック関数へ渡す引数を指定します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>返り値</H2>
+<P>
+<CODE><A href="MICResult.html">MICResult</A></CODE>列挙型の処理結果を返します。<BR>
+非同期処理を正常に開始できた場合に <em><strong><font face="Courier New">MIC_RESULT_SUCCESS</font></strong></em> が、何らかの原因で失敗した場合にはそれ以外の返り値が返されます。
+</P>
+
+<H2>説明</H2>
+<P>
+マイクの周波数限定自動サンプリングにおけるサンプリングレートの調整を非同期に開始します。<BR>
+この関数はARM7に周波数限定自動サンプリング調整要求を発行し、ARM7からの応答を待たずに呼び出し元に戻ります。
+ARM7における処理結果はユーザコールバック関数に渡される<EM><STRONG><FONT face="Courier New">result</FONT></STRONG></EM>引数によって取得する必要があります。
+この関数が失敗した場合は非同期的な操作は行われず、ユーザコールバック関数も呼び出されません。<BR>
+周波数限定自動サンプリングが開始されている場合にのみ有効であり、ARM7が要求を受け付けた時点でサンプリング周期が更新されます。
+</P>
+<P>
+周波数限定自動サンプリングは通常の自動サンプリングと異なり、実際のサンプリング操作をハードウェアで行います。
+このため、厳密な周期で安定したサンプリングを行うことができ、ARM7でのCPU負荷が緩和されることにより無線通信などの他のI/Oに与える影響が少なくなります。
+反面、ハードウェアのサポートする周波数以外ではサンプリングを行うことができません。
+<em><strong><font face="Courier New">rate</font></strong></em> に指定可能なサンプリング周波数は以下の通りですが、サウンドのマスター周波数設定に依存して更に以下の内の４つに限定されます。
+限定された周波数以外を指定した場合には <em><strong><font face="Courier New">MIC_RESULT_ILLEGAL_PARAMETER</font></strong></em> が返されます。
+</P>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH width="20%"><center>サウンドマスター周波数</center></TD>
+      <TH width="40%"><center>設定可能な周波数</center></TD>
+      <TH width="40%"><center>説明</center></TD>
+    </TR>
+    <TR>
+      <TD rowspan="4">32.73kHz</TD>
+      <TD><em><strong><font face="Courier New">MIC_SAMPLING_RATE_32730</font></strong></em></TD>
+      <TD>32.73kHz (マスター周波数の1/1)</TD>
+    </TR>
+    <TR>
+      <TD><em><strong><font face="Courier New">MIC_SAMPLING_RATE_16360</font></strong></em></TD>
+      <TD>16.36kHz (マスター周波数の1/2)</TD>
+    </TR>
+    <TR>
+      <TD><em><strong><font face="Courier New">MIC_SAMPLING_RATE_10910</font></strong></em></TD>
+      <TD>10.91kHz (マスター周波数の1/3)</TD>
+    </TR>
+    <TR>
+      <TD><em><strong><font face="Courier New">MIC_SAMPLING_RATE_8180</font></strong></em></TD>
+      <TD>8.18kHz (マスター周波数の1/4)</TD>
+    </TR>
+    <TR>
+      <TD rowspan="4">47.61kHz</TD>
+      <TD><em><strong><font face="Courier New">MIC_SAMPLING_RATE_47610</font></strong></em></TD>
+      <TD>47.61kHz (マスター周波数の1/1)</TD>
+    </TR>
+    <TR>
+      <TD><em><strong><font face="Courier New">MIC_SAMPLING_RATE_23810</font></strong></em></TD>
+      <TD>23.81kHz (マスター周波数の1/2)</TD>
+    </TR>
+    <TR>
+      <TD><em><strong><font face="Courier New">MIC_SAMPLING_RATE_15870</font></strong></em></TD>
+      <TD>15.87kHz (マスター周波数の1/3)</TD>
+    </TR>
+    <TR>
+      <TD><em><strong><font face="Courier New">MIC_SAMPLING_RATE_11900</font></strong></em></TD>
+      <TD>11.90kHz (マスター周波数の1/4)</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>注意</H2>
+<P>
+<FONT color=red>
+NITROプラットフォーム上やCODECをCODEC-DSモードで動作させる場合には周波数限定自動サンプリングは行うことができないため、
+代わりに自動サンプリング操作用関数<CODE><A href="MIC_AdjustAutoSamplingAsync.html">MIC_AdjustAutoSamplingAsync()</A></CODE>が内部的に呼び出されます。
+</FONT>
+</P>
+<P><FONT color=red>TWL のマイク入力には、微小なノイズが混入することが判明しています。対策は<A href="./about_HardwareNoise.html">こちら</A>をご覧下さい。</FONT></P>
+<H2>参照</H2>
+<P>
+<CODE>
+<A href="MIC_AdjustLimitedSampling.html">MIC_AdjustLimitedSampling</A>, <A href="MIC_StartLimitedSamplingAsync.html">MIC_StartLimitedSamplingAsync</A>, <A href="MIC_StopLimitedSamplingAsync.html">MIC_StopLimitedSamplingAsync</A>
+</CODE>
+</P>
+
+<H2>履歴</H2>
+<P>
+Ver. 2008/01/09 CODECモードによる動作の差異についての注意を追記<BR>
+Ver. 2007/11/17 初版<BR>
+</P>
+</BODY>
+</HTML>

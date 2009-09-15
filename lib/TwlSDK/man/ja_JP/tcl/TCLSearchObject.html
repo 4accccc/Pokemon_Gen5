@@ -1,0 +1,41 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCLSearchObject</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCLSearchObject <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+typedef struct
+{
+    int startIdx;
+    u32 condition;
+} TCLSearchObject;
+	</code></pre>
+</dl>
+
+<h2>説明</h2>
+<p>検索関連の関数に使用する構造体です。</p>
+<p><a href="TCL_InitSearchObject.html"><code>TCL_InitSearchObject</code></a> を使用して初期化してから使用します。</p>
+<p>各メンバをアプリ側で操作することは禁止されています。</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="TCL_InitSearchObject.html">TCL_InitSearchObject</a> <a href="TCL_SearchNextPictureInfo.html">TCL_SearchNextPictureInfo</a> <a href="TCL_SearchPictureInfoByIndex.html">TCL_SearchPictureInfoByIndex</a> <a href="TCL_SearchNextPicturePath.html">TCL_SearchNextPicturePath</a> <a href="TCL_SearchPicturePathByIndex.html">TCL_SearchPicturePathByIndex</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/10/07 初版<br/>
+</p>
+
+</body>
+</html>

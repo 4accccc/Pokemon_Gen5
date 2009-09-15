@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>OS_TryLockMutexFrom[RToW|WToR]</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">OS_TryLockMutexFrom[RToW|WToR] <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>BOOL OS_TryLockMutexFromRToW( OSMutex* mutex );</CODE><BR>
+  <BR>
+  <CODE>BOOL OS_TryLockMutexFromWToR( OSMutex* mutex );</CODE></dd>
+</dl>
+
+<h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>mutex</STRONG></EM></TD>
+      <TD width="87%">OSMutex 構造体へのポインタ</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p><B><I>mutex</I></B> のロックを正しく read lock から write lock へ、あるいは write lock から
+read lock へ移行できた場合は TRUE を、そうでない場合は FALSE を返します。</p>
+
+<H2>説明</H2>
+<P>ロックされている <B><I>mutex</I></B> の種類を変更します。</P>
+<P><B><I>mutex</I></B> は変更しようとしている OSMutex 構造体へのポインタです。</P>
+<P><CODE>OS_TryLockMutexFromWToR()</CODE> は write lock された <B><I>mutex</I></B> を read lock へ移行しようとします。成功すると、それ以降は read lock の性質を持ち、アンロックする場合も
+<CODE><A href="OS_UnlockMutexRW.html">OS_UnlockMutexR()</A></CODE> または <CODE><A href="OS_UnlockMutexRW.html">OS_UnlockMutexRW()</A></CODE> で行う必要があります。</P>
+<P><CODE>OS_TryLockMutexFromRToW()</CODE> は read lock された <B><I>mutex</I></B> を write lock へ移行します。成功すると、それ以降は write lock の性質を持ち、アンロックする場合も
+<CODE><A href="OS_UnlockMutexRW.html">OS_UnlockMutexW()</A></CODE> または <CODE><A href="OS_UnlockMutexRW.html">OS_UnlockMutexRW()</A></CODE> で行う必要があります。</P>
+<P><B><I>mutex</I></B> が、多段にロックされていたり、種類が正しくない場合は失敗となり、FALSE を返します。多段にロックされるというのは、複数のスレッドからロックされていたり、同じスレッドであっても同じ <CODE>OSMutex</CODE> 構造体に対し二重以上にロックの関数を呼んでいる場合です。種類が正しくないというのは、例えば、read
+lock から write lock に移行しようとしているのに、read lock のミューテックスではないような場合です。</P>
+<BLOCKQUOTE style="background-color:#ffffcc"><CODE><B>(例1)</B><BR>
+OSMutex mutex;<BR>
+<BR>
+OS_LockMutexR( &amp;mutex );<BR>
+OS_LockMutexR( &amp;mutex );<BR>
+<BR>
+if ( OS_TryLockMutexFromRToW( &amp;mutex ) == FALSE )　　<FONT color="#ff0000">← mutex が多段にロックされているので FALSE を返します。</FONT><BR>
+{<BR>
+　　：<BR>
+}</CODE></BLOCKQUOTE>
+<BLOCKQUOTE style="background-color:#ffffcc"><CODE><B>(例2)</B><BR>
+OSMutex mutex;<BR>
+<BR>
+OS_LockMutexR( &amp;mutex );<BR>
+if ( OS_TryLockMutexFromWToR( &amp;mutex ) == FALSE )　　<FONT color="#ff0000">← read lock なのに &quot;FromWToR&quot; なので FALSE を返します。</FONT><BR>
+{<BR>
+　　：<BR>
+}</CODE></BLOCKQUOTE>
+<P>成功であっても失敗であっても、本関数からはすぐに戻ります。 スレッドの切り替わりが発生することはありません。</P>
+<h2>参照</h2>
+<p><CODE><A href="OS_InitMutex.html">OS_InitMutex</A>, <A href="OS_LockMutex.html">OS_LockMutex</A>, <A href="OS_UnlockMutex.html">OS_UnlockMutex</A><BR>
+<A href="OS_LockMutexRW.html">OS_LockMutexR</A>, <A href="OS_LockMutexRW.html">OS_LockMutexW</A>, <A href="OS_UnlockMutexRW.html">OS_UnlocMutexR</A>, <A href="OS_UnlockMutexRW.html">OS_UnlocMutexW</A><BR>
+<A href="OS_TryLockMutexRW.html">OS_TryLockMutexR</A>, <A href="OS_TryLockMutexRW.html">OS_TryLockMutexW</A><br>
+<A href="OS_LockMutexFromToRW.html">OS_LockMutexFromRToW</A>, <A href="OS_LockMutexFromToRW.html">OS_LockMutexFromWToR</A><BR>
+</CODE></p>
+
+<H2>履歴</H2>
+<P>2008/12/16 初版</P>
+</body>
+</html>

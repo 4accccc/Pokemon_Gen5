@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>DSPコンポーネントの利用方法 (overview)</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">DSPコンポーネントの利用方法 (overview) <IMG src="../../image/TWL.gif"></H1>
+<P>このページでは DSP ライブラリで提供している各種コンポーネントの利用方法について説明します。</P>
+
+<A name="OVERVIEW"><H2>概要</H2></A>
+<P>TwlSDK では、DSP を用いて画像や音声データのデコード、エンコードといった処理を行うことができる DSP ライブラリを用意しています。
+</P>
+<P>DSP ライブラリとして提供している機能は以下の通りです。</P>
+<UL>
+	<LI>G.711 エンコード/デコード</LI>
+	<LI>グラフィックス</LI>
+	<LI>コンポーネント共通機能（サウンド再生、マイクサンプリングなど）</LI>
+</UL>
+
+<A name="COMPONENT"><H2>コンポーネント</H2></A>
+<P>DSP ライブラリの各機能は、ライブラリをリンクすればすぐに使えるわけではありません。<BR>
+各機能は「コンポーネント」として分けられており、<FONT color="red">使いたいコンポーネントをアプリケーション側で DSP にロードしなければなりません。</FONT><BR>
+各コンポーネントのロード関数(<CODE>DSP_Load*()</CODE>)を実行した時点で、DSP は動作状態になります。なお、何らかのコンポーネントがロードされた状態でスリープに入ることは禁止されています。<BR>
+</P>
+
+<P>DSP は WRAM-B,C をそれぞれコード領域、データ領域として使用します（詳しくは<A href="../../mi/wram/about_Wram.html">ワークRAMの概要</A>を参照）。使用するサイズ（スロット数）は各コンポーネントによって異なります。<BR>
+各コンポーネントのサイズを表すマクロを定義しており、それぞれのロード関数（<CODE>DSP_Load*()</CODE>）の説明に書いています。</P>
+
+<A name="LOAD"><H2>コンポーネントのロード</H2></A>
+<P>各コンポーネントは、<CODE>$TwlSDK/dspcomponents/</CODE>（コンポーネント名） 以下に入っている *.a ファイルです。<BR>
+このコンポーネントファイルを展開する必要があるのですが、DSP ライブラリでは各コンポーネントファイルを静的メモリに配置してオープンする<BR>
+<CODE>DSP_OpenStaticComponent*()</CODE> を用意しています（ただし、プログラムの常駐サイズは増加します）。</P>
+
+<P>サイズを小さくしたい場合、圧縮したコンポーネントファイルをメモリに配置しておき、随時伸張して <A href="../../fs/file/FS_CreateFileFromMemory.html"><CODE>FS_CreateFileFromMemory()</CODE></A> を使用してオープンする方法をとることができます。<BR>
+（<CODE>DSP_OpenStaticComponent*()</CODE> の内部でも <A href="../../fs/file/FS_CreateFileFromMemory.html"><CODE>FS_CreateFileFromMemory()</CODE></A>を使用しています）
+</P>
+
+<P>コンポーネントのロードは、<CODE>DSP_Load*()</CODE> の引数に先ほどオープンしたコンポーネントファイルである <A href="../../fs/fs_file_type.html"><CODE>FSFile</CODE></A> 構造体を渡すことで行います。<BR>
+また、WRAM-B, WRAM-C の中で DSP に使わせてもよいスロットを指定する必要があります。<BR>
+このとき、ロードに必要な WRAM-B および WRAM-C の空きスロット数が不足している場合は失敗します。
+</P>
+<P>DSP のロード関数は、必要に応じて WRAM のスロットを ARM9、DSP の両方に切り替えます。<BR>
+<A href="../../mi/wram/MI_ReserveWram.html"><CODE>MI_ReserveWram*()</CODE></A> で予約されたスロットは切り替えが禁止されているため、このようなスロットを指定すると失敗してしまいます。<BR>
+従って、<FONT color=red>DSP のために WRAM をあらかじめ予約する必要はありません。</FONT>
+</P>
+
+<P>ロードに必要な空き領域があるなら、それらのスロットの中から必要な領域だけを DSP が確保します。<BR>
+</P>
+
+<P>なお、<B><FONT color="red">複数のコンポーネントを同時にロードして使用することはできません。</FONT></B></P>
+
+<H3>例</H3>
+<BLOCKQUOTE style="background-color:#ffffd0;"><CODE>// G.711 コンポーネントを使った例<BR>
+FSFile *file;<BR>
+// G.711 コンポーネントファイルをオープン<BR>
+DSP_OpenStaticComponentG711(file);<BR>
+// ロード<BR>
+DSP_LoadG711(file, 0xff, 0xff);<BR>
+</CODE></BLOCKQUOTE>
+
+<P>上の例の場合、DSP用に確保される WRAM-B, WRAM-C は各 WRAM の全スロットの中から必要な分だけ選択されます。
+</P>
+
+<H2>コンポーネントのアンロード</H2>
+<P>WRAM を空けたいためにロードしたコンポーネントを削除したいとき、またはアプリケーションのスリープ時、終了時には、<CODE>DSP_Unload*()</CODE>を用いて<FONT color="red">コンポーネントをアンロードする必要があります。</FONT></P>
+<P>アンロードによって、DSP のために確保されていた WRAM-B, WRAM-C のスロットが解放されます。</P>
+
+<H3>例</H3>
+<BLOCKQUOTE style="background-color:#ffffd0;"><CODE>// G.711 コンポーネントのアンロード<BR>
+DSP_UnloadG711();<BR>
+</CODE></BLOCKQUOTE>
+
+<H2>参照</H2>
+<P><A href="../list_dsp.html">DSP 機能一覧</A></P>
+
+<H2>履歴</H2>
+<P>
+2008/11/04 コンポーネントロード時のスリープ禁止について追記<br>
+2008/10/21 コンポーネントのアンロードが必要となる場面を追加<br>
+2008/09/03 初版</P>
+</BODY>
+</HTML>

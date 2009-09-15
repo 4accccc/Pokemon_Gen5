@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>OS_UnlockMutex[R|W|RW]</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">OS_UnlockMutex[R|W|RW] <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>void OS_UnlockMutexR( OSMutex* mutex );</CODE><BR>
+  <BR>
+  <CODE>void OS_UnlockMutexW( OSMutex* mutex );</CODE><BR>
+  <BR>
+  <CODE>void OS_UnlockMutexRW( OSMutex* mutex );</CODE></dd>
+</dl>
+
+<h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>mutex</STRONG></EM></TD>
+      <TD width="87%">OSMutex構造体へのポインタ</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>なし。</p>
+
+<H2>説明</H2>
+<P>呼び出したスレッドは<B><I>mutex</I></B> を解放します。</P>
+<P><CODE>OS_UnlockMutexR()</CODE> は read lock をアンロックする関数です。read lock をアンロックする場合は、呼び出したスレッドが
+<B><I>mutex</I></B> の所有者でなくても構いません。ただし、この <B><I>mutex</I></B> が n 回ロックされていた場合、n 番目の <CODE>OS_UnlockMutexR()</CODE> でのみ実際に <B><I>mutex</I></B> を解放します。</P>
+<P><CODE>OS_UnlockMutexW()</CODE> は write lock をアンロックする関数です。write lock をアンロックする場合は、呼び出したスレッドは
+<B><I>mutex</I></B> の所有者でなければなりません。ただし、呼び出したスレッドがこの <B><I>mutex</I></B> を n 回ロックしていた場合、n 番目の <CODE>OS_UnlockMutexW()</CODE> でのみ実際に<B><I>mutex</I></B> を解放します。</P>
+<P><CODE>OS_UnlockMutexRW()</CODE> は read lock、write lock のどちらもアンロック出来る関数です。前述の <CODE>OS_UnlockMutexR()</CODE> と <CODE>OS_UnlockMutexW()</CODE> の両方の特性を備えています。<CODE><A href="OS_LockMutex.html">OS_LockMutex()</A></CODE> でロックされたものもアンロック可能です。</P>
+<H3><BR>
+ロックとアンロックの対応</H3>
+<P><CODE><A href="OS_LockMutexRW.html">OS_LockMutexR()</A></CODE> でロックした <B><I>mutex</I></B> は <CODE>OS_UnlockMutexR()</CODE> または <CODE>OS_UnlockMutexRW()</CODE> でアンロックしてください。<CODE>OS_UnlockMutexW()</CODE> でアンロックしようとすると <CODE><A href="../debug/OS_Panic.html">OS_Panic()</A></CODE> で停止します。</P>
+<P><CODE><A href="OS_LockMutexRW.html">OS_LockMutexW()</A></CODE> でロックした <B><I>mutex</I></B> は <CODE>OS_UnlockMutexW()</CODE> または <CODE>OS_UnlockMutexRW()</CODE> でアンロックしてください。<CODE>OS_UnlockMutexR()</CODE> でアンロックしようとすると <CODE><A href="../debug/OS_Panic.html">OS_Panic()</A></CODE> で停止します。</P>
+<P>また、ロックされていない <B><I>mutex</I></B> を <CODE>OS_UnlockMutexR()</CODE>, <CODE>OS_UnlockMutexW()</CODE>, <CODE>OS_UnlockMutexRW()</CODE> でアンロックしようとすると <CODE><A href="../debug/OS_Panic.html">OS_Panic()</A></CODE> で停止します。</P>
+<P>いずれも <CODE><A href="../debug/OS_Panic.html">OS_Panic()</A></CODE> で停止した場合はロック関数とアンロック関数の対応が取れていないということなので、アプリケーションプログラム上の不具合が考えられます。</P>
+<H3><BR>
+スレッドの終了</H3>
+<P><B><I>mutex</I></B> をロックしているスレッドが <A href="../thread/OS_ExitThread.html"><CODE>OS_ExitThread()</CODE></A> によって終了したときは、その<B><I>mutex</I></B> は自動的にアンロックされます。</P>
+<h2>参照</h2>
+<p><CODE><A href="OS_InitMutex.html">OS_InitMutex</A>, <A href="OS_LockMutex.html">OS_LockMutex</A>, <A href="OS_TryLockMutex.html">OS_TryLockMutex</A>, <A href="../thread/OS_ExitThread.html">OS_ExitThread</A><br>
+<A href="OS_LockMutexRW.html">OS_LockMutexR</A>, <A href="OS_LockMutexRW.html">OS_LockMutexW</A>, <A href="OS_TryLockMutexRW.html">OS_TryLockMutexR</A>, <A href="OS_TryLockMutexRW.html">OS_TryLockMutexW</A><BR>
+<A href="OS_LockMutexFromToRW.html">OS_LockMutexFromRToW</A>, <A href="OS_LockMutexFromToRW.html">OS_LockMutexFromWToR</A>,<BR>
+<A href="OS_TryLockMutexFromToRW.html">OS_TryLockMutexFromRToW</A>, <A href="OS_TryLockMutexFromToRW.html">OS_TryLockMutexFromWToR</A></CODE></p>
+<H2>履歴</H2>
+<P>2008/12/16 初版</P>
+</body>
+</html>

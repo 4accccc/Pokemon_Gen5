@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>cmptad</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD,TH{
+  border-color	: #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+<H1 align="left">cmptad</H1>
+<H2>説明</H2>
+
+<P><CODE>cmptad</CODE> は、指定された 2 つのファイルについて SRL の同一性を確認する Windows ツールです。具体的には以下の組合せについて判定を行います。</P>
+<ul>
+<li>指定された 2 つの tad ファイルに含まれる SRL の同一性
+<li>指定された tad ファイルに含まれる SRL と指定された SRL の同一性
+</ul>
+<P>
+<CODE>maketad.exe</CODE> で作成される tad ファイルは生成するごとに異なるデータを出力するため、
+単純な比較では内部に含まれる SRL が同一かどうかを確認することはできません。
+</P>
+
+<H2>使用方法</H2>
+<H3>起動コマンド</H3>
+<P>
+    <CODE>% cmptad [-s] &lt;tad1&gt;|&lt;srl1&gt; &lt;tad2&gt;|&lt;srl2&gt;</CODE>
+</P>
+
+<P>
+    <CODE>&lt;tad1&gt;|&lt;srl1&gt;</CODE> および <CODE>&lt;tad2&gt;|&lt;srl2&gt;</CODE> には比較する対象の tad ファイル、もしくは srl ファイルのパスを指定します。
+</P>
+<P>
+    <CODE><B>-s</B></CODE> オプションが指定されると標準出力に一切の出力をださないようになります。
+</P>
+
+<H3>返り値</H3>
+<ul>
+<li>返り値＝0： エラーがなく 2 つのファイルが同一だった場合。
+<li>返り値＝1： エラーがなく 2 つのファイルが異なっていた場合。
+<li>返り値＝2： コマンドライン引数にエラーがあるとき。
+<li>返り値＝3： 指定されたファイルにエラーがあるとき。
+</ul>
+
+<H2>場所</H2>
+<P><CODE>$TwlSDK/tools/bin/cmptad.exe</CODE></P>
+
+<H2>参照</H2>
+<P>なし</P>
+
+<H2>履歴</H2>
+<P>
+2008/12/04 tad と srl ファイル間の比較方法の記述を追加<BR>
+2008/10/06 初版作成
+</P>
+</BODY>
+</HTML>

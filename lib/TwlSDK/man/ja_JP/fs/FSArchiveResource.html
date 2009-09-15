@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FSArchiveResource</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FSArchiveResource <img src="../image/NTR.gif"align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+<h2>定義</h2>
+<pre><code>
+
+typedef struct FSArchiveResource
+{
+    u64     totalSize;
+    u64     availableSize;
+    u32     maxFileHandles;
+    u32     currentFileHandles;
+    u32     maxDirectoryHandles;
+    u32     currentDirectoryHandles;
+    // for FAT archives.
+    u32     bytesPerSector;
+    u32     sectorsPerCluster;
+    u32     totalClusters;
+    u32     availableClusters;
+}
+FSArchiveResource;
+
+</code></pre>
+
+<h2>説明</h2>
+<p><code><a href="archive/FS_GetArchiveResource.html">FS_GetArchiveResource()</a></code> で取得できるリソース情報をあらわす構造体です。<br />
+各メンバの内容は以下の通りです。</p>
+<table>
+<tr><td>totalSize</td><td>アーカイブの全体容量をバイト数で表します。<br />64bits整数である点に注意してください。</td></tr>
+<tr><td>availableSize</td><td>アーカイブ内の空き容量をバイト数で表します。<br />64bits整数である点に注意してください。</td></tr>
+<tr><td>maxFileHandles</td><td>同時に開くことの出来るファイルの最大数を表します。</td></tr>
+<tr><td>currentFileHandles</td><td>現在開いているファイルの最大数を表します。</td></tr>
+<tr><td>maxDirectoryHandles</td><td>同時に開くことの出来るディレクトリの最大数を表します。</td></tr>
+<tr><td>currentDirectoryHandles</td><td>現在開いているディレクトリの最大数を表します。</td></tr>
+<tr><td colspan='2' style='background-color:white'>以下のメンバは<a href="archive_nand_spec.html">NANDアーカイブ</a>や<a href="archive_sdmc_spec.html">SDカードアーカイブ</a>など、内部的にFAT構造を持つアーカイブに限り有効です。</td></tr>
+<tr><td>bytesPerSector</td><td>1セクタあたりのバイト数を表します。</td></tr>
+<tr><td>sectorsPerCluster</td><td>1クラスタあたりのセクタ数を表します。</td></tr>
+<tr><td>totalClusters</td><td>全体のクラスタ数を表します。</td></tr>
+<tr><td>availableClusters</td><td>空きのクラスタ数を表します。</td></tr>
+</table>
+
+<h2>参照</h2>
+<p><code>
+<a href="archive/FS_GetArchiveResource.html">FS_GetArchiveResource</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2007/12/17 初版<br />
+</p>
+</body>
+</html>

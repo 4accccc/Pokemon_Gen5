@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<LINK rel="stylesheet" type="text/css" href="../../css/nitro.css">
+<TITLE>CARD Demos</TITLE>
+</HEAD>
+<BODY>
+<H1>CARD ライブラリ(CARD)サンプルデモ</H1>
+<H2>場所</H2>
+<P><CODE>$TwlSDK/build/demos/card</CODE></P>
+<H2>コンパイル方法</H2>
+<P><CODE>$TwlSDK/build/demos/card</CODE>ディレクトリに移り、</P>
+<BLOCKQUOTE><CODE>% make</CODE></BLOCKQUOTE>
+<P>と入力します。コンパイルが始まり、実行ファイルである <CODE>.srl</CODE> ファイルやバイナリ情報を記述した <CODE>.nef</CODE> または <CODE>.tef</CODE> ファイルが、</P>
+<BLOCKQUOTE><CODE>$TwlSDK/build/demos/card/(サンプル名)/bin/(プラットフォーム)/(ターゲット)/</CODE></BLOCKQUOTE>
+<P>の下に生成されます。例えば、</P>
+<BLOCKQUOTE><CODE>$TwlSDK/build/demos/card/backup/bin/ARM9-TS/Release/main.srl</CODE></BLOCKQUOTE>
+<P>が <CODE>backup</CODE> デモの実行ファイルとなります。</P>
+
+<H2>実行方法</H2>
+<H3>NITRO ROM の場合</H3>
+
+<P>Ensata エミュレータを用いる場合</P>
+<UL>
+  <LI>ensata で <CODE>*.nef</CODE>, <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-NITRO-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<H3>TWL/NITRO HYBRID ROM の場合</H3>
+<P>IS-NITRO-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<H3>TWL LIMITED ROM の場合</H3>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+
+<H2>説明</H2>
+<TABLE width="720">
+  <TBODY>
+    <TR>
+      <TH>デモ名</TH>
+      <TH>ディレクトリ</TH>
+      <TH>動作</TH>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>backup</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">CARD ライブラリによるバックアップデバイスへのアクセス方法を示す、ごく簡単な雛形です。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>card-1trom</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">ROM種類をワンタイムPROMに指定して転送速度をデバッグ出力するサンプルです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>card-mrom</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">ROM種類をマスクROMに指定して転送速度をデバッグ出力するサンプルです。</TD>
+    </TR>
+    <TR>
+      <TD>(カートリッジデモに含まれる)<BR>
+      <STRONG><CODE><EM>ctrdg/pullout-1</EM></CODE></STRONG></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>このサンプルはカートリッジデモ ($TwlSDK/build/demos/ctrdg) に含まれます。<BR>
+      カードとカートリッジの抜け検出を行います。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>動作</H2>
+<P><CODE>card-mrom は NTR モードでしか正常動作しません。</CODE></P>
+<H2>参照</H2>
+<P><A href="../../card/list_card.html"><CODE>CARD関数一覧</CODE></A></P>
+<H2>履歴</H2>
+<P>
+2008/12/12 card-1 のデモを backup デモに改名<BR>
+2008/07/11 TWLに対応した記述に変更<BR>
+2005/04/26 用語修正 「1タイムROM」→「ワンタイムPROM」<br>
+2005/04/06 card-1trom デモ、card-mrom デモについての記述追加<BR>
+2005/03/02 記述内容を現在のサポート環境の状況に合うよう修正<BR>
+2004/10/06 ctrdg/pullout-1 デモについての記述追加<BR>
+2004/09/10 初版<br>
+</P>
+</BODY>
+</HTML>

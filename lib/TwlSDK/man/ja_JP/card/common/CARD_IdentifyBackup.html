@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>CARD_IdentifyBackup</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">CARD_IdentifyBackup<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/card.h&gt;</CODE><BR>
+  <BR>
+  <CODE>BOOL	CARD_IdentifyBackup(CARDBackupType type);</CODE><br>
+  <br>
+  </dd>
+</dl>
+<h2>引数</h2>
+<p>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>type</STRONG></EM></TD>
+      <TD width="87%">CARDに搭載されているバックアップデバイスの種類<br>
+	  <font color="Red"><A href="../card_backup_type_const.html">CARD_BACKUP_TYPE_NOT_USE</A>を指定することはできません</font></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</p>
+
+<h2>返り値</h2>
+<p>デバイスへの1バイトリードが正しく成功すれば TRUE を返します。カードが抜けているか接触不良の場合には FALSE を返します。</p>
+
+<H2>説明</H2>
+<p>CARD に搭載されているバックアップデバイスを指定します。<BR>
+デバイスの指定とともに先頭1バイトの読み出し処理を試行し、成功すれば TRUE を、そうでないなら FALSE を返します。<br>
+成否に関する<A href="../card_result_const.html">CARDResult</A>型の詳細な結果値は<a href="CARD_GetResultCode.html">CARD_GetResultCode( )</a>で取得することができます。</p>
+
+<h2>注意</h2>
+<ul style="color:Red">
+<li>この関数による指定以降、CARD 関数は該当デバイスが確かに搭載されている前提のもとに動作します。<br />
+実際に搭載されていないデバイスを指定してアクセスすることはプログラムの異常動作および搭載デバイスの破損につながりますので、絶対に避けてください。</li>
+<li>この関数の返り値はカードの接触不良を確認することはできますが、搭載デバイスが正しい種類かどうかの確認はできません。
+たとえ返り値がTRUEであっても、実際に搭載されているデバイスが異なる場合がありえるという点に注意してください。</li>
+<li>この関数は内部でPXIを介してARM7プロセッサと通信しています。
+PXIの割り込みが有効でないと処理が完了しない点に注意してください。</li>
+<li>この関数を使用する場合、事前にアクセスバスを<A href="../backup/CARD_LockBackup.html">CARD_LockBackup</A>( )でロックしている必要があります。</li>
+</ul>
+
+<h2>参照</h2>
+<p><CODE>
+<A href="../card_result_const.html">CARDResult</A>, 
+<A href="../card_backup_type_const.html">CARDBackupType</A>, 
+<A href="CARD_GetBackupTotalSize.html">CARD_GetBackupTotalSize</A>, 
+<A href="CARD_GetBackupSectorSize.html">CARD_GetBackupSectorSize</A>, 
+<A href="CARD_GetCurrentBackupType.html">CARD_GetCurrentBackupType</A> 
+</CODE><BR></P>
+
+<H2>履歴</H2>
+<P>
+2008/09/06 返り値で実際の搭載デバイスを確認できない点に関する追記<br />
+2005/06/20 明示的にCARD_BACKUP_TYPE_NOT_USEを指定することができない旨の説明を追加<br>
+2005/04/05 内部でテスト読み込みする旨とアクセスバスのロックが必要となった旨の説明と追加<br>
+2004/12/09 記述修正 「IOプロセッサ」→「ARM7プロセッサ」<br>
+2004/09/10 非搭載デバイスの指定を強く禁止する記述を追加<br>
+2004/08/18 PXI割り込みについての記述を追加<br>
+2004/07/05 初版<BR>
+</P>
+</body>
+</html>

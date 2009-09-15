@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>SCFG_SetConfigBlockInaccessible</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">SCFG_SetConfigBlockInaccessible　<IMG src="../../image/TWL.gif" width="23" height="12" border="0" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;twl/scfg.h&gt;</CODE></PRE>
+  <PRE><CODE>static inline void SCFG_SetConfigBlockInaccessible( void );
+  </CODE></PRE>
+</DL>
+<H2>引数</H2>
+<P>なし。</P>
+<H2>返り値</H2>
+<P>なし。</P>
+<H2>説明</H2>
+<P>ARM9 のコンフィグブロックへのアクセスを禁止します。</P>
+<P>一度禁止にすると、それ以降ARM9 のコンフィグブロックへのアクセスは出来なくなります。すなわち、このアクセス禁止という設定自体も解除できません。したがって、アクセス禁止にする場合は全ての設定を終えた後にこの関数を呼んで下さい。ただし、<FONT color="#ff0000"><B>通常はアプリケーションから不可能状態にはしないようにしてください。</B></FONT></P>
+<P><B><FONT color="#ff0000">(注意)</FONT></B><BR>
+<FONT color="#ff0000">この関数は TWL ハードウェア上で動作しているときに使用してください。</FONT></P>
+<P>NITRO ハードウェアには SCFG ブロックが存在していませんので、その上で呼び出されることは想定していません。</P>
+<H2>参照</H2>
+<P><A href="../overview_scfg.html">SCFG概要</A><BR>
+<CODE><A href="SCFG_IsConfigBlockAccessible.html">SCFG_IsConfigBlockAccessible()</A></CODE></P>
+<H2>履歴</H2>
+<P>2008/04/06 アプリケーションからの不可能状態禁止の追加<BR>
+2007/10/03 初版</P>
+</BODY>
+</HTML>

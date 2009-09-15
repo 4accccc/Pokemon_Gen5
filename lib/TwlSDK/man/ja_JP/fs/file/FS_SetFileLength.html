@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_SetFileLength</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FS_SetFileLength <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+<a href="../fs_result_const.html">FSResult</a>	FS_SetFileLength(<A href="../fs_file_type.html">FSFile</a> *file, u32 length);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>file</strong></em></td>
+<td style="width:87%">ファイルハンドルを保持した<A href="../fs_file_type.html">FSFile</a>構造体<br />
+<span style='color:Red'>読み書き両方のアクセス権を持っている必要があります。</span></td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>length</strong></em></td>
+<td style="width:87%">設定するファイルサイズ</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>処理の結果を<code><a href="../fs_result_const.html">FSResult</a></code>型で返します。</p>
+
+<h2>説明</h2>
+<p>ファイルのサイズを設定します。<br />
+サイズが拡張される場合、拡張された領域の値は不定です。<br />
+サイズが縮小される場合、領域外となったシーク位置は新しい終端位置まで補正されます。</p>
+
+<h2>注意</h2>
+<p style='color:Red'>この操作はファイル終端位置を変更したあとシーク位置を元に戻す処理が必要なため、読み書き両方のアクセス権を必要とします。</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="FS_OpenFileEx.html">FS_OpenFileEx</a>
+<a href="FS_GetFileLength.html">FS_GetFileLength</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/12/08 読み書き両方のアクセス権が必要な旨を追記<br />
+2007/09/18 初版<br />
+</p>
+</body>
+</html>

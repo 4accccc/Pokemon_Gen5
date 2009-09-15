@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>bannercvtr</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD,TH{
+  border-color	: #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+<H1 align="left">bannercvtr <IMG src="../image/TWL.gif" align="middle"></H1>
+<H2>説明</H2>
+<P>TWL バナーコンバータは、NITRO-CHARACTER で作成したセルアニメーションまたは <A href="ntexconv.html"><CODE>ntexconv</CODE></A> で作成した NBF ファイルを、TWL のバナーアイコン用のバイナリファイルに変換するコマンドラインツールです。</P>
+<H2>使用方法</H2>
+<H3>起動コマンド</H3>
+<P><CODE>% bannercvtr.exe [option] NCE_FILE | XML_FILE</CODE></P>
+<P><CODE>NCE_FILE</CODE> は、NITRO-CHARACTER で作成したセルアニメーション nce ファイルを指定します</P>
+<P><CODE>XML_FILE</CODE> は、<A href="ntexconv.html"><CODE>ntexconv</CODE></A> で作成した NBF ファイル とアニメーションの内容を記述した XML ファイルを指定します</P>
+<P><CODE><B>-h</B></CODE> オプションは、簡単な使い方を表示します。</P>
+<P><CODE><B>--version</B></CODE> オプションは、<CODE>bannercvtr</CODE> のバージョンを表示します。</P>
+<P><CODE><B>-o &lt;出力ファイル&gt;</B></CODE> オプションは、出力ファイルを指定します。</P>
+<P><CODE><B>-x</B></CODE> オプションは、NITRO-CHARACTER で作成した nce ファイルを NBF ファイルとバナーアイコン用の XML ファイルに変換します。</P>
+<P><CODE><B>-v</B></CODE> オプションは、コンバートの詳細な情報を表示します。</P>
+<H2>NITRO-CHARACTER で作成したセルアニメーションの変換</H2>
+<P>NITRO-CHARACTER を使用してTWL バナー用のセルアニメーションデータ(<CODE>*.nce</CODE> )を作る方法は、<BR>
+<A href="bannerNitroCharacter.html">NITRO-CHARACTER を使用したバナー作成手順</A>をご参照ください。
+</P>
+<H3>起動コマンド</H3>
+<P>コマンドラインから次のように実行すると、nce ファイルと同じフォルダに nce ファイルと同じ名前で拡張子を bin にしたバイナリファイルが出力されます。</P>
+
+<P><CODE>% bannercvtr.exe data.nce</CODE></P>
+
+<P>次のように出力ファイルを指定することも可能です。</P>
+
+<P><CODE>% bannercvtr.exe -o C:\data\output.bin data.nce</CODE></P>
+
+<P>nce ファイルが参照している ncg ファイルと ncl ファイルは、プロジェクト内または nce ファイルと同じフォルダに存在する必要があります。</P>
+
+<H2><A href="ntexconv.html">ntexconv</A> で作成した NBF ファイルの変換</H2>
+<H3>起動コマンド</H3>
+<H4>NBF ファイルの作成</H4>
+<P>ntexconv で画像ファイルを NBF ファイルに変換します。
+ntexconv は次のようなオプションで実行してください。</P>
+
+<P><CODE>% ntexconv.exe -no -bg -bgb -bgnc -f palette16 image0.bmp</CODE></P>
+
+<P>画像ファイルのアルファで抜きのカラー 0 を割り当てる際は -ta オプションを、
+透明色で抜きのカラー 0 を割り当てる際は -tc オプションを指定します。
+ntexconv を実行すると、nbfc ファイル、nbfp ファイル、nbfs ファイルが作成されますが、TWL バナーコンバータでは nbfs ファイルは使用しません。</P>
+
+<H4>バナーアイコン用の XML ファイルの作成</H4>
+<P>バナーアイコンで使用する NBF ファイルとアニメーションの内容を記述した XML ファイルを作成します。XML ファイルの書式は次の章で説明します。</P>
+
+<H4>TWL バナーコンバータの実行</H4>
+<P>コマンドラインから次のように実行すると、XML ファイルと同じフォルダに XML ファイルと同じ名前で拡張子を bin にしたバイナリファイルが出力されます。</P>
+
+<P><CODE>% bannercvtr.exe data.xml</CODE></P>
+
+<P>次のように出力ファイルを指定することも可能です。</P>
+
+<P><CODE>% bannercvtr.exe -o C:\data\output.bin data.xml</CODE></P>
+<H3>バナーアイコン用の XML ファイルの書式</H3>
+<H4>バナーアイコン用の XML ファイルの例</H4>
+<BLOCKQUOTE>
+<PRE class="sample_source"><CODE>&lt;?xml version="1.0" encoding="Shift_JIS"?&gt;
+&lt;banner&gt;
+&lt;character_array&gt;
+    &lt;character&gt;character0.nbfc&lt;/character&gt;
+    &lt;character&gt;character1.nbfc&lt;/character&gt;
+&lt;/character_array&gt;
+&lt;palette_array&gt;
+    &lt;palette&gt;palette0.nbfp&lt;/palette&gt;
+&lt;/palette_array&gt;
+&lt;animation loop_mode="loop"&gt;
+    10 0 0 N
+    20 1 0 N
+     5 0 0 H
+&lt;/animation&gt;
+&lt;/banner&gt;</CODE></PRE>
+</BLOCKQUOTE>
+<BLOCKQUOTE>
+<DL class="command_list">
+  <DT class="command_item"><CODE>&lt;character_array&gt;</CODE>
+  <DD class="command_desc">使用する nbfc ファイル（キャラクタデータ）を &lt;character_array&gt; 要素の内容として記述します。<BR>
+  &lt;character_array&gt; 要素は最大 8 個まで記述できます。<BR>
+  nbfc ファイルのパスがフルパスでない場合は XML ファイルのあるフォルダからの相対パスとみなします。
+  <DT class="command_item"><CODE>&lt;palette_array&gt;</CODE>
+  <DD class="command_desc">使用する nbfp ファイル（パレットデータ）を &lt;palette_array&gt; 要素の内容として記述します。<BR>
+  &lt;palette_array&gt; 要素は1 個のみ記述できます。<BR>
+  nbfp ファイルのパスがフルパスでない場合は XML ファイルのあるフォルダからの相対パスとみなします。
+  <DT class="command_item"><CODE>&lt;animation&gt;</CODE>
+  <DD class="command_desc">アニメーションの内容を記述します。<BR>
+  loop_mode 属性でアニメーションの動作を指定します。<BR>
+  ループするなら loop、最後のコマで停止するなら stop を記述します。<BR>
+  &lt;animation&gt; の内容には、
+
+  <PRE class="sample_source"><CODE>フレーム数 キャラクタNo. パレットNo. フリップ</CODE></PRE>
+
+  を 1 組としたキーデータを必要なだけ記述します。<BR>
+  フレーム数は、指定したキャラクタ、パレット、フリップで表示するフレーム数です。<BR>
+  フレーム数の最大値は 255 で、0 を指定するとそのキーデータは無視されます。<BR>
+  キャラクタNo. は &lt;character_array&gt; 中の番号です。最初の &lt;character&gt; が 0 番になります。<BR>
+  パレットNo. は &lt;palette_array&gt; の番号で、<FONT color=#ff0000>常に0 番を指定します。</FONT><BR>
+  フリップには、フリップなしなら N、水平フリップなら H、垂直フリップなら V、水平垂直フリップなら VH（または HV）を記述します。<BR>
+  <FONT color=#ff0000>一つ前のキーデータから同じキャラクタNo. を使用して、フリップのみ変更することはできません。<BR>
+  フリップを変更する場合は、キャラクタNo. も変更して使うようにしてください。<BR>
+  loop 設定にしている場合は、最後のキーデータと最初のキーデータについても同じ制限があてはまります。</FONT><BR>
+  <BR><BR>
+
+  キーデータの数は loop_mode が stop の場合は 63 以下、loop の場合は 64 以下にしてください。
+</DL>
+</BLOCKQUOTE>
+
+<H3>NBF ファイルとバナーアイコン用の XML ファイルの出力</H3>
+<P>コマンドラインから次のように実行すると、NITRO-CHARACTER で作成した nce ファイルを NBF ファイルとバナーアイコン用の XML ファイルに変換できます。</P>
+
+<P><CODE>% bannercvtr.exe -x data.nce</P>
+
+<P>nce ファイルと同じフォルダに nce ファイルと同じ名前で拡張子を xml にしたファイルと NBF ファイルが出力されます。
+NBF ファイルは、キャラクタデータが character0.nbfc、character1.nbfc、character2.nbfc ...、パレットデータが palette0.nbfp、palette1.nbfp、palette2.nbfp ... という名前で出力されます。
+-x オプションを指定した場合、バナーアイコン用のバイナリファイルは出力されません。</P>
+
+<P>次のように出力する XML ファイルを指定することも可能です（NBF ファイルは XML ファイルと同じフォルダに出力されます）。</P>
+
+<P><CODE>% bannercvtr.exe -x -o C:\data\output.xml data.nce</P>
+
+<P>nce ファイルが参照している ncg ファイルと ncl ファイルは、プロジェクト内または nce ファイルと同じフォルダに存在する必要があります。</P>
+<H2>場所</H2>
+<P><CODE>$TwlSDK/tools/bin/bannercvtr.exe</CODE></P>
+<H2>参照</H2>
+<P><CODE><A href="about_Banner.html">バナー (overview)</A>,
+<A href="makebannerTWL.html">makebanner.TWL</A>,
+<A href="ntexconv.html">ntexconv</A>,
+<A href="bannerNitroCharacter.html">NITRO-CHARACTER を使用したバナー作成手順</A></CODE></P>
+<H2>履歴</H2>
+<P>
+2008/11/04 アニメーションの制限を追加<BR>
+2008/09/12 初版作成</P>
+</BODY>
+</HTML>

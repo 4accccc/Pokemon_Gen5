@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>カメラライブラリの使用方法 (overview)</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">カメラライブラリの使用方法 (overview)</H1>
+<P>
+ここでは、カメラライブラリを利用してカメラを使用する際に注意する点などを説明します。
+</P>
+
+<p><h2>カメラ画像の取得方法について</h2></p>
+<p>
+カメラから撮影された画像は、新規DMAを使用して取得するようになっています。<br>
+<font color="red">そのため、カメラがキャプチャを行っている最中に他の部分でDMAを使用するなど、カメラが使用する新規DMAより優先度の高い
+AHBバスへのアクセスが存在すると、カメラ画像の転送が間に合わずバッファエラーが発生することがあるので、注意が必要です。</font><br>
+<br>
+カメラのキャプチャを開始する手順は、一般的には以下のようになります。
+</p>
+<ol>
+<li><code><a href="CAMERA_DmaRecvAsync.html">CAMERA_DmaRecvAsync()</a></code>でキャプチャ開始後に新規DMA転送が行われる準備をする。
+<li><code><a href="CAMERA_ClearBuffer.html">CAMERA_ClearBuffer()</a></code>でカメラ内部のバッファをクリアします。
+<li><code><a href="CAMERA_I2CActivate.html">CAMERA_I2CActivate()</a></code>で内側カメラ、もしくは外側カメラを起動します。
+<li><code><a href="CAMERA_StartCapture.html">CAMERA_StartCapture()</a></code>、もしくは <code><a href="CAMERA_Start.html">CAMERA_Start()</a></code>でキャプチャを開始する
+</ol>
+<p>
+3. については、1. もしくは 2. の前のタイミングで呼び出しても問題ありません。<br>
+<br>
+<code><a href="CAMERA_DmaRecvAsync.html">CAMERA_DmaRecvAsync()</a></code>は全てのデータ（1フレームの画像）の転送が完了すると、
+完了コールバックが呼ばれるので、そのコールバック関数内で次のフレームの画像を取得するため、同様に
+<code><a href="CAMERA_DmaRecvAsync.html">CAMERA_DmaRecvAsync()</a></code>を呼び出す必要があります。
+</p>
+
+<H3>例</H3>
+<BLOCKQUOTE style="background-color:#ffffd0;"><CODE>
+void CameraDmaRecvIntr(void* arg)<br>
+{<br>
+　　CAMERA_DmaRecvAsync(... CameraDmaRecvIntr, NULL);<br>
+}<br>
+<br>
+...<br>
+<br>
+CAMERA_DmaRecvAsync(... CameraDmaRecvIntr, NULL);<br>
+CAMERA_ClearBuffer();<br>
+CAMERA_StartCapture();<br>
+</CODE></BLOCKQUOTE>
+
+<p>
+カメラ画像の転送が間に合わずにバッファエラーが発生した場合は、<code><a href="CAMERA_SetBufferErrorCallback.html">CAMERA_SetBufferErrorCallback()</a></code>で指定したコールバックが呼ばれることになります。<br>
+バッファエラーが発生した場合は、一度キャプチャと使用していた新規DMAを停止させた後に、再度キャプチャを開始するといった復帰処理が必要となります。
+</p>
+
+<H3>例</H3>
+<BLOCKQUOTE style="background-color:#ffffd0;"><CODE>
+void CameraIntrError(CAMERAResult result)<br>
+{<br>
+　　CAMERA_StopCapture();<br>
+　　MI_StopNDma(...);<br>
+　　CAMERA_DmaRecvAsync(...);<br>
+　　CAMERA_ClearBuffer();<br>
+　　CAMERA_StartCapture();<br>
+}<br>
+<br>
+...<br>
+<br>
+CAMERA_SetBufferErrorCallback(CameraIntrError);<br>
+</CODE></BLOCKQUOTE>
+
+
+<p><h2>カメラ設定の変更について</h2></p>
+<p>
+カメラの設定関数は同時に一つしか呼び出せないようになっています。<br>
+そのため、カメラの設定関数の非同期版を連続で呼び出す等した場合には、二回目の関数呼び出しが失敗することになります。<br>
+<br>
+また、カメラのキャプチャ中に使用することのできない設定関数が一部存在します。<br>
+具体的な関数名については、<code><a href="CAMERA_IsBusy.html">CAMERA_IsBusy()</a></code>のリファレンスを参照してください。<br>
+例えば、カメラのVsync中にこれらの関数でパラメータを変更したい場合には、カメラのVSYNC割り込みコールバック内で<br>
+<code><a href="CAMERA_StopCapture.html">CAMERA_StopCapture()</a> -> CAMERA_SetXXX() -> <a href="CAMERA_StartCapture.html">CAMERA_StartCapture()</a></code><br>
+の順で呼び出す必要があります。
+</p>
+
+<p><h2>解像度とトリミングの違いについて</h2></p>
+<p>
+例えば、<code><a href="CAMERA_I2CSize.html">CAMERA_I2CSize()</a></code>に<code><a href="CAMERASize.html">CAMERA_SIZE_VGA</a></code>を
+指定した上で、<code><a href="CAMERA_SetTrimmingParamsCenter.html">CAMERA_SetTrimmingParamsCenter()</a></code>等で256x192に
+トリミングして取得した画像と、<code><a href="CAMERA_I2CSize.html">CAMERA_I2CSize()</a></code>に
+<code><a href="CAMERASize.html">CAMERA_SIZE_DS_LCD</a></code>を指定して取得した画像は、得られる画像のサイズは同じなため
+新規DMAで転送される量も同等となり、動作の重さに違いはありません。<br>
+しかし、トリミングしてサイズを縮小した画像とカメラ解像度を下げて縮小した画像では、画角(視野角)が違うため、
+カメラ解像度が変えただけでは映る範囲は変わりませんが、トリミングした場合は映る範囲が狭まります。
+</p>
+
+<p><h2>カメラの終了処理について</h2></p>
+<p>
+カメラの終了処理を行う順番、タイミングによっては、<code><a href="CAMERA_StopCapture.html">CAMERA_StopCapture()</a></code>、
+<code><a href="CAMERA_I2CActivate.html">CAMERA_I2Activate(CAMERA_SELECT_NONE)</a></code>を呼び出したにも関わらず、
+<code><a href="CAMERA_IsBusy.html">CAMERA_IsBusy()</a></code>が TRUE を返すようになります。<br>
+この状態になったとしても、内側カメラ、外側カメラどちらかを有効にすれば、
+<code><a href="CAMERA_IsBusy.html">CAMERA_IsBusy()</a></code>は FALSE を返すようになるため問題はありません。<br>
+<br>
+確実に<code><a href="CAMERA_IsBusy.html">CAMERA_IsBusy()</a></code>が FALSE を返すようにしたい場合は、
+<code><a href="CAMERA_StopCapture.html">CAMERA_StopCapture()</a></code>を呼び出した後に
+<code><a href="CAMERA_IsBusy.html">CAMERA_IsBusy()</a></code>が FALSE を返すことを確認したうえで
+<code><a href="CAMERA_I2CActivate.html">CAMERA_I2CActivate(CAMERA_SELECT_NONE)</a></code>を呼び出す必要があります。
+</p>
+
+<p><h2>スリープモードから復帰した際のカメラの処理について</h2></p>
+<p>
+スリープモードへ移行する際に、カメラは自動的にスタンバイ状態 （<code><a href="CAMERA_I2CActivate.html">CAMERA_I2CActivate(CAMERA_SELECT_NONE)</a></code>）に入ります。<br>
+スリープ復帰時にカメラを有効にしたい場合は、<code><a href="CAMERA_I2CActivate.html">CAMERA_I2CActivate()</a></code>を呼び出すなど、アプリケーション側で対処する必要があります。
+</p>
+
+<p><h2>カメラ誤動作時の復帰処理について</h2></p>
+<p>
+構造上、カメラは静電気・機械的衝撃などによって画像データを取得できなくなる恐れがあります。<br>
+このような現象が発生した場合、カメラライブラリは内部で自動的に再起動処理を行います。再起動処理完了後には
+<code><a href="CAMERA_SetRebootCallback.html">CAMERA_SetRebootCallback()</a></code>で登録したコールバック関数が呼ばれます。<br>
+この再起動処理では、カメラ設定は直前の状態に自動で再設定されるため、アプリ側で特に対応を行う必要はありません。<br>
+<br>
+再起動処理中にカメラのAPIを実行しようとした場合には、<code><a href="CAMERAResult.html">CAMRA_RESULT_ILLEGAL_STATUS</a></code>が
+返ることになるため、必要ならば<code><a href="CAMERA_SetRebootCallback.html">CAMERA_SetRebootCallback()</a></code>にセットした
+コールバック関数が呼ばれた後に、そのAPIのやり直しを行ってください。<br>
+<br>
+コールバック関数の引数に<code><a href="CAMERAResult.html">CAMERA_RESULT_FATAL_ERROR</a></code>が入っていた場合は
+再起動処理に失敗したことを示し、カメラが物理的に故障している可能性があります。<br>
+その際には、電源を入れ直すことで復旧する可能性もありますので、ユーザに対してメッセージを表示して対応することを推奨します。<br>
+なお、DSiカメラでは以下の様なメッセージを表示し、以降の処理は行わないようになっております。<br>
+「エラーが発生しました。本体の電源ボタンを押して電源をOFFにして、本体の取扱説明書の指示に従ってください。」
+</p>
+
+<H2>参照</H2>
+<P><CODE>
+<A href="list_camera.html">CAMERA 関数一覧</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>
+2009/01/06 CAMERA_RESULT_FATAL_ERROR が発生した場合の対応方法について追記<br>
+2009/01/05 説明の意図が伝わるように修正<br>
+2008/09/11 初版
+</P>
+</BODY>
+</HTML>

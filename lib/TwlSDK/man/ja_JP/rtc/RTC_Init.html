@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>RTC_Init</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">RTC_Init <img src="../image/NTR.gif" align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/rtc.h&gt;</CODE><BR>
+  <PRE><CODE>void RTC_Init( void );</CODE></PRE>
+  </dd>
+
+</dl><h2>引数</h2>
+<p>なし。</p>
+
+<h2>返り値</h2>
+<p>なし。</p>
+
+<H2>説明</H2>
+<P>リアルタイムクロックAPI の為の初期化を行います。<BR>
+他のリアルタイムクロック操作関数を呼び出す前に一回呼び出して下さい。</P>
+
+<h2>注意</h2>
+<P>
+リアルタイムクロックはバッテリーによってデータが保持されており、本体の電源が入っていない時も継続して時間を計測しています。
+<FONT color=red>
+初期化関数はこの保持されているデータを初期化しませんので、日付・時刻の初期値は一定ではないことに注意して下さい。
+</FONT>
+なお、アラームに関する設定値は本体の起動シーケンス内で全て 0 クリアされますが、
+ソフトウェアリセットによるアプリケーションの再起動時には再起動前の設定が持ち越されます。
+</P>
+<P>
+リアルタイムクロックの日付・時刻はエンドユーザが本体設定機能を用いて自由に調整できます。
+<FONT color=red>
+このため、本体が起動し直された時には、再起動の前と後とで日付・時刻の一貫性は保証されないことに注意して下さい。
+</FONT>
+</P>
+
+<h2>参照</h2>
+<P><CODE><A href="RTC_SetAlarmStatus.html">RTC_SetAlarmStatus</A>, <A href="RTC_SetAlarmParam.html">RTC_SetAlarmParam</A></CODE></P>
+
+<H2>履歴</H2>
+<P>
+2008/09/16 注意点の内容を修正・追加<BR>
+2004/07/01 時間表記の統一による記述変更<BR>
+2004/05/18 初版<BR>
+</P>
+</body>
+</html>

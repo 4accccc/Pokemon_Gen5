@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 8.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>ELLinkMode</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">ELLinkMode <img src="../image/TWL.gif" align="middle"></h1>
+<h2>定義</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;twl/el.h&gt;</CODE><BR>
+typedef enum ELLinkMode {
+  EL_LINKMODE_ROUGH = 0,
+  EL_LINKMODE_ONESHOT,
+  EL_LINKMODE_RELATION
+} ELLinkMode;
+</PRE>
+  </dd>
+</dl>
+
+<H2>要素</H2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>EL_LINKMODE_ROUGH</STRONG></EM></TD>
+      <TD width="87%">現在は使用できません。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>EL_LINKMODE_ONESHOT</STRONG></EM></TD>
+      <TD width="87%">動的オブジェクトが外部参照している場合、全てベニヤを前提として計算するモードです。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>EL_LINKMODE_RELATION</STRONG></EM></TD>
+      <TD width="87%">現在は使用できません。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>説明</h2>
+<P>動的リンクをテストする際のモードを表す列挙型です。<BR>
+<code><a href="EL_CalcEnoughBufferSizeforLink.html">EL_CalcEnoughBufferSizeforLink*()</a></code>で指定することができます。<BR>
+<BR>
+</P>
+
+<H2>履歴</H2>
+<P>2009/03/04 初版</P>
+</body>
+</html>

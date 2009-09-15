@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>CTRDG_Init</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">CTRDG_Init <IMG src="../image/NTR.gif" align="middle"><IMG src="../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;nitro/ctrdg.h&gt;</CODE></PRE>
+  <PRE><CODE>void CTRDG_Init( void );
+  </CODE></PRE>
+</DL>
+<H2>引数</H2>
+<P>なし。</P>
+<H2>返り値</H2>
+<P>なし。</P>
+<H2>説明</H2>
+<P>カートリッジライブラリの初期化を行います。</P>
+<P>カートリッジ関数を呼ぶ前に一度だけ呼べば結構ですが、<CODE><A href="../os/init/OS_Init.html">OS_Init()</A></CODE> の内部から呼び出されていますのでアプリケーションで呼ぶ必要はありません。</P>
+<P>本関数は weak 関数なので、カートリッジを使用しないアプリケーションの場合、<CODE>CTRDG_Init()</CODE> をアプリケーションで定義して上書きすることができます。その目的は、CTRDG
+ライブラリのメモリ占有サイズを減らすことです。その中では <CODE><A href="CTRDG_DummyInit.html">CTRDG_DummyInit()</A></CODE> のみを呼び出すようにしてください。詳細は <CODE><A href="CTRDG_DummyInit.html">CTRDG_DummyInit()</A></CODE> を参照してください。ただし、weak 関数であるのは、NITRO ビルドと、NITRO/TWL
+HYBRID ビルドの場合のみです。TWL LIMITED の場合はインライン関数であり、この方法は使えません。</P>
+<P>TWL LIMITED でも本関数は存在しますが、TWLハードウェアにはカートリッジスロットがないので最低限の初期化しか行いません。</P>
+<H2>注意</H2>
+<P>以下は NITRO専用ROM と NITRO/TWL HYBRID ROM について説明しています。</P>
+<P><font color="#800000">ライブラリはこの初期化処理の中で最初にカートリッジ有無の判定およびその情報取得を行い、以降はそれらの値が
+<a href="CTRDG_GetAgbMakerCode.html"><CODE>CTRDG_GetAgbMakerCode()</CODE></a> および <a href="CTRDG_GetAgbMakerCode.html"><CODE>CTRDG_GetAgbGameCode( )</CODE></a> 内での正当性判定に使用されます。よって、カートリッジを使用する場合にはこの関数を呼び出す前にカートリッジを「有効な状態」にしておく必要があるという点に注意してください。</font></P>
+<P><font color="#800000">「有効な状態」とは、IS-NITRO-DEBUGGER などの開発機材においてはカートリッジ電源がＯＮであることを意味します。
+</font></P>
+<P><font color="#800000">また、この関数を呼ぶと AGB バックアップアクセス関数の非同期関数を実行するためのスレッドが作成されますので事前に <CODE><A href="../os/thread/OS_InitThread.html">OS_InitThread()</A></CODE> を呼んでおく必要があります。</font>
+</P>
+
+<H2>参照</H2>
+<P><CODE><A href="CTRDG_SetPulledOutCallback.html">CTRDG_SetPulledOutCallback</A>, <A href="CTRDG_TerminateForPulledOut.html">CTRDG_TerminateForPulledOut</A></CODE><BR>
+<CODE><A href="CTRDG_DummyInit.html">CTRDG_DummyInit</A></CODE></P>
+<H2>履歴</H2>
+<P>2009/05/19 <CODE>OS_Init()</CODE> 内部で呼ばれていることを明記<BR>
+2008/01/28 参照に<CODE>CTRDG_DummyInit()</CODE> を追加<BR>
+2006/04/05 事前に <CODE>OS_InitThread()</CODE> を呼ばなければならなくなった点を記述追加<br>
+2005/04/12 <CODE>CTRDG_GetAgbMakerCode()</CODE> および <CODE>CTRDG_GetAgbGameCode()</CODE> と初回取得情報との関係について記述を訂正<br>
+2005/03/03 カートリッジ有無の判定が初期化時のみ行われる点について記述追加<br>
+2004/09/15 初版<br>
+</P>
+</BODY>
+</HTML>

@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<BASE target="main">
+<TITLE>AES 暗号ライブラリ (AES) API 機能一覧</TITLE>
+<LINK rel="stylesheet" href="../css/apilist.css">
+</HEAD>
+<BODY>
+<H1>AES 暗号ライブラリ (AES) API 機能一覧</H1>
+<H3><A name="api">基本 API</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH width="25%"><A href="api/AES_Init.html" target="_self">AES_Init</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>AES ライブラリの初期化を行います。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AES_SetKey.html" target="_self">AES_SetKey</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>暗号化 / 復号化で使用する鍵を設定します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AES_Ctr.html" target="_self">AES_Ctr</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>CTR モードでの暗号化 / 復号化を行います。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AES_Ctr.html" target="_self">AES_CtrEncrypt</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>CTR モードでの暗号化 / 復号化を行います。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AES_Ctr.html" target="_self">AES_CtrDecrypt</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>CTR モードでの暗号化 / 復号化を行います。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AES_CcmEncryptAndSign.html" target="_self">AES_CcmEncryptAndSign</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>CCM モードでの暗号化及び署名を行います。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AES_CcmDecryptAndVerify.html" target="_self">AES_CcmDecryptAndVerify</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>CCM モードでの復号化及び署名検証を行います。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AES_AddToCounter.html" target="_self">AES_AddToCounter</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>カウンタ値に数値を加えます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AES_ReverseBytes.html" target="_self">AES_ReverseBytes</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>バイナリ列をバイト単位で逆順にしてコピーします。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AES_SwapEndianEach128.html" target="_self">AES_SwapEndianEach128</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>バイナリ列を 16 byte 毎にバイト単位で逆順にしてコピーします。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AESCallback.html" target="_self">AESCallback</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>暗号化または復号化処理が完了したときに呼ばれるコールバック関数の型です。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AESKey.html" target="_self">AESKey</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>AES の鍵を格納する共用体です。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AESCounter.html" target="_self">AESCounter</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>CTR モードで使用されるカウンタ初期値を格納する共用体です。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AESNonce.html" target="_self">AESNonce</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>CCM モードで使用される Nonce を格納する共用体です。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AESResult.html" target="_self">AESResult</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>AES 処理の結果を表す列挙型です。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AESMac.html" target="_self">AESMac</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>CCM モードで使用される MAC を格納する共用体です。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="api/AESMacLength.html" target="_self">AESMacLength</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>CCM モードで使用される MAC の長さを指定する列挙型です。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H3><A name="util">高位 API</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH width="25%"><A href="util/AES_Rand.html" target="_self">AES_Rand</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>AES アルゴリズムを用いて擬似乱数を生成します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="util/AES_Encrypt.html" target="_self">AES_Encrypt</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>AES アルゴリズムを用いた暗号化を行います。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="util/AES_Decrypt.html" target="_self">AES_Decrypt</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD><code>AES_Encrypt</code> で暗号化した内容を復号します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="util/AES_EncryptAndSign.html" target="_self">AES_EncryptAndSign</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>AES アルゴリズムを用いて暗号化と署名を行います。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="util/AES_DecryptAndVerify.html" target="_self">AES_DecryptAndVerify</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD><code>AES_EncryptAndSign</code> で暗号化/署名を行った内容を復号し署名の検証を行います。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<table border="0" height="100%"><tr><td style="background-color : white;"></td></tr></table>
+
+</BODY>
+</HTML>

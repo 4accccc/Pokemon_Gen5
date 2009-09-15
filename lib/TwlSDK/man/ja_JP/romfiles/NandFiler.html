@@ -1,0 +1,391 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>NandFiler</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+pre
+{
+  display: compact;
+  font-family	: "Courier New", monospace;
+  font-weight	: normal;
+  font-size     : normal;
+
+/*  margin		: 0pt 0pt 6pt 50pt;*/
+  padding		: 2pt 8pt 2pt 8pt;
+  background-color	: #eee;
+
+  border-style		: solid;
+  border-width		: 1px;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD.table,TH.table{
+  border-color	: #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+div.screen
+{
+    float: left;
+    padding: 2px;
+    background-color: black;
+    margin: 0 0.5em 1em 1em;
+}
+ol, ul
+{
+    padding-left: 4em;
+    margin-left: 0pt;
+}
+
+div.screen img.main
+{
+    margin-bottom: 10px;
+}
+.warning
+{
+    color: red;
+}
+table
+{
+    left: 0;
+}
+table.plain td
+{
+    border: none;
+    background-color: transparent;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+<H1 align="left">NandFiler</H1>
+<H2>概要</H2>
+<P>NandFilerは本体NANDメモリ内のデータを操作するためのツールです。
+写真データや、本体NANDメモリ内に保存されている各NANDアプリのセーブデータを
+削除・閲覧・編集することができます。<BR>
+また、SDカードを用いることによって、セーブデータをインポート/エクスポートすることができます。
+</P>
+
+<H2>実行</H2>
+<P>
+以下のいずれかの方法で実行することができます。
+</P>
+<ul>
+<li>IS-TWL-DEBUGGER ソフトウェアを使用して NandFiler.srl を実行する。
+<li>IS-TWL-DEBUGGER ソフトウェアを使用して NandFiler.tad をインポート後、実行する。
+<li>NandFiler.srl を DS カードに書き込んで実行する。
+<li>TwlNmenu を使用して NandFiler.tad をインポート後、実行する。
+</ul>
+<P>
+IS-TWL-DEBUGGER ソフトウェアで実行する場合は
+「しばらくお待ちください」と書かれたダイアログが表示され、
+IS-TWL-DEBUGGER ソフトウェア上での操作はできなくなります。
+終了する場合はダイアログ上の「強制中断」ボタンを押してください。
+</P>
+
+<H2>モード</H2>
+<P>NandFilerでは、以下の3種類のモードが存在します。</P>
+<ul>
+	<li>Filerモード…ディレクトリを辿って、ファイルサイズ、タイムスタンプ、属性を確認できます。</li>
+	<li>Viewモード…ファイル内を閲覧できます。</li>
+	<li>Editモード…ファイル内を編集できます。</li>
+</ul>
+
+<H2>Filerモード</H2>
+<div class="screen"><img class="main" src="NandFiler/Filer_0.png"></div>
+<div class="screen"><img class="main" src="NandFiler/Filer_1.png"></div>
+<P>
+NandFilerを起動した直後は、「Filerモード」になっています。<BR>
+「Filerモード」では、「写真データ・本体にインポート済みのNANDアプリのセーブデータ・SDカード」のいずれかを選択して、
+そのディレクトリツリー内を閲覧・操作することができます。<BR>
+<FONT color=#ff0000>SDカード内を閲覧する場合、SJISに変換できない文字コードで書かれたファイル名またはディレクトリ名は表示されません</FONT>
+<br clear="left">
+
+以下の表で示す操作ができます。
+
+</P>
+<table class="table">
+<tbody>
+<tr><th>ボタン<th>操作
+<tr><td>SELECT<td>操作一覧の表示
+<tr><td>←→<td>表示項目のページ切り替え
+<tr><td>↑↓<td>ファイル等の選択
+<!--<tr><td>START<td>選択されている NAND アプリを起動-->
+<tr><td>A<td>項目の決定
+<tr><td>B<td>・アーカイブ・ファイル選択のキャンセル<br>・親ディレクトリへの移動
+<tr><td>X<td>・アーカイブ・ファイルの選択時に<br>　サブメニューを開く
+</tbody>
+</table>
+
+<h3>タイトル選択</h3>
+<P>
+起動直後の状態です。画面左に、インストールされているNANDアプリのイニシャルコードと（青色）と、写真データとSDカードへの
+リンク（黄色）が表示されます。<BR>
+イニシャルコードを選択した場合は画面中央の「アーカイブ選択」へ、写真データ・SDカードへのリンクを選択した場合は画面右の「ファイル選択」へ遷移します。
+Xボタンのサブメニューでは次の操作を選択できます。
+<ul>
+	<li>Export…データのエクスポート</li>
+</ul>
+</P>
+
+<h4>Export</h4>
+<p>
+    アプリケーションのセーブデータ領域、または「PHOTO」ディレクトリ内のファイルを、SDカードへコピーします。<BR>
+    SDカード上には、「イニシャルコード4桁_バージョン4桁」または「PHOTO」のディレクトリが
+    生成され、データがコピーされます。
+    
+</p>
+
+
+<h3><a name="Archive">アーカイブ選択</a></h3>
+<p>
+    「タイトル選択」でイニシャルコードを選択した場合、ここに遷移します。
+    アーカイブ選択では、「Public」「Private」「SBanner」を選択できます。<br>
+    それぞれ、「タイトル選択」で選択したNANDアプリの、「publicセーブデータ」「privateセーブデータ」「サブバナー」へのリンクとなっています。<br>
+    Xボタンのサブメニューでは次の操作を選択できます。
+</p>
+<ul>
+	<li>Backup…セーブデータのバックアップ</li>
+	<li>Break…セーブデータ領域の破壊</li>
+	<li>Delete…セーブデータ領域またはサブバナーの削除</li>
+	<li>Size0…セーブデータ領域またはサブバナーのサイズを0にします</li>
+	<li>Format…セーブデータ領域またはサブバナーのフォーマット</li>
+</ul>
+<p>
+    但し、サブバナーのサブメニューには「Backup」「Break」の機能はありません。
+</p>
+
+<h4>Backup</h4>
+<p>
+    SDカードにセーブデータをバックアップします。ここでバックアップしたデータは、
+    後述する「Restore」の操作でインポートが可能です。<BR>
+    前述の「Export」はファイル単位でSDカードにコピーするのに対して、
+    「Backup」はセーブデータ領域のファイルシステム全体をコピーする点が異なります。
+</p>
+ 
+<h4>Break</h4>
+<p>
+    セーブデータのFATシステム領域を破壊します。セーブデータ領域が異常をきたして<a href="../fs/fs_result_const.html">FS_RESULT_BAD_FORMAT</a>が発生する状況を想定したデバッグに利用できます。<br>
+    破壊したセーブデータ領域は、本ツール上で下記のいずれかの方法によって復旧できます。
+</p>
+
+    <ul>
+	    <li>「Break」の前に「Backup」を実行しておき、「Break」後に「Restore」を使う</li>
+        <li>「Format」を実行する(セーブデータ内のファイルは削除されます)</li>
+        <li>TwlNmenuで該当アプリを再インポートする</li>
+        <li>IS-TWL-DEBUGGER ソフトウェアを使用して再インポート<br>
+        [ファイル]-[開く]で「TAD」を選択し[インポートを制御する]オプションを使用してください。</li>
+    </ul>
+<p>
+    アプリケーションが実行中に復旧するには<a href="../na/archive/NA_FormatTitleArchive.html">NA_FormatTitleArchive</a>をご使用ください。
+</p>
+
+<h4>Delete, Size0</h4>
+<p>
+     DSiショップによるダウンロード処理では、アプリのROM領域・セーブデータ領域・サブバナーファイルの順に領域確保を行いますが、<br>
+    ダウンロード中の特定タイミングで本体の電源を切られることによりセーブデータ領域等が正常に確保されない場合があります。<br>
+    「Delete」「Size0」はこの異常時を想定したデバッグに使用します。
+</p>
+<p>
+    「Delete」はファイルが全く作られていない状態であり、<br>
+    「Size0」はファイルのみ作成され領域サイズが0として確保された状態を再現するコマンドです。<br>
+     どちらもダウンロード中に電源が切られることで発生します。<br>
+     不正な状態のセーブデータ領域やサブバナーは「Break」の場合と同じ方法で復旧できます。(但し「Restore」を使用する方法は使えません。)
+</p>
+<p>
+     <FONT color=#ff0000>アプリケーションがこれらのエラーを対処する方法は現在検討中です。</FONT><br>
+</p>
+
+<h4>Format</h4>
+<p>
+     セーブデータやサブバナーを初期化します。<br>
+     「Backup」「Delete」「Size0」を使用してセーブデータやサブバナーが不正な状態になった場合にこれらを復旧することができます。
+</p>
+
+<h3>ファイル選択</h3>
+<P>
+「タイトル選択」で「PHOTO」「SD」を選択した場合と、「アーカイブ選択」でいずれかのセーブデータを
+選択した場合に、ここに遷移します。<BR>
+「ファイル選択」では、ディレクトリ（黄色）とファイル（白）の一覧が表示されます。<br>
+ディレクトリを選択した状態でAボタンを押すと、そのディレクトリの中を閲覧することができます。<br>
+ファイルを選択した状態でAボタンを押すと、「Viewモード」へ移行します。<br>
+
+「ファイル選択」で、上画面に表示される情報の意味は次のとおりです。
+
+<table class="table">
+<tbody>
+<tr><td>Size<td>ファイルサイズ
+<tr><td>CTime<td>ファイルが作成された日時
+<tr><td>MTime<td>ファイルの最終更新日時
+<tr><td>ATime<td>ファイルの最終アクセス日時
+<tr><td>Attr<td>ファイルの属性<BR>REA…リードオンリー<BR>HID…隠しファイル
+								<BR>SYS…システムファイル<BR>VOL…ボリュームラベル
+								<BR>PRO…プロテクト<BR>ARC…アーカイブ
+<tr><td>画面最下部<td>選択中のファイルのフルパス
+</tbody>
+</table>
+
+
+Xボタンのサブメニューでは次の操作を選択できます。
+<ul>
+    <li>Import…セーブデータのインポート</li>
+	<li>Delete…ファイル・ディレクトリの削除</li>
+	<li>Restore…セーブデータの修復</li>
+</ul>
+</P>
+
+<h4>Import</h4>
+<p>
+「Export」で作成したディレクトリに対して有効な操作です。
+ただし、「PHOTO」をエクスポートした場合は、インポートできません。<BR>
+本体NANDメモリ内のセーブデータ領域へデータをコピーします。
+本体NANDメモリ内のセーブデータ領域のサイズを超えない限り、
+「Export」したデータが改変されていてもインポートできます。
+</p>
+
+<h4>Delete</h4>
+<p>
+    ファイルやディレクトリを削除します。ディレクトリが選択されている場合、
+    再帰的にディレクトリ内のファイル・ディレクトリを削除します。
+</p>
+ 
+<h4>Restore</h4>
+<p>
+    「Backup」で作成したセーブデータのバックアップファイルに対してのみ有効な操作です。
+    SDカード上のバックアップファイルを、本体NANDメモリにインポートします。<BR>
+    下記の場合は、バックアップファイルのインポートに失敗しますのでご注意下さい。
+    <ul>
+	    <li>バックアップファイルが改変されている</li>
+	    <li>バックアップファイル名が変更されている</li>
+	    <li>該当アプリが削除されている</li>
+	    <li>該当アプリのセーブデータサイズが変更されている</li>
+	    <li>該当アプリのセーブデータに対して「Delete」「Size0」が実行されている<br>
+            (この場合「Format」を使用することで、インポートできるようになります)</li>
+    </ul>
+</p>
+
+
+
+<H2>Viewモード</H2>
+<P>
+<div class="screen"><img class="main" src="NandFiler/Viewer_0.png"></div>
+
+Viewモードではファイルの中を閲覧することができます。<BR>
+上画面には、表示中のファイル名と表示アドレスが表示されます。<BR>
+下画面には、ファイルの内容（バイナリ値と、対応するキャラクタ）が表示されます。<BR>
+<BR>
+</P>
+
+<br clear="left">
+
+
+<p>
+キャラクタは下記の仕様に沿ったものが表示されます。
+<ul>
+        <li>0x00は0x20に置き換える（スペースに置き換える）</li>
+        <li>0x20～0x7Aはアスキーコードに準拠</li>
+        <li>その他の領域は平仮名とカタカナを表示（サンプルとして組み込んだフォント）</li>
+</ul>
+</p>
+
+以下の表で示す操作ができます。
+
+<table class="table">
+<tbody>
+<tr><th>ボタン<th>操作
+<tr><td>←→<td>ページ単位でスクロール
+<tr><td>↑↓<td>行単位でスクロール
+<tr><td>A<td>「Editモード」へ移行
+<tr><td>B<td>「Filerモード」へ移行<BR>「Editモード」でファイルが編集されている場合はファイルを保存する
+</tbody>
+</table>
+
+
+<H2>Editモード</H2>
+
+<P>
+<div class="screen"><img class="main" src="NandFiler/Editor_0.png"></div>
+「Editモード」ではファイルを編集することができます。<BR>
+ただし、下記の制限がありますのでご注意下さい。
+</P>
+
+<br clear="left">
+<h4>編集時の制限事項</h4>
+<ul>
+        <li>ファイルサイズの変更には対応していません。</li>
+        <li>14M以上のサイズのファイルを編集中に、先頭付近と末尾付近を同時に編集すると、先に編集したほうの変更が反映されません。</li>
+</ul>
+
+<h3>非編集状態</h3>
+<p>「Editモード」移行時はこの状態です。</p>
+<table class="table">
+<tbody>
+<tr><th>ボタン<th>操作
+<tr><td>←→↑↓<td>カーソルの移動
+<tr><td>A<td>「編集状態」へ移行
+<tr><td>B<td>「Viewモード」へ移行
+</tbody>
+</table>
+
+<h3>編集状態</h3>
+
+<table class="table">
+<tbody>
+<tr><th>ボタン<th>操作
+<tr><td>←→↑↓<td>カーソルの移動
+<tr><td>B<td>「非編集状態」へ移行<BR>
+<tr><td>L,R<td>値の増減
+</tbody>
+</table>
+
+<P>
+「編集状態」で、「L,Rボタン」を押すことによって、カーソルの指す位置の値を変更することができます。<BR>
+一度でも変更した箇所は、緑色で表示されます。<BR>
+    「編集状態」でも自由にカーソルを動かせますが、「非編集状態」に比べて横方向の移動幅が減少します。<BR>
+編集結果を保存するには「Viewモード」で「Bボタン」を押したときに表示される選択肢で「Yes」を選択してください。<BR>
+</P>
+<H2>場所</H2>
+<P><CODE>
+$TwlSDK/bin/ARM9-TS/Rom/NandFiler.srl<br>
+$TwlSDK/bin/ARM9-TS/Rom/NandFiler.tad</CODE></P>
+
+<H2>参照</H2>
+
+<H2>履歴</H2>
+<P>
+2009/05/20 SDカード内のSJIS以外のファイル名の非表示、アーカイブ選択のサブバナー、「Delete」「Size0」「Format」機能を追記<br>
+2009/02/18 「Break」機能とFS_RESULT_BAD_FORMATの関連を追記<br>
+2008/01/13  「Import」「Export」機能について追記<br>
+2008/12/08  編集時の制限事項を追記<br>
+2008/11/26  スクリーンショットの追加と操作の変更に追従<br>
+2008/10/21 「Backup」「Restore」機能について追記<br>
+2008/09/16 「Break」機能について追記<br>
+2008/07/18 「場所」の変更 Release → Rom<br>
+2008/07/14 用語の変更<br>
+2008/07/07 初版作成<br>
+</P>
+</BODY>
+</HTML>

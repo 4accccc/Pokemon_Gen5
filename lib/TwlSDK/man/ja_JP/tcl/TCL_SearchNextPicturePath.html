@@ -1,0 +1,57 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCL_SearchNextPicturePath</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCL_SearchNextPicturePath <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+TCLResult TCL_SearchNextPicturePath( const TCLAccessor* pAccessor ,
+                                     char* path ,
+                                     size_t len ,
+                                     TCLSearchObject* pSearchObj );
+	</code></pre>
+</dl>
+
+<h2>引数</h2>
+<p>
+<table>
+<tr><td>pAccessor<td><a href="TCLAccessor.html">アクセサ</a>
+<tr><td>path<td>パス格納バッファ
+<tr><td>len<td>パス長
+<tr><td>pSearchObj<td><a href="TCLSearchObject.html">検索オブジェクト</a>
+</table>
+</p>
+
+<h2>返り値</h2>
+<p><a href="TCLResult.html">処理結果</a></p>
+
+<h2>説明</h2>
+<p>検索オブジェクトで表される検索条件に全て合致する写真の格納されているパスを、この関数の呼出し毎に順次取得します。</p>
+<p>最後まで検索を行い次の写真が見つからなかった場合 <code>TCL_RESULT_ERROR_NO_FIND_PICTURE</code> が返ってきます。</p>
+<p>返り値が <code>TCL_RESULT_SUCCESS</code> 以外の場合は取得されるパスの値は不定です。</p>
+<p>検索処理中に <a href="TCL_EncodeAndWritePicture.html"><code>TCL_EncodeAndWritePicture</code></a> や <a href="TCL_SortTable.html"><code>TCL_SortTable</code></a> 、<code><a href="TCL_DeletePicture.html">TCL_DeletePicture</a></code> など、管理される写真の枚数の増減や順番変更が発生するような処理を行った場合の挙動は不定です。</p>
+<p>アクセサは <a href="TCL_LoadTable.html"><code>TCL_LoadTable</code></a> や <a href="TCL_CreateTable.html"><code>TCL_CreateTable</code></a> などで初期化されている必要があります。</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="TCL_InitSearchObject.html">TCL_InitSearchObject</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/03/23 動作が不定となる条件を追加<br>
+2009/03/04 誤記修正<br/>
+2008/10/07 初版<br/>
+</p>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>OS_TFPrintfEx</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">OS_TFPrintfEx <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD><CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>void OS_TFPrintfEx( int console, const char *fmt, ... );</CODE>
+</DL>
+<H2>引数</H2>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TD><B><I>console</I></B></TD>
+      <TD>出力先ウィンドウ</TD>
+    </TR>
+    <TR>
+      <TD><B><I>fmt</I></B></TD>
+      <TD>出力書式文字列(フォーマット文字列)</TD>
+    </TR>
+    <TR>
+      <TD><B><I>...</I></B></TD>
+      <TD>可変個引数</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>返り値</H2>
+<P>なし。</P>
+<H2>説明</H2>
+<P>出力先ウィンドウ指定のある <CODE><A href="OS_TPrintfEx.html">OS_TPrintfEx()</A></CODE> です。出力先指定以外の仕様は <CODE><A href="OS_TPrintfEx.html">OS_TPrintfEx()</A></CODE> に準じますのでそちらを参照してください。</P>
+<P><B><I>console</I></B> は出力先の指定で、ウィンドウの番号である0～3 の値をとることが出来ます。また、<CODE>OS_PRINT_OUTPUT_NONE</CODE> を指定することで何も出力しません。<CODE>OS_PRINT_OUTPUT_CURRENT</CODE> を指定すると <CODE><A href="OS_SetPrintOutput.html">OS_SetPrintOutput()</A></CODE> で指定した標準出力先に出力します。</P>
+<P>この関数は weak シンボルでコンパイルされますので、ユーザが独自で関数を定義すれば、それで上書きされます。</P>
+<P>これはデバッグ用の関数です。最終ROM版(FINALROM)ライブラリでは出力動作を行ないません。</P>
+
+<H2>参照</H2>
+<P><CODE><A href="OS_TPrintfEx.html">OS_TPrintfEx</A> </CODE></P>
+<H2>履歴</H2>
+<P>2009/04/30 weak シンボルの記述を追加<BR>
+2008/01/12 初版</P>
+</BODY>
+</HTML>

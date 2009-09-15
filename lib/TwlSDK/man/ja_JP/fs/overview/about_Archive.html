@@ -1,0 +1,312 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>標準アーカイブ (overview)</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+<style type="text/css">
+td.supported   {border:solid 1px black;background-color:#FFFFF8}
+td.unsupported {border:solid 1px black;background-color:#C0C0C0}
+</style>
+</HEAD>
+<BODY>
+<H1 align="left">標準アーカイブ (overview) <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+
+
+<h2>説明</h2>
+<p>FSライブラリは、起動したプログラムの種類に応じていくつかの標準的なアーカイブをマウントします。<br />
+ここでは、それぞれのアーカイブについておおまかな特徴を解説します。</p>
+
+
+<h2><a name="ROM">ROMアーカイブ  <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></a></h2>
+<p>全てのプログラムは、<a href="../../tools/makerom.html">makeromツール</a>によって構築された1個のディレクトリツリーをDSカードのROMデータ領域内に格納しています。
+このディレクトリツリーにアクセスするアーカイブがROMアーカイブであり、常に"rom:"という名前でマウントされます。
+ROMに収録すべきデータはビルド時に<a href="../../tools/makerom.html">makeromツール</a>で指定することができ、
+<a href="#NitroROM">NitroROMフォーマット</a>と呼ばれるデータ構造を持ちます。
+データの収録方法に関する詳細は<a href="../../tools/makerom.html">makeromツール</a>のリファレンスをご参照ください。</p>
+<p>ROMアーカイブは通常のカードアプリであれば特に問題なく使用することができますが、
+それ以外のモードで起動した場合にはDSカードが実際に挿入されているかどうか定かではないため、
+あたかも空のディレクトリであるかのように振舞います。
+プログラムのブート種別については別途<code><a href="../../os/bootInfo/OS_GetBootType.html">OS_GetBootType( )</a></code>の説明をご参照ください。</p>
+<p>DSダウンロードプレイによって起動したプログラムでカードアプリと同様にROMアーカイブを使用したい場合は、
+<a href="../../wfs/overview_wfs.html">WFSライブラリ</a>の使用をおすすめします。
+このライブラリは、ダウンロード元の親機と再接続してローカル通信経由でROMデータへアクセスするためのユーティリティです。</p>
+
+<p>ニンテンドーDSiでの機能拡張にともない、TWL-SDKではROMアーカイブの動作に大きな変更がありました。
+以下、旧パッケージであるNITRO-SDKからの変更点をおおまかにまとめます。</p>
+<div style="border:1px solid black;margin:5px;">
+<ul>
+<li style="padding:5px;"><b>ROMデータの正当性検証</b><br />
+<span style="color:Red;">TWLモードの環境で動作している場合にはROMデータの正当性を検証するためのハッシュチェック処理が行われます。</span><br />
+これは従来と大きく異なる追加仕様であり、以下のような挙動を示す点に注意してください。
+<div style="border:1px solid black;margin:5px;">
+<ul>
+<li style="padding:5px;">CARDライブラリの<a href="../../card/overview/about_Rom.html">【概要】</a>で述べたROM転送処理に加えてハッシュ計算処理が実行されるため、より多くのCPU計算時間と転送速度の低下が起こります。<br />
+例として、カードブート時のROMアクセス速度はNTRモードでおよそ1.6[MB/s]ですが、TWLモードではおよそ1.2[MB/s]になります。</li>
+<li style="padding:5px;">ROMイメージに対するハッシュチェック用テーブルもデータとして収録されるため、一定の比率でROM容量を追加消費します。
+また、その一部をオンメモリに保持しておく必要があるため<code><a href="../../card/common/CARD_Init.html">CARD_Init( )</a></code>の内部でアリーナからメインメモリが消費されます。
+これらの所要量はROMサイズと<a href="../../tools/makerom.html">makeromツール</a>のDigestParam設定に依存し、以下の計算式で算出されます。
+<pre><code>(消費メモリサイズ) = 20 * (ROMサイズ) / (DigestParam引数1) / (DigestParam引数2)<br />(追加消費ROMサイズ) = 20 * (ROMサイズ) / (DigestParam引数1) + (消費メモリサイズ)</code></pre>
+現行ではDigestParamは常に"1024 32"ですので、実際の計算式は常に以下のようになります。
+<pre><code><b>消費メモリサイズ = ROMサイズ * 0.0006104<br />追加消費ROMサイズ = ROMサイズ * 0.02014</b></code></pre>
+例として、1Gb(128MB)のROMであればメインメモリを約20kB、ROM容量を約2.7MB追加で消費することになります。</li>
+</ul>
+</div>
+なお、この検証処理にはSRLファイルまたはTADファイルに格納されている情報が必要なため、TLFファイルのみをロードした場合は検証処理が行われません。</li>
+<li style="padding:5px;"><a name="ROM_LTDFILE"><b>TWL専用ファイル</b></a><br />
+ニンテンドーDSi対応ゲームカードの新しいセキュリティで保護される「TWL専用領域」へ個別にファイルを選んで配置することができます。<br />
+TWL専用領域に配置されたファイルは「TWL専用ファイル」となり、NITROモード環境ではカードからの読み出しが不可能となります。
+HYBRIDモードでビルドされたプログラムはニンテンドーDS/DSiどちらの本体でも動作する必要がありますが、ニンテンドーDSiでしか使用しないファイルをこの機能で個別に指定しておくことにより、コピープロテクト機能の向上が期待できます。<br />
+TWL専用ファイルを指定する方法は、<a href="../../tools/makelcf.html">makelcf.TWL</a>の"Ltdautoload"や"Ltdoverlay"パラメータ、または
+<a href="../../tools/makerom.html#ROMSPEC_TWL">makerom.TWL</a>の"Put"パラメータなどがあります。詳細は各々の説明を参照してください。</li>
+<li style="padding:5px;"><b>NANDアプリへの自動対応</b><br />
+NANDアプリとして起動した場合は自分自身のROMデータがDSカード上でなくNANDファイルとして存在しているため、
+NANDファイルをDSカードとみなして振舞う特別なアーカイブが<a href="../../na/overview_na.html">NAライブラリ</a>の初期化処理によって自動的に構築されます。
+このため、ROMアクセスに関してカードアプリからNANDアプリへの移行時に必要な変更作業は特にありません。</li>
+</ul>
+</div>
+<p>
+</p>
+
+<h2><a name="NAND">NANDアーカイブ <img src="../../image/TWL.gif" align="middle"></a></h2>
+<p>TWLには本体NANDメモリが内蔵されており、この領域に存在するファイルシステムへアクセスするための何種類かのアーカイブを総称してNANDアーカイブと呼びます。
+本体NANDメモリはそれ自体がいくつかのパーティションに分割されており、
+個々のNANDアプリが保持するセーブデータファイルもそれぞれが1個の独立したファイルシステムになっていますが、
+内部構造は全て<a href="#FAT">FATフォーマット</a>を採用しています。<br />
+本体NANDメモリの性能については別途プログラミングマニュアルをご参照ください。</p>
+<p>NANDアーカイブとしてマウントされるアーカイブはNANDアプリの設定によって最大で10個近く存在し、それぞれが"photo:"や"dataPub:"などの異なる名前を持ちます。
+各々のアーカイブに関する詳細はNANDアプリ開発用の関連ドキュメントをご参照ください。</p>
+
+
+<h2><a name="SDMC">SDメモリカードアーカイブ <img src="../../image/TWL.gif" align="middle"></a></h2>
+<p>TWLにはSDメモリカードスロットが搭載されており、プログラムの設定によってはこのスロットへのアクセスが可能です。
+このときに使用するアーカイブがSDメモリカードアーカイブであり、"sdmc:"という名前でマウントされます。
+SDメモリカードも<a href="#FAT">FATフォーマット</a>で構成されているため基本的な使用方法はNANDアーカイブとまったく同じですが、
+データ転送速度が個々のSDメモリカードごとに大きく異なる点やアクセス中にメディアを抜き挿しされてしまう可能性がある点には注意が必要です。</p>
+<p>メディアの抜き挿しをイベントとして監視したい場合は<code><a href="../archive/FS_RegisterEventHook.html">FS_RegisterEventHook()</a></code>を利用することができます。現在のスロットの状態やライトプロテクトなどを確認したい場合は<code><a href="../directory/FS_GetPathInfo.html">FS_GetPathInfo("sdmc:/", info)</a></code>のようにルートディレクトリの情報として取得することができますが、スロットが空であったり不明なデバイスが挿入されている場合はこの関数が失敗しますので、<code><a href="../archive/FS_GetArchiveResultCode.html">FS_GetArchiveResultCode()</a></code>の返り値で詳細を確認する必要があります。(たとえば<code><a href="../fs_result_const.html">FS_RESULT_MEDIA_NOTHING</a></code>であればスロットが空であることを示します)</p>
+<p>また、SDメモリカードはパーソナルコンピュータや多くのデジタル家電製品でも一般的に使用される記憶媒体であり、
+使用にあたってはアプリケーションの意図していない不正な内容のデータを外部から受け取ってしまう危険性を常に充分に考慮する必要があります。このような安全上の観点により現行ではSDメモリカードアーカイブは原則的に使用禁止となっていますが、開発の利便性を考慮し、TWL-SDK5.1PR以降ではDebug/Releaseビルド時のみ限定的にアクセスが許可されるようになりました。</p>
+
+<h2><a name="MEM">メモリファイルアーカイブ <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></a></h2>
+<p>このアーカイブはFSライブラリ内部に存在する無名のアーカイブであり、システムにはマウントされていません。
+<code><a href="../file/FS_CreateFileFromMemory.html">FS_CreateFileFromMemory( )</a></code>を呼び出してオープンした無名のファイルはこのアーカイブに属します。</p>
+<p>任意のメモリ空間をあたかもファイルのように扱うことができるため、
+頻繁に使用する小さなファイルをオンメモリ化するなど、使い方によっては大変便利なアーカイブです。</p>
+
+
+<h2><a name="format">内部フォーマット</a></h2>
+<p>前述したいくつかの標準アーカイブは、それぞれに特性の異なる内部フォーマットを採用しています。
+ここでは、各フォーマットのおおまかな特徴を解説します。</p>
+
+
+<h3><a name="NitroROM">NitroROMフォーマット</a></h3>
+<p><a href="../../tools/makerom.html">makeromツール</a>やTWL-Systemのnnsarc.exeツールなどで採用されている、
+TWL-SDK固有のデータアーカイブフォーマットです。以下のような特徴を備えています。</p>
+<ul>
+<li>全てのファイルとディレクトリに一意なIDが割り当てられているため、繰り返し使用するファイルのIDを
+<code><a href="../file/FS_ConvertPathToFileID.html">FS_ConvertPathToFileID( )</a></code>で取得しておけば
+<code><a href="../file/FS_OpenFileFast.html">FS_OpenFileFast( )</a></code>を使用して高速に開くことができます。
+</li>
+<li>格納媒体がROMであることを考慮したフォーマットであるため、ディレクトリツリーの構造を変更することが困難です。
+NitroROMフォーマットを採用しているアーカイブは、ファイルやディレクトリの新規作成・削除・移動などの操作をサポートしていません。</li>
+</ul>
+<p>NitroROMフォーマットの概要については $TwlSDK/docs/technicalNotes/AboutFileSystem.pdf で紹介されていますが、通常は一般開発者がこの仕様を考慮する必要はありません。</p>
+
+<h3><a name="FAT">FATフォーマット</a></h3>
+<p>国際規格ISO/IEC 9293として標準化され、SDメモリカードやハードディスクなどで広く採用されている、いわゆるFATファイルシステムです。
+FATフォーマットに関してはさまざまな解説書籍や仕様書などが存在しますので説明を省略しますが、
+ここでは実際の使用にあたって注意しておきたいいくつかの特徴を述べておきます。</p>
+
+<ul>
+<li>ディレクトリやファイル名のために内部的な管理情報を保持しておく必要があるため、
+ファイルを作成すると名目上のファイルサイズ以外にも管理情報のためにドライブの空き容量を消費することがあります。
+<font color='Red'>消費されるサイズはファイルシステムの内部状態やパス名の長さに依存しますが、ディレクトリ作成時は少なくとも確実に1クラスタ分の空き容量を必要としますので、作成するファイルやディレクトリの総数が不定な場合はドライブの空き容量にいくらかの充分なマージンを見積もっておく必要があります。</font></li>
+<li>ルートディレクトリの直下に生成できるファイルやディレクトリの総数に上限があり、
+その数はFATのフォーマットタイプや容量、ファイル名の長さなどに依存します。</li>
+<li>SDメモリカードによっては初回アクセスの際に非常に長い時間を要することがあり、
+その時間はクラスタサイズや容量、メーカ固有のデータ転送速度などに依存します。</li>
+<li>長いファイル名と短いファイル名の2種類が存在し、それぞれが異なる文字コードになっています。
+長いファイル名は常にUTF-16LE(Unicode)で格納されますが、短いファイル名については「ファイルを作成した環境のロケール」
+であること以外に特別な規定がありません。そのため、短いファイル名のみからその正確な文字コードを確認する手段はありません。</li>
+</ul>
+
+<p>また、TWLにおけるFATのドライバ実装は以下のような特徴を持っています。</p>
+<ul>
+<li>FAT12/FAT16/FAT32に対応しており、SDHCメモリカードにも対応しています。</li>
+<li>FATフォーマットで実装された全てのアーカイブをARM7コンポーネント内の単一のドライバが処理しているため、
+複数のスレッドから複数のアーカイブへ同時にコマンドを発行してもひとつずつ処理されます。</li>
+<li>ドライバがARM7コンポーネント内に存在するため、ファイルの読み書き処理がキャッシュライン32バイト境界の影響を受けます。<br />
+ReadFile/WriteFileに指定するバッファや転送サイズがキャッシュライン整合していない場合には
+ライブラリ内部の一時バッファを経由するメモリコピーが発生するため、
+非同期呼び出しは無視されて常にブロッキング動作となり、転送速度も低下します。</li>
+<li>ファイルやディレクトリを生成する際、エントリ名が8.3形式で表現できるかどうかに関わらず常に長いファイル名を生成します。</li>
+<li>オープンしたファイルを読み書きする際、シークポインタが4バイト整合していない場合にアクセス性能が低下します。</li>
+<li>長い処理時間がかかる可能性のあるコマンドは、
+<a href="../../spi/pm/about_exit.html">システムのシャットダウン</a>が開始された場合FS_RESULT_CANCELEDを返して全て中止されます。<br />
+SDメモリカードへの初回アクセス時や2MB以上の一括読み書きアクセスがこれに該当します。</li>
+<li>より製品環境に近いテストのため、本体NANDメモリの読み書き寿命を内部でエミュレーションします。
+DebugおよびReleaseビルド時には読み出しアクセス時間にランダムな遅延時間が追加されます。</li>
+<li><code><a href="../directory/FS_ReadDirectory.html">FS_ReadDirectory( )</a></code>で取得するディレクトリエントリの順番は特にソートされず、ファイルシステム内に格納されている順でそのまま渡されます。
+また、"."や".."といったシステムノードやSDメモリカードのボリュームラベルといった特殊なエントリもフィルタされずにそのまま取得することができます。</li>
+<li>ドライバの仕様により、<code><a href="../directory/FS_ReadDirectory.html">FS_ReadDirectory( )</a></code>では更新時刻しか取得できず、
+生成時刻と最新アクセス時刻は取得できません。
+これらの情報が必要な場合、別途<code><a href="../directory/FS_GetPathInfo.html">FS_GetPathInfo( )</a></code>を呼び出して取得する必要があります。</li>
+<li>8.3形式でない長いファイル名で新規作成する際、短いファイル名の選定のために非常に長い処理時間を要する場合があります。<br />
+たとえば "aaaaaaaa101.bin" というファイルを新規作成すると短いファイル名の候補は "AAAAAA~1.BIN" になりますが、
+すでに"aaaaaaaa001.bin"、"aaaaaaaa002.bin"、… "aaaaaaaa100.bin" のような100個の連番ファイルが存在するフォルダであれば
+"AAAAAA~1.BIN"、"AAAAAA~2.BIN"、… "AAAA~100.BIN" までのすべての候補が競合してしまうため、
+"AAAA~101.BIN" でようやく成功するまでディレクトリ内を100回繰り返し列挙することになります。<br />
+連番になりえるファイル群の名前は8.3形式におさめるか連番を接頭子にすえると処理速度が向上します。</li>
+</ul>
+
+<p>また、SDメモリカードへアクセスしている最中にSDメモリカードを抜かれてしまうと、
+FATの内部状態に不整合をきたしてしまう致命的なタイミングが存在します。
+そのときに起こりえる不具合と対策を以下にまとめます。</p>
+<table>
+<tr><td>抜かれる状況</td><td>まれに起こる症状</td><td>プログラムでとりうる対策</td></tr>
+<tr>
+  <td>ファイルサイズ変更中(SetFileLength)</td>
+  <td>増加予定分のファイルサイズが空き容量から失われる。<br />
+  または減少した分のファイルサイズが空き容量から失われる。<br />
+  (ファイル自体には異常なし)</td>
+  <td rowspan="3">プログラムからこれを復旧する方法はありません。PCなどの外部環境でチェックディスクツールを使用すれば復旧できるかもしれません。</td>
+</tr>
+<tr>
+  <td>エントリの作成中(Create)<br />
+      エントリの移動中(Rename)</td>
+  <td>内部で確保中だった長いファイル名が消失し、13文字あたり32バイトが空き容量から失われる。</td>
+</tr>
+<tr>
+  <td rowspan="2">エントリの削除中(Delete)<br />エントリの移動中(Rename)</td>
+  <td>削除中のエントリが使用していた全クラスタが空き容量から失われる。<font size="-1">*1</font></td>
+</tr>
+<tr>
+  <td>長いファイル名だけが消失してしまい、8.3形式の短いファイル名となる。<font size="-1">*2</font></td>
+  <td>プログラムが大文字と小文字の違いを特に区別しないのであれば問題ありません。</td>
+</tr>
+<tr>
+  <td>エントリの移動中(Rename)</td>
+  <td>新旧両方のエントリが存在し、どちらを参照/変更しても同じ内容を指すようになる。<br />
+      一方を削除したらもう一方は削除操作以外全てFS_RESULT_ERRORで失敗する。</td>
+  <td>新旧両方のエントリを削除して作り直す必要があります。</td>
+</tr>
+<tr>
+  <td>ファイル追記後のクローズ中(Close)</td>
+  <td>追記した領域の実体が確保されないままファイルサイズ情報だけが更新され、不整合が生じる。<br />
+      追記した領域へアクセスするとFS_RESULT_ERRORで失敗する。</td>
+  <td>ファイルを削除して作り直す必要があります。</td>
+</tr>
+<tr><td colspan="3" style="background-color:Transparent"><font size="-1">*1と*2が同時に発生することはありません。</font></td></tr>
+</table>
+
+<hr />
+<h3><a name="comparison">各フォーマットの動作比較</a></h3>
+<p>FSライブラリは多くのファイルシステム操作APIを用意し、各アーカイブがそのインタフェースに準拠することを要求していますが、
+ファイルシステムの仕様上どうしてもサポートできないオペレーションについては実装しないことも許容しています。
+そのようなアーカイブに対してAPIを呼び出した場合、常に<code><a href="../fs_result_const.html">FS_RESULT_UNSUPPORTED</a></code>のエラーが返されます。<br />
+主要な関数に対する各フォーマットの対応状況を下表に示します。</p>
+
+<table style="width:30%">
+<tr><td class="supported">使用可能</td><td class="unsupported">使用不可能</td></tr>
+</table>
+<br />
+<table style="border:solid 1px black">
+<tr><td style="text-align:left">関数</td>                                             <td><a href="#NitroROM">NitroROMフォーマット</a><br />(<a href="#ROM">ROMアーカイブ</a>)</td>
+                                                                                      <td><a href="#FAT">FATフォーマット</a><br />(<a href="#NAND">NANDアーカイブ</a>、<br /><a href="#SDMC">SDメモリカードアーカイブ</a>)</td>
+                                                                                      <td><a href="#MEM">(メモリファイルアーカイブ)</a></td>     </tr>
+<tr><td><a href="../file/FS_OpenFileEx.html">FS_OpenFileEx</a>
+  <font size="-1">(<a href="../file/FS_OpenFile.html">FS_OpenFile</a>)</font></td>    <td class="supported"></td>     <td class="supported"></td>     <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../file/FS_OpenFileFast.html">FS_OpenFileFast</a></td>               <td class="supported"></td>     <td class="unsupported">*4</td> <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../file/FS_ConvertPathToFileID.html">FS_ConvertPathToFileID</a></td> <td class="supported"></td>     <td class="unsupported">*4</td> <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../file/FS_OpenFileDirect.html">FS_OpenFileDirect</a></td>           <td class="supported"></td>     <td class="unsupported">*5</td> <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../file/FS_GetFileImageTop.html">FS_GetFileImageTop</a></td>         <td class="supported"></td>     <td class="unsupported">*5</td> <td class="supported"></td>     </tr>
+<tr><td><a href="../file/FS_GetFileImageBottom.html">FS_GetFileImageBottom</a></td>   <td class="supported"></td>     <td class="unsupported">*5</td> <td class="supported"></td>     </tr>
+<tr><td><a href="../file/FS_CloseFile.html">FS_CloseFile</a></td>                     <td class="supported"></td>     <td class="supported"></td>     <td class="supported"></td>     </tr>
+<tr><td><a href="../file/FS_GetFileLength.html">FS_GetFileLength</a></td>             <td class="supported"></td>     <td class="supported"></td>     <td class="supported"></td>     </tr>
+<tr><td><a href="../file/FS_SetFileLength.html">FS_SetFileLength</a></td>             <td class="supported"></td>     <td class="supported"></td>     <td class="supported"></td>     </tr>
+<tr><td><a href="../file/FS_GetFilePosition.html">FS_GetFilePosition</a></td>         <td class="supported"></td>     <td class="supported"></td>     <td class="supported"></td>     </tr>
+<tr><td><a href="../file/FS_SeekFile.html">FS_SeekFile</a><br />
+        <a href="../file/FS_SeekFileToBegin.html">FS_SeekFileToBegin</a><br />
+        <a href="../file/FS_SeekFileToEnd.html">FS_SeekFileToEnd</a></td>             <td class="supported"></td>     <td class="supported"></td>     <td class="supported"></td>     </tr>
+<tr><td><a href="../file/FS_ReadFile.html">FS_ReadFile</a></td>                       <td class="supported"></td>     <td class="supported"></td>     <td class="supported"></td>     </tr>
+<tr><td><a href="../file/FS_ReadFileAsync.html">FS_ReadFileAsync</a></td>             <td class="supported"></td>     <td class="supported"></td>     <td class="supported"></td>     </tr>
+<tr><td><a href="../file/FS_WriteFile.html">FS_WriteFile</a></td>                     <td class="unsupported">*1</td> <td class="supported"></td>     <td class="supported"></td>     </tr>
+<tr><td><a href="../file/FS_WriteFileAsync.html">FS_WriteFileAsync</a></td>           <td class="unsupported">*1</td> <td class="supported"></td>     <td class="supported"></td>     </tr>
+<tr><td><a href="../file/FS_FlushFile.html">FS_FlushFile</a></td>                     <td class="unsupported">*1</td> <td class="supported"></td>     <td class="supported"></td>     </tr>
+<tr><td><a href="../directory/FS_OpenDirectory.html">FS_OpenDirectory</a>
+  <font size="-1">(<a href="../file/FS_FindDir.html">FS_FindDir</a>)</font></td>      <td class="supported"></td>     <td class="supported"></td>     <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../directory/FS_ReadDirectory.html">FS_ReadDirectory</a>
+  <font size="-1">(<a href="../file/FS_ReadDir.html">FS_ReadDir</a>)</font></td>      <td class="supported"></td>     <td class="supported"></td>     <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../directory/FS_CloseDirectory.html">FS_CloseDirectory</a></td>      <td class="supported"></td>     <td class="supported"></td>     <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../file/FS_TellDir.html">FS_TellDir</a></td>                         <td class="supported"></td>     <td class="unsupported">*4</td> <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../file/FS_SeekDir.html">FS_SeekDir</a></td>                         <td class="supported"></td>     <td class="unsupported">*4</td> <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../file/FS_RewindDir.html">FS_RewindDir</a></td>                     <td class="supported"></td>     <td class="unsupported">*4</td> <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../file/FS_GetPathName.html">FS_GetPathName</a></td>                 <td class="supported"></td>     <td class="unsupported">*4</td> <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../file/FS_GetPathLength.html">FS_GetPathLength</a></td>             <td class="supported"></td>     <td class="unsupported">*4</td> <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../directory/FS_CreateFile.html">FS_CreateFile</a></td>              <td class="unsupported">*2</td> <td class="supported"></td>     <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../directory/FS_DeleteFile.html">FS_DeleteFile</a></td>              <td class="unsupported">*2</td> <td class="supported"></td>     <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../directory/FS_RenameFile.html">FS_RenameFile</a></td>              <td class="unsupported">*2</td> <td class="supported"></td>     <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../directory/FS_CreateDirectory.html">FS_CreateDirectory</a></td>    <td class="unsupported">*2</td> <td class="supported"></td>     <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../directory/FS_DeleteDirectory.html">FS_DeleteDirectory</a></td>    <td class="unsupported">*2</td> <td class="supported"></td>     <td class="unsupported">*3</td> </tr>
+<tr><td><a href="../directory/FS_RenameDirectory.html">FS_RenameDirectory</a></td>    <td class="unsupported">*2</td> <td class="supported"></td>     <td class="unsupported">*3</td> </tr>
+<tr><td></td><td colspan="3"><font size="-1">
+*1 ファイルの内容を書き換えるコマンドは非対応です。<br />
+*2 ディレクトリ構造を動的に変更するコマンドは非対応です。<br />
+*3 ディレクトリ構造へアクセスするコマンドは非対応です。<br />
+*4 ファイルIDやディレクトリIDを使用するコマンドは非対応です。<br />
+*5 デバイスのアドレス空間へ直接アクセスするコマンドは非対応です。<br />
+</font></td></tr>
+</table>
+
+<hr />
+<h3>返しうるエラーコードの一覧</h3>
+<p>FSライブラリが定義しているエラーコードは全てのアーカイブの内部処理を包括したものなので、
+エラーコードによっては特定のアーカイブからしか返されないものもいくつか存在します。
+参考までに、各アーカイブが返す可能性のあるエラーコードの一覧を下表に示します。</p>
+
+<table style="border:solid 1px black">
+<tr><td style="text-align:left">エラーコード (<code><a href="../fs_result_const.html">FSResult</a></code>)</td><td><a href="#ROM">ROMアーカイブ</a></td><td><a href="#NAND">NANDアーカイブ</a></td><td><a href="#SDMC">SDメモリカードアーカイブ</a></td><td><a href="#MEM">メモリファイルアーカイブ</a></td><td>備考</td></tr>
+<tr><td>FS_RESULT_SUCCESS</td>           <td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td></td></tr>
+<tr><td>FS_RESULT_FAILURE</td>           <td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td></td></tr>
+<tr><td>FS_RESULT_BUSY</td>              <td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td></td></tr>
+<tr><td>FS_RESULT_CANCELED</td>          <td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td></td></tr>
+<tr><td>FS_RESULT_UNSUPPORTED</td>       <td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td></td></tr>
+<tr><td>FS_RESULT_ERROR</td>             <td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td></td></tr>
+<tr><td>FS_RESULT_INVALID_PARAMETER</td> <td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td></td></tr>
+<tr><td>FS_RESULT_NO_MORE_RESOURCE</td>  <td class='unsupported'>No</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td class='unsupported'>No</td><td></td></tr>
+<tr><td>FS_RESULT_ALREADY_DONE</td>      <td class='unsupported'>No</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td class='unsupported'>No</td><td></td></tr>
+<tr><td>FS_RESULT_PERMISSION_DENIED</td> <td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td class='unsupported'>No</td><td></td></tr>
+<tr><td>FS_RESULT_MEDIA_FATAL</td>       <td class='unsupported'>No</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td class='unsupported'>No</td><td>NAND/SDメモリカード固有のエラーです。</td></tr>
+<tr><td>FS_RESULT_NO_ENTRY</td>          <td class='supported'>Yes</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td class='unsupported'>No</td><td></td></tr>
+<tr><td>FS_RESULT_MEDIA_NOTHING</td>     <td class='unsupported'>No</td><td class='unsupported'>No</td><td class='supported'>Yes</td><td class='unsupported'>No</td><td>SDメモリカード固有のエラーです。</td></tr>
+<tr><td>FS_RESULT_MEDIA_UNKNOWN</td>     <td class='unsupported'>No</td><td class='unsupported'>No</td><td class='supported'>Yes</td><td class='unsupported'>No</td><td>SDメモリカード固有のエラーです。</td></tr>
+<tr><td>FS_RESULT_BAD_FORMAT</td>        <td class='unsupported'>No</td><td class='supported'>Yes</td><td class='supported'>Yes</td><td class='unsupported'>No</td><td>FATフォーマット固有のエラーです。</td></tr>
+</table>
+
+
+<h2>参照</h2>
+<p><code>
+<a href="../list_fs.html">FS関数一覧</a><br />
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/06/08 TWL専用領域とTWL専用ファイルについて追記。<br />
+2009/05/13 SDメモリカードの挿抜検出やスロット状態の判定方法について追記。<br />
+2009/04/13 参考資料の文書名を訂正。TWLモードでのROMアーカイブ動作について追記。<br />
+2009/04/10 表中で使用する記号を標準的な表記に置き換え。<br />
+2009/02/27 FATドライバのファイルアクセス動作について追記<br />
+2009/01/13 SDメモリカードアーカイブがDebug/Releaseビルド時のみ限定的にアクセス許可される旨を追記<br />
+2008/12/08 各アーカイブが返しうるエラーコードの一覧を追記<br />
+2008/10/28 FATで連番ファイルを作成する際の注意を追記<br />
+2008/10/20 TLFをロードしてた場合にROMの検証処理が実行されない旨を追記<br />
+2008/09/30 SDメモリカードの挿抜で生じるFAT状態不整合に関して追記<br />
+2008/09/26 SDメモリカードの挿抜に関して追記、ROMアーカイブのアクセス速度に関して追記<br />
+2008/09/16 FATドライバの仕様に関して追記<br />
+2008/09/12 初版<br />
+</p>
+
+</body>
+</html>

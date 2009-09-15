@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MI_AllocWramx</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MI_AllocWram* <IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd><CODE>#include &lt;twl/mi.h&gt;</CODE></dd>
+  <dd>　</dd>
+  <dd><CODE>u32 MI_AllocWram( <A href="../mi_constant.html">MIWramPos</A> wram, <A href="../mi_constant.html">MIWramSize</A> size, <A href="../mi_constant.html">MIWramPro</A>c proc )</CODE></dd>
+  <dd><CODE>u32 MI_AllocWramSlot( <A href="../mi_constant.html">MIWramPos</A> wram, int slot, <A href="../mi_constant.html">MIWramSize</A> size, <A href="../mi_constant.html">MIWramPro</A>c proc )</CODE></dd>
+</dl>
+<dl>
+  <dd><CODE>(define)<br>
+  <font color="#7f7f7f">#define MI_AllocWram_A( size, proc );</font><br>
+  #define MI_AllocWram_B( size, proc );<br>
+  #define MI_AllocWram_C( size, proc );<br>
+  <font color="#7f7f7f">#define MI_AllocWramSlot_A( slot, size, proc );</font><br>
+  #define MI_AllocWramSlot_B( slot,.size, proc );<br>
+  #define MI_AllocWramSlot_C( slot, size, proc );<br>
+  </CODE></dd>
+</dl>
+<h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>wram</STRONG></EM></TD>
+      <TD width="87%">確保する対象のWRAM</TD>
+    </TR>
+    <TR>
+      <TD><B><I>slot</I></B></TD>
+      <TD>スロット番号</TD>
+    </TR>
+    <TR>
+      <TD><B><I>size</I></B></TD>
+      <TD>確保する領域の大きさ</TD>
+    </TR>
+    <TR>
+      <TD><B><I>proc</I></B></TD>
+      <TD>使用するプロセッサ</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>確保できたときは、その先頭アドレスを返します。<BR>
+確保できなかったときは <CODE>MI_WRAM_ALLOC_FAIL</CODE> (0 に define されています) を返します。</p>
+
+<H2>説明</H2>
+<P>WRAM から領域を確保します。</P>
+<P><I><B>wram</B></I> は対象となる WRAM で、<CODE><A href="../mi_constant.html">MIWramPos</A></CODE> 型です。<CODE>MI_WRAM_A, MI_WRAM_B, MI_WRAM_C</CODE> のいずれかとなります。</P>
+<P><B><I>size</I></B> は、確保しようとする領域の大きさです。<CODE><A href="../mi_constant.html">MIWramSize</A></CODE> 型で、MI_WRAM_SIZE_xxxKB となります。xxx には 0 ～ 256 の値が入りますが、WRAM-A の場合は確保できる大きさは64KB単位で、WRAM-B、WRAM-C の場合は 32KB 単位です。</P>
+<P><B><I>proc</I></B> は、その確保する領域をどこが使用するかを表します。<CODE><A href="../mi_constant.html">MIWramProc</A></CODE> 型で、<CODE>MI_WRAM_ARM9, MI_WRAM_ARM7, MI_WRAM_DSP</CODE> のいずれかとなります。</P>
+<P><font color="#7f7f7f"><CODE>MI_AllocWram_A</CODE> は <CODE>MI_AllocWram( MI_WRAM_A, ... )</CODE> の define です。</font><BR>
+<CODE>MI_AllocWram_B</CODE> は <CODE>MI_AllocWram( MI_WRAM_B, ... )</CODE> の define です。<BR>
+<CODE>MI_AllocWram_C</CODE> は <CODE>MI_AllocWram( MI_WRAM_C, ... )</CODE> の define です。<BR>
+<font color="#7f7f7f"><CODE>MI_AllocWramSlot_A</CODE> は <CODE>MI_AllocWramSlot( MI_WRAM_A, ... )</CODE> の define です。</font><BR>
+<CODE>MI_AllocWramSlot_B</CODE> は <CODE>MI_AllocWramSlot( MI_WRAM_B, ... )</CODE> の define です。<BR>
+<CODE>MI_AllocWramSlot_C</CODE> は <CODE>MI_AllocWramSlot( MI_WRAM_C, ... )</CODE> の define です。<BR>
+</P>
+<P><CODE>MI_AllocWram*()</CODE> によって確保される領域は、</P>
+<P>　・その時点で使用されていない<BR>
+　・指定のプロセッサに予約されているか、どこからも予約されていない<BR>
+　・指定のサイズ分、連続領域を確保することが出来る</P>
+<P>を満たしている中で、下位アドレス側から確保されます。</P>
+<P><CODE>MI_AllocWramSlot*()</CODE> の場合は、確保する場所を指定することが出来ます。ただしその領域が取得条件を満たさなければ、たとえそれ以外で確保できる場所があっても失敗となります。</P>
+<P>(例) 以下のように WRAM-C が予約されている場合を考えます。但しまだどの領域も確保はされていないとします。</P>
+<P align="center"><BR>
+<IMG src="image3.gif" border="0"><BR>
+</P>
+<P>どこもまだ確保していない場合、<BR>
+<CODE>MI_AllocWram_C( MI_WRAM_SIZE_64KB, MI_WRAM_ARM7 )</CODE> 　<BR>
+→ slot2 と slot3 を確保します。返り値は 0x03950000 です。</P>
+<P>どこもまだ確保していない場合、<BR>
+<CODE>MI_AllocWram_C( MI_WRAM_SIZE_64KB, MI_WRAM_DSP )</CODE><BR>
+→ slot3 と slot4 を確保します。返り値は 0x03958000 です。</P>
+<P>どこもまだ確保していない場合、<BR>
+<CODE>MI_AllocWram_C( MI_WRAM_SIZE_96KB, MI_WRAM_ARM7 )</CODE><BR>
+→ 確保できません。返り値は <CODE>MI_WRAM_ALLOC_FAIL</CODE> (=0) です。</P>
+
+<h2>参照</h2>
+<P><A href="about_Wram.html">概要(ワークRAM)</A>、<A href="../mi_constant.html">MI関連の定数</A></P>
+
+<H2>履歴</H2>
+<P>2007/08/22 初版</P>
+</body>
+</html>

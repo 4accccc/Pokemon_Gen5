@@ -1,0 +1,46 @@
+#! make -f
+#----------------------------------------------------------------------------
+# Project:  TwlSDK
+# File:     commondefs.add-ins.nadk
+#
+# Copyright 2007-2009 Nintendo.  All rights reserved.
+#
+# These coded instructions, statements, and computer programs contain
+# proprietary information of Nintendo of America Inc. and/or Nintendo
+# Company Ltd., and are protected by Federal copyright law.  They may
+# not be disclosed to third parties or copied or duplicated in any form,
+# in whole or in part, without the prior written consent of Nintendo.
+#
+# $Date:: 2009-06-04#$
+# $Rev: 10698 $
+# $Author: okubata_ryoma $
+#----------------------------------------------------------------------------
+
+ifeq	($(TWL_NANDAPP),TRUE)
+ifeq	($(CODEGEN_PROC),ARM9)
+
+
+# NAND アプリ用に置き換え
+
+DEFAULT_ROM_SPEC		 = $(TWL_SPECDIR)/ROM-$(TWL_PLATFORM)_nand.rsf
+
+
+# 追加ライブラリ
+
+TWL_LIBS		+=	libna$(TWL_LIBSUFFIX).a
+
+
+# 追加ツール
+
+MAKETAD			 := $(TWL_TOOLSDIR)/bin/maketad.exe
+
+
+# 追加の設定
+
+INT_ROM_EXT			:=	nand.srl
+TARGET_NAND_SRL		?= $(TARGET_BIN_BASENAME).$(INT_ROM_EXT)
+TITLE_VERSION_LO	?=	0
+
+
+endif	# ifeq	($(CODEGEN_PROC),ARM9)
+endif	# ifeq	($(TWL_NANDAPP),TRUE)

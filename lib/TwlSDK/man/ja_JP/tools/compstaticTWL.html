@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>compstatic.TWL</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  margin-left: 12pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD,TH{
+  border-color	: #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+<H1 align="left">compstatic.TWL <IMG src="../image/TWL.gif" align="middle"></H1>
+
+<H2>説明</H2>
+<P><FONT color=#ff0000>
+このコマンドは TWL ROM 用のものです。NITRO ROM については <CODE><A href="compstatic.html">compstatic</A></CODE> を参照してください。
+</FONT></P>
+<P>
+<CODE>compstatic.TWL</CODE> は、アプリケーションの常駐領域・拡張常駐領域及びオーバーレイ・拡張オーバーレイの ROM イメージを圧縮するためのツールです。
+圧縮を行うことにより多くの場合 ROM 容量を節約することができますが、ROM イメージを伸張しながらメモリに展開する必要があるため、
+非圧縮の場合と比べてロード処理に要する時間は多くの場合長くなります。
+</P>
+<P>
+TWL はランチャーの制限により、常駐領域・拡張常駐領域どちらか一方でも ROM イメージが 2.5M バイトを超えるアプリケーションは作成できませんが、
+<CODE>compstatic.TWL</CODE> を用いることで、実質 2.5M バイトを超える常駐領域・拡張常駐領域を持ったアプリケーションを作成することが可能になります。
+</P>
+<P>
+また、<CODE>compstatic.TWL</CODE> は、オーバーレイ・拡張オーバーレイの改竄防止用に、各オーバーレイの ROM イメージの
+ダイジェスト値を常駐領域の ROM イメージに埋め込む機能をあわせ持っています。
+</P>
+<P>
+TWL-SDK の make 環境を使用している場合は、環境変数 <CODE>TWL_COMPRESS</CODE> に何らかの値が定義してある場合に
+ARM9 の常駐領域、拡張常駐領域、オーバーレイ、及び拡張オーバーレイに対する圧縮処理が有効になります。
+また、オーバーレイのダイジェスト値の埋め込みは、環境変数に関りなく自動的に有効になります。
+</P>
+
+<H2>使用方法</H2>
+<H3>起動コマンド</H3>
+<PRE><CODE>% compstatic.TWL -a [-d] [-9] [-SHSIZE] [-c] [-C] [-F|-eSUFFIX] [-lFILE] STATICMODULE OVERLAYDEFS [OVERLAYTABLE] LTDSTATICMODULE LTDOVERLAYDEFS [LTDOVERLAYTABLE]</CODE></PRE>
+<P>または</P>
+<PRE><CODE>% compstatic.TWL -a [-d] [-9] [-SHSIZE] [-c] [-C] [-F|-eSUFFIX] [-lFILE] -f RESPONSE_FILE</CODE></PRE>
+<P><CODE><B>-a</B></CODE> オプションにより <CODE>OVERLAYDEFS/LTDOVERLAYDEFS</CODE> で指定されたオーバーレイ/拡張オーバーレイのダイジェスト値が常駐領域に埋め込まれます。
+このダイジェスト値は、オーバーレイモジュールの正当性をロード時に確認するために使用されます。
+なお、ダイジェスト値を埋め込む領域は事前に確保しておく必要がありますが、デフォルトの LCF テンプレートファイルを使用する限り
+<CODE><A href="makelcf.html">makelcf.TWL</A></CODE> ツールによって自動的に必要な領域を確保するリンカスクリプトが生成されます。</P>
+<P><CODE><B>-d</B></CODE> オプションは <CODE>compstatic.TWL</CODE> のデバッグ用メッセージを出力するためのオプションです。
+通常は指定する必要はありません。</P>
+<P><CODE><B>-9</B></CODE> オプションは <CODE>STATICMODULE</CODE> で指定された常駐領域のファイルを ARM9 のコードと見なし圧縮するためのオプションです。
+展開処理は TWL-SDK の crt0.[HYB|LTD].TWL.o と統合されているため、アプリケーション作成者は何も追加作業は必要ありません。</P>
+<P><CODE><B>-S</B></CODE> オプションは <CODE>LTDSTATICMODULE</CODE> で指定された拡張常駐領域のファイルを圧縮するためのオプションです。
+<CODE>HSIZE</CODE>には、圧縮せずに残しておくヘッダー部分のサイズを指定しますが、通常は領域内を全て圧縮するために <CODE>0</CODE> を指定して下さい。
+展開処理は TWL-SDK の crt0.[HYB|LTD].TWL.o と統合されているため、アプリケーション作成者は何も追加作業は必要ありません。</P>
+<P><CODE><B>-c</B></CODE> オプションは <CODE>OVERLAYDEFS</CODE> で指定された各オーバーレイファイルを圧縮するためのオプションです。
+展開処理は TWL-SDK の FS ライブラリと統合されているため、アプリケーション作成者は何も追加作業は必要ありません。</P>
+<P><CODE><B>-C</B></CODE> オプションは <CODE>LTDOVERLAYDEFS</CODE> で指定された各拡張オーバーレイファイルを圧縮するためのオプションです。
+展開処理は TWL-SDK の FS ライブラリと統合されているため、アプリケーション作成者は何も追加作業は必要ありません。</P>
+<P><CODE><B>-e</B></CODE>, <CODE><B>-F</B></CODE> オプションは処理後のファイル名を制御するためのオプションです。
+これらのオプションがない場合は、元のファイル名に拡張子 "<CODE>_LZ</CODE>" が後置された名前のファイルへ処理結果が出力されます。
+この後置子の "<CODE>_LZ</CODE>" を変更する場合は <CODE><B>-e</B></CODE> オプションの <CODE>SUFFIX</CODE> に指定します。
+<CODE><B>-F</B></CODE> が指定されると、元のファイルへ処理後のファイルが上書きされます。</P>
+<P><B><CODE>-l</CODE></B> オプションは、<B><CODE>-c</CODE></B> または <B><CODE>-C</CODE></B> と共に指定します。<a href="#list_format">後述</a>のリストファイルをパラメータで渡すことにより、圧縮から除外するオーバーレイモジュールを指定することができます。</P>
+<P><CODE><B>-f</B></CODE> オプションは、処理対象ファイルのファイル名をコマンドライン引数で指定する代わりに、
+処理対象のファイル名が記録されたファイルを指定するためのオプションです。
+ファイル名が記録されたファイルは <CODE>RESPONSE_FILE</CODE> に指定します。
+<CODE>RESPONSE_FILE</CODE> の内容は <CODE>STATICMODULE/OVERLAYDEFS/OVERLAYTABLE/LTDSTATICMODULE/LTDOVERLAYDEFS/LTDOVERLAYTABLE</CODE>
+の実際のファイル名を <CODE>'\0'</CODE> で終端処理し、順に格納したものとなっています。
+この時に指定するファイルは <CODE>RESPONSE_FILE</CODE> が置かれているディレクトリからの相対パスで指定されているとみなされます。</P>
+<P>ARM7 の常駐領域の圧縮は、ARM7 コンポーネントが自動展開に対応していないため、現在使用できません。</P>
+
+<a name="list_format"></a>
+<H2>圧縮除外リストのフォーマット</H2>
+<P>下記のように、1行に <I>Overlayモジュール</I> と <I>圧縮指定文字</I> をカンマで区切って記述します。
+<PRE class="command_item">
+main_overlay_1.TWL.FLX.sbin, E
+main_overlay_2.TWL.FLX.sbin, E
+main_overlay_3.TWL.FLX.sbin, S
+</PRE>
+</P>
+<P><I>Overlayモジュールファイル名</I> には、実際に <CODE>$(BINDIR)</CODE> に出力される圧縮前のファイル名を記述します。拡張オーバーレイファイルを指定することもできます。</P>
+<P><I>圧縮指定文字</I> の意味は、それぞれ以下の通りです。
+<TABLE>
+<TBODY class="blockquoted_table">
+<TR>
+  <TH width="96"><CODE>圧縮指定文字</CODE></TH>
+  <TH>意味</TH>
+</TR>
+<TR>
+  <TD><CODE>S</CODE></TD>
+  <TD><CODE>SMART</CODE> の意味。<B><CODE>-c</CODE></B> または <B><CODE>-C</CODE></B> のオプションに従い、圧縮をかけます。デフォルトの動作なので、この行は省略することができます。</TD>
+</TR>
+<TR>
+  <TD><CODE>E</CODE></TD>
+  <TD><CODE>EXCLUSION</CODE> の意味。圧縮対象から除外されます。</TD>
+</TR>
+</TBODY>
+</TABLE>
+</P>
+<P>
+TWL-SDK の make 環境を使用している場合は、環境変数 TWL_COMPRESS と共に環境変数 COMPSTATIC_SPEC_FILE を定義します。
+<PRE class="command_item">
+TWL_COMPRESS         = TRUE
+COMPSTATIC_SPEC_FILE = <I>filename</I>
+</PRE>
+</P>
+
+<H2>場所</H2>
+<P><CODE>$TwlSDK/tools/bin/compstatic.TWL.exe</CODE></P>
+
+<H2>参照</H2>
+<P><CODE><A href="makerom.html">makerom.TWL</A>, <A href="makelcf.html">makelcf.TWL</A></CODE></P>
+
+<H2>履歴</H2>
+<P>
+2009/05/14 -l オプションの記述追加。それに伴い、「圧縮除外リストのフォーマット」の項目を追加。<BR>
+2008/11/07 オーバーレイも圧縮可能な事を明記<BR>
+2008/10/28 -a オプションの説明を加筆修正<BR>
+2008/09/12 詳細記載<BR>
+2008/07/09 仮作成
+</P>
+</BODY>
+</HTML>

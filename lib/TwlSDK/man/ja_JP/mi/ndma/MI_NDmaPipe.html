@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>MI_NDmaPipe</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">MI_NDmaPipe* <IMG src="../../image/TWL.gif" width="24" height="12" border="0" align=middle></H1>
+<H2>構文</H2>
+<DL>
+  <DD><CODE>#include &lt;twl/mi.h&gt;</CODE><BR>
+  <BR>
+  <CODE>void MI_NDmaPipe( u32 ndmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipe_SetUp( u32 ndmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipeAsync( u32 dmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaCallback callback,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>void* arg );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipeAsync_SetUp( u32 dmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaCallback callback,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>void* arg );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipeEx( u32 ndmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaConfig *config );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipeEx_SetUp( u32 ndmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaConfig *config );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipeExAsync( u32 ndmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaCallback callback,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>void* arg,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaConfig *config</CODE><CODE> );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipeExAsync_SetUp( u32 ndmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaCallback callback,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>void* arg,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaConfig *config</CODE><CODE> );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipe_Dev( u32 ndmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaDevice dev );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipe_Dev_SetUp( u32 ndmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaDevice dev );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipeAsync_Dev( u32 ndmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaCallback callback,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>void* arg,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaDevice dev );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipeAsync_Dev_SetUp( u32 ndmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaCallback callback,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>void* arg,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaDevice dev );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipeEx_Dev( u32 ndmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaConfig *config,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaDevice dev );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipeEx_Dev_SetUp( u32 ndmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaConfig *config,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaDevice dev );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipeExAsync_Dev( u32 ndmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaCallback callback,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>void* arg,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaConfig *config,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaDevice dev );</CODE>
+</DL>
+<DL>
+  <DD><CODE>void MI_NDmaPipeExAsync_Dev_SetUp( u32 ndmaNo,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile const void* src,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>volatile void* dest,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>u32 size,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaCallback callback,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>void* arg,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaConfig *config,</CODE>
+  <DT>　　　　　　　　　　　　　　　　　　　　<CODE>MINDmaDevice dev );</CODE>
+</DL>
+<H2>引数</H2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>ndmaNo</STRONG></EM></TD>
+      <TD width="87%">使用DMAチャンネル (新規DMAの中で0～3)</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>src</STRONG></EM></TD>
+      <TD width="87%">転送元アドレス</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>dest</STRONG></EM></TD>
+      <TD width="87%">転送先アドレス</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG>size</STRONG></EM></TD>
+      <TD>転送サイズ</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG>callback</STRONG></EM></TD>
+      <TD>DMA終了時のコールバック</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG>arg</STRONG></EM></TD>
+      <TD>DMA終了時のコールバック引数</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG>config</STRONG></EM></TD>
+      <TD>DMA 設定</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG>dev</STRONG></EM></TD>
+      <TD>デバイス起動する場合のデバイス</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>返り値</H2>
+<P>なし。</P>
+<H2>説明</H2>
+<P>新規 DMA を用いて同じ転送元アドレスから同じ転送先にデータを送り続けます。<BR>
+(但し、<CODE>*_SetUp()</CODE> は設定のみを行います。)</P>
+<P><CODE>MI_NDmaPipe*</CODE>は TWL の新規DMAを用いてワード(4byte)単位でデータを送り続けます。転送元アドレス
+<B><I>src</I></B>、転送先アドレス<B><I>dest</I></B> は4バイトアラインメントする必要があります。転送サイズ <B><I>size</I></B> も4の倍数である必要があります。</P>
+<P>使用する新規DMA を、0～3の番号で <B><I>ndmaNo</I></B> で指定します。</P>
+<P><CODE>MI_NDmaPipe*() </CODE>には、</P>
+<P>・DMAの終了を関数内で待つか、待たないか<BR>
+・DMAの詳細な設定をデフォルトのまま行うか、ユーザが指定するか<BR>
+・DMAを即時に開始するか、周辺デバイスからの割り込みで開始するか</P>
+<P>の動作別に関数が用意されています。<BR>
+また、<CODE>*_SetUp()</CODE>  は実際にはDMAを行なわず、その設定のみを行います。実際のDMA開始は <CODE><A href="MI_NDmaRestart.html">MI_NDmaRestart()</A></CODE> を呼んで下さい。<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>関数</TH>
+      <TH>関数内でのDMAの終了待ち</TH>
+      <TH>詳細なDMA設定</TH>
+      <TH>DMAの開始</TH>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaPipe()</CODE></TD>
+      <TD>する</TD>
+      <TD>デフォルト</TD>
+      <TD>即時</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaPipeAsync()</CODE></TD>
+      <TD>しない(Async)</TD>
+      <TD>デフォルト</TD>
+      <TD>即時</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaPipeEx()</CODE></TD>
+      <TD>する</TD>
+      <TD>ユーザ指定</TD>
+      <TD>即時</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaPipeExAsync()</CODE></TD>
+      <TD>しない(Async)</TD>
+      <TD>ユーザ指定</TD>
+      <TD>即時</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaPipe_Dev()</CODE></TD>
+      <TD>する</TD>
+      <TD>デフォルト</TD>
+      <TD>周辺デバイスからの割り込み</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaPipeAsync_Dev()</CODE></TD>
+      <TD>しない(Async)</TD>
+      <TD>デフォルト</TD>
+      <TD>周辺デバイスからの割り込み</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaPipeEx_Dev()</CODE></TD>
+      <TD>する</TD>
+      <TD>ユーザ指定</TD>
+      <TD>周辺デバイスからの割り込み</TD>
+    </TR>
+    <TR>
+      <TD><CODE>MI_NDmaPipeExAsync_Dev()</CODE></TD>
+      <TD>しない(Async)</TD>
+      <TD>ユーザ指定</TD>
+      <TD>周辺デバイスからの割り込み</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+</P>
+<P><CODE>Async 型の関数は、</CODE>DMA終了時にコールバック <B><I>callback</I></B> を呼びます。コールバックは <CODE>MINDmaCallback</CODE> 型 ( void* 引数1つを取る void 型関数 ) です。<B><I>callback</I></B> は システムのDMA割り込みハンドラ内から呼び出されますので、割り込み禁止状態で呼び出されます。</P>
+<P>Async 型の API の機能を引き出すにはその使用法を十分に理解する必要があります。<BR>
+これについては、<CODE><A href="../dma/MI_DmaCopy.html">MI_DmaCopy()</A></CODE> を参照してください。</P>
+<P><B><I>config</I></B> はDMA の動作を詳細に決定する構造体へのポインタです。</P>
+<P><B><I>dev</I></B> は周辺デバイス起動DMA を行うときの、デバイスを指定します。指定できる値については、<A href="about_ndma.html#MINDmaDevice">新規DMA(overview) の「DMA 起動のタイミングについて」</A> を参照してください。</P>
+<H2>内部動作</H2>
+<P>IOレジスタの新規DMAレジスタを使用します。</P>
+<H2>参照</H2>
+<P><CODE><A href="MI_NDmaFill.html">MI_NDmaFill*</A>, <A href="MI_NDmaClear.html">MI_NDmaClear*</A>, <A href="MI_NDmaSend.html">MI_NDmaSend*</A>, <A href="MI_NDmaRecv.html">MI_NDmaRecv</A>, <A href="../dma/MI_DmaPipe.html">MI_DmaPipe*</A>, <A href="../memory/MI_CpuPipe.html">MI_CpuPipe*</A>, <A href="MI_NDmaRestart.html">MI_NDmaRestart</A><BR>
+<A href="about_ndma.html">新規DMA(overview)</A></CODE></P>
+<H2>履歴</H2>
+<P>2008/11/19 <CODE>MINDmaDevice</CODE> についての参照先を記述<BR>
+2007/10/31 <CODE>_SetUp()</CODE> 追加<BR>
+2007/10/24 初版</P>
+</BODY>
+</HTML>

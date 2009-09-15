@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>カメラライブラリ全般 (overview)</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">カメラライブラリ全般 (overview)</H1>
+<P>
+TWLは、本体内に2つのカメラを内蔵しています。<BR>
+2つのカメラは個別に制御できますが、同時に2つのカメラの画像を得ることはできません。<BR>
+<BR>
+カメラライブラリは CODEC-DS モードでは使用することはできません。必ず CODEC-TWL モードにしてください。<BR>
+<br>
+カメラの操作は、すべてAPI経由で行ってください。
+</P>
+<H2>カメラの基本スペック</H2>
+<P>
+カメラの基本スペックは次の通りです。
+</P>
+<ul>
+<li>絞り: F2.8(固定)</li>
+<li>画角: 対角 66° 水平 約54° 垂直 約42°(最大解像度で撮影時の値)</li>
+<li>撮影可能範囲：20cm～無限遠 (パンフォーカス。マクロスイッチ非搭載)</li>
+<li>最大解像度：VGA</li>
+<li>最大フレームレート: 30fps (fps: 1秒間のフレーム数)</li>
+<li>出力フォーマット: YCrYCb (YUV -> RGB変換回路により RGB555 として出力可能)</li>
+<li>解像度の設定 (設定の高速変更に対応)</li>
+<li>フレームレートの設定</li>
+<li>エフェクト処理 (設定の高速変更に対応)</li>
+<li>反転処理 (設定の高速変更に対応)</li>
+<li>撮影モードの設定</li>
+<li>ホワイトバランスの設定</li>
+<li>露光の設定</li>
+<li>シャープネスの設定</li>
+</ul>
+<P>
+このうち、解像度、エフェクト、反転処理については、それぞれのカメラでそれぞれ2つのコンテキストを扱え、個別に設定する場合に比べて高速にコンテキストスイッチすることができます。<BR>
+<BR>
+カメラはハードウェアリセット及びスリープ時にライブラリ内で自動的にスタンバイ状態となるようになっています。<BR>
+スリープ復帰時にカメラを有効にしたい場合は、アプリケーション側で対処する必要があります。
+</P>
+
+<P><h2>カメラ設定の初期値について</h2></P>
+<p>
+カメラ起動時（<code><A href="CAMERA_Init.html">CAMERA_Init()</A></code> を呼び出した際）の初期値のなかで、コンテキストで扱えるものは、次のようになっています。
+</p>
+<p>内側カメラ：コンテキストA
+<table>
+<tr><td>解像度</td><td><A href="CAMERASize.html">CAMERA_SIZE_DS_LCD</A></td></tr>
+<tr><td>エフェクト</td><td><A href="CAMERAEffect.html">CAMERA_EFFECT_NONE</A></td></tr>
+<tr><td>反転処理</td><td><A href="CAMERAFlip.html">CAMERA_FLIP_HORIZONTAL</A></td></tr>
+</table></p>
+<p>内側カメラ：コンテキストB
+<table>
+<tr><td>解像度</td><td><A href="CAMERASize.html">CAMERA_SIZE_VGA</A></td></tr>
+<tr><td>エフェクト</td><td><A href="CAMERAEffect.html">CAMERA_EFFECT_NONE</A></td></tr>
+<tr><td>反転処理</td><td><A href="CAMERAFlip.html">CAMERA_FLIP_HORIZONTAL</A></td></tr>
+</table></p>
+<p>外側カメラ：コンテキストA
+<table>
+<tr><td>解像度</td><td><A href="CAMERASize.html">CAMERA_SIZE_DS_LCD</A></td></tr>
+<tr><td>エフェクト</td><td><A href="CAMERAEffect.html">CAMERA_EFFECT_NONE</A></td></tr>
+<tr><td>反転処理</td><td><A href="CAMERAFlip.html">CAMERA_FLIP_NONE</A></td></tr>
+</table></p>
+<p>外側カメラ：コンテキストB
+<table>
+<tr><td>解像度</td><td><A href="CAMERASize.html">CAMERA_SIZE_VGA</A></td></tr>
+<tr><td>エフェクト</td><td><A href="CAMERAEffect.html">CAMERA_EFFECT_NONE</A></td></tr>
+<tr><td>反転処理</td><td><A href="CAMERAFlip.html">CAMERA_FLIP_NONE</A></td></tr>
+</table></p>
+<p>デフォルトのコンテキストは、内側カメラ、外側カメラどちらもコンテキストAになります。<BR>
+<BR>
+それ以外の、コンテキストで扱えないものの初期値は、次のようになっています。
+<p>内側カメラ
+<table>
+<tr><td>フレームレート</td><td><A href="CAMERAFrameRate.html">CAMERA_FRAME_RATE_15</A></td></tr>
+<tr><td>撮影モード</td><td><A href="CAMERAPhotoMode.html">CAMERA_PHOTO_MODE_PORTRAIT</A></td></tr>
+</table></p>
+<p>外側カメラ
+<table>
+<tr><td>フレームレート</td><td><A href="CAMERAFrameRate.html">CAMERA_FRAME_RATE_15</A></td></tr>
+<tr><td>撮影モード</td><td><A href="CAMERAPhotoMode.html">CAMERA_PHOTO_MODE_NORMAL</A></td></tr>
+</table></p>
+<BR>
+内側カメラ、外側カメラ共通の設定についての初期値は、次のようになっています。
+<p>
+<table>
+<tr><td>出力形式</td><td><A href="CAMERAOutput.html">CAMERA_OUTPUT_YUV</A></td></tr>
+<tr><td>転送ライン数</td><td>1ライン</td></tr>
+</table></p>
+<p>具体的なパラメータの意味については、リンク先の説明を参照してください。</p>
+</p>
+
+<P><h2>RGB変換について</h2></P>
+<p>
+カメラからの画像データは、YCrYCb (YUV4:2:2) フォーマットまたは RGB (RGB5:5:5) で得られます。<BR>
+<BR>
+YUV4:2:2からRGB8:8:8への変換式は次の通りです。
+
+<PRE>
+R = 1.000 x Y                     + 1.402 x (V - 128)
+G = 1.000 x Y - 0.344 x (U - 128) - 0.714 x (V - 128)
+B = 1.000 x Y + 1.772 x (U - 128)
+</PRE>
+</p>
+<p>
+計算結果が0以下または255以上となった場合は丸められます。<BR>
+その後、0～31にスケーリングされ、RGB5:5:5となります。<BR>
+<BR>
+なお、逆変換式は次のようになります。
+
+<PRE>
+Y =  0.299 x R + 0.587 x G + 0.114 x B
+U = -0.169 x R - 0.331 x G + 0.500 x B + 128
+V =  0.500 x R - 0.419 x G - 0.081 x B + 128
+</PRE>
+</p>
+<H2>参照</H2>
+<P><CODE>
+<A href="list_camera.html">CAMERA 関数一覧</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>
+2009/06/09 カメラの基本スペックについての説明更新<br>
+2008/10/06 カメラライブラリを使用するための CODEC の制限について説明追加<br>
+2008/09/11 カメラの初期値について説明追加<br>
+2008/04/21 カメラ設定の初期値について、撮影モードを追加<BR>
+2008/03/17 ハードウェアリセット時とスリープ時の動作について説明追加<BR>
+2007/11/14 初版
+</P>
+</BODY>
+</HTML>

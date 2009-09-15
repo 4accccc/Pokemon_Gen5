@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>NITRO-CHARACTER を使用したバナー作成手順</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD,TH{
+  border-color	: #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+<H1 align="left">NITRO-CHARACTER を使用したバナー作成手順<IMG src="../image/TWL.gif" align="middle"></H1>
+<H2>説明</H2>
+<P>ここではTWL アプリに必要なTWL バナーをNITRO-CHARACTER を使用して作成する方法を説明します。
+</P><P>
+TWL バナーはこの方法の他に<A href="ntexconv.html"><CODE>ntexconv</CODE></A> を使用して作成する方法もあります。<BR>
+<A href="ntexconv.html"><CODE>ntexconv</CODE></A> を使用して作成する方法は<A href="bannercvtr.html"><CODE>bannercvtr</CODE></A> をご参照ください。</P>
+<H2>サンプル</H2>
+<P>以下にサンプルがあります。このサンプルを使って説明します。</P>
+<P><CODE>$TwlSDK/build/demos.TWL/tips/TWLBanner_anim1/banner/SDK_demo</CODE></P>
+<H2>制限事項</H2>
+<H3>カラーパレット</H3>
+<P>カラーパレットは 16 色 x 16 パレット（標準）で、0 番を使用してください。<BR>
+<FONT color=#ff0000>0番以外のパレットを使用することはできません。</FONT></P>
+<IMG src="banner_palette.gif" border="0"></P>
+
+<H3>キャラクタ</H3>
+<P>キャラクタは 16 色 x 16 パレット（標準）にしてください。<BR>
+サイズはフリーサイズで32 x 4 (chr)を指定します。</P>
+<P><IMG src="banner_character.gif" border="0"></P>
+
+<H3>セル</H3>
+<P>セルのマッピングモードは 1D モード（32K）、オブジェクト圧縮モードは ファイル全体 にしてください。</P>
+<P><IMG src="banner_cell1.gif" border="0"></P>
+<P>1 つのセルには 32 x 32 ドットの OBJ を 1 つだけ配置します。プレビューのため、センターに配置します。<BR>
+セルの上下反転、左右反転（Flip）はバナーアイコンに反映されますが、位置、半透明、ウィンドウ、モザイク、回転拡大縮小フラグ、倍角フラグは反映されません。</P>
+<P><IMG src="banner_cell2.gif" border="0"></P>
+
+<H3>セルアニメーション</H3>
+<P>セルアニメーションは No.1 のものが変換されます。
+セルアニメーションの動作（STOP / LOOP）はバナーアイコンに反映されます。<BR>
+シーケンスデータ数はアニメーションが STOP の場合は 63 以下、LOOP の場合は 64 以下にしてください。
+シーケンスデータの表示フレーム数は 255 以下にしてください。<BR>
+シーケンスデータの位置、拡大縮小、回転はバナーアイコンに反映されません。</P>
+
+<P><FONT color=#ff0000>但しセルの上下反転、左右反転（[Flip] 欄のVH）を使用する場合に制限があります。<BR>
+一つ前のシーケンス（[No.] 欄）と次のシーケンスではセルのキャラクタ番号（[Num.] 欄）を変更せずに、上下反転、左右反転のみ変更することはできません。<BR>
+例えば、セルのキャラクタ番号は常に同じで、上下反転、左右反転のみを使ったアニメーションは作成できません。<BR>
+そのようなアニメーションを作る場合は、必ず別のキャラクタ番号のセルを作成して使うようにして下さい。<BR>
+アニメーションをLOOP 設定している場合は、最後のシーケンスと最初のシーケンスについても同じ制限があてはまります。
+</FONT></P>
+<H2>プレビュー</H2>
+<P>プレビューするには、NitroViewerを使用します。TwlSystem に同梱されている以下のツールを起動してください。</P>
+<P><CODE>% $TwlSystem/tools/NitroViewer/***_NITRO-Viewer_Controller.bat</CODE></P>
+<P>デフォルトでは、上画面に表示されますので、L ボタン+セレクトボタンで上下画面を切り替えてください。</P>
+<P>TWL 本体ランチャー画面の背景とあわせてプレビューを行う場合は、サンプルにある以下のファイルを自分のプロジェクトフォルダにコピーします。</P>
+<P><CODE>$SDK_demo/ColorPalette/banner_background(0～F).ncl<BR>
+$SDK_demo/Character/banner_background.ncg<BR>
+$SDK_demo/Character/Screen/banner_background0.nsc<BR>
+$SDK_demo/Character/Screen/banner_background1.nsc<BR>
+$SDK_demo/Character/Screen/banner_background2_CARD.nsc<BR>
+$SDK_demo/Character/Screen/banner_background2_NAND.nsc<BR>
+$SDK_demo/Character/Screen/banner_background3.nsc</CODE></P>
+<P>次にプレビューの設定を行います。以下にサンプルでのプレビュー設定を説明します。</P>
+<P><IMG src="banner_preview.gif" border="0"></P>
+<P>BG には上記のファイルを、アニメーションリストには作成したバナーのセルアニメーションを設定してください。</P>
+<TABLE>
+  <TBODY>
+    <TR>
+      <TH>番号</TH>
+      <TH>説明</TH>
+    </TR>
+    <TR>
+      <TD>01</TD>
+      <TD>カラーパレットを変えることでバナーを囲むフレームの色を変更できます。<BR>
+      通常TWL 本体では本体設定の[ユーザー情報]-[ユーザーカラー]で設定した色になります。<BR>
+      各々のカラーパレットは<A href="../os/ownerInfo/os_favorite_color_const.html">OS_FAVORITE_COLOR_*</A>の色と対応しています。
+    </TD>
+    </TR>
+    <TR>
+      <TD>02</TD>
+      <TD>カードアプリとNAND アプリでは表示される背景が異なります。<BR>
+      カードアプリの場合は、<CODE>banner_background2_CARD.nsc</CODE> を、<BR>
+      NAND アプリの場合は、<CODE>banner_background2_NAND.nsc</CODE> を使用してください。
+      </TD>
+    </TR>
+    <TR>
+      <TD>03</TD>
+      <TD><CODE>banner_background1.nsc</CODE> のY 座標は1 、<BR>
+      <CODE>banner_background2_****.nsc</CODE> のY 座標は2 に設定してください。</TD>
+    </TR>
+    <TR>
+      <TD>04</TD>
+      <TD>セルアニメーションの設定は、X 座標は128 、<BR>
+       Y 座標は114 に設定してください。<BR>
+       （但しセルをセンターに置いている場合）</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>参照</H2>
+<P><CODE><A href="about_Banner.html">バナー (overview)</A>, <A href="makebannerTWL.html">makebanner.TWL</A>, <A href="ntexconv.html">ntexconv</A>, <A href="bannercvtr.html">bannercvtr</A></CODE></P>
+<H2>履歴</H2>
+<P>2008/11/28 初版作成</P>
+</BODY>
+</HTML>

@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<LINK rel="stylesheet" type="text/css" href="../../css/nitro.css">
+<TITLE>OS Demos</TITLE>
+</HEAD>
+<BODY>
+<H1>オペレーティングシステム(OS)サンプルデモ</H1>
+<H2>場所</H2>
+<P><CODE>$TwlSDK/build/demos/os</CODE><BR>
+<CODE>$TwlSDK/build/demos.TWL/os</CODE></P>
+<H2>コンパイル方法</H2>
+<P><CODE>$TwlSDK/build/demos/os</CODE> (または<CODE>$TwlSDK/build/demos.TWL/os</CODE>) ディレクトリに移り、</P>
+<BLOCKQUOTE><CODE>% make</CODE></BLOCKQUOTE>
+<P>と入力します。コンパイルが始まり、実行ファイルである <CODE>.srl</CODE> ファイルやバイナリ情報を記述した <CODE>.nef</CODE> または <CODE>.tef</CODE> ファイルが、</P>
+<BLOCKQUOTE><CODE>$TwlSDK/build/demos/os/(サンプル名)/bin/(プラットフォーム)/(ターゲット)/</CODE><BR>
+<CODE>$TwlSDK/build/demos.TWL/os/(サンプル名)/bin/(プラットフォーム)/(ターゲット)/</CODE></BLOCKQUOTE>
+<P>の下に生成されます。例えば、</P>
+<BLOCKQUOTE><CODE>$TwlSDK/build/demos/os/thread-1/bin/ARM9-TS/Release/main.srl</CODE></BLOCKQUOTE>
+<P>が <CODE>thread-1</CODE> デモの実行ファイルとなります。</P>
+
+<H2>実行方法</H2>
+<H3>NITRO ROM の場合</H3>
+
+<P>Ensata エミュレータを用いる場合</P>
+<UL>
+  <LI>ensata で <CODE>*.nef</CODE>, <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-NITRO-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<H3>TWL/NITRO HYBRID ROM の場合</H3>
+<P>IS-NITRO-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<H3>TWL LIMITED ROM の場合</H3>
+<P>IS-TWL-DEBUGGER を用いる場合</P>
+<UL>
+  <LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読みこんで実行する。
+  <LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+  <LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行する。
+</UL>
+<H2>説明</H2>
+<BR>
+<TABLE width="720">
+  <TBODY>
+    <TR>
+      <TH>デモ名</TH>
+      <TH>ディレクトリ</TH>
+      <TH>動作</TH>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>alarm-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">ワンショットのアラームを１つ使用します。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>alarm-2</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">周期的なアラームと、ワンショットのアラームを使用します。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>arena-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">アリーナを設定しメモリを取得します。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>argument-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>引数データをROMイメージに埋め込み表示します。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>argument-2</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>文字列からその場で引数データを作成して設定します。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>callTrace-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>スレッドシステムを使用せずに、関数コールトレース表示を行います。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>callTrace-2</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>スレッドシステムを使用して、関数コールトレース表示を行います。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>consoleType-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>動作環境情報を画面に表示します。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>cplusplus-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>C++の実装のためにスタティックイニシャライザを呼ぶ前にメモリ管理の初期化を行います。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>cpuSpeed-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD>CPU速度を倍速と等速で切り替えます。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>entropy-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525"><CODE><A href="../../os/entropy/OS_GetLowEntropyData.html">OS_GetLowEntropyData()</A></CODE> を使用します。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>event-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">イベントによってスレッドを起こします。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>exceptionDisplay-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">例外表示を行い、例外コールバックを使用します。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>exceptionDisplay-2</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>0除算で擬似的に例外を発生させます。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>exceptionDisplay-3</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>例外発生時に、関数コールトレース情報を表示します。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>exceptionDisplay-4</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>例外発生時に、画面に例外時コンテキストを表示します。</TD>
+    </TR>
+<!--
+    <TR>
+      <TD><EM><STRONG><CODE>favorite-color</CODE></STRONG></EM></TD>
+      <TD>本体情報に含まれる「お気に入りの色」を画面にテスト表示するサンプルです。</TD>
+    </TR>
+-->
+    <TR>
+      <TD><EM><STRONG><CODE>forChina-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>中国向けアプリケーションを作成する簡易サンプルです。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>forChina-fs</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD><CODE><EM><STRONG>forChina-1</STRONG></EM></CODE>と同様ですが、<CODE>OS_ShowAttentionChina()</CODE> を独自に定義して画像データをファイルシステムから取得します。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>forKorea-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>韓国向けアプリケーションを作成する簡易サンプルです。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>functionCost-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>関数のコストを計測して表示します。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>functionCost-2</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>複数のスレッドで関数のコストを計測して表示します。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>functionCost-3</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>複数のスレッドで計測した関数コストを全体で集計して表示します。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>heap-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">ヒープを作成して領域を確保したり解放したりします。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>message-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">メッセージでスレッドを起こします。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>mutex-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">複数のスレッドから1つの関数をアクセスする際にmutexで排他制御します。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>mutex-2</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">スレッドが終了するときに mutex をアンロックします。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>os_jump</CODE></STRONG></EM></TD>
+      <TD><CODE>demos.TWL</CODE></TD>
+      <TD width="525"><CODE><A href="../../os/appJump/OS_JumpToSystemMenu.html">OS_JumpToSystemMenu()</A></CODE> や <CODE><A href="../../os/appJump/OS_RebootSystem.html">OS_RebootSystem()</A></CODE> などハードウェアリセットを介する関数の動作デモです。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>reset-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>ソフトウェアリセットをかけます。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>simple-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">最もシンプルな動作デモです。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>sleep-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">一定時間スレッドをスリープします。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>spinwait-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD><CODE><A href="../../os/system/OS_SpinWait.html">OS_SpinWait()</A></CODE> で一定時間ウェイトします。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>thread-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">２つのスレッドを作成し、一方がもう一方を直接起こします。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>thread-2</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">２つのスレッドを作成し、割り込みハンドラからそれぞれを起こします。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>thread-3</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525"><CODE><A href="../../os/thread/OS_JoinThread.html">OS_JoinThread()</A></CODE> を使用する例です。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>threadQueue-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>スレッドキューを用いてスレッドを起こします。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>threadYield-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD><CODE><A href="../../os/thread/OS_YieldThread.html">OS_YieldThread()</A></CODE> を使用する例です。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>tick-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">システムのtick値を取得します。</TD>
+    </TR>
+    <TR>
+      <TD width="187"><EM><STRONG><CODE>timer-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD width="525">16bitタイマと32bitタイマを使用します。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>valarm-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>Vカウントを用いたアラームを使用します。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>waitIrq-1</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD>別スレッドを動作させながらVブランクの発生を待ちます。</TD>
+    </TR>
+    <TR>
+      <TD><EM><STRONG><CODE>waitIrq-2</CODE></STRONG></EM></TD>
+      <TD><CODE>demos</CODE></TD>
+      <TD><CODE><A href="../../os/irq/OS_WaitIrq.html">OS_WaitIrq()</A></CODE> と <CODE><A href="../../os/irq/OS_WaitAnyIrq.html">OS_WaitAnyIrq()</A></CODE> の動作の違いを示します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>動作</H2>
+<P><CODE>exceptionDisplay-*, reset-1 は ensata では正常動作をしません。</CODE></P>
+<P><CODE>IS-TWL-DEBUGGER では、exceptionDisplay-* は例外が発生したコードで停止します。</CODE></P>
+<P><CODE>arbitrary_jump は <A href="../../romfiles/TwlNmenu.html">TwlNmenu.srl</A> を使って本体保存メモリに tad をインポートしてから実行してください。</CODE></P>
+<P>デモのいくつかは <CODE><A href="../../os/debug/OS_Printf.html">OS_Printf()</A></CODE> で情報をデバッグコンソールに表示しているものがあります。しかしFINALROM版のROMでは <CODE><A href="../../os/debug/OS_Printf.html">OS_Printf()</A></CODE> が無効化されるので、そういうものに関しては FINALROM版での確認が出来ません。</P>
+<H2>参照</H2>
+<P><A href="../../os/list_os.html"><CODE>OS関数一覧</CODE></A></P>
+<H2>履歴</H2>
+<P>2008/07/09 一旦削除していた argument-1, argument-2 を追加<BR>
+2008/04/25 表を一新。TWL用の一覧に変更。<BR>
+2006/10/19 forKorea-1 サンプルの説明を追加。<br>
+2005/09/09 argument-2 を追加<BR>
+2005/07/22 functionCost-1 の記載漏れを修正<BR>
+2005/07/21 argument-1 を追加<BR>
+2005/07/14 thread-10 を追加<BR>
+2005/07/13 thread-6, thread-7, thread-8, thread-9 を追加。<BR>
+2005/07/11 forChina-1、forChina-fsサンプルの説明を追加。<br>
+2005/05/10 favorite-colorサンプルの説明を追加。<br>
+2005/03/02 記述内容を現在のサポート環境の状況に合うよう修正。<BR>
+2004/12/08 interrupt-key-1 を削除。動作を修正。<BR>
+2004/09/01 reset-1 を追加。<BR>
+2004/08/17 IS-NITRO-EMULATORについての表記を統一。<BR>
+2004/07/10 .bin から .srl へ変更。<BR>
+2004/06/25 thread-5を追加。<BR>
+2004/06/08 profile関連のデモをデフォルトでMakefileに入れるようにした。<BR>
+2004/05/24 functionCost-1,2,3, waitIrq-1,2 を追加。必要なprofile機能についての記述を追加。<BR>
+2004/04/15 callTrace-1, callTrace-2, cplusplus-1, exceptionDisplay-3 の記述を追加。<BR>
+2004/04/05 mutex-2, sleep-1, timer-1 の記述を追加。systemClock-1 を tick-1
+に修正。<BR>
+2004/03/17 exceptionDisplay-2, valarm-1, spinWait-1 の記述を追加。<BR>
+2004/02/05 alarm-1,alarm-2,exceptionDisplay-1,systemClock-1 の記述を追加。<BR>
+2004/01/18 interrupt-dma-1 サンプルはdmaCallback-1 としてMIに移した。<BR>
+2004/01/09 初版</P>
+</BODY>
+</HTML>

@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--==========================================================================
+  Copyright 2008 Nintendo.  All rights reserved.
+
+  These coded instructions, statements, and computer programs contain
+  proprietary information of Nintendo of America Inc. and/or Nintendo
+  Company Ltd., and are protected by Federal copyright law.  They may
+  not be disclosed to third parties or copied or duplicated in any form,
+  in whole or in part, without the prior written consent of Nintendo.
+ ==========================================================================-->
+<HTML>
+<HEAD>
+	<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+	<META http-equiv="Content-Style-Type" content="text/css">
+	<TITLE>RSA アルゴリズムによる暗号化 (overview)</TITLE>
+	<LINK rel="stylesheet" href="../../css/nitro.css">
+	<BASE target="main">
+</HEAD>
+<BODY>
+<H1>RSA アルゴリズムによる暗号化 (overview)</H1>
+
+<H2>説明</H2>
+<H3>RSA暗号について</H3>
+<P>
+	RSA アルゴリズムによる暗号化関数は公開鍵を用いた暗号を行うために用意しています。
+</P>
+<P>
+	RSA アルゴリズムには以下の特徴があります。
+</P>
+<ul>
+	<li>公開鍵暗号である。</li>
+	<li>暗号化・復号処理は非常に低速である。</li>
+</ul>
+<P>
+	公開鍵暗号方式は共通鍵暗号方式に比して鍵の配送に関するリスクが低いというメリットがありますが、
+	他の暗号方式と比較して処理速度が遅いというデメリットがあります。
+	そのため暗号化したいデータは他の暗号方式で暗号化し、
+	その暗号化に用いた鍵をRSAで暗号化して配送するという方法を採るのが一般的です。
+</P>
+<H3>RSA暗号を使うときの注意事項</H3>
+<P>
+	RSA暗号方式の性質として以下のようなものがあります。
+</P>
+<ol>
+	<li>秘密鍵が流出すれば暗号が危殆化する
+	<li>Private Exponentが判明できれば復号ができる(ブルートフォース攻撃)
+	<li>鍵配送を悪用すればデータの偽装が可能(main-in-the-middle攻撃)
+</ol>
+<P>
+	秘密鍵が流出すると暗号解読も署名偽装も可能となり暗号による安全性は損なわれます。秘密鍵の管理には十分注意してください。<BR>
+	ブルートフォース攻撃に対しては鍵長を長くすれば防ぎやすくなりますが、その分暗号化のための処理速度が増大します。<BR>
+	main-in-the-middleを防ぐためには公開鍵の認証(証明書)が有効です。
+</P>
+<P>
+	詳細は、一般的な暗号の書籍を参照してください。
+</P>
+<H3>鍵形式および暗号/復号文字列について</H3>
+<P>
+	鍵は公開鍵・秘密鍵共にDER形式のものを使用します。鍵形式は以下のようにして下さい。
+</P>
+<ol>
+	<li>鍵のデータフォーマットがASN.1形式に準拠しており、DERエンコードされている</li>
+	<li>使用している公開鍵の公開指数が65537である</li>
+</ol>
+<P>
+	なお鍵長に制限はありませんが、動作確認を取っているのは1024・2048・4096bitです。
+</P>
+<P>
+	暗号化文字列は以下の形式になっています。
+</P>
+<ol>
+	<li>RSA暗号にて暗号化</li>
+	<li>PKCS#1 v1.5形式でパディング</li>
+</ol>
+<P>
+	暗号化可能な文字列の長さは鍵長よりも11byte以上短いものである必要があります。(例えば1024bitの鍵長の場合は暗号化する文字列は117byte以下である必要があります)<BR>
+	CRYPTOライブラリ以外の方法で暗号化した文字列をCRYPTOライブラリで復号する場合は上記暗号化文字列形式に従ったものを使用すれば復号できます。
+</P>
+<H3>制限事項</H3>
+<P>
+	RSA暗号アルゴリズムはライセンスの都合上TWLでのみ動作します。NITROでは動作しません。
+</P>
+<a name="make_key"><H3>鍵作成例</H3></a>
+<P>
+	一例として、オープンソースのSSL	ツールキットであるOpenSSLで暗号化に用いる公開・秘密鍵を作成する手順を以下に述べます。
+</P>
+<P><B>1. RSA 秘密鍵を作成する</B></P>
+<P>
+	OpenSSLがインストールされている環境のコマンドラインで以下のコマンドを入力することで、PEM形式・鍵長 1024 bit の RSA 秘密鍵ファイル privkey.pem を作成します。
+</P>
+<PRE><CODE> &gt; openssl genrsa -out privkey.pem</CODE></PRE>
+<P>
+	万が一、privkey.pem が漏洩すると、誰もが暗号解読および暗号偽造ができるようになってしまいます。
+	秘密鍵の鍵ファイルは厳重に取り扱うようにしてください。
+</P>
+<P>
+	PEM形式の秘密鍵ができたらDER形式に変換します。
+</P>
+<PRE><CODE> &gt; openssl rsa -outform DER -in privkey.pem -out privkey.der</CODE></PRE>
+<P>
+	CRYPTO APIで秘密鍵を指定するときは、この privkey.der の中身をC言語の u8 の配列に変換して指定します。
+	なお、privkey.der も秘密鍵のため privkey.pem 同様厳重に取り扱うようにしてください。
+</P>
+<P><B>2. RSA 公開鍵を作成する</B></P>
+<P>
+	以下のコマンドでDER形式の公開鍵を作成します。
+</P>
+<PRE><CODE> &gt; openssl rsa -pubout -inform DER -in privkey.der -outform DER -out pubkey.der</CODE></PRE>
+<P>
+	CRYPTO APIで公開鍵を指定するときは、この pubkey.der の中身をC言語の u8 の配列に変換して指定します。
+</P>
+<P><B>3. 鍵の動作確認をする</B></P>
+<P>
+	作成した秘密・公開鍵のペアが正しく機能するかを確認します。<BR>
+	まず、鍵長のよりも短い文字列長の文字列を記載したテキストファイル (test.txt) を用意し、公開鍵で暗号化して test.txt.enc に変換します。
+</P>
+<PRE><CODE> &gt; openssl rsautl -encrypt -in test.txt -out test.txt.enc -pubin -keyform DER -inkey pubkey.der</CODE></PRE>
+<P>
+	作成した秘密・公開鍵のペアが正しく機能するかを確認します。<BR>
+	次に、test.txt.enc を秘密鍵で復号して test.txt.dec に変換します。
+</P>
+<PRE><CODE> &gt; openssl rsautl -decrypt -in test.txt.enc -out test.txt.dec -keyform DER -inkey privkey.der</CODE></PRE>
+<P>
+	test.txt と test.txt.dec の中身が一致していたら鍵は正しく動作することが確認できます。
+</P>
+
+<H2>参照</H2>
+<P>
+	<CODE>
+		<A href="../list_crypto.html#rsa">CRYPTO関数一覧</A><BR>
+	</CODE>
+</P>
+
+<H2>履歴</H2>
+<P>
+	2008/10/30 暗号化文字列のフォーマットに関する修正<BR>
+	2008/10/02 鍵のフォーマットに関する修正<BR>
+	2008/09/18 HTMLタグ周りの修正<BR>
+	2008/09/16 記載の一部修正<BR>
+	2008/03/27 初版<BR>
+</P>
+
+</BODY>
+</HTML>

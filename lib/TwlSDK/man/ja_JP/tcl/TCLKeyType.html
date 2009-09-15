@@ -1,0 +1,46 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCLKeyType</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCLKeyType <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+typedef enum
+{
+    TCL_KEY_TYPE_LAUNCHER = 0 ,
+    TCL_KEY_TYPE_APPLICATION ,
+    TCL_KEY_TYPE_UNKNOWN ,
+    TCL_KEY_TYPE_MAX
+} TCLKeyType;
+	</code></pre>
+</dl>
+
+<h2>説明</h2>
+<p>写真にかけられている署名のタイプです。</p>
+<p>DSiカメラとDSiメニューで撮影された写真はランチャー鍵で署名されていますが、それ以外は一般鍵で署名されています(署名のないjpeg画像の保存は禁止されています)。</p>
+<p>各アプリでこの型を意識する必要はありません。</p>
+<p>内容は以下の通りです。</p>
+<table>
+<tr><td>TCL_KEY_TYPE_LAUNCHER<td>ランチャー鍵で署名されていることを示します。
+<tr><td>TCL_KEY_TYPE_APPLICATION<td>一般鍵で署名されていることを示します。
+<tr><td>TCL_KEY_TYPE_UNKNOWN<td>管理されてから一度もデコードされてないためどちらの鍵で署名されているか分からない状態を示します。
+</table>
+
+<h2>参照</h2>
+
+<h2>履歴</h2>
+<p>
+2008/10/07 初版<br/>
+</p>
+
+</body>
+</html>

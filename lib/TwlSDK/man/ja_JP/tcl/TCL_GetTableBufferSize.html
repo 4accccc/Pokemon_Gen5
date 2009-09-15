@@ -1,0 +1,42 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCL_GetTableBufferSize</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCL_GetTableBufferSize <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+u32 TCL_GetTableBufferSize( void );
+	</code></pre>
+</dl>
+
+<h2>引数</h2>
+<p>なし</p>
+
+<h2>返り値</h2>
+<p>管理ファイルの読み込み、生成に必要なバッファサイズ</p>
+
+<h2>説明</h2>
+<p><a href="TCL_LoadTable.html"><code>TCL_LoadTable</code></a> や <a href="TCL_CreateTable.html"><code>TCL_CreateTable</code></a> など、管理ファイルの読み込み、生成を行う際に必要なバッファサイズを返す関数です。</p>
+<p>上記関数を呼ぶ際には、この関数で得られるサイズのバッファを渡して下さい。</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="TCL_LoadTable.html">TCL_LoadTable</a> <a href="TCL_CreateTable.html">TCL_CreateTable</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/10/07 初版<br/>
+</p>
+
+</body>
+</html>

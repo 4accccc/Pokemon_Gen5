@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>MINDmaConfig 構造体</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">MINDmaConfig 構造体<IMG src="../../image/TWL.gif" width="24" height="12" border="0" align=middle></H1>
+<H2>定義</H2>
+<DL>
+  <DD><CODE>#include &lt;twl/mi.h&gt;</CODE><BR>
+  <BR>
+  <CODE>typedef struct _MINDmaConfig<BR>
+  {<BR>
+  　　　u32 intervalTimer;<BR>
+  　　　u32 prescaler;<BR>
+  　　　u32 blockWord;<BR>
+  　　　u32 wordCount;<BR>
+  }<BR>
+  MINDmaConfig;</CODE>
+</DL>
+<H2>メンバー</H2>
+<P><CODE>MINDmaConfig</CODE> 構造体のメンバーは以下の通りです。<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>メンバ名</TH>
+      <TH>説明</TH>
+      <TH>関係するレジスタ</TH>
+      <TH>初期値</TH>
+    </TR>
+    <TR>
+      <TD><CODE>intervalTimer</CODE></TD>
+      <TD>ブロック転送のインターバルタイマーです。</TD>
+      <TD>DMAxBCNT の d15-0</TD>
+      <TD><CODE>MI_NDMA_NO_INTERVAL</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>prescaler</CODE></TD>
+      <TD>ブロック転送インターバルタイマーのプリスケーラです。</TD>
+      <TD>DMAxBCNT の d17-16</TD>
+      <TD><CODE>MI_NDMA_INTERVAL_PS_1</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>blockWord</CODE></TD>
+      <TD>ブロック転送ワード数です。</TD>
+      <TD>DMAx_CNT の d19-16</TD>
+      <TD><CODE>MI_NDMA_BWORD_1</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>wordCount</CODE></TD>
+      <TD>転送ワード数です。</TD>
+      <TD>DMAxWCNT</TD>
+      <TD><CODE>MI_NDMA_AT_A_TIME</CODE></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>説明</H2>
+<P><CODE>MINDmaConfig</CODE> は新規DMAの操作で使用される、DMAの動作を指定するための構造体です。</P>
+<P>新規DMAの動作を指定するパラメータは数多いため、動作の度に全てを指定していると命令の記述が長くなり非常に煩雑です。そこで、複数のDMA動作を行っても大きく変わらないであろうと思われる部分を <CODE>MINDmaConfig</CODE> 構造体にまとめ、DMA動作のときにはこの構造体を参照することでアプリケーション側の負担を減らします。</P>
+<P>4つの新規DMAはそれぞれ内部で <CODE>MINDmaConfig</CODE> 構造体を保持しています。DMA動作の際には、</P>
+<BLOCKQUOTE>(1) 内部で保持する<CODE>MINDmaConfig</CODE> 構造体を参照する<BR>
+(2) アプリケーションで指定する <CODE>MINDmaConfig</CODE> 構造体を参照する </BLOCKQUOTE>
+<P>のどちらかの動作を選ぶことが出来ます。</P>
+<P>内部で保持する <CODE>MINDmaConfig</CODE> 構造体を設定する関数として、</P>
+<BLOCKQUOTE>4つの内部構造体を初期化する <CODE><A href="MI_InitNDmaConfig.html">MI_InitNDmaConfig()</A></CODE><BR>
+指定の <CODE>MINDmaConfig</CODE> 構造体を内部構造体にコピーする <CODE><A href="MI_SetNDmaConfig.html">MI_SetNDmaConfig()</A></CODE><BR>
+特定の内部構造体の Intarval 情報を指定する <CODE><A href="MI_SetNDmaInterval.html">MI_SetNDmaInterval()</A></CODE><BR>
+特定の内部構造体の BlockWord 情報を指定する <CODE><A href="MI_SetNDmaBlockWord.html">MI_SetNDmaBlockWord()</A></CODE><BR>
+特定の内部構造体の WordCount 情報を指定する <CODE><A href="MI_SetNDmaWordCount.html">MI_SetNDmaWordCount()</A></CODE></BLOCKQUOTE>
+<P>があります。また、内部の <CODE>MINDmaConfig</CODE> 構造体の情報を取得する関数として、</P>
+<BLOCKQUOTE>内部構造体を指定の領域にコピーする <CODE><A href="MI_GetNDmaConfig.html">MI_GetNDmaConfig()</A></CODE> <BR>
+特定の内部構造体の Interval Timer 情報を取得する <CODE><A href="MI_GetNDmaIntervalTimer.html">MI_GetNDmaIntervalTimer()</A></CODE><BR>
+特定の内部構造体の Interval Prescaler 情報を取得する <CODE><A href="MI_GetNDmaIntervalPrescaler.html">MI_GetNDmaIntervalPrescaler()</A></CODE><BR>
+特定の内部構造体の BlockWord 情報を取得する <CODE><A href="MI_GetNDmaBlockWord.html">MI_GetNDmaBlockWord()</A></CODE><BR>
+特定の内部構造体の WordCount 情報を取得する <CODE><A href="MI_GetNDmaWordCount.html">MI_GetNDmaWordCount()</A></CODE></BLOCKQUOTE>
+<P>があります。 設定関数の「Interval 情報」は Interval Timer 情報と Interval
+Prescaler 情報のことで、両方を同時に設定します。取得関数ではこの2つを個別に取得する関数が用意されています。</P>
+<P>内部構造体の初期化は <CODE><A href="../../os/init/OS_Init.html">OS_Init()</A></CODE> で行われますので最初にアプリケーションで行う必要はありません。必要があれば呼び出してください。</P>
+<P>内部構造体を変化させたくないが、デフォルトの設定とは違うパラメータで新規DMAを行いたい場合は、(1) 内部の <CODE>MINDmaConfig</CODE> 構造体をコピしてくる　(2) コピーした<CODE>MINDmaConfig</CODE> 構造体のメンバーを書き換える (3) その構造体を指定して新規DMA を行う　、という手順を踏んでください。</P>
+<P>ライブラリ内部構造体の値自体を変更したい場合は、コピーして必要部分を書き換えた
+<CODE>MINDmaConfig</CODE> 構造体をライブラリに設定するか、<CODE><A href="MI_SetNDmaInterval.html">MI_SetNDmaInterval()</A></CODE> などの関数で必要なパラメータを直接書き換えてください。</P>
+<P><B><BR>
+(例)</B> 新規DMA1番の設定をコピーして、Interval情報(Interval Timer 情報と Interval
+Prescaler 情報) を書き換えてそれを改めて新規DMA 1番の config として設定します。</P>
+<BLOCKQUOTE style="background-color: #ffffcc;"><CODE><BR>MINDmaConfig config;<BR>
+<BR>
+<FONT color="#666633">//---- get config</FONT><BR>
+<FONT color="#ff0000">MI_GetNDmaConfig</FONT>( 1, &amp;config );<BR>
+<BR>
+<FONT color="#666633">//---- change config values</FONT><BR>
+config.intervalTimer = 0x100;<BR>
+config.prescaler = MI_NDMA_INTERVAL_PS_16;<BR>
+<BR>
+<FONT color="#666633">//---- set config</FONT><BR>
+<FONT color="#ff0000">MI_SetNDmaConfig</FONT>( 1, &amp;config );<BR>
+<BR>
+</CODE></BLOCKQUOTE>
+<H2>参照</H2>
+<P><CODE><A href="MI_InitNDmaConfig.html">MI_InitNDmaConfig</A>, <A href="MI_SetNDmaConfig.html">MI_SetNDmaConfig</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2008/01/22 初版</P>
+</BODY>
+</HTML>

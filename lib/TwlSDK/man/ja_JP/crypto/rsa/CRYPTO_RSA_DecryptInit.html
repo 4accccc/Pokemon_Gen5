@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--==========================================================================
+  Copyright 2008 Nintendo.  All rights reserved.
+
+  These coded instructions, statements, and computer programs contain
+  proprietary information of Nintendo of America Inc. and/or Nintendo
+  Company Ltd., and are protected by Federal copyright law.  They may
+  not be disclosed to third parties or copied or duplicated in any form,
+  in whole or in part, without the prior written consent of Nintendo.
+ ==========================================================================-->
+<HTML>
+<HEAD>
+	<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+	<META http-equiv="Content-Style-Type" content="text/css">
+	<TITLE>CRYPTO_RSA_DecryptInit</TITLE>
+	<LINK rel="stylesheet" href="../../css/nitro.css">
+	<BASE target="main">
+</HEAD>
+<BODY>
+<H1>CRYPTO_RSA_DecryptInit <IMG src="../../image/BPT.gif" width="23" height="12" border="0" align="middle"><IMG src="../../image/TWL.gif" width="23" height="12" border="0" align="middle"></H1>
+
+<H2>構文</H2>
+<DL>
+	<DD>
+		<PRE><CODE>
+#include &lt;nitro/crypto.h&gt;
+
+s32 CRYPTO_RSA_DecryptInit(<a href="CRYPTORSAContext.html">CRYPTORSAContext</a> *context, <a href="CRYPTORSADecryptInitParam.html">CRYPTORSADecryptInitParam</a> *param);
+		</CODE></PRE>
+	</DD>
+</DL>
+
+<H2>引数</H2>
+<TABLE border="1">
+	<TBODY>
+		<TR>
+			<TD width="25%"><EM><STRONG><CODE>context</CODE></STRONG></EM></TD>
+			<TD width="75%">内部的に用いるためのコンテキスト構造体へのアドレスを指定します。</TD>
+		</TR>
+		<TR>
+			<TD><EM><STRONG><CODE>param</CODE></STRONG></EM></TD>
+			<TD>RSA処理に必要な設定を指定するための構造体へのアドレスを指定します。</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+
+<H2>返り値</H2>
+<P>
+	以下のいずれかの処理結果を返します。
+</P>
+<TABLE border="1">
+	<TBODY>
+		<TR>
+			<TD width="25%"><EM><STRONG><CODE>0</CODE></STRONG></EM></TD>
+			<TD width="75%">初期化に成功</TD>
+		</TR>
+		<TR>
+			<TD><EM><STRONG><CODE>-1</CODE></STRONG></EM></TD>
+			<TD>初期化に失敗</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+
+<H2>説明</H2>
+<P>
+	RSAアルゴリズムによる復号を行うための初期化処理を行い、復号で用いる秘密鍵を設定します。
+</P>
+<P>
+	この初期化処理に必要となる設定は引数paramのメンバに指定する必要があります。詳しくは <a href="CRYPTORSADecryptInitParam.html">CRYPTORSADecryptInitParam</a> を参照してください。
+</P>
+<P>
+	RSA復号の詳細に関しましては「<A href="../overview/about_RSA.html">RSA暗号化の概要</A>」を参照してください。
+</P>
+
+<H2>参照</H2>
+<P>
+	<CODE>
+		<A href="CRYPTO_RSA_Decrypt.html">CRYPTO_RSA_Decrypt</A>, <A href="CRYPTO_RSA_DecryptTerminate.html">CRYPTO_RSA_DecryptTerminate</A>
+	</CODE>
+</P>
+
+<H2>履歴</H2>
+<P>
+	2008/03/27 初版<BR>
+</P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>SVC_HMACSHA1Init</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">SVC_HMACSHA1Init <IMG src="../image/BPT.gif" align="middle"><IMG src="../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;twl/os/common/systemCall.h&gt;</CODE></PRE>
+  <PRE><CODE>void SVC_HMACSHA1Init( SVCHMACSHA1Context* context,
+　　　　　　　　　　　　　const void* key,
+　　　　　　　　　　　　　u32 keylen );</CODE></PRE>
+  <PRE><CODE>typedef struct SVCHMACSHA1Context
+{
+    <CODE><A href="SVC_SHA1Init.html">SVCSHA1Context</A></CODE>  sha1_ctx;
+    u8              key[SVC_SHA1_BLOCK_SIZE];
+    u32             keylen;
+}
+SVCHMACSHA1Context</CODE></PRE>
+</DL>
+<H2>引数</H2>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TD><B><I>context</I></B></TD>
+      <TD>初期化する HMAC-SHA1 生成用のコンテキスト構造体へのポインタ。</TD>
+    </TR>
+    <TR>
+      <TD><B><I>key</I></B></TD>
+      <TD>キー文字列</TD>
+    </TR>
+    <TR>
+      <TD><B><I>keylen</I></B></TD>
+      <TD>キー文字列の長さ</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>返り値</H2>
+<P>なし。</P>
+<H2>説明</H2>
+<P>HMAC-SHA1 を計算する際に使用する構造体を初期化します。<BR>
+<CODE><A href="SVC_SHA1Update.html">SVC_HMACSHA1Update()</A></CODE>, <CODE><A href="SVC_SHA1GetHash.html">SVC_HMACSHA1GetHash()</A></CODE> を使用する前に必ず呼び出してください。</P>
+<P><B><I>context</I></B> は初期化する HMAC-SHA1 生成用のコンテキスト構造体です。初期化済のコンテキスト構造体にこの関数を再度適用しても構いません。その場合は、コンテキスト構造体は初期状態に戻ります。</P>
+<P><B><I>key</I></B>, <B><I>keylen</I></B> でHMAC-SHA1 に与えるキー文字列を指定します。SVC_SHA1_BLOCK_SIZE (=64)
+バイトまでのキーを指定することが出来ます。</P>
+
+<H2>参照</H2>
+<P><CODE><A href="SVC_SHA1Update.html">SVC_HMACSHA1Update</A></CODE>, <CODE><A href="SVC_SHA1GetHash.html">SVC_HMACSHA1GetHash</A></CODE>, <CODE><A href="SVC_SHA1Init.html">SVC_SHA1Init</A></CODE></P>
+<H2>履歴</H2>
+<P>2007/10/24 初版</P>
+</BODY>
+</HTML>

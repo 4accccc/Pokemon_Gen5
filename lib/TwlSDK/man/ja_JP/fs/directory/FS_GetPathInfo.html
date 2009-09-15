@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_GetPathInfo</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FS_GetPathInfo <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+BOOL FS_GetPathInfo(const char *path, <a href="../FSPathInfo.html">FSPathInfo</a> *info);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>path</strong></em></td>
+<td style="width:87%">情報を取得したいファイルまたはディレクトリのパス名</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>info</strong></em></td>
+<td style="width:87%">得られた情報を格納すべき<code><a href="../FSPathInfo.html">FSPathInfo</a></code>構造体へのポインタ</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>指定したパスのエントリ情報が正しく取得できればTRUEを、失敗すればFALSEを返します。<br />
+失敗時の詳細なエラーは<code><a href="../archive/FS_GetArchiveResultCode.html">FS_GetArchiveResultCode()</a></code>で取得することができます。</p>
+
+<h2>説明</h2>
+<p>指定したファイルまたはディレクトリのエントリ情報を取得します。<br />
+この関数は、指定したパスがファイルまたはディレクトリのどちらかとして存在すればエントリ情報を取得してTRUEを返します。<br />
+<br />
+以下の場合には失敗してFALSEを返します。
+</p>
+<ul>
+<li>指定したパスにファイルもディレクトリも存在しない場合</li>
+</ul>
+<p>TWL専用ファイルに関するエントリ情報はNITROモードで動作しているときでも取得することができます。実際にファイルへアクセス可能かどうかは<a href="../FSPathInfo.html">attributes</a>フィールドの<a href="../FSPathInfo.html">FS_ATTRIBUTE_IS_OFFLINE</a>フラグを確認することによって判定可能です。(TWL専用ファイルの指定については<a href="../../tools/makerom.html">makerom.TWL</a>の"Put"パラメータに関する説明を参照してください)</p>
+
+<h2>注意</h2>
+<ul>
+<li>この関数を割り込みハンドラ(IRQモード)から呼び出すことはできません。<br />
+また、割り込みを禁止したままの状態にあると処理が完了しない場合がある点に注意して下さい。</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="../FSPathInfo.html">FSPathInfo</a>
+<br />
+<a href="../archive/FS_GetArchiveResultCode.html">FS_GetArchiveResultCode</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/01/08 TWL専用ファイルに関する説明を追記<br />
+2007/12/13 初版<br />
+</p>
+</body>
+</html>

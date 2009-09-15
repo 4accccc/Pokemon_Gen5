@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>RTC_InitSWClock</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">RTC_InitSWClock <img src="../image/NTR.gif" align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/rtc.h&gt;</CODE><BR>
+<PRE><CODE><A href="RTCResult.html">RTCResult</A> RTC_InitSWClock( void );</CODE></PRE>
+  </dd>
+
+</dl><h2>引数</h2>
+<p>なし。</p>
+
+<h2>返り値</h2>
+<p>
+初期化時に呼び出した <code><A href="RTC_SyncSWClock.html">RTC_SyncSWClock()</A></code> の返り値を返します。
+</p>
+
+<H2>説明</H2>
+<P>
+ソフトウェアクロックの初期化を行います。ソフトウェアクロックは <code><A href="../os/time/OS_GetTick.html">OS_GetTick()</A></code> で取得できるチック値を元に時刻を計算します。
+</P>
+
+<P>
+初期化時には <code><A href="RTC_SyncSWClock.html">RTC_SyncSWClock()</A></code> が呼び出されてソフトウェアクロックとリアルタイムクロックの同期が行われます。同期後は、<code><A href="RTC_GetSWClockTick.html">RTC_GetSWClockTick()</A></code> を呼び出すことで 2000年1月1日午前0時0分0秒から現時点までの総チック値を取得することができます。また、<code><A href="RTC_GetDateTimeExFromSWClock.html">RTC_GetDateTimeExFromSWClock()</A></code> を呼び出すことで日付・時刻データを取得できます。
+</P>
+
+<P>
+ソフトウェアクロックは本体がスリープしていると進まないため、この関数を呼び出すとスリープ復帰時のコールバックリストに <code><A href="RTC_SyncSWClock.html">RTC_SyncSWClock()</A></code> を呼び出す関数が追加され、スリープ復帰時にソフトウェアクロックと RTC が再同期されるようになります。
+</P>
+
+<P>
+この関数を呼び出す前に予め <code><A href="../os/time/OS_InitTick.html">OS_InitTick()</A></code> でチックの初期化が行われている必要があります。また、内部で <code><A href="RTC_GetDateTime.html">RTC_GetDateTime()</A></code> を呼び出すため、PXI 割り込みを禁止した状態で呼び出さないようにしてください。
+</P>
+
+<h2>参照</h2>
+<P><CODE>
+<A href="RTC_SyncSWClock.html">RTC_SyncSWClock</A>,
+<A href="RTC_GetSWClockTick.html">RTC_GetSWClockTick</A>,
+<A href="RTC_GetDateTimeExFromSWClock.html">RTC_GetDateTimeExFromSWClock</A>,
+<A href="RTCResult.html">RTCResult</A>
+</CODE></P>
+
+<H2>履歴</H2>
+<P>
+2008/04/17 初版
+</P>
+</body>
+</html>

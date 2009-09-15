@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+	<HEAD>
+		<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+		<title>SNDEXIirFilterTarget</title>
+		<link rel="stylesheet" href="../../css/nitro.css" type="text/css">
+	</HEAD>
+	<BODY>
+		<H1>SNDEXIirFilterTarget <IMG src="../../image/TWL.gif" width="24" height="12" border="0" align=middle></H1>
+
+		<H2>定義</H2>
+		<DL>
+			<DD><CODE>#include &lt;twl/snd.h&gt;</CODE></DD>
+			<DD><PRE><CODE>typedef enum _SNDEXIirFilterTarget
+{
+    SNDEX_IIR_FILTER_ADC_1 = 0,
+    SNDEX_IIR_FILTER_ADC_2,
+    SNDEX_IIR_FILTER_ADC_3,
+    SNDEX_IIR_FILTER_ADC_4,
+    SNDEX_IIR_FILTER_ADC_5,
+    SNDEX_IIR_FILTER_DAC_LEFT_1,
+    SNDEX_IIR_FILTER_DAC_LEFT_2,
+    SNDEX_IIR_FILTER_DAC_LEFT_3,
+    SNDEX_IIR_FILTER_DAC_LEFT_4,
+    SNDEX_IIR_FILTER_DAC_LEFT_5,
+    SNDEX_IIR_FILTER_DAC_RIGHT_1,
+    SNDEX_IIR_FILTER_DAC_RIGHT_2,
+    SNDEX_IIR_FILTER_DAC_RIGHT_3,
+    SNDEX_IIR_FILTER_DAC_RIGHT_4,
+    SNDEX_IIR_FILTER_DAC_RIGHT_5,
+    SNDEX_IIR_FILTER_DAC_BOTH_1,
+    SNDEX_IIR_FILTER_DAC_BOTH_2,
+    SNDEX_IIR_FILTER_DAC_BOTH_3,
+    SNDEX_IIR_FILTER_DAC_BOTH_4,
+    SNDEX_IIR_FILTER_DAC_BOTH_5,
+    SNDEX_IIR_FILTER_TARGET_MAX
+} SNDEXIirFilterTarget;</CODE></PRE></DD>
+		</DL>
+
+		<H2>要素</H2>
+		<TABLE>
+			<TBODY>
+				<TR>
+					<TH width="25%">SNDEX_IIR_FILTER_ADC_1 ... 5</TH>
+					<TD width="75%">マイク入力データへのIIRフィルタ（1～5段）。</TD>
+				</TR>
+				<TR>
+					<TH width="25%">SNDEX_IIR_FILTER_DAC_LEFT_1 ... 5</TH>
+					<TD width="75%">スピーカー出力データ（左）へのIIRフィルタ（1～5段）。</TD>
+				</TR>
+				<TR>
+					<TH width="25%">SNDEX_IIR_FILTER_DAC_RIGHT_1 ... 5</TH>
+					<TD width="75%">スピーカー出力データ（右）へのIIRフィルタ（1～5段）。</TD>
+				</TR>
+				<TR>
+					<TH width="25%">SNDEX_IIR_FILTER_DAC_BOTH_1 ... 5</TH>
+					<TD width="75%">スピーカー出力データ（左右両方）へのIIRフィルタ（1～5段）。</TD>
+				</TR>
+			</TBODY>
+		</TABLE>
+
+		<H2>説明</H2>
+		<P>
+			IIRフィルタをかける対象を示す列挙型です。
+		</P>
+		<P>
+			フィルタの適用順は以下のように数字の若い方からとなります。<BR>
+			<UL>
+				<LI>(マイク) -> A/Dコンバータ -> ADC1 -> ADC2 -> ADC3 -> ADC4 -> ADC5 -> マイク入力データ</LI>
+				<LI>サウンドソース    -> DAC1 -> DAC2 -> DAC3 -> DAC4 -> DAC5 -> D/Aコンバータ -> (スピーカー)</LI>
+			</UL>
+		</P>
+		<H2>参照</H2>
+		<P><CODE>
+				<A href="SNDEX_SetIirFilter.html">SNDEX_SetIirFilter</A>, <A href="SNDEX_SetIirFilterAsync.html">SNDEX_SetIirFilterAsync</A>, <A href="SNDEXIirFilterParam.html">SNDEXIirFilterParam</A></CODE>
+		</P>
+
+		<H2>履歴</H2>
+		<P>
+			2008/07/08 初版
+		</P>
+	</BODY>
+</HTML>

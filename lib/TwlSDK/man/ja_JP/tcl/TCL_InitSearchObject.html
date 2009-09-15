@@ -1,0 +1,48 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCL_InitSearchObject</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCL_InitSearchObject <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+void TCL_InitSearchObject( TCLSearchObject* pSearchObj , u32 condition );
+	</code></pre>
+</dl>
+
+<h2>引数</h2>
+<p>
+<table>
+<tr><td>pSearchObj<td><a href="TCLSearchObject.html">検索オブジェクト</a>
+<tr><td>condition<td><a href="TCLSearchCondition.html">検索条件</a>
+</table>
+</p>
+
+<h2>返り値</h2>
+<p>なし</p>
+
+<h2>説明</h2>
+<p>検索関連の関数を使用する際に必要な検索オブジェクトの初期化を行います。</p>
+<p><code>condition</code> には <a href="TCLSearchCondition.html"><code>TCLSearchCondition</code></a> で表される検索条件のビット和を指定して下さい。</p>
+<p>各種検索は <code>condition</code> で表される条件全てに合致するものを返します。</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="TCL_GetNumPictures.html">TCL_GetNumPictures</a> <a href="TCL_SearchNextPictureInfo.html">TCL_SearchNextPictureInfo</a> <a href="TCL_SearchPictureInfoByIndex.html">TCL_SearchPictureInfoByIndex</a> <a href="TCL_SearchNextPicturePath.html">TCL_SearchNextPicturePath</a> <a href="TCL_SearchPicturePathByIndex.html">TCL_SearchPicturePathByIndex</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/10/07 初版<br/>
+</p>
+
+</body>
+</html>

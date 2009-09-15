@@ -1,0 +1,1052 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<BASE target="main">
+<TITLE>メモリインターフェイス(MI) API 機能一覧</TITLE>
+<LINK rel="stylesheet" href="../css/apilist.css">
+</HEAD>
+<BODY>
+<H1>メモリインターフェイス(MI) API 機能一覧</H1>
+
+<H3><A name="init">初期化</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH width="25%"><A href="init/MI_Init.html" target="_self">MI_Init</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>MI ライブラリの初期化を行います。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+
+<H3><A name="memory">CPUによるメモリ操作</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH nowrap width="25%"><A href="memory/MI_CpuCopy.html" target="_self">MI_CpuCopy*</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>データをコピーします。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="memory/MI_CpuMove.html" target="_self">MI_CpuMove*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>データを移動します。</TD>
+    </TR>
+    <TR>
+      <TH nowrap width="25%"><A href="memory/MI_CpuFill.html" target="_self">MI_CpuFill*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メモリを指定のデータで埋めます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="memory/MI_CpuClear.html" target="_self">MI_CpuClear*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メモリをゼロクリアします。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="memory/MI_CpuSend.html" target="_self">MI_CpuSend*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>アドレスを固定してデータを送り込みます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="memory/MI_CpuRecv.html" target="_self">MI_CpuRecv*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>固定のアドレスからデータを読み込みます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="memory/MI_CpuPipe.html" target="_self">MI_CpuPipe*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>固定のアドレスから固定のアドレスへデータを送ります。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="memory/MI_CpuFind.html" target="_self">MI_CpuFind*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メモリから指定のデータを探します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="memory/MI_CpuComp.html" target="_self">MI_CpuComp*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>データを比較します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+
+<H3><A name="dma">DMAによるメモリ操作</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH width="25%"><A href="dma/MI_DmaCopy.html" target="_self">MI_DmaCopy*</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>データをコピーします。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_NDmaCopy.html" target="_self">MI_NDmaCopy*</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>データをコピーします。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="dma/MI_DmaFill.html" target="_self">MI_DmaFill*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メモリを指定のデータで埋めます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_NDmaFill.html" target="_self">MI_NDmaFill*</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メモリを指定のデータで埋めます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="dma/MI_DmaClear.html" target="_self">MI_DmaClear*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メモリをゼロクリアします。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_NDmaClear.html" target="_self">MI_NDmaClear*</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メモリをゼロクリアします。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="dma/MI_DmaSend.html" target="_self">MI_DmaSend*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>アドレスを固定してデータを送り込みます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_NDmaSend.html" target="_self">MI_NDmaSend*</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>アドレスを固定してデータを送り込みます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="dma/MI_DmaRecv.html" target="_self">MI_DmaRecv*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>固定アドレスからデータを読み込みます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_NDmaRecv.html" target="_self">MI_NDmaRecv*</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>固定アドレスからデータを読み込みます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="dma/MI_DmaPipe.html" target="_self">MI_DmaPipe*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>固定アドレスから固定アドレスへデータを送ります。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_NDmaPipe.html" target="_self">MI_NDmaPipe*</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>固定アドレスから固定アドレスへデータを送ります。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="dma/MI_DmaRestart.html" target="_self">MI_DmaRestart</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>設定済みのDMAを開始します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_NDmaRestart.html" target="_self">MI_NDmaRestart</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>設定済みのDMAを開始します。</TD>
+    </TR>
+ <TR><TD class="separator" colspan=3></TD></TR>
+    <TR>
+      <TH width="25%"><A href="dma/MI_HBlankDmaCopy.html" target="_self">MI_HBlankDmaCopy*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>HブランクDMAコピーの設定を行います。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_HBlankNDmaCopy.html" target="_self">MI_HBlankNDmaCopy*</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>HブランクDMAコピーの設定を行います。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="dma/MI_VBlankDmaCopy.html" target="_self">MI_VBlankDmaCopy*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>VブランクDMAコピーの設定を行います。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_VBlankNDmaCopy.html" target="_self">MI_VBlankNDmaCopy*</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>VブランクDMAコピーの設定を行います。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="dma/MI_DispMemDmaCopy.html" target="_self">MI_DispMemDmaCopy</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メインメモリ表示DMAコピーの設定を行います。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="dma/MI_SendGXCommand.html" target="_self">MI_SendGXCommand*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>コマンドFIFOにDMAでジオメトリコマンドを送ります。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_SendNDmaGXCommand.html" target="_self">MI_SendNDmaGXCommand*</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>コマンドFIFOにDMAでジオメトリコマンドを送ります。</TD>
+    </TR>
+
+    <TR>
+      <TH width="25%"><A href="ndma/MI_TimerNDmaCopy.html" target="_self">MI_TimerNDmaCopy</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>タイマー起動DMAコピーの設定を行います。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_Card_NDmaCopy.html" target="_self">MI_Card_NDmaCopy</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メモリカード転送起動DMAコピーの設定を行います。</TD>
+    </TR>
+ <TR><TD class="separator" colspan=3></TD></TR>
+    <TR>
+      <TH width="25%"><A href="dma/MI_IsDmaBusy.html" target="_self">MI_IsDmaBusy</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のDMAチャンネルが使用中かを調べます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_IsNDmaBusy.html" target="_self">MI_IsNDmaBusy</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のDMAチャンネルが使用中かを調べます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="dma/MI_WaitDma.html" target="_self">MI_WaitDma</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のDMAの終了を待ちます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_WaitNDma.html" target="_self">MI_WaitNDma</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のDMAの終了を待ちます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="dma/MI_StopDma.html" target="_self">MI_StopDma</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のDMAをストップします。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_StopNDma.html" target="_self">MI_StopNDma</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のDMAをストップします。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="dma/MI_StopAllDma.html" target="_self">MI_StopAllDma</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>全てのDMAをストップします。(従来のDMA)</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_StopAllNDma.html" target="_self">MI_StopAllNDma</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>全てのDMAをストップします。(新規DMA)</TD>
+    </TR>
+ <TR><TD class="separator" colspan=3></TD></TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_SetNDmaArbitrament.html" target="_self">MI_SetNDmaArbitrament</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>新規DMAの調停方式を設定します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_GetNDmaArbitrament.html" target="_self">MI_GetNDmaArbitramentMode</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>新規DMAの調停方式を取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_GetNDmaArbitramentRoundRobinCycle.html" target="_self">MI_GetNDmaArbitramentRoundRobinCycle</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>新規DMAの調停方式がラウンドロビン時のARM7実行可能サイクルを取得します。</TD>
+    </TR>
+ <TR><TD class="separator" colspan=3></TD></TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_InitNDmaConfig.html" target="_self">MI_InitNDmaConfig</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>新規DMAの動作を制御するconfigを初期化します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_GetNDmaConfig.html" target="_self">MI_GetNDmaConfig</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>新規DMAのconfig を取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_SetNDmaConfig.html" target="_self">MI_SetNDmaConfig</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>新規DMAのconfig を設定します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_SetNDmaInterval.html" target="_self">MI_SetNDmaInterval</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定config に Interval情報を設定します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_GetNDmaIntervalTimer.html" target="_self">MI_GetNDmaIntervalTimer</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定config の IntervalTimer情報を取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_GetNDmaIntervalPrescaler.html" target="_self">MI_GetNDmaIntervalPrescaler</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定config の IntervalPrescaler 情報を取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_SetNDmaBlockWord.html" target="_self">MI_SetNDmaBlockWord</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定config の BlockWord 情報を設定します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_GetNDmaBlockWord.html" target="_self">MI_GetNDmaBlockWord</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定config の BlockWord 情報を取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_SetNDmaWordCount.html" target="_self">MI_SetNDmaWordCount</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定config の WordCount 情報を設定します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="ndma/MI_GetNDmaWordCount.html" target="_self">MI_GetNDmaWordCount</A></TH>
+      <TD><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定config の WordCount 情報を取得します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H3><A name="exMemory">外部メモリ制御</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH width="25%"><A href="exmemory/MI_SetMainMemoryPriority.html" target="_self">MI_SetMainMemoryPriority</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メインメモリへのアクセス優先権を設定します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="exmemory/MI_GetMainMemoryPriority.html" target="_self">MI_GetMainMemoryPriority</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メインメモリへのアクセス優先権の設定を取得します。</TD>
+    </TR>
+<!--
+    <TR>
+      <TH width="25%"><A href="exmemory/MIi_SetCardProcessor.html" target="_self">MIi_SetCardProcessor</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>カードへのアクセス権を設定します。</TD>
+    </TR>
+-->
+    <TR>
+      <TH width="25%"><A href="exmemory/MI_GetCardProcessor.html" target="_self">MI_GetCardProcessor</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>カードへのアクセス権の設定を取得します。</TD>
+    </TR>
+<!--
+    <TR>
+      <TH width="25%"><A href="exmemory/MIi_SetCartridgeProcessor.html" target="_self">MIi_SetCartridgeProcessor</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>カートリッジへのアクセス権を設定します。</TD>
+    </TR>
+-->
+    <TR>
+      <TH width="25%"><A href="exmemory/MI_GetCartridgeProcessor.html" target="_self">MI_GetCartridgeProcessor</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>カートリッジへのアクセス権の設定を取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="exmemory/MI_SetCartridgeRomCycle1st.html" target="_self">MI_SetCartridgeRomCycle1st</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>カートリッジROM領域への1stアクセスサイクルを設定します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="exmemory/MI_GetCartridgeRomCycle1st.html" target="_self">MI_GetCartridgeRomCycle1st</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>カートリッジROM領域への1stアクセスサイクルの設定を取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="exmemory/MI_SetCartridgeRomCycle2nd.html" target="_self">MI_SetCartridgeRomCycle2nd</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>カートリッジROM領域への2ndアクセスサイクルを設定します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="exmemory/MI_GetCartridgeRomCycle2nd.html" target="_self">MI_GetCartridgeRomCycle2nd</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>カートリッジROM領域への2ndアクセスサイクルの設定を取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="exmemory/MI_SetCartridgeRamCycle.html" target="_self">MI_SetCartridgeRamCycle</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>カートリッジRAM領域のアクセスサイクルを設定します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="exmemory/MI_GetCartridgeRamCycle.html" target="_self">MI_GetCartridgeRamCycle</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>カートリッジRAM領域のアクセスサイクルの設定を取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="exmemory/MI_SetAgbCartridgeFastestRomCycle.html" target="_self">MI_SetAgbCartridgeFastestRomCycle</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>AGBカートリッジROM領域への高速なアクセスサイクルを設定します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+
+<H3><A name="wram">ワークRAM設定</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH width="25%"><A href="wram/MI_SetWramBank.html" target="_self"><font color="#808080">MI_SetWramBank</font></A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/BPT.gif"></TD>
+<!--      <TD>共用ワークRAM(16KBx2) の割り当て設定を行います。</TD> -->
+      <TD><font color="#808080">この関数はシステムでのみ使用されます。</font></TD>
+    </TR>
+    <TR>
+      <TD class="separator" colspan=3></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_GetWramBankMaster.html" target="_self">MI_GetWramBankMaster*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) に割り当たっているマスタープロセッサを取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_GetWramBankOffset.html" target="_self">MI_GetWramBankOffset*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) のバンクのオフセット位置を取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_GetWramBankEnable.html" target="_self">MI_GetWramBankEnable*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) のバンクが使用可能かどうかを取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_GetWramMapStart.html" target="_self">MI_GetWramMapStart*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) の開始アドレスを取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_GetWramMapEnd.html" target="_self">MI_GetWramMapEnd*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) の終了アドレスを取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_GetWramMapImage.html" target="_self">MI_GetWramMapImage*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) のイメージ出現設定を取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_IsWramSlotLocked.html" target="_self">MI_IsWramSlotLocked*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) のスロットがロックされているかを調べます。</TD>
+    </TR>
+    <TR>
+      <TD class="separator" colspan=3></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_GetAllocatableWramSlot.html" target="_self">MI_GetAllocatableWramSlot*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) で指定プロセッサが割り当て可能なスロットを取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_GetFreeWramSlot.html" target="_self">MI_GetFreeWramSlot*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) で予約も割り当てもされていないスロットを取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_GetUsedWramSlot.html" target="_self">MI_GetUsedWramSlot*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) で割り当てがされているスロットを取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_GetWramReservation.html" target="_self">MI_GetWramReservation*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) のスロットを予約しているプロセッサを取得します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_IsWramSlotUsed.html" target="_self">MI_IsWramSlotUsed*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) のスロットが割り当てられているかを取得します。</TD>
+    </TR>
+    <TR>
+ <TD class="separator" colspan=3></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_InitWramManager.html" target="_self">MI_InitWramManager</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) マネージャを初期化します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_AllocWram.html" target="_self">MI_AllocWram*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) マネージャに、WRAMを割り当てを要求します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_FreeWram.html" target="_self">MI_FreeWram*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) マネージャに、WRAMの割り当て解放を伝えます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_SwitchWram.html" target="_self">MI_SwitchWram*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) マネージャに、割り当て済みWRAMのマスター変更を通知します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_ReserveWram.html" target="_self">MI_ReserveWram*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) マネージャに、WRAMのプロセッサでの予約を通知します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_CancelWram.html" target="_self">MI_CancelWram*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) マネージャに、WRAMのプロセッサの予約キャンセルを通知します。</TD>
+    </TR>
+    <TR>
+      <TD class="separator" colspan=3></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_DumpWramList.html" target="_self">MI_DumpWramList*</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) マネージャのWRAM割り当て状況を表示します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="wram/MI_DumpWramList.html" target="_self">MI_DumpWramListAll</A></TH>
+      <TD width="48"><img src="../image/BPT.gif"><img src="../image/TWL.gif"></TD>
+      <TD>共用WRAM(256KBx3) マネージャのすべてのWRAM割り当て状況を表示します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+
+<H3><A name="swap">メモリスワップ</A></H3>
+
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH width="25%"><A href="swap/MI_Swap.html" target="_self">MI_SwapByte</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のバイトデータとメモリデータをスワップします。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="swap/MI_Swap.html" target="_self">MI_SwapWord</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のワードデータとメモリデータをスワップします。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+
+<H3><A name="uncompress">圧縮データ展開</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH width="25%"><A href="uncompress/MI_UnpackBits.html" target="_self">MI_UnpackBits</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>0固定のビットを詰めたデータを展開します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="uncompress/MI_UncompressLZ.html" target="_self">MI_UncompressLZ8</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>LZ77圧縮データを8bit単位で展開します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="uncompress/MI_UncompressLZ.html" target="_self">MI_UncompressLZ16</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>LZ77圧縮データを16bit単位で展開します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="uncompress/MI_UncompressHuffman.html" target="_self">MI_UncompressHuffman</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ハフマン圧縮データを32bit単位で展開します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="uncompress/MI_UncompressRL.html" target="_self">MI_UncompressRL8</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ランレングス圧縮データを8bit単位で展開します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="uncompress/MI_UncompressRL.html" target="_self">MI_UncompressRL16</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ランレングス圧縮データを16bit単位で展開します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="uncompress/MI_UncompressRL.html" target="_self">MI_UncompressRL32</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ランレングス圧縮データを32bit単位で展開します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_UnfilterDiff.html" target="_self">MI_UnfilterDiff8</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>差分フィルタをかけられたデータを8bit単位で展開します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_UnfilterDiff.html" target="_self">MI_UnfilterDiff16</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>差分フィルタをかけられたデータを16bit単位で展開します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_UnfilterDiff.html" target="_self">MI_UnfilterDiff32</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>差分フィルタをかけられたデータを32bit単位で展開します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_SecureUncompressAny.html" target="_self">MI_SecureUncompressAny</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>データヘッダから圧縮タイプを判別して、適当な展開処理を実行します。(バッファオーバーランチェック有)</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_SecureUncompressRL.html" target="_self">MI_SecureUncompressRL</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ランレングス圧縮データを一度に展開します。(バッファオーバーランチェック有)</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_SecureUncompressLZ.html" target="_self">MI_SecureUncompressLZ</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>LZ77圧縮データを一度に展開します。(バッファオーバーランチェック有)</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_SecureUncompressBLZ.html" target="_self">MI_SecureUncompressBLZ</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>BLZ圧縮データを一度に展開します。(バッファオーバーランチェック有)</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_SecureUncompressHuffman.html" target="_self">MI_SecureUncompressHuffman</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ハフマン圧縮データを一度に展開します。(バッファオーバーランチェック有)</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_SecureUnfilterDiff.html" target="_self">MI_SecureUnfilterDiff</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>差分フィルタをかけられたデータを展開します。(バッファオーバーランチェック有)</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_GetUncompressedSize.html" target="_self">MI_GetUncompressedSize</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>圧縮データの展開後サイズを取得します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_GetCompressionType.html" target="_self">MI_GetCompressionType</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>圧縮データの圧縮形式を取得します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_InitUncompContextRL.html" target="_self">MI_InitUncompContextRL</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ランレングス圧縮のストリーミング展開コンテキストを初期化します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_InitUncompContextLZ.html" target="_self">MI_InitUncompContextLZ</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>LZ77圧縮のストリーミング展開コンテキストを初期化します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_InitUncompContextHuffman.html" target="_self">MI_InitUncompCOntextHuffman</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ハフマン圧縮のストリーミング展開コンテキストを初期化します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_ReadUncompRL.html" target="_self">MI_ReadUncompRL*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ランレングス圧縮のストリーミング展開を実行します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_ReadUncompLZ.html" target="_self">MI_ReadUncompLZ*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>LZ77圧縮のストリーミング展開を実行します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_ReadUncompHuffman.html" target="_self">MI_ReadUncompHuffman</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ハフマン圧縮のストリーミング展開を実行します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_CompressRL.html" target="_self">MI_CompressRL</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>データをランレングス圧縮します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_CompressLZ.html" target="_self">MI_CompressLZ</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>データをLZ77圧縮します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_CompressLZ.html" target="_self">MI_CompressLZFast</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>データをLZ77圧縮します。 ワークバッファを必要とする代わりに高速に処理をおこないます。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_CompressHuffman.html" target="_self">MI_CompressHuffman</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>データをハフマン圧縮します。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MI_FilterDiff.html" target="_self">MI_FilterDiff*</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>差分フィルタをかけたデータを作成します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+
+
+<H3><A name="byteAccess">バイトアクセス</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH width="25%"><font color="gray">MI_ReadByte</font></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD><font color="gray">バイトデータをメモリから読み出します。<BR>この関数は互換のために残されていますが使用しないでください。</font></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><font color="gray">MI_WriteByte</font></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD><font color="gray">バイトデータをメモリに書き込みます。<BR>この関数は互換のために残されていますが使用しないでください。</font></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H3><A name="endian">エンディアンを考慮するメモリアクセス</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH width="25%"><A href="endian/MI_SwapEndian.html" target="_self">MI_SwapEndian8</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>8bit値のエンディアンを反転するマクロです。<br><font color="gray">実際には何の変換も行いませんが、
+ソースコードの視認性を統一するために用意されています。</font></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_SwapEndian.html" target="_self">MI_SwapEndian16</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>16bit値のエンディアンを反転するマクロです。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_SwapEndian.html" target="_self">MI_SwapEndian32</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>32bit値のエンディアンを反転するマクロです。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_SwapEndian.html" target="_self">MI_SwapEndian64</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>64bit値のエンディアンを反転するマクロです。</TD>
+    </TR>
+    <TR>
+      <TD class="separator" colspan=3></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_HTo.html" target="_self">MI_HToLE8</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>8bit値を現在の環境からリトルエンディアンへ変換するマクロです。<br><font color="gray">実際には何の変換も行いませんが、
+ソースコードの視認性を統一するために用意されています。</font></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_HTo.html" target="_self">MI_HToLE16</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>16bit値を現在の環境からリトルエンディアンへ変換するマクロです。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_HTo.html" target="_self">MI_HToLE32</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>32bit値を現在の環境からリトルエンディアンへ変換するマクロです。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_HTo.html" target="_self">MI_HToLE64</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>64bit値を現在の環境からリトルエンディアンへ変換するマクロです。</TD>
+    </TR>
+    <TR>
+      <TD class="separator" colspan=3></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_HTo.html" target="_self">MI_HToBE8</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>8bit値を現在の環境からビッグエンディアンへ変換するマクロです。<br><font color="gray">実際には何の変換も行いませんが、
+ソースコードの視認性を統一するために用意されています。</font></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_HTo.html" target="_self">MI_HToBE16</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>16bit値を現在の環境からビッグエンディアンへ変換するマクロです。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_HTo.html" target="_self">MI_HToBE32</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>32bit値を現在の環境からビッグエンディアンへ変換するマクロです。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_HTo.html" target="_self">MI_HToBE64</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>64bit値を現在の環境からビッグエンディアンへ変換するマクロです。</TD>
+    </TR>
+    <TR>
+      <TD class="separator" colspan=3></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_ToH.html" target="_self">MI_LEToH8</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>8bit値をリトルエンディアンから現在の環境へ変換するマクロです。<br><font color="gray">実際には何の変換も行いませんが、
+ソースコードの視認性を統一するために用意されています。</font></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_ToH.html" target="_self">MI_LEToH16</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>16bit値をリトルエンディアンから現在の環境へ変換するマクロです。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_ToH.html" target="_self">MI_LEToH32</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>32bit値をリトルエンディアンから現在の環境へ変換するマクロです。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_ToH.html" target="_self">MI_LEToH64</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>64bit値をリトルエンディアンから現在の環境へ変換するマクロです。</TD>
+    </TR>
+    <TR>
+      <TD class="separator" colspan=3></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_ToH.html" target="_self">MI_BEToH8</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>8bit値をビッグエンディアンから現在の環境へ変換するマクロです。<br><font color="gray">実際には何の変換も行いませんが、
+ソースコードの視認性を統一するために用意されています。</font></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_ToH.html" target="_self">MI_BEToH16</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>16bit値をビッグエンディアンから現在の環境へ変換するマクロです。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_ToH.html" target="_self">MI_BEToH32</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>32bit値をビッグエンディアンから現在の環境へ変換するマクロです。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_ToH.html" target="_self">MI_BEToH64</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>64bit値をビッグエンディアンから現在の環境へ変換するマクロです。</TD>
+    </TR>
+    <TR>
+      <TD class="separator" colspan=3></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Load.html" target="_self">MI_LoadLE8</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のアドレスから8bit値をリトルエンディアンとして読み出します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Load.html" target="_self">MI_LoadLE16</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のアドレスから16bit値をリトルエンディアンとして読み出します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Load.html" target="_self">MI_LoadLE32</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のアドレスから32bit値をリトルエンディアンとして読み出します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Load.html" target="_self">MI_LoadLE64</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のアドレスから64bit値をリトルエンディアンとして読み出します。</TD>
+    </TR>
+    <TR>
+      <TD class="separator" colspan=3></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Load.html" target="_self">MI_LoadBE8</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のアドレスから8bit値をビッグエンディアンとして読み出します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Load.html" target="_self">MI_LoadBE16</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のアドレスから16bit値をビッグエンディアンとして読み出します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Load.html" target="_self">MI_LoadBE32</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のアドレスから32bit値をビッグエンディアンとして読み出します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Load.html" target="_self">MI_LoadBE64</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>指定のアドレスから64bit値をビッグエンディアンとして読み出します。</TD>
+    </TR>
+    <TR>
+      <TD class="separator" colspan=3></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Store.html" target="_self">MI_StoreLE8</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>8bit値をリトルエンディアンとして指定のアドレスへ書き込みます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Store.html" target="_self">MI_StoreLE16</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>16bit値をリトルエンディアンとして指定のアドレスへ書き込みます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Store.html" target="_self">MI_StoreLE32</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>32bit値をリトルエンディアンとして指定のアドレスへ書き込みます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Store.html" target="_self">MI_StoreLE64</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>64bit値をリトルエンディアンとして指定のアドレスへ書き込みます。</TD>
+    </TR>
+    <TR>
+      <TD class="separator" colspan=3></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Store.html" target="_self">MI_StoreBE8</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>8bit値をビッグエンディアンとして指定のアドレスへ書き込みます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Store.html" target="_self">MI_StoreBE16</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>16bit値をビッグエンディアンとして指定のアドレスへ書き込みます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Store.html" target="_self">MI_StoreBE32</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>32bit値をビッグエンディアンとして指定のアドレスへ書き込みます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="endian/MI_Store.html" target="_self">MI_StoreBE64</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>64bit値をビッグエンディアンとして指定のアドレスへ書き込みます。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<H3><A name="utility">ユーティリティ</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+ 
+    <TR>
+      <TH width="25%"><A href="allocator/MI_InitAllocator.html" target="_self">MI_InitAllocator</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メモリアロケータ構造体を初期化します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="allocator/MI_CallAlloc.html" target="_self">MI_CallAlloc</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>アロケータからメモリを確保します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="allocator/MI_CallFree.html" target="_self">MI_CallFree</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>アロケータへメモリを解放します。</TD>
+    </TR>
+    <TR>
+      <TD class="separator" colspan=3></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="device/MI_InitDevice.html" target="_self">MI_InitDevice</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>デバイスインタフェース構造体を初期化します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="device/MI_ReadDevice.html" target="_self">MI_ReadDevice</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>デバイスからデータを読み込みます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="device/MI_WriteDevice.html" target="_self">MI_WriteDevice</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>デバイスへデータを書き込みます。</TD>
+    </TR>
+    <TR>
+      <TD class="separator" colspan=3></TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="cache/MI_InitCache.html" target="_self">MI_InitCache</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>キャッシュ構造体を初期化します。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="cache/MI_ReadCache.html" target="_self">MI_ReadCache</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>キャッシュページリストからデータを読み込みます。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="cache/MI_LoadCache.html" target="_self">MI_LoadCache</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ロード待ち状態の全てのページをロードします。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="cache/MI_IsCacheLoading.html" target="_self">MI_IsCacheLoading</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ロード待ち状態のページが存在するかどうか判定します。</TD>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<BR>
+<H3><A name="struct">型・構造体</A></H3>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TH width="25%"><A href="uncompress/MICompressionHeader.html">MICompressionHeader</A></TH>
+      <TD width="48"><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>圧縮データのヘッダ情報構造体です。</TD>
+    </TR>
+    <TR>
+      <TH width="25%"><A href="uncompress/MIUncompContextRL.html" target="_self">MIUncompContextRL</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ランレングス圧縮のストリーミング展開を行なう際の、コンテキスト構造体です。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MIUncompContextLZ.html" target="_self">MIUncompContextLZ</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>LZ77圧縮のストリーミング展開を行なう際の、コンテキスト構造体です。</TD>
+    </TR>
+    <TR>
+      <TH><A href="uncompress/MIUncompContextHuffman.html" target="_self">MIUncompContextHuffman</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>ハフマン圧縮のストリーミング展開を行なう際の、コンテキスト構造体です。</TD>
+    </TR>
+   
+    <TR>
+      <TH><A href="allocator/MIAllocator.html" target="_self">MIAllocator</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メモリアロケータのインタフェース構造体です。</TD>
+    </TR>
+    <TR>
+      <TH><A href="allocator/MIAllocatorAllocFunction.html" target="_self">MIAllocatorAllocFunction</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メモリ確保コールバックの関数プロトタイプです。</TD>
+    </TR>
+    <TR>
+      <TH><A href="allocator/MIAllocatorFreeFunction.html" target="_self">MIAllocatorFreeFunction</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メモリ解放コールバックの関数プロトタイプです。</TD>
+    </TR>
+
+
+    <TR>
+      <TH><A href="device/MIDevice.html" target="_self">MIDevice</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>デバイス制御をラップするためのインタフェース構造体です。</TD>
+    </TR>
+    <TR>
+      <TH><A href="device/MIDeviceReadFunction.html" target="_self">MIDeviceReadFunction</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>デバイス読み込みコールバックの関数プロトタイプです。</TD>
+    </TR>
+    <TR>
+      <TH><A href="device/MIDeviceWriteFunction.html" target="_self">MIDeviceWriteFunction</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>デバイス書き込みコールバックの関数プロトタイプです。</TD>
+    </TR>
+    <TR>
+      <TH><A href="cache/MICache.html" target="_self">MICache</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>メモリキャッシュを実現するための構造体です。</TD>
+    </TR>
+    <TR>
+      <TH><A href="ndma/MINDmaConfig.html" target="_self">MINDmaConfig</A></TH>
+      <TD><img src="../image/NTR.gif"><img src="../image/TWL.gif"></TD>
+      <TD>新規DMAの動作を指定するための構造体です。</TD>
+    </TR>
+
+
+  </TBODY>
+</TABLE>
+
+<table border="0" height="100%"><tr><td style="background-color : white;"></td></tr></table>
+
+</BODY>
+</HTML>

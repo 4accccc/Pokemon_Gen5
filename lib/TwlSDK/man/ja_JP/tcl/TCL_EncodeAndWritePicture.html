@@ -1,0 +1,83 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCL_EncodeAndWritePicture</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCL_EncodeAndWritePicture(Ex) <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+TCLResult TCL_EncodeAndWritePicture( TCLAccessor* pAccessor ,
+                                     const void* imageBuffer ,
+                                     u8* jpegBuffer ,
+                                     u32 jpegBufferSize ,
+                                     u8* workBuffer ,
+                                     u32 quality ,
+                                     u32 option ,
+                                     FSResult* pFSResult );
+
+TCLResult TCL_EncodeAndWritePictureEx( TCLAccessor* pAccessor ,
+                                       const void* imageBuffer ,
+                                       u8* jpegBuffer ,
+                                       u32 jpegBufferSize ,
+                                       u8* workBuffer ,
+                                       u32 quality ,
+                                       u32 option ,
+                                       u8* makerNoteBuffer ,
+                                       u16 makerNoteBufferSize ,
+                                       FSResult* pFSResult );
+	</code></pre>
+</dl>
+
+<h2>引数</h2>
+<p>
+<table>
+<tr><td>pAccessor<td><a href="TCLAccessor.html">アクセサ</a>
+<tr><td>imageBuffer<td>元画像バッファ
+<tr><td>jpegBuffer<td>jpeg画像バッファ
+<tr><td>jpegBufferSize<td>jpeg画像バッファサイズ
+<tr><td>workBuffer<td>jpegエンコードワークバッファ
+<tr><td>quality<td>jpegエンコードクオリティ
+<tr><td>option<td>jpegエンコードオプション
+<tr><td>makerNoteBuffer<td>ユーザメーカーノートバッファ
+<tr><td>makerNoteBufferSize<td>ユーザメーカーノートバッファサイズ
+<tr><td>pFSResult<td>関数内部で各種FS関数にエラーが発生した場合の処理結果
+</table>
+</p>
+
+<h2>返り値</h2>
+<p><a href="TCLResult.html">処理結果</a></p>
+
+<h2>説明</h2>
+<p>元画像をjpegエンコードし、保存します。内部で <code>SSP_StartJpegEncoderLite</code> を呼び出します。</p>
+<p>元画像はVGAサイズである必要があります。</p>
+<p>ワークバッファは <a href="TCL_GetJpegEncoderBufferSize.html"><code>TCL_GetJpegEncoderBufferSize</code></a> で求めたサイズ分確保する必要があります。</p>
+<p>エンコードに成功後、jpeg画像の次回保存先パスへの保存と管理ファイルの上書き処理を行います。</p>
+<p>この関数から <code>TCL_RESULT_ERROR_NO_NEXT_INDEX</code> が返って来た場合、パス上の制約によってこれ以上保存できません。これは <a href="TCL_CalcNumEnableToTakePictures.html"><code>TCL_CalcNumEnableToTakePictures</code></a> が0より大きな値を示していても同様ですので注意が必要です。</p>
+<p>アクセサは <a href="TCL_LoadTable.html"><code>TCL_LoadTable</code></a> や <a href="TCL_CreateTable.html"><code>TCL_CreateTable</code></a> などで初期化されている必要があります。</p>
+<p>
+jpegBufferSize が小さい、quality が大きい等の理由でエンコード処理に失敗した場合、関数内部で自動的に quality を下げて
+エンコードが成功するまでリトライし続けます。<br>
+quality を限界まで下げても成功しなかった場合は TCL_RESULT_ERROR_OTHER を返します。
+</p>
+<h2>参照</h2>
+<p><code>
+<a href="TCL_GetJpegEncoderBufferSize.html">TCL_GetJpegEncoderBufferSize</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/04/30 内部で呼び出す SSP の関数変更<br>
+2009/04/16 内部のエンコードに失敗した場合の動作について追記<br>
+2008/12/05 初版<br/>
+</p>
+
+</body>
+</html>

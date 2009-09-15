@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+	<HEAD>
+		<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+		<title>SNDEX_Init</title>
+		<link rel="stylesheet" href="../../css/nitro.css" type="text/css">
+	</HEAD>
+	<BODY>
+		<H1>SNDEX_Init <IMG src="../../image/TWL.gif" width="24" height="12" border="0" align=middle></H1>
+		<H2>構文</H2>
+		<DL>
+			<DD><CODE>#include &lt;twl/snd.h&gt;</CODE></DD>
+			<DD><PRE><CODE>void SNDEX_Init( void );</CODE></PRE></DD>
+		</DL>
+		<H2>引数</H2>
+		<P>
+			なし。
+		</P>
+		<H2>返り値</H2>
+		<P>
+			なし。
+		</P>
+		<H2>説明</H2>
+		<P>
+			サウンド拡張機能を初期化します。
+			サウンド拡張機能に関する他の全ての関数より先に一度呼び出して下さい。
+			関数内部では、ワークの初期化及びARM7との通信同期処理を行っています。
+		</P>
+		<H2>注意</H2>
+		<P>
+			サウンド拡張機能は、TWLプラットフォーム上でのみ利用できます。
+			NITROプラットフォーム上で当関数を呼び出した場合は何も行いません。
+		</P>
+		<H2>参照</H2>
+		<H2>履歴</H2>
+		<P>
+			2008/02/15 初版
+		</P>
+	</BODY>
+</HTML>

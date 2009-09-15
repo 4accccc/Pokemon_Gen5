@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MI_DumpWramList</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MI_DumpWramList* <IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd><CODE>#include &lt;twl/mi.h&gt;</CODE></dd>
+  <dd>　</dd>
+  <dd><CODE>void MI_DumpWramList( <A href="../mi_constant.html">MIWramPos</A> wram );</CODE></dd>
+</dl>
+<dl>
+  <dd><CODE>void MI_DumpWramListAll( void );</CODE></dd>
+</dl>
+<dl>
+  <dd>(define)</dd>
+  <dd><CODE>void MI_DumpWramList_A();</CODE></dd>
+  <dd><CODE>void MI_DumpWramList_B();</CODE></dd>
+  <dd><CODE>void MI_DumpWramList_C();</CODE></dd>
+</dl>
+<h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>wram</STRONG></EM></TD>
+      <TD width="87%">表示する対象のWRAM</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>なし。</p>
+
+<H2>説明</H2>
+<P>WRAM の状態を表示します。<BR>
+これはデバッグ用の関数です。FINALROM版では何も行いません。</P>
+<P><CODE>MI_DumpWramList()</CODE> の <I><B>wram</B></I> は対象となる WRAM で、<CODE><A href="../mi_constant.html">MIWramPos</A></CODE> 型です。<CODE>MI_WRAM_A, MI_WRAM_B, MI_WRAM_C</CODE> のいずれかとなります。<CODE>MI_DumpWramListAll()</CODE> はすべての WRAM を対象にします。</P>
+<P>表示は以下のようになります。<BR>
+</P>
+<BLOCKQUOTE>
+<P><CODE>----WRAM-A (3000000-2ffffff)<BR>
+　　　　ALLOC RESERVE<BR>
+slot0　 ARM9　 ARM9<BR>
+slot1 　ARM7 　ARM7<BR>
+slot2 　ARM7 　----<BR>
+slot3 　---- 　----<BR>
+</CODE></P>
+</BLOCKQUOTE>
+<P>ALLOC は割り当てられているプロセッサをあらわします。上の例では、slot 0
+が ARM9 に、slot1 と slot2 が ARM7 に割り当てられています。slot3 はまだ割り当てられていません。<BR>
+<BR>
+RESERVE は予約されているプロセッサを表します。上の例では slot0 が ARM9
+に予約されており、slot1 が ARM7 に割り当てられています。slot2 と slot3
+は予約されていません。<BR>
+<BR>
+上の例では WRAM-A の領域が 0x3000000-0x2ffffff と示されていますが、ARM9
+から読めないように設定されている場合などこのように始端より終端が下位アドレスとなることがあります。</P>
+<P><CODE>MI_DumpWramList_A</CODE> は <CODE>MI_DumpWramList( MI_WRAM_A )</CODE> の define です。<BR>
+<CODE>MI_DumpWramList_B</CODE> は <CODE>MI_DumpWramList( MI_WRAM_B )</CODE> の define です。<BR>
+<CODE>MI_DumpWramList_C</CODE> は <CODE>MI_DumpWramList( MI_WRAM_C )</CODE> の define です。<BR>
+</P>
+<h2>参照</h2>
+<P><A href="about_Wram.html">概要(ワークRAM)</A>、<A href="../mi_constant.html">MI関連の定数</A></P>
+
+<H2>履歴</H2>
+<P>2007/10/24 初版</P>
+</body>
+</html>

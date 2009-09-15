@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>addbanner</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD,TH{
+  border-color	: #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+<H1 align="left">addbanner <IMG src="../image/NTR.gif" align="middle"><IMG src="../image/TWL.gif" align="middle"></H1>
+<H2>説明</H2>
+<P>　<CODE>addbanner</CODE> は、<A href="makebanner.html"><CODE>makebanner</CODE></A> や
+<A href="makebannerTWL.html"><CODE>makebanner.TWL</CODE></A> ツールで作成されたバナーファイルが
+実際どのように TWL 本体や DS/DS Lite 本体のランチャー画面に表示されるか確認するためのツールです。<BR>
+各言語で設定されたゲームタイトル名の確認や、DS ダウンロードプレイ時のバナー表示の確認、
+TWL バナーが持つアニメーションデータの確認に使用することができます。</P>
+<P>　<FONT color=#ff0000>TWL 本体とDS/DS Lite 本体では文字フォントや文字枠の横幅サイズが異なります。
+両方の画面で枠からはみ出さないようにゲームタイトルを設定してください。<BR>
+但しTWL 本体はカードアプリでの画面になります。
+ユーザーNANDアプリでの表示は<CODE><A href="../romfiles/TwlNmenu.html">TwlNmenu</A></CODE>で、
+開発用のTWL 本体や IS-TWL-DEBUGGER にtadをインポートして確認してください。</P></FONT>
+
+<P>　本来、<CODE>addbanner</CODE> は、その名が示す通り、バナーファイルを ROM ファイルに挿し込むためのツールですが、通常は
+<A href="makerom.html"><CODE>makerom, makerom.TWL</CODE></A>ツールによってバナーファイルの挿し込み処理が行なわれるため、現在では挿し込みの用途として使う必要はありません。</P>
+
+<H2>使用方法</H2>
+<H3>起動コマンド</H3>
+<P><CODE>% addbanner [-t VIEWER_TEMPLATE] BANNERFILE [VIEWER]</CODE></P>
+<P><CODE>　BANNERFILE</CODE> で指定されたバナーファイルを TWL 本体や DS/DS Lite 本体の画面上に表示するための実行 ROM ファイルを
+<CODE>VIEWER</CODE> というファイル名で出力します。<CODE>VIEWER</CODE> は省略可能です。省略時には <CODE>BANNERFILE</CODE> で指定されたファイル名の拡張子部分を <CODE>.srl</CODE> としたファイル名が使用されます。</P>
+<P>　<CODE>addbanner</CODE> は、<CODE>VIEWER</CODE> 生成の元ファイルとなるテンプレート ROM ファイルとして、<CODE>addbanner.exe</CODE> と同じディレクトリにある <CODE>BannerViewerTemplate.srl</CODE> を使用します。<CODE>addbanner</CODE> は、テンプレート ROM ファイルのバナーファイルを <CODE>BANNERFILE</CODE> で指定されたファイルに差し替え、<CODE>VIEWER</CODE> で指定された名前で出力しているだけです。</P>
+<P>　<CODE>-t</CODE> オプションによって VIEWER 生成の元となるテンプレート ROM ファイルを変更できます。普段は必要ありません。</P>
+<H3>作成されたVIEWER の使用方法</H3>
+<P>DS/DS Lite 本体用の画面上で、<CODE>Platform : </CODE>には、NTR バナーであれば<CODE>NTR</CODE> ,
+TWL バナーであれば<CODE>TWL</CODE> と表示されます。<BR>
+不正なバナーであれば、<CODE>Banner is invalid.</CODE> と表示されます。</P>
+
+<P><TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>ボタン</TH>
+      <TH>内容</TH>
+    </TR><TR>
+      <TD>上下ボタン</TD>
+      <TD>言語を変更します。</TD>
+    </TR><TR>
+      <TD>A ボタン</TD>
+      <TD>上画面と下画面を入れ替えます。</TD>
+    </TR></P>
+  </TBODY>
+</TABLE>
+<H2>場所</H2>
+<P><CODE>$TwlSDK/tools/bin/addbanner.exe</CODE><BR>
+<CODE>$TwlSDK/tools/bin/BannerViewerTemplate.srl</CODE></P>
+<H2>参照</H2>
+<P><CODE><A href="about_Banner.html">バナー (overview)</A>, <A href="makebanner.html">makebanner</A></CODE>, <CODE><A href="makebannerTWL.html">makebanner.TWL</A></CODE></P>
+<H2>履歴</H2>
+<P>2008/11/11 TWL ランチャー画面に正式対応<BR>
+2008/09/24 TWL バナー対応に伴う修正<BR>
+2008/09/16 TWL バナーに関して追記<BR>
+2004/09/21 初版作成</P>
+</BODY>
+</HTML>

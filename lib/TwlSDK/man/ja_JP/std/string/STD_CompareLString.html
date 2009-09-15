@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 8.0.2.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>STD_CompareLString</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">STD_CompareLString<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+<dl>
+  <dd><PRE><CODE>#include &lt;nitro/std.h&gt;
+
+int STD_CompareLString( const char* str1, const char* str2, int len );</CODE></PRE>
+  <PRE><CODE>int STD_StrLCmp( const char* str1, const char* str2, int len );
+</CODE></PRE></dd>
+</dl>
+
+<h2>引数</h2>
+<table border="1" width="100%">
+  <tbody>
+    <TR>
+      <TD width="200"><EM><STRONG><FONT face="Courier New">str1</FONT></STRONG></EM></TD>
+      <TD width="800">比較する文字列のポインタを指定します。</TD>
+    </TR>
+    <TR>
+      <TD width="200"><EM><STRONG><FONT face="Courier New">str2</FONT></STRONG></EM></TD>
+      <TD width="800">比較する文字列のポインタを指定します。</TD>
+    </TR>
+    <TR>
+      <TD width="200"><EM><STRONG><FONT face="Courier New">len</FONT></STRONG></EM></TD>
+      <TD width="800">比較する文字列の長さを指定します。</TD>
+    </TR>
+  </tbody>
+</table>
+
+<h2>返り値</h2>
+<p>
+比較した文字列が同一ならば 0 を返します。
+</p>
+
+<H2>説明</H2>
+<P>
+文字列 str1 と、文字列 str2 を len の長さだけ比較します。<CODE>strlcmp()</CODE> と同じ動作をします。
+</P>
+<P>
+<CODE>STD_CompareNString()</CODE>との違いはlenの長さを比較して一致してもその次のstr1文字列がNULLでなかった
+場合は一致したことにはならないというところにあります。
+<P>
+バッファオーバーフローを防止するためのプログラム手法として、バッファの違いを検出する時は
+長さ制限チェックのない比較関数は長さ制限チェックのある比較関数に置き換えることでバッファ長よりも後ろの
+アドレスの比較を防止するというものがあります。
+</P>
+<P>
+その実例の一つとしてstrcmp()をstrncmp()に置き換えるというものがありますが、
+strncmp()で長さ指定するパラメータlenに安易にバッファサイズを指定するとバッファがオーバーフローしていても
+比較結果が一致していれば一致という結果が返ります。
+そこで、strlcmp()では(len+1)文字内にNULL文字がない場合は一致という結果を返さないことで
+バッファオーバーフローも検出できるようにしています。
+</P>
+<P>
+そのため、バッファチェックのために比較文字列を使う場合はSTD_CompareLString()を用いることが望ましいです。
+<!--これによってlenにstr1のバッファサイズを指定しておけば
+str1のバッファがオーバーフローしているにもかかわらず比較関数が一致という結果を返すことを防止できます。
+文字列比較関数で一致した場合は処理継続・不一致の場合は処理中止という処理を -->
+</P>
+<P>
+<CODE>STD_StrLCmp()</CODE> は <CODE>STD_CompareLString()</CODE> の別名として define されています。
+</P>
+
+<h2>参照</h2>
+<p><CODE><A href="STD_CompareString.html">STD_CompareString</A>, <A href="STD_CompareNString.html">STD_CompareNString</A></CODE></p>
+
+<H2>履歴</H2>
+<P>
+2008/10/ 6 <CODE>STD_CompareNString()</CODE>との違いの追記<BR>
+2008/ 9/26 定義の修正<BR>
+2005/10/ 5 初版<BR>
+</P>
+</body>
+</html>

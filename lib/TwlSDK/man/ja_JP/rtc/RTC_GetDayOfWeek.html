@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>RTC_GetDayOfWeek</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">RTC_GetDayOfWeek <img src="../image/NTR.gif" align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/rtc.h&gt;</CODE><BR>
+  <PRE><CODE>RTCWeek RTC_GetDayOfWeek( <A href="RTCDate.html">RTCDate</A>* date );</CODE></PRE>
+  </dd>
+
+</dl><h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="300"><em><strong><font face="Courier New">date</font></strong></em></TD>
+      <TD width="700">日付データへのポインタ</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>指定の日付に対する曜日です。</p>
+
+<H2>説明</H2>
+<P>指定の日付に対する曜日を取得します。</P>
+<P><B><I>date</I></B> には取得する日付データが格納されているものとします。</P>
+<P>取得できる曜日データは <A href="RTCWeek.html">RTCWeek</A> 列挙型の値で、以下の通りです。<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>返り値</TH>
+      <TH>曜日</TH>
+    </TR>
+    <TR>
+      <TD>RTC_WEEK_SUNDAY</TD>
+      <TD>日曜日</TD>
+    </TR>
+    <TR>
+      <TD>RTC_WEEK_MONDAY</TD>
+      <TD>月曜日</TD>
+    </TR>
+    <TR>
+      <TD>RTC_WEEK_TUESDAY</TD>
+      <TD>火曜日</TD>
+    </TR>
+    <TR>
+      <TD>RTC_WEEK_WEDNESDAY</TD>
+      <TD>水曜日</TD>
+    </TR>
+    <TR>
+      <TD>RTC_WEEK_THURSDAY</TD>
+      <TD>木曜日</TD>
+    </TR>
+    <TR>
+      <TD>RTC_WEEK_FRIDAY</TD>
+      <TD>金曜日</TD>
+    </TR>
+    <TR>
+      <TD>RTC_WEEK_SATURDAY</TD>
+      <TD>土曜日</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<h2>参照</h2>
+<P><CODE><A href="RTCWeek.html">RTCWeek</A></CODE></P>
+
+<H2>履歴</H2>
+<P>2009/03/31 初版<BR>
+</P>
+</body>
+</html>

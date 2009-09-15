@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>WXCStateCode</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">WXCStateCode <img src="../image/NTR.gif"align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+<h2>定義</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/wxc.h&gt;</CODE><BR>
+  <BR>
+<PRE>
+typedef enum
+{
+    <font color="#008000">/* WXC_GetStatus 関数で取得可能な内部状態 */</font>
+    WXC_STATE_END,            /* WXCライブラリ初期化前の状態 */
+    WXC_STATE_ENDING,         /* WXC_End 関数以降かつ 終了処理実行中 */
+    WXC_STATE_READY,          /* WXC_Init 関数以降かつ WXC_Start 関数以前 */
+    WXC_STATE_ACTIVE,         /* WXC_Start 関数以降でワイヤレスが有効な状態 */
+
+    <font color="#008000">/* システムコールバックに通知される内部イベント */</font>
+    WXC_STATE_CONNECTED,      /* 接続通知 (引数は接続先の情報を格納したWXCUserInfo構造体ポインタ) */
+    WXC_STATE_EXCHANGE_DONE,  /* データ交換完了 (引数はユーザが指定した受信バッファ) */
+    WXC_STATE_BEACON_RECV     /* ビーコン受信 (引数はWXCBeaconFoundCallback構造体) */
+}
+WXCStateCode;
+</PRE>
+</CODE><br>
+  <br>
+  </dd>
+</dl>
+
+<H2>説明</H2>
+<P>WXCライブラリの内部状態を表す列挙定数を示します。<BR>
+各値の意味は以下の通りです。<BR>
+<br>
+・<A href="common/WXC_GetStateCode.html">WXC_GetStateCode</A>関数で取得される値
+<TABLE border="0">
+  <TBODY>
+
+    <TR>
+      <TD>値</TD>
+      <TD>状態</TD>
+	  <TD><A href="common/WXC_Init.html">WXC_Init</A>関数で指定したシステムコールバック</td>
+    </TR>
+
+    <TR>
+      <TD>WXC_STATE_END</TD>
+      <TD>WXCライブラリを初期化する前の状態、もしくは<A href="common/WXC_End.html">WXC_End</A>関数による終了処理が完了した状態です。
+	  </TD>
+	  <td><A href="common/WXC_End.html">WXC_End</A>関数による終了処理が完了した時点で通知されます。<br>
+	  引数は、<A href="common/WXC_Init.html">WXC_Init</A>関数で割り当てたワークメモリのポインタが与えられます。<br>
+	  このメモリは、すでにこのコールバックの時点でユーザアプリケーションへ解放されています。</td>
+    </TR>
+
+    <TR>
+      <TD>WXC_STATE_ENDING</TD>
+      <TD><A href="common/WXC_End.html">WXC_End</A>関数を呼び出してワイヤレスの終了処理を行っている状態です。
+	  </TD>
+	  <td><A href="common/WXC_End.html">WXC_End</A>関数呼び出しの内部からただちに通知されます。<br>
+	  引数は、常に NULL が与えられます。</td>
+    </TR>
+
+    <TR>
+      <TD>WXC_STATE_READY</TD>
+      <TD><A href="common/WXC_Init.html">WXC_Init</A>関数を呼び出し、<A href="common/WXC_Start.html">WXC_Start</A>関数を呼び出す前の状態です。
+	  </TD>
+	  <td><A href="common/WXC_Init.html">WXC_Init</A>関数呼び出しの内部から、あるいは<A href="common/WXC_Stop.html">WXC_Stop</A>関数による状態遷移処理が完了した時点で通知されます。<br>
+	  引数は、常に NULL が与えられます。</td>
+    </TR>
+
+    <TR>
+      <TD>WXC_STATE_ACTIVE</TD>
+      <TD><A href="common/WXC_Start.html">WXC_Start</A>関数を呼び出して内部のワイヤレスが駆動している状態です。
+	  </TD>
+	  <td><A href="common/WXC_Start.html">WXC_Start</A>関数呼び出しの内部からただちに通知されます。<br>
+	  引数は、常に NULL が与えられます。</td>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+・<A href="common/WXC_Init.html">WXC_Init</A>関数で指定したシステムコールバックにのみ通知される値
+
+<TABLE border="0">
+  <TBODY>
+
+    <TR>
+      <TD>値</TD>
+	  <TD><A href="common/WXC_Init.html">WXC_Init</A>関数で指定したシステムコールバック</td>
+    </TR>
+
+    <TR>
+      <TD>WXC_STATE_CONNECTED</TD>
+	  <td>親機として起動している際、子機が接続するたびに通知されます。<br>
+	  引数は、<A href="WXCUserInfo.html">WXCUserInfo</A>構造体へのポインタが与えられます。</td>
+    </TR>
+
+    <TR>
+      <TD>WXC_STATE_BEACON_RECV</TD>
+	  <td>接続対象とみなせる親機のビーコンを検出するたびに通知されます。<br>
+	  引数は、<A href="WXCBeaconFoundCallback.html">WXCBeaconFoundCallback</A>構造体へのポインタが与えられます。</td>
+    </TR>
+  </TBODY>
+</TABLE>
+
+・<A href="common/WXC_RegisterCommonData.html">WXC_RegisterCommonData</A>関数で指定したユーザコールバックにのみ通知される値
+
+<TABLE border="0">
+  <TBODY>
+
+    <TR>
+      <TD>値</TD>
+	  <TD><A href="common/WXC_RegisterCommonData.html">WXC_RegisterCommonData</A>関数で指定したユーザコールバック</td>
+    </TR>
+
+    <TR>
+      <TD>WXC_STATE_EXCHANGE_DONE</TD>
+	  <td>データ交換が完了するたびに通知されます。<br>
+	  引数は、受信データの情報を格納した<A href="WXCBlockDataFormat.html">WXCBlockDataFormat</A>構造体へのポインタが与えられます。</td>
+    </TR>
+
+  </TBODY>
+</TABLE>
+
+<BR>
+</P>
+<h2>参照</h2>
+<p><CODE>
+<A href="WXCCallback.html">WXCCallback</A> 
+<A href="WXCBeaconFoundCallback.html">WXCBeaconFoundCallback</A> 
+<A href="WXCUserInfo.html">WXCUserInfo</A> 
+<br>
+<A href="common/WXC_Init.html">WXC_Init</A> 
+<A href="common/WXC_Start.html">WXC_Start</A> 
+<A href="common/WXC_End.html">WXC_End</A> 
+<A href="common/WXC_GetStateCode.html">WXC_GetStateCode</A> 
+</CODE></p>
+
+<H2>履歴</H2>
+<P>
+2006/02/20 WXC_STATE_EXCHANGE_DONEの説明を追加<br>
+2005/11/04 WXC_STATE_BEACON_RECVの説明を追加<br>
+2005/10/11 WXC_STATE_READYの説明を修正<br>
+2005/08/04 初版<br>
+</P>
+</body>
+</html>

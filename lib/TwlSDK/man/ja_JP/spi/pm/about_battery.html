@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>バッテリー (overview)</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">バッテリー (overview) <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
+
+<H2>説明</H2>
+<P>TWL はバッテリー(充電池)で駆動しています。ここでは電池残量の取得や、それが減少したときに呼ばれるコールバックなどについて説明します。</P>
+<H2>電池残量の取得</H2>
+<P>バッテリーパックの電池残量を調べる命令は、<CODE><A href="PM_GetBattery.html">PM_GetBattery()</A></CODE>、<CODE><A href="PM_GetBatteryLevel.html">PM_GetBatteryLevel()</A></CODE> です。</P>
+<P><CODE><A href="PM_GetBattery.html">PM_GetBattery()</A></CODE> では <CODE>PM_BATTERY_HIGH</CODE>, と <CODE>PM_BATTERY_LOW</CODE> の 2段階で取得出来ます。これは NITRO から存在する関数で、ハードウェアとしては6段階で取得できる TWL の場合はある定められたところを境に 2段階にみなして値を返します。</P>
+<P><CODE><A href="PM_GetBatteryLevel.html">PM_GetBatteryLevel()</A></CODE> は 0～5 の6段階で取得出来ます。これは TWL で新設された関数で、NITRO ハードウェアでは使用することが出来ません。</P>
+
+<P>バッテリーの低下を検出しても、メッセージなどを表示する必要はありません。TWL
+本体では、電池残量の低下を検出したときに、後述の「バッテリーLOWコールバック」で説明するコールバックを自動で呼び出すことが可能なのでアプリケーションで残量低下をポーリングせずに知ることが出来ます。</P>
+<H2>電池残量低下によるシャットダウン</H2>
+<P>充電池の残量がなくなれば、当然ゲームを続けることは出来ません。しかし、NANDメモリにアクセスしている正にその途中で電源が切れたりするとNANDのデータが失われたりする可能性もあるように、システム側の意図しないところで電源が落ちるのは好ましくありません。そこで、NAND
+メモリ/ SDメモリカードにアクセスするアプリケーションでは、NANDメモリ/SDメモリカードのファイルシステムを保護する目的で、電池残量が非常に少なくなったときに、少し余裕がある状態で自動的にシャットダウン処理を行います。そのため、厳密には電池を
+0 まで使い切ることは出来ません。</P>
+<P>一方、DS ゲームカードやカード上のバックアップメモリにしかアクセスしないアプリケーションはいきなり電源が落ちてもデータが消失したりすることはありません。なのでこちらは電池残量が低下しても自動シャットダウン処理を行うことはありません。つまりDS同様に電池を使い切るまで遊べます。こちらで電池残量が非常に低くなったことを知るには、後述のバッテリーLOWコールバックが使用できます。</P>
+<BLOCKQUOTE><IMG src="battery_Pict1.gif" width="542" height="431" border="0"></BLOCKQUOTE>
+<H2>バッテリーLOWコールバック</H2>
+<P>バッテリーLOWコールバックとは、電池電圧が一定の低さになったときに発生するコールバックです。コールバックの設定は、<CODE><A href="PM_SetBatteryLowCallback.html">PM_SetBatteryLowCallback()</A></CODE>です。</P>
+<P>バッテリーLOWコールバックは <CODE><A href="PM_GetBatteryLevel.html">PM_GetBatteryLevel()</A></CODE> の値が 1 となる残量 (1% が目安です) になったときに呼び出されますが、終了処理を必要としないアプリケーションの場合は、<FONT color="#ff0000">まれに発生しないこともありえます。</FONT>(<CODE><A href="PM_GetBatteryLevel.html">PM_GetBatteryLevel()</A></CODE> の「内部での値取得について」と「コールバックについて」を参照)</P>
+<P>このコールバックが呼び出される電池残量のレベルは、NAND メモリ/ SDメモリカードにアクセスするアプリケーションが自動シャットダウンが発生する残量よりは若干高いところに設定されています。</P>
+<P>なお、自動シャットダウンを行うソフトでも、行わないソフトでも、バッテリーLOWコールバックの仕組みを使用することが出来ます。</P>
+<H2>ACアダプタの検出</H2>
+<P>ACアダプタで電源が供給されているかどうかを調べる命令は <CODE><A href="PM_GetACAdapter.html">PM_GetACAdaper()</A></CODE> です。正確には、「ACアダプタがDCコネクタに接続され、通電状態になっているかどうか」を調べます。現在通電しているかどうかを調べるだけで、充電中であるかどうかを知ることは出来ません。</P>
+
+<H2>履歴</H2>
+<P>2008/09/13 初版</P>
+</BODY>
+</HTML>

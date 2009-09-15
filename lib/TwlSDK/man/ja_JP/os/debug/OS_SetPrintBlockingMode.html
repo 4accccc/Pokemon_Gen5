@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>OS_SetPrintBlockingMode</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">OS_SetPrintBlockingMode <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD><CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
+  <BR>
+  <CODE>void OS_SetPrintBlockingMode( BOOL sw );</CODE>
+</DL>
+<H2>引数</H2>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TD><B><I>sw</I></B></TD>
+      <TD>ブロッキングモードのスイッチ<BR>
+      TRUE ならばブロッキングモード、FALSE ならば非ブロッキングモード</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>返り値</H2>
+<P>なし。</P>
+<H2>説明</H2>
+<P>IS-TWL-DEBUGGER または IS-NITRO-DEBUGGER のデバッグ出力のブロッキングモードを設定します。</P>
+<P>ブロッキングモードの場合、<CODE><A href="OS_Printf.html">OS_Printf()</A></CODE> 等で出力した文字を確実に出力します。ただしその結果としてデバッグ出力の処理で時間が掛かる可能性はあります。非ブロッキングモードの場合、処理のリアルタイム性を優先するために高速に出力関数を呼び出したり、PC側で出力文字列を長時間取り込まないと一部の文字列が出力されないという場合もあります。通常は非ブロッキングモードにしておき、必要なときにブロッキングモードにして表示する用途が想定されます。</P>
+<P>現在の設定を取得する関数は、<CODE><A href="OS_GetPrintBlockingMode.html">OS_GetPrintBlockingMode()</A></CODE> です。</P>
+<P>これはデバッグ用の関数です。最終ROM版(FINALROM)ライブラリでは何も行いません。</P>
+<P>この関数の用途としては、例えば、関数コストを計算するプロファイル機能で集計結果を出力する場合に、</P>
+<BLOCKQUOTE style="background-color:#ffffcc"><CODE>BOOL prev = OS_GetPrintBlockingMode();<BR>
+OS_SetPrintBlockingMode( TRUE );<BR>
+OS_DumpStatistics(buf);<BR>
+OS_SetPrintBlockingMode( prev );</CODE></BLOCKQUOTE>
+<P>のように、一時的に設定を変更するために使用します。</P>
+<P>ブロッキングモードの切り替え機能は、IS-TWL-DEBUGGER や IS-NITRO-DEBUGGER
+のバージョンによって実装されていない場合もあります。デバッガソフトウェアの更新履歴などでご確認ください。非対応の場合でも関数を呼び出すことは可能です。非対応の場合は
+<CODE><A href="OS_GetPrintBlockingMode.html">OS_GetPrintBlockingMode()</A></CODE> は何も行いません。</P>
+<H2>参照</H2>
+<P><CODE><A href="OS_GetPrintBlockingMode.html">OS_GetPrintBlockingMode</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2009/04/21 FINALROM時の動作について修正。例を修正。<BR>
+2009/04/02 初版</P>
+</BODY>
+</HTML>

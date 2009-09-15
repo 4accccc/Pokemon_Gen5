@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+	<HEAD>
+		<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+		<title>SNDEXIirFilterParam</title>
+		<link rel="stylesheet" href="../../css/nitro.css" type="text/css">
+	</HEAD>
+	<BODY>
+		<H1>SNDEXIirFilterParam <IMG src="../../image/TWL.gif" width="24" height="12" border="0" align=middle></H1>
+
+		<H2>定義</H2>
+		<DL>
+			<DD><CODE>#include &lt;twl/snd.h&gt;</CODE></DD>
+			<DD><PRE><CODE>typedef struct _SNDEXIirFilterParam
+{
+    u16 n0;
+    u16 n1;
+    u16 n2;
+    u16 d1;
+    u16 d2;
+} SNDEXIirFilterParam;</CODE></PRE></DD>
+		</DL>
+
+		<H2>要素</H2>
+		<TABLE>
+			<TBODY>
+				<TR>
+					<TH width="25%">n0, n1, n2, d1, d2</TH>
+					<TD width="75%">IIRフィルタを構成する係数(0～65535)。</TD>
+				</TR>
+			</TBODY>
+		</TABLE>
+
+		<H2>説明</H2>
+		<P>
+			IIRフィルタを設定するためのパラメータをまとめた構造体です。
+        </P>
+        <P>
+            <A href="doc/aboutIirFilterBuilder.html">IIR_FilterBuilder</A> を用いて計算したパラメータ（Hex値）をそのまま使うことが可能です。<BR>
+            （ただし、Values 値を使う場合は u16型へのキャストが必要になります）
+        </P>
+        <P>
+			<A href="SNDEXIirFilterTarget.html">SNDEXIirFilterTarget</A>構造体で指定できる各フィルタについて、このパラメータの初期値は、以下のように設定されています。<PRE><CODE>n0 = 0x7FFF(32767), n1 = n2 = d1 = d2 = 0</CODE></PRE>
+		</P>
+		<P>
+			各フィルタに対してパラメータを設定した場合でも、上記の値に再設定することで初期状態に戻すことができます。
+		</P>
+		<H2>参照</H2>
+		<P>
+			<CODE>
+				<A href="SNDEX_SetIirFilter.html">SNDEX_SetIirFilter</A>, <A href="SNDEX_SetIirFilterAsync.html">SNDEX_SetIirFilterAsync</A></CODE>
+		</P>
+
+		<H2>履歴</H2>
+		<P>
+            2008/09/10 <A href="doc/aboutIirFilterBuilder.html">IIR_FilterBuilder</A> へのリンクを追加<BR>
+			2008/07/08 初版
+		</P>
+	</BODY>
+</HTML>

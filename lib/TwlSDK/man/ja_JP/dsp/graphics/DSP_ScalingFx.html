@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>DSP_ScalingFx</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>DSP_ScalingFx* <IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<pre><code>
+BOOL DSP_ScalingFxAsyncEx(
+        const void* src,
+        void* dst,
+        u16 img_width,
+        u16 img_height,
+        fx32 rx,
+        fx32 ry,
+        DSPGraphicsScalingMode mode,
+        u16 x,
+        u16 y,
+        u16 width,
+        u16 height,
+        DSP_GraphicsCallback callback
+    );
+
+BOOL DSP_ScalingFx(src, dst, img_width, img_height, rx, ry, mode);
+BOOL DSP_ScalingFxEx(src, dst, img_width, img_height, rx, ry, mode, x, y, width, height);
+BOOL DSP_ScalingFxAsync(src, dst, img_width, img_height, rx, ry, mode, callback);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>src</strong></em></td>
+<td style="width:87%">変換元データを保持しているメインメモリ上のバッファ。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>dst</strong></em></td>
+<td style="width:87%">変換データを格納するメインメモリ上のバッファ。<br />
+<span style='color:Red'>変換後のデータが格納できるバッファサイズを確保しておく必要があります。</span></td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>img_width</strong></em></td>
+<td style="width:87%">変換元画像の横サイズ。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>img_height</strong></em></td>
+<td style="width:87%">変換元画像の縦サイズ。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>rx</strong></em></td>
+<td style="width:87%">横方向の倍率。<br />
+<span style='color:Red'>31～0.001 の範囲で有効。小数点第4位以下は切り捨てられる。</span></td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>ry</strong></em></td>
+<td style="width:87%">縦方向の倍率。<br />
+<span style='color:Red'>31～0.001 の範囲で有効。小数点第4位以下は切り捨てられる。</span>
+</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>mode</strong></em></td>
+<td style="width:87%">拡大（縮小）処理時の補間方法。DSPGraphicsScalingMode（後述）を指定する。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>x</strong></em></td>
+<td style="width:87%">src の左上を(0, 0)とした座標空間における、処理を行いたい領域の x 座標。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>y</strong></em></td>
+<td style="width:87%">src の左上を(0, 0)とした座標空間における、処理を行いたい領域の y 座標。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>width</strong></em></td>
+<td style="width:87%">処理を行いたい領域の横方向のサイズ。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>height</strong></em></td>
+<td style="width:87%">処理を行いたい領域の縦方向のサイズ。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>callback</strong></em></td>
+<td style="width:87%">処理終了時のコールバック関数。</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>処理が正常に終了した場合に TRUE を返します。<br>
+変換が正常に終了しなかった場合や、既にグラフィックスコンポーネントが何らかの処理を行っている場合はFALSEを返します。</p>
+
+<h2>説明</h2>
+<p>DSP を用いて、画像データの拡大（縮小）処理を行います。</p>
+
+<p>src や dst が指すアドレスは 4バイトアラインメントする必要があります。</p>
+<p>メインメモリから DSP(WRAM-C) 間のデータ転送は、AHBを使って行われます。<br>
+メインメモリとDSP間のデータ転送は、DMAによるデータ転送よりも優先度が低いため、Scailng 処理を行っている間に別の処理がDMA転送を頻繁に行うと、<br>
+AHBの調停によって遅延が発生してしまいます。</p>
+
+<p>倍率は固定小数(fx32)で指定します。小数計算の過程で生じる桁落ちなどのため、変換後のサイズが意図した値と異なる場合がありますが、<br>
+DSP_ScalingFx* 関数による変換後のサイズは、マクロ <code><a href="DSP_Macro.html">DSP_CALC_SCALING_SIZE_FX</a></code> で取得することができます。<BR>
+また、変換後のサイズを引数にとることで、本関数に渡す倍率を取得できる <a href="DSP_CalcScalingFactor.html"><code>DSP_CalcScalingFactorFx32()</code></a> が用意されています。
+</p>
+
+<p><span style='color:Red'>なお、本関数には内部処理の設計上、引数として指定できる値に制約があります。詳しくは「注意」をご覧下さい。
+</span></p>
+
+<p>
+処理時の補間方法は DSPGraphicsScalingMode として以下のように定義されています。
+</p>
+<pre><code>
+typedef DSPWord DSPGraphicsScalingMode;
+#define DSP_GRAPHICS_SCALING_MODE_N_NEIGHBOR (DSPGraphicsScalingMode)0x0001
+#define DSP_GRAPHICS_SCALING_MODE_BILINEAR   (DSPGraphicsScalingMode)0x0002
+#define DSP_GRAPHICS_SCALING_MODE_BICUBIC    (DSPGraphicsScalingMode)0x0003
+</code></pre>
+<p>上から、最近傍法（ニアレストネイバー）、双線形補間法（バイリニア）、三次補間法（バイキュービック）です。<br>
+基本的に、処理時間はこの順に長くなっていきます。
+</p>
+
+<p>非同期版（*Async)を実行した場合、変換終了は引数として登録したコールバック関数が呼ばれることで通知されます。<br>
+<span style='color:Red'>コールバック関数の呼び出しは DSP からの割り込みによって行われますので、<code><A href="../../os/irq/OS_DisableIrq.html">OS_DisableIrq()</A></code> などにより割り込み禁止状態になっていると、<br>
+いつまでもコールバックが返らない状態になります。非同期版と同時に行う別の処理では、DSP 割り込みを禁止しないようにしてください。<br>
+</span>
+</p>
+
+<p>(*Ex)では、変換元画像中の任意の領域を指定して、そこだけを処理することができます。
+</p>
+
+<h2>注意</h2>
+<p>同期版の内部では <code>OS_Sleep()</code> によって処理の終了待ちを行っているため、<code><A href="../../os/thread/OS_InitThread.html">OS_InitThread()</A>, <A href="../../os/time/OS_InitTick.html">OS_InitTick()</A>, <A href="../../os/alarm/OS_InitAlarm.html">OS_InitAlarm()</A></code> を事前に呼んでおく必要があります。</p>
+
+<p>本関数では下記の条件を満たしている場合、DSP 内部でいつまでも処理が終了しませんのでご注意下さい。<br>
+条件を満たしてしまった場合は、<a href="../../os/debug/SDK_ASSERT.html">SDK_ASSERTMSG</a> が呼ばれます。
+</p>
+
+<!-- 制約条件 -->
+<ul>
+<li>処理後のデータサイズが元のデータサイズ以上になる場合
+<table style="width:80%">
+<tbody>
+<tr>
+<td style="width:55%"><strong>mode</strong></td><td><strong>条件</strong></td>
+</tr>
+<tr>
+<td>DSP_GRAPHICS_SCALING_MODE_N_NEIGHBOR<br>DSP_GRAPHICS_SCALING_MODE_BILINEAR</td>
+<td>（出力データの幅）×（縦方向の倍率 ry）>= 8192</td>
+</tr><tr>
+<td>DSP_GRAPHICS_SCALING_MODE_BICUBIC</td>
+<td>（出力データの幅）×（縦方向の倍率 ry）>= 4096</td>
+</tr>
+</tbody>
+</table>
+
+<li>処理後のデータサイズが元のデータサイズよりも小さくなる場合
+<table style="width:80%">
+<tbody>
+<tr>
+<td style="width:55%"><strong>mode</strong></td><td><strong>条件</strong></td>
+</tr>
+<tr>
+<td>DSP_GRAPHICS_SCALING_MODE_N_NEIGHBOR<br>DSP_GRAPHICS_SCALING_MODE_BILINEAR</td>
+<td>（入力データの幅 width）>= 8192</td>
+<tr>
+<td>DSP_GRAPHICS_SCALING_MODE_BICUBIC</td>
+<td>（入力データの幅 width）>= 4096</td>
+</tr>
+</tbody>
+</table>
+</ul>
+<!-- 制約条件 -->
+
+<h2>参照</h2>
+<p><code>
+<a href="DSP_LoadGraphics.html">DSP_LoadGraphics</a>,
+<a href="DSP_UnloadGraphics.html">DSP_UnloadGraphics</a>,
+<a href="DSP_Scaling.html">DSP_Scaling*</a>,
+<a href="../../os/irq/OS_DisableIrq.html">OS_DisableIrq</a>,
+<a href="DSP_Macro.html">DSP_CALC_SCALING_SIZE_FX</a>,
+<a href="DSP_CalcScalingFactor.html">DSP_CalcScalingFactor*</a>,
+<a href="../../fx/fx32.html">fx32</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/04/03 「注意」項に引数に関する制約事項について追記<br>
+2008/10/22 同期関数内部の変更に伴う注意追記<br>
+2008/09/06 データ転送方法について追記<br>
+2008/08/28 初版
+</p>
+</body>
+</html>

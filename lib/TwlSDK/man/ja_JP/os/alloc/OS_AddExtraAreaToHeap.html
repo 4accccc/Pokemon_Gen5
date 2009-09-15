@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>OS_AddExtraAreaToHeap</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">OS_AddExtraAreaToHeap <IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;nitro/os.h&gt;</CODE></PRE>
+  <PRE><CODE>void OS_AddExtraAreaToHeap( OSArenaId id, OSHeapHandle heap );</CODE></PRE>
+</DL>
+<H2>引数</H2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>id</STRONG></EM></TD>
+      <TD width="87%">メインメモリ先頭の16KB領域を追加するヒープのあるアリーナのアリーナID</TD>
+    </TR>
+    <TR>
+      <TD><B><I>heap</I></B></TD>
+      <TD>メインメモリ先頭の16KB領域を追加するヒープのハンドル</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>返り値</H2>
+<P>なし。</P>
+<H2>説明</H2>
+<P>メインメモリ先頭の 16KB 領域のメモリブロックを既存のヒープ領域に追加します。</P>
+<P>この関数は特殊な用途 ( 追加領域は、HYBRID ROM を NITRO モードで動作させた際に出来るメインメモリ最下位
+16KB の領域で固定 ) で用いられます。通常の用途で用いられる、メインメモリブロックを既存のヒープに追加する関数は
+<CODE><A href="OS_AddToHeap.html">OS_AddToHeap()</A></CODE> です。なお、本関数 <CODE>OS_AddExtraAreaToHeap()</CODE> は内部で <CODE>OS_AddToHeap()</CODE> を呼び出す inline 関数となっています。</P>
+<P>TWL ROM (HYBRID ROM、LIMITED ROM ともに) では、メインメモリの最下位 16KB
+にシステムの予約領域が作成されます。ただしこの領域は TWL モードで動作している場合にしか使用されません。すなわち、HYBRID
+ROM を NITRO ハードウェア上で NITRO モードで動作させている時には、この
+16KB は全く使用されていません。</P>
+<P>本関数は、この空いた 16KB の領域を指定のアリーナのヒープとして割り当てるための関数です。<FONT color="#ff0000">NITRO ROM や、TWL LIMITED ROM では、本関数を呼ぶことは出来ません。</FONT>(HYBRID ROM ビルドでしか存在しませんのでコンパイルエラーとなります。) また、<FONT color="#ff0000">HYBRID ROM を TWL ハードウェア上で TWL モードで動作させているときには、本関数を呼んでも何も行いません。</FONT></P>
+<P>アリーナはアリーナID <B><I>id</I></B> で指定します。この値については <A href="../arena/OS_InitArena.html"><CODE>OS_InitArena()</CODE></A> を参照してください。アリーナはあらかじめ <CODE><A href="OS_InitAlloc.html">OS_InitAlloc()</A></CODE> でメモリ割り当てシステムの初期化を行なっておく必要があります。</P>
+<P>本関数は、<FONT color="#ff0000">16KB の領域を既存のヒープに追加する関数です。</FONT>16KB の領域を1つのヒープとして作成する場合は、<CODE><A href="OS_CreateExtraHeap.html">OS_CreateExtraHeap()</A></CODE> を参照してください。なお、両方を同時に行うことは出来ません。</P>
+<H2>参照</H2>
+<P><CODE><A href="OS_AddToHeap.html">OS_AddToHeap</A>, <A href="OS_CreateExtraHeap.html">OS_CreateExtraHeap</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2009/04/03 初版</P>
+</BODY>
+</HTML>

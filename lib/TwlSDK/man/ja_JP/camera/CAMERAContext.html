@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>CAMERAContext</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">CAMERAContext <IMG src="../image/TWL.gif" align="middle"></H1>
+<H2>定義</H2>
+<DL>
+  <DD>
+  <CODE>#include &lt;twl/camera.h&gt;</CODE><BR>
+  <BR>
+  <PRE><CODE>
+typedef enum
+{
+    CAMERA_CONTEXT_A     = (1<<0),
+    CAMERA_CONTEXT_B     = (1<<1),
+    CAMERA_CONTEXT_BOTH  = (CAMERA_CONTEXT_A|CAMERA_CONTEXT_B)
+}
+CAMERAContext;
+</CODE></PRE>
+</DL>
+
+<H2>要素</H2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>CAMERA_CONTEXT_A</STRONG></EM></TD>
+      <TD width="87%">カメラ設定のコンテキストAを意味します。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>CAMERA_CONTEXT_B</STRONG></EM></TD>
+      <TD width="87%">カメラ設定のコンテキストBを意味します。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>CAMERA_CONTEXT_BOTH</STRONG></EM></TD>
+      <TD width="87%">コンテキストA、Bの両方を意味します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>説明</H2>
+<P>
+カメラ設定のコンテキストを指定するために使用する列挙型です。<BR>
+<BR>
+ここでのコンテキストとは、カメラ設定の状態を保持するものと考えてください。<BR>
+現在のライブラリでは、解像度、エフェクト、反転処理の3つの設定を組み合わせた状態を、コンテキストA/Bの2種類保存することができます。<BR>
+カメラ起動時のデフォルトのコンテキストは、内側カメラ、外側カメラともにコンテキストAになります。詳しくは<A href="about_camera.html">概要</A>の初期値の項目を参照してください。<BR>
+<BR>
+コンテキストの使い方としては、コンテキストBに <code><A href="CAMERA_I2CSize.html">CAMERA_I2CSizeEx()</A>,<A href="CAMERA_I2CEffect.html">CAMERA_I2CEffectEx()</A>,<A href="CAMERA_I2CFlip.html">CAMERA_I2CFlipEx()</A></code> で必要な設定をしておけば、その後に、その設定が必要となった場合、<code><A href="CAMERA_I2CContextSwitch.html">CAMERA_I2CContextSwitch()</A></code> を呼び出してカレントのコンテキストをコンテキストBに変更することにより、必要になった段階で個別にカメラ設定を変更するよりも高速に設定を切り替えることができます。
+</P>
+
+<H2>履歴</H2>
+<P>
+2008/11/13 誤記修正<br>
+2007/11/09 初版</P>
+</BODY>
+</HTML>

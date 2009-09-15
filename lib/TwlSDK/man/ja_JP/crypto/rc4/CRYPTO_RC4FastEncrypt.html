@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>CRYPTO_RC4FastEncrypt</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">CRYPTO_RC4FastEncrypt <IMG src="../../image/NTR.gif" width="23" height="12" border="0" align="middle"><IMG src="../../image/TWL.gif" width="23" height="12" border="0" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+  <pre><CODE>#include &lt;nitro/crypto.h&gt;
+
+void CRYPTO_RC4FastEncrypt(<a href="CRYPTORC4FastContext.html">CRYPTORC4FastContext</a>* context, const void* in, u32 length, void* out);
+</CODE></pre>
+</dd>
+</dl>
+
+<h2>引数</h2>
+<TABLE border="1" width="100%" class="arguments">
+  <TBODY>
+    <TR>
+      <TH>context</TH>
+      <TD><code><a href="CRYPTO_RC4FastInit.html">CRYPTO_RC4FastInit()</a></code> で予め鍵を設定した <code><A href="CRYPTORC4FastContext.html">CRYPTORC4FastContext</A></code> 型の構造体を指定します。</TD>
+    </TR>
+    <TR>
+      <TH>in</TH>
+      <TD>RC4 アルゴリズムによる暗号化/復号を行う対象のデータへのポインタを指定します。</TD>
+    </TR>
+    <TR>
+      <TH>length</TH>
+      <TD>in で指定したデータの長さを指定します。</TD>
+    </TR>
+    <TR>
+      <TH>out</TH>
+      <TD>暗号化/復号を行った結果を格納する先のポインタを指定します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>
+なし。
+</p>
+
+<H2>説明</H2>
+<P>
+共通鍵暗号である RC4 アルゴリズムによる暗号化/復号を行います。<BR>
+RC4 アルゴリズムは暗号化と復号を同一の関数で行います。<BR>
+in に格納されているデータに対して処理を行い、変換結果を out に出力します。in と out に同じポインタを指定して上書きすることも可能です。
+</P>
+<P>
+<code>CRYPTO_RC4*()</code> と <code>CRYPTO_RC4Fast*()</code> の違いは使用するメモリ量と処理速度です。<BR>
+<code>CRYPTO_RC4*()</code> で使用する <code>CRYPTORC4Context</code> 構造体は 260 バイトですが、
+<code>CRYPTO_RC4Fast*()</code> で使用する <code>CRYPTORC4FastContext</code> 構造体は 1032 バイトを使用します。<BR>
+また、十分大きなサイズのデータを扱う場合、<code>CRYPTO_RC4FastEncrypt()</code> のほうが1.5倍程度速く処理を行います。<BR>
+ただし、速度差が出るのは in と out に同じポインタを与えた場合であり、異なるポインタを与えた場合は
+<code><a href="CRYPTO_RC4Encrypt.html">CRYPTO_RC4Encrypt()</a></code> と <code>CRYPTO_RC4FastEncrypt()</code> であまり速度に違いはでません。
+</P>
+<P>
+RC4 アルゴリズムを使用する際の詳細な注意事項に関しましては、「<A href="../overview/about_RC4.html">RC4 アルゴリズムによる暗号化の概要</A>」を参照してください。
+</P>
+
+<h2>参照</h2>
+<p><CODE>
+	<A href="CRYPTO_RC4Fast.html">CRYPTO_RC4Fast</A>, <A href="CRYPTO_RC4FastInit.html">CRYPTO_RC4FastInit</A>
+</CODE></p>
+
+<H2>履歴</H2>
+<P>
+2008/2/25 初版
+</P>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>本体内蔵フォント (overview)</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+
+<H1 align="left">本体内蔵フォント (overview)</H1>
+
+<H2>説明</H2>
+<P>
+TWL の本体保存メモリには 3 種類のサイズのフォントが内蔵されています。
+本体内蔵フォント API は本体内蔵フォントをメモリにロードするための API です。
+ロードしたフォントを使用して文字を描画する API は TWL-SDK には用意されていません。
+</P>
+<P>
+本体内蔵フォントは TWL-System の NITRO フォント（NFTR） 形式になっています。
+TWL-System を使用することでロードしたフォントを使用して文字を描画することができます。
+NITRO フォント（NFTR）の詳細については TWL-System のドキュメントを、
+本体内蔵フォント固有の情報については「<a href="../../information/tbf.html">TWLビットマップフォント</a>」を参照してください
+</P>
+<P>
+本体内蔵フォントは NAND アプリでのみ使用することができます。
+</P>
+
+
+<H2>サンプルデモ</H2>
+<P>
+NAND アプリサンプルデモの sharedFont デモは本体内蔵フォント API を使用して
+本体内蔵フォントをロードする処理のデモとなっています。
+</P>
+<P>
+sharedFont デモは <code>$TwlSDK/build/demos.TWL/nandApp/sharedFont</code> にあります。
+</P>
+
+
+<H2>参照</H2>
+<P><CODE>
+<A href="../list_na.html#sharedFont">NA関数一覧(本体内蔵フォント)</A>,
+<A href="../../demos/nandApp/nandAppdemos.html">NAND アプリサンプルデモ</A>,
+<A href="../../information/tbf.html">TWL ビットマップフォント</A>
+</CODE></P>
+
+<H2>履歴</H2>
+<P>
+2008/09/16 初版
+</P>
+</BODY>
+</HTML>

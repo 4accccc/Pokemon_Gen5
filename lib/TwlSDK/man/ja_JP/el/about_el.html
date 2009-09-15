@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>ELFローダー (overview) </TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">ELFローダー (overview)</H1>
+<H2>説明</H2>
+<P>
+
+ELライブラリは再配置可能 モジュール システムです。<BR>
+<BR>
+ゲーム プログラム中でプログラムモジュールを動的に読み込んだり、解放しながら、メインメモリを効率よく使用することができます。<BR>
+他のオペレーティングシステムのダイナミック リンク ライブラリとは異なり、このライブラリでは、メモリの割り当てと解放および ROM からのモジュールの読み込みはゲームプログラム側に任されています。<BR>
+<BR>
+ELライブラリは、ひとつの静的モジュール(アプリケーションプログラム)とひとつの静的モジュール情報(makelst生成プログラム)、複数の動的（＝再配置可能）モジュール(.o もしくは .aファイル)で構成されます。静的モジュールが動的モジュールのメモリ配置を制御できます。
+静的モジュールは通常のSRLファイルとしてビルドします。静的モジュールは動的モジュールから参照される共通の関数や変数を含むことができます。<BR>
+<BR>
+動的（＝再配置可能）モジュールは静的モジュール内の関数を呼び出したり、変数を参照することができます。そのためにはmakelstツールを使用して、静的モジュールの関数情報をELライブラリに渡すプログラムを自動生成し、必要ならば変数情報も追加し、静的モジュール側から呼び出す必要があります。<BR>
+さらに、動的モジュールはすでにメモリに読み込まれているその他の動的モジュールの関数を呼び出したり、変数を参照することもできます。<BR>
+<BR>
+静的モジュールから動的（＝再配置可能）モジュールの関数や変数をシンボル名を指定することによってアクセスすることができます。<BR>
+これは動的モジュールが静的モジュール内の関数を呼び出す場合と異なりプログラム側が意識して使用することになります。<BR>
+<BR>
+動的（＝再配置可能）モジュールのプログラムは通常のCプログラムとまったく同様に記述することができます。また、動的モジュールはコンパイラ、リンカが生成する .o もしくは .a ファイルをそのまま使用できます。しかし、通常コンパイルしたものはプログラムを動作させるために必要のないデバッグ情報を含んでおり、またデバッガを動作させるための情報も足りていません。通常コンパイルで生成されたファイルとは別に、アプリケーションに組み込む動的モジュールとしてデバッグ情報を削除したファイルと、デバッグを行いたいのであればデバッグ情報等を含んだファイルも必要となります。その際には、stripdebugツールを使用することになります。<BR>
+デバッガに、デバッグ情報付き動的モジュールのパスを通知するためには RSF ファイルの RomSpec セクションに DllFile を追加する必要があります。詳しくは<CODE><A href="../tools/makerom.html">makerom</A></CODE>を参照してください。<br>
+<br>
+<font color="red">注意：ELライブラリはC++に対応していません。</font>
+<BR>
+
+</P>
+<HR>
+<P><H4>再配置可能 モジュールの作り方</H4></P>
+<p>
+<H5>1.&nbsp;&nbsp;&nbsp; 動的側のプログラムをコンパイルしてオブジェクトファイル(.o もしくは .a)を生成する</H5>
+<P>ELライブラリはオブジェクトファイルそのものを動的モジュールとして扱うので、コンパイルした .o ファイルもしくは複数の .o ファイルをリンクした .a ファイルをそのまま使用することになります。ここでアプリケーションに組み込む動的モジュールとして、生成されたファイルをstripdebugツールにかけて、不必要なデバッグ情報を削除しサイズを小さくしたファイルと、デバッガに渡すデバッグ情報等の付属したファイルを用意します。</P>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="100%">
+      <PRE><CODE>
+% stripdebug.exe -o dll.a -O dll_debug.a a.a</CODE></PRE>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H5>2.&nbsp;&nbsp;&nbsp; 静的側のプログラムをコンパイルしてオブジェクトファイル(.o)を生成する</H5>
+<P>makelstを使用して静的モジュール情報を生成するために、静的側のプログラムをコンパイルしてオブジェクトファイルにしておきます。</P>
+
+<H5>3.&nbsp;&nbsp;&nbsp; すべての動的モジュールが静的モジュールにアクセスできるようにするプログラムを生成する</H5>
+<P>makelstを使用して静的モジュール情報を生成し、このプログラムを静的側にリンクすることで、すべての動的モジュールが静的モジュール側の必要な関数を参照できるようになります。</P>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="100%">
+      <PRE><CODE>
+% makelst.exe -o staticsymlist.c --static obj/ARM9-TS/Release/main.o ../../../../lib/ARM9-TS/Release/libos.a --dll dll/dll.a</CODE></PRE>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H5>4.&nbsp;&nbsp;&nbsp; プログラムをビルドしてROMファイルを作成する</H5>
+<P>1.と3.でコンパイルしたオブジェクトファイルをリンクして実行ファイルを作成します。動的モジュールとなる .o もしくは .a ファイルは ROM ファイルとして組み込むようにして、SRLファイルを作成すれば完成です。</P>
+<P><FONT color=red>注意</FONT><BR>デバッガを使用して動的モジュールのデバッグを行いたい場合には、<A href="EL_Link.html">EL_LinkFile</A>関数を使用し、RSF ファイル中でデバッガに渡すファイルを指定する必要があります。</P>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="100%">
+      <PRE><CODE>
+RomSpec
+{
+    File		dll.a
+    DllFile		dll.a dll_debug.a ARM9
+}
+      </CODE></PRE>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P>また、動的モジュールとなるファイルは ROM ファイルとして組み込むようにしてください。</P>
+
+
+<HR>
+<P><H4>動的モジュールの使い方</H4></P>
+<P>以下の説明は ROM にある動的モジュールをリンクする方法になります。</P>
+
+<P>動的モジュールは、一般的なELF形式のデータになっています。<br>
+<H5>1.&nbsp;&nbsp;&nbsp; 各モジュールの読み込み準備</H5>
+<p>EL_LinkFile 関数内では FS を使用して ROM にアクセスしているため、ROM ファイルシステムの初期化を行います。
+</p>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="100%">
+      <PRE><CODE>
+FS_Init( FS_DMA_NOT_USE );
+      </CODE></PRE>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H5>2.&nbsp;&nbsp;&nbsp; ELライブラリの初期化</H5>
+<p>EL_InitでELライブラリの初期化を行います。
+</p>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="100%">
+      <PRE><CODE>
+EL_Init(MY_Alloc, MY_Free);
+      </CODE></PRE>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H5>3.&nbsp;&nbsp;&nbsp; 動的モジュールの追加</H5>
+<p>
+<A href="EL_Link.html">EL_Link*</A> 関数で動的モジュールをELライブラリに登録します。<BR>
+ここでは、デバッガを使えるようにするため EL_LinkFile を使用することになります。
+</p>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="100%">
+      <PRE><CODE>
+my_dlld = EL_LinkFile( "rom:/data/dllA.a", lib_buf);
+      </CODE></PRE>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H5>4.&nbsp;&nbsp;&nbsp; リンクの解決</H5>
+<p>
+EL_AddStaticSymでmakelstで生成した静的モジュール側のシンボル情報をELライブラリに登録します。
+その後、EL_ResolveAllで、登録した動的モジュールのリンクを解決します。
+</p>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="100%">
+      <PRE><CODE>
+EL_AddStaticSym();
+EL_ResolveAll();
+      </CODE></PRE>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H5>5.&nbsp;&nbsp;&nbsp; 動的モジュールの関数を呼び出す</H5>
+<p>
+EL_GetGlobalAdrに呼び出したい動的モジュール側の関数名(シンボル名)を与えて、関数ポインタをうけとります。
+その関数ポインタから呼び出すことにより、目的の関数を使用することができます。
+</p>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="100%">
+      <PRE><CODE>
+dll_func = EL_GetGlobalAdr( my_dlld, "global_func\0");
+(*dll_func)();
+      </CODE></PRE>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H5>6.&nbsp;&nbsp;&nbsp; 動的モジュールをアンリンクする</H5>
+<p>
+使用しなくなった動的モジュールはアンリンクしてメモリから削除することが可能です。<BR>
+アンリンク処理は EL_Unlink で行えるので、使用していたメモリはアプリ側で解放を行ってください。
+</p>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="100%">
+      <PRE><CODE>
+EL_Unlink( my_dlld );
+      </CODE></PRE>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+</P>
+
+
+<H2>参照</H2>
+<P><CODE><A href="list_el.html">EL関数一覧</A><BR></CODE>
+<CODE><A href="../tools/makerom.html">makerom</A></CODE>
+</P>
+<H2>履歴</H2>
+<P>
+2009/01/16 ELライブラリがC++非対応であることを追記<br>
+2008/10/06 動的モジュールから静的モジュールの変数へのアクセスついて追記<br>
+2008/04/22 最新の仕様に対応<BR>
+2007/08/07 初版</P>
+</BODY>
+</HTML>

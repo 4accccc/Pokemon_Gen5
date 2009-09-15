@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>デバッグ(動作環境) (overview)</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">動作環境 (overview) <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>説明</H2>
+<P>動作環境や動作モードを取得する API に関して説明します。</P>
+<P>TWL-SDK には現在の実行環境を取得するための関数が用意されています。例えば
+NITRO と TWL のハイブリッドROM で起動プラットフォームによって動作を分けたい場合や、実機動作とデバッガ動作で処理を変えたい場合などに判定関数として使用することができます。</P>
+<P>このカテゴリに属する関数として</P>
+<BLOCKQUOTE>
+<P>・ <CODE><A href="OS_GetConsoleType.html">OS_GetConsoleType()</A></CODE><BR>
+・ <CODE><A href="OS_GetRunningConsoleType.html">OS_GetRunningConsoleType()</A></CODE><BR>
+・ <CODE><A href="OS_IsRunOnEmulator.html">OS_IsRunOnEmulator()</A></CODE><BR>
+・ <CODE><A href="OS_IsRunOnDebugger.html">OS_IsRunOnDebugger()</A></CODE><BR>
+・ <CODE><A href="OS_IsRunOnTwl.html">OS_IsRunOnTwl()</A></CODE></P>
+</BLOCKQUOTE>
+<P>が用意されています。</P>
+<H2>動作環境と動作モード</H2>
+<P><B>「動作環境」</B> と <B>「動作モード」</B> について説明します。</P>
+<P><BR>
+<B>「動作環境」</B>は、そのプログラムが動作している ハードウェアの情報で、<FONT color="#ff0000">ハードウェア種別</FONT>、<FONT color="#ff0000">メモリ搭載量</FONT>、<FONT color="#ff0000">ブートされたデバイス</FONT>といった情報を含みます。例えば「32MBのメモリを搭載した IS-TWL-DEBUGGER
+でカードバスから起動された」といった情報です。</P>
+<BLOCKQUOTE>
+<P>・ハードウェア種別は、「TWL実機」「DS実機」「IS-TWL-DEBUGGER」「IS-NITRO-DEBUGGER」「Ensata
+Emulator」のいずれかとなります。</P>
+<P>・メモリ搭載量は、環境によって「4MB」「8MB」「16MB」「32MB」のいずれかとなります。</P>
+<P>・ブートデバイスは、「カード」「カートリッジ」「NAND」「SDカード」「メモリ」「ダウンロード」
+のいずれかとなります。</P>
+</BLOCKQUOTE>
+<P><B><BR>
+「動作モード」</B>は、そのプログラムが TWLアプリケーションとして動作しているか、NITRO アプリケーションとして動作しているかの区別を表します。従って、動作モードには <FONT color="#ff0000">NITRO モード</FONT> と <FONT color="#ff0000">TWL モード</FONT> の２つしかありません。 </P>
+<BLOCKQUOTE>・NITRO 専用 ROM は NITRO モードでしか動作しません。TWL本体上で動作してもNITROモードです。</BLOCKQUOTE>
+<BLOCKQUOTE>・TWL 専用 ROM は TWL モードでしか動作しません。</BLOCKQUOTE>
+<BLOCKQUOTE>・NITRO/TWL ハイブリッドROM は NITROモードとなる場合もありますし、TWL モードとなる場合もあります。</BLOCKQUOTE>
+<H2>動作環境取得関数</H2>
+<P>動作環境は <CODE><A href="OS_GetConsoleType.html">OS_GetConsoleType()</A></CODE> または <CODE><A href="OS_GetRunningConsoleType.html">OS_GetRunningConsoleType()</A></CODE> で知ることができます。<BR>
+２つの関数の違いは、以下の通りです。</P>
+<BLOCKQUOTE>・<CODE><A href="OS_GetConsoleType.html">OS_GetConsoleType()</A></CODE> は最終版 ROM (FINALROM) ではそれが動作する機器によらず最終版を表す定数を返します</BLOCKQUOTE>
+<BLOCKQUOTE>・<CODE><A href="OS_GetRunningConsoleType.html">OS_GetRunningConsoleType()</A></CODE> は最終版 ROM (FINALROM) でも現状の動作環境を返します。</BLOCKQUOTE>
+<P>すなわち、ビルド種別が FINALROM の時だけ2つの関数は異なります。DEBUGとRELEASE
+では同じ値を返します。<BR>
+取得できる値などの詳細は <CODE><A href="OS_GetConsoleType.html">OS_GetConsoleType()</A></CODE> のリファレンスを参照してください。</P>
+<P>また、<CODE><A href="OS_GetConsoleType.html">OS_GetConsoleType()</A></CODE> の値を利用した <CODE><A href="OS_IsRunOnDebugger.html">OS_IsRunOnDebugger()</A></CODE> と <CODE><A href="OS_IsRunOnEmulator.html">OS_IsRunOnEmulator()</A></CODE> が用意されています。</P>
+<BLOCKQUOTE>・<CODE><A href="OS_IsRunOnDebugger.html">OS_IsRunOnDebubger()</A></CODE> は動作している環境が<FONT color="#ff0000">デバッガかどうか</FONT>を調べることができます。</BLOCKQUOTE>
+<BLOCKQUOTE>・<CODE><A href="OS_IsRunOnEmulator.html">OS_IsRunOnEmulator()</A></CODE> は動作している環境が <FONT color="#ff0000">Ensata エミュレータかどうか</FONT>を調べることが出来ます。</BLOCKQUOTE>
+<H2>動作モード取得関数</H2>
+<P>動作モードは <CODE><A href="OS_IsRunOnTwl.html">OS_IsRunOnTwl()</A></CODE> で知ることができます。この関数が「TRUE」を返すときは TWL モードで動作していることを表します。「FALSE」ならば NITRO モードです。</P>
+<BLOCKQUOTE>・ NITRO 専用ROM では、<CODE><A href="OS_IsRunOnTwl.html">OS_IsRunOnTwl()</A></CODE> は<FONT color="#ff0000">定数 FALSE</FONT> となります。</BLOCKQUOTE>
+<BLOCKQUOTE>・ TWL 専用 ROM では、 <CODE><A href="OS_IsRunOnTwl.html">OS_IsRunOnTwl()</A></CODE> は<FONT color="#ff0000">定数 TRUE</FONT> となります。</BLOCKQUOTE>
+<BLOCKQUOTE>・ NITRO/TWL ハイブリッドROM では、<CODE><A href="OS_IsRunOnTwl.html">OS_IsRunOnTwl()</A></CODE> はIOレジスタなどの情報から動作モードを決定します。その結果、<FONT color="#ff0000">TWL モードであると判断されれば TRUE を、そうでなければ FALSE</FONT> を返します。</BLOCKQUOTE>
+<H2>参照</H2>
+<P><CODE><A href="../list_os.html#Environment">OS関数一覧(動作環境)</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2008/04/15 初版</P>
+</BODY>
+</HTML>

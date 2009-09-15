@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_*FileAuto,FS_*DirectoryAuto</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+<h1>FS_*FileAuto,FS_*DirectoryAuto <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+BOOL FS_CreateFileAuto(const char *path, u32 permit);
+BOOL FS_DeleteFileAuto(const char *path);
+BOOL FS_RenameFileAuto(const char *src, const char *dst);
+BOOL FS_CreateDirectoryAuto(const char *path, u32 permit);
+BOOL FS_DeleteDirectoryAuto(const char *path);
+BOOL FS_RenameDirectoryAuto(const char *src, const char *dst);
+</code></pre>
+<h2>引数</h2>
+<p>接尾子"Auto"のない通常版の関数と同様です。</p>
+
+<h2>返り値</h2>
+<p>接尾子"Auto"のない通常版の関数と同様です。</p>
+
+<h2>説明</h2>
+<p>対象となるパスに対してディレクトリ操作を自動的に補完するという点以外は、
+接尾子"Auto"のない通常版の関数と同様です。<br />
+これらの関数は以下のように内部で処理を補完します。
+<ul>
+<li>Createの生成パスまたはRenameの移動先パスが存在しないディレクトリの下層にある場合、
+そのパスへ至る全てのサブディレクトリを自動的に生成します。<br />
+目的の処理が失敗した場合は、自動的に生成されたディレクトリは再び削除されます。</li>
+<li>Deleteの削除対象ディレクトリが空でない場合、そのディレクトリ以下の全ての要素を削除します。</li>
+</ul>
+</p>
+
+<h2>注意</h2>
+<ul>
+<li>この関数を割り込みハンドラ(IRQモード)から呼び出すことはできません。<br />
+また、割り込みを禁止したままの状態にあると処理が完了しない場合がある点に注意して下さい。</li>
+<li style='color:Red'>これらの関数はディレクトリ操作を自動的に補完しますので、
+通常版であれば失敗するはずの誤ったパスに対しても処理を成功させてしまうことがありえます。
+利用にあたってはこの点に細心の注意を払う必要があります。<br />
+<pre style='color:Black;border:solid 1px Black;width:80%'><code>
+安全な例：
+  <span style='color:#008000'>// 常に定数文字列のみを使用すればデバッグがより確実になります。
+  // このような一定の用途に限定して利便性のために使用されることを推奨します。</span>
+  static const char *dir = "tmp:/workdir/";
+  FS_DeleteDirectoryAuto(dir);
+
+危険な例：
+  <span style='color:#008000'>// 動的に生成したパスは不具合をより生じやすくなります。
+  // 実行環境に依存する場面ではこれらの使用を避けるか、特に注意深くご使用ください。</span>
+  STD_SPrintf(path, "savedata:/users/%s/", newUserName);
+  FS_CreateDirectoryAuto(path);
+
+</code></pre>
+</li>
+<li style='color:Red'>これらの関数が失敗した場合、<code><a href="../archive/FS_GetArchiveResultCode.html">FS_GetArchiveResultCode()</a></code>を使用しても正確なエラー内容を確認することはできません。</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="FS_CreateDirectory.html">FS_CreateDirectory</A> 
+<a href="FS_DeleteDirectory.html">FS_DeleteDirectory</A> 
+<a href="FS_RenameDirectory.html">FS_RenameDirectory</A> 
+<a href="FS_CreateFile.html">FS_CreateFile</A> 
+<a href="FS_DeleteFile.html">FS_DeleteFile</A> 
+<a href="FS_RenameFile.html">FS_RenameFile</A> 
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/01/25 初版<br />
+</p>
+</body>
+</html>

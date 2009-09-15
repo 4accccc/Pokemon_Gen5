@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>SSP_GetDateTime</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>SSP_GetDateTime <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<pre><code>
+BOOL SSP_GetDateTime(void);
+</code></pre>
+
+<h2>引数</h2>
+<p>なし。</p>
+
+
+<h2>返り値</h2>
+<p>成功した場合は TRUE を返します。<BR>
+失敗した場合は FALSE を返します。</p>
+
+<h2>説明</h2>
+<p>現在の日付と時刻を取得します。<BR>
+本関数は内部で <code><a href="../../rtc/RTC_GetDateTime.html">RTC_GetDateTime()</a></code> を呼び出しているだけの関数となっており、<code><a href="SSP_SetJpegEncoderDateTimeNow.html">SSP_SetJpegEncoderDateTimeNow()</a>,<a href="SSP_StartJpegEncoder.html">SSP_StartJpegEncoder()</a></code> の内部から呼ばれます。<BR>
+本関数は weak シンボルでコンパイルされますので、ユーザが独自で関数を定義すれば、それで上書きされます。
+</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="../../rtc/RTC_GetDateTime.html">RTC_GetDateTime</a>
+<a href="SSP_SetJpegEncoderDateTimeNow.html">SSP_SetJpegEncoderDateTimeNow</a>
+<a href="SSP_StartJpegEncoder.html">SSP_StartJpegEncoder</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/09/15 初版<br />
+</p>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>RTC_GetSWClockTick</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">RTC_GetSWClockTick <img src="../image/NTR.gif" align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/rtc.h&gt;</CODE><BR>
+<PRE><CODE>OSTick RTC_GetSWClockTick( void );</CODE></PRE>
+  </dd>
+
+</dl><h2>引数</h2>
+<p>なし。</p>
+
+<h2>返り値</h2>
+<p>
+ソフトウェアクロックから計算される 2000年1月1日午前0時0分0秒から現時点までの総チック値を返します。<BR>
+最後に行ったソフトウェアクロックの同期に失敗している場合は 0 を返します。
+</p>
+
+<H2>説明</H2>
+<P>
+ソフトウェアクロックから計算される 2000年1月1日午前0時0分0秒から現時点までの総チック値を OSTick 型（u64）で返します。
+</P>
+<P>
+最後に呼び出した <code><A href="RTC_SyncSWClock.html">RTC_SyncSWClock()</A></code> が失敗している場合は 0 を返します。
+</P>
+
+<h2>参照</h2>
+<P><CODE>
+<A href="RTC_SyncSWClock.html">RTC_SyncSWClock</A>
+</CODE></P>
+
+<H2>履歴</H2>
+<P>
+2008/04/17 初版
+</P>
+</body>
+</html>

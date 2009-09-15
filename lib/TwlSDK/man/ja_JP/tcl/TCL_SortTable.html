@@ -1,0 +1,45 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCL_SortTable</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCL_SortTable <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+void TCL_SortTable( TCLAccessor* pAccessor , TCLSortType sortType );
+	</code></pre>
+</dl>
+
+<h2>引数</h2>
+<p>
+<table>
+<tr><td>pAccessor<td><a href="TCLAccessor.html">アクセサ</a>
+<tr><td>sortType<td><a href="TCLSortType.html">ソートタイプ</a>
+</table>
+</p>
+
+<h2>返り値</h2>
+<p>なし</p>
+
+<h2>説明</h2>
+<p>管理ファイルに管理されている写真情報をソートします。</p>
+<p>ソートされた状態で検索を行うには、検索関数を呼び出す前にこの関数を呼び出しておいて下さい。</p>
+<p>アクセサは <a href="TCL_LoadTable.html"><code>TCL_LoadTable</code></a> や <a href="TCL_CreateTable.html"><code>TCL_CreateTable</code></a> などで初期化されている必要があります。</p>
+
+<h2>参照</h2>
+
+<h2>履歴</h2>
+<p>
+2008/10/07 初版<br/>
+</p>
+
+</body>
+</html>

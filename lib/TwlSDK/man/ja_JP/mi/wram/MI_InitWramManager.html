@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MI_InitWramManager</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+<h1 align="left">MI_InitWramManager <img src="../../image/TWL.gif" align="center"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;twl/mi.h&gt;</CODE><BR>
+  <BR>
+  <CODE>void MI_InitWramManager( void )</CODE><br>
+  </dd>
+</dl>
+<h2>引数</h2>
+<P>なし。</P>
+<h2>返り値</h2>
+<p>なし。</p>
+
+<H2>説明</H2>
+<P>WRAM-A、 WRAM-B、WRAM-C を対象にした WRAMマネージャを初期化します。</P>
+<P>この関数はプログラムの出来るだけ早い時期(WRAM-A～Cを使用する前) に呼ぶべきです。ただし、<CODE><A href="../../os/init/OS_Init.html">OS_Init()</A></CODE> から呼び出されていますので、通常 ユーザが呼び出す必要はありません。</P>
+<P><FONT color="#ff0000">初期化直後は、すべてのWRAM領域が ARM9 か ARM7 か DSP のいずれかに予約・確保されています。</FONT>これは WRAMの設定を行うレジスタの情報を反映させているものです。WRAMの各スロットはレジスタ上では必ずどこかの所有となるというハードウェアの仕様なので、「どこにも確保されていない」という状態である判断が(初期化直後は)出来ないのでこのようになっています。必要ならば解放したり予約キャンセルを行ってください。
+<h2>参照</h2>
+<p><A href="about_Wram.html">概要(ワークRAM)</A></p>
+
+<H2>履歴</H2>
+<P>2007/08/11 初版</P>
+</body>
+</html>

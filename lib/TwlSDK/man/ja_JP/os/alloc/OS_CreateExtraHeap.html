@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>OS_CreateExtraHeap</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">OS_CreateExtraHeap <IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD>
+  <PRE><CODE>#include &lt;nitro/os.h&gt;</CODE></PRE>
+  <PRE><CODE>OSHeapHandle OS_CreateExtraHeap( OSArenaId id ); </CODE></PRE>
+</DL>
+<H2>引数</H2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>id</STRONG></EM></TD>
+      <TD width="87%">ヒープを作成するアリーナのアリーナID</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>返り値</H2>
+<P>ヒープを作成することが出来た場合、ヒープへのハンドル値を返します。これは0以上の値です。<BR>
+ヒープを作成することが出来なかった場合、-1を返します。</P>
+<H2>説明</H2>
+<P>指定のアリーナにヒープを作成します。 </P>
+<P>この関数は特殊な用途 ( ヒープの領域は、HYBRID ROM を NITRO モードで動作させた際に出来るメインメモリ最下位
+16KB の領域で固定 ) で用いられます。通常の用途で用いられるヒープ作成関数は
+<CODE><A href="OS_CreateHeap.html">OS_CreateHeap()</A></CODE> です。</P>
+<P>TWL ROM (HYBRID ROM、LIMITED ROM ともに) では、メインメモリの最下位 16KB
+にシステムの予約領域が作成されます。ただしこの領域は TWL モードで動作している場合にしか使用されません。すなわち、HYBRID
+ROM を NITRO ハードウェア上で NITRO モードで動作させている時には、この
+16KB は全く使用されていません。</P>
+<P>本関数は、この空いた 16KB の領域を指定のアリーナのヒープとして割り当てるための関数です。<FONT color="#ff0000">NITRO ROM や、TWL LIMITED ROM では、本関数を呼ぶことは出来ません。</FONT>(HYBRID ROM ビルドでしか存在しませんのでコンパイルエラーとなります。) また、<FONT color="#ff0000">HYBRID ROM を TWL ハードウェア上で TWL モードで動作させているときには、本関数を呼んでもヒープは作成されませんのでエラーを表す
+-1 を返します。</FONT></P>
+<P>アリーナはアリーナID <B><I>id</I></B> で指定します。この値については <A href="../arena/OS_InitArena.html"><CODE>OS_InitArena()</CODE></A> を参照してください。アリーナはあらかじめ <CODE><A href="OS_InitAlloc.html">OS_InitAlloc()</A></CODE> でメモリ割り当てシステムの初期化を行なっておく必要があります。ヒープのための領域はメインメモリ先頭
+0x02000000 から 0x02003FFF までの16KB となります。</P>
+<P>作成したヒープを破壊するときは <CODE><A href="OS_DestroyHeap.html">OS_DestoryHeap()</A></CODE> を呼んでください。</P>
+<P>ヒープを再初期化するときは <CODE><A href="OS_ClearExtraHeap.html">OS_ClearExtraHeap()</A></CODE> を呼んでください。( <CODE><A href="OS_ClearHeap.html">OS_ClearHeap()</A></CODE> ではありません。)</P>
+<BLOCKQUOTE style="background-color:#ffffcc">
+<CODE><B>(例)</B><BR>
+<BR>
+#define HEAP_NUM 2<BR>
+#define HEAP_SIZE 0x10000<BR>
+OSHeapHandle mainHeapHandle = -1;<BR>
+<BR>
+void NitroMain(void)<BR>
+{<BR>
+　　OS_Init();<BR>
+<BR>
+　　//---- Declare to use main memory heaps<BR>
+　　OS_InitAlloc( OS_ARENA_MAIN, OS_GetMainArenaLo(), OS_GetMainArenaHi(),
+HEAP_NUM );<BR>
+<BR>
+　　//---- Create main heap<BR>
+　　heapArea = OS_AllocFromArenaLo( OS_ARENA_MAIN, HEAP_SIZE, 32 );<BR>
+　　mainHeapHandle = OS_CreateHeap( OS_ARENA_MAIN, heapArea, (void*)((u32)heapArea
++ HEAP_SIZE) );<BR>
+<BR>
+　　//---- If NITRO MODE,　create extra heap<BR>
+<FONT color="#ff0000">　　if ( OS_IsRunOnTwl() == FALSE )<BR>
+　　{<BR>
+　　　　extraHeapHandle = OS_CreateExtraHeap( OS_ARENA_MAIN );<BR>
+　　}</FONT><BR>
+<BR>
+}</CODE></BLOCKQUOTE>
+<P>この例では、NITRO モードで動作している場合のみ、<CODE>OS_CreateExtraHeap()</CODE> を呼ぶようにしています。このプログラムは HYBRID ROM ビルドされることが想定されています。NITRO
+ROM ビルドや、TWL LIMITED ROM ビルドを行うと、<CODE>OS_CreateExtraHeap()</CODE> が定義されていないため、コンパイルエラーとなります。</P>
+<P>本関数は、<FONT color="#ff0000">16KB の領域を一つのヒープとして作成する関数です。</FONT>すでにあるヒープの飛び地領域として追加する場合は、<CODE><A href="OS_AddExtraAreaToHeap.html">OS_AddExtraAreaToHeap()</A></CODE> を参照してください。なお、16KB領域をヒープとして作成すれば、飛び地の追加領域としては使用できませんし、飛び地の追加領域として使用した場合は、1つのヒープとして作成することはできません。</P>
+<H2>参照</H2>
+<P><CODE><A href="../arena/OS_InitArena.html">OS_InitArena</A>, <A href="OS_InitAlloc.html">OS_InitAlloc</A>, <A href="OS_DestroyHeap.html">OS_DestroyHeap</A><BR>
+<A href="OS_ClearHeap.html">OS_ClearHeap</A>, <A href="OS_ClearExtraHeap.html">OS_ClearExtraHeap</A>, <A href="OS_CreateHeap.html">OS_CreateHeap</A><BR>
+<A href="OS_AddExtraAreaToHeap.html">OS_AddExtraAreaToHeap</A></CODE><BR>
+</P>
+<H2>履歴</H2>
+<P>2009/04/03 <CODE><A href="OS_AddExtraAreaToHeap.html">OS_AddExtraAreaToHeap</A></CODE> について追加<BR>
+2009/02/17 初版</P>
+</BODY>
+</HTML>

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 8.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>WXC_SetParentParameter</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">WXC_SetParentParameter <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/wxc.h&gt;</CODE><BR>
+  <BR>
+  <CODE>BOOL WXC_SetParentParameter(u16 sendSize, u16 recvSize, u16 maxEntry);</CODE><br>
+  <br>
+  </dd>
+</dl>
+<h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>sendSize</STRONG></EM></TD>
+      <TD width="87%">親機送信サイズ<br>
+      <a href="../wxc_consts.html">WXC_PACKET_SIZE_MIN</a>以上かつ<a href="../wxc_consts.html">WXC_PACKET_SIZE_MAX</a>以下である必要があります。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>recvSize</STRONG></EM></TD>
+      <TD width="87%">親機受信サイズ<br>
+      <a href="../wxc_consts.html">WXC_PACKET_SIZE_MIN</a>以上かつ<a href="../wxc_consts.html">WXC_PACKET_SIZE_MAX</a>以下である必要があります。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>maxEntry</STRONG></EM></TD>
+      <TD width="87%">最大接続人数<br>
+      現在の実装ではこの指定は 1 のみサポートされます。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<h2>返り値</h2>
+<p>設定が有効であれば内部に反映して TRUE を、そうでなければ警告文をデバッグ出力して FALSEを返します。</p>
+
+<H2>説明</H2>
+<P>ワイヤレスの親機モード通信パラメータを設定します。<br>
+ここでの設定内容は親機モードの状態時でのみ使用され、子機モードで接続した場合は親機側の設定に従います。<br>
+この関数は<A href="WXC_Start.html">WXC_Start</A>関数より前に呼び出す必要があります。<BR>
+通常の用途においてはこの関数を使用する必要はありません
+</p>
+<h2>参照</h2>
+<p><CODE>
+<a href="../wxc_consts.html">WXC_PACKET_SIZE_MIN</a>
+<a href="../wxc_consts.html">WXC_PACKET_SIZE_MAX</a>
+<br>
+<A href="WXC_Init.html">WXC_Init</A> 
+<A href="WXC_Start.html">WXC_Start</A> 
+<A href="WXC_End.html">WXC_End</A> 
+<BR></CODE></P>
+<H2>履歴</H2>
+<P>
+2005/08/09 初版<br>
+</P>
+</body>
+</html>

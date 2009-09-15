@@ -1,0 +1,46 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCL_IsSameImageType</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCL_IsSameImageType <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+BOOL TCL_IsSameImageType( const TCLPictureInfo* pPicInfo , const TCLMakerNote* pMakerNote );
+	</code></pre>
+</dl>
+
+<h2>引数</h2>
+<p>
+<table>
+<tr><td>pPicInfo<td><a href="TCLPictureInfo.html">写真情報</a>
+<tr><td>pMakerNote<td><a href="TCLMakerNote.html">メーカーノート構造体</a>
+</table>
+</p>
+
+<h2>返り値</h2>
+<p>同じ画像タイプとみなせる場合 <code>TRUE</code></p>
+
+<h2>説明</h2>
+<p>管理ファイル上での画像タイプと、画像をデコードして得られるメーカーノートから取得できる画像タイプ(メーカーノートを <a href="TCLMakerNote.html"><code>TCLMakerNote</code></a> 型に変換して比較対象とします)が同じかどうか判別します。</p>
+<p>比較のための処理は<a href="overview_tcl.html">概要</a>を参照してください。</a>
+<p>実際には管理ファイル上では画像タイプが写真か合成写真か分からない状態、というのが存在するため、それらの場合も同じとみなします。</p>
+
+<h2>参照</h2>
+
+<h2>履歴</h2>
+<p>
+2009/03/04 誤記修正<br/>
+2008/10/20 初版<br/>
+</p>
+
+</body>
+</html>

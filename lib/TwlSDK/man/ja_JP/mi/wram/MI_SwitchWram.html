@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MI_SwitchWram</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MI_SwitchWram* <IMG src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;twl/mi.h&gt;</CODE><BR>
+  <BR>
+  <CODE>int MI_SwitchWram( MIWramPos wram, MIWramProc proc, MIWramProc newProc
+  );<br>
+  int MI_SwitchWramSlot( MIWramPos wram, int slot, MIWramSize size, MIWramProc
+  proc, MIWramProc newProc );<br>
+  　<br>
+  (define)<br>
+  <font color="#7f7f7f">void MI_SwitchWram_A( MIWramProc proc, MIWramProc newProc );</font><br>
+  void MI_SwitchWram_B( MIWramProc proc, MIWramProc newProc );<br>
+  void MI_SwitchWram_C( MIWramProc proc, MIWramProc newProc );<br>
+  <font color="#7f7f7f">void MI_SwitchWramSlot_A( int slot, MIWramSize size, MIWramProc proc, MIWramProc
+  newProc );</font><br>
+  void MI_SwitchWramSlot_B( int slot, MIWramSize size, MIWramProc proc, MIWramProc
+  newProc );<br>
+  void MI_SwitchWramSlot_C( int slot, MIWramSize size, MIWramProc proc, MIWramProc
+  newProc );</CODE></dd>
+</dl>
+<h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>wram</STRONG></EM></TD>
+      <TD width="87%">解放する領域のWRAM</TD>
+    </TR>
+    <TR>
+      <TD><B><I>slot</I></B></TD>
+      <TD>開始slot番号</TD>
+    </TR>
+    <TR>
+      <TD><B><I>size</I></B></TD>
+      <TD>サイズ</TD>
+    </TR>
+    <TR>
+      <TD><B><I>proc</I></B></TD>
+      <TD>変更する領域のマスタープロセッサ</TD>
+    </TR>
+    <TR>
+      <TD><B><I>newProc</I></B></TD>
+      <TD>変更後のマスタープロセッサ</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>変更したブロック数。0なら変更しなかった。-1 ならエラー。</p>
+
+<H2>説明</H2>
+<P>WRAM のマスタープロセッサを変更します。</P>
+<P><B><I>wram</I></B> は対象となる WRAM です。</P>
+<P><I><B>slot</B></I> は 変更する領域の開始slot 番号です。</P>
+<P><B><I>size</I></B> は変更する領域の大きさで、MI_WRAM_SIZE_xxxKB で指定します。</P>
+<P><B><I>proc</I></B> は変更する領域のマスタープロセッサです。</P>
+<P><B><I>newProc</I></B> は変更する領域のマスタープロセッサです。</P>
+
+<P><CODE>MI_SwitchWram()</CODE> は指定のWRAM の中から、マスタープロセッサが<B><I>proc</I></B> であるものを <B><I>newProc</I></B> に変更します。</P>
+<P><CODE>MI_SwitchWramSlot()</CODE> は、<B><I>slot</I></B> と <B><I>size</I></B> で領域を指定して変更しようとします。但し、マスタープロセッサが指定のプロセッサと異なっている領域は変更しません。</P>
+<P><CODE><font color="#7f7f7f">MI_SwitchWram_A</CODE> は <CODE>MI_SwitchWram( MI_WRAM_A, ... )</CODE> の define です。</font><BR>
+<CODE>MI_SwitchWram_B</CODE> は <CODE>MI_SwitchWram( MI_WRAM_B, ... )</CODE> の define です。<BR>
+<CODE>MI_SwitchWram_C</CODE> は <CODE>MI_SwitchWram( MI_WRAM_C, ... )</CODE> の define です。<BR>
+<font color="#7f7f7f"><CODE>MI_SwitchWramSlot_A</CODE> は <CODE>MI_SwitchWramSlot( MI_WRAM_A, ... )</CODE> の define です。</font><BR>
+<CODE>MI_SwitchWramSlot_B</CODE> は <CODE>MI_SwitchWramSlot( MI_WRAM_B, ... )</CODE> の define です。<BR>
+<CODE>MI_SwitchWramSlot_C</CODE> は <CODE>MI_SwitchWramSlot( MI_WRAM_C, ... )</CODE> の define です。</P>
+<h2>参照</h2>
+<P><A href="about_Wram.html">概要(ワークRAM)</A>、<A href="../mi_constant.html">MI関連の定数</A><BR>
+<CODE><A href="MI_AllocWram.html">MI_AllocWram*()</A></CODE>, <CODE><A href="MI_ReserveWram.html">MI_ReserveWram*()</A></CODE></P>
+
+<H2>履歴</H2>
+<P>2007/10/08 初版</P>
+</body>
+</html>

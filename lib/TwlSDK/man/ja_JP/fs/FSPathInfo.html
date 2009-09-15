@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FSPathInfo</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FSPathInfo <img src="../image/NTR.gif"align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+<h2>定義</h2>
+<pre><code>
+
+#define FS_ATTRIBUTE_IS_DIRECTORY   0x00000100UL
+#define FS_ATTRIBUTE_IS_PROTECTED   0x00000200UL
+#define FS_ATTRIBUTE_IS_OFFLINE     0x00000400UL
+
+#define FS_ATTRIBUTE_DOS_MASK       0x000000FFUL
+#define FS_ATTRIBUTE_DOS_READONLY   0x00000001UL
+#define FS_ATTRIBUTE_DOS_HIDDEN     0x00000002UL
+#define FS_ATTRIBUTE_DOS_SYSTEM     0x00000004UL
+#define FS_ATTRIBUTE_DOS_VOLUME     0x00000008UL
+#define FS_ATTRIBUTE_DOS_DIRECTORY  0x00000010UL
+#define FS_ATTRIBUTE_DOS_ARCHIVE    0x00000020UL
+
+typedef struct FSPathInfo
+{
+    u32         attributes;
+    <a href="FSDateTime.html">FSDateTime</a>  ctime;
+    <a href="FSDateTime.html">FSDateTime</a>  mtime;
+    <a href="FSDateTime.html">FSDateTime</a>  atime;
+    u32         filesize;
+    u32         id;
+}
+FSPathInfo;
+
+</code></pre>
+
+<h2>説明</h2>
+<p><code><a href="directory/FS_GetPathInfo.html">FS_GetPathInfo()</a></code> で取得できるエントリ情報をあらわす構造体です。<br />
+各メンバの内容は以下の通りです。</p>
+<table>
+<tr><td>attributes</td><td>エントリの属性です。<br />FS_ATTRIBUTE_*であらわされる各属性の組み合わせになります。<br />
+<table style="background-color:white">
+<tr><td>FS_ATTRIBUTE_IS_DIRECTORY</td><td>エントリがディレクトリであることを示します。</td></tr>
+<tr><td>FS_ATTRIBUTE_IS_PROTECTED</td><td>エントリの属するアーカイブ全体がハードウェアレベルで書き込み禁止状態であることを示します。<br />
+このフラグは、たとえば<a href="archive_rom_spec.html">ROMアーカイブ</a>や<a href="archive_sdmc_spec.html">SDカードアーカイブ</a>などで有効になっている場合があります。</td></tr>
+<tr><td>FS_ATTRIBUTE_IS_OFFLINE</td><td>エントリの指すファイルが現在の動作環境ではアクセスできない状態にあることを示します。<br />
+このフラグは、NITRO環境で動作しているプログラムがTWL専用ファイルの情報を問い合わせたときに返されます。<br />
+(TWL専用ファイルの指定については<a href="../tools/makerom.html">makerom.TWL</a>の"Put"パラメータに関する説明を参照してください)</td></tr>
+<tr><td colspan="2">以下はFATフォーマット準拠のアーカイブでのみ有効な属性です。</td></tr>
+<tr><td>FS_ATTRIBUTE_DOS_READONLY</td><td>エントリが読み込み専用であることを示します。</td></tr>
+<tr><td>FS_ATTRIBUTE_DOS_HIDDEN</td><td>エントリが隠しファイルであることを示します。</td></tr>
+<tr><td>FS_ATTRIBUTE_DOS_SYSTEM</td><td>エントリがシステムファイルであることを示します。</td></tr>
+<tr><td>FS_ATTRIBUTE_DOS_VOLUME</td><td>エントリがボリュームラベルであることを示します。</td></tr>
+<tr><td>FS_ATTRIBUTE_DOS_DIRECTORY</td><td>エントリがディレクトリであることを示します。FS_ATTRIBUTE_IS_DIRECTORYと同様です。</td></tr>
+<tr><td>FS_ATTRIBUTE_DOS_ARCHIVE</td><td>エントリがアーカイブファイルであることを示します。</td></tr>
+</table></td></tr>
+<tr><td>ctime</td><td><a href="FSDateTime.html">FSDateTime</a>型で表現されるエントリ生成時刻です。<br />
+時刻情報が有効でない場合は全てのメンバが0になります。</td></tr>
+<tr><td>mtime</td><td><a href="FSDateTime.html">FSDateTime</a>型で表現されるエントリ最終更新時刻です。<br />
+時刻情報が有効でない場合は全てのメンバが0になります。</td></tr>
+<tr><td>atime</td><td><a href="FSDateTime.html">FSDateTime</a>型で表現されるエントリ最終アクセス時刻です。<br />
+時刻情報が有効でない場合は全てのメンバが0になります。</td></tr>
+<tr><td>filesize</td><td>ファイルサイズです。<br />エントリがファイルである場合にのみ有効です。</td></tr>
+<tr><td>id</td><td>ファイルまたはディレクトリのIDです。<br />得られた値は <code><a href="file/FS_OpenFileFast.html">FS_OpenFileFast()</a></code> などに使用することが出来ます。<br />
+<a href="archive_nand_spec.html">NANDアーカイブ</a>など、ファイルIDやディレクトリIDをサポートしていない場合は常にFS_INVALID_FILE_IDとなります。</td></tr>
+</table>
+
+<h2>参照</h2>
+<p><code>
+<a href="directory/FS_GetPathInfo.html">FS_GetPathInfo</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/01/08 TWL専用ファイルに関する説明を追記<br />
+2008/12/08 FS_ATTRIBUTE_IS_OFFLINEフラグを追加<br />
+2008/06/13 FS_ATTRIBUTE_IS_PROTECTEDフラグを追加<br />
+2007/12/13 初版<br />
+</p>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCLMakerNote</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCLMakerNote <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+typedef struct
+{
+    union
+    {
+        u32 bitField;
+        struct
+        {
+            u32 imageType :  2;
+            u32 reserved0 : 30;
+        };
+    };
+    u32 reserved1;
+} TCLMakerNote;
+	</code></pre>
+</dl>
+
+<h2>説明</h2>
+<p>DSiカメラで読み込める形式のjpeg画像を作成するため Exif 情報のメーカーノートタグに埋め込んでいただく構造体です。</p>
+<p>エンコード時に使用する <a href="TCL_EncodeAndWritePicture.html"><code>TCL_EncodeAndWritePicture(Ex)</code></a> は、内部でメーカーノートへ埋め込みますので、直接この構造体を意識する必要はありません。</p>
+<p>デコードしたjpeg画像の正当性を評価するために必要になる場合があります。詳しくは <a href="TCL_IsSameImageType.html"><code>TCL_IsSameImageType</code></a> を参照してください。</p>
+<p>各メンバをアプリ側で操作することは禁止されています。</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="TCL_EncodeAndWritePicture.html">TCL_EncodeAndWritePicture(Ex)</a> <a href="TCL_IsSameImageType.html">TCL_IsSameImageType</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/03/04 エンコード時、デコード時の構造体の用途に関して追記<br/>
+2008/10/07 初版<br/>
+</p>
+
+</body>
+</html>

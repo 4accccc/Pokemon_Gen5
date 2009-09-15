@@ -1,0 +1,47 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCL_GetNumPictures</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCL_GetNumPictures <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+int TCL_GetNumPictures( const TCLAccessor* pAccessor , const TCLSearchObject* pSearchObj );
+	</code></pre>
+</dl>
+
+<h2>引数</h2>
+<p>
+<table>
+<tr><td>pAccessor<td><a href="TCLAccessor.html">アクセサ</a>
+<tr><td>pSearchObj<td><a href="TCLSearchObject.html">検索オブジェクト</a>
+</table>
+</p>
+
+<h2>返り値</h2>
+<p>条件に合致した写真枚数</p>
+
+<h2>説明</h2>
+<p>検索オブジェクトで表される検索条件に全て合致する写真の枚数を返します。</p>
+<p>アクセサは <a href="TCL_LoadTable.html"><code>TCL_LoadTable</code></a> や <a href="TCL_CreateTable.html"><code>TCL_CreateTable</code></a> などで初期化されている必要があります。</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="TCL_InitSearchObject.html">TCL_InitSearchObject</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/10/07 初版<br/>
+</p>
+
+</body>
+</html>

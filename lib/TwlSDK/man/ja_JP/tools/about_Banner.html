@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>バナー (overview)</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD,TH{
+  border-color	: #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+
+<H1 align="left">バナー (overview)</H1>
+
+<H2>説明</H2>
+<P>TWL 本体や DS/DS Lite 本体のランチャー画面で表示するバナーファイルの概要です。</P>
+
+<P>TWL 本体で表示するTWL バナーは、DS/DS Lite 本体で表示するNTR バナーのフォーマットに
+アニメーションデータを付加したものになっています。
+そのため、TWL バナーをDS/DS Lite 本体やDS ダウンロードプレイで表示するとNTR バナーと同様静止画で
+表示されますが、TWL 本体で表示するとアニメーションが表示されます。
+</P>
+
+<P>またTWL のユーザーNAND アプリにおいては、通常のバナーの他にサブバナーと呼ばれる、
+別のバナーを表示することができます。サブバナーについては、
+<CODE><A href="../na/subBanner/about_subBanner.html">サブバナーの概要</A></CODE>を参照してください。</P>
+
+<H2>バナーフォーマット</H2>
+<P>NTR バナーとTWL バナーでは以下のようにフォーマットが異なっています。</P>
+
+<P>NTR バナー
+<TABLE border="1" width="100%">
+<TR><TD width="200">バナーコメント</TD><TD width="800">各言語のゲームタイトル名</TD></TR>
+<TR><TD width="200">バナーアイコンのBitmap</TD><TD width="800">32x32 ドット 1枚</TD></TR>
+<TR><TD width="200">バナーアイコンのカラーパレット</TD><TD width="800">16色 1セット</TD></TR>
+</TABLE></P>
+
+<P>TWL バナー
+<TABLE>
+<TR><TD width="200">NTR バナー</TD><TD width="800">上記と同じデータ</TD></TR>
+<TR><TD width="200">アニメーション用のBitmap</TD><TD width="800">32x32 ドット 8枚</TD></TR>
+<TR><TD width="200">アニメーション用のカラーパレット</TD><TD width="800">16色 1セット</TD></TR>
+<TR><TD width="200">アニメーション制御データ</TD><TD width="800">1～255フレームを64個の制御データで管理</TD></TR>
+</TABLE></P>
+<P>TWL バナーはNTR バナーを持っているため、DS/DS Lite 本体ではNTR バナーが表示され、TWL 本体ではアニメーションが表示されるようになっています。</P>
+<H2>作成方法</H2>
+<P>バナーファイルを作成する方法は以下の３つの方法があります。
+但しニンテンドーDS 専用ソフトのバナーを作るには、3.ntexconv を使用する方法（静止画）を使用してください。</P>
+<P><IMG src="about_Banner.gif" border="0"></P>
+<P>
+<H3>1.NITRO-CHARACTER を使用する方法</H3>
+<P>NITRO-CHARACTER を使用してTWL バナー用のセルアニメーションデータ(<CODE>*.nce</CODE> )を作る方法は、<BR>
+<A href="bannerNitroCharacter.html">NITRO-CHARACTER を使用したバナー作成手順</A>をご参照ください。
+</P>
+
+<P>NITRO-CHARACTERで作成した<CODE>*.nce</CODE> を<A href="bannercvtr.html">bannercvtr</A> で変換します。</P>
+<P><A href="bannercvtr.html">bannercvtr</A> で出力されたデータとバナーコメントを設定した<CODE>bsf</CODE> ファイルを<A href="makebannerTWL.html">makebanner.TWL</A>で変換することで
+TWL バナーが作成されます。</P>
+<H3>2.ntexconv を使用する方法（アニメーション）</H3>
+<P>16色で構成される32 x 32 ドットのビットマップを最大8 枚用意します。
+そのビットマップを<A href="ntexconv.html">ntexconv</A>で変換します。<BR>
+変換したデータとアニメーションの内容を記述した XML ファイルを作成し、
+<A href="bannercvtr.html">bannercvtr</A>で変換します。
+</P>
+<P><A href="bannercvtr.html">bannercvtr</A> で出力されたデータとバナーコメントを設定した<CODE>bsf</CODE> ファイルを<A href="makebannerTWL.html">makebanner.TWL</A>で変換することで
+TWL バナーが作成されます。</P>
+<P>XML ファイルの記述方法の詳細は<A href="bannercvtr.html">bannercvtr</A> を参照してください。</P>
+<H3>3.ntexconv を使用する方法（静止画）</H3>
+<P>NTR バナー やアニメーションしないTWL バナーを作成する方法です</P>
+<P>16色で構成される32 x 32 ドットのビットマップを1 枚用意します。
+そのビットマップを<A href="ntexconv.html">ntexconv</A>で変換します。</P>
+<P><A href="ntexconv.html">ntexconv</A>で出力されたデータとバナーコメントを設定した<CODE>bsf</CODE> ファイルを,
+
+ニンテンドーDS 専用ソフトの場合は<A href="makebanner.html">makebanner</A>で、
+TWL 対応ソフトの場合は<A href="makebannerTWL.html">makebanner.TWL</A>で変換することで
+バナーファイルが作成されます。</P>
+
+<H2>アプリへの実装</H2>
+<P><A href="makerom.html">ROM スペックファイル</A> *.rsf に作成したバナーを指定します。
+<A href="makerom.html">makerom, makerom.TWL</A> によって 生成した *.srl ファイルに指定したバナーが設定されます。</P>
+<BLOCKQUOTE>
+<PRE class="sample_source"><CODE>   #  ROM SPEC FILE
+
+Property
+{
+    ....
+    #
+    # BANNER FILE: generated from Banner Spec File
+    #
+    BannerFile    banner.bnr
+}</CODE></PRE>
+</BLOCKQUOTE>
+<P>詳細は<A href="makerom.html">makerom, makerom.TWL</A> を参照してください。</P>
+<H2>サンプル</H2>
+各々の作成方法を示したサンプルが以下にあります。
+<H3>1.NITRO-CHARACTER を使用する方法</H3>
+<P><CODE>$TwlSDK/build/demos.TWL/tips/TWLBanner_anim1</CODE></P>
+<H3>2.ntexconv を使用する方法（アニメーション）</H3>
+<P><CODE>$TwlSDK/build/demos.TWL/tips/TWLBanner_anim2</CODE></P>
+<H3>3.ntexconv を使用する方法（静止画）</H3>
+<P>NTR バナーの作成方法</P>
+<P><CODE>$TwlSDK/build/demos/tips/NTRBanner</CODE></P>
+<P>TWL バナーの作成方法</P>
+<P><CODE>$TwlSDK/build/demos.TWL/tips/TWLBanner_image</CODE></P>
+
+<H2>確認方法</H2>
+<P>バナー内のゲームタイトルについては、<A href="makebannerTWL.html">makebanner.TWL</A> ,
+<A href="makebanner.html">makebanner</A> で表示可能な文字のチェックと<BR>
+文字の横幅がTWL 本体や DS/DS Lite 本体の表示枠からはみ出すことがないかチェックしています。<BR>
+ゲームタイトルの正常表示はプログラミングガイドラインで規定されていますので、
+警告が表示された場合は修正してください。
+</P>
+<P><A href="addbanner.html">addbanner</A> ツールを使用するとカードを使用することなく、
+バナーを確認することができます。<BR>
+但しカードアプリの表示のみ対応しており、ユーザーNANDアプリでは表示は若干異なりますので、以下の方法を参照してください。<BR>
+以下に<A href="addbanner.html">addbanner</A> 以外の方法をご説明します。</P>
+
+<H3>ニンテンドーDS専用ソフトの場合</H3>
+<H4>DS/DS Lite 本体上の表示</H4>
+<P>ROMをFlash カードに焼いて、DS/DS Lite 本体に差して確認します。<BR>
+IS-NITRO-DEBUGGER でROMを実行した後、[ツール]-[ゲームバナー]で確認することもできます。
+</P>
+<H4>TWL 本体上の表示</H4>
+<P>ROMをFlash カードに焼いて、TWL 本体や IS-TWL-DEBUGGER に差して確認します。<BR>
+製品版のTWL 本体に差した場合、アプリの起動はできませんがバナーを確認することは可能です。</P>
+<H3>TWL対応ソフト(カード)の場合</H3>
+<H4>DS/DS Lite 本体上の表示</H4>
+<P>ROMをFlash カードに焼いて、DS/DS Lite 本体に差して確認します。<BR>
+</P>
+<H4>TWL 本体上の表示</H4>
+<P>ROMをFlash カードに焼いて、開発用のTWL 本体や IS-TWL-DEBUGGER に差して確認します。<BR>
+製品版のTWL 本体に差してバナーを確認することはできません。</P>
+<H3>TWL専用ソフト(カード)の場合</H3>
+<H4>TWL 本体上の表示</H4>
+<P>ROMをFlash カードに焼いて、開発用のTWL 本体や IS-TWL-DEBUGGER に差して確認します。<BR>
+製品版のTWL 本体に差してバナーを確認することできません。</P>
+<H3>ユーザーNANDアプリの場合</H3>
+<P><A href="../romfiles/TwlNmenu.html">TwlNmenu</A> で、開発用のTWL 本体や IS-TWL-DEBUGGER にtadをインポートして確認してください。</P>
+
+<P>また本体設定のソフト管理画面でのバナー表示をあわせてご確認ください。<BR>
+ソフト管理画面のアイコン表示は、ランチャーでの表示と同じですが、バナーコメントは表示される文字数に制限があります。<BR>
+文字数が枠からはみ出る場合は「...」と表示されますのでご注意ください。</P>
+
+<P>DS とTWL のランチャーで表示されるバナーコメントの文字数は以下のようになります。
+<TABLE>
+<TR><TH width="200"></TH><TH width="200">DS ランチャー</TH><TH width="200">TWL ランチャー</TH><TH width="200">TWL ソフト管理画面</TH></TR>
+<TR><TH width="200">領域幅</TH><TD width="200">140px</TD><TD width="200">240px</TD><TD width="200">202px</TD></TR>
+<TR><TH width="200">W 最大文字数</TH><TD width="200">23</TD><TD width="200">17</TD><TD width="200">16</TD></TR>
+<TR><TH width="200">M 最大文字数</TH><TD width="200">23</TD><TD width="200">20</TD><TD width="200">19</TD></TR>
+<TR><TH width="200">w 最大文字数</TH><TD width="200">23</TD><TD width="200">20</TD><TD width="200">19</TD></TR>
+<TR><TH width="200">i 最大文字数</TH><TD width="200">69</TD><TD width="200">80</TD><TD width="200">64</TD></TR>
+</TABLE></P>
+<H2>参照</H2>
+<P><CODE>
+<A href="ntexconv.html">ntexconv</A>,
+<A href="bannercvtr.html">bannercvtr</A>,
+<A href="makebannerTWL.html">makebanner.TWL</A>,
+<A href="makebanner.html">makebanner</A>,
+<A href="addbanner.html">addbanner</A>,
+<A href="../na/subBanner/about_subBanner.html">サブバナー (overview)</A>,
+<A href="../demos/tips/tipsdemos.html">その他のサンプルデモ - Tips</A>,
+<A href="bannerNitroCharacter.html">NITRO-CHARACTER を使用したバナー作成手順</A>
+</CODE></P>
+
+<H2>履歴</H2>
+<P>
+2009/03/27 図の修正。誤記の修正と内容が古い箇所を削除<BR>
+2009/03/10 TWL バナーのカラーパレットについて修正、IS-NITRO-DEBUGGERでのバナーの確認方法を追記<BR>
+2008/11/28 NITRO-CHARACTER の使用法を別ページに移動<BR>
+2008/11/11 addbanner TWL対応に伴い修正<BR>
+2008/10/20 最大文字数修正。確認方法について追記<BR>
+2008/09/29 ビルドサンプルについて追記<BR>
+2008/09/26 ソフト管理画面について追記<BR>
+2008/09/25 初版
+</P>
+</BODY>
+</HTML>

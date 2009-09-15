@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>SSP_StartJpegEncoderWithEncodeData</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>SSP_StartJpegEncoderWithEncodeData <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<pre><code>
+u32 SSP_StartJpegEncoderWithEncodeData(u8 *dst, u32 limit, u8 *wrk, u32 width, u32 height, u32 quality, u32 sampling, u32 option);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>dst</strong></em></td>
+<td style="width:87%">エンコード結果を格納するバッファ</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>limit</strong></em></td>
+<td style="width:87%">dstのサイズ<br>
+                      このサイズを超えるとエンコードに失敗します。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>wrk</strong></em></td>
+<td style="width:87%">作業用バッファ。4バイトアライメントでなければなりません。<br>
+                      <code><a href="SSP_ConvertJpegEncodeData.html">SSP_ConvertJpegEncodeData()</a></code>と同じ指定にしてください。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>width</strong></em></td>
+<td style="width:87%">エンコードする画像の横幅(pixel)<br>
+                      <code><a href="SSP_ConvertJpegEncodeData.html">SSP_ConvertJpegEncodeData()</a></code>と同じ指定にしてください。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>height</strong></em></td>
+<td style="width:87%">エンコードする画像の縦幅(pixel)<br>
+                      <code><a href="SSP_ConvertJpegEncodeData.html">SSP_ConvertJpegEncodeData()</a></code>と同じ指定にしてください。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>quality</strong></em></td>
+<td style="width:87%">エンコードのクオリティ<br>
+                      1～100 まで指定可能であり、100 に近づくほど高画質になりサイズが大きくなります。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>sampling</strong></em></td>
+<td style="width:87%">主画像の出力形式 (SSP_JPEG_OUTPUT_YUV444 / SSP_JPEG_OUTPUT_YUV420 / SSP_JPEG_OUTPUT_YUV422)<br>
+                      <code><a href="SSP_ConvertJpegEncodeData.html">SSP_ConvertJpegEncodeData()</a></code>と同じ指定にしてください。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>option</strong></em></td>
+<td style="width:87%">エンコードオプション (SSP_JPEG_RGB555 / SSP_JPEG_YUV422 / SSP_JPEG_THUMBNAIL)<br>
+                      <code><a href="SSP_ConvertJpegEncodeData.html">SSP_ConvertJpegEncodeData()</a></code>と同じ指定にしてください。</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>返り値</h2>
+<p>成功ならば、生成されたJPEGファイルのサイズが返ってくる。<BR>
+失敗した場合は 0 が返る。</p>
+
+<h2>説明</h2>
+<p><code><a href="SSP_ConvertJpegEncodeData.html">SSP_ConvertJpegEncodeData()</a></code>でコンバートした画像データをJPEGファイルにエンコードします。<br>
+<code>wrk, width, height, sampling, option</code>は、<code><a href="SSP_ConvertJpegEncodeData.html">SSP_ConvertJpegEncodeData()</a></code>と同じ指定にする必要があります。<br>
+コンバート処理とエンコード処理を一括して行いたい場合は、<code><a href="SSP_StartJpegEncoder.html">SSP_StartJpegEncoder()</a></code>を使用してください。<br>
+<br>
+<font color="red">注意：</font><br>
+本関数は完了後にエンコードの成功、失敗問わず、<code><a href="SSP_SetJpegEncoderDateTime.html">SSP_SetJpegEncoderDateTime()</a>,<a href="SSP_SetJpegEncoderDateTimeNow.html">SSP_SetJpegEncoderDateTimeNow()</a>,<a href="SSP_SetJpegEncoderMakerNote.html">SSP_SetJpegEncoderMakerNote()</a>,<a href="SSP_SetJpegEncoderMakerNoteEx.html">SSP_SetJpegEncoderMakerNoteEx()</a></code> で設定した値はクリアされます。<br>
+また、本関数は事前に <code><a href="SSP_SetJpegEncoderDateTime.html">SSP_SetJpegEncoderDateTime()</a></code> もしくは <code><a href="SSP_SetJpegEncoderDateTimeNow.html">SSP_SetJpegEncoderDateTimeNow()</a></code> を呼び出していない場合、内部で <code><a href="../../rtc/RTC_GetDateTime.html">RTC_GetDateTime()</a></code> が呼ばれます。
+</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="SSP_SetJpegEncoderDateTime.html">SSP_SetJpegEncoderDateTime</a>, <a href="SSP_SetJpegEncoderDateTimeNow.html">SSP_SetJpegEncoderDateTimeNow</a>, <a href="SSP_ConvertJpegEncodeData.html">SSP_ConvertJpegEncodeData</a>, <a href="SSP_StartJpegEncoder.html">SSP_StartJpegEncodder</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/04/28 アライメントの制限について追記<br>
+2008/11/14 初版
+</p>
+</body>
+</html>

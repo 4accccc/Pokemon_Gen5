@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>アーカイブ (overview)</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+
+<H1 align="left">アーカイブ (overview)</H1>
+
+<H2>説明</H2>
+<P>
+NAND アプリでは本体保存メモリにセーブデータを格納するため、
+他の NAND アプリのセーブデータを読み書きすることができます。
+</P>
+<P>
+<a href="NA_LoadOtherTitleArchive.html">NA_LoadOtherTitleArchive()</a>
+は指定した NAND アプリのセーブデータを「otherPub」または「otherPrv」アーカイブとしてロードします。
+FS ライブラリを使用してこれらのアーカイブにアクセスすることで
+指定した NAND アプリのセーブデータにアクセスできます。
+</P>
+<P>
+<a href="NA_LoadOtherTitleArchive.html">NA_LoadOtherTitleArchive()</a> でロードできるのは
+同時に最大 1 つのセーブデータ領域までです。public セーブデータと private セーブデータの両方に
+アクセスしたい場合や複数の NAND アプリのセーブデータにアクセスしたい場合は
+一つのセーブデータ領域にアクセスする毎に
+ <a href="NA_UnloadOtherTitleArchive.html">NA_UnloadOtherTitleArchive()</a> で
+アンロードする必要があります。
+</P>
+<P>
+他の NAND アプリのセーブデータへのアクセスは NAND アプリでのみ行うことができます。
+</P>
+
+
+<H2>サンプルデモ</H2>
+<P>
+NAND アプリサンプルデモの other_backup デモは
+他の NAND アプリ（backup デモ）のセーブデータを読み書きするデモとなっています。
+</P>
+<P>
+other_backup デモは <code>$TwlSDK/build/demos.TWL/nandApp/other_backup</code> にあります。<br>
+backup デモは <code>$TwlSDK/build/demos.TWL/nandApp/backup</code> にあります。
+</P>
+
+
+<H2>参照</H2>
+<P><CODE>
+<A href="../list_na.html#archive">NA関数一覧(アーカイブ)</A>,
+<A href="../../demos/nandApp/nandAppdemos.html">NAND アプリサンプルデモ</A>
+</CODE></P>
+
+<H2>履歴</H2>
+<P>
+2008/09/16 初版
+</P>
+</BODY>
+</HTML>

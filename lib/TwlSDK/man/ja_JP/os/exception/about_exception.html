@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>例外 (overview)</TITLE><LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">例外 (overview)  <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<P>ここでは、ARM プロセッサによる例外が発生したときに TWL-SDK でその例外の情報を表示するための例外表示システムについて説明します。</P>
+<H2>例外の種類</H2>
+<P>ARM プロセッサには以下の例外が存在します。<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR bgcolor="red">
+      <TH>例外タイプ</TH>
+      <TH>正規ベクタアドレス</TH>
+      <TH>ハイベクタアドレス</TH>
+    </TR>
+    <TR>
+      <TD>リセット</TD>
+      <TD>0x00000000</TD>
+      <TD>0xFFFF0000</TD>
+    </TR>
+    <TR>
+      <TD>未定義命令</TD>
+      <TD>0x00000004</TD>
+      <TD>0xFFFF0004</TD>
+    </TR>
+    <TR>
+      <TD>ソフトウェア割り込み</TD>
+      <TD>0x00000008</TD>
+      <TD>0xFFFF0008</TD>
+    </TR>
+    <TR>
+      <TD>プリフェッチアボート</TD>
+      <TD>0x0000000C</TD>
+      <TD>0xFFFF000C</TD>
+    </TR>
+    <TR>
+      <TD>データアボート</TD>
+      <TD>0x00000010</TD>
+      <TD>0xFFFF0010</TD>
+    </TR>
+    <TR>
+      <TD>IRQ</TD>
+      <TD>0x00000018</TD>
+      <TD>0xFFFF0018</TD>
+    </TR>
+    <TR>
+      <TD>FIQ</TD>
+      <TD>0x0000001C</TD>
+      <TD>0xFFFF001C</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+このうち、 リセット割り込みや FIQ 例外は、システムやデバッガで利用していますのでユーザは使用することは出来ません。</P>
+<P>IRQ 例外は、割り込みとして利用しています。割り込みに関してはこちらを参照してください。→
+<A href="../irq/about_irq.html">割り込み(概要)</A></P>
+<P>未定義命令の中には、デバッガがブレイクポイントなどに使用しているものもあります。</P>
+<P>例外が発生すると、上の表に記載されているベクタアドレスのアドレスに制御が移ります。通常はハイベクタアドレスを使用します。</P>
+<H2>例外ベクタの位置</H2>
+<P>ARM プロセッサの仕様で、例外ベクタのアドレスとして、0x00000000 ～ 0x0000001C
+か 0xFFFF0000 ～ 0xFFFF001C の何れかを選択できるようになっています。前者を「正規ベクタ」、後者を「ハイベクタ」と呼びます。</P>
+<P><CODE><A href="OS_SetExceptionVectorLower.html">OS_SetExceptionVectorLower()</A></CODE> で例外ベクタのアドレスを 0x0000000 ～ 0x0000001C (正規ベクタ) にします。</P>
+<P><CODE><A href="OS_SetExceptionVectorUpper.html">OS_SetExceptionVectorUpper()</A></CODE> で例外ベクタのアドレスを 0xFFFF0000 ～ 0xFFFF001C ( ハイベクタ) にします。</P>
+<P>TWL-SDK ではデフォルトではハイベクタを使用しています。<FONT color="#ff0033">特に理由がなければハイベクタを使用し、この設定は変更しないでください。</FONT></P>
+<H2>例外時のコンテキスト表示</H2>
+<P>TWL-SDK には例外発生時に、その時点のコンテキスト(レジスタやCPUステータスの内容)
+をデバッグウィンドウ(コンソール) へ表示する機構が用意されています。この例外表示機構の初期化は
+<CODE><A href="OS_InitException.html">OS_InitException()</A></CODE> で行われますが、その関数は <CODE><A href="../init/OS_Init.html">OS_Init()</A></CODE> から呼ばれていますので <CODE><A href="../init/OS_Init.html">OS_Init()</A></CODE> を使用するアプリケーションでは特に準備は必要はありません。</P>
+<P>以下は表示例です。<CODE><A href="../debug/OS_FPrintf.html">OS_FPrintf()</A></CODE> のエラー出力を用いて出力します。</P>
+<BLOCKQUOTE style="background-color:#ffffc0;"><BR>
+<CODE>　**** Exception Occurred ****<BR>
+　R00=00000000 R01=12345678 R02=2000001F R03=02030340 <BR>
+　R04=200000D7 R05=0000000F R06=00000001 R07=00000002 <BR>
+　R08=02FFFFA8 R09=04000130 R10=00000001 R11=0201C25C <BR>
+　R12=0200E240 SP =02FE3750 LR =02005130 PC =02005140<BR>
+　CPSR=2000001F SPSR=00000000 CP15=0005707D</CODE><BR>
+<BR>
+</BLOCKQUOTE>
+<H2>ユーザハンドラの設定</H2>
+<P>例外が発生したときに、ユーザが設定した例外ハンドラに制御を移すことが可能です。<A href="OS_SetUserExceptionHandler.html" target="_self"><CODE>OS_SetUserExceptionHandler()</CODE></A> でハンドラを登録してください。詳細はリファレンスを参照してください。</P>
+<H2>例外時コンテキスト表示やユーザ例外ハンドラの呼び出しの可能な環境</H2>
+<P>動作環境別で、例外発生時にデバッグウィンドウ(コンソール)へコンテキスト表示が行えるかどうかと、ユーザの例外ハンドラに制御を移すことが出来るかを示します。ただし
+<B><FONT color="#ff0000">OK</FONT></B> となっている箇所でも、FINALROM ビルドでは、<CODE><A href="../debug/OS_FPrintf.html">OS_FPrintf()</A></CODE> が使用できないので動作環境に依らず 例外時のコンテキスト表示は出来ません。ユーザの例外ハンドラの呼び出しは
+ビルドに依存しません。</P>
+<P>この表は動作環境で切り分けられていることにご注意ください。例えば、 HYBRID
+ROM を NITRO モードで動作させる場合、IS-TWL-DEBUGGER 上なら例外発生時のコンテキスト表示は行えませんが、同じ
+ROM を 同じモードで動作させても IS-NITRO-DEBUGGER 上なら表示可能です。</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH colspan="3" style="background-color:#304040;"><FONT color="#ffffff">NITRO モードの場合</FONT> <img src="../../image/NTR.gif" align="middle"></TH>
+    </TR>
+    <TR>
+      <TH>動作環境</TH>
+      <TH>例外発生時の<BR>
+      <CODE>コンテキスト表示</CODE></TH>
+      <TH>ユーザの例外ハンドラの<BR>
+      呼び出し</TH>
+    </TR>
+    <TR>
+      <TD>DS実機</TD>
+      <TD><B>N/A </B>(コンソールが存在しない)</TD>
+      <TD><FONT color="#ff0000"><B>OK</B></FONT></TD>
+    </TR>
+    <TR>
+      <TD>TWL実機</TD>
+      <TD><B>N/A </B>(コンソールが存在しない)</TD>
+      <TD><FONT color="#ff0000"><B>OK</B></FONT></TD>
+    </TR>
+    <TR>
+      <TD>IS-NITRO-DEBUGGER</TD>
+      <TD><FONT color="#ff0000"><B>OK</B></FONT></TD>
+      <TD><FONT color="#ff0000"><B>OK</B></FONT></TD>
+    </TR>
+    <TR>
+      <TD>ENSATA EMULATOR</TD>
+      <TD>???</TD>
+      <TD>???</TD>
+    </TR>
+    <TR>
+      <TD>IS-TWL-DEBUGGER　(一般開発用: ARM9)</TD>
+      <TD><B>N/A</B></TD>
+      <TD><B>N/A</B></TD>
+    </TR>
+    <TR>
+      <TD>IS-TWL-DEBUGGER　(コンポーネント開発用　ARM9 + ARM7)</TD>
+      <TD><B>N/A</B></TD>
+      <TD><B>N/A</B></TD>
+    </TR>
+    <TR>
+      <TH colspan="3" style="background-color:#304040;"><FONT color="#ffffff">TWL モードの場合</FONT> <img src="../../image/TWL.gif" align="middle"></TH>
+    </TR>
+    <TR>
+      <TH>動作環境</TH>
+      <TH>例外発生時の<BR>
+      <CODE>コンテキスト表示</CODE></TH>
+      <TH>ユーザの例外ハンドラの<BR>
+      呼び出し</TH>
+    </TR>
+    <TR>
+      <TD>TWL実機</TD>
+      <TD><B>N/A</B> (コンソールが存在しない)</TD>
+      <TD><FONT color="#ff0000"><B>OK</B></FONT></TD>
+    </TR>
+    <TR>
+      <TD>IS-TWL-DEBUGGER　(一般開発用: ARM9)</TD>
+      <TD><B>N/A</B></TD>
+      <TD><B>N/A</B></TD>
+    </TR>
+    <TR>
+      <TD>IS-TWL-DEBUGGER　(コンポーネント開発用　ARM9 + ARM7)</TD>
+      <TD><B>N/A</B></TD>
+      <TD><B>N/A</B></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+</P>
+<H2>例外発生の流れ</H2>
+<P>例外が発生すると、例外ベクタの領域にジャンプします。例外ベクタは前述の通り、通常はハイベクタとなりますので、例えばデータアボート例外ならば
+0xFFFFFF10 に制御が移ります。</P>
+<P>次にシステム領域内の HW_EXCP_VECTOR_MAIN (0x2FFFFD9C) に格納されているアドレスに制御が移ります。
+(ARM7 では専用ワークRAM のオフセット 0x7FDC の位置となります。) 　ここにはTWL-SDK
+の例外ハンドラのアドレスがセットされています。</P>
+<P>TWL-SDK の例外ハンドラでは、例外時コンテキスト表示を行った後、あれば <CODE><A href="OS_SetUserExceptionHandler.html">OS_SetUserExceptionHandler()</A></CODE> で登録したユーザハンドラを 呼び出します。</P>
+<P>そしてプログラムを停止します。</P>
+<BLOCKQUOTE><BR>
+<IMG src="image_exception_flow.gif" border="0"></BLOCKQUOTE>
+<H2>参照</H2>
+<P><CODE>
+<A href="../list_os.html#Exception">OS関数一覧(例外)</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2008/04/18 例外時コンテキスト表示環境の表追加など<BR>
+2005/03/08 用語統一 [割込み] → [割り込み]<br>
+2004/12/14 用語や語尾など修正<BR>
+2004/11/16 初版</P>
+</BODY>
+</HTML>

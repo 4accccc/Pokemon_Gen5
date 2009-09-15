@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 8.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>WXC_GetOwnAid</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">WXC_GetOwnAid <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/wxc.h&gt;</CODE><BR>
+  <BR>
+  <CODE>u16 WXC_GetOwnAid(void);</CODE><br>
+  <br>
+  </dd>
+</dl>
+<h2>引数</h2>
+<p>なし</p>
+<h2>返り値</h2>
+<p>現在の接続における自身のAIDを返します。</p>
+
+<H2>説明</H2>
+<P>現在の接続における自身のAIDを取得します。<BR>
+通信が確立されていない状況では不定な値を返します。<BR>
+現在の通信状態は、<A href="WXC_GetUserBitmap.html"> WXC_GetUserBitmap</A>関数の返り値で判定可能です。
+</p>
+<h2>参照</h2>
+<p><CODE>
+<A href="WXC_GetUserBitmap.html">WXC_GetUserBitmap</A>
+<BR></CODE></P>
+<H2>履歴</H2>
+<P>
+2005/08/18 初版<br>
+</P>
+</body>
+</html>

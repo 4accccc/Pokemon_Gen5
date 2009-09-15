@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>OS_VSPrintf</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">OS_VSPrintf <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+<DL>
+  <DD><CODE>#include &lt;nitro/os.h&gt;<BR>
+<BR>
+int OS_VSPrintf( char *dst, const char *fmt, va_list vlist );<BR>
+<BR></CODE>
+</DL>
+
+<H2>引数</H2>
+<p><a href="../../std/string/STD_TVSPrintf.html"><code>STD_TVSPrintf( )</code></a>と同じです。</p>
+
+<H2>返り値</H2>
+<p><a href="../../std/string/STD_TVSPrintf.html"><code>STD_TVSPrintf( )</code></a>と同じです。</p>
+
+<H2>説明</H2>
+<p>この関数は、現在は<a href="../../std/string/STD_TVSPrintf.html"><code>STD_TVSPrintf( )</code></a>に置き換えられました。
+内部では単に<a href="../../std/string/STD_TVSPrintf.html"><code>STD_TVSPrintf( )</code></a>を呼び出し、その結果を返します。</p>
+<p>この関数は weak シンボルでコンパイルされますので、ユーザが独自で関数を定義すれば、それで上書きされます。<BR>
+<FONT color=#ff0000>但しこの関数は、TWL-SDK 内の関数や上位ライブラリ、ミドルウェアなどで使用されている可能性がありますので、<BR>
+上書きする場合は動作が変わらないように十分注意してください。</FONT>
+</p>
+
+<H2>参照</H2>
+<p><code><a href="../../std/string/STD_TVSPrintf.html">STD_TVSPrintf</a></code></p>
+
+<H2>履歴</H2>
+<P>
+2009/03/27 ユーザが独自で関数を定義した場合の注意を追記<BR>
+2008/09/06 STDライブラリ関数への置き換えに関する記述修正<br />
+2004/11/25 weak シンボルの記述を追加<BR>
+2004/06/15 「終端のNUL」 を「終端文字 '\0'」に修正<BR>
+2004/03/26 初版</P>
+</BODY>
+</HTML>

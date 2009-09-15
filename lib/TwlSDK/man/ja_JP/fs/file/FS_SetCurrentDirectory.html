@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_SetCurrentDirectory</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FS_SetCurrentDirectory <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+BOOL FS_SetCurrentDirectory(const char *path);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>path</strong></em></td>
+<td style="width:87%">カレントディレクトリに指定するパス</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>カレントディレクトリを正しく設定できればTRUEを、失敗すればFALSEを返します。<br />
+失敗時の詳細なエラーは<code><a href="../file/FS_GetResultCode.html">FS_GetResultCode()</a></code>で取得することができます。</p>
+
+<h2>説明</h2>
+<p>カレントディレクトリを設定します。<br />
+FSライブラリの関数呼び出しに相対パスを指定した場合、この関数で指定されたカレントディレクトリを参照します。
+</p>
+<p>この関数は、指定されたディレクトリが現時点で存在していなくともアーカイブが正しく存在していればTRUEを返します。</p>
+
+<h2>注意</h2>
+<ul>
+<li>この関数を割り込みハンドラ(IRQモード)から呼び出すことはできません。<br />
+また、割り込みを禁止したままの状態にあると処理が完了しない場合がある点に注意して下さい。</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="../file/FS_OpenFileEx.html">FS_OpenFileEx</a>
+<a href="../directory/FS_OpenDirectory.html">FS_OpenDirectory</a>
+<a href="../directory/FS_CreateFile.html">FS_CreateFile</a>
+<a href="../directory/FS_DeleteFile.html">FS_DeleteFile</a>
+<a href="../directory/FS_RenameFile.html">FS_RenameFile</a>
+<a href="../directory/FS_CreateDirectory.html">FS_CreateDirectory</a>
+<a href="../directory/FS_DeleteDirectory.html">FS_DeleteDirectory</a>
+<a href="../directory/FS_RenameDirectory.html">FS_RenameDirectory</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/09/08 存在しないディレクトリを指定可能な旨を追記<br />
+2007/11/01 引数の誤記を訂正<br />
+2007/09/18 初版<br />
+</p>
+</body>
+</html>

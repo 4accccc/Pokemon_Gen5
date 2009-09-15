@@ -1,0 +1,722 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>makerom[.TWL]</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<STYLE type="text/css">
+<!--
+.sample_source{
+  background-color : #e8e8e8;
+}
+H3{
+  color : teal;
+}
+.command_list{
+  margin-bottom : 16pt;
+}
+.command_desc{
+  }
+.command_item{
+  margin-top : 16pt;
+  background-color : #e8e8e8;
+}
+.blockquoted_table {
+  border : 1px;
+  width : 80%;
+}
+TD,TH{
+  border-color	: #c0d8d8;
+  padding       : 1pt 4pt 1pt 4pt;
+  border-width  : 1px;
+  border-style  : solid;
+}
+-->
+</STYLE>
+</HEAD>
+<BODY>
+<H1 align="left">makerom <IMG src="../image/NTR.gif" align="middle"></H1>
+<H1 align="left">makerom.TWL <IMG src="../image/TWL.gif" align="middle"></H1>
+<H2>説明</H2>
+<P><CODE>makerom</CODE> は、NITRO のアプリケーション ROM イメージを作成するためのツールです。ROM
+スペックファイルと呼ばれるファイルの記述を元に ROM イメージを生成します。</P>
+<P><CODE>makerom.TWL</CODE> は、<CODE>makerom</CODE> に TWL の ROM イメージの作成機能を追加したツールです。
+指定可能なパラメータが増えています。</P>
+<P>このツールを用いて TWL 用に作成した ROM イメージは、TWL の開発機上でのみ動作します。TWL-SDK の環境を用いて TWL 量産機上で動作可能な ROM イメージを作成することはできません。(また、NITRO 用に作成された ROM イメージも TWL 量産機上では動作しません。)</P>
+
+<H2>使用方法</H2>
+<H3>起動コマンド</H3>
+<H4>1) 通常起動</H4>
+<PRE><CODE>% makerom [-d] [-DNAME=VALUE...] [-MDEFINES_FILE] [-F] [-A]
+            [-VFMT_VER] [-WWARNING_TYPE] SPECFILE [ROMFILE] [LISTFILE]</CODE></PRE>
+<PRE><CODE>% makerom.TWL [-DTARGET_PLATFORM=<I>target</I>] [-d] [-DNAME=VALUE...] [-MDEFINES_FILE] [-F] [-A]
+            [-VFMT_VER] [-WWARNING_TYPE] SPECFILE [ROMFILE] [LISTFILE]</CODE></PRE>
+<P><CODE>SPECFILE</CODE> で指定された ROM スペックファイル(後述)の記述にしたがってファイルを結合し、
+ROM イメージファイルを <CODE>ROMFILE</CODE> という名前で作成します。このとき、ROM の構成情報を <CODE>LISTFILE</CODE> で指定されたファイルに出力します。</P>
+<P><CODE>ROMFILE</CODE>, <CODE>LISTFILE</CODE> は省略可能です。省略時には <CODE>SPECFILE</CODE> で指定されたファイル名の拡張子部分をそれぞれ <CODE>.rom</CODE> あるいは <CODE>.nlf</CODE> としたファイル名が使用されます。また <CODE>-D</CODE> オプションにより変数とその値を定義することができます。この変数の値は ROM
+スペックファイルの記述時に参照することができます。</P>
+<P><CODE>makerom.TWL.exe</CODE> では、 <CODE>-D</CODE> オプションで <CODE>TARGET_PLATFORM</CODE> に <CODE><I>target</I></CODE> パラメータを指定する必要があります。 <CODE><I>target</I></CODE> パラメータは、<CODE>TWL</CODE> 対応アプリをビルドする場合には <CODE>'TWL-HYB'</CODE> を <CODE>TWL</CODE> 専用アプリをビルドする場合には <CODE>'TWL-LTD'</CODE> を指定します。通常は、ビルドシステムが適切な値を設定します。<FONT color="#ff0000">この指定がない場合は、デフォルトで <CODE>'TWL-LTD'</CODE> が設定されます。</FONT>
+
+<P><CODE>-M</CODE> オプションは<CODE>-D</CODE>オプションと同様に変数とその値を定義するものです。<CODE>[NAME=VALUE]</CODE> の列から成るテキストファイルを引数として受けます。このオプションによりコマンドラインの長さ制限に引っかかるような変数とその値の定義の記述を行なうことができます。<FONT color="#ff0000">オブジェクトファイル名を列挙するときなどのように空白を含む値を変数に定義する場合、コマンドライン引数の解釈の都合上、<CODE>-D</CODE> オプションにおいて値の部分を <CODE>"</CODE> や <CODE>'</CODE> などの引用符で囲ったりする必要がありますが、<CODE>-M</CODE> オプションの場合は、定義ファイル内の記述において値を引用符で囲う必要はありません。引用符をつけてしまうと引用符込みの値として認識されます。</FONT></P>
+<P><CODE>-F</CODE> オプションが指定されている場合、ROM ファイルがサイズの制限値(<CODE>Property</CODE> セクションの <CODE>RomSize</CODE> 参考)を越えていても ROM イメージファイルを生成します。</P>
+<P><CODE>-A</CODE> オプションが指定されている場合、ROM ファイルに <A href="attachsign.html"><CODE>attachsign</CODE></A> コマンドによるデジタル署名コードを追加したときに、ROM サイズの制限値(<CODE>Property</CODE> セクションの <CODE>RomSize</CODE> 参考)を超えるかどうかの判定を行ないます。超える場合はエラーとなりますが、前述の
+<CODE>-F</CODE> オプションが設定されている場合は処理を継続します。</P>
+<P><FONT color="#ff0000"><CODE>-V</CODE> オプションで出力 ROM イメージのフォーマット番号 <CODE>FMT_VER</CODE> を指定します。このオプションは過去のバージョンとの互換のために用意されています。デフォルトでは
+2 が指定されています。詳しくは以降の ROM フォーマットバージョンについての説明をご覧ください。</FONT></P>
+<P><CODE>-W</CODE> オプションにより通常は抑制されている警告が出力されるようになります。<CODE>-Wrom_speedtype_undefined</CODE> は <CODE>Property</CODE> セクションの <CODE>RomSpeedType</CODE> が SDK デフォルト設定のまま明示的に指定されていない場合に警告します。<CODE>-Wall</CODE> にて全ての警告が出力されます。</P>
+<P><CODE>-d</CODE> オプションは <CODE>makerom</CODE> のデバグ用メッセージ出力用のオプションで実行時にデバグ用メッセージを出力します。普段は必要ありません。</P>
+<H4>2) オプション <CODE>-l</CODE></H4>
+<P><CODE>% makerom [-d] [-DNAME=VALUE...] [-MDEFINES_FILE] [-VFMT_VER] -l SPECFILE
+[LISTFILE]</CODE></P>
+<P><CODE>% makerom.TWL [-d] [-DNAME=VALUE...] [-MDEFINES_FILE] [-VFMT_VER] -l SPECFILE
+[LISTFILE]</CODE></P>
+<P>ROM イメージを出力しないという点を除いて、起動方法 1 と同じです。<CODE>SPECFILE</CODE> で指定されたファイルを読み込んで、ROM 構成情報を <CODE>LISTFILE</CODE> という名のファイルに出力します。</P>
+<P><CODE>LISTFILE</CODE> は省略可能です。省略時には <CODE>SPECFILE</CODE> で指定されたファイル名の拡張子部分をプラットフォーム毎のデフォルト拡張子としたものが、ファイル名として使用されます。NITRO の ROM イメージを作成する場合のデフォルト拡張子は <CODE>.nlf</CODE>、TWL の場合は <CODE>.tlf</CODE> です。<CODE>-D</CODE> オプションにより変数とその値を定義することができます。この変数の値は ROM
+スペックファイルの記述時に参照することができます。</P>
+<P><CODE>-V</CODE> オプションは <B>1)通常起動</B> の場合と同じ動作をします。</P>
+<H4>3) オプション <CODE>-r</CODE></H4>
+<P><CODE>% makerom [-d] [-F] [-A] [-VFMT_VER] -r LISTFILE [ROMFILE]</CODE></P>
+<P><CODE>% makerom.TWL [-d] [-F] [-A] [-VFMT_VER] -r LISTFILE [ROMFILE]</CODE></P>
+<P><CODE>LISTFILE</CODE> で指定された ROM 構成情報から、ROM イメージを構成し <CODE>ROMFILE</CODE> で指定された名前のファイルとして出力します。</P>
+<P><CODE>ROMFILE</CODE> は省略可能です。省略時には <CODE>LISTFILE</CODE> で指定されたファイル名の拡張子部分を <CODE>.rom</CODE> としたものが、ファイル名として使用されます。</P>
+<P><CODE>-F</CODE> オプション、<CODE>-A</CODE> オプションおよび <CODE>-V</CODE> オプションは <B>1)通常起動</B> の場合と同じ動作をします。</P>
+<H3>ROM スペックファイルフォーマット</H3>
+<P>NITRO および TWL の ROM イメージ内部は簡易的なファイルシステムによって管理されています。ROM
+スペックファイルはこのファイルシステムの構成を NITRO では 4 つ、TWL では 6 つのセクションに分けて記述したテキストファイルです。なお、<FONT color="#ff0000">ROM イメージセクションは全てのセクションの最後に記述されなければなりません。</FONT>セクション定義の書式は、セクション定義開始の宣言部の後に引き続いて各セクションに関するパラメータが中括弧<CODE>{ }</CODE> で囲むという書式になっています。<BR>
+</P>
+<TABLE>
+  <TBODY>
+    <TR>
+      <TH>セクションの定義対象</TH>
+      <TH>セクション定義の書式</TH>
+    </TR>
+    <TR>
+      <TD>ARM9 実行バイナリ<BR>
+      <IMG src="../image/NTR.gif" align="middle"><IMG src="../image/TWL.gif" align="middle"></TD>
+      <TD>
+      <PRE><CODE>Arm9
+{
+  <I>[ARM9 パラメータ記述部]</I>
+  ....
+}</CODE></PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD>ARM7 実行バイナリ<BR>
+      <IMG src="../image/NTR.gif" align="middle"><IMG src="../image/TWL.gif" align="middle"></TD>
+      <TD>
+      <PRE><CODE>Arm7
+{
+  <I>[ARM7 パラメータ記述部]</I>
+  ....
+}</CODE></PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD>ARM9 TWL専用 実行バイナリ<BR>
+      <IMG src="../image/TWL.gif" align="middle"></TD>
+      <TD>
+      <PRE><CODE>Arm9.Ltd
+{
+  <I>[ARM9 TWL専用部 パラメータ記述部]</I>
+  ....
+}</CODE></PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD>ARM7 TWL専用 実行バイナリ<BR>
+      <IMG src="../image/TWL.gif" align="middle"></TD>
+      <TD>
+      <PRE><CODE>Arm7.Ltd
+{
+  <I>[ARM7 TWL専用部 パラメータ記述部]</I>
+  ....
+}</CODE></PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD>付帯情報<BR>
+      <CODE>(Property)</CODE><BR>
+      <IMG src="../image/NTR.gif" align="middle"><IMG src="../image/TWL.gif" align="middle"></TD>
+      <TD>
+      <PRE><CODE>Property
+{
+  <I>[付帯情報パラメータ記述部]</I>
+  ....
+}</CODE></PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD>追加付帯情報<BR>
+      <CODE>(AppendProperty)</CODE><BR>
+      <IMG src="../image/TWL.gif" align="middle"></TD>
+      <TD>
+      <PRE><CODE>AppendProperty
+{
+  <I>[追加付帯情報パラメータ記述部]</I>
+  ....
+}</CODE></PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD>レーティング情報<BR>
+      <CODE>(Rating)</CODE><BR>
+      <IMG src="../image/TWL.gif" align="middle"></TD>
+      <TD>
+      <PRE><CODE>Rating
+{
+  <I>[レーティング情報パラメータ記述部]</I>
+  ....
+}</CODE></PRE>
+      </TD>
+    </TR>
+    <TR>
+      <TD>ROM イメージ<BR>
+      <IMG src="../image/NTR.gif" align="middle"><IMG src="../image/TWL.gif" align="middle"></TD>
+      <TD>
+      <pre><code>RomSpec
+{
+  <i>[ROM イメージパラメータ記述部]</i>
+  ....
+}</code></pre>
+      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H3>セクションパラメータ</H3>
+<H4>Arm9 セクション (ARM9 実行バイナリ定義セクション) <IMG src="../image/NTR.gif" align="middle"><IMG src="../image/TWL.gif" align="middle"></H4>
+<P>ここでは ARM9 側の実行バイナリに関する設定を行ないます。</P>
+<BLOCKQUOTE>
+<DL class="command_list">
+  <DT class="command_item"><CODE>Static</CODE> <I>[ARM9 の常駐モジュールファイル名]</I>
+  <DD class="command_desc">ARM9 の実行ファイルの常駐モジュールファイル名を指定します。
+  <DT class="command_item"><CODE>OverlayDefs</CODE> <I>[ARM9 の Overlayネームファイル名]</I>
+  <DD class="command_desc">ARM9 の OverlayDefs ファイル名を指定します。
+  <DT class="command_item"><CODE>OverlayTable</CODE> <I>[ARM9 の OverlayTable ファイル名]</I>
+  <DD>ARM9 の OverlayTable ファイル名を指定します。<BR>
+  オーバーレイを使用しない場合、このファイルは必要ありません。この場合、<CODE>OverlayTable</CODE> 定義文を省略することができます。
+  <DT class="command_item"><CODE>Nef</CODE> <I>[ARM9 の nef または tef ファイル(デバグ情報ファイル)名]</I>
+  <DD class="command_desc">ARM9 のデバグ情報を保持するファイル(<CODE>nef</CODE>ファイル) を指定します。
+  <DD class="command_desc">デバグを実行しない場合、この <CODE>Nef</CODE> 定義文は必要ありません。記述を省略することができます。<BR>
+  <CODE>&quot;Nef&quot;</CODE> キーワードの別名として <CODE>&quot;Elf&quot;</CODE> を使用することもできます。
+</DL>
+</BLOCKQUOTE>
+<H4>Arm7 セクション (ARM7 実行ファイル定義セクション) <IMG src="../image/NTR.gif" align="middle"><IMG src="../image/TWL.gif" align="middle"></H4>
+<P>ここでは ARM7 側の実行バイナリに関する設定を行ないます。</P>
+<BLOCKQUOTE>
+<DL class="command_list">
+  <DT class="command_item"><CODE>Static</CODE> <I>[ARM7 の常駐モジュールファイル名]</I><BR>
+  <CODE>OverlayDefs</CODE> <I>[ARM7 の Overlayネームファイル名]</I><BR>
+  <CODE>OverlayTable</CODE> <I>[ARM7 の OverlayTable ファイル名]</I><BR>
+  <CODE>Nef</CODE> <I>[ARM7 の nef または tef ファイル(デバグ情報ファイル)名]</I>
+  <DD class="command_desc">ARM9 のパラメータと同様です。
+</DL>
+</BLOCKQUOTE>
+<H4>Arm9.Ltd セクション (ARM9 TWL専用 実行バイナリ定義セクション) <IMG src="../image/TWL.gif" align="middle"></H4>
+<P>ここでは TWL 上で実行される場合でのみ使用される ARM9 側の実行バイナリに関する設定を行ないます。</P>
+<BLOCKQUOTE>
+<DL class="command_list">
+  <DT class="command_item"><CODE>Static</CODE> <I>[ARM9 TWL専用部 の常駐モジュールファイル名]</I><BR>
+  <CODE>OverlayDefs</CODE> <I>[ARM9 TWL専用部 の Overlayネームファイル名]</I><BR>
+  <CODE>OverlayTable</CODE> <I>[ARM9 TWL専用部 の OverlayTable ファイル名]</I><BR>
+  <DD class="command_desc">ARM9 のパラメータと同様です。
+</DL>
+</BLOCKQUOTE>
+<H4>Arm7.Ltd セクション (ARM7 TWL専用 実行ファイル定義セクション) <IMG src="../image/TWL.gif" align="middle"></H4>
+<P>ここでは TWL 上で実行される場合でのみ使用される ARM7 側の実行ファイルに関する設定を行ないます。</P>
+<BLOCKQUOTE>
+<DL class="command_list">
+  <DT class="command_item"><CODE>Static</CODE> <I>[ARM7 TWL専用部 の常駐モジュールファイル名]</I><BR>
+  <CODE>OverlayDefs</CODE> <I>[ARM7 TWL専用部 の Overlayネームファイル名]</I><BR>
+  <CODE>OverlayTable</CODE> <I>[ARM7 TWL専用部 の OverlayTable ファイル名]</I><BR>
+  <DD class="command_desc">ARM9 のパラメータと同様です。
+</DL>
+</BLOCKQUOTE>
+<H4>Property セクション (付帯情報定義セクション)</H4>
+<P>名称の後に ◎ が付いている項目は、マスターROM作成時に必ず設定しなければならない項目です。</P>
+<P><B>Property セクション NITRO / TWL 共通項目</B> <IMG src="../image/NTR.gif" align="middle"><IMG src="../image/TWL.gif" align="middle"></P>
+<BLOCKQUOTE>
+<DL class="command_list">
+  <DT class="command_item"><CODE>RomHeaderTemplate</CODE> <I>[Rom ヘッダのテンプレートファイル名]</I> ◎
+  <DD class="command_desc">ROM イメージのヘッダ部分のテンプレートファイルを指定します。指定なしの場合は
+  <CODE>makerom[.TWL].exe</CODE> と同じディレクトリの<CODE>&quot;rom_header.template.sbin&quot;</CODE> がデフォルトとして使われます。マスターROM作成時に弊社より各ゲームアプリケーションに対応したマスターROM用のテンプレートファイルを配布いたしますので、そのファイル名をここに指定します。<FONT color="#FF0000">ROM ヘッダのテンプレートファイル自体の内容をバイナリ修正することは推奨されていません。</FONT>以下に示している <CODE>TitleName</CODE> などのパラメータ記述を ROMスペックファイルへ行なうことで各マスターROMの付帯情報を設定してください。
+  <DT class="command_item"><CODE>TitleName</CODE> <I>[タイトル名]</I> ◎
+  <DD class="command_desc">タイトルの名称を指定します。ASCIIコード（英数字）で 12 文字までです。12文字未満の場合は未使用領域へ
+  0 が格納されます。指定なしの場合は RomHeaderTemplate 内に埋め込まれている値が使用されます。
+  <DT class="command_item"><CODE>MakerCode</CODE> <I>[メーカーコード]</I> ◎
+  <DD class="command_desc">弊社とのライセンス契約時に決定しているメーカーコードを指定します。ASCIIコード（英数字）2
+  文字です。
+  <DD class="command_desc">指定なしの場合は RomHeaderTemplate 内に埋め込まれている値が使用されます。
+  <DT class="command_item"><CODE>RemasterVersion</CODE> <I>[リマスターバージョン]</I> ◎
+  <DD class="command_desc">製品として生産される ROM のリマスターバージョン番号を指定します。16進数、10進数、8進数表記が使用できます。指定なしの場合は
+  RomHeaderTemplate 内に埋め込まれている値が使用されます。これは以前のバージョンにおいて使用されていたROM
+  バージョンと等価です。以前のバージョンの <CODE>makerom</CODE> ツールにおける ROM バージョンという語句の定義が弊社標準の定義と異なっていたため名称統一のため変更されました。以前の
+  ROM スペックファイルとの互換性のため<CODE>&quot;RomVersion&quot;</CODE> キーワードも別名として使用できます。
+  <DT class="command_item"><CODE>RomSpeedType</CODE> <I>[1TROM|MROM|UNDEFINED]</I> ◎
+  <DD class="command_desc">ROM の種類を指定し、対応したアクセススピードへ変更します。<CODE>&quot;1TROM&quot;</CODE> は ワンタイムPROM、<CODE>&quot;MROM&quot;</CODE> はマスクROM を指定することになります。ワンタイムPROMの方が遅い設定になるため、ワンタイムPROMの設定であればマスクROMでも動作させることが可能ですが、逆はできません。
+  <DD>このパラメータを指定していない場合は <CODE>&quot;UNDEFINED&quot;</CODE> が指定されているとみなされます。<CODE>&quot;UNDEFINED&quot;</CODE> はアクセススピードとしてはとしては <CODE>&quot;1TROM&quot;</CODE> と同様の設定となります。ただし、<CODE>&quot;UNDEFINED&quot;</CODE> の場合は ROM バイナリ生成時に ROM 内登録データへ警告を意味するフラグがセットされ、最終マスターROMとしての提出ができません。これは、意図しないアクセススピードが設定されたままマスターROMとして出荷されるという人為的ミスを防止するためのものです。このため最終マスター
+  ROM を作成するときは、必ず <CODE>&quot;1TROM&quot;</CODE> か <CODE>&quot;MROM&quot;</CODE> のどちらを使用するかを確認し、ROM スペックファイル内で明示的に指定してください。
+  <DT class="command_item"><CODE>RomSize</CODE> <I>[64M|128M|256M|512M|1G|2G|4G]</I> ◎
+  <DD class="command_desc">ROM 容量をビット単位で指定します。現状において 64M/128M/256M/512M/1G/2G/4G の文字列の中から選択して下さい。<BR>
+ROM イメージが指定値を超えた場合はエラーまたは警告(<CODE>-F</CODE> オプション指定時)を出力します。<BR>
+ただし 1G bit 以上を指定した場合は、指定値と使用可能サイズが異なりますのでご注意ください。 (詳細は<A href="#ROMFORMAT_VER">ROM フォーマットバージョンについて</A>を参照)<BR>
+指定なしの場合は RomHeaderTemplate 内に埋め込まれている値 ( 現在のものは &quot;2G&quot; ) が使用されます。<BR>
+  <FONT color="#FF0000">NAND アプリにおいては、この指定は無視され、最適な値が自動的に選択されます。</FONT>
+  <DT class="command_item"><CODE>RomFootPadding</CODE> <I>[TRUE|FALSE]</I> ◎
+  <DD class="command_desc">ROM内のプログラム格納領域よりも上位側の未使用領域をデータで埋め、<CODE>RomSize</CODE> で指定されているROM容量と一致するバイナリを作成したい場合は <CODE>TRUE</CODE> を指定して下さい。未使用領域へ格納されるデータは <CODE>RomSpec</CODE> セクションの <CODE>Padding</CODE> パラメータで指定されている値になります。この機能を有効にするには <CODE>RomSize</CODE> を指定する必要があります。指定なしの場合は <CODE>FALSE</CODE> となります。<BR>
+  <FONT color="#FF0000">NAND アプリにおいては、必ず <CODE>FALSE</CODE> を指定してください。</FONT>
+  <DT class="command_item"><CODE>RomHeader</CODE> <I>[Rom ヘッダのファイル名]</I>
+  <DD>ROM イメージのヘッダ部分のイメージファイルの名前です。このファイルは、前項のテンプレートファイルをコピーしたものに
+  ROM スペックファイルなどからの情報を埋め込むことによって生成されます。
+  <DD>通常は指定する必要はありません。指定なしの場合はARM9 の常駐モジュールのファイル名の拡張子を外したものに<CODE>_header.sbin</CODE> を付けたものがデフォルトのファイル名として使用されます。
+  <DT class="command_item"><CODE>FileName</CODE> <I>[FileNameTable ファイル名]</I>
+  <DD>ROM ファイルシステムのファイルネームテーブル部分のイメージファイルの名前です。このファイルは、ROM
+  スペックファイルの <CODE>RomSpec</CODE> の項目より生成されます。通常は指定する必要はありません。指定なしの場合はARM9
+  の常駐モジュールのファイル名の拡張子を外したものに<CODE>_files.sbin</CODE> を付けたものがデフォルトのファイル名として使用されます。
+  <DT class="command_item"><CODE>BannerFile</CODE> <I>[バナーファイル名]</I> ◎
+  <DD class="command_desc">NITRO 起動時のメニューで表示する、アプリケーションの識別画像情報をまとめたバナーファイルを指定します。
+  <DT class="command_item"><CODE>ForChina</CODE> <I>[TRUE|FALSE]</I>
+  <DD class="command_desc">中国版本体へ対応したアプリケーションかどうかを指定します。このプロパティを
+  <CODE>TRUE</CODE> にした場合のみ、中国版本体で動作するようになります。また、中国版本体の設定メニューで中国語が選択されていることを取得するためには本プロパティを
+  <CODE>TRUE</CODE> にしておく必要があります。<BR>
+  <FONT color="#FF0000">指定なしの場合は <CODE>FALSE</CODE> となり、代わりに英語の言語コードが取得されます。RomHeaderTemplate 内に埋め込まれている値は使用されないという点に注意してください。</FONT>
+  <DT class="command_item"><CODE>ForKorea</CODE> <I>[TRUE|FALSE]</I>
+  <DD class="command_desc">韓国版本体へ対応したアプリケーションかどうかを指定します。このプロパティを
+  <CODE>TRUE</CODE> にしても、動作する本体についての制限は特にありません。韓国版本体の設定メニューで韓国語が選択されていることを取得するためには本プロパティを
+  <CODE>TRUE</CODE> にしておく必要があります。<BR>
+  <FONT color="#FF0000">指定なしの場合は <CODE>FALSE</CODE> となり、代わりに英語の言語コードが取得されます。RomHeaderTemplate 内に埋め込まれている値は使用されないという点に注意してください。</FONT>
+  <DT class="command_item"><CODE>PermitLandingTmpJump</CODE> <I>[TRUE|FALSE]</I>
+  <DD class="command_desc">指示があった場合にのみ <CODE>TRUE</CODE> を指定してください。デフォルトは <CODE>FALSE</CODE> です。
+
+</DL>
+</BLOCKQUOTE>
+<P><B>Property セクション TWL 専用項目</B> <IMG src="../image/TWL.gif" align="middle"></P>
+<BLOCKQUOTE>
+<DL class="command_list">
+  <DT class="command_item"><CODE>RomHeaderLtd</CODE> <I>[Rom ヘッダのテンプレートファイル名]</I> ◎
+  <DD class="command_desc">ROM イメージのTWL専用領域ヘッダ部分のテンプレートファイルを指定します。<BR>
+  通常は <CODE>$(TWLSDK_ROOT)/tools/bin/rom_header.LTD.sbin</CODE> を指定してください。
+  <DT class="command_item"><CODE>DigestParam</CODE> <I>1024 32</I> ◎
+  <DD class="command_desc">FSライブラリの<a href="../fs/overview/about_Archive.html#ROM">ROMアーカイブの概要</a>で説明されているハッシュチェックテーブルの算出単位を指定します。<br />
+  引数は <CODE>1024 32</CODE> から変更しないでください。
+  <DT class="command_item"><CODE>WramMapping</CODE> <I>[MAP2_TS_HYB|MAP2_TS_LTD]</I> ◎
+  <DD class="command_desc">WRAM のメモリマッピングを指定します。HYBRID ROM では <CODE>MAP2_TS_HYB</CODE> を、LIMITED ROM では <CODE>MAP2_TS_LTD</CODE> を指定してください。<BR>
+  通常は、<CODE>$(MAKEROM_WRAM_MAPPING)</CODE> を指定する事でビルドシステムが適切に設定します。
+  <DT class="command_item"><CODE>CardRegion</CODE> <I>[Japan|America|Europe|Australia|EuropeAndAustralia]</I> ◎
+  <DD class="command_desc">ソフトのリージョンを指定します。<BR><FONT color="#FF0000">ソフトのリージョンと本体のリージョンが一致しない場合、 そのソフトは ランチャー上で認識されませんのでご注意ください。<BR>またサンプルデモに設定されている<CODE>ALL</CODE> はデモ専用のものであり、この設定でマスター ROMを提出することはできません。</FONT>
+  <DT class="command_item"><CODE>CodecMode</CODE> <I>[NTR|TWL]</I> ◎
+  <DD class="command_desc">TWL 上で動作する際の CODEC の動作モードを指定します。CODEC の動作モードに関しては、<a href="../snd/sndex/doc/aboutSNDEX.html">TWL サウンド拡張機能の概要</a>を参照してください。CODEC-DS モードで動作させる場合は <CODE>NTR</CODE> を、CODEC-TWL モードで動作させる場合は <CODE>TWL</CODE> を指定します。<BR>
+  通常は、<CODE>$(MAKEROM_CODEC_MODE)</CODE> を指定する事でビルドシステムが適切に指定します。
+  <DT class="command_item"><CODE>WiFiConnectionIcon</CODE> <I>[TRUE|FALSE]</I>
+  <DD class="command_desc">ランチャー上で、ソフトのバナーと同時に Wi-Fi コネクションアイコンを表示するかどうかを指定します。
+  ランチャー上でアイコンを表示することで、ユーザの同意を改めて得ることなく、ソフトの起動と同時に Wi-Fi コネクションを開始することができるようになります。<BR>
+  また、起動時に Wi-Fi コネクションを開始する場合は、同時に <CODE>AgreeEULA</CODE> の指定も必要になります。<BR>
+  ただし、この指定を行っている場合、本体設定で無線オフモードになっている場合、ランチャーからアプリの起動ができなくなります。
+  無線通信が必須のアプリケーションのみ、この指定を行うようにしてください。<BR>
+  <CODE>DSWirelessIcon</CODE> と同時に <CODE>TRUE</CODE> を指定する事はできません。両方指定する必要がある場合は、<CODE>WiFiConnectionIcon</CODE> の指定を優先してください。<BR>
+  デフォルトは <CODE>FALSE</CODE> です。
+  <DT class="command_item"><CODE>DSWirelessIcon</CODE> <I>[TRUE|FALSE]</I>
+  <DD class="command_desc">ランチャー上で、ソフトのバナーと同時に DS ワイヤレスアイコンを表示するかどうかを指定します。
+  ランチャー上でアイコンを表示することで、ユーザの同意を改めて得ることなく、ソフトの起動と同時に DS ワイヤレスプレイを開始することができるようになります。<BR>
+  ただし、この指定を行っている場合、本体設定で無線オフモードになっている場合、ランチャーからアプリの起動ができなくなります。
+  無線通信が必須のアプリケーションのみ、この指定を行うようにしてください。<BR>
+  <CODE>WiFiConnectionIcon</CODE> と同時に <CODE>TRUE</CODE> を指定する事はできません。両方指定する必要がある場合は、<CODE>WiFiConnectionIcon</CODE> の指定を優先してください。<BR>
+  デフォルトは <CODE>FALSE</CODE> です。
+  <DT class="command_item"><CODE>AgreeEULA</CODE> <I>[TRUE|FALSE]</I>
+  <DD class="command_desc">利用規約に同意しないとランチャーからソフトを起動できないようにするかどうかを指定します。<BR>
+  ソフトを利用する上でインターネットへの接続が<FONT color="#FF0000">必須</FONT>である場合にのみ、TRUEを指定してください。<BR>
+  この指定を行う場合、同時に <CODE>WiFiConnectionIcon</CODE> の指定も必要になります。<BR>
+  なお、インターネットへの接続が必須ではなく、<FONT color="#FF0000">機能の一部として</FONT>ニンテンドーWi-Fiコネクション等のインターネットを利用するサービスに対応している場合には、FALSEを選択してください。代わりに、インターネットへの接続を試みる前に利用規約への同意がなされていることを確認する仕組みをゲームソフトに実装してください。(利用規約へ同意がなされていることはTWL-DWCライブラリでチェックされます。詳細については、TWL-DWC関数リファレンスマニュアルをご参照ください。)<BR>
+  デフォルトは <CODE>FALSE</CODE> です。
+  <DT class="command_item"><CODE>PhotoAccess</CODE> <I>[Read|ReadWrite]</I>
+  <DD class="command_desc">photo領域の写真データにアクセスする場合の種類について指定します。<BR>
+  TCL ライブラリを使用してphoto領域にアクセスする場合のみ指定してください。<BR>
+  ソフトが写真データを読み込む機能のみを持つ場合は Read を指定し、書き込み及び読み書き機能を持つ場合は ReadWrite を指定してください。
+
+</DL>
+</BLOCKQUOTE>
+<H4>AppendProperty セクション (追加付帯情報定義セクション) <IMG src="../image/TWL.gif" align="middle"></H4>
+<P>NAND アプリを作成する場合にだけ指定する必要があるセクションです。</P>
+<P>名称の後に ◎ が付いている項目は、NAND アプリのマスターROM作成時に必ず設定しなければならない項目です。</P>
+<BLOCKQUOTE>
+<DL class="command_list">
+  <DT class="command_item"><CODE>Media</CODE> <I>[GameCard|NAND]</I> ◎
+  <DD class="command_desc">ソフトがカードアプリなのかNANDアプリなのかを指定します。カードアプリの場合は AppendProperty セクション全体を省略することが可能です。
+  <DT class="command_item"><CODE>InitialCode</CODE> <I>[イニシャルコード]</I>
+  <DD class="command_desc">イニシャルコードをアスキー文字4文字で指定します。指定しなかった場合は、ROMヘッダを参照して設定されます。
+  <DT class="command_item"><CODE>PublicSaveDataSize</CODE> <I>[publicセーブデータのサイズ]</I>
+  <DD class="command_desc">publicセーブデータのサイズを数値で指定します。単位として、キロバイトを示す <CODE>K</CODE> を使用してください（例: <CODE>2048K</CODE>）。指定しなかった場合は <CODE>0K</CODE> と解釈されます。<BR>
+  指定可能な値に関しては、<A href="SaveDataSize.html">セーブデータサイズ一覧</A> を参照してください。
+  <DT class="command_item"><CODE>PrivateSaveDataSize</CODE> <I>[privateセーブデータのサイズ]</I>
+  <DD class="command_desc">privateセーブデータのサイズを数値で指定します。単位として、キロバイトを示す <CODE>K</CODE> を使用してください。（例: <CODE>2048K</CODE>）。指定しなかった場合は <CODE>0K</CODE> と解釈されます。<BR>
+  指定可能な値に関しては、<A href="SaveDataSize.html">セーブデータサイズ一覧</A> を参照してください。
+  <DT class="command_item"><CODE>SubBannerFile</CODE> <I>[TRUE|FALSE]</I>
+  <DD class="command_desc">サブバナーを利用するかどうかを指定します。
+
+</DL>
+</BLOCKQUOTE>
+<H4>Rating セクション (レーティング情報定義セクション) <IMG src="../image/TWL.gif" align="middle"></H4>
+<P>レーティング審査団体から取得したレーティング値を設定するセクションです。</P>
+<P>以下の審査団体のレーティング値を個別に設定できます。
+ただし、ソフトのリージョン(<CODE>Property</CODE>セクションの項目<CODE>CardRegion</CODE>で指定)に含まれる審査団体のみ設定可能です。</P>
+<BLOCKQUOTE>
+</P>
+<TABLE class="blockquoted_table">
+<TBODY>
+<TR>
+<TH>項目名</TH><TH>対応する審査団体名</TH><TH>含まれるリージョン</TH><TH>設定可能な値とレーティングとの対応</TH>
+</TR>
+<TR>
+  <TD><CODE>CERO</CODE></TD><TD>CERO</TD><TD>日本(<CODE>Japan</CODE>)</TD>
+  <TD>
+    <DIV>
+    <CODE>0</CODE>  : A(全年齢)<BR>
+    <CODE>12</CODE> : B(12歳以上)<BR>
+    <CODE>15</CODE> : C(15歳以上)<BR>
+    <CODE>17</CODE> : D(17歳以上)<BR>
+    <CODE>18</CODE> : Z(18歳以上)<BR>
+    <CODE>PENDING</CODE> : 審査中<BR>
+    </DIV>
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>ESRB</CODE></TD><TD>ESRB</TD><TD>北米(<CODE>America</CODE>)</TD>
+  <TD>
+    <DIV>
+    <CODE> 3</CODE> : EARLY CHILDHOOD (EC, 全年齢)<BR>
+    <CODE> 6</CODE> : EVELYONE (E, 6歳以上)<BR>
+    <CODE>10</CODE> : EVERYONE10+ (E10+, 10歳以上)<BR>
+    <CODE>13</CODE> : TEEN (T, 13歳以上)<BR>
+    <CODE>17</CODE> : MATURE (M, 17歳以上)<BR>
+    <CODE>PENDING</CODE> : 審査中<BR>
+    </DIV>
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>USK</CODE></TD><TD>USK</TD>
+  <TD>欧州(<CODE>Europe</CODE>)<BR>
+      欧州と豪州(<CODE>EuropeAndAustralia</CODE>)</TD>
+  <TD>
+    <DIV>
+    <CODE> 0</CODE> : 年齢制限なし<BR>
+    <CODE> 6</CODE> :  6歳以上<BR>
+    <CODE>12</CODE> : 12歳以上<BR>
+    <CODE>16</CODE> : 16歳以上<BR>
+    <CODE>18</CODE> : 青少年には不適切<BR>
+    <CODE>PENDING</CODE> : 審査中<BR>
+    </DIV>
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>PEGI_GEN</CODE></TD><TD>PEGI(一般)</TD>
+  <TD>欧州(<CODE>Europe</CODE>)<BR>
+      欧州と豪州(<CODE>EuropeAndAustralia</CODE>)</TD>
+  <TD>
+    <DIV>
+    <CODE> 3</CODE> :  3歳以上<BR>
+    <CODE> 7</CODE> :  7歳以上<BR>
+    <CODE>12</CODE> : 12歳以上<BR>
+    <CODE>16</CODE> : 16歳以上<BR>
+    <CODE>18</CODE> : 18歳以上<BR>
+    <CODE>PENDING</CODE> : 審査中<BR>
+    </DIV>
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>PEGI_PRT</CODE></TD><TD>PEGI(ポルトガル)</TD>
+  <TD>欧州(<CODE>Europe</CODE>)<BR>
+      欧州と豪州(<CODE>EuropeAndAustralia</CODE>)</TD>
+  <TD>
+    <DIV>
+    <CODE> 4</CODE> :  4歳以上<BR>
+    <CODE> 6</CODE> :  6歳以上<BR>
+    <CODE>12</CODE> : 12歳以上<BR>
+    <CODE>16</CODE> : 16歳以上<BR>
+    <CODE>18</CODE> : 18歳以上<BR>
+    <CODE>PENDING</CODE> : 審査中<BR>
+    </DIV>
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>PEGI_BBFC</CODE></TD><TD>PEGI(一般)およびBBFC</TD>
+  <TD>欧州(<CODE>Europe</CODE>)<BR>
+      欧州と豪州(<CODE>EuropeAndAustralia</CODE>)</TD>
+  <TD>
+    <DIV>
+    <CODE> 3</CODE> :  3歳以上<BR>
+    <CODE> 4</CODE> :  U, Uc(4歳以上推奨)<BR>
+    <CODE> 7</CODE> :  7歳以上<BR>
+    <CODE> 8</CODE> :  PG(8歳以上推奨)<BR>
+    <CODE>12</CODE> : 12歳以上<BR>
+    <CODE>15</CODE> : 16歳以上<BR>
+    <CODE>16</CODE> : 16歳以上<BR>
+    <CODE>18</CODE> : 18歳以上<BR>
+    <CODE>PENDING</CODE> : 審査中<BR>
+    </DIV>
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>AGCB</CODE></TD><TD>AGCB</TD>
+  <TD>豪州(<CODE>Australia</CODE>)<BR>
+      欧州と豪州(<CODE>EuropeAndAustralia</CODE>)</TD>
+  <TD>
+    <DIV>
+    <CODE> 0</CODE> : G(一般的、年齢が指定されていない)<BR>
+    <CODE> 7</CODE> : PG(親の指導推奨、年齢が指定されていない)<BR>
+    <CODE>14</CODE> : M(成人向け推奨、年齢が指定されていない)<BR>
+    <CODE>15</CODE> : MA15+(15歳未満は不適切、15歳未満は親または保護者の同伴が必要)<BR>
+    <CODE>PENDING</CODE> : 審査中<BR>
+    </DIV>
+  </TD>
+</TR>
+</TBODY>
+</TABLE>
+<P>例外的にレーティングが不要であると判断された場合のみ、以下の項目を設定してください。</P>
+<DL class="command_list">
+  <DT class="command_item"><CODE>Unnecessary</CODE> <I>[TRUE|FALSE]</I>
+  <DD class="command_desc">レーティング取得が不要なアプリであるかどうかを指定します。<CODE>TRUE</CODE>を設定した場合、各審査団体のレーティング値を設定することはできません。<BR>
+デフォルトは<CODE>FALSE</CODE>です。
+</DL>
+</BLOCKQUOTE>
+<H4>RomSpec セクション (ROM イメージ定義セクション)</H4>
+<P><FONT color="#ff0000">他のセクションよりも後に記述する必要があります。</FONT></P>
+<P><B>RomSpec セクション NITRO / TWL 共通項目</B> <IMG src="../image/NTR.gif" align="middle"><IMG src="../image/TWL.gif" align="middle"></P>
+<BLOCKQUOTE>
+<DL class="command_list">
+  <DT class="command_item"><CODE>Offset <I>[オフセット値]</I></CODE>
+  <DD>ROM イメージにおけるファイル(またはデータ)の配置位置のオフセット値を指定します。<BR>
+  ROM イメージの領域が重なることを防止するため、設定可能なオフセット値は、その時点で全てのファイル(またはデータ)が設置されている最終位置よりも大きな値でなければなりません。そうでない場合はエラーとなります。
+  <DT class="command_item"><CODE>OffsetMin <I>[オフセット値]</I></CODE>
+  <DD><CODE>Offset</CODE> と同じですが、指定されたオフセット値がファイルが設置されている最終位置よりも大きな値でない場合であってもエラーとならずに、指定が無視されます。
+  <DT class="command_item"><CODE>Segment All</CODE>
+  <DD><FONT color="#ff0000">全ての</FONT>ファイルシステム管理用データを設置します。他のファイルに先立ってこの管理データをROM
+  の先頭に配置する必要があります。
+  <DT class="command_item"><CODE>Padding</CODE> <I>[キャラクタコード 0～255]</I>
+  <DD class="command_desc">ROM イメージのアラインメント処理などを行なったときに出来る隙間に代入する値を指定します。<BR>
+  0～255 の値が指定でき、<FONT color="#ff0000">初期値は ROM フォーマット番号が 1 のときには 0、フォーマット番号が 2 以上のときは
+  255 となっています。</FONT>
+  <DT class="command_item"><CODE>Align</CODE> <I>[アラインメント値]</I>
+  <DD class="command_desc">次に格納されるファイルまたはデータの ROM イメージ上の先頭位置を指定したメモリ境界に一致させます。このときに空いた隙間は
+  <CODE>Padding</CODE> で指定された値が埋められます。<BR>
+  アラインメント値は 2 の累乗である必要があります。<BR>
+  <FONT color="#ff0000"><CODE>Align</CODE> 文は、あくまで一時的にファイルのメモリ境界を操作するためのものですので、その影響範囲はこの記述の直後に置かれるファイルのみとなっています。永続的なメモリ境界の指定を行ないたい場合は
+  <CODE>AlignAll</CODE> 文をご使用ください。</FONT>
+  <DT class="command_item"><CODE>AlignAll</CODE> <I>[アラインメント値]</I>
+  <DD class="command_desc">　この記述以降に格納される全てのファイルまたはデータの ROM イメージ上の先頭位置を指定したメモリ境界に一致させます。このときに空いた隙間は
+  <CODE>Padding</CODE> で指定された値が埋められます。<CODE><BR>
+  　Align</CODE> と<CODE>AlignAll</CODE> の両方が有効になっていたときは、Alignで指定された方の値が使用されます。<CODE>AlignAll</CODE> の初期値は 512 となっています。<BR>
+  　<FONT color="#ff0000">ファイル配置の境界を 512 未満に設定した場合には、NITRO のソフト媒体である
+  NITRO CARD へのアクセスが 512 バイトブロック単位に限定されていることについて注意する必要があります。</FONT>
+  <DT class="command_item"><CODE>HostRoot</CODE> <I>[PC 側のルートディレクトリ名]</I>
+  <DD class="command_desc">ROM イメージ内に格納するファイルの PC 上の基準ディレクトリです。<CODE>HostRoot</CODE> は省略することができ、その場合は <CODE>&quot;.&quot;</CODE> (カレントディレクトリ) がデフォルト値として使用されます。
+  <DT class="command_item"><CODE>Root</CODE> <I>[NITRO 側のルートディレクトリ名]</I>
+  <DD class="command_desc">ROM イメージ内に格納するファイルの NITRO 上の基準ディレクトリです。これにより
+  <CODE>HostRoot</CODE> で示したPC 上のディレクトリが <CODE>Root</CODE> で示した NITRO のディレクトリにマップされます。<CODE>Root</CODE> は省略することができ、その場合は <CODE>&quot;/&quot;</CODE> (ルートディレクトリ) がデフォルト値として使用されます。
+  <DT class="command_item"><CODE>File</CODE> <I>[ファイル名 ...]</I>
+  <DD class="command_desc">ROM イメージ内に格納するファイルを指定します。指定したファイル名がディレクトリである場合は、そのディレクトリ以下の全てのサブディレクトリ内のファイルが格納されます。ただし
+  <CODE>Reject</CODE> で指定したパターンに一致したファイル、サブディレクトリは除きます。ファイルの指定にはワイルドカードとして
+  <CODE>*</CODE> あるいは <CODE>?</CODE> を使用することができます。<CODE>*</CODE> は任意の複数の文字に、<CODE>?</CODE> は任意の文字(1バイト)を表わします。
+  <DT class="command_item"><CODE>Reject</CODE> <I>[ファイル名パターン ...]</I>
+  <DD class="command_desc">ROM イメージ内に格納しないファイルの名前です。<CODE>makerom</CODE> において、<CODE>File</CODE> 文でディレクトリやワイルドカードをファイル名として指定したときには、その指定名からファイル名を展開して
+  ROM 内に格納するファイル一覧を <CODE>makerom</CODE> 内部で求めます。このファイル一覧に含めて欲しくないファイル名を <CODE>Reject</CODE> 定義によって指定することができます。<BR>
+  <BR>
+  <CODE>Reject</CODE> 文には空白で区切ることで、複数のファイル名パターンを書くことができ、ワイルドカード(<CODE>*</CODE> あるいは <CODE>?</CODE> ) が使用可能です。<CODE>Reject</CODE>文による指定は、次の<CODE>Reject</CODE>文か <CODE>RomSpec</CODE> セクション終了までの間に含まれる以降の <CODE>File</CODE> 文に対して有効となります。また <CODE>Reject</CODE> されるファイル名パターンの初期値として <CODE>&quot;CVS&quot; &quot;vssver.scc&quot;</CODE> および <CODE>&quot;.?*&quot;</CODE> (ピリオドで始まるファイル名)が設定されています。
+  <DT class="command_item"><CODE>Fixed</CODE> <I>[Default | True | False ]</I>
+  <DD>nlf ファイルのパラメータを修正するためのもので、この後に設置されるデータの移動可能かどうかのフラグを操作します。通常は使用する必要はありません。初期値は
+  <CODE>Default</CODE>(設置されるデータの種類に応じた自動設定) になっています。
+  <DT class="command_item"><CODE>TagType</CODE> <I>[Default | Name | Id | None ]</I>
+  <DD>nlf ファイルのパラメータを修正するためのもので、この後に設置されるデータのアクセス方法
+  (自動設定 / ファイル名 / ファイルID / アクセス方法無し) を指定します。通常は使用する必要はありません。初期値は
+  <CODE>Default</CODE> (設置されるデータの種類に応じた自動設定) になっています。
+</DL>
+</BLOCKQUOTE>
+<P><a name="ROMSPEC_TWL"><B>RomSpec セクション TWL 専用項目</B></a> <IMG src="../image/TWL.gif" align="middle"></P>
+<BLOCKQUOTE>
+<DL class="command_list">
+  <DT class="command_item"><CODE>DllFile</CODE> <I>[アプリが使用する動的モジュール名] [デバッグ情報を含む動的モジュール名] [ARM9/ARM7]</I>
+  <DD class="command_desc">ROM イメージ内に格納した動的モジュールファイルの元となるデバッグ情報付きの動的モジュールファイルを指定します。指定した動的モジュールがARM9用かARM7用かを指定する必要があります。
+  <DT class="command_item"><CODE>Put</CODE> <I>[TwlRom|NitroRom]</I>
+  <DD class="command_desc">以降の行で指定するファイルを ROM 上に配置する領域を、TWL 専用領域と NITRO 互換領域とで切り替えます。なお、デフォルトは NitroRom となっています。<br />
+TWL専用領域に配置したファイルは<a href="../fs/overview/about_Archive.html#ROM_LTDFILE">TWL専用ファイル</a>となり、NITROモード環境での動作時にはROMからの読み出しが不可能となります。</DL>
+</BLOCKQUOTE>
+<H3>変数参照と修飾オプション</H3>
+<P>　ROM スペックファイルの記述において<CODE> $(<I>[変数名</I>])</CODE>という記述により、ファイル外部で定義された変数の値を参照することができます。変数はコマンドラインオプションの
+<CODE>-D</CODE><I>[変数名]</I>=<I>[値]</I> や <CODE>-M</CODE><I>[変数リストファイル名]</I>、あるいは環境変数で値を設定することができます。コマンドラインオプションと環境変数で同じ変数が定義された場合は、コマンドラインオプションの定義が優先され、コマンドラインオプションにおいて同一名の変数が定義されたときは、先に定義された値が優先されます。</P>
+<P>以下は変数参照の記述例です。</P>
+<BLOCKQUOTE>
+<PRE class="sample_source"><CODE>RomSpec
+{
+    Offset     0x00000000
+    Segment    All
+    File       $(FILENAME)
+}</CODE></PRE>
+</BLOCKQUOTE>
+<P>　また変数の値がファイルパスの形式であった場合に、変数名の直後に<CODE>:h</CODE>,<CODE>:t</CODE>,<CODE>:r</CODE>,<CODE>:e</CODE> という修飾オプションをつけることによって、以下のような値を参照することができます。</P>
+<BLOCKQUOTE><CODE>$(FILE)=C:/home/Twl/readme.txt</CODE> の場合：
+<TABLE class="blockquoted_table">
+  <TBODY>
+    <TR>
+      <TD><CODE>:h</CODE></TD>
+      <TD>パスの最後のパス区切り文字以前の部分</TD>
+      <TD><CODE>$(FILE:h)=C:/home/Twl/</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>:t</CODE></TD>
+      <TD>パスの最後のパス区切り文字より後ろの部分</TD>
+      <TD><CODE>$(FILE:t)=readme.txt</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>:r</CODE></TD>
+      <TD>パスのファイル拡張子を除いた部分</TD>
+      <TD><CODE>$(FILE:r)=C:/home/Twl/readme</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>:e</CODE></TD>
+      <TD>パスのファイル拡張子の部分</TD>
+      <TD><CODE>$(FILE:e)=txt</CODE></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</BLOCKQUOTE>
+<P><BR>
+</P>
+<H3>その他の書式について</H3>
+<P>　セクション定義で使用される <CODE>&quot;RomSpec&quot;</CODE> などのキーワードは <CODE>&quot;ROMSPEC&quot;</CODE> のように全て大文字でも、あるいは <CODE>&quot;romspec&quot;</CODE> のように全て小文字でも同じものとして動作します。また '#' 以降の記述はコメントとして扱われます。</P>
+<P>　<CODE>File</CODE> や <CODE>Reject</CODE> 文において、複数の項目を指定する場合には空白で項目を区切ります。また <CODE>&quot;&quot;</CODE> (ダブルクォーテーション) で文字列を囲むことで、空白を含むファイル名を指定することができます。</P>
+<BLOCKQUOTE>
+<PRE class="sample_source"><CODE>#
+# '#' で始まるとコメント
+#
+Arm9
+{
+   Static      &quot;c:/Program Files/myApps/lib/main.sbin&quot;
+   OverlayDefs &quot;c:/Program Files/myApps/lib/overlaydefs.sbin&quot;
+}
+
+Property
+{
+   RomSpeedType    1TROM
+   BannerFile      ./etc/default.bnr
+}
+
+ROMSPEC  # 大文字でも OK
+{
+   Segment  ALL
+   File     boo.dat foo.dat woo.dat
+}</CODE></PRE>
+</BLOCKQUOTE>
+<H3><A name="ROMFORMAT_VER">ROM フォーマットバージョンについて</A></H3>
+<P>　新仕様の <CODE>1Gbit 以上のサイズの</CODE> ROM のサポートのために ROM フォーマットが一部変更され、これらのサイズの ROM イメージにおいて最上位の一定サイズの領域がシステム予約領域となりました。SDK 3.2 以降の <CODE>makerom</CODE> から、この新しい ROM フォーマットがデフォルトの設定となりました。SDK 3.1 以前の旧フォーマットで ROM イメージを出力したい場合はオプションに <CODE>-V1</CODE> を指定してください。</P>
+
+<P>　新旧のフォーマット間の変更点は以下の通りです。</P>
+<DIV align="left">
+<BLOCKQUOTE>
+<TABLE class="blockquoted_table">
+  <TBODY>
+    <TR>
+      <TH></TH>
+      <TH>新 ROM フォーマット</TH>
+      <TH>旧 ROM フォーマット</TH>
+    </TR>
+    <TR>
+      <TD>バージョン番号</TD>
+      <TD><CODE>2</CODE></TD>
+      <TD><CODE>1</CODE></TD>
+    </TR>
+    <TR>
+      <TD>Padding の初期値</TD>
+      <TD><CODE>255</CODE></TD>
+      <TD><CODE>0</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>1G bit</CODE> ROM の使用可能サイズ</TD>
+      <TD><CODE>125.5MBytes = 1004Mbit</CODE></TD>
+      <TD><CODE>128.0MBytes = 1024Mbit</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>2G bit</CODE> ROM の使用可能サイズ</TD>
+      <TD><CODE>251.0MBytes = 2008Mbit</CODE></TD>
+      <TD><CODE>256.0MBytes = 2048Mbit</CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE>4G bit</CODE> ROM の使用可能サイズ</TD>
+      <TD><CODE>501.625MBytes = 4013Mbit</CODE></TD>
+      <TD><CODE>512.0MBytes = 4096Mbit</CODE></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</BLOCKQUOTE>
+</DIV>
+<P>　新ROMフォーマットにおけるシステム予約領域は 255 で埋められます。また、ROM イメージのサイズに関わらず Padding の初期値も 0 から 255 に変更されています。
+</P>
+<H3>量産機で動作する　ROM の作成に関して</H3>
+<P>
+makerom.TWL を用いて作成できる ROM イメージは TWL 開発機上でのみ動作します。TWL 量産機上で動作する ROM の作成には任天堂でのマスタリング作業が必要になりますので、開発者の手元では量産機上での動作確認を行って頂く必要はありません。makerom.TWL によって作成された ROM イメージのままマスター ROM 提出を行ってください。詳細は「マスター ROM 提出手順書」をご参照ください。
+</P>
+<P>
+また、TWL 量産機では NITRO の ROM に関してもマスタリング済みの物しか動作しないようになっているため、makerom を用いて作成された NITRO 用の ROM イメージを動作させることはできませんので注意してください。
+</P>
+
+<H3>その他の注意事項</H3>
+<H4>マスターROM最後部未使用領域のデータについて</H4>
+<P>
+マスターROMの最後部の使用していない領域には、
+TWL-SDKのmakeromツールによって自動的に0xFFが埋められます。
+</P>
+<H4>マスターROM使用禁止領域のデータについて</H4>
+<P>1Gbit以上のROMには、ROMのメモリマップ後尾にROMコードを格納することができない
+使用禁止領域があります。使用禁止領域には、TWL-SDKのmakeromツールによって自動的に0xFFが埋められます。
+1Gbit以上のROMでは、使用禁止領域を読み出すと常に0xFFが出力される仕様です。
+使用禁止領域のサイズについては、『ゲームカードマニュアル』を参照して下さい。</P>
+<H4>アクセス禁止領域からの読み出しデータ使用について</H4>
+<P>ゲームカードのアクセス禁止領域を読み出した場合の出力データは不定です。
+（TWL-SDKのFS関数を利用して、ゲームカードに配置されたファイルをアクセスする限り、
+アクセス禁止領域を読み出すことはありません）。アクセス禁止領域については、
+『ゲームカードマニュアル』を参照して下さい。</P>
+<H2>場所</H2>
+<P>
+<CODE>$TwlSDK/tools/bin/makerom.exe</CODE><BR>
+<CODE>$TwlSDK/tools/bin/makerom.TWL.exe</CODE><BR>
+<CODE>$TwlSDK/tools/bin/rom_header.template.sbin</CODE>
+<CODE>$TwlSDK/tools/bin/rom_header.LTD.sbin</CODE>
+</P>
+<H2>参照</H2>
+<P><CODE><A href="makelcf.html">makelcf</A>, <A href="makebanner.html">makebanner</A></CODE></P>
+<H2>履歴</H2>
+<P>
+2009/06/08 TWL専用ファイルの説明へのリンクを追加。<br />
+2009/04/13 DigestParamの説明からFSライブラリ概要へのリンクを追加<BR>
+2009/04/07 PhotoAccess プロパティの説明を追記<BR>
+2009/03/24 AlignとAlignAllの優先順位に関して記述修正<BR>
+2009/03/10 <CODE>CardRegion</CODE>の説明を追記、豪州のレーティング審査団体名変更に伴った修正<BR>
+2009/02/06 <CODE>CardRegion</CODE>の説明を追記し、Rating の説明を新たに追加<BR>
+2009/02/03 <CODE>WiFiConnectionIcon</CODE> および <CODE>AgreeEULA</CODE> に説明を追記<BR>
+2009/01/08 TWL専用ファイルに関する説明を追記<BR>
+2008/12/16 <CODE>TARGET_PLATFORM</CODE> のデフォルト値に関する説明修正<BR>
+2008/12/08 <CODE>JpegSign</CODE> の説明を削除<BR>
+2008/10/31 RomSize に関する説明の追記<BR>
+2008/10/29 <CODE>WramMapping</CODE> および <CODE>CodecMode</CODE> の説明を修正<BR>
+2008/10/22 <CODE>JpegSign</CODE> に説明を追記<BR>
+2008/10/22 Property の説明を追記<BR>
+2008/09/16 開発機/量産機での ROM 動作に関する記述を追加<BR>
+2008/09/12 makerom.TWL.exe を見出しに加え、項目を大幅に追加<BR>
+2008/06/04 FixSound、FixSoundDMAのデフォルトをTRUEに変更<BR>
+2008/03/28 ARM7 の SCFG に関する記述の変更<BR>
+2007/11/30 ARM7 の SCFG に関する設定を追加<BR>
+2007/09/27 DllFile の追加<BR>
+2007/06/06 <CODE>-M</CODE>オプションについての記述の追加<BR>
+2007/03/29 新 ROM フォーマットの <CODE>2Gbit</CODE> ROM の仮仕様が、そのまま最終仕様となったことに対応する記載の修正<BR>
+2006/10/06 Reject 文の有効範囲についての記述を追加<BR>
+2006/08/18 ForKorea に関する説明文追加<BR>
+2005/05/09 ROM フォーマットバージョンのサポート<BR>
+2005/04/26 用語修正 「1タイムROM」→「ワンタイムPROM」<BR>
+2005/04/11 ForChina に関する説明文追加<BR>
+2005/04/05 RomSpeedType へ&quot;UNDEFINED&quot; に関する説明文追加<BR>
+2005/03/28 RomSpeedType と -W オプションに関する説明文追加<BR>
+2004/09/22 セクションの出現順に関する説明文追加<BR>
+2004/07/23 Align/AlignAll に関する説明文追加<BR>
+2004/06/08 初版作成</P>
+</BODY>
+</HTML>

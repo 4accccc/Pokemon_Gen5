@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_SetSeekCache</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FS_SetSeekCache <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+BOOL FS_SetSeekCache(<A href="../fs_file_type.html">FSFile</a> *file, void* buf, u32 bufsize);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>file</strong></em></td>
+<td style="width:87%">すでに開かれているファイル<br />
+<span style="color:Red">引数の条件について、後述の【注意】もご参照ください。</span></td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>buf</strong></em></td>
+<td style="width:87%">シーク用キャッシュとして使用させるバッファ<br />
+NULLを指定した場合は以前に設定したキャッシュバッファの使用を解除します。<br />
+<span style="color:Red">引数の条件について、後述の【注意】もご参照ください。</span></td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>bufsize</strong></em></td>
+<td style="width:87%">バッファのサイズ<br />
+シーク用キャッシュとして充分なサイズは<code><a href="FS_GetSeekCacheSize.html">FS_GetSeekCacheSize()</a></code>で取得することができます。<br />
+サイズが小さい場合、ライブラリは与えられたサイズの範囲で可能な限りのキャッシュを構築します。</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>処理が成功すればTRUEを返します。<br />
+以下の場合には失敗してFALSEを返します。</p>
+<ul>
+<li>指定されたバッファがメインメモリ上ではない場合</li>
+<li>指定されたバッファの両端をキャッシュライン32バイト境界で切り詰めたら領域が0バイトになってしまう場合</li>
+</ul>
+
+<h2>説明</h2>
+<p>シーク用キャッシュバッファを設定します。<br />
+<a href="../archive_nand_spec.html">NANDアーカイブ</a>や<a href="../archive_sdmc_spec.html">SDカードアーカイブ</a>など
+内部フォーマットにFATを採用しているアーカイブではファイル終端や逆方向へのシーク処理に大きな実行コストを要する場合があります。
+読み込み専用ファイルのシーク操作を頻繁に使用することがわかっている場合、この関数を使用することによってシーク速度を向上することができます。</p>
+<p>この関数で設定したバッファは、ファイルを閉じるか明示的にNULLを指定して使用を解除するまでライブラリ内部で管理されます。</p>
+<p>この関数は、指定されたバッファの範囲内で先端と終端をキャッシュライン境界に整合させて切り詰めた領域だけを使用します。
+<code><a href="FS_GetSeekCacheSize.html">FS_GetSeekCacheSize()</a></code>で取得するバッファサイズには、
+どのようなアドレスでも使用できる充分な余白が含まれています。</p>
+
+<h2>注意</h2>
+<a name="note" />
+<ul><span style="color:Red">
+<li>指定するファイルは読み込み専用モードで開かれている必要があります。</li>
+<li>指定するシーク用キャッシュは4バイトの整数倍に境界整合されたメインメモリ上のバッファである必要があります。</li>
+</span></ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="FS_SeekFile.html">FS_SeekFile</a>
+<a href="FS_GetSeekCacheSize.html">FS_GetSeekCacheSize</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/02/05 バッファのキャッシュライン境界整合に関する追記<br />
+2008/07/01 ファイルが読み込み専用モードで開かれている必要がある旨を追記<br />
+2008/06/26 初版<br />
+</p>
+</body>
+</html>

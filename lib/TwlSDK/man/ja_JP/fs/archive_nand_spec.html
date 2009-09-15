@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>NANDアーカイブ</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css" />
+</head>
+<body>
+<h1>NANDアーカイブ <img src="../image/TWL.gif" align="middle"></h1>
+<h2>概要</h2>
+<p>
+この項では、ファイルシステムにデフォルトで用意される「NANDアーカイブ」について説明します。
+</p>
+<h2>仕様</h2>
+<p>
+NANDアーカイブの基本的な動作は以下の通りです。
+</p>
+<ul>
+<li>ファイルシステムによって予約されているアーカイブ名 "shared1", "photo" などを使用します。</li>
+<li><code><a href="archive/FS_InitFatDriver.html">FS_InitFatDriver()</a></code> の初回呼び出し時に自動的にマウントされます。<br />
+マウントされるNANDアーカイブの種類と個数はRSFファイルの設定内容に応じて本体ランチャーが判断し、起動時に決定されます。</li>
+<li>任意のファイルやディレクトリに対して新規生成や削除が可能なため、ファイルIDやディレクトリIDを必要とするコマンド全般に対応しません。<br />(そのような関数を呼び出した場合は<a href="fs_result_const.html">FS_RESULT_UNSUPPORTED</a>を返します)</li>
+<li>非同期版の読み書き関数を呼び出されても、バッファアドレスと転送サイズのいずれかが32バイト境界に整合していなければ同期版として動作します。この時はライブラリ内部の一時バッファを経由して転送するため、処理性能は低下します。</li>
+</ul>
+<h2>実装</h2>
+<p>
+NAND内部メモリ空間はNitroROMフォーマットでないため、アーカイブの内部実装も<a href="archive_rom_spec.html">ROMアーカイブ</a>のようなプロシージャ機構ではありません。
+そのため、NITRO-SDKには存在しなかったいくつかの新規関数を使用することができ、逆にいくつかの既存の関数は使用することができません。<br />
+NANDアーカイブで使用可能なFS関数は以下の通りです。
+</p>
+<table style="width:30%">
+<tr><td style="border:solid 1px black;background-color:#FFFFF8">使用可能な関数</td></tr>
+<tr><td style="border:solid 1px black;background-color:#C0C0C0">使用不可能な関数</td></tr>
+</table>
+<br />
+<table>
+<tr><td style="text-align:left;width:30%">関数</td><td style="width:20%">備考</td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="file/FS_OpenFileEx.html">FS_OpenFileEx</a> <font size="-1">(<a href="file/FS_OpenFile.html">FS_OpenFile</a>)</font></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#C0C0C0"><a href="file/FS_OpenFileFast.html">FS_OpenFileFast</a></td><td rowspan="2">ファイルIDを使用するコマンドは非対応です。</td></tr>
+<tr><td style="border:solid 1px black;background-color:#C0C0C0"><a href="file/FS_ConvertPathToFileID.html">FS_ConvertPathToFileID</a></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="file/FS_CloseFile.html">FS_CloseFile</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#C0C0C0"><a href="file/FS_OpenFileDirect.html">FS_OpenFileDirect</a></td><td rowspan="3">デバイスのアドレス空間へ直接アクセスするコマンドは非対応です。</td></tr>
+<tr><td style="border:solid 1px black;background-color:#C0C0C0"><a href="file/FS_GetFileImageTop.html">FS_GetFileImageTop</a></td></tr>
+<tr><td style="border:solid 1px black;background-color:#C0C0C0"><a href="file/FS_GetFileImageBottom.html">FS_GetFileImageBottom</a></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="file/FS_GetFileLength.html">FS_GetFileLength</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="file/FS_SetFileLength.html">FS_SetFileLength</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="file/FS_GetFilePosition.html">FS_GetFilePosition</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="file/FS_SeekFile.html">FS_SeekFile</a><br /><a href="file/FS_SeekFileToBegin.html">FS_SeekFileToBegin</a><br /><a href="file/FS_SeekFileToEnd.html">FS_SeekFileToEnd</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="file/FS_ReadFile.html">FS_ReadFile</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="file/FS_ReadFileAsync.html">FS_ReadFileAsync</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="file/FS_WriteFile.html">FS_WriteFile</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="file/FS_WriteFileAsync.html">FS_WriteFileAsync</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="file/FS_FlushFile.html">FS_FlushFile</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="directory/FS_OpenDirectory.html">FS_OpenDirectory</a> <font size="-1">(<a href="file/FS_FindDir.html">FS_FindDir</a>)</font></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="directory/FS_ReadDirectory.html">FS_ReadDirectory</a> <font size="-1">(<a href="file/FS_ReadDir.html">FS_ReadDir</a>)</font></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="directory/FS_CloseDirectory.html">FS_CloseDirectory</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#C0C0C0"><a href="file/FS_TellDir.html">FS_TellDir</a></td><td rowspan="3">ディレクトリIDを使用するコマンドは非対応です。</td></tr>
+<tr><td style="border:solid 1px black;background-color:#C0C0C0"><a href="file/FS_SeekDir.html">FS_SeekDir</a></td></tr>
+<tr><td style="border:solid 1px black;background-color:#C0C0C0"><a href="file/FS_RewindDir.html">FS_RewindDir</a></td></tr>
+<tr><td style="border:solid 1px black;background-color:#C0C0C0"><a href="file/FS_GetPathName.html">FS_GetPathName</a></td><td rowspan="2">ハンドルからパス名を検索するコマンドは非対応です。</td></tr>
+<tr><td style="border:solid 1px black;background-color:#C0C0C0"><a href="file/FS_GetPathLength.html">FS_GetPathLength</a></td></tr>
+
+
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="directory/FS_CreateFile.html">FS_CreateFile</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="directory/FS_DeleteFile.html">FS_DeleteFile</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="directory/FS_RenameFile.html">FS_RenameFile</a></td><td></td></tr>
+
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="directory/FS_CreateDirectory.html">FS_CreateDirectory</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="directory/FS_DeleteDirectory.html">FS_DeleteDirectory</a></td><td></td></tr>
+<tr><td style="border:solid 1px black;background-color:#FFFFF8"><a href="directory/FS_RenameDirectory.html">FS_RenameDirectory</a></td><td></td></tr>
+
+
+</table>
+
+
+<h2>参照</h2>
+<p><code>
+<br />
+<a href="file/FS_Init.html">FS_Init</a> 
+</code></p>
+
+<h2>履歴</h2>
+<P>
+2009/02/27 非同期関数の動作について記述を訂正<br />
+2008/07/14 アーカイブ名に関して記述を若干修正<br />
+2007/09/18 初版<br />
+</P>
+</body>
+</html>

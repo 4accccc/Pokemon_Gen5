@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>RTC_SyncSWClock</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">RTC_SyncSWClock <img src="../image/NTR.gif" align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/rtc.h&gt;</CODE><BR>
+<PRE><CODE><A href="RTCResult.html">RTCResult</A> RTC_SyncSWClock( void );</CODE></PRE>
+  </dd>
+
+</dl><h2>引数</h2>
+<p>なし。</p>
+
+<h2>返り値</h2>
+<p>
+関数内で呼び出された <code><A href="RTC_GetDateTime.html">RTC_GetDateTime()</A></code> の結果を返します。
+</p>
+
+<H2>説明</H2>
+<P>
+ソフトウェアクロックを現在の RTC 時刻に同期します。関数内で <code><A href="RTC_GetDateTime.html">RTC_GetDateTime()</A></code> を呼び出すため、PXI 割り込みを禁止した状態で呼び出さないようにしてください。
+</P>
+<P>
+この関数は、<code><A href="RTC_InitSWClock.html">RTC_InitSWClock()</A></code> 呼び出し時に追加されるスリープ復帰時のコールバック内でも呼び出されます。
+</P>
+<P>
+<code><A href="RTC_GetLastSyncSWClockResult.html">RTC_GetLastSyncSWClockResult()</A></code> を呼び出すことで、最後に呼び出された <code>RTC_SyncSWClock()</code> の返り値を取得することができます。
+</P>
+
+<h2>参照</h2>
+<P><CODE>
+<A href="RTC_InitSWClock.html">RTC_InitSWClock</A>,
+<A href="RTC_GetLastSyncSWClockResult.html">RTC_GetLastSyncSWClockResult</A>,
+<A href="RTCResult.html">RTCResult</A>
+</CODE></P>
+
+<H2>履歴</H2>
+<P>
+2008/04/17 初版
+</P>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCLSortType</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCLSortType <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+typedef enum
+{
+    TCL_SORT_TYPE_DATE = 0 ,
+    TCL_SORT_TYPE_FAVORITE_1 ,
+    TCL_SORT_TYPE_FAVORITE_2 ,
+    TCL_SORT_TYPE_FAVORITE_3 ,
+    TCL_SORT_TYPE_FAVORITE_ALL ,
+    TCL_SORT_TYPE_FRAME ,
+    TCL_SORT_TYPE_MAX
+} TCLSortType;
+	</code></pre>
+</dl>
+
+<h2>説明</h2>
+<p><a href="TCL_SortTable.html"><code>TCL_SortTable</code></a> を使用して管理ファイルのソートを行う際のソートタイプです。</p>
+<p>内容は以下の通りです。</p>
+<table>
+<tr><td>TCL_SORT_TYPE_DATE<td>写真(=フレーム以外)を優先し、日付でソートします。
+<tr><td>TCL_SORT_TYPE_FAVORITE_1<td>お気に入り1でソートします。
+<tr><td>TCL_SORT_TYPE_FAVORITE_2<td>お気に入り2でソートします。
+<tr><td>TCL_SORT_TYPE_FAVORITE_3<td>お気に入り3でソートします。
+<tr><td>TCL_SORT_TYPE_FAVORITE_ALL<td>全てのお気に入りでソートします。お気に入り1、2、3、それ以外という順番になります。
+<tr><td>TCL_SORT_TYPE_FRAME<td>フレームを優先し、日付でソートします。
+</table>
+
+<h2>参照</h2>
+<p><code>
+<a href="TCL_SortTable.html">TCL_SortTable</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/10/24 <code>TCL_SORT_TYPE_FAVORITE_ALL</code> 追加<br/>
+2008/10/07 初版<br/>
+</p>
+
+</body>
+</html>

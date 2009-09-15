@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>DSP_StartSampling</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>DSP_StartSampling <IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<pre><code>
+void DSP_StartSampling(void *buffer, u32 length);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>buffer</strong></em></td>
+<td style="width:87%">サンプリングデータを格納するリングバッファ。<br />
+16ビットの整数倍に境界整合している必要があります。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>len</strong></em></td>
+<td style="width:87%">リングバッファのサイズ。<br />
+16ビットの整数倍である必要があります。</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>なし。</p>
+
+<h2>説明</h2>
+<p>DSP内部のマイク入力回路を使用して符号付き16ビットの自動サンプリングを開始します。<br />
+入力波形のサンプリング周波数は実行時のサウンド回路周波数に依存して32kHz/48kHzのいずれかになります。<br />
+この関数は、いずれかの DSP コンポーネントをロードしていれば常に使用することができます。</p>
+<p>DSPはモノラル4096サンプル分のリングバッファを内蔵してバックグラウンドで自動サンプリングするため、
+ARM9に負荷を与えずに最大83.3[ms](描画フレーム5周)分の入力波形をストックしておくことが出来ます。
+アプリケーションは、この期間内に <code><a href="DSP_SyncSamplingBuffer.html">DSP_SyncSamplingBuffer()</a></code> を呼び出して
+DSPの内部バッファからARM9側のリングバッファへ入力波形を定期的に退避する必要があります。<br />
+格納されたサンプリングデータの状況は <code><a href="DSP_GetLastSamplingAddress.html">DSP_GetLastSamplingAddress()</a></code> によって参照することができます。</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="DSP_StopSampling.html">DSP_StopSampling</a>
+<a href="DSP_SyncSamplingBuffer.html">DSP_SyncSamplingBuffer</a>
+<a href="DSP_GetLastSamplingAddress.html">DSP_GetLastSamplingAddress</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/06/13 初版<br />
+</p>
+</body>
+</html>

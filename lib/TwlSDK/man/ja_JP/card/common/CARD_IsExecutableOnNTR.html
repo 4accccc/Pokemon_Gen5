@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>CARD_IsExecutableOnNTR</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">CARD_IsExecutableOnNTR<img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;nitro/card.h&gt;</CODE><BR>
+  <BR>
+  <CODE>void	CARD_IsExecutableOnNTR(const <code><a href="../card_rom_header_type.html">CARDRomHeader</a></code> *header);</CODE><br>
+  <br>
+  </dd>
+</dl>
+<h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>header</STRONG></EM></TD>
+      <TD width="87%">判定すべきプログラムのROMヘッダ情報が格納されたバッファへのポインタ</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<h2>返り値</h2>
+<p>DSモードとして起動可能なプログラムであればTRUEを、そうでなければFALSEを返します。</p>
+
+<H2>説明</H2>
+<P>プログラムがDSモードとして起動可能であるかどうかを、ROMヘッダ情報から判定します。<br />
+NITROモードまたはHYBRIDモードとしてビルドされたニンテンドーDS対応プログラムであればTRUEを返し、
+LIMITEDモードとしてビルドされたニンテンドーDSi専用プログラムであればFALSEを返します。
+</P>
+<h2>参照</h2>
+<p><CODE>
+<A href="../card_rom_header_type.html">CARDRomHeader</A>
+</CODE></p>
+
+<H2>履歴</H2>
+<P>
+2008/11/27 初版<br />
+</P>
+</body>
+</html>

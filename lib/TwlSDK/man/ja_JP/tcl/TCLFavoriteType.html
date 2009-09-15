@@ -1,0 +1,48 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>TCLFavoriteType</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+<body>
+<h1 align="left">TCLFavoriteType <img src="../image/TWL.gif" align="middle"></h1>
+
+<h2>定義</h2>
+<dl>
+	<dd>
+	<code>#include &lt;twl/tcl.h&gt;</code><br/>
+	<br/>
+	<pre><code>
+typedef enum
+{
+    TCL_FAVORITE_TYPE_NONE = 0 ,
+    TCL_FAVORITE_TYPE_1 ,
+    TCL_FAVORITE_TYPE_2 ,
+    TCL_FAVORITE_TYPE_3 ,
+    TCL_FAVORITE_TYPE_ALL ,
+    TCL_FAVORITE_TYPE_MAX = TCL_FAVORITE_TYPE_ALL
+} TCLFavoriteType;
+	</code></pre>
+</dl>
+
+<h2>説明</h2>
+<p>お気に入りタイプです。</p>
+<p>内容は以下の通りです。</p>
+<table>
+<tr><td>TCL_FAVORITE_TYPE_NONE<td>お気に入りには指定されてません。
+<tr><td>TCL_FAVORITE_TYPE_1<td>お気に入り1です。
+<tr><td>TCL_FAVORITE_TYPE_2<td>お気に入り2です。
+<tr><td>TCL_FAVORITE_TYPE_3<td>お気に入り3です。
+<tr><td>TCL_FAVORITE_TYPE_ALL<td>全てのお気に入りです。<code>TCLPictureInfo</code> のお気に入り情報がこの値を持つことはありません。ライブラリ内部で使用される値です。
+</table>
+
+<h2>参照</h2>
+
+<h2>履歴</h2>
+<p>
+2008/10/07 初版<br/>
+</p>
+
+</body>
+</html>

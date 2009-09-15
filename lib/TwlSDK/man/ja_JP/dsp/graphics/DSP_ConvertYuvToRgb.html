@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>DSP_ConvertYuvToRgb</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>DSP_ConvertYuvToRgb <IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<pre><code>
+BOOL DSP_ConvertYuvToRgb(const void* src, void* dst, u32 size);</br>
+BOOL DSP_ConvertYuvToRgbAsync(const void* src, void* dst, u32 size, DSP_GraphicsCallback callback);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>src</strong></em></td>
+<td style="width:87%">YUV422形式の画像データを保持しているバッファ。<br /></td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>dst</strong></em></td>
+<td style="width:87%">変換後のデータを格納するバッファ。<br /></td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>size</strong></em></td>
+<td style="width:87%">src のデータサイズ。</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>callback</strong></em></td>
+<td style="width:87%">処理の終了時に実行されるコールバック関数。<br /></td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>変換が正常に終了した場合はTRUEを返します。<br />
+変換が正常に終了しなかった場合や、既にグラフィックスコンポーネントが何らかの処理を行っている場合はFALSEを返します。</p>
+
+<h2>説明</h2>
+<p>YUV422 フォーマットの画像データを RGB555 フォーマットに変換します。<br/>
+YUV422 フォーマットの画像データは、カメラから取得することができます。</p>
+
+<p>メインメモリからDSP(WRAM-C)へのデータ転送は、DMAを用いて行われます。</p>
+
+<p>非同期版（*Async)を実行した場合、変換終了は引数として登録したコールバック関数が呼ばれることで通知されます。
+</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="DSP_LoadGraphics.html">DSP_LoadGraphics</a>,
+<a href="DSP_UnloadGraphics.html">DSP_UnloadGraphics</a>,
+<a href="../../camera/CAMERA_SetOutputFormat.html">CAMERA_SetOutputFormat</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/05/22 初版
+</p>
+</body>
+</html>

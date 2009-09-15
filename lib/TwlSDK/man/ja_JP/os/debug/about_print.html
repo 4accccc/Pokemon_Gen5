@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>デバッグ(文字列表示) (overview)</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">デバッグ(文字列表示) (overview) <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
+<H2>説明</H2>
+<P>TWL-SDK で使用できるデバッグ表示について説明します。</P>
+<H2>出力先(TWL モードの場合)</H2>
+<H4>標準出力</H4>
+<P>ARM9 では 出力ウィンドウ0、 ARM7 では出力ウィンドウ3 がデフォルトの出力先となっています。出力先の変更は
+<CODE><A href="OS_SetPrintOutput.html">OS_SetPrintOutput()</A></CODE> を呼び出すことで行います。出力先を変更するプロセッサには <CODE>OS_PRINT_OUTPUT_ARM9</CODE> か、<CODE>OS_PRINT_OUTPUT_ARM7</CODE> を指定します。また、便利関数としてARM9 の出力先を指定する <CODE><A href="OS_SetPrintOutput.html">OS_SetPrintOutput_Arm9()</A></CODE>、ARM7 の出力先を指定する <CODE><A href="OS_SetPrintOutput.html">OS_SetPrintOutput_Arm7()</A></CODE> が用意されています。</P>
+<P>出力先は、ウィンドウ0 ～ 3 の指定が可能です。他に <CODE>OS_PRINT_OUTPUT_NONE</CODE> を指定することで出力を抑制することが出来ます。</P>
+<BLOCKQUOTE style="background-color:#ffffcc;">(例) ARM9 の出力先を切り替える<BR>
+<CODE><BR>
+//---- Change ARM9 output to Window 2<BR>
+<FONT color="#ff0000">OS_SetPrintOutput_Arm9( 2 );</FONT><BR>
+OS_Printf( &quot;This line is output in WINDOW 2.\n&quot; );<BR>
+<BR>
+//---- Suppress ARM9 output<BR>
+<FONT color="#ff0000">OS_SetPrintOutput_Arm9( OS_PRINT_OUTPUT_NONE );</FONT><BR>
+OS_Printf( &quot;This line is not displayed in any window.\n&quot; );</CODE><BR>
+</BLOCKQUOTE>
+<P>ここで指定した出力先は、<CODE><A href="OS_Printf.html">OS_Printf()</A></CODE> などのように通常の表示を行う関数で、出力先を引数に持たない場合に使用されます。<CODE><A href="OS_FPrintf.html">OS_FPrintf()</A></CODE> のように出力先を引数に持つ関数ではそこで行った指定が優先されます。出力先を引数にもつ関数で、出力先に<CODE>OS_PRINT_OUTPUT_CURRENT</CODE> を指定すると、この標準出力が出力先となります。</P>
+<BLOCKQUOTE style="background-color:#ffffcc;">(例) ARM9 の出力先を切り替える<BR>
+<BR>
+<CODE>//---- Change ARM9 output to Window 2<BR>
+<FONT color="#ff0000">OS_SetPrintOutput_Arm9( 2 );</FONT><BR>
+OS_Printf( &quot;This line is output in WINDOW 2.\n&quot;);<BR>
+<BR>
+//---- Specify the output window directly<BR>
+<FONT color="#ff0000">OS_FPrintf</FONT>( 3, &quot;This line is output in WINDOW 3\n&quot; );<BR>
+<FONT color="#ff0000">OS_FPrintf</FONT>( <FONT color="#ff0000">OS_PRINT_OUTPUT_CURRENT</FONT>, &quot;This line is output in WINDOW 2\n&quot;);</CODE><BR>
+</BLOCKQUOTE>
+<P><CODE><A href="OS_Panic.html">OS_Panic()</A></CODE> や <CODE><A href="OS_Warning.html">OS_Warning()</A></CODE> のような緊急性の高い出力は後述の「エラー出力」にしたがって指定して下さい。</P>
+<H4><BR>
+<BR>
+エラー出力</H4>
+<P><CODE><A href="OS_Panic.html">OS_Panic()</A></CODE> や <CODE><A href="OS_Warning.html">OS_Warning()</A></CODE> など緊急性の高いメッセージの出力先も、標準出力同様に変更することが可能です。出力先の変更は
+<A href="OS_SetPrintOutput.html"><CODE>OS_SetPrintOutput()</CODE></A> を呼び出すことで行います。出力先を変更するプロセッサは <CODE>OS_PRINT_OUTPUT_PROC_ARM9ERR</CODE> か、 <CODE>OS_PRINT_OUTPUT_PROC_ARM7ERR</CODE> を指定します。また、便利関数として ARM9 のエラー出力先を指定する <CODE><A href="OS_SetPrintOutput.html">OS_SetPrintOutput_Arm9Err()</A></CODE> 、ARM7 のエラー出力先を指定する <A href="OS_SetPrintOutput.html"><CODE>OS_SetPrintOutput_Arm7Err()</CODE></A> が用意されています。</P>
+<P>出力先は、ウィンドウ0 ～ 3 の指定が可能です。他に <CODE>OS_PRINT_OUTPUT_NONE</CODE> を指定することで出力を抑制することが出来ます。</P>
+<P>ここで指定した出力先は、<CODE><A href="OS_Panic.html">OS_Panic()</A></CODE> などエラー出力表示の出力先を引数に持たない場合に使用されます。 <CODE><A href="OS_FPanic.html">OS_FPanic()</A></CODE> のようにエラー出力先を引数に持つ関数ではそこで行った指定が優先されます。エラー出力先を引数に持つ関数で、出力先に<CODE>OS_PRINT_OUTPUT_CURRENT</CODE> を指定すると、このエラー出力が出力先となります。</P>
+<H2>出力先(NITRO モードの場合)</H2>
+<P>NITRO では出力先が一つしかありませんので、0～3のいずれを指定しても同じウィンドウに出力されます。ただし、OS_PRINT_OUTPUT_NONE
+指定で出力を抑制する機能はNITROモードでも使用できます。</P>
+<H2>出力関数の種類</H2>
+<P>デバッグ出力のための関数が数多く用意されています。</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>用途</TH>
+      <TH>関数</TH>
+      <TH>出力先</TH>
+    </TR>
+    <TR>
+      <TD>文字列をそのまま出力する</TD>
+      <TD align="left"><A href="OS_PutString.html"><CODE>OS_PutString</CODE></A><BR>
+      <A href="OS_FPutString.html"><CODE>OS_FPutString</CODE></A></TD>
+      <TD>標準出力</TD>
+    </TR>
+    <TR>
+      <TD>フォーマット付きで出力する<BR>
+      　　　　通常版</TD>
+      <TD><A href="OS_Printf.html"><CODE>OS_Printf</CODE></A><BR>
+      <A href="OS_FPrintf.html"><CODE>OS_FPrintf</CODE></A></TD>
+      <TD>標準出力</TD>
+    </TR>
+    <TR>
+      <TD>　　　　簡易版</TD>
+      <TD><A href="OS_TPrintf.html"><CODE>OS_TPrintf</CODE></A><BR>
+      <A href="OS_TFPrintf.html"><CODE>OS_TFPrintf</CODE></A><BR>
+      <A href="OS_TPrintfEx.html"><CODE>OS_TPrintfEx</CODE></A><BR>
+      <A href="OS_TFPrintfEx.html"><CODE>OS_TFPrintfEx</CODE></A></TD>
+      <TD>標準出力</TD>
+    </TR>
+    <TR>
+      <TD>　　　　引数リスト利用</TD>
+      <TD><A href="OS_VPrintf.html"><CODE>OS_VPrintf</CODE></A><BR>
+      <A href="OS_VFPrintf.html"><CODE>OS_VFPrintf</CODE></A></TD>
+      <TD>標準出力</TD>
+    </TR>
+    <TR>
+      <TD>　　　　簡易版、引数リスト利用</TD>
+      <TD><A href="OS_TVPrintf.html"><CODE>OS_TVPrintf</CODE></A><BR>
+      <A href="OS_TVFPrintf.html"><CODE>OS_TVFPrintf</CODE></A><BR>
+      <A href="OS_TVPrintfEx.html"><CODE>OS_TVPrintfEx</CODE></A><BR>
+      <A href="OS_TVFPrintfEx.html"><CODE>OS_TVFPrintfEx</CODE></A></TD>
+      <TD>標準出力</TD>
+    </TR>
+    <TR>
+      <TD>フォーマット付きでメモリ上に出力する<BR>
+      　　　　可変個引数利用</TD>
+      <TD><A href="OS_SPrintf.html"><CODE>OS_SPrintf</CODE></A></TD>
+      <TD>メモリ</TD>
+    </TR>
+    <TR>
+      <TD>　　　　引数リスト利用</TD>
+      <TD><A href="OS_VSPrintf.html"><CODE>OS_VSPrintf</CODE></A></TD>
+      <TD>メモリ</TD>
+    </TR>
+    <TR>
+      <TD>　　　　可変個引数利用、サイズ指定あり</TD>
+      <TD><A href="OS_SNPrintf.html"><CODE>OS_SNPrintf</CODE></A></TD>
+      <TD>メモリ</TD>
+    </TR>
+    <TR>
+      <TD>　　　　引数リスト利用、サイズ指定あり</TD>
+      <TD><A href="OS_VSNPrintf.html"><CODE>OS_VSNPrintf</CODE></A><BR>
+      <A href="OS_VSNPrintfEx.html"><CODE>OS_VSNPrintfEx</CODE></A></TD>
+      <TD>メモリ</TD>
+    </TR>
+    <TR>
+      <TD>警告を出力する<BR>
+      　　　　通常版</TD>
+      <TD><A href="OS_Warning.html"><CODE>OS_Warning</CODE></A><BR>
+      <A href="OS_FWarning.html"><CODE>OS_FWarning</CODE></A></TD>
+      <TD>エラー出力</TD>
+    </TR>
+    <TR>
+      <TD>　　　　簡易版</TD>
+      <TD><A href="OS_TWarning.html"><CODE>OS_TWarning</CODE></A><BR>
+      <A href="OS_TFWarning.html"><CODE>OS_TFWarning</CODE></A></TD>
+      <TD>エラー出力</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<H2>STD_ 関数との関係</H2>
+<P>STD カテゴリにも <CODE><A href="../../std/string/STD_TSPrintf.html">STD_TSPrintf()</A></CODE>, <CODE><A href="../../std/string/STD_TVSPrintf.html">STD_TVSPrintf()</A></CODE>, <CODE><A href="../../std/string/STD_TSNPrintf.html">STD_TSNPrintf()</A></CODE>, <CODE><A href="../../std/string/STD_TVSNPrintf.html">STD_TVSNPrintf()</A></CODE> というメモリを対象とした出力関数が用意されています。OS ライブラリのメモリ対象の出力関数は、内部では最終的にこの STD_ 関数に到達しているので、あるOS_関数と STD_ 関数で同じ動作を行うものがあります。以下の表で同じ行の OS_関数 と STD_関数は同じ動作となります。</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH>OS_ 関数</TH>
+      <TH>等しい STD_ 関数</TH>
+    </TR>
+    <TR>
+      <TD><CODE><A href="OS_Sprintf.html">OS_SPrintf()</A></CODE></TD>
+      <TD><CODE><A href="../../std/string/STD_TSPrintf.html">STD_TSPrintf()</A></CODE></TD>
+    </TR>
+    <TR>
+      <TD><A href="OS_VSPrintf.html"><CODE>OS_VSPrintf()</CODE></A></TD>
+      <TD><CODE><A href="../../std/string/STD_TVSPrintf.html">STD_TVNPrintf()</A></CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE><A href="OS_SNPrintf.html">OS_SNPrintf()</A></CODE></TD>
+      <TD><CODE><A href="../../std/string/STD_TSNPrintf.html">STD_TSNPrintf()</A></CODE></TD>
+    </TR>
+    <TR>
+      <TD><CODE><A href="OS_VSNPrintf.html">OS_VSNPrintf()</A></CODE></TD>
+      <TD><CODE><A href="../../std/string/STD_TVSNPrintf.html">STD_TVSNPrintf()</A></CODE></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+OS 側には、<CODE><A href="OS_VSNPrintfEx.html">OS_VSNPrintfEx()</A></CODE> という拡張されたメモリ出力関数がありますが、こちらは OS ライブラリに実体を持っています。</P>
+<H2>ブロッキングモード</H2>
+<P>IS-TWL-DEBUGGER ならびに IS-NITRO-DEBUGGER のデバッグ出力は、ブロッキングモードと非ブロッキングモードを切り替えることが出来ます。</P>
+<P>非ブロッキングモードでは、高速に <CODE><A href="OS_Printf.html">OS_Printf()</A></CODE> 等で文字列を出力し続けたり、PC側で出力文字をバッファから取得しないことが続けば一部の出力文字列が失われる場合があります。ブロッキングモードでは出力文字列は確実に表示されますが、そのためにアプリケーションの動作が一時的に遅くなる場合もあります。</P>
+<P>この切り替えは <CODE><A href="OS_SetPrintBlockingMode.html">OS_SetPrintBlockingMode()</A></CODE> で行います。現在の状態を取得する関数は <CODE><A href="OS_GetPrintBlockingMode.html">OS_GetPrintBlockingMode()</A></CODE> です。</P>
+<P>この機能は、IS-TWL-DEBUGGER や IS-NITRO-DEBUGGER のバージョンによって実装されていない場合もあります。デバッガソフトウェアの更新履歴などでご確認ください。非対応の場合でも関数を呼び出すことは可能です。非対応の場合は
+<CODE><A href="OS_GetPrintBlockingMode.html">OS_GetPrintBlockingMode()</A></CODE> は常に FALSE を返します。</P>
+<H2>参照</H2>
+<P><CODE><A href="../list_os.html#Debug-Print">OS関数一覧(デバッグ(文字列表示))</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2009/04/21 ブロッキングモードの非対応時の値を修正<BR>
+2009/04/03 ブロッキングモードの説明を追加<BR>
+2008/09/01 STD_関数との関係を追加<BR>
+2008/01/12 初版</P>
+</BODY>
+</HTML>

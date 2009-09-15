@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>スリープ (overview)</TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">スリープ (overview) <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
+
+<H2>説明</H2>
+<P>TWL では通常の状態(アクティブ状態) と別に スリープ状態になって電池の消費を抑えることができます。通常のゲームは、蓋を閉じることでスリープに入り、蓋を開けることでスリープから復帰するように作られます。これは、ハードウェアの機能でそのようになっているのではなく、「蓋を閉めた」という動作をアプリケーション側で検出し、「スリープする」という関数を呼び出すことによります。ここではスリープ関連の関数群を説明します。</P>
+<H2>スリープ要因</H2>
+<P>スリープモードに入る命令は、<CODE><A href="PM_GoSleepMode.html">PM_GoSleepMode()</A></CODE> です。</P>
+<P>この命令ではスリープモードからの復帰要因を以下から指定することが出来ます。これらは論理輪を取ることで複数のものを指定することが出来ます。詳細は
+<CODE><A href="PM_GoSleepMode.html">PM_GoSleepMode()</A></CODE> のリファレンスを参照してください。<BR>
+</P>
+<TABLE border=1>
+<TBODY>
+<TR>
+<TH>プラットフォーム</TH>
+<TH>値</TH>
+<TH>復帰要因内容</TH>
+    </TR>
+<TR>
+<TD>
+<CENTER><IMG src="../../image/NTR.gif"><IMG src="../../image/TWL.gif"></CENTER>
+      </TD>
+<TD>PM_TRIGGER_KEY</TD>
+<TD>キー割り込み発生</TD>
+    </TR>
+<TR>
+<TD>
+<CENTER><IMG src="../../image/NTR.gif"><IMG src="../../image/TWL.gif"></CENTER>
+      </TD>
+<TD>PM_TRIGGER_RTC_ALARM</TD>
+<TD>RTCのアラーム割り込み発生</TD>
+    </TR>
+<TR>
+<TD>
+<CENTER><IMG src="../../image/NTR.gif"><IMG src="../../image/TWL.gif"></CENTER>
+      </TD>
+<TD>PM_TRIGGER_COVER_OPEN</TD>
+<TD>ふたを開く</TD>
+    </TR>
+<TR>
+<TD>
+<CENTER><IMG src="../../image/NTR.gif"><IMG src="../../image/TWL.gif"></CENTER>
+      </TD>
+<TD>PM_TRIGGER_CARD</TD>
+<TD>カード割り込み発生 またはカードを抜く</TD>
+    </TR>
+<TR>
+<TD>
+<CENTER><IMG src="../../image/NTR.gif"><IMG src="../../image/TWL.gif"></CENTER>
+      </TD>
+<TD>PM_TRIGGER_CARTRIDGE <B><FONT color=#ff0000>(注1)</FONT></B></TD>
+<TD>カートリッジ割り込み発生 またはカートリッジを抜く</TD>
+    </TR>
+<TR>
+<TD>
+<CENTER><IMG src="../../image/BPT.gif"><IMG src="../../image/TWL.gif"></CENTER>
+      </TD>
+<TD>PM_TRIGGER_SDIO</TD>
+<TD>SDIO 割り込み</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><FONT color=red>　<B>(注1)</B> 
+カートリッジ抜けによってスリープから復帰する方法はガイドラインで禁止されています。</FONT> </P>
+<H2>スリープコールバックリスト</H2>
+<P>スリープコールバックは、<BR>
+　　　<CODE>typedef void (*PMGenCallback) (void *);</CODE><BR>
+で定義されるように、void* 引数を一つとる void 型関数です。</P>
+<P>内部では、スリープの直後に呼ばれるコールバックと、復帰直後に呼ばれるコールバックそれぞれをリストで保持しています。スリープ前コールバック、スリープ後コールバックと呼びます。</P>
+<P><IMG src="sleep_List1.gif" width="340" height="224" border="0"></P>
+<H2>スリープコールバックの登録</H2>
+<P>コールバックには優先度が設定されています。アプリケーションで使用できる優先度は
+-255 (<CODE>PM_CALLBACK_PRIORITY_MIN</CODE>) ～ 255 (<CODE>PM_CALLBACK_PRIORITY_MAX</CODE>) です。( SDKライブラリやミドルウェアなど、システムでは -65535 (<CODE>PM_CALLBACK_PRIORITY_SYSMIN</CODE>) ～65535 (<CODE>PM_CALLBACK_PRIORITY_SYSMAX</CODE>)の優先度を用いることができます。) この優先度はコールバックリストの順序を決定するのに用いるためにのみ使用されます。値の小さいものが、リスト中でより前に位置します。</P>
+<P>コールバック情報構造体 <CODE><A href="PM_SetSleepCallbackInfo.html">PM_SetSleepCallbackInfo()</A></CODE> でコールバック関数と引数を設定しその情報構造体をリストに登録します。</P>
+<P>登録は3種類の方法で行うことが出来ます。</P>
+<UL>
+  <LI><CODE><A href="PM_AppendSleepCallback.html">PM_PrependPreSleepCallback()</A>, <A href="PM_AppendSleepCallback.html">PM_PrependPostSleepCallback()</A></CODE><BR>
+  優先度 -255 でリストに登録します。すでに優先度 -255 のコールバックが登録されている場合には前に登録されます。<BR>
+  つまりアプリケーションが使用できる優先度のみを考えれば、リストの先頭に入れることになります。<BR>
+  <BR>
+  <LI><CODE><A href="PM_AppendSleepCallback.html">PM_AppendPreSleepCallback()</A>, <A href="PM_AppendSleepCallback.html">PM_AppendPostSleepCallback()</A></CODE><BR>
+  優先度 255 でリストに登録します。すでに優先度 255 のコールバックが登録されている場合には後ろに登録されます。<BR>
+  つまりアプリケーションが使用できる優先度のみを考えれば、リストの末尾に入れることになります。<BR>
+  <BR>
+  <LI><A href="PM_AppendSleepCallback.html"><CODE>PM_InsertPreSleepCallback()</CODE></A><CODE>, <A href="PM_AppendSleepCallback.html">PM_InsertPostSleepCallback()</A></CODE><BR>
+  優先度を指定して、適切な位置に登録します。同じ優先度のものがあれば後ろに登録されます。<BR>
+</UL>
+<P>この辺りの仕様は、終了コールバックと同様ですので、例などは <A href="about_exit.html">概要：シャットダウン・ハードウェアリセット</A> の 「終了コールバックの登録」を参照してください。</P>
+<H2>スリープコールバックの削除</H2>
+<P>設定したコールバックは <CODE><A href="PM_DeleteSleepCallback.html">PM_DeletePreSleepCallback()</A>, <A href="PM_DeleteSleepCallback.html">PM_DeletePostSleepCallback()</A></CODE> で削除することが出来ます。</P>
+<H2>スリープコールバックの表示(デバッグ用)</H2>
+<P><CODE><A href="PM_DumpSleepCallback.html">PM_DumpSleepCallback()</A></CODE> は、デバッグ用途で、コールバックの一覧を表示する関数です。FINALROM ビルドでは何も行いません。</P>
+<H2>スリープ時電源オフへの備え</H2>
+<P>スリープモード時には、システム全体の状態がアクティブモード時とは異なるために、アクティブモード時と同様なシャットダウン処理を行うこと(保証すること)が困難です。そのため、スリープモード時にはシャットダウン処理を行わず、スリープモード移行時に必要な処理を事前に行うようにしています。</P>
+<P>ですので、TWLとしてはスリープモード時に突然電源が落とされても問題はありません。結果としてアクティブモードで電源ボタンを押されたときと同じ振る舞いになります。</P>
+<H2>登録されるスリープコールバック</H2>
+<P>SDK で登録されるスリープコールバックでは以下の処理を行います。</P>
+<P>スリープ前のコールバックは以下の通りです。</P>
+<UL>
+  <LI>(必要ならば)振動を停止する。
+  <LI>カメラをスタンバイ状態にする。
+  <LI>DSP を停止する。
+  <LI>IIRフィルタの設定中ならば、処理の終了まで待つ。<CODE><A href="../../snd/sndex/SNDEX_SetIgnoreHWVolume.html">SNDEX_SetIgnoreHWVolume()</A></CODE> による保存値があればスピーカー音量を戻す。
+  <LI>NANDのフラッシュを行う。
+  <LI>TWL無線でWiFi通信中ならば、APとの接続を切断して無線通信を終了する。
+</UL>
+<P>スリープから復帰してからのコールバックは以下の通りです。</P>
+<UL>
+  <LI>スリープでずれるソフトウェアクロックを RTC に同期させる。
+</UL>
+<H2>履歴</H2>
+<P>2009/04/13 電源/リセットボタン → 電源ボタン に修正<BR>
+2009/02/03 登録される終了コールバックに SNDEX における処理を追記<BR>
+2008/09/13 初版</P>
+</BODY>
+</HTML>

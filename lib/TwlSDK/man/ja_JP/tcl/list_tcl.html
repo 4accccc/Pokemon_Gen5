@@ -1,0 +1,71 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css" text="text/css">
+<title>TCL 機能一覧</title>
+<link rel="stylesheet" href="../css/apilist.css">
+</head>
+<body>
+<h1>DSi写真データベースライブラリ(TCL) 機能一覧</h1>
+
+<h3><a name="general">一般</a></h3>
+<table>
+<tr><th width="25%"><a href="TCL_GetTableBufferSize.html" target="_self">TCL_GetTableBufferSize</a><td width="24"><img src="../image/TWL.gif"><td>管理ファイルを読み込むのに必要なバッファサイズを返します。
+<tr><th width="25%"><a href="TCL_GetWorkBufferSize.html" target="_self">TCL_GetWorkBufferSize</a><td width="24"><img src="../image/TWL.gif"><td>管理ファイルを読み込むのに必要なワークバッファサイズを返します。
+<tr><th width="25%"><a href="TCL_CalcNumEnableToTakePictures.html" target="_self">TCL_CalcNumEnableToTakePictures</a><td width="24"><img src="../image/TWL.gif"><td>撮影可能な写真枚数を計算します。
+<tr><th width="25%"><a href="TCL_GetCurrentSecond.html" target="_self">TCL_GetCurrentSecond</a><td width="24"><img src="../image/TWL.gif"><td>現在時刻(秒)を取得します。
+</table>
+
+<h3><a name="admin_file">管理ファイル操作関連</a></h3>
+<table>
+<tr><th width="25%"><a href="TCL_LoadTable.html" target="_self">TCL_LoadTable</a><td width="24"><img src="../image/TWL.gif"><td>管理ファイルを読み込みます。
+<tr><th width="25%"><a href="TCL_CreateTable.html" target="_self">TCL_CreateTable</a><td width="24"><img src="../image/TWL.gif"><td>管理ファイルを生成します。
+<tr><th width="25%"><a href="TCL_RepairTable.html" target="_self">TCL_RepairTable</a><td width="24"><img src="../image/TWL.gif"><td>管理ファイルを修復します。
+<tr><th width="25%"><a href="TCL_SortTable.html" target="_self">TCL_SortTable</a><td width="24"><img src="../image/TWL.gif"><td>管理ファイルの写真情報をソートします。
+</table>
+
+<h3><a name="search">検索関連</a></h3>
+<table>
+<tr><th width="25%"><a href="TCL_InitSearchObject.html" target="_self">TCL_InitSearchObject</a><td width="24"><img src="../image/TWL.gif"><td>検索オブジェクトを初期化します。
+<tr><th width="25%"><a href="TCL_GetNumPictures.html" target="_self">TCL_GetNumPictures</a><td width="24"><img src="../image/TWL.gif"><td>検索条件に合致する写真の枚数を取得します。
+<tr><th width="25%"><a href="TCL_SearchNextPictureInfo.html" target="_self">TCL_SearchNextPictureInfo</a><td width="24"><img src="../image/TWL.gif"><td>検索条件に合致する写真情報を順次取得します。
+<tr><th width="25%"><a href="TCL_SearchPictureInfoByIndex.html" target="_self">TCL_SearchPictureInfoByIndex</a><td width="24"><img src="../image/TWL.gif"><td>検索条件に合致する写真情報を取得します。
+<tr><th width="25%"><a href="TCL_SearchNextPicturePath.html" target="_self">TCL_SearchNextPicturePath</a><td width="24"><img src="../image/TWL.gif"><td>検索条件に合致する写真の保存先パスを順次取得します。
+<tr><th width="25%"><a href="TCL_SearchPicturePathByIndex.html" target="_self">TCL_SearchPicturePathByIndex</a><td width="24"><img src="../image/TWL.gif"><td>検索条件に合致する写真の保存先パスを取得します。
+<tr><th width="25%"><a href="TCL_PrintPicturePath.html" target="_self">TCL_PrintPicturePath</a><td width="24"><img src="../image/TWL.gif"><td>写真情報から写真保存先パスを取得します。
+<tr><th width="25%"><a href="TCL_GetPictureInfoFromPath.html" target="_self">TCL_GetPictureInfoFromPath</a><td width="24"><img src="../image/TWL.gif"><td>写真保存先パスから写真情報を取得します。
+</table>
+
+<h3><a name="photo">写真関連</a></h3>
+<table>
+<tr><th width="25%"><a href="TCL_GetJpegEncoderBufferSize.html" target="_self">TCL_GetJpegEncoderBufferSize</a><td width="24"><img src="../image/TWL.gif"><td>jpegエンコードに必要なワークバッファサイズを返します。
+<tr><th width="25%"><a href="TCL_EncodeAndWritePicture.html" target="_self">TCL_EncodeAndWritePicture(Ex)</a><td width="24"><img src="../image/TWL.gif"><td>画像データをjpegエンコードし保存します。
+<tr><th width="25%"><a href="TCL_GetLastWrittenPicturePath.html" target="_self">TCL_GetLastWrittenPicturePath</a><td width="24"><img src="../image/TWL.gif"><td>最後に書き出した画像のパスを返します。
+<tr><th width="25%"><a href="TCL_GetLastWrittenPictureInfo.html" target="_self">TCL_GetLastWrittenPictureInfo</a><td width="24"><img src="../image/TWL.gif"><td>最後に書き出した画像の写真情報を返します。
+<tr><th width="25%"><a href="TCL_DecodePicture.html" target="_self">TCL_DecodePicture</a><td width="24"><img src="../image/TWL.gif"><td>画像ファイルをjpegデコードします。
+<tr><th width="25%"><a href="TCL_IsSameImageType.html" target="_self">TCL_IsSameImageType</a><td width="24"><img src="../image/TWL.gif"><td>画像タイプが同じかどうか判別します。
+<tr><th width="25%"><a href="TCL_DeletePicture.html" target="_self">TCL_DeletePicture</a><td width="24"><img src="../image/TWL.gif"><td>画像ファイルを削除します。
+</table>
+
+<h3><a name="const">定数</a></h3>
+<table>
+<tr><th width="25%"><a href="TCLConst.html" target="_self">一般定数</a><td width="24"><img src="../image/TWL.gif"><td>各種定数です。
+<tr><th width="25%"><a href="TCLResult.html" target="_self">TCLResult</a><td width="24"><img src="../image/TWL.gif"><td>各関数の処理結果を表します。
+<tr><th width="25%"><a href="TCLFavoriteType.html" target="_self">TCLFavoriteType</a><td width="24"><img src="../image/TWL.gif"><td>お気に入りタイプです。
+<tr><th width="25%"><a href="TCLImageType.html" target="_self">TCLImageType</a><td width="24"><img src="../image/TWL.gif"><td>画像のタイプです。
+<tr><th width="25%"><a href="TCLKeyType.html" target="_self">TCLKeyType</a><td width="24"><img src="../image/TWL.gif"><td>写真にかけられている署名のタイプです。
+<tr><th width="25%"><a href="TCLSearchCondition.html" target="_self">TCLSearchCondition</a><td width="24"><img src="../image/TWL.gif"><td>検索を行う際の検索条件です。
+<tr><th width="25%"><a href="TCLSortType.html" target="_self">TCLSortType</a><td width="24"><img src="../image/TWL.gif"><td>管理ファイルのソートを行う際のソートタイプです。
+</table>
+
+<h3><a name="struct">型・構造体</a></h3>
+<table>
+<tr><th width="25%"><a href="TCLAccessor.html" target="_self">TCLAccessor</a><td width="24"><img src="../image/TWL.gif"><td>TCLの各関数にアクセスするときに使用するアクセサです。
+<tr><th width="25%"><a href="TCLPictureInfo.html" target="_self">TCLPictureInfo</a><td width="24"><img src="../image/TWL.gif"><td>管理ファイルに登録されている写真の情報を表す構造体です。
+<tr><th width="25%"><a href="TCLSearchObject.html" target="_self">TCLSearchObject</a><td width="24"><img src="../image/TWL.gif"><td>検索関連の関数に使用する構造体です。
+<tr><th width="25%"><a href="TCLMakerNote.html" target="_self">TCLMakerNote</a><td width="24"><img src="../image/TWL.gif"><td>jpeg画像のExif情報メーカーノートタグに入れる構造体です。
+</table>
+
+<table border="0" height="100%"><tr><td style="background-color : white;"></td></tr></table>
+</body>
+</html>

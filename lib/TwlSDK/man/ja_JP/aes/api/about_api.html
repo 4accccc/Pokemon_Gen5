@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>AES 基本 API (overview)</title>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">AES 暗号 基本 API (overview)</h1>
+
+<H2>説明</H2>
+
+<h3 class="inline">概要</h3>
+<p>
+TWL-SDK AES 暗号ライブラリは AES アルゴリズムを使用した暗号化処理を提供するライブラリです。
+単純な暗号化を行う CTR モードと、それに加えてデータの改変を検出するための
+仕組みを持った CCM モードの 2 つの暗号モードをサポートしています。
+</p>
+
+
+
+<h3 class="inline">用語</h3>
+<p>
+TWL-SDK AES 暗号ライブラリ関連文書で使用される用語を説明します。<br>
+ここでの説明は TWL-SDK AES 暗号ライブラリ関連文書内での使われ方を示すものであり、
+各用語の一般的な意味とは異なることがあります。
+</p>
+
+<table class="table">
+<tbody>
+<tr><th>秘密<td>暗号において公開してはならないこと。またはそのような情報。
+<tr><th>暗号化<td>情報をなんらかの復元可能な方法で変換し、表面的な情報を失わせること。
+<tr><th><ruby><rb>平文</rb><rp>(</rp><rt>ひらぶん</rt><rp>)</rp></ruby>
+    <td>暗号化を行う対象となるデータ。文字列データだけを指すのではなく任意のバイナリ列を指す。
+<tr><th>暗号文<td>平文を暗号化した結果。平文と同様に一般的には文字列データではなくバイナリ列を指す。
+<tr><th>復号化<td>暗号文を平文にもどすこと。復号とも。
+<tr><th>ブロック暗号<td>固定長の平文を暗号化して固定長の暗号文を出力する暗号アルゴリズム。
+<tr><th>AES<td>ブロック暗号アルゴリズムの一つで、16 バイトの平文から暗号化された 16 バイトの暗号文を生成する。
+<tr><th>MAC<td>Message Authentication Code （メッセージ認証コード）の略でデータが変更されていないことを確認するためのデータ。
+<tr><th>暗号モード<td>ブロック暗号を使用して任意長のデータを暗号化するためのアルゴリズムを指す言葉。
+<tr><th>CTR モード<td>暗号モードの一つ。CounTeR モード。
+<tr><th>CCM モード<td>暗号モードの一つで CTR モードの処理に加え MAC の付加を行う。Counter with Cipher block chaining Message authentication code モード。
+<tr><th>Adata<td>CCM モードの入力のうち MAC の対象となるが暗号化は行わないデータのこと。
+<tr><th>Pdata<td>CCM モードの入力のうち MAC の対象となり、かつ暗号化を行うデータのこと。
+<tr><th>鍵<td>同じ平文、同じ暗号アルゴリズムを使用しても異なる暗号文となるようにするためのデータ。秘密である。
+<tr><th nowrap>カウンタ初期値
+    <td>CTR モードで同じ鍵、同じ平文、同じ暗号アルゴリズムを使用しても異なる暗号文となるようにするためのデータ。
+        秘密ではない。暗号化を行うごとに異なる値を用いなければならない。
+<tr><th>Nonce
+    <td>CCM モードで同じ鍵、同じ平文、同じ暗号アルゴリズムを使用しても異なる暗号文、異なる MAC となるようにするためのデータ。
+        秘密ではない。暗号化を行うごとに異なる値を用いなければならない。
+<tr><th>署名<td>MAC を付加すること。
+</tbody>
+</table>
+
+
+
+<h3 class="inline">暗号モード</h3>
+<p>
+TWL-SDK AES 暗号ライブラリでサポートしている 2 つの暗号モードとデータの関連は
+以下のようになります。
+</p>
+
+<h4 class="inline">CTR モード</h4>
+<p>
+CTR モードでは単純に平文を暗号化します。
+暗号文を復号化するには暗号化時と同じ鍵とカウンタ初期値が必要です。
+</p>
+<img src="ctr.png">
+
+<h4 class="inline">CCM モード</h4>
+<p>
+CCM モードでは Pdata を暗号化すると共に Pdata の正当性を検査するための MAC を生成します。
+MAC には Pdata の他に Adata と呼ばれる暗号化はしないが正当性を検査する
+必要があるデータ（データサイズなどの任意のデータ）の情報を含めることもできます。
+暗号文を復号化するには暗号化時と同じ鍵と Nonce が必要です。
+暗号文の検証を行うにはさらに暗号化時と同じ Adata が必要です。
+
+</p>
+<img src="ccm.png">
+
+
+
+<h3 class="inline">パフォーマンス</h3>
+<p>
+暗号化 / 復号化処理のバイトあたりのパフォーマンスはおおよそ以下のようになります。
+これに加えて暗号化 / 復号化処理ごとにおよそ 60000 サイクル（@ 134.06 MHz）のオーバーヘッドがあります。
+</p>
+
+<table class="table">
+<thead>
+<tr><th colspan="2">モード<th>処理サイクル数 （@ 134.06 MHz）
+</thead>
+<tbody>
+<tr><th colspan="2">CTR モード<td>8.4 サイクル / バイト
+<tr><th rowspan="2">CCM モード<th>Adata<td>4.9 サイクル / バイト
+<tr><th>Pdata<td>8.4 サイクル / バイト
+
+</tbody>
+</table>
+
+
+
+<h3 class="inline">制限</h3>
+<p>
+TWL-SDK AES 暗号ライブラリは一般的な AES ライブラリと比較して以下の制限があります。
+</p>
+
+<h4 class="inline">CTR モード</h4>
+<ul>
+<li>暗号文の互換性がありません。
+</ul>
+
+<h4 class="inline">CCM モード</h4>
+<ul>
+<li>Adata および Pdata のサイズはそれぞれ 1,048,560 byte (1 MByte - 16 byte) までです。
+<li>Adata のサイズが 16 の倍数でなければなりません。
+<li>Adata のデータサイズが MAC の計算に組み込まれません。必要な場合は Adata に含める必要があります。
+<li>Nonce のサイズが 96 bit 固定です。
+<li>暗号文、MAC の互換性がありません。
+</ul>
+
+
+
+<h3 class="inline">セキュリティ上の注意</h3>
+<p>
+CTR モードはそのアルゴリズム上、暗号文の任意のビットを反転すると、それを復号化して得られた
+平文は元の平文と比べて対応する箇所のビットが反転するという性質があります。
+</p>
+<p>
+例えば、以下の上段のようなビット列の平文を暗号化して
+下段のようなビット列の暗号文が得られたとします。
+</p>
+<code class="src"><pre>
+平文：     00011010000111111100100101010001<span style="background-color: blue; color: white; font-weight: bold;">1</span>001000010100111110110010001001
+暗号文：   01000010011011110100011110001011<span style="background-color: blue; color: white; font-weight: bold;">0</span>111110001010011001001000011101
+</pre></code>
+<p>
+ここで暗号文の任意のビット、例えば33ビット目を反転したものを暗号文’とすると、
+</p>
+<code class="src"><pre>
+暗号文’： 01000010011011110100011110001011<span style="background-color: red; color: white; font-weight: bold;">1</span>111110001010011001001000011101
+</pre></code>
+<p>
+暗号文’を復号化して得られる平文’はもとの平文と比較して33ビット目が反転します。
+</p>
+<code class="src"><pre>
+平文’：   00011010000111111100100101010001<span style="background-color: red; color: white; font-weight: bold;">0</span>001000010100111110110010001001
+</pre></code>
+<p>
+この性質を利用すると平文が推測できるような場合は、暗号化に使用された鍵を知らなくても、暗号文があれば
+その鍵で暗号化された任意の暗号文を作成することができてしまいます。
+この性質が問題となる場合は CCM モードを使用する必要があります。
+CCM モードでは MAC を付加するため上記のような改ざんの検出ができます。
+</p>
+
+
+
+<H2>履歴</H2>
+<P>
+2008/09/03 CCM モードで Adata のサイズが付加されないことを追記<br>
+2007/12/25 初版
+</p>
+
+</body>
+</html>

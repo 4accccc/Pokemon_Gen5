@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 8.0.0.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>ELResult</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">ELResult <img src="../image/TWL.gif" align="middle"></h1>
+<h2>定義</h2>
+
+<dl>
+  <dd>
+  <PRE><CODE>#include &lt;twl/el.h&gt;</CODE><BR>
+typedef enum ELResult {
+  EL_RESULT_SUCCESS = 0,
+  EL_RESULT_FAILURE = 1,
+  EL_RESULT_INVALID_PARAMETER,
+  EL_RESULT_INVALID_ELF,
+  EL_RESULT_UNSUPPORTED_ELF,
+  EL_RESULT_CANNOT_ACCESS_ELF,
+  EL_RESULT_NO_MORE_RESOURCE
+} ELResult;
+</PRE>
+  </dd>
+</dl>
+<h2>説明</h2>
+<P>ELライブラリのリンク処理の結果を表現する列挙型です。<BR>
+以下のように定義されます。
+</P>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>EL_RESULT_SUCCESS</STRONG></EM></TD>
+      <TD width="87%">成功したことを示します。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>EL_RESULT_FAILURE</STRONG></EM></TD>
+      <TD width="87%">初期化をしていないことでリンク処理が失敗したことを示します。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>EL_RESULT_INVALID_PARAMETER</STRONG></EM></TD>
+      <TD width="87%">無効な要素をライブラリに渡したことを示します。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>EL_RESULT_INVALID_ELF</STRONG></EM></TD>
+      <TD width="87%">ELFファイルの中に無効な項目があったことを示します。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>EL_RESULT_UNSUPPORTED_ELF</STRONG></EM></TD>
+      <TD width="87%">ライブラリがサポートしていないELFファイルの形式であったことを示します。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>EL_RESULT_CANNOT_ACCESS_ELF</STRONG></EM></TD>
+      <TD width="87%">ELFファイルの OPEN/READ に失敗したことを示します。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>EL_RESULT_NO_MORE_RESOURCE</STRONG></EM></TD>
+      <TD width="87%">ライブラリ内部での動的なメモリ確保に失敗場合、もしくは EL_Link*Ex() に指定したバッファのサイズが足りなかったことを示します。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+
+<H2>履歴</H2>
+<P>
+2009/03/16 EL_RESULT_NO_MORE_RESOURCE が発生する条件を追加<br>
+2009/01/14 初版</P>
+</body>
+</html>

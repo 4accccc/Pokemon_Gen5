@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FS_RegisterEventHook</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FS_RegisterEventHook <img src="../../image/NTR.gif"align="middle"><img src="../../image/TWL.gif" align="middle"></h1>
+<h2>構文</h2>
+
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+typedef u32 FSEvent;
+#define FS_EVENT_MEDIA_INSERTED 0x00000001
+#define FS_EVENT_MEDIA_REMOVED  0x00000002
+
+typedef void (*FSEventFunction)(void *userdata, FSEvent event, void *argument);
+
+void FS_RegisterEventHook(const char *arcname, FSEventHook *hook, FSEventFunction callback, void *userdata);
+</code></pre>
+
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>arcname</strong></em></td>
+<td style="width:87%">登録対象のアーカイブ名</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>hook</strong></em></td>
+<td style="width:87%">登録に使用するフック構造体のポインタ</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>callback</strong></em></td>
+<td style="width:87%">イベント発生時に呼び出されるべきコールバック</td>
+</tr>
+<tr>
+<td style="width:13%"><em><strong>userdata</strong></em></td>
+<td style="width:87%">コールバック引数に与えられる任意のユーザ定義データ (不要ならNULL)</td>
+</tr>
+</tbody>
+</table>
+
+<h2>返り値</h2>
+<p>なし</p>
+
+<h2>説明</h2>
+<p>指定したアーカイブのイベント通知に対するフックを登録します。<br />
+この関数は主に、DSカードやSDカードなどいわゆるリムーバブルメディアのイベントを監視するために使用することが出来ます。<br />
+通知されるイベントは以下の通りです。
+</p>
+<table>
+<tr><td>event</td><td>意味</td><td>arg</td></tr>
+<tr><td>FS_EVENT_MEDIA_INSERTED</td><td>アーカイブと関連のあるメディアが挿入されたことを示します。</td><td>常にNULL</td></tr>
+<tr><td>FS_EVENT_MEDIA_REMOVED</td><td>アーカイブと関連のあるメディアが取り外されたことを示します。</td><td>常にNULL</td></tr>
+</table>
+
+<h2>注意</h2>
+<ul>
+<li>登録したコールバック関数は割り込みハンドラから呼び出される点に注意してください。</li>
+</ul>
+
+<h2>参照</h2>
+<p><code>
+<a href="FS_UnregisterEventHook.html">FS_UnregisterEventHook</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2007/12/06 初版<br />
+</p>
+</body>
+</html>

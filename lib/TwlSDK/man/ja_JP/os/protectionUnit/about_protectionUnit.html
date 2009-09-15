@@ -1,0 +1,438 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
+<META http-equiv="Content-Style-Type" content="text/css">
+<TITLE>プロテクションユニット (overview) </TITLE>
+<LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
+</HEAD>
+<BODY>
+<H1 align="left">プロテクションユニット (overview) <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<P>プロテクションユニットは、メモリのリード／ライト属性やキャッシュ／ライトバックの使用の有無を設定してメモリを保護するための機能です。8つのリージョンをメモリ空間にマッピングすることが可能で、それぞれに異なった属性を設定することができます。</P>
+<P>プロテクションユニットは ARM9 プロセッサでのみ使用可能です。</P>
+<H2>プロテクションユニットのイネーブル・ディセーブル</H2>
+<P>以下の関数で、プロテクションユニット自体をイネーブル、ディセーブルとすることが出来ます。</P>
+<P><CODE><A href="OS_EnableProtectionUnit.html">OS_EnableProtectionUnit()</A></CODE><BR>
+<CODE><A href="OS_DisableProtectionUnit.html">OS_DisableProtectionUnit()</A></CODE></P>
+<H2>各リージョンの設定</H2>
+<P>各プロテクションリージョンの設定を行なうための関数は以下の通りです。</P>
+<P><CODE><A href="OS_SetProtectionRegion.html">OS_SetProtectionRegion()</A></CODE><BR>
+<CODE><A href="OS_SetProtectionRegion.html">OS_SetProtectionRegionParam()</A></CODE></P>
+<P>設定を取得するための関数は以下の通りです。</P>
+<P><CODE><A href="OS_GetProtectionRegion.html">OS_GetProtectionRegionAddress()</A></CODE><BR>
+<CODE><A href="OS_GetProtectionRegion.html">OS_GetProtectionRegionSize()<BR>
+</A><A href="OS_GetProtectionRegion.html">OS_GetProtectionRegionParam()</A></CODE></P>
+<H2>NITROモードでのデフォルトのマッピング<img src="../../image/NTR.gif" align="middle"></H2>
+<P>デフォルトでは各リージョンは以下のようにマッピングされています。<BR>
+リージョンが重なっている場合、リージョン番号の大きい方が優先されます。<BR>
+<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH width="55">リージョン番号</TH>
+      <TH width="172">用途</TH>
+      <TH width="107">ベースアドレス</TH>
+      <TH width="142">サイズ</TH>
+      <TH width="45">キャッシュ</TH>
+      <TH width="45">ライトバッファ</TH>
+
+      <TH width="45">ユーザ属性(命令)</TH>
+      <TH width="45">ユーザ属性(データ)</TH>
+    </TR>
+    <TR>
+      <TD width="55">-</TD>
+      <TD width="172">バックグラウンド</TD>
+      <TD width="107">0x00000000</TD>
+      <TD width="142">4GByte<BR>
+      ( 0x100000000 )</TD>
+      <TD align="center" width="47">×</TD>
+      <TD>×</TD>
+      <TD width="63">NA</TD>
+      <TD width="45">NA</TD>
+    </TR>
+    <TR>
+      <TD width="55">0</TD>
+      <TD width="172">I/Oレジスタ, VRAM等</TD>
+      <TD width="107">HW_IOREG<BR>
+      ( 0x04000000 )</TD>
+      <TD width="142">64MByte<BR>
+      ( 0x4000000 )</TD>
+      <TD align="center" width="47">×</TD>
+      <TD>×</TD>
+      <TD width="63">R/W</TD>
+      <TD width="45">R/W</TD>
+    </TR>
+    <TR>
+      <TD width="55">1</TD>
+      <TD width="172">メインメモリ, WRAM</TD>
+      <TD width="107">HW_MAIN_MEM_MAIN<BR>
+      ( 0x02000000 )</TD>
+      <TD width="142">4MByte / 8MByte<BR>
+      ( 0x400000/0x800000 )<B><FONT color="#ff0033">(注1)</FONT></B></TD>
+      <TD width="47">○</TD>
+      <TD>○</TD>
+      <TD width="63">R/W</TD>
+      <TD width="45">R/W</TD>
+    </TR>
+    <TR>
+      <TD width="55">2</TD>
+      <TD width="172">共有メインメモリイメージ<BR>
+      <FONT color="#ff0033"><B>(注2)</B></FONT></TD>
+      <TD width="107">HW_MAIN_MEM_IM_SHARED<BR>
+      ( 0x027FF000 )</TD>
+      <TD width="142">4KByte<BR>
+      ( 0x1000 )</TD>
+      <TD align="center" width="47">×</TD>
+      <TD>×</TD>
+      <TD width="63">NA</TD>
+      <TD width="45">R/W</TD>
+    </TR>
+    <TR>
+      <TD width="55">3</TD>
+      <TD width="172">カートリッジ</TD>
+      <TD width="107">HW_CTRDG_ROM<BR>
+      ( 0x08000000 )</TD>
+      <TD width="142">128MByte<BR>
+      ( 0x8000000 )</TD>
+      <TD align="center" width="47">×</TD>
+      <TD>×</TD>
+      <TD width="63">NA</TD>
+      <TD width="45">R/W</TD>
+    </TR>
+    <TR>
+      <TD width="55">4</TD>
+      <TD width="172">DTCM</TD>
+      <TD width="107">HW_DTCM<BR>
+      ( 0x027E0000/0x2FE0000 ) <B><FONT color="#ff0033">(注3)</FONT></B></TD>
+      <TD width="142">16KByte<BR>
+      ( 0x4000 )</TD>
+      <TD align="center" width="47">×</TD>
+      <TD>×</TD>
+      <TD width="63">NA</TD>
+      <TD width="45">R/W</TD>
+    </TR>
+    <TR>
+      <TD width="55">5</TD>
+      <TD width="172">ITCM</TD>
+      <TD width="107">HW_ITCM_IMAGE<BR>
+      ( 0x01000000 ) <FONT color="#ff0033"><B>(注4)</B></FONT></TD>
+      <TD width="142">16MByte<BR>
+      ( 0x1000000 )</TD>
+      <TD align="center" width="47">×</TD>
+      <TD>×</TD>
+      <TD width="63">R/W</TD>
+      <TD width="45">R/W</TD>
+    </TR>
+    <TR>
+      <TD width="55">6</TD>
+      <TD width="172">BIOS予約</TD>
+      <TD width="107">HW_BIOS<BR>
+      ( 0xFFFF0000 )</TD>
+      <TD width="142">32KByte<BR>
+      ( 0x8000 )</TD>
+      <TD align="center" width="47">○</TD>
+      <TD>×</TD>
+      <TD width="63">R</TD>
+      <TD width="45">R</TD>
+    </TR>
+    <TR>
+      <TD width="55">7</TD>
+      <TD width="172">共有メインメモリ</TD>
+      <TD width="107">HW_MAIN_MEM_SHARED<BR>
+      ( 0x02FFF000 )</TD>
+      <TD width="142">4KByte <BR>
+      ( 0x1000 )</TD>
+      <TD align="center" width="47">×</TD>
+      <TD>×</TD>
+      <TD width="63">NA</TD>
+      <TD width="45">R/W</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+<B><FONT color="#ff0033">(注1)</FONT></B><B><FONT color="#ff0033"><BR>
+</FONT></B>メインメモリの保護を用途とするプロテクションリージョン1 のサイズは、デバッガ上で動作させる場合は、<CODE><A href="../arena/OS_EnableMainExArena.html">OS_EnableMainExArena()</A></CODE> を <CODE><A href="../arena/OS_InitArena.html">OS_InitArena()</A></CODE> や <CODE><A href="../init/OS_Init.html">OS_Init()</A></CODE> の前に指定することで 8MByte となります。実機の場合は上記の設定に依らず常に
+4MByte となります。</P>
+<P>以前のバージョンとの互換性のために、上記の指定の替わりに、OS ライブラリを
+NITRO_MEMSIZE=8M を指定してコンパイルすれば、プロテクションリージョン1
+のサイズは 8MByte となります ( デバッガ上で動作させる場合 )。</P>
+<P><FONT color="#ff0033"><B>(注2)</B></FONT><BR>
+TWL-SDK の前身である NITRO-SDK では、このプロテクションリージョン2はメインメモリ上の
+ARM7 専用領域を保護するために使用されていましたが、TWL-SDK では共有メインメモリイメージという異なる用途に使用しますのでメインメモリ
+ARM7 専用領域の保護はありません。なお HYBRID ROM を NITRO モードで動作させた場合には正確には共有メインメモリのイメージではなく、共有メインメモリとは独立した領域となっています。</P>
+<P><B><FONT color="#ff0033">(注3)</FONT></B><BR>
+DTCM の開始位置は lsf ファイルで指定されています。このアドレスは、動作モードでなく
+ROM の種類で決定されます。NITRO ROM では 0x027E0000 が、HYBRID ROM、LIMITED
+ROMでは 0x02FE0000 がデフォルトの値となっています。</P>
+<P><B><FONT color="#ff0033">(注4)</FONT></B><BR>
+NULL ポインタへのアクセスで例外を発生させるためにあえて 0x00000000 からにしていません。</P>
+<P><BR>
+<BR>
+どのようにプロテクションリージョンが設定されるかをメモリマップと併せて図示します。</P>
+<UL>
+  <LI>NITRO ROM ・ HYBRID ROM の区別と、動作プラットフォームに搭載されているメインメモリサイズで場合わけをします。<BR>
+  <BR>
+  <LI>FINALビルドされているROM は、搭載メモリが 4MB であるという前提で動作しますので、MEMSIZE=4MB
+  扱いとなります。<BR>
+  <BR>
+  <LI>TWL実機で NITROモードが動作する場合、NITRO 実機の動作と合わせるために MEMSIZE=4MB
+  扱いとなります。<BR>
+  <BR>
+  <LI>NITRO ROM を NITROモードで動作させる場合と、HYBRID ROM を NITRO モードで動作させる場合では、DTCM
+  の位置が異なるので、ここを覆うプロテクションリージョン 4 も異なります。<BR>
+  <BR>
+  <LI>MEMSIZE=4MB と MEMSIZE=8MB では、0x02400000 以降の領域のある・なしが異なりますので、メインメモリを保護する
+  リージョン1 の大きさが異なりますMEMSIZE=4MB の場合は 0x02000000～0x023FFFFF
+  であり、MEMSIZE=8MB の場合は 0x02000000～0x027FFFFF となります。MEMSIZE=32MB
+  の場合は、MEMSIZE=8MB と同じとなります。
+</UL>
+<BR>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TD colspan="3" style="background-color:#304080;"><B><FONT color="#ffffff">NITRO モードでの動作</FONT></B></TD>
+    </TR>
+    <TR>
+      <TH>ROM の種類</TH>
+      <TH>動作プラットフォーム</TH>
+      <TH>該当する項目</TH>
+    </TR>
+    <TR>
+      <TD rowspan="3">NIRO ROM</TD>
+      <TD>NITRO 実機<BR>
+      TWL 実機<BR>
+      すべての FINALROMビルド</TD>
+      <TD>NITRO MODE (NITRO ROM): MEMSIZE=4MB</TD>
+    </TR>
+    <TR>
+      <TD>IS-NITRO-DEBUGGER<BR>
+      ENSATA EMULATOR</TD>
+      <TD>NITRO MODE (NITRO ROM): MEMSIZE=8MB</TD>
+    </TR>
+    <TR>
+      <TD>IS-TWL-DEBUGGER</TD>
+      <TD>NITRO MODE (NITRO ROM): MEMSIZE=32MB</TD>
+    </TR>
+    <TR>
+      <TD rowspan="3">HYBRID ROM</TD>
+      <TD>NITRO 実機<BR>
+      すべての FINALROMビルド</TD>
+      <TD>NITRO MODE (HYBRID ROM): MEMSIZE=4MB</TD>
+    </TR>
+    <TR>
+      <TD>IS-NITRO-DEBUGGER</TD>
+      <TD>NITRO MODE (HYBRID ROM): MEMSIZE=8MB</TD>
+    </TR>
+    <TR>
+      <TD>IS-TWL-DEBUGGER (強制的にNITRO動作)</TD>
+      <TD>NITRO MODE (HYBRID ROM): MEMSIZE=32MB</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+<BLOCKQUOTE>
+<IMG src="image_NITRO_4M.gif" border="0">
+<IMG src="image_NITRO_8M.gif" border="0">
+<IMG src="image_NITRO_32M.gif" border="0">
+<IMG src="image_HYBRIDNITRO_4M.gif" border="0">
+<IMG src="image_HYBRIDNITRO_8M.gif" border="0">
+<IMG src="image_HYBRIDNITRO_32M.gif" border="0">
+</BLOCKQUOTE>
+<P>さらにメインメモリと拡張メインメモリ等、0x02000000～0x03000000 を拡大したものが下の図です。</P>
+<BLOCKQUOTE>
+<IMG src="image_NITRO_4M_d.gif" border="0">
+<IMG src="image_NITRO_8M_d.gif" border="0">
+<IMG src="image_NITRO_32M_d.gif" border="0">
+<IMG src="image_HYBRIDNITRO_4M_d.gif" border="0">
+<IMG src="image_HYBRIDNITRO_8M_d.gif" border="0">
+<IMG src="image_HYBRIDNITRO_32M_d.gif" border="0">
+</BLOCKQUOTE>
+<H2>TWLモードでのデフォルトのマッピング <img src="../../image/TWL.gif" align="middle"></H2>
+<P>デフォルトでは各リージョンは以下のようにマッピングされています。<BR>
+リージョンが重なっている場合、リージョン番号の大きい方が優先されます。<BR>
+<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TH width="55">リージョン番号</TH>
+      <TH width="172">用途</TH>
+      <TH width="107">ベースアドレス</TH>
+      <TH width="142">サイズ</TH>
+      <TH width="45">キャッシュ</TH>
+      <TH width="45">ライトバッファ</TH>
+
+      <TH width="45">ユーザ属性(命令)</TH>
+      <TH width="45">ユーザ属性(データ)</TH>
+    </TR>
+    <TR>
+      <TD width="55">-</TD>
+      <TD width="172">バックグラウンド</TD>
+      <TD width="107">0x00000000</TD>
+      <TD width="142">4GByte<BR>
+      ( 0x100000000 )</TD>
+      <TD align="center" width="47">×</TD>
+      <TD>×</TD>
+      <TD width="63">NA</TD>
+      <TD width="45">NA</TD>
+    </TR>
+    <TR>
+      <TD width="55">0</TD>
+      <TD width="172">I/Oレジスタ, VRAM等</TD>
+      <TD width="107">HW_IOREG<BR>
+      ( 0x04000000 )</TD>
+      <TD width="142">64MByte<BR>
+      ( 0x4000000 )</TD>
+      <TD align="center" width="47">×</TD>
+      <TD>×</TD>
+      <TD width="63">R/W</TD>
+      <TD width="45">R/W</TD>
+    </TR>
+    <TR>
+      <TD width="55">1</TD>
+      <TD width="172">メインメモリ, WRAM</TD>
+      <TD width="107">HW_MAIN_MEM_MAIN<BR>
+      ( 0x02000000 )</TD>
+      <TD width="142">32MByte <BR>
+      ( 0x200000 )</TD>
+      <TD width="47">○</TD>
+      <TD>○</TD>
+      <TD width="63">R/W</TD>
+      <TD width="45">R/W</TD>
+    </TR>
+    <TR>
+      <TD width="55">2</TD>
+      <TD width="172">ARM7専用メインメモリ</TD>
+      <TD width="107">HW_MAIN_MEM_SUB<BR>
+      ( 0x02F80000)</TD>
+      <TD width="142">512KByte<BR>
+      ( 0x80000 )</TD>
+      <TD align="center" width="47">×</TD>
+      <TD>×</TD>
+      <TD width="63">NA</TD>
+      <TD width="45">NA</TD>
+    </TR>
+    <TR>
+      <TD width="55">3</TD>
+      <TD width="172">拡張メインメモリ</TD>
+      <TD width="107">HW_CTRDG_ROM<BR>
+      ( 0x08000000 ) <B><FONT color="#ff0000">(注5)</FONT></B></TD>
+      <TD width="142">64MByte / 128MByte<BR>
+      ( 0x4000000/0x8000000 )</TD>
+      <TD align="center" width="47">○</TD>
+      <TD>○</TD>
+      <TD width="63">R/W</TD>
+      <TD width="45">R/W</TD>
+    </TR>
+    <TR>
+      <TD width="55">4</TD>
+      <TD width="172">DTCM</TD>
+      <TD width="107">HW_DTCM<BR>
+      ( 0x02FE0000 ) <B><FONT color="#ff0033">(注6)</FONT></B></TD>
+      <TD width="142">16KByte<BR>
+      ( 0x4000 )</TD>
+      <TD align="center" width="47">×</TD>
+      <TD>×</TD>
+      <TD width="63">NA</TD>
+      <TD width="45">R/W</TD>
+    </TR>
+    <TR>
+      <TD width="55">5</TD>
+      <TD width="172">ITCM</TD>
+      <TD width="107">HW_ITCM_IMAGE<BR>
+      ( 0x01000000 ) <FONT color="#ff0033"><B>(注7)</B></FONT></TD>
+      <TD width="142">16MByte<BR>
+      ( 0x1000000 )</TD>
+      <TD align="center" width="47">×</TD>
+      <TD>×</TD>
+      <TD width="63">R/W</TD>
+      <TD width="45">R/W</TD>
+    </TR>
+    <TR>
+      <TD width="55">6</TD>
+      <TD width="172">BIOS予約</TD>
+      <TD width="107">HW_TWL_BIOS<BR>
+      ( 0xFFFF0000 )</TD>
+      <TD width="142">32KByte<BR>
+      ( 0x8000 )</TD>
+      <TD align="center" width="47">○</TD>
+      <TD>×</TD>
+      <TD width="63">R</TD>
+      <TD width="45">R</TD>
+    </TR>
+    <TR>
+      <TD width="55">7</TD>
+      <TD width="172">共有メインメモリ</TD>
+      <TD width="107">HW_TWL_MAIN_MEM_SHARED<BR>
+      ( 0x02FFC000 )</TD>
+      <TD width="142">16KByte <BR>
+      ( 0x4000 )</TD>
+      <TD align="center" width="47">×</TD>
+      <TD>×</TD>
+      <TD width="63">NA</TD>
+      <TD width="45">R/W</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+<B><FONT color="#ff0033">(注5)</FONT></B><BR>
+拡張メインメモリは 0x0C000000 からですが、NITRO カートリッジ領域(0x08000000～)
+にチェックのためにアクセスに行くので HW_CTRDG_ROM がベースになります。サイズは
+FINALROM 版では必ず 64MByte となります。それ以外では、32MBのメインメモリが搭載されている場合(拡張メインメモリがある場合)
+は128MByte、そうでない場合は 64MByte となります。</P>
+<P><B><FONT color="#ff0033">(注6)</FONT></B><BR>
+DTCM の開始位置は lsf ファイルで指定されています。0x02FE0000 はデフォルトの値です。</P>
+<P><B><FONT color="#ff0033">(注7)</FONT></B><BR>
+NULL ポインタへのアクセスで例外を発生させるためにあえて 0x00000000 からにしていません。</P>
+<P><BR>
+どのようにプロテクションリージョンが設定されるかをメモリマップと併せて図示します。
+HYBRID ROM が TWL モードで動作する場合と LIMITED ROM が動作する場合で違いはありません。搭載メモリサイズは
+動作する機器によって 16MB と 32MB に分けていますが、FINALROM ビルドされているものは、搭載メモリが
+16MB であるという前提で動作しますので 16MB の項目を参照してください。<BR>
+</P>
+<TABLE border="1">
+  <TBODY>
+    <TR>
+      <TD colspan="3" style="background-color:#304080;"><B><FONT color="#ffffff">TWL モードでの動作</FONT></B></TD>
+    </TR>
+    <TR>
+      <TH>ROM の種類</TH>
+      <TH>動作プラットフォーム</TH>
+      <TH>該当する項目</TH>
+    </TR>
+    <TR>
+      <TD rowspan="2">HYBRID ROM<BR>
+      LIMITED ROM</TD>
+      <TD>TWL 実機<BR>
+      すべての FINALROMビルド</TD>
+      <TD>TWL MODE : MEMSIZE=16MB</TD>
+    </TR>
+    <TR>
+      <TD>IS-TWL-DEBUGGER</TD>
+      <TD>TWL MODE : MEMSIZE=32MB</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<P><BR>
+<IMG src="image_TWL_PR_2.gif" border="0"><IMG src="image_TWL_PR_1.gif" border="0"></P>
+<P>以下は 0x2000000～0x3000000 のメインメモリ領域を拡大したものです。16MB設定でも
+32MB設定でもこの領域は変わりません。</P>
+<P><IMG src="image_TWL_PR_1b.gif" border="0"></P>
+<H2>参照</H2>
+<P><CODE>
+<A href="../list_os.html#ProtectionUnit">OS関数一覧(プロテクションユニット)</A><BR>
+</CODE></P>
+<H2>履歴</H2>
+<P>2008/12/02 TWL ROM のARM9プログラム開始位置を調整<BR>
+2008/09/08 NITRO モードを NITRO ROM と HYBRID ROM NITRO に分けて説明<BR>
+2008/08/20 TWL側のリージョン3を修正<BR>
+2007/11/26 図を大幅に改訂<BR>
+2007/10/08 TWLに関する記述を追加<BR>
+2006/05/12 デフォルトのマッピング表の修正<BR>
+2005/04/13 ARM7専用・DTCMリージョンのアドレスを変更<BR>
+2004/12/14 用語や語尾など修正<BR>
+2004/11/17 初版</P>
+</BODY>
+</HTML>

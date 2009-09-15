@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--==========================================================================
+  Copyright 2008 Nintendo.  All rights reserved.
+
+  These coded instructions, statements, and computer programs contain
+  proprietary information of Nintendo of America Inc. and/or Nintendo
+  Company Ltd., and are protected by Federal copyright law.  They may
+  not be disclosed to third parties or copied or duplicated in any form,
+  in whole or in part, without the prior written consent of Nintendo.
+ ==========================================================================-->
+<HTML>
+<HEAD>
+	<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+	<META http-equiv="Content-Style-Type" content="text/css">
+	<TITLE>CRYPTO_SIGN_GetModulus</TITLE>
+	<LINK rel="stylesheet" href="../../css/nitro.css">
+	<BASE target="main">
+</HEAD>
+<BODY>
+<H1>CRYPTO_SIGN_GetModulus <IMG src="../../image/NTR.gif" width="23" height="12" border="0" align="middle"><IMG src="../../image/TWL.gif" width="23" height="12" border="0" align="middle"></H1>
+
+<H2>構文</H2>
+<DL>
+	<DD>
+		<PRE><CODE>
+#include &lt;nitro/crypto/sign.h&gt;
+
+int CRYPTO_SIGN_GetModulus(
+const void* pub_ptr
+);
+		</CODE></PRE>
+	</DD>
+</DL>
+
+<H2>引数</H2>
+<TABLE border="1">
+	<TBODY>
+		<TR>
+			<TD width="25%"><EM><STRONG><CODE>pub_ptr</CODE></STRONG></EM></TD>
+			<TD width="75%">公開鍵へのポインタを指定します。</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+
+<H2>返り値</H2>
+<P>
+	以下のいずれかの処理結果を返します。
+</P>
+<TABLE border="1">
+	<TBODY>
+		<TR>
+			<TD width="25%"><EM><STRONG><CODE>NULL以外</CODE></STRONG></EM></TD>
+			<TD width="75%">解析が成功し、公開鍵のmodulusへのポインタを返します。</TD>
+		</TR>
+		<TR>
+			<TD><EM><STRONG><CODE>NULL</CODE></STRONG></EM></TD>
+			<TD>解析が失敗しました。</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+
+<H2>説明</H2>
+<P>
+	公開鍵のmodulusの位置を解析しポインタを返します。<BR>
+	pub_ptr には署名検証で用いる公開鍵へのポインタを与えます。
+	返ってきたポインタを<A href="CRYPTO_VerifySignature.html">CRYPTO_VerifySignature()</A>や
+	<A href="CRYPTO_VerifySignatureWithHash.html">CRYPTO_VerifySignatureWithHash()</A>の引数mod_ptrに指定することが可能です。
+</P>
+
+<P>
+	この関数を用いることで公開鍵のmodulusを探す作業が不要にすることができます。
+</P>
+
+<H2>参照</H2>
+<P>
+	<CODE>
+		<A href="CRYPTO_VerifySignature.html">CRYPTO_VerifySignature</A>, <A href="CRYPTO_VerifySignatureWithHash.html">CRYPTO_VerifySignatureWithHash</A>
+	</CODE>
+</P>
+
+<H2>履歴</H2>
+<P>
+	2008/09/16 初版<BR>
+</P>
+
+</BODY>
+</HTML>

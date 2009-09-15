@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>FSResult</title>
+<link rel="stylesheet" href="../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>FSResult <img src="../image/NTR.gif"align="middle"><img src="../image/TWL.gif" align="middle"></h1>
+<h2>定義</h2>
+<pre><code>
+#include &lt;nitro/fs.h&gt;
+
+typedef	enum FSResult
+{
+    FS_RESULT_SUCCESS = 0,
+    FS_RESULT_FAILURE = 1,
+    FS_RESULT_BUSY = 2,
+    FS_RESULT_CANCELED = 3,
+    FS_RESULT_UNSUPPORTED = 4,
+    FS_RESULT_ERROR = 5,
+    FS_RESULT_INVALID_PARAMETER = 6,
+    FS_RESULT_NO_MORE_RESOURCE = 7,
+    FS_RESULT_ALREADY_DONE = 8,
+    FS_RESULT_PERMISSION_DENIED = 9,
+    FS_RESULT_MEDIA_FATAL = 10,
+    FS_RESULT_NO_ENTRY = 11,
+    FS_RESULT_MEDIA_NOTHING = 12,
+    FS_RESULT_MEDIA_UNKNOWN = 13,
+    FS_RESULT_BAD_FORMAT = 14,
+
+    FS_RESULT_PROC_ASYNC = 256,
+    FS_RESULT_PROC_DEFAULT,
+    FS_RESULT_PROC_UNKNOWN,
+
+    FS_RESULT_CANCELLED = FS_RESULT_CANCELED
+}
+FSResult;
+</code></pre>
+
+<h2>説明</h2>
+<p>ファイルシステムAPIの実行結果、およびアーカイブのユーザプロシージャの結果を表現する列挙型です。<br />
+以下のように定義されます。</p>
+
+<table>
+<tbody>
+
+<tr><td colspan="2" style="border:solid 1px black;background-color:Transparent">以下はFSライブラリ関数の実行結果として返されます。</td></tr>
+
+<tr><td>FS_RESULT_SUCCESS</td>
+<td>関数が正しく処理した結果としての成功を示します。<br />
+例えば <code><a href="file/FS_ReadFile.html">FS_ReadFile()</a></code> にて 100 BYTE リードしようとしたところが終端に達して 50 BYTE しか読めなかった場合も、動作としては正常なので「成功」として扱われます。</td>
+</tr>
+
+<tr><td>FS_RESULT_FAILURE</td>
+<td>関数が正しく処理した結果としての失敗を示します。<br />
+例えば <code><a href="file/FS_ReadDir.html">FS_ReadDir()</a></code> で終端を読んだときなど、処理として認められている想定内の「失敗」を指します。</td></tr>
+
+<tr><td>FS_RESULT_BUSY</td>
+<td>現在コマンド処理中であることを示します。<br />
+未完なので厳密にはエラーではありませんが、便宜上エラーに含みます。</td></tr>
+
+<tr><td>FS_RESULT_CANCELED</td>
+<td>コマンドをキャンセルされたことを示します。<br />
+ユーザ自身による明示的なコマンドキャンセルと、アーカイブがアンロードされる際の強制キャンセルがあります。</td></tr>
+
+<tr><td>FS_RESULT_UNSUPPORTED</td>
+<td>アーカイブが指定コマンドに対応しなかったことを示します。<br />
+このエラーは特定のコマンドをあえて無視するアーカイブがユーザプロシージャの返り値として明示的に返すことで発生します。<br />
+意図せずこのエラーが返された場合、対象としているアーカイブの特殊な仕様を改めてご確認ください。</td></tr>
+
+<tr><td>FS_RESULT_INVALID_PARAMETER</td>
+<td>与えた引数いずれかが不正かまたは範囲外であることを示します。<br />
+主に、ポインタがNULLであったり無効なハンドルを指定した場合に発生します。</td></tr>
+
+<tr><td>FS_RESULT_NO_MORE_RESOURCE</td>
+<td>処理に必要とされるなんらかのリソースが内部で不足したことを示します。<br />
+同時に開くことのできるハンドルの総数や内部で消費される動的なメモリの上限はアーカイブごとに異なります。</td></tr>
+
+<tr><td>FS_RESULT_ALREADY_DONE</td>
+<td>すでに要求された処理と同じ状態になっていたことを示します。<br />
+<code><a href="directory/FS_CreateFile.html">FS_CreateFile()</a></code> で指定したファイルがすでに存在している場合や、<code><a href="directory/FS_DeleteDirectory.html">FS_DeleteDirectory()</a></code> で指定したディレクトリが元から存在していない場合などに発生します。</td></tr>
+
+<tr><td>FS_RESULT_PERMISSION_DENIED</td>
+<td>要求された処理がアクセス権の問題で失敗したことを示します。<br />
+主に以下のような状況で発生します。
+<ul>
+<li>読み込み専用のファイルを書き込み権限で開こうとした場合</li>
+<li>空でないディレクトリを削除しようとした場合</li>
+<li><a href="../tools/makerom.html#ROMSPEC_TWL">makeromツールの"Put"パラメータ</a>で指定した<a href="overview/about_Archive.html#ROM_LTDFILE">TWL専用ファイル</a>をNTR環境で開こうとした場合</li>
+<li>SDカードがライトプロテクトされている場合</li>
+<li>FSライブラリでサポートしていない2Gバイト以上のファイルを開こうとした場合</li>
+</ul>
+</td></tr>
+
+<tr><td style="background-color:#FFF0F0;">FS_RESULT_MEDIA_FATAL</td>
+<td style="background-color:#FFF0F0;"><a href="archive_nand_spec.html">NANDアーカイブ</a>や<a href="archive_sdmc_spec.html">SDカードアーカイブ</a>などの書き込み可能メディアで致命的なデバイス異常を検知した場合などに発生します。<br />
+このアーカイブに対する処理の継続は困難なため、SDカードであればメディアの交換や挿し直しを、本体保存メモリ(NAND)であれば本体の修理を促す必要があります。</td></tr>
+
+<tr><td style="background-color:#FFF0F0;">FS_RESULT_BAD_FORMAT</td>
+<td style="background-color:#FFF0F0;"><a href="archive_nand_spec.html">NANDアーカイブ</a>や<a href="archive_sdmc_spec.html">SDカードアーカイブ</a>などの書き込み可能メディアでファイルシステムの破損を検知した場合などに発生します。<br />
+このアーカイブに対する処理の継続は困難なため、SDカードであればメディアの交換や挿し直しを、本体保存メモリ(NAND)であればNA_FormatTitleArchive()でアーカイブを再フォーマットする必要があります。</td></tr>
+
+<tr><td>FS_RESULT_NO_ENTRY</td>
+<td>指定されたパスが存在しなかったことを示します。<br />
+存在しないディレクトリの下にファイルを生成しようとした場合にもこのエラーが発生します。</td></tr>
+
+<tr><td>FS_RESULT_MEDIA_NOTHING</td>
+<td>指定されたアーカイブはリムーバブルメディアであり、デバイスが挿入されていませんでした。<br />
+現在は<a href="archive_sdmc_spec.html">SDカードアーカイブ</a>だけがこのエラーを返します。</td></tr>
+
+<tr><td>FS_RESULT_MEDIA_UNKNOWN</td>
+<td>指定されたアーカイブはリムーバブルメディアであり、ファイルシステムではない不明なデバイスが挿入されています。<br />
+現在は<a href="archive_sdmc_spec.html">SDカードアーカイブ</a>だけがこのエラーを返します。</td></tr>
+
+<tr><td>FS_RESULT_ERROR</td>
+<td>上記いずれにも該当しない検知可能な異常が処理中に発生した結果としての失敗を示します。</td></tr>
+
+<tr><td colspan="2" style="border:solid 1px black;background-color:Transparent">以下はユーザプロシージャ返り値としてのみ使用されます。</td></tr>
+
+<tr><td>FS_RESULT_PROC_ASYNC</td>
+<td>ユーザプロシージャが処理を非同期的に行うためにひとまず制御を戻すときの返り値です。<br />
+この値を返した場合は、リード・ライトコールバックと同様に <code><a href="archive/FS_NotifyArchiveAsyncEnd.html">FS_NotifyArchiveAsyncEnd()</a></code> で処理の完了を通知する必要があります。</td></tr>
+
+<tr><td>FS_RESULT_PROC_DEFAULT</td>
+<td>ユーザプロシージャが少なくとも今回だけはデフォルト処理に任せるときの返り値です。<br />
+次回も当該コマンドへのユーザプロシージャは呼び出されます。単に既存のコマンドをフックしたい場合などは毎回これを返します。</td></tr>
+
+<tr><td>FS_RESULT_PROC_UNKNOWN</td>
+<td>ユーザプロシージャが今回以降のこのコマンドを全てデフォルト処理に任せるときの返り値です。<br />
+当該コマンドへのプロシージャ呼び出しフラグは解除され、次回から呼び出されません。</td></tr>
+
+<tr><td>FS_RESULT_SUCCESS</td><td rowspan="10">前述の規則に従ってアーカイブ固有の判断でプロシージャから返す必要があります。</td></tr>
+
+<tr><td>FS_RESULT_FAILURE</td></tr>
+
+<tr><td>FS_RESULT_UNSUPPORTED</td></tr>
+
+<tr><td>FS_RESULT_INVALID_PARAMETER</td></tr>
+
+<tr><td>FS_RESULT_NO_MORE_RESOURCE</td></tr>
+
+<tr><td>FS_RESULT_ALREADY_DONE</td></tr>
+
+<tr><td>FS_RESULT_PERMISSION_DENIED</td></tr>
+
+<tr><td>FS_RESULT_MEDIA_FATAL</td></tr>
+
+<tr><td>FS_RESULT_NO_ENTRY</td></tr>
+
+<tr><td>FS_RESULT_ERROR</td></tr>
+
+</tbody>
+</table>
+
+<h2>参照</h2>
+<p><code>
+<a href="fs_archive_type.html">FSArchive</a>
+<a href="fs_archive_proc_func_type.html">FS_ARCHIVE_PROC_FUNC</a>
+<br />
+<a href="archive/FS_SetArchiveProc.html">FS_SetArchiveProc</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/06/08 TWL専用ファイルの説明へのリンクを追加。<br />
+2009/02/05 エラー要因の説明を追記<br />
+2008/10/21 FS_RESULT_MEDIA_FATALとFS_RESULT_BAD_FORMATの説明を詳細化<br />
+2008/07/16 FS_RESULT_PERMISSION_DENIEDの発生条件を追加<br />
+2008/06/25 FS_RESULT_MEDIA_NOTHING,FS_RESULT_MEDIA_UNKNOWN,FS_RESULT_BAD_FORMATを追加<br />
+2008/05/13 FS_RESULT_NO_ENTRYを追加<br />
+2008/04/42 エラーコードと数値の対応を明記。<br />
+2008/03/12 FS_RESULT_MEDIA_FATALを追加<br />
+2007/09/18 列挙値とその説明を追加<br />
+2004/07/12 列挙値とその説明を追加<br />
+2004/07/01 初版<br />
+</p>
+</body>
+</html>

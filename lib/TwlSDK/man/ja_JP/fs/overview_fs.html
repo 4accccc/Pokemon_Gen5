@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<BASE target="main">
+<TITLE>ファイルシステム</TITLE>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+<style type="text/css">
+td.supported   {border:solid 1px black;background-color:#FFFFF8}
+td.unsupported {border:solid 1px black;background-color:#C0C0C0}
+</style>
+</HEAD>
+<BODY>
+
+<H1>ファイルシステム(FS) 概要</H1>
+
+<ul>
+  <li><a href="#introduction">はじめに</a></li>
+  <li><a href="#file">ファイル・ディレクトリへのアクセス</a></li>
+  <li><a href="#archive">アーカイブ</a></li>
+  <ul>
+      <li><a href="overview/about_Archive.html" target="_self">標準アーカイブ</a></li>
+      <ul>
+          <li><a href="overview/about_Archive.html#ROM" target="_self">ROMアーカイブ</a></li>
+          <li><a href="overview/about_Archive.html#MEM" target="_self">メモリファイルアーカイブ</a></li>
+          <li><a href="overview/about_Archive.html#NAND" target="_self">NANDアーカイブ</a></li>
+          <li><a href="overview/about_Archive.html#SDMC" target="_self">SDカードアーカイブ</a></li>
+          <li><a href="overview/about_Archive.html#format" target="_self">内部フォーマット</a></li>
+      </ul>
+      <ul>
+          <li><a href="overview/about_Archive.html#NitroROM" target="_self">NitroROMフォーマット</a></li>
+          <li><a href="overview/about_Archive.html#FAT" target="_self">FATフォーマット</a></li>
+      </ul>
+  </ul>
+  <li><a href="#overlay" target="_self">オーバーレイ</a></li>
+</ul>
+
+
+<h2><a name="introduction">はじめに</a></h2>
+<p>FSライブラリは、ファイルシステムとオーバーレイモジュールを使用するための各種APIを提供します。</p>
+<p><font color="Red">あらゆるFSライブラリ関数の使用に先立ってあらかじめ<code><a href="file/FS_Init.html">FS_Init( )</a></code> を呼び出しておく必要があります。</font><br />
+FSライブラリは内部で使用できるDMAチャンネルをアプリケーションから明示的に指定される必要があるため、
+<code><a href="../os/init/OS_Init.html">OS_Init( )</a></code>の内部から自動的に呼び出されないという点に注意してください。</p>
+<pre style="border:1px solid black"><code>
+(初期化の例)
+void NitroMain(void)
+{
+    <font color="#008000">// 起動直後にOSを初期化します。</font>
+    <a href="../os/init/OS_Init.html">OS_Init()</a>;
+    <font color="#008000">// DMA番号を明示的に指定してFSライブラリを初期化します。</font>
+    <a href="file/FS_Init.html">FS_Init(3)</a>;
+    <font color="#008000">// これ以降、FSライブラリが使用可能となります。</font>
+}
+</code></pre>
+
+
+<h2><a name="file">ファイル・ディレクトリへのアクセス</a></h2>
+<p>TWL-SDKに用意される様々なファイルシステムは、FSライブラリで定められた共通のインタフェースに準拠して実装されます。
+これにより、仕様が異なる各々のファイルシステムに対応するためのコードをゲーム開発者やライブラリ設計者が個別に記述する必要が無くなり、開発の負担を軽減することができます。</p>
+<p>
+アプリケーションがファイルシステムへアクセスする際には、多くの場合ファイルやディレクトリのハンドルをオープンする必要があります。
+オープンしたハンドルを保持しておくための<code><a href="fs_file_type.html">FSFile構造体</a></code>はアプリケーション側で用意し、
+使用する前に<code><a href="file/FS_InitFile.html">FS_InitFile( )</a></code>で初期化しておく必要がある点に注意してください。</p>
+<p><code>
+<a href="list_fs.html#file">ファイルアクセス 関数一覧</a><br />
+<a href="list_fs.html#directory">ディレクトリアクセス 関数一覧</a><br />
+</code></p>
+
+
+<h2><a name="archive">アーカイブ</a></h2>
+<p>FSライブラリにマウントされる個々のファイルシステムの実装を「アーカイブ」と呼びます。
+アーカイブは、パーソナルコンピュータ上で一般的に「ドライブ」と呼ばれるものと概念的に同じものです。</p>
+<p>DSカードから起動したプログラムであれば必ずROM領域内に1個のディレクトリツリー構造を格納しており、
+FSライブラリではこのディレクトリツリーへアクセスするためのアーカイブを"rom:"という名前でシステムにマウントします。
+このアーカイブを「<a href="overview/about_Archive.html#ROM">ROMアーカイブ</a>」と呼び、プログラムにとっては最も標準的なアーカイブとなります。
+その他にもプログラムの種類によってはFSライブラリがいくつかのアーカイブを追加で用意することがあります。
+詳細は「<a href="overview/about_Archive.html">標準アーカイブ (overview)</a>」の項をご参照ください。</p>
+<p>SDKが用意する標準的なアーカイブのほかにも、必要に応じて開発者が新しいアーカイブを自由に実装してマウントするための各種APIが用意されています。</p>
+<p><code>
+<a href="list_fs.html#archive">アーカイブ 関数一覧</a><br />
+</code></p>
+
+
+<h2><a name="overlay">オーバーレイ</a></h2>
+<p>起動時に全てを常駐させておくことのできない巨大なプログラムであっても、
+個々のモジュールをオーバーレイとして分割すれば実行中に必要な部分だけをロードすることができます。
+FSライブラリではこのオーバーレイモジュールのロード処理に必要なひととおりの機能(オーバーレイ情報の取得・実行コードの読み込み・コンストラクタやデストラクタの起動)をAPIとして用意しています。
+オーバーレイモジュールはファイルシステム内部で1個の無名ファイルとして扱われているため、
+必要に応じて、通常のファイル読み込みと同じ要領でロード処理をカスタマイズすることも可能です。</p>
+<p>オーバーレイを使用するための手順は<a href="../demos/fs/fsdemos.html">FSライブラリのサンプルデモ</a>と
+<a href="../tools/makelcf.html">makelcfツールの説明</a>をご参照ください。</p>
+<p><code>
+<a href="list_fs.html#overlay">オーバーレイ 関数一覧</a><br />
+</code></p>
+
+
+<h2>参照</h2>
+<p><code><a href="list_fs.html">FS関数一覧</a><br />
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2008/09/26 アンカータグの書式ミスを修正<br />
+2008/09/12 初版<br />
+</p>
+
+<table border="0" height="100%"><tr><td style="background-color : white;"></td></tr></table>
+
+</BODY>
+</HTML>
