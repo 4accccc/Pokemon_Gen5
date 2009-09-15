@@ -4,7 +4,7 @@
 #======================================================================
 #コンバート対象ユーザー定義
 #
-USERS = kagaya lee_hyunjung
+USERS = kagaya lee_hyunjung takahashi
 
 #対象ディレクトリ
 #
