@@ -7,7 +7,7 @@
 def read_uniq_scripts( filename )
   File.open(filename){|file|
     file.each{|line|
-      if line =~/\t\w+\.ev/ then
+      if line =~/\w+\.ev/ then
         column = line.split
         puts "\#include \"../script/#{column[0].sub(/\.ev/,"")}_def.h\""
       end
