@@ -463,6 +463,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
         break;
       }
 
+      wk->shooterCost[ wk->procPokeIdx ] = 0;
       wk->checkedPokeCnt++;
     }
     break;
@@ -604,8 +605,14 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     break;
 
   case SEQ_CHECK_ITEM:
-    BTLV_ITEMSELECT_Start( wk->viewCore, wk->bagMode, wk->shooterEnergy );
-    (*seq) = SEQ_WAIT_ITEM;
+    {
+      u32 i, sum_cost = 0;
+      for(i=0; i<wk->procPokeIdx; ++i){
+        sum_cost += wk->shooterCost[i];
+      }
+      BTLV_ITEMSELECT_Start( wk->viewCore, wk->bagMode, wk->shooterEnergy, sum_cost );
+      (*seq) = SEQ_WAIT_ITEM;
+    }
     break;
 
   case SEQ_WAIT_ITEM:
@@ -623,6 +630,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
           cost = wk->shooterEnergy;
         }
         wk->shooterCost[ wk->procPokeIdx ] = cost;
+        BTL_Printf("Act Param :item=%d, targetIdx=%d\n", itemID, targetIdx);
         BTL_ACTION_SetItemParam( wk->procAction, itemID, targetIdx );
         (*seq)=SEQ_CHECK_DONE;
       }else{
@@ -1456,7 +1464,7 @@ restart:
   case 1:
     if( SCQUE_IsFinishRead(wk->cmdQue) )
     {
-      BTL_Printf("サーバーコマンド読み終わりましたよっと\n");
+      BTL_Printf("サーバーコマンド読み終わりました\n");
       return TRUE;
     }
     (*seq)++;
@@ -1528,6 +1536,9 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
       u8 posIdx = wk->cmdArgs[1];
       u8 memberIdx = wk->cmdArgs[2];
       BtlPokePos  pokePos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
+
+      BTL_Printf("メンバーIN ACT client=%d, posIdx=%d, pos=%d, memberIdx=%d\n",
+          clientID, posIdx, pokePos, memberIdx );
 
       BTLV_StartMemberChangeAct( wk->viewCore, pokePos, clientID, posIdx );
       (*seq)++;

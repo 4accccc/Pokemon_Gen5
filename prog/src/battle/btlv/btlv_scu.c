@@ -717,7 +717,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
 
       bbgp_make( wk, &bbgp, BTLV_MCSS_POS_BB, BTLV_BALL_GAUGE_TYPE_ENEMY );
       BTLV_EFFECT_SetBallGauge( &bbgp );
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_NPC1, 2, subwk->trID, subwk->trID );
+      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_NPC1, 1, 1 );
       BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
@@ -735,7 +735,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
       TrainerID  trID = BTL_MAIN_GetTrainerID( wk->mainModule );
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_NPC1, 3, trID, trID, subwk->pokeID );
+      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_NPC1, 2, 1, subwk->pokeID );
       BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
       (*seq)++;
     }
@@ -1445,7 +1445,10 @@ void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos, u8 clientID, u8 memberI
     const BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeDataConst( wk->pokeCon, clientID, memberIdx );
     {
       u8 vpos =  BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos);
-      BTLV_EFFECT_SetPokemon( BPP_GetSrcData( bpp ), vpos );
+      const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
+      BTL_Printf("“ü‚éƒ|ƒPƒ‚ƒ“  memIdx=%d, pokeID=%d, monsno=%d, adrs=%p\n",
+            memberIdx, BPP_GetID(bpp), BPP_GetMonsNo(bpp), pp );
+      BTLV_EFFECT_SetPokemon( pp, vpos );
     }
   }
 }

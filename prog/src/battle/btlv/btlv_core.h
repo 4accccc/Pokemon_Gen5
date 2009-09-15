@@ -221,7 +221,7 @@ extern void BTLV_KinomiAct_Start( BTLV_CORE* wk, BtlPokePos pos );
 extern BOOL BTLV_KinomiAct_Wait( BTLV_CORE* wk, BtlPokePos pos );
 
 
-extern void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy );
+extern void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_energy );
 extern BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk );
 extern u16 BTLV_ITEMSELECT_GetItemID( BTLV_CORE* wk );
 extern u8  BTLV_ITEMSELECT_GetCost( BTLV_CORE* wk );

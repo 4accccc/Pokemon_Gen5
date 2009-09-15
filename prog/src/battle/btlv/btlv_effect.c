@@ -307,6 +307,8 @@ BOOL  BTLV_EFFECT_CheckExecute( void )
 //============================================================================================
 void  BTLV_EFFECT_SetPokemon( const POKEMON_PARAM *pp, int position )
 {
+  u16 monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+  BTL_Printf(" *** Eff set pokemon monsno=%d\n", monsno);
   BTLV_MCSS_Add( bew->bmw, pp, position );
 }
 
@@ -360,10 +362,10 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
   }
 #endif
   if( position & 1 )
-  { 
+  {
     BTLV_MCSS_AddTrainer( bew->bmw, trtype, position );
     if( ( pos_x != 0 ) || ( pos_y != 0 ) || ( pos_z != 0 ) )
-    { 
+    {
       BTLV_MCSS_SetPosition( bew->bmw, position, pos_x, pos_y, pos_z );
     }
     BTLV_MCSS_SetShadowVanishFlag( bew->bmw, position, 1 );
@@ -390,12 +392,12 @@ void  BTLV_EFFECT_DelTrainer( int position )
   GF_ASSERT_MSG( bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] != BTLV_EFFECT_TRAINER_INDEX_NONE, "pos=%d", position );
 
   if( position & 1 )
-  { 
+  {
     BTLV_MCSS_Del( bew->bmw, position );
     bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
   }
   else
-  { 
+  {
     BTLV_CLACT_Delete( bew->bclw, bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] );
     bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
   }
@@ -497,30 +499,30 @@ BOOL  BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE type )
  * @brief  指定された3Dモデルに対するパレットフェードをセット
  *
  * @param[in] model       対象とする3Dモデル
- * @param[in]	start_evy   セットするパラメータ（フェードさせる色に対する開始割合16段階）
- * @param[in]	end_evy   	セットするパラメータ（フェードさせる色に対する終了割合16段階）
- * @param[in]	wait	    	セットするパラメータ（ウェイト）
- * @param[in]	rgb		    	セットするパラメータ（フェードさせる色）
+ * @param[in] start_evy   セットするパラメータ（フェードさせる色に対する開始割合16段階）
+ * @param[in] end_evy     セットするパラメータ（フェードさせる色に対する終了割合16段階）
+ * @param[in] wait        セットするパラメータ（ウェイト）
+ * @param[in] rgb         セットするパラメータ（フェードさせる色）
  */
 //============================================================================================
 void  BTLV_EFFECT_SetPaletteFade( int model, u8 start_evy, u8 end_evy, u8 wait, u16 rgb )
-{ 
-  if( ( model == BTLEFF_PAL_FADE_STAGE ) || 
-      ( model == BTLEFF_PAL_FADE_3D ) || 
+{
+  if( ( model == BTLEFF_PAL_FADE_STAGE ) ||
+      ( model == BTLEFF_PAL_FADE_3D ) ||
       ( model == BTLEFF_PAL_FADE_ALL ) )
-  { 
+  {
     BTLV_STAGE_SetPaletteFade( bew->bsw, start_evy, end_evy, wait, rgb );
   }
-  if( ( model == BTLEFF_PAL_FADE_FIELD ) || 
-      ( model == BTLEFF_PAL_FADE_3D ) || 
+  if( ( model == BTLEFF_PAL_FADE_FIELD ) ||
+      ( model == BTLEFF_PAL_FADE_3D ) ||
       ( model == BTLEFF_PAL_FADE_ALL ) )
-  { 
+  {
     BTLV_FIELD_SetPaletteFade( bew->bfw, start_evy, end_evy, wait, rgb );
   }
   if( ( model == BTLEFF_PAL_FADE_EFFECT ) ||
       ( model == BTLEFF_PAL_FADE_ALL ) )
-  { 
-    PaletteFadeReq( bew->pfd, PF_BIT_MAIN_BG, BTLEFF_PAL_FADE_EFFECT_BIT, wait, 
+  {
+    PaletteFadeReq( bew->pfd, PF_BIT_MAIN_BG, BTLEFF_PAL_FADE_EFFECT_BIT, wait,
                     start_evy, end_evy, rgb, bew->tcb_sys );
   }
 }
@@ -535,26 +537,26 @@ void  BTLV_EFFECT_SetPaletteFade( int model, u8 start_evy, u8 end_evy, u8 wait, 
  */
 //============================================================================================
 BOOL  BTLV_EFFECT_CheckExecutePaletteFade( int model )
-{ 
+{
   BOOL  ret_stage   = FALSE;
   BOOL  ret_field   = FALSE;
   BOOL  ret_effect  = FALSE;
 
-  if( ( model == BTLEFF_PAL_FADE_STAGE ) || 
-      ( model == BTLEFF_PAL_FADE_3D ) || 
+  if( ( model == BTLEFF_PAL_FADE_STAGE ) ||
+      ( model == BTLEFF_PAL_FADE_3D ) ||
       ( model == BTLEFF_PAL_FADE_ALL ) )
-  { 
+  {
     ret_stage = BTLV_STAGE_CheckExecutePaletteFade( bew->bsw );
   }
-  if( ( model == BTLEFF_PAL_FADE_FIELD ) || 
-      ( model == BTLEFF_PAL_FADE_3D ) || 
+  if( ( model == BTLEFF_PAL_FADE_FIELD ) ||
+      ( model == BTLEFF_PAL_FADE_3D ) ||
       ( model == BTLEFF_PAL_FADE_ALL ) )
-  { 
+  {
     ret_field = BTLV_FIELD_CheckExecutePaletteFade( bew->bfw );
   }
   if( ( model == BTLEFF_PAL_FADE_EFFECT ) ||
       ( model == BTLEFF_PAL_FADE_ALL ) )
-  { 
+  {
     ret_effect = ( PaletteFadeCheck( bew->pfd ) != 0 );
   }
 
@@ -570,9 +572,9 @@ BOOL  BTLV_EFFECT_CheckExecutePaletteFade( int model )
  */
 //============================================================================================
 void  BTLV_EFFECT_SetVanishFlag( int model, int flag )
-{ 
+{
   switch( model )
-  { 
+  {
   case BTLEFF_STAGE:
     BTLV_STAGE_SetVanishFlag( bew->bsw, flag );
     break;

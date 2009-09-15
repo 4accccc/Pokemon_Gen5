@@ -22,6 +22,7 @@
 #include "battle/btl_calc.h"
 #include "battle/btl_util.h"
 #include "../app/b_bag.h"
+#include "../app/b_plist.h"
 
 #include "btlv_scu.h"
 #include "btlv_scd.h"
@@ -66,6 +67,7 @@ struct _BTLV_CORE {
   u32                   procPokeID;
   BtlAction             playerAction;
   BBAG_DATA             bagData;
+  BPLIST_DATA           plistData;
   u8                    selectItemSeq;
 
   GFL_TCBLSYS*  tcbl;
@@ -272,6 +274,7 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 {
   switch( *seq ){
   case 0:
+    BTL_Printf("SelectAction pokeID=%d\n", core->procPokeID);
     BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_SelectAction, 1, core->procPokeID );
     BTLV_SCU_StartMsg( core->scrnU, core->strBuf, BTLV_MSGWAIT_NONE );
     (*seq)++;
@@ -501,7 +504,7 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* core )
  * @param   energy
  */
 //=============================================================================================
-void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy )
+void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_energy )
 {
   if( wk->selectItemSeq == 0 )
   {
@@ -511,13 +514,15 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy )
     wk->bagData.mode = bagMode;
     wk->bagData.font = wk->fontHandle;
     wk->bagData.heap = wk->heapID;
-    wk->bagData.end_flg = FALSE;
-    wk->bagData.ret_item = ITEM_DUMMY_DATA;
     wk->bagData.energy = energy;
-    wk->bagData.reserved_energy = 0;
+    wk->bagData.reserved_energy = reserved_energy;
 
-    BTL_Printf(" Start Item Select!!! mode=%d!!\n", bagMode );
-    BattleBag_TaskAdd( &wk->bagData );
+    wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
+    wk->plistData.font = wk->fontHandle;
+    wk->plistData.heap = wk->heapID;
+    wk->plistData.mode = BPL_MODE_ITEMUSE;
+    wk->plistData.end_flg = FALSE;
+
     wk->selectItemSeq = 1;
   }
 }
@@ -532,14 +537,46 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy )
 //=============================================================================================
 BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
 {
-  BOOL result = wk->bagData.end_flg;
-  if( wk->selectItemSeq == 1 ){
-    if( result ){
-      BTLV_SCD_Setup( wk->scrnD );
-      wk->selectItemSeq = 0;
+  switch( wk->selectItemSeq ){
+  case 1:
+    wk->bagData.end_flg = FALSE;
+    wk->bagData.ret_item = ITEM_DUMMY_DATA;
+    BattleBag_TaskAdd( &wk->bagData );
+    wk->selectItemSeq++;
+    break;
+
+  case 2:
+    if( wk->bagData.end_flg ){
+      wk->selectItemSeq++;
     }
+    break;
+
+ case 3:
+    if( wk->bagData.ret_item != ITEM_DUMMY_DATA ){
+      wk->plistData.item = wk->bagData.ret_item;
+      BattlePokeList_TaskAdd( &wk->plistData );
+      wk->selectItemSeq++;
+    }else{
+      wk->selectItemSeq = 10;
+    }
+    break;
+
+  case 4:
+    if( wk->plistData.end_flg ){
+      if( wk->plistData.sel_poke != BPL_SEL_EXIT ){
+        wk->selectItemSeq = 10;
+      }else{
+        wk->selectItemSeq = 1;
+      }
+    }
+    break;
+
+  case 10:
+    BTLV_SCD_Setup( wk->scrnD );
+    wk->selectItemSeq = 0;
+    return TRUE;
   }
-  return result;
+  return FALSE;
 }
 //=============================================================================================
 /**
@@ -584,7 +621,8 @@ u8 BTLV_ITEMSELECT_GetCost( BTLV_CORE* wk )
 //=============================================================================================
 u8 BTLV_ITEMSELECT_GetTargetIdx( BTLV_CORE* wk )
 {
-  return 0;
+  BTL_Printf(" Item Target Index = %d\n",wk->plistData.sel_poke );
+  return wk->plistData.sel_poke;
 }
 
 //--------------------------------------
@@ -969,8 +1007,7 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
         BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
       }else{
         // ‘ŠŽè‚ª“ü‚ê‘Ö‚¦
-        TrainerID trID = BTL_MAIN_GetTrainerID( wk->mainModule );
-        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_NPC1, 3, trID, trID, subwk->pokeID );
+        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_NPC1, 2, subwk->clientID, subwk->pokeID );
       }
       BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
       (*seq)++;

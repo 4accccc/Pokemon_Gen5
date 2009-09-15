@@ -59,6 +59,7 @@ static const u8 ClientBasePokeID[] = {
 
 struct _BTL_PARTY {
   BTL_POKEPARAM*  member[ TEMOTI_POKEMAX ];
+  POKEPARTY*      srcParty;
   u8  memberCount;
 };
 
@@ -68,6 +69,11 @@ struct _BTL_POKE_CONTAINER {
   BTL_POKEPARAM*    pokeParam[ BTL_COMMITMENT_POKE_MAX ];
 };
 
+typedef struct {
+  MYSTATUS*   playerStatus;
+  u32         trainerID;
+}BTL_TRAINER_DATA;
+
 struct _BTL_MAIN_MODULE {
 
   const BATTLE_SETUP_PARAM* setupParam;
@@ -75,6 +81,7 @@ struct _BTL_MAIN_MODULE {
   BTLV_CORE*    viewCore;
   BTL_SERVER*   server;
   BTL_CLIENT*   client[ BTL_CLIENT_MAX ];
+  BTL_TRAINER_DATA   trainerParam[ BTL_CLIENT_MAX ];
 
   // サーバが計算時に書き換えても良い一時使用パラメータ領域と、
   // サーバコマンドを受け取ったクライアントが実際に書き換えるパラメータ領域
@@ -108,10 +115,10 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
 static BOOL setup_alone_single( int* seq, void* work );
 static BOOL cleanup_common( int* seq, void* work );
 static BOOL setup_comm_single( int* seq, void* work );
+static BOOL setup_comm_double( int* seq, void* work );
 static BOOL setup_alone_double( int* seq, void* work );
 static BOOL cleanup_alone_double( int* seq, void* work );
 static BOOL setup_alone_triple( int* seq, void* work );
-static BOOL setup_comm_double( int* seq, void* work );
 static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk );
 static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk );
 static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk );
@@ -126,10 +133,16 @@ static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos );
 static inline u8 PokeID_to_ClientID( u8 pokeID );
 static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModule );
 static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* party_src, u8 clientID );
+static void PokeCon_SetSrcParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* party_src, u8 clientID );
 static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon );
 static int PokeCon_FindPokemon( const BTL_POKE_CONTAINER* pokecon, u8 clientID, u8 pokeID );
 static void BTL_PARTY_Initialize( BTL_PARTY* party );
 static void BTL_PARTY_AddMember( BTL_PARTY* party, BTL_POKEPARAM* member );
+static void BTL_PARTY_SetSrcParty( BTL_PARTY* party, const POKEPARTY* srcParty );
+static void trainerParam_Init( BTL_MAIN_MODULE* wk );
+static void trainerParam_Clear( BTL_MAIN_MODULE* wk );
+static void trainerParam_StorePlayer( BTL_TRAINER_DATA* dst, HEAPID heapID, const MYSTATUS* playerData );
+static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, u32 trainerID );
 
 
 //--------------------------------------------------------------
@@ -178,6 +191,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       BTL_ADAPTERSYS_Init( wk->setupParam->commMode );
       BTL_FIELD_Init( BTL_WEATHER_NONE );
       setSubProcForSetup( &wk->subProc, wk, wk->setupParam );
+      trainerParam_Init( wk );
       (*seq)++;
     }
     break;
@@ -226,6 +240,7 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
   switch( *seq ){
   case 0:
     BTL_Printf("クリーンアッププロセス１\n");
+    trainerParam_Clear( wk );
     setSubProcForClanup( &wk->subProc, wk, wk->setupParam );
     (*seq)++;
     break;
@@ -362,10 +377,18 @@ static BOOL setup_alone_single( int* seq, void* work )
   BTL_MAIN_MODULE* wk = work;
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
 
+  wk->numClients = 2;
+  wk->myClientID = 0;
+  wk->myOrgPos = BTL_POS_1ST_0;
+  wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+  wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+
+
   // バトル用ポケモンパラメータ＆パーティデータを生成
   PokeCon_Init( &wk->pokeconForClient, wk );
   PokeCon_AddParty( &wk->pokeconForClient, sp->partyPlayer, BTL_STANDALONE_PLAYER_CLIENT_ID );
   PokeCon_AddParty( &wk->pokeconForClient, sp->partyEnemy1, 1 );
+  PokeCon_SetSrcParty( &wk->pokeconForClient, sp->partyPlayer, BTL_STANDALONE_PLAYER_CLIENT_ID );
 
   PokeCon_Init( &wk->pokeconForServer, wk );
   PokeCon_AddParty( &wk->pokeconForServer, sp->partyPlayer, BTL_STANDALONE_PLAYER_CLIENT_ID );
@@ -375,17 +398,15 @@ static BOOL setup_alone_single( int* seq, void* work )
   wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
   wk->ImServer = TRUE;
 
+  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
+  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->trID );
+
   // Client 作成
   wk->client[ BTL_STANDALONE_PLAYER_CLIENT_ID ] = BTL_CLIENT_Create(
        wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 1, BTL_THINKER_UI, BAG_MODE, wk->heapID );
 
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle,
     1, 1, BTL_THINKER_AI, BAG_MODE, wk->heapID );
-  wk->numClients = 2;
-  wk->myClientID = 0;
-  wk->myOrgPos = BTL_POS_1ST_0;
-  wk->posCoverClientID[BTL_POS_1ST_0] = 0;
-  wk->posCoverClientID[BTL_POS_2ND_0] = 1;
 
   // 描画エンジン生成
   wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
@@ -456,6 +477,8 @@ static BOOL setup_comm_single( int* seq, void* work )
     if( BTL_NET_IsServerDetermained() )
     {
       BTL_Printf("サーバ決定しました\n");
+      wk->numClients = 2;
+
       if( BTL_NET_IsServer() )
       {
         // サーバーマシンが、各参加者にクライアントIDを割り振る
@@ -479,15 +502,10 @@ static BOOL setup_comm_single( int* seq, void* work )
     }
     break;
   case 1:
-    #ifdef PM_DEBUG
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      BTL_Printf("クライアントIDの確定待ちです\n");
-    }
-    #endif
     // 自分のクライアントIDが確定
     if( BTL_NET_IsClientIdDetermined() )
     {
+      wk->myClientID = GFL_NET_GetNetID( sp->netHandle );
       BTL_Printf("クライアントIDが確定した→タイミングシンクロ\n");
       BTL_NET_TimingSyncStart( BTL_NET_TIMING_CLIENTID_DETERMINE );
       (*seq)++;
@@ -509,6 +527,7 @@ static BOOL setup_comm_single( int* seq, void* work )
       PokeCon_Init( &wk->pokeconForClient, wk );
       PokeCon_AddParty( &wk->pokeconForClient, BTL_NET_GetPartyData(0), 0 );
       PokeCon_AddParty( &wk->pokeconForClient, BTL_NET_GetPartyData(1), 1 );
+      PokeCon_SetSrcParty( &wk->pokeconForClient, sp->partyPlayer, wk->myClientID );
       (*seq)++;
     }
     break;
@@ -523,15 +542,28 @@ static BOOL setup_comm_single( int* seq, void* work )
     break;
   case 5:
     BTL_NET_EndNotifyPartyData();
+    BTL_NET_StartNotifyPlayerData( sp->statusPlayer );
     (*seq)++;
     break;
   case 6:
-    wk->numClients = 2;
+    if( BTL_NET_IsCompleteNotifyPlayerData() )
+    {
+      u32 i;
+      for(i=0; i<wk->numClients; ++i){
+        trainerParam_StorePlayer( &wk->trainerParam[i], wk->heapID, BTL_NET_GetPlayerData(i) );
+      }
+      BTL_Printf("プレイヤーデータ相互受信できました。\n");
+      (*seq)++;
+    }
+    break;
+  case 7:
+    BTL_NET_EndNotifyPlayerData();
+    (*seq)++;
+    break;
+  case 8:
     wk->posCoverClientID[BTL_POS_1ST_0] = 0;
     wk->posCoverClientID[BTL_POS_2ND_0] = 1;
-    wk->myClientID = GFL_NET_GetNetID( sp->netHandle );
     wk->myOrgPos = (wk->myClientID == 0)? BTL_POS_1ST_0 : BTL_POS_2ND_0;
-
 
     // 自分がサーバ
     if( BTL_NET_IsServer() )
@@ -573,147 +605,15 @@ static BOOL setup_comm_single( int* seq, void* work )
 
       wk->mainLoop = MainLoop_Comm_NotServer;
     }
+
     (*seq)++;
     break;
-  case 7:
+  case 9:
     BTL_Printf("セットアップ完了\n");
     return TRUE;
   }
   return FALSE;
 }
-//--------------------------------------------------------------------------
-/**
- * スタンドアローン／ダブルバトル：セットアップ
- */
-//--------------------------------------------------------------------------
-static BOOL setup_alone_double( int* seq, void* work )
-{
-  enum {
-    BAG_MODE = BBAG_MODE_NORMAL,
-  };
-
-  // server*1, client*2
-  BTL_MAIN_MODULE* wk = work;
-  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
-
-  // バトル用ポケモンパラメータ＆パーティデータを生成
-  PokeCon_Init( &wk->pokeconForClient, wk );
-  PokeCon_AddParty( &wk->pokeconForClient, sp->partyPlayer, 0 );
-  PokeCon_AddParty( &wk->pokeconForClient, sp->partyEnemy1, 1 );
-
-  PokeCon_Init( &wk->pokeconForServer, wk );
-  PokeCon_AddParty( &wk->pokeconForServer, sp->partyPlayer, 0 );
-  PokeCon_AddParty( &wk->pokeconForServer, sp->partyEnemy1, 1 );
-
-  // Server 作成
-  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
-
-  // Client 作成
-  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
-    BTL_THINKER_UI, BAG_MODE, wk->heapID );
-  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
-    BTL_THINKER_AI, BAG_MODE, wk->heapID );
-  wk->numClients = 2;
-  wk->posCoverClientID[BTL_POS_1ST_0] = 0;
-  wk->posCoverClientID[BTL_POS_2ND_0] = 1;
-  wk->posCoverClientID[BTL_POS_1ST_1] = 0;
-  wk->posCoverClientID[BTL_POS_2ND_1] = 1;
-
-  // 描画エンジン生成
-  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
-
-  // プレイヤークライアントに描画エンジンを関連付ける
-  BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
-
-  // Server に Client を接続
-  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, 2 );
-  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), 1, 2 );
-
-  // Server 始動
-  BTL_SERVER_Startup( wk->server );
-
-  wk->mainLoop = MainLoop_StandAlone;
-
-  return TRUE;
-}
-//--------------------------------------------------------------------------
-/**
- * スタンドアローン／ダブルバトル：クリーンアップ
- */
-//--------------------------------------------------------------------------
-static BOOL cleanup_alone_double( int* seq, void* work )
-{
-  BTL_MAIN_MODULE* wk = work;
-  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
-
-  BTLV_Delete( wk->viewCore );
-
-  BTL_CLIENT_Delete( wk->client[0] );
-  BTL_CLIENT_Delete( wk->client[1] );
-  BTL_SERVER_Delete( wk->server );
-
-  PokeCon_Release( &wk->pokeconForClient );
-  PokeCon_Release( &wk->pokeconForServer );
-
-  return TRUE;
-}
-//--------------------------------------------------------------------------
-/**
- * スタンドアローン／トリプルバトル：セットアップ
- */
-//--------------------------------------------------------------------------
-static BOOL setup_alone_triple( int* seq, void* work )
-{
-  enum {
-    BAG_MODE = BBAG_MODE_NORMAL,
-  };
-  // server*1, client*2
-  BTL_MAIN_MODULE* wk = work;
-  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
-
-  // バトル用ポケモンパラメータ＆パーティデータを生成
-  PokeCon_Init( &wk->pokeconForClient, wk );
-  PokeCon_AddParty( &wk->pokeconForClient, sp->partyPlayer, 0 );
-  PokeCon_AddParty( &wk->pokeconForClient, sp->partyEnemy1, 1 );
-
-  PokeCon_Init( &wk->pokeconForServer, wk );
-  PokeCon_AddParty( &wk->pokeconForServer, sp->partyPlayer, 0 );
-  PokeCon_AddParty( &wk->pokeconForServer, sp->partyEnemy1, 1 );
-
-  // Server 作成
-  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
-
-  // Client 作成
-  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
-    BTL_THINKER_UI, BAG_MODE, wk->heapID );
-  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
-    BTL_THINKER_AI, BAG_MODE, wk->heapID );
-  wk->numClients = 2;
-  wk->posCoverClientID[BTL_POS_1ST_0] = 0;
-  wk->posCoverClientID[BTL_POS_2ND_0] = 1;
-  wk->posCoverClientID[BTL_POS_1ST_1] = 0;
-  wk->posCoverClientID[BTL_POS_2ND_1] = 1;
-  wk->posCoverClientID[BTL_POS_1ST_2] = 0;
-  wk->posCoverClientID[BTL_POS_2ND_2] = 1;
-
-  // 描画エンジン生成
-  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
-
-  // プレイヤークライアントに描画エンジンを関連付ける
-  BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
-
-  // Server に Client を接続
-  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, 2 );
-  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), 1, 2 );
-
-  // Server 始動
-  BTL_SERVER_Startup( wk->server );
-
-  wk->mainLoop = MainLoop_StandAlone;
-
-  return TRUE;
-}
-
 //--------------------------------------------------------------------------
 /**
  * 通信／ダブルバトル：セットアップ
@@ -795,6 +695,7 @@ static BOOL setup_comm_double( int* seq, void* work )
       {
         PokeCon_AddParty( &wk->pokeconForClient, BTL_NET_GetPartyData(i), i );
       }
+      PokeCon_SetSrcParty( &wk->pokeconForClient, sp->partyPlayer, wk->myClientID );
       (*seq)++;
     }
     break;
@@ -813,9 +714,25 @@ static BOOL setup_comm_double( int* seq, void* work )
     break;
   case 5:
     BTL_NET_EndNotifyPartyData();
+    BTL_NET_StartNotifyPlayerData( sp->statusPlayer );
     (*seq)++;
     break;
   case 6:
+    if( BTL_NET_IsCompleteNotifyPlayerData() )
+    {
+      u32 i;
+      for(i=0; i<wk->numClients; ++i){
+        trainerParam_StorePlayer( &wk->trainerParam[i], wk->heapID, BTL_NET_GetPlayerData(i) );
+      }
+      BTL_Printf("プレイヤーデータ相互受信できました。\n");
+      (*seq)++;
+    }
+    break;
+  case 7:
+    BTL_NET_EndNotifyPlayerData();
+    (*seq)++;
+    break;
+  case 8:
     if( sp->multiMode == 0 )
     {
       wk->posCoverClientID[BTL_POS_1ST_0] = 0;
@@ -894,11 +811,158 @@ static BOOL setup_comm_double( int* seq, void* work )
     }
     (*seq)++;
     break;
-  case 7:
+  case 9:
     BTL_Printf("セットアップ完了\n");
     return TRUE;
   }
   return FALSE;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * スタンドアローン／ダブルバトル：セットアップ
+ */
+//--------------------------------------------------------------------------
+static BOOL setup_alone_double( int* seq, void* work )
+{
+  enum {
+    BAG_MODE = BBAG_MODE_NORMAL,
+  };
+
+  // server*1, client*2
+  BTL_MAIN_MODULE* wk = work;
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
+  wk->myClientID = 0;
+  wk->numClients = 2;
+  wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+  wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+  wk->posCoverClientID[BTL_POS_1ST_1] = 0;
+  wk->posCoverClientID[BTL_POS_2ND_1] = 1;
+  wk->myOrgPos = BTL_POS_1ST_0;
+
+
+  // バトル用ポケモンパラメータ＆パーティデータを生成
+  PokeCon_Init( &wk->pokeconForClient, wk );
+  PokeCon_AddParty( &wk->pokeconForClient, sp->partyPlayer, 0 );
+  PokeCon_AddParty( &wk->pokeconForClient, sp->partyEnemy1, 1 );
+  PokeCon_SetSrcParty( &wk->pokeconForClient, sp->partyPlayer, 0 );
+
+  PokeCon_Init( &wk->pokeconForServer, wk );
+  PokeCon_AddParty( &wk->pokeconForServer, sp->partyPlayer, 0 );
+  PokeCon_AddParty( &wk->pokeconForServer, sp->partyEnemy1, 1 );
+
+  // Server 作成
+  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
+
+  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
+  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->trID );
+
+  // Client 作成
+  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
+    BTL_THINKER_UI, BAG_MODE, wk->heapID );
+  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
+    BTL_THINKER_AI, BAG_MODE, wk->heapID );
+
+  // 描画エンジン生成
+  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
+
+  // プレイヤークライアントに描画エンジンを関連付ける
+  BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
+
+  // Server に Client を接続
+  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, 2 );
+  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), 1, 2 );
+
+  // Server 始動
+  BTL_SERVER_Startup( wk->server );
+
+  wk->mainLoop = MainLoop_StandAlone;
+
+  return TRUE;
+}
+//--------------------------------------------------------------------------
+/**
+ * スタンドアローン／ダブルバトル：クリーンアップ
+ */
+//--------------------------------------------------------------------------
+static BOOL cleanup_alone_double( int* seq, void* work )
+{
+  BTL_MAIN_MODULE* wk = work;
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
+  BTLV_Delete( wk->viewCore );
+
+  BTL_CLIENT_Delete( wk->client[0] );
+  BTL_CLIENT_Delete( wk->client[1] );
+  BTL_SERVER_Delete( wk->server );
+
+  PokeCon_Release( &wk->pokeconForClient );
+  PokeCon_Release( &wk->pokeconForServer );
+
+  return TRUE;
+}
+//--------------------------------------------------------------------------
+/**
+ * スタンドアローン／トリプルバトル：セットアップ
+ */
+//--------------------------------------------------------------------------
+static BOOL setup_alone_triple( int* seq, void* work )
+{
+  enum {
+    BAG_MODE = BBAG_MODE_NORMAL,
+  };
+  // server*1, client*2
+  BTL_MAIN_MODULE* wk = work;
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
+  wk->myClientID = 0;
+  wk->numClients = 2;
+  wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+  wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+  wk->posCoverClientID[BTL_POS_1ST_1] = 0;
+  wk->posCoverClientID[BTL_POS_2ND_1] = 1;
+  wk->posCoverClientID[BTL_POS_1ST_2] = 0;
+  wk->posCoverClientID[BTL_POS_2ND_2] = 1;
+
+  // バトル用ポケモンパラメータ＆パーティデータを生成
+  PokeCon_Init( &wk->pokeconForClient, wk );
+  PokeCon_AddParty( &wk->pokeconForClient, sp->partyPlayer, 0 );
+  PokeCon_AddParty( &wk->pokeconForClient, sp->partyEnemy1, 1 );
+  PokeCon_SetSrcParty( &wk->pokeconForClient, sp->partyPlayer, 0 );
+
+  PokeCon_Init( &wk->pokeconForServer, wk );
+  PokeCon_AddParty( &wk->pokeconForServer, sp->partyPlayer, 0 );
+  PokeCon_AddParty( &wk->pokeconForServer, sp->partyEnemy1, 1 );
+
+  // Server 作成
+  wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
+
+  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, sp->statusPlayer );
+  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->trID );
+
+  // Client 作成
+  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
+    BTL_THINKER_UI, BAG_MODE, wk->heapID );
+  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
+    BTL_THINKER_AI, BAG_MODE, wk->heapID );
+
+  // 描画エンジン生成
+  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
+
+  // プレイヤークライアントに描画エンジンを関連付ける
+  BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
+
+  // Server に Client を接続
+  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, 2 );
+  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), 1, 2 );
+
+  // Server 始動
+  BTL_SERVER_Startup( wk->server );
+
+  wk->mainLoop = MainLoop_StandAlone;
+
+  return TRUE;
 }
 
 //======================================================================================================
@@ -1722,11 +1786,19 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* part
     pokecon->pokeParam[ pokeID ] = BTL_POKEPARAM_Create(
                         PokeParty_GetMemberPointer(party_src, i), pokeID, HEAPID_BTL_SYSTEM
     );
-
     BTL_Printf(" Create Client(%d)'s PokeParam ID=%d, adrs=%p\n", clientID, pokeID, pokecon->pokeParam[i]);
-
     BTL_PARTY_AddMember( party, pokecon->pokeParam[ pokeID ] );
   }
+}
+static void PokeCon_SetSrcParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* party_src, u8 clientID )
+{
+  BTL_PARTY* party = &pokecon->party[ clientID ];
+  BTL_PARTY_SetSrcParty( party, party_src );
+}
+static POKEPARTY* PokeCon_GetSrcParty( BTL_POKE_CONTAINER* pokecon, u8 clientID )
+{
+  BTL_PARTY* party = &pokecon->party[ clientID ];
+  return party->srcParty;
 }
 static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon )
 {
@@ -1740,7 +1812,15 @@ static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon )
       pokecon->pokeParam[i] = NULL;
     }
   }
+  for(i=0; i<NELEMS(pokecon->party); ++i)
+  {
+    if( pokecon->party[i].srcParty ){
+      GFL_HEAP_FreeMemory( pokecon->party[i].srcParty );
+      pokecon->party[i].srcParty = NULL;
+    }
+  }
 }
+
 
 static int PokeCon_FindPokemon( const BTL_POKE_CONTAINER* pokecon, u8 clientID, u8 pokeID )
 {
@@ -1901,6 +1981,7 @@ static void BTL_PARTY_Initialize( BTL_PARTY* party )
 {
   int i;
   party->memberCount = 0;
+  party->srcParty = NULL;
   for(i=0; i<TEMOTI_POKEMAX; i++)
   {
     party->member[i] = NULL;
@@ -1911,6 +1992,11 @@ static void BTL_PARTY_AddMember( BTL_PARTY* party, BTL_POKEPARAM* member )
 {
   GF_ASSERT(party->memberCount < TEMOTI_POKEMAX);
   party->member[party->memberCount++] = member;
+}
+static void BTL_PARTY_SetSrcParty( BTL_PARTY* party, const POKEPARTY* srcParty )
+{
+  party->srcParty = PokeParty_AllocPartyWork( HEAPID_BTL_SYSTEM );
+  PokeParty_Copy( srcParty, party->srcParty );
 }
 
 u8 BTL_PARTY_GetMemberCount( const BTL_PARTY* party )
@@ -1923,8 +2009,7 @@ u8 BTL_PARTY_GetAliveMemberCount( const BTL_PARTY* party )
   int i, cnt;
   for(i=0, cnt=0; i<party->memberCount; i++)
   {
-    if( BPP_GetValue(party->member[i], BPP_HP) )
-    {
+    if( BPP_GetValue(party->member[i], BPP_HP) ){
       cnt++;
     }
   }
@@ -1936,8 +2021,7 @@ u8 BTL_PARTY_GetAliveMemberCountRear( const BTL_PARTY* party, u8 startIdx )
   int i, cnt;
   for(i=startIdx, cnt=0; i<party->memberCount; i++)
   {
-    if( BPP_GetValue(party->member[i], BPP_HP) )
-    {
+    if( BPP_GetValue(party->member[i], BPP_HP) ){
       cnt++;
     }
   }
@@ -1962,6 +2046,10 @@ void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
     BTL_POKEPARAM* tmp = party->member[ idx1 ];
     party->member[ idx1 ] = party->member[ idx2 ];
     party->member[ idx2 ] = tmp;
+
+    if( party->srcParty ){
+      PokeParty_ExchangePosition( party->srcParty, idx1, idx2, HEAPID_BTL_SYSTEM );
+    }
   }
 }
 
@@ -1976,6 +2064,11 @@ s16 BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param )
     }
   }
   return -1;
+}
+
+POKEPARTY* BTL_MAIN_GetPlayerPokeParty( BTL_MAIN_MODULE* wk )
+{
+  return PokeCon_GetSrcParty( &wk->pokeconForClient, wk->myClientID );
 }
 
 
@@ -2046,5 +2139,52 @@ void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume )
 TrainerID BTL_MAIN_GetTrainerID( const BTL_MAIN_MODULE* wk )
 {
   return wk->setupParam->trID;
+}
+
+
+
+//----------------------------------------------------------------------------------------------
+// トレーナーパラメータ関連
+//----------------------------------------------------------------------------------------------
+static void trainerParam_Init( BTL_MAIN_MODULE* wk )
+{
+  u32 i;
+  for(i=0; i<NELEMS(wk->trainerParam); ++i){
+    wk->trainerParam[i].playerStatus = NULL;
+    wk->trainerParam[i].trainerID = TRID_NULL;
+  }
+}
+static void trainerParam_Clear( BTL_MAIN_MODULE* wk )
+{
+  u32 i;
+  for(i=0; i<NELEMS(wk->trainerParam); ++i)
+  {
+    if( wk->trainerParam[i].playerStatus ){
+      GFL_HEAP_FreeMemory( wk->trainerParam[i].playerStatus );
+    }
+  }
+}
+static void trainerParam_StorePlayer( BTL_TRAINER_DATA* dst, HEAPID heapID, const MYSTATUS* playerData )
+{
+  dst->playerStatus = MyStatus_AllocWork( heapID );
+  BTL_Printf("*** playerStatus=%p\n", dst->playerStatus );
+  MyStatus_Copy( playerData, dst->playerStatus );
+  dst->trainerID = TRID_NULL;
+}
+static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, u32 trainerID )
+{
+  dst->playerStatus = NULL;
+  dst->trainerID = trainerID;
+}
+
+u32 BTL_MAIN_GetClientTrainerID( const BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  BTL_Printf("ClientID=%d, trainerID=%d\n", clientID, wk->trainerParam[clientID].trainerID);
+  return wk->trainerParam[clientID].trainerID;
+}
+
+const MYSTATUS* BTL_MAIN_GetClientPlayerData( const BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  return wk->trainerParam[ clientID ].playerStatus;
 }
 

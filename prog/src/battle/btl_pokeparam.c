@@ -197,6 +197,8 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 
   setupBySrcData( bpp, pp );
 
+  BTL_Printf("setup pokeID=%d, monsno=%d, ppSrc=%p\n", pokeID, bpp->baseParam.monsno, pp );
+
   // ランク効果初期化
   Effrank_Init( &bpp->varyParam );
 
@@ -254,6 +256,7 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
   bpp->baseParam.type1 = PP_Get( srcPP, ID_PARA_type1, 0 );
   bpp->baseParam.type2 = PP_Get( srcPP, ID_PARA_type2, 0 );
   bpp->baseParam.sex = PP_GetSex( srcPP );
+
 
   // 所有ワザデータ初期化
   bpp->wazaCnt = 0;
@@ -1568,7 +1571,6 @@ static void clearWazaSickWork( BTL_POKEPARAM* bpp, BOOL fPokeSickInclude )
     bpp->sickCont[i].type = WAZASICK_CONT_NONE;
   }
   GFL_STD_MemClear( bpp->wazaSickCounter, sizeof(bpp->wazaSickCounter) );
-  BTL_Printf("ポケ[%d]の状態異常カウンタがクリアされた\n", bpp->coreParam.myID);
 }
 
 

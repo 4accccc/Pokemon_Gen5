@@ -23,6 +23,7 @@ typedef enum {
 
   BTL_NET_TIMING_INITIALIZE,
   BTL_NET_TIMING_CLIENTID_DETERMINE,
+  BTL_NET_TIMING_SETUP_END,
 
 }BtlNetTiming;
 
@@ -81,6 +82,10 @@ extern BOOL BTL_NET_CheckReturnFromClient( void );
 extern u32 BTL_NET_GetRecvClientData( u8 netID, const void** pptr );
 extern void BTL_NET_ClearRecvData( void );
 
+extern void BTL_NET_StartNotifyPlayerData( const MYSTATUS* playerData );
+extern BOOL BTL_NET_IsCompleteNotifyPlayerData( void );
+extern void BTL_NET_EndNotifyPlayerData( void );
+extern const MYSTATUS* BTL_NET_GetPlayerData( int netID );
 
 
 

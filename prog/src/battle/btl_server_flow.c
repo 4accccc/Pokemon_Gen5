@@ -1649,7 +1649,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
     int arg[2];
     arg[0] = BPP_GetID(bpp);
     arg[1] = itemID;
-    scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem, 2, arg );
+    scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem_Player, 2, arg );
   }
 
   hem_state = Hem_PushState( &wk->HEManager );
@@ -4634,6 +4634,7 @@ static void scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
   {
     if( BPP_IsDead(poke) )
     {
+      BTL_Printf("ポケ[ID=%d]しにます\n", pokeID);
       wk->pokeDeadFlag[pokeID] = 1;
 
       // @@@ みがわり出てたら画面から消すコマンド生成？

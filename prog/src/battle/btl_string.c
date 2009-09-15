@@ -103,11 +103,13 @@ static struct {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static inline void register_PokeNickname( u8 pokeID, WordBufID bufID );
+static void register_TrainerType( WORDSET* wset, u8 bufIdx, u8 clientID );
+static void register_TrainerName( WORDSET* wset, u8 bufIdx, u8 clientID );
 static inline SetStrFormat get_strFormat( u8 pokeID );
 static inline u16 get_setStrID( u8 pokeID, u16 defaultStrID );
 static inline u16 get_setStrID_Poke2( u8 pokeID1, u8 pokeID2, u16 defaultStrID );
 static inline u16 get_setPtnStrID( u8 pokeID, u16 originStrID, u8 ptnNum );
-static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID );
+static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_encount( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_encount_double( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_encount_tr1( STRBUF* dst, BtlStrID_STD strID, const int* args );
@@ -121,6 +123,7 @@ static void ms_kodawari_lock( STRBUF* dst, BtlStrID_STD strID, const int* args )
 static void ms_waza_lock( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_waza_only( STRBUF* dst, BtlStrID_STD strID, const int* args );
 static void ms_side_eff( STRBUF* dst, BtlStrID_STD strID, const int* args );
+static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset );
 static void ms_set_std( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
@@ -210,6 +213,25 @@ static inline void register_PokeNickname( u8 pokeID, WordBufID bufID )
   pp = BPP_GetSrcData( bpp );
 
   WORDSET_RegisterPokeNickName( SysWork.wset, bufID, pp );
+}
+
+static void register_TrainerType( WORDSET* wset, u8 bufIdx, u8 clientID )
+{
+  u32 trainerID = BTL_MAIN_GetClientTrainerID( SysWork.mainModule, clientID );
+  GF_ASSERT( trainerID != TRID_NULL );
+  WORDSET_RegisterTrTypeName( wset, bufIdx, trainerID );
+}
+static void register_TrainerName( WORDSET* wset, u8 bufIdx, u8 clientID )
+{
+  u32 trainerID = BTL_MAIN_GetClientTrainerID( SysWork.mainModule, clientID );
+  if( trainerID != TRID_NULL ){
+    WORDSET_RegisterTrainerName( wset, bufIdx, trainerID );
+  }else{
+    const MYSTATUS* status = BTL_MAIN_GetClientPlayerData( SysWork.mainModule, clientID );
+    BTL_Printf("Register Trainer Name...myst=%p\n", status);
+    WORDSET_RegisterPlayerName( wset, bufIdx, status );
+  }
+
 }
 
 //--------------------------------------------------------------------------
@@ -318,6 +340,7 @@ void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID, u32 numArgs, ... )
 //=============================================================================================
 void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const int* args )
 {
+  #if 0
   static const struct {
     BtlStrID_STD   strID;
     void  (* const func)( STRBUF* buf, BtlStrID_STD strID, const int* args );
@@ -328,7 +351,7 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
     { BTL_STRID_STD_PutSingle,        ms_put_single },
     { BTL_STRID_STD_PutDouble,        ms_put_double },
     { BTL_STRID_STD_PutSingle_NPC1,   ms_put_single_npc },
-    { BTL_STRID_STD_UseItem,          ms_put_tr_item },
+    { BTL_STRID_STD_UseItem_Player,   ms_put_tr_item },
     { BTL_STRID_STD_MemberOut1,       ms_out_member1 },
     { BTL_STRID_STD_SelectAction,     ms_select_action_ready },
     { BTL_STRID_STD_KodawariLock,     ms_kodawari_lock },
@@ -361,13 +384,16 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
       return;
     }
   }
+  #endif
 
-  ms_std_simple( buf, strID );
+  ms_std_simple( buf, strID, args );
 }
 
-static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID )
+static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID, const int* args )
 {
-  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, dst );
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
+  registerWords( SysWork.tmpBuf, args, SysWork.wset );
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
 
 // 野生エンカウントシングル
@@ -499,49 +525,49 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
     u16   strID;
     void  (* func)( STRBUF*, u16, const int* );
   }funcTbl[] = {
-    { BTL_STRID_SET_Rankup_ATK,           ms_set_rankup     },
-    { BTL_STRID_SET_Rankdown_ATK,         ms_set_rankdown   },
-    { BTL_STRID_SET_RankupMax_ATK,        ms_set_rank_limit },
-    { BTL_STRID_SET_RankdownMin_ATK,      ms_set_rank_limit },
-    { BTL_STRID_SET_Trace,                ms_set_trace      },
-    { BTL_STRID_SET_YotimuExe,            ms_set_yotimu     },
-    { BTL_STRID_SET_Omitoosi,             ms_set_omitoosi   },
+    { BTL_STRID_SET_Rankup_ATK,           ms_set_rankup           },
+    { BTL_STRID_SET_Rankdown_ATK,         ms_set_rankdown         },
+    { BTL_STRID_SET_RankupMax_ATK,        ms_set_rank_limit       },
+    { BTL_STRID_SET_RankdownMin_ATK,      ms_set_rank_limit       },
+    #if 0
+    { BTL_STRID_SET_Trace,                ms_set_trace            },
+    { BTL_STRID_SET_YotimuExe,            ms_set_yotimu           },
+    { BTL_STRID_SET_Omitoosi,             ms_set_omitoosi         },
     { BTL_STRID_SET_ChangePokeType,       ms_set_change_poke_type },
-    { BTL_STRID_SET_UseItem_RecoverHP,    ms_set_item_common },
-    { BTL_STRID_SET_UseItem_CureDoku,     ms_set_item_common },
-    { BTL_STRID_SET_UseItem_CureMahi,     ms_set_item_common },
-    { BTL_STRID_SET_UseItem_CureNemuri,   ms_set_item_common },
-    { BTL_STRID_SET_UseItem_CureKoori,    ms_set_item_common },
-    { BTL_STRID_SET_UseItem_CureYakedo,   ms_set_item_common },
-    { BTL_STRID_SET_UseItem_CureKonran,   ms_set_item_common },
-    { BTL_STRID_SET_UseItem_RecoverLittle,ms_set_item_common },
-    { BTL_STRID_SET_RankRecoverItem,      ms_set_item_common },
-    { BTL_STRID_SET_KoraeItem,            ms_set_item_common },
-    { BTL_STRID_SET_Item_DamageShrink,    ms_set_item_common },
-    { BTL_STRID_SET_Recycle,              ms_set_item_common },
-    { BTL_STRID_SET_Tuibamu,              ms_set_item_common },
-    { BTL_STRID_SET_Nagetukeru,           ms_set_item_common },
-    { BTL_STRID_SET_UseItem_Rankup_ATK,   ms_set_kinomi_rankup },
-    { BTL_STRID_SET_UseItem_RecoverPP,    ms_set_item_recover_pp },
-    { BTL_STRID_SET_KaifukuFuji,          ms_set_waza_sp },
-    { BTL_STRID_SET_ChouhatuWarn,         ms_set_waza_sp },
-    { BTL_STRID_SET_FuuinWarn,            ms_set_waza_sp },
-    { BTL_STRID_SET_Kanasibari,           ms_set_waza_sp },
-    { BTL_STRID_SET_Monomane,             ms_set_waza_sp },
-    { BTL_STRID_SET_DelayAttack,          ms_set_waza_sp },
-    { BTL_STRID_SET_Bind,                 ms_set_waza_sp },
-    { BTL_STRID_SET_BindCure,             ms_set_waza_sp },
-    { BTL_STRID_SET_PP_Recover,           ms_set_waza_sp },
-    { BTL_STRID_SET_Urami,                ms_set_waza_num },
-    { BTL_STRID_SET_HorobiCountDown,      ms_set_poke_num },
-    { BTL_STRID_SET_Takuwaeru,            ms_set_poke_num },
-    { BTL_STRID_SET_LockOn,               ms_set_poke },
-    { BTL_STRID_SET_Tedasuke,             ms_set_poke },
-    { BTL_STRID_SET_YokodoriExe,          ms_set_poke2poke },
-    { BTL_STRID_SET_MagicCoatExe,         ms_set_waza_sp },
-    { BTL_STRID_SET_Tonbogaeri,           ms_set_poke_trainer },
-
-
+    { BTL_STRID_SET_UseItem_RecoverHP,    ms_set_item_common      },
+    { BTL_STRID_SET_UseItem_CureDoku,     ms_set_item_common      },
+    { BTL_STRID_SET_UseItem_CureMahi,     ms_set_item_common      },
+    { BTL_STRID_SET_UseItem_CureNemuri,   ms_set_item_common      },
+    { BTL_STRID_SET_UseItem_CureKoori,    ms_set_item_common      },
+    { BTL_STRID_SET_UseItem_CureYakedo,   ms_set_item_common      },
+    { BTL_STRID_SET_UseItem_CureKonran,   ms_set_item_common      },
+    { BTL_STRID_SET_UseItem_RecoverLittle,ms_set_item_common      },
+    { BTL_STRID_SET_RankRecoverItem,      ms_set_item_common      },
+    { BTL_STRID_SET_KoraeItem,            ms_set_item_common      },
+    { BTL_STRID_SET_Item_DamageShrink,    ms_set_item_common      },
+    { BTL_STRID_SET_Recycle,              ms_set_item_common      },
+    { BTL_STRID_SET_Tuibamu,              ms_set_item_common      },
+    { BTL_STRID_SET_Nagetukeru,           ms_set_item_common      },
+    { BTL_STRID_SET_UseItem_Rankup_ATK,   ms_set_kinomi_rankup    },
+    { BTL_STRID_SET_UseItem_RecoverPP,    ms_set_item_recover_pp  },
+    { BTL_STRID_SET_KaifukuFuji,          ms_set_waza_sp          },
+    { BTL_STRID_SET_ChouhatuWarn,         ms_set_waza_sp          },
+    { BTL_STRID_SET_FuuinWarn,            ms_set_waza_sp          },
+    { BTL_STRID_SET_Kanasibari,           ms_set_waza_sp          },
+    { BTL_STRID_SET_Monomane,             ms_set_waza_sp          },
+    { BTL_STRID_SET_DelayAttack,          ms_set_waza_sp          },
+    { BTL_STRID_SET_Bind,                 ms_set_waza_sp          },
+    { BTL_STRID_SET_BindCure,             ms_set_waza_sp          },
+    { BTL_STRID_SET_PP_Recover,           ms_set_waza_sp          },
+    { BTL_STRID_SET_Urami,                ms_set_waza_num         },
+    { BTL_STRID_SET_HorobiCountDown,      ms_set_poke_num         },
+    { BTL_STRID_SET_Takuwaeru,            ms_set_poke_num         },
+    { BTL_STRID_SET_LockOn,               ms_set_poke             },
+    { BTL_STRID_SET_Tedasuke,             ms_set_poke             },
+    { BTL_STRID_SET_YokodoriExe,          ms_set_poke2poke        },
+    { BTL_STRID_SET_MagicCoatExe,         ms_set_waza_sp          },
+    { BTL_STRID_SET_Tonbogaeri,           ms_set_poke_trainer     },
+    #endif
   };
 
   int i;
@@ -557,6 +583,91 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 
   ms_set_std( buf, strID, args );
 }
+static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
+{
+  enum {
+    TAGIDX_TRAINER_NAME = 0,
+    TAGIDX_POKE_NICKNAME = 2,
+    TAGIDX_POKE_TYPE = 3,
+    TAGIDX_TOKUSEI_NAME = 6,
+    TAGIDX_WAZA_NAME = 7,
+    TAGIDX_ITEM_NAME = 9,
+    TAGIDX_TRAINER_TYPE = 14,
+  };
+  const STRCODE* sp = GFL_STR_GetStringCodePointer( buf );
+  STRCODE eomCode, tagCode;
+  u8  argIdxDec = 0;
+  u8  clientID = BTL_CLIENT_MAX;
+
+  eomCode = GFL_STR_GetEOMCode();
+  tagCode = PRINTSYS_GetTagStartCode();
+
+  while( *sp != eomCode )
+  {
+    if( *sp == tagCode )
+    {
+      if( PRINTSYS_IsWordSetTagGroup(sp) )
+      {
+        u32 bufIdx = PRINTSYS_GetTagParam( sp, 0 );
+        u32 argIdx = bufIdx;
+        u8  tagGrp = PRINTSYS_GetTagGroup( sp );
+        if( argIdx >= argIdxDec ){
+          argIdx -= argIdxDec;
+        }
+        BTL_Printf("bufIdx=%d ....\n", bufIdx);
+        if( tagGrp == TAGGROUP_NUMBER )
+        {
+          u8 keta = PRINTSYS_GetTagIndex( sp ) + 1;
+          WORDSET_RegisterNumber( wset, bufIdx, args[argIdx], keta, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+        }
+        else
+        {
+          u8 tagIdx = PRINTSYS_GetTagIndex( sp );
+          switch( tagIdx ){
+          case TAGIDX_TRAINER_TYPE:
+            clientID = args[ argIdx ];
+            BTL_Printf("[TAG] SetTrainerID ... clientID=%d\n", clientID);
+            register_TrainerType( wset, bufIdx, clientID );
+            ++argIdxDec;
+            break;
+          case TAGIDX_TRAINER_NAME:
+            if( clientID == BTL_CLIENT_MAX ){
+              clientID = args[argIdx];
+              BTL_Printf("[TAG] TrainerName (clientID = NULL)\n");
+            }
+            BTL_Printf("[TAG] SetTrainerName ... clientID=%d\n", clientID);
+            register_TrainerName( wset, bufIdx, clientID );
+            clientID = BTL_CLIENT_MAX;
+            break;
+          case TAGIDX_POKE_NICKNAME:
+            BTL_Printf("[TAG] Set PokeNickName ... pokeIdx=%d\n", args[argIdx]);
+            register_PokeNickname( args[argIdx], bufIdx );
+            break;
+          case TAGIDX_POKE_TYPE:
+            WORDSET_RegisterPokeTypeName( wset, bufIdx, args[argIdx] );
+            break;
+          case TAGIDX_TOKUSEI_NAME:
+            WORDSET_RegisterTokuseiName( wset, bufIdx, args[argIdx] );
+            break;
+          case TAGIDX_WAZA_NAME:
+            WORDSET_RegisterWazaName( wset, bufIdx, args[argIdx] );
+            break;
+          case TAGIDX_ITEM_NAME:
+            WORDSET_RegisterItemName( wset, bufIdx, args[argIdx] );
+            break;
+          default:
+            GF_ASSERT_MSG(0, "unknown tagIdx = %d\n", tagIdx);
+            break;
+          }
+        }
+      }
+      sp = PRINTSYS_SkipTag( sp );
+    }
+    else{
+      ++sp;
+    }
+  }
+}
 //--------------------------------------------------------------
 /**
  *  標準処理（args[0] にポケモンID）
@@ -564,10 +675,15 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 //--------------------------------------------------------------
 static void ms_set_std( STRBUF* dst, u16 strID, const int* args )
 {
-  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
   strID = get_setStrID( args[0], strID );
 
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+
+  registerWords( SysWork.tmpBuf, args, SysWork.wset );
+
+//  register_PokeNickname( args[0], BUFIDX_POKE_1ST );
+
+
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
 //--------------------------------------------------------------

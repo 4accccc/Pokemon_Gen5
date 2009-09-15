@@ -27,6 +27,7 @@ enum {
   CMD_NOTIFY_SERVER_VER = GFL_NET_CMD_BATTLE,
   CMD_NOTIFY_CLIENT_ID,
   CMD_NOTIFY_PARTY_DATA,
+  CMD_NOTIFY_PLAYER_DATA,
   CMD_TO_CLIENT,
   CMD_TO_SERVER,
 };
@@ -123,10 +124,12 @@ static void recv_serverVer( const int netID, const int size, const void* pData, 
 static void recv_cliendID( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_partyData( int netID, void* pWork, int size );
 static void recv_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
+static u8* getbuf_playerData( int netID, void* pWork, int size );
+static void recv_playerData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
+static u8* getbuf_clientData( int netID, void* pWork, int size );
+static void recv_clientData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static void recv_serverCmd( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_serverCmd( int netID, void* pWork, int size );
-static void recv_clientData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
-static u8* getbuf_clientData( int netID, void* pWork, int size );
 static inline void recvBuf_Store( RECV_BUFFER* buf, const void* pData, int size );
 static inline u8* recvBuf_getBufAdrs( RECV_BUFFER* buf );
 static inline u32 recvBuf_getData( const RECV_BUFFER* buf, const void** ppData );
@@ -139,8 +142,9 @@ static inline void recvBuf_clear( RECV_BUFFER* buf );
 const NetRecvFuncTable BtlRecvFuncTable[] = {
     { recv_serverVer, NULL },
     { recv_cliendID,  NULL },
-    { recv_partyData, getbuf_partyData },
-    { recv_serverCmd, getbuf_serverCmd },
+    { recv_partyData,   getbuf_partyData },
+    { recv_playerData,  getbuf_playerData },
+    { recv_serverCmd,   getbuf_serverCmd },
     { recv_clientData,  getbuf_clientData },
 };
 
@@ -410,6 +414,79 @@ void BTL_NET_EndNotifyPartyData( void )
     }
   }
 }
+
+// プレイヤーデータデータを連絡する（全マシン相互）
+void BTL_NET_StartNotifyPlayerData( const MYSTATUS* playerData )
+{
+  u32 size = MyStatus_GetWorkSize();
+
+  BTL_Printf("プレイヤーデータサイズ=%dbytes\n", size);
+
+  GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_PLAYER_DATA,
+        size,
+        playerData,
+        FALSE,     // 優先度を高くする
+        TRUE,     // 同一コマンドがキューに無い場合のみ送信する
+        TRUE      // GFL_NETライブラリの外で保持するバッファを使用
+  );
+}
+
+
+static u8* getbuf_playerData( int netID, void* pWork, int size )
+{
+  GF_ASSERT(Sys->tmpLargeBuf[ netID ] == NULL);
+
+  Sys->tmpLargeBuf[ netID ] = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(Sys->heapID), size );
+  return Sys->tmpLargeBuf[ netID ];
+}
+
+static void recv_playerData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
+{
+  Sys->tmpLargeBufUsedSize[ netID ] = size;
+  BTL_Printf("netID=%dのプレイヤーデータ受信完了, pData=%p, buf=%p\n",
+      netID, pData, Sys->tmpLargeBuf[netID] );
+
+}
+// パーティデータの相互受信が完了したか？
+BOOL BTL_NET_IsCompleteNotifyPlayerData( void )
+{
+  int i, max;
+
+  max = GFL_NET_GetConnectNum();
+
+  for(i=0; i<max; i++)
+  {
+    if( Sys->tmpLargeBufUsedSize[i] == 0 )
+    {
+      return FALSE;
+    }
+  }
+  BTL_Printf("プレイヤーデータ相互受信完了  メンバー数=%d\n", max);
+  return TRUE;
+}
+
+const MYSTATUS* BTL_NET_GetPlayerData( int netID )
+{
+  GF_ASSERT_MSG(Sys->tmpLargeBuf[netID] != NULL, "netID=%d", netID);
+  GF_ASSERT_MSG(Sys->tmpLargeBufUsedSize[netID] != 0, "netID=%d", netID);
+
+  return Sys->tmpLargeBuf[netID];
+}
+
+void BTL_NET_EndNotifyPlayerData( void )
+{
+  int i;
+
+  for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
+  {
+    if( Sys->tmpLargeBuf[i] != NULL )
+    {
+      GFL_HEAP_FreeMemory( Sys->tmpLargeBuf[i] );
+      Sys->tmpLargeBufUsedSize[i] = 0;
+    }
+  }
+}
+
 
 
 //

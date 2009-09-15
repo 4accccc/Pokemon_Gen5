@@ -138,7 +138,7 @@ typedef struct {
 
   const MYSTATUS*   statusPlayer; ///< プレイヤーのステータス
   MYITEM*           itemData;     ///< アイテムデータ
-  TrainerID       trID;         ///<対戦相手トレーナーID（7/31ROMでトレーナーエンカウントを実現するための暫定）
+  TrainerID         trID;         ///<対戦相手トレーナーID（7/31ROMでトレーナーエンカウントを実現するための暫定）
 
   u16       musicDefault;   ///< デフォルト時のBGMナンバー
   u16       musicPinch;     ///< ピンチ時のBGMナンバー
