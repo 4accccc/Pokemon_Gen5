@@ -1,8 +1,13 @@
 //======================================================================
 /**
  * @file    easy_event_def.h
- * @brief   共通イベント呼び出しテンプレートファイル
+ * @brief   簡易イベント定義ファイル
+ * @date    2009.09.08
  * @author  tamada GAMEFREAK inc.
+ *
+ *
+ * 実際にスクリプト中で使用する定義はscr_seq_def.hに記述されている。
+ * こちらの定義を直接呼び出さないこと！！
  */
 //======================================================================
 
@@ -10,7 +15,14 @@
 /**
  * 簡易イベント入手イベント
  *
- * 詳細な説明はscr_seq_def.hを参照のこと
+ * @param itemno        取得するアイテムナンバー
+ * @param num           取得するアイテムの数
+ * @param flag          アイテム取得したかどうかの判定用フラグ
+ * @param before_msg    入手前のメッセージ
+ * @param finish_msg    入手後のメッセージ
+ * @param after_msg     入手後、再び話かけたときのメッセージ
+ *
+ * SCWK_PARAM0～SCWK_PARAM6を使用して引数を渡している
  */
 //--------------------------------------------------------------
   .macro  _ASM_EASY_TALK_ITEM_EVENT itemno, num, flag, before_msg, finish_msg, after_msg
@@ -42,6 +54,7 @@
   .endm
 
 //--------------------------------------------------------------
+// イベント入手イベント「▼」待ちあり
 //--------------------------------------------------------------
   .macro  _ASM_ITEM_EVENT_KEYWAIT itemno, num
   _PUSH_WORK  SCWK_PARAM0
@@ -54,6 +67,9 @@
   .endm
 
 
+//--------------------------------------------------------------
+// イベント入手イベント「▼」待ちなし
+//--------------------------------------------------------------
   .macro  _ASM_ITEM_EVENT_NOWAIT  itemno, num
   _PUSH_WORK  SCWK_PARAM0
   _PUSH_WORK  SCWK_PARAM1
@@ -63,4 +79,56 @@
   _POP_WORK   SCWK_PARAM1
   _POP_WORK   SCWK_PARAM0
   .endm
+
+//======================================================================
+//   簡易メッセージコマンド
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 簡易吹き出しメッセージ表示 話し掛けOBJ用
+ * @param msg_id 表示するメッセージID
+ */
+//--------------------------------------------------------------
+  .macro _ASM_EASY_BALLOONWIN_TALKOBJ_MSG msg_id
+  _ASM_TALK_START_SE_PLAY
+  _ASM_TURN_HERO_SITE   
+  _ASM_BALLOONWIN_TALKOBJ_OPEN \msg_id 
+  _ASM_LAST_KEYWAIT      
+  _ASM_BALLOONWIN_CLOSE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 簡易メッセージ表示 BG用
+ * @param msg_id 表示するメッセージID
+ */
+//--------------------------------------------------------------
+  .macro  _ASM_EASY_MSG msg_id
+  _ASM_TALK_START_SE_PLAY
+  _ASM_TALKWIN_OPEN
+  _ASM_TALKMSG_ALLPUT \msg_id
+  _ASM_LAST_KEYWAIT
+  _ASM_TALKWIN_CLOSE
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ * 簡易鳴き声メッセージコマンド
+ *
+ * @param monsno
+ * @param formno
+ * @param msg_id
+ */
+//--------------------------------------------------------------
+    .macro  _ASM_EASY_TALK_POKEVOICE monsno, formno, msg_id
+    _ASM_TALK_START_SE_PLAY
+    _ASM_TURN_HERO_SITE   
+    _ASM_VOICE_PLAY \monsno, \formno
+    _ASM_BALLOONWIN_TALKOBJ_OPEN \msg_id 
+    _ASM_VOICE_WAIT
+    _ASM_LAST_KEYWAIT
+    _ASM_BALLOONWIN_CLOSE
+    .endm
+
 

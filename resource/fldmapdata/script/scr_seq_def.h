@@ -213,17 +213,26 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   //ミュージカル関連
   DEF_CMD EV_SEQ_MUSICAL_CALL
 
-  //その他
-  DEF_CMD EV_SEQ_CHG_LANGID
-  DEF_CMD EV_SEQ_GET_RND
-  DEF_CMD EV_SEQ_GET_NOW_MSG_ARCID
-
   //マップ遷移関連
   DEF_CMD EV_SEQ_MAP_CHANGE_SAND_STREAM
   DEF_CMD EV_SEQ_MAP_CHANGE
 
   //ジムギミック関連
   DEF_CMD EV_SEQ_GYM_ELEC_PUSH_SW
+
+  //その他
+  DEF_CMD EV_SEQ_CHG_LANGID
+  DEF_CMD EV_SEQ_GET_RND
+  DEF_CMD EV_SEQ_GET_NOW_MSG_ARCID
+  DEF_CMD EV_SEQ_CHECK_TEMOTI_POKERUS
+  DEF_CMD EV_SEQ_GET_TIMEZONE
+  DEF_CMD EV_SEQ_GET_TRAINER_CARD_RANK
+  DEF_CMD EV_SEQ_POKEMON_RECOVER
+  DEF_CMD EV_SEQ_POKECEN_RECOVER_ANIME
+
+  //ポケモン鳴き声
+  DEF_CMD EV_SEQ_VOICE_PLAY
+  DEF_CMD EV_SEQ_VOICE_WAIT
 
 //======================================================================
 // イベントデータ関連
@@ -1979,6 +1988,39 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 .endm
 
 //======================================================================
+//  サウンド 鳴き声
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * ポケモン鳴き声再生
+ *
+ * @param monsno  ポケモンナンバー
+ * @param formno  フォルムナンバー（特にない場合、０を指定）
+ */
+//--------------------------------------------------------------
+#define _VOICE_PLAY( monsno, formno ) \
+    _ASM_VOICE_PLAY monsno, formno
+
+  .macro  _ASM_VOICE_PLAY monsno, formno
+  .short  EV_SEQ_VOICE_PLAY
+  .short  \monsno
+  .short  \formno
+  .short  0
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * ポケモン鳴き声再生
+ */
+//--------------------------------------------------------------
+#define _VOICE_WAIT() \
+    _ASM_VOICE_WAIT
+
+  .macro  _ASM_VOICE_WAIT
+  .short  EV_SEQ_VOICE_WAIT
+  .endm
+
+//======================================================================
 //  メニュー
 //======================================================================
 //--------------------------------------------------------------
@@ -2323,6 +2365,73 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .short  \work
   .endm
 
+//--------------------------------------------------------------
+/**
+ * 時間帯の取得
+ * @param ret_wk    チェック結果を受け取るワーク
+ *
+ * 戻り値はprog/include/system/timezone.hを参照
+ */
+//--------------------------------------------------------------
+#define _GET_TIMEZONE( ret_wk ) \
+    _ASM_GET_TIMEZONE ret_wk
+
+  .macro  _ASM_GET_TIMEZONE ret_wk
+  .short  EV_SEQ_GET_TIMEZONE
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * トレーナーカードランクの取得
+ *
+ * @param ret_wk    結果を受け取るワーク
+ */
+//--------------------------------------------------------------
+#define _GET_TRAINER_CARD_RANK( ret_wk ) \
+    _ASM_GET_TRAINER_CARD_RANK ret_wk
+
+  .macro  _ASM_GET_TRAINER_CARD_RANK ret_wk
+  .short  EV_SEQ_GET_TRAINER_CARD_RANK
+  .short  \ret_wk
+  .endm
+
+//======================================================================
+//
+//
+//    ポケモン関連
+//
+//
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 手持ちポケモン回復
+ */
+//--------------------------------------------------------------
+#define _TEMOTI_POKEMON_KAIFUKU() \
+    _ASM_TEMOTI_POKEMON_KAIFUKU
+
+  .macro  _ASM_TEMOTI_POKEMON_KAIFUKU
+  .short  EV_SEQ_POKEMON_RECOVER
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 手持ちにポケルスがいるかどうかのチェック
+ *
+ * @param ret_wk    チェック結果を受け取るワーク
+ *
+ * 結果がTRUEのとき、ポケルス感染したポケモンが手持ちにいる
+ */
+//--------------------------------------------------------------
+#define _CHECK_TEMOTI_POKERUS( ret_wk ) \
+    _ASM_CHECK_TEMOTI_POKERUS ret_wk
+
+  .macro  _ASM_CHECK_TEMOTI_POKERUS ret_wk
+  .short  EV_SEQ_CHECK_TEMOTI_POKERUS
+  .short  \ret_wk
+  .endm
+
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
@@ -2363,6 +2472,13 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .short  \dir
   .endm
 
+//======================================================================
+//
+//
+//  特殊状況ギミック関連
+//
+//
+//======================================================================
 //--------------------------------------------------------------
 /**
  * ジムコマンド　電気ジムスイッチ
@@ -2377,12 +2493,31 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
   .short  \sw_idx
   .endm
 
+//--------------------------------------------------------------
+/**
+ * ポケセン回復アニメ
+ *
+ * @param poke_count    手持ちのポケモンの数
+ */
+//--------------------------------------------------------------
+#define _POKECEN_RECOVER_ANIME( poke_count )  \
+  _ASM_POKECEN_RECOVER_ANIME poke_count
+
+  .macro  _ASM_POKECEN_RECOVER_ANIME poke_count
+  .short  EV_SEQ_POKECEN_RECOVER_ANIME
+  .short  \poke_count
+  .endm
+
+
+
 //======================================================================
 //
 //  簡易コマンド
 //  ※スクリプトコマンドを組み合わせたもの
 //
 //======================================================================
+  .include  "easy_event_def.h"
+
 //--------------------------------------------------------------
 /**
  * 簡易メッセージ表示 BG用
@@ -2390,14 +2525,6 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  */
 //--------------------------------------------------------------
 #define _EASY_MSG( msg_id )   _ASM_EASY_MSG msg_id
-
-  .macro  _ASM_EASY_MSG msg_id
-  _ASM_TALK_START_SE_PLAY
-  _ASM_TALKWIN_OPEN
-  _ASM_TALKMSG_ALLPUT \msg_id
-  _ASM_LAST_KEYWAIT
-  _ASM_TALKWIN_CLOSE
-  .endm
 
 
 //--------------------------------------------------------------
@@ -2408,13 +2535,6 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 //--------------------------------------------------------------
 #define _EASY_BALLOONWIN_TALKOBJ_MSG( msg_id )  _ASM_EASY_BALLOONWIN_TALKOBJ_MSG msg_id
 
-  .macro _ASM_EASY_BALLOONWIN_TALKOBJ_MSG msg_id
-  _ASM_TALK_START_SE_PLAY
-  _ASM_TURN_HERO_SITE   
-  _ASM_BALLOONWIN_TALKOBJ_OPEN \msg_id 
-  _ASM_LAST_KEYWAIT      
-  _ASM_BALLOONWIN_CLOSE
-  .endm
 
 //--------------------------------------------------------------
 /**
@@ -2432,8 +2552,6 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 #define _EASY_TALK_ITEM_EVENT( itemno, num, flag, before_msg, finish_msg, after_msg) \
     _ASM_EASY_TALK_ITEM_EVENT itemno, num, flag, before_msg, finish_msg, after_msg
 
-  .include  "easy_event_def.h"
-
 //--------------------------------------------------------------
 /**
  * イベント入手イベント「▼」待ちあり
@@ -2450,5 +2568,15 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
 #define _ITEM_EVENT_NOWAIT(itemno, num)   \
     _ASM_ITEM_EVENT_KEYWAIT itemno, num
 
-
+//--------------------------------------------------------------
+/**
+ * 簡易鳴き声メッセージコマンド
+ *
+ * @param monsno
+ * @param formno
+ * @param msg_id
+ */
+//--------------------------------------------------------------
+#define _EASY_TALK_POKEVOICE( monsno, formno, msg_id ) \
+    _ASM_EASY_TALK_POKEVOICE monsno, formno, msg_id
 

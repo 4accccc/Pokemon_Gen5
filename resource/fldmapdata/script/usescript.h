@@ -115,7 +115,8 @@
 //サウンドラベル
 #include "../../sound/wb_sound_data.sadl"
 
-#include "../../itemconv/itempocket_def.h"
+#include "../../personal/monsno_def.h"		//ポケモンナンバー
+#include "../../itemconv/itempocket_def.h"  //どうぐポケットナンバー指定
 #include "../../../prog/include/item/itemsym.h"
 #if 0 //wb null
 
@@ -131,7 +132,6 @@
 #include "../../../include/system/wipe.h"			//ワイプ
 #include "../../../include/system/timezone.h"		//時間帯
 
-#include "../../../include/poketool/monsno.h"		//ポケモンナンバー
 #include "../../../include/battle/battle_common.h"	//戦闘関連
 #include "../../../include/battle/trno_def.h"		//トレーナーナンバー定義
 
@@ -198,7 +198,8 @@
 //	共通メッセージ関連
 //
 //======================================================================
-#include "../../../prog/include/msg/script/msg_common_scr.h"
+#include "../../message/dst/script/msg_common_scr.h"
+//#include "../../../prog/include/msg/script/msg_common_scr.h"
 #if 0 //wb null
 #include "../../../include/msgdata/msg_common_scr.h"
 #include "../../../include/msgdata/msg_ev_win.h"

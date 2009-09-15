@@ -1,7 +1,8 @@
 #マップに依存しないスクリプトはここに追加してください
 SCRIPTFILES	+= \
-	c99.ev	\
 	common_scr.ev	\
+	c99.ev	\
   bg_attr.ev \
 	trainer.ev \
-  init_scr.ev
+  init_scr.ev \
+  pokecen_scr.ev
