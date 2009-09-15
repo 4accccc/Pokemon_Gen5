@@ -926,8 +926,8 @@ SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
 #MCSライブラリ
 #===> MCS_EX
 #LIB=>          libnnsmcs.a
-SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c
-
+SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
+											 debug/mcs_resident.c
 
 #ITEMUSEライブラリ
 #===> SRCS_OVERLAY_FIELDMAP
