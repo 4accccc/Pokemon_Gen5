@@ -141,7 +141,7 @@
 #define WK_SCENE_T01R0401                16505 /* 0x4079 カノコタウン研究所：イベント用ワーク */
 #define WK_SCENE_T02                     16506 /* 0x407a カラクサタウン：イベント用ワーク */
 #define WK_SCENE_T02PC0101               16507 /* 0x407b カラクサタウンＰＣ：イベント用ワーク */
-		/* not used 16508(0x407c) */
+#define WK_SCENE_R01                     16508 /* 0x407c １番道路：イベント用ワーク */
 		/* not used 16509(0x407d) */
 		/* not used 16510(0x407e) */
 		/* not used 16511(0x407f) */

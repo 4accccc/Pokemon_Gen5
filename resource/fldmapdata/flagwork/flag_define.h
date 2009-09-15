@@ -123,8 +123,8 @@
 #define FE_ZUKAN_GET                       107 /* 0x006b 図鑑ゲット(イベント用) */
 #define FE_R30R0201_GAKUSYUUSOUTI_GET      108 /* 0x006c 学習装置を入手 */
 #define FE_T02R0302_BALLGET                109 /* 0x006d カノコタウン民家２F：親父からスーパーボール入手した */
-		/* not used   110(0x006e) */
-		/* not used   111(0x006f) */
+#define FE_C01R0102_ITEM_GET               110 /* 0x006e サンヨウシティビルＡ ２Ｆ：アイテム入手イベント（アイテム未定） */
+#define FE_C01R0201_ITEM_GET               111 /* 0x006f サンヨウシティビルＢ １Ｆ：アイテム入手イベント（ピントレンズ） */
 		/* not used   112(0x0070) */
 		/* not used   113(0x0071) */
 		/* not used   114(0x0072) */
