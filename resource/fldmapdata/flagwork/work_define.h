@@ -138,8 +138,8 @@
 #define WK_SCENE_0907ROM06               16502 /* 0x4076 wb 0907ROM用スクリプトセーブワーク */
 #define WK_SCENE_0907ROM07               16503 /* 0x4077 wb 0907ROM用スクリプトセーブワーク */
 #define WK_SCENE_T01R0201                16504 /* 0x4078 友達♀の自宅イベント用ワーク */
-		/* not used 16505(0x4079) */
-		/* not used 16506(0x407a) */
+#define WK_SCENE_T01R0401                16505 /* 0x4079 カノコタウン研究所：イベント用ワーク */
+#define WK_SCENE_T02                     16506 /* 0x407a カラクサタウン：イベント用ワーク */
 		/* not used 16507(0x407b) */
 		/* not used 16508(0x407c) */
 		/* not used 16509(0x407d) */
