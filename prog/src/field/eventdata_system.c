@@ -263,9 +263,9 @@ static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 #define	ZONE_ID_SPECIAL		(0x0fff)
 #define	EXIT_ID_SPECIAL		(0x0100)
 	enum {
-		OFS_X = -8,
+		OFS_X = 0,
 		OFS_Y = 0,
-		OFS_Z = 8,
+		OFS_Z = 0,
 
     RANGE = 2,
 	};
