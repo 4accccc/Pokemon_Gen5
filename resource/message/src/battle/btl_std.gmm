@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-09-15T20:08:17"/>
+	<create user="taya" host="W00146" date="2009-09-15T21:41:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -453,8 +453,14 @@
 [1:02:ポケモンニックネーム:2]を　くりだした！</language>
 	</row>
 
+	<row id="BTL_STRID_STD_UseItem_Self" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>どうぐを使う　自分</comment>
+		<language name="JPN" width="216">[1:09:どうぐ名:1]を　つかった！</language>
+		<language name="JPN_KANJI" width="216">[1:09:どうぐ名:1]を　使った！</language>
+	</row>
+
 	<row id="BTL_STRID_STD_UseItem_Player" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
-		<comment>どうぐを使う</comment>
+		<comment>どうぐを使う　通信対戦プレイヤー</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]は
 [1:09:どうぐ名:1]を　つかった！</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]は
@@ -462,6 +468,7 @@
 	</row>
 
 	<row id="BTL_STRID_STD_UseItem_NPC" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>どうぐを使う　NPCトレーナー</comment>
 		<language name="JPN" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]は
 [1:09:どうぐ名:2]を　つかった！</language>
 		<language name="JPN_KANJI" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]は
