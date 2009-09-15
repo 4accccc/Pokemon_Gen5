@@ -26,7 +26,3 @@
 "b_plist_obj.NCER"
 "b_plist_obj.NCGR"
 "b_plist_obj.NCLR"
-"p_st_ijou.NCGR"
-"p_st_ijou.NCLR"
-"p_st_ijou.NCER"
-"p_st_ijou.NANR"
