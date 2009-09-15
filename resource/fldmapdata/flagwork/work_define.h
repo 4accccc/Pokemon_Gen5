@@ -140,7 +140,7 @@
 #define WK_SCENE_T01R0201                16504 /* 0x4078 友達♀の自宅イベント用ワーク */
 #define WK_SCENE_T01R0401                16505 /* 0x4079 カノコタウン研究所：イベント用ワーク */
 #define WK_SCENE_T02                     16506 /* 0x407a カラクサタウン：イベント用ワーク */
-		/* not used 16507(0x407b) */
+#define WK_SCENE_T02PC0101               16507 /* 0x407b カラクサタウンＰＣ：イベント用ワーク */
 		/* not used 16508(0x407c) */
 		/* not used 16509(0x407d) */
 		/* not used 16510(0x407e) */
