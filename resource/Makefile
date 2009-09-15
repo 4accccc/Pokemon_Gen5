@@ -8,6 +8,7 @@ RESOURCE_MACRO	= $(PROJECT_RSCDIR)\macro_define
 
 
 SUBDIRS	=	wmi \
+			personal\
 			sound \
 			bag \
 		  trade \
@@ -18,11 +19,11 @@ SUBDIRS	=	wmi \
 			field_weather \
 			field_weather_light \
 			field_light \
+			message\
 			fldmmdl \
 			fldmapdata\
 			pokegra\
 			battle\
-			personal\
 			waza_tbl\
 			net_err\
 			font\
@@ -42,7 +43,6 @@ SUBDIRS	=	wmi \
 			yn_touch \
 			balloon \
 			mysign \
-			message\
 			pms \
 			pms_gra \
 			compatible \
