@@ -69,10 +69,6 @@ typedef struct {
 	s16 df_angle;
   fx32  camera_len;
   u16   camera_pitch;
-
-  FLD_SCENEAREA* p_sceneArea;
-	FLD_SCENEAREA_LOADER* p_scenearealoader;
-
 }C3_MOVE_WORK;
 
 
@@ -222,13 +218,8 @@ static void mapCtrlC3_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 
   if (rail_flag)
   {
-    // レール動作
-    
-    // シーンエリア処理でカメラ上書き
-    if( FLD_SCENEAREA_GetUpdateFuncID( cp_areaMan ) == FLD_SCENEAREA_UPDATE_CIRCLE ){
-      // カメラ動作限界管理
-      cameraRailAreaControl( FIELDMAP_GetFieldCamera( fieldWork ) );
-    }
+    // カメラ動作限界管理
+    cameraRailAreaControl( FIELDMAP_GetFieldCamera( fieldWork ) );
 
 		// 移動方向の設定
 		FIELDMAP_CTRL_NOGRID_WORK_Main( p_ngridwork );

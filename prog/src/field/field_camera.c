@@ -57,6 +57,13 @@ typedef enum {
 	FIELD_CAMERA_TYPE_MAX,
 }FIELD_CAMERA_TYPE;
 
+
+//-----------------------------------------------------------------------------
+/**
+ *			カメラ可動範囲
+ */
+//-----------------------------------------------------------------------------
+
 //------------------------------------------------------------------
 /**
  * @brief	型宣言
@@ -74,8 +81,10 @@ struct _FIELD_CAMERA {
   const VecFx32 *   watch_camera; ///<追随するカメラ位置へのポインタ
 
   VecFx32       camPos;             ///<カメラ位置用ワーク
+  VecFx32       campos_write;       ///<カメラ位置用実際に画面反映した値
 
 	VecFx32				target;			        ///<注視点用ワーク
+	VecFx32				target_write;			  ///<注視点用実際に画面反映した値
 	VecFx32				target_offset;			///<注視点用補正座標
   VecFx32       target_before;
 
@@ -85,6 +94,9 @@ struct _FIELD_CAMERA {
 
   u16         fovy;
   u16         pad;
+
+  FIELD_CAMERA_AREA camera_area;  // カメラ可動範囲
+  
 #ifdef PM_DEBUG
   u32 debug_subscreen_type;
 
@@ -121,6 +133,22 @@ static void ControlParameter( FIELD_CAMERA * camera, u16 key_cont );
 static void ControlParameter_CalcCamera( FIELD_CAMERA * camera, u16 key_cont );
 static void ControlParameter_CalcTarget( FIELD_CAMERA * camera, u16 key_cont );
 static void ControlParameter_Direct( FIELD_CAMERA * camera, u16 key_cont );
+
+
+//------------------------------------------------------------------
+// カメラ可動エリア判定
+//------------------------------------------------------------------
+static void cameraArea_UpdateTarget( const FIELD_CAMERA_AREA * cp_area, VecFx32* p_target );
+static void cameraArea_UpdateCamPos( const FIELD_CAMERA_AREA * cp_area, VecFx32* p_camera );
+static BOOL cameraArea_IsAreaRect( const FIELD_CAMERA_AREA* cp_area, const VecFx32* cp_pos, VecFx32* p_pos );
+static BOOL cameraArea_IsAreaCircle( const FIELD_CAMERA_AREA* cp_area, const VecFx32* cp_pos, VecFx32* p_pos );
+
+static BOOL (*pIsAreaFunc[])( const FIELD_CAMERA_AREA* cp_area, const VecFx32* cp_pos, VecFx32* p_pos ) = 
+{
+  NULL,
+  cameraArea_IsAreaRect,
+  cameraArea_IsAreaCircle,
+};
 
 
 //============================================================================================
@@ -345,16 +373,46 @@ static void calcAnglePos( const VecFx32* cp_target, VecFx32* p_pos, u16 yaw, u16
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void updateAngleCameraPos(FIELD_CAMERA * camera)
-{ 
+{
+  // 
+  camera->target_write = camera->target;
+  cameraArea_UpdateTarget( &camera->camera_area, &camera->target_write );
+  
   // カメラポジション計算
-	calcAnglePos( &camera->target, &camera->camPos,
+	calcAnglePos( &camera->target_write, &camera->camPos,
 			camera->angle_yaw, camera->angle_pitch, camera->angle_len );
+
+  // 
+  camera->campos_write = camera->camPos;
+  cameraArea_UpdateCamPos( &camera->camera_area, &camera->campos_write );
 }
 static void updateAngleTargetPos(FIELD_CAMERA * camera)
 { 
+  // 
+  camera->campos_write = camera->camPos;
+  cameraArea_UpdateCamPos( &camera->camera_area, &camera->campos_write );
+
   // ターゲットポジション計算
-	calcAnglePos( &camera->camPos, &camera->target,
+	calcAnglePos( &camera->campos_write, &camera->target,
 			camera->angle_yaw, camera->angle_pitch, camera->angle_len );
+
+  // 
+  camera->target_write = camera->target;
+  cameraArea_UpdateTarget( &camera->camera_area, &camera->target_write );
+}
+
+	
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void updateCameraArea(FIELD_CAMERA * camera)
+{
+  // 
+  camera->campos_write = camera->camPos;
+  cameraArea_UpdateCamPos( &camera->camera_area, &camera->campos_write );
+
+  // 
+  camera->target_write = camera->target;
+  cameraArea_UpdateTarget( &camera->camera_area, &camera->target_write );
 }
 	
 //------------------------------------------------------------------
@@ -365,10 +423,11 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
 
 #ifndef PM_DEBUG
 	// カメラターゲット補正
-  VEC_Add( &camera->target, &camera->target_offset, &cameraTarget );
+  VEC_Add( &camera->target_write, &camera->target_offset, &cameraTarget );
+  
 
 	GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &cameraTarget );
-	GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->camPos );
+	GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->campos_write );
 
   traceUpdate( camera );
 #else
@@ -377,10 +436,11 @@ static void updateG3Dcamera(FIELD_CAMERA * camera)
   {
     // 通常のカメラターゲット
     // カメラターゲット補正
-    VEC_Add( &camera->target, &camera->target_offset, &cameraTarget );
+    VEC_Add( &camera->target_write, &camera->target_offset, &cameraTarget );
+    
 
     GFL_G3D_CAMERA_SetTarget( camera->g3Dcamera, &cameraTarget );
-    GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->camPos );
+	  GFL_G3D_CAMERA_SetPos( camera->g3Dcamera, &camera->campos_write );
 
 		if( camera->debug_subscreen_type == FIELD_CAMERA_DEBUG_BIND_NONE )
 		{
@@ -469,6 +529,7 @@ static void ControlParameter_Direct( FIELD_CAMERA * camera, u16 key_cont )
 {
 	updateTargetBinding(camera);
 	updateCamPosBinding( camera );
+  updateCameraArea( camera );
   updateG3Dcamera(camera);
 }
 
@@ -1034,5 +1095,252 @@ static void traceUpdate(FIELD_CAMERA * camera)
     TAMADA_Printf("outTGT:%3d outCAM:%3d \n", FX_Whole(outTgt.y), FX_Whole(outCam.y) );
   }
 }
+
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ可動エリアの設定
+ *
+ *	@param	camera      カメラ
+ *	@param	cp_area     エリア情報
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetCameraArea( FIELD_CAMERA * camera, const FIELD_CAMERA_AREA* cp_area )
+{
+  GFL_STD_MemCopy( cp_area, &camera->camera_area, sizeof(FIELD_CAMERA_AREA) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ可動エリアのクリア
+ *
+ *	@param	camera  カメラ
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_ClearCameraArea( FIELD_CAMERA * camera )
+{
+  GF_ASSERT( camera );
+  camera->camera_area.area_type = FIELD_CAMERA_AREA_NONE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ可動エリア　範囲タイプの取得
+ *
+ *	@param	camera  カメラ
+ *
+ *	@return 範囲タイプ
+ */
+//-----------------------------------------------------------------------------
+FIELD_CAMERA_AREA_TYPE FIELD_CAMERA_GetCameraAreaType( const FIELD_CAMERA * camera )
+{
+  GF_ASSERT( camera );
+  return camera->camera_area.area_type;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ可動エリア  管理座標タイプの取得
+ *
+ *	@param	camera  カメラ
+ *
+ *	@return 管理座標タイプ
+ */
+//-----------------------------------------------------------------------------
+FIELD_CAMERA_AREA_CONT FIELD_CAMERA_GetCameraAreaCont( const FIELD_CAMERA * camera )
+{
+  GF_ASSERT( camera );
+  return camera->camera_area.area_cont;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラエリア反映
+ *
+ *	@param	cp_area       エリア情報
+ *	@param	p_target      ターゲット座標
+ */
+//-----------------------------------------------------------------------------
+static void cameraArea_UpdateTarget( const FIELD_CAMERA_AREA * cp_area, VecFx32* p_target )
+{
+  VecFx32* p_pos;
+
+  GF_ASSERT( cp_area->area_type < FIELD_CAMERA_AREA_MAX );
+  GF_ASSERT( cp_area->area_cont < FIELD_CAMERA_AREA_CONT_MAX );
+
+  if( cp_area->area_cont == FIELD_CAMERA_AREA_CONT_TARGET )
+  {
+    p_pos = p_target;
+
+    if( pIsAreaFunc[cp_area->area_type] )
+    {
+      pIsAreaFunc[cp_area->area_type]( cp_area, p_pos, p_pos );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラエリア反映
+ *
+ *	@param	cp_area       エリア情報
+ *	@param	p_camera      カメラ座標
+ */
+//-----------------------------------------------------------------------------
+static void cameraArea_UpdateCamPos( const FIELD_CAMERA_AREA * cp_area, VecFx32* p_camera )
+{
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ可動範囲計算　矩形
+ *
+ *	@param	cp_area   矩形情報
+ *	@param  cp_pos	  現在座標
+ *	@param	p_pos     計算後座標
+ *
+ *	@retval TRUE  カメラ動作範囲外だった
+ *	@retval FALSE カメラ動作範囲内だった
+ */
+//-----------------------------------------------------------------------------
+static BOOL cameraArea_IsAreaRect( const FIELD_CAMERA_AREA* cp_area, const VecFx32* cp_pos, VecFx32* p_pos )
+{
+  VecFx32 pos_data = *cp_pos;
+  BOOL ret = FALSE;
+
+  // Y座標設定
+  p_pos->x = pos_data.x;
+  p_pos->z = pos_data.z;
+  p_pos->y = pos_data.y;
+  
+  // X方向範囲内？
+  if( (FX32_CONST(cp_area->rect.x_min) > pos_data.x) )
+  {
+    ret = TRUE;
+    p_pos->x = FX32_CONST(cp_area->rect.x_min);
+  }
+  else if( (cp_area->rect.x_max<<FX32_SHIFT < pos_data.x) )
+  {
+    ret = TRUE;
+    p_pos->x = FX32_CONST(cp_area->rect.x_max);
+  }
+
+
+  // Z方向範囲内？
+  if( (cp_area->rect.z_min<<FX32_SHIFT > pos_data.z) )
+  {
+    ret = TRUE;
+    p_pos->z = FX32_CONST(cp_area->rect.z_min);
+  }
+  else if( (cp_area->rect.z_max<<FX32_SHIFT < pos_data.z) )
+  {
+    ret = TRUE;
+    p_pos->z = FX32_CONST(cp_area->rect.z_max);
+  }
+
+
+  return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ可動範囲計算　円
+ *
+ *	@param	cp_area   円情報
+ *	@param	cp_pos    現在座標
+ *	@param	p_pos     計算後座標
+ *
+ *	@retval TRUE  カメラ動作範囲外だった
+ *	@retval FALSE カメラ動作範囲内だった
+ */
+//-----------------------------------------------------------------------------
+static BOOL cameraArea_IsAreaCircle( const FIELD_CAMERA_AREA* cp_area, const VecFx32* cp_pos, VecFx32* p_pos )
+{
+  VecFx32 def_vec = { 0,0,FX32_ONE };
+  VecFx32 pos_data = *cp_pos;
+  VecFx32 pos_save = *cp_pos;
+  VecFx32 center;
+  VecFx32 way;
+  fx32  len;
+  u16 min_rot, max_rot, rot_now;
+  VecFx32 normal; // 回転方向検出用
+  BOOL ret = FALSE;
+
+  // 中心座標を求める
+  center.x = cp_area->circle.center_x;
+  center.y = 0;
+  center.z = cp_area->circle.center_z;
+  
+
+  // ターゲットを中心とした距離に変更
+  pos_data.y = 0; // 平面で見る
+  VEC_Subtract( &pos_data, &center, &way ); 
+
+  // 距離を求める
+  len = VEC_Mag( &way );
+
+  VEC_Normalize( &way, &way );
+
+  // start endとの外積を求める
+  VEC_CrossProduct( &def_vec, &way, &normal );
+  rot_now     = FX_AcosIdx( VEC_DotProduct( &def_vec, &way ) );
+
+  if( normal.y < 0 )
+  {
+    rot_now = 0x10000 - rot_now;
+  }
+
+  // 距離の範囲外チェック
+  if( len < cp_area->circle.r )
+  {
+    len = cp_area->circle.r;
+    ret = TRUE;
+  }
+
+  // 角度の範囲外チェック
+  if( cp_area->circle.min_rot != cp_area->circle.max_rot )
+  {
+    if( cp_area->circle.min_rot > cp_area->circle.max_rot )
+    {
+      // 360度を通過する方が　可動範囲
+      min_rot = cp_area->circle.max_rot;
+      max_rot = cp_area->circle.min_rot;
+    }
+    else
+    {
+      // 通常の　可動範囲
+      min_rot = cp_area->circle.min_rot;
+      max_rot = cp_area->circle.max_rot;
+    }
+  }
+
+
+  //  チェック
+  if( min_rot > rot_now )
+  {
+    rot_now = min_rot;
+    ret = TRUE;
+  }
+  else if( max_rot < rot_now )
+  {
+    rot_now = max_rot;
+    ret = TRUE;
+  }
+
+
+  // 座標の再計算
+  if( ret )
+  {
+    p_pos->x = FX_Mul( FX_SinIdx( rot_now ), len ) + center.x;
+    p_pos->z = FX_Mul( FX_CosIdx( rot_now ), len ) + center.z;
+    p_pos->y = pos_save.y;
+  }
+
+  return ret;
+}
+
 
 

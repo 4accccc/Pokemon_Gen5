@@ -9,11 +9,30 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 
+#include "field/zonedata.h"
+
 #include "fldmmdl.h"
 #include "fieldmap.h"
 #include "field_player_grid.h"
 
 #include "fieldmap_ctrl_grid.h"
+
+#include "arc/arc_def.h"
+#include "arc/arc_def.h"
+#include "arc/fieldmap/camera_scroll.naix"
+
+
+//======================================================================
+//	”ÍˆÍî•ñ
+//======================================================================
+static FIELD_CAMERA_AREA s_FIELD_CAMERA_AREA = 
+{
+  FIELD_CAMERA_AREA_RECT,
+  FIELD_CAMERA_AREA_CONT_TARGET,
+};
+ 
+
+
 
 //======================================================================
 //	define
@@ -130,6 +149,23 @@ static void mapCtrlGrid_Create(
 	}
   
 	FIELDMAP_SetMapCtrlWork( fieldWork, gridWork );
+
+
+  //  ƒJƒƒ‰”ÍˆÍ
+  if( ZONEDATA_GetMatrixID( FIELDMAP_GetZoneID( fieldWork ) ) > 0 )
+  {
+
+    FIELD_CAMERA_RECT* p_rect;
+    p_rect = GFL_ARC_UTIL_Load( ARCID_FLD_CAMSCRLL, 
+        ZONEDATA_GetMatrixID( FIELDMAP_GetZoneID( fieldWork ) ), 
+        FALSE, heapID );
+    s_FIELD_CAMERA_AREA.rect = *p_rect;
+    TOMOYA_Printf( "xmin[0x%x] xmax[0x%x] zmin[0x%x] zmax[0x%x]\n", 
+        p_rect->x_min, p_rect->x_max, p_rect->z_min, p_rect->z_max );
+    FIELD_CAMERA_SetCameraArea( FIELDMAP_GetFieldCamera( fieldWork ), &s_FIELD_CAMERA_AREA );
+
+    GFL_HEAP_FreeMemory( p_rect );
+  }
 }
 
 //--------------------------------------------------------------

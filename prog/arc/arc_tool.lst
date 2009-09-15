@@ -181,3 +181,4 @@
   ARCID_OBATA_DEBUG "debug_obata.narc" # 小幡デバッグメニュー用データ
   ARCID_MICTEST_GRA "mictest.narc" # マイクテスト用グラフィックデータ
   ARCID_GYM_ELEC "fieldmap/gym_elec.narc"  #電気ジム
+  ARCID_FLD_CAMSCRLL "fieldmap/camera_scroll.narc"  #カメラスクロール範囲

@@ -39,6 +39,76 @@ typedef enum
 } FIELD_CAMERA_MODE;
 
 
+//-----------------------------------------------------------------------------
+/**
+ *			カメラ可動範囲
+ */
+//-----------------------------------------------------------------------------
+// 範囲タイプ
+typedef enum
+{
+  FIELD_CAMERA_AREA_NONE,     // 範囲なし
+  FIELD_CAMERA_AREA_RECT,     // 矩形範囲
+  FIELD_CAMERA_AREA_CIRCLE,   // 円範囲
+
+  FIELD_CAMERA_AREA_MAX,   // システム内で使用
+} FIELD_CAMERA_AREA_TYPE;
+
+// 管理座標
+typedef enum
+{
+  FIELD_CAMERA_AREA_CONT_TARGET,   // カメラターゲットの管理
+  FIELD_CAMERA_AREA_CONT_CAMERA,   // カメラ座標の管理
+
+
+  FIELD_CAMERA_AREA_CONT_MAX,   // システム内で使用
+} FIELD_CAMERA_AREA_CONT;
+
+//-------------------------------------
+///	矩形範囲
+//=====================================
+typedef struct {
+  s32 x_min;  // 小数点なし座標
+  s32 x_max;
+  s32 z_min;
+  s32 z_max;
+} FIELD_CAMERA_RECT;
+
+//-------------------------------------
+///	円範囲
+//=====================================
+typedef struct {
+  fx32 center_x;
+  fx32 center_z;
+  fx32 r;         // 可動範囲の半径
+  u16  min_rot;   // min_rot == max_rot なら ３６０度　可動範囲
+  u16  max_rot;   // min_rot > max_rot なら、360度を通過する方が　可動範囲
+} FIELD_CAMERA_CIRCLE;
+
+//-------------------------------------
+///	カメラ可動範囲情報
+//=====================================
+typedef struct {
+
+  // 範囲タイプ指定
+  FIELD_CAMERA_AREA_TYPE area_type;
+
+  // 管理座標タイプ指定
+  FIELD_CAMERA_AREA_CONT area_cont;
+
+  // 範囲情報
+  union
+  {
+    // XZ平面の矩形範囲
+    FIELD_CAMERA_RECT rect;
+
+    // XZ平面の円範囲
+    FIELD_CAMERA_CIRCLE circle;
+  } ;
+  
+} FIELD_CAMERA_AREA;
+
+
 //============================================================================================
 //	生成・メイン・消去
 //============================================================================================
@@ -184,6 +254,18 @@ extern BOOL FIELD_CAMERA_IsBindDefaultTarget( const FIELD_CAMERA * camera );
 //------------------------------------------------------------------
 extern void FIELD_CAMERA_BindCamera(FIELD_CAMERA * camera, const VecFx32 * watch_camera);
 extern void FIELD_CAMERA_FreeCamera(FIELD_CAMERA * camera);
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *      カメラ可動範囲
+ */
+//-----------------------------------------------------------------------------
+extern void FIELD_CAMERA_SetCameraArea( FIELD_CAMERA * camera, const FIELD_CAMERA_AREA* cp_area );
+extern void FIELD_CAMERA_ClearCameraArea( FIELD_CAMERA * camera );
+extern FIELD_CAMERA_AREA_TYPE FIELD_CAMERA_GetCameraAreaType( const FIELD_CAMERA * camera );
+extern FIELD_CAMERA_AREA_CONT FIELD_CAMERA_GetCameraAreaCont( const FIELD_CAMERA * camera );
 
 #ifdef  PM_DEBUG
 typedef enum{
