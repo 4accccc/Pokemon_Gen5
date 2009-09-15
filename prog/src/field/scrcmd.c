@@ -32,6 +32,7 @@
 #include "tr_tool/tr_tool.h"
 
 #include "field/zonedata.h"
+#include "system/rtc_tool.h"  //GFL_RTC_GetTimeZone
 
 #include "scrcmd_trainer.h"
 #include "scrcmd_sound.h"
@@ -42,6 +43,8 @@
 #include "scrcmd_menuwin.h"
 #include "scrcmd_fldmmdl.h"
 #include "scrcmd_gym.h"
+#include "scrcmd_pokemon.h"
+
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
@@ -1215,6 +1218,58 @@ static VMCMD_RESULT EvCmdGetNowMsgArcID( VMHANDLE * core, void *wk )
   }
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * 時間帯の取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ * @todo  トレーナーカードの企画ができたらそれにあわせて戻り値をかえす
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdGetTrainerCardRank( VMHANDLE *core, void *wk )
+{
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = 4;
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 時間帯の取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ * @todo  時間帯が季節で変わることをどうするか企画と協議
+ * @todo  直接RTCでなくイベントで保持している時間帯を参照するのか？
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdGetTimeZone( VMHANDLE *core, void *wk )
+{
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = GFL_RTC_GetTimeZone();
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ポケセン回復アニメ
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ * @todo  どんな表現をするとか、何も決まってないよ～ということで空コマンドです
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk )
+{
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //======================================================================
 //  画面フェード
 //======================================================================
@@ -1495,17 +1550,27 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   //ミュージカル関連
   EvCmdMusicalCall,
   
-  //その他
-  EvCmdChangeLangID,
-  EvCmdGetRand,
-  EvCmdGetNowMsgArcID,
-
   //マップ遷移
   EvCmdMapChangeBySandStream,
   EvCmdMapChange,
 
   //ジムギミック関連
   EvCmdGymElec_PushSw,
+
+  //その他
+  EvCmdChangeLangID,
+  EvCmdGetRand,
+  EvCmdGetNowMsgArcID,
+  EvCmdCheckTemotiPokerus,
+  EvCmdGetTimeZone,
+  EvCmdGetTrainerCardRank,
+  EvCmdPokemonRecover,
+  EvCmdPokecenRecoverAnime,
+
+  //鳴き声
+  EvCmdVoicePlay,
+  EvCmdVoiceWait,
+
 };
 
 
