@@ -6,10 +6,16 @@
 "hp_dodai_32k.NCGR"
 "hp_dodai_32k.NCER"
 "hp_dodai_32k.NANR"
+
 "p_st_ijou.NCLR"
 "p_st_ijou.NCGR"
-"p_st_ijou.NCER"
-"p_st_ijou.NANR"
+"p_st_ijou_32k.NCER"
+"p_st_ijou_32k.NANR"
+"p_st_ijou_64k.NCER"
+"p_st_ijou_64k.NANR"
+"p_st_ijou_128k.NCER"
+"p_st_ijou_128k.NANR"
+
 "bar_button.NCLR"
 "bar_button_128k.NCGR"
 "bar_button_32k.NCER"
@@ -65,4 +71,11 @@
 "p_st_type_64k.NANR"
 "p_st_type_128k.NANR"
 
-
+"item_icon.NCGR"
+"item_icon.NCLR"
+"item_icon_32k.NCER"
+"item_icon_32k.NANR"
+"item_icon_64k.NCER"
+"item_icon_64k.NANR"
+"item_icon_128k.NCER"
+"item_icon_128k.NANR"
