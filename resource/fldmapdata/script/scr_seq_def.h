@@ -2370,10 +2370,10 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  */
 //--------------------------------------------------------------
 #define _GYM_ELEC_PUSH_SW( sw_idx ) \
-    _GYM_ELEC_PUSH_SW sw_idx 
+    _ASM_GYM_ELEC_PUSH_SW sw_idx 
 
-  .macro  _GYM_ELEC_PUSH_SW sw_idx
-  .short  EV_SEQ_GYM_ELEC_PUSH_Sw
+  .macro  _ASM_GYM_ELEC_PUSH_SW sw_idx
+  .short  EV_SEQ_GYM_ELEC_PUSH_SW
   .short  \sw_idx
   .endm
 
