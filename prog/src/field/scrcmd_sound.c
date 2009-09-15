@@ -20,7 +20,8 @@
 #include "field/zonedata.h"
 #include "field_sound.h"
 
-#include "field_sound.h"
+#include "sound/pm_voice.h"
+#include "sound/pm_wb_voice.h"
 
 #include "script.h"
 #include "script_def.h"
@@ -399,32 +400,42 @@ VMCMD_RESULT EvCmdMeWait(VMHANDLE *core, void *wk )
 //======================================================================
 //  鳴き声
 //======================================================================
-#if 0 //wb
 //--------------------------------------------------------------
 /**
  * 鳴き声を鳴らす
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
+ *
+ * @todo  色々懸念があった模様なので、サウンドとすり合わせる
+ *
+  //ぺラップ再生テスト
+  //no = MONSNO_PERAPPU;
+  //パターンを指定できる関数に置き換える予定
  * ★手持ちの先頭のポケモンの鳴き声を鳴らす時があったら、フォルムを見る必要がある！
+  //フィールド上で、スカイフォルムが出現することはない。
+  //育て屋に預けるとノーマルフォルムになるので、育て屋の鳴き声もOK
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdVoicePlay( VMHANDLE *core, void *wk )
 {
-  u16 no, ptn;
-  no  = VMGetWorkValue(core);
-  ptn = VMGetWorkValue(core);
+  u16 monsno  = SCRCMD_GetVMWorkValue(core, wk);
+  u8 formno = VMGetU8(core);
+  u8 ptn = VMGetU8(core);     //今は捨てている
 
-  //ぺラップ再生テスト
-  //no = MONSNO_PERAPPU;
+  core->vm_register[0] = PMV_PlayVoice( monsno, formno );
 
-  //パターンを指定できる関数に置き換える予定
-  Snd_PMVoicePlay( no, 0 );
-
-  //フィールド上で、スカイフォルムが出現することはない。
-  //育て屋に預けるとノーマルフォルムになるので、育て屋の鳴き声もOK
   return VMCMD_RESULT_CONTINUE;
-};
+}
 
+//return 1 = 終了
+static BOOL EvWaitVoicePlay(VMHANDLE *core, void *wk)
+{
+  if (PMVOICE_CheckPlay( core->vm_register[0] ) == FALSE)
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
 //--------------------------------------------------------------
 /**
  * 鳴き声終了待ち
@@ -432,21 +443,12 @@ VMCMD_RESULT EvCmdVoicePlay( VMHANDLE *core, void *wk )
  * @return  VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdVoicePlayWait( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdVoiceWait( VMHANDLE *core, void *wk )
 {
   VMCMD_SetWait( core, EvWaitVoicePlay );
   return VMCMD_RESULT_SUSPEND;
 }
 
-//return 1 = 終了
-static BOOL EvWaitVoicePlay(VMHANDLE *core, void *wk)
-{
-  if( Snd_PMVoicePlayCheck() == 0 ){
-    return TRUE;
-  }
-  return FALSE;
-}
-#endif
 
 //======================================================================
 //  ぺラップ

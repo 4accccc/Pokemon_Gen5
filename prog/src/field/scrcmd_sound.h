@@ -31,6 +31,10 @@ extern VMCMD_RESULT EvCmdSeWait(VMHANDLE *core, void *wk);
 extern VMCMD_RESULT EvCmdMePlay(VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdMeWait(VMHANDLE *core, void *wk );
 
+//ñ¬Ç´ê∫
+extern VMCMD_RESULT EvCmdVoicePlay(VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdVoiceWait(VMHANDLE *core, void *wk );
+
 #endif	/* __ASM_NO_DEF_ */
 
 #endif	/* SCR_SOUND_H */
