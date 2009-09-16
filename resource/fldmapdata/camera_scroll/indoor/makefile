@@ -33,14 +33,14 @@ include	$(PROJECT_RSCDIR)\macro_define
 LIST_FILE 	= list.txt
 
 #マップマトリックス
-MAP_MATRIX = ../map_matrix/map_matrix.xls
+MAP_MATRIX = ../../map_matrix/map_matrix.xls
 MAP_MATRIX_FILE = map_matrix.txt
 
 #エクセルコンバーター
 CSV_CVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 
 #imdフォルダ
-IMD_FOLDER = ../land_data/land_res/
+IMD_FOLDER = ../../land_data/land_res/
 IMD_FILE = $(wildcard $(IMD_FOLDER)*.imd)
 
 
