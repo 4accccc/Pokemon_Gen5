@@ -99,6 +99,7 @@ void	STA_BG_ExitSystem( STA_BG_SYS *work )
 
 void	STA_BG_UpdateSystem( STA_BG_SYS *work )
 {
+  //ミュージカルショットではアニメさせないために呼ばないので注意！
   u8 i;
 	if( work->mdlRes != NULL )
 	{

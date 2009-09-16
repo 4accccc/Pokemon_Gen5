@@ -471,6 +471,10 @@ STA_POKE_WORK* STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *mus
   pokeWork->shadowBbdIdx = GFL_BBD_AddObject( work->bbdSys , work->shadowResIdx 
                     , FX16_CONST(1f)/4 , FX16_CONST(0.75f)/4 , 
                     &pokeWork->pokePos , 12 , GFL_BBD_LIGHT_NONE );
+  {
+    BOOL flg = TRUE;
+    GFL_BBD_SetObjectDrawEnable( work->bbdSys , pokeWork->shadowBbdIdx , &flg );
+  }
   return pokeWork;
 }
 

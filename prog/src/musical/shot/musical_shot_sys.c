@@ -38,6 +38,7 @@ enum  //メインシーケンス
 typedef struct
 {
   HEAPID heapId;
+  GFL_TCB   *vblankFuncTcb;
   
   MUS_SHOT_INIT_WORK *shotInitWork;
   
@@ -51,6 +52,7 @@ typedef struct
 static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 static GFL_PROC_RESULT MusicalShotProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 static GFL_PROC_RESULT MusicalShotProc_Term( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
+static void MUSICAL_SHOT_VBlankFunc(GFL_TCB *tcb,void *work);
 static void MUSICAL_SHOT_InitGraphic( SHOT_LOCAL_WORK *work );
 static void MUSICAL_SHOT_ExitGraphic( SHOT_LOCAL_WORK *work );
 
@@ -101,12 +103,14 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
     work->shotInitWork->musShotData = GFL_HEAP_AllocClearMemory( HEAPID_MUSICAL_SHOT , sizeof( MUSICAL_SHOT_DATA ));
     {
       u8 i;
+      RTCDate date;
       MUSICAL_SHOT_DATA *shotData = work->shotInitWork->musShotData;
+      GFL_RTC_GetDate( &date );
       shotData->bgNo = 0;
       shotData->spotBit = 2;
-      shotData->year = 9;
-      shotData->month = 9;
-      shotData->day = 15;
+      shotData->year = date.year;
+      shotData->month = date.month;
+      shotData->day = date.day;
       shotData->title[0] = L'ポ';
       shotData->title[1] = L'ケ';
       shotData->title[2] = L'ッ';
@@ -153,6 +157,9 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
     work->shotInitWork = pwk;
   }
   
+  work->vblankFuncTcb = GFUser_VIntr_CreateTCB( MUSICAL_SHOT_VBlankFunc , (void*)work , 64 );
+
+
   MUSICAL_SHOT_InitGraphic( work );
 
   work->photoWork = MUS_SHOT_PHOTO_InitSystem( work->shotInitWork->musShotData , work->heapId );
@@ -176,6 +183,8 @@ static GFL_PROC_RESULT MusicalShotProc_Term( GFL_PROC * proc, int * seq , void *
   
   MUS_SHOT_PHOTO_ExitSystem( work->photoWork );
   MUSICAL_SHOT_ExitGraphic( work );
+
+  GFL_TCB_DeleteTask( work->vblankFuncTcb );
   
   if( pwk == NULL )
   {
@@ -198,12 +207,22 @@ static GFL_PROC_RESULT MusicalShotProc_Main( GFL_PROC * proc, int * seq , void *
   SHOT_LOCAL_WORK *work = mywk;
 
   MUS_SHOT_PHOTO_UpdateSystem( work->photoWork );
+  //OBJの更新
+  GFL_CLACT_SYS_Main();
 
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
   {
     return GFL_PROC_RES_FINISH;
   }
   return GFL_PROC_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//  VBLank Function
+//------------------------------------------------------------------
+static void MUSICAL_SHOT_VBlankFunc(GFL_TCB *tcb,void *work)
+{
+  GFL_CLACT_SYS_VBlankFunc();
 }
 
 
@@ -234,6 +253,9 @@ static void MUSICAL_SHOT_InitGraphic( SHOT_LOCAL_WORK *work )
     GFL_BG_SetBGMode( &sys_data );
   }
   GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &vramBank ,work->heapId );
+  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+  //ライト用のアルファ設定
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_OBJ , GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG3 , 4 , 31 );
 }
 
 //--------------------------------------------------------------

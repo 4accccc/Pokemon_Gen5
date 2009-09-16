@@ -56,9 +56,4 @@ const u8 STA_ACT_GetUseItemPoke( ACTING_WORK *work );
 void	STA_ACT_EDITOR_SetScript( ACTING_WORK *work , void* data );
 void	STA_ACT_EDITOR_StartScript( ACTING_WORK *work );
 
-//ミュージカルショット用
-ACTING_WORK*  STA_ACT_InitActingPhoto( HEAPID heapId );
-void  STA_ACT_TermActingPhoto( ACTING_WORK *work );
-
-
 #endif STA_ACTING_H__

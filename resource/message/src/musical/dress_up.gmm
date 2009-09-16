@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-09-03T17:38:44"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-09-16T16:32:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="106" top="283" right="811" bottom="903" maximized="no" rayout="Vertical2">
+	<dialog left="-26" top="283" right="679" bottom="903" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="161" right="1280" bottom="559" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -334,6 +334,7 @@
 
 
 	<row id="DUP_MSG_01">
+		<comment>ポケモン名がまだ仮のところがあるので、直打ち中</comment>
 		<language name="JPN" width="256">プルンセスを　きせかえて
 コーディネート　しましょう！</language>
 		<language name="JPN_KANJI" width="256">プルンセスを　着せ替えて

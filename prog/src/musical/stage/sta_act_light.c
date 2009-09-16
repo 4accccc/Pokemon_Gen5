@@ -126,6 +126,7 @@ void	STA_LIGHT_ExitSystem( STA_LIGHT_SYS *work )
 
 void	STA_LIGHT_UpdateSystem( STA_LIGHT_SYS *work )
 {
+  //work->actWork が NULL の時はミュージカルショット
 	int idx;
 	for( idx=0 ; idx<ACT_LIGHT_MAX ; idx++ )
 	{
@@ -134,19 +135,23 @@ void	STA_LIGHT_UpdateSystem( STA_LIGHT_SYS *work )
 			STA_LIGHT_UpdateObjFunc( work,&work->lightWork[idx] );
 		}
 	}
-	STA_LIGHT_UpdateAttentionLight( work );
+  if( work->actWork != NULL )
+  {
+  	STA_LIGHT_UpdateAttentionLight( work );
+  }
 }
 
 static void STA_LIGHT_UpdateObjFunc( STA_LIGHT_SYS *work , STA_LIGHT_WORK *lightWork )
 {
-  const u16 scrOfs = STA_ACT_GetStageScroll( work->actWork );
+  //work->actWork が NULL の時はミュージカルショット
+  const u16 scrOfs = ( work->actWork == NULL ? 128 : STA_ACT_GetStageScroll( work->actWork ));
   if( lightWork->type == ALT_CIRCLE )
   {
     GFL_CLACTPOS cellPos;
     cellPos.x = F32_CONST( lightWork->pos.x ) - scrOfs;
     cellPos.y = F32_CONST( lightWork->pos.y );
     GFL_CLACT_WK_SetPos( lightWork->lightCell , &cellPos , CLSYS_DEFREND_MAIN );
-    if( STA_ACT_GetUseItemPoke( work->actWork ) != MUSICAL_POKE_MAX )
+    if( work->actWork != NULL && STA_ACT_GetUseItemPoke( work->actWork ) != MUSICAL_POKE_MAX )
     {
     	GFL_CLACT_WK_SetDrawEnable( lightWork->lightCell, FALSE );
     }
