@@ -24,7 +24,8 @@ enum {
 	NARC_trade_wb_trade_stbg02_NSCR = 10,
 	NARC_trade_wb_trade_stbg03_NSCR = 11,
 	NARC_trade_wb_trade_obj01_NANR = 12,
-	NARC_trade_Makefile = 13
+	NARC_trade_box_001_nsbmd = 13,
+	NARC_trade_Makefile = 14
 };
 
 /* NARC_TRADE_NAIX_ */

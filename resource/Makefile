@@ -14,7 +14,6 @@ SUBDIRS	=	wmi \
 			sound \
 			bag \
 		  trade \
-		  regulation \
 			test_layout \
 			test_graphic\
 			place_name \
@@ -95,6 +94,7 @@ SUBDIRS	=	wmi \
 			zukan_data \
             b_bag \
             b_plist \
+		  regulation \
 			mictest
 
 include $(RESOURCE_MACRO)

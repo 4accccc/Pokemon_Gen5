@@ -17,6 +17,7 @@
 #include "system/main.h"
 #include "system/wipe.h"
 #include "gamesystem/msgspeed.h" // MSGSPEED_GetWait
+#include "savedata/config.h"  // WIRELESSSAVE_ON
 
 #include "message.naix"
 #include "print/printsys.h"
@@ -551,17 +552,23 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
   switch( bttnid ){
   case _SELECTMODE_BATTLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-    _CHANGE_STATE(pWork,_modeReportInit);
+    if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw)))){
+      _CHANGE_STATE(pWork,_modeReportInit);
+    }
+    else{
+      _CHANGE_STATE(pWork,_modeSelectEntryNumInit);
+    }
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
-
-    //		_CHANGE_STATE(pWork,_modeSelectEntryNumInit);
     return TRUE;
   case _SELECTMODE_POKE_CHANGE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRADE;
-    _CHANGE_STATE(pWork,_modeReportInit);
-
-//    _CHANGE_STATE(pWork,_modeSelectChangeInit);
+    if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(IrcBattle_GetSAVE_CONTROL_WORK(pWork->dbw)))){
+      _CHANGE_STATE(pWork,_modeReportInit);
+    }
+    else{
+      _CHANGE_STATE(pWork,_modeSelectChangeInit);
+    }
     return TRUE;
 	case _SELECTMODE_COMPATIBLE:
 		PMSND_PlaySystemSE(SEQ_SE_DECIDE1);

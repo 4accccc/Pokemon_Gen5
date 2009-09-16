@@ -100,6 +100,7 @@ void CONFIG_Init(CONFIG * cfg)
 	cfg->input_mode = INPUTMODE_NORMAL;
 	cfg->window_type = WINTYPE_01;
   cfg->moji_mode = MOJIMODE_HIRAGANA;
+  cfg->wirelesssave_mode = WIRELESSSAVE_OFF;
 }
 
 //============================================================================================
@@ -252,5 +253,16 @@ MOJIMODE CONFIG_GetMojiMode(const CONFIG * cfg)
 void CONFIG_SetMojiMode(CONFIG * cfg, MOJIMODE type)
 {
   cfg->moji_mode = type;
+}
+
+//	ワイヤレスセーブモード
+WIRELESSSAVE_MODE CONFIG_GetWirelessSaveMode(const CONFIG * cfg)
+{
+  return cfg->wirelesssave_mode;
+}
+
+void CONFIG_SetWirelessSaveMode(CONFIG * cfg, WIRELESSSAVE_MODE type)
+{
+  cfg->wirelesssave_mode = type;
 }
 

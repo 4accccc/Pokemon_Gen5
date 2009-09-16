@@ -10,6 +10,7 @@
 
 #include <gflib.h>
 #include "arc_def.h"
+#include "poke_tool/monsno_def.h"
 
 #include "trade.naix"
 
@@ -20,12 +21,26 @@
 #include "font/font.naix"    // NARC_font_default_nclr
 
 #include "system/bmp_winframe.h"
+#include "savedata/box_savedata.h"
+#include "pokeicon/pokeicon.h"
 
 #include "ircbattle.naix"
 #include "trade.naix"
 
 
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
+
+
+static void IRC_POKETRADE_TrayInit(IRC_POKEMON_TRADE* pWork,int subchar);
+static void IRC_POKETRADE_TrayExit(IRC_POKEMON_TRADE* pWork);
+static int _DotToLine(int pos);
+static void PokeIconCgxLoad(IRC_POKEMON_TRADE* pWork );
+
+
+static int _Line2RingLineIconGet(IRC_POKEMON_TRADE* pWork,int line);
+static void _Line2RingLineSet(IRC_POKEMON_TRADE* pWork,int add);
+static void _iconAllDrawDisable(IRC_POKEMON_TRADE* pWork);
+
 
 
 //------------------------------------------------------------------
@@ -38,7 +53,7 @@
 
 void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork)
 {
-
+  
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
 	MYSTATUS* pMy = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(pWork->pGameSys) );
 	u32 sex = MyStatus_GetMySex(pMy);
@@ -77,12 +92,11 @@ void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork)
 	pWork->subchar1 = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg02_NCGR,
 																																GFL_BG_FRAME1_S, 0, 0, pWork->heapID);
 
-	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
-																				 NARC_trade_wb_trade_bg02_NSCR,
-																				 GFL_BG_FRAME2_S, 0,
-																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-																				 pWork->heapID);
-
+//	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+//																				 NARC_trade_wb_trade_bg02_NSCR,
+//																				 GFL_BG_FRAME2_S, 0,
+//																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+//																				 pWork->heapID);
 
 
 
@@ -92,11 +106,19 @@ void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork)
 
 
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME3_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+  
+  IRC_POKETRADE_TrayInit(pWork,pWork->subchar);
 
+  PokeIconCgxLoad( pWork );
 
 
 }
 
+
+void IRC_POKETRADE_GraphicExit(IRC_POKEMON_TRADE* pWork)
+{
+  IRC_POKETRADE_TrayExit(pWork);
+}
 
 
 void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork,int pokeposx)
@@ -255,3 +277,432 @@ BOOL IRC_POKETRADE_MessageEndCheck(IRC_POKEMON_TRADE* pWork)
   return TRUE;// 終わっている
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   トレイの表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+#define _TEMOTITRAY_SCR_MAX (12)
+#define _BOXTRAY_SCR_MAX (20)
+#define _SRCMAX ((BOX_MAX_TRAY*_BOXTRAY_SCR_MAX)+_TEMOTITRAY_SCR_MAX)
+
+#define _TEMOTITRAY_MAX (8*_TEMOTITRAY_SCR_MAX)
+#define _BOXTRAY_MAX (8*_BOXTRAY_SCR_MAX)
+
+#define _DOTMAX ((BOX_MAX_TRAY*_BOXTRAY_MAX)+_TEMOTITRAY_MAX)
+
+
+#define _LINEMAX (BOX_MAX_TRAY * 6 + 2)
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   スクリーン座標からスクリーンデータを取り出す
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static u16 _GetScr(int x , int y, IRC_POKEMON_TRADE* pWork)
+{
+  int x2=x;
+
+  if(x >= _SRCMAX){
+    x2 = x - _SRCMAX;
+  }
+  if(x2 < _TEMOTITRAY_SCR_MAX){
+    return pWork->scrTemoti[ 18+(y * 32) + x2 ];
+  }
+  x2 = x2 - _TEMOTITRAY_SCR_MAX;
+  x2 = x2 % _BOXTRAY_SCR_MAX;
+  return pWork->scrTray[ 18+(y * 32) + x2 ];
+}
+
+
+void IRC_POKETRADE_TrayDisp(IRC_POKEMON_TRADE* pWork)
+{
+  int bgscr = pWork->BoxScrollNum / 8;  //マスの単位は画面スクロールを使う
+  int frame = GFL_BG_FRAME2_S;
+  int x,y;
+
+  for(y = 0; y < 24 ; y++){
+    for(x = 0; x < (_BOXTRAY_SCR_MAX*2+_TEMOTITRAY_SCR_MAX) ; x++){
+      u16 scr = _GetScr( bgscr + x , y ,pWork);
+//      GFL_BG_WriteScreen(frame, &scr, x, y, 1, 1 );
+      GFL_BG_ScrSetDirect(frame, x, y, scr);
+    }
+  }
+
+  pWork->bgscroll = pWork->BoxScrollNum % 8;  //マスの単位は画面スクロールを使う
+  pWork->bgscrollRenew = TRUE;
+
+  
+  GFL_BG_LoadScreenV_Req(frame);
+
+}
+
+
+static void IRC_POKETRADE_TrayInit(IRC_POKEMON_TRADE* pWork,int subchar)
+{
+  // スクリーンを読み込んでおく
+  pWork->scrTray = GFL_ARC_LoadDataAlloc( ARCID_POKETRADE, NARC_trade_wb_trade_bg02_NSCR, pWork->heapID);
+  pWork->scrTemoti = GFL_ARC_LoadDataAlloc( ARCID_POKETRADE, NARC_trade_wb_trade_bg03_NSCR, pWork->heapID);
+
+
+  {
+    int i;
+    for(i=0;i<(32*24);i++){
+      pWork->scrTray[18+i] += GFL_ARCUTIL_TRANSINFO_GetPos(subchar);
+      pWork->scrTemoti[18+i] += GFL_ARCUTIL_TRANSINFO_GetPos(subchar);
+    }
+  }
+
+  pWork->BoxScrollNum = _DOTMAX - 80;
+  IRC_POKETRADE_TrayDisp(pWork);
+}
+
+static void IRC_POKETRADE_TrayExit(IRC_POKEMON_TRADE* pWork)
+{
+  GFL_HEAP_FreeMemory( pWork->scrTray);
+  GFL_HEAP_FreeMemory( pWork->scrTemoti);
+}
+
+
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   下画面ポケモン表示
+ * @param   state  変えるステートの関数
+ * @param   time   ステート保持時間
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+//	u32 pokeIconNcgRes[BOX_HORIZONTAL_NUM * BOX_MAX_TRAY + HAND_HORIZONTAL_NUM][BOX_VERTICAL_NUM];
+//	GFL_CLWK* pokeIcon[BOX_HORIZONTAL_NUM * BOX_MAX_TRAY + HAND_HORIZONTAL_NUM][BOX_VERTICAL_NUM];
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   必要なくなったラインのリソース開放
+ * @param   state  変えるステートの関数
+ * @param   time   ステート保持時間
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _deletePokeIconResource(IRC_POKEMON_TRADE* pWork, int line)
+{
+  int i;
+  
+	for( i = 0 ; i < BOX_VERTICAL_NUM ; i++ ){
+		if(pWork->pokeIconNcgRes[line][i]){
+			GFL_CLGRP_CGR_Release(pWork->pokeIconNcgRes[line][i]);
+			pWork->pokeIconNcgRes[line][i] = NULL;
+		}
+		if(pWork->pokeIcon[line][i]){
+			GFL_CLACT_WK_Remove(pWork->pokeIcon[line][i]);
+			pWork->pokeIcon[line][i]=NULL;
+		}
+	}
+}
+
+void IRC_POKETRADE_AllDeletePokeIconResource(IRC_POKEMON_TRADE* pWork)
+{
+  int i;
+  
+  for(i = 0 ; i < _LINEMAX ; i++){
+    _deletePokeIconResource(pWork,i);
+  }
+}
+
+
+
+static const POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_DATA* boxData , int lineno, int verticalindex , IRC_POKEMON_TRADE* pWork)
+{
+
+  if(lineno > HAND_HORIZONTAL_NUM){
+    int tray = (lineno - HAND_HORIZONTAL_NUM) / BOX_HORIZONTAL_NUM;
+    int index = ((lineno - HAND_HORIZONTAL_NUM) % BOX_HORIZONTAL_NUM) + (BOX_HORIZONTAL_NUM * verticalindex);
+    
+    return BOXDAT_GetPokeDataAddress(boxData,tray,index);
+  }
+	{
+		POKEPARTY* party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(pWork->pGameSys));
+
+    if(verticalindex <3){
+      int index = lineno * 3 + verticalindex;
+      if(index < PokeParty_GetPokeCount(party)){
+        const POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , index );
+        return PP_GetPPPPointerConst( pp );
+      }
+		}
+	}
+	return NULL;
+
+}
+
+
+static void _calcPokeIconPos(int line,int index, GFL_CLACTPOS* pos)
+{
+	static const u8	iconSize = 24;
+	static const u8 iconTop = 72;
+	static const u8 iconLeft = 24;
+
+	pos->x = line * iconSize + iconLeft;
+	pos->y = index * iconSize + iconTop;
+}
+
+
+
+static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_DATA* boxData ,int line)
+{
+  int i,k;
+	void *obj_vram = G2S_GetOBJCharPtr();
+	ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
+
+  k =  _Line2RingLineIconGet(pWork, line);
+
+	for( i = 0 ; i < BOX_VERTICAL_NUM ; i++ )
+	{
+    {
+      int	fileNo,monsno,formno,bEgg;
+      const POKEMON_PASO_PARAM* ppp = _getPokeDataAddress(boxData, line, i, pWork);
+      if(!ppp){
+        continue;
+      }
+      monsno = PPP_Get(ppp,ID_PARA_monsno,NULL);
+      if( monsno == 0 ){	//ポケモンがいるかのチェック
+        continue;
+      }
+      else if(pWork->pokeIconNo[k][i] == monsno){
+        GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
+      }
+      else if(pWork->pokeIconNo[k][i] != monsno){
+        GFL_CLWK_DATA cellInitData;
+        u8 pltNum;
+        GFL_CLACTPOS pos;
+        NNSG2dImageProxy aproxy;
+          
+ //         pWork->pokeIconNcgRes[line][i] =
+   //         GFL_CLGRP_CGR_Register( arcHandle , POKEICON_GetCgxArcIndex(ppp) , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+
+   //     OS_TPrintf("変更 k%d i%d %d %d\n",k,i,pWork->pokeIconNo[k][i],monsno);
+        pWork->pokeIconNo[k][i] = monsno;
+        
+        pltNum = POKEICON_GetPalNumGetByPPP( ppp );
+        _calcPokeIconPos(line, i, &pos);
+
+        GFL_CLACT_WK_GetImgProxy( pWork->pokeIcon[k][i], &aproxy );
+        
+        GFL_STD_MemCopy(&pWork->pCharMem[4*8*4*4*monsno] , (char*)((u32)obj_vram) + aproxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DSUB], 4*8*4*4);
+        
+        
+        GFL_CLACT_WK_SetPlttOffs( pWork->pokeIcon[k][i] , pltNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
+        GFL_CLACT_WK_SetAutoAnmFlag( pWork->pokeIcon[k][i] , FALSE );
+        GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
+      }
+    }
+  }
+  GFL_ARC_CloseDataHandle( arcHandle );
+}
+
+
+
+void IRC_POKETRADE_InitBoxIcon( BOX_DATA* boxData ,IRC_POKEMON_TRADE* pWork )
+{
+  int i,line = 0;
+
+  if(pWork->BoxScrollNum < (_TEMOTITRAY_MAX/2)){
+    line = 0;
+  }
+  else if(pWork->BoxScrollNum < _TEMOTITRAY_MAX){
+    line = 1;
+  }
+  else{
+    i = (pWork->BoxScrollNum - _TEMOTITRAY_MAX) / _BOXTRAY_MAX; //BOX数
+    line = i * 6 + 2;
+    line += ((pWork->BoxScrollNum - _TEMOTITRAY_MAX) - (i*_BOXTRAY_MAX)) / 27 ;
+    //OS_TPrintf("LINE %d %d\n", pWork->BoxScrollNum, line);
+  }
+  if( pWork->oldLine != line ){
+    pWork->oldLine = line;
+
+    _Line2RingLineSet(pWork,line);
+    _iconAllDrawDisable(pWork);  // アイコン表示を一旦消す
+  
+    for(i=0;i < _LING_LINENO_MAX;i++){
+      //OS_TPrintf("create %d\n", line);
+      _createPokeIconResource(pWork, boxData,line );  //アイコン表示
+      line++;
+      if(line >= _LINEMAX){
+        line=0;
+      }
+    }
+  }
+  IRC_POKETRADE_PokeIcomPosSet(pWork);
+  
+}
+
+
+
+void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork)
+{
+  int line, i, no, m;
+  int x,y;
+  //int bgscr = pWork->BoxScrollNum;
+
+  for(m = 0; m < _LING_LINENO_MAX; m++){
+    line = pWork->oldLine + m;
+    
+    no = _Line2RingLineIconGet(pWork, line);
+
+    for(i=0;i<BOX_VERTICAL_NUM;i++){
+      GFL_CLACTPOS apos;
+      y = 32+i*24;
+      if(line == 0){
+        x = 16;
+      }
+      else if(line == 1){
+        x = 56;
+      }
+      else{
+        x = ((line - 2) / 6) * _BOXTRAY_MAX;
+        x += ((line - 2) % 6) * 24 + 16 + 4;
+        x += _TEMOTITRAY_MAX;
+      }
+      x = x - pWork->BoxScrollNum;
+      apos.x = x;
+      apos.y = y;
+      
+      GFL_CLACT_WK_SetPos(pWork->pokeIcon[no][i], &apos, CLSYS_DRAW_SUB);
+    }
+  }
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ドットの位置
+ * @param   state  変えるステートの関数
+ * @param   time   ステート保持時間
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+#if 1
+
+static int _DotToLine(int pos)
+{
+
+
+  return 0;
+}
+
+
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ポケモンアイコンキャラデータをメモリに展開
+ *
+ * @param	appwk	ボックス画面アプリワーク
+ * @param	ppp		POKEMON_PASO_PARAM
+ * @param	chr		NNSG2dCharacterData
+ *
+ * @return	buf
+ */
+//--------------------------------------------------------------------------------------------
+static void  PokeIconCgxLoad(IRC_POKEMON_TRADE* pWork )
+{
+  int i;
+  void* pMem;
+	u32	arcIndex;
+  ARCHANDLE * pokeicon_ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, pWork->heapID );
+  NNSG2dCharacterData* pCharData;
+
+
+  GF_ASSERT(MONSNO_MAX < 650);
+  pWork->pCharMem = GFL_HEAP_AllocMemory(pWork->heapID, 4*8*4*4*650 );
+  
+  for(i=0;i<MONSNO_MAX; i++){ //@@OO フォルム違いを持ってくる必要あり
+  
+    arcIndex = POKEICON_GetCgxArcIndexByMonsNumber( i, 0, 0 );
+    pMem = GFL_ARCHDL_UTIL_LoadBGCharacter(pokeicon_ah, arcIndex, FALSE, &pCharData, pWork->heapID);
+
+    GFL_STD_MemCopy(pCharData->pRawData,&pWork->pCharMem[4*8*4*4*i] , 4*8*4*4);
+
+    GFL_HEAP_FreeMemory(pMem);
+    
+  }
+
+  GFL_ARC_CloseDataHandle(pokeicon_ah);
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * リングバッファのライン番号を返す
+ *
+ * @param	appwk	ボックス画面アプリワーク
+ * @param	ppp		POKEMON_PASO_PARAM
+ * @param	chr		NNSG2dCharacterData
+ *
+ * @return	buf
+ */
+//--------------------------------------------------------------------------------------------
+
+static int _Line2RingLineIconGet(IRC_POKEMON_TRADE* pWork,int line)
+{
+  int ret;
+
+//  ret = pWork->ringLineNo + line;
+  ret = line % _LING_LINENO_MAX;
+  return ret;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * リングバッファを進める＆もどす
+ *
+ * @param	appwk	ボックス画面アプリワーク
+ * @param	ppp		POKEMON_PASO_PARAM
+ * @param	chr		NNSG2dCharacterData
+ *
+ * @return	buf
+ */
+//--------------------------------------------------------------------------------------------
+
+static void _Line2RingLineSet(IRC_POKEMON_TRADE* pWork,int add)
+{
+  int ret;
+
+  pWork->ringLineNo = add;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アイコン表示を全部禁止
+ *
+ * @param	appwk	ボックス画面アプリワーク
+ * @param	ppp		POKEMON_PASO_PARAM
+ * @param	chr		NNSG2dCharacterData
+ *
+ * @return	buf
+ */
+//--------------------------------------------------------------------------------------------
+
+static void _iconAllDrawDisable(IRC_POKEMON_TRADE* pWork)
+{
+  int line,i;
+  
+  for(line =0 ;line < _LING_LINENO_MAX; line++)
+  {
+    for(i = 0;i < BOX_VERTICAL_NUM; i++)
+    {
+      GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[line][i], FALSE );
+    }
+  }
+}
+
+#endif

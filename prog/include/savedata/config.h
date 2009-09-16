@@ -36,8 +36,9 @@ struct _CONFIG {
 	u16 input_mode:2;			///<INPUTMODE		入力モード
 	u16 window_type:5;			///<WINTYPE			ウィンドウタイプ
 	u16 moji_mode:1;      ///<MOJIMODE
+	u16 wirelesssave_mode:1;      ///<WIRELESSSAVE_MODE   ワイヤレスでセーブをはさむかどうか
 	
-	u16 padding;	//WBでパディングを入れました 2008.12.11(木) matsuda
+  u16 padding:15;	//WBでパディングを入れました 2008.12.11(木) matsuda
 };
 
 //----------------------------------------------------------
@@ -118,6 +119,14 @@ typedef enum{
 	MOJIMODE_MAX,
 }MOJIMODE;
 
+//----------------------------------------------------------
+//----------------------------------------------------------
+typedef enum{
+	WIRELESSSAVE_OFF,
+	WIRELESSSAVE_ON,
+	WIRELESSSAVE_MAX,
+}WIRELESSSAVE_MODE;
+
 
 //============================================================================================
 //============================================================================================
@@ -179,6 +188,11 @@ extern void CONFIG_SetWindowType(CONFIG * cfg, WINTYPE type);
 //	文字モード
 extern MOJIMODE CONFIG_GetMojiMode(const CONFIG * cfg);
 extern void CONFIG_SetMojiMode(CONFIG * cfg, MOJIMODE type);
+
+//  ワイヤレスセーブモード
+extern WIRELESSSAVE_MODE CONFIG_GetWirelessSaveMode(const CONFIG * cfg);
+extern void CONFIG_SetWirelessSaveMode(CONFIG * cfg, WIRELESSSAVE_MODE type);
+
 
 //----------------------------------------------------------
 //	セーブデータ取得のための関数

@@ -24,14 +24,24 @@
 
 
 #define _TIMING_ENDNO (12)
-#define BOX_MONS_NUM (30)
+
+#define BOX_VERTICAL_NUM (5)
+#define BOX_HORIZONTAL_NUM (6)
+
+#define HAND_VERTICAL_NUM (3)
+#define HAND_HORIZONTAL_NUM (2)
+
+//#define BOX_MONS_NUM (30)
+
+
 #define _BRIGHTNESS_SYNC (2)  // フェードのＳＹＮＣは要調整
-#define CUR_NUM (5)
+#define CUR_NUM (3)
 #define _BUTTON_WIN_PAL   (15)  // ウインドウ
 #define _BUTTON_MSG_PAL   (14)  // メッセージフォント
 #define	FBMP_COL_WHITE		(15)
 
 #define _OBJPLT_BOX  (0)  //3本
+#define _OBJPLT_BAR  (3)  //3本
 #define _OBJPLT_POKEICON  (6)  //3本
 #define PLIST_RENDER_MAIN (1)
 #define PSTATUS_MCSS_POS_X1 (FX32_CONST(( 60 )/16.0f))
@@ -65,6 +75,8 @@
 
 #define _SUBMENU_LISTMAX (8)
 
+#define _LING_LINENO_MAX (12)  //リングバッファ最大
+
 
 typedef void (StateFunc)(IRC_POKEMON_TRADE* pState);
 
@@ -76,7 +88,11 @@ typedef enum
 	PLT_BOX,
 	ANM_POKEICON,
 	ANM_BOX,
-	CEL_RESOURCE_MAX,
+  CHAR_SCROLLBAR,
+  PAL_SCROLLBAR,
+  ANM_SCROLLBAR,
+
+  CEL_RESOURCE_MAX,
 } CEL_RESOURCE;
 
 
@@ -128,10 +144,12 @@ struct _IRC_POKEMON_TRADE {
 	GFL_CLUNIT	*cellUnit;
 	GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
 
-	u32 pokeIconNcgRes[BOX_MONS_NUM];
-	GFL_CLWK* pokeIcon[BOX_MONS_NUM];
+	u32 pokeIconNcgRes[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
+	GFL_CLWK* pokeIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
+	u32 pokeIconNo[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
+	u32 pokeIconForm[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
 
-	GFL_CLWK* curIcon[CUR_NUM];
+  GFL_CLWK* curIcon[CUR_NUM];
 
 	int windowNum;
 	BOOL IsIrc;
@@ -158,12 +176,26 @@ struct _IRC_POKEMON_TRADE {
 
 	BOOL bParent;
 	BOOL bTouchReset;
+
+  int BoxScrollNum;   //ドット単位で位置を管理  8*20がBOX 8*12がてもち BOX_MAX_TRAY => 2880+96=2976
+  int oldLine; //現在の描画Line 更新トリガ
+  
+  BOOL bgscrollRenew;
+  BOOL touckON;
+  int bgscroll;
+  int ringLineNo;
+  
+  u16* scrTray;
+  u16* scrTemoti;
+  u8* pCharMem;
+
 };
 
 
 
 
 extern void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_GraphicExit(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork,int pokeposx);
 extern void IRC_POKETRADE_SubStatusEnd(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_AppMenuOpen(IRC_POKEMON_TRADE* pWork, int *menustr,int num);
@@ -172,4 +204,9 @@ extern void IRC_POKETRADE_MessageWindowOpen(IRC_POKEMON_TRADE* pWork, int msgno)
 extern void IRC_POKETRADE_MessageWindowClose(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_MessageWindowClear(IRC_POKEMON_TRADE* pWork);
 extern BOOL IRC_POKETRADE_MessageEndCheck(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_TrayDisp(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_InitBoxIcon( BOX_DATA* boxData ,IRC_POKEMON_TRADE* pWork );
+extern void IRC_POKETRADE_AllDeletePokeIconResource(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork);
+
 
