@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2009-09-15T16:51:01
+	Update:2009-09-16T15:59:03
  *****************************************************************************/
 
 #ifndef NARC_GYM_ELEC_NAIX_
@@ -24,18 +24,32 @@ enum {
 	NARC_gym_elec_gym04_s_pin_nsbta = 10,
 	NARC_gym_elec_gym04_rail_01a_nsbca = 11,
 	NARC_gym_elec_gym04_rail_01b_nsbca = 12,
-	NARC_gym_elec_gym04_rail_01_nsbmd = 13,
-	NARC_gym_elec_gym04_rail_02_nsbmd = 14,
-	NARC_gym_elec_gym04_rail_03_nsbmd = 15,
-	NARC_gym_elec_gym04_rail_04_nsbmd = 16,
-	NARC_gym_elec_gym04_rail_01a_nsbta = 17,
-	NARC_gym_elec_gym04_rail_01b_nsbta = 18,
-	NARC_gym_elec_gym04_rail_02a_nsbta = 19,
-	NARC_gym_elec_gym04_rail_02b_nsbta = 20,
-	NARC_gym_elec_gym04_rail_03a_nsbta = 21,
-	NARC_gym_elec_gym04_rail_03b_nsbta = 22,
-	NARC_gym_elec_gym04_rail_04a_nsbta = 23,
-	NARC_gym_elec_gym04_rail_04b_nsbta = 24
+	NARC_gym_elec_gym04_rail_02a_nsbca = 13,
+	NARC_gym_elec_gym04_rail_02b_nsbca = 14,
+	NARC_gym_elec_gym04_rail_03a_nsbca = 15,
+	NARC_gym_elec_gym04_rail_03b_nsbca = 16,
+	NARC_gym_elec_gym04_rail_04a_nsbca = 17,
+	NARC_gym_elec_gym04_rail_04b_nsbca = 18,
+	NARC_gym_elec_gym04_rail_01_nsbmd = 19,
+	NARC_gym_elec_gym04_rail_02_nsbmd = 20,
+	NARC_gym_elec_gym04_rail_03_nsbmd = 21,
+	NARC_gym_elec_gym04_rail_04_nsbmd = 22,
+	NARC_gym_elec_gym04_rail_01a_nsbta = 23,
+	NARC_gym_elec_gym04_rail_01b_nsbta = 24,
+	NARC_gym_elec_gym04_rail_02a_nsbta = 25,
+	NARC_gym_elec_gym04_rail_02b_nsbta = 26,
+	NARC_gym_elec_gym04_rail_03a_nsbta = 27,
+	NARC_gym_elec_gym04_rail_03b_nsbta = 28,
+	NARC_gym_elec_gym04_rail_04a_nsbta = 29,
+	NARC_gym_elec_gym04_rail_04b_nsbta = 30,
+	NARC_gym_elec_gym04_rail_01a_bin = 31,
+	NARC_gym_elec_gym04_rail_01b_bin = 32,
+	NARC_gym_elec_gym04_rail_02a_bin = 33,
+	NARC_gym_elec_gym04_rail_02b_bin = 34,
+	NARC_gym_elec_gym04_rail_03a_bin = 35,
+	NARC_gym_elec_gym04_rail_03b_bin = 36,
+	NARC_gym_elec_gym04_rail_04a_bin = 37,
+	NARC_gym_elec_gym04_rail_04b_bin = 38
 };
 
 /* NARC_GYM_ELEC_NAIX_ */

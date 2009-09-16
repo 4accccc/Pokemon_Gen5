@@ -41,6 +41,11 @@ LINCLUDES	+= $(dir $<)
 
 INCPATH	= -I$(NITROSDK_ROOT)/include
 
+#------------------------------------------------------------------------------
+#ツール
+#------------------------------------------------------------------------------
+
+ICA_CNV = ../../../../tools/ica/ica_converter.rb
 
 .PHONY:	do-build clean
 
@@ -81,8 +86,13 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #	@echo $<をコンバート
 	@g3dcvtr $<
 
+%.bin:	data/%.ica
+	@ruby $(ICA_CNV) -t $< $@
+
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(DATA_LIST)
 	@nnsarc -i -cl -l -n $(targetname).narc -S $(ARCLIST) > arc_result.txt
 	@-rm -f *.nsb*
+	@-rm -f *.bin
+
 endif
