@@ -143,9 +143,15 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/c8_buildb_04.nsbmd \
 	$(RESDIR)/c8_buildw_04.nsbmd \
 	$(RESDIR)/c8_gym_01.nsbmd \
+	$(RESDIR)/c8_buildb_05.nsbmd \
+	$(RESDIR)/c8_buildw_05.nsbmd \
 	$(RESDIR)/h3_gate_01.nsbmd \
 	$(RESDIR)/c4_gate_01.nsbmd \
 	$(RESDIR)/h5_gate_01.nsbmd \
 	$(RESDIR)/c04_poke01.nsbmd \
 	$(RESDIR)/c04_sign01.nsbmd \
+	$(RESDIR)/sign01.nsbmd \
+	$(RESDIR)/sign02.nsbmd \
+	$(RESDIR)/sign03.nsbmd \
+	$(RESDIR)/sign04.nsbmd \
 
