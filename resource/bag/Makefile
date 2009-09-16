@@ -42,6 +42,7 @@ cobjects = $(subst .nsc,.NSCR,$(csources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
 
+LIST_FILE = list.txt
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -80,8 +81,12 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) bag_btnpos.txt bag_anmpos.txt Makefile
-	nnsarc -r -l -n -i $(targetname) $^
+	-ls *.N*R > $(LIST_FILE)
+	-ls *.nsb* >> $(LIST_FILE)
+	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(LIST_FILE)
+	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
+	-rm $(LIST_FILE)
 	$(BTNTBL) bag_btnpos.txt bag_btnpos.h
 	$(BTNTBL) bag_anmpos.txt bag_anmpos.h
 	$(DIFFCOPY) bag_parts_d_NANR_LBLDEFS.h  $(TARGETDIR)../src/app/bag
