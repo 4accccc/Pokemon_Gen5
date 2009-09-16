@@ -242,7 +242,7 @@ static TESTMODE_MENU_LIST topMenu[] =
   {L"いわさわ　みゆき", TESTMODE_ITEM_SelectFuncIwasawa},
   {L"さいとう　のぞむ", TESTMODE_ITEM_SelectFuncSaito},
   {L"もり　あきと", TESTMODE_ITEM_SelectFuncMori},
-  {L"なかむら　ゆきひろ", TESTMODE_ITEM_SelectFuncNakamura},
+  {L"なかむら　ひろゆき", TESTMODE_ITEM_SelectFuncNakamura},
   {L"ほさか　げんや", TESTMODE_ITEM_SelectFuncHosaka},
 };
 
