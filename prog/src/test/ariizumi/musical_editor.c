@@ -214,18 +214,6 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
   MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_EREBUU  , HEAPID_MUSICAL_STAGE );
   MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_RUKARIO , HEAPID_MUSICAL_STAGE );
   
-  work->actInitWork->musPoke[0].equip[MUS_POKE_EQU_HAND_R].itemNo = 13;
-  work->actInitWork->musPoke[0].equip[MUS_POKE_EQU_HEAD].itemNo = 16;
-  
-  work->actInitWork->musPoke[1].equip[MUS_POKE_EQU_EAR_L].itemNo = 7;
-  work->actInitWork->musPoke[1].equip[MUS_POKE_EQU_BODY].itemNo = 9;
-  
-  work->actInitWork->musPoke[2].equip[MUS_POKE_EQU_HAND_R].itemNo = 31;
-  work->actInitWork->musPoke[2].equip[MUS_POKE_EQU_HEAD].itemNo = 15;
-  
-  work->actInitWork->musPoke[3].equip[MUS_POKE_EQU_HAND_R].itemNo = 30;
-  work->actInitWork->musPoke[3].equip[MUS_POKE_EQU_HEAD].itemNo = 21;
-
   //mcs用初期化
   work->heapId = HEAPID_MUSICAL_STAGE;
   work->mcsSeq = MSEQ_WAIT;
@@ -429,14 +417,14 @@ static void MusicalEdit_DrawPokeData( MUS_EDIT_LOCAL_WORK *work , const u8 pokeN
     { L'H',L'A',L'N',L'D',L'_',L'R',0xFFFF },
     { L'H',L'A',L'N',L'D',L'_',L'L',0xFFFF },
   };
-  MUSICAL_POKE_PARAM *musPoke = &work->actInitWork->musPoke[pokeNo];
+  MUSICAL_POKE_PARAM *musPoke = work->actInitWork->musPoke[pokeNo];
 
   u8 Col[3];
   GFL_FONTSYS_GetColor( &Col[0] , &Col[1] , &Col[2] );
   GFL_FONTSYS_SetColor( 1 , 0 , 0 );
 
   //名前
-  GFL_MSG_GetString( GlobalMsg_PokeName , PP_Get( musPoke->pokePara , ID_PARA_monsno , 0 ) , str );
+  GFL_MSG_GetString( GlobalMsg_PokeName , musPoke->mcssParam.monsno , str );
   MusicalEdit_PrintFunc( work , baseWin[EDIT_POKEWIN_POKENAME] , str );
   GFL_STR_ClearBuffer( str );
   
@@ -1033,7 +1021,7 @@ static void MusicalSetting_DrawPoke( MUS_EDIT_LOCAL_WORK *work )
   u8 i;
   STRBUF  *str = GFL_STR_CreateBuffer( 32 , work->heapId );
 
-  MUSICAL_POKE_PARAM *musPoke = &work->actInitWork->musPoke[work->pokeNo];
+  MUSICAL_POKE_PARAM *musPoke = work->actInitWork->musPoke[work->pokeNo];
 
   GFL_FONTSYS_SetColor( 1 , 0 , 0 );
 
@@ -1041,7 +1029,7 @@ static void MusicalSetting_DrawPoke( MUS_EDIT_LOCAL_WORK *work )
   MusicalEdit_UpdateNumberFunc( work->pokeNo , 1 , 5 , 1 );
 
   //名前
-  GFL_MSG_GetString( GlobalMsg_PokeName , PP_Get( musPoke->pokePara , ID_PARA_monsno , 0 ) , str );
+  GFL_MSG_GetString( GlobalMsg_PokeName , musPoke->mcssParam.monsno , str );
   MusicalEdit_PrintFunc( work , work->winArr[0] , str );
   GFL_STR_ClearBuffer( str );
 
@@ -1076,7 +1064,7 @@ static void MusicalSetting_DrawPoke( MUS_EDIT_LOCAL_WORK *work )
 static void MusicalSetting_LoadPoke( MUS_EDIT_LOCAL_WORK *work )
 {
   u8 ePos;  //equipPos
-  MUSICAL_POKE_PARAM *musPoke = &work->actInitWork->musPoke[work->pokeNo];
+  MUSICAL_POKE_PARAM *musPoke = work->actInitWork->musPoke[work->pokeNo];
   VecFx32 pos = {MUSICAL_POS_X( 128.0f ),MUSICAL_POS_Y( 112.0f ),FX32_CONST(40.0f)};
   if( work->pokeWork == NULL )
   {
@@ -1205,7 +1193,7 @@ static void MusicalSetting_UpdateTouch( MUS_EDIT_LOCAL_WORK *work )
 {
   BOOL isRefresh = FALSE;
   BOOL isReload = FALSE;
-  MUSICAL_POKE_PARAM *musPoke = &work->actInitWork->musPoke[work->pokeNo];
+  MUSICAL_POKE_PARAM *musPoke = work->actInitWork->musPoke[work->pokeNo];
 
   //アイテム変更
   {
@@ -1310,7 +1298,7 @@ static void MusicalSetting_UpdateTouch( MUS_EDIT_LOCAL_WORK *work )
       {
         const s8 valueArr2[4] = {-5,-1,1,5};
         s8 moveVal = valueArr2[ ret-POKEBUT_POKE_DOWN2 ];
-        s32 tempNo = PP_Get( musPoke->pokePara, ID_PARA_monsno, NULL );
+        s32 tempNo = musPoke->mcssParam.monsno;
         while( moveVal != 0 )
         {
           while( TRUE )
@@ -1324,8 +1312,8 @@ static void MusicalSetting_UpdateTouch( MUS_EDIT_LOCAL_WORK *work )
           }
           ( moveVal<0 ? moveVal++ : moveVal-- );
         }
-        GFL_HEAP_FreeMemory( musPoke->pokePara );
-        musPoke->pokePara = PP_Create( tempNo , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_STAGE );
+        GFL_HEAP_FreeMemory( musPoke );
+        musPoke = MUSICAL_SYSTEM_InitMusPokeParam( tempNo , 0 , 0 , 0 , HEAPID_MUSICAL_STAGE );
         isReload = TRUE;
       }
       break;

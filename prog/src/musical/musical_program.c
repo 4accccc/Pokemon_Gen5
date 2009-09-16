@@ -149,7 +149,7 @@ void MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID heapId , MUSICAL_PROGRAM_WORK* pro
   for( pokeIdx = 0 ; pokeIdx < MUSICAL_POKE_MAX ; pokeIdx++ )
   {
     u8 ePos;
-    MUSICAL_POKE_PARAM *musPoke = &actInitWork->musPoke[pokeIdx];
+    MUSICAL_POKE_PARAM *musPoke = actInitWork->musPoke[pokeIdx];
     for( ePos = 0 ; ePos < MUS_POKE_EQUIP_MAX ; ePos++ )
     {
       if( musPoke->equip[ePos].itemNo != MUSICAL_ITEM_INVALID )
@@ -164,7 +164,7 @@ void MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID heapId , MUSICAL_PROGRAM_WORK* pro
   
   for( pokeIdx = 0 ; pokeIdx < MUSICAL_POKE_MAX ; pokeIdx++ )
   {
-    MUSICAL_POKE_PARAM *musPoke = &actInitWork->musPoke[pokeIdx];
+    MUSICAL_POKE_PARAM *musPoke = actInitWork->musPoke[pokeIdx];
     OS_TPrintf("Poke[%d]:",pokeIdx);
     for( conIdx=0;conIdx<MCT_MAX;conIdx++ )
     {

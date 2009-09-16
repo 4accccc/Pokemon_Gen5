@@ -22,6 +22,9 @@
 //ミュージカルで装備できるアイテムの個数
 #define MUSICAL_ITEM_EQUIP_MAX (MUS_POKE_EQUIP_USER_MAX)	//顔＆頭・胴・右手・左手
 
+//ミュージカルの演目名の文字数
+#define MUSICAL_PROGRAM_NAME_MAX (26) //日本12・海外24＋EOM
+
 //======================================================================
 //	enum
 //======================================================================
@@ -87,8 +90,17 @@ typedef struct
 
 typedef struct
 {
+  u16 monsno;
+  u8  sex;
+  u8  form;
+  u8  rare;
+}MUSICAL_MCSS_PARAM;
+
+typedef struct
+{
   MUSICAL_CHARA_TYPE charaType;
 	POKEMON_PARAM *pokePara;
+	MUSICAL_MCSS_PARAM mcssParam;
 	MUSICAL_POKE_EQUIP equip[MUS_POKE_EQUIP_MAX];
 	u16                point; //評価点
 }MUSICAL_POKE_PARAM;

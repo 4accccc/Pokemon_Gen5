@@ -230,7 +230,7 @@ static const GFL_DISP_VRAM vramBank = {
 ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
 {
   u8 i;
-  ACTING_WORK *work = GFL_HEAP_AllocMemory( heapId , sizeof( ACTING_WORK ));
+  ACTING_WORK *work = GFL_HEAP_AllocClearMemory( heapId , sizeof( ACTING_WORK ));
   
   work->heapId = heapId;
   work->initWork = initWork;
@@ -246,7 +246,7 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   {
     for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
-      if( work->initWork->musPoke[i].charaType == MUS_CHARA_PLAYER )
+      if( work->initWork->musPoke[i]->charaType == MUS_CHARA_PLAYER )
       {
         work->playerIdx = i;
         break;
@@ -285,7 +285,7 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   
   work->lightSys = STA_LIGHT_InitSystem(work->heapId , work );
   work->audiSys = STA_AUDI_InitSystem( work->heapId , work , work->initWork );
-  work->buttonSys = STA_BUTTON_InitSystem( work->heapId , work , &work->initWork->musPoke[work->playerIdx] );
+  work->buttonSys = STA_BUTTON_InitSystem( work->heapId , work , work->initWork->musPoke[work->playerIdx] );
 
   work->scriptSys = STA_SCRIPT_InitSystem( work->heapId , work );
 
@@ -729,14 +729,6 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
   
   //CELL初期化(ライト・観客用)
   {
-/*
-    GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
-    cellSysInitData.oamst_main = 0x10;  //デバッグメータの分
-    cellSysInitData.oamnum_main = 128-0x10;
-    cellSysInitData.CGR_RegisterMax = 48;
-    cellSysInitData.CELL_RegisterMax = 48;
-    cellSysInitData.tr_cell = 48;
-*/
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &vramBank ,work->heapId );
     
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
@@ -838,7 +830,7 @@ static void STA_ACT_SetupPokemon( ACTING_WORK *work )
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
     pos.x = XBase*(i+1);
-    work->pokeWork[i] = STA_POKE_CreatePoke( work->pokeSys , &work->initWork->musPoke[i] );
+    work->pokeWork[i] = STA_POKE_CreatePoke( work->pokeSys , work->initWork->musPoke[i] );
     STA_POKE_SetPosition( work->pokeSys , work->pokeWork[i] , &pos );
 
     pos.z -= FX32_CONST(30.0f); //ひとキャラの厚みは30と見る
@@ -1178,14 +1170,14 @@ static void STA_ACT_UpdateAttention( ACTING_WORK *work )
       //得点でチェック
       for( i=0;i<MUSICAL_POKE_MAX;i++ )
       {
-        if( maxPoint < work->initWork->musPoke[i].point )
+        if( maxPoint < work->initWork->musPoke[i]->point )
         {
-          maxPoint = work->initWork->musPoke[i].point;
+          maxPoint = work->initWork->musPoke[i]->point;
         }
       }
       for( i=0;i<MUSICAL_POKE_MAX;i++ )
       {
-        if( maxPoint == work->initWork->musPoke[i].point )
+        if( maxPoint == work->initWork->musPoke[i]->point )
         {
           STA_AUDI_SetAttentionPoke( work->audiSys , i , TRUE );
         }
@@ -1501,3 +1493,99 @@ void  STA_ACT_EDITOR_StartScript( ACTING_WORK *work )
   }
 }
 
+
+#pragma mark [> photo func
+//--------------------------------------------------------------
+//  ミュージカルショット用初期化
+//--------------------------------------------------------------
+ACTING_WORK*  STA_ACT_InitActingPhoto( HEAPID heapId )
+{
+  u8 i;
+  ACTING_WORK *work = GFL_HEAP_AllocClearMemory( heapId , sizeof( ACTING_WORK ));
+  
+  work->heapId = heapId;
+  work->initWork = NULL;
+  work->scrollOffset = 0;
+  work->makuOffset = 0;
+  work->scriptData = NULL;
+  work->mainSeq = AMS_FADEIN;
+  
+  work->vblankFuncTcb = GFUser_VIntr_CreateTCB( STA_ACT_VBlankFunc , (void*)work , 64 );
+  
+  //自キャラの選択
+  if( work->initWork->commWork == NULL )
+  {
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      if( work->initWork->musPoke[i]->charaType == MUS_CHARA_PLAYER )
+      {
+        work->playerIdx = i;
+        break;
+      }
+    }
+    if( MUSICAL_POKE_MAX == i )
+    {
+      GF_ASSERT_MSG( MUSICAL_POKE_MAX != i , "Musical stage:Player poke is not found!!!\n");
+      work->playerIdx = 1;
+    }
+  }
+  else
+  {
+    work->playerIdx = MUS_COMM_GetSelfMusicalIndex(work->initWork->commWork);
+  }
+  
+  //注目ポケ系初期化
+  work->isUpdateAttention = TRUE;
+  work->lightUpPoke = MUSICAL_POKE_MAX;
+  work->attentionPoke = MUSICAL_POKE_MAX; //カメラはデフォルト
+  //アイテム使用系初期化
+  work->useItemPoke = MUSICAL_POKE_MAX;
+  work->useItemCnt = 0;
+  work->useItemReq = FALSE;
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    work->useItemFlg[i] = FALSE;
+  }
+
+//  STA_ACT_SetupBg( work );
+//  STA_ACT_SetupMessage( work);
+//  STA_ACT_SetupPokemon( work );
+//  STA_ACT_SetupItem( work );
+//  STA_ACT_SetupEffect( work );
+  
+//  work->lightSys = STA_LIGHT_InitSystem(work->heapId , work );
+//  work->audiSys = STA_AUDI_InitSystem( work->heapId , work , work->initWork );
+//  work->buttonSys = STA_BUTTON_InitSystem( work->heapId , work , &work->initWork->musPoke[work->playerIdx] );
+
+  return work;
+}
+
+//--------------------------------------------------------------
+//  ミュージカルショット用開放
+//--------------------------------------------------------------
+void  STA_ACT_TermActingPhoto( ACTING_WORK *work )
+{
+
+//  if( work->msgStr != NULL )
+//  {
+//    GFL_STR_DeleteBuffer( work->msgStr );
+//  }
+//  GFL_MSG_Delete( work->msgHandle );
+//  GFL_BMPWIN_Delete( work->msgWin );
+//  GFL_FONT_Delete( work->fontHandle );
+//  GFL_TCBL_Exit( work->tcblSys );
+  
+//  STA_BUTTON_ExitSystem( work->buttonSys );
+//  STA_AUDI_ExitSystem( work->audiSys );
+//  STA_BG_ExitSystem( work->bgSys );
+//  STA_LIGHT_ExitSystem( work->lightSys );
+//  STA_EFF_ExitSystem( work->effSys );
+//  STA_OBJ_ExitSystem( work->objSys );
+//  STA_POKE_ExitSystem( work->pokeSys );
+
+//  MUS_POKE_DRAW_TermSystem( work->drawSys );
+//  MUS_ITEM_DRAW_TermSystem( work->itemDrawSys );
+
+  GFL_HEAP_FreeMemory( work );
+  
+}

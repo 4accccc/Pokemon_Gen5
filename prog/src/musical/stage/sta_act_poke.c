@@ -204,16 +204,19 @@ void  STA_POKE_UpdateSystem_Item( STA_POKE_SYS *work )
 static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 {
 
-  if( pokeWork->isUpdate == TRUE )
+  //if( pokeWork->isUpdate == TRUE )
   {
     VecFx32 musPos;
     VecFx32 musScale;
+    VecFx32 *shadowOfs; //‰e·•ª
+    shadowOfs = MUS_POKE_DRAW_GetShadowOfs( pokeWork->drawWork );
     
     //ƒ|ƒPƒ‚ƒ“‚ÌÀ•W
     VEC_Add( &pokeWork->pokePos , &pokeWork->posOfs , &musPos );
     
-    musPos.x = ACT_POS_X_FX(musPos.x);
-    musPos.y = ACT_POS_Y_FX(musPos.y);
+    //‰e‚ÌÀ•W‚ðŠî€‚É
+    musPos.x = ACT_POS_X_FX(musPos.x - shadowOfs->x);
+    musPos.y = ACT_POS_Y_FX(musPos.y - shadowOfs->y);
 //    musPos.z = musPos.z;
     
     MUS_POKE_DRAW_SetPosition( pokeWork->drawWork , &musPos);
@@ -317,12 +320,14 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
   }
 
   //’Ç]‚È‚Ì‚Å‚±‚±‚Åˆê‚É‚â‚é
-  //‰e‚ÌÀ•W
+  //‰e‚ÌÀ•W(‰e‚ðŠî€À•W‚É‚·‚é‚Ì‚ÅA‰e‚Ì·•ª‚ÍŒ©‚È‚¢B
   {
     VecFx32 *shadowOfs; //‰e·•ª
     shadowOfs = MUS_POKE_DRAW_GetShadowOfs( pokeWork->drawWork );
-    pos.x = ACT_POS_X_FX(pokeWork->pokePos.x + shadowOfs->x );
-    pos.y = ACT_POS_Y_FX(pokeWork->pokePos.y + shadowOfs->y );
+//    pos.x = ACT_POS_X_FX(pokeWork->pokePos.x + shadowOfs->x );
+//    pos.y = ACT_POS_Y_FX(pokeWork->pokePos.y + shadowOfs->y );
+    pos.x = ACT_POS_X_FX(pokeWork->pokePos.x );
+    pos.y = ACT_POS_Y_FX(pokeWork->pokePos.y );
     pos.z = 5.0f;
     GFL_BBD_SetObjectTrans( work->bbdSys , pokeWork->shadowBbdIdx , &pos );
   }

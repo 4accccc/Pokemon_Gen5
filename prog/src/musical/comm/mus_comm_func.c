@@ -845,14 +845,21 @@ static void MUS_COMM_Post_AllMusPokeData( const int netID, const int size , cons
   ARI_TPrintf("MusComm Finish Post AllPokeData.\n");
   for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
   {
-    u32 pokeParaAdr;
-    MUSICAL_POKE_PARAM *musPoke;
-    u32 startAdr = (u32)work->allPokeData+MUS_COMM_POKEDATA_SIZE*i;
-    GFL_STD_MemCopy( (void*)startAdr , work->userData[i].pokeData , MUS_COMM_POKEDATA_SIZE );
-    pokeParaAdr = (u32)work->userData[i].pokeData+sizeof(MUSICAL_POKE_PARAM);
-    musPoke = work->userData[i].pokeData;
-    musPoke->pokePara = (void*)pokeParaAdr;
-    work->userData[i].isValidData = TRUE;
+    if( i < GFL_NET_GetConnectNum() )
+    {
+      u32 pokeParaAdr;
+      MUSICAL_POKE_PARAM *musPoke;
+      u32 startAdr = (u32)work->allPokeData+MUS_COMM_POKEDATA_SIZE*i;
+      GFL_STD_MemCopy( (void*)startAdr , work->userData[i].pokeData , MUS_COMM_POKEDATA_SIZE );
+      pokeParaAdr = (u32)work->userData[i].pokeData+sizeof(MUSICAL_POKE_PARAM);
+      musPoke = work->userData[i].pokeData;
+      musPoke->pokePara = (void*)pokeParaAdr;
+      work->userData[i].isValidData = TRUE;
+    }
+    else
+    {
+      work->userData[i].isValidData = FALSE;
+    }
   }
 
 }

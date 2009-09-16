@@ -1230,7 +1230,7 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
     {
       if( mus_bef_save->equipData[i].pos != MUS_POKE_EQU_INVALID )
       {
-        DUP_FIT_SetupStartItem( work , mus_bef_save->equipData[i].data.itemNo );
+        DUP_FIT_SetupStartItem( work , mus_bef_save->equipData[i].itemNo );
       }
     }
   }
@@ -3046,8 +3046,8 @@ static void DUP_CHECK_SaveNowEquip( FITTING_WORK *work )
     GF_ASSERT_MSG( save_pos < MUSICAL_ITEM_EQUIP_MAX , "‘•”õ•i‚ª‘½‚·‚¬I\n" );
 
     mus_bef_save->equipData[save_pos].pos = equip_pos;
-    mus_bef_save->equipData[save_pos].data.itemNo = DUP_FIT_ITEM_GetItemState( item )->itemId;
-    mus_bef_save->equipData[save_pos].data.angle = work->initWork->musPoke->equip[equip_pos].angle;
+    mus_bef_save->equipData[save_pos].itemNo = DUP_FIT_ITEM_GetItemState( item )->itemId;
+    mus_bef_save->equipData[save_pos].angle = work->initWork->musPoke->equip[equip_pos].angle;
     work->initWork->musPoke->equip[equip_pos].itemNo = DUP_FIT_ITEM_GetItemState( item )->itemId;
     work->initWork->musPoke->equip[equip_pos].priority = save_pos;
     

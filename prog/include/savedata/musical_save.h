@@ -21,7 +21,8 @@
 typedef struct
 {
 	u8	pos;					//装備箇所(MUS_POKE_EQUIP_POS）
-	MUSICAL_POKE_EQUIP data;	//アイテム番号と角度
+	u16	itemNo;	      //アイテムの種類
+	s16	angle;	      //アイテムの傾き
 }MUSICAL_EQUIP_ONE_SAVE;
 
 typedef struct

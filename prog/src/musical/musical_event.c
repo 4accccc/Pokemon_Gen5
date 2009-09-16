@@ -399,16 +399,16 @@ static void MUSICAL_EVENT_InitActing( MUSICAL_EVENT_WORK *evWork )
     MUSICAL_STAGE_SetData_NPC( evWork->actInitWork , 2 , MONSNO_PIKATYUU  , HEAPID_MUSICAL_PROC );
     MUSICAL_STAGE_SetData_NPC( evWork->actInitWork , 3 , MONSNO_REIBAAN , HEAPID_MUSICAL_PROC );
 
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 0 , MUS_POKE_EQU_EAR_L , 7 , 0 );
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 0 , MUS_POKE_EQU_HEAD  ,15 , 0 );
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 0 , MUS_POKE_EQU_HAND_L,13 , 0 );
+    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 0 , MUS_POKE_EQU_EAR_L , 7 , 0 , 0 );
+    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 0 , MUS_POKE_EQU_HEAD  ,15 , 0 , 1 );
+    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 0 , MUS_POKE_EQU_HAND_L,13 , 0 , 2 );
 
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 2 , MUS_POKE_EQU_EAR_R  ,  2 , 0 );
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 2 , MUS_POKE_EQU_EYE    , 11 , 0 );
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 2 , MUS_POKE_EQU_BODY   , 27 , 0 );
+    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 2 , MUS_POKE_EQU_EAR_R  ,  2 , 0 , 0 );
+    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 2 , MUS_POKE_EQU_EYE    , 11 , 0 , 1 );
+    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 2 , MUS_POKE_EQU_BODY   , 27 , 0 , 2 );
 
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 3 , MUS_POKE_EQU_FACE   , 21 , 0 );
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 3 , MUS_POKE_EQU_HAND_R , 30 , 0 );
+    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 3 , MUS_POKE_EQU_FACE   , 21 , 0 , 0 );
+    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 3 , MUS_POKE_EQU_HAND_R , 30 , 0 , 1 );
   }
   evWork->actInitWork->distData = evWork->distData;
   evWork->actInitWork->progWork = evWork->progWork;

@@ -127,10 +127,9 @@ const BOOL  MUSICAL_SYSTEM_CheckEntryMusical( POKEMON_PARAM *pokePara )
 }
 
 //ミュージカルでの番号に変換
-const u16 MUSICAL_SYSTEM_ChangeMusicalPokeNumber( POKEMON_PARAM *pokePara )
+const u16 MUSICAL_SYSTEM_ChangeMusicalPokeNumber( const u16 mons_no )
 {
   u16 i=0;
-  int mons_no = PP_Get( pokePara, ID_PARA_monsno, NULL );
 
   while( 0xFFFF != musPokeArr[i] )
   {
@@ -159,6 +158,33 @@ MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPoke( POKEMON_PARAM *pokePara , HEAPID
     musPara->equip[i].itemNo = MUSICAL_ITEM_INVALID;
     musPara->equip[i].angle = 0;
   }
+  
+  musPara->mcssParam.monsno = PP_Get( pokePara, ID_PARA_monsno,	NULL );
+  musPara->mcssParam.sex    = PP_Get( pokePara, ID_PARA_form_no,	NULL );
+  musPara->mcssParam.form = PP_Get( pokePara, ID_PARA_sex,	NULL );
+  musPara->mcssParam.rare   = PP_CheckRare( pokePara );
+  
+  return musPara;
+}
+MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPokeParam( u16 monsno , u8 sex , u8 form , u8 rare , HEAPID heapId )
+{
+  int i;
+  MUSICAL_POKE_PARAM *musPara;
+  musPara = GFL_HEAP_AllocMemory( heapId , sizeof(MUSICAL_POKE_PARAM) );
+  musPara->charaType = MUS_CHARA_INVALID;
+  musPara->pokePara = NULL;
+  musPara->point = 0;
+  
+  for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
+  {
+    musPara->equip[i].itemNo = MUSICAL_ITEM_INVALID;
+    musPara->equip[i].angle = 0;
+  }
+  
+  musPara->mcssParam.monsno = monsno;
+  musPara->mcssParam.sex    = sex;
+  musPara->mcssParam.form = form;
+  musPara->mcssParam.rare   = rare;
   
   return musPara;
 }
@@ -405,16 +431,16 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
       MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_PIKATYUU  , HEAPID_MUSICAL_PROC );
       MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_REIBAAN , HEAPID_MUSICAL_PROC );
 
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_EAR_L , 7 , 0 );
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HEAD  ,15 , 0 );
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HAND_L,13 , 0 );
+      MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_EAR_L , 7 , 0 , 0 );
+      MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HEAD  ,15 , 0 , 1 );
+      MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HAND_L,13 , 0 , 2 );
 
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_EAR_R  ,  2 , 0 );
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_EYE    , 11 , 0 );
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_BODY   , 27 , 0 );
+      MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_EAR_R  ,  2 , 0 , 0 );
+      MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_EYE    , 11 , 0 , 1 );
+      MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_BODY   , 27 , 0 , 2 );
 
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_FACE   , 21 , 0 );
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HAND_R , 30 , 0 );
+      MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_FACE   , 21 , 0 , 0 );
+      MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HAND_R , 30 , 0 , 1 );
     }
     work->actInitWork->distData = work->distData;
     work->actInitWork->progWork = work->progWork;

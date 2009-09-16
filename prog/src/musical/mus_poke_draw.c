@@ -361,30 +361,15 @@ enum{
 static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WORK *maw , const BOOL isBack )
 {
 	const POKEMON_PASO_PARAM *ppp = PP_GetPPPPointerConst( musPoke->pokePara );
-	int	mons_no = PPP_Get( ppp, ID_PARA_monsno,	NULL );
-	int	form_no = PPP_Get( ppp, ID_PARA_form_no,NULL );
-	int	sex		= PPP_Get( ppp, ID_PARA_sex,	NULL );
-	int	rare	= PPP_CheckRare( ppp );
+	int	mons_no = musPoke->mcssParam.monsno;
+	int	form_no = musPoke->mcssParam.form;
+	int	sex		= musPoke->mcssParam.sex;
+	int	rare	= musPoke->mcssParam.rare;
 	int	file_start;
 	int	file_offset;
-/*	
-	//FIXME mons_noの変換を行う！
-	{
-		int i;
-		i = 0;
-		while( mons_no != musPokeArr[i] )
-		{
-			i++;
-			if( musPokeArr[i] == 0xFFFF )
-			{
-				i--;
-				break;
-			}
-		}
-		mons_no = i;
-	}
-*/
-	file_start = MUS_POKEGRA_FILE_MAX * MUSICAL_SYSTEM_ChangeMusicalPokeNumber(musPoke->pokePara);	//ポケモンナンバーからファイルのオフセットを計算
+
+
+	file_start = MUS_POKEGRA_FILE_MAX * MUSICAL_SYSTEM_ChangeMusicalPokeNumber(mons_no);	//ポケモンナンバーからファイルのオフセットを計算
 
   if( isBack == TRUE )
   {
