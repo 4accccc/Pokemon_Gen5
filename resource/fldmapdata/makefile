@@ -18,7 +18,6 @@ SUBDIRS	=	zonetable/zoneindex \
 					script \
 					effect \
 					rail_data \
-					scenearea \
 					zonefog_table \
 					zonelight_table \
 					fld_gimmick_assign \
