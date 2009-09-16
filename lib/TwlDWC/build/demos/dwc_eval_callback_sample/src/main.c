@@ -515,13 +515,14 @@ update_save( void )
         {
             OS_TPrintf( "User Data No Change.\n" );
         }
-        DispMessage( "STATE : ONLINE", "anybody matching", "shutdown", "save user data", NULL );
-
+        DispMessage( "STATE : ONLINE", "anybody matching", "shutdown", "save user data",
+                    s_groupID ? "groupID reconnect" : NULL );
         return state_online;
     }
     else if ( g_KeyCtrl.trg & PAD_BUTTON_B )
     {
-        DispMessage( "STATE : ONLINE", "anybody matching", "shutdown", "save user data", NULL );
+        DispMessage( "STATE : ONLINE", "anybody matching", "shutdown", "save user data",
+                    s_groupID ? "groupID reconnect" : NULL );
         return state_online;
     }
     return state_save;

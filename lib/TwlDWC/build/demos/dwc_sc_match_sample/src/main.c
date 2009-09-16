@@ -704,12 +704,14 @@ update_save( void )
         DTUD_SaveFriendList();
         OS_TPrintf( "Saved Friend Data.\n" );
 
-        DispMessage( "STATE : ONLINE", "connect to server", "shutdown", "setup game server", "friend state", "save firned data", NULL );
+        DispMessage( "STATE : ONLINE", "connect to server", "shutdown", "setup game server", "friend state", "save firned data",
+                    s_groupID ? "groupID reconnect" : NULL );
         return state_online;
     }
     else if ( g_KeyCtrl.trg & PAD_BUTTON_B )
     {
-        DispMessage( "STATE : ONLINE", "connect to server", "shutdown", "setup game server", "friend state", "save firned data", NULL );
+        DispMessage( "STATE : ONLINE", "connect to server", "shutdown", "setup game server", "friend state", "save firned data",
+                    s_groupID ? "groupID reconnect" : NULL );
         return state_online;
     }
     return state_save;
