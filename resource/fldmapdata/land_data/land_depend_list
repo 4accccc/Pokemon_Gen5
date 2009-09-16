@@ -136,22 +136,6 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/map_outtree_sm.3dppack \
 	$(DIR_OUTPUT)/map_outtree_au.3dppack \
 	$(DIR_OUTPUT)/map_outtree_wi.3dppack \
-	$(DIR_OUTPUT)/mapspring01_01.3dppack \
-	$(DIR_OUTPUT)/mapspring02_01.3dppack \
-	$(DIR_OUTPUT)/mapspring01_02.3dppack \
-	$(DIR_OUTPUT)/mapspring02_02.3dppack \
-	$(DIR_OUTPUT)/mapsummer01_01.3dppack \
-	$(DIR_OUTPUT)/mapsummer02_01.3dppack \
-	$(DIR_OUTPUT)/mapsummer01_02.3dppack \
-	$(DIR_OUTPUT)/mapsummer02_02.3dppack \
-	$(DIR_OUTPUT)/mapautumn01_01.3dppack \
-	$(DIR_OUTPUT)/mapautumn02_01.3dppack \
-	$(DIR_OUTPUT)/mapautumn01_02.3dppack \
-	$(DIR_OUTPUT)/mapautumn02_02.3dppack \
-	$(DIR_OUTPUT)/mapwinter01_01.3dppack \
-	$(DIR_OUTPUT)/mapwinter02_01.3dppack \
-	$(DIR_OUTPUT)/mapwinter01_02.3dppack \
-	$(DIR_OUTPUT)/mapwinter02_02.3dppack \
 	$(DIR_OUTPUT)/c03_a00_00.3dppack \
 	$(DIR_OUTPUT)/c03_b00_00.3dppack \
 	$(DIR_OUTPUT)/c03_c00_00.3dppack \
