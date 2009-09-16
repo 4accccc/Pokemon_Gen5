@@ -255,6 +255,94 @@ void ITEMDISP_SetVisible(void)
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  下画面BGリソース読み込み（男女でリソースきりわけ）
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork
+ *	@param	p_handle 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _load_basebg_d( FIELD_ITEMMENU_WORK* pWork, ARCHANDLE* p_handle )
+{
+  u32 nclr;
+  u32 ncgr;
+  u32 nscr;
+  u32 sex = MyStatus_GetMySex( pWork->mystatus );
+  
+  if( sex == PTL_SEX_MALE )
+  {
+    // 男
+    nclr = NARC_bag_bag_basebg_man_d_NCLR;
+    ncgr = NARC_bag_bag_basebg_man_d_NCGR;
+    nscr = NARC_bag_bag_basebg_man_d_NSCR;
+  }
+  else if( sex == PTL_SEX_FEMALE )
+  {
+    // 女
+    nclr = NARC_bag_bag_basebg_d_NCLR;
+    ncgr = NARC_bag_bag_basebg_d_NCGR;
+    nscr = NARC_bag_bag_basebg_d_NSCR;
+  }
+  else
+  {
+    GF_ASSERT(0);
+  }
+
+  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, nclr, PALTYPE_MAIN_BG, 0, 4*0x20,  pWork->heapID );
+
+  pWork->mainbg = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, ncgr, GFL_BG_FRAME0_M, 0, 0, pWork->heapID );
+
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs( p_handle, nscr, GFL_BG_FRAME0_M, 0, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainbg), 0, 0, pWork->heapID );
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  下画面アイコンリソース読み込み（男女でリソースきりわけ）
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork
+ *	@param	p_handle 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _load_parts( FIELD_ITEMMENU_WORK* pWork, ARCHANDLE* p_handle )
+{
+  u32 parts_clr;
+  u32 parts_cgx;
+  u32 parts_cer;
+  u32 parts_anm;
+  u32 sex = MyStatus_GetMySex( pWork->mystatus );
+  
+  if( sex == PTL_SEX_MALE )
+  {
+    // 男
+    parts_clr = NARC_bag_bag_parts_man_d_NCLR;
+    parts_cgx = NARC_bag_bag_parts_man_d_NCGR;
+    parts_cer = NARC_bag_bag_parts_man_d_NCER;
+    parts_anm = NARC_bag_bag_parts_man_d_NANR;
+  }
+  else if( sex == PTL_SEX_FEMALE )
+  {
+    // 女
+    parts_clr = NARC_bag_bag_parts_d_NCLR;
+    parts_cgx = NARC_bag_bag_parts_d_NCGR;
+    parts_cer = NARC_bag_bag_parts_d_NCER;
+    parts_anm = NARC_bag_bag_parts_d_NANR;
+  }
+  else
+  {
+    GF_ASSERT(0);
+  }
+
+  pWork->cellRes[_PLT_BAGPOCKET] = GFL_CLGRP_PLTT_RegisterEx( p_handle , parts_clr , CLSYS_DRAW_MAIN , _PAL_BAG_PARTS_CELL*32 , 0 , 2 , pWork->heapID );
+  pWork->cellRes[_NCG_BAGPOCKET] = GFL_CLGRP_CGR_Register( p_handle , parts_cgx , FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
+  pWork->cellRes[_ANM_BAGPOCKET] = GFL_CLGRP_CELLANIM_Register( p_handle, parts_cer, parts_anm , pWork->heapID );
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   絵の初期化
@@ -278,18 +366,17 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     };
     GFL_BG_SetBGMode( &BGsys_data );
   }
+
   GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
   GFL_DISP_GXS_SetVisibleControlDirect(0);
-  _createSubBg();
 
+  _createSubBg();
 
   GFL_FONTSYS_SetDefaultColor();
   pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
 
-
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME3_M,
                                                 _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
-
 
   {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BAG, pWork->heapID );
@@ -302,14 +389,8 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
                                             GFL_BG_FRAME0_S, 0,
                                             GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg), 0, 0, pWork->heapID);
 
-
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_basebg_d_NCLR,
-                                      PALTYPE_MAIN_BG, 0, 4*0x20,  pWork->heapID);
-    pWork->mainbg = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_bag_bag_basebg_d_NCGR,
-                                                                 GFL_BG_FRAME0_M, 0, 0, pWork->heapID);
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs( p_handle, NARC_bag_bag_basebg_d_NSCR,
-                                            GFL_BG_FRAME0_M, 0,
-                                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainbg), 0, 0, pWork->heapID);
+    // 下画面BG（男女で切替)
+    _load_basebg_d( pWork, p_handle );
 
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win01_u_NCLR,
                                       PALTYPE_SUB_BG, 4*0x20, 4*0x20,  pWork->heapID);
@@ -322,16 +403,8 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     //    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_p_list_NCLR,
     //                                    PALTYPE_MAIN_BG, _SUBLIST_NORMAL_PAL*0x20, 2*0x20,  pWork->heapID);
 
-
     //下画面アイコン
-    pWork->cellRes[_PLT_BAGPOCKET] = GFL_CLGRP_PLTT_RegisterEx(
-      p_handle , NARC_bag_bag_parts_d_NCLR , CLSYS_DRAW_MAIN , _PAL_BAG_PARTS_CELL*32 , 0 , 2 , pWork->heapID  );
-
-    pWork->cellRes[_NCG_BAGPOCKET] = GFL_CLGRP_CGR_Register(
-      p_handle , NARC_bag_bag_parts_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
-
-    pWork->cellRes[_ANM_BAGPOCKET] = GFL_CLGRP_CELLANIM_Register(
-      p_handle, NARC_bag_bag_parts_d_NCER, NARC_bag_bag_parts_d_NANR , pWork->heapID);
+    _load_parts( pWork, p_handle );
 
     //数字のフレーム
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win01_d_NCLR,
@@ -1059,23 +1132,12 @@ static GFL_CLACTPOS pokectCellPos[]={
 void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno )
 {
   int anm[] = {
-    NANR_bag_parts_d_dougu_f, // デフォルト女
+    NANR_bag_parts_d_dougu,
     NANR_bag_parts_d_kaifuku,
     NANR_bag_parts_d_waza,
     NANR_bag_parts_d_kinomi,
     NANR_bag_parts_d_taisetsu
   };
-
-  // 男女でバッグアイコン表示切替
-  { 
-    u32 sex = MyStatus_GetMySex( pWork->mystatus );
-
-    // 男
-    if( sex == PTL_SEX_MALE )
-    {
-      anm[0] = NANR_bag_parts_d_dougu_m;
-    }
-  }
 
   GFL_CLACT_WK_SetAnmSeq(pWork->clwkPocketIcon, anm[pocketno]);
   GFL_CLACT_WK_SetPos( pWork->clwkPocketIcon ,  &pokectCellPos[pocketno], CLWK_SETSF_NONE );
