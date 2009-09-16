@@ -24,6 +24,7 @@
 #include "intrude_field.h"
 #include "field/intrude_comm.h"
 #include "intrude_comm_command.h"
+#include "system/net_err.h"
 
 #include "message.naix"
 #include "msg/msg_d_field.h"
@@ -421,7 +422,7 @@ static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gam
       FIELD_INVALID_PARENT_WORK *invalid_parent;
       
       invalid_parent = GFL_HEAP_AllocClearMemory(
-          GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(FIELD_INVALID_PARENT_WORK));
+          GFL_HEAP_LOWID(HEAPID_PROC), sizeof(FIELD_INVALID_PARENT_WORK));
       invalid_parent->my_invasion = TRUE;
       invalid_parent->gsys = gameSys;
       invalid_parent->game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSys);

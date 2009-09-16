@@ -51,6 +51,7 @@
 #include "event_trainer_eye.h"
 #include "fieldmap/zone_id.h"
 #include "net_app/union/union_main.h"
+#include "event_comm_error.h"
 
 #include "../../../resource/fldmapdata/script/bg_attr_def.h"  //SCRID_BG_MSG_～
 
@@ -391,6 +392,13 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     }
   }
   
+  //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
+  if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
+		if(WIPE_SYS_EndCheck()){
+      return EVENT_FieldCommErrorProc(gsys, fieldWork);
+    }
+  }
+  
 	//メニュー起動チェック
 	if( req.menuRequest ){
 		if(WIPE_SYS_EndCheck()){
@@ -537,6 +545,13 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
       if(event != NULL){
         return event;
       }
+    }
+  }
+
+  //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
+  if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
+		if(WIPE_SYS_EndCheck()){
+      return EVENT_FieldCommErrorProc(gsys, fieldWork);
     }
   }
 
@@ -791,6 +806,13 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
     }
   }
   
+  //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
+  if( GAMESYSTEM_GetFieldCommErrorReq(gsys) == TRUE ){
+		if(WIPE_SYS_EndCheck()){
+      return EVENT_FieldCommErrorProc(gsys, fieldWork);
+    }
+  }
+
 	//メニュー起動チェック
 	if( req.menuRequest ){
 		if(WIPE_SYS_EndCheck()){

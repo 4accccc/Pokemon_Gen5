@@ -170,7 +170,7 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
   //始めて通信確立した時のパレスの初期位置設定
   //※check　ちょっとやっつけっぽい。
   //正しくは通信確立時のコールバック内でパレスのエリア初期位置をセットしてあげるのがよい
-  first_create = PALACE_DEBUG_CreateNumberAct(palace, GFL_HEAP_LOWID(HEAPID_FIELDMAP), fieldWork);
+  first_create = PALACE_DEBUG_CreateNumberAct(palace, GFL_HEAP_LOWID(HEAPID_WORLD), fieldWork);
   if(palace->clunit != NULL){
     if(GFL_NET_GetConnectNum() > 1){
       if(palace->area == PALACE_AREA_NO_NULL){
@@ -590,7 +590,7 @@ static void _WindowPrint(PALACE_SYS_PTR palace, u32 msg_id, MYSTATUS *myst)
 {
   STRBUF *namebuf, *temp_strbuf;
 
-  namebuf = MyStatus_CreateNameString(myst, HEAPID_FIELDMAP);
+  namebuf = MyStatus_CreateNameString(myst, HEAPID_WORLD);
   WORDSET_RegisterWord(palace->wordset, 0, namebuf, 0, TRUE, PM_LANG);
   GFL_STR_DeleteBuffer(namebuf);
   

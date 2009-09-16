@@ -20,6 +20,7 @@
 #include "gamesystem/game_init.h"
 
 #include "src/field/event_mapchange.h"
+#include "system/net_err.h"
 
 #include "poke_tool/monsno_def.h"
 #ifdef PM_DEBUG
@@ -223,7 +224,8 @@ struct _GAMESYS_WORK {
 	ISS_SYS * iss_sys;		// ISSシステム
 	
 	u8 always_net;          ///<TRUE:常時通信
-	u8 padding[3];
+	u8 field_comm_error_req;      ///<TRUE:フィールドでの通信エラー画面表示リクエスト
+	u8 padding[2];
 };
 
 //------------------------------------------------------------------
@@ -310,6 +312,11 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 		GFL_UI_ChangeFrameRate(GFL_UI_FRAMERATE_60);
 	}
 
+  //通信エラー画面呼び出しチェック
+  if(gsys->proc_result == GFL_PROC_MAIN_CHANGE || gsys->proc_result == GFL_PROC_MAIN_NULL){
+    NetErr_DispCall();
+  }
+  
 	if (gsys->proc_result == GFL_PROC_MAIN_NULL && gsys->event == NULL)
 	{
 		//プロセスもイベントも存在しないとき、ゲーム終了
@@ -437,6 +444,32 @@ BOOL GAMESYSTEM_CheckFieldMapWork( const GAMESYS_WORK *gsys )
     return TRUE;
   }
   return FALSE;
+}
+
+//==================================================================
+/**
+ * フィールドでの通信エラー画面表示リクエスト設定
+ *
+ * @param   fieldWork		FIELDMAP_WORK
+ * @param   error_req		TRUE:エラー画面表示。　FALSE:リクエストをクリア
+ */
+//==================================================================
+void GAMESYSTEM_SetFieldCommErrorReq( GAMESYS_WORK *gsys, BOOL error_req )
+{
+  gsys->field_comm_error_req = error_req;
+}
+
+//==================================================================
+/**
+ * フィールドでの通信エラー画面表示リクエスト取得
+ *
+ * @param   fieldWork		FIELDMAP_WORK
+ * @retval  TRUE:エラー画面表示。　FALSE:リクエストをクリア
+ */
+//==================================================================
+BOOL GAMESYSTEM_GetFieldCommErrorReq( const GAMESYS_WORK *gsys )
+{
+  return gsys->field_comm_error_req;
 }
 
 //--------------------------------------------------------------

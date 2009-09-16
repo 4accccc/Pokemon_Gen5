@@ -90,6 +90,8 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_comm/intrude_comm.c \
         field/field_comm/intrude_comm_command.c \
         field/field_comm/intrude_main.c \
+        net_app/union/comm_player.c \
+				field/field_comm/palace_sys.c \
         system/mcss.c \
         system/mcss_tool.c \
         poke_tool/poke_tool.c \
@@ -296,8 +298,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/field_easytp.c \
 				field/field_comm_actor.c \
 				field/field_comm/intrude_field.c \
-				field/field_comm/palace_sys.c \
-        net_app/union/comm_player.c \
 				net_app/irc_match/ircbattlemenu.c \
 				field/c_gear/c_gear.c \
 				field/fldmmdl_draw.c \
@@ -386,6 +386,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_appear.c \
         field/event_disappear.c \
         field/height_ex.c \
+        field/event_comm_error.c \
         field/gym_elec.c
 
 # フィールド天気

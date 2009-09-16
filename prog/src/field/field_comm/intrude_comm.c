@@ -163,6 +163,13 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
 
+  //通信エラーチェック
+  if(NetErr_App_CheckError() == TRUE){
+    intcomm->comm_status = INTRUDE_COMM_STATUS_ERROR;
+    GameCommSys_ExitReq(intcomm->game_comm);
+    return;
+  }
+  
   switch(*seq){
   case 0:
     if(intcomm->comm_status == INTRUDE_COMM_STATUS_HARD_CONNECT){
@@ -208,6 +215,10 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
 BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork )
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
+
+  if(NetErr_App_CheckError() == TRUE){
+    return TRUE;
+  }
 
   switch(*seq){
   case 0:
@@ -265,13 +276,21 @@ BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork )
 BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
-  
-  if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT){
-    CommPlayer_Exit(intcomm->cps);
-    PALACE_SYS_Free(intcomm->palace);
-    GFL_HEAP_FreeMemory(intcomm);
-    GFL_HEAP_FreeMemory(pwk);
-    return TRUE;
+  FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
+
+  switch(*seq){
+  case 0:
+    if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || NetErr_App_CheckError() == TRUE){
+      CommPlayer_Exit(intcomm->cps);
+      PALACE_SYS_Free(intcomm->palace);
+      GFL_HEAP_FreeMemory(intcomm);
+      GFL_HEAP_FreeMemory(pwk);
+      if(NetErr_App_CheckError() == TRUE){
+        GAMESYSTEM_SetFieldCommErrorReq(invalid_parent->gsys, TRUE);
+      }
+      return TRUE;
+    }
+    break;
   }
   return FALSE;
 }
@@ -400,8 +419,9 @@ static void  IntrudeComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWor
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
 
-  NetErr_ErrorSet();
-  intcomm->comm_status = INTRUDE_COMM_STATUS_ERROR;
+//  NetErr_ErrorSet();
+//  intcomm->comm_status = INTRUDE_COMM_STATUS_ERROR;
+  OS_TPrintf("intrude comm エラー！\n");
 }
 
 //--------------------------------------------------------------

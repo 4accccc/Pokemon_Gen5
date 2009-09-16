@@ -16,8 +16,8 @@
 ///エラー画面システムの状況
 typedef enum{
 	NET_ERR_STATUS_NULL,			///<何もなし
+	NET_ERR_STATUS_ERROR,			///<エラー発生
 	NET_ERR_STATUS_REQ,				///<エラー画面呼び出しリクエスト発生中
-	NET_ERR_STATUS_ERROR,			///<エラー発生(エラー画面は既に表示後)
 }NET_ERR_STATUS;
 
 
@@ -42,8 +42,9 @@ typedef enum{
 extern void NetErr_SystemInit(void);
 extern void NetErr_SystemCreate(int heap_id);
 extern void NetErr_SystemExit(void);
-extern NET_ERR_STATUS NetErr_Main(void);
+extern void NetErr_Main(void);
 extern void NetErr_ErrorSet(void);
+extern BOOL NetErr_DispCall(void);
 
 extern void NetErr_GetTempArea( u8** charArea , u16** scrnArea , u16** plttArea );
 
@@ -51,7 +52,8 @@ extern void NetErr_GetTempArea( u8** charArea , u16** scrnArea , u16** plttArea 
 //--------------------------------------------------------------
 //	アプリ側で使用する関数
 //--------------------------------------------------------------
-extern NET_ERR_STATUS NetErr_App_ErrorCheck(void);
+extern BOOL NetErr_App_CheckError(void);
+extern void NetErr_App_ReqErrorDisp(void);
 
 
 #endif	//__NET_ERR_H__

@@ -90,6 +90,7 @@ static NET_ERR_SYSTEM NetErrSystem = {0};
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
+static BOOL NetErr_DispMain(void);
 static void Local_ErrDispInit(void);
 static void Local_ErrDispExit(void);
 static BOOL Local_SystemOccCheck(void);
@@ -160,42 +161,36 @@ void NetErr_SystemExit(void)
 	GFL_STD_MemClear(nes, sizeof(NET_ERR_SYSTEM));
 }
 
-//--------------------------------------------------------------
+//==================================================================
 /**
- * @brief   通信エラー画面制御メイン
- *
- * @retval  エラー画面システムの状況
+ * エラー発生監視：メイン
  */
-//--------------------------------------------------------------
-NET_ERR_STATUS NetErr_Main(void)
+//==================================================================
+void NetErr_Main(void)
 {
-	NET_ERR_SYSTEM *nes = &NetErrSystem;
-	
-	if(Local_SystemOccCheck() == FALSE){
-		return NET_ERR_STATUS_NULL;
-	}
-	
-	if(nes->status == NET_ERR_STATUS_REQ){
-		//エラー画面描画
-		Local_ErrDispInit();
-		nes->status = NET_ERR_STATUS_ERROR;
-		
-//		OS_SpinWait(10000);
-		
-		while((PAD_Read() & ERR_DISP_END_BUTTON) != 0){
-			;	//ボタンを一度離すまで待つ
-		}
-		
-		while((PAD_Read() & ERR_DISP_END_BUTTON) == 0){
-			;	//エラー画面終了ボタンが押されるまで待つ
-		}
-		
-		//エラー画面終了
-		Local_ErrDispExit();
-		nes->key_timer = 0;
-	}
-	
-	return nes->status;
+  if(NetErrSystem.status == NET_ERR_STATUS_NULL && GFL_NET_IsInit() == TRUE){
+    if(GFL_NET_GetErrorCode() || GFL_NET_SystemIsError() || (GFL_NET_StateGetError()!=0)){
+      //GFL_NET_StateGetWifiErrorNo();  これはエラー情報の取得だけに使用する
+      OS_TPrintf("NetErr エラー発生\n");
+      NetErr_ErrorSet();
+    }
+  }
+}
+
+//==================================================================
+/**
+ * エラーが発生していればエラー画面を一発呼び出し
+ *
+ * @retval  TRUE:エラー画面を呼び出した
+ * @retval  FALSE:呼び出していない
+ * 
+ * エラー画面を表示した場合、ユーザーが特定の操作を行わない限り(Aを押す)
+ * この関数内で無限ループします。
+ */
+//==================================================================
+BOOL NetErr_DispCall(void)
+{
+  return NetErr_DispMain();
 }
 
 //--------------------------------------------------------------
@@ -212,30 +207,37 @@ void NetErr_ErrorSet(void)
 	if(Local_SystemOccCheck() == FALSE || nes->status != NET_ERR_STATUS_NULL){
 		return;
 	}
-	nes->status = NET_ERR_STATUS_REQ;
+	nes->status = NET_ERR_STATUS_ERROR;
 }
 
 //--------------------------------------------------------------
 /**
  * @brief   アプリ用：エラーが発生したか調べる
  *
- * @retval  エラー画面システムの状況
+ * @retval  TRUE:エラー発生
+ * @retval  FALSE:正常動作
  *
  * アプリ側はこの関数を使用してエラーが発生しているか調べ、
- * エラーが発生していた場合(NET_ERR_STATUS_ERROR)は、各アプリ毎のエラー用処理へ移行してください
- *
- * 　※NET_ERR_STATUS_ERRORが取得出来た場合は、既にエラー画面から復帰している時です。
+ * エラーが発生していた場合は、各アプリ毎のエラー用処理へ移行してください
  */
 //--------------------------------------------------------------
-NET_ERR_STATUS NetErr_App_ErrorCheck(void)
+BOOL NetErr_App_CheckError(void)
 {
-	NET_ERR_STATUS status;
-	
-	status = NetErrSystem.status;
-	if(status == NET_ERR_STATUS_ERROR){
-		NetErrSystem.status = NET_ERR_STATUS_NULL;
-	}
-	return status;
+	if(NetErrSystem.status != NET_ERR_STATUS_NULL){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * アプリ用：エラー画面表示リクエスト
+ */
+//==================================================================
+void NetErr_App_ReqErrorDisp(void)
+{
+  GF_ASSERT(NetErrSystem.status == NET_ERR_STATUS_ERROR);
+  NetErrSystem.status = NET_ERR_STATUS_REQ;
 }
 
 //--------------------------------------------------------------
@@ -249,6 +251,53 @@ void NetErr_GetTempArea( u8** charArea , u16** scrnArea , u16** plttArea )
   *charArea = nes->push_char_p;
   *scrnArea = nes->push_scrn_p;
   *plttArea = nes->push_pltt_p;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   通信エラー画面制御メイン
+ *
+ * @retval  TRUE:エラー画面を呼び出した
+ * @retval  FALSE:呼び出していない
+ */
+//--------------------------------------------------------------
+static BOOL NetErr_DispMain(void)
+{
+	NET_ERR_SYSTEM *nes = &NetErrSystem;
+	
+	if(Local_SystemOccCheck() == FALSE){
+		return FALSE;
+	}
+
+	if(nes->status == NET_ERR_STATUS_REQ){
+    //通信ライブラリ終了待ち
+    GFL_NET_Exit(NULL);
+    do{
+      GFL_NET_Main();
+      OS_TPrintf("GFL_NET_IsExitの完了を待っています\n");
+    }while(GFL_NET_IsExit() == FALSE);
+
+		//エラー画面描画
+		Local_ErrDispInit();
+		
+//		OS_SpinWait(10000);
+		
+		while((PAD_Read() & ERR_DISP_END_BUTTON) != 0){
+			;	//ボタンを一度離すまで待つ
+		}
+		
+		while((PAD_Read() & ERR_DISP_END_BUTTON) == 0){
+			;	//エラー画面終了ボタンが押されるまで待つ
+		}
+		
+		//エラー画面終了
+		Local_ErrDispExit();
+		nes->status = NET_ERR_STATUS_NULL;
+		nes->key_timer = 0;
+  	return TRUE;
+	}
+	
+	return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -300,6 +349,9 @@ static void Local_ErrDispInit(void)
 	//フォントカラー退避
 	GFL_FONTSYS_GetColor(&nes->font_letter, &nes->font_shadow, &nes->font_back);
 	GFL_FONTSYS_SetColor(4, 0xb, 7);
+	
+	//※check　退避できないもの
+	G2_BlendNone(); //WriteOnlyの為、レジスタ退避が出来ていない
 	
 	//エラー画面描画
 	Local_ErrDispDraw();
@@ -449,7 +501,7 @@ static void Local_ErrMessagePrint(void)
 	
 	//BMP作成
 	bmpdata = GFL_BMP_CreateInVRAM((void*)((u32)G2_GetBG1CharPtr() + MESSAGE_START_CHARNO*0x20), 
-		MESSAGE_X_LEN*8, MESSAGE_Y_LEN*8, GFL_BMP_16_COLOR, HEAPID_NET_ERR);
+		MESSAGE_X_LEN, MESSAGE_Y_LEN, GFL_BMP_16_COLOR, HEAPID_NET_ERR);
 	
 	//メッセージOPEN
 	{
@@ -470,4 +522,7 @@ static void Local_ErrMessagePrint(void)
 		
 		GFL_FONT_Delete(fontHandle);
 	}
+	
+	GFL_BMP_Delete(bmpdata);
 }
+

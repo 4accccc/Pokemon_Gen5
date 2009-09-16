@@ -49,6 +49,7 @@ typedef struct _COMM_PLAYER_SYS{
   FIELD_COMM_ACTOR_CTRL *act_ctrl;
   COMM_PLAYER act[COMM_PLAYER_MAX];
   MINE_PLAYER mine;     ///<自分自身の座標データなど
+  HEAPID heap_id;
   u8 max;
   u8 update_stop;       ///<TRUE:座標更新を行わない
   u8 padding[2];
@@ -94,6 +95,7 @@ COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, GAMESYS_WORK *gsys, HEAPID heap_id)
   
   cps->max = max;
   cps->gsys = gsys;
+  cps->heap_id = heap_id;
   cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(max, fldMdlSys, heap_id);
   
   return cps;
@@ -112,10 +114,12 @@ void CommPlayer_Exit(COMM_PLAYER_SYS_PTR cps)
   
   OS_TPrintf("通信プレイヤー制御システムの破棄\n");
 
-  for(i = 0; i < COMM_PLAYER_MAX; i++){
-    CommPlayer_Del(cps, i);
+  if(cps->act_ctrl != NULL){  //NULLの場合はPUSH状態の為、既に削除されている
+    for(i = 0; i < COMM_PLAYER_MAX; i++){
+      CommPlayer_Del(cps, i);
+    }
+    FIELD_COMM_ACTOR_CTRL_Delete(cps->act_ctrl);
   }
-  FIELD_COMM_ACTOR_CTRL_Delete(cps->act_ctrl);
   
   GFL_HEAP_FreeMemory(cps);
 }
@@ -200,6 +204,8 @@ void CommPlayer_Push(COMM_PLAYER_SYS_PTR cps)
 {
   int i;
   
+  GF_ASSERT(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE);
+  
   for(i = 0; i < COMM_PLAYER_MAX; i++){
     if(cps->act[i].occ == TRUE){
       CommPlayer_Del(cps, i);
@@ -207,6 +213,8 @@ void CommPlayer_Push(COMM_PLAYER_SYS_PTR cps)
       OS_TPrintf("CommPlayer Push! %d\n", i);
     }
   }
+  FIELD_COMM_ACTOR_CTRL_Delete(cps->act_ctrl);
+  cps->act_ctrl = NULL;
 }
 
 //==================================================================
@@ -220,6 +228,15 @@ void CommPlayer_Pop(COMM_PLAYER_SYS_PTR cps)
 {
   int i;
   COMM_PLAYER_PACKAGE pack;
+  FIELD_MAIN_WORK *fieldWork;
+  MMDLSYS *fldMdlSys;
+
+  GF_ASSERT(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE);
+  GF_ASSERT(cps->act_ctrl == NULL);
+
+  fieldWork = GAMESYSTEM_GetFieldMapWork(cps->gsys);
+  fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
+  cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(cps->max, fldMdlSys, cps->heap_id);
   
   GFL_STD_MemClear(&pack, sizeof(COMM_PLAYER_PACKAGE));
   for(i = 0; i < COMM_PLAYER_MAX; i++){

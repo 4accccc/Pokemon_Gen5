@@ -17,6 +17,7 @@
 #include "net_app/union/union_main.h"
 #include "field/fieldmap_proc.h"
 #include "field/intrude_comm.h"
+#include "system/net_err.h"
 
 
 //==============================================================================
@@ -29,6 +30,7 @@ typedef enum{
   GCSSEQ_UPDATE,
   GCSSEQ_EXIT,
   GCSSEQ_EXIT_WAIT,
+  GCSSEQ_FINISH,
 }GCSSEQ;
 
 ///通信最大人数
@@ -264,14 +266,20 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
     break;
   case GCSSEQ_EXIT_WAIT:
     if(func_tbl->exit_wait_func == NULL || func_tbl->exit_wait_func(&sub_work->func_seq, gcsp->parent_work, gcsp->app_work) == TRUE){
-      gcsp->app_work = NULL;
-      gcsp->game_comm_no = GAME_COMM_NO_NULL;
-      gcsp->comm_status = GAME_COMM_STATUS_NULL;
-      if(gcsp->reserve_comm_game_no != GAME_COMM_NO_NULL){
-        GameCommSys_Boot(gcsp, gcsp->reserve_comm_game_no, gcsp->reserve_parent_work);
-        gcsp->reserve_comm_game_no = GAME_COMM_NO_NULL;
-        gcsp->reserve_parent_work = NULL;
-      }
+      GameCommSub_SeqSet(sub_work, GCSSEQ_FINISH);
+    }
+    break;
+  case GCSSEQ_FINISH:
+    if(NetErr_App_CheckError() == TRUE){
+      return; //エラー発生による強制終了だった場合はエラー画面が表示されるまで待つ
+    }
+    gcsp->app_work = NULL;
+    gcsp->game_comm_no = GAME_COMM_NO_NULL;
+    gcsp->comm_status = GAME_COMM_STATUS_NULL;
+    if(gcsp->reserve_comm_game_no != GAME_COMM_NO_NULL){
+      GameCommSys_Boot(gcsp, gcsp->reserve_comm_game_no, gcsp->reserve_parent_work);
+      gcsp->reserve_comm_game_no = GAME_COMM_NO_NULL;
+      gcsp->reserve_parent_work = NULL;
     }
     break;
   }
@@ -286,6 +294,10 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
 //==================================================================
 void GameCommSys_Callback_FieldCreate(GAME_COMM_SYS_PTR gcsp, void *fieldWork)
 {
+  if(gcsp->sub_work.seq == GCSSEQ_FINISH){
+    return;
+  }
+  
   if(GameFuncTbl[gcsp->game_comm_no].field_create != NULL){
     GameFuncTbl[gcsp->game_comm_no].field_create(gcsp->parent_work, gcsp->app_work, fieldWork);
   }
@@ -300,6 +312,10 @@ void GameCommSys_Callback_FieldCreate(GAME_COMM_SYS_PTR gcsp, void *fieldWork)
 //==================================================================
 void GameCommSys_Callback_FieldDelete(GAME_COMM_SYS_PTR gcsp, void *fieldWork)
 {
+  if(gcsp->sub_work.seq == GCSSEQ_FINISH){
+    return;
+  }
+
   if(GameFuncTbl[gcsp->game_comm_no].field_delete != NULL){
     GameFuncTbl[gcsp->game_comm_no].field_delete(gcsp->parent_work, gcsp->app_work, fieldWork);
   }

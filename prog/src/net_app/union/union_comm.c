@@ -28,7 +28,7 @@
 //  定数定義
 //==============================================================================
 ///HEAPID_UNIONで確保するヒープサイズ
-#define HEAP_SIZE_UNION               0x8000//(0x8a00)  //(0x9800)  //(0xa000)
+#define HEAP_SIZE_UNION               (0x8a00)  //(0x9800)  //(0xa000)
 
 ///通信ステータス
 enum{
@@ -659,7 +659,7 @@ static void UnionComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork)
 {
 	UNION_SYSTEM_PTR unisys = pWork;
 
-  NetErr_ErrorSet();
+//  NetErr_ErrorSet();
 }
 
 //--------------------------------------------------------------

@@ -146,6 +146,26 @@ extern void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, void * fieldmap);
 //------------------------------------------------------------------
 extern BOOL GAMESYSTEM_CheckFieldMapWork( const GAMESYS_WORK *gsys );
 
+//==================================================================
+/**
+ * フィールドでの通信エラー画面表示リクエスト設定
+ *
+ * @param   fieldWork		FIELDMAP_WORK
+ * @param   error_req		TRUE:エラー画面表示。　FALSE:リクエストをクリア
+ */
+//==================================================================
+extern void GAMESYSTEM_SetFieldCommErrorReq( GAMESYS_WORK *gsys, BOOL error_req );
+
+//==================================================================
+/**
+ * フィールドでの通信エラー画面表示リクエスト取得
+ *
+ * @param   fieldWork		FIELDMAP_WORK
+ * @retval  TRUE:エラー画面表示。　FALSE:リクエストをクリア
+ */
+//==================================================================
+extern BOOL GAMESYSTEM_GetFieldCommErrorReq( const GAMESYS_WORK *gsys );
+
 //--------------------------------------------------------------
 //	ISSシステム取得
 //--------------------------------------------------------------
