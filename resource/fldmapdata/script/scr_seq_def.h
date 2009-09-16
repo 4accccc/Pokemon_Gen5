@@ -1306,7 +1306,7 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  
 //--------------------------------------------------------------
 /**
- * _OBJ_ADD OBJを追加
+ * _OBJ_ADD_EX OBJを追加
  * @param x 表示するグリッドX座標
  * @param z 表示するグリッドZ座標
  * @param dir 方向 DIR_UP等
@@ -1315,9 +1315,9 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  * @param move 動作コードMV_RND等
  */
 //--------------------------------------------------------------
-#define _OBJ_ADD( x,z,dir,id,code,move ) _ASM_OBJ_ADD x, z, dir, id, code, move
+#define _OBJ_ADD_EX( x,z,dir,id,code,move ) _ASM_OBJ_ADD_EX x, z, dir, id, code, move
 
-.macro _ASM_OBJ_ADD x, z, dir, id, code, move
+.macro _ASM_OBJ_ADD_EX x, z, dir, id, code, move
   .short EV_SEQ_OBJ_ADD
   .short \x
   .short \z
@@ -1330,24 +1330,27 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  
 //--------------------------------------------------------------
 /**
- * _OBJ_ADD OBJを削除
+ * _OBJ_DEL_EX OBJを削除
  * @param id 削除するOBJ ID
  */
 //--------------------------------------------------------------
-#define _OBJ_DEL( id ) _ASM_OBJ_DEL id
+#define _OBJ_DEL_EX( id ) _ASM_OBJ_DEL_EX id
 
-.macro  _ASM_OBJ_DEL id
+.macro  _ASM_OBJ_DEL_EX id
   .short EV_SEQ_OBJ_DEL
   .short \id
 .endm
  
 //--------------------------------------------------------------
 /**
- * _OBJ_ADD_EV ゾーン内で配置されているOBJ一覧内、指定のIDを持つOBJを追加
+ * _OBJ_ADD ゾーン内で配置されているOBJ一覧内、指定のIDを持つOBJを追加
  * @param id 配置OBJ内で追加するOBJ ID
  */
 //--------------------------------------------------------------
-  .macro _OBJ_ADD_EV id
+#define _OBJ_ADD( id ) \
+  _ASM_OBJ_ADD id
+
+  .macro _ASM_OBJ_ADD id
   .short EV_SEQ_OBJ_ADD_EV
   .short \id
   .endm
@@ -1359,7 +1362,13 @@ DEF_CMD_COUNT  =  ( DEF_CMD_COUNT + 1 )
  * @param id 配置OBJ内で追加するOBJ ID
  */
 //--------------------------------------------------------------
-  .macro _OBJ_DEL_EV id
+#define _OBJ_DEL( id )  \
+    _ASM_OBJ_DEL id
+
+#define _OBJ_DEL_EV( id ) \
+    _ASM_OBJ_DEL id
+
+  .macro _ASM_OBJ_DEL id
   .short EV_SEQ_OBJ_DEL_EV
   .short \id
   .endm
