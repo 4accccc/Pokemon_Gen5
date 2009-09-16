@@ -6,8 +6,6 @@
 #include "arc/debug_obata.naix"
 
 
-void* mem;
-
 
 //============================================================================================
 /**
@@ -144,7 +142,6 @@ static GFL_PROC_RESULT DEBUG_OBATA_DEMO_TEST_MainProcFunc_End( GFL_PROC* proc, i
 
 	// ワークを破棄
   ICA_ANIME_Delete( work->icaAnime );
-  GFL_HEAP_FreeMemory( mem );
 	GFL_PROC_FreeWork( proc );
 
   DEBUG_OBATA_DEMO_TEST_Exit();
@@ -210,7 +207,6 @@ static void Initialize( PROC_WORK* work )
   }
 
   // icaデータをロード
-  mem = GFL_HEAP_AllocMemory( HEAPID_OBATA_DEBUG, 0xffff );
   work->icaAnime = ICA_ANIME_CreateStreamingAlloc(
       HEAPID_OBATA_DEBUG, ARCID_OBATA_DEBUG, NARC_debug_obata_ica_test_data2_bin, 10 );
 

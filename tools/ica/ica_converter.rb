@@ -25,15 +25,18 @@
 #
 # [バイナリデータフォーマット (オプションに -srt を指定した場合)]
 # [ 0]: アニメーションフレーム数 (int)
-# [ 4]: scale x (float)         |
-# [ 8]: scale y (float)         |
-# [12]: scale z (float)         | 
-# [16]: rotate x (float)        |
-# [20]: rotate y (float)        |------1フレーム目のデータ
-# [24]: rotate z (float)        |
-# [28]: translate x (float)     |
-# [32]: translate y (float)     |
-# [36]: translate z (float)     |
+# [ 4]: scaleデータの有無(0:無, 1:有)     
+# [ 5]: rotateデータの有無(0:無, 1:有)
+# [ 6]: translateデータの有無(0:無, 1:有)
+# [ 7]: scale x (float)                   |
+# [11]: scale y (float)                   |
+# [15]: scale z (float)                   | 
+# [19]: rotate x (float)                  |
+# [23]: rotate y (float)                  |------1フレーム目のデータ
+# [27]: rotate z (float)                  |
+# [31]: translate x (float)               |
+# [35]: translate y (float)               |
+# [39]: translate z (float)               |
 # 以下、全フレーム分のデータが存在
 # また、オプション指定に該当しないデータは削減されます。
 # 
@@ -99,6 +102,23 @@ file = File.open( ARGV[2], "wb" )
 
 # アニメーションフレーム数を出力
 file.write( [ica.frameSize].pack( "I" ) )
+
+# 選択情報を出力
+if output_scale==TRUE then
+  file.write( [1].pack( "C" ) )
+else
+  file.write( [0].pack( "C" ) )
+end
+if output_rotate==TRUE then
+  file.write( [1].pack( "C" ) )
+else
+  file.write( [0].pack( "C" ) )
+end
+if output_translate==TRUE then
+  file.write( [1].pack( "C" ) )
+else
+  file.write( [0].pack( "C" ) )
+end
 
 # 全フレーム分のアニメーションデータを出力
 0.upto( ica.frameSize-1 ) do |i|

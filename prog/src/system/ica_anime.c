@@ -9,7 +9,7 @@
  */
 /////////////////////////////////////////////////////////////////////////////////////
 #include <gflib.h>
-#include "ica_anime.h"
+#include "system/ica_anime.h"
 
 // デバッグ出力スイッチ
 #define ICA_ANIME_DEBUG

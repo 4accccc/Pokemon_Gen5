@@ -19,6 +19,8 @@ targetname = debug_obata
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)
 
+ICACONV = ..\..\..\tools\ica\ica_converter.rb
+
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -50,7 +52,7 @@ subdir:
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # コンバート
-	ruby ica_converter.rb -rt camera_null2.ica ica_test_data2.bin
+	ruby $(ICACONV) -rt camera_null2.ica ica_test_data2.bin
 	g3dcvtr houou_test.imd
 	g3dcvtr houou_test.ica
 	g3dcvtr houou_test.ita
