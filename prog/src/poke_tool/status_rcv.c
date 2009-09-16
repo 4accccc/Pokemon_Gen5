@@ -17,7 +17,7 @@
 #include "poke_tool/monsno_def.h"
 #include "item/item.h"
 
-#include "status_rcv.h"
+#include "poke_tool/status_rcv.h"
 
 //============================================================================================
 //	’è”’è‹`

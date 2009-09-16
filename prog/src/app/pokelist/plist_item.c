@@ -19,7 +19,7 @@
 #include "plist_plate.h"
 #include "plist_message.h"
 #include "plist_item.h"
-#include "status_rcv.h"
+#include "poke_tool/status_rcv.h"
 
 //======================================================================
 //	define
