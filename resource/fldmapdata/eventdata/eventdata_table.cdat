@@ -1,6 +1,9 @@
-#include "../script/c99_def.h"
 #include "../script/common_scr_def.h"
+#include "../script/c99_def.h"
+#include "../script/bg_attr_def.h"
 #include "../script/trainer_def.h"
+#include "../script/init_scr_def.h"
+#include "../script/pokecen_scr_def.h"
 //#include "tmp/bcwftest.h"
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Ídata/bcwftest.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
 #ifndef ZONE_BCWFTEST_EVD_H
