@@ -925,7 +925,9 @@ SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
                            test/obata/debug_obata_demo_test.c \
                            test/obata/debug_obata_demo_test_setup.c \
                            test/obata/debug_obata_3d_sound.c \
-                           test/obata/debug_obata_3d_sound_setup.c 
+                           test/obata/debug_obata_3d_sound_setup.c \
+                           test/obata/debug_obata_ica_test.c \
+                           test/obata/debug_obata_ica_test_setup.c
 
 #MCSƒ‰ƒCƒuƒ‰ƒŠ
 #===> MCS_EX
