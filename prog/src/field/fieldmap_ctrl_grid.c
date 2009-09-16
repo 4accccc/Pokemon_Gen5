@@ -10,6 +10,7 @@
 #include "system/gfl_use.h"
 
 #include "field/zonedata.h"
+#include "arc/fieldmap/zone_id.h"
 
 #include "fldmmdl.h"
 #include "fieldmap.h"
@@ -77,6 +78,9 @@ static void mapCtrlGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos );
 static const VecFx32 * mapCtrlGrid_GetCameraTarget( FIELDMAP_WORK *fieldWork );
 
 static u16 grid_ChangeFourDir( u16 dir );
+
+
+static BOOL gym_check( u16 zone_id );
 
 //======================================================================
 //	フィールドマップ　グリッド処理
@@ -152,7 +156,7 @@ static void mapCtrlGrid_Create(
 
 
   //  カメラ範囲
-  if( ZONEDATA_GetMatrixID( FIELDMAP_GetZoneID( fieldWork ) ) > 0 )
+  if( (ZONEDATA_GetMatrixID( FIELDMAP_GetZoneID( fieldWork ) ) > 0) && (gym_check( FIELDMAP_GetZoneID( fieldWork ) ) == FALSE) )
   {
 
     FIELD_CAMERA_RECT* p_rect;
@@ -292,3 +296,35 @@ void FIELDMAP_CTRL_GRID_SetPlayerPause( FIELDMAP_WORK *fieldMap, BOOL flag )
 #endif
   gridWork->jikiMovePause = flag;
 }
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ぞーんIDからジムチェック
+ *
+ *	@param	zone_id 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static BOOL gym_check( u16 zone_id )
+{
+  switch( zone_id )
+  {
+  case ZONE_ID_C01GYM0101:
+  case ZONE_ID_C02GYM0101:
+  case ZONE_ID_C03GYM0101:
+  case ZONE_ID_C04GYM0101:
+  case ZONE_ID_C05GYM0101:
+  case ZONE_ID_C06GYM0101:
+  case ZONE_ID_C07GYM0101:
+  case ZONE_ID_C08GYM0101:
+    
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
