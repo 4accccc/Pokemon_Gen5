@@ -16,10 +16,11 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA   ev_t02pc0101_scene_change_01		//博士ポケセン案内
-_EVENT_DATA   ev_t02pc0101_woman1_1
-_EVENT_DATA   ev_t02pc0101_middlewoman1_1
-_EVENT_DATA   ev_t02pc0101_doctor_guide
+_EVENT_DATA		ev_t02pc0101_scene_change_01		//博士ポケセン案内
+_EVENT_DATA		ev_t02pc0101_woman1_1
+_EVENT_DATA		ev_t02pc0101_middlewoman1_1
+_EVENT_DATA		ev_t02pc0101_doctor_guide
+_EVENT_DATA		ev_t02pc0101_support_01
 _EVENT_DATA_END
 
 
@@ -45,6 +46,8 @@ _EVENT_DATA_END
 EVENT_START   ev_t02pc0101_scene_change_01
 	//ポケセン案内イベント
 	
+	//友達♀：ポケセン内に入る　自機の真横
+	
 	//博士：気付く、近づく
 	_OBJ_ANIME( T02PC0101_DOCTOR, anm_hakase_tikaduku )
 	_OBJ_ANIME_WAIT()
@@ -53,9 +56,10 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_hakase2_01, T02PC0101_DOCTOR )
 	_BALLOONWIN_CLOSE()
 	
-	//博士：カウンターの真横に動く自機：カウンター前に移動
+	//博士：カウンターの真横に動く、自機：カウンター前に移動、友達♀：自機真横に移動
 	_OBJ_ANIME( T02PC0101_DOCTOR, anm_hakase_counter )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_counter )
+	_OBJ_ANIME( T02PC0101_SUPPORT_01, anm_support_counter )
 	_OBJ_ANIME_WAIT()
 	
 	//ポケモンセンターの凄いところ！
@@ -68,20 +72,23 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	
 	//【仮】回復処理
 	
-	//博士：パソコンの前（１マス隣）に移動自機：パソコンの前に移動
-	_OBJ_ANIME( T02PC0101_DOCTOR, anm_hakase_pc )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_pc )
+	//博士：パソコンの前（１マス隣）に移動、自機：パソコンの前に移動、友達♀：自機真横に移動
+	_OBJ_ANIME( T02PC0101_DOCTOR,anm_hakase_pc )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_pc )
+	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_support_pc )
 	_OBJ_ANIME_WAIT()
-	
-	//【仮】友達♀：自機の横に移動　保留
 	
 	//こいつはパソコン！
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_hakase2_04,T02PC0101_DOCTOR )
 	_BALLOONWIN_CLOSE()
 	
-	//【仮】友達♀：博士の方に向く　保留
+	//友達♀：博士の方に向く、その場ジャンプ
+	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_support_jump )
+	_OBJ_ANIME_WAIT()
 	
-	//【仮】はかせ……　がめんの「だれかのパソコン」って　保留
+	//はかせ……　がめんの「だれかのパソコン」って
+	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_white_01,T02PC0101_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
 	
 	//なるほど……　いい　しつもんだ
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_hakase2_05,T02PC0101_DOCTOR )
@@ -90,6 +97,7 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	//博士：フレンドリィショップの前（１マス隣）に移動、自機：フレンドリィショップの前に移動
 	_OBJ_ANIME( T02PC0101_DOCTOR,anm_hakase_friendly )
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_friendly )
+	_OBJ_ANIME( T02PC0101_SUPPORT_01,anm_support_friendly )
 	_OBJ_ANIME_WAIT()
 	
 	//こちらは　フレンドリィショップ！
@@ -104,11 +112,22 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	_OBJ_ANIME( T02PC0101_DOCTOR,anm_hakase_sayonara )
 	_OBJ_ANIME_WAIT()
 	
-	//【仮】友達♀も去る　保留
-	
 	//博士の動作モデルを削除する
 	_OBJ_DEL_EV( T02PC0101_DOCTOR )
-
+	
+	//友達♀：自機のほうに向く、自機：友達♀に向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_muku )
+	_OBJ_ANIME( T02PC0101_SUPPORT_01, anm_support_muku )
+	_OBJ_ANIME_WAIT()
+	
+	//あたし　ちょっと　のんびり　していくね
+	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_white_02,T02PC0101_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//友達♀：ショップに向く
+	_OBJ_ANIME( T02PC0101_SUPPORT_01, anm_support_shop )
+	_OBJ_ANIME_WAIT()
+	
 	//博士案内イベント終了
 	$WK_SCENE_T02PC0101 = 1
 
@@ -141,6 +160,14 @@ _ANIME_LABEL	anm_player_counter
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/
+/*     友達♀、カウンター前まで移動                     */
+/**************************************************************/
+_ANIME_LABEL	anm_support_counter
+	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
 /*     博士、パソコン前まで移動                     */
 /**************************************************************/
 _ANIME_LABEL	anm_hakase_pc
@@ -157,12 +184,28 @@ _ANIME_LABEL	anm_player_pc
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
+/*     友達♀、パソコン前まで移動                     */
+/**************************************************************/
+_ANIME_LABEL	anm_support_pc
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*     友達♀、博士のほうに向いてその場ジャンプ               */
+/**************************************************************/
+_ANIME_LABEL	anm_support_jump
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA AC_STAY_JUMP_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
 /*     博士、フレンドリィショップ前まで移動                     */
 /**************************************************************/
 _ANIME_LABEL	anm_hakase_friendly
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,5
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 	
@@ -173,6 +216,17 @@ _ANIME_LABEL	anm_player_friendly
 	_ANIME_DATA	AC_WAIT_16F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*     友達♀、フレンドリィショップ前まで移動                     */
+/**************************************************************/
+_ANIME_LABEL	anm_support_friendly
+	_ANIME_DATA	AC_WAIT_16F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,4
 	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
@@ -186,7 +240,27 @@ _ANIME_LABEL	anm_hakase_sayonara
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 	
-
+/**************************************************************/
+/*     友達♀、自機のほうに向く                               */
+/**************************************************************/
+_ANIME_LABEL	anm_support_muku
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*     自機、友達♀のほうに向く                               */
+/**************************************************************/
+_ANIME_LABEL	anm_player_muku
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*     友達♀：ショップのほうに向く                               */
+/**************************************************************/
+_ANIME_LABEL	anm_support_shop
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+	
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
@@ -201,10 +275,7 @@ EVENT_END
 /*      T02 MIDDLEWOMAN1の会話用イベントスクリプト            */
 /**************************************************************/
 EVENT_START   ev_t02pc0101_middlewoman1_1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t02pc0101_middlewoman1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02pc0101_middlewoman1_01 )
 EVENT_END
 
 /**************************************************************/
@@ -214,3 +285,9 @@ EVENT_START   ev_t02pc0101_doctor_guide
 
 EVENT_END
 
+/**************************************************************/
+/*                  友達♀                                    */
+/**************************************************************/
+EVENT_START   ev_t02pc0101_support_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02pc0101_white_02 )
+EVENT_END
