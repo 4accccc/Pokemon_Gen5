@@ -901,6 +901,12 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       para->partyPartner = NULL;  ///< 2vs2時の味方AI（不要ならnull）
       para->partyEnemy2 = NULL;   ///< 2vs2時の２番目敵AI用（不要ならnull）
       para->statusPlayer = GAMEDATA_GetMyStatus( wk->gameData );
+      {
+        STRBUF* hoge = GFL_STR_CreateBuffer( 32, HEAPID_CORE );
+        OS_TPrintf("いまからだよ\n");
+        MyStatus_CopyNameString( para->statusPlayer, hoge );
+        GFL_STR_DeleteBuffer( hoge );
+      }
       para->itemData = GAMEDATA_GetMyItem( wk->gameData );
       TAYA_Printf(" **** ITEM PTR= %p\n", para->itemData );
 
@@ -997,7 +1003,7 @@ static BOOL btlBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo )
 
 static const GFLNetInitializeStruct btlNetInitParam = {
   BtlRecvFuncTable,     // 受信関数テーブル
-  5,                    // 受信テーブル要素数
+  BTL_NETFUNCTBL_ELEMS, // 受信テーブル要素数
   NULL,                 // ハードで接続した時に呼ばれる
   NULL,                 // ネゴシエーション完了時にコール
   NULL,                 // ユーザー同士が交換するデータのポインタ取得関数
@@ -1039,8 +1045,8 @@ static const GFLNetInitializeStruct btlNetInitParam = {
 };
 
 static const GFLNetInitializeStruct btlMultiNetInitParam = {
-  BtlRecvFuncTable,   // 受信関数テーブル
-  5,                  // 受信テーブル要素数
+  BtlRecvFuncTable,     ///< 受信関数テーブル
+  BTL_NETFUNCTBL_ELEMS, ///< 受信テーブル要素数
   NULL,                 ///< ハードで接続した時に呼ばれる
   NULL,                 ///< ネゴシエーション完了時にコール
   NULL,                 // ユーザー同士が交換するデータのポインタ取得関数

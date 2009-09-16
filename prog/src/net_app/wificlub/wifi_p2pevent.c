@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	wifi_p2pevent.c
- * @bfief	WIFIP2Pイベント制御
- * @author	k.ohno
- * @date	06.04.14
+ * @file  wifi_p2pevent.c
+ * @bfief WIFIP2Pイベント制御
+ * @author  k.ohno
+ * @date  06.04.14
  */
 //============================================================================================
 
@@ -29,14 +29,14 @@
 #include "net_app/balloon.h"
 
 //==============================================================================
-//	プロトタイプ宣言
+//  プロトタイプ宣言
 //==============================================================================
 static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT WifiClubProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 
 //==============================================================================
-//	データ
+//  データ
 //==============================================================================
 const GFL_PROC_DATA WifiClubProcData = {
   WifiClubProcInit,
@@ -64,7 +64,7 @@ typedef struct{
   u16* ret;
   u8 lvLimit;
   u8 bSingle;
-  void* work;		// wifiPofin用ワーク
+  void* work;   // wifiPofin用ワーク
   u32 vchat;
 }EV_P2PEVENT_WORK;
 
@@ -122,7 +122,7 @@ static const u8 sc_P2P_FOUR_MATCH_MAX[ WFP2PMF_TYPE_NUM ] = {
 
 //-------------------------------------
 #if _BLOCK
-///	バトルルームの実験のためプロセス変更関数を作成
+/// バトルルームの実験のためプロセス変更関数を作成
 static void P2P_FourWaitInit( EV_P2PEVENT_WORK* p_wk, GMEVENT* fsys, u32 heapID, u32 type );
 static u32 P2P_FourWaitEnd( EV_P2PEVENT_WORK* p_wk );
 #else
@@ -148,7 +148,7 @@ static BALLOON_PROC_WORK* BL_ProcSet( GMEVENT* fsys, u32 heapID, u32 vchat ){}
 static void BL_ProcEnd( BALLOON_PROC_WORK* p_wk ){}
 #endif
 
-// レコード	ミニゲーム遊んだスコア設定
+// レコード ミニゲーム遊んだスコア設定
 //static void P2P_Record_Minigame( FIELDSYS_WORK* fsys );
 
 
@@ -180,7 +180,7 @@ NextMatchKindTbl aNextMatchKindTbl[] = {
   {0,0, P2P_BUCKET_WAIT},   //WIFI_P2PMATCH_BUCKET:   // バケット呼び出し
   {0,0, P2P_BALANCE_BALL_WAIT},   //WIFI_P2PMATCH_BALANCEBALL:   // 玉乗り呼び出し
   {0,0, P2P_BALLOON_WAIT},   //WIFI_P2PMATCH_BALLOON:   // ふうせん呼び出し
-#ifdef WFP2P_DEBUG_EXON	//
+#ifdef WFP2P_DEBUG_EXON //
   {0, 0, P2P_BATTLEROOM},   //WIFI_P2PMATCH_BALLOON:   // ふうせん呼び出し
   {0, WIFI_BATTLEFLAG_MULTI, P2P_BATTLE},   //MULTI フリー対戦
 #endif
@@ -189,7 +189,7 @@ NextMatchKindTbl aNextMatchKindTbl[] = {
 
 
 //==============================================================================
-//	WIFI通信入り口
+//  WIFI通信入り口
 //==============================================================================
 static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
@@ -199,7 +199,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
 
   switch (ep2p->seq) {
   case P2P_INIT:
-	
+
     ep2p->seq = P2P_MATCH_BOARD;
     if(ep2p->pMatchParam->seq == WIFI_P2PMATCH_DPW){
       if( mydwc_checkMyGSID() ){
@@ -235,7 +235,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_BATTLE:
     {
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
-      GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, 5, NULL);
+      GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
       GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO);
       ep2p->seq++;
     }
@@ -277,12 +277,12 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     return TRUE;
 
   case P2P_POFIN_WAIT:
-    //		P2P_FourWaitInit( ep2p, fsys, HEAPID_WORLD, WFP2PMF_TYPE_POFIN );
+    //    P2P_FourWaitInit( ep2p, fsys, HEAPID_WORLD, WFP2PMF_TYPE_POFIN );
     ep2p->seq++;
     break;
 
   case P2P_POFIN_WAIT_END:
-    //        if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){		//サブプロセス終了待ち
+    //        if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){   //サブプロセス終了待ち
     //          ep2p->seq = P2P_FourWaitEnd( ep2p );
     //    }
     break;
@@ -293,19 +293,19 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     ep2p->seq++;
     break;
   case P2P_POFIN_END:
-    //        if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){		//サブプロセス終了待ち
+    //        if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){   //サブプロセス終了待ち
     //          sys_FreeMemoryEz(ep2p->work);
     //        ep2p->seq = P2P_MATCH_BOARD;
     //  }
     break;
 
   case P2P_FRONTIER:
-	GFL_NET_SetWifiBothNet(FALSE);
-//	ep2p->work = EvCmdFrontierSystemCall( fsys,  NULL );
+  GFL_NET_SetWifiBothNet(FALSE);
+//  ep2p->work = EvCmdFrontierSystemCall( fsys,  NULL );
     ep2p->seq++;
     break;
   case P2P_FRONTIER_END:
-    //        if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){		//サブプロセス終了待ち
+    //        if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){   //サブプロセス終了待ち
     //            sys_FreeMemoryEz(ep2p->work);
     //            ep2p->seq = P2P_MATCH_BOARD;
     //        }
@@ -318,60 +318,60 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     break;
 
   case P2P_BATTLEROOM_END:
-    //      if( WBRSys_EndCheck( ep2p->work ) == TRUE ){		//サブプロセス終了待ち
+    //      if( WBRSys_EndCheck( ep2p->work ) == TRUE ){    //サブプロセス終了待ち
     //        ep2p->seq = P2P_MATCH_BOARD;
-    //		WBR_ProcEnd( ep2p->work );
+    //    WBR_ProcEnd( ep2p->work );
     //  }
     break;
 #endif
 
   case P2P_BUCKET_WAIT:
-    //		P2P_FourWaitInit( ep2p, fsys, HEAPID_WORLD, WFP2PMF_TYPE_BUCKET );
+    //    P2P_FourWaitInit( ep2p, fsys, HEAPID_WORLD, WFP2PMF_TYPE_BUCKET );
     //      ep2p->seq++;
     break;
 
   case P2P_BUCKET_WAIT_END:
-    //    if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){		//サブプロセス終了待ち
+    //    if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){   //サブプロセス終了待ち
     //      ep2p->seq = P2P_FourWaitEnd( ep2p );
     //}
     break;
 
   case P2P_BUCKET:
     // ミニゲームスコア設定
-    //		P2P_Record_Minigame( fsys );
+    //    P2P_Record_Minigame( fsys );
     //        ep2p->work = BCT_ProcSet(fsys,HEAPID_WORLD,ep2p->vchat);
     //        ep2p->seq++;
     break;
 
   case P2P_BUCKET_END:
-    //        if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){		//サブプロセス終了待ち
+    //        if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){   //サブプロセス終了待ち
     //            ep2p->seq = P2P_MATCH_BOARD;
-    //			BCT_ProcEnd( ep2p->work );
+    //      BCT_ProcEnd( ep2p->work );
     //        }
     break;
 
   case P2P_BALANCE_BALL_WAIT:
-    //		P2P_FourWaitInit( ep2p, fsys, HEAPID_WORLD, WFP2PMF_TYPE_BALANCE_BALL );
+    //    P2P_FourWaitInit( ep2p, fsys, HEAPID_WORLD, WFP2PMF_TYPE_BALANCE_BALL );
     //        ep2p->seq++;
     break;
 
   case P2P_BALANCE_BALL_WAIT_END:
-    //        if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){		//サブプロセス終了待ち
+    //        if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){   //サブプロセス終了待ち
     //            ep2p->seq = P2P_FourWaitEnd( ep2p );
     //        }
     break;
 
   case P2P_BALANCE_BALL:
     // ミニゲームスコア設定
-    //		P2P_Record_Minigame( fsys );
+    //    P2P_Record_Minigame( fsys );
     //        ep2p->work = BB_ProcSet(fsys,HEAPID_WORLD,ep2p->vchat);
     //        ep2p->seq++;
     break;
 
   case P2P_BALANCE_BALL_END:
-    //       if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){		//サブプロセス終了待ち
+    //       if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){    //サブプロセス終了待ち
     //           ep2p->seq = P2P_MATCH_BOARD;
-    //			BB_ProcEnd( ep2p->work );
+    //      BB_ProcEnd( ep2p->work );
     //      }
     break;
 
@@ -382,8 +382,8 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
 
   case P2P_BALLOON_WAIT_END:
 
-    if( !GAMESYSTEM_EVENT_IsExists(pClub->gsys) ){		//サブプロセス終了待ち
-      //     if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){		//サブプロセス終了待ち
+    if( !GAMESYSTEM_EVENT_IsExists(pClub->gsys) ){    //サブプロセス終了待ち
+      //     if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){    //サブプロセス終了待ち
       ep2p->seq = P2P_FourWaitEnd( ep2p );
       GFL_OVERLAY_Unload(FS_OVERLAY_ID(wificlub));
 
@@ -392,14 +392,14 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
 
   case P2P_BALLOON:
     // ミニゲームスコア設定
-    //		P2P_Record_Minigame( fsys );
+    //    P2P_Record_Minigame( fsys );
     ep2p->work = BL_ProcSet(pClub->event,HEAPID_NETWORK,ep2p->vchat);
     ep2p->seq++;
     break;
 
   case P2P_BALLOON_END:
-    if( !GAMESYSTEM_EVENT_IsExists(pClub->gsys) ){		//サブプロセス終了待ち
-      //        if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){		//サブプロセス終了待ち
+    if( !GAMESYSTEM_EVENT_IsExists(pClub->gsys) ){    //サブプロセス終了待ち
+      //        if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){   //サブプロセス終了待ち
       ep2p->seq = P2P_MATCH_BOARD;
       BL_ProcEnd( ep2p->work );
     }
@@ -425,15 +425,15 @@ static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk,
   ep2p->pWifiList = SaveData_GetWifiListData(pClub->ctrl); //クラブに必要な物を移し変え
   ep2p->pMatchParam->seq = P2P_INIT;
   ep2p->gsys = pClub->gsys;
-	
+
   pClub->pWork = ep2p;
 
-	// サウンドテスト
-	// ＢＧＭ一時停止→退避
-	PMSND_PauseBGM(TRUE);
-	PMSND_PushBGM();
+  // サウンドテスト
+  // ＢＧＭ一時停止→退避
+  PMSND_PauseBGM(TRUE);
+  PMSND_PushBGM();
 
-	
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -446,13 +446,13 @@ static GFL_PROC_RESULT WifiClubProcEnd( GFL_PROC * proc, int * seq, void * pwk, 
   GFL_HEAP_FreeMemory(ep2p->pMatchParam);
   GFL_PROC_FreeWork(proc);
 
-	// サウンドテスト
-	// ＢＧＭ取り出し→再開
-	PMSND_PopBGM();
-	PMSND_PauseBGM(FALSE);
-	PMSND_FadeInBGM(60);
+  // サウンドテスト
+  // ＢＧＭ取り出し→再開
+  PMSND_PopBGM();
+  PMSND_PauseBGM(FALSE);
+  PMSND_FadeInBGM(60);
 
-	
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -485,11 +485,11 @@ GMEVENT * EVENT_CreateWifiClub(GAMESYS_WORK *gsys, int kind)
 #if _BLOCK
 //----------------------------------------------------------------------------
 /**
- *	@brief	４にん待合室初期化
+ *  @brief  ４にん待合室初期化
  *
- *	@param	p_wk		ワーク
- *	@param	fsys		フィールドシステム
- *	@param	heapID		ヒープ
+ *  @param  p_wk    ワーク
+ *  @param  fsys    フィールドシステム
+ *  @param  heapID    ヒープ
  */
 //-----------------------------------------------------------------------------
 static void P2P_FourWaitInit( EV_P2PEVENT_WORK* p_wk, GMEVENT* fsys, u32 heapID, u32 type )
@@ -503,7 +503,7 @@ static void P2P_FourWaitInit( EV_P2PEVENT_WORK* p_wk, GMEVENT* fsys, u32 heapID,
   p_work->comm_max = sc_P2P_FOUR_MATCH_MAX[ type ];
   p_work->result = FALSE;
   p_work->vchat = FALSE;
-  //	p_work->p_savedata = fsys->savedata;
+  //  p_work->p_savedata = fsys->savedata;
   //    p_work->p_fnote = ;
   p_work->wintype = CONFIG_GetWindowType(SaveData_GetConfig(SaveControl_GetPointer()));
 
@@ -515,11 +515,11 @@ static void P2P_FourWaitInit( EV_P2PEVENT_WORK* p_wk, GMEVENT* fsys, u32 heapID,
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	４にん待合室募集終了
+ *  @brief  ４にん待合室募集終了
  *
- *	@param	p_wk	ワーク
+ *  @param  p_wk  ワーク
  *
- *	@retval	次進んでほしいシーケンス
+ *  @retval 次進んでほしいシーケンス
  */
 //-----------------------------------------------------------------------------
 static u32 P2P_FourWaitEnd( EV_P2PEVENT_WORK* p_wk )
@@ -527,11 +527,11 @@ static u32 P2P_FourWaitEnd( EV_P2PEVENT_WORK* p_wk )
   WFP2PMF_INIT* p_work = p_wk->work;
 
   if( p_work->result == TRUE ){
-	switch( p_work->type ){
+  switch( p_work->type ){
       // ポフィン
-	case WFP2PMF_TYPE_POFIN:
-	  p_wk->seq = P2P_POFIN;
-	  break;
+  case WFP2PMF_TYPE_POFIN:
+    p_wk->seq = P2P_POFIN;
+    break;
       // たまいれ
     case WFP2PMF_TYPE_BUCKET:
       p_wk->seq = P2P_BUCKET;
@@ -559,10 +559,10 @@ static u32 P2P_FourWaitEnd( EV_P2PEVENT_WORK* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	バケットゲーム開始
+ *  @brief  バケットゲーム開始
  *
- *	@param	fsys		システムワーク
- *	@param	heapID		ヒープID
+ *  @param  fsys    システムワーク
+ *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
 static BUCKET_PROC_WORK* BCT_ProcSet( FIELDSYS_WORK* fsys, u32 heapID, u32 vchat )
@@ -581,9 +581,9 @@ static BUCKET_PROC_WORK* BCT_ProcSet( FIELDSYS_WORK* fsys, u32 heapID, u32 vchat
     };
     p_work = sys_AllocMemory( heapID, sizeof(BUCKET_PROC_WORK) );
     memset( p_work, 0, sizeof(BUCKET_PROC_WORK) );
-    p_work->vchat		= vchat;
-    p_work->wifi_lobby	= FALSE;
-    p_work->p_save		= SaveControl_GetPointer();
+    p_work->vchat   = vchat;
+    p_work->wifi_lobby  = FALSE;
+    p_work->p_save    = SaveControl_GetPointer();
 
     // ミニゲーム共通オーバーレイを読み込む
     GFL_OVERLAY_Load( FS_OVERLAY_ID(minigame_common));
@@ -595,9 +595,9 @@ static BUCKET_PROC_WORK* BCT_ProcSet( FIELDSYS_WORK* fsys, u32 heapID, u32 vchat
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	バケットゲーム終了
+ *  @brief  バケットゲーム終了
  *
- *	@param	p_wk
+ *  @param  p_wk
  */
 //-----------------------------------------------------------------------------
 static void BCT_ProcEnd( BUCKET_PROC_WORK* p_wk )
@@ -611,11 +611,11 @@ static void BCT_ProcEnd( BUCKET_PROC_WORK* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	バランスボールプロセス設定
+ *  @brief  バランスボールプロセス設定
  *
- *	@param	fsys		ワーク
- *	@param	heapID		ヒープ
- *	@param	vchat		VCHAT
+ *  @param  fsys    ワーク
+ *  @param  heapID    ヒープ
+ *  @param  vchat   VCHAT
  */
 //-----------------------------------------------------------------------------
 static BB_PROC_WORK* BB_ProcSet( FIELDSYS_WORK* fsys, u32 heapID, u32 vchat )
@@ -635,7 +635,7 @@ static BB_PROC_WORK* BB_ProcSet( FIELDSYS_WORK* fsys, u32 heapID, u32 vchat )
     p_work = sys_AllocMemory( heapID, sizeof(BB_PROC_WORK) );
     memset( p_work, 0, sizeof(BB_PROC_WORK) );
     p_work->vchat = vchat;
-    p_work->wifi_lobby	= FALSE;
+    p_work->wifi_lobby  = FALSE;
     p_work->p_save= fsys->savedata;
 
     // ミニゲーム共通オーバーレイを読み込む
@@ -648,9 +648,9 @@ static BB_PROC_WORK* BB_ProcSet( FIELDSYS_WORK* fsys, u32 heapID, u32 vchat )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	バランスボールプロセス破棄
+ *  @brief  バランスボールプロセス破棄
  *
- *	@param	p_wk	ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void BB_ProcEnd( BB_PROC_WORK* p_wk )
@@ -666,11 +666,11 @@ static void BB_ProcEnd( BB_PROC_WORK* p_wk )
 #if _BLOCK
 //----------------------------------------------------------------------------
 /**
- *	@brief	ふうせんわりプロセス設定
+ *  @brief  ふうせんわりプロセス設定
  *
- *	@param	fsys		ワーク
- *	@param	heapID		ヒープ
- *	@param	vchat		VCHAT
+ *  @param  fsys    ワーク
+ *  @param  heapID    ヒープ
+ *  @param  vchat   VCHAT
  */
 //-----------------------------------------------------------------------------
 static BALLOON_PROC_WORK* BL_ProcSet( GMEVENT* fsys, u32 heapID, u32 vchat )
@@ -681,25 +681,25 @@ static BALLOON_PROC_WORK* BL_ProcSet( GMEVENT* fsys, u32 heapID, u32 vchat )
   {
     p_work = GFL_HEAP_AllocMemory( heapID, sizeof(BALLOON_PROC_WORK) );
     MI_CpuClear8(p_work, sizeof(BALLOON_PROC_WORK));
-    p_work->vchat		= vchat;
-    p_work->wifi_lobby	= FALSE;
-    p_work->p_save		= SaveControl_GetPointer();
+    p_work->vchat   = vchat;
+    p_work->wifi_lobby  = FALSE;
+    p_work->p_save    = SaveControl_GetPointer();
     p_work->game_comm = GAMESYSTEM_GetGameCommSysPtr(GMEVENT_GetGameSysWork(fsys));
 
     // ミニゲーム共通オーバーレイを読み込む
     //GFL_OVERLAY_Load( FS_OVERLAY_ID(minigame_common));
 
-	GFL_PROC_SysCallProc(FS_OVERLAY_ID(balloon), &BalloonProcData, p_work);
-	//    EventCmd_CallSubProc(fsys, &BCTProcData, p_work);
+  GFL_PROC_SysCallProc(FS_OVERLAY_ID(balloon), &BalloonProcData, p_work);
+  //    EventCmd_CallSubProc(fsys, &BCTProcData, p_work);
   }
   return p_work;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ふうせんわりプロセス破棄
+ *  @brief  ふうせんわりプロセス破棄
  *
- *	@param	p_wk	ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void BL_ProcEnd( BALLOON_PROC_WORK* p_wk )
@@ -714,9 +714,9 @@ static void BL_ProcEnd( BALLOON_PROC_WORK* p_wk )
 #if 0
 //----------------------------------------------------------------------------
 /**
- *	@brief	ミニゲームで遊んだ	スコア計算
+ *  @brief  ミニゲームで遊んだ  スコア計算
  *
- *	@param	fsys
+ *  @param  fsys
  */
 //-----------------------------------------------------------------------------
 static void P2P_Record_Minigame( FIELDSYS_WORK* fsys )
@@ -739,10 +739,10 @@ static void P2P_Record_Minigame( FIELDSYS_WORK* fsys )
 FS_EXTERN_OVERLAY(wifi_battleroom);
 //----------------------------------------------------------------------------
 /**
- *	@brief	バトルルームプロセス設定
+ *  @brief  バトルルームプロセス設定
  *
- *	@param	fsys		フィールドシステム
- *	@param	heapID		ヒープID
+ *  @param  fsys    フィールドシステム
+ *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
 static WIFI_BATTLEROOM* WBR_ProcSet( FIELDSYS_WORK* fsys, u32 heapID )

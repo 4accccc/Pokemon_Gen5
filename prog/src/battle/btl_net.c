@@ -410,6 +410,7 @@ void BTL_NET_EndNotifyPartyData( void )
     if( Sys->tmpLargeBuf[i] != NULL )
     {
       GFL_HEAP_FreeMemory( Sys->tmpLargeBuf[i] );
+      Sys->tmpLargeBuf[i] = NULL;
       Sys->tmpLargeBufUsedSize[i] = 0;
     }
   }

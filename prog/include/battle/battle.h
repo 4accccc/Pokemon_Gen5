@@ -154,4 +154,15 @@ typedef struct {
 extern const GFL_PROC_DATA BtlProcData;
 
 
+//--------------------------------------------------------------
+/**
+ *  NetFunc Table
+ */
+//--------------------------------------------------------------
+extern const NetRecvFuncTable BtlRecvFuncTable[];
+enum {
+  BTL_NETFUNCTBL_ELEMS = 6,
+};
+
+
 #endif

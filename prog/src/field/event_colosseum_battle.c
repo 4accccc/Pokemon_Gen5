@@ -58,31 +58,31 @@ typedef struct{
 
 //============================================================================================
 //
-//		サブイベント
+//    サブイベント
 //
 //============================================================================================
 static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, void * work)
 {
   EVENT_COLOSSEUM_BATTLE_WORK * cbw = work;
   GAMESYS_WORK * gsys = cbw->gsys;
-  
+
   switch (*seq) {
-	case 0:
+  case 0:
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, cbw->fieldmap) );
     (*seq)++;
     break;
   case 1:
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, cbw->fieldmap, FIELD_FADE_BLACK));
-		(*seq)++;
-		break;
-	case 2:
-		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, cbw->fieldmap));
-		(*seq)++;
-		break;
-	case 3:
-		{
+    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, cbw->fieldmap, FIELD_FADE_BLACK));
+    (*seq)++;
+    break;
+  case 2:
+    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, cbw->fieldmap));
+    (*seq)++;
+    break;
+  case 3:
+    {
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
-      GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, 5, NULL);
+      GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
       GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_ADD_CMD_TBL_AFTER);
       OS_TPrintf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
       (*seq) ++;
@@ -111,7 +111,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     }
     OS_TPrintf("バトル完了\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-		(*seq)++;
+    (*seq)++;
     break;
 
   case 7:
@@ -120,7 +120,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     (*seq) ++;
     break;
   case 8:
-		OS_TPrintf("_FIELD_FADEIN\n");
+    OS_TPrintf("_FIELD_FADEIN\n");
     GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, cbw->fieldmap, 0));
     (*seq) ++;
     break;
@@ -130,7 +130,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
       FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
       FIELD_SOUND_PopBGM( fsnd );
     }
-		PMSND_FadeInBGM(60);
+    PMSND_FadeInBGM(60);
     return GMEVENT_RES_FINISH;
   default:
     GF_ASSERT(0);
@@ -148,7 +148,7 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, 
   BtlRule rule;
   int multi;
   GMEVENT *event;
-  
+
   switch(play_category){
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:         //コロシアム
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:       //コロシアム
@@ -170,7 +170,7 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, 
     GF_ASSERT(0);
     return NULL;
   }
-  
+
   event = GMEVENT_Create(
     gsys, NULL, EVENT_ColosseumBattleMain, sizeof(EVENT_COLOSSEUM_BATTLE_WORK));
   cbw = GMEVENT_GetEventWork(event);
@@ -184,7 +184,7 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, 
 
     para->commMode = BTL_COMM_DS;
     para->multiMode = multi;
-    
+
     para->partyPlayer = setup->partyPlayer;
     para->partyEnemy1 = setup->partyEnemy1;   ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
     para->partyPartner = setup->partyPartner; ///< 2vs2時の味方AI（不要ならnull）
@@ -194,8 +194,8 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, 
     para->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
     para->netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
 
-    para->musicDefault = SEQ_BA_TEST_250KB;		///< デフォルト時のBGMナンバー
-    para->musicPinch = SEQ_BA_PINCH_TEST_150KB;			///< ピンチ時のBGMナンバー
+    para->musicDefault = SEQ_BA_TEST_250KB;   ///< デフォルト時のBGMナンバー
+    para->musicPinch = SEQ_BA_PINCH_TEST_150KB;     ///< ピンチ時のBGMナンバー
   }
   return event;
 }

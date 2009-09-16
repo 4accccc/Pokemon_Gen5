@@ -215,6 +215,16 @@ static inline void register_PokeNickname( u8 pokeID, WordBufID bufID )
 
   WORDSET_RegisterPokeNickName( SysWork.wset, bufID, pp );
 }
+static inline void register_PokeName( u8 pokeID, u8 bufID )
+{
+  const BTL_POKEPARAM* bpp;
+  const POKEMON_PARAM* pp;
+
+  bpp = BTL_POKECON_GetPokeParamConst( SysWork.pokeCon, pokeID );
+  pp = BPP_GetSrcData( bpp );
+
+  WORDSET_RegisterPokeMonsName( SysWork.wset, bufID, pp );
+}
 
 static void register_TrainerType( WORDSET* wset, u8 bufIdx, u8 clientID )
 {
@@ -543,6 +553,7 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
 {
   enum {
     TAGIDX_TRAINER_NAME = 0,
+    TAGIDX_POKE_NAME = 1,
     TAGIDX_POKE_NICKNAME = 2,
     TAGIDX_POKE_TYPE = 3,
     TAGIDX_TOKUSEI_NAME = 6,
@@ -598,6 +609,10 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
           case TAGIDX_POKE_NICKNAME:
             BTL_Printf("[TAG] Set PokeNickName ... pokeIdx=%d\n", args[argIdx]);
             register_PokeNickname( args[argIdx], bufIdx );
+            break;
+          case TAGIDX_POKE_NAME:
+            BTL_Printf("[TAG] Set PokeName ... pokeIdx=%d\n", args[argIdx] );
+            register_PokeName( args[argIdx], bufIdx );
             break;
           case TAGIDX_POKE_TYPE:
             WORDSET_RegisterPokeTypeName( wset, bufIdx, args[argIdx] );

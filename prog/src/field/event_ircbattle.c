@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	event_ircbattle.c
- * @brief	イベント：赤外線バトル
- * @author	k.ohno
- * @date	2009.03.24
+ * @file  event_ircbattle.c
+ * @brief イベント：赤外線バトル
+ * @author  k.ohno
+ * @date  2009.03.24
  */
 //============================================================================================
 
@@ -32,7 +32,7 @@
 #include "sound/pm_sndsys.h"
 #include "battle/battle.h"
 #include "poke_tool/monsno_def.h"
-#include "system/main.h"			//GFL_HEAPID_APP参照
+#include "system/main.h"      //GFL_HEAPID_APP参照
 
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
@@ -47,7 +47,7 @@ extern const NetRecvFuncTable BtlRecvFuncTable[];
 
 FS_EXTERN_OVERLAY(irc_compatible);
 
-#define	HEAPID_CORE GFL_HEAPID_APP
+#define HEAPID_CORE GFL_HEAPID_APP
 
 FS_EXTERN_OVERLAY(battle);
 FS_EXTERN_OVERLAY(fieldmap);
@@ -56,14 +56,14 @@ FS_EXTERN_OVERLAY(ircbattlematch);
 #define _LOCALMATCHNO (100)
 
 enum _EVENT_IRCBATTLE {
-	_IRCBATTLE_START,
-	_IRCBATTLE_START_FIELD_CLOSE,
+  _IRCBATTLE_START,
+  _IRCBATTLE_START_FIELD_CLOSE,
   _CALL_IRCBATTLE_MENU,
   _WAIT_IRCBATTLE_MENU,
   _FIELD_FADEOUT,
   _CALL_IRCBATTLE_MATCH,
   _WAIT_IRCBATTLE_MATCH,
-	_BATTLE_MATCH_START,
+  _BATTLE_MATCH_START,
   _TIMING_SYNC_CALL_BATTLE,
   _CALL_BATTLE,
   _WAIT_BATTLE,
@@ -77,10 +77,10 @@ enum _EVENT_IRCBATTLE {
   _FIELD_FADEIN,
   _FIELD_END,
 
-	_FIELD_FADEOUT_IRCBATTLE,
-	_FIELD_END_IRCBATTLE,
-	_CALL_IRCCOMMPATIBLE,
-	_WAIT_IRCCOMMPATIBLE,
+  _FIELD_FADEOUT_IRCBATTLE,
+  _FIELD_END_IRCBATTLE,
+  _CALL_IRCCOMMPATIBLE,
+  _WAIT_IRCCOMMPATIBLE,
 };
 
 struct _EVENT_IRCBATTLE_WORK{
@@ -90,7 +90,7 @@ struct _EVENT_IRCBATTLE_WORK{
   BATTLE_SETUP_PARAM para;
   BOOL isEndProc;
   int selectType;
-	IRC_COMPATIBLE_PARAM	compatible_param;	//赤外線メニューに渡す情報
+  IRC_COMPATIBLE_PARAM  compatible_param; //赤外線メニューに渡す情報
 #if PM_DEBUG
   int debugseq;
 #endif
@@ -101,7 +101,7 @@ static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw);
 
 //============================================================================================
 //
-//		サブイベント
+//    サブイベント
 //
 //============================================================================================
 static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * work)
@@ -117,16 +117,16 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 #endif
 
   switch (*seq) {
-	case _IRCBATTLE_START:
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK));
-		(*seq) ++;
-		break;
-	case _IRCBATTLE_START_FIELD_CLOSE:
-		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
-		//
-		(*seq) = _CALL_IRCBATTLE_MENU;
-		break;
-	case _CALL_IRCBATTLE_MENU:
+  case _IRCBATTLE_START:
+    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK));
+    (*seq) ++;
+    break;
+  case _IRCBATTLE_START_FIELD_CLOSE:
+    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
+    //
+    (*seq) = _CALL_IRCBATTLE_MENU;
+    break;
+  case _CALL_IRCBATTLE_MENU:
     dbw->isEndProc = FALSE;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(fieldmap), &IrcBattleMenuProcData, dbw);
     (*seq)++;
@@ -135,16 +135,16 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
-		if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_COMPATIBLE )
-		{	
-			*seq = _FIELD_FADEOUT_IRCBATTLE;
-		}
-		else if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_EXIT){
-			*seq = _FIELD_OPEN;
-		}
-		else{	
-			(*seq) ++;
-		}
+    if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_COMPATIBLE )
+    {
+      *seq = _FIELD_FADEOUT_IRCBATTLE;
+    }
+    else if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_EXIT){
+      *seq = _FIELD_OPEN;
+    }
+    else{
+      (*seq) ++;
+    }
     break;
   case _FIELD_FADEOUT:
     dbw->isEndProc = FALSE;
@@ -157,30 +157,30 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
   case _WAIT_IRCBATTLE_MATCH:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-			// マッチング内容によりゲーム分岐
-			switch(dbw->selectType){
-			case EVENTIRCBTL_ENTRYMODE_EXIT:
-				*seq = _WAIT_NET_END;
-				break;
-			case EVENTIRCBTL_ENTRYMODE_RETRY:
-				*seq = _CALL_IRCBATTLE_MENU;
-				break;
-			case EVENTIRCBTL_ENTRYMODE_FRIEND:
+      // マッチング内容によりゲーム分岐
+      switch(dbw->selectType){
+      case EVENTIRCBTL_ENTRYMODE_EXIT:
+        *seq = _WAIT_NET_END;
+        break;
+      case EVENTIRCBTL_ENTRYMODE_RETRY:
+        *seq = _CALL_IRCBATTLE_MENU;
+        break;
+      case EVENTIRCBTL_ENTRYMODE_FRIEND:
         *seq = _CALL_IRCBATTLE_FRIEND;
         break;
-			case EVENTIRCBTL_ENTRYMODE_TRADE:
+      case EVENTIRCBTL_ENTRYMODE_TRADE:
         *seq = _CALL_TRADE;
         break;
-			default:
-				*seq = _BATTLE_MATCH_START;
-				break;
-			}
-		}
-		break;
-	case _BATTLE_MATCH_START:
-		{
+      default:
+        *seq = _BATTLE_MATCH_START;
+        break;
+      }
+    }
+    break;
+  case _BATTLE_MATCH_START:
+    {
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
-      GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, 5, NULL);
+      GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
       GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO);
       (*seq) ++;
     }
@@ -230,7 +230,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     NET_PRINT("バトル完了 event_ircbattle\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-		(*seq) = _CALL_NET_END;
+    (*seq) = _CALL_NET_END;
     break;
   case _CALL_IRCBATTLE_FRIEND:  //  ともだちコード交換
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(ircbattlematch), &IrcBattleFriendProcData, dbw);
@@ -255,7 +255,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
 
 
-	case _CALL_NET_END:
+  case _CALL_NET_END:
     if(GFL_NET_IsParentMachine()){
       GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL);
     }
@@ -273,7 +273,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq) ++;
     break;
   case _FIELD_FADEIN:
-		OS_TPrintf("_FIELD_FADEIN\n");
+    OS_TPrintf("_FIELD_FADEIN\n");
     GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
     (*seq) ++;
     break;
@@ -283,35 +283,35 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
       FIELD_SOUND_PopBGM( fsnd );
     }
-		PMSND_FadeInBGM(60);
+    PMSND_FadeInBGM(60);
     return GMEVENT_RES_FINISH;
 
-	//相性チェックはプロセス移動
-	case _FIELD_FADEOUT_IRCBATTLE:
-		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK));
+  //相性チェックはプロセス移動
+  case _FIELD_FADEOUT_IRCBATTLE:
+    GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, dbw->fieldmap, FIELD_FADE_BLACK));
     (*seq)++;
-		break;
-	case _FIELD_END_IRCBATTLE:
-		//すでにCloseされている
-		//GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
+    break;
+  case _FIELD_END_IRCBATTLE:
+    //すでにCloseされている
+    //GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
     (*seq)++;
-		break;
-	case _CALL_IRCCOMMPATIBLE:	//相性チェック画面へ
-		dbw->compatible_param.p_gamesys		= dbw->gsys;
+    break;
+  case _CALL_IRCCOMMPATIBLE:  //相性チェック画面へ
+    dbw->compatible_param.p_gamesys   = dbw->gsys;
 #ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
-		dbw->compatible_param.is_only_play	= FALSE;
+    dbw->compatible_param.is_only_play  = FALSE;
 #endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
-		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, &dbw->compatible_param );
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(irc_compatible), &IrcCompatible_ProcData, &dbw->compatible_param );
     (*seq)++;
-		break;
-	case _WAIT_IRCCOMMPATIBLE:
-		if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL)
-		{
-			GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
+    break;
+  case _WAIT_IRCCOMMPATIBLE:
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL)
+    {
+      GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
       NET_PRINT("相性チェック画面おわり\n");
-			(*seq)=_CALL_IRCBATTLE_MENU;
+      (*seq)=_CALL_IRCBATTLE_MENU;
     }
-		break;
+    break;
   default:
     GF_ASSERT(0);
     break;
@@ -346,14 +346,14 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT
     para->commMode = BTL_COMM_DS;
     para->multiMode = 0;
 
-    para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_PROC );	///< プレイヤーのパーティ
-    para->partyEnemy1 = NULL;		///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
-    para->partyPartner = NULL;	///< 2vs2時の味方AI（不要ならnull）
-    para->partyEnemy2 = NULL;		///< 2vs2時の２番目敵AI用（不要ならnull）
-		para->statusPlayer =  GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
+    para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_PROC );  ///< プレイヤーのパーティ
+    para->partyEnemy1 = NULL;   ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
+    para->partyPartner = NULL;  ///< 2vs2時の味方AI（不要ならnull）
+    para->partyEnemy2 = NULL;   ///< 2vs2時の２番目敵AI用（不要ならnull）
+    para->statusPlayer =  GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
 
-    para->musicDefault = SEQ_BA_TEST_250KB;		///< デフォルト時のBGMナンバー
-    para->musicPinch = SEQ_BA_PINCH_TEST_150KB;			///< ピンチ時のBGMナンバー
+    para->musicDefault = SEQ_BA_TEST_250KB;   ///< デフォルト時のBGMナンバー
+    para->musicPinch = SEQ_BA_PINCH_TEST_150KB;     ///< ピンチ時のBGMナンバー
 
     PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), para->partyPlayer);
   }
@@ -363,10 +363,10 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT
 
 static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw)
 {
-	BATTLE_SETUP_PARAM * para;
+  BATTLE_SETUP_PARAM * para;
 
-	para = &dbw->para;
-	GFL_HEAP_FreeMemory(para->partyPlayer);
+  para = &dbw->para;
+  GFL_HEAP_FreeMemory(para->partyPlayer);
 }
 
 
