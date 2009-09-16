@@ -17,7 +17,15 @@ enum {
 	NARC_debug_obata_houou_test_nsbta = 3,
 	NARC_debug_obata_trailer_nsbmd = 4,
 	NARC_debug_obata_t1_house_01_nsbmd = 5,
-	NARC_debug_obata_h01_ship_nsbmd = 6
+	NARC_debug_obata_h01_ship_nsbmd = 6,
+	NARC_debug_obata_dice_nsbmd = 7,
+	NARC_debug_obata_dice_anime_srt_bin = 8,
+	NARC_debug_obata_dice_anime_sr_bin = 9,
+	NARC_debug_obata_dice_anime_st_bin = 10,
+	NARC_debug_obata_dice_anime_rt_bin = 11,
+	NARC_debug_obata_dice_anime_s_bin = 12,
+	NARC_debug_obata_dice_anime_r_bin = 13,
+	NARC_debug_obata_dice_anime_t_bin = 14
 };
 
 /* NARC_DEBUG_OBATA_NAIX_ */

@@ -33,7 +33,15 @@ include	$(PROJECT_RSCDIR)\macro_define
 
 CONVERTDATA = ica_test_data2.bin \
 							houou_test.nsbmd houou_test.nsbca houou_test.nsbta \
-							trailer.nsbmd t1_house_01.nsbmd h01_ship.nsbmd
+							trailer.nsbmd t1_house_01.nsbmd h01_ship.nsbmd \
+							dice.nsbmd \
+							dice_anime_srt.bin \
+							dice_anime_sr.bin \
+							dice_anime_st.bin \
+							dice_anime_rt.bin \
+							dice_anime_s.bin \
+							dice_anime_r.bin \
+							dice_anime_t.bin
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -53,12 +61,20 @@ subdir:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # コンバート
 	ruby $(ICACONV) -rt camera_null2.ica ica_test_data2.bin
+	ruby $(ICACONV) -srt dice.ica dice_anime_srt.bin
+	ruby $(ICACONV) -sr dice.ica dice_anime_sr.bin
+	ruby $(ICACONV) -st dice.ica dice_anime_st.bin
+	ruby $(ICACONV) -rt dice.ica dice_anime_rt.bin
+	ruby $(ICACONV) -s dice.ica dice_anime_s.bin
+	ruby $(ICACONV) -r dice.ica dice_anime_r.bin
+	ruby $(ICACONV) -t dice.ica dice_anime_t.bin
 	g3dcvtr houou_test.imd
 	g3dcvtr houou_test.ica
 	g3dcvtr houou_test.ita
 	g3dcvtr trailer.imd
 	g3dcvtr t1_house_01.imd
 	g3dcvtr h01_ship.imd
+	g3dcvtr dice.imd
 endif
 
 
