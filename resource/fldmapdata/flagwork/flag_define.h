@@ -536,7 +536,7 @@
 #define FV_T01R0201_SUPPORT                512 /* 0x0200 サポートの自宅：出発イベントのサポート */
 #define FV_T01_RIVAL                       513 /* 0x0201 研究所前：ストッパーのライバル */
 #define FV_T01_SUPPORT                     514 /* 0x0202 研究所前：サポート */
-		/* not used   515(0x0203) */
+#define FV_R01_POKECOUNT_BTL               515 /* 0x0203 １番道路のポケモン捕獲数勝負（ライバルとサポート） */
 		/* not used   516(0x0204) */
 		/* not used   517(0x0205) */
 		/* not used   518(0x0206) */
