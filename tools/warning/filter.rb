@@ -19,7 +19,7 @@ class CWWarningFilter
 
 		#ここにチェックしたくないエラーを引っ掛ける正規表現を定義
 		@ignore_warns = [
-			[false, "識別子の再定義", 
+			[true, "識別子の再定義", 
 				Regexp::new("identifier '[a-zA-Z0-9_]+' redeclared")],
 			[true, "暗黙の算術変換", 
 				Regexp::new("implicit arithmetic conversion from")],
@@ -28,7 +28,9 @@ class CWWarningFilter
 			[true, "暗黙の変換",
 				Regexp::new("illegal implicit conversion from ")],
 			[true, "未使用の変数/引数",
-				Regexp::new(/variable \/ argument '[a-zA-Z0-9_]+' is not used in function/)]
+				Regexp::new(/variable \/ argument '[a-zA-Z0-9_]+' is not used in function/)],
+      [false, "対応していないエスケープシーケンス",
+        Regexp::new(/unknown escape sequence '/) ]
 		]
 		@counter = Array.new(@ignore_warns.length, 0)
 	end
@@ -59,7 +61,7 @@ class CWWarningFilter
 		raise FilterError, "場所がない" if tpos == nil
 
 		if filter(warn) == true then return end
-		puts "FILE:#{tfile}"
+		puts "\nFILE:#{tfile}"
 		sfile ||= "itself"
 		puts "    :#{sfile}"
 		puts "#{tpos}"

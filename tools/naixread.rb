@@ -39,7 +39,7 @@ class NAIXReader
       return @index.index(name)
     else
       p = "NARC_" + @arc_name + "_" + name
-      #puts "seach short name :#{p}"
+      #puts "seach short name :#{name} -->:#{p}"
       return @index.index(p)
     end
   end
