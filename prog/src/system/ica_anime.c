@@ -624,14 +624,30 @@ void UpdateBuf( ICA_ANIME* anime, fx32 start_frame )
 {
   int   i, j;
   int   frame     = (start_frame >> FX32_SHIFT) % anime->frameSize;
-  int   ofs       = 7 + sizeof(float) * 6 * frame;
-  int   data_size = sizeof(float) * 6 * anime->bufSize;
+  int   ofs       = 7;
+  int   data_size = 0;
   void* data      = GFL_HEAP_AllocMemoryLo( anime->heapID, data_size );
+
+  // 先頭データへのオフセットを計算
+  if( anime->haveScale  ) ofs += sizeof(float)*3*frame;
+  if( anime->haveRotate ) ofs += sizeof(float)*3*frame;
+  if( anime->haveTrans  ) ofs += sizeof(float)*3*frame;
+
+  // データサイズを計算
+  if( anime->haveScale  ) data_size += sizeof(float)*3*anime->bufSize;
+  if( anime->haveRotate ) data_size += sizeof(float)*3*anime->bufSize;
+  if( anime->haveTrans  ) data_size += sizeof(float)*3*anime->bufSize;
 
   // 指定フレーム位置から 一定フレーム数分のデータを取得し, バッファ更新
   GFL_ARC_LoadDataOfsByHandle( anime->arcHandle, anime->datID, ofs, data_size, data );
   for( i=0, j=0; i<anime->bufSize; i++ )
   {
+    if( anime->haveScale )
+    {
+      anime->scaleBuf[i].x = FX_F32_TO_FX32( *( (float*)( (int)data + j*sizeof(float) ) ) );   j++;
+      anime->scaleBuf[i].y = FX_F32_TO_FX32( *( (float*)( (int)data + j*sizeof(float) ) ) );   j++;
+      anime->scaleBuf[i].z = FX_F32_TO_FX32( *( (float*)( (int)data + j*sizeof(float) ) ) );   j++;
+    }
     if( anime->haveRotate )
     {
       anime->rotateBuf[i].x = FX_F32_TO_FX32( *( (float*)( (int)data + j*sizeof(float) ) ) );   j++;
