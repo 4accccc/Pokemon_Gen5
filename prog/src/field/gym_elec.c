@@ -12,10 +12,12 @@
 #include "field_gimmick_def.h"
 #include "savedata/gimmickwork.h"
 #include "gmk_tmp_wk.h"
+#include "system/ica_anime.h"
 
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
 #include "arc/fieldmap/gym_elec.naix"
+#include "system/main.h"    //for HEAPID_FIELDMAP
 
 #define GYM_ELEC_UNIT_IDX (0)
 #define GYM_ELEC_TMP_ASSIGN_ID  (1)
@@ -57,9 +59,23 @@
 #define SW4_X (25*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
 #define SW4_Z (8*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
 
+static const VecFx32 CapPos[CAPSULE_NUM_MAX] = {
+  {CAP1_X,0,CAP1_Z},
+  {CAP2_X,0,CAP2_Z},
+  {CAP3_X,0,CAP3_Z},
+  {CAP4_X,0,CAP4_Z},
+};
 
 
 
+#define FRAME_POS_SIZE  (4*3*360)   //座標ＸＹＺ各4バイトｘ360フレーム
+
+
+typedef struct XZ_DAT_tag
+{
+  int x;
+  int z;
+}XZ_DAT;
 
 typedef struct CAPSULE_DAT_tag
 {
@@ -83,7 +99,9 @@ typedef struct GYM_ELEC_TMP_tag
   u8 ChgingSw;
   u8 RideEvt;            //乗降イベント中カプセル番号
   ELEC_GYM_TASK_WK  TaskWk[CAPSULE_NUM_MAX];
-  VecFx32 FramePos[360];
+  ICA_ANIME* IcaAnmPtr;
+  u8 FramePos[FRAME_POS_SIZE];
+  BOOL AltoMove;
 }GYM_ELEC_TMP;
 
 //電気ジムセーブワーク
@@ -113,40 +131,8 @@ typedef struct RALE_DAT_tag
 
 }RALE_DAT;
 
-static const LEVER_SW LeverSw[LEVER_NUM_MAX] = {
-  {0,1},
-  {0,2},
-};
-
-static const RALE_DAT RaleDat[RALE_NUM_MAX] = {
-  { 
-    { {0,0,10},{1,20,50} },   //レール1
-  },
-  {
-    { {1,0,10},{2,30,40} },   //レール2
-  },
-  {
-    { {4,10,20}, {-1,0,0,} }, //レール3
-  },
-  { 
-    { {4,0,10},{3,20,50} },   //レール4
-  },
-  {
-    { {6,0,10},{-1,0,0} },   //レール5
-  },
-  {
-    { {6,10,20}, {5,50,60,} }, //レール6
-  },
-  {
-    { {8,0,10},{-1,0,0} },   //レール7
-  },
-  {
-    { {8,10,20}, {7,50,60,} }, //レール8
-  },
-};
-
 //レールごとの停車プラットホーム
-static s8 RaleStopPlatform[RALE_NUM_MAX][STOP_NUM_MAX] = {
+static const s8 RaleStopPlatform[RALE_NUM_MAX][STOP_NUM_MAX] = {
   {1, 0},
   {1, 2},
   {4, -1},
@@ -175,19 +161,13 @@ static const u8 PlatStpCapIdx[PLATFORM_NUM_MAX] = {
   0,0,0,1,1,2,2,3,3
 };
 
-/**
-//レールインデックス別アニメインデックスリスト
-static const u8 RaleAnmIdx[RALE_NUM_MAX] = {
-  0,1,2
-};
-*/
 //1つのレバーで切り替えるレール間で共通で停車するプラットホーム
 static const u8 CommPlatFormIdx[CAPSULE_NUM_MAX] = {
   1,4,6,8
 };
 
 //レールごとの停車アニメフレーム（1レール2つずつ）
-static fx32 StopFrame[RALE_NUM_MAX][RALE_PLATFORM_NUM_MAX] = {
+static const fx32 StopFrame[RALE_NUM_MAX][RALE_PLATFORM_NUM_MAX] = {
   {0, FX32_ONE*0},     //レール1
   {0, FX32_ONE*0},   //レール2
   {0, FX32_ONE*0},     //レール3
@@ -199,8 +179,21 @@ static fx32 StopFrame[RALE_NUM_MAX][RALE_PLATFORM_NUM_MAX] = {
 };
 
 //カプセルごとのレール移動アニメ共通部分フレーム（アニメデータ依存）
-static u16 CommFrame[CAPSULE_NUM_MAX] = {
+static const u16 CommFrame[CAPSULE_NUM_MAX] = {
   70,70,70,70
+};
+
+//カプセル停止座標
+static const XZ_DAT CapStopPos[PLATFORM_NUM_MAX] = {
+  {14, 38},
+  {22, 38},
+  {16, 25},
+  {16, 14},
+  {41, 39},
+  {49, 39},
+  {34, 6},
+  {22, 6},
+  {5, 38},
 };
 
 //リソースの並び順番
@@ -502,7 +495,6 @@ static fx32 GetRaleAnmFrame(const u8 inRaleIdx);
 static u8 GetRaleIdxByPlatformIdx(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inPlatformIdx);
 static u8 GetCapIdxByPlatformIdx(const u8 inPlatformIdx);
 static BOOL IsStopCapsuleToPlatForm(GYM_ELEC_TMP *tmp, const u8 inPlatformIdx);
-static BOOL IsStopCapsule( const u8 inRaleIdx, const fx32 inAnmFrame );
 static fx32 GetAnimeFrame(FLD_EXP_OBJ_CNT_PTR ptr, const u16 inObjIdx, const u16 inAnmIdx);
 static void SetAnimeFrame
          (FLD_EXP_OBJ_CNT_PTR ptr, const u16 inObjIdx, const u16 inAnmIdx, const int inFrame);
@@ -828,7 +820,31 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
       }
     }
     OS_Printf("%d::stop_plat %d\n",i, tmp->TaskWk[i].StopPlatFormIdx);
-  } //end for   
+  } //end for
+
+  //--自機自動移動部--
+  if (tmp->AltoMove){
+    fx32 frame;
+    u8 cap_idx;
+    u8 anm_idx;
+    int frm_idx;
+    VecFx32 dst_vec = {0,0,0};
+    //レールインデックス/2でカプセルインデックスになる
+    cap_idx = tmp->RadeRaleIdx / 2;
+    anm_idx = ANM_CAP_MOV1 + tmp->RadeRaleIdx;
+    //アニメフレーム取得
+    frame = FLD_EXP_OBJ_GetObjAnmFrm( obj_cnt_ptr, GYM_ELEC_UNIT_IDX, cap_idx, anm_idx );
+    frm_idx = frame / FX32_ONE;
+    
+    //座標取得
+    if ( ICA_ANIME_GetTranslateAt( tmp->IcaAnmPtr, &dst_vec, frm_idx ) ){
+      dst_vec.x += CapPos[cap_idx].x;
+      dst_vec.y += CapPos[cap_idx].y;
+      dst_vec.z += CapPos[cap_idx].z;
+      //自機座標セット
+      FIELD_PLAYER_SetPos( FIELDMAP_GetFieldPlayer( fieldWork ), &dst_vec );
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -870,7 +886,7 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
       test_GYM_ELEC_ChangePoint(gsys, 3);
     }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
       test_GYM_ELEC_CallMoveEvt(gsys);
     }
     if (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT ){
@@ -976,25 +992,6 @@ static BOOL IsStopCapsuleToPlatForm(GYM_ELEC_TMP *tmp, const u8 inPlatformIdx)
   }
   return FALSE;
 #endif  
-}
-
-//--------------------------------------------------------------
-/**
- * 指定レール上カプセル移動アニメのフレームは停止フレームかを調べる
- * @param	
- * @return
- */
-//--------------------------------------------------------------
-static BOOL IsStopCapsule( const u8 inRaleIdx, const fx32 inAnmFrame )
-{
-  u8 i;
-  for(i=0;i<STOP_NUM_MAX;i++){
-    if ( (RaleDat[inRaleIdx].StopDat[i].StopStart < inAnmFrame) &&
-         (RaleDat[inRaleIdx].StopDat[i].StopEnd > inAnmFrame) ){
-      return TRUE;
-    }
-  }
-  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -1230,7 +1227,7 @@ BOOL GYM_ELEC_CallMoveEvt(GAMESYS_WORK *gsys)
   //カプセルがプラットフォームに停止しているか？
   if ( IsStopCapsuleToPlatForm(tmp_work, platform_idx) ){ //停止している
     //次のプラットフォームまでの移動イベントを作成する
-    GMEVENT_Create( gsys, NULL, CapMoveEvt, 0/*sizeof(ENCEFF_WORK)*/ );
+    GMEVENT_Create( gsys, NULL, CapMoveEvt, 0 );
     //自機が走行するレールインデックスを保存
     tmp_work->RadeRaleIdx = GetRaleIdxByPlatformIdx(gmk_sv_work, platform_idx);
     //カプセル移動アニメを停止
@@ -1274,7 +1271,7 @@ BOOL test_GYM_ELEC_CallMoveEvt(GAMESYS_WORK *gsys)
   //カプセルがプラットフォームに停止しているか？
   if ( IsStopCapsuleToPlatForm(tmp_work, platform_idx) ){ //停止している
     //次のプラットフォームまでの移動イベントを作成する
-    GMEVENT * event = GMEVENT_Create( gsys, NULL, CapMoveEvt, 0/*sizeof(ENCEFF_WORK)*/ );
+    GMEVENT * event = GMEVENT_Create( gsys, NULL, CapMoveEvt, 0 );
     GAMESYSTEM_SetEvent(gsys, event);
 
     //自機が走行するレールインデックスを保存
@@ -1312,14 +1309,20 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
 
   switch(*seq){
   case 0:
-    //イベント開始
-    tmp->RideEvt = cap_idx;
-    //カプセル開くアニメスタート
     {
-      //フレーム頭だし
-      SetAnimeFrame(ptr, obj_idx, ANM_CAP_OPCL, 0);
-      //再生
-      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+      u16 arc_idx;
+      //イベント開始
+      tmp->RideEvt = cap_idx;
+      //自機移動データロード
+      arc_idx = NARC_gym_elec_gym04_rail_01a_bin + tmp->RadeRaleIdx;
+      tmp->IcaAnmPtr = ICA_ANIME_Create( GFL_HEAP_LOWID(HEAPID_FIELDMAP), ARCID_GYM_ELEC, arc_idx, tmp->FramePos, FRAME_POS_SIZE );
+      //カプセル開くアニメスタート
+      {
+        //フレーム頭だし
+        SetAnimeFrame(ptr, obj_idx, ANM_CAP_OPCL, 0);
+        //再生
+        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+      }
     }
     (*seq)++;
     break;
@@ -1369,6 +1372,9 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       tmp->TaskWk[cap_idx].Timer = 0;
       tmp->TaskWk[cap_idx].StopPlatFormIdx = PLATFORM_NO_STOP;
 
+      //自機自動移動開始
+      tmp->AltoMove = TRUE;
+
       (*seq)++;
     }
     break;
@@ -1376,7 +1382,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     //プラットホーム到着待ち
     if( tmp->TaskWk[cap_idx].StopPlatFormIdx != PLATFORM_NO_STOP ){
       //プレーヤ入力待ち
-      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){   //入力あり
+      if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){   //入力あり
         (*seq)++;
       }
     }
@@ -1404,15 +1410,37 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       frame = GetAnimeFrame(ptr, obj_idx, ANM_CAP_OPCL);
       //カプセル開くアニメ待ち
       if (frame >= CAP_OPEN_FRAME){
-        //主人公カプセルからでるアニメ
-        MMDL * mmdl;
-        mmdl = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( fieldWork ) );
-        MMDL_SetAcmd( mmdl, AC_WALK_D_8F );
+        //カプセル開くアニメ止める
+        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+        {
+          FIELD_PLAYER *fld_player;
+          fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+          //主人公のカプセル出る座標セット
+          {
+            VecFx32 pos = {0,0,0};
+            pos.x = CapStopPos[tmp->TaskWk[cap_idx].StopPlatFormIdx].x * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE;
+            pos.z = CapStopPos[tmp->TaskWk[cap_idx].StopPlatFormIdx].z * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE;
+            FIELD_PLAYER_SetPos( fld_player, &pos );
+          }
+        }
+        //自機自動移動終了
+        tmp->AltoMove = FALSE;
         (*seq)++;
       }
     }
     break;
   case 7:
+    {
+      MMDL * mmdl;
+      FIELD_PLAYER *fld_player;
+      fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+      //主人公カプセルからでるアニメ
+      mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+      MMDL_SetAcmd( mmdl, AC_WALK_D_8F );
+    }
+    (*seq)++;
+    break;
+  case 8:
     {
       MMDL * mmdl;
       mmdl = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( fieldWork ) );
@@ -1424,7 +1452,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       }
     }
     break;
-  case 8:
+  case 9:
     //カプセル閉まるアニメ待ち
     if( FLD_EXP_OBJ_ChkAnmEnd(anm) ){
       EXP_OBJ_ANM_CNT_PTR cap_anm;
@@ -1440,6 +1468,8 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       tmp->TaskWk[cap_idx].Timer = 0;
       tmp->TaskWk[cap_idx].StopPlatFormIdx = PLATFORM_NO_STOP;
 
+      ICA_ANIME_Delete( tmp->IcaAnmPtr );
+      
       //イベント終了
       tmp->RideEvt = -1;
       return GMEVENT_RES_FINISH;
