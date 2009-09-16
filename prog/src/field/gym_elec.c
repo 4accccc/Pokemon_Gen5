@@ -684,7 +684,7 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
       obj_idx = OBJ_CAP_1+i;
       anm_idx = ANM_CAP_MOV1+(i*2);
       //レール移動の決定(偶数インデックスを有効)
-///      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx, TRUE);
+      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx, TRUE);
       //蓋アニメをセットして止めておく
       FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ELEC_UNIT_IDX, obj_idx, ANM_CAP_OPCL, TRUE);
       {
