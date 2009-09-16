@@ -281,7 +281,7 @@ BOOL ICA_ANIME_GetTranslate( ICA_ANIME* anime, VecFx32* vec_dst )
 BOOL ICA_ANIME_GetRotate( ICA_ANIME* anime, VecFx32* vec_dst )
 {
   // 読み込んだファイルに回転データが存在する場合のみ取得可能
-  if( anime->haveTrans )
+  if( anime->haveRotate )
   {
     // バッファ内インデックスを計算
     int buf_index = (anime->nowFrame>>FX32_SHIFT) - anime->bufStartFrame;
