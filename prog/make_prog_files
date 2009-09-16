@@ -170,7 +170,8 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/iss_3ds_sys.c \
         field/field_bgm_control.c \
         system/ica_anime.c \
-		poke_tool/status_rcv.c
+		poke_tool/status_rcv.c \
+        system/bgwinfrm.c
 
 
 #================================================
