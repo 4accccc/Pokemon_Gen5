@@ -48,7 +48,7 @@ SCRIPT_DUMMY_STRING = <<DUMMY_STRING
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_ZONEIDSYMBOL.h"
-  //.include  "../eventdata/zone_ZONEIDSYMBOLevc.h"
+  //.include  "ZONEIDSYMBOL.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
