@@ -494,9 +494,9 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 					pMatrix, pos->x, pos->z );
 		}
 		
-		DebugFont_ClearLine( work, 7 );
+		DebugFont_ClearLine( work, 8 );
 		sprintf( str, "ZONE ID " );
-		DebugFont_Print( work, 0, 7, str );
+		DebugFont_Print( work, 0, 8, str );
 		
 		if( zone_id == MAP_MATRIX_ZONE_ID_NON ){
 			sprintf( str, "ERROR" );
@@ -504,6 +504,6 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 			ZONEDATA_DEBUG_GetZoneName( str, zone_id );
 		}
 		
-		DebugFont_Print( work, 8, 7, str );
+		DebugFont_Print( work, 8, 8, str );
 	}
 }
