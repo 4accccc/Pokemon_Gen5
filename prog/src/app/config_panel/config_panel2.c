@@ -1018,7 +1018,7 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 
-	//BMPWIN作成
+	//BMPWIN作成し文字を貼り付ける
 	{	
 		int i;
 		GFL_FONT	*p_font;
@@ -1043,6 +1043,8 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
 			PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0, 0, p_strbuf, p_font );
 
 			GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_bmpwin[i] );
+
+			GFL_STR_DeleteBuffer(p_strbuf);
 		}
 		GFL_FONTSYS_SetDefaultColor();
 
@@ -1457,7 +1459,7 @@ static void Scroll_Move( SCROLL_WORK *p_wk, int y_add )
 		int start, end;
 
 		//先頭バー
-		bar_top	= (y-SCROLL_START)/SCROLL_WINDOW_H_DOT;
+		bar_top	= (y-SCROLL_START)/GFL_BG_1CHRDOTSIZ;
 
 		//一端全部4でぬる
 		GFL_BG_ChangeScreenPalette( p_wk->back_frm, 0, 0,
@@ -1468,13 +1470,13 @@ static void Scroll_Move( SCROLL_WORK *p_wk, int y_add )
 		for( i = 0; i < NELEMS(sc_bright_plt); i++ )
 		{	
 			//バーをぬる
-			start	= SCROLL_WINDOW_OFS_CHR + ( bar_top + i ) * SCROLL_WINDOW_H_CHR;
-			end		= SCROLL_WINDOW_OFS_CHR + ( bar_top + i + 1 ) * SCROLL_WINDOW_H_CHR;
+			start	= SCROLL_WINDOW_OFS_CHR + bar_top + ( i ) * SCROLL_WINDOW_H_CHR;
+			end		= SCROLL_WINDOW_OFS_CHR + bar_top + ( i + 1 ) * SCROLL_WINDOW_H_CHR;
 			GFL_BG_ChangeScreenPalette( p_wk->back_frm, 0, start,
 					32, end, sc_bright_plt[i] );
 			//フォントをぬる
-			start	= SCROLL_WINDOW_OFS_CHR*2 + ( bar_top + i ) * SCROLL_WINDOW_H_CHR;
-			end		= SCROLL_WINDOW_OFS_CHR*2 + ( bar_top + i + 1 ) * SCROLL_WINDOW_H_CHR;
+			start	= SCROLL_WINDOW_OFS_CHR*2 + bar_top + ( i ) * SCROLL_WINDOW_H_CHR;
+			end		= SCROLL_WINDOW_OFS_CHR*2 + bar_top + ( i + 1 ) * SCROLL_WINDOW_H_CHR;
 			GFL_BG_ChangeScreenPalette( p_wk->font_frm, 0, start,
 					32, end, sc_bright_plt[i] );
 		}
