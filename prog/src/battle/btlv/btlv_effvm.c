@@ -2248,24 +2248,23 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 {
   BTLV_EFFVM_EMIT_INIT_WORK *beeiw = ( BTLV_EFFVM_EMIT_INIT_WORK* )GFL_PTC_GetTempPtr();
   VecFx32 src,dst;
+  BOOL  minus_flag = FALSE;
 
   switch( beeiw->src ){
-  case BTLEFF_CAMERA_POS_AA:
-  case BTLEFF_CAMERA_POS_BB:
-  case BTLEFF_CAMERA_POS_A:
-  case BTLEFF_CAMERA_POS_B:
-  case BTLEFF_CAMERA_POS_C:
-  case BTLEFF_CAMERA_POS_D:
+  case BTLEFF_PARTICLE_PLAY_POS_AA:
+  case BTLEFF_PARTICLE_PLAY_POS_BB:
+  case BTLEFF_PARTICLE_PLAY_POS_A:
+  case BTLEFF_PARTICLE_PLAY_POS_B:
+  case BTLEFF_PARTICLE_PLAY_POS_C:
+  case BTLEFF_PARTICLE_PLAY_POS_D:
     beeiw->src = EFFVM_ConvPosition( beeiw->vmh, beeiw->src );
     break;
-  case BTLEFF_CAMERA_POS_ATTACK:
-  case BTLEFF_CAMERA_POS_ATTACK_PAIR:
-  case BTLEFF_CAMERA_POS_DEFENCE:
-  case BTLEFF_CAMERA_POS_DEFENCE_PAIR:
-    beeiw->src = EFFVM_GetPosition( beeiw->vmh, beeiw->src - BTLEFF_CAMERA_POS_ATTACK );
+  case BTLEFF_PARTICLE_PLAY_SIDE_ATTACK:
+  case BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE:
+    beeiw->src = EFFVM_GetPosition( beeiw->vmh, beeiw->src - BTLEFF_PARTICLE_PLAY_SIDE_ATTACK );
     GF_ASSERT( beeiw->src != BTLV_MCSS_POS_ERROR );
     break;
-  case BTLEFF_CAMERA_POS_NONE:
+  case BTLEFF_PARTICLE_PLAY_SIDE_NONE:
     src.x = beeiw->src_pos.x;
     src.y = beeiw->src_pos.y;
     src.z = beeiw->src_pos.z;
@@ -2278,22 +2277,26 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
   }
 
   switch( beeiw->dst ){
-  case BTLEFF_CAMERA_POS_AA:
-  case BTLEFF_CAMERA_POS_BB:
-  case BTLEFF_CAMERA_POS_A:
-  case BTLEFF_CAMERA_POS_B:
-  case BTLEFF_CAMERA_POS_C:
-  case BTLEFF_CAMERA_POS_D:
+  case BTLEFF_PARTICLE_PLAY_POS_AA:
+  case BTLEFF_PARTICLE_PLAY_POS_BB:
+  case BTLEFF_PARTICLE_PLAY_POS_A:
+  case BTLEFF_PARTICLE_PLAY_POS_B:
+  case BTLEFF_PARTICLE_PLAY_POS_C:
+  case BTLEFF_PARTICLE_PLAY_POS_D:
     beeiw->dst = EFFVM_ConvPosition( beeiw->vmh, beeiw->dst );
     break;
-  case BTLEFF_CAMERA_POS_ATTACK:
-  case BTLEFF_CAMERA_POS_ATTACK_PAIR:
-  case BTLEFF_CAMERA_POS_DEFENCE:
-  case BTLEFF_CAMERA_POS_DEFENCE_PAIR:
-    beeiw->dst = EFFVM_GetPosition( beeiw->vmh, beeiw->dst - BTLEFF_CAMERA_POS_ATTACK );
+  case BTLEFF_PARTICLE_PLAY_SIDE_ATTACK:
+  case BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE:
+    beeiw->dst = EFFVM_GetPosition( beeiw->vmh, beeiw->dst - BTLEFF_PARTICLE_PLAY_SIDE_ATTACK );
     GF_ASSERT( beeiw->dst != BTLV_MCSS_POS_ERROR );
     break;
-  case BTLEFF_CAMERA_POS_NONE:
+  case BTLEFF_PARTICLE_PLAY_SIDE_ATTACK_MINUS:
+  case BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE_MINUS:
+    minus_flag = TRUE;
+    beeiw->dst = EFFVM_GetPosition( beeiw->vmh, beeiw->dst - BTLEFF_PARTICLE_PLAY_SIDE_ATTACK - 1 );
+    GF_ASSERT( beeiw->dst != BTLV_MCSS_POS_ERROR );
+    break;
+  case BTLEFF_PARTICLE_PLAY_SIDE_NONE:
     dst.x = beeiw->dst_pos.x;
     dst.y = beeiw->dst_pos.y;
     dst.z = beeiw->dst_pos.z;
@@ -2415,6 +2418,11 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     VEC_Set( &src_vec, dir.x, dir.y, dir.z );
     MTX_MultVec43( &src_vec, &mtx43, &src_vec );
     VEC_Normalize( &src_vec, &src_vec );
+    if( minus_flag == TRUE )
+    { 
+      src_vec.x *= -1;
+      src_vec.z *= -1;
+    }
     VEC_Fx16Set( &dir, src_vec.x, src_vec.y, src_vec.z );
 
     if( angle < 0x2000 || ( angle > 0x6000 && angle < 0xa000 ) || angle > 0xe000 )
