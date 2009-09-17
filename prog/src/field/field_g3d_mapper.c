@@ -135,11 +135,13 @@ static void DeleteGlobalTexture( FLDMAPPER* g3Dmapper );
 
 static void GetMapperBlockIdxAll( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_NEWREQ* new );
 static void GetMapperBlockIdxXZ( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_NEWREQ* new );
+static void GetMapperBlockIdxXZ_Loop( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_NEWREQ* new );
 static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_NEWREQ* new );
 static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new );
 
 static s32 GetMapperBlockStartIdxEven( u32 blockNum, fx32 width, fx32 pos );
 static s32 GetMapperBlockStartIdxUnEven( u32 blockNum, fx32 width, fx32 pos );
+static s32 GetMapperBlockStartIdxLoop( u32 blockNum, fx32 width, fx32 pos );
 
 
 
@@ -259,6 +261,9 @@ void	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 	default:
 	case FLDMAPPER_MODE_SCROLL_XZ: 
 		GetMapperBlockIdxXZ( g3Dmapper, &g3Dmapper->posCont, g3Dmapper->blockNew );
+		break;
+	case FLDMAPPER_MODE_SCROLL_XZ_LOOP: 
+		GetMapperBlockIdxXZ_Loop( g3Dmapper, &g3Dmapper->posCont, g3Dmapper->blockNew );
 		break;
 	case FLDMAPPER_MODE_SCROLL_Y: 
 		GetMapperBlockIdxY( g3Dmapper, &g3Dmapper->posCont, g3Dmapper->blockNew );
@@ -685,6 +690,62 @@ static void GetMapperBlockIdxXZ( const FLDMAPPER* g3Dmapper, const VecFx32* pos,
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static void GetMapperBlockIdxXZ_Loop( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_NEWREQ* new )
+{
+	u16		sizex, sizez;
+	u32		idx, idxmax;
+	fx32	blockWidth, blockHalfWidth;
+	int		i, j;
+  int   start_x, start_z;
+  int   set_x, set_z;
+  int   ix, iz;
+
+
+	sizex = g3Dmapper->sizex;
+	sizez = g3Dmapper->sizez;
+	idxmax = sizex * sizez;
+	blockWidth = g3Dmapper->blockWidth;
+  blockHalfWidth = FX_Div( g3Dmapper->blockWidth, 2*FX32_ONE );
+
+  // XZ方向ブロック開始位置を求める
+  start_x = GetMapperBlockStartIdxLoop( g3Dmapper->blockXNum, blockWidth, pos->x );
+  start_z = GetMapperBlockStartIdxLoop( g3Dmapper->blockZNum, blockWidth, pos->z );
+
+  // 読み込みリクエスト情報を設定する
+	for( i=0; i<g3Dmapper->blockZNum; i++ )
+  {
+    // 設定するブロックのZ値を求める 
+    set_z = start_z + i;
+    iz = set_z % sizez;
+    if( iz < 0 )
+    {
+      iz += sizez;
+    }
+    {
+  	  for( j=0; j<g3Dmapper->blockXNum; j++ )
+      {
+        // 設定するブロックのX値を求める 
+        set_x = start_x + j;
+        ix = set_x % sizex;
+        if(ix < 0)
+        {
+          ix += sizex;
+        }
+        {
+          idx = (i*g3Dmapper->blockXNum) + j;
+          BLOCKINFO_SetBlockIdx( &new[idx].newBlockInfo, (iz * sizex) + ix );
+          BLOCKINFO_SetBlockTrans( &new[idx].newBlockInfo, 
+             FX_Mul(set_x<<FX32_SHIFT, blockWidth) + blockHalfWidth,
+             0,
+             FX_Mul(set_z<<FX32_SHIFT, blockWidth) + blockHalfWidth ); 
+        }
+      }
+    }
+  } 
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static void GetMapperBlockIdxY( const FLDMAPPER* g3Dmapper, const VecFx32* pos, BLOCK_NEWREQ* new )
 {
 	u16		sizex, sizez;
@@ -757,19 +818,31 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
 
 	//更新ブロックチェック
 	delProcFlag = FALSE;
-	for( i=0; i<g3Dmapper->blockNum; i++ ){
-		if( BLOCKINFO_IsInBlockData( &g3Dmapper->blockWk[i].blockInfo)  ){
+  // 全カレントブロックを走査
+	for( i=0; i<g3Dmapper->blockNum; i++ )
+  {
+		if( BLOCKINFO_IsInBlockData( &g3Dmapper->blockWk[i].blockInfo)  )
+    {
 			delFlag = FALSE;
       now_blockIdx = BLOCKINFO_GetBlockIdx( &g3Dmapper->blockWk[i].blockInfo );
-			for( j=0; j<g3Dmapper->blockNum; j++ ){
+      
+      // カレントブロックと同じリクエストを除外
+			for( j=0; j<g3Dmapper->blockNum; j++ )
+      {
         new_blockIdx = BLOCKINFO_GetBlockIdx( &new[j].newBlockInfo );
-				if(( now_blockIdx == new_blockIdx )&&(delFlag == FALSE )){
-          
+				if(( now_blockIdx == new_blockIdx )&&(delFlag == FALSE ))
+        { 
+          // 除外する前に, 座標をコピー(座標は変わっているかもしれないため)
+          VecFx32 trans;
+          BLOCKINFO_GetBlockTrans( &new[j].newBlockInfo, &trans );
+          GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &trans );
           BLOCKINFO_init( &new[j].newBlockInfo );
 					delFlag = TRUE;
 				}
 			}
-			if( delFlag == FALSE ){
+      // カレントブロックがリクエスト内に存在しなければクリアする
+			if( delFlag == FALSE )
+      {
         BLOCKINFO_init( &g3Dmapper->blockWk[i].blockInfo );
 				GFL_G3D_MAP_SetDrawSw( g3Dmapper->blockWk[i].g3Dmap, FALSE );
 
@@ -780,24 +853,31 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
 			}
 		}
 	}
+
 	//更新
 	addProcFlag = FALSE;
 	c = 0;
-	for( i=0; i<g3Dmapper->blockNum; i++ ){
-      
-		if( BLOCKINFO_IsInBlockData( &new[i].newBlockInfo) ){
-			addFlag = FALSE;
-			for( j=0; j<g3Dmapper->blockNum; j++ ){
 
-				if(( BLOCKINFO_IsInBlockData( &g3Dmapper->blockWk[j].blockInfo ) == FALSE )&&(addFlag == FALSE )){
+  // 全リクエストブロックを走査
+	for( i=0; i<g3Dmapper->blockNum; i++ )
+  { 
+    // リクエストが生きていたら,
+		if( BLOCKINFO_IsInBlockData( &new[i].newBlockInfo) )
+    {
+			addFlag = FALSE;
+      // カレントブロックを検索し, 空き要素にコピーする
+			for( j=0; j<g3Dmapper->blockNum; j++ )
+      { 
+				if(( BLOCKINFO_IsInBlockData( &g3Dmapper->blockWk[j].blockInfo ) == FALSE )&&(addFlag == FALSE ))
+        {
           u32 blockIdx = BLOCKINFO_GetBlockIdx( &new[i].newBlockInfo );
 					u32 mapdatID = g3Dmapper->blocks[blockIdx].datID;
           VecFx32 trans;
 
           BLOCKINFO_GetBlockTrans( &new[i].newBlockInfo, &trans );
 
-					if( mapdatID != FLDMAPPER_MAPDATA_NULL ){
-
+					if( mapdatID != FLDMAPPER_MAPDATA_NULL )
+          { 
 						GFL_G3D_MAP_SetLoadReq( g3Dmapper->blockWk[j].g3Dmap, mapdatID );
 						GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[j].g3Dmap, &trans );
 						GFL_G3D_MAP_SetDrawSw( g3Dmapper->blockWk[j].g3Dmap, TRUE );
@@ -807,6 +887,7 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
 					addProcFlag = TRUE;
 				}
 			}
+      // 空き要素が無いのはおかしい
 			if( addFlag == FALSE ){
 				GF_ASSERT(0);
 			}
@@ -815,6 +896,7 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
 	if( addProcFlag == TRUE ){
 		reloadFlag = TRUE;
 	}
+
 	return reloadFlag;
 }
 
@@ -878,6 +960,23 @@ static s32 GetMapperBlockStartIdxUnEven( u32 blockNum, fx32 width, fx32 pos )
   return block_start;
 }
 
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static s32 GetMapperBlockStartIdxLoop( u32 blockNum, fx32 width, fx32 pos )
+{
+  s32 cur_block;
+  s32 start_block;
+  cur_block = FX_Whole( FX_Div(pos, width) );
+  start_block = cur_block - (blockNum / 2);
+  if( blockNum % 2 == 0 )
+  {
+    fx32 offset = FX_Mod(pos, width);
+    fx32 width_half = FX_Div( width, 2*FX32_ONE );
+    if( width_half < offset ) start_block++;
+  }
+  return start_block;
+}
 
 
 //============================================================================================
