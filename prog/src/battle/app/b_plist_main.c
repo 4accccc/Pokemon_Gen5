@@ -425,8 +425,9 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 //	wk->dat->mode = BPL_MODE_NO_CANCEL;		// キャンセル不可
 //	wk->dat->mode = BPL_MODE_ITEMUSE;			// アイテム使用
 //	wk->dat->item = 38;
-//	wk->dat->mode = BPL_MODE_WAZASET;			// 技忘れ
-//	wk->dat->chg_waza = 20;
+	wk->dat->mode = BPL_MODE_WAZASET;			// 技忘れ
+	wk->dat->sel_poke = 1;
+	wk->dat->chg_waza = 20;
 //	wk->page = BPLIST_PAGE_PP_RCV;		// PP回復技選択ページ
 /**************/
 }

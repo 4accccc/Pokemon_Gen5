@@ -29,8 +29,8 @@
 #define	BPL_PAL_B_GREEN		( 12 )		///< パレット09：ボタン（緑）
 
 #define	BPL_PAL_SYS_FONT	( 13 )		///< パレット13：システムフォント
-#define	BPL_PAL_TALK_WIN	( BPL_PAL_SYS_FONT )		///< パレット14：会話ウィンドウ
-#define	BPL_PAL_TALK_FONT	( 14 )		///< パレット15：会話フォント
+#define	BPL_PAL_TALK_WIN	( 14 )		///< パレット14：会話ウィンドウ
+#define	BPL_PAL_TALK_FONT	( BPL_PAL_SYS_FONT )		///< パレット15：会話フォント
 
 #define	BPL_HP_DOTTO_MAX	( 48 )		///< HPゲージのドットサイズ
 
@@ -201,16 +201,14 @@ enum {
 
 // セルアクターのID
 enum {
-/*
 	BPL_CA_ITEM1 = 0,
 	BPL_CA_ITEM2,
 	BPL_CA_ITEM3,
 	BPL_CA_ITEM4,
 	BPL_CA_ITEM5,
 	BPL_CA_ITEM6,
-
 	BPL_CA_ITEM7,
-*/
+
 	BPL_CA_POKE1,
 	BPL_CA_POKE2,
 	BPL_CA_POKE3,
@@ -224,7 +222,7 @@ enum {
 	BPL_CA_STATUS4,
 	BPL_CA_STATUS5,
 	BPL_CA_STATUS6,
-/*
+
 	BPL_CA_POKETYPE1,
 	BPL_CA_POKETYPE2,
 
@@ -235,7 +233,7 @@ enum {
 	BPL_CA_WAZATYPE5,
 
 	BPL_CA_BUNRUI,
-*/
+
 	BPL_CA_MAX
 };
 
@@ -249,7 +247,8 @@ enum {
 	BPLIST_CHRRES_POKE5,				// ポケモンアイコン：５匹目
 	BPLIST_CHRRES_POKE6,				// ポケモンアイコン：６匹目
 	BPLIST_CHRRES_STATUS,				// 状態異常アイコン
-/*
+	BPLIST_CHRRES_ITEM,					// アイテムアイコン
+
 	BPLIST_CHRRES_POKETYPE1,		// ポケモンタイプアイコン１
 	BPLIST_CHRRES_POKETYPE2,		// ポケモンタイプアイコン２
 	BPLIST_CHRRES_WAZATYPE1,		// 技タイプアイコン１
@@ -258,7 +257,7 @@ enum {
 	BPLIST_CHRRES_WAZATYPE4,		// 技タイプアイコン４
 	BPLIST_CHRRES_WAZATYPE5,		// 技タイプアイコン５
 	BPLIST_CHRRES_BUNRUI,				// 分類アイコン
-	BPLIST_CHRRES_ITEM,					// アイテムアイコン
+/*
 	BPLIST_CHRRES_CURSOR,				// カーソル
 */
 	BPLIST_CHRRES_MAX,
@@ -266,9 +265,9 @@ enum {
 	// パレットリソースID
 	BPLIST_PALRES_POKE = 0,			// ポケモンアイコン（３本）
 	BPLIST_PALRES_STATUS,				// 状態異常アイコン（１本）
-/*
-	BPLIST_PALRES_TYPE,					// タイプ/分類アイコン（３本）
 	BPLIST_PALRES_ITEM,					// アイテムアイコン（１本）
+	BPLIST_PALRES_TYPE,					// タイプ/分類アイコン（３本）
+/*
 	BPLIST_PALRES_CURSOR,				// カーソル（１本）
 */
 	BPLIST_PALRES_MAX,
@@ -276,9 +275,9 @@ enum {
 	// セルリソースID
 	BPLIST_CELRES_POKE = 0,			// ポケモンアイコン
 	BPLIST_CELRES_STATUS,				// 状態異常アイコン
-/*
-	BPLIST_CELRES_TYPE,					// タイプ/分類アイコン
 	BPLIST_CELRES_ITEM,					// アイテムアイコン
+	BPLIST_CELRES_TYPE,					// タイプ/分類アイコン
+/*
 	BPLIST_CELRES_CURSOR,				// カーソル
 */
 	BPLIST_CELRES_MAX,
