@@ -429,17 +429,17 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
     u32 gx, gz;
 
 		DebugFont_ClearLine( work, 0 );
-		sprintf( str, "X %d %xH GRID %d BLOCK %d",
+		sprintf( str, "X %d %xH GRID %d",
 			FX_Whole(pos->x), pos->x, SIZE_GRID_FX32(pos->x) );
 		DebugFont_Print( work, 0, 0, str );
 		
 		DebugFont_ClearLine( work, 1 );
-		sprintf( str, "Y %d %xH GRID %d BLOCK %d",
+		sprintf( str, "Y %d %xH GRID %d",
 			FX_Whole(pos->y), pos->y, SIZE_GRID_FX32(pos->y) );
 		DebugFont_Print( work, 0, 1, str );
 		
 		DebugFont_ClearLine( work, 2 );
-		sprintf( str, "Z %d %xH GRID %d BLOCK %d",
+		sprintf( str, "Z %d %xH GRID %d",
 			FX_Whole(pos->z), pos->z, SIZE_GRID_FX32(pos->z) );
 		DebugFont_Print( work, 0, 2, str );
 
