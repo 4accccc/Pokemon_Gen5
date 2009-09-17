@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: tradedemo.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_TRADEDEMO_NAIX_
+#define NARC_TRADEDEMO_NAIX_
+
+enum {
+	NARC_tradedemo_trade_nsbmd = 0
+};
+
+/* NARC_TRADEDEMO_NAIX_ */
+#endif
