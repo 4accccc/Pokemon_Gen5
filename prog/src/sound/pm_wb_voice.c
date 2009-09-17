@@ -49,7 +49,7 @@ void PMV_GetVoiceWaveIdx(	u32 pokeNo, 		// [in]ポケモンナンバー
 		return;
 	}
 	if( pokeNo == MONSNO_SHEIMI ){					//シェイミの時のみ、フォルムチェック
-		if( pokeFormNo == FORMNO_SHEIMI_FLOWER ){	//スカイフォルム
+		if( pokeFormNo == FORMNO_SHEIMI_SKY ){	//スカイフォルム
 			*waveIdx = WAVE_ARC_PV516_SKY;
 			return;
 		}
