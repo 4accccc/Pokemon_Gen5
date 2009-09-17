@@ -153,6 +153,7 @@
 #define ACCORDION (0x94) //148 アコーディオン奏者
 #define BASKETM (0x95) //149 バスケ選手
 #define SUPPORT (0x96) //150 サポート
-#define OBJCODEMAX (0x97) //151 最大
+#define NONE (0x97) //151 透明なもの
+#define OBJCODEMAX (0x98) //152 最大
 
 #endif
