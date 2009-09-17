@@ -1623,7 +1623,7 @@ static void PLIST_SelectPokeMain( PLIST_WORK *work )
     work->subSeq = PSSS_TERM;
   }
   
-  APP_TASKMENU_UpdatePalletAnime( &work->btlMenuAnmCnt , &work->btlMenuTransBuf , PLIST_BG_PLT_MENU_ACTIVE );
+  APP_TASKMENU_UpdatePalletAnime( &work->btlMenuAnmCnt , &work->btlMenuTransBuf , PLIST_BG_MENU , PLIST_BG_PLT_MENU_ACTIVE );
 
 }
 

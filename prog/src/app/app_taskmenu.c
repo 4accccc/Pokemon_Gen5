@@ -203,7 +203,7 @@ void APP_TASKMENU_UpdateMenu( APP_TASKMENU_WORK *work )
     work->anmCnt++;
   }
   
-  APP_TASKMENU_UpdatePalletAnime( &work->transAnmCnt , &work->transCol , work->initWork.palNo );
+  APP_TASKMENU_UpdatePalletAnime( &work->transAnmCnt , &work->transCol , work->initWork.bgFrame , work->initWork.palNo );
   
   //プレートアニメ
   /*
@@ -320,7 +320,7 @@ static void APP_TASKMENU_SetActiveItem( APP_TASKMENU_WORK *work , const u8 idx ,
 //--------------------------------------------------------------
 //	パレットアニメーションの更新
 //--------------------------------------------------------------
-void APP_TASKMENU_UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 pltNo )
+void APP_TASKMENU_UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 bgFrame , u8 pltNo )
 {
   //プレートアニメ
   if( *anmCnt + APP_TASKMENU_ANIME_VALUE >= 0x10000 )
@@ -340,9 +340,18 @@ void APP_TASKMENU_UpdatePalletAnime( u16 *anmCnt , u16 *transBuf , u8 pltNo )
     
     *transBuf = GX_RGB(r, g, b);
     
-    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
-                                        pltNo * 32 + APP_TASKMENU_ANIME_COL*2 ,
-                                        transBuf , 2 );
+    if( bgFrame <= GFL_BG_FRAME3_M )
+    {
+      NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_MAIN ,
+                                          pltNo * 32 + APP_TASKMENU_ANIME_COL*2 ,
+                                          transBuf , 2 );
+    }
+    else
+    {
+      NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                          pltNo * 32 + APP_TASKMENU_ANIME_COL*2 ,
+                                          transBuf , 2 );
+    }
   }
 }
 
