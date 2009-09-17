@@ -235,7 +235,7 @@ BOOL	PMVOICE_CheckBusy( void )
  * @brief	プレーヤー用waveバッファ事前確保
  */
 //============================================================================================
-void	PMVOICE_PlayerHeapReserve( int num )
+void	PMVOICE_PlayerHeapReserve( int num, HEAPID heapID )
 {
 	PMVOICE_PLAYER* voicePlayer;
 	int i;
@@ -246,7 +246,7 @@ void	PMVOICE_PlayerHeapReserve( int num )
 
 	for( i=0; i<num; i++ ){ 
 		voicePlayer = &pmvSys.voicePlayer[i];
-		voicePlayer->waveData = GFL_HEAP_AllocClearMemory(pmvSys.heapID, PMVOICE_WAVESIZE_MAX);
+		voicePlayer->waveData = GFL_HEAP_AllocClearMemory(heapID, PMVOICE_WAVESIZE_MAX);
 	}
 	pmvSys.voicePlayerEnableNum = num;
 	pmvSys.voicePlayerHeapReserveFlag = TRUE;
