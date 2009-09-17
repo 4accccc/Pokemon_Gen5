@@ -832,7 +832,8 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
         new_blockIdx = BLOCKINFO_GetBlockIdx( &new[j].newBlockInfo );
 				if(( now_blockIdx == new_blockIdx )&&(delFlag == FALSE ))
         { 
-          // 除外する前に, 座標をコピー(座標は変わっているかもしれないため)
+          // 除外する前に, 座標をコピー
+          // (小さいマップでループ表示する場合, 同じIDのブロックが座標だけ変更して現れることがあるため)
           VecFx32 trans;
           BLOCKINFO_GetBlockTrans( &new[j].newBlockInfo, &trans );
           GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[i].g3Dmap, &trans );
