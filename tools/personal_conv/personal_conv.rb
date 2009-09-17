@@ -517,6 +517,17 @@ end
     end
   }
 
+  #他のスクリプトで使用するためのポケモンNoHashを生成
+  fp_hash = open( "monsno_hash.rb", "w" )
+  fp_hash.printf("#! ruby -Ks\n\n" )
+  fp_hash.printf("\t$monsno_hash = {\n" )
+  monsno.size.times {|no|
+    split_data = read_data[ no ].split(/,/)
+    fp_hash.printf("\t\t\"%s\"=>%d,\n", split_data[ PARA::POKENAME ], monsno[ split_data[ PARA::POKENAME ] ] )
+  }
+  fp_hash.printf("\t}\n" )
+  fp_hash.close
+
   #gmmファイルの後始末
   gmm.close_gmm
 
@@ -761,7 +772,7 @@ end
         fp_per.printf( "\t.short\t0\t\t//別フォルムグラフィックデータ開始位置\n" )
       else
         fp_per.printf( "\t.short\t%d\t\t//別フォルムグラフィックデータ開始位置\n",  form_gra_index )
-        form_gra_index += form[ cnt ].get_form_max
+        form_gra_index += ( form[ cnt ].get_form_max - 1 )
       end
 
       fp_per.printf( "\t.byte\t\t%s\t\t//別フォルムMAX\n",                        form[ cnt ].get_form_max )
