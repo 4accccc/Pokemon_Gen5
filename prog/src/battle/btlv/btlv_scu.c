@@ -535,7 +535,6 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
   case 1:
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
     {
-      BTLV_EFFECT_SetPokemon( BPP_GetSrcData(subwk->pp), subwk->viewPos );
       BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_TRAINER_ENCOUNT_1 );
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
       (*seq)++;
@@ -574,6 +573,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
   case 5:
     if( BTLV_SCU_WaitMsg(wk) )
     {
+      BTLV_EFFECT_SetPokemon( BPP_GetSrcData(subwk->pp), subwk->viewPos );
       BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_TRAINER_ENCOUNT_3 );
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
       (*seq)++;
@@ -706,7 +706,6 @@ static BOOL btlin_trainer_comm( int* seq, void* wk_adrs )
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
     {
       BTL_Printf("step2 vpos=%d\n", subwk->viewPos);
-      BTLV_EFFECT_SetPokemon( BPP_GetSrcData(subwk->pp), subwk->viewPos );
       BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_TRAINER_ENCOUNT_1 );
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
       (*seq)++;
@@ -751,6 +750,7 @@ static BOOL btlin_trainer_comm( int* seq, void* wk_adrs )
     break;
 
   case SEQ_PUT_ENEMY1:
+    if( !BTLV_EFFECT_CheckExecute() )
     {
       enum {
         POS  = BTL_POS_2ND_0,
@@ -778,7 +778,7 @@ static BOOL btlin_trainer_comm( int* seq, void* wk_adrs )
     if( BTLV_SCU_WaitMsg(wk) )
     {
       BTL_Printf("step 7 vpos=%d\n", subwk->viewPos);
-//      BTLV_EFFECT_SetPokemon( BPP_GetSrcData(subwk->pp), subwk->viewPos );
+      BTLV_EFFECT_SetPokemon( BPP_GetSrcData(subwk->pp), subwk->viewPos );
       BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_TRAINER_ENCOUNT_3 );
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
       (*seq)++;
@@ -847,7 +847,7 @@ static BOOL btlin_trainer_comm( int* seq, void* wk_adrs )
     if( BTLV_SCU_WaitMsg(wk) )
     {
       BTLV_EFFECT_SetPokemon( BPP_GetSrcData(subwk->pp), subwk->viewPos );
-      BTL_Printf("step 11 vpos=subwk->viewPos\n");
+      BTL_Printf("step 11 vpos=%d\n", subwk->viewPos);
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
       statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
@@ -869,7 +869,7 @@ static BOOL btlin_trainer_comm( int* seq, void* wk_adrs )
     if( !BTLV_EFFECT_CheckExecute() )
     {
       BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_MINE );
-
+      BTL_Printf("step 13 ... ‚¨‚í‚è\n");
       return TRUE;
     }
     break;
