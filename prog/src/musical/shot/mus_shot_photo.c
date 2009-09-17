@@ -35,15 +35,21 @@
 
 #define MUS_PHOTO_SCROLL_OFFSET (128)
 
-#define MUS_PHOTO_BG_3D ( GFL_BG_FRAME0_M )
-#define MUS_PHOTO_BG_MSG ( GFL_BG_FRAME1_M )
-#define MUS_PHOTO_BG_CURTAIN ( GFL_BG_FRAME2_M )
+#define MUS_PHOTO_FRAME_3D ( GFL_BG_FRAME0_M )
+#define MUS_PHOTO_FRAME_MSG ( GFL_BG_FRAME1_M )
+#define MUS_PHOTO_FRAME_CURTAIN ( GFL_BG_FRAME2_M )
 
 #define MSU_PHOTO_DATE_POS_X (25)
 #define MSU_PHOTO_DATE_POS_Y (22)
 #define MSU_PHOTO_DATE_WIDTH  ( 8)
 #define MSU_PHOTO_DATE_HEIGHT ( 2)
 #define MSU_PHOTO_DATE_COLOR (PRINTSYS_LSB_Make(3,0x0b,0))
+
+#define MSU_PHOTO_TITLE_POS_X (1)
+#define MSU_PHOTO_TITLE_POS_Y (1)
+#define MSU_PHOTO_TITLE_WIDTH  (30)
+#define MSU_PHOTO_TITLE_HEIGHT ( 2)
+#define MSU_PHOTO_TITLE_COLOR (PRINTSYS_LSB_Make(1,2,0))
 
 #define MSU_PHOTO_PAL_FONT (0xA)
 //======================================================================
@@ -75,8 +81,10 @@ struct _MUS_SHOT_PHOTO_WORK
   STA_LIGHT_WORK    *lightWork[MUSICAL_POKE_MAX];
 
   //メッセージ用
-  GFL_BMPWIN      *msgWin;
-  GFL_FONT        *fontHandle;
+  GFL_BMPWIN      *msgWinDate;
+  GFL_BMPWIN      *msgWinTitle;
+  GFL_FONT        *fontHandleSmall;
+  GFL_FONT        *fontHandleLarge;
 };
 
 //======================================================================
@@ -144,8 +152,10 @@ void MUS_SHOT_PHOTO_ExitSystem( MUS_SHOT_PHOTO_WORK *work )
   MUS_POKE_DRAW_TermSystem( work->drawSys );
   MUS_ITEM_DRAW_TermSystem( work->itemDrawSys );
 
-  GFL_BMPWIN_Delete( work->msgWin );
-  GFL_FONT_Delete( work->fontHandle );
+  GFL_BMPWIN_Delete( work->msgWinTitle );
+  GFL_BMPWIN_Delete( work->msgWinDate );
+  GFL_FONT_Delete( work->fontHandleLarge );
+  GFL_FONT_Delete( work->fontHandleSmall );
   MUS_SHOT_PHOTO_ExitGraphic( work );
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
@@ -263,9 +273,9 @@ static void MUS_SHOT_PHOTO_InitGraphic( MUS_SHOT_PHOTO_WORK *work )
       GX_BG_EXTPLTT_01, 1, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     
-    MUS_SHOT_PHOTO_SetupBgFunc( &header_main1, MUS_PHOTO_BG_MSG , GFL_BG_MODE_TEXT);
-    MUS_SHOT_PHOTO_SetupBgFunc( &header_main2, MUS_PHOTO_BG_CURTAIN , GFL_BG_MODE_TEXT);
-    GFL_BG_SetScroll( MUS_PHOTO_BG_CURTAIN , GFL_BG_SCROLL_Y_SET , ACT_CURTAIN_SCROLL_MAX );
+    MUS_SHOT_PHOTO_SetupBgFunc( &header_main1, MUS_PHOTO_FRAME_MSG , GFL_BG_MODE_TEXT);
+    MUS_SHOT_PHOTO_SetupBgFunc( &header_main2, MUS_PHOTO_FRAME_CURTAIN , GFL_BG_MODE_TEXT);
+    GFL_BG_SetScroll( MUS_PHOTO_FRAME_CURTAIN , GFL_BG_SCROLL_Y_SET , ACT_CURTAIN_SCROLL_MAX );
   }
   //BG読み込み
   {
@@ -273,10 +283,10 @@ static void MUS_SHOT_PHOTO_InitGraphic( MUS_SHOT_PHOTO_WORK *work )
     GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_stage_gra_maku_NCLR , 
                       PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
     GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_maku_NCGR ,
-                      MUS_PHOTO_BG_CURTAIN , 0 , 0, FALSE , work->heapId );
+                      MUS_PHOTO_FRAME_CURTAIN , 0 , 0, FALSE , work->heapId );
     GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_maku_NSCR , 
-                      MUS_PHOTO_BG_CURTAIN ,  0 , 0, FALSE , work->heapId );
-    GFL_BG_LoadScreenReq(MUS_PHOTO_BG_CURTAIN);
+                      MUS_PHOTO_FRAME_CURTAIN ,  0 , 0, FALSE , work->heapId );
+    GFL_BG_LoadScreenReq(MUS_PHOTO_FRAME_CURTAIN);
     GFL_ARC_CloseDataHandle(arcHandle);
   }
 }
@@ -296,12 +306,12 @@ static void MUS_SHOT_PHOTO_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 b
 //--------------------------------------------------------------
 static void MUS_SHOT_PHOTO_ExitGraphic( MUS_SHOT_PHOTO_WORK *work )
 {
-  GFL_BG_FreeBGControl( MUS_PHOTO_BG_MSG );
-  GFL_BG_FreeBGControl( MUS_PHOTO_BG_CURTAIN );
+  GFL_BG_FreeBGControl( MUS_PHOTO_FRAME_MSG );
+  GFL_BG_FreeBGControl( MUS_PHOTO_FRAME_CURTAIN );
   GFL_BBD_DeleteSys( work->bbdSys );
   GFL_G3D_CAMERA_Delete( work->camera );
   GFL_G3D_Exit();
-  GFL_BG_FreeBGControl( MUS_PHOTO_BG_3D );
+  GFL_BG_FreeBGControl( MUS_PHOTO_FRAME_3D );
   
 }
 
@@ -367,16 +377,21 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
 //--------------------------------------------------------------
 static void MUS_SHOT_PHOTO_SetupMessage( MUS_SHOT_PHOTO_WORK *work )
 {
-  work->msgWin = GFL_BMPWIN_Create( MUS_PHOTO_BG_MSG , MSU_PHOTO_DATE_POS_X , MSU_PHOTO_DATE_POS_Y ,
+  work->msgWinDate = GFL_BMPWIN_Create( MUS_PHOTO_FRAME_MSG , MSU_PHOTO_DATE_POS_X , MSU_PHOTO_DATE_POS_Y ,
                   MSU_PHOTO_DATE_WIDTH , MSU_PHOTO_DATE_HEIGHT , MSU_PHOTO_PAL_FONT ,
                   GFL_BMP_CHRAREA_GET_B );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->msgWin) , 0 );
+  work->msgWinTitle = GFL_BMPWIN_Create( MUS_PHOTO_FRAME_MSG , MSU_PHOTO_TITLE_POS_X , MSU_PHOTO_TITLE_POS_Y ,
+                  MSU_PHOTO_TITLE_WIDTH , MSU_PHOTO_TITLE_HEIGHT , MSU_PHOTO_PAL_FONT ,
+                  GFL_BMP_CHRAREA_GET_B );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->msgWinDate) , 0 );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->msgWinTitle) , 0 );
 
   //フォント読み込み
-  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_small_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  work->fontHandleSmall = GFL_FONT_Create( ARCID_FONT , NARC_font_small_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  work->fontHandleLarge = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , MSU_PHOTO_PAL_FONT*0x20, 16*2, work->heapId );
  
-  //メッセージ
+  //メッセージ(日付
   {
     GFL_MSGDATA     *msgHandle;
     STRBUF *srcStr;
@@ -391,8 +406,8 @@ static void MUS_SHOT_PHOTO_SetupMessage( MUS_SHOT_PHOTO_WORK *work )
     WORDSET_RegisterNumber( wordset , 2 , work->shotData->day  , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
     WORDSET_ExpandStr( wordset , workStr , srcStr );
     
-    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(work->msgWin) , 0 , 0 ,
-                         workStr , work->fontHandle , MSU_PHOTO_DATE_COLOR );
+    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(work->msgWinDate) , 0 , 0 ,
+                         workStr , work->fontHandleSmall , MSU_PHOTO_DATE_COLOR );
 
     GFL_STR_DeleteBuffer( workStr );
     GFL_STR_DeleteBuffer( srcStr );
@@ -400,7 +415,18 @@ static void MUS_SHOT_PHOTO_SetupMessage( MUS_SHOT_PHOTO_WORK *work )
     GFL_MSG_Delete( msgHandle );
   }
 
-  GFL_BMPWIN_TransVramCharacter( work->msgWin );
-  GFL_BMPWIN_MakeScreen( work->msgWin );
-  GFL_BG_LoadScreenReq( MUS_PHOTO_BG_MSG );
+  //メッセージ(タイトル
+  {
+    STRBUF *workStr  = GFL_STR_CreateBuffer( MUSICAL_PROGRAM_NAME_MAX , work->heapId );
+    GFL_STR_SetStringCode( workStr , work->shotData->title );
+    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(work->msgWinTitle) , 0 , 0 ,
+                         workStr , work->fontHandleLarge , MSU_PHOTO_TITLE_COLOR );
+    GFL_STR_DeleteBuffer( workStr );
+  }
+
+  GFL_BMPWIN_TransVramCharacter( work->msgWinDate );
+  GFL_BMPWIN_MakeScreen( work->msgWinDate );
+  GFL_BMPWIN_TransVramCharacter( work->msgWinTitle );
+  GFL_BMPWIN_MakeScreen( work->msgWinTitle );
+  GFL_BG_LoadScreenReq( MUS_PHOTO_FRAME_MSG );
 }

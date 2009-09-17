@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: musical_shot.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MUSICAL_SHOT_NAIX_
+#define NARC_MUSICAL_SHOT_NAIX_
+
+enum {
+	NARC_musical_shot_info_bg_NCLR = 0,
+	NARC_musical_shot_info_bg_NCGR = 1,
+	NARC_musical_shot_info_bg_NSCR = 2
+};
+
+/* NARC_MUSICAL_SHOT_NAIX_ */
+#endif

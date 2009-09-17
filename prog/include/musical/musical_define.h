@@ -23,7 +23,7 @@
 #define MUSICAL_ITEM_EQUIP_MAX (MUS_POKE_EQUIP_USER_MAX)	//顔＆頭・胴・右手・左手
 
 //ミュージカルの演目名の文字数
-#define MUSICAL_PROGRAM_NAME_MAX (26) //日本12・海外24＋EOM
+#define MUSICAL_PROGRAM_NAME_MAX (66) //日本32・海外64＋EOM
 
 //======================================================================
 //	enum

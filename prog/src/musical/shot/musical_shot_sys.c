@@ -14,6 +14,7 @@
 #include "musical/musical_system.h"
 #include "musical/musical_shot_sys.h"
 #include "mus_shot_photo.h"
+#include "mus_shot_info.h"
 
 #include "poke_tool/monsno_def.h"
 
@@ -43,6 +44,7 @@ typedef struct
   MUS_SHOT_INIT_WORK *shotInitWork;
   
   MUS_SHOT_PHOTO_WORK *photoWork;
+  MUS_SHOT_INFO_WORK *infoWork;
 }SHOT_LOCAL_WORK;
 
 //======================================================================
@@ -97,6 +99,7 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
 
   work = GFL_PROC_AllocWork( proc, sizeof(SHOT_LOCAL_WORK), HEAPID_MUSICAL_SHOT );
   work->heapId = HEAPID_MUSICAL_SHOT;
+  OS_TPrintf("MUS_SHOT_DATA_SIZE[%d]\n",sizeof(MUSICAL_SHOT_DATA));
   if( pwk == NULL )
   {
     work->shotInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_SHOT , sizeof( MUS_SHOT_INIT_WORK ));
@@ -123,7 +126,7 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
       shotData->title[9] = L'タ';
       shotData->title[10] = L'ー';
       shotData->title[11] = L'リ';
-      shotData->title[12] = 0;
+      shotData->title[12] = GFL_STR_GetEOMCode();
 
       shotData->shotPoke[0].monsno = MONSNO_PIKATYUU;
       shotData->shotPoke[1].monsno = MONSNO_PIKUSII;
@@ -163,7 +166,8 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
   MUSICAL_SHOT_InitGraphic( work );
 
   work->photoWork = MUS_SHOT_PHOTO_InitSystem( work->shotInitWork->musShotData , work->heapId );
-
+  work->infoWork = MUS_SHOT_INFO_InitSystem( work->shotInitWork->musShotData , work->heapId );
+  
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
                 WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
   
@@ -176,11 +180,16 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
 static GFL_PROC_RESULT MusicalShotProc_Term( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   SHOT_LOCAL_WORK *work = mywk;
+  if( WIPE_SYS_EndCheck() == FALSE )
+  {
+    return GFL_PROC_RES_CONTINUE;
+  }
   //フェードないので仮処理
   GX_SetMasterBrightness(-16);  
   GXS_SetMasterBrightness(-16);
   G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE , GX_BLEND_PLANEMASK_NONE , 31 , 31 );
   
+  MUS_SHOT_INFO_ExitSystem( work->infoWork );
   MUS_SHOT_PHOTO_ExitSystem( work->photoWork );
   MUSICAL_SHOT_ExitGraphic( work );
 
@@ -207,11 +216,15 @@ static GFL_PROC_RESULT MusicalShotProc_Main( GFL_PROC * proc, int * seq , void *
   SHOT_LOCAL_WORK *work = mywk;
 
   MUS_SHOT_PHOTO_UpdateSystem( work->photoWork );
+  MUS_SHOT_INFO_UpdateSystem( work->infoWork );
+
   //OBJの更新
   GFL_CLACT_SYS_Main();
 
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+  if( MUS_SHOT_INFO_IsFinish(work->infoWork) == TRUE )
   {
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
     return GFL_PROC_RES_FINISH;
   }
   return GFL_PROC_RES_CONTINUE;

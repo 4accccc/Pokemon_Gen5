@@ -730,7 +730,7 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_draw.c \
 		musical/comm/mus_comm_func.c \
         musical/shot/musical_shot_sys.c\
         musical/shot/mus_shot_photo.c\
-        musical/shot/mus_shot_data.c\
+        musical/shot/mus_shot_info.c\
         test/ariizumi/musical_editor.c
 
 #ƒpƒŒƒX

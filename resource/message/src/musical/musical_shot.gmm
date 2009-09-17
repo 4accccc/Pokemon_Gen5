@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-09-16T15:33:13"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-09-17T16:09:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="180"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="116" top="176" right="821" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1586" top="161" right="2275" bottom="781" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="786" top="163" right="1259" bottom="561" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="514"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="681"/>
+		<band id="3" index="3" style="0000" width="681"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,13 +335,23 @@
 
 	<row id="MUSICAL_SHOT_PHOTO_01">
 		<comment>写真の日付</comment>
-		<language name="JPN" font=" 1:small" width="64">[2:01:２桁:0].[2:01:２桁:1].[2:01:２桁:2]</language>
-		<language name="JPN_KANJI">[2:01:２桁:0].[2:01:２桁:1].[2:01:２桁:2]</language>
+		<language name="JPN" font=" 1:small" width="64">[2:01:２桁:0]&apos;[2:01:２桁:1]&apos;[2:01:２桁:2]</language>
+		<language name="JPN_KANJI">[2:01:２桁:0]&apos;[2:01:２桁:1]&apos;[2:01:２桁:2]</language>
 	</row>
 
-	<row id="MUSICAL_SHOT_PHOTO_02">
-		<language name="JPN" width="64"></language>
-		<language name="JPN_KANJI"></language>
+	<row id="MUSICAL_SHOT_INFO_01">
+		<language name="JPN" width="240">この しゃしんを　ほぞんしますか？</language>
+		<language name="JPN_KANJI">この　写真を　保存しますか？</language>
+	</row>
+
+	<row id="MUSICAL_SHOT_INFO_02">
+		<language name="JPN" width="240">はい</language>
+		<language name="JPN_KANJI">はい</language>
+	</row>
+
+	<row id="MUSICAL_SHOT_INFO_03">
+		<language name="JPN" width="240">いいえ</language>
+		<language name="JPN_KANJI">いいえ</language>
 	</row>
 
 	<flowchart-group-list>
