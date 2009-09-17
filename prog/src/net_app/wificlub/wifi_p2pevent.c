@@ -675,6 +675,7 @@ static void BB_ProcEnd( BB_PROC_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static BALLOON_PROC_WORK* BL_ProcSet( GMEVENT* fsys, u32 heapID, u32 vchat )
 {
+#if 0
   BALLOON_PROC_WORK* p_work;
 
   FS_EXTERN_OVERLAY(balloon);
@@ -693,6 +694,9 @@ static BALLOON_PROC_WORK* BL_ProcSet( GMEVENT* fsys, u32 heapID, u32 vchat )
   //    EventCmd_CallSubProc(fsys, &BCTProcData, p_work);
   }
   return p_work;
+#else //Wi-FiçLèÍFix
+  return NULL;
+#endif
 }
 
 //----------------------------------------------------------------------------

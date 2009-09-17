@@ -48,9 +48,9 @@ FS_EXTERN_OVERLAY(matsuda_debug);
 FS_EXTERN_OVERLAY(balloon);
 FS_EXTERN_OVERLAY(compati_check);
 FS_EXTERN_OVERLAY(palace);
-FS_EXTERN_OVERLAY(wifilobby_common);
-FS_EXTERN_OVERLAY(netold);
-FS_EXTERN_OVERLAY(minigame_common);
+//FS_EXTERN_OVERLAY(wifilobby_common);
+//FS_EXTERN_OVERLAY(netold);
+//FS_EXTERN_OVERLAY(minigame_common);
 
 
 //==============================================================================
@@ -131,7 +131,7 @@ extern const GFL_PROC_DATA PalaceEditProcData;
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
-#if 1
+#if 0
 	{//WIFI広場
 		DM_MSG_MENU014, 
 		&WFLBY_PROC,
@@ -139,12 +139,6 @@ static const D_MENULIST DebugMenuList[] = {
 		FS_OVERLAY_ID(wifilobby_common),
 	},
 #endif
-	{//風船ミニゲーム
-		DM_MSG_MENU011, 
-		&BalloonProcData,	
-		_BalloonParentWorkCreate,
-		FS_OVERLAY_ID(balloon)
-	},
 	{//パレス編集
 		DM_MSG_MENU013, 
 		&PalaceEditProcData,			
@@ -517,6 +511,7 @@ static BOOL DebugMatsuda_ItemDebug(D_MATSU_WORK *wk)
 //==============================================================================
 static void * _BalloonParentWorkCreate(D_MATSU_WORK *wk)
 {
+#if 0
 	BALLOON_PROC_WORK *balloon_pwk;
 	
 	balloon_pwk = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(BALLOON_PROC_WORK));
@@ -526,6 +521,9 @@ static void * _BalloonParentWorkCreate(D_MATSU_WORK *wk)
 	GFL_OVERLAY_Load(FS_OVERLAY_ID(minigame_common));
 	
 	return balloon_pwk;
+#else
+  return NULL;
+#endif
 }
 
 //==============================================================================
@@ -533,6 +531,7 @@ static void * _BalloonParentWorkCreate(D_MATSU_WORK *wk)
 //==============================================================================
 static void * _WifiLobbyParentWorkCreate(D_MATSU_WORK *wk)
 {
+#if 0
 	WFLBY_PROC_PARAM *wflby_pwk;
 	
 	wflby_pwk = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(WFLBY_PROC_PARAM));
@@ -543,6 +542,9 @@ static void * _WifiLobbyParentWorkCreate(D_MATSU_WORK *wk)
 	
 	D_Tomoya_WiFiLobby_DebugStart = 0;//TRUE;
 	return wflby_pwk;
+#else
+  return NULL;
+#endif
 }
 
 

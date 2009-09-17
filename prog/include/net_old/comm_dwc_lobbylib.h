@@ -304,6 +304,7 @@ typedef struct {
 extern void OLDDWC_LOBBY_Init( u32 heapID, SAVE_CONTROL_WORK* p_save, u32 profilesize, const OLDDWC_LOBBY_CALLBACK* cp_callback,  void* p_callbackwork );	// ワークの初期化
 extern void OLDDWC_LOBBY_Exit( void );												// ワークの破棄
 extern OLDDWC_LOBBY_CHANNEL_STATE OLDDWC_LOBBY_Update( void );						// ロビーの更新関数
+extern BOOL OLDDWC_LOBBY_UpdateErrorCheck( void );
 extern PPW_LOBBY_ERROR OLDDWC_LOBBY_GetErr( void );								// ロビーエラー状態取得
 extern s32 OLDDWC_LOBBY_GetErrNo( PPW_LOBBY_ERROR error );								// ロビーエラー状態取得
 extern BOOL OLDDWC_LOBBY_Login( const void* cp_loginprofile );						// メインチャンネルへログイン

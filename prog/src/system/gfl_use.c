@@ -24,7 +24,7 @@
 #include "system\gfl_use.h"
 #include "arc_def.h"
 #include "arc_file.h"
-#include "net_old/net_old.h"
+//#include "net_old/net_old.h"
 
 #include "textprint.h"
 
@@ -186,7 +186,6 @@ void GFLUser_Main(void)
 {
   GFL_UI_Main();
   GFL_NET_Main();  //キーの処理の後すぐに通信を処理したい為ここに配置
-  NetOld_Update();
 
 #ifdef PM_DEBUG
   //デバッグシステム

@@ -13,7 +13,7 @@
 #include "dwc_rapinitialize.h"
 #include "net/dwc_rapcommon.h"
 #include "dwc_rapfriend.h"
-#include "net/dwc_lobbylib.h"
+//#include "net_old\comm_dwc_lobbylib.h"
 
 extern GFLNetDevTable *NET_GetWifiDeviceTable(void);
 
@@ -464,7 +464,7 @@ static BOOL _DevIsNewPlayer(void)
 
 //--------------------------------------------------------------
 /**
- * @brief   Wi-Fi広場にログイン	DWC_LOBBY_Login
+ * @brief   Wi-Fi広場にログイン	OLDDWC_LOBBY_Login
  *
  * @param   cp_loginprofile
  *
@@ -474,12 +474,16 @@ static BOOL _DevIsNewPlayer(void)
 //--------------------------------------------------------------
 static BOOL _DevLobbyLogin(const void* cp_loginprofile)
 {
-  return DWC_LOBBY_Login(cp_loginprofile);
+#if 0  //Wi-Fi広場Fix
+  return OLDDWC_LOBBY_Login(cp_loginprofile);
+#else
+  return FALSE;
+#endif
 }
 
 //--------------------------------------------------------------
 /**
- * @brief   デバッグ用 部屋データ設定DWC_LOBBY_DEBUG_SetRoomData
+ * @brief   デバッグ用 部屋データ設定OLDDWC_LOBBY_DEBUG_SetRoomData
  *
  * @param   locktime
  * @param   random
@@ -489,24 +493,30 @@ static BOOL _DevLobbyLogin(const void* cp_loginprofile)
 //--------------------------------------------------------------
 static void _DevDebugSetRoom( u32 locktime, u32 random, u8 roomtype, u8 season )
 {
-  DWC_LOBBY_DEBUG_SetRoomData(locktime, random, roomtype, season);
+#if 0  //Wi-Fi広場Fix
+  OLDDWC_LOBBY_DEBUG_SetRoomData(locktime, random, roomtype, season);
+#endif
 }
 
 //--------------------------------------------------------------
 /**
- * @brief   DWCロビーを更新し、戻り値でエラー発生をTRUEorFALSEで返す DWC_LOBBY_UpdateErrorCheck
+ * @brief   DWCロビーを更新し、戻り値でエラー発生をTRUEorFALSEで返す OLDDWC_LOBBY_UpdateErrorCheck
  *
  * @retval  TRUE：正常　FALSE：エラー
  */
 //--------------------------------------------------------------
 static BOOL _DevLobbyUpdateErrorCheck(void)
 {
-  return DWC_LOBBY_UpdateErrorCheck();
+#if 0  //Wi-Fi広場Fix
+  return OLDDWC_LOBBY_UpdateErrorCheck();
+#else
+  return FALSE;
+#endif
 }
 
 //--------------------------------------------------------------
 /**
- * @brief   ログイン完了待ち	DWC_LOBBY_LoginWait
+ * @brief   ログイン完了待ち	OLDDWC_LOBBY_LoginWait
  *
  *	@retval	TRUE	ログイン完了
  *	@retval	FALSE	ログイン中orログイン以外の状態
@@ -514,22 +524,28 @@ static BOOL _DevLobbyUpdateErrorCheck(void)
 //--------------------------------------------------------------
 static BOOL _DevLobbyLoginWait(void)
 {
-  return DWC_LOBBY_LoginWait();
+#if 0  //Wi-Fi広場Fix
+  return OLDDWC_LOBBY_LoginWait();
+#else
+  return FALSE;
+#endif
 }
 
 //--------------------------------------------------------------
 /**
- * @brief   ロビーサーバからログアウト		DWC_LOBBY_Logout
+ * @brief   ロビーサーバからログアウト		OLDDWC_LOBBY_Logout
  */
 //--------------------------------------------------------------
 static void _DevLobbyLogout(void)
 {
-  DWC_LOBBY_Logout();
+#if 0  //Wi-Fi広場Fix
+  OLDDWC_LOBBY_Logout();
+#endif
 }
 
 //--------------------------------------------------------------
 /**
- * @brief   ログアウト完了待ち		DWC_LOBBY_LogoutWait
+ * @brief   ログアウト完了待ち		OLDDWC_LOBBY_LogoutWait
  *
  *	@retval		TRUE	完了
  *	@retval		FALSE	ログアウト中orログアウト状態以外の状態
@@ -537,42 +553,70 @@ static void _DevLobbyLogout(void)
 //--------------------------------------------------------------
 static BOOL _DevLobbyLogoutWait(void)
 {
-  return DWC_LOBBY_LogoutWait();
+#if 0  //Wi-Fi広場Fix
+  return OLDDWC_LOBBY_LogoutWait();
+#else
+  return FALSE;
+#endif
 }
 
 static BOOL _DevLobbyMgCheckRecruit( int type )
 {
-  return DWC_LOBBY_MG_CheckRecruit(type);
+#if 0  //Wi-Fi広場Fix
+  return OLDDWC_LOBBY_MG_CheckRecruit(type);
+#else
+  return FALSE;
+#endif
 }
 
 static BOOL _DevLobbyMgStartRecruit( int type, u32 maxnum )
 {
-  return DWC_LOBBY_MG_StartRecruit(type, maxnum);
+#if 0  //Wi-Fi広場Fix
+  return OLDDWC_LOBBY_MG_StartRecruit(type, maxnum);
+#else
+  return FALSE;
+#endif
 }
 
 static BOOL _DevLobbyMgEntry( int type )
 {
-  return DWC_LOBBY_MG_Entry(type);
+#if 0  //Wi-Fi広場Fix
+  return OLDDWC_LOBBY_MG_Entry(type);
+#else
+  return FALSE;
+#endif
 }
 
 static BOOL _DevLobbyMgForceEnd( void )
 {
-  return DWC_LOBBY_MG_ForceEnd();
+#if 0  //Wi-Fi広場Fix
+  return OLDDWC_LOBBY_MG_ForceEnd();
+#else
+  return FALSE;
+#endif
 }
 
 static void _DevLobbyMgEndConnect( void )
 {
-  DWC_LOBBY_MG_EndConnect();
+#if 0  //Wi-Fi広場Fix
+  OLDDWC_LOBBY_MG_EndConnect();
+#endif
 }
 
 static BOOL _DevLobbyMgMyParent( void )
 {
-  return DWC_LOBBY_MG_MyParent();
+#if 0  //Wi-Fi広場Fix
+  return OLDDWC_LOBBY_MG_MyParent();
+#else
+  return FALSE;
+#endif
 }
 
 static void _DevLobbyMgEndRecruit( void )
 {
-  DWC_LOBBY_MG_EndRecruit();
+#if 0  //Wi-Fi広場Fix
+  OLDDWC_LOBBY_MG_EndRecruit();
+#endif
 }
 
 

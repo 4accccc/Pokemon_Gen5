@@ -644,6 +644,36 @@ OLDDWC_LOBBY_CHANNEL_STATE OLDDWC_LOBBY_Update( void )
 	return OLDDWC_LOBBY_GetState();
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   DWCロビーを更新し、戻り値でエラー発生をTRUEorFALSEで返す
+ *
+ * @retval  TRUE:正常。　FALSE:エラー
+ */
+//--------------------------------------------------------------
+BOOL OLDDWC_LOBBY_UpdateErrorCheck( void )
+{
+	OLDDWC_LOBBY_CHANNEL_STATE lobby_err;
+	BOOL ret = TRUE;
+	
+	lobby_err = OLDDWC_LOBBY_Update();
+	switch( lobby_err ){
+	//  正常
+    case OLDDWC_LOBBY_CHANNEL_STATE_NONE:           // チャンネルに入っていない。
+    case OLDDWC_LOBBY_CHANNEL_STATE_LOGINWAIT:		// チャンネルに入室中。
+    case OLDDWC_LOBBY_CHANNEL_STATE_CONNECT:		// チャンネルに入室済み。
+    case OLDDWC_LOBBY_CHANNEL_STATE_LOGOUTWAIT:     // チャンネルに退室中。
+		break;
+	
+	// エラー処理
+	case OLDDWC_LOBBY_CHANNEL_STATE_ERROR:           // チャンネル状態を取得できませんでした。
+		ret = FALSE;
+		break;
+	}
+	
+	return ret;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief		現在起こっているエラーを取得する
