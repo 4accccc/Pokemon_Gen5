@@ -980,17 +980,17 @@ static VMCMD_RESULT VMEC_POKEMON_MOVE( VMHANDLE *vmh, void *context_work )
 
   position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
 
+  type        = ( int )VMGetU32( vmh );
+  move_pos.x  = ( fx32 )VMGetU32( vmh );
+  move_pos.y  = ( fx32 )VMGetU32( vmh );
+  move_pos.z  = 0;
+  frame       = ( int )VMGetU32( vmh );
+  wait        = ( int )VMGetU32( vmh );
+  count       = ( int )VMGetU32( vmh );
+
   //立ち位置情報がエラーのときは、コマンド実行しない
   if( position != BTLV_MCSS_POS_ERROR )
   {
-    type     = ( int )VMGetU32( vmh );
-    move_pos.x = ( fx32 )VMGetU32( vmh );
-    move_pos.y = ( fx32 )VMGetU32( vmh );
-    move_pos.z = 0;
-    frame    = ( int )VMGetU32( vmh );
-    wait     = ( int )VMGetU32( vmh );
-    count    = ( int )VMGetU32( vmh );
-
     BTLV_MCSS_MovePosition( BTLV_EFFECT_GetMcssWork(), position, type, &move_pos, frame, wait, count );
   }
 
@@ -1011,18 +1011,18 @@ static VMCMD_RESULT VMEC_POKEMON_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work 
   BTLV_MCSS_MOVE_CIRCLE_PARAM bmmcp;
   bmmcp.position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
 
+  bmmcp.axis              = ( int )VMGetU32( vmh );
+  bmmcp.shift             = ( int )VMGetU32( vmh );
+  bmmcp.radius_h          = ( fx32 )VMGetU32( vmh );
+	bmmcp.radius_v          = ( fx32 )VMGetU32( vmh );
+	bmmcp.frame             = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
+  bmmcp.rotate_wait       = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
+  bmmcp.count             = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
+	bmmcp.rotate_after_wait = ( int )VMGetU32( vmh );
+
   //立ち位置情報がエラーのときは、コマンド実行しない
   if( bmmcp.position != BTLV_MCSS_POS_ERROR )
   {
-    bmmcp.axis              = ( int )VMGetU32( vmh );
-    bmmcp.shift             = ( int )VMGetU32( vmh );
-	  bmmcp.radius_h          = ( fx32 )VMGetU32( vmh );
-	  bmmcp.radius_v          = ( fx32 )VMGetU32( vmh );
-	  bmmcp.frame             = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
-  	bmmcp.rotate_wait       = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
-  	bmmcp.count             = ( int )VMGetU32( vmh ) >> FX32_SHIFT;
-	  bmmcp.rotate_after_wait = ( int )VMGetU32( vmh );
-
     if( bmmcp.count )
     { 
       BTLV_MCSS_MoveCircle( BTLV_EFFECT_GetMcssWork(), &bmmcp );
@@ -1051,18 +1051,17 @@ static VMCMD_RESULT VMEC_POKEMON_SCALE( VMHANDLE *vmh, void *context_work )
   int   count;
 
   position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+  type    = ( int )VMGetU32( vmh );
+  scale.x = ( fx32 )VMGetU32( vmh );
+  scale.y = ( fx32 )VMGetU32( vmh );
+  scale.z = FX32_ONE;
+  frame   = ( int )VMGetU32( vmh );
+  wait    = ( int )VMGetU32( vmh );
+  count   = ( int )VMGetU32( vmh );
 
   //立ち位置情報がエラーのときは、コマンド実行しない
   if( position != BTLV_MCSS_POS_ERROR )
   {
-    type     = ( int )VMGetU32( vmh );
-    scale.x = ( fx32 )VMGetU32( vmh );
-    scale.y = ( fx32 )VMGetU32( vmh );
-    scale.z = FX32_ONE;
-    frame    = ( int )VMGetU32( vmh );
-    wait     = ( int )VMGetU32( vmh );
-    count    = ( int )VMGetU32( vmh );
-
     BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(), position, type, &scale, frame, wait, count );
   }
 
@@ -1088,18 +1087,17 @@ static VMCMD_RESULT VMEC_POKEMON_ROTATE( VMHANDLE *vmh, void *context_work )
   int   count;
 
   position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+  type     = ( int )VMGetU32( vmh );
+  rotate.x   = 0;
+  rotate.y   = 0;
+  rotate.z   = ( fx32 )VMGetU32( vmh );
+  frame    = ( int )VMGetU32( vmh );
+  wait     = ( int )VMGetU32( vmh );
+  count    = ( int )VMGetU32( vmh );
 
   //立ち位置情報がエラーのときは、コマンド実行しない
   if( position != BTLV_MCSS_POS_ERROR )
   {
-    type     = ( int )VMGetU32( vmh );
-    rotate.x   = 0;
-    rotate.y   = 0;
-    rotate.z   = ( fx32 )VMGetU32( vmh );
-    frame    = ( int )VMGetU32( vmh );
-    wait     = ( int )VMGetU32( vmh );
-    count    = ( int )VMGetU32( vmh );
-
     BTLV_MCSS_MoveRotate( BTLV_EFFECT_GetMcssWork(), position, type, &rotate, frame, wait, count );
   }
 
@@ -1125,16 +1123,15 @@ static VMCMD_RESULT VMEC_POKEMON_ALPHA( VMHANDLE *vmh, void *context_work )
   int count;
 
   position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+  type  = ( int )VMGetU32( vmh );
+  alpha = ( int )VMGetU32( vmh );
+  frame = ( int )VMGetU32( vmh );
+  wait  = ( int )VMGetU32( vmh );
+  count = ( int )VMGetU32( vmh );
 
   //立ち位置情報がエラーのときは、コマンド実行しない
   if( position != BTLV_MCSS_POS_ERROR )
   {
-    type  = ( int )VMGetU32( vmh );
-    alpha = ( int )VMGetU32( vmh );
-    frame = ( int )VMGetU32( vmh );
-    wait  = ( int )VMGetU32( vmh );
-    count = ( int )VMGetU32( vmh );
-
     BTLV_MCSS_MoveAlpha( BTLV_EFFECT_GetMcssWork(), position, type, alpha, frame, wait, count );
   }
 
@@ -1158,14 +1155,13 @@ static VMCMD_RESULT VMEC_POKEMON_SET_MEPACHI_FLAG( VMHANDLE *vmh, void *context_
   int   count;
 
   position = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+  type     = ( int )VMGetU32( vmh );
+  wait     = ( int )VMGetU32( vmh );
+  count    = ( int )VMGetU32( vmh );
 
   //立ち位置情報がエラーのときは、コマンド実行しない
   if( position != BTLV_MCSS_POS_ERROR )
   {
-    type     = ( int )VMGetU32( vmh );
-    wait     = ( int )VMGetU32( vmh );
-    count    = ( int )VMGetU32( vmh );
-    //GF_ASSERT( count != 0 );
     if( count == 0 )
     {
       count = 1;
@@ -1189,7 +1185,6 @@ static VMCMD_RESULT VMEC_POKEMON_SET_ANM_FLAG( VMHANDLE *vmh, void *context_work
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
   int   position  = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
   int   flag      = ( int )VMGetU32( vmh );
-
 
   //立ち位置情報がエラーのときは、コマンド実行しない
   if( position != BTLV_MCSS_POS_ERROR )
