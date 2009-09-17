@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-09-07T11:55:03"/>
+	<create user="fujiwara_maiko" host="W00194" date="2009-09-16T17:05:20"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="2" xyz="-2.000000 0.000000 -2.000000" whd="4.000000 0.000000 4.000000"/>
 
-<tex_image_array size="3">
+<tex_image_array size="6">
 	<tex_image index="0" name="h02_hasi1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
@@ -80,41 +80,230 @@
 		path="C:/home/wb_data3d/field/out08/map/tex/h02_hasi2.tga"
 	>
 		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			8888 8888 4448 c633 99cc 9999 5666 1123
+			aaaa aaaa 477a c633 99cc 9999 5666 1123
+			bbbb bbbb 477b c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d 9633 9999 9999 3666 0012
+			8888 8888 4448 6633 6666 6666 2666 0001
+			aaaa aaaa 477a 3333 2223 2222 1222 0000
+			bbbb bbbb 477b 3333 2223 2222 1222 0000
+			dddd dddd 488d 6633 6666 6666 2666 0001
+			dddd dddd 488d c633 99cc 9999 3666 0012
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			8888 8888 4448 c633 99cc 9999 5666 1123
+			aaaa aaaa 477a c633 99cc 9999 5666 1123
+			bbbb bbbb 477b c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 488d c633 99cc 9999 5666 1123
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="h02_umi"
+	<tex_image index="2" name="h02_hasi3"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette256"
+		color0_mode="color"
+		palette_name="h02_hasi3_pl"
+		path="C:/home/wb_data3d/field/out08/map/tex/h02_hasi3.tga"
+	>
+		<bitmap size="512">
+			110e 0100 0606 0001 0e11 000d 0a0a 0a0a
+			0a0a 0a0a 0c0c 0c05 0d0d 0c0c 0505 0505
+			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
+			0c0c 0a0c 0c0c 0c05 0d0d 0c0c 0505 0505
+			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
+			0d0d 0a0c 0c0c 0c05 0d0d 0c0c 0505 0505
+			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
+			0d0d 0a0c 0c0c 0c05 0c0d 0505 0505 0505
+			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
+			0d0d 0a0c 0c0c 0c05 050d 0404 0203 0502
+			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
+			0d0d 0a0c 0c0c 0c05 050f 0405 0203 0502
+			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
+			0d0d 0a0c 0c0c 0c05 0510 0405 0203 0502
+			110e 0100 0606 0001 0e11 000d 0a0c 0c0a
+			0707 0a0c 0c0c 0c05 0510 0405 0203 0502
+			110e 0100 0606 0001 0e11 000d 0a0c 0c0a
+			1010 0a0c 0c0c 0c05 0510 0405 0203 0502
+			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
+			1010 0a0c 0c0c 0c05 0510 0405 0203 0502
+			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
+			1212 0a0c 0c0c 0c05 0510 0405 0203 0502
+			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
+			1212 0a0c 0c0c 0c05 0510 0405 0203 0502
+			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
+			1212 0a0c 0c0c 0c05 050f 0405 0203 0502
+			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
+			1212 0a0c 0c0c 0c05 050d 0404 0203 0502
+			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
+			1212 0a0c 0c0c 0c05 0c0d 0505 0505 0505
+			110e 0100 0606 0001 0e11 000d 0a0c 0c0a
+			1010 0a0c 0c0c 0c05 0d0d 0c0c 0505 0505
+			110e 0100 0606 0001 0e11 000d 0a0c 0c0a
+			1010 0a0c 0c0c 0c05 0d0d 0c0c 0505 0505
+			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
+			0707 0a0c 0c0c 0c05 0d0d 0c0c 0505 0505
+			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
+			0707 0a0c 0c0c 0c05 0d0d 0c0c 0505 0505
+			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
+			0707 0a0c 0c0c 0c05 0c0d 0505 0505 0505
+			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
+			0707 0a0c 0c0c 0c05 050d 0404 0203 0502
+			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
+			0707 0a0c 0c0c 0c05 050f 0405 0203 0502
+			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
+			0707 0a0c 0b0b 0c05 0510 0405 0203 0502
+			110e 0100 0606 0001 0e11 000d 0a0c 0c0a
+			0d0d 0a0c 0a0a 0c05 0510 0405 0203 0502
+			110e 0100 0606 0001 0e11 000d 0a0c 0c0a
+			0d0d 0a0c 0909 0c05 0510 0405 0203 0502
+			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
+			0d0d 0a0c 0808 0c05 0510 0405 0203 0502
+			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
+			0d0d 0a0c 0808 0c05 0510 0405 0203 0502
+			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
+			0d0d 0a0c 0505 0c05 0510 0405 0203 0502
+			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
+			0d0d 0a0c 0505 0c05 050f 0405 0203 0502
+			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
+			0d0d 0a0c 0505 0c05 050d 0404 0203 0502
+			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
+			0c0c 0a0c 0505 0c05 0c0d 0505 0505 0505
+			110e 0100 0606 0001 0e11 000d 0a0c 0a0a
+			0a0a 0a0a 0505 0c05 0d0d 0c0c 0505 0505
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="h02_hasi5"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="h02_hasi5_pl"
+		path="C:/home/wb_data3d/field/out08/map/tex/h02_hasi5.tga"
+	>
+		<bitmap size="256">
+			2420 fff0 ffff ffff ffff ffff ffff ffff
+			2420 fff0 ffff ffff ffff ffff ffff ffff
+			2420 fff0 ffff ffff ffff ffff ffff ffff
+			2420 fff0 ffff ffff ffff ffff ffff ffff
+			2420 fff0 ffff ffff ffff ffff ffff ffff
+			3531 fff1 ffff ffff ffff ffff ffff ffff
+			4642 fff2 ffff ffff ffff ffff ffff ffff
+			5853 fff3 ffff ffff ffff ffff ffff ffff
+			7a74 fff4 ffff ffff ffff ffff ffff ffff
+			9b96 fff6 ffff ffff ffff ffff ffff ffff
+			9c97 fff7 ffff ffff ffff ffff ffff ffff
+			ada7 fff7 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			beb8 fff8 ffff ffff ffff ffff ffff ffff
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="h02_kage"
+		width="32" height="32" original_width="32" original_height="32"
+		format="a5i3"
+		palette_name="h02_kage_pl"
+		path="C:/home/wb_data3d/field/out08/map/tex/h02_kage.tga"
+	>
+		<bitmap size="512">
+			c0c8 c8c0 c0c8 c0c8 c8c8 c8c0 c8c8 c0c8
+			c8c8 c0c8 c0c8 c0c8 c8c0 c0c8 c8c8 c8c8
+			c8c8 c8c8 c8c8 c8c8 c8c0 c0c8 c0c8 c0c8
+			c8c8 c0c8 c0c8 c0c8 c8c8 c8c0 c8c8 c8c8
+			d0d0 d0d0 d0d0 c8d0 c8c0 c0c8 c0c8 c8c8
+			c0c8 c0c8 c8c0 c0c8 c8c8 c0c8 c8c8 c0c0
+			d8d8 d8d8 d8d8 c8d8 c0c8 c0c8 c8c0 c8c8
+			c8c0 c8c8 c8c8 c8c8 c8c0 c8c0 c8c8 c8c0
+			e0e0 e0e0 e0e0 c0e0 c8c8 c0c8 c8c8 c0c8
+			c8c8 c8c8 c0c8 c8c8 c0c0 c0c8 c8c0 c0c8
+			e8e8 e8e8 e8e8 c8e8 c8c8 c8c8 c0c0 c8c8
+			c8c8 c8c8 c8c0 c8c8 c8c8 c8c8 c8c0 c8c0
+			e8e8 f0f0 e8f0 c0e8 c8c8 c8c8 c8c8 c8c8
+			c8c0 c8c8 c8c8 c8c0 c8c8 c0c8 c0c0 c0c8
+			e8e8 f0e8 e8f0 c8e8 c8c8 c8c0 c0c0 c8c8
+			c8c0 c0c8 c8c0 c0c8 c8c8 c0c8 c0c8 c8c8
+			e8f0 e8e8 f0f0 c8e8 c8c0 c8c8 c8c0 c0c8
+			c8c8 c0c0 c0c8 c8c8 c8c8 c0c8 c8c0 c0c8
+			f0e8 e8f0 f0f0 c0e8 c8c0 c0c8 c8c8 c8c8
+			c0c8 c8c8 c8c8 c8c8 c0c8 c8c8 c8c8 c8c8
+			e8f0 e8f0 e8f0 c0e8 c8c8 c8c8 c8c8 c0c8
+			c0c8 c8c8 c8c8 c8c8 c8c8 c8c0 c8c8 c8c0
+			f0f0 f0e8 e8e8 c8f0 c8c8 c8c8 c8c0 c8c8
+			c8c0 c8c0 c0c8 c8c0 c8c8 c8c0 c8c8 c8c8
+			e8e8 e8e8 e8f0 c8f0 c8c8 c8c8 c8c8 c8c8
+			c8c0 c0c0 c8c8 c8c8 c8c0 c8c8 c8c8 c8c8
+			e8f0 e8f0 f0e8 c0f0 c8c8 c8c8 c8c0 c8c0
+			c8c8 c8c0 c8c0 c8c8 c8c8 c8c0 c8c8 c0c8
+			e8e8 f0f0 f0e8 c8e8 c0c8 c8c8 c8c8 c8c8
+			c8c8 c0c8 c8c0 c8c8 c8c8 c8c8 c8c8 c8c8
+			f0e8 e8f0 e8e8 c0e8 c8c8 c8c8 c0c8 c8c0
+			c8c8 c8c8 c8c0 c8c8 c8c8 c8c8 c8c8 c0c8
+			e8e8 e8f0 e8f0 c8e8 c8c8 c8c0 c8c8 c8c0
+			c8c0 c8c8 c8c8 c0c8 c8c8 c0c8 c8c8 c8c8
+			f0f0 e8e8 e8e8 c8e8 c8c0 c0c8 c0c0 c8c8
+			c8c8 c8c8 c0c8 c8c8 c8c0 c8c8 c8c8 c8c8
+			f0e8 e8f0 f0f0 c0e8 c8c8 c8c0 c8c8 c0c0
+			c0c8 c8c8 c8c0 c0c8 c0c8 c8c0 c8c8 c0c0
+			e8f0 e8e8 e8e8 c8e8 c8c8 c8c8 c8c0 c0c8
+			c8c8 c8c8 c8c8 c8c8 c8c8 c8c0 c8c8 c0c8
+			e8f0 e8e8 f0f0 c8e8 c8c8 c8c8 c8c8 c8c8
+			c8c8 c8c8 c0c8 c0c8 c0c0 c0c0 c0c8 c8c8
+			e8e8 f0e8 f0e8 c8e8 c8c8 c8c8 c8c0 c8c8
+			c8c8 c8c8 c8c0 c8c8 c0c8 c0c8 c8c8 c8c8
+			e8f0 f0e8 e8e8 c8e8 c8c8 c8c8 c8c8 c8c8
+			c8c0 c0c8 c8c0 c0c0 c0c8 c0c8 c8c8 c8c8
+			f0e8 e8e8 e8f0 c8e8 c0c8 c8c0 c0c8 c8c8
+			c0c8 c8c8 c8c0 c0c8 c8c8 c0c8 c8c8 c0c8
+			e8e8 e8f0 f0e8 c0e8 c0c8 c8c8 c0c8 c0c0
+			c8c8 c0c0 c0c8 c0c8 c8c8 c0c8 c8c8 c0c8
+			e8e8 f0f0 e8e8 c8f0 c8c8 c8c8 c8c8 c8c8
+			c8c0 c8c8 c8c8 c8c8 c8c0 c8c8 c8c0 c8c8
+			e8e8 f0e8 e8f0 c0f0 c8c8 c8c0 c8c8 c8c0
+			c0c0 c8c8 c8c8 c0c8 c8c8 c8c0 c8c8 c8c0
+			f0e8 f0f0 f0f0 c8e8 c8c8 c8c8 c0c0 c8c0
+			c8c0 c8c8 c0c8 c8c0 c0c8 c8c8 c8c8 c8c8
+			e8e8 e8e8 e8f0 c0e8 c8c8 c8c0 c8c8 c8c8
+			c0c0 c8c8 c8c8 c8c0 c8c0 c0c8 c8c8 c8c8
+			f0e8 f0f0 f0e8 c8f0 c8c0 c8c0 c8c8 c8c0
+			c8c8 c8c0 c8c0 c8c0 c0c8 c8c8 c8c0 c0c0
+			f0e8 f0f0 f0f0 c8f0 c0c8 c0c8 c8c8 c8c8
+			c0c8 c8c8 c8c0 c8c8 c8c8 c8c8 c8c0 c8c8
+			e8e8 f0f0 e8f0 c8e8 c8c8 c8c8 c0c8 c0c8
+			c8c8 c8c8 c0c0 c8c8 c8c8 c0c8 c8c8 c8c8
+		</bitmap>
+	</tex_image>
+	<tex_image index="5" name="h02_umi"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -158,14 +347,27 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="3">
+<tex_palette_array size="6">
 	<tex_palette index="0" name="h02_hasi1_pl" color_size="8">
 		0c71 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="h02_hasi2_pl" color_size="8">
-		6319 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="1" name="h02_hasi2_pl" color_size="16">
+		1084 1ce6 318b 3dee 4a96 4e72 5292 52d7
+		56f8 5ad5 5af8 5b19 6317 633a 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="h02_umi_pl" color_size="16">
+	<tex_palette index="2" name="h02_hasi3_pl" color_size="24">
+		0072 0095 0847 0848 0869 088f 08ba 08fa
+		0c92 0cb3 0cb4 0cb5 0cb6 0cdb 0cdc 0cfc
+		0d5c 113f 119f 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="3" name="h02_hasi5_pl" color_size="16">
+		2d6b 318c 35ad 39ce 3def 4210 4631 4a52
+		4e73 5294 56b5 5ad6 5ef7 6318 6739 7fff
+	</tex_palette>
+	<tex_palette index="4" name="h02_kage_pl" color_size="8">
+		24a5 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="5" name="h02_umi_pl" color_size="16">
 		6e60 6e80 7281 7282 72a3 72a4 72c5 72c6
 		76c7 76e9 770a 772d 76e9 770b 770c 7b2d
 	</tex_palette>
@@ -251,15 +453,21 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="V‹KƒV[ƒ“" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="3">
+	<ex_tex_image_array size="6">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="5" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="3">
+	<ex_tex_palette_array size="6">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="5" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="1">
 		<ex_material index="0" disp_pos="0.000000 240.000000"/>
