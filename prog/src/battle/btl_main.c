@@ -10,6 +10,8 @@
 #include <gflib.h>
 
 #include "system/main.h"
+#include "tr_tool/trtype_def.h"
+#include "tr_tool/tr_tool.h"
 #include "battle/battle.h"
 
 #include "btl_common.h"
@@ -2141,6 +2143,26 @@ void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume )
 TrainerID BTL_MAIN_GetTrainerID( const BTL_MAIN_MODULE* wk )
 {
   return wk->setupParam->trID;
+}
+
+u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  const BTL_TRAINER_DATA* trData = &wk->trainerParam[ clientID ];
+  u16 type;
+
+  if( trData->playerStatus )
+  {
+    if( MyStatus_GetMySex( trData->playerStatus ) == PTL_SEX_FEMALE ){
+      type = TRTYPE_HEROINE;
+    }else{
+      type = TRTYPE_HERO;
+    }
+  }
+  else
+  {
+    type = TT_TrainerDataParaGet( trData->trainerID, ID_TD_tr_type );
+  }
+  return type;
 }
 
 

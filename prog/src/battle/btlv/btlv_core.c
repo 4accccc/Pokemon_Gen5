@@ -116,7 +116,7 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
   core->processingCmd = BTLV_CMD_NULL;
   core->heapID = heapID;
   core->strBuf = GFL_STR_CreateBuffer( STR_BUFFER_SIZE, heapID );
-  core->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+  core->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
             GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 
 
