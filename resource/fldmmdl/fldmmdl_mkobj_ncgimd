@@ -48,11 +48,6 @@
 	@echo convert ncg_imd accordion
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/accordion.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
-#support.imd
-./mmdl_res/support.imd: ./mmdl_nchara/support.ncg ./mmdl_nchara/support.ncl
-	@echo convert ncg_imd support
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/support.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
-
 #none.imd
 ./mmdl_res/none.imd: ./mmdl_nchara/none.ncg ./mmdl_nchara/none.ncl
 	@echo convert ncg_imd none
