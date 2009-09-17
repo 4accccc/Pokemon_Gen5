@@ -51,7 +51,7 @@ TARGET_NARC = script_seq.narc
 TARGET_NAIX = $(TARGET_NARC:.narc=.naix)
 
 #eventdata/tmp参照
-ADD_MACRO = -I../eventdata/tmp/
+ADD_MACRO = -I../eventdata/tmp/ -I../../message/dst/script/
 
 #(PM_DEBUG == yes)のときのみデバッグバージョン
 ifeq ($(PM_DEBUG),yes)
