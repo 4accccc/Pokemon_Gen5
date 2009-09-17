@@ -927,9 +927,9 @@ nsbtx_files/tex_set_in25.nsbtx: src_imd_files/in00_texset.imd
 	@$(COPY) src_imd_files/in00_texset.imd marged_imd_files/tex_set_in25.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in25.imd -o nsbtx_files/tex_set_in25.nsbtx -etex
 
-nsbtx_files/tex_set_in26.nsbtx: src_imd_files/in00_texset.imd
-	@echo src_imd_files/in00_texset.imd Å® nsbtx_files/tex_set_in26.nsbtx
-	@$(COPY) src_imd_files/in00_texset.imd marged_imd_files/tex_set_in26.imd
+nsbtx_files/tex_set_in26.nsbtx: src_imd_files/in26_local_texset.imd
+	@echo src_imd_files/in26_local_texset.imd Å® nsbtx_files/tex_set_in26.nsbtx
+	@$(COPY) src_imd_files/in26_local_texset.imd marged_imd_files/tex_set_in26.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in26.imd -o nsbtx_files/tex_set_in26.nsbtx -etex
 
 nsbtx_files/tex_set_in27.nsbtx: src_imd_files/in00_texset.imd
