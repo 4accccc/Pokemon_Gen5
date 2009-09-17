@@ -80,7 +80,7 @@ static GFL_PROC_RESULT NAME_INPUT_ProcInit( GFL_PROC * proc, int * seq, void * p
 	NAME_INPUT_WORK *work;
 
 		//ÉqÅ[ÉvçÏê¨
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAME_INPUT, 0x80000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAME_INPUT, 0x20000 );
 	work = GFL_PROC_AllocWork( proc, sizeof(NAME_INPUT_WORK), HEAPID_NAME_INPUT );
 	GFL_STD_MemClear(work, sizeof(NAME_INPUT_WORK));
 
