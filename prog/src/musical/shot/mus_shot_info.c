@@ -275,6 +275,7 @@ static void MUS_SHOT_INFO_InitMessage( MUS_SHOT_INFO_WORK *work )
   BmpWinFrame_GraphicSet( MUS_INFO_FRAME_MSG , MUS_INFO_CGX_WIN , MUS_INFO_PAL_WIN , 0 , work->heapId );
 
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , MUS_INFO_PAL_FONT*0x20, 16*2, work->heapId );
+  GFL_FONTSYS_SetDefaultColor();
   
   work->tcblSys = GFL_TCBL_Init( work->heapId , work->heapId , 3 , 0x100 );
   work->printHandle = NULL;

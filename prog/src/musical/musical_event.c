@@ -30,6 +30,7 @@
 #include "musical/musical_program.h"
 #include "musical/musical_dressup_sys.h"
 #include "musical/musical_stage_sys.h"
+#include "musical/musical_shot_sys.h"
 #include "musical/comm/mus_comm_lobby.h"
 #include "musical/comm/mus_comm_func.h"
 #include "musical/stage/sta_acting.h"
@@ -61,6 +62,9 @@ typedef enum
 
   MES_INIT_ACTING,
   MES_TERM_ACTING,
+
+  MES_INIT_MUSICAL_SHOT,
+  MES_TERM_MUSICAL_SHOT,
 
   MES_RETURN_FIELD,
   MES_FINIHS_EVENT,
@@ -101,6 +105,7 @@ typedef struct
   MUS_COMM_WORK     *commWork;
   DRESSUP_INIT_WORK *dupInitWork;
   STAGE_INIT_WORK *actInitWork;
+  MUS_SHOT_INIT_WORK *shotInitWork;
   
   MUSICAL_PROGRAM_WORK *progWork;
   MUSICAL_POKE_PARAM *musPoke;
@@ -120,6 +125,7 @@ static void MUSICAL_EVENT_InitDressUp( MUSICAL_EVENT_WORK *evWork );
 static void MUSICAL_EVENT_TermDressUp( MUSICAL_EVENT_WORK *evWork );
 static void MUSICAL_EVENT_InitActing( MUSICAL_EVENT_WORK *evWork );
 static void MUSICAL_EVENT_TermActing( MUSICAL_EVENT_WORK *evWork );
+static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork );
 
 static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *evWork );
 static const BOOL MUSICAL_EVENT_ExitField( GMEVENT *event, MUSICAL_EVENT_WORK *evWork );
@@ -149,6 +155,7 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const BOOL
 
   evWork->dupInitWork = NULL;
   evWork->actInitWork = NULL;
+  evWork->shotInitWork = NULL;
 
   evWork->state = MES_ENTER_WAITROOM_FIRST;
   evWork->subSeq = 0;
@@ -254,10 +261,26 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     if( GAMESYSTEM_IsProcExists(evWork->gsys) == GFL_PROC_MAIN_NULL )
     {
       MUSICAL_EVENT_TermActing( evWork );
-      evWork->state = MES_ENTER_WAITROOM_THIRD;
+      evWork->state = MES_INIT_MUSICAL_SHOT;
     }
     break;
 
+  //ミュージカルショット
+  //------------------------------
+  case MES_INIT_MUSICAL_SHOT:
+    MUSICAL_EVENT_InitMusicalShot( evWork );
+    GAMESYSTEM_CallProc( evWork->gsys , NO_OVERLAY_ID, &MusicalShot_ProcData, evWork->shotInitWork );
+    evWork->state = MES_TERM_MUSICAL_SHOT;
+    break;
+    
+  case MES_TERM_MUSICAL_SHOT:
+    if( GAMESYSTEM_IsProcExists(evWork->gsys) == GFL_PROC_MAIN_NULL )
+    {
+      MUSICAL_EVENT_TermActing( evWork );
+      evWork->state = MES_ENTER_WAITROOM_THIRD;
+    }
+    break;
+    
   //最後の控え室
   //------------------------------
   case MES_ENTER_WAITROOM_THIRD:
@@ -354,6 +377,11 @@ static void MUSICAL_EVENT_TermMusical( MUSICAL_EVENT_WORK *evWork )
   {
     MUSICAL_STAGE_DeleteStageWork( evWork->actInitWork );
   }
+  if( evWork->shotInitWork != NULL )
+  {
+    GFL_HEAP_FreeMemory( evWork->shotInitWork->musShotData );
+    GFL_HEAP_FreeMemory( evWork->shotInitWork );
+  }
   MUSICAL_SYSTEM_TermDistributeData( evWork->distData );
   GFL_HEAP_FreeMemory( evWork->musPoke );
   
@@ -421,6 +449,89 @@ static void MUSICAL_EVENT_InitActing( MUSICAL_EVENT_WORK *evWork )
 static void MUSICAL_EVENT_TermActing( MUSICAL_EVENT_WORK *evWork )
 {
   //現在処理無し
+}
+
+//--------------------------------------------------------------
+//  ミュージカルショットの初期化
+//--------------------------------------------------------------
+static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
+{
+  evWork->shotInitWork = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_PROC , sizeof( MUS_SHOT_INIT_WORK ));
+  evWork->shotInitWork->musShotData = GFL_HEAP_AllocClearMemory( HEAPID_MUSICAL_PROC , sizeof( MUSICAL_SHOT_DATA ));
+  {
+    u8 i;
+    RTCDate date;
+    MUSICAL_SHOT_DATA *shotData = evWork->shotInitWork->musShotData;
+    GFL_RTC_GetDate( &date );
+    shotData->bgNo = 0;
+    shotData->year = date.year;
+    shotData->month = date.month;
+    shotData->day = date.day;
+    shotData->title[0] = L'ポ';
+    shotData->title[1] = L'ケ';
+    shotData->title[2] = L'ッ';
+    shotData->title[3] = L'タ';
+    shotData->title[4] = L'ー';
+    shotData->title[5] = L'リ';
+    shotData->title[6] = L'モ';
+    shotData->title[7] = L'ン';
+    shotData->title[8] = L'ス';
+    shotData->title[9] = L'タ';
+    shotData->title[10] = L'ー';
+    shotData->title[11] = L'リ';
+    shotData->title[12] = GFL_STR_GetEOMCode();
+    
+    
+    //スポットライトの計算
+    {
+      u8 maxPoint = 0;
+      for( i=0;i<MUSICAL_POKE_MAX;i++ )
+      {
+        const u8 point = evWork->actInitWork->musPoke[i]->point;
+        if( maxPoint < point )
+        {
+          shotData->spotBit = 0;
+          maxPoint = point;
+        }
+        if( maxPoint == point )
+        {
+          shotData->spotBit += 1<<i;
+        }
+      }
+    }
+    
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      u8 j;
+      MUSICAL_POKE_PARAM *musPoke = evWork->actInitWork->musPoke[i];
+      shotData->shotPoke[i].monsno = musPoke->mcssParam.monsno;
+      shotData->shotPoke[i].trainerName[0] = L'ト';
+      shotData->shotPoke[i].trainerName[1] = L'レ';
+      shotData->shotPoke[i].trainerName[2] = L'ー';
+      shotData->shotPoke[i].trainerName[3] = L'ナ';
+      shotData->shotPoke[i].trainerName[4] = L'１'+i;
+      shotData->shotPoke[i].trainerName[5] = 0;
+      
+      //装備箇所の初期化
+      for( j=0;j<MUSICAL_ITEM_EQUIP_MAX;j++ )
+      {
+        shotData->shotPoke[i].equip[j].itemNo = MUSICAL_ITEM_INVALID;
+        shotData->shotPoke[i].equip[j].angle = 0;
+        shotData->shotPoke[i].equip[j].equipPos = MUS_POKE_EQU_INVALID;
+      }
+
+      for( j=0;j<MUS_POKE_EQUIP_MAX;j++ )
+      {
+        if( musPoke->equip[j].itemNo != MUSICAL_ITEM_INVALID )
+        {
+          const u8 idx = musPoke->equip[j].priority;
+          shotData->shotPoke[i].equip[idx].itemNo = musPoke->equip[j].itemNo;
+          shotData->shotPoke[i].equip[idx].angle = musPoke->equip[j].angle;
+          shotData->shotPoke[i].equip[idx].equipPos = j;
+        }
+      }
+    }
+  }  
 }
 
 #pragma mark [>FieldFunc
