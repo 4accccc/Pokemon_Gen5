@@ -899,6 +899,21 @@
 
 
 #endif //ZONE_C04_EVC_H
+//#include "tmp/c04gym0101.h"
+//このファイルはdata/c04gym0101.mevから自動生成されました
+#ifndef ZONE_C04GYM0101_EVD_H
+#define ZONE_C04GYM0101_EVD_H
+
+
+#endif //ZONE_C04GYM0101_EVD_H
+//このファイルはdata/c04gym0101.mevから自動生成されました
+#ifndef ZONE_C04GYM0101_EVC_H
+#define ZONE_C04GYM0101_EVC_H
+
+#define C04GYM0101_BOY1_01                 0
+#define C04GYM0101_BOY1_02                 1
+
+#endif //ZONE_C04GYM0101_EVC_H
 //#include "tmp/c05.h"
 //このファイルはdata/c05.mevから自動生成されました
 #ifndef ZONE_C05_EVD_H
@@ -6585,6 +6600,91 @@ static const EVENTDATA_TABLE event_c04 = {
 	(void *)NULL,
 	(void *)&DOOR_EVENT_C04,
 	(void *)NULL,
+};
+#include "../script/c04gym0101_def.h"
+//ConnectData_C04GYM0101[]はデータがないため存在しない
+const FLDMMDL_HEADER OBJ_EVENT_C04GYM0101[] = {
+	{
+		C04GYM0101_BOY1_01,
+		BOY1,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_DUMMY,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		17,
+		15,
+		0,
+	},
+	{
+		C04GYM0101_BOY1_02,
+		BOY1,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_DUMMY,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		50,
+		40,
+		0,
+	},
+};
+const int ObjCount_C04GYM0101 = NELEMS(OBJ_EVENT_C04GYM0101);
+const POS_EVENT_DATA POS_EVENT_C04GYM0101[] = {
+	{//POSID_C04GYM0101_SW3 = 0
+		SCRID_POS_C04GYM0101_SW3,
+		46, 41,
+		1, 1,
+		32,  //height
+		0,
+		LOCALWORK13,
+	},
+	{//POSID_C04GYM0101_SW2 = 1
+		SCRID_POS_C04GYM0101_SW2,
+		13, 16,
+		1, 1,
+		32,  //height
+		0,
+		LOCALWORK12,
+	},
+	{//POSID_C04GYM0101_SW1 = 2
+		SCRID_POS_C04GYM0101_SW1,
+		29, 33,
+		1, 1,
+		32,  //height
+		0,
+		LOCALWORK11,
+	},
+	{//POSID_C04GYM0101_SW4 = 3
+		SCRID_POS_C04GYM0101_SW4,
+		25, 9,
+		1, 1,
+		32,  //height
+		0,
+		LOCALWORK14,
+	},
+};
+const int PosCount_C04GYM0101 = NELEMS(POS_EVENT_C04GYM0101);
+
+static const EVENTDATA_TABLE event_c04gym0101 = {
+	0,
+	2,
+	0,
+	4,
+	(void *)NULL,
+	(void *)&OBJ_EVENT_C04GYM0101,
+	(void *)NULL,
+	(void *)&POS_EVENT_C04GYM0101,
 };
 #include "../script/c05_def.h"
 const CONNECT_DATA DOOR_EVENT_C05[] = {
@@ -13409,6 +13509,7 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_C03R0101, &event_c03r0101 },
 	{ ZONE_ID_C03R0201, &event_c03r0201 },
 	{ ZONE_ID_C04, &event_c04 },
+	{ ZONE_ID_C04GYM0101, &event_c04gym0101 },
 	{ ZONE_ID_C05, &event_c05 },
 	{ ZONE_ID_C05GYM0101, &event_c05gym0101 },
 	{ ZONE_ID_C05PC0101, &event_c05pc0101 },
