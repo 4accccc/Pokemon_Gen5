@@ -2342,6 +2342,8 @@
 #define R01_RIVAL                          3
 #define R01_HEROINE                        4
 #define R01_HAKASE2                        5
+#define R01_RIVEL02                        6
+#define R01_HEROINE02                      7
 
 #endif //ZONE_R01_EVC_H
 //#include "tmp/r02.h"
@@ -10855,6 +10857,40 @@ const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 		727,
 		0,
 	},
+	{
+		R01_RIVEL02,
+		RIVEL,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_R01_POKE_COUNT_RIVEL,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		788,
+		681,
+		0,
+	},
+	{
+		R01_HEROINE02,
+		HEROINE,
+		MV_DOWN,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_R01_POKECOUNT02,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		791,
+		677,
+		0,
+	},
 };
 const int ObjCount_R01 = NELEMS(OBJ_EVENT_R01);
 const POS_EVENT_DATA POS_EVENT_R01[] = {
@@ -10864,16 +10900,24 @@ const POS_EVENT_DATA POS_EVENT_R01[] = {
 		6, 1,
 		0,  //height
 		0,
-		WK_SCENE_0907ROM02,
+		WK_SCENE_R01,
+	},
+	{//POSID_R01_POKECOUNT = 1
+		SCRID_POS_R01_POKECOUNT,
+		788, 678,
+		7, 1,
+		0,  //height
+		1,
+		WK_SCENE_R01,
 	},
 };
 const int PosCount_R01 = NELEMS(POS_EVENT_R01);
 
 static const EVENTDATA_TABLE event_r01 = {
 	0,
-	6,
+	8,
 	0,
-	1,
+	2,
 	(void *)NULL,
 	(void *)&OBJ_EVENT_R01,
 	(void *)NULL,
