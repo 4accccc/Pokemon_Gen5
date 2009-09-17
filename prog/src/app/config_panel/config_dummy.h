@@ -1,11 +1,3 @@
-//------------------------------------------------------------------
-/*
- * 	簡単メモリリークチェック（現在は無効）
- */
-//------------------------------------------------------------------
-#define HeapStatePush()		/* */
-#define HeapStatePop()		/* */
-#define HeapStateCheck(h)	/* */
 
 
 //------------------------------------------------------------------
@@ -26,9 +18,6 @@
 #define	FBMP_COL_WHITE		(15)
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-typedef struct _CATS_SYS * CATS_SYS_PTR;
-typedef struct _CATS_RES * CATS_RES_PTR;
-typedef struct _CATS_ACT * CATS_ACT_PTR;
 //------------------------------------------------------------------
 //	SE関連ダミー定義
 //------------------------------------------------------------------
@@ -46,35 +35,6 @@ static void Snd_SeStopBySeqNo(int seqno, int para) { /* dummy */ }
 enum {
 	COMM_BRIGHTNESS_SYNC = 1,
 };
-
-enum {
-	WIPE_TYPE_FADEOUT = 0,
-	WIPE_TYPE_FADEIN = 1,
-
-	WIPE_PATTERN_M = 0,
-
-	WIPE_DISP_MAIN,
-	WIPE_DISP_SUB,
-};
-static inline void WIPE_ResetWndMask(int sw) {/* */}
-static inline void WIPE_SYS_Start(int pattern, int type1, int type2, u16 value,
-		int timing, int sw, HEAPID heapID)
-{
-	if (type1 == WIPE_TYPE_FADEIN) {
-		GFL_FADE_SetMasterBrightReq(
-				GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
-				16, 0, 0);
-	} else {
-		GFL_FADE_SetMasterBrightReq(
-				GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
-				0, 16, 0);
-	}
-}
-
-static inline BOOL WIPE_SYS_EndCheck(void)
-{
-	return GFL_FADE_CheckFade();
-}
 
 //------------------------------------------------------------------
 //	MSG関連ダミー定義

@@ -6,6 +6,7 @@
  *  @author Miyuki Iwasawa
  *
  *  2008.12.11  tamada  DP環境より移植
+ *  2009.9,11  nagihashi WB仕様で作り変え
  */
 //============================================================================================
 #include <gflib.h>
@@ -23,12 +24,12 @@
 
 #include "arc_def.h"
 #include "system/main.h"
-#define HEAPID_BASE_APP GFL_HEAPID_APP
 
 #include "arc/config_gra.naix"
 
 #include "message.naix"
 #include "msg/msg_config.h"
+#include "system/wipe.h"
 
 #include "./config_dummy.h"
 
@@ -158,15 +159,13 @@ typedef struct _CONFIG_MAIN_DAT
   int heapID;
   CONFIG_SEQUENCE seq;
   int sub_seq;
-  int wipe_f;
-  u32 end_f:2;
-  u32 line:3;
-  u32 side:16;
-  u32 wincgx_f:1;
-  u32 pad:10;
+  u32 end_f;
+  u32 line;
+  u32 side;
+  u32 wincgx_f;
 
   CONFIG_PARAM  param;
-  CONFIG      *save;
+  CONFIG				*save;
 
   ///メッセージリソース
   GFL_MSGDATA*  pMsg;
@@ -179,10 +178,6 @@ typedef struct _CONFIG_MAIN_DAT
 
   BMPMENU_WORK* pYesNoWork; ///<BMPYESNOウィンドウデータ
   u32 msg_no;
-
-  CATS_SYS_PTR  pCActSys; ///<セルアクターシステム
-  CATS_RES_PTR  pCActRes; ///<セルアクターリソース
-  CATS_ACT_PTR  pCAct;    ///<アクト
 
   GFL_TCB * vintr_tcb;
   GFL_FONT * hSysFont;
@@ -226,12 +221,12 @@ static GFL_PROC_RESULT ConfigProc_End( GFL_PROC *proc,int *seq, void *pwk, void 
 //================================================================
 ///データ定義エリア
 //================================================================
-const GFL_PROC_DATA ConfigPanelProcData = {
+const GFL_PROC_DATA ConfigPanelProcData = 
+{
   ConfigProc_Init,
   ConfigProc_Main,
   ConfigProc_End
 };
-
 
 //============================================================================================
 //
@@ -256,11 +251,8 @@ GFL_PROC_RESULT ConfigProc_Init( GFL_PROC *proc,int *seq, void *pwk, void *work)
   
   sp = (CONFIG*)pwk;
 
-  //ワークエリア取得
-  HeapStatePush();
-
   //ヒープ作成
-  GFL_HEAP_CreateHeap(HEAPID_BASE_APP,HEAPID_CONFIG,0x10000 + 0x8000);
+  GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_CONFIG,0x10000 + 0x8000);
   
   wk = GFL_PROC_AllocWork( proc,sizeof(CONFIG_MAIN_DAT),HEAPID_CONFIG);
   GFL_STD_MemFill(wk,0,sizeof(CONFIG_MAIN_DAT));
@@ -340,8 +332,7 @@ GFL_PROC_RESULT ConfigProc_End( GFL_PROC *proc,int *seq, void *pwk, void *work)
   //ワークエリア解放
   GFL_PROC_FreeWork(proc);
 
-  HeapStatePop();
-  HeapStateCheck(wk->heapID);
+  
   GFL_HEAP_DeleteHeap(wk->heapID);
 
   return GFL_PROC_RES_FINISH;
@@ -547,16 +538,14 @@ static int ConfigInitCommon(CONFIG_MAIN_DAT *wk)
 {
   switch(wk->sub_seq){
   case 0:
-    //sys_VBlankFuncChange(NULL,NULL);  
-    //sys_HBlankIntrStop();
   
     GFL_DISP_GX_InitVisibleControl();
     GFL_DISP_GXS_InitVisibleControl();
-    GX_SetVisiblePlane(0);
-    GXS_SetVisiblePlane(0);
 
     //Bankセット
     ConfigVramBankSet();
+
+		GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
 
     WIPE_ResetWndMask(WIPE_DISP_MAIN);
     WIPE_ResetWndMask(WIPE_DISP_SUB);
@@ -581,7 +570,6 @@ static int ConfigInitCommon(CONFIG_MAIN_DAT *wk)
     ConfigBmpWinInit(wk);
     ConfigBmpWinWriteFirst(wk);
     //通信アイコン用にOBJ面ON
-    //initVramTransferManagerHeap(32,wk->heapID);
     GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
 
     GFL_BG_LoadScreenReq(GFL_BG_FRAME1_M);
@@ -591,7 +579,6 @@ static int ConfigInitCommon(CONFIG_MAIN_DAT *wk)
     //WirelessIconEasyUnion();
 
     wk->vintr_tcb = GFUser_VIntr_CreateTCB(ConfigVBlank, wk, 0 );
-    //sys_VBlankFuncChange(ConfigVBlank,wk);  
     wk->sub_seq = 0;
     return 1;
     
@@ -611,7 +598,6 @@ static int ConfigReleaseCommon(CONFIG_MAIN_DAT *wk)
   
   switch(wk->sub_seq){
   case 0:
-    //DellVramTransferManager();
     //Bmpウィンドウ破棄
     ConfigBmpWinRelease(wk);
     //メッセージリソース解放
@@ -629,8 +615,6 @@ static int ConfigReleaseCommon(CONFIG_MAIN_DAT *wk)
     break;
   case 1:
     GFL_TCB_DeleteTask(wk->vintr_tcb);
-    //sys_VBlankFuncChange(NULL,NULL);  
-    //sys_HBlankIntrStop();
   
     GFL_DISP_GX_InitVisibleControl();
     GFL_DISP_GXS_InitVisibleControl();
@@ -664,28 +648,28 @@ static void ConfigBGLInit(CONFIG_MAIN_DAT* wk)
   {
   GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
     { //MAIN BG0  選択枠線
-      0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
+      0,0,0x1000,0,GFL_BG_SCRSIZ_256x512,GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf800,GX_BG_CHARBASE_0x00000,0x4000,GX_BG_EXTPLTT_01,
       1,0,0,FALSE},
     { //MAIN BG1  テキスト表示プレーン
-      0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
+      0,0,0x1000,0,GFL_BG_SCRSIZ_256x512,GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf000,GX_BG_CHARBASE_0x04000,0x8000,GX_BG_EXTPLTT_01,
       2,0,0,FALSE},
     { //MAIN BG2
-      0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
+      0,0,0x1000,0,GFL_BG_SCRSIZ_256x512,GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe800,GX_BG_CHARBASE_0x00000,0x4000,GX_BG_EXTPLTT_01,
       3,0,0,FALSE},
     { //MAIN BG3  「はい・いいえ」表示用プレーン
-      0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
+      0,0,0x1000,0,GFL_BG_SCRSIZ_256x512,GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe000,GX_BG_CHARBASE_0x00000,0x4000,GX_BG_EXTPLTT_01,
       0,0,0,FALSE},
     { //SUB BG0
-      0,0,0x800,0,GFL_BG_SCRSIZ_256x256,GX_BG_COLORMODE_16,
+      0,0,0x1000,0,GFL_BG_SCRSIZ_256x512,GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf800,GX_BG_CHARBASE_0x00000,0x4000,GX_BG_EXTPLTT_01,
       0,0,0,FALSE},
   };
   for(i = 0;i < 5;i++){
-    static const frame[5] = {
+    static const int frame[5] = {
       GFL_BG_FRAME0_M,GFL_BG_FRAME1_M,GFL_BG_FRAME2_M,GFL_BG_FRAME3_M,GFL_BG_FRAME0_S
     };
     GFL_BG_SetBGControl(frame[i],&(TextBgCntDat[i]),GFL_BG_MODE_TEXT);

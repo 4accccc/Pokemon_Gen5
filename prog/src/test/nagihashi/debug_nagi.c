@@ -34,6 +34,7 @@
 #include "net_app/irc_ranking.h"
 #include "app/townmap.h"
 #include "net_app/worldtrade.h"
+#include "app/config_panel.h"
 
 #include "savedata/irc_compatible_savedata.h"
 
@@ -227,6 +228,7 @@ static void LISTDATA_CallProcCompatibleDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcNameDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcGts( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallProcConfig( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_FullRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcTownMap( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -305,6 +307,7 @@ enum
 	LISTDATA_SEQ_NEXT_HOME,
 	LISTDATA_SEQ_NEXT_PAGE1,
 	LISTDATA_SEQ_PROC_GTS,
+	LISTDATA_SEQ_PROC_CONFIG,
 
 	LISTDATA_SEQ_MAX,
 };
@@ -325,6 +328,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 	LISTDATA_NextListHome,
 	LISTDATA_NextListPage1,
 	LISTDATA_CallProcGts,
+	LISTDATA_CallProcConfig,
 };
 
 //-------------------------------------
@@ -332,6 +336,9 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 //=====================================
 static const LIST_SETUP_TBL sc_list_data_home[]	=
 {	
+	{	
+		L"コンフィグ", LISTDATA_SEQ_PROC_CONFIG
+	},
 	{	
 		L"相性診断画面へ", LISTDATA_SEQ_PROC_COMPATIBLE
 	},
@@ -341,6 +348,7 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	{	
 		L"結果", LISTDATA_SEQ_PROC_RESULT,
 	},
+
 #if 0
 	{	
 		L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
@@ -846,6 +854,18 @@ static void LISTDATA_CallProcGts( DEBUG_NAGI_MAIN_WORK *p_wk )
 	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(worldtrade), &WorldTrade_ProcData, &p_wk->gts_param );
 
 	GAMEDATA_Delete( p_gamedata );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	コンフィグPROCへの移動
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_CallProcConfig( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, NULL );
 }
 //----------------------------------------------------------------------------
 /**

@@ -4,17 +4,11 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00179" date="2009-05-22T17:29:56"/>
+	<create user="matsumiya" host="W00207" date="2009-09-15T19:33:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
 <body language="japanese">
-	<color>
-		<list entry="0" r="00" g="00" b="00" a="FF"/>
-		<list entry="1" r="FF" g="00" b="00" a="FF"/>
-		<list entry="2" r="00" g="00" b="FF" a="FF"/>
-		<list entry="3" r="00" g="8C" b="00" a="FF"/>
-	</color>
 	<tag-table>
 		<group entry="0" japanese="タググループ" english="タググループ">
 		</group>
@@ -407,37 +401,25 @@
 	<row id="mes_config_title">
 		<comment>タイトル</comment>
 		<language name="JPN" width="120">せっていを　かえる</language>
-		<language name="JPN_KANJI">せっていを　かえる</language>
-	</row>
-
-	<row id="mes_config_sumd" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ダイアモンド用サムネイル</comment>
-		<language name="JPN" width="120">ポケットモンスター　ダイヤモンド</language>
-		<language name="JPN_KANJI">ポケットモンスター　ダイヤモンド</language>
-	</row>
-
-	<row id="mes_config_sump" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>パール用サムネイル</comment>
-		<language name="JPN" width="120">ポケットモンスター　パール</language>
-		<language name="JPN_KANJI">ポケットモンスター　パール</language>
+		<language name="JPN_KANJI">設定を　変える</language>
 	</row>
 
 	<row id="mes_config_menu01">
 		<comment>メニュー項目「話の早さ」</comment>
 		<language name="JPN" width="120">はなしの　はやさ</language>
-		<language name="JPN_KANJI">はなしの　はやさ</language>
+		<language name="JPN_KANJI">話の速さ</language>
 	</row>
 
 	<row id="mes_config_menu02">
 		<comment>メニュー項目「戦闘アニメ」</comment>
 		<language name="JPN" width="120">せんとうアニメ</language>
-		<language name="JPN_KANJI">せんとうアニメ</language>
+		<language name="JPN_KANJI">戦闘アニメ</language>
 	</row>
 
 	<row id="mes_config_menu03">
 		<comment>メニュー項目「試合のルール」</comment>
 		<language name="JPN" width="120">しあいの　ルール</language>
-		<language name="JPN_KANJI">しあいの　ルール</language>
+		<language name="JPN_KANJI">試合のルール</language>
 	</row>
 
 	<row id="mes_config_menu04">
@@ -447,51 +429,68 @@
 	</row>
 
 	<row id="mes_config_menu05">
-		<comment>メニュー項目「ボタンモード」</comment>
-		<language name="JPN" width="120">ボタンモード</language>
-		<language name="JPN_KANJI">ボタンモード</language>
+		<comment>メニュー項目「文字モード」
+※WBで追加</comment>
+		<language name="JPN" width="120">もじモード</language>
+		<language name="JPN_KANJI">文字モード</language>
 	</row>
 
-	<row id="mes_config_menu06" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>メニュー項目「ウインドウ」</comment>
-		<language name="JPN" width="120">ウインドウ</language>
-		<language name="JPN_KANJI">ウインドウ</language>
+	<row id="mes_config_menu06">
+		<comment>メニュー項目「無線」
+※WBで追加</comment>
+		<language name="JPN" width="120">むせん</language>
+		<language name="JPN_KANJI">無線</language>
 	</row>
 
-	<row id="mes_config_menu07" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>メニュー項目「けってい」</comment>
+	<row id="mes_config_menu07">
+		<comment>メニュー項目「レポート」
+※WBで追加</comment>
+		<language name="JPN" width="120">レポート</language>
+		<language name="JPN_KANJI">レポート</language>
+	</row>
+
+	<row id="mes_config_menu08">
+		<comment>メニュー項目「決定」
+※WBで追加</comment>
 		<language name="JPN" width="120">けってい</language>
-		<language name="JPN_KANJI">けってい</language>
+		<language name="JPN_KANJI">決定</language>
+	</row>
+
+	<row id="mes_config_menu09">
+		<comment>メニュー項目「止める」
+※WBで追加</comment>
+		<language name="JPN" width="120">やめる</language>
+		<language name="JPN_KANJI">やめる</language>
 	</row>
 
 	<row id="mes_config_sm01_00">
 		<comment>「話のはやさ」-&gt;おそい</comment>
 		<language name="JPN" width="120">おそい</language>
-		<language name="JPN_KANJI">おそい</language>
+		<language name="JPN_KANJI">遅い</language>
 	</row>
 
 	<row id="mes_config_sm01_01">
 		<comment>「話のはやさ」-&gt;ふつう</comment>
 		<language name="JPN" width="120">ふつう</language>
-		<language name="JPN_KANJI">ふつう</language>
+		<language name="JPN_KANJI">普通</language>
 	</row>
 
 	<row id="mes_config_sm01_02">
 		<comment>「話のはやさ」-&gt;はやい</comment>
 		<language name="JPN" width="120">はやい</language>
-		<language name="JPN_KANJI">はやい</language>
+		<language name="JPN_KANJI">速い</language>
 	</row>
 
 	<row id="mes_config_sm02_00">
 		<comment>「戦闘アニメ」-&gt;みる</comment>
 		<language name="JPN" width="120">みる</language>
-		<language name="JPN_KANJI">みる</language>
+		<language name="JPN_KANJI">見る</language>
 	</row>
 
 	<row id="mes_config_sm02_01">
 		<comment>「戦闘アニメ」-&gt;みない</comment>
 		<language name="JPN" width="120">みない</language>
-		<language name="JPN_KANJI">みない</language>
+		<language name="JPN_KANJI">見ない</language>
 	</row>
 
 	<row id="mes_config_sm03_00">
@@ -519,261 +518,122 @@
 	</row>
 
 	<row id="mes_config_sm05_00">
-		<comment>「ボタンモード」-&gt;ノーマル</comment>
-		<language name="JPN" width="120">ノーマル</language>
-		<language name="JPN_KANJI">ノーマル</language>
+		<comment>「文字モード」-&gt;ひらがな
+※WBで追加</comment>
+		<language name="JPN" width="120">ひらがな</language>
+		<language name="JPN_KANJI">ひらがな</language>
 	</row>
 
 	<row id="mes_config_sm05_01">
-		<comment>「ボタンモード」-&gt;START=X</comment>
-		<language name="JPN" width="120">ＳＴＡＲＴ＝Ｘ</language>
-		<language name="JPN_KANJI">ＳＴＡＲＴ＝Ｘ</language>
+		<comment>「文字モード」-&gt;かんじ
+※WBで追加</comment>
+		<language name="JPN" width="120">かんじ</language>
+		<language name="JPN_KANJI">漢字</language>
 	</row>
 
-	<row id="mes_config_sm05_02">
-		<comment>「ボタンモード」-&gt;Ｌ→Ａ</comment>
-		<language name="JPN" width="120">Ｌ＝Ａ</language>
-		<language name="JPN_KANJI">Ｌ＝Ａ</language>
+	<row id="mes_config_sm06_00">
+		<comment>「無線」-&gt;オン
+※WBで追加</comment>
+		<language name="JPN" width="120">オン</language>
+		<language name="JPN_KANJI">オン</language>
 	</row>
 
-	<row id="mes_config_sm06_00" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ
-プラチナで修正　半角を全角に修正</comment>
-		<language name="JPN" width="120">タイプ１</language>
-		<language name="JPN_KANJI">タイプ１</language>
+	<row id="mes_config_sm06_01">
+		<comment>「無線」-&gt;オフ
+※WBで追加</comment>
+		<language name="JPN" width="120">オフ</language>
+		<language name="JPN_KANJI">オフ</language>
 	</row>
 
-	<row id="mes_config_sm06_01" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ２</language>
-		<language name="JPN_KANJI">タイプ２</language>
+	<row id="mes_config_sm07_00">
+		<comment>「レポート」-&gt;かく
+※WBで追加</comment>
+		<language name="JPN" width="120">かく</language>
+		<language name="JPN_KANJI">書く</language>
 	</row>
 
-	<row id="mes_config_sm06_02" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ３</language>
-		<language name="JPN_KANJI">タイプ３</language>
+	<row id="mes_config_sm07_01">
+		<comment>「レポート」-&gt;かかない
+※WBで追加</comment>
+		<language name="JPN" width="120">かかない</language>
+		<language name="JPN_KANJI">書かない</language>
 	</row>
 
-	<row id="mes_config_sm06_03" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ４</language>
-		<language name="JPN_KANJI">タイプ４</language>
-	</row>
-
-	<row id="mes_config_sm06_04" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ５</language>
-		<language name="JPN_KANJI">タイプ５</language>
-	</row>
-
-	<row id="mes_config_sm06_05" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ６</language>
-		<language name="JPN_KANJI">タイプ６</language>
-	</row>
-
-	<row id="mes_config_sm06_06" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ７</language>
-		<language name="JPN_KANJI">タイプ７</language>
-	</row>
-
-	<row id="mes_config_sm06_07" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ８</language>
-		<language name="JPN_KANJI">タイプ８</language>
-	</row>
-
-	<row id="mes_config_sm06_08" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ９</language>
-		<language name="JPN_KANJI">タイプ９</language>
-	</row>
-
-	<row id="mes_config_sm06_09" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ１０</language>
-		<language name="JPN_KANJI">タイプ１０</language>
-	</row>
-
-	<row id="mes_config_sm06_10" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ１１</language>
-		<language name="JPN_KANJI">タイプ１１</language>
-	</row>
-
-	<row id="mes_config_sm06_11" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ１２</language>
-		<language name="JPN_KANJI">タイプ１２</language>
-	</row>
-
-	<row id="mes_config_sm06_12" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ１３</language>
-		<language name="JPN_KANJI">タイプ１３</language>
-	</row>
-
-	<row id="mes_config_sm06_13" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ１４</language>
-		<language name="JPN_KANJI">タイプ１４</language>
-	</row>
-
-	<row id="mes_config_sm06_14" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ１５</language>
-		<language name="JPN_KANJI">タイプ１５</language>
-	</row>
-
-	<row id="mes_config_sm06_15" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ１６</language>
-		<language name="JPN_KANJI">タイプ１６</language>
-	</row>
-
-	<row id="mes_config_sm06_16" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ１７</language>
-		<language name="JPN_KANJI">タイプ１７</language>
-	</row>
-
-	<row id="mes_config_sm06_17" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ１８</language>
-		<language name="JPN_KANJI">タイプ１８</language>
-	</row>
-
-	<row id="mes_config_sm06_18" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ１９</language>
-		<language name="JPN_KANJI">タイプ１９</language>
-	</row>
-
-	<row id="mes_config_sm06_19" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
-		<comment>ウィンドウタイプ</comment>
-		<language name="JPN" width="120">タイプ２０</language>
-		<language name="JPN_KANJI">タイプ２０</language>
-	</row>
-
-	<row id="mes_config_menu08" text-color="#000000,,,#000000,,#000000,,,,,,#000000,,,,,,">
-		<comment>メニュー項目「とじる」
-※プラチナで追加</comment>
-		<language name="JPN" width="120">とじる</language>
-		<language name="JPN_KANJI">とじる</language>
-	</row>
-
-	<row id="mes_config_comment01" text-color="#000000,,,#000000,,#000000,,,,,,#000000,,,,,,">
-		<comment>「話のはやさ」の解説文
-※プラチナで追加</comment>
+	<row id="mes_config_comment01">
+		<comment>「話のはやさ」の解説文</comment>
 		<language name="JPN" width="120">メッセージの　はやさを
 ３しゅるいから　えらべます</language>
-		<language name="JPN_KANJI">メッセージの　はやさを
-３しゅるいから　えらべます</language>
+		<language name="JPN_KANJI">メッセージの　表示速度を
+３種類から　選べます</language>
 	</row>
 
-	<row id="mes_config_comment02" text-color="#000000,,,#000000,,#000000,,,,,,#000000,,,,,,">
-		<comment>「戦闘アニメ」の解説文
-※プラチナで追加</comment>
+	<row id="mes_config_comment02">
+		<comment>「戦闘アニメ」の解説文</comment>
 		<language name="JPN" width="120">せんとうのとき　ポケモンの　わざの
 アニメを　みるかどうか　えらべます</language>
-		<language name="JPN_KANJI">せんとうのとき　ポケモンの　わざの
-アニメを　みるかどうか　えらべます</language>
+		<language name="JPN_KANJI">戦闘のとき　ポケモンの　わざの
+アニメを　見るかどうか　選べます</language>
 	</row>
 
-	<row id="mes_config_comment03" text-color="#000000,,,#000000,,#000000,,,,,,#000000,,,,,,">
-		<comment>「試合のルール」の解説文
-※プラチナで追加</comment>
+	<row id="mes_config_comment03">
+		<comment>「試合のルール」の解説文</comment>
 		<language name="JPN" width="120">しょうぶの　ルールを
 えらぶことが　できます</language>
-		<language name="JPN_KANJI">しょうぶの　ルールを
-えらぶことが　できます</language>
+		<language name="JPN_KANJI">勝負の　ルールを
+選ぶことが　できます</language>
 	</row>
 
-	<row id="mes_config_comment04" text-color="#000000,,,#000000,,#000000,,,,,,#000000,,,,,,">
-		<comment>「サウンド」の解説文
-※プラチナで追加</comment>
+	<row id="mes_config_comment04">
+		<comment>「サウンド」の解説文</comment>
 		<language name="JPN" width="120">ゲームの　おとを
 えらぶことが　できます</language>
-		<language name="JPN_KANJI">ゲームの　おとを
-えらぶことが　できます</language>
+		<language name="JPN_KANJI">ゲームの　音を
+選ぶことが　できます</language>
 	</row>
 
-	<row id="mes_config_comment05" text-color="#000000,,,#000000,,#000000,,,,,,#000000,,,,,,">
-		<comment>「ボタンモード」の解説文
-※プラチナで追加</comment>
-		<language name="JPN" width="120">ボタンの　そうさほうほうを
-３しゅるいから　えらべます</language>
-		<language name="JPN_KANJI">ボタンの　そうさほうほうを
-３しゅるいから　えらべます</language>
+	<row id="mes_config_comment05">
+		<comment>「文字モード」の解説文
+※WBで追加</comment>
+		<language name="JPN" width="120">もじの　ひょうじを
+きりかえることが　できます</language>
+		<language name="JPN_KANJI">文字の　表示を
+切り替えることが　できます</language>
 	</row>
 
-	<row id="mes_config_comment06" text-color="#000000,,,#000000,,#000000,,,,,,#000000,,,,,,">
-		<comment>「ウインドウ」の解説文
-※プラチナで追加</comment>
-		<language name="JPN" width="120">ウインドウの　デザインを
+	<row id="mes_config_comment06">
+		<comment>「無線」の解説文
+※WBで追加</comment>
+		<language name="JPN" width="120">むせんの　オン／オフを
 えらぶことが　できます</language>
-		<language name="JPN_KANJI">ウインドウの　デザインを
-えらぶことが　できます</language>
+		<language name="JPN_KANJI">無線の　オン／オフを
+選ぶことが　できます</language>
 	</row>
 
-	<row id="mes_config_comment07" text-color="#000000,,,#000000,,#000000,,,,,,#000000,,,,,,">
-		<comment>せってい変更時の確認メッセージ
-※プラチナで追加</comment>
+	<row id="mes_config_comment07">
+		<comment>「レポート」の解説文
+※WBで追加</comment>
+		<language name="JPN" width="120">ワイヤレスつうしんを　するまえに
+レポートを　かくかどうか　えらべます</language>
+		<language name="JPN_KANJI">ワイヤレス通信を　するまえに
+レポートを　書くかどうか　選べます</language>
+	</row>
+
+	<row id="mes_config_comment20">
+		<comment>せってい変更時の確認メッセージ</comment>
 		<language name="JPN" width="120">えらんだ　せっていに　かえますか？</language>
-		<language name="JPN_KANJI">えらんだ　せっていに　かえますか？</language>
+		<language name="JPN_KANJI">選んだ　設定に　変更しますか？</language>
 	</row>
 
-	<row id="mes_config_comment08" text-color="#000000,,,#000000,,#000000,,,,,,#000000,,,,,,">
-		<comment>せってい変更時の選択メッセージ
-※プラチナで追加</comment>
+	<row id="mes_config_comment21">
+		<comment>せってい変更時の選択メッセージ</comment>
 		<language name="JPN" width="120">はい</language>
 		<language name="JPN_KANJI">はい</language>
 	</row>
 
-	<row id="mes_config_comment09" text-color="#000000,,,#000000,,#000000,,,,,,#000000,,,,,,">
-		<comment>せってい変更時の選択メッセージ
-※プラチナで追加</comment>
+	<row id="mes_config_comment22">
+		<comment>せってい変更時の選択メッセージ</comment>
 		<language name="JPN" width="120">いいえ</language>
 		<language name="JPN_KANJI">いいえ</language>
-	</row>
-
-	<row id="mes_config_comment10" text-color="#000000,,,#000000,,#000000,,,,,,#000000,,,,,,">
-		<comment>「とじる」の解説文
-※プラチナで追加</comment>
-		<language name="JPN" width="120">ゲームに　もどります</language>
-		<language name="JPN_KANJI">ゲームに　もどります</language>
-	</row>
-
-	<row id="mes_config_menu09" text-color="#ff0000,,,#ff0000,,#000000,,,,,,#000000,,,,,,">
-		<comment>メニュー項目「文字モード
-※WBで追加</comment>
-		<language name="JPN" width="120">もじモード</language>
-		<language name="JPN_KANJI">もじモード</language>
-	</row>
-
-	<row id="mes_config_sm07_01" text-color="#ff0000,,,#ff0000,,#000000,,,,,,#000000,,,,,,">
-		<comment>「文字モード」-&gt;かな
-※WBで追加</comment>
-		<language name="JPN" width="120">かなモード</language>
-		<language name="JPN_KANJI">かなモード</language>
-	</row>
-
-	<row id="mes_config_sm07_02" text-color="#ff0000,,,#ff0000,,#000000,,,,,,#000000,,,,,,">
-		<comment>「文字モード」-&gt;漢字
-※WBで追加</comment>
-		<language name="JPN" width="120">かんじモード</language>
-		<language name="JPN_KANJI">かんじモード</language>
-	</row>
-
-	<row id="mes_config_comment11" text-color="#ff0000,,,#ff0000,,#000000,,,,,,#000000,,,,,,">
-		<comment>「文字モード」の解説文
-※WBで追加</comment>
-		<language name="JPN" width="120">かんじを　つかうかどうか
-えらぶことが　できます</language>
-		<language name="JPN_KANJI">かんじを　つかうかどうか
-えらぶことが　できます</language>
 	</row>
 
 	<flowchart-group-list>

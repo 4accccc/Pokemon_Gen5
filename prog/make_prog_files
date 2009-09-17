@@ -435,7 +435,7 @@ SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
-SRCS_OVERLAY_CONFIG_PANEL = app/config_panel/config_panel.c
+SRCS_OVERLAY_CONFIG_PANEL = app/config_panel/config_panel2.c
 
 
 # ƒAƒCƒeƒ€‰æ–Ê
