@@ -9,13 +9,14 @@
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
 
-USERS	=	sogabe
+USERS	=	sogabe nishino
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 
 HEADER = monsno_def.h
+HASHFILE = monsno_hash.rb
 GMMFILE = monsname.gmm
 SCRFILE = pokegra_wb.scr
 OTHERFILE = otherpoke_wb.scr
@@ -25,6 +26,7 @@ OTHERFILE = otherpoke_wb.scr
 #------------------------------------------------------------------------------
 TARGETDIR	= ../../prog/include/poke_tool/
 GMMDIR	= ../../resource/message/src/
+HASHDIR	= ../../tools/hash/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -51,13 +53,16 @@ out_end: personal_wb.csv
 	ruby ../../tools/personal_conv/personal_conv.rb $< ../message/template.gmm
 endif
 
-do-build: $(TARGETDIR)$(HEADER) $(GMMDIR)$(GMMFILE)
+do-build: $(TARGETDIR)$(HEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(HASHFILE)
 
 $(TARGETDIR)$(HEADER):	$(HEADER)
 	$(COPY)	$(HEADER) $(TARGETDIR)
 
 $(GMMDIR)$(GMMFILE):	$(GMMFILE)
 	$(COPY)	$(GMMFILE) $(GMMDIR)
+
+$(HASHDIR)$(HASHFILE):	$(HASHFILE)
+	$(COPY)	$(HASHFILE) $(HASHDIR)
 
 #------------------------------------------------------------------------------
 #	make cleanルール
@@ -67,9 +72,11 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f *.s
 	-rm -f $(HEADER)
 	-rm -f $(GMMFILE)
+	-rm -f $(HASHFILE)
 	-rm -f *.scr
 	-rm -f out_end
 endif
 	-rm -f $(TARGETDIR)$(HEADER)
 	-rm -f $(GMMDIR)$(GMMFILE)
+	-rm -f $(HASHDIR)$(HASHFILE)
 
