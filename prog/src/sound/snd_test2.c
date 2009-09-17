@@ -367,6 +367,7 @@ typedef struct {
 	u16							tpTrgRepeatCount;
 
 	u16							trackBit;
+	BOOL						voiceReserveFlag;
 }SOUNDTEST_WORK;
 
 enum {
@@ -428,6 +429,7 @@ static void	SoundWorkInitialize(SOUNDTEST_WORK* sw)
 	sw->gflSndViewer = GFL_SNDVIEWER_Create( &sndViewerData, sw->heapID );
 
 	sw->trackBit = 0;
+	sw->voiceReserveFlag = FALSE;
 }
 
 static void	SoundWorkFinalize(SOUNDTEST_WORK* sw)
@@ -447,6 +449,10 @@ static void	SoundWorkFinalize(SOUNDTEST_WORK* sw)
 	for(i=0; i<NAMEIDX_MAX; i++){ GFL_STR_DeleteBuffer(sw->setName[i]); }
 
 	GFL_SKB_DeleteSjisCodeBuffer(sw->skbStrBuf);
+
+	if(sw->voiceReserveFlag == TRUE){
+		PMVOICE_PlayerHeapRelease();
+	}
 }
 
 //------------------------------------------------------------------
@@ -460,12 +466,12 @@ static GFL_PROC_RESULT SoundTest2Proc_Init(GFL_PROC * proc, int * seq, void * pw
 
 	sw = GFL_PROC_AllocWork(proc, sizeof(SOUNDTEST_WORK), GFL_HEAPID_APP);
 
-    GFL_STD_MemClear(sw, sizeof(SOUNDTEST_WORK));
-    sw->heapID = GFL_HEAPID_APP;
+  GFL_STD_MemClear(sw, sizeof(SOUNDTEST_WORK));
+  sw->heapID = GFL_HEAPID_APP;
 
 	SoundWorkInitialize(sw);
 
-    return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------
@@ -598,6 +604,17 @@ static BOOL	SoundTest(SOUNDTEST_WORK* sw)
 				mcsControlSetTrackSt(sw->heapID, sw->trackBit);
 				mcsControlReset(sw->heapID);
 				break;
+			}
+		}
+#endif
+#if 1
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+			if(sw->voiceReserveFlag == FALSE){
+				PMVOICE_PlayerHeapReserve(2, GFL_HEAPID_APP);
+				sw->voiceReserveFlag = TRUE;
+			} else {
+				PMVOICE_PlayerHeapRelease();
+				sw->voiceReserveFlag = FALSE;
 			}
 		}
 #endif

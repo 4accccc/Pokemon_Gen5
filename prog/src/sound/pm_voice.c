@@ -51,8 +51,10 @@ typedef struct {
 	int					speedSub;
 	u8					pan;
 	BOOL				subWaveUse;
+	BOOL				heapReserveFlag;
 }PMVOICE_PLAYER;
 
+static  u8 staticWaveData[PMVOICE_WAVESIZE_MAX];
 //------------------------------------------------------------------
 /**
  * @brief	システム定義
@@ -65,7 +67,6 @@ typedef struct {
 	PMVOICE_PLAYER	voicePlayer[VOICE_PLAYER_NUM];
 	u16				voicePlayerRef;
 	u16				voicePlayerEnableNum;
-	BOOL			voicePlayerHeapReserveFlag;
 	PMVOICE_CB_GET_WVIDX*	CallBackGetWaveIdx;
 	PMVOICE_CB_GET_WVDAT*	CallBackCustomWave;
 }PMVOICE_SYS;
@@ -136,10 +137,13 @@ void	PMVOICE_Init
 		voicePlayer->channel = useChannnelPriority[i][0];
 		voicePlayer->channelSub = useChannnelPriority[i][1];
 		initPlayerWork(voicePlayer);
+		// player0 だけは静的確保する
+		if(i == 0){
+			voicePlayer->waveData = staticWaveData;
+		}
 	}
+	pmvSys.voicePlayerEnableNum = 1;
 	pmvSys.voicePlayerRef = 0;
-	pmvSys.voicePlayerEnableNum = VOICE_PLAYER_NUM;
-	pmvSys.voicePlayerHeapReserveFlag = FALSE;
 
 	pmvSys.CallBackGetWaveIdx = CallBackGetWaveIdx;
 	pmvSys.CallBackCustomWave = CallBackCustomWave;
@@ -206,8 +210,9 @@ void	PMVOICE_Exit( void )
 
 		if(voicePlayer->active == TRUE){ stopWave(voicePlayer); }
 		// 未開放バッファがあれば開放
-		if(voicePlayer->waveData != NULL){ GFL_HEAP_FreeMemory(voicePlayer->waveData); }
-
+		if((i != 0)&&(voicePlayer->waveData != NULL)){
+			GFL_HEAP_FreeMemory(voicePlayer->waveData);
+		}
 		voicePlayer->active = FALSE;
 		initPlayerWork(voicePlayer);
 	}
@@ -242,14 +247,17 @@ void	PMVOICE_PlayerHeapReserve( int num, HEAPID heapID )
 
 	PMVOICE_Reset();
 
-	if( num > VOICE_PLAYER_NUM ){ num = VOICE_PLAYER_NUM; }
+	if( num > (VOICE_PLAYER_NUM-1) ){ num = VOICE_PLAYER_NUM-1; }
 
-	for( i=0; i<num; i++ ){ 
+	for( i=1; i<num+1; i++ ){ 
 		voicePlayer = &pmvSys.voicePlayer[i];
-		voicePlayer->waveData = GFL_HEAP_AllocClearMemory(heapID, PMVOICE_WAVESIZE_MAX);
+		if(voicePlayer->waveData == NULL){
+			voicePlayer->waveData = GFL_HEAP_AllocClearMemory(heapID, PMVOICE_WAVESIZE_MAX);
+			voicePlayer->heapReserveFlag = TRUE;
+		}
 	}
-	pmvSys.voicePlayerEnableNum = num;
-	pmvSys.voicePlayerHeapReserveFlag = TRUE;
+	pmvSys.voicePlayerEnableNum = num + 1;
+	pmvSys.voicePlayerRef = 0;
 }
 
 //============================================================================================
@@ -266,10 +274,13 @@ void	PMVOICE_PlayerHeapRelease( void )
 
 	for( i=0; i<pmvSys.voicePlayerEnableNum; i++ ){ 
 		voicePlayer = &pmvSys.voicePlayer[i];
-		if(voicePlayer->waveData != NULL){ GFL_HEAP_FreeMemory(voicePlayer->waveData); }
+		if((voicePlayer->waveData != NULL)&&(voicePlayer->heapReserveFlag == TRUE)){
+			GFL_HEAP_FreeMemory(voicePlayer->waveData);
+			initPlayerWork(voicePlayer);
+		}
 	}
-	pmvSys.voicePlayerEnableNum = VOICE_PLAYER_NUM;
-	pmvSys.voicePlayerHeapReserveFlag = FALSE;
+	pmvSys.voicePlayerEnableNum = 1;
+	pmvSys.voicePlayerRef = 0;
 }
 
 
@@ -311,9 +322,8 @@ static u16 getPlayerIdx( void )
  * @brief	プレーヤーワーク初期化
  */
 //------------------------------------------------------------------
-static void initPlayerWork( PMVOICE_PLAYER* voicePlayer )
+static void resetPlayerWork( PMVOICE_PLAYER* voicePlayer )
 {
-	voicePlayer->waveData = NULL;
 	voicePlayer->waveSize = 0;
 	voicePlayer->waveRate = VOICE_RATE_DEFAULT;
 	voicePlayer->volume = 0;
@@ -322,6 +332,13 @@ static void initPlayerWork( PMVOICE_PLAYER* voicePlayer )
 	voicePlayer->speedSub = VOICE_SPEED_DEFAULT;
 	voicePlayer->pan = 64;
 	voicePlayer->subWaveUse = FALSE;
+}
+
+static void initPlayerWork( PMVOICE_PLAYER* voicePlayer )
+{
+	resetPlayerWork(voicePlayer);
+	voicePlayer->waveData = NULL;
+	voicePlayer->heapReserveFlag = FALSE;
 }
 
 //------------------------------------------------------------------
@@ -421,15 +438,14 @@ static void stopWave( PMVOICE_PLAYER* voicePlayer )
 		// 使用チャンネル開放
 		NNS_SndWaveOutFreeChannel(voicePlayer->waveHandleSub);
 	}
-
+#if 0
 	// 波形データバッファ開放
-	if(voicePlayer->waveData != NULL){
-		if( pmvSys.voicePlayerHeapReserveFlag == FALSE ){
-			GFL_HEAP_FreeMemory(voicePlayer->waveData); 
-		}
+	if((voicePlayer->waveData != NULL)&&(voicePlayer->heapReserveFlag == FALSE)){
+		GFL_HEAP_FreeMemory(voicePlayer->waveData); 
 	}
+#endif
 	voicePlayer->active = FALSE;
-	initPlayerWork(voicePlayer);
+	resetPlayerWork(voicePlayer);
 }
 
 
@@ -476,12 +492,14 @@ u32		PMVOICE_Play
 	voicePlayerIdx = getPlayerIdx();
 	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
 
+	if(voicePlayer->active == TRUE){ stopWave(voicePlayer); };
+#if 0
 	// 波形データバッファ確保
-	if( pmvSys.voicePlayerHeapReserveFlag == FALSE ){
+	if( voicePlayer->heapReserveFlag == FALSE ){
 		// 常に最大値で確保（種別によって異なると潜在バグを生む可能性があるため）
 		voicePlayer->waveData = GFL_HEAP_AllocClearMemory(pmvSys.heapID, PMVOICE_WAVESIZE_MAX);
 	}
-	
+#endif	
 	// 波形データカスタマイズ(TRUE: コールバック内で生成された)
 	waveLoadFlag = pmvSys.CallBackCustomWave(	pokeNo, pokeFormNo, userParam,
 													&voicePlayer->waveData, 
