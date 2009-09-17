@@ -125,7 +125,7 @@ unless FileTest.directory?(directory) then
 end
 
 filename = directory + "\\" + symbol + ".ev"
-sp_filename = directory + "\\sp_" + File.basename(filename)
+sp_filename = directory + "\\sp_" + symbol + ".ev"
 def_filename = directory + "\\" + symbol + "_def.h"
 
 make_dummy(filename, symbol, SCRIPT_DUMMY_STRING)
