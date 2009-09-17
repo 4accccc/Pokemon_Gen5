@@ -62,7 +62,7 @@ extern BOOL	PMVOICE_CheckBusy( void );
  *
  */
 //============================================================================================
-extern void	PMVOICE_PlayerHeapReserve( int num );	// プレーヤー用waveバッファ事前確保
+extern void	PMVOICE_PlayerHeapReserve( int num, HEAPID heapID );// プレーヤー用waveバッファ事前確保
 extern void	PMVOICE_PlayerHeapRelease( void );		// プレーヤー用waveバッファ開放
 
 //============================================================================================
