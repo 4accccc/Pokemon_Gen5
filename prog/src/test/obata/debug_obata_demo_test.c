@@ -138,10 +138,10 @@ static GFL_PROC_RESULT DEBUG_OBATA_DEMO_TEST_MainProcFunc_End( GFL_PROC* proc, i
 	PROC_WORK* work = mywk;
 
   // I—¹ˆ—
+  ICA_ANIME_Delete( work->icaAnime );
   Finalize( work );
 
 	// ƒ[ƒN‚ð”jŠü
-  ICA_ANIME_Delete( work->icaAnime );
 	GFL_PROC_FreeWork( proc );
 
   DEBUG_OBATA_DEMO_TEST_Exit();

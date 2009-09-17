@@ -194,9 +194,18 @@ void ICA_ANIME_Delete( ICA_ANIME* anime )
   GFL_ARC_CloseDataHandle( anime->arcHandle );
   if( anime->allocMemory )  // 各バッファはクラス内で確保した場合のみ解放する
   {
-    if( anime->transBuf )  GFL_HEAP_FreeMemory( anime->transBuf );
-    if( anime->rotateBuf ) GFL_HEAP_FreeMemory( anime->rotateBuf );
-    if( anime->scaleBuf )  GFL_HEAP_FreeMemory( anime->scaleBuf );
+    if( anime->transBuf )
+    {
+      GFL_HEAP_FreeMemory( anime->transBuf );
+    }
+    if( anime->rotateBuf ) 
+    {
+      GFL_HEAP_FreeMemory( anime->rotateBuf );
+    }
+    if( anime->scaleBuf )  
+    {
+      GFL_HEAP_FreeMemory( anime->scaleBuf );
+    }
   }
   GFL_HEAP_FreeMemory( anime );
 }
@@ -626,7 +635,7 @@ void UpdateBuf( ICA_ANIME* anime, fx32 start_frame )
   int   frame     = (start_frame >> FX32_SHIFT) % anime->frameSize;
   int   ofs       = 7;
   int   data_size = 0;
-  void* data      = GFL_HEAP_AllocMemoryLo( anime->heapID, data_size );
+  void* data      = NULL;
 
   // 先頭データへのオフセットを計算
   if( anime->haveScale  ) ofs += sizeof(float)*3*frame;
@@ -639,6 +648,7 @@ void UpdateBuf( ICA_ANIME* anime, fx32 start_frame )
   if( anime->haveTrans  ) data_size += sizeof(float)*3*anime->bufSize;
 
   // 指定フレーム位置から 一定フレーム数分のデータを取得し, バッファ更新
+  data = GFL_HEAP_AllocMemoryLo( anime->heapID, data_size );
   GFL_ARC_LoadDataOfsByHandle( anime->arcHandle, anime->datID, ofs, data_size, data );
   for( i=0, j=0; i<anime->bufSize; i++ )
   {
@@ -668,5 +678,9 @@ void UpdateBuf( ICA_ANIME* anime, fx32 start_frame )
 
 #ifdef ICA_ANIME_DEBUG
   OBATA_Printf( "update ica anime buffer\n" );
+  OBATA_Printf( "frame     = %d\n", frame );
+  OBATA_Printf( "ofs       = %d\n", ofs );
+  OBATA_Printf( "data_size = %d\n", data_size );
+  OBATA_Printf( "bufSize   = %d\n", anime->bufSize );
 #endif
 }
