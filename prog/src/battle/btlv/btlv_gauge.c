@@ -253,7 +253,7 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( HEAPID heapID )
   }
 
   //フォント読み込み（独自フォントになる可能性があるので　現状はデフォルトフォントを読んでおく）
-  bgw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, bgw->heapID );
+  bgw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, bgw->heapID );
 
   return bgw;
 }
