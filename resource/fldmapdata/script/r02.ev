@@ -6,7 +6,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../../prog/include/msg/script/msg_r02.h"
-  //.include  "r02.h"
+  .include  "r02.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -15,7 +15,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r02_talkobj_black
+_EVENT_DATA    ev_pos_r02_rival_01
 _EVENT_DATA    ev_r02_talkobj_mama
 _EVENT_DATA    ev_r02_talkobj_boy2
 _EVENT_DATA    ev_r02_talkobj_girl2
@@ -38,14 +38,68 @@ _EVENT_DATA_END
 //ev_r02_flag_change:
 //  _END
 
-/**************************************************************/
-/*  R02 友達♂のイベントスクリプト*/
-/**************************************************************/
-EVENT_START   ev_r02_talkobj_black
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r02_black_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+/************************************************************/
+/*				ライバル：草むら説明イベント				*/
+/************************************************************/
+EVENT_START   ev_pos_r02_rival_01
+	
+	//ライバル：メッセージ
+	_BALLOONWIN_OBJMSG_OPEN( msg_r02_black_01, R02_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル：主人公を向く
+	_OBJ_ANIME( R02_RIVAL_01,anm_shita_muku)
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：！マーク
+	_OBJ_ANIME( R02_RIVAL_01,anm_bikkuri_mark)
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：ウェイトを持たせる
+	_OBJ_ANIME( R02_RIVAL_01,anm_16wait)
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル草むらを向く
+	_OBJ_ANIME( R02_RIVAL_01,anm_ue_muku)
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：ウェイトを持たせる
+	_OBJ_ANIME( R02_RIVAL_01,anm_16wait)
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：メッセージ
+	_BALLOONWIN_OBJMSG_OPEN( msg_r02_black_02, R02_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル：ウェイトを持たせる
+	_OBJ_ANIME( R02_RIVAL_01,anm_16wait)
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：主人公を向く
+	_OBJ_ANIME( R02_RIVAL_01,anm_shita_muku)
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：メッセージ
+	_BALLOONWIN_OBJMSG_OPEN( msg_r02_black_03, R02_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル：ウェイトを持たせる
+	_OBJ_ANIME( R02_RIVAL_01,anm_16wait)
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：去る
+	_OBJ_ANIME( R02_RIVAL_01,anm_rival_saru)
+	_OBJ_ANIME_WAIT()	
+
+	//ライバル：消す
+	_OBJ_DEL_EV( R02_RIVAL_01 )
+
+
+	//==============フラグワーク操作==============//
+	//R02のライバルの長い草イベントを無効にする
+	$WK_SCENE_R02 = 1
+	//============================================//
+
 EVENT_END
 
 /**************************************************************/
@@ -78,3 +132,45 @@ EVENT_START   ev_r02_talkobj_girl2
   _BALLOONWIN_CLOSE()
 EVENT_END
 
+
+//--------------------------------------------------------------------
+//ライバル:びっくりマークを出す                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_bikkuri_mark
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル:ウェイト16待つ                            
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_16wait
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ライバル:方向を固定する                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_kotei
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル:上を向く                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ue_muku
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル:下を向く                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_shita_muku
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0	
+
+//--------------------------------------------------------------------
+//ライバル:画面外に移動                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_saru
+	_ANIME_DATA AC_WALK_R_8F,10
+	_ANIME_DATA	ACMD_END,0

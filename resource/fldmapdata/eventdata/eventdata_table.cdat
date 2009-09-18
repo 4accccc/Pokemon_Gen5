@@ -2369,6 +2369,7 @@
 #define R02_TRAINER_04                     5
 #define R02_TRAINER_05                     6
 #define R02_TRAINER_06                     7
+#define R02_RIVAL_01                       8
 
 #endif //ZONE_R02_EVC_H
 //#include "tmp/r03.h"
@@ -11088,18 +11089,46 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 		618,
 		0,
 	},
+	{
+		R02_RIVAL_01,
+		RIVEL,
+		MV_UP,
+		EV_TYPE_NORMAL,
+		FV_R02_RIVAL_01,
+		SCRID_DUMMY,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		764,
+		648,
+		0,
+	},
 };
 const int ObjCount_R02 = NELEMS(OBJ_EVENT_R02);
+const POS_EVENT_DATA POS_EVENT_R02[] = {
+	{//POS_R02_RIVAL_01 = 0
+		SCRID_POS_R02_RIVAL_01,
+		764, 649,
+		1, 1,
+		0,  //height
+		0,
+		WK_SCENE_R02,
+	},
+};
+const int PosCount_R02 = NELEMS(POS_EVENT_R02);
 
 static const EVENTDATA_TABLE event_r02 = {
 	0,
-	8,
+	9,
 	4,
-	0,
+	1,
 	(void *)NULL,
 	(void *)&OBJ_EVENT_R02,
 	(void *)&DOOR_EVENT_R02,
-	(void *)NULL,
+	(void *)&POS_EVENT_R02,
 };
 #include "../script/r03_def.h"
 const CONNECT_DATA DOOR_EVENT_R03[] = {
