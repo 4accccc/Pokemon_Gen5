@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-25T16:01:32"/>
+	<create user="matsumiya" host="W00207" date="2009-09-18T18:29:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="57" top="195" right="762" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="57" top="195" right="762" bottom="813" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,9 +292,9 @@
 	</lock>
 
 
-	<row id="msg_r03_oldwoman1_01">
+	<row id="msg_r03_oldwoman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀
-・7月末ROM用</comment>
+・10月末ROMでは削除</comment>
 		<attribute name="キャラ指定">OLDWOMAN1
 おばあさん</attribute>
 		<language name="JPN" width="256">ここは　そだてや　じゃ！[BE:01:ページ切り替え（クリア）]
@@ -305,21 +305,319 @@
 そりゃ　ポケモン　じゃ！！</language>
 	</row>
 
+	<row id="msg_r03_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・r03の中央あたりのposを踏むと
+　c01側から友達♀と登場
+・主人公に隣接するとメッセージ表示
+・表示後、トレーナー戦闘へ</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">とｋもだち♂「[1:00:トレーナー名:0]！　オレたちも
+サンヨウジムで　バッジを　もらったぜ！[BE:01:ページ切り替え（クリア）]
+なにが　いいたいか　わかるだろ？[BE:00:ページ切り替え（行送り）]
+そう　しょうぶ　しようぜ！</language>
+		<language name="JPN_KANJI" width="256">とｋもだち♂「[1:00:トレーナー名:0]！　オレたちも
+サンヨウジムで　バッジを　もらったぜ！[BE:01:ページ切り替え（クリア）]
+なにが　いいたいか　わかるだろ？[BE:00:ページ切り替え（行送り）]
+そう　しょうぶ　しようぜ！</language>
+	</row>
+
+	<row id="msg_r03_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・戦闘後メッセージ</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『なるほどな
+そういう　たたかいかたも　あるか[BE:01:ページ切り替え（クリア）]
+で　ともだち♀さ
+おまえも　たたかう……</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『なるほどな
+そういう　たたかいかたも　あるか[BE:01:ページ切り替え（クリア）]
+で　ともだち♀さ
+おまえも　たたかう……</language>
+	</row>
+
+	<row id="msg_r03_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ表示後、c02側に移動</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『……ん
+ちょっと　まって……！？[BE:01:ページ切り替え（クリア）]
+ねえねえ
+むこうで　なにか　きこえる！</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『……ん
+ちょっと　まって……！？[BE:01:ページ切り替え（クリア）]
+ねえねえ
+むこうで　なにか　きこえる！</language>
+	</row>
+
+	<row id="msg_r03_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、連れ歩き
+・所定位置まで移動すると
+　カメラ移動して
+　下のイベント開始</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『あいかわらず
+いい　みみ　してるんだな　あいつ[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]
+オレたちも　いこうぜ</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『あいかわらず
+いい　みみ　してるんだな　あいつ[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]
+オレたちも　いこうぜ</language>
+	</row>
+
+	<row id="msg_r03_babygirl1_01">
+		<comment>♀
+・続けてmsg_r03_hakaim_01</comment>
+		<attribute name="キャラ指定">BABYGIRL1
+女の子</attribute>
+		<language name="JPN" width="256">あたしの　ポケモン　かえしてぇ！！</language>
+		<language name="JPN_KANJI" width="256">あたしの　ポケモン　かえしてぇ！！</language>
+	</row>
+
+	<row id="msg_r03_hakaim_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・表示後、主人公たちを
+　したっぱの近くに移動させる
+・続けてmsg_r03_white_02</comment>
+		<attribute name="キャラ指定">？？？団したっぱ</attribute>
+		<language name="JPN" width="256">？？？だん『おれたちはな
+ポケモンを　たすけて　いるんだぞ！</language>
+		<language name="JPN_KANJI" width="256">おれたちはな　ポケモンを
+助けて　いるんだぞ！</language>
+	</row>
+
+	<row id="msg_r03_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてmsg_r03_hakaim_02</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『！[BE:01:ページ切り替え（クリア）]
+あんたたち　なにしてるの！？</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『！[BE:01:ページ切り替え（クリア）]
+あんたたち　なにしてるの！？</language>
+	</row>
+
+	<row id="msg_r03_hakaim_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　倍速でc02側に移動
+・続けてmsg_r03_white_03</comment>
+		<attribute name="キャラ指定">？？？団したっぱ</attribute>
+		<language name="JPN" width="256">？？？だん『なんだ……？[BE:01:ページ切り替え（クリア）]
+１……　２……　３にんか
+あいてをするのは　ちょっとめんどうだな</language>
+		<language name="JPN_KANJI" width="256">？？？だん『なんだ……？[BE:01:ページ切り替え（クリア）]
+１……　２……　３にんか
+あいてをするのは　ちょっとめんどうだな</language>
+	</row>
+
+	<row id="msg_r03_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・表示後、左右にうろうろ
+・続けてmsg_r03_black_04</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『わっ　わっ
+あのひとたち　にげちゃったよ！？</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『わっ　わっ
+あのひとたち　にげちゃったよ！？</language>
+	</row>
+
+	<row id="msg_r03_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・はい/いいえ
+　はい→msg_r03_black_06
+　いいえ→msg_r03_black_05</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『あいつら……！
+[1:00:トレーナー名:0]　追いかけるぞ</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『あいつら……！
+[1:00:トレーナー名:0]　追いかけるぞ</language>
+	</row>
+
+	<row id="msg_r03_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・いいえ選択時
+・再度話しかけたときは
+　msg_r03_black_04表示から</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『準備なら　早くしろよ</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『準備なら　早くしろよ</language>
+	</row>
+
+	<row id="msg_r03_black_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・はい選択時
+・メッセージ後
+　友達♂、c02側に移動
+・画面外に消えると主人公操作可能に</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『よし行こうぜ</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『よし行こうぜ</language>
+	</row>
+
+	<row id="msg_r03_black_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・いいえ選択後
+　posを踏む＝c02に行こうとすると
+　このメッセージ表示</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『一人で行くなよ</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『一人で行くなよ</language>
+	</row>
+
+	<row id="msg_r03_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・msg_r03_black_08表示まで繰り返し</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『あたし
+このこと　いっしょに　いるから</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『あたし
+このこと　いっしょに　いるから</language>
+	</row>
+
+	<row id="msg_r03_babygirl1_02">
+		<comment>♀
+・msg_r03_black_08表示まで繰り返し</comment>
+		<attribute name="キャラ指定">BABYGIRL1
+女の子</attribute>
+		<language name="JPN" width="256">あたしの　ポケモン……</language>
+		<language name="JPN_KANJI" width="256">あたしの　ポケモン……</language>
+	</row>
+
+	<row id="msg_r03_black_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・posを踏むと
+　主人公、友達♂の隣に移動
+・その後このメッセージ
+・表示後、続けてmsg_r03_hakaim_03</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『おまえら……[BE:01:ページ切り替え（クリア）]
+だいの　おとなが
+なに　やってんだよ！</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『おまえら……[BE:01:ページ切り替え（クリア）]
+だいの　おとなが
+なに　やってんだよ！</language>
+	</row>
+
+	<row id="msg_r03_hakaim_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・続けてmsg_r03_hakaim_04</comment>
+		<attribute name="キャラ指定">？？？団したっぱ</attribute>
+		<language name="JPN" width="256">？？？だん『おれたちは
+ポケモンを　解放するんだ！</language>
+		<language name="JPN_KANJI" width="256">？？？だん『おれたちは
+ポケモンを　解放するんだ！</language>
+	</row>
+
+	<row id="msg_r03_hakaim_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・続けてmsg_r03_black_09</comment>
+		<attribute name="キャラ指定">？？？団したっぱ</attribute>
+		<language name="JPN" width="256">？？？だん『だから
+ポケモンを　奪うんだ！</language>
+		<language name="JPN_KANJI" width="256">？？？だん『だから
+ポケモンを　奪うんだ！</language>
+	</row>
+
+	<row id="msg_r03_black_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、ダブルバトル</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『うるせえ！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]　こいつら　ぶっとばして
+あのこの　ポケモン　とりもどす！</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『うるせえ！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]　こいつら　ぶっとばして
+あのこの　ポケモン　とりもどす！</language>
+	</row>
+
+	<row id="msg_r03_hakaim_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+※戦闘後、ポケモンの動作モデル表示
+・戦闘後メッセージ
+・続けてmsg_r03_black_10</comment>
+		<attribute name="キャラ指定">？？？団したっぱ</attribute>
+		<language name="JPN" width="256">？？？だん『お前たち　トレーナーは
+ポケモンを　苦しめているぞ……</language>
+		<language name="JPN_KANJI" width="256">？？？だん『お前たち　トレーナーは
+ポケモンを　苦しめているぞ……</language>
+	</row>
+
+	<row id="msg_r03_black_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてmsg_r03_hakaim_06</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『うるせえ！[BE:01:ページ切り替え（クリア）]
+どんな　りゆうでも
+ひとのモノ　とったら　どろぼう　だろ　</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『うるせえ！[BE:01:ページ切り替え（クリア）]
+どんな　りゆうでも
+ひとのモノ　とったら　どろぼう　だろ　</language>
+	</row>
+
+	<row id="msg_r03_hakaim_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・戦闘後メッセージ
+・表示後、こいつら退場
+・そのあと、友達♀登場</comment>
+		<attribute name="キャラ指定">？？？団したっぱ</attribute>
+		<language name="JPN" width="256">？？？だん『くっ……　いつか
+じぶんたちの　おろかさに　きづけ……</language>
+		<language name="JPN_KANJI" width="256">？？？だん『くっ……　いつか
+じぶんたちの　おろかさに　きづけ……</language>
+	</row>
+
+	<row id="msg_r03_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ポケモンの動作モデルと一緒に
+　ｃ01側に戻っていく</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ともだち♀『あたし
+この　ポケモン　かえしにいくね[BE:01:ページ切り替え（クリア）]
+ありがとう
+[1:00:トレーナー名:0]！　ともだち♂！</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『あたし
+この　ポケモン　かえしにいくね[BE:01:ページ切り替え（クリア）]
+ありがとう
+[1:00:トレーナー名:0]！　ともだち♂！</language>
+	</row>
+
+	<row id="msg_r03_black_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・c01側を見ながらメッセージ表示</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">ともだち♂『きをつけろよ</language>
+		<language name="JPN_KANJI" width="256">ともだち♂『きをつけろよ</language>
+	</row>
+
+	<row id="msg_r03_black_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けて主人公と向き合いながら
+　このメッセージ表示
+・表示後、c02へ移動
+・画面外に消えると主人公、操作可能</comment>
+		<language name="JPN" width="256">オレ　このまま　シッポウシティに　いくよ
+だって　もう　めのまえ　だしな</language>
+		<language name="JPN_KANJI" width="256">オレ　このまま　シッポウシティに　いくよ
+だって　もう　めのまえ　だしな</language>
+	</row>
+
 	<row id="msg_r03_woman3_01">
 		<comment>♀
 ・7月末ROM用</comment>
 		<attribute name="キャラ指定">WOMAN3
 保育士</attribute>
-		<language name="JPN" width="256">こちらの　ほいくえん　では[BE:01:ページ切り替え（クリア）]
-おとなりの　そだてやさんで
-ポケモンが　そだつ　すがたを　みて[BE:00:ページ切り替え（行送り）]
-えんじの　みんなが　こころゆたかに[BE:00:ページ切り替え（行送り）]
-そだつと　ひょうばん　なんです</language>
-		<language name="JPN_KANJI" width="256">こちらの　保育園では[BE:01:ページ切り替え（クリア）]
-お隣の　育て屋さんで
-ポケモンが　育つ姿を　みて[BE:00:ページ切り替え（行送り）]
-園児の　みんなが　心豊かに[BE:00:ページ切り替え（行送り）]
-育つと　評判なんです</language>
+		<language name="JPN" width="256">この　ニコニコほいくえんは
+なかよしが　モットー　なのね[BE:01:ページ切り替え（クリア）]
+だから　ポケモンしょうぶも　なかよく
+ポケモン２ひき　ずつ　だしあって[BE:00:ページ切り替え（行送り）]
+ダブルバトルで　しょうぶ　するのよ！</language>
+		<language name="JPN_KANJI" width="256">この　ニコニコ保育園は
+なかよしが　モットー　なのね[BE:01:ページ切り替え（クリア）]
+だから　ポケモン勝負も　なかよく
+ポケモン２匹ずつ　だしあって　勝負[BE:00:ページ切り替え（行送り）]
+つまり　ダブルバトルって　わけ！</language>
 	</row>
 
 	<row id="msg_r03_babygirl1a_01">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-08T15:52:25"/>
+	<create user="matsumiya" host="W00207" date="2009-09-18T16:36:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,18 +292,12 @@
 	</lock>
 
 
-	<row id="msg_r03r0201_oldwoman1_01">
-		<comment>♀
-・仮</comment>
+	<row id="msg_r03r0201_oldwoman1_01" back-color="#404040,,,,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>・育て屋用のgmmは
+　sodateya.gmm参照</comment>
 		<attribute name="キャラ指定">OLDWOMAN1</attribute>
-		<language name="JPN" width="256">わしは　そだてや　ばあさんじゃ[BE:01:ページ切り替え（クリア）]
-おまえさんの　かわりに
-ポケモンを　そだてて　あげるよ[BE:01:ページ切り替え（クリア）]
-なにか　そだてて　ほしいのかい？</language>
-		<language name="JPN_KANJI" width="256">わしは　育て屋ばあさんじゃ[BE:01:ページ切り替え（クリア）]
-おまえさんの　代わりに
-ポケモンを　育ててあげるよ[BE:01:ページ切り替え（クリア）]
-なにか　育ててほしいのかい？</language>
+		<language name="JPN" width="256">test</language>
+		<language name="JPN_KANJI" width="256">test</language>
 	</row>
 
 	<flowchart-group-list>
