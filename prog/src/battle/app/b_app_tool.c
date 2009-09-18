@@ -374,19 +374,17 @@ u32 BAPP_CursorMove( BAPP_CURSOR_MVWK * wk )
 }
 
 
-void BAPPTOOL_PrintQueOn( BAPP_BMPWIN_QUE * dat )
+void BAPPTOOL_PrintScreenTrans( PRINT_UTIL * util )
 {
-	dat->flg = TRUE;
+	GFL_BMPWIN_MakeScreen( util->win );
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(util->win) );
 }
 
-void BAPPTOOL_PrintQueTrans( BAPP_BMPWIN_QUE * dat, u32 max )
+void BAPPTOOL_PrintUtilTrans( PRINT_UTIL * util, PRINT_QUE * que, u32 max )
 {
 	u32	i;
 
 	for( i=0; i<max; i++ ){
-		if( dat[i].flg == TRUE ){
-		  GFL_BMPWIN_MakeTransWindow_VBlank( dat[i].win );
-			dat[i].flg = FALSE;
-		}
+		PRINT_UTIL_Trans( &util[i], que );
 	}
 }

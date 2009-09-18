@@ -141,7 +141,7 @@ extern void BattlePokeList_PPRcv( BPLIST_WORK * wk, u16 widx, u16 pos );
  *	ページ６で使用
  */
 //--------------------------------------------------------------------------------------------
-extern void BPL_HidenMsgPut( BPLIST_WORK * wk );
+//extern void BPL_HidenMsgPut( BPLIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -167,6 +167,18 @@ extern void BattlePokeList_ItemUseSkillErrMsgSet( BPLIST_WORK * wk );
 
 
 extern void BPLISTBMP_PrintMain( BPLIST_WORK * wk );
+
+
+extern u8 BPLISTBMP_GetNumDotto( u32 prm_now, u32 prm_max, u8 dot_max );
+extern u8 BPLISTBMP_GetGaugeDottoColor( u32 put_dot, u32 max_dot );
+
+enum {
+	HP_DOTTO_GREEN = 0,		// 緑
+	HP_DOTTO_YELLOW,			// 黄
+	HP_DOTTO_RED,					// 赤
+	HP_DOTTO_NULL,				// HP=0
+};
+
 
 
 #endif	// B_PLIST_BMP_H

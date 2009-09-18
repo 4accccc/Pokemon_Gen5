@@ -425,9 +425,9 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 //	wk->dat->mode = BPL_MODE_NO_CANCEL;		// キャンセル不可
 //	wk->dat->mode = BPL_MODE_ITEMUSE;			// アイテム使用
 //	wk->dat->item = 38;
-	wk->dat->mode = BPL_MODE_WAZASET;			// 技忘れ
-	wk->dat->sel_poke = 1;
-	wk->dat->chg_waza = 20;
+//	wk->dat->mode = BPL_MODE_WAZASET;			// 技忘れ
+//	wk->dat->sel_poke = 1;
+//	wk->dat->chg_waza = 20;
 //	wk->page = BPLIST_PAGE_PP_RCV;		// PP回復技選択ページ
 /**************/
 }
@@ -1069,13 +1069,15 @@ static int BPL_SeqWazaDelMain( BPLIST_WORK * wk )
 	case 0:		// わすれる
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );
 		BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZADEL_B );
+/*
 		if( BPL_HidenCheck( wk ) == TRUE ){
 			BPL_HidenMsgPut( wk );
 			BPL_HidenOff_Battle( wk );
 			wk->ret_seq = SEQ_BPL_WAZADEL_MAIN;
 		}else{
+*/
 			wk->ret_seq = SEQ_BPL_ENDSET;
-		}
+//		}
 		return SEQ_BPL_BUTTON_WAIT;
 
 	case 1:		// 戦闘<->コンテスト切り替え
@@ -1813,7 +1815,7 @@ static void BPL_MsgManSet( BPLIST_WORK * wk )
 {
 	wk->mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_b_plist_dat, wk->dat->heap );
 //	wk->nfnt = NUMFONT_Create( 15, 14, FBMP_COL_NULL, wk->dat->heap );
-  wk->nfnt = GFL_FONT_Create( ARCID_FONT, NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->dat->heap );
+  wk->nfnt = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->dat->heap );
 	wk->wset = WORDSET_Create( wk->dat->heap );
 	wk->que  = PRINTSYS_QUE_Create( wk->dat->heap );
 	wk->msg_buf = GFL_STR_CreateBuffer( TMP_MSG_BUF_SIZ, wk->dat->heap );
@@ -2233,8 +2235,7 @@ static void BPL_ExpGagePut( BPLIST_WORK * wk, u8 page )
 		now = 0;
 	}
 
-//	dot = GetNumDotto( now, max, EXP_DOT_MAX );
-	dot = EXP_DOT_MAX;
+	dot = BPLISTBMP_GetNumDotto( now, max, EXP_DOT_MAX );
 
 	for( i=0; i<EXP_DOT_CHR_MAX; i++ ){
 		if( dot >= 8 ){

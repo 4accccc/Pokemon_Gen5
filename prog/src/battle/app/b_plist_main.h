@@ -412,8 +412,8 @@ typedef struct {
 
 //	GFL_BMPWIN * win[WIN_MAX];	// BMPウィンドウデータ（通常）
 //	GFL_BMPWIN * add_win[64];		// BMPウィンドウデータ（追加）
-	BAPP_BMPWIN_QUE	win[WIN_MAX];	// BMPウィンドウデータ（通常）
-	BAPP_BMPWIN_QUE	add_win[64];	// BMPウィンドウデータ（通常）
+	PRINT_UTIL	win[WIN_MAX];	// BMPウィンドウデータ（通常）
+	PRINT_UTIL	add_win[64];	// BMPウィンドウデータ（通常）
 	u8	bmp_add_max;				// 追加したBMPの数
 	u8	bmp_swap;					// スワップ描画フラグ
 

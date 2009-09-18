@@ -45,6 +45,7 @@
 #include "b_plist.h"
 #include "b_plist_main.h"
 #include "b_plist_obj.h"
+#include "b_plist_bmp.h"
 #include "b_plist_gra.naix"
 
 
@@ -1699,7 +1700,6 @@ static void BPL_PokeIconAnmChg( GFL_CLWK * clwk, u16 anm )
 //--------------------------------------------------------------------------------------------
 static u8 BPL_PokeIconAnmCheck( BPL_POKEDATA * pd )
 {
-/*
 	if( pd->hp == 0 ){
 		return POKEICON_ANM_DEATH;
 	}
@@ -1708,9 +1708,11 @@ static u8 BPL_PokeIconAnmCheck( BPL_POKEDATA * pd )
 		return POKEICON_ANM_STCHG;
 	}
 
-	switch( GetHPGaugeDottoColor( pd->hp, pd->mhp, BPL_HP_DOTTO_MAX ) ){
-	case HP_DOTTO_MAX:
+	if( pd->hp == pd->mhp ){
 		return POKEICON_ANM_HPMAX;
+	}
+
+	switch( BPLISTBMP_GetGaugeDottoColor( pd->hp, pd->mhp ) ){
 	case HP_DOTTO_GREEN:	// —Î
 		return POKEICON_ANM_HPGREEN;
 	case HP_DOTTO_YELLOW:	// ‰©
@@ -1720,7 +1722,7 @@ static u8 BPL_PokeIconAnmCheck( BPL_POKEDATA * pd )
 	}
 
 	return POKEICON_ANM_DEATH;
-*/
+
 	return 1;
 }
 

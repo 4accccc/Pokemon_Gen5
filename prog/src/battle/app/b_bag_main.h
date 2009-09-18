@@ -240,7 +240,8 @@ typedef struct {
 //	GF_BGL_BMPWIN * add_win;	// BMPウィンドウデータ（追加）
 	GFL_BMPWIN * talk_win;
 //	GFL_BMPWIN * add_win[WIN_MAX];
-	BAPP_BMPWIN_QUE	add_win[WIN_MAX];
+//	BAPP_BMPWIN_QUE	add_win[WIN_MAX];
+	PRINT_UTIL	add_win[WIN_MAX];
 
 	u8	bmp_add_max;			// 追加したBMPの数
 	u8	p2_swap;				// ページ２のスワップ描画フラグ

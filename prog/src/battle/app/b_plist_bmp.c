@@ -58,6 +58,7 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
+/*
 #define	PCOL_N_BLACK	( PRINTSYS_LSB_Make( 1, 2, 0 ) )		// フォントカラー：黒
 #define	PCOL_N_WHITE	( PRINTSYS_LSB_Make( 15, 14, 0 ) )		// フォントカラー：白
 #define	PCOL_N_BLUE		( PRINTSYS_LSB_Make( 7, 8, 0 ) )		// フォントカラー：青
@@ -67,6 +68,7 @@
 #define	PCOL_B_WHITE	( PRINTSYS_LSB_Make( 15, 14, 0 ) )		// フォントカラー：ボタン用白
 #define	PCOL_B_BLUE		( PRINTSYS_LSB_Make( 10, 11, 0 ) )		// フォントカラー：ボタン用青
 #define	PCOL_B_RED		( PRINTSYS_LSB_Make( 12, 13, 0 ) )		// フォントカラー：ボタン用赤
+*/
 
 #define	FCOL_P09WN		( PRINTSYS_LSB_Make(15,14,0) )		// フォントカラー：パレット９白抜
 #define	FCOL_P09BLN		( PRINTSYS_LSB_Make(10,11,0) )		// フォントカラー：パレット９青抜
@@ -96,6 +98,9 @@ static void BPL_PPRcvPageBmpWrite( BPLIST_WORK * wk );
 static void BPL_WazaDelSelPageBmpWrite( BPLIST_WORK * wk );
 static void BPL_Page6BmpWrite( BPLIST_WORK * wk );
 //static void BPL_Page8BmpWrite( BPLIST_WORK * wk );
+
+
+
 
 
 //============================================================================================
@@ -826,9 +831,11 @@ static void BPL_NamePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 	WORDSET_ExpandStr( wk->wset, exp, str );
 
 	if( pal == BPL_PAL_HPGAGE ){
-		PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), px, py, exp, wk->dat->font, FCOL_P09WN );
+//		PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), px, py, exp, wk->dat->font, FCOL_P09WN );
+		PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px, py, exp, wk->dat->font, FCOL_P09WN );
 	}else{
-		PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), px, py, exp, wk->dat->font, FCOL_P13WN );
+//		PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), px, py, exp, wk->dat->font, FCOL_P13WN );
+		PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px, py, exp, wk->dat->font, FCOL_P13WN );
 	}
 
 	GFL_STR_DeleteBuffer( str );
@@ -840,24 +847,29 @@ static void BPL_NamePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 			str = GFL_MSG_CreateString( wk->mman, mes_b_plist_02_502 );
 			sex_px = GFL_BMPWIN_GetSizeX(win)*8-PRINTSYS_GetStrWidth(str,wk->dat->font,0);
 			if( pal == BPL_PAL_HPGAGE ){
-				PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), sex_px, py, str, wk->dat->font, FCOL_P09BLN );
+//				PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), sex_px, py, str, wk->dat->font, FCOL_P09BLN );
+				PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, sex_px, py, str, wk->dat->font, FCOL_P09BLN );
 			}else{
-				PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), sex_px, py, str, wk->dat->font, FCOL_P13BLN );
+//				PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), sex_px, py, str, wk->dat->font, FCOL_P13BLN );
+				PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, sex_px, py, str, wk->dat->font, FCOL_P13BLN );
 			}
 			GFL_STR_DeleteBuffer( str );
 		}else if( pd->sex == PTL_SEX_FEMALE ){
 			str = GFL_MSG_CreateString( wk->mman, mes_b_plist_02_503 );
 			sex_px = GFL_BMPWIN_GetSizeX(win)*8-PRINTSYS_GetStrWidth(str,wk->dat->font,0);
 			if( pal == BPL_PAL_HPGAGE ){
-				PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), sex_px, py, str, wk->dat->font, FCOL_P09RN );
+//				PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), sex_px, py, str, wk->dat->font, FCOL_P09RN );
+				PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, sex_px, py, str, wk->dat->font, FCOL_P09RN );
 			}else{
-				PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), sex_px, py, str, wk->dat->font, FCOL_P13RN );
+//				PRINTSYS_PrintQueColor( wk->que, GFL_BMPWIN_GetBmp(win), sex_px, py, str, wk->dat->font, FCOL_P13RN );
+				PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, sex_px, py, str, wk->dat->font, FCOL_P13RN );
 			}
 			GFL_STR_DeleteBuffer( str );
 		}
 	}
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -884,11 +896,13 @@ static void BPL_LvPut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 	WORDSET_RegisterNumber(
 		wk->wset, 0, pd->lv, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win), px+8, py, wk->msg_buf, wk->nfnt, FCOL_P09WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win), px+8, py, wk->msg_buf, wk->nfnt, FCOL_P09WN );
+	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px+8, py, wk->msg_buf, wk->nfnt, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -916,16 +930,20 @@ static void BPL_HPPut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_01_702 );
 	sx  = PRINTSYS_GetStrWidth( str, wk->nfnt, 0 );
 	px  = px - ( sx / 2 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win), px, py, str, wk->nfnt, FCOL_P09WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win), px, py, str, wk->nfnt, FCOL_P09WN );
+	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px, py, str, wk->nfnt, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
 	// HP
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_01_703 );
 	WORDSET_RegisterNumber(
 		wk->wset, 0, pd->hp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win),
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win),
+//		px-PRINTSYS_GetStrWidth(wk->msg_buf,wk->nfnt,0), py, wk->msg_buf, wk->nfnt, FCOL_P09WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[idx], wk->que,
 		px-PRINTSYS_GetStrWidth(wk->msg_buf,wk->nfnt,0), py, wk->msg_buf, wk->nfnt, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
 	// MHP
@@ -933,12 +951,16 @@ static void BPL_HPPut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 	WORDSET_RegisterNumber(
 		wk->wset, 0, pd->mhp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win),
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win),
+//		px+sx, py, wk->msg_buf, wk->nfnt, FCOL_P09WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[idx], wk->que,
 		px+sx, py, wk->msg_buf, wk->nfnt, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -962,16 +984,13 @@ static void BPL_HPGagePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 
 	pd  = &wk->poke[pos];
 	col = 1;
-//	dot = GetNumDotto( pd->hp, pd->mhp, BPL_HP_DOTTO_MAX );
-	dot = BPL_HP_DOTTO_MAX;
+	dot = BPLISTBMP_GetNumDotto( pd->hp, pd->mhp, BPL_HP_DOTTO_MAX );
 
-/*
-	switch( GetHPGaugeDottoColor( pd->hp, pd->mhp, BPL_HP_DOTTO_MAX ) ){
+	switch( BPLISTBMP_GetGaugeDottoColor( pd->hp, pd->mhp ) ){
 	case HP_DOTTO_NULL:
-		GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[idx] );
+		GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[idx].win );
 		return;
-	case HP_DOTTO_MAX:		// 緑
-	case HP_DOTTO_GREEN:
+	case HP_DOTTO_GREEN:	// 緑
 		col = HP_GAGE_COL_G1;
 		break;
 	case HP_DOTTO_YELLOW:	// 黄
@@ -981,8 +1000,6 @@ static void BPL_HPGagePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 		col = HP_GAGE_COL_R1;
 		break;
 	}
-*/
-	col = HP_GAGE_COL_G1;
 
 	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->add_win[idx].win), px, py+1, dot, 1, col+1 );
 	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->add_win[idx].win), px, py+2, dot, 2, col );
@@ -1015,13 +1032,15 @@ static void BPL_TokuseiPut( BPLIST_WORK * wk, u32 idx, u32 pos )
 	WORDSET_RegisterTokuseiName( wk->wset, 0, pd->spa );
 	WORDSET_ExpandStr( wk->wset, exp, str );
 
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win), 0, 0, exp, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win), 0, 0, exp, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, 0, 0, exp, wk->dat->font, FCOL_P13WN );
 
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1051,12 +1070,14 @@ static void BPL_ItemPut( BPLIST_WORK * wk, u32 idx, u32 pos )
 		WORDSET_ExpandStr( wk->wset, exp, str );
 		GFL_STR_DeleteBuffer( str );
 	}
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win), 0, 0, exp, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win), 0, 0, exp, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, 0, 0, exp, wk->dat->font, FCOL_P13WN );
 
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1098,13 +1119,15 @@ static void BPL_WazaNamePut(
 */
 	px = 0;
 
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win), px, py, exp, wk->dat->font, col );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win), px, py, exp, wk->dat->font, col );
+	PRINT_UTIL_PrintColor( &wk->add_win[widx], wk->que, px, py, exp, wk->dat->font, col );
 
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[widx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[widx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[widx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1124,10 +1147,12 @@ static void BPL_PPPut( BPLIST_WORK * wk, u16 idx, u8 px, u8 py )
 	STRBUF * str;
 
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_02_500 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win), px, py, str, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[idx].win), px, py, str, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px, py, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1154,6 +1179,7 @@ static void BPL_PPNumPut( BPLIST_WORK * wk, BPL_POKEWAZA * waza, u16 idx, u8 px,
 		wk->nfnt, waza->mpp, 2, NUMFONT_MODE_LEFT,
 		&wk->add_win[idx], px+NUMFONT_NUM_WIDTH*2+8, py );
 
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 */
@@ -1182,11 +1208,13 @@ static void BPL_PokeSelStrPut( BPLIST_WORK * wk, u32 midx )
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[WIN_COMMENT].win), 15 );
 
 	str = GFL_MSG_CreateString( wk->mman, midx );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->win[WIN_COMMENT].win), 0, 0, str, wk->dat->font, PCOL_N_BLACK );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->win[WIN_COMMENT].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor( &wk->win[WIN_COMMENT], wk->que, 0, 0, str, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 
-	BAPPTOOL_PrintQueOn( &wk->win[WIN_COMMENT] );
+	BAPPTOOL_PrintScreenTrans( &wk->win[WIN_COMMENT] );
+//	BAPPTOOL_PrintQueOn( &wk->win[WIN_COMMENT] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1207,11 +1235,15 @@ static void BPL_StrIrekaePut( BPLIST_WORK * wk )
 
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_02_501 );
 	siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_CHG_IREKAE].win),
-		(WIN_CHG_IREKAE_SX*8-siz)/2, IREKAE_PY, str, wk->dat->font, PCOL_BTN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_CHG_IREKAE].win),
+//		(WIN_CHG_IREKAE_SX*8-siz)/2, IREKAE_PY, str, wk->dat->font, PCOL_BTN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_CHG_IREKAE], wk->que,
+		(WIN_CHG_IREKAE_SX*8-siz)/2, IREKAE_PY, str, wk->dat->font, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_CHG_IREKAE] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_CHG_IREKAE] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_CHG_IREKAE] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1234,11 +1266,15 @@ static void BPL_StrCommandPut( BPLIST_WORK * wk, u32 wid, u32 mid )
 	win = wk->add_win[wid].win;
 	str = GFL_MSG_CreateString( wk->mman, mid );
 	siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win),
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win),
+//		(GFL_BMPWIN_GetSizeX(win)*8-siz)/2, COMMAND_STR_PY, str, wk->dat->font, FCOL_P09WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[wid], wk->que,
 		(GFL_BMPWIN_GetSizeX(win)*8-siz)/2, COMMAND_STR_PY, str, wk->dat->font, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintQueOn( &wk->add_win[wid] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[wid] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[wid] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1264,8 +1300,10 @@ static void BPL_P3_LvPut( BPLIST_WORK * wk, u32 pos )
 
 	// 「Lv.」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_000 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_LV].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_LV].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_LV], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	// レベル値
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_001 );
@@ -1273,14 +1311,18 @@ static void BPL_P3_LvPut( BPLIST_WORK * wk, u32 pos )
 	WORDSET_RegisterNumber(
 		wk->wset, 0, pd->lv, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_LVNUM+swap].win), 0, 0, exp, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_LVNUM+swap].win), 0, 0, exp, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_LVNUM+swap], wk->que, 0, 0, exp, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 	// 「つぎのレベルまで」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_100 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_NEXT].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_NEXT].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_NEXT], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	// 次のレベル値
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_101 );
@@ -1296,15 +1338,21 @@ static void BPL_P3_LvPut( BPLIST_WORK * wk, u32 pos )
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	px = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_NEXTNUM+swap].win ) * 8
 			- PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_NEXTNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_NEXTNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_NEXTNUM+swap], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_LV] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_LVNUM+swap] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_NEXT] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_NEXTNUM+swap] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_LV] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_LVNUM+swap] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_NEXT] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_NEXTNUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_LV] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_LVNUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_NEXT] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_NEXTNUM+swap] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1331,8 +1379,9 @@ static void BPL_P3_PowPut( BPLIST_WORK * wk, u32 pos )
 
 	// 「こうげき」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_400 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_POW].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_POW].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor( &wk->add_win[WIN_P3_POW], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	// 攻撃値
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_401 );
@@ -1342,13 +1391,17 @@ static void BPL_P3_PowPut( BPLIST_WORK * wk, u32 pos )
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
 	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_POWNUM+swap].win ) * 8 - siz;
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_POWNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_POWNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_POWNUM+swap], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_POW] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_POWNUM+swap] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_POW] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_POWNUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_POW] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_POWNUM+swap] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1375,8 +1428,10 @@ static void BPL_P3_DefPut( BPLIST_WORK * wk, u32 pos )
 
 	// 「ぼうぎょ」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_500 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_DEF].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_DEF].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_DEF], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	// 防御値
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_501 );
@@ -1386,13 +1441,17 @@ static void BPL_P3_DefPut( BPLIST_WORK * wk, u32 pos )
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
 	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_DEFNUM+swap].win ) * 8 - siz;
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_DEFNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_DEFNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_DEFNUM+swap], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_DEF] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_DEFNUM+swap] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_DEF] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_DEFNUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_DEF] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_DEFNUM+swap] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1419,8 +1478,10 @@ static void BPL_P3_AgiPut( BPLIST_WORK * wk, u32 pos )
 
 	// 「すばやさ」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_800 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_AGI].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_AGI].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_AGI], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	// 素早さ値
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_801 );
@@ -1430,13 +1491,17 @@ static void BPL_P3_AgiPut( BPLIST_WORK * wk, u32 pos )
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
 	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_AGINUM+swap].win ) * 8 - siz;
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_AGINUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_AGINUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_AGINUM+swap], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_AGI] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_AGINUM+swap] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_AGI] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_AGINUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_AGI] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_AGINUM+swap] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1463,8 +1528,10 @@ static void BPL_P3_SppPut( BPLIST_WORK * wk, u32 pos )
 
 	// 「とくこう」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_600 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPP].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPP].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_SPP], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	// 特攻値
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_601 );
@@ -1474,13 +1541,17 @@ static void BPL_P3_SppPut( BPLIST_WORK * wk, u32 pos )
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
 	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_SPPNUM+swap].win ) * 8 - siz;
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPPNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPPNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_SPPNUM+swap], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPP] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPPNUM+swap] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPP] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPPNUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPP] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPPNUM+swap] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1507,8 +1578,10 @@ static void BPL_P3_SpdPut( BPLIST_WORK * wk, u32 pos )
 
 	// 「とくぼう」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_700 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPD].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPD].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_SPD], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	// 特防値
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_701 );
@@ -1518,13 +1591,17 @@ static void BPL_P3_SpdPut( BPLIST_WORK * wk, u32 pos )
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
 	px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_SPDNUM+swap].win ) * 8 - siz;
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPDNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPDNUM+swap].win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_SPDNUM+swap], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPD] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPDNUM+swap] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPD] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPDNUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPD] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPDNUM+swap] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1551,15 +1628,19 @@ static void BPL_P3_HPPut( BPLIST_WORK * wk, u32 pos )
 
 	// 「HP」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_300 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HP].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HP].win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_HP], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	// 「/」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_303 );
 	sra_siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
 	px = (GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_HPNUM].win )*8-sra_siz)/2;
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPNUM+swap].win), px, 0, str, wk->dat->font, FCOL_P13BKN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPNUM+swap].win), px, 0, str, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_HPNUM+swap], wk->que, px, 0, str, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	// HP値
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_301 );
@@ -1568,9 +1649,11 @@ static void BPL_P3_HPPut( BPLIST_WORK * wk, u32 pos )
 		wk->wset, 0, pd->hp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	tmp_siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPNUM+swap].win),
-		px-tmp_siz, 0, exp, wk->dat->font, FCOL_P13BKN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPNUM+swap].win),
+//		px-tmp_siz, 0, exp, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_HPNUM+swap], wk->que, px-tmp_siz, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 	// 最大HP値
@@ -1579,14 +1662,18 @@ static void BPL_P3_HPPut( BPLIST_WORK * wk, u32 pos )
 	WORDSET_RegisterNumber(
 		wk->wset, 0, pd->mhp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPNUM+swap].win),
-		px+sra_siz, 0, exp, wk->dat->font, FCOL_P13BKN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_HPNUM+swap].win),
+//		px+sra_siz, 0, exp, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_HPNUM+swap], wk->que, px+sra_siz, 0, exp, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_HP] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_HPNUM+swap] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_HP] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_HPNUM+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_HP] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_HPNUM+swap] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1611,11 +1698,14 @@ static void BPL_P3_TokuseiInfoPut( BPLIST_WORK * wk, u32 pos )
 
 	man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_tokuseiinfo_dat, wk->dat->heap );
 	str = GFL_MSG_CreateString( man, pd->spa );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPAINFO+swap].win), 0, 0, str, wk->dat->font, FCOL_P13BKN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPAINFO+swap].win), 0, 0, str, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_P3_SPAINFO+swap], wk->que, 0, 0, str, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_MSG_Delete( man );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPAINFO+swap] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P3_SPAINFO+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P3_SPAINFO+swap] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1637,10 +1727,13 @@ static void BPL_WazaHitStrPut( BPLIST_WORK * wk, u32 idx )
 
 	win = wk->add_win[idx].win;
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_200 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[idx], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1670,8 +1763,10 @@ static void BPL_WazaHitNumPut( BPLIST_WORK * wk, u32 idx, u32 hit )
 		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_102 );
 		siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
 		px  = GFL_BMPWIN_GetSizeX(win) * 8 - siz;
-		PRINTSYS_PrintQueColor(
-			wk->que, GFL_BMPWIN_GetBmp(win), px, 0, str, wk->dat->font, FCOL_P13BKN );
+//		PRINTSYS_PrintQueColor(
+//			wk->que, GFL_BMPWIN_GetBmp(win), px, 0, str, wk->dat->font, FCOL_P13BKN );
+		PRINT_UTIL_PrintColor(
+			&wk->add_win[idx], wk->que, px, 0, str, wk->dat->font, FCOL_P13BKN );
 		GFL_STR_DeleteBuffer( str );
 	}else{
 		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_201 );
@@ -1681,14 +1776,16 @@ static void BPL_WazaHitNumPut( BPLIST_WORK * wk, u32 idx, u32 hit )
 		WORDSET_ExpandStr( wk->wset, exp, str );
 		siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
 		px  = GFL_BMPWIN_GetSizeX(win) * 8 - siz;
-/*↑[GS_CONVERT_TAG]*/
-		PRINTSYS_PrintQueColor(
-			wk->que, GFL_BMPWIN_GetBmp(win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+//		PRINTSYS_PrintQueColor(
+//			wk->que, GFL_BMPWIN_GetBmp(win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+		PRINT_UTIL_PrintColor(
+			&wk->add_win[idx], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
 		GFL_STR_DeleteBuffer( str );
 		GFL_STR_DeleteBuffer( exp );
 	}
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1710,10 +1807,12 @@ static void BPL_WazaPowStrPut( BPLIST_WORK * wk, u32 idx )
 
 	win = wk->add_win[idx].win;
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_100 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win), 0, 0, str, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1743,8 +1842,9 @@ static void BPL_WazaPowNumPut( BPLIST_WORK * wk, u32 idx, u32 pow )
 		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_102 );
 		siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
 		px  = GFL_BMPWIN_GetSizeX(win) * 8 - siz;
-		PRINTSYS_PrintQueColor(
-			wk->que, GFL_BMPWIN_GetBmp(win), px, 0, str, wk->dat->font, FCOL_P13BKN );
+//		PRINTSYS_PrintQueColor(
+//			wk->que, GFL_BMPWIN_GetBmp(win), px, 0, str, wk->dat->font, FCOL_P13BKN );
+		PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px, 0, str, wk->dat->font, FCOL_P13BKN );
 		GFL_STR_DeleteBuffer( str );
 	}else{
 		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_101 );
@@ -1754,13 +1854,15 @@ static void BPL_WazaPowNumPut( BPLIST_WORK * wk, u32 idx, u32 pow )
 		WORDSET_ExpandStr( wk->wset, exp, str );
 		siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
 		px  = GFL_BMPWIN_GetSizeX(win) * 8 - siz;
-		PRINTSYS_PrintQueColor(
-			wk->que, GFL_BMPWIN_GetBmp(win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+//		PRINTSYS_PrintQueColor(
+//			wk->que, GFL_BMPWIN_GetBmp(win), px, 0, exp, wk->dat->font, FCOL_P13BKN );
+		PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px, 0, exp, wk->dat->font, FCOL_P13BKN );
 		GFL_STR_DeleteBuffer( str );
 		GFL_STR_DeleteBuffer( exp );
 	}
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1785,11 +1887,13 @@ static void BPL_WazaInfoPut( BPLIST_WORK * wk, u32 idx, u32 waza )
 	win = wk->add_win[idx].win;
 	man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wazainfo_dat, wk->dat->heap );
 	str = GFL_MSG_CreateString( man, waza );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win), 0, 0, str, wk->dat->font, FCOL_P13BKN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win), 0, 0, str, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, 0, 0, str, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_MSG_Delete( man );
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1854,10 +1958,12 @@ static void BPL_WazaBunruiStrPut( BPLIST_WORK * wk, u32 idx )
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_300 );
 	siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
 	px  = ( GFL_BMPWIN_GetSizeX(win) * 8 - siz ) / 2;
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win), px, 0, str, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win), px, 0, str, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1890,11 +1996,13 @@ static void BPL_WazaKindPut( BPLIST_WORK * wk, u32 idx, u32 kind )
 	case 2:		// 特殊
 		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_302 );
 	}
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win), 0, 0, str, wk->dat->font, FCOL_P13BKN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win), 0, 0, str, wk->dat->font, FCOL_P13BKN );
+	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, 0, 0, str, wk->dat->font, FCOL_P13BKN );
 	GFL_STR_DeleteBuffer( str );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1925,8 +2033,9 @@ static void BPL_WazaPPPut( BPLIST_WORK * wk, u32 idx, u32 npp, u32 mpp )
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_004 );
 	sra_siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
 	px = ( GFL_BMPWIN_GetSizeX(win) * 8 - sra_siz ) / 2;
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win), px, 0, str, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win), px, 0, str, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor( &wk->add_win[idx], wk->que, px, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	// PP値
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_002 );
@@ -1935,8 +2044,10 @@ static void BPL_WazaPPPut( BPLIST_WORK * wk, u32 idx, u32 npp, u32 mpp )
 		wk->wset, 0, npp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	tmp_siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win), px-tmp_siz, 0, exp, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win), px-tmp_siz, 0, exp, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[idx], wk->que, px-tmp_siz, 0, exp, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 	// 最大PP値
@@ -1945,12 +2056,15 @@ static void BPL_WazaPPPut( BPLIST_WORK * wk, u32 idx, u32 npp, u32 mpp )
 	WORDSET_RegisterNumber(
 		wk->wset, 0, mpp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win), px+sra_siz, 0, exp, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win), px+sra_siz, 0, exp, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[idx], wk->que, px+sra_siz, 0, exp, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 #define	P5_PPNUM5_PX	( 56 )		// PP値表示X座標
@@ -2012,11 +2126,15 @@ static void BPL_WasureruStrPut( BPLIST_WORK * wk, u32 idx )
 		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_05_000 );
 	}
 	siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win),
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win),
+//		(WIN_P6_WASURERU_SX*8-siz)/2, P6_WASURERU_PY, str, wk->dat->font, FCOL_P09WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[idx], wk->que,
 		(WIN_P6_WASURERU_SX*8-siz)/2, P6_WASURERU_PY, str, wk->dat->font, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2030,9 +2148,11 @@ static void BPL_WasureruStrPut( BPLIST_WORK * wk, u32 idx )
  *	ページ６で使用
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BPL_HidenMsgPut( BPLIST_WORK * wk )
 {
-	BAPP_BMPWIN_QUE * dat;
+//	BAPP_BMPWIN_QUE * dat;
+	PRINT_UTIL * dat;
 	STRBUF * str;
 
 	if( wk->page == BPLIST_PAGE_WAZASET_BI ){
@@ -2042,12 +2162,14 @@ void BPL_HidenMsgPut( BPLIST_WORK * wk )
 	}
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(dat->win), 0 );
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_05_002 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(dat->win), 0, 0, str, wk->dat->font, PCOL_N_BLACK );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(dat->win), 0, 0, str, wk->dat->font, PCOL_N_BLACK );
+	PRINT_UTIL_PrintColor( dat, wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
 	GFL_STR_DeleteBuffer( str );
-	BAPPTOOL_PrintQueOn( dat );
+	BAPPTOOL_PrintScreenTrans( dat );
+//	BAPPTOOL_PrintQueOn( dat );
 }
-
+*/
 
 
 #define	BTN_PP_PX		( 40 )		// 「PP」表示X座標
@@ -2078,16 +2200,20 @@ static void BPL_WazaButtonPPPut( BPLIST_WORK * wk, BPL_POKEWAZA * waza, u32 idx 
 
 	// 「PP」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_001 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win), BTN_PP_PX, BTN_PP_PY, str, wk->dat->font, FCOL_P09WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win), BTN_PP_PX, BTN_PP_PY, str, wk->dat->font, FCOL_P09WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[idx], wk->que, BTN_PP_PX, BTN_PP_PY, str, wk->dat->font, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
 	
 	// 「/」
 	str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_004 );
 	siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win),
-		BTN_PPSRA_PX, BTN_PPSRA_PY, str, wk->dat->font, FCOL_P09WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win),
+//		BTN_PPSRA_PX, BTN_PPSRA_PY, str, wk->dat->font, FCOL_P09WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[idx], wk->que, BTN_PPSRA_PX, BTN_PPSRA_PY, str, wk->dat->font, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
 
 	// 最大PP値
@@ -2095,9 +2221,11 @@ static void BPL_WazaButtonPPPut( BPLIST_WORK * wk, BPL_POKEWAZA * waza, u32 idx 
 	WORDSET_RegisterNumber(
 		wk->wset, 0, waza->mpp, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win),
-		BTN_PPSRA_PX+siz, BTN_PPSRA_PY, exp, wk->dat->font, FCOL_P09WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win),
+//		BTN_PPSRA_PX+siz, BTN_PPSRA_PY, exp, wk->dat->font, FCOL_P09WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[idx], wk->que, BTN_PPSRA_PX+siz, BTN_PPSRA_PY, exp, wk->dat->font, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
 
 	// PP値
@@ -2106,14 +2234,17 @@ static void BPL_WazaButtonPPPut( BPLIST_WORK * wk, BPL_POKEWAZA * waza, u32 idx 
 		wk->wset, 0, waza->pp, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win),
-		BTN_PPSRA_PX-siz, BTN_PPSRA_PY, exp, wk->dat->font, FCOL_P09WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win),
+//		BTN_PPSRA_PX-siz, BTN_PPSRA_PY, exp, wk->dat->font, FCOL_P09WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[idx], wk->que, BTN_PPSRA_PX-siz, BTN_PPSRA_PY, exp, wk->dat->font, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
 
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2149,14 +2280,17 @@ static void BPL_WazaButtonPPRcv( BPLIST_WORK * wk, BPL_POKEWAZA * waza, u32 idx 
 		wk->wset, 0, waza->pp, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
 	WORDSET_ExpandStr( wk->wset, exp, str );
 	siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win),
-		BTN_PPSRA_PX-siz, BTN_PPSRA_PY, exp, wk->dat->font, PCOL_B_WHITE );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win),
+//		BTN_PPSRA_PX-siz, BTN_PPSRA_PY, exp, wk->dat->font, PCOL_B_WHITE );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[idx], wk->que, BTN_PPSRA_PX-siz, BTN_PPSRA_PY, exp, wk->dat->font, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( str );
 
 	GFL_STR_DeleteBuffer( exp );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[idx] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[idx] );
 }
 
 // パラメータ表示座標
@@ -2283,8 +2417,8 @@ static void BPL_ChgPageBmpWrite( BPLIST_WORK * wk )
 	}else{
 //		BAPPTOOL_PrintQueOn( &wk->add_win[WIN_CHG_STATUS] );
 //		BAPPTOOL_PrintQueOn( &wk->add_win[WIN_CHG_WAZACHECK] );
-//		GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[ WIN_CHG_STATUS ].win );
-//		GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[ WIN_CHG_WAZACHECK ].win );
+		GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[ WIN_CHG_STATUS ].win );
+		GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[ WIN_CHG_WAZACHECK ].win );
 	}
 }
 
@@ -2339,24 +2473,33 @@ static void BPL_IrekaeNamePut( BPLIST_WORK * wk, u32 pos )
 	}
 	px = (GFL_BMPWIN_GetSizeX(win)*8-name_siz-sex_siz-spc_siz)/2;
 
-	PRINTSYS_PrintQueColor(
-		wk->que, GFL_BMPWIN_GetBmp(win), px, P_CHG_NAME_PY-1, exp, wk->dat->font, FCOL_P13WN );
+//	PRINTSYS_PrintQueColor(
+//		wk->que, GFL_BMPWIN_GetBmp(win), px, P_CHG_NAME_PY-1, exp, wk->dat->font, FCOL_P13WN );
+	PRINT_UTIL_PrintColor(
+		&wk->add_win[WIN_CHG_NAME], wk->que, px, P_CHG_NAME_PY-1, exp, wk->dat->font, FCOL_P09WN );
 	GFL_STR_DeleteBuffer( exp );
 
 	if( str != NULL ){
 		if( pd->sex == PTL_SEX_MALE ){
-			PRINTSYS_PrintQueColor(
-				wk->que, GFL_BMPWIN_GetBmp(win),
-				px+name_siz+spc_siz, P_CHG_NAME_PY, str, wk->dat->font, PCOL_B_BLUE );
+//			PRINTSYS_PrintQueColor(
+//				wk->que, GFL_BMPWIN_GetBmp(win),
+//				px+name_siz+spc_siz, P_CHG_NAME_PY, str, wk->dat->font, PCOL_B_BLUE );
+			PRINT_UTIL_PrintColor(
+				&wk->add_win[WIN_CHG_NAME], wk->que,
+				px+name_siz+spc_siz, P_CHG_NAME_PY, str, wk->dat->font, FCOL_P09BLN );
 		}else{
-			PRINTSYS_PrintQueColor(
-				wk->que, GFL_BMPWIN_GetBmp(win),
-				px+name_siz+spc_siz, P_CHG_NAME_PY, str, wk->dat->font, PCOL_B_RED );
+//			PRINTSYS_PrintQueColor(
+//				wk->que, GFL_BMPWIN_GetBmp(win),
+//				px+name_siz+spc_siz, P_CHG_NAME_PY, str, wk->dat->font, PCOL_B_RED );
+			PRINT_UTIL_PrintColor(
+				&wk->add_win[WIN_CHG_NAME], wk->que,
+				px+name_siz+spc_siz, P_CHG_NAME_PY, str, wk->dat->font, FCOL_P09RN );
 		}
 		GFL_STR_DeleteBuffer( str );
 	}
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_CHG_NAME] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_CHG_NAME] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_CHG_NAME] );
 }
 
 
@@ -2408,10 +2551,14 @@ static void BPL_StWazaSelPageBmpWrite( BPLIST_WORK * wk )
 
 	BPL_StrCommandPut( wk, WIN_STW_STATUS, mes_b_plist_02_504 );
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL1+swap] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL2+swap] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL3+swap] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL4+swap] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL1+swap] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL2+swap] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL3+swap] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL4+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL1+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL2+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL3+swap] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL4+swap] );
 
 	wk->bmp_swap ^= 1;
 }
@@ -2579,11 +2726,16 @@ static void BPL_WazaDelSelPageBmpWrite( BPLIST_WORK * wk )
 		BPL_WazaButtonPPPut( wk, &tmp, WIN_P5_SKILL5 );
 	}
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P5_SKILL1] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P5_SKILL2] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P5_SKILL3] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P5_SKILL4] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P5_SKILL5] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL1] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL2] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL3] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL4] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P5_SKILL5] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P5_SKILL1] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P5_SKILL2] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P5_SKILL3] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P5_SKILL4] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P5_SKILL5] );
 }
 
 #define	P6_NAME_PX		( 0 )
@@ -2692,10 +2844,14 @@ static void BPL_PPRcvPageBmpWrite( BPLIST_WORK * wk )
 		BPL_PokeSelStrPut( wk, mes_b_plist_m19 );
 	}
 
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P7_SKILL1] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P7_SKILL2] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P7_SKILL3] );
-	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P7_SKILL4] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P7_SKILL1] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P7_SKILL2] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P7_SKILL3] );
+	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P7_SKILL4] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P7_SKILL1] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P7_SKILL2] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P7_SKILL3] );
+//	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P7_SKILL4] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2762,10 +2918,13 @@ static void BPL_Page8BmpWrite( BPLIST_WORK * wk )
 		STRBUF * str;
 
 		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_400 );
-		PRINTSYS_PrintQueColor(
-			wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P8_APP].win), 0, 0, str, wk->dat->font, PCOL_N_WHITE );
+//		PRINTSYS_PrintQueColor(
+//			wk->que, GFL_BMPWIN_GetBmp(wk->add_win[WIN_P8_APP].win), 0, 0, str, wk->dat->font, PCOL_N_WHITE );
+		PRINT_UTIL_PrintColor(
+			&wk->add_win[WIN_P8_APP], wk->que, 0, 0, str, wk->dat->font, FCOL_P13WM );
 		GFL_STR_DeleteBuffer( str );
-		BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P8_APP] );
+		BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_P8_APP] );
+//		BAPPTOOL_PrintQueOn( &wk->add_win[WIN_P8_APP] );
 	}
 
 	if( wk->dat->sel_wp < 4 ){
@@ -2773,7 +2932,7 @@ static void BPL_Page8BmpWrite( BPLIST_WORK * wk )
 
 		BPL_WazaNamePut(
 			wk, waza->id, WIN_P8_SKILL, 
-			WazaMsgID_Tbl[wk->dat->sel_wp], P8_WAZANAME_PY, PCOL_N_WHITE );
+			WazaMsgID_Tbl[wk->dat->sel_wp], P8_WAZANAME_PY, FCOL_P13WM );
 //		BPL_ContestWazaInfoPut( wk, WIN_P8_INFO, waza->id );
 
 /*
@@ -2788,7 +2947,7 @@ static void BPL_Page8BmpWrite( BPLIST_WORK * wk )
 
 		BPL_WazaNamePut(
 			wk, wk->dat->chg_waza, WIN_P8_SKILL, 
-			WazaMsgID_Tbl[4], P8_WAZANAME_PY, PCOL_N_WHITE );
+			WazaMsgID_Tbl[4], P8_WAZANAME_PY, FCOL_P13WM );
 //		BPL_ContestWazaInfoPut( wk, WIN_P8_INFO, wk->dat->chg_waza );
 
 /*
@@ -2802,7 +2961,7 @@ static void BPL_Page8BmpWrite( BPLIST_WORK * wk )
 		BPL_WazaPPPut( wk, WIN_P8_PPNUM, pp, pp );
 	}
 
-	BPL_WasureruStrPut( wk, WIN_P8_WASURERU );
+//	BPL_WasureruStrPut( wk, WIN_P8_WASURERU );
 }
 #endif
 
@@ -3021,8 +3180,70 @@ void BattlePokeList_ItemUseSkillErrMsgSet( BPLIST_WORK * wk )
 
 void BPLISTBMP_PrintMain( BPLIST_WORK * wk )
 {
-	if( PRINTSYS_QUE_Main( wk->que ) == TRUE ){
-		BAPPTOOL_PrintQueTrans( wk->win, WIN_MAX );
-		BAPPTOOL_PrintQueTrans( wk->add_win, wk->bmp_add_max );
+	BAPPTOOL_PrintUtilTrans( wk->win, wk->que, WIN_MAX );
+	BAPPTOOL_PrintUtilTrans( wk->add_win, wk->que, wk->bmp_add_max );
+}
+
+
+
+
+
+//--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+/*
+	あとで戦闘と共通にする
+*/
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief 現在値のゲージドット数を取得
+ *
+ * @param	prm_now		現在値
+ * @param	prm_max		最大値
+ * @param	dot_max		最大ドット数
+ *
+ * @return	ドット数
+ */
+//--------------------------------------------------------------------------------------------
+u8 BPLISTBMP_GetNumDotto( u32 prm_now, u32 prm_max, u8 dot_max )
+{
+	u8 put_dot;
+	
+	put_dot = prm_now * dot_max / prm_max;
+	if( put_dot == 0 && prm_now > 0 )   // ﾄﾞｯﾄ計算では0でも実際の値が1以上なら1ﾄﾞｯﾄにする
+  {
+		put_dot = 1;
 	}
+	return put_dot;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   表示ドットと最大ドットからHPゲージの色を取得する
+ *
+ * @param   put_dot		表示ドット数
+ * @param   max_dot		最大ドット数
+ *
+ * @retval  ゲージカラー
+ */
+//--------------------------------------------------------------
+u8 BPLISTBMP_GetGaugeDottoColor( u32 put_dot, u32 max_dot )
+{
+	put_dot <<= 8;		//割り算使用の為、小数レベルまで見れるように固定小数化
+	max_dot <<= 8;
+	
+	if( put_dot > (max_dot/2) )
+  {
+		return HP_DOTTO_GREEN;		// 緑
+	}
+  else if( put_dot > ( max_dot / 5 ) )
+  {
+		return HP_DOTTO_YELLOW;		// 黄
+	}
+  else if( put_dot > 0 )
+  {
+		return HP_DOTTO_RED;		// 赤
+	}
+	return HP_DOTTO_NULL;			// HP=0
 }

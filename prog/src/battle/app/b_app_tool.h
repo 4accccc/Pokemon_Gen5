@@ -10,6 +10,7 @@
 #define B_APP_TOOL_H
 
 //#include "battle_cursor.h"
+#include "print/printsys.h"
 
 
 //============================================================================================
@@ -22,12 +23,12 @@ typedef struct _BAPP_CURSOR_MVWK	BAPP_CURSOR_MVWK;
 
 #define	BAPP_CMV_RETBIT		( 0x80 )		// カーソル移動で前回の位置へ戻る
 
-
+/*
 typedef struct {
 	GFL_BMPWIN * win;
 	BOOL	flg;
 }BAPP_BMPWIN_QUE;
-
+*/
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -171,9 +172,10 @@ extern void BAPP_CursorMvWkSetMvTbl( BAPP_CURSOR_MVWK * wk, u32 mv_tbl );
 extern u32 BAPP_CursorMove( BAPP_CURSOR_MVWK * wk );
 
 
-extern void BAPPTOOL_PrintQueOn( BAPP_BMPWIN_QUE * dat );
-
-extern void BAPPTOOL_PrintQueTrans( BAPP_BMPWIN_QUE * dat, u32 max );
+//extern void BAPPTOOL_PrintQueOn( BAPP_BMPWIN_QUE * dat );
+//extern void BAPPTOOL_PrintQueTrans( PRINT_UTIL * util, PRINT_QUE * que, u32 max );
+extern void BAPPTOOL_PrintScreenTrans( PRINT_UTIL * util );
+extern void BAPPTOOL_PrintUtilTrans( PRINT_UTIL * util, PRINT_QUE * que, u32 max );
 
 
 #endif	// B_APP_TOOL_H
