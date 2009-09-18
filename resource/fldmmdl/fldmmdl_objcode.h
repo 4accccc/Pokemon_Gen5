@@ -127,7 +127,7 @@
 #define ICPO (0x7a) //122 ハンサム
 #define TBOSS (0x7b) //123 タワーボス
 #define TREE (0x7c) //124 切れる木
-#define BREAKROCK (0x7d) //125 壊せる岩
+#define ROCK (0x7d) //125 怪力の岩
 #define MONSTERBALL (0x7e) //126 アイテムカプセル
 #define PIKACHU (0x7f) //127 ピカチュウ
 #define KABI32 (0x80) //128 テスト三頭身
