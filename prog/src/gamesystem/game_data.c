@@ -24,6 +24,7 @@
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
 #include "savedata/myitem_savedata.h"
+#include "savedata/config.h"
 #include "poke_tool/pokeparty.h"
 #include "savedata/mystatus.h"
 #include "savedata/situation.h"
@@ -53,6 +54,7 @@ struct _GAMEDATA{
   BAG_CURSOR* bagcursor;  ///< バッグカーソルの管理構造体ポインタ
   MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
   POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
+	CONFIG		*config;				///<コンフィグセーブデータへのポインタ
 
   BGM_INFO_SYS* bgm_info_sys;	// BGM情報取得システム
 
@@ -150,6 +152,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->bagcursor = MYITEM_BagCursorAlloc( heapID );
   gd->myitem = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYITEM);
   gd->my_pokeparty = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYPOKE);
+	gd->config	= SaveData_GetConfig( gd->sv_control_ptr );
 
   //歩数カウント
   gd->fieldmap_walk_count = 0;
@@ -682,6 +685,32 @@ int GAMEDATA_GetIntrudeMyID(const GAMEDATA *gamedata)
   return gamedata->intrude_my_id;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	常時通信モードフラグ取得
+ *
+ *	@param	gamedata		GAMEDATAへのポインタ
+ *	
+ *	@return	TRUE常時通信モードON FALSE常時通信モードOFF
+ */
+//-----------------------------------------------------------------------------
+BOOL GAMEDATA_GetAlwaysNetFlag( const GAMEDATA *gamedata )
+{	
+	return CONFIG_GetNetworkSearchMode( gamedata->config ) == NETWORK_SEARCH_ON;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	常時通信モードフラグ設定
+ *
+ *	@param	gamedata		GAMEDATAへのポインタ
+ *	@param	is_on				TRUEならば常時通信モードON FALSEならば常時通信モードOFF
+ */
+//-----------------------------------------------------------------------------
+void GAMEDATA_SetAlwaysNetFlag( GAMEDATA *gamedata, BOOL is_on )
+{	
+	NETWORK_SEARCH_MODE mode	= is_on? NETWORK_SEARCH_ON: NETWORK_SEARCH_OFF;
+	CONFIG_SetNetworkSearchMode( gamedata->config, mode );
+}
 //==============================================================================
 //	ゲームデータが持つ情報を元にセーブ
 //==============================================================================

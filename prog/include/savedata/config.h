@@ -214,6 +214,7 @@ extern WIRELESSSAVE_MODE CONFIG_GetWirelessSaveMode(const CONFIG * cfg);
 extern void CONFIG_SetWirelessSaveMode(CONFIG * cfg, WIRELESSSAVE_MODE type);
 
 //	ゲーム中のネットワークサーチモード
+//	GAMESYSではAlwaysNetFlagとなっています
 extern NETWORK_SEARCH_MODE CONFIG_GetNetworkSearchMode( const CONFIG * cfg );
 extern void CONFIG_SetNetworkSearchMode( CONFIG * cfg, NETWORK_SEARCH_MODE mode );
 

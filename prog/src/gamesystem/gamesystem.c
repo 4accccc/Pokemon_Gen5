@@ -192,7 +192,7 @@ GAME_INIT_WORK * DEBUG_GetGameInitWork(GAMEINIT_MODE mode, u16 mapid, VecFx32 *p
 	TestGameInitWork.mapid = mapid;
 	TestGameInitWork.pos = *pos;
 	TestGameInitWork.dir = dir;
-	TestGameInitWork.always_net = always_net;
+	TestGameInitWork.always_net	= always_net;
 	return &TestGameInitWork;
 }
 
@@ -223,9 +223,8 @@ struct _GAMESYS_WORK {
 
 	ISS_SYS * iss_sys;		// ISSシステム
 	
-	u8 always_net;          ///<TRUE:常時通信
 	u8 field_comm_error_req;      ///<TRUE:フィールドでの通信エラー画面表示リクエスト
-	u8 padding[2];
+	u8 padding[3];
 };
 
 //------------------------------------------------------------------
@@ -251,7 +250,6 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 	gsys->game_comm = GameCommSys_Alloc(gsys->heapID, gsys->gamedata);
 	gsys->comm_infowin = NULL;
 	gsys->iss_sys = ISS_SYS_Create( gsys->gamedata, heapID );
-	gsys->always_net = init_param->always_net;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -499,11 +497,22 @@ GAME_COMM_SYS_PTR GAMESYSTEM_GetGameCommSysPtr(GAMESYS_WORK *gsys)
  * @retval  TRUE:常時通信ON、　FALSE:常時通信OFF
  */
 //--------------------------------------------------------------
-BOOL GAMESYSTEM_GetAlwaysNetFlag(GAMESYS_WORK * gsys)
+BOOL GAMESYSTEM_GetAlwaysNetFlag(const GAMESYS_WORK * gsys)
 {
-	return gsys->always_net;
+	return GAMEDATA_GetAlwaysNetFlag(gsys->gamedata);
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   常時通信フラグの設定
+ * @param   gsys		ゲーム制御システムへのポインタ
+ * @param	is_on			TRUEならば常時通信モードON FALSEならば常時通信モードOFF
+ */
+//--------------------------------------------------------------
+void GAMESYSTEM_SetAlwaysNetFlag( GAMESYS_WORK * gsys, BOOL is_on )
+{	
+	GAMEDATA_SetAlwaysNetFlag(gsys->gamedata, is_on);
+}
 
 //--------------------------------------------------------------
 /**

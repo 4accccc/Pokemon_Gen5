@@ -208,7 +208,16 @@ extern GAME_COMM_SYS_PTR GAMESYSTEM_GetGameCommSysPtr(GAMESYS_WORK *gsys);
  * @retval  TRUE:常時通信ON、　FALSE:常時通信OFF
  */
 //--------------------------------------------------------------
-extern BOOL GAMESYSTEM_GetAlwaysNetFlag(GAMESYS_WORK * gsys);
+extern BOOL GAMESYSTEM_GetAlwaysNetFlag(const GAMESYS_WORK * gsys);
+
+//--------------------------------------------------------------
+/**
+ * @brief   常時通信フラグの設定
+ * @param   gsys		ゲーム制御システムへのポインタ
+ * @param	is_on			TRUEならば常時通信モードON FALSEならば常時通信モードOFF
+ */
+//--------------------------------------------------------------
+extern void GAMESYSTEM_SetAlwaysNetFlag( GAMESYS_WORK * gsys, BOOL is_on );
 
 #ifdef PM_DEBUG
 extern GAMESYS_WORK * DEBUG_GameSysWorkPtrGet(void);

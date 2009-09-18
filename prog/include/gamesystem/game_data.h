@@ -417,6 +417,27 @@ extern int GAMEDATA_GetIntrudeNum(const GAMEDATA *gamedata);
 //==================================================================
 extern int GAMEDATA_GetIntrudeMyID(const GAMEDATA *gamedata);
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	常時通信モードフラグ取得
+ *
+ *	@param	gamedata		GAMEDATAへのポインタ
+ *	
+ *	@return	TRUE常時通信モードON FALSE常時通信モードOFF
+ */
+//-----------------------------------------------------------------------------
+extern BOOL GAMEDATA_GetAlwaysNetFlag( const GAMEDATA *gamedata );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	常時通信モードフラグ設定
+ *
+ *	@param	gamedata		GAMEDATAへのポインタ
+ *	@param	is_on				TRUEならば常時通信モードON FALSEならば常時通信モードOFF
+ */
+//-----------------------------------------------------------------------------
+extern void GAMEDATA_SetAlwaysNetFlag( GAMEDATA *gamedata, BOOL is_on );
+
 //============================================================================================
 //	SAVE_CONTROL_WORKへのアクセス
 //============================================================================================
