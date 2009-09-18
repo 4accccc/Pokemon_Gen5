@@ -412,8 +412,6 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     break;
 
   case 3:
-    // @@@ ここで勝ち負け引き分け判定が入るが、とりあえず終了させる
-    // @@@ マルチの場合、ここでは終わらないこともあり得る
     PMSND_PlayBGM( SEQ_WIN1 );
     (*seq)++;
     break;

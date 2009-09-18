@@ -78,7 +78,7 @@ typedef struct {
 
 struct _BTL_MAIN_MODULE {
 
-  const BATTLE_SETUP_PARAM* setupParam;
+  BATTLE_SETUP_PARAM* setupParam;
 
   BTLV_CORE*    viewCore;
   BTL_SERVER*   server;
@@ -90,7 +90,7 @@ struct _BTL_MAIN_MODULE {
   BTL_POKE_CONTAINER    pokeconForClient;
   BTL_POKE_CONTAINER    pokeconForServer;
 
-  u8              posCoverClientID[ BTL_POS_MAX ];
+  u8        posCoverClientID[ BTL_POS_MAX ];
 
   u8        numClients;
   u8        myClientID;
@@ -134,8 +134,10 @@ static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, Btl
 static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos );
 static inline u8 PokeID_to_ClientID( u8 pokeID );
 static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModule );
+static BOOL PokeCon_IsExistClient( const BTL_POKE_CONTAINER* wk, u32 clientID );
 static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* party_src, u8 clientID );
 static void PokeCon_SetSrcParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* party_src, u8 clientID );
+static POKEPARTY* PokeCon_GetSrcParty( BTL_POKE_CONTAINER* pokecon, u8 clientID );
 static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon );
 static int PokeCon_FindPokemon( const BTL_POKE_CONTAINER* pokecon, u8 clientID, u8 pokeID );
 static void BTL_PARTY_Initialize( BTL_PARTY* party );
@@ -145,6 +147,7 @@ static void trainerParam_Init( BTL_MAIN_MODULE* wk );
 static void trainerParam_Clear( BTL_MAIN_MODULE* wk );
 static void trainerParam_StorePlayer( BTL_TRAINER_DATA* dst, HEAPID heapID, const MYSTATUS* playerData );
 static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, u32 trainerID );
+static void checkWinner( BTL_MAIN_MODULE* wk );
 
 
 //--------------------------------------------------------------
@@ -166,7 +169,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
   case 0:
     {
       BTL_MAIN_MODULE* wk;
-      const BATTLE_SETUP_PARAM* setup_param = pwk;
+      BATTLE_SETUP_PARAM* setup_param = pwk;
 
       GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_SYSTEM, 0x28000 );
       GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_NET,     0x8000 );
@@ -221,6 +224,7 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
   if( wk->mainLoop( wk ) )
   {
     BTL_Printf("バトルメインプロセス終了します\n");
+    checkWinner( wk );
     return GFL_PROC_RES_FINISH;
   }
 
@@ -1777,6 +1781,13 @@ static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModu
     pokecon->pokeParam[i] = NULL;
   }
 }
+static BOOL PokeCon_IsExistClient( const BTL_POKE_CONTAINER* wk, u32 clientID )
+{
+  GF_ASSERT(clientID < BTL_CLIENT_MAX);
+
+  return (wk->party[ clientID ].memberCount != 0);
+}
+
 static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* party_src, u8 clientID )
 {
   u8 pokeID = ClientBasePokeID[ clientID ];
@@ -2210,5 +2221,45 @@ u32 BTL_MAIN_GetClientTrainerID( const BTL_MAIN_MODULE* wk, u8 clientID )
 const MYSTATUS* BTL_MAIN_GetClientPlayerData( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
   return wk->trainerParam[ clientID ].playerStatus;
+}
+
+
+//----------------------------------------------------------------------------------------------
+// 勝敗判定
+//----------------------------------------------------------------------------------------------
+static void checkWinner( BTL_MAIN_MODULE* wk )
+{
+  BTL_POKE_CONTAINER* container;
+
+  u32 i;
+  u8 restPokeCnt[2];
+
+
+  GFL_STD_MemClear( restPokeCnt, sizeof(restPokeCnt) );
+  container = &wk->pokeconForServer;
+
+  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    if( PokeCon_IsExistClient( container, i ) )
+    {
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( container, i );
+      if( BTL_PARTY_GetMemberCount(party) )
+      {
+        u8 side = BTL_MAIN_GetClientSide( wk, i );
+        restPokeCnt[side] += BTL_PARTY_GetAliveMemberCount( party );
+      }
+    }
+  }
+
+  if( restPokeCnt[0] == restPokeCnt[1] )
+  {
+    wk->setupParam->result = BTL_RESULT_DRAW;
+  }
+  else
+  {
+    u8 winSide = (restPokeCnt[0] > restPokeCnt[1])? 0 : 1;
+    wk->setupParam->result = (winSide == BTL_MAIN_GetClientSide(wk, wk->myClientID))?
+          BTL_RESULT_WIN : BTL_RESULT_LOSE;
+  }
 }
 
