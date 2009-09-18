@@ -889,7 +889,7 @@ extern u32 MMDL_HitCheckMoveDir( const MMDL * mmdl, u16 dir );
 extern int MMDL_HitCheckMoveFellow(
 	const MMDL * mmdl, s16 x, s16 y, s16 z );
 extern int MMDL_HitCheckMoveLimit(
-	const MMDL * mmdl, s16 x, s16 y, s16 z );
+	const MMDL * mmdl, s16 x, s16 z );
 extern BOOL MMDL_GetMapPosAttr(
 	const MMDL *mmdl, const VecFx32 *pos, u32 *attr );
 extern BOOL MMDL_GetMapPosHeight(

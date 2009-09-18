@@ -445,7 +445,7 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 
 		DebugFont_ClearLine( work, 3 );
     FLDMAPPER_GetBlockXZPos( g3Dmapper, &gx, &gz );
-    sprintf( str, "BLOCK (%d,%d)", gx, gz );
+    sprintf( str, "BLOCK (%d,%d) LOCAL (%d,%d)", gx, gz, SIZE_GRID_FX32(pos->x)%32, SIZE_GRID_FX32(pos->z)%32 );
     DebugFont_Print( work, 0, 3, str );
 	}
 	
@@ -473,13 +473,23 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 			DebugFont_ClearLine( work, y );
 			for( x = 0, a_pos.x = pos->x - GRID_SIZE_FX32(1);
 					x < 3*10; x += 10, a_pos.x += GRID_SIZE_FX32(1) ){
+#if 0
 				if( FLDMAPPER_GetGridInfo(pG3DMapper,&a_pos,&gridInfo) ){
 					attr = gridInfo.gridData[0].attr;
 					sprintf( str, "%08xH", attr );
 				}else{
 					sprintf( str, "GET ERROR", attr );
 				}
-				
+#else
+        {
+          FLDMAPPER_GRIDINFODATA gridData;
+          if( FLDMAPPER_GetGridData(pG3DMapper,&a_pos,&gridData)){
+					  sprintf( str, "%08xH", gridData.attr );
+          }else{
+  					sprintf( str, "GET ERROR", gridData.attr );
+          }
+        }
+#endif
 				DebugFont_Print( work, x, y, str );
 			}
 		}

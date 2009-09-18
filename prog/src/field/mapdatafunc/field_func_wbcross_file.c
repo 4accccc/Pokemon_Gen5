@@ -166,7 +166,7 @@ void FieldGetAttr_WBCrossFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapda
   //—§‘ÌŒð·ŠK‘wƒ[ƒh
   fgr_WBCrossFileCore( &attr, CROSS_LAYER_EX, (u32)mapdata + fileHeader->exAttrOffset,
     posInBlock, map_width, map_height );
-
+#if 0
   {
     int i;
     u8 target = CROSS_LAYER_DEF;
@@ -192,7 +192,10 @@ void FieldGetAttr_WBCrossFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapda
     }
     attrInfo->mapAttr[0] = attr.mapAttr[target];
   }
-  attrInfo->mapAttrCount = 1;
+#else
+  *attrInfo = attr;
+#endif
+  attrInfo->mapAttrCount = CROSS_LAYER_NUM;
 }
 
 /**

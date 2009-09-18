@@ -30,17 +30,25 @@
 /**
  * 指定位置のアトリビュートを取得
  * @param mapper FLDMAPPER
+ * @param pos アトリビュートを取得したいx,z座標,yは現在位置(もしくは階層判定に用いたい基準値)
  * @retval MAPATTR MAPATTR_ERROR=取得エラー
  */
 //--------------------------------------------------------------
 MAPATTR MAPATTR_GetAttribute( FLDMAPPER *mapper, const VecFx32 *pos )
 {
   MAPATTR attr = MAPATTR_ERROR;
+#if 1
   FLDMAPPER_GRIDINFO gridInfo;
   
   if( FLDMAPPER_GetGridInfo(mapper,pos,&gridInfo) == TRUE ){
     attr = gridInfo.gridData[0].attr;  
   }
+#else
+  FLDMAPPER_GRIDINFODATA gridData;
+  if( FLDMAPPER_GetGridData(mapper,pos,&gridData) == TRUE){
+    return gridData.attr;
+  }
+#endif
   
   return( attr );
 }
@@ -73,6 +81,27 @@ MAPATTR_FLAG MAPATTR_GetAttrFlag( const MAPATTR attr )
 
 //--------------------------------------------------------------
 /**
+ * @brief MAPATTRから、アトリビュートバリューの有効/無効を取得
+ *
+ * @param attr MAPATTR
+ * @retval TRUE   有効 
+ * @retval FALSE  無効
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_IsEnable( const MAPATTR attr )
+{
+  u16 val = MAPATTR_GetAttrValue( attr );
+
+  //アトリビュートそのもの、もしくはValueが無効かチェック
+  if( (attr == MAPATTR_ERROR) ||
+      (val == MAPATTR_VAL_ERR)){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief MAPATTRから進入可不可状態を取得
  *
  * @param attr MAPATTR
@@ -84,12 +113,10 @@ MAPATTR_FLAG MAPATTR_GetAttrFlag( const MAPATTR attr )
 //--------------------------------------------------------------
 BOOL MAPATTR_GetHitchFlag( const MAPATTR attr )
 {
-  u16 val = MAPATTR_GetAttrValue( attr );
   u16 flag = MAPATTR_GetAttrFlag( attr );
 
-  //アトリビュートそのもの、もしくはValueが無効か、進入不可フラグがOnなら通れない
-  if( (attr == MAPATTR_ERROR) ||
-      (val == MAPATTR_VAL_ERR) ||
+  //アトリビュートValueが無効か、進入不可フラグがOnなら通れない
+  if( (MAPATTR_IsEnable( attr ) == FALSE) ||
       (flag & MAPATTR_FLAGBIT_HITCH)){
     return TRUE;
   }

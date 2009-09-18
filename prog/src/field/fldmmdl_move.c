@@ -44,6 +44,9 @@
 #define ATTROFFS_Y_YUKI_DEEP (NUM_FX32(-14))///<深い雪Yオフセット
 #define ATTROFFS_Y_YUKI_DEEP_MOST (NUM_FX32(-16))///<更に深い雪Yオフセット
 
+///高さ差分による移動制限
+#define HEIGHT_DIFF_COLLISION (FX32_ONE*(20))
+
 //======================================================================
 //	struct
 //======================================================================
@@ -122,7 +125,7 @@ static void MMdl_MapAttrSEProc_1(
 		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 static BOOL MMdl_HitCheckMoveAttr(
-	const MMDL * fmmdl, s16 x, s16 z, u16 dir );
+	const MMDL * fmmdl, const VecFx32 pos );
 
 #ifndef MMDL_PL_NULL
 static BOOL (* const DATA_HitCheckAttr_Now[DIR_MAX4])( MATR attr );
@@ -526,11 +529,6 @@ static void MMdl_MapAttrHeight_02(
 static void MMdl_MapAttrGrassProc_0(
 		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
-	#ifndef MMDL_PL_NULL
-	if( MATR_IsGrass(now) == TRUE ){
-		FE_fmmdlGrass_Add( fmmdl, FALSE );
-	}
-	#else
   {
     MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( now );
     
@@ -539,7 +537,6 @@ static void MMdl_MapAttrGrassProc_0(
       FLDEFF_GRASS_SetMMdl( fectrl, fmmdl, FALSE );
     }
   }
-  #endif
 }
 
 //--------------------------------------------------------------
@@ -555,11 +552,6 @@ static void MMdl_MapAttrGrassProc_0(
 static void MMdl_MapAttrGrassProc_12(
 		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
-	#ifndef MMDL_PL_NULL
-	if( MATR_IsGrass(now) == TRUE ){
-		FE_fmmdlGrass_Add( fmmdl, TRUE );
-	}
-	#else
   {
     if( now != MAPATTR_ERROR ){
       MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( now );
@@ -570,7 +562,6 @@ static void MMdl_MapAttrGrassProc_12(
       }
     }
   }
-  #endif
 }
 
 //======================================================================
@@ -588,39 +579,6 @@ static void MMdl_MapAttrGrassProc_12(
 static void MMdl_MapAttrFootMarkProc_1(
 		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
-	#ifndef MMDL_PL_NULL
-	if( prm->footmark_type == MMDL_FOOTMARK_NON ){
-		return;
-	}
-	
-	if( MATR_IsShadowOnSnow(old) == TRUE ){
-		if( prm->footmark_type == MMDL_FOOTMARK_NORMAL ){
-			FE_fmmdlFootMarkShadowSnow_Add( fmmdl );
-		}else if( prm->footmark_type == MMDL_FOOTMARK_CYCLE ){
-			FE_fmmdlFootMarkShadowSnowCycle_Add( fmmdl );
-		}
-	}
-	
-	if(	MMdl_CheckMapAttrKind_Sand(fmmdl,old) == TRUE ){
-		if( prm->footmark_type == MMDL_FOOTMARK_NORMAL ){
-			FE_fmmdlFootMarkNormal_Add( fmmdl );
-		}else if( prm->footmark_type == MMDL_FOOTMARK_CYCLE ){
-			FE_fmmdlFootMarkCycle_Add( fmmdl );
-		}
-		return;
-	}
-	
-	if( MATR_IsSnowDeep(old) == TRUE || MATR_IsSnowDeepMost(old) == TRUE ||
-		MATR_IsShallowSnow(old) ){
-		FE_fmmdlFootMarkSnowDeep_Add( fmmdl );
-		return;
-	}
-	
-	if( MMdl_CheckMapAttrKind_MostShallowSnow(fmmdl,old) == TRUE ){
-		FE_fmmdlFootMarkSnow_Add( fmmdl );
-		return;
-	}
-	#else
   if( old != MAPATTR_ERROR ){
     MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( old );
   
@@ -635,7 +593,6 @@ static void MMdl_MapAttrFootMarkProc_1(
       FLDEFF_FOOTMARK_SetMMdl( fmmdl, fectrl, type );
     }
   }
-  #endif
 }
 
 //======================================================================
@@ -710,36 +667,6 @@ static void MMdl_MapAttrShadowProc_0(
 static void MMdl_MapAttrShadowProc_1(
 		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
-	#ifndef MMDL_PL_NULL
-	{
-		const MMDLSYS *fos = MMDL_GetMMdlSys( fmmdl );
-		
-		if( MMDLSYS_CheckJoinShadow(fos) == FALSE ){
-			return;
-		}
-	}
-	
-	if( prm->shadow_type == MMDL_SHADOW_NON ){
-		return;
-	}
-
-	if( MATR_IsGrass(now) == TRUE ||
-		MATR_IsLongGrass(now) == TRUE ||
-		MMdl_CheckMapAttrKind_Water(fmmdl,now) == TRUE ||
-		MATR_IsPoolCheck(now) == TRUE ||
-		MATR_IsShoal(now) == TRUE ||
-		MMdl_CheckMapAttrKind_Snow(fmmdl,now) == TRUE ||
-		MATR_IsSwamp(now) == TRUE ||
-		MATR_IsSwampGrass(now) == TRUE ||
-		MATR_IsMirrorReflect(now) ){
-		MMDL_OnStatusBit( fmmdl, MMDL_STABIT_SHADOW_VANISH );
-	}else{
-		if( MMDL_CheckStatusBit(fmmdl,MMDL_STABIT_SHADOW_SET) == 0 ){
-			FE_fmmdlShadow_Add( fmmdl );
-			MMDL_OnStatusBit( fmmdl, MMDL_STABIT_SHADOW_SET );
-		}
-	}
-	#else
   {
   	const MMDLSYS *fos = MMDL_GetMMdlSys( fmmdl );
     
@@ -753,7 +680,6 @@ static void MMdl_MapAttrShadowProc_1(
 			MMDL_OnStatusBit( fmmdl, MMDL_STABIT_SHADOW_SET );
     }
   }
-  #endif
 }
 
 //--------------------------------------------------------------
@@ -812,23 +738,10 @@ static void MMdl_MapAttrShadowProc_2(
 static void MMdl_MapAttrGroundSmokeProc_2(
 		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
-	#ifndef MMDL_PL_NULL
-	if( MMdl_CheckMapAttrKind_Water(fmmdl,now) == TRUE ||
-		MATR_IsShoal(now) == TRUE ||
-		MATR_IsIce(now) == TRUE ||
-		MATR_IsSwamp(now) == TRUE ||
-		MATR_IsSwampGrass(now) == TRUE ||
-		MMdl_CheckMapAttrKind_Snow(fmmdl,now) == TRUE ){
-		return;
-	}
-	
-	FE_fmmdlKemuri_Add( fmmdl );
-	#else
   {
     FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
     FLDEFF_KEMURI_SetMMdl( fmmdl, fectrl );
   }
-  #endif
 }
 
 //======================================================================
@@ -1031,42 +944,6 @@ static void MMdl_MapAttrSwampProc_2(
 static void MMdl_MapAttrReflect_01(
 		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
-	#ifndef MMDL_PL_NULL
-	if( prm->reflect_type == MMDL_REFLECT_NON ){
-		return;
-	}
-	
-	{
-		if( MMDL_CheckStatusBitReflect(fmmdl) == FALSE ){
-			MATR hit = MATR_IsNotAttrGet();
-			
-			if( MATR_IsReflect(now) == TRUE ){
-				hit = now;
-			}else{
-				MATR next = MMDL_GetMapDirAttr( fmmdl, DIR_DOWN );
-				
-				if( MATR_IsReflect(next) == TRUE ){
-					hit = next;
-				}
-			}
-			
-			if( hit != MATR_IsNotAttrGet() ){	//映り込みヒット
-				REFTYPE type;
-				MMDL_SetStatusBitReflect( fmmdl, TRUE );
-				
-				if( MATR_IsMirrorReflect(hit) == TRUE ){ 	//鏡床
-					type = REFTYPE_MIRROR;
-				}else if( MATR_IsPoolCheck(hit) == TRUE ){	//水溜り
-					type = REFTYPE_POOL;
-				}else{										//池
-					type = REFTYPE_POND;
-				}
-				
-				FE_fmmdlReflect_Add( fmmdl, type );
-			}
-		}
-	}
-	#else //wb
   if( prm->reflect_type == MMDL_REFLECT_NON ){
     return;
   }
@@ -1114,7 +991,6 @@ static void MMdl_MapAttrReflect_01(
       }
     }
   }
-  #endif
 }
 
 //--------------------------------------------------------------
@@ -1130,21 +1006,6 @@ static void MMdl_MapAttrReflect_01(
 static void MMdl_MapAttrReflect_2(
 		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
-	#ifndef MMDL_PL_NULL
-	if( prm->reflect_type == MMDL_REFLECT_NON ||
-		MMDL_CheckStatusBitReflect(fmmdl) == FALSE ){
-		return;
-	}
-	
-	{
-		MATR attr = MMDL_GetMapDirAttr( fmmdl, DIR_DOWN );
-		
-		if( MATR_IsReflect(attr) == FALSE ){
-			MMDL_SetStatusBitReflect( fmmdl, FALSE );
-		}
-	}
-	#else //wb
-  
 	if( prm->reflect_type == MMDL_REFLECT_NON ||
 		MMDL_CheckStatusBitReflect(fmmdl) == FALSE ){
 		return;
@@ -1168,7 +1029,6 @@ static void MMdl_MapAttrReflect_2(
       }
     }
   }
-  #endif
 }
 
 //======================================================================
@@ -1268,51 +1128,30 @@ u32 MMDL_HitCheckMove(
 	const MMDL *fmmdl, const VecFx32 *vec, s16 x, s16 y, s16 z, u16 dir )
 {
 	u32 ret;
+	VecFx32 pos;
 	
 	ret = MMDL_MOVEHITBIT_NON;
 	
-	if( MMDL_HitCheckMoveLimit(fmmdl,x,y,z) == TRUE ){
+	pos.x = GRID_SIZE_FX32( x ) + GRID_HALF_FX32;
+	pos.y = vec->y; //GRID_SIZE_FX32( y );
+	pos.z = GRID_SIZE_FX32( z ) + GRID_HALF_FX32;
+		
+	if( MMDL_HitCheckMoveLimit(fmmdl,x,z) == TRUE ){
 		ret |= MMDL_MOVEHITBIT_LIM;
 	}
 	
-	#ifndef MMDL_PL_NULL
-	{
-		s8 flag;
-		FIELDSYS_WORK *fsys = MMDL_FieldSysWorkGet( fmmdl );
-		if( MPTL_CheckHitWall(fsys,vec,x,z,&flag) == TRUE ){
-			ret |= MMDL_MOVEHITBIT_ATTR;
-			
-			if( flag != HIT_RES_EQUAL ){
-				ret |= MMDL_MOVEHITBIT_HEIGHT;
-			}
-		}
-	}
-	
-	if( MMdl_HitCheckMoveAttr(fmmdl,x,z,dir) == TRUE ){
-		ret |= MMDL_MOVEHITBIT_ATTR;
-	}
-	
-	if( MMDL_HitCheckMoveFellow(fmmdl,x,y,z) == TRUE ){
-		ret |= MMDL_MOVEHITBIT_OBJ;
-	}
-	#else
 	{
 		u32 attr;
 		fx32 height;
-		VecFx32 pos;
 		
-		pos.x = GRID_SIZE_FX32( x ) + GRID_HALF_FX32;
-		pos.y = GRID_SIZE_FX32( y );
-		pos.z = GRID_SIZE_FX32( z ) + GRID_HALF_FX32;
-		
-		if( MMdl_HitCheckMoveAttr(fmmdl,x,z,dir) == TRUE ){
+		if( MMdl_HitCheckMoveAttr(fmmdl,pos) == TRUE ){
 			ret |= MMDL_MOVEHITBIT_ATTR;
 		}
 
 		if( MMDL_GetMapPosHeight(fmmdl,&pos,&height) == TRUE ){
 			fx32 diff = vec->y - height;
 			if( diff < 0 ){ diff = -diff; }
-			if( diff >= (FX32_ONE*20) ){
+			if( diff >= HEIGHT_DIFF_COLLISION ){
 				ret |= MMDL_MOVEHITBIT_HEIGHT;
 			}
 		}else{
@@ -1325,19 +1164,15 @@ u32 MMDL_HitCheckMove(
 	}
 	
 	{
-		VecFx32 pos;
 		const FLDMAPPER *pG3DMapper;
 		
 		pG3DMapper = MMDLSYS_GetG3DMapper( MMDL_GetMMdlSys(fmmdl) );
-		pos.x = GRID_SIZE_FX32( x ) + GRID_HALF_FX32;
-		pos.y = GRID_SIZE_FX32( y );
-		pos.z = GRID_SIZE_FX32( z ) + GRID_HALF_FX32;
 		
+		//pos->yはCheckOutRange()内では未評価<090916時点>
 		if( FLDMAPPER_CheckOutRange(pG3DMapper,&pos) == TRUE ){
 			ret |= MMDL_MOVEHITBIT_OUTRANGE;
 		}
 	}
-	#endif
 
 	return( ret );
 }
@@ -1403,28 +1238,6 @@ BOOL MMDL_HitCheckMoveFellow( const MMDL * fmmdl, s16 x, s16 y, s16 z )
 				cmmdl,MMDL_STABIT_FELLOW_HIT_NON) == 0 ){
 				hx = MMDL_GetGridPosX( cmmdl );
 				hz = MMDL_GetGridPosZ( cmmdl );
-				#if 0
-				if( hx == x && hz == z ){
-					int hy = MMDL_GetHeightGrid( cmmdl );
-					int sy = hy - y;
-					if( sy < 0 ){ sy = -sy; }
-					if( sy < H_GRID_FELLOW_SIZE ){
-						return( TRUE );
-					}
-				}
-			
-				hx = MMDL_GetOldGridPosX( cmmdl );
-				hz = MMDL_GetOldGridPosZ( cmmdl );
-			
-				if( hx == x && hz == z ){
-					int hy = MMDL_GetHeightGrid( cmmdl );
-					int sy = hy - y;
-					if( sy < 0 ){ sy = -sy; }
-					if( sy < H_GRID_FELLOW_SIZE ){
-						return( TRUE );
-					}
-				}
-				#else
 				{
 					BOOL debug = FALSE;
 					if( MMDL_GetOBJID(fmmdl) == MMDL_ID_PLAYER ){
@@ -1458,7 +1271,6 @@ BOOL MMDL_HitCheckMoveFellow( const MMDL * fmmdl, s16 x, s16 y, s16 z )
 						}
 					}
 				}
-				#endif
 			}
 		}
 	}
@@ -1476,7 +1288,7 @@ BOOL MMDL_HitCheckMoveFellow( const MMDL * fmmdl, s16 x, s16 y, s16 z )
  * @retval	BOOL	TRUE=制限越え
  */
 //--------------------------------------------------------------
-BOOL MMDL_HitCheckMoveLimit( const MMDL * fmmdl, s16 x, s16 y, s16 z )
+BOOL MMDL_HitCheckMoveLimit( const MMDL * fmmdl, s16 x, s16 z )
 {
 	s16 init,limit,min,max;
 	
@@ -1511,47 +1323,21 @@ BOOL MMDL_HitCheckMoveLimit( const MMDL * fmmdl, s16 x, s16 y, s16 z )
 /**
  * フィールド動作モデルアトリビュートヒットチェック
  * @param	fmmdl	MMDL * 
- * @param	x		移動先X座標	グリッド
- * @param	z		移動先Z座標	グリッド
+ * @param	pos		移動先X座標,現在位置のY,移動先Z座標
  * @param	dir		移動方向 DIR_UP等
  * @retval	int		TRUE=移動不可アトリビュート
  */
 //--------------------------------------------------------------
 static BOOL MMdl_HitCheckMoveAttr(
-	const MMDL * fmmdl, s16 x, s16 z, u16 dir )
+	const MMDL * fmmdl, const VecFx32 pos )
 {
-	#ifndef MMDL_PL_NULL
-	if( MMDL_CheckMoveBitAttrGetOFF(fmmdl) == FALSE ){
-		FIELDSYS_WORK *fsys = MMDL_FieldSysWorkGet( fmmdl );
-		MATR now_attr = MMDL_GetMapAttr( fmmdl );
-		MATR next_attr = GetAttributeLSB( fsys, x, z );
-		
-		if( next_attr == MATR_IsNotAttrGet() ){ //アトリビュート取得失敗
-			return( TRUE );
-		}
-		
-		if( DATA_HitCheckAttr_Now[dir](now_attr) == TRUE ||
-			DATA_HitCheckAttr_Next[dir](next_attr) == TRUE ){
-			return( TRUE );
-		}
-	}
-	#else
 	if( MMDL_CheckMoveBitAttrGetOFF(fmmdl) == FALSE ){
 		MAPATTR attr;
-		VecFx32 pos;
-		pos.x = GRID_SIZE_FX32( x );
-		pos.y = 0;
-		pos.z = GRID_SIZE_FX32( z );
 		
 		if( MMDL_GetMapPosAttr(fmmdl,&pos,&attr) == TRUE ){
-      MAPATTR_FLAG attr_flag = MAPATTR_GetAttrFlag( attr );
-      
-      if( (attr_flag&MAPATTR_FLAGBIT_HITCH) == 0 ){
-        return( FALSE );
-      }
+      return MAPATTR_GetHitchFlag(attr);
 		}
 	}
-	#endif
 	
 	return( TRUE ); //移動不可アトリビュート
 }
@@ -1756,9 +1542,30 @@ static BOOL MMdl_GetMapGridInfo(
 
 //--------------------------------------------------------------
 /**
+ * マップグリッド情報取得
+ * @param	fmmdl	MMDL
+ * @param	pos     	取得する座標(x,zに取得したい位置座標、yには現在のheightが格納されていること)
+ * @param	pGridData	グリッドアトリビュートデータ格納先
+ * @retval	0未満 情報が取得できない
+ *
+ *  @li GridInfoに取得された全階層をサーチし、現在のYに最も近いheight,attrを返します
+ *  @li GridInfoの配列0の方がプライオリティが高いです
+ */
+//--------------------------------------------------------------
+static int MMdl_GetMapPosGridData(
+	const MMDL *fmmdl, const VecFx32 *pos, FLDMAPPER_GRIDINFODATA* pGridData)
+{
+	const FLDMAPPER *pG3DMapper =
+		MMDLSYS_GetG3DMapper( MMDL_GetMMdlSys(fmmdl) );
+	
+	return FLDMAPPER_GetGridData(pG3DMapper,pos,pGridData);
+}
+
+//--------------------------------------------------------------
+/**
  * マップアトリビュート取得
  * @param	fmmdl	MMDL
- * @param	pos	取得する座標
+ * @param	pos	取得する座標(x,zに取得したい位置座標、yには現在のheightが格納されていること)
  * @param	attr	アトリビュート格納先
  * @retval	BOOL	FALSE=アトリビュートが存在しない。
  */
@@ -1766,14 +1573,23 @@ static BOOL MMdl_GetMapGridInfo(
 BOOL MMDL_GetMapPosAttr(
 	const MMDL *fmmdl, const VecFx32 *pos, u32 *attr )
 {
-	FLDMAPPER_GRIDINFO GridInfo;
+#if 1
+	FLDMAPPER_GRIDINFODATA gridData;
 	*attr = 0;
 	
-	if( MMdl_GetMapGridInfo(fmmdl,pos,&GridInfo) == TRUE ){
-		*attr = GridInfo.gridData[0].attr;
+	if( MMdl_GetMapPosGridData(fmmdl,pos,&gridData) == TRUE ){
+		*attr = gridData.attr;
 		return( TRUE );
 	}
-	
+#else
+	FLDMAPPER_GRIDINFO GridInfo;
+  *attr = 0;
+
+  if( MMdl_GetMapGridInfo( fmmdl, pos, &GridInfo) == TRUE){
+    *attr = GridInfo.gridData[0].attr;
+    return ( TRUE );
+  }
+#endif
 	return( FALSE );
 }
 
@@ -1782,17 +1598,25 @@ BOOL MMDL_GetMapPosAttr(
  * マップ高さ取得
  * @param	fmmdl	MMDL
  * @param	pos	取得する座標
- * @param	attr	高さ格納先
+ * @param	height	高さ格納先
  * @retval	BOOL	FALSE=高さが存在しない。
  */
 //--------------------------------------------------------------
 BOOL MMDL_GetMapPosHeight(
 	const MMDL *fmmdl, const VecFx32 *pos, fx32 *height )
 {
+#if 1
+	FLDMAPPER_GRIDINFODATA gridData;
+	
+  *height = 0;
+	if( MMdl_GetMapPosGridData(fmmdl,pos,&gridData) == TRUE ){
+		*height = gridData.height;
+		return( TRUE );
+	}
+#else
 	FLDMAPPER_GRIDINFO GridInfo;
-	
-	*height = 0;
-	
+  *height = 0;
+
 	if( MMdl_GetMapGridInfo(fmmdl,pos,&GridInfo) == TRUE ){
 		if( GridInfo.count ){
 			int		i = 0;
@@ -1815,7 +1639,7 @@ BOOL MMDL_GetMapPosHeight(
 			return( TRUE );
 		}
 	}
-	
+#endif
 	return( FALSE );
 }
 
@@ -1865,13 +1689,6 @@ void MMDL_UpdateGridPosCurrent( MMDL * fmmdl )
 //--------------------------------------------------------------
 u32 MMDL_GetMapDirAttr( MMDL * fmmdl, u16 dir )
 {
-	#ifndef MMDL_PL_NULL
-	int gx,gz;
-	gx = MMDL_GetGridPosX( fmmdl ) + MMDL_TOOL_GetDirAddValueGridX( dir );
-	gz = MMDL_GetGridPosZ( fmmdl ) + MMDL_TOOL_GetDirAddValueGridZ( dir );
-	FIELDSYS_WORK *fsys = MMDL_FieldSysWorkGet( fmmdl );
-	MATR attr = GetAttributeLSB( fsys, gx, gz );
-	#else
 	u32 attr = MAPATTR_ERROR;
   VecFx32 pos;
   const FLDMAPPER *pG3DMapper;
@@ -1879,7 +1696,6 @@ u32 MMDL_GetMapDirAttr( MMDL * fmmdl, u16 dir )
   MMDL_GetVectorPos( fmmdl, &pos );
   MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
   MMDL_GetMapPosAttr( fmmdl, &pos, &attr );
-	#endif
 
 	return( attr );
 }
@@ -1949,21 +1765,6 @@ BOOL MMDL_UpdateCurrentHeight( MMDL * fmmdl )
 	}
 	
 	{
-	#ifndef MMDL_PL_NULL
-		int eflag = MMDL_CheckStatusBitHeightExpand( fmmdl );
-		FIELDSYS_WORK *fsys = MMDL_FieldSysWorkGet( fmmdl );
-		int ret = FieldOBJTool_GetHeightExpand( fsys, &vec_pos_h, eflag );
-		
-		if( ret == TRUE ){
-			vec_pos.y = vec_pos_h.y;
-			MMDL_SetVectorPos( fmmdl, &vec_pos );
-			MMDL_SetOldGridPosY( fmmdl, MMDL_GetHeightGrid(fmmdl) );
-			MMDL_SetGridPosY( fmmdl, SIZE_H_GRID_FX32(vec_pos.y) );
-			MMDL_OffStatusBit( fmmdl, MMDL_STABIT_HEIGHT_GET_ERROR );
-		}else{
-			MMDL_OnStatusBit( fmmdl, MMDL_STABIT_HEIGHT_GET_ERROR );
-		}
-	#else
 		fx32 height;
 		int ret = MMDL_GetMapPosHeight( fmmdl, &vec_pos_h, &height );
 		
@@ -1974,7 +1775,6 @@ BOOL MMDL_UpdateCurrentHeight( MMDL * fmmdl )
 		}else{
 			MMDL_OnStatusBit( fmmdl, MMDL_STABIT_HEIGHT_GET_ERROR );
 		}
-	#endif
 		return( ret );
 	}
 }
@@ -1988,32 +1788,6 @@ BOOL MMDL_UpdateCurrentHeight( MMDL * fmmdl )
 //--------------------------------------------------------------
 BOOL MMDL_UpdateCurrentMapAttr( MMDL * fmmdl )
 {
-#ifndef MMDL_PL_NULL
-	MATR old_attr = MATR_IsNotAttrGet();
-	MATR now_attr = old_attr;
-	
-	if( MMDL_CheckMoveBitAttrGetOFF(fmmdl) == FALSE ){
-		int gx = MMDL_GetOldGridPosX( fmmdl );
-		int gz = MMDL_GetOldGridPosZ( fmmdl );
-		FIELDSYS_WORK *fsys = MMDL_FieldSysWorkGet( fmmdl );
-		old_attr = GetAttributeLSB( fsys, gx, gz );
-	
-		gx = MMDL_GetGridPosX( fmmdl );
-		gz = MMDL_GetGridPosZ( fmmdl );
-		now_attr = GetAttributeLSB( fsys, gx, gz );
-	}
-	
-	MMDL_SetMapAttrOld( fmmdl, old_attr );
-	MMDL_SetMapAttr( fmmdl, now_attr );
-	
-	if( MATR_IsNotAttr(now_attr) == TRUE ){
-		MMDL_OnStatusBit( fmmdl, MMDL_STABIT_ATTR_GET_ERROR );
-		return( FALSE );
-	}
-	
-	MMDL_OffStatusBit( fmmdl, MMDL_STABIT_ATTR_GET_ERROR );
-  return( TRUE );
-#else
 	MAPATTR old_attr = MAPATTR_ERROR;
 	MAPATTR now_attr = old_attr;
 	
@@ -2043,7 +1817,6 @@ BOOL MMDL_UpdateCurrentMapAttr( MMDL * fmmdl )
   
 	MMDL_OffStatusBit( fmmdl, MMDL_STABIT_ATTR_GET_ERROR );
 	return( TRUE );
-#endif
 }
 
 //======================================================================

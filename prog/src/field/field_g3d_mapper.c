@@ -1106,7 +1106,27 @@ void FLDMAPPER_GRIDINFO_Init( FLDMAPPER_GRIDINFO* gridInfo )
 
 //------------------------------------------------------------------
 /**
- * @brief	アトリビュート情報取得
+ * @brief	グリッドアトリビュートの全階層情報をメモリにロードされたブロックデータ群から取得
+ *
+ * @param g3Dmapper 
+ * @param pos       x,zにデータを取得したいposの座標、yに現在の高さを格納
+ * @param gridInfo  グリッドデータを取得するFLDMAPPER_GRIDINFO構造体型変数へのポインタ
+ *
+ * @li  最大16層までの複層アトリビュート情報を配列に取得します。
+ *      FLDMAPPER_GRIDINFO->count > 1 の時は、どのデータを取得するか、取得側で選択する必要があります。
+ *
+ *    　複数階層及び冗長データを持たないposでは FLDMAPPER_GRIDINFO->gridData[0]へのアクセスで情報を取得できますが、
+ *      配列要素へ直接アクセスはオススメしません。
+ *      GetGridInfo()をラップし、現在のY値に最も近い階層のアトリビュートを取得する、
+ *      FLDMAPPER_GetGridData()関数があるので、そちらを基本的には用いてください。
+ *      posが単一のデータしか持たない場合、gridData[0]の値を返します
+ *
+ * @li  090915時点のマップ構想では、冗長なアトリビュートデータ(あるposのアトリビュートを、隣接する複数のブロックが持っている場合)
+ *      の存在は考慮されていません。あるposのアトリビュート情報を複数のブロックが持つ場合、
+ *      アトリビュートを矩形の左上ブロックから順にサーチするため、
+ *      メモリ上にどのようにブロックデータがマッピングされているかにより、アトリビュート値の配列への格納順が変わります。
+ *      GetGridInfoより上のレベルでは、配列のどこがどのブロックから抽出されたデータかはわからないため
+ *      たとえば、現在のposが属するブロックデータを優先する、などのプライオリティ制御ができないので注意してください
  */
 //------------------------------------------------------------------
 BOOL FLDMAPPER_GetGridInfo
@@ -1145,7 +1165,8 @@ BOOL FLDMAPPER_GetGridInfo
 					int j;
 
 					if( (p + attrInfo.mapAttrCount) >= FLDMAPPER_GRIDINFO_MAX ){
-						GF_ASSERT("height count over\n");
+						GF_ASSERT("height count over <- FLDMAPPER_GetGridInfo()\n");
+            break;  //これ以上進むとメモリが破壊されるのでストップ
 					}
 					for( j=0; j<attrInfo.mapAttrCount; j++ ){
 						gridInfo->gridData[p+j].vecN = attrInfo.mapAttr[j].vecN;
@@ -1167,6 +1188,66 @@ BOOL FLDMAPPER_GetGridInfo
 	}
 //	OS_Printf("データが存在していない\n");
 	return FALSE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	グリッドアトリビュート情報取得
+ *
+ * @param g3Dmapper
+ * @param pos       x,zにデータを取得したいposの座標、yに現在の高さを格納
+ * @param gridInfo  グリッドデータを取得するFLDMAPPER_GRIDINFO構造体型変数へのポインタ
+ *
+ * @li  内部でFLDMAPPER_GetGridInfo()を呼び出し、全アトリビュートデータを取得した上で
+ *      現在のY値に最も近い階層のアトリビュートデータを返します。
+ */
+//------------------------------------------------------------------
+BOOL FLDMAPPER_GetGridData
+	( const FLDMAPPER* g3Dmapper, const VecFx32* pos, FLDMAPPER_GRIDINFODATA* pGridData )
+{
+	FLDMAPPER_GRIDINFO gridInfo;
+  fx32    o_diff;
+	int		i, target;
+
+  FLDMAPPER_GRIDINFODATA_Init(pGridData);
+
+  if(FLDMAPPER_GetGridInfo(g3Dmapper,pos,&gridInfo) == FALSE){
+    return FALSE;
+  }
+  if(gridInfo.count == 1){
+    *pGridData = gridInfo.gridData[0];
+	  return TRUE;
+  }
+//  *pGridData = gridInfo.gridData[0];
+//  return TRUE;
+
+  target = 0;
+  o_diff = FX32_CONST(4095);//gridInfo.gridData[0].height - pos->y;
+
+  IWASAWA_Printf("CrossGrid %d pos = %08x\n",gridInfo.count,pos->y);
+
+	for( i=0; i<gridInfo.count; i++ ){
+    fx32  diff;
+
+    //アトリビュートValueが無効のデータは候補にいれない
+    if( MAPATTR_IsEnable(gridInfo.gridData[i].attr) == FALSE){
+    //if( MAPATTR_GetHitchFlag(gridInfo.gridData[i].attr) == TRUE){
+      continue;
+    }
+    diff = gridInfo.gridData[i].height - pos->y;
+    if(diff < 0){
+      diff = FX_Mul(diff,FX32_CONST(-1));
+    }
+    IWASAWA_Printf("idx = %d diff %08x , o_diff %08x\n",i,diff,o_diff);
+    
+		if( diff < o_diff ){
+      target  = i;  //ターゲット変更
+      o_diff = diff;
+    }
+	}
+  IWASAWA_Printf("TargetIs %d Y = %08x, attr = %08x\n",target,gridInfo.gridData[target].height,gridInfo.gridData[target].attr);
+  *pGridData = gridInfo.gridData[target];
+	return TRUE;
 }
 
 //------------------------------------------------------------------
@@ -1565,6 +1646,9 @@ static void GetExHight( const FLDMAPPER* g3Dmapper, const VecFx32 *pos, FLDMAPPE
       int idx;
       n++;
       idx = count+n;
+      if(idx >= FLDMAPPER_GRIDINFO_MAX){
+        break;  //これ以上は積めないので抜ける
+      }
       gridInfo->gridData[idx].vecN = normVec;
 			gridInfo->gridData[idx].attr = 0;
 			gridInfo->gridData[idx].height = EXH_GetHeight(i, g3Dmapper->ExHeightList);

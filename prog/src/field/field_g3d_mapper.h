@@ -97,12 +97,19 @@ extern void FLDMAPPER_GRIDINFODATA_Init( FLDMAPPER_GRIDINFODATA* gridInfoData );
 extern void FLDMAPPER_GRIDINFO_Init( FLDMAPPER_GRIDINFO* gridInfo );
 //------------------------------------------------------------------
 /**
- * @brief	グリッド情報取得
+ * @brief	グリッドの全階層アトリビュート情報取得
  */
 //------------------------------------------------------------------
 extern BOOL FLDMAPPER_GetGridInfo
 	( const FLDMAPPER* g3Dmapper, const VecFx32* pos, FLDMAPPER_GRIDINFO* gridInfo );
 
+//------------------------------------------------------------------
+/**
+ * @brief	グリッドの現在の高さに最も近い階層のアトリビュート情報取得
+ */
+//------------------------------------------------------------------
+extern BOOL FLDMAPPER_GetGridData
+	( const FLDMAPPER* g3Dmapper, const VecFx32* pos, FLDMAPPER_GRIDINFODATA* pGridData );
 
 //------------------------------------------------------------------
 /**
