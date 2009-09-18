@@ -2372,6 +2372,20 @@
 #define R02_RIVAL_01                       8
 
 #endif //ZONE_R02_EVC_H
+//#include "tmp/r02r0101.h"
+//このファイルはdata/r02r0101.mevから自動生成されました
+#ifndef ZONE_R02R0101_EVD_H
+#define ZONE_R02R0101_EVD_H
+
+
+#endif //ZONE_R02R0101_EVD_H
+//このファイルはdata/r02r0101.mevから自動生成されました
+#ifndef ZONE_R02R0101_EVC_H
+#define ZONE_R02R0101_EVC_H
+
+#define R02R0101_WOMAN1                    0
+
+#endif //ZONE_R02R0101_EVC_H
 //#include "tmp/r03.h"
 //このファイルはdata/r03.mevから自動生成されました
 #ifndef ZONE_R03_EVD_H
@@ -11130,6 +11144,39 @@ static const EVENTDATA_TABLE event_r02 = {
 	(void *)&DOOR_EVENT_R02,
 	(void *)&POS_EVENT_R02,
 };
+#include "../script/r02r0101_def.h"
+//ConnectData_R02R0101[]はデータがないため存在しない
+const FLDMMDL_HEADER OBJ_EVENT_R02R0101[] = {
+	{
+		R02R0101_WOMAN1,
+		WOMAN1,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_R02R0101_TALKOBJ_WOMAN1,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		3,
+		8,
+		0,
+	},
+};
+const int ObjCount_R02R0101 = NELEMS(OBJ_EVENT_R02R0101);
+
+static const EVENTDATA_TABLE event_r02r0101 = {
+	0,
+	1,
+	0,
+	0,
+	(void *)NULL,
+	(void *)&OBJ_EVENT_R02R0101,
+	(void *)NULL,
+	(void *)NULL,
+};
 #include "../script/r03_def.h"
 const CONNECT_DATA DOOR_EVENT_R03[] = {
 	{//DOOR_ID_R03_C02R0701_EXIT01 = 0
@@ -13666,6 +13713,7 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_H01P01, &event_h01p01 },
 	{ ZONE_ID_R01, &event_r01 },
 	{ ZONE_ID_R02, &event_r02 },
+	{ ZONE_ID_R02R0101, &event_r02r0101 },
 	{ ZONE_ID_R03, &event_r03 },
 	{ ZONE_ID_R03R0101, &event_r03r0101 },
 	{ ZONE_ID_R03R0201, &event_r03r0201 },
