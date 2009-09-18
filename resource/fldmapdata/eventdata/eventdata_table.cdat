@@ -103,7 +103,8 @@
 
 #define C01R0101_BIGMAN                    0
 #define C01R0101_WOMAN1                    1
-#define C01R0101_BOY3WOMAN1                2
+#define C01R0101_BOY3                      2
+#define C01R0101_INVENTOR                  3
 
 #endif //ZONE_C01R0101_EVC_H
 //#include "tmp/c01r0102.h"
@@ -178,6 +179,7 @@
 #define C01R0301_BOY2                      0
 #define C01R0301_MIDDLEWOMAN2              1
 #define C01R0301_MAN1                      2
+#define C01R0301_MAN2                      3
 
 #endif //ZONE_C01R0301_EVC_H
 //#include "tmp/c01r0302.h"
@@ -3415,7 +3417,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0101[] = {
 	{
 		C01R0101_BIGMAN,
 		MAN3,
-		MV_DMY,
+		MV_RND_DL,
 		EV_TYPE_NORMAL,
 		0,
 		SCRID_C01R0101_TALKOBJ_BIGMAN,
@@ -3425,7 +3427,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0101[] = {
 		0,
 		0,
 		0,
-		10,
+		13,
 		4,
 		0,
 	},
@@ -3447,9 +3449,9 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0101[] = {
 		0,
 	},
 	{
-		C01R0101_BOY3WOMAN1,
+		C01R0101_BOY3,
 		BOY3,
-		MV_RTUL         ,
+		MV_RND,
 		EV_TYPE_NORMAL,
 		0,
 		SCRID_C01R0101_TALKOBJ_BOY3,
@@ -3459,7 +3461,24 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0101[] = {
 		0,
 		3,
 		3,
-		5,
+		3,
+		7,
+		0,
+	},
+	{
+		C01R0101_INVENTOR,
+		WOMAN1,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0101_TALKOBJ_INVENTOR,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		10,
 		6,
 		0,
 	},
@@ -3468,7 +3487,7 @@ const int ObjCount_C01R0101 = NELEMS(OBJ_EVENT_C01R0101);
 
 static const EVENTDATA_TABLE event_c01r0101 = {
 	0,
-	3,
+	4,
 	4,
 	0,
 	(void *)NULL,
@@ -3799,12 +3818,29 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0301[] = {
 		7,
 		0,
 	},
+	{
+		C01R0301_MAN2,
+		MAN2,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01R0301_TALKOBJ_MAN2,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		2,
+		9,
+		0,
+	},
 };
 const int ObjCount_C01R0301 = NELEMS(OBJ_EVENT_C01R0301);
 
 static const EVENTDATA_TABLE event_c01r0301 = {
 	0,
-	3,
+	4,
 	4,
 	0,
 	(void *)NULL,
