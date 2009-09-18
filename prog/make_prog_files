@@ -693,16 +693,6 @@ SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
         app/pms_input/pms_input.c \
         app/pms_input/pmsiv_wordwin.c
 
-# 友達手帳(+コード入力
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
-SRCS_OVERLAY_WIFINOTE = app/wifi_note/wifi_note.c \
-        app/codein/codein.c \
-        app/codein/codein_pv.c \
-        app/codein/codein_disp.c
-
-
 
 # ミュージカル
 #===> SRCS_OVERLAY_DEV_WIFI
@@ -760,6 +750,17 @@ SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
               net_app/wifi2dmap/wf2dmap_scroll.c \
               net_app/wifi2dmap/wf2dmap_scrdraw.c \
               net_app/wifi2dmap/wf2dmap_cmdq.c
+
+# 友達手帳(+コード入力
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
+#===> WIFI2DMAP
+SRCS_OVERLAY_WIFINOTE = app/wifi_note/wifi_note.c \
+        app/codein/codein.c \
+        app/codein/codein_pv.c \
+        app/codein/codein_disp.c
+
 
 # 松田デバッグ
 #===> SRCS_OVERLAY_DPW_COMMON

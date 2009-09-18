@@ -115,7 +115,8 @@ void CI_pv_disp_CodeRes_Load( CODEIN_WORK* wk )
 	GFL_ARCHDL_UTIL_TransVramBgCharacter( hdl , NARC_code_input_code_bg_NCGR , GFL_BG_FRAME1_M, 0, 0, FALSE, HEAPID_CODEIN );
 //	ArcUtil_HDL_ScrnSet( hdl, NARC_codein_gra_code_bg_NSCR, bgl, GF_BGL_FRAME1_M, 0, 0, 0, HEAPID_CODEIN );
 	GFL_ARCHDL_UTIL_TransVramScreen( hdl , NARC_code_input_code_bg_NSCR, GFL_BG_FRAME1_M, 0, 0, FALSE, HEAPID_CODEIN );
-	PaletteWorkSet_Arc( pfd, ARCID_CODE_INPUT, NARC_code_input_code_bg_NCLR, HEAPID_CODEIN, FADE_MAIN_BG, 0x20 * 1, 0 );
+	//090918 2ñ{Ç…ïœçXÇµÇ‹ÇµÇΩÅB Ariizumi
+	PaletteWorkSet_Arc( pfd, ARCID_CODE_INPUT, NARC_code_input_code_bg_NCLR, HEAPID_CODEIN, FADE_MAIN_BG, 0x20 * 2, 0 );
 	
 	///< bg-top
 //	ArcUtil_HDL_BgCharSet( hdl, NARC_codein_gra_code_bg_t_NCGR, bgl, GF_BGL_FRAME1_S, 0, 0, 0, HEAPID_CODEIN );
