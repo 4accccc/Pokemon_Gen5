@@ -8,6 +8,7 @@
   .text
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c02r0301.h"
+  .include	"../../../prog/include/poke_tool/monsno_def.h" //鳴き声のインクルードファイル
   //.include  "c02r0301.h"
 
 //--------------------------------------------------------------
@@ -41,8 +42,15 @@ EVENT_END
 /*  C02R0301 POKEの会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c02r0301_talkobj_poke
+/*  
   _TALK_OBJ_START()
+	_VOICE_PLAY( 1, 0 )
 	_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0301_poke_01 )
 	_AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
+  
+ */
+ 
+ 	_EASY_TALK_POKEVOICE( 1, msg_c02r0301_poke_01 )	//仮でヒトカゲの鳴き声（1）。
+ 	
 EVENT_END
