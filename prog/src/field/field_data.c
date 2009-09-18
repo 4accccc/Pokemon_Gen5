@@ -267,7 +267,7 @@ const SCENE_DATA resistMapTbl[] = {
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
 	},
-  //RSC_NOGRID_DEFAULT = 0,
+  //RSC_NOGRID_DEFAULT = 7,
 	{	//実験マップ レール移動
 		{
 			FLDMAPPER_FILETYPE_NORMAL,
@@ -288,7 +288,7 @@ const SCENE_DATA resistMapTbl[] = {
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
 	},
-  //RSC_NOGRID_C03P02 = 0,
+  //RSC_NOGRID_C03P02 = 8,
 	{	//実験マップ レール移動
 		{
 			FLDMAPPER_FILETYPE_NORMAL,
@@ -309,7 +309,7 @@ const SCENE_DATA resistMapTbl[] = {
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
 	},
-  //RSC_GRID_MUSICAL = 0,
+  //RSC_GRID_MUSICAL = 9,
 	{	//実験マップ グリッド移動
 		{
 			FLDMAPPER_FILETYPE_NORMAL,
@@ -326,6 +326,27 @@ const SCENE_DATA resistMapTbl[] = {
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
+		},
+		&FieldMapCtrl_GridFunctions,
+		TRUE,
+	},
+  //RSC_GRID_GYM_ELEC = 10,
+	{	//実験マップ グリッド移動
+		{
+			FLDMAPPER_FILETYPE_NORMAL,
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      2,2,
+      FLDMAPPER_MODE_SCROLL_NONE, 
+			ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
+			{0,2},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE,
 		},
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
