@@ -70,6 +70,7 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_GetProgramData( HEAPID heapId )
   
   //ランダム生成(デバッグ
   {
+    /*
     u8 point = MUSICAL_PROGRAM_CONDITION_SUM/5;
     while( point > 0 )
     {
@@ -82,6 +83,12 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_GetProgramData( HEAPID heapId )
       progData->condition[GFL_STD_MtRand(MCT_DATA_MAX)] += val*5;
       point -= val;
     }
+    */
+    progData->condition[MCT_COOL] = 20;
+    progData->condition[MCT_CUTE] = 70;
+    progData->condition[MCT_ELEGANT] = 20;
+    progData->condition[MCT_UNIQUE] = 50;
+    progData->condition[MCT_RANDOM] = 40;
   }
   
   OS_TPrintf("--Condition--\n");
@@ -100,7 +107,6 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_GetProgramData( HEAPID heapId )
   }
   //ランダム分の分配
   {
-    /*
     u8 point = progData->condition[MCT_RANDOM]/5;
     while( point > 0 )
     {
@@ -113,12 +119,6 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_GetProgramData( HEAPID heapId )
       progWork->condition[GFL_STD_MtRand(MCT_MAX)] += val*5;
       point -= val;
     }
-    */
-    progWork->condition[MCT_COOL] = 20;
-    progWork->condition[MCT_CUTE] = 70;
-    progWork->condition[MCT_ELEGANT] = 20;
-    progWork->condition[MCT_UNIQUE] = 50;
-    progWork->condition[MCT_RANDOM] = 40;
   }
   OS_TPrintf("--FinalCondition--\n");
   OS_TPrintf("Cool   [%3d]\n",progWork->condition[0]);
