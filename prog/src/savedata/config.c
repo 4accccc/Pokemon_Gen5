@@ -260,6 +260,7 @@ MOJIMODE CONFIG_GetMojiMode(const CONFIG * cfg)
 void CONFIG_SetMojiMode(CONFIG * cfg, MOJIMODE type)
 {
   cfg->moji_mode = type;
+	GFL_MSGSYS_SetLangID( cfg->moji_mode );
 }
 
 //	ワイヤレスセーブモード

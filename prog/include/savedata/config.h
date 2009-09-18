@@ -142,6 +142,7 @@ typedef enum{
 typedef enum{	
 	NETWORK_SEARCH_OFF,
 	NETWORK_SEARCH_ON,
+	NETWORK_SEARCH_MAX,
 }NETWORK_SEARCH_MODE;
 
 //============================================================================================

@@ -20,8 +20,12 @@ enum {
 	NARC_config_gra_est_obj_01_NCER = 6,
 	NARC_config_gra_est_obj_01_NCGR = 7,
 	NARC_config_gra_est_obj_01_NCLR = 8,
-	NARC_config_gra_ue_bar_01_NCGR = 9,
-	NARC_config_gra_ue_bar_01_NSCR = 10
+	NARC_config_gra_est_uegamen_01_NCGR = 9,
+	NARC_config_gra_est_uegamen_01_NCLR = 10,
+	NARC_config_gra_est_uegamen_01_NSCR = 11,
+	NARC_config_gra_ue_bar_01_NCGR = 12,
+	NARC_config_gra_ue_bar_01_NSCR = 13,
+	NARC_config_gra_ue_flame_01_NCGR = 14
 };
 
 /* NARC_CONFIG_GRA_NAIX_ */
