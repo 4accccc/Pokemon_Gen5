@@ -970,24 +970,25 @@ BOOL SetEvDefineObjCode( FLDCOMMON_WORK* fsys, u16 no, u16 obj_code )
  * @return	none
  */
 //------------------------------------------------------------------
-#ifndef SCRIPT_PL_NULL
-void LocalEventFlagClear( EVENTWORK * eventwork )
+void LocalEventFlagClear( EVENTWORK * event )
 {
-	int i;
-	EVENTWORK* event;
+  enum {
+    LOCAL_WORK_MAX = LOCALWORKAREA_END - LOCALWORKAREA_START,
 
+    //LOCAL_FLAG_AREA_MAX = FH_AREA_END - FH_AREA_START,
+  };
+	int i;
 	//イベントワークのポインタ取得
-	event = SaveData_GetEventWork(fsys->savedata);
+  //
 
 	//ローカルフラグのクリア"8bit * 8 = 64個分"
 	//"0"は無効なナンバーなので1を渡して取得している
-	MI_CpuClear8( EventWork_GetEventFlagAdrs(event,1), LOCAL_FLAG_AREA_MAX );
+	//MI_CpuClear8( EVENTWORK_GetEventFlagAdrs(event,1), LOCAL_FLAG_AREA_MAX );
 
 	//ローカルワークのクリア"32個分"
-	MI_CpuClear8( EventWork_GetEventWorkAdrs(event,LOCAL_WORK_START), 2*LOCAL_WORK_MAX );
+	MI_CpuClear8( EVENTWORK_GetEventWorkAdrs(event,LOCALWORKAREA_START), 2*LOCAL_WORK_MAX );
 
 }
-#endif
 
 //------------------------------------------------------------------
 /**
@@ -1234,6 +1235,8 @@ BOOL SCRIPT_CallFieldRecoverScript( GAMESYS_WORK * gsys, HEAPID heapID )
 //------------------------------------------------------------------
 BOOL SCRIPT_CallZoneChangeScript( GAMESYS_WORK * gsys, HEAPID heapID)
 {
+  EVENTWORK * ev = GAMEDATA_GetEventWork( GAMESYSTEM_GetGameData(gsys) );
+  LocalEventFlagClear(ev);
   return searchMapInitScript( gsys, heapID, SP_SCRID_ZONE_CHANGE );
 }
 
