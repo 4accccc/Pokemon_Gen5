@@ -19,14 +19,18 @@ HEADER = monsno_def.h
 HASHFILE = monsno_hash.rb
 GMMFILE = monsname.gmm
 SCRFILE = pokegra_wb.scr
-OTHERFILE = otherpoke_wb.scr
+LSTFILE = pokegra_wb.lst
+OTHERFORMFILE = otherform_wb.scr
+OTHERPLTTFILE = otherpltt_wb.scr
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR	= ../../prog/include/poke_tool/
-GMMDIR	= ../../resource/message/src/
+GMMDIR	= ../message/src/
 HASHDIR	= ../../tools/hash/
+SCRDIR = ../pokegra/
+LSTDIR = ../pokegra/conv/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -53,7 +57,7 @@ out_end: personal_wb.csv
 	ruby ../../tools/personal_conv/personal_conv.rb $< ../message/template.gmm
 endif
 
-do-build: $(TARGETDIR)$(HEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(HASHFILE)
+do-build: $(TARGETDIR)$(HEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(HASHFILE) $(SCRDIR)$(SCRFILE) $(LSTDIR)$(LSTFILE) $(SCRDIR)$(OTHERFORMFILE) $(SCRDIR)$(OTHERPLTTFILE)
 
 $(TARGETDIR)$(HEADER):	$(HEADER)
 	$(COPY)	$(HEADER) $(TARGETDIR)
@@ -64,6 +68,18 @@ $(GMMDIR)$(GMMFILE):	$(GMMFILE)
 $(HASHDIR)$(HASHFILE):	$(HASHFILE)
 	$(COPY)	$(HASHFILE) $(HASHDIR)
 
+$(SCRDIR)$(SCRFILE):	$(SCRFILE)
+	$(COPY)	$(SCRFILE) $(SCRDIR)
+
+$(LSTDIR)$(LSTFILE):	$(LSTFILE)
+	$(COPY)	$(LSTFILE) $(LSTDIR)
+
+$(SCRDIR)$(OTHERFORMFILE):	$(OTHERFORMFILE)
+	$(COPY)	$(OTHERFORMFILE) $(SCRDIR)
+
+$(SCRDIR)$(OTHERPLTTFILE):	$(OTHERPLTTFILE)
+	$(COPY)	$(OTHERPLTTFILE) $(SCRDIR)
+
 #------------------------------------------------------------------------------
 #	make cleanルール
 #------------------------------------------------------------------------------
@@ -73,10 +89,13 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f $(HEADER)
 	-rm -f $(GMMFILE)
 	-rm -f $(HASHFILE)
+	-rm -f $(LSTFILE)
 	-rm -f *.scr
 	-rm -f out_end
 endif
 	-rm -f $(TARGETDIR)$(HEADER)
 	-rm -f $(GMMDIR)$(GMMFILE)
 	-rm -f $(HASHDIR)$(HASHFILE)
+	-rm -f $(LSTDIR)$(LSTFILE)
+	-rm -f $(SCRDIR)*.scr
 
