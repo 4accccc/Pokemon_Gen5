@@ -42,38 +42,28 @@ _EVENT_DATA_END
 /*  C01R0302 MAN1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c01r0302_talkobj_man1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0302_man1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0302_man1_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C01R0302 BREEDERWの会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c01r0302_talkobj_breederw
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0302_breederw_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0302_breederw_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C01R0302 POKE1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c01r0302_talkobj_poke1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0302_poke1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	//【仮】ポケモンの鳴き声は仮です
+	_EASY_TALK_POKEVOICE( MONSNO_PIKATYUU, msg_c01r0302_poke1_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C01R0302 POKE2の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c01r0302_talkobj_poke2
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0302_poke2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	//【仮】ポケモンの鳴き声は仮です
+	_EASY_TALK_POKEVOICE( MONSNO_PIKATYUU, msg_c01r0302_poke2_01 )
 EVENT_END

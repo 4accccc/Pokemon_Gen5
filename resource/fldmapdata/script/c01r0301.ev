@@ -17,6 +17,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c01r0301_talkobj_middlewoman2
 _EVENT_DATA    ev_c01r0301_talkobj_man1
+_EVENT_DATA    ev_c01r0301_talkobj_man2
 _EVENT_DATA    ev_c01r0301_talkobj_boy2
 _EVENT_DATA_END
 
@@ -41,28 +42,37 @@ _EVENT_DATA_END
 /*  C01R0301 MIDDLEWOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c01r0301_talkobj_middlewoman2
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0301_middlewoman2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0301_middlewoman2_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C01R0301 MAN1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c01r0301_talkobj_man1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0301_man1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+ 	 _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0301_man1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  C01R0301 MAN2の会話用イベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_c01r0301_talkobj_man2
+	_TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0301_man2_01 )
+	_YES_NO_WIN( SCWK_ANSWER )
+		//【仮】ポケモン交換処理は保留
+		IF $SCWK_ANSWER == 0 THEN
+			//【仮】ポケモンを間違えた時の反応にしています
+			_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0301_man2_03 )
+		ELSE
+			_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0301_man2_04 )
+ 	 	ENDIF
+ 	 _AB_KEYWAIT()
+ 	 _BALLOONWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
 /*  C01R0301 BOY2の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c01r0301_talkobj_boy2
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0301_boy2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0301_boy2_01 )
 EVENT_END
