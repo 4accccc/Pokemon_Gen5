@@ -47,8 +47,9 @@
   u16   form_gra_index; //別フォルムグラフィックデータ開始位置
 
   u8    form_max;       //別フォルムMAX
-  u8    color :7;       //色（図鑑で使用）
-  u8    reverse :1;     //反転フラグ
+  u8    color     :6;   //色（図鑑で使用）
+  u8    reverse   :1;   //反転フラグ
+  u8    pltt_only :1;   //別フォルム時パレットのみ変化  
   u8    rank;           //ポケモンランク
   u8    padding;        //パディング
 
@@ -164,6 +165,7 @@ class PARA
     REVERSE
     OTHERFORM
     RANK
+    PLTT_ONLY
     MAX
   ]
 end
@@ -434,6 +436,7 @@ end
   print "ポケモンラベル＆グラフィックデータ圧縮リスト＆gmmファイル　生成中\n"
   fp_monsno = open( "monsno_def.h", "w" )
   fp_gra = open( "pokegra_wb.scr", "w" )
+  fp_lst = open( "pokegra_wb.lst", "w" )
   gmm = GMM::new
   gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "monsname.gmm" )
 
@@ -507,6 +510,86 @@ end
 	    fp_gra.printf( "\"pmwb_%s%s_n.NCLR\"\n",   split_data[ PARA::GRA_NO ], form_name )
 	    fp_gra.printf( "\"pmwb_%s%s_r.NCLR\"\n",   split_data[ PARA::GRA_NO ], form_name )
 
+      gra_no = split_data[ PARA::GRA_NO ].to_i
+
+      case gra_no
+      when 1..151
+	      fp_lst.printf( "kanto/%03d/pfwb_%s%s_m.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "kanto/%03d/pfwb_%s%s_f.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "kanto/%03d/pfwb_%sc%s_m.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "kanto/%03d/pfwb_%sc%s_f.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "kanto/%03d/pfwb_%s%s.nce\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "kanto/%03d/pfwb_%s%s.nmc\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "kanto/%03d/pbwb_%s%s_m.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "kanto/%03d/pbwb_%s%s_f.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "kanto/%03d/pbwb_%sc%s_m.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "kanto/%03d/pbwb_%sc%s_f.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "kanto/%03d/pbwb_%s%s.nce\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "kanto/%03d/pbwb_%s%s.nmc\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "kanto/%03d/pmwb_%s%s_n.ncl\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "kanto/%03d/pmwb_%s%s_r.ncl\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+      when 152..251
+	      fp_lst.printf( "jyoto/%03d/pfwb_%s%s_m.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "jyoto/%03d/pfwb_%s%s_f.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "jyoto/%03d/pfwb_%sc%s_m.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "jyoto/%03d/pfwb_%sc%s_f.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "jyoto/%03d/pfwb_%s%s.nce\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "jyoto/%03d/pfwb_%s%s.nmc\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "jyoto/%03d/pbwb_%s%s_m.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "jyoto/%03d/pbwb_%s%s_f.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "jyoto/%03d/pbwb_%sc%s_m.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "jyoto/%03d/pbwb_%sc%s_f.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "jyoto/%03d/pbwb_%s%s.nce\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "jyoto/%03d/pbwb_%s%s.nmc\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "jyoto/%03d/pmwb_%s%s_n.ncl\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "jyoto/%03d/pmwb_%s%s_r.ncl\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+      when 252..386
+	      fp_lst.printf( "houen/%03d/pfwb_%s%s_m.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "houen/%03d/pfwb_%s%s_f.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "houen/%03d/pfwb_%sc%s_m.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "houen/%03d/pfwb_%sc%s_f.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "houen/%03d/pfwb_%s%s.nce\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "houen/%03d/pfwb_%s%s.nmc\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "houen/%03d/pbwb_%s%s_m.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "houen/%03d/pbwb_%s%s_f.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "houen/%03d/pbwb_%sc%s_m.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "houen/%03d/pbwb_%sc%s_f.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "houen/%03d/pbwb_%s%s.nce\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "houen/%03d/pbwb_%s%s.nmc\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "houen/%03d/pmwb_%s%s_n.ncl\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "houen/%03d/pmwb_%s%s_r.ncl\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+      when 387..493
+	      fp_lst.printf( "shinou/%03d/pfwb_%s%s_m.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "shinou/%03d/pfwb_%s%s_f.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "shinou/%03d/pfwb_%sc%s_m.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "shinou/%03d/pfwb_%sc%s_f.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "shinou/%03d/pfwb_%s%s.nce\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "shinou/%03d/pfwb_%s%s.nmc\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "shinou/%03d/pbwb_%s%s_m.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "shinou/%03d/pbwb_%s%s_f.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "shinou/%03d/pbwb_%sc%s_m.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "shinou/%03d/pbwb_%sc%s_f.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "shinou/%03d/pbwb_%s%s.nce\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "shinou/%03d/pbwb_%s%s.nmc\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "shinou/%03d/pmwb_%s%s_n.ncl\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "shinou/%03d/pmwb_%s%s_r.ncl\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+      else
+	      fp_lst.printf( "issyu/%03d/pfwb_%s%s_m.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "issyu/%03d/pfwb_%s%s_f.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "issyu/%03d/pfwb_%sc%s_m.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "issyu/%03d/pfwb_%sc%s_f.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "issyu/%03d/pfwb_%s%s.nce\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "issyu/%03d/pfwb_%s%s.nmc\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "issyu/%03d/pbwb_%s%s_m.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "issyu/%03d/pbwb_%s%s_f.ncg\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "issyu/%03d/pbwb_%sc%s_m.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "issyu/%03d/pbwb_%sc%s_f.ncg\n",  gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "issyu/%03d/pbwb_%s%s.nce\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "issyu/%03d/pbwb_%s%s.nmc\n",     gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "issyu/%03d/pmwb_%s%s_n.ncl\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+	      fp_lst.printf( "issyu/%03d/pmwb_%s%s_r.ncl\n",   gra_no, split_data[ PARA::GRA_NO ], form_name )
+      end
+
       gmm.make_row_index( "MONSNAME_", cnt, split_data[ PARA::POKENAME ] )
     end
     if split_data[ PARA::FORM_NAME ] != "" && split_data[ PARA::POKENAME ] != ""
@@ -539,8 +622,7 @@ end
 	fp_gra.print( "\"pmwb_egg_normal.NMCR\"\n" )
 	fp_gra.print( "\"pmwb_egg_normal.NMAR\"\n" )
 	fp_gra.print( "\"pmwb_egg_normal.NCEC\"\n" )
-	fp_gra.print( "\"pmwb_egg_normal_n.NCLR\"\n" )
-	fp_gra.print( "\"pmwb_egg_normal_r.NCLR\"\n" )
+	fp_gra.print( "\"pmwb_egg_normal.NCLR\"\n" )
   fp_gra.print( "\"pmwb_egg_manafi.NCGR\"\n" )
 	fp_gra.print( "\"pmwb_eggc_manafi.NCBR\"\n" )
 	fp_gra.print( "\"pmwb_egg_manafi.NCER\"\n" )
@@ -548,10 +630,21 @@ end
 	fp_gra.print( "\"pmwb_egg_manafi.NMCR\"\n" )
 	fp_gra.print( "\"pmwb_egg_manafi.NMAR\"\n" )
 	fp_gra.print( "\"pmwb_egg_manafi.NCEC\"\n" )
-	fp_gra.print( "\"pmwb_egg_manafi_n.NCLR\"\n" )
-	fp_gra.print( "\"pmwb_egg_manafi_r.NCLR\"\n" )
+	fp_gra.print( "\"pmwb_egg_manafi.NCLR\"\n" )
+
+  fp_lst.print( "egg/pmwb_egg_normal.ncg\n" )
+	fp_lst.print( "egg/pmwb_eggc_normal.ncg\n" )
+	fp_lst.print( "egg/pmwb_egg_normal.nce\n" )
+	fp_lst.print( "egg/pmwb_egg_normal.nmc\n" )
+	fp_lst.print( "egg/pmwb_egg_normal.ncl\n" )
+  fp_lst.print( "egg/pmwb_egg_manafi.ncg\n" )
+	fp_lst.print( "egg/pmwb_eggc_manafi.ncg\n" )
+	fp_lst.print( "egg/pmwb_egg_manafi.nce\n" )
+	fp_lst.print( "egg/pmwb_egg_manafi.nmc\n" )
+	fp_lst.print( "egg/pmwb_egg_manafi.ncl\n" )
 
   fp_gra.close
+  fp_lst.close
 
   fp_monsno.printf( "#define\t\tMONSNO_TAMAGO\t\t\t\t( %d )\n", monsno_max )
   fp_monsno.printf( "#define\t\tMONSNO_DAMETAMAGO\t\t( %d )\n", monsno_max + 1 )
@@ -559,7 +652,8 @@ end
   fp_monsno.printf( "#define\t\tMONSNO_MAX\t\t\t\t\t( %d )\n",   monsno_max + 1 )
   fp_monsno.print( "\n" )
 
-  fp_gra = open( "otherpoke_wb.scr", "w" )
+  fp_form = open( "otherform_wb.scr", "w" )
+  fp_pltt = open( "otherpltt_wb.scr", "w" )
 
   fp_monsno.print( "//別フォルム定義\n" )
 
@@ -574,26 +668,31 @@ end
         str << form[ i ].get_form_name( j ).upcase
         fp_monsno.printf( "#define\t\t%s\t\t\t\t( %d )\n", str, j )
         if j != 0
-  	      fp_gra.printf( "\"pfwb_%s_%s_m.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pfwb_%s_%s_f.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pfwb_%sc_%s_m.NCBR\"\n",  split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pfwb_%sc_%s_f.NCBR\"\n",  split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pfwb_%s_%s.NCER\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pfwb_%s_%s.NANR\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pfwb_%s_%s.NMCR\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pfwb_%s_%s.NMAR\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pfwb_%s_%s.NCEC\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pbwb_%s_%s_m.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pbwb_%s_%s_f.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pbwb_%sc_%s_m.NCBR\"\n",  split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pbwb_%sc_%s_f.NCBR\"\n",  split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pbwb_%s_%s.NCER\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pbwb_%s_%s.NANR\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pbwb_%s_%s.NMCR\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pbwb_%s_%s.NMAR\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pbwb_%s_%s.NCEC\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pmwb_%s_%s_n.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
-  	      fp_gra.printf( "\"pmwb_%s_%s_r.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+          if split_data[ PARA::PLTT_ONLY ] == "●"
+  	        fp_form.printf( "\"pmwb_%s_%s_n.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pmwb_%s_%s_r.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+          else
+  	        fp_form.printf( "\"pfwb_%s_%s_m.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pfwb_%s_%s_f.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pfwb_%sc_%s_m.NCBR\"\n",  split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pfwb_%sc_%s_f.NCBR\"\n",  split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pfwb_%s_%s.NCER\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pfwb_%s_%s.NANR\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pfwb_%s_%s.NMCR\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pfwb_%s_%s.NMAR\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pfwb_%s_%s.NCEC\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pbwb_%s_%s_m.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pbwb_%s_%s_f.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pbwb_%sc_%s_m.NCBR\"\n",  split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pbwb_%sc_%s_f.NCBR\"\n",  split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pbwb_%s_%s.NCER\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pbwb_%s_%s.NANR\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pbwb_%s_%s.NMCR\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pbwb_%s_%s.NMAR\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pbwb_%s_%s.NCEC\"\n",     split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pmwb_%s_%s_n.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+  	        fp_form.printf( "\"pmwb_%s_%s_r.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
+          end
         end
       }
       fp_monsno.print( "\n" )
@@ -601,7 +700,8 @@ end
   }
 
   fp_monsno.close
-  fp_gra.close
+  fp_form.close
+  fp_pltt.close
 
   print "ポケモンラベル＆グラフィックデータ圧縮リスト＆gmmファイル　生成終了\n"
 
@@ -782,9 +882,12 @@ end
       end
       col_rev = color_table[ split_data[ PARA::COLOR ] ]
       if split_data[ PARA::REVERSE ] == "●"
+        col_rev |= 0x40
+      end
+      if split_data[ PARA::PLTT_ONLY ] == "●"
         col_rev |= 0x80
       end
-      fp_per.printf( "\t.byte\t\t%s\t\t//色（図鑑で使用）//反転フラグ\n",       col_rev.to_i )
+      fp_per.printf( "\t.byte\t\t%s\t\t//色（図鑑で使用）、反転フラグ、別フォルム時パレットのみ変化\n",       col_rev.to_i )
 
       if rank_table[ split_data[ PARA::RANK ] ] == nil
         printf( "定義されていないランクです:%s\n", split_data[ PARA::RANK ] )

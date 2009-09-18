@@ -77,7 +77,6 @@
 		fp_r.close
 		fp_w.close
 		com = "cp " + ARGV[ ARGV_READ_FILE ] + " " + ARGV[ ARGV_OUT_DIR ]
-		p com
 		system( com )
 		exit( 0 )
 	end

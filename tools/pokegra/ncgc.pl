@@ -26,6 +26,8 @@ use File::Basename;
 		$filename =~ s/pfwb/pmwb/g;
 		$filename =~ s/c_m//g;
 		$filename =~ s/c_f//g;
+		$filename =~ s/(c_)(\w*)(_m)/_$2/g;
+		$filename =~ s/(c_)(\w*)(_f)/_$2/g;
 		$cmd = "rm " . $filename . "_n.NCLR";
 		system $cmd;
 		$cmd = "rm " . $filename . "_r.NCLR";
@@ -33,8 +35,9 @@ use File::Basename;
 
 		#_fÉtÉ@ÉCÉãÇ™ë∂ç›ÇµÇ»Ç¢èÍçáÇ…ê∂ê¨
 		$file_name = basename( @ARGV[0], '.ncg' );
-		if( $file_name =~ m/c_m/ ){
+		if( ( $file_name =~ m/c_m/ ) || ( $file_name =~ m/c_\w*_m/ ) ){
 			$file_name =~ s/c_m/c_f/g;
+		  $file_name =~ s/(c_)(\w*)(_m)/c_$2_f/g;
 			$file_name = @ARGV[1] . $file_name . ".NCBR";
 			$size = -s $file_name;
 			if( $size eq "" ){
