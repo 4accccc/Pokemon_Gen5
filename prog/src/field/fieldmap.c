@@ -88,6 +88,8 @@
 #include "field_gimmick.h"
 #include "gmk_tmp_wk.h"
 
+#include "script.h"   //SCRIPT_CallZoneChangeScript
+
 //======================================================================
 //	define
 //======================================================================
@@ -1955,6 +1957,9 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	//ゾーンID更新
 	lc->zone_id = new_zone_id;
 	
+  //特殊スクリプト呼び出し：ゾーン切り替え
+  SCRIPT_CallZoneChangeScript( fieldWork->gsys, HEAPID_PROC );
+
 	KAGAYA_Printf( "ゾーン更新完了 %d -> %d\n", lc->zone_id, new_zone_id );
 }
 

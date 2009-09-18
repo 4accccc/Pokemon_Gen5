@@ -677,6 +677,9 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 
   //ギミックアサイン
   AssignGimmickID(gamedata, loc.zone_id);
+
+  //特殊スクリプト呼び出し：ゾーン切り替え
+  SCRIPT_CallZoneChangeScript( gsys, HEAPID_PROC );
 }
 
 //--------------------------------------------------------------
