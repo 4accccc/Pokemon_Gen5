@@ -102,7 +102,9 @@ struct _BTL_MAIN_MODULE {
   pMainLoop   mainLoop;
 
 
+  u8          escapeClientID;
   HEAPID      heapID;
+
 
 };
 
@@ -180,6 +182,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
       wk->heapID = HEAPID_BTL_SYSTEM;
       wk->setupParam = setup_param;
+      wk->escapeClientID = BTL_CLIENTID_NULL;
 
       BTL_NET_InitSystem( setup_param->netHandle, HEAPID_BTL_NET );
       BTL_CALC_ITEM_InitSystem( HEAPID_BTL_SYSTEM );
@@ -207,6 +210,9 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       if( BTL_UTIL_CallProc(&wk->subProc) )
       {
         BTL_Printf("Proc Init done\n");
+        BTL_Printf("test non-exist heapSize=%d\n", GFI_HEAP_GetHeapTotalSize(HEAPID_BALLOON) );
+        GFL_HEAP_DEBUG_PrintExistMemoryBlocks( PARENT_HEAP_ID );
+
         return GFL_PROC_RES_FINISH;
       }
    }
@@ -986,6 +992,7 @@ static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk )
   {
     if( BTL_CLIENT_Main(wk->client[i]) )
     {
+      wk->escapeClientID = BTL_CLIENT_GetEscapeClientID( wk->client[i] );
       quitFlag = TRUE;
     }
   }
@@ -1009,6 +1016,7 @@ static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
     {
       if( BTL_CLIENT_Main(wk->client[i]) )
       {
+        wk->escapeClientID = BTL_CLIENT_GetEscapeClientID( wk->client[i] );
         quitFlag = TRUE;
       }
     }
@@ -1030,6 +1038,7 @@ static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk )
     {
       if( BTL_CLIENT_Main(wk->client[i]) )
       {
+        wk->escapeClientID = BTL_CLIENT_GetEscapeClientID( wk->client[i] );
         quitFlag = TRUE;
       }
     }
@@ -2229,37 +2238,50 @@ const MYSTATUS* BTL_MAIN_GetClientPlayerData( const BTL_MAIN_MODULE* wk, u8 clie
 //----------------------------------------------------------------------------------------------
 static void checkWinner( BTL_MAIN_MODULE* wk )
 {
-  BTL_POKE_CONTAINER* container;
+  // 種々メッセージのタグ解釈不備を解消すべし
+  BtlResult result;
 
-  u32 i;
-  u8 restPokeCnt[2];
-
-
-  GFL_STD_MemClear( restPokeCnt, sizeof(restPokeCnt) );
-  container = &wk->pokeconForServer;
-
-  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  if( wk->escapeClientID != BTL_CLIENTID_NULL )
   {
-    if( PokeCon_IsExistClient( container, i ) )
-    {
-      BTL_PARTY* party = BTL_POKECON_GetPartyData( container, i );
-      if( BTL_PARTY_GetMemberCount(party) )
-      {
-        u8 side = BTL_MAIN_GetClientSide( wk, i );
-        restPokeCnt[side] += BTL_PARTY_GetAliveMemberCount( party );
-      }
-    }
-  }
-
-  if( restPokeCnt[0] == restPokeCnt[1] )
-  {
-    wk->setupParam->result = BTL_RESULT_DRAW;
+    result = (wk->escapeClientID == wk->myClientID)? BTL_RESULT_RUN : BTL_RESULT_RUN_ENEMY;
+    BTL_Printf("逃げたクライアント=%d, 自分=%d\n", wk->escapeClientID, wk->myClientID);
   }
   else
   {
-    u8 winSide = (restPokeCnt[0] > restPokeCnt[1])? 0 : 1;
-    wk->setupParam->result = (winSide == BTL_MAIN_GetClientSide(wk, wk->myClientID))?
-          BTL_RESULT_WIN : BTL_RESULT_LOSE;
+    BTL_POKE_CONTAINER* container;
+
+    u32 i;
+    u8 restPokeCnt[2];
+
+
+    GFL_STD_MemClear( restPokeCnt, sizeof(restPokeCnt) );
+    container = &wk->pokeconForServer;
+
+    for(i=0; i<BTL_CLIENT_MAX; ++i)
+    {
+      if( PokeCon_IsExistClient( container, i ) )
+      {
+        BTL_PARTY* party = BTL_POKECON_GetPartyData( container, i );
+        if( BTL_PARTY_GetMemberCount(party) )
+        {
+          u8 side = BTL_MAIN_GetClientSide( wk, i );
+          restPokeCnt[side] += BTL_PARTY_GetAliveMemberCount( party );
+        }
+      }
+    }
+
+    if( restPokeCnt[0] == restPokeCnt[1] )
+    {
+      result = BTL_RESULT_DRAW;
+    }
+    else
+    {
+      u8 winSide = (restPokeCnt[0] > restPokeCnt[1])? 0 : 1;
+      result = (winSide == BTL_MAIN_GetClientSide(wk, wk->myClientID))?
+            BTL_RESULT_WIN : BTL_RESULT_LOSE;
+    }
   }
+
+  wk->setupParam->result = result;
 }
 

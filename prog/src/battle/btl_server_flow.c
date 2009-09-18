@@ -179,6 +179,7 @@ struct _BTL_SVFLOW_WORK {
   u8      numEndActOrder;
   u8      wazaEff_EnableFlag;
   u8      wazaEff_TargetPokeID;
+  u8      escapeClientID;
   u8      pokeDeadFlag[ BTL_POKEID_MAX ];
 
 
@@ -586,6 +587,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->heapID = heapID;
   wk->prevExeWaza = WAZANO_NULL;
   wk->bagMode = bagMode;
+  wk->escapeClientID = BTL_CLIENTID_NULL;
   {
     BtlRule rule = BTL_MAIN_GetRule( mainModule );
     BTL_POSPOKE_InitWork( &wk->pospokeWork, wk->mainModule, wk->pokeCon, rule );
@@ -744,6 +746,21 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
   return result;
 }
 
+//=============================================================================================
+/**
+ * 逃げたクライアントIDを取得
+ *
+ * @param   wk
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_SVFLOW_GetEscapeClientID( const BTL_SVFLOW_WORK* wk )
+{
+  return wk->escapeClientID;
+}
+
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -789,6 +806,8 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
         {
           PMSND_PlaySE( SEQ_SE_NIGERU );
           wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
+          wk->escapeClientID = actOrder->clientID;
+          BTL_Printf("クライアント[%d]が逃げて終了\n");
         } else {
           SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
         }

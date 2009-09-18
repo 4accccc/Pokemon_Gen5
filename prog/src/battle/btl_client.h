@@ -55,6 +55,7 @@ extern BTL_CLIENT* BTL_CLIENT_Create(
   HEAPID heapID );
 
 extern void BTL_CLIENT_Delete( BTL_CLIENT* wk );
+extern u8 BTL_CLIENT_GetEscapeClientID( const BTL_CLIENT* wk );
 
 
 extern BTL_ADAPTER* BTL_CLIENT_GetAdapter( BTL_CLIENT* client );

@@ -28,7 +28,7 @@
 typedef enum {
   SVFLOW_RESULT_DEFAULT = 0,  ///< そのまま続行
   SVFLOW_RESULT_POKE_CHANGE,  ///< ポケモン入れ替えフェーズ->バトル継続
-  SVFLOW_RESULT_BTL_QUIT,     ///< バトル終了
+  SVFLOW_RESULT_BTL_QUIT,     ///< バトル終了（決着）
 }SvflowResult;
 
 
@@ -87,6 +87,7 @@ extern SvflowResult BTL_SVFLOW_StartAfterPokeSelect( BTL_SVFLOW_WORK* wk );
 // server_flow -> server
 extern SVCL_WORK* BTL_SERVER_GetClientWork( BTL_SERVER* server, u8 clientID );
 extern SVCL_WORK* BTL_SERVER_GetClientWorkIfEnable( BTL_SERVER* server, u8 clientID );
+extern u8 BTL_SVFLOW_GetEscapeClientID( const BTL_SVFLOW_WORK* wk );
 
 extern u8 BTL_SVCL_GetNumActPoke( SVCL_WORK* clwk );
 extern const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx );

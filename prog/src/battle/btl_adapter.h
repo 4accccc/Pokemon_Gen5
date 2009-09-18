@@ -1,10 +1,10 @@
 //=============================================================================================
 /**
- * @file	btl_adapter.h
- * @brief	ポケモンWB バトルシステム	サーバ-クライアント間アダプター
- * @author	taya
+ * @file  btl_adapter.h
+ * @brief ポケモンWB バトルシステム サーバ-クライアント間アダプター
+ * @author  taya
  *
- * @date	2008.09.25	作成
+ * @date  2008.09.25  作成
  */
 //=============================================================================================
 #ifndef __BTL_ADAPTER_H__
@@ -16,40 +16,41 @@
 
 //--------------------------------------------------------------
 /**
- *	ハンドラ用型定義
+ *  ハンドラ用型定義
  */
 //--------------------------------------------------------------
-typedef struct _BTL_ADAPTER		BTL_ADAPTER;
+typedef struct _BTL_ADAPTER   BTL_ADAPTER;
 
 
 //--------------------------------------------------------------
 /**
- *	アダプタータイプ
+ *  アダプタータイプ
  */
 //--------------------------------------------------------------
 typedef enum {
-	BTL_ADAPTER_LOCAL,			///< 通信せず、サーバと同一マシン上にクライアントがある
-	BTL_ADAPTER_COMM_PARENT,	///< DS 無線通信を利用（親機側）
-	BTL_ADAPTER_COMM_CHILD,		///< DS 無線通信をを利用（子機側）
-	BTL_ADAPTER_WIFI_PARENT,	///< DS Wi-Fi 機能を利用（親機側）
-	BTL_ADAPTER_WIFI_CHILD,		///< DS Wi-Fi 機能を利用（子機側）
+  BTL_ADAPTER_LOCAL,      ///< 通信せず、サーバと同一マシン上にクライアントがある
+  BTL_ADAPTER_COMM_PARENT,  ///< DS 無線通信を利用（親機側）
+  BTL_ADAPTER_COMM_CHILD,   ///< DS 無線通信をを利用（子機側）
+  BTL_ADAPTER_WIFI_PARENT,  ///< DS Wi-Fi 機能を利用（親機側）
+  BTL_ADAPTER_WIFI_CHILD,   ///< DS Wi-Fi 機能を利用（子機側）
 }BtlAdapterType;
 
 //--------------------------------------------------------------
 /**
- *	アダプターコマンド
+ *  アダプターコマンド
  */
 //--------------------------------------------------------------
 typedef enum {
-	BTL_ACMD_NONE = 0,
-	BTL_ACMD_NOTIFY_POKEDATA,
-	BTL_ACMD_WAIT_INITIALIZE,
-	BTL_ACMD_SELECT_ACTION,
-	BTL_ACMD_SELECT_POKEMON,
-	BTL_ACMD_SERVER_CMD,
-	BTL_ACMD_QUIT_BTL,
+  BTL_ACMD_NONE = 0,
+  BTL_ACMD_NOTIFY_POKEDATA,
+  BTL_ACMD_WAIT_INITIALIZE,
+  BTL_ACMD_SELECT_ACTION,
+  BTL_ACMD_SELECT_POKEMON,
+  BTL_ACMD_SERVER_CMD,
+  BTL_ACMD_QUIT_BTL,
+  BTL_ACMD_QUIT_ESCAPE,
 
-	BTL_ACMD_MAX,
+  BTL_ACMD_MAX,
 }BtlAdapterCmd;
 
 

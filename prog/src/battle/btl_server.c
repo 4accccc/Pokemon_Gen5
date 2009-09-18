@@ -71,6 +71,7 @@ struct _BTL_SERVER {
   BtlBagMode            bagMode;
   u8          numClient;
   u8          quitStep;
+  u32         escapeClientID;
 
 
   BTL_SERVER_CMD_QUE  queBody;
@@ -299,7 +300,9 @@ void BTL_SERVER_Main( BTL_SERVER* sv )
   {
     if( sv->mainProc( sv, &sv->seq ) )
     {
-      SetAdapterCmd( sv, BTL_ACMD_QUIT_BTL );
+      sv->escapeClientID = BTL_SVFLOW_GetEscapeClientID( sv->flowWork );
+      BTL_Printf("逃げクライアントID=%d\n", sv->escapeClientID);
+      SetAdapterCmdEx( sv, BTL_ACMD_QUIT_BTL, &sv->escapeClientID, sizeof(sv->escapeClientID) );
       sv->quitStep = QUITSTEP_CORE;
     }
   }

@@ -109,6 +109,7 @@ struct _BTL_CLIENT {
   u8  commWaitInfoOn;
   u8  bagMode;
   u8  shooterEnergy;
+  u8  escapeClientID;
 
   u8          myChangePokeCnt;
   BtlPokePos  myChangePokePos[ BTL_POSIDX_MAX ];
@@ -244,6 +245,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->commWaitInfoOn = FALSE;
   wk->shooterEnergy = 0;
   wk->bagMode = bagMode;
+  wk->escapeClientID = BTL_CLIENTID_NULL;
 
   return wk;
 }
@@ -286,6 +288,9 @@ BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
       BtlAdapterCmd  cmd = BTL_ADAPTER_RecvCmd(wk->adapter);
       if( cmd == BTL_ACMD_QUIT_BTL )
       {
+        const u32* p;
+        BTL_ADAPTER_GetRecvData( wk->adapter, (const void**)&p );
+        wk->escapeClientID = *p;
         return TRUE;
       }
       if( cmd != BTL_ACMD_NONE )
@@ -335,6 +340,20 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
 
   GF_ASSERT(0);
   return NULL;
+}
+
+//=============================================================================================
+/**
+ * 逃げたクライアントのIDを取得（サーバコマンドを介して送られてくる）
+ *
+ * @param   wk
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_CLIENT_GetEscapeClientID( const BTL_CLIENT* wk )
+{
+  return wk->escapeClientID;
 }
 //------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------
