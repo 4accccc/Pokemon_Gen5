@@ -31,19 +31,21 @@ include	$(PROJECT_RSCDIR)\macro_define
 #------------------------------------------------------------------------------
 #データ
 #------------------------------------------------------------------------------
-SAFILE = $(wildcard *.sa)
-OBJ_FILE = $(SAFILE:.sa=.dat)
+XLSFILE = rail_data.xls
+XLS_CSV_FILE = rail_data.txt
+#エクセルコンバーター
+CSV_CVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
+
+#naix
+RAILDATA_NAIX = rail/field_rail_data.naix 
+SCENEDATA_NAIX = scene/field_scenearea_data.naix 
 
 LIST_FILE 	= list.txt
-
-script = $(PROJECT_ROOT)\tools\rail_editor\scenearea_conv.pl
 
 #------------------------------------------------------------------------------
 #ヘッダ参照先
 #------------------------------------------------------------------------------
 HEADERDIR = $(PROJECT_PROGDIR)src/field/
-
-HEADERDUMMY_TARGET = headerdummy.txt
 
 #------------------------------------------------------------------------------
 #	#サフィックス
@@ -52,11 +54,7 @@ HEADERDUMMY_TARGET = headerdummy.txt
 ifeq	($(CONVERTUSER),true)	
 
 
-.SUFFIXES: .sa .dat
-
-#コンバート環境
-.sa.dat:
-	perl $(script) $< $(HEADERDIR)fld_scenearea_loader_func.h $(HEADERDIR)fld_scenearea.h
+.SUFFIXES: 
 
 endif
 
@@ -67,7 +65,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir
+do-build:	subdir $(TARGETDIR)/$(targetname).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -80,17 +78,18 @@ $(TARGETDIR)/$(targetname).narc: $(HEADERDUMMY_TARGET) $(targetname).narc
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
+
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(OBJ_FILE)
+$(targetname).narc: $(XLSFILE)
+	$(CSV_CVTR) -o $(XLS_CSV_FILE) -p 1 $(XLSFILE)
+	perl conv.pl $(XLS_CSV_FILE) $(RAILDATA_NAIX) $(SCENEDATA_NAIX)
+	
 	-ls *.dat > $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
 	-rm	$(LIST_FILE)
 
-$(HEADERDUMMY_TARGET):$(HEADERDIR)fld_scenearea_loader_func.h $(HEADERDIR)fld_scenearea.h
-	rm -f *.dat
-	echo このファイルは、headerが更新されたときにdatを作り直すために用意されています。 > $(HEADERDUMMY_TARGET)
 endif
 
 #------------------------------------------------------------------------------
@@ -99,15 +98,15 @@ endif
 #------------------------------------------------------------------------------
 clean:
 	@$(MAKE_SUBDIR)
-#	rm -f $(TARGETDIR)/$(targetname).narc
-#	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -f $(TARGETDIR)/$(targetname).narc
+	rm -f $(TARGETDIR)/$(targetname).naix
 
 #コンバート対象者のみ、中間ファイル削除
-#ifeq	($(CONVERTUSER),true)	
-#	rm -f *.dat
-#	rm -f $(targetname).narc
-#	rm -f $(targetname).naix
-#endif
+ifeq	($(CONVERTUSER),true)	
+	rm -f *.dat
+	rm -f $(targetname).narc
+	rm -f $(targetname).naix
+endif
 
 
 
