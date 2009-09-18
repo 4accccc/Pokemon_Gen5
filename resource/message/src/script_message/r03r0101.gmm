@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-18T16:38:14"/>
+	<create user="matsumiya" host="W00207" date="2009-09-18T18:34:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="248" top="183" right="944" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="521"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="534"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="688"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -309,42 +309,49 @@
 育つと　評判なんです</language>
 	</row>
 
-	<row id="msg_r03r0101_woman3_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♀：回復処理
+	<row id="msg_r03r0101_woman3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
 ・はい／いいえの選択肢表示
 　はい　→woman3_02
 　いいえ→woman3_03</comment>
 		<attribute name="キャラ指定">WOMAN3
 エプロン女性</attribute>
-		<language name="JPN" width="256">あたしは　しょうぶ　しないの[BE:01:ページ切り替え（クリア）]
-だって　ほけんの　せんせいだし
-よければ　ポケモンを　やすませる？</language>
-		<language name="JPN_KANJI" width="256">あたしは　勝負しないの[BE:01:ページ切り替え（クリア）]
-だって　保健の　先生だし
-よければ　ポケモンを　休ませる？</language>
+		<language name="JPN" width="256">あたし　ダブルバトルって
+ごぞんじ　かしら？</language>
+		<language name="JPN_KANJI" width="256">あたし　ダブルバトルって
+ごぞんじ　かしら？</language>
 	</row>
 
-	<row id="msg_r03r0101_woman3_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♀：回復処理
-・はい選択
-　回復処理実行後にこのメッセージを表示</comment>
+	<row id="msg_r03r0101_woman3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀：
+・はい選択</comment>
 		<attribute name="キャラ指定">WOMAN3
 エプロン女性</attribute>
-		<language name="JPN" width="256">あなたの　ポケモン
-げんき　いっぱいね！</language>
-		<language name="JPN_KANJI" width="256">あなたの　ポケモン
-元気　いっぱい　ね！</language>
+		<language name="JPN" width="256">かんたんに　いえば
+ポケモンを　２ひきずつ　たたかわせる[BE:00:ページ切り替え（行送り）]
+ポケモンしょうぶの　ことよ[BE:01:ページ切り替え（クリア）]
+どの　２ひきで　たたかうか
+コンビネーションが　だいじになるわ</language>
+		<language name="JPN_KANJI" width="256">かんたんに　いえば
+ポケモンを　２ひきずつ　たたかわせる[BE:00:ページ切り替え（行送り）]
+ポケモンしょうぶの　ことよ[BE:01:ページ切り替え（クリア）]
+どの　２ひきで　たたかうか
+コンビネーションが　だいじになるわ</language>
 	</row>
 
-	<row id="msg_r03r0101_woman3_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♀：回復処理
+	<row id="msg_r03r0101_woman3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
 ・いいえ選択</comment>
 		<attribute name="キャラ指定">WOMAN3
 エプロン女性</attribute>
-		<language name="JPN" width="256">そう？　やすみたいときは
-いつでも　はなしかけてね！</language>
-		<language name="JPN_KANJI" width="256">そう？　休みたいときは
-いつでも　話しかけてね！</language>
+		<language name="JPN" width="256">そうよね
+ジムバッジを　もってるもんね[BE:01:ページ切り替え（クリア）]
+でも　じっさいに　たたかうほどに
+いろいろ　おぼえていくのが　ダブルバトルよ</language>
+		<language name="JPN_KANJI" width="256">そうよね
+ジムバッジを　もってるもんね[BE:01:ページ切り替え（クリア）]
+でも　じっさいに　たたかうほどに
+いろいろ　おぼえていくのが　ダブルバトルよ</language>
 	</row>
 
 	<row id="msg_r03r0101_babygirl1_01">
