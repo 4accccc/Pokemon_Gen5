@@ -15,10 +15,6 @@
 //======================================================================
 //	define
 //======================================================================
-#define MAP_MATRIX_WIDTH_MAX (30)
-#define MAP_MATRIX_HEIGHT_MAX (30)
-#define MAP_MATRIX_MAX (MAP_MATRIX_WIDTH_MAX*MAP_MATRIX_HEIGHT_MAX)
-#define MAP_MATRIX_PREFIX_MAX (16)
 
 //======================================================================
 //	struct
