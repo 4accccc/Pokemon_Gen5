@@ -7,8 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-#include ../land_data/users_def
-USERS	= tomoya_takahashi
+include users_def
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -42,6 +41,7 @@ CSV_CVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 #imdフォルダ
 IMD_FOLDER = ../../land_data/land_res/
 IMD_FILE = $(wildcard $(IMD_FOLDER)*.imd)
+BIN_FILE = $(wildcard *.bin)
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
@@ -74,6 +74,15 @@ $(targetname).narc: Makefile $(IMD_FILE) $(MAP_MATRIX)
 	perl conv.pl $(MAP_MATRIX_FILE) $(IMD_FOLDER) $(LIST_FILE)
 	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
+
+else
+
+# コピー先のnarcが古い場合実行する
+$(targetname).narc: Makefile $(BIN_FILE)
+
+	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
+	$(NAIXCUT) $(targetname).naix
+
 endif
 
 #------------------------------------------------------------------------------
@@ -84,9 +93,9 @@ clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -r *.bin
+endif
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
-endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
 
