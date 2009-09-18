@@ -717,7 +717,7 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
       GX_RGB(0,0,0),
       GX_RGB(0,0,0),
       GX_RGB(0,0,0),
-      ACT_POLYID_SHADOW, //‰e—p‚Ì
+      MUS_ITEM_POLIGON_ID, //‰e—p‚Ì
 			GFL_BBD_ORIGIN_CENTER,
     };
     VecFx32 scale ={FX32_ONE*4,FX32_ONE*4,FX32_ONE};

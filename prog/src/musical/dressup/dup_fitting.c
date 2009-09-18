@@ -999,7 +999,8 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
       GX_RGB(0,0,0),
       GX_RGB(0,0,0),
       GX_RGB(0,0,0),
-      0 , GFL_BBD_ORIGIN_CENTER
+      MUS_ITEM_POLIGON_ID , 
+      GFL_BBD_ORIGIN_CENTER
     };
     //ビルボードシステム構築
     work->bbdSys = GFL_BBD_CreateSys( &bbdSetup , work->heapId );
