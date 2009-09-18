@@ -134,7 +134,6 @@ rule
 	#	「ブロック」は
 	#		「ブロック開始」「」「」「ブロック終了」
 	#---------------------------------------------
-	#stmt_block	: block_start defvar_list stmt_list block_end
   stmt_block  : block_start def_local_list stmt_list block_end
 					{
 						result = BlockNode.new(val[1], val[2])
@@ -444,6 +443,14 @@ rule
           {
             result = [ val[0], nil ]
           }
+        | SP_EVENT_START IDENT
+          {
+            result = [ val[0], val[1] ]
+          }
+        | SP_EVENT_END
+          {
+            result = [ val[0], nil ]
+          }
 
 	#---------------------------------------------
   # 「ローカル変数定義」は
@@ -547,12 +554,13 @@ RESERVED = {
 	'ELSE'	=> :ELSE,
 	'ELSIF'	=> :ELSIF,
 	'ENDIF'	=> :ENDIF,
-	'DEFVAR'	=> :DEFVAR,
 	'DEFFUNC'	=> :DEFFUNC,
 	'FLAG_ON'	=> :FLAG_ON,
 	'FLAG_OFF'	=> :FLAG_OFF,
   'EVENT_START' => :EVENT_START,
   'EVENT_END' => :EVENT_END,
+  'SP_EVENT_START' => :SP_EVENT_START,
+  'SP_EVENT_END' => :SP_EVENT_END,
   'SWITCH' => :SWITCH,
   'CASE' => :CASE,
   'ENDSWITCH' => :ENDSWITCH,

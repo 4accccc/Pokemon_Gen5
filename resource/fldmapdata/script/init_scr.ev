@@ -15,7 +15,7 @@ _EVENT_DATA_END
 //  ゲーム開始スクリプト
 //  ※非常中プログラム類の呼び出しは禁止
 //=====================================================================
-ev_init_script:
+SP_EVENT_START  ev_init_script
   _NOP
   _NOP
-  _END
+SP_EVENT_END
