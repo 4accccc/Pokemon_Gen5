@@ -142,7 +142,7 @@
 #define WK_SCENE_T02                     16506 /* 0x407a カラクサタウン：イベント用ワーク */
 #define WK_SCENE_T02PC0101               16507 /* 0x407b カラクサタウンＰＣ：イベント用ワーク */
 #define WK_SCENE_R01                     16508 /* 0x407c １番道路：イベント用ワーク */
-		/* not used 16509(0x407d) */
+#define WK_SCENE_R02                     16509 /* 0x407d ２番道路：イベント用ワーク */
 		/* not used 16510(0x407e) */
 		/* not used 16511(0x407f) */
 		/* not used 16512(0x4080) */
