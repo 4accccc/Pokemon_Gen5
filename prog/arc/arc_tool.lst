@@ -185,4 +185,4 @@
 	ARCID_MUSICAL_SHOT		"musical_shot.narc"		#ミュージカルショット
 	ARCID_CAMERA_ORG_SCRL	"fieldmap/camera_scroll_original.narc"		#カメラスクロール範囲独自情報
 	ARCID_FLD_RAILSETUP	"fieldmap/field_rail_setup.narc"		#レールセットアップ情報
-  ARCID_PC_RECOVERY "pc_recovery_anime.naix" # ポケセン回復アニメーション
+  ARCID_PC_RECOVERY "pc_recovery_anime.narc" # ポケセン回復アニメーション
