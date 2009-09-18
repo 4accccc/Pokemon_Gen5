@@ -9,6 +9,7 @@ FMMDL_RESLIST_NCGIMD = \
 	girl1.imd \
 	tree.imd \
 	rock.imd \
+	monsterball.imd \
 	obj_kabi32.imd \
 	accordion.imd \
 	none.imd
