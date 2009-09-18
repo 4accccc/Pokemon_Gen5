@@ -332,8 +332,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/field_ground_anime.c \
 				field/texanm_sys.c \
         field/event_entrance_effect.c \
-				field/fieldmap_ctrl_c3.c \
-				field/fieldmap_ctrl_c3p02.c \
 				field/field_menu.c \
         field/field_encount.c \
         field/map_attr.c \
