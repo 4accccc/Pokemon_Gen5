@@ -22,6 +22,7 @@
 
 //MDLSIZE モデルサイズで指定するシンボルです。
 #define MDLSIZE_32x32 0 //32x32
+#define MDLSIZE_16x16 1 //16x16
 
 //TEXSIZE テクスチャサイズで指定するシンボルです。
 #define TEXSIZE_8x8 0
@@ -98,6 +99,7 @@
 #define ANMID_BLACT_FLIP 5 //人物汎用 反転使用
 #define ANMID_BLACT_NONFLIP 6 //人物汎用 反転未使用
 #define ANMID_CYCLEHERO 7 //自転車自機専用
+#define ANMID_ONECELL 8 //一パターン絵専用
 
 //SEX 性別で指定するシンボルです。
 #define SEX_MALE 0
