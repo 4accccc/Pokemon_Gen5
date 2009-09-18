@@ -19,7 +19,7 @@
 #include "zonetableformat.h"
 #include "gamesystem/pm_season.h"
 
-#include "arc/fieldmap/field_rail_data.naix"  //NARC_field_rail_data_Å`
+#include "arc/fieldmap/field_rail_setup.naix"  //NARC_field_rail_data_Å`
 #include "../../resource/fldmapdata/zonetable/header/maptype.h"
 
 
@@ -278,11 +278,11 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
   switch (zone_id)
   {
   case ZONE_ID_C03:
-    return NARC_field_rail_data_c3_dat;
+    return NARC_field_rail_setup_C03_dat;
   case ZONE_ID_H01:
-    return NARC_field_rail_data_h01_dat;
+    return NARC_field_rail_setup_H01_dat;
   case ZONE_ID_C03P02:
-    return NARC_field_rail_data_c3p02_dat;
+    return NARC_field_rail_setup_C03P02_dat;
   }
   return ZONEDATA_NO_RAILDATA_ID;
 }

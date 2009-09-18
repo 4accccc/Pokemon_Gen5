@@ -65,6 +65,9 @@ $CONT_TYPE  = 0;   #座標管理タイプ
 $data_in = 0;
 foreach $data ( @input_file )
 {
+  $data =~ s/\r\n//;
+  $data =~ s/\n//;
+  
   @data_array = split( /\t/, $data );
   
   if( $data_in == 0 )

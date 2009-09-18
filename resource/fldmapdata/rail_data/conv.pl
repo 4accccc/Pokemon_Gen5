@@ -38,6 +38,9 @@ $SCENE_ID = 0;
 $data_in = 0;
 foreach $one ( @input_file )
 {
+  $one =~ s/\r\n//;
+  $one =~ s/\n//;
+  
   @data_one = split( /\t/, $one );
 
   if( $data_in == 0 )
@@ -57,6 +60,8 @@ foreach $one ( @input_file )
     {
     
       $TAG        = $data_one[0];
+      $data_one[1] =~ s/\.rail/_dat/;
+      $data_one[2] =~ s/\.sa/_dat/;
       $RAIL_ID    = &getNaixIndex( \@RAIL_DATA_NAIX, $data_one[1] );
       $SCENE_ID   = &getNaixIndex( \@AREA_DATA_NAIX, $data_one[2] );
 
@@ -138,6 +143,9 @@ sub getNaixIndex
 
     $sarch_count++;
   }
+
+  print( "$sarch none\n" );
+  return $NONE_NUM;
 }
 
 

@@ -310,6 +310,7 @@ extern void FIELD_RAIL_MAN_DeleteWork( FIELD_RAIL_MAN * man, FIELD_RAIL_WORK* wo
 extern void FIELD_RAIL_MAN_BindCamera( FIELD_RAIL_MAN * man, const FIELD_RAIL_WORK* work );
 extern void FIELD_RAIL_MAN_UnBindCamera( FIELD_RAIL_MAN * man );
 extern void FIELD_RAIL_MAN_GetBindWorkPos( const FIELD_RAIL_MAN * man, VecFx32* pos );
+
 #ifdef PM_DEBUG
 // 仮処理 色々な部分で、RAILMANからLocationなどを取得しているため、作成
 // これを使用している部分は後々は、PLAYERの情報から取得できるようになるはず

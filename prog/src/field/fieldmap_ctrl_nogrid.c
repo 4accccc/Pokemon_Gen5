@@ -9,6 +9,7 @@
 #include "system/gfl_use.h"
 
 #include "arc/fieldmap/field_rail_data.naix"
+#include "arc/fieldmap/camera_scroll_original.naix"
 #include "arc/fieldmap/zone_id.h"
 
 #include "fieldmap.h"
@@ -24,6 +25,11 @@
 
 #include "field_rail.h"
 #include "field_rail_func.h"
+
+
+//======================================================================
+//	範囲情報
+//======================================================================
 
 //======================================================================
 //	define
@@ -126,12 +132,15 @@ static void mapCtrlNoGrid_Create(
   FIELD_PLAYER_NOGRID* p_ngrid_player;
 
   {
-    FLDNOGRID_RESISTDATA resist;
+    FLDNOGRID_RESISTDATA* p_resist;
 
-    resist.railDataID = ZONEDATA_GetRailDataID( FIELDMAP_GetZoneID(fieldWork) );
-    resist.areaDataID = FLDNOGRID_RESISTDATA_NONE;
+    p_resist = GFL_ARC_UTIL_Load( ARCID_FLD_RAILSETUP, 
+        ZONEDATA_GetRailDataID( FIELDMAP_GetZoneID(fieldWork) ),
+        FALSE, FIELDMAP_GetHeapID(fieldWork) );
 
-    FLDNOGRID_MAPPER_ResistData( p_mapper, &resist, FIELDMAP_GetHeapID(fieldWork) );  
+    FLDNOGRID_MAPPER_ResistData( p_mapper, p_resist, FIELDMAP_GetHeapID(fieldWork) );  
+
+    GFL_HEAP_FreeMemory( p_resist );
   }
 
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
@@ -171,6 +180,20 @@ static void mapCtrlNoGrid_Create(
     }
   }
 #endif
+
+
+  //  カメラ範囲
+  if( FIELDMAP_GetZoneID( fieldWork ) == ZONE_ID_C03 )
+  {
+    FIELD_CAMERA_AREA * p_area = GFL_ARC_UTIL_Load( ARCID_CAMERA_ORG_SCRL, 
+        NARC_camera_scroll_original_C03_bin,
+        FALSE, FIELDMAP_GetHeapID(fieldWork) );
+
+    FIELD_CAMERA_SetCameraArea( FIELDMAP_GetFieldCamera( fieldWork ), p_area );
+
+    GFL_HEAP_FreeMemory( p_area );
+  }
+
 }
 
 //--------------------------------------------------------------
@@ -224,10 +247,72 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
       GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(fieldWork)) );
   MMDL* mmdl = FIELD_PLAYER_GetMMdl( fld_player );
 
-  FIELDMAP_CTRL_NOGRID_WORK_Main( work );
+  if( FIELDMAP_GetZoneID( fieldWork ) != ZONE_ID_C03P02 )
+  {
+    FIELDMAP_CTRL_NOGRID_WORK_Main( work );
+  }
+  else
+  {
+    u32 now_areaID;
+    BOOL auto_move = FALSE;
+    const FLD_SCENEAREA* cp_fldscenearea = FLDNOGRID_MAPPER_GetSceneAreaMan( p_mapper );
+    FIELD_RAIL_WORK* p_railwork = FIELD_PLAYER_NOGRID_GetRailWork( p_ngrid_player );
 
+    // エリアから、自動動作部分と、通常動作部分を判定
+    now_areaID = FLD_SCENEAREA_GetActiveArea(cp_fldscenearea);
+    if( now_areaID != FLD_SCENEAREA_ACTIVE_NONE )
+    {
+      if( now_areaID < 5 )
+      {
+        // 左右おした？
+        if( (FIELD_RAIL_WORK_GetActionKey( p_railwork ) == RAIL_KEY_RIGHT) ||
+            (FIELD_RAIL_WORK_GetActionKey( p_railwork ) == RAIL_KEY_LEFT) )
+        {
+          auto_move = TRUE;
+        }
+      }
+      else
+      {
+        
+        // 上下おした？
+        if( (FIELD_RAIL_WORK_GetActionKey( p_railwork ) == RAIL_KEY_UP) ||
+            (FIELD_RAIL_WORK_GetActionKey( p_railwork ) == RAIL_KEY_DOWN) )
+        {
+          auto_move = TRUE;
+        }
+      }
+    }
+
+    
+    // 移動方向の設定
+    // 通常動作部分
+    if( auto_move == FALSE )
+    {
+      FIELDMAP_CTRL_NOGRID_WORK_Main( work );
+    }
+    else
+    {
+      static const u32 sc_key[] = 
+      {
+        0,
+        PAD_KEY_UP,
+        PAD_KEY_RIGHT,
+        PAD_KEY_DOWN,
+        PAD_KEY_LEFT,
+      };
+      u32 last_action;
+      
+      last_action = FIELD_RAIL_WORK_GetActionKey( p_railwork );
+      
+      // 自動動作部分
+      FIELD_PLAYER_NOGRID_Move( p_ngrid_player, sc_key[last_action], sc_key[last_action] );
+    }
+
+
+  }
+
+  
   MMDL_GetVectorPos( mmdl, pos );
-  FIELD_PLAYER_SetPos( fld_player, pos );
   PLAYERWORK_setPosition( player, pos );
 }
 

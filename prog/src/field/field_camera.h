@@ -47,6 +47,7 @@ typedef enum
 // 範囲タイプ
 typedef enum
 {
+// conv.pl用定義 [CAMERA_AREA]
   FIELD_CAMERA_AREA_NONE,     // 範囲なし
   FIELD_CAMERA_AREA_RECT,     // 矩形範囲
   FIELD_CAMERA_AREA_CIRCLE,   // 円範囲
@@ -57,6 +58,7 @@ typedef enum
 // 管理座標
 typedef enum
 {
+// conv.pl用定義 [CAMERA_CONT]
   FIELD_CAMERA_AREA_CONT_TARGET,   // カメラターゲットの管理
   FIELD_CAMERA_AREA_CONT_CAMERA,   // カメラ座標の管理
 
@@ -97,6 +99,7 @@ typedef struct {
   FIELD_CAMERA_AREA_CONT area_cont;
 
   // 範囲情報
+  // 16byte
   union
   {
     // XZ平面の矩形範囲

@@ -180,7 +180,7 @@ const SCENE_DATA resistMapTbl[] = {
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
 		}, 
-		&FieldMapCtrl_C3Functions,
+		&FieldMapCtrl_NoGridFunctions,
 		FALSE,
 	},
   //RSC_GRID_PALACE = 3,
@@ -306,7 +306,7 @@ const SCENE_DATA resistMapTbl[] = {
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
 		},
-		&FieldMapCtrl_C3P02Functions,
+		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
 	},
   //RSC_GRID_MUSICAL = 0,
