@@ -90,17 +90,6 @@ typedef struct {
 } BLOCK_NEWREQ;
 
 
-//--------------------------------------------------------------
-/// @brief マップ接続リクエストワーク
-struct _FLDMAPPER_CONNECTREQ
-{
-	u16	sizex;		//横ブロック数
-	u16	sizez;		//縦ブロック数
-	u32	totalSize;//配列サイズ
-	const FLDMAPPER_MAPDATA* blocks;	//実マップデータ
-};
-
-
 //------------------------------------------------------------------
 struct _FLD_G3D_MAPPER {
 	HEAPID					heapID;
@@ -351,27 +340,34 @@ BOOL FLDMAPPER_CheckTrans( const FLDMAPPER* g3Dmapper )
  * @brief マップ接続
  *
  * @param g3Dmapper 接続対象マッパー
- * @param req       接続リクエスト
+ * @param matrix    接続するマップのマップマトリックス
  *
  * @return 接続できたらTRUE
  */
 //--------------------------------------------------------------
-BOOL FLDMAPPER_Connect( FLDMAPPER* g3Dmapper, const FLDMAPPER_CONNECTREQ* req )
+BOOL FLDMAPPER_Connect( FLDMAPPER* g3Dmapper, const MAP_MATRIX* matrix )
 { 
-  int             i, ix, iz;
-  u16                 sizex;  // 新マップの横ブロック数
-  u16                 sizez;  // 新マップの縦ブロック数
-  u32             totalSize;  // 新マップの総ブロック数
-  FLDMAPPER_MAPDATA *blocks;  // 新マップの実マップデータ
+  int i, ix, iz;
+  u16 add_sizex, add_sizez; // 追加マップの横・縦ブロック数
+  u32 add_totalSize;        // 追加マップの総ブロック数
+  const u32* add_blocks;    // 追加マップの実マップデータ
+  u16 sizex, sizez;         // 新マップの横・縦ブロック数
+  u32 totalSize;            // 新マップの総ブロック数
+  FLDMAPPER_MAPDATA* blocks;// 新マップの実マップデータ
 
+  // 追加マップのサイズを取得
+  add_sizex     = MAP_MATRIX_GetMapBlockSizeWidth( matrix );
+  add_sizez     = MAP_MATRIX_GetMapBlockSizeHeight( matrix );
+  add_totalSize = MAP_MATRIX_GetMapBlockTotalSize( matrix );
+  add_blocks    = MAP_MATRIX_GetMapResIDTable( matrix );
 
   // 新マップのパラメータ計算
-  sizex     = g3Dmapper->sizex + req->sizex;
+  sizex     = g3Dmapper->sizex + add_sizex;
   sizez     = g3Dmapper->sizez;
-  totalSize = g3Dmapper->totalSize + req->totalSize;
+  totalSize = g3Dmapper->totalSize + add_totalSize;
 
   // z方向の大きさが異なるマップは接続できない
-  if( g3Dmapper->sizez != req->sizez )
+  if( g3Dmapper->sizez != add_sizez )
   {
     OS_Printf( "---------------------------------------------\n" );
     OS_Printf( "error in FLDMAPPER_Connect. Map size conflict\n" );
@@ -405,13 +401,13 @@ BOOL FLDMAPPER_Connect( FLDMAPPER* g3Dmapper, const FLDMAPPER_CONNECTREQ* req )
     }
   }
   // リクエストのデータをコピー
-  for( iz=0; iz<req->sizez; iz++ )
+  for( iz=0; iz<add_sizez; iz++ )
   {
-    for( ix=0; ix<req->sizex; ix++ )
+    for( ix=0; ix<add_sizex; ix++ )
     {
-      int old_index = iz * req->sizex + ix;
+      int old_index = iz * add_sizex + ix;
       int new_index = iz * sizex + g3Dmapper->sizex + ix;
-      blocks[ new_index ] = req->blocks[ old_index ];
+      blocks[ new_index ].datID = add_blocks[ old_index ];
     }
   }
 
@@ -429,37 +425,6 @@ BOOL FLDMAPPER_Connect( FLDMAPPER* g3Dmapper, const FLDMAPPER_CONNECTREQ* req )
   return TRUE;
 }
 
-//--------------------------------------------------------------
-/**
- * @brief マップ接続リクエストを作成する
- *
- * @param g3Dmapper 接続データ抽出対象マッパー
- *
- * @return 作成した接続リクエスト
- */
-//--------------------------------------------------------------
-FLDMAPPER_CONNECTREQ* FLDMAPPER_CreateConnectReq( const FLDMAPPER* g3Dmapper )
-{
-  FLDMAPPER_CONNECTREQ* req;
-  req            = GFL_HEAP_AllocMemory( g3Dmapper->heapID, sizeof(FLDMAPPER_CONNECTREQ) );
-  req->sizex     = g3Dmapper->sizex;
-  req->sizez     = g3Dmapper->sizez;
-  req->totalSize = g3Dmapper->totalSize;
-  req->blocks    = g3Dmapper->blocks;
-  return req;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief マップ接続リクエストを破棄する
- *
- * @param req 破棄対象のリクエスト
- */
-//--------------------------------------------------------------
-void FLDMAPPER_DeleteConnectReq( FLDMAPPER_CONNECTREQ* req )
-{
-  GFL_HEAP_FreeMemory( req );
-}
 
 
 //============================================================================================

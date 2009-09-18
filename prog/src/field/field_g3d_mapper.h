@@ -4,6 +4,7 @@
 //============================================================================================
 #pragma once
 
+#include "map_matrix.h"
 
 //------------------------------------------------------------------
 /**
@@ -130,41 +131,15 @@ extern void FLDMAPPER_GetBlockXZPos( const FLDMAPPER * g3Dmapper, u32 * blockx, 
 //--------------------------------------------------------------
 extern BOOL DEBUG_Field_Grayscale(GFL_G3D_RES *g3Dres);
 
-//--------------------------------------------------------------
-/**
- * @brief マップ接続リクエストの不完全型宣言
- */
-//--------------------------------------------------------------
-typedef struct _FLDMAPPER_CONNECTREQ FLDMAPPER_CONNECTREQ; 
 
 //--------------------------------------------------------------
 /**
  * @brief マップ接続
  *
  * @param g3Dmapper 接続対象マッパー
- * @param req       接続リクエスト
+ * @param matrix    接続するマップのマップマトリックス
  *
  * @return 接続できたらTRUE
  */
 //--------------------------------------------------------------
-BOOL FLDMAPPER_Connect( FLDMAPPER* g3Dmapper, const FLDMAPPER_CONNECTREQ* req );
-
-//--------------------------------------------------------------
-/**
- * @brief マップ接続リクエストを作成する
- *
- * @param g3Dmapper 接続データ抽出対象マッパー
- *
- * @return 作成した接続リクエスト
- */
-//--------------------------------------------------------------
-FLDMAPPER_CONNECTREQ* FLDMAPPER_CreateConnectReq( const FLDMAPPER* g3Dmapper );
-
-//--------------------------------------------------------------
-/**
- * @brief マップ接続リクエストを破棄する
- *
- * @param req 破棄対象のリクエスト
- */
-//--------------------------------------------------------------
-void FLDMAPPER_DeleteConnectReq( FLDMAPPER_CONNECTREQ* req );
+BOOL FLDMAPPER_Connect( FLDMAPPER* g3Dmapper, const MAP_MATRIX* matrix ); 
