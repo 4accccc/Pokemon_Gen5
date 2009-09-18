@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: pc_recovery_anime.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_PC_RECOVERY_ANIME_NAIX_
+#define NARC_PC_RECOVERY_ANIME_NAIX_
+
+enum {
+	NARC_pc_recovery_anime_pc_mb_nsbmd = 0,
+	NARC_pc_recovery_anime_pc_mb_nsbtp = 1
+};
+
+/* NARC_PC_RECOVERY_ANIME_NAIX_ */
+#endif

@@ -95,7 +95,8 @@ SUBDIRS	=	wmi \
             b_bag \
             b_plist \
 		  regulation \
-			mictest
+			mictest \
+			pokemon_center
 
 include $(RESOURCE_MACRO)
 
