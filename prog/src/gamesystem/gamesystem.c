@@ -185,14 +185,13 @@ const GFL_PROC_DATA GameMainProcData = {
  * @file	ゲーム開始初期化用ワーク取得
  */
 //------------------------------------------------------------------
-GAME_INIT_WORK * DEBUG_GetGameInitWork(GAMEINIT_MODE mode, u16 mapid, VecFx32 *pos, s16 dir, BOOL always_net)
+GAME_INIT_WORK * DEBUG_GetGameInitWork(GAMEINIT_MODE mode, u16 mapid, VecFx32 *pos, s16 dir )
 {
   GFL_STD_MemClear(&TestGameInitWork, sizeof(GAME_INIT_WORK));
 	TestGameInitWork.mode = mode;
 	TestGameInitWork.mapid = mapid;
 	TestGameInitWork.pos = *pos;
 	TestGameInitWork.dir = dir;
-	TestGameInitWork.always_net	= always_net;
 	return &TestGameInitWork;
 }
 

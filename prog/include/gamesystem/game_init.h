@@ -27,14 +27,12 @@ typedef struct {
 	VecFx32 pos;
 	u16 mapid;
 	s16 dir;
-	u8 always_net;      ///<TRUE:íŽž’ÊM
-	u8 padding[3];
 }GAME_INIT_WORK;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern GAME_INIT_WORK * DEBUG_GetGameInitWork(
-  GAMEINIT_MODE mode, u16 mapid, VecFx32 *pos, s16 dir, BOOL always_net);
+  GAMEINIT_MODE mode, u16 mapid, VecFx32 *pos, s16 dir );
 
 #ifdef	__cplusplus
 }	//extern "C" {

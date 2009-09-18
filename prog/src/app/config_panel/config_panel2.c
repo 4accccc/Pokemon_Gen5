@@ -2161,8 +2161,8 @@ static void CONFIGPARAM_Init( CONFIG_PARAM *p_wk, const CONFIG *cp_savedata )
 	p_wk->param[CONFIG_LIST_BTLRULE]	= CONFIG_GetBattleRule(cp_savedata);
 	p_wk->param[CONFIG_LIST_SND]			= CONFIG_GetSoundMode(cp_savedata);
 	p_wk->param[CONFIG_LIST_STR]			= CONFIG_GetMojiMode(cp_savedata);
-	p_wk->param[CONFIG_LIST_WIRELESS]	= CONFIG_GetWirelessSaveMode(cp_savedata);
-	p_wk->param[CONFIG_LIST_REPORT]		= CONFIG_GetNetworkSearchMode(cp_savedata);
+	p_wk->param[CONFIG_LIST_WIRELESS]	= CONFIG_GetNetworkSearchMode(cp_savedata);	
+	p_wk->param[CONFIG_LIST_REPORT]		= CONFIG_GetWirelessSaveMode(cp_savedata);
 }
 //----------------------------------------------------------------------------
 /**

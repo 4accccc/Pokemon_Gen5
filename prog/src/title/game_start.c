@@ -237,7 +237,7 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
 	MyStatus_SetID(myStatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
 	MyStatus_SetTrainerView(myStatus, 
 	  UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
-	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0, work->selModeParam.isComm);
+	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
 
 	NameIn_ParamDelete(work->nameInParam);
 	GFL_PROC_FreeWork( proc );
@@ -263,7 +263,7 @@ static GFL_PROC_RESULT GameStart_ContinueProcInit( GFL_PROC * proc, int * seq, v
 {
 	GAMESTART_FIRST_WORK *work = GFL_PROC_AllocWork( proc , sizeof(GAMESTART_FIRST_WORK) , GFL_HEAPID_APP );
 	work->selModeParam.type = SMT_CONTINUE_GAME;
-	work->selModeParam.configSave = NULL;
+	work->selModeParam.configSave = SaveData_GetConfig( SaveControl_GetPointer() );
 	work->selModeParam.mystatus = NULL;
 	
 	
@@ -289,12 +289,12 @@ static GFL_PROC_RESULT GameStart_ContinueProcMain( GFL_PROC * proc, int * seq, v
   	else
   	if( continueType == CONTINUE_MODE_COMM_OFF )
   	{
-      work->selModeParam.isComm = FALSE;
+			CONFIG_SetNetworkSearchMode( work->selModeParam.configSave, NETWORK_SEARCH_OFF );
     }
     else
   	if( continueType == CONTINUE_MODE_COMM_ON )
   	{
-      work->selModeParam.isComm = TRUE;
+			CONFIG_SetNetworkSearchMode( work->selModeParam.configSave, NETWORK_SEARCH_ON );
     }
 		(*seq)++;
 		break;
@@ -320,7 +320,7 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
 	SaveData_SituationLoad_PlayerWorkSave(SaveControl_GetPointer(), &plsv);
 
 	init_param = DEBUG_GetGameInitWork(
-	GAMEINIT_MODE_CONTINUE, plsv.zoneID, &plsv.position, plsv.direction, work->selModeParam.isComm);
+	GAMEINIT_MODE_CONTINUE, plsv.zoneID, &plsv.position, plsv.direction );
 	
 	GFL_PROC_FreeWork( proc );
 	
@@ -395,8 +395,17 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
   	GFL_STR_DeleteBuffer(namebuf);
   	GFL_MSG_Delete(msgman);
   }
+	{	
+		//常時通信モードのセット
+		CONFIG *config;
+		NETWORK_SEARCH_MODE	mode;
+
+		config	= SaveData_GetConfig( SaveControl_GetPointer() );
+		mode	= always_net? NETWORK_SEARCH_ON: NETWORK_SEARCH_OFF;
+		CONFIG_SetNetworkSearchMode( config, mode );
+	}
 	
-	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0, always_net);
+	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0 );
 	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 #endif
 
@@ -463,7 +472,15 @@ static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * 
 		GAME_INIT_WORK * init_param;
 		VecFx32 pos = {0,0,0};
 		
-		init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0, FALSE);
+		{	
+			//常時通信モードのセット
+			CONFIG *config;
+
+			config	= SaveData_GetConfig( SaveControl_GetPointer() );
+			CONFIG_SetNetworkSearchMode( config, NETWORK_SEARCH_OFF );
+		}
+		
+		init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
 		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 	}
 	else

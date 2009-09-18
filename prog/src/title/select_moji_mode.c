@@ -224,11 +224,11 @@ static GFL_PROC_RESULT SEL_MODE_ProcMain( GFL_PROC * proc, int * seq, void * pwk
       {
         if( ret == SMUR_TRUE )
         {
-          initWork->isComm = TRUE;
+					CONFIG_SetNetworkSearchMode(initWork->configSave, NETWORK_SEARCH_ON );
         }
         else
         {
-          initWork->isComm = FALSE;
+					CONFIG_SetNetworkSearchMode(initWork->configSave, NETWORK_SEARCH_OFF );
         }
         WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                         WIPE_FADE_BLACK , 12 , WIPE_DEF_SYNC , HEAPID_SEL_MODE );

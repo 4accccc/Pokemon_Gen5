@@ -24,7 +24,6 @@ typedef enum
 typedef struct
 {
   SELECT_MODE_TYPE type;
-  BOOL  isComm; //í êMÉÇÅ[ÉhÇÃON/OFF
   CONFIG *configSave;
   MYSTATUS *mystatus;
 }SELECT_MODE_INIT_WORK;
