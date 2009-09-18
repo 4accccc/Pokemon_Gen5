@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00176" date="2009-08-28T12:52:13"/>
+	<create user="matsuda" host="W00142" date="2009-09-17T18:29:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3213,6 +3213,86 @@ msg_connect_union_08からの分岐メッセージ
 		<comment>サポートシューターを使わない場合、参加決定時に表示</comment>
 		<language name="JPN" width="216" line="2">サポートシューター　なし</language>
 		<language name="JPN_KANJI" width="216" line="2">サポートシューター　なし</language>
+	</row>
+
+	<row id="msg_union_battle_01_22" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>コロシアムで立ち位置に着いたとき</comment>
+		<language name="JPN" width="216" line="2">てもちか　バトルボックスの
+どれを　つかうか　えらんでください</language>
+		<language name="JPN_KANJI" width="216" line="2">手持ちか　バトルボックスの
+どれを　使うか　選んでください</language>
+	</row>
+
+	<row id="msg_union_battle_01_23" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>ポケパーティ選択項目</comment>
+		<language name="JPN" width="216" line="2">てもち</language>
+		<language name="JPN_KANJI" width="216" line="2">手持ち</language>
+	</row>
+
+	<row id="msg_union_battle_01_24" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>ポケパーティ選択項目</comment>
+		<language name="JPN" width="216" line="2">バトルボックス１</language>
+		<language name="JPN_KANJI" width="216" line="2">バトルボックス１</language>
+	</row>
+
+	<row id="msg_union_battle_01_25" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>ポケパーティ選択項目</comment>
+		<language name="JPN" width="216" line="2">バトルボックス２</language>
+		<language name="JPN_KANJI" width="216" line="2">バトルボックス２</language>
+	</row>
+
+	<row id="msg_union_battle_01_26" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>選択したパーティが参加条件に合わない</comment>
+		<language name="JPN" width="216" line="2">じょうけんを　みたして　いないので
+さんか　できません</language>
+		<language name="JPN_KANJI" width="216" line="2">条件を満たしていないので
+参加できません</language>
+	</row>
+
+	<row id="msg_union_battle_01_27" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>パーティ決定後、相手の決定待ち</comment>
+		<language name="JPN" width="216" line="2">しょうしょう　おまちください
+Ｂボタンで　キャンセル</language>
+		<language name="JPN_KANJI" width="216" line="2">しょうしょう　おまちください
+Ｂボタンで　キャンセル</language>
+	</row>
+
+	<row id="msg_union_battle_01_28" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>パーティ決定後、相手の決定も済み、ポケモンリストへ行く前のメッセージ</comment>
+		<language name="JPN" width="216" line="2">それでは　さんかする　ポケモンを
+えらんで　ください▽</language>
+		<language name="JPN_KANJI" width="216" line="2">それでは　さんかする　ポケモンを
+えらんで　ください▽</language>
+	</row>
+
+	<row id="msg_union_battle_01_29" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>パーティ決定後、相手の決定も済み、ポケモンリストへ行く前のメッセージ</comment>
+		<language name="JPN" width="216" line="2">それでは　さんかする　ポケモンを
+３ひき　えらんで　ください▽</language>
+		<language name="JPN_KANJI" width="216" line="2">それでは　さんかする　ポケモンを
+３ひき　えらんで　ください▽</language>
+	</row>
+
+	<row id="msg_union_battle_01_30" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>パーティ決定後、相手の決定も済み、ポケモンリストへ行く前のメッセージ</comment>
+		<language name="JPN" width="216" line="2">それでは　さんかする　ポケモンを
+４ひき　えらんで　ください▽</language>
+		<language name="JPN_KANJI" width="216" line="2">それでは　さんかする　ポケモンを
+４ひき　えらんで　ください▽</language>
+	</row>
+
+	<row id="msg_union_battle_01_31" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>パーティ決定後、相手の決定も済み、ポケモンリストへ行く前のメッセージ</comment>
+		<language name="JPN" width="216" line="2">それでは　さんかする　ポケモンを
+６ひき　えらんで　ください▽</language>
+		<language name="JPN_KANJI" width="216" line="2">それでは　さんかする　ポケモンを
+６ひき　えらんで　ください▽</language>
+	</row>
+
+	<row id="msg_union_battle_01_32" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>ポケモンリストで繰り出すポケモンを決定後、通信相手待ち</comment>
+		<language name="JPN" width="216" line="2">しょうしょう　おまちください</language>
+		<language name="JPN_KANJI" width="216" line="2">しょうしょう　おまちください</language>
 	</row>
 
 	<row id="msg_union_test_000" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">

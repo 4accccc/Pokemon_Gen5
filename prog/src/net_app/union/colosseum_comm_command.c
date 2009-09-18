@@ -36,6 +36,7 @@ static void _ColosseumRecv_BattleReady(const int netID, const int size, const vo
 static void _ColosseumRecv_BattleReadyCancel(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _ColosseumRecv_BattleReadyCancelOK(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _ColosseumRecv_AllBattleReady(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _ColosseumRecv_PokeListSelected(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -55,6 +56,7 @@ const NetRecvFuncTable Colosseum_CommPacketTbl[] = {
   {_ColosseumRecv_BattleReadyCancel, NULL},         //COLOSSEUM_CMD_BATTLE_READY_CANCEL
   {_ColosseumRecv_BattleReadyCancelOK, NULL},       //COLOSSEUM_CMD_BATTLE_READY_CANCEL_OK
   {_ColosseumRecv_AllBattleReady, NULL},            //COLOSSEUM_CMD_ALL_BATTLE_READY
+  {_ColosseumRecv_PokeListSelected, NULL},          //COLOSSEUM_CMD_POKELIST_SELECTED
   {_ColosseumRecv_Leave, NULL},                     //COLOSSEUM_CMD_LEAVE
 };
 SDK_COMPILER_ASSERT(NELEMS(Colosseum_CommPacketTbl) == COLOSSEUM_CMD_NUM);
@@ -437,7 +439,7 @@ BOOL ColosseumSend_Pokeparty(POKEPARTY *pokeparty)
 //==============================================================================
 //--------------------------------------------------------------
 /**
- * @brief   コマンド受信：POKEPARTY
+ * @brief   コマンド受信：全員分の立ち位置
  * @param   netID      送ってきたID
  * @param   size       パケットサイズ
  * @param   pData      データ
@@ -463,7 +465,7 @@ static void _ColosseumRecv_StandingPos(const int netID, const int size, const vo
 
 //==================================================================
 /**
- * データ送信：POKEPARTY
+ * データ送信：全員分の立ち位置
  * @param   
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
@@ -479,7 +481,7 @@ BOOL ColosseumSend_StandingPos(u8 *standing_pos)
 //==============================================================================
 //--------------------------------------------------------------
 /**
- * @brief   コマンド受信：退出
+ * @brief   コマンド受信：戦闘準備完了
  * @param   netID      送ってきたID
  * @param   size       パケットサイズ
  * @param   pData      データ
@@ -504,7 +506,7 @@ static void _ColosseumRecv_BattleReady(const int netID, const int size, const vo
 
 //==================================================================
 /**
- * データ送信：退出
+ * データ送信：戦闘準備完了
  * @param   
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
@@ -640,6 +642,47 @@ BOOL ColosseumSend_AllBattleReady(void)
 {
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
     COLOSSEUM_CMD_ALL_BATTLE_READY, 0, NULL, TRUE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ポケモンリスト選択画面終了しました
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _ColosseumRecv_PokeListSelected(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+
+  if(clsys == NULL){
+    GF_ASSERT(0);
+    return; //準備が出来ていないので受け取らない
+  }
+  
+  clsys->recvbuf.pokelist_selected_num++;
+  OS_TPrintf("ポケモンリスト選択完了：net_id = %d, total_num = %d\n", netID, clsys->recvbuf.pokelist_selected_num);
+}
+
+//==================================================================
+/**
+ * データ送信：ポケモンリスト選択画面終了しました
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL ColosseumSend_PokeListSelected(void)
+{
+  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    COLOSSEUM_CMD_POKELIST_SELECTED, 0, NULL);
 }
 
 //==============================================================================

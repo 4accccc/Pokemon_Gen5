@@ -125,7 +125,7 @@ typedef enum{
 //通信対戦時の相手情報
 typedef struct{
   POKEPARTY *pp;              // 対戦相手のポケモンデータ
-  STRBUF *name;               // 対戦相手の名前
+  const STRCODE *name;        // 対戦相手の名前
   u8 sex;                     // 対戦相手の性別
   u8 padding[3];
 }PL_COMM_BATTLE_PARAM;

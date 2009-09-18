@@ -47,3 +47,7 @@ extern u32 UnionMsg_Menu_MainMenuSelectLoop(UNION_SYSTEM_PTR unisys);
 extern void UnionMsg_Menu_BattleMenuSetup(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, int menu_index);
 extern void UnionMsg_Menu_BattleMenuDel(UNION_SYSTEM_PTR unisys);
 extern u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_menu);
+
+extern void UnionMsg_Menu_PokePartySelectMenuSetup(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork);
+extern void UnionMsg_Menu_PokePartySelectMenuDel(UNION_SYSTEM_PTR unisys);
+extern u32 UnionMsg_Menu_PokePartySelectMenuSelectLoop(UNION_SYSTEM_PTR unisys);

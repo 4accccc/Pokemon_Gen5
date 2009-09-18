@@ -178,6 +178,39 @@ static const FLDMENUFUNC_HEADER MenuHeader_Battle =
 };
 //SDK_COMPILER_ASSERT(NELEMS(MainMenuList) == MenuHeader_MainMenu.line);
 
+//--------------------------------------------------------------
+//  POKEPARTY選択メニューヘッダー
+//--------------------------------------------------------------
+///POKEPARTY選択メニューリスト
+static const FLDMENUFUNC_LIST PokePartySelectMenuList[] =
+{
+  {msg_union_battle_01_23, (void*)COLOSSEUM_SELECT_PARTY_TEMOTI},  //手持ち
+  {msg_union_battle_01_24, (void*)COLOSSEUM_SELECT_PARTY_BOX_A},   //バトルボックス１
+  {msg_union_battle_01_25, (void*)COLOSSEUM_SELECT_PARTY_BOX_B},   //バトルボックス２
+};
+
+///メニューヘッダー(POKEPARTY選択メニュー用)
+static const FLDMENUFUNC_HEADER MenuHeader_PokePartySelect =
+{
+	3,		//リスト項目数
+	3,		//表示最大項目数
+	0,		//ラベル表示Ｘ座標
+	13,		//項目表示Ｘ座標
+	0,		//カーソル表示Ｘ座標
+	0,		//表示Ｙ座標
+	1,		//表示文字色
+	15,		//表示背景色
+	2,		//表示文字影色
+	0,		//文字間隔Ｘ
+	1,		//文字間隔Ｙ
+	FLDMENUFUNC_SKIP_NON,	//ページスキップタイプ
+	12,		//文字サイズX(ドット
+	16,		//文字サイズY(ドット
+	32-14,		//表示座標X キャラ単位
+	24-6-7,		//表示座標Y キャラ単位
+	13,		//表示サイズX キャラ単位
+	6,		//表示サイズY キャラ単位
+};
 
 //==============================================================================
 //
@@ -528,5 +561,45 @@ u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_m
   
   GF_ASSERT_MSG(0, "menu_ret=%d\n", menu_ret);
   return 0;
+}
+
+//==================================================================
+/**
+ * POKEPARTY選択メニュー：セットアップ
+ *
+ * @param   unisys		
+ * @param   fieldWork		
+ */
+//==================================================================
+void UnionMsg_Menu_PokePartySelectMenuSetup(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork)
+{
+  UnionMsg_Menu_WindowSetup(unisys, fieldWork, 
+    PokePartySelectMenuList, NELEMS(PokePartySelectMenuList), &MenuHeader_PokePartySelect);
+}
+
+//==================================================================
+/**
+ * POKEPARTY選択メニュー：削除
+ *
+ * @param   unisys		
+ */
+//==================================================================
+void UnionMsg_Menu_PokePartySelectMenuDel(UNION_SYSTEM_PTR unisys)
+{
+  UnionMsg_Menu_WindowDel(unisys);
+}
+
+//==================================================================
+/**
+ * POKEPARTY選択メニュー：選択待ち
+ *
+ * @param   unisys		
+ *
+ * @retval  u32		結果
+ */
+//==================================================================
+u32 UnionMsg_Menu_PokePartySelectMenuSelectLoop(UNION_SYSTEM_PTR unisys)
+{
+  return UnionMsg_Menu_SelectLoop(unisys);
 }
 

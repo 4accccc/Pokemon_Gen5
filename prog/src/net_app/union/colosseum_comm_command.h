@@ -35,6 +35,7 @@ enum COLOSSEUM_CMD{
   COLOSSEUM_CMD_BATTLE_READY_CANCEL,        ///<戦闘準備キャンセル
   COLOSSEUM_CMD_BATTLE_READY_CANCEL_OK,     ///<戦闘準備キャンセルOK
   COLOSSEUM_CMD_ALL_BATTLE_READY,           ///<全員戦闘準備完了
+  COLOSSEUM_CMD_POKELIST_SELECTED,          ///<ポケモンリスト選択完了
   COLOSSEUM_CMD_LEAVE,                      ///<退出
   
   COLOSSEUM_CMD_MAX,
@@ -67,6 +68,7 @@ extern BOOL ColosseumSend_BattleReady(void);
 extern BOOL ColosseumSend_BattleReadyCancel(void);
 extern BOOL ColosseumSend_BattleReadyCancelOK(int send_netid);
 extern BOOL ColosseumSend_AllBattleReady(void);
+extern BOOL ColosseumSend_PokeListSelected(void);
 extern BOOL ColosseumSend_Leave(void);
 extern BOOL ColosseumSend_EntryAnswer(int send_netid, COMM_ENTRY_ANSWER answer);
 

@@ -24,6 +24,8 @@
 #include "fieldmap/zone_id.h"
 #include "field/event_colosseum_battle.h"
 #include "savedata/sp_ribbon_save.h"
+#include "colosseum.h"
+#include "colosseum_tool.h"
 
 #include "net_app\poke_trade\ircpokemontrade.h"
 
@@ -487,6 +489,11 @@ static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
 		break;
 	case SEQ_POKELIST_WAIT:
 		if(GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
+      if(unisys->colosseum_sys != NULL){
+        plist->comm_selected_num 
+          = ColosseumTool_ReceiveCheck_PokeListSeletedNum(unisys->colosseum_sys);
+        OS_TPrintf("selected_num = %d\n", plist->comm_selected_num);
+      }
       break;
     }
     if(plist->ret_mode == PL_RET_STATUS){

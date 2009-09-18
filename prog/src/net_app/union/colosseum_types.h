@@ -23,6 +23,12 @@
 ///立ち位置についていない(COLOSSEUM_PARENT_WORK.stand_positionの値)
 #define COLOSSEUM_STANDING_POSITION_NULL    (0xff)
 
+///どのPOKEPARTYを使用するか
+enum{
+  COLOSSEUM_SELECT_PARTY_TEMOTI,    ///<手持ち
+  COLOSSEUM_SELECT_PARTY_BOX_A,     ///<バトルボックス１
+  COLOSSEUM_SELECT_PARTY_BOX_B,     ///<バトルボックス２
+};
 
 //==============================================================================
 //  構造体定義
@@ -69,6 +75,8 @@ typedef struct{
   u8 stand_position[COLOSSEUM_MEMBER_MAX];  ///<各メンバーがどの立ち位置にいるか
   u8 stand_position_occ;                    ///<TRUE:データ有効
   
+  u8 pokelist_selected_num;                 ///<ポケモンリスト選択完了人数
+  
   u8 leave[COLOSSEUM_MEMBER_MAX];           ///<TRUE:誰かが退出しようとしている
 }COLOSSEUM_RECV_BUF;
 
@@ -90,7 +98,8 @@ typedef struct _COLOSSEUM_SYSTEM{
   COMM_ENTRY_MENU_PTR entry_menu;           ///<参加募集メニュー管理
   
   u8 talk_obj_id;                           ///<話しかけ相手のOBJ_ID
-  u8 padding[3];
+  u8 select_pokeparty;                      ///<選択したPOKEPARTY(COLOSSEUM_SELECT_PARTY_???)
+  u8 padding[2];
 }COLOSSEUM_SYSTEM;
 
 
