@@ -17,6 +17,6 @@ extern void GYM_ELEC_End(FIELDMAP_WORK *fieldWork);
 extern void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork);
 
 extern GMEVENT *GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx);
-
+extern GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys);
 
 #endif  //__GYM_ELEC_H__

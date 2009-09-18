@@ -26,5 +26,7 @@ extern BOOL FLDGMK_FieldGimmickHitCheck(FIELDSYS_WORK *fsys,
 										const fx32 inHeight,
 										BOOL *outHit);
 #endif
+
+extern BOOL FLDGMK_GimmickCodeCheck(FIELDMAP_WORK *fieldWork, int gimmick_id);
 #endif	//__FIELD_GIMMICK_H__
 

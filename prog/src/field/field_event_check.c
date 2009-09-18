@@ -55,6 +55,10 @@
 
 #include "../../../resource/fldmapdata/script/bg_attr_def.h"  //SCRID_BG_MSG_～
 
+#include "field_gimmick.h"   //for FLDGMK_GimmickCodeCheck
+#include "field_gimmick_def.h"  //for FLD_GIMMICK_GYM_ELEC
+#include "gym_elec.h"     //for GYM_ELEC_CreateMoveEvt
+
 //======================================================================
 //======================================================================
 
@@ -1142,6 +1146,12 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
   //目の前チェック（階段、壁、ドア）
   idx = getConnectID(req, &front_pos);
   if (idx == EXIT_ID_NONE) {
+    //壁の場合、電気ジムかを調べる
+    //ギミックが割り当てられているかを調べて、ジムソースのオーバレイがなされていることを確認する
+    if ( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_GYM_ELEC) ){  
+      //電気ジム
+      return GYM_ELEC_CreateMoveEvt(gsys);
+    }
     return NULL;
   }
 

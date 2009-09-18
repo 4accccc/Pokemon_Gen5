@@ -24,6 +24,8 @@ _EVENT_DATA		ev_pos_c04gym0101_sw1
 _EVENT_DATA		ev_pos_c04gym0101_sw2
 _EVENT_DATA		ev_pos_c04gym0101_sw3
 _EVENT_DATA		ev_pos_c04gym0101_sw4
+_EVENT_DATA   gimmick_c04gym0101_scr01
+_EVENT_DATA   gimmick_c04gym0101_scr02
 _EVENT_DATA_END
 
 
@@ -51,20 +53,33 @@ ev_c04gym0101:
 //ジムギミックposイベント：スタート地点（逆Ｌ字）
 ev_pos_c04gym0101_sw1:
 	//LOCALWORK11==0で起動
+  _GYM_ELEC_PUSH_SW(0)
   _END
 
 //ジムギミックposイベント：第２地点（逆コの字）
 ev_pos_c04gym0101_sw2:
 	//LOCALWORK12==0で起動
+  _GYM_ELEC_PUSH_SW(1)
   _END
 
 //ジムギミックposイベント：第３地点（一の字）
 ev_pos_c04gym0101_sw3:
 	//LOCALWORK13==0で起動
+  _GYM_ELEC_PUSH_SW(2)
   _END
 
 //ジムギミックposイベント：リーダー前（逆Ｔ字）
 ev_pos_c04gym0101_sw4:
 	//LOCALWORK14==0で起動
+  _GYM_ELEC_PUSH_SW(3)
   _END
+
+//カプセル内トレーナーと自機のアニメーション
+gimmick_c04gym0101_scr01:
+  _END
+
+//カプセル内トレーナーとの戦闘
+gimmick_c04gym0101_scr02:
+  _END
+
 

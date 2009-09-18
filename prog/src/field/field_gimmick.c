@@ -226,3 +226,34 @@ BOOL FLDGMK_FieldGimmickHitCheck(	FIELDSYS_WORK *fsys,
 	return FALSE;						//処理無し
 }
 #endif
+
+//--------------------------------------------------------------
+/**
+ * @brief   ギミックコードが指定IDのコードと同一かチェック
+ *
+ * @param	fieldWork	フィールドワークポインタ
+ * @param   gimmick_id		ギミックコード
+ *
+ * @retval  TRUE:一致。　FALSE:不一致
+ *
+ */
+//--------------------------------------------------------------
+BOOL FLDGMK_GimmickCodeCheck(FIELDMAP_WORK *fieldWork, int gimmick_id)
+{
+  int id;
+  GIMMICKWORK *work;
+
+  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK* sv= GAMEDATA_GetSaveControlWork(gamedata);
+	
+	//ギミックワーク取得
+	work = SaveData_GetGimmickWork(sv);
+	//ギミックコードを取得
+	id = GIMMICKWORK_GetAssignID(work);
+
+	if(gimmick_id == id){
+		return TRUE;
+	}
+	return FALSE;
+}
