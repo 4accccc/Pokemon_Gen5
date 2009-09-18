@@ -11,6 +11,8 @@
 
 #include "savedata/save_control.h"
 
+#define OLDCONFIG_ON
+
 //============================================================================================
 //============================================================================================
 //----------------------------------------------------------
@@ -33,12 +35,21 @@ struct _CONFIG {
 	u16 sound_mode:2;			///<SOUNDMODE		サウンド出力
 	u16 battle_rule:1;			///<BATTLERULE		戦闘ルール
 	u16 wazaeff_mode:1;			///<WAZAEFF_MODE	わざエフェクト
+#ifdef OLDCONFIG_ON
 	u16 input_mode:2;			///<INPUTMODE		入力モード
 	u16 window_type:5;			///<WINTYPE			ウィンドウタイプ
+#endif
 	u16 moji_mode:1;      ///<MOJIMODE
 	u16 wirelesssave_mode:1;      ///<WIRELESSSAVE_MODE   ワイヤレスでセーブをはさむかどうか
-	
-  u16 padding:15;	//WBでパディングを入れました 2008.12.11(木) matsuda
+	u16 network_search:1;					///<NETWORK_SEARCH_MODE	ゲーム中にビーコンサーチするかどうか
+
+#ifdef OLDCONFIG_ON
+	u16 padding:14;
+#else
+	u16 padding1:5;
+
+  u16 padding2;	//WBでパディングを入れました 2008.12.11(木) matsuda
+#endif
 };
 
 //----------------------------------------------------------
@@ -78,6 +89,7 @@ typedef enum {
 
 //----------------------------------------------------------
 //----------------------------------------------------------
+#ifdef OLDCONFIG_ON
 typedef enum {	// ※KeyCustmizeDataと並びが同じである必要があります
 	INPUTMODE_NORMAL = 0,	///<ボタン設定＝「ノーマル」
 	INPUTMODE_START_X,		///<ボタン設定＝「START=X」
@@ -110,7 +122,7 @@ typedef enum{
 	WINTYPE_20,
 	WINTYPE_MAX,
 }WINTYPE;
-
+#endif
 //----------------------------------------------------------
 //----------------------------------------------------------
 typedef enum{
@@ -127,6 +139,10 @@ typedef enum{
 	WIRELESSSAVE_MAX,
 }WIRELESSSAVE_MODE;
 
+typedef enum{	
+	NETWORK_SEARCH_OFF,
+	NETWORK_SEARCH_ON,
+}NETWORK_SEARCH_MODE;
 
 //============================================================================================
 //============================================================================================
@@ -150,6 +166,7 @@ extern void CONFIG_Init(CONFIG * cfg);
 /**
  *	@brief	キーコンフィグをゲームに反映する
  */
+#ifdef OLDCONFIG_ON
 extern void config_SetKeyConfig(SAVE_CONTROL_WORK* sv,INPUTMODE mode);
 static inline void CONFIG_SetKeyConfigFormSave(SAVE_CONTROL_WORK* sv)
 {
@@ -159,6 +176,7 @@ static inline void CONFIG_SetKeyConfig(INPUTMODE mode)
 {
 	config_SetKeyConfig(NULL,mode);
 }
+#endif
 
 //	はなしのはやさ
 extern MSGSPEED CONFIG_GetMsgSpeed(const CONFIG * cfg);
@@ -178,12 +196,14 @@ extern SOUNDMODE CONFIG_GetSoundMode(const CONFIG * cfg);
 extern void CONFIG_SetSoundMode(CONFIG * cfg, SOUNDMODE snd_mode);
 
 //	ボタンモード
+#ifdef OLDCONFIG_ON
 extern INPUTMODE CONFIG_GetInputMode(const CONFIG * cfg);
 extern void CONFIG_SetInputMode(CONFIG * cfg, INPUTMODE mode);
 
 //	ウィンドウタイプ
 extern WINTYPE CONFIG_GetWindowType(const CONFIG * cfg);
 extern void CONFIG_SetWindowType(CONFIG * cfg, WINTYPE type);
+#endif
 
 //	文字モード
 extern MOJIMODE CONFIG_GetMojiMode(const CONFIG * cfg);
@@ -193,6 +213,9 @@ extern void CONFIG_SetMojiMode(CONFIG * cfg, MOJIMODE type);
 extern WIRELESSSAVE_MODE CONFIG_GetWirelessSaveMode(const CONFIG * cfg);
 extern void CONFIG_SetWirelessSaveMode(CONFIG * cfg, WIRELESSSAVE_MODE type);
 
+//	ゲーム中のネットワークサーチモード
+extern NETWORK_SEARCH_MODE CONFIG_GetNetworkSearchMode( const CONFIG * cfg );
+extern void CONFIG_SetNetworkSearchMode( CONFIG * cfg, NETWORK_SEARCH_MODE mode );
 
 //----------------------------------------------------------
 //	セーブデータ取得のための関数

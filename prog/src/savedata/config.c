@@ -97,10 +97,13 @@ void CONFIG_Init(CONFIG * cfg)
 	cfg->sound_mode = SOUNDMODE_STEREO;
 	cfg->battle_rule = BATTLERULE_IREKAE;
 	cfg->wazaeff_mode = WAZAEFF_MODE_ON;
+#ifdef OLDCONFIG_ON
 	cfg->input_mode = INPUTMODE_NORMAL;
 	cfg->window_type = WINTYPE_01;
+#endif
   cfg->moji_mode = MOJIMODE_HIRAGANA;
   cfg->wirelesssave_mode = WIRELESSSAVE_OFF;
+	cfg->network_search	= NETWORK_SEARCH_ON;
 }
 
 //============================================================================================
@@ -108,6 +111,7 @@ void CONFIG_Init(CONFIG * cfg)
 /**
  *	@brief	キーコンフィグをゲームに反映する
  */
+#ifdef OLDCONFIG_ON
 void config_SetKeyConfig(SAVE_CONTROL_WORK * sv,INPUTMODE mode)
 {
 	CONFIG* config;
@@ -117,6 +121,7 @@ void config_SetKeyConfig(SAVE_CONTROL_WORK * sv,INPUTMODE mode)
 	}
 	GFL_UI_KEY_SetControlMode(mode);
 }
+#endif
 
 //----------------------------------------------------------
 /**
@@ -212,6 +217,7 @@ void CONFIG_SetBattleRule(CONFIG * cfg, BATTLERULE rule)
 /**
  */
 //---------------------------------------------------------
+#ifdef OLDCONFIG_ON
 INPUTMODE CONFIG_GetInputMode(const CONFIG * cfg)
 {
 	return cfg->input_mode;
@@ -243,6 +249,7 @@ void CONFIG_SetWindowType(CONFIG * cfg, WINTYPE type)
 {
 	cfg->window_type = type;
 }
+#endif
 
 //	文字モード
 MOJIMODE CONFIG_GetMojiMode(const CONFIG * cfg)
@@ -266,3 +273,12 @@ void CONFIG_SetWirelessSaveMode(CONFIG * cfg, WIRELESSSAVE_MODE type)
   cfg->wirelesssave_mode = type;
 }
 
+//ゲーム中のネットワークサーチモード
+NETWORK_SEARCH_MODE CONFIG_GetNetworkSearchMode( const CONFIG * cfg )
+{	
+	return cfg->network_search;
+}
+void CONFIG_SetNetworkSearchMode( CONFIG * cfg, NETWORK_SEARCH_MODE mode )
+{	
+	cfg->network_search	= mode;
+}

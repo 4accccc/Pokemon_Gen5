@@ -80,6 +80,43 @@ enum
 	CONFIG_BG_PAL_S_13,		// 
 	CONFIG_BG_PAL_S_14,		//  
 	CONFIG_BG_PAL_S_15,		// 
+
+	// メイン画面OBJ
+	CONFIG_OBJ_PAL_M_00 = 0,//
+	CONFIG_OBJ_PAL_M_01,		// 
+	CONFIG_OBJ_PAL_M_02,		//
+	CONFIG_OBJ_PAL_M_03,		// 
+	CONFIG_OBJ_PAL_M_04,		// 
+	CONFIG_OBJ_PAL_M_05,		// 
+	CONFIG_OBJ_PAL_M_06,		// 
+	CONFIG_OBJ_PAL_M_07,		// 
+	CONFIG_OBJ_PAL_M_08,		//  
+	CONFIG_OBJ_PAL_M_09,		//  
+	CONFIG_OBJ_PAL_M_10,		//  
+	CONFIG_OBJ_PAL_M_11,		//  
+	CONFIG_OBJ_PAL_M_12,		//  
+	CONFIG_OBJ_PAL_M_13,		//  
+	CONFIG_OBJ_PAL_M_14,		// 
+	CONFIG_OBJ_PAL_M_15,		//
+
+
+	// サブ画面OBJ
+	CONFIG_OBJ_PAL_S_00 = 0,//
+	CONFIG_OBJ_PAL_S_01,		// 
+	CONFIG_OBJ_PAL_S_02,		// 
+	CONFIG_OBJ_PAL_S_03,		// 
+	CONFIG_OBJ_PAL_S_04,		// 
+	CONFIG_OBJ_PAL_S_05,		// 
+	CONFIG_OBJ_PAL_S_06,		// 
+	CONFIG_OBJ_PAL_S_07,		//  
+	CONFIG_OBJ_PAL_S_08,		//  
+	CONFIG_OBJ_PAL_S_09,		//  
+	CONFIG_OBJ_PAL_S_10,		//  
+	CONFIG_OBJ_PAL_S_11,		//  
+	CONFIG_OBJ_PAL_S_12,		//  
+	CONFIG_OBJ_PAL_S_13,		// 
+	CONFIG_OBJ_PAL_S_14,		//  
+	CONFIG_OBJ_PAL_S_15,		// 
 };
 
 //-------------------------------------
@@ -87,12 +124,52 @@ enum
 //=====================================
 enum 
 {
-	OBJRESID_TOUCH_PLT,
-	OBJRESID_TOUCH_CHR,
-	OBJRESID_TOUCH_CEL,
+	OBJRESID_ITEM_PLT,
+	OBJRESID_ITEM_CHR,
+	OBJRESID_ITEM_CEL,
 
 	OBJRESID_MAX
 };
+//-------------------------------------
+///	コンフィグのメニュー
+//=====================================
+typedef enum 
+{
+	CONFIG_LIST_MSGSPEED,
+	CONFIG_LIST_BTLEFF,
+	CONFIG_LIST_BTLRULE,
+	CONFIG_LIST_SND,
+	CONFIG_LIST_STR,
+	CONFIG_LIST_WIRELESS,
+	CONFIG_LIST_REPORT,
+	CONFIG_LIST_MAX,
+	CONFIG_LIST_NONE	= CONFIG_LIST_MAX,
+} CONFIG_LIST;
+
+//-------------------------------------
+///	コンフィグアイテムの数
+//=====================================
+typedef enum
+{	
+	CONFIG_ITEM_MSG_SLOW,
+	CONFIG_ITEM_MSG_NORMAL,
+	CONFIG_ITEM_MSG_FAST,
+	CONFIG_ITEM_BTLEFF_YES,
+	CONFIG_ITEM_BTLEFF_NO,
+	CONFIG_ITEM_BTLRULE_IREKAE,
+	CONFIG_ITEM_BTLRULE_KACHINUKI,
+	CONFIG_ITEM_SND_STEREO,
+	CONFIG_ITEM_SND_MONO,
+	CONFIG_ITEM_STR_HIRAGANA,
+	CONFIG_ITEM_STR_KANJI,
+	CONFIG_ITEM_WIRELESS_YES,
+	CONFIG_ITEM_WIRELESS_NO,
+	CONFIG_ITEM_REPORT_YES,
+	CONFIG_ITEM_REPORT_NO,
+
+	CONFIG_ITEM_MAX
+}CONFIG_ITEM;
+
 //-------------------------------------
 ///	CLWKのID
 //=====================================
@@ -101,6 +178,9 @@ typedef enum
 	CLWKID_DECIDE,
 	CLWKID_CANCEL,
 	CLWKID_CHECK,
+
+	CLWKID_ITEM_TOP,
+	CLWKID_ITEM_END	= CLWKID_ITEM_TOP + CONFIG_ITEM_MAX,
 	
 	CLWKID_MAX
 }CLWKID;
@@ -109,49 +189,19 @@ typedef enum
 //=====================================
 typedef enum
 {	
-	BMPWINID_MSGSPEED,
-	BMPWINID_MSGSPEED_SLOW,
-	BMPWINID_MSGSPEED_NORMAL,
-	BMPWINID_MSGSPEED_FAST,
-	BMPWINID_BTLEFF,
-	BMPWINID_BTLEFF_ON,
-	BMPWINID_BTLEFF_OFF,
-	BMPWINID_BTLRULE,
-	BMPWINID_BTLRULE_IREKAE,
-	BMPWINID_BTLRULE_KACHINUKI,
-	BMPWINID_SND,
-	BMPWINID_SND_STEREO,
-	BMPWINID_SND_MONO,
-	BMPWINID_STR,
-	BMPWINID_STR_HERAGANA,
-	BMPWINID_STR_KANJI,
-	BMPWINID_WIRELESS,
-	BMPWINID_WIRELESS_ON,
-	BMPWINID_WIRELESS_OFF,
-	BMPWINID_REPORT,
-	BMPWINID_REPORT_WRITE,
-	BMPWINID_REPORT_NONE,
-	BMPWINID_CONFIG_MENU_MAX,
+	BMPWINID_ITEM_TOP,
+	BMPWINID_ITEM_END = BMPWINID_ITEM_TOP + CONFIG_ITEM_MAX - 1,
+	BMPWINID_ITEM_MAX,
+	BMPWINID_LIST_TOP	= BMPWINID_ITEM_MAX,
+	BMPWINID_LIST_END = BMPWINID_LIST_TOP + CONFIG_LIST_MAX - 1,
+	BMPWINID_LIST_MAX,
+	BMPWINID_CONFIG_MENU_MAX	= BMPWINID_LIST_MAX,
 	BMPWINID_TITLE	= BMPWINID_CONFIG_MENU_MAX,
 	BMPWINID_DECIDE,
 	BMPWINID_CANCEL,
 	
 	BMPWINID_MAX
 }BMPWINID;
-//-------------------------------------
-///	UIの選択しているもの
-//=====================================
-typedef enum 
-{
-	UI_SELECT_MSGSPEED,
-	UI_SELECT_BTLEFF,
-	UI_SELECT_BTLRULE,
-	UI_SELECT_SND,
-	UI_SELECT_STR,
-	UI_SELECT_WIRELESS,
-	UI_SELECT_REPORT,
-	UI_SELECT_MAX
-} UI_SELECT;
 
 //-------------------------------------
 ///	BG転送情報
@@ -172,9 +222,12 @@ typedef enum
 #define SCROLL_START_OFS_Y	(-(36-SCROLL_WINDOW_OFS_DOT))		//開始オフセット
 #define SCROLL_WINDOW_H_CHR	(3)													//１つのウィンドウの幅（キャラ単位）
 #define SCROLL_WINDOW_H_DOT	(SCROLL_WINDOW_H_CHR*GFL_BG_1CHRDOTSIZ)		//１つのウィンドウの幅（ドット単位）
-#define SCROLL_DISTANCE			(SCROLL_WINDOW_H_DOT*UI_SELECT_MAX)			//スクロールする距離
-#define SCROLL_START				(SCROLL_START_OFS_Y)											//開始
+#define SCROLL_DISTANCE			(SCROLL_WINDOW_H_DOT*CONFIG_LIST_MAX)			//スクロールする距離
+#define SCROLL_START				(SCROLL_START_OFS_Y)																//開始
 #define SCROLL_END					(-(156-(SCROLL_WINDOW_OFS_DOT+SCROLL_DISTANCE)))		//終了
+#define SCROLL_DISPLAY			(4)	//画面から見えるウィンドウの数
+#define SCROLL_START_OBJ		(SCROLL_WINDOW_OFS_DOT-SCROLL_START_OFS_Y)	//開始
+#define SCROLL_END_OBJ			(156-(SCROLL_START_OBJ+SCROLL_DISTANCE)+36)		//終了
 
 //-------------------------------------
 ///	UIの種類
@@ -214,13 +267,7 @@ typedef enum
 //=====================================
 typedef struct
 {
-  u8 msg_spd;
-  u8 btl_eff;
-  u8 btl_rule;
-  u8 sound;
-  u8 moji_mode;
-	u8 wireless;
-	u8 report;
+  u8 param[CONFIG_LIST_MAX];
 	u8 dummy;
 }CONFIG_PARAM;
 //-------------------------------------
@@ -272,6 +319,20 @@ typedef struct
 	GFL_POINT	slide;
 } UI_WORK;
 //-------------------------------------
+///	メッセージウィンドウ
+//=====================================
+typedef struct 
+{
+	GFL_MSGDATA				*p_msg;
+	GFL_FONT					*p_font;
+	PRINT_QUE					*p_print_que;
+	GFL_BMPWIN*				p_bmpwin;
+	PRINT_UTIL        print_util;
+	STRBUF*						p_strbuf;
+	u16								clear_chr;
+	u16								dummy;
+} MSGWND_WORK;
+//-------------------------------------
 ///	APPBAR
 //=====================================
 typedef struct 
@@ -287,14 +348,11 @@ typedef struct
 {
 	u16	font_frm;
 	u16	back_frm;
+	CONFIG_LIST	select;
+	GFL_CLWK *p_item[CONFIG_ITEM_MAX];
+	int	obj_y_ofs;
+	CONFIG_PARAM	now;
 } SCROLL_WORK;
-//-------------------------------------
-///	SETTING
-//=====================================
-typedef struct 
-{
-	CONFIG_PARAM	now;	//現在の設定情報
-} SETTING_WORK;
 //-------------------------------------
 ///	コンフィグメインワーク
 //=====================================
@@ -315,8 +373,8 @@ typedef struct
 	//スクロール
 	SCROLL_WORK		scroll;
 
-	//設定ワーク
-	SETTING_WORK	setting;
+	//上画面解説文ウィンドウ
+	MSGWND_WORK		info;
 
 	//以前の設定情報
 	CONFIG_PARAM	pre;	
@@ -337,6 +395,12 @@ typedef struct
 #define TITLEBAR_MENUBAR_Y	(0)
 #define TITLEBAR_MENUBAR_W	(32)
 #define TITLEBAR_MENUBAR_H	(3)
+
+//解説ウィンドウ
+#define INFOWND_X		(1)
+#define INFOWND_Y		(19)
+#define INFOWND_W		(30)
+#define INFOWND_H		(4)
 
 //=============================================================================
 /**
@@ -384,6 +448,13 @@ static void UI_Exit( UI_WORK *p_wk );
 static void UI_Main( UI_WORK *p_wk, const SCROLL_WORK *cp_scroll );
 static UI_INPUT UI_GetInput( const UI_WORK *cp_wk, GFL_POINT *p_data );
 //-------------------------------------
+///	MSGWND
+//=====================================
+static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe, u8 x, u8 y, u8 w, u8 h, u8 plt, HEAPID heapID );
+static void MSGWND_Exit( MSGWND_WORK* p_wk );
+static BOOL MSGWND_Main( MSGWND_WORK *p_wk );
+static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID );
+//-------------------------------------
 ///	APPBAR
 //=====================================
 static void APPBAR_Init
@@ -393,16 +464,22 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui );
 //-------------------------------------
 ///	SCROLL
 //=====================================
-static void SCROLL_Init( SCROLL_WORK *p_wk, u8 font_frm, u8 back_frm, HEAPID heapID );
+static void SCROLL_Init( SCROLL_WORK *p_wk, u8 font_frm, u8 back_frm, const GRAPHIC_WORK *cp_grp, const CONFIG_PARAM *cp_param, HEAPID heapID );
 static void SCROLL_Exit( SCROLL_WORK *p_wk );
 static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui );
+static CONFIG_LIST SCROLL_GetSelect( const SCROLL_WORK *cp_wk );
+static void SCROLL_GetConfigParam( const SCROLL_WORK *cp_wk, CONFIG_PARAM *p_param );
+static void Scroll_ChangePlt( SCROLL_WORK *p_wk, BOOL is_decide_draw );
 static void Scroll_Move( SCROLL_WORK *p_wk, int y_add );
+static CONFIG_LIST Scroll_PosToList( const SCROLL_WORK *cp_wk, const GFL_POINT *cp_pos );
 //-------------------------------------
-///	SETTING
+///	CONFIG_PARAM
 //=====================================
-static void SETTING_Init( SETTING_WORK *p_wk, HEAPID heapID );
-static void SETTING_Exit( SETTING_WORK *p_wk );
-static void SETTING_Main( SETTING_WORK *p_wk, const UI_WORK *cp_ui );
+static void CONFIGPARAM_Init( CONFIG_PARAM *p_wk, const CONFIG *cp_savedata );
+static void CONFIGPARAM_Exit( CONFIG_PARAM *p_wk );
+static void CONFIGPARAM_Save( const CONFIG_PARAM *cp_wk, CONFIG *p_savedata );
+static void CONFIGPARAM_SetItem( CONFIG_PARAM *p_wk, CONFIG_ITEM item );
+static BOOL CONFIGPARAM_IsItemSetting( const CONFIG_PARAM *cp_wk, CONFIG_ITEM item );
 //-------------------------------------
 ///	SEQ
 //=====================================
@@ -419,12 +496,7 @@ static void SEQFUNC_FadeOut( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_FadeIn( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 //-------------------------------------
-///	CONFIG_PARAM
-//=====================================
-static void CONFIGPARAM_Create( CONFIG_PARAM *p_wk, const CONFIG *cp_savedata );
-static void CONFIGPARAM_Decide( const CONFIG_PARAM *cp_wk, CONFIG *p_savedata );
-static void CONFIGPARAM_Set( CONFIG_PARAM *p_wk );
-//-------------------------------------
+
 ///	ETC
 //=====================================
 static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h, u8 plt, BOOL compressedFlag, HEAPID heapID );
@@ -459,6 +531,7 @@ enum
 	GRAPHIC_BG_FRAME_WND_M,				//ウィンドウ
 	GRAPHIC_BG_FRAME_BACK_M,			//背景
 
+	GRAPHIC_BG_FRAME_TEXT_S,			//ウィンドウ
 	GRAPHIC_BG_FRAME_BACK_S,			//背景
 
 	GRAPHIC_BG_FRAME_MAX
@@ -527,6 +600,17 @@ static const struct
 		},
 		GFL_BG_MODE_TEXT
 	},
+	{	
+		GFL_BG_FRAME1_S,
+		{
+			0, 0, 0x800, 0,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+		},
+		GFL_BG_MODE_TEXT
+	},
+
 };
 //フレーム取得用マクロ
 #define GRAPHIC_BG_GetFrame( x )	(sc_bgsetup[ x ].frame)
@@ -538,18 +622,14 @@ static const struct
 //=====================================
 static const struct 
 {
-	u16			strID;	//文字番号
+	u32			strID;	//文字番号
 	u8			x;			//BMPWIN座標X
 	u8			y;			//BMPWIN座標Y
 	u8			w;			//BMPWIN座標幅
 	u8			h;			//BMPWIN座標高さ
 } sc_config_menu_bmpwin_data[BMPWINID_CONFIG_MENU_MAX]	=
 {	
-	//○話の早さ
-	{	
-		mes_config_menu01,
-		1,5,10,2
-	},
+
 	//おそい
 	{	
 		mes_config_sm01_00,
@@ -565,11 +645,6 @@ static const struct
 		mes_config_sm01_02,
 		27,5,4,2
 	},
-	//○戦闘アニメ
-	{	
-		mes_config_menu02,
-		1,8,8,2
-	},
 	//みる
 	{	
 		mes_config_sm02_00,
@@ -579,11 +654,6 @@ static const struct
 	{	
 		mes_config_sm02_01,
 		24,8,6,2
-	},
-	//○試合のルール
-	{	
-		mes_config_menu03,
-		1,11,10,2
 	},
 	//いれかえ
 	{	
@@ -595,11 +665,7 @@ static const struct
 		mes_config_sm03_01,
 		24,11,8,2
 	},
-	//○サウンド
-	{	
-		mes_config_menu04,
-		1,14,6,2
-	},
+
 	//ステレオ
 	{	
 		mes_config_sm04_00,
@@ -609,11 +675,6 @@ static const struct
 	{	
 		mes_config_sm04_01,
 		24,14,6,2
-	},
-	//○文字モード
-	{	
-		mes_config_menu05,
-		1,17,8,2
 	},
 	//ひらがな
 	{	
@@ -625,11 +686,6 @@ static const struct
 		mes_config_sm05_01,
 		24,17,8,2
 	},
-	//○無線
-	{	
-		mes_config_menu06,
-		1,20,10,2
-	},
 	//オン
 	{	
 		mes_config_sm06_00,
@@ -639,11 +695,6 @@ static const struct
 	{	
 		mes_config_sm06_01,
 		24,20,8,2
-	},
-	//○ワイヤレス接続前レポート
-	{	
-		mes_config_menu07,
-		1,23,10,2
 	},
 	//かく
 	{	
@@ -655,7 +706,188 @@ static const struct
 		mes_config_sm07_01,
 		24,23,6,2
 	},
+	//○話の早さ
+	{	
+		mes_config_menu01,
+		1,5,10,2
+	},
+	//○戦闘アニメ
+	{	
+		mes_config_menu02,
+		1,8,8,2
+	},
+	//○試合のルール
+	{	
+		mes_config_menu03,
+		1,11,10,2
+	},
+	//○サウンド
+	{	
+		mes_config_menu04,
+		1,14,6,2
+	},
+	//○文字モード
+	{	
+		mes_config_menu05,
+		1,17,8,2
+	},
+	//○無線
+	{	
+		mes_config_menu06,
+		1,20,10,2
+	},
+	//○ワイヤレス接続前レポート
+	{	
+		mes_config_menu07,
+		1,23,10,2
+	},
 };
+
+//-------------------------------------
+///	メニューに対応した説明メッセージ
+//=====================================
+static const u32 sc_list_info_msg[CONFIG_LIST_MAX]	=
+{		
+	mes_config_comment01,//CONFIG_LIST_MSGSPEED,
+	mes_config_comment02,//CONFIG_LIST_BTLEFF,
+	mes_config_comment03,//CONFIG_LIST_BTLRULE,
+	mes_config_comment04,//CONFIG_LIST_SND,
+	mes_config_comment05,//CONFIG_LIST_STR,
+	mes_config_comment06,//CONFIG_LIST_WIRELESS,
+	mes_config_comment07,//CONFIG_LIST_REPORT,
+};
+
+//-------------------------------------
+///	アイテムの情報
+//=====================================
+static const struct
+{	
+	CONFIG_LIST list;		//対応するリスト
+	u32					idx;		//リストのインデックス
+	GFL_POINT		obj_pos;//OBJの位置
+}sc_item_info[CONFIG_ITEM_MAX]	=
+{
+	//	CONFIG_ITEM_MSG_SLOW,
+	{	
+		CONFIG_LIST_MSGSPEED,
+		MSGSPEED_SLOW,
+		{	
+			15*8,0
+		},
+	},
+	//	CONFIG_ITEM_MSG_NORMAL,
+	{	
+		CONFIG_LIST_MSGSPEED,
+		MSGSPEED_NORMAL,
+		{	
+			21*8,0
+		},
+	},
+	//	CONFIG_ITEM_MSG_FAST,
+	{	
+		CONFIG_LIST_MSGSPEED,
+		MSGSPEED_FAST,
+		{	
+			27*8,0
+		},
+	},
+	//	CONFIG_ITEM_BTLEFF_YES,
+	{	
+		CONFIG_LIST_BTLEFF,
+		WAZAEFF_MODE_ON,
+		{	
+			15*8,3*8
+		},
+	},
+	//	CONFIG_ITEM_BTLEFF_NO,
+	{	
+		CONFIG_LIST_BTLEFF,
+		WAZAEFF_MODE_OFF,
+		{	
+			24*8,3*8
+		},
+	},
+	//	CONFIG_ITEM_BTLRULE_IREKAE,
+	{	
+		CONFIG_LIST_BTLRULE,
+		BATTLERULE_IREKAE,
+		{	
+			15*8,6*8
+		},
+	},
+	//	CONFIG_ITEM_BTLRULE_KACHINUKI,
+	{	
+		CONFIG_LIST_BTLRULE,
+		BATTLERULE_KACHINUKI,
+		{	
+			24*8,6*8
+		},
+	},
+	//	CONFIG_ITEM_SND_STEREO,
+	{	
+		CONFIG_LIST_SND,
+		SOUNDMODE_STEREO,
+		{	
+			15*8,9*8
+		},
+	},
+	//	CONFIG_ITEM_SND_MONO,
+	{	
+		CONFIG_LIST_SND,
+		SOUNDMODE_MONO,
+		{	
+			24*8,9*8
+		},
+	},
+	//	CONFIG_ITEM_STR_HIRAGANA,
+	{	
+		CONFIG_LIST_STR,
+		MOJIMODE_HIRAGANA,
+		{	
+			15*8,12*8
+		},
+	},
+	//	CONFIG_ITEM_STR_KANJI,
+	{	
+		CONFIG_LIST_STR,
+		MOJIMODE_KANJI,
+		{	
+			24*8,12*8
+		},
+	},
+	//	CONFIG_ITEM_WIRELESS_YES,
+	{	
+		CONFIG_LIST_WIRELESS,
+		NETWORK_SEARCH_ON,
+		{	
+			15*8,15*8
+		},
+	},
+	//	CONFIG_ITEM_WIRELESS_NO,
+	{	
+		CONFIG_LIST_WIRELESS,
+		NETWORK_SEARCH_OFF,
+		{	
+			24*8,15*8
+		},
+	},
+	//	CONFIG_ITEM_REPORT_YES,
+	{	
+		CONFIG_LIST_REPORT,
+		WIRELESSSAVE_ON,
+		{	
+			15*8,18*8
+		},
+	},
+	//	CONFIG_ITEM_REPORT_NO,
+	{	
+		CONFIG_LIST_REPORT,
+		WIRELESSSAVE_OFF,
+		{	
+			24*8,18*8
+		},
+	},
+} ;
 
 //=============================================================================
 /**
@@ -686,6 +918,10 @@ static GFL_PROC_RESULT CONFIG_PROC_Init( GFL_PROC *p_proc,int *p_seq, void *p_pa
 		GFL_STD_MemClear( p_wk, sizeof(CONFIG_WORK) );
 
 		//モジュール初期化
+		{
+			CONFIG * p_sv	= SaveData_GetConfig(SaveControl_GetPointer());	
+			CONFIGPARAM_Init( &p_wk->pre, p_sv );
+		}
 		GRAPHIC_Init( &p_wk->graphic, HEAPID_CONFIG );
 		SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeOut );
 		APPBAR_Init( &p_wk->appbar, 
@@ -693,11 +929,18 @@ static GFL_PROC_RESULT CONFIG_PROC_Init( GFL_PROC *p_proc,int *p_seq, void *p_pa
 				GRAPHIC_GetClwk(&p_wk->graphic, CLWKID_CANCEL),
 				GRAPHIC_GetClwk(&p_wk->graphic, CLWKID_CHECK),
 				HEAPID_CONFIG );
+
 		SCROLL_Init( &p_wk->scroll, 
 				GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_FONT_M),
 				GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_WND_M),
+				&p_wk->graphic,
+				&p_wk->pre,
 				HEAPID_CONFIG);
 		UI_Init( &p_wk->ui, HEAPID_CONFIG );
+		MSGWND_Init( &p_wk->info, 
+				GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S),
+				INFOWND_X, INFOWND_Y,
+				INFOWND_W, INFOWND_H, 0, HEAPID_CONFIG );
 	}
 
 
@@ -717,14 +960,18 @@ static GFL_PROC_RESULT CONFIG_PROC_Init( GFL_PROC *p_proc,int *p_seq, void *p_pa
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT CONFIG_PROC_Exit( GFL_PROC *p_proc,int *p_seq, void *p_param_adrs, void *p_wk_adrs)
 {	
-	CONFIG_WORK	*p_wk	= p_wk_adrs;
-
 	//モジュール破棄
-	UI_Exit( &p_wk->ui );
-	SCROLL_Exit( &p_wk->scroll );
-	APPBAR_Exit( &p_wk->appbar );
-	SEQ_Exit( &p_wk->seq );
-	GRAPHIC_Exit( &p_wk->graphic );
+	{	
+		CONFIG_WORK	*p_wk	= p_wk_adrs;
+
+		MSGWND_Exit( &p_wk->info );
+		UI_Exit( &p_wk->ui );
+		SCROLL_Exit( &p_wk->scroll );
+		APPBAR_Exit( &p_wk->appbar );
+		SEQ_Exit( &p_wk->seq );
+		GRAPHIC_Exit( &p_wk->graphic );
+		CONFIGPARAM_Exit( &p_wk->pre );
+	}
 
  	//ワークエリア解放
   GFL_PROC_FreeWork( p_proc );
@@ -814,17 +1061,17 @@ static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID )
 	//VRAMバンク設定
 	GFL_DISP_SetBank( &sc_vramSetTable );
 
-	// ディスプレイON
+	//ディスプレイON
 	GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
 	GFL_DISP_SetDispOn();
 
-	//	表示
+	//表示
 	GFL_DISP_GX_InitVisibleControl();
 
-	//	フォント初期化
+	//フォント初期化
 	GFL_FONTSYS_Init();
 
-	//	モジュール初期化
+	//モジュール初期化
 	GRAPHIC_BG_Init( &p_wk->bg, heapID );
 	GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
 
@@ -1025,7 +1272,7 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
 		STRBUF		*p_strbuf;
 		GFL_MSGDATA	*p_msg;
 
-		p_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, 
+		p_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, 
 				GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 
 		p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
@@ -1145,6 +1392,45 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
+	//読み込み
+	{	
+		ARCHANDLE *p_handle;
+
+		p_handle	= GFL_ARC_OpenDataHandle( ARCID_CONFIG_GRA, heapID );
+
+		p_wk->reg_id[OBJRESID_ITEM_PLT]	= GFL_CLGRP_PLTT_Register( p_handle, 
+				NARC_config_gra_est_obj_01_NCLR, CLSYS_DRAW_MAIN, CONFIG_OBJ_PAL_M_00*0x20, heapID );
+
+		p_wk->reg_id[OBJRESID_ITEM_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
+				NARC_config_gra_est_obj_01_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+
+		p_wk->reg_id[OBJRESID_ITEM_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
+				NARC_config_gra_est_obj_01_NCER, NARC_config_gra_est_obj_01_NANR, heapID );
+
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
+
+	//CLWK作成
+	{	
+		int i;
+		GFL_CLWK_DATA	cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+		cldata.bgpri	= 1;
+		for( i = CLWKID_ITEM_TOP; i < CLWKID_ITEM_END; i++ )
+		{	
+			cldata.pos_x	= sc_item_info[i-CLWKID_ITEM_TOP].obj_pos.x;
+			cldata.pos_y	= sc_item_info[i-CLWKID_ITEM_TOP].obj_pos.y;
+			p_wk->p_clwk[i]	=		GFL_CLACT_WK_Create( p_wk->p_clunit,
+					p_wk->reg_id[OBJRESID_ITEM_CHR],
+					p_wk->reg_id[OBJRESID_ITEM_PLT],
+					p_wk->reg_id[OBJRESID_ITEM_CEL],
+					&cldata,
+					CLSYS_DEFREND_MAIN,
+					heapID );
+			GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
+		}
+	}
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -1156,6 +1442,26 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 //-----------------------------------------------------------------------------
 static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 {	
+	//CLWK破棄
+	{	
+		int i;
+		for( i = 0; i < CLWKID_MAX; i++ )
+		{	
+			if( p_wk->p_clwk[i] )
+			{	
+				GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
+			}
+		}
+	}
+
+	//リソース破棄
+	{	
+		GFL_CLGRP_PLTT_Release( p_wk->reg_id[OBJRESID_ITEM_PLT] );
+		GFL_CLGRP_CGR_Release( p_wk->reg_id[OBJRESID_ITEM_CHR] );
+		GFL_CLGRP_CELLANIM_Release( p_wk->reg_id[OBJRESID_ITEM_CEL] );
+	}
+
+
 	//システム破棄
 	GFL_CLACT_UNIT_Delete( p_wk->p_clunit );
 	GFL_CLACT_SYS_Delete();
@@ -1312,7 +1618,91 @@ static UI_INPUT UI_GetInput( const UI_WORK *cp_wk, GFL_POINT *p_data )
 
 	return cp_wk->input;
 }
+//=============================================================================
+/**
+ *					MSGWND
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージウィンドウ	初期化
+ *
+ *	@param	MSGWND_WORK* p_wk	ワーク
+ *	@param	bgframe			BGフレーム
+ *	@param	x						X
+ *	@param	y						Y
+ *	@param	w						幅
+ *	@param	h						高さ
+ *	@param	plt					パレット番号
+ *	@param	heapID			ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe, u8 x, u8 y, u8 w, u8 h, u8 plt, HEAPID heapID )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(MSGWND_WORK) );
+	p_wk->clear_chr	= 0xF;
+	p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+	p_wk->p_msg			= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+				NARC_message_config_dat, heapID );
+	p_wk->p_bmpwin	= GFL_BMPWIN_Create( bgframe, x, y, w, h, plt, GFL_BMP_CHRAREA_GET_B );
+	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 255, heapID );
+	p_wk->p_print_que = PRINTSYS_QUE_Create( heapID );
+	PRINT_UTIL_Setup( &p_wk->print_util, p_wk->p_bmpwin );
 
+	//フレーム書き込み
+//	BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_ON, 
+	//				GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->grp.bg.frame_char), AURA_BG_PAL_S_00 );	
+
+	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージウィンドウ	破棄
+ *
+ *	@param	MSGWND_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_Exit( MSGWND_WORK* p_wk )
+{	
+	PRINTSYS_QUE_Delete( p_wk->p_print_que );
+	GFL_STR_DeleteBuffer( p_wk->p_strbuf );
+	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
+	GFL_MSG_Delete( p_wk->p_msg );
+	GFL_FONT_Delete( p_wk->p_font );
+	GFL_STD_MemClear( p_wk, sizeof(MSGWND_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージウィンドウ	メイン処理
+ *
+ *	@param	MSGWND_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL MSGWND_Main( MSGWND_WORK *p_wk )
+{	
+	return PRINT_UTIL_Trans( &p_wk->print_util, p_wk->p_print_que );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージウィンドウ	プリント開始
+ *
+ *	@param	MSGWND_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID )
+{	
+	//一端消去
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
+
+	//文字列作成
+	GFL_MSG_GetString( p_wk->p_msg, strID, p_wk->p_strbuf );
+
+	//キューをクリア
+	PRINTSYS_QUE_Clear( p_wk->p_print_que );
+
+	//表示
+	PRINT_UTIL_Print( &p_wk->print_util, p_wk->p_print_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
+}
 //=============================================================================
 /**
  *					APPBAR
@@ -1373,14 +1763,28 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui )
  *	@param	heapID						ヒープID
  */
 //-----------------------------------------------------------------------------
-static void SCROLL_Init( SCROLL_WORK *p_wk, u8 font_frm, u8 back_frm, HEAPID heapID )
+static void SCROLL_Init( SCROLL_WORK *p_wk, u8 font_frm, u8 back_frm, const GRAPHIC_WORK *cp_grp, const CONFIG_PARAM *cp_param, HEAPID heapID )
 {	
 	GFL_STD_MemClear( p_wk,sizeof(SCROLL_WORK) );
 	p_wk->font_frm	= font_frm;
 	p_wk->back_frm	= back_frm;
+	p_wk->select		= CONFIG_LIST_MSGSPEED;
+	p_wk->obj_y_ofs	= SCROLL_WINDOW_OFS_DOT;
+	p_wk->now				= *cp_param;
+
+	{	
+		int i;
+		for( i = 0; i < CONFIG_ITEM_MAX; i++ )
+		{	
+			p_wk->p_item[i]	= GRAPHIC_GetClwk( cp_grp, CLWKID_ITEM_TOP + i );
+		}
+	}
 
 	//開始オフセットまでずらす
 	Scroll_Move( p_wk, SCROLL_START_OFS_Y );
+
+	//パレットを塗る
+	Scroll_ChangePlt( p_wk, FALSE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1405,24 +1809,260 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui )
 {	
 	UI_INPUT input;
 	GFL_POINT pos;
+	int y, bar_top;
 	
 	//入力取得
 	input	= UI_GetInput( cp_ui, &pos );
 
-	//スライド移動
+	//先頭バー計算
+	y	= GFL_BG_GetScrollY( p_wk->back_frm );
+	bar_top	= (y-SCROLL_START)/SCROLL_WINDOW_H_DOT;
+
+	//入力による操作
 	switch( input )
 	{	
 	case UI_INPUT_SLIDE:
 		Scroll_Move( p_wk, -pos.y );
+		Scroll_ChangePlt( p_wk, FALSE );
 		break;
 
 	case UI_INPUT_TRG_UP:
-		Scroll_Move( p_wk, SCROLL_WINDOW_H_DOT );
+		p_wk->select--;
+		p_wk->select	= MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_REPORT );
+		//スクロールする距離になったら動く
+		if( p_wk->select < bar_top )
+		{
+			Scroll_Move( p_wk, -SCROLL_WINDOW_H_DOT );
+		}
+		Scroll_ChangePlt( p_wk, TRUE );
 		break;
 
 	case UI_INPUT_TRG_DOWN:
-		Scroll_Move( p_wk, -SCROLL_WINDOW_H_DOT );
+		p_wk->select++;
+		p_wk->select	= MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_REPORT );
+		//スクロールする距離になったら動く
+		if( p_wk->select > bar_top+SCROLL_DISPLAY )
+		{
+			Scroll_Move( p_wk, SCROLL_WINDOW_H_DOT );
+		}
+		Scroll_ChangePlt( p_wk, TRUE );
 		break;
+
+	case UI_INPUT_TOUCH:
+		//座標から選択への変換
+		p_wk->select	= Scroll_PosToList( p_wk, &pos );
+		Scroll_ChangePlt( p_wk, FALSE );
+		break;
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	現在何を選択しているか取得
+ *
+ *	@param	const SCROLL_WORK *cp_wk	ワーク
+ *
+ *	@return	現在選択しているもの
+ */
+//-----------------------------------------------------------------------------
+static CONFIG_LIST SCROLL_GetSelect( const SCROLL_WORK *cp_wk )
+{	
+	return cp_wk->select;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	コンフィグパラメータ受け取り
+ *
+ *	@param	const SCROLL_WORK *cp_wk	ワーク
+ *	@param	*p_param									受け取り
+ */
+//-----------------------------------------------------------------------------
+static void SCROLL_GetConfigParam( const SCROLL_WORK *cp_wk, CONFIG_PARAM *p_param )
+{	
+	*p_param	= cp_wk->now;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	パレットで塗る
+ *
+ *	@param	SCROLL_WORK *p_wk	ワーク
+ *	@param	is_decide_draw		決定色を塗るかどうか
+ */
+//-----------------------------------------------------------------------------
+static void Scroll_ChangePlt( SCROLL_WORK *p_wk, BOOL is_decide_draw )
+{	
+	enum
+	{	
+		SCROLL_SELECT_PLT	= 7,
+	};
+
+	static const u8 sc_bright_plt[]	=  
+	{	
+		3,1,0,1,3
+	};
+
+	int i;
+	int bar_top;
+	int start;
+	int y;
+
+	//座標取得
+	y	= GFL_BG_GetScrollY( p_wk->back_frm );
+
+	//先頭バー
+	bar_top	= (y-SCROLL_START)/SCROLL_WINDOW_H_DOT;
+
+	//一端全部ぬる
+	GFL_BG_ChangeScreenPalette( p_wk->back_frm, 0, 0,
+			32, 32, 5 );
+
+	//通常のリストを塗る
+	for( i = 0; i < NELEMS(sc_bright_plt); i++ )
+	{	
+		//バーをぬる
+		start	= SCROLL_WINDOW_OFS_CHR +  ( bar_top +i ) * SCROLL_WINDOW_H_CHR;
+		GFL_BG_ChangeScreenPalette( p_wk->back_frm, 0, start,
+				32, SCROLL_WINDOW_H_CHR, sc_bright_plt[i] );
+	}
+
+	//フォントを塗る
+	for( i = BMPWINID_ITEM_TOP; i < BMPWINID_ITEM_MAX; i++ )
+	{	
+		//選択中であれば
+		if( sc_item_info[i].list == p_wk->select && is_decide_draw )
+		{	
+			//ONかOFFか
+			if( CONFIGPARAM_IsItemSetting( &p_wk->now, i ) )
+			{	
+				GFL_BG_ChangeScreenPalette( p_wk->font_frm, 
+						sc_config_menu_bmpwin_data[i].x, 
+						sc_config_menu_bmpwin_data[i].y, 
+						sc_config_menu_bmpwin_data[i].w, 
+						sc_config_menu_bmpwin_data[i].h, 
+						7
+						);
+			}
+			else
+			{	
+				GFL_BG_ChangeScreenPalette( p_wk->font_frm, 
+						sc_config_menu_bmpwin_data[i].x, 
+						sc_config_menu_bmpwin_data[i].y, 
+						sc_config_menu_bmpwin_data[i].w, 
+						sc_config_menu_bmpwin_data[i].h, 
+						0xC
+						);
+			}
+		}
+		else
+		{	
+			//ONかOFFか
+			if( CONFIGPARAM_IsItemSetting( &p_wk->now, i ) )
+			{	
+				GFL_BG_ChangeScreenPalette( p_wk->font_frm, 
+						sc_config_menu_bmpwin_data[i].x, 
+						sc_config_menu_bmpwin_data[i].y, 
+						sc_config_menu_bmpwin_data[i].w, 
+						sc_config_menu_bmpwin_data[i].h, 
+						0
+						);
+			}
+			else
+			{	
+				GFL_BG_ChangeScreenPalette( p_wk->font_frm, 
+						sc_config_menu_bmpwin_data[i].x, 
+						sc_config_menu_bmpwin_data[i].y, 
+						sc_config_menu_bmpwin_data[i].w, 
+						sc_config_menu_bmpwin_data[i].h, 
+						3
+						);
+			}
+		}
+	}
+	for( i = BMPWINID_LIST_TOP; i < BMPWINID_LIST_MAX; i++ )
+	{	
+	//選択中であれば
+		if( ((i - BMPWINID_LIST_TOP)== p_wk->select) && is_decide_draw )
+		{	
+			GFL_BG_ChangeScreenPalette( p_wk->font_frm, 
+					sc_config_menu_bmpwin_data[i].x, 
+					sc_config_menu_bmpwin_data[i].y, 
+					sc_config_menu_bmpwin_data[i].w, 
+					sc_config_menu_bmpwin_data[i].h, 
+					7
+					);
+		}
+		else
+		{	
+			GFL_BG_ChangeScreenPalette( p_wk->font_frm, 
+					sc_config_menu_bmpwin_data[i].x, 
+					sc_config_menu_bmpwin_data[i].y, 
+					sc_config_menu_bmpwin_data[i].w, 
+					sc_config_menu_bmpwin_data[i].h, 
+					0
+					);
+		}
+	}
+
+
+	//決定のリストを塗る
+	if( is_decide_draw )
+	{	
+		start	= SCROLL_WINDOW_OFS_CHR + ( p_wk->select ) * SCROLL_WINDOW_H_CHR;
+		GFL_BG_ChangeScreenPalette( p_wk->back_frm, 0, start,
+					32, SCROLL_WINDOW_H_CHR, SCROLL_SELECT_PLT );
+	}
+
+	//転送
+	GFL_BG_LoadScreenV_Req( p_wk->back_frm );
+	GFL_BG_LoadScreenV_Req( p_wk->font_frm );
+
+	//OBJのパレット変更
+	{	
+		
+		enum
+		{	
+			SCROLL_SELECT_PLT	= 7,
+		};
+
+		static const u8 sc_bright_obj_plt[]	=  
+		{	
+			3,1,0,1,3,5
+		};
+
+		int i, j;
+
+		for( j = bar_top; j < NELEMS(sc_bright_obj_plt) + bar_top; j++ )
+		{	
+			for( i = 0; i < CONFIG_ITEM_MAX; i++ )
+			{	
+				//選択中であれば
+				if( sc_item_info[i].list == p_wk->select && is_decide_draw )
+				{	
+					//ONかOFFか
+					if( CONFIGPARAM_IsItemSetting( &p_wk->now, i ) )
+					{	
+						GFL_CLACT_WK_SetAnmSeq( p_wk->p_item[i], 3 );
+					}
+					else
+					{	
+						GFL_CLACT_WK_SetAnmSeq( p_wk->p_item[i], 2 );
+					}
+				}
+				else if( sc_item_info[i].list == j )
+				{	
+					//ONかOFFか
+					if( CONFIGPARAM_IsItemSetting( &p_wk->now, i ) )
+					{	
+						GFL_CLACT_WK_SetAnmSeq( p_wk->p_item[i], 0 );
+					}
+					else
+					{	
+						GFL_CLACT_WK_SetAnmSeq( p_wk->p_item[i], 1 );
+					}
+				}
+			}
+		}
+
 	}
 }
 
@@ -1438,57 +2078,147 @@ static void Scroll_Move( SCROLL_WORK *p_wk, int y_add )
 {	
 	int y;
 
+	//BGの移動
+
 	//制限
 	y	= GFL_BG_GetScrollY( p_wk->back_frm );
 	y	+= y_add;
 	y	= MATH_CLAMP( y, SCROLL_START, SCROLL_END );
 
 	//移動
-	GFL_BG_SetScroll( p_wk->font_frm, GFL_BG_SCROLL_Y_SET, y + SCROLL_FONT_OFS_CHR );
-	GFL_BG_SetScroll( p_wk->back_frm, GFL_BG_SCROLL_Y_SET, y );
+	GFL_BG_SetScrollReq( p_wk->font_frm, GFL_BG_SCROLL_Y_SET, y + SCROLL_FONT_OFS_CHR );
+	GFL_BG_SetScrollReq( p_wk->back_frm, GFL_BG_SCROLL_Y_SET, y );
 
-	//書き換え
+	//OBJの移動
 	{	
-		static const u8 sc_bright_plt[]	=  
-		{	
-			3, 1, 0, 1, 3,
-		};
-
 		int i;
-		int bar_top;
-		int start, end;
-
-		//先頭バー
-		bar_top	= (y-SCROLL_START)/GFL_BG_1CHRDOTSIZ;
-
-		//一端全部4でぬる
-		GFL_BG_ChangeScreenPalette( p_wk->back_frm, 0, 0,
-					32, 32, 4 );
-		GFL_BG_ChangeScreenPalette( p_wk->font_frm, 0, 0,
-					32, 32, 4 );
-		
-		for( i = 0; i < NELEMS(sc_bright_plt); i++ )
-		{	
-			//バーをぬる
-			start	= SCROLL_WINDOW_OFS_CHR + bar_top + ( i ) * SCROLL_WINDOW_H_CHR;
-			end		= SCROLL_WINDOW_OFS_CHR + bar_top + ( i + 1 ) * SCROLL_WINDOW_H_CHR;
-			GFL_BG_ChangeScreenPalette( p_wk->back_frm, 0, start,
-					32, end, sc_bright_plt[i] );
-			//フォントをぬる
-			start	= SCROLL_WINDOW_OFS_CHR*2 + bar_top + ( i ) * SCROLL_WINDOW_H_CHR;
-			end		= SCROLL_WINDOW_OFS_CHR*2 + bar_top + ( i + 1 ) * SCROLL_WINDOW_H_CHR;
-			GFL_BG_ChangeScreenPalette( p_wk->font_frm, 0, start,
-					32, end, sc_bright_plt[i] );
-		}
-
-		//NAGI_Printf( "bar_top %d \n", bar_top );
-		GFL_BG_LoadScreenReq( p_wk->back_frm );
-		GFL_BG_LoadScreenReq( p_wk->font_frm );
-	}
+		GFL_CLACTPOS	pos;
 	
-	//NAGI_Printf( "YOFS %d add %d\n", y, y_add );
+		//移動
+		p_wk->obj_y_ofs	-= y_add;
+		p_wk->obj_y_ofs	= MATH_CLAMP( p_wk->obj_y_ofs, SCROLL_END_OBJ, SCROLL_START_OBJ );
+
+		//設定
+		for( i = 0; i < CONFIG_ITEM_MAX; i++ )
+		{	
+			pos.x	= sc_item_info[i].obj_pos.x;
+			pos.y	= sc_item_info[i].obj_pos.y + p_wk->obj_y_ofs;
+			GFL_CLACT_WK_SetPos( p_wk->p_item[i], &pos, CLSYS_DEFREND_MAIN );
+		}
+	}
+
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	座標からリストへの変換
+ *
+ *	@param	const SCROLL_WORK *cp_wk	ワーク
+ *	@param	GFL_POINT *cp_pos					タッチ座標
+ *
+ *	@return	選択しているリスト
+ */
+//-----------------------------------------------------------------------------
+static CONFIG_LIST Scroll_PosToList( const SCROLL_WORK *cp_wk, const GFL_POINT *cp_pos )
+{	
+	int y;
+	CONFIG_LIST	list;
+
+	y	= GFL_BG_GetScrollY( cp_wk->back_frm );
+	list	= (y + cp_pos->y - SCROLL_WINDOW_OFS_DOT) / SCROLL_WINDOW_H_DOT;
+
+
+	//タッチ範囲内なら計算
+	if( CONFIG_LIST_MSGSPEED <= list && list < CONFIG_LIST_MAX )
+	{	
+		return list;
+	}
+	else
+	{	
+		//範囲外ならば現在のものを返す
+		return cp_wk->select;
+	}
+}
+//=============================================================================
+/**
+ *					CONFIG_PARAM
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	設定情報	初期化
+ *
+ *	@param	CONFIG_PARAM *p_wk		ワーク
+ *	@param	CONFIG *cp_savedata		コンフィグセーブデータ
+ */
+//-----------------------------------------------------------------------------
+static void CONFIGPARAM_Init( CONFIG_PARAM *p_wk, const CONFIG *cp_savedata )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(CONFIG_PARAM) );
+	
+	p_wk->param[CONFIG_LIST_MSGSPEED]	= CONFIG_GetMsgSpeed(cp_savedata);
+	p_wk->param[CONFIG_LIST_BTLEFF]		= CONFIG_GetWazaEffectMode(cp_savedata);
+	p_wk->param[CONFIG_LIST_BTLRULE]	= CONFIG_GetBattleRule(cp_savedata);
+	p_wk->param[CONFIG_LIST_SND]			= CONFIG_GetSoundMode(cp_savedata);
+	p_wk->param[CONFIG_LIST_STR]			= CONFIG_GetMojiMode(cp_savedata);
+	p_wk->param[CONFIG_LIST_WIRELESS]	= CONFIG_GetWirelessSaveMode(cp_savedata);
+	p_wk->param[CONFIG_LIST_REPORT]		= CONFIG_GetNetworkSearchMode(cp_savedata);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	設定情報	破棄
+ *
+ *	@param	CONFIG_PARAM *p_wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+static void CONFIGPARAM_Exit( CONFIG_PARAM *p_wk )
+{	
+	GFL_STD_MemClear( p_wk, sizeof(CONFIG_PARAM) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	設定情報	セーブデータへ反映
+ *
+ *	@param	const CONFIG_PARAM *cp_wk	ワーク
+ *	@param	*p_savedata								セーブデータ
+ */
+//-----------------------------------------------------------------------------
+static void CONFIGPARAM_Save( const CONFIG_PARAM *cp_wk, CONFIG *p_savedata )
+{	
+	CONFIG_SetMsgSpeed( p_savedata, cp_wk->param[CONFIG_LIST_MSGSPEED] );
+	CONFIG_SetWazaEffectMode( p_savedata, cp_wk->param[CONFIG_LIST_BTLEFF] );
+	CONFIG_SetBattleRule( p_savedata, cp_wk->param[CONFIG_LIST_BTLRULE] );
+	CONFIG_SetSoundMode( p_savedata, cp_wk->param[CONFIG_LIST_SND] );
+	CONFIG_SetMojiMode( p_savedata, cp_wk->param[CONFIG_LIST_STR] );
+	CONFIG_SetWirelessSaveMode( p_savedata, cp_wk->param[CONFIG_LIST_WIRELESS] );
+	CONFIG_SetNetworkSearchMode( p_savedata, cp_wk->param[CONFIG_LIST_REPORT] );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	設定情報	項目を設定
+ *
+ *	@param	CONFIG_PARAM *p_wk	ワーク
+ *	@param	item								項目
+ */
+//-----------------------------------------------------------------------------
+static void CONFIGPARAM_SetItem( CONFIG_PARAM *p_wk, CONFIG_ITEM item )
+{	
+	p_wk->param[ sc_item_info[ item ].list ]	= sc_item_info[ item ].idx;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	設定情報	指定した項目が設定されているかチェック
+ *
+ *	@param	const CONFIG_PARAM *cp_wk	ワーク
+ *	@param	item											調べる項目
+ *
+ *	@return	TRUEならば設定されている	FALSEならばされていない
+ */
+//-----------------------------------------------------------------------------
+static BOOL CONFIGPARAM_IsItemSetting( const CONFIG_PARAM *cp_wk, CONFIG_ITEM item )
+{	
+	return cp_wk->param[ sc_item_info[item].list ] == sc_item_info[item].idx;
+}
 //=============================================================================
 /**
  *						SEQ
@@ -1696,6 +2426,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	//モジュールメイン
 	SCROLL_Main( &p_wk->scroll, &p_wk->ui );
 	UI_Main( &p_wk->ui, &p_wk->scroll );
+	MSGWND_Main( &p_wk->info );
 }
 //----------------------------------------------------------------------------
 /**
