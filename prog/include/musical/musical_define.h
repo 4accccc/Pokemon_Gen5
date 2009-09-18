@@ -9,6 +9,7 @@
 #ifndef MUSICAL_DEFINE_H__
 #define MUSICAL_DEFINE_H__
 #include "poke_tool/poke_tool.h"
+#include "buflen.h"
 
 //======================================================================
 //	define
@@ -104,5 +105,40 @@ typedef struct
 	MUSICAL_POKE_EQUIP equip[MUS_POKE_EQUIP_MAX];
 	u16                point; //評価点
 }MUSICAL_POKE_PARAM;
+
+//----------------------------------------------------------
+//	ミュージカルショット系
+//----------------------------------------------------------
+typedef struct
+{
+  u16 itemNo;
+  s16 angle;
+  u8  equipPos;
+}
+MUSICAL_SHOT_POKE_EQUIP;
+
+typedef struct
+{
+  u16 monsno;
+  u8  sex :2;
+  u8  rare:1;
+  u8  form:5;
+  
+  STRCODE trainerName[BUFLEN_PERSON_NAME];
+  MUSICAL_SHOT_POKE_EQUIP equip[MUSICAL_ITEM_EQUIP_MAX];
+  
+}MUSICAL_SHOT_POKE;
+
+typedef struct
+{
+  u8 bgNo;    //背景番号
+  u32 spotBit:4; //スポットライト対象(bit)
+  u32 year   :7;
+  u32 month  :5;  //これが０だったら無効データとみなす
+  u32 day    :6;
+  
+  STRCODE title[MUSICAL_PROGRAM_NAME_MAX];
+  MUSICAL_SHOT_POKE shotPoke[MUSICAL_POKE_MAX];
+}MUSICAL_SHOT_DATA;
 
 #endif MUSICAL_DEFINE_H__

@@ -41,6 +41,7 @@ int MUSICAL_SAVE_GetWorkSize(void)
 void MUSICAL_SAVE_InitWork(MUSICAL_SAVE *musSave)
 {
 	MUSICAL_SAVE_ResetBefEquip(musSave);
+	GFL_STD_MemClear( &musSave->musicalShotData , sizeof( MUSICAL_SHOT_DATA ));
 }
 
 //----------------------------------------------------------
@@ -65,3 +66,19 @@ MUSICAL_EQUIP_SAVE* MUSICAL_SAVE_GetBefEquipData( MUSICAL_SAVE *musSave )
 	return &musSave->befEquip;
 }
 
+//----------------------------------------------------------
+//	ƒf[ƒ^‘€ì‚Ì‚½‚ß‚ÌŠÖ”
+//----------------------------------------------------------
+BOOL MUSICAL_SAVE_IsValidMusicalShotData( MUSICAL_SAVE *musSave )
+{
+  if( musSave->musicalShotData.month == 0 )
+  {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+MUSICAL_SHOT_DATA* MUSICAL_SAVE_GetMusicalShotData( MUSICAL_SAVE *musSave )
+{
+  return &musSave->musicalShotData;
+}

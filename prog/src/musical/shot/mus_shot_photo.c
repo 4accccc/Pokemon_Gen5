@@ -49,7 +49,7 @@
 #define MSU_PHOTO_TITLE_POS_Y (1)
 #define MSU_PHOTO_TITLE_WIDTH  (30)
 #define MSU_PHOTO_TITLE_HEIGHT ( 2)
-#define MSU_PHOTO_TITLE_COLOR (PRINTSYS_LSB_Make(1,2,0))
+#define MSU_PHOTO_TITLE_COLOR (PRINTSYS_LSB_Make(0xf,2,0))
 
 #define MSU_PHOTO_PAL_FONT (0xA)
 //======================================================================

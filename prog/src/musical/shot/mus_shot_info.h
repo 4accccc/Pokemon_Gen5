@@ -10,6 +10,7 @@
 //======================================================================
 #pragma once
 #include "musical/musical_shot_sys.h"
+#include "savedata/musical_save.h"
 
 
 //======================================================================
@@ -34,7 +35,7 @@ typedef struct _MUS_SHOT_INFO_WORK MUS_SHOT_INFO_WORK;
 //======================================================================
 #pragma mark [> proto
 
-MUS_SHOT_INFO_WORK* MUS_SHOT_INFO_InitSystem( MUSICAL_SHOT_DATA *shotData , HEAPID heapId );
+MUS_SHOT_INFO_WORK* MUS_SHOT_INFO_InitSystem( MUSICAL_SHOT_DATA *shotData , MUSICAL_SAVE *musicalSave , const BOOL isChackMode , HEAPID heapId );
 void MUS_SHOT_INFO_ExitSystem( MUS_SHOT_INFO_WORK *infoWork );
 void MUS_SHOT_INFO_UpdateSystem( MUS_SHOT_INFO_WORK *infoWork );
 

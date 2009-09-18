@@ -531,7 +531,13 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
         }
       }
     }
-  }  
+  }
+  evWork->shotInitWork->isCheckMode = TRUE;
+  {
+    GAMEDATA *gameData = GAMESYSTEM_GetGameData(evWork->gsys);
+    SAVE_CONTROL_WORK *saveWork = GAMEDATA_GetSaveControlWork(gameData);
+    evWork->shotInitWork->musicalSave = MUSICAL_SAVE_GetMusicalSave(saveWork);
+  }
 }
 
 #pragma mark [>FieldFunc

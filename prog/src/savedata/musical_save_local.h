@@ -13,6 +13,8 @@
 #include "savedata/musical_save.h"
 
 struct _MUSICAL_SAVE {
+  //ミュージカルショット
+  MUSICAL_SHOT_DATA   musicalShotData;
 	//前回装備
 	MUSICAL_EQUIP_SAVE	befEquip;
 };

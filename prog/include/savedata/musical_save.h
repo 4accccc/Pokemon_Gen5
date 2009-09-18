@@ -51,4 +51,6 @@ extern MUSICAL_SAVE* MUSICAL_SAVE_GetMusicalSave( SAVE_CONTROL_WORK *sv );
 extern void MUSICAL_SAVE_ResetBefEquip( MUSICAL_SAVE *musSave );
 extern MUSICAL_EQUIP_SAVE* MUSICAL_SAVE_GetBefEquipData( MUSICAL_SAVE *musSave );
 
+extern BOOL MUSICAL_SAVE_IsValidMusicalShotData( MUSICAL_SAVE *musSave );
+extern MUSICAL_SHOT_DATA* MUSICAL_SAVE_GetMusicalShotData( MUSICAL_SAVE *musSave );
 #endif //MUSICAL_SAVE_H__

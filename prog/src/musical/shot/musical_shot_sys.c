@@ -154,6 +154,8 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
         shotData->shotPoke[i].equip[0].equipPos = MUS_POKE_EQU_HAND_R;
       }
     }
+    work->shotInitWork->isCheckMode = FALSE;
+    work->shotInitWork->musicalSave = NULL;
   }
   else
   {
@@ -166,7 +168,10 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
   MUSICAL_SHOT_InitGraphic( work );
 
   work->photoWork = MUS_SHOT_PHOTO_InitSystem( work->shotInitWork->musShotData , work->heapId );
-  work->infoWork = MUS_SHOT_INFO_InitSystem( work->shotInitWork->musShotData , work->heapId );
+  work->infoWork = MUS_SHOT_INFO_InitSystem( work->shotInitWork->musShotData , 
+                                             work->shotInitWork->musicalSave , 
+                                             work->shotInitWork->isCheckMode ,
+                                             work->heapId );
   
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
                 WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );

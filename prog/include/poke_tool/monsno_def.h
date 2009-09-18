@@ -3,7 +3,7 @@
  * @file	monsno_def.h
  * @bfief	ポケモンNoのDefine定義ファイル
  * @author	PersonalConverter
- * @date	2009-09-14
+ * @date	2009-09-17
  * パーソナルコンバータから生成されました
 */
 //============================================================================================
@@ -549,6 +549,36 @@
 #define		MONSNO_MAX					( 535 )
 
 //別フォルム定義
+//アンノーン
+#define		FORMNO_ANNOON_UNA				( 0 )
+#define		FORMNO_ANNOON_UNB				( 1 )
+#define		FORMNO_ANNOON_UNC				( 2 )
+#define		FORMNO_ANNOON_UND				( 3 )
+#define		FORMNO_ANNOON_UNE				( 4 )
+#define		FORMNO_ANNOON_UNF				( 5 )
+#define		FORMNO_ANNOON_UNG				( 6 )
+#define		FORMNO_ANNOON_UNH				( 7 )
+#define		FORMNO_ANNOON_UNI				( 8 )
+#define		FORMNO_ANNOON_UNJ				( 9 )
+#define		FORMNO_ANNOON_UNK				( 10 )
+#define		FORMNO_ANNOON_UNL				( 11 )
+#define		FORMNO_ANNOON_UNM				( 12 )
+#define		FORMNO_ANNOON_UNN				( 13 )
+#define		FORMNO_ANNOON_UNO				( 14 )
+#define		FORMNO_ANNOON_UNP				( 15 )
+#define		FORMNO_ANNOON_UNQ				( 16 )
+#define		FORMNO_ANNOON_UNR				( 17 )
+#define		FORMNO_ANNOON_UNS				( 18 )
+#define		FORMNO_ANNOON_UNT				( 19 )
+#define		FORMNO_ANNOON_UNU				( 20 )
+#define		FORMNO_ANNOON_UNV				( 21 )
+#define		FORMNO_ANNOON_UNW				( 22 )
+#define		FORMNO_ANNOON_UNX				( 23 )
+#define		FORMNO_ANNOON_UNY				( 24 )
+#define		FORMNO_ANNOON_UNZ				( 25 )
+#define		FORMNO_ANNOON_EXC				( 26 )
+#define		FORMNO_ANNOON_QUE				( 27 )
+
 //ポワルン
 #define		FORMNO_POWARUN_NORMAL				( 0 )
 #define		FORMNO_POWARUN_SUN				( 1 )
@@ -561,7 +591,61 @@
 #define		FORMNO_DEOKISISU_DEFENCE				( 2 )
 #define		FORMNO_DEOKISISU_SPEED				( 3 )
 
+//ミノムッチ
+#define		FORMNO_MINOMUTTI_KUSA				( 0 )
+#define		FORMNO_MINOMUTTI_SUNA				( 1 )
+#define		FORMNO_MINOMUTTI_GOMI				( 2 )
+
+//ミノマダム
+#define		FORMNO_MINOMADAMU_KUSA				( 0 )
+#define		FORMNO_MINOMADAMU_JIMEN				( 1 )
+#define		FORMNO_MINOMADAMU_HAGANE				( 2 )
+
+//チェリム
+#define		FORMNO_THERIMU_NEGA				( 0 )
+#define		FORMNO_THERIMU_POSI				( 1 )
+
+//カラナクシ
+#define		FORMNO_KARANAKUSI_WEST				( 0 )
+#define		FORMNO_KARANAKUSI_EAST				( 1 )
+
+//トリトドン
+#define		FORMNO_TORITODON_WEST				( 0 )
+#define		FORMNO_TORITODON_EAST				( 1 )
+
+//ロトム
+#define		FORMNO_ROTOMU_NORMAL				( 0 )
+#define		FORMNO_ROTOMU_HOT				( 1 )
+#define		FORMNO_ROTOMU_WASH				( 2 )
+#define		FORMNO_ROTOMU_COLD				( 3 )
+#define		FORMNO_ROTOMU_FAN				( 4 )
+#define		FORMNO_ROTOMU_CUT				( 5 )
+
+//ギラティナ
+#define		FORMNO_GIRATHINA_ANOTHER				( 0 )
+#define		FORMNO_GIRATHINA_ORIGIN				( 1 )
+
 //シェイミ
-#define		FORMNO_SHEIMI_NORMAL				( 0 )
-#define		FORMNO_SHEIMI_FLOWER				( 1 )
+#define		FORMNO_SHEIMI_LAND				( 0 )
+#define		FORMNO_SHEIMI_SKY				( 1 )
+
+//アルセウス
+#define		FORMNO_ARUSEUSU_NORMAL				( 0 )
+#define		FORMNO_ARUSEUSU_BATTLE				( 1 )
+#define		FORMNO_ARUSEUSU_HIKOU				( 2 )
+#define		FORMNO_ARUSEUSU_POISON				( 3 )
+#define		FORMNO_ARUSEUSU_JIMEN				( 4 )
+#define		FORMNO_ARUSEUSU_IWA				( 5 )
+#define		FORMNO_ARUSEUSU_MUSHI				( 6 )
+#define		FORMNO_ARUSEUSU_GHOST				( 7 )
+#define		FORMNO_ARUSEUSU_METAL				( 8 )
+#define		FORMNO_ARUSEUSU_HATE				( 9 )
+#define		FORMNO_ARUSEUSU_FIRE				( 10 )
+#define		FORMNO_ARUSEUSU_WATER				( 11 )
+#define		FORMNO_ARUSEUSU_KUSA				( 12 )
+#define		FORMNO_ARUSEUSU_ELECTRIC				( 13 )
+#define		FORMNO_ARUSEUSU_ESPER				( 14 )
+#define		FORMNO_ARUSEUSU_KOORI				( 15 )
+#define		FORMNO_ARUSEUSU_DRAGON				( 16 )
+#define		FORMNO_ARUSEUSU_AKU				( 17 )
 

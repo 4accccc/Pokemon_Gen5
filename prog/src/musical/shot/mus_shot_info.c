@@ -56,8 +56,12 @@
 typedef enum
 {
   MSIS_FADE_WAIT,
+  //保存確認モード
   MSIS_MSG_WAIT,
   MSIS_YESNO_WAIT,
+  //見るだけモード
+  MSIS_KEY_WAIT,
+  
   MSIS_FINISH,
   
 }MUSICAL_SHOT_INFO_STATE;
@@ -71,8 +75,9 @@ struct _MUS_SHOT_INFO_WORK
   HEAPID heapId;
   MUSICAL_SHOT_INFO_STATE state;
   
+  BOOL              isChackMode;
   MUSICAL_SHOT_DATA *shotData;
-  
+  MUSICAL_SAVE      *musicalSave;
   //メッセージ用
   GFL_TCBLSYS     *tcblSys;
   GFL_BMPWIN      *msgWin;
@@ -100,14 +105,17 @@ static void MUS_SHOT_INFO_DispYesNo( MUS_SHOT_INFO_WORK *work );
 //--------------------------------------------------------------
 //	初期化
 //--------------------------------------------------------------
-MUS_SHOT_INFO_WORK* MUS_SHOT_INFO_InitSystem( MUSICAL_SHOT_DATA *shotData , HEAPID heapId )
+MUS_SHOT_INFO_WORK* MUS_SHOT_INFO_InitSystem( MUSICAL_SHOT_DATA *shotData , MUSICAL_SAVE *musicalSave , const BOOL isChackMode , HEAPID heapId )
 {
   MUS_SHOT_INFO_WORK* infoWork = GFL_HEAP_AllocClearMemory( heapId , sizeof( MUS_SHOT_INFO_WORK ));
   
   infoWork->heapId = heapId;
+  infoWork->isChackMode = isChackMode;
   infoWork->shotData = shotData;
-  infoWork->state = MSIS_FADE_WAIT;
+  infoWork->musicalSave = musicalSave;
   infoWork->msgStr = NULL;
+
+  infoWork->state = MSIS_FADE_WAIT;
   
   MUS_SHOT_INFO_InitGraphic( infoWork );
   MUS_SHOT_INFO_InitMessage( infoWork );
@@ -136,8 +144,15 @@ void MUS_SHOT_INFO_UpdateSystem( MUS_SHOT_INFO_WORK *infoWork )
   case MSIS_FADE_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      MUS_SHOT_INFO_DispMessage( infoWork , MUSICAL_SHOT_INFO_01 );
-      infoWork->state = MSIS_MSG_WAIT;
+      if( infoWork->isChackMode == TRUE )
+      {
+        MUS_SHOT_INFO_DispMessage( infoWork , MUSICAL_SHOT_INFO_01 );
+        infoWork->state = MSIS_MSG_WAIT;
+      }
+      else
+      {
+        infoWork->state = MSIS_KEY_WAIT;
+      }
     }
     break;
 
@@ -155,6 +170,20 @@ void MUS_SHOT_INFO_UpdateSystem( MUS_SHOT_INFO_WORK *infoWork )
     {
       const u8 retPos = APP_TASKMENU_GetCursorPos( infoWork->yesNoWork );
       APP_TASKMENU_CloseMenu( infoWork->yesNoWork );
+      if( retPos == 0 )
+      {
+        //セーブする！
+        MUSICAL_SHOT_DATA *shotData = MUSICAL_SAVE_GetMusicalShotData( infoWork->musicalSave );
+        GFL_STD_MemCopy( infoWork->shotData , shotData , sizeof(MUSICAL_SHOT_DATA) );
+      }
+      
+      infoWork->state = MSIS_FINISH;
+    }
+    break;
+  
+  case MSIS_KEY_WAIT:
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
       infoWork->state = MSIS_FINISH;
     }
     break;
