@@ -2061,6 +2061,57 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmHeroCycleTbl[DRAW_STA_MAXDIR4] 
 };
 
 //======================================================================
+//  アニメーション1パターン
+//======================================================================
+static const GFL_BBDACT_ANM DATA_BlActOneCellAnm[] = {
+	{0,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{0,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{0,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{0,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActOneCellAnmTbl[DRAW_STA_MAXDIR4] =
+{
+  DATA_BlActOneCellAnm,//DRWA_STA_STOP
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,//DRWA_STA_WALK_32F
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,//DRWA_STA_WALK_16F
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,//DRWA_STA_WALK_8F
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,//DRWA_STA_WALK_4F
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,//DRWA_STA_WALK_2F
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,//DRWA_STA_WALK_6F
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,//DRWA_STA_WALK_3F
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,//DRWA_STA_WALK_7F
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+  DATA_BlActOneCellAnm,
+};
+
+//======================================================================
 //	ビルボードアクター　アニメーション　リストテーブル
 //======================================================================
 const MMDL_BBDACT_ANMTBL
@@ -2074,4 +2125,14 @@ const MMDL_BBDACT_ANMTBL
   {DATA_BlActAnmFlipTbl,DRAW_STA_MAXDIR4},//MMDL_BLACT_ANMTBLNO_FLIP
   {DATA_BlActAnmNonFlipTbl,DRAW_STA_MAXDIR4},//MMDL_BLACT_ANMTBLNO_FLIP
   {DATA_BlActAnmHeroCycleTbl,DRAW_STA_MAXDIR4},//MMDL_BLACT_ANMTBLNO_CYCLEHERO
+  {DATA_BlActOneCellAnmTbl,DRAW_STA_MAXDIR4},//MMDL_BLACT_ANMTBLNO_ONECELL
+};
+
+//======================================================================
+//  ビルボードアクター　モデルサイズ [size][x,y]
+//======================================================================
+const u16 DATA_MMDL_BLACT_MdlSize[MMDL_BLACT_MDLSIZE_MAX][2] =
+{
+  {32,32}, //MMDL_BLACT_MDLSIZE_32x32
+  {16,16}, //MMDL_BLACT_MDLSIZE_16x16
 };

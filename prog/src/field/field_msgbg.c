@@ -216,7 +216,9 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 	
 	{	//font
 		fmb->fontHandle = GFL_FONT_Create(
-			ARCID_FONT, NARC_font_large_nftr,
+			ARCID_FONT,
+//    NARC_font_large_nftr, //旧フォントID
+      NARC_font_large_gftr, //新フォントID
 			GFL_FONT_LOADTYPE_FILE, FALSE, fmb->heapID );
 	}
 	

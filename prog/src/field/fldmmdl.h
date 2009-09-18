@@ -284,8 +284,19 @@ typedef enum
   MMDL_BLACT_ANMTBLNO_FLIP, ///<人物汎用 フリップ使用
   MMDL_BLACT_ANMTBLNO_NONFLIP, ///<人物汎用 フリップ未使用
   MMDL_BLACT_ANMTBLNO_CYCLEHERO, ///<自転車自機専用
+  MMDL_BLACT_ANMTBLNO_ONECELL, ///<一パターンのみ
 	MMDL_BLACT_ANMTBLNO_MAX,		///<最大
 }MMDL_BLACT_ANMTBLNO;
+
+//--------------------------------------------------------------
+/// ビルボードアクターモデルサイズ
+//--------------------------------------------------------------
+typedef enum
+{
+  MMDL_BLACT_MDLSIZE_32x32, //32x32
+  MMDL_BLACT_MDLSIZE_16x16, //16x16
+  MMDL_BLACT_MDLSIZE_MAX,
+}MMDL_BLACT_MDLSIZE;
 
 //--------------------------------------------------------------
 ///	描画関数番号
@@ -842,6 +853,8 @@ extern const MMDL_DRAW_PROC_LIST * const
 
 extern const MMDL_BBDACT_ANMTBL
 	DATA_MMDL_BBDACT_ANM_ListTable[MMDL_BLACT_ANMTBLNO_MAX];
+
+extern const u16 DATA_MMDL_BLACT_MdlSize[MMDL_BLACT_MDLSIZE_MAX][2];
 
 #ifndef MMDL_PL_NULL
 extern const OBJCODE_STATE DATA_FieldOBJCodeDrawStateTbl[];

@@ -1682,8 +1682,18 @@ static GFL_BBDACT_RESUNIT_ID BlActRes_AddRes(
   data.g3dres = g3dres;
 	data.texFmt = GFL_BBD_TEXFMT_PAL16;
 	data.texSiz = prm->tex_size;
+  
+#if 0
 	data.celSizX = 32;				//‚¢‚¸‚êmdl_size‚©‚ç
 	data.celSizY = 32;
+#else 
+  {
+    const u16 *size = DATA_MMDL_BLACT_MdlSize[prm->mdl_size];
+    data.celSizX = size[0];
+    data.celSizY = size[1];
+  }
+#endif
+
   data.dataCut = type;
   
 	id = GFL_BBDACT_AddResourceG3DResUnit( pBlActCont->pBbdActSys, &data, 1 );
