@@ -16,8 +16,6 @@
 
 #include "fieldmap_ctrl_grid.h"
 #include "fieldmap_ctrl_nogrid.h"
-#include "fieldmap_ctrl_c3.h"
-#include "fieldmap_ctrl_c3p02.h"
 
 typedef struct {
 	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
