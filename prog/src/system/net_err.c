@@ -136,9 +136,9 @@ void NetErr_SystemCreate(int heap_id)
 	
 	GFL_STD_MemClear(nes, sizeof(NET_ERR_SYSTEM));
 
-	nes->push_char_p = GFL_HEAP_AllocMemoryLo(heap_id, NETERR_PUSH_CHARVRAM_SIZE);
-	nes->push_scrn_p = GFL_HEAP_AllocMemoryLo(heap_id, NETERR_PUSH_SCRNVRAM_SIZE);
-	nes->push_pltt_p = GFL_HEAP_AllocMemoryLo(heap_id, NETERR_PUSH_PLTTVRAM_SIZE);
+	nes->push_char_p = GFL_HEAP_AllocMemory(heap_id, NETERR_PUSH_CHARVRAM_SIZE);
+	nes->push_scrn_p = GFL_HEAP_AllocMemory(heap_id, NETERR_PUSH_SCRNVRAM_SIZE);
+	nes->push_pltt_p = GFL_HEAP_AllocMemory(heap_id, NETERR_PUSH_PLTTVRAM_SIZE);
 }
 
 //--------------------------------------------------------------
