@@ -1281,7 +1281,7 @@ static void MicTest_BG_Init( MICTEST_BG_WORK *p_bg, u32 heap_id )
 	}
 	
 	// タッチフォントロード
-  p_bg->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap_id );
+  p_bg->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap_id );
 
 	//	BG面設定
 	{
