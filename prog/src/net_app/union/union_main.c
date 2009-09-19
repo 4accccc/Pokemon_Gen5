@@ -34,34 +34,31 @@ void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap)
   
   //PROCがフィールドの時のみ実行する処理
   if(Union_FieldCheck(unisys) == TRUE){
-    switch(unisys->my_situation.play_category){
-    case UNION_PLAY_CATEGORY_UNION:
-    case UNION_PLAY_CATEGORY_TALK:
-      if(UnionSubProc_IsExits(unisys) == FALSE){  //サブPROCが無い時のみ実行
-        //データ受信によるイベント起動
-        UnionReceive_BeaconInterpret(unisys);
-        
-        //キー操作によるイベント起動
-        UnionOneself_Update(unisys, fieldmap);
-        
-        //OBJ反映
-        UNION_CHAR_Update(unisys, unisys->uniparent->game_data);
-        
-        //下画面反映
-      }
-      break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:
-    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
+    if(unisys->my_situation.play_category >= UNION_PLAY_CATEGORY_COLOSSEUM_START
+        && unisys->my_situation.play_category <= UNION_PLAY_CATEGORY_COLOSSEUM_END){
       if(UnionSubProc_IsExits(unisys) == FALSE){  //サブPROCが無い時のみ実行
         //キー操作によるイベント起動
         UnionOneself_Update(unisys, fieldmap);
       }
-      break;
+    }
+    else{
+      switch(unisys->my_situation.play_category){
+      case UNION_PLAY_CATEGORY_UNION:
+      case UNION_PLAY_CATEGORY_TALK:
+        if(UnionSubProc_IsExits(unisys) == FALSE){  //サブPROCが無い時のみ実行
+          //データ受信によるイベント起動
+          UnionReceive_BeaconInterpret(unisys);
+          
+          //キー操作によるイベント起動
+          UnionOneself_Update(unisys, fieldmap);
+          
+          //OBJ反映
+          UNION_CHAR_Update(unisys, unisys->uniparent->game_data);
+          
+          //下画面反映
+        }
+        break;
+      }
     }
   }
 }

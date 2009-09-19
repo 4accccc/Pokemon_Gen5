@@ -162,6 +162,18 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, 
     rule = BTL_RULE_DOUBLE;
     multi = 0;
     break;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50:         //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE:       //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD:   //コロシアム
+    rule = BTL_RULE_TRIPLE;
+    multi = 0;
+    break;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50:         //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE:       //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD:   //コロシアム
+    rule = BTL_RULE_TRIPLE; //※check まだローテーションの定義が無い
+    multi = 0;
+    break;
   case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //コロシアム
     rule = BTL_RULE_DOUBLE;
     multi = 1;

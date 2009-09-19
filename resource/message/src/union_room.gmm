@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-09-17T18:29:01"/>
+	<create user="matsuda" host="W00142" date="2009-09-18T21:37:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3113,6 +3113,11 @@ msg_connect_union_08からの分岐メッセージ
 		<language name="JPN_KANJI" width="216" line="2">ローテーションバトル</language>
 	</row>
 
+	<row id="msg_union_battle_01_07_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">けってい</language>
+		<language name="JPN_KANJI" width="216" line="2">けってい</language>
+	</row>
+
 	<row id="msg_union_battle_01_08" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>・「２人で対戦」「４人で対戦」のウィンドウへ戻る。</comment>
 		<language name="JPN" width="216" line="2">もどる</language>
@@ -3141,6 +3146,16 @@ msg_connect_union_08からの分岐メッセージ
 ・参加できない場合、各種の参加ＮＧメッセージへ。</comment>
 		<language name="JPN" width="216" line="2">スタンダードルール</language>
 		<language name="JPN_KANJI" width="216" line="2">スタンダードルール</language>
+	</row>
+
+	<row id="msg_union_battle_01_11_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">サポートシューター　あり</language>
+		<language name="JPN_KANJI" width="216" line="2">サポートシューター　あり</language>
+	</row>
+
+	<row id="msg_union_battle_01_11_02" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="216" line="2">サポートシューター　なし</language>
+		<language name="JPN_KANJI" width="216" line="2">サポートシューター　なし</language>
 	</row>
 
 	<row id="msg_union_battle_01_12" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,#80ffff,#80ffff,#80ffff,#80ffff,,,#80ffff,,">
@@ -3323,33 +3338,191 @@ msg_connect_union_08からの分岐メッセージ
 	</row>
 
 	<row id="msg_union_test_003_02" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
-		<language name="JPN" width="216" line="2">シングル　５０で　たいせんしよう！</language>
-		<language name="JPN_KANJI" width="216" line="2">シングル　５０で　たいせんしよう！</language>
+		<comment>シューター有</comment>
+		<language name="JPN" width="216" line="2">シングル　５０で
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">シングル　５０で
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_00_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター無</comment>
+		<language name="JPN" width="216" line="2">シングル　５０で
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">シングル　５０で
+たいせんしよう！</language>
 	</row>
 
 	<row id="msg_union_test_003_02_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
-		<language name="JPN" width="216" line="2">シングル　せいげんなしで　たいせんしよう！</language>
-		<language name="JPN_KANJI" width="216" line="2">シングル　せいげんなしで　たいせんしよう！</language>
+		<comment>シューター有</comment>
+		<language name="JPN" width="216" line="2">シングル　せいげんなしで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">シングル　せいげんなしで
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_01_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター無</comment>
+		<language name="JPN" width="216" line="2">シングル　せいげんなしで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">シングル　せいげんなしで
+たいせんしよう！</language>
 	</row>
 
 	<row id="msg_union_test_003_02_02" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
-		<language name="JPN" width="216" line="2">シングル　スタンダードで　たいせんしよう！</language>
-		<language name="JPN_KANJI" width="216" line="2">シングル　スタンダードで　たいせんしよう！</language>
+		<comment>シューター有</comment>
+		<language name="JPN" width="216" line="2">シングル　スタンダードで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">シングル　スタンダードで
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_00_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター無</comment>
+		<language name="JPN" width="216" line="2">シングル　スタンダードで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">シングル　スタンダードで
+たいせんしよう！</language>
 	</row>
 
 	<row id="msg_union_test_003_02_02_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター有</comment>
+		<language name="JPN" width="216" line="2">ダブル　５０で　たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">ダブル　５０で　たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_01_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター無</comment>
 		<language name="JPN" width="216" line="2">ダブル　５０で　たいせんしよう！</language>
 		<language name="JPN_KANJI" width="216" line="2">ダブル　５０で　たいせんしよう！</language>
 	</row>
 
 	<row id="msg_union_test_003_02_02_02" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
-		<language name="JPN" width="216" line="2">ダブル　せいげんなしで　たいせんしよう！</language>
-		<language name="JPN_KANJI" width="216" line="2">ダブル　せいげんなしで　たいせんしよう！</language>
+		<comment>シューター有</comment>
+		<language name="JPN" width="216" line="2">ダブル　せいげんなしで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">ダブル　せいげんなしで
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_02_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター無</comment>
+		<language name="JPN" width="216" line="2">ダブル　せいげんなしで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">ダブル　せいげんなしで
+たいせんしよう！</language>
 	</row>
 
 	<row id="msg_union_test_003_02_02_03" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
-		<language name="JPN" width="216" line="2">ダブル　スタンダードで　たいせんしよう！</language>
-		<language name="JPN_KANJI" width="216" line="2">ダブル　スタンダードで　たいせんしよう！</language>
+		<comment>シューター有</comment>
+		<language name="JPN" width="216" line="2">ダブル　スタンダードで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">ダブル　スタンダードで
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_03_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター無</comment>
+		<language name="JPN" width="216" line="2">ダブル　スタンダードで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">ダブル　スタンダードで
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_04" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター有</comment>
+		<language name="JPN" width="216" line="2">トリプル　５０で
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">トリプル　５０で
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_04_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター無</comment>
+		<language name="JPN" width="216" line="2">トリプル　５０で
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">トリプル　５０で
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_05" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター有</comment>
+		<language name="JPN" width="216" line="2">トリプル　せいげんなしで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">トリプル　せいげんなしで
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_05_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター無</comment>
+		<language name="JPN" width="216" line="2">トリプル　せいげんなしで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">トリプル　せいげんなしで
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_06" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター有</comment>
+		<language name="JPN" width="216" line="2">トリプル　スタンダードで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">トリプル　スタンダードで
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_06_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター無</comment>
+		<language name="JPN" width="216" line="2">トリプル　スタンダードで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">トリプル　スタンダードで
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_07" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター有</comment>
+		<language name="JPN" width="216" line="2">ローテーション　５０で
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">ローテーション　５０で
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_07_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター無</comment>
+		<language name="JPN" width="216" line="2">ローテーション　５０で
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">ローテーション　５０で
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_08" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター有</comment>
+		<language name="JPN" width="216" line="2">ローテーション　せいげんなしで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">ローテーション　せいげんなしで
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_08_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター無</comment>
+		<language name="JPN" width="216" line="2">ローテーション　せいげんなしで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">ローテーション　せいげんなしで
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_09" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター有</comment>
+		<language name="JPN" width="216" line="2">ローテーション　スタンダードで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">ローテーション　スタンダードで
+たいせんしよう！</language>
+	</row>
+
+	<row id="msg_union_test_003_02_02_10" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
+		<comment>シューター無</comment>
+		<language name="JPN" width="216" line="2">ローテーション　スタンダードで
+たいせんしよう！</language>
+		<language name="JPN_KANJI" width="216" line="2">ローテーション　スタンダードで
+たいせんしよう！</language>
 	</row>
 
 	<row id="msg_union_test_003_02_03" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">

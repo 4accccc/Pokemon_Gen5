@@ -175,7 +175,17 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
     OneselfSeq_ShutdownUpdate,
     NULL,
   },
+  {//UNION_STATUS_BATTLE_1VS1_SINGLE_50_SHOOTER
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
   {//UNION_STATUS_BATTLE_1VS1_SINGLE_50
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_SINGLE_FREE_SHOOTER
     NULL,
     OneselfSeq_ColosseumUpdate,
     NULL,
@@ -185,7 +195,17 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
     OneselfSeq_ColosseumUpdate,
     NULL,
   },
+  {//UNION_STATUS_BATTLE_1VS1_SINGLE_STANDARD_SHOOTER
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
   {//UNION_STATUS_BATTLE_1VS1_SINGLE_STANDARD
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_DOUBLE_50_SHOOTER
     NULL,
     OneselfSeq_ColosseumUpdate,
     NULL,
@@ -195,12 +215,82 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
     OneselfSeq_ColosseumUpdate,
     NULL,
   },
+  {//UNION_STATUS_BATTLE_1VS1_DOUBLE_FREE_SHOOTER
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
   {//UNION_STATUS_BATTLE_1VS1_DOUBLE_FREE
     NULL,
     OneselfSeq_ColosseumUpdate,
     NULL,
   },
+  {//UNION_STATUS_BATTLE_1VS1_DOUBLE_STANDARD_SHOOTER
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
   {//UNION_STATUS_BATTLE_1VS1_DOUBLE_STANDARD
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_TRIPLE_50_SHOOTER
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_TRIPLE_50
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_TRIPLE_FREE_SHOOTER
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_TRIPLE_FREE
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_TRIPLE_STANDARD_SHOOTER
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_TRIPLE_STANDARD
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_ROTATION_50_SHOOTER
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_ROTATION_50
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_ROTATION_FREE_SHOOTER
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_ROTATION_FREE
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_ROTATION_STANDARD_SHOOTER
+    NULL,
+    OneselfSeq_ColosseumUpdate,
+    NULL,
+  },
+  {//UNION_STATUS_BATTLE_1VS1_ROTATION_STANDARD
     NULL,
     OneselfSeq_ColosseumUpdate,
     NULL,
@@ -386,12 +476,30 @@ static BOOL Union_CheckEntryBattleRegulation(u32 menu_index)
   }
   
   switch(menu_index){
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50_SHOOTER:        //対戦:1VS1:シングル:LV50
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:        //対戦:1VS1:シングル:LV50
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE_SHOOTER:      //対戦:1VS1:シングル:制限なし
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:      //対戦:1VS1:シングル:制限なし
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD_SHOOTER://対戦:1VS1:シングル:スタンダード
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:  //対戦:1VS1:シングル:スタンダード
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50_SHOOTER:        //対戦:1VS1:ダブル:LV50
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:        //対戦:1VS1:ダブル:LV50
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE_SHOOTER:      //対戦:1VS1:ダブル:制限なし
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:      //対戦:1VS1:ダブル:制限なし
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD_SHOOTER:  //対戦:1VS1:ダブル:スタンダード
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:  //対戦:1VS1:ダブル:スタンダード
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD:
   case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:                 //対戦:マルチ
     return TRUE;  //今はレギュレーションチェックなし。項目さえあっていればOK
   default:
@@ -1043,11 +1151,11 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
     break;
   case LOCALSEQ_MENU_SETUP:
     OS_TPrintf("対戦メニューセットアップ：%d\n", situ->work);
-    UnionMsg_Menu_BattleMenuSetup(unisys, fieldWork, situ->work);  //1vs1, 2vs2
+    UnionMsg_Menu_BattleMenuSetup(unisys, fieldWork, situ->work, &situ->menu_reg);  //1vs1, 2vs2
     (*seq)++;
     break;
   case LOCALSEQ_MENU_LOOP:
-    select_ret = UnionMsg_Menu_BattleMenuSelectLoop(unisys, &next_menu);
+    select_ret = UnionMsg_Menu_BattleMenuSelectLoop(unisys, &next_menu, &situ->menu_reg);
     if(next_menu == TRUE){
       situ->work = select_ret;
       UnionMsg_Menu_BattleMenuDel(unisys);
@@ -1122,12 +1230,30 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       (*seq) = LOCALSEQ_END;
       break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD:
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_015);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       (*seq) = LOCALSEQ_END;
@@ -1222,12 +1348,30 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_M
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_014);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       break;
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD_SHOOTER:      //コロシアム
     case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:      //コロシアム
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD_SHOOTER:
+    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD:
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_015);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       break;
@@ -1624,31 +1768,11 @@ static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     }
     break;
   case 4:
-    switch(situ->mycomm.mainmenu_select){
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_50, NULL);
-      break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_FREE, NULL);
-      break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_STANDARD, NULL);
-      break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_50, NULL);
-      break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_FREE, NULL);
-      break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_STANDARD, NULL);
-      break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI, NULL);
-      break;
-    default:
-      GF_ASSERT(0); //不明なID
-      break;
+    {
+      int subproc_id;
+      subproc_id = UNION_SUBPROC_ID_COLOSSEUM_WARP_START 
+        + (situ->mycomm.mainmenu_select - UNION_PLAY_CATEGORY_COLOSSEUM_START);
+      UnionSubProc_EventSet(unisys, subproc_id, NULL);
     }
     (*seq)++;
     break;
@@ -1717,32 +1841,11 @@ static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
     }
     break;
   case 4:
-    switch(situ->mycomm.mainmenu_select){
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_50, NULL);
-      break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_FREE, NULL);
-      break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_SINGLE_STANDARD, NULL);
-      break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_50, NULL);
-      break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_FREE, NULL);
-      break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_1VS1_DOUBLE_STANDARD, NULL);
-      break;
-    case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:
-      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_WARP_MULTI, NULL);
-      break;
-    default:
-      OS_TPrintf("不明なID = %d\n", situ->mycomm.mainmenu_select);
-      GF_ASSERT(0); //不明なID
-      break;
+    {
+      int subproc_id;
+      subproc_id = UNION_SUBPROC_ID_COLOSSEUM_WARP_START 
+        + (situ->mycomm.mainmenu_select - UNION_PLAY_CATEGORY_COLOSSEUM_START);
+      UnionSubProc_EventSet(unisys, subproc_id, NULL);
     }
     (*seq)++;
     break;
@@ -2443,19 +2546,35 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
       switch(situ->mycomm.mainmenu_select){
       default:
         GF_ASSERT(0);
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50_SHOOTER:
       case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE_SHOOTER:
       case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50_SHOOTER:
       case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE_SHOOTER:
       case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:
         msg_id = msg_union_battle_01_28;
         break;
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD_SHOOTER:
       case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:
         msg_id = msg_union_battle_01_29;
         break;
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD_SHOOTER:
       case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:
         msg_id = msg_union_battle_01_30;
         break;
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50_SHOOTER:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE_SHOOTER:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD_SHOOTER:
       case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50_SHOOTER:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE_SHOOTER:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE:
+      case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD_SHOOTER:
       case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD:
         msg_id = msg_union_battle_01_31;
         break;
@@ -2482,7 +2601,7 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     plist->myitem = GAMEDATA_GetMyItem(unisys->uniparent->game_data);
     plist->cfg = SaveData_GetConfig(GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data));
     plist->mode = PL_MODE_BATTLE;
-    if(situ->mycomm.mainmenu_select >= UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50 
+    if(situ->mycomm.mainmenu_select >= UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50_SHOOTER 
         && situ->mycomm.mainmenu_select <= UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD){
       plist->in_min = 2;
     }
