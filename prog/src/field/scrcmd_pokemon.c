@@ -20,6 +20,7 @@
 #include "scrcmd.h"
 #include "scrcmd_work.h"
 
+#include "scrcmd_pokemon.h"
 
 
 //======================================================================
