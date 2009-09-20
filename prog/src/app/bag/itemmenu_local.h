@@ -87,7 +87,7 @@ struct _DEBUGITEM_PARAM {
   StateFunc* state;      ///< ハンドルのプログラム状態
   GMEVENT * event;
   GAMESYS_WORK * gsys;
-  FIELD_MAIN_WORK * fieldmap;
+  FIELDMAP_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
   MYITEM_PTR pMyItem;
   MYSTATUS* mystatus;

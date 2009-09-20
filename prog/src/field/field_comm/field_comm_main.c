@@ -66,7 +66,7 @@ struct _FIELD_COMM_MAIN
 typedef struct{
   VecFx32 pos;
   FIELD_COMM_MAIN *commSys;
-  FIELD_MAIN_WORK *fieldmap;
+  FIELDMAP_WORK *fieldmap;
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
   ZONEID zoneID;
@@ -77,7 +77,7 @@ typedef struct{
 ///デバッグ用
 typedef struct{
   FIELD_COMM_MAIN *commSys;
-  FIELD_MAIN_WORK *fieldmap;
+  FIELDMAP_WORK *fieldmap;
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
   u16 wait;
@@ -93,12 +93,12 @@ static const s8 FCM_dirOfsArr[4][2]={{0,-1},{-1,0},{0,1},{1,0}};
 //======================================================================
 
 FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID, GAME_COMM_SYS_PTR game_comm );
-void FIELD_COMM_MAIN_TermSystem( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *commSys );
-void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
+void FIELD_COMM_MAIN_TermSystem( FIELDMAP_WORK *fieldWork, FIELD_COMM_MAIN *commSys );
+void  FIELD_COMM_MAIN_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
         GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys );
-static void FIELD_COMM_MAIN_UpdateSelfData( FIELD_MAIN_WORK *fieldWork ,
+static void FIELD_COMM_MAIN_UpdateSelfData( FIELDMAP_WORK *fieldWork ,
         GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys );
-static void FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork ,
+static void FIELD_COMM_MAIN_UpdateCharaData( FIELDMAP_WORK *fieldWork ,
         GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
 
 const BOOL  FIELD_COMM_MAIN_CanTalk( FIELD_COMM_MAIN *commSys );
@@ -114,13 +114,13 @@ void  FIELD_COMM_MAIN_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys, FLDMSGBG 
 void  FIELD_COMM_MAIN_TermStartInvasionMenu( FIELD_COMM_MAIN *commSys );
 const BOOL  FIELD_COMM_MAIN_LoopStartInvasionMenu( GAMESYS_WORK *gsys, FIELD_COMM_MAIN *commSys );
 
-void  FIELD_COMM_MAIN_Disconnect( FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *commSys );
+void  FIELD_COMM_MAIN_Disconnect( FIELDMAP_WORK *fieldWork , FIELD_COMM_MAIN *commSys );
 void FIELD_COMM_MAIN_CommFieldSysFree(COMM_FIELD_SYS_PTR comm_field);
 
-static GMEVENT * DEBUG_EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
+static GMEVENT * DEBUG_EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		u16 zone_id, const VecFx32 * pos, FIELD_COMM_MAIN *commSys );
 static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*work);
-static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, FIELD_COMM_MAIN *commSys);
+static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, FIELD_COMM_MAIN *commSys);
 static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*work);
 
 
@@ -152,7 +152,7 @@ FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID, 
 //--------------------------------------------------------------
 // フィールド通信システム開放
 //--------------------------------------------------------------
-void FIELD_COMM_MAIN_TermSystem( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *commSys )
+void FIELD_COMM_MAIN_TermSystem( FIELDMAP_WORK *fieldWork, FIELD_COMM_MAIN *commSys )
 {
   if(commSys == NULL){
     return; //※check　パレスとユニオンの場合の為
@@ -284,7 +284,7 @@ void FIELD_COMM_MAIN_SetCommActor(FIELD_COMM_MAIN *commSys, MMDLSYS *fmmdlsys)
  */
 //==================================================================
 
-GMEVENT * DEBUG_PalaceJamp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor)
+GMEVENT * DEBUG_PalaceJamp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor)
 {
   PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
@@ -317,7 +317,7 @@ GMEVENT * DEBUG_PalaceJamp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FI
  * @retval  GMEVENT *		
  */
 //==================================================================
-GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, FIELD_COMM_MAIN *commSys)
+GMEVENT * DEBUG_PalaceTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, FIELD_COMM_MAIN *commSys)
 {
   PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
@@ -397,7 +397,7 @@ GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *game
  * @retval  GMEVENT *		
  */
 //==================================================================
-static GMEVENT * DEBUG_EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
+static GMEVENT * DEBUG_EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		u16 zone_id, const VecFx32 * pos, FIELD_COMM_MAIN *commSys )
 {
   DEBUG_SIOEND_WARP *dsw;
@@ -419,7 +419,7 @@ static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, voi
 {
 	DEBUG_SIOEND_WARP * dsw = work;
 	GAMESYS_WORK  * gsys = GMEVENT_GetGameSysWork(event);
-	FIELD_MAIN_WORK * fieldmap = dsw->fieldmap;
+	FIELDMAP_WORK * fieldmap = dsw->fieldmap;
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	
 	switch (*seq) {
@@ -484,7 +484,7 @@ static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, voi
  * @retval  GMEVENT *		
  */
 //--------------------------------------------------------------
-static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, FIELD_COMM_MAIN *commSys)
+static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, FIELD_COMM_MAIN *commSys)
 {
   DEBUG_SIOEND_CHILD *dsc;
 	GMEVENT * event;
@@ -503,7 +503,7 @@ static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*wo
 {
   DEBUG_SIOEND_CHILD *dsc = work;
 	GAMESYS_WORK  * gsys = GMEVENT_GetGameSysWork(event);
-	FIELD_MAIN_WORK * fieldmap = dsc->fieldmap;
+	FIELDMAP_WORK * fieldmap = dsc->fieldmap;
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	
 	switch (*seq) {
@@ -562,7 +562,7 @@ static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*wo
  * @param   gameSys		
  */
 //--------------------------------------------------------------
-static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_COMM_MAIN *commSys, FIELD_PLAYER *pcActor)
+static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_COMM_MAIN *commSys, FIELD_PLAYER *pcActor)
 {
   PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
 //  ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
@@ -642,14 +642,14 @@ static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gam
 
 //--------------------------------------------------------------
 // フィールド通信システム更新
-//  @param  FIELD_MAIN_WORK フィールドワーク
+//  @param  FIELDMAP_WORK フィールドワーク
 //  @param  GAMESYS_WORK  ゲームシステムワーク(PLAYER_WORK取得用
 //  @param  PC_ACTCONT    プレイヤーアクター(プレイヤー数値取得用
 //  @param  FIELD_COMM_MAIN 通信ワーク
 //  自分のキャラの数値を取得して通信用に保存
 //  他キャラの情報を取得し、通信から設定
 //--------------------------------------------------------------
-void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
+void  FIELD_COMM_MAIN_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
         GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys )
 {
   if(commSys == NULL){  //パレスではなくユニオンの場合。とてもやっつけなので後でちゃんとする
@@ -692,7 +692,7 @@ void  FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
 //--------------------------------------------------------------
 // 自分のキャラの更新
 //--------------------------------------------------------------
-static void FIELD_COMM_MAIN_UpdateSelfData( FIELD_MAIN_WORK *fieldWork ,
+static void FIELD_COMM_MAIN_UpdateSelfData( FIELDMAP_WORK *fieldWork ,
         GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys )
 {
   ZONEID zoneID;
@@ -721,7 +721,7 @@ static void FIELD_COMM_MAIN_UpdateSelfData( FIELD_MAIN_WORK *fieldWork ,
 //--------------------------------------------------------------
 // 他のキャラの更新
 //--------------------------------------------------------------
-static void FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork ,
+static void FIELD_COMM_MAIN_UpdateCharaData( FIELDMAP_WORK *fieldWork ,
         GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys )
 {
   FIELD_COMM_FUNC *commFunc = FIELD_COMM_SYS_GetCommFuncWork(commSys->commField_);
@@ -1115,7 +1115,7 @@ const BOOL  FIELD_COMM_MAIN_LoopStartInvasionMenu( GAMESYS_WORK *gsys, FIELD_COM
  * ※この関数呼出し後、必ずFIELD_COMM_MAIN_DisconnectWait関数で切断完了の確認待ちをする事
  */
 //==================================================================
-void  FIELD_COMM_MAIN_Disconnect( FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *commSys )
+void  FIELD_COMM_MAIN_Disconnect( FIELDMAP_WORK *fieldWork , FIELD_COMM_MAIN *commSys )
 {
   //FieldMain_CommActorFreeAll( fieldWork );
 ////  FIELD_COMM_FUNC_TermCommSystem();
@@ -1132,7 +1132,7 @@ void  FIELD_COMM_MAIN_Disconnect( FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *
  * @retval  BOOL    TRUE:切断完了。　FALSE:切断待ち
  */
 //==================================================================
-BOOL FIELD_COMM_MAIN_DisconnectWait( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *commSys )
+BOOL FIELD_COMM_MAIN_DisconnectWait( FIELDMAP_WORK *fieldWork, FIELD_COMM_MAIN *commSys )
 {
   if(GameCommSys_BootCheck(commSys->game_comm) != GAME_COMM_NO_INVASION){
     commSys->commField_ = NULL;

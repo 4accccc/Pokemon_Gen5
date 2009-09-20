@@ -50,7 +50,7 @@ static const POINT_S16 UnionWayOutPos[] = {
  * @retval  BOOL		TRUE:èoå˚ç¿ïWÇ…Ç¢ÇÈ
  */
 //==================================================================
-BOOL UnionTool_CheckWayOut(FIELD_MAIN_WORK *fieldWork)
+BOOL UnionTool_CheckWayOut(FIELDMAP_WORK *fieldWork)
 {
   VecFx32 pos;
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldWork);

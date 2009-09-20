@@ -42,7 +42,7 @@ struct _FIELD_COMM_DEBUG_WORK
   u8  subSeq_;
   HEAPID heapID_;
   GAMESYS_WORK  *gameSys_;
-  FIELD_MAIN_WORK *fieldWork_;
+  FIELDMAP_WORK *fieldWork_;
   GMEVENT *event_;
   FLDMENUFUNC *menuFunc_;
 
@@ -54,7 +54,7 @@ struct _FIELD_COMM_DEBUG_WORK
 //  proto
 //======================================================================
 const int FIELD_COMM_DEBUG_GetWorkSize(void);
-void  FIELD_COMM_DEBUG_InitWork( const HEAPID heapID , GAMESYS_WORK *gameSys , FIELD_MAIN_WORK *fieldWork , GMEVENT *event , FIELD_COMM_DEBUG_WORK *commDeb );
+void  FIELD_COMM_DEBUG_InitWork( const HEAPID heapID , GAMESYS_WORK *gameSys , FIELDMAP_WORK *fieldWork , GMEVENT *event , FIELD_COMM_DEBUG_WORK *commDeb );
 GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void *work );
 
 static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartComm( FIELD_COMM_DEBUG_WORK *work );
@@ -75,7 +75,7 @@ const int FIELD_COMM_DEBUG_GetWorkSize(void)
 //--------------------------------------------------------------
 //  ÉèÅ[ÉNèâä˙âª
 //--------------------------------------------------------------
-void  FIELD_COMM_DEBUG_InitWork( const HEAPID heapID , GAMESYS_WORK *gameSys , FIELD_MAIN_WORK *fieldWork , GMEVENT *event , FIELD_COMM_DEBUG_WORK *commDeb )
+void  FIELD_COMM_DEBUG_InitWork( const HEAPID heapID , GAMESYS_WORK *gameSys , FIELDMAP_WORK *fieldWork , GMEVENT *event , FIELD_COMM_DEBUG_WORK *commDeb )
 {
   commDeb->heapID_ = heapID;
   commDeb->gameSys_ = gameSys;
@@ -281,7 +281,7 @@ static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartComm( FIELD_COMM_DEBUG_WO
 {
   GMEVENT *event = work->event_;
   FIELD_COMM_MAIN *commSys = FIELDMAP_GetCommSys(work->fieldWork_);
-  FIELD_MAIN_WORK *fieldWork = work->fieldWork_;
+  FIELDMAP_WORK *fieldWork = work->fieldWork_;
   FIELD_COMM_EVENT *eveWork;
 
   GMEVENT_Change( event , FIELD_COMM_EVENT_StartCommNormal , FIELD_COMM_EVENT_GetWorkSize() );
@@ -297,7 +297,7 @@ static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_StartInvasion( FIELD_COMM_DEBU
 {
   GMEVENT *event = work->event_;
   FIELD_COMM_MAIN *commSys = FIELDMAP_GetCommSys(work->fieldWork_);
-  FIELD_MAIN_WORK *fieldWork = work->fieldWork_;
+  FIELDMAP_WORK *fieldWork = work->fieldWork_;
   FIELD_COMM_EVENT *eveWork;
 
   GMEVENT_Change( event , FIELD_COMM_EVENT_StartCommInvasion , FIELD_COMM_EVENT_GetWorkSize() );
@@ -313,7 +313,7 @@ static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_EndComm( FIELD_COMM_DEBUG_WORK
 {
   GMEVENT *event = work->event_;
   FIELD_COMM_MAIN *commSys = FIELDMAP_GetCommSys(work->fieldWork_);
-  FIELD_MAIN_WORK *fieldWork = work->fieldWork_;
+  FIELDMAP_WORK *fieldWork = work->fieldWork_;
   FIELD_COMM_EVENT *eveWork;
 
   FIELD_COMM_MAIN_Disconnect( fieldWork , commSys );
@@ -371,7 +371,7 @@ static  const BOOL  FIELD_COMM_DEBUG_MenuCallback_ChangePartTest(FIELD_COMM_DEBU
 static  const BOOL  FIELD_COMM_DEBUG_SubProc_DisconnectWait(FIELD_COMM_DEBUG_WORK *work )
 {
   FIELD_COMM_MAIN *commSys = FIELDMAP_GetCommSys(work->fieldWork_);
-  FIELD_MAIN_WORK *fieldWork = work->fieldWork_;
+  FIELDMAP_WORK *fieldWork = work->fieldWork_;
 
   if(FIELD_COMM_MAIN_DisconnectWait( fieldWork , commSys ) == TRUE){
     OS_TPrintf("FIELD_COMM_DEBUG_SubProc_DisconnectWait : êÿífäÆóπ\n");

@@ -38,7 +38,7 @@
 typedef struct{
   VecFx32 pos;
   INTRUDE_COMM_SYS_PTR intcomm;
-  FIELD_MAIN_WORK *fieldmap;
+  FIELDMAP_WORK *fieldmap;
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
   ZONEID zoneID;
@@ -49,7 +49,7 @@ typedef struct{
 ///デバッグ用
 typedef struct{
   INTRUDE_COMM_SYS_PTR intcomm;
-  FIELD_MAIN_WORK *fieldmap;
+  FIELDMAP_WORK *fieldmap;
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
   u16 wait;
@@ -60,12 +60,12 @@ typedef struct{
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
-static GMEVENT * DEBUG_EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
+static GMEVENT * DEBUG_EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		u16 zone_id, const VecFx32 * pos, INTRUDE_COMM_SYS_PTR intcomm );
 static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*work);
-static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm);
+static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm);
 static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*work);
-static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor);
+static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor);
 
 
 //==============================================================================
@@ -75,13 +75,13 @@ static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gam
 //==============================================================================
 //--------------------------------------------------------------
 // フィールド通信システム更新
-//  @param  FIELD_MAIN_WORK フィールドワーク
+//  @param  FIELDMAP_WORK フィールドワーク
 //  @param  GAMESYS_WORK  ゲームシステムワーク(PLAYER_WORK取得用
 //  @param  PC_ACTCONT    プレイヤーアクター(プレイヤー数値取得用
 //  自分のキャラの数値を取得して通信用に保存
 //  他キャラの情報を取得し、通信から設定
 //--------------------------------------------------------------
-void IntrudeField_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
+void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
         GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor )
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSys);
@@ -143,7 +143,7 @@ void IntrudeField_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
  * @retval  GMEVENT *		
  */
 //==================================================================
-GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm)
+GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm)
 {
   PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
@@ -212,7 +212,7 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gam
  * @retval  GMEVENT *		
  */
 //==================================================================
-static GMEVENT * DEBUG_EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
+static GMEVENT * DEBUG_EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		u16 zone_id, const VecFx32 * pos, INTRUDE_COMM_SYS_PTR intcomm )
 {
   DEBUG_SIOEND_WARP *dsw;
@@ -234,7 +234,7 @@ static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, voi
 {
 	DEBUG_SIOEND_WARP * dsw = work;
 	GAMESYS_WORK  * gsys = GMEVENT_GetGameSysWork(event);
-	FIELD_MAIN_WORK * fieldmap = dsw->fieldmap;
+	FIELDMAP_WORK * fieldmap = dsw->fieldmap;
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	
 	switch (*seq) {
@@ -298,7 +298,7 @@ static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, voi
  * @retval  GMEVENT *		
  */
 //--------------------------------------------------------------
-static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm)
+static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm)
 {
   DEBUG_SIOEND_CHILD *dsc;
 	GMEVENT * event;
@@ -317,7 +317,7 @@ static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*wo
 {
   DEBUG_SIOEND_CHILD *dsc = work;
 	GAMESYS_WORK  * gsys = GMEVENT_GetGameSysWork(event);
-	FIELD_MAIN_WORK * fieldmap = dsc->fieldmap;
+	FIELDMAP_WORK * fieldmap = dsc->fieldmap;
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	
 	switch (*seq) {
@@ -376,7 +376,7 @@ static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*wo
  */
 //--------------------------------------------------------------
 extern u8 debug_palace_comm_seq;
-static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor)
+static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor)
 {
   PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
 //  ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
@@ -462,7 +462,7 @@ static void DEBUG_PalaceMapInCheck(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gam
  *  @retval  GMEVENT *		
  */
 //==================================================================
-GMEVENT * DEBUG_PalaceJamp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor)
+GMEVENT * DEBUG_PalaceJamp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor)
 {
   PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );

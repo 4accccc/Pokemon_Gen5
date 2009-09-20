@@ -105,7 +105,7 @@ enum TALK_CHILD_SEQ
 struct _FIELD_COMM_EVENT
 {
   FIELD_COMM_MAIN *commSys_;
-  FIELD_MAIN_WORK *fieldWork_;
+  FIELDMAP_WORK *fieldWork_;
   GAMESYS_WORK  *gameSys_;
   GMEVENT     *event_;
 
@@ -121,16 +121,16 @@ typedef void(FIELD_COMM_EVENT_USERDATA_INIT_FUNC)( FIELD_COMM_MAIN *commSys , GA
 //  proto
 //======================================================================
 const int FIELD_COMM_EVENT_GetWorkSize(void);
-void FIELD_COMM_EVENT_SetWorkData( FIELD_COMM_MAIN *commSys , FIELD_MAIN_WORK *fieldWork , FIELD_COMM_EVENT *commEvent );
+void FIELD_COMM_EVENT_SetWorkData( FIELD_COMM_MAIN *commSys , FIELDMAP_WORK *fieldWork , FIELD_COMM_EVENT *commEvent );
 
 GMEVENT* FIELD_COMM_EVENT_Start_StartCommNormal( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
 GMEVENT_RESULT FIELD_COMM_EVENT_StartCommNormal( GMEVENT *event , int *seq , void *work );
 GMEVENT* FIELD_COMM_EVENT_Start_StartCommInvasion( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
 GMEVENT_RESULT FIELD_COMM_EVENT_StartCommInvasion( GMEVENT *event , int *seq , void *work );
 
-GMEVENT* FIELD_COMM_EVENT_StartTalk( GAMESYS_WORK *gameSys , FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *commSys );
+GMEVENT* FIELD_COMM_EVENT_StartTalk( GAMESYS_WORK *gameSys , FIELDMAP_WORK *fieldWork , FIELD_COMM_MAIN *commSys );
 static GMEVENT_RESULT FIELD_COMM_EVENT_TalkEvent( GMEVENT *event , int *seq , void *work );
-GMEVENT* FIELD_COMM_EVENT_StartTalkPartner( GAMESYS_WORK *gameSys ,FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *commSys );
+GMEVENT* FIELD_COMM_EVENT_StartTalkPartner( GAMESYS_WORK *gameSys ,FIELDMAP_WORK *fieldWork , FIELD_COMM_MAIN *commSys );
 static GMEVENT_RESULT FIELD_COMM_EVENT_TalkEventPartner( GMEVENT *event , int *seq , void *work );
 static GMEVENT_RESULT FIELD_COMM_EVENT_TalkCommonEvent( GMEVENT *event , int *seq , FIELD_COMM_EVENT *evtWork , BOOL isParent );
 
@@ -147,7 +147,7 @@ const int FIELD_COMM_EVENT_GetWorkSize(void)
 {
   return sizeof(FIELD_COMM_EVENT);
 }
-void FIELD_COMM_EVENT_SetWorkData( FIELD_COMM_MAIN *commSys , FIELD_MAIN_WORK *fieldWork , FIELD_COMM_EVENT *commEvent )
+void FIELD_COMM_EVENT_SetWorkData( FIELD_COMM_MAIN *commSys , FIELDMAP_WORK *fieldWork , FIELD_COMM_EVENT *commEvent )
 {
   commEvent->commSys_ = commSys;
   commEvent->fieldWork_ = fieldWork;
@@ -218,7 +218,7 @@ GMEVENT_RESULT FIELD_COMM_EVENT_StartCommInvasion( GMEVENT *event , int *seq , v
 //--------------------------------------------------------------
 //  話しかけるイベント開始
 //--------------------------------------------------------------
-GMEVENT* FIELD_COMM_EVENT_StartTalk( GAMESYS_WORK *gameSys ,FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *commSys )
+GMEVENT* FIELD_COMM_EVENT_StartTalk( GAMESYS_WORK *gameSys ,FIELDMAP_WORK *fieldWork , FIELD_COMM_MAIN *commSys )
 {
   FIELD_COMM_EVENT *evtWork;
   GMEVENT *event;
@@ -368,7 +368,7 @@ static GMEVENT_RESULT FIELD_COMM_EVENT_TalkEvent( GMEVENT *event , int *seq , vo
 //--------------------------------------------------------------
 //  話しかけられるイベント開始
 //--------------------------------------------------------------
-GMEVENT* FIELD_COMM_EVENT_StartTalkPartner( GAMESYS_WORK *gameSys , FIELD_MAIN_WORK *fieldWork ,FIELD_COMM_MAIN *commSys )
+GMEVENT* FIELD_COMM_EVENT_StartTalkPartner( GAMESYS_WORK *gameSys , FIELDMAP_WORK *fieldWork ,FIELD_COMM_MAIN *commSys )
 {
   FIELD_COMM_EVENT *evtWork;
   GMEVENT *event;

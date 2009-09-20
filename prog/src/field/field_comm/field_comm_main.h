@@ -36,8 +36,8 @@ typedef enum{
 //  proto
 //======================================================================
 extern FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID, GAME_COMM_SYS_PTR game_comm );
-extern void FIELD_COMM_MAIN_TermSystem( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *commSys );
-extern void FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys );
+extern void FIELD_COMM_MAIN_TermSystem( FIELDMAP_WORK *fieldWork, FIELD_COMM_MAIN *commSys );
+extern void FIELD_COMM_MAIN_UpdateCommSystem( FIELDMAP_WORK *fieldWork , GAMESYS_WORK *gameSys , FIELD_PLAYER *pcActor , FIELD_COMM_MAIN *commSys );
 
 extern void FIELD_COMM_MAIN_SetCommType(FIELD_COMM_MAIN *commSys, FIELD_COMM_TYPE comm_type);
 extern FIELD_COMM_TYPE FIELD_COMM_MAIN_GetCommType(FIELD_COMM_MAIN *commSys);
@@ -56,8 +56,8 @@ extern void FIELD_COMM_MAIN_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys, FLD
 extern void FIELD_COMM_MAIN_TermStartInvasionMenu( FIELD_COMM_MAIN *commSys );
 extern const BOOL FIELD_COMM_MAIN_LoopStartInvasionMenu( GAMESYS_WORK *gsys, FIELD_COMM_MAIN *commSys );
 
-extern void FIELD_COMM_MAIN_Disconnect( FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *commSys );
-extern BOOL FIELD_COMM_MAIN_DisconnectWait( FIELD_MAIN_WORK *fieldWork, FIELD_COMM_MAIN *commSys );
+extern void FIELD_COMM_MAIN_Disconnect( FIELDMAP_WORK *fieldWork , FIELD_COMM_MAIN *commSys );
+extern BOOL FIELD_COMM_MAIN_DisconnectWait( FIELDMAP_WORK *fieldWork, FIELD_COMM_MAIN *commSys );
 
 extern COMM_FIELD_SYS_PTR FIELD_COMM_MAIN_GetCommFieldSysPtr( FIELD_COMM_MAIN *commSys );
 extern const int FIELD_COMM_MAIN_GetWorkSize(void);
@@ -71,8 +71,8 @@ extern void FIELD_COMM_MAIN_CommFieldMapInit(COMM_FIELD_SYS_PTR comm_field);
 //--------------------------------------------------------------
 //  デバッグ用
 //--------------------------------------------------------------
-extern GMEVENT * DEBUG_PalaceJamp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor);
-extern GMEVENT * DEBUG_PalaceTreeMapWarp(FIELD_MAIN_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, FIELD_COMM_MAIN *commSys);
+extern GMEVENT * DEBUG_PalaceJamp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor);
+extern GMEVENT * DEBUG_PalaceTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, FIELD_COMM_MAIN *commSys);
 
 #endif //FIELD_COMM_MAIN__
 

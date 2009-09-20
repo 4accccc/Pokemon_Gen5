@@ -75,7 +75,7 @@ typedef struct _COMM_PLAYER_SYS{
 COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, GAMESYS_WORK *gsys, HEAPID heap_id)
 {
   COMM_PLAYER_SYS_PTR cps;
-  FIELD_MAIN_WORK *fieldWork;
+  FIELDMAP_WORK *fieldWork;
   FIELD_PLAYER * player;
   MMDLSYS *fldMdlSys;
 
@@ -228,7 +228,7 @@ void CommPlayer_Pop(COMM_PLAYER_SYS_PTR cps)
 {
   int i;
   COMM_PLAYER_PACKAGE pack;
-  FIELD_MAIN_WORK *fieldWork;
+  FIELDMAP_WORK *fieldWork;
   MMDLSYS *fldMdlSys;
 
   GF_ASSERT(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE);
@@ -313,7 +313,7 @@ void CommPlayer_SetParam(COMM_PLAYER_SYS_PTR cps, int index, const COMM_PLAYER_P
 BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pack)
 {
   MINE_PLAYER *mine = &cps->mine;
-  FIELD_MAIN_WORK *fieldWork;
+  FIELDMAP_WORK *fieldWork;
   FIELD_PLAYER * player;
   VecFx32 pos;
   u16 dir;

@@ -13,5 +13,5 @@
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
-extern BOOL UnionTool_CheckWayOut(FIELD_MAIN_WORK *fieldWork);
+extern BOOL UnionTool_CheckWayOut(FIELDMAP_WORK *fieldWork);
 extern UNION_APPEAL UnionTool_PlayCategory_to_AppealNo(UNION_PLAY_CATEGORY play_category);

@@ -81,9 +81,9 @@ typedef struct _PALACE_SYS_WORK{
 //  プロトタイプ宣言
 //==============================================================================
 static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, INTRUDE_COMM_SYS_PTR intcomm);
-static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm);
-static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm, int area_no);
-static void _WindowSetup(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork);
+static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELDMAP_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm);
+static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELDMAP_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm, int area_no);
+static void _WindowSetup(PALACE_SYS_PTR palace, FIELDMAP_WORK *fieldWork);
 static void _WindowDelete(PALACE_SYS_PTR palace);
 static void _WindowPrint(PALACE_SYS_PTR palace, u32 msg_id, MYSTATUS *myst);
 
@@ -147,7 +147,7 @@ void PALACE_SYS_Free(PALACE_SYS_PTR palace)
  * @param   palace		
  */
 //==================================================================
-void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, INTRUDE_COMM_SYS_PTR intcomm, FIELD_MAIN_WORK *fieldWork, GAME_COMM_SYS_PTR game_comm)
+void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, INTRUDE_COMM_SYS_PTR intcomm, FIELDMAP_WORK *fieldWork, GAME_COMM_SYS_PTR game_comm)
 {
   int net_num;
   int first_create;
@@ -370,7 +370,7 @@ void PALACE_SYS_FriendPosConvert(PALACE_SYS_PTR palace, int friend_area,
  * @param   heap_id		
  */
 //--------------------------------------------------------------
-BOOL PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id, FIELD_MAIN_WORK *fieldWork)
+BOOL PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id, FIELDMAP_WORK *fieldWork)
 {
   PALACE_DEBUG_NUMBER *number = &palace->number;
 
@@ -495,7 +495,7 @@ void PALACE_DEBUG_EnableNumberAct(PALACE_SYS_PTR palace, BOOL enable)
  * @param   palace		
  */
 //--------------------------------------------------------------
-static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm)
+static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELDMAP_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm)
 {
   PALACE_DEBUG_NUMBER *number = &palace->number;
   int before_anmseq;
@@ -528,7 +528,7 @@ static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fi
  * @param   area_no		
  */
 //--------------------------------------------------------------
-static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm, int area_no)
+static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELDMAP_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm, int area_no)
 {
   FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG( fieldWork );
   GFL_FONT *fontHandle = FLDMSGBG_GetFontHandle( msgBG );
@@ -554,7 +554,7 @@ static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork, I
  * @param   fieldWork		
  */
 //--------------------------------------------------------------
-static void _WindowSetup(PALACE_SYS_PTR palace, FIELD_MAIN_WORK *fieldWork)
+static void _WindowSetup(PALACE_SYS_PTR palace, FIELDMAP_WORK *fieldWork)
 {
   FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
   
@@ -623,7 +623,7 @@ int PALACE_SYS_GetMissionNo(PALACE_SYS_PTR palace)
 //
 //==============================================================================
 typedef struct{
-  FIELD_MAIN_WORK *fieldWork;
+  FIELDMAP_WORK *fieldWork;
   MMDL *player_mmdl;
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
@@ -632,7 +632,7 @@ typedef struct{
 
 static GMEVENT_RESULT DebugPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk );
 
-GMEVENT * EVENT_DebugPalaceNGWin( GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, FIELD_PLAYER *fld_player, BOOL left_right )
+GMEVENT * EVENT_DebugPalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, BOOL left_right )
 {
   DEBUG_PALACE_NGWIN *ngwin;
   GMEVENT * event;

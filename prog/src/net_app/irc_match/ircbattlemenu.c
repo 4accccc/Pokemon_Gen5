@@ -197,7 +197,7 @@ struct _IRC_BATTLE_MENU {
   int windowNum;
   BOOL IsIrc;
   GAMESYS_WORK *gameSys_;
-  FIELD_MAIN_WORK *fieldWork_;
+  FIELDMAP_WORK *fieldWork_;
   GMEVENT* event_;
 };
 

@@ -554,7 +554,7 @@ static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
     break;
   case 1:
     {
-      FIELD_MAIN_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
+      FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
       GMEVENT_CallEvent(event, EVENT_FieldFadeIn(evWork->gsys, fieldWork, 0));
       evWork->subSeq++;
     }
@@ -571,7 +571,7 @@ static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
 //--------------------------------------------------------------
 static const BOOL MUSICAL_EVENT_ExitField( GMEVENT *event, MUSICAL_EVENT_WORK *evWork )
 {
-  FIELD_MAIN_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
   switch( evWork->subSeq )
   {
   case 0:
@@ -595,7 +595,7 @@ static const BOOL MUSICAL_EVENT_ExitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
 static const void MUSICAL_EVENT_JumpWaitingRoom( GMEVENT *event, MUSICAL_EVENT_WORK *evWork )
 {
   GMEVENT *newEvent;
-  FIELD_MAIN_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
   const VecFx32 pos = { FX32_CONST(88.0f) , 0 , FX32_CONST(72.0f) };
   
   newEvent = DEBUG_EVENT_ChangeMapPos( evWork->gsys, fieldWork ,
@@ -609,7 +609,7 @@ static const void MUSICAL_EVENT_JumpWaitingRoom( GMEVENT *event, MUSICAL_EVENT_W
 static const void MUSICAL_EVENT_JumpMusicalHall( GMEVENT *event, MUSICAL_EVENT_WORK *evWork )
 {
   GMEVENT *newEvent;
-  FIELD_MAIN_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
 
   const VecFx32 pos = { FX32_CONST(12536.0f) , 0 , FX32_CONST(9432.0f) };
   
