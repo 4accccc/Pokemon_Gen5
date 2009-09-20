@@ -17,6 +17,7 @@ extern "C" {
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_comm.h"
 #include "gamesystem/iss_sys.h"
+#include "field/fieldmap_proc.h"  //FIELDMAP_WORK
 
 //============================================================================================
 //============================================================================================
@@ -124,7 +125,7 @@ extern HEAPID GAMESYSTEM_GetHeapID(GAMESYS_WORK * gsys);
  * セットでアクセスされるため、利便性を考慮して追加。
  */
 //------------------------------------------------------------------
-extern void * GAMESYSTEM_GetFieldMapWork(GAMESYS_WORK * gsys);
+extern FIELDMAP_WORK * GAMESYSTEM_GetFieldMapWork(GAMESYS_WORK * gsys);
 
 //------------------------------------------------------------------
 /**
@@ -135,7 +136,7 @@ extern void * GAMESYSTEM_GetFieldMapWork(GAMESYS_WORK * gsys);
  * フィールドマップを生成する部分以外からのアクセスは無いはず！
  */
 //------------------------------------------------------------------
-extern void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, void * fieldmap);
+extern void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap);
 
 //------------------------------------------------------------------
 /**

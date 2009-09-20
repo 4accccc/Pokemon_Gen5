@@ -79,8 +79,6 @@ static GAME_INIT_WORK TestGameInitWork;
 
 //============================================================================================
 //============================================================================================
-extern const GFL_PROC_DATA FieldProcData;
-FS_EXTERN_OVERLAY(fieldmap);
 
 static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK * init_param);
 static BOOL GameSystem_Main(GAMESYS_WORK * gsys);
@@ -216,7 +214,7 @@ struct _GAMESYS_WORK {
 	GMEVENT * event;
 
 	GAMEDATA * gamedata;
-	void * fieldmap;
+	FIELDMAP_WORK * fieldmap;
 	GAME_COMM_SYS_PTR game_comm;    ///<ゲーム通信管理ワークへのポインタ
 	void * comm_infowin;		///<INFOWIN通信ワーク
 
@@ -418,7 +416,7 @@ void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT * event)
 //------------------------------------------------------------------
 //	フィールドマップワークへのポインタ取得
 //------------------------------------------------------------------
-void * GAMESYSTEM_GetFieldMapWork(GAMESYS_WORK * gsys)
+FIELDMAP_WORK * GAMESYSTEM_GetFieldMapWork(GAMESYS_WORK * gsys)
 {
 	//GF_ASSERT(gsys->fieldmap != NULL);
 	return gsys->fieldmap;
@@ -427,7 +425,7 @@ void * GAMESYSTEM_GetFieldMapWork(GAMESYS_WORK * gsys)
 //------------------------------------------------------------------
 //	フィールドマップワークのポインタセット
 //------------------------------------------------------------------
-void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, void * fieldmap)
+void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
 {
 	gsys->fieldmap = fieldmap;
 }
