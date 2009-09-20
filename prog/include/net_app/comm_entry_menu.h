@@ -29,7 +29,7 @@ typedef enum{
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
-extern COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(FIELD_MAIN_WORK *fieldWork, int min_num, int max_num, HEAPID heap_id);
+extern COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(FIELDMAP_WORK *fieldWork, int min_num, int max_num, HEAPID heap_id);
 extern void CommEntryMenu_Exit(COMM_ENTRY_MENU_PTR em);
 extern void CommEntryMenu_Entry(COMM_ENTRY_MENU_PTR em, int netID, const STRCODE *name, u32 id, u8 sex, BOOL force_entry);
 extern BOOL CommEntryMenu_Update(COMM_ENTRY_MENU_PTR em);

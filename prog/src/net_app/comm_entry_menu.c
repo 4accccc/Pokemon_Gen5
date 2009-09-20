@@ -77,7 +77,7 @@ typedef struct{
 
 ///参加募集管理システム
 typedef struct _COMM_ENTRY_MENU_SYSTEM{
-  FIELD_MAIN_WORK *fieldWork;
+  FIELDMAP_WORK *fieldWork;
   WORDSET *wordset;
   GFL_MSGDATA *msgdata;
   FLDMSGWIN *fld_msgwin;
@@ -121,7 +121,7 @@ static void _StreamMsgSet(COMM_ENTRY_MENU_PTR em, u32 msg_id);
  * @retval  COMM_ENTRY_MENU_PTR		生成した参加募集メニューワークへのポインタ
  */
 //==================================================================
-COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(FIELD_MAIN_WORK *fieldWork, int min_num, int max_num, HEAPID heap_id)
+COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(FIELDMAP_WORK *fieldWork, int min_num, int max_num, HEAPID heap_id)
 {
   COMM_ENTRY_MENU_PTR em;
   FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
