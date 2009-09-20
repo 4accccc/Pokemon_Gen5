@@ -304,7 +304,7 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
  * @param   fieldWork		
  */
 //==================================================================
-void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork)
+void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork)
 {
   INTRUDE_COMM_SYS_PTR intcomm = app_work;
   
@@ -321,7 +321,7 @@ void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWo
  * @param   fieldWork		
  */
 //==================================================================
-void IntrudeComm_FieldDelete(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork)
+void IntrudeComm_FieldDelete(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork)
 {
   INTRUDE_COMM_SYS_PTR intcomm = app_work;
   

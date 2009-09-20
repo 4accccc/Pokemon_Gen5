@@ -18,10 +18,11 @@
 #include "union_oneself.h"
 #include "union_subproc.h"
 #include "field/fieldmap_ctrl_grid.h"
+#include "field/fieldmap_call.h"  //FIELDMAP_IsReady
 #include "colosseum.h"
 
 
-void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap)
+void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELDMAP_WORK *fieldmap)
 {
   UNION_SYSTEM_PTR unisys;
   
@@ -89,7 +90,7 @@ BOOL Union_FieldCheck(UNION_SYSTEM_PTR unisys)
  * @param   unisys		
  */
 //==================================================================
-void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork)
+void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork)
 {
   UNION_PARENT_WORK *uniparent = pwk;
   UNION_SYSTEM_PTR unisys = app_work;
@@ -111,7 +112,7 @@ void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELD_MAIN_WORK *
  * @param   unisys		
  */
 //==================================================================
-void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork)
+void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork)
 {
   UNION_PARENT_WORK *uniparent = pwk;
   UNION_SYSTEM_PTR unisys = app_work;

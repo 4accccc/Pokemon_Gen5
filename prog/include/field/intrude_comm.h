@@ -11,6 +11,7 @@
 //==============================================================================
 #pragma once
 
+#include "gamesystem/gamesystem.h"
 #include "field/fieldmap_proc.h"
 
 //==============================================================================
@@ -34,6 +35,6 @@ extern BOOL  IntrudeComm_InitCommSystemWait( int *seq, void *pwk, void *pWork );
 extern void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork );
 extern BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork );
 extern BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork );
-extern void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);
-extern void IntrudeComm_FieldDelete(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);
+extern void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork);
+extern void IntrudeComm_FieldDelete(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork);
 

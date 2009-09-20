@@ -10,6 +10,7 @@
 
 #include "gamesystem/gamesystem.h"
 #include "field/fieldmap_proc.h"
+#include "field/fieldmap_call.h"  //FIELDMAP_Create/FIELDMAP_Main/FIELDMAP_Delete
 
 #include "field/zonedata.h" //ZONEDATA_IsUnionRoom
 //======================================================================

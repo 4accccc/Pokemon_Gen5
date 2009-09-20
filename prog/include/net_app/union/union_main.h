@@ -8,6 +8,8 @@
 //==============================================================================
 #pragma once
 
+#include "gamesystem/gamesystem.h"
+#include "gamesystem/game_data.h"
 #include "gamesystem/game_comm.h"
 #include "field/fieldmap_proc.h"
 #include "net_app/union/union_types.h"
@@ -71,10 +73,10 @@ extern void UnionChat_SetMyPmsData(UNION_SYSTEM_PTR unisys, const PMS_DATA *pmsd
 //--------------------------------------------------------------
 //  union_main.c
 //--------------------------------------------------------------
-extern void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELD_MAIN_WORK *fieldmap);
+extern void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELDMAP_WORK *fieldmap);
 extern BOOL Union_FieldCheck(UNION_SYSTEM_PTR unisys);
-extern void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);
-extern void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELD_MAIN_WORK *fieldWork);
+extern void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork);
+extern void UnionMain_Callback_FieldDelete(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork);
 extern BOOL UnionMain_GetFinishReq(UNION_SYSTEM_PTR unisys);
 extern BOOL UnionMain_GetFinishExe(UNION_SYSTEM_PTR unisys);
 extern void UnionMain_SetAppealNo(UNION_SYSTEM_PTR unisys, UNION_APPEAL appeal_no);
