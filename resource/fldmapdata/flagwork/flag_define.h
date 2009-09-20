@@ -2445,44 +2445,44 @@
 		/* not used  2477(0x09ad) */
 		/* not used  2478(0x09ae) */
 		/* not used  2479(0x09af) */
-#define SYS_FLAG_ARRIVE_T01               2480 /* 0x09b0 マサラ到着フラグ */
-#define SYS_FLAG_ARRIVE_T02               2481 /* 0x09b1 トキワ到着フラグ */
-#define SYS_FLAG_ARRIVE_T03               2482 /* 0x09b2 ニビ到着フラグ */
-#define SYS_FLAG_ARRIVE_T04               2483 /* 0x09b3 ハナダ到着フラグ */
-#define SYS_FLAG_ARRIVE_T05               2484 /* 0x09b4 シオン到着フラグ */
-#define SYS_FLAG_ARRIVE_T06               2485 /* 0x09b5 クチバ到着フラグ */
-#define SYS_FLAG_ARRIVE_T07               2486 /* 0x09b6 タマムシ到着フラグ */
-#define SYS_FLAG_ARRIVE_T08               2487 /* 0x09b7 セキチク到着フラグ */
-#define SYS_FLAG_ARRIVE_T09               2488 /* 0x09b8 グレン到着フラグ */
-#define SYS_FLAG_ARRIVE_T10               2489 /* 0x09b9 セキエイ高原到着フラグ */
-#define SYS_FLAG_ARRIVE_T11               2490 /* 0x09ba ヤマブキ到着フラグ */
-#define SYS_FLAG_ARRIVE_T20               2491 /* 0x09bb ワカバ到着フラグ */
-#define SYS_FLAG_ARRIVE_T21               2492 /* 0x09bc ヨシノ到着フラグ */
-#define SYS_FLAG_ARRIVE_T22               2493 /* 0x09bd キキョウ到着フラグ */
-#define SYS_FLAG_ARRIVE_T23               2494 /* 0x09be ヒワダ到着フラグ */
-#define SYS_FLAG_ARRIVE_T24               2495 /* 0x09bf タンバ到着フラグ */
-#define SYS_FLAG_ARRIVE_T25               2496 /* 0x09c0 コガネ到着フラグ */
-#define SYS_FLAG_ARRIVE_T26               2497 /* 0x09c1 アサギ到着フラグ */
-#define SYS_FLAG_ARRIVE_T27               2498 /* 0x09c2 エンジュ到着フラグ */
-#define SYS_FLAG_ARRIVE_T28               2499 /* 0x09c3 チョウジ到着フラグ */
-#define SYS_FLAG_ARRIVE_T29               2500 /* 0x09c4 いかりの湖到着フラグ */
-#define SYS_FLAG_ARRIVE_T30               2501 /* 0x09c5 フスベ到着フラグ */
-#define SYS_FLAG_ARRIVE_T31               2502 /* 0x09c6 シロガネヤマ到着フラグ */
+#define SYS_FLAG_ARRIVE_T01               2480 /* 0x09b0 到着フラグ：T01 */
+#define SYS_FLAG_ARRIVE_T02               2481 /* 0x09b1 到着フラグ：T0２ */
+#define SYS_FLAG_ARRIVE_C01               2482 /* 0x09b2 到着フラグ：C01 */
+#define SYS_FLAG_ARRIVE_C02               2483 /* 0x09b3 到着フラグ：C02 */
+#define SYS_FLAG_ARRIVE_C03               2484 /* 0x09b4 到着フラグ：C03 */
+#define SYS_FLAG_ARRIVE_C04               2485 /* 0x09b5 到着フラグ：C04 */
+#define SYS_FLAG_ARRIVE_C05               2486 /* 0x09b6 到着フラグ：C05 */
+#define SYS_FLAG_ARRIVE_C06               2487 /* 0x09b7 到着フラグ：C06 */
+#define SYS_FLAG_ARRIVE_C07               2488 /* 0x09b8 到着フラグ：C07 */
+#define SYS_FLAG_ARRIVE_C08               2489 /* 0x09b9 到着フラグ：C08 */
+#define SYS_FLAG_ARRIVE_T03               2490 /* 0x09ba 到着フラグ：T0３ */
+		/* not used  2491(0x09bb) */
+		/* not used  2492(0x09bc) */
+		/* not used  2493(0x09bd) */
+		/* not used  2494(0x09be) */
+		/* not used  2495(0x09bf) */
+		/* not used  2496(0x09c0) */
+		/* not used  2497(0x09c1) */
+		/* not used  2498(0x09c2) */
+		/* not used  2499(0x09c3) */
+		/* not used  2500(0x09c4) */
+		/* not used  2501(0x09c5) */
+		/* not used  2502(0x09c6) */
 		/* not used  2503(0x09c7) */
 		/* not used  2504(0x09c8) */
-#define SYS_FLAG_ARRIVE_R47               2505 /* 0x09c9 四国到着フラグ */
-#define SYS_FLAG_ARRIVE_CHAMPLEAGUE       2506 /* 0x09ca 到着フラグ チャンピオンリーグ */
-#define SYS_FLAG_ARRIVE_D32R0101          2507 /* 0x09cb バトルタワー受付 */
-#define SYS_FLAG_ARRIVE_R221              2508 /* 0x09cc ポケパーク施設 */
-#define SYS_FLAG_ARRIVE_R221R0101         2509 /* 0x09cd ポケパーク受付 */
-#define SYS_FLAG_ARRIVE_D47               2510 /* 0x09ce サファリ */
-#define SYS_FLAG_ARRIVE_D32R0102          2511 /* 0x09cf フロンティアフロント */
-#define SYS_FLAG_ARRIVE_D49               2512 /* 0x09d0 スロン会場前 */
-#define SYS_FLAG_ARRIVE_R22R0101          2513 /* 0x09d1 チャンピオンロード入り口 */
-#define SYS_FLAG_ARRIVE_R32PC0101         2514 /* 0x09d2 32番道路ポケモンセンター */
-#define SYS_FLAG_ARRIVE_D49R0101          2515 /* 0x09d3 ポケスロン受付マップ */
-#define SYS_FLAG_ARRIVE_R03PC0101         2516 /* 0x09d4 3番道路ポケモンセンター */
-#define SYS_FLAG_ARRIVE_R10PC0101         2517 /* 0x09d5 10番道路ポケモンセンター */
+		/* not used  2505(0x09c9) */
+		/* not used  2506(0x09ca) */
+		/* not used  2507(0x09cb) */
+		/* not used  2508(0x09cc) */
+		/* not used  2509(0x09cd) */
+		/* not used  2510(0x09ce) */
+		/* not used  2511(0x09cf) */
+		/* not used  2512(0x09d0) */
+		/* not used  2513(0x09d1) */
+		/* not used  2514(0x09d2) */
+		/* not used  2515(0x09d3) */
+		/* not used  2516(0x09d4) */
+		/* not used  2517(0x09d5) */
 
 #define SYS_FLAG_AREA_END                 2719 /* 0x0a9f  */
 
