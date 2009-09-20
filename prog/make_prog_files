@@ -72,6 +72,7 @@ SRCS  +=    $(SOUNDSRC) \
         map/dp3format.c \
         field/zonedata.c \
         field/areadata.c \
+        field/warpdata.c \
         field/location.c \
         field/field_rail_loader.c \
         field/field_location.c \
