@@ -23,12 +23,12 @@
 #include "scrcmd_mapchange.h"
 
 #include "event_mapchange.h"
-#include "field/field_const.h"  //FIELD_CONST_GRID_SIZE
+#include "field/field_const.h"  //GRID_TO_FX32
 #include "eventdata_local.h"
 //======================================================================
 //  define
 //======================================================================
-#define GRID_TO_FX32(gvalue)  ( (gvalue * FIELD_CONST_GRID_SIZE) << FX32_SHIFT )
+
 //======================================================================
 //  struct
 //======================================================================
