@@ -85,7 +85,7 @@ enum _EVENT_IRCBATTLE {
 
 struct _EVENT_IRCBATTLE_WORK{
   GAMESYS_WORK * gsys;
-  FIELD_MAIN_WORK * fieldmap;
+  FIELDMAP_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
   BATTLE_SETUP_PARAM para;
   BOOL isEndProc;
@@ -321,7 +321,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * prevevent,BOOL bCreate)
+GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * prevevent,BOOL bCreate)
 {
   GMEVENT * event = prevevent;
   BATTLE_SETUP_PARAM * para;

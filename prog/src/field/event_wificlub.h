@@ -20,7 +20,7 @@
 typedef struct {
   GMEVENT * event;
   GAMESYS_WORK * gsys;
-  FIELD_MAIN_WORK * fieldmap;
+  FIELDMAP_WORK * fieldmap;
   SAVE_CONTROL_WORK *ctrl;
   void* pWork;
   BATTLE_SETUP_PARAM para;
@@ -29,5 +29,5 @@ typedef struct {
 } EVENT_WIFICLUB_WORK;
 
 
-extern void EVENT_WiFiClub(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * event);
+extern void EVENT_WiFiClub(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event);
 

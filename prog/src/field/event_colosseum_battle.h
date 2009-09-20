@@ -24,5 +24,5 @@ typedef struct{
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
-extern GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, UNION_PLAY_CATEGORY play_category, const COLOSSEUM_BATTLE_SETUP *setup);
+extern GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UNION_PLAY_CATEGORY play_category, const COLOSSEUM_BATTLE_SETUP *setup);
 

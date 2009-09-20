@@ -14,13 +14,13 @@
 #include "gamesystem/gamesystem.h"
 
 /// 共通化した呼び出し
-typedef GMEVENT* (ItemUseEventFunc)(FIELD_MAIN_WORK *fieldWork,GAMESYS_WORK *gsys);
+typedef GMEVENT* (ItemUseEventFunc)(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys);
 
 /// 自転車を使う
-extern GMEVENT* EVENT_CycleUse(FIELD_MAIN_WORK *fieldWork,GAMESYS_WORK *gsys);
+extern GMEVENT* EVENT_CycleUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys);
 
 /// パレスにジャンプする
-extern GMEVENT* EVENT_PalaceJumpUse(FIELD_MAIN_WORK *fieldWork,GAMESYS_WORK *gsys);
+extern GMEVENT* EVENT_PalaceJumpUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys);
 
 ///オーバーレイＩＤ定義
 FS_EXTERN_OVERLAY(itemuse);

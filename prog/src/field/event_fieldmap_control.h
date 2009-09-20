@@ -38,7 +38,7 @@ typedef enum {
  * @return	GMEVENT		生成したイベントへのポインタ
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_FieldFadeOut(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap, FIELD_FADE_TYPE type);
+extern GMEVENT * EVENT_FieldFadeOut(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, FIELD_FADE_TYPE type);
 
 //------------------------------------------------------------------
 /**
@@ -49,7 +49,7 @@ extern GMEVENT * EVENT_FieldFadeOut(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldm
  * @return	GMEVENT		生成したイベントへのポインタ
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_FieldFadeIn(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap, FIELD_FADE_TYPE type);
+extern GMEVENT * EVENT_FieldFadeIn(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, FIELD_FADE_TYPE type);
 
 //------------------------------------------------------------------
 /**
@@ -69,7 +69,7 @@ extern GMEVENT * EVENT_FieldOpen(GAMESYS_WORK *gsys);
  * @return	GMEVENT		生成したイベントへのポインタ
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_FieldClose(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap);
+extern GMEVENT * EVENT_FieldClose(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap);
 
 //------------------------------------------------------------------
 /**
@@ -85,7 +85,7 @@ extern GMEVENT * EVENT_FieldClose(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap
  * →フィールドマップ再開→フェードインを処理する
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_FieldSubProc(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
+extern GMEVENT * EVENT_FieldSubProc(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void * proc_work);
 
 

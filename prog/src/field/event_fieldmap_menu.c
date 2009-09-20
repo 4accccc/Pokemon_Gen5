@@ -141,7 +141,7 @@ struct _TAG_FMENU_EVENT_WORK
   HEAPID heapID;
   GMEVENT *gmEvent;
   GAMESYS_WORK *gmSys;
-  FIELD_MAIN_WORK *fieldWork;
+  FIELDMAP_WORK *fieldWork;
   
   GFL_MSGDATA *msgData;
   FLDMENUFUNC *menuFunc;
@@ -195,7 +195,7 @@ static GMEVENT * createFMenuMsgWinEvent(
 static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk );
 
 static GMEVENT * createFMenuReportEvent(
-  GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG );
+  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG );
 static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk );
 
 static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk);
@@ -302,13 +302,13 @@ static const FMENU_ITEMUSE_EVENT_DATA FldMapMenu_ItemUseData[FMENU_ITEMUSE_MAX] 
 /**
  * フィールドマップメニューイベント起動
  * @param gsys  GAMESYS_WORK
- * @param fieldWork FIELD_MAIN_WORK
+ * @param fieldWork FIELDMAP_WORK
  * @param heapID  HEAPID
  * @retval  GMEVENT*
  */
 //--------------------------------------------------------------
 GMEVENT * EVENT_FieldMapMenu(
-  GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, HEAPID heapID )
+  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAPID heapID )
 {
   FMENU_EVENT_WORK *mwk;
   GMEVENT * event;
@@ -334,13 +334,13 @@ GMEVENT * EVENT_FieldMapMenu(
 /**
  * ユニオンルーム用フィールドマップメニューイベント起動
  * @param gsys  GAMESYS_WORK
- * @param fieldWork FIELD_MAIN_WORK
+ * @param fieldWork FIELDMAP_WORK
  * @param heapID  HEAPID
  * @retval  GMEVENT*
  */
 //--------------------------------------------------------------
 GMEVENT * EVENT_UnionMapMenu(
-  GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, HEAPID heapID )
+  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAPID heapID )
 {
   FMENU_EVENT_WORK *mwk;
   GMEVENT * event;
@@ -1291,12 +1291,12 @@ typedef struct
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
   GAMESYS_WORK *gsys;
-  FIELD_MAIN_WORK *fieldWork;
+  FIELDMAP_WORK *fieldWork;
 }FMENU_REPORT_EVENT_WORK;
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static GMEVENT * createFMenuReportEvent(GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG )
+static GMEVENT * createFMenuReportEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG )
 {
   GMEVENT * msgEvent;
   FMENU_REPORT_EVENT_WORK *work;

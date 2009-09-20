@@ -14,6 +14,7 @@
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
 
+#include "field/fieldmap_call.h"  //FIELDMAP_IsReady,FIELDMAP_ForceUpdate
 #include "field/fieldmap.h"
 
 #include "./event_fieldmap_control.h"
@@ -51,7 +52,7 @@ static GMEVENT_RESULT FieldFadeOutEvent(GMEVENT * event, int *seq, void * work)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldFadeOut(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap, FIELD_FADE_TYPE type)
+GMEVENT * EVENT_FieldFadeOut(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, FIELD_FADE_TYPE type)
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldFadeOutEvent, sizeof(FADE_EVENT_WORK));
 	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
@@ -84,7 +85,7 @@ static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldFadeIn(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap, FIELD_FADE_TYPE type)
+GMEVENT * EVENT_FieldFadeIn(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap, FIELD_FADE_TYPE type)
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldFadeInEvent, sizeof(FADE_EVENT_WORK));
 	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
@@ -99,7 +100,7 @@ GMEVENT * EVENT_FieldFadeIn(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap, FIEL
 //------------------------------------------------------------------
 typedef struct {
 	GAMESYS_WORK * gsys;
-	FIELD_MAIN_WORK * fieldmap;
+	FIELDMAP_WORK * fieldmap;
 	GAMEDATA * gamedata;
 }FIELD_OPENCLOSE_WORK;
 //------------------------------------------------------------------
@@ -108,7 +109,7 @@ static GMEVENT_RESULT FieldCloseEvent(GMEVENT * event, int * seq, void *work)
 {
 	FIELD_OPENCLOSE_WORK * focw = work;
 	GAMESYS_WORK * gsys = focw->gsys;
-	FIELD_MAIN_WORK * fieldmap = focw->fieldmap;
+	FIELDMAP_WORK * fieldmap = focw->fieldmap;
 	switch (*seq) {
 	case 0:
 		FIELDMAP_Close(fieldmap);
@@ -123,7 +124,7 @@ static GMEVENT_RESULT FieldCloseEvent(GMEVENT * event, int * seq, void *work)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldClose(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap)
+GMEVENT * EVENT_FieldClose(GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldmap)
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldCloseEvent, sizeof(FIELD_OPENCLOSE_WORK));
 	FIELD_OPENCLOSE_WORK * focw = GMEVENT_GetEventWork(event);
@@ -139,7 +140,7 @@ static GMEVENT_RESULT FieldOpenEvent(GMEVENT * event, int *seq, void*work)
 {
 	FIELD_OPENCLOSE_WORK * focw = work;
 	GAMESYS_WORK * gsys = focw->gsys;
-	FIELD_MAIN_WORK * fieldmap;	// = focw->fieldmap;
+	FIELDMAP_WORK * fieldmap;	// = focw->fieldmap;
 	switch(*seq) {
 	case 0:
 		if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL) break;
@@ -182,7 +183,7 @@ GMEVENT * EVENT_FieldOpen(GAMESYS_WORK *gsys)
 //------------------------------------------------------------------
 typedef struct {
 	GAMESYS_WORK * gsys;
-	FIELD_MAIN_WORK * fieldmap;
+	FIELDMAP_WORK * fieldmap;
 	FSOverlayID ov_id;
 	const GFL_PROC_DATA * proc_data;
 	void * proc_work;
@@ -229,7 +230,7 @@ static GMEVENT_RESULT GameChangeEvent(GMEVENT * event, int * seq, void * work)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * EVENT_FieldSubProc(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
+GMEVENT * EVENT_FieldSubProc(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void * proc_work)
 {
 #if 1

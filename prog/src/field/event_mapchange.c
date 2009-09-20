@@ -77,7 +77,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 	FIRST_MAPIN_WORK * fmw = work;
 	GAMESYS_WORK * gsys = fmw->gsys;
 	GAME_INIT_WORK * game_init_work = fmw->game_init_work;
-	FIELD_MAIN_WORK * fieldmap;
+	FIELDMAP_WORK * fieldmap;
 	switch (*seq) {
 	case 0:
 		switch(game_init_work->mode){
@@ -144,7 +144,7 @@ GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_i
 //============================================================================================
 typedef struct {
 	GAMESYS_WORK * gsys;
-	FIELD_MAIN_WORK * fieldmap;
+	FIELDMAP_WORK * fieldmap;
 }GAME_END_WORK;
 
 //------------------------------------------------------------------
@@ -183,7 +183,7 @@ static GMEVENT_RESULT GameEndEvent(GMEVENT * event, int *seq, void *work)
  * @brief	デバッグ用：ゲーム終了
  */
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
+GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, GameEndEvent, sizeof(GAME_END_WORK));
 	GAME_END_WORK * gew = GMEVENT_GetEventWork(event);
@@ -205,7 +205,7 @@ GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
 typedef struct {
 	GAMESYS_WORK * gsys;
 	GAMEDATA * gamedata;
-	FIELD_MAIN_WORK * fieldmap;
+	FIELDMAP_WORK * fieldmap;
   u16 before_zone_id;         ///<遷移前マップID
 	LOCATION loc_req;           ///<遷移先指定
   EXIT_TYPE exit_type;
@@ -221,7 +221,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
 {
 	MAPCHANGE_WORK*       mcw = *( (MAPCHANGE_WORK_PTR*)work );
 	GAMESYS_WORK*        gsys = mcw->gsys;
-	FIELD_MAIN_WORK* fieldmap = mcw->fieldmap;
+	FIELDMAP_WORK* fieldmap = mcw->fieldmap;
 	GAMEDATA*        gamedata = mcw->gamedata;
 
 	switch( *seq )
@@ -297,7 +297,7 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 {
 	MAPCHANGE_WORK * mcw = work;
 	GAMESYS_WORK  * gsys = mcw->gsys;
-	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
+	FIELDMAP_WORK * fieldmap = mcw->fieldmap;
 	GAMEDATA * gamedata = mcw->gamedata;
 	switch (*seq) {
   case 0:
@@ -333,7 +333,7 @@ static GMEVENT_RESULT EVENT_MapChangeByWarp(GMEVENT * event, int *seq, void*work
 {
 	MAPCHANGE_WORK * mcw = work;
 	GAMESYS_WORK  * gsys = mcw->gsys;
-	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
+	FIELDMAP_WORK * fieldmap = mcw->fieldmap;
 	GAMEDATA * gamedata = mcw->gamedata;
 	switch (*seq) {
   case 0:
@@ -370,7 +370,7 @@ static GMEVENT_RESULT EVENT_MapChangeBySandStream(GMEVENT * event, int *seq, voi
 {
 	MAPCHANGE_WORK*       mcw = work;
 	GAMESYS_WORK*        gsys = mcw->gsys;
-	FIELD_MAIN_WORK* fieldmap = mcw->fieldmap;
+	FIELDMAP_WORK* fieldmap = mcw->fieldmap;
 	GAMEDATA*        gamedata = mcw->gamedata;
 
 	switch (*seq)
@@ -412,7 +412,7 @@ static void MAPCHANGE_WORK_init(MAPCHANGE_WORK * mcw, GAMESYS_WORK * gsys)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
+GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		u16 zone_id, const VecFx32 * pos, u16 dir )
 {
 	MAPCHANGE_WORK * mcw;
@@ -432,7 +432,7 @@ GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldm
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
-		FIELD_MAIN_WORK * fieldmap, u16 zone_id)
+		FIELDMAP_WORK * fieldmap, u16 zone_id)
 {
 	MAPCHANGE_WORK * mcw;
 	GMEVENT * event;
@@ -449,7 +449,7 @@ GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 GMEVENT * DEBUG_EVENT_ChangeMapDefaultPosByWarp(GAMESYS_WORK * gsys,
-		FIELD_MAIN_WORK * fieldmap, u16 zone_id)
+		FIELDMAP_WORK * fieldmap, u16 zone_id)
 {
 	MAPCHANGE_WORK * mcw;
 	GMEVENT * event;
@@ -466,7 +466,7 @@ GMEVENT * DEBUG_EVENT_ChangeMapDefaultPosByWarp(GAMESYS_WORK * gsys,
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 GMEVENT * EVENT_ChangeMapBySandStream(
-    GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, 
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, 
     const VecFx32* disappear_pos, u16 zone_id, const VecFx32* appear_pos )
 {
 	MAPCHANGE_WORK * mcw;
@@ -513,7 +513,7 @@ GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
 //------------------------------------------------------------------
 //	※マップIDをインクリメントしている。最大値になったら先頭に戻る
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
+GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
 {
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
 	PLAYER_WORK * myplayer = GAMEDATA_GetMyPlayerWork(gamedata);
@@ -530,7 +530,7 @@ GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fie
 //------------------------------------------------------------------
 void DEBUG_EVENT_ChangeEventMapChange(
 	GAMESYS_WORK *gsys, GMEVENT *event,
-	FIELD_MAIN_WORK *fieldmap, ZONEID zone_id )
+	FIELDMAP_WORK *fieldmap, ZONEID zone_id )
 {
 	if (zone_id >= ZONEDATA_GetZoneIDMax()) {
 		GF_ASSERT( 0 );

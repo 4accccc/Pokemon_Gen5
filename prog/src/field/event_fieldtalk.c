@@ -21,7 +21,7 @@
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
-extern MMDLSYS * FIELDMAP_GetMMdlSys( FIELD_MAIN_WORK *fieldWork );
+extern MMDLSYS * FIELDMAP_GetMMdlSys( FIELDMAP_WORK *fieldWork );
 
 //======================================================================
 //	define
@@ -39,7 +39,7 @@ typedef struct
 	u32 scr_id;
 	MMDL *fmmdl_player;
 	MMDL *fmmdl_talk;
-	FIELD_MAIN_WORK *fieldWork;
+	FIELDMAP_WORK *fieldWork;
 
 	FLDMSGBG *msgBG;
 	GFL_MSGDATA *msgData;
@@ -58,7 +58,7 @@ static GMEVENT_RESULT FldTalkEvent( GMEVENT *event, int *seq, void *wk );
 /**
  * フィールド話し掛けイベント起動
  * @param	GAMESYS_WORK
- * @param	fieldWork		FIELD_MAIN_WORK
+ * @param	fieldWork		FIELDMAP_WORK
  * @param	scr_id			スクリプトID
  * @param	fmmdl_player	自機動作モデル
  * @param	fmmdl_talk		話し掛け対象動作モデル
@@ -67,7 +67,7 @@ static GMEVENT_RESULT FldTalkEvent( GMEVENT *event, int *seq, void *wk );
  */
 //--------------------------------------------------------------
 GMEVENT * EVENT_FieldTalk(
-		GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, u32 scr_id,
+		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u32 scr_id,
 		MMDL *fmmdl_player, MMDL *fmmdl_talk, HEAPID heapID )
 {
 	GMEVENT *event;
@@ -77,7 +77,7 @@ GMEVENT * EVENT_FieldTalk(
 
 #if 0
 GMEVENT * EVENT_FieldTalk(
-		GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, u32 scr_id,
+		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u32 scr_id,
 		MMDL *fmmdl_player, MMDL *fmmdl_talk, HEAPID heapID )
 {
 	FLDTALK_EVENT_WORK *ftalk_wk;

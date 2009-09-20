@@ -52,7 +52,7 @@ FS_EXTERN_OVERLAY(battle);
 //--------------------------------------------------------------
 typedef struct {
   GAMESYS_WORK * gsys;
-  FIELD_MAIN_WORK * fieldmap;
+  FIELDMAP_WORK * fieldmap;
   BATTLE_SETUP_PARAM para;
   u16 timeWait;
   u16 bgmpush_off;

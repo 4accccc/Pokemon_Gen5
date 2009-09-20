@@ -50,7 +50,7 @@ FS_EXTERN_OVERLAY(battle);
 //==============================================================================
 typedef struct{
   GAMESYS_WORK * gsys;
-  FIELD_MAIN_WORK * fieldmap;
+  FIELDMAP_WORK * fieldmap;
   BATTLE_SETUP_PARAM para;
 }EVENT_COLOSSEUM_BATTLE_WORK;
 
@@ -141,7 +141,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, UNION_PLAY_CATEGORY play_category, const COLOSSEUM_BATTLE_SETUP *setup)
+GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UNION_PLAY_CATEGORY play_category, const COLOSSEUM_BATTLE_SETUP *setup)
 {
   BATTLE_SETUP_PARAM * para;
   EVENT_COLOSSEUM_BATTLE_WORK * cbw;

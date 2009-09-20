@@ -27,5 +27,5 @@
 GMEVENT* EVENT_EntranceOut( GMEVENT* parent, 
                            GAMESYS_WORK* gsys,
                            GAMEDATA* gdata, 
-                           FIELD_MAIN_WORK* fieldmap, 
+                           FIELDMAP_WORK* fieldmap, 
                            LOCATION location );

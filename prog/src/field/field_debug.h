@@ -31,7 +31,7 @@ typedef struct _TAG_FIELD_DEBUG_WORK FIELD_DEBUG_WORK;
 //	extern
 //======================================================================
 extern FIELD_DEBUG_WORK * FIELD_DEBUG_Init(
-	FIELD_MAIN_WORK *pFieldMainWork, HEAPID heapID );
+	FIELDMAP_WORK *pFieldMainWork, HEAPID heapID );
 extern void FIELD_DEBUG_Delete( FIELD_DEBUG_WORK *work );
 extern void FIELD_DEBUG_UpdateProc( FIELD_DEBUG_WORK *work );
 

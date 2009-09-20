@@ -27,7 +27,7 @@ extern GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK *
  * @brief	デバッグ用：ゲーム終了
  */
 //------------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap);
+extern GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap);
 
 //------------------------------------------------------------------
 /**
@@ -47,7 +47,7 @@ extern GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * f
  * @return	GMEVENT		生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
+extern GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		u16 zone_id, const VecFx32 * pos, u16 dir );
 
 //------------------------------------------------------------------
@@ -60,7 +60,7 @@ extern GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK *
  */
 //------------------------------------------------------------------
 extern GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
-		FIELD_MAIN_WORK * fieldmap, u16 zone_id);
+		FIELDMAP_WORK * fieldmap, u16 zone_id);
 
 //------------------------------------------------------------------
 /**
@@ -72,7 +72,7 @@ extern GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
  */
 //------------------------------------------------------------------
 extern GMEVENT * DEBUG_EVENT_ChangeMapDefaultPosByWarp(GAMESYS_WORK * gsys,
-		FIELD_MAIN_WORK * fieldmap, u16 zone_id);
+		FIELDMAP_WORK * fieldmap, u16 zone_id);
 
 //------------------------------------------------------------------
 /**
@@ -86,20 +86,20 @@ extern GMEVENT * DEBUG_EVENT_ChangeMapDefaultPosByWarp(GAMESYS_WORK * gsys,
  */
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_ChangeMapBySandStream(
-    GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, 
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, 
     const VecFx32* disappear_pos, u16 zone_id, const VecFx32* appear_pos );
 
 //------------------------------------------------------------------
 /**
  */
 //------------------------------------------------------------------
-extern GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK *fieldmap);
+extern GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap);
 
 //------------------------------------------------------------------
 /**
  */
 //------------------------------------------------------------------
-extern void DEBUG_EVENT_ChangeEventMapChange( GAMESYS_WORK *gsys, GMEVENT *event,FIELD_MAIN_WORK *fieldmap, ZONEID zone_id );
+extern void DEBUG_EVENT_ChangeEventMapChange( GAMESYS_WORK *gsys, GMEVENT *event,FIELDMAP_WORK *fieldmap, ZONEID zone_id );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

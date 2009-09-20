@@ -54,7 +54,7 @@ static const GFL_PROC_DATA FieldCommErrorProc = {
  * @retval  GMEVENT *		
  */
 //==================================================================
-GMEVENT * EVENT_FieldCommErrorProc(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
+GMEVENT * EVENT_FieldCommErrorProc(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
 {
   GAMESYSTEM_SetFieldCommErrorReq(gsys, FALSE);
   NetErr_App_ReqErrorDisp();

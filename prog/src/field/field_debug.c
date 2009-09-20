@@ -32,7 +32,7 @@ struct _TAG_FIELD_DEBUG_WORK
 {
 	HEAPID heapID;	//デバッグで使用するHEAPID
 	u32 bgFrame;	//デバッグで使用するBG FRAME
-	FIELD_MAIN_WORK *pFieldMainWork; //FIELD_MAIN_WORK*
+	FIELDMAP_WORK *pFieldMainWork; //FIELDMAP_WORK*
 	
 	BOOL flag_bgscr_load;	//デバッグBG面のスクリーンロード
 	BOOL flag_pos_print;	//座標表示切り替え
@@ -55,12 +55,12 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work );
 //--------------------------------------------------------------
 /**
  * フィールドデバッグシステム 初期化
- * @param 	pFieldMainWork FIELD_MAIN_WORK
+ * @param 	pFieldMainWork FIELDMAP_WORK
  * @retval	FIELD_DEBUG_WORK
  */
 //--------------------------------------------------------------
 FIELD_DEBUG_WORK * FIELD_DEBUG_Init(
-	FIELD_MAIN_WORK *pFieldMainWork, HEAPID heapID )
+	FIELDMAP_WORK *pFieldMainWork, HEAPID heapID )
 {
 	FIELD_DEBUG_WORK *work;
 	work = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_DEBUG_WORK) );

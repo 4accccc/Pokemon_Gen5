@@ -117,7 +117,7 @@ const DEPEND_FUNCTIONS FieldMapCtrl_NoGridFunctions =
 //--------------------------------------------------------------
 /**
  * フィールドマップ　ノングリッド処理　初期化
- * @param	fieldWork	FIELD_MAIN_WORK
+ * @param	fieldWork	FIELDMAP_WORK
  * @param	pos	自機初期位置
  * @param	dir 自機初期方向
  */

@@ -36,7 +36,7 @@ static GMEVENT_RESULT CycleEvent(GMEVENT * event, int * seq, void *work)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * EVENT_CycleUse(FIELD_MAIN_WORK *fieldWork,GAMESYS_WORK *gsys)
+GMEVENT * EVENT_CycleUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys)
 {
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, CycleEvent, sizeof(CYCLEUSE_STRUCT));
 	CYCLEUSE_STRUCT * pCy = GMEVENT_GetEventWork(event);
@@ -53,7 +53,7 @@ GMEVENT * EVENT_CycleUse(FIELD_MAIN_WORK *fieldWork,GAMESYS_WORK *gsys)
 //------------------------------------------------------------------------------
 
 
-GMEVENT * EVENT_PalaceJumpUse(FIELD_MAIN_WORK *fieldWork,GAMESYS_WORK *gsys)
+GMEVENT * EVENT_PalaceJumpUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys)
 {
   VecFx32 pos;
   ZONEID jump_zone;

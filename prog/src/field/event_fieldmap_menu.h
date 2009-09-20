@@ -25,8 +25,8 @@
 //	extern
 //======================================================================
 extern GMEVENT * EVENT_FieldMapMenu(
-	GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, HEAPID heapID );
+	GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAPID heapID );
 extern GMEVENT * EVENT_UnionMapMenu(
-  GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork, HEAPID heapID );
+  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAPID heapID );
 
 #endif //__EVENT_FIELDMAP_MENU_H__

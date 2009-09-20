@@ -12,5 +12,5 @@
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
-extern GMEVENT * EVENT_FieldCommErrorProc(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap);
+extern GMEVENT * EVENT_FieldCommErrorProc(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap);
 

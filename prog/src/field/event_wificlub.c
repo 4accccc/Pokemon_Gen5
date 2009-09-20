@@ -113,7 +113,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void EVENT_WiFiClub(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * event)
+void EVENT_WiFiClub(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event)
 {
   GMEVENT * child_event;
   BATTLE_SETUP_PARAM * para;

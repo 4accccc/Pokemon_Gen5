@@ -34,7 +34,7 @@ typedef struct
 {
   GAMESYS_WORK*    gsys;
   GAMEDATA*        gdata;
-  FIELD_MAIN_WORK* fieldmap;
+  FIELDMAP_WORK* fieldmap;
   LOCATION         location;  // ‘JˆÚæŽw’è
 }
 EVENT_WORK;
@@ -73,7 +73,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
 GMEVENT* EVENT_EntranceOut( GMEVENT* parent, 
                            GAMESYS_WORK* gsys,
                            GAMEDATA* gdata, 
-                           FIELD_MAIN_WORK* fieldmap, 
+                           FIELDMAP_WORK* fieldmap, 
                            LOCATION location )
 {
   GMEVENT* event;
@@ -131,7 +131,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone(GMEVENT * event, int *
 {
 	EVENT_WORK*      event_work = work;
 	GAMESYS_WORK*    gsys       = event_work->gsys;
-	FIELD_MAIN_WORK* fieldmap   = event_work->fieldmap;
+	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
 	GAMEDATA*        gamedata   = event_work->gdata;
 
   switch (*seq)
@@ -162,7 +162,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeDoor(GMEVENT * event, int *
 {
 	EVENT_WORK*      event_work = work;
 	GAMESYS_WORK*    gsys       = event_work->gsys;
-	FIELD_MAIN_WORK* fieldmap   = event_work->fieldmap;
+	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
 
   switch (*seq)
   {
@@ -192,7 +192,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep(GMEVENT * event, int *
 {
 	EVENT_WORK*      event_work = work;
 	GAMESYS_WORK*    gsys       = event_work->gsys;
-	FIELD_MAIN_WORK* fieldmap   = event_work->fieldmap;
+	FIELDMAP_WORK* fieldmap   = event_work->fieldmap;
 	GAMEDATA*        gamedata   = event_work->gdata;
 
   switch (*seq)
