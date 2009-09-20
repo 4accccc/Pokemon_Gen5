@@ -25,7 +25,7 @@ typedef struct{
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
-extern GMEVENT * UnionSubProc_Create(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork, UNION_SYSTEM_PTR unisys);
+extern GMEVENT * UnionSubProc_Create(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork, UNION_SYSTEM_PTR unisys);
 extern void UnionSubProc_EventSet(UNION_SYSTEM_PTR unisys, UNION_SUBPROC_ID sub_proc_id, void *parent_wk);
 extern BOOL UnionSubProc_IsExits(UNION_SYSTEM_PTR unisys);
 

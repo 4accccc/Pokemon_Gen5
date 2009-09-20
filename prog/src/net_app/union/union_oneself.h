@@ -12,5 +12,5 @@
 //  äOïîä÷êîêÈåæ
 //==============================================================================
 extern BOOL UnionOneself_ReqStatus(UNION_SYSTEM_PTR unisys, int req_status);
-extern int UnionOneself_Update(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork);
+extern int UnionOneself_Update(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork);
 

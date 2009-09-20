@@ -231,7 +231,7 @@ void ColosseumTool_Clear_ReceivePokeListSelected(COLOSSEUM_SYSTEM_PTR clsys)
  * @retval  TRUE:立ち位置にいる。　FALSE:立ち位置にいない
  */
 //==================================================================
-BOOL ColosseumTool_CheckStandingPosition(FIELD_MAIN_WORK *fieldWork, int entry_num, int *stand_pos)
+BOOL ColosseumTool_CheckStandingPosition(FIELDMAP_WORK *fieldWork, int entry_num, int *stand_pos)
 {
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldWork);
   int i;
@@ -318,7 +318,7 @@ BOOL ColosseumTool_ReceiveCheck_Leave(COLOSSEUM_SYSTEM_PTR clsys)
  * @retval  BOOL		TRUE:出口座標にいる
  */
 //==================================================================
-BOOL ColosseumTool_CheckWayOut(FIELD_MAIN_WORK *fieldWork)
+BOOL ColosseumTool_CheckWayOut(FIELDMAP_WORK *fieldWork)
 {
   VecFx32 pos;
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldWork);

@@ -391,7 +391,7 @@ void UnionMsg_AllDel(UNION_SYSTEM_PTR unisys)
  * @param   unisys		
  */
 //==================================================================
-void UnionMsg_TalkStream_WindowSetup(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork)
+void UnionMsg_TalkStream_WindowSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork)
 {
   FLDMSGBG *fldmsg_bg;
   
@@ -469,7 +469,7 @@ BOOL UnionMsg_TalkStream_Check(UNION_SYSTEM_PTR unisys)
  * @param   str_id		  メッセージID
  */
 //==================================================================
-void UnionMsg_TalkStream_PrintPack(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, u32 str_id)
+void UnionMsg_TalkStream_PrintPack(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, u32 str_id)
 {
   UnionMsg_TalkStream_WindowSetup(unisys, fieldWork);
   UnionMsg_TalkStream_Print(unisys, str_id);
@@ -483,7 +483,7 @@ void UnionMsg_TalkStream_PrintPack(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fie
  * @param   fieldWork		
  */
 //==================================================================
-void UnionMsg_YesNo_Setup(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork)
+void UnionMsg_YesNo_Setup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork)
 {
   FLDMSGBG *fldmsg_bg;
 
@@ -547,7 +547,7 @@ BOOL UnionMsg_YesNo_SelectLoop(UNION_SYSTEM_PTR unisys, BOOL *result)
  * @param   list_max		
  */
 //--------------------------------------------------------------
-static void UnionMsg_Menu_WindowSetup(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, const FLDMENUFUNC_LIST *menulist, int list_max, const FLDMENUFUNC_HEADER *menuhead)
+static void UnionMsg_Menu_WindowSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, const FLDMENUFUNC_LIST *menulist, int list_max, const FLDMENUFUNC_HEADER *menuhead)
 {
   FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(fieldWork);
   FLDMENUFUNC_LISTDATA *fldmenu_listdata;
@@ -597,7 +597,7 @@ static u32 UnionMsg_Menu_SelectLoop(UNION_SYSTEM_PTR unisys)
  * @param   fieldWork		
  */
 //==================================================================
-void UnionMsg_Menu_MainMenuSetup(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork)
+void UnionMsg_Menu_MainMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork)
 {
   UnionMsg_Menu_WindowSetup(unisys, fieldWork, 
     MainMenuList, NELEMS(MainMenuList), &MenuHeader_MainMenu);
@@ -637,7 +637,7 @@ u32 UnionMsg_Menu_MainMenuSelectLoop(UNION_SYSTEM_PTR unisys)
  * @param   fieldWork		
  */
 //==================================================================
-void UnionMsg_Menu_BattleMenuSetup(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork, int menu_index, UNION_MENU_REGULATION *menu_reg)
+void UnionMsg_Menu_BattleMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, int menu_index, UNION_MENU_REGULATION *menu_reg)
 {
   FLDMENUFUNC_HEADER head;
   
@@ -757,7 +757,7 @@ u32 UnionMsg_Menu_BattleMenuSelectLoop(UNION_SYSTEM_PTR unisys, BOOL *next_sub_m
  * @param   fieldWork		
  */
 //==================================================================
-void UnionMsg_Menu_PokePartySelectMenuSetup(UNION_SYSTEM_PTR unisys, FIELD_MAIN_WORK *fieldWork)
+void UnionMsg_Menu_PokePartySelectMenuSetup(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork)
 {
   UnionMsg_Menu_WindowSetup(unisys, fieldWork, 
     PokePartySelectMenuList, NELEMS(PokePartySelectMenuList), &MenuHeader_PokePartySelect);
