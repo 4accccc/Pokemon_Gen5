@@ -1,8 +1,17 @@
+#==============================================================================
+#
+#	warpデータコンバータ
+#
+#	@author	GAME FREAK inc.
+#	@date	2009.09.20	HGSSからそのまま持ってきた
+#
+#==============================================================================
 
+include $(PROJECT_RSCDIR)macro_define
 
 DATAFILE	=	warpdata.xls
 MIDFILE		=	$(DATAFILE:.xls=.txt)
-TARGET		=	warpdata.c
+TARGET		=	warpdata.cdat
 EXCEL2TAB	=	$(PROJECT_ROOT)tools/exceltool/exceltabconv
 
 do-build:	$(TARGET)

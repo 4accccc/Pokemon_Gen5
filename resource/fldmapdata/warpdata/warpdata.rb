@@ -135,7 +135,7 @@ end
 
 def convert	infile
 	#データファイル（別名で作成）
-	datafile = WarpDataFile.new("temp_data.c")
+	datafile = WarpDataFile.new("temp_data.cdat")
 	#ヘッダファイル（別名で作成）
 	headerfile = WarpHeaderFile.new("temp_data.h")
 
@@ -156,12 +156,12 @@ def convert	infile
 	headerfile.close
 
 	#もともとのデータファイルと比較、変化があれば上書きする
-	datafile.diff_overwrite "warpdata.c"
+	datafile.diff_overwrite "warpdata.cdat"
 	#もともとのヘッダファイルと比較、変化があれば上書きする
 	headerfile.diff_overwrite "warpdata.h"
 end
 
-infile = File.open("warpdata.txt", "r")
+infile = File.open(ARGV[0], "r")
 convert infile
 infile.close
 

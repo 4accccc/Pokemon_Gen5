@@ -1,0 +1,61 @@
+//==================================
+//==================================
+static const WARPDATA WarpData[] = {
+	{
+		FLAG_ARRIVE_T01,
+		FALSE,TRUE ,
+		ZONE_ID_T01         ,   8,  13,
+		ZONE_ID_T01         ,1033, 364,
+		ZONE_ID_T01         ,1033, 364,
+	},
+	{
+		FLAG_ARRIVE_T02,
+		TRUE ,TRUE ,
+		ZONE_ID_T02PC0101   ,   8,  13,
+		ZONE_ID_T02         ,1032, 263,
+		ZONE_ID_T02         ,1032, 263,
+	},
+	{
+		FLAG_ARRIVE_T03,
+		TRUE ,TRUE ,
+		ZONE_ID_T03PC0101   ,   8,  13,
+		ZONE_ID_T03         ,1048, 107,
+		ZONE_ID_T03         ,1048, 107,
+	},
+	{
+		FLAG_ARRIVE_T04,
+		TRUE ,TRUE ,
+		ZONE_ID_T04PC0101   ,   8,  13,
+		ZONE_ID_T04         ,1309, 132,
+		ZONE_ID_T04         ,1309, 132,
+	},
+	{
+		FLAG_ARRIVE_T05,
+		TRUE ,TRUE ,
+		ZONE_ID_T05PC0101   ,   8,  13,
+		ZONE_ID_T05         ,1418, 235,
+		ZONE_ID_T05         ,1418, 235,
+	},
+	{
+		FLAG_ARRIVE_T06,
+		TRUE ,TRUE ,
+		ZONE_ID_T06PC0101   ,   8,  13,
+		ZONE_ID_T06         ,1297, 295,
+		ZONE_ID_T06         ,1297, 295,
+	},
+	{
+		FLAG_ARRIVE_T07,
+		TRUE ,TRUE ,
+		ZONE_ID_T07PC0101   ,   8,  13,
+		ZONE_ID_T07         ,1231, 238,
+		ZONE_ID_T07         ,1231, 238,
+	},
+	{
+		FLAG_ARRIVE_T08,
+		TRUE ,TRUE ,
+		ZONE_ID_T08PC0101   ,   8,  13,
+		ZONE_ID_T08         ,1209, 440,
+		ZONE_ID_T08         ,1209, 440,
+	},
+};
+//==================================
