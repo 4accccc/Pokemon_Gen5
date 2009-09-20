@@ -11,6 +11,7 @@
 #pragma once
 
 
+#include "gamesystem/game_data.h"
 #include "field/location.h"
 
 //--------------------------------------------------------------------------------------------
