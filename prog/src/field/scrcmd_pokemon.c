@@ -5,6 +5,8 @@
  * @date  2009.09.15
  * @author	tamada GAMEFREAK inc.
  *
+ * @todo  ポケルスチェックの確認が行われていない
+ * @todo  status_rcv.cの命名規則修正ができたら回復処理を呼び出す
  */
 //======================================================================
 
@@ -49,6 +51,26 @@
 VMCMD_RESULT EvCmdCheckTemotiPokerus( VMHANDLE * core, void *wk )
 {
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = FALSE;
+
+  {
+    GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
+    PokeParty * party = GAMEDATA_GetMyPokemon( gamedata );
+    u32 max = PokeParty_GetPokeCount( party );
+
+    for (idx = 0; idx < max; idx ++)
+    {
+      u32 result;
+      POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, idx );
+      result = PokeParaGet( pp, ID_PARA_pokerus, NULL );
+      if (result != 0)
+      {
+        *ret_wk = TRUE;
+        break;
+      }
+    }
+  }
+
   return VMCMD_RESULT_CONTINUE;
 }
 
