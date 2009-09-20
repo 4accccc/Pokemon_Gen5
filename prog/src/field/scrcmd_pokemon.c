@@ -24,6 +24,8 @@
 
 #include "scrcmd_pokemon.h"
 
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/pokeparty.h"
 
 //======================================================================
 //  define
@@ -55,14 +57,15 @@ VMCMD_RESULT EvCmdCheckTemotiPokerus( VMHANDLE * core, void *wk )
 
   {
     GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
-    PokeParty * party = GAMEDATA_GetMyPokemon( gamedata );
+    POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
     u32 max = PokeParty_GetPokeCount( party );
+    int idx;
 
     for (idx = 0; idx < max; idx ++)
     {
       u32 result;
       POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, idx );
-      result = PokeParaGet( pp, ID_PARA_pokerus, NULL );
+      result = PP_Get( pp, ID_PARA_pokerus, NULL );
       if (result != 0)
       {
         *ret_wk = TRUE;
