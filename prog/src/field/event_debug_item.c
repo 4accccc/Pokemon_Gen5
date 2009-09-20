@@ -48,7 +48,7 @@ struct _DEBUGITEM_PARAM {
 	StateFunc* state;      ///< ハンドルのプログラム状態
 	GMEVENT * event;
 	GAMESYS_WORK * gsys;
-	FIELD_MAIN_WORK * fieldmap;
+	FIELDMAP_WORK * fieldmap;
 	SAVE_CONTROL_WORK *ctrl;
 	GFL_BMPWIN* win;
 	GFL_SKB*      skb;
@@ -616,7 +616,7 @@ static GMEVENT_RESULT EVENT_DebugItemMain(GMEVENT * event, int *  seq, void * wo
 //------------------------------------------------------------------------------
 
 
-void EVENT_DebugItemMake(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * event, HEAPID heapID)
+void EVENT_DebugItemMake(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event, HEAPID heapID)
 {
 	GMEVENT * child_event;
 	EVENT_DEBUGITEM_WORK * wk;

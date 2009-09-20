@@ -10,6 +10,6 @@
 #pragma once
 
 
-extern void EVENT_DebugItemMake(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,GMEVENT * event, HEAPID heapID);
+extern void EVENT_DebugItemMake(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event, HEAPID heapID);
 
 

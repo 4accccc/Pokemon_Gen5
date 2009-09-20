@@ -107,7 +107,7 @@ struct _TAG_DEBUG_MENU_EVENT_WORK
 	HEAPID heapID;
 	GMEVENT *gmEvent;
 	GAMESYS_WORK *gmSys;
-	FIELD_MAIN_WORK * fieldWork;
+	FIELDMAP_WORK * fieldWork;
 	
 	DEBUG_MENU_CALLPROC call_proc;
 	GFL_MSGDATA *msgData;
@@ -302,14 +302,14 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuListHeader =
 /**
  * フィールドデバッグメニューイベント起動
  * @param	gsys	GAMESYS_WORK
- * @param	fieldWork	FIELD_MAIN_WORK
+ * @param	fieldWork	FIELDMAP_WORK
  * @param	heapID	HEAPID
  * @param	page_id	デバッグメニューページ
  * @retval	GMEVENT*
  */
 //--------------------------------------------------------------
 GMEVENT * DEBUG_EVENT_DebugMenu(
-	GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork,
+	GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 	HEAPID heapID, u16 page_id )
 {
 	DEBUG_MENU_EVENT_WORK * dmew;
@@ -437,7 +437,7 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 static BOOL debugMenuCallProc_GridCamera( DEBUG_MENU_EVENT_WORK *wk )
 {
 	DEBUG_MENU_EVENT_WORK *d_menu = wk;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	HEAPID DebugHeapID = d_menu->heapID;
 	
 	DEBUG_FldGridProc_Camera( fieldWork );
@@ -456,7 +456,7 @@ static BOOL debugMenuCallProc_GridScaleSwitch( DEBUG_MENU_EVENT_WORK *wk )
 {
 #if 0
 	DEBUG_MENU_EVENT_WORK *d_menu = wk;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	HEAPID DebugHeapID = d_menu->heapID;
 	
 	DEBUG_FldGridProc_ScaleChange( fieldWork );
@@ -475,7 +475,7 @@ static BOOL debugMenuCallProc_GridScaleControl( DEBUG_MENU_EVENT_WORK *wk )
 {
 #if 0
 	DEBUG_MENU_EVENT_WORK *d_menu = wk;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	HEAPID DebugHeapID = d_menu->heapID;
 	
 	DEBUG_FldGridProc_ScaleControl( fieldWork );
@@ -494,7 +494,7 @@ static BOOL debugMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GMEVENT *event = wk->gmEvent;
 	const HEAPID heapID = wk->heapID;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	GAMESYS_WORK	*gameSys	= wk->gmSys;
 	FIELD_COMM_DEBUG_WORK *work;
 	
@@ -520,7 +520,7 @@ static BOOL debugMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
 static BOOL debugMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GMEVENT *event = wk->gmEvent;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	GAMESYS_WORK	*gameSys	= wk->gmSys;
 
     EVENT_WiFiClub(gameSys, fieldWork, event);
@@ -539,7 +539,7 @@ typedef struct
 	HEAPID heapID;
 	GAMESYS_WORK *gmSys;
 	GMEVENT *gmEvent;
-	FIELD_MAIN_WORK *fieldWork;
+	FIELDMAP_WORK *fieldWork;
 	GFL_MSGDATA *msgData;
 	FLDMENUFUNC *menuFunc;
 }DEBUG_ZONESEL_EVENT_WORK;
@@ -585,7 +585,7 @@ static BOOL debugMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
 	HEAPID heapID = wk->heapID;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	DEBUG_ZONESEL_EVENT_WORK *work;
 	
 	GMEVENT_Change( event,
@@ -685,7 +685,7 @@ static debugMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk )
 	GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
 	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
 	ZONEID zone_id = PLAYERWORK_getZoneID( player );
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	DEBUG_ZONESEL_EVENT_WORK *work;
 	
 		GMEVENT_Change( event,
@@ -799,7 +799,7 @@ typedef struct {
 	HEAPID heapID;
 	GAMESYS_WORK *gmSys;
 	GMEVENT *gmEvent;
-	FIELD_MAIN_WORK *fieldWork;
+	FIELDMAP_WORK *fieldWork;
 	FLDMENUFUNC *menuFunc;
   FIELD_SUBSCREEN_WORK * subscreen;
 }DEBUG_MENU_EVENT_SUBSCRN_SELECT_WORK, DMESSWORK;
@@ -829,7 +829,7 @@ static debugMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk )
 	HEAPID heapID = wk->heapID;
 	GMEVENT *event = wk->gmEvent;
 	GAMESYS_WORK *gsys = wk->gmSys;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	DMESSWORK *work;
 	
 		GMEVENT_Change( event,
@@ -990,7 +990,7 @@ typedef struct {
 	GAMESYS_WORK *gmSys;
 	GMEVENT *gmEvent;
 	GMEVENT *newEvent;
-	FIELD_MAIN_WORK *fieldWork;
+	FIELDMAP_WORK *fieldWork;
 	FLDMENUFUNC *menuFunc;
 	
 	POKEMON_PARAM *pokePara;
@@ -1017,7 +1017,7 @@ static debugMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk )
 	HEAPID heapID = wk->heapID;
 	GMEVENT *event = wk->gmEvent;
 	GAMESYS_WORK *gsys = wk->gmSys;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	DEB_MENU_MUS_WORK *work;
 	
 		GMEVENT_Change( event,
@@ -1343,7 +1343,7 @@ typedef struct
 	GAMESYS_WORK *gsys;
 	GMEVENT *event;
 	HEAPID heapID;
-	FIELD_MAIN_WORK *fieldWork;
+	FIELDMAP_WORK *fieldWork;
 	FLDMSGBG *pMsgBG;
 	FLDMSGWIN *pMsgWin;
 	STRBUF *pStrBuf;
@@ -1368,7 +1368,7 @@ static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
 	HEAPID heapID = wk->heapID;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	
 	GMEVENT_Change( event, debugMenuControlCamera, sizeof(DEBUG_CTLCAMERA_WORK) );
 	work = GMEVENT_GetEventWork( event );
@@ -1410,7 +1410,7 @@ static BOOL debugMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk )
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
 	HEAPID heapID = wk->heapID;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	
 	GMEVENT_Change( event, debugMenuControlCamera, sizeof(DEBUG_CTLCAMERA_WORK) );
 	work = GMEVENT_GetEventWork( event );
@@ -1473,7 +1473,7 @@ typedef struct
 	HEAPID heapID;
 	GAMESYS_WORK *gmSys;
 	GMEVENT *gmEvent;
-	FIELD_MAIN_WORK *fieldWork;
+	FIELDMAP_WORK *fieldWork;
 	GFL_MSGDATA *msgData;
 	FLDMENUFUNC *menuFunc;
 }DEBUG_TESTCAMERALIST_EVENT_WORK;
@@ -1531,7 +1531,7 @@ static BOOL debugMenuCallProc_CameraList( DEBUG_MENU_EVENT_WORK *wk )
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
 	HEAPID heapID = wk->heapID;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	DEBUG_TESTCAMERALIST_EVENT_WORK *work;
 	
 	GMEVENT_Change( event,
@@ -1641,7 +1641,7 @@ typedef struct
 	HEAPID heapID;
 	GAMESYS_WORK *gmSys;
 	GMEVENT *gmEvent;
-	FIELD_MAIN_WORK *fieldWork;
+	FIELDMAP_WORK *fieldWork;
 	GFL_MSGDATA *msgData;
 	FLDMENUFUNC *menuFunc;
 	MMDLSYS *fldmmdlsys;
@@ -1695,7 +1695,7 @@ static BOOL debugMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk )
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
 	HEAPID heapID = wk->heapID;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	DEBUG_MMDLLIST_EVENT_WORK *work;
 	
 	GMEVENT_Change( event,
@@ -1910,7 +1910,7 @@ typedef struct
 	GAMESYS_WORK *gsys;
 	GMEVENT *event;
 	HEAPID heapID;
-	FIELD_MAIN_WORK *fieldWork;
+	FIELDMAP_WORK *fieldWork;
 
 	GFL_BMPWIN* p_win;
 }DEBUG_CTLLIGHT_WORK;
@@ -1934,7 +1934,7 @@ static BOOL debugMenuCallProc_ControlLight( DEBUG_MENU_EVENT_WORK *wk )
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
 	HEAPID heapID = wk->heapID;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	
 	GMEVENT_Change( event, debugMenuControlLight, sizeof(DEBUG_CTLLIGHT_WORK) );
 	work = GMEVENT_GetEventWork( event );
@@ -2048,7 +2048,7 @@ typedef struct
 	GAMESYS_WORK *gsys;
 	GMEVENT *event;
 	HEAPID heapID;
-	FIELD_MAIN_WORK *fieldWork;
+	FIELDMAP_WORK *fieldWork;
 
 	GFL_BMPWIN* p_win;
 
@@ -2066,7 +2066,7 @@ static BOOL debugMenuCallProc_ControlFog( DEBUG_MENU_EVENT_WORK *wk )
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
 	HEAPID heapID = wk->heapID;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	
 	GMEVENT_Change( event, debugMenuControlFog, sizeof(DEBUG_CTLFOG_WORK) );
 	work = GMEVENT_GetEventWork( event );
@@ -2180,7 +2180,7 @@ typedef struct
 	HEAPID heapID;
 	GAMESYS_WORK *gmSys;
 	GMEVENT *gmEvent;
-	FIELD_MAIN_WORK *fieldWork;
+	FIELDMAP_WORK *fieldWork;
 	GFL_MSGDATA *msgData;
 	FLDMENUFUNC *menuFunc;
 }DEBUG_WEATERLIST_EVENT_WORK;
@@ -2241,7 +2241,7 @@ static BOOL debugMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk )
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
 	HEAPID heapID = wk->heapID;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	DEBUG_WEATERLIST_EVENT_WORK *work;
 	
 	GMEVENT_Change( event,
@@ -2344,7 +2344,7 @@ typedef struct
 	HEAPID heapID;
 	GAMESYS_WORK *gmSys;
 	GMEVENT *gmEvent;
-	FIELD_MAIN_WORK *fieldWork;
+	FIELDMAP_WORK *fieldWork;
 	GFL_MSGDATA *msgData;
 	FLDMENUFUNC *menuFunc;
 }DEBUG_CONTROL_TIME_LIST_EVENT_WORK;
@@ -2422,7 +2422,7 @@ static BOOL debugMenuCallProc_ControlRtcList( DEBUG_MENU_EVENT_WORK *wk )
 	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
 	HEAPID heapID = wk->heapID;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	DEBUG_CONTROL_TIME_LIST_EVENT_WORK *work;
 	
 	GMEVENT_Change( event,
@@ -2559,7 +2559,7 @@ typedef struct
   HEAPID heapID;
 	GAMESYS_WORK		*p_gamesys;
 	GMEVENT					*p_event;
-	FIELD_MAIN_WORK *p_field;
+	FIELDMAP_WORK *p_field;
 	PROCPARAM_DEBUG_MAKEPOKE p_mp_work;
 	POKEMON_PARAM *pp;
 } DEBUG_MAKEPOKE_EVENT_WORK;
@@ -2577,7 +2577,7 @@ static BOOL debugMenuCallProc_DebugMakePoke( DEBUG_MENU_EVENT_WORK *p_wk )
 {	
 	GAMESYS_WORK	*p_gamesys	= p_wk->gmSys;
 	GMEVENT				*p_event		= p_wk->gmEvent;
-	FIELD_MAIN_WORK *p_field	= p_wk->fieldWork;
+	FIELDMAP_WORK *p_field	= p_wk->fieldWork;
 	HEAPID heapID = HEAPID_PROC;
 	DEBUG_MAKEPOKE_EVENT_WORK	*p_mp_work;
 
@@ -2661,7 +2661,7 @@ static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_w
 static BOOL debugMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk )
 {
 	GMEVENT *event = wk->gmEvent;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	GAMESYS_WORK	*gameSys	= wk->gmSys;
 
 	EVENT_DebugItemMake(gameSys, fieldWork, event, wk->heapID);
@@ -2750,7 +2750,7 @@ typedef struct
 {
 	GAMESYS_WORK		*p_gamesys;
 	GMEVENT					*p_event;
-	FIELD_MAIN_WORK *p_field;
+	FIELDMAP_WORK *p_field;
 	TOWNMAP_PARAM		*p_param;
 } DEBUG_SKYJUMP_EVENT_WORK;
 //-------------------------------------
@@ -2770,7 +2770,7 @@ static BOOL debugMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk )
 {	
 	GAMESYS_WORK	*p_gamesys	= p_wk->gmSys;
 	GMEVENT				*p_event		= p_wk->gmEvent;
-	FIELD_MAIN_WORK *p_field	= p_wk->fieldWork;
+	FIELDMAP_WORK *p_field	= p_wk->fieldWork;
 	DEBUG_SKYJUMP_EVENT_WORK	*p_sky;
 
 	//イヴェント
@@ -2899,7 +2899,7 @@ typedef struct
 {
 	GAMESYS_WORK				*p_gamesys;
 	GMEVENT							*p_event;
-	FIELD_MAIN_WORK			*p_field;
+	FIELDMAP_WORK			*p_field;
 	EVENT_WIFICLUB_WORK	wifi;
 	WORLDTRADE_PARAM		gts;
 } DEBUG_WIFIGTS_EVENT_WORK;
@@ -2919,7 +2919,7 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
 {	
 	GAMESYS_WORK	*p_gamesys	= p_wk->gmSys;
 	GMEVENT				*p_event		= p_wk->gmEvent;
-	FIELD_MAIN_WORK *p_field	= p_wk->fieldWork;
+	FIELDMAP_WORK *p_field	= p_wk->fieldWork;
 	GAMEDATA *p_gamedata			= GAMESYSTEM_GetGameData(p_gamesys);
 	DEBUG_WIFIGTS_EVENT_WORK	*p_gts;
 

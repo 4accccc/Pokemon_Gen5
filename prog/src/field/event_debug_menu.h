@@ -24,5 +24,5 @@
 //	extern
 //======================================================================
 extern GMEVENT * DEBUG_EVENT_DebugMenu( GAMESYS_WORK * gsys,
-		FIELD_MAIN_WORK * fieldWork, HEAPID heapID, u16 page_id );
+		FIELDMAP_WORK * fieldWork, HEAPID heapID, u16 page_id );
 
