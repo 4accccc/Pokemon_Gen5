@@ -34,6 +34,8 @@
 
 #include "fieldmap/zone_id.h"   //※check　ユニオンのSubScreen設定暫定対処の為
 
+#include "warpdata.h"
+
 #include "field_sound.h"
 
 #include "event_entrance_in.h"
@@ -48,8 +50,14 @@
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
-static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );
+static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req );
+static void MAPCHG_releaseMapTools( GAMESYS_WORK * gsys );
+
+static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req );
+
+static void MAPCHG_loadMMdl( GAMEDATA * gamedata, const LOCATION *loc_req );
+static void MAPCHG_releaseMMdl( GAMEDATA * gamedata );
+
 static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id);
 static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID);
 
@@ -81,6 +89,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 {
 	FIRST_MAPIN_WORK * fmw = work;
 	GAMESYS_WORK * gsys = fmw->gsys;
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
 	GAME_INIT_WORK * game_init_work = fmw->game_init_work;
 	FIELDMAP_WORK * fieldmap;
 	switch (*seq) {
@@ -92,8 +101,15 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 			break;
 		}
 
-		UpdateMapParams(gsys, &fmw->loc_req);
-		SetMMdl( gsys, &fmw->loc_req, game_init_work->mode );
+    //新しいマップモードなど機能指定を行う
+    MAPCHG_setupMapTools( gsys, &fmw->loc_req );
+		//新しいマップID、初期位置をセット
+		MAPCHG_updateGameData( gsys, &fmw->loc_req );
+		//新規ゾーンに配置する動作モデルを追加（新規ゲーム時のみ）
+	  if(	game_init_work->mode == GAMEINIT_MODE_FIRST
+        || game_init_work->mode == GAMEINIT_MODE_DEBUG ){
+		  MAPCHG_loadMMdl( gamedata, &fmw->loc_req );
+    }
 		
 		setFirstBGM(fmw->gamedata, fmw->loc_req.zone_id);
 		
@@ -115,7 +131,15 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 	}
 	return GMEVENT_RES_CONTINUE;
 }
+
 //------------------------------------------------------------------
+/**
+ * @brief ゲーム開始処理
+ *
+ * @todo
+ * コンティニュー処理を内部で切り分けているので
+ * きちんと関数分割する必要がある
+ */
 //------------------------------------------------------------------
 GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work)
 {
@@ -238,33 +262,23 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
 	case 0:
 		//フィールドマップを終了待ち
 		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
-		//配置していた動作モデルを削除
-		MMDLSYS_DeleteMMdl( GAMEDATA_GetMMdlSys(gamedata) );
 		(*seq)++;
 		break;
 	case 1:
-	  //※check　スクリプトでマップ作成前に実行できるタイミングが出来れば、そこ行うようにしたい
-	  if(mcw->loc_req.zone_id == ZONE_ID_PALACETEST){
-      GAMEDATA_SetMapMode(gamedata, MAPMODE_INTRUDE);
-    }
+		//配置していた動作モデルを削除
+    MAPCHG_releaseMMdl( gamedata );
+
+    //マップモードなど機能指定を解除する
+    MAPCHG_releaseMapTools( gsys );
+
+    //新しいマップモードなど機能指定を行う
+    MAPCHG_setupMapTools( gsys, &mcw->loc_req );
     
 		//新しいマップID、初期位置をセット
-		UpdateMapParams(gsys, &mcw->loc_req);
+		MAPCHG_updateGameData( gsys, &mcw->loc_req );
 		//新規ゾーンに配置する動作モデルを追加
-		SetMMdl( gsys, &mcw->loc_req, GAMEINIT_MODE_FIRST );
+		MAPCHG_loadMMdl( gamedata, &mcw->loc_req );
 
-	  //※check　ユニオンルームへの移動を受付スクリプトで制御するようになったらサブスクリーンモードの
-	  //         変更もそのスクリプト内で行うようにする
-	  switch(mcw->loc_req.zone_id){
-  	case ZONE_ID_UNION:
-  	case ZONE_ID_CLOSSEUM:
-  	case ZONE_ID_CLOSSEUM02:
-  	  GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_UNION);
-  	  break;
-  	default:
-  	  GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_NORMAL);
-  	  break;
-  	} 
 		(*seq)++;
 		break;
   case 2:
@@ -545,6 +559,44 @@ GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELDMAP_WORK * field
 //
 //
 //============================================================================================
+//--------------------------------------------------------------
+/**
+ * @brief 全滅時のマップ遷移処理（フィールド非生成時）
+ */
+//--------------------------------------------------------------
+void MAPCHG_GameOver( GAMESYS_WORK * gsys )
+{
+  LOCATION loc_req;
+	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+  {
+			//SITUATION * sit = SaveData_GetSituation(fsys->savedata);
+			//u16 warp_id = Situation_GetWarpID(sit);
+			u16 warp_id = 1;
+			WARPDATA_GetRevivalLocation(warp_id, &loc_req);
+			//エスケープポイントを再設定
+			//WARPDATA_GetEscapeLocation(warp_id,Situation_GetEscapeLocation(sit));
+			//マップチェンジ
+			//EventCmd_MapChangeByLocation(event, &loc_req);
+  }
+
+  //配置していた動作モデルを削除
+  MAPCHG_releaseMMdl( gamedata );
+
+  //マップモードなど機能指定を解除する
+  MAPCHG_releaseMapTools( gsys );
+
+  //新しいマップモードなど機能指定を行う
+  MAPCHG_setupMapTools( gsys, &loc_req );
+  
+  //新しいマップID、初期位置をセット
+  MAPCHG_updateGameData( gsys, &loc_req );
+  //新規ゾーンに配置する動作モデルを追加
+  MAPCHG_loadMMdl( gamedata, &loc_req );
+
+  //ゲームオーバー時のフラグのクリア
+  //FldFlgInit_GameOver(fsys);
+}
+
 #if 0
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -636,8 +688,13 @@ static void MakeNewRailLocation(GAMEDATA * gamedata, EVENTDATA_SYSTEM * evdata, 
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief Map切り替え時のデータ更新処理
+ *
+ * @todo  歩いてマップをまたいだときの処理との共通部分をきちんと処理すること
+ */
 //------------------------------------------------------------------
-static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
+static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req )
 {
 	LOCATION loc;
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
@@ -647,7 +704,7 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
   { 
     char buf[ZONEDATA_NAME_LENGTH*2];
     ZONEDATA_DEBUG_GetZoneName(buf, loc_req->zone_id);
-    TAMADA_Printf("UpdateMapParams:%s\n", buf);
+    TAMADA_Printf("MAPCHG_updateGameData:%s\n", buf);
   }
 	//イベント起動データの読み込み
 	EVENTDATA_SYS_Load(evdata, loc_req->zone_id);
@@ -680,6 +737,14 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 	//開始位置を記憶しておく
 	GAMEDATA_SetStartLocation(gamedata, &loc);
 
+  //ワープ先登録
+  {
+    u16 warp_id;
+    warp_id = WARPDATA_SearchByRoomID( loc.zone_id );
+    if (warp_id) {
+      //Situation_SetWarpID(sit, warp_id);
+    }
+  }
   //ギミックアサイン
   AssignGimmickID(gamedata, loc.zone_id);
 
@@ -688,24 +753,73 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
 }
 
 //--------------------------------------------------------------
-//	test
 //--------------------------------------------------------------
-static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode )
+static void MAPCHG_loadMMdl( GAMEDATA * gamedata, const LOCATION *loc_req )
 {
-	if(	mode == GAMEINIT_MODE_FIRST || mode == GAMEINIT_MODE_DEBUG ){
-		GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
-		EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
-		u16 count = EVENTDATA_GetNpcCount( evdata );
-		
-		if( count ){
-      EVENTWORK *evwork =  GAMEDATA_GetEventWork( gamedata );
-			MMDLSYS *fmmdlsys = GAMEDATA_GetMMdlSys( gamedata );
-			const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
-			MMDLSYS_SetMMdl( fmmdlsys, header, loc_req->zone_id, count, evwork );
-		}
-	}
+  EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
+  u16 count = EVENTDATA_GetNpcCount( evdata );
+  
+  if( count ){
+    EVENTWORK *evwork =  GAMEDATA_GetEventWork( gamedata );
+    MMDLSYS *fmmdlsys = GAMEDATA_GetMMdlSys( gamedata );
+    const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
+    MMDLSYS_SetMMdl( fmmdlsys, header, loc_req->zone_id, count, evwork );
+  }
 }
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void MAPCHG_releaseMMdl( GAMEDATA * gamedata )
+{
+		MMDLSYS_DeleteMMdl( GAMEDATA_GetMMdlSys(gamedata) );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief
+ * @param gamedata
+ *
+ * @todo  MapMatrix読み込みをこの中に移動する
+ * @todo  マップをまたいでor画面暗転中もずっと維持されるメモリ状態などはここで設定
+ * @todo  下記の※checkの対処を行う
+ */
+//--------------------------------------------------------------
+static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req )
+{
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+  //MAPCHGモジュール群はFieldMapが存在しないときに呼ばれる
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  GF_ASSERT( fieldmap == NULL );
+
+  //※check　スクリプトでマップ作成前に実行できるタイミングが出来れば、そこ行うようにしたい
+  if(loc_req->zone_id == ZONE_ID_PALACETEST){
+    GAMEDATA_SetMapMode(gamedata, MAPMODE_INTRUDE);
+  }
+  //※check　ユニオンルームへの移動を受付スクリプトで制御するようになったらサブスクリーンモードの
+  //         変更もそのスクリプト内で行うようにする
+  switch(loc_req->zone_id){
+  case ZONE_ID_UNION:
+  case ZONE_ID_CLOSSEUM:
+  case ZONE_ID_CLOSSEUM02:
+    GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_UNION);
+    break;
+  default:
+    GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NORMAL);
+    break;
+  } 
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void MAPCHG_releaseMapTools( GAMESYS_WORK * gsys )
+{
+  //MAPCHGモジュール群はFieldMapが存在しないときに呼ばれる
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  GF_ASSERT( fieldmap == NULL );
+
+}
+
+//--------------------------------------------------------------
 //--------------------------------------------------------------
 static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id)
 {

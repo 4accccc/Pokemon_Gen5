@@ -609,7 +609,21 @@ void MMDLSYS_DeleteMMdl( const MMDLSYS *fos )
 	MMDL *mmdl;
 	
 	while( MMDLSYS_SearchUseMMdl(fos,&mmdl,&no) ){
+#if 0 //マップ遷移からの呼び出しでハングアップするためとりあえず対処
 		MMDL_Delete( mmdl );
+#else
+    if( MMDLSYS_CheckCompleteDrawInit(fos) == TRUE ){
+      MMDL_CallDrawDeleteProc( mmdl );
+    }
+    
+    if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVEPROC_INIT) ){
+      //MMDL_CallMoveDeleteProc( mmdl );
+      //MMdl_DeleteTCB( mmdl );
+    }
+    
+    MMdlSys_DecrementOBJCount( (MMDLSYS*)(mmdl->pMMdlSys) );
+    MMdl_ClearWork( mmdl );
+#endif
 	}
 }
 
