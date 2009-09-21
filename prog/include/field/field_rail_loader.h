@@ -51,6 +51,7 @@ extern void FIELD_RAIL_LOADER_Clear( FIELD_RAIL_LOADER* p_sys );
 // レールセットアップ情報取得
 extern const RAIL_SETTING* FIELD_RAIL_LOADER_GetData( const FIELD_RAIL_LOADER* cp_sys );
 
+extern u32 FIELD_RAIL_LOADER_GetNearestPoint( const FIELD_RAIL_LOADER* cp_sys, const VecFx32 * pos);
 
 // デバック機能
 #ifdef PM_DEBUG

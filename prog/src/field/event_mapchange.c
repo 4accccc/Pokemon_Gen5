@@ -1,7 +1,7 @@
 //============================================================================================
 /**
  * @file	event_mapchange.c
- * @brief
+ * @brief マップ遷移関連イベント
  * @date	2008.11.04
  * @author	tamada GAME FREAK inc.
  */
@@ -44,10 +44,15 @@
 
 #include "savedata/gimmickwork.h"   //for GIMMICKWORK
 
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
 static void SetMMdl( GAMESYS_WORK *gsys, const LOCATION *loc_req, GAMEINIT_MODE mode );
 static void setFirstBGM(GAMEDATA * gamedata, u16 zone_id);
 static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID);
+
 
 //============================================================================================
 //
@@ -181,6 +186,10 @@ static GMEVENT_RESULT GameEndEvent(GMEVENT * event, int *seq, void *work)
 //------------------------------------------------------------------
 /**
  * @brief	デバッグ用：ゲーム終了
+ *
+ * @note
+ * 実際にはゲームを終了させるというインターフェイスは
+ * ポケモンに存在しないので、この関数はあくまでデバッグ用。
  */
 //------------------------------------------------------------------
 GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
@@ -530,7 +539,13 @@ GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELDMAP_WORK * field
 }
 
 //============================================================================================
+//
+//
+//  マップ遷移初期化処理
+//
+//
 //============================================================================================
+#if 0
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void AddOffsetByDirection(EXIT_DIR dir_id, VecFx32 * pos)
@@ -544,6 +559,7 @@ static void AddOffsetByDirection(EXIT_DIR dir_id, VecFx32 * pos)
 		break;
 	}
 }
+#endif
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static u16 GetDirValueByDirID(EXIT_DIR dir_id)
@@ -586,7 +602,6 @@ static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * lo
 		LOCATION_DEBUG_SetDefaultPos(loc_tmp, loc_req->zone_id);
 	}
 }
-extern u32 FIELD_RAIL_LOADER_GetNearestPoint( const FIELD_RAIL_LOADER* cp_sys, const VecFx32 * pos);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void MakeNewRailLocation(GAMEDATA * gamedata, EVENTDATA_SYSTEM * evdata, const LOCATION * loc_req)
