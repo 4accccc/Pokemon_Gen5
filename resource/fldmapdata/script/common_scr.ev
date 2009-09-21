@@ -19,6 +19,8 @@ _EVENT_DATA   ev_item_event_fail
 _EVENT_DATA   ev_easy_item_event
 _EVENT_DATA   ev_item_event_keywait
 _EVENT_DATA   ev_item_event_nowait
+_EVENT_DATA   ev_gameover_recover_home
+_EVENT_DATA   ev_gameover_recover_pokecen
 _EVENT_DATA_END //èIóπ
 
 //--------------------------------------------------------------------
@@ -269,4 +271,20 @@ pocket_me_set:
   ENDSWITCH
 
   _RET
+
+//********************************************************************
+//********************************************************************
+EVENT_START   ev_gameover_recover_home
+  _BLACK_IN(8)
+  _DISP_FADE_END_CHECK()
+  _EASY_MSG( msg_common_pc_heal_01 )
+EVENT_END
+
+//********************************************************************
+//********************************************************************
+EVENT_START   ev_gameover_recover_pokecen
+  _WHITE_IN(8)
+  _DISP_FADE_END_CHECK()
+  _EASY_MSG( msg_common_pc_heal_01 )
+EVENT_END
 
