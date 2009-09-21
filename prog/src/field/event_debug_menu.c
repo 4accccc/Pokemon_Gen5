@@ -652,8 +652,11 @@ static GMEVENT_RESULT debugMenuZoneSelectEvent(
 				return( GMEVENT_RES_FINISH );
 			}
 			
-			DEBUG_EVENT_ChangeEventMapChange(	//Œˆ’è
-				work->gmSys, work->gmEvent, work->fieldWork, ret );
+      {
+        GMEVENT * mapchange_event;
+        mapchange_event = DEBUG_EVENT_ChangeMapDefaultPos( work->gmSys, work->fieldWork, ret );
+        GMEVENT_ChangeEvent( work->gmEvent, mapchange_event );
+      }
 		}
 		break;
 	}
@@ -2883,7 +2886,11 @@ static BOOL debugMenuCallProc_ChangePlayerSex( DEBUG_MENU_EVENT_WORK *wk )
   MyStatus_SetMySex( mystatus, sex );
   MyStatus_SetMySex( s_mystatus, sex );
   
-  DEBUG_EVENT_ChangeEventMapChange( gsys, event, fieldMap, zone_id );
+  {
+    GMEVENT * mapchange_event;
+    mapchange_event = DEBUG_EVENT_ChangeMapDefaultPos( gsys, fieldMap, zone_id );
+    GMEVENT_ChangeEvent( event, mapchange_event );
+  }
   return( TRUE );
 }
 

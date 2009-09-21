@@ -96,12 +96,6 @@ extern GMEVENT * EVENT_ChangeMapBySandStream(
 extern GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap);
 
 //------------------------------------------------------------------
-/**
- */
-//------------------------------------------------------------------
-extern void DEBUG_EVENT_ChangeEventMapChange( GAMESYS_WORK *gsys, GMEVENT *event,FIELDMAP_WORK *fieldmap, ZONEID zone_id );
-
-//------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void MAPCHANGE_setPlayerVanish(FIELDMAP_WORK * fieldmap, BOOL vanish_flag);
 

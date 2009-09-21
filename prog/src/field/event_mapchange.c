@@ -441,6 +441,10 @@ GMEVENT * DEBUG_EVENT_ChangeMapDefaultPos(GAMESYS_WORK * gsys,
 	mcw = GMEVENT_GetEventWork(event);
   MAPCHANGE_WORK_init( mcw, gsys );
 
+	if (zone_id >= ZONEDATA_GetZoneIDMax()) {
+		GF_ASSERT( 0 );
+		zone_id = 0;
+	}
 	LOCATION_DEBUG_SetDefaultPos(&mcw->loc_req, zone_id);
   mcw->exit_type = EXIT_TYPE_NONE;
 	return event;
@@ -524,20 +528,6 @@ GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELDMAP_WORK * field
 	}
 	return DEBUG_EVENT_ChangeMapDefaultPos(gsys, fieldmap, next);
 }
-
-//------------------------------------------------------------------
-//	※マップID指定型 イベント切り替え
-//------------------------------------------------------------------
-void DEBUG_EVENT_ChangeEventMapChange(
-	GAMESYS_WORK *gsys, GMEVENT *event,
-	FIELDMAP_WORK *fieldmap, ZONEID zone_id )
-{
-	if (zone_id >= ZONEDATA_GetZoneIDMax()) {
-		GF_ASSERT( 0 );
-		zone_id = 0;
-	}
-	GMEVENT_ChangeEvent(event, DEBUG_EVENT_ChangeMapDefaultPos(gsys, fieldmap, zone_id));
-}	
 
 //============================================================================================
 //============================================================================================
