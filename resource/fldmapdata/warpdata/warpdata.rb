@@ -86,7 +86,7 @@ class WarpDataFile < OutputFile
 	end
 
 	def putLine	room_id, room_x, room_z, escape, fld_id, fld_x, fld_z, exit_id,exit_x,exit_z,arrive, arrive_id
-		a_id = "FLAG_ARRIVE_" + arrive_id.upcase
+		a_id = "SYS_FLAG_ARRIVE_" + arrive_id.upcase
 		puts "\t{"
 		printf "\t\t%s,\n", a_id
 		printf "\t\t%-5s,", if escape == true then "TRUE" else "FALSE" end
