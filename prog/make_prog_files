@@ -146,6 +146,8 @@ SRCS  +=    $(SOUNDSRC) \
         field/scrcmd.c \
         field/eventwork.c \
         field/scrcmd_work.c \
+        field/scrcmd_enviroments.c \
+        field/scrcmd_pokemon.c \
         test/matsuda/wflby_debug.c \
         test/ariizumi/debug_pause.c \
         system/wazatype_icon.c \
@@ -355,7 +357,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_menuwin.c \
         field/scrcmd_fldmmdl.c \
         field/scrcmd_gym.c \
-        field/scrcmd_pokemon.c \
+        field/scrcmd_screeneffects.c \
 				field/rail_editor.c \
         field/field_rail.c \
         field/field_rail_func.c \
