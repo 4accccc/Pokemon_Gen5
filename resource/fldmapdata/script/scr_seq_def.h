@@ -2153,7 +2153,8 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
- *  _CHG_LANGID 言語ID切り替え ひらがな<->漢字
+ *  @def  _CHG_LANGID
+ *  @brief  言語ID切り替え ひらがな<->漢字
  *  @param none
  */
 //--------------------------------------------------------------
@@ -2163,6 +2164,22 @@
   .short  EV_SEQ_CHG_LANGID
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _GET_LANG_ID
+ * @brief 言語モードIDの取得
+ * @param ret_wk
+ * @retval  0   ひらがなモード
+ * @retval  1   漢字モード
+ */
+//--------------------------------------------------------------
+#define _GET_LANG_ID(ret_wk) \
+    _ASM_GET_LANG_ID ret_wk
+
+  .macro  _ASM_GET_LANG_ID
+  .short  EV_SEQ_GET_LANG_ID
+  .short  \ret_wk
+  .endm
 
 //--------------------------------------------------------------
 /**
@@ -2241,11 +2258,11 @@
 
 //--------------------------------------------------------------
 /**
- * 手持ちにポケルスがいるかどうかのチェック
- *
+ * @def _CHECK_TEMOTI_POKERUS
+ * @brief 手持ちにポケルスがいるかどうかのチェック
  * @param ret_wk    チェック結果を受け取るワーク
- *
- * 結果がTRUEのとき、ポケルス感染したポケモンが手持ちにいる
+ * @retval  TRUEのとき、ポケルス感染したポケモンが手持ちにいる
+ * @retval  FALSEのとき、感染したポケモンはいない
  */
 //--------------------------------------------------------------
 #define _CHECK_TEMOTI_POKERUS( ret_wk ) \
@@ -2254,6 +2271,26 @@
   .macro  _ASM_CHECK_TEMOTI_POKERUS ret_wk
   .short  EV_SEQ_CHECK_TEMOTI_POKERUS
   .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _CHECK_TEMOTI_HP
+ * @brief 手持ちポケモンのHPチェック
+ * @param ret_wk  チェック結果を受け取るワーク
+ * @param pos     チェックするポケモンの位置（０～５）
+ * @retval  TRUE    チェックしたポケモンのHPが満タン
+ * @retval  FALSE   チェックしたポケモンのHPは減っている
+ */
+//--------------------------------------------------------------
+#define _CHECK_TEMOTI_HP( ret_wk, pos ) \
+    _ASM_CHECK_TEMOTI_HP ret_wk, pos
+
+
+  .macro  _ASM_CHECK_TEMOTI_HP ret_wk, pos
+  .short  EV_SEQ_CHECK_TEMOTI_HP
+  .short  \ret_wk
+  .short  \pos
   .endm
 
 //======================================================================
