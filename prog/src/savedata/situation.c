@@ -20,9 +20,11 @@
  */
 //----------------------------------------------------------
 struct _SITUATION {
-	LOCATION start_loc;
-	LOCATION entrance_loc;
-	LOCATION special_loc;
+	LOCATION start_loc;     ///<
+	LOCATION entrance_loc;  ///<直前の出入口LOCATION
+	LOCATION special_loc;   ///<特殊接続先LOCATION
+  LOCATION escape_loc;    ///<脱出先LOCATION
+  u16 warp_id;            ///<ワープ飛び先指定ID
 
 	//PLAYER_WORKからセーブに必要なものだけを抜粋
 	PLAYERWORK_SAVE plsv;
@@ -97,6 +99,29 @@ LOCATION * Situation_GetSpecialLocation(SITUATION * st)
 	return &st->special_loc;
 }
 
+//----------------------------------------------------------
+/**
+ * @brief	脱出用接続情報の取得
+ * @param	st	状況ワークへのポインタ
+ * @return	LOCATION	脱出用接続情報へのポインタ
+ */
+//----------------------------------------------------------
+LOCATION * Situation_GetEscapeLocation(SITUATION * st)
+{
+	return &st->special_loc;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief ワープ接続先IDの取得
+ * @param	st	状況ワークへのポインタ
+ * @return  u16 * ワープID格納エリアへのポインタ
+ */
+//----------------------------------------------------------
+u16 * Situation_GetWarpID(SITUATION * st)
+{
+  return &st->warp_id;
+}
 
 //============================================================================================
 //

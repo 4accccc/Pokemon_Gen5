@@ -158,10 +158,24 @@ extern void GAMEDATA_SetSpecialLocation(GAMEDATA * gamedata, const LOCATION * lo
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
+extern const LOCATION * GAMEDATA_GetEscapeLocation(const GAMEDATA * gamedata);
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern void GAMEDATA_SetEscapeLocation(GAMEDATA * gamedata, const LOCATION * loc);
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 extern const RAIL_LOCATION * GAMEDATA_GetRailLocation(const GAMEDATA * gamedata);
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 extern void GAMEDATA_SetRailLocation(GAMEDATA * gamedata, const RAIL_LOCATION * railLoc);
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern void GAMEDATA_SetWarpID(GAMEDATA * gamedata, u16 warp_id);
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern u16 GAMEDATA_GetWarpID(GAMEDATA * gamedata);
 
 //--------------------------------------------------------------
 /**

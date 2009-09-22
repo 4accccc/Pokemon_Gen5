@@ -48,7 +48,8 @@ struct _GAMEDATA{
   EVENTDATA_SYSTEM * evdata;
   LOCATION *start_loc;
   LOCATION *entrance_loc;
-  LOCATION *special_loc;
+  LOCATION *special_loc;    ///<特殊接続先位置
+  LOCATION *escape_loc;     ///<脱出先位置
   RAIL_LOCATION railLoc;    ///<レール構造時の自分位置
 
   BAG_CURSOR* bagcursor;  ///< バッグカーソルの管理構造体ポインタ
@@ -117,6 +118,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->start_loc = Situation_GetStartLocation(st);
   gd->entrance_loc = Situation_GetStartLocation(st);
   gd->special_loc = Situation_GetStartLocation(st);
+  gd->escape_loc = Situation_GetEscapeLocation(st);
 
   // BGM情報取得システムを作成(BGM情報を読み込む)
   gd->bgm_info_sys = BGM_INFO_CreateSystem( heapID );
@@ -242,6 +244,18 @@ void GAMEDATA_SetSpecialLocation(GAMEDATA * gamedata, const LOCATION * loc)
 {
   *(gamedata->special_loc) = *loc;
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const LOCATION * GAMEDATA_GetEscapeLocation(const GAMEDATA * gamedata)
+{
+  return gamedata->escape_loc;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void GAMEDATA_SetEscapeLocation(GAMEDATA * gamedata, const LOCATION * loc)
+{
+  *(gamedata->escape_loc) = *loc;
+}
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -255,6 +269,32 @@ const RAIL_LOCATION * GAMEDATA_GetRailLocation(const GAMEDATA * gamedata)
 void GAMEDATA_SetRailLocation(GAMEDATA * gamedata, const RAIL_LOCATION * railLoc)
 {
   gamedata->railLoc = * railLoc;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief ワープ飛び先IDのセット
+ * @param	gamedata	GAMEDATAへのポインタ
+ * @param warp_id   ワープ飛び先ID指定
+ */
+//--------------------------------------------------------------
+void GAMEDATA_SetWarpID(GAMEDATA * gamedata, u16 warp_id)
+{
+  u16 * warp = Situation_GetWarpID( SaveData_GetSituation(gamedata->sv_control_ptr) );
+  *warp = warp_id;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  ワープ飛び先IDの取得
+ * @param	gamedata	GAMEDATAへのポインタ
+ * @return  u16 ワープ飛び先ID
+ */
+//--------------------------------------------------------------
+u16 GAMEDATA_GetWarpID(GAMEDATA * gamedata)
+{
+  u16 * warp = Situation_GetWarpID( SaveData_GetSituation(gamedata->sv_control_ptr) );
+  return *warp;
 }
 
 //--------------------------------------------------------------
