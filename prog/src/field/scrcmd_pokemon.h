@@ -17,3 +17,5 @@ extern VMCMD_RESULT EvCmdCheckTemotiPokerus( VMHANDLE * core, void *wk );
 
 extern VMCMD_RESULT EvCmdPokemonRecover( VMHANDLE * core, void *wk );
 
+extern VMCMD_RESULT EvCmdCheckPokemonHP( VMHANDLE * core, void *wk );
+
