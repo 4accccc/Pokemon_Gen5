@@ -31,8 +31,6 @@
 
 #include "tr_tool/tr_tool.h"
 
-#include "field/zonedata.h"
-#include "system/rtc_tool.h"  //GFL_RTC_GetTimeZone
 
 #include "scrcmd_trainer.h"
 #include "scrcmd_sound.h"
@@ -44,6 +42,8 @@
 #include "scrcmd_fldmmdl.h"
 #include "scrcmd_gym.h"
 #include "scrcmd_pokemon.h"
+#include "scrcmd_screeneffects.h"
+#include "scrcmd_enviroments.h"
 
 
 #include "../../../resource/fldmapdata/script/usescript.h"
@@ -728,7 +728,7 @@ static VMCMD_RESULT EvCmdChangeLocalScr( VMHANDLE *core, void *wk )
  *  表記：  EVCMD_JUMP  JumpOffset(s16)
  */
 //--------------------------------------------------------------
-static VMCMD_RESULT EvCmdGlobalJump( VMHANDLE *core, void *wk )
+static VMCMD_RESULT EvCmdJump( VMHANDLE *core, void *wk )
 {
   s32  pos;
   pos = (s32)VMGetU32(core);
@@ -928,7 +928,7 @@ static VMCMD_RESULT EvCmdWkAdd( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   u16 *work_val;
-  u16 num;
+
   work_val = SCRCMD_GetVMWork( core, work );
   *work_val += SCRCMD_GetVMWorkValue( core, work );
   return VMCMD_RESULT_CONTINUE;
@@ -1167,156 +1167,9 @@ static VMCMD_RESULT EvCmdTrainerFlagCheck( VMHANDLE * core, void *wk )
 //======================================================================
 //  その他
 //======================================================================
-//--------------------------------------------------------------
-/**
- * 言語IDを切り替え
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdChangeLangID( VMHANDLE *core, void *wk )
-{
-  u8 id = GFL_MSGSYS_GetLangID();
-  if( id == 0 ){ //ひらがな
-    id = 1;
-  }else if( id == 1 ){ //漢字
-    id = 0;
-  }
-  GFL_MSGSYS_SetLangID( id );
-  return VMCMD_RESULT_CONTINUE;
-}
 
-//--------------------------------------------------------------
-/**
- * 乱数の取得
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdGetRand( VMHANDLE *core, void *wk )
-{
-  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
-  u16 limit = SCRCMD_GetVMWorkValue( core, wk );
-  *ret_wk = GFUser_GetPublicRand( limit );
-// return VMCMD_RESULT_SUSPEND;
-  return VMCMD_RESULT_CONTINUE;
-}
-//--------------------------------------------------------------
-/**
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdGetNowMsgArcID( VMHANDLE * core, void *wk )
-{
-  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
-  { //とりあえず。
-    //本来はスクリプト起動時に使用するメッセージアーカイブIDを保存しておき、
-    //そこからわたすような仕組みとするべき
-    GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
-    PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
-    u16 zone_id = PLAYERWORK_getZoneID( player );
-    *ret_wk = ZONEDATA_GetMessageArcID( zone_id );
-  }
-  return VMCMD_RESULT_CONTINUE;
-}
 
-//--------------------------------------------------------------
-/**
- * 時間帯の取得
- * @param  core    仮想マシン制御構造体へのポインタ
- * @param wk      SCRCMD_WORKへのポインタ
- * @retval VMCMD_RESULT
- *
- * @todo  トレーナーカードの企画ができたらそれにあわせて戻り値をかえす
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdGetTrainerCardRank( VMHANDLE *core, void *wk )
-{
-  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
-  *ret_wk = 4;
-  return VMCMD_RESULT_CONTINUE;
-}
 
-//--------------------------------------------------------------
-/**
- * 時間帯の取得
- * @param  core    仮想マシン制御構造体へのポインタ
- * @param wk      SCRCMD_WORKへのポインタ
- * @retval VMCMD_RESULT
- *
- * @todo  時間帯が季節で変わることをどうするか企画と協議
- * @todo  直接RTCでなくイベントで保持している時間帯を参照するのか？
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdGetTimeZone( VMHANDLE *core, void *wk )
-{
-  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
-  *ret_wk = GFL_RTC_GetTimeZone();
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * ポケセン回復アニメ
- * @param  core    仮想マシン制御構造体へのポインタ
- * @param wk      SCRCMD_WORKへのポインタ
- * @retval VMCMD_RESULT
- *
- * @todo  どんな表現をするとか、何も決まってないよ～ということで空コマンドです
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk )
-{
-  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//======================================================================
-//  画面フェード
-//======================================================================
-//--------------------------------------------------------------
-/**
- * 画面フェード
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdDispFadeStart( VMHANDLE *core, void *wk )
-{
-  u16 mode = VMGetU16( core );
-  u16 start_evy = VMGetU16( core );
-  u16 end_evy = VMGetU16( core );
-  u16 wait = VMGetU16( core );
-  GFL_FADE_SetMasterBrightReq( mode, start_evy, end_evy, wait );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * 画面フェード終了チェック ウェイト部分
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval BOOL TRUE=終了
- */
-//--------------------------------------------------------------
-static BOOL EvCmdDispFadeWait( VMHANDLE *core, void *wk )
-{
-  if( GFL_FADE_CheckFade() == TRUE ){
-    return FALSE;
-  }
-  return TRUE;
-}
-
-//--------------------------------------------------------------
-/**
- * 画面フェード終了チェック
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdDispFadeCheck( VMHANDLE *core, void *wk )
-{
-  VMCMD_SetWait( core, EvCmdDispFadeWait );
-  return VMCMD_RESULT_SUSPEND;
-}
 
 //======================================================================
 //  parts
@@ -1417,7 +1270,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdChangeLocalScr,
   
   //分岐命令
-  EvCmdGlobalJump,
+  EvCmdJump,
   EvCmdIfJump,
   EvCmdIfCall,
   EvCmdObjIDJump,
@@ -1566,6 +1419,8 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdGetTrainerCardRank,
   EvCmdPokemonRecover,
   EvCmdPokecenRecoverAnime,
+  EvCmdGetLangID,
+  EvCmdCheckPokemonHP,      //ポケモン関連：手持ちHPのチェック
 
   //鳴き声
   EvCmdVoicePlay,
