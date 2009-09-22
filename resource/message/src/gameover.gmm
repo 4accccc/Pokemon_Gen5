@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-09-22T12:03:18"/>
+	<create user="matsumiya" host="W00207" date="2009-06-22T15:56:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,10 +279,10 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="3" width="238"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="274"/>
+			<message position="1" width="232"/>
 			<font default=" 0:large" position="4" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -293,7 +293,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="2" width="246"/>
 			<font default=" 0:large" position="5" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -305,15 +305,15 @@
 		</language>
 	</columns>
 
-	<dialog left="203" top="106" right="908" bottom="726" maximized="no" rayout="Vertical2">
+	<dialog left="155" top="203" right="859" bottom="821" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<tag-palette left="807" top="218" right="1280" bottom="616" visible="yes"/>
+		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="696"/>
+		<band id="3" index="3" style="0000" width="696"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -333,14 +333,115 @@
 	</lock>
 
 
+	<row id="msg_all_dead_01">
+		<comment>ゲームオーバーメッセージ
+対トレーナー戦闘
+
+０＝ポケモン名
+１＝主人公名
+２＝対戦トレーナー名
+３＝金額
+
+フェードアウト後
+msg_all_dead_04（ＰＣ）か
+msg_all_dead_05（自宅）</comment>
+		<language name="JPN" width="256">[1:03:ポケモンタイプ:0]は　たおれた！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:1]の　てもとには
+たたかえる　ポケモンが　いない！[BE:01:ページ切り替え（クリア）]
+たんパンこぞうの　[1:03:ポケモンタイプ:2]
+との　しょうぶに　まけた……[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:1]は　しょうきんとして
+[2:05:６桁:3]円　しはらった[BE:01:ページ切り替え（クリア）]
+……　……　……
+……　……　……[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:1]は
+めのまえが　まっくらに　なった！</language>
+		<language name="JPN_KANJI" width="256">[1:03:ポケモンタイプ:0]は　倒れた！▼
+[1:00:トレーナー名:1]の　手元には
+戦える　ポケモンが　いない！▼
+たんパンこぞうの　[1:00:トレーナー名:2]
+との　勝負に　負けた……▼
+[1:00:トレーナー名:1]は　賞金として
+[2:05:６桁:3]円　しはらった▼
+……　……　……
+……　……　……▼
+[1:00:トレーナー名:1]は
+目の前が　真っ暗に　なった！</language>
+	</row>
+
+	<row id="msg_all_dead_02">
+		<comment>ゲームオーバーメッセージ
+対野生ポケモン
+
+０＝ポケモン名
+１＝主人公名
+２＝対戦トレーナー名
+３＝金額
+
+フェードアウト後
+msg_all_dead_04（ＰＣ）か
+msg_all_dead_05（自宅）</comment>
+		<language name="JPN" width="256">[1:03:ポケモンタイプ:0]は　たおれた！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:1]の　てもとには
+たたかえる　ポケモンが　いない！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:1]は　あわてて
+[2:05:６桁:3]円　なくしてしまった……[BE:01:ページ切り替え（クリア）]
+……　……　……
+……　……　……[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:1]は
+めのまえが　まっくらに　なった！</language>
+		<language name="JPN_KANJI" width="256">[1:03:ポケモンタイプ:0]は　倒れた！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:1]の　手元には
+戦える　ポケモンが　いない！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:1]は　慌てて
+[2:05:６桁:3]円　なくしてしまった……[BE:01:ページ切り替え（クリア）]
+……　……　……
+……　……　……[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:1]は
+目の前が　真っ暗に　なった！</language>
+	</row>
+
 	<row id="msg_all_dead_04">
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<comment>フェードアウト後、ブラック画面での表示
+（画面中央一発表示）
+
+※１８文字を超えています。
+
+ボタン待ち。
+フェードイン。
+
+戻りの処理
+１：ポケモンセンター
+１－１：１ｓｔジム勝利後、ポケモンセンターの場合</comment>
+		<language name="JPN" width="256">つかれて　うごけなくなった　ひんしの
+ポケモンたちを　かばいながら
+[1:00:トレーナー名:1]は　いそいで
+ポケモンセンターに　もどるのであった</language>
+		<language name="JPN_KANJI" width="256">疲れて　動けなくなった　ひん死の
+ポケモンたちを　かばいながら
+[1:00:トレーナー名:1]は　急いで
+ポケモンセンターに　戻るのであった</language>
 	</row>
 
 	<row id="msg_all_dead_05">
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<comment>フェードアウト後、ブラック画面での表示
+（画面中央一発表示）
+
+※１８文字を超えています。
+
+ボタン待ち。
+フェードイン。
+
+戻りの処理
+２：自宅</comment>
+		<language name="JPN" width="256">つかれて　うごけなくなった　ひんしの
+ポケモンたちを　かばいながら
+[1:00:トレーナー名:1]は　いそいで
+じたくに　もどるのであった</language>
+		<language name="JPN_KANJI" width="256">疲れて　動けなくなった　ひん死の
+ポケモンたちを　かばいながら
+[1:00:トレーナー名:1]は　急いで
+自宅に　戻るのであった</language>
 	</row>
 
 	<flowchart-group-list>
