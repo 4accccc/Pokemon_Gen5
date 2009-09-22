@@ -173,105 +173,65 @@ BOOL GAMESYSTEM_EVENT_CheckSet(GAMESYS_WORK * gsys, EVCHECK_FUNC ev_check, void 
 //
 //=============================================================================
 //------------------------------------------------------------------
-//------------------------------------------------------------------
-
-#if 0
-//extern BOOL FieldEvent_Cmd_WaitSubProcEnd(GAMESYS_WORK * gsys);
-//extern void FieldEvent_Cmd_SetMapProc(GAMESYS_WORK * gsys);
-//extern BOOL FieldEvent_Cmd_WaitMapProcStart(GAMESYS_WORK * gsys);
-
-//extern void EventCmd_CallSubProc(GMEVENT * event, const GFL_PROC_DATA * proc_data, void * param);
-
-//------------------------------------------------------------------
 /**
- * @brief	サブプロセス動作終了待ち
- * @param	gsys	フィールド制御ワークへのポインタ
- * @retval	TRUE	サブプロセス動作中
- * @retval	FALSE	サブプロセス終了
+ * @brief 別プロセス呼び出しイベント用ワーク定義
  */
 //------------------------------------------------------------------
-BOOL FieldEvent_Cmd_WaitSubProcEnd(GAMESYS_WORK * gsys)
-{
-	if (GameSystem_CheckFieldProcExists(gsys) || GameSystem_CheckSubProcExists(gsys)) {
-		return TRUE;
-	} else {
-		return FALSE;
-	}
-}
+typedef struct _CALL_PROC_EVENT_WORK{
+  FSOverlayID ov_id;
+  const GFL_PROC_DATA * proc_data;
+  void * pwk;
+}CPEW;
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void FieldEvent_Cmd_SetMapProc(GAMESYS_WORK * gsys)
-{
-	GameSystem_CreateFieldProc(gsys);
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-BOOL FieldEvent_Cmd_WaitMapProcStart(GAMESYS_WORK * gsys)
-{
-	if (GameSystem_CheckFieldMain(gsys)) {
-		return TRUE;
-	} else {
-		return FALSE;
-	}
-}
-
-//=============================================================================
-//
-//=============================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-typedef struct {
-	int seq;
-	const GFL_PROC_DATA * proc_data;
-	void * param;
-}EV_SUBPROC_WORK;
 //------------------------------------------------------------------
 /**
- * @brief	サブイベント：サブプロセス呼び出し
- * @param	event		イベント制御ワークへのポインタ
- * @retval	TRUE		サブイベント終了
- * @retval	FALSE		サブイベント継続中
+ * @brief 別プロセス呼び出しイベント
  */
 //------------------------------------------------------------------
-static BOOL GMEVENT_Sub_CallSubProc(GMEVENT * event)
+static GMEVENT_RESULT callProcEvent( GMEVENT * event, int *seq, void * work)
 {
-	GAMESYS_WORK * gsys = GMEVENT_GetGameSysWork(event);
-	EV_SUBPROC_WORK * esw = GMEVENT_GetSpecialWork(event);
-	switch (esw->seq) {
-	case 0:
-		GameSystem_StartSubProc(gsys, esw->proc_data, esw->param);
-		esw->seq ++;
-		break;
-	case 1:
-		if (FieldEvent_Cmd_WaitSubProcEnd(gsys)) {
-			break;
-		}
-		GFL_HEAP_FreeMemory(esw);
-		return TRUE;
-	}
-	return FALSE;
+  CPEW * cpew = (CPEW *)work;
+  GAMESYS_WORK * gsys = GMEVENT_GetGameSysWork(event);
+  switch(*seq)
+  {
+  case 0:
+    GAMESYSTEM_CallProc(gsys, cpew->ov_id, cpew->proc_data, cpew->pwk);
+    (*seq)++;
+    break;
+  case 1:
+    if( GAMESYSTEM_IsProcExists( gsys ) == GFL_PROC_MAIN_NULL )
+    {
+      return GMEVENT_RES_FINISH;
+    }
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
 }
 //------------------------------------------------------------------
 /**
- * @brief	イベント擬似コマンド：サブプロセス呼び出し
- * @param	event		イベント制御ワークへのポインタ
- * @param	proc_data	プロセス定義データへのポインタ
- * @param	param		パラメータへのポインタ
+ * @brief 別プロセス呼び出し→ウェイト
+ * @param parent     現在のイベント
+ * @param ov_id     呼び出すプロセスのオーバーレイID指定
+ * @param proc_data 呼び出すプロセスのPROC_DATAへのポインタ
+ * @param pwk       プロセスに引き渡すワーク
  *
- * サブプロセスを呼び出して終了を待つ
+ * 内部でプロセス呼び出し→終了待ちをおこなうイベントを生成し、
+ * そのイベントをCallする
  */
 //------------------------------------------------------------------
-void EventCmd_CallSubProc(GMEVENT * event, const GFL_PROC_DATA * proc_data, void * param)
+void GMEVENT_CallProc( GMEVENT * parent, 
+    FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void * pwk)
 {
-	EV_SUBPROC_WORK * esw = GFL_HEAP_AllocMemory(HEAPID_LOCAL, sizeof(EV_SUBPROC_WORK));
-	esw->seq = 0;
-	esw->proc_data = proc_data;
-	esw->param = param;
-	FieldEvent_Call(event, GMEVENT_Sub_CallSubProc, esw);
+  CPEW * cpew;
+  GMEVENT * proc_event;
+  proc_event = GMEVENT_Create( parent->gsys, NULL, callProcEvent, sizeof(CPEW) );
+  cpew = GMEVENT_GetEventWork( proc_event );
+  cpew->ov_id = ov_id;
+  cpew->proc_data = proc_data;
+  cpew->pwk = pwk;
+  GMEVENT_CallEvent( parent, proc_event );
 }
-#endif
+
 
 //=============================================================================
 //
