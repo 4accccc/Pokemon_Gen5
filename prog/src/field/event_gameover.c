@@ -370,7 +370,7 @@ static void scr_msg_print( GAME_OVER_WORK* wk, u16 msg_id, u8 x, u8 y )
 //-----------------------------------------------------------------------------
 static u16 get_warp_id( GAMEDATA * gamedata )
 {
-  return 1;
+  return GAMEDATA_GetWarpID( gamedata );
 }
 
 //-----------------------------------------------------------------------------
