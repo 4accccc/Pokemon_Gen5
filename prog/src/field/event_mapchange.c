@@ -568,15 +568,14 @@ void MAPCHG_GameOver( GAMESYS_WORK * gsys )
 {
   LOCATION loc_req;
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+  u16 warp_id = GAMEDATA_GetWarpID( gamedata );
+  //復活ポイントを取得
+  WARPDATA_GetRevivalLocation( warp_id, &loc_req );
   {
-			//SITUATION * sit = SaveData_GetSituation(fsys->savedata);
-			//u16 warp_id = Situation_GetWarpID(sit);
-			u16 warp_id = 1;
-			WARPDATA_GetRevivalLocation(warp_id, &loc_req);
-			//エスケープポイントを再設定
-			//WARPDATA_GetEscapeLocation(warp_id,Situation_GetEscapeLocation(sit));
-			//マップチェンジ
-			//EventCmd_MapChangeByLocation(event, &loc_req);
+    LOCATION esc;
+    //エスケープポイントを再設定
+    WARPDATA_GetEscapeLocation( warp_id, &esc );
+    GAMEDATA_SetEscapeLocation( gamedata, &esc );
   }
 
   //配置していた動作モデルを削除
@@ -742,7 +741,7 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
     u16 warp_id;
     warp_id = WARPDATA_SearchByRoomID( loc.zone_id );
     if (warp_id) {
-      //Situation_SetWarpID(sit, warp_id);
+      GAMEDATA_SetWarpID( gamedata, warp_id );
     }
   }
   //ギミックアサイン
