@@ -162,7 +162,7 @@ sub_heal_kaifuku_anime:
 {
   DEFINE_LOCAL  POKEMON_COUNT
 
-  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_heal_p01_turn_left )
+  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_heal_p01_turn_up )
   _OBJ_ANIME_WAIT()
 
   //_GET_POKE_COUNT( POKEMON_COUNT )
@@ -177,8 +177,8 @@ _RET
 //--------------------------------------------------------------------
 //  ç∂Çå¸Ç≠
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_heal_p01_turn_left
-	_ANIME_DATA	AC_DIR_L,1
+_ANIME_LABEL	anm_heal_p01_turn_up
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

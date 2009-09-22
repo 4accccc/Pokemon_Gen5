@@ -277,7 +277,18 @@ pocket_me_set:
 EVENT_START   ev_gameover_recover_home
   _BLACK_IN(8)
   _DISP_FADE_END_CHECK()
-  _EASY_MSG( msg_common_pc_heal_01 )
+  _EASY_MSG( msg_common_pc_heal_01 )  //âº
+
+  _BLACK_OUT(8)
+  _DISP_FADE_END_CHECK()
+  _ME_PLAY( SEQ_ME_ASA )
+  _ME_WAIT()
+  _BLACK_IN(8)
+  _DISP_FADE_END_CHECK()
+
+  _TEMOTI_POKEMON_KAIFUKU()                         //éËéùÇøÉ|ÉPÉÇÉìâÒïúèàóù
+
+  _EASY_MSG( msg_common_pc_heal_02 )  //âº
 EVENT_END
 
 //********************************************************************
