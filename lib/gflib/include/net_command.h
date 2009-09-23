@@ -42,6 +42,8 @@ enum GFL_NET_CommCommand_e {
   GFL_NET_CMD_SEND_MACADDRESS,      ///< 持ってるマックアドレスを送る
   GFL_NET_CMD_INFOMATION,           ///< インフォメーションコマンドを送る
   GFL_NET_CMD_WIFI_EXIT,              ///< 子機が親機に終了するように送信
+  GFL_NET_CMD_HUGEDATA,            ///< 大きなデータの分割転送ルーチン
+  GFL_NET_CMD_HUGEPREDATA,         ///< 大きなデータを送る予約コマンド
   //------------------------------------------------ここまで----------
   GFL_NET_CMD_COMMAND_MAX   // 終端--------------これは移動させないでください
 };
@@ -92,6 +94,20 @@ extern void GFL_NET_DelCommandTable(const int cokind);
  */
 //--------------------------------------------------------------
 extern void GFL_NET_COMMAND_Exit( void );
+
+//------------------------------------------------------------------------------
+/**
+ * @brief 送信開始
+ * @param[in,out]  pNet  通信ハンドル
+ * @param[in]   sendBit                     送信相手 全員へ送信する場合 NET_SENDID_ALLUSER
+ * @param[in]   sendCommand                送信するコマンド
+ * @param[in]   size                       送信データサイズ
+ * @param[in]   data                       送信データポインタ
+ * @retval  TRUE   成功した
+ * @retval  FALSE  失敗の場合
+ */
+//------------------------------------------------------------------------------
+extern BOOL GFL_NET_COMMAND_SendHugeData(GFL_NETHANDLE* pNet,const NetID sendBit,const u16 sendCommand, const u32 size,const void* data);
 
 
 // ここから下はライブラリ専用 GFI関数

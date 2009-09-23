@@ -61,6 +61,7 @@ typedef enum {
 	_NETCMD_CHANGE_CANCEL,
 	_NETCMD_END_REQ,
 	_NETCMD_END,
+  _NETCMD_SCROLLBAR,
 } _BATTLEIRC_SENDCMD;
 
 
@@ -80,6 +81,7 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork);
 static void _changeYesNoWaitState(IRC_POKEMON_TRADE* pWork);
 static void _endWaitState(IRC_POKEMON_TRADE* pWork);
 static void _PokemonsetAndSendData(IRC_POKEMON_TRADE* pWork);
+static void _recvFriendScrollBar(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 
 
@@ -99,6 +101,7 @@ static const NetRecvFuncTable _PacketTbl[] = {
 	{_recvChangeCancel,   NULL},    ///_NETCMD_SELECT_POKEMON
 	{_recvEndReq, NULL},
 	{_recvEnd, NULL},
+  {_recvFriendScrollBar, NULL}, //_NETCMD_SCROLLBAR
 
 };
 
@@ -340,7 +343,7 @@ static void _InitBoxName( BOX_DATA* boxData , u8 trayNo ,IRC_POKEMON_TRADE* pWor
 		else{
 			BOXDAT_GetBoxName(boxData, trayNo, pWork->pStrBuf);
 		}
-		//GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
+		GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
 		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0 );
 		GFL_BMPWIN_MakeScreen(pWork->MyInfoWin);
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 1, 0, pWork->pStrBuf, pWork->pFontHandle);
@@ -443,6 +446,30 @@ static void _recvChangeYesNo(const int netID, const int size, const void* pData,
 
 
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   相手のスクロールバーの移動位置が送られてきた
+ *          _NETCMD_SCROLLBAR
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+//
+static void _recvFriendScrollBar(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+	IRC_POKEMON_TRADE *pWork = pWk;
+  short* pRecvData = (short*)pData;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_SystemGetCurrentID()){
+    return;	//自分のデータは要らない
+  }
+  pWork->FriendBoxScrollNum = pRecvData[0];
+}
+
 
 //_NETCMD_CHANGE_CANCEL	
 
@@ -721,7 +748,7 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 	}
 	pWork->selectBoxno = 0;
 	pWork->selectIndex = -1;
-	pWork->catchIndex = -1;
+	pWork->pCatchCLWK = NULL;
 	PSTATUS_SUB_PokeDeleteMcss(pWork, 0);
 	PSTATUS_SUB_PokeDeleteMcss(pWork, 1);
 
@@ -798,11 +825,15 @@ static void _PokemonsetAndSendData(IRC_POKEMON_TRADE* pWork)
 { //選択ポケモン表示
   
   const POKEMON_PASO_PARAM* ppp = _getPokeDataAddress(pWork->pBox, pWork->selectBoxno, pWork->selectIndex,pWork);
-  _Pokemonset(pWork,0,ppp);
 
-  //@@OO POKEMON_PASO_PARAMサイズ取得関数依頼中
-  //@@OO 戻り値を見ないとばぐる
-  GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON, sizeof( POKEMON_PASO_PARAM ),ppp);
+  GF_ASSERT(ppp);
+  
+  if(ppp!=NULL){
+    _Pokemonset(pWork,0,ppp);
+    //@@OO POKEMON_PASO_PARAMサイズ取得関数依頼中
+    //@@OO 戻り値を見ないとばぐる
+    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON, sizeof( POKEMON_PASO_PARAM ),ppp);
+  }
 }
 
 
@@ -812,6 +843,7 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
 {
 	u32 x,y,i;
 	GFL_CLACTPOS pos;
+  
 	int backBoxNo = pWork->nowBoxno;
 
 	for(i=0;i<2;i++){
@@ -820,14 +852,14 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
 
 	
 	if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視
-		pWork->bUpVec = FALSE;
+    // 上向き判定
+    pWork->bUpVec = FALSE;
 		if(pWork->y > y){
 			pWork->bUpVec = TRUE;
 		}
-
-
+    // パネルスクロール
 		if((x >=  64) && ((192) > x)){
-      if((y >=  152) && ((176) > y)){   //交換ボタンを押す
+      if((y >=  152) && ((176) > y)){
         if(pWork->touckON){
           pWork->BoxScrollNum -= (x - pWork->x)*2;
           if(0 > pWork->BoxScrollNum){
@@ -838,10 +870,10 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
           }
           IRC_POKETRADE_TrayDisp(pWork);
           IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
+          GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SCROLLBAR,4,&pWork->BoxScrollNum);
         }
       }
     }
-
     pWork->x = x;
 		pWork->y = y;
     pWork->touckON = TRUE;
@@ -849,143 +881,61 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
   else{
     pWork->touckON = FALSE;
   }
-/*
-  if(GFL_UI_KEY_GetCont() == PAD_KEY_RIGHT){
-    pWork->BoxScrollNum+=1;
-    if(2976 <= pWork->BoxScrollNum){
-      pWork->BoxScrollNum-=2976;
-    }
-    IRC_POKETRADE_TrayDisp(pWork);
-    IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
-  }
-  if(GFL_UI_KEY_GetCont() == PAD_KEY_LEFT){
-    pWork->BoxScrollNum-=1;
-    if(0 > pWork->BoxScrollNum){
-      pWork->BoxScrollNum+=2976;
-    }
-    IRC_POKETRADE_TrayDisp(pWork);
-    IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
-  }
-*/
   
-  return;
 
-  
+#if 1  //  画面タッチトリガ中の処理
 	if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
-
-
-    
-    
-#if 0
-		if((x >=  CHANGEBUTTON_X) && ((CHANGEBUTTON_X+CHANGEBUTTON_WIDTH) > x)){
-			if((y >=  CHANGEBUTTON_Y) && ((CHANGEBUTTON_Y+CHANGEBUTTON_HEIGHT) > y)){   //交換ボタンを押す
-				if(pWork->bPokemonSet[0] && pWork->bPokemonSet[1]){  //両方のポケモンがいる場合
-					GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGE_YESNO, 0, NULL);
-					_CHANGE_STATE(pWork,_noneState);
-					return;
-				}
-			}
-		}
-    if((x >=  40) && (64 > x)){
-			if((y >=  CONTROL_PANEL_Y) && (CONTROL_PANEL_Y+24 > y)){
-				pWork->nowBoxno++;
-			}
-		}
-		if((x >=  8) && (32 > x)){
-			if((y >=  CONTROL_PANEL_Y) && (CONTROL_PANEL_Y+24 > y)){
-				pWork->nowBoxno--;
-			}
-		}
-#endif
-
-		if((x >=(232-40)) && ((232-16) > x)){
-			if((y >=  CONTROL_PANEL_Y) && (CONTROL_PANEL_Y+24 > y)){
+		if((x >=(256-24)) && (256 > x)){  //終了ボタンがある場合
+			if((y >= (192-24)) && (192 > y)){
 				GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_END_REQ, 0, NULL);
 				_CHANGE_STATE(pWork,_noneState);
 				return;
 			}
 		}
 		
-		if(pWork->nowBoxno < 0){
-			pWork->nowBoxno = BOX_MAX_TRAY;
-		}
-		else if(BOX_MAX_TRAY < pWork->nowBoxno){
-			pWork->nowBoxno = 0;
-		}
-		
-		if(backBoxNo !=  pWork->nowBoxno){
-			IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
-			_InitBoxName(pWork->pBox,pWork->nowBoxno,pWork);
-		}
-
-		if((x >=  8) && ((18*8+8) > x)){
-			if((y >=  48) && ((48+8*15) > y)){
-				int ans;
-				x = (x - 8) / 24;
-				y = (y - 40) / 24;
-				ans = x + y * 6;
-				if(ans >= 0 && ans < 30){
-					pWork->catchIndex = ans;
-				}
-			}
-		}
+//		if(backBoxNo !=  pWork->nowBoxno){
+	//		IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
+		//	_InitBoxName(pWork->pBox,pWork->nowBoxno,pWork);
+//		}
+    pWork->workBoxno=-1;
+    pWork->workPokeIndex=-1;
+    pWork->pCatchCLWK = IRC_POKETRADE_GetCLACT(pWork,x,y, &pWork->workBoxno, &pWork->workPokeIndex);
+    if(pWork->pCatchCLWK){
+      OS_TPrintf("GET %d %d\n",pWork->workBoxno,pWork->workPokeIndex);
+    }
 	}
+#endif
+
+  
 	if(GFL_UI_TP_GetCont()==FALSE){ //タッチパネルを離した
 
-    //ポケモンをつかむ
-		if(pWork->nowBoxno == pWork->selectBoxno){
-			if(pWork->selectIndex == pWork->catchIndex){
-				pWork->catchIndex = -1;  //さっきと同じ物をつかんでいた場合は何もしない
-			}
-		}
-//		if(	pWork->pokeIcon[pWork->catchIndex]==NULL ){  //いないものはなにもしない  @@OO ロジック変更
-	//			pWork->catchIndex = -1;
-	//	}
+    if((pWork->pCatchCLWK != NULL) && pWork->bUpVec){ //ポケモンを上に登録
+      GFL_CLACT_WK_SetDrawEnable( pWork->pCatchCLWK, FALSE);
 
-		
-		if((pWork->catchIndex != -1) && !pWork->bUpVec){
-			if(pWork->nowBoxno == pWork->selectBoxno){   //つかんでた物を元に戻す
-//				GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[pWork->catchIndex],TRUE);
-				_getPokeIconPos(pWork->catchIndex, &pos);
-//				GFL_CLACT_WK_SetPos( pWork->pokeIcon[pWork->catchIndex], &pos, CLSYS_DRAW_SUB);
-			}
-		}
-		if((pWork->catchIndex != -1) && pWork->bUpVec){
-			if(pWork->selectIndex != -1){
-				if(pWork->nowBoxno == pWork->selectBoxno){   //消えてたアイコン復活
-//					GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[pWork->selectIndex],TRUE);
-					_getPokeIconPos(pWork->selectIndex, &pos);
-	//				GFL_CLACT_WK_SetPos( pWork->pokeIcon[pWork->selectIndex], &pos, CLSYS_DRAW_SUB);
-				}
-			}
-
-			pWork->selectIndex = pWork->catchIndex;
-			pWork->selectBoxno = pWork->nowBoxno;
-//			GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[pWork->catchIndex],FALSE);  //選択した物を消す
-
+			pWork->selectIndex = pWork->workPokeIndex;
+			pWork->selectBoxno = pWork->workBoxno;
+      pWork->workPokeIndex = 0;
+      pWork->workBoxno = 0;
       _PokemonsetAndSendData(pWork);
 
-
       _CHANGE_STATE(pWork,_changeMenuOpen);
-      
-
 		}
-    else if(pWork->catchIndex != -1){  //キャッチしてるが上ベクトルは働かなかった場合 自分の画面にステータスを表示する
-      pWork->underSelectIndex = pWork->catchIndex;
-      pWork->underSelectBoxno  = pWork->nowBoxno;
+    else if(pWork->pCatchCLWK){  //キャッチしてるが上ベクトルは働かなかった場合 自分の画面にステータスを表示する
+      pWork->underSelectBoxno  = pWork->workBoxno;
+			pWork->underSelectIndex = pWork->workPokeIndex;
       _CHANGE_STATE(pWork,_dispSubState);
     }
-		pWork->catchIndex = -1;
+    pWork->workPokeIndex = 0;
+    pWork->workBoxno = 0;
+		pWork->pCatchCLWK = NULL;
 	}
 
-	if(pWork->catchIndex != -1){
+	if(pWork->pCatchCLWK != NULL){  //タッチパネル操作中のアイコン移動
 		if(GFL_UI_TP_GetPointCont(&x,&y)){
 			pos.x = x;
 			pos.y = y;
-//			if(pWork->pokeIcon[pWork->catchIndex]){
-	//			GFL_CLACT_WK_SetPos( pWork->pokeIcon[pWork->catchIndex], &pos, CLSYS_DRAW_SUB);
-		//	}
-		}
+      GFL_CLACT_WK_SetPos( pWork->pCatchCLWK, &pos, CLSYS_DRAW_SUB);
+    }
 	}
 
 
@@ -1067,6 +1017,62 @@ static const GFL_CLSYS_INIT fldmapdata_CLSYS_Init =
 	FIELD_CLSYS_RESOUCE_MAX,
 	16, 16,
 };
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	環境セットアップコールバック関数
+ */
+//-----------------------------------------------------------------------------
+static void Graphic_3d_SetUp( void )
+{
+	// ３Ｄ使用面の設定(表示＆プライオリティー)
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+
+	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
+	G3X_SetShading( GX_SHADING_TOON); //GX_SHADING_HIGHLIGHT );
+	G3X_AntiAlias( FALSE );
+	G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
+	G3X_AlphaBlend( FALSE );		// アルファブレンド　オン
+	G3X_EdgeMarking( FALSE );
+	G3X_SetFog( TRUE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
+
+	// クリアカラーの設定
+	G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,63,FALSE);	//color,alpha,depth,polygonID,fog
+	// ビューポートの設定
+	G3_ViewPort(0, 0, 255, 191);
+
+	// ライト設定
+	{
+		static const GFL_G3D_LIGHT sc_GFL_G3D_LIGHT[] = 
+		{
+			{
+				{ 0, -FX16_ONE, 0 },
+				GX_RGB( 16,16,16),
+			},
+			{
+				{ 0, FX16_ONE, 0 },
+				GX_RGB( 16,16,16),
+			},
+			{
+				{ 0, -FX16_ONE, 0 },
+				GX_RGB( 16,16,16),
+			},
+			{
+				{ 0, -FX16_ONE, 0 },
+				GX_RGB( 16,16,16),
+			},
+		};
+		int i;
+		
+		for( i=0; i<NELEMS(sc_GFL_G3D_LIGHT); i++ ){
+			GFL_G3D_SetSystemLight( i, &sc_GFL_G3D_LIGHT[i] );
+		}
+	}
+
+	//レンダリングスワップバッファ
+	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
+	G2_SetBG0Priority(2);
+}
 
 
 //------------------------------------------------------------------------------
@@ -1215,6 +1221,7 @@ static void _createBg(IRC_POKEMON_TRADE* pWork)
 
 	GFL_BG_SetBGControl3D( 0 );
 	GFL_BG_SetVisible( GFL_BG_FRAME0_M , TRUE );
+  
 
 	//3D系の初期化
 	{ //3D系の設定
@@ -1225,7 +1232,8 @@ static void _createBg(IRC_POKEMON_TRADE* pWork)
 		static  const GXRgb edge_color_table[8]=
 		{ GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
 		GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
-									0, pWork->heapID, NULL );
+									0, pWork->heapID, Graphic_3d_SetUp );
+#if 0
 
 		//正射影カメラ
 		pWork->camera =  GFL_G3D_CAMERA_Create( GFL_G3D_PRJORTH,
@@ -1247,6 +1255,8 @@ static void _createBg(IRC_POKEMON_TRADE* pWork)
 		G3X_EdgeMarking( TRUE );
 
 		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );
+#endif
+
 	}
 
 
@@ -1327,7 +1337,7 @@ static void _dispInit(IRC_POKEMON_TRADE* pWork)
 	pWork->pWordSet    = WORDSET_Create( pWork->heapID );
 	pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_poke_trade_dat, pWork->heapID );
 	pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
-	pWork->MyInfoWin = GFL_BMPWIN_Create(GFL_BG_FRAME1_S, 0x07, 0x03, 10, 2, _BUTTON_MSG_PAL,  GFL_BMP_CHRAREA_GET_B );
+	pWork->MyInfoWin = GFL_BMPWIN_Create(GFL_BG_FRAME1_S, 0x07, 0x01, 10, 2, _BUTTON_MSG_PAL,  GFL_BMP_CHRAREA_GET_B );
 	pWork->pStrBuf = GFL_STR_CreateBuffer( 128, pWork->heapID );
 	pWork->pExStrBuf = GFL_STR_CreateBuffer( 128, pWork->heapID );
 	pWork->pMessageStrBuf = GFL_STR_CreateBuffer( 128, pWork->heapID );
@@ -1452,7 +1462,7 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
 static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	int i;
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x30000+0x3CF00 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x38000+0x3CF00 );
 
 	{
 		IRC_POKEMON_TRADE *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_POKEMON_TRADE ), HEAPID_IRCBATTLE );
@@ -1467,7 +1477,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
 
 		pWork->pBox = SaveData_GetBoxData(GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pWork->pGameSys)));
 
-		pWork->catchIndex = -1;
+		pWork->pCatchCLWK = NULL;
 		pWork->selectIndex = -1;
 
 
@@ -1489,8 +1499,8 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
     pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 2 , 0 );
     
     _dispInit(pWork);
+IRC_POKETRADEDEMO_Init(pWork);
 	}
-
 
 
 	return GFL_PROC_RES_FINISH;
@@ -1531,8 +1541,13 @@ static GFL_PROC_RESULT IrcBattleFriendProcMain( GFL_PROC * proc, int * seq, void
 
 	GFL_G3D_DRAW_Start();
 	GFL_G3D_DRAW_SetLookAt();
-	MCSS_Main( pWork->mcssSys );
-	MCSS_Draw( pWork->mcssSys );
+//  GFL_G3D_CAMERA_Switching( pWork->camera );  
+
+//	MCSS_Main( pWork->mcssSys );
+//	MCSS_Draw( pWork->mcssSys );
+  //IRC_POKETRADE_G3dDraw(pWork);
+
+IRC_POKETRADEDEMO_Main(pWork);  
 	GFL_G3D_DRAW_End();
 
 	//	ConnectBGPalAnm_Main(&pWork->cbp);
@@ -1602,6 +1617,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
 		}
 	}
 	MCSS_Exit(pWork->mcssSys);
+IRC_POKETRADEDEMO_End(pWork);
 
   IRC_POKETRADE_AllDeletePokeIconResource(pWork);
 

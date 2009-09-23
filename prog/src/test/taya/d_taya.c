@@ -763,6 +763,8 @@ static const GFLNetInitializeStruct testNetInitParam = {
 #if GFL_NET_IRC
   IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
+  0,//MP親最大サイズ 512まで
+  0,//dummy
 };
 
 static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
@@ -1042,6 +1044,8 @@ static const GFLNetInitializeStruct btlNetInitParam = {
 #if GFL_NET_IRC
   IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
+  0,//MP親最大サイズ 512まで
+  0,//dummy
 };
 
 static const GFLNetInitializeStruct btlMultiNetInitParam = {
@@ -1085,6 +1089,8 @@ static const GFLNetInitializeStruct btlMultiNetInitParam = {
 #if GFL_NET_IRC
   IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
+  0,//MP親最大サイズ 512まで
+  0,//dummy
 };
 
 static void btlAutoConnectCallback( void* pWork )

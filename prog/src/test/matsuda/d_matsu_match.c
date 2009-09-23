@@ -518,6 +518,8 @@ static const GFLNetInitializeStruct aGFLNetInit = {
 #if GFL_NET_IRC
 	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
 #endif
+    0,//MP親最大サイズ 512まで
+    0,//dummy
 };
 
 //--------------------------------------------------------------

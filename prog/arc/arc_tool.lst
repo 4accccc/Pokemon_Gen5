@@ -177,6 +177,7 @@
     ARCID_B_PLIST_GRA   "b_plist_gra.narc"    #戦闘ポケモンリスト画面グラフィック
   ARCID_GIMMICK_ASSIGN "fieldmap/gimmick_assign.narc"	#ギミックアサインデータ
 	ARCID_POKETRADE			"trade.narc"	# ポケモン交換
+	ARCID_POKETRADEDEMO			"tradedemo.narc"	# ポケモン交換デモ
 	ARCID_REGULATION			"regulation.narc"	# ポケモンバトルレギュレーションデータ
   ARCID_OBATA_DEBUG "debug_obata.narc" # 小幡デバッグメニュー用データ
   ARCID_MICTEST_GRA "mictest.narc" # マイクテスト用グラフィックデータ

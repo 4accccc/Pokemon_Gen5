@@ -579,7 +579,10 @@ static int _DevGetError(void)  ///< ƒGƒ‰[‚ð“¾‚é
 {
 	int err = WH_GetLastError();
 
-	if(GFL_NET_WLIsError() && (err != 0)){
+  if(err == WM_ERRCODE_NO_DATASET){
+    err = WM_ERRCODE_SUCCESS;
+  }
+  if(GFL_NET_WLIsError() && (err != 0)){
 		err = WH_ERRCODE_DISCONNECTED;
 	}
 	return err;

@@ -91,6 +91,7 @@ struct _EVENT_IRCBATTLE_WORK{
   BOOL isEndProc;
   int selectType;
   IRC_COMPATIBLE_PARAM  compatible_param; //ÔŠOüƒƒjƒ…[‚É“n‚·î•ñ
+  BOOL push;
 #if PM_DEBUG
   int debugseq;
 #endif
@@ -218,6 +219,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
       FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
       FIELD_SOUND_PushPlayEventBGM( fsnd, dbw->para.musicDefault );
+      dbw->push=TRUE;
     }
 
     GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &BtlProcData, &dbw->para);
@@ -268,20 +270,19 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
   case _FIELD_OPEN:
     _battleParaFree(dbw);
-    OS_TPrintf("_FIELD_OPEN\n");
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq) ++;
     break;
   case _FIELD_FADEIN:
-    OS_TPrintf("_FIELD_FADEIN\n");
     GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
     (*seq) ++;
     break;
   case _FIELD_END:
-    {
+    if(dbw->push){
       GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
       FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
       FIELD_SOUND_PopBGM( fsnd );
+      dbw->push=FALSE;
     }
     PMSND_FadeInBGM(60);
     return GMEVENT_RES_FINISH;

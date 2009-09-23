@@ -26,6 +26,7 @@
 
 #include "ircbattle.naix"
 #include "trade.naix"
+#include "tradedemo.naix"
 
 
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
@@ -42,6 +43,22 @@ static void _Line2RingLineSet(IRC_POKEMON_TRADE* pWork,int add);
 static void _iconAllDrawDisable(IRC_POKEMON_TRADE* pWork);
 
 
+
+static int LINE2TRAY(int lineno)
+{
+  if(lineno > HAND_HORIZONTAL_NUM){
+    return (lineno - HAND_HORIZONTAL_NUM) / BOX_HORIZONTAL_NUM;
+  }
+  return -1;
+}
+    
+static int LINE2POKEINDEX(int lineno,int verticalindex)
+{
+  if(lineno > HAND_HORIZONTAL_NUM){
+    return ((lineno - HAND_HORIZONTAL_NUM) % BOX_HORIZONTAL_NUM) + (BOX_HORIZONTAL_NUM * verticalindex);
+  }
+  return lineno*3+verticalindex;
+}
 
 //------------------------------------------------------------------
 /**
@@ -73,11 +90,11 @@ void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork)
 																				 GFL_BG_FRAME1_M, 0,
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
 																				 pWork->heapID);
-//	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
-	//																			 NARC_ircbattle_DsTradeList_Sub3_NSCR,
-		//																		 GFL_BG_FRAME2_M, 0,
-			//																	 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-				//																 pWork->heapID);
+	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+																				 NARC_trade_wb_trade_bg01_back_NSCR,
+																				 GFL_BG_FRAME2_M, 0,
+                                         GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                         pWork->heapID);
 
 
 
@@ -112,7 +129,96 @@ void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork)
   PokeIconCgxLoad( pWork );
 
 
+#if 0
+
+	//読み込み
+	{	
+    ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_POKETRADEDEMO, pWork->heapID );
+
+    //モデル読み込み
+    {	
+      BOOL			result;
+      
+      GFL_G3D_RES	*p_tex	= NULL;
+      GFL_G3D_RES	*p_mdl	= NULL;
+      GFL_G3D_RND* pRender = NULL;
+
+//      pWork->pG3dRes	= GFL_G3D_CreateResourceHandle( p_handle, NARC_tradedemo_trade_nsbmd );
+      pWork->pG3dRes	= GFL_G3D_CreateResourceHandle( p_handle, NARC_tradedemo_trailer_nsbmd );
+      GF_ASSERT( pWork->pG3dRes != NULL );
+
+      if( GFL_G3D_CheckResourceType( pWork->pG3dRes, GFL_G3D_RES_CHKTYPE_TEX ) ){
+        p_tex	= pWork->pG3dRes;
+        result	= GFL_G3D_TransVramTexture( p_tex );
+        OS_TPrintf("転送した\n");
+        GF_ASSERT( result );
+      }
+
+
+      pRender = GFL_G3D_RENDER_Create( pWork->pG3dRes, 0, NULL );
+
+      pWork->pG3dObj = GFL_G3D_OBJECT_Create(pRender, NULL, 0 );
+      
+    }
+
+	//座標
+    {	
+      MTX_Identity33( &pWork->status.rotate );
+      VEC_Set( &pWork->status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+    }
+
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
+
+
+  {
+    static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST( 160 ) };
+    static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };
+    static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };
+
+    enum
+    {	
+      CAMERA_PER_FOVY		=	(40),
+      CAMERA_PER_ASPECT =	(FX32_ONE * 4 / 3),
+      CAMERA_PER_NEAR		=	(FX32_ONE * 1),
+      CAMERA_PER_FER		=	(FX32_ONE * 6000),
+      CAMERA_PER_SCALEW	=(0),
+    };
+
+    
+	//射影
+    pWork->p_camera =
+      GFL_G3D_CAMERA_CreatePerspective( CAMERA_PER_FOVY, CAMERA_PER_ASPECT,
+                                        CAMERA_PER_NEAR, CAMERA_PER_FER, CAMERA_PER_SCALEW, 
+                                        &sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET, pWork->heapID );
+  }
+#endif
+
+  // カメラ初期設定
+#if 0
+  {
+#define cameraPerspway  ( 0x0b60 )
+#define cameraAspect    ( FX32_ONE * 4 / 3 )
+#define cameraNear	    ( 1 << FX32_SHIFT )
+#define cameraFar       ( 1024 << FX32_SHIFT )
+
+    
+    GFL_G3D_PROJECTION proj = { GFL_G3D_PRJPERS, 0, 0, cameraAspect, 0, cameraNear, cameraFar, 0 }; 
+    proj.param1 = FX_SinIdx( cameraPerspway ); 
+    proj.param2 = FX_CosIdx( cameraPerspway ); 
+    GFL_G3D_SetSystemProjection( &proj );	
+  }
+#endif
+  
 }
+
+void IRC_POKETRADE_G3dDraw(IRC_POKEMON_TRADE* pWork)
+{
+		G3X_EdgeMarking( FALSE );
+  GFL_G3D_CAMERA_Switching( pWork->p_camera );  
+  GFL_G3D_DRAW_DrawObject( pWork->pG3dObj, &pWork->status );
+}
+
 
 
 void IRC_POKETRADE_GraphicExit(IRC_POKEMON_TRADE* pWork)
@@ -424,8 +530,8 @@ static const POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_DATA* boxData , int lin
 {
 
   if(lineno > HAND_HORIZONTAL_NUM){
-    int tray = (lineno - HAND_HORIZONTAL_NUM) / BOX_HORIZONTAL_NUM;
-    int index = ((lineno - HAND_HORIZONTAL_NUM) % BOX_HORIZONTAL_NUM) + (BOX_HORIZONTAL_NUM * verticalindex);
+    int tray = LINE2TRAY(lineno);
+    int index = LINE2POKEINDEX(lineno, verticalindex);
     
     return BOXDAT_GetPokeDataAddress(boxData,tray,index);
   }
@@ -510,11 +616,19 @@ static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_DATA* boxData ,
 }
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   BoxScrollNumの値からLineの基本値を得る
+ * @param   state  変えるステートの関数
+ * @param   time   ステート保持時間
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
-void IRC_POKETRADE_InitBoxIcon( BOX_DATA* boxData ,IRC_POKEMON_TRADE* pWork )
+static int _boxScrollNum2Line(IRC_POKEMON_TRADE* pWork)
 {
-  int i,line = 0;
-
+  int line,i;
+  
   if(pWork->BoxScrollNum < (_TEMOTITRAY_MAX/2)){
     line = 0;
   }
@@ -527,6 +641,17 @@ void IRC_POKETRADE_InitBoxIcon( BOX_DATA* boxData ,IRC_POKEMON_TRADE* pWork )
     line += ((pWork->BoxScrollNum - _TEMOTITRAY_MAX) - (i*_BOXTRAY_MAX)) / 27 ;
     //OS_TPrintf("LINE %d %d\n", pWork->BoxScrollNum, line);
   }
+  return line;
+}
+
+
+
+
+
+void IRC_POKETRADE_InitBoxIcon( BOX_DATA* boxData ,IRC_POKEMON_TRADE* pWork )
+{
+  int i,line = _boxScrollNum2Line(pWork);
+
   if( pWork->oldLine != line ){
     pWork->oldLine = line;
 
@@ -705,4 +830,38 @@ static void _iconAllDrawDisable(IRC_POKEMON_TRADE* pWork)
   }
 }
 
+
+
+
+GFL_CLWK* IRC_POKETRADE_GetCLACT( IRC_POKEMON_TRADE* pWork , int x, int y, int* trayno, int* pokeindex)
+{
+  GFL_CLACTPOS apos;
+  int line,i,line2;
+
+  for(line =0 ;line < _LING_LINENO_MAX; line++)
+  {
+    for(i = 0;i < BOX_VERTICAL_NUM; i++)
+    {
+      GFL_CLACT_WK_GetPos( pWork->pokeIcon[line][i], &apos ,CLSYS_DRAW_SUB );
+      if((apos.x <= x) && (x < (apos.x+24))){
+        if((apos.y <= y) && (y < (apos.y+24))){
+
+          if(trayno!=NULL){//位置情報を得たい場合に計算
+            line2 = line + _boxScrollNum2Line(pWork);
+            *trayno = LINE2TRAY(line2);
+            *pokeindex = LINE2POKEINDEX(line2, i);
+          }
+          return pWork->pokeIcon[line][i];
+          //          line += BoxScrollNum(pWork);
+        }
+      }
+    }
+  }
+  return NULL;
+}
+
+
 #endif
+
+
+

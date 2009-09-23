@@ -143,7 +143,7 @@ static const NetRecvFuncTable _PacketTbl[] = {
 };
 
 #define _MAXNUM   (2)         // 最大接続人数
-#define _MAXSIZE  (32)        // 最大送信バイト数
+#define _MAXSIZE  (100)        // 最大送信バイト数
 #define _BCON_GET_NUM (16)    // 最大ビーコン収集数
 
 static GFLNetInitializeStruct aGFLNetInit = {
@@ -182,6 +182,8 @@ static GFLNetInitializeStruct aGFLNetInit = {
   TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
   WB_NET_COMPATI_CHECK,  //GameServiceID
   0xfffe,	// 赤外線タイムアウト時間
+  0,//MP通信親機送信バイト数
+  0,//dummy
 };
 
 

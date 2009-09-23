@@ -214,7 +214,8 @@ class RegulationBin
       
     when COL_PROGRAM_LAVEL    # Program
       num = value.to_i
-      outFH.puts( "#define REG_" + value + " " +  @TempNum)
+      num = @TempNum.to_i
+      outFH.puts( "#define REG_" + value + " " +  num.to_s)
     else
     end
   end

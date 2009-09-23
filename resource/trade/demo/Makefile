@@ -136,6 +136,7 @@ LIST_FILE = list.txt
 $(targetname).narc:  $(OBJ_FILE) Makefile
 	-ls -f *.N*R > $(LIST_FILE)
 	-ls -f *.nsb* >> $(LIST_FILE)
+	-ls -f *.spa >> $(LIST_FILE)
 	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(LIST_FILE)
 	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
@@ -150,15 +151,15 @@ endif
 clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
-	rm -f *.narc
-	rm -f *.naix
-	rm -f *.N*R
-	rm -f *.ns*
-	rm -r *.h
-	rm -f $(targetname).narc
-	rm -f $(targetname).naix
+	rm -rf *.narc
+	rm -rf *.naix
+	rm -rf *.N*R
+	rm -rf *.ns*
+	rm -rf *.h
+	rm -rf $(targetname).narc
+	rm -rf $(targetname).naix
 endif
-	rm -f $(TARGETDIR)/$(targetname).narc
-	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -rf $(TARGETDIR)/$(targetname).narc
+	rm -rf $(TARGETDIR)/$(targetname).naix
 
 

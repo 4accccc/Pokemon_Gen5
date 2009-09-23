@@ -93,7 +93,7 @@ typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
 ///< @brief ’ÊMŠÇ—\‘¢‘Ì
 typedef struct _GFL_NETSYS GFL_NETSYS;
 
-// define 
+// define
 #define GFL_NET_NETID_SERVER (0xff)    ///< NetID:ƒT[ƒo[‚Ìê‡‚±‚ê Œã‚Í0‚©‚çClientID
 #define GFL_NET_NETID_SERVERBIT (0x80)    ///< ƒT[ƒo[BIT
 #define GFL_NET_SENDID_ALLUSER (0xff)  ///< NetID:‘Sˆõ‚Ö‘—M‚·‚éê‡
@@ -146,9 +146,9 @@ typedef u8* (*GFL_NET_SendCallbackType)(int netID, int command, void* pWork);
 
 /// ƒRƒ}ƒ“ƒhƒpƒPƒbƒgƒe[ƒuƒ‹’è‹`
 typedef struct {
-    GFL_NET_PTRCommRecvFunc callbackFunc;    ///< ƒRƒ}ƒ“ƒh‚ª‚«‚½Žž‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
-//    PTRCommRecvSizeFunc getSizeFunc; ///< ƒRƒ}ƒ“ƒh‚Ì‘—Mƒf[ƒ^ƒTƒCƒY‚ªŒÅ’è‚È‚ç‘‚¢‚Ä‚­‚¾‚³‚¢
-    GFL_NET_PTRCommRecvBuffAddr getAddrFunc;
+  GFL_NET_PTRCommRecvFunc callbackFunc;    ///< ƒRƒ}ƒ“ƒh‚ª‚«‚½Žž‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
+  //    PTRCommRecvSizeFunc getSizeFunc; ///< ƒRƒ}ƒ“ƒh‚Ì‘—Mƒf[ƒ^ƒTƒCƒY‚ªŒÅ’è‚È‚ç‘‚¢‚Ä‚­‚¾‚³‚¢
+  GFL_NET_PTRCommRecvBuffAddr getAddrFunc;
 } NetRecvFuncTable;
 
 /// ‰Â•Ïƒf[ƒ^‘—M‚Å‚ ‚é‚±‚Æ‚ðŽ¦‚µ‚Ä‚¢‚é
@@ -168,20 +168,20 @@ typedef enum {
 } GFL_NET_ERROR_ENUM;
 
 
-typedef enum {   
+typedef enum {
   GFL_NET_ICON_WIFINCGR,   ///< WIFI‚ÌŠG‚Ìƒf[ƒ^
   GFL_NET_ICON_WMNCGR,     ///< Wireless‚ÌŠG‚Ìƒf[ƒ^
   GFL_NET_ICON_WMNCLR,     ///< ƒpƒŒƒbƒg‚Ìƒf[ƒ^
 } GFL_NET_ICON_ENUM;       /// ’ÊMƒAƒCƒRƒ“ƒtƒ@ƒCƒ‹‚ðŠO•”‚©‚ç‚à‚ç‚¤‚Æ‚«‚ÌŽ¯•Ê”Ô†
 
 enum {
-	GFL_NET_TYPE_WIRELESS,		///<ƒƒCƒ„ƒŒƒX’ÊM
-	GFL_NET_TYPE_WIFI,			///<WIFI’ÊM
-	GFL_NET_TYPE_WIFI_LOBBY,	///<WIFILê’ÊM
-	GFL_NET_TYPE_IRC,			///<ÔŠOü’ÊM
-	GFL_NET_TYPE_IRC_WIRELESS,	///<ÔŠOü’ÊM‚Åƒ}ƒbƒ`ƒ“ƒOŒãAƒƒCƒ„ƒŒƒX’ÊM‚ÖˆÚs
-	GFL_NET_TYPE_WIRELESS_SCANONLY,	///<ƒƒCƒ„ƒŒƒX’ÊM(ƒXƒLƒƒƒ“ê—pE“dŒ¹ƒ‰ƒ“ƒv”ñ“_–Å)
-	GFL_NET_TYPE_WIFI_GTS,		///<GTS’ÊMiWIFIƒfƒoƒCƒX‚Ìƒ[ƒh‚Ì‚Ýs‚¤j
+  GFL_NET_TYPE_WIRELESS,		///<ƒƒCƒ„ƒŒƒX’ÊM
+  GFL_NET_TYPE_WIFI,			///<WIFI’ÊM
+  GFL_NET_TYPE_WIFI_LOBBY,	///<WIFILê’ÊM
+  GFL_NET_TYPE_IRC,			///<ÔŠOü’ÊM
+  GFL_NET_TYPE_IRC_WIRELESS,	///<ÔŠOü’ÊM‚Åƒ}ƒbƒ`ƒ“ƒOŒãAƒƒCƒ„ƒŒƒX’ÊM‚ÖˆÚs
+  GFL_NET_TYPE_WIRELESS_SCANONLY,	///<ƒƒCƒ„ƒŒƒX’ÊM(ƒXƒLƒƒƒ“ê—pE“dŒ¹ƒ‰ƒ“ƒv”ñ“_–Å)
+  GFL_NET_TYPE_WIFI_GTS,		///<GTS’ÊMiWIFIƒfƒoƒCƒX‚Ìƒ[ƒh‚Ì‚Ýs‚¤j
 };
 
 enum{
@@ -212,7 +212,7 @@ typedef void* (*NetBeaconGetFunc)(void* pWork);        ///< ƒr[ƒRƒ“ƒf[ƒ^Žæ“¾ŠÖ
 typedef int (*NetBeaconGetSizeFunc)(void* pWork);      ///< ƒr[ƒRƒ“ƒf[ƒ^ƒTƒCƒYŽæ“¾ŠÖ”  ã‚Æ“¯‚¶‚Å‚©‚Ü‚í‚È‚¢
 typedef BOOL (*NetBeaconCompFunc)(GameServiceID GameServiceID1, GameServiceID GameServiceID2);  ///< ƒr[ƒRƒ“‚ÌƒT[ƒrƒX‚ð”äŠr‚µ‚ÄŒq‚¢‚Å—Ç‚¢‚©‚Ç‚¤‚©”»’f‚·‚é
 
-typedef void (*NetAutoParentConnect)(void* work);  ///< Ž©“®Ú‘±‚µ‚½‚Æ‚«‚Ée‚É‚È‚Á‚½ƒ}ƒVƒ“‚ÅŒÄ‚Ño‚³‚ê‚éŠÖ” 
+typedef void (*NetAutoParentConnect)(void* work);  ///< Ž©“®Ú‘±‚µ‚½‚Æ‚«‚Ée‚É‚È‚Á‚½ƒ}ƒVƒ“‚ÅŒÄ‚Ño‚³‚ê‚éŠÖ”
 
 typedef void (*NetErrorFunc)(GFL_NETHANDLE* pNet,int errNo, void* pWork);    ///< ’ÊMƒGƒ‰[‚ª‹N‚±‚Á‚½ê‡ŒÄ‚Î‚ê‚é ’ÊMØ’f‚·‚é‚µ‚©‚È‚¢
 typedef void (*NetFatalErrorFunc)(GFL_NETHANDLE* pNet,int errNo, void* pWork);    ///< ’ÊM•s”\‚ÈƒGƒ‰[‚ª‹N‚±‚Á‚½ê‡ŒÄ‚Î‚ê‚é “dŒ¹Ø’f‚·‚é‚µ‚©‚È‚¢
@@ -237,7 +237,7 @@ typedef void (*NetConnectNegotiation)(void* pWork,int netID); ///< ƒlƒSƒVƒG[ƒVƒ
 typedef void (*NetDeleteFriendListCallback)(int deletedIndex, int srcIndex, void* pWork); ///< ƒtƒŒƒ“ƒhƒŠƒXƒgíœƒR[ƒ‹ƒoƒbƒN
 
 typedef DWCUserData* (*NetGetDWCUserDataCallback)(void* pWork); ///< DWC‚Ìƒ†[ƒUƒf[ƒ^iŽ©•ª‚Ìƒf[ƒ^j‚ð“¾‚é
-typedef DWCFriendData* (*NetGetDWCFriendDataCallback)(void* pWork); ///< DWCŒ`Ž®‚Ì—F’BƒŠƒXƒg	
+typedef DWCFriendData* (*NetGetDWCFriendDataCallback)(void* pWork); ///< DWCŒ`Ž®‚Ì—F’BƒŠƒXƒg
 
 
 /// @brief ’ÊM‚Ì‰Šú‰»—p\‘¢‘Ì
@@ -259,7 +259,7 @@ typedef struct{
   NetWifiSaveUserDataFunc wifiSaveFunc;     ///< wifiÚ‘±Žž‚ÉŽ©•ª‚Ìƒf[ƒ^‚ðƒZ[ƒu‚·‚é•K—v‚ª‚ ‚éê‡‚ÉŒÄ‚Î‚ê‚éŠÖ”
   NetWifiMargeFrinedDataFunc wifiMargeFunc; ///< wifiÚ‘±Žž‚ÉƒtƒŒƒ“ƒhƒR[ƒh‚Ì“ü‚ê‘Ö‚¦‚ðs‚¤•K—v‚ª‚ ‚éê‡ŒÄ‚Î‚ê‚éŠÖ”
   NetDeleteFriendListCallback friendDeleteFunc;  ///< wifiƒtƒŒƒ“ƒhƒŠƒXƒgíœƒR[ƒ‹ƒoƒbƒN
-  NetGetDWCFriendDataCallback keyList;   ///< DWCŒ`Ž®‚Ì—F’BƒŠƒXƒg	
+  NetGetDWCFriendDataCallback keyList;   ///< DWCŒ`Ž®‚Ì—F’BƒŠƒXƒg
   NetGetDWCUserDataCallback myUserData;  ///< DWC‚Ìƒ†[ƒUƒf[ƒ^iŽ©•ª‚Ìƒf[ƒ^j
   u32 heapSize;           ///< DWC‚Ö‚Ìƒq[ƒvƒTƒCƒY
   u32 bDebugServer;        ///< ƒfƒoƒbƒN—pƒT[ƒo‚É‚Â‚È‚®‚©‚Ç‚¤‚©
@@ -282,6 +282,8 @@ typedef struct{
 #if GFL_NET_IRC
   u32 irc_timeout;			///< ÔŠOüÄÚ‘±Žž‚Ìƒ^ƒCƒ€ƒAƒEƒgŽžŠÔ
 #endif	//GFL_NET_IRC
+  u16 maxMPParentSize;    ///< MP’ÊMŽž‚Ée‚Ì‘—M—Ê‚ð‘‚â‚µ‚½‚¢ê‡ƒTƒCƒYŽw’è ‚»‚¤‚µ‚È‚¢ê‡‚O
+  u16 dummy;
 } GFLNetInitializeStruct;
 
 //-------------------------------
@@ -630,6 +632,16 @@ extern int GFL_NET_GetConnectNumMax(void);
  */
 //==============================================================================
 extern int GFL_NET_GetSendSizeMax(void);
+
+//------------------------------------------------------------------------------
+/**
+ * @brief    MP’ÊMŽž‚Ìe‹@‘—MÅ‘åƒTƒCƒY‚ð“¾‚é
+ * @return   ‘—MƒTƒCƒY
+ */
+//------------------------------------------------------------------------------
+extern int GFL_NET_GetMpParentSendSizeMax(void);
+
+
 //==============================================================================
 /**
  * @brief    ‰Šú‰»\‘¢‘Ì‚ð“¾‚é
@@ -893,14 +905,14 @@ extern u32 GFLR_NET_GetGGID(void);
 
 
 #ifndef HEAPSYS_DEBUG
- //‚±‚ÌŠÖ”‚ð’¼ÚŒÄ‚Ño‚·‚Ì‚Í‹ÖŽ~
+//‚±‚ÌŠÖ”‚ð’¼ÚŒÄ‚Ño‚·‚Ì‚Í‹ÖŽ~
 extern void* GFI_NET_Align32Alloc( HEAPID id, u32 size );
 
 #define GFL_NET_Align32Alloc( heapID, size )  GFI_NET_Align32Alloc( heapID, size )
 
 #else
 
- //‚±‚ÌŠÖ”‚ð’¼ÚŒÄ‚Ño‚·‚Ì‚Í‹ÖŽ~
+//‚±‚ÌŠÖ”‚ð’¼ÚŒÄ‚Ño‚·‚Ì‚Í‹ÖŽ~
 extern void* GFI_NET_Align32Alloc( HEAPID heapID, u32 size, const char* filename, u16 linenum );
 
 #define GFL_NET_Align32Alloc( heapID, size )  GFI_NET_Align32Alloc( heapID, size, __FILE__, __LINE__)
@@ -935,7 +947,7 @@ extern void* GFL_NET_GetWork(void);
 //==============================================================================
 /**
  * Ž©•ª‚Ì‹@‚ÌID‚ð•Ô‚·
- * @param   
+ * @param
  * @retval  Ž©•ª‚Ì‹@‚ÌID  ‚Â‚È‚ª‚Á‚Ä‚¢‚È‚¢ê‡GFL_NET_NO_PARENTMACHINE
  */
 //==============================================================================
@@ -976,7 +988,7 @@ extern int GFL_NET_SystemGetErrorCode(void);
 //--------------------------------------------------------------
 /**
  * @brief   Wi-FiLê‚Ì“ÆŽ©ƒGƒ‰[‚ª”­¶‚µ‚Ä‚¢‚é‚©
- * @param   none		
+ * @param   none
  * @retval  ƒGƒ‰[No(ƒGƒ‰[‚Å‚È‚¢ê‡‚Í0)
  */
 //--------------------------------------------------------------

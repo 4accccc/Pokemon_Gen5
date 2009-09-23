@@ -595,6 +595,7 @@ SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
 SRCS_OVERLAY_IRCBATTLEMATCH = net_app/irc_match/ircbattlematch.c \
                 net_app/friend_trade/ircbattlefriend.c \
 								net_app/poke_trade/ircpokemontrade.c \
+								net_app/poke_trade/ircpoketrade_3d.c \
 								net_app/poke_trade/ircpoketrade_gra.c
 
 # •sŽv‹c‚È‘¡‚è•¨

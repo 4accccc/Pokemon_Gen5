@@ -36,6 +36,7 @@ static BOOL NetTestNone(void* pCtl);
 static BOOL NetTestSendTiming(void* pCtl);
 static BOOL NetTestRecvTiming(void* pCtl);
 static BOOL NetTestEndStart(void* pCtl);
+static BOOL NetTestMoveStart(void* pCtl);
 static BOOL NetTestMoveSend(void* pCtl);
 static BOOL NetTestEnd(void* pCtl);
 
@@ -48,10 +49,12 @@ static void _netConnectFunc(void* pWork,int hardID);    ///< ƒn[ƒh‚ÅÚ‘±‚µ‚½Žž‚
 static void _netNegotiationFunc(void* pWork,int hardID);    ///< ƒlƒSƒVƒG[ƒVƒ‡ƒ“Š®—¹Žž‚ÉƒR[ƒ‹
 
 static void _endCallBack(void* pWork);
+static u8* _recvMemory(int netID, void* pWork, int size);
+
 
 
 static const NetRecvFuncTable _CommPacketTbl[] = {
-    {_RecvMoveData,         NULL},    ///NET_CMD_MOVE
+    {_RecvMoveData,         _recvMemory},    ///NET_CMD_MOVE
     {_RecvTalkData,         NULL},    ///NET_CMD_TALK
 };
 
@@ -100,17 +103,19 @@ static GFLNetInitializeStruct aGFLNetInit = {
     HEAPID_WIFI,  //wifi—p‚Écreate‚³‚ê‚éHEAPID
     HEAPID_NETWORK,  //IRC—p‚Écreate‚³‚ê‚éHEAPID
     GFL_WICON_POSX,GFL_WICON_POSY,        // ’ÊMƒAƒCƒRƒ“XYˆÊ’u
-    _MAXNUM,     // Å‘åÚ‘±l”
-    _MAXSIZE,  //Å‘å‘—MƒoƒCƒg”
+    4,                            // Å‘åÚ‘±l”
+    24,                  //Å‘å‘—MƒoƒCƒg”
     _BCON_GET_NUM,    // Å‘åƒr[ƒRƒ“ŽûW”
     TRUE,     // CRCŒvŽZ
-    FALSE,     // MP’ÊMeŽqŒ^’ÊMƒ‚[ƒh‚©‚Ç‚¤‚©
+    TRUE,     // MP’ÊMeŽqŒ^’ÊMƒ‚[ƒh‚©‚Ç‚¤‚©
     GFL_NET_TYPE_WIRELESS,  //’ÊMŽí•Ê
     TRUE,     // e‚ªÄ“x‰Šú‰»‚µ‚½ê‡A‚Â‚È‚ª‚ç‚È‚¢‚æ‚¤‚É‚·‚éê‡TRUE
     WB_NET_DEBUG_OHNO_SERVICEID,  //GameServiceID
 #if GFL_NET_IRC
 	IRC_TIMEOUT_STANDARD,	// ÔŠOüƒ^ƒCƒ€ƒAƒEƒgŽžŠÔ
 #endif
+    500,
+  0,
 };
 
 //--------------------------------------------------------------
@@ -143,6 +148,24 @@ static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
         return FALSE;
     }
     return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ˆÚ“®ƒf[ƒ^ŽóM‚Ì‚½‚ß‚Ì—ÌˆæŠm•ÛŠÖ”
+ * @param   netID      ‘—‚Á‚Ä‚«‚½ID
+ * @param   size       ƒpƒPƒbƒgƒTƒCƒY
+ * @param   pData      ƒf[ƒ^
+ * @param   pWork      ƒ[ƒNƒGƒŠƒA
+ * @param   pHandle    Žó‚¯Žæ‚é‘¤‚Ì’ÊMƒnƒ“ƒhƒ‹
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static u8 dummymem[4*sizeof(_testBeacon)];
+
+static u8* _recvMemory(int netID, void* pWork, int size)
+{
+  return &dummymem[netID*sizeof(_testBeacon)];
 }
 
 //--------------------------------------------------------------
@@ -302,12 +325,28 @@ static BOOL NetTestRecvTiming(void* pCtl)
     DEBUG_OHNO_CONTROL* pDOC = pCtl;
     
     if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),15)){
-        _testMoveStruct test={1,2,3,4,5};
-        NET_PRINT("TIMOK\n");
-        GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),NET_CMD_MOVE, sizeof(_testMoveStruct),&test);
-        _CHANGE_STATE( NetTestMoveSend );
+      NET_PRINT("TIMOK\n");
+      _CHANGE_STATE( NetTestMoveStart );
     }
     return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   \‘¢‘Ì“]‘—ƒeƒXƒg
+ * @param   pCtl    ƒfƒoƒbƒOƒ[ƒN
+ * @retval  PROCI—¹Žž‚É‚ÍTRUE
+ */
+//--------------------------------------------------------------
+static BOOL NetTestMoveStart(void* pCtl)
+{
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
+  _testMoveStruct test={1,2,3,4,5};
+
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),NET_CMD_MOVE, sizeof(_testMoveStruct),&test)){
+    _CHANGE_STATE( NetTestMoveSend );
+  }
+  return FALSE;
 }
 
 

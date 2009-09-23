@@ -247,6 +247,8 @@ BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm)
 #if GFL_NET_IRC
 	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
 #endif
+    0,//MP親最大サイズ 512まで
+    0,//dummy
 	};
 
 	aGFLNetInit.baseHeapID = d_comm->heapID_;

@@ -264,6 +264,8 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 #if GFL_NET_IRC
 				IRC_TIMEOUT_STANDARD,
 #endif	//GFL_NET_IRC
+    0,//MP親最大サイズ 512まで
+    0,//dummy
 			};
 			GFL_NET_Init( &net_init, NET_InitCallback, work );
 		}

@@ -76,6 +76,7 @@
 #define _SUBMENU_LISTMAX (8)
 
 #define _LING_LINENO_MAX (12)  //リングバッファ最大
+//#define _G3D_MDL_MAX (1)  //モデルの数
 
 
 typedef void (StateFunc)(IRC_POKEMON_TRADE* pState);
@@ -94,6 +95,13 @@ typedef enum
 
   CEL_RESOURCE_MAX,
 } CEL_RESOURCE;
+
+// セットアップ番号
+enum
+{
+  SETUP_INDEX_BALL,
+  SETUP_INDEX_MAX
+};
 
 
 struct _IRC_POKEMON_TRADE {
@@ -127,9 +135,23 @@ struct _IRC_POKEMON_TRADE {
   STRBUF* pMessageStrBufEx;
   PRINT_QUE*            SysMsgQue;
 	GFL_TCBLSYS *pMsgTcblSys;
+
+  GFL_G3D_RES* pG3dRes;
+  GFL_G3D_OBJ* pG3dObj;
+	GFL_G3D_OBJSTATUS	status;
+	GFL_G3D_CAMERA		*p_camera;
+
+  //  G3D_MDL_WORK			mdl[_G3D_MDL_MAX];
 	//    BMPWINFRAME_AREAMANAGER_POS aPos;
 	//3D
-	BOX_DATA* pBox;
+
+  GFL_G3D_UTIL* g3dUtil;
+  u16 unitIndex[ SETUP_INDEX_MAX ];
+//  ICA_ANIME* icaAnime;
+//  GFL_G3D_CAMERA* camera;
+
+
+  BOX_DATA* pBox;
 	GFL_G3D_CAMERA    *camera;
 
 	MCSS_SYS_WORK *mcssSys;
@@ -163,8 +185,14 @@ struct _IRC_POKEMON_TRADE {
 	u32 x;
 	u32 y;
 	BOOL bUpVec;
-	int catchIndex;   //つかんでるポケモン
-	int selectIndex;  //候補のポケモンIndex
+	GFL_CLWK* pCatchCLWK;   //つかんでるポケモンCLACT
+
+
+  int workPokeIndex;  // マウス操作でにぎったポケモン
+  int workBoxno;  //マウス操作でにぎったポケモン
+
+
+  int selectIndex;  //候補のポケモンIndex
 	int selectBoxno;  //候補のポケモンBox
 
   int underSelectIndex;  //まだ相手に見せてないポケモンIndex
@@ -177,8 +205,10 @@ struct _IRC_POKEMON_TRADE {
 	BOOL bParent;
 	BOOL bTouchReset;
 
-  int BoxScrollNum;   //ドット単位で位置を管理  8*20がBOX 8*12がてもち BOX_MAX_TRAY => 2880+96=2976
-  int oldLine; //現在の描画Line 更新トリガ
+  short BoxScrollNum;   ///< ドット単位で位置を管理  8*20がBOX 8*12がてもち BOX_MAX_TRAY => 2880+96=2976
+  short FriendBoxScrollNum;   ///< 上記の相手側の値
+  
+  short oldLine; //現在の描画Line 更新トリガ
   
   BOOL bgscrollRenew;
   BOOL touckON;
@@ -208,5 +238,11 @@ extern void IRC_POKETRADE_TrayDisp(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_InitBoxIcon( BOX_DATA* boxData ,IRC_POKEMON_TRADE* pWork );
 extern void IRC_POKETRADE_AllDeletePokeIconResource(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_G3dDraw(IRC_POKEMON_TRADE* pWork);
+
+extern void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork );
+extern void IRC_POKETRADEDEMO_Main( IRC_POKEMON_TRADE* pWork );
+extern void IRC_POKETRADEDEMO_End( IRC_POKEMON_TRADE* pWork );
+extern GFL_CLWK* IRC_POKETRADE_GetCLACT( IRC_POKEMON_TRADE* pWork , int x, int y, int* trayno, int* pokeindex);
 
 

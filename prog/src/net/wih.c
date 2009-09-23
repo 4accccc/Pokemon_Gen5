@@ -939,39 +939,6 @@ static void WH_ChangeSysState(int state)
 
 #endif
 
-#if 0
-static void _memoryAlloc(BOOL bParent)
-{
-	if(_pWmInfo->sRecvBuffer==NULL){
-		int size = GFL_NET_GetSendSizeMax();
-		int num = GFL_NET_GetConnectNumMax()-1;
-		int _PARENT_MAX_SIZE  =    ((size * num) + WM_SIZE_DS_PARENT_HEADER);
-		int _CHILD_MAX_SIZE   =    (size);
-		int _PARENT_RECV_BUFFER_SIZE  = WM_SIZE_MP_PARENT_RECEIVE_BUFFER( _CHILD_MAX_SIZE, num, FALSE );
-		int _PARENT_SEND_BUFFER_SIZE  = WM_SIZE_MP_PARENT_SEND_BUFFER( _PARENT_MAX_SIZE, FALSE );
-		int _CHILD_RECV_BUFFER_SIZE =  WM_SIZE_MP_CHILD_RECEIVE_BUFFER( _PARENT_MAX_SIZE, FALSE );
-		int _CHILD_SEND_BUFFER_SIZE =  WM_SIZE_MP_CHILD_SEND_BUFFER( _CHILD_MAX_SIZE, FALSE );
-
-		NET_PRINT("_memoryAlloc %d %d %d %d\n",
-							_PARENT_RECV_BUFFER_SIZE , _PARENT_SEND_BUFFER_SIZE,
-							_CHILD_RECV_BUFFER_SIZE,_CHILD_SEND_BUFFER_SIZE);
-		GF_ASSERT(_PARENT_MAX_SIZE < WM_SIZE_MP_DATA_MAX);  //ワイヤレス通信は WM_SIZE_MP_DATA_MAXを台数で割って動いている
-
-		if(bParent){
-			_pWmInfo->sRecvBufferSize = _PARENT_RECV_BUFFER_SIZE;
-			_pWmInfo->sSendBufferSize = _PARENT_SEND_BUFFER_SIZE;
-		}
-		else{
-			_pWmInfo->sRecvBufferSize = _CHILD_RECV_BUFFER_SIZE;
-			_pWmInfo->sSendBufferSize = _CHILD_SEND_BUFFER_SIZE;
-		}
-		_pWmInfo->sRecvBuffer = GFL_NET_Align32Alloc(_pWmInfo->heapID, _pWmInfo->sRecvBufferSize+32);
-		_pWmInfo->sSendBuffer = GFL_NET_Align32Alloc(_pWmInfo->heapID, _pWmInfo->sSendBufferSize+32);
-
-	}
-}
-#endif
-
 static void WH_SetError(int code)
 {
 	// 既にシステムが ERROR 状態になっている場合は、上書きしない。
@@ -3253,7 +3220,12 @@ BOOL WH_ParentConnect(int mode, u16 tgid, u16 channel,u16 maxEntry)
 	_pWmInfo->sParentParam.tgid = tgid;
 	_pWmInfo->sParentParam.channel = channel;
 	_pWmInfo->sParentParam.beaconPeriod = WM_GetDispersionBeaconPeriod();
-	_pWmInfo->sParentParam.parentMaxSize = ((GFL_NET_GetSendSizeMax() * (GFL_NET_GetConnectNumMax())) + WM_SIZE_DS_PARENT_HEADER);
+  if(GFL_NET_GetMpParentSendSizeMax()!=0){
+    _pWmInfo->sParentParam.parentMaxSize = GFL_NET_GetMpParentSendSizeMax();
+  }
+  else{
+    _pWmInfo->sParentParam.parentMaxSize = ((GFL_NET_GetSendSizeMax() * (GFL_NET_GetConnectNumMax())) + WM_SIZE_DS_PARENT_HEADER);
+  }
 	_pWmInfo->sParentParam.childMaxSize = GFL_NET_GetSendSizeMax();
 
 	WH_TRACE("Parent = %d %d %d\n", tgid, channel, maxEntry);
