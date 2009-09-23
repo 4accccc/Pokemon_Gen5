@@ -161,7 +161,12 @@ static void PSTATUS_SUB_PokeCreateMcss( IRC_POKEMON_TRADE *pWork ,int no, const 
 
 	GF_ASSERT( pWork->pokeMcss[no] == NULL );
 
-	MCSS_TOOL_MakeMAWPPP( ppp , &addWork , MCSS_DIR_FRONT );
+  if(no==0){
+    MCSS_TOOL_MakeMAWPPP( ppp , &addWork , MCSS_DIR_FRONT );
+  }
+  else{
+    MCSS_TOOL_MakeMAWPPP( ppp , &addWork , MCSS_DIR_BACK );
+  }
 	pWork->pokeMcss[no] = MCSS_Add( pWork->mcssSys , xpos[no] , PSTATUS_MCSS_POS_Y ,0 , &addWork );
 	MCSS_SetScale( pWork->pokeMcss[no] , &scale );
 }
@@ -1095,7 +1100,7 @@ static void _createBg(IRC_POKEMON_TRADE* pWork)
 			GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
 			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 			GX_VRAM_TEX_0_B,				// テクスチャイメージスロット
-			GX_VRAM_TEXPLTT_0_F,			// テクスチャパレットスロット
+			GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
 			GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
 			GX_OBJVRAMMODE_CHAR_1D_128K,		// サブOBJマッピングモード
 		};
@@ -1225,31 +1230,31 @@ static void _createBg(IRC_POKEMON_TRADE* pWork)
 
 	//3D系の初期化
 	{ //3D系の設定
-		static const VecFx32 cam_pos = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(101.0f)};
-		static const VecFx32 cam_target = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(-100.0f)};
+		static const VecFx32 cam_pos = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(300.0f)};
+		static const VecFx32 cam_target = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(0.0f)};
 		static const VecFx32 cam_up = {0,FX32_ONE,0};
 		//エッジマーキングカラー
 		static  const GXRgb edge_color_table[8]=
 		{ GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
-		GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
+		GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
 									0, pWork->heapID, Graphic_3d_SetUp );
-#if 0
+#if 1
 
 		//正射影カメラ
-		pWork->camera =  GFL_G3D_CAMERA_Create( GFL_G3D_PRJORTH,
+		pWork->pCamera =  GFL_G3D_CAMERA_Create( GFL_G3D_PRJORTH,
 																						FX32_ONE*12.0f,
 																						0,
 																						0,
 																						FX32_ONE*16.0f,
 																						(FX32_ONE),
-																						(FX32_ONE*200),
+																						(FX32_ONE*300),
 																						NULL,
 																						&cam_pos,
 																						&cam_up,
 																						&cam_target,
 																						pWork->heapID );
 
-		GFL_G3D_CAMERA_Switching( pWork->camera );
+		GFL_G3D_CAMERA_Switching( pWork->pCamera );
 		//エッジマーキングカラーセット
 		G3X_SetEdgeColorTable( edge_color_table );
 		G3X_EdgeMarking( TRUE );
@@ -1261,7 +1266,6 @@ static void _createBg(IRC_POKEMON_TRADE* pWork)
 
 
 }
-
 
 
 //------------------------------------------------------------------------------
@@ -1462,7 +1466,7 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
 static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	int i;
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x38000+0x3CF00 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x3C000+0x3CF00 );
 
 	{
 		IRC_POKEMON_TRADE *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_POKEMON_TRADE ), HEAPID_IRCBATTLE );
@@ -1512,6 +1516,7 @@ IRC_POKETRADEDEMO_Init(pWork);
  * @retval  none
  */
 //------------------------------------------------------------------------------
+
 static GFL_PROC_RESULT IrcBattleFriendProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	IRC_POKEMON_TRADE* pWork = mywk;
@@ -1539,16 +1544,17 @@ static GFL_PROC_RESULT IrcBattleFriendProcMain( GFL_PROC * proc, int * seq, void
   GFL_TCBL_Main( pWork->pMsgTcblSys );
   PRINTSYS_QUE_Main(pWork->SysMsgQue);
 
-	GFL_G3D_DRAW_Start();
-	GFL_G3D_DRAW_SetLookAt();
-//  GFL_G3D_CAMERA_Switching( pWork->camera );  
+    IRC_POKETRADEDEMO_Main(pWork);  
 
-//	MCSS_Main( pWork->mcssSys );
-//	MCSS_Draw( pWork->mcssSys );
-  //IRC_POKETRADE_G3dDraw(pWork);
-
-IRC_POKETRADEDEMO_Main(pWork);  
-	GFL_G3D_DRAW_End();
+  GFL_G3D_DRAW_Start();
+    GFL_G3D_DRAW_SetLookAt();
+    GFL_G3D_CAMERA_Switching( pWork->pCamera );  
+    
+    MCSS_Main( pWork->mcssSys );
+    MCSS_Draw( pWork->mcssSys );
+    //IRC_POKETRADE_G3dDraw(pWork);
+    GFL_G3D_DRAW_End();
+  
 
 	//	ConnectBGPalAnm_Main(&pWork->cbp);
 
@@ -1598,7 +1604,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
 	GFL_STR_DeleteBuffer(pWork->pMessageStrBufEx);
 
 
-	GFL_G3D_CAMERA_Delete(pWork->camera);
+	GFL_G3D_CAMERA_Delete(pWork->pCamera);
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
 
 

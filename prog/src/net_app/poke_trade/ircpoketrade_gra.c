@@ -212,11 +212,12 @@ void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork)
   
 }
 
+
 void IRC_POKETRADE_G3dDraw(IRC_POKEMON_TRADE* pWork)
 {
-		G3X_EdgeMarking( FALSE );
-  GFL_G3D_CAMERA_Switching( pWork->p_camera );  
-  GFL_G3D_DRAW_DrawObject( pWork->pG3dObj, &pWork->status );
+//		G3X_EdgeMarking( FALSE );
+//  GFL_G3D_CAMERA_Switching( pWork->p_camera );  
+//  GFL_G3D_DRAW_DrawObject( pWork->pG3dObj, &pWork->status );
 }
 
 
@@ -562,7 +563,7 @@ static void _calcPokeIconPos(int line,int index, GFL_CLACTPOS* pos)
 }
 
 
-
+//ラインにあわせたポケモン表示
 static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_DATA* boxData ,int line)
 {
   int i,k;
@@ -576,6 +577,7 @@ static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_DATA* boxData ,
     {
       int	fileNo,monsno,formno,bEgg;
       const POKEMON_PASO_PARAM* ppp = _getPokeDataAddress(boxData, line, i, pWork);
+      pWork->pokeIconLine[k][i] = line;
       if(!ppp){
         continue;
       }
@@ -847,7 +849,8 @@ GFL_CLWK* IRC_POKETRADE_GetCLACT( IRC_POKEMON_TRADE* pWork , int x, int y, int* 
         if((apos.y <= y) && (y < (apos.y+24))){
 
           if(trayno!=NULL){//位置情報を得たい場合に計算
-            line2 = line + _boxScrollNum2Line(pWork);
+
+            line2 = pWork->pokeIconLine[line][i];
             *trayno = LINE2TRAY(line2);
             *pokeindex = LINE2POKEINDEX(line2, i);
           }

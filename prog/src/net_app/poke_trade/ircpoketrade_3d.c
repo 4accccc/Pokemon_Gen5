@@ -46,67 +46,7 @@ enum
 	PRIORITY_MAIN_BG0,
 };
 
-// VRAMバンクの割り当て
-static const GFL_DISP_VRAM sc_VRAM_param = 
-{ 
-	GX_VRAM_BG_128_B,				      // メイン2DエンジンのBG
-	GX_VRAM_BGEXTPLTT_NONE,		  	// メイン2DエンジンのBG拡張パレット
-	GX_VRAM_SUB_BG_128_C,		  	  // サブ2DエンジンのBG
-	GX_VRAM_SUB_BGEXTPLTT_NONE,  	// サブ2DエンジンのBG拡張パレット
-	GX_VRAM_OBJ_80_EF,				    // メイン2DエンジンのOBJ
-	GX_VRAM_OBJEXTPLTT_NONE,		  // メイン2DエンジンのOBJ拡張パレット
-	GX_VRAM_SUB_OBJ_16_I,			    // サブ2DエンジンのOBJ
-	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-	GX_VRAM_TEX_0_A,				      // テクスチャイメージスロット
-	GX_VRAM_TEXPLTT_0_G,			    // テクスチャパレットスロット
-	GX_OBJVRAMMODE_CHAR_1D_32K,
-	GX_OBJVRAMMODE_CHAR_1D_32K,
-};
 
-
-// BGモード設定
-static const GFL_BG_SYS_HEADER sc_BG_mode = 
-{
-	GX_DISPMODE_GRAPHICS,	// 表示モード
-	GX_BGMODE_0,		   	  // BGモード(メインスクリーン)
-	GX_BGMODE_0,		      // BGモード(サブスクリーン) 
-	GX_BG0_AS_3D,		      // BG0の2D or 3Dモード選択
-};
-
-// BGコントロール設定
-static const GFL_BG_BGCNT_HEADER sc_BGCNT1_M = 
-{
-	0, 0,				              // 初期表示位置
-	0x800,					          // スクリーンバッファサイズ
-	0,						            // スクリーンバッファオフセット
-	GFL_BG_SCRSIZ_256x256,	  // スクリーンサイズ
-	GX_BG_COLORMODE_16,		    // カラーモード
-	GX_BG_SCRBASE_0x0000,	    // スクリーンベースブロック
-	GX_BG_CHARBASE_0x04000,	  // キャラクタベースブロック
-	GFL_BG_CHRSIZ_256x256,	  // キャラクタエリアサイズ
-	GX_BG_EXTPLTT_01,		      // BG拡張パレットスロット選択
-	PRIORITY_MAIN_BG1,		    // 表示プライオリティー
-	0,						            // エリアオーバーフラグ
-	0,						            // DUMMY
-	FALSE,					          // モザイク設定
-};
-
-static const GFL_BG_BGCNT_HEADER sc_BGCNT1_S = 
-{
-	0, 0,				            // 初期表示位置
-	0x800,					        // スクリーンバッファサイズ
-	0,						          // スクリーンバッファオフセット
-	GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
-	GX_BG_COLORMODE_16,		  // カラーモード
-	GX_BG_SCRBASE_0x0000,	  // スクリーンベースブロック
-	GX_BG_CHARBASE_0x04000,	// キャラクタベースブロック
-	GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
-	GX_BG_EXTPLTT_01,		    // BG拡張パレットスロット選択
-	0,						          // 表示プライオリティー
-	0,						          // エリアオーバーフラグ
-	0,						          // DUMMY
-	FALSE,					        // モザイク設定
-};
 
 
 //ライト初期設定データ
@@ -234,6 +174,7 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
   _demoInit( pWork->heapID );
   Initialize( pWork );
 
+#if 0
   campos.x = 0*FX32_ONE;
   campos.y = FX32_ONE*43;
   campos.z = 241*FX32_ONE;
@@ -249,7 +190,11 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
   tarpos.z = 0;
 
   GFL_G3D_CAMERA_SetCamUp( pWork->camera, &tarpos );
+#endif
 
+
+
+  
 }
 
 
@@ -433,17 +378,66 @@ static void Draw( IRC_POKEMON_TRADE* work )
   int a;
 
   VEC_Set( &status.trans, 0, 0, 0 );
-  VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+  VEC_Set( &status.scale, FX32_ONE/2, FX32_ONE/8, FX32_ONE/2 );
   MTX_Identity33( &status.rotate );
 
   a = -work->FriendBoxScrollNum * 65535 / 2976;
   
   MTX_RotY33(	&status.rotate,FX_SinIdx((u16)a),FX_CosIdx((u16)a));
-  
+
+#if 1
   // カメラ更新
 //  ICA_ANIME_SetCameraStatus( work->icaAnime, work->camera );
-  GFL_G3D_CAMERA_Switching( work->camera );
+ // GFL_G3D_CAMERA_Switching( work->camera );
 
+
+
+  {
+	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
+	G3X_SetShading( GX_SHADING_TOON); //GX_SHADING_HIGHLIGHT );
+	G3X_AntiAlias( FALSE );
+	G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
+	G3X_AlphaBlend( FALSE );		// アルファブレンド　オン
+	G3X_EdgeMarking( FALSE );
+	G3X_SetFog( TRUE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
+
+	// クリアカラーの設定
+	G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,63,FALSE);	//color,alpha,depth,polygonID,fog
+	// ビューポートの設定
+	G3_ViewPort(0, 0, 255, 191);
+
+	// ライト設定
+	{
+		static const GFL_G3D_LIGHT sc_GFL_G3D_LIGHT[] = 
+		{
+			{
+				{ 0, -FX16_ONE, 0 },
+				GX_RGB( 16,16,16),
+			},
+			{
+				{ 0, FX16_ONE, 0 },
+				GX_RGB( 16,16,16),
+			},
+			{
+				{ 0, -FX16_ONE, 0 },
+				GX_RGB( 16,16,16),
+			},
+			{
+				{ 0, -FX16_ONE, 0 },
+				GX_RGB( 16,16,16),
+			},
+		};
+		int i;
+		
+		for( i=0; i<NELEMS(sc_GFL_G3D_LIGHT); i++ ){
+			GFL_G3D_SetSystemLight( i, &sc_GFL_G3D_LIGHT[i] );
+		}
+  }
+
+  }
+#endif
+
+  
   // TEMP: カメラ設定
 //  {
 //    fx32 far = FX32_ONE * 0;
@@ -476,7 +470,7 @@ static void Draw( IRC_POKEMON_TRADE* work )
       GFL_G3D_DRAW_DrawObject( obj, &status );
     }
   }
-  GFL_G3D_DRAW_End();
+ GFL_G3D_DRAW_End();
 
   frame += anime_speed;
 //  ICA_ANIME_IncAnimeFrame( work->icaAnime, anime_speed );

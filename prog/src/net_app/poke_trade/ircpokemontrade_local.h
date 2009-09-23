@@ -46,7 +46,7 @@
 #define PLIST_RENDER_MAIN (1)
 #define PSTATUS_MCSS_POS_X1 (FX32_CONST(( 60 )/16.0f))
 #define PSTATUS_MCSS_POS_X2 (FX32_CONST(( 190 )/16.0f))
-#define PSTATUS_MCSS_POS_Y (FX32_CONST((192.0f-( 140 ))/16.0f))
+#define PSTATUS_MCSS_POS_Y (FX32_CONST((192.0f-( 130 ))/16.0f))
 
 #define YESNO_CHARA_OFFSET	(21 * 20 )
 #define YESNO_CHARA_W		( 8 )
@@ -105,8 +105,9 @@ enum
 
 
 struct _IRC_POKEMON_TRADE {
-	POKEMON_PASO_PARAM* recvPoke[2];
-	BOOL bPokemonSet[2];
+  u8 FriendPokemonCol[732];         ///< 相手のポケモンBOXにあるポケモン色
+	POKEMON_PASO_PARAM* recvPoke[2];  ///< 受け取ったポケモンを格納する場所
+	BOOL bPokemonSet[2];              ///< 
 	EVENT_IRCBATTLE_WORK* pParentWork;
 	StateFunc* state;      ///< ハンドルのプログラム状態
 	int selectType;   // 接続タイプ
@@ -139,7 +140,7 @@ struct _IRC_POKEMON_TRADE {
   GFL_G3D_RES* pG3dRes;
   GFL_G3D_OBJ* pG3dObj;
 	GFL_G3D_OBJSTATUS	status;
-	GFL_G3D_CAMERA		*p_camera;
+	GFL_G3D_CAMERA		*pCamera;
 
   //  G3D_MDL_WORK			mdl[_G3D_MDL_MAX];
 	//    BMPWINFRAME_AREAMANAGER_POS aPos;
@@ -170,6 +171,7 @@ struct _IRC_POKEMON_TRADE {
 	GFL_CLWK* pokeIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
 	u32 pokeIconNo[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
 	u32 pokeIconForm[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
+	u8 pokeIconLine[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
 
   GFL_CLWK* curIcon[CUR_NUM];
 
