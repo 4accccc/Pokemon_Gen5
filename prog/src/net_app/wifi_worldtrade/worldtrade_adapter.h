@@ -335,6 +335,8 @@ extern void EMAILSAVE_DCProfileCreate_Update( SAVE_CONTROL_WORK * savedata, Dpw_
  *		WBのシステムを使い実装する
 */
 //=============================================================================
+#include "system/bgwinfrm.h"
+#if 0
 #define BGWINFRM_TRANS_VBLANK	(0)
 
 typedef struct _BGWINFRM_WORK BGWINFRM_WORK;
@@ -354,6 +356,7 @@ extern void BGWINFRM_FramePut( BGWINFRM_WORK *wk, int index, int px, int py );
 extern u16 * BGWINFRM_FrameBufGet( BGWINFRM_WORK *wk, int index );
 extern void BGWINFRM_FrameOn( BGWINFRM_WORK *wk, int index );
 extern void BGWINFRM_FrameOff( BGWINFRM_WORK *wk, int index );
+#endif
 
 //=============================================================================
 /**

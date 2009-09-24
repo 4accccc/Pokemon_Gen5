@@ -415,6 +415,7 @@ void GF_STR_PrintColor( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int
  *		BGWINFRM
  */
 //=============================================================================
+#if 0
 //-------------------------------------
 ///		WIN_FRM
 //=====================================
@@ -867,3 +868,4 @@ void BGWINFRM_FrameOff( BGWINFRM_WORK *wk, int index )
 	GFL_BG_FillScreen( win->frm, 0, px, py, sx, sy, GFL_BG_SCRWRT_PALNL );
 	GFL_BG_LoadScreenV_Req( win->frm );
 }
+#endif
