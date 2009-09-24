@@ -5,4 +5,5 @@ SCRIPTFILES	+= \
   bg_attr.ev \
 	trainer.ev \
   init_scr.ev \
+  sodateya_scr.ev \
   pokecen_scr.ev

@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2009 09/16 (Wed) 01:30
+ * @date  2009 09/24 (Thu) 17:45
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -29,6 +29,12 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       ID_BG_ATTR_OFFSET_END,          //( 2799),
       NARC_script_seq_bg_attr_bin,
       NARC_script_message_bg_attr_dat
+    },
+    {//育て屋用スクリプト
+      ID_SODATEYA_SCR_OFFSET,         //( 2200),
+      ID_SODATEYA_SCR_OFFSET_END,     //( 2299),
+      NARC_script_seq_sodateya_scr_bin,
+      NARC_script_message_sodateya_scr_dat
     },
     {//ポケセン用スクリプト
       ID_POKECEN_SCR_OFFSET,          //( 2100),

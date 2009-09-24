@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2009 09/16 (Wed) 01:30
+ * @date  2009 09/24 (Thu) 17:45
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -21,6 +21,9 @@
 
 #define ID_POKECEN_SCR_OFFSET            (2100) //ポケセン用スクリプト
 #define ID_POKECEN_SCR_OFFSET_END        (2199)
+
+#define ID_SODATEYA_SCR_OFFSET           (2200) //育て屋用スクリプト
+#define ID_SODATEYA_SCR_OFFSET_END       (2299)
 
 #define ID_BG_ATTR_OFFSET                (2500) //BGアトリビュート話かけスクリプト
 #define ID_BG_ATTR_OFFSET_END            (2799)
