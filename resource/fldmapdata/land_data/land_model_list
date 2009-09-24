@@ -209,6 +209,10 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/palace03_01_00.nsbmd \
 	$(DIR_TEMP)/palace03_00_01.nsbmd \
 	$(DIR_TEMP)/palace03_01_01.nsbmd \
+	$(DIR_TEMP)/t05_00_00.nsbmd \
+	$(DIR_TEMP)/t05_01_00.nsbmd \
+	$(DIR_TEMP)/t05_00_01.nsbmd \
+	$(DIR_TEMP)/t05_01_01.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \

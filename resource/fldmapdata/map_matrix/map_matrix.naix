@@ -155,7 +155,8 @@ enum {
 	NARC_map_matrix_siten04_mat_bin = 141,
 	NARC_map_matrix_champ01_mat_bin = 142,
 	NARC_map_matrix_dendo01_mat_bin = 143,
-	NARC_map_matrix_ncastle01_mat_bin = 144
+	NARC_map_matrix_ncastle01_mat_bin = 144,
+	NARC_map_matrix_t05_mat_bin = 145
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */

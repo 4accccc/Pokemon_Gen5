@@ -143,3 +143,4 @@
 "champ01.bin"
 "dendo01.bin"
 "ncastle01.bin"
+"t05.bin"

@@ -1888,6 +1888,42 @@ $(DIR_TEMP)/palace03_01_01.nsbmd: $(DIR_RES)/palace03_01_01.imd
 	@echo create_nsbmd palace03_01_01
 	@$(G3DCVTR) $(DIR_RES)/palace03_01_01.imd -o $(DIR_TEMP)/palace03_01_01.nsbmd
 
+#t05_00_00
+$(DIR_OUTPUT)/t05_00_00.3dppack: $(DIR_TEMP)/t05_00_00.nsbmd $(DIR_RES)/t05_00_00.bin $(DIR_RES)/t05_00_00.3dmd
+	@echo create 3dppack t05_00_00
+	@$(BINLINKER) $(DIR_TEMP)/t05_00_00.nsbmd $(DIR_RES)/t05_00_00.bin $(DIR_RES)/t05_00_00.3dmd $(DIR_OUTPUT)/t05_00_00.3dppack WB
+
+$(DIR_TEMP)/t05_00_00.nsbmd: $(DIR_RES)/t05_00_00.imd
+	@echo create_nsbmd t05_00_00
+	@$(G3DCVTR) $(DIR_RES)/t05_00_00.imd -o $(DIR_TEMP)/t05_00_00.nsbmd
+
+#t05_01_00
+$(DIR_OUTPUT)/t05_01_00.3dppack: $(DIR_TEMP)/t05_01_00.nsbmd $(DIR_RES)/t05_01_00.bin $(DIR_RES)/t05_01_00.3dmd
+	@echo create 3dppack t05_01_00
+	@$(BINLINKER) $(DIR_TEMP)/t05_01_00.nsbmd $(DIR_RES)/t05_01_00.bin $(DIR_RES)/t05_01_00.3dmd $(DIR_OUTPUT)/t05_01_00.3dppack WB
+
+$(DIR_TEMP)/t05_01_00.nsbmd: $(DIR_RES)/t05_01_00.imd
+	@echo create_nsbmd t05_01_00
+	@$(G3DCVTR) $(DIR_RES)/t05_01_00.imd -o $(DIR_TEMP)/t05_01_00.nsbmd
+
+#t05_00_01
+$(DIR_OUTPUT)/t05_00_01.3dppack: $(DIR_TEMP)/t05_00_01.nsbmd $(DIR_RES)/t05_00_01.bin $(DIR_RES)/t05_00_01.3dmd
+	@echo create 3dppack t05_00_01
+	@$(BINLINKER) $(DIR_TEMP)/t05_00_01.nsbmd $(DIR_RES)/t05_00_01.bin $(DIR_RES)/t05_00_01.3dmd $(DIR_OUTPUT)/t05_00_01.3dppack WB
+
+$(DIR_TEMP)/t05_00_01.nsbmd: $(DIR_RES)/t05_00_01.imd
+	@echo create_nsbmd t05_00_01
+	@$(G3DCVTR) $(DIR_RES)/t05_00_01.imd -o $(DIR_TEMP)/t05_00_01.nsbmd
+
+#t05_01_01
+$(DIR_OUTPUT)/t05_01_01.3dppack: $(DIR_TEMP)/t05_01_01.nsbmd $(DIR_RES)/t05_01_01.bin $(DIR_RES)/t05_01_01.3dmd
+	@echo create 3dppack t05_01_01
+	@$(BINLINKER) $(DIR_TEMP)/t05_01_01.nsbmd $(DIR_RES)/t05_01_01.bin $(DIR_RES)/t05_01_01.3dmd $(DIR_OUTPUT)/t05_01_01.3dppack WB
+
+$(DIR_TEMP)/t05_01_01.nsbmd: $(DIR_RES)/t05_01_01.imd
+	@echo create_nsbmd t05_01_01
+	@$(G3DCVTR) $(DIR_RES)/t05_01_01.imd -o $(DIR_TEMP)/t05_01_01.nsbmd
+
 #m_dun0101_00_00
 $(DIR_OUTPUT)/m_dun0101_00_00.3dppack: $(DIR_TEMP)/m_dun0101_00_00.nsbmd $(DIR_RES)/m_dun0101_00_00.bin $(DIR_RES)/m_dun0101_00_00.3dmd
 	@echo create 3dppack m_dun0101_00_00
