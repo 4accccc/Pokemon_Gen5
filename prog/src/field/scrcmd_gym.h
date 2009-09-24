@@ -12,6 +12,7 @@
 //  extern 
 //======================================================================
 #ifndef	__ASM_NO_DEF_ //アセンブラソースは無効に
+extern VMCMD_RESULT EvCmdGymElec_Init( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGymElec_PushSw( VMHANDLE *core, void *wk );
 #endif	//__ASM_NO_DEF_
 

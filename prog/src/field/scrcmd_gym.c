@@ -29,7 +29,25 @@
 #include "scrcmd_gym.h"
 
 #include "gym_elec.h"
+#include "gym_init.h"
 
+//--------------------------------------------------------------
+/**
+ * 電気ジム初期化
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymElec_Init( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  GYM_INIT_Elec(fieldWork);
+
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //--------------------------------------------------------------
 /**

@@ -8,6 +8,7 @@
 //======================================================================
 
 #include "fieldmap.h"
+#include "gym_elec_sv.h"
 #include "gym_elec.h"
 #include "field_gimmick_def.h"
 #include "savedata/gimmickwork.h"
@@ -26,12 +27,11 @@
 
 #define STOP_NUM_MAX  (2)
 #define RALE_NUM_MAX  (8)
-#define LEVER_NUM_MAX (4)
-#define CAPSULE_NUM_MAX (4)
+
+
 #define PLATFORM_NUM_MAX (9)
 
 #define PLATFORM_NONE (0xff)
-#define PLATFORM_NO_STOP (-1)
 
 #define GYM_ELEC_GMK_OBJ_NUM  (10)
 #define RALE_PLATFORM_NUM_MAX (2)   //1レールで止まるプラットホームの数
@@ -87,12 +87,6 @@ static const int RaleAnm[RALE_NUM_MAX] = {
 #define FRAME_POS_SIZE  (4*3*360)   //座標ＸＹＺ各4バイトｘ360フレーム
 #define HEADER_SIZE  (8)   //フレームサイズ4バイト+格納情報3バイトのヘッダー情報があるためアライメントを加味して8バイト確保する
 
-typedef struct CAPSULE_DAT_tag
-{
-  int RaleIdx;      //現在走行中のレールインデックス
-  fx32 AnmFrame;    //レールの現在アニメフレーム
-}CAPSULE_DAT;
-
 typedef struct ELEC_GYM_TASK_WK_tag
 {
   u32 Timer;
@@ -115,17 +109,6 @@ typedef struct GYM_ELEC_TMP_tag
   GFL_TCB *PlayerBack;
   GFL_TCB *TrGo;
 }GYM_ELEC_TMP;
-
-//電気ジムセーブワーク
-typedef struct GYM_ELEC_SV_WORK_tag
-{
-  CAPSULE_DAT CapDat[CAPSULE_NUM_MAX];
-  u8 LeverSw[LEVER_NUM_MAX];    //0or1
-  u8 RaleChgReq[CAPSULE_NUM_MAX];
-  u8 NowRaleIdx[CAPSULE_NUM_MAX];     //現在走行しているレールのインデックス(スイッチ非依存)
-  u8 RideFlg[CAPSULE_NUM_MAX];      //カプセルに乗ったことがあるか？
-  u8 StopPlatformIdx[CAPSULE_NUM_MAX];
-}GYM_ELEC_SV_WORK;
 
 typedef struct LEVER_SW_tag
 {
@@ -842,7 +825,7 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
     u8 cap_idx;
     u8 anm_idx;
     int frm_idx;
-    VecFx32 dst_vec = {0,0,0};
+    VecFx32 dst_vec = {0,OBJ3D_Y,0};
     //レールインデックス/2でカプセルインデックスになる
     cap_idx = tmp->RadeRaleIdx / 2;
     anm_idx = ANM_CAP_MOV1 + tmp->RadeRaleIdx;
@@ -1588,7 +1571,7 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
         //アニメスクリプトコール
         OS_Printf("スクリプトコール\n");
-        SCRIPT_CallScript( event, SCRID_GIMMICK_C04GYM0101_SCR01,
+        SCRIPT_CallScript( event, SCRID_PRG_C04GYM0101_SCR01,
           NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
         (*seq)++;
       }      
@@ -1620,7 +1603,7 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
 
       //スクリプトコール
       OS_Printf("スクリプトコール\n");
-      SCRIPT_CallScript( event, SCRID_GIMMICK_C04GYM0101_SCR02,
+      SCRIPT_CallScript( event, SCRID_PRG_C04GYM0101_SCR02,
           NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
       (*seq)++;
     }

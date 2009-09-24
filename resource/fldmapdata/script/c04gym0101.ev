@@ -20,12 +20,13 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c04gym0101		//未使用
+_EVENT_DATA		ev_zone_c04gym0101
 _EVENT_DATA		ev_pos_c04gym0101_sw1
 _EVENT_DATA		ev_pos_c04gym0101_sw2
 _EVENT_DATA		ev_pos_c04gym0101_sw3
 _EVENT_DATA		ev_pos_c04gym0101_sw4
-_EVENT_DATA   gimmick_c04gym0101_scr01
-_EVENT_DATA   gimmick_c04gym0101_scr02
+_EVENT_DATA   ev_prg_c04gym0101_scr01
+_EVENT_DATA   ev_prg_c04gym0101_scr02
 _EVENT_DATA_END
 
 
@@ -48,6 +49,11 @@ _EVENT_DATA_END
 /**************************************************************/
 ev_c04gym0101:
   //とりあえず最初のラベルだけ生成している
+  _END
+
+//
+ev_zone_c04gym0101:
+  _GYM_ELEC_INIT()
   _END
 
 //ジムギミックposイベント：スタート地点（逆Ｌ字）
@@ -75,11 +81,11 @@ ev_pos_c04gym0101_sw4:
   _END
 
 //カプセル内トレーナーと自機のアニメーション
-gimmick_c04gym0101_scr01:
+ev_prg_c04gym0101_scr01:
   _END
 
 //カプセル内トレーナーとの戦闘
-gimmick_c04gym0101_scr02:
+ev_prg_c04gym0101_scr02:
   _END
 
 
