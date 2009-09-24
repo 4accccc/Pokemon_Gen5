@@ -12,7 +12,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	 tamada matsumiya suginaka_katsunori nakatsui masafumi_saitou suginaka_katsunori mai_ando murakami_naoto hozumi_yukiko kagaya iwasawa obata_toshihiro ariizumi_nobuhiko tomoya_takahashi
+USERS	=	 tamada matsumiya suginaka_katsunori nakatsui masafumi_saitou suginaka_katsunori mai_ando murakami_naoto hozumi_yukiko kagaya iwasawa obata_toshihiro ariizumi_nobuhiko tomoya_takahashi saitou
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
