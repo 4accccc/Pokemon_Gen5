@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ica version="1.6.0">
+
+<head>
+	<create user="ibe_mana" host="W00191" date="2009-09-24T18:39:40" source="book_anim01.mb"/>
+	<title>Character Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<node_anm_info
+	frame_size="121"
+	scaling_rule="standard"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tool_end_frame="120"
+	interpolation="frame"
+	compress_node="merge" node_size="1 1"
+	frame_step_mode="1"
+	tolerance_scale="0.100000"
+	tolerance_rotate="0.100000"
+	tolerance_translate="0.100000"
+/>
+
+<node_scale_data size="1">
+	1.000000
+</node_scale_data>
+
+<node_rotate_data size="1">
+	0.000000
+</node_rotate_data>
+
+<node_translate_data size="122">
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.000000 0.000000 -0.012695 -0.050781 -0.113525 -0.200928 -0.312012 -0.446777 -0.604736 -0.785156
+	-0.988037 -1.212646 -1.458740 -1.725586 -2.013184 -2.320801 -2.648193 -2.994629 -3.360107 -3.743896
+	-4.145752 -4.565186 -5.001709 -5.454834 -5.924316 -6.409424 -6.910156 -7.425781 -7.956055 -8.500244
+	-9.058350 -9.629639 -10.213867 -10.810303 -11.418701 -12.038818 -12.670166 -13.312012 -13.964111 -14.626221
+	-15.297607 -15.978027 -16.666992 -17.364258 -18.068848 -18.781006 -19.500000 -20.225342 -20.956787 -21.693604
+	-22.435791 -23.182373 -23.933594 -24.688477 -25.446777 -26.208008 -26.971924 -27.737793 -28.505615 -29.274658
+	-30.044434 -30.814697 -31.585205 -32.354980 -33.124023 -33.891846 -34.657715 -35.421631 -36.182861 -36.941162
+	-37.696045 -38.447266 -39.193848 -39.936035 -40.672852 -41.404297 -42.129639 -42.848633 -43.560547 -44.265381
+	-44.962646 -45.651611 -46.332031 -47.003418 -47.665527 -48.317627 -48.959473 -49.590820 -50.210938 -50.819336
+	-51.415771 -52.000000
+</node_translate_data>
+
+<node_anm_array size="1">
+	<node_anm index="0">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="121" data_head="1"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+</node_anm_array>
+
+</body>
+
+</ica>
