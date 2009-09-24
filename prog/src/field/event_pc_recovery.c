@@ -86,12 +86,12 @@ GFL_G3D_UTIL_SETUP setup =
 // ボール設置座標 (回復マシンからのオフセット)
 VecFx32 ball_offset[] = 
 {
-  {  -4*FX32_ONE,   14*FX32_ONE,  -51*FX32_ONE},
-  {   4*FX32_ONE,   14*FX32_ONE,  -51*FX32_ONE},
-  {  -9*FX32_ONE,   14*FX32_ONE,  -44*FX32_ONE},
-  {   9*FX32_ONE,   14*FX32_ONE,  -44*FX32_ONE},
-  {  -4*FX32_ONE,   14*FX32_ONE,  -40*FX32_ONE},
-  {   4*FX32_ONE,   14*FX32_ONE,  -40*FX32_ONE},
+  {  -4*FX32_ONE,   14*FX32_ONE,  -3*FX32_ONE},
+  {   4*FX32_ONE,   14*FX32_ONE,  -3*FX32_ONE},
+  {   9*FX32_ONE,   14*FX32_ONE,   4*FX32_ONE},
+  {   4*FX32_ONE,   14*FX32_ONE,   8*FX32_ONE},
+  {  -4*FX32_ONE,   14*FX32_ONE,   8*FX32_ONE},
+  {  -9*FX32_ONE,   14*FX32_ONE,   4*FX32_ONE},
 };
 // ボールのオブジェクト番号
 EXOBJID ball_obj_id[] = 
@@ -249,7 +249,7 @@ static void SetupEvent(
   work->heapID   = heap_id;
   work->fieldmap = fieldmap;
   VEC_Set( &work->machinePos, machine_pos->x, machine_pos->y, machine_pos->z );
-  work->pokemonNum = 6;//pokemon_num;
+  work->pokemonNum = pokemon_num;
   work->setBallNum = 0;
 
   // 拡張オブジェクトユニット追加
@@ -315,7 +315,7 @@ static void SetMonsterBall( RECOVERY_WORK* work )
   work->setBallNum++;
 
   // SE再生
-  PMSND_PlaySE( SEQ_SE_CANCEL2 );
+  PMSND_PlaySE( SEQ_SE_BOWA1 );
 
 #ifdef PC_RECOVERY_DEBUG_ON
   OBATA_Printf( "SetMonsterBall\n" );
