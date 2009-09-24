@@ -25,7 +25,7 @@
 #define	MCS_TIME_OUT	  ( 500 )
 
 #define MCS_PRINTBUF_SIZE (1024)
-#define MCS_RECVBUF_SIZE	(0x4000)
+#define MCS_RECVBUF_SIZE	(0x2000)
 #define MCS_SPLIT_SIZE		(MCS_RECVBUF_SIZE	- 0x0800)
 
 #define POKEMON_MCS_ID			(0x58976557)
@@ -914,6 +914,7 @@ BOOL	GFL_MCS_Read( u32 categoryID, void* pReadBuf, u32 readBufSize )
 			OS_Printf("読み込みバッファサイズを超えるデータが到着しています\n");
 			return FALSE;
 		}
+		OS_Printf("読み込みデータ到着(%x)\n", readSize);
 		result = TRUE;
 
 		if(linkStatus->rParam.split == FALSE){
@@ -933,7 +934,7 @@ BOOL	GFL_MCS_Read( u32 categoryID, void* pReadBuf, u32 readBufSize )
 					readSize -= recvSize;
 					(u8*)pReadBuf += recvSize;
 
-					sendIdle(&linkStatus->key);
+					if(recvSize){ sendIdle(&linkStatus->key); }
 				}
 			}
 		}
