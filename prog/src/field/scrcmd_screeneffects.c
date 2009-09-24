@@ -1,6 +1,7 @@
 //======================================================================
 /**
  * @file	scrcmd_screeneffects.c
+ *
  * @brief	スクリプトコマンド：フィールド画面演出系
  * @date  2009.09.22
  * @author	tamada GAMEFREAK inc.
@@ -104,6 +105,7 @@ VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk )
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
   FIELD_PLAYER_GetDirPos( fld_player, DIR_UP, &pos );
+  pos.z -= 48*FX32_ONE;  // TEMP: C01ポケセンでテスト
   //PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
   
   parent = SCRIPT_GetEvent( sc );
