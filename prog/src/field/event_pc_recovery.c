@@ -16,6 +16,7 @@
 //==============================================================================
 // 定数
 //==============================================================================
+#define PC_RECOVERY_DEBUG_ON  // デバッグ出力の有無
 #define MAX_BALL_NUM (6)  // 最大手持ちポケモン数
 #define BALLSET_WAIT (15) // ボールセット待ち時間
 #define ANIME_START_WAIT (10) // ボールセット後の回復アニメーション開始待ち時間
@@ -176,10 +177,19 @@ static GMEVENT_RESULT EVENT_FUNC_PcRecoveryAnime( GMEVENT* event, int* seq, void
 {
   RECOVERY_WORK* rw = (RECOVERY_WORK*)work;
 
+#ifdef PC_RECOVERY_DEBUG_ON
+  switch( *seq )
+  {
+  case SEQ_BALLSET:     OBATA_Printf( "SEQ_BALLSET\n" );     break;
+  case SEQ_WAIT:        OBATA_Printf( "SEQ_BALLSET\n" );     break;
+  case SEQ_RECOV_ANIME: OBATA_Printf( "SEQ_RECOV_ANIME\n" ); break;
+  case SEQ_EXIT:        OBATA_Printf( "SEQ_EXIT\n" );        break;
+  }
+#endif
+
   switch( *seq )
   {
   case SEQ_BALLSET:
-    OBATA_Printf( "SEQ_BALLSET\n" );
     // 一定タイミングでボールをセット
     if( rw->seqCount % BALLSET_WAIT == 0 )
     {
@@ -200,7 +210,6 @@ static GMEVENT_RESULT EVENT_FUNC_PcRecoveryAnime( GMEVENT* event, int* seq, void
     }
     break;
   case SEQ_RECOV_ANIME:
-    OBATA_Printf( "SEQ_RECOV_ANIME\n" );
     PlayRecoveryAnime( rw );
     if( IsRecoveryAnimeEnd( rw ) )
     {
@@ -209,7 +218,6 @@ static GMEVENT_RESULT EVENT_FUNC_PcRecoveryAnime( GMEVENT* event, int* seq, void
     }
     break;
   case SEQ_EXIT:
-    OBATA_Printf( "SEQ_EXIT\n" );
     ExitEvent( rw );
     return GMEVENT_RES_FINISH;
   } 
@@ -304,8 +312,9 @@ static void SetMonsterBall( RECOVERY_WORK* work )
   // セットしたボールの数をインクリメント
   work->setBallNum++;
 
-  // DEBUG:
+#ifdef PC_RECOVERY_DEBUG_ON
   OBATA_Printf( "SetMonsterBall\n" );
+#endif
 }
 
 //==============================================================================
@@ -328,8 +337,9 @@ static void StartRecoveryAnime( RECOVERY_WORK* work )
     FLD_EXP_OBJ_ValidCntAnm( exobj_cont, EXOBJUNITID, ball_obj_id[i], 0, TRUE );
   }
 
-  // DEBUG:
+#ifdef PC_RECOVERY_DEBUG_ON
   OBATA_Printf( "StartRecoveryAnime\n" );
+#endif
 }
 
 //==============================================================================
@@ -351,8 +361,9 @@ static void StopRecoveryAnime( RECOVERY_WORK* work )
     FLD_EXP_OBJ_ChgAnmStopFlg( anm_cont, FALSE );
   }
 
-  // DEBUG:
+#ifdef PC_RECOVERY_DEBUG_ON
   OBATA_Printf( "StopRecoveryAnime\n" );
+#endif
 }
 
 //==============================================================================
@@ -392,9 +403,10 @@ static void PlayRecoveryAnime( RECOVERY_WORK* work )
   FLD_EXP_OBJ_CNT_PTR exobj_cont = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
   FLD_EXP_OBJ_PlayAnime( exobj_cont );
   
-  // DEBUG:
+#ifdef PC_RECOVERY_DEBUG_ON
   {
     fx32 frame = FLD_EXP_OBJ_GetObjAnmFrm( exobj_cont, EXOBJUNITID, 0, 0 );
     OBATA_Printf( "anmframe = %d\n", frame>>FX32_SHIFT );
   }
+#endif
 }
