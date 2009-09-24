@@ -11,7 +11,6 @@
 #include "fieldmap.h"
 #include "event_pc_recovery.h"
 #include "pc_recovery_anime.naix"
-#include "field_sound.h"
 #include "sound/pm_sndsys.h"
 
 
