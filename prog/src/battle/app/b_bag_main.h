@@ -11,6 +11,7 @@
 
 #include "print/wordset.h"
 #include "system/palanm.h"
+#include "system/bgwinfrm.h"
 #include "savedata/myitem_savedata.h"
 #include "item/item.h"
 //#include "itemtool/myitem.h"
@@ -259,6 +260,7 @@ typedef struct {
 	GFL_CLWK * clwk[BBAG_CA_MAX];
 
 	// ボタンアニメスクリーンデータ
+/*
 	u16	btn_pocket[BBAG_BANM_MAX_N][BBAG_BSX_POCKET*BBAG_BSY_POCKET];	// ポケットボタン
 	u16	btn_use[BBAG_BANM_MAX_E][BBAG_BSX_USE*BBAG_BSY_USE];			// 使用ボタン
 	u16	btn_ret[BBAG_BANM_MAX_N][BBAG_BSX_RET*BBAG_BSY_RET];			// 戻るボタン
@@ -270,6 +272,8 @@ typedef struct {
 	u16	btn_icon_st[BBAG_BANM_MAX_N][BBAG_BSX_ICON*BBAG_BSY_ICON];
 	u16	btn_icon_ball[BBAG_BANM_MAX_N][BBAG_BSX_ICON*BBAG_BSY_ICON];
 	u16	btn_icon_batl[BBAG_BANM_MAX_N][BBAG_BSX_ICON*BBAG_BSY_ICON];
+*/
+	BGWINFRM_WORK * bgwfrm;
 
 	u8	btn_seq;
 	u8	btn_cnt;

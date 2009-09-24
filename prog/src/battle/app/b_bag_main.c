@@ -355,7 +355,10 @@ static void BattleBag_Main( GFL_TCB * tcb, void * work )
 	}
 
 	GFL_TCBL_Main( wk->tcbl );
-	BattleBag_ButtonAnmMain( wk );
+
+//	BattleBag_ButtonAnmMain( wk );
+	BBAGANM_ButtonAnmMain( wk );
+	BGWINFRM_MoveMain( wk->bgwfrm );
 //	BattleBag_GetDemoCursorAnm( wk );
 //	GFL_CLACT_SYS_Main( wk->crp );
 
@@ -395,6 +398,8 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 	BattleBag_BmpWrite( wk, wk->page );
 
 //	BattleBag_ButtonPageScreenInit( wk, wk->page );
+	BBAGANM_ButtonInit( wk );
+	BBAGANM_PageButtonPut( wk, wk->page );
 
 	BattleBag_ObjInit( wk );
 	BattleBag_PageObjSet( wk, wk->page );
@@ -438,6 +443,8 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 	BattleBag_BmpWrite( wk, wk->page );
 
 //	BattleBag_ButtonPageScreenInit( wk, wk->page );
+	BBAGANM_ButtonInit( wk );
+	BBAGANM_PageButtonPut( wk, wk->page );
 
 	BattleBag_ObjInit( wk );
 	BattleBag_PageObjSet( wk, wk->page );
@@ -485,8 +492,7 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 //			Snd_SePlay( SEQ_SE_DP_DECIDE );
 			wk->poke_id = (u8)ret;
 			wk->ret_seq = SEQ_BBAG_PAGE2_CHG;
-			BattleBag_ButtonAnmInit(
-				wk, BBAG_BTNANM_PAGE1+ret-BBAG_POKE_HPRCV, BBAG_BTNANM_MODE_END );
+			BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_POCKET01+ret-BBAG_POKE_HPRCV );
 			return SEQ_BBAG_BUTTON_WAIT;
 
 		case BBAG_P1_LASTITEM:		// ÅŒã‚ÉŽg—p‚µ‚½“¹‹ï
@@ -495,7 +501,7 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 				wk->poke_id = wk->dat->used_poke;
 				wk->ret_seq = SEQ_BBAG_PAGE3_CHG;
 				BattleBag_CorsorReset( wk );
-				BattleBag_ButtonAnmInit( wk, BBAG_BTNANM_LAST, BBAG_BTNANM_MODE_END );
+				BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_USE );
 				return SEQ_BBAG_BUTTON_WAIT;
 			}
 			break;
@@ -504,7 +510,7 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 //			Snd_SePlay( SEQ_SE_DP_DECIDE );
 			wk->dat->ret_item = ITEM_DUMMY_DATA;
 			wk->dat->ret_page = BBAG_POKE_MAX;
-			BattleBag_ButtonAnmInit( wk, BBAG_BTNANM_RET1, BBAG_BTNANM_MODE_END );
+			BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
 			return SEQ_BBAG_ENDSET;
 		}
 	}
@@ -560,14 +566,14 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 //			Snd_SePlay( SEQ_SE_DP_DECIDE );
 			wk->dat->item_pos[wk->poke_id] = (u8)ret;
 			wk->ret_seq = SEQ_BBAG_PAGE3_CHG;
-			BattleBag_ButtonAnmInit( wk, BBAG_BTNANM_ITEM1+ret, BBAG_BTNANM_MODE_END );
+			BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_ITEM01+ret );
 			return SEQ_BBAG_BUTTON_WAIT;
 		}
 		break;
 
 	case 6:		// –ß‚é
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );
-		BattleBag_ButtonAnmInit( wk, BBAG_BTNANM_RET2, BBAG_BTNANM_MODE_END );
+		BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
 		if( wk->dat->mode == BBAG_MODE_SHOOTER ){
 			wk->dat->ret_item = ITEM_DUMMY_DATA;
 			wk->dat->ret_page = BBAG_POKE_MAX;
@@ -583,7 +589,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 //			Snd_SePlay( SEQ_SE_DP_DECIDE );
 			wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
 			wk->page_mv = -1;
-			BattleBag_ButtonAnmInit( wk, BBAG_BTNANM_UP, BBAG_BTNANM_MODE_END );
+			BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_LEFT );
 			return SEQ_BBAG_BUTTON_WAIT;
 		}
 		break;
@@ -593,7 +599,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 //			Snd_SePlay( SEQ_SE_DP_DECIDE );
 			wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
 			wk->page_mv = 1;
-			BattleBag_ButtonAnmInit( wk, BBAG_BTNANM_DOWN, BBAG_BTNANM_MODE_END );
+			BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RIGHT );
 			return SEQ_BBAG_BUTTON_WAIT;
 		}
 		break;
@@ -627,6 +633,7 @@ static int BBAG_SeqItemSelNext( BBAG_WORK * wk )
 	BattleBag_Page2_StrItemPut( wk );
 	BattleBag_Page2_StrPageNumPut( wk );
 	BattleBag_PageObjSet( wk, wk->page );
+	BBAGANM_PageButtonPut( wk, wk->page );
 //	BattleBag_ButtonPageScreenInit( wk, wk->page );
 //	BBAG_P2CursorMvTblMake( wk );
 	return SEQ_BBAG_ITEM;
@@ -665,13 +672,13 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk )
 		}else{
 			wk->dat->ret_cost = 0;
 		}
-		BattleBag_ButtonAnmInit( wk, BBAG_BTNANM_USE, BBAG_BTNANM_MODE_END );
+		BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_USE );
 		return BBAG_ItemUse( wk );
 
 	case 1:		// –ß‚é
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );
 		wk->ret_seq = SEQ_BBAG_PAGE2_CHG;
-		BattleBag_ButtonAnmInit( wk, BBAG_BTNANM_RET3, BBAG_BTNANM_MODE_END );
+		BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
 		return SEQ_BBAG_BUTTON_WAIT;
 	}
 
@@ -910,14 +917,14 @@ static int BBAG_SeqTrgWait( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqButtonWait( BBAG_WORK * wk )
 {
-/*
 	if( wk->btn_flg == 0 ){
 		return wk->ret_seq;
 	}
-*/
+/*
 	if( wk->btn_seq == 2 ){
 		return wk->ret_seq;
 	}
+*/
 	return SEQ_BBAG_BUTTON_WAIT;
 }
 
@@ -963,6 +970,8 @@ static BOOL BBAG_SeqEnd( GFL_TCB * tcb, BBAG_WORK * wk )
 	}
 
 	wk->dat->end_flg = 1;
+
+	BBAGANM_ButtonExit( wk );
 
 	BattleBag_ObjFree( wk );
 	BattleBag_BmpFreeAll( wk );
@@ -1420,6 +1429,7 @@ static void BBAG_PageChange( BBAG_WORK * wk, u8 next_page )
 	BattleBag_BmpWrite( wk, next_page );
 
 //	BattleBag_ButtonPageScreenInit( wk, next_page );
+	BBAGANM_PageButtonPut( wk, next_page );
 
 	BattleBag_CursorMoveSet( wk, next_page );
 	BBAG_GetDemoCursorSet( wk, next_page );

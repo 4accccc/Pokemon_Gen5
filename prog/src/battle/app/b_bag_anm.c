@@ -7,7 +7,8 @@
  */
 //============================================================================================
 #include <gflib.h>
-/*↑[GS_CONVERT_TAG]*/
+
+#include "arc_def.h"
 #include "system/palanm.h"
 /*
 #include "system/msgdata.h"
@@ -25,6 +26,7 @@
 #include "b_bag_main.h"
 #include "b_bag_item.h"
 #include "b_bag_anm.h"
+#include "b_bag_gra.naix"
 
 
 //============================================================================================
@@ -126,7 +128,7 @@ enum {
 #define	P1_PAGE3_SCR_PY		( 1 )
 #define	P1_PAGE4_SCR_PX		( BBAG_BSX_POCKET )
 #define	P1_PAGE4_SCR_PY		( P1_PAGE3_SCR_PY + BBAG_BSY_POCKET )
-#define	P1_LASTITEM_SCR_PX	( 0 )
+#define	P1_LASTITEM_SCR_PX	( 1 )
 #define	P1_LASTITEM_SCR_PY	( 19 )
 #define	P1_RETURN_SCR_PX	( 27 )
 #define	P1_RETURN_SCR_PY	( 19 )
@@ -150,7 +152,7 @@ enum {
 #define	P2_RETURN_SCR_PX	( 59 )
 #define	P2_RETURN_SCR_PY	( 19 )
 // ３ページ目のボタン座標
-#define	P3_USE_SCR_PX		( 0 )
+#define	P3_USE_SCR_PX		( 1 )
 #define	P3_USE_SCR_PY		( 51 )
 #define	P3_RETURN_SCR_PX	( 27 )
 #define	P3_RETURN_SCR_PY	( 51 )
@@ -163,6 +165,19 @@ typedef struct {
 	u8	sy;
 }BUTTON_ANM;
 
+typedef struct {
+	u16	arc;
+	u8	sx;
+	u8	sy;
+}BGWF_DATA;
+
+#define	BUTTON_PAL_NORMAL		( 4 )
+#define	BUTTON_PAL_ON				( 5 )
+#define	BUTTON_PAL_OFF			( 6 )
+
+#define	SYSBTN_PAL_NORMAL		( 1 )
+#define	SYSBTN_PAL_ON				( 2 )
+#define	SYSBTN_PAL_OFF			( 3 )
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -250,6 +265,258 @@ static const u8 * const ButtonBmpWinIndex[] = {
 #define	SWAP_BMP_POS	( BBAG_BTNANM_RET3+1 )		// スワップ用データ位置
 
 
+static const BGWF_DATA ButtonAddData[] =
+{
+	{ NARC_b_bag_gra_pocket_button01_NSCR, 16, 8 },
+	{ NARC_b_bag_gra_pocket_button11_NSCR, 16, 8 },
+	{ NARC_b_bag_gra_pocket_button21_NSCR, 16, 8 },
+	{ NARC_b_bag_gra_pocket_button31_NSCR, 16, 8 },
+
+	{ NARC_b_bag_gra_item_button01_NSCR, 16, 6 },
+	{ NARC_b_bag_gra_item_button01_NSCR, 16, 6 },
+	{ NARC_b_bag_gra_item_button01_NSCR, 16, 6 },
+	{ NARC_b_bag_gra_item_button01_NSCR, 16, 6 },
+	{ NARC_b_bag_gra_item_button01_NSCR, 16, 6 },
+	{ NARC_b_bag_gra_item_button01_NSCR, 16, 6 },
+
+	{ NARC_b_bag_gra_return_button01_NSCR, 5, 5 },
+	{ NARC_b_bag_gra_left_button01_NSCR, 5, 5 },
+	{ NARC_b_bag_gra_right_button01_NSCR, 5, 5 },
+	{ NARC_b_bag_gra_use_button01_NSCR, 25, 5 },
+};
+
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ボタン作成
+ *
+ * @param	wk		戦闘バッグのワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BBAGANM_ButtonInit( BBAG_WORK * wk )
+{
+	ARCHANDLE * ah;
+	u32	i;
+
+	wk->bgwfrm = BGWINFRM_Create( BGWINFRM_TRANS_VBLANK, BBAG_BGWF_MAX, wk->dat->heap );
+
+	ah = GFL_ARC_OpenDataHandle( ARCID_B_BAG_GRA, wk->dat->heap );
+
+	for( i=0; i<BBAG_BGWF_MAX; i++ ){
+		BGWINFRM_Add( wk->bgwfrm, i, GFL_BG_FRAME2_S, ButtonAddData[i].sx, ButtonAddData[i].sy );
+		BGWINFRM_PutAreaSet( wk->bgwfrm, i, 0, 64, 0, 64 );
+		BGWINFRM_FrameSetArcHandle( wk->bgwfrm, i, ah, ButtonAddData[i].arc, FALSE );
+	}
+
+	GFL_ARC_CloseDataHandle( ah );
+
+	// 位置固定のボタンだけ座標を設定しておく
+	BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_POCKET01, P1_PAGE1_SCR_PX, P1_PAGE1_SCR_PY );
+	BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_POCKET02, P1_PAGE2_SCR_PX, P1_PAGE2_SCR_PY );
+	BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_POCKET03, P1_PAGE3_SCR_PX, P1_PAGE3_SCR_PY );
+	BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_POCKET04, P1_PAGE4_SCR_PX, P1_PAGE4_SCR_PY );
+
+	BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_ITEM01, P2_ITEM1_SCR_PX, P2_ITEM1_SCR_PY );
+	BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_ITEM02, P2_ITEM2_SCR_PX, P2_ITEM2_SCR_PY );
+	BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_ITEM03, P2_ITEM3_SCR_PX, P2_ITEM3_SCR_PY );
+	BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_ITEM04, P2_ITEM4_SCR_PX, P2_ITEM4_SCR_PY );
+	BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_ITEM05, P2_ITEM5_SCR_PX, P2_ITEM5_SCR_PY );
+	BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_ITEM06, P2_ITEM6_SCR_PX, P2_ITEM6_SCR_PY );
+
+	BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_LEFT, P2_UP_SCR_PX, P2_UP_SCR_PY );
+	BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_RIGHT, P2_DOWN_SCR_PX, P2_DOWN_SCR_PY );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ボタン削除
+ *
+ * @param	wk		戦闘バッグのワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BBAGANM_ButtonExit( BBAG_WORK * wk )
+{
+	BGWINFRM_Exit( wk->bgwfrm );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ボタンBG初期化
+ *
+ * @param	wk		戦闘バッグのワーク
+ * @param	page	ページ番号
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BBAGANM_PageButtonPut( BBAG_WORK * wk, u8 page )
+{
+	u32	i;
+
+	for( i=0; i<BBAG_BGWF_MAX; i++ ){
+		BGWINFRM_FrameOff( wk->bgwfrm, i );
+	}
+
+	switch( page ){
+	case BBAG_PAGE_POCKET:	// ポケット選択ページ
+		BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_RETURN, P1_RETURN_SCR_PX, P1_RETURN_SCR_PY );
+		BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_USE, P1_LASTITEM_SCR_PX, P1_LASTITEM_SCR_PX );
+		if( wk->dat->used_item == ITEM_DUMMY_DATA ){
+			BGWINFRM_PaletteChange(
+				wk->bgwfrm, BBAG_BGWF_USE, 0, 0, ButtonAddData[i].sx, ButtonAddData[i].sy, SYSBTN_PAL_OFF );
+		}else{
+			BGWINFRM_PaletteChange(
+				wk->bgwfrm, BBAG_BGWF_USE, 0, 0, ButtonAddData[i].sx, ButtonAddData[i].sy, SYSBTN_PAL_NORMAL );
+		}
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_POCKET01 );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_POCKET02 );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_POCKET03 );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_POCKET04 );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_RETURN );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_USE );
+		break;
+
+	case BBAG_PAGE_MAIN:	// アイテム選択ページ
+		BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_RETURN, P2_RETURN_SCR_PX, P2_RETURN_SCR_PY );
+		for( i=0; i<6; i++ ){
+			if( BattleBag_PosItemCheck( wk, i ) == 0 ){
+				BGWINFRM_PaletteChange(
+					wk->bgwfrm, BBAG_BGWF_ITEM01+i, 0, 0,
+					ButtonAddData[BBAG_BGWF_ITEM01+i].sx, ButtonAddData[BBAG_BGWF_ITEM01+i].sy, BUTTON_PAL_OFF );
+			}else{
+				BGWINFRM_PaletteChange(
+					wk->bgwfrm, BBAG_BGWF_ITEM01+i, 0, 0,
+					ButtonAddData[BBAG_BGWF_ITEM01+i].sx, ButtonAddData[BBAG_BGWF_ITEM01+i].sy, BUTTON_PAL_NORMAL );
+			}
+		}
+		if( wk->scr_max[wk->poke_id] == 0 ){
+				BGWINFRM_PaletteChange(
+					wk->bgwfrm, BBAG_BGWF_LEFT, 0, 0,
+					ButtonAddData[BBAG_BGWF_LEFT].sx, ButtonAddData[BBAG_BGWF_LEFT].sy, SYSBTN_PAL_OFF );
+				BGWINFRM_PaletteChange(
+					wk->bgwfrm, BBAG_BGWF_RIGHT, 0, 0,
+					ButtonAddData[BBAG_BGWF_RIGHT].sx, ButtonAddData[BBAG_BGWF_RIGHT].sy, SYSBTN_PAL_OFF );
+		}else{
+				BGWINFRM_PaletteChange(
+					wk->bgwfrm, BBAG_BGWF_LEFT, 0, 0,
+					ButtonAddData[BBAG_BGWF_LEFT].sx, ButtonAddData[BBAG_BGWF_LEFT].sy, SYSBTN_PAL_NORMAL );
+				BGWINFRM_PaletteChange(
+					wk->bgwfrm, BBAG_BGWF_RIGHT, 0, 0,
+					ButtonAddData[BBAG_BGWF_RIGHT].sx, ButtonAddData[BBAG_BGWF_RIGHT].sy, SYSBTN_PAL_NORMAL );
+		}
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_ITEM01 );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_ITEM02 );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_ITEM03 );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_ITEM04 );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_ITEM05 );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_ITEM06 );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_LEFT );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_RIGHT );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_RETURN );
+		break;
+
+	case BBAG_PAGE_ITEM:	// アイテム使用ページ
+		BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_RETURN, P3_RETURN_SCR_PX, P3_RETURN_SCR_PY );
+		BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_USE, P3_USE_SCR_PX, P3_USE_SCR_PY );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_RETURN );
+		BGWINFRM_FrameOn( wk->bgwfrm, BBAG_BGWF_USE );
+		break;
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ボタンアニメ初期化
+ *
+ * @param	wk		戦闘バッグのワーク
+ * @param	id		ボタンID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BBAGANM_ButtonAnmInit( BBAG_WORK * wk, u8 id )
+{
+	wk->btn_seq  = 0;
+	wk->btn_cnt  = 0;
+	wk->btn_id   = id;
+//	wk->btn_mode = mode;
+	wk->btn_flg  = 1;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ボタンアニメメイン
+ *
+ * @param	wk		戦闘バッグのワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BBAGANM_ButtonAnmMain( BBAG_WORK * wk )
+{
+	if( wk->btn_flg != 0 ){
+		u8	pal;
+
+		switch( wk->btn_seq ){
+		case 0:
+			if( wk->btn_id >= BBAG_BGWF_RETURN ){
+				pal = SYSBTN_PAL_ON;
+			}else{
+				pal = BUTTON_PAL_ON;
+			}
+			BGWINFRM_PaletteChange(
+				wk->bgwfrm, wk->btn_id, 0, 0,
+				ButtonAddData[wk->btn_id].sx, ButtonAddData[wk->btn_id].sy, pal );
+			BGWINFRM_FrameOn( wk->bgwfrm, wk->btn_id );
+			wk->btn_seq++;
+			break;
+
+		case 1:
+		case 3:
+			if( wk->btn_cnt == 1 ){
+				wk->btn_cnt = 0;
+				wk->btn_seq++;
+			}else{
+				wk->btn_cnt++;
+			}
+			break;
+
+		case 2:
+			if( wk->btn_id >= BBAG_BGWF_RETURN ){
+				pal = SYSBTN_PAL_NORMAL;
+			}else{
+				pal = BUTTON_PAL_NORMAL;
+			}
+			BGWINFRM_PaletteChange(
+				wk->bgwfrm, wk->btn_id, 0, 0,
+				ButtonAddData[wk->btn_id].sx, ButtonAddData[wk->btn_id].sy, pal );
+			BGWINFRM_FrameOn( wk->bgwfrm, wk->btn_id );
+			wk->btn_seq++;
+			break;
+
+		case 4:
+			wk->btn_seq = 0;
+			wk->btn_flg = 0;
+			break;
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+#if 0
 //--------------------------------------------------------------------------------------------
 /**
  * ボタンスクリーン作成
@@ -262,6 +529,7 @@ static const u8 * const ButtonBmpWinIndex[] = {
 //--------------------------------------------------------------------------------------------
 void BattleBag_ButtonScreenMake( BBAG_WORK * wk, u16 * scrn )
 {
+/*
 	// ポケットボタン
 	BBAG_ScrnCopy(
 		wk->btn_pocket[BBAG_BANM_PAT0], scrn,
@@ -379,6 +647,7 @@ void BattleBag_ButtonScreenMake( BBAG_WORK * wk, u16 * scrn )
 	BBAG_ScrnCopy(
 		wk->btn_icon_batl[BBAG_BANM_PAT2], scrn,
 		DAT_PX_BATL_3, DAT_PY_BATL_3, BBAG_BSX_ICON, BBAG_BSY_ICON );
+*/
 }
 
 
@@ -421,6 +690,7 @@ static void BBAG_ScrnCopy( u16 * buf, u16 * scrn, u8 px, u8 py, u8 sx, u8 sy )
 //--------------------------------------------------------------------------------------------
 static u16 * BBAG_ButtonScreenBufGet( BBAG_WORK * wk, u8 id, u8 num )
 {
+/*
 	switch( id ){
 	case BBAG_BTNANM_PAGE1:
 	case BBAG_BTNANM_PAGE2:
@@ -453,6 +723,7 @@ static u16 * BBAG_ButtonScreenBufGet( BBAG_WORK * wk, u8 id, u8 num )
 	case BBAG_BTNANM_USE:
 		return wk->btn_use[num];
 	}
+*/
 	return NULL;
 }
 
@@ -528,6 +799,7 @@ static u16 BBAG_ButtonPalGet( BBAG_WORK * wk, u8 id, u8 anm, u8 page )
 //--------------------------------------------------------------------------------------------
 static void BBAG_ButtonPageIconSet( BBAG_WORK * wk, u16 * buf, u8 id, u8 anm )
 {
+/*
 	u16 * icon;
 	u16	i, j;
 
@@ -548,6 +820,7 @@ static void BBAG_ButtonPageIconSet( BBAG_WORK * wk, u16 * buf, u8 id, u8 anm )
 			buf[BBAG_BSX_POCKET*(PAGE_ICON_BPY+i)+PAGE_ICON_BPX+j] = icon[BBAG_BSX_ICON*i+j];
 		}
 	}
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -793,6 +1066,7 @@ void BattleBag_ButtonAnmMain( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BattleBag_ButtonPageScreenInit( BBAG_WORK * wk, u8 page )
 {
+/*
 	switch( page ){
 	case BBAG_PAGE_POCKET:	// ポケット選択ページ
 		BBAG_ButtonScreenWrite( wk, BBAG_BTNANM_PAGE1, 0, page );
@@ -833,4 +1107,6 @@ void BattleBag_ButtonPageScreenInit( BBAG_WORK * wk, u8 page )
 		BBAG_ButtonScreenWrite( wk, BBAG_BTNANM_USE, 0, page );
 		BBAG_ButtonScreenWrite( wk, BBAG_BTNANM_RET3, 0, page );
 	}
+*/
 }
+#endif
