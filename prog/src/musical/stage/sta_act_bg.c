@@ -39,6 +39,7 @@ enum
 {
   MUS_BG_ANM_ICA,
   MUS_BG_ANM_ITA,
+  MUS_BG_ANM_ITP,
   
   MUS_BG_ANM_MAX,
 };
@@ -116,8 +117,8 @@ void	STA_BG_DrawSystem( STA_BG_SYS *work )
   {
     static GFL_G3D_OBJSTATUS objState = {
                       {FX32_CONST(16.0f),FX32_CONST(3.0f),FX32_CONST(-6.0f)},
-//                      {FX32_CONST(0.05f),FX32_CONST(0.05f),FX32_CONST(0.05f)},
-                      {FX32_ONE,FX32_ONE,FX32_ONE},
+                      {FX32_CONST(0.2f),FX32_CONST(0.2f),FX32_CONST(0.2f)},
+//                      {FX32_ONE,FX32_ONE,FX32_ONE},
                       {0}};
     
   	MTX_Identity33(&objState.rotate);
@@ -187,6 +188,7 @@ void	STA_BG_CreateBg( STA_BG_SYS* work , const u8 bgNo )
 
 	work->anmRes[MUS_BG_ANM_ICA] = GFL_G3D_CreateResourceArc( ARCID_STAGE_GRA, NARC_stage_gra_mus_stage03_nsbta ); 
 	work->anmRes[MUS_BG_ANM_ITA] = GFL_G3D_CreateResourceArc( ARCID_STAGE_GRA, NARC_stage_gra_mus_stage03_nsbca ); 
+	work->anmRes[MUS_BG_ANM_ITP] = GFL_G3D_CreateResourceArc( ARCID_STAGE_GRA, NARC_stage_gra_mus_stage03_nsbtp ); 
 	if( GFL_G3D_TransVramTexture( work->mdlRes ) == FALSE )
 	{
 		GF_ASSERT_MSG( NULL , "Stage Bg System Can't Create Bg!\n" );
@@ -194,6 +196,7 @@ void	STA_BG_CreateBg( STA_BG_SYS* work , const u8 bgNo )
 	}
   
   work->render = GFL_G3D_RENDER_Create( work->mdlRes , 0 , work->mdlRes );
+
   for(i=0;i<MUS_BG_ANM_MAX;i++ )
   {
     work->anmObj[i] = GFL_G3D_ANIME_Create( work->render , work->anmRes[i], 0 );
@@ -210,6 +213,7 @@ void	STA_BG_DeleteBg( STA_BG_SYS* work )
 {
   u8 i;
   GFL_G3D_OBJECT_Delete( work->g3dobj );
+
   for(i=0;i<MUS_BG_ANM_MAX;i++ )
   {
     GFL_G3D_ANIME_Delete( work->anmObj[i] );
