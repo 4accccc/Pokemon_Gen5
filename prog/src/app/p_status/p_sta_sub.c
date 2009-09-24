@@ -27,8 +27,15 @@
 //======================================================================
 #pragma mark [> define
 
-#define PSTATUS_MCSS_POS_X (FX32_CONST(( 200+16 )/16.0f))
-#define PSTATUS_MCSS_POS_Y (FX32_CONST((192.0f-( 120 ))/16.0f))
+
+#define PSTATUS_POS_X(val) (FX32_CONST((val)/16.0f))
+#define PSTATUS_POS_Y(val) (FX32_CONST((192.0f-( val ))/16.0f))
+
+//#define PSTATUS_MCSS_POS_X (FX32_CONST(( 200+16 )/16.0f))
+//#define PSTATUS_MCSS_POS_Y (FX32_CONST(( 192.0f - (120) )/16.0f))
+
+#define PSTATUS_MCSS_POS_X (PSTATUS_POS_X( 200+16 ))
+#define PSTATUS_MCSS_POS_Y (PSTATUS_POS_Y( 120 ))
 
 //座標系
 //上用Win
@@ -71,19 +78,25 @@
 #define PSTATUS_SUB_TOUCH_LEFT ( 152)
 #define PSTATUS_SUB_TOUCH_RIGHT ( 255)
 
+//タッチペン判定でこれ以上動いたら動いたとみなす
+#define PSTATUS_SUB_TP_MOVE_LENGTH ( 16 )
+//動きの有効時間
+#define PSTATUS_SUB_TP_MOVE_TIME ( 20 )
+//アクションが確定するカウント量
+#define PSTATUS_SUB_ACTION_COUNT ( 20 )
+//アクションが終了するカウント
+#define PSTATUS_SUB_ACTION_END_COUNT ( 24 )
+
+//TP動作速度を記録する数
+#define PSTATUS_SUB_TP_SPEED_CNT (5)
+
 //カメラ定義
 #define PSTATUS_SUB_CAMERA_FRONT_X (FX32_CONST(-41.0f))
 #define PSTATUS_SUB_CAMERA_BACK_X (FX32_CONST(-66.0f))
 
-
-//くすぐり系定義
-#define PSTATUS_SUB_TICKLE_WIDHT (8)  //くすぐり幅
-#define PSTATUS_SUB_TICKLE_TIME (20)  //くすぐり有効時間
-#define PSTATUS_SUB_TICKLE_NUM (4)  //くすぐり回数
-
-//ジャンプ系定義
-#define PSTATUS_SUB_JUMP_TIME (10)
-#define PSTATUS_SUB_JUMP_HEIGHT (2)  //FX16にかけるので整数でOK
+//振り向き系定義
+#define PSTATUS_SUB_TURN_TIME (10)
+#define PSTATUS_SUB_TURN_HEIGHT (2)  //FX16にかけるので整数でOK
 
 //前→後ろアニメ定義
 #define PSTATUS_SUB_FLIP_TIME (3)
@@ -95,7 +108,7 @@
 
 typedef enum
 {
-  PSS_DISP_FORNT,
+  PSS_DISP_FRONT,
   PSS_FRONT_TO_BACK,
   PSS_DISP_BACK,
   PSS_BACK_TO_FRONT,
@@ -115,25 +128,56 @@ enum
   SSMT_MAX,
 }PSTAUTS_SUB_MARK_TYPE;
 
-//くすぐりの方向
 typedef enum
 {
-  SSTD_NONE,  //初回
-  SSTD_LEFT,  //左に行った
-  SSTD_RIGHT, //右に行った
+  PSSS_NONE,
+  PSSS_STEP,
+  PSSS_JUMP,
+  PSSS_FLOAT,
+  PSSS_STEP_END,
+  PSSS_JUMP_END,
+  PSSS_FLOAT_END,
   
-}PSTATUS_SUB_TICKLE_DIR;
+}PSTAUTS_SUB_SUBACTION_STATE;
+
+//TPアクションのTP移動方向
+typedef enum
+{
+  SSMD_NONE,  //初回
+  SSMD_RIGHT, //右に行った
+  SSMD_DOWN,  //下に行った
+  SSMD_LEFT,  //左に行った
+  SSMD_UP,    //上に行った
+}PSTATUS_SUB_MOVE_DIR;
+
+//TPアクションのTP回転方向
+typedef enum
+{
+  SSRD_NONE,  //初回
+  SSRD_RIGHT, //右周り(時計回り
+  SSRD_LEFT,  //左周り
+}PSTATUS_SUB_ROT_DIR;
 
 //======================================================================
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
+typedef struct
+{
+  u8  count;
+  u8  time;
+  u8  befX;
+  u8  befY;
+  PSTATUS_SUB_MOVE_DIR  dir;
+}PSTATUS_TP_ACTION_WORK;
+
 struct _PSTATUS_SUB_WORK
 {
   MCSS_WORK     *pokeMcss;
   MCSS_WORK     *pokeMcssBack;
   
   PSTATUS_SUB_STATE state;
+
   BOOL  isDispFront;
   
   GFL_BMPWIN  *bmpWinUpper;
@@ -142,16 +186,35 @@ struct _PSTATUS_SUB_WORK
   GFL_CLWK    *clwkBall;
   GFL_CLWK    *clwkMark[SSMT_MAX];
   
-  //TPくすぐり操作用
+
+  //サブアクション用
+  BOOL isStartAction; //振り返りチェックに使う
+  PSTAUTS_SUB_SUBACTION_STATE subActState;
+  
+  u16 continueCount;
+  u16 subActCount;
+  u16 subActStep;
+  u16 subActValue;  //回転用 高さ
+  u16 subActTarget; //回転用 目標値
+
+  //TP操作用
   BOOL        IsHoldTp;
-  PSTATUS_SUB_TICKLE_DIR tickleDir;
   u32         befTpx;
   u32         befTpy;
-  u8          holdCnt;
-  u8          tickleNum;
   
-  //ジャンプ演出管理
-  u8          flipAnimeCnt;
+  //横こすり判定
+  PSTATUS_TP_ACTION_WORK tpWorkH;
+  //縦こすり判定
+  PSTATUS_TP_ACTION_WORK tpWorkV;
+  //回転こすり判定
+  PSTATUS_TP_ACTION_WORK tpWorkR;
+  PSTATUS_SUB_ROT_DIR  tpRotDir;
+  u8  tpRotSpeed[PSTATUS_SUB_TP_SPEED_CNT];
+  u8  tpRotSpeedCnt;
+  u8  tpRotSpeedPos;
+  
+  //振り向き演出管理
+  u8          turnAnimeCnt;
 
 };
 
@@ -161,7 +224,20 @@ struct _PSTATUS_SUB_WORK
 #pragma mark [> proto
 static void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const POKEMON_PASO_PARAM *ppp );
 
+static void PSTATUS_SUB_SubActionUpdate( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork );
+static void PSTATUS_SUB_SubActionInitAction( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork );
+static const BOOL PSTATUS_SUB_SubActionContinueCheck( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , PSTATUS_TP_ACTION_WORK *tpWork );
+
+static const BOOL PSTATUS_SUB_SubActionUpdateStep( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork );
+static const BOOL PSTATUS_SUB_SubActionUpdateJump( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork );
+static const BOOL PSTATUS_SUB_SubActionUpdateFloat( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const BOOL isUpdate );
+
+
 static void PSTATUS_SUB_UpdateTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork );
+static void PSTATUS_SUB_UpdateTPAction( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork );
+static void PSTATUS_SUB_ResetTPActionWork( PSTATUS_TP_ACTION_WORK *tpWork , u32 tpx , u32 tpy );
+static void PSTATUS_SUB_AddCountTPActionWork( PSTATUS_TP_ACTION_WORK *tpWork , u32 tpx , u32 tpy , PSTATUS_SUB_MOVE_DIR dir );
+static void PSTATUS_SUB_TPCheckRotSpeed( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const BOOL isRound );
 
 static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const POKEMON_PASO_PARAM *ppp );
 static void PSTATUS_SUB_PokeDeleteMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork );
@@ -178,7 +254,8 @@ PSTATUS_SUB_WORK* PSTATUS_SUB_Init( PSTATUS_WORK *work )
   subWork->pokeMcssBack = NULL;
   subWork->IsHoldTp = FALSE;
   subWork->isDispFront = TRUE;
-  subWork->state = PSS_DISP_FORNT;
+  subWork->state = PSS_DISP_FRONT;
+  subWork->subActState = PSSS_NONE;
   return subWork;
 }
 
@@ -196,21 +273,22 @@ void PSTATUS_SUB_Term( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 //--------------------------------------------------------------
 void PSTATUS_SUB_Main( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 {
-  if( subWork->state == PSS_DISP_FORNT ||
+  if( subWork->state == PSS_DISP_FRONT ||
       subWork->state == PSS_DISP_BACK )
   {
     PSTATUS_SUB_UpdateTP( work , subWork );
+    PSTATUS_SUB_SubActionUpdate( work , subWork );
   }
   else
   if( subWork->state == PSS_BACK_TO_FRONT )
   {
-    //ポケモンジャンプ処理
+    //ポケモン振り向き処理
     VecFx32 cam_pos = {PSTATUS_SUB_CAMERA_FRONT_X,FX32_CONST(0.0f),FX32_CONST(101.0f)};
     VecFx32 ofs={0,0,0};
     
-    subWork->flipAnimeCnt++;
+    subWork->turnAnimeCnt++;
     
-    if( subWork->flipAnimeCnt > PSTATUS_SUB_JUMP_TIME/2 &&
+    if( subWork->turnAnimeCnt > PSTATUS_SUB_TURN_TIME/2 &&
         subWork->isDispFront == FALSE )
     {
       MCSS_ResetVanishFlag( subWork->pokeMcss );
@@ -218,21 +296,21 @@ void PSTATUS_SUB_Main( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
       subWork->isDispFront = TRUE;
     }
 
-    if( subWork->flipAnimeCnt >= PSTATUS_SUB_JUMP_TIME )
+    if( subWork->turnAnimeCnt >= PSTATUS_SUB_TURN_TIME )
     {
-      subWork->state = PSS_DISP_FORNT;
+      subWork->state = PSS_DISP_FRONT;
     }
     else
     {
       u16 rad;
       fx32 sin;
       const fx32 camSubX = (PSTATUS_SUB_CAMERA_FRONT_X-PSTATUS_SUB_CAMERA_BACK_X);
-      const fx32 camOfsX = camSubX*subWork->flipAnimeCnt/PSTATUS_SUB_JUMP_TIME;
+      const fx32 camOfsX = camSubX*subWork->turnAnimeCnt/PSTATUS_SUB_TURN_TIME;
       cam_pos.x = PSTATUS_SUB_CAMERA_BACK_X+camOfsX;
       
-      rad = subWork->flipAnimeCnt*0x8000/PSTATUS_SUB_JUMP_TIME;
+      rad = subWork->turnAnimeCnt*0x8000/PSTATUS_SUB_TURN_TIME;
       sin = FX_SinIdx( rad );
-      ofs.y = (sin*PSTATUS_SUB_JUMP_HEIGHT);
+      ofs.y = (sin*PSTATUS_SUB_TURN_HEIGHT);
       
     }
     MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
@@ -246,24 +324,15 @@ void PSTATUS_SUB_Main( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
     VecFx32 cam_pos = {PSTATUS_SUB_CAMERA_BACK_X,FX32_CONST(0.0f),FX32_CONST(101.0f)};
     VecFx32 shadowScale = {PSTATUS_SUB_SHADOW_SCALE_BACK_X , PSTATUS_SUB_SHADOW_SCALE_BACK_Y , PSTATUS_SUB_SHADOW_SCALE_BACK_Z};
     
-    subWork->flipAnimeCnt++;
+    subWork->turnAnimeCnt++;
 
-    if( subWork->flipAnimeCnt < PSTATUS_SUB_FLIP_TIME )
+    if( subWork->turnAnimeCnt < PSTATUS_SUB_FLIP_TIME )
     {
-      /*
-      const fx32 scaleX = (PSTATUS_SUB_SHADOW_SCALE_BACK_X - PSTATUS_SUB_SHADOW_SCALE_X)*subWork->flipAnimeCnt/PSTATUS_SUB_FLIP_TIME;
-      const fx32 scaleY = (PSTATUS_SUB_SHADOW_SCALE_BACK_Y - PSTATUS_SUB_SHADOW_SCALE_Y)*subWork->flipAnimeCnt/PSTATUS_SUB_FLIP_TIME;
-      const fx32 camX = (PSTATUS_SUB_CAMERA_BACK_X - PSTATUS_SUB_CAMERA_FRONT_X)*subWork->flipAnimeCnt/PSTATUS_SUB_FLIP_TIME;
-      
-      shadowScale.x = PSTATUS_SUB_SHADOW_SCALE_X + scaleX;
-      shadowScale.y = PSTATUS_SUB_SHADOW_SCALE_Y + scaleY;
-      cam_pos.x = PSTATUS_SUB_CAMERA_FRONT_X + camX;
-      */
       //数値指定
       const fx32 scareXArr[2] = { FX32_CONST(1.2f),FX32_CONST(1.4f) };
       const fx32 scareYArr[2] = { FX32_CONST(2.2f),FX32_CONST(2.3f) };
       const fx32 camXArr[2] = { FX32_CONST(-57.0f),FX32_CONST(-60.0f) };
-      const u8 arrIdx = subWork->flipAnimeCnt-1;
+      const u8 arrIdx = subWork->turnAnimeCnt-1;
       
       shadowScale.x = scareXArr[arrIdx];
       shadowScale.y = scareYArr[arrIdx];
@@ -472,7 +541,7 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
     GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
     GFL_G3D_CAMERA_Switching( work->camera );
 
-    subWork->state = PSS_DISP_FORNT;
+    subWork->state = PSS_DISP_FRONT;
   }
   else
   {
@@ -631,6 +700,268 @@ void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const
   
 }
 
+#pragma mark [>Action
+static void PSTATUS_SUB_SubActionUpdate( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
+{
+  switch( subWork->subActState )
+  {
+  case PSSS_NONE:
+    if( subWork->isStartAction == FALSE )
+    {
+      if( subWork->tpWorkH.count > PSTATUS_SUB_ACTION_COUNT )
+      {
+        subWork->subActState = PSSS_STEP;
+        PSTATUS_SUB_SubActionInitAction( work , subWork );
+      }
+      if( subWork->tpWorkV.count > PSTATUS_SUB_ACTION_COUNT )
+      {
+        subWork->subActState = PSSS_JUMP;
+        PSTATUS_SUB_SubActionInitAction( work , subWork );
+      }
+      if( subWork->tpWorkR.count > PSTATUS_SUB_ACTION_COUNT )
+      {
+        subWork->subActState = PSSS_FLOAT;
+        PSTATUS_SUB_SubActionInitAction( work , subWork );
+      }
+    }
+    break;
+
+  case PSSS_STEP:
+    PSTATUS_SUB_SubActionUpdateStep( work , subWork );
+    if( PSTATUS_SUB_SubActionContinueCheck( work , subWork , &subWork->tpWorkH ) == FALSE )
+    {
+      subWork->subActState = PSSS_STEP_END;
+    }
+    break;
+    
+  case PSSS_STEP_END:
+    if( PSTATUS_SUB_SubActionUpdateStep( work , subWork ) == TRUE )
+    {
+      subWork->subActState = PSSS_NONE;
+    }
+    break;
+
+  case PSSS_JUMP:
+    PSTATUS_SUB_SubActionUpdateJump( work , subWork );
+    if( PSTATUS_SUB_SubActionContinueCheck( work , subWork , &subWork->tpWorkV ) == FALSE )
+    {
+      subWork->subActState = PSSS_JUMP_END;
+    }
+    break;
+
+  case PSSS_JUMP_END:
+    if( PSTATUS_SUB_SubActionUpdateJump( work , subWork ) == TRUE )
+    {
+      subWork->subActState = PSSS_NONE;
+    }
+    break;
+
+  case PSSS_FLOAT:
+    PSTATUS_SUB_SubActionUpdateFloat( work , subWork , TRUE );
+    if( PSTATUS_SUB_SubActionContinueCheck( work , subWork , &subWork->tpWorkR ) == FALSE )
+    {
+      subWork->subActState = PSSS_FLOAT_END;
+    }
+    break;
+
+  case PSSS_FLOAT_END:
+    if( PSTATUS_SUB_SubActionUpdateFloat( work , subWork , FALSE ) == TRUE )
+    {
+      MCSS_ResetAnmStopFlag( subWork->pokeMcss );
+      subWork->subActState = PSSS_NONE;
+    }
+    break;
+
+  }
+}
+
+static void PSTATUS_SUB_SubActionInitAction( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
+{
+  subWork->isStartAction = TRUE;
+  subWork->subActStep = 0;
+  subWork->subActTarget = 0;
+  subWork->subActCount = 0;
+  subWork->subActValue = 0;
+  subWork->continueCount = 0;
+}
+
+static const BOOL PSTATUS_SUB_SubActionContinueCheck( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , PSTATUS_TP_ACTION_WORK *tpWork )
+{
+  if( tpWork->count < PSTATUS_SUB_ACTION_COUNT )
+  {
+    subWork->continueCount++;
+    if( subWork->continueCount > PSTATUS_SUB_ACTION_END_COUNT )
+    {
+      return FALSE;
+    }
+  }
+  else
+  {
+    subWork->continueCount = 0;
+  }
+  return TRUE;
+}
+
+#define PSTATUS_SUB_STEP_TIME (15)
+#define PSTATUS_SUB_STEP_WIDTH (16)
+#define PSTATUS_SUB_STEP_HEIGHT (16) 
+static const BOOL PSTATUS_SUB_SubActionUpdateStep( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
+{
+  VecFx32 pos = {PSTATUS_MCSS_POS_X,PSTATUS_MCSS_POS_Y,0};
+  VecFx32 ofs = {0,0,0};
+  
+  {
+    //高さ
+    const u16 rad = subWork->subActCount*0x8000/PSTATUS_SUB_STEP_TIME;
+    const fx32 sin = FX_SinIdx( rad );
+    ofs.y = (sin*PSTATUS_SUB_STEP_HEIGHT+FX32_CONST(work->friend/64))/16;
+  }
+  {
+    //横位置
+    const u8 moveMax = PSTATUS_SUB_STEP_WIDTH + (work->friend/64);
+    int moveVal = subWork->subActCount*moveMax/PSTATUS_SUB_STEP_TIME;
+    switch( subWork->subActStep )
+    {
+    case 0:
+      //中から右
+      pos.x += FX32_CONST( moveVal )/16;
+      break;
+    case 1:
+      //右から中
+      pos.x += FX32_CONST( moveMax-moveVal )/16;
+      break;
+    case 2:
+      //中から左
+      pos.x -= FX32_CONST( moveVal )/16;
+      break;
+    case 3:
+      //左から中
+      pos.x -= FX32_CONST( moveMax-moveVal )/16;
+      break;
+    }
+  }
+  MCSS_SetPosition( subWork->pokeMcss , &pos );
+  MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
+  {
+    //カウント更新
+    subWork->subActCount++;
+    if( subWork->subActCount > PSTATUS_SUB_STEP_TIME )
+    {
+      subWork->subActCount = 0;
+      subWork->subActStep++;
+      if( subWork->subActStep > 3 )
+      {
+        subWork->subActStep = 0;
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+
+#define PSTATUS_SUB_JUMP_TIME (20)
+#define PSTATUS_SUB_JUMP_HEIGHT (32) 
+static const BOOL PSTATUS_SUB_SubActionUpdateJump( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
+{
+  VecFx32 ofs = {0,0,0};
+  
+  {
+    //高さ
+    const u16 rad = subWork->subActCount*0x8000/PSTATUS_SUB_JUMP_TIME;
+    const fx32 sin = FX_SinIdx( rad );
+    ofs.y = (sin*PSTATUS_SUB_JUMP_HEIGHT+FX32_CONST(work->friend/64))/16;
+  }
+  MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
+  {
+    //カウント更新
+    subWork->subActCount++;
+    if( subWork->subActCount > PSTATUS_SUB_JUMP_TIME )
+    {
+      subWork->subActCount = 0;
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+#define PSTATUS_SUB_FLOAT_MAX (32)
+#define PSTATUS_SUB_FLOAT_MIN ( 8)
+#define PSTATUS_SUB_FLOAT_VAL ( PSTATUS_SUB_FLOAT_MAX-PSTATUS_SUB_FLOAT_MIN)
+#define PSTATUS_SUB_FLOAT_SPEED_MAX (10)  //早いのでMAXのほうが小さいので注意
+#define PSTATUS_SUB_FLOAT_SPEED_MIN (20)
+#define PSTATUS_SUB_FLOAT_SPEED_VAL (PSTATUS_SUB_FLOAT_SPEED_MIN-PSTATUS_SUB_FLOAT_SPEED_MAX)
+#define PSTATUS_SUB_YURE_SPEED (120)
+#define PSTATUS_SUB_YURE_VALUE (4)
+static const BOOL PSTATUS_SUB_SubActionUpdateFloat( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const BOOL isUpdate )
+{
+  //Step = 目標高さ
+  //Count = 現在高さ
+  VecFx32 ofs = {0,0,0};
+  u32 aveSpeed = 0;
+  if( isUpdate == TRUE )
+  {
+    u8 i;
+    for( i=0;i<PSTATUS_SUB_TP_SPEED_CNT;i++ )
+    {
+      aveSpeed += subWork->tpRotSpeed[i];
+    }
+    aveSpeed /= PSTATUS_SUB_TP_SPEED_CNT;
+    if( aveSpeed < PSTATUS_SUB_FLOAT_SPEED_MAX )
+    {
+      aveSpeed = PSTATUS_SUB_FLOAT_SPEED_MAX;
+    }
+    if( aveSpeed > PSTATUS_SUB_FLOAT_SPEED_MIN )
+    {
+      aveSpeed = PSTATUS_SUB_FLOAT_SPEED_MIN;
+    }
+    
+    //目標高さ
+    {
+      const u8 heightOfs = PSTATUS_SUB_FLOAT_MAX-PSTATUS_SUB_FLOAT_MIN;
+      const u8 speedVal = PSTATUS_SUB_FLOAT_SPEED_VAL-(aveSpeed-PSTATUS_SUB_FLOAT_SPEED_MAX);
+      subWork->subActTarget = PSTATUS_SUB_FLOAT_MIN + ( speedVal*PSTATUS_SUB_FLOAT_VAL/PSTATUS_SUB_FLOAT_SPEED_VAL );
+    }
+    {
+      //ゆれ
+      
+      //ofs.x += FX_CosIdx( subWork->subActCount*(0x10000/PSTATUS_SUB_YURE_SPEED) )*PSTATUS_SUB_YURE_VALUE/16;
+      ofs.y += FX_SinIdx( subWork->subActCount*(0x10000/PSTATUS_SUB_YURE_SPEED) )*PSTATUS_SUB_YURE_VALUE/16;
+      
+      subWork->subActCount++;
+      if( subWork->subActCount > PSTATUS_SUB_YURE_SPEED )
+      {
+        subWork->subActCount = 0;
+      }
+    }
+  }
+  else
+  {
+    subWork->subActTarget = 0;
+  }
+  {
+    //高さ
+    if( subWork->subActValue < subWork->subActTarget )
+    {
+      subWork->subActValue++;
+    }
+    if( subWork->subActValue > subWork->subActTarget )
+    {
+      subWork->subActValue--;
+    }
+    
+    ofs.y += FX32_CONST(subWork->subActValue)/16;
+  }
+  MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
+  MCSS_SetAnmStopFlag( subWork->pokeMcss );
+  
+  if( subWork->subActValue == 0 &&
+      subWork->subActTarget == 0 )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 #pragma mark [>UI
 static void PSTATUS_SUB_UpdateTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 {
@@ -645,94 +976,74 @@ static void PSTATUS_SUB_UpdateTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork
   GFL_UI_TP_GetPointCont( &tpx,&tpy );
   if( work->isEgg == FALSE )
   {
-    if( subWork->state == PSS_DISP_FORNT )
+    const BOOL isTrg = GFL_UI_TP_GetTrg();
+    const BOOL isTouch = GFL_UI_TP_GetCont();
+    const int  retCont = GFL_UI_TP_HitCont( hitTbl );
+    if( subWork->state == PSS_DISP_FRONT )
     {
-      /*
-      //くすぐり判定
-      const int retCont = GFL_UI_TP_HitCont( hitTbl );
       if( retCont == 0 )
       {
-        if( subWork->IsHoldTp == FALSE )
+        if( isTrg == TRUE )
         {
+          u8 i;
           subWork->IsHoldTp = TRUE;
-          subWork->tickleDir = SSTD_NONE;
-          subWork->befTpx = tpx;
-          subWork->befTpy = tpy;
-          subWork->holdCnt = 0;
-          subWork->tickleNum = 0;
+          subWork->isStartAction = FALSE;
+          PSTATUS_SUB_ResetTPActionWork( &subWork->tpWorkH , tpx , tpy );
+          PSTATUS_SUB_ResetTPActionWork( &subWork->tpWorkV , tpx , tpy );
+          PSTATUS_SUB_ResetTPActionWork( &subWork->tpWorkR , tpx , tpy );
+          for( i=0;i<PSTATUS_SUB_TP_SPEED_CNT;i++ )
+          {
+            subWork->tpRotSpeed[i] = 0;
+          }
+          subWork->tpRotSpeedCnt = 0;
+          subWork->tpRotSpeedPos = 0;
+          subWork->tpRotDir = SSRD_NONE;
         }
         else
+        if( isTouch == TRUE && subWork->IsHoldTp == TRUE )
         {
-          const int subX = subWork->befTpx - tpx;
-          if( ( subWork->tickleDir == SSTD_NONE || subWork->tickleDir == SSTD_LEFT ) &&
-              subX > PSTATUS_SUB_TICKLE_WIDHT )
-          {
-            subWork->tickleNum++;
-            subWork->tickleDir = SSTD_RIGHT;
-            subWork->holdCnt = 0;
-            subWork->befTpx = tpx;
-            subWork->befTpy = tpy;
-          }
-          else
-          if( ( subWork->tickleDir == SSTD_NONE || subWork->tickleDir == SSTD_RIGHT ) &&
-              subX < -PSTATUS_SUB_TICKLE_WIDHT )
-          {
-            subWork->tickleNum++;
-            subWork->tickleDir = SSTD_LEFT;
-            subWork->holdCnt = 0;
-            subWork->befTpx = tpx;
-            subWork->befTpy = tpy;
-          }
-          else
-          {
-            subWork->holdCnt++;
-            if( subWork->holdCnt > PSTATUS_SUB_TICKLE_TIME )
-            {
-              //時間かかりすぎでリセット
-              subWork->tickleDir = SSTD_NONE;
-              subWork->holdCnt = 0;
-              subWork->tickleNum = 0;
-              subWork->befTpx = tpx;
-              subWork->befTpy = tpy;
-            }
-          }
-          if( subWork->tickleNum >= PSTATUS_SUB_TICKLE_NUM )
-          {
-            //ひっくり返る！
-            const VecFx32 cam_pos = {PSTATUS_SUB_CAMERA_BACK_X,FX32_CONST(0.0f),FX32_CONST(101.0f)};
-            MCSS_SetVanishFlag( subWork->pokeMcss );
-            MCSS_ResetVanishFlag( subWork->pokeMcssBack );
-            GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
-            GFL_G3D_CAMERA_Switching( work->camera );
-            subWork->isDispFront = FALSE;
-            subWork->IsHoldTp = FALSE;
-          }
+          PSTATUS_SUB_UpdateTPAction( work , subWork );
         }
+        subWork->befTpx = tpx;
+        subWork->befTpy = tpy;
       }
       else
       {
+        if( subWork->IsHoldTp == TRUE )
+        {
+          if( subWork->isStartAction == FALSE && 
+              subWork->subActState == PSSS_NONE )
+          {
+            //向き反転処理
+            subWork->state = PSS_FRONT_TO_BACK;
+            subWork->turnAnimeCnt = 0;
+          }
+        }
+        PSTATUS_SUB_ResetTPActionWork( &subWork->tpWorkH , tpx , tpy );
+        PSTATUS_SUB_ResetTPActionWork( &subWork->tpWorkV , tpx , tpy );
+        PSTATUS_SUB_ResetTPActionWork( &subWork->tpWorkR , tpx , tpy );
         subWork->IsHoldTp = FALSE;
       }
-      */
-
-      //タッチで向き反転処理
-      const int retCont = GFL_UI_TP_HitTrg( hitTbl );
-      if( retCont == 0 )
-      {
-        subWork->state = PSS_FRONT_TO_BACK;
-        subWork->flipAnimeCnt = 0;
-      }
-
     }
     else
     if( subWork->state == PSS_DISP_BACK )
     {
-      //タッチでジャンプ
-      const int retCont = GFL_UI_TP_HitTrg( hitTbl );
+      //離して振り向き
       if( retCont == 0 )
       {
-        subWork->state = PSS_BACK_TO_FRONT;
-        subWork->flipAnimeCnt = 0;
+        if( isTrg == TRUE )
+        {
+          subWork->IsHoldTp = TRUE;
+        }
+      }
+      else
+      {
+        if( subWork->IsHoldTp == TRUE )
+        {
+          subWork->IsHoldTp = FALSE;
+          subWork->state = PSS_BACK_TO_FRONT;
+          subWork->turnAnimeCnt = 0;
+        }
       }
     }
   }
@@ -740,6 +1051,178 @@ static void PSTATUS_SUB_UpdateTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork
   {
     //タマゴは別処理
   }
+}
+
+static void PSTATUS_SUB_UpdateTPAction( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
+{
+  u32 tpx,tpy;
+  GFL_UI_TP_GetPointCont( &tpx,&tpy );
+  //横こすり判定
+  {
+    const s8 subX = tpx - subWork->tpWorkH.befX;
+    const s8 subY = tpy - subWork->tpWorkH.befY;
+    if( subWork->tpWorkH.dir == SSMD_NONE || subWork->tpWorkH.dir == SSMD_LEFT )
+    {
+      if( subX > PSTATUS_SUB_TP_MOVE_LENGTH )
+      {
+        PSTATUS_SUB_AddCountTPActionWork( &subWork->tpWorkH , tpx , tpy , SSMD_RIGHT );
+      }
+    }
+    if( subWork->tpWorkH.dir == SSMD_NONE || subWork->tpWorkH.dir == SSMD_RIGHT )
+    {
+      if( subX < -PSTATUS_SUB_TP_MOVE_LENGTH )
+      {
+        PSTATUS_SUB_AddCountTPActionWork( &subWork->tpWorkH , tpx , tpy , SSMD_LEFT );
+      }
+    }
+    if( subY > PSTATUS_SUB_TP_MOVE_LENGTH || subY < -PSTATUS_SUB_TP_MOVE_LENGTH ||
+       subWork->tpWorkH.time > PSTATUS_SUB_TP_MOVE_TIME )
+    {
+      PSTATUS_SUB_ResetTPActionWork( &subWork->tpWorkH , tpx , tpy );
+    }
+    subWork->tpWorkH.time++;
+  }
+  //縦こすり判定
+  {
+    const s8 subX = tpx - subWork->tpWorkV.befX;
+    const s8 subY = tpy - subWork->tpWorkV.befY;
+    if( subWork->tpWorkV.dir == SSMD_NONE || subWork->tpWorkV.dir == SSMD_UP )
+    {
+      if( subY > PSTATUS_SUB_TP_MOVE_LENGTH )
+      {
+        PSTATUS_SUB_AddCountTPActionWork( &subWork->tpWorkV , tpx , tpy , SSMD_DOWN );
+      }
+    }
+    if( subWork->tpWorkV.dir == SSMD_NONE || subWork->tpWorkV.dir == SSMD_DOWN )
+    {
+      if( subY < -PSTATUS_SUB_TP_MOVE_LENGTH )
+      {
+        PSTATUS_SUB_AddCountTPActionWork( &subWork->tpWorkV , tpx , tpy , SSMD_UP );
+      }
+    }
+    if( subX > PSTATUS_SUB_TP_MOVE_LENGTH || subX < -PSTATUS_SUB_TP_MOVE_LENGTH ||
+       subWork->tpWorkV.time > PSTATUS_SUB_TP_MOVE_TIME )
+    {
+      PSTATUS_SUB_ResetTPActionWork( &subWork->tpWorkV , tpx , tpy );
+    }
+    subWork->tpWorkV.time++;
+  }
+  //回転こすり判定
+  {
+    const s8 subX = tpx - subWork->tpWorkR.befX;
+    const s8 subY = tpy - subWork->tpWorkR.befY;
+    u8 moveDir = SSMD_NONE;
+    BOOL isRound = FALSE;
+    if( subX > PSTATUS_SUB_TP_MOVE_LENGTH )
+    {
+      moveDir = SSMD_RIGHT;
+    }
+    else
+    if( subX < -PSTATUS_SUB_TP_MOVE_LENGTH )
+    {
+      moveDir = SSMD_LEFT;
+    }
+    else
+    if( subY > PSTATUS_SUB_TP_MOVE_LENGTH )
+    {
+      moveDir = SSMD_DOWN;
+    }
+    else
+    if( subY < -PSTATUS_SUB_TP_MOVE_LENGTH )
+    {
+      moveDir = SSMD_UP;
+    }
+    
+    if( moveDir != SSMD_NONE && moveDir != subWork->tpWorkR.dir )
+    {
+      if( subWork->tpWorkR.dir + 1 == moveDir || 
+         (subWork->tpWorkR.dir == SSMD_UP && moveDir == SSMD_RIGHT) )
+      {
+        //時計回り
+        if( subWork->tpRotDir == SSRD_RIGHT || subWork->tpRotDir == SSRD_NONE )
+        {
+          subWork->tpRotDir = SSRD_RIGHT;
+          PSTATUS_SUB_AddCountTPActionWork( &subWork->tpWorkR , tpx , tpy , moveDir );
+          if( subWork->tpWorkR.dir == SSMD_UP )
+          {
+            isRound = TRUE;
+          } 
+        }
+        else
+        {
+          subWork->tpRotDir = SSRD_NONE;
+          PSTATUS_SUB_ResetTPActionWork( &subWork->tpWorkR , tpx , tpy );
+        }
+      }
+      else
+      if( subWork->tpWorkR.dir - 1 == moveDir || 
+         (subWork->tpWorkR.dir == SSMD_RIGHT && moveDir == SSMD_UP) )
+      {
+        //反時計回り
+        if( subWork->tpRotDir == SSRD_LEFT || subWork->tpRotDir == SSRD_NONE )
+        {
+          subWork->tpRotDir = SSRD_LEFT;
+          PSTATUS_SUB_AddCountTPActionWork( &subWork->tpWorkR , tpx , tpy , moveDir );
+          if( subWork->tpWorkR.dir == SSMD_UP )
+          {
+            isRound = TRUE;
+          } 
+        }
+        else
+        {
+          subWork->tpRotDir = SSRD_NONE;
+          PSTATUS_SUB_ResetTPActionWork( &subWork->tpWorkR , tpx , tpy );
+        }
+      }
+      else
+      if( subWork->tpWorkR.dir == SSMD_NONE )
+      {
+        subWork->tpWorkR.dir = moveDir;
+      }
+      
+    }
+    if( subWork->tpWorkR.time > PSTATUS_SUB_TP_MOVE_TIME )
+    {
+      subWork->tpRotDir = SSRD_NONE;
+      PSTATUS_SUB_ResetTPActionWork( &subWork->tpWorkR , tpx , tpy );
+    }
+    PSTATUS_SUB_TPCheckRotSpeed( work , subWork , isRound );
+    subWork->tpWorkR.time++;
+  }
+  //OS_TPrintf("[%2d][%2d][%2d]\n",subWork->tpWorkH.count,subWork->tpWorkV.count,subWork->tpWorkR.count);
+}
+
+static void PSTATUS_SUB_ResetTPActionWork( PSTATUS_TP_ACTION_WORK *tpWork , u32 tpx , u32 tpy )
+{
+  tpWork->count = 0;
+  tpWork->dir = SSMD_NONE;
+  tpWork->time = 0;
+  tpWork->befX = tpx;
+  tpWork->befY = tpy;
+}
+
+static void PSTATUS_SUB_AddCountTPActionWork( PSTATUS_TP_ACTION_WORK *tpWork , u32 tpx , u32 tpy , PSTATUS_SUB_MOVE_DIR dir )
+{
+  tpWork->count++;
+  tpWork->dir = dir;
+  tpWork->time = 0;
+  tpWork->befX = tpx;
+  tpWork->befY = tpy;
+}
+
+static void PSTATUS_SUB_TPCheckRotSpeed( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const BOOL isRound )
+{
+  if( isRound == TRUE )
+  {
+    subWork->tpRotSpeed[ subWork->tpRotSpeedPos ] = subWork->tpRotSpeedCnt;
+    subWork->tpRotSpeedCnt = 0;
+    subWork->tpRotSpeedPos++;
+    if( subWork->tpRotSpeedPos >= PSTATUS_SUB_TP_SPEED_CNT )
+    {
+      subWork->tpRotSpeedPos = 0;
+    }
+  }
+  subWork->tpRotSpeedCnt++;
 }
 
 #pragma mark [>Poke

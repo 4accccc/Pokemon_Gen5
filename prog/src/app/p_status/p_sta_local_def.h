@@ -242,6 +242,7 @@ typedef struct
   
   //QÆ‚ª‘½‚¢‚Ì‚Å•Û‚µ‚Ä‚¨‚­pp
   BOOL isEgg;
+  u32  friend;
   
   BOOL isActiveBarButton;
   PSTATUS_MAIN_SEQ    mainSeq;

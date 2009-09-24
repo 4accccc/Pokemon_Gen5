@@ -1033,11 +1033,11 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     break;
   case SBT_CURSOR_UP:
     {
-      const BOOL isChange = PSTATUS_ChangeData( work , TRUE );
+      const BOOL isChange = PSTATUS_ChangeData( work , FALSE );
       if( isChange == TRUE )
       {
         PSTATUS_RefreshDisp( work );
-        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_ON );
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_ON );
       }
     }
     break;
@@ -1277,6 +1277,7 @@ static void PSTATUS_RefreshData( PSTATUS_WORK *work )
   PSTATUS_UTIL_SetCurrentPPPFast( work , TRUE );
   
   work->isEgg = PP_Get( pp , ID_PARA_tamago_flag , NULL );
+  work->friend = PP_Get( pp , ID_PARA_friend , NULL );
   
   //PPPà√çÜâª
   PSTATUS_UTIL_SetCurrentPPPFast( work , FALSE );
