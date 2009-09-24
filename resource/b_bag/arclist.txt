@@ -3,6 +3,16 @@
 "b_bag_base.NSCR"
 "b_bag_button.NSCR"
 
+"pocket_button01.NSCR"
+"pocket_button11.NSCR"
+"pocket_button21.NSCR"
+"pocket_button31.NSCR"
+"item_button01.NSCR"
+"left_button01.NSCR"
+"right_button01.NSCR"
+"return_button01.NSCR"
+"use_button01.NSCR"
+
 "test_cost.NCGR"
 "test_cost.NCLR"
 "test_cost.NCER"
