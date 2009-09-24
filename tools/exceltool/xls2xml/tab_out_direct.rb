@@ -1,4 +1,4 @@
-#=begin
+=begin
  * @file    tab_out_direct.rb
  * @brief   エクセルからタブ区切りファイルを出力するエクセル
  * @author  ariizumi
@@ -9,7 +9,7 @@
 　ファイルの出力を行っている。
 
 　使っている範囲だけで出力しているので、A列や1行目が空行だと、B行や2列目から出力されるので注意。
-#=end
+=end
 
 
 require 'win32ole'
