@@ -246,11 +246,14 @@ static void SetupEvent(
   FLD_EXP_OBJ_CNT_PTR exobj_cont = FIELDMAP_GetExpObjCntPtr( fieldmap );
 
   // イベントワーク初期化
-  work->heapID   = heap_id;
-  work->fieldmap = fieldmap;
-  VEC_Set( &work->machinePos, machine_pos->x, machine_pos->y, machine_pos->z );
+  work->heapID     = heap_id;
+  work->fieldmap   = fieldmap;
   work->pokemonNum = pokemon_num;
   work->setBallNum = 0;
+  VEC_Set( &work->machinePos, machine_pos->x, machine_pos->y, machine_pos->z );
+
+  // 念のため例外処理
+  if( MAX_BALL_NUM < work->pokemonNum ) work->pokemonNum = MAX_BALL_NUM;
 
   // 拡張オブジェクトユニット追加
   FLD_EXP_OBJ_AddUnit( exobj_cont, &setup, EXOBJUNITID );
