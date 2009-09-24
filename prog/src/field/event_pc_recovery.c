@@ -11,12 +11,14 @@
 #include "fieldmap.h"
 #include "event_pc_recovery.h"
 #include "pc_recovery_anime.naix"
+#include "field_sound.h"
+#include "sound/pm_sndsys.h"
 
 
 //==============================================================================
 // 定数
 //==============================================================================
-#define PC_RECOVERY_DEBUG_ON  // デバッグ出力の有無
+//#define PC_RECOVERY_DEBUG_ON  // デバッグ出力の有無
 #define MAX_BALL_NUM (6)  // 最大手持ちポケモン数
 #define BALLSET_WAIT (15) // ボールセット待ち時間
 #define ANIME_START_WAIT (10) // ボールセット後の回復アニメーション開始待ち時間
@@ -85,12 +87,12 @@ GFL_G3D_UTIL_SETUP setup =
 // ボール設置座標 (回復マシンからのオフセット)
 VecFx32 ball_offset[] = 
 {
-  { -10*FX32_ONE,   10*FX32_ONE,  -10*FX32_ONE},
-  {  10*FX32_ONE,   10*FX32_ONE,  -10*FX32_ONE},
-  { -10*FX32_ONE,   10*FX32_ONE,    0*FX32_ONE},
-  {  10*FX32_ONE,   10*FX32_ONE,    0*FX32_ONE},
-  { -10*FX32_ONE,   10*FX32_ONE,   10*FX32_ONE},
-  {  10*FX32_ONE,   10*FX32_ONE,   10*FX32_ONE},
+  {  -4*FX32_ONE,   14*FX32_ONE,  -51*FX32_ONE},
+  {   4*FX32_ONE,   14*FX32_ONE,  -51*FX32_ONE},
+  {  -9*FX32_ONE,   14*FX32_ONE,  -44*FX32_ONE},
+  {   9*FX32_ONE,   14*FX32_ONE,  -44*FX32_ONE},
+  {  -4*FX32_ONE,   14*FX32_ONE,  -40*FX32_ONE},
+  {   4*FX32_ONE,   14*FX32_ONE,  -40*FX32_ONE},
 };
 // ボールのオブジェクト番号
 EXOBJID ball_obj_id[] = 
@@ -187,6 +189,7 @@ static GMEVENT_RESULT EVENT_FUNC_PcRecoveryAnime( GMEVENT* event, int* seq, void
   }
 #endif
 
+
   switch( *seq )
   {
   case SEQ_BALLSET:
@@ -199,13 +202,13 @@ static GMEVENT_RESULT EVENT_FUNC_PcRecoveryAnime( GMEVENT* event, int* seq, void
       if( rw->pokemonNum <= rw->setBallNum )
       {
         ChangeSequence( rw, seq, SEQ_WAIT );
-        StartRecoveryAnime( rw );
       }
     }
     break;
   case SEQ_WAIT:
     if( ANIME_START_WAIT < rw->seqCount )
     {
+        StartRecoveryAnime( rw );
         ChangeSequence( rw, seq, SEQ_RECOV_ANIME );
     }
     break;
@@ -247,7 +250,7 @@ static void SetupEvent(
   work->heapID   = heap_id;
   work->fieldmap = fieldmap;
   VEC_Set( &work->machinePos, machine_pos->x, machine_pos->y, machine_pos->z );
-  work->pokemonNum = pokemon_num;
+  work->pokemonNum = 6;//pokemon_num;
   work->setBallNum = 0;
 
   // 拡張オブジェクトユニット追加
@@ -312,6 +315,9 @@ static void SetMonsterBall( RECOVERY_WORK* work )
   // セットしたボールの数をインクリメント
   work->setBallNum++;
 
+  // SE再生
+  PMSND_PlaySE( SEQ_SE_CANCEL2 );
+
 #ifdef PC_RECOVERY_DEBUG_ON
   OBATA_Printf( "SetMonsterBall\n" );
 #endif
@@ -337,6 +343,11 @@ static void StartRecoveryAnime( RECOVERY_WORK* work )
     FLD_EXP_OBJ_ValidCntAnm( exobj_cont, EXOBJUNITID, ball_obj_id[i], 0, TRUE );
   }
 
+  // ME再生
+  PMSND_PauseBGM( TRUE );
+  PMSND_PushBGM();
+  PMSND_PlayBGM( SEQ_ME_ASA );
+
 #ifdef PC_RECOVERY_DEBUG_ON
   OBATA_Printf( "StartRecoveryAnime\n" );
 #endif
@@ -361,6 +372,10 @@ static void StopRecoveryAnime( RECOVERY_WORK* work )
     FLD_EXP_OBJ_ChgAnmStopFlg( anm_cont, FALSE );
   }
 
+  // BGM再生再開
+  PMSND_PopBGM();
+  PMSND_PauseBGM( FALSE );
+
 #ifdef PC_RECOVERY_DEBUG_ON
   OBATA_Printf( "StopRecoveryAnime\n" );
 #endif
@@ -379,6 +394,7 @@ static BOOL IsRecoveryAnimeEnd( RECOVERY_WORK* work )
 {
   int i;
 
+  // 全ボールのアニメーションが終了しているかどうか
   for( i=0; i<work->setBallNum; i++ )
   {
     FLD_EXP_OBJ_CNT_PTR exobj_cont = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
@@ -400,8 +416,10 @@ static BOOL IsRecoveryAnimeEnd( RECOVERY_WORK* work )
 //==============================================================================
 static void PlayRecoveryAnime( RECOVERY_WORK* work )
 {
+  // ボールアニメーション再生
   FLD_EXP_OBJ_CNT_PTR exobj_cont = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
   FLD_EXP_OBJ_PlayAnime( exobj_cont );
+
   
 #ifdef PC_RECOVERY_DEBUG_ON
   {
