@@ -70,6 +70,8 @@ EVENT_START   ev_heal_p01
     _CALL sub_heal_kaifuku_anime                      //回復アニメ呼び出し
     _TEMOTI_POKEMON_KAIFUKU()                         //手持ちポケモン回復処理
 
+    _BALLOONWIN_CLOSE()
+
     _CHECK_TEMOTI_POKERUS( LWK_POKERUS_STATUS )
     IF $LWK_POKERUS_STATUS == TRUE && FLAG_OFF( FE_PC_POKERUS )  THEN
     //ポケルス状態ポケモンがいて、その状態で初めての来店だったら
@@ -144,6 +146,8 @@ sub_heal_gyoe:
   _BALLOONWIN_TALKOBJ_OPEN( msg_common_pc_heal_07 ) //おつかれさまです
   _OBJ_ANIME( SCWK_TARGET_OBJID, anm_heal_p01_gyoe )  //！マーク表示
   _OBJ_ANIME_WAIT()
+  _BALLOONWIN_CLOSE()
+
   _PLAYER_NAME( 0 )
   _BALLOONWIN_TALKOBJ_OPEN( msg_common_pc_heal_08 ) //そ　そのカードは！？
 _RET
