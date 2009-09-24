@@ -155,6 +155,8 @@ SRCS  +=    $(SOUNDSRC) \
         net_app/union/union_beacon_tool.c \
         test/camera_adjust_view.c \
         system/selbox.c \
+        system/point_sel.c \
+        system/cursor_move.c \
         gamesystem/game_comm.c \
         field/field_comm/game_beacon_search.c \
         debug/debugwin_sys.c \
@@ -839,5 +841,4 @@ SRCS_OVERLAY_ITEMUSE = field/itemuse_event.c
 #マイクテスト
 #===> main
 SRCS_OVERLAY_MICTEST	= app/mictest/mictest.c
-
 
