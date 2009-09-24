@@ -174,7 +174,7 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
   _demoInit( pWork->heapID );
   Initialize( pWork );
 
-#if 0
+#if 1
   campos.x = 0*FX32_ONE;
   campos.y = FX32_ONE*43;
   campos.z = 241*FX32_ONE;
@@ -378,7 +378,7 @@ static void Draw( IRC_POKEMON_TRADE* work )
   int a;
 
   VEC_Set( &status.trans, 0, 0, 0 );
-  VEC_Set( &status.scale, FX32_ONE/2, FX32_ONE/8, FX32_ONE/2 );
+  VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
   MTX_Identity33( &status.rotate );
 
   a = -work->FriendBoxScrollNum * 65535 / 2976;
@@ -388,7 +388,7 @@ static void Draw( IRC_POKEMON_TRADE* work )
 #if 1
   // ƒJƒƒ‰XV
 //  ICA_ANIME_SetCameraStatus( work->icaAnime, work->camera );
- // GFL_G3D_CAMERA_Switching( work->camera );
+  GFL_G3D_CAMERA_Switching( work->camera );
 
 
 

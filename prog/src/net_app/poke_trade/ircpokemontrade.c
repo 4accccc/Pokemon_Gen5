@@ -82,6 +82,8 @@ static void _changeYesNoWaitState(IRC_POKEMON_TRADE* pWork);
 static void _endWaitState(IRC_POKEMON_TRADE* pWork);
 static void _PokemonsetAndSendData(IRC_POKEMON_TRADE* pWork);
 static void _recvFriendScrollBar(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _changeDemo_PokeMove(IRC_POKEMON_TRADE* pWork);
+static void _changeFinish(IRC_POKEMON_TRADE* pWork);
 
 
 
@@ -734,11 +736,37 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 
   
 	for(i=0;i<2;i++){
-		if(pWork->bChangeOK[i]==FALSE){
+    if(pWork->bChangeOK[i]==FALSE){
 			return;
 		}
 	}
+  _CHANGE_STATE(pWork,_changeDemo_PokeMove);
+  
+}
 
+
+static void _changeDemo_PokeMove(IRC_POKEMON_TRADE* pWork)
+{
+  VecFx32 apos;
+  
+  MCSS_GetPosition(pWork->pokeMcss[0],&apos);
+  apos.x += FX32_ONE/32;
+  apos.z += FX32_ONE/32;
+  MCSS_SetPosition( pWork->pokeMcss[0] ,&apos );
+
+  OS_TPrintf("_changeDemo_PokeMove %d %d\n", apos.x/FX32_ONE, apos.z/FX32_ONE);
+
+  
+  if(apos.x>(8*FX32_ONE)){
+    _CHANGE_STATE(pWork,_changeFinish);
+  }
+}
+
+
+
+static void _changeFinish(IRC_POKEMON_TRADE* pWork)
+{ 
+	int id = 1-GFL_NET_SystemGetCurrentID();
 	//ŒðŠ·‚·‚é
 	// ‘ŠŽè‚Ìƒ|ƒP‚ðŽ©•ª‚Ì‘I‚ñ‚Å‚¢‚½êŠ‚É“ü‚ê‚é
 	if(pWork->selectBoxno == BOX_MAX_TRAY){ //‚à‚¿‚à‚Ì‚ÌŒðŠ·‚Ìê‡
@@ -1413,7 +1441,7 @@ static void _dispInit(IRC_POKEMON_TRADE* pWork)
   
 #if 1
 	pWork->mcssSys = MCSS_Init( 2 , pWork->heapID );
-	MCSS_SetTextureTransAdrs( pWork->mcssSys , 0 );
+	MCSS_SetTextureTransAdrs( pWork->mcssSys , 0x8000 );
 	MCSS_SetOrthoMode( pWork->mcssSys );
 #endif
 
