@@ -914,7 +914,7 @@ BOOL	GFL_MCS_Read( u32 categoryID, void* pReadBuf, u32 readBufSize )
 			OS_Printf("読み込みバッファサイズを超えるデータが到着しています\n");
 			return FALSE;
 		}
-		OS_Printf("読み込みデータ到着(%x)\n", readSize);
+		//OS_Printf("読み込みデータ到着(%x)\n", readSize);
 		result = TRUE;
 
 		if(linkStatus->rParam.split == FALSE){
