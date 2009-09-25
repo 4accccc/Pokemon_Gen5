@@ -2461,7 +2461,7 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     break;
   case BTLEFF_PARTICLE_PLAY_SIDE_ATTACK:
   case BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE:
-    beeiw->src = EFFVM_GetPosition( beeiw->vmh, beeiw->src - BTLEFF_PARTICLE_PLAY_SIDE_ATTACK );
+    beeiw->src = EFFVM_GetPosition( beeiw->vmh, beeiw->src - BTLEFF_PARTICLE_PLAY_SIDE_ATTACK + BTLEFF_POKEMON_SIDE_ATTACK);
     GF_ASSERT( beeiw->src != BTLV_MCSS_POS_ERROR );
     break;
   case BTLEFF_PARTICLE_PLAY_SIDE_NONE:
@@ -2489,13 +2489,13 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     break;
   case BTLEFF_PARTICLE_PLAY_SIDE_ATTACK:
   case BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE:
-    beeiw->dst = EFFVM_GetPosition( beeiw->vmh, beeiw->dst - BTLEFF_PARTICLE_PLAY_SIDE_ATTACK );
+    beeiw->dst = EFFVM_GetPosition( beeiw->vmh, beeiw->dst - BTLEFF_PARTICLE_PLAY_SIDE_ATTACK + BTLEFF_POKEMON_SIDE_ATTACK );
     GF_ASSERT( beeiw->dst != BTLV_MCSS_POS_ERROR );
     break;
   case BTLEFF_PARTICLE_PLAY_SIDE_ATTACK_MINUS:
   case BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE_MINUS:
     minus_flag = TRUE;
-    beeiw->dst = EFFVM_GetPosition( beeiw->vmh, beeiw->dst - BTLEFF_PARTICLE_PLAY_SIDE_ATTACK - 1 );
+    beeiw->dst = EFFVM_GetPosition( beeiw->vmh, beeiw->dst - BTLEFF_PARTICLE_PLAY_SIDE_ATTACK + BTLEFF_POKEMON_SIDE_ATTACK - 1 );
     GF_ASSERT( beeiw->dst != BTLV_MCSS_POS_ERROR );
     break;
   case BTLEFF_PARTICLE_PLAY_SIDE_NONE:

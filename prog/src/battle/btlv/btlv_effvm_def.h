@@ -44,11 +44,13 @@
 #define	BTLEFF_CAMERA_POS_B							( 3 )
 #define	BTLEFF_CAMERA_POS_C							( 4 )
 #define	BTLEFF_CAMERA_POS_D							( 5 )
-#define	BTLEFF_CAMERA_POS_INIT					( 6 )
-#define	BTLEFF_CAMERA_POS_ATTACK				( 7 )
-#define	BTLEFF_CAMERA_POS_ATTACK_PAIR		( 8 )
-#define	BTLEFF_CAMERA_POS_DEFENCE				( 9 )
-#define	BTLEFF_CAMERA_POS_DEFENCE_PAIR	( 10 )
+#define	BTLEFF_CAMERA_POS_E							( 6 )
+#define	BTLEFF_CAMERA_POS_F							( 7 )
+#define	BTLEFF_CAMERA_POS_INIT					( 8 )
+#define	BTLEFF_CAMERA_POS_ATTACK				( 9 )
+#define	BTLEFF_CAMERA_POS_ATTACK_PAIR		( 10 )
+#define	BTLEFF_CAMERA_POS_DEFENCE				( 11 )
+#define	BTLEFF_CAMERA_POS_DEFENCE_PAIR	( 12 )
 
 #define	BTLEFF_CAMERA_POS_NONE					( 0xffffffff )
 
