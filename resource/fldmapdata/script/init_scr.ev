@@ -16,6 +16,8 @@ _EVENT_DATA_END
 //  ※非常中プログラム類の呼び出しは禁止
 //=====================================================================
 SP_EVENT_START  ev_init_script
-  _NOP
-  _NOP
+
+	//カノコタウン：研究所前のサポート
+	_FLAG_SET( FV_T01_SUPPORT )
+
 SP_EVENT_END
