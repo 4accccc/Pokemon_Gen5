@@ -332,9 +332,10 @@ static void Load3DSoundInfo( H01WORK* work, HEAPID heap_id )
   int track, volume;
   float height0, height1, range;
   ISS_3DS_UNIT* unit;
+  HEAPID heap_low_id = GFL_HEAP_LOWID( heap_id );
 
   // アーカイブファイルデータを読み込む
-  data = GFL_ARC_LoadDataAlloc( ARCID_ISS_UNIT, NARC_iss_3d_sound_h01_bin, heap_id );
+  data = GFL_ARC_LoadDataAlloc( ARCID_ISS_UNIT, NARC_iss_3d_sound_h01_bin, heap_low_id );
 
   // 風
   track   = *( (int*)((int)data + ofs) );   ofs += sizeof(int);
