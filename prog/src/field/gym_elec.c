@@ -110,23 +110,12 @@ typedef struct GYM_ELEC_TMP_tag
   GFL_TCB *TrGo;
 }GYM_ELEC_TMP;
 
-typedef struct LEVER_SW_tag
-{
-  u16 OffOnRaleIdx[2];    //添え字0がレバーオフ　1がレバーオン
-}LEVER_SW;
-
 typedef struct STOP_DAT_tag
 {
   int PlatformIdx;      //停車プラットフォーム
   int StopStart;        //停車開始フレーム
   int StopEnd;          //停車終了フレーム
 }STOP_DAT;
-
-typedef struct RALE_DAT_tag
-{
-  STOP_DAT StopDat[STOP_NUM_MAX];
-
-}RALE_DAT;
 
 //トレーナーエンカウント前アニメ
 static const MMDL_ACMD_LIST AcmdList[] = {
@@ -163,12 +152,12 @@ static const u16 PlatformXZ[PLATFORM_NUM_MAX][2] = {
 static const u8 PlatStpCapIdx[PLATFORM_NUM_MAX] = {
   0,0,0,1,1,2,2,3,3
 };
-
+#if 0
 //1つのレバーで切り替えるレール間で共通で停車するプラットホーム
 static const u8 CommPlatFormIdx[CAPSULE_NUM_MAX] = {
   1,4,6,8
 };
-
+#endif
 //レールごとの停車アニメフレーム（1レール2つずつ）
 //1箇所しか止まらないレールは2データとも同じ値を入れる。ICAデータ依存
 static const fx32 StopFrame[RALE_NUM_MAX][RALE_PLATFORM_NUM_MAX] = {
