@@ -15,18 +15,22 @@ SUBDIRS =
 #対象ヘッダーファイル
 DEPENDHEADERS = usescript.h scr_seq_def.h
 
-SCRIPTFILES	=
-#マップに依存しないスクリプトはここに追加してください
-include uniq_script.list
-
 #マップ依存のスクリプト：定義ファイルは自動生成
+SCRIPTFILES	=
 include zone_script.list
 
+#マップ非依存スクリプトはここに追加してください
+#UNIQ_SCRIPTFILES =
+include uniq_script.list
 
-SCRSRCS_BIN = $(SCRIPTFILES:.ev=.bin)
+#COMPILE_TARGETSとARCHIVE_TARGETSに含まれる内容は一緒だが並びを代えている
 
-#MSGLIST
-#include msg_list
+#非マップスクリプトから先にコンパイルされる（通常スクリプトから呼び出す際にIDを参照するため）
+COMPILE_TARGETS	= $(UNIQ_SCRIPTFILES:.ev=.bin) $(SCRIPTFILES:.ev=.bin)
+
+#アーカイブにするときはマップスクリプトからの並びにする
+#（非マップスクリプトを追加してもアーカイブIDがずれないように）
+ARCHIVE_TARGETS = $(SCRIPTFILES:.ev=.bin) $(UNIQ_SCRIPTFILES:.ev=.bin)
 
 #MWAS,MWLD
 include	$(NITROSDK_ROOT)/build/buildtools/commondefs.cctype.CW
@@ -63,7 +67,7 @@ endif
 # Makeで生成される*.narcはmake cleanの削除対象にする
 #----------------------------------------------------------------------------
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
-LDIRT_CLEAN	= $(TARGET_DIR)/$(TARGET_NARC) $(TARGET_DIR)/$(TARGET_NAIX) $(SCRSRCS_BIN)
+LDIRT_CLEAN	= $(TARGET_DIR)/$(TARGET_NARC) $(TARGET_DIR)/$(TARGET_NAIX) $(COMPILE_TARGETS)
 else
 LDIRT_CLEAN	= $(TARGET_DIR)/$(TARGET_NARC) $(TARGET_DIR)/$(TARGET_NAIX)
 endif
@@ -99,9 +103,9 @@ endif #CONVERTUSER
 
 
 #script.narc
-$(TARGET_NARC): $(SCRSRCS_BIN)
+$(TARGET_NARC): $(COMPILE_TARGETS)
 	@echo "スクリプトデータをアーカイブします"
-	@nnsarc -i -c -l -n $(TARGET_NARC) $(SCRSRCS_BIN) > arc_result.txt
+	@nnsarc -i -c -l -n $(TARGET_NARC) $(ARCHIVE_TARGETS) > arc_result.txt
 	@$(NAIXCUT) $(TARGET_NAIX)
 
 #----------------------------------------------------------------------------

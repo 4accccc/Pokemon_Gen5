@@ -1,5 +1,5 @@
 #マップに依存しないスクリプトはここに追加してください
-SCRIPTFILES	+= \
+UNIQ_SCRIPTFILES	= \
 	common_scr.ev	\
 	c99.ev	\
   bg_attr.ev \
