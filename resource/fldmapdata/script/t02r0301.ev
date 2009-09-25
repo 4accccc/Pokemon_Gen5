@@ -6,7 +6,6 @@
 
   .include  "scr_seq_def.h"
   .include  "../../../prog/include/msg/script/msg_t02r0301.h"
-  //.include  "t02r0301.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -41,29 +40,20 @@ _EVENT_DATA_END
 /*  T02R0301 MAN1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_t02r0301_talkobj_man1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t02r0301_man1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02r0301_man1_01 )
 EVENT_END
 
 /**************************************************************/
 /*  T02R0301 MIDDLEWOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_t02r0301_talkobj_middlewoman2
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t02r0301_middlewoman2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02r0301_middlewoman2_01 )
 EVENT_END
   
 /**************************************************************/
 /*  T02R0301 BABYBOY1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_t02r0301_talkobj_babyboy1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t02r0301_babyboy1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02r0301_babyboy1_01 )
 EVENT_END
 

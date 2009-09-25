@@ -13,5 +13,7 @@
 #define SCRID_T02_HAKAIM_01 (6)
 #define SCRID_T02_HAKAIW_01 (7)
 #define SCRID_POS_T02_HAKAI_STOP (8)
+#define SCRID_T02_DOCTOR_GUIDE (9)
+#define SCRID_T02_RIVAL_01 (10)
 
 #endif //_T02_DEF_H_

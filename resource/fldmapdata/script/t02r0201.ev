@@ -6,7 +6,6 @@
 
   .include  "scr_seq_def.h"
   .include  "../../../prog/include/msg/script/msg_t02r0201.h"
-  //.include  "t02r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -40,19 +39,13 @@ _EVENT_DATA_END
 /*  T02R0201 MIDDLEWOMAN1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_t02r0201_talkobj_middlewoman1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t02r0201_middlewoman1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02r0201_middlewoman1_01 )
 EVENT_END
 
 /**************************************************************/
 /*  T02R0201 BABYGIRL1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_t02r0201_talkobj_babygirl1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t02r0201_babygirl1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02r0201_babygirl1_01 )
 EVENT_END
 
