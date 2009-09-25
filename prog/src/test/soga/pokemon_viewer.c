@@ -534,7 +534,7 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
 
     for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ )
     {
-      if( BTLV_EFFECT_CheckExistPokemon( mcss_pos ) == TRUE )
+      if( BTLV_EFFECT_CheckExist( mcss_pos ) == TRUE )
       {
         BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(),
                    mcss_pos,
@@ -548,7 +548,7 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
   {
     int hit = GFL_UI_TP_HitTrg( TP_HitTbl );
     if( hit != GFL_UI_TP_HIT_NONE ){
-      if( BTLV_EFFECT_CheckExistPokemon( hit ) == TRUE ){
+      if( BTLV_EFFECT_CheckExist( hit ) == TRUE ){
         BTLV_MCSS_SetVanishFlag( BTLV_EFFECT_GetMcssWork(), hit, BTLV_MCSS_VANISH_FLIP );
         TextPrint( pvw, hit, hit );
       }
@@ -651,7 +651,7 @@ static  void  PokemonViewerSequence( POKEMON_VIEWER_WORK *pvw )
       pvw->seq_no = SEQ_IDLE;
 
       for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ ){
-        if( BTLV_EFFECT_CheckExistPokemon( mcss_pos ) == TRUE ){
+        if( BTLV_EFFECT_CheckExist( mcss_pos ) == TRUE ){
           BTLV_EFFECT_DelPokemon( mcss_pos );
           for( res = RESOURCE_NCBR ; res < RESOURCE_MAX ; res++ ){
             //リソース自体の解放は、MCSS_Delの中でやっているので、NULL初期化だけ行う
@@ -730,7 +730,7 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
 #endif
       if( rep != 0 )
       {
-        if( BTLV_EFFECT_CheckExistPokemon( pvw->edit_pos ) == TRUE ){
+        if( BTLV_EFFECT_CheckExist( pvw->edit_pos ) == TRUE ){
             BTLV_EFFECT_DelPokemon( pvw->edit_pos );
         }
         PokemonViewerPP_Put( pvw, pvw->mons_no[ pvw->edit_pos ] );
@@ -780,7 +780,7 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
       }
       if( rep != 0 )
       {
-        if( BTLV_EFFECT_CheckExistPokemon( pvw->edit_pos ) == TRUE ){
+        if( BTLV_EFFECT_CheckExist( pvw->edit_pos ) == TRUE ){
           VecFx32 scale;
           VEC_Set( &scale,
                    pvw->scale[ pvw->proj ][ pvw->edit_pos ],
@@ -875,7 +875,7 @@ static  void  PokemonViewerPositionLoad( POKEMON_VIEWER_WORK *pvw )
     head = SEND_IDLE;
     MCS_Write( MCS_WRITE_CH, &head, 4 );
     pvw->seq_no = SEQ_IDLE;
-    if( BTLV_EFFECT_CheckExistPokemon( pvw->read_position ) == TRUE ){
+    if( BTLV_EFFECT_CheckExist( pvw->read_position ) == TRUE ){
       BTLV_EFFECT_DelPokemon( pvw->read_position );
       for( res = RESOURCE_NCBR ; res < RESOURCE_MAX ; res++ ){
         //リソース自体の解放は、MCSS_Delの中でやっているので、NULL初期化だけ行う
@@ -912,7 +912,7 @@ static  void  TextPrint( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num )
   int flag = 0;
   STRBUF  *strbuf;
 
-  if( BTLV_EFFECT_CheckExistPokemon( num ) == TRUE ){
+  if( BTLV_EFFECT_CheckExist( num ) == TRUE ){
      flag = BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), num );
   }
 
@@ -1124,7 +1124,7 @@ static  void  PokemonViewerCameraWork( POKEMON_VIEWER_WORK *pvw )
   BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &pos, &target, 32, 0, 32 );
 
   for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ ){
-    if( BTLV_EFFECT_CheckExistPokemon( mcss_pos ) == TRUE ){
+    if( BTLV_EFFECT_CheckExist( mcss_pos ) == TRUE ){
       BTLV_MCSS_MoveScale( BTLV_EFFECT_GetMcssWork(),
                  mcss_pos,
                  EFFTOOL_CALCTYPE_INTERPOLATION,
