@@ -264,11 +264,12 @@ static void CHAR_UNIT_SetCharCode( CHAR_UNIT* p_unit, GFL_FONT* p_font, STRCODE 
 
 	STRCODE code_arr[2];
 	STRBUF* buf = NULL;
+  HEAPID heap_low_id = GFL_HEAP_LOWID( heap_id );
 
 	// 生の文字列を作成し, 文字バッファを作成
 	code_arr[0] = code;
 	code_arr[1] = GFL_STR_GetEOMCode();
-	buf         = GFL_STR_CreateBuffer( 2, heap_id );
+	buf         = GFL_STR_CreateBuffer( 2, heap_low_id );
 	GFL_STR_SetStringCodeOrderLength( buf, code_arr, 2 );
 
 	// サイズを取得

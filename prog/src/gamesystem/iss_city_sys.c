@@ -473,9 +473,11 @@ static void LoadUnitData( ISS_CITY_SYS* p_sys )
 	u8 unit_num;	// ユニット数
 	u16* zone_id;	// 各ユニットのゾーンID
 	u16* offset;	// 各ユニットデータ先頭部へのオフセット
+  u16 heap_low_id;
 
 	// アーカイブデータの読み込み
-	header = (u8*)GFL_ARC_UTIL_Load( ARCID_ISS_UNIT, NARC_iss_city_bin, FALSE, p_sys->heapID );
+  heap_low_id = GFL_HEAP_LOWID( p_sys->heapID );
+	header      = (u8*)GFL_ARC_UTIL_Load( ARCID_ISS_UNIT, NARC_iss_city_bin, FALSE, heap_low_id );
 
 	// ユニット数を取得
 	unit_num = header[ pos++ ];	
