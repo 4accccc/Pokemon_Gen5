@@ -3,6 +3,7 @@
 #include "../script/bg_attr_def.h"
 #include "../script/trainer_def.h"
 #include "../script/init_scr_def.h"
+#include "../script/sodateya_scr_def.h"
 #include "../script/pokecen_scr_def.h"
 //#include "tmp/bcwftest.h"
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕdata/bcwftest.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -2851,6 +2852,8 @@
 #define T02_BABYGIRL1_1                    4
 #define T02_HAKAIM_01                      5
 #define T02_HAKAIW_01                      6
+#define T02_DOCTOR_GUIDE                   7
+#define T02_RIVAL_01                       8
 
 #endif //ZONE_T02_EVC_H
 //#include "tmp/t02pc0101.h"
@@ -12083,13 +12086,13 @@ static const EVENTDATA_TABLE event_r16 = {
 #include "../script/t01_def.h"
 const CONNECT_DATA DOOR_EVENT_T01[] = {
 	{//DOOR_ID_T01_EXIT01 = 0
-		{12536, 0, 11960},
+		{12520, 0, 11960},
 		ZONE_ID_T01R0101, DOOR_ID_T01R0101_EXIT02,
 		EXIT_DIR_DOWN,//direction
 		EXIT_TYPE_DOOR //type
 	},
 	{//DOOR_ID_T01_EXIT02 = 1
-		{12456, 0, 12120},
+		{12424, 0, 12120},
 		ZONE_ID_T01R0201, DOOR_ID_T01R0201_EXIT02,
 		EXIT_DIR_DOWN,//direction
 		EXIT_TYPE_DOOR //type
@@ -12101,7 +12104,7 @@ const CONNECT_DATA DOOR_EVENT_T01[] = {
 		EXIT_TYPE_DOOR //type
 	},
 	{//DOOR_ID_T01_EXIT04 = 3
-		{12456, 0, 11848},
+		{12440, 0, 11848},
 		ZONE_ID_T01R0401, DOOR_ID_T01R0401_EXIT02,
 		EXIT_DIR_DOWN,//direction
 		EXIT_TYPE_DOOR //type
@@ -12917,6 +12920,40 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		650,
 		0,
 	},
+	{
+		T02_DOCTOR_GUIDE,
+		HAKASE1,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T02_DOCTOR_GUIDE,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		791,
+		658,
+		0,
+	},
+	{
+		T02_RIVAL_01,
+		RIVEL,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_T02_RIVAL_01,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		788,
+		660,
+		0,
+	},
 };
 const int ObjCount_T02 = NELEMS(OBJ_EVENT_T02);
 const POS_EVENT_DATA POS_EVENT_T02[] = {
@@ -12933,7 +12970,7 @@ const int PosCount_T02 = NELEMS(POS_EVENT_T02);
 
 static const EVENTDATA_TABLE event_t02 = {
 	0,
-	7,
+	9,
 	5,
 	1,
 	(void *)NULL,
@@ -13018,7 +13055,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02PC0101[] = {
 		0,
 		0,
 		7,
-		16,
+		18,
 		0,
 	},
 	{
@@ -13044,15 +13081,15 @@ const FLDMMDL_HEADER OBJ_EVENT_T02PC0101[] = {
 		MV_DMY,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_DUMMY,
+		SCRID_T02PC0101_SUPPORT_01,
 		DIR_UP,
 		0,
 		0,
 		0,
 		0,
 		0,
-		8,
-		19,
+		9,
+		13,
 		0,
 	},
 };
