@@ -325,16 +325,16 @@ void  BTLV_EFFECT_DelPokemon( int position )
 
 //============================================================================================
 /**
- * @brief  指定された立ち位置のポケモンが存在するかチェック
+ * @brief  指定された立ち位置にMCSSが存在するかチェック
  *
- * @param[in] position  チェックするポケモンの立ち位置
+ * @param[in] position  チェックする立ち位置
  *
  * @retval  TRUE:存在する　FALSE:存在しない
  */
 //============================================================================================
-BOOL  BTLV_EFFECT_CheckExistPokemon( int position )
+BOOL  BTLV_EFFECT_CheckExist( int position )
 {
-  return BTLV_MCSS_CheckExistPokemon( bew->bmw, position );
+  return BTLV_MCSS_CheckExist( bew->bmw, position );
 }
 
 //============================================================================================

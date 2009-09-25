@@ -121,7 +121,7 @@ extern  void            BTLV_MCSS_MoveAlpha( BTLV_MCSS_WORK *bmw, int position, 
                                              int alpha, int frame, int wait, int count );
 extern  void            BTLV_MCSS_MoveCircle( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_CIRCLE_PARAM* bmmcp );
 extern  BOOL            BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position );
-extern  BOOL            BTLV_MCSS_CheckExistPokemon( BTLV_MCSS_WORK *bmw, int position );
+extern  BOOL            BTLV_MCSS_CheckExist( BTLV_MCSS_WORK *bmw, int position );
 extern  void            BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position,
                                                   u8 start_evy, u8 end_evy, u8 wait, u32 rgb );
 

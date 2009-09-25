@@ -46,14 +46,14 @@ struct _BTLV_MCSS_WORK
   MCSS_WORK*      mcss[ BTLV_MCSS_MAX ];
   int             callback_count[ BTLV_MCSS_MAX ];    //コールバックが呼ばれた回数をカウント
 
-  u8              poke_mcss_proj_mode   :1;
-  u8                                    :7;
-  u32             poke_mcss_tcb_move_execute;
-  u32             poke_mcss_tcb_scale_execute;
-  u32             poke_mcss_tcb_rotate_execute;
+  u8              mcss_proj_mode   :1;
+  u8                               :7;
+  u32             mcss_tcb_move_execute;
+  u32             mcss_tcb_scale_execute;
+  u32             mcss_tcb_rotate_execute;
 
-  u32             poke_mcss_tcb_blink_execute;
-  u32             poke_mcss_tcb_alpha_execute;
+  u32             mcss_tcb_blink_execute;
+  u32             mcss_tcb_alpha_execute;
   HEAPID          heapID;
 };
 
@@ -121,7 +121,7 @@ static  const VecFx32 poke_pos_table[]={
 #define OFS_Y ( 0.3f )
 
 static  const VecFx32 poke_pos_table[]={
-  { FX_F32_TO_FX32( -2.5f + 3.000f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },    //POS_AA
+  { FX_F32_TO_FX32( -2.5f + 3.000f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },   //POS_AA
   { FX_F32_TO_FX32(  4.5f - 4.200f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -10.0f ) },   //POS_BB
   { FX_F32_TO_FX32( -3.5f + 3.500f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },   //POS_A
   { FX_F32_TO_FX32(  6.0f - 4.200f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -10.0f ) },   //POS_B
@@ -130,11 +130,11 @@ static  const VecFx32 poke_pos_table[]={
   { FX_F32_TO_FX32( -2.5f + 3.845f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },   //POS_E
   { FX_F32_TO_FX32(  4.5f - 4.964f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -10.0f ) },   //POS_F
   { FX_F32_TO_FX32( -2.5f + 3.000f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   7.5f - 0.5f ) },    //POS_TR_AA
-  { FX_F32_TO_FX32(  4.5f - 4.200f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( -25.0f ) },   //POS_TR_BB
-  { FX_F32_TO_FX32( -3.5f + 3.500f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   8.5f ) },   //POS_TR_A
-  { FX_F32_TO_FX32(  6.0f - 4.200f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(  -9.0f ) },   //POS_TR_B
-  { FX_F32_TO_FX32( -0.5f + 3.845f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   9.0f ) },   //POS_TR_C
-  { FX_F32_TO_FX32(  2.0f - 4.964f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( -11.0f ) },   //POS_TR_D
+  { FX_F32_TO_FX32(  4.5f - 4.200f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( -25.0f ) },           //POS_TR_BB
+  { FX_F32_TO_FX32( -3.5f + 3.500f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   8.5f ) },           //POS_TR_A
+  { FX_F32_TO_FX32(  6.0f - 4.200f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(  -9.0f ) },           //POS_TR_B
+  { FX_F32_TO_FX32( -0.5f + 3.845f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   9.0f ) },           //POS_TR_C
+  { FX_F32_TO_FX32(  2.0f - 4.964f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( -11.0f ) },           //POS_TR_D
 };
 
 //============================================================================================
@@ -337,7 +337,7 @@ void  BTLV_MCSS_SetOrthoMode( BTLV_MCSS_WORK *bmw )
 
   MCSS_SetOrthoMode( bmw->mcss_sys );
 
-  bmw->poke_mcss_proj_mode = BTLV_MCSS_PROJ_ORTHO;
+  bmw->mcss_proj_mode = BTLV_MCSS_PROJ_ORTHO;
 
   for( position = 0 ; position < BTLV_MCSS_POS_TOTAL ; position++ ){
     if( bmw->mcss[ position ] ){
@@ -359,7 +359,7 @@ void  BTLV_MCSS_ResetOrthoMode( BTLV_MCSS_WORK *bmw )
 
   MCSS_ResetOrthoMode( bmw->mcss_sys );
 
-  bmw->poke_mcss_proj_mode = BTLV_MCSS_PROJ_PERSPECTIVE;
+  bmw->mcss_proj_mode = BTLV_MCSS_PROJ_PERSPECTIVE;
 
   for( position = 0 ; position < BTLV_MCSS_POS_TOTAL ; position++ ){
     if( bmw->mcss[ position ] ){
@@ -472,7 +472,7 @@ void  BTLV_MCSS_GetPokeDefaultPos( VecFx32 *pos, int position )
 //============================================================================================
 fx32  BTLV_MCSS_GetPokeDefaultScale( BTLV_MCSS_WORK *bmw, int position )
 {
-  return BTLV_MCSS_GetPokeDefaultScaleEx( bmw, position, bmw->poke_mcss_proj_mode );
+  return BTLV_MCSS_GetPokeDefaultScaleEx( bmw, position, bmw->mcss_proj_mode );
 }
 
 //============================================================================================
@@ -576,7 +576,7 @@ void  BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int type, VecFx
     type = EFFTOOL_CALCTYPE_INTERPOLATION;
   }
   BTLV_MCSS_TCBInitialize( bmw, position, type, &start, pos, frame, wait, count, TCB_BTLV_MCSS_Move, REVERSE_FLAG_ON );
-  bmw->poke_mcss_tcb_move_execute |= BTLV_EFFTOOL_Pos2Bit( position );
+  bmw->mcss_tcb_move_execute |= BTLV_EFFTOOL_Pos2Bit( position );
 }
 
 //============================================================================================
@@ -600,7 +600,7 @@ void  BTLV_MCSS_MoveScale( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32 
 
   MCSS_GetOfsScale( bmw->mcss[ position ], &start );
   BTLV_MCSS_TCBInitialize( bmw, position, type, &start, scale, frame, wait, count, TCB_BTLV_MCSS_Scale, REVERSE_FLAG_OFF );
-  bmw->poke_mcss_tcb_scale_execute |= BTLV_EFFTOOL_Pos2Bit( position );
+  bmw->mcss_tcb_scale_execute |= BTLV_EFFTOOL_Pos2Bit( position );
 }
 
 //============================================================================================
@@ -624,7 +624,7 @@ void  BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32
 
   MCSS_GetRotate( bmw->mcss[ position ], &start );
   BTLV_MCSS_TCBInitialize( bmw, position, type, &start, rotate, frame, wait, count, TCB_BTLV_MCSS_Rotate, REVERSE_FLAG_ON );
-  bmw->poke_mcss_tcb_rotate_execute |= BTLV_EFFTOOL_Pos2Bit( position );
+  bmw->mcss_tcb_rotate_execute |= BTLV_EFFTOOL_Pos2Bit( position );
 }
 
 //============================================================================================
@@ -658,7 +658,7 @@ void  BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait
     break;
   case BTLEFF_MEPACHI_MABATAKI:
     GFL_TCB_AddTask( bmw->tcb_sys, TCB_BTLV_MCSS_Blink, pmtw, 0 );
-    bmw->poke_mcss_tcb_blink_execute |= BTLV_EFFTOOL_Pos2Bit( position );
+    bmw->mcss_tcb_blink_execute |= BTLV_EFFTOOL_Pos2Bit( position );
     break;
   }
 }
@@ -690,7 +690,7 @@ void  BTLV_MCSS_MoveAlpha( BTLV_MCSS_WORK *bmw, int position, int type, int alph
   end.y = 0;
   end.z = 0;
   BTLV_MCSS_TCBInitialize( bmw, position, type, &start, &end, frame, wait, count, TCB_BTLV_MCSS_Alpha, REVERSE_FLAG_OFF );
-  bmw->poke_mcss_tcb_alpha_execute |= BTLV_EFFTOOL_Pos2Bit( position );
+  bmw->mcss_tcb_alpha_execute |= BTLV_EFFTOOL_Pos2Bit( position );
 }
 
 //============================================================================================
@@ -734,7 +734,7 @@ void  BTLV_MCSS_MoveCircle( BTLV_MCSS_WORK *bmw, BTLV_MCSS_MOVE_CIRCLE_PARAM* bm
   bmmcp_p->speed  = 0x10000 / bmmcp->frame;
 
   GFL_TCB_AddTask( bmw->tcb_sys, TCB_BTLV_MCSS_MoveCircle, bmmcp_p, 0 );
-  bmw->poke_mcss_tcb_move_execute |= BTLV_EFFTOOL_Pos2Bit( bmmcp_p->position );
+  bmw->mcss_tcb_move_execute |= BTLV_EFFTOOL_Pos2Bit( bmmcp_p->position );
 }
 
 //============================================================================================
@@ -751,40 +751,40 @@ BOOL  BTLV_MCSS_CheckTCBExecute( BTLV_MCSS_WORK *bmw, int position )
 {
   BOOL  pal_fade_flag = FALSE;
 
-  if( BTLV_MCSS_CheckExistPokemon( bmw, position ) )
+  if( BTLV_MCSS_CheckExist( bmw, position ) )
   {
     pal_fade_flag = MCSS_CheckExecutePaletteFade( bmw->mcss[ position ] );
   }
 
-  return ( ( bmw->poke_mcss_tcb_move_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
-       ( bmw->poke_mcss_tcb_scale_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
-       ( bmw->poke_mcss_tcb_rotate_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
-       ( bmw->poke_mcss_tcb_blink_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
-       ( bmw->poke_mcss_tcb_alpha_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
+  return ( ( bmw->mcss_tcb_move_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
+       ( bmw->mcss_tcb_scale_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
+       ( bmw->mcss_tcb_rotate_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
+       ( bmw->mcss_tcb_blink_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
+       ( bmw->mcss_tcb_alpha_execute & BTLV_EFFTOOL_Pos2Bit( position ) ) ||
        ( pal_fade_flag ) );
 }
 
 //============================================================================================
 /**
- * @brief 指定された立ち位置のポケモンが存在するかチェック
+ * @brief 指定された立ち位置に存在するかチェック
  *
- * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
- * @param[in] position  ポケモンの立ち位置
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  チェックする立ち位置
  *
  * @retval  TRUE:存在する　FALSE:存在しない
  */
 //============================================================================================
-BOOL  BTLV_MCSS_CheckExistPokemon( BTLV_MCSS_WORK *bmw, int position )
+BOOL  BTLV_MCSS_CheckExist( BTLV_MCSS_WORK *bmw, int position )
 {
   return (bmw->mcss[ position ] != NULL );
 }
 
 //============================================================================================
 /**
- * @brief 指定された立ち位置のポケモンにパレットフェードをセットする
+ * @brief 指定された立ち位置のMCSSにパレットフェードをセットする
  *
  * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
- * @param[in] position  ポケモンの立ち位置
+ * @param[in] position  MCSSの立ち位置
  * @param[in] start_evy セットするパラメータ（フェードさせる色に対する開始割合16段階）
  * @param[in] end_evy   セットするパラメータ（フェードさせる色に対する終了割合16段階）
  * @param[in] wait      セットするパラメータ（ウェイト）
@@ -801,9 +801,9 @@ void  BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int position, u8 start_evy,
 /**
  * @brief POKEMON_PARAMからMCSS_ADD_WORKを生成する
  *
- * @param[in] pp      POKEMON_PARAM構造体へのポインタ
- * @param[out]  maw     MCSS_ADD_WORKワークへのポインタ
- * @param[in] position  ポケモンの立ち位置
+ * @param[in]   pp        POKEMON_PARAM構造体へのポインタ
+ * @param[out]  maw       MCSS_ADD_WORKワークへのポインタ
+ * @param[in]   position  ポケモンの立ち位置
  */
 //============================================================================================
 static  void  BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position )
@@ -817,9 +817,9 @@ static  void  BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, in
 /**
  * @brief tr_typeからMCSS_ADD_WORKを生成する
  *
- * @param[in]   pp      POKEMON_PARAM構造体へのポインタ
- * @param[out]  maw     MCSS_ADD_WORKワークへのポインタ
- * @param[in]   position  ポケモンの立ち位置
+ * @param[in]   pp        POKEMON_PARAM構造体へのポインタ
+ * @param[out]  maw       MCSS_ADD_WORKワークへのポインタ
+ * @param[in]   position  トレーナーの立ち位置
  */
 //============================================================================================
 static  void  BTLV_MCSS_MakeMAWTrainer( int tr_type, MCSS_ADD_WORK* maw, int position )
@@ -842,8 +842,8 @@ static  void  BTLV_MCSS_SetDefaultScale( BTLV_MCSS_WORK *bmw, int position )
   GF_ASSERT( bmw->mcss[ position ] );
 
   VEC_Set( &scale,
-       poke_scale_table[ bmw->poke_mcss_proj_mode ][ position ],
-       poke_scale_table[ bmw->poke_mcss_proj_mode ][ position ],
+       poke_scale_table[ bmw->mcss_proj_mode ][ position ],
+       poke_scale_table[ bmw->mcss_proj_mode ][ position ],
        FX32_ONE );
 
   MCSS_SetScale( bmw->mcss[ position ], &scale );
@@ -919,7 +919,7 @@ static  void  TCB_BTLV_MCSS_Move( GFL_TCB *tcb, void *work )
   ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &now_pos );
   MCSS_SetPosition( bmw->mcss[ pmtw->position ], &now_pos );
   if( ret == TRUE ){
-    bmw->poke_mcss_tcb_move_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+    bmw->mcss_tcb_move_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
   }
@@ -941,7 +941,7 @@ static  void  TCB_BTLV_MCSS_Scale( GFL_TCB *tcb, void *work )
   ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &now_scale );
   MCSS_SetOfsScale( bmw->mcss[ pmtw->position ], &now_scale );
   if( ret == TRUE ){
-    bmw->poke_mcss_tcb_scale_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+    bmw->mcss_tcb_scale_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
   }
@@ -963,7 +963,7 @@ static  void  TCB_BTLV_MCSS_Rotate( GFL_TCB *tcb, void *work )
   ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &now_rotate );
   MCSS_SetRotate( bmw->mcss[ pmtw->position ], &now_rotate );
   if( ret == TRUE ){
-    bmw->poke_mcss_tcb_rotate_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+    bmw->mcss_tcb_rotate_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
   }
@@ -983,7 +983,7 @@ static  void  TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work )
     pmtw->emw.wait = pmtw->emw.wait_tmp;
     BTLV_MCSS_SetMepachiFlag( pmtw->bmw, pmtw->position, BTLV_MCSS_MEPACHI_FLIP );
     if( --pmtw->emw.count == 0 ){
-      bmw->poke_mcss_tcb_blink_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+      bmw->mcss_tcb_blink_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
       GFL_HEAP_FreeMemory( work );
       GFL_TCB_DeleteTask( tcb );
     }
@@ -1011,7 +1011,7 @@ static  void  TCB_BTLV_MCSS_Alpha( GFL_TCB *tcb, void *work )
   ret = BTLV_EFFTOOL_CalcParam( &pmtw->emw, &now_alpha );
   MCSS_SetAlpha( bmw->mcss[ pmtw->position ], now_alpha.x );
   if( ret == TRUE ){
-    bmw->poke_mcss_tcb_alpha_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+    bmw->mcss_tcb_alpha_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
   }
@@ -1101,7 +1101,7 @@ static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work )
     bmmcp->rotate_after_wait_count--;
   }
   if( bmmcp->count == 0 ){
-    bmw->poke_mcss_tcb_move_execute &= ( BTLV_EFFTOOL_Pos2Bit( bmmcp->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+    bmw->mcss_tcb_move_execute &= ( BTLV_EFFTOOL_Pos2Bit( bmmcp->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
   }
