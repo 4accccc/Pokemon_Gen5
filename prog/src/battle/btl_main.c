@@ -1540,7 +1540,7 @@ BOOL BTL_MAIN_IsOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID1, u8 cl
 static inline u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos )
 {
   GF_ASSERT(btlPos < NELEMS(wk->posCoverClientID));
-  GF_ASSERT(wk->posCoverClientID[btlPos] != BTL_CLIENT_MAX);
+  GF_ASSERT_MSG(wk->posCoverClientID[btlPos] != BTL_CLIENT_MAX, "pos=%d\n", btlPos);
 
   return wk->posCoverClientID[btlPos];
 }
@@ -1731,15 +1731,37 @@ BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos )
   }
   else
   {
+    #if 0
+      BTL_POS_1ST_0=0,    ///< スタンドアローンならプレイヤー側、通信対戦ならサーバ側
+      BTL_POS_2ND_0,
+      BTL_POS_1ST_1,
+      BTL_POS_2ND_1,
+      BTL_POS_1ST_2,
+      BTL_POS_2ND_2,
+
+      BTLV_MCSS_POS_A=2,
+      BTLV_MCSS_POS_B,
+      BTLV_MCSS_POS_C,
+      BTLV_MCSS_POS_D,
+      BTLV_MCSS_POS_E,
+      BTLV_MCSS_POS_F,
+    #endif
+
     u8 org_pos = (wk->myOrgPos & 1);
+    u8 result;
+
     if( isFarSide )
     {
-      return (!org_pos) + (vpos / 2);
+      result =  (org_pos ^ 1) + ((vpos - BTLV_MCSS_POS_A ) - 1);
     }
     else
     {
-      return org_pos + (vpos / 2);
+      result =  org_pos + (vpos - BTLV_MCSS_POS_A);
     }
+
+    BTL_Printf("myOrgPos=%d, vpos=%d, resultPos=%d\n", wk->myOrgPos, vpos, result);
+
+    return result;
   }
 }
 
@@ -2225,6 +2247,13 @@ u32 BTL_MAIN_GetClientTrainerID( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
   BTL_Printf("ClientID=%d, trainerID=%d\n", clientID, wk->trainerParam[clientID].trainerID);
   return wk->trainerParam[clientID].trainerID;
+}
+
+u32 BTL_MAIN_GetOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx )
+{
+  BtlPokePos pos = BTL_MAIN_GetClientPokePos( wk, clientID, 0 );
+  pos = BTL_MAIN_GetOpponentPokePos( wk, pos, idx );
+  return BTL_MAIN_BtlPosToClientID( wk, pos );
 }
 
 const MYSTATUS* BTL_MAIN_GetClientPlayerData( const BTL_MAIN_MODULE* wk, u8 clientID )

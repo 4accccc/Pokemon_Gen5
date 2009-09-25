@@ -1007,7 +1007,7 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
         BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
       }else{
         // ‘ŠŽè‚ª“ü‚ê‘Ö‚¦
-        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_NPC1, 2, subwk->clientID, subwk->pokeID );
+        BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_NPC, 2, subwk->clientID, subwk->pokeID );
       }
       BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
       (*seq)++;

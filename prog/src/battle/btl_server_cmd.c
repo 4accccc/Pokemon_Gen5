@@ -125,7 +125,6 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_1byte,            // SC_ACT_DEAD
   SC_ARGFMT_1byte,            // SC_ACT_MEMBER_OUT
   SC_ARGFMT_53bit_1byte,      // SC_ACT_MEMBER_IN
-  SC_ARGFMT_5_5_14bit,        // SC_ACT_SICK_DMG
   SC_ARGFMT_4_4bit,           // SC_ACT_WEATHER_DMG,
   SC_ARGFMT_1byte,            // SC_ACT_WEATHER_START,
   SC_ARGFMT_1byte,            // SC_ACT_WEATHER_END,

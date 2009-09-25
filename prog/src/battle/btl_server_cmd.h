@@ -78,7 +78,6 @@ typedef enum {
   SC_ACT_DEAD,              ///< 【ポケモンひんし】[ ClientID ]
   SC_ACT_MEMBER_OUT,        ///< 【ポケモン退場】[ ClientID, memberIdx ]
   SC_ACT_MEMBER_IN,         ///< 【ポケモンイン】[ ClientID, posIdx, memberIdx ]
-  SC_ACT_SICK_DMG,          ///<  アクション／ターンチェック時の状態異常ダメージ
   SC_ACT_WEATHER_DMG,       ///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
   SC_ACT_WEATHER_START,     ///< 天候変化
   SC_ACT_WEATHER_END,       ///< ターンチェックで天候終了
@@ -468,10 +467,6 @@ static inline void SCQUE_PUT_ACT_TokTrace( BTL_SERVER_CMD_QUE* que, u8 pokeID, u
 static inline void SCQUE_PUT_ACT_KINOMI( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
   SCQUE_PUT_Common( que, SC_ACT_KINOMI, pokeID );
-}
-static inline void SCQUE_PUT_SickDamage( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 sick, u8 damage )
-{
-  SCQUE_PUT_Common( que, SC_ACT_SICK_DMG, pokeID, sick, damage );
 }
 
 static inline void SCQUE_PUT_TOKWIN_IN( BTL_SERVER_CMD_QUE* que, u8 pokeID )

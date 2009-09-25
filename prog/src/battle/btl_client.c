@@ -1411,7 +1411,6 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_MEMBER_IN,         scProc_ACT_MemberIn       },
     { SC_ACT_RANKUP,            scProc_ACT_RankUp         },
     { SC_ACT_RANKDOWN,          scProc_ACT_RankDown       },
-    { SC_ACT_SICK_DMG,          scProc_ACT_SickDamage     },
     { SC_ACT_WEATHER_DMG,       scProc_ACT_WeatherDmg     },
     { SC_ACT_WEATHER_START,     scProc_ACT_WeatherStart   },
     { SC_ACT_WEATHER_END,       scProc_ACT_WeatherEnd     },
@@ -1910,44 +1909,6 @@ static BOOL scProc_ACT_SickSet( BTL_CLIENT* wk, int* seq, const int* args )
   case 1:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
-      return TRUE;
-    }
-    break;
-  }
-  return FALSE;
-}
-/**
- *  【アクション】ターンチェックによる状態異常ダメージ処理
- */
-static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args )
-{
-  switch( *seq ){
-  case 0:
-    {
-      BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-      WazaSick sick = args[1];
-      int damage = args[2];
-      u16 msgID;
-
-      switch( sick ){
-      default:
-        GF_ASSERT_MSG(0, "poke[%d], Illegal sick ID:%d\n", args[0], sick);
-        /* fallthru */
-      case WAZASICK_DOKU:   msgID = BTL_STRID_SET_DokuDamage; break;
-      case WAZASICK_YAKEDO: msgID = BTL_STRID_SET_YakedoDamage; break;
-      case WAZASICK_AKUMU:  msgID = BTL_STRID_SET_AkumuDamage; break;
-      case WAZASICK_NOROI:  msgID = BTL_STRID_SET_NoroiDamage; break;
-      }
-
-      BTLV_StartMsgSet( wk->viewCore, msgID, args );  // この先ではargs[0]しか参照しないハズ…
-      BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
-      (*seq)++;
-    }
-    break;
-  case 1:
-    if( BTLV_WaitMsg(wk->viewCore)
-    &&  BTLV_ACT_SimpleHPEffect_Wait(wk->viewCore)
-    ){
       return TRUE;
     }
     break;
