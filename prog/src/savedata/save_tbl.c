@@ -36,6 +36,7 @@
 #include "field/eventwork.h"
 #include "savedata/gimmickwork.h"
 #include "savedata/battle_rec.h"
+#include "savedata/battle_box_save.h"
 
 //==============================================================================
 //	定数定義
@@ -327,6 +328,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_GIMMICK_WORK,
     (FUNC_GET_SIZE)GIMMICKWORK_GetWorkSize,
     (FUNC_INIT_WORK)GIMMICKWORK_Init,
+  },
+  { //バトルボックス
+    GMDATA_ID_BATTLE_BOX,
+    (FUNC_GET_SIZE)BATTLE_BOX_SAVE_GetWorkSize,
+    (FUNC_INIT_WORK)BATTLE_BOX_SAVE_InitWork,
   }
 };
 

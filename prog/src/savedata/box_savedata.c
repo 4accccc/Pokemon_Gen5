@@ -25,8 +25,9 @@ static BOX_TRAY_DATA* BOXTRAYDAT_GetTrayData( const BOX_DATA *boxData , const u3
 
 
 
-//#define TRAY_ALL_USE_BIT	(0b111111111111111111111111)
-#define TRAY_ALL_USE_BIT	(0b111111111111111111)
+#define TRAY_ALL_USE_BIT	((1<<BOX_MAX_TRAY)-1)
+//#define TRAY_ALL_USE_BIT	(0b111111111111111111)
+
 //フラッシュのページをまたがないように1トレー分のデータを256バイトアライメントする
 struct _BOX_TRAY_DATA
 {
