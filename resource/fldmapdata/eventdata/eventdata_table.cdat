@@ -2537,6 +2537,9 @@
 #ifndef ZONE_R05_EVC_H
 #define ZONE_R05_EVC_H
 
+#define R05_TREE                           0
+#define R05_ROCK                           1
+#define DUMMY_OBJ                          2
 
 #endif //ZONE_R05_EVC_H
 //#include "tmp/r06.h"
@@ -11707,14 +11710,68 @@ const CONNECT_DATA DOOR_EVENT_R05[] = {
 	},
 };
 const int ConnectCount_R05 = NELEMS(DOOR_EVENT_R05);
+const FLDMMDL_HEADER OBJ_EVENT_R05[] = {
+	{
+		R05_TREE,
+		TREE,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_DUMMY,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		354,
+		423,
+		0,
+	},
+	{
+		R05_ROCK,
+		ROCK,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_DUMMY,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		350,
+		423,
+		0,
+	},
+	{
+		DUMMY_OBJ,
+		BABYBOY1,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_DUMMY,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		346,
+		423,
+		0,
+	},
+};
+const int ObjCount_R05 = NELEMS(OBJ_EVENT_R05);
 
 static const EVENTDATA_TABLE event_r05 = {
 	0,
-	0,
+	3,
 	7,
 	0,
 	(void *)NULL,
-	(void *)NULL,
+	(void *)&OBJ_EVENT_R05,
 	(void *)&DOOR_EVENT_R05,
 	(void *)NULL,
 };
