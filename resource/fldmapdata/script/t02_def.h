@@ -15,5 +15,6 @@
 #define SCRID_POS_T02_HAKAI_STOP (8)
 #define SCRID_T02_DOCTOR_GUIDE (9)
 #define SCRID_T02_RIVAL_01 (10)
+#define SCRID_T02_SAGE7_01 (11)
 
 #endif //_T02_DEF_H_

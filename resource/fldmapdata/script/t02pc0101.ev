@@ -21,6 +21,7 @@ _EVENT_DATA		ev_t02pc0101_middlewoman1_1
 _EVENT_DATA		ev_t02pc0101_doctor_guide
 _EVENT_DATA		ev_t02pc0101_support_01
 _EVENT_DATA		ev_zone_t02pc0101
+_EVENT_DATA		ev_t02pc0101_rival_01
 _EVENT_DATA_END
 
 
@@ -302,4 +303,12 @@ EVENT_START		ev_zone_t02pc0101
 
 EVENT_END
 
+/**************************************************************/
+/*  【仮】友達♂	R02の強草イベント後に出現 フラグ未設定	  */
+/**************************************************************/
+EVENT_START   ev_t02pc0101_rival_01
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_black_01 , T02PC0101_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+EVENT_END
 
