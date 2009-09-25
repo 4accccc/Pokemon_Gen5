@@ -5,7 +5,8 @@ include $(PROJECT_RSCDIR)\macro_define
 #zonetable/zoneindexが先頭、
 #zonetableが末尾、という順番は変更してはいけない。
 
-SUBDIRS	=	gym_denki
+SUBDIRS	=	gym_denki \
+					gym_normal
 
 .PHONY:	do-build clean
 
