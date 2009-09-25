@@ -14,7 +14,7 @@
 #include "fieldmap.h"
 #include "field_gimmick_h01.h"
 #include "gym_elec.h"
-
+#include "gym_normal.h"
 
 extern void GYM_SetupTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_EndTest(FIELDMAP_WORK *fieldWork);
@@ -26,17 +26,9 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   GYM_SetupTest,
   H01_GIMMICK_Setup,
   GYM_ELEC_Setup,
-/* 
-	GYM_SetupGhostGym,		//1:ゴーストジム
-	GYM_SetupCombatGym,		//2:格闘ジム
-	GYM_SetupElecGym,		//3:電気ジム		カントー
-	GYM_SetupSkyGym,		//4:飛行ジム
-	GYM_SetupInsectGym,		//5:虫ジム
-	GYM_SetupDragonGym,		//6:ドラゴンジム
-	GYM_SetupPoisonGym,		//7:毒ジム			カントー
-	GYM_SetupAlmGym,		//8:万能ジム		カントー
-	ArceusGmk_Setup,		//9:シント遺跡ギミック
-*/
+  GYM_NORMAL_SetupRoom1,
+  GYM_NORMAL_SetupRoom2,
+
 };
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
@@ -44,17 +36,9 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   GYM_EndTest,
   H01_GIMMICK_End,
   GYM_ELEC_End,
-/*
-	GYM_EndGhostGym,		//1:ゴーストジム
-	GYM_EndCombatGym,		//2:格闘ジム
-	GYM_EndElecGym,			//3:電気ジム		カントー
-	NULL,					//4:飛行ジム
-	GYM_EndInsectGym,		//5:虫ジム
-	GYM_EndDragonGym,		//6:ドラゴンジム
-	GYM_EndPoisonGym,		//7:毒ジム			カントー
-	GYM_EndAlmGym,			//8:万能ジム		カントー
-	ArceusGmk_End,			//9:シント遺跡ギミック
-*/
+  GYM_NORMAL_End,
+  GYM_NORMAL_End,
+
 };
 
 const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
@@ -62,33 +46,20 @@ const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   GYM_MoveTest,
   H01_GIMMICK_Move,
   GYM_ELEC_Move,
-/*
-	GYM_EndGhostGym,		//1:ゴーストジム
-	GYM_EndCombatGym,		//2:格闘ジム
-	GYM_EndElecGym,			//3:電気ジム		カントー
-	NULL,					//4:飛行ジム
-	GYM_EndInsectGym,		//5:虫ジム
-	GYM_EndDragonGym,		//6:ドラゴンジム
-	GYM_EndPoisonGym,		//7:毒ジム			カントー
-	GYM_EndAlmGym,			//8:万能ジム		カントー
-	ArceusGmk_End,			//9:シント遺跡ギミック
-*/
+  GYM_NORMAL_Move,
+  GYM_NORMAL_Move,
+
 };
 
 
 const static FLD_GMK_HIT_CHECK FldGimmickHitCheck[FLD_GIMMICK_MAX] = {
 	NULL,					//0:無し
-/*
-	NULL,					//1:ゴーストジム
-	NULL,					//2:格闘ジム
-	NULL,					//3:電気ジム		カントー
-	NULL,					//4:飛行ジム
-	NULL,					//5:虫ジム
-	GYM_HitCheckDragonGym,	//6:ドラゴンジム
-	NULL,					//7:毒ジム			カントー
-	NULL,					//8:万能ジム		カントー
-	NULL,					//9:シント遺跡ギミック
-*/
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+
 };
 
 //---------------------------------------------------------------------------
