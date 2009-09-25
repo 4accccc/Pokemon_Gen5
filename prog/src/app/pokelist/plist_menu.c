@@ -337,11 +337,11 @@ static void PLIST_MENU_CreateItem(  PLIST_WORK *work , PLIST_MENU_WORK *menuWork
     
     if( menuWork->itemArr[i] == PMIT_CLOSE )
     {
-      menuWork->itemWork[i].isReturn = TRUE;
+      menuWork->itemWork[i].type = APP_TASKMENU_WIN_TYPE_RETURN;
     }
     else
     {
-      menuWork->itemWork[i].isReturn = FALSE;
+      menuWork->itemWork[i].type = APP_TASKMENU_WIN_TYPE_NORMAL;
     }
   }
 }

@@ -18,6 +18,7 @@
 
 //module
 #include "app/app_menu_common.h"
+#include "app/app_taskmenu.h"
 
 //archive
 #include "arc_def.h"
@@ -58,8 +59,8 @@ enum
 	CONFIG_BG_PAL_M_10,		//  
 	CONFIG_BG_PAL_M_11,		//  
 	CONFIG_BG_PAL_M_12,		//  
-	CONFIG_BG_PAL_M_13,		//  
-	CONFIG_BG_PAL_M_14,		// 
+	CONFIG_BG_PAL_M_13,		//	TASKWND
+	CONFIG_BG_PAL_M_14,		//	
 	CONFIG_BG_PAL_M_15,		//	タッチバー
 
 
@@ -159,8 +160,6 @@ typedef enum
 //=====================================
 typedef enum
 {	
-	CLWKID_DECIDE,
-	CLWKID_CANCEL,
 	CLWKID_CHECK,
 
 	CLWKID_ITEM_TOP,
@@ -250,6 +249,9 @@ typedef enum
 #define APPBAR_MENUBAR_W	(32)
 #define APPBAR_MENUBAR_H	(3)
 
+#define APPBAR_WIN_X	(14)
+#define APPBAR_WIN_W	(9)
+
 //タイトルバー
 #define TITLEBAR_MENUBAR_X	(0)
 #define TITLEBAR_MENUBAR_Y	(0)
@@ -272,6 +274,16 @@ typedef enum
 #define PLTFADE_DECIDESTR_ADD	(0x100)
 #define PLTFADE_DECIDESTR_STARTCOLOR GX_RGB( 13, 29, 19 )
 #define PLTFADE_DECIDESTR_ENDCOLOR	GX_RGB( 24, 29, 26 )
+
+//-------------------------------------
+///	APP
+//=====================================
+enum
+{	
+	APPBAR_WIN_DECIDE,
+	APPBAR_WIN_CANCEL,
+	APPBAR_WIN_MAX,
+};
 
 //-------------------------------------
 ///	ETC
@@ -363,9 +375,12 @@ typedef struct
 //=====================================
 typedef struct 
 {
-	GFL_CLWK	*p_cancel;
-	GFL_CLWK	*p_decide;
+	GFL_FONT	*p_font;
+	PRINT_QUE *p_que;
 	GFL_CLWK	*p_check;
+	APP_TASKMENU_RES			*p_menures;
+	APP_TASKMENU_WIN_WORK	*p_win[ APPBAR_WIN_MAX ];
+	APP_TASKMENU_ITEMWORK	item[ APPBAR_WIN_MAX ];
 } APPBAR_WORK;
 //-------------------------------------
 ///	SCROLL
@@ -405,6 +420,9 @@ typedef struct
 
 	//以前の設定情報
 	CONFIG_PARAM	pre;	
+
+	//共通で使うフォント
+	GFL_FONT			*p_font;
 
 } CONFIG_WORK;
 
@@ -465,7 +483,7 @@ static UI_INPUT UI_GetInput( const UI_WORK *cp_wk, GFL_POINT *p_data );
 //-------------------------------------
 ///	MSGWND
 //=====================================
-static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_BMPWIN *p_bmpwin, HEAPID heapID );
+static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_font, HEAPID heapID );
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
 static void MSGWND_Main( MSGWND_WORK *p_wk );
 static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait );
@@ -473,7 +491,7 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait );
 ///	APPBAR
 //=====================================
 static void APPBAR_Init
-	( APPBAR_WORK *p_wk, GFL_CLWK *p_decide, GFL_CLWK *p_cancel, GFL_CLWK *p_check, HEAPID heapID );
+	( APPBAR_WORK *p_wk, GFL_CLWK *p_check, GFL_FONT *p_font, HEAPID heapID );
 static void APPBAR_Exit( APPBAR_WORK *p_wk );
 static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui );
 //-------------------------------------
@@ -549,7 +567,7 @@ enum
 	GRAPHIC_BG_FRAME_BAR_M,				//バーやタイトル
 	GRAPHIC_BG_FRAME_FONT_M,			//メインフォント
 	GRAPHIC_BG_FRAME_WND_M,				//ウィンドウ
-	GRAPHIC_BG_FRAME_BACK_M,			//背景
+	GRAPHIC_BG_FRAME_DECIDE_M,		//最終確認ウィンドウ
 
 	GRAPHIC_BG_FRAME_TEXT_S,			//ウィンドウ
 	GRAPHIC_BG_FRAME_BACK_S,			//背景
@@ -597,7 +615,7 @@ static const struct
 		},
 		GFL_BG_MODE_TEXT
 	},
-	//GRAPHIC_BG_FRAME_BACK_M
+	//GRAPHIC_BG_FRAME_DECIDE_M
 	{	
 		GFL_BG_FRAME3_M,
 		{
@@ -1056,12 +1074,14 @@ static GFL_PROC_RESULT CONFIG_PROC_Init( GFL_PROC *p_proc,int *p_seq, void *p_pa
 			CONFIG * p_sv	= SaveData_GetConfig(SaveControl_GetPointer());	
 			CONFIGPARAM_Init( &p_wk->pre, p_sv );
 		}
+		p_wk->p_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
+				GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_CONFIG );
+
 		GRAPHIC_Init( &p_wk->graphic, HEAPID_CONFIG );
 		SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeOut );
 		APPBAR_Init( &p_wk->appbar, 
-				GRAPHIC_GetClwk(&p_wk->graphic, CLWKID_DECIDE),
-				GRAPHIC_GetClwk(&p_wk->graphic, CLWKID_CANCEL),
 				GRAPHIC_GetClwk(&p_wk->graphic, CLWKID_CHECK),
+				p_wk->p_font,
 				HEAPID_CONFIG );
 
 		SCROLL_Init( &p_wk->scroll, 
@@ -1073,6 +1093,7 @@ static GFL_PROC_RESULT CONFIG_PROC_Init( GFL_PROC *p_proc,int *p_seq, void *p_pa
 		UI_Init( &p_wk->ui, HEAPID_CONFIG );
 		MSGWND_Init( &p_wk->info, 
 				GRAPHIC_GetBmpwin( &p_wk->graphic, BMPWINID_TEXT ),
+				p_wk->p_font,
 				HEAPID_CONFIG );
 	}
 
@@ -1104,6 +1125,7 @@ static GFL_PROC_RESULT CONFIG_PROC_Exit( GFL_PROC *p_proc,int *p_seq, void *p_pa
 		SEQ_Exit( &p_wk->seq );
 		GRAPHIC_Exit( &p_wk->graphic );
 		CONFIGPARAM_Exit( &p_wk->pre );
+		GFL_FONT_Delete( p_wk->p_font );
 	}
 
  	//ワークエリア解放
@@ -1922,14 +1944,14 @@ static UI_INPUT UI_GetInput( const UI_WORK *cp_wk, GFL_POINT *p_data )
  *	@param	heapID			ヒープID
  */
 //-----------------------------------------------------------------------------
-static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_BMPWIN *p_bmpwin, HEAPID heapID )
+static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_font, HEAPID heapID )
 {	
 	GFL_STD_MemClear( p_wk, sizeof(MSGWND_WORK) );
 	p_wk->clear_chr	= 0x4;
 	p_wk->p_bmpwin	= p_bmpwin;
 	p_wk->heapID		= heapID;
 
-	p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+	p_wk->p_font		= p_font;
 	p_wk->p_msg			= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
 				NARC_message_config_dat, heapID );
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 255, heapID );
@@ -1959,7 +1981,6 @@ static void MSGWND_Exit( MSGWND_WORK* p_wk )
 	GFL_TCBL_Exit( p_wk->p_tcbl );
 	GFL_STR_DeleteBuffer( p_wk->p_strbuf );
 	GFL_MSG_Delete( p_wk->p_msg );
-	GFL_FONT_Delete( p_wk->p_font );
 	GFL_STD_MemClear( p_wk, sizeof(MSGWND_WORK) );
 }
 //----------------------------------------------------------------------------
@@ -2016,11 +2037,36 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait )
  */
 //-----------------------------------------------------------------------------
 static void APPBAR_Init
-	( APPBAR_WORK *p_wk, GFL_CLWK *p_decide, GFL_CLWK *p_cancel, GFL_CLWK *p_check, HEAPID heapID )
+	( APPBAR_WORK *p_wk, GFL_CLWK *p_check, GFL_FONT *p_font, HEAPID heapID )
 {	
 	GFL_STD_MemClear( p_wk, sizeof(APPBAR_WORK) );
-	p_wk->p_decide	= p_decide;
-	p_wk->p_cancel	= p_cancel;
+	p_wk->p_check	= p_check;
+	p_wk->p_font	= p_font;
+ 
+	p_wk->p_que		= PRINTSYS_QUE_Create( heapID );
+
+	//リソース読み込み
+	p_wk->p_menures	= APP_TASKMENU_RES_Create( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_BAR_M), CONFIG_BG_PAL_M_13, p_font, p_wk->p_que, heapID );
+
+
+	{	
+		GFL_MSGDATA	*p_msg;
+		int i;
+		//メッセージ作成（ワークに保持しない）
+		p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+															NARC_message_config_dat, heapID );
+
+		for( i = 0; i < APPBAR_WIN_MAX; i++ )
+		{	
+			p_wk->item[i].str				= GFL_MSG_CreateString( p_msg, mes_config_menu08 + i );
+			p_wk->item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;
+			p_wk->item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL+i;
+			p_wk->p_win[i] = APP_TASKMENU_WIN_Create( p_wk->p_menures, &p_wk->item[i],
+														APPBAR_WIN_X + APPBAR_WIN_W*i, APPBAR_MENUBAR_Y, APPBAR_WIN_W, heapID );
+		}
+
+		GFL_MSG_Delete( p_msg );
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -2031,6 +2077,19 @@ static void APPBAR_Init
 //-----------------------------------------------------------------------------
 static void APPBAR_Exit( APPBAR_WORK *p_wk )
 {	
+	{	
+		int i;
+		for( i = 0; i < APPBAR_WIN_MAX; i++ )
+		{	
+			GFL_STR_DeleteBuffer( p_wk->item[i].str );
+			APP_TASKMENU_WIN_Delete( p_wk->p_win[i] );
+		}
+	}
+
+	APP_TASKMENU_RES_Delete( p_wk->p_menures );
+
+	PRINTSYS_QUE_Delete( p_wk->p_que );
+
 	GFL_STD_MemClear( p_wk, sizeof(APPBAR_WORK) );
 }
 //----------------------------------------------------------------------------
@@ -2042,7 +2101,14 @@ static void APPBAR_Exit( APPBAR_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui )
 {	
-
+	{	
+		int i;
+		for( i = 0; i < APPBAR_WIN_MAX; i++ )
+		{	
+			APP_TASKMENU_WIN_Update( p_wk->p_win[i] );
+		}
+	}
+	PRINTSYS_QUE_Main( p_wk->p_que );
 }
 //=============================================================================
 /**

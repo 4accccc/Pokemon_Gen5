@@ -314,17 +314,8 @@ static void APP_TASKMENU_CreateMenuWin( APP_TASKMENU_WORK *work, const APP_TASKM
                         APP_TASKMENU_PLATE_WIDTH , APP_TASKMENU_PLATE_HEIGHT , 
                         work->res->plt+1 , GFL_BMP_CHRAREA_GET_B );
 
-
-
     //プレートの絵を送る
-    if( work->itemWork[i].isReturn == TRUE )
-    {
-			APP_TASKMENU_TransFrame( work->menuWin[i], res, APP_TASKMENU_WIN_TYPE_RETURN );
-    }
-    else
-    {
-			APP_TASKMENU_TransFrame( work->menuWin[i], res, APP_TASKMENU_WIN_TYPE_NORMAL );
-    }
+		APP_TASKMENU_TransFrame( work->menuWin[i], res, work->itemWork[i].type );
     PRINTSYS_PrintQueColor( res->printQue , GFL_BMPWIN_GetBmp( work->menuWin[i] ), 
                         8+2 , 4+2 , work->itemWork[i].str , res->fontHandle , work->itemWork[i].msgColor );
     GFL_BMPWIN_MakeTransWindow_VBlank( work->menuWin[i] );
@@ -575,7 +566,6 @@ void APP_TASKMENU_RES_Delete( APP_TASKMENU_RES *wk )
  *
  *	@param	const APP_TASKMENU_WIN_WORK *res	窓のリソース
  *	@param	APP_TASKMENU_ITEMWORK *item	窓情報
- *	@param	type	作成タイプ
  *	@param	x			X座標（キャラ単位）
  *	@param	y			Y座標（キャラ単位）
  *	@param	w			幅（キャラ単位）
@@ -583,9 +573,9 @@ void APP_TASKMENU_RES_Delete( APP_TASKMENU_RES *wk )
  *	@return	単発用ワーク
  */
 //-----------------------------------------------------------------------------
-APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, APP_TASKMENU_WIN_TYPE type, u8 x, u8 y, u8 w, HEAPID heapID )
+APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, HEAPID heapID )
 {	
-	return APP_TASKMENU_WIN_CreateEx( res, item, type, x, y, w, APP_TASKMENU_PLATE_HEIGHT, heapID );
+	return APP_TASKMENU_WIN_CreateEx( res, item, x, y, w, APP_TASKMENU_PLATE_HEIGHT, heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -593,7 +583,6 @@ APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, co
  *
  *	@param	const APP_TASKMENU_WIN_WORK *res	窓のリソース
  *	@param	APP_TASKMENU_ITEMWORK *item	窓情報
- *	@param	type	作成タイプ
  *	@param	x			X座標（キャラ単位）
  *	@param	y			Y座標（キャラ単位）
  *	@param	w			幅（キャラ単位）
@@ -602,7 +591,7 @@ APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, co
  *	@return	単発用ワーク
  */
 //-----------------------------------------------------------------------------
-APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, APP_TASKMENU_WIN_TYPE type, u8 x, u8 y, u8 w, u8 h, HEAPID heapID )
+APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, HEAPID heapID )
 {	
 	APP_TASKMENU_WIN_WORK *wk;
 
@@ -613,10 +602,10 @@ APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, 
 
 	//BMPWIN
 	wk->bmpwin	= GFL_BMPWIN_Create( res->frame, x, y , w, h, 
-                        res->plt , GFL_BMP_CHRAREA_GET_B ); 
+                        res->plt+1, GFL_BMP_CHRAREA_GET_B ); 
 
 	//読み込み	
-	APP_TASKMENU_TransFrame( wk->bmpwin, res, APP_TASKMENU_WIN_TYPE_NORMAL );
+	APP_TASKMENU_TransFrame( wk->bmpwin, res, item->type );
 	PRINTSYS_PrintQueColor( res->printQue , GFL_BMPWIN_GetBmp( wk->bmpwin ), 
                 8+2 , 4+2 , item->str , res->fontHandle , item->msgColor );
 	GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmpwin );
@@ -685,7 +674,7 @@ void APP_TASKMENU_WIN_Update( APP_TASKMENU_WIN_WORK *wk )
 //-----------------------------------------------------------------------------
 void APP_TASKMENU_WIN_SetActive( APP_TASKMENU_WIN_WORK *wk, BOOL isActive )
 {	
-	wk->isActive	= isActive;
+	APP_TASKMENU_SetActiveItem( wk->bmpwin, wk->res, isActive );
 }
 
 //----------------------------------------------------------------------------

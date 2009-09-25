@@ -20,6 +20,9 @@
 #define APP_TASKMENU_PLATE_WIDTH (13)
 #define APP_TASKMENU_PLATE_HEIGHT (3)
 
+//デフォルト文字色カラー
+#define APP_TASKMENU_ITEM_MSGCOLOR	(PRINTSYS_LSB_Make(0xd,0xf,0xe))
+
 //単発まどの種類
 typedef enum
 {	
@@ -49,7 +52,7 @@ typedef struct
 {
   STRBUF  *str;
   PRINTSYS_LSB msgColor;
-  BOOL    isReturn;       //戻るマークの表示
+  APP_TASKMENU_WIN_TYPE type;       //戻るマークの表示
 }APP_TASKMENU_ITEMWORK;
 
 //タスクメニュー 初期化ワーク
@@ -80,8 +83,8 @@ extern const u8 APP_TASKMENU_GetCursorPos( APP_TASKMENU_WORK *work );
 
 //横メニューなどで使用する、単発窓
 //横メニューの際は、「けってい」「やめる」など、複数ウィンドウを作成してください
-extern APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, APP_TASKMENU_WIN_TYPE type, u8 x, u8 y, u8 w, HEAPID heapID );
-extern APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, APP_TASKMENU_WIN_TYPE type, u8 x, u8 y, u8 w, u8 h, HEAPID heapID );
+extern APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, HEAPID heapID );
+extern APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, HEAPID heapID );
 extern void APP_TASKMENU_WIN_Delete( APP_TASKMENU_WIN_WORK *wk );
 extern void APP_TASKMENU_WIN_Update( APP_TASKMENU_WIN_WORK *wk );
 extern void APP_TASKMENU_WIN_SetActive( APP_TASKMENU_WIN_WORK *wk, BOOL isActive );

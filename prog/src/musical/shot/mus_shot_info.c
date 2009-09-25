@@ -388,8 +388,8 @@ static void MUS_SHOT_INFO_DispYesNo( MUS_SHOT_INFO_WORK *work )
   itemWork[1].str = GFL_MSG_CreateString( work->msgHandle , MUSICAL_SHOT_INFO_03 );
   itemWork[0].msgColor = MSU_INFO_YESNO_COLOR;
   itemWork[1].msgColor = MSU_INFO_YESNO_COLOR;
-  itemWork[0].isReturn = FALSE;
-  itemWork[1].isReturn = FALSE;
+  itemWork[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+  itemWork[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
 
   initWork.heapId = work->heapId;
   initWork.itemNum = 2;
