@@ -540,6 +540,8 @@ SCRIPTFILES += \
 	sp_palace01.ev \
 	palace02.ev \
 	sp_palace02.ev \
+	c02gym0201.ev \
+	sp_c02gym0201.ev \
 	c02gym0202.ev \
 	sp_c02gym0202.ev \
 	c02gym0203.ev \
