@@ -2389,6 +2389,57 @@
 
 //--------------------------------------------------------------
 /**
+ * ジムコマンド　ノーマルジム初期化
+ */
+//--------------------------------------------------------------
+#define _GYM_NORMAL_INIT( rm_idx ) \
+    _ASM_GYM_NORMAL_INIT rm_idx 
+
+  .macro  _ASM_GYM_NORMAL_INIT rm_idx
+  .short  EV_SEQ_GYM_NORMAL_INIT
+  .short  \rm_idx
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　ノーマルジムロック解除
+ */
+//--------------------------------------------------------------
+#define _GYM_NORMAL_UNROCK() \
+    _ASM_GYM_NORMAL_UNROCK 
+
+  .macro  _ASM_GYM_NORMAL_UNROCK
+  .short  EV_SEQ_GYM_NORMAL_UNROCK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　ノーマルジムロック解除
+ */
+//--------------------------------------------------------------
+#define _GYM_NORMAL_CHK_UNROCK(ret_wk) \
+    _ASM_GYM_NORMAL_CHK_UNROCK ret_wk
+
+  .macro  _ASM_GYM_NORMAL_CHK_UNROCK
+  .short  EV_SEQ_GYM_NORMAL_CHK_UNROCK
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　ノーマルジムロック解除
+ */
+//--------------------------------------------------------------
+#define _GYM_NORMAL_MOVE_WALL(wall_idx) \
+    _ASM_GYM_NORMAL_MOVE_WALL wall_idx
+
+  .macro  _ASM_GYM_NORMAL_MOVE_WALL
+  .short  EV_SEQ_GYM_NORMAL_MOVE_WALL
+  .short  \wall_idx
+  .endm
+
+//--------------------------------------------------------------
+/**
  * ポケセン回復アニメ
  *
  * @param poke_count    手持ちのポケモンの数

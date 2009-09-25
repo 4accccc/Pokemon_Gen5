@@ -15,8 +15,9 @@ extern void GYM_NORMAL_SetupRoom1(FIELDMAP_WORK *fieldWork);
 extern void GYM_NORMAL_SetupRoom2(FIELDMAP_WORK *fieldWork);
 extern void GYM_NORMAL_End(FIELDMAP_WORK *fieldWork);
 extern void GYM_NORMAL_Move(FIELDMAP_WORK *fieldWork);
-/**
-extern GMEVENT *GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx);
-extern GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys);
-*/
+
+extern void GYM_NORMAL_Unrock(FIELDMAP_WORK *fieldWork);
+extern BOOL GYM_NORMAL_CheckRock(FIELDMAP_WORK *fieldWork);
+extern GMEVENT * GYM_NORMAL_MoveWall(GAMESYS_WORK *gsys, const u8 inWallIdx);
+
 #endif  //__GYM_ELEC_H__

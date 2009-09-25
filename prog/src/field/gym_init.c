@@ -7,11 +7,8 @@
 //======================================================================
 
 #include "gym_init.h"
-
 #include "savedata/gimmickwork.h"
 #include "field_gimmick_def.h"
-#include "fieldmap.h"
-
 #include "gym_elec_sv.h"
 #include "gym_normal_sv.h"
 
@@ -22,11 +19,11 @@
  * @return
  */
 //--------------------------------------------------------------
-void GYM_INIT_Elec(FIELDMAP_WORK *fieldWork)
+void GYM_INIT_Elec(GAMESYS_WORK *gsys)
 {
   GYM_ELEC_SV_WORK *gmk_sv_work;
   {
-    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
     GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
   }
@@ -48,7 +45,7 @@ void GYM_INIT_Elec(FIELDMAP_WORK *fieldWork)
  * @return
  */
 //--------------------------------------------------------------
-void GYM_INIT_Normal(FIELDMAP_WORK *fieldWork, const u8 inRoomNo)
+void GYM_INIT_Normal(GAMESYS_WORK *gsys, const u8 inRoomNo)
 {
   u8 i;
   int gmk_id;
@@ -61,7 +58,7 @@ void GYM_INIT_Normal(FIELDMAP_WORK *fieldWork, const u8 inRoomNo)
   }
 
   {
-    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
     GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, gmk_id );
   }

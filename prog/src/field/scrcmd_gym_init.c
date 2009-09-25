@@ -32,6 +32,8 @@
 #include "gym_elec.h"
 #include "gym_normal.h"
 
+FS_EXTERN_OVERLAY(field_gym_init);
+
 
 //--電気--
 //--------------------------------------------------------------
@@ -46,8 +48,10 @@ VMCMD_RESULT EvCmdGymElec_Init( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  GYM_INIT_Elec(fieldWork);
+
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(field_gym_init) );		//オーバーレイロード
+  GYM_INIT_Elec(gsys);
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(field_gym_init));		//オーバーレイアンロード
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -66,10 +70,11 @@ VMCMD_RESULT EvCmdGymNormal_Init( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
 
   room_no = VMGetU16( core );
-  GYM_INIT_Normal(fieldWork, room_no);
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(field_gym_init) );		//オーバーレイロード
+  GYM_INIT_Normal(gsys, room_no);
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(field_gym_init));		//オーバーレイアンロード
 
   return VMCMD_RESULT_CONTINUE;
 }

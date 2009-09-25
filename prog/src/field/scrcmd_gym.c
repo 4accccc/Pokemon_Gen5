@@ -28,27 +28,12 @@
 
 #include "scrcmd_gym.h"
 
-#include "gym_elec.h"
 #include "gym_init.h"
+#include "gym_elec.h"
+#include "gym_normal.h"
 
-//--------------------------------------------------------------
-/**
- * 電気ジム初期化
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymElec_Init( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  GYM_INIT_Elec(fieldWork);
 
-  return VMCMD_RESULT_CONTINUE;
-}
-
+//--電気--
 //--------------------------------------------------------------
 /**
  * 電気ジムスイッチ押下
@@ -72,6 +57,74 @@ VMCMD_RESULT EvCmdGymElec_PushSw( VMHANDLE *core, void *wk )
   
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
+}
+
+//--ノーマル--
+//--------------------------------------------------------------
+/**
+ * ノーマルジムギミックロック解除
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymNormal_Unrock( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  GYM_NORMAL_Unrock(fieldWork);
+}
+
+//--------------------------------------------------------------
+/**
+ * ノーマルジムギミックロック解除チェック
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymNormal_CheckUnrock( VMHANDLE *core, void *wk )
+{
+  u16 *ret;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  ret = SCRCMD_GetVMWork( core, work );
+
+  if ( GYM_NORMAL_CheckRock(fieldWork) ){
+    *ret = 1;
+  }else{
+    *ret = 0;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * ノーマルジムギミック本棚移動
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymNormal_MoveWall( VMHANDLE *core, void *wk )
+{
+  u8 wall_idx;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  wall_idx = VMGetU16( core );
+
+  call_event = GYM_NORMAL_MoveWall(gsys, wall_idx);
+
+  SCRIPT_EntryNextEvent( sc, call_event );
+  
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+
 }
 
 

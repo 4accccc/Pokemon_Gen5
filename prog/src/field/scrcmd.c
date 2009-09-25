@@ -1238,7 +1238,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdPushWork,
   EvCmdPopWork,
   EvCmdPop,
-  EvCmdCalcAdd,
+  EvCmdCalcAdd,                       //10
   EvCmdCalcSub,
   EvCmdCalcMul,
   EvCmdCalcDiv,
@@ -1250,7 +1250,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdLoadRegWData,
   EvCmdLoadRegAdrs,
   EvCmdLoadAdrsValue,
-  EvCmdLoadAdrsReg,
+  EvCmdLoadAdrsReg,                 //20
   EvCmdLoadRegReg,
   EvCmdLoadAdrsAdrs,
   
@@ -1262,7 +1262,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdCmpAdrsValue,
   EvCmdCmpAdrsAdrs,
   EvCmdCmpWkValue,
-  EvCmdCmpWkWk,
+  EvCmdCmpWkWk,//30
   
   //仮想マシン関連
   EvCmdVMMachineAdd,
@@ -1278,7 +1278,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdPlayerDirJump,
     
   //イベントワーク関連
-  EvCmdFlagSet,
+  EvCmdFlagSet,                     //40
   EvCmdFlagReset,
   EvCmdFlagCheck,
   EvCmdFlagCheckWk,
@@ -1292,7 +1292,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdLoadWkWkValue,
   
   //フィールドイベント共通処理
-  EvCmdCommonProcFieldEventStart,
+  EvCmdCommonProcFieldEventStart,   //50
   EvCmdCommonProcFieldEventEnd,
 
   //キー入力関連
@@ -1308,7 +1308,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   //吹き出しウィンドウ
   EvCmdBalloonWinWrite,
   EvCmdBalloonWinTalkWrite,
-  EvCmdBalloonWinClose,
+  EvCmdBalloonWinClose,           //60
   
   //動作モデル
   EvCmdObjAnime,
@@ -1320,7 +1320,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdObjDel,
   EvCmdObjAddEvent,
   EvCmdObjDelEvent,
-  EvCmdObjPosChange,
+  EvCmdObjPosChange,            //70
   
   //動作モデル　イベント関連
   EvCmdObjTurn,
@@ -1338,7 +1338,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   //scrcmd_trainer.c 視線トレーナー関連
   EvCmdEyeTrainerMoveSet,
   EvCmdEyeTrainerMoveSingle,
-  EvCmdEyeTrainerMoveDouble,
+  EvCmdEyeTrainerMoveDouble,            //80
   EvCmdEyeTrainerTypeGet,
   EvCmdEyeTrainerIdGet,
   
@@ -1349,8 +1349,8 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdTrainerMessageSet,
   EvCmdTrainerTalkTypeGet,
   EvCmdRevengeTrainerTalkTypeGet,
-  EvCmdTrainerTypeGet,
-  EvCmdTrainerBgmSet,
+  EvCmdTrainerTypeGet,                
+  EvCmdTrainerBgmSet,             //90
   EvCmdTrainerLose,
   EvCmdTrainerLoseCheck,
   EvCmdSeacretPokeRetryCheck,
@@ -1362,7 +1362,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   //トレーナーフラグ関連
   EvCmdTrainerFlagSet,
   EvCmdTrainerFlagReset,
-  EvCmdTrainerFlagCheck,
+  EvCmdTrainerFlagCheck,                    //100
   
   //BGM
   EvCmdBgmPlay,
@@ -1374,9 +1374,9 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdBgmNowMapPlay,
   
   //SE
-  EvCmdSePlay,
-  EvCmdSeStop,
-  EvCmdSeWait,
+  EvCmdSePlay,  
+  EvCmdSeStop,                      
+  EvCmdSeWait,                      //110
   
   //ME
   EvCmdMePlay,
@@ -1393,8 +1393,8 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdDispFadeCheck,
   
   //アイテム関連
-  EvCmdAddItem,
-  EvCmdSubItem,
+  EvCmdAddItem,                       
+  EvCmdSubItem,                       //120
   EvCmdAddItemChk,
   EvCmdCheckItem,
   EvCmdGetItemNum,
@@ -1409,7 +1409,12 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdMapChange,
 
   //ジムギミック関連
-  EvCmdGymElec_PushSw,
+  EvCmdGymElec_Init,
+  EvCmdGymElec_PushSw,                //130
+  EvCmdGymNormal_Init,
+  EvCmdGymNormal_Unrock,
+  EvCmdGymNormal_CheckUnrock,
+  EvCmdGymNormal_MoveWall,
 
   //その他
   EvCmdChangeLangID,

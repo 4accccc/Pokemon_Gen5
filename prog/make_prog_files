@@ -177,8 +177,8 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_bgm_control.c \
         system/ica_anime.c \
 		poke_tool/status_rcv.c \
-        system/bgwinfrm.c
-
+        system/bgwinfrm.c \
+        field/scrcmd_gym_init.c
 
 #================================================
 # ここから下はオーバーレイプログラム定義
@@ -392,7 +392,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_disappear.c \
         field/height_ex.c \
         field/event_comm_error.c \
-        field/gym_init.c \
         field/gym_elec.c \
         field/gym_normal.c \
         field/event_pc_recovery.c
@@ -410,6 +409,9 @@ SRCS_OVERLAY_FIELD_WEATHER_RAIN = field/weather_rain.c
 #===> SRCS_OVERLAY_FIELDMAP
 SRCS_OVERLAY_FIELD_WEATHER_STORM = field/weather_storm.c \
                   field/weather_mirage.c
+
+#===> SRCS_OVERLAY_FIELDMAP
+SRCS_OVERLAY_FIELD_GYM_INIT = field/gym_init.c
 
 #===> SRCS_OVERLAY_FIELDMAP
 #===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
