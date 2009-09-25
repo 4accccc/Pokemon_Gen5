@@ -12,7 +12,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	tamada matsumiya suginaka_katsunori
+USERS	=	masafumi_saitou mai_ando tamada
 
 #----------------------------------------------------------------------------
 #※ここに作成するファイル名を書く
@@ -49,16 +49,10 @@ XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
 #----------------------------------------------------------------------------
 .PHONY:	do-build clean 
 
-do-build: $(TARGETDIR)/$(FLAGTARGET) $(TARGETDIR)/$(WORKTARGET)
+do-build: $(FLAGTARGET) $(WORKTARGET)
 
-$(TARGETDIR)/$(FLAGTARGET):	$(FLAGTARGET)
-	$(COPY) $(FLAGTARGET) $(TARGETDIR)/$(FLAGTARGET)
-
-$(TARGETDIR)/$(WORKTARGET):	$(WORKTARGET)
-	$(COPY) $(WORKTARGET) $(TARGETDIR)/$(WORKTARGET)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
-
 
 $(FLAGTARGET): flags.xls $(FLAGFILES)
 	@echo フラグ生成開始...
@@ -74,7 +68,6 @@ endif
 clean:
 	@rm -f $(TARGETDIR)/$(FLAGTARGET)
 	@rm -f $(TARGETDIR)/$(WORKTARGET)
-	@
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 	@rm -f $(FLAGTARGET) $(WORKTARGET)
 endif
