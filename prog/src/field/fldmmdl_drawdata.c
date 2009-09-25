@@ -30,7 +30,7 @@ const MMDL_DRAW_PROC_LIST * const
 };
 
 //======================================================================
-///	ビルボード汎用アニメ
+///	ビルボード汎用アニメ　DP　もう使いません。
 //======================================================================
 #if 0
 enum
@@ -154,6 +154,8 @@ static const GFL_BBDACT_ANM DATA_BlActAnm00_WalkR16F[] = {
 	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
 };
 #else
+
+#if 0
 //stop
 static const GFL_BBDACT_ANM DATA_BlActAnm00_StopU[] =
 {
@@ -417,7 +419,9 @@ static const GFL_BBDACT_ANM DATA_BlActAnm00_WalkR7F[] = {
 	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
 };
 #endif
+#endif
 
+#if 0
 static const GFL_BBDACT_ANM * const DATA_BlActAnm00Tbl[DRAW_STA_MAXDIR4] =
 {
 	DATA_BlActAnm00_StopU,//DRWA_STA_STOP
@@ -457,6 +461,7 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnm00Tbl[DRAW_STA_MAXDIR4] =
 	DATA_BlActAnm00_WalkL7F,
 	DATA_BlActAnm00_WalkR7F,
 };
+#endif
 
 //======================================================================
 //  自機アニメ
@@ -889,7 +894,7 @@ static const GFL_BBDACT_ANM * DATA_BlActHeroTbl[DRAW_STA_MAXDIR4_HERO] = {
 };
 
 //======================================================================
-//  自機自転車アニメ
+//  自機自転車アニメ　DP 廃盤
 //  0 上　停止
 //  1 左　走り0
 //  2 左　停止
@@ -911,6 +916,7 @@ static const GFL_BBDACT_ANM * DATA_BlActHeroTbl[DRAW_STA_MAXDIR4_HERO] = {
 //  18 下　走り0
 //  19 下　走り1
 //======================================================================
+#if 0
 //--------------------------------------------------------------
 //  自機自転車アニメ 上
 //--------------------------------------------------------------
@@ -1038,10 +1044,12 @@ static const GFL_BBDACT_ANM DATA_BlActCycleHero_WalkR8F[] = {
 	{2,ANMFLIP_ON,ANMFLIP_OFF,4},
 	{GFL_BBDACT_ANMCOM_JMP,0,0,0},
 };
+#endif
 
 //--------------------------------------------------------------
 //  自機自転車アニメ　データテーブル
 //--------------------------------------------------------------
+#if 0
 static const GFL_BBDACT_ANM * DATA_BlActCycleHeroTbl[DRAW_STA_MAXDIR4] =
 {
 	DATA_BlActCycleHero_StopU,	//DRAW_STA_STOP
@@ -1081,6 +1089,7 @@ static const GFL_BBDACT_ANM * DATA_BlActCycleHeroTbl[DRAW_STA_MAXDIR4] =
 	DATA_BlActCycleHero_WalkL8F,
 	DATA_BlActCycleHero_WalkR8F,
 };
+#endif
 
 //======================================================================
 //  自機波乗りアニメ
@@ -2117,15 +2126,24 @@ static const GFL_BBDACT_ANM * const DATA_BlActOneCellAnmTbl[DRAW_STA_MAXDIR4] =
 const MMDL_BBDACT_ANMTBL
 	DATA_MMDL_BBDACT_ANM_ListTable[MMDL_BLACT_ANMTBLNO_MAX] =
 {
-	{NULL,0},//MMDL_BLACT_ANMTBLNO_NON
-	{DATA_BlActHeroTbl,DRAW_STA_MAXDIR4_HERO},//MMDL_BLACT_ANMTBLNO_HERO
-	{DATA_BlActAnm00Tbl,DRAW_STA_MAXDIR4},//MMDL_BLACT_ANMTBLNO_BLACT
-  {DATA_BlActCycleHeroTbl,DRAW_STA_MAXDIR4},//MMDL_BLACT_ANMTBLNO_CYCLEHERO
-  {DATA_BlActSwimHeroTbl,DRAW_STA_SWIMHERO_MAX},//MMDL_BLACT_ANMTBLNO_SWIMHERO
-  {DATA_BlActAnmFlipTbl,DRAW_STA_MAXDIR4},//MMDL_BLACT_ANMTBLNO_FLIP
-  {DATA_BlActAnmNonFlipTbl,DRAW_STA_MAXDIR4},//MMDL_BLACT_ANMTBLNO_FLIP
-  {DATA_BlActAnmHeroCycleTbl,DRAW_STA_MAXDIR4},//MMDL_BLACT_ANMTBLNO_CYCLEHERO
-  {DATA_BlActOneCellAnmTbl,DRAW_STA_MAXDIR4},//MMDL_BLACT_ANMTBLNO_ONECELL
+  //MMDL_BLACT_ANMTBLNO_NON
+	{NULL,0},
+  //MMDL_BLACT_ANMTBLNO_HERO
+	{DATA_BlActHeroTbl,DRAW_STA_MAXDIR4_HERO},
+  //MMDL_BLACT_ANMTBLNO_BLACT 廃止
+	{NULL,0},
+  //MMDL_BLACT_ANMTBLNO_CYCLEHERO_OLD 廃止
+  {NULL,0},
+  //MMDL_BLACT_ANMTBLNO_SWIMHERO
+  {DATA_BlActSwimHeroTbl,DRAW_STA_SWIMHERO_MAX},
+  //MMDL_BLACT_ANMTBLNO_FLIP
+  {DATA_BlActAnmFlipTbl,DRAW_STA_MAXDIR4},
+  //MMDL_BLACT_ANMTBLNO_FLIP
+  {DATA_BlActAnmNonFlipTbl,DRAW_STA_MAXDIR4},
+  //MMDL_BLACT_ANMTBLNO_CYCLEHERO
+  {DATA_BlActAnmHeroCycleTbl,DRAW_STA_MAXDIR4},
+  //MMDL_BLACT_ANMTBLNO_ONECELL
+  {DATA_BlActOneCellAnmTbl,DRAW_STA_MAXDIR4},
 };
 
 //======================================================================

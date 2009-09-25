@@ -507,8 +507,8 @@ typedef struct
 	u8 shadow_type;		///<MMDL_SHADOWTYPE
 	u8 footmark_type;	///<MMDL_FOOTMARKTYPE
 	u8 reflect_type;	///<MMDL_REFLECTTYPE
-	u8 mdl_size;		///<モデルサイズ
-	u8 tex_size;		///<テクスチャサイズ
+	u8 mdl_size;		///<MMDL_BLACT_MDLSIZE
+	u8 tex_size;		///<GFL_BBD_TEXSIZDEF... テクスチャサイズ
 	u8 anm_id;			///<MMDL_BLACT_ANMTBLNO
   u8 sex; ///<MMDL_OBJCODESEX
   u8 dmy0; ///<ダミー0
