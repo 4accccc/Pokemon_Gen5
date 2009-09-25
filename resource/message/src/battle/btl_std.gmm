@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-09-15T21:41:56"/>
+	<create user="taya" host="W00146" date="2009-09-18T22:43:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -377,6 +377,14 @@
 勝負を　しかけてきた！▼</language>
 	</row>
 
+	<row id="BTL_STRID_STD_Encount_Player1" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>プレイヤー間ソロ対戦</comment>
+		<language name="JPN" width="216">[1:00:トレーナー名:0]が
+しょうぶを　しかけてきた！▼</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]が
+勝負を　しかけてきた！▼</language>
+	</row>
+
 	<row id="BTL_STRID_STD_Encount_NPC2" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>NPCタッグ対戦</comment>
 		<language name="JPN" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]と
@@ -384,14 +392,6 @@
 しょうぶを　しかけてきた！▼</language>
 		<language name="JPN_KANJI" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]と
 [1:0E:トレーナー種別名:2]の　[1:00:トレーナー名:3]が▽
-勝負を　しかけてきた！▼</language>
-	</row>
-
-	<row id="BTL_STRID_STD_Encount_Player1" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
-		<comment>プレイヤー間ソロ対戦</comment>
-		<language name="JPN" width="216">[1:00:トレーナー名:0]が
-しょうぶを　しかけてきた！▼</language>
-		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]が
 勝負を　しかけてきた！▼</language>
 	</row>
 
@@ -417,7 +417,7 @@
 [1:01:ポケモン種族名:1]！</language>
 	</row>
 
-	<row id="BTL_STRID_STD_PutSingle_NPC1" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+	<row id="BTL_STRID_STD_PutSingle_NPC" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>ＮＰＣがくりだす　１体</comment>
 		<language name="JPN" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]は
 [1:02:ポケモンニックネーム:2]を　くりだした！</language>
@@ -425,7 +425,7 @@
 [1:02:ポケモンニックネーム:2]を　くりだした！</language>
 	</row>
 
-	<row id="BTL_STRID_STD_PutSingle_NPC2" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+	<row id="BTL_STRID_STD_PutDouble_NPC" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>ＮＰＣがくりだす　２体</comment>
 		<language name="JPN" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]は
 [1:02:ポケモンニックネーム:2]と▽
@@ -435,7 +435,7 @@
 [1:02:ポケモンニックネーム:3]を　くりだした！</language>
 	</row>
 
-	<row id="BTL_STRID_STD_PutSingle_Player1" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+	<row id="BTL_STRID_STD_PutSingle_Player" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>相手プレイヤーがくり出す　１体</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]は
 [1:02:ポケモンニックネーム:1]を　くりだした！</language>
@@ -443,7 +443,7 @@
 [1:02:ポケモンニックネーム:1]を　くりだした！</language>
 	</row>
 
-	<row id="BTL_STRID_STD_PutSingle_Player2" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+	<row id="BTL_STRID_STD_PutDouble_Player" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>相手プレイヤーがくり出す　２体</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]は
 [1:02:ポケモンニックネーム:1]と▽

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-08-25T15:53:59"/>
+	<create user="taya" host="W00146" date="2009-09-24T17:56:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -289,12 +289,12 @@
 
 
 	<row id="DEBUG_TAYA_MENU1">
-		<language name="JPN" width="256">얇겎</language>
-		<language name="JPN_KANJI" width="256">＋－±×÷</language>
+		<language name="JPN" width="256">バトルテスト</language>
+		<language name="JPN_KANJI" width="256">バトルテスト</language>
 	</row>
 
 	<row id="DEBUG_TAYA_MENU2">
-		<language name="JPN" width="256">。，．・：；</language>
+		<language name="JPN" width="256">ポケモンさくせい</language>
 		<language name="JPN_KANJI" width="256">ポケモン作成</language>
 	</row>
 
