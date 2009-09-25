@@ -1141,14 +1141,11 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
   for( i=0;i<MUSICAL_ITEM_MAX;i++ )
   {
     //  FIXME:正しい所持アイテムチェック
-#if DEB_ARI
     if( i<100 )
-#else
-    if( i<33 )
-#endif
     {
       work->itemStateBase[work->totalItemNum].itemId = i;
       work->itemStateBase[work->totalItemNum].isOutList = FALSE;
+      /*
       if( i<100 && GFL_STD_MtRand0(4) == 0 )
       {
         work->itemStateBase[work->totalItemNum].isNew = TRUE;
@@ -1157,6 +1154,8 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
       {
         work->itemStateBase[work->totalItemNum].isNew = FALSE;
       }
+      */
+      work->itemStateBase[work->totalItemNum].isNew = FALSE;
       work->itemStateBase[work->totalItemNum].pltWork = NULL;
       work->totalItemNum++;
     }
