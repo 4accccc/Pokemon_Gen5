@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gym_normal.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2009-09-25T13:40:47
+ *****************************************************************************/
+
+#ifndef NARC_GYM_NORMAL_NAIX_
+#define NARC_GYM_NORMAL_NAIX_
+
+enum {
+	NARC_gym_normal_book_anim01_nsbmd = 0,
+	NARC_gym_normal_book_anim01_nsbca = 1
+};
+
+/* NARC_GYM_NORMAL_NAIX_ */
+#endif
