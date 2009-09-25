@@ -66,12 +66,10 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #	make clean ルール
 #------------------------------------------------------------------------------
 #警告抑止のため、LDIRT_CLEANを定義してNitroのMakefileに任せるようにした
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
-LDIRT_CLEAN = $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix $(targetname).narc $(targetname).naix
-else
 LDIRT_CLEAN = $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+LDIRT_CLEAN += $(targetname).narc $(targetname).naix
 endif
-
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
