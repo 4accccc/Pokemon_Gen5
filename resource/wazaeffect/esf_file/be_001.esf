@@ -5,7 +5,18 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\be_000_ec001_1a.spa
 %00
 カメラ移動	ダイレクト	POS_BB	0	0	0
 カメラ移動（角度指定）	ダイレクト	0	-8192	0	0	0
+立ち位置チェック	POS_BB	いない	NO_EXIST_BB_1
 ポケモンパレットフェード	POS_BB	12	12	0	0:0:0
+ラベル	NO_EXIST_BB_1
+立ち位置チェック	POS_B	いない	NO_EXIST_B_1
+ポケモンパレットフェード	POS_B	12	12	0	0:0:0
+ラベル	NO_EXIST_B_1
+立ち位置チェック	POS_D	いない	NO_EXIST_D_1
+ポケモンパレットフェード	POS_D	12	12	0	0:0:0
+ラベル	NO_EXIST_D_1
+立ち位置チェック	POS_F	いない	NO_EXIST_F_1
+ポケモンパレットフェード	POS_F	12	12	0	0:0:0
+ラベル	NO_EXIST_F_1
 エフェクト終了待ち	すべて
 パーティクルデータロード	be_000_ec001_1a
 制御モード変更	継続
@@ -24,7 +35,18 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\be_000_ec001_1a.spa
 SE再生	SEQ_SE_PASA1	デフォルト	0	0	127	0	0
 SE再生	SEQ_SE_PASA2	デフォルト	0	0	127	0	0
 エフェクト終了待ち	カメラ
+立ち位置チェック	POS_BB	いない	NO_EXIST_BB_2
 ポケモンパレットフェード	POS_BB	12	0	1	0:0:0
+ラベル	NO_EXIST_BB_2
+立ち位置チェック	POS_B	いない	NO_EXIST_B_2
+ポケモンパレットフェード	POS_B	12	0	1	0:0:0
+ラベル	NO_EXIST_B_2
+立ち位置チェック	POS_D	いない	NO_EXIST_D_2
+ポケモンパレットフェード	POS_D	12	0	1	0:0:0
+ラベル	NO_EXIST_D_2
+立ち位置チェック	POS_F	いない	NO_EXIST_F_2
+ポケモンパレットフェード	POS_F	12	0	1	0:0:0
+ラベル	NO_EXIST_F_2
 カメラ移動	追従	初期位置	20	0	20
 エフェクト終了待ち	すべて
 エフェクト終了

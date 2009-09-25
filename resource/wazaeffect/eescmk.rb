@@ -541,7 +541,6 @@ end
 		}
 		#ファイルデータ書き出し
 		bin_list.size.times {|num|
-      p bin_list[ num ]
 			fp_r = open( bin_list[ num ], "rb" )
 			file.write fp_r.read
 			padding[ num ].times do

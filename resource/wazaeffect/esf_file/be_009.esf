@@ -6,13 +6,49 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_normal_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_157.spa
 #001
 %00
+制御モード変更	継続
+立ち位置チェック	POS_BB	いない	NO_EXIST_BB_1
 ポケモン拡縮	POS_BB	ダイレクト	0	0	0	0	0
 ポケモン移動	POS_BB	追従	0	4	1	0	0
+ポケモンアニメ	POS_BB	アニメストップ
+ポケモン影バニッシュ	POS_BB	バニッシュオン
+ラベル	NO_EXIST_BB_1
+立ち位置チェック	POS_B	いない	NO_EXIST_B_1
+ポケモン拡縮	POS_B	ダイレクト	0	0	0	0	0
+ポケモン移動	POS_B	追従	0	4	1	0	0
+ポケモンアニメ	POS_B	アニメストップ
+ポケモン影バニッシュ	POS_B	バニッシュオン
+ラベル	NO_EXIST_B_1
+立ち位置チェック	POS_D	いない	NO_EXIST_D_1
+ポケモン拡縮	POS_D	ダイレクト	0	0	0	0	0
+ポケモン移動	POS_D	追従	0	4	1	0	0
+ポケモンアニメ	POS_D	アニメストップ
+ポケモン影バニッシュ	POS_D	バニッシュオン
+ラベル	NO_EXIST_D_1
+立ち位置チェック	POS_F	いない	NO_EXIST_F_1
+ポケモン拡縮	POS_F	ダイレクト	0	0	0	0	0
+ポケモン移動	POS_F	追従	0	4	1	0	0
+ポケモンアニメ	POS_F	アニメストップ
+ポケモン影バニッシュ	POS_F	バニッシュオン
+ラベル	NO_EXIST_F_1
+制御モード変更	逐次
 パーティクルデータロード	be_m_ball_00_kaiten
 パーティクルデータロード	be_ball_normal_1
 パーティクルデータロード	w_157
 SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
+制御モード変更	継続
+立ち位置チェック	POS_BB	いない	NO_EXIST_BB_2
 パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_BB	方向無し	4	0
+ラベル	NO_EXIST_BB_2
+立ち位置チェック	POS_B	いない	NO_EXIST_B_2
+パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_B	方向無し	4	0
+ラベル	NO_EXIST_B_2
+立ち位置チェック	POS_D	いない	NO_EXIST_D_2
+パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_D	方向無し	4	0
+ラベル	NO_EXIST_D_2
+立ち位置チェック	POS_F	いない	NO_EXIST_F_2
+パーティクル再生	be_m_ball_00_kaiten	BE_M_BALL_00_KAITEN_M_BALL_00_KAITEN	POS_F	方向無し	4	0
+ラベル	NO_EXIST_F_2
 ポケモンα値	POS_TR_BB	追従	2	20	0	0
 エフェクト終了待ち	ポケモン
 トレーナー削除	9
@@ -20,20 +56,71 @@ SE再生	SEQ_SE_NAGERU	デフォルト	0	0	127	0	0
 パーティクルデータ削除	be_m_ball_00_kaiten
 制御モード変更	継続
 SE再生	SEQ_SE_BOWA2	デフォルト	0	0	127	0	0
+立ち位置チェック	POS_BB	いない	NO_EXIST_BB_3
 パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_BB	方向無し	4	0
 パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_BB	方向無し	4	0
 パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_BB	方向無し	4	0
-ポケモンアニメ	POS_BB	アニメストップ
-ポケモン影バニッシュ	POS_BB	バニッシュオン
 ポケモンパレットフェード	POS_BB	16	16	0	31:31:31
 ポケモン拡縮	POS_BB	追従	1.2	1.2	32	0	0
+ラベル	NO_EXIST_BB_3
+立ち位置チェック	POS_B	いない	NO_EXIST_B_3
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_B	方向無し	4	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_B	方向無し	4	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_B	方向無し	4	0
+ポケモンパレットフェード	POS_B	16	16	0	31:31:31
+ポケモン拡縮	POS_B	追従	1.2	1.2	32	0	0
+ラベル	NO_EXIST_B_3
+立ち位置チェック	POS_D	いない	NO_EXIST_D_3
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_D	方向無し	4	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_D	方向無し	4	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_D	方向無し	4	0
+ポケモンパレットフェード	POS_D	16	16	0	31:31:31
+ポケモン拡縮	POS_D	追従	1.2	1.2	32	0	0
+ラベル	NO_EXIST_D_3
+立ち位置チェック	POS_F	いない	NO_EXIST_F_3
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_1	POS_F	方向無し	4	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_2	POS_F	方向無し	4	0
+パーティクル再生	be_ball_normal_1	BE_BALL_NORMAL_1_BALL_NORMAL_3	POS_F	方向無し	4	0
+ポケモンパレットフェード	POS_F	16	16	0	31:31:31
+ポケモン拡縮	POS_F	追従	1.2	1.2	32	0	0
+ラベル	NO_EXIST_F_3
 エフェクト終了待ち	ポケモン
+制御モード変更	継続
+立ち位置チェック	POS_BB	いない	NO_EXIST_BB_4
 ポケモンパレットフェード	POS_BB	16	0	1	31:31:31
 ポケモン拡縮	POS_BB	追従	1	1	16	0	0
 ポケモン移動	POS_BB	追従	0	-1	16	0	0
+ラベル	NO_EXIST_BB_4
+立ち位置チェック	POS_B	いない	NO_EXIST_B_4
+ポケモンパレットフェード	POS_B	16	0	1	31:31:31
+ポケモン拡縮	POS_B	追従	1	1	16	0	0
+ポケモン移動	POS_B	追従	0	-1	16	0	0
+ラベル	NO_EXIST_B_4
+立ち位置チェック	POS_D	いない	NO_EXIST_D_4
+ポケモンパレットフェード	POS_D	16	0	1	31:31:31
+ポケモン拡縮	POS_D	追従	1	1	16	0	0
+ポケモン移動	POS_D	追従	0	-1	16	0	0
+ラベル	NO_EXIST_D_4
+立ち位置チェック	POS_F	いない	NO_EXIST_F_4
+ポケモンパレットフェード	POS_F	16	0	1	31:31:31
+ポケモン拡縮	POS_F	追従	1	1	16	0	0
+ポケモン移動	POS_F	追従	0	-1	16	0	0
+ラベル	NO_EXIST_F_4
 エフェクト終了待ち	すべて
 パーティクル再生	w_157	W_157_157_IWA_KEMURI	POS_BB	方向無し	1	0
+制御モード変更	継続
+立ち位置チェック	POS_BB	いない	NO_EXIST_BB_5
 ポケモン移動	POS_BB	追従	0	-3	10	0	0
+ラベル	NO_EXIST_BB_5
+立ち位置チェック	POS_B	いない	NO_EXIST_B_5
+ポケモン移動	POS_B	追従	0	-3	10	0	0
+ラベル	NO_EXIST_B_5
+立ち位置チェック	POS_D	いない	NO_EXIST_D_5
+ポケモン移動	POS_D	追従	0	-3	10	0	0
+ラベル	NO_EXIST_D_5
+立ち位置チェック	POS_F	いない	NO_EXIST_F_5
+ポケモン移動	POS_F	追従	0	-3	10	0	0
+ラベル	NO_EXIST_F_5
 タイマーによるウエイト	5
 SE再生	SEQ_SE_W011_01	デフォルト	0	0	127	0	0
 射影モード	正射影
@@ -45,7 +132,22 @@ SE再生	SEQ_SE_W011_01	デフォルト	0	0	127	0	0
 エフェクト終了待ち	カメラ
 カメラ移動（座標指定）	追従（相対指定）	0:-1:0	0:-1:0	2	0	0
 エフェクト終了待ち	カメラ
+制御モード変更	継続
+立ち位置チェック	POS_BB	いない	NO_EXIST_BB_6
 ポケモンアニメ	POS_BB	アニメスタート
 ポケモン影バニッシュ	POS_BB	バニッシュオフ
+ラベル	NO_EXIST_BB_6
+立ち位置チェック	POS_B	いない	NO_EXIST_B_6
+ポケモンアニメ	POS_B	アニメスタート
+ポケモン影バニッシュ	POS_B	バニッシュオフ
+ラベル	NO_EXIST_B_6
+立ち位置チェック	POS_D	いない	NO_EXIST_D_6
+ポケモンアニメ	POS_D	アニメスタート
+ポケモン影バニッシュ	POS_D	バニッシュオフ
+ラベル	NO_EXIST_D_6
+立ち位置チェック	POS_F	いない	NO_EXIST_F_6
+ポケモンアニメ	POS_F	アニメスタート
+ポケモン影バニッシュ	POS_F	バニッシュオフ
+ラベル	NO_EXIST_F_6
 エフェクト終了
 &
