@@ -15,7 +15,7 @@ class DataFormatError < Exception; end
 class ReadWMSError < Exception; end
 
 def debug_puts str
-  puts str
+  #puts str
 end
 
 GRID_SIZE   =   16    #1グリッドのユニット数
