@@ -291,10 +291,10 @@ EVENT_START   ev_r01_poke_count_rivel
 	//カウント勝負によって返答を分岐
 	IF $WK_SCENE_R01 == 1 THEN
 	//カウント前
-	_EASY_MSG(msg_r01_black_10)
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_black_10)
 ELSE
 	//カウント後
-	_EASY_MSG(msg_r01_black_11)
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_black_11)
 ENDIF
 EVENT_END
 
@@ -362,7 +362,7 @@ EVENT_END
 /**************************************************************/
 
 EVENT_START   ev_r01_pokecount02
-	_EASY_MSG(msg_r01_white_13)
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_white_13)
 EVENT_END
 
 /**************************************************************/

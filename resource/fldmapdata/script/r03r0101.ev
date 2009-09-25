@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r03r0101.h"
-  //.include  "r03r0101.h"
+  .include  "r03r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -37,49 +37,45 @@ _EVENT_DATA_END
 /*  R03R0101 MIDDLEWOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r03r0101_talkobj_middlewoman2
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r03r0101_middlewoman2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03r0101_middlewoman2_01)
 EVENT_END
 
 /**************************************************************/
 /*  R03R0101 WOMAN3の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r03r0101_talkobj_woman3
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r03r0101_woman3_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  //カウント勝負質問
+_BALLOONWIN_OBJMSG_OPEN(msg_r03r0101_woman3_01,R03R0101_WOMAN3_01)
+_YES_NO_WIN( SCWK_ANSWER )
+
+//レスにより分岐
+IF $SCWK_ANSWER == 0 THEN
+  //「はい」
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03r0101_woman3_02)
+ELSE
+  //「いいえ」
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03r0101_woman3_03)
+ENDIF
 EVENT_END
 
 /**************************************************************/
 /*  R03R0101 BABYGIRL1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r03r0101_talkobj_babygirl1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r03r0101_babygirl1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03r0101_babygirl1_01)
 EVENT_END
 
 /**************************************************************/
 /*  R03R0101 BABYBOY1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r03r0101_talkobj_babyboy1a
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r03r0101_babyboy1a_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03r0101_babyboy1a_01)
 EVENT_END
 
 /**************************************************************/
 /*  R03R0101 BABYBOY1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r03r0101_talkobj_babyboy1b
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r03r0101_babyboy1b_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03r0101_babyboy1b_01)
 EVENT_END
 

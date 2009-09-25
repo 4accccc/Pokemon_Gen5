@@ -2429,7 +2429,7 @@
 #define R03R0101_MIDDLEWOMAN2              0
 #define R03R0101_BABYBOY1A                 1
 #define R03R0101_BABYBOY1B                 2
-#define R03R0101_WOMAN3                    3
+#define R03R0101_WOMAN3_01                 3
 #define R03R0101_BABYGIRL1                 4
 
 #endif //ZONE_R03R0101_EVC_H
@@ -11413,7 +11413,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03R0101[] = {
 		0,
 	},
 	{
-		R03R0101_WOMAN3,
+		R03R0101_WOMAN3_01,
 		WOMAN3,
 		MV_DIR_RND,
 		EV_TYPE_NORMAL,
