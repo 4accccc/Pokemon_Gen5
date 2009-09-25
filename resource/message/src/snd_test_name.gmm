@@ -1641,6 +1641,90 @@
 		<language name="JPN" width="256">PASA2</language>
 		<language name="JPN_KANJI" width="256">PASA2</language>
 	</row>
+	<row id="msg_seq_se_mscl_01">
+		<language name="JPN" width="256">MSCL-01</language>
+		<language name="JPN_KANJI" width="256">MSCL-01</language>
+	</row>
+	<row id="msg_seq_se_mscl_02">
+		<language name="JPN" width="256">MSCL-02</language>
+		<language name="JPN_KANJI" width="256">MSCL-02</language>
+	</row>
+	<row id="msg_seq_se_mscl_03">
+		<language name="JPN" width="256">MSCL-03</language>
+		<language name="JPN_KANJI" width="256">MSCL-03</language>
+	</row>
+	<row id="msg_seq_se_mscl_04">
+		<language name="JPN" width="256">MSCL-04</language>
+		<language name="JPN_KANJI" width="256">MSCL-04</language>
+	</row>
+	<row id="msg_seq_se_mscl_05">
+		<language name="JPN" width="256">MSCL-05</language>
+		<language name="JPN_KANJI" width="256">MSCL-05</language>
+	</row>
+	<row id="msg_seq_se_mscl_06">
+		<language name="JPN" width="256">MSCL-06</language>
+		<language name="JPN_KANJI" width="256">MSCL-06</language>
+	</row>
+	<row id="msg_seq_se_mscl_07">
+		<language name="JPN" width="256">MSCL-07</language>
+		<language name="JPN_KANJI" width="256">MSCL-07</language>
+	</row>
+	<row id="msg_seq_se_mscl_08">
+		<language name="JPN" width="256">MSCL-08</language>
+		<language name="JPN_KANJI" width="256">MSCL-08</language>
+	</row>
+	<row id="msg_seq_se_mscl_09">
+		<language name="JPN" width="256">MSCL-09</language>
+		<language name="JPN_KANJI" width="256">MSCL-09</language>
+	</row>
+	<row id="msg_seq_se_mscl_10">
+		<language name="JPN" width="256">MSCL-10</language>
+		<language name="JPN_KANJI" width="256">MSCL-10</language>
+	</row>
+	<row id="msg_seq_se_mscl_11">
+		<language name="JPN" width="256">MSCL-11</language>
+		<language name="JPN_KANJI" width="256">MSCL-11</language>
+	</row>
+	<row id="msg_seq_se_mscl_12">
+		<language name="JPN" width="256">MSCL-12</language>
+		<language name="JPN_KANJI" width="256">MSCL-12</language>
+	</row>
+	<row id="msg_seq_se_mscl_13">
+		<language name="JPN" width="256">MSCL-13</language>
+		<language name="JPN_KANJI" width="256">MSCL-13</language>
+	</row>
+	<row id="msg_seq_se_mscl_14">
+		<language name="JPN" width="256">MSCL-14</language>
+		<language name="JPN_KANJI" width="256">MSCL-14</language>
+	</row>
+	<row id="msg_seq_se_mscl_15">
+		<language name="JPN" width="256">MSCL-15</language>
+		<language name="JPN_KANJI" width="256">MSCL-15</language>
+	</row>
+	<row id="msg_seq_se_mscl_16">
+		<language name="JPN" width="256">MSCL-16</language>
+		<language name="JPN_KANJI" width="256">MSCL-16</language>
+	</row>
+	<row id="msg_seq_se_mscl_17">
+		<language name="JPN" width="256">MSCL-17</language>
+		<language name="JPN_KANJI" width="256">MSCL-17</language>
+	</row>
+	<row id="msg_seq_se_mscl_18">
+		<language name="JPN" width="256">MSCL-18</language>
+		<language name="JPN_KANJI" width="256">MSCL-18</language>
+	</row>
+	<row id="msg_seq_se_mscl_19">
+		<language name="JPN" width="256">MSCL-19</language>
+		<language name="JPN_KANJI" width="256">MSCL-19</language>
+	</row>
+	<row id="msg_seq_se_sys_01">
+		<language name="JPN" width="256">SYS-01</language>
+		<language name="JPN_KANJI" width="256">SYS-01</language>
+	</row>
+	<row id="msg_seq_se_sys_02">
+		<language name="JPN" width="256">SYS-02</language>
+		<language name="JPN_KANJI" width="256">SYS-02</language>
+	</row>
 	<row id="msg_seq_se_pl_w012">
 		<language name="JPN" width="256">PL-W012</language>
 		<language name="JPN_KANJI" width="256">PL-W012</language>
