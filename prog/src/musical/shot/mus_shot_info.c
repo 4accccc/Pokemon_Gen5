@@ -88,6 +88,7 @@ struct _MUS_SHOT_INFO_WORK
   
   PRINT_QUE *printQue;
   APP_TASKMENU_WORK *yesNoWork;
+	APP_TASKMENU_RES	*takmenures;
 };
 
 //======================================================================
@@ -119,6 +120,9 @@ MUS_SHOT_INFO_WORK* MUS_SHOT_INFO_InitSystem( MUSICAL_SHOT_DATA *shotData , MUSI
   
   MUS_SHOT_INFO_InitGraphic( infoWork );
   MUS_SHOT_INFO_InitMessage( infoWork );
+
+	infoWork->takmenures	= APP_TASKMENU_RES_Create( MUS_INFO_FRAME_MSG, MUS_INFO_PAL_YESNO, infoWork->fontHandle, infoWork->printQue, infoWork->heapId );
+
   return infoWork;
 }
 
@@ -127,6 +131,8 @@ MUS_SHOT_INFO_WORK* MUS_SHOT_INFO_InitSystem( MUSICAL_SHOT_DATA *shotData , MUSI
 //--------------------------------------------------------------
 void MUS_SHOT_INFO_ExitSystem( MUS_SHOT_INFO_WORK *infoWork )
 {
+	APP_TASKMENU_RES_Delete( infoWork->takmenures );
+
   MUS_SHOT_INFO_ExitMessage( infoWork );
   GFL_BG_FreeBGControl( MUS_INFO_FRAME_MSG );
   GFL_BG_FreeBGControl( MUS_INFO_FRAME_INFO );
@@ -388,16 +394,16 @@ static void MUS_SHOT_INFO_DispYesNo( MUS_SHOT_INFO_WORK *work )
   initWork.heapId = work->heapId;
   initWork.itemNum = 2;
   initWork.itemWork = itemWork;
-  initWork.bgFrame = MUS_INFO_FRAME_MSG;
-  initWork.palNo = MUS_INFO_PAL_YESNO;
+//  initWork.bgFrame = MUS_INFO_FRAME_MSG;
+ // initWork.palNo = MUS_INFO_PAL_YESNO;
   initWork.posType = ATPT_LEFT_UP;
   initWork.charPosX = MUS_INFO_YESNO_X;
   initWork.charPosY = MUS_INFO_YESNO_Y;
-  initWork.msgHandle = work->msgHandle;
-  initWork.fontHandle = work->fontHandle;
-  initWork.printQue = work->printQue;
+  //initWork.msgHandle = work->msgHandle;
+ // initWork.fontHandle = work->fontHandle;
+//  initWork.printQue = work->printQue;
 
-  work->yesNoWork = APP_TASKMENU_OpenMenu( &initWork );
+  work->yesNoWork = APP_TASKMENU_OpenMenu( &initWork, work->takmenures );
   
   GFL_STR_DeleteBuffer( itemWork[0].str );
   GFL_STR_DeleteBuffer( itemWork[1].str );

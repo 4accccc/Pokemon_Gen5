@@ -512,9 +512,6 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind , FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType , FALSE );
   }
-
-
-
 }
 
 void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
@@ -1184,23 +1181,17 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
   appinit.heapId = pWork->heapID;
   appinit.itemNum =  num;
   appinit.itemWork =  &pWork->appitem[0];
-  appinit.bgFrame =  GFL_BG_FRAME3_M;
-  appinit.palNo = _SUBLIST_NORMAL_PAL;
 
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 24;
-
-  appinit.msgHandle = pWork->MsgManager;
-  appinit.fontHandle =  pWork->fontHandle;
-  appinit.printQue =  pWork->SysMsgQue;
 
   for(i=0;i<num;i++){
     pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
     GFL_MSG_GetString(pWork->MsgManager, menustr[i], pWork->appitem[i].str);
     pWork->appitem[i].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
   }
-  pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit);
+  pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   for(i=0;i<num;i++){
     GFL_STR_DeleteBuffer(pWork->appitem[i].str);
   }
@@ -1559,16 +1550,10 @@ void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork)
   appinit.heapId = pWork->heapID;
   appinit.itemNum =  2;
   appinit.itemWork =  &pWork->appitem[0];
-  appinit.bgFrame =  GFL_BG_FRAME3_M;
-  appinit.palNo = _SUBLIST_NORMAL_PAL;
 
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 12;
-
-  appinit.msgHandle = pWork->MsgManager;
-  appinit.fontHandle = pWork->fontHandle;
-  appinit.printQue = pWork->SysMsgQue;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->MsgManager, MSG_ITEM_STR003, pWork->appitem[0].str);
@@ -1576,7 +1561,7 @@ void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork)
   pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->MsgManager, MSG_ITEM_STR004, pWork->appitem[1].str);
   pWork->appitem[1].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
-  pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit);
+  pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
   G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );

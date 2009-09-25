@@ -1519,6 +1519,8 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   _pocketMessageDisp(pWork, pWork->pocketno);
   ITEMDISP_ChangePocketCell( pWork, pWork->pocketno );
 
+	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME3_M, _SUBLIST_NORMAL_PAL,pWork->fontHandle, pWork->SysMsgQue, pWork->heapID  );
+
   pWork->count=2;
 
   GFL_NET_ChangeIconPosition(256-16, 0);
@@ -1579,6 +1581,8 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 
   MYITEM_FieldBagPocketSet(pWork->pBagCursor, pWork->pocketno);
   MYITEM_FieldBagCursorSet(pWork->pBagCursor, pWork->pocketno, pWork->curpos, pWork->oamlistpos+1 );
+
+	APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
 
   ITEMDISP_upMessageDelete(pWork);
   ITEMDISP_graphicDelete(pWork);

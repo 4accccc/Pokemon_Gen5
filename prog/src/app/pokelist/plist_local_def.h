@@ -13,6 +13,7 @@
 #include "print/printsys.h"
 #include "sound/pm_sndsys.h"
 #include "debug/debugwin_sys.h"
+#include "app/app_taskmenu.h"
 
 #define PLIST_LIST_MAX (6)
 
@@ -245,6 +246,10 @@ struct _PLIST_WORK
   GFL_CLWK    *clwkCursor[2];
   GFL_CLWK    *clwkBarIcon[PBT_MAX];
   GFL_CLWK    *clwkExitButton;    //終了時アニメ待ちをするときにポインタを入れておく
+
+
+	//taskmenuリソース
+	APP_TASKMENU_RES *taskres;
 
   PLIST_DATA *plData;
 #if USE_DEBUGWIN_SYSTEM

@@ -265,9 +265,13 @@ typedef enum
 //-------------------------------------
 ///	PARETTLE_FADE
 //=====================================
-#define BG_PLTFADE_ADD	(0x400)
-#define BG_PLTFADE_STARTCOLOR GX_RGB( 5, 10, 13 )
-#define BG_PLTFADE_ENDCOLOR	GX_RGB( 12, 25, 30 )
+#define PLTFADE_SELECT_ADD	(0x300)
+#define PLTFADE_SELECT_STARTCOLOR GX_RGB( 7, 13, 20 )
+#define PLTFADE_SELECT_ENDCOLOR	GX_RGB( 12, 25, 30 )
+
+#define PLTFADE_DECIDESTR_ADD	(0x100)
+#define PLTFADE_DECIDESTR_STARTCOLOR GX_RGB( 13, 29, 19 )
+#define PLTFADE_DECIDESTR_ENDCOLOR	GX_RGB( 24, 29, 26 )
 
 //-------------------------------------
 ///	ETC
@@ -298,9 +302,8 @@ typedef struct
 	GFL_ARCUTIL_TRANSINFO	transinfo[BGTRANSINFOID_MAX];
 	u32										transfrm[BGTRANSINFOID_MAX];
 	GFL_BMPWIN	*p_bmpwin[BMPWINID_MAX];
-	u16										pltfade_cnt;
-	u16										dummy;
-	GXRgb									trans_color;
+	u16										pltfade_cnt[2];
+	GXRgb									trans_color[2];
 } GRAPHIC_BG_WORK;
 //-------------------------------------
 ///	OBJワーク
@@ -1516,10 +1519,15 @@ static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_BG_Main( GRAPHIC_BG_WORK *p_wk )
 {	
+	//選択色のパレットフェード
+	Graphic_Bg_PalletFadeMain( &p_wk->trans_color[0], &p_wk->pltfade_cnt[0],
+			PLTFADE_SELECT_ADD, 7, 1, PLTFADE_SELECT_STARTCOLOR, PLTFADE_SELECT_ENDCOLOR );
 
-	Graphic_Bg_PalletFadeMain( &p_wk->trans_color, &p_wk->pltfade_cnt,
-			BG_PLTFADE_ADD, 7, 1, BG_PLTFADE_STARTCOLOR, BG_PLTFADE_ENDCOLOR );
-}
+	//文字色のパレットフェード
+/*	わからん
+	Graphic_Bg_PalletFadeMain( &p_wk->trans_color[1], &p_wk->pltfade_cnt[1],
+			PLTFADE_DECIDESTR_ADD, 0, 0xF, PLTFADE_DECIDESTR_STARTCOLOR, PLTFADE_DECIDESTR_ENDCOLOR );
+*/}
 //----------------------------------------------------------------------------
 /**
  *	@brief	BG	BMPWIN取得
@@ -1853,7 +1861,7 @@ static void UI_Main( UI_WORK *p_wk, const SCROLL_WORK *cp_scroll )
 		p_wk->tp_pos.y	= y;
 	}
 	else if( GFL_UI_TP_GetPointCont( &x, &y ) )
-	{	
+	{
 		if( MATH_IAbs( y - p_wk->tp_pos.y ) >= UI_SLIDE_DISTANCE )
 		{	
 			p_wk->input	= UI_INPUT_SLIDE;
@@ -2115,7 +2123,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 	{	
 	case UI_INPUT_SLIDE:
 		Scroll_Move( p_wk, -pos.y );
-		Scroll_ChangePlt( p_wk, FALSE );
+		Scroll_ChangePlt( p_wk, TRUE );
 		break;
 
 	case UI_INPUT_CONT_UP:
@@ -2167,9 +2175,9 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 		p_wk->select	= Scroll_PosToList( p_wk, &pos );
 		//項目のタッチ
 		Scroll_TouchItem( p_wk, &pos );
-		Scroll_ChangePlt( p_wk, FALSE );
+		Scroll_ChangePlt( p_wk, TRUE );
 		is_info_update	= TRUE;
-		is_bmpprint_decide	= FALSE;
+		is_bmpprint_decide	= TRUE;
 		break;
 
 	case UI_INPUT_TRG_RIGHT:

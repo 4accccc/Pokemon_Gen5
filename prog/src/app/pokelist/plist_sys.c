@@ -267,6 +267,10 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
       work->btlJoinNum++;
     }
   }
+
+	work->taskres	= APP_TASKMENU_RES_Create( PLIST_BG_MENU, PLIST_BG_PLT_MENU_ACTIVE,
+									work->fontHandle, work->printQue, work->heapId );
+
   //•`‰æ‡‚ÌŠÖŒWã‚±‚±‚Å
   PLIST_InitCell( work );
   
@@ -319,6 +323,8 @@ const BOOL PLIST_TermPokeList( PLIST_WORK *work )
   {
     PLIST_PLATE_DeletePlate( work , work->plateWork[i] );
   }
+
+	APP_TASKMENU_RES_Delete( work->taskres );
 
   PLIST_TermMessage( work );
   PLIST_TermCell( work );
@@ -1623,7 +1629,8 @@ static void PLIST_SelectPokeMain( PLIST_WORK *work )
     work->subSeq = PSSS_TERM;
   }
   
-  APP_TASKMENU_UpdatePalletAnime( &work->btlMenuAnmCnt , &work->btlMenuTransBuf , PLIST_BG_MENU , PLIST_BG_PLT_MENU_ACTIVE );
+	//‚È‚­‚È‚è‚Ü‚µ‚½ nagihashi
+  //APP_TASKMENU_UpdatePalletAnime( &work->btlMenuAnmCnt , &work->btlMenuTransBuf , PLIST_BG_MENU , PLIST_BG_PLT_MENU_ACTIVE );
 
 }
 

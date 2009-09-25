@@ -141,6 +141,7 @@ struct _DEBUGITEM_PARAM {
 
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
+	APP_TASKMENU_RES* pAppTaskRes;
   
   //ÉÅÉjÉÖÅ[ìyë‰
   NNSG2dCharacterData *ncgData;

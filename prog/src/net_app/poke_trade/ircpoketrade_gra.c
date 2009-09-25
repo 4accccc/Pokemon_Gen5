@@ -128,7 +128,6 @@ void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork)
 
   PokeIconCgxLoad( pWork );
 
-
 #if 0
 
 	//“Ç‚Ýž‚Ý
@@ -210,6 +209,8 @@ void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork)
   }
 #endif
   
+	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME3_S, _SUBLIST_NORMAL_PAL,
+			pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID );
 }
 
 
@@ -224,6 +225,7 @@ void IRC_POKETRADE_G3dDraw(IRC_POKEMON_TRADE* pWork)
 
 void IRC_POKETRADE_GraphicExit(IRC_POKEMON_TRADE* pWork)
 {
+	APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
   IRC_POKETRADE_TrayExit(pWork);
 }
 
@@ -266,23 +268,17 @@ void IRC_POKETRADE_AppMenuOpen(IRC_POKEMON_TRADE* pWork, int *menustr,int num)
   appinit.heapId = pWork->heapID;
   appinit.itemNum =  num;
   appinit.itemWork =  &pWork->appitem[0];
-  appinit.bgFrame =  GFL_BG_FRAME3_S;
-  appinit.palNo = _SUBLIST_NORMAL_PAL;
 
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 24;
-
-  appinit.msgHandle = pWork->pMsgData;
-  appinit.fontHandle =  pWork->pFontHandle;
-  appinit.printQue =  pWork->SysMsgQue;
 
   for(i=0;i<num;i++){
     pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
     GFL_MSG_GetString(pWork->pMsgData, menustr[i], pWork->appitem[i].str);
     pWork->appitem[i].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
   }
-  pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit);
+  pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   for(i=0;i<num;i++){
     GFL_STR_DeleteBuffer(pWork->appitem[i].str);
   }

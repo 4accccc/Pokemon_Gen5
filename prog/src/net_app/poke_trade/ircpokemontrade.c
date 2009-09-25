@@ -1658,7 +1658,6 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
 
   IRC_POKETRADE_GraphicExit(pWork);
 
-
 	for(i=0;i<2;i++){
 		if( pWork->pokeMcss[i] ){
 			MCSS_Del(pWork->mcssSys,pWork->pokeMcss[i]);

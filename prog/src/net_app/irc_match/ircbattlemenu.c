@@ -193,6 +193,7 @@ struct _IRC_BATTLE_MENU {
   PRINT_QUE*            SysMsgQue;
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
+	APP_TASKMENU_RES* pAppTaskRes;
   EVENT_IRCBATTLE_WORK * dbw;
   int windowNum;
   BOOL IsIrc;
@@ -807,16 +808,10 @@ static void _YesNoStart(IRC_BATTLE_MENU* pWork)
   appinit.heapId = pWork->heapID;
   appinit.itemNum =  2;
   appinit.itemWork =  &pWork->appitem[0];
-  appinit.bgFrame =  GFL_BG_FRAME1_S;
-  appinit.palNo = _SUBLIST_NORMAL_PAL;
 
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 14;
-
-  appinit.msgHandle = pWork->pMsgData;
-  appinit.fontHandle = pWork->pFontHandle;
-  appinit.printQue = pWork->SysMsgQue;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_27, pWork->appitem[0].str);
@@ -824,7 +819,7 @@ static void _YesNoStart(IRC_BATTLE_MENU* pWork)
   pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_28, pWork->appitem[1].str);
   pWork->appitem[1].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
-  pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit);
+  pWork->pAppTask			= APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
