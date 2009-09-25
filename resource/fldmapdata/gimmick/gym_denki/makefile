@@ -53,16 +53,13 @@ ICA_CNV = ../../../../tools/ica/ica_converter.rb
 
 do-build: $(TARGETDIR)/$(targetname).narc
 
-
-
-
-clean:
-	@rm -f $(TARGETDIR)/$(targetname).narc
-	@rm -f $(TARGETDIR)/$(targetname).naix
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
-	@rm -f $(targetname).narc
-	@rm -f $(targetname).naix
-endif
+#clean:
+#	@rm -f $(TARGETDIR)/$(targetname).narc
+#	@rm -f $(TARGETDIR)/$(targetname).naix
+#ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+#	@rm -f $(targetname).narc
+#	@rm -f $(targetname).naix
+#endif
 
 #コピー実行する
 $(TARGETDIR)/$(targetname).narc:  $(targetname).narc 
