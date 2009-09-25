@@ -58,6 +58,7 @@ typedef enum {
   POKEPER_ID_form_max,        //別フォルムMAX
   POKEPER_ID_color,           //色（図鑑で使用）
   POKEPER_ID_reverse,         //反転フラグ
+  POKEPER_ID_pltt_only,       //別フォルム時パレットのみ変化
   POKEPER_ID_rank,            //ポケモンランク
   POKEPER_ID_padding,         //パディング
 
