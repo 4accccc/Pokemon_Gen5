@@ -62,8 +62,9 @@ struct  pokemon_personal_data
   u16   form_gra_index; //別フォルムグラフィックデータ開始位置
 
   u8    form_max;       //別フォルムMAX
-  u8    color :7;       //色（図鑑で使用）
-  u8    reverse :1;     //反転フラグ
+  u8    color     :6;   //色（図鑑で使用）
+  u8    reverse   :1;   //反転フラグ
+  u8    pltt_only :1;   //別フォルム時パレットのみ変化
   u8    rank;           //ポケモンランク
   u8    padding;        //パディング
 

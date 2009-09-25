@@ -249,6 +249,9 @@ u32 POKE_PERSONAL_GetParam( POKEMON_PERSONAL_DATA *ppd, PokePersonalParamID para
 	case POKEPER_ID_reverse:		      //反転フラグ
 		ret = ppd->reverse;
 		break;
+	case POKEPER_ID_pltt_only:		    //別フォルム時パレットのみ変化
+		ret = ppd->pltt_only;
+		break;
   case POKEPER_ID_rank:             //ポケモンランク
 		ret = ppd->rank;
 		break;
