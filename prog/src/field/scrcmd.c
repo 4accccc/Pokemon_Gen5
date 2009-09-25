@@ -1320,6 +1320,7 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   EvCmdObjDel,
   EvCmdObjAddEvent,
   EvCmdObjDelEvent,
+  EvCmdObjPosChange,
   
   //動作モデル　イベント関連
   EvCmdObjTurn,
@@ -1425,7 +1426,6 @@ const VMCMD_FUNC ScriptCmdTbl[] = {
   //鳴き声
   EvCmdVoicePlay,
   EvCmdVoiceWait,
-
 };
 
 

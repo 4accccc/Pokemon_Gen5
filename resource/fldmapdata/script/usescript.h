@@ -105,6 +105,9 @@
 //動作モデル表示コード
 #include "../../../prog/src/field/fldmmdl_code.h"
 
+//方向
+#include "../../../prog/include/field/field_dir.h"
+
 //src/field
 #include "../../../prog/src/field/script_def.h"
 
@@ -120,6 +123,8 @@
 #include "../../../prog/include/item/itemsym.h"
 
 #include "../zonetable/zone_id.h"     //ゾーンID参照
+
+
 #if 0 //wb null
 
 #include "../../../include/pm_version.h"

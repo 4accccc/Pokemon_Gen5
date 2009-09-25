@@ -3929,6 +3929,24 @@ void MMDL_InitPosition( MMDL * mmdl, const VecFx32 *vec, u16 dir )
 
 //--------------------------------------------------------------
 /**
+ * MMDL 座標、方向を初期化。グリッド版
+ * @param	mmdl	MMDL *
+ * @param	vec		初期化座標
+ * @param	dir		方向 DIR_UP等
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void MMDL_InitGridPosition( MMDL * mmdl, s16 gx, s16 gy, s16 gz, u16 dir )
+{
+  VecFx32 pos;
+  pos.x = GRID_SIZE_FX32( gx ) + MMDL_VEC_X_GRID_OFFS_FX32;
+  pos.y = GRID_SIZE_FX32( gy );
+	pos.z = GRID_SIZE_FX32( gz ) + MMDL_VEC_Z_GRID_OFFS_FX32;
+  MMDL_InitPosition( mmdl, &pos, dir );
+}
+
+//--------------------------------------------------------------
+/**
  * MMDL 動作コード変更
  * @param	mmdl	MMDL *
  * @param	code	MV_RND等

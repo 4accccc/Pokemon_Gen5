@@ -13,6 +13,8 @@
 #include "system/gfl_use.h"
 #include "arc_def.h"
 
+#include "include/field/field_dir.h"
+
 #include "field_g3d_mapper.h"
 #include "field_nogrid_mapper.h"
 #include "eventwork.h"
@@ -806,6 +808,8 @@ extern void MMDLSYS_DeleteZoneUpdateMMdl( MMDLSYS *fos );
 extern BOOL MMDL_SearchUseOBJCode( const MMDL *mmdl, u16 code );
 extern void MMDL_InitPosition(
 	MMDL * mmdl, const VecFx32 *vec, u16 dir );
+extern void MMDL_InitGridPosition(
+    MMDL * mmdl, s16 gx, s16 gy, s16 gz, u16 dir );
 extern void MMDL_ChangeMoveCode( MMDL *mmdl, u16 code );
 extern void MMDL_ChangeOBJID( MMDL * mmdl, u16 id );
 extern void MMDL_InitCheckSameData(

@@ -1169,10 +1169,31 @@
   .short \id
   .endm
 
+//--------------------------------------------------------------
+/**
+ * _OBJ_POS_CHANGE 指定のOBJ_IDを持ったOBJの座標位置を変更。
+ * @param id 座標変更するOBJ ID
+ * @param gx グリッドX座標
+ * @param gy グリッドY座標
+ * @param gz グリッドZ座標
+ * @param dir 方向 DIR_UP等
+ */
+//--------------------------------------------------------------
+#define _OBJ_POS_CHANGE( id, gx, gy, gz )  \
+    _ASM_OBJ_POS_CHANGE id, gx, gy, gz
+
+	.macro	_ASM_OBJ_POS_CHANGE	id,gx,gy,gz,dir
+	.short	EV_SEQ_OBJ_POS_CHANGE
+	.short	\id
+	.short	\gx
+	.short	\gy
+	.short	\gz
+	.short	\dir
+	.endm
+
 //======================================================================
 //  動作モデル　イベント関連
 //======================================================================
-
 //--------------------------------------------------------------
 /**
  *  _TURN_HERO_SITE 話しかけたOBJを自機方向へ振り向き

@@ -330,6 +330,54 @@ VMCMD_RESULT EvCmdObjDelEvent( VMHANDLE *core, void *wk )
   return( VMCMD_RESULT_CONTINUE );
 }
 
+//--------------------------------------------------------------
+/**
+ * OBJデータの座標情報を変更
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdObjPosChange( VMHANDLE *core, void *wk )
+{
+	MMDL *mmdl;
+  SCRCMD_WORK *work = wk;
+	u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
+	u16 x		= SCRCMD_GetVMWorkValue(core,work);
+	u16 y		= SCRCMD_GetVMWorkValue(core,work);
+	u16 z		= SCRCMD_GetVMWorkValue(core,work);
+	u16 dir		= SCRCMD_GetVMWorkValue(core,work);
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  
+	//対象のフィールドOBJのポインタ取得
+	mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+  GF_ASSERT( mmdl != NULL && "ERROR OBJ ID" );
+  
+  MMDL_InitGridPosition( mmdl, x, y, z, dir );
+	return VMCMD_RESULT_CONTINUE;
+}
+
+#if 0
+//--------------------------------------------------------------
+/**
+ * SXYデータの座標情報を変更
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+static BOOL EvCmdSxyPosChange( VM_MACHINE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 id = SCRCMD_GetVMWorkValue(core,work);
+	u16 gx = SCRCMD_GetVMWorkValue(core,work);
+	u16 gz = SCRCMD_GetVMWorkValue(core,work);
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
+  
+	EventData_NpcDataPosChange( core->fsys, id, gx, gz );
+	return 0;
+}
+#endif
+
 //======================================================================
 //  動作モデル　イベント関連
 //======================================================================
