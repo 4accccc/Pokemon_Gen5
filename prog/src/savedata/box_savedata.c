@@ -21,28 +21,31 @@
 
 
 static void PPP_RecoverPP(POKEMON_PASO_PARAM* pp){}  //ダミー関数
+static BOX_TRAY_DATA* BOXTRAYDAT_GetTrayData( const BOX_DATA *boxData , const u32 trayNum );
 
 
 
+//#define TRAY_ALL_USE_BIT	(0b111111111111111111111111)
 #define TRAY_ALL_USE_BIT	(0b111111111111111111)
-
 //フラッシュのページをまたがないように1トレー分のデータを256バイトアライメントする
-typedef struct BOX_TRAY_DATA_tag{
+struct _BOX_TRAY_DATA
+{
 	POKEMON_PASO_PARAM  ppp[BOX_MAX_POS];
-	u8 dummy[16];
-}BOX_TRAY_DATA;
+//	u8 dummy[TRAY_DUMMY_NUM];
+};
 
 struct _BOX_DATA{
-///	POKEMON_PASO_PARAM  ppp[BOX_MAX_TRAY][BOX_MAX_POS];
-	BOX_TRAY_DATA		btd[BOX_MAX_TRAY];
+//	BOX_TRAY_DATA		btd[BOX_MAX_TRAY];  //WBよりトレーが個別のセーブになります。
 	//ここより下のデータが２５６バイトアライメントされたところにマッピングされる
 	u32					currentTrayNumber;								//4
 	u32					UseBoxBits;										//4
-	STRCODE				trayName[BOX_MAX_TRAY][BOX_TRAYNAME_BUFSIZE];	//2*20*18 = 720
-	u8					wallPaper[BOX_MAX_TRAY];						//18
+	SAVE_CONTROL_WORK *sv;  //4 トレーアクセス用
+	STRCODE				trayName[BOX_MAX_TRAY][BOX_TRAYNAME_BUFSIZE];	//2*20*24 = 960
+	u8					wallPaper[BOX_MAX_TRAY];						//24
 	u8					daisukiBitFlag;									//1
-	u8					dummy[17];		//アライメントダミー			//17
+	u8					dummy[3];		//アライメントダミー			//3
 	
+	//以下昔の情報
 	//ポケモンデータが0x1000*18	バイト = 0x12000
 	//ポケモンデータ以外で764バイト = 0x2fc
 	//計0x122fcバイト　
@@ -53,8 +56,8 @@ struct _BOX_DATA{
 // 構造体が想定のサイズとなっているかチェック
 #ifdef PM_DEBUG
 #ifdef _NITRO
-SDK_COMPILER_ASSERT(sizeof(BOX_TRAY_DATA) == 4096);
-SDK_COMPILER_ASSERT(sizeof(BOX_DATA) == 0x122fc);
+SDK_COMPILER_ASSERT(sizeof(BOX_TRAY_DATA) == 4080); //ヘッダ分減らしました
+SDK_COMPILER_ASSERT(sizeof(BOX_DATA) == 0x3e8);
 #endif
 #endif
 
@@ -102,7 +105,7 @@ static void boxdata_init( BOX_DATA* boxdat )
 {
 	u32 i, p;
 	GFL_MSGDATA*  msgman;
-
+/*
 	for(i = 0; i < BOX_MAX_TRAY; i++)
 	{
 		for(p = 0; p < BOX_MAX_POS; p++)
@@ -110,6 +113,7 @@ static void boxdata_init( BOX_DATA* boxdat )
 			PPP_Clear( &(boxdat->btd[i].ppp[p]) );
 		}
 	}
+*/
 
 	// 壁紙ナンバー，だいすきクラブ壁紙の取得フラグ
 	for(i = 0, p = 0; i < BOX_MAX_TRAY; i++)
@@ -197,9 +201,10 @@ BOOL BOXDAT_PutPokemonBox( BOX_DATA* box, u32 trayNum, POKEMON_PASO_PARAM* poke 
 
 	for(i = 0; i < BOX_MAX_POS; i++)
 	{
-		if( PPP_Get( &(box->btd[trayNum].ppp[i]), ID_PARA_monsno, NULL  ) == 0 )
+    BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
+		if( PPP_Get( &(trayData->ppp[i]), ID_PARA_monsno, NULL  ) == 0 )
 		{
-			box->btd[trayNum].ppp[i] = *poke;
+			trayData->ppp[i] = *poke;
 			//SaveData_RequestTotalSave();	//金銀で変更
 			BOXDAT_SetTrayUseBit( box, trayNum);
 			return TRUE;
@@ -232,7 +237,8 @@ BOOL BOXDAT_PutPokemonPos( BOX_DATA* box, u32 trayNum, u32 pos, POKEMON_PASO_PAR
 	if(	(trayNum < BOX_MAX_TRAY)
 	&&	(pos < BOX_MAX_POS)
 	){
-		box->btd[trayNum].ppp[pos] = *poke;
+    BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
+		trayData->ppp[pos] = *poke;
 		//SaveData_RequestTotalSave();	金銀で変更
 		BOXDAT_SetTrayUseBit( box, trayNum);	
 		return TRUE;
@@ -258,9 +264,10 @@ BOOL BOXDAT_PutPokemonPos( BOX_DATA* box, u32 trayNum, u32 pos, POKEMON_PASO_PAR
 //------------------------------------------------------------------
 void BOXDAT_ChangePokeData( BOX_DATA * box, u32 trayNum, u32 pos1, u32 pos2 )
 {
-	POKEMON_PASO_PARAM	tmp = box->btd[trayNum].ppp[pos1];
-	box->btd[trayNum].ppp[pos1] = box->btd[trayNum].ppp[pos2];
-	box->btd[trayNum].ppp[pos2] = tmp;
+  BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
+	POKEMON_PASO_PARAM	tmp = trayData->ppp[pos1];
+	trayData->ppp[pos1] = trayData->ppp[pos2];
+	trayData->ppp[pos2] = tmp;
 	//SaveData_RequestTotalSave();	金銀で変更
 	BOXDAT_SetTrayUseBit( box, trayNum);
 }
@@ -284,7 +291,8 @@ void BOXDAT_ClearPokemon( BOX_DATA* box, u32 trayNum, u32 pos )
 
 	if( (pos < BOX_MAX_POS) && (trayNum < BOX_MAX_TRAY) )
 	{
-		PPP_Clear( &(box->btd[trayNum].ppp[pos]) );
+    BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
+		PPP_Clear( &(trayData->ppp[pos]) );
 		//SaveData_RequestTotalSave();	金銀で変更
 		BOXDAT_SetTrayUseBit( box, trayNum);
 	}
@@ -324,9 +332,10 @@ u32 BOXDAT_GetEmptyTrayNumber( const BOX_DATA* box )
 
 	while(1)
 	{
+    BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,tray);
 		for(pos=0; pos<BOX_MAX_POS; pos++)
 		{
-			if( PPP_Get( (POKEMON_PASO_PARAM*)(&(box->btd[tray].ppp[pos])), ID_PARA_poke_exist, NULL  ) == 0 )
+			if( PPP_Get( (POKEMON_PASO_PARAM*)(&(trayData->ppp[pos])), ID_PARA_poke_exist, NULL  ) == 0 )
 			{
 				return tray;
 			}
@@ -369,9 +378,10 @@ BOOL BOXDAT_GetEmptyTrayNumberAndPos( const BOX_DATA* box, int* trayNum, int* po
 
 	while(1)
 	{
+    BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,t);
 		for( ; p<BOX_MAX_POS; p++)
 		{
-			if( PPP_Get( (POKEMON_PASO_PARAM*)(&(box->btd[t].ppp[p])), ID_PARA_poke_exist, NULL  ) == 0 )
+			if( PPP_Get( (POKEMON_PASO_PARAM*)(&(trayData->ppp[p])), ID_PARA_poke_exist, NULL  ) == 0 )
 			{
 				*trayNum = t;
 				*pos = p;
@@ -410,9 +420,10 @@ u32 BOXDAT_GetEmptySpaceTotal( const BOX_DATA* box )
 
 	for(t=0; t<BOX_MAX_TRAY; t++)
 	{
+    BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,t);
 		for(pos=0; pos<BOX_MAX_POS; pos++)
 		{
-			if( PPP_Get( (POKEMON_PASO_PARAM*)(&(box->btd[t].ppp[pos])), ID_PARA_poke_exist, NULL  ) == 0 )
+			if( PPP_Get( (POKEMON_PASO_PARAM*)(&(trayData->ppp[pos])), ID_PARA_poke_exist, NULL  ) == 0 )
 			{
 				cnt++;
 			}
@@ -435,6 +446,7 @@ u32 BOXDAT_GetEmptySpaceTray( const BOX_DATA* box, u32 trayNum )
 {
 	int pos;
 	u32 cnt;
+  BOX_TRAY_DATA *trayData;
 
 	if( trayNum == BOXDAT_TRAYNUM_CURRENT )
 	{
@@ -445,9 +457,10 @@ u32 BOXDAT_GetEmptySpaceTray( const BOX_DATA* box, u32 trayNum )
 
 	cnt = 0;
 
+  trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
 	for(pos=0; pos<BOX_MAX_POS; pos++)
 	{
-		if( PPP_Get( (POKEMON_PASO_PARAM*)(&(box->btd[trayNum].ppp[pos])), ID_PARA_poke_exist, NULL  ) == 0 )
+		if( PPP_Get( (POKEMON_PASO_PARAM*)(&(trayData->ppp[pos])), ID_PARA_poke_exist, NULL  ) == 0 )
 		{
 			cnt++;
 		}
@@ -613,9 +626,10 @@ u32 BOXDAT_GetPokeExistCount( const BOX_DATA* box, u32 trayNum )
 	{
 		int i;
 		u32 cnt = 0;
+    BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
 		for(i=0; i<BOX_MAX_POS; i++)
 		{
-			if(PPP_Get( (POKEMON_PASO_PARAM*)(&(box->btd[trayNum].ppp[i])), ID_PARA_poke_exist, NULL ))
+			if(PPP_Get( (POKEMON_PASO_PARAM*)(&(trayData->ppp[i])), ID_PARA_poke_exist, NULL ))
 			{
 				cnt++;
 			}
@@ -650,11 +664,12 @@ u32 BOXDAT_GetPokeExistCount2( const BOX_DATA* box, u32 trayNum )
 	{
 		int i;
 		u32 cnt = 0;
+    BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
 		for(i=0; i<BOX_MAX_POS; i++)
 		{
-			if(PPP_Get( (POKEMON_PASO_PARAM*)(&(box->btd[trayNum].ppp[i])), ID_PARA_poke_exist, NULL ))
+			if(PPP_Get( (POKEMON_PASO_PARAM*)(&(trayData->ppp[i])), ID_PARA_poke_exist, NULL ))
 			{
-				if(PPP_Get( (POKEMON_PASO_PARAM*)(&(box->btd[trayNum].ppp[i])), ID_PARA_tamago_flag, NULL ) == 0)	//タマゴ除外
+				if(PPP_Get( (POKEMON_PASO_PARAM*)(&(trayData->ppp[i])), ID_PARA_tamago_flag, NULL ) == 0)	//タマゴ除外
 				{
 					cnt++;
 				}
@@ -724,6 +739,7 @@ u32 BOXDAT_GetPokeExistCount2Total( const BOX_DATA* box )
 //------------------------------------------------------------------
 u32 BOXDAT_PokeParaGet( const BOX_DATA* box, u32 trayNum, u32 pos, int param, void* buf )
 {
+	BOX_TRAY_DATA *trayData;
 	GF_ASSERT((trayNum<BOX_MAX_TRAY)||(trayNum == BOXDAT_TRAYNUM_CURRENT));
 	GF_ASSERT(pos<BOX_MAX_POS);
 
@@ -731,8 +747,9 @@ u32 BOXDAT_PokeParaGet( const BOX_DATA* box, u32 trayNum, u32 pos, int param, vo
 	{
 		trayNum = box->currentTrayNumber;
 	}
+  trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
 
-	return PPP_Get( (POKEMON_PASO_PARAM*)(&box->btd[trayNum].ppp[pos]), param, buf );
+	return PPP_Get( (POKEMON_PASO_PARAM*)(&trayData->ppp[pos]), param, buf );
 }
 
 
@@ -750,6 +767,7 @@ u32 BOXDAT_PokeParaGet( const BOX_DATA* box, u32 trayNum, u32 pos, int param, vo
 //------------------------------------------------------------------
 void BOXDAT_PokeParaPut( BOX_DATA* box, u32 trayNum, u32 pos, int param, u32 arg )
 {
+  BOX_TRAY_DATA *trayData;
 	GF_ASSERT((trayNum<BOX_MAX_TRAY)||(trayNum == BOXDAT_TRAYNUM_CURRENT));
 	GF_ASSERT(pos<BOX_MAX_POS);
 
@@ -758,7 +776,8 @@ void BOXDAT_PokeParaPut( BOX_DATA* box, u32 trayNum, u32 pos, int param, u32 arg
 		trayNum = box->currentTrayNumber;
 	}
 
-	PPP_Put( (POKEMON_PASO_PARAM*)(&box->btd[trayNum].ppp[pos]), param, arg );
+  trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
+	PPP_Put( (POKEMON_PASO_PARAM*)(&trayData->ppp[pos]), param, arg );
 	//SaveData_RequestTotalSave();	//金銀で変更
 	BOXDAT_SetTrayUseBit( box, trayNum);
 
@@ -787,6 +806,7 @@ void BOXDAT_PokeParaPut( BOX_DATA* box, u32 trayNum, u32 pos, int param, u32 arg
 //------------------------------------------------------------------
 POKEMON_PASO_PARAM* BOXDAT_GetPokeDataAddress( const BOX_DATA* box, u32 trayNum, u32 pos )
 {
+  BOX_TRAY_DATA *trayData;
 	GF_ASSERT( ((trayNum<BOX_MAX_TRAY)||(trayNum == BOXDAT_TRAYNUM_CURRENT)) );
 	GF_ASSERT( (pos<BOX_MAX_POS) );
 
@@ -794,8 +814,9 @@ POKEMON_PASO_PARAM* BOXDAT_GetPokeDataAddress( const BOX_DATA* box, u32 trayNum,
 	{
 		trayNum = box->currentTrayNumber;
 	}
+  trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
 
-	return (POKEMON_PASO_PARAM*) &(box->btd[trayNum].ppp[pos]);
+	return (POKEMON_PASO_PARAM*) &(trayData->ppp[pos]);
 }
 
 
@@ -960,13 +981,17 @@ u32 BOXDAT_GetOneBoxDataSize(void)
 //------------------------------------------------------------------
 void BOXDAT_CheckBoxDummyData(BOX_DATA* box)
 {
+  //ダミーは無くしました。
+  /*
 	u8 i,d;
 	for(i = 0; i < BOX_MAX_TRAY; i++){
-		for(d = 0; d < 16; d++){
-			GF_ASSERT( box->btd[i].dummy[d] == 0 );
-			box->btd[i].dummy[d] = 0;
+    BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,i);
+		for(d = 0; d < TRAY_DUMMY_NUM; d++){
+			GF_ASSERT( trayData->dummy[d] == 0 );
+			trayData->dummy[d] = 0;
 		}
 	}
+	*/
 
 }
 
@@ -974,6 +999,7 @@ extern BOX_DATA * SaveData_GetBoxData(SAVE_CONTROL_WORK * sv)
 {
 	BOX_DATA* pData;
 	pData = SaveControl_DataPtrGet(sv, GMDATA_ID_BOXDATA);
+	pData->sv = sv;
 	return pData;
 
 }
@@ -995,3 +1021,25 @@ void BOXDAT_SetPPPData_Tray( u8 trayIdx , void *dataPtr , BOX_DATA *boxData )
 
 }
 
+//==============================================================================================
+// ボックスデータ分割処理
+//==============================================================================================
+
+void BOXTRAYDAT_Init( BOX_TRAY_DATA* traydat )
+{
+  u32 p;
+  for(p = 0; p < BOX_MAX_POS; p++)
+  {
+  	PPP_Clear( &(traydat->ppp[p]) );
+  }
+}
+
+u32 BOXTRAYDAT_GetTotalSize( void )
+{
+  return sizeof( BOX_TRAY_DATA );
+}
+
+static BOX_TRAY_DATA* BOXTRAYDAT_GetTrayData( const BOX_DATA *boxData , const u32 trayNum )
+{
+  return SaveControl_DataPtrGet(boxData->sv, GMDATA_ID_BOXTRAY_01+trayNum);
+}

@@ -20,7 +20,7 @@
  */
 //---------------------------------------------------------------------------
 typedef struct _BOX_DATA BOX_DATA;
-
+typedef struct _BOX_TRAY_DATA BOX_TRAY_DATA;
 
 //------------------------------------------------------------
 /**
@@ -29,7 +29,7 @@ typedef struct _BOX_DATA BOX_DATA;
 //------------------------------------------------------------
 #define BOX_MAX_RAW				(5)
 #define BOX_MAX_COLUMN			(6)
-#define BOX_MAX_TRAY			(18)
+#define BOX_MAX_TRAY			(24)
 #define BOX_TRAYNAME_MAXLEN		(8)
 #define BOX_TRAYNAME_BUFSIZE	(20)	// 日本語８文字＋EOM。海外版用の余裕も見てこの程度。
 #define BOX_MAX_POS				(BOX_MAX_RAW*BOX_MAX_COLUMN)
@@ -203,3 +203,9 @@ extern void BOXDAT_CheckBoxDummyData(BOX_DATA* box);
 
 
 extern void BOXDAT_SetPPPData_Tray( u8 trayIdx , void *dataPtr , BOX_DATA *boxData );
+
+//==============================================================================================
+// ボックスデータ分割処理
+//==============================================================================================
+extern void BOXTRAYDAT_Init( BOX_TRAY_DATA* traydat );
+extern u32 BOXTRAYDAT_GetTotalSize( void );
