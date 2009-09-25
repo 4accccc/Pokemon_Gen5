@@ -63,8 +63,7 @@ void	GFL_MCS_Resident(void)
 					sendSize = GetExistMemoryBlocksInfo( i, (u32)&commHeader->param);
 					if(sendSize){
 						sendSize += MCSRSDCOMM_HEADER_SIZE;	// ƒwƒbƒ_î•ñ•ª‰ÁZ
-						OS_Printf("trans heapInfo ... size %x, heapID %d\n", sendSize, i);
-
+						//OS_Printf("trans heapInfo ... size %x, heapID %d\n", sendSize, i);
 						GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
 						ISDPrintSetBlockingMode(0);
 					}
