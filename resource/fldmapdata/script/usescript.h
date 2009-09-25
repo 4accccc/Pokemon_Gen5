@@ -118,6 +118,8 @@
 #include "../../personal/monsno_def.h"		//ポケモンナンバー
 #include "../../itemconv/itempocket_def.h"  //どうぐポケットナンバー指定
 #include "../../../prog/include/item/itemsym.h"
+
+#include "../zonetable/zone_id.h"     //ゾーンID参照
 #if 0 //wb null
 
 #include "../../../include/pm_version.h"
