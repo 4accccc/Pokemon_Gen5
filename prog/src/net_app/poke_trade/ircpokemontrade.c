@@ -83,6 +83,7 @@ static void _endWaitState(IRC_POKEMON_TRADE* pWork);
 static void _PokemonsetAndSendData(IRC_POKEMON_TRADE* pWork);
 static void _recvFriendScrollBar(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _changeDemo_PokeMove(IRC_POKEMON_TRADE* pWork);
+static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork);
 static void _changeFinish(IRC_POKEMON_TRADE* pWork);
 
 
@@ -758,11 +759,24 @@ static void _changeDemo_PokeMove(IRC_POKEMON_TRADE* pWork)
 
   
   if(apos.x>(8*FX32_ONE)){
-    _CHANGE_STATE(pWork,_changeFinish);
+    
+    IRC_POKETRADEDEMO_RemoveModel( pWork);
+    IRC_POKETRADEDEMO_SetModel( pWork, TRADE01_OBJECT);
+
+    
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade1);
   }
 }
 
+static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
+{
+  
 
+  if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_DECIDE){
+    _CHANGE_STATE(pWork,_changeFinish);
+  }
+
+}
 
 static void _changeFinish(IRC_POKEMON_TRADE* pWork)
 { 

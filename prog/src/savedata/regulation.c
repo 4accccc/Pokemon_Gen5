@@ -18,7 +18,20 @@
 
 // 最大数のレギュレーション確保
 struct _REGULATION_DATA {
-  REGULATION regulation_buff[REGULATION_MAX_NUM];
+  REGULATION regulation_buff;
+  STRCODE cupname[36+1];  //大会名（36文字＋EOM）
+short no;//大会No.
+char code;//国コード：
+char ver;//カセットバージョン：
+char start_year;//開始年：00-99
+char start_month;//開始月：01-12
+char start_day;//開始日：01-31
+char end_year;//終了年：00-99
+char end_month;//終了月：01-12
+char end_day;//終了日：01-31
+char status;  //大会状態：０未開催／１開催中／２終了
+short rating;//大会用レーティング
+short rd;//大会用RD
 };
 
 
@@ -424,7 +437,7 @@ REGULATION* SaveData_GetRegulation(SAVE_CONTROL_WORK* pSave, int regNo)
   GF_ASSERT(regNo < REGULATION_MAX_NUM);
   if(regNo < REGULATION_MAX_NUM){
     pRegData = SaveControl_DataPtrGet(pSave, GMDATA_ID_REGULATION_DATA);
-    return &pRegData->regulation_buff[regNo];
+    return &pRegData->regulation_buff;
   }
   return NULL;
 }
@@ -444,7 +457,7 @@ void SaveData_SetRegulation(SAVE_CONTROL_WORK* pSave, const REGULATION* pReg, co
   pRegData = SaveControl_DataPtrGet(pSave, GMDATA_ID_REGULATION_DATA);
   GF_ASSERT(regNo < REGULATION_MAX_NUM);
   if(regNo < REGULATION_MAX_NUM){
-    Regulation_Copy(pReg, &pRegData->regulation_buff[regNo]);
+    Regulation_Copy(pReg, &pRegData->regulation_buff);
   }
 }
 

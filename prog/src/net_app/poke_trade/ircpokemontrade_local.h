@@ -23,6 +23,15 @@
 #include "app/app_taskmenu.h"
 
 
+typedef enum
+{
+	REEL_PANEL_OBJECT,
+	TRADE01_OBJECT,
+  OBJECT_MODEL_MAX,
+} CELL_OBJECT_MODEL;
+
+
+
 #define _TIMING_ENDNO (12)
 
 #define BOX_VERTICAL_NUM (5)
@@ -216,6 +225,8 @@ struct _IRC_POKEMON_TRADE {
   BOOL touckON;
   int bgscroll;
   int ringLineNo;
+
+  int modelno;  ///< •\Ž¦‚µ‚Ä‚¢‚éƒ‚ƒfƒ‹‚Ì”Ô†
   
   u16* scrTray;
   u16* scrTemoti;
@@ -246,5 +257,7 @@ extern void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork );
 extern void IRC_POKETRADEDEMO_Main( IRC_POKEMON_TRADE* pWork );
 extern void IRC_POKETRADEDEMO_End( IRC_POKEMON_TRADE* pWork );
 extern GFL_CLWK* IRC_POKETRADE_GetCLACT( IRC_POKEMON_TRADE* pWork , int x, int y, int* trayno, int* pokeindex);
+extern void IRC_POKETRADEDEMO_SetModel( IRC_POKEMON_TRADE* pWork, int modelno);
+extern void IRC_POKETRADEDEMO_RemoveModel( IRC_POKEMON_TRADE* pWork);
 
 
