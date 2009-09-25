@@ -9,7 +9,6 @@
 //======================================================================
 #include "eventwork.h"
 #include "eventwork_def.h"
-//#include "field_script.h"
 
 //======================================================================
 //	定義
@@ -26,6 +25,14 @@ struct _EVENTWORK {
 
 //セーブしないフラグ
 static u8 EventCtrlFlag[CTRLFLAG_AREA_MAX] = {};
+
+//システムフラグ範囲内チェック
+#define CHECK_SYS_FLAG_RANGE(flag) \
+  GF_ASSERT_MSG(flag>=SYS_FLAG_AREA_START && flag<=SYS_FLAG_AREA_END,"ERROR SYS FLAG OUTRANGE")
+
+//======================================================================
+//  proto
+//======================================================================
 
 //======================================================================
 //	EVENTWORK
@@ -232,4 +239,91 @@ u16 * EVENTWORK_GetEventWorkAdrs( EVENTWORK * ev, u16 work_no )
 	}
 	
 	return &ev->work[ work_no - SVWK_START ];
+}
+
+//======================================================================
+//  イベントワーク　システムフラグ関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * システムフラグ　セット
+ * @param ev EVENT_WORK
+ * @param flag SYSTEM_FLAG
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void sysflag_Set( EVENTWORK *ev, u16 flag )
+{
+  CHECK_SYS_FLAG_RANGE( flag );
+  EVENTWORK_SetEventFlag( ev, flag );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムフラグ　リセット
+ * @param ev EVENT_WORK
+ * @param flag SYSTEM_FLAG
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void sysflag_Reset( EVENTWORK *ev, u16 flag )
+{
+  CHECK_SYS_FLAG_RANGE( flag );
+  EVENTWORK_ResetEventFlag( ev, flag );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムフラグ　チェック
+ * @param ev EVENT_WORK
+ * @param flag SYSTEM_FLAG
+ * @retval BOOL TRUE=flag on
+ */
+//--------------------------------------------------------------
+static BOOL sysflag_Check( EVENTWORK *ev, u16 flag )
+{
+  CHECK_SYS_FLAG_RANGE( flag );
+  return EVENTWORK_CheckEventFlag( ev, flag );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムフラグ　共通処理
+ * @param ev  EVENTWORK
+ * @param mode SYS_FLAG_MODE
+ * @param flag_id
+ * @retval BOOL SYS_FLAG_MODE_CHECK時、TRUEでflag on
+ */
+//--------------------------------------------------------------
+static BOOL sysflag_Common( EVENTWORK *ev, SYS_FLAG_MODE mode, u16 flag )
+{
+  switch( mode ){
+  case SYS_FLAG_MODE_SET:
+    sysflag_Set( ev, flag );
+    break;
+  case SYS_FLAG_MODE_RESET:
+    sysflag_Reset( ev, flag );
+    break;
+  case SYS_FLAG_MODE_CHECK:
+    return sysflag_Check( ev, flag );
+  default:
+ 		GF_ASSERT_MSG( 0,"FLAG %d, NOT DEFINED MODE %d\n", flag, mode );
+  }
+  return FALSE;
+}
+
+//======================================================================
+//  システムフラグ　秘伝技関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * システムフラグ　秘伝技　かいりき
+ * @param ev EVENTWORK
+ * @param mode SYS_FLAG_MODE
+ * @retval BOOL
+ */
+//--------------------------------------------------------------
+BOOL EVENTWORK_SYS_FLAG_Kairiki( EVENTWORK *ev, SYS_FLAG_MODE mode )
+{
+  return sysflag_Common( ev, mode, SYS_FLAG_KAIRIKI );
 }
