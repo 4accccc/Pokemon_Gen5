@@ -40,6 +40,7 @@
 #include "b_app_tool.h"
 */
 
+#include "battle/battgra_wb.naix"
 #include "app_menu_common.naix"
 
 #include "b_plist.h"
@@ -131,6 +132,8 @@ enum {
 #define	PALSIZ_ITEMICON			( 1 )
 #define	PALOFS_TYPEICON			( PALOFS_ITEMICON + 0x20 * PALSIZ_ITEMICON )
 #define	PALSIZ_TYPEICON			( 3 )
+#define	PALOFS_CURSOR				( PALOFS_TYPEICON + 0x20 * PALSIZ_TYPEICON )
+#define	PALSIZ_CURSOR				( 1 )		// パレット１を使用してるので２本読んでおく
 
 
 //============================================================================================
@@ -161,6 +164,8 @@ static void BPL_Page7ObjSet( BPLIST_WORK * wk );
 
 static void BPL_ClactCursorAdd( BPLIST_WORK * wk );
 static void BPL_CursorDel( BPLIST_WORK * wk );
+
+static void CursorResLoad( BPLIST_WORK * wk );
 
 
 //============================================================================================
@@ -306,6 +311,7 @@ void BattlePokeList_ObjInit( BPLIST_WORK * wk )
 	BPL_ClactItemLoad( wk );
 	BPL_ClactTypeLoad( wk );
 //	BPL_ClactConditionLoad( wk );
+	CursorResLoad( wk );
 	BPL_ClactAddAll( wk );
 	BPL_ClactCursorAdd( wk );
 
@@ -395,44 +401,6 @@ static void BPL_ClactPokeLoad( BPLIST_WORK * wk )
 																		wk->dat->heap );
 
   GFL_ARC_CloseDataHandle( ah );
-
-/*
-	CATS_SYS_PTR	csp;
-	u32	i;
-	
-	ARCHANDLE* hdl;
-	
-	hdl = GFL_ARC_OpenDataHandle( ARC_POKEICON,  wk->dat->heap ); 
-	
-	csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-	// パレット
-	CATS_LoadResourcePlttWorkArcH(
-		wk->pfd, FADE_SUB_OBJ, csp, wk->crp,
-		hdl, PokeIconPalArcIndexGet(), 0, 3, NNS_G2D_VRAM_TYPE_2DSUB, PAL_ID_POKE );
-	// セル
-	CATS_LoadResourceCellArcH(
-		csp, wk->crp, hdl, PokeIconAnmCellArcIndexGet(), 0, CEL_ID_POKE );
-	// セルアニメ
-	CATS_LoadResourceCellAnmArcH(
-		csp, wk->crp, hdl, PokeIconAnmCellAnmArcIndexGet(), 0, ANM_ID_POKE );
-	// キャラ
-	for( i=0; i<6; i++ ){
-		if( wk->poke[i].mons != 0 ){
-			CATS_LoadResourceCharArcH(
-				csp, wk->crp, hdl,
-				PokeIconCgxArcIndexGetByPP(wk->poke[i].pp),
-				0, NNS_G2D_VRAM_TYPE_2DSUB, CHR_ID_POKE1+i );
-		}else{
-			CATS_LoadResourceCharArcH(
-				csp, wk->crp, hdl,
-				PokeIconCgxArcIndexGetByMonsNumber(0,0,0),
-				0, NNS_G2D_VRAM_TYPE_2DSUB, CHR_ID_POKE1+i );
-		}
-	}
-	
-	GFL_ARC_CloseDataHandle( hdl );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -466,31 +434,6 @@ static void BPL_ClactStatusLoad( BPLIST_WORK * wk )
 																			wk->dat->heap );
 
   GFL_ARC_CloseDataHandle( ah );
-
-/*
-	CATS_SYS_PTR	csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-	ARCHANDLE* hdl;
-	
-	hdl = GFL_ARC_OpenDataHandle( ARC_PSTATUS_GRA,  wk->dat->heap ); 
-	
-	// パレット
-	CATS_LoadResourcePlttWorkArcH(
-		wk->pfd, FADE_SUB_OBJ, csp, wk->crp, hdl,
-		BadStatusIconPlttArcGet(), 0, 1, NNS_G2D_VRAM_TYPE_2DSUB, PAL_ID_STATUS );
-	// セル
-	CATS_LoadResourceCellArcH(
-		csp, wk->crp, hdl, BadStatusIconCellArcGet(), 0, CEL_ID_STATUS );
-	// セルアニメ
-	CATS_LoadResourceCellAnmArcH(
-		csp, wk->crp, hdl, BadStatusIconCanmArcGet(), 0, ANM_ID_STATUS );
-	// キャラ
-	CATS_LoadResourceCharArcH(
-		csp, wk->crp, hdl,
-		BadStatusIconCharArcGet(), 0, NNS_G2D_VRAM_TYPE_2DSUB, CHR_ID_STATUS );
-		
-	GFL_ARC_CloseDataHandle( hdl );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -532,25 +475,6 @@ static void BPL_ClactTypeLoad( BPLIST_WORK * wk )
 																			FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
 
   GFL_ARC_CloseDataHandle( ah );
-
-/*
-	CATS_SYS_PTR	csp;
-	u32	i;
-	
-	csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-	// パレット
-	WazaTypeIcon_PlttWorkResourceLoad(
-		wk->pfd, FADE_SUB_OBJ, csp, wk->crp, NNS_G2D_VRAM_TYPE_2DSUB, PAL_ID_TYPE );
-	// セル・アニメ
-	WazaTypeIcon_CellAnmResourceLoad( csp, wk->crp, CEL_ID_TYPE, ANM_ID_TYPE );
-	// キャラ
-	for( i=CHR_ID_POKETYPE1; i<=CHR_ID_WAZATYPE5; i++ ){
-		WazaTypeIcon_CharResourceLoad( csp, wk->crp, NNS_G2D_VRAM_TYPE_2DSUB, 0, i );
-	}
-	// 分類キャラ
-	WazaKindIcon_CharResourceLoad( csp, wk->crp, NNS_G2D_VRAM_TYPE_2DSUB, 0, CHR_ID_BUNRUI );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -584,34 +508,6 @@ static void BPL_ClactItemLoad( BPLIST_WORK * wk )
 																			wk->dat->heap );
 
   GFL_ARC_CloseDataHandle( ah );
-
-/*
-	CATS_SYS_PTR	csp;
-	u32	i;
-	
-	ARCHANDLE* hdl;
-	
-	hdl = GFL_ARC_OpenDataHandle( ARC_PLIST_GRA,  wk->dat->heap ); 
-	
-	csp = BattleWorkCATS_SYS_PTRGet( wk->dat->bw );
-
-	// パレット
-	CATS_LoadResourcePlttWorkArcH(
-		wk->pfd, FADE_SUB_OBJ, csp, wk->crp, hdl,
-		Pokelist_ItemIconPalArcGet(), 0, 1, NNS_G2D_VRAM_TYPE_2DSUB, PAL_ID_ITEM );
-	// セル
-	CATS_LoadResourceCellArcH(
-		csp, wk->crp, hdl, Pokelist_ItemIconCellArcGet(), 0, CEL_ID_ITEM );
-	// セルアニメ
-	CATS_LoadResourceCellAnmArcH(
-		csp, wk->crp, hdl, Pokelist_ItemIconCAnmArcGet(), 0, ANM_ID_ITEM );
-	// キャラ
-	CATS_LoadResourceCharArcH(
-		csp, wk->crp, hdl,
-		Pokelist_ItemIconCgxArcGet(), 0, NNS_G2D_VRAM_TYPE_2DSUB, CHR_ID_ITEM );
-		
-	GFL_ARC_CloseDataHandle( hdl );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -644,6 +540,32 @@ static void BPL_ClactConditionLoad( BPLIST_WORK * wk )
 		NARC_b_plist_gra_b_plist_obj_NCGR, 0, NNS_G2D_VRAM_TYPE_2DSUB, CHR_ID_CND );
 }
 */
+
+static void CursorResLoad( BPLIST_WORK * wk )
+{
+  ARCHANDLE * ah;
+
+	ah = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, wk->dat->heap );
+
+	// キャラ
+	wk->chrRes[BPLIST_CHRRES_CURSOR] = GFL_CLGRP_CGR_Register(
+																			ah, NARC_battgra_wb_battle_w_obj_NCGR,
+																			FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
+	// パレット
+  wk->palRes[BPLIST_PALRES_CURSOR] = GFL_CLGRP_PLTT_RegisterEx(
+																			ah, NARC_battgra_wb_battle_w_obj_NCLR,
+																			CLSYS_DRAW_SUB, PALOFS_CURSOR, 1, PALSIZ_CURSOR, wk->dat->heap );
+
+	// セル・アニメ
+  wk->celRes[BPLIST_CELRES_CURSOR] = GFL_CLGRP_CELLANIM_Register(
+																			ah,
+																			NARC_battgra_wb_battle_w_obj_NCER,
+																			NARC_battgra_wb_battle_w_obj_NANR,
+																			wk->dat->heap );
+
+  GFL_ARC_CloseDataHandle( ah );
+}
+
 
 
 
@@ -720,7 +642,7 @@ static void BPL_ClactAddAll( BPLIST_WORK * wk )
 {
 	u32	i;
 
-	wk->clunit = GFL_CLACT_UNIT_Create( BPL_CA_MAX, 0, wk->dat->heap );
+	wk->clunit = GFL_CLACT_UNIT_Create( BPL_CA_MAX+4, 0, wk->dat->heap );
 
 	for( i=0; i<BPL_CA_MAX; i++ ){
 		wk->clwk[i] = BPL_ClactAdd( wk, ObjParamEz[i] );
@@ -741,6 +663,8 @@ static void BPL_ClactAddAll( BPLIST_WORK * wk )
 void BattlePokeList_ObjFree( BPLIST_WORK * wk )
 {
 	u32	i;
+
+	BAPPTOOL_DelCursor( wk->cpwk );
 
 	for( i=0; i<BPL_CA_MAX; i++ ){
 		GFL_CLACT_WK_Remove( wk->clwk[i] );
@@ -1903,6 +1827,15 @@ static void BPL_EzConditionPut( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void BPL_ClactCursorAdd( BPLIST_WORK * wk )
 {
+	BAPPTOOL_AddCursor(
+		wk->cpwk,
+		wk->clunit,
+		wk->chrRes[BPLIST_CHRRES_CURSOR],
+		wk->palRes[BPLIST_PALRES_CURSOR],
+		wk->celRes[BPLIST_CELRES_CURSOR] );
+
+//	BAPPTOOL_VanishCursor( wk->cpwk, FALSE );
+
 /*
 	CATS_SYS_PTR csp;
 	BCURSOR_PTR	cursor;
@@ -1931,6 +1864,8 @@ static void BPL_ClactCursorAdd( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void BPL_CursorDel( BPLIST_WORK * wk )
 {
+	BAPPTOOL_DelCursor( wk->cpwk );
+
 /*
 	BCURSOR_ActorDelete( BAPP_CursorMvWkGetBCURSOR_PTR( wk->cmv_wk ) );
 	BCURSOR_ResourceFree(
@@ -1940,7 +1875,7 @@ static void BPL_CursorDel( BPLIST_WORK * wk )
 
 /*
 // ポケモン選択画面移動テーブル
-static const POINTER_WORK P1_CursorPosTbl[] =
+static const POINTSEL_WORK P1_CursorPosTbl[] =
 {
 	{   8,   8, 120,  40, 6, 2, 6, 1 },		// 0
 	{ 136,  16, 248,  48, 4, 3, 0, 2 },		// 1
@@ -1950,21 +1885,21 @@ static const POINTER_WORK P1_CursorPosTbl[] =
 	{ 136, 112, 248, 144, 3, 6, 4, 6 },		// 5
 	{ 224, 160, 248, 184, 5, 0, 5, 0 },		// 6（戻る）
 };
-static const POINTER_WORK Chg_CursorPosTbl[] =
+static const POINTSEL_WORK Chg_CursorPosTbl[] =
 {
 	{  16,  16, 240, 136, 0, BAPP_CMV_RETBIT|1, 0, 0 },		// 0 : いれかえる
 	{   8, 160,  96, 184, 0, 1, 1, 2 },						// 1 : 強さを見る
 	{ 112, 160, 200, 184, 0, 2, 1, 3 },						// 2 : 技を見る
 	{ 224, 160, 248, 184, 0, 3, 2, 3 },						// 3 : 戻る
 };
-static const POINTER_WORK StMain_CursorPosTbl[] =
+static const POINTSEL_WORK StMain_CursorPosTbl[] =
 {
 	{   8, 160,  32, 184, 0, 0, 0, 1 },		// 0 : 上
 	{  48, 160,  72, 184, 1, 1, 0, 2 },		// 1 : 下
 	{ 104, 160, 192, 184, 2, 2, 1, 3 },		// 2 : 技を見る
 	{ 224, 160, 248, 184, 3, 3, 2, 3 },		// 3 : 戻る
 };
-static const POINTER_WORK StWazaSel_CursorPosTbl[] =
+static const POINTSEL_WORK StWazaSel_CursorPosTbl[] =
 {
 	{   8,  56, 120,  88, 0, 2, 0, 1 },		// 0 : 技１
 	{ 136,  56, 248,  88, 1, 3, 0, 1 },		// 1 : 技２
@@ -1975,7 +1910,7 @@ static const POINTER_WORK StWazaSel_CursorPosTbl[] =
 	{ 104, 160, 192, 184, 3, 6, 5, 7 },		// 6 : 強さを見る
 	{ 224, 160, 248, 184, 3, 7, 6, 7 },		// 7 : 戻る
 };
-static const POINTER_WORK StWazaInfo_CursorPosTbl[] =
+static const POINTSEL_WORK StWazaInfo_CursorPosTbl[] =
 {
 	{  92, 157, 124, 165, 0, 2, 0, 1 },		// 0 : 技１
 	{ 132, 157, 164, 165, 1, 3, 0, 4 },		// 1 : 技２
@@ -1983,7 +1918,7 @@ static const POINTER_WORK StWazaInfo_CursorPosTbl[] =
 	{ 132, 173, 164, 181, 1, 3, 2, 4 },		// 3 : 技４
 	{ 224, 160, 248, 184, 4, 4, BAPP_CMV_RETBIT|3, 4 },		// 4 : 戻る
 };
-static const POINTER_WORK DelSel_CursorPosTbl[] =
+static const POINTSEL_WORK DelSel_CursorPosTbl[] =
 {
 	{   8,  56, 120,  88, 5, 2, 0, 1 },						// 0 : 技１画面へ
 	{ 136,  56, 248,  88, 5, 3, 0, 1 },						// 1 : 技２画面へ
@@ -1994,14 +1929,14 @@ static const POINTER_WORK DelSel_CursorPosTbl[] =
 	{ 224, 160, 248, 184, 3, 6, 4, 6 },						// 6 : 戻る
 };
 
-static const POINTER_WORK DelInfo_CursorPosTbl[] =
+static const POINTSEL_WORK DelInfo_CursorPosTbl[] =
 {
 	{   8, 160, 200, 184, 1, 0, 0, 2 },						// 0 : わすれる
 	{ 192,   8, 248,  24, 1, BAPP_CMV_RETBIT|2, 0, 1 },		// 1 : 戦闘<->コンテストの切り替え
 	{ 224, 160, 248, 184, 1, 2, 0, 2 },						// 2 : 戻る
 };
 
-static const POINTER_WORK PPRcv_CursorPosTbl[] =
+static const POINTSEL_WORK PPRcv_CursorPosTbl[] =
 {
 	{   8,  56, 120,  88, 0, 2, 0, 1 },						// 0 : 技１回復
 	{ 136,  56, 248,  88, 1, 3, 0, 1 },						// 1 : 技２回復
@@ -2010,7 +1945,7 @@ static const POINTER_WORK PPRcv_CursorPosTbl[] =
 	{ 224, 160, 248, 184, BAPP_CMV_RETBIT|3, 4, 4, 4 },		// 4 : 戻る
 };
 
-static const POINTER_WORK * const CursorPosTable[] = {
+static const POINTSEL_WORK * const CursorPosTable[] = {
 	P1_CursorPosTbl,			// ポケモン選択ページ
 	Chg_CursorPosTbl,			// ポケモン入れ替えページ
 	StMain_CursorPosTbl,		// ステータスメインページ
@@ -2023,6 +1958,76 @@ static const POINTER_WORK * const CursorPosTable[] = {
 	DelInfo_CursorPosTbl,		// ステータス技忘れ４ページ（コンテスト技詳細）
 };
 */
+
+// ポケモン選択画面移動テーブル
+static const BAPP_CURSOR_PUT P1_CursorPosTbl[] =
+{
+	{  64,  24, 128,  48 },		// 0
+	{ 192,  32, 128,  48 },		// 1
+	{  64,  72, 128,  48 },		// 2
+	{ 192,  80, 128,  48 },		// 3
+	{  64, 120, 128,  48 },		// 4
+	{ 192, 128, 128,  48 },		// 5
+	{ 232, 168,  40,  40 },		// 6（戻る）
+};
+static const BAPP_CURSOR_PUT Chg_CursorPosTbl[] =
+{
+	{  16,  16, 240, 136 },		// 0 : いれかえる
+	{   8, 160,  96, 184 },		// 1 : 強さを見る
+	{ 112, 160, 200, 184 },		// 2 : 技を見る
+	{ 224, 160, 248, 184 },		// 3 : 戻る
+};
+static const BAPP_CURSOR_PUT StMain_CursorPosTbl[] =
+{
+	{   8, 160,  32, 184 },		// 0 : 上
+	{  48, 160,  72, 184 },		// 1 : 下
+	{ 104, 160, 192, 184 },		// 2 : 技を見る
+	{ 224, 160, 248, 184 },		// 3 : 戻る
+};
+static const BAPP_CURSOR_PUT StWazaSel_CursorPosTbl[] =
+{
+	{   8,  56, 120,  88 },		// 0 : 技１
+	{ 136,  56, 248,  88 },		// 1 : 技２
+	{   8, 104, 120, 136 },		// 2 : 技３
+	{ 136, 104, 248, 136 },		// 3 : 技４
+	{   8, 160,  32, 184 },		// 4 : 上
+	{  48, 160,  72, 184 },		// 5 : 下
+	{ 104, 160, 192, 184 },		// 6 : 強さを見る
+	{ 224, 160, 248, 184 },		// 7 : 戻る
+};
+static const BAPP_CURSOR_PUT StWazaInfo_CursorPosTbl[] =
+{
+	{  92, 157, 124, 165 },		// 0 : 技１
+	{ 132, 157, 164, 165 },		// 1 : 技２
+	{  92, 173, 124, 181 },		// 2 : 技３
+	{ 132, 173, 164, 181 },		// 3 : 技４
+	{ 224, 160, 248, 184 },		// 4 : 戻る
+};
+static const BAPP_CURSOR_PUT DelSel_CursorPosTbl[] =
+{
+	{   8,  56, 120,  88 },						// 0 : 技１画面へ
+	{ 136,  56, 248,  88 },						// 1 : 技２画面へ
+	{   8, 104, 120, 136 },						// 2 : 技３画面へ
+	{ 136, 104, 248, 136 },						// 3 : 技４画面へ
+	{  72, 152, 184, 184 },						// 4 : 技５画面へ
+	{ 224, 160, 248, 184 },						// 5 : 戻る
+};
+
+static const BAPP_CURSOR_PUT DelInfo_CursorPosTbl[] =
+{
+	{   8, 160, 200, 184 },						// 0 : わすれる
+	{ 224, 160, 248, 184 },						// 1 : 戻る
+};
+
+static const BAPP_CURSOR_PUT PPRcv_CursorPosTbl[] =
+{
+	{   8,  56, 120,  88 },						// 0 : 技１回復
+	{ 136,  56, 248,  88 },						// 1 : 技２回復
+	{   8, 104, 120, 136 },						// 2 : 技３回復
+	{ 136, 104, 248, 136 },						// 3 : 技４回復
+	{ 224, 160, 248, 184 },						// 4 : 戻る
+};
+
 
 #define	WAZADEL_SEL_MV_TBL_N	( 0x7f )	// 技忘れの技選択のカーソル移動テーブル（通常）
 #define	WAZADEL_SEL_MV_TBL_C	( 0x5f )	// 技忘れの技選択のカーソル移動テーブル（コンテストなし）
@@ -2082,6 +2087,38 @@ static void BPL_WazaDelMainCursorMvTblMake( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BattlePokeList_CursorMoveSet( BPLIST_WORK * wk, u8 page )
 {
+	switch( page ){
+	case BPLIST_PAGE_SELECT:			// ポケモン選択ページ
+		BAPPTOOL_SetCursorPutData( wk->cpwk, P1_CursorPosTbl );
+		break;
+
+	case BPLIST_PAGE_POKE_CHG:		// ポケモン入れ替えページ
+		BAPPTOOL_SetCursorPutData( wk->cpwk, Chg_CursorPosTbl );
+		break;
+
+	case BPLIST_PAGE_MAIN:				// ステータスメインページ
+		BAPPTOOL_SetCursorPutData( wk->cpwk, StMain_CursorPosTbl );
+		break;
+
+	case BPLIST_PAGE_WAZA_SEL:		// ステータス技選択ページ
+		BAPPTOOL_SetCursorPutData( wk->cpwk, StWazaInfo_CursorPosTbl );
+		break;
+
+	case BPLIST_PAGE_SKILL:				// ステータス技詳細ページ
+		BAPPTOOL_SetCursorPutData( wk->cpwk, StWazaSel_CursorPosTbl );
+		break;
+
+	case BPLIST_PAGE_WAZASET_BS:	// ステータス技忘れ１ページ（戦闘技選択）
+		BAPPTOOL_SetCursorPutData( wk->cpwk, DelSel_CursorPosTbl );
+		break;
+
+	case BPLIST_PAGE_WAZASET_BI:	// ステータス技忘れ２ページ（戦闘技詳細）
+		BAPPTOOL_SetCursorPutData( wk->cpwk, DelInfo_CursorPosTbl );
+		break;
+	}
+
+	BAPPTOOL_MoveCursor( wk->cpwk, 0 );
+
 /*
 	BAPP_CursorMvWkSetPoint( wk->cmv_wk, CursorPosTable[page] );
 
@@ -2104,13 +2141,13 @@ void BattlePokeList_CursorMoveSet( BPLIST_WORK * wk, u8 page )
 		break;
 
 	case BPLIST_PAGE_WAZASET_BS:	// ステータス技忘れ１ページ（戦闘技選択）
-	case BPLIST_PAGE_WAZASET_CS:	// ステータス技忘れ３ページ（コンテスト技選択）
+//	case BPLIST_PAGE_WAZASET_CS:	// ステータス技忘れ３ページ（コンテスト技選択）
 		BPL_WazaDelSelCursorMvTblMake( wk );
 		BAPP_CursorMvWkSetPos( wk->cmv_wk, wk->wws_page_cp );
 		break;
 
 	case BPLIST_PAGE_WAZASET_BI:	// ステータス技忘れ２ページ（戦闘技詳細）
-	case BPLIST_PAGE_WAZASET_CI:	// ステータス技忘れ４ページ（コンテスト技詳細）
+//	case BPLIST_PAGE_WAZASET_CI:	// ステータス技忘れ４ページ（コンテスト技詳細）
 		BPL_WazaDelMainCursorMvTblMake( wk );
 		BAPP_CursorMvWkSetPos( wk->cmv_wk, wk->wwm_page_cp );
 		break;

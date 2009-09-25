@@ -40,8 +40,8 @@ enum {
 	BPLIST_PAGE_PP_RCV,			// PP回復技選択ページ
 	BPLIST_PAGE_WAZASET_BS,		// ステータス技忘れ１ページ（戦闘技選択）
 	BPLIST_PAGE_WAZASET_BI,		// ステータス技忘れ２ページ（戦闘技詳細）
-	BPLIST_PAGE_WAZASET_CS,		// ステータス技忘れ３ページ（コンテスト技選択）
-	BPLIST_PAGE_WAZASET_CI,		// ステータス技忘れ４ページ（コンテスト技詳細）
+//	BPLIST_PAGE_WAZASET_CS,		// ステータス技忘れ３ページ（コンテスト技選択）
+//	BPLIST_PAGE_WAZASET_CI,		// ステータス技忘れ４ページ（コンテスト技詳細）
 };
 
 // リストデータ

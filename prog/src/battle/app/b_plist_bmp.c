@@ -679,7 +679,7 @@ void BattlePokeList_BmpAdd( BPLIST_WORK * wk, u32 page )
 		break;
 
 	case BPLIST_PAGE_WAZASET_BS:	// ステータス技忘れ１ページ（戦闘技選択）
-	case BPLIST_PAGE_WAZASET_CS:	// ステータス技忘れ４ページ（コンテスト技選択）
+//	case BPLIST_PAGE_WAZASET_CS:	// ステータス技忘れ４ページ（コンテスト技選択）
 		dat = Page5_BmpData[0];
 		wk->bmp_add_max = WIN_P5_MAX;
 		break;
@@ -688,11 +688,12 @@ void BattlePokeList_BmpAdd( BPLIST_WORK * wk, u32 page )
 		dat = Page6_BmpData[0];
 		wk->bmp_add_max = WIN_P6_MAX;
 		break;
-
+/*
 	case BPLIST_PAGE_WAZASET_CI:	// ステータス技忘れ３ページ（コンテスト技詳細）
 		dat = Page8_BmpData[0];
 		wk->bmp_add_max = WIN_P8_MAX;
 		break;
+*/
 	}
 
 //	wk->add_win = GFL_BMPWIN_Init( wk->dat->heap, wk->bmp_add_max );
@@ -783,7 +784,7 @@ void BattlePokeList_BmpWrite( BPLIST_WORK * wk, u32 page )
 		break;
 
 	case BPLIST_PAGE_WAZASET_BS:	// ステータス技忘れ１ページ（戦闘技選択）
-	case BPLIST_PAGE_WAZASET_CS:	// ステータス技忘れ４ページ（コンテスト技選択）
+//	case BPLIST_PAGE_WAZASET_CS:	// ステータス技忘れ４ページ（コンテスト技選択）
 		BPL_WazaDelSelPageBmpWrite( wk );
 		break;
 
@@ -2527,7 +2528,7 @@ static void BPL_StWazaSelPageBmpWrite( BPLIST_WORK * wk )
 	BPL_POKEWAZA * waza;
 	u16	i, swap;
 
-	swap = WIN_STW_NAME_S * wk->bmp_swap;
+	swap  = WIN_STW_NAME_S * wk->bmp_swap;
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_NAME+swap].win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_SKILL1+swap].win), 0 );
@@ -2555,6 +2556,11 @@ static void BPL_StWazaSelPageBmpWrite( BPLIST_WORK * wk )
 	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL2+swap] );
 	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL3+swap] );
 	BAPPTOOL_PrintScreenTrans( &wk->add_win[WIN_STW_SKILL4+swap] );
+	wk->add_win[WIN_STW_SKILL1+swap].transReq = TRUE;
+	wk->add_win[WIN_STW_SKILL2+swap].transReq = TRUE;
+	wk->add_win[WIN_STW_SKILL3+swap].transReq = TRUE;
+	wk->add_win[WIN_STW_SKILL4+swap].transReq = TRUE;
+
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL1+swap] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL2+swap] );
 //	BAPPTOOL_PrintQueOn( &wk->add_win[WIN_STW_SKILL3+swap] );

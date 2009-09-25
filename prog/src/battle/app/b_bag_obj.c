@@ -808,7 +808,7 @@ static void BBAG_CursorDel( BBAG_WORK * wk )
 
 /*
 // ポケット選択画面移動テーブル
-static const POINTER_WORK P1_CursorPosTbl[] =
+static const POINTSEL_WORK P1_CursorPosTbl[] =
 {
 	{   8,  16, 120,  72, 0, 1, 0, 2 },					// 0 : HP回復ポケット
 	{   8,  88, 120, 144, 0, 4, 1, 3 },					// 1 : 状態回復ポケット
@@ -819,7 +819,7 @@ static const POINTER_WORK P1_CursorPosTbl[] =
 };
 
 // アイテム選択画面移動テーブル
-static const POINTER_WORK P2_CursorPosTbl[] =
+static const POINTSEL_WORK P2_CursorPosTbl[] =
 {
 	{   8,  16, 120,  48, 0, 2, 0, 1 },					// 0 : アイテム１
 	{ 136,  16, 248,  48, 1, 3, 0, 1 },					// 1 : アイテム２
@@ -831,13 +831,13 @@ static const POINTER_WORK P2_CursorPosTbl[] =
 };
 
 // アイテム選択画面移動テーブル
-static const POINTER_WORK P3_CursorPosTbl[] =
+static const POINTSEL_WORK P3_CursorPosTbl[] =
 {
 	{   8, 160, 200, 184, 0, 0, 0, 1 },	// 0 : 使う
 	{ 224, 160, 248, 184, 1, 1, 0, 1 },	// 1 : 戻る
 };
 
-static const POINTER_WORK * const CursorPosTable[] = {
+static const POINTSEL_WORK * const CursorPosTable[] = {
 	P1_CursorPosTbl,
 	P2_CursorPosTbl,
 	P3_CursorPosTbl,

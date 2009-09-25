@@ -1019,7 +1019,7 @@ void BattlePokeList_ButtonPageScreenInit( BPLIST_WORK * wk, u8 page )
 		break;
 
 	case BPLIST_PAGE_WAZASET_BS:	// ステータス技忘れ１ページ（戦闘技選択）
-	case BPLIST_PAGE_WAZASET_CS:	// ステータス技忘れ３ページ（コンテスト技詳細）
+//	case BPLIST_PAGE_WAZASET_CS:	// ステータス技忘れ３ページ（コンテスト技詳細）
 		BPL_ButtonScreenWrite( wk, BPL_BUTTON_WAZADEL1, 0, 0 );
 		BPL_ButtonScreenWrite( wk, BPL_BUTTON_WAZADEL2, 0, 0 );
 		BPL_ButtonScreenWrite( wk, BPL_BUTTON_WAZADEL3, 0, 0 );
@@ -1032,11 +1032,12 @@ void BattlePokeList_ButtonPageScreenInit( BPLIST_WORK * wk, u8 page )
 		BPL_ButtonScreenWrite( wk, BPL_BUTTON_WAZADEL_B, 0, 0 );
 		BPL_ButtonScreenWrite( wk, BPL_BUTTON_RET, 0, 0 );
 		break;
-
+/*
 	case BPLIST_PAGE_WAZASET_CI:	// ステータス技忘れ４ページ（コンテスト技選択）
 		BPL_ButtonScreenWrite( wk, BPL_BUTTON_WAZADEL_C, 0, 0 );
 		BPL_ButtonScreenWrite( wk, BPL_BUTTON_RET, 0, 0 );
 		break;
+*/
 	}
 }
 

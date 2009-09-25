@@ -282,7 +282,7 @@ static const u8 PlatePos[][2] =
 };
 /*
 // ポケモン選択画面移動テーブル
-static const POINTER_WORK NormalMoveTable[] =
+static const POINTSEL_WORK NormalMoveTable[] =
 {
 	{  0,  0, 16, 6,	6,2,0,1 },		// 0
 	{ 16,  1, 16, 6,	4,3,0,1 },		// 1
@@ -400,7 +400,7 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 	BPLIST_WORK * wk;
 
 	// メモリリークをチェックするために仮エリアを作成
-//	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_APP_TEST, 0x70000 );
+//	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_APP_TEST, 0x50000 );
 //	dat->heap = HEAPID_BATTLE_APP_TEST;
 
 	if( dat->sel_poke > 5 ){ dat->sel_poke = 0; }
@@ -611,6 +611,8 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 	}
 
 	wk->cmv_wk = BAPP_CursorMoveWorkAlloc( wk->dat->heap );
+
+	wk->cpwk = BAPPTOOL_CreateCursor( wk->dat->heap );
 
 	BPL_PokeDataMake( wk );
 
@@ -1570,7 +1572,10 @@ static BOOL BPL_SeqEnd( GFL_TCB * tcb, BPLIST_WORK * wk )
 	BPL_BgExit();
 
 	GFL_TCBL_Exit( wk->tcbl );
+
 	BAPP_CursorMoveWorkFree( wk->cmv_wk );
+
+	BAPPTOOL_FreeCursor( wk->cpwk );
 
 //	FontProc_UnloadFont( FONT_TOUCH );
 
@@ -2402,8 +2407,8 @@ static const u32 ScreenArc[][2] =
 	{ NARC_b_plist_gra_item_waza_t_NSCR, NARC_b_plist_gra_item_waza_u_NSCR },			// PP回復技選択ページ
 	{ NARC_b_plist_gra_waza_delb_sel_t_NSCR, NARC_b_plist_gra_waza_delb_sel_u_NSCR },	// ステータス技忘れ１ページ（戦闘技選択）
 	{ NARC_b_plist_gra_waza_delb_main_t_NSCR, NARC_b_plist_gra_waza_delb_main_u_NSCR },	// ステータス技忘れ２ページ（戦闘技詳細）
-	{ NARC_b_plist_gra_waza_delc_sel_t_NSCR, NARC_b_plist_gra_waza_delc_sel_u_NSCR },	// ステータス技忘れ３ページ（コンテスト技詳細）
-	{ NARC_b_plist_gra_waza_delc_main_t_NSCR, NARC_b_plist_gra_waza_delc_main_u_NSCR },	// ステータス技忘れ４ページ（コンテスト技選択）
+//	{ NARC_b_plist_gra_waza_delc_sel_t_NSCR, NARC_b_plist_gra_waza_delc_sel_u_NSCR },	// ステータス技忘れ３ページ（コンテスト技詳細）
+//	{ NARC_b_plist_gra_waza_delc_main_t_NSCR, NARC_b_plist_gra_waza_delc_main_u_NSCR },	// ステータス技忘れ４ページ（コンテスト技選択）
 };
 
 //--------------------------------------------------------------------------------------------

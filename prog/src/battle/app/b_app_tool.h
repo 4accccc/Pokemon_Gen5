@@ -18,6 +18,8 @@
 //============================================================================================
 typedef struct _BAPP_CURSOR_MVWK	BAPP_CURSOR_MVWK;
 
+typedef struct _BAPP_CURSOR_PUT_WORK	BAPP_CURSOR_PUT_WORK;
+
 #define	BAPP_CMV_CANCEL		( 0xfffffffe )	// キャンセル
 #define	BAPP_CMV_NONE		( 0xffffffff )	// 動作し
 
@@ -29,6 +31,14 @@ typedef struct {
 	BOOL	flg;
 }BAPP_BMPWIN_QUE;
 */
+
+typedef struct {
+	u8	px;
+	u8	py;
+	u8	sx;
+	u8	sy;
+}BAPP_CURSOR_PUT;
+
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -146,7 +156,7 @@ extern void BAPP_CursorMvWkPosInit( BAPP_CURSOR_MVWK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-//extern void BAPP_CursorMvWkSetPoint( BAPP_CURSOR_MVWK * wk, const POINTER_WORK * pwk );
+//extern void BAPP_CursorMvWkSetPoint( BAPP_CURSOR_MVWK * wk, const POINTSEL_WORK * pwk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -170,6 +180,16 @@ extern void BAPP_CursorMvWkSetMvTbl( BAPP_CURSOR_MVWK * wk, u32 mv_tbl );
  */
 //--------------------------------------------------------------------------------------------
 extern u32 BAPP_CursorMove( BAPP_CURSOR_MVWK * wk );
+
+
+
+extern BAPP_CURSOR_PUT_WORK * BAPPTOOL_CreateCursor( HEAPID heapID );
+extern void BAPPTOOL_FreeCursor( BAPP_CURSOR_PUT_WORK * wk );
+extern void BAPPTOOL_SetCursorPutData( BAPP_CURSOR_PUT_WORK * wk, const BAPP_CURSOR_PUT * put );
+extern void BAPPTOOL_AddCursor( BAPP_CURSOR_PUT_WORK * wk, GFL_CLUNIT * clunit, u32 chrRes, u32 palRes, u32 celRes );
+extern void BAPPTOOL_DelCursor( BAPP_CURSOR_PUT_WORK * wk );
+extern void BAPPTOOL_VanishCursor( BAPP_CURSOR_PUT_WORK * wk, BOOL flg );
+extern void BAPPTOOL_MoveCursor( BAPP_CURSOR_PUT_WORK * wk, u32 point );
 
 
 //extern void BAPPTOOL_PrintQueOn( BAPP_BMPWIN_QUE * dat );

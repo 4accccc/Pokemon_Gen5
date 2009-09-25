@@ -248,7 +248,6 @@ enum {
 	BPLIST_CHRRES_POKE6,				// ポケモンアイコン：６匹目
 	BPLIST_CHRRES_STATUS,				// 状態異常アイコン
 	BPLIST_CHRRES_ITEM,					// アイテムアイコン
-
 	BPLIST_CHRRES_POKETYPE1,		// ポケモンタイプアイコン１
 	BPLIST_CHRRES_POKETYPE2,		// ポケモンタイプアイコン２
 	BPLIST_CHRRES_WAZATYPE1,		// 技タイプアイコン１
@@ -257,9 +256,7 @@ enum {
 	BPLIST_CHRRES_WAZATYPE4,		// 技タイプアイコン４
 	BPLIST_CHRRES_WAZATYPE5,		// 技タイプアイコン５
 	BPLIST_CHRRES_BUNRUI,				// 分類アイコン
-/*
 	BPLIST_CHRRES_CURSOR,				// カーソル
-*/
 	BPLIST_CHRRES_MAX,
 
 	// パレットリソースID
@@ -267,9 +264,7 @@ enum {
 	BPLIST_PALRES_STATUS,				// 状態異常アイコン（１本）
 	BPLIST_PALRES_ITEM,					// アイテムアイコン（１本）
 	BPLIST_PALRES_TYPE,					// タイプ/分類アイコン（３本）
-/*
 	BPLIST_PALRES_CURSOR,				// カーソル（１本）
-*/
 	BPLIST_PALRES_MAX,
 
 	// セルリソースID
@@ -277,9 +272,7 @@ enum {
 	BPLIST_CELRES_STATUS,				// 状態異常アイコン
 	BPLIST_CELRES_ITEM,					// アイテムアイコン
 	BPLIST_CELRES_TYPE,					// タイプ/分類アイコン
-/*
 	BPLIST_CELRES_CURSOR,				// カーソル
-*/
 	BPLIST_CELRES_MAX,
 };
 
@@ -405,6 +398,7 @@ typedef struct {
 	PRINT_QUE * que;				// プリントキュー
 	PRINT_STREAM * stream;	// プリントストリーム
 
+	BAPP_CURSOR_PUT_WORK * cpwk;		// カーソル表示
 //	CATS_RES_PTR	crp;				// リソース管理
 //	CATS_ACT_PTR	cap[BPL_CA_MAX];	// OAMのCAP
 	GFL_CLUNIT * clunit;
