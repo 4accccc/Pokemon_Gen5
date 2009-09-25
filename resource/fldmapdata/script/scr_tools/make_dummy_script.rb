@@ -47,7 +47,7 @@ SCRIPT_DUMMY_STRING = <<DUMMY_STRING
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../message/dst/script/msg_ZONEIDSYMBOL.h"
+  .include  "msg_ZONEIDSYMBOL.h"
   //.include  "ZONEIDSYMBOL.h"
 
 //--------------------------------------------------------------
@@ -62,9 +62,9 @@ _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
-//ev_ZONEIDSYMBOL_flag_change:
+//ev_zone_ZONEIDSYMBOL:
 //  _END
 
 /**************************************************************/
