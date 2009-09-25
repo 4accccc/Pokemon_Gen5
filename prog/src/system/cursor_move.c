@@ -4,6 +4,8 @@
  * @brief	カーソル移動処理
  * @author	Hiroyuki Nakamura
  * @date	08.08.06
+ *
+ *	モジュール名：CURSORMOVE
  */
 //============================================================================================
 #include <gflib.h>
@@ -19,7 +21,7 @@
 // 選択カーソル移動ワーク
 struct _CURSOR_MOVE_WORK {
 	const GFL_UI_TP_HITTBL * rect;			// タッチテーブル
-	const POINTER_WORK * pw;			// カーソル位置ワーク
+	const POINTSEL_WORK * pw;			// カーソル位置ワーク
 	BOOL cur_flg;						// カーソルON/OFF
 	u8	cur_mode;						// カーソル表示モード
 	u8	cur_pos;						// カーソル位置
@@ -46,11 +48,11 @@ enum {
 //============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
-static u32 Main_TouchCheck( CURSOR_MOVE_WORK * wk, int hit );
-static u32 Main_CursorOn( CURSOR_MOVE_WORK * wk );
-static u32 Main_KeyMove( CURSOR_MOVE_WORK * wk, u8 mv, u8 ret );
+static u32 Main_TouchCheck( CURSORMOVE_WORK * wk, int hit );
+static u32 Main_CursorOn( CURSORMOVE_WORK * wk );
+static u32 Main_KeyMove( CURSORMOVE_WORK * wk, u8 mv, u8 ret );
 
-static BOOL OldCursorSetCheck( const POINTER_WORK * pw, u8 mv );
+static BOOL OldCursorSetCheck( const POINTSEL_WORK * pw, u8 mv );
 static BOOL MoveTableBitCheck( u32 * tbl, u32 pos );
 
 
@@ -72,16 +74,16 @@ static BOOL MoveTableBitCheck( u32 * tbl, u32 pos );
  *	デフォルトはカーソルを常に表示
  */
 //--------------------------------------------------------------------------------------------
-CURSOR_MOVE_WORK * CURSORMOVE_Create(
+CURSORMOVE_WORK * CURSORMOVE_Create(
 					const GFL_UI_TP_HITTBL * rect,
-					const POINTER_WORK * pw,
+					const POINTSEL_WORK * pw,
 					const CURSORMOVE_CALLBACK * func,
 					void * work,
 					BOOL cur_flg,
 					u8	cur_pos,
 					u32 heapID )
 {
-	CURSOR_MOVE_WORK * wk = GFL_HEAP_AllocMemory( heapID, sizeof(CURSOR_MOVE_WORK) );
+	CURSORMOVE_WORK * wk = GFL_HEAP_AllocMemory( heapID, sizeof(CURSORMOVE_WORK) );
 
 	wk->rect = rect;
 	wk->pw   = pw;
@@ -110,7 +112,7 @@ CURSOR_MOVE_WORK * CURSORMOVE_Create(
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void CURSORMOVE_Exit( CURSOR_MOVE_WORK * wk )
+void CURSORMOVE_Exit( CURSORMOVE_WORK * wk )
 {
 	GFI_HEAP_FreeMemory( wk );
 }
@@ -124,7 +126,7 @@ void CURSORMOVE_Exit( CURSOR_MOVE_WORK * wk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void CURSORMOVE_VanishModeSet( CURSOR_MOVE_WORK * wk )
+void CURSORMOVE_VanishModeSet( CURSORMOVE_WORK * wk )
 {
 	wk->cur_mode = CURSOR_MODE_VANISH;
 }
@@ -138,7 +140,7 @@ void CURSORMOVE_VanishModeSet( CURSOR_MOVE_WORK * wk )
  * @return	動作結果
  */
 //--------------------------------------------------------------------------------------------
-u32 CURSORMOVE_Main( CURSOR_MOVE_WORK * wk )
+u32 CURSORMOVE_Main( CURSORMOVE_WORK * wk )
 {
 	int	hit;
 	u16	cnt, flg;
@@ -180,23 +182,23 @@ u32 CURSORMOVE_Main( CURSOR_MOVE_WORK * wk )
 
 	// 移動先取得
 	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
-		ret = PointerWkMoveSel( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINT_MV_UP );
-		mv  = POINT_MV_UP;
+		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_UP );
+		mv  = POINTSEL_MV_UP;
 	}else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
-		ret = PointerWkMoveSel( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINT_MV_DOWN );
-		mv  = POINT_MV_DOWN;
+		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_DOWN );
+		mv  = POINTSEL_MV_DOWN;
 	}else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
-		ret = PointerWkMoveSel( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINT_MV_LEFT );
-		mv  = POINT_MV_LEFT;
+		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_LEFT );
+		mv  = POINTSEL_MV_LEFT;
 	}else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
-		ret = PointerWkMoveSel( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINT_MV_RIGHT );
-		mv  = POINT_MV_RIGHT;
+		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_RIGHT );
+		mv  = POINTSEL_MV_RIGHT;
 	}else{
-		ret = POINT_SEL_NOMOVE;
+		ret = POINTSEL_MOVE_NONE;
 	}
 
 	// キー移動
-	if( ret != POINT_SEL_NOMOVE ){
+	if( ret != POINTSEL_MOVE_NONE ){
 		return Main_KeyMove( wk, mv, ret );
 	}
 
@@ -224,7 +226,7 @@ u32 CURSORMOVE_Main( CURSOR_MOVE_WORK * wk )
  *	ボタン（Ａ、Ｂなど）はトリガ入力
  */
 //--------------------------------------------------------------------------------------------
-u32 CURSORMOVE_MainCont( CURSOR_MOVE_WORK * wk )
+u32 CURSORMOVE_MainCont( CURSORMOVE_WORK * wk )
 {
 	int	hit;
 	u16	cnt, flg;
@@ -266,23 +268,23 @@ u32 CURSORMOVE_MainCont( CURSOR_MOVE_WORK * wk )
 
 	// 移動先取得
 	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP  ){
-		ret = PointerWkMoveSel( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINT_MV_UP );
-		mv  = POINT_MV_UP;
+		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_UP );
+		mv  = POINTSEL_MV_UP;
 	}else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-		ret = PointerWkMoveSel( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINT_MV_DOWN );
-		mv  = POINT_MV_DOWN;
+		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_DOWN );
+		mv  = POINTSEL_MV_DOWN;
 	}else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
-		ret = PointerWkMoveSel( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINT_MV_LEFT );
-		mv  = POINT_MV_LEFT;
+		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_LEFT );
+		mv  = POINTSEL_MV_LEFT;
 	}else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
-		ret = PointerWkMoveSel( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINT_MV_RIGHT );
-		mv  = POINT_MV_RIGHT;
+		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_RIGHT );
+		mv  = POINTSEL_MV_RIGHT;
 	}else{
-		ret = POINT_SEL_NOMOVE;
+		ret = POINTSEL_MOVE_NONE;
 	}
 
 	// キー移動
-	if( ret != POINT_SEL_NOMOVE ){
+	if( ret != POINTSEL_MOVE_NONE ){
 		return Main_KeyMove( wk, mv, ret );
 	}
 
@@ -310,7 +312,7 @@ u32 CURSORMOVE_MainCont( CURSOR_MOVE_WORK * wk )
  * @retval	"CURSORMOVE_NONE != 有効な位置"
  */
 //--------------------------------------------------------------------------------------------
-static u32 Main_TouchCheck( CURSOR_MOVE_WORK * wk, int hit )
+static u32 Main_TouchCheck( CURSORMOVE_WORK * wk, int hit )
 {
 	if( MoveTableBitCheck( wk->mv_tbl, hit ) == TRUE ){
 		wk->cur_pos  = hit;
@@ -335,7 +337,7 @@ static u32 Main_TouchCheck( CURSOR_MOVE_WORK * wk, int hit )
  * @return	CURSORMOVE_CURSOR_ON
  */
 //--------------------------------------------------------------------------------------------
-static u32 Main_CursorOn( CURSOR_MOVE_WORK * wk )
+static u32 Main_CursorOn( CURSORMOVE_WORK * wk )
 {
 	wk->cur_flg  = TRUE;
 	wk->old_pos  = DEF_OLDPOS;
@@ -356,7 +358,7 @@ static u32 Main_CursorOn( CURSOR_MOVE_WORK * wk )
  * @retval	"CURSORMOVE_NONE = 移動しなかった"
  */
 //--------------------------------------------------------------------------------------------
-static u32 Main_KeyMove( CURSOR_MOVE_WORK * wk, u8 mv, u8 ret )
+static u32 Main_KeyMove( CURSORMOVE_WORK * wk, u8 mv, u8 ret )
 {
 	u8	tmp, old;
 
@@ -376,7 +378,7 @@ static u32 Main_KeyMove( CURSOR_MOVE_WORK * wk, u8 mv, u8 ret )
 			break;
 		}
 		old = 0;
-		tmp = PointerWkMoveSel( wk->pw,NULL,NULL,NULL,NULL,ret,mv )&(0xff^CURSORMOVE_RETBIT);
+		tmp = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,ret,mv )&(0xff^CURSORMOVE_RETBIT);
 		// 移動先が行き止まり or 元の位置に戻ってきたら
 		if( tmp == ret || tmp == wk->cur_pos ){
 			ret = wk->cur_pos;
@@ -412,7 +414,7 @@ static u32 Main_KeyMove( CURSOR_MOVE_WORK * wk, u8 mv, u8 ret )
  * @return	カーソル位置
  */
 //--------------------------------------------------------------------------------------------
-u8 CURSORMOVE_PosGet( CURSOR_MOVE_WORK * wk )
+u8 CURSORMOVE_PosGet( CURSORMOVE_WORK * wk )
 {
 	return wk->cur_pos;
 }
@@ -426,7 +428,7 @@ u8 CURSORMOVE_PosGet( CURSOR_MOVE_WORK * wk )
  * @return	カーソル記憶位置
  */
 //--------------------------------------------------------------------------------------------
-u8 CURSORMOVE_SavePosGet( CURSOR_MOVE_WORK * wk )
+u8 CURSORMOVE_SavePosGet( CURSORMOVE_WORK * wk )
 {
 	return wk->save_pos;
 }
@@ -441,7 +443,7 @@ u8 CURSORMOVE_SavePosGet( CURSOR_MOVE_WORK * wk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void CURSORMOVE_PosSet( CURSOR_MOVE_WORK * wk, u8 pos )
+void CURSORMOVE_PosSet( CURSORMOVE_WORK * wk, u8 pos )
 {
 	wk->cur_pos  = pos;
 	wk->old_pos  = DEF_OLDPOS;
@@ -460,7 +462,7 @@ void CURSORMOVE_PosSet( CURSOR_MOVE_WORK * wk, u8 pos )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void CURSORMOVE_PosSetEx( CURSOR_MOVE_WORK * wk, u8 new_pos, u8 old_pos, u8 save_pos )
+void CURSORMOVE_PosSetEx( CURSORMOVE_WORK * wk, u8 new_pos, u8 old_pos, u8 save_pos )
 {
 	wk->cur_pos  = new_pos;
 	wk->old_pos  = old_pos;
@@ -477,7 +479,7 @@ void CURSORMOVE_PosSetEx( CURSOR_MOVE_WORK * wk, u8 new_pos, u8 old_pos, u8 save
  * @retval	"FALSE = 非表示"
  */
 //--------------------------------------------------------------------------------------------
-BOOL CURSORMOVE_CursorOnOffGet( CURSOR_MOVE_WORK * wk )
+BOOL CURSORMOVE_CursorOnOffGet( CURSORMOVE_WORK * wk )
 {
 	return wk->cur_flg;
 }
@@ -495,7 +497,7 @@ BOOL CURSORMOVE_CursorOnOffGet( CURSOR_MOVE_WORK * wk )
  * @li	コールバックのold_posにはCURSORMOVE_ONOFF_DIRECTが渡されます
  */
 //--------------------------------------------------------------------------------------------
-void CURSORMOVE_CursorOnOffSet( CURSOR_MOVE_WORK * wk, BOOL flg )
+void CURSORMOVE_CursorOnOffSet( CURSORMOVE_WORK * wk, BOOL flg )
 {
 	wk->cur_flg = flg;
 	if( wk->cur_flg == TRUE ){
@@ -516,7 +518,7 @@ void CURSORMOVE_CursorOnOffSet( CURSOR_MOVE_WORK * wk, BOOL flg )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void CURSORMOVE_MoveTableInit( CURSOR_MOVE_WORK * wk )
+void CURSORMOVE_MoveTableInit( CURSORMOVE_WORK * wk )
 {
 	wk->mv_tbl[0] = DEF_MVTBL;
 	wk->mv_tbl[1] = DEF_MVTBL;
@@ -531,7 +533,7 @@ void CURSORMOVE_MoveTableInit( CURSOR_MOVE_WORK * wk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void CURSORMOVE_MoveTableSet( CURSOR_MOVE_WORK * wk, u32 * tbl )
+void CURSORMOVE_MoveTableSet( CURSORMOVE_WORK * wk, u32 * tbl )
 {
 	wk->mv_tbl[0] = tbl[0];
 	wk->mv_tbl[1] = tbl[1];
@@ -547,7 +549,7 @@ void CURSORMOVE_MoveTableSet( CURSOR_MOVE_WORK * wk, u32 * tbl )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void CURSORMOVE_MoveTableBitOff( CURSOR_MOVE_WORK * wk, u32 pos )
+void CURSORMOVE_MoveTableBitOff( CURSORMOVE_WORK * wk, u32 pos )
 {
 	u32	i = pos / 32;
 	pos = pos % 32;
@@ -567,7 +569,7 @@ void CURSORMOVE_MoveTableBitOff( CURSOR_MOVE_WORK * wk, u32 pos )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void CURSORMOVE_MoveTableBitOn( CURSOR_MOVE_WORK * wk, u32 pos )
+void CURSORMOVE_MoveTableBitOn( CURSORMOVE_WORK * wk, u32 pos )
 {
 	u32	i = pos / 32;
 	pos = pos % 32;
@@ -587,7 +589,7 @@ void CURSORMOVE_MoveTableBitOn( CURSOR_MOVE_WORK * wk, u32 pos )
  * @return	カーソル位置データ
  */
 //--------------------------------------------------------------------------------------------
-const POINTER_WORK * CURSORMOVE_PointerWorkGet( CURSOR_MOVE_WORK * wk, u32 pos )
+const POINTSEL_WORK * CURSORMOVE_PointerWorkGet( CURSORMOVE_WORK * wk, u32 pos )
 {
 	return &wk->pw[pos];
 }
@@ -605,7 +607,7 @@ const POINTER_WORK * CURSORMOVE_PointerWorkGet( CURSOR_MOVE_WORK * wk, u32 pos )
  */
 //--------------------------------------------------------------------------------------------
 void CURSORMOVE_SceneChange(
-		CURSOR_MOVE_WORK * wk, const GFL_UI_TP_HITTBL * rect, const POINTER_WORK * pw, u8 cur_pos )
+		CURSORMOVE_WORK * wk, const GFL_UI_TP_HITTBL * rect, const POINTSEL_WORK * pw, u8 cur_pos )
 {
 	wk->rect = rect;
 	wk->pw   = pw;
@@ -629,25 +631,25 @@ void CURSORMOVE_SceneChange(
  * @retval	"FALSE = 移動しない"
  */
 //--------------------------------------------------------------------------------------------
-static BOOL OldCursorSetCheck( const POINTER_WORK * pw, u8 mv )
+static BOOL OldCursorSetCheck( const POINTSEL_WORK * pw, u8 mv )
 {
 	switch( mv ){
-	case POINT_MV_UP:
+	case POINTSEL_MV_UP:
 		if( pw->down & CURSORMOVE_RETBIT ){
 			return TRUE;
 		}
 		break;
-	case POINT_MV_DOWN:
+	case POINTSEL_MV_DOWN:
 		if( pw->up & CURSORMOVE_RETBIT ){
 			return TRUE;
 		}
 		break;
-	case POINT_MV_LEFT:
+	case POINTSEL_MV_LEFT:
 		if( pw->right & CURSORMOVE_RETBIT ){
 			return TRUE;
 		}
 		break;
-	case POINT_MV_RIGHT:
+	case POINTSEL_MV_RIGHT:
 		if( pw->left & CURSORMOVE_RETBIT ){
 			return TRUE;
 		}

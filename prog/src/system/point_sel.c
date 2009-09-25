@@ -4,27 +4,12 @@
  * @brief	位置インデックス選択処理
  * @author	Hiroyuki Nakamura
  * @date	2004.11.12
+ *
+ *	モジュール名：POINTSEL
  */
 //============================================================================================
-#define	POINT_SEL_H_GLOBAL
-
 #include <gflib.h>
 #include "system/point_sel.h"
-
-
-//============================================================================================
-//	シンボル定義
-//============================================================================================
-
-
-//============================================================================================
-//	プロトタイプ宣言
-//============================================================================================
-
-
-//============================================================================================
-//	グローバル変数
-//============================================================================================
 
 
 //--------------------------------------------------------------------------------------------
@@ -32,29 +17,29 @@
  * パラメータ取得
  *
  * @param	pw		ワーク
- * @param	flg		取得フラグ
+ * @param	prm		取得フラグ
  *
  * @return	指定パラメータ
  */
 //--------------------------------------------------------------------------------------------
-u8 PointerWorkGet( const POINTER_WORK * pw, u8 flg )
+u8 POINTSEL_GetParam( const POINTSEL_WORK * pw, u8 prm )
 {
-	switch( flg ){
-	case POINT_WK_PX:
+	switch( prm ){
+	case POINTSEL_PRM_PX:
 		return pw->px;
-	case POINT_WK_PY:
+	case POINTSEL_PRM_PY:
 		return pw->py;
-	case POINT_WK_SX:
+	case POINTSEL_PRM_SX:
 		return pw->sx;
-	case POINT_WK_SY:
+	case POINTSEL_PRM_SY:
 		return pw->sy;
-	case POINT_WK_UP:
+	case POINTSEL_PRM_UP:
 		return pw->up;
-	case POINT_WK_DOWN:
+	case POINTSEL_PRM_DOWN:
 		return pw->down;
-	case POINT_WK_LEFT:
+	case POINTSEL_PRM_LEFT:
 		return pw->left;
-	case POINT_WK_RIGHT:
+	case POINTSEL_PRM_RIGHT:
 		return pw->right;
 	}
 	return 0;
@@ -71,7 +56,7 @@ u8 PointerWorkGet( const POINTER_WORK * pw, u8 flg )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void PointerWkPosGet( const POINTER_WORK * pw, u8 * x, u8 * y )
+void POINTSEL_GetPos( const POINTSEL_WORK * pw, u8 * x, u8 * y )
 {
 	*x = pw->px;
 	*y = pw->py;
@@ -88,7 +73,7 @@ void PointerWkPosGet( const POINTER_WORK * pw, u8 * x, u8 * y )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void PointerWkSizeGet( const POINTER_WORK * pw, u8 * x, u8 * y )
+void POINTSEL_GetSize( const POINTSEL_WORK * pw, u8 * x, u8 * y )
 {
 	*x = pw->sx;
 	*y = pw->sy;
@@ -109,22 +94,22 @@ void PointerWkSizeGet( const POINTER_WORK * pw, u8 * x, u8 * y )
  * @return	移動先のインデックス
  */
 //--------------------------------------------------------------------------------------------
-u8 PointerWkMoveSel(
-		const POINTER_WORK * pw, u8 * px, u8 * py, u8 * sx, u8 * sy, u8 now, u8 mv )
+u8 POINTSEL_MoveVec(
+		const POINTSEL_WORK * pw, u8 * px, u8 * py, u8 * sx, u8 * sy, u8 now, u8 mv )
 {
 	u8	next = now;
 
 	switch( mv ){
-	case POINT_MV_UP:
+	case POINTSEL_MV_UP:
 		next = pw[now].up;
 		break;
-	case POINT_MV_DOWN:
+	case POINTSEL_MV_DOWN:
 		next = pw[now].down;
 		break;
-	case POINT_MV_LEFT:
+	case POINTSEL_MV_LEFT:
 		next = pw[now].left;
 		break;
-	case POINT_MV_RIGHT:
+	case POINTSEL_MV_RIGHT:
 		next = pw[now].right;
 		break;
 	}
@@ -147,26 +132,26 @@ u8 PointerWkMoveSel(
  * @param	sy		Yサイズ格納場所
  * @param	now		現在のインデックス
  *
- * @return	移動先のインデックス（十字キーが押されていない場合はPOINT_SEL_NOMOVE）
+ * @return	移動先のインデックス（十字キーが押されていない場合はPOINTSEL_MOVE_NONE）
  *
  * @li	GFL_UI_KEY_GetTrg()を使用
  */
 //--------------------------------------------------------------------------------------------
-u8 PointerWkMoveSelTrg( const POINTER_WORK * pw, u8 * px, u8 * py, u8 * sx, u8 * sy, u8 now )
+u8 POINTSEL_MoveTrg( const POINTSEL_WORK * pw, u8 * px, u8 * py, u8 * sx, u8 * sy, u8 now )
 {
 	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
-		return PointerWkMoveSel( pw, px, py, sx, sy, now, POINT_MV_UP );
+		return POINTSEL_MoveVec( pw, px, py, sx, sy, now, POINTSEL_MV_UP );
 	}
 	if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
-		return PointerWkMoveSel( pw, px, py, sx, sy, now, POINT_MV_DOWN );
+		return POINTSEL_MoveVec( pw, px, py, sx, sy, now, POINTSEL_MV_DOWN );
 	}
 	if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
-		return PointerWkMoveSel( pw, px, py, sx, sy, now, POINT_MV_LEFT );
+		return POINTSEL_MoveVec( pw, px, py, sx, sy, now, POINTSEL_MV_LEFT );
 	}
 	if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
-		return PointerWkMoveSel( pw, px, py, sx, sy, now, POINT_MV_RIGHT );
+		return POINTSEL_MoveVec( pw, px, py, sx, sy, now, POINTSEL_MV_RIGHT );
 	}
-	return POINT_SEL_NOMOVE;
+	return POINTSEL_MOVE_NONE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -181,7 +166,7 @@ u8 PointerWkMoveSelTrg( const POINTER_WORK * pw, u8 * px, u8 * py, u8 * sx, u8 *
  * @return	指定座標のインデックス
  */
 //--------------------------------------------------------------------------------------------
-u8 PointerWkMovePos( const POINTER_WORK * pw, u8 px, u8 py, u8 siz )
+u8 POINTSEL_GetPosIndex( const POINTSEL_WORK * pw, u8 px, u8 py, u8 siz )
 {
 	u16	i;
 

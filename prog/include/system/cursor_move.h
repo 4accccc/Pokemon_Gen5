@@ -4,19 +4,21 @@
  * @brief	カーソル移動処理
  * @author	Hiroyuki Nakamura
  * @date	08.08.06
+ *
+ *	モジュール名：CURSORMOVE
  */
 //============================================================================================
-#ifndef	CURSOR_MOVE_H
-#define	CURSOR_MOVE_H
-
-#include <gflib.h>
+#pragma	once
 
 #include "system/point_sel.h"
+
+
 //============================================================================================
 //	定数定義
 //============================================================================================
 
-typedef struct _CURSOR_MOVE_WORK	CURSOR_MOVE_WORK;		// 選択カーソル移動ワーク
+//typedef struct _CURSOR_MOVE_WORK	CURSOR_MOVE_WORK;		// 選択カーソル移動ワーク
+typedef struct _CURSOR_MOVE_WORK	CURSORMOVE_WORK;		// 選択カーソル移動ワーク
 
 // コールバック関数
 typedef struct {
@@ -57,9 +59,9 @@ typedef struct {
  *	デフォルトはカーソルを常に表示
  */
 //--------------------------------------------------------------------------------------------
-extern CURSOR_MOVE_WORK * CURSORMOVE_Create(
+extern CURSORMOVE_WORK * CURSORMOVE_Create(
 					const GFL_UI_TP_HITTBL * rect,
-					const POINTER_WORK * pw,
+					const POINTSEL_WORK * pw,
 					const CURSORMOVE_CALLBACK * func,
 					void * work,
 					BOOL cur_flg,
@@ -75,7 +77,7 @@ extern CURSOR_MOVE_WORK * CURSORMOVE_Create(
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void CURSORMOVE_Exit( CURSOR_MOVE_WORK * wk );
+extern void CURSORMOVE_Exit( CURSORMOVE_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -86,7 +88,7 @@ extern void CURSORMOVE_Exit( CURSOR_MOVE_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void CURSORMOVE_VanishModeSet( CURSOR_MOVE_WORK * wk );
+extern void CURSORMOVE_VanishModeSet( CURSORMOVE_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -97,7 +99,7 @@ extern void CURSORMOVE_VanishModeSet( CURSOR_MOVE_WORK * wk );
  * @return	動作結果
  */
 //--------------------------------------------------------------------------------------------
-extern u32 CURSORMOVE_Main( CURSOR_MOVE_WORK * wk );
+extern u32 CURSORMOVE_Main( CURSORMOVE_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -110,7 +112,7 @@ extern u32 CURSORMOVE_Main( CURSOR_MOVE_WORK * wk );
  *	ボタン（Ａ、Ｂなど）はトリガ入力
  */
 //--------------------------------------------------------------------------------------------
-extern u32 CURSORMOVE_MainCont( CURSOR_MOVE_WORK * wk );
+extern u32 CURSORMOVE_MainCont( CURSORMOVE_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -121,7 +123,7 @@ extern u32 CURSORMOVE_MainCont( CURSOR_MOVE_WORK * wk );
  * @return	カーソル位置
  */
 //--------------------------------------------------------------------------------------------
-extern u8 CURSORMOVE_PosGet( CURSOR_MOVE_WORK * wk );
+extern u8 CURSORMOVE_PosGet( CURSORMOVE_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -132,7 +134,7 @@ extern u8 CURSORMOVE_PosGet( CURSOR_MOVE_WORK * wk );
  * @return	カーソル記憶位置
  */
 //--------------------------------------------------------------------------------------------
-extern u8 CURSORMOVE_SavePosGet( CURSOR_MOVE_WORK * wk );
+extern u8 CURSORMOVE_SavePosGet( CURSORMOVE_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -144,7 +146,7 @@ extern u8 CURSORMOVE_SavePosGet( CURSOR_MOVE_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void CURSORMOVE_PosSet( CURSOR_MOVE_WORK * wk, u8 pos );
+extern void CURSORMOVE_PosSet( CURSORMOVE_WORK * wk, u8 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -158,7 +160,7 @@ extern void CURSORMOVE_PosSet( CURSOR_MOVE_WORK * wk, u8 pos );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void CURSORMOVE_PosSetEx( CURSOR_MOVE_WORK * wk, u8 new_pos, u8 old_pos, u8 save_pos );
+extern void CURSORMOVE_PosSetEx( CURSORMOVE_WORK * wk, u8 new_pos, u8 old_pos, u8 save_pos );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -170,7 +172,7 @@ extern void CURSORMOVE_PosSetEx( CURSOR_MOVE_WORK * wk, u8 new_pos, u8 old_pos, 
  * @retval	"FALSE = 非表示"
  */
 //--------------------------------------------------------------------------------------------
-extern BOOL CURSORMOVE_CursorOnOffGet( CURSOR_MOVE_WORK * wk );
+extern BOOL CURSORMOVE_CursorOnOffGet( CURSORMOVE_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -185,7 +187,7 @@ extern BOOL CURSORMOVE_CursorOnOffGet( CURSOR_MOVE_WORK * wk );
  * @li	コールバックのold_posにはCURSORMOVE_ONOFF_DIRECTが渡されます
  */
 //--------------------------------------------------------------------------------------------
-extern void CURSORMOVE_CursorOnOffSet( CURSOR_MOVE_WORK * wk, BOOL flg );
+extern void CURSORMOVE_CursorOnOffSet( CURSORMOVE_WORK * wk, BOOL flg );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -196,7 +198,7 @@ extern void CURSORMOVE_CursorOnOffSet( CURSOR_MOVE_WORK * wk, BOOL flg );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void CURSORMOVE_MoveTableInit( CURSOR_MOVE_WORK * wk );
+extern void CURSORMOVE_MoveTableInit( CURSORMOVE_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -207,7 +209,7 @@ extern void CURSORMOVE_MoveTableInit( CURSOR_MOVE_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void CURSORMOVE_MoveTableSet( CURSOR_MOVE_WORK * wk, u32 * tbl );
+extern void CURSORMOVE_MoveTableSet( CURSORMOVE_WORK * wk, u32 * tbl );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -219,7 +221,7 @@ extern void CURSORMOVE_MoveTableSet( CURSOR_MOVE_WORK * wk, u32 * tbl );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void CURSORMOVE_MoveTableBitOff( CURSOR_MOVE_WORK * wk, u32 pos );
+extern void CURSORMOVE_MoveTableBitOff( CURSORMOVE_WORK * wk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -231,7 +233,7 @@ extern void CURSORMOVE_MoveTableBitOff( CURSOR_MOVE_WORK * wk, u32 pos );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void CURSORMOVE_MoveTableBitOn( CURSOR_MOVE_WORK * wk, u32 pos );
+extern void CURSORMOVE_MoveTableBitOn( CURSORMOVE_WORK * wk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -243,7 +245,7 @@ extern void CURSORMOVE_MoveTableBitOn( CURSOR_MOVE_WORK * wk, u32 pos );
  * @return	カーソル位置データ
  */
 //--------------------------------------------------------------------------------------------
-extern const POINTER_WORK * CURSORMOVE_PointerWorkGet( CURSOR_MOVE_WORK * wk, u32 pos );
+extern const POINTSEL_WORK * CURSORMOVE_PointerWorkGet( CURSORMOVE_WORK * wk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -258,7 +260,4 @@ extern const POINTER_WORK * CURSORMOVE_PointerWorkGet( CURSOR_MOVE_WORK * wk, u3
  */
 //--------------------------------------------------------------------------------------------
 extern void CURSORMOVE_SceneChange(
-				CURSOR_MOVE_WORK * wk, const GFL_UI_TP_HITTBL * rect, const POINTER_WORK * pw, u8 cur_pos );
-
-
-#endif	// CURSOR_MOVE_H
+				CURSORMOVE_WORK * wk, const GFL_UI_TP_HITTBL * rect, const POINTSEL_WORK * pw, u8 cur_pos );
