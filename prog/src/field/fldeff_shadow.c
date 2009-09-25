@@ -29,6 +29,8 @@
 #define SHADOW_SCALE_SPEED (0x0010)
 #define SHADOW_ALPHA_SPEED (0x0200)
 
+#define MMDL_CHECKBIT_SHADOW_VANISH (MMDL_STABIT_SHADOW_VANISH|MMDL_STABIT_VANISH)
+
 /*
 #define	TIMEZONE_MORNING	(0)
 #define	TIMEZONE_NOON		(1)
@@ -336,8 +338,8 @@ static void shadowTask_Update( FLDEFF_TASK *task, void *wk )
       return;
     }
   }
-    
-  if( MMDL_CheckStatusBit(work->fmmdl,MMDL_STABIT_SHADOW_VANISH) ){
+  
+  if( MMDL_CheckStatusBit(work->fmmdl,MMDL_CHECKBIT_SHADOW_VANISH) ){
     work->vanish_flag = TRUE;
   }else{
     work->vanish_flag = FALSE;
@@ -367,7 +369,7 @@ static void shadowTask_Draw( FLDEFF_TASK *task, void *wk )
     VecFx32 pos;
     GFL_G3D_OBJ *obj = work->eff_shadow->g3d_obj;
     GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,0xc00},{0}};
-
+    
     #if 0
     MTX_Identity33( &status.rotate );
     #else //‰ñ“]‰Â”\‚É
