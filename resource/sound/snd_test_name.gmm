@@ -1725,6 +1725,42 @@
 		<language name="JPN" width="256">SYS-02</language>
 		<language name="JPN_KANJI" width="256">SYS-02</language>
 	</row>
+	<row id="msg_seq_se_sys_03">
+		<language name="JPN" width="256">SYS-03</language>
+		<language name="JPN_KANJI" width="256">SYS-03</language>
+	</row>
+	<row id="msg_seq_se_sys_04">
+		<language name="JPN" width="256">SYS-04</language>
+		<language name="JPN_KANJI" width="256">SYS-04</language>
+	</row>
+	<row id="msg_seq_se_sys_05">
+		<language name="JPN" width="256">SYS-05</language>
+		<language name="JPN_KANJI" width="256">SYS-05</language>
+	</row>
+	<row id="msg_seq_se_sys_06">
+		<language name="JPN" width="256">SYS-06</language>
+		<language name="JPN_KANJI" width="256">SYS-06</language>
+	</row>
+	<row id="msg_seq_se_sys_07">
+		<language name="JPN" width="256">SYS-07</language>
+		<language name="JPN_KANJI" width="256">SYS-07</language>
+	</row>
+	<row id="msg_seq_se_sys_08">
+		<language name="JPN" width="256">SYS-08</language>
+		<language name="JPN_KANJI" width="256">SYS-08</language>
+	</row>
+	<row id="msg_seq_se_sys_09">
+		<language name="JPN" width="256">SYS-09</language>
+		<language name="JPN_KANJI" width="256">SYS-09</language>
+	</row>
+	<row id="msg_seq_se_sys_10">
+		<language name="JPN" width="256">SYS-10</language>
+		<language name="JPN_KANJI" width="256">SYS-10</language>
+	</row>
+	<row id="msg_seq_se_sys_27">
+		<language name="JPN" width="256">SYS-27</language>
+		<language name="JPN_KANJI" width="256">SYS-27</language>
+	</row>
 	<row id="msg_seq_se_pl_w012">
 		<language name="JPN" width="256">PL-W012</language>
 		<language name="JPN_KANJI" width="256">PL-W012</language>
