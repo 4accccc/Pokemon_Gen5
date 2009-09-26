@@ -16,8 +16,19 @@ enum {
 	NARC_tradedemo_under01_NSCR = 2,
 	NARC_tradedemo_trade_nsbca = 3,
 	NARC_tradedemo_trade_nsbmd = 4,
-	NARC_tradedemo_trailer_nsbmd = 5,
-	NARC_tradedemo_balloon_spa = 6
+	NARC_tradedemo_trade_nsbta = 5,
+	NARC_tradedemo_trade2_2_nsbca = 6,
+	NARC_tradedemo_trade2_2_nsbmd = 7,
+	NARC_tradedemo_trade2_2_nsbta = 8,
+	NARC_tradedemo_trade3_nsbca = 9,
+	NARC_tradedemo_trade3_nsbmd = 10,
+	NARC_tradedemo_trade3_nsbta = 11,
+	NARC_tradedemo_trade4_nsbca = 12,
+	NARC_tradedemo_trade4_nsbmd = 13,
+	NARC_tradedemo_trade4_nsbta = 14,
+	NARC_tradedemo_trade5_nsbca = 15,
+	NARC_tradedemo_trade5_nsbmd = 16,
+	NARC_tradedemo_balloon_spa = 17
 };
 
 /* NARC_TRADEDEMO_NAIX_ */

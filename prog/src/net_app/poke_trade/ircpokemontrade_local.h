@@ -27,6 +27,7 @@ typedef enum
 {
 	REEL_PANEL_OBJECT,
 	TRADE01_OBJECT,
+	TRADE02_OBJECT,
   OBJECT_MODEL_MAX,
 } CELL_OBJECT_MODEL;
 
@@ -109,6 +110,7 @@ typedef enum
 enum
 {
   SETUP_INDEX_BALL,
+  SETUP_INDEX_ROUND,
   SETUP_INDEX_MAX
 };
 
@@ -170,6 +172,7 @@ struct _IRC_POKEMON_TRADE {
 
 	GFL_ARCUTIL_TRANSINFO subchar;
 	GFL_ARCUTIL_TRANSINFO subchar1;
+  GFL_ARCUTIL_TRANSINFO subchar2;
 	u32 cellRes[CEL_RESOURCE_MAX];
 
 	GAMESYS_WORK* pGameSys;
@@ -236,7 +239,7 @@ struct _IRC_POKEMON_TRADE {
 };
 
 
-
+#define UNIT_NULL		(0xffff)
 
 extern void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_GraphicExit(IRC_POKEMON_TRADE* pWork);
@@ -253,6 +256,8 @@ extern void IRC_POKETRADE_InitBoxIcon( BOX_DATA* boxData ,IRC_POKEMON_TRADE* pWo
 extern void IRC_POKETRADE_AllDeletePokeIconResource(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_G3dDraw(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_SetSubdispGraphicDemo(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_GraphicFreeVram(IRC_POKEMON_TRADE* pWork);
 
 extern void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork );
 extern void IRC_POKETRADEDEMO_Main( IRC_POKEMON_TRADE* pWork );

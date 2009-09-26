@@ -63,13 +63,14 @@ NSBCAFILE = $(ICAFILE:.ica=.nsbca)
 NSBVAFILE = $(IVAFILE:.iva=.nsbva)
 NSBMAFILE = $(IMAFILE:.ima=.nsbma)
 NSBTPFILE = $(ITPFILE:.itp=.nsbtp)
+NSBTAFILE = $(ITAFILE:.ita=.nsbta)
 
 OBJ_FILE 	= $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) $(gobjects) \
-						$(NSBMDFILE) $(NSBTXFILE) $(NSBCAFILE) $(NSBVAFILE) $(NSBMAFILE) $(NSBTPFILE)
+						$(NSBMDFILE) $(NSBTXFILE) $(NSBCAFILE) $(NSBVAFILE) $(NSBMAFILE) $(NSBTPFILE) $(NSBTAFILE) 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .ncg .NCGR .NSCR .nsc .NCER .nce .imd .ica .iva .ima .itp .ita .nsbmd .nsbtx .nsbca .nsbma .nsbva .nsbtp
+.SUFFIXES: .NCLR .ncl .ncg .NCGR .NSCR .nsc .NCER .nce .imd .ica .iva .ima .itp .ita .nsbmd .nsbtx .nsbca .nsbma .nsbva .nsbtp .nsbta
 
 
 .ncl.NCLR:
@@ -99,6 +100,9 @@ ifdef IMDTEX_SEPARATE
 endif
 
 .ica.nsbca:
+	g3dcvtr $<
+
+.ita.nsbta:
 	g3dcvtr $<
 
 .iva.nsbva:

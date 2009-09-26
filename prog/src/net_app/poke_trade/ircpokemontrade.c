@@ -749,20 +749,42 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 static void _changeDemo_PokeMove(IRC_POKEMON_TRADE* pWork)
 {
   VecFx32 apos;
+  int i;
   
   MCSS_GetPosition(pWork->pokeMcss[0],&apos);
   apos.x += FX32_ONE/32;
   apos.z += FX32_ONE/32;
   MCSS_SetPosition( pWork->pokeMcss[0] ,&apos );
 
-  OS_TPrintf("_changeDemo_PokeMove %d %d\n", apos.x/FX32_ONE, apos.z/FX32_ONE);
 
-  
   if(apos.x>(8*FX32_ONE)){
     
     IRC_POKETRADEDEMO_RemoveModel( pWork);
     IRC_POKETRADEDEMO_SetModel( pWork, TRADE01_OBJECT);
+    IRC_POKETRADEDEMO_SetModel( pWork, TRADE02_OBJECT);
 
+    for(i=0;i<2;i++){
+      if( pWork->pokeMcss[i] ){
+        MCSS_SetVanishFlag(pWork->pokeMcss[i]);
+      }
+    }
+    for(i = 0;i< CUR_NUM;i++){
+      if(pWork->curIcon[i]){
+        GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[i], FALSE );
+      }
+    }
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+
+
+    
+    GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
+    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_OBJ );
+    IRC_POKETRADE_AllDeletePokeIconResource(pWork);
+
+    IRC_POKETRADE_GraphicFreeVram(pWork);
+
+    IRC_POKETRADE_SetSubdispGraphicDemo(pWork);
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
     
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade1);
   }
@@ -773,6 +795,11 @@ static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
   
 
   if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_DECIDE){
+
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3, VISIBLE_ON );
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3, VISIBLE_ON );
+
+
     _CHANGE_STATE(pWork,_changeFinish);
   }
 
@@ -1136,7 +1163,7 @@ static void _createBg(IRC_POKEMON_TRADE* pWork)
 			GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
 			GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
 			GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-			GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+			GX_VRAM_SUB_BGEXTPLTT_32_H,		// サブ2DエンジンのBG拡張パレット
 			GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
 			GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
 			GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
@@ -1508,7 +1535,7 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
 static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	int i;
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x3C000+0x3CF00 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0xA0000 );
 
 	{
 		IRC_POKEMON_TRADE *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_POKEMON_TRADE ), HEAPID_IRCBATTLE );
@@ -1545,7 +1572,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
     pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 2 , 0 );
     
     _dispInit(pWork);
-IRC_POKETRADEDEMO_Init(pWork);
+    IRC_POKETRADEDEMO_Init(pWork);
 	}
 
 
@@ -1661,10 +1688,11 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
 	for(i=0;i<2;i++){
 		if( pWork->pokeMcss[i] ){
 			MCSS_Del(pWork->mcssSys,pWork->pokeMcss[i]);
+      pWork->pokeMcss[i] = NULL;
 		}
 	}
 	MCSS_Exit(pWork->mcssSys);
-IRC_POKETRADEDEMO_End(pWork);
+  IRC_POKETRADEDEMO_End(pWork);
 
   IRC_POKETRADE_AllDeletePokeIconResource(pWork);
 
