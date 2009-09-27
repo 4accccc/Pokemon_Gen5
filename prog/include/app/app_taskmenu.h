@@ -17,11 +17,11 @@
 #define APP_TASKMENU_ANM_INTERVAL (4)
 
 //デフォルト幅
-#define APP_TASKMENU_PLATE_WIDTH (13)
+#define APP_TASKMENU_PLATE_WIDTH (13)	
 #define APP_TASKMENU_PLATE_HEIGHT (3)
 
 //デフォルト文字色カラー
-#define APP_TASKMENU_ITEM_MSGCOLOR	(PRINTSYS_LSB_Make(0xd,0xf,0xe))
+#define APP_TASKMENU_ITEM_MSGCOLOR	(PRINTSYS_LSB_Make(0xe,0xf,0x3))
 
 //単発まどの種類
 typedef enum
@@ -50,8 +50,8 @@ typedef enum
 //タスクメニュー 初期化ワーク １項目
 typedef struct
 {
-  STRBUF  *str;
-  PRINTSYS_LSB msgColor;
+  STRBUF  *str;											//メニューに表示する文字列
+  PRINTSYS_LSB msgColor;						//文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
   APP_TASKMENU_WIN_TYPE type;       //戻るマークの表示
 }APP_TASKMENU_ITEMWORK;
 
@@ -88,3 +88,4 @@ extern APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES
 extern void APP_TASKMENU_WIN_Delete( APP_TASKMENU_WIN_WORK *wk );
 extern void APP_TASKMENU_WIN_Update( APP_TASKMENU_WIN_WORK *wk );
 extern void APP_TASKMENU_WIN_SetActive( APP_TASKMENU_WIN_WORK *wk, BOOL isActive );
+extern void APP_TASKMENU_WIN_SetDecide( APP_TASKMENU_WIN_WORK *wk, BOOL isDecide );

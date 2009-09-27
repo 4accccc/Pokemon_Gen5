@@ -598,6 +598,7 @@ APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, 
 	//ワーク作成
 	wk	= GFL_HEAP_AllocMemory( heapID ,sizeof(APP_TASKMENU_WIN_WORK) );
 	GFL_STD_MemClear( wk, sizeof(APP_TASKMENU_WIN_WORK) );
+	wk->res	= res;
 	wk->isUpdateMsg	= TRUE;
 
 	//BMPWIN
@@ -675,6 +676,18 @@ void APP_TASKMENU_WIN_Update( APP_TASKMENU_WIN_WORK *wk )
 void APP_TASKMENU_WIN_SetActive( APP_TASKMENU_WIN_WORK *wk, BOOL isActive )
 {	
 	APP_TASKMENU_SetActiveItem( wk->bmpwin, wk->res, isActive );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	決定ON,OFF
+ *
+ *	@param	APP_TASKMENU_WIN_WORK *wk	ワーク
+ *	@param	isDecide	TRUEで決定アニメ	FALSEでなし
+ */
+//-----------------------------------------------------------------------------
+void APP_TASKMENU_WIN_SetDecide( APP_TASKMENU_WIN_WORK *wk, BOOL isDecide )
+{	
+	wk->isDecide	= isDecide;
 }
 
 //----------------------------------------------------------------------------

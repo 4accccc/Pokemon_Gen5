@@ -26,8 +26,8 @@ typedef enum
   APP_COMMON_BARICON_CURSOR_UP,
   APP_COMMON_BARICON_CURSOR_LEFT,
   APP_COMMON_BARICON_CURSOR_RIGHT,
-  APP_COMMON_BARICON_CHECK_ON,
   APP_COMMON_BARICON_CHECK_OFF,
+  APP_COMMON_BARICON_CHECK_ON,
 
   APP_COMMON_BARICON_EXIT_ON,
   APP_COMMON_BARICON_RETURN_ON,
@@ -102,7 +102,7 @@ extern const u32 APP_COMMON_GetWazaKindCharArcIdx( const PokeType type );
 //下部バーボタン系素材取得
 extern const u32 APP_COMMON_GetBarIconPltArcIdx( void );
 extern const u8  APP_COMMON_GetBarIconPltOffset( const APP_COMMON_BARICON type );
-const u32 APP_COMMON_GetBarIconCharArcIdx();
+extern const u32 APP_COMMON_GetBarIconCharArcIdx();
 extern const u32 APP_COMMON_GetBarIconCellArcIdx( const APP_COMMON_MAPPING mapping );
 extern const u32 APP_COMMON_GetBarIconAnimeArcIdx( const APP_COMMON_MAPPING mapping );
 
