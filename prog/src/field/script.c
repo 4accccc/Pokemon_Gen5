@@ -1188,6 +1188,8 @@ void SCRIPT_CallSpecialScript( GAMESYS_WORK *gsys, HEAPID heapID, u16 script_id 
   core = SCRVM_Create( sc, sc->start_zone_id, script_id );
   while( VM_Control(core) == TRUE ){};
   SCRVM_Delete( core );
+
+  SCRIPTWORK_Delete( sc );
 }
 
 //------------------------------------------------------------------
