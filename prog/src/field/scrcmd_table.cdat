@@ -1,0 +1,422 @@
+//======================================================================
+/**
+ * @file  scrcmd_table.cdat
+ * @brief スクリプトコマンド定義
+ * @date  2009.09.17
+ * @author  tamada GAME FREAK inc.
+ *
+ * @note
+ *
+ * INIT_CMD/DEF_CMD/NO_CMDの各マクロは、スクリプトでの場合はコマンドID定義、
+ * Cソース中の場合はスクリプトコマンド関数テーブル用に変換する。
+ * それぞれ、resource/fldmapdata/script/scrcmd_table/def_table_macro.hと
+ * prog/src/field/scrcmd.c内の定義を確認すること。
+ */
+//======================================================================
+
+//======================================================================
+//  命令シンボル宣言
+//======================================================================
+
+  //スクリプトコマンドテーブル開始
+  INIT_CMD
+
+  //基本システム命令
+  DEF_CMD( EvCmdNop,  EV_SEQ_NOP )
+  DEF_CMD( EvCmdDummy,  EV_SEQ_DUMMY ) 
+  DEF_CMD( EvCmdEnd,  EV_SEQ_END )
+  DEF_CMD( EvCmdTimeWait,  EV_SEQ_TIME_WAIT )
+
+  DEF_CMD( EvCmdCall,  EV_SEQ_CALL )
+  DEF_CMD( EvCmdRet,  EV_SEQ_RET )
+  NO_CMD()
+  NO_CMD()
+  
+  //判定演算用命令
+  DEF_CMD( EvCmdPushValue,  EV_SEQ_PUSH_VALUE )
+  DEF_CMD( EvCmdPushWork,  EV_SEQ_PUSH_WORK )
+  DEF_CMD( EvCmdPopWork,  EV_SEQ_POP_WORK )
+  DEF_CMD( EvCmdPop,  EV_SEQ_POP )
+
+  DEF_CMD( EvCmdCalcAdd,  EV_SEQ_CALC_ADD )
+  DEF_CMD( EvCmdCalcSub,  EV_SEQ_CALC_SUB )
+  DEF_CMD( EvCmdCalcMul,  EV_SEQ_CALC_MUL )
+  DEF_CMD( EvCmdCalcDiv,  EV_SEQ_CALC_DIV )
+
+  DEF_CMD( EvCmdPushFlagValue,  EV_SEQ_PUSH_FLAG )
+  DEF_CMD( EvCmdCmpStack,  EV_SEQ_CMP_STACK )
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+
+  //(データロード )・ストア関連
+  DEF_CMD( EvCmdLoadRegValue, EV_SEQ_LD_REG_VAL )
+  DEF_CMD( EvCmdLoadRegWData, EV_SEQ_LD_REG_WDATA )
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  DEF_CMD( EvCmdLoadRegReg, EV_SEQ_LD_REG_REG )
+  NO_CMD()
+  NO_CMD()
+  
+  
+  //比較命令
+  DEF_CMD( EvCmdCmpRegReg, EV_SEQ_CP_REG_REG )
+  DEF_CMD( EvCmdCmpRegValue, EV_SEQ_CP_REG_VAL )
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  DEF_CMD( EvCmdCmpWkValue, EV_SEQ_CP_WK_VAL )
+  DEF_CMD( EvCmdCmpWkWk, EV_SEQ_CP_WK_WK )
+  
+  
+  //仮想マシン関連
+  DEF_CMD( EvCmdVMMachineAdd, EV_SEQ_VM_ADD )
+  DEF_CMD( EvCmdChangeCommonScr, EV_SEQ_CHG_COMMON_SCR )
+  DEF_CMD( EvCmdChangeLocalScr, EV_SEQ_CHG_LOCAL_SCR )
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  //分岐命令
+  DEF_CMD( EvCmdJump, EV_SEQ_JUMP )
+  DEF_CMD( EvCmdIfJump, EV_SEQ_IF_JUMP )
+  DEF_CMD( EvCmdIfCall, EV_SEQ_IF_CALL )
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  //イベントフラグ関連
+  DEF_CMD( EvCmdFlagSet, EV_SEQ_FLAG_SET )
+  DEF_CMD( EvCmdFlagReset, EV_SEQ_FLAG_RESET )
+  DEF_CMD( EvCmdFlagCheck, EV_SEQ_FLAG_CHECK )
+  DEF_CMD( EvCmdFlagCheckWk, EV_SEQ_FLAG_CHECK_WK )
+
+  DEF_CMD( EvCmdFlagSetWk, EV_SEQ_FLAG_SET_WK )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  //ワーク操作関連
+  DEF_CMD( EvCmdWkAdd, EV_SEQ_ADD_WK )
+  DEF_CMD( EvCmdWkSub, EV_SEQ_SUB_WK )
+  DEF_CMD( EvCmdLoadWkValue, EV_SEQ_LD_WK_VAL )
+  DEF_CMD( EvCmdLoadWkWk, EV_SEQ_LD_WK_WK )
+
+  DEF_CMD( EvCmdLoadWkWkValue, EV_SEQ_LD_WK_WKVAL )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  //フィールドイベント共通処理
+  DEF_CMD( EvCmdCommonProcFieldEventStart, EV_SEQ_COMMON_PROC_FIELD_EVENT_START )
+  DEF_CMD( EvCmdCommonProcFieldEventEnd, EV_SEQ_COMMON_PROC_FIELD_EVENT_END )
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+
+  //キー入力関連
+  DEF_CMD( EvCmdABKeyWait, EV_SEQ_ABKEYWAIT )
+  DEF_CMD( EvCmdLastKeyWait, EV_SEQ_LASTKEYWAIT )
+  NO_CMD()
+  NO_CMD()
+  
+  //(会話 )ウィンドウ
+  DEF_CMD( EvCmdTalkMsg, EV_SEQ_TALKMSG )
+  DEF_CMD( EvCmdTalkMsgAllPut, EV_SEQ_TALKMSG_ALLPUT )
+  DEF_CMD( EvCmdTalkWinOpen, EV_SEQ_TALKWIN_OPEN )
+  DEF_CMD( EvCmdTalkWinClose, EV_SEQ_TALKWIN_CLOSE )
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  //(フィールド )　吹き出しウィンドウ
+  DEF_CMD( EvCmdBalloonWinWrite, EV_SEQ_BALLOONWIN_OBJMSG_OPEN )
+  DEF_CMD( EvCmdBalloonWinTalkWrite, EV_SEQ_BALLOONWIN_TALKOBJ_OPEN )
+  DEF_CMD( EvCmdBalloonWinClose, EV_SEQ_BALLOONWIN_CLOSE )
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  //動作モデル
+  DEF_CMD( EvCmdObjAnime, EV_SEQ_OBJ_ANIME )      
+  DEF_CMD( EvCmdObjAnimeWait, EV_SEQ_OBJ_ANIME_WAIT )
+  DEF_CMD( EvCmdMoveCodeGet, EV_SEQ_MOVE_CODE_GET )
+  DEF_CMD( EvCmdObjPosGet, EV_SEQ_OBJ_POS_GET )
+
+  DEF_CMD( EvCmdPlayerPosGet, EV_SEQ_PLAYER_POS_GET )
+  DEF_CMD( EvCmdObjAdd, EV_SEQ_OBJ_ADD )
+  DEF_CMD( EvCmdObjDel, EV_SEQ_OBJ_DEL )
+  DEF_CMD( EvCmdObjAddEvent, EV_SEQ_OBJ_ADD_EV )
+
+  DEF_CMD( EvCmdObjDelEvent, EV_SEQ_OBJ_DEL_EV )
+	DEF_CMD( EvCmdObjPosChange, EV_SEQ_OBJ_POS_CHANGE )
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  //動作モデル　イベント関連
+  DEF_CMD( EvCmdObjTurn, EV_SEQ_OBJ_TURN )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  //(はい )、いいえ　処理
+  DEF_CMD( EvCmdYesNoWin, EV_SEQ_YES_NO_WIN )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  //WORDSET関連
+  DEF_CMD( EvCmdPlayerName, EV_SEQ_PLAYER_NAME )
+  DEF_CMD( EvCmdItemName, EV_SEQ_ITEM_NAME )
+  DEF_CMD( EvCmdItemWazaName, EV_SEQ_ITEM_WAZA_NAME )
+  DEF_CMD( EvCmdWazaName, EV_SEQ_WAZA_NAME )
+
+  DEF_CMD( EvCmdPocketName, EV_SEQ_POCKET_NAME )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  //視線トレーナー関連
+  DEF_CMD( EvCmdEyeTrainerMoveSet, EV_SEQ_EYE_TRAINER_MOVE_SET )
+  DEF_CMD( EvCmdEyeTrainerMoveSingle, EV_SEQ_EYE_TRAINER_MOVE_SINGLE )
+  DEF_CMD( EvCmdEyeTrainerMoveDouble, EV_SEQ_EYE_TRAINER_MOVE_DOUBLE )
+  DEF_CMD( EvCmdEyeTrainerTypeGet, EV_SEQ_EYE_TRAINER_TYPE_GET )
+
+  DEF_CMD( EvCmdEyeTrainerIdGet, EV_SEQ_EYE_TRAINER_ID_GET )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  //トレーナーバトル関連
+  DEF_CMD( EvCmdTrainerIdGet, EV_SEQ_TRAINER_ID_GET )
+  DEF_CMD( EvCmdTrainerBattleSet, EV_SEQ_TRAINER_BTL_SET )
+  DEF_CMD( EvCmdTrainerMultiBattleSet, EV_SEQ_TRAINER_MULTI_BTL_SET )
+  DEF_CMD( EvCmdTrainerMessageSet, EV_SEQ_TRAINER_MSG_SET )
+
+  DEF_CMD( EvCmdTrainerTalkTypeGet, EV_SEQ_TRAINER_TALK_TYPE_GET )
+  DEF_CMD( EvCmdRevengeTrainerTalkTypeGet, EV_SEQ_REVENGE_TRAINER_TALK_TYPE_GET )
+  DEF_CMD( EvCmdTrainerTypeGet, EV_SEQ_TRAINER_TYPE_GET )
+  DEF_CMD( EvCmdTrainerBgmSet, EV_SEQ_TRAINER_BGM_SET )
+
+  DEF_CMD( EvCmdTrainerLose, EV_SEQ_LOSE )
+  DEF_CMD( EvCmdTrainerLoseCheck, EV_SEQ_LOSE_CHECK )
+  DEF_CMD( EvCmdSeacretPokeRetryCheck, EV_SEQ_SEACRET_POKE_RETRY_CHECK )
+  DEF_CMD( EvCmdHaifuPokeRetryCheck, EV_SEQ_HAIFU_POKE_RETRY_CHECK )
+
+  DEF_CMD( EvCmd2vs2BattleCheck, EV_SEQ_2VS2_BATTLE_CHECK )
+  DEF_CMD( EvCmdDebugBattleSet, EV_SEQ_DEBUG_BTL_SET )
+  DEF_CMD( EvCmdBattleResultGet, EV_SEQ_BATTLE_RESULT_GET )
+  NO_CMD()
+
+  //トレーナーフラグ関連
+  DEF_CMD( EvCmdTrainerFlagSet, EV_SEQ_TRAINER_FLAG_SET )
+  DEF_CMD( EvCmdTrainerFlagReset, EV_SEQ_TRAINER_FLAG_RESET )
+  DEF_CMD( EvCmdTrainerFlagCheck, EV_SEQ_TRAINER_FLAG_CHECK )
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  //BGM
+  DEF_CMD( EvCmdBgmPlay, EV_SEQ_BGM_PLAY )
+  DEF_CMD( EvCmdBgmStop, EV_SEQ_BGM_STOP )
+  DEF_CMD( EvCmdBgmPlayerPause, EV_SEQ_BGM_PLAYER_PAUSE )
+  DEF_CMD( EvCmdBgmPlayCheck, EV_SEQ_BGM_PLAY_CHECK )
+
+  DEF_CMD( EvCmdBgmFadeOut, EV_SEQ_BGM_FADEOUT )
+  DEF_CMD( EvCmdBgmFadeIn, EV_SEQ_BGM_FADEIN )
+  DEF_CMD( EvCmdBgmNowMapPlay, EV_SEQ_BGM_NOW_MAP_RECOVER )
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  //SE
+  DEF_CMD( EvCmdSePlay, EV_SEQ_SE_PLAY )
+  DEF_CMD( EvCmdSeStop, EV_SEQ_SE_STOP )
+  DEF_CMD( EvCmdSeWait, EV_SEQ_SE_WAIT )
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  //ME
+  DEF_CMD( EvCmdMePlay, EV_SEQ_ME_PLAY )
+  DEF_CMD( EvCmdMeWait, EV_SEQ_ME_WAIT )
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  //ポケモン鳴き声
+  DEF_CMD( EvCmdVoicePlay, EV_SEQ_VOICE_PLAY )
+  DEF_CMD( EvCmdVoiceWait, EV_SEQ_VOICE_WAIT )
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+
+  //メニュー
+  DEF_CMD( EvCmdBmpMenuInit, EV_SEQ_BMPMENU_INIT )
+  DEF_CMD( EvCmdBmpMenuInitEx, EV_SEQ_BMPMENU_INIT_EX )
+  DEF_CMD( EvCmdBmpMenuMakeList, EV_SEQ_BMPMENU_MAKE_LIST )
+  DEF_CMD( EvCmdBmpMenuStart, EV_SEQ_BMPMENU_START )
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  //画面フェード
+  DEF_CMD( EvCmdDispFadeStart, EV_SEQ_DISP_FADE_START )
+  DEF_CMD( EvCmdDispFadeCheck, EV_SEQ_DISP_FADE_CHECK )
+  NO_CMD()
+  NO_CMD()
+
+  //アイテム関連
+  DEF_CMD( EvCmdAddItem, EV_SEQ_ADD_ITEM )
+	DEF_CMD( EvCmdSubItem, EV_SEQ_SUB_ITEM )
+	DEF_CMD( EvCmdAddItemChk, EV_SEQ_ADD_ITEM_CHK )
+	DEF_CMD( EvCmdCheckItem, EV_SEQ_ITEM_CHK )
+
+  DEF_CMD( EvCmdGetItemNum, EV_SEQ_GET_ITEM_NUM )
+	DEF_CMD( EvCmdWazaMachineItemNoCheck, EV_SEQ_WAZA_ITEM_CHK )
+  DEF_CMD( EvCmdGetPocketID, EV_SEQ_GET_POCKET_ID )
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+
+  //ミュージカル関連
+  DEF_CMD( EvCmdMusicalCall, EV_SEQ_MUSICAL_CALL )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  //マップ遷移関連
+  DEF_CMD( EvCmdMapChangeBySandStream, EV_SEQ_MAP_CHANGE_SAND_STREAM )
+  DEF_CMD( EvCmdMapChange, EV_SEQ_MAP_CHANGE )
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  //ジムギミック関連
+  DEF_CMD( EvCmdGymElec_Init, EV_SEQ_GYM_ELEC_INIT )
+  DEF_CMD( EvCmdGymElec_PushSw, EV_SEQ_GYM_ELEC_PUSH_SW )
+  DEF_CMD( EvCmdGymNormal_Init, EV_SEQ_GYM_NORMAL_INIT )
+  DEF_CMD( EvCmdGymNormal_Unrock, EV_SEQ_GYM_NORMAL_UNROCK )
+
+  DEF_CMD( EvCmdGymNormal_CheckUnrock, EV_SEQ_GYM_NORMAL_CHK_UNROCK )
+  DEF_CMD( EvCmdGymNormal_MoveWall, EV_SEQ_GYM_NORMAL_MOVE_WALL )
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  //その他
+  DEF_CMD( EvCmdChangeLangID, EV_SEQ_CHG_LANGID )
+  DEF_CMD( EvCmdGetRand, EV_SEQ_GET_RND )
+  DEF_CMD( EvCmdGetNowMsgArcID, EV_SEQ_GET_NOW_MSG_ARCID )
+  DEF_CMD( EvCmdCheckTemotiPokerus, EV_SEQ_CHECK_TEMOTI_POKERUS )
+
+  DEF_CMD( EvCmdGetTimeZone, EV_SEQ_GET_TIMEZONE )
+  DEF_CMD( EvCmdGetTrainerCardRank, EV_SEQ_GET_TRAINER_CARD_RANK )
+  DEF_CMD( EvCmdPokemonRecover, EV_SEQ_POKEMON_RECOVER )
+  DEF_CMD( EvCmdPokecenRecoverAnime, EV_SEQ_POKECEN_RECOVER_ANIME )
+
+  DEF_CMD( EvCmdGetLangID, EV_SEQ_GET_LANG_ID )
+  DEF_CMD( EvCmdCheckPokemonHP, EV_SEQ_CHECK_TEMOTI_HP )
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  END_CMD
+  //スクリプトコマンドテーブル終了
+

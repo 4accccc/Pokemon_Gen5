@@ -29,7 +29,7 @@
 #include "field_sound.h"
 #include "field_player.h"
 
-#include "tr_tool/tr_tool.h"
+//#include "tr_tool/tr_tool.h"
 
 
 #include "scrcmd_trainer.h"
@@ -159,7 +159,7 @@ static VMCMD_RESULT EvCmdTimeWait( VMHANDLE *core, void *wk )
  *  表記：  EVCMD_CALL  CallOffset(s16)
  */
 //--------------------------------------------------------------
-static VMCMD_RESULT EvCmdGlobalCall( VMHANDLE *core, void *wk )
+static VMCMD_RESULT EvCmdCall( VMHANDLE *core, void *wk )
 {
   s32  pos = (s32)VMGetU32(core);
   VMCMD_Call( core, (VM_CODE *)(core->adrs+pos) );
@@ -225,60 +225,6 @@ static VMCMD_RESULT EvCmdLoadRegWData( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 仮想マシンの汎用レジスタにアドレスを格納
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdLoadRegAdrs( VMHANDLE *core, void *wk )
-{
-  u8  r;
-  VM_CODE * adrs;
-
-  r = VMGetU8( core );
-  adrs = (VM_CODE *)VMGetU32( core );
-  core->vm_register[r] = *adrs;
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * アドレスの中身に値を代入
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdLoadAdrsValue( VMHANDLE *core, void *wk )
-{
-  VM_CODE * adrs;
-  u8  r;
-
-  adrs = (VM_CODE *)VMGetU32( core );
-  r = VMGetU8( core );
-  *adrs = r;
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * アドレスの中身に仮想マシンの汎用レジスタの値を代入
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdLoadAdrsReg( VMHANDLE *core, void *wk )
-{
-  VM_CODE * adrs;
-  u8  r;
-  
-  adrs = (VM_CODE *)VMGetU32( core );
-  r = VMGetU8( core);
-  *adrs = core->vm_register[r];
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
  * 仮想マシンの汎用レジスタの値を汎用レジスタにコピー
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  VMCMD_RESULT
@@ -291,24 +237,6 @@ static VMCMD_RESULT EvCmdLoadRegReg( VMHANDLE *core, void *wk )
   r1 = VMGetU8( core );
   r2 = VMGetU8( core );
   core->vm_register[r1] = core->vm_register[r2];
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * アドレスの中身にアドレスの中身を代入
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdLoadAdrsAdrs( VMHANDLE *core, void *wk )
-{
-  VM_CODE * adr1;
-  VM_CODE * adr2;
-
-  adr1 = (VM_CODE *)VMGetU32( core );
-  adr2 = (VM_CODE *)VMGetU32( core );
-  *adr1 = * adr2;
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -371,74 +299,6 @@ static VMCMD_RESULT EvCmdCmpRegValue( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 仮想マシンの汎用レジスタとアドレスの中身を比較
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdCmpRegAdrs( VMHANDLE *core, void *wk )
-{
-  u8  r1, r2;
-
-  r1 = core->vm_register[ VMGetU8(core) ];
-  r2 = *(VM_CODE *)VMGetU32(core);
-  core->cmp_flag = EvCmdCmpMain( r1, r2 );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * アドレスの中身と仮想マシンの汎用レジスタを比較
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdCmpAdrsReg( VMHANDLE *core, void *wk )
-{
-  u8  r1, r2;
-
-  r1 = *(VM_CODE *)VMGetU32(core);
-  r2 = core->vm_register[ VMGetU8(core) ];
-  core->cmp_flag = EvCmdCmpMain(r1,r2);
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * アドレスの中身と値を比較
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdCmpAdrsValue(VMHANDLE * core, void *wk)
-{
-  u8 r1,r2;
-
-  r1 = *(VM_CODE *)VMGetU32(core);
-  r2 = VMGetU8(core);
-  core->cmp_flag = EvCmdCmpMain(r1,r2);
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * アドレスの中身とアドレスの中身を比較
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdCmpAdrsAdrs(VMHANDLE * core, void *wk)
-{
-  u8 r1,r2;
-
-  r1 = *(VM_CODE *)VMGetU32(core);
-  r2 = *(VM_CODE *)VMGetU32(core);
-  core->cmp_flag = EvCmdCmpMain(r1,r2);
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
  * ワークと値を比較
  *
  * @param  core    仮想マシン制御構造体へのポインタ
@@ -490,6 +350,9 @@ static VMCMD_RESULT EvCmdPushValue( VMHANDLE *core, void *wk )
 }
 
 //--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：ワークの値をプッシュ
+ */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdPushWork( VMHANDLE *core, void *wk )
 {
@@ -500,6 +363,9 @@ static VMCMD_RESULT EvCmdPushWork( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 //--------------------------------------------------------------
+/**
+ * @brief  スクリプトコマンド：スタックポップ→ワーク
+ */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdPopWork( VMHANDLE *core, void *wk )
 {
@@ -514,6 +380,9 @@ static VMCMD_RESULT EvCmdPopWork( VMHANDLE *core, void *wk )
 }
 
 //--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：スタックポップ
+ */
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdPop( VMHANDLE *core, void *wk )
 {
@@ -785,45 +654,6 @@ static VMCMD_RESULT EvCmdIfCall( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
-//--------------------------------------------------------------
-/**
- * 話し掛け対象OBJID比較ジャンプ
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdObjIDJump( VMHANDLE *core, void *wk )
-{
-  GF_ASSERT( 0 && "WB未対応\n" );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * 話し掛け対象BG比較ジャンプ
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdBgIDJump( VMHANDLE *core, void *wk )
-{
-  GF_ASSERT( 0 && "WB未対応\n" );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * イベント起動時の主人公の向き比較ジャンプ
- * (現在の向きではないので注意！)
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdPlayerDirJump( VMHANDLE *core, void *wk )
-{
-  GF_ASSERT( 0 && "WB未対応\n" );
-  return VMCMD_RESULT_CONTINUE;
-}
 
 //======================================================================
 //  イベントワーク関連
@@ -1222,216 +1052,25 @@ static u16 getZoneID( SCRCMD_WORK *work )
 //======================================================================
 //  data
 //======================================================================
+
+#define INIT_CMD  const VMCMD_FUNC ScriptCmdTbl[] = {
+#define DEF_CMD( symfunc, symname )   symfunc,
+#define NO_CMD()                        NULL,
+#define END_CMD   };
+
 //--------------------------------------------------------------
-///  スクリプトコマンドテーブル
+/**
+ * スクリプトコマンドテーブル
+ *
+ * @val ScriptCmdTbl
+ *
+ * @note
+ * scrcmd_table.cdatの中にあるINIT_CMD/DEF_CMD/NO_CMD/END_CMDが
+ * 展開されることで、スクリプトコマンド定義テーブルScriptCmdTblが
+ * 定義される。
+ */
 //--------------------------------------------------------------
-const VMCMD_FUNC ScriptCmdTbl[] = {
-  //基本システム命令
-  EvCmdNop,        
-  EvCmdDummy,        
-  EvCmdEnd,
-  EvCmdTimeWait,
-  EvCmdGlobalCall,
-  EvCmdRet,
-  
-  EvCmdPushValue,
-  EvCmdPushWork,
-  EvCmdPopWork,
-  EvCmdPop,
-  EvCmdCalcAdd,                       //10
-  EvCmdCalcSub,
-  EvCmdCalcMul,
-  EvCmdCalcDiv,
-  EvCmdPushFlagValue,
-  EvCmdCmpStack,
-
-  //データロード・ストア関連
-  EvCmdLoadRegValue,
-  EvCmdLoadRegWData,
-  EvCmdLoadRegAdrs,
-  EvCmdLoadAdrsValue,
-  EvCmdLoadAdrsReg,                 //20
-  EvCmdLoadRegReg,
-  EvCmdLoadAdrsAdrs,
-  
-  //比較命令
-  EvCmdCmpRegReg,
-  EvCmdCmpRegValue,
-  EvCmdCmpRegAdrs,    
-  EvCmdCmpAdrsReg,    
-  EvCmdCmpAdrsValue,
-  EvCmdCmpAdrsAdrs,
-  EvCmdCmpWkValue,
-  EvCmdCmpWkWk,//30
-  
-  //仮想マシン関連
-  EvCmdVMMachineAdd,
-  EvCmdChangeCommonScr,
-  EvCmdChangeLocalScr,
-  
-  //分岐命令
-  EvCmdJump,
-  EvCmdIfJump,
-  EvCmdIfCall,
-  EvCmdObjIDJump,
-  EvCmdBgIDJump,
-  EvCmdPlayerDirJump,
-    
-  //イベントワーク関連
-  EvCmdFlagSet,                     //40
-  EvCmdFlagReset,
-  EvCmdFlagCheck,
-  EvCmdFlagCheckWk,
-  EvCmdFlagSetWk,
-  
-  //ワーク操作関連
-  EvCmdWkAdd,
-  EvCmdWkSub,
-  EvCmdLoadWkValue,
-  EvCmdLoadWkWk,
-  EvCmdLoadWkWkValue,
-  
-  //フィールドイベント共通処理
-  EvCmdCommonProcFieldEventStart,   //50
-  EvCmdCommonProcFieldEventEnd,
-
-  //キー入力関連
-  EvCmdABKeyWait,
-  EvCmdLastKeyWait,
-  
-  //会話ウィンドウ
-  EvCmdTalkMsg,
-  EvCmdTalkMsgAllPut,
-  EvCmdTalkWinOpen,
-  EvCmdTalkWinClose,
-  
-  //吹き出しウィンドウ
-  EvCmdBalloonWinWrite,
-  EvCmdBalloonWinTalkWrite,
-  EvCmdBalloonWinClose,           //60
-  
-  //動作モデル
-  EvCmdObjAnime,
-  EvCmdObjAnimeWait,
-  EvCmdMoveCodeGet,
-  EvCmdObjPosGet,
-  EvCmdPlayerPosGet,
-  EvCmdObjAdd,
-  EvCmdObjDel,
-  EvCmdObjAddEvent,
-  EvCmdObjDelEvent,
-  EvCmdObjPosChange,            //70
-  
-  //動作モデル　イベント関連
-  EvCmdObjTurn,
-  
-  //はい、いいえ　処理
-  EvCmdYesNoWin,
-  
-  //WORDSET関連
-  EvCmdPlayerName,
-  EvCmdItemName,
-  EvCmdItemWazaName,
-  EvCmdWazaName,
-  EvCmdPocketName,
-  
-  //scrcmd_trainer.c 視線トレーナー関連
-  EvCmdEyeTrainerMoveSet,
-  EvCmdEyeTrainerMoveSingle,
-  EvCmdEyeTrainerMoveDouble,            //80
-  EvCmdEyeTrainerTypeGet,
-  EvCmdEyeTrainerIdGet,
-  
-  //scrcmd_trainer.c トレーナーバトル関連
-  EvCmdTrainerIdGet,
-  EvCmdTrainerBattleSet,
-  EvCmdTrainerMultiBattleSet,
-  EvCmdTrainerMessageSet,
-  EvCmdTrainerTalkTypeGet,
-  EvCmdRevengeTrainerTalkTypeGet,
-  EvCmdTrainerTypeGet,                
-  EvCmdTrainerBgmSet,             //90
-  EvCmdTrainerLose,
-  EvCmdTrainerLoseCheck,
-  EvCmdSeacretPokeRetryCheck,
-  EvCmdHaifuPokeRetryCheck,
-  EvCmd2vs2BattleCheck,
-  EvCmdDebugBattleSet,
-  EvCmdBattleResultGet,
-  
-  //トレーナーフラグ関連
-  EvCmdTrainerFlagSet,
-  EvCmdTrainerFlagReset,
-  EvCmdTrainerFlagCheck,                    //100
-  
-  //BGM
-  EvCmdBgmPlay,
-  EvCmdBgmStop,
-  EvCmdBgmPlayerPause,
-  EvCmdBgmPlayCheck,
-  EvCmdBgmFadeOut,
-  EvCmdBgmFadeIn,
-  EvCmdBgmNowMapPlay,
-  
-  //SE
-  EvCmdSePlay,  
-  EvCmdSeStop,                      
-  EvCmdSeWait,                      //110
-  
-  //ME
-  EvCmdMePlay,
-  EvCmdMeWait,
-  
-  //メニュー
-  EvCmdBmpMenuInit,
-  EvCmdBmpMenuInitEx,
-  EvCmdBmpMenuMakeList,
-  EvCmdBmpMenuStart,
-  
-  //画面フェード
-  EvCmdDispFadeStart,
-  EvCmdDispFadeCheck,
-  
-  //アイテム関連
-  EvCmdAddItem,                       
-  EvCmdSubItem,                       //120
-  EvCmdAddItemChk,
-  EvCmdCheckItem,
-  EvCmdGetItemNum,
-  EvCmdWazaMachineItemNoCheck,
-  EvCmdGetPocketID,
-  
-  //ミュージカル関連
-  EvCmdMusicalCall,
-  
-  //マップ遷移
-  EvCmdMapChangeBySandStream,
-  EvCmdMapChange,
-
-  //ジムギミック関連
-  EvCmdGymElec_Init,
-  EvCmdGymElec_PushSw,                //130
-  EvCmdGymNormal_Init,
-  EvCmdGymNormal_Unrock,
-  EvCmdGymNormal_CheckUnrock,
-  EvCmdGymNormal_MoveWall,
-
-  //その他
-  EvCmdChangeLangID,
-  EvCmdGetRand,
-  EvCmdGetNowMsgArcID,
-  EvCmdCheckTemotiPokerus,
-  EvCmdGetTimeZone,
-  EvCmdGetTrainerCardRank,
-  EvCmdPokemonRecover,
-  EvCmdPokecenRecoverAnime,
-  EvCmdGetLangID,
-  EvCmdCheckPokemonHP,      //ポケモン関連：手持ちHPのチェック
-
-  //鳴き声
-  EvCmdVoicePlay,
-  EvCmdVoiceWait,
-};
+#include "scrcmd_table.cdat"
 
 
 //--------------------------------------------------------------

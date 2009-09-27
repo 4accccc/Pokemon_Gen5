@@ -14,8 +14,10 @@
 //データを自然な境界にアラインするかの設定
   .option alignment off
 
+//スクリプトコマンドテーブル用マクロの定義
+  .include "scrcmd_table/def_table_macro.h"
 //スクリプト定義テーブル
-  .include "scrcmd_table/def_cmd.h"
+  .include "../../../prog/src/field/scrcmd_table.cdat"
 
 //======================================================================
 // イベントデータ関連
