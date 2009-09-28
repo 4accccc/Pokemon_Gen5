@@ -533,6 +533,15 @@ GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
 		CONNECTDATA_SetNextLocation(cnct, &mcw->loc_req);
 	}
   mcw->exit_type = CONNECTDATA_GetExitType(cnct);
+
+  {
+    const LOCATION * ent = GAMEDATA_GetEntranceLocation(gamedata);
+    if (ZONEDATA_IsFieldMatrixID(ent->zone_id) == TRUE
+        && ZONEDATA_IsFieldMatrixID(mcw->loc_req.zone_id) == FALSE)
+    {
+      GAMEDATA_SetEscapeLocation( gamedata, ent );
+    }
+  }
 	return event;
 }
 
