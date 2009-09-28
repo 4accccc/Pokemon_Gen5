@@ -110,17 +110,17 @@ enum {
 };
 
 // ワザ覚えデータコード：終端チェック
-static BOOL POKEPER_WAZAOBOE_IsEndCode( POKEPER_WAZAOBOE_CODE code )
+static inline BOOL POKEPER_WAZAOBOE_IsEndCode( POKEPER_WAZAOBOE_CODE code )
 {
   return code == POKEPER_WAZAOBOE_ENDCODE;
 }
 // ワザ覚えデータコード：レベル取得
-static u8 POKEPER_WAZAOBOE_GetLevel( POKEPER_WAZAOBOE_CODE code )
+static inline u8 POKEPER_WAZAOBOE_GetLevel( POKEPER_WAZAOBOE_CODE code )
 {
   return (code >> 9) & 0x7f;
 }
 // ワザ覚えデータコード：ワザID取得
-static u16 POKEPER_WAZAOBOE_GetWazaID( POKEPER_WAZAOBOE_CODE code )
+static inline u16 POKEPER_WAZAOBOE_GetWazaID( POKEPER_WAZAOBOE_CODE code )
 {
   return code & 0x1ff;
 }
