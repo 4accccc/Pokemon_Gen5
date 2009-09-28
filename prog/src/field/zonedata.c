@@ -12,6 +12,7 @@
 #include "arc/arc_def.h"
 #include "arc/fieldmap/zonedata.naix"
 #include "arc/fieldmap/zone_id.h"
+#include "arc/fieldmap/map_matrix.naix"
 
 #include "field/field_const.h"
 
@@ -376,6 +377,20 @@ BOOL ZONEDATA_IsDungeon(u16 zone_id)
     return TRUE;
   } 
   return FALSE;
+}
+
+//------------------------------------------------------------------
+/** 
+ * @brief 指定ゾーンがフィールドマップのマトリックス指定かどうかを判定
+ * @param  zone_id 判定するゾーンのID
+ * @return  BOOL TRUEのとき、フィールドマップのマトリックス指定
+ */
+//------------------------------------------------------------------
+BOOL ZONEDATA_IsFieldMatrixID(u16 zone_id)
+{
+	ZONEDATA zdbuf;
+	getZoneData(&zdbuf, zone_id);
+	return (zdbuf.matrix_id == NARC_map_matrix_wb_mat_bin);
 }
 
 
