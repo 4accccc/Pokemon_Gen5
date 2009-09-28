@@ -212,6 +212,32 @@ BOOL FIELD_COMM_ACTOR_CTRL_SearchGridPos(
 
 //--------------------------------------------------------------
 /**
+ * フィールド通信用アクター　アクターが使用している動作モデル取得
+ * @param act_ctrl FIELD_COMM_ACTOR_CTRL
+ * @param id 追加時に指定した管理ID
+ * @retval MMDL MMDL*
+ */
+//--------------------------------------------------------------
+MMDL * FIELD_COMM_ACTOR_CTRL_GetMMdl(
+    FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 id )
+{
+  int i;
+  FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
+  
+  for( i = 0; i < act_ctrl->max; i++, act++ ){
+    if( act->fmmdl != NULL ){
+      if( act->id == id ){
+        return( act->fmmdl );
+      }
+    }
+  }
+  
+  GF_ASSERT( 0 && "ERROR COMM ACTOR UNKNOW ID\n" );
+  return( NULL );
+}
+
+//--------------------------------------------------------------
+/**
  * フィールド通信用アクター　アクター削除処理
  * @param act FIELD_COMM_ACTOR
  * @retval nothing
