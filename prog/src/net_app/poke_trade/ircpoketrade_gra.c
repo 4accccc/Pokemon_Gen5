@@ -697,6 +697,8 @@ static int _Line2RingLineIconGet(IRC_POKEMON_TRADE* pWork,int line)
 
 //  ret = pWork->ringLineNo + line;
   ret = line % _LING_LINENO_MAX;
+
+  OS_TPrintf("_Line2RingLineIconGet %d\n",ret);
   return ret;
 }
 

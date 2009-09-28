@@ -197,6 +197,9 @@ void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(IRC_POKEMON_TRADE* pWork)
 static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
 {
   if(pWork->anmCount==0){
+
+
+
     _setNextAnim(pWork, _TRADE04_SCENE);
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade4);
   }
@@ -208,19 +211,154 @@ static void _changeDemo_ModelTrade4(IRC_POKEMON_TRADE* pWork)
 {
   if(pWork->anmCount==0){
     _setNextAnim(pWork, _TRADE05_SCENE);
+
+    
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade5);
   }
 }
 static void _changeDemo_ModelTrade5(IRC_POKEMON_TRADE* pWork)
 {
   if(pWork->anmCount==0){
+
+
     _setNextAnim(pWork, _TRADE06_SCENE);
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade6);
   }
 }
+
 static void _changeDemo_ModelTrade6(IRC_POKEMON_TRADE* pWork)
 {
   if(pWork->anmCount==0){
+    _setNextAnim(pWork, _TRADE07_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade7);
+  }
+}
+static void _changeDemo_ModelTrade7(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    IRC_POKETRADEDEMO_RemoveModel( pWork);
+    IRC_POKETRADEDEMO_SetModel( pWork, TRADE_TRADE_OBJECT);
+    _setNextAnim(pWork, _TRADE08_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade8);
+  }
+}
+static void _changeDemo_ModelTrade8(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    _setNextAnim(pWork, _TRADE09_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade9);
+  }
+}
+static void _changeDemo_ModelTrade9(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    _setNextAnim(pWork, _TRADE10_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade10);
+  }
+}
+static void _changeDemo_ModelTrade10(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    _setNextAnim(pWork, _TRADE11_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade11);
+  }
+}
+static void _changeDemo_ModelTrade11(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    _setNextAnim(pWork, _TRADE12_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade12);
+  }
+}
+static void _changeDemo_ModelTrade12(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    _setNextAnim(pWork, _TRADE13_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade13);
+  }
+}
+static void _changeDemo_ModelTrade13(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    _setNextAnim(pWork, _TRADE14_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade14);
+  }
+}
+static void _changeDemo_ModelTrade14(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    _setNextAnim(pWork, _TRADE15_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade15);
+  }
+}
+static void _changeDemo_ModelTrade15(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    IRC_POKETRADEDEMO_RemoveModel( pWork);
+    IRC_POKETRADEDEMO_SetModel( pWork, TRADE_RETURN_OBJECT);
+
+    _setNextAnim(pWork, _TRADE16_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade16);
+  }
+}
+static void _changeDemo_ModelTrade16(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    _setNextAnim(pWork, _TRADE17_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade17);
+  }
+}
+static void _changeDemo_ModelTrade17(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    IRC_POKETRADEDEMO_RemoveModel( pWork);
+    IRC_POKETRADEDEMO_SetModel( pWork, TRADE_SPLASH_OBJECT);
+    _setNextAnim(pWork, _TRADE18_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade18);
+  }
+}
+static void _changeDemo_ModelTrade18(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    _setNextAnim(pWork, _TRADE19_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade19);
+  }
+}
+static void _changeDemo_ModelTrade19(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    _setNextAnim(pWork, _TRADE20_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade20);
+  }
+}
+static void _changeDemo_ModelTrade20(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    _setNextAnim(pWork, _TRADE21_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade21);
+  }
+}
+static void _changeDemo_ModelTrade21(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    _setNextAnim(pWork, _TRADE22_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);
+  }
+}
+static void _changeDemo_ModelTrade22(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+    _setNextAnim(pWork, _TRADE23_SCENE);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade23);
+  }
+}
+static void _changeDemo_ModelTrade23(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->anmCount==0){
+
+    IRC_POKETRADEDEMO_RemoveModel( pWork);
+    IRC_POKETRADEDEMO_SetModel( pWork, TRADE_END_OBJECT);
+
     _setNextAnim(pWork, _TRADE24_SCENE);
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade24);
   }

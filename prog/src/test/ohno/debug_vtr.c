@@ -522,7 +522,7 @@ static GFL_PROC_RESULT VTRProc_Init( GFL_PROC * proc, int * seq, void * pwk, voi
 
 		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 
-		pWork->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+		pWork->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 																			GFL_FONT_LOADTYPE_FILE, FALSE, pWork->heapID );
 
 		pWork->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_ohno_dat, pWork->heapID );

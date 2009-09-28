@@ -1109,7 +1109,7 @@ static void _modeInit(C_GEAR_WORK* pWork)
 
   pWork->pWordSet    = WORDSET_Create( pWork->heapID );
   pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_invasion_dat, pWork->heapID );
-  pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
+  pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
 
 	
 	pWork->MyInfoWin = GFL_BMPWIN_Create(GEAR_BUTTON_FRAME, 3, 0x15, 0x1a, 2,

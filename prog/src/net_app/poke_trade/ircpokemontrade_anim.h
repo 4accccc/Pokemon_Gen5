@@ -11,7 +11,10 @@
 
 
 // ゆっくりで調整してからはやめる
-#define ANIM_SPEED  (FX32_ONE / 8)
+#define ALL_SLOW_SPEED_NUM (8)    ///< 八倍おそい
+
+
+#define ANIM_SPEED  (FX32_ONE / ALL_SLOW_SPEED_NUM)
 
 
 #define _TRADE01_ANMCOUNT (30)   //交換選択
@@ -29,7 +32,7 @@
 #define _TRADE13_ANMCOUNT (30)   //上下に移動
 #define _TRADE14_ANMCOUNT (30)   //ホワイトアウト
 #define _TRADE15_ANMCOUNT (30)   //ボール振ってくる
-#define _TRADE16_ANMCOUNT (30)   //落ちてる最中
+#define _TRADE16_ANMCOUNT (90)   //落ちてる最中
 #define _TRADE17_ANMCOUNT (30)   //ぶつかり波紋
 #define _TRADE18_ANMCOUNT (30)   //おちたエフェクト
 #define _TRADE19_ANMCOUNT (30)   //はもんひろがる

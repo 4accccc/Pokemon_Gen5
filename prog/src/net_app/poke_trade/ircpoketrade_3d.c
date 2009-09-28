@@ -146,14 +146,10 @@ static const GFL_G3D_UTIL_RES res_table_reel[] =
 
 static const GFL_G3D_UTIL_RES res_table_trade1[] =
 {
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade_nsbmd,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade2_2_nsbmd,    GFL_G3D_UTIL_RESARC },
-
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade_nsbca,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade2_2_nsbca,    GFL_G3D_UTIL_RESARC },
-
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade_nsbta,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade2_2_nsbta,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade_ball_nsbmd,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade_01_nsbmd,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade_01_nsbca,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade_01_nsbta,    GFL_G3D_UTIL_RESARC },
 };
 
 static const GFL_G3D_UTIL_RES res_table_trade_trade[] =
@@ -190,9 +186,15 @@ static const GFL_G3D_UTIL_ANM anm_table_trade1[] =
   { 3, 0 },
 };
 
+static const GFL_G3D_UTIL_ANM anm_table_trade_nomal[] =
+{
+  { 1, 0 },
+  { 2, 0 },
+};
+
 static const GFL_G3D_UTIL_ANM anm_table_trade_splash[] =
 {
-  { 2, 0 },
+  { 1, 0 },
 };
 
 static const GFL_G3D_UTIL_ANM anm_table_trade2[] =
@@ -217,18 +219,18 @@ static const GFL_G3D_UTIL_OBJ obj_table_reel[] =
 static const GFL_G3D_UTIL_OBJ obj_table_trade1[] =
 {
   {
-    0,                         // モデルリソースID
+    1,                         // モデルリソースID
     0,                         // モデルデータID(リソース内部INDEX)
-    0,                         // テクスチャリソースID
+    1,                         // テクスチャリソースID
     anm_table_trade1,           // アニメテーブル(複数指定のため)
     NELEMS(anm_table_trade1),   // アニメリソース数
   },
   {
-    1,                         // モデルリソースID
+    0,                         // モデルリソースID
     0,                         // モデルデータID(リソース内部INDEX)
-    1,                         // テクスチャリソースID
-    anm_table_trade2,           // アニメテーブル(複数指定のため)
-    NELEMS(anm_table_trade2),   // アニメリソース数
+    0,                         // テクスチャリソースID
+    NULL,           // アニメテーブル(複数指定のため)
+    0,   // アニメリソース数
   },
 };
 
@@ -238,8 +240,8 @@ static const GFL_G3D_UTIL_OBJ obj_table_trade_normal[] =
     0,                         // モデルリソースID
     0,                         // モデルデータID(リソース内部INDEX)
     0,                         // テクスチャリソースID
-    anm_table_trade1,           // アニメテーブル(複数指定のため)
-    NELEMS(anm_table_trade1),   // アニメリソース数
+    anm_table_trade_nomal,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_table_trade_nomal),   // アニメリソース数
   },
 };
 
@@ -455,6 +457,11 @@ static const MODEL3D_SET_FUNCS modelset[] =
   { _cameraSetReel,_moveSetReel },
   { _cameraSetTrade01,_moveSetTrade01 },
   { _cameraSetTrade01,_moveSetTrade01 },
+  { _cameraSetTrade01,_moveSetTrade01 },
+  { _cameraSetTrade01,_moveSetTrade01 },
+  { _cameraSetTrade01,_moveSetTrade01 },
+  { _cameraSetTrade01,_moveSetTrade01 },
+  { _cameraSetTrade01,_moveSetTrade01 },
 };
 
 
@@ -625,6 +632,7 @@ static void Finalize( IRC_POKEMON_TRADE* pWork )
     for( i=0; i<pWork->objCount; i++ )
     {
       GFL_G3D_UTIL_DelUnit( pWork->g3dUtil, pWork->unitIndex+i );
+      break;
     }
   }
 

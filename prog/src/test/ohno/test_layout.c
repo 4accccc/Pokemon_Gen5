@@ -21,7 +21,7 @@
 #include "system/bmp_winframe.h"
 #include "message.naix"
 #include "msg/msg_d_field.h"
-#include "font/font.naix" //NARC_font_large_nftr
+#include "font/font.naix" //NARC_font_large_gftr
 
 //======================================================================
 //	struct
@@ -542,7 +542,7 @@ void LayoutDebugMenu_Create( DEBUG_FLDMENU *d_menu )
 		
 		d_menu->strbuf = GFL_STR_CreateBuffer( 1024, d_menu->heapID );
 
-    d_menu->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr ,
+    d_menu->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr ,
                                           GFL_FONT_LOADTYPE_FILE , FALSE , d_menu->heapID );
     
 //		d_menu->fontHandle = GFL_FONT_Create( ARCID_D_TAYA,

@@ -259,7 +259,7 @@ static GFL_PROC_RESULT DebugOhnoMainProcInit( GFL_PROC * proc, int * seq, void *
 
 		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 
-		wk->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+		wk->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
 //		PRINTSYS_Init( wk->heapID );

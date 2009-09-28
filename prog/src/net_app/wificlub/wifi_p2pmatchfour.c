@@ -1475,7 +1475,7 @@ static void WFP2PMF_GraphicMsgInit( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT* cp
 
 
 
-	p_draw->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , heapID );
+	p_draw->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , heapID );
 	p_draw->printQue = PRINTSYS_QUE_Create( heapID );
 	PRINT_UTIL_Setup( &p_draw->msgwinPrintUtil , p_draw->msgwin );
 	PRINT_UTIL_Setup( &p_draw->titlewinPrintUtil , p_draw->titlewin );
