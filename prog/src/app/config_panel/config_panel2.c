@@ -278,7 +278,7 @@ typedef enum
 #define INFOWND_H		(4)
 
 //タイトル文字
-#define TITLEWND_X	(1)
+#define TITLEWND_X	(0)
 #define TITLEWND_Y	(0)
 #define TITLEWND_W	(16)
 #define TITLEWND_H	(3)
@@ -1349,7 +1349,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID )
 {	
 	static const GFL_DISP_VRAM sc_vramSetTable =
 	{
-		GX_VRAM_BG_128_A,					// メイン2DエンジンのBG
+		GX_VRAM_BG_128_A,						// メイン2DエンジンのBG
 		GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
 		GX_VRAM_SUB_BG_128_C,				// サブ2DエンジンのBG
 		GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
@@ -1538,7 +1538,6 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
 	}
 	GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_DECIDE_M), VISIBLE_OFF );	
 
-	GFL_BG_FillCharacter( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_BAR_M), 0, 1,  0 );
 	GFL_BG_FillCharacter( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), 0, 1,  0 );
 	GFL_BG_FillCharacter( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_DECIDE_M), 0, 1,  0 );
 
@@ -1652,7 +1651,6 @@ static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk )
 	//リソース破棄
 	{	
 		GFL_HEAP_FreeMemory( p_wk->ncg_buf );
-		GFL_BG_FillCharacterRelease( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_BAR_M), 1, 0 );
 		GFL_BG_FillCharacterRelease( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), 1, 0 );
 		GFL_BG_FillCharacterRelease( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_DECIDE_M), 1, 0 );
 	}
