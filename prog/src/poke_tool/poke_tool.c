@@ -974,7 +974,7 @@ void  PPP_SetWazaDefault( POKEMON_PASO_PARAM *ppp )
   }
 
   i = 0;
-  while( POKEPER_WAZAOBOE_IsEndCode(wot[i]) )
+  while( !POKEPER_WAZAOBOE_IsEndCode(wot[i]) )
   {
     if( POKEPER_WAZAOBOE_GetLevel(wot[i]) <= level )
     {
