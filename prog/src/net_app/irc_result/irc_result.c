@@ -1424,11 +1424,11 @@ static void MSG_Init( MSG_WORK *p_wk, MSG_FONT_TYPE font, HEAPID heapID )
 	{	
 	case MSG_FONT_TYPE_LARGE:
 		p_wk->p_font	= GFL_FONT_Create( ARCID_FONT,
-				NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+				NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 		break;
 	case MSG_FONT_TYPE_SMALL:
 		p_wk->p_font	= GFL_FONT_Create( ARCID_FONT,
-				NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+				NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 		break;
 	default:
 		GF_ASSERT_MSG( 0, "MSGFONT_ERRO %d", font );
@@ -2715,7 +2715,7 @@ static void DEBUGPRINT_Init( u8 frm, BOOL is_now_save, HEAPID heapID )
 
 	//デバッグプリント用フォント
 	p_wk->p_font	= GFL_FONT_Create( ARCID_FONT,
-				NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );	
+				NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );	
 
 	//退避エリアをNetEffから取得
 	NetErr_GetTempArea( &p_wk->p_char_temp_area, &p_wk->p_scrn_temp_area, &p_wk->p_pltt_temp_area );

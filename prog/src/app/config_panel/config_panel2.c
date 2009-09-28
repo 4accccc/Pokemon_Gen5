@@ -244,6 +244,7 @@ typedef enum
 {
 	UI_INPUT_PARAM_TRGPOS,
 	UI_INPUT_PARAM_SLIDEPOS,
+	UI_INPUT_PARAM_SLIDENOW,
 } UI_INPUT_PARAM;
 
 
@@ -279,7 +280,7 @@ typedef enum
 //タイトル文字
 #define TITLEWND_X	(1)
 #define TITLEWND_Y	(0)
-#define TITLEWND_W	(14)
+#define TITLEWND_W	(16)
 #define TITLEWND_H	(3)
 
 //確認
@@ -360,6 +361,8 @@ typedef struct
 	GFL_BMPWIN	*p_bmpwin[BMPWINID_MAX];
 	u16										pltfade_cnt[2];
 	GXRgb									trans_color[2];
+	void									*ncg_buf;
+	NNSG2dCharacterData		*ncg_data;
 } GRAPHIC_BG_WORK;
 //-------------------------------------
 ///	OBJワーク
@@ -766,17 +769,20 @@ static const struct
 	//おそい
 	{	
 		mes_config_sm01_00,
-		15,5,5,2
+		//15,5,5,2
+		14,5,6,2
 	},
 	//普通
 	{	
 		mes_config_sm01_01,
-		21,5,5,2
+		//21,5,5,2
+		20,5,6,2
 	},
 	//早い
 	{	
 		mes_config_sm01_02,
-		27,5,5,2
+		26,5,6,2
+		//27,5,5,2	//本来の値※１
 	},
 	//みる
 	{	
@@ -985,7 +991,7 @@ static const struct
 		CONFIG_LIST_MSGSPEED,
 		MSGSPEED_NORMAL,
 		{	
-			21*8,0
+			21*8-3,0
 		},
 		{	
 			20*8,0,6*8,24,
@@ -996,7 +1002,7 @@ static const struct
 		CONFIG_LIST_MSGSPEED,
 		MSGSPEED_FAST,
 		{	
-			27*8,0
+			27*8-5,0
 		},
 		{	
 			26*8,0,6*8,24,
@@ -1568,6 +1574,10 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
 		GFL_ARCHDL_UTIL_TransVramPaletteEx( p_handle, NARC_config_gra_est_uegamen_01_NCLR,
 				PALTYPE_MAIN_BG, 4*0x20, CONFIG_BG_PAL_M_15*0x20, 0x20, heapID );
 
+		//TITLE
+		p_wk->ncg_buf = GFL_ARCHDL_UTIL_LoadBGCharacter( p_handle ,
+			NARC_config_gra_ue_bar_window_NCGR, FALSE, &p_wk->ncg_data, heapID );	
+
 
 		//サブ画面-----------------------------------
 		//PLT
@@ -1610,8 +1620,11 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
 		p_wk->p_bmpwin[BMPWINID_TITLE]	= GFL_BMPWIN_Create( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_BAR_M),
 				TITLEWND_X, TITLEWND_Y, TITLEWND_W, TITLEWND_H, 
 				CONFIG_BG_PAL_M_08, GFL_BMP_CHRAREA_GET_B );
+
 	}
 	GRAPHIC_BG_PrintBmpwin( p_wk );
+
+	GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), FALSE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1638,6 +1651,7 @@ static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk )
 
 	//リソース破棄
 	{	
+		GFL_HEAP_FreeMemory( p_wk->ncg_buf );
 		GFL_BG_FillCharacterRelease( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_BAR_M), 1, 0 );
 		GFL_BG_FillCharacterRelease( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), 1, 0 );
 		GFL_BG_FillCharacterRelease( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_DECIDE_M), 1, 0 );
@@ -1702,6 +1716,7 @@ static void GRAPHIC_BG_PrintBmpwin( GRAPHIC_BG_WORK *p_wk )
 		GFL_FONT	*p_font;
 		STRBUF		*p_strbuf;
 		GFL_MSGDATA	*p_msg;
+		s32	x;
 
 		p_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, 
 				GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_CONFIG );
@@ -1709,13 +1724,30 @@ static void GRAPHIC_BG_PrintBmpwin( GRAPHIC_BG_WORK *p_wk )
 		p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
 				NARC_message_config_dat, HEAPID_CONFIG );
 
+
 		for( i = 0; i < BMPWINID_CONFIG_MENU_MAX; i++ )
 		{	
+			x	= 0;
+			//離しの速さだけぎゅうぎゅうなので、右のらんから外れているので
+			//左１キャラ多く作り※１、右に修正しています
+			switch(i )
+			{	
+			case CONFIG_ITEM_MSG_SLOW:
+				x = 7;
+				break;
+			case CONFIG_ITEM_MSG_NORMAL:
+				x = 4;
+				break;
+			case CONFIG_ITEM_MSG_FAST:
+				x = 2;
+				break;
+			}
+
 			p_strbuf	= GFL_MSG_CreateString( p_msg, sc_config_menu_bmpwin_data[i].strID );
 
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0 );
 
-			PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), 0, 0, p_strbuf, p_font );
+			PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[i]), x, 0, p_strbuf, p_font );
 
 			GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_bmpwin[i] );
 
@@ -1723,9 +1755,23 @@ static void GRAPHIC_BG_PrintBmpwin( GRAPHIC_BG_WORK *p_wk )
 		}
 
 		//タイトル
+		//BMPWINに絵のデータ転送
+		{	
+			u32 srcAdr, dstAdr;
+			srcAdr	= (u32)(p_wk->ncg_data->pRawData);
+			dstAdr	= (u32)(GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( p_wk->p_bmpwin[BMPWINID_TITLE] )));
+			GFL_STD_MemCopy32( (void*)srcAdr, (void*)dstAdr, TITLEWND_W*TITLEWND_H*0x20 );
+		}
+
+		//文字表示
 		p_strbuf	= GFL_MSG_CreateString( p_msg, mes_config_title );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[BMPWINID_TITLE]), 1 );
-		PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[BMPWINID_TITLE]), 0, 4, p_strbuf, p_font, PRINTSYS_LSB_Make(0xf,0xE,1) );
+		{	
+			//センター処理
+			int x;
+			x	= GFL_BMPWIN_GetSizeX( p_wk->p_bmpwin[BMPWINID_TITLE] )*4;
+			x	-= PRINTSYS_GetStrWidth( p_strbuf, p_font, 0 )/2;
+			PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin[BMPWINID_TITLE]), x, 4, p_strbuf, p_font, PRINTSYS_LSB_Make(0xf,0xE,1) );
+		}
 		GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_bmpwin[BMPWINID_TITLE] );
 		GFL_STR_DeleteBuffer(p_strbuf);
 
@@ -1911,6 +1957,7 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 					CLSYS_DEFREND_MAIN,
 					heapID );
 	}
+
 
 }
 //----------------------------------------------------------------------------
@@ -2139,6 +2186,10 @@ static void UI_GetParam( const UI_WORK *cp_wk, UI_INPUT_PARAM param, GFL_POINT *
 
 		case UI_INPUT_PARAM_SLIDEPOS:
 			*p_data	= cp_wk->slide;
+			break;
+			
+		case UI_INPUT_PARAM_SLIDENOW:
+			*p_data	= cp_wk->slide_start;
 			break;
 		}
 	}
@@ -2525,6 +2576,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 	UI_INPUT input;
 	GFL_POINT trg_pos;
 	GFL_POINT slide_pos;
+	GFL_POINT slide_now;
 	int y, bar_top;
 	BOOL is_info_update	= FALSE;
 	BOOL is_bmpprint_decide;
@@ -2542,8 +2594,10 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 	{	
 	case UI_INPUT_SLIDE:		
 		UI_GetParam( cp_ui, UI_INPUT_PARAM_SLIDEPOS, &slide_pos );
+		UI_GetParam( cp_ui, UI_INPUT_PARAM_SLIDENOW, &slide_now );
 		UI_GetParam( cp_ui, UI_INPUT_PARAM_TRGPOS, &trg_pos );
-		if( SCROLL_TOP_BAR_Y < trg_pos.y && trg_pos.y < SCROLL_APP_BAR_Y )
+		if( SCROLL_TOP_BAR_Y < trg_pos.y && trg_pos.y < SCROLL_APP_BAR_Y 
+			 && SCROLL_TOP_BAR_Y < slide_now.y && slide_now.y < SCROLL_APP_BAR_Y )
 		{	
 			Scroll_Move( p_wk, -slide_pos.y );
 			Scroll_ChangePlt_Safe_Check( p_wk, -slide_pos.y );
@@ -2565,6 +2619,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 		/* fallthrough */
 
 	case UI_INPUT_TRG_UP:
+		GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), TRUE );
 		p_wk->cont_sync	= 0;
 		p_wk->select--;
 		p_wk->select	= MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
@@ -2590,6 +2645,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 		/* fallthrough */
 
 	case UI_INPUT_TRG_DOWN:
+		GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), TRUE );
 		p_wk->cont_sync	= 0;
 		p_wk->select++;
 		p_wk->select	= MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
@@ -2609,6 +2665,9 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 		UI_GetParam( cp_ui, UI_INPUT_PARAM_TRGPOS, &trg_pos );
 		if( SCROLL_TOP_BAR_Y < trg_pos.y && trg_pos.y < SCROLL_APP_BAR_Y )
 		{	
+
+			GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), TRUE );
+
 			//座標から選択への変換
 			p_wk->select	= Scroll_PosToList( p_wk, &trg_pos );
 			//項目のタッチ

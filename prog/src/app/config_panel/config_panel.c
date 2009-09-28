@@ -557,9 +557,9 @@ static int ConfigInitCommon(CONFIG_MAIN_DAT *wk)
     //2Dリソース取得
     Config2DGraInit(wk);
 
-    wk->hSysFont = GFL_FONT_Create(ARCID_FONT, NARC_font_small_nftr,
+    wk->hSysFont = GFL_FONT_Create(ARCID_FONT, NARC_font_small_gftr,
         GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID);
-    wk->hMsgFont = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr,
+    wk->hMsgFont = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr,
         GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID);
     //メッセージリソース取得
     wk->pMsg = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_MESSAGE,

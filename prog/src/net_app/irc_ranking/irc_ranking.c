@@ -1307,7 +1307,7 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAME_COMM_SYS_PTR	p_gamecomm
 		//作成
 		p_msg				= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
 				NARC_message_irc_ranking_dat, heapID );
-		p_font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, 
+		p_font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, 
 				GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 
 
@@ -1792,7 +1792,7 @@ static void SCROLL_Init( SCROLL_WORK *p_wk, u8 bar_frm_m, u8 font_frm_m, u8 bar_
 	p_wk->data_len		= data_len;
 
 	//ランキング用フォント作成
-	p_wk->p_font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, TRUE, heapID );
+	p_wk->p_font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, heapID );
 
 	//ランキング用メッセージマネージャ
 	p_wk->p_msg				= GFL_MSG_Create(

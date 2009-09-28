@@ -1213,7 +1213,7 @@ static void MSG_Init( MSG_WORK *p_wk, HEAPID heapID )
 	GFL_FONTSYS_Init();
 
 	p_wk->p_font	= GFL_FONT_Create( ARCID_FONT,
-    NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+    NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 
 	p_wk->p_print_que = PRINTSYS_QUE_Create( heapID );
 
