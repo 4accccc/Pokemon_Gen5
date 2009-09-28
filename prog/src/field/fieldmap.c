@@ -62,6 +62,7 @@
 #include "system/fld_wipe_3dobj.h"
 
 #include "fieldmap_func.h"
+#include "field/fieldmap_call.h"
 
 #include "arc/fieldmap/zone_id.h"
 #include "field/weather_no.h"
