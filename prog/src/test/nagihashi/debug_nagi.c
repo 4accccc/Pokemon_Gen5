@@ -337,10 +337,10 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 static const LIST_SETUP_TBL sc_list_data_home[]	=
 {	
 	{	
-		L"コンフィグ", LISTDATA_SEQ_PROC_CONFIG
+		L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
 	},
 	{	
-		L"相性診断画面へ", LISTDATA_SEQ_PROC_COMPATIBLE
+		L"コンフィグ", LISTDATA_SEQ_PROC_CONFIG
 	},
 	{	
 		L"GTS", LISTDATA_SEQ_PROC_GTS

@@ -1861,6 +1861,14 @@ static void SEQFUNC_StartGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 	u8 score				= p_wk->p_param->score;
 	MYSTATUS *p_you;
 	
+	if( p_wk->p_param->is_only_play )
+	{	
+
+		BACKOBJ_StartGather( &p_wk->backobj[BACKOBJ_SYS_MAIN], FALSE );
+		SEQ_Change( p_wk, SEQFUNC_DecideScore );
+		return;
+	}
+
 	if( p_wk->p_param->p_you_status )
 	{	
 

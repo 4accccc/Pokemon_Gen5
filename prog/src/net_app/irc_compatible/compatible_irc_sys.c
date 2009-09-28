@@ -96,6 +96,7 @@ struct _COMPATIBLE_IRC_SYS
 	BOOL	is_timing;
 	BOOL	is_init;
 
+	BOOL	is_only_play;
 	u8		mac_address[6];
 	u16		scene_send_cnt;
 
@@ -264,7 +265,7 @@ static const NetRecvFuncTable	sc_recv_tbl[]	=
  *	@return	システムハンドル
  */
 //-----------------------------------------------------------------------------
-COMPATIBLE_IRC_SYS * COMPATIBLE_IRC_CreateSystem( u32 irc_timeout, HEAPID heapID )
+COMPATIBLE_IRC_SYS * COMPATIBLE_IRC_CreateSystem( u32 irc_timeout, HEAPID heapID, BOOL is_only_play )
 {	
 	COMPATIBLE_IRC_SYS *p_sys;
 	//ワーク作成
@@ -274,6 +275,7 @@ COMPATIBLE_IRC_SYS * COMPATIBLE_IRC_CreateSystem( u32 irc_timeout, HEAPID heapID
 	p_sys->irc_timeout		= irc_timeout;
 	p_sys->heapID		= heapID;
 	p_sys->is_init	= FALSE;
+	p_sys->is_only_play	= is_only_play;
 
 	return p_sys;
 }
@@ -310,6 +312,11 @@ BOOL COMPATIBLE_IRC_InitWait( COMPATIBLE_IRC_SYS *p_sys )
 		SEQ_INIT_MENU,
 		SEQ_INIT_END,
 	};
+
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
 
 	switch( p_sys->seq )
 	{
@@ -372,6 +379,11 @@ BOOL COMPATIBLE_IRC_ExitWait( COMPATIBLE_IRC_SYS *p_sys )
 		SEQ_EXIT_END,
 	};
 
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
+
 	switch(p_sys->seq)
 	{
 	case SEQ_MENUNET_EXIT:
@@ -429,6 +441,11 @@ BOOL COMPATIBLE_IRC_ConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 		SEQ_CONNECT_TIMING_WAIT,
 		SEQ_CONNECT_END,
 	};
+
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
 
 	switch( p_sys->seq ){
 	case SEQ_CONNECT_START:
@@ -492,6 +509,11 @@ BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 		SEQ_DISCONNECT_END,
 	};
 
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
+
 	switch(p_sys->seq){
 	case SEQ_DISCONNECT_MENU:
 		//仮　応急処置	DisConnectでExitすると、ExitでDelCommandできない
@@ -553,6 +575,11 @@ BOOL COMPATIBLE_IRC_DisConnextWait( COMPATIBLE_IRC_SYS *p_sys )
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_IRC_IsConnext( const COMPATIBLE_IRC_SYS *cp_sys )
 {	
+	if( cp_sys->is_only_play )
+	{	
+		return TRUE;
+	}
+
 	return cp_sys->is_connect;
 }
 
@@ -568,6 +595,11 @@ BOOL COMPATIBLE_IRC_IsConnext( const COMPATIBLE_IRC_SYS *cp_sys )
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_IRC_IsInit( const COMPATIBLE_IRC_SYS *cp_sys )
 {	
+	if( cp_sys->is_only_play )
+	{	
+		return TRUE;
+	}
+
 	return cp_sys->is_init;
 }
 
@@ -592,6 +624,11 @@ BOOL COMPATIBLE_IRC_TimingSyncWait( COMPATIBLE_IRC_SYS *p_sys, COMPATIBLE_TIMING
 		SEQ_TIMING_RETURN_WAIT,
 		SEQ_TIMING_END,
 	};
+
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
 
 	switch( p_sys->seq )
 	{	
@@ -683,6 +720,10 @@ BOOL COMPATIBLE_IRC_IsError( COMPATIBLE_IRC_SYS *p_sys )
 		SEQ_ERROR_WAIT,
 		SEQ_ERROR_END,
 	};
+	if( p_sys->is_only_play )
+	{	
+		return FALSE;
+	}
 
 	switch(p_sys->err_seq){
 	case SEQ_ERROR_START:
@@ -752,6 +793,11 @@ void COMPATIBLE_IRC_SetScene( COMPATIBLE_IRC_SYS *p_sys, COMPATIBLE_SCENE scene 
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_IRC_SendSceneContinue( COMPATIBLE_IRC_SYS *p_sys )
 {	
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
+
 	//一定間隔で、シーンを送る。
 	//シーンはバッファにおいてあるものを使う
 	//送信キューをチェックし存在していないときのみ送信。
@@ -785,6 +831,12 @@ BOOL COMPATIBLE_IRC_SendScene( COMPATIBLE_IRC_SYS *p_sys )
 	NetID	sendID;
 	NetID	recvID;
 
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
+
+
 	sendID	= GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
 	if( sendID == 0 )
 	{	
@@ -813,6 +865,11 @@ BOOL COMPATIBLE_IRC_SendScene( COMPATIBLE_IRC_SYS *p_sys )
 //-----------------------------------------------------------------------------
 int COMPATIBLE_IRC_CompScene( const COMPATIBLE_IRC_SYS *cp_sys )
 {	
+	if( cp_sys->is_only_play )
+	{	
+		return 0;
+	}
+
 	return cp_sys->my_scene - cp_sys->you_scene;
 }
 
@@ -831,6 +888,11 @@ int COMPATIBLE_IRC_CompScene( const COMPATIBLE_IRC_SYS *cp_sys )
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_IRC_SendData( COMPATIBLE_IRC_SYS *p_sys, u16 send_command, u16 size, const void *cp_data )
 {	
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
+
 	return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), send_command, size, cp_data );
 }
 
@@ -853,6 +915,10 @@ BOOL COMPATIBLE_IRC_SendData( COMPATIBLE_IRC_SYS *p_sys, u16 send_command, u16 s
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_IRC_SendDataEx( COMPATIBLE_IRC_SYS *p_sys, u16 send_command, u16 size, const void *cp_data, const NetID sendID, const BOOL b_fast, const BOOL b_repeat, const BOOL b_send_buff_lock )
 {	
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
 	return GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle(), sendID,
 			send_command, size, cp_data, b_fast, b_repeat, b_send_buff_lock );
 }
@@ -870,6 +936,11 @@ BOOL COMPATIBLE_IRC_SendDataEx( COMPATIBLE_IRC_SYS *p_sys, u16 send_command, u16
 //-----------------------------------------------------------------------------
 void COMPATIBLE_IRC_AddCommandTable( COMPATIBLE_IRC_SYS *p_sys, int cmdkindID, const NetRecvFuncTable *cp_net_recv_tbl, int tbl_max, void *p_param )
 {	
+	if( p_sys->is_only_play )
+	{	
+		return;
+	}
+
 	GFL_NET_AddCommandTable(cmdkindID, cp_net_recv_tbl, tbl_max, p_param );
 }
 
@@ -884,6 +955,11 @@ void COMPATIBLE_IRC_AddCommandTable( COMPATIBLE_IRC_SYS *p_sys, int cmdkindID, c
 //-----------------------------------------------------------------------------
 void COMPATIBLE_IRC_DelCommandTable( COMPATIBLE_IRC_SYS *p_sys, int cmdkindID )
 {	
+	if( p_sys->is_only_play )
+	{	
+		return;
+	}
+
 	GFL_NET_DelCommandTable( cmdkindID );
 }
 
@@ -901,6 +977,11 @@ void COMPATIBLE_IRC_DelCommandTable( COMPATIBLE_IRC_SYS *p_sys, int cmdkindID )
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_MENU_SendMenuData( COMPATIBLE_IRC_SYS *p_sys, u32 ms, u32 select )
 {	
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
+
 	return MENUNET_SendMenuData( &p_sys->menu, ms, select );
 }
 //----------------------------------------------------------------------------
@@ -915,6 +996,11 @@ BOOL COMPATIBLE_MENU_SendMenuData( COMPATIBLE_IRC_SYS *p_sys, u32 ms, u32 select
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_MENU_RecvMenuData( COMPATIBLE_IRC_SYS *p_sys )
 {	
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
+
 	return MENUNET_RecvMenuData( &p_sys->menu );
 }
 //----------------------------------------------------------------------------
@@ -929,6 +1015,11 @@ BOOL COMPATIBLE_MENU_RecvMenuData( COMPATIBLE_IRC_SYS *p_sys )
 //-----------------------------------------------------------------------------
 void COMPATIBLE_MENU_GetMenuData( const COMPATIBLE_IRC_SYS *cp_sys, u32 *p_ms, u32 *p_select )
 {	
+	if( cp_sys->is_only_play )
+	{	
+		return;
+	}
+
 	MENUNET_GetMenuData( &cp_sys->menu, p_ms, p_select );
 }
 //----------------------------------------------------------------------------
@@ -943,6 +1034,11 @@ void COMPATIBLE_MENU_GetMenuData( const COMPATIBLE_IRC_SYS *cp_sys, u32 *p_ms, u
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_MENU_SendReturnMenu( COMPATIBLE_IRC_SYS *p_sys )
 {	
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
+
 	return MENUNET_SendReturnMenu( &p_sys->menu );
 }
 //----------------------------------------------------------------------------
@@ -957,6 +1053,11 @@ BOOL COMPATIBLE_MENU_SendReturnMenu( COMPATIBLE_IRC_SYS *p_sys )
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_MENU_RecvReturnMenu( COMPATIBLE_IRC_SYS *p_sys )
 {	
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
+
 	return MENUNET_RecvReturnMenu( &p_sys->menu );
 }
 //----------------------------------------------------------------------------
@@ -972,6 +1073,11 @@ BOOL COMPATIBLE_MENU_RecvReturnMenu( COMPATIBLE_IRC_SYS *p_sys )
 //-----------------------------------------------------------------------------
 BOOL COMPATIBLE_MENU_SendStatusData( COMPATIBLE_IRC_SYS *p_sys, GAMESYS_WORK *p_gamesys )
 {	
+	if( p_sys->is_only_play )
+	{	
+		return TRUE;
+	}
+
 	return MENUNET_SendStatusData( &p_sys->menu, p_gamesys );
 }
 //----------------------------------------------------------------------------
@@ -985,6 +1091,11 @@ BOOL COMPATIBLE_MENU_SendStatusData( COMPATIBLE_IRC_SYS *p_sys, GAMESYS_WORK *p_
 //-----------------------------------------------------------------------------
 void COMPATIBLE_MENU_GetStatusData( const COMPATIBLE_IRC_SYS *cp_sys, MYSTATUS *p_status )
 {	
+	if( cp_sys->is_only_play )
+	{	
+		return;
+	}
+
 	MENUNET_GetStatusData( &cp_sys->menu, p_status );
 }
 //=============================================================================

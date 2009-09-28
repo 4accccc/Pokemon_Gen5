@@ -258,17 +258,18 @@ static GFL_PROC_RESULT IRC_COMPATIBLE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 	//毎回接続しなおす処理に直す。その際、最初の接続時にマックアドレスを貰いその人としか
 	//繋がらないような処理にする
 	//→仕様になりました。090709
-	p_wk->p_irc	= COMPATIBLE_IRC_CreateSystem( 0xFFFFFFFF, HEAPID_IRCCOMPATIBLE_SYSTEM );
+	{	
+		BOOL is_debug		= FALSE;
+
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
+		is_debug	= p_wk->p_param->is_only_play;
+#endif
+
+		p_wk->p_irc	= COMPATIBLE_IRC_CreateSystem( 0xFFFFFFFF, HEAPID_IRCCOMPATIBLE_SYSTEM, is_debug );
+	}
 
 	p_wk->is_init	= TRUE;
 
-#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
-	if( p_wk->p_param->is_only_play )
-	{	
-		SEQ_Change( p_wk, SEQFUNC_DebugCompatibleProc );
-	}
-	else
-#endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
 	{	
 		SEQ_Change( p_wk, SEQFUNC_Start );
 	}
@@ -979,6 +980,17 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 	p_param->p_irc			= p_wk->p_irc;
 	p_param->p_you_status	= p_wk->p_you_status;
 
+#ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
+	if( p_wk->p_param->is_only_play )
+	{	
+		p_param->score	= 80;
+		p_param->is_only_play	= p_wk->p_param->is_only_play;
+		return p_param;
+	}
+#endif
+
+
+
 	//得点計算
 	{	
 		PLAYER_WORK *p_player;
@@ -1032,7 +1044,6 @@ static void *SUBPROC_ALLOC_Ranking( HEAPID heapID, void *p_wk_adrs )
 	p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(IRC_RANKING_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(IRC_RANKING_PARAM)) ;
 	p_param->p_gamesys	= p_wk->p_param->p_gamesys;
-
 	return p_param;
 }
 //----------------------------------------------------------------------------

@@ -718,7 +718,7 @@ const GFL_PROC_DATA	IrcRanking_ProcData	=
 static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param, void *p_work )
 {	
 	IRC_RANKING_WORK	*p_wk;
-	IRC_RANKING_PARAM	*p_rank_param;
+	IRC_RANKING_PARAM	*p_rank_param	;
 	u16	data_len;
 
 	//ヒープ作成
@@ -730,7 +730,7 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 
 	//パラメータうけとり
 	p_rank_param	= p_param;
-	if( p_rank_param )
+	if( p_rank_param->p_gamesys )
 	{	
 		p_wk->p_gamecomm	= GAMESYSTEM_GetGameCommSysPtr(p_rank_param->p_gamesys);
 	}

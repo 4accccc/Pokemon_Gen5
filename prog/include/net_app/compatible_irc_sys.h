@@ -85,7 +85,7 @@ typedef struct _COMPATIBLE_IRC_SYS COMPATIBLE_IRC_SYS;
 */
 //=============================================================================
 //IRC_COMPATIBLE‚Ì‚ÝŽg—p
-extern COMPATIBLE_IRC_SYS * COMPATIBLE_IRC_CreateSystem( u32 irc_timeout, HEAPID heapID );
+extern COMPATIBLE_IRC_SYS * COMPATIBLE_IRC_CreateSystem( u32 irc_timeout, HEAPID heapID, BOOL is_only_play );
 extern void COMPATIBLE_IRC_DeleteSystem( COMPATIBLE_IRC_SYS *p_sys );
 
 extern BOOL COMPATIBLE_IRC_InitWait( COMPATIBLE_IRC_SYS *p_sys );
