@@ -9,6 +9,12 @@
 
 #pragma once
 
+#if PM_DEBUG
+#define _TRADE_DEBUG (1)
+#else
+#define _TRADE_DEBUG (0)
+#endif
+
 #include "../../field/event_ircbattle.h"
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/poke_tool_def.h"
@@ -21,7 +27,7 @@
 #include "system/mcss.h"
 #include "system/mcss_tool.h"
 #include "app/app_taskmenu.h"
-
+#include "ircpokemontrade_anim.h"
 
 typedef enum
 {
@@ -119,9 +125,8 @@ struct _IRC_POKEMON_TRADE {
   u8 FriendPokemonCol[732];         ///< 相手のポケモンBOXにあるポケモン色
 	POKEMON_PASO_PARAM* recvPoke[2];  ///< 受け取ったポケモンを格納する場所
 	BOOL bPokemonSet[2];              ///< 
-	EVENT_IRCBATTLE_WORK* pParentWork;
+//	EVENT_IRCBATTLE_WORK* pParentWork;
 	StateFunc* state;      ///< ハンドルのプログラム状態
-	int selectType;   // 接続タイプ
 	HEAPID heapID;
 
 	//メッセージ系
@@ -151,20 +156,22 @@ struct _IRC_POKEMON_TRADE {
 
   GFL_G3D_RES* pG3dRes;
   GFL_G3D_OBJ* pG3dObj;
-	GFL_G3D_OBJSTATUS	status;
+	GFL_G3D_OBJSTATUS*	pStatus;
 	GFL_G3D_CAMERA		*pCamera;
 
   //  G3D_MDL_WORK			mdl[_G3D_MDL_MAX];
 	//    BMPWINFRAME_AREAMANAGER_POS aPos;
 	//3D
+  int objCount;
 
   GFL_G3D_UTIL* g3dUtil;
-  u16 unitIndex[ SETUP_INDEX_MAX ];
+  u16 unitIndex;
 //  ICA_ANIME* icaAnime;
 //  GFL_G3D_CAMERA* camera;
 
-
   BOX_DATA* pBox;
+  MYSTATUS* pMy;
+  POKEPARTY* pMyParty;
 	GFL_G3D_CAMERA    *camera;
 
 	MCSS_SYS_WORK *mcssSys;
@@ -175,7 +182,7 @@ struct _IRC_POKEMON_TRADE {
   GFL_ARCUTIL_TRANSINFO subchar2;
 	u32 cellRes[CEL_RESOURCE_MAX];
 
-	GAMESYS_WORK* pGameSys;
+//	GAMESYS_WORK* pGameSys;
 
 	GFL_CLUNIT	*cellUnit;
 	GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
@@ -189,6 +196,8 @@ struct _IRC_POKEMON_TRADE {
   GFL_CLWK* curIcon[CUR_NUM];
 
 	int windowNum;
+  int anmCount;
+  int anmStep;
 	BOOL IsIrc;
 	u32 connect_bit;
 	BOOL connect_ok;
@@ -241,6 +250,9 @@ struct _IRC_POKEMON_TRADE {
 
 #define UNIT_NULL		(0xffff)
 
+extern void IRC_POKMEONTRADE_ChangeFinish(IRC_POKEMON_TRADE* pWork);
+
+
 extern void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_GraphicExit(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork,int pokeposx);
@@ -266,4 +278,20 @@ extern GFL_CLWK* IRC_POKETRADE_GetCLACT( IRC_POKEMON_TRADE* pWork , int x, int y
 extern void IRC_POKETRADEDEMO_SetModel( IRC_POKEMON_TRADE* pWork, int modelno);
 extern void IRC_POKETRADEDEMO_RemoveModel( IRC_POKEMON_TRADE* pWork);
 
+extern void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(IRC_POKEMON_TRADE* pWork);
 
+
+
+#if _TRADE_DEBUG
+
+extern void IRC_POKMEONTRADE_changeStateDebug(IRC_POKEMON_TRADE* pWork,StateFunc* state, int line);
+
+#define   _CHANGE_STATE(pWork, state)  IRC_POKMEONTRADE_changeStateDebug(pWork ,state, __LINE__)
+
+#else  //_NET_DEBUG
+
+extern void IRC_POKMEONTRADE_changeState(IRC_POKEMON_TRADE* pWork,StateFunc* state);
+
+#define   _CHANGE_STATE(pWork, state)  IRC_POKMEONTRADE_changeState(pWork ,state)
+
+#endif //_NET_DEBUG

@@ -599,6 +599,8 @@ static inline u8 PTL_SETUP_POW_UNPACK( u32 powrnd, u8 abilityType )
 
 extern  void  POKETOOL_InitSystem( HEAPID heapID ); ///< システム初期化（プログラム起動後に１回だけ）
 extern  u32   POKETOOL_GetWorkSize( void );     ///< POKEMON_PARAM１体分のサイズ取得
+extern u32   POKETOOL_GetPPPWorkSize( void );  ///< POKEMON_PASO_PARAMのサイズ
+
 
 //ポケモンパラメータ操作関数系
 

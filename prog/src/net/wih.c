@@ -250,6 +250,7 @@
 
 #include "net.h"
 #include "wih.h"
+#include "net_whpipe.h"
 
 /*
   wh.c : Wireless Manager ä÷òA Wrapper
@@ -1101,6 +1102,7 @@ static void WH_StateOutStartParent(void *arg)
 			if(_pWmInfo->disconnectCallBack){
 				_pWmInfo->disconnectCallBack(cb->aid);
 			}
+      GFL_NET_WL_DisconnectError();
 			GFI_NET_HANDLE_Delete(cb->aid);
 		}
 		break;
@@ -3424,7 +3426,7 @@ BOOL WH_StepDS(const void *data)
 
 	if (result == WM_ERRCODE_NO_DATASET)
 	{
-		//        WH_TRACE("WH_StepDataSharing - Warning No DataSet\n");
+    WH_TRACE("WH_StepDataSharing - Warning No DataSet\n");
 		//WH_SetError(result);  //Ç±ÇÍÇÕFALSEÇï‘Ç∑Ç™ÉGÉâÅ[Ç…ÇÕÇµÇ»Ç¢
 		return FALSE;
 	}

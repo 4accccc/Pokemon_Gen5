@@ -455,7 +455,7 @@ static const POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_DATA* boxData , int lin
     return BOXDAT_GetPokeDataAddress(boxData,tray,index);
   }
 	{
-		POKEPARTY* party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(pWork->pGameSys));
+		POKEPARTY* party = pWork->pMyParty;
 
     if(verticalindex <3){
       int index = lineno * 3 + verticalindex;

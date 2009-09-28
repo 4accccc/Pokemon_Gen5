@@ -602,6 +602,7 @@ SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
 SRCS_OVERLAY_IRCBATTLEMATCH = net_app/irc_match/ircbattlematch.c \
                 net_app/friend_trade/ircbattlefriend.c \
 								net_app/poke_trade/ircpokemontrade.c \
+								net_app/poke_trade/ircpokemontrade_step.c \
 								net_app/poke_trade/ircpoketrade_3d.c \
 								net_app/poke_trade/ircpoketrade_gra.c
 
@@ -677,6 +678,7 @@ SRCS_OVERLAY_DOWNLOAD_PLAY = test/dlplay/dlplay_parent_sample.c \
 # 大野デバッグ
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_IRCBATTLEMATCH
 SRCS_OVERLAY_OHNO_DEBUG = test/ohno/d_ohno_list.c
 
 # 大野デバッグ

@@ -54,67 +54,67 @@ static u8* _recvMemory(int netID, void* pWork, int size);
 
 
 static const NetRecvFuncTable _CommPacketTbl[] = {
-    {_RecvMoveData,         _recvMemory},    ///NET_CMD_MOVE
-    {_RecvTalkData,         NULL},    ///NET_CMD_TALK
+  {_RecvMoveData,         _recvMemory},    ///NET_CMD_MOVE
+  {_RecvTalkData,         NULL},    ///NET_CMD_TALK
 };
 
 
 typedef struct{
-    int gameNo;   ///< ゲーム種類
+  int gameNo;   ///< ゲーム種類
 } _testBeaconStruct;
 
 typedef struct{
-    int x;
-    int y;
-    int z;
-    int rot;
-    int anm;
+  int x;
+  int y;
+  int z;
+  int rot;
+  int anm;
 } _testMoveStruct;
 
 static _testBeaconStruct _testBeacon = { WB_NET_DEBUG_OHNO_SERVICEID };
 
 
 static GFLNetInitializeStruct aGFLNetInit = {
-    _CommPacketTbl,  // 受信関数テーブル
-    NELEMS(_CommPacketTbl), // 受信テーブル要素数
-    _netConnectFunc,    ///< ハードで接続した時に呼ばれる
-    _netNegotiationFunc,    ///< ネゴシエーション完了時にコール
-    NULL,   // ユーザー同士が交換するデータのポインタ取得関数
-    NULL,   // ユーザー同士が交換するデータのサイズ取得関数
-    _netBeaconGetFunc,  // ビーコンデータ取得関数
-    _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
-    _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
-    NULL,            // 普通のエラーが起こった場合 通信終了
-    FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
-    _endCallBack,  // 通信切断時に呼ばれる関数
-    NULL,  // オート接続で親になった場合
+  _CommPacketTbl,  // 受信関数テーブル
+  NELEMS(_CommPacketTbl), // 受信テーブル要素数
+  _netConnectFunc,    ///< ハードで接続した時に呼ばれる
+  _netNegotiationFunc,    ///< ネゴシエーション完了時にコール
+  NULL,   // ユーザー同士が交換するデータのポインタ取得関数
+  NULL,   // ユーザー同士が交換するデータのサイズ取得関数
+  _netBeaconGetFunc,  // ビーコンデータ取得関数
+  _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
+  _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
+  NULL,            // 普通のエラーが起こった場合 通信終了
+  FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+  _endCallBack,  // 通信切断時に呼ばれる関数
+  NULL,  // オート接続で親になった場合
 #if GFL_NET_WIFI
-    NULL,     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
-    NULL, ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
-    NULL,  ///< wifiフレンドリスト削除コールバック
-    NULL,   ///< DWC形式の友達リスト	
-    NULL,  ///< DWCのユーザデータ（自分のデータ）
-    0,   ///< DWCへのHEAPサイズ
-    TRUE,        ///< デバック用サーバにつなぐかどうか
+  NULL,     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
+  NULL, ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+  NULL,  ///< wifiフレンドリスト削除コールバック
+  NULL,   ///< DWC形式の友達リスト
+  NULL,  ///< DWCのユーザデータ（自分のデータ）
+  0,   ///< DWCへのHEAPサイズ
+  TRUE,        ///< デバック用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
-    0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
-    GFL_HEAPID_APP,  //元になるheapid
-    HEAPID_NETWORK,  //通信用にcreateされるHEAPID
-    HEAPID_WIFI,  //wifi用にcreateされるHEAPID
-    HEAPID_NETWORK,  //IRC用にcreateされるHEAPID
-    GFL_WICON_POSX,GFL_WICON_POSY,        // 通信アイコンXY位置
-    4,                            // 最大接続人数
-    24,                  //最大送信バイト数
-    _BCON_GET_NUM,    // 最大ビーコン収集数
-    TRUE,     // CRC計算
-    TRUE,     // MP通信＝親子型通信モードかどうか
-    GFL_NET_TYPE_WIRELESS,  //通信種別
-    TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
-    WB_NET_DEBUG_OHNO_SERVICEID,  //GameServiceID
+  0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
+  GFL_HEAPID_APP,  //元になるheapid
+  HEAPID_NETWORK,  //通信用にcreateされるHEAPID
+  HEAPID_WIFI,  //wifi用にcreateされるHEAPID
+  HEAPID_NETWORK,  //IRC用にcreateされるHEAPID
+  GFL_WICON_POSX,GFL_WICON_POSY,        // 通信アイコンXY位置
+  4,                            // 最大接続人数
+  24,                  //最大送信バイト数
+  _BCON_GET_NUM,    // 最大ビーコン収集数
+  TRUE,     // CRC計算
+  FALSE,     // MP通信＝親子型通信モードかどうか
+  GFL_NET_TYPE_WIRELESS,  //通信種別
+  TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
+  WB_NET_DEBUG_OHNO_SERVICEID,  //GameServiceID
 #if GFL_NET_IRC
-	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
+  IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
 #endif
-    500,
+  500,
   0,
 };
 
@@ -126,28 +126,28 @@ static GFLNetInitializeStruct aGFLNetInit = {
  * @param   pData      データ
  * @param   pWork      ワークエリア
  * @param   pHandle    受け取る側の通信ハンドル
- * @retval  none  
+ * @retval  none
  */
 //--------------------------------------------------------------
 
 static void* _netBeaconGetFunc(void* pWork)
 {
-	return &_testBeacon;
+  return &_testBeacon;
 }
 
 ///< ビーコンデータサイズ取得関数
 static int _netBeaconGetSizeFunc(void* pWork)
 {
-	return sizeof(_testBeacon);
+  return sizeof(_testBeacon);
 }
 
 ///< ビーコンデータ取得関数
 static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
 {
-    if(myNo != beaconNo){
-        return FALSE;
-    }
-    return TRUE;
+  if(myNo != beaconNo){
+    return FALSE;
+  }
+  return TRUE;
 }
 
 //--------------------------------------------------------------
@@ -158,7 +158,7 @@ static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
  * @param   pData      データ
  * @param   pWork      ワークエリア
  * @param   pHandle    受け取る側の通信ハンドル
- * @retval  none  
+ * @retval  none
  */
 //--------------------------------------------------------------
 static u8 dummymem[4*sizeof(_testBeacon)];
@@ -176,7 +176,7 @@ static u8* _recvMemory(int netID, void* pWork, int size)
  * @param   pData      データ
  * @param   pWork      ワークエリア
  * @param   pHandle    受け取る側の通信ハンドル
- * @retval  none  
+ * @retval  none
  */
 //--------------------------------------------------------------
 /*
@@ -185,7 +185,7 @@ static void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo, void* pWork)
 	// 通信不能なエラーが起こった場合呼ばれる 切断するしかない
 	OS_TPrintf("通信不能エラーが発生 ErrorNo = %d\n",errNo);
 }
-*/
+ */
 //--------------------------------------------------------------
 /**
  * @brief   移動コマンド受信関数
@@ -194,15 +194,15 @@ static void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo, void* pWork)
  * @param   pData      データ
  * @param   pWork      ワークエリア
  * @param   pHandle    受け取る側の通信ハンドル
- * @retval  none  
+ * @retval  none
  */
 //--------------------------------------------------------------
 
 static void _RecvMoveData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    DEBUG_OHNO_CONTROL* pDOC = pWork;
+  DEBUG_OHNO_CONTROL* pDOC = pWork;
 
-    pDOC->bMoveRecv = TRUE;
+  pDOC->bMoveRecv = TRUE;
 }
 
 //--------------------------------------------------------------
@@ -213,7 +213,7 @@ static void _RecvMoveData(const int netID, const int size, const void* pData, vo
  * @param   pData      データ
  * @param   pWork      ワークエリア
  * @param   pHandle    受け取る側の通信ハンドル
- * @retval  none  
+ * @retval  none
  */
 //--------------------------------------------------------------
 
@@ -233,7 +233,7 @@ static void _RecvTalkData(const int netID, const int size, const void* pData, vo
 
 static void _changeState(DEBUG_OHNO_CONTROL* pDOC, NetTestFunc state)
 {
-    pDOC->funcNet = state;
+  pDOC->funcNet = state;
 }
 
 //==============================================================================
@@ -247,8 +247,8 @@ static void _changeState(DEBUG_OHNO_CONTROL* pDOC, NetTestFunc state)
 #ifdef GFL_NET_DEBUG
 static void _changeStateDebug(DEBUG_OHNO_CONTROL* pDOC,NetTestFunc state, int line)
 {
-    NET_PRINT("df_state: %d\n",line);
-    _changeState(pDOC, state);
+  NET_PRINT("df_state: %d\n",line);
+  _changeState(pDOC, state);
 }
 #endif
 
@@ -270,9 +270,9 @@ static void _changeStateDebug(DEBUG_OHNO_CONTROL* pDOC,NetTestFunc state, int li
 #if 0
 static BOOL _connectCallBack(void* pCtl)
 {
-    DEBUG_OHNO_CONTROL* pDOC = pWork;
- //   OS_TPrintf("GFL_NET_ChangeoverConnect OK\n");
-    _CHANGE_STATE( NetTestSendTiming );
+  DEBUG_OHNO_CONTROL* pDOC = pWork;
+  //   OS_TPrintf("GFL_NET_ChangeoverConnect OK\n");
+  _CHANGE_STATE( NetTestSendTiming );
 }
 #endif
 //--------------------------------------------------------------
@@ -284,12 +284,12 @@ static BOOL _connectCallBack(void* pCtl)
 //--------------------------------------------------------------
 static BOOL NetTestAutoConnect(void* pCtl)
 {
-    DEBUG_OHNO_CONTROL* pDOC = pCtl;
-    
-    GFL_NET_ChangeoverConnect(NULL); // 自動接続
-    _CHANGE_STATE( NetTestSendTiming );
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
 
-    return FALSE;
+  GFL_NET_ChangeoverConnect(NULL); // 自動接続
+  _CHANGE_STATE( NetTestSendTiming );
+
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -301,16 +301,16 @@ static BOOL NetTestAutoConnect(void* pCtl)
 //--------------------------------------------------------------
 static BOOL NetTestSendTiming(void* pCtl)
 {
-    DEBUG_OHNO_CONTROL* pDOC = pCtl;
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
 
-    if(GFL_NET_HANDLE_IsNegotiation( GFL_NET_HANDLE_GetCurrentHandle() ) ){
-        int id = 1 - GFL_NET_HANDLE_GetNetHandleID( GFL_NET_HANDLE_GetCurrentHandle());
-        if(GFL_NET_HANDLE_IsNegotiation( GFL_NET_GetNetHandle(id) ) ){
-            GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15);
-            _CHANGE_STATE( NetTestRecvTiming );
-        }
+  if(GFL_NET_HANDLE_IsNegotiation( GFL_NET_HANDLE_GetCurrentHandle() ) ){
+    int id = 1 - GFL_NET_HANDLE_GetNetHandleID( GFL_NET_HANDLE_GetCurrentHandle());
+    if(GFL_NET_HANDLE_IsNegotiation( GFL_NET_GetNetHandle(id) ) ){
+      GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15);
+      _CHANGE_STATE( NetTestRecvTiming );
     }
-    return FALSE;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -322,14 +322,45 @@ static BOOL NetTestSendTiming(void* pCtl)
 //--------------------------------------------------------------
 static BOOL NetTestRecvTiming(void* pCtl)
 {
-    DEBUG_OHNO_CONTROL* pDOC = pCtl;
-    
-    if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),15)){
-      NET_PRINT("TIMOK\n");
-      _CHANGE_STATE( NetTestMoveStart );
-    }
-    return FALSE;
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
+
+  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),15)){
+    NET_PRINT("TIMOK\n");
+    _CHANGE_STATE( NetTestMoveStart );
+  }
+  return FALSE;
 }
+
+//タイミングを取り続けるテスト
+
+static int debugTiming = 1;
+static BOOL _TimingTest(void* pCtl);
+
+static BOOL _TimingTestNext(void* pCtl)
+{
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
+  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),debugTiming)){
+    NET_PRINT("TIMOK %d\n",debugTiming);
+    debugTiming++;
+    _CHANGE_STATE( _TimingTest );
+  }
+  GF_ASSERT(!GFL_NET_IsError());
+  return FALSE;
+}
+
+
+static BOOL _TimingTest(void* pCtl)
+{
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
+  GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,debugTiming);
+
+  GF_ASSERT(!GFL_NET_IsError());
+
+  _CHANGE_STATE(_TimingTestNext);
+  return FALSE;
+}
+
+
 
 //--------------------------------------------------------------
 /**
@@ -359,13 +390,17 @@ static BOOL NetTestMoveStart(void* pCtl)
 //--------------------------------------------------------------
 static BOOL NetTestMoveSend(void* pCtl)
 {
-    DEBUG_OHNO_CONTROL* pDOC = pCtl;
-    
-    if(pDOC->bMoveRecv){
-        NET_PRINT(" MOVE Recv\n");
-        _CHANGE_STATE( NetTestEndStart );
-    }
-    return FALSE;
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
+
+  if(pDOC->bMoveRecv){
+    NET_PRINT(" MOVE Recv\n");
+
+    GFL_NET_SetNoChildErrorCheck(TRUE);
+    _CHANGE_STATE( _TimingTest );
+
+    //      _CHANGE_STATE( NetTestEndStart );
+  }
+  return FALSE;
 }
 
 
@@ -379,9 +414,9 @@ static BOOL NetTestMoveSend(void* pCtl)
 
 static void _endCallBack(void* pWork)
 {
-    DEBUG_OHNO_CONTROL* pDOC = pWork;
-    NET_PRINT("endCallBack終了\n");
-    _CHANGE_STATE( NetTestEnd );
+  DEBUG_OHNO_CONTROL* pDOC = pWork;
+  NET_PRINT("endCallBack終了\n");
+  _CHANGE_STATE( NetTestEnd );
 }
 
 //--------------------------------------------------------------
@@ -393,12 +428,12 @@ static void _endCallBack(void* pWork)
 //--------------------------------------------------------------
 static BOOL NetTestEndStart(void* pCtl)
 {
-    DEBUG_OHNO_CONTROL* pDOC = pCtl;
-//    GFL_NET_Exit(_endCallBack);
-    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ, 0, NULL);
-//    GFL_NET_SendData();
-    _CHANGE_STATE( NetTestNone );
-    return FALSE;
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
+  //    GFL_NET_Exit(_endCallBack);
+  GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ, 0, NULL);
+  //    GFL_NET_SendData();
+  _CHANGE_STATE( NetTestNone );
+  return FALSE;
 }
 
 
@@ -412,8 +447,8 @@ static BOOL NetTestEndStart(void* pCtl)
 
 static void _initCallBack(void* pWork)
 {
-    DEBUG_OHNO_CONTROL* pDOC = pWork;
-    _CHANGE_STATE( NetTestAutoConnect );
+  DEBUG_OHNO_CONTROL* pDOC = pWork;
+  _CHANGE_STATE( NetTestAutoConnect );
 }
 
 //--------------------------------------------------------------
@@ -425,17 +460,17 @@ static void _initCallBack(void* pWork)
 //--------------------------------------------------------------
 static BOOL NetTestNone(void* pCtl)
 {
-    return FALSE;
+  return FALSE;
 }
 
 static BOOL netinit(void* pCtl)
 {
-	DEBUG_OHNO_CONTROL* pDOC = pCtl;
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
 
-	if( GFL_NET_IsInit() == FALSE ){  // もう通信している場合終了処理
-		GFL_NET_Init(&aGFLNetInit, _initCallBack, pDOC);
-	}
-	return FALSE;
+  if( GFL_NET_IsInit() == FALSE ){  // もう通信している場合終了処理
+    GFL_NET_Init(&aGFLNetInit, _initCallBack, pDOC);
+  }
+  return FALSE;
 }
 
 
@@ -449,9 +484,9 @@ static BOOL netinit(void* pCtl)
 //--------------------------------------------------------------
 static BOOL NetTestEnd(void* pCtl)
 {
-    DEBUG_OHNO_CONTROL* pDOC = pCtl;
-    _CHANGE_STATE( netinit );
-    return FALSE;
+  DEBUG_OHNO_CONTROL* pDOC = pCtl;
+  _CHANGE_STATE( netinit );
+  return FALSE;
 }
 
 
@@ -464,34 +499,34 @@ static BOOL NetTestEnd(void* pCtl)
 static GFL_PROC_RESULT DebugOhnoMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 
-    DEBUG_OHNO_CONTROL * pDOC;
-	HEAPID			heapID = HEAPID_OHNO_DEBUG;
+  DEBUG_OHNO_CONTROL * pDOC;
+  HEAPID			heapID = HEAPID_OHNO_DEBUG;
 
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, heapID, 0x30000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, heapID, 0x30000 );
 
-	pDOC = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), heapID );
-	GFL_STD_MemClear(pDOC, sizeof(DEBUG_OHNO_CONTROL));
-	pDOC->debug_heap_id = heapID;
+  pDOC = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), heapID );
+  GFL_STD_MemClear(pDOC, sizeof(DEBUG_OHNO_CONTROL));
+  pDOC->debug_heap_id = heapID;
 
-	_CHANGE_STATE( netinit );
-	
-	return GFL_PROC_RES_FINISH;
+  _CHANGE_STATE( netinit );
+
+  return GFL_PROC_RES_FINISH;
 }
 
 //------------------------------------------------------------------
 /**   デバッグ用メイン
- */  
+ */
 //------------------------------------------------------------------
 static GFL_PROC_RESULT DebugOhnoMainProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	DEBUG_OHNO_CONTROL * testmode = mywk;
+  DEBUG_OHNO_CONTROL * testmode = mywk;
 
-    if(testmode->funcNet){
-        if(testmode->funcNet(mywk)){
-            return GFL_PROC_RES_FINISH;
-        }
+  if(testmode->funcNet){
+    if(testmode->funcNet(mywk)){
+      return GFL_PROC_RES_FINISH;
     }
-    return GFL_PROC_RES_CONTINUE;
+  }
+  return GFL_PROC_RES_CONTINUE;
 }
 
 //------------------------------------------------------------------
@@ -500,24 +535,24 @@ static GFL_PROC_RESULT DebugOhnoMainProcMain(GFL_PROC * proc, int * seq, void * 
 //------------------------------------------------------------------
 static GFL_PROC_RESULT DebugOhnoMainProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-    GFL_PROC_FreeWork(proc);
-	GFL_HEAP_DeleteHeap( HEAPID_OHNO_DEBUG );
+  GFL_PROC_FreeWork(proc);
+  GFL_HEAP_DeleteHeap( HEAPID_OHNO_DEBUG );
 
-    return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_FINISH;
 }
 
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const GFL_PROC_DATA DebugOhnoMainProcData = {
-	DebugOhnoMainProcInit,
-	DebugOhnoMainProcMain,
-	DebugOhnoMainProcEnd,
+  DebugOhnoMainProcInit,
+  DebugOhnoMainProcMain,
+  DebugOhnoMainProcEnd,
 };
 
 
 
-   ///< 
+///<
 //--------------------------------------------------------------
 /**
  * @brief   ハードで接続した時に呼ばれる
@@ -528,7 +563,7 @@ const GFL_PROC_DATA DebugOhnoMainProcData = {
 //--------------------------------------------------------------
 void _netConnectFunc(void* pWork,int hardID)
 {
-    NET_PRINT("_netConnectFunc %d\n", hardID);
+  NET_PRINT("_netConnectFunc %d\n", hardID);
 
 }
 
@@ -543,6 +578,6 @@ void _netConnectFunc(void* pWork,int hardID)
 void _netNegotiationFunc(void* pWork,int NetID)
 {
 
-    NET_PRINT("_netNegotiationFunc %d\n", NetID);
+  NET_PRINT("_netNegotiationFunc %d\n", NetID);
 
 }

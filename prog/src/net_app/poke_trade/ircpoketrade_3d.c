@@ -25,7 +25,9 @@
 #include "pokeicon/pokeicon.h"
 
 #include "tradedemo.naix"
-
+#if PM_DEBUG
+#include "debug_obata.naix"
+#endif
 
 
 #define cameraPerspway  ( 0x0b60 )
@@ -125,56 +127,143 @@ static void _demoExit()
 }
 
 
+
 //============================================================================================
 /**
  * @brief 3Dデータ
+●trade2_2.mb(交換ですれ違うシーン)
+●trade4.mb（モンスターボールが帰ってくるシーン）
+●trade5.mb（モンスターボールが落ちるシーン）
+●trade3.mb（モンスターボールからポケモンになるシーン）
+  
  */
 //============================================================================================
 
 static const GFL_G3D_UTIL_RES res_table_reel[] =
 {
-  { ARCID_POKETRADE,
-    NARC_trade_box_001_nsbmd,
-    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADE,   NARC_trade_box_001_nsbmd,   GFL_G3D_UTIL_RESARC },
 };
 
 static const GFL_G3D_UTIL_RES res_table_trade1[] =
+{
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade_nsbmd,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade2_2_nsbmd,    GFL_G3D_UTIL_RESARC },
+
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade_nsbca,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade2_2_nsbca,    GFL_G3D_UTIL_RESARC },
+
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade_nsbta,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade2_2_nsbta,    GFL_G3D_UTIL_RESARC },
+};
+
+static const GFL_G3D_UTIL_RES res_table_trade_trade[] =
 {
   { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade2_2_nsbmd,    GFL_G3D_UTIL_RESARC },
   { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade2_2_nsbca,    GFL_G3D_UTIL_RESARC },
   { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade2_2_nsbta,    GFL_G3D_UTIL_RESARC },
 };
-static const GFL_G3D_UTIL_RES res_table_trade2[] =
+
+static const GFL_G3D_UTIL_RES res_table_trade_return[] =
+{
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade4_nsbmd,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade4_nsbca,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade4_nsbta,    GFL_G3D_UTIL_RESARC },
+};
+
+static const GFL_G3D_UTIL_RES res_table_trade_splash[] =
+{
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade5_nsbmd,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade5_nsbca,    GFL_G3D_UTIL_RESARC },
+};
+
+static const GFL_G3D_UTIL_RES res_table_trade_end[] =
 {
   { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade3_nsbmd,    GFL_G3D_UTIL_RESARC },
   { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade3_nsbca,    GFL_G3D_UTIL_RESARC },
   { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade3_nsbta,    GFL_G3D_UTIL_RESARC },
 };
 
-static const GFL_G3D_UTIL_ANM anm_table_ball[] =
+
+static const GFL_G3D_UTIL_ANM anm_table_trade1[] =
 {
-  { 1, 0 },
+  { 2, 0 },
+  { 3, 0 },
+};
+
+static const GFL_G3D_UTIL_ANM anm_table_trade_splash[] =
+{
   { 2, 0 },
 };
-static const GFL_G3D_UTIL_OBJ obj_table_ball[] =
+
+static const GFL_G3D_UTIL_ANM anm_table_trade2[] =
+{
+  { 4, 0 },
+  { 5, 0 },
+};
+
+
+static const GFL_G3D_UTIL_OBJ obj_table_reel[] =
 {
   {
     0,                         // モデルリソースID
     0,                         // モデルデータID(リソース内部INDEX)
     0,                         // テクスチャリソースID
-    NULL,
-    0,
-    //   anm_table_ball,           // アニメテーブル(複数指定のため)
-    //   NELEMS(anm_table_ball),   // アニメリソース数
+    0,           // アニメテーブル(複数指定のため)
+    NULL,   // アニメリソース数
   },
 };
+
+
+static const GFL_G3D_UTIL_OBJ obj_table_trade1[] =
+{
+  {
+    0,                         // モデルリソースID
+    0,                         // モデルデータID(リソース内部INDEX)
+    0,                         // テクスチャリソースID
+    anm_table_trade1,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_table_trade1),   // アニメリソース数
+  },
+  {
+    1,                         // モデルリソースID
+    0,                         // モデルデータID(リソース内部INDEX)
+    1,                         // テクスチャリソースID
+    anm_table_trade2,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_table_trade2),   // アニメリソース数
+  },
+};
+
+static const GFL_G3D_UTIL_OBJ obj_table_trade_normal[] =
+{
+  {
+    0,                         // モデルリソースID
+    0,                         // モデルデータID(リソース内部INDEX)
+    0,                         // テクスチャリソースID
+    anm_table_trade1,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_table_trade1),   // アニメリソース数
+  },
+};
+
+static const GFL_G3D_UTIL_OBJ obj_table_trade_splash[] =
+{
+  {
+    0,                         // モデルリソースID
+    0,                         // モデルデータID(リソース内部INDEX)
+    0,                         // テクスチャリソースID
+    anm_table_trade_splash,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_table_trade_splash),   // アニメリソース数
+  },
+};
+
 
 // セットアップデータ
 static const GFL_G3D_UTIL_SETUP setup[] =
 {
-  { res_table_reel, NELEMS(res_table_reel), obj_table_ball, NELEMS(obj_table_ball) },
-  { res_table_trade1, NELEMS(res_table_trade1), obj_table_ball, NELEMS(obj_table_ball) },
-  { res_table_trade2, NELEMS(res_table_trade2), obj_table_ball, NELEMS(obj_table_ball) },
+  { res_table_reel, NELEMS(res_table_reel), obj_table_reel, NELEMS(obj_table_reel) },
+  { res_table_trade1, NELEMS(res_table_trade1), obj_table_trade1, NELEMS(obj_table_trade1) },
+  { res_table_trade_trade, NELEMS(res_table_trade_trade), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
+  { res_table_trade_return, NELEMS(res_table_trade_return), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
+  { res_table_trade_splash, NELEMS(res_table_trade_splash), obj_table_trade_splash, NELEMS(obj_table_trade_splash) },
+  { res_table_trade_end, NELEMS(res_table_trade_end), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
 };
 
 
@@ -204,10 +293,11 @@ static void _cameraSetTrade01(IRC_POKEMON_TRADE* pWork)
 {
   VecFx32 campos;
   VecFx32 tarpos;
-  fx32 far= 2000*FX32_ONE;
+  fx32 far= 200*FX32_ONE;
+  fx32 near= FX32_ONE;
 
-  campos.x = 0*FX32_ONE;
-  campos.y = 0;
+  campos.x = 0;
+  campos.y = 2*FX32_ONE;
   campos.z = 15*FX32_ONE;
   tarpos.x = 0;
   tarpos.y = 0;
@@ -215,6 +305,7 @@ static void _cameraSetTrade01(IRC_POKEMON_TRADE* pWork)
 
   GFL_G3D_CAMERA_SetPos( pWork->camera, &campos );
   GFL_G3D_CAMERA_SetTarget( pWork->camera, &tarpos );
+  GFL_G3D_CAMERA_SetNear( pWork->camera, &near );
   GFL_G3D_CAMERA_SetFar( pWork->camera, &far );
   tarpos.x = 0;
   tarpos.y = FX32_ONE;
@@ -391,16 +482,12 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
   VecFx32 tarpos;
     int i;
 
-  for( i=0; i<SETUP_INDEX_MAX; i++ )
-  {
-    pWork->unitIndex[i] = UNIT_NULL;
-  }
 
 
   // 初期化処理
   _demoInit( pWork->heapID );
   // 3D管理ユーティリティーのセットアップ
-  pWork->g3dUtil = GFL_G3D_UTIL_Create( 10, 10, pWork->heapID );
+  pWork->g3dUtil = GFL_G3D_UTIL_Create( 20, 20, pWork->heapID );
 
   Finalize(pWork);
 
@@ -412,9 +499,9 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
     pWork->camera   = GFL_G3D_CAMERA_CreateDefault( &pos, &target, pWork->heapID );
   }
 
-  Initialize( pWork, REEL_PANEL_OBJECT);
-  pWork->modelno = REEL_PANEL_OBJECT;
-
+  {
+    Initialize( pWork, REEL_PANEL_OBJECT);
+  }
   modelset[pWork->modelno].setCamera(pWork);
 
 }
@@ -461,10 +548,9 @@ void IRC_POKETRADEDEMO_End( IRC_POKEMON_TRADE* pWork )
 //============================================================================================
 void IRC_POKETRADEDEMO_SetModel( IRC_POKEMON_TRADE* pWork, int modelno)
 {
-
+  
   Initialize( pWork, modelno);
 
-  pWork->modelno = modelno;
 
   modelset[pWork->modelno].setCamera(pWork);
 
@@ -498,34 +584,26 @@ static void Initialize( IRC_POKEMON_TRADE* pWork, int modelno )
 
   // ユニット追加
   {
-    int i;
-    for( i=0; i<SETUP_INDEX_MAX; i++ )
-    {
-      if(pWork->unitIndex[i]==UNIT_NULL)
-      {
-        pWork->unitIndex[i] = GFL_G3D_UTIL_AddUnit( pWork->g3dUtil, &setup[modelno] );
-        break;
-      }
-    }
+    pWork->unitIndex = GFL_G3D_UTIL_AddUnit( pWork->g3dUtil, &setup[modelno] );
+    pWork->objCount = setup[modelno].objCount;
   }
 
   // アニメーション有効化
   {
     int i;
-    for( i=0; i<SETUP_INDEX_MAX; i++ )
+    for( i=0; i<pWork->objCount; i++ )
     {
-      if(pWork->unitIndex[i]!=UNIT_NULL){
-        int j;
-        GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( pWork->g3dUtil, pWork->unitIndex[i] );
-        int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
-        for( j=0; j<anime_count; j++ )
-        {
-          OS_TPrintf("アニメーション有効化%d\n",j);
-          GFL_G3D_OBJECT_EnableAnime( obj, j );
-        }
+      int j;
+      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( pWork->g3dUtil, pWork->unitIndex+i );
+      int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+      for( j=0; j<anime_count; j++ )
+      {
+        OS_TPrintf("アニメーション有効化%d\n",j);
+        GFL_G3D_OBJECT_EnableAnime( obj, j );
       }
     }
   }
+  pWork->modelno = modelno;
 
   // icaデータをロード
   //  pWork->icaAnime = ICA_ANIME_CreateStreamingAlloc(
@@ -544,13 +622,9 @@ static void Finalize( IRC_POKEMON_TRADE* pWork )
   // ユニット破棄
   {
     int i;
-    for( i=0; i<SETUP_INDEX_MAX; i++ )
+    for( i=0; i<pWork->objCount; i++ )
     {
-      if(pWork->unitIndex[i]!=UNIT_NULL)
-      {
-        GFL_G3D_UTIL_DelUnit( pWork->g3dUtil, pWork->unitIndex[i] );
-        pWork->unitIndex[i] = UNIT_NULL;
-      }
+      GFL_G3D_UTIL_DelUnit( pWork->g3dUtil, pWork->unitIndex+i );
     }
   }
 
@@ -565,7 +639,7 @@ static void Finalize( IRC_POKEMON_TRADE* pWork )
 static void Draw( IRC_POKEMON_TRADE* pWork )
 {
   static fx32 frame = 0;
-  static fx32 anime_speed = FX32_ONE;
+  static fx32 anime_speed = ANIM_SPEED;
   GFL_G3D_OBJSTATUS status;
 
 
@@ -580,12 +654,11 @@ static void Draw( IRC_POKEMON_TRADE* pWork )
   // アニメーション更新
   {
     int i;
-    for( i=0; i<SETUP_INDEX_MAX; i++ )
+    for( i=0; i<pWork->objCount; i++ )
     {
-      if(pWork->unitIndex[i]!=UNIT_NULL)
       {
         int j;
-        GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( pWork->g3dUtil, pWork->unitIndex[i] );
+        GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( pWork->g3dUtil, pWork->unitIndex+i );
         int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
         for( j=0; j<anime_count; j++ )
         {
@@ -600,17 +673,16 @@ static void Draw( IRC_POKEMON_TRADE* pWork )
   GFL_G3D_DRAW_SetLookAt();
   {
     int i;
-    for( i=0; i<SETUP_INDEX_MAX; i++ )
+    for( i=0; i<pWork->objCount; i++ )
     {
-      if(pWork->unitIndex[i]!=UNIT_NULL)
-      {
-        GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( pWork->g3dUtil, pWork->unitIndex[i] );
-        GFL_G3D_DRAW_DrawObject( obj, &status );
-      }
+      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( pWork->g3dUtil, pWork->unitIndex+i );
+      GFL_G3D_DRAW_DrawObject( obj, &status );
     }
   }
   GFL_G3D_DRAW_End();
 
-  frame += anime_speed;
+//  frame += anime_speed;
   //  ICA_ANIME_IncAnimeFrame( pWork->icaAnime, anime_speed );
 }
+
+

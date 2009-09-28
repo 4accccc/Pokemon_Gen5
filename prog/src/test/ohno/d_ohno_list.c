@@ -98,17 +98,25 @@ static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk);
 //==============================================================================
 FS_EXTERN_OVERLAY(wificlub);
 FS_EXTERN_OVERLAY(ohno_debugapp);
+FS_EXTERN_OVERLAY(ircbattlematch);
 extern const GFL_PROC_DATA WifiClubProcData;
 extern const GFL_PROC_DATA DebugOhnoMainProcData;
 extern const GFL_PROC_DATA DebugLayoutMainProcData;
 extern const GFL_PROC_DATA G_SYNC_ProcData;
 extern const GFL_PROC_DATA VTRProcData;
+extern const GFL_PROC_DATA IrcPokemonTradeProcData;
 
 //==============================================================================
 //	データ
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
+	{//
+		DEBUG_OHNO_MSG0013, 
+		&IrcPokemonTradeProcData,	
+		NULL,
+		FS_OVERLAY_ID(ircbattlematch)
+	},
 	{//
 		DEBUG_OHNO_MSG0002, 
 		&DebugLayoutMainProcData,	

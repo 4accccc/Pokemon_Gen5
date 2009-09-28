@@ -462,6 +462,14 @@ extern void GFL_NET_WHPipeSetClientConnect(BOOL bEnable);
  */
 //-------------------------------------------------------------
 extern BOOL GFL_NET_WLCrossoverInit(void);
+//-------------------------------------------------------------
+/**
+ * @brief   切断コールバックがあったらエラーにする
+ * @param   none
+ * @retval  nene
+ */
+//-------------------------------------------------------------
+extern void GFL_NET_WL_DisconnectError(void);
 
 
 

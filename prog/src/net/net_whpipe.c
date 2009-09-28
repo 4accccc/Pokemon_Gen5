@@ -1960,3 +1960,19 @@ BOOL GFL_NET_WLCrossoverInit(void)
   return TRUE;
 }
 
+//-------------------------------------------------------------
+/**
+ * @brief   切断コールバックがあったらエラーにする
+ * @param   none
+ * @retval  nene
+ */
+//-------------------------------------------------------------
+void GFL_NET_WL_DisconnectError(void)
+{
+	GFL_NETWL* pNetWL = _pNetWL;
+
+	if(pNetWL->bErrorCheck){
+    pNetWL->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
+  }
+}
+
