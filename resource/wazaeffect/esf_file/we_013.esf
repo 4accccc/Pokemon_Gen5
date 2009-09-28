@@ -1,11 +1,12 @@
 EFFSEQ
-$0003
+$0004
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_013.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_013_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_013_1.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_013_2.spa
 #001
 %00
-カメラ移動	追従	防御側	16	0	12
+カメラ移動	追従	攻撃側	16	0	12
 ポケモンアニメ	攻撃側	アニメストップ
 パーティクルデータロード	w_013_1
 パーティクル再生	w_013_1	W_013_1_013_SPIN_FIN	攻撃側	方向無し	0	0
@@ -15,6 +16,21 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_013_1.spa
 エフェクト終了待ち	すべて
 ポケモンアニメ	攻撃側	アニメスタート
 カメラ移動	追従	初期位置	16	0	12
+エフェクト終了待ち	すべて
+エフェクト終了
+&
+#002
+%00
+カメラ移動	追従	防御側	16	0	12
+ポケモンアニメ	防御側	アニメストップ
+ポケモンアニメ	攻撃側	アニメストップ
+パーティクルデータロード	w_013_2
+パーティクル再生	w_013_2	W_013_2_013_HIT_SLASH	防御側	方向無し	2	0
+ポケモン移動	防御側	往復	0.3	0	1	2	5
+エフェクト終了待ち	すべて
+カメラ移動	追従	初期位置	16	0	12
+ポケモンアニメ	防御側	アニメスタート
+ポケモンアニメ	攻撃側	アニメスタート
 エフェクト終了待ち	すべて
 エフェクト終了
 &

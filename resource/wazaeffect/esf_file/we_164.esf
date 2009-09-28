@@ -1,16 +1,17 @@
 EFFSEQ
-$0001
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_106.spa
+$0003
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_424.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_164.spa
 #001
 %00
-カメラ移動	追従	攻撃側	16	0	8
+カメラ移動	追従	攻撃側	16	0	12
+ポケモンアニメ	攻撃側	アニメストップ
+パーティクルデータロード	w_164
+パーティクル再生	w_164	W_164_164_GURUMI_MIGAWARI	攻撃側	方向無し	0	0
 エフェクト終了待ち	すべて
-パーティクルデータロード	w_106
-パーティクル再生	w_106	W_106_106_KATAKU_KIRA	攻撃側	方向無し	2	0
-ポケモンパレットフェード	攻撃側	0	12	0	0:0:0
-エフェクト終了待ち	すべて
-ポケモンパレットフェード	攻撃側	12	0	0	0:0:0
-カメラ移動	追従	初期位置	16	0	8
+ポケモンアニメ	攻撃側	アニメスタート
+カメラ移動	追従	初期位置	16	0	12
 エフェクト終了待ち	すべて
 エフェクト終了
 &

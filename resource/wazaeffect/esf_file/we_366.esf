@@ -1,11 +1,15 @@
 EFFSEQ
-$0001
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+$0002
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_366.spa
 #001
 %00
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	攻撃側	方向無し	0	0
-パーティクル再生	w_001	W_001_001_HIT_MARK	攻撃側	方向無し	0	0
+カメラ移動	追従	攻撃側	16	0	12
+パーティクルデータロード	w_366
+パーティクル再生	w_366	W_366_366_OIKAZE_LINE	攻撃側	方向無し	2	0
+パーティクル再生	w_366	W_366_366_OIKAZE_WIND	攻撃側	方向無し	0	0
+エフェクト終了待ち	すべて
+カメラ移動	追従	初期位置	16	0	12
 エフェクト終了待ち	すべて
 エフェクト終了
 &

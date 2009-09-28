@@ -1,11 +1,26 @@
 EFFSEQ
-$0001
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+$0002
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_417.spa
 #001
 %00
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	攻撃側	方向無し	0	0
-パーティクル再生	w_001	W_001_001_HIT_MARK	攻撃側	方向無し	0	0
+カメラ移動	追従	攻撃側	16	0	12
+ポケモンアニメ	攻撃側	アニメストップ
+パーティクルデータロード	w_417
+パーティクル再生	w_417	W_417_417_HAND	攻撃側	方向無し	2	0
+パーティクル再生	w_417	W_417_417_LINE_BURN	攻撃側	方向無し	2	0
+パーティクル再生	w_417	W_417_417_KEMURI_BOMB1A	攻撃側	方向無し	2	0
+パーティクル再生	w_417	W_417_417_KEMURI_BOMB1B	攻撃側	方向無し	2	0
+パーティクル再生	w_417	W_417_417_KEMURI_BOMB2A	攻撃側	方向無し	2	0
+パーティクル再生	w_417	W_417_417_KEMURI_BOMB2B	攻撃側	方向無し	2	0
+パーティクル再生	w_417	W_417_417_KEMURI_BOMB3A	攻撃側	方向無し	2	0
+パーティクル再生	w_417	W_417_417_KEMURI_BOMB3B	攻撃側	方向無し	2	0
+タイマーによるウエイト	85
+ポケモン移動	攻撃側	往復	0	0.3	3	1	1
+ポケモン拡縮	攻撃側	往復	0	0.3	3	1	1
+エフェクト終了待ち	すべて
+ポケモンアニメ	攻撃側	アニメスタート
+カメラ移動	追従	初期位置	16	0	12
 エフェクト終了待ち	すべて
 エフェクト終了
 &
