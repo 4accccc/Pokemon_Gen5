@@ -83,32 +83,37 @@ typedef void (StateFunc)(FIELD_ITEMMENU_WORK* wk);
 typedef int (MenuFunc)(FIELD_ITEMMENU_WORK* wk);
 
 struct _DEBUGITEM_PARAM {
-	ITEM_ST ScrollItem[ BAG_MYITEM_MAX ];	// スクロールする為のアイテムリスト
-  StateFunc* state;      ///< ハンドルのプログラム状態
-  GMEVENT * event;
-  GAMESYS_WORK * gsys;
-  FIELDMAP_WORK * fieldmap;
-  SAVE_CONTROL_WORK *ctrl;
+  // [IN] 初期化時に外部から受け渡されるメンバ
+  FIELDMAP_WORK       * fieldmap;
+  GAMESYS_WORK        * gsys;
+  SAVE_CONTROL_WORK   * ctrl;
+  MYSTATUS            * mystatus;
+  ITEMCHECK_WORK      icwk;             ///< アイテムチェックワーク FMENU_EVENT_WORKからコピー
+  BAG_MODE            mode;             ///< バッグ呼び出しモード
+	HEAPID              heapID;
+  BOOL                cycle_flg;        ///< 自転車かどうか？
+//  GMEVENT * event;
+
+  // [PRIVATE]
+	ITEM_ST ScrollItem[ BAG_MYITEM_MAX ];	///< スクロールする為のアイテムリスト
+  StateFunc * state;                    ///< ハンドルのプログラム状態
   MYITEM_PTR pMyItem;
-  MYSTATUS* mystatus;
 	GFL_BMPWIN* win;
   GFL_BMPWIN* itemInfoDispWin;
   GFL_BMPWIN* pocketNameWin;
-  PRINT_UTIL            SysMsgPrintUtil;    // システムウインドウPrintUtil
-  PRINT_QUE*            SysMsgQue;
-  GFL_MSGDATA* MsgManager;			// 名前入力メッセージデータマネージャー
-  GFL_MSGDATA* MsgManagerItemInfo;			// 名前入力メッセージデータマネージャー
+  PRINT_UTIL  SysMsgPrintUtil;      ///< システムウインドウPrintUtil
+  PRINT_QUE*  SysMsgQue;
+  GFL_MSGDATA* MsgManager;		      ///< 名前入力メッセージデータマネージャー
+  GFL_MSGDATA* MsgManagerItemInfo;	///< 名前入力メッセージデータマネージャー
   GFL_MSGDATA* MsgManagerPocket;
-  WORDSET			*WordSet;								// メッセージ展開用ワークマネージャー
-  STRBUF*  pStrBuf;
-	STRBUF*  pExpStrBuf;
-  GFL_FONT 			*fontHandle;
+  WORDSET*    WordSet;							///< メッセージ展開用ワークマネージャー
+  STRBUF*     pStrBuf;
+	STRBUF*     pExpStrBuf;
+  GFL_FONT*   fontHandle;
   BAG_CURSOR* pBagCursor;
-  MenuFunc* menu_func[BAG_MENUTBL_MAX];
-  ITEMCHECK_WORK icwk;
-	u32 objRes[3];  //CLACTリソース
-  u32 cellRes[SCR_MAX];  //アイテムカーソル
-
+  MenuFunc*   menu_func[BAG_MENUTBL_MAX];
+	u32 objRes[3];          ///< CLACTリソース
+  u32 cellRes[SCR_MAX];   ///< アイテムカーソル
 
   u32 commonCellTypeNcg[POKETYPE_MAX];
   u32 commonCell[5];
@@ -160,11 +165,8 @@ struct _DEBUGITEM_PARAM {
   int menuNum;          //サブメニューの項目数
   int subListCursor;  //サブメニューのカーソル位置
   int submenuList[BAG_MENUTBL_MAX];  //サブメニューの項目
-  int mode;
-  int cycle_flg;
   u32 NowAttr;
   u32 FrontAttr;
-	HEAPID heapID;
 	u32 bgchar;
   BOOL bChange;
   int count;
