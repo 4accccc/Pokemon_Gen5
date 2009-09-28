@@ -28,7 +28,8 @@ enum {
 	NARC_config_gra_shita_bar_NCGR = 14,
 	NARC_config_gra_ue_bar_01_NCGR = 15,
 	NARC_config_gra_ue_bar_01_NSCR = 16,
-	NARC_config_gra_ue_flame_01_NCGR = 17
+	NARC_config_gra_ue_bar_window_NCGR = 17,
+	NARC_config_gra_ue_flame_01_NCGR = 18
 };
 
 /* NARC_CONFIG_GRA_NAIX_ */
