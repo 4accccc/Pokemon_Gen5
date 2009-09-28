@@ -136,7 +136,70 @@ VMCMD_RESULT EvCmdCheckPokemonHP( VMHANDLE * core, void *wk )
 }
 
 
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちポケモンの数を取得
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetPartyPokeCount( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK* work = (SCRCMD_WORK*)wk;
+  u16*       ret_wk = SCRCMD_GetVMWork( core, work );
+  GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY*  party = GAMEDATA_GetMyPokemon( gdata );
+
+  *ret_wk = (u16)PokeParty_GetPokeCount( party );
+  return VMCMD_RESULT_CONTINUE;
+} 
 
 
 
 
+//--------------------------------------------------------------
+/**
+ * @brief 所持金を増やす
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdAddGold( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*   work = (SCRCMD_WORK*)wk;
+  u16*         ret_wk = SCRCMD_GetVMWork( core, work );
+  GAMEDATA*     gdata = SCRCMD_WORK_GetGameData( work );
+  PLAYER_WORK* player = GAMEDATA_GetMyPlayerWork( gdata );
+  MYSTATUS*  mystatus = &player->mystatus;
+  u16             val = SCRCMD_GetVMWorkValue( core, wk );
+  u32            gold = MyStatus_GetGold( mystatus );
+
+  gold = gold + val;
+  MyStatus_SetGold( mystatus, gold );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 所持金を減らす
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSubtractGold( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*   work = (SCRCMD_WORK*)wk;
+  u16*         ret_wk = SCRCMD_GetVMWork( core, work );
+  GAMEDATA*     gdata = SCRCMD_WORK_GetGameData( work );
+  PLAYER_WORK* player = GAMEDATA_GetMyPlayerWork( gdata );
+  MYSTATUS*  mystatus = &player->mystatus;
+  u16             val = SCRCMD_GetVMWorkValue( core, wk );
+  u32            gold = MyStatus_GetGold( mystatus );
+
+  gold = gold - val;
+  MyStatus_SetGold( mystatus, gold );
+  return VMCMD_RESULT_CONTINUE;
+}

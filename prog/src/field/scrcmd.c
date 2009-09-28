@@ -29,6 +29,7 @@
 #include "field_sound.h"
 #include "field_player.h"
 
+
 //#include "tr_tool/tr_tool.h"
 
 
@@ -44,6 +45,7 @@
 #include "scrcmd_pokemon.h"
 #include "scrcmd_screeneffects.h"
 #include "scrcmd_enviroments.h"
+#include "scrcmd_sodateya.h"
 
 
 #include "../../../resource/fldmapdata/script/usescript.h"

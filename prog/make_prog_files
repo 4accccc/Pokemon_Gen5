@@ -38,7 +38,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
 				savedata/regulation.c \
         savedata/gimmickwork.c \
         savedata/battle_rec.c \
-        savedata/battle_box_save.c
+        savedata/battle_box_save.c \
+        savedata/sodateya_work.c 
 
 
 #’ÊM‚Ìí’“
@@ -149,6 +150,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/scrcmd_work.c \
         field/scrcmd_enviroments.c \
         field/scrcmd_pokemon.c \
+        field/scrcmd_sodateya.c \
         test/matsuda/wflby_debug.c \
         test/ariizumi/debug_pause.c \
         system/wazatype_icon.c \

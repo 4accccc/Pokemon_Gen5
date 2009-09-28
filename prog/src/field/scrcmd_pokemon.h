@@ -19,3 +19,7 @@ extern VMCMD_RESULT EvCmdPokemonRecover( VMHANDLE * core, void *wk );
 
 extern VMCMD_RESULT EvCmdCheckPokemonHP( VMHANDLE * core, void *wk );
 
+extern VMCMD_RESULT EvCmdGetPartyPokeCount( VMHANDLE * core, void *wk );
+
+extern VMCMD_RESULT EvCmdAddGold( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdSubtractGold( VMHANDLE * core, void * wk );

@@ -19,9 +19,69 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_sodateya_scr
+_EVENT_DATA   ev_sodateya_grandpa
+_EVENT_DATA   ev_sodateya_grandma
 _EVENT_DATA_END
 
+
+//--------------------------------------------------------------
+// ローカルワーク
+//--------------------------------------------------------------
+DEFINE_LOCAL message_id // メッセージID
+DEFINE_LOCAL ask_retval // 「はい」「いいえ」選択結果
+
+//===============================================================
+// サブルーチン：通常メッセージ表示
+//
+// message_id に指定されたメッセージを表示する
+//===============================================================
+say:
+  _TALK_OBJ_START()
+  _BALLOONWIN_TALKOBJ_OPEN( message_id )
+  _AB_KEYWAIT()
+  _BALLOONWIN_CLOSE() 
+_RET
+
+//===============================================================
+// サブルーチン：質問メッセージ表示
+//
+// message_id に指定されたメッセージを表示し, 
+// 「はい」「いいえ」選択ウィンドウを表示する。
+// 選択結果を ask_retval に格納し, ウィンドウを閉じる
+//===============================================================
+ask:
+  _TALK_OBJ_START()
+  _BALLOONWIN_TALKOBJ_OPEN( message_id )
+  _AB_KEYWAIT()
+  _YES_NO_WIN( ask_retval )
+  _BALLOONWIN_CLOSE()
+_RET
+
+//===============================================================
+// サブルーチン：相性チェックとその結果発表
+//===============================================================
+love_check:
+{
+  DEFINE_LOCAL love
+
+  // 相性チェック
+  _SODATEYA_LOVE_CHECK( love )
+
+  // 相性に応じて表示するメッセージを決定
+  IF $love >= 70 THEN 
+    $message_id = msg_sodateya_oldman_03
+  ELSIF $love >= 50 THEN
+    $message_id = msg_sodateya_oldman_04
+  ELSIF $love >= 20 THEN
+    $message_id = msg_sodateya_oldman_05
+  ELSE
+    $message_id = msg_sodateya_oldman_06
+  ENDIF
+
+  // 結果発表
+  _CALL say
+}
+_RET
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -30,9 +90,81 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/* 育て屋じいさん                                             */
 /**************************************************************/
-ev_sodateya_scr:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START ev_sodateya_grandpa
+  
+  // ローカルワーク宣言
+  DEFINE_LOCAL have_egg     // タマゴの有無
+  DEFINE_LOCAL pokemon_num  // 預けているポケモンの数
+  DEFINE_LOCAL party_count  // 手持ちポケモン数
+  DEFINE_LOCAL egg_get      // タマゴを受け取るかどうか
 
+  // 状態を取得
+  _CHECK_SODATEYA_HAVE_EGG( have_egg )  
+  _GET_SODATEYA_POKEMON_NUM( pokemon_num ) 
+  _GET_PARTY_POKE_COUNT( party_count )
+  $have_egg = TRUE
+  $pokemon_num = 2 
+  $egg_get = FALSE
+
+  //-------------------
+  // タマゴがある場合
+  //-------------------
+  IF $have_egg == TRUE THEN  
+    //「タマゴほしいじゃろ？」
+    $message_id = msg_sodateya_oldman_07
+    _CALL ask
+    IF $ask_retval == 0 THEN  //「はい」を選択 ==> タマゴを貰う
+      $egg_get = TRUE 
+    ELSE                      //「いいえ」を選択 ==>「本当は欲しいんじゃろ？」
+      $message_id = msg_sodateya_oldman_10
+      _CALL ask
+      IF $ask_retval == 0 THEN  //「はい」を選択 ==> タマゴを貰う
+        $egg_get = TRUE 
+      ENDIF
+    ENDIF
+    // タマゴ受け取り処理
+    IF $egg_get == TRUE THEN 
+      IF $party_count < 6 THEN  // 手持ちに空き有 ==> たまごゲット
+        _GET_SODATEYA_EGG()
+        //「タマゴを貰った」
+        $message_id = msg_sodateya_oldman_08
+        _CALL say
+        //「大事に育てなさいよ」
+        $message_id = msg_sodateya_oldman_08_01
+        _CALL say
+      ELSE                      // 手持ちがいっぱい ==>「手持ちがいっぱいじゃ」
+        $message_id = msg_sodateya_oldman_09
+        _CALL say
+      ENDIF
+    // タマゴ削除
+    ELSE
+      _DELETE_SODATEYA_EGG()
+    ENDIF
+  //-------------------
+  // タマゴがない場合
+  //-------------------
+  ELSE                      
+    IF $pokemon_num == 0 THEN       // 預けポケモン0体 ==>「わしは育て屋じいさん」
+      $message_id = msg_sodateya_oldman_01
+      _CALL say
+    ELSIF $pokemon_num == 1 THEN    // 預けポケモン1体 ==>「よくきたな」
+      $message_id = msg_sodateya_oldman_02
+      _CALL say
+    ELSE                            // 預けポケモン2体 ==> 相性チェック
+      _CALL love_check
+    ENDIF
+  ENDIF
+
+EVENT_END
+
+
+/**************************************************************/
+/* 育て屋ばあさん                                             */
+/**************************************************************/
+EVENT_START ev_sodateya_grandma
+
+  // ローカルワーク宣言
+  DEFINE_LOCAL have_egg   // タマゴの有無
+EVENT_END 

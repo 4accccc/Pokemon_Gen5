@@ -5,6 +5,7 @@
 #define _SODATEYA_SCR_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_SODATEYA_SCR (2200)
+#define SCRID_SODATEYA_GRANDPA (2200)
+#define SCRID_SODATEYA_GRANDMA (2201)
 
 #endif //_SODATEYA_SCR_DEF_H_

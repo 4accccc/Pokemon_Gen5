@@ -404,17 +404,20 @@
 
   DEF_CMD( EvCmdGetLangID, EV_SEQ_GET_LANG_ID )
   DEF_CMD( EvCmdCheckPokemonHP, EV_SEQ_CHECK_TEMOTI_HP )
-  NO_CMD()
-  NO_CMD()
-
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdGetPartyPokeCount, EV_SEQ_GET_PARTY_POKE_COUNT )
   NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  // ˆç‚Ä‰®
+  DEF_CMD( EvCmdCheckSodateyaHaveEgg, EV_SEQ_CHECK_SODATEYA_HAVE_EGG )
+  DEF_CMD( EvCmdGetSodateyaEgg, EV_SEQ_GET_SODATEYA_EGG )
+  DEF_CMD( EvCmdDeleteSodateyaEgg, EV_SEQ_DELETE_SODATEYA_EGG )
+  DEF_CMD( EvCmdGetSodateyaPokemonNum, EV_SEQ_GET_SODATEYA_POKEMON_NUM )
+  DEF_CMD( EvCmdSodateyaLoveCheck, EV_SEQ_SODATEYA_LOVE_CHECK )
+
+  // ‚¨‹à
+  DEF_CMD( EvCmdAddGold, EV_SEQ_ADD_GOLD )
+  DEF_CMD( EvCmdSubtractGold, EV_SEQ_SUBTRACT_GOLD )
+
   NO_CMD()
 
   END_CMD

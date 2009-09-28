@@ -37,6 +37,7 @@
 #include "savedata/gimmickwork.h"
 #include "savedata/battle_rec.h"
 #include "savedata/battle_box_save.h"
+#include "savedata/sodateya_work.h"
 
 //==============================================================================
 //	íËêîíËã`
@@ -333,6 +334,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_BATTLE_BOX,
     (FUNC_GET_SIZE)BATTLE_BOX_SAVE_GetWorkSize,
     (FUNC_INIT_WORK)BATTLE_BOX_SAVE_InitWork,
+  },
+  { // àÁÇƒâÆÉèÅ[ÉN
+    GMDATA_ID_SODATEYA_WORK,
+    (FUNC_GET_SIZE)SODATEYA_WORK_GetWorkSize,
+    (FUNC_INIT_WORK)SODATEYA_WORK_InitWork,
   }
 };
 

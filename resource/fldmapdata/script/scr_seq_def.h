@@ -2316,6 +2316,55 @@
   .short  \pos
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _GET_PARTY_POKE_COUNT
+ * @brief 手持ちポケモンの数を取得
+ * @param ret_wk チェック結果を受け取るワーク
+ * @retval u16 手持ちポケモンの数
+ */
+//--------------------------------------------------------------
+#define _GET_PARTY_POKE_COUNT( ret_wk ) \
+    _ASM_GET_PARTY_POKE_COUNT ret_wk
+
+  .macro _ASM_GET_PARTY_POKE_COUNT ret_wk
+  .short EV_SEQ_GET_PARTY_POKE_COUNT
+  .short \ret_wk
+  .endm
+
+//======================================================================
+// お金
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @def _ADD_GOLD
+ * @brief お金を増やす
+ * @param value 増やす量
+ */
+//--------------------------------------------------------------
+#define _ADD_GOLD( value ) \
+    _ASM_ADD_GOLD value
+
+  .macro _ASM_ADD_GOLD value
+  .short EV_SEQ_ADD_GOLD
+  .short \value
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SUBTRACT_GOLD
+ * @brief お金を増やす
+ * @param value 増やす量
+ */
+//--------------------------------------------------------------
+#define _SUBTRACT_GOLD( value ) \
+    _ASM_SUBTRACT_GOLD value
+
+  .macro _ASM_SUBTRACT_GOLD value
+  .short EV_SEQ_SUBTRACT_GOLD
+  .short \value
+  .endm
+  
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
@@ -2455,6 +2504,84 @@
   .short  \poke_count
   .endm
 
+
+//======================================================================
+//
+//
+// 育て屋関連
+//
+//
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 育て屋のポケモンにタマゴが生まれたかどうかのチェック
+ * 
+ * @param ret_wk 結果の格納先
+ * @return       タマゴがある場合 TRUE
+ */
+//--------------------------------------------------------------
+#define _CHECK_SODATEYA_HAVE_EGG( ret_wk ) \
+    _ASM_CHECK_SODATEYA_HAVE_EGG ret_wk
+
+  .macro _ASM_CHECK_SODATEYA_HAVE_EGG ret_wk
+  .short EV_SEQ_CHECK_SODATEYA_HAVE_EGG
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 育て屋のタマゴを受け取る
+ */
+//--------------------------------------------------------------
+#define _GET_SODATEYA_EGG() \
+    _ASM_GET_SODATEYA_EGG
+
+  .macro _ASM_GET_SODATEYA_EGG
+  .short EV_SEQ_GET_SODATEYA_EGG
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 育て屋のタマゴを削除する
+ */
+//--------------------------------------------------------------
+#define _DELETE_SODATEYA_EGG() \
+    _ASM_DELETE_SODATEYA_EGG
+
+  .macro _ASM_DELETE_SODATEYA_EGG
+  .short EV_SEQ_DELETE_SODATEYA_EGG
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 育て屋に預けているポケモンの数を取得する
+ *
+ * @param ret_wk 結果の格納先
+ * @return       育て屋に預けているポケモンの数
+ */
+//--------------------------------------------------------------
+#define _GET_SODATEYA_POKEMON_NUM( ret_wk ) \
+    _ASM_GET_SODATEYA_POKEMON_NUM ret_wk
+
+  .macro _ASM_GET_SODATEYA_POKEMON_NUM ret_wk
+  .short EV_SEQ_GET_SODATEYA_POKEMON_NUM
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 育て屋に預けている2体のポケモンの相性をチェックする
+ *
+ * @param ret_wk 結果の格納先
+ * @return 
+ */
+//--------------------------------------------------------------
+#define _SODATEYA_LOVE_CHECK( ret_wk ) \
+    _ASM_SODATEYA_LOVE_CHECK ret_wk
+
+  .macro _ASM_SODATEYA_LOVE_CHECK ret_wk
+  .short EV_SEQ_SODATEYA_LOVE_CHECK
+  .endm
 
 
 //======================================================================
