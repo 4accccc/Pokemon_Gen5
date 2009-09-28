@@ -1887,7 +1887,7 @@
     _ASM_BMPMENU_MAKE_LIST msg_id, param
 
   .macro  _ASM_BMPMENU_MAKE_LIST msg_id,param
-  .short  EV_SEQ_BMPMENU_MAKE_LIST16
+  .short  EV_SEQ_BMPMENU_MAKE_LIST
   .short  \msg_id
   .short  \param
   .endm
@@ -2318,6 +2318,26 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _CHECK_TEMOTI_EGG
+ * @brief 手持ちポケモンのEGGチェック
+ * @param ret_wk  チェック結果を受け取るワーク
+ * @param pos     チェックするポケモンの位置（０～５）
+ * @retval  TRUE    チェックしたポケモンがタマゴの場合
+ * @retval  FALSE   チェックしたポケモンがタマゴでない場合
+ */
+//--------------------------------------------------------------
+#define _CHECK_TEMOTI_EGG( ret_wk, pos ) \
+    _ASM_CHECK_TEMOTI_EGG ret_wk, pos
+
+
+  .macro  _ASM_CHECK_TEMOTI_EGG ret_wk, pos
+  .short  EV_SEQ_CHECK_TEMOTI_EGG
+  .short  \ret_wk
+  .short  \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @def _GET_PARTY_POKE_COUNT
  * @brief 手持ちポケモンの数を取得
  * @param ret_wk チェック結果を受け取るワーク
@@ -2331,6 +2351,23 @@
   .short EV_SEQ_GET_PARTY_POKE_COUNT
   .short \ret_wk
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_PARTY_BATTLE_POKE_COUNT
+ * @brief 戦える手持ちポケモンの数を取得
+ * @param ret_wk チェック結果を受け取るワーク
+ * @retval u16 戦える手持ちポケモンの数
+ */
+//--------------------------------------------------------------
+#define _GET_PARTY_BATTLE_POKE_COUNT( ret_wk ) \
+    _ASM_GET_PARTY_BATTLE_POKE_COUNT ret_wk
+
+  .macro _ASM_GET_PARTY_BATTLE_POKE_COUNT ret_wk
+  .short EV_SEQ_GET_PARTY_BATTLE_POKE_COUNT
+  .short \ret_wk
+  .endm
+
 
 //======================================================================
 // お金

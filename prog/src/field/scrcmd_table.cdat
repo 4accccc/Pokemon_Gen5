@@ -404,8 +404,9 @@
 
   DEF_CMD( EvCmdGetLangID, EV_SEQ_GET_LANG_ID )
   DEF_CMD( EvCmdCheckPokemonHP, EV_SEQ_CHECK_TEMOTI_HP )
+  DEF_CMD( EvCmdCheckPokemonEgg, EV_SEQ_CHECK_TEMOTI_EGG )
   DEF_CMD( EvCmdGetPartyPokeCount, EV_SEQ_GET_PARTY_POKE_COUNT )
-  NO_CMD()
+  DEF_CMD( EvCmdGetPartyBattlePokeCount, EV_SEQ_GET_PARTY_BATTLE_POKE_COUNT )
 
   // ˆç‚Ä‰®
   DEF_CMD( EvCmdCheckSodateyaHaveEgg, EV_SEQ_CHECK_SODATEYA_HAVE_EGG )

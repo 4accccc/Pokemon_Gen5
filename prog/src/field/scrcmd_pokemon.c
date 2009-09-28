@@ -135,6 +135,41 @@ VMCMD_RESULT EvCmdCheckPokemonHP( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちポケモンのタマゴかどうかの判定
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCheckPokemonEgg( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK*   work = (SCRCMD_WORK*)wk;
+  u16*         ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
+  u16             pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
+  GAMEDATA*     gdata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY*    party = GAMEDATA_GetMyPokemon( gdata );
+  int             max = PokeParty_GetPokeCountMax( party );
+  u32     tamago_flag = 0;
+  POKEMON_PARAM* param = NULL;
+
+  // ポケモン指定に対する例外処理
+  if( (pos < 0) || (max <= pos) )
+  {
+    *ret_wk = FALSE;
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  // タマゴフラグ取得
+  param       = PokeParty_GetMemberPointer( party, pos );
+  tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
+
+  // 結果を格納
+  if( tamago_flag == 0 ) *ret_wk = FALSE;
+  else                   *ret_wk = TRUE;
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //--------------------------------------------------------------
 /**
@@ -156,6 +191,25 @@ VMCMD_RESULT EvCmdGetPartyPokeCount( VMHANDLE * core, void *wk )
 } 
 
 
+//--------------------------------------------------------------
+/**
+ * @brief 戦える手持ちポケモンの数を取得
+ *     (手持ちからタマゴ, 瀕死のポケモンを除いた数を取得する)
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetPartyBattlePokeCount( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK* work = (SCRCMD_WORK*)wk;
+  u16*       ret_wk = SCRCMD_GetVMWork( core, work );
+  GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY*  party = GAMEDATA_GetMyPokemon( gdata );
+
+  *ret_wk = (u16)PokeParty_GetBattlePokeNum( party );
+  return VMCMD_RESULT_CONTINUE;
+} 
 
 
 //--------------------------------------------------------------
