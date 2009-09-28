@@ -539,7 +539,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   case BTLEFF_CAMERA_POS_ATTACK_PAIR:
   case BTLEFF_CAMERA_POS_DEFENCE:
   case BTLEFF_CAMERA_POS_DEFENCE_PAIR:
-    cam_move_pos = EFFVM_GetPosition( vmh, cam_move_pos - BTLEFF_CAMERA_POS_ATTACK );
+    cam_move_pos = EFFVM_GetPosition( vmh, cam_move_pos - BTLEFF_CAMERA_POS_ATTACK + BTLEFF_POKEMON_SIDE_ATTACK );
     if( cam_move_pos == BTLV_MCSS_POS_ERROR )
     {
       return bevw->control_mode;
