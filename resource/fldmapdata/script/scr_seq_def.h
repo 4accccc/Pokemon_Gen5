@@ -689,9 +689,9 @@
  *  @param リセットするフラグナンバー
  */
 //--------------------------------------------------------------
-#define _FLAG_RESET( num ) _ASM_FLAG_RESET
+#define _FLAG_RESET( num ) _ASM_FLAG_RESET num
 
-  .macro  _ASM_FLAG_RESET
+  .macro  _ASM_FLAG_RESET num
   .short  EV_SEQ_FLAG_RESET
   .short  \num
   .endm
