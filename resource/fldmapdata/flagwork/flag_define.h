@@ -538,15 +538,15 @@
 #define FV_T01_SUPPORT                     514 /* 0x0202 研究所前：サポート */
 #define FV_R01_POKECOUNT_BTL               515 /* 0x0203 １番道路：ポケモン捕獲数勝負（ライバルとサポート） */
 #define FV_R02_RIVAL_01                    516 /* 0x0204 ２番道路：長い草説明イベントのライバル */
-		/* not used   517(0x0205) */
-		/* not used   518(0x0206) */
-		/* not used   519(0x0207) */
-		/* not used   520(0x0208) */
-		/* not used   521(0x0209) */
-		/* not used   522(0x020a) */
-		/* not used   523(0x020b) */
-		/* not used   524(0x020c) */
-		/* not used   525(0x020d) */
+#define FV_R03_RIVAL_01                    517 /* 0x0205 ３番道路：ライバルと出会い戦闘後イベント */
+#define FV_T02PC0101_SUPPORT               518 /* 0x0206 カラクサタウン：演説イベント終了後 */
+#define FV_T02PC0101_RIVAL                 519 /* 0x0207 カラクサタウン：長草イベント後 */
+#define FV_T02_HAKASE                      520 /* 0x0208 カラクサタウン：博士のポケセン案内 */
+#define FV_T02_SUPPORT                     521 /* 0x0209 カラクサタウン：サポートのストッパー */
+#define FV_T02_HAKAI                       522 /* 0x020a カラクサタウン：ハカイ団ストッパー */
+#define FV_T02_SAGE                        523 /* 0x020b カラクサタウン：七賢者の演説 */
+#define FV_T02_NNN                         524 /* 0x020c カラクサタウン：Nとの出会い */
+#define FV_T02_MAN                         525 /* 0x020d カラクサタウン：群集 */
 		/* not used   526(0x020e) */
 		/* not used   527(0x020f) */
 		/* not used   528(0x0210) */
