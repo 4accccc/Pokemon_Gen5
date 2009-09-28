@@ -370,9 +370,10 @@ void SCRCMD_WORK_InitMenuWork( SCRCMD_WORK *work,
   menuWork->y = y;
   menuWork->cursor = cursor;
   menuWork->cancel = cancel;
+  menuWork->ret = ret;
   menuWork->wordset = wordset;
   menuWork->msgData = msgData;
-  
+
   if( menuWork->msgData == NULL ){ //メニュー用共通メッセージ
     menuWork->free_msg = TRUE;
     menuWork->msgData = GFL_MSG_Create(

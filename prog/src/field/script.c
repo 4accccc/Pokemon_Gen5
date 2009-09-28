@@ -488,7 +488,8 @@ static VMHANDLE * SCRVM_Create( SCRIPT_WORK *sc, u16 zone_id, u16 scr_id )
 	head.gdata = GAMESYSTEM_GetGameData( sc->gsys );
 	head.mmdlsys = GAMEDATA_GetMMdlSys( head.gdata );
 	head.script = sc;
-	
+	head.fldMsgBG = sc->fld_param.msgBG;
+
 	work = SCRCMD_WORK_Create( &head, sc->main_heapID, sc->temp_heapID );
 	
 	init.stack_size = 0x0100;
