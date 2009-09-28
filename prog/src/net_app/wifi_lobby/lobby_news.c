@@ -733,7 +733,7 @@ GFL_PROC_RESULT NEWS_DRAW_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * 
 	NEWSDRAW_DrawSysInit( &p_wk->draw, HEAPID_NEWSDRAW );
 
   //ƒtƒHƒ“ƒg“Ç‚Ýž‚Ý
-  p_wk->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+  p_wk->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NEWSDRAW );
 	//TCBLì¬
 	p_wk->tcbl = GFL_TCBL_Init( HEAPID_NEWSDRAW, HEAPID_NEWSDRAW, 4, 32);

@@ -1418,7 +1418,7 @@ static void ANKETO_LOCAL_INPUT_Exit( ANKETO_LOCAL_WK* p_wk, ANKETO_MSGMAN* p_msg
 static void ANKETO_INPUT_Init( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_DRAWSYS* p_drawsys, u32 heapID )
 {
   //フォント読み込み
-  p_wk->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+  p_wk->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_ANKETO );
 	p_wk->printQue = PRINTSYS_QUE_Create(HEAPID_ANKETO);
 	p_wk->tcblsys = GFL_TCBL_Init(HEAPID_ANKETO, HEAPID_ANKETO, 8, 32);
@@ -2300,7 +2300,7 @@ static void ANKETO_LOCAL_OUTPUT_Exit( ANKETO_LOCAL_WK* p_wk, ANKETO_MSGMAN* p_ms
 static void ANKETO_OUTPUT_Init( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_DRAWSYS* p_drawsys, ANKETO_PARAM* p_param, u32 heapID )
 {
   //フォント読み込み
-  p_wk->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+  p_wk->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_ANKETO );
 	p_wk->printQue = PRINTSYS_QUE_Create(HEAPID_ANKETO);
 	p_wk->tcblsys = GFL_TCBL_Init(HEAPID_ANKETO, HEAPID_ANKETO, 8, 32);

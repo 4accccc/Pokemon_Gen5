@@ -678,7 +678,7 @@ static void Local_MessageSetting(TITLE_WORK *tw)
 	GFL_BG_LoadScreenReq( FRAME_MSG_S );
 
 	//ƒtƒHƒ“ƒgì¬
-	tw->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+	tw->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_TITLE_DEMO );
 
 	tw->printQue = PRINTSYS_QUE_Create( HEAPID_TITLE_DEMO );

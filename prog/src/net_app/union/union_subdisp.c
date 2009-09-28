@@ -374,7 +374,7 @@ static void _UniSub_SystemSetup(UNION_SUBDISP_PTR unisub)
 {
   unisub->clunit = GFL_CLACT_UNIT_Create(UNISUB_ACTOR_MAX, 5, HEAPID_FIELDMAP);
   unisub->printQue = PRINTSYS_QUE_Create(HEAPID_FIELDMAP);
-  unisub->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+  unisub->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
     GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_FIELDMAP );
 }
 

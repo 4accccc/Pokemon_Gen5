@@ -618,7 +618,7 @@ static void CCLocal_MessageSetting(COMPATI_SYS *cs)
 	}
 	GFL_BG_LoadScreenReq(FRAME_MSG_S);	//MakeScreen‚µ‚½‚Ì‚ð”½‰f
 
-	cs->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+	cs->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_COMPATI );
 
 //		PRINTSYS_Init( HEAPID_COMPATI );

@@ -902,7 +902,7 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	//メッセージマネージャ作成
 	game->msgman = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_balloon_dat, 
 		HEAPID_BALLOON);
-	game->fontHandle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr,
+	game->fontHandle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_BALLOON);
 	game->printQue = PRINTSYS_QUE_Create(HEAPID_BALLOON);
 

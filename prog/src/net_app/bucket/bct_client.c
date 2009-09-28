@@ -1700,7 +1700,7 @@ BCT_CLIENT* BCT_CLIENT_Init( u32 heapID, u32 timeover, u32 comm_num, u32 plno, B
   p_wk->tcbsys			= tcbsys;
 
   //ƒtƒHƒ“ƒg“Ç‚Ýž‚Ý
-  p_wk->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+  p_wk->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 	p_wk->printQue = PRINTSYS_QUE_Create(heapID);
 	p_wk->tcblsys = GFL_TCBL_Init(heapID, heapID, 8, 32);

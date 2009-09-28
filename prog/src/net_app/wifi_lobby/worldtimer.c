@@ -1431,7 +1431,7 @@ GFL_PROC_RESULT WLDTIMER_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * m
 //	OS_TPrintf( "world time hour[%d] minute[%d] second[%d]\n", p_wk->worldtime.hour, p_wk->worldtime.minute, p_wk->worldtime.second );
 
   //ƒtƒHƒ“ƒg“Ç‚Ýž‚Ý
-  p_wk->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+  p_wk->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WLDTIMER );
 	p_wk->printQue = PRINTSYS_QUE_Create(HEAPID_WLDTIMER);
 	p_wk->tcblsys = GFL_TCBL_Init(HEAPID_WLDTIMER, HEAPID_WLDTIMER, 8, 32);

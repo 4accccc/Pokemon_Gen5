@@ -460,9 +460,9 @@ GFL_PROC_RESULT WFLBY_CONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 
 	// フォント作成	※check PLのように会話フォント、システムフォントといったものがまだ無いので
 	//						どちらも同じフォントを読み込んでいる 2009.03.10(火) matsuda
-	p_wk->fontHandle_talk = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr,
+	p_wk->fontHandle_talk = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WFLBY_ROOM);
-	p_wk->fontHandle_system = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr,
+	p_wk->fontHandle_system = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WFLBY_ROOM);
 
 	// ウィンドウシステム初期化
@@ -939,9 +939,9 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 
 	// フォント作成	※check PLのように会話フォント、システムフォントといったものがまだ無いので
 	//						どちらも同じフォントを読み込んでいる 2009.03.10(火) matsuda
-	p_wk->fontHandle_talk = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr,
+	p_wk->fontHandle_talk = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WFLBY_ROOM);
-	p_wk->fontHandle_system = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr,
+	p_wk->fontHandle_system = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WFLBY_ROOM);
 
 	// ウィンドウシステム初期化

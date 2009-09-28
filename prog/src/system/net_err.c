@@ -509,7 +509,7 @@ static void Local_ErrMessagePrint(void)
 		GFL_MSGDATA		*mm;
 		STRBUF *strbuf;
 
-		fontHandle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr,
+		fontHandle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NET_ERR );
 		
 		mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 

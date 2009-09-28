@@ -713,7 +713,7 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
   fps->tcbsys = GFL_TCB_Init(64, fps->tcb_work);
 
   //ƒtƒHƒ“ƒg“Ç‚Ýž‚Ý
-  fps->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+  fps->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_FOOTPRINT );
 	fps->printQue = PRINTSYS_QUE_Create(HEAPID_FOOTPRINT);
 	fps->tcblsys = GFL_TCBL_Init(HEAPID_FOOTPRINT, HEAPID_FOOTPRINT, 8, 32);

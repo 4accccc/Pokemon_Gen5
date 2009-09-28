@@ -433,7 +433,7 @@ GFL_PROC_RESULT BalanceBallProc_Init( GFL_PROC* proc, int* seq, void * pwk, void
  	bb_gf_rand_init();
 
   //ƒtƒHƒ“ƒg“Ç‚Ýž‚Ý
-  wk->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+  wk->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_BB );
 	wk->printQue = PRINTSYS_QUE_Create( HEAPID_BB );
 

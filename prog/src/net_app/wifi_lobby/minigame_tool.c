@@ -2692,7 +2692,7 @@ static void MNGM_CLACT_VBlank( MNGM_CLACT* p_wk )
 static void MNGM_MSG_Init( MNGM_MSG* p_wk, u32 heapID )
 {
 	p_wk->printQue = PRINTSYS_QUE_Create( heapID );
-  p_wk->fontHandle_system = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+  p_wk->fontHandle_system = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
   p_wk->p_msgman  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_minigame_tool_dat, heapID );
   p_wk->p_wordset = WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_COUNTRY_BUFLEN, heapID );

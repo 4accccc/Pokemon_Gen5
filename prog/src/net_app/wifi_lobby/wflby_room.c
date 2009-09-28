@@ -4867,9 +4867,9 @@ static void WFLBY_ROOM_Msg_Init( WFLBY_ROOM_DEFMSG* p_wk, u32 heapID )
 	p_wk->p_str		= GFL_STR_CreateBuffer( WFLBY_DEFMSG_STRNUM, heapID );
 	p_wk->p_tmp		= GFL_STR_CreateBuffer( WFLBY_DEFMSG_STRNUM, heapID );
 
-	p_wk->fontHandle_system = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+	p_wk->fontHandle_system = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
-	p_wk->fontHandle_talk = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
+	p_wk->fontHandle_talk = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 	p_wk->printQue = PRINTSYS_QUE_Create( heapID );
 }
