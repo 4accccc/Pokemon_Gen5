@@ -234,7 +234,7 @@ void WT_PRINT_Init( WT_PRINT *wk, const CONFIG *cfg )
 
 	wk->tcbsys	= GFL_TCBL_Init( HEAPID_WORLDTRADE, HEAPID_WORLDTRADE, 32, 32 );
 	wk->cfg			= cfg;
-	wk->font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WORLDTRADE );
+	wk->font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_WORLDTRADE );
 
 
 	{	
