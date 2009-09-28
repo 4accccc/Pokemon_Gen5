@@ -542,7 +542,7 @@
 #define FV_T02PC0101_SUPPORT               518 /* 0x0206 カラクサタウン：演説イベント終了後 */
 #define FV_T02PC0101_RIVAL                 519 /* 0x0207 カラクサタウン：長草イベント後 */
 #define FV_T02_HAKASE                      520 /* 0x0208 カラクサタウン：博士のポケセン案内 */
-#define FV_T02_SUPPORT                     521 /* 0x0209 カラクサタウン：サポートのストッパー */
+#define FV_T02_RIVAL                       521 /* 0x0209 カラクサタウン：ライバルのストッパー */
 #define FV_T02_HAKAI                       522 /* 0x020a カラクサタウン：ハカイ団ストッパー */
 #define FV_T02_SAGE                        523 /* 0x020b カラクサタウン：七賢者の演説 */
 #define FV_T02_NNN                         524 /* 0x020c カラクサタウン：Nとの出会い */
