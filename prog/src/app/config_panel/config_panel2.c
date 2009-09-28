@@ -89,7 +89,7 @@ enum
 	CONFIG_OBJ_PAL_M_03,		//										暗い色
 	CONFIG_OBJ_PAL_M_04,		// 
 	CONFIG_OBJ_PAL_M_05,		// 
-	CONFIG_OBJ_PAL_M_06,		// 
+	CONFIG_OBJ_PAL_M_06,		//	したばー
 	CONFIG_OBJ_PAL_M_07,		//	選択色
 	CONFIG_OBJ_PAL_M_08,		//  したバー共通素材
 	CONFIG_OBJ_PAL_M_09,		//  
@@ -445,6 +445,8 @@ typedef struct
 	APP_TASKMENU_WIN_WORK *p_win[ CONFIRM_WIN_MAX ];
 	APPBAR_WIN_LIST	select;
 	BOOL						is_decide;
+	APP_TASKMENU_RES *p_res;
+	GFL_MSGDATA *p_msg;
 } APPBAR_WORK;
 //-------------------------------------
 ///	SCROLL
@@ -578,12 +580,13 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, GFL_CLWK *p_check,
 static void APPBAR_Exit( APPBAR_WORK *p_wk );
 static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_WORK *cp_scroll );
 static BOOL APPBAR_IsDecide( const APPBAR_WORK *cp_wk, APPBAR_WIN_LIST *p_select );
+static void APPBAR_ReWrite( APPBAR_WORK *p_wk, HEAPID heapID );
 //-------------------------------------
 ///	SCROLL
 //=====================================
 static void SCROLL_Init( SCROLL_WORK *p_wk, u8 font_frm, u8 back_frm, const GRAPHIC_WORK *cp_grp, const CONFIG_PARAM *cp_param, HEAPID heapID );
 static void SCROLL_Exit( SCROLL_WORK *p_wk );
-static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p_msg, GRAPHIC_WORK *p_graphic );
+static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p_msg, GRAPHIC_WORK *p_graphic, APPBAR_WORK *p_appbar );
 static CONFIG_LIST SCROLL_GetSelect( const SCROLL_WORK *cp_wk );
 static void SCROLL_GetConfigParam( const SCROLL_WORK *cp_wk, CONFIG_PARAM *p_param );
 static void Scroll_ChangePlt( SCROLL_WORK *p_wk, BOOL is_decide_draw );
@@ -1940,6 +1943,7 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 					&cldata,
 					CLSYS_DEFREND_MAIN,
 					heapID );
+		GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk[CLWKID_DOWNBAR], CONFIG_OBJ_PAL_M_06, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
 		cldata.pos_x		= CLWK_CHECK_X;
@@ -2312,20 +2316,10 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, GFL_CLWK *p_check,
 	p_wk->p_check	= p_check;
 	p_wk->p_font	= p_font;
 	p_wk->p_que		= p_que;
+	p_wk->p_res		= p_res;
+	p_wk->p_msg		= p_msg;
 
-	//決定、やめるボタン作成
-	{	
-		int i;
-
-		for( i = 0; i < APPBAR_WIN_MAX; i++ )
-		{	
-			p_wk->item[i].str				= GFL_MSG_CreateString( p_msg, mes_config_menu08 + i );
-			p_wk->item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;
-			p_wk->item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL+i;
-			p_wk->p_win[i] = APP_TASKMENU_WIN_Create( p_res, &p_wk->item[i],
-														APPBAR_WIN_X + APPBAR_WIN_W*i, APPBAR_MENUBAR_Y, APPBAR_WIN_W, heapID );
-		}
-	}
+	APPBAR_ReWrite( p_wk, heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2510,6 +2504,37 @@ static BOOL APPBAR_IsDecide( const APPBAR_WORK *cp_wk, APPBAR_WIN_LIST *p_select
 
 	return cp_wk->is_decide;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	再描画
+ *
+ *	@param	APPBAR_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void APPBAR_ReWrite( APPBAR_WORK *p_wk, HEAPID heapID )
+{	
+	//決定、やめるボタン作成
+	{	
+		int i;
+
+		for( i = 0; i < APPBAR_WIN_MAX; i++ )
+		{	
+			if( p_wk->item[i].str )
+			{	
+				GFL_STR_DeleteBuffer( p_wk->item[i].str );
+			}
+			p_wk->item[i].str				= GFL_MSG_CreateString( p_wk->p_msg, mes_config_menu08 + i );
+			p_wk->item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;
+			p_wk->item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL+i;
+			if( p_wk->p_win[i] )
+			{	
+					APP_TASKMENU_WIN_Delete( p_wk->p_win[i] );
+			}
+			p_wk->p_win[i] = APP_TASKMENU_WIN_Create( p_wk->p_res, &p_wk->item[i],
+														APPBAR_WIN_X + APPBAR_WIN_W*i, APPBAR_MENUBAR_Y, APPBAR_WIN_W, heapID );
+		}
+	}
+}
 //=============================================================================
 /**
  *					SCROLL
@@ -2569,7 +2594,7 @@ static void SCROLL_Exit( SCROLL_WORK *p_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p_msg, GRAPHIC_WORK *p_graphic )
+static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p_msg, GRAPHIC_WORK *p_graphic, APPBAR_WORK *p_appbar )
 {	
 	UI_INPUT input;
 	GFL_POINT trg_pos;
@@ -2718,6 +2743,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 		case CONFIG_ITEM_STR_KANJI:
 			//漢字変更のためPRINTしなおし
 			GRAPHIC_PrintBmpwin( p_graphic );
+			APPBAR_ReWrite( p_appbar, HEAPID_CONFIG );
 			Scroll_ChangePlt( p_wk, is_bmpprint_decide );
 			is_info_update	= TRUE;
 			break;
@@ -3656,7 +3682,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	CONFIG_WORK	*p_wk	= p_param;
 
 	//モジュールメイン
-	SCROLL_Main( &p_wk->scroll, &p_wk->ui, &p_wk->info, &p_wk->graphic );
+	SCROLL_Main( &p_wk->scroll, &p_wk->ui, &p_wk->info, &p_wk->graphic, &p_wk->appbar );
 	APPBAR_Main(  &p_wk->appbar, &p_wk->ui, &p_wk->scroll );
 	UI_Main( &p_wk->ui );
 
