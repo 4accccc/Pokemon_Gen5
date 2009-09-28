@@ -86,7 +86,6 @@ extern void POKE_PERSONAL_InitSystem( HEAPID heapID );
 
 
 extern void POKE_PERSONAL_LoadData( u16 mons_no, u16 form_no, POKEMON_PERSONAL_DATA* ppd );
-extern void POKE_PERSONAL_LoadWazaOboeTable( u16 mons_no, u16 form_no, u16* dst );
 
 extern u16 POKE_PERSONAL_GetPersonalID( u16 mons_no, u16 form_no );
 

@@ -162,6 +162,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs );
 static BOOL btlin_comm_single( int* seq, void* wk_adrs );
 static BOOL btlin_wild_double( int* seq, void* wk_adrs );
 static BOOL btlin_trainer_double( int* seq, void* wk_adrs );
+static BOOL btlin_comm_double( int* seq, void* wk_adrs );
 static BOOL  btlinEff_OpponentTrainerIn( BTLV_SCU* wk, int* seq );
 static BOOL btlinEff_OpponentPokeInDouble( BTLV_SCU* wk, int* seq );
 static BOOL btlinEff_MyPokeInDouble( BTLV_SCU* wk, int* seq );
@@ -1006,6 +1007,34 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
 //--------------------------------------------------------------------------
 static BOOL btlin_trainer_double( int* seq, void* wk_adrs )
 {
+  static const BtlinEffectSeq funcs[] = {
+    btlinEff_OpponentTrainerIn,
+    btlinEff_OpponentPokeInDouble,
+    btlinEff_MyPokeInDouble,
+  };
+
+  BTLV_SCU* wk = wk_adrs;
+
+  if( wk->btlinSeq < NELEMS(funcs) )
+  {
+    if( funcs[wk->btlinSeq](wk, seq) ){
+      wk->btlinSeq++;
+      (*seq) = 0;
+    }
+    return FALSE;
+  }
+  else{
+    return TRUE;
+  }
+}
+//--------------------------------------------------------------------------
+/**
+ * 戦闘画面セットアップ完了までの演出（通信対戦／ダブル）
+ * @retval  BOOL    TRUEで終了
+ */
+//--------------------------------------------------------------------------
+static BOOL btlin_comm_double( int* seq, void* wk_adrs )
+{
   static const BtlinEffectSeq funcs_A[] = {
     btlinEff_OpponentTrainerIn,
     btlinEff_OpponentPokeInDouble,
@@ -1410,6 +1439,7 @@ static BOOL btlin_trainer_triple( int* seq, void* wk_adrs )
     const BTL_POKEPARAM* pp;
     u8  pokeID;
     u8  pos;
+    u8  aliveCnt;
   }ProcWork;
 
   BTLV_SCU* wk = wk_adrs;
@@ -1420,11 +1450,13 @@ static BOOL btlin_trainer_triple( int* seq, void* wk_adrs )
     {
       BtlPokePos myPos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->playerClientID, 0 );
       u32 i;
+      subwk->aliveCnt = 0;
       for(i=0; i<3; ++i){
         subwk[i].pos = BTL_MAIN_GetOpponentPokePos( wk->mainModule, myPos, i );
         subwk[i].pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk[i].pos );
-        if( subwk[i].pp != NULL ){
+        if( !BPP_IsDead(subwk[i].pp) ){
           subwk[i].pokeID = BPP_GetID( subwk[i].pp );
+          subwk->aliveCnt++;
         }else{
           subwk[i].pokeID = BTL_POKEID_NULL;
         }

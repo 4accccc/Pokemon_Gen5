@@ -96,13 +96,47 @@ enum {
   POKEPER_SEX_FEMALE = 254,   ///<メスのみ
   POKEPER_SEX_UNKNOWN = 255,    ///<性別なし
 };
+//--------------------------------------------------------------
+/**
+ * ポケモンワザ覚えデータ関連
+ */
+//--------------------------------------------------------------
+
+typedef u16 POKEPER_WAZAOBOE_CODE;    ///< ワザ覚えデータコード
+
+enum {
+  POKEPER_WAZAOBOE_TABLE_ELEMS = 26,  ///< ワザおぼえテーブルのロードに必要な要素数
+  POKEPER_WAZAOBOE_ENDCODE = 0xffff,
+};
+
+// ワザ覚えデータコード：終端チェック
+static BOOL POKEPER_WAZAOBOE_IsEndCode( POKEPER_WAZAOBOE_CODE code )
+{
+  return code == POKEPER_WAZAOBOE_ENDCODE;
+}
+// ワザ覚えデータコード：レベル取得
+static u8 POKEPER_WAZAOBOE_GetLevel( POKEPER_WAZAOBOE_CODE code )
+{
+  return (code >> 9) & 0x7f;
+}
+// ワザ覚えデータコード：ワザID取得
+static u16 POKEPER_WAZAOBOE_GetWazaID( POKEPER_WAZAOBOE_CODE code )
+{
+  return code & 0x1ff;
+}
+
+
+
 
 //ポケモンパーソナル操作関数系
 extern POKEMON_PERSONAL_DATA*  POKE_PERSONAL_OpenHandle( u16 mons_no, u16 form_no, HEAPID heapID );
 extern void POKE_PERSONAL_CloseHandle( POKEMON_PERSONAL_DATA* handle );
 extern u32 POKE_PERSONAL_GetParam( POKEMON_PERSONAL_DATA *ppd, PokePersonalParamID paramID );
 
+// ワザおぼえテーブルロード（dst には POKEPER_WAZAOBOE_CODE * POKEPER_WAZAOBOETABLE_ELEMS の配列を渡すこと）
+extern void POKE_PERSONAL_LoadWazaOboeTable( u16 mons_no, u16 form_no, POKEPER_WAZAOBOE_CODE* dst );
 
+// 性別取得
 extern  u8    PokePersonal_SexGet( POKEMON_PERSONAL_DATA* personalData, u16 monsno, u32 rnd );
 
 

@@ -183,20 +183,20 @@ POKEMON_PARAM* PP_CreateByPPP( const POKEMON_PASO_PARAM* ppp, HEAPID heapID )
   }
   PPP_FastModeOff( (POKEMON_PASO_PARAM*)ppp, fast_flag );
 
-	pp->ppp=*ppp;
+  pp->ppp=*ppp;
 
 //コンディションセット
-	PP_Put(pp,ID_PARA_condition,i);
+  PP_Put(pp,ID_PARA_condition,i);
 //HP初期化
-	PP_Put(pp,ID_PARA_hp,i);
-	PP_Put(pp,ID_PARA_hpmax,i);
+  PP_Put(pp,ID_PARA_hp,i);
+  PP_Put(pp,ID_PARA_hpmax,i);
 //メールデータ  @@OO不明なので
-//	mail_data=MailData_CreateWork(HEAPID_BASE_SYSTEM);
-//	PP_Put(pp,ID_PARA_mail_data, mail_data);
-//	sys_FreeMemoryEz(mail_data);
+//  mail_data=MailData_CreateWork(HEAPID_BASE_SYSTEM);
+//  PP_Put(pp,ID_PARA_mail_data, mail_data);
+//  sys_FreeMemoryEz(mail_data);
 
-	PP_Renew(pp);
-  
+  PP_Renew(pp);
+
   return pp;
 }
 
@@ -947,7 +947,7 @@ void  PP_SetWazaDefault( POKEMON_PARAM *pp )
 //============================================================================================
 void  PPP_SetWazaDefault( POKEMON_PASO_PARAM *ppp )
 {
-  static  u16 wot[ LEVELUPWAZA_OBOE_MAX ];  //技覚えテーブル
+  static  u16 wot[ POKEPER_WAZAOBOE_TABLE_ELEMS ];  //技覚えテーブル
 
   BOOL  flag;
   int i;
@@ -974,17 +974,17 @@ void  PPP_SetWazaDefault( POKEMON_PASO_PARAM *ppp )
   }
 
   i = 0;
-  while( wot[i] != 0xffff ){
-    if( ( wot[i] & 0xfe00 ) <= ( level << 9 ) ){
-      waza_no = wot[i] & 0x1ff;
+  while( POKEPER_WAZAOBOE_IsEndCode(wot[i]) )
+  {
+    if( POKEPER_WAZAOBOE_GetLevel(wot[i]) <= level )
+    {
+      waza_no = POKEPER_WAZAOBOE_GetWazaID( wot[i] );
       ret = PPP_SetWaza( ppp, waza_no );
-      if( ret == PTL_WAZASET_FAIL )
-      {
+      if( ret == PTL_WAZASET_FAIL ){
         PPP_SetWazaPush( ppp, waza_no );
       }
     }
-    else
-    {
+    else{
       break;
     }
     i++;
