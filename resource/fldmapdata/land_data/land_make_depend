@@ -944,9 +944,9 @@ $(DIR_TEMP)/map19_05.nsbmd: $(DIR_RES)/map19_05.imd
 	@$(G3DCVTR) $(DIR_RES)/map19_05.imd -o $(DIR_TEMP)/map19_05.nsbmd
 
 #map20_05
-$(DIR_OUTPUT)/map20_05.3dppack: $(DIR_TEMP)/map20_05.nsbmd $(DIR_RES)/map20_05.bin $(DIR_RES)/map20_05.3dmd
+$(DIR_OUTPUT)/map20_05.3dppack: $(DIR_TEMP)/map20_05.nsbmd $(DIR_RES)/map20_05.bin $(DIR_RES)/map20_05_ex.bin $(DIR_RES)/map20_05.3dmd
 	@echo create 3dppack map20_05
-	@$(BINLINKER) $(DIR_TEMP)/map20_05.nsbmd $(DIR_RES)/map20_05.bin $(DIR_RES)/map20_05.3dmd $(DIR_OUTPUT)/map20_05.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/map20_05.nsbmd $(DIR_RES)/map20_05.bin $(DIR_RES)/map20_05_ex.bin $(DIR_RES)/map20_05.3dmd $(DIR_OUTPUT)/map20_05.3dppack GC
 
 $(DIR_TEMP)/map20_05.nsbmd: $(DIR_RES)/map20_05.imd
 	@echo create_nsbmd map20_05
@@ -3374,9 +3374,9 @@ $(DIR_TEMP)/m_closseum01_00_00.nsbmd: $(DIR_RES)/m_closseum01_00_00.imd
 	@$(G3DCVTR) $(DIR_RES)/m_closseum01_00_00.imd -o $(DIR_TEMP)/m_closseum01_00_00.nsbmd
 
 #m_mall01_00_00
-$(DIR_OUTPUT)/m_mall01_00_00.3dppack: $(DIR_TEMP)/m_mall01_00_00.nsbmd $(DIR_RES)/m_mall01_00_00.bin $(DIR_RES)/m_mall01_00_00.3dmd
+$(DIR_OUTPUT)/m_mall01_00_00.3dppack: $(DIR_TEMP)/m_mall01_00_00.nsbmd $(DIR_RES)/m_mall01_00_00.bin $(DIR_RES)/m_mall01_00_00_ex.bin $(DIR_RES)/m_mall01_00_00.3dmd
 	@echo create 3dppack m_mall01_00_00
-	@$(BINLINKER) $(DIR_TEMP)/m_mall01_00_00.nsbmd $(DIR_RES)/m_mall01_00_00.bin $(DIR_RES)/m_mall01_00_00.3dmd $(DIR_OUTPUT)/m_mall01_00_00.3dppack WB
+	@$(BINLINKER) $(DIR_TEMP)/m_mall01_00_00.nsbmd $(DIR_RES)/m_mall01_00_00.bin $(DIR_RES)/m_mall01_00_00_ex.bin $(DIR_RES)/m_mall01_00_00.3dmd $(DIR_OUTPUT)/m_mall01_00_00.3dppack GC
 
 $(DIR_TEMP)/m_mall01_00_00.nsbmd: $(DIR_RES)/m_mall01_00_00.imd
 	@echo create_nsbmd m_mall01_00_00
