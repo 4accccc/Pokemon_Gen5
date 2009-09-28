@@ -1961,7 +1961,7 @@ static GFL_PROC_RESULT MysteryGiftProc_Init(GFL_PROC *proc, int * seq, void *pwk
 	wk->printQueMsg = PRINTSYS_QUE_Create( HEAPID_MYSTERYGIFT );
 	wk->printQueMenu = PRINTSYS_QUE_Create( HEAPID_MYSTERYGIFT );
 	wk->printQueUp 	= PRINTSYS_QUE_Create( HEAPID_MYSTERYGIFT );
-	wk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , HEAPID_MYSTERYGIFT );
+	wk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , HEAPID_MYSTERYGIFT );
 	wk->streamMsg = NULL;
 	
 	GFL_FONTSYS_SetColor(MYSTERYGIFT_BLACK);

@@ -148,7 +148,7 @@ static GFL_PROC_RESULT DebugDLPlayMainProcInit(GFL_PROC * proc, int * seq, void 
 	parentData->commSys_ = DLPlayComm_InitData( heapID );
 	parentData->msgSys_ = DLPlayFunc_MsgInit( heapID , DLPLAY_MSG_PLANE );
 	parentData->dispSys_ = DLPlayDispSys_InitSystem( heapID , &vramBank);
-	DLPlayFunc_FontInit( ARCID_FONT , NARC_font_large_nftr ,
+	DLPlayFunc_FontInit( ARCID_FONT , NARC_font_large_gftr ,
 					ARCID_MESSAGE , NARC_message_d_dlplay_dat ,
 					ARCID_FONT , NARC_font_default_nclr , 
 					DLPLAY_FONT_MSG_PLANE , parentData->msgSys_ );

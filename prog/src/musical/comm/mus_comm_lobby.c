@@ -443,7 +443,7 @@ static void MUS_LOBBY_InitGraphic( MUS_LOBBY_WORK *work )
   //フォント用パレット
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , MUS_LOBBY_FONT_PLT * 32, 16*2, work->heapId );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG  , MUS_LOBBY_FONT_PLT * 32, 16*2, work->heapId );
-  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
   work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_comm_dat , work->heapId );
 
   GFL_FONTSYS_SetDefaultColor();

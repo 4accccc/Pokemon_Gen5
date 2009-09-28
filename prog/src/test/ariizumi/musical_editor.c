@@ -299,7 +299,7 @@ static void MusicalEdit_InitGraphic( MUS_EDIT_LOCAL_WORK *work )
                     EDIT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
   
   //フォント読み込み
-  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_small_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_small_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
   GFL_FONTSYS_SetColor( 1,0,0 );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , EDIT_PAL_FONT*0x20, 16*sizeof(u16), work->heapId );
 
@@ -912,7 +912,7 @@ static void MusicalSetting_Init( MUS_EDIT_LOCAL_WORK *work )
   }
   
   //フォント読み込み
-  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_small_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_small_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
   GFL_FONTSYS_SetColor( 1,0,0 );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , EDIT_PAL_FONT*0x20, 16*sizeof(u16), work->heapId );
 

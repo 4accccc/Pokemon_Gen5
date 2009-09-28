@@ -1023,7 +1023,7 @@ static void MysteryCardCreateMsgWindow(MYSTERYCARD_WORK *wk, int font, int side)
 //	wk->msgman = MSGMAN_Create(MSGMAN_TYPE_DIRECT, ARC_MSG, NARC_msg_mystery_dat, wk->heapid);
 //	wk->word = WORDSET_Create(wk->heapid);
 	//ƒtƒHƒ“ƒg‚à“Ç‚Ş
-	wk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , TRUE , wk->heapid );
+	wk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , TRUE , wk->heapid );
 
 
 	wk->disp_side = side;

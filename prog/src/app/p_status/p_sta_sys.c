@@ -863,7 +863,7 @@ static void PSTATUS_TermCell( PSTATUS_WORK *work )
 //--------------------------------------------------------------------------
 static void PSTATUS_InitMessage( PSTATUS_WORK *work )
 {
-  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
   
   //メッセージ
   work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_pokestatus_dat , work->heapId );

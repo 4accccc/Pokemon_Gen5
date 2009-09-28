@@ -313,7 +313,7 @@ static void SEL_MODE_InitGraphic( SEL_MODE_WORK *work )
   //フォント用パレット
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , SEL_MODE_PLT_FONT * 32, 16*2, HEAPID_SEL_MODE );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , SEL_MODE_PLT_S_FONT * 32, 16*2, HEAPID_SEL_MODE );
-  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , HEAPID_SEL_MODE );
+  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , HEAPID_SEL_MODE );
 
   //WinFrame用グラフィック設定
   BmpWinFrame_GraphicSet( SEL_MODE_BG_ITEM , SEL_MODE_FRAMECHR1 , SEL_MODE_PLT_SEL  , 1, HEAPID_SEL_MODE);

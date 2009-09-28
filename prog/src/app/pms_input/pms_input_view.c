@@ -651,7 +651,7 @@ static void setup_bg_params( COMMAND_WORK* cwk )
 	}
 
 	//ボタンフォント読み出し
-	vwk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , HEAPID_PMS_INPUT_VIEW );
+	vwk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , HEAPID_PMS_INPUT_VIEW );
 }
 
 

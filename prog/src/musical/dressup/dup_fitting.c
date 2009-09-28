@@ -3266,7 +3266,7 @@ static void DUP_DEMO_DemoPhaseDragPen( FITTING_WORK *work , const GFL_POINT *sta
 
 static void DUP_FIT_InitMessage( FITTING_WORK *work )
 {
-  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
   
   //メッセージ
   work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_dress_up_dat , work->heapId );

@@ -100,7 +100,7 @@ static GFL_PROC_RESULT CI_Proc_Init( GFL_PROC * proc, int * seq , void *pwk, voi
 	GFL_BMPWIN_Init( HEAPID_CODEIN );
 	wk->sys.pfd		 = PaletteFadeInit( HEAPID_CODEIN );
 	
-	wk->sys.fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr ,
+	wk->sys.fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr ,
 							GFL_FONT_LOADTYPE_FILE , TRUE , HEAPID_CODEIN );
 	
 	PaletteTrans_AutoSet( wk->sys.pfd, TRUE );

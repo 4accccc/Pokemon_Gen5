@@ -559,7 +559,7 @@ static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 
 	//フォント用パレット
 	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , TESTMODE_PLT_FONT * 32, 16*2, work->heapId_ );
-	work->fontHandle_ = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId_ );
+	work->fontHandle_ = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId_ );
 
 	work->bmpWin_ = GFL_BMPWIN_Create( BG_PLANE_MENU , 1,1,30,LIST_DISP_MAX*2,TESTMODE_PLT_FONT,GFL_BMP_CHRAREA_GET_B );
 	GFL_BMPWIN_MakeScreen( work->bmpWin_ );

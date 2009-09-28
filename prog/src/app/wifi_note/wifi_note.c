@@ -2643,7 +2643,7 @@ static void Draw_MsgInit( WFNOTE_DRAW* p_draw, u32 heapID )
 	p_draw->p_msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_note_dat, heapID );
 
 	//タッチフォントロード
-	p_draw->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , heapID );
+	p_draw->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , heapID );
 	
 	p_draw->msgTcblSys = GFL_TCBL_Init( heapID , heapID , 3 , 0x100 );
 	p_draw->printHandle = NULL;
