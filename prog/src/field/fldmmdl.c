@@ -31,6 +31,11 @@
 #define MMDL_DRAW_WORK_SIZE		(32)	///<描画関数用ワークサイズ
 
 //--------------------------------------------------------------
+/// 同一XZ座標に配置可能な動作オブジェレイヤー数
+//--------------------------------------------------------------
+#define MMDL_POST_LAYER_MAX (16)  //FLDMAPPER_GRIDINFO_MAXと同じ値にしてます
+
+//--------------------------------------------------------------
 ///	エイリアスシンボル
 //--------------------------------------------------------------
 enum
@@ -134,6 +139,14 @@ struct _TAG_MMDL
 };
 
 #define MMDL_SIZE (sizeof(MMDL)) ///<MMDLサイズ 224
+
+//--------------------------------------------------------------
+///	MMDLポインタ配列
+//--------------------------------------------------------------
+typedef struct{
+  int count;  //格納された有効なポインタ数
+  MMDL* mmdl_parray[MMDL_POST_LAYER_MAX];
+}MMDL_PARRAY;
 
 //--------------------------------------------------------------
 ///	MMDL_SAVEWORK構造体 size 80
@@ -688,6 +701,8 @@ static void MMdl_SetHeaderPos( MMDL *mmdl, const MMDL_HEADER *head )
 	MMDL_SetGridPosZ( mmdl, pos );
 	
 	MMDL_SetVectorPos( mmdl, &vec );
+
+  IWASAWA_Printf("Mmdl (%d,%d) h = %d\n",FX_Whole(vec.x),FX_Whole(vec.z),FX_Whole(vec.y));
 }
 
 //--------------------------------------------------------------
@@ -3669,7 +3684,50 @@ BOOL MMDLSYS_SearchUseMMdl(
 
 //--------------------------------------------------------------
 /**
- * MMDLSYS 指定されたグリッドX,Z座標にいるOBJを取得
+ * MMDLSYS 指定されたグリッドX,Z座標にいるOBJ全てをMMDLポインタ配列に取得
+ * @param	sys			MMDLSYS *
+ * @param	x			検索グリッドX
+ * @param	z			検索グリッドZ
+ * @param	old_hit		TURE=過去座標も判定する
+ * @param array   見つけたMMDLポインタを最大16個分格納する構造体型
+ *
+ * @return  見つけた配列数 
+ */
+//--------------------------------------------------------------
+static int MMDLSYS_SearchGridPosArray(
+	const MMDLSYS *sys, s16 x, s16 z, BOOL old_hit ,MMDL_PARRAY* array)
+{
+	u32 no = 0;
+	MMDL *mmdl;
+
+  MI_CpuClear8(array,sizeof(MMDL_PARRAY));
+
+	while( MMDLSYS_SearchUseMMdl(sys,&mmdl,&no) == TRUE ){
+    if(array->count >= MMDL_POST_LAYER_MAX){
+      GF_ASSERT_MSG(0,"同一座標OBJ個数オーバー\n"); 
+      break;  //これ以上格納できない
+    }
+		if( old_hit ){
+			if( MMDL_GetOldGridPosX(mmdl) == x &&
+				  MMDL_GetOldGridPosZ(mmdl) == z ){
+				array->mmdl_parray[array->count++] = mmdl;
+        continue;
+			}
+		}
+		
+		if( MMDL_GetGridPosX(mmdl) == x &&
+		  	MMDL_GetGridPosZ(mmdl) == z ){
+      array->mmdl_parray[array->count++] = mmdl;
+      continue;
+		}
+	}
+	
+	return array->count;
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDLSYS 指定されたグリッドX,Z座標にいるOBJを取得(立体交差を考えない版)
  * @param	sys			MMDLSYS *
  * @param	x			検索グリッドX
  * @param	z			検索グリッドZ
@@ -3680,23 +3738,51 @@ BOOL MMDLSYS_SearchUseMMdl(
 MMDL * MMDLSYS_SearchGridPos(
 	const MMDLSYS *sys, s16 x, s16 z, BOOL old_hit )
 {
-	u32 no = 0;
-	MMDL *mmdl;
+	u32 num = 0;
+	MMDL_PARRAY array;
+
+  num = MMDLSYS_SearchGridPosArray(sys, x, z, old_hit , &array);
 	
-	while( MMDLSYS_SearchUseMMdl(sys,&mmdl,&no) == TRUE ){
-		if( old_hit ){
-			if( MMDL_GetOldGridPosX(mmdl) == x &&
-				MMDL_GetOldGridPosZ(mmdl) == z ){
-				return( mmdl );
-			}
-		}
-		
-		if( MMDL_GetGridPosX(mmdl) == x &&
-			MMDL_GetGridPosZ(mmdl) == z ){
-			return( mmdl );
-		}
-	}
-	
+  if(num){
+    return array.mmdl_parray[0];
+  }
+	return( NULL );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDLSYS 指定されたグリッドX,Z,and Y座標にいるOBJを取得(立体交差を考慮する)
+ * @param	sys			MMDLSYS *
+ * @param	x		  	検索グリッドX
+ * @param	z			  検索グリッドZ
+ * @param height  検索Y座標値 fx32型
+ * @param h_diff  Y値で許容する振れ幅(絶対値がこの指定値未満のY差分を持つOBJのみを返す)
+ *
+ * @param	old_hit		TURE=過去座標も判定する
+ * @retval	MMDL	x,z位置にいるMMDL * 。NULL=その座標にOBJはいない
+ */
+//--------------------------------------------------------------
+MMDL * MMDLSYS_SearchGridPosEx(
+	const MMDLSYS *sys, s16 x, s16 z, fx32 height, fx32 y_diff, BOOL old_hit )
+{
+	u32 i = 0,num = 0;
+	MMDL_PARRAY array;
+
+  num = MMDLSYS_SearchGridPosArray(sys, x, z, old_hit , &array);
+
+  if(num == 0){
+    return NULL;
+  }
+  for(i = 0;i < num;i++){
+    fx32 y,diff;
+	  diff = MMDL_GetVectorPosY( array.mmdl_parray[i] ) - height;
+    if(diff < 0){
+      diff = FX_Mul(diff,FX32_CONST(-1));
+    }
+    if(diff < y_diff) {
+      return array.mmdl_parray[i];
+    }
+  }
 	return( NULL );
 }
 

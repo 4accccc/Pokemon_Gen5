@@ -800,6 +800,8 @@ extern BOOL MMDLSYS_SearchUseMMdl(
 	const MMDLSYS *fos, MMDL **mmdl, u32 *no );
 extern MMDL * MMDLSYS_SearchGridPos(
 	const MMDLSYS *sys, s16 x, s16 z, BOOL old_hit );
+extern MMDL * MMDLSYS_SearchGridPosEx(
+	const MMDLSYS *sys, s16 x, s16 z, fx32 height, fx32 y_diff, BOOL old_hit );
 extern MMDL * MMDLSYS_SearchMoveCode(
 	const MMDLSYS *fos, u16 mv_code );
 extern MMDL * MMDLSYS_SearchOBJID( const MMDLSYS *fos, u16 id );

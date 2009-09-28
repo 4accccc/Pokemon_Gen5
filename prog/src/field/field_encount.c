@@ -12,6 +12,7 @@
 #include "fieldmap.h"
 #include "map_attr.h"
 
+//#include "encount_dat.h"
 #include "field_encount.h"
 
 #include "battle/battle.h"
@@ -69,9 +70,10 @@
 //--------------------------------------------------------------
 typedef enum
 {
-  ENCOUNT_LOCATION_GROUND = 0,
+  ENCOUNT_LOCATION_GROUND = 0,  //通常エンカウント
   ENCOUNT_LOCATION_WATER,
   ENCOUNT_LOCATION_FISHING,
+  ENCOUNT_LOCATION_GROUND_EX, //通常エンカウント2
 }ENCOUNT_LOCATION;
 
 //======================================================================

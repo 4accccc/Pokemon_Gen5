@@ -1218,13 +1218,11 @@ BOOL FLDMAPPER_GetGridData
     *pGridData = gridInfo.gridData[0];
 	  return TRUE;
   }
-//  *pGridData = gridInfo.gridData[0];
-//  return TRUE;
 
   target = 0;
   o_diff = FX32_CONST(4095);//gridInfo.gridData[0].height - pos->y;
 
-  IWASAWA_Printf("CrossGrid %d pos = %08x\n",gridInfo.count,pos->y);
+//  IWASAWA_Printf("CrossGrid %d pos = %08x\n",gridInfo.count,pos->y);
 
 	for( i=0; i<gridInfo.count; i++ ){
     fx32  diff;
@@ -1238,14 +1236,14 @@ BOOL FLDMAPPER_GetGridData
     if(diff < 0){
       diff = FX_Mul(diff,FX32_CONST(-1));
     }
-    IWASAWA_Printf("idx = %d diff %08x , o_diff %08x\n",i,diff,o_diff);
+//    IWASAWA_Printf("idx = %d diff %08x , o_diff %08x\n",i,diff,o_diff);
     
 		if( diff < o_diff ){
       target  = i;  //ターゲット変更
       o_diff = diff;
     }
 	}
-  IWASAWA_Printf("TargetIs %d Y = %08x, attr = %08x\n",target,gridInfo.gridData[target].height,gridInfo.gridData[target].attr);
+//  IWASAWA_Printf("TargetIs %d Y = %08x, attr = %08x\n",target,gridInfo.gridData[target].height,gridInfo.gridData[target].attr);
   *pGridData = gridInfo.gridData[target];
 	return TRUE;
 }

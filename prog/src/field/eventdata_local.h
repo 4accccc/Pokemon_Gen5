@@ -53,7 +53,7 @@ struct _POS_EVENT_DATA{
 	u16	gz;			//z
 	u16	sx;			//sizeX
 	u16	sz;			//sizeZ
-	u16	height;		//height
+	s16	height;		//height
 	u16 param;
 	u16 workID;
 };

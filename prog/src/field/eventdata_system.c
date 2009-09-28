@@ -461,24 +461,27 @@ const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
     u16 max = evdata->pos_count;
     int gx = SIZE_GRID_FX32( pos->x );
     int gz = SIZE_GRID_FX32( pos->z );
-    
+    s16 y = FX_Whole(pos->y);
+
     for( ; i < max; i++, data++ )
     {
-      if( gz >= data->gz && gz < (data->gz+data->sz) )
+      if( gz < data->gz || gz >= (data->gz+data->sz) ){
+        continue;
+      }
+      if( gx < data->gx || gx >= (data->gx+data->sx) ){
+        continue;
+      }
+      if( y < (data->height - RANGE) || y > (data->height + RANGE)){
+        continue;
+      }
       {
-        if( gx >= data->gx && gx < (data->gx+data->sx) )
-        {
-          work_val = EVENTWORK_GetEventWorkAdrs( evwork, data->workID );
-
-          if( (*work_val) == data->param )
-          {
-            return data;
-          }
+        work_val = EVENTWORK_GetEventWorkAdrs( evwork, data->workID );
+        if( (*work_val) == data->param ){
+          return data;
         }
       }
     }
   }
-  
   return NULL;
 }
 
@@ -494,33 +497,11 @@ const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
 u16 EVENTDATA_CheckPosEvent(
     const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos )
 {
-  const POS_EVENT_DATA *data = evdata->pos_data;
+  const POS_EVENT_DATA* data = EVENTDATA_GetPosEvent( evdata,evwork,pos );
   
-  if( data != NULL )
-  {
-    u16 i = 0;
-    u16 *work_val;
-    u16 max = evdata->pos_count;
-    int gx = SIZE_GRID_FX32( pos->x );
-    int gz = SIZE_GRID_FX32( pos->z );
-    
-    for( ; i < max; i++, data++ )
-    {
-      if( gz >= data->gz && gz < (data->gz+data->sz) )
-      {
-        if( gx >= data->gx && gx < (data->gx+data->sx) )
-        {
-          work_val = EVENTWORK_GetEventWorkAdrs( evwork, data->workID );
-
-          if( (*work_val) == data->param )
-          {
-            return data->id;
-          }
-        }
-      }
-    }
+  if( data != NULL ){
+    return data->id;
   }
-  
   return EVENTDATA_ID_NONE;
 }
 
@@ -545,113 +526,62 @@ u16 EVENTDATA_CheckTalkBGEvent(
     u16 max = evdata->bg_count;
     int gx = SIZE_GRID_FX32( pos->x );
     int gz = SIZE_GRID_FX32( pos->z );
-    
+    int y = FX_Whole( pos->y ); 
     for( ; i < max; i++, data++ )
     {
-      if( gz == data->gz && gx == data->gx )
+      if( gz != data->gz || gx != data->gx ){
+        continue;
+      }
+      if( y < (data->height - RANGE) || y > (data->height + RANGE)){
+        continue;
+      }
+      if( data->type == BG_TALK_TYPE_HIDE )
       {
-        #if 1 //隠しアイテム対応
-        if( data->type == BG_TALK_TYPE_HIDE )
-        {
-          u16 flag = SCRIPT_GetHideItemFlagNoByScriptID( data->id );
+        u16 flag = SCRIPT_GetHideItemFlagNoByScriptID( data->id );
           
-          if( EVENTWORK_CheckEventFlag(evwork,flag) == FALSE ){
-            return data->id;
-          }
+        if( EVENTWORK_CheckEventFlag(evwork,flag) == FALSE ){
+          return data->id;
         }
-        else
+      }
+      else
+      {
+        switch( data->dir )
         {
-          switch( data->dir )
-          {
-          case BG_TALK_DIR_DOWN:
-            if( talk_dir == DIR_UP )
-            {
-              return data->id;
-            }
-            break;
-          case BG_TALK_DIR_LEFT:
-            if( talk_dir == DIR_RIGHT )
-            {
-              return data->id;
-            }
-            break;
-          case BG_TALK_DIR_RIGHT:
-            if( talk_dir == DIR_LEFT )
-            {
-              return data->id;
-            }
-            break;
-          case BG_TALK_DIR_UP:
-            if( talk_dir == DIR_DOWN )
-            {
-              return data->id;
-            }
-            break;
-          case BG_TALK_DIR_ALL:
+        case BG_TALK_DIR_DOWN:
+          if( talk_dir == DIR_UP ){
             return data->id;
-          case BG_TALK_DIR_SIDE:
-            if( talk_dir == DIR_LEFT || talk_dir == DIR_RIGHT )
-            {
-              return data->id;
-            }
-            break;
-          case BG_TALK_DIR_UPDOWN:
-            if( talk_dir == DIR_UP || talk_dir == DIR_DOWN )
-            {
-              return data->id;
-            }
-            break;
-          default:
-            GF_ASSERT( 0 );
           }
-        }
-        #else //隠しアイテム未対応
-        {
-          switch( data->dir )
-          {
-          case BG_TALK_DIR_DOWN:
-            if( talk_dir == DIR_UP )
-            {
-              return data->id;
-            }
-            break;
-          case BG_TALK_DIR_LEFT:
-            if( talk_dir == DIR_RIGHT )
-            {
-              return data->id;
-            }
-            break;
-          case BG_TALK_DIR_RIGHT:
-            if( talk_dir == DIR_LEFT )
-            {
-              return data->id;
-            }
-            break;
-          case BG_TALK_DIR_UP:
-            if( talk_dir == DIR_DOWN )
-            {
-              return data->id;
-            }
-            break;
-          case BG_TALK_DIR_ALL:
+          break;
+        case BG_TALK_DIR_LEFT:
+          if( talk_dir == DIR_RIGHT ){
             return data->id;
-          case BG_TALK_DIR_SIDE:
-            if( talk_dir == DIR_LEFT || talk_dir == DIR_RIGHT )
-            {
-              return data->id;
-            }
-            break;
-          case BG_TALK_DIR_UPDOWN:
-            if( talk_dir == DIR_UP || talk_dir == DIR_DOWN )
-            {
-              return data->id;
-            }
-            break;
-          default:
-            GF_ASSERT( 0 );
           }
+          break;
+        case BG_TALK_DIR_RIGHT:
+          if( talk_dir == DIR_LEFT ){
+            return data->id;
+          }
+          break;
+        case BG_TALK_DIR_UP:
+          if( talk_dir == DIR_DOWN ){
+             return data->id;
+          }
+          break;
+        case BG_TALK_DIR_ALL:
+          return data->id;
+        case BG_TALK_DIR_SIDE:
+          if( talk_dir == DIR_LEFT || talk_dir == DIR_RIGHT ){
+            return data->id;
+          }
+          break;
+        case BG_TALK_DIR_UPDOWN:
+          if( talk_dir == DIR_UP || talk_dir == DIR_DOWN ){
+            return data->id;
+          }
+          break;
+        default:
+          GF_ASSERT( 0 );
         }
-        #endif
       }
     }
   }
@@ -680,14 +610,17 @@ u16 EVENTDATA_CheckTalkBoardEvent(
     u16 max = evdata->bg_count;
     int gx = SIZE_GRID_FX32( pos->x );
     int gz = SIZE_GRID_FX32( pos->z );
+    int y = FX_Whole( pos->y ); 
     
     for( ; i < max; i++, data++ )
     {
-      if( data->type == BG_TALK_TYPE_BOARD &&
-          gz == data->gz && gx == data->gx )
-      {
-        return data->id;
+      if( data->type != BG_TALK_TYPE_BOARD || gz != data->gz || gx != data->gx ){
+        continue;
       }
+      if( y < (data->height - RANGE) || y > (data->height + RANGE)){
+        continue;
+      }
+      return data->id;
     }
   }
   
