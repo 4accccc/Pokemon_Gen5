@@ -243,7 +243,9 @@ static void Performance_AllOffOam(void);
 void DEBUG_PerformanceInit(void)
 {
 	GFL_STD_MemClear(&pfm_sys, sizeof(PERFORMANCE_SYSTEM));
-	pfm_sys.on_off = TRUE;	//デフォルトで表示ON
+  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
+  	pfm_sys.on_off = TRUE;	//デフォルトで表示ON
+  }
 }
 
 //--------------------------------------------------------------
@@ -332,6 +334,10 @@ void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 //--------------------------------------------------------------
 void DEBUG_PerformanceSetActive(BOOL isActive)
 {
+  if( (OS_GetConsoleType() & OS_CONSOLE_NITRO) && isActive == TRUE ){
+    return;
+  }
+  
 	pfm_sys.on_off = isActive;
 	if(isActive == FALSE){
 		Performance_AllOffOam();
