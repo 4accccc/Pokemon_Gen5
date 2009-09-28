@@ -261,7 +261,7 @@ void MUS_COMM_InitComm( MUS_COMM_WORK* work )
     HEAPID_NETWORK,         //
     GFL_WICON_POSX,GFL_WICON_POSY,  // 通信アイコンXY位置
     MUSICAL_COMM_MEMBER_NUM,        //_MAXNUM,  //最大接続人数
-    60,                     //_MAXSIZE, //最大送信バイト数
+    64,                     //_MAXSIZE, //最大送信バイト数
     MUS_COMM_BEACON_MAX,    //_BCON_GET_NUM,  // 最大ビーコン収集数
     TRUE,                   // CRC計算
     TRUE,                  // MP通信＝親子型通信モードかどうか
@@ -271,7 +271,7 @@ void MUS_COMM_InitComm( MUS_COMM_WORK* work )
 #if GFL_NET_IRC
     IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
-    0,//MP親最大サイズ 512まで
+    512 - 4*64,//MP親最大サイズ 512まで
     0,//dummy
   };  
   
