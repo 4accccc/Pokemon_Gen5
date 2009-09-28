@@ -545,8 +545,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     {
       MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
       int sex = MyStatus_GetMySex( mystatus );
-      fieldWork->field_player =
-        FIELD_PLAYER_Create( pw, fieldWork, pos, sex, fieldWork->heapID );
+      FLDMAP_CTRLTYPE type = fieldWork->func_tbl->type;
+      fieldWork->field_player = FIELD_PLAYER_Create(
+          pw, fieldWork, pos, sex, type, fieldWork->heapID );
     }
 
     //登録テーブルごとに個別の初期化処理を呼び出し

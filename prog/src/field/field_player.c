@@ -37,10 +37,12 @@ struct _FIELD_PLAYER
 	HEAPID heapID;
 	FIELDMAP_WORK *fieldWork;
   PLAYER_WORK *playerWork;
-
+   
 #if 0 //PLAYER_WORKへ移動
   PLAYER_MOVE_FORM move_form;
 #endif
+  
+  FLDMAP_CTRLTYPE map_type;
 
   PLAYER_MOVE_STATE move_state;
   PLAYER_MOVE_VALUE move_value;
@@ -54,10 +56,6 @@ struct _FIELD_PLAYER
   
 	MMDL *fldmmdl;
 	FLDMAPPER_GRIDINFODATA gridInfoData;
-  
-	//以下消します
-	GFL_BBDACT_RESUNIT_ID	bbdActResUnitID;
-	GFL_BBDACT_ACTUNIT_ID	bbdActActUnitID;
 };
 
 //======================================================================
@@ -82,7 +80,7 @@ static const OBJCODE_FORM dataOBJCodeForm[2][PLAYER_DRAW_FORM_MAX];
 //--------------------------------------------------------------
 FIELD_PLAYER * FIELD_PLAYER_Create(
     PLAYER_WORK *playerWork, FIELDMAP_WORK *fieldWork,
-		const VecFx32 *pos, int sex, HEAPID heapID )
+		const VecFx32 *pos, int sex, FLDMAP_CTRLTYPE type, HEAPID heapID )
 {
 	MMDLSYS *fmmdlsys;
 	FIELD_PLAYER *fld_player;
@@ -91,6 +89,7 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
   fld_player->playerWork = playerWork;
 	fld_player->fieldWork = fieldWork;
 	fld_player->pos = *pos;
+  fld_player->map_type = type;
 
 	FLDMAPPER_GRIDINFODATA_Init( &fld_player->gridInfoData );
 	
@@ -168,6 +167,21 @@ void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player )
   VecFx32 pos;
   FIELD_PLAYER_GetPos( fld_player, &pos );
 	PLAYERWORK_setPosition( fld_player->playerWork, &pos );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機イベント移動チェック
+ * @param fld_player FIELD_PLAYER
+ * @param dir 移動方向
+ * @param evbit PLAYER_EVENTBIT
+ * @retval BOOL TRUE=自機イベント移動発生
+ */
+//--------------------------------------------------------------
+GMEVENT * FIELD_PLAYER_CheckMoveEvent(
+    FIELD_PLAYER *fld_player, u16 dir, PLAYER_EVENTBIT evbit )
+{
+  return( NULL );
 }
 
 //======================================================================

@@ -8,6 +8,7 @@
 #pragma once
 #include <gflib.h>
 #include "system/gfl_use.h"
+#include "gamesystem/gamesystem.h"
 #include "gamesystem/game_data.h"
 
 #include "field/fieldmap_proc.h"
@@ -62,6 +63,16 @@ typedef enum
   PLAYER_DRAW_FORM_MAX,
 }PLAYER_DRAW_FORM;
 
+//--------------------------------------------------------------
+/// PLAYER_EVENTBIT
+//--------------------------------------------------------------
+typedef enum
+{
+  PLAYER_EVENTBIT_NON = 0, ///<イベント許可　なし
+  PLAYER_EVENTBIT_KAIRIKI = (1<<0), ///<イベント許可　かいりき
+  PLAYER_EVENTBIT_TAKINOBORI = (1<<1), ///<イベント許可 たきのぼり
+}PLAYER_EVENTBIT;
+
 //======================================================================
 //	struct
 //======================================================================
@@ -74,10 +85,12 @@ typedef struct _FIELD_PLAYER FIELD_PLAYER;
 //作成、削除、更新
 extern FIELD_PLAYER * FIELD_PLAYER_Create(
     PLAYER_WORK *playerWork, FIELDMAP_WORK *fieldWork,
-		const VecFx32 *pos, int sex, HEAPID heapID );
+		const VecFx32 *pos, int sex, FLDMAP_CTRLTYPE type, HEAPID heapID );
 extern void FIELD_PLAYER_Delete( FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player );
+extern GMEVENT * FIELD_PLAYER_CheckMoveEvent(
+    FIELD_PLAYER *fld_player, u16 dir, PLAYER_EVENTBIT evbit );
 
 //参照、設定
 extern void FIELD_PLAYER_GetPos(

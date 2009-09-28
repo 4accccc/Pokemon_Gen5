@@ -268,9 +268,18 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     }
   }
   
-//☆☆☆自機状態イベントチェックがここから
-    /* 今はない */
+//☆☆☆自機状態イベントチェック
+  if( !(req.debugRequest) ){
+    u16 dir = DIR_NOT;
+    PLAYER_EVENTBIT evbit = PLAYER_EVENTBIT_NON;
 
+    event = FIELD_PLAYER_CheckMoveEvent( req.field_player, dir, evbit );
+    
+    if( event != NULL ){
+      return event;
+    }
+  }
+  
 //☆☆☆会話チェック
 
 	///通信用会話処理(仮

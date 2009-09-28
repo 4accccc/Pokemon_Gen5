@@ -395,8 +395,9 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/height_ex.c \
         field/event_comm_error.c \
         field/gym_elec.c \
+        field/event_pc_recovery.c \
         field/gym_normal.c \
-        field/event_pc_recovery.c
+        field/field_player_grid_event.c
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP

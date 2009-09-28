@@ -59,3 +59,9 @@ extern FLDEFF_TASK * FIELD_PLAYER_GRID_GetEffectTaskWork(
 extern void FIELD_PLAYER_SetNaminori( FIELD_PLAYER_GRID *gjiki );
 extern void FIELD_PLAYER_SetNaminoriEnd( FIELD_PLAYER_GRID *gjiki );
 extern u16 FIELD_PLAYER_GRID_GetKeyDir( FIELD_PLAYER_GRID *gjiki, int key );
+
+//field_player_grid_event.c
+
+extern BOOL FIELD_PLAYER_GRID_CheckMoveEvent(
+    FIELD_PLAYER *fld_player, FIELD_PLAYER_GRID *gjiki,
+    u16 dir, PLAYER_EVENTBIT evbit );
