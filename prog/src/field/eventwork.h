@@ -59,7 +59,7 @@ extern void EVENTWORK_Init(EVENTWORK * evwk);
 extern BOOL EVENTWORK_CheckEventFlag( EVENTWORK * ev, u16 flag_no);
 extern void EVENTWORK_SetEventFlag( EVENTWORK * ev, u16 flag_no);
 extern void EVENTWORK_ResetEventFlag( EVENTWORK * ev, u16 flag_no);
-extern u8 * EVENTWORK_GetEventFlagAdrs( EVENTWORK * ev, u16 flag_no );
+
 extern u16 * EVENTWORK_GetEventWorkAdrs( EVENTWORK * ev, u16 work_no );
 
 //----------------------------------------------------------

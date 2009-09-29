@@ -10,6 +10,7 @@
 #include "eventwork.h"
 #include "eventwork_def.h"
 
+static u8 * EVENTWORK_GetEventFlagAdrs( EVENTWORK * ev, u16 flag_no );
 //======================================================================
 //	定義
 //======================================================================
@@ -199,22 +200,22 @@ void EVENTWORK_ResetEventFlag( EVENTWORK * ev, u16 flag_no)
  * @retval	"NULL = 未定義"
  */
 //--------------------------------------------------------------
-u8 * EVENTWORK_GetEventFlagAdrs( EVENTWORK * ev, u16 flag_no )
+static u8 * EVENTWORK_GetEventFlagAdrs( EVENTWORK * ev, u16 flag_no )
 {
 	if( flag_no == 0 ){
 		return NULL;
 	}else if( flag_no < SCFLG_START ){
 		if( (flag_no / 8) >= EVENT_FLAG_AREA_MAX ){
-			GF_ASSERT( (0) && "フラグナンバーが最大数を超えています！" );
+			GF_ASSERT_MSG(0, "フラグナンバー(0x%04x)が最大数を超えています！\n", flag_no );
+      return NULL;
 		}
-
 		return &ev->flag[flag_no/8];
 	}else{
 
 		if( ((flag_no - SCFLG_START) / 8) >= CTRLFLAG_AREA_MAX ){
-			GF_ASSERT( (0) && "フラグナンバーが最大数を超えています！" );
+			GF_ASSERT_MSG(0, "フラグナンバー(0x%04x)が最大数を超えています！\n", flag_no );
+      return NULL;
 		}
-		
 		return &( EventCtrlFlag[ (flag_no - SCFLG_START) / 8 ] );
 	}
 }
@@ -235,7 +236,7 @@ u8 * EVENTWORK_GetEventFlagAdrs( EVENTWORK * ev, u16 flag_no )
 u16 * EVENTWORK_GetEventWorkAdrs( EVENTWORK * ev, u16 work_no )
 {
 	if( (work_no - SVWK_START) >= EVENT_WORK_AREA_MAX ){
-		GF_ASSERT( (0) && "ワークナンバーが最大数を超えています！" );
+		GF_ASSERT_MSG( 0, "ワークナンバー(0x%04x)が最大数を超えています！\n", work_no );
 	}
 	
 	return &ev->work[ work_no - SVWK_START ];
