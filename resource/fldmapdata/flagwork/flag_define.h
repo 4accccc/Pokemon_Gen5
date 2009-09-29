@@ -548,8 +548,8 @@
 #define FV_T02_NNN                         524 /* 0x020c カラクサタウン：Nとの出会い */
 #define FV_T02_MAN                         525 /* 0x020d カラクサタウン：群集 */
 #define FV_R03_POKE                        526 /* 0x020e ３番道路：ハカイ団に奪われたポケモン */
-		/* not used   527(0x020f) */
-		/* not used   528(0x0210) */
+#define FV_D01_GYM_LEADER                  527 /* 0x020f 廃墟入り口：ジムリーダー */
+#define FV_T02_RIVAL_02                    528 /* 0x0210 カラクサタウン：イベント誘導 */
 		/* not used   529(0x0211) */
 		/* not used   530(0x0212) */
 		/* not used   531(0x0213) */

@@ -144,7 +144,7 @@
 #define WK_SCENE_R01                     16508 /* 0x407c １番道路：イベント用ワーク */
 #define WK_SCENE_R02                     16509 /* 0x407d ２番道路：イベント用ワーク */
 #define WK_SCENE_R03                     16510 /* 0x407e ３番道路：イベント用ワーク */
-		/* not used 16511(0x407f) */
+#define WK_SCENE_D01                     16511 /* 0x407f 廃墟：イベント用ワーク */
 		/* not used 16512(0x4080) */
 		/* not used 16513(0x4081) */
 		/* not used 16514(0x4082) */
