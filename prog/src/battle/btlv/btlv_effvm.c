@@ -831,8 +831,8 @@ static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_
 #endif DEBUG_OS_PRINT
 
   beeiw->vmh = vmh;
-  beeiw->src = BTLEFF_CAMERA_POS_NONE;
-  beeiw->dst = BTLEFF_CAMERA_POS_NONE;
+  beeiw->src = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
+  beeiw->dst = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
   beeiw->src_pos.x = ( fx32 )VMGetU32( vmh );
   beeiw->src_pos.y = ( fx32 )VMGetU32( vmh );
   beeiw->src_pos.z = ( fx32 )VMGetU32( vmh );
@@ -994,12 +994,12 @@ static VMCMD_RESULT VMEC_EMITTER_CIRCLE_MOVE( VMHANDLE *vmh, void *context_work 
   case BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_L:
   case BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_R:
     position = EFFVM_GetPosition( vmh, BTLEFF_POKEMON_SIDE_ATTACK );
-    BTLV_MCSS_GetPokeDefaultPos( &beecmw->center_pos, position );
+    BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &beecmw->center_pos, position );
     break;
   case BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_L:
   case BTLEFF_EMITTER_CIRCLE_MOVE_DEFENCE_R:
     position = EFFVM_GetPosition( vmh, BTLEFF_POKEMON_SIDE_DEFENCE );
-    BTLV_MCSS_GetPokeDefaultPos( &beecmw->center_pos, position );
+    BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &beecmw->center_pos, position );
     break;
   case BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_L:
   case BTLEFF_EMITTER_CIRCLE_MOVE_CENTER_R:
@@ -2471,9 +2471,9 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     break;
   }
 
-  if( beeiw->src != BTLEFF_CAMERA_POS_NONE )
+  if( ( beeiw->src != BTLEFF_CAMERA_POS_NONE ) && ( beeiw->src != BTLEFF_PARTICLE_PLAY_SIDE_NONE ) )
   {
-    BTLV_MCSS_GetPokeDefaultPos( &src, beeiw->src );
+    BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &src, beeiw->src );
   }
 
   switch( beeiw->dst ){
@@ -2505,9 +2505,9 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     break;
   }
 
-  if( beeiw->dst != BTLEFF_CAMERA_POS_NONE )
+  if( ( beeiw->dst != BTLEFF_CAMERA_POS_NONE ) && ( beeiw->dst != BTLEFF_PARTICLE_PLAY_SIDE_NONE ) )
   {
-    BTLV_MCSS_GetPokeDefaultPos( &dst, beeiw->dst );
+    BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &dst, beeiw->dst );
   }
 
   src.y += beeiw->ofs_y;
