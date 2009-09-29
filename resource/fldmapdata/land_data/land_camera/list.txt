@@ -144,3 +144,8 @@
 "dendo01.bin"
 "ncastle01.bin"
 "t05.bin"
+"buill07.bin"
+"buill08.bin"
+"GATE03.bin"
+"GATE04.bin"
+"GATE05.bin"
