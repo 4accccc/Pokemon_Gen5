@@ -1,10 +1,10 @@
 #event data
-#save date:2009/07/15 17:38:24
+#save date:2009/09/28 18:18:06
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t02r0202.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/15 17:38:24
+#save date:2009/09/28 18:18:06
 2
 #hold event type:
 1
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t02r0202.wms
 #type
 1
 #ID name
-T02R0202_WOMAN1
+T02R0202_WOMAN1_01
 #OBJ CODE Number
 WOMAN1
 #MOVE CODE Number
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_T02R0202_TALKOBJ_WOMAN1
+SCRID_T02R0202_WOMAN1_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -43,7 +43,7 @@ DIR_DOWN
 #type
 1
 #ID name
-T02R0202_MAN1
+T02R0202_MAN1_01
 #OBJ CODE Number
 MAN1
 #MOVE CODE Number
@@ -53,7 +53,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_T02R0202_TALKOBJ_MAN1
+SCRID_T02R0202_MAN1_01
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -72,7 +72,7 @@ DIR_UP
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/15 17:38:24
+#save date:2009/09/28 18:18:06
 2
 #hold event type:
 1
@@ -82,7 +82,7 @@ DIR_UP
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/15 17:38:24
+#save date:2009/09/28 18:18:06
 2
 #hold event type:
 1
@@ -92,7 +92,7 @@ DIR_UP
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/15 17:38:24
+#save date:2009/09/28 18:18:06
 2
 #hold event type:
 1
@@ -100,11 +100,11 @@ DIR_UP
 1
 #event number: 0
 #Door Event Label
-DOOR_ID_T02R0202_EXIT01
+DOOR_ID_T02R0202_T02R0201_EXIT01
 #Next Zone ID Name
 ZONE_ID_T02R0201
 #Next Door ID Name
-DOOR_ID_T02R0201_EXIT04
+DOOR_ID_T02R0201_T02R0202_EXIT01
 #Door Direction
 EXIT_DIR_RIGHT
 #Door Type
