@@ -524,8 +524,31 @@
 #define ITEM_AIIRONOTAMA		( 535 )		// あいいろのたま
 #define ITEM_NAZONOSUISYOU		( 536 )		// なぞのすいしょう
 #define ITEM_PARESUHEGOO		( 537 )		// パレスへゴー
+#define ITEM_KURITHIc2		( 538 )		// クリティＣ２
+#define ITEM_SUPIIDAA2		( 539 )		// スピーダー２
+#define ITEM_SUPESYARUu2		( 540 )		// スペシャルＵ２
+#define ITEM_SUPESYARUg2		( 541 )		// スペシャルＧ２
+#define ITEM_DHIFENDAA2		( 542 )		// ディフェンダー２
+#define ITEM_PURASUPAWAA2		( 543 )		// プラスパワー２
+#define ITEM_YOKUATAARU2		( 544 )		// ヨクアタール２
+#define ITEM_SUPIIDAA3		( 545 )		// スピーダー３
+#define ITEM_SUPESYARUu3		( 546 )		// スペシャルＵ３
+#define ITEM_SUPESYARUg3		( 547 )		// スペシャルＧ３
+#define ITEM_DHIFENDAA3		( 548 )		// ディフェンダー３
+#define ITEM_PURASUPAWAA3		( 549 )		// プラスパワー３
+#define ITEM_YOKUATAARU3		( 550 )		// ヨクアタール３
+#define ITEM_SUPIIDAA6		( 551 )		// スピーダー６
+#define ITEM_SUPESYARUu6		( 552 )		// スペシャルＵ６
+#define ITEM_SUPESYARUg6		( 553 )		// スペシャルＧ６
+#define ITEM_DHIFENDAA6		( 554 )		// ディフェンダー６
+#define ITEM_PURASUPAWAA6		( 555 )		// プラスパワー６
+#define ITEM_YOKUATAARU6		( 556 )		// ヨクアタール６
+#define ITEM_SUKIRUKOORU		( 557 )		// スキルコール
+#define ITEM_AITEMUDOROPPU		( 558 )		// アイテムドロップ
+#define ITEM_AITEMUKOORU		( 559 )		// アイテムコール
+#define ITEM_HURATTOKOORU		( 560 )		// フラットコール
 
-#define ITEM_DATA_MAX		( 537 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 560 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数

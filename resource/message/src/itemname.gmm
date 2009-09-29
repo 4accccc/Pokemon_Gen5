@@ -2820,6 +2820,121 @@
 		<language name="JPN_KANJI" width="256">パレスへゴー</language>
 	</row>
 
+	<row id="ITEMNAME_538">
+		<language name="JPN" width="256">クリティＣ２</language>
+		<language name="JPN_KANJI" width="256">パレスへゴー</language>
+	</row>
+
+	<row id="ITEMNAME_539">
+		<language name="JPN" width="256">スピーダー２</language>
+		<language name="JPN_KANJI" width="256">スピーダー２</language>
+	</row>
+
+	<row id="ITEMNAME_540">
+		<language name="JPN" width="256">スペシャルＵ２</language>
+		<language name="JPN_KANJI" width="256">スペシャルＵ２</language>
+	</row>
+
+	<row id="ITEMNAME_541">
+		<language name="JPN" width="256">スペシャルＧ２</language>
+		<language name="JPN_KANJI" width="256">スペシャルＧ２</language>
+	</row>
+
+	<row id="ITEMNAME_542">
+		<language name="JPN" width="256">ディフェンダー２</language>
+		<language name="JPN_KANJI" width="256">ディフェンダー２</language>
+	</row>
+
+	<row id="ITEMNAME_543">
+		<language name="JPN" width="256">プラスパワー２</language>
+		<language name="JPN_KANJI" width="256">プラスパワー２</language>
+	</row>
+
+	<row id="ITEMNAME_544">
+		<language name="JPN" width="256">ヨクアタール２</language>
+		<language name="JPN_KANJI" width="256">ヨクアタール２</language>
+	</row>
+
+	<row id="ITEMNAME_545">
+		<language name="JPN" width="256">スピーダー３</language>
+		<language name="JPN_KANJI" width="256">スピーダー３</language>
+	</row>
+
+	<row id="ITEMNAME_546">
+		<language name="JPN" width="256">スペシャルＵ３</language>
+		<language name="JPN_KANJI" width="256">スペシャルＵ３</language>
+	</row>
+
+	<row id="ITEMNAME_547">
+		<language name="JPN" width="256">スペシャルＧ３</language>
+		<language name="JPN_KANJI" width="256">スペシャルＧ３</language>
+	</row>
+
+	<row id="ITEMNAME_548">
+		<language name="JPN" width="256">ディフェンダー３</language>
+		<language name="JPN_KANJI" width="256">ディフェンダー３</language>
+	</row>
+
+	<row id="ITEMNAME_549">
+		<language name="JPN" width="256">プラスパワー３</language>
+		<language name="JPN_KANJI" width="256">プラスパワー３</language>
+	</row>
+
+	<row id="ITEMNAME_550">
+		<language name="JPN" width="256">ヨクアタール３</language>
+		<language name="JPN_KANJI" width="256">ヨクアタール３</language>
+	</row>
+
+	<row id="ITEMNAME_551">
+		<language name="JPN" width="256">スピーダー６</language>
+		<language name="JPN_KANJI" width="256">スピーダー６</language>
+	</row>
+
+	<row id="ITEMNAME_552">
+		<language name="JPN" width="256">スペシャルＵ６</language>
+		<language name="JPN_KANJI" width="256">スペシャルＵ６</language>
+	</row>
+
+	<row id="ITEMNAME_553">
+		<language name="JPN" width="256">スペシャルＧ６</language>
+		<language name="JPN_KANJI" width="256">スペシャルＧ６</language>
+	</row>
+
+	<row id="ITEMNAME_554">
+		<language name="JPN" width="256">ディフェンダー６</language>
+		<language name="JPN_KANJI" width="256">ディフェンダー６</language>
+	</row>
+
+	<row id="ITEMNAME_555">
+		<language name="JPN" width="256">プラスパワー６</language>
+		<language name="JPN_KANJI" width="256">プラスパワー６</language>
+	</row>
+
+	<row id="ITEMNAME_556">
+		<language name="JPN" width="256">ヨクアタール６</language>
+		<language name="JPN_KANJI" width="256">ヨクアタール６</language>
+	</row>
+
+	<row id="ITEMNAME_557">
+		<language name="JPN" width="256">スキルコール</language>
+		<language name="JPN_KANJI" width="256">スキルコール</language>
+	</row>
+
+	<row id="ITEMNAME_558">
+		<language name="JPN" width="256">アイテムドロップ</language>
+		<language name="JPN_KANJI" width="256">アイテムドロップ</language>
+	</row>
+
+	<row id="ITEMNAME_559">
+		<language name="JPN" width="256">アイテムコール</language>
+		<language name="JPN_KANJI" width="256">アイテムコール</language>
+	</row>
+
+	<row id="ITEMNAME_560">
+		<language name="JPN" width="256">フラットコール</language>
+		<language name="JPN_KANJI" width="256">フラットコール</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

@@ -526,7 +526,30 @@ enum {
 	NARC_item_data_item534_dat = 512,
 	NARC_item_data_item535_dat = 513,
 	NARC_item_data_item536_dat = 514,
-	NARC_item_data_item537_dat = 515
+	NARC_item_data_item537_dat = 515,
+	NARC_item_data_item538_dat = 516,
+	NARC_item_data_item539_dat = 517,
+	NARC_item_data_item540_dat = 518,
+	NARC_item_data_item541_dat = 519,
+	NARC_item_data_item542_dat = 520,
+	NARC_item_data_item543_dat = 521,
+	NARC_item_data_item544_dat = 522,
+	NARC_item_data_item545_dat = 523,
+	NARC_item_data_item546_dat = 524,
+	NARC_item_data_item547_dat = 525,
+	NARC_item_data_item548_dat = 526,
+	NARC_item_data_item549_dat = 527,
+	NARC_item_data_item550_dat = 528,
+	NARC_item_data_item551_dat = 529,
+	NARC_item_data_item552_dat = 530,
+	NARC_item_data_item553_dat = 531,
+	NARC_item_data_item554_dat = 532,
+	NARC_item_data_item555_dat = 533,
+	NARC_item_data_item556_dat = 534,
+	NARC_item_data_item557_dat = 535,
+	NARC_item_data_item558_dat = 536,
+	NARC_item_data_item559_dat = 537,
+	NARC_item_data_item560_dat = 538
 };
 
 /* NARC_ITEM_DATA_NAIX_ */
