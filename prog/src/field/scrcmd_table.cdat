@@ -381,9 +381,9 @@
   NO_CMD()
   NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdGymAnti_Init, EV_SEQ_GYM_ANTI_INIT )
+  DEF_CMD( EvCmdGymAnti_SwOn, EV_SEQ_GYM_ANTI_SW_ON )
+  DEF_CMD( EvCmdGymAnti_OpenDoor, EV_SEQ_GYM_ANTI_OPEN_DOOR )
   NO_CMD()
 
   NO_CMD()

@@ -79,5 +79,19 @@ VMCMD_RESULT EvCmdGymNormal_Init( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--アンチ--
+//--------------------------------------------------------------
+/**
+ * アンチジム初期化
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymAnti_Init( VMHANDLE *core, void *wk )
+{
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(field_gym_init) );		//オーバーレイロード
+//  GYM_INIT_Normal(gsys, room_no);
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(field_gym_init));		//オーバーレイアンロード
 
-
+  return VMCMD_RESULT_CONTINUE;
+}
