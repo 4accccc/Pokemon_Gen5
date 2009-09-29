@@ -3,7 +3,7 @@
  *
  *	@file		mictest.h
  *	@brief		マイクテスト画面外部公開ヘッダー
- *	@author		Toru=Nagihashi
+ *	@author		Toru=Nagihashi / genya hosaka(GSからWBに移植)
  *	@data		2008.07.03
  *
  */
