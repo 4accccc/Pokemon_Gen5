@@ -125,7 +125,6 @@ struct _BTLV_SCU {
   PRINT_QUE*      printQue;
   PRINT_UTIL      printUtil;
   GFL_FONT*       defaultFont;
-  GFL_FONT*       smallFont;
   GFL_TCBLSYS*    tcbl;
   PRINT_STREAM*      printStream;
   STRBUF*            strBuf;
@@ -211,7 +210,6 @@ BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore,
   wk->heapID = heapID;
   wk->playerClientID = playerClientID;
   wk->defaultFont = defaultFont;
-//  wk->smallFont = GFL_FONT_Create( ARCID_FONT, NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 
   wk->printStream = NULL;
   wk->tcbl = tcbl;
@@ -318,7 +316,6 @@ void BTLV_SCU_Delete( BTLV_SCU* wk )
 
   PRINTSYS_QUE_Delete( wk->printQue );
   GFL_STR_DeleteBuffer( wk->strBuf );
-//  GFL_FONT_Delete( wk->smallFont );
 
   GFL_HEAP_FreeMemory( wk );
 }
