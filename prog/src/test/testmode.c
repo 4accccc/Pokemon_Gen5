@@ -1007,11 +1007,16 @@ static BOOL TESTMODE_ITEM_SelectFuncNakamura( TESTMODE_WORK *work , const int id
 	return TRUE;
 }
 
-FS_EXTERN_OVERLAY(mictest);
-extern const GFL_PROC_DATA TitleMicTestProcData;
+// マイクテスト
+//FS_EXTERN_OVERLAY(mictest);
+//extern const GFL_PROC_DATA TitleMicTestProcData;
+// UIテンプレート
+FS_EXTERN_OVERLAY(ui_debug);
+extern const GFL_PROC_DATA UITemplateProcData;
 static BOOL TESTMODE_ITEM_SelectFuncHosaka( TESTMODE_WORK *work , const int idx )
 {
-	TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(mictest), &TitleMicTestProcData, NULL );
+//  TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(mictest), &TitleMicTestProcData, NULL );
+	TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(ui_debug), &UITemplateProcData, NULL );
 	return TRUE;
 }
 static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx )

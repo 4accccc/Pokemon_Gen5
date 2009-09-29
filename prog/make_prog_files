@@ -853,3 +853,12 @@ SRCS_OVERLAY_ITEMUSE = field/itemuse_event.c
 #===> main
 SRCS_OVERLAY_MICTEST	= app/mictest/mictest.c
 
+#UI汎用モジュール
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_UI_COMMON = ui/ui_scene.c
+
+#UIデバッグ(新規アプリ用テンプレート）
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_UI_DEBUG = ui/debug/ui_template.c
+
