@@ -146,15 +146,25 @@ extern void
 #ifdef AREAMAN_DEBUG
 //------------------------------------------------------------------
 /**
- * デバッグ出力
+ * デバッグ出力開始／停止
  *
  * @param   man
- * @param   flag
+ * @param   flag  TRUEで開始／FALSEで停止
  */
 //------------------------------------------------------------------
 extern void
   GFL_AREAMAN_SetPrintDebug
     ( GFL_AREAMAN* man, BOOL flag );
+
+//------------------------------------------------------------------
+/**
+ * デバッグ出力実行
+ *
+ * @param   man
+ */
+//------------------------------------------------------------------
+extern void GFL_AREAMAN_PrintDebug( GFL_AREAMAN* man );
+
 #else
 #define GFL_AREAMAN_SetPrintDebug( m, f )  /* */
 #endif
