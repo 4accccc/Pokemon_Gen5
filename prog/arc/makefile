@@ -29,13 +29,13 @@ include $(VER_FILE)
 do-build: narc_tree.inc arc_def.h arc_file.h file_tree.inc arc_tool.lst
 
 narc_tree.inc: ../../tools/arc/narc_tree.pl arc_tool.lst $(VER_FILE)
-	perl ../../tools/arc/narc_tree.pl arc_tool.lst $(PM_VERSION)
+	perl ../../tools/arc/narc_tree.pl arc_tool.lst $(PM_VERSION) $(PM_DEBUG)
 
 arc_def.h arc_file.h: ../../tools/arc/header.pl arc_tool.lst $(VER_FILE)
-	perl ../../tools/arc/header.pl arc_tool.lst $(PM_VERSION) no
+	perl ../../tools/arc/header.pl arc_tool.lst $(PM_VERSION) $(PM_DEBUG) no
 
 file_tree.inc: ../../tools/arc/narc.pl arc_tool.lst $(VER_FILE) $(NARC_TREE)
-	perl ../../tools/arc/narc.pl arc_tool.lst $(PM_VERSION) ./ ../filetree/ no
+	perl ../../tools/arc/narc.pl arc_tool.lst $(PM_VERSION) $(PM_DEBUG) ./ ../filetree/ no
 
 clean:
 	-rm -f $(LDIRT_CLEAN)
