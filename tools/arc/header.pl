@@ -9,12 +9,13 @@ use	File::Basename;
 
 use constant ARC_LIST	=> 0;
 use constant VERSION	=> 1;
-use constant MB_FLAG	=> 2;
+use constant DEBUG	  => 2;
+use constant MB_FLAG	=> 3;
 
 	$argc = @ARGV;
 
-	if( $argc < 3 ){
-		print "error:perl perl_file read_file pm_version multi_boot_flag\n";
+	if( $argc < 4 ){
+		print "error:perl perl_file read_file pm_version pm_debug multi_boot_flag\n";
 		print " read_file:\n  読み込むリストファイル（通常は、arc_tool.lst）\n";
 		print " pm_version:\n  バージョンフラグ（ポケモンなどで２バージョンある時に作成バージョンを指定）\n";
 		print " multi_boot_flag:\n  yesを指定することで、マルチブート子機対応になる\n";
@@ -48,7 +49,7 @@ use constant MB_FLAG	=> 2;
 	$count		= 0;
 
 	while($data_num != 0){
-		@arc_data		=	split(/ |\t|\r|\n/,@data[$count]);
+		@arc_data		=	split(/ +|\t|\r|\n/,@data[$count]);
 		$arc_data_num	=	@arc_data;
 		for( $i = 0 ; $i < $arc_data_num ; $i++ ){
 			my $flag = 0;
@@ -57,9 +58,20 @@ use constant MB_FLAG	=> 2;
 					case '$' {
 						$version = @arc_data[$i];
 						$version =~ s/\$//g;
-						$find = index( $version, @ARGV[VERSION] );
-						if( $find >= 0 && length $version == length @ARGV[VERSION] ){
-							&FileWrite($i+1);
+            if( $version eq "DEBUG_YES" && @ARGV[DEBUG] eq "yes" )
+            {
+  						&FileWrite($i+1);
+            }
+            elsif( $version eq "DEBUG_NO" && @ARGV[DEBUG] eq "no" )
+            {
+  						&FileWrite($i+1);
+            }
+            else
+            {
+  						$find = index( $version, @ARGV[VERSION] );
+  						if( $find >= 0 && length $version == length @ARGV[VERSION] ){
+  							&FileWrite($i+1);
+              }
 						}
 						$flag = 1;
 					}

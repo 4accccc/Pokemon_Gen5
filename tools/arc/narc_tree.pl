@@ -8,8 +8,8 @@ use Switch;
 
 	$argc = @ARGV;
 
-	if( $argc < 2 ){
-		print "error:perl perl_file read_file version\n";
+	if( $argc < 3 ){
+		print "error:perl perl_file read_file version debug\n";
 		exit(1);
 	}
 
@@ -25,7 +25,7 @@ use Switch;
 	$write_count= 0;
 
 	while($data_num != 0){
-		@arc_data		=	split(/ |\t|\r|\n/,@data[$count]);
+		@arc_data		=	split(/ +|\t|\r|\n/,@data[$count]);
 		$arc_data_num	=	@arc_data;
 		for( $i = 0 ; $i < $arc_data_num ; $i++ ){
 			my $flag = 0;
@@ -34,10 +34,21 @@ use Switch;
 					case '$' {
 						$version = @arc_data[$i];
 						$version =~ s/\$//g;
-						$find = index( $version, @ARGV[1] );
-						if( $find >= 0 && length $version == length @ARGV[1] ){
-							&FileWrite($i+1);
-						}
+            if( $version eq "DEBUG_YES" && @ARGV[2] eq "yes" )
+            {
+  						&FileWrite($i+1);
+            }
+            elsif( $version eq "DEBUG_NO" && @ARGV[2] eq "no" )
+            {
+  						&FileWrite($i+1);
+            }
+            else
+            {
+  						$find = index( $version, @ARGV[1] );
+  						if( $find >= 0 && length $version == length @ARGV[1] ){
+  							&FileWrite($i+1);
+  						}
+            }
 						$flag = 1;
 					}
 					case '#' {

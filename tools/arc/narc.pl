@@ -8,16 +8,18 @@ use Switch;
 
 use constant ARC_LIST	=> 0;
 use constant VERSION	=> 1;
-use constant SRC_DIR	=> 2;
-use constant DEST_DIR	=> 3;
-use constant MB_FLAG	=> 4;
+use constant DEBUG	  => 2;
+use constant SRC_DIR	=> 3;
+use constant DEST_DIR	=> 4;
+use constant MB_FLAG	=> 5;
 
 	$argc = @ARGV;
 
-	if( $argc < 5 ){
-		print "error:perl perl_file read_file pm_version src_dir dest_dir\n";
+	if( $argc < 6 ){
+		print "error:perl perl_file read_file pm_version pm_debug src_dir dest_dir\n";
 		print " read_file:\n  読み込むリストファイル（通常は、arc_tool.lst）\n";
 		print " pm_version:\n  バージョンフラグ（ポケモンなどで２バージョンある時に作成バージョンを指定）\n";
+		print " pm_debug:\n  デバッグフラグ（デバッグ版と製品版で含めるものを変えたい時用に指定）\n";
 		print " src_dir:\n  コピー元ファイルの存在するフォルダを指定\n";
 		print " dest_dir:\n  短縮ファイル名のコピー先フォルダを指定\n";
 		print " multi_boot_flag:\n  yesを指定することで、マルチブート子機対応になる\n";
@@ -47,7 +49,7 @@ use constant MB_FLAG	=> 4;
 	}
 
 	while($data_num != 0){
-		@arc_data		=	split(/ |\t|\r|\n/,@data[$count]);
+		@arc_data		=	split(/ +|\t|\r|\n/,@data[$count]);
 		$arc_data_num	=	@arc_data;
 		for( $i = 0 ; $i < $arc_data_num ; $i++ ){
 			my $flag = 0;
@@ -56,11 +58,22 @@ use constant MB_FLAG	=> 4;
 					case '$' {
 						$version = @arc_data[$i];
 						$version =~ s/\$//g;
-						$find = index( $version, @ARGV[VERSION] );
-						if( $find >= 0 && length $version == length @ARGV[VERSION] ){
-							&FileWrite($i+1);
-						}
-						$flag = 1;
+            if( $version eq "DEBUG_YES" && @ARGV[DEBUG] eq "yes" )
+            {
+  						&FileWrite($i+1);
+            }
+            elsif( $version eq "DEBUG_NO" && @ARGV[DEBUG] eq "no" )
+            {
+  						&FileWrite($i+1);
+            }
+            else
+            {
+  						$find = index( $version, @ARGV[VERSION] );
+  						if( $find >= 0 && length $version == length @ARGV[VERSION] ){
+  							&FileWrite($i+1);
+  						}
+            }
+  					$flag = 1;
 					}
 					case '#' {
 						$flag = 1;
@@ -146,7 +159,7 @@ sub FileWrite{
 		my $dst_file = @ARGV[DEST_DIR];
 		$dst_file .= $tree;
 		my @cmd = ( 'cp', $src_file, $dst_file );
-	
+
 		system @cmd;
 		if( $? >> 8 != 0 ){
 			exit(1);
