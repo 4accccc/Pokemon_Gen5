@@ -5,21 +5,28 @@
 # @author tamada GAMEFREAK inc.
 # @date 2009.09.16  renew
 #
+# @note
+#   prog/makefileの"echo_buildtype"ターゲットに依存している。
+#   "echo_buildtype"はNITRO_BUILDTYPEを取得するためだけに追加した。
 #
 #============================================================================
 require "fileutils"
 
 PROGDIR = ENV["PROJECT_PROGDIR"].sub(/C:/,"/cygdrive/c").chomp
 
+def DebugPut arg
+  puts "DEBUG:" + arg
+end
+
 #指定ファイル名を含む依存ファイルをリストアップする
 def search_depend_files( search_name )
   build_type = `cd #{PROGDIR}; make echo_buildtype`.chomp
-  #puts "result:#{build_type}"
-  depend_path = "#{PROGDIR}/depend/#{build_type}/*.d"
+  #DebugPut "result:#{build_type}"
+  depend_path = "#{PROGDIR}depend/#{build_type}/*.d"
   command = "grep #{search_name} #{depend_path}"
-  #puts "command:#{command}"
+  DebugPut "command:#{command}"
   dependfiles = `#{command}`
-  #puts "\"#{dependfiles}\""
+  DebugPut "\"#{dependfiles}\""
   return dependfiles
 end
 
