@@ -32,8 +32,11 @@ end
 
 #依存ファイル名リストから依存ファイルとオブジェクトファイルを削除する
 def remove_depfile_and_objfile( dependfiles )
+  removed = Hash.new
   dependfiles.each{|line|
     file = line.sub(/:.*$/,"").chomp
+    if removed.has_key?(file) then next end
+    removed[file] = true
     puts "rm #{file}"
     FileUtils.rm( file )
     FileUtils.rm( file.sub(/\/depend\//,"\/obj\/").sub(/d$/,"o") )

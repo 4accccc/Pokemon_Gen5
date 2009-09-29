@@ -3,7 +3,7 @@ if "%1"=="rsc" (
 	make -C %PROJECT_RSCDIR% %2 %3
 )
 if "%1"=="prog" (
-	make -C %PROJECT_PROGDIR% %2 %3
+	make -C %PROJECT_PROGDIR% -j 3 %2 %3
 )
 if "%1"=="arc" (
 	make -C %PROJECT_ARCDIR% %2 %3
