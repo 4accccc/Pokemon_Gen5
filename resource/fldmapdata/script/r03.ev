@@ -74,7 +74,7 @@ EVENT_START   ev_pos_r03_rival_01
 	_AB_KEYWAIT()
 	
 	//サポート、ハカイ団に気づいて駆け寄る。
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_r03_support_01)
+	_OBJ_ANIME(R03_SUPPORT,anm_r03_support_01)
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_OPEN(msg_r03_white_01,R03_SUPPORT)
 	_AB_KEYWAIT()
@@ -325,8 +325,8 @@ _ANIME_LABEL	anm_r03_hakai_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03_player_02
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
