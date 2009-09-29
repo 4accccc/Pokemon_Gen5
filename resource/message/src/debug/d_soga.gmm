@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="sogabe" host="W00140" date="2009-08-21T15:53:59"/>
+	<create user="sogabe" host="W00140" date="2009-09-29T17:02:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -336,6 +336,14 @@
 
 	<row id="DSMSG_CAPTURE">
 		<language name="JPN">キャプチャじっけん</language>
+	</row>
+
+	<row id="PVMSG_PERS">
+		<language name="JPN">透視射影</language>
+	</row>
+
+	<row id="PVMSG_ORTH">
+		<language name="JPN">正射影</language>
 	</row>
 
 	<row id="PVMSG_POS_AA">
