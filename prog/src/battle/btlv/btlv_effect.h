@@ -65,7 +65,7 @@ typedef struct {
   u8           continue_count;  ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
 }BTLV_WAZAEFFECT_PARAM;
 
-extern  void              BTLV_EFFECT_Init( int index, HEAPID heapID );
+extern  void              BTLV_EFFECT_Init( BtlRule rule, int index, HEAPID heapID );
 extern  void              BTLV_EFFECT_Exit( void );
 extern  void              BTLV_EFFECT_Main( void );
 extern  void              BTLV_EFFECT_Add( int eff_no );

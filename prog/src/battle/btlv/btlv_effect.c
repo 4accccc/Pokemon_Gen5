@@ -94,7 +94,7 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
  * @param[in] heapID    ƒq[ƒvID
  */
 //============================================================================================
-void  BTLV_EFFECT_Init( int index, HEAPID heapID )
+void  BTLV_EFFECT_Init( BtlRule rule, int index, HEAPID heapID )
 {
   GF_ASSERT( bew == NULL );
   bew = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_EFFECT_WORK ) );
@@ -114,7 +114,7 @@ void  BTLV_EFFECT_Init( int index, HEAPID heapID )
   PaletteFadeWorkAllocSet( bew->pfd, FADE_MAIN_OBJ, 0x200, heapID );
   PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_OBJ, 0x1e0, heapID );
 
-  bew->bmw  = BTLV_MCSS_Init( bew->tcb_sys, heapID );
+  bew->bmw  = BTLV_MCSS_Init( rule, bew->tcb_sys, heapID );
   bew->bsw  = BTLV_STAGE_Init( index, heapID );
   bew->bfw  = BTLV_FIELD_Init( index, heapID );
   bew->bcw  = BTLV_CAMERA_Init( bew->tcb_sys, heapID );

@@ -12,6 +12,7 @@
 
 #include "system/mcss.h"
 #include "poke_tool/poke_tool.h"
+#include "battle/battle.h"
 
 //ポケモンの立ち位置定義
 // 1vs1
@@ -90,7 +91,7 @@ typedef struct
   int             rotate_after_wait_count;
 }BTLV_MCSS_MOVE_CIRCLE_PARAM;
 
-extern  BTLV_MCSS_WORK* BTLV_MCSS_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID );
+extern  BTLV_MCSS_WORK* BTLV_MCSS_Init( BtlRule rule, GFL_TCBSYS *tcb_sys, HEAPID heapID );
 extern  void            BTLV_MCSS_Exit( BTLV_MCSS_WORK *bmw );
 extern  void            BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw );
 extern  void            BTLV_MCSS_Draw( BTLV_MCSS_WORK *bmw );
@@ -127,5 +128,6 @@ extern  void            BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int posit
 
 #ifdef PM_DEBUG
 extern  void            BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
+extern  void            BTLV_MCSS_SetMcss3vs3( BTLV_MCSS_WORK *bmw, int flag );
 #endif
 

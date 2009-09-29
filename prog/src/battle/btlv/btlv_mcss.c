@@ -230,12 +230,14 @@ static  const fx32  poke_scale_table[ BTLV_MCSS_PROJ_MAX ][ BTLV_MCSS_POS_TOTAL 
  * @param[in] heapID  ヒープID
  */
 //============================================================================================
-BTLV_MCSS_WORK  *BTLV_MCSS_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID )
+BTLV_MCSS_WORK  *BTLV_MCSS_Init( BtlRule rule, GFL_TCBSYS *tcb_sys, HEAPID heapID )
 {
   BTLV_MCSS_WORK *bmw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_MCSS_WORK ) );
 
   bmw->mcss_sys = MCSS_Init( BTLV_MCSS_MAX, heapID );
   bmw->tcb_sys  = tcb_sys;
+
+  bmw->mcss_pos_3vs3 = ( rule == BTL_RULE_TRIPLE ) ? 1 : 0;
 
   return bmw;
 }
@@ -1235,4 +1237,18 @@ void  BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, 
 
   BTLV_MCSS_SetDefaultScale( bmw, position );
 }
+
+//============================================================================================
+/**
+ * @brief mcss_pos_3vs3に値をセット（デバッグ用）
+ *
+ * @param[in] bmw   BTLV_MCSS管理ワークへのポインタ
+ * @param[in] flag  セットする値
+ */
+//============================================================================================
+void  BTLV_MCSS_SetMcss3vs3( BTLV_MCSS_WORK *bmw, int flag )
+{
+  bmw->mcss_pos_3vs3 = flag;
+}
+
 #endif
