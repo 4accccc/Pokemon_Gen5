@@ -104,7 +104,7 @@ extern  void            BTLV_MCSS_SetMepachiFlag( BTLV_MCSS_WORK *bmw, int posit
 extern  void            BTLV_MCSS_SetAnmStopFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
 extern  int             BTLV_MCSS_GetVanishFlag( BTLV_MCSS_WORK *bmw, int position );
 extern  void            BTLV_MCSS_SetVanishFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
-extern  void            BTLV_MCSS_GetPokeDefaultPos( VecFx32 *pos, int position );
+extern  void            BTLV_MCSS_GetPokeDefaultPos( BTLV_MCSS_WORK *bmw, VecFx32 *pos, int position );
 extern  fx32            BTLV_MCSS_GetPokeDefaultScale( BTLV_MCSS_WORK *bmw, int position );
 extern  fx32            BTLV_MCSS_GetPokeDefaultScaleEx( BTLV_MCSS_WORK *bmw, int position, BTLV_MCSS_PROJECTION proj );
 extern  void            BTLV_MCSS_GetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale );
