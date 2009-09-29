@@ -497,8 +497,8 @@ def mtxline_convert(
 					idx = hfile_search( zone_id_header_file, str_zone )
 					
 					if( idx == RET_ERROR )
-						printf( "map_matconv ZONE_ID ERROR %s %d,%d\n",
-							str_zone, x, y )
+						printf( "map_matconv ZONE_ID ERROR %s %d,%d [%s]\n",
+							str_zone, x, y, zonename )
 						exit 1
 					end
 				end
