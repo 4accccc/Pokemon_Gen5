@@ -1056,6 +1056,14 @@ u16 PLIST_PLATE_GetDispHp( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
   return plateWork->dispHp;
 }
 
+//--------------------------------------------------------------
+//タマゴチェック
+//--------------------------------------------------------------
+const BOOL PLIST_PLATE_IsEgg( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+{
+  return plateWork->isEgg;
+}
+
 #pragma mark [>battle order
 //--------------------------------------------------------------
 //バトルに参加できるか？(初期参加番号が入っているか？

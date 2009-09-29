@@ -938,6 +938,7 @@ static void PLIST_InitMode( PLIST_WORK *work )
   case PL_MODE_ITEMSET:
   case PL_MODE_MAILSET:
   case PL_MODE_WAZASET:
+  case PL_MODE_SODATEYA:
     //選択画面へ
     PLIST_InitMode_Select( work );
     work->nextMainSeq = PSMS_SELECT_POKE;
@@ -1087,6 +1088,12 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
     PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_05 );
     work->canExit = FALSE;
     break;
+  
+  case PL_MODE_SODATEYA:
+    PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
+    PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_07 );
+    work->canExit = FALSE;
+    break;
 
   default:
     GF_ASSERT_MSG( NULL , "PLIST mode まだ作ってない！[%d]\n" , work->plData->mode );
@@ -1103,6 +1110,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
   {
   case PL_MODE_FIELD:
   case PL_MODE_BATTLE:
+  case PL_MODE_SODATEYA:
     PLIST_SelectMenuInit( work );
     //中で一緒にメニューを開く
     PLIST_InitMode_Menu( work );
@@ -1295,6 +1303,31 @@ static void PLIST_InitMode_Menu( PLIST_WORK *work )
     }
     
     PLIST_MSG_DeleteWordSet( work , work->msgWork );
+    break;
+    
+  case PL_MODE_SODATEYA:
+    if( PLIST_PLATE_IsEgg( work , work->plateWork[work->pokeCursor] ) == TRUE )
+    {
+      itemArr[0] = PMIT_STATSU;
+      itemArr[1] = PMIT_CLOSE;
+      itemArr[2] = PMIT_END_LIST;
+    }
+    else
+    {
+      itemArr[0] = PMIT_LEAVE;
+      itemArr[1] = PMIT_STATSU;
+      itemArr[2] = PMIT_CLOSE;
+      itemArr[3] = PMIT_END_LIST;
+    }
+    
+    PLIST_MSG_CreateWordSet( work , work->msgWork );
+    PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+    
+    PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
+    PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_03_01 );
+    
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
+
     break;
     
   default:
@@ -2211,6 +2244,12 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
     work->mainSeq = PSMS_FADEOUT;
     work->plData->ret_sel = work->pokeCursor;
     work->plData->ret_mode = PL_RET_ITEMSET;
+    break;
+
+  case PMIT_LEAVE:
+    work->mainSeq = PSMS_FADEOUT;
+    work->plData->ret_sel = work->pokeCursor;
+    work->plData->ret_mode = PL_RET_NORMAL;
     break;
 
   case PMIT_WAZA_1:

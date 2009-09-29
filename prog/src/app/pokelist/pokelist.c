@@ -148,9 +148,12 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       else
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
       {
+        plData->mode = PL_MODE_SODATEYA;
+        /*
         plData->mode = PL_MODE_WAZASET;
         plData->item = 328; //技マシン気合パンチ
         plData->waza = 0;
+        */
       }
       GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
     }
