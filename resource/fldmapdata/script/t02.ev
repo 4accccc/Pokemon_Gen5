@@ -434,9 +434,12 @@ EVENT_START   ev_pos_t02_rival_speech
 
 	//ゲーチスを消す
 	_FLAG_SET( FV_T02_SAGE )
+	_OBJ_DEL( T02_SAGE_01 )
 	
 	//部下を消す
 	_FLAG_SET( FV_T02_HAKAI )
+	_OBJ_DEL( T02_HAKAIW_01 )
+	_OBJ_DEL( T02_HAKAIM_01 )
 	
 	//群集おじいさん：キョロキョロする
 	//今の　演説　わしたちは　どうすれば　いいんだ
@@ -453,10 +456,11 @@ EVENT_START   ev_pos_t02_rival_speech
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME_WAIT()
-	
+
 	//Ｎ出現
 	_FLAG_RESET( FV_T02_NNN )
-	
+	_OBJ_ADD( T02_N_01 )
+
 	//Ｎ：自機の真横に移動
 	_OBJ_ANIME( T02_N_01, anm_n_tikaduku )
 	_OBJ_ANIME_WAIT()
@@ -518,9 +522,8 @@ EVENT_START   ev_pos_t02_rival_speech
 	//【仮】自機：Ｎを目で追う
 
 	//Ｎを消す
-	_OBJ_DEL_EV( T02_N_01 )
-	_FLAG_SET( FV_T02_NNN )
-	
+	_OBJ_DEL( T02_N_01 )
+
 	//【仮】友達♂：Ｎの方を見た後、自機を見る
 	
 	//なんか　オレのせいで　変な話に　なっちゃった
@@ -533,8 +536,16 @@ EVENT_START   ev_pos_t02_rival_speech
 	_OBJ_ANIME_WAIT()
 
 	//友達♂を消す
-	_OBJ_DEL_EV( T02_RIVAL_02 )
+	_OBJ_DEL( T02_RIVAL_02 )
 
+	//============================================//
+	
+	//Ｎと友達♂のバニッシュフラグセット
+	_FLAG_SET( FV_T02_NNN )
+	_FLAG_SET( FV_T02_RIVAL_02 )
+
+	//============================================//
+	
 EVENT_END
 
 //--------------------------------------------------------------
@@ -641,7 +652,8 @@ _ANIME_LABEL anm_sage_move
 //	Ｎ	自機に近づく
 //--------------------------------------------------------------
 _ANIME_LABEL anm_n_tikaduku
-	_ANIME_DATA		AC_WALK_L_8F,10
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_DIR_L,1
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
@@ -671,7 +683,7 @@ _ANIME_LABEL anm_rival_jump
 _ANIME_LABEL anm_n_bye
 	_ANIME_DATA		AC_WALK_R_8F,1
 	_ANIME_DATA		AC_WALK_U_8F,8
-	_ANIME_DATA		AC_WALK_L_8F,10
+	_ANIME_DATA		AC_WALK_L_8F,12
 	_ANIME_DATA		ACMD_END,0
 	
 //--------------------------------------------------------------
@@ -680,7 +692,7 @@ _ANIME_LABEL anm_n_bye
 _ANIME_LABEL anm_rival_bye
 	_ANIME_DATA		AC_WALK_R_8F,3
 	_ANIME_DATA		AC_WALK_U_8F,8
-	_ANIME_DATA		AC_WALK_L_8F,10
+	_ANIME_DATA		AC_WALK_L_8F,12
 	_ANIME_DATA		ACMD_END,0
 
 /************************************************************/
