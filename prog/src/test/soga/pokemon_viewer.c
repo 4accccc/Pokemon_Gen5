@@ -108,7 +108,7 @@ typedef struct{
   u8 palnum;
   u8 msgx;
   u8 msgy;
-  u8 padding;
+  u8 frame;
 }BMP_CREATE_TABLE;
 
 enum{
@@ -188,7 +188,7 @@ typedef struct
   int                   mcs_enable;
   POKEMON_PARAM*        pp;
   int                   mons_no[ BTLV_MCSS_POS_MAX ];
-  fx32                  value[ VALUE_MAX ][ BTLV_MCSS_POS_MAX ];
+  fx32                  value[ 2 ][ VALUE_MAX ][ BTLV_MCSS_POS_MAX ];
   GFL_BMPWIN*           bmpwin[ BMPWIN_MAX ];
   GFL_BMPWIN*           bmpwin2;
   int                   key_repeat_speed;
@@ -196,6 +196,7 @@ typedef struct
   int                   read_position;
   int                   read_resource;
   int                   add_pokemon_req;
+  int                   mcss_mode;
   int                   edit_mode;
   int                   edit_pos;
   int                   edit_type;
@@ -225,6 +226,10 @@ static  void  PokemonViewerPP_Put( POKEMON_VIEWER_WORK *pvw, int mons_no );
 static  void  MoveCamera( POKEMON_VIEWER_WORK *pvw );
 
 static  void  set_pokemon( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos );
+
+static  void  get_default_value( POKEMON_VIEWER_WORK *pvw );
+static  void  mcss_mode_change( POKEMON_VIEWER_WORK *pvw );
+
 #if 0
 static  void  del_pokemon( POKEMON_VIEWER_WORK *pvw );
 #endif
@@ -252,21 +257,21 @@ static  const u32 btlv_mcss_pos_msg[BMPWIN_MAX]={
 
 static const BMP_CREATE_TABLE bmp_create_table[] = {
   //AA
-  {  0, 12,  8, 12, BGCOL_AA, 12, 40, 0 },
+  {  0, 12,  8, 12, BGCOL_AA, 12, 40, GFL_BG_FRAME1_S },
   //BB
-  {  0,  0,  8, 12, BGCOL_BB, 12, 40, 0 },
+  {  0,  0,  8, 12, BGCOL_BB, 12, 40, GFL_BG_FRAME1_S },
   //A
-  {  8, 12,  8, 12, BGCOL_A,  16, 40, 0 },
+  {  8, 12,  8, 12, BGCOL_A,  16, 40, GFL_BG_FRAME1_S },
   //B
-  { 24,  0,  8, 12, BGCOL_B,  16, 40, 0 },
+  { 24,  0,  8, 12, BGCOL_B,  16, 40, GFL_BG_FRAME1_S },
   //C
-  { 16, 12,  8, 12, BGCOL_C,  16, 40, 0 },
+  { 16, 12,  8, 12, BGCOL_C,  16, 40, GFL_BG_FRAME1_S },
   //D
-  { 16,  0,  8, 12, BGCOL_D,  16, 40, 0 },
+  { 16,  0,  8, 12, BGCOL_D,  16, 40, GFL_BG_FRAME1_S },
   //E
-  { 24, 12,  8, 12, BGCOL_E,  16, 40, 0 },
+  { 24, 12,  8, 12, BGCOL_E,  16, 40, GFL_BG_FRAME1_S },
   //F
-  {  8,  0,  8, 12, BGCOL_F,  16, 40, 0 },
+  {  8,  0,  8, 12, BGCOL_F,  16, 40, GFL_BG_FRAME1_S },
 };
 
 static const GFL_UI_TP_HITTBL TP_HitTbl[] = {
@@ -365,7 +370,7 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
   //戦闘エフェクト初期化
   {
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, pvw->heapID );
-    BTLV_EFFECT_Init( 0, pvw->heapID );
+    BTLV_EFFECT_Init( 0, 0, pvw->heapID );
   }
 
 //  set_pokemon( pvw );
@@ -394,13 +399,13 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
       ///<FRAME1_S
       {
         0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
+        GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
         GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
       },
       ///<FRAME2_S
       {
         0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+        GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x18000, GFL_BG_CHRSIZ_256x256,
         GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
       },
     };
@@ -435,7 +440,8 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
     pvw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr, GFL_FONT_LOADTYPE_FILE, TRUE, pvw->heapID );
 
     for( i = 0 ; i < BMPWIN_MAX ; i++ ){
-      pvw->bmpwin[ i ] = GFL_BMPWIN_Create( GFL_BG_FRAME1_S,
+      pvw->bmpwin[ i ] = GFL_BMPWIN_Create(
+                         bmp_create_table[ i ].frame,
                          bmp_create_table[ i ].posx,
                          bmp_create_table[ i ].posy,
                          bmp_create_table[ i ].sizx,
@@ -474,22 +480,8 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
   pvw->pp = GFL_HEAP_AllocMemory( pvw->heapID, POKETOOL_GetWorkSize() );
   PP_SetupEx( pvw->pp, 0, 0, 0, 0, 255 );
 
-  {
-    int     pos;
-    VecFx32 vpos;
-
-    for ( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
-    {
-      BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &vpos, pos );
-      pvw->value[ VALUE_X ][ pos ] = vpos.x;
-      pvw->value[ VALUE_Y ][ pos ] = vpos.y;
-      pvw->value[ VALUE_Z ][ pos ] = vpos.z;
-      pvw->value[ VALUE_SCALE_PERS ][ pos ] = BTLV_MCSS_GetPokeDefaultScaleEx( BTLV_EFFECT_GetMcssWork(), pos,
-                                                                                         BTLV_MCSS_PROJ_PERSPECTIVE );
-      pvw->value[ VALUE_SCALE_ORTH ][ pos ] = BTLV_MCSS_GetPokeDefaultScaleEx( BTLV_EFFECT_GetMcssWork(), pos,
-                                                                                   BTLV_MCSS_PROJ_ORTHO );
-    }
-  }
+  pvw->mcss_mode = 0;
+  get_default_value( pvw );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -555,6 +547,39 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
     PokemonViewerCameraWork( pvw );
   }
 #endif
+  if( trg & PAD_BUTTON_SELECT )
+  { 
+    mcss_mode_change( pvw );
+  }
+
+  if( trg & PAD_BUTTON_L )
+  { 
+    int mcss_mode;
+    int mcss_pos;
+
+    for( mcss_mode = 0 ; mcss_mode < 2 ; mcss_mode++ )
+    { 
+      for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ )
+      { 
+        if( mcss_mode == 0 )
+        { 
+          OS_TPrintf("2vs2 pos:%d pos_x:%08x pos_y:%08x pos_z:%08x scale:%08x\n", mcss_pos,
+              pvw->value[ mcss_mode ][ VALUE_X ][ mcss_pos ],
+              pvw->value[ mcss_mode ][ VALUE_Y ][ mcss_pos ],
+              pvw->value[ mcss_mode ][ VALUE_Z ][ mcss_pos ],
+              pvw->value[ mcss_mode ][ VALUE_SCALE_PERS ][ mcss_pos ] );
+        }
+        else
+        { 
+          OS_TPrintf("3vs3 pos:%d pos_x:%08x pos_y:%08x pos_z:%08x scale:%08x\n", mcss_pos,
+              pvw->value[ mcss_mode ][ VALUE_X ][ mcss_pos ],
+              pvw->value[ mcss_mode ][ VALUE_Y ][ mcss_pos ],
+              pvw->value[ mcss_mode ][ VALUE_Z ][ mcss_pos ],
+              pvw->value[ mcss_mode ][ VALUE_SCALE_PERS ][ mcss_pos ] );
+        }
+      }
+    }
+  }
 
   if( (trg & PAD_BUTTON_DEBUG ) )
   {
@@ -585,6 +610,10 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
 
   {
     int hit = GFL_UI_TP_HitTrg( TP_HitTbl );
+    if( ( pvw->mcss_mode == 0 ) && ( hit > BMPWIN_D ) )
+    { 
+      hit = GFL_UI_TP_HIT_NONE;
+    }
     if( hit != GFL_UI_TP_HIT_NONE ){
       if( BTLV_EFFECT_CheckExist( hit ) == TRUE ){
         BTLV_MCSS_SetVanishFlag( BTLV_EFFECT_GetMcssWork(), hit, BTLV_MCSS_VANISH_FLIP );
@@ -797,7 +826,7 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
         }
         else
         { 
-          pvw->value[ index ][ pvw->edit_pos ] += ( 1 << ( pvw->edit_keta * 4 ) );
+          pvw->value[ pvw->mcss_mode ][ index ][ pvw->edit_pos ] += ( 1 << ( pvw->edit_keta * 4 ) );
         }
       }
       if( rep & PAD_KEY_DOWN )
@@ -811,7 +840,7 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
         }
         else
         { 
-          pvw->value[ index ][ pvw->edit_pos ] -= ( 1 << ( pvw->edit_keta * 4 ) );
+          pvw->value[ pvw->mcss_mode ][ index ][ pvw->edit_pos ] -= ( 1 << ( pvw->edit_keta * 4 ) );
         }
       }
       if( ( rep & PAD_KEY_LEFT ) && ( pvw->edit_keta < 7 ) && ( pvw->edit_mode == 2 ) )
@@ -828,17 +857,17 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
         VecFx32 scale;
 
         BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &vpos, pvw->edit_pos );
-        pvw->value[ VALUE_X ][ pvw->edit_pos ] = vpos.x;
-        pvw->value[ VALUE_Y ][ pvw->edit_pos ] = vpos.y;
-        pvw->value[ VALUE_Z ][ pvw->edit_pos ] = vpos.z;
-        pvw->value[ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ] = BTLV_MCSS_GetPokeDefaultScaleEx( BTLV_EFFECT_GetMcssWork(), pvw->edit_pos, pvw->proj );
+        pvw->value[ pvw->mcss_mode ][ VALUE_X ][ pvw->edit_pos ] = vpos.x;
+        pvw->value[ pvw->mcss_mode ][ VALUE_Y ][ pvw->edit_pos ] = vpos.y;
+        pvw->value[ pvw->mcss_mode ][ VALUE_Z ][ pvw->edit_pos ] = vpos.z;
+        pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ] = BTLV_MCSS_GetPokeDefaultScaleEx( BTLV_EFFECT_GetMcssWork(), pvw->edit_pos, pvw->proj );
         BTLV_MCSS_SetPosition( BTLV_EFFECT_GetMcssWork(), pvw->edit_pos,
-                               pvw->value[ VALUE_X ][ pvw->edit_pos ],
-                               pvw->value[ VALUE_Y ][ pvw->edit_pos ],
-                               pvw->value[ VALUE_Z ][ pvw->edit_pos ] );
+                               pvw->value[ pvw->mcss_mode ][ VALUE_X ][ pvw->edit_pos ],
+                               pvw->value[ pvw->mcss_mode ][ VALUE_Y ][ pvw->edit_pos ],
+                               pvw->value[ pvw->mcss_mode ][ VALUE_Z ][ pvw->edit_pos ] );
         VEC_Set( &scale,
-                 pvw->value[ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
-                 pvw->value[ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
+                 pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
+                 pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
                  FX32_ONE );
         BTLV_MCSS_SetScale( BTLV_EFFECT_GetMcssWork(), pvw->edit_pos, &scale );
       }
@@ -855,8 +884,8 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
           BTLV_MCSS_ResetOrthoMode( BTLV_EFFECT_GetMcssWork() );
         }
         VEC_Set( &scale,
-                 pvw->value[ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
-                 pvw->value[ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
+                 pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
+                 pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
                  FX32_ONE );
         BTLV_MCSS_SetScale( BTLV_EFFECT_GetMcssWork(), pvw->edit_pos, &scale );
       }
@@ -865,12 +894,12 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
         if( BTLV_EFFECT_CheckExist( pvw->edit_pos ) == TRUE ){
           VecFx32 scale;
           BTLV_MCSS_SetPosition( BTLV_EFFECT_GetMcssWork(), pvw->edit_pos,
-                                 pvw->value[ VALUE_X ][ pvw->edit_pos ],
-                                 pvw->value[ VALUE_Y ][ pvw->edit_pos ],
-                                 pvw->value[ VALUE_Z ][ pvw->edit_pos ] );
+                                 pvw->value[ pvw->mcss_mode ][ VALUE_X ][ pvw->edit_pos ],
+                                 pvw->value[ pvw->mcss_mode ][ VALUE_Y ][ pvw->edit_pos ],
+                                 pvw->value[ pvw->mcss_mode ][ VALUE_Z ][ pvw->edit_pos ] );
           VEC_Set( &scale,
-                   pvw->value[ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
-                   pvw->value[ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
+                   pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
+                   pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
                    FX32_ONE );
           BTLV_MCSS_SetScale( BTLV_EFFECT_GetMcssWork(), pvw->edit_pos, &scale );
         }
@@ -895,6 +924,10 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
   else
   {
     int hit = GFL_UI_TP_HitTrg( TP_HitTbl );
+    if( ( pvw->mcss_mode == 0 ) && ( hit > BMPWIN_D ) )
+    { 
+      hit = GFL_UI_TP_HIT_NONE;
+    }
     if( hit != GFL_UI_TP_HIT_NONE ){
       pvw->edit_mode = 1;
       pvw->edit_pos = hit;
@@ -1004,13 +1037,16 @@ static  void  TextPrint( POKEMON_VIEWER_WORK *pvw, int num, int bmpwin_num )
   int flag = 0;
   STRBUF  *strbuf;
 
-  if( BTLV_EFFECT_CheckExist( num ) == TRUE ){
-     flag = BTLV_MCSS_GetVanishFlag( BTLV_EFFECT_GetMcssWork(), num );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pvw->bmpwin[ bmpwin_num ] ), bmp_create_table[ bmpwin_num ].palnum );
+
+  if( ( pvw->mcss_mode == 0 ) && ( num > BMPWIN_D ) )
+  { 
+    GFL_FONTSYS_SetColor( BACK_COL, SHADOW_COL, bmp_create_table[ bmpwin_num ].palnum );
   }
-
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pvw->bmpwin[ bmpwin_num ] ), bmp_create_table[ bmpwin_num ].palnum + 6 * flag );
-
-  GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, bmp_create_table[ bmpwin_num ].palnum + 6 * flag );
+  else
+  {
+    GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, bmp_create_table[ bmpwin_num ].palnum );
+  }
 
   strbuf = GFL_MSG_CreateString( pvw->msg,  btlv_mcss_pos_msg[ num ] );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp( pvw->bmpwin[ bmpwin_num ] ),
@@ -1094,7 +1130,7 @@ static  void  PokemonViewerDrawInfo( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
             GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
           }
         }
-        num = pvw->value[ index ][ pos ] & ( 0x0000000f << ( keta * 4 ) );
+        num = pvw->value[ pvw->mcss_mode ][ index ][ pos ] & ( 0x0000000f << ( keta * 4 ) );
         num = num >> ( keta * 4 );
         strbuf = GFL_MSG_CreateString( pvw->msg,  EVMSG_NUM0 + num );
         PRINTSYS_Print( GFL_BMPWIN_GetBmp( pvw->bmpwin2 ),
@@ -1267,7 +1303,75 @@ static  void  set_pokemon( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
   {
     BTLV_EFFECT_SetPokemon( pvw->pp, pos );
     BTLV_MCSS_SetPosition( BTLV_EFFECT_GetMcssWork(), pos,
-                           pvw->value[ VALUE_X ][ pos ], pvw->value[ VALUE_Y ][ pos ], pvw->value[ VALUE_Z ][ pos ] );
+                           pvw->value[ pvw->mcss_mode ][ VALUE_X ][ pos ],
+                           pvw->value[ pvw->mcss_mode ][ VALUE_Y ][ pos ],
+                           pvw->value[ pvw->mcss_mode ][ VALUE_Z ][ pos ] );
+  }
+}
+
+static  void  get_default_value( POKEMON_VIEWER_WORK *pvw )
+{ 
+  int     mode;
+  int     pos;
+  int     pos_max;
+  VecFx32 vpos;
+
+  for ( mode = 0 ; mode < 2 ; mode++ )
+  { 
+    BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), mode );
+    pos_max = ( mode == 0 ) ? ( BTLV_MCSS_POS_D + 1 ) : BTLV_MCSS_POS_MAX;
+    for ( pos = BTLV_MCSS_POS_AA ; pos < pos_max ; pos++ )
+    {
+      BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &vpos, pos );
+      pvw->value[ mode ][ VALUE_X ][ pos ] = vpos.x;
+      pvw->value[ mode ][ VALUE_Y ][ pos ] = vpos.y;
+      pvw->value[ mode ][ VALUE_Z ][ pos ] = vpos.z;
+      pvw->value[ mode ][ VALUE_SCALE_PERS ][ pos ] = BTLV_MCSS_GetPokeDefaultScaleEx( BTLV_EFFECT_GetMcssWork(), pos,
+                                                                                       BTLV_MCSS_PROJ_PERSPECTIVE );
+      pvw->value[ mode ][ VALUE_SCALE_ORTH ][ pos ] = BTLV_MCSS_GetPokeDefaultScaleEx( BTLV_EFFECT_GetMcssWork(), pos,
+                                                                                       BTLV_MCSS_PROJ_ORTHO );
+    }
+  }
+  BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), pvw->mcss_mode );
+}
+
+static  void  mcss_mode_change( POKEMON_VIEWER_WORK *pvw )
+{ 
+  int mcss_pos;
+
+  pvw->mcss_mode ^= 1;
+
+  BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), pvw->mcss_mode );
+
+  for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ )
+  {
+    TextPrint( pvw, mcss_pos, mcss_pos );
+    if( BTLV_EFFECT_CheckExist( mcss_pos ) == TRUE )
+    {
+      VecFx32 scale;
+
+      BTLV_MCSS_SetPosition( BTLV_EFFECT_GetMcssWork(), mcss_pos,
+                             pvw->value[ pvw->mcss_mode ][ VALUE_X ][ mcss_pos ],
+                             pvw->value[ pvw->mcss_mode ][ VALUE_Y ][ mcss_pos ],
+                             pvw->value[ pvw->mcss_mode ][ VALUE_Z ][ mcss_pos ] );
+      VEC_Set( &scale,
+               pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ mcss_pos ],
+               pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ mcss_pos ],
+               FX32_ONE );
+      BTLV_MCSS_SetScale( BTLV_EFFECT_GetMcssWork(), mcss_pos, &scale );
+    }
+  }
+
+  if( pvw->mcss_mode == 0 )
+  { 
+    if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_E ) == TRUE )
+    { 
+      BTLV_MCSS_Del( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_E );
+    }
+    if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_F ) == TRUE )
+    { 
+      BTLV_MCSS_Del( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_F );
+    }
   }
 }
 

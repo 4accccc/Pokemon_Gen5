@@ -205,7 +205,7 @@ static GFL_PROC_RESULT DebugBattleTestProcInit( GFL_PROC * proc, int * seq, void
   wk->seq_no = 0;
   {
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, wk->heapID );
-    BTLV_EFFECT_Init( 0, wk->heapID );
+    BTLV_EFFECT_Init( 0, 0, wk->heapID );
     wk->bcw = BTLV_EFFECT_GetCameraWork();
   }
 

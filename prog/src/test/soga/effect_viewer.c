@@ -271,7 +271,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
   //戦闘エフェクト初期化
   {
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, evw->heapID );
-    BTLV_EFFECT_Init( 0, evw->heapID );
+    BTLV_EFFECT_Init( 0, 0, evw->heapID );
   }
 
   set_pokemon( evw );
