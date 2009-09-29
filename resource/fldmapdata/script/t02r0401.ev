@@ -14,9 +14,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t02r0401_talkobj_girl4
-_EVENT_DATA    ev_t02r0401_talkobj_man2
-_EVENT_DATA    ev_t02r0401_talkobj_poke
+_EVENT_DATA    ev_t02r0401_girl4_01
+_EVENT_DATA    ev_t02r0401_man2_01
+_EVENT_DATA    ev_t02r0401_poke2_01
 _EVENT_DATA_END
 
 
@@ -39,21 +39,21 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  T02R0401 GIRL4の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_t02r0401_talkobj_girl4
+EVENT_START   ev_t02r0401_girl4_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_01 )
 EVENT_END
 
 /**************************************************************/
 /*  T02R0401 MAN2の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_t02r0401_talkobj_man2
+EVENT_START   ev_t02r0401_man2_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_man2_01 )
 EVENT_END
 
 /**************************************************************/
 /*  T02R0401 POKEの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_t02r0401_talkobj_poke
+EVENT_START   ev_t02r0401_poke2_01
 	_EASY_TALK_POKEVOICE( MONSNO_DHIARUGA, msg_t02r0401_poke_01 )
 EVENT_END
 

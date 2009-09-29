@@ -14,8 +14,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t02r0201_talkobj_middlewoman1
-_EVENT_DATA    ev_t02r0201_talkobj_babygirl1
+_EVENT_DATA    ev_t02r0201_middlewoman1_01
+_EVENT_DATA    ev_t02r0201_babygirl1_01
 _EVENT_DATA_END
 
 
@@ -38,14 +38,14 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  T02R0201 MIDDLEWOMAN1の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_t02r0201_talkobj_middlewoman1
+EVENT_START   ev_t02r0201_middlewoman1_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02r0201_middlewoman1_01 )
 EVENT_END
 
 /**************************************************************/
 /*  T02R0201 BABYGIRL1の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_t02r0201_talkobj_babygirl1
+EVENT_START   ev_t02r0201_babygirl1_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02r0201_babygirl1_01 )
 EVENT_END
 
