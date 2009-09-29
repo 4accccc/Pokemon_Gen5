@@ -14,7 +14,6 @@
 #include  <heapsys.h>
 #include  <arc_tool.h>
 
-//#include  "font\font.naix"
 #include  "print/gf_font.h"
 
 enum {
@@ -27,7 +26,6 @@ enum {
 };
 
 
-typedef void (*pSizeGetFunc)( const GFL_FONT*, u32, GFL_FONT_SIZE* );
 typedef u8 (*pWidthGetFunc)( const GFL_FONT*, u32 );
 typedef void (*pGetBitmapFunc)(const GFL_FONT*, u32, void*, GFL_FONT_SIZE* );
 typedef void (*pDotExpandFunc)( const u8* glyphSrc, u16 glyph2ndCharBits, u8* dst );
@@ -132,11 +130,9 @@ struct  _GFL_FONT {
 
   NNSFontInfo              fontHeader;
   BOOL                     fixedFontFlag;
+  pWidthGetFunc            WidthGetFunc;
 
-  pSizeGetFunc            SizeGetFunc;
-  pWidthGetFunc           WidthGetFunc;
-
-  NNSGlyphInfo      glyphInfo;
+  NNSGlyphInfo  glyphInfo;
   u16           glyphRemBits;
   u8            glyphCharW;
   u8            glyphCharH;
@@ -251,13 +247,12 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
       u32 widthTblSize = wk->fontHeader.ofsMap - wk->fontHeader.ofsWidth;
 
       wk->widthTblTop = GFL_HEAP_AllocMemory( heapID, widthTblSize );
-//      wk->SizeGetFunc = GetWidthProportionalFont;
       wk->WidthGetFunc = GetWidthProportionalFont;
 
       GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, wk->fontHeader.ofsWidth,
             widthTblSize, (void*)(wk->widthTblTop) );
 
-      TAYA_Printf("[GF_FONT] WidthTableSize=%08x bytes\n", widthTblSize);
+      OS_TPrintf("[GF_FONT] WidthTableSize=%08x bytes\n", widthTblSize);
     }
 
     // GlyphInfo
@@ -267,7 +262,7 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
     wk->glyphCharH = wk->glyphInfo.cellHeight /8  + (wk->glyphInfo.cellHeight % 8 != 0);
     wk->glyphRemBits = (wk->glyphInfo.cellWidth * 2) % 8;
     if( wk->glyphRemBits == 0 ){ wk->glyphRemBits = 8; }
-    TAYA_Printf("[GF_FONT] CellW=%d, RemBits=%d\n", wk->glyphInfo.cellWidth, wk->glyphRemBits);
+    OS_TPrintf("[GF_FONT] CellW=%d, RemBits=%d\n", wk->glyphInfo.cellWidth, wk->glyphRemBits);
 
     wk->ofsGlyphTop = wk->fontHeader.ofsGlyph + sizeof(NNSGlyphInfo);
     wk->glyphBuf = GFL_HEAP_AllocMemory( heapID, wk->glyphInfo.cellSize );
@@ -279,9 +274,9 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
       GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, wk->fontHeader.ofsMap,
             mapTblSize, (void*)(wk->codeMapTop) );
 
-      TAYA_Printf("[GF_FONT] MapIdxTableSize=%08x bytes\n", mapTblSize);
-      TAYA_Printf("[GF_FONT] WidthTableOfs  = %08x\n", wk->fontHeader.ofsWidth);
-      TAYA_Printf("[GF_FONT] MapIdxTableOfs = %08x\n", wk->fontHeader.ofsMap);
+      OS_TPrintf("[GF_FONT] MapIdxTableSize=%08x bytes\n", mapTblSize);
+      OS_TPrintf("[GF_FONT] WidthTableOfs  = %08x\n", wk->fontHeader.ofsWidth);
+      OS_TPrintf("[GF_FONT] MapIdxTableOfs = %08x\n", wk->fontHeader.ofsMap);
     }
   }
 }
@@ -486,13 +481,11 @@ static u32 get_glyph_index( const GFL_FONT* wk, u32 code )
     {
       switch( pMap->mappingMethod ){
       case NNS_G2D_MAPMETHOD_DIRECT:
-//        TAYA_Printf( "[ ggi ] code=%04x Method=DIRECT codeBegin=%04x, mapInfo=%d\n", code, pMap->codeBegin, pMap->mapInfo[0] );
         return ( code - pMap->codeBegin ) + pMap->mapInfo[0];
 
       case NNS_G2D_MAPMETHOD_TABLE:
       {
         u16 aidx = code - pMap->codeBegin;
-//        TAYA_Printf( "[ ggi ] code=%04x Method=TABLE  codeBegin=%04x, tblIdx=%d\n", code, pMap->codeBegin, aidx);
         return pMap->mapInfo[aidx];
       }
 
@@ -504,14 +497,11 @@ static u32 get_glyph_index( const GFL_FONT* wk, u32 code )
         numEntries = pMap->mapInfo[0];
         min = 1;
         max = numEntries;
-//        TAYA_Printf( "GetGlyphIndex scanMethod code=%04x, numEntries=%d\n", code, numEntries );
 
         while( min <= max )
         {
           mid = (min + (max - min) / 2);
           midIdx = 1 + mid * 2;
-//          TAYA_PrintfEx( PRINTFLAG, "  %4d-%4d (mid:%4d, code=%04x)\n",
-//              min, max, mid, pMap->mapInfo[midIdx] );
 
           if( pMap->mapInfo[midIdx] < code )
           {
@@ -591,8 +581,6 @@ static void GetBitmapFileRead( const GFL_FONT* wk, u32 index, void* dst, GFL_FON
   size->glyph_width = wk->glyphBuf[1];
   size->width       = wk->glyphBuf[2];
   size->height      = wk->fontHeader.linefeed;
-
-//  wk->SizeGetFunc( wk, index, size );
 }
 
 //--------------------------------------------------------------------------
@@ -671,9 +659,6 @@ u16 GFL_FONT_GetWidth( const GFL_FONT* wk, STRCODE code )
 {
   GFL_FONT_SIZE  size;
   u32 index = get_glyph_index( wk, code );
-
-//  wk->SizeGetFunc( wk, index, &size );
-//  return size.width;
 
   return wk->WidthGetFunc( wk, index );
 }
@@ -760,7 +745,6 @@ static u8 GetWidthProportionalFont( const GFL_FONT* wk, u32 glyphIndex )
         index = (*chainTable << 8) | *(chainTable+1);
         if( glyphIndex == index ){
           u8 width = *(chainTable + 2);
-          TAYA_Printf(" * GlyphIndex=%04x, width=%d\n", glyphIndex, width);
           return width;
         }
         else{

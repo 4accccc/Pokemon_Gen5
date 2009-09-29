@@ -737,7 +737,7 @@ static void setup_view( DMP_MAINWORK* wk )
 
   wk->win = GFL_BMPWIN_Create( PRINT_FRAME, 0, 0, 32, 24, PRINT_PALIDX, GFL_BMP_CHRAREA_GET_F );
   wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
-  wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+  wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
   wk->msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debug_makepoke_dat, wk->heapID );
   wk->strbuf = GFL_STR_CreateBuffer( STRBUF_LEN, wk->heapID );
   wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
