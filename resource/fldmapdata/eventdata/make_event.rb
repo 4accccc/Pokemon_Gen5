@@ -380,7 +380,7 @@ class ObjEvent < AllEvent
 		output.puts "\t\t#{@move_limit_z},"   #2,	///<Z方向移動制限
 		output.puts "\t\t#{gx},"   #757,	///<グリッドX
 		output.puts "\t\t#{gz},"   #811,	///<グリッドZ
-		output.puts "\t\t#{@y},"   #0,	///<Y値 fx32型
+		output.puts "\t\tFX32_CONST(#{@y}),"   #0,	///<Y値 fx32型
     output.puts "\t},"
   end
 
