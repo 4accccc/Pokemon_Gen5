@@ -76,6 +76,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/areadata.c \
         field/warpdata.c \
         field/location.c \
+				field/map_matrix.c \
         field/field_rail_loader.c \
         field/field_location.c \
         field/eventdata_system.c \
@@ -331,7 +332,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/weather.c \
 				field/weather_task.c \
 				field/field_debug.c \
-				field/map_matrix.c \
 				field/fieldmap_ctrl_grid.c \
 				field/field_player.c \
 				field/field_player_grid.c \

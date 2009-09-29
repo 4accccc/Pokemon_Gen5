@@ -25,6 +25,7 @@
 #include "field/field_rail_loader.h"    //FIELD_RAIL_LOADER
 #include "field/fldmmdl.h"
 #include "field/eventwork.h"
+#include "gamesystem/game_data.h"       //MAP_MATRIX
 #include "field/field_sound_proc.h"
 #include "sound/bgm_info.h"
 
@@ -359,6 +360,15 @@ extern SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata);
  */
 //--------------------------------------------------------------
 extern EVENTWORK * GAMEDATA_GetEventWork(GAMEDATA *gamedata);
+
+//--------------------------------------------------------------
+/**
+ * @brief   MAP_MATRIXへのポインタ取得
+ * @param	  gamedata	GAMEDATAへのポインタ
+ * @retval  MAP_MATRIXへのポインタ
+ */
+//--------------------------------------------------------------
+extern MAP_MATRIX * GAMEDATA_GetMapMatrix(GAMEDATA * gamedata);
 
 //------------------------------------------------------------------
 /**

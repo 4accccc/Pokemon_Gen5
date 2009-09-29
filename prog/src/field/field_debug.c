@@ -10,7 +10,7 @@
 #include "fieldmap.h"
 
 #include "fldmmdl.h"
-#include "map_matrix.h"
+#include "field/map_matrix.h"
 #include "field/zonedata.h"
 
 #include "arc/others.naix"
@@ -497,7 +497,8 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 	
 	{	//マップブロック　ZONE_ID表示
 		u32 zone_id = MAP_MATRIX_ZONE_ID_NON;
-		MAP_MATRIX *pMatrix = FIELDMAP_GetMapMatrix( work->pFieldMainWork );
+    GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+		MAP_MATRIX *pMatrix = GAMEDATA_GetMapMatrix( gamedata );
 		
 		if( MAP_MATRIX_CheckVectorPosRange(pMatrix,pos->x,pos->z) == TRUE ){
 			zone_id = MAP_MATRIX_GetVectorPosZoneID(

@@ -49,7 +49,7 @@
 
 #include "field_debug.h"
 
-#include "map_matrix.h"
+#include "field/map_matrix.h"
 #include "field_event_check.h"  
 
 #include "eventdata_local.h"
@@ -200,6 +200,7 @@ struct _FIELDMAP_WORK
 {
 	HEAPID heapID;
 	GAMESYS_WORK *gsys;
+  GAMEDATA * gamedata;
 
   AREADATA * areadata;
 	
@@ -360,6 +361,7 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 	fieldWork->heapID = heapID;
 	fieldWork->gamemode = GAMEMODE_BOOT;
 	fieldWork->gsys = gsys;
+  fieldWork->gamedata = GAMESYSTEM_GetGameData(gsys);
 	
 	{
 		PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
@@ -374,9 +376,6 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 	//マップコントロール
 	fieldWork->func_tbl = FIELDDATA_GetFieldFunctions( fieldWork->map_id );
 
-	//マップマトリクス
-	fieldWork->pMapMatrix = MAP_MATRIX_Create( heapID );
-	
 	//通信用処理 
   FIELDMAP_CommBoot(gsys, fieldWork, heapID);
 	
@@ -397,9 +396,6 @@ void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
   //エリアデータ
   AREADATA_Delete( fieldWork->areadata );
 
-	//マップマトリクス
-	MAP_MATRIX_Delete( fieldWork->pMapMatrix );
-	
   //ワーク開放
 	GFL_HEAP_FreeMemory( fieldWork );
   
@@ -504,7 +500,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     FIELDDATA_SetMapperData(fieldWork->map_id,
         fieldWork->areadata,
         &fieldWork->map_res,
-        fieldWork->pMapMatrix );
+        GAMEDATA_GetMapMatrix(fieldWork->gamedata) );
     { //とりあえず、電光掲示板用文字列を登録
       FIELD_BMODEL_MAN_EntryELStringID(bmodel_man,
           FIELD_BMODEL_ELBOARD_ID1, NARC_message_d_field_dat, DEBUG_FIELD_C_STR10);
@@ -1196,18 +1192,6 @@ GAMESYS_WORK * FIELDMAP_GetGameSysWork( FIELDMAP_WORK *fieldWork )
 
 //--------------------------------------------------------------
 /**
- * FIELDMAP_WORK MAP_MATRIX取得
- * @param fieldWork	FIELDMAP_WORK
- * @retval MAP_MATRIX*
- */
-//--------------------------------------------------------------
-MAP_MATRIX * FIELDMAP_GetMapMatrix( FIELDMAP_WORK *fieldWork )
-{
-	return fieldWork->pMapMatrix;
-}
-
-//--------------------------------------------------------------
-/**
  * FIELDMAP_WORK HEAPID取得
  * @param fieldWork	FIELDMAP_WORK
  * @retval HEAPID
@@ -1894,7 +1878,7 @@ static BOOL fldmap_CheckPlayerPosUpdate( FIELDMAP_WORK *fieldWork )
 static BOOL fldmap_CheckMoveZoneChange( FIELDMAP_WORK *fieldWork )
 {
 	LOCATION *lc = &fieldWork->location;
-	MAP_MATRIX *mat = fieldWork->pMapMatrix;
+	MAP_MATRIX *mat = GAMEDATA_GetMapMatrix(fieldWork->gamedata);
 	
 	if( MAP_MATRIX_CheckVectorPosRange(mat,lc->pos.x,lc->pos.z) == TRUE ){
 		u32 zone_id =
@@ -1925,7 +1909,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
 	MMDLSYS *fmmdlsys = fieldWork->fldMMdlSys;
 	
-	MAP_MATRIX *mat = fieldWork->pMapMatrix;
+	MAP_MATRIX *mat = GAMEDATA_GetMapMatrix(fieldWork->gamedata);
 	u32 new_zone_id = MAP_MATRIX_GetVectorPosZoneID(
 			mat, lc->pos.x, lc->pos.z );
 	u32 old_zone_id = lc->zone_id;

@@ -6,7 +6,7 @@
 #pragma once
 #include "gamesystem/pm_season.h"
 #include "fieldmap_resist.h"
-#include "map_matrix.h"
+#include "field/map_matrix.h"
 
 #include "field/areadata.h"
 #include "fieldmap.h"

@@ -15,7 +15,6 @@
 #include "field/field_msgbg.h"
 
 #include "field_g3d_mapper.h"
-#include "map_matrix.h"
 
 #include "field/fieldmap_proc.h"
 
@@ -73,7 +72,6 @@ extern FIELD_WEATHER * FIELDMAP_GetFieldWeather( FIELDMAP_WORK *fieldWork );
 extern MMDLSYS * FIELDMAP_GetMMdlSys( FIELDMAP_WORK *fieldWork );
 extern FIELD_DEBUG_WORK * FIELDMAP_GetDebugWork( FIELDMAP_WORK *fieldWork );
 extern GAMESYS_WORK * FIELDMAP_GetGameSysWork( FIELDMAP_WORK *fieldWork );
-extern MAP_MATRIX * FIELDMAP_GetMapMatrix( FIELDMAP_WORK *fieldWork );
 extern HEAPID FIELDMAP_GetHeapID( FIELDMAP_WORK *fieldWork );
 extern GFL_BBDACT_SYS * FIELDMAP_GetBbdActSys( FIELDMAP_WORK *fieldWork );
 extern FLDMAPPER * FIELDMAP_GetFieldG3Dmapper( FIELDMAP_WORK *fieldWork );

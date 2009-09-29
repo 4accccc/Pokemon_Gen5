@@ -30,7 +30,7 @@
 #include "height_ex.h"
 
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
-#include "map_matrix.h"   // for MAP_MATRIX_MAX
+#include "field/map_matrix.h"   // for MAP_MATRIX_MAX
 
 //============================================================================================
 /**

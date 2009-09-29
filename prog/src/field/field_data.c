@@ -10,7 +10,7 @@
 #include "./fieldmap_resist.h"
 #include "field/zonedata.h"
 #include "field/areadata.h"
-#include "map_matrix.h"
+#include "field/map_matrix.h"
 
 #include "fieldmap/area_id.h"
 

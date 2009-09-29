@@ -34,6 +34,7 @@
 #include "field/rail_location.h"    //RAIL_LOCATION
 #include "field/field_rail_loader.h"    //FIELD_RAIL_LOADER
 #include "sound/bgm_info.h"
+#include "field/map_matrix.h"     //MAP_MATRIX
 
 //============================================================================================
 //============================================================================================
@@ -62,6 +63,7 @@ struct _GAMEDATA{
   FIELD_RAIL_LOADER * railLoader;   ///<フィールドレールデータ管理へのポインタ
   MMDLSYS *mmdlsys;
   EVENTWORK *eventwork;
+  MAP_MATRIX * mapMatrix;     ///<マップマトリックス管理
   
   FIELD_SOUND *field_sound; ///<フィールドサウンド管理
 
@@ -143,6 +145,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   //イベントワーク
   gd->eventwork = SaveControl_DataPtrGet( gd->sv_control_ptr, GMDATA_ID_EVENT_WORK );
   
+  //マップマトリックス
+  gd->mapMatrix = MAP_MATRIX_Create( heapID );
+
 	// railデータ読み込みシステム
   gd->railLoader = FIELD_RAIL_LOADER_Create( heapID );
   //動作モデル
@@ -174,6 +179,7 @@ void GAMEDATA_Delete(GAMEDATA * gamedata)
   GFL_HEAP_FreeMemory(gamedata->bagcursor);
   MMDLSYS_FreeSystem(gamedata->mmdlsys);
 	FIELD_RAIL_LOADER_Delete( gamedata->railLoader );
+  MAP_MATRIX_Delete( gamedata->mapMatrix );
   EVENTDATA_SYS_Delete(gamedata->evdata);
   FIELD_SOUND_Delete( gamedata->field_sound );
   GFL_HEAP_FreeMemory(gamedata);
@@ -405,6 +411,18 @@ MMDLSYS * GAMEDATA_GetMMdlSys(GAMEDATA *gamedata)
 EVENTWORK * GAMEDATA_GetEventWork(GAMEDATA *gamedata)
 {
   return gamedata->eventwork;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   MAP_MATRIXへのポインタ取得
+ * @param	  gamedata	GAMEDATAへのポインタ
+ * @retval  MAP_MATRIXへのポインタ
+ */
+//--------------------------------------------------------------
+MAP_MATRIX * GAMEDATA_GetMapMatrix(GAMEDATA * gamedata)
+{
+  return gamedata->mapMatrix;
 }
 
 //--------------------------------------------------------------
