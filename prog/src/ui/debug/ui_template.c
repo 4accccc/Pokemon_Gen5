@@ -185,6 +185,9 @@ GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *
 
   // ‰Šú‰»
   wk->heap_id = HEAPID_UI_DEBUG;
+	
+  // BANKİ’è
+  GFL_DISP_SetBank( &c_vram_bank );
 
   // BG
   UITemplate_BG_Init( &wk->wk_bg, wk->heap_id );
