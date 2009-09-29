@@ -28,4 +28,7 @@ SP_EVENT_START  ev_init_script
 	_FLAG_SET( FV_T02_NNN )
 	_FLAG_SET( FV_T02_MAN )	
 
+	//２番道路：イベント後、カラクサタウンＰＣ内に出現
+	_FLAG_SET( FV_T02PC0101_RIVAL )
+
 SP_EVENT_END
