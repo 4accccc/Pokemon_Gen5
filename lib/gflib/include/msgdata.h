@@ -35,6 +35,7 @@ typedef enum {
 
 
 extern GFL_MSGDATA* GFL_MSG_Create( GflMsgLoadType loadType, u16 ArcID, u16 datID, HEAPID heapID );
+extern GFL_MSGDATA* GFL_MSG_Construct( void* adrs, HEAPID heapID );
 extern void GFL_MSG_Delete( GFL_MSGDATA* handle );
 extern void GFL_MSG_GetString( const GFL_MSGDATA* handle, u32 strID, STRBUF* dst );
 extern STRBUF* GFL_MSG_CreateString( const GFL_MSGDATA* handle, u32 strID );
