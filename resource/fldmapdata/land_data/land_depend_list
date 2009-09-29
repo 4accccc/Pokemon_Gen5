@@ -406,6 +406,12 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_champ01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dendo01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_ncastle01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_gate03_00_00.3dppack \
+	$(DIR_OUTPUT)/m_gate04_00_00.3dppack \
+	$(DIR_OUTPUT)/m_gate05_00_00.3dppack \
+	$(DIR_OUTPUT)/m_labo02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_buill07_00_00.3dppack \
+	$(DIR_OUTPUT)/m_buill08_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_00_02.ngpack \
 	$(DIR_OUTPUT)/C3_01_01.ngpack \

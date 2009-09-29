@@ -406,6 +406,12 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_champ01_00_00.nsbmd \
 	$(DIR_TEMP)/m_dendo01_00_00.nsbmd \
 	$(DIR_TEMP)/m_ncastle01_00_00.nsbmd \
+	$(DIR_TEMP)/m_gate03_00_00.nsbmd \
+	$(DIR_TEMP)/m_gate04_00_00.nsbmd \
+	$(DIR_TEMP)/m_gate05_00_00.nsbmd \
+	$(DIR_TEMP)/m_labo02_00_00.nsbmd \
+	$(DIR_TEMP)/m_buill07_00_00.nsbmd \
+	$(DIR_TEMP)/m_buill08_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd	$(DIR_TEMP)/C3_00_01.bhc \
 	$(DIR_TEMP)/C3_00_02.nsbmd	$(DIR_TEMP)/C3_00_02.bhc \
 	$(DIR_TEMP)/C3_01_01.nsbmd	$(DIR_TEMP)/C3_01_01.bhc \
