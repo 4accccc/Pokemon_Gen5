@@ -27,6 +27,15 @@
 #include "field_rail_func.h"
 
 
+
+#ifdef PM_DEBUG
+
+#ifdef DEBUG_ONLY_FOR_lee_hyunjung
+#define C3P02_DEBUG_CAMERA_NOT_MOVE // カメラを動かさない
+#endif //DEBUG_ONLY_FOR_lee_hyunjung
+
+#endif  // 
+
 //======================================================================
 //	範囲情報
 //======================================================================
@@ -48,7 +57,7 @@ static const RAIL_LOCATION locationStart = {
 //======================================================================
 //	ダミーNPC
 //======================================================================
-#define DEBUG_TEST_NPC
+//#define DEBUG_TEST_NPC
 
 #ifdef DEBUG_TEST_NPC
 static const MMDL_HEADER dummyNpc = 
@@ -308,6 +317,18 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
       FIELD_PLAYER_NOGRID_Move( p_ngrid_player, sc_key[last_action], sc_key[last_action] );
     }
 
+
+#ifdef C3P02_DEBUG_CAMERA_NOT_MOVE
+    {
+      FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldwork );
+      
+      // カメラを動かさないで、主人公に向ける
+      FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( p_mapper, FALSE );
+
+      // アングルモードで、主人公を追うようにする。
+      FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+    }
+#endif
 
   }
 
