@@ -212,6 +212,21 @@ void NetErr_ErrorSet(void)
 
 //--------------------------------------------------------------
 /**
+ * @brief   エラーが発生したらこの関数を使用してエラー画面を呼び出す
+ *
+ * @param   none		後々、エラー情報を入れてもらう
+ */
+//--------------------------------------------------------------
+#if PM_DEBUG
+void NetErr_DEBUG_ErrorSet(void)
+{
+	NET_ERR_SYSTEM *nes = &NetErrSystem;
+	nes->status = NET_ERR_STATUS_ERROR;
+}
+#endif  //PM_DEBUG
+
+//--------------------------------------------------------------
+/**
  * @brief   アプリ用：エラーが発生したか調べる
  *
  * @retval  TRUE:エラー発生

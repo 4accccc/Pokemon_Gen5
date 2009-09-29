@@ -56,4 +56,11 @@ extern BOOL NetErr_App_CheckError(void);
 extern void NetErr_App_ReqErrorDisp(void);
 
 
+//--------------------------------------------------------------
+//  デバッグ用
+//--------------------------------------------------------------
+#if PM_DEBUG
+extern void NetErr_DEBUG_ErrorSet(void);
+#endif  //PM_DEBUG
+
 #endif	//__NET_ERR_H__
