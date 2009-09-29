@@ -127,7 +127,7 @@ EVENT_START   ev_pos_t02_hakai_stop
 		//Z軸が652なら
 		//_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_idoc )
 	ELSE
-		//Z軸が653なら
+		//Z軸が650なら
 		_OBJ_ANIME( T02_HAKAIW_01, anm_hakai_idod )
 	ENDIF
 	_OBJ_ANIME_WAIT()
@@ -174,7 +174,8 @@ _ANIME_LABEL anm_hakai_idoc
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_hakai_idod
-	_ANIME_DATA		AC_WALK_D_8F,3
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_D_8F,1
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 
@@ -211,7 +212,7 @@ EVENT_START   ev_t02_hakase_guide
 	_OBJ_ANIME_WAIT()
 
 	//博士の動作モデルを削除する
-	_OBJ_DEL_EV( T02_HAKASE_GUIDE )
+	_OBJ_DEL( T02_HAKASE_GUIDE )
 
 	//自機も一緒についていく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_pokecen )
@@ -220,8 +221,15 @@ EVENT_START   ev_t02_hakase_guide
 	//ゾーンチェンジ
 	_MAP_CHANGE( ZONE_ID_T02PC0101, 7, 19, DIR_UP )
 
-	//博士案内イベント終了
+	//========================================//
+	
+	//博士のバニッシュフラグセット
 	_FLAG_SET( FV_T02_HAKASE )
+	
+	//========================================//
+	
+	//博士案内イベント終了
+	$WK_SCENE_T02 = 1
 	
 EVENT_END
 
@@ -457,10 +465,6 @@ EVENT_START   ev_pos_t02_rival_speech
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME_WAIT()
 
-	//Ｎ出現
-	_FLAG_RESET( FV_T02_NNN )
-	_OBJ_ADD( T02_N_01 )
-
 	//Ｎ：自機の真横に移動
 	_OBJ_ANIME( T02_N_01, anm_n_tikaduku )
 	_OBJ_ANIME_WAIT()
@@ -545,6 +549,9 @@ EVENT_START   ev_pos_t02_rival_speech
 	_FLAG_SET( FV_T02_RIVAL_02 )
 
 	//============================================//
+	
+	//演説イベント終了
+	$WK_SCENE_T02 = 2
 	
 EVENT_END
 
