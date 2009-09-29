@@ -37,6 +37,7 @@
 //============================================================================================
 
 #define BTLV_INPUT_TCB_MAX ( 8 )    //使用するTCBのMAX
+#define BTLV_INPUT_BUTTON_MAX ( 6 + 1 )  //押せるボタンのMAX値（3vs3時の対象選択6個＋キャンセル1個）
 #define BG_CLEAR_CODE     (0x8000 / 0x20 - 1)   ///BGスクリーンのクリアコード（キャラクタの一番後ろを指定）
 
 #define INFOWIN_PAL_NO  ( 0x0f )  //情報ステータスバーパレット
@@ -317,7 +318,7 @@ struct _BTLV_INPUT_WORK
 
   HEAPID                heapID;
 
-  u8                    button_exist[ 6 ];  //押せるボタンかどうかチェック
+  u8                    button_exist[ BTLV_INPUT_BUTTON_MAX ];  //押せるボタンかどうかチェック
 };
 
 typedef struct
