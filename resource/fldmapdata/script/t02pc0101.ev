@@ -133,6 +133,13 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	//博士案内イベント終了
 	$WK_SCENE_T02PC0101 = 1
 
+	//友達♂ストッパー解除
+	_FLAG_SET( FV_T02_RIVAL )
+	
+	//演説イベントフラグ開始
+	_FLAG_RESET( FV_T02_SAGE )
+	_FLAG_RESET( FV_T02_HAKAI )	
+
 EVENT_END
 
 /**************************************************************/
@@ -307,8 +314,6 @@ EVENT_END
 /*  【仮】友達♂	R02の強草イベント後に出現 フラグ未設定	  */
 /**************************************************************/
 EVENT_START   ev_t02pc0101_rival_01
-	_TALK_OBJ_START()
-	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_black_01 , T02PC0101_RIVAL_01 )
-	_BALLOONWIN_CLOSE()
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02pc0101_black_01 )
 EVENT_END
 
