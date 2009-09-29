@@ -954,9 +954,9 @@ static BOOL setup_alone_triple( int* seq, void* work )
   trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->trID );
 
   // Client 作成
-  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
+  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 3,
     BTL_THINKER_UI, BAG_MODE, wk->heapID );
-  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
+  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 3,
     BTL_THINKER_AI, BAG_MODE, wk->heapID );
 
   // 描画エンジン生成
@@ -966,8 +966,8 @@ static BOOL setup_alone_triple( int* seq, void* work )
   BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
 
   // Server に Client を接続
-  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, 2 );
-  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), 1, 2 );
+  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, 3 );
+  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), 1, 3 );
 
   // Server 始動
   BTL_SERVER_Startup( wk->server );
@@ -1699,8 +1699,8 @@ u8 BTL_MAIN_BtlPosToViewPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
   else
   {
     static const u8 vpos[2][BTL_POSIDX_MAX] = {
-      { BTLV_MCSS_POS_B, BTLV_MCSS_POS_F, BTLV_MCSS_POS_D  },
-      { BTLV_MCSS_POS_A, BTLV_MCSS_POS_E, BTLV_MCSS_POS_C  },
+      { BTLV_MCSS_POS_B, BTLV_MCSS_POS_D, BTLV_MCSS_POS_F  },
+      { BTLV_MCSS_POS_A, BTLV_MCSS_POS_C, BTLV_MCSS_POS_E  },
     };
     u8 posIdx = btlPos_to_sidePosIdx( pos );
     return vpos[ isPlayerSide ][ posIdx ];
@@ -1913,7 +1913,7 @@ const BTL_POKEPARAM* BTL_POKECON_GetFrontPokeDataConst( const BTL_POKE_CONTAINER
   btlPos_to_cliendID_and_posIdx( wk->mainModule, pos, &clientID, &posIdx );
   party = &wk->party[ clientID ];
 
-  BTL_Printf("戦闘位置[%d] = クライアント[%d]の %d 番目のポケを返す\n", pos, clientID, posIdx );
+//  BTL_Printf("戦闘位置[%d] = クライアント[%d]の %d 番目のポケを返す\n", pos, clientID, posIdx );
 
   return BTL_PARTY_GetMemberDataConst( party, posIdx );
 }

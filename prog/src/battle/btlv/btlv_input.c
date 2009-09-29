@@ -478,7 +478,7 @@ static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
-{ 
+{
   biw->handle   = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, biw->heapID );
   biw->wazatype_clunit = GFL_CLACT_UNIT_Create( PTL_WAZA_MAX, 0, biw->heapID );
   biw->ballgauge_clunit = GFL_CLACT_UNIT_Create( TEMOTI_POKEMAX * 2, 0, biw->heapID );
@@ -513,7 +513,7 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
  */
 //============================================================================================
 void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
-{ 
+{
   BTLV_INPUT_DeleteBallGauge( biw );
 
   GFL_CLGRP_CGR_Release( biw->objcharID );
@@ -655,11 +655,11 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       ttw->biw = biw;
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_DIR )
-      { 
+      {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformDir2Waza, ttw, 1 );
       }
       else
-      { 
+      {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Waza, ttw, 1 );
       }
     }
@@ -708,8 +708,10 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl 
 
   if( hit != GFL_UI_TP_HIT_NONE )
   {
+    BTL_Printf("Input: hitPos=%d\n", hit);
     if( biw->button_exist[ hit ] == FALSE )
     {
+      BTL_Printf("  not exist ...\n");
       hit = GFL_UI_TP_HIT_NONE;
     }
   }
@@ -903,12 +905,12 @@ static  void  TCB_TransformWaza2Dir( GFL_TCB* tcb, void* work )
   }
   */
   if( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE )
-  { 
+  {
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1c_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
   }
   else
-  {  
+  {
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1b_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
   }
@@ -1451,10 +1453,11 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT
   STRBUF *monsname_src;
   WORDSET *wordset;
   PRINTSYS_LSB color;
-  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_btlv_input_dat, biw->heapID );
+  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_btlv_input_dat, GFL_HEAP_LOWID(biw->heapID) );
+
   static  const int monsname_pos[ 2 ][ BTLV_INPUT_DIR_MAX ][ 2 ] =
   {
-    { 
+    {
       { MONSNAME4_X3, MONSNAME4_Y3 },
       { MONSNAME4_X2, MONSNAME4_Y2 },
       { MONSNAME4_X4, MONSNAME4_Y4 },
@@ -1462,7 +1465,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT
       { NULL, NULL },
       { NULL, NULL },
     },
-    { 
+    {
       { MONSNAME6_X4, MONSNAME6_Y4 },
       { MONSNAME6_X3, MONSNAME6_Y3 },
       { MONSNAME6_X5, MONSNAME6_Y5 },
@@ -1474,8 +1477,8 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT
   int max = ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) ? BTLV_INPUT_DIR_MAX : 4;
   int type = ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) ? BUTTON_TYPE_DIR_6 : BUTTON_TYPE_DIR_4;
 
-  monsname_p = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, biw->heapID );
-  wordset = WORDSET_Create( biw->heapID );
+  monsname_p = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, GFL_HEAP_LOWID(biw->heapID) );
+  wordset = WORDSET_Create( GFL_HEAP_LOWID(biw->heapID) );
 
   for( i = 0 ; i < max ; i++){
     if( bisp->bidp[ i ].hp ){
@@ -1489,6 +1492,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT
       GFL_STR_DeleteBuffer( monsname_src );
     }
     biw->button_exist[ i ] = ( bisp->bidp[ i ].hp != 0 );  //押せるボタンかどうかチェック
+    BTL_Printf("ボタン[%d]有効 : %d\n", i, biw->button_exist[i] );
   }
   biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
 

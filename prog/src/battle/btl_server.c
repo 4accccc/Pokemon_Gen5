@@ -449,6 +449,7 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
       ResetAdapterCmd( server );
       SCQUE_Init( server->que );
       server->flowResult = BTL_SVFLOW_StartAfterPokeSelect( server->flowWork );
+      BTL_Printf("サーバー処理結果=%d\n", server->flowResult );
       SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;
     }
@@ -567,7 +568,7 @@ u8 BTL_SVCL_GetNumActPoke( SVCL_WORK* clwk )
 const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx )
 {
   GF_ASSERT(clwk->adapter);
-  GF_ASSERT(posIdx<clwk->numCoverPos);
+  GF_ASSERT_MSG(posIdx<clwk->numCoverPos, "posIdx=%d, numCoverPos=%d", posIdx, clwk->numCoverPos);
 
   {
     const BTL_ACTION_PARAM* action = BTL_ADAPTER_GetReturnData( clwk->adapter );

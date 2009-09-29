@@ -540,6 +540,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     {
       BtlvResult result = BTLV_UI_SelectTarget_Wait( wk->viewCore );
       if( result == BTLV_RESULT_DONE ){
+        BTL_Printf("選択した対象ポケPos=%d\n", wk->procAction->fight.targetPos);
         (*seq) = SEQ_CHECK_DONE;
       }else if( result == BTLV_RESULT_CANCEL ){
         (*seq) = SEQ_SELECT_WAZA_START;
@@ -566,7 +567,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
         (*seq) =  SEQ_CHECK_DONE;
       }
       else{
-        (*seq) = SEQ_CHECK_ACTION;
+        (*seq) = SEQ_SELECT_ACTION;
       }
     }
     break;
@@ -576,6 +577,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     wk->procPokeIdx++;
     if( wk->procPokeIdx >= wk->numCoverPos )
     {
+      BTL_Printf("カバー位置数(%d)終了、アクション送信へ\n", wk->numCoverPos);
       wk->returnDataPtr = &(wk->actionParam[0]);
       wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
       (*seq) = SEQ_RETURN_START;

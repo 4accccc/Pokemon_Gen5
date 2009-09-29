@@ -694,6 +694,15 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ *
+ *
+ * @param   wk
+ *
+ * @retval  BOOL  交換する必要あり、かつ交換要員がいる場合はTRUE
+ */
+//----------------------------------------------------------------------------------
 static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
 {
   u8 posAry[ BTL_POSIDX_MAX ];
@@ -738,8 +747,9 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
       }
       // もう戦えるポケがいない場合も通知
       else{
+        BTL_Printf("Client[%d]にはもう戦えるポケがいないことを通知\n", clientID);
         BTL_SERVER_NotifyGiveupClientID( wk->server, i );
-        result = TRUE;
+//        result = TRUE;
       }
     }
   }
@@ -923,13 +933,16 @@ SvflowResult BTL_SVFLOW_StartAfterPokeSelect( BTL_SVFLOW_WORK* wk )
   }
   if( i==wk->numActOrder )
   {
+    BTL_Printf("全クライアントの処理を最後まで行った\n");
     // 死んだポケモンがいる場合の処理
     if( reqChangePokeForServer(wk) ){
+      BTL_Printf("…しんだポケがいる\n");
       return SVFLOW_RESULT_POKE_CHANGE;
     }
   }
   else{
     reqChangePokeForServer( wk );
+    BTL_Printf("全クライアントの処理を最後まで行えない ... result=%d\n", wk->flowResult);
     return wk->flowResult;
   }
 
@@ -3240,7 +3253,7 @@ static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
   u8 i, poke_cnt;
 
   poke_cnt = TargetPokeRec_GetCount( targets );
-  GF_ASSERT(poke_cnt < BTL_POSIDX_MAX);
+  GF_ASSERT(poke_cnt <= BTL_POSIDX_MAX);
 
   wazaEff_SetNoTarget( wk );
 

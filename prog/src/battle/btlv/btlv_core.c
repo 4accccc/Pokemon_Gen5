@@ -427,6 +427,7 @@ void BTLV_UI_SelectWaza_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_AC
 {
   core->procPokeParam = bpp;
   core->procPokeID = BPP_GetID( bpp );
+  BTL_Printf("ワザ選択開始：対象ポケID=%d\n", core->procPokeID);
   core->actionParam = dest;
   mainproc_setup( core, CmdProc_SelectWaza );
 }

@@ -68,8 +68,9 @@ enum {
  */
 //--------------------------------------------------------------
 enum {
-  STW_CONFIRM_POKE,
-  STW_CONFIRM_FIELD,
+  STW_SELECT_POKE,      ///< ポケモン選択
+  STW_CONFIRM_POKE,     ///< 対象ポケモン確認のみ
+  STW_CONFIRM_FIELD,    ///< 対象がポケモン以外（フィールド）
 };
 typedef u8 StwConfirmType;
 
@@ -486,9 +487,11 @@ static BOOL selectWaza_init( int* seq, void* wk_adrs )
   u8 PP, PPMax;
 
   wazaCnt = BPP_WAZA_GetCount( wk->bpp );
+  BTL_Printf("ワザ数:%d, pokeID=%d\n", wazaCnt, BPP_GetID(wk->bpp));
   for(i=0; i<wazaCnt; i++)
   {
     wazaID = BPP_WAZA_GetParticular( wk->bpp, i, &PP, &PPMax );
+    BTL_Printf(" waza(%d) = %d\n", i, wazaID);
     biwp.wazano[ i ] = wazaID;
     biwp.pp[ i ]     = PP;
     biwp.ppmax[ i ]  = PPMax;
@@ -601,7 +604,7 @@ static const GFL_UI_TP_HITTBL PokeSeleMenuTouch4Data[] = {
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 static const GFL_UI_TP_HITTBL PokeSeleMenuTouch6Data[] = {
-  //UP DOWN LEFT RIGHT
+  //UP      DOWN    LEFT    RIGHT
   { 12 * 8, 15 * 8,  2 * 8, 10 * 8 }, //ターゲットA
   {  5 * 8, 10 * 8, 22 * 8, 30 * 8 }, //ターゲットB
   { 12 * 8, 15 * 8, 12 * 8, 20 * 8 }, //ターゲットC
@@ -675,14 +678,16 @@ static BOOL stw_is_enable_hitpos( SEL_TARGET_WORK* stw, int hitPos, const BTL_MA
   if( stw->selectablePokeCount )
   {
     u8 hitVpos = STW_HitTblIndex[ hitPos ];
-    u8 vpos, i;
+    u8 i;
 
+    *targetPos = BTL_MAIN_ViewPosToBtlPos( mainModule, hitVpos );
+
+    BTL_Printf( "hitPos=%d, vpos=%d, btlPos=%d\n", hitPos, hitVpos, *targetPos );
     for(i=0; i<stw->selectablePokeCount; ++i)
     {
-      vpos = BTL_MAIN_BtlPosToViewPos( mainModule, stw->pos[i] );
-      if( vpos == hitVpos )
+      if( *targetPos == stw->pos[i] )
       {
-        *targetPos = stw->pos[i];
+        BTL_Printf( " btlPos[%d]  Selectable !\n", *targetPos );
         return TRUE;
       }
     }
@@ -728,18 +733,34 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
   u8 vpos;
   WazaID waza = wk->destActionParam->fight.waza;
 
-  MI_CpuClear16( &bisp, sizeof( BTLV_INPUT_SCENE_PARAM ) );
+  MI_CpuClear16( &bisp, sizeof(bisp) );
 
   bisp.pokesele_type = WAZADATA_GetTarget( waza );
   bisp.client_type = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) );
 
+  BTL_Printf(" **** triple select **** \n");
   while( count-- )
   {
     bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, *pos );
     pp  = BPP_GetSrcData( bpp );
     vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, *pos );
+    BTL_Printf(" count[%d]: pos=%d -> vpos=%d, pokeID=%d\n", count, *pos, vpos, BPP_GetID(bpp));
     vpos -= BTLV_MCSS_POS_A;
+#if 0
+  BTLV_MCSS_POS_A = 2
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_E,
+  BTLV_MCSS_POS_F,
 
+  BTL_POS_1ST_0=0,    ///< スタンドアローンならプレイヤー側、通信対戦ならサーバ側
+  BTL_POS_2ND_0,
+  BTL_POS_1ST_1,
+  BTL_POS_2ND_1,
+  BTL_POS_1ST_2,
+  BTL_POS_2ND_2,
+#endif
     bisp.bidp[ vpos ].hp = BPP_GetValue( bpp, BPP_HP );
     if( bisp.bidp[ vpos ].hp )
     {
@@ -839,19 +860,30 @@ static BOOL selectTarget_init( int* seq, void* wk_adrs )
 static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;
-  const GFL_UI_TP_HITTBL *touch_data = ( BTL_MAIN_GetRule( wk->mainModule ) == BTL_RULE_TRIPLE ) ? PokeSeleMenuTouch6Data :
-                                                                                                   PokeSeleMenuTouch4Data;
 
   switch( *seq ){
   case 0:
     {
-      int hit = BTLV_INPUT_CheckInput( wk->biw, touch_data );
-//      int hit = GFL_UI_TP_HitTrg( PokeSeleMenuTouchData );
+      const GFL_UI_TP_HITTBL *touch_data;
+      int hit;
+      u8  touch_max;
+
+      if( BTL_MAIN_GetRule( wk->mainModule ) != BTL_RULE_TRIPLE ){
+        touch_data = PokeSeleMenuTouch4Data;
+        touch_max = 4;
+      }else{
+        touch_data = PokeSeleMenuTouch6Data;
+        touch_max = 6;
+      }
+
+      hit = BTLV_INPUT_CheckInput( wk->biw, touch_data );
       if( hit != GFL_UI_TP_HIT_NONE )
       {
-        if( hit < BTL_CLIENT_MAX )
+        BTL_Printf("hitBtn = %d\n", hit );
+        if( hit != touch_max )
         {
           BtlPokePos targetPos;
+
           SePlayDecide();
           if( stw_is_enable_hitpos( &wk->selTargetWork, hit, wk->mainModule, &targetPos ) )
           {
@@ -881,6 +913,8 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
   BtlPokePos  basePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) );
 
   stw_init( stw );
+
+  BTL_Printf("stw basePoke=%d, basePos=%d\n", BPP_GetID(wk->bpp), basePos);
 
   switch( target ){
   case WAZA_TARGET_OTHER_SELECT:        ///< 自分以外の１体（選択）
