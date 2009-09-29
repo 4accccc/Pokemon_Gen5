@@ -404,6 +404,7 @@ EVENT_END
 _ANIME_LABEL	anime_r01_count_no
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*   R01　捕獲デモ用：POSで主人公移動                    */

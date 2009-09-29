@@ -547,7 +547,7 @@
 #define FV_T02_SAGE                        523 /* 0x020b カラクサタウン：七賢者の演説 */
 #define FV_T02_NNN                         524 /* 0x020c カラクサタウン：Nとの出会い */
 #define FV_T02_MAN                         525 /* 0x020d カラクサタウン：群集 */
-		/* not used   526(0x020e) */
+#define FV_R03_POKE                        526 /* 0x020e ３番道路：ハカイ団に奪われたポケモン */
 		/* not used   527(0x020f) */
 		/* not used   528(0x0210) */
 		/* not used   529(0x0211) */

@@ -20,5 +20,6 @@ SP_EVENT_START  ev_init_script
 	//カノコタウン：研究所前のサポート
 	_FLAG_SET( FV_T01_SUPPORT )
 	_FLAG_SET( FV_R03_RIVAL_01 )
+	_FLAG_SET( FV_R03_POKE )
 
 SP_EVENT_END

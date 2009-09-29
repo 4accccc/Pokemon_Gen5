@@ -2411,6 +2411,13 @@
 #define R03_BABYGIRL1b                     1
 #define R03_BABYGIRL1a                     2
 #define R03_WOMAN3                         3
+#define R03_RIVAL                          4
+#define R03_SUPPORT                        5
+#define R03_HAKAIM_01                      6
+#define R03_HAKAIM_02                      7
+#define R03_BABYGIRL_02                    8
+#define R03_POKE                           9
+#define R03_SUPPORT_02                    10
 
 #endif //ZONE_R03_EVC_H
 //#include "tmp/r03r0101.h"
@@ -11347,18 +11354,164 @@ const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
 		556,
 		16,
 	},
+	{
+		R03_RIVAL,
+		RIVEL,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		FV_R03_RIVAL_01,
+		SCRID_R03_RIVAL_03,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		724,
+		596,
+		0,
+	},
+	{
+		R03_SUPPORT,
+		HEROINE,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		FV_R03_RIVAL_01,
+		SCRID_R03_SUPPORT_01,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		724,
+		595,
+		0,
+	},
+	{
+		R03_HAKAIM_01,
+		HAKAIM,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		FV_R03_RIVAL_01,
+		SCRID_POS_R03_RIVAL_01,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		710,
+		596,
+		0,
+	},
+	{
+		R03_HAKAIM_02,
+		HAKAIM,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		FV_R03_RIVAL_01,
+		SCRID_POS_R03_RIVAL_01,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		710,
+		595,
+		0,
+	},
+	{
+		R03_BABYGIRL_02,
+		BABYGIRL1,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		FV_R03_RIVAL_01,
+		SCRID_R03_BABYGIRL_02,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		711,
+		596,
+		0,
+	},
+	{
+		R03_POKE,
+		POKE3,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		FV_R03_POKE,
+		SCRID_POS_R03_RIVAL_04,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		696,
+		594,
+		0,
+	},
+	{
+		R03_SUPPORT_02,
+		HEROINE,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		FV_R03_POKE,
+		SCRID_POS_R03_RIVAL_04,
+		DIR_LEFT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		697,
+		594,
+		0,
+	},
 };
 const int ObjCount_R03 = NELEMS(OBJ_EVENT_R03);
+const POS_EVENT_DATA POS_EVENT_R03[] = {
+	{//SCRID_R03_RIVAL_01 = 0
+		SCRID_POS_R03_RIVAL_01,
+		719, 594,
+		1, 5,
+		0,  //height
+		0,
+		WK_SCENE_R03,
+	},
+	{//SCRID_POS_R03_RIVAL_04 = 1
+		SCRID_POS_R03_RIVAL_04,
+		697, 593,
+		1, 6,
+		0,  //height
+		1,
+		WK_SCENE_R03,
+	},
+	{//SCRID_POS_R03_RIVAL_02 = 2
+		SCRID_POS_R03_RIVAL_02,
+		707, 593,
+		1, 5,
+		0,  //height
+		0,
+		WK_SCENE_R03,
+	},
+};
+const int PosCount_R03 = NELEMS(POS_EVENT_R03);
 
 static const EVENTDATA_TABLE event_r03 = {
 	0,
-	4,
+	11,
 	6,
-	0,
+	3,
 	(void *)NULL,
 	(void *)&OBJ_EVENT_R03,
 	(void *)&DOOR_EVENT_R03,
-	(void *)NULL,
+	(void *)&POS_EVENT_R03,
 };
 #include "../script/r03r0101_def.h"
 const CONNECT_DATA DOOR_EVENT_R03R0101[] = {
