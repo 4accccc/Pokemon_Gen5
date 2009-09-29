@@ -12,6 +12,7 @@
 #include "print/wordset.h"
 #include "system/palanm.h"
 #include "system/bgwinfrm.h"
+#include "system/cursor_move.h"
 #include "savedata/myitem_savedata.h"
 #include "item/item.h"
 //#include "itemtool/myitem.h"
@@ -82,11 +83,13 @@ enum {
 	BBAG_PAGE_ITEM			// アイテム使用ページ
 };
 
+/*
 // ページ１の選択ID
 enum {
 	BBAG_P1_LASTITEM = BBAG_POKE_MAX,	// 最後に使用した道具
 	BBAG_P1_RETURN						// 戻る
 };
+*/
 
 // セルアクターのID
 enum {
@@ -204,6 +207,7 @@ enum {
 	BBAG_CHRRES_ITEM6,
 	BBAG_CHRRES_ITEM7,
 	BBAG_CHRRES_COST,
+	BBAG_CHRRES_CURSOR,
 	BBAG_CHRRES_MAX,
 
 	// パレット
@@ -215,11 +219,13 @@ enum {
 	BBAG_PALRES_ITEM6,
 	BBAG_PALRES_ITEM7,
 	BBAG_PALRES_COST,
+	BBAG_PALRES_CURSOR,
 	BBAG_PALRES_MAX,
 
 	// セル・アニメ
 	BBAG_CELRES_ITEM = 0,
 	BBAG_CELRES_COST,
+	BBAG_CELRES_CURSOR,
 	BBAG_CELRES_MAX,
 };
 
@@ -249,6 +255,8 @@ typedef struct {
 //	u8	midx;					// メッセージインデックス
 
 	BAPP_CURSOR_MVWK * cmv_wk;	// カーソル制御ワーク
+	CURSORMOVE_WORK * cmwk;					// カーソル制御ワーク
+	BAPP_CURSOR_PUT_WORK * cpwk;		// カーソル表示
 
 //	FINGER_PTR	finger;			// 捕獲デモ用指カーソル
 
@@ -278,8 +286,9 @@ typedef struct {
 	u8	btn_seq;
 	u8	btn_cnt;
 	u8	btn_id;
-	u8	btn_flg:4;
-	u8	btn_mode:4;
+	u8	btn_flg;
+//	u8	btn_flg:4;
+//	u8	btn_mode:4;
 	u8	btn_win[8];
 
 	u8	seq;			// メインシーケンス
@@ -304,6 +313,7 @@ typedef struct {
 	u32	palRes[BBAG_PALRES_MAX];
 	u32	celRes[BBAG_CELRES_MAX];
 //	u32	anmRes[16];
+	BOOL cursor_flg;
 
 }BBAG_WORK;
 

@@ -7,11 +7,12 @@
  */
 //============================================================================================
 #include <gflib.h>
+
 //#include "system/clact_tool.h"
 /*Å™[GS_CONVERT_TAG]*/
 //#include "battle_snd_def.h"
 
-#define	B_APP_TOOL_H_GLOBAL
+
 #include "b_app_tool.h"
 
 
@@ -441,6 +442,7 @@ void BAPPTOOL_VanishCursor( BAPP_CURSOR_PUT_WORK * wk, BOOL flg )
 		for( i=0; i<BAPP_CURSOR_MAX; i++ ){
 			GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], flg );
 		}
+		wk->vanish = flg;
 	}
 }
 
@@ -469,6 +471,38 @@ void BAPPTOOL_MoveCursor( BAPP_CURSOR_PUT_WORK * wk, u32 point )
 	pos.y = wk->put[point].py + sy;
 	GFL_CLACT_WK_SetPos( wk->clwk[3], &pos, CLSYS_DRAW_SUB );
 }
+
+void BAPPTOOL_MoveCursorPoint( BAPP_CURSOR_PUT_WORK * wk, const CURSORMOVE_DATA * dat )
+{
+	GFL_CLACTPOS	pos;
+	u8	sx, sy;
+
+	sx = dat->sx >> 1;
+	sy = dat->sy >> 1;
+
+	// ç∂è„
+	pos.x = dat->px - sx;
+	pos.y = dat->py - sy;
+	GFL_CLACT_WK_SetPos( wk->clwk[0], &pos, CLSYS_DRAW_SUB );
+	// ç∂â∫
+	pos.x = dat->px - sx;
+	pos.y = dat->py + sy;
+	GFL_CLACT_WK_SetPos( wk->clwk[1], &pos, CLSYS_DRAW_SUB );
+	// âEè„
+	pos.x = dat->px + sx;
+	pos.y = dat->py - sy;
+	GFL_CLACT_WK_SetPos( wk->clwk[2], &pos, CLSYS_DRAW_SUB );
+	// âEâ∫
+	pos.x = dat->px + sx;
+	pos.y = dat->py + sy;
+	GFL_CLACT_WK_SetPos( wk->clwk[3], &pos, CLSYS_DRAW_SUB );
+}
+
+
+
+
+
+
 
 
 

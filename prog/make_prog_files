@@ -582,6 +582,7 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/app/b_bag_anm.c \
 			battle/app/b_bag_obj.c \
 			battle/app/b_bag_main.c \
+			battle/app/b_bag_ui.c \
 			battle/app/b_plist_anm.c \
 			battle/app/b_plist_bmp.c \
        		battle/app/b_plist_obj.c \

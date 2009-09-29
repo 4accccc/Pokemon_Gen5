@@ -133,7 +133,7 @@ enum {
 #define	PALOFS_TYPEICON			( PALOFS_ITEMICON + 0x20 * PALSIZ_ITEMICON )
 #define	PALSIZ_TYPEICON			( 3 )
 #define	PALOFS_CURSOR				( PALOFS_TYPEICON + 0x20 * PALSIZ_TYPEICON )
-#define	PALSIZ_CURSOR				( 1 )		// パレット１を使用してるので２本読んでおく
+#define	PALSIZ_CURSOR				( 1 )
 
 
 //============================================================================================
@@ -642,7 +642,7 @@ static void BPL_ClactAddAll( BPLIST_WORK * wk )
 {
 	u32	i;
 
-	wk->clunit = GFL_CLACT_UNIT_Create( BPL_CA_MAX+4, 0, wk->dat->heap );
+	wk->clunit = GFL_CLACT_UNIT_Create( BPL_CA_MAX+BAPPTOOL_CURSOR_MAX, 0, wk->dat->heap );
 
 	for( i=0; i<BPL_CA_MAX; i++ ){
 		wk->clwk[i] = BPL_ClactAdd( wk, ObjParamEz[i] );
@@ -664,11 +664,10 @@ void BattlePokeList_ObjFree( BPLIST_WORK * wk )
 {
 	u32	i;
 
-	BAPPTOOL_DelCursor( wk->cpwk );
-
 	for( i=0; i<BPL_CA_MAX; i++ ){
 		GFL_CLACT_WK_Remove( wk->clwk[i] );
 	}
+	BAPPTOOL_DelCursor( wk->cpwk );
 
 	for( i=0; i<BPLIST_CHRRES_MAX; i++ ){
     GFL_CLGRP_CGR_Release( wk->chrRes[i] );

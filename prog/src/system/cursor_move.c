@@ -20,16 +20,24 @@
 
 // 選択カーソル移動ワーク
 struct _CURSOR_MOVE_WORK {
-	const GFL_UI_TP_HITTBL * rect;			// タッチテーブル
-	const POINTSEL_WORK * pw;			// カーソル位置ワーク
-	BOOL cur_flg;						// カーソルON/OFF
-	u8	cur_mode;						// カーソル表示モード
-	u8	cur_pos;						// カーソル位置
-	u8	old_pos;						// 前回のカーソル位置
-	u8	save_pos;						// カーソル位置記憶
-	u32	mv_tbl[2];						// 移動テーブル
-	const CURSORMOVE_CALLBACK * func;	// コールバック関数
-	void * work;						// コールバック関数に渡すワーク
+	const CURSORMOVE_DATA * dat;				// カーソル移動データ
+	BOOL cur_flg;												// カーソルON/OFF
+	u8	cur_mode;												// カーソル表示モード
+	u8	cur_pos;												// カーソル位置
+	u8	old_pos;												// 前回のカーソル位置
+	u8	save_pos;												// カーソル位置記憶
+	u32	mv_tbl[2];											// 移動テーブル
+	const CURSORMOVE_CALLBACK * func;		// コールバック関数
+	void * work;												// コールバック関数に渡すワーク
+};
+
+// データ移動定義
+enum {
+	CURSOR_MOVE_UP = 0,			// 上
+	CURSOR_MOVE_DOWN,				// 下
+	CURSOR_MOVE_LEFT,				// 右
+	CURSOR_MOVE_RIGHT,			// 左
+	CURSOR_MOVE_NONE = 0xff	// カーソル移動なし
 };
 
 // カーソル表示モード
@@ -41,19 +49,29 @@ enum {
 // キー全部
 #define	PAD_KEY_ALL	( PAD_KEY_UP | PAD_KEY_DOWN | PAD_KEY_LEFT | PAD_KEY_RIGHT )
 
-#define	DEF_OLDPOS		( 0xff )			// 前回のカーソル位置なし
-#define	DEF_MVTBL		( 0xffffffff )		// デフォルトの移動テーブル
+#define	DEF_OLDPOS		( 0xff )					// 前回のカーソル位置なし
+#define	DEF_MVTBL			( 0xffffffff )		// デフォルトの移動テーブル
 
 
 //============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
-static u32 Main_TouchCheck( CURSORMOVE_WORK * wk, int hit );
+static BOOL Main_TouchCheck( CURSORMOVE_WORK * wk, int * hit );
+static u8 MoveVec( const CURSORMOVE_DATA * dat, u8 now, u8 mv );
 static u32 Main_CursorOn( CURSORMOVE_WORK * wk );
 static u32 Main_KeyMove( CURSORMOVE_WORK * wk, u8 mv, u8 ret );
 
-static BOOL OldCursorSetCheck( const POINTSEL_WORK * pw, u8 mv );
+static BOOL OldCursorSetCheck( const CURSORMOVE_DATA * dat, u8 mv );
 static BOOL MoveTableBitCheck( u32 * tbl, u32 pos );
+
+
+//============================================================================================
+//	グローバル
+//============================================================================================
+
+// タッチテーブル終了データ
+static const GFL_UI_TP_HITTBL HitRectEnd = { GFL_UI_TP_HIT_END, 0, 0, 0 };
+
 
 
 
@@ -61,13 +79,13 @@ static BOOL MoveTableBitCheck( u32 * tbl, u32 pos );
 /**
  * 選択カーソル移動ワーク作成
  *
- * @param	rect		タッチ判定テーブル
- * @param	pw			カーソル位置ワーク
- * @param	func		コールバック関数
- * @param	work		コールバック関数に渡されるワーク
- * @param	cur_flg		カーソル表示フラグ
- * @param	cur_pos		カーソル位置
- * @param	heapID		ヒープID
+ * @param		dat				カーソル移動データ
+ * @param		pw				カーソル位置ワーク
+ * @param		func			コールバック関数
+ * @param		work			コールバック関数に渡されるワーク
+ * @param		cur_flg		カーソル表示フラグ
+ * @param		cur_pos		カーソル位置
+ * @param		heapID		ヒープID
  *
  * @return	カーソル移動ワーク
  *
@@ -75,18 +93,17 @@ static BOOL MoveTableBitCheck( u32 * tbl, u32 pos );
  */
 //--------------------------------------------------------------------------------------------
 CURSORMOVE_WORK * CURSORMOVE_Create(
-					const GFL_UI_TP_HITTBL * rect,
-					const POINTSEL_WORK * pw,
+					const CURSORMOVE_DATA * dat,
 					const CURSORMOVE_CALLBACK * func,
 					void * work,
 					BOOL cur_flg,
 					u8	cur_pos,
 					u32 heapID )
 {
+ 
 	CURSORMOVE_WORK * wk = GFL_HEAP_AllocMemory( heapID, sizeof(CURSORMOVE_WORK) );
 
-	wk->rect = rect;
-	wk->pw   = pw;
+	wk->dat = dat;
 
 	wk->func = func;
 	wk->work = work;
@@ -143,34 +160,12 @@ void CURSORMOVE_VanishModeSet( CURSORMOVE_WORK * wk )
 u32 CURSORMOVE_Main( CURSORMOVE_WORK * wk )
 {
 	int	hit;
-	u16	cnt, flg;
 	u8	mv, ret, tmp, old;
 
-/*
 	// タッチチェック
-	hit = GF_TP_RectHitTrg( wk->rect );
-
-	if( hit != RECT_HIT_NONE ){
-		return Main_TouchCheck( wk, hit );
+	if( Main_TouchCheck( wk, &hit ) == TRUE ){
+		return hit;
 	}
-*/
-	// タッチチェック
-	cnt = 0;
-	flg = 0;
-	while( 1 ){
-		if( wk->rect[cnt].rect.top == GFL_UI_TP_HIT_END ){
-			break;
-		}
-		if( GFL_UI_TP_HitTrg( &wk->rect[cnt] ) == TRUE ){
-			hit = Main_TouchCheck( wk, cnt );
-			if( hit != CURSORMOVE_NONE ){
-				return hit;
-			}
-			flg = 1;
-		}
-		cnt++;
-	}
-	if( flg != 0 ){ return CURSORMOVE_NONE; }
 
 	// カーソル表示チェック
 	if( wk->cur_flg == FALSE && wk->cur_mode == CURSOR_MODE_VANISH ){
@@ -182,23 +177,23 @@ u32 CURSORMOVE_Main( CURSORMOVE_WORK * wk )
 
 	// 移動先取得
 	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
-		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_UP );
-		mv  = POINTSEL_MV_UP;
+		ret = MoveVec( wk->dat, wk->cur_pos, CURSOR_MOVE_UP );
+		mv  = CURSOR_MOVE_UP;
 	}else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
-		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_DOWN );
-		mv  = POINTSEL_MV_DOWN;
+		ret = MoveVec( wk->dat, wk->cur_pos, CURSOR_MOVE_DOWN );
+		mv  = CURSOR_MOVE_DOWN;
 	}else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
-		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_LEFT );
-		mv  = POINTSEL_MV_LEFT;
+		ret = MoveVec( wk->dat, wk->cur_pos, CURSOR_MOVE_LEFT );
+		mv  = CURSOR_MOVE_LEFT;
 	}else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
-		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_RIGHT );
-		mv  = POINTSEL_MV_RIGHT;
+		ret = MoveVec( wk->dat, wk->cur_pos, CURSOR_MOVE_RIGHT );
+		mv  = CURSOR_MOVE_RIGHT;
 	}else{
-		ret = POINTSEL_MOVE_NONE;
+		ret = CURSOR_MOVE_NONE;
 	}
 
 	// キー移動
-	if( ret != POINTSEL_MOVE_NONE ){
+	if( ret != CURSOR_MOVE_NONE ){
 		return Main_KeyMove( wk, mv, ret );
 	}
 
@@ -229,34 +224,12 @@ u32 CURSORMOVE_Main( CURSORMOVE_WORK * wk )
 u32 CURSORMOVE_MainCont( CURSORMOVE_WORK * wk )
 {
 	int	hit;
-	u16	cnt, flg;
 	u8	mv, ret, tmp, old;
 
-/*
 	// タッチチェック
-	hit = GF_TP_RectHitTrg( wk->rect );
-
-	if( hit != RECT_HIT_NONE ){
-		return Main_TouchCheck( wk, hit );
+	if( Main_TouchCheck( wk, &hit ) == TRUE ){
+		return hit;
 	}
-*/
-	// タッチチェック
-	cnt = 0;
-	flg = 0;
-	while( 1 ){
-		if( wk->rect[cnt].rect.top == GFL_UI_TP_HIT_END ){
-			break;
-		}
-		if( GFL_UI_TP_HitTrg( &wk->rect[cnt] ) == TRUE ){
-			hit = Main_TouchCheck( wk, cnt );
-			if( hit != CURSORMOVE_NONE ){
-				return hit;
-			}
-			flg = 1;
-		}
-		cnt++;
-	}
-	if( flg != 0 ){ return CURSORMOVE_NONE; }
 
 	// カーソル表示チェック
 	if( wk->cur_flg == FALSE && wk->cur_mode == CURSOR_MODE_VANISH ){
@@ -268,23 +241,23 @@ u32 CURSORMOVE_MainCont( CURSORMOVE_WORK * wk )
 
 	// 移動先取得
 	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP  ){
-		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_UP );
-		mv  = POINTSEL_MV_UP;
+		ret = MoveVec( wk->dat, wk->cur_pos, CURSOR_MOVE_UP );
+		mv  = CURSOR_MOVE_UP;
 	}else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_DOWN );
-		mv  = POINTSEL_MV_DOWN;
+		ret = MoveVec( wk->dat, wk->cur_pos, CURSOR_MOVE_DOWN );
+		mv  = CURSOR_MOVE_DOWN;
 	}else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
-		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_LEFT );
-		mv  = POINTSEL_MV_LEFT;
+		ret = MoveVec( wk->dat, wk->cur_pos, CURSOR_MOVE_LEFT );
+		mv  = CURSOR_MOVE_LEFT;
 	}else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
-		ret = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,wk->cur_pos,POINTSEL_MV_RIGHT );
-		mv  = POINTSEL_MV_RIGHT;
+		ret = MoveVec( wk->dat, wk->cur_pos, CURSOR_MOVE_RIGHT );
+		mv  = CURSOR_MOVE_RIGHT;
 	}else{
-		ret = POINTSEL_MOVE_NONE;
+		ret = CURSOR_MOVE_NONE;
 	}
 
 	// キー移動
-	if( ret != POINTSEL_MOVE_NONE ){
+	if( ret != CURSOR_MOVE_NONE ){
 		return Main_KeyMove( wk, mv, ret );
 	}
 
@@ -305,27 +278,87 @@ u32 CURSORMOVE_MainCont( CURSORMOVE_WORK * wk )
 /**
  * タッチチェック
  *
- * @param	wk		カーソル移動ワーク
- * @param	hit		タッチ位置
+ * @param		wk		カーソル移動ワーク
+ * @param		hit		タッチ位置格納場所
  *
- * @retval	"CURSORMOVE_NONE = 無効な位置"
- * @retval	"CURSORMOVE_NONE != 有効な位置"
+ * @retval	"TRUE = タッチされた"
+ * @retval	"FALSE = それ以外"
+ *
+ * @li	"*hit = CURSORMOVE_NONE : 無効な位置"
  */
 //--------------------------------------------------------------------------------------------
-static u32 Main_TouchCheck( CURSORMOVE_WORK * wk, int hit )
+static BOOL Main_TouchCheck( CURSORMOVE_WORK * wk, int * hit )
 {
-	if( MoveTableBitCheck( wk->mv_tbl, hit ) == TRUE ){
-		wk->cur_pos  = hit;
-		wk->old_pos  = DEF_OLDPOS;
-		wk->save_pos = DEF_OLDPOS;
-		if( wk->cur_flg == TRUE && wk->cur_mode == CURSOR_MODE_VANISH ){
-			wk->cur_flg = FALSE;
-			wk->func->off( wk->work, wk->cur_pos, wk->old_pos );
+	GFL_UI_TP_HITTBL	rect[2];
+	BOOL	ret;
+	int	p;
+	u16	cnt, flg;
+
+	rect[1] = HitRectEnd;
+	ret = FALSE;
+	cnt = 0;
+	flg = 0;
+
+	*hit = CURSORMOVE_NONE;
+
+	while( 1 ){
+		if( wk->dat[cnt].rect.rect.top == GFL_UI_TP_HIT_END ){
+			break;
 		}
-		wk->func->touch( wk->work, wk->cur_pos, wk->old_pos );
-		return hit;
+		rect[0] = wk->dat[cnt].rect;
+		p = GFL_UI_TP_HitTrg( rect );
+		if( p != GFL_UI_TP_HIT_NONE ){
+			ret = TRUE;
+			if( MoveTableBitCheck( wk->mv_tbl, cnt ) == TRUE ){
+				wk->cur_pos  = cnt;
+				wk->old_pos  = DEF_OLDPOS;
+				wk->save_pos = DEF_OLDPOS;
+				if( wk->cur_flg == TRUE && wk->cur_mode == CURSOR_MODE_VANISH ){
+					wk->cur_flg = FALSE;
+					wk->func->off( wk->work, wk->cur_pos, wk->old_pos );
+				}
+				wk->func->touch( wk->work, wk->cur_pos, wk->old_pos );
+				*hit = cnt;
+				break;
+			}
+		}
+		cnt++;
 	}
-	return CURSORMOVE_NONE;
+
+	return ret;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 移動方向を指定し、座標、サイズ、インデックスを取得する
+ *
+ * @param		dat		カーソル移動データ
+ * @param		now		現在のインデックス
+ * @param		mv		移動方向
+ *
+ * @return	移動先のインデックス
+ */
+//--------------------------------------------------------------------------------------------
+static u8 MoveVec( const CURSORMOVE_DATA * dat, u8 now, u8 mv )
+{
+	u8	next = now;
+
+	switch( mv ){
+	case CURSOR_MOVE_UP:
+		next = dat[now].up;
+		break;
+	case CURSOR_MOVE_DOWN:
+		next = dat[now].down;
+		break;
+	case CURSOR_MOVE_LEFT:
+		next = dat[now].left;
+		break;
+	case CURSOR_MOVE_RIGHT:
+		next = dat[now].right;
+		break;
+	}
+
+	return next;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -378,7 +411,7 @@ static u32 Main_KeyMove( CURSORMOVE_WORK * wk, u8 mv, u8 ret )
 			break;
 		}
 		old = 0;
-		tmp = POINTSEL_MoveVec( wk->pw,NULL,NULL,NULL,NULL,ret,mv )&(0xff^CURSORMOVE_RETBIT);
+		tmp = MoveVec( wk->dat, ret, mv ) & (0xff^CURSORMOVE_RETBIT);
 		// 移動先が行き止まり or 元の位置に戻ってきたら
 		if( tmp == ret || tmp == wk->cur_pos ){
 			ret = wk->cur_pos;
@@ -389,7 +422,7 @@ static u32 Main_KeyMove( CURSORMOVE_WORK * wk, u8 mv, u8 ret )
 
 	if( wk->cur_pos != ret ){
 		// 移動先の記憶ビットが立ってたら記憶
-		if( OldCursorSetCheck(&wk->pw[ret],mv) == TRUE && old != 0 ){
+		if( OldCursorSetCheck(&wk->dat[ret],mv) == TRUE && old != 0 ){
 			wk->save_pos = wk->cur_pos;
 		}else{
 			wk->save_pos = DEF_OLDPOS;
@@ -402,6 +435,20 @@ static u32 Main_KeyMove( CURSORMOVE_WORK * wk, u8 mv, u8 ret )
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );
 		return CURSORMOVE_CURSOR_MOVE;
 	}
+
+	if( mv == CURSOR_MOVE_UP ){
+		return CURSORMOVE_NO_MOVE_UP;			// 十字キー上が押されたが、移動なし
+	}
+	if( mv == CURSOR_MOVE_DOWN ){
+		return CURSORMOVE_NO_MOVE_DOWN;		// 十字キー下が押されたが、移動なし
+	}
+	if( mv == CURSOR_MOVE_LEFT ){
+		return CURSORMOVE_NO_MOVE_LEFT;		// 十字キー左が押されたが、移動なし
+	}
+	if( mv == CURSOR_MOVE_RIGHT ){
+		return CURSORMOVE_NO_MOVE_RIGHT;	// 十字キー右が押されたが、移動なし
+	}
+
 	return CURSORMOVE_NONE;
 }
 
@@ -589,9 +636,9 @@ void CURSORMOVE_MoveTableBitOn( CURSORMOVE_WORK * wk, u32 pos )
  * @return	カーソル位置データ
  */
 //--------------------------------------------------------------------------------------------
-const POINTSEL_WORK * CURSORMOVE_PointerWorkGet( CURSORMOVE_WORK * wk, u32 pos )
+const CURSORMOVE_DATA * CURSORMOVE_GetMoveData( CURSORMOVE_WORK * wk, u32 pos )
 {
-	return &wk->pw[pos];
+	return &wk->dat[pos];
 }
 
 //--------------------------------------------------------------------------------------------
@@ -606,8 +653,9 @@ const POINTSEL_WORK * CURSORMOVE_PointerWorkGet( CURSORMOVE_WORK * wk, u32 pos )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void CURSORMOVE_SceneChange(
-		CURSORMOVE_WORK * wk, const GFL_UI_TP_HITTBL * rect, const POINTSEL_WORK * pw, u8 cur_pos )
+		CURSORMOVE_WORK * wk, const GFL_UI_TP_HITTBL * rect, const CURSORMOVE_DATA * dat, u8 cur_pos )
 {
 	wk->rect = rect;
 	wk->pw   = pw;
@@ -619,38 +667,39 @@ void CURSORMOVE_SceneChange(
 	wk->mv_tbl[0] = DEF_MVTBL;
 	wk->mv_tbl[1] = DEF_MVTBL;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
  * 前のカーソル位置に移動するか
  *
- * @param	wk		カーソル位置ワーク
+ * @param	wk		カーソル移動データ
  * @param	mv		移動方向
  *
  * @retval	"TRUE = 移動する"
  * @retval	"FALSE = 移動しない"
  */
 //--------------------------------------------------------------------------------------------
-static BOOL OldCursorSetCheck( const POINTSEL_WORK * pw, u8 mv )
+static BOOL OldCursorSetCheck( const CURSORMOVE_DATA * dat, u8 mv )
 {
 	switch( mv ){
-	case POINTSEL_MV_UP:
-		if( pw->down & CURSORMOVE_RETBIT ){
+	case CURSOR_MOVE_UP:
+		if( dat->down & CURSORMOVE_RETBIT ){
 			return TRUE;
 		}
 		break;
-	case POINTSEL_MV_DOWN:
-		if( pw->up & CURSORMOVE_RETBIT ){
+	case CURSOR_MOVE_DOWN:
+		if( dat->up & CURSORMOVE_RETBIT ){
 			return TRUE;
 		}
 		break;
-	case POINTSEL_MV_LEFT:
-		if( pw->right & CURSORMOVE_RETBIT ){
+	case CURSOR_MOVE_LEFT:
+		if( dat->right & CURSORMOVE_RETBIT ){
 			return TRUE;
 		}
 		break;
-	case POINTSEL_MV_RIGHT:
-		if( pw->left & CURSORMOVE_RETBIT ){
+	case CURSOR_MOVE_RIGHT:
+		if( dat->left & CURSORMOVE_RETBIT ){
 			return TRUE;
 		}
 		break;

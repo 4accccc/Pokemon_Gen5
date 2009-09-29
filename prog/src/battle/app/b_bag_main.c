@@ -68,6 +68,7 @@
 #include "b_bag_item.h"
 #include "b_bag_obj.h"
 #include "b_bag_anm.h"
+#include "b_bag_ui.h"
 #include "b_bag_bmp_def.h"
 #include "b_bag_gra.naix"
 
@@ -179,42 +180,6 @@ static const pBBagFunc MainSeqFunc[] = {
 };
 
 
-// ポケット選択画面のタッチパネル座標
-static const GFL_UI_TP_HITTBL Page1_HitRect[] =
-{
-	{  1*8,  9*8-1,  0*8, 16*8-1 },	// HP回復ポケット
-	{ 10*8, 18*8-1,  0*8, 16*8-1 },	// 状態回復ポケット
-	{  1*8,  9*8-1, 16*8, 32*8-1 },	// ボールポケット
-	{ 10*8, 18*8-1, 16*8, 32*8-1 },	// 戦闘用ポケット
-	{ 19*8, 24*8-1,  1*8, 26*8-1 },	// 最後に使用した道具
-	{ 19*8, 24*8-1, 27*8, 32*8-1 },	// 戻る
-	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-
-// アイテム選択画面のタッチパネル座標
-static const GFL_UI_TP_HITTBL Page2_HitRect[] =
-{
-	{  1*8,  7*8-1,  0*8, 16*8-1 },	// アイテム１
-	{  1*8,  7*8-1, 16*8, 32*8-1 },	// アイテム２
-	{  7*8, 13*8-1,  0*8, 16*8-1 },	// アイテム３
-	{  7*8, 13*8-1, 16*8, 32*8-1 },	// アイテム４
-	{ 13*8, 19*8-1,  0*8, 16*8-1 },	// アイテム５
-	{ 13*8, 19*8-1, 16*8, 32*8-1 },	// アイテム６
-	{ 19*8, 24*8-1, 27*8, 32*8-1 },	// 戻る
-	{ 19*8, 24*8-1,  0*8,  5*8-1 },	// 前へ
-	{ 19*8, 24*8-1,  5*8, 10*8-1 },	// 次へ
-	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-
-// アイテム選択画面のタッチパネル座標
-static const GFL_UI_TP_HITTBL Page3_HitRect[] =
-{
-	{ 19*8, 24*8-1,  1*8, 26*8-1 },	// 使う
-	{ 19*8, 24*8-1, 27*8, 32*8-1 },	// 戻る
-	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -284,7 +249,6 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 	}
 
 //	テスト処理
-/*
 	{
 		u32	i = 0;
 		while(1){
@@ -295,7 +259,6 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 			i++;
 		}
 	}
-*/
 
 	wk->cur = MYITEM_BagCursorAlloc( dat->heap );		// 仮でカーソルデータを作成
 	{
@@ -381,6 +344,7 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 	wk->tcbl = GFL_TCBL_Init( wk->dat->heap, wk->dat->heap, 1, 4 );
 
 	wk->cmv_wk = BAPP_CursorMoveWorkAlloc( wk->dat->heap );
+	wk->cpwk = BAPPTOOL_CreateCursor( wk->dat->heap );
 
 //	BBAG_VramInit();
 	BBAG_BgInit( wk );
@@ -404,6 +368,8 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 	BattleBag_ObjInit( wk );
 	BattleBag_PageObjSet( wk, wk->page );
 
+	BBAGUI_Init( wk, wk->page, 0 );
+
 	if( wk->dat->cursor_flg != 0 ){
 		BAPP_CursorMvWkSetFlag( wk->cmv_wk, 1 );
 	}
@@ -426,6 +392,7 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 	wk->tcbl = GFL_TCBL_Init( wk->dat->heap, wk->dat->heap, 1, 4 );
 
 	wk->cmv_wk = BAPP_CursorMoveWorkAlloc( wk->dat->heap );
+	wk->cpwk = BAPPTOOL_CreateCursor( wk->dat->heap );
 
 //	BBAG_VramInit();
 	BBAG_BgInit( wk );
@@ -448,6 +415,8 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 
 	BattleBag_ObjInit( wk );
 	BattleBag_PageObjSet( wk, wk->page );
+
+	BBAGUI_Init( wk, wk->page, 0 );
 
 	if( wk->dat->cursor_flg != 0 ){
 		BAPP_CursorMvWkSetFlag( wk->cmv_wk, 1 );
@@ -473,29 +442,20 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 {
 	if( PaletteFadeCheck( wk->pfd ) == 0 ){
-		int	ret = GFL_UI_TP_HitTrg( Page1_HitRect );
-
-		if( ret == GFL_UI_TP_HIT_NONE ){
-			ret = BAPP_CursorMove( wk->cmv_wk );
-			if( ret == BAPP_CMV_CANCEL ){
-				ret = BBAG_P1_RETURN;
-			}
-		}else{
-			BattleBag_CursorOff( wk );
-		}
+		u32	ret = CURSORMOVE_MainCont( wk->cmwk );
 
 		switch( ret ){
-		case BBAG_POKE_HPRCV:		// HP回復ポケット
-		case BBAG_POKE_STRCV:		// 状態回復ポケット
-		case BBAG_POKE_BALL:		// ボールポケット
-		case BBAG_POKE_BATTLE:		// 戦闘用ポケット
+		case BBAG_UI_P1_HP_POCKET:				// HP回復ポケット
+		case BBAG_UI_P1_STATUS_POCKET:		// 状態回復ポケット
+		case BBAG_UI_P1_BALL_POCKET:			// ボールポケット
+		case BBAG_UI_P1_BATTLE_POCKET:		// 戦闘用ポケット
 //			Snd_SePlay( SEQ_SE_DP_DECIDE );
 			wk->poke_id = (u8)ret;
 			wk->ret_seq = SEQ_BBAG_PAGE2_CHG;
 			BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_POCKET01+ret-BBAG_POKE_HPRCV );
 			return SEQ_BBAG_BUTTON_WAIT;
 
-		case BBAG_P1_LASTITEM:		// 最後に使用した道具
+		case BBAG_UI_P1_LAST_ITEM:		// 最後に使用した道具
 			if( wk->dat->used_item != ITEM_DUMMY_DATA ){
 //				Snd_SePlay( SEQ_SE_DP_DECIDE );
 				wk->poke_id = wk->dat->used_poke;
@@ -506,12 +466,22 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 			}
 			break;
 
-		case BBAG_P1_RETURN:		// 戻る
+		case BBAG_UI_P1_RETURN:		// 戻る
+		case CURSORMOVE_CANCEL:		// キャンセル
 //			Snd_SePlay( SEQ_SE_DP_DECIDE );
 			wk->dat->ret_item = ITEM_DUMMY_DATA;
 			wk->dat->ret_page = BBAG_POKE_MAX;
 			BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
 			return SEQ_BBAG_ENDSET;
+
+		case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+		case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+		case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+		case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+		case CURSORMOVE_CURSOR_ON:			// カーソル表示
+		case CURSORMOVE_CURSOR_MOVE:		// 移動
+		case CURSORMOVE_NONE:						// 動作なし
+			break;
 		}
 	}
 
@@ -529,39 +499,15 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 {
-	int	ret = GFL_UI_TP_HitTrg( Page2_HitRect );
-
-	if( ret == GFL_UI_TP_HIT_NONE ){
-		u8	old, now, flg;
-		flg = BAPP_CursorMvWkGetFlag( wk->cmv_wk );
-		old = BAPP_CursorMvWkGetPos( wk->cmv_wk );
-		ret = BAPP_CursorMove( wk->cmv_wk );
-		now = BAPP_CursorMvWkGetPos( wk->cmv_wk );
-		if( ret == BAPP_CMV_CANCEL ){
-			ret = 6;
-		}else if( flg == 1 && old == now ){
-			if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
-				if( now == 0 || now == 2 || now == 4 ){
-					ret = 7;
-				}
-			}
-			if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
-				if( now == 1 || now == 3 || now == 5 ){
-					ret = 8;
-				}
-			}
-		}
-	}else{
-		BattleBag_CursorOff( wk );
-	}
+	u32	ret = CURSORMOVE_MainCont( wk->cmwk );
 
 	switch( ret ){
-	case 0:		// アイテム１
-	case 1:		// アイテム２
-	case 2:		// アイテム３
-	case 3:		// アイテム４
-	case 4:		// アイテム５
-	case 5:		// アイテム６
+	case BBAG_UI_P2_ITEM1:		// アイテム１
+	case BBAG_UI_P2_ITEM2:		// アイテム２
+	case BBAG_UI_P2_ITEM3:		// アイテム３
+	case BBAG_UI_P2_ITEM4:		// アイテム４
+	case BBAG_UI_P2_ITEM5:		// アイテム５
+	case BBAG_UI_P2_ITEM6:		// アイテム６
 		if( BattleBag_PosItemCheck( wk, ret ) != 0 ){
 //			Snd_SePlay( SEQ_SE_DP_DECIDE );
 			wk->dat->item_pos[wk->poke_id] = (u8)ret;
@@ -571,7 +517,8 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 		}
 		break;
 
-	case 6:		// 戻る
+	case BBAG_UI_P2_RETURN:		// 戻る
+	case CURSORMOVE_CANCEL:		// キャンセル
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );
 		BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
 		if( wk->dat->mode == BBAG_MODE_SHOOTER ){
@@ -584,7 +531,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 		}
 		break;
 
-	case 7:		// 前へ
+	case BBAG_UI_P2_LEFT:			// 前へ
 		if( wk->scr_max[wk->poke_id] != 0 ){
 //			Snd_SePlay( SEQ_SE_DP_DECIDE );
 			wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
@@ -594,13 +541,50 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 		}
 		break;
 
-	case 8:		// 次へ
+	case BBAG_UI_P2_RIGHT:		// 次へ
 		if( wk->scr_max[wk->poke_id] != 0 ){
 //			Snd_SePlay( SEQ_SE_DP_DECIDE );
 			wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
 			wk->page_mv = 1;
 			BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RIGHT );
 			return SEQ_BBAG_BUTTON_WAIT;
+		}
+		break;
+
+	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_CURSOR_ON:			// カーソル表示
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+	case CURSORMOVE_NONE:						// 動作なし
+		break;
+
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+		{
+			u8	pos = CURSORMOVE_PosGet( wk->cmwk );
+			if( pos == BBAG_UI_P2_ITEM1 || pos == BBAG_UI_P2_ITEM3 || BBAG_UI_P2_ITEM5 ){
+				if( wk->scr_max[wk->poke_id] != 0 ){
+//				Snd_SePlay( SEQ_SE_DP_DECIDE );
+					wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
+					wk->page_mv = -1;
+					BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_LEFT );
+					return SEQ_BBAG_BUTTON_WAIT;
+				}
+			}
+		}
+		break;
+
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+		{
+			u8	pos = CURSORMOVE_PosGet( wk->cmwk );
+			if( pos == BBAG_UI_P2_ITEM2 || pos == BBAG_UI_P2_ITEM4 || BBAG_UI_P2_ITEM6 ){
+				if( wk->scr_max[wk->poke_id] != 0 ){
+//				Snd_SePlay( SEQ_SE_DP_DECIDE );
+					wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
+					wk->page_mv = 1;
+					BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RIGHT );
+					return SEQ_BBAG_BUTTON_WAIT;
+				}
+			}
 		}
 		break;
 	}
@@ -651,19 +635,10 @@ static int BBAG_SeqItemSelNext( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqUseSelect( BBAG_WORK * wk )
 {
-	int	ret = GFL_UI_TP_HitTrg( Page3_HitRect );
-
-	if( ret == GFL_UI_TP_HIT_NONE ){
-		ret = BAPP_CursorMove( wk->cmv_wk );
-		if( ret == BAPP_CMV_CANCEL ){
-			ret = 1;
-		}
-	}else{
-		BattleBag_CursorOff( wk );
-	}
+	u32	ret = CURSORMOVE_MainCont( wk->cmwk );
 
 	switch( ret ){
-	case 0:		// 使う
+	case BBAG_UI_P3_USE:		// 使う
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );
 		wk->dat->ret_item = BattleBag_PosItemCheck( wk, wk->dat->item_pos[wk->poke_id] );
 		wk->dat->ret_page = wk->poke_id;
@@ -675,11 +650,21 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk )
 		BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_USE );
 		return BBAG_ItemUse( wk );
 
-	case 1:		// 戻る
+	case BBAG_UI_P3_RETURN:		// 戻る
+	case CURSORMOVE_CANCEL:		// キャンセル
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );
 		wk->ret_seq = SEQ_BBAG_PAGE2_CHG;
 		BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
 		return SEQ_BBAG_BUTTON_WAIT;
+
+	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+	case CURSORMOVE_CURSOR_ON:			// カーソル表示
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+	case CURSORMOVE_NONE:						// 動作なし
+			break;
 	}
 
 	return SEQ_BBAG_USE;
@@ -980,6 +965,8 @@ static BOOL BBAG_SeqEnd( GFL_TCB * tcb, BBAG_WORK * wk )
 
 	GFL_TCBL_Exit( wk->tcbl );
 	BAPP_CursorMoveWorkFree( wk->cmv_wk );
+	BBAGUI_Exit( wk );
+	BAPPTOOL_FreeCursor( wk->cpwk );
 
 	GFL_HEAP_FreeMemory( wk->cur );		// カーソルデータ削除（仮）
 	GFL_TCB_DeleteTask( tcb );
@@ -1430,6 +1417,8 @@ static void BBAG_PageChange( BBAG_WORK * wk, u8 next_page )
 
 //	BattleBag_ButtonPageScreenInit( wk, next_page );
 	BBAGANM_PageButtonPut( wk, next_page );
+
+	BBAGUI_ChangePage( wk, next_page, 0 );
 
 	BattleBag_CursorMoveSet( wk, next_page );
 	BBAG_GetDemoCursorSet( wk, next_page );

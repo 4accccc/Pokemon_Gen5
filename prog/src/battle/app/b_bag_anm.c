@@ -365,7 +365,7 @@ void BBAGANM_PageButtonPut( BBAG_WORK * wk, u8 page )
 	switch( page ){
 	case BBAG_PAGE_POCKET:	// ポケット選択ページ
 		BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_RETURN, P1_RETURN_SCR_PX, P1_RETURN_SCR_PY );
-		BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_USE, P1_LASTITEM_SCR_PX, P1_LASTITEM_SCR_PX );
+		BGWINFRM_FramePut( wk->bgwfrm,BBAG_BGWF_USE, P1_LASTITEM_SCR_PX, P1_LASTITEM_SCR_PY );
 		if( wk->dat->used_item == ITEM_DUMMY_DATA ){
 			BGWINFRM_PaletteChange(
 				wk->bgwfrm, BBAG_BGWF_USE, 0, 0, ButtonAddData[i].sx, ButtonAddData[i].sy, SYSBTN_PAL_OFF );

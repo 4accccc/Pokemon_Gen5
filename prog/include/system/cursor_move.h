@@ -10,8 +10,6 @@
 //============================================================================================
 #pragma	once
 
-#include "system/point_sel.h"
-
 
 //============================================================================================
 //	定数定義
@@ -19,6 +17,21 @@
 
 //typedef struct _CURSOR_MOVE_WORK	CURSOR_MOVE_WORK;		// 選択カーソル移動ワーク
 typedef struct _CURSOR_MOVE_WORK	CURSORMOVE_WORK;		// 選択カーソル移動ワーク
+
+// カーソル移動データ
+typedef struct {
+	u8	px;										// X座標（キャラでもドットでも）
+	u8	py;										// Y座標
+	u8	sx;										// Xサイズ
+	u8	sy;										// Yサイズ
+
+	u8	up;										// 上方向へのインデックス番号
+	u8	down;									// 下方向へのインデックス番号
+	u8	left;									// 左方向へのインデックス番号
+	u8	right;								// 右方向へのインデックス番号
+
+	GFL_UI_TP_HITTBL	rect;		// タッチ範囲
+}CURSORMOVE_DATA;
 
 // コールバック関数
 typedef struct {
@@ -30,10 +43,14 @@ typedef struct {
 
 #define	CURSORMOVE_ONOFF_DIRECT	( 0xffffffff )	// CURSORMOVE_CursorOnOffSet()でコールバックに渡される引数
 
-#define	CURSORMOVE_CURSOR_ON	( 0xfffffffc )	// カーソル表示
-#define	CURSORMOVE_CURSOR_MOVE	( 0xfffffffd )	// 移動
-#define	CURSORMOVE_CANCEL		( 0xfffffffe )	// キャンセル
-#define	CURSORMOVE_NONE			( 0xffffffff )	// 動作なし
+#define	CURSORMOVE_NO_MOVE_UP			( 0xfffffff8 )	// 十字キー上が押されたが、移動なし
+#define	CURSORMOVE_NO_MOVE_DOWN		( 0xfffffff9 )	// 十字キー下が押されたが、移動なし
+#define	CURSORMOVE_NO_MOVE_LEFT		( 0xfffffffa )	// 十字キー左が押されたが、移動なし
+#define	CURSORMOVE_NO_MOVE_RIGHT	( 0xfffffffb )	// 十字キー右が押されたが、移動なし
+#define	CURSORMOVE_CURSOR_ON			( 0xfffffffc )	// カーソル表示
+#define	CURSORMOVE_CURSOR_MOVE		( 0xfffffffd )	// 移動
+#define	CURSORMOVE_CANCEL					( 0xfffffffe )	// キャンセル
+#define	CURSORMOVE_NONE						( 0xffffffff )	// 動作なし
 
 #define	CURSORMOVE_RETBIT		( 0x80 )		// カーソル移動で前回の位置へ戻る
 
@@ -46,13 +63,13 @@ typedef struct {
 /**
  * 選択カーソル移動ワーク作成
  *
- * @param	rect		タッチ判定テーブル
- * @param	pw			カーソル位置ワーク
- * @param	func		コールバック関数
- * @param	work		コールバック関数に渡されるワーク
- * @param	cur_flg		カーソル表示フラグ
- * @param	cur_pos		カーソル位置
- * @param	heapID		ヒープID
+ * @param		dat				カーソル移動データ
+ * @param		pw				カーソル位置ワーク
+ * @param		func			コールバック関数
+ * @param		work			コールバック関数に渡されるワーク
+ * @param		cur_flg		カーソル表示フラグ
+ * @param		cur_pos		カーソル位置
+ * @param		heapID		ヒープID
  *
  * @return	カーソル移動ワーク
  *
@@ -60,8 +77,7 @@ typedef struct {
  */
 //--------------------------------------------------------------------------------------------
 extern CURSORMOVE_WORK * CURSORMOVE_Create(
-					const GFL_UI_TP_HITTBL * rect,
-					const POINTSEL_WORK * pw,
+					const CURSORMOVE_DATA * dat,
 					const CURSORMOVE_CALLBACK * func,
 					void * work,
 					BOOL cur_flg,
@@ -245,7 +261,7 @@ extern void CURSORMOVE_MoveTableBitOn( CURSORMOVE_WORK * wk, u32 pos );
  * @return	カーソル位置データ
  */
 //--------------------------------------------------------------------------------------------
-extern const POINTSEL_WORK * CURSORMOVE_PointerWorkGet( CURSORMOVE_WORK * wk, u32 pos );
+extern const CURSORMOVE_DATA * CURSORMOVE_GetMoveData( CURSORMOVE_WORK * wk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -259,5 +275,7 @@ extern const POINTSEL_WORK * CURSORMOVE_PointerWorkGet( CURSORMOVE_WORK * wk, u3
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 extern void CURSORMOVE_SceneChange(
-				CURSORMOVE_WORK * wk, const GFL_UI_TP_HITTBL * rect, const POINTSEL_WORK * pw, u8 cur_pos );
+				CURSORMOVE_WORK * wk, const GFL_UI_TP_HITTBL * rect, const CURSORMOVE_DATA * dat, u8 cur_pos );
+*/

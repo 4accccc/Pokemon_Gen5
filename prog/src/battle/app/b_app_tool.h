@@ -11,6 +11,7 @@
 
 //#include "battle_cursor.h"
 #include "print/printsys.h"
+#include "system/cursor_move.h"
 
 
 //============================================================================================
@@ -38,6 +39,9 @@ typedef struct {
 	u8	sx;
 	u8	sy;
 }BAPP_CURSOR_PUT;
+
+
+#define	BAPPTOOL_CURSOR_MAX		( 4 )		// カーソルで使用するセルアクターの数
 
 
 //============================================================================================
@@ -190,6 +194,8 @@ extern void BAPPTOOL_AddCursor( BAPP_CURSOR_PUT_WORK * wk, GFL_CLUNIT * clunit, 
 extern void BAPPTOOL_DelCursor( BAPP_CURSOR_PUT_WORK * wk );
 extern void BAPPTOOL_VanishCursor( BAPP_CURSOR_PUT_WORK * wk, BOOL flg );
 extern void BAPPTOOL_MoveCursor( BAPP_CURSOR_PUT_WORK * wk, u32 point );
+extern void BAPPTOOL_MoveCursorPoint( BAPP_CURSOR_PUT_WORK * wk, const CURSORMOVE_DATA * dat );
+
 
 
 //extern void BAPPTOOL_PrintQueOn( BAPP_BMPWIN_QUE * dat );

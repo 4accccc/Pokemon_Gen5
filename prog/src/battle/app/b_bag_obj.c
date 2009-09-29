@@ -21,6 +21,8 @@
 #include "itemtool/item.h"
 */
 #include "arc_def.h"
+#include "battle/battgra_wb.naix"
+
 #include "b_app_tool.h"
 
 #include "b_bag.h"
@@ -104,6 +106,7 @@ static void BBAG_CursorDel( BBAG_WORK * wk );
 static void BBAG_ClactGetDemoCursorAdd( BBAG_WORK * wk );
 static void BBAG_GetDemoCursorDel( BBAG_WORK * wk );
 static void CostResLoad( BBAG_WORK * wk );
+static void CursorResLoad( BBAG_WORK * wk );
 
 static void CostObjPut( BBAG_WORK * wk, u16 idx, u8 ene, u8 res_ene, const GFL_CLACTPOS * pos );
 
@@ -232,6 +235,7 @@ void BattleBag_ObjInit( BBAG_WORK * wk )
 	BBAG_ClactItemLoad( wk );
 //	BBAG_ClactGetDemoLoad( wk );
 	CostResLoad( wk );
+	CursorResLoad( wk );
 
 	BBAG_ClactAddAll( wk );
 	BBAG_ClactCursorAdd( wk );
@@ -413,7 +417,6 @@ static void CostResLoad( BBAG_WORK * wk )
   wk->celRes[BBAG_CELRES_COST] = GFL_CLGRP_CELLANIM_Register(
 																	ah, NARC_b_bag_gra_test_cost_NCER,
 																	NARC_b_bag_gra_test_cost_NANR, wk->dat->heap );
-
 	// パレット
 	PaletteWorkSet_ArcHandle(
 					wk->pfd, ah, NARC_b_bag_gra_test_cost_NCLR,
@@ -421,6 +424,43 @@ static void CostResLoad( BBAG_WORK * wk )
 
   GFL_ARC_CloseDataHandle( ah );
 }
+
+static void CursorResLoad( BBAG_WORK * wk )
+{
+  ARCHANDLE * ah;
+
+	ah = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, wk->dat->heap );
+
+	// キャラ
+	wk->chrRes[BBAG_CHRRES_CURSOR] = GFL_CLGRP_CGR_Register(
+																		ah, NARC_battgra_wb_battle_w_obj_NCGR,
+																		FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
+	// パレット
+  wk->palRes[BBAG_PALRES_CURSOR] = GFL_CLGRP_PLTT_RegisterEx(
+																		ah, NARC_battgra_wb_battle_w_obj_NCLR,
+																		CLSYS_DRAW_SUB, BBAG_PALRES_CURSOR*0x20, 1, 1, wk->dat->heap );
+	// セル・アニメ
+  wk->celRes[BBAG_CELRES_CURSOR] = GFL_CLGRP_CELLANIM_Register(
+																		ah,
+																		NARC_battgra_wb_battle_w_obj_NCER,
+																		NARC_battgra_wb_battle_w_obj_NANR,
+																		wk->dat->heap );
+
+	// パレットフェードに設定
+	{
+		NNSG2dPaletteData * dat;
+		void * buf;
+
+		buf = GFL_ARCHDL_UTIL_LoadPalette( ah, NARC_battgra_wb_battle_w_obj_NCLR, &dat, wk->dat->heap );
+		PaletteWorkSet(
+			wk->pfd, &(((u16*)(dat->pRawData))[16]), FADE_SUB_OBJ, BBAG_PALRES_CURSOR*16, 0x20 );
+	
+		GFL_HEAP_FreeMemory( buf );
+	}
+
+  GFL_ARC_CloseDataHandle( ah );
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -549,7 +589,8 @@ static void BBAG_ClactAddAll( BBAG_WORK * wk )
 {
 	u32	i;
 
-	wk->clunit = GFL_CLACT_UNIT_Create( BBAG_CA_MAX, 0, wk->dat->heap );
+	wk->clunit = GFL_CLACT_UNIT_Create( BBAG_CA_MAX+BAPPTOOL_CURSOR_MAX, 0, wk->dat->heap );
+//	wk->clunit = GFL_CLACT_UNIT_Create( BBAG_CA_MAX, 0, wk->dat->heap );
 
 	for( i=0; i<BBAG_CA_MAX; i++ ){
 		wk->clwk[i] = BBAG_ClactAdd( wk, ClactDat[i] );
@@ -572,6 +613,7 @@ void BattleBag_ObjFree( BBAG_WORK * wk )
 	for( i=0; i<BBAG_CA_MAX; i++ ){
 		GFL_CLACT_WK_Remove( wk->clwk[i] );
 	}
+	BBAG_CursorDel( wk );
 
 	for( i=0; i<BBAG_CHRRES_MAX; i++ ){
     GFL_CLGRP_CGR_Release( wk->chrRes[i] );
@@ -770,6 +812,14 @@ static void BBAG_Page3ObjSet( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void BBAG_ClactCursorAdd( BBAG_WORK * wk )
 {
+	BAPPTOOL_AddCursor(
+		wk->cpwk, wk->clunit,
+		wk->chrRes[BBAG_CHRRES_CURSOR],
+		wk->palRes[BBAG_PALRES_CURSOR],
+		wk->celRes[BBAG_CELRES_CURSOR] );
+
+	BAPPTOOL_VanishCursor( wk->cpwk, FALSE );
+
 /*
 	CATS_SYS_PTR csp;
 	BCURSOR_PTR	cursor;
@@ -798,6 +848,8 @@ static void BBAG_ClactCursorAdd( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void BBAG_CursorDel( BBAG_WORK * wk )
 {
+	BAPPTOOL_DelCursor( wk->cpwk );
+
 /*
 	BCURSOR_ActorDelete( BAPP_CursorMvWkGetBCURSOR_PTR( wk->cmv_wk ) );
 	BCURSOR_ResourceFree(
