@@ -15,6 +15,8 @@ typedef struct _GFL_G3D_UTIL	GFL_G3D_UTIL;
 typedef enum {
 	GFL_G3D_UTIL_RESARC = 0,		//アーカイブＩＤを指定
 	GFL_G3D_UTIL_RESPATH,			//アーカイブパスを指定
+  GFL_G3D_UTIL_RESARC_UTILHEAP,		//アーカイブＩＤを指定　ユーティリティのヒープを使用
+  GFL_G3D_UTIL_RESPATH_UTILHEAP,			//アーカイブパスを指定 ユーティリティのヒープを使用
 
 }GFL_G3D_UTIL_RESTYPE;	//指定アーカイブタイプ
 
