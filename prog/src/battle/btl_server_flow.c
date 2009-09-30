@@ -260,7 +260,7 @@ static u8 ItemEff_SPAttackRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 ite
 static u8 ItemEff_SPDefenceRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ItemEff_AgilityRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ItemEff_HitRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
-static u8 ItemEff_CriticalRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_CriticalUp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ItemEff_PP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
@@ -1659,7 +1659,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
     { ITEM_PRM_SP_DEFENCE_UP, ItemEff_SPDefenceRank },   // 特防アップ
     { ITEM_PRM_AGILITY_UP,    ItemEff_AgilityRank   },   // 素早さアップ
     { ITEM_PRM_HIT_UP,        ItemEff_HitRank       },   // 命中率アップ
-    { ITEM_PRM_CRITICAL_UP,   ItemEff_CriticalRank  },   // クリティカル率アップ
+    { ITEM_PRM_CRITICAL_UP,   ItemEff_CriticalUp    },   // クリティカル率アップ
     { ITEM_PRM_PP_RCV,        ItemEff_PP_Rcv        },   // PP回復
     { ITEM_PRM_ALL_PP_RCV,    ItemEff_AllPP_Rcv     },   // PP回復（全ての技）
     { ITEM_PRM_HP_RCV,        ItemEff_HP_Rcv        },   // HP回復
@@ -1788,9 +1788,16 @@ static u8 ItemEff_HitRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, 
 {
   return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_HIT_RATIO );
 }
-static u8 ItemEff_CriticalRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+static u8 ItemEff_CriticalUp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_CRITICAL_RATIO );
+  if( !BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_KIAIDAME) )
+  {
+    scPut_SetContFlag( wk, bpp, BPP_CONTFLG_KIAIDAME );
+    scPut_Message_Set( wk, bpp, BTL_STRID_SET_KiaiDame );
+    return TRUE;
+  }
+  return FALSE;
+//  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_CRITICAL_RATIO );
 }
 static u8 ItemEff_PP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
@@ -6403,8 +6410,10 @@ static void scEvent_DmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
 static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza )
 {
   BOOL flag = FALSE;
-  u16  rank = BPP_GetValue( attacker, BPP_CRITICAL_RATIO );
-  rank += WAZADATA_GetCriticalRank( waza );
+  u16  rank = WAZADATA_GetCriticalRank( waza );
+  if( BPP_CONTFLAG_Get(attacker, BPP_CONTFLG_KIAIDAME) ){
+    rank += 2;
+  }
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_FAIL_FLAG, FALSE );

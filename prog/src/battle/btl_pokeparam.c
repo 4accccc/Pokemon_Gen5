@@ -92,7 +92,6 @@ typedef struct {
   s8  agility;    ///< すばやさ
   s8  hit;        ///< 命中率
   s8  avoid;      ///< 回避率
-  s8  critical;   ///< クリティカル率
 
 }BPP_VARIABLE_PARAM;
 
@@ -346,7 +345,6 @@ void BTL_POKEPARAM_Copy( BTL_POKEPARAM* dst, const BTL_POKEPARAM* src )
 static void Effrank_Init( BPP_VARIABLE_PARAM* rank )
 {
   Effrank_Reset( rank );
-  rank->critical = RANK_CRITICAL_DEF;
 }
 static void Effrank_Reset( BPP_VARIABLE_PARAM* rank )
 {
@@ -507,7 +505,6 @@ int BPP_GetValue_Base( const BTL_POKEPARAM* bpp, BppValueID vid )
 
   case BPP_HIT_RATIO:         return RANK_STATUS_DEF;
   case BPP_AVOID_RATIO:       return RANK_STATUS_DEF;
-  case BPP_CRITICAL_RATIO:    return RANK_CRITICAL_DEF;
 
   default:
     return BPP_GetValue( bpp, vid );
@@ -543,7 +540,6 @@ int BPP_GetValue( const BTL_POKEPARAM* bpp, BppValueID vid )
 
   case BPP_HIT_RATIO:       return bpp->varyParam.hit;
   case BPP_AVOID_RATIO:     return bpp->varyParam.avoid;
-  case BPP_CRITICAL_RATIO:  return bpp->varyParam.critical;
 
   case BPP_LEVEL:           return bpp->baseParam.level;
   case BPP_HP:              return bpp->coreParam.hp;
@@ -820,11 +816,7 @@ static const s8* getRankVaryStatusConst( const BTL_POKEPARAM* pp, BppValueID typ
   case BPP_AGILITY:     ptr = &pp->varyParam.agility; break;
   case BPP_HIT_RATIO:   ptr = &pp->varyParam.hit; break;
   case BPP_AVOID_RATIO: ptr = &pp->varyParam.avoid; break;
-  case BPP_CRITICAL_RATIO:
-    ptr = &pp->varyParam.critical;
-    *min = RANK_CRITICAL_MIN;
-    *max = RANK_CRITICAL_MAX;
-    break;
+
   default:
     GF_ASSERT(0);
     return NULL;
@@ -919,10 +911,7 @@ u8 BPP_RankUp( BTL_POKEPARAM* bpp, BppValueID rankType, u8 volume )
   case BPP_AGILITY:     ptr = &bpp->varyParam.agility; break;
   case BPP_HIT_RATIO:   ptr = &bpp->varyParam.hit; break;
   case BPP_AVOID_RATIO: ptr = &bpp->varyParam.avoid; break;
-  case BPP_CRITICAL_RATIO:
-    ptr = &bpp->varyParam.critical;
-    max = RANK_CRITICAL_MAX;
-    break;
+
   default:
     GF_ASSERT(0);
     return FALSE;
@@ -963,10 +952,7 @@ u8 BPP_RankDown( BTL_POKEPARAM* bpp, BppValueID rankType, u8 volume )
   case BPP_AGILITY:      ptr = &bpp->varyParam.agility; break;
   case BPP_HIT_RATIO:    ptr = &bpp->varyParam.hit; break;
   case BPP_AVOID_RATIO:  ptr = &bpp->varyParam.avoid; break;
-  case BPP_CRITICAL_RATIO:
-    ptr = &bpp->varyParam.critical;
-    min = RANK_CRITICAL_MIN;
-    break;
+
   default:
     GF_ASSERT(0);
     return FALSE;
@@ -1006,11 +992,7 @@ void BPP_RankSet( BTL_POKEPARAM* pp, BppValueID rankType, u8 value )
   case BPP_AGILITY:       ptr = &pp->varyParam.agility; break;
   case BPP_HIT_RATIO:     ptr = &pp->varyParam.hit; break;
   case BPP_AVOID_RATIO:   ptr = &pp->varyParam.avoid; break;
-  case BPP_CRITICAL_RATIO:
-    ptr = &pp->varyParam.critical;
-    min = RANK_CRITICAL_MIN;
-    max = RANK_CRITICAL_MAX;
-    break;
+
   default:
     GF_ASSERT(0);
     return;

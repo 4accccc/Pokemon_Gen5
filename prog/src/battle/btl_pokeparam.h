@@ -39,7 +39,6 @@ typedef enum {
   BPP_AGILITY,
   BPP_HIT_RATIO,
   BPP_AVOID_RATIO,
-  BPP_CRITICAL_RATIO,
   //--- ここまでランクアップ／ダウン効果の引数としても用いる ---
 
   BPP_HP,
@@ -107,6 +106,7 @@ typedef enum {
   BPP_CONTFLG_ANAWOHORU,
   BPP_CONTFLG_MARUKUNARU,
   BPP_CONTFLG_TIISAKUNARU,
+  BPP_CONTFLG_KIAIDAME,
 
   BPP_CONTFLG_MAX,
 

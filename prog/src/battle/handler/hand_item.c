@@ -1979,7 +1979,7 @@ static void handler_Naganegi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   // 自分が攻撃側で
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    // ラッキーなら
+    // カモネギなら
     const BTL_POKEPARAM* bpp = BTL_SVFLOW_RECEPT_GetPokeParam( flowWk, pokeID );
     u32 monsNo = BPP_GetMonsNo( bpp );
     if( monsNo == MONSNO_KAMONEGI )
