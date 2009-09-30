@@ -59,6 +59,15 @@ typedef enum
   MPS_FINISH,
 }MUSICAL_PROC_STATE;
 
+//ミュージカル配信データはnaixを持っていないし、コンバータで順番固定で出力しているので
+//ココでenum定義
+enum
+{
+  MUSICAL_ARCDATAID_PROGDATA = 0,
+  MUSICAL_ARCDATAID_GMMDATA = 1,
+  MUSICAL_ARCDATAID_STRMDATA = 2,
+};
+
 //======================================================================
 //  typedef struct
 //======================================================================
@@ -92,8 +101,6 @@ GFL_PROC_DATA Musical_ProcData =
   MusicalProc_Main,
   MusicalProc_Term
 };
-
-
 
 static const u16 musPokeArr[]=
 {
@@ -141,6 +148,18 @@ const u16 MUSICAL_SYSTEM_ChangeMusicalPokeNumber( const u16 mons_no )
   }
   //一応最終番号に変換
   return i-1;
+}
+
+//ランダムでミュージカル参加可能なポケモンを返す
+const u16 MUSICAL_SYSTEM_GetMusicalPokemonRandom( void )
+{
+  u16 i=0;
+
+  while( 0xFFFF != musPokeArr[i] )
+  {
+    i++;
+  }
+  return musPokeArr[ GFL_STD_MtRand0(i) ];
 }
 
 //ミュージカル用パラメータの初期化
@@ -194,12 +213,23 @@ MUSICAL_DISTRIBUTE_DATA* MUSICAL_SYSTEM_InitDistributeData( HEAPID workHeapId )
 {
   MUSICAL_DISTRIBUTE_DATA *distData = GFL_HEAP_AllocMemory( workHeapId , sizeof( MUSICAL_DISTRIBUTE_DATA ) );
 
+  distData->programData = NULL;
+  distData->messageData = NULL;
   distData->strmData = NULL;
+
   return distData;
 }
 
 void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData )
 {
+  if( distData->programData != NULL )
+  {
+    GFL_HEAP_FreeMemory( distData->programData );
+  }
+  if( distData->messageData != NULL )
+  {
+    GFL_HEAP_FreeMemory( distData->messageData );
+  }
   if( distData->strmData != NULL )
   {
     GFL_HEAP_FreeMemory( distData->strmData );
@@ -207,10 +237,12 @@ void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData )
   GFL_HEAP_FreeMemory( distData );
 }
 
-void MUSICAL_SYSTEM_LoadStrmData( MUSICAL_DISTRIBUTE_DATA *distData , HEAPID strmHeapId )
+void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , HEAPID heapId )
 {
   //FIXME:セーブデータからの取得
-  distData->strmData = GFL_ARC_UTIL_LoadEx( ARCID_SNDSTRM , NARC_snd_strm_poketari_swav , FALSE , HEAPID_MUSICAL_STRM , &distData->strmDataSize );
+  distData->programData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_PROGDATA , FALSE , heapId );
+  distData->messageData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_GMMDATA , FALSE , heapId );
+  distData->strmData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_STRMDATA , FALSE , heapId , &distData->strmDataSize );
 }
 
 #pragma mark [>proc 
@@ -225,7 +257,6 @@ static GFL_PROC_RESULT MusicalProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 
   work = GFL_PROC_AllocWork( proc, sizeof(MUSICAL_PROC_WORK), HEAPID_MUSICAL_PROC );
   work->musPoke = MUSICAL_SYSTEM_InitMusPoke( initWork->pokePara , HEAPID_MUSICAL_PROC );
-  work->progWork = MUSICAL_PROGRAM_GetProgramData( HEAPID_MUSICAL_PROC );
   work->dupInitWork = NULL;
   work->actInitWork = NULL;
   work->distData = MUSICAL_SYSTEM_InitDistributeData( HEAPID_MUSICAL_PROC );
@@ -240,7 +271,8 @@ static GFL_PROC_RESULT MusicalProc_Init( GFL_PROC * proc, int * seq , void *pwk,
   }
   else
   {
-    MUSICAL_SYSTEM_LoadStrmData( work->distData , HEAPID_MUSICAL_STRM );
+    MUSICAL_SYSTEM_LoadDistributeData( work->distData , HEAPID_MUSICAL_STRM );
+    work->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_PROC , work->distData );
     work->state = MPS_INIT_DRESSUP;
     work->commWork = NULL;
   }
@@ -277,7 +309,7 @@ static GFL_PROC_RESULT MusicalProc_Term( GFL_PROC * proc, int * seq , void *pwk,
   MUSICAL_SYSTEM_TermDistributeData( work->distData );
   GFL_HEAP_FreeMemory( work->musPoke );
   
-  GFL_HEAP_FreeMemory( work->progWork );
+  MUSICAL_PROGRAM_TermProgramData( work->progWork );
   
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STRM );
@@ -319,7 +351,8 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
         break;
       
       case MCM_PARENT:  //仮
-        MUSICAL_SYSTEM_LoadStrmData( work->distData , HEAPID_MUSICAL_STRM );
+        MUSICAL_SYSTEM_LoadDistributeData( work->distData , HEAPID_MUSICAL_STRM );
+        work->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_PROC , work->distData );
         work->state = MPS_INIT_DRESSUP_SEND_MUSICAL_IDX;
         break;
 

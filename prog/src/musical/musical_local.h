@@ -44,12 +44,14 @@ typedef enum
 //配信されてくるデータ
 typedef struct
 {
+  void *programData;
+  void *messageData;
   void *strmData;
   u32  strmDataSize;
 }MUSICAL_DISTRIBUTE_DATA;
 
 MUSICAL_DISTRIBUTE_DATA* MUSICAL_SYSTEM_InitDistributeData( HEAPID workHeapId );
 void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData );
-void MUSICAL_SYSTEM_LoadStrmData( MUSICAL_DISTRIBUTE_DATA *distData , HEAPID strmHeapId );
+void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , HEAPID strmHeapId );
 
 #endif	//MUSICAL_LOCAL_H_

@@ -74,6 +74,8 @@ begin
   sheet.extend Worksheet
   
   dataCol = EXCEL_DATA_COL + no - 1
+  
+  padAry = Array(170) #(0xAA)
 
   #背景番号
   ary = Array( sheet[dataCol,DATA_IDX_BACK_NO].to_i )
@@ -94,6 +96,7 @@ begin
   #ご褒美
   ary = Array( sheet[dataCol,DATA_IDX_AWARD_TYPE].to_i )
   outFile.write( ary.pack("C") )
+  outFile.write( padAry.pack("C") ) #パディング
   ary = Array( sheet[dataCol,DATA_IDX_AWARD_NO].to_i )
   outFile.write( ary.pack("S") )
 
@@ -106,6 +109,7 @@ begin
     outFile.write( ary.pack("S") )
     ary = Array( sheet[dataCol,rowBase+POKEDATA_IDX_TRAINER].to_i )
     outFile.write( ary.pack("C") )
+    outFile.write( padAry.pack("C") ) #パディング
     
     goodsIdx = 0
     while goodsIdx < GOODS_NUM
@@ -114,6 +118,7 @@ begin
       outFile.write( ary.pack("S") )
       ary = Array( sheet[dataCol,goodsRowBase+GOODSDATA_IDX_POS].to_i )
       outFile.write( ary.pack("C") )
+      outFile.write( padAry.pack("C") ) #パディング
       
       goodsIdx = goodsIdx + 1
     end

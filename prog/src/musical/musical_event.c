@@ -110,6 +110,8 @@ typedef struct
   MUSICAL_PROGRAM_WORK *progWork;
   MUSICAL_POKE_PARAM *musPoke;
 
+  u8 musicalIndex[MUSICAL_POKE_MAX];
+
 }MUSICAL_EVENT_WORK;
 
 
@@ -159,6 +161,25 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const BOOL
 
   evWork->state = MES_ENTER_WAITROOM_FIRST;
   evWork->subSeq = 0;
+  
+  //ミュージカルの配置入れ替え
+  {
+    u8 i,j;
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      evWork->musicalIndex[i] = i;
+    }
+    for( j=0;j<10;j++ )
+    {
+      for( i=0;i<MUSICAL_POKE_MAX;i++ )
+      {
+        u8 swapIdx = GFL_STD_MtRand0(MUSICAL_POKE_MAX);
+        u8 temp = evWork->musicalIndex[i];
+        evWork->musicalIndex[i] = evWork->musicalIndex[swapIdx];
+        evWork->musicalIndex[swapIdx] = temp;
+      }
+    }
+  }
 
   return event;
 }
@@ -353,10 +374,10 @@ static void MUSICAL_EVENT_InitMusical( MUSICAL_EVENT_WORK *evWork )
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_PROC|HEAPDIR_MASK, 0x8000 );
 
   evWork->musPoke = MUSICAL_SYSTEM_InitMusPoke( evWork->pokePara , HEAPID_MUSICAL_PROC );
-  evWork->progWork = MUSICAL_PROGRAM_GetProgramData( HEAPID_MUSICAL_PROC );
   evWork->distData = MUSICAL_SYSTEM_InitDistributeData( HEAPID_MUSICAL_PROC );
+  MUSICAL_SYSTEM_LoadDistributeData( evWork->distData , HEAPID_MUSICAL_STRM );
+  evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_PROC , evWork->distData );
   evWork->commWork = NULL;
-  MUSICAL_SYSTEM_LoadStrmData( evWork->distData , HEAPID_MUSICAL_STRM );
 }
 
 //--------------------------------------------------------------
@@ -385,7 +406,7 @@ static void MUSICAL_EVENT_TermMusical( MUSICAL_EVENT_WORK *evWork )
   MUSICAL_SYSTEM_TermDistributeData( evWork->distData );
   GFL_HEAP_FreeMemory( evWork->musPoke );
   
-  GFL_HEAP_FreeMemory( evWork->progWork );
+  MUSICAL_PROGRAM_TermProgramData( evWork->progWork );
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STRM );
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_PROC );
 
@@ -416,28 +437,22 @@ static void MUSICAL_EVENT_TermDressUp( MUSICAL_EVENT_WORK *evWork )
 //--------------------------------------------------------------
 static void MUSICAL_EVENT_InitActing( MUSICAL_EVENT_WORK *evWork )
 {
+  u8 i;
+  evWork->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_PROC , evWork->commWork );
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
-    u8 ePos,i;
-    OS_TPrintf("FreeHeap:[%x][%x]\n", 
-        GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ) ,
-        GFI_HEAP_GetHeapAllocatableSize( GFL_HEAPID_APP ) );
-    evWork->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_PROC , evWork->commWork );
-    MUSICAL_STAGE_SetData_Player( evWork->actInitWork , 1 , evWork->musPoke );
-    MUSICAL_STAGE_SetData_NPC( evWork->actInitWork , 0 , MONSNO_ONOKKUSU , HEAPID_MUSICAL_PROC );
-    MUSICAL_STAGE_SetData_NPC( evWork->actInitWork , 2 , MONSNO_PIKATYUU  , HEAPID_MUSICAL_PROC );
-    MUSICAL_STAGE_SetData_NPC( evWork->actInitWork , 3 , MONSNO_REIBAAN , HEAPID_MUSICAL_PROC );
-
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 0 , MUS_POKE_EQU_EAR_L , 7 , 0 , 0 );
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 0 , MUS_POKE_EQU_HEAD  ,15 , 0 , 1 );
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 0 , MUS_POKE_EQU_HAND_L,13 , 0 , 2 );
-
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 2 , MUS_POKE_EQU_EAR_R  ,  2 , 0 , 0 );
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 2 , MUS_POKE_EQU_EYE    , 11 , 0 , 1 );
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 2 , MUS_POKE_EQU_BODY   , 27 , 0 , 2 );
-
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 3 , MUS_POKE_EQU_FACE   , 21 , 0 , 0 );
-    MUSICAL_STAGE_SetEquip( evWork->actInitWork , 3 , MUS_POKE_EQU_HAND_R , 30 , 0 , 1 );
+    if( evWork->musicalIndex[i] == 0 )
+    {
+      //プレイヤー
+      MUSICAL_STAGE_SetData_Player( evWork->actInitWork , evWork->musicalIndex[i] , evWork->musPoke );
+    }
+    else
+    {
+      //NPC
+      MUSICAL_PROGRAM_SetData_NPC( evWork->progWork , evWork->actInitWork , evWork->musicalIndex[i] , evWork->musicalIndex[i]-1 , HEAPID_MUSICAL_PROC );
+    }
   }
+
   evWork->actInitWork->distData = evWork->distData;
   evWork->actInitWork->progWork = evWork->progWork;
   MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_PROC , evWork->progWork , evWork->actInitWork );
@@ -596,7 +611,7 @@ static const void MUSICAL_EVENT_JumpWaitingRoom( GMEVENT *event, MUSICAL_EVENT_W
 {
   GMEVENT *newEvent;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
-  const VecFx32 pos = { FX32_CONST(88.0f) , 0 , FX32_CONST(72.0f) };
+  const VecFx32 pos = { FX32_CONST(264.0f) , FX32_CONST(0.0f) , FX32_CONST(312.0f) };
   
   newEvent = DEBUG_EVENT_ChangeMapPos( evWork->gsys, fieldWork ,
                 ZONE_ID_C04R0202 , &pos , 0 );
