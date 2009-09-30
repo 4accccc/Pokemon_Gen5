@@ -96,7 +96,8 @@ SUBDIRS	=	wmi \
             b_plist \
 		  regulation \
 			mictest \
-			pokemon_center
+			pokemon_center \
+			fld3d_ci
 
 include $(RESOURCE_MACRO)
 

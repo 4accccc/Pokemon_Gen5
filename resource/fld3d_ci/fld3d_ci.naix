@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fld3d_ci.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2009-09-30T19:15:01
+ *****************************************************************************/
+
+#ifndef NARC_FLD3D_CI_NAIX_
+#define NARC_FLD3D_CI_NAIX_
+
+enum {
+	NARC_fld3d_ci_test_spa = 0,
+	NARC_fld3d_ci_test_cart_nsbmd = 1
+};
+
+/* NARC_FLD3D_CI_NAIX_ */
+#endif
