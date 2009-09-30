@@ -3193,7 +3193,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01[] = {
 		4,
 		779,
 		597,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01__BOY2,
@@ -3210,7 +3210,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01[] = {
 		0,
 		777,
 		589,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01_CLEANINGM,
@@ -3227,7 +3227,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01[] = {
 		2,
 		771,
 		594,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01_WOMAN2,
@@ -3244,7 +3244,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01[] = {
 		2,
 		754,
 		589,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01_BREEDERW,
@@ -3261,7 +3261,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01[] = {
 		2,
 		786,
 		594,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01_MAN2,
@@ -3278,7 +3278,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01[] = {
 		0,
 		783,
 		588,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01_BABYGIRL,
@@ -3295,7 +3295,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01[] = {
 		0,
 		792,
 		586,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C01 = NELEMS(OBJ_EVENT_C01);
@@ -3381,7 +3381,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01PC0101[] = {
 		0,
 		7,
 		10,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01PC0101_SHOPM,
@@ -3398,7 +3398,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01PC0101[] = {
 		0,
 		11,
 		17,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01PC0101_MAN2,
@@ -3415,7 +3415,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01PC0101[] = {
 		0,
 		13,
 		13,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01PC0101_MIDDLEMAN2,
@@ -3432,7 +3432,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01PC0101[] = {
 		3,
 		3,
 		14,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C01PC0101 = NELEMS(OBJ_EVENT_C01PC0101);
@@ -3491,7 +3491,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0101[] = {
 		0,
 		13,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0101_WOMAN1,
@@ -3508,7 +3508,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0101[] = {
 		0,
 		4,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0101_BOY3,
@@ -3525,7 +3525,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0101[] = {
 		3,
 		3,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0101_INVENTOR,
@@ -3542,7 +3542,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0101[] = {
 		0,
 		10,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C01R0101 = NELEMS(OBJ_EVENT_C01R0101);
@@ -3583,7 +3583,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0102[] = {
 		0,
 		9,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0102_GIRL3,
@@ -3600,7 +3600,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0102[] = {
 		1,
 		7,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0102_BOY3,
@@ -3617,7 +3617,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0102[] = {
 		4,
 		2,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C01R0102 = NELEMS(OBJ_EVENT_C01R0102);
@@ -3676,7 +3676,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0201[] = {
 		0,
 		4,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0201_OLDMAN1,
@@ -3693,7 +3693,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0201[] = {
 		0,
 		5,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0201_BIGMAN,
@@ -3710,7 +3710,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0201[] = {
 		0,
 		9,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C01R0201 = NELEMS(OBJ_EVENT_C01R0201);
@@ -3751,7 +3751,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0202[] = {
 		2,
 		7,
 		8,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0202_GENTLEMAN,
@@ -3768,7 +3768,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0202[] = {
 		0,
 		12,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0202_WOMAN3,
@@ -3785,7 +3785,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0202[] = {
 		2,
 		4,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C01R0202 = NELEMS(OBJ_EVENT_C01R0202);
@@ -3844,7 +3844,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0301[] = {
 		0,
 		5,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0301_MIDDLEWOMAN2,
@@ -3861,7 +3861,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0301[] = {
 		0,
 		4,
 		3,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0301_MAN1,
@@ -3878,7 +3878,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0301[] = {
 		0,
 		10,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0301_MAN2,
@@ -3895,7 +3895,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0301[] = {
 		0,
 		2,
 		9,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C01R0301 = NELEMS(OBJ_EVENT_C01R0301);
@@ -3936,7 +3936,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0302[] = {
 		0,
 		10,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0302_POKE1,
@@ -3953,7 +3953,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0302[] = {
 		0,
 		7,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0302_POKE2,
@@ -3970,7 +3970,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0302[] = {
 		0,
 		11,
 		8,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0302_MAN1,
@@ -3987,7 +3987,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0302[] = {
 		0,
 		2,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C01R0302 = NELEMS(OBJ_EVENT_C01R0302);
@@ -4040,7 +4040,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0501[] = {
 		0,
 		6,
 		10,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0501_TRAINERM,
@@ -4057,7 +4057,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0501[] = {
 		1,
 		5,
 		3,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0501_BOY3,
@@ -4074,7 +4074,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0501[] = {
 		0,
 		2,
 		13,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0501_GIRL,
@@ -4091,7 +4091,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0501[] = {
 		2,
 		12,
 		11,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C01R0501_BOY2,
@@ -4108,7 +4108,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C01R0501[] = {
 		0,
 		11,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C01R0501 = NELEMS(OBJ_EVENT_C01R0501);
@@ -4233,7 +4233,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02[] = {
 		0,
 		635,
 		586,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C02_BACKPACKER,
@@ -4250,7 +4250,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02[] = {
 		2,
 		640,
 		600,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C02_WOMAN2,
@@ -4267,7 +4267,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02[] = {
 		3,
 		654,
 		598,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C02_MAN2,
@@ -4284,7 +4284,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02[] = {
 		0,
 		660,
 		587,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C02_MIDDLEWOMAN2,
@@ -4301,7 +4301,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02[] = {
 		0,
 		626,
 		602,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C02 = NELEMS(OBJ_EVENT_C02);
@@ -4387,7 +4387,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02PC0101[] = {
 		0,
 		11,
 		17,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C02PC0101_PCWOMAN,
@@ -4404,7 +4404,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02PC0101[] = {
 		0,
 		7,
 		10,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C02PC0101_GIRL2,
@@ -4421,7 +4421,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02PC0101[] = {
 		1,
 		10,
 		11,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C02PC0101_BACKPACKERM,
@@ -4438,7 +4438,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02PC0101[] = {
 		0,
 		2,
 		14,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C02PC0101 = NELEMS(OBJ_EVENT_C02PC0101);
@@ -4491,7 +4491,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0101[] = {
 		0,
 		6,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C02R0101 = NELEMS(OBJ_EVENT_C02R0101);
@@ -4550,7 +4550,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0201[] = {
 		0,
 		4,
 		3,
-		48,
+		FX32_CONST(48),
 	},
 	{
 		C02R0201_BABYBOY1,
@@ -4567,7 +4567,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0201[] = {
 		2,
 		4,
 		8,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C02R0201 = NELEMS(OBJ_EVENT_C02R0201);
@@ -4626,7 +4626,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0301[] = {
 		3,
 		5,
 		4,
-		48,
+		FX32_CONST(48),
 	},
 	{
 		C02R0301_WOMAN2,
@@ -4643,7 +4643,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0301[] = {
 		0,
 		9,
 		8,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C02R0301 = NELEMS(OBJ_EVENT_C02R0301);
@@ -4702,7 +4702,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0401[] = {
 		0,
 		6,
 		2,
-		48,
+		FX32_CONST(48),
 	},
 	{
 		C02R0401_FIGHTERM2,
@@ -4719,7 +4719,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0401[] = {
 		0,
 		3,
 		2,
-		48,
+		FX32_CONST(48),
 	},
 	{
 		C02R0401_FIGHTERM3,
@@ -4736,7 +4736,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0401[] = {
 		0,
 		9,
 		2,
-		48,
+		FX32_CONST(48),
 	},
 };
 const int ObjCount_C02R0401 = NELEMS(OBJ_EVENT_C02R0401);
@@ -4789,7 +4789,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0501[] = {
 		0,
 		4,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C02R0501_WOMAN2,
@@ -4806,7 +4806,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0501[] = {
 		1,
 		8,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C02R0501 = NELEMS(OBJ_EVENT_C02R0501);
@@ -4859,7 +4859,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0601[] = {
 		0,
 		9,
 		12,
-		32,
+		FX32_CONST(32),
 	},
 	{
 		C02R0601_BIGMAN,
@@ -4876,7 +4876,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0601[] = {
 		0,
 		8,
 		4,
-		32,
+		FX32_CONST(32),
 	},
 	{
 		C02R0601_MIDDLEMAN2,
@@ -4893,7 +4893,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0601[] = {
 		0,
 		4,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C02R0601_WOMAN3,
@@ -4910,7 +4910,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0601[] = {
 		4,
 		10,
 		6,
-		32,
+		FX32_CONST(32),
 	},
 };
 const int ObjCount_C02R0601 = NELEMS(OBJ_EVENT_C02R0601);
@@ -6734,7 +6734,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C04GYM0101[] = {
 		0,
 		17,
 		15,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C04GYM0101_BOY1_02,
@@ -6751,7 +6751,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C04GYM0101[] = {
 		0,
 		50,
 		40,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C04GYM0101 = NELEMS(OBJ_EVENT_C04GYM0101);
@@ -6899,7 +6899,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05[] = {
 		0,
 		241,
 		429,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05_WORKMAN,
@@ -6916,7 +6916,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05[] = {
 		2,
 		180,
 		440,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05_BADMAN,
@@ -6933,7 +6933,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05[] = {
 		0,
 		202,
 		414,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05_BABYGIRL1,
@@ -6950,7 +6950,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05[] = {
 		2,
 		177,
 		427,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05_TRAINERM,
@@ -6967,7 +6967,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05[] = {
 		2,
 		191,
 		430,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05_DRIVER,
@@ -6984,7 +6984,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05[] = {
 		0,
 		173,
 		440,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C05 = NELEMS(OBJ_EVENT_C05);
@@ -7070,7 +7070,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05PC0101[] = {
 		0,
 		7,
 		10,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05PC0101_SHOPM,
@@ -7087,7 +7087,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05PC0101[] = {
 		0,
 		11,
 		17,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05PC0101_MIDDLEWOMAN1,
@@ -7104,7 +7104,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05PC0101[] = {
 		0,
 		10,
 		11,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05PC0101_GIRL1,
@@ -7121,7 +7121,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05PC0101[] = {
 		1,
 		1,
 		6,
-		48,
+		FX32_CONST(48),
 	},
 };
 const int ObjCount_C05PC0101 = NELEMS(OBJ_EVENT_C05PC0101);
@@ -7174,7 +7174,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0101[] = {
 		0,
 		4,
 		3,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0101_WOMAN1,
@@ -7191,7 +7191,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0101[] = {
 		1,
 		9,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0101_BOY1,
@@ -7208,7 +7208,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0101[] = {
 		1,
 		5,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C05R0101 = NELEMS(OBJ_EVENT_C05R0101);
@@ -7261,7 +7261,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0201[] = {
 		0,
 		6,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C05R0201 = NELEMS(OBJ_EVENT_C05R0201);
@@ -7314,7 +7314,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0301[] = {
 		0,
 		5,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0301_WOMAN2,
@@ -7331,7 +7331,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0301[] = {
 		1,
 		7,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C05R0301 = NELEMS(OBJ_EVENT_C05R0301);
@@ -7384,7 +7384,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0401[] = {
 		0,
 		2,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0401_MIDDLEWOMAN,
@@ -7401,7 +7401,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0401[] = {
 		1,
 		7,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C05R0401 = NELEMS(OBJ_EVENT_C05R0401);
@@ -7454,7 +7454,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0501[] = {
 		0,
 		11,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0501_OLDWOMAN,
@@ -7471,7 +7471,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0501[] = {
 		0,
 		2,
 		9,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0501_GIRL2,
@@ -7488,7 +7488,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0501[] = {
 		1,
 		12,
 		10,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0501_MOUNTAIN,
@@ -7505,7 +7505,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0501[] = {
 		0,
 		8,
 		11,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0501_WOMAN2,
@@ -7522,7 +7522,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0501[] = {
 		0,
 		6,
 		13,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0501_MAN1,
@@ -7539,7 +7539,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0501[] = {
 		1,
 		2,
 		16,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0501_GENTLEMAN,
@@ -7556,7 +7556,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0501[] = {
 		0,
 		6,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C05R0501 = NELEMS(OBJ_EVENT_C05R0501);
@@ -7645,7 +7645,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0601[] = {
 		0,
 		13,
 		12,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0601_BADMAN,
@@ -7662,7 +7662,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0601[] = {
 		0,
 		2,
 		12,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0601_SUNGLASSES,
@@ -7679,7 +7679,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0601[] = {
 		0,
 		4,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0601_WOMAN2,
@@ -7696,7 +7696,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0601[] = {
 		0,
 		12,
 		14,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0601_NURSE,
@@ -7713,7 +7713,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0601[] = {
 		1,
 		14,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0601_WORKMAN,
@@ -7730,7 +7730,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0601[] = {
 		0,
 		4,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C05R0601_TRAINERW,
@@ -7747,7 +7747,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C05R0601[] = {
 		4,
 		10,
 		9,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C05R0601 = NELEMS(OBJ_EVENT_C05R0601);
@@ -7830,7 +7830,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C06[] = {
 		0,
 		89,
 		308,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C06_BOY3,
@@ -7847,7 +7847,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C06[] = {
 		0,
 		93,
 		314,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C06_PILOT,
@@ -7864,7 +7864,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C06[] = {
 		2,
 		116,
 		297,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C06_WORKMAN,
@@ -7881,7 +7881,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C06[] = {
 		2,
 		79,
 		313,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C06_WOMAN1,
@@ -7898,7 +7898,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C06[] = {
 		0,
 		105,
 		296,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C06_RANGERW,
@@ -7915,7 +7915,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C06[] = {
 		0,
 		86,
 		275,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C06 = NELEMS(OBJ_EVENT_C06);
@@ -8001,7 +8001,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C06PC0101[] = {
 		0,
 		7,
 		10,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C06PC0101_SHOPM,
@@ -8018,7 +8018,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C06PC0101[] = {
 		0,
 		11,
 		17,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C06PC0101 = NELEMS(OBJ_EVENT_C06PC0101);
@@ -8137,7 +8137,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C06R0301[] = {
 		0,
 		7,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C06R0301_BOY1_01,
@@ -8154,7 +8154,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C06R0301[] = {
 		0,
 		5,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C06R0301 = NELEMS(OBJ_EVENT_C06R0301);
@@ -8207,7 +8207,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C06R0401[] = {
 		0,
 		6,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C06R0401 = NELEMS(OBJ_EVENT_C06R0401);
@@ -8389,7 +8389,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C07PC0101[] = {
 		0,
 		7,
 		10,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		C06PC0101_SHOPM,
@@ -8406,7 +8406,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C07PC0101[] = {
 		0,
 		11,
 		17,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_C07PC0101 = NELEMS(OBJ_EVENT_C07PC0101);
@@ -8660,7 +8660,7 @@ const FLDMMDL_HEADER OBJ_EVENT_D01[] = {
 		1,
 		808,
 		583,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		D01_SUPPORT,
@@ -8677,7 +8677,7 @@ const FLDMMDL_HEADER OBJ_EVENT_D01[] = {
 		0,
 		806,
 		583,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		D01_GYMLD,
@@ -8694,7 +8694,7 @@ const FLDMMDL_HEADER OBJ_EVENT_D01[] = {
 		0,
 		809,
 		592,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_D01 = NELEMS(OBJ_EVENT_D01);
@@ -8866,7 +8866,7 @@ const FLDMMDL_HEADER OBJ_EVENT_D02[] = {
 		0,
 		587,
 		586,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_D02 = NELEMS(OBJ_EVENT_D02);
@@ -8961,7 +8961,7 @@ const FLDMMDL_HEADER OBJ_EVENT_D02R0101[] = {
 		16,
 		73,
 		31,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		D02R0101_MOUNTAIN,
@@ -8978,7 +8978,7 @@ const FLDMMDL_HEADER OBJ_EVENT_D02R0101[] = {
 		2,
 		65,
 		69,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		D02R0101_ASSISTANTW,
@@ -8995,7 +8995,7 @@ const FLDMMDL_HEADER OBJ_EVENT_D02R0101[] = {
 		1,
 		75,
 		46,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_D02R0101 = NELEMS(OBJ_EVENT_D02R0101);
@@ -11111,7 +11111,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 		0,
 		789,
 		700,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R01_GIRL1,
@@ -11128,7 +11128,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 		2,
 		776,
 		711,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R01_MAN1,
@@ -11145,7 +11145,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 		2,
 		789,
 		706,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R01_RIVAL,
@@ -11162,7 +11162,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 		0,
 		787,
 		728,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R01_HEROINE,
@@ -11179,7 +11179,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 		0,
 		789,
 		728,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R01_HAKASE2,
@@ -11196,7 +11196,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 		0,
 		788,
 		727,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R01_RIVEL02,
@@ -11213,7 +11213,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 		0,
 		788,
 		681,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R01_HEROINE02,
@@ -11230,7 +11230,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R01[] = {
 		0,
 		791,
 		677,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_R01 = NELEMS(OBJ_EVENT_R01);
@@ -11308,7 +11308,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 		1,
 		757,
 		645,
-		-16,
+		FX32_CONST(-16),
 	},
 	{
 		R02_GIRL2,
@@ -11325,7 +11325,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 		0,
 		746,
 		645,
-		16,
+		FX32_CONST(16),
 	},
 	{
 		R02_TRAINER_01,
@@ -11342,7 +11342,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 		0,
 		762,
 		646,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R02_TRAINER_02,
@@ -11359,7 +11359,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 		0,
 		762,
 		650,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R02_TRAINER_03,
@@ -11376,7 +11376,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 		0,
 		754,
 		657,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R02_TRAINER_04,
@@ -11393,7 +11393,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 		0,
 		754,
 		654,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R02_TRAINER_05,
@@ -11410,7 +11410,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 		0,
 		775,
 		630,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R02_TRAINER_06,
@@ -11427,7 +11427,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 		0,
 		787,
 		618,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R02_RIVAL_01,
@@ -11442,9 +11442,9 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 		0,
 		0,
 		0,
-		761,
-		646,
-		0,
+		758,
+		631,
+		FX32_CONST(0),
 	},
 	{
 		ROCK_01,
@@ -11461,14 +11461,14 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 		0,
 		758,
 		652,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_R02 = NELEMS(OBJ_EVENT_R02);
 const POS_EVENT_DATA POS_EVENT_R02[] = {
 	{//POS_R02_RIVAL_01 = 0
 		SCRID_POS_R02_RIVAL_01,
-		764, 649,
+		758, 633,
 		1, 1,
 		0,  //height
 		0,
@@ -11505,7 +11505,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R02R0101[] = {
 		0,
 		3,
 		8,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_R02R0101 = NELEMS(OBJ_EVENT_R02R0101);
@@ -11576,7 +11576,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
 		0,
 		749,
 		556,
-		16,
+		FX32_CONST(16),
 	},
 	{
 		R03_BABYGIRL1b,
@@ -11593,7 +11593,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
 		0,
 		732,
 		556,
-		16,
+		FX32_CONST(16),
 	},
 	{
 		R03_BABYGIRL1a,
@@ -11610,7 +11610,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
 		0,
 		733,
 		556,
-		16,
+		FX32_CONST(16),
 	},
 	{
 		R03_WOMAN3,
@@ -11627,7 +11627,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
 		1,
 		737,
 		556,
-		16,
+		FX32_CONST(16),
 	},
 	{
 		R03_RIVAL,
@@ -11644,7 +11644,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
 		0,
 		724,
 		596,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R03_SUPPORT,
@@ -11661,7 +11661,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
 		0,
 		724,
 		595,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R03_HAKAIM_01,
@@ -11678,7 +11678,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
 		0,
 		710,
 		596,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R03_HAKAIM_02,
@@ -11695,7 +11695,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
 		0,
 		710,
 		595,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R03_BABYGIRL_02,
@@ -11712,7 +11712,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
 		0,
 		711,
 		596,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R03_POKE,
@@ -11729,7 +11729,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
 		0,
 		696,
 		594,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R03_SUPPORT_02,
@@ -11746,7 +11746,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03[] = {
 		0,
 		697,
 		594,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_R03 = NELEMS(OBJ_EVENT_R03);
@@ -11826,7 +11826,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03R0101[] = {
 		0,
 		2,
 		3,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R03R0101_BABYBOY1A,
@@ -11843,7 +11843,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03R0101[] = {
 		3,
 		10,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R03R0101_BABYBOY1B,
@@ -11860,7 +11860,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03R0101[] = {
 		3,
 		7,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R03R0101_WOMAN3_01,
@@ -11877,7 +11877,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03R0101[] = {
 		0,
 		10,
 		9,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R03R0101_BABYGIRL1,
@@ -11894,7 +11894,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R03R0101[] = {
 		0,
 		3,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_R03R0101 = NELEMS(OBJ_EVENT_R03R0101);
@@ -12172,7 +12172,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R05[] = {
 		0,
 		354,
 		423,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		R05_ROCK,
@@ -12189,7 +12189,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R05[] = {
 		0,
 		350,
 		423,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		DUMMY_OBJ,
@@ -12206,7 +12206,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R05[] = {
 		0,
 		346,
 		423,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_R05 = NELEMS(OBJ_EVENT_R05);
@@ -12631,7 +12631,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 		0,
 		783,
 		761,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T01_WOMAN2_01,
@@ -12648,7 +12648,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 		2,
 		775,
 		745,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T01_BABYGIRL1,
@@ -12665,7 +12665,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 		0,
 		790,
 		749,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T01_SUPPORT_01,
@@ -12682,7 +12682,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 		0,
 		777,
 		741,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T01_RIVAL_01,
@@ -12699,7 +12699,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 		0,
 		778,
 		741,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T01 = NELEMS(OBJ_EVENT_T01);
@@ -12758,7 +12758,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0101[] = {
 		0,
 		6,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T01R0101 = NELEMS(OBJ_EVENT_T01R0101);
@@ -12810,7 +12810,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0102[] = {
 		0,
 		4,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T01R0102_BALL3,
@@ -12827,7 +12827,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0102[] = {
 		0,
 		5,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T01R0102_BALL1,
@@ -12844,7 +12844,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0102[] = {
 		0,
 		3,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T01R0102_RIVAL,
@@ -12861,7 +12861,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0102[] = {
 		0,
 		8,
 		2,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T01R0102_HEROINE,
@@ -12878,7 +12878,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0102[] = {
 		0,
 		6,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T01R0102 = NELEMS(OBJ_EVENT_T01R0102);
@@ -12996,7 +12996,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0201[] = {
 		0,
 		8,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T01R0201_MIDDLEWOMAN1_01,
@@ -13013,7 +13013,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0201[] = {
 		0,
 		2,
 		3,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T01R0201_SUPPORT_01,
@@ -13030,7 +13030,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0201[] = {
 		0,
 		6,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T01R0201 = NELEMS(OBJ_EVENT_T01R0201);
@@ -13120,7 +13120,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0301[] = {
 		1,
 		9,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T01R0301_MIDDLEWOMAN2,
@@ -13137,7 +13137,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0301[] = {
 		0,
 		4,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T01R0301 = NELEMS(OBJ_EVENT_T01R0301);
@@ -13221,7 +13221,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0401[] = {
 		0,
 		4,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T01R0401_SUPPORT_01,
@@ -13238,7 +13238,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0401[] = {
 		0,
 		3,
 		9,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T01R0401_RIVAL_01,
@@ -13255,7 +13255,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0401[] = {
 		0,
 		5,
 		9,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T01R0401 = NELEMS(OBJ_EVENT_T01R0401);
@@ -13320,7 +13320,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		0,
 		789,
 		643,
-		80,
+		FX32_CONST(80),
 	},
 	{
 		T02_WOMAN1_01,
@@ -13337,7 +13337,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		0,
 		773,
 		661,
-		-80,
+		FX32_CONST(-80),
 	},
 	{
 		T02_OLDWOMAN1_01,
@@ -13354,7 +13354,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		0,
 		783,
 		653,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02_OLDMAN1_01,
@@ -13371,7 +13371,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		3,
 		786,
 		655,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02_BABYGIRL1_01,
@@ -13388,7 +13388,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		0,
 		793,
 		662,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02_HAKAIM_01,
@@ -13405,7 +13405,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		0,
 		776,
 		648,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02_HAKAIW_01,
@@ -13422,7 +13422,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		0,
 		776,
 		650,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02_HAKASE_GUIDE,
@@ -13439,7 +13439,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		0,
 		791,
 		658,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02_RIVAL_01,
@@ -13456,7 +13456,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		0,
 		777,
 		648,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02_SAGE_01,
@@ -13473,7 +13473,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		0,
 		778,
 		652,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02_BOODLE_01,
@@ -13490,7 +13490,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		0,
 		778,
 		655,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02_RIVAL_02,
@@ -13507,7 +13507,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		0,
 		778,
 		656,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02_N_01,
@@ -13524,7 +13524,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 		0,
 		779,
 		655,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T02 = NELEMS(OBJ_EVENT_T02);
@@ -13610,7 +13610,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02PC0101[] = {
 		0,
 		11,
 		17,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02PC0101_PCWOMAN,
@@ -13627,7 +13627,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02PC0101[] = {
 		0,
 		7,
 		10,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02PC0101_DOCTOR,
@@ -13644,7 +13644,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02PC0101[] = {
 		0,
 		7,
 		18,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02PC0101_WOMAN1,
@@ -13661,7 +13661,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02PC0101[] = {
 		0,
 		2,
 		15,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02PC0101_SUPPORT_01,
@@ -13678,7 +13678,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02PC0101[] = {
 		0,
 		9,
 		13,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02PC0101_RIVAL_01,
@@ -13695,7 +13695,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02PC0101[] = {
 		0,
 		5,
 		15,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T02PC0101 = NELEMS(OBJ_EVENT_T02PC0101);
@@ -13754,7 +13754,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0101[] = {
 		0,
 		9,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02R0101_WOMAN1,
@@ -13771,7 +13771,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0101[] = {
 		0,
 		4,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02R0101_BABYBOY1,
@@ -13788,7 +13788,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0101[] = {
 		0,
 		3,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T02R0101 = NELEMS(OBJ_EVENT_T02R0101);
@@ -13829,7 +13829,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0102[] = {
 		0,
 		7,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02R0102_MAN1,
@@ -13846,7 +13846,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0102[] = {
 		0,
 		3,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T02R0102 = NELEMS(OBJ_EVENT_T02R0102);
@@ -13905,7 +13905,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0201[] = {
 		0,
 		8,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02R0201_BABYGIRL1_01,
@@ -13922,7 +13922,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0201[] = {
 		0,
 		2,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T02R0201 = NELEMS(OBJ_EVENT_T02R0201);
@@ -13963,7 +13963,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0202[] = {
 		2,
 		12,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02R0202_MAN1_01,
@@ -13980,7 +13980,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0202[] = {
 		0,
 		3,
 		8,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T02R0202 = NELEMS(OBJ_EVENT_T02R0202);
@@ -14039,7 +14039,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0301[] = {
 		2,
 		8,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02R0301_BABYBOY1_01,
@@ -14056,7 +14056,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0301[] = {
 		1,
 		5,
 		4,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02R0301_MAN1_01,
@@ -14073,7 +14073,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0301[] = {
 		0,
 		4,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T02R0301 = NELEMS(OBJ_EVENT_T02R0301);
@@ -14114,7 +14114,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0302[] = {
 		3,
 		11,
 		6,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02R0302_MIDDLEMAN1_01,
@@ -14131,7 +14131,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0302[] = {
 		0,
 		6,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T02R0302 = NELEMS(OBJ_EVENT_T02R0302);
@@ -14184,7 +14184,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0401[] = {
 		0,
 		3,
 		5,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02R0401_POKE2_01,
@@ -14201,7 +14201,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0401[] = {
 		1,
 		7,
 		7,
-		0,
+		FX32_CONST(0),
 	},
 	{
 		T02R0401_MAN2_01,
@@ -14218,7 +14218,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T02R0401[] = {
 		0,
 		8,
 		3,
-		0,
+		FX32_CONST(0),
 	},
 };
 const int ObjCount_T02R0401 = NELEMS(OBJ_EVENT_T02R0401);
