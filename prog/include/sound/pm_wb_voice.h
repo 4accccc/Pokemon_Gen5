@@ -17,7 +17,7 @@
  */
 //------------------------------------------------------------------
 #define PMVOICE_START	(BANK_PV001)
-#define PMVOICE_END		(BANK_PV516_SKY)
+#define PMVOICE_END		(WAVE_ARC_PV492_SKY)
 #define PMVOICE_POKE001	(PMVOICE_START)
 
 //------------------------------------------------------------------

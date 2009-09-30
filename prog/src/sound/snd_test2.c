@@ -1095,7 +1095,7 @@ static void setSelectName(SOUNDTEST_WORK* sw)
 {
 	u32 msgIdx;
 	int i;
-#if 0
+
 	for(i=0; i<NAMEIDX_MAX; i++){ GFL_BMP_Clear(GFL_BMPWIN_GetBmp(sw->bmpwinName[i]), 0); }
 	
 	// BGM
@@ -1107,7 +1107,7 @@ static void setSelectName(SOUNDTEST_WORK* sw)
 	// VOICE
 	msgIdx = (sw->setNo[NOIDX_VOICENO]-initNoData[NOIDX_VOICENO]) + NAMEMSG_STARTIDX_VOICE;
 	GFL_MSG_GetString(sw->monsmsgman, msgIdx, sw->setName[NAMEIDX_VOICE]);
-#endif
+
 }
 
 //------------------------------------------------------------------
