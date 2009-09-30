@@ -182,7 +182,7 @@ SRCS  +=    $(SOUNDSRC) \
 		poke_tool/status_rcv.c \
         system/bgwinfrm.c \
         field/scrcmd_gym_init.c \
-        poke_tool/gage_tool.c
+        poke_tool/gauge_tool.c
 
 #================================================
 # ここから下はオーバーレイプログラム定義

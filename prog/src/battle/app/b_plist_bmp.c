@@ -14,7 +14,7 @@
 #include "gamesystem/msgspeed.h"
 #include "waza_tool/waza_tool.h"
 #include "system/bmp_winframe.h"
-#include "poke_tool/gage_tool.h"
+#include "poke_tool/gauge_tool.h"
 #include "app/app_menu_common.h"
 
 /*Å™[GS_CONVERT_TAG]*/
@@ -986,19 +986,19 @@ static void BPL_HPGagePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 
 	pd  = &wk->poke[pos];
 	col = 1;
-	dot = GAGETOOL_GetNumDotto( pd->hp, pd->mhp, BPL_HP_DOTTO_MAX );
+	dot = GAUGETOOL_GetNumDotto( pd->hp, pd->mhp, BPL_HP_DOTTO_MAX );
 
-	switch( GAGETOOL_GetGaugeDottoColor( pd->hp, pd->mhp ) ){
-	case GAGETOOL_HP_DOTTO_NULL:
+	switch( GAUGETOOL_GetGaugeDottoColor( pd->hp, pd->mhp ) ){
+	case GAUGETOOL_HP_DOTTO_NULL:
 		GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[idx].win );
 		return;
-	case GAGETOOL_HP_DOTTO_GREEN:		// óŒ
+	case GAUGETOOL_HP_DOTTO_GREEN:		// óŒ
 		col = HP_GAGE_COL_G1;
 		break;
-	case GAGETOOL_HP_DOTTO_YELLOW:	// â©
+	case GAUGETOOL_HP_DOTTO_YELLOW:		// â©
 		col = HP_GAGE_COL_Y1;
 		break;
-	case GAGETOOL_HP_DOTTO_RED:			// ê‘
+	case GAUGETOOL_HP_DOTTO_RED:			// ê‘
 		col = HP_GAGE_COL_R1;
 		break;
 	}
