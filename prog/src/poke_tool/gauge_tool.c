@@ -1,6 +1,6 @@
 //============================================================================================
 /**
- * @file		gage_tool.c
+ * @file		gauge_tool.c
  * @brief		ƒQ[ƒWŠÖ˜Aˆ—
  * @author	Hiroyuki Nakamura
  * @date		09.09.30
