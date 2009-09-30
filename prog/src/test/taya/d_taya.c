@@ -190,7 +190,7 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 {
   MAIN_WORK* wk;
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CORE,    0x6000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CORE,    0x8000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TEMP,   0xb0000 );
 
   wk = GFL_PROC_AllocWork( proc, sizeof(MAIN_WORK), HEAPID_CORE );
@@ -334,7 +334,14 @@ static void createTemporaryModules( MAIN_WORK* wk )
   wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME0_S, 0, 0, 32, 24, 0, GFL_BMP_CHRAREA_GET_F );
   wk->bmp = GFL_BMPWIN_GetBmp(wk->win);
 
+  #if 0
+  {
+    void* mmdat = GFL_ARC_LoadDataAlloc( ARCID_MESSAGE, NARC_message_d_taya_dat, wk->heapID );
+    wk->mm = GFL_MSG_Construct( mmdat, wk->heapID );
+  }
+  #else
   wk->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_taya_dat, wk->heapID );
+  #endif
   wk->strbuf = GFL_STR_CreateBuffer( 1024, wk->heapID );
   wk->tcbl = GFL_TCBL_Init( wk->heapID, wk->heapID, 4, 32 );
 
@@ -905,7 +912,7 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       para->statusPlayer = GAMEDATA_GetMyStatus( wk->gameData );
       {
         STRBUF* hoge = GFL_STR_CreateBuffer( 32, HEAPID_CORE );
-        OS_TPrintf("いまからだよ\n");
+        OS_TPrintf("いまから\n");
         MyStatus_CopyNameString( para->statusPlayer, hoge );
         GFL_STR_DeleteBuffer( hoge );
       }
@@ -961,6 +968,16 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       TAYA_Printf( "free adrs=%p & %p\n", para->partyPlayer, para->partyEnemy1);
       GFL_HEAP_FreeMemory( para->partyPlayer );
       GFL_HEAP_FreeMemory( para->partyEnemy1 );
+      {
+        BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
+        switch( para->result ){
+        case BTL_RESULT_WIN:   TAYA_Printf("勝ったよ\n"); break;
+        case BTL_RESULT_LOSE:  TAYA_Printf("負けたよ\n"); break;
+        case BTL_RESULT_RUN:   TAYA_Printf("逃げたよ\n"); break;
+        default:
+          TAYA_Printf("不明な終了コード %d\n", para->result);
+        }
+      }
     }
     (*seq)++;
     break;
