@@ -1,11 +1,25 @@
 EFFSEQ
-$0001
-C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
+$0005
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_424.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_224.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_271.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_415.spa
 #001
 %00
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	攻撃側	方向無し	0	0
-パーティクル再生	w_001	W_001_001_HIT_MARK	攻撃側	方向無し	0	0
+ポケモンアニメ	攻撃側	アニメストップ
+ポケモン拡縮	攻撃側	往復ロング	0	0.3	2	1	1
+タイマーによるウエイト	12
+BGのパレットフェード	すべて	0	12	1	0:0:0
+パーティクルデータロード	w_415
+パーティクル再生（座標指定）	w_415	W_415_415_GLASS0_SURI	0:0:0	0:0:0	1	0
+パーティクル再生（座標指定）	w_415	W_415_415_GLASS1_SURI	0:0:0	0:0:0	0.7	0
+パーティクル再生（座標指定）	w_415	W_415_415_GLASS2_SURI	0:0:0	0:0:0	0.7	0
+パーティクル再生（座標指定）	w_415	W_415_415_GLASS3_SURI	0:0:0	0:0:0	0.7	0
+パーティクル再生（座標指定）	w_415	W_415_415_GLASS4_SURI	0:0:0	0:0:0	0.7	0
+エフェクト終了待ち	すべて
+BGのパレットフェード	すべて	12	0	1	0:0:0
+ポケモンアニメ	攻撃側	アニメスタート
 エフェクト終了待ち	すべて
 エフェクト終了
 &
