@@ -586,7 +586,8 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/app/b_plist_anm.c \
 			battle/app/b_plist_bmp.c \
        		battle/app/b_plist_obj.c \
-    		battle/app/b_plist_main.c
+    		battle/app/b_plist_main.c \
+    		battle/app/b_plist_ui.c
 #			battle/btlv/finger_cursor.c \
 
 # WIFICLUB

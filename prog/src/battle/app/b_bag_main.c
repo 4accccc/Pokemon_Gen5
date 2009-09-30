@@ -281,6 +281,8 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 //	wk->dat->energy = 7;
 //	wk->dat->reserved_energy = 3;
 
+	wk->cursor_flg = FALSE;
+
 /*
 	if( BattleWorkFightTypeGet(wk->dat->bw) & FIGHT_TYPE_GET_DEMO ){
 		wk->dat->mode = BBAG_MODE_GETDEMO;
@@ -343,7 +345,7 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 
 	wk->tcbl = GFL_TCBL_Init( wk->dat->heap, wk->dat->heap, 1, 4 );
 
-	wk->cmv_wk = BAPP_CursorMoveWorkAlloc( wk->dat->heap );
+//	wk->cmv_wk = BAPP_CursorMoveWorkAlloc( wk->dat->heap );
 	wk->cpwk = BAPPTOOL_CreateCursor( wk->dat->heap );
 
 //	BBAG_VramInit();
@@ -370,9 +372,11 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 
 	BBAGUI_Init( wk, wk->page, 0 );
 
+/*
 	if( wk->dat->cursor_flg != 0 ){
 		BAPP_CursorMvWkSetFlag( wk->cmv_wk, 1 );
 	}
+*/
 	BattleBag_CursorMoveSet( wk, wk->page );
 	BBAG_GetDemoCursorSet( wk, wk->page );
 
@@ -391,7 +395,7 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 
 	wk->tcbl = GFL_TCBL_Init( wk->dat->heap, wk->dat->heap, 1, 4 );
 
-	wk->cmv_wk = BAPP_CursorMoveWorkAlloc( wk->dat->heap );
+//	wk->cmv_wk = BAPP_CursorMoveWorkAlloc( wk->dat->heap );
 	wk->cpwk = BAPPTOOL_CreateCursor( wk->dat->heap );
 
 //	BBAG_VramInit();
@@ -418,9 +422,11 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 
 	BBAGUI_Init( wk, wk->page, 0 );
 
+/*
 	if( wk->dat->cursor_flg != 0 ){
 		BAPP_CursorMvWkSetFlag( wk->cmv_wk, 1 );
 	}
+*/
 	BattleBag_CursorMoveSet( wk, wk->page );
 	BBAG_GetDemoCursorSet( wk, wk->page );
 
@@ -964,7 +970,7 @@ static BOOL BBAG_SeqEnd( GFL_TCB * tcb, BBAG_WORK * wk )
 	BBAG_BgExit();
 
 	GFL_TCBL_Exit( wk->tcbl );
-	BAPP_CursorMoveWorkFree( wk->cmv_wk );
+//	BAPP_CursorMoveWorkFree( wk->cmv_wk );
 	BBAGUI_Exit( wk );
 	BAPPTOOL_FreeCursor( wk->cpwk );
 

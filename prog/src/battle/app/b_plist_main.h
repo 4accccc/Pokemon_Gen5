@@ -9,9 +9,9 @@
 #ifndef B_PLIST_MAIN_H
 #define B_PLIST_MAIN_H
 
-
 #include "print/wordset.h"
 #include "system/palanm.h"
+#include "system/cursor_move.h"
 #include "b_app_tool.h"
 #include "b_plist.h"
 
@@ -398,7 +398,7 @@ typedef struct {
 	PRINT_QUE * que;				// プリントキュー
 	PRINT_STREAM * stream;	// プリントストリーム
 
-	BAPP_CURSOR_PUT_WORK * cpwk;		// カーソル表示
+//	BAPP_CURSOR_PUT_WORK * cpwk;		// カーソル表示
 //	CATS_RES_PTR	crp;				// リソース管理
 //	CATS_ACT_PTR	cap[BPL_CA_MAX];	// OAMのCAP
 	GFL_CLUNIT * clunit;
@@ -423,7 +423,10 @@ typedef struct {
 	u16	rcv_hp;
 	u16	rcv_pp[4];
 
-	BAPP_CURSOR_MVWK * cmv_wk;	// カーソル制御ワーク
+//	BAPP_CURSOR_MVWK * cmv_wk;	// カーソル制御ワーク
+	CURSORMOVE_WORK * cmwk;					// カーソル制御ワーク
+	BAPP_CURSOR_PUT_WORK * cpwk;		// カーソル表示
+	BOOL cursor_flg;
 	u8	chg_page_cp;			// ポケモン入れ替えページのカーソル位置
 	u8	wws_page_cp;			// ステータス技忘れ技選択ページのカーソル位置
 	u8	wwm_page_cp;			// ステータス技忘れ技詳細ページのカーソル位置

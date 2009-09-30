@@ -17,14 +17,14 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
-typedef struct _BAPP_CURSOR_MVWK	BAPP_CURSOR_MVWK;
+//typedef struct _BAPP_CURSOR_MVWK	BAPP_CURSOR_MVWK;
 
 typedef struct _BAPP_CURSOR_PUT_WORK	BAPP_CURSOR_PUT_WORK;
 
-#define	BAPP_CMV_CANCEL		( 0xfffffffe )	// キャンセル
-#define	BAPP_CMV_NONE		( 0xffffffff )	// 動作し
+//#define	BAPP_CMV_CANCEL		( 0xfffffffe )	// キャンセル
+//#define	BAPP_CMV_NONE		( 0xffffffff )	// 動作し
 
-#define	BAPP_CMV_RETBIT		( 0x80 )		// カーソル移動で前回の位置へ戻る
+//#define	BAPP_CMV_RETBIT		( 0x80 )		// カーソル移動で前回の位置へ戻る
 
 /*
 typedef struct {
@@ -32,14 +32,14 @@ typedef struct {
 	BOOL	flg;
 }BAPP_BMPWIN_QUE;
 */
-
+/*
 typedef struct {
 	u8	px;
 	u8	py;
 	u8	sx;
 	u8	sy;
 }BAPP_CURSOR_PUT;
-
+*/
 
 #define	BAPPTOOL_CURSOR_MAX		( 4 )		// カーソルで使用するセルアクターの数
 
@@ -57,7 +57,7 @@ typedef struct {
  * @return	カーソル移動ワーク
  */
 //--------------------------------------------------------------------------------------------
-extern BAPP_CURSOR_MVWK * BAPP_CursorMoveWorkAlloc( u32 heap );
+//extern BAPP_CURSOR_MVWK * BAPP_CursorMoveWorkAlloc( u32 heap );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -68,7 +68,7 @@ extern BAPP_CURSOR_MVWK * BAPP_CursorMoveWorkAlloc( u32 heap );
  * @return	カーソル移動ワーク
  */
 //--------------------------------------------------------------------------------------------
-extern void BAPP_CursorMoveWorkFree( BAPP_CURSOR_MVWK * wk );
+//extern void BAPP_CursorMoveWorkFree( BAPP_CURSOR_MVWK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -90,7 +90,7 @@ extern void BAPP_CursorMoveWorkFree( BAPP_CURSOR_MVWK * wk );
  * @return	カーソル位置
  */
 //--------------------------------------------------------------------------------------------
-extern u8 BAPP_CursorMvWkGetPos( BAPP_CURSOR_MVWK * wk );
+//extern u8 BAPP_CursorMvWkGetPos( BAPP_CURSOR_MVWK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -101,7 +101,7 @@ extern u8 BAPP_CursorMvWkGetPos( BAPP_CURSOR_MVWK * wk );
  * @return	カーソルON/OFF
  */
 //--------------------------------------------------------------------------------------------
-extern u8 BAPP_CursorMvWkGetFlag( BAPP_CURSOR_MVWK * wk );
+//extern u8 BAPP_CursorMvWkGetFlag( BAPP_CURSOR_MVWK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -113,7 +113,7 @@ extern u8 BAPP_CursorMvWkGetFlag( BAPP_CURSOR_MVWK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BAPP_CursorMvWkSetFlag( BAPP_CURSOR_MVWK * wk, u8 flg );
+//extern void BAPP_CursorMvWkSetFlag( BAPP_CURSOR_MVWK * wk, u8 flg );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -137,7 +137,7 @@ extern void BAPP_CursorMvWkSetFlag( BAPP_CURSOR_MVWK * wk, u8 flg );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BAPP_CursorMvWkSetPos( BAPP_CURSOR_MVWK * wk, u8 pos );
+//extern void BAPP_CursorMvWkSetPos( BAPP_CURSOR_MVWK * wk, u8 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -148,7 +148,7 @@ extern void BAPP_CursorMvWkSetPos( BAPP_CURSOR_MVWK * wk, u8 pos );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BAPP_CursorMvWkPosInit( BAPP_CURSOR_MVWK * wk );
+//extern void BAPP_CursorMvWkPosInit( BAPP_CURSOR_MVWK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -172,7 +172,7 @@ extern void BAPP_CursorMvWkPosInit( BAPP_CURSOR_MVWK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BAPP_CursorMvWkSetMvTbl( BAPP_CURSOR_MVWK * wk, u32 mv_tbl );
+//extern void BAPP_CursorMvWkSetMvTbl( BAPP_CURSOR_MVWK * wk, u32 mv_tbl );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -183,17 +183,17 @@ extern void BAPP_CursorMvWkSetMvTbl( BAPP_CURSOR_MVWK * wk, u32 mv_tbl );
  * @return	動作結果
  */
 //--------------------------------------------------------------------------------------------
-extern u32 BAPP_CursorMove( BAPP_CURSOR_MVWK * wk );
+//extern u32 BAPP_CursorMove( BAPP_CURSOR_MVWK * wk );
 
 
 
 extern BAPP_CURSOR_PUT_WORK * BAPPTOOL_CreateCursor( HEAPID heapID );
 extern void BAPPTOOL_FreeCursor( BAPP_CURSOR_PUT_WORK * wk );
-extern void BAPPTOOL_SetCursorPutData( BAPP_CURSOR_PUT_WORK * wk, const BAPP_CURSOR_PUT * put );
+//extern void BAPPTOOL_SetCursorPutData( BAPP_CURSOR_PUT_WORK * wk, const BAPP_CURSOR_PUT * put );
 extern void BAPPTOOL_AddCursor( BAPP_CURSOR_PUT_WORK * wk, GFL_CLUNIT * clunit, u32 chrRes, u32 palRes, u32 celRes );
 extern void BAPPTOOL_DelCursor( BAPP_CURSOR_PUT_WORK * wk );
 extern void BAPPTOOL_VanishCursor( BAPP_CURSOR_PUT_WORK * wk, BOOL flg );
-extern void BAPPTOOL_MoveCursor( BAPP_CURSOR_PUT_WORK * wk, u32 point );
+//extern void BAPPTOOL_MoveCursor( BAPP_CURSOR_PUT_WORK * wk, u32 point );
 extern void BAPPTOOL_MoveCursorPoint( BAPP_CURSOR_PUT_WORK * wk, const CURSORMOVE_DATA * dat );
 
 

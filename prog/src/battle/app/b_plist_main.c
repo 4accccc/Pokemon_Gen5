@@ -70,6 +70,7 @@
 #include "b_plist_main.h"
 #include "b_plist_obj.h"
 #include "b_plist_anm.h"
+#include "b_plist_ui.h"
 #include "b_plist_bmp.h"
 #include "b_plist_bmp_def.h"
 #include "b_plist_gra.naix"
@@ -293,6 +294,7 @@ static const POINTSEL_WORK NormalMoveTable[] =
 	{ 25, 19,  7, 5,	5,0,6,6 },		// 6（戻る）
 };
 */
+/*
 // ページ１のタッチパネル座標
 static const GFL_UI_TP_HITTBL Page1_HitRect[] =
 {
@@ -305,7 +307,8 @@ static const GFL_UI_TP_HITTBL Page1_HitRect[] =
 	{ 19*8, 24*8-1, 27*8, 32*8-1 },
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
-
+*/
+/*
 static const GFL_UI_TP_HITTBL ChgPage_HitRect[] =
 {
 	{  1*8, 18*8-1,  1*8, 31*8-1 },		// 0 : 入れ替え
@@ -314,7 +317,8 @@ static const GFL_UI_TP_HITTBL ChgPage_HitRect[] =
 	{ 19*8, 24*8-1, 27*8, 32*8-1 },		// 3 : 戻る
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
-
+*/
+/*
 // ステータスメインページのタッチパネル座標
 static const GFL_UI_TP_HITTBL StMainPage_HitRect[] =
 {
@@ -324,7 +328,8 @@ static const GFL_UI_TP_HITTBL StMainPage_HitRect[] =
 	{ 19*8, 24*8-1, 27*8, 32*8-1 },		// 3 : 戻る
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
-
+*/
+/*
 // ステータス技選択ページのタッチパネル座標
 static const GFL_UI_TP_HITTBL StWazaSelPage_HitRect[] =
 {
@@ -338,8 +343,8 @@ static const GFL_UI_TP_HITTBL StWazaSelPage_HitRect[] =
 	{ 19*8, 24*8-1, 27*8, 32*8-1 },		// 7 : 戻る
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
-
-
+*/
+/*
 // ステータス技選択ページのタッチパネル座標
 static const GFL_UI_TP_HITTBL StWazaInfoPage_HitRect[] =
 {
@@ -350,7 +355,8 @@ static const GFL_UI_TP_HITTBL StWazaInfoPage_HitRect[] =
 	{ 19*8, 24*8-1, 27*8, 32*8-1 },		// 4 : 戻る
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
-
+*/
+/*
 // 技忘れ選択ページのタッチパネル座標
 static const GFL_UI_TP_HITTBL Page5_HitRect[] =
 {
@@ -363,7 +369,8 @@ static const GFL_UI_TP_HITTBL Page5_HitRect[] =
 	{ 19*8, 24*8-1, 27*8, 32*8-1 },		// 6 : 戻る
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
-
+*/
+/*
 // 技忘れ決定ページのタッチパネル座標
 static const GFL_UI_TP_HITTBL Page6_HitRect[] =
 {
@@ -372,7 +379,8 @@ static const GFL_UI_TP_HITTBL Page6_HitRect[] =
 	{ 19*8, 24*8-1, 27*8, 32*8-1 },		// 2 : 戻る
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
-
+*/
+/*
 // 技回復ページのタッチパネル座標
 static const GFL_UI_TP_HITTBL PPRcvPage_HitRect[] =
 {
@@ -383,7 +391,7 @@ static const GFL_UI_TP_HITTBL PPRcvPage_HitRect[] =
 	{ 19*8, 24*8-1, 27*8, 32*8-1 },		// 4 : 戻る
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
-
+*/
 
 
 //--------------------------------------------------------------------------------------------
@@ -418,6 +426,8 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 	wk->multi_pos = 0;
 // CLIENT_TYPE_A : 前衛
 // CLIENT_TYPE_C : 後衛
+
+	wk->cursor_flg = FALSE;
 
 
 /*** テスト ***/
@@ -610,7 +620,7 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 		ret = SEQ_BPL_SELECT;
 	}
 
-	wk->cmv_wk = BAPP_CursorMoveWorkAlloc( wk->dat->heap );
+//	wk->cmv_wk = BAPP_CursorMoveWorkAlloc( wk->dat->heap );
 
 	wk->cpwk = BAPPTOOL_CreateCursor( wk->dat->heap );
 
@@ -633,17 +643,19 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 	BattlePokeList_BmpWrite( wk, wk->page );
 
 //	wk->dat->cursor_flg = 1;
+/*
 	if( wk->dat->cursor_flg != 0 ){
 		BAPP_CursorMvWkSetFlag( wk->cmv_wk, 1 );
 	}
-
+*/
 	// マルチのときの初期位置補正
 	if( wk->page == BPLIST_PAGE_SELECT &&
 		BattlePokeList_MultiPosCheck( wk, 0 ) == TRUE ){
 		wk->dat->sel_poke = 1;
 	}
 
-	BattlePokeList_CursorMoveSet( wk, wk->page );
+//	BattlePokeList_CursorMoveSet( wk, wk->page );
+	BPLISTUI_Init( wk, wk->page, 0 );
 
 	BPL_ExpGagePut( wk, wk->page );
 
@@ -1002,10 +1014,10 @@ static int BPL_SeqStInfoWaza( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqWazaDelSelect( BPLIST_WORK * wk )
 {
+/*
 	int	ret = BPL_TPCheck( wk, Page5_HitRect );
 
 	if( ret == GFL_UI_TP_HIT_NONE ){
-/*↑[GS_CONVERT_TAG]*/
 		ret = BAPP_CursorMove( wk->cmv_wk );
 		if( ret == BAPP_CMV_CANCEL ){
 			ret = 6;
@@ -1042,6 +1054,41 @@ static int BPL_SeqWazaDelSelect( BPLIST_WORK * wk )
 		return SEQ_BPL_BUTTON_WAIT;
 	}
 	return SEQ_BPL_WAZADEL_SEL;
+*/
+	u32	ret = CURSORMOVE_MainCont( wk->cmwk );
+
+	switch( ret ){
+	case BPLIST_UI_WAZADEL_SEL1:		// 技１
+	case BPLIST_UI_WAZADEL_SEL2:		// 技２
+	case BPLIST_UI_WAZADEL_SEL3:		// 技３
+	case BPLIST_UI_WAZADEL_SEL4:		// 技４
+	case BPLIST_UI_WAZADEL_SEL5:		// 技５
+		wk->dat->sel_wp = (u8)ret;
+		wk->wws_page_cp = (u8)ret;
+//		Snd_SePlay( SEQ_SE_DP_DECIDE );
+		BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZADEL1+ret );
+		wk->ret_seq = SEQ_BPL_PAGECHG_WAZASET_I;
+		return SEQ_BPL_BUTTON_WAIT;
+
+	case BPLIST_UI_WAZADEL_RETURN:	// もどる
+	case CURSORMOVE_CANCEL:					// キャンセル
+		wk->dat->sel_wp = BPL_SEL_WP_CANCEL;
+//		Snd_SePlay( SEQ_SE_DP_DECIDE );
+		BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
+		wk->ret_seq = SEQ_BPL_ENDSET;
+		return SEQ_BPL_BUTTON_WAIT;
+
+	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+	case CURSORMOVE_CURSOR_ON:			// カーソル表示
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+	case CURSORMOVE_NONE:						// 動作なし
+		break;
+	}
+
+	return SEQ_BPL_WAZADEL_SEL;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1055,10 +1102,10 @@ static int BPL_SeqWazaDelSelect( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqWazaDelMain( BPLIST_WORK * wk )
 {
+/*
 	int	ret = BPL_TPCheck( wk, Page6_HitRect );
 
 	if( ret == GFL_UI_TP_HIT_NONE ){
-/*↑[GS_CONVERT_TAG]*/
 		ret = BAPP_CursorMove( wk->cmv_wk );
 		if( ret == BAPP_CMV_CANCEL ){
 			ret = 2;
@@ -1071,15 +1118,18 @@ static int BPL_SeqWazaDelMain( BPLIST_WORK * wk )
 	case 0:		// わすれる
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );
 		BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZADEL_B );
-/*
+#if 0
 		if( BPL_HidenCheck( wk ) == TRUE ){
 			BPL_HidenMsgPut( wk );
 			BPL_HidenOff_Battle( wk );
 			wk->ret_seq = SEQ_BPL_WAZADEL_MAIN;
 		}else{
-*/
+
 			wk->ret_seq = SEQ_BPL_ENDSET;
-//		}
+		}
+#else
+		wk->ret_seq = SEQ_BPL_ENDSET;
+#endif
 		return SEQ_BPL_BUTTON_WAIT;
 
 	case 1:		// 戦闘<->コンテスト切り替え
@@ -1095,8 +1145,45 @@ static int BPL_SeqWazaDelMain( BPLIST_WORK * wk )
 		wk->wwm_page_cp = 0;
 		wk->ret_seq = SEQ_BPL_PAGECHG_WAZASET_S;
 		return SEQ_BPL_BUTTON_WAIT;
-
 	}
+	return SEQ_BPL_WAZADEL_MAIN;
+*/
+	u32	ret = CURSORMOVE_MainCont( wk->cmwk );
+
+	switch( ret ){
+	case BPLIST_UI_DELINFO_ENTER:		// わすれる
+//		Snd_SePlay( SEQ_SE_DP_DECIDE );
+		BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZADEL_B );
+/*
+		if( BPL_HidenCheck( wk ) == TRUE ){
+			BPL_HidenMsgPut( wk );
+			BPL_HidenOff_Battle( wk );
+			wk->ret_seq = SEQ_BPL_WAZADEL_MAIN;
+		}else{
+			wk->ret_seq = SEQ_BPL_ENDSET;
+		}
+*/
+		wk->ret_seq = SEQ_BPL_ENDSET;
+		return SEQ_BPL_BUTTON_WAIT;
+
+	case BPLIST_UI_DELINFO_RETURN:	// もどる
+	case CURSORMOVE_CANCEL:					// キャンセル
+//		Snd_SePlay( SEQ_SE_DP_DECIDE );
+		BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
+		wk->wwm_page_cp = 0;
+		wk->ret_seq = SEQ_BPL_PAGECHG_WAZASET_S;
+		return SEQ_BPL_BUTTON_WAIT;
+
+	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+	case CURSORMOVE_CURSOR_ON:			// カーソル表示
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+	case CURSORMOVE_NONE:						// 動作なし
+		break;
+	}
+
 	return SEQ_BPL_WAZADEL_MAIN;
 }
 
@@ -1111,13 +1198,13 @@ static int BPL_SeqWazaDelMain( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
 {
+/*
 	BPLIST_DATA * dat;
 	int	ret;
 
 	dat = wk->dat;
 	ret = BPL_TPCheck( wk, PPRcvPage_HitRect );
 	if( ret == GFL_UI_TP_HIT_NONE ){
-/*↑[GS_CONVERT_TAG]*/
 		ret = BAPP_CursorMove( wk->cmv_wk );
 		if( ret == BAPP_CMV_CANCEL ){
 			ret = 4;
@@ -1131,6 +1218,50 @@ static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
 	case 1:
 	case 2:
 	case 3:
+#if 0
+		if( wk->poke[dat->sel_poke].waza[ret].id == 0 ){ break; }
+		wk->dat->sel_wp = (u8)ret;
+//		Snd_SePlay( SEQ_SE_DP_DECIDE );
+		BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZARCV1+ret );
+//		if( BattleWorkStatusRecover(dat->bw,dat->client_no,dat->list_row[dat->sel_poke],ret,dat->item) == TRUE ){
+		if( 0 ){
+			wk->rcv_seq = 0;
+			wk->ret_seq = SEQ_BPL_STRCV;
+			return SEQ_BPL_BUTTON_WAIT;
+		}else{
+			GFL_MSG_GetString( wk->mman, mes_b_plist_m06, wk->msg_buf );
+			BattlePokeList_TalkMsgSet( wk );
+			wk->dat->sel_poke = BPL_SEL_EXIT;
+			wk->ret_seq = SEQ_BPL_ENDSET;
+			return SEQ_BPL_MSG_WAIT;
+		}
+		break;
+#endif
+		if( wk->poke[dat->sel_poke].waza[ret].id == 0 ){ break; }
+		wk->dat->sel_wp = (u8)ret;
+//		Snd_SePlay( SEQ_SE_DP_DECIDE );
+		BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZARCV1+ret );
+		return SEQ_BPL_ENDSET;
+
+	case 4:		// キャンセル
+//		Snd_SePlay( SEQ_SE_DP_DECIDE );
+		BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
+		wk->ret_seq = SEQ_BPL_PAGE1_CHG;
+		return SEQ_BPL_BUTTON_WAIT;
+	}
+	return SEQ_BPL_WAZARCV_SEL;
+*/
+	BPLIST_DATA * dat;
+	u32	ret;
+
+	dat = wk->dat;
+	ret = CURSORMOVE_MainCont( wk->cmwk );
+
+	switch( ret ){
+	case BPLIST_UI_PPRCV_WAZA1:			// 技１
+	case BPLIST_UI_PPRCV_WAZA2:			// 技２
+	case BPLIST_UI_PPRCV_WAZA3:			// 技３
+	case BPLIST_UI_PPRCV_WAZA4:			// 技４
 /*
 		if( wk->poke[dat->sel_poke].waza[ret].id == 0 ){ break; }
 		wk->dat->sel_wp = (u8)ret;
@@ -1156,12 +1287,23 @@ static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
 		BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZARCV1+ret );
 		return SEQ_BPL_ENDSET;
 
-	case 4:		// キャンセル
+	case BPLIST_UI_PPRCV_RETURN:		// もどる
+	case CURSORMOVE_CANCEL:					// キャンセル
 //		Snd_SePlay( SEQ_SE_DP_DECIDE );
 		BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_RET );
 		wk->ret_seq = SEQ_BPL_PAGE1_CHG;
 		return SEQ_BPL_BUTTON_WAIT;
+
+	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+	case CURSORMOVE_CURSOR_ON:			// カーソル表示
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+	case CURSORMOVE_NONE:						// 動作なし
+		break;
 	}
+
 	return SEQ_BPL_WAZARCV_SEL;
 }
 
@@ -1564,7 +1706,7 @@ static BOOL BPL_SeqEnd( GFL_TCB * tcb, BPLIST_WORK * wk )
 	}
 
 	wk->dat->end_flg = 1;
-	wk->dat->cursor_flg = BAPP_CursorMvWkGetFlag( wk->cmv_wk );
+//	wk->dat->cursor_flg = BAPP_CursorMvWkGetFlag( wk->cmv_wk );
 
 	BPL_MsgManExit( wk );
 	BattlePokeList_ObjFree( wk );
@@ -1573,7 +1715,8 @@ static BOOL BPL_SeqEnd( GFL_TCB * tcb, BPLIST_WORK * wk )
 
 	GFL_TCBL_Exit( wk->tcbl );
 
-	BAPP_CursorMoveWorkFree( wk->cmv_wk );
+//	BAPP_CursorMoveWorkFree( wk->cmv_wk );
+	BPLISTUI_Exit( wk );
 
 	BAPPTOOL_FreeCursor( wk->cpwk );
 
@@ -1934,6 +2077,7 @@ static void BPL_PokeDataMake( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static u8 BPL_PokemonSelect( BPLIST_WORK * wk )
 {
+/*
 	int	ret = BPL_TPCheck( wk, Page1_HitRect );
 
 	if( ret == GFL_UI_TP_HIT_NONE ){
@@ -1956,6 +2100,39 @@ static u8 BPL_PokemonSelect( BPLIST_WORK * wk )
 	}
 
 	return FALSE;
+*/
+	u32	ret = CURSORMOVE_MainCont( wk->cmwk );
+
+	switch( ret ){
+	case BPLIST_UI_LIST_POKE1:
+	case BPLIST_UI_LIST_POKE2:
+	case BPLIST_UI_LIST_POKE3:
+	case BPLIST_UI_LIST_POKE4:
+	case BPLIST_UI_LIST_POKE5:
+	case BPLIST_UI_LIST_POKE6:
+		if( BattlePokeList_PokeSetCheck( wk, ret ) != 0 ){
+			wk->dat->sel_poke = (u8)ret;
+			return TRUE;
+		}
+		break;
+
+	case BPLIST_UI_LIST_RETURN:
+	case CURSORMOVE_CANCEL:					// キャンセル
+		wk->dat->sel_poke = (u8)ret;
+		ret = BPL_SEL_EXIT;
+		return TRUE;
+
+	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+	case CURSORMOVE_CURSOR_ON:			// カーソル表示
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+	case CURSORMOVE_NONE:						// 動作なし
+		break;
+	}
+
+	return FALSE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1970,6 +2147,7 @@ static u8 BPL_PokemonSelect( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static u8 BPL_IrekaeSelect( BPLIST_WORK * wk )
 {
+/*
 	int	ret = BPL_TPCheck( wk, ChgPage_HitRect );
 
 	if( ret == GFL_UI_TP_HIT_NONE ){
@@ -1982,6 +2160,32 @@ static u8 BPL_IrekaeSelect( BPLIST_WORK * wk )
 	}else{
 		BattlePokeList_CursorOff( wk );
 	}
+	return (u8)ret;
+*/
+	u32	ret = CURSORMOVE_MainCont( wk->cmwk );
+
+	switch( ret ){
+	case BPLIST_UI_CHG_ENTER:				// いれかえる
+	case BPLIST_UI_CHG_STATUS:			// つよさをみる
+	case BPLIST_UI_CHG_WAZA:				// わざをみる
+	case BPLIST_UI_CHG_RETURN:			// もどる
+		break;
+
+	case CURSORMOVE_CANCEL:					// キャンセル
+		ret = BPLIST_UI_CHG_RETURN;
+		break;
+
+	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+	case CURSORMOVE_CURSOR_ON:			// カーソル表示
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+	case CURSORMOVE_NONE:						// 動作なし
+		ret = 0xff;
+		break;
+	}
+
 	return (u8)ret;
 }
 
@@ -1997,6 +2201,7 @@ static u8 BPL_IrekaeSelect( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static u8 BPL_StatusMainSelect( BPLIST_WORK * wk )
 {
+/*
 	int	ret = BPL_TPCheck( wk, StMainPage_HitRect );
 
 	if( ret == GFL_UI_TP_HIT_NONE ){
@@ -2009,6 +2214,32 @@ static u8 BPL_StatusMainSelect( BPLIST_WORK * wk )
 	}else{
 		BattlePokeList_CursorOff( wk );
 	}
+	return (u8)ret;
+*/
+	u32	ret = CURSORMOVE_MainCont( wk->cmwk );
+
+	switch( ret ){
+	case BPLIST_UI_STATUS_UP:				// 前のポケモンへ
+	case BPLIST_UI_STATUS_DOWN:			// 次のポケモンへ
+	case BPLIST_UI_STATUS_WAZA:			// わざをみる
+	case BPLIST_UI_STATUS_RETURN:		// もどる
+		break;
+
+	case CURSORMOVE_CANCEL:					// キャンセル
+		ret = BPLIST_UI_STATUS_RETURN;
+		break;
+
+	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+	case CURSORMOVE_CURSOR_ON:			// カーソル表示
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+	case CURSORMOVE_NONE:						// 動作なし
+		ret = 0xff;
+		break;
+	}
+
 	return (u8)ret;
 }
 
@@ -2024,6 +2255,7 @@ static u8 BPL_StatusMainSelect( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static u8 BPL_StWazaSelect( BPLIST_WORK * wk )
 {
+/*
 	int	ret = BPL_TPCheck( wk, StWazaSelPage_HitRect );
 
 	if( ret == GFL_UI_TP_HIT_NONE ){
@@ -2036,6 +2268,36 @@ static u8 BPL_StWazaSelect( BPLIST_WORK * wk )
 	}else{
 		BattlePokeList_CursorOff( wk );
 	}
+	return (u8)ret;
+*/
+	u32	ret = CURSORMOVE_MainCont( wk->cmwk );
+
+	switch( ret ){
+	case BPLIST_UI_WAZA_SEL1:			// 技１
+	case BPLIST_UI_WAZA_SEL2:			// 技２
+	case BPLIST_UI_WAZA_SEL3:			// 技３
+	case BPLIST_UI_WAZA_SEL4:			// 技４
+	case BPLIST_UI_WAZA_UP:				// 前のポケモンへ
+	case BPLIST_UI_WAZA_DOWN:			// 次のポケモンへ
+	case BPLIST_UI_WAZA_STATUS:		// つよさをみる
+	case BPLIST_UI_WAZA_RETURN:		// もどる
+		break;
+
+	case CURSORMOVE_CANCEL:				// キャンセル
+		ret = BPLIST_UI_WAZA_RETURN;
+		break;
+
+	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+	case CURSORMOVE_CURSOR_ON:			// カーソル表示
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+	case CURSORMOVE_NONE:						// 動作なし
+		ret = 0xff;
+		break;
+	}
+
 	return (u8)ret;
 }
 
@@ -2051,10 +2313,10 @@ static u8 BPL_StWazaSelect( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static u8 BPL_StInfoWazaSelect( BPLIST_WORK * wk )
 {
+/*
 	int	ret = BPL_TPCheck( wk, StWazaInfoPage_HitRect );
 
 	if( ret == GFL_UI_TP_HIT_NONE ){
-/*↑[GS_CONVERT_TAG]*/
 		ret = BAPP_CursorMove( wk->cmv_wk );
 		if( ret == BAPP_CMV_CANCEL ){
 			ret = 4;
@@ -2064,6 +2326,33 @@ static u8 BPL_StInfoWazaSelect( BPLIST_WORK * wk )
 	}else{
 		BattlePokeList_CursorOff( wk );
 	}
+	return (u8)ret;
+*/
+	u32	ret = CURSORMOVE_MainCont( wk->cmwk );
+
+	switch( ret ){
+	case BPLIST_UI_WAZAINFO_SEL1:			// 技１
+	case BPLIST_UI_WAZAINFO_SEL2:			// 技２
+	case BPLIST_UI_WAZAINFO_SEL3:			// 技３
+	case BPLIST_UI_WAZAINFO_SEL4:			// 技４
+	case BPLIST_UI_WAZAINFO_RETURN:		// もどる
+		break;
+
+	case CURSORMOVE_CANCEL:					// キャンセル
+		ret = BPLIST_UI_WAZAINFO_RETURN;
+		break;
+
+	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+	case CURSORMOVE_CURSOR_ON:			// カーソル表示
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+	case CURSORMOVE_NONE:						// 動作なし
+		ret = 0xff;
+		break;
+	}
+
 	return (u8)ret;
 }
 
@@ -2389,7 +2678,8 @@ static void BPL_PageChange( BPLIST_WORK * wk, u8 next_page )
 
 //	BPL_ContestWazaHeartPut( wk, next_page );
 
-	BattlePokeList_CursorMoveSet( wk, next_page );
+//	BattlePokeList_CursorMoveSet( wk, next_page );
+	BPLISTUI_ChangePage( wk, next_page, 0 );
 
 	BattlePokeList_ButtonPageScreenInit( wk, next_page );
 	BattlePokeList_ButtonPalSet( wk, next_page );

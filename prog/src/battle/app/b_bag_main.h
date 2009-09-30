@@ -254,7 +254,7 @@ typedef struct {
 	u8	p2_swap;				// ページ２のスワップ描画フラグ
 //	u8	midx;					// メッセージインデックス
 
-	BAPP_CURSOR_MVWK * cmv_wk;	// カーソル制御ワーク
+//	BAPP_CURSOR_MVWK * cmv_wk;	// カーソル制御ワーク
 	CURSORMOVE_WORK * cmwk;					// カーソル制御ワーク
 	BAPP_CURSOR_PUT_WORK * cpwk;		// カーソル表示
 

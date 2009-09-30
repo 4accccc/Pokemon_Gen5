@@ -20,8 +20,9 @@
 //	定数定義
 //============================================================================================
 
-#define	BAPP_CURSOR_MAX		( 4 )
+//#define	BAPP_CURSOR_MAX		( 4 )
 
+/*
 // 選択カーソル移動ワーク
 struct _BAPP_CURSOR_MVWK {
 //	BCURSOR_PTR	cursor;			// カーソルデータ
@@ -31,10 +32,11 @@ struct _BAPP_CURSOR_MVWK {
 	u8	old_pos;				// 前回のカーソル位置
 	u32	mv_tbl;					// 移動テーブル
 };
+*/
 
 struct _BAPP_CURSOR_PUT_WORK {
-	GFL_CLWK * clwk[BAPP_CURSOR_MAX];
-	const BAPP_CURSOR_PUT * put;
+	GFL_CLWK * clwk[BAPPTOOL_CURSOR_MAX];
+//	const BAPP_CURSOR_PUT * put;
 	HEAPID	heapID;
 	BOOL	vanish;
 };
@@ -53,11 +55,13 @@ struct _BAPP_CURSOR_PUT_WORK {
  * @return	カーソル移動ワーク
  */
 //--------------------------------------------------------------------------------------------
+/*
 BAPP_CURSOR_MVWK * BAPP_CursorMoveWorkAlloc( u32 heap )
 {
 	BAPP_CURSOR_MVWK * wk = GFL_HEAP_AllocClearMemory( heap, sizeof(BAPP_CURSOR_MVWK) );
 	return wk;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -68,10 +72,12 @@ BAPP_CURSOR_MVWK * BAPP_CursorMoveWorkAlloc( u32 heap )
  * @return	カーソル移動ワーク
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BAPP_CursorMoveWorkFree( BAPP_CURSOR_MVWK * wk )
 {
 	GFL_HEAP_FreeMemory( wk );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -98,10 +104,12 @@ BCURSOR_PTR BAPP_CursorMvWkGetBCURSOR_PTR( BAPP_CURSOR_MVWK * wk )
  * @return	カーソル位置
  */
 //--------------------------------------------------------------------------------------------
+/*
 u8 BAPP_CursorMvWkGetPos( BAPP_CURSOR_MVWK * wk )
 {
 	return wk->cur_pos;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -112,10 +120,12 @@ u8 BAPP_CursorMvWkGetPos( BAPP_CURSOR_MVWK * wk )
  * @return	カーソルON/OFF
  */
 //--------------------------------------------------------------------------------------------
+/*
 u8 BAPP_CursorMvWkGetFlag( BAPP_CURSOR_MVWK * wk )
 {
 	return wk->cur_flg;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -127,10 +137,12 @@ u8 BAPP_CursorMvWkGetFlag( BAPP_CURSOR_MVWK * wk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BAPP_CursorMvWkSetFlag( BAPP_CURSOR_MVWK * wk, u8 flg )
 {
 	wk->cur_flg = flg;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -159,19 +171,19 @@ void BAPP_CursorMvWkSetBCURSOR_PTR( BAPP_CURSOR_MVWK * wk, BCURSOR_PTR cur )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BAPP_CursorMvWkSetPos( BAPP_CURSOR_MVWK * wk, u8 pos )
 {
 	wk->cur_pos = pos;
 
 	if( wk->cur_flg == 1 ){
-/*
 		BCURSOR_PosSetON(
 			wk->cursor,
 			wk->cp_wk[wk->cur_pos].px, wk->cp_wk[wk->cur_pos].sx,
 			wk->cp_wk[wk->cur_pos].py, wk->cp_wk[wk->cur_pos].sy );
-*/
 	}
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -182,11 +194,13 @@ void BAPP_CursorMvWkSetPos( BAPP_CURSOR_MVWK * wk, u8 pos )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BAPP_CursorMvWkPosInit( BAPP_CURSOR_MVWK * wk )
 {
 	wk->cur_pos = 0;
 	wk->old_pos = 0xff;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -222,10 +236,12 @@ void BAPP_CursorMvWkSetPoint( BAPP_CURSOR_MVWK * wk, const POINTSEL_WORK * pwk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BAPP_CursorMvWkSetMvTbl( BAPP_CURSOR_MVWK * wk, u32 mv_tbl )
 {
 	wk->mv_tbl = mv_tbl;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -237,6 +253,7 @@ void BAPP_CursorMvWkSetMvTbl( BAPP_CURSOR_MVWK * wk, u32 mv_tbl )
  * @retval	"FALSE = 非表示"
  */
 //--------------------------------------------------------------------------------------------
+/*
 static u8 BAPP_CursorOnOffCheck( BAPP_CURSOR_MVWK * wk )
 {
 	if( wk->cur_flg == 1 ){
@@ -244,18 +261,16 @@ static u8 BAPP_CursorOnOffCheck( BAPP_CURSOR_MVWK * wk )
 	}
 
 	if( GFL_UI_KEY_GetTrg() & ( PAD_KEY_ALL | PAD_BUTTON_CANCEL | PAD_BUTTON_DECIDE ) ){
-/*↑[GS_CONVERT_TAG]*/
 		wk->cur_flg = 1;
-/*
 		BCURSOR_PosSetON(
 			wk->cursor,
 			wk->cp_wk[ wk->cur_pos ].px, wk->cp_wk[ wk->cur_pos ].sx,
 			wk->cp_wk[ wk->cur_pos ].py, wk->cp_wk[ wk->cur_pos ].sy );
-*/
 //	Snd_SePlay( BCURSOR_MOVE_SE );
 	}
 	return FALSE;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -306,9 +321,9 @@ static u8 BAPP_OldCursorSetCheck( const POINTSEL_WORK * pw, u8 mv )
  * @return	動作結果
  */
 //--------------------------------------------------------------------------------------------
+/*
 u32 BAPP_CursorMove( BAPP_CURSOR_MVWK * wk )
 {
-/*
 	u8	lx, ly, rx, ry;
 	u8	pm_ret;
 	u8	mv;
@@ -381,10 +396,10 @@ u32 BAPP_CursorMove( BAPP_CURSOR_MVWK * wk )
 //	Snd_SePlay( SEQ_SE_DP_DECIDE );
 		return BAPP_CMV_CANCEL;
 	}
-*/
+
 	return BAPP_CMV_NONE;
 }
-
+*/
 
 
 #define	BATTLE_CURSOR_ANIME		( 11 )
@@ -402,10 +417,12 @@ void BAPPTOOL_FreeCursor( BAPP_CURSOR_PUT_WORK * wk )
 	GFL_HEAP_FreeMemory( wk );
 }
 
+/*
 void BAPPTOOL_SetCursorPutData( BAPP_CURSOR_PUT_WORK * wk, const BAPP_CURSOR_PUT * put )
 {
 	wk->put = put;
 }
+*/
 
 void BAPPTOOL_AddCursor( BAPP_CURSOR_PUT_WORK * wk, GFL_CLUNIT * clunit, u32 chrRes, u32 palRes, u32 celRes )
 {
@@ -417,7 +434,7 @@ void BAPPTOOL_AddCursor( BAPP_CURSOR_PUT_WORK * wk, GFL_CLUNIT * clunit, u32 chr
 	dat.softpri = 0;
 	dat.bgpri   = 1;
 
-	for( i=0; i<BAPP_CURSOR_MAX; i++ ){
+	for( i=0; i<BAPPTOOL_CURSOR_MAX; i++ ){
 		dat.anmseq = BATTLE_CURSOR_ANIME + i;
 		wk->clwk[i] = GFL_CLACT_WK_Create( clunit, chrRes, palRes, celRes, &dat, CLSYS_DRAW_SUB, wk->heapID );
 		GFL_CLACT_WK_SetPlttOffs( wk->clwk[i], 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
@@ -429,7 +446,7 @@ void BAPPTOOL_DelCursor( BAPP_CURSOR_PUT_WORK * wk )
 {
 	u32	i;
 
-	for( i=0; i<BAPP_CURSOR_MAX; i++ ){
+	for( i=0; i<BAPPTOOL_CURSOR_MAX; i++ ){
 		GFL_CLACT_WK_Remove( wk->clwk[i] );
 	}
 }
@@ -439,13 +456,14 @@ void BAPPTOOL_VanishCursor( BAPP_CURSOR_PUT_WORK * wk, BOOL flg )
 	if( wk->vanish != flg ){
 		u32	i;
 
-		for( i=0; i<BAPP_CURSOR_MAX; i++ ){
+		for( i=0; i<BAPPTOOL_CURSOR_MAX; i++ ){
 			GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], flg );
 		}
 		wk->vanish = flg;
 	}
 }
 
+/*
 void BAPPTOOL_MoveCursor( BAPP_CURSOR_PUT_WORK * wk, u32 point )
 {
 	GFL_CLACTPOS	pos;
@@ -471,6 +489,7 @@ void BAPPTOOL_MoveCursor( BAPP_CURSOR_PUT_WORK * wk, u32 point )
 	pos.y = wk->put[point].py + sy;
 	GFL_CLACT_WK_SetPos( wk->clwk[3], &pos, CLSYS_DRAW_SUB );
 }
+*/
 
 void BAPPTOOL_MoveCursorPoint( BAPP_CURSOR_PUT_WORK * wk, const CURSORMOVE_DATA * dat )
 {

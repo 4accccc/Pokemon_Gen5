@@ -80,7 +80,7 @@ extern void BPL_PokeIconAnime( BPLIST_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BattlePokeList_CursorMoveSet( BPLIST_WORK * wk, u8 page );
+//extern void BattlePokeList_CursorMoveSet( BPLIST_WORK * wk, u8 page );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -91,7 +91,7 @@ extern void BattlePokeList_CursorMoveSet( BPLIST_WORK * wk, u8 page );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BattlePokeList_CursorOff( BPLIST_WORK * wk );
+//extern void BattlePokeList_CursorOff( BPLIST_WORK * wk );
 
 
 #endif	// B_PLIST_OBJ_H

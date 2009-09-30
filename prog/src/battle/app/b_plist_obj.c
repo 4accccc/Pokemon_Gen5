@@ -1833,7 +1833,7 @@ static void BPL_ClactCursorAdd( BPLIST_WORK * wk )
 		wk->palRes[BPLIST_PALRES_CURSOR],
 		wk->celRes[BPLIST_CELRES_CURSOR] );
 
-//	BAPPTOOL_VanishCursor( wk->cpwk, FALSE );
+	BAPPTOOL_VanishCursor( wk->cpwk, FALSE );
 
 /*
 	CATS_SYS_PTR csp;
@@ -1957,81 +1957,14 @@ static const POINTSEL_WORK * const CursorPosTable[] = {
 	DelInfo_CursorPosTbl,		// ƒXƒe[ƒ^ƒX‹Z–Y‚ê‚Sƒy[ƒWiƒRƒ“ƒeƒXƒg‹ZÚ×j
 };
 */
+/*
 
-// ƒ|ƒPƒ‚ƒ“‘I‘ð‰æ–ÊˆÚ“®ƒe[ƒuƒ‹
-static const BAPP_CURSOR_PUT P1_CursorPosTbl[] =
-{
-	{  64,  24, 128,  48 },		// 0
-	{ 192,  32, 128,  48 },		// 1
-	{  64,  72, 128,  48 },		// 2
-	{ 192,  80, 128,  48 },		// 3
-	{  64, 120, 128,  48 },		// 4
-	{ 192, 128, 128,  48 },		// 5
-	{ 232, 168,  40,  40 },		// 6i–ß‚éj
-};
-static const BAPP_CURSOR_PUT Chg_CursorPosTbl[] =
-{
-	{  16,  16, 240, 136 },		// 0 : ‚¢‚ê‚©‚¦‚é
-	{   8, 160,  96, 184 },		// 1 : ‹­‚³‚ðŒ©‚é
-	{ 112, 160, 200, 184 },		// 2 : ‹Z‚ðŒ©‚é
-	{ 224, 160, 248, 184 },		// 3 : –ß‚é
-};
-static const BAPP_CURSOR_PUT StMain_CursorPosTbl[] =
-{
-	{   8, 160,  32, 184 },		// 0 : ã
-	{  48, 160,  72, 184 },		// 1 : ‰º
-	{ 104, 160, 192, 184 },		// 2 : ‹Z‚ðŒ©‚é
-	{ 224, 160, 248, 184 },		// 3 : –ß‚é
-};
-static const BAPP_CURSOR_PUT StWazaSel_CursorPosTbl[] =
-{
-	{   8,  56, 120,  88 },		// 0 : ‹Z‚P
-	{ 136,  56, 248,  88 },		// 1 : ‹Z‚Q
-	{   8, 104, 120, 136 },		// 2 : ‹Z‚R
-	{ 136, 104, 248, 136 },		// 3 : ‹Z‚S
-	{   8, 160,  32, 184 },		// 4 : ã
-	{  48, 160,  72, 184 },		// 5 : ‰º
-	{ 104, 160, 192, 184 },		// 6 : ‹­‚³‚ðŒ©‚é
-	{ 224, 160, 248, 184 },		// 7 : –ß‚é
-};
-static const BAPP_CURSOR_PUT StWazaInfo_CursorPosTbl[] =
-{
-	{  92, 157, 124, 165 },		// 0 : ‹Z‚P
-	{ 132, 157, 164, 165 },		// 1 : ‹Z‚Q
-	{  92, 173, 124, 181 },		// 2 : ‹Z‚R
-	{ 132, 173, 164, 181 },		// 3 : ‹Z‚S
-	{ 224, 160, 248, 184 },		// 4 : –ß‚é
-};
-static const BAPP_CURSOR_PUT DelSel_CursorPosTbl[] =
-{
-	{   8,  56, 120,  88 },						// 0 : ‹Z‚P‰æ–Ê‚Ö
-	{ 136,  56, 248,  88 },						// 1 : ‹Z‚Q‰æ–Ê‚Ö
-	{   8, 104, 120, 136 },						// 2 : ‹Z‚R‰æ–Ê‚Ö
-	{ 136, 104, 248, 136 },						// 3 : ‹Z‚S‰æ–Ê‚Ö
-	{  72, 152, 184, 184 },						// 4 : ‹Z‚T‰æ–Ê‚Ö
-	{ 224, 160, 248, 184 },						// 5 : –ß‚é
-};
-
-static const BAPP_CURSOR_PUT DelInfo_CursorPosTbl[] =
-{
-	{   8, 160, 200, 184 },						// 0 : ‚í‚·‚ê‚é
-	{ 224, 160, 248, 184 },						// 1 : –ß‚é
-};
-
-static const BAPP_CURSOR_PUT PPRcv_CursorPosTbl[] =
-{
-	{   8,  56, 120,  88 },						// 0 : ‹Z‚P‰ñ•œ
-	{ 136,  56, 248,  88 },						// 1 : ‹Z‚Q‰ñ•œ
-	{   8, 104, 120, 136 },						// 2 : ‹Z‚R‰ñ•œ
-	{ 136, 104, 248, 136 },						// 3 : ‹Z‚S‰ñ•œ
-	{ 224, 160, 248, 184 },						// 4 : –ß‚é
-};
-
-
+/*
 #define	WAZADEL_SEL_MV_TBL_N	( 0x7f )	// ‹Z–Y‚ê‚Ì‹Z‘I‘ð‚ÌƒJ[ƒ\ƒ‹ˆÚ“®ƒe[ƒuƒ‹i’Êíj
 #define	WAZADEL_SEL_MV_TBL_C	( 0x5f )	// ‹Z–Y‚ê‚Ì‹Z‘I‘ð‚ÌƒJ[ƒ\ƒ‹ˆÚ“®ƒe[ƒuƒ‹iƒRƒ“ƒeƒXƒg‚È‚µj
 #define	WAZADEL_MAIN_MV_TBL_N	( 7 )	// ‹Z–Y‚ê‚ÌÚ×‚ÌƒJ[ƒ\ƒ‹ˆÚ“®ƒe[ƒuƒ‹i’Êíj
 #define	WAZADEL_MAIN_MV_TBL_C	( 5 )	// ‹Z–Y‚ê‚ÌÚ×‚ÌƒJ[ƒ\ƒ‹ˆÚ“®ƒe[ƒuƒ‹iƒRƒ“ƒeƒXƒg‚È‚µj
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2042,16 +1975,16 @@ static const BAPP_CURSOR_PUT PPRcv_CursorPosTbl[] =
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BPL_WazaDelSelCursorMvTblMake( BPLIST_WORK * wk )
 {
-/*
 	if( wk->ev_contest == 0 ){
 		BAPP_CursorMvWkSetMvTbl( wk->cmv_wk, WAZADEL_SEL_MV_TBL_C );
 	}else{
 		BAPP_CursorMvWkSetMvTbl( wk->cmv_wk, WAZADEL_SEL_MV_TBL_N );
 	}
-*/
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2062,17 +1995,16 @@ static void BPL_WazaDelSelCursorMvTblMake( BPLIST_WORK * wk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BPL_WazaDelMainCursorMvTblMake( BPLIST_WORK * wk )
 {
-/*
 	if( wk->ev_contest == 0 ){
 		BAPP_CursorMvWkSetMvTbl( wk->cmv_wk, WAZADEL_MAIN_MV_TBL_C );
 	}else{
 		BAPP_CursorMvWkSetMvTbl( wk->cmv_wk, WAZADEL_MAIN_MV_TBL_N );
 	}
-*/
 }
-
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2084,41 +2016,9 @@ static void BPL_WazaDelMainCursorMvTblMake( BPLIST_WORK * wk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BattlePokeList_CursorMoveSet( BPLIST_WORK * wk, u8 page )
 {
-	switch( page ){
-	case BPLIST_PAGE_SELECT:			// ƒ|ƒPƒ‚ƒ“‘I‘ðƒy[ƒW
-		BAPPTOOL_SetCursorPutData( wk->cpwk, P1_CursorPosTbl );
-		break;
-
-	case BPLIST_PAGE_POKE_CHG:		// ƒ|ƒPƒ‚ƒ““ü‚ê‘Ö‚¦ƒy[ƒW
-		BAPPTOOL_SetCursorPutData( wk->cpwk, Chg_CursorPosTbl );
-		break;
-
-	case BPLIST_PAGE_MAIN:				// ƒXƒe[ƒ^ƒXƒƒCƒ“ƒy[ƒW
-		BAPPTOOL_SetCursorPutData( wk->cpwk, StMain_CursorPosTbl );
-		break;
-
-	case BPLIST_PAGE_WAZA_SEL:		// ƒXƒe[ƒ^ƒX‹Z‘I‘ðƒy[ƒW
-		BAPPTOOL_SetCursorPutData( wk->cpwk, StWazaInfo_CursorPosTbl );
-		break;
-
-	case BPLIST_PAGE_SKILL:				// ƒXƒe[ƒ^ƒX‹ZÚ×ƒy[ƒW
-		BAPPTOOL_SetCursorPutData( wk->cpwk, StWazaSel_CursorPosTbl );
-		break;
-
-	case BPLIST_PAGE_WAZASET_BS:	// ƒXƒe[ƒ^ƒX‹Z–Y‚ê‚Pƒy[ƒWií“¬‹Z‘I‘ðj
-		BAPPTOOL_SetCursorPutData( wk->cpwk, DelSel_CursorPosTbl );
-		break;
-
-	case BPLIST_PAGE_WAZASET_BI:	// ƒXƒe[ƒ^ƒX‹Z–Y‚ê‚Qƒy[ƒWií“¬‹ZÚ×j
-		BAPPTOOL_SetCursorPutData( wk->cpwk, DelInfo_CursorPosTbl );
-		break;
-	}
-
-	BAPPTOOL_MoveCursor( wk->cpwk, 0 );
-
-/*
 	BAPP_CursorMvWkSetPoint( wk->cmv_wk, CursorPosTable[page] );
 
 	switch( page ){
@@ -2151,9 +2051,8 @@ void BattlePokeList_CursorMoveSet( BPLIST_WORK * wk, u8 page )
 		BAPP_CursorMvWkSetPos( wk->cmv_wk, wk->wwm_page_cp );
 		break;
 	}
-*/
 }
-
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2164,11 +2063,11 @@ void BattlePokeList_CursorMoveSet( BPLIST_WORK * wk, u8 page )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BattlePokeList_CursorOff( BPLIST_WORK * wk )
 {
-/*
 	BAPP_CursorMvWkSetFlag( wk->cmv_wk, 0 );
 	BAPP_CursorMvWkPosInit( wk->cmv_wk );
 	BCURSOR_OFF( BAPP_CursorMvWkGetBCURSOR_PTR( wk->cmv_wk ) );
-*/
 }
+*/
