@@ -33,9 +33,11 @@ $PLACEGMM_FILENAME	= "";
 @GUIDGMM_BUFF				= ();		#ガイド文字ID
 @PLACEGMM_BUFF			=	();		#名所文字ID
 @TYPE_BUFF					= ();		#タイプ名	これだけheaderから取り出す
+@ZONE_SEARCH				= ();		#自分の場所を調べる方法
 
 #取得したデータ
 @DATA_ZONEID				=	();		#ゾーンID
+@DATA_ZONESEARCH		=	();		#探索方法
 @DATA_POS_X					=	();		#座標X
 @DATA_POS_Y					=	();		#座標Y
 @DATA_CURSOR_X			=	();		#カーソルX
@@ -89,6 +91,7 @@ if( @ARGV < 1 )
 $line_cnt	= 0;
 $is_file_name_start	= 0;
 $is_type_start	= 0;
+$zone_search_start	= 0;
 foreach $line ( @TOWNMAP_XLS_HEADER )
 {
 
@@ -113,6 +116,15 @@ foreach $line ( @TOWNMAP_XLS_HEADER )
 	elsif( $word[0] eq "#type_end" )
 	{
 		$is_type_start	= 0;
+	}
+	elsif( $word[0] eq "#zone_search_start" )
+	{
+		$line_cnt	= 0;
+		$zone_search_start	= 1;
+	}
+	elsif( $word[0] eq "#zone_search_end" )
+	{
+		$zone_search_start	= 0;
 	}
 
 	#ファイル名データ取得
@@ -146,6 +158,15 @@ foreach $line ( @TOWNMAP_XLS_HEADER )
 		{
 			#print "$word[1]"."\n";
 			push( @TYPE_BUFF, $word[1] );
+		}
+	}
+	#種類データ取得
+	elsif( $zone_search_start == 1 )
+	{
+		if( $line_cnt >= 1 ) 
+		{
+			#print "$word[1]"."\n";
+			push( @ZONE_SEARCH, $word[1] );
 		}
 	}
 
@@ -195,6 +216,13 @@ foreach $line ( @TOWNMAP_XLS_DATA )
 			{
 				&UndefAssert( $w );
 				push( @DATA_ZONEID, &GetTypeNumber( $w, \@ZONEID_BUFF ) );
+			}
+			#自分の位置探索
+			if( $tag eq "#zone_search" )
+			{
+				&UndefAssert( $w );
+				$val	= &GetArrayNumber( $w, \@ZONE_SEARCH );
+				push( @DATA_ZONESEARCH, $val );
 			}
 			#座標X
 			elsif( $tag eq "#pos_x" )
@@ -386,6 +414,16 @@ foreach $line ( @TOWNMAP_XLS_DATA )
 		}
 	}
 }
+#-------------------------------------
+#	当たり判定情報に場所の位置を足す
+#=====================================
+for( my $i = 0; $i < $DATA_LENGTH; $i++ )
+{
+	$DATA_HIT_S_X[$i]	+= $DATA_POS_X[$i];
+	$DATA_HIT_S_Y[$i]	+= $DATA_POS_Y[$i];
+	$DATA_HIT_E_X[$i]	+= $DATA_POS_X[$i];
+	$DATA_HIT_E_Y[$i]	+= $DATA_POS_Y[$i];
+}
 
 #-------------------------------------
 #	デバッグプリント
@@ -397,6 +435,7 @@ if(0)
 	{
 		print( "DATA=".$i."\n" );
 		print( "ZONE=".$DATA_ZONEID[$i]."\n" );
+		print( "SEAR=".$DATA_ZONESEARCH[$i]."\n" );
 		print( "posX=".$DATA_POS_X[$i]."\n" );
 		print( "posY=".$DATA_POS_Y[$i]."\n" );
 		print( "curX=".$DATA_CURSOR_X[$i]."\n" );
@@ -438,6 +477,12 @@ foreach $type ( @TYPE_BUFF )
 	print( FILEOUT "#define TOWNMAP_PLACETYPE_$type\t($cnt)\n" );
 	$cnt++;
 }
+$cnt	= 0;
+foreach $search ( @ZONE_SEARCH )
+{
+	print( FILEOUT "#define TOWNMAP_ZONESEARCH_$search\t($cnt)\n" );
+	$cnt++;
+}
 print( FILEOUT "#define TOWNMAP_PLACETYPE_MAX\t($cnt)\n\n" );
 close( FILEOUT ); 
 
@@ -449,6 +494,7 @@ binmode( FILEOUT );
 for( my $i = 0; $i < $DATA_LENGTH; $i++ )
 {
 	print( FILEOUT pack( "S", $DATA_ZONEID[$i] ) );
+	print( FILEOUT pack( "S", $DATA_ZONESEARCH[$i] ) );
 	print( FILEOUT pack( "S", $DATA_POS_X[$i] ) );
 	print( FILEOUT pack( "S", $DATA_POS_Y[$i] ) );
 	print( FILEOUT pack( "S", $DATA_CURSOR_X[$i] ) );

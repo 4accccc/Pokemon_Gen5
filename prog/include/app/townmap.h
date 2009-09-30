@@ -54,8 +54,8 @@ typedef struct
 	TOWNMAP_MODE		mode;			//[in]			動作モード
 	TOWNMAP_SELECT	select;		//[out]			選択の種類
 	u16							zoneID;		//[in/out]	[in]主人公が今いるゾーンID[out]空を飛ぶゾーンID
-	u16							dummy;		// zoneIDはu16
-	GFL_POINT				grid;			//[out] 空を飛んだ先の座標
+	u16							escapeID;	//[in]			戻りゾーンID
+	GFL_POINT				grid;			//[out]			空を飛んだ先の座標
 } TOWNMAP_PARAM;
 
 

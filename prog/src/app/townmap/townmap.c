@@ -603,7 +603,7 @@ static void CURSOR_SetPullEnable( CURSOR_WORK *p_wk, BOOL on_off );
 //-------------------------------------
 ///	PLACE
 //=====================================
-static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, const TOWNMAP_DATA *cp_data, const TOWNMAP_GRAPHIC_SYS *cp_grh, HEAPID heapID, BOOL is_debug );
+static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, const TOWNMAP_DATA *cp_data, const TOWNMAP_GRAPHIC_SYS *cp_grh, HEAPID heapID, BOOL is_debug );
 static void PLACE_Exit( PLACE_WORK *p_wk );
 static void PLACE_Main( PLACE_WORK *p_wk );
 static void PLACE_Scale( PLACE_WORK *p_wk, fx32 scale, const GFL_POINT *cp_center_start, const GFL_POINT *cp_center_next );
@@ -616,7 +616,7 @@ static const PLACE_DATA* PLACE_PullHit( const PLACE_WORK *cp_wk, const CURSOR_WO
 static s32 PLACEDATA_GetParam( const PLACE_DATA *cp_wk, TOWNMAP_DATA_PARAM param );
 static void PLACE_Active( PLACE_WORK *p_wk, const PLACE_DATA *cp_data );
 static void PLACE_NonActive( PLACE_WORK *p_wk );
-static const PLACE_DATA *PLACE_GetDataByZoneID( const PLACE_WORK *cp_wk, u16 zoneID );
+static const PLACE_DATA *PLACE_GetDataByZoneID( const PLACE_WORK *cp_wk, u16 zoneID, u16 escapeID );
 static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 data_idx, GFL_CLUNIT *p_clunit, u32 chr, u32 cel, u32 plt, HEAPID heapID, BOOL is_debug );
 static void PlaceData_Exit( PLACE_DATA *p_wk );
 static void PlaceData_SetVisible( PLACE_DATA *p_wk, BOOL is_visible );
@@ -924,7 +924,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 					GFL_BG_SCROLL_Y_SET, -4 );
 
 	//場所作成
-	PLACE_Init( &p_wk->place, p_param->zoneID, p_wk->p_data, p_wk->p_grh, HEAPID_TOWNMAP, FALSE );
+	PLACE_Init( &p_wk->place, p_param->zoneID, p_param->escapeID, p_wk->p_data, p_wk->p_grh, HEAPID_TOWNMAP, FALSE );
 
 	//カーソル作成
 	CURSOR_Init( &p_wk->cursor, TOWNMAP_GRAPHIC_GetClwk( p_wk->p_grh, TOWNMAP_OBJ_CLWK_CURSOR ),
@@ -932,7 +932,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	{	
 		const PLACE_DATA *cp_data	= NULL;
 		GFL_POINT pos;
-		cp_data	= PLACE_GetDataByZoneID( &p_wk->place, p_param->zoneID );
+		cp_data	= PLACE_GetDataByZoneID( &p_wk->place, p_param->zoneID, p_param->escapeID );
 		if( cp_data )
 		{	
 			pos.x	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_CURSOR_X );
@@ -2471,7 +2471,7 @@ static void CURSOR_SetPullEnable( CURSOR_WORK *p_wk, BOOL on_off )
  *	@param	heapID								ヒープID
  */
 //-----------------------------------------------------------------------------
-static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, const TOWNMAP_DATA *cp_data, const TOWNMAP_GRAPHIC_SYS *cp_grh, HEAPID heapID, BOOL is_debug )
+static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, const TOWNMAP_DATA *cp_data, const TOWNMAP_GRAPHIC_SYS *cp_grh, HEAPID heapID, BOOL is_debug )
 {	
 	//クリアー
 	GFL_STD_MemClear( p_wk, sizeof(PLACE_WORK) );
@@ -2516,7 +2516,10 @@ static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, const TOWNMAP_DATA *c
 		u32 chr, cel, plt;
 		const PLACE_DATA *cp_placedata	= NULL;
 		//ゾーンIDに対応する場所を取得
-		cp_placedata	= PLACE_GetDataByZoneID( p_wk, now_zone_ID );
+		cp_placedata	= PLACE_GetDataByZoneID( p_wk, now_zone_ID, esc_zone_ID );
+
+		NAGI_Printf( "ゾーンID now%d esc%d\n", esc_zone_ID, now_zone_ID );
+
 		//リソース取得
 		TOWNMAP_GRAPHIC_GetObjResource( cp_grh, &chr, &cel, &plt );
 		//作成
@@ -2911,11 +2914,12 @@ static void PLACE_NonActive( PLACE_WORK *p_wk )
  *	@return	PLACE_DATA	
  */
 //-----------------------------------------------------------------------------
-static const PLACE_DATA *PLACE_GetDataByZoneID( const PLACE_WORK *cp_wk, u16 zoneID )
+static const PLACE_DATA *PLACE_GetDataByZoneID( const PLACE_WORK *cp_wk, u16 zoneID, u16 escapeID )
 {	
 	const PLACE_DATA *cp_data	= NULL;
 	int i;
-	//ゾーンに対応する場所を取得
+
+	//ゾーンと完全対応する場所を取得
 	for( i = 0; i < cp_wk->data_num; i++ )
 	{	
 		cp_data	= &cp_wk->p_place[i];
@@ -2924,6 +2928,20 @@ static const PLACE_DATA *PLACE_GetDataByZoneID( const PLACE_WORK *cp_wk, u16 zon
 			return cp_data;
 		}
 	}
+
+	//現在地がフィールドではないならば、エスケープID検索
+	if( !ZONEDATA_IsFieldMatrixID( zoneID ) )
+	{	
+		for( i = 0; i < cp_wk->data_num; i++ )
+		{	
+			cp_data	= &cp_wk->p_place[i];
+			if( escapeID == PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ESCAPE_ZONE_ID ) )
+			{
+				return cp_data;
+			}
+		}
+	}
+
 	return NULL;
 }
 //----------------------------------------------------------------------------

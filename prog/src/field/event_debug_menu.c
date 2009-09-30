@@ -49,6 +49,7 @@
 #include  "item/item.h"  //ITEM_CheckEnable
 #include "app/townmap.h"
 #include "net_app/worldtrade.h"
+#include "../ui/debug/ui_template.h"
 
 #include "field_sound.h"
 
@@ -166,6 +167,7 @@ static BOOL debugMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_ChangePlayerSex( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_UITemplate( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk );
 
 //======================================================================
@@ -203,6 +205,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR36, debugMenuCallProc_ControlFog },
 	{ DEBUG_FIELD_STR40, debugMenuCallProc_ChangePlayerSex },
 	{	DEBUG_FIELD_STR42, debugMenuCallProc_WifiGts },
+	{	DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },
 	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -2922,6 +2925,7 @@ static BOOL debugMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk )
 		p_gamedata	= GAMESYSTEM_GetGameData( p_sky->p_gamesys );
 		p_player		= GAMEDATA_GetMyPlayerWork( p_gamedata );
 		p_sky->p_param->zoneID		= PLAYERWORK_getZoneID(p_player);
+		p_sky->p_param->escapeID	= GAMEDATA_GetEscapeLocation( p_gamedata )->zone_id;
 	}
 	return TRUE;
 }
@@ -3106,6 +3110,7 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
 
 	return TRUE;
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	デバッグGTS接続用イベント
@@ -3150,4 +3155,40 @@ static GMEVENT_RESULT debugMenuWifiGts( GMEVENT *p_event, int *p_seq, void *p_wk
 	}
 
 	return GMEVENT_RES_CONTINUE ;
+}
+//======================================================================
+//  デバッグメニュー UIテンプレートへ
+//======================================================================
+FS_EXTERN_OVERLAY(ui_debug);
+//----------------------------------------------------------------------------
+/**
+ *	@brief	UIテンプレート接続
+ *
+ *	@param	DEBUG_MENU_EVENT_WORK *p_wk		ワーク
+ *
+ *	@return	終了コード
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_UITemplate( DEBUG_MENU_EVENT_WORK *p_wk )
+{	
+	GAMESYS_WORK	*p_gamesys	= p_wk->gmSys;
+	GMEVENT				*p_event		= p_wk->gmEvent;
+	FIELDMAP_WORK *p_field		= p_wk->fieldWork;
+	UI_TEMPLATE_PARAM	*p_param;
+
+	//イヴェント
+	GMEVENT_Change( p_event, debugMenuWifiGts, sizeof(UI_TEMPLATE_PARAM) );
+	p_param = GMEVENT_GetEventWork( p_event );
+	GFL_STD_MemClear( p_param, sizeof(UI_TEMPLATE_PARAM) );
+
+	p_param->p_gamesys	= p_gamesys;
+
+	GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_gamesys, p_field,
+        FS_OVERLAY_ID(ui_debug), &UITemplateProcData, p_param ) );
+
+
+	OS_Printf( "UIテンプレート Start\n" );
+
+	return TRUE;
+
 }

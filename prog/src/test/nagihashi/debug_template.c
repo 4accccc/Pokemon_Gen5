@@ -20,7 +20,7 @@
 #include "app/app_menu_common.h"
 #include "app/app_taskmenu.h"
 #include "infowin/infowin.h"
-#include "touchbar.h"
+#include "ui/touchbar.h"
 #include "hoge_graphic.h"
 
 //archive
@@ -92,7 +92,7 @@ typedef struct
 	SEQ_WORK			seq;
 
 	//タッチバー
-	TOUCHBAR_WORK		*p_touchbar;
+	TOUCHBAR_WORK	*p_touchbar;
 
 	//共通で使うフォント
 	GFL_FONT			*p_font;

@@ -11,19 +11,22 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
-#include "system/wipe.h"
-#include "system/brightness.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
-#include "print/global_font.h"
 #include "font/font.naix"
 
 #include "arc_def.h"
 
+//INFOWIN
+#include "infowin/infowin.h"
+
 //描画設定
 #include "hoge_graphic.h"
 
+//タッチバー
+#include "ui/touchbar.h"
 
+//外部公開
 #include "ui_template.h"
 
 #include "message.naix" // GMM
@@ -42,6 +45,8 @@ const GFL_PROC_DATA UITemplateProcData = {
 	UITemplateProc_Exit,
 };
 
+FS_EXTERN_OVERLAY(ui_common);
+
 //=============================================================================
 /**
  *								定数定義
@@ -49,7 +54,32 @@ const GFL_PROC_DATA UITemplateProcData = {
 //=============================================================================
 enum
 { 
-  UI_TEMPLATE_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
+  UI_TEMPLATE_HEAP_SIZE = 0x20000,  ///< ヒープサイズ
+};
+
+//-------------------------------------
+///	フレーム
+//=====================================
+enum
+{	
+	BG_FRAME_BAR_M	= GFL_BG_FRAME0_M,
+	BG_FRAME_BACK_M	= GFL_BG_FRAME1_M,
+	BG_FRAME_BACK_S	= GFL_BG_FRAME1_S,
+};
+//-------------------------------------
+///	パレット
+//=====================================
+enum
+{	
+	//メインBG
+	PLTID_BG_BACK_M			= 0,
+	PLTID_BG_TOUCHBAR_M	= 13,
+	PLTID_BG_INFOWIN_M	= 15,
+	//サブBG
+	PLTID_BG_BACK_S	=		 0,
+
+	//メインOBJ
+	PLTID_OBJ_TOUCHBAR_M	= 0,
 };
 
 //=============================================================================
@@ -76,6 +106,9 @@ typedef struct {
 
 	//描画設定
 	HOGE_GRAPHIC_WORK			*p_graphic;
+
+	//タッチバー
+	TOUCHBAR_WORK					*p_touchbar;
 } UI_TEMPLATE_MAIN_WORK;
 
 
@@ -113,6 +146,13 @@ static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heap_id 
 GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
 	UI_TEMPLATE_MAIN_WORK *wk;
+	UI_TEMPLATE_PARAM *param;
+
+	//オーバーレイ読み込み
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+	
+	//引数取得
+	param	= pwk;
 
 	//ヒープ作成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_UI_DEBUG, UI_TEMPLATE_HEAP_SIZE );
@@ -127,6 +167,48 @@ GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *
 
 	//BGリソース読み込み
 	UITemplate_BG_LoadResource( &wk->wk_bg, wk->heap_id );
+
+	//INFOWINの初期化
+	{
+		GAME_COMM_SYS_PTR comm;
+		comm	= GAMESYSTEM_GetGameCommSysPtr(param->p_gamesys);
+		INFOWIN_Init( BG_FRAME_BAR_M, 
+				PLTID_BG_INFOWIN_M, comm, wk->heap_id );
+	}
+
+	//タッチバーの初期化
+	{	
+		TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
+		{	
+			{	
+				TOUCHBAR_ICON_RETURN,
+				{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
+			},
+			{	
+				TOUCHBAR_ICON_CLOSE,
+				{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
+			},
+			{	
+				TOUCHBAR_ICON_CHECK,
+				{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y_CHECK },
+			},
+		};
+		TOUCHBAR_SETUP	touchbar_setup;
+		touchbar_setup.p_item		= touchbar_icon_tbl;
+		touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);
+		touchbar_setup.p_unit		= HOGE_GRAPHIC_GetClunit( wk->p_graphic );
+		touchbar_setup.bar_frm	= BG_FRAME_BAR_M;
+		touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;
+		touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;
+		touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;
+
+		wk->p_touchbar	= TOUCHBAR_Init( &touchbar_setup, wk->heap_id );
+	}
+
+
+	//@todo	フェードシーケンスがないので
+	GX_SetMasterBrightness(0);
+	GXS_SetMasterBrightness(0);
 
   return GFL_PROC_RES_FINISH;
 }
@@ -147,6 +229,11 @@ GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *
 { 
 	UI_TEMPLATE_MAIN_WORK* wk = mywk;
 
+	//タッチバー破棄
+	TOUCHBAR_Exit( wk->p_touchbar );
+
+	//INFOWIN破棄
+	INFOWIN_Exit();
 
 	//描画設定破棄
 	HOGE_GRAPHIC_Exit( wk->p_graphic );
@@ -154,6 +241,9 @@ GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *
 
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( wk->heap_id );
+
+	//オーバーレイ破棄
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
 
   return GFL_PROC_RES_FINISH;
 }
@@ -180,8 +270,14 @@ GFL_PROC_RESULT UITemplateProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *
     return GFL_PROC_RES_FINISH;
   }
 
+	//INFOWINメイン
+	INFOWIN_Update();
+
 	//描画設定メイン
 	HOGE_GRAPHIC_2D_Draw( wk->p_graphic );
+
+	//TOUCHBAR
+	TOUCHBAR_Main( wk->p_touchbar );
 
   return GFL_PROC_RES_CONTINUE;
 }
@@ -204,21 +300,26 @@ GFL_PROC_RESULT UITemplateProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *
 static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heap_id )
 {
   //@TODO とりあえずマイクテストのリソース
+	ARCHANDLE	*handle;
+
+	handle	= GFL_ARC_OpenDataHandle( ARCID_MICTEST_GRA, heap_id );
 
 	// 上下画面ＢＧパレット転送
-	GFL_ARC_UTIL_TransVramPalette( ARCID_MICTEST_GRA, NARC_mictest_back_bg_down_NCLR, PALTYPE_MAIN_BG, 0, 0x20, heap_id );
-	GFL_ARC_UTIL_TransVramPalette( ARCID_MICTEST_GRA, NARC_mictest_back_bg_up_NCLR, PALTYPE_SUB_BG, 0, 0x20, heap_id );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_down_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x20, heap_id );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_up_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heap_id );
 	
   //	----- 下画面 -----
-	GFL_ARC_UTIL_TransVramBgCharacter(	ARCID_MICTEST_GRA, NARC_mictest_back_bg_down_NCGR,
-						GFL_BG_FRAME1_S, 0, 0, 0, heap_id );
-	GFL_ARC_UTIL_TransVramScreen(	ARCID_MICTEST_GRA, NARC_mictest_back_bg_down_NSCR,
-						GFL_BG_FRAME1_S, 0, 0, 0, heap_id );	
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_mictest_back_bg_down_NCGR,
+						BG_FRAME_BACK_S, 0, 0, 0, heap_id );
+	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_mictest_back_bg_down_NSCR,
+						BG_FRAME_BACK_S, 0, 0, 0, heap_id );	
 
 	//	----- 上画面 -----
-	GFL_ARC_UTIL_TransVramBgCharacter(	ARCID_MICTEST_GRA, NARC_mictest_back_bg_up_NCGR,
-						GFL_BG_FRAME1_M, 0, 0, 0, heap_id );
-	GFL_ARC_UTIL_TransVramScreen(	ARCID_MICTEST_GRA, NARC_mictest_back_bg_up_NSCR,
-						GFL_BG_FRAME1_M, 0, 0, 0, heap_id );		
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_mictest_back_bg_up_NCGR,
+						BG_FRAME_BACK_M, 0, 0, 0, heap_id );
+	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_mictest_back_bg_up_NSCR,
+						BG_FRAME_BACK_M, 0, 0, 0, heap_id );		
+
+	GFL_ARC_CloseDataHandle( handle );
 }
 
