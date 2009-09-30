@@ -35,6 +35,7 @@
 #include "app/townmap.h"
 #include "net_app/worldtrade.h"
 #include "app/config_panel.h"
+#include "debug_template.h"
 
 #include "savedata/irc_compatible_savedata.h"
 
@@ -166,6 +167,7 @@ typedef struct
 	IRC_RHYTHM_PARAM			rhythm_param;
 	TOWNMAP_PARAM					townmap_param;
 	WORLDTRADE_PARAM			gts_param;
+	TEMPLATE_PARAM				template_param;
 } DEBUG_NAGI_MAIN_WORK;
 
 //-------------------------------------
@@ -229,6 +231,7 @@ static void LISTDATA_CallProcNameDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcGts( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcConfig( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallProcTemplate( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_FullRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcTownMap( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -308,6 +311,7 @@ enum
 	LISTDATA_SEQ_NEXT_PAGE1,
 	LISTDATA_SEQ_PROC_GTS,
 	LISTDATA_SEQ_PROC_CONFIG,
+	LISTDATA_SEQ_PROC_TEMPLATE,
 
 	LISTDATA_SEQ_MAX,
 };
@@ -329,6 +333,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 	LISTDATA_NextListPage1,
 	LISTDATA_CallProcGts,
 	LISTDATA_CallProcConfig,
+	LISTDATA_CallProcTemplate,
 };
 
 //-------------------------------------
@@ -343,8 +348,13 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 		L"コンフィグ", LISTDATA_SEQ_PROC_CONFIG
 	},
 	{	
+		L"テンプレート", LISTDATA_SEQ_PROC_TEMPLATE,
+	},
+#if 0
+	{	
 		L"GTS", LISTDATA_SEQ_PROC_GTS
 	},
+#endif
 	{	
 		L"結果", LISTDATA_SEQ_PROC_RESULT,
 	},
@@ -489,7 +499,8 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void 
 	switch( *p_seq )
 	{	
 	case SEQ_INIT:
-//		*p_seq	= SEQ_FADEOUT_START;
+//		*p_seq	= SEQ_FADEOUTぷｒ_START;
+		//この前の
 			*p_seq	= SEQ_MAIN;
 		break;
 
@@ -866,6 +877,18 @@ static void LISTDATA_CallProcGts( DEBUG_NAGI_MAIN_WORK *p_wk )
 static void LISTDATA_CallProcConfig( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, NULL );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	テンプレートPROCへの移動
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_CallProcTemplate( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DebugTemplate_ProcData, &p_wk->template_param );
 }
 //----------------------------------------------------------------------------
 /**
