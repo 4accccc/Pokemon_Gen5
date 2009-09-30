@@ -1,5 +1,9 @@
 //============================================================================================
 /**
+ * @file  field_data.c
+ * @brief 各マップのデータサイズ・プログラム指定
+ * @author  GAMEFREAK inc.
+ * @date  2008.09
  */
 //============================================================================================
 #include <gflib.h>
@@ -50,27 +54,18 @@ void FIELDDATA_SetMapperData(u16 mapid, const AREADATA * areadata,
 	*map_res = resistMapTbl[resid].mapperData;
 
 	if (resistMapTbl[resid].isMatrixMapFlag){
-		u16 matID;
-		matID = ZONEDATA_GetMatrixID( mapid );
-		MAP_MATRIX_Init( matrix_buf, matID, mapid );
 		map_res->sizex = MAP_MATRIX_GetMapBlockSizeWidth( matrix_buf );
 		map_res->sizez = MAP_MATRIX_GetMapBlockSizeHeight( matrix_buf );
 		map_res->totalSize = MAP_MATRIX_GetMapBlockTotalSize( matrix_buf );
 		map_res->blocks = (const FLDMAPPER_MAPDATA*)MAP_MATRIX_GetMapResIDTable( matrix_buf );
 	}
-	
-	//標準フィールド以外のときだけテクスチャをグローバルにしてみる
-	if (map_res->g3DmapFileType != FLDMAPPER_FILETYPE_PKGS) {
-    FLDMAPPER_RESIST_TEX	gTexBuffer;
 
-		gTexBuffer.arcID = ARCID_AREA_MAPTEX;
-		gTexBuffer.datID = AREADATA_GetTextureSetID(areadata);
-		map_res->gtexType = FLDMAPPER_TEXTYPE_USE;
-		map_res->gtexData = gTexBuffer;
+  map_res->gtexType = FLDMAPPER_TEXTYPE_USE;
+  map_res->gtexData.arcID = ARCID_AREA_MAPTEX;
+  map_res->gtexData.datID = AREADATA_GetTextureSetID(areadata);
 
-    map_res->ground_anime.ita_datID = AREADATA_GetGroundITAID(areadata);
-    map_res->ground_anime.itp_anm_datID = AREADATA_GetGroundITPID(areadata);
-	}
+  map_res->ground_anime.ita_datID = AREADATA_GetGroundITAID(areadata);
+  map_res->ground_anime.itp_anm_datID = AREADATA_GetGroundITPID(areadata);
 }
 
 //------------------------------------------------------------------

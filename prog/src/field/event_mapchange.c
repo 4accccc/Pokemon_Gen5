@@ -535,6 +535,7 @@ GMEVENT * EVENT_ChangeMapByConnect(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
   mcw->exit_type = CONNECTDATA_GetExitType(cnct);
 
   {
+    //フィールド→屋内への移動の際は脱出先位置を記憶しておく
     const LOCATION * ent = GAMEDATA_GetEntranceLocation(gamedata);
     if (ZONEDATA_IsFieldMatrixID(ent->zone_id) == TRUE
         && ZONEDATA_IsFieldMatrixID(mcw->loc_req.zone_id) == FALSE)
@@ -736,6 +737,12 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 		PLAYERWORK_setDirection(mywork, direction);
 	}
 
+  //マトリックスデータの更新
+  {
+    MAP_MATRIX * matrix = GAMEDATA_GetMapMatrix( gamedata );
+		u16 matID = ZONEDATA_GetMatrixID( loc.zone_id );
+		MAP_MATRIX_Init( matrix, matID, loc.zone_id );
+  }
 	// ISSにゾーン切り替えを通知
 	{
 		ISS_SYS* iss = GAMESYSTEM_GetIssSystem( gsys );
@@ -787,7 +794,6 @@ static void MAPCHG_releaseMMdl( GAMEDATA * gamedata )
  * @brief
  * @param gamedata
  *
- * @todo  MapMatrix読み込みをこの中に移動する
  * @todo  マップをまたいでor画面暗転中もずっと維持されるメモリ状態などはここで設定
  * @todo  下記の※checkの対処を行う
  */
