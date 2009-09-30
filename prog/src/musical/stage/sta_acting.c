@@ -29,6 +29,7 @@
 
 #include "musical/musical_stage_sys.h"
 #include "sta_local_def.h"
+#include "sta_snd_def.h"
 #include "script/sta_act_script_def.h"
 #include "sta_act_bg.h"
 #include "sta_act_button.h"
@@ -464,9 +465,12 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
     break;
     
   case AMS_FADEOUT:
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
-    work->mainSeq = AMS_WAIT_FADEOUT;
+    if( PMSND_CheckPlaySE() == FALSE )
+    {
+      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+      work->mainSeq = AMS_WAIT_FADEOUT;
+    }
     break;
     
   case AMS_WAIT_FADEOUT:
@@ -555,6 +559,44 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
   {
     G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ , -8 );
     STA_BUTTON_SetCanUseButton( work->buttonSys , TRUE );
+    
+    /*
+    {
+      static testStaticNo = 0;
+      switch( testStaticNo )
+      {
+      case 0:
+        PMSND_PlaySE( SEQ_SE_MSCL_09 );
+        break;
+      case 1:
+        PMSND_PlaySE( SEQ_SE_MSCL_10 );
+        break;
+      case 2:
+        PMSND_PlaySE( SEQ_SE_MSCL_11 );
+        break;
+      case 3:
+        PMSND_PlaySE( SEQ_SE_MSCL_12 );
+        break;
+      case 4:
+        PMSND_PlaySE( SEQ_SE_MSCL_13 );
+        break;
+      case 5:
+        PMSND_PlaySE( SEQ_SE_SYS_04 );
+        break;
+      case 6:
+        PMSND_PlaySE( SEQ_SE_SAVE );
+        break;
+        
+      }
+      
+      testStaticNo++;
+      if( testStaticNo >= 7 )
+      {
+        testStaticNo = 0;
+      }
+    }
+    //*/
+
   }
 #endif
 
@@ -1363,6 +1405,8 @@ void STA_ACT_PlayTransEffect( ACTING_WORK *work , const u8 idx )
   {
     STA_EFF_CreateEmitter( work->transEffWork[idx] , i , &pos );
   }
+  
+  PMSND_PlaySE( STA_SE_TRANS_SE );
 }
 
 #pragma mark [> offer func

@@ -13,8 +13,8 @@
 #include "arc_def.h"
 #include "stage_gra.naix"
 
-
 #include "sta_local_def.h"
+#include "sta_snd_def.h"
 #include "sta_acting.h"
 #include "sta_act_poke.h"
 #include "script/sta_act_script_def.h"
@@ -503,6 +503,13 @@ void STA_POKE_UseItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , MUS_PO
   if( pokeWork->itemWork[ePos] != NULL &&
       pokeWork->updateItemUseFunc == NULL )
   {
+    static const u32 UseSeArr[MUT_MAX] = { 
+      STA_SE_USEITEM_SPIN ,
+      STA_SE_USEITEM_FLASH ,
+      STA_SE_USEITEM_FLYING ,
+      STA_SE_USEITEM_THROW ,
+      STA_SE_USEITEM_USE };
+    
     MUS_ITEM_DATA_SYS *itemDataSys = MUS_ITEM_DRAW_GetItemDataSys ( work->itemDrawSys );
     const u16 itemNo = pokeWork->pokeEquip[ePos]->itemNo;
     const MUSICAL_ITEM_USETYPE useType = MUS_ITEM_DATA_GetItemUseType( itemDataSys , itemNo );
@@ -514,6 +521,9 @@ void STA_POKE_UseItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , MUS_PO
     pokeWork->itemUseWork.equipPos = ePos;
     pokeWork->itemUseWork.effWork = NULL;
     pokeWork->releaseItem = MUS_POKE_EQUIP_MAX;
+    
+    //SEÄ¶
+    PMSND_PlaySE( UseSeArr[useType] );
     
     //ŒÂ•Ê‰Šú‰»
     switch(useType)

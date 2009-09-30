@@ -25,6 +25,7 @@
 #include "system/bmp_winframe.h"
 #include "system/wipe.h"
 #include "mus_shot_info.h"
+#include "mus_shot_snd_def.h"
 
 //======================================================================
 //	define
@@ -55,6 +56,7 @@
 #pragma mark [> enum
 typedef enum
 {
+  MSIS_FADE_WAIT_PLAY_SE,
   MSIS_FADE_WAIT,
   //保存確認モード
   MSIS_MSG_WAIT,
@@ -116,7 +118,14 @@ MUS_SHOT_INFO_WORK* MUS_SHOT_INFO_InitSystem( MUSICAL_SHOT_DATA *shotData , MUSI
   infoWork->musicalSave = musicalSave;
   infoWork->msgStr = NULL;
 
-  infoWork->state = MSIS_FADE_WAIT;
+  if( isChackMode == TRUE )
+  {
+    infoWork->state = MSIS_FADE_WAIT_PLAY_SE;
+  }
+  else
+  {
+    infoWork->state = MSIS_FADE_WAIT;
+  }
   
   MUS_SHOT_INFO_InitGraphic( infoWork );
   MUS_SHOT_INFO_InitMessage( infoWork );
@@ -147,6 +156,11 @@ void MUS_SHOT_INFO_UpdateSystem( MUS_SHOT_INFO_WORK *infoWork )
 {
   switch( infoWork->state )
   {
+  case MSIS_FADE_WAIT_PLAY_SE:
+    infoWork->state = MSIS_FADE_WAIT;
+    PMSND_PlaySE( STA_SE_SHUTTER_SE );
+    //break;  break througth
+
   case MSIS_FADE_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {

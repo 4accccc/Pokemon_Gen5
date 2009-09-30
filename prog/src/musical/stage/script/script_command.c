@@ -16,6 +16,7 @@
 #include "stage_gra.naix"
 #include "script_table.h"
 #include "../sta_local_def.h"
+#include "../sta_snd_def.h"
 #include "test/ariizumi/ari_debug.h"
 
 
@@ -369,6 +370,9 @@ SCRIPT_FUNC_DEF( CurtainDown )
 //  moveWork->stepVal = (moveWork->end-moveWork->start)/moveWork->frame;
   
   moveWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
+  
+  PMSND_PlaySE( STA_SE_CLOSE_CURTAIN );
+//  PMSND_PlaySE( SEQ_SE_MSCL_09 );
   
   return SFT_CONTINUE;
 }

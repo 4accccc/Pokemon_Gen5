@@ -3,7 +3,7 @@
  * @file	dup_local_def.h
  * @brief	ミュージカル　ドレスアップ用音定義
  * @author	ariizumi
- * @data	09/05/29
+ * @data	09/09/30
  */
 //======================================================================
 
@@ -21,7 +21,7 @@
 //リスト回転音
 #define DUP_SE_LIST_ROTATE (SEQ_SE_MSCL_03)
 //↑を鳴らすための値
-#define DUP_LIST_ROTATE_SE_VALUE (30*0x10000/360)
+#define DUP_LIST_ROTATE_SE_VALUE (180*0x10000/360)
 //グッズタッチ音
 #define DUP_SE_LIST_TOUCH_GOODS (SEQ_SE_MSCL_02)
 //リストからグッズを取り出す音

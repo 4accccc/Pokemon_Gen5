@@ -154,7 +154,14 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
         shotData->shotPoke[i].equip[0].equipPos = MUS_POKE_EQU_HAND_R;
       }
     }
-    work->shotInitWork->isCheckMode = FALSE;
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+    {
+      work->shotInitWork->isCheckMode = TRUE;
+    }
+    else
+    {
+      work->shotInitWork->isCheckMode = FALSE;
+    }
     work->shotInitWork->musicalSave = NULL;
   }
   else
