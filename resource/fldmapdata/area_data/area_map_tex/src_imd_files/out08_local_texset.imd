@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-09-16T17:05:20"/>
+	<create user="fujiwara_maiko" host="W00194" date="2009-09-30T16:46:30"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,8 +29,33 @@
 
 <box_test pos_scale="2" xyz="-2.000000 0.000000 -2.000000" whd="4.000000 0.000000 4.000000"/>
 
-<tex_image_array size="6">
-	<tex_image index="0" name="h02_hasi1"
+<tex_image_array size="11">
+	<tex_image index="0" name="h02_2kage"
+		width="16" height="16" original_width="16" original_height="16"
+		format="a5i3"
+		palette_name="h02_2kage_pl"
+		path="C:/home/wb_data3d/field/out08/map/tex/h02_2kage.tga"
+	>
+		<bitmap size="128">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0808 0808 0808 0808 0808 0808 0808 0808
+			1818 1818 1818 1818 1818 1818 1818 1818
+			3030 3030 3030 3030 3030 3030 3030 3030
+			4840 4848 4848 4848 4848 4848 4848 4848
+			4840 4848 4848 4848 4848 4848 4848 4848
+			6060 6060 6060 6060 6060 6060 6060 6060
+			6060 6060 6060 6060 6060 6060 6060 6060
+			8080 8080 8080 8080 8080 8080 8080 8080
+			8080 8080 8080 8080 8080 8080 8080 8080
+			a0a0 a0a0 a0a0 a0a0 a0a0 a0a0 a0a0 a0a0
+			a0a0 a0a0 a0a0 a0a0 a0a0 a0a0 a0a0 a0a0
+			a0a0 a0a0 a0a0 a0a0 a0a0 a0a0 a0a0 a0a0
+			a0a0 a0a0 a0a0 a0a0 a0a0 a0a0 a0a0 a0a0
+			a0a0 a0a0 a0a0 a0a0 a0a0 a0a0 a0a0 a0a0
+			a0a0 a0a0 a0a0 a0a0 a0a0 a0a0 a0a0 a0a0
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="h02_hasi1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -38,41 +63,41 @@
 		path="C:/home/wb_data3d/field/out08/map/tex/h02_hasi1.tga"
 	>
 		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+			2222 2222 0222 2222 2022 2221 1202 2222
+			2222 2222 0222 2222 2022 2221 1202 2222
+			2222 2222 0222 2222 2022 2221 1202 2222
+			2222 2222 0222 3322 2033 3331 1203 3333
+			2222 2222 0222 3322 2033 3331 1203 3333
+			2222 2222 0222 3322 2033 3331 1203 3333
+			2222 2222 0222 4322 1033 3331 1103 3343
+			2222 2222 0222 5322 2033 3331 1203 3353
+			2222 2222 0222 5322 2033 3331 1203 3353
+			2222 2222 0222 6322 2033 3331 1203 3363
+			2222 2222 0222 7322 2033 3331 1203 3373
+			2222 2222 0222 7322 2033 3331 1203 3373
+			2222 2222 0222 8322 2033 3331 1203 3383
+			2222 2222 0222 9322 2033 3331 1203 3393
+			2222 2222 0222 a322 2033 3331 1203 33a3
+			2222 2222 0222 a322 2033 3431 1203 33a3
+			2222 2222 0222 a322 2033 3531 1203 33a3
+			2222 2222 0222 a322 2033 3631 1203 33a3
+			2222 2222 0222 a322 2033 3731 1203 33a3
+			2222 2222 0222 a322 1033 3831 1103 33a3
+			2222 2222 0222 a322 2033 3931 1203 33a3
+			2222 2222 0222 a322 2033 3a31 1203 33a3
+			2222 2222 0222 a322 2033 3a31 1203 33a3
+			2222 2222 0222 a322 2033 3a31 1203 33a3
+			2222 2222 0222 a322 2033 3931 1203 33a3
+			2222 2222 0222 a322 2033 3831 1203 33a3
+			2222 2222 0222 a322 2033 3731 1203 33a3
+			2222 2222 0222 a322 2033 3631 1203 33a3
+			2222 2222 0222 a322 2033 3531 1203 33a3
+			2222 2222 0222 a322 2033 3431 1203 33a3
+			2222 2222 0222 a322 2033 3331 1203 33a3
+			2222 2222 0222 a322 2033 3331 1203 33a3
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="h02_hasi2"
+	<tex_image index="2" name="h02_hasi2"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -80,230 +105,324 @@
 		path="C:/home/wb_data3d/field/out08/map/tex/h02_hasi2.tga"
 	>
 		<bitmap size="256">
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			8888 8888 4448 c633 99cc 9999 5666 1123
-			aaaa aaaa 477a c633 99cc 9999 5666 1123
-			bbbb bbbb 477b c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d 9633 9999 9999 3666 0012
-			8888 8888 4448 6633 6666 6666 2666 0001
-			aaaa aaaa 477a 3333 2223 2222 1222 0000
-			bbbb bbbb 477b 3333 2223 2222 1222 0000
-			dddd dddd 488d 6633 6666 6666 2666 0001
-			dddd dddd 488d c633 99cc 9999 3666 0012
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			8888 8888 4448 c633 99cc 9999 5666 1123
-			aaaa aaaa 477a c633 99cc 9999 5666 1123
-			bbbb bbbb 477b c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
-			dddd dddd 488d c633 99cc 9999 5666 1123
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			8888 8888 4555 c633 69cc 2333 2222 1122
+			aaaa aaaa 4577 c633 69cc 2333 2222 1122
+			bbbb bbbb 4577 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 9633 6999 2333 2222 0012
+			8888 8888 4555 6633 6666 2333 2222 0001
+			aaaa aaaa 4577 3333 2223 1222 1111 0000
+			bbbb bbbb 4577 3333 2223 1222 1111 0000
+			dddd dddd 4588 6633 6666 2333 2222 0001
+			dddd dddd 4588 c633 69cc 2333 2222 0012
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			8888 8888 4555 c633 69cc 2333 2222 1122
+			aaaa aaaa 4577 c633 69cc 2333 2222 1122
+			bbbb bbbb 4577 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
+			dddd dddd 4588 c633 69cc 2333 2222 1122
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="h02_hasi3"
+	<tex_image index="3" name="h02_hasi3"
 		width="32" height="32" original_width="32" original_height="32"
-		format="palette256"
+		format="palette16"
 		color0_mode="color"
 		palette_name="h02_hasi3_pl"
 		path="C:/home/wb_data3d/field/out08/map/tex/h02_hasi3.tga"
 	>
-		<bitmap size="512">
-			110e 0100 0606 0001 0e11 000d 0a0a 0a0a
-			0a0a 0a0a 0c0c 0c05 0d0d 0c0c 0505 0505
-			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
-			0c0c 0a0c 0c0c 0c05 0d0d 0c0c 0505 0505
-			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
-			0d0d 0a0c 0c0c 0c05 0d0d 0c0c 0505 0505
-			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
-			0d0d 0a0c 0c0c 0c05 0c0d 0505 0505 0505
-			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
-			0d0d 0a0c 0c0c 0c05 050d 0404 0203 0502
-			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
-			0d0d 0a0c 0c0c 0c05 050f 0405 0203 0502
-			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
-			0d0d 0a0c 0c0c 0c05 0510 0405 0203 0502
-			110e 0100 0606 0001 0e11 000d 0a0c 0c0a
-			0707 0a0c 0c0c 0c05 0510 0405 0203 0502
-			110e 0100 0606 0001 0e11 000d 0a0c 0c0a
-			1010 0a0c 0c0c 0c05 0510 0405 0203 0502
-			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
-			1010 0a0c 0c0c 0c05 0510 0405 0203 0502
-			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
-			1212 0a0c 0c0c 0c05 0510 0405 0203 0502
-			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
-			1212 0a0c 0c0c 0c05 0510 0405 0203 0502
-			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
-			1212 0a0c 0c0c 0c05 050f 0405 0203 0502
-			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
-			1212 0a0c 0c0c 0c05 050d 0404 0203 0502
-			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
-			1212 0a0c 0c0c 0c05 0c0d 0505 0505 0505
-			110e 0100 0606 0001 0e11 000d 0a0c 0c0a
-			1010 0a0c 0c0c 0c05 0d0d 0c0c 0505 0505
-			110e 0100 0606 0001 0e11 000d 0a0c 0c0a
-			1010 0a0c 0c0c 0c05 0d0d 0c0c 0505 0505
-			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
-			0707 0a0c 0c0c 0c05 0d0d 0c0c 0505 0505
-			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
-			0707 0a0c 0c0c 0c05 0d0d 0c0c 0505 0505
-			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
-			0707 0a0c 0c0c 0c05 0c0d 0505 0505 0505
-			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
-			0707 0a0c 0c0c 0c05 050d 0404 0203 0502
-			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
-			0707 0a0c 0c0c 0c05 050f 0405 0203 0502
-			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
-			0707 0a0c 0b0b 0c05 0510 0405 0203 0502
-			110e 0100 0606 0001 0e11 000d 0a0c 0c0a
-			0d0d 0a0c 0a0a 0c05 0510 0405 0203 0502
-			110e 0100 0606 0001 0e11 000d 0a0c 0c0a
-			0d0d 0a0c 0909 0c05 0510 0405 0203 0502
-			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
-			0d0d 0a0c 0808 0c05 0510 0405 0203 0502
-			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
-			0d0d 0a0c 0808 0c05 0510 0405 0203 0502
-			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
-			0d0d 0a0c 0505 0c05 0510 0405 0203 0502
-			110e 0101 0000 0101 0e11 000d 0a0c 0c0a
-			0d0d 0a0c 0505 0c05 050f 0405 0203 0502
-			110e 0701 0101 0107 0e11 000d 0a0c 0c0a
-			0d0d 0a0c 0505 0c05 050d 0404 0203 0502
-			110e 0601 0707 0106 0e11 000d 0a0c 0c0a
-			0c0c 0a0c 0505 0c05 0c0d 0505 0505 0505
-			110e 0100 0606 0001 0e11 000d 0a0c 0a0a
-			0a0a 0a0a 0505 0c05 0d0d 0c0c 0505 0505
+		<bitmap size="256">
+			66eb e666 576b 7777 5777 9299 99aa 2222
+			86eb e688 596b 9779 5999 9299 99aa 2222
+			86eb e688 596b 9779 59aa 9299 99aa 2222
+			86eb e688 596b 9779 59aa 9299 229a 2222
+			86eb e688 596b 9779 59aa 9299 002a 2111
+			86eb e688 596b 9779 59cc 9299 022c 2111
+			86eb e688 596b 9779 59dd 9299 022d 2111
+			86eb e688 596b 9779 59dd 9299 022d 2111
+			86eb e688 596b 9779 59ff 9299 022d 2111
+			86eb e688 596b 9779 59ff 9299 022d 2111
+			86eb e688 596b 9779 59ff 9299 022d 2111
+			86eb e688 596b 9779 59ff 9299 022d 2111
+			86eb e688 596b 9779 59ff 9299 022c 2111
+			86eb e688 596b 9779 59ff 9299 002a 2111
+			86eb e688 596b 9779 59ff 9299 229a 2222
+			86eb e688 596b 9779 59ff 9299 99aa 2222
+			86eb e688 596b 9779 59ff 9299 99aa 2222
+			86eb e688 596b 9779 59ff 9299 99aa 2222
+			86eb e688 596b 9779 59ff 9299 99aa 2222
+			86eb e688 596b 9779 59ff 9299 229a 2222
+			86eb e688 596b 9779 59ff 9255 002a 2111
+			86eb e688 596b 9779 59ff 9255 022c 2111
+			86eb e688 596b 9779 59ff 9244 022d 2111
+			86eb e688 596b 9779 59dd 9244 022d 2111
+			86eb e688 596b 9779 59dd 9233 022d 2111
+			86eb e688 596b 9779 59cc 9233 022d 2111
+			86eb e688 596b 9779 59cc 9222 022d 2111
+			86eb e688 596b 9779 59aa 9222 022d 2111
+			86eb e688 596b 9779 59aa 9200 022c 2111
+			86eb e688 596b 9779 59aa 9200 002a 2111
+			86eb e688 596b 9779 5999 9200 229a 2222
+			86eb e688 556b 5779 5555 9200 99aa 2222
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="h02_hasi5"
+	<tex_image index="4" name="h02_hasi4"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
+		palette_name="h02_hasi4_pl"
+		path="C:/home/wb_data3d/field/out08/map/tex/h02_hasi4.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			1111 1111 1111 1111 1111 1111 1111 0001
+			1111 1111 1111 1111 1111 1111 1111 0001
+			2222 2222 2222 2222 2222 2222 2222 0002
+			2222 2222 2222 2222 2222 2222 2222 1112
+			3333 3333 3333 3333 3333 3333 3333 1113
+			3333 3333 3333 3333 3333 3333 3333 1113
+			4444 4444 4444 4444 4444 4444 4444 1114
+			4444 4444 4444 4444 4444 4444 4444 2224
+			5555 5555 5555 5555 5555 5555 5555 2225
+			5555 5555 5555 5555 5555 5555 5555 2225
+			6666 6666 6666 6666 6666 6666 6666 2226
+			6666 6666 6666 6666 6666 6666 6666 3336
+			6666 6666 6666 6666 6666 6666 6666 3336
+			6666 6666 6666 6666 6666 6666 6666 3336
+			7777 7777 7777 7777 7777 7777 7777 3337
+			7777 7777 7777 7777 7777 7777 7777 3337
+			7777 7777 7777 7777 7777 7777 7777 3337
+			7777 7777 7777 7777 7777 7777 7777 2227
+			7777 7777 7777 7777 7777 7777 7777 2227
+			7777 7777 7777 7777 7777 7777 7777 2227
+			7777 7777 7777 7777 7777 7777 7777 1117
+			7777 7777 7777 7777 7777 7777 7777 1117
+			7777 7777 7777 7777 7777 7777 7777 1117
+			7777 7777 7777 7777 7777 7777 7777 1117
+			7777 7777 7777 7777 7777 7777 7777 0007
+			7777 7777 7777 7777 7777 7777 7777 0007
+			7777 7777 7777 7777 7777 7777 7777 0007
+			7777 7777 7777 7777 7777 7777 7777 0007
+			7777 7777 7777 7777 7777 7777 7777 0007
+			7777 7777 7777 7777 7777 7777 7777 0007
+		</bitmap>
+	</tex_image>
+	<tex_image index="5" name="h02_hasi5"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
 		palette_name="h02_hasi5_pl"
 		path="C:/home/wb_data3d/field/out08/map/tex/h02_hasi5.tga"
 	>
 		<bitmap size="256">
-			2420 fff0 ffff ffff ffff ffff ffff ffff
-			2420 fff0 ffff ffff ffff ffff ffff ffff
-			2420 fff0 ffff ffff ffff ffff ffff ffff
-			2420 fff0 ffff ffff ffff ffff ffff ffff
-			2420 fff0 ffff ffff ffff ffff ffff ffff
-			3531 fff1 ffff ffff ffff ffff ffff ffff
-			4642 fff2 ffff ffff ffff ffff ffff ffff
-			5853 fff3 ffff ffff ffff ffff ffff ffff
-			7a74 fff4 ffff ffff ffff ffff ffff ffff
-			9b96 fff6 ffff ffff ffff ffff ffff ffff
-			9c97 fff7 ffff ffff ffff ffff ffff ffff
-			ada7 fff7 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
-			beb8 fff8 ffff ffff ffff ffff ffff ffff
+			da90 539b 7557 7777 7777 5755 0000 0000
+			ac90 539b 5557 7555 5555 5755 3000 07b7
+			cc90 539a 1157 7522 2225 5751 7300 7ddb
+			dc90 539b 1157 7511 1115 5751 b300 bddb
+			da90 539b 1157 7511 1115 5751 7300 7bbb
+			ab90 549b 1157 7522 2225 5751 3000 07b7
+			cc90 549a 1157 7522 2225 5751 0000 0000
+			dc90 559b 1157 7522 2225 5751 0000 0000
+			da90 569b 7557 7577 7775 5755 0000 0000
+			ac90 589b 5557 7555 5555 5755 0000 0000
+			cc90 599a 1157 7522 2225 5751 0000 0000
+			db90 599b 1157 7511 1115 5751 0000 0000
+			da90 599b 1157 7511 1115 5751 0000 0000
+			ab90 599b 1157 7522 2225 5751 0000 0000
+			cc90 599a 1157 7522 2225 5751 0000 0000
+			dc90 599b 7557 7577 7775 5755 0000 0000
+			da90 599b 5557 7555 5555 5755 0000 0000
+			ac90 599b 1157 7522 2225 5751 0000 0000
+			cc90 599a 1157 7511 1115 5751 0000 0000
+			dc90 599b 1157 7511 1115 5751 0000 0000
+			da90 599b 1157 7522 2225 5751 0000 0000
+			ac90 599b 1157 7522 2225 5751 0000 0000
+			cc90 599a 1157 7522 2225 5751 0000 0000
+			dc90 599b 7557 7577 7775 5755 0000 0000
+			da90 599b 5557 7555 5555 5755 0000 0000
+			ac90 599b 1157 7522 2225 5751 0000 0000
+			cc90 599a 1157 7511 1115 5751 0000 0000
+			dc90 599b 1157 7511 1115 5751 0000 0000
+			da90 599b 1157 7522 2225 5751 0000 0000
+			ac90 599b 1157 7522 2225 5751 0000 0000
+			cc90 599a 7557 7577 7775 5755 0000 0000
+			dc90 599b 5557 7555 5555 5755 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="h02_kage"
+	<tex_image index="6" name="h02_kage"
 		width="32" height="32" original_width="32" original_height="32"
 		format="a5i3"
 		palette_name="h02_kage_pl"
 		path="C:/home/wb_data3d/field/out08/map/tex/h02_kage.tga"
 	>
 		<bitmap size="512">
-			c0c8 c8c0 c0c8 c0c8 c8c8 c8c0 c8c8 c0c8
-			c8c8 c0c8 c0c8 c0c8 c8c0 c0c8 c8c8 c8c8
-			c8c8 c8c8 c8c8 c8c8 c8c0 c0c8 c0c8 c0c8
-			c8c8 c0c8 c0c8 c0c8 c8c8 c8c0 c8c8 c8c8
-			d0d0 d0d0 d0d0 c8d0 c8c0 c0c8 c0c8 c8c8
-			c0c8 c0c8 c8c0 c0c8 c8c8 c0c8 c8c8 c0c0
-			d8d8 d8d8 d8d8 c8d8 c0c8 c0c8 c8c0 c8c8
-			c8c0 c8c8 c8c8 c8c8 c8c0 c8c0 c8c8 c8c0
-			e0e0 e0e0 e0e0 c0e0 c8c8 c0c8 c8c8 c0c8
-			c8c8 c8c8 c0c8 c8c8 c0c0 c0c8 c8c0 c0c8
-			e8e8 e8e8 e8e8 c8e8 c8c8 c8c8 c0c0 c8c8
-			c8c8 c8c8 c8c0 c8c8 c8c8 c8c8 c8c0 c8c0
-			e8e8 f0f0 e8f0 c0e8 c8c8 c8c8 c8c8 c8c8
-			c8c0 c8c8 c8c8 c8c0 c8c8 c0c8 c0c0 c0c8
-			e8e8 f0e8 e8f0 c8e8 c8c8 c8c0 c0c0 c8c8
-			c8c0 c0c8 c8c0 c0c8 c8c8 c0c8 c0c8 c8c8
-			e8f0 e8e8 f0f0 c8e8 c8c0 c8c8 c8c0 c0c8
-			c8c8 c0c0 c0c8 c8c8 c8c8 c0c8 c8c0 c0c8
-			f0e8 e8f0 f0f0 c0e8 c8c0 c0c8 c8c8 c8c8
-			c0c8 c8c8 c8c8 c8c8 c0c8 c8c8 c8c8 c8c8
-			e8f0 e8f0 e8f0 c0e8 c8c8 c8c8 c8c8 c0c8
-			c0c8 c8c8 c8c8 c8c8 c8c8 c8c0 c8c8 c8c0
-			f0f0 f0e8 e8e8 c8f0 c8c8 c8c8 c8c0 c8c8
-			c8c0 c8c0 c0c8 c8c0 c8c8 c8c0 c8c8 c8c8
-			e8e8 e8e8 e8f0 c8f0 c8c8 c8c8 c8c8 c8c8
-			c8c0 c0c0 c8c8 c8c8 c8c0 c8c8 c8c8 c8c8
-			e8f0 e8f0 f0e8 c0f0 c8c8 c8c8 c8c0 c8c0
-			c8c8 c8c0 c8c0 c8c8 c8c8 c8c0 c8c8 c0c8
-			e8e8 f0f0 f0e8 c8e8 c0c8 c8c8 c8c8 c8c8
-			c8c8 c0c8 c8c0 c8c8 c8c8 c8c8 c8c8 c8c8
-			f0e8 e8f0 e8e8 c0e8 c8c8 c8c8 c0c8 c8c0
-			c8c8 c8c8 c8c0 c8c8 c8c8 c8c8 c8c8 c0c8
-			e8e8 e8f0 e8f0 c8e8 c8c8 c8c0 c8c8 c8c0
-			c8c0 c8c8 c8c8 c0c8 c8c8 c0c8 c8c8 c8c8
-			f0f0 e8e8 e8e8 c8e8 c8c0 c0c8 c0c0 c8c8
-			c8c8 c8c8 c0c8 c8c8 c8c0 c8c8 c8c8 c8c8
-			f0e8 e8f0 f0f0 c0e8 c8c8 c8c0 c8c8 c0c0
-			c0c8 c8c8 c8c0 c0c8 c0c8 c8c0 c8c8 c0c0
-			e8f0 e8e8 e8e8 c8e8 c8c8 c8c8 c8c0 c0c8
-			c8c8 c8c8 c8c8 c8c8 c8c8 c8c0 c8c8 c0c8
-			e8f0 e8e8 f0f0 c8e8 c8c8 c8c8 c8c8 c8c8
-			c8c8 c8c8 c0c8 c0c8 c0c0 c0c0 c0c8 c8c8
-			e8e8 f0e8 f0e8 c8e8 c8c8 c8c8 c8c0 c8c8
-			c8c8 c8c8 c8c0 c8c8 c0c8 c0c8 c8c8 c8c8
-			e8f0 f0e8 e8e8 c8e8 c8c8 c8c8 c8c8 c8c8
-			c8c0 c0c8 c8c0 c0c0 c0c8 c0c8 c8c8 c8c8
-			f0e8 e8e8 e8f0 c8e8 c0c8 c8c0 c0c8 c8c8
-			c0c8 c8c8 c8c0 c0c8 c8c8 c0c8 c8c8 c0c8
-			e8e8 e8f0 f0e8 c0e8 c0c8 c8c8 c0c8 c0c0
-			c8c8 c0c0 c0c8 c0c8 c8c8 c0c8 c8c8 c0c8
-			e8e8 f0f0 e8e8 c8f0 c8c8 c8c8 c8c8 c8c8
-			c8c0 c8c8 c8c8 c8c8 c8c0 c8c8 c8c0 c8c8
-			e8e8 f0e8 e8f0 c0f0 c8c8 c8c0 c8c8 c8c0
-			c0c0 c8c8 c8c8 c0c8 c8c8 c8c0 c8c8 c8c0
-			f0e8 f0f0 f0f0 c8e8 c8c8 c8c8 c0c0 c8c0
-			c8c0 c8c8 c0c8 c8c0 c0c8 c8c8 c8c8 c8c8
-			e8e8 e8e8 e8f0 c0e8 c8c8 c8c0 c8c8 c8c8
-			c0c0 c8c8 c8c8 c8c0 c8c0 c0c8 c8c8 c8c8
-			f0e8 f0f0 f0e8 c8f0 c8c0 c8c0 c8c8 c8c0
-			c8c8 c8c0 c8c0 c8c0 c0c8 c8c8 c8c0 c0c0
-			f0e8 f0f0 f0f0 c8f0 c0c8 c0c8 c8c8 c8c8
-			c0c8 c8c8 c8c0 c8c8 c8c8 c8c8 c8c0 c8c8
-			e8e8 f0f0 e8f0 c8e8 c8c8 c8c8 c0c8 c0c8
-			c8c8 c8c8 c0c0 c8c8 c8c8 c0c8 c8c8 c8c8
+			c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c0c0 c0c0
+			c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c0c0 c0c0
+			c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c0c0 c0c0
+			b1b1 b1b1 b1b1 c1b1 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 b1c1 b1b1 b0b0 b0b0
+			a1a1 a1a1 a1a1 c1a1 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 a1c1 a1a1 a0a0 a0a0
+			9191 9191 9191 c191 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 91c1 9191 9090 9090
+			8989 8181 8181 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 81c1 8981 8880 8088
+			8989 8181 8189 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 81c1 8989 8080 8888
+			8181 8181 8981 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 89c1 8189 8888 8088
+			8989 8989 8181 c189 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 81c1 8189 8888 8880
+			8189 8981 8981 c189 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 89c1 8189 8888 8088
+			8981 8981 8189 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 81c1 8981 8080 8888
+			8181 8989 8189 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 89c1 8981 8080 8880
+			8181 8981 8181 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 81c1 8981 8088 8888
+			8181 8181 8181 c189 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 81c1 8189 8880 8088
+			8981 8989 8189 c189 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 81c1 8189 8888 8888
+			8981 8189 8989 c189 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 81c1 8181 8080 8080
+			8181 8989 8989 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 89c1 8181 8880 8088
+			8181 8989 8181 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 81c1 8989 8088 8888
+			8181 8989 8981 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 81c1 8181 8080 8880
+			8989 8989 8181 c189 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 89c1 8181 8880 8080
+			8189 8181 8989 c189 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 81c1 8989 8888 8888
+			8981 8181 8989 c189 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 89c1 8981 8088 8088
+			8181 8989 8989 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 81c1 8989 8080 8888
+			8989 8181 8989 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 89c1 8189 8880 8088
+			8989 8189 8981 c189 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 81c1 8989 8880 8880
+			8989 8189 8981 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 91c1 9191 9090 9090
+			8981 8181 8981 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 a1c1 a1a1 a0a0 a0a0
+			8181 8189 8181 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 b1c1 b1b1 b0b0 b0b0
+			8981 8981 8981 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c0c0 c0c0
+			8989 8189 8981 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c0c0 c0c0
+			8989 8189 8181 c181 c1c1 c1c1 c1c1 c1c1
+			c1c1 c1c1 c1c1 c1c1 c1c1 c1c1 c0c0 c0c0
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="h02_umi"
+	<tex_image index="7" name="h02_light"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="h02_light_pl"
+		path="C:/home/wb_data3d/field/out08/map/tex/h02_light.tga"
+	>
+		<bitmap size="256">
+			7777 7777 7777 0777 3333 3333 3333 c833
+			7777 7777 7777 0777 3333 3333 3333 c833
+			7777 7777 7777 0777 1100 1111 4444 c914
+			7777 7777 7777 0777 1100 1111 4444 e914
+			7777 7777 7777 0777 2200 1111 4644 e914
+			7777 7777 7777 0777 2200 1111 6764 e914
+			7777 7777 7777 0777 2200 1111 6764 e914
+			7777 7777 7777 0777 2200 1111 6764 e914
+			7777 7777 7777 0777 2200 1111 6765 e915
+			7777 7777 7777 0777 2200 1111 6765 e915
+			7777 7777 7777 0777 2200 1111 6765 f915
+			7777 7777 7777 0777 2200 1111 5655 f915
+			7777 7777 7777 0777 2200 1111 5555 f915
+			7777 7777 7777 0777 2200 1111 5555 fa15
+			7777 7777 7777 0777 2200 1111 5555 fb15
+			7777 7777 7777 0777 1100 1111 4444 eb14
+			7777 7777 7777 0777 0000 0000 0000 fb00
+			7777 7777 7777 0777 0000 0000 0000 fb00
+			7777 7777 7777 0777 1100 1111 1111 fb11
+			7777 7777 7777 0777 2200 1111 1111 db11
+			7777 7777 7777 0777 2200 1111 4644 da14
+			7777 7777 7777 0777 2200 1111 6764 d914
+			7777 7777 7777 0777 2200 1111 6764 d914
+			7777 7777 7777 0777 2200 1111 6764 d914
+			7777 7777 7777 0777 2200 1111 6765 d915
+			7777 7777 7777 0777 2200 1111 5655 d915
+			7777 7777 7777 0777 2200 1111 5555 d915
+			7777 7777 7777 0777 2200 1111 5555 d915
+			7777 7777 7777 0777 2200 1111 5555 d915
+			7777 7777 7777 0777 1100 1111 4444 d914
+			7777 7777 7777 0777 0000 0000 0000 d900
+			7777 7777 7777 0777 0000 0000 0000 d900
+		</bitmap>
+	</tex_image>
+	<tex_image index="8" name="h02_stbg3"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="h02_stbg3_pl"
+		path="C:/home/wb_data3d/field/out08/map/tex/h02_stbg3.tga"
+	>
+		<bitmap size="256">
+			6664 5556 3255 3333 8883 8888 7777 7777
+			7774 5656 3265 3333 8883 8888 7777 7777
+			7774 5656 3265 3333 8883 8888 7777 7777
+			6664 6356 3277 3333 8883 8888 7777 7777
+			3334 6353 3277 3333 8883 8888 7777 7777
+			5555 2225 3222 5252 9985 9999 7777 7777
+			5555 5225 3235 5252 9985 9999 7777 7777
+			5555 5225 3235 5252 a985 9aaa 7777 7777
+			3533 0003 3200 5252 a985 9aaa 7777 7777
+			3433 0003 3200 5252 b985 9bbb 7777 7777
+			3433 0003 3200 5252 b985 9bbb 7777 7777
+			3433 1003 3211 5252 b985 9bcc 7777 7777
+			3433 1003 3211 5252 b985 9bcc 7777 7777
+			3433 1003 3211 5252 b985 9bcc 7777 7777
+			3433 5223 3233 5252 b985 9bcc 7777 7777
+			3433 0003 3200 5252 b985 9bcc 7777 7777
+			3433 0003 3200 5252 b985 9bcc 7777 7777
+			3433 1003 3211 5252 b985 9bcc 7777 7777
+			3433 5223 3233 5252 b985 9bcc 7777 7777
+			3433 0003 3200 5252 b985 9bcc 7777 7777
+			5455 0005 3200 5252 b985 9bcc 7777 7777
+			5455 1005 3211 5252 b985 9bcc 7777 7777
+			5455 5225 3233 5252 b985 9bcc 9988 9999
+			5455 0005 3200 5252 b985 9bcc 9988 9999
+			5455 0005 2100 2222 b982 9bcc aa88 9aaa
+			5455 1005 1111 1111 b981 9bcc bb88 9abb
+			5455 5225 8833 8888 b988 9bcc cc88 9bcc
+			5455 0005 8800 8888 b988 9bcc cc88 9bcc
+			5455 0005 8800 8888 b988 9bcc bb88 9abb
+			4444 5224 9933 9999 b999 9bcc aa88 9aaa
+			4444 2224 9922 9999 b999 9bcc 9988 9999
+			0000 0000 9900 9999 b999 9bcc 9988 9999
+		</bitmap>
+	</tex_image>
+	<tex_image index="9" name="h02_umi"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -345,31 +464,74 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
+	<tex_image index="10" name="sea_mizu1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette4"
+		color0_mode="color"
+		palette_name="sea_mizu1_pl"
+		path="C:/home/wb_data3d/field/out00/chip/tex/sea_mizu1.tga"
+	>
+		<bitmap size="128">
+			00a8 9655 00a8 9655 4a58 55a9 4a58 55a9
+			a094 55aa a094 55aa a828 5655 a828 5655
+			5000 9955 5000 9955 5298 2555 5298 2555
+			8955 a955 8955 8955 2556 aaa6 0556 a2a6
+			a556 55aa 255a 5800 9556 555a 1569 56a8
+			9569 5556 95a9 5560 a69a 5aa6 aa9a 5a08
+			aa5a a8aa aa56 0002 5656 0296 565a 25aa
+			9698 0956 96a8 a55a 2600 2555 aa02 9956
+			00aa 2555 80a8 9655 4aaa 95a9 a0a8 55a9
+			a0aa 95aa a8a8 55aa a82a 5655 a820 5655
+			5002 9955 5000 9955 529a 2555 5028 2555
+			8955 8955 8a55 8955 0556 a2a6 a956 a2a6
+			2556 5800 a556 582a 1556 56a8 9556 56aa
+			9569 5560 9569 556a a69a 5a08 a69a 5a0a
+			aa5a 0000 aa5a 0000 5656 2560 5656 2560
+			9698 a554 9698 a554 2600 9955 2600 9955
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="6">
-	<tex_palette index="0" name="h02_hasi1_pl" color_size="8">
-		0c71 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+<tex_palette_array size="11">
+	<tex_palette index="0" name="h02_2kage_pl" color_size="8">
+		1ca5 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="h02_hasi2_pl" color_size="16">
-		1084 1ce6 318b 3dee 4a96 4e72 5292 52d7
+	<tex_palette index="1" name="h02_hasi1_pl" color_size="16">
+		042d 0430 0452 04b9 04bb 04bd 04df 051f
+		055f 097f 0dbf 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="h02_hasi2_pl" color_size="16">
+		1084 1ce6 318b 3dee 3e33 4a96 5292 52d7
 		56f8 5ad5 5af8 5b19 6317 633a 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="h02_hasi3_pl" color_size="24">
-		0072 0095 0847 0848 0869 088f 08ba 08fa
-		0c92 0cb3 0cb4 0cb5 0cb6 0cdb 0cdc 0cfc
-		0d5c 113f 119f 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="3" name="h02_hasi3_pl" color_size="16">
+		002a 0446 044d 044e 044f 0470 0491 0891
+		08d6 0cb3 0cd7 0cd8 0cf8 0d38 111b 117b
 	</tex_palette>
-	<tex_palette index="3" name="h02_hasi5_pl" color_size="16">
-		2d6b 318c 35ad 39ce 3def 4210 4631 4a52
-		4e73 5294 56b5 5ad6 5ef7 6318 6739 7fff
+	<tex_palette index="4" name="h02_hasi4_pl" color_size="8">
+		2108 2529 294a 318c 35ad 3def 4210 4a52
 	</tex_palette>
-	<tex_palette index="4" name="h02_kage_pl" color_size="8">
-		24a5 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="5" name="h02_hasi5_pl" color_size="16">
+		0000 14a5 1ce7 2d6b 35ad 39ce 3def 4210
+		4631 4e73 5294 56b5 5ad6 6739 7fff 7fff
 	</tex_palette>
-	<tex_palette index="5" name="h02_umi_pl" color_size="16">
+	<tex_palette index="6" name="h02_kage_pl" color_size="8">
+		0008 2840 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="7" name="h02_light_pl" color_size="16">
+		044d 0892 08b5 0dfe 10f9 111a 11f8 1fbd
+		318c 4210 4e73 56b6 592d 7593 7596 765a
+	</tex_palette>
+	<tex_palette index="8" name="h02_stbg3_pl" color_size="16">
+		084b 084e 0892 08d8 0c8f 0cb6 0d19 19bd
+		2d49 41ee 4a30 5693 6718 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="9" name="h02_umi_pl" color_size="16">
 		6e60 6e80 7281 7282 72a3 72a4 72c5 72c6
 		76c7 76e9 770a 772d 76e9 770b 770c 7b2d
+	</tex_palette>
+	<tex_palette index="10" name="sea_mizu1_pl" color_size="4">
+		69c3 5d82 61a3 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -386,12 +548,17 @@
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
-		diffuse="12 12 12"
+		diffuse="25 25 25"
 		ambient="0 0 0"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="-1" tex_palette_idx="-1"
+		tex_image_idx="5" tex_palette_idx="5"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
 	/>
 </material_array>
 
@@ -453,21 +620,31 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="V‹KƒV[ƒ“" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="6">
+	<ex_tex_image_array size="11">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="4" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="7" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="8" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="9" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="10" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="6">
+	<ex_tex_palette_array size="11">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="4" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="6" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="7" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="8" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="9" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="10" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="1">
 		<ex_material index="0" disp_pos="0.000000 240.000000"/>
