@@ -11,7 +11,6 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/wipe.h"
-#include "sound/pm_sndsys.h"
 
 #include "arc_def.h"
 #include "message.naix"
@@ -32,6 +31,7 @@
 #include "musical/mus_item_data.h"
 #include "musical/musical_camera_def.h"
 #include "dup_local_def.h"
+#include "dup_snd_def.h"
 #include "dup_fitting.h"
 #include "dup_fitting_item.h"
 
@@ -301,6 +301,7 @@ struct _FITTING_WORK
   s16 listSpeed;
   u16 listHoldMove; //持っているときの移動量
   s32 listTotalMove;  //リスト全体の移動量
+  s32 listMoveSeCnt;  //リストの移動量(SE用
   s16 listSwingAngle;      //リストの揺れ
   s16 listSwingSpeed;
   //デモ用
@@ -365,7 +366,7 @@ static void DUP_FIT_CheckItemListPallet( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpMain( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY );
 static const BOOL DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work , FIT_ITEM_GROUP *itemGroupe , ITEM_GROUPE groupeType );
-static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work );
+static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work , const BOOL playSnapSe );
 static void DUP_FIT_UpdateTpDropItemToField( FITTING_WORK *work );
 static void DUP_FIT_UpdateTpDropItemToList( FITTING_WORK *work , const BOOL isMove );
 static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work );
@@ -465,6 +466,8 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   work->isDispMsg = FALSE;
   work->isUpdateMsg = FALSE;
   work->bgScrollCnt = 0;
+  work->listTotalMove = 0;
+  work->listMoveSeCnt = 0;
 
   work->listSpeed = 0;
   work->snapPos = MUS_POKE_EQU_INVALID;
@@ -1469,6 +1472,18 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
   
   work->listTotalMove += moveAngle;
   
+  //SE処理
+  {
+    work->listMoveSeCnt += moveAngle;
+    OS_TPrintf("SE[%8d]\n",work->listMoveSeCnt);
+    if( work->listMoveSeCnt > DUP_LIST_ROTATE_SE_VALUE ||
+        work->listMoveSeCnt < -DUP_LIST_ROTATE_SE_VALUE )
+    {
+      work->listMoveSeCnt = 0;
+      PMSND_PlaySE( DUP_SE_LIST_ROTATE );
+    }
+  }
+  
   if( work->listTotalMove < 0 )
   {
     work->listTotalMove += (LIST_ONE_ANGLE*work->totalItemNum);
@@ -1658,7 +1673,7 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
       //チェックボタン
       work->state = DUS_GO_CHECK;
       work->animeCnt = 0;
-      PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+      PMSND_PlaySE( DUP_SE_DECIDE );
     }
     else
     {
@@ -1678,7 +1693,7 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
       if( work->holdItemType == IG_FIELD && work->holdItem != NULL )
       {
         //アイテム保持中の処理
-        DUP_FIT_UpdateTpHoldingItem( work );
+        DUP_FIT_UpdateTpHoldingItem( work , TRUE );
       }
       else if( work->tpIsTrg == TRUE )
       {
@@ -1689,7 +1704,7 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
           DUP_FIT_ITEMGROUP_RemoveItem( work->itemGroupEquip , work->holdItem );
           DUP_FIT_ITEMGROUP_AddItem( work->itemGroupField , work->holdItem );
           //座標あわせと深度設定
-          DUP_FIT_UpdateTpHoldingItem( work );
+          DUP_FIT_UpdateTpHoldingItem( work , FALSE );
         }
         else
         {
@@ -1820,6 +1835,8 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
     work->listHoldMove >= DEG_TO_U16(10) )
   {
     FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
+    BOOL isTouchItem = FALSE; //SEの判定に使用
+    
     //ついでに初期化
     if( work->tpIsTrg == TRUE )
     {
@@ -1834,19 +1851,40 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
       //サイズを気にするか？
 //      if( DUP_FIT_ITEM_GetScale( item ) == FX32_ONE &&
 //        DUP_FIT_ITEM_CheckHit( item , work->tpx,work->tpy ) == TRUE )
-      if( DUP_FIT_ITEM_CheckHit( item , work->tpx,work->tpy ) == TRUE &&
-          nowItemState->isOutList == FALSE )
+      if( DUP_FIT_ITEM_CheckHit( item , work->tpx,work->tpy ) == TRUE )
       {
-        work->holdItem = item;
-        work->holdItemType = IG_LIST;
-        //DUP_FIT_ITEM_CheckLengthSqrt( item , work->tpx,work->tpy );
-        item = NULL;
+        isTouchItem = TRUE;
+        if( nowItemState->isOutList == FALSE )
+        {
+          work->holdItem = item;
+          work->holdItemType = IG_LIST;
+          //DUP_FIT_ITEM_CheckLengthSqrt( item , work->tpx,work->tpy );
+          item = NULL;
+        }
       }
-      else
+      
+      if( work->holdItem == NULL )
       {
         item = DUP_FIT_ITEM_GetNextItem(item);
       }
     }
+    
+    if( work->tpIsTrg == TRUE )
+    {
+      if( isTouchItem == TRUE )
+      {
+        if( work->holdItem != NULL )
+        {
+          PMSND_PlaySE( DUP_SE_LIST_TOUCH_GOODS );
+        }
+        else
+        {
+          //タッチはしたけどholdItemがNULLだったら暗いアイテム
+          PMSND_PlaySE( DUP_SE_LIST_NO_GOODS );
+        }
+      }
+    }
+
   }
   //回転処理
   if( work->befAngleEnable == TRUE )
@@ -1922,70 +1960,6 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
 //--------------------------------------------------------------
 //フィールド・装備のアイテムを拾う
 //--------------------------------------------------------------
-/*
-static void DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work )
-{
-  BOOL isEquipList = TRUE;
-  FIT_ITEM_WORK* item;
-  
-  //装備アイテムのリストを調べた後に、同じルーチンでフィールドのリストを調べる
-  
-  item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupEquip );
-  if( item == NULL || DUP_FIT_ITEMGROUP_IsItemMax(work->itemGroupField) == TRUE )
-  {
-    //フィールドのアイテムがいっぱいなら装備アイテムは拾えない
-    //即フィールドのリストに
-    item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupField );
-    isEquipList = FALSE;
-  }
-  while( item != NULL )
-  {
-    if( DUP_FIT_ITEM_CheckHit( item , work->tpx,work->tpy ) == TRUE )
-    {
-      const GFL_POINT *itemPos = DUP_FIT_ITEM_GetPosition( item );
-      work->holdItem = item;
-      work->holdItemType = IG_FIELD;
-      //DUP_FIT_ITEM_CheckLengthSqrt( item , work->tpx,work->tpy );
-      ARI_TPrintf("Item Hold[%d]\n",DUP_FIT_ITEM_GetItemState(item)->itemId);
-      
-      //戻す時用の処理
-      if( isEquipList == TRUE )
-      {
-        work->befItemType = IG_EQUIP;
-        work->befItemPos.x = itemPos->x;
-        work->befItemPos.y = itemPos->y;
-      }
-      else
-      {
-        work->befItemType = IG_FIELD;
-        work->befItemPos.x = itemPos->x;
-        work->befItemPos.y = itemPos->y;
-      }
-
-      item = NULL;
-    }
-    else
-    {
-      item = DUP_FIT_ITEM_GetNextItem(item);
-      if( item == NULL && isEquipList == TRUE )
-      {
-        //装備のリストがなくなったのでフィールドのリストに切り替え
-        item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupField );
-        isEquipList = FALSE;
-      }
-    }
-    
-  }
-  
-  if( isEquipList == TRUE && item != work->holdItem )
-  {
-    DUP_FIT_ITEMGROUP_RemoveItem( work->itemGroupEquip , work->holdItem );
-    DUP_FIT_ITEMGROUP_AddItem( work->itemGroupField , work->holdItem );
-    //座標あわせと深度設定
-    DUP_FIT_UpdateTpHoldingItem( work );
-  }
-}
-*/
 static const BOOL DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work , FIT_ITEM_GROUP *itemGroupe , ITEM_GROUPE groupeType )
 {
   FIT_ITEM_WORK* item = DUP_FIT_ITEMGROUP_GetStartItem( itemGroupe );
@@ -1997,7 +1971,9 @@ static const BOOL DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work , FIT_ITEM_GROUP 
       work->holdItem = item;
       work->holdItemType = IG_FIELD;
       ARI_TPrintf("Item Hold[%d]\n",DUP_FIT_ITEM_GetItemState(item)->itemId);
-      
+
+      PMSND_PlaySE( DUP_SE_LIST_TOUCH_GOODS );
+
       //戻す時用の処理
       work->befItemType = groupeType;
       work->befItemPos.x = itemPos->x;
@@ -2010,20 +1986,11 @@ static const BOOL DUP_FIT_UpdateTpHoldItem( FITTING_WORK *work , FIT_ITEM_GROUP 
     }
   }
   return FALSE;
-  /*
-  if( isEquipList == TRUE && item != work->holdItem )
-  {
-    DUP_FIT_ITEMGROUP_RemoveItem( work->itemGroupEquip , work->holdItem );
-    DUP_FIT_ITEMGROUP_AddItem( work->itemGroupField , work->holdItem );
-    //座標あわせと深度設定
-    DUP_FIT_UpdateTpHoldingItem( work );
-  }
-  */
 }
 //--------------------------------------------------------------
 //フィールドのアイテムを持っている
 //--------------------------------------------------------------
-static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work )
+static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work , const BOOL playSnapSe )
 {
   u16 snapLen = HOLD_ITEM_SNAP_LENGTH;
   GFL_POINT dispPos;
@@ -2031,6 +1998,7 @@ static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work )
   VecFx32 pos = {0,0,HOLD_ITEM_DEPTH};
   fx16 scaleX,scaleY;
   u16 rotZ = 0;
+  const MUS_POKE_EQUIP_POS befSnapPos = work->snapPos;
   MUS_ITEM_DRAW_WORK *itemDrawWork = DUP_FIT_ITEM_GetItemDrawWork( work->holdItem );
   
   pokePosSub.x = work->tpx - FIT_POKE_POS_X;
@@ -2059,6 +2027,11 @@ static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work )
     work->befItemPos.x = dispPos.x;
     work->befItemPos.y = dispPos.y;
     DUP_FIT_ITEM_SetEquipPos( work->holdItem , work->snapPos );
+    
+    if( befSnapPos != work->snapPos && playSnapSe == TRUE )
+    {
+      PMSND_PlaySE( DUP_SE_POKE_SET_GOODS );
+    }
     
   }
   else
@@ -2135,6 +2108,9 @@ static void DUP_FIT_CreateItemListToField( FITTING_WORK *work )
   //アイテムを取った状態に
   itemState->isOutList = TRUE;
   DUP_FIT_CheckItemListPallet( work );
+  
+  PMSND_PlaySE( DUP_SE_LIST_TAKE_GOODS );
+
 }
 
 //--------------------------------------------------------------
@@ -2233,6 +2209,9 @@ static void DUP_FIT_UpdateTpDropItemToList( FITTING_WORK *work , const BOOL isMo
   //アイテムを戻した状態に
   itemState->isOutList = FALSE;
   DUP_FIT_CheckItemListPallet( work );
+
+  PMSND_PlaySE( DUP_SE_LIST_RETURN_GOODS );
+
 #if DEB_ARI
   DUP_FIT_ITEM_DumpList( work->itemGroupField ,2 );
 #endif
@@ -2450,6 +2429,7 @@ static const BOOL DUP_FIT_UpdateTpPokeCheck( FITTING_WORK *work )
     
     DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 , LIST_SIZE_X , LIST_SIZE_Y );
     
+    PMSND_PlaySE( DUP_SE_POKE_TOUCH );
     return TRUE;
   }
   else
@@ -2908,13 +2888,13 @@ static FITTING_RETURN DUP_CHECK_CheckMain(  FITTING_WORK *work )
   {
   case 0: //決定ボタン
     DUP_CHECK_SaveNowEquip( work );
-    PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+    PMSND_PlaySE( DUP_SE_KIRAKIRA );
     return FIT_RET_GO_END;
     break;
   case 1: //戻るボタン
     work->state = DUS_RETURN_FITTING;
     work->animeCnt = FIT_ANIME_MAX;
-    PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
+    PMSND_PlaySE( DUP_SE_CANCEL );
     {
       DUP_CHECK_ResetItemAngle( work );
     }
@@ -2991,17 +2971,17 @@ static void DUP_CHECK_UpdateTpHoldingItem( FITTING_WORK *work )
 {
   fx32 subX;
   fx32 subY;
-  u16 angle;
+  u16 tpAngle;
 
   GFL_POINT *itemPos = DUP_FIT_ITEM_GetPosition( work->holdItem );
   subX = FX32_CONST((s32)work->tpx - itemPos->x);
   subY = FX32_CONST((s32)work->tpy - itemPos->y);
-  angle = FX_Atan2Idx(subX,subY);
+  tpAngle = FX_Atan2Idx(subX,subY);
   
   if( work->befAngleEnable == TRUE )
   {
     u16 rot;
-    s32 subAngle = work->befAngle - angle;
+    s32 subAngle = work->befAngle - tpAngle;
     u16 equipPos = DUP_FIT_ITEM_GetEquipPos( work->holdItem );
     s16 angle = work->initWork->musPoke->equip[equipPos].angle;
     MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , equipPos );
@@ -3016,13 +2996,20 @@ static void DUP_CHECK_UpdateTpHoldingItem( FITTING_WORK *work )
     {
       angle =  MUS_POKE_EQUIP_ANGLE_MAX;
     }
+    
+    subAngle = work->initWork->musPoke->equip[equipPos].angle - angle;
+    OS_TPrintf("[%d][%d][%d]\n",subAngle,work->befAngle,angle);
+    if( MATH_ABS( subAngle ) > DUP_POKE_ADJUST_SE_VALUE )
+    {
+      PMSND_PlaySE( DUP_SE_POKE_ADJUST );
+    }
       
     rot = equipData->itemRot+angle;
     MUS_ITEM_DRAW_SetRotation( work->itemDrawSys , DUP_FIT_ITEM_GetItemDrawWork(work->holdItem) , rot );
     
     work->initWork->musPoke->equip[equipPos].angle = angle;
   }
-  work->befAngle = angle;
+  work->befAngle = tpAngle;
   work->befAngleEnable = TRUE;
   
 }
