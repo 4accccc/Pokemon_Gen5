@@ -1961,6 +1961,10 @@
 		<language name="JPN" width="256">FLD-11</language>
 		<language name="JPN_KANJI" width="256">FLD-11</language>
 	</row>
+	<row id="msg_seq_se_fld_12">
+		<language name="JPN" width="256">FLD-12</language>
+		<language name="JPN_KANJI" width="256">FLD-12</language>
+	</row>
 	<row id="msg_seq_se_fld_13">
 		<language name="JPN" width="256">FLD-13</language>
 		<language name="JPN_KANJI" width="256">FLD-13</language>
