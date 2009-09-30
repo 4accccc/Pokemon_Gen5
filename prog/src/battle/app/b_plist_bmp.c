@@ -14,6 +14,7 @@
 #include "gamesystem/msgspeed.h"
 #include "waza_tool/waza_tool.h"
 #include "system/bmp_winframe.h"
+#include "poke_tool/gage_tool.h"
 #include "app/app_menu_common.h"
 
 /*↑[GS_CONVERT_TAG]*/
@@ -985,19 +986,19 @@ static void BPL_HPGagePut( BPLIST_WORK * wk, u32 idx, u16 pos, u8 px, u8 py )
 
 	pd  = &wk->poke[pos];
 	col = 1;
-	dot = BPLISTBMP_GetNumDotto( pd->hp, pd->mhp, BPL_HP_DOTTO_MAX );
+	dot = GAGETOOL_GetNumDotto( pd->hp, pd->mhp, BPL_HP_DOTTO_MAX );
 
-	switch( BPLISTBMP_GetGaugeDottoColor( pd->hp, pd->mhp ) ){
-	case HP_DOTTO_NULL:
+	switch( GAGETOOL_GetGaugeDottoColor( pd->hp, pd->mhp ) ){
+	case GAGETOOL_HP_DOTTO_NULL:
 		GFL_BMPWIN_MakeTransWindow_VBlank( wk->add_win[idx].win );
 		return;
-	case HP_DOTTO_GREEN:	// 緑
+	case GAGETOOL_HP_DOTTO_GREEN:		// 緑
 		col = HP_GAGE_COL_G1;
 		break;
-	case HP_DOTTO_YELLOW:	// 黄
+	case GAGETOOL_HP_DOTTO_YELLOW:	// 黄
 		col = HP_GAGE_COL_Y1;
 		break;
-	case HP_DOTTO_RED:		// 赤
+	case GAGETOOL_HP_DOTTO_RED:			// 赤
 		col = HP_GAGE_COL_R1;
 		break;
 	}
@@ -3188,68 +3189,4 @@ void BPLISTBMP_PrintMain( BPLIST_WORK * wk )
 {
 	BAPPTOOL_PrintUtilTrans( wk->win, wk->que, WIN_MAX );
 	BAPPTOOL_PrintUtilTrans( wk->add_win, wk->que, wk->bmp_add_max );
-}
-
-
-
-
-
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------
-/*
-	あとで戦闘と共通にする
-*/
-//--------------------------------------------------------------------------------------------
-/**
- * @brief 現在値のゲージドット数を取得
- *
- * @param	prm_now		現在値
- * @param	prm_max		最大値
- * @param	dot_max		最大ドット数
- *
- * @return	ドット数
- */
-//--------------------------------------------------------------------------------------------
-u8 BPLISTBMP_GetNumDotto( u32 prm_now, u32 prm_max, u8 dot_max )
-{
-	u8 put_dot;
-	
-	put_dot = prm_now * dot_max / prm_max;
-	if( put_dot == 0 && prm_now > 0 )   // ﾄﾞｯﾄ計算では0でも実際の値が1以上なら1ﾄﾞｯﾄにする
-  {
-		put_dot = 1;
-	}
-	return put_dot;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   表示ドットと最大ドットからHPゲージの色を取得する
- *
- * @param   put_dot		表示ドット数
- * @param   max_dot		最大ドット数
- *
- * @retval  ゲージカラー
- */
-//--------------------------------------------------------------
-u8 BPLISTBMP_GetGaugeDottoColor( u32 put_dot, u32 max_dot )
-{
-	put_dot <<= 8;		//割り算使用の為、小数レベルまで見れるように固定小数化
-	max_dot <<= 8;
-	
-	if( put_dot > (max_dot/2) )
-  {
-		return HP_DOTTO_GREEN;		// 緑
-	}
-  else if( put_dot > ( max_dot / 5 ) )
-  {
-		return HP_DOTTO_YELLOW;		// 黄
-	}
-  else if( put_dot > 0 )
-  {
-		return HP_DOTTO_RED;		// 赤
-	}
-	return HP_DOTTO_NULL;			// HP=0
 }

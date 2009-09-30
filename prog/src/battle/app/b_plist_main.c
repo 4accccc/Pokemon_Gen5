@@ -15,6 +15,7 @@
 #include "system/bmp_winframe.h"
 #include "font/font.naix"
 #include "waza_tool/waza_tool.h"
+#include "poke_tool/gage_tool.h"
 //#include    "waza_tool/wazadata.h"
 #include "app/app_menu_common.h"
 
@@ -2529,7 +2530,7 @@ static void BPL_ExpGagePut( BPLIST_WORK * wk, u8 page )
 		now = 0;
 	}
 
-	dot = BPLISTBMP_GetNumDotto( now, max, EXP_DOT_MAX );
+	dot = GAGETOOL_GetNumDotto( now, max, EXP_DOT_MAX );
 
 	for( i=0; i<EXP_DOT_CHR_MAX; i++ ){
 		if( dot >= 8 ){

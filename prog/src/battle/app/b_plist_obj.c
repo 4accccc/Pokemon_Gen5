@@ -9,6 +9,7 @@
 #include <gflib.h>
 
 #include "arc_def.h"
+#include "poke_tool/gage_tool.h"
 #include "pokeicon/pokeicon.h"
 #include "item/item.h"
 //#include "item/itemsym.h"
@@ -1635,12 +1636,12 @@ static u8 BPL_PokeIconAnmCheck( BPL_POKEDATA * pd )
 		return POKEICON_ANM_HPMAX;
 	}
 
-	switch( BPLISTBMP_GetGaugeDottoColor( pd->hp, pd->mhp ) ){
-	case HP_DOTTO_GREEN:	// óŒ
+	switch( GAGETOOL_GetGaugeDottoColor( pd->hp, pd->mhp ) ){
+	case GAGETOOL_HP_DOTTO_GREEN:		// óŒ
 		return POKEICON_ANM_HPGREEN;
-	case HP_DOTTO_YELLOW:	// â©
+	case GAGETOOL_HP_DOTTO_YELLOW:	// â©
 		return POKEICON_ANM_HPYERROW;
-	case HP_DOTTO_RED:		// ê‘
+	case GAGETOOL_HP_DOTTO_RED:			// ê‘
 		return POKEICON_ANM_HPRED;
 	}
 

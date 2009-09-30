@@ -169,16 +169,5 @@ extern void BattlePokeList_ItemUseSkillErrMsgSet( BPLIST_WORK * wk );
 extern void BPLISTBMP_PrintMain( BPLIST_WORK * wk );
 
 
-extern u8 BPLISTBMP_GetNumDotto( u32 prm_now, u32 prm_max, u8 dot_max );
-extern u8 BPLISTBMP_GetGaugeDottoColor( u32 put_dot, u32 max_dot );
-
-enum {
-	HP_DOTTO_GREEN = 0,		// óŒ
-	HP_DOTTO_YELLOW,			// â©
-	HP_DOTTO_RED,					// ê‘
-	HP_DOTTO_NULL,				// HP=0
-};
-
-
 
 #endif	// B_PLIST_BMP_H
