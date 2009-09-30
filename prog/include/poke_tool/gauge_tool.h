@@ -17,9 +17,9 @@
 
 // ゲージカラー
 enum {
-	GAUGETOOL_HP_DOTTO_GREEN = 0,	// 緑
+	GAUGETOOL_HP_DOTTO_GREEN = 0,		// 緑
 	GAUGETOOL_HP_DOTTO_YELLOW,			// 黄
-	GAUGETOOL_HP_DOTTO_RED,				// 赤
+	GAUGETOOL_HP_DOTTO_RED,					// 赤
 	GAUGETOOL_HP_DOTTO_NULL,				// HP=0
 };
 
@@ -30,7 +30,7 @@ enum {
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief	 現在値のゲージドット数を取得
+ * @brief		現在値のゲージドット数を取得
  *
  * @param		prm_now		現在値
  * @param		prm_max		最大値
@@ -52,3 +52,16 @@ extern u8 GAUGETOOL_GetNumDotto( u32 prm_now, u32 prm_max, u8 dot_max );
  */
 //--------------------------------------------------------------------------------------------
 extern u8 GAUGETOOL_GetGaugeDottoColor( u32 put_dot, u32 max_dot );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		HPゲージのカラーを取得
+ *
+ * @param		hp				現在のHP
+ * @param		mhp				最大HP
+ * @param		max_dot		最大ドット数
+ *
+ * @return	ゲージカラー
+ */
+//--------------------------------------------------------------------------------------------
+extern u8 GAUGETOOL_GetHPGaugeDottoColor( u16 hp, u16 mhp, u32 max_dot );

@@ -16,7 +16,7 @@
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief	 現在値のゲージドット数を取得
+ * @brief		現在値のゲージドット数を取得
  *
  * @param		prm_now		現在値
  * @param		prm_max		最大値
@@ -54,7 +54,7 @@ u8 GAUGETOOL_GetGaugeDottoColor( u32 put_dot, u32 max_dot )
 	
 	if( put_dot > (max_dot/2) )
   {
-		return GAUGETOOL_HP_DOTTO_GREEN;		// 緑
+		return GAUGETOOL_HP_DOTTO_GREEN;	// 緑
 	}
   else if( put_dot > ( max_dot / 5 ) )
   {
@@ -62,7 +62,32 @@ u8 GAUGETOOL_GetGaugeDottoColor( u32 put_dot, u32 max_dot )
 	}
   else if( put_dot > 0 )
   {
-		return GAUGETOOL_HP_DOTTO_RED;			// 赤
+		return GAUGETOOL_HP_DOTTO_RED;		// 赤
 	}
 	return GAUGETOOL_HP_DOTTO_NULL;			// HP=0
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		HPゲージのカラーを取得
+ *
+ * @param		hp				現在のHP
+ * @param		mhp				最大HP
+ * @param		max_dot		最大ドット数
+ *
+ * @return	ゲージカラー
+ */
+//--------------------------------------------------------------------------------------------
+u8 GAUGETOOL_GetHPGaugeDottoColor( u16 hp, u16 mhp, u32 max_dot )
+{
+	u32 put_dot;
+	
+	if( hp == mhp )
+  {
+    return GAUGETOOL_HP_DOTTO_GREEN;	// 緑
+  }
+	
+	put_dot = GAUGETOOL_GetNumDotto( hp, mhp, max_dot );
+
+	return GAUGETOOL_GetGaugeDottoColor( put_dot, max_dot );
 }
