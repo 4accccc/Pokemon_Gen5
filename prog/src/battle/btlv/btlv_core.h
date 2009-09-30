@@ -220,6 +220,9 @@ extern void BTLV_ResetCommWaitInfo( BTLV_CORE* wk );
 extern void BTLV_KinomiAct_Start( BTLV_CORE* wk, BtlPokePos pos );
 extern BOOL BTLV_KinomiAct_Wait( BTLV_CORE* wk, BtlPokePos pos );
 
+extern void BTLV_ACT_MoveMember_Start( BTLV_CORE* wk, u8 clientID, u8 vpos1, u8 vpos2, u8 posIdx1, u8 posIdx2 );
+extern BOOL BTLV_ACT_MoveMember_Wait( BTLV_CORE* wk );
+
 
 extern void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_energy );
 extern BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk );

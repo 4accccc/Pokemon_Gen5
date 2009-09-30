@@ -85,6 +85,7 @@ typedef enum {
   SC_ACT_TRACE_TOKUSEI,     ///< とくせいトレース[ pokeID, targetPokeID, tokusei ]
   SC_ACT_KINOMI,            ///< きのみを食べる
   SC_ACT_KILL,              ///< 強制瀕死演出（みちづれ、一撃ワザなど）
+  SC_ACT_MOVE,              ///< ムーブ
   SC_TOKWIN_IN,             ///< とくせいウィンドウ表示イン [ClientID]
   SC_TOKWIN_OUT,            ///< とくせいウィンドウ表示アウト [ClientID]
   SC_MSG_WAZA,              ///< ワザメッセージ表示[ ClientID, wazaIdx ]
@@ -419,11 +420,6 @@ static inline void SCQUE_PUT_ACT_RankDown( BTL_SERVER_CMD_QUE* que, u8 pokeID, u
 {
   SCQUE_PUT_Common( que, SC_ACT_RANKDOWN, pokeID, statusType, volume );
 }
-static inline void SCQUE_PUT_ACT_Kill( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 effectType )
-{
-  SCQUE_PUT_Common( que, SC_ACT_KILL, pokeID, effectType );
-}
-
 // 【アクション】ポケモンひんし
 static inline void SCQUE_PUT_ACT_Dead( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
@@ -468,6 +464,16 @@ static inline void SCQUE_PUT_ACT_KINOMI( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
   SCQUE_PUT_Common( que, SC_ACT_KINOMI, pokeID );
 }
+static inline void SCQUE_PUT_ACT_Kill( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 effectType )
+{
+  SCQUE_PUT_Common( que, SC_ACT_KILL, pokeID, effectType );
+}
+static inline void SCQUE_PUT_ACT_MemberMove( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 posIdx )
+{
+  SCQUE_PUT_Common( que, SC_ACT_MOVE, clientID, posIdx );
+}
+
+
 
 static inline void SCQUE_PUT_TOKWIN_IN( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {

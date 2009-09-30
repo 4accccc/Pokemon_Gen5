@@ -233,6 +233,7 @@ static inline u32 TargetPokeRec_GetCountMax( const TARGET_POKE_REC* rec );
 static u32 TargetPokeRec_CopyFriends( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* pp, TARGET_POKE_REC* dst );
 static u32 TargetPokeRec_CopyEnemys( const TARGET_POKE_REC* rec, const BTL_POKEPARAM* pp, TARGET_POKE_REC* dst );
 static void TargetPokeRec_RemoveDeadPokemon( TARGET_POKE_REC* rec );
+static void scproc_Move( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scproc_NigeruCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scEvent_SkipNigeruCalc( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scEvent_SkipNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
@@ -822,6 +823,9 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
           SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
         }
         break;
+      case BTL_ACTION_MOVE:
+        scproc_Move( wk, bpp );
+        break;
       case BTL_ACTION_SKIP:
         BTL_Printf("処理をスキップ\n");
         scPut_CantAction( wk, bpp );
@@ -1057,10 +1061,11 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
 
     // 行動による優先順（優先度高いほど数値大）
     switch( actParam->gen.cmd ){
-    case BTL_ACTION_ESCAPE: actionPri = 4; break;
-    case BTL_ACTION_ITEM:   actionPri = 3; break;
-    case BTL_ACTION_CHANGE: actionPri = 2; break;
-    case BTL_ACTION_SKIP:   actionPri = 1; break;
+    case BTL_ACTION_ESCAPE: actionPri = 5; break;
+    case BTL_ACTION_ITEM:   actionPri = 4; break;
+    case BTL_ACTION_CHANGE: actionPri = 3; break;
+    case BTL_ACTION_SKIP:   actionPri = 2; break;
+    case BTL_ACTION_MOVE:   actionPri = 1; break;
     case BTL_ACTION_FIGHT:  actionPri = 0; break;
     case BTL_ACTION_NULL: continue;
     default:
@@ -1408,6 +1413,28 @@ static void TargetPokeRec_RemoveDeadPokemon( TARGET_POKE_REC* rec )
 // サーバーフロー処理
 //======================================================================================================
 
+//-----------------------------------------------------------------------------------
+// サーバーフロー：「ムーブ」
+//-----------------------------------------------------------------------------------
+static void scproc_Move( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+{
+  BTL_PARTY* party;
+  u8 clientID;
+  u8 pokeID;
+  int posIdx;
+
+  pokeID = BPP_GetID( bpp );
+  clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
+  party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+  posIdx = BTL_PARTY_FindMember( party, bpp );
+  if( (posIdx == 0) || (posIdx == 2) )
+  {
+    BTL_PARTY_SwapMembers( party, posIdx, 1 );
+    SCQUE_PUT_ACT_MemberMove( wk->que, clientID, posIdx );
+  }else{
+    GF_ASSERT_MSG(0, "clientID=%d, pokeID=%d, posIdx=%d\n", clientID, pokeID, posIdx);
+  }
+}
 //-----------------------------------------------------------------------------------
 // サーバーフロー：「にげる」
 //-----------------------------------------------------------------------------------
@@ -1797,7 +1824,6 @@ static u8 ItemEff_CriticalUp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemI
     return TRUE;
   }
   return FALSE;
-//  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_CRITICAL_RATIO );
 }
 static u8 ItemEff_PP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {

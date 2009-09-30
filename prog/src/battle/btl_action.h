@@ -22,6 +22,7 @@ typedef enum {
   BTL_ACTION_ITEM,
   BTL_ACTION_CHANGE,
   BTL_ACTION_ESCAPE,
+  BTL_ACTION_MOVE,
 
   BTL_ACTION_SKIP,    ///< ”½“®‚È‚Ç‚Å“®‚¯‚È‚¢
 }BtlAction;

@@ -160,13 +160,13 @@ static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_RankUp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_ACT_SickDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherStart( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WeatherEnd( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
@@ -1460,6 +1460,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_MIGAWARI_DELETE,    scProc_OP_MigawariDelete  },
     { SC_OP_SHOOTER_CHARGE,     scProc_OP_ShooterCharge   },
     { SC_ACT_KILL,              scProc_ACT_Kill           },
+    { SC_ACT_MOVE,              scProc_ACT_Move           },
   };
 
 restart:
@@ -2104,6 +2105,43 @@ static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args )
     break;
   case 1:
     if( BTLV_ACT_SimpleHPEffect_Wait(wk->viewCore) )
+    {
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+//---------------------------------------------------------------------------------------
+/**
+ *  ムーブ処理
+ *  args .. [0]:対象クライアントID  [1]:対象ポケモンIndex
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args )
+{
+
+  switch( *seq ){
+  case 0:
+    {
+      u8 clientID = args[0];
+      u8 posIdx = args[1];
+      u8 pos1, pos2, vpos1, vpos2;
+
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+      BTL_PARTY_SwapMembers( party, posIdx, 1 );
+
+      pos1 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
+      pos2 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, 1 );
+      vpos1 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos1 );
+      vpos2 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos2 );
+
+      BTLV_ACT_MoveMember_Start( wk->viewCore, clientID, vpos1, vpos2, posIdx, 1 );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( BTLV_ACT_MoveMember_Wait(wk->viewCore) )
     {
       return TRUE;
     }

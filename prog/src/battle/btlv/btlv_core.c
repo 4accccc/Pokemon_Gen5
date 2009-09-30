@@ -92,6 +92,7 @@ static BOOL subprocDamageDoubleEffect( int* seq, void* wk_adrs );
 static BOOL subprocMemberIn( int* seq, void* wk_adrs );
 static void setup_core( BTLV_CORE* wk, HEAPID heapID );
 static void cleanup_core( BTLV_CORE* wk );
+static BOOL subprocMoveMember( int* seq, void* wk_adrs );
 
 
 
@@ -1283,6 +1284,87 @@ static void cleanup_core( BTLV_CORE* wk )
   GFL_G3D_Exit();
 }
 
+//--------------------------------------------------------------------
+typedef struct {
+  u8 clientID;
+  u8 vpos1;
+  u8 vpos2;
+  BtlPokePos  posIdx1;
+  BtlPokePos  posIdx2;
+}MOVE_MEMBER_WORK;
+
+//=============================================================================================
+/**
+ * ムーブアクション開始
+ *
+ * @param   wk
+ * @param   vpos1
+ * @param   vpos2
+ */
+//=============================================================================================
+void BTLV_ACT_MoveMember_Start( BTLV_CORE* wk, u8 clientID, u8 vpos1, u8 vpos2, u8 posIdx1, u8 posIdx2 )
+{
+  MOVE_MEMBER_WORK* subwk = getGenericWork( wk, sizeof(MOVE_MEMBER_WORK) );
+
+  subwk->clientID = clientID;
+  subwk->vpos1 = vpos1;
+  subwk->vpos2 = vpos2;
+  subwk->posIdx1 = posIdx1;
+  subwk->posIdx2 = posIdx2;
+
+  BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocMoveMember );
+}
+//=============================================================================================
+/**
+ * ムーブアクション終了待ち
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTLV_ACT_MoveMember_Wait( BTLV_CORE* wk )
+{
+  return FALSE;
+}
+static BOOL subprocMoveMember( int* seq, void* wk_adrs )
+{
+  BTLV_CORE* wk = wk_adrs;
+  MOVE_MEMBER_WORK* subwk = getGenericWork( wk, sizeof(MOVE_MEMBER_WORK) );
+
+  switch( *seq ){
+  case 0:
+    if( BTLV_EFFECT_CheckExist(subwk->vpos1) ){
+      BTLV_EFFECT_DelPokemon( subwk->vpos1 );
+    }
+    if( BTLV_EFFECT_CheckExist(subwk->vpos2) ){
+      BTLV_EFFECT_DelPokemon( subwk->vpos2 );
+    }
+    (*seq)++;
+    break;
+
+  case 1:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, subwk->clientID );
+      const BTL_POKEPARAM* bpp;
+      bpp = BTL_PARTY_GetMemberDataConst( party, subwk->posIdx1 );
+      if( !BPP_IsDead(bpp) ){
+        BTLV_EFFECT_SetPokemon( BPP_GetSrcData(bpp), subwk->vpos1 );
+      }
+      bpp = BTL_PARTY_GetMemberDataConst( party, subwk->posIdx2 );
+      if( !BPP_IsDead(bpp) ){
+        BTLV_EFFECT_SetPokemon( BPP_GetSrcData(bpp), subwk->vpos2 );
+      }
+      (*seq)++;
+    }
+    break;
+
+  case 2:
+    return TRUE;
+  }
+  return FALSE;
+}
 
 
 u8 BTLV_CORE_GetPlayerClientID( const BTLV_CORE* core )
