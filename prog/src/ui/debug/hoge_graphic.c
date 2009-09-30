@@ -163,6 +163,7 @@ static const struct
 		GFL_BG_MODE_TEXT,//BGの種類
 		TRUE,	//初期表示
 	},
+#if 0	//使わない場合は、このテーブルから消してください。(#if#endifじゃなくても大丈夫です)
 	{	
 		GFL_BG_FRAME3_S,	//設定するフレーム
 		{
@@ -174,6 +175,7 @@ static const struct
 		GFL_BG_MODE_TEXT,//BGの種類
 		TRUE,	//初期表示
 	},
+#endif
 };
 
 #endif //GRAPHIC_BG_USE
