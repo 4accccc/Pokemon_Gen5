@@ -35,7 +35,8 @@ static const u8 INFOWIN_WIDTH = 32;
 static const u8 INFOWIN_HEIGHT = 2;
 
 static const u16 INFOWIN_CLEAR_CHR = 0x00;
-static const u16 INFOWIN_BLACK_CHR = 0x10;
+static const u16 INFOWIN_BLANK_CHR_UP = 0x0F;
+static const u16 INFOWIN_BLANK_CHR_DOWN = 0x1F;
 static const u16 INFOWIN_LINE_CHRNUM = 0x10;	//1—ñ‚Ì”
 
 static const u8 INFOWIN_TIMECHR_START = 0x01;
@@ -349,12 +350,12 @@ static	void	INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
 		u16	scrDataAmPm[2][2];
 		scrData[0][0] = INFOWIN_CALC_NUM_SCR( infoWk->hour/10,infoWk->pltNo)+infoWk->ncgPos;
 		scrData[0][1] = INFOWIN_CALC_NUM_SCR( infoWk->hour%10,infoWk->pltNo)+infoWk->ncgPos;
-		scrData[0][2] = (infoWk->isDispColon?INFOWIN_COLONCHR:INFOWIN_BLACK_CHR) + (infoWk->pltNo<<12)+infoWk->ncgPos;
+		scrData[0][2] = (infoWk->isDispColon?INFOWIN_COLONCHR:INFOWIN_BLANK_CHR_UP) + (infoWk->pltNo<<12)+infoWk->ncgPos;
 		scrData[0][3] = INFOWIN_CALC_NUM_SCR( infoWk->min/10,infoWk->pltNo)+infoWk->ncgPos;
 		scrData[0][4] = INFOWIN_CALC_NUM_SCR( infoWk->min%10,infoWk->pltNo)+infoWk->ncgPos;
 		scrData[1][0] = scrData[0][0] + INFOWIN_LINE_CHRNUM;
 		scrData[1][1] = scrData[0][1] + INFOWIN_LINE_CHRNUM;
-		scrData[1][2] = (infoWk->isDispColon?INFOWIN_COLONCHR+INFOWIN_LINE_CHRNUM:INFOWIN_BLACK_CHR) + (infoWk->pltNo<<12)+infoWk->ncgPos;
+		scrData[1][2] = (infoWk->isDispColon?INFOWIN_COLONCHR+INFOWIN_LINE_CHRNUM:INFOWIN_BLANK_CHR_DOWN) + (infoWk->pltNo<<12)+infoWk->ncgPos;
 		scrData[1][3] = scrData[0][3] + INFOWIN_LINE_CHRNUM;
 		scrData[1][4] = scrData[0][4] + INFOWIN_LINE_CHRNUM;
 		
@@ -545,7 +546,8 @@ static	void	INFOWIN_InitBg( u8 bgplane , u8 pltNo, HEAPID heapId )
 	
 	//‰Šúó‘ÔBG‚ÌÝ’è
 	
-	GFL_BG_FillScreen( bgplane,INFOWIN_BLACK_CHR+infoWk->ncgPos,0,0,INFOWIN_WIDTH,INFOWIN_HEIGHT,pltNo);
+	GFL_BG_FillScreen( bgplane,INFOWIN_BLANK_CHR_UP+infoWk->ncgPos,0,0,INFOWIN_WIDTH,1,pltNo);
+	GFL_BG_FillScreen( bgplane,INFOWIN_BLANK_CHR_DOWN+infoWk->ncgPos,0,1,INFOWIN_WIDTH,2,pltNo);
 	GFL_BG_FillScreen( bgplane,INFOWIN_CLEAR_CHR+infoWk->ncgPos,0,INFOWIN_HEIGHT,INFOWIN_WIDTH,32,pltNo);
 	GFL_BG_LoadScreenReq( bgplane );
 }
