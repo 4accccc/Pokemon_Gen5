@@ -166,6 +166,7 @@ static BOOL debugMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_ChangePlayerSex( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -178,6 +179,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 {
 	{	DEBUG_FIELD_STR38, debugMenuCallProc_DebugSkyJump },
 	{ DEBUG_FIELD_STR17, debugMenuCallProc_FieldPosData },
+	{ DEBUG_FIELD_STR43, debugMenuCallProc_Jump },
 	{ DEBUG_FIELD_STR02, debugMenuCallProc_ControlCamera },
 	{ DEBUG_FIELD_STR20, debugMenuCallProc_ControlTarget },
 	{ DEBUG_FIELD_STR03, debugMenuCallProc_GridScaleSwitch },
@@ -663,6 +665,130 @@ static GMEVENT_RESULT debugMenuZoneSelectEvent(
 
 	return( GMEVENT_RES_CONTINUE );
 }
+
+//======================================================================
+//	デバッグメニュー ジャンプ
+//======================================================================
+//--------------------------------------------------------------
+///	proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk );
+static void DEBUG_SetSTRBUF_ZoneIDName(u32 heapID, u32 zoneID, STRBUF *strBuf );
+
+//--------------------------------------------------------------
+//  data
+//--------------------------------------------------------------
+///「ジャンプ」コマンドで選択可能なゾーンID
+static const u16 JumpZoneID_ListTbl[] = {
+  ZONE_ID_UNION,
+  ZONE_ID_PALACETEST,
+};
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　ジャンプ
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk )
+{
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
+	DEBUG_ZONESEL_EVENT_WORK *work;
+	
+	GMEVENT_Change( event,
+		debugMenuZoneJump, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
+	
+	work = GMEVENT_GetEventWork( event );
+	MI_CpuClear8( work, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
+	
+	work->gmSys = gsys;
+	work->gmEvent = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	return( TRUE );
+}
+
+static void DEBUG_SetMenuWorkZoneID_SelectZone(
+		FLDMENUFUNC_LISTDATA *list, HEAPID heapID )
+{
+	int i;
+	STRBUF *strBuf = GFL_STR_CreateBuffer( 128, heapID );
+  
+	for(i = 0; i < NELEMS(JumpZoneID_ListTbl); i++){
+		GFL_STR_ClearBuffer( strBuf );
+		DEBUG_SetSTRBUF_ZoneIDName( heapID, JumpZoneID_ListTbl[i], strBuf );
+		FLDMENUFUNC_AddStringListData( list, strBuf, JumpZoneID_ListTbl[i], heapID );
+	}
+	
+	GFL_HEAP_FreeMemory( strBuf );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：ジャンプ
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event work
+ * @retval	GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk )
+{
+	DEBUG_ZONESEL_EVENT_WORK *work = wk;
+	
+	switch( (*seq) ){
+	case 0:
+		{
+			FLDMSGBG *msgBG;
+			u32 max = NELEMS(JumpZoneID_ListTbl);
+			FLDMENUFUNC_HEADER menuH = DATA_DebugMenuList_ZoneSel;
+			FLDMENUFUNC_LISTDATA *pMenuListData;
+			
+			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
+			work->msgData = FLDMSGBG_CreateMSGDATA(
+					msgBG, NARC_message_d_field_dat );
+			pMenuListData = FLDMENUFUNC_CreateListData( max, work->heapID );
+			DEBUG_SetMenuWorkZoneID_SelectZone( pMenuListData, work->heapID );
+			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 11, 16 );
+			
+			work->menuFunc = FLDMENUFUNC_AddMenu(
+					msgBG, &menuH, pMenuListData );
+			GFL_MSG_Delete( work->msgData );
+		}
+		
+		(*seq)++;
+		break;
+	case 1:
+		{
+			u32 ret;
+			ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+			
+			if( ret == FLDMENUFUNC_NULL ){	//操作無し
+				break;
+			}
+			
+			FLDMENUFUNC_DeleteMenu( work->menuFunc );
+			
+			if( ret == FLDMENUFUNC_CANCEL ){	//キャンセル
+				return( GMEVENT_RES_FINISH );
+			}
+			
+      {
+        GMEVENT * mapchange_event;
+        mapchange_event = DEBUG_EVENT_ChangeMapDefaultPos( work->gmSys, work->fieldWork, ret );
+        GMEVENT_ChangeEvent( work->gmEvent, mapchange_event );
+      }
+		}
+		break;
+	}
+
+	return( GMEVENT_RES_CONTINUE );
+}
+
 
 //======================================================================
 //	デバッグメニュー　四季ジャンプ
