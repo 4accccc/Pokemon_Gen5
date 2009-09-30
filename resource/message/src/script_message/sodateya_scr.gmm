@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-18T16:23:11"/>
+	<create user="matsumiya" host="W00207" date="2009-09-30T21:23:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,15 +307,15 @@
 		</language>
 	</columns>
 
-	<dialog left="-5" top="166" right="695" bottom="786" maximized="no" rayout="Vertical2">
+	<dialog left="0" top="166" right="695" bottom="786" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="525"/>
+		<band id="0" index="1" style="0000" width="520"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="538"/>
+		<band id="2" index="3" style="0000" width="533"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="692"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="687"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -683,16 +683,16 @@
 		<comment>メニュー用
 ・♂</comment>
 		<attribute name="キャラ指定">メニュー用</attribute>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]♂</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]♂</language>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]♂　ＬＶ[2:02:３桁:1]</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]♂　ＬＶ[2:02:３桁:1]</language>
 	</row>
 
 	<row id="msg_sodateya_menu_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>メニュー用
 ・♀</comment>
 		<attribute name="キャラ指定">メニュー用</attribute>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]♀</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]♀</language>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]♀　ＬＶ[2:02:３桁:1]</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]♀　ＬＶ[2:02:３桁:1]</language>
 	</row>
 
 	<row id="msg_sodateya_menu_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
