@@ -126,7 +126,6 @@ const SCENE_DATA resistMapTbl[] = {
 			NULL, 
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_CROSSBLOCK_MEMSIZE,	// 1ブロックメモリサイズ(立体交差用アトリビュートサイズ込み) by iwasawa 090910
@@ -147,7 +146,6 @@ const SCENE_DATA resistMapTbl[] = {
 			newbridgemap,
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
@@ -168,7 +166,6 @@ const SCENE_DATA resistMapTbl[] = {
 			test_c3map, 
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
@@ -189,7 +186,6 @@ const SCENE_DATA resistMapTbl[] = {
 			NULL, 
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
@@ -210,7 +206,6 @@ const SCENE_DATA resistMapTbl[] = {
 			NULL, 
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
@@ -231,7 +226,6 @@ const SCENE_DATA resistMapTbl[] = {
 			NULL, 
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE*4,	// 1ブロックメモリサイズ
@@ -252,7 +246,6 @@ const SCENE_DATA resistMapTbl[] = {
 			NULL, 
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
@@ -273,7 +266,6 @@ const SCENE_DATA resistMapTbl[] = {
 			NULL, 
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
@@ -294,7 +286,6 @@ const SCENE_DATA resistMapTbl[] = {
 			NULL, 
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
@@ -315,7 +306,6 @@ const SCENE_DATA resistMapTbl[] = {
 			NULL, 
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
@@ -336,7 +326,6 @@ const SCENE_DATA resistMapTbl[] = {
 			NULL, 
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,
@@ -358,7 +347,6 @@ const SCENE_DATA resistMapTbl[] = {
 			NULL, 
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
-			FLDMAPPER_RESIST_OBJTYPE_BMODEL,	NULL,
 			{0,2},	// 地面アニメーション
 
 			FLD_MAPPER_CROSSBLOCK_MEMSIZE,	// 1ブロックメモリサイズ(立体交差用アトリビュートサイズ込み) by iwasawa 090910

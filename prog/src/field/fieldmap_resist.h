@@ -38,56 +38,6 @@ typedef enum {
 }FLDMAPPER_FILETYPE;
 
 //------------------------------------------------------------------
-//
-//		登録モデリングデータ
-//
-//------------------------------------------------------------------
-#define	NON_LOWQ	(0xffff)
-
-typedef struct {
-	u16 highQ_ID;
-	u16 lowQ_ID;
-}FLDMAPPER_RESISTOBJDATA;
-
-typedef struct {
-	u32							arcID;	//アーカイブＩＤ
-	const FLDMAPPER_RESISTOBJDATA*	data;	//実データ
-	u32							count;		//モデル数
-
-}FLDMAPPER_RESISTDATA_OBJ;
-
-typedef struct {
-	u32			arcID;	//アーカイブＩＤ
-	const u16*	data;	//実データ
-	u32			count;	//テクスチャ数
-
-}FLDMAPPER_RESISTDATA_DDOBJ;
-
-typedef enum {
-	FLDMAPPER_RESIST_OBJTYPE_NONE	= 0xffffffff,
-  FLDMAPPER_RESIST_OBJTYPE_BMODEL = 0,
-	FLDMAPPER_RESIST_OBJTYPE_TBL,
-	FLDMAPPER_RESIST_OBJTYPE_BIN,
-}FLDMAPPER_RESIST_OBJTYPE;
-typedef struct {
-	u32							objArcID;	//アーカイブＩＤ
-	const FLDMAPPER_RESISTOBJDATA*	objData;	//実データ
-	u32							objCount;	//モデル数
-	u32							ddobjArcID;	//アーカイブＩＤ
-	const u16*					ddobjData;	//実データ
-	u32							ddobjCount;	//モデル数
-}FLDMAPPER_RESISTDATA_OBJTBL;
-
-typedef struct {
-	u32							areaObjArcID;		//配置種類アーカイブＩＤ
-	u32							areaObjAnmTblArcID;	//配置種類アニメ付与データアーカイブＩＤ
-	u32							areaObjDatID;		//配置種類データＩＤ
-	u32							objArcID;			//モデルアーカイブＩＤ
-	u32							objtexArcID;		//テクスチャアーカイブＩＤ
-	u32							objanmArcID;		//アニメアーカイブＩＤ
-}FLDMAPPER_RESISTDATA_OBJBIN;
-
-//------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef enum {
 	FLDMAPPER_TEXTYPE_NONE = 0,
@@ -123,8 +73,6 @@ typedef struct {
 
 	FLDMAPPER_TEXTYPE	gtexType;		//グローバルテクスチャタイプ
 	FLDMAPPER_RESIST_TEX	gtexData;		//グローバルテクスチャ
-	FLDMAPPER_RESIST_OBJTYPE	gobjType;		//グローバルオブジェクトタイプ
-	void *						gobjData;		//グローバルオブジェクト
 
 	FLDMAPPER_RESIST_GROUND_ANIME ground_anime;	// 地面アニメーション
 
