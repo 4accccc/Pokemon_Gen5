@@ -20,8 +20,9 @@
 
 //リスト回転音
 #define DUP_SE_LIST_ROTATE (SEQ_SE_MSCL_03)
-//↑を鳴らすための値
-#define DUP_LIST_ROTATE_SE_VALUE (180*0x10000/360)
+//↑を鳴らすための速度と連続防止カウント数
+#define DUP_LIST_ROTATE_SE_SPEED (2500)
+#define DUP_LIST_ROTATE_SE_WAIT_CNT (30)
 //グッズタッチ音
 #define DUP_SE_LIST_TOUCH_GOODS (SEQ_SE_MSCL_02)
 //リストからグッズを取り出す音
@@ -38,6 +39,6 @@
 //グッズに傾斜をつける音
 #define DUP_SE_POKE_ADJUST (SEQ_SE_MSCL_08)
 //↑を鳴らすための値
-#define DUP_POKE_ADJUST_SE_VALUE (4*0x10000/360)
+#define DUP_POKE_ADJUST_SE_VALUE (10*0x10000/360)
 
 //  PMSND_PlaySE(  );

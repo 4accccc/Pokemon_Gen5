@@ -301,7 +301,6 @@ struct _FITTING_WORK
   s16 listSpeed;
   u16 listHoldMove; //持っているときの移動量
   s32 listTotalMove;  //リスト全体の移動量
-  s32 listMoveSeCnt;  //リストの移動量(SE用
   s16 listSwingAngle;      //リストの揺れ
   s16 listSwingSpeed;
   //デモ用
@@ -330,6 +329,10 @@ struct _FITTING_WORK
   u8        effUpCnt[EFFECT_UP_NUM];
   u8        endEffCnt;
   u8        bgScrollCnt;
+
+  //SE用
+  u16       listSeWaitCnt;
+  s16       adjustMoveValue;
 
   //上画面系
   u8      curtainScrollCnt;
@@ -467,7 +470,6 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   work->isUpdateMsg = FALSE;
   work->bgScrollCnt = 0;
   work->listTotalMove = 0;
-  work->listMoveSeCnt = 0;
 
   work->listSpeed = 0;
   work->snapPos = MUS_POKE_EQU_INVALID;
@@ -617,6 +619,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       work->state = DUS_CHECK_MAIN;
       work->listSwingAngle = 0;
       work->listSwingSpeed = 0;
+      work->adjustMoveValue = 0;
     }
     DUP_FIT_ChangeStateAnime(work);
     
@@ -786,6 +789,12 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
 
   //メッセージ
   PRINTSYS_QUE_Main( work->printQue );
+  
+  //SE用
+  if( work->listSeWaitCnt > 0 )
+  {
+    work->listSeWaitCnt--;
+  }
 
 #if DEB_ARI
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
@@ -1472,18 +1481,6 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
   
   work->listTotalMove += moveAngle;
   
-  //SE処理
-  {
-    work->listMoveSeCnt += moveAngle;
-    OS_TPrintf("SE[%8d]\n",work->listMoveSeCnt);
-    if( work->listMoveSeCnt > DUP_LIST_ROTATE_SE_VALUE ||
-        work->listMoveSeCnt < -DUP_LIST_ROTATE_SE_VALUE )
-    {
-      work->listMoveSeCnt = 0;
-      PMSND_PlaySE( DUP_SE_LIST_ROTATE );
-    }
-  }
-  
   if( work->listTotalMove < 0 )
   {
     work->listTotalMove += (LIST_ONE_ANGLE*work->totalItemNum);
@@ -1499,6 +1496,14 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
     itemSwingOfsX = ((fx32)FX_SinIdx( 0 )*ITEM_SWING_ORIGIN_OFSSET)-((fx32)FX_SinIdx( itemSwingRot )*ITEM_SWING_ORIGIN_OFSSET);
     itemSwingOfsY = ((fx32)FX_CosIdx( 0 )-ITEM_SWING_ORIGIN_OFSSET)-((fx32)FX_CosIdx( itemSwingRot )*-ITEM_SWING_ORIGIN_OFSSET)-FX32_CONST(ITEM_SWING_ORIGIN_OFSSET);
     //OS_Printf("[%4x][%.2f][%.2f]\n",itemSwingRot,F32_CONST(itemSwingOfsX),F32_CONST(itemSwingOfsY));
+  }
+  
+  //SE処理
+  if( moveAngle > DUP_LIST_ROTATE_SE_SPEED &&
+      work->listSeWaitCnt == 0 )
+  {
+    work->listSeWaitCnt = DUP_LIST_ROTATE_SE_WAIT_CNT;
+    PMSND_PlaySE(SEQ_SE_MSCL_03);
   }
   
   while( item != NULL )
@@ -2997,10 +3002,10 @@ static void DUP_CHECK_UpdateTpHoldingItem( FITTING_WORK *work )
       angle =  MUS_POKE_EQUIP_ANGLE_MAX;
     }
     
-    subAngle = work->initWork->musPoke->equip[equipPos].angle - angle;
-    OS_TPrintf("[%d][%d][%d]\n",subAngle,work->befAngle,angle);
-    if( MATH_ABS( subAngle ) > DUP_POKE_ADJUST_SE_VALUE )
+    work->adjustMoveValue += work->initWork->musPoke->equip[equipPos].angle - angle;
+    if( MATH_ABS( work->adjustMoveValue ) > DUP_POKE_ADJUST_SE_VALUE )
     {
+      work->adjustMoveValue = 0;
       PMSND_PlaySE( DUP_SE_POKE_ADJUST );
     }
       
