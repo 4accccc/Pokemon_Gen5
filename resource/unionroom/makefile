@@ -42,7 +42,7 @@ sobjects = $(subst .nsc,.NSCR,$(ssources))
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .imd
+.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .imd .nce
 
 endif
 
