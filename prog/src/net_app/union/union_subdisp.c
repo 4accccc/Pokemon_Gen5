@@ -26,9 +26,9 @@
 //  定数定義
 //==============================================================================
 enum{
+  UNISUB_ACTOR_APPEAL_CHAT,
   UNISUB_ACTOR_APPEAL_BATTLE,
   UNISUB_ACTOR_APPEAL_TRADE,
-  UNISUB_ACTOR_APPEAL_RECORD,
   UNISUB_ACTOR_APPEAL_PICTURE,
   UNISUB_ACTOR_APPEAL_GURUGURU,
   UNISUB_ACTOR_APPEAL_SCROLL,
@@ -115,9 +115,9 @@ enum{
 
 ///wb_union_icon.nceのアニメーションシーケンス
 enum{
+  UNION_ACT_ANMSEQ_CHAT,
   UNION_ACT_ANMSEQ_BATTLE,
   UNION_ACT_ANMSEQ_TRADE,
-  UNION_ACT_ANMSEQ_RECORD,
   UNION_ACT_ANMSEQ_PICTURE,
   UNION_ACT_ANMSEQ_GURUGURU,
   UNION_ACT_ANMSEQ_SCROLL,
@@ -221,9 +221,9 @@ static BOOL _UniSub_ChatPlate_ChangeColor(UNION_SUBDISP_PTR unisub, int plate_no
 //==============================================================================
 ///ボタンと対応したplay_category
 ALIGN4 static const u8 AppealNo_CategoryTbl[] = {
+  UNION_APPEAL_NULL,        ///<チャット
   UNION_APPEAL_BATTLE,      ///<戦闘
   UNION_APPEAL_TRADE,       ///<交換
-  UNION_APPEAL_RECORD,      ///<レコードコーナー
   UNION_APPEAL_PICTURE,     ///<お絵かき
   UNION_APPEAL_GURUGURU,    ///<ぐるぐる交換
 };
@@ -632,7 +632,7 @@ static void _UniSub_ActorCreate(UNION_SUBDISP_PTR unisub, ARCHANDLE *handle)
   };
   
   //アピールアイコン
-  for(i = UNISUB_ACTOR_APPEAL_BATTLE; i <= UNISUB_ACTOR_APPEAL_GURUGURU; i++){
+  for(i = UNISUB_ACTOR_APPEAL_CHAT; i <= UNISUB_ACTOR_APPEAL_GURUGURU; i++){
     head.pos_x = 32 + i * 48;
     head.anmseq = i;
     unisub->act[i] = GFL_CLACT_WK_Create(unisub->clunit, 
@@ -692,7 +692,7 @@ static void _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub)
     return;
   }
   
-  for(i = UNISUB_ACTOR_APPEAL_BATTLE; i <= UNISUB_ACTOR_APPEAL_GURUGURU; i++){
+  for(i = UNISUB_ACTOR_APPEAL_CHAT; i <= UNISUB_ACTOR_APPEAL_GURUGURU; i++){
     GFL_CLACT_WK_GetPos(unisub->act[i], &clpos, CLSYS_DEFREND_SUB);
     crect.top = clpos.y - 10;
     crect.bottom = clpos.y + 10;
@@ -718,7 +718,7 @@ static void _UniSub_IconPalChange(UNION_SUBDISP_PTR unisub, int act_index)
   int i;
   UNION_APPEAL select_appeal;
   
-  select_appeal = AppealNo_CategoryTbl[act_index - UNISUB_ACTOR_APPEAL_BATTLE];
+  select_appeal = AppealNo_CategoryTbl[act_index - UNISUB_ACTOR_APPEAL_CHAT];
   if(select_appeal == unisub->appeal_no){
     unisub->appeal_no = UNION_APPEAL_NULL;
   }
@@ -726,7 +726,7 @@ static void _UniSub_IconPalChange(UNION_SUBDISP_PTR unisub, int act_index)
     unisub->appeal_no = select_appeal;
   }
   
-  for(i = UNISUB_ACTOR_APPEAL_BATTLE; i <= UNISUB_ACTOR_APPEAL_GURUGURU; i++){
+  for(i = UNISUB_ACTOR_APPEAL_CHAT; i <= UNISUB_ACTOR_APPEAL_GURUGURU; i++){
     if(i == act_index && unisub->appeal_no != UNION_APPEAL_NULL){
       GFL_CLACT_WK_SetPlttOffs(unisub->act[i], 1, CLWK_PLTTOFFS_MODE_PLTT_TOP);
     }
