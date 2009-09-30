@@ -39,10 +39,11 @@
   read_data.size.times {|i|
     if File.exist?( read_data[ i ] ) == TRUE
       com = "ruby " +  File::dirname(__FILE__) + "/nclinkrw.rb " + read_data[ i ] + " " + ARGV[ ARGV_COPY_DIR ]
-      if File.exist?( File::basename( read_data[ i ] ) ) == FALSE
+      read_file = ARGV[ ARGV_COPY_DIR ] + File::basename( read_data[ i ] )
+      if File.exist?( read_file ) == FALSE
         printf("copy %s\n", File::basename( read_data[ i ] ) )
         system( com )
-      elsif File::stat( File::basename( read_data[ i ] ) ).mtime < File::stat( read_data[ i ] ).mtime
+      elsif File::stat( read_file ).mtime < File::stat( read_data[ i ] ).mtime
         printf("copy %s\n", File::basename( read_data[ i ] ) )
         system( com )
       end
