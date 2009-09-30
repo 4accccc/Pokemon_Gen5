@@ -249,6 +249,7 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 	}
 
 //	テスト処理
+/*
 	{
 		u32	i = 0;
 		while(1){
@@ -259,6 +260,7 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 			i++;
 		}
 	}
+*/
 
 	wk->cur = MYITEM_BagCursorAlloc( dat->heap );		// 仮でカーソルデータを作成
 	{
@@ -270,13 +272,13 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 		for( i=0; i<5; i++ ){
 			MYITEM_BattleBagCursorGet( cur, i, &wk->dat->item_pos[i], &wk->dat->item_scr[i] );
 		}
-		wk->dat->used_item = MYITEM_BattleBagLastItemGet( cur );
-		wk->dat->used_poke = MYITEM_BattleBagLastPageGet( cur );
+		wk->used_item = MYITEM_BattleBagLastItemGet( cur );
+		wk->used_poke = MYITEM_BattleBagLastPageGet( cur );
 	}
 
 	BattleBag_UsedItemChack( wk );
-//	wk->dat->used_item = 2;
-//	wk->dat->used_poke = 1;
+//	wk->used_item = 2;
+//	wk->used_poke = 1;
 
 //	wk->dat->energy = 7;
 //	wk->dat->reserved_energy = 3;
@@ -462,9 +464,9 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 			return SEQ_BBAG_BUTTON_WAIT;
 
 		case BBAG_UI_P1_LAST_ITEM:		// 最後に使用した道具
-			if( wk->dat->used_item != ITEM_DUMMY_DATA ){
+			if( wk->used_item != ITEM_DUMMY_DATA ){
 //				Snd_SePlay( SEQ_SE_DP_DECIDE );
-				wk->poke_id = wk->dat->used_poke;
+				wk->poke_id = wk->used_poke;
 				wk->ret_seq = SEQ_BBAG_PAGE3_CHG;
 				BattleBag_CorsorReset( wk );
 				BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_USE );
@@ -540,6 +542,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 	case BBAG_UI_P2_LEFT:			// 前へ
 		if( wk->scr_max[wk->poke_id] != 0 ){
 //			Snd_SePlay( SEQ_SE_DP_DECIDE );
+			wk->dat->item_pos[wk->poke_id] = 0;
 			wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
 			wk->page_mv = -1;
 			BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_LEFT );
@@ -550,6 +553,7 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 	case BBAG_UI_P2_RIGHT:		// 次へ
 		if( wk->scr_max[wk->poke_id] != 0 ){
 //			Snd_SePlay( SEQ_SE_DP_DECIDE );
+			wk->dat->item_pos[wk->poke_id] = 0;
 			wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
 			wk->page_mv = 1;
 			BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RIGHT );
@@ -611,7 +615,7 @@ static int BBAG_SeqItemSelNext( BBAG_WORK * wk )
 {
 	s8	scr = wk->dat->item_scr[wk->poke_id];
 
-	wk->dat->item_pos[wk->poke_id] = 0;
+//	wk->dat->item_pos[wk->poke_id] = 0;
 	scr += wk->page_mv;
 	if( scr > wk->scr_max[wk->poke_id] ){
 		wk->dat->item_scr[wk->poke_id] = 0;

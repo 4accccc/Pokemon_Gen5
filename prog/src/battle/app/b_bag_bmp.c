@@ -409,7 +409,7 @@ static void BBAG_Page1BmpWrite( BBAG_WORK * wk )
 	BBAG_StrPut( wk, WIN_P1_ZYOUTAI, mes_b_bag_01_101, P1_KAIFUKU2_PY, FCOL_S12W );
 	BBAG_StrPut( wk, WIN_P1_BALL, mes_b_bag_01_500, P1_BALL_PY, FCOL_S12W );
 	BBAG_StrPut( wk, WIN_P1_BATTLE, mes_b_bag_01_400, P1_BATTLE_PY, FCOL_S12W );
-	if( wk->dat->used_item != ITEM_DUMMY_DATA ){
+	if( wk->used_item != ITEM_DUMMY_DATA ){
 		STRBUF * str = GFL_MSG_CreateString( wk->mman, mes_b_bag_01_600 );
 /*
 		PRINTSYS_PrintQueColor(

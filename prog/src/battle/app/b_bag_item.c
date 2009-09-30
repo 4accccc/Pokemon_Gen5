@@ -91,11 +91,11 @@ static const SHOOTER_ITEM ShooterItemTable[] =
 //--------------------------------------------------------------------------------------------
 BOOL BattleBag_UsedItemChack( BBAG_WORK * wk )
 {
-	if( wk->dat->used_item == ITEM_DUMMY_DATA ){ return FALSE; }
+	if( wk->used_item == ITEM_DUMMY_DATA ){ return FALSE; }
 
-	if( MYITEM_CheckItem( wk->dat->myitem, wk->dat->used_item, 1, wk->dat->heap ) == FALSE ){
-		wk->dat->used_item = ITEM_DUMMY_DATA;
-		wk->dat->used_poke = 0;
+	if( MYITEM_CheckItem( wk->dat->myitem, wk->used_item, 1, wk->dat->heap ) == FALSE ){
+		wk->used_item = ITEM_DUMMY_DATA;
+		wk->used_poke = 0;
 		return FALSE;
 	}
 
@@ -116,7 +116,7 @@ void BattleBag_CorsorReset( BBAG_WORK * wk )
 	u32	i;
 
 	for( i=0; i<BBAG_POCKET_IN_MAX; i++ ){
-		if( wk->dat->used_item == wk->pocket[wk->poke_id][i].id ){
+		if( wk->used_item == wk->pocket[wk->poke_id][i].id ){
 			wk->dat->item_pos[wk->poke_id] = i%6;
 			wk->dat->item_scr[wk->poke_id] = i/6;
 			break;

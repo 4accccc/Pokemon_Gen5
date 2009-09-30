@@ -305,6 +305,8 @@ typedef struct {
 	u8	get_cnt;		// 捕獲デモカウンタ
 //	u8	get_anm;		// 捕獲デモカーソルアニメフラグ
 
+  u16 used_item;    // 前回使用したアイテム
+  u8  used_poke;    // 前回使用したアイテムのポケット
 
 //	WB追加
 	BAG_CURSOR * cur;		// 仮
@@ -314,6 +316,7 @@ typedef struct {
 	u32	celRes[BBAG_CELRES_MAX];
 //	u32	anmRes[16];
 	BOOL cursor_flg;
+
 
 }BBAG_WORK;
 

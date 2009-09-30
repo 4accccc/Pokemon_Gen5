@@ -128,6 +128,22 @@ void BBAGUI_Exit( BBAG_WORK * wk )
 
 void BBAGUI_ChangePage( BBAG_WORK * wk, u32 page, u32 pos )
 {
+	if( wk->cursor_flg == FALSE ){
+		pos = 0;
+	}else{
+		switch( page ){
+		case BBAG_PAGE_POCKET:		// ポケット選択ページ
+			pos = wk->poke_id;
+			break;
+		case BBAG_PAGE_MAIN:			// アイテム選択ページ
+			pos = wk->dat->item_pos[wk->poke_id];
+			break;
+		case BBAG_PAGE_ITEM:			// アイテム使用ページ
+			pos = 0;
+			break;
+		}
+	}
+
 	BBAGUI_Exit( wk );
 	BBAGUI_Init( wk, page, pos );
 }

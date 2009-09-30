@@ -46,13 +46,12 @@ typedef struct {
   u8  ret_cost;   ///< 選択したアイテムの消費コスト（シューター用）
   u8  end_flg;    ///< 終了フラグ
 
+  BAG_CURSOR* bagcursor;  ///< バッグカーソルの管理構造体ポインタ
 
 
   u32 skill_item_use; // 技で使用不可
   s32 client_no;    // クライアントNo
-  u16 used_item;    // 前回使用したアイテム
 
-  u8  used_poke;    // 前回使用したアイテムのポケット
   u8  enc_double;   // 野生2vs2でボールが投げられない場合は１
   u8  waza_vanish;  // 相手が「そらをとぶ」などで見えない場合は１
   u8  waza_migawari;// 相手が「みがわり」を使用している場合は１
@@ -61,6 +60,9 @@ typedef struct {
 
   s16 item_pos[5];  // アイテム位置
   s16 item_scr[5];  // アイテムスクロールカウンタ
+
+//  u16 used_item;    // 前回使用したアイテム
+//  u8  used_poke;    // 前回使用したアイテムのポケット
 
 }BBAG_DATA;
 

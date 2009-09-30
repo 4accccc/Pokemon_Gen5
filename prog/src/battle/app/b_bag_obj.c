@@ -711,9 +711,9 @@ static void BBAG_Page1ObjSet( BBAG_WORK * wk )
 {
 	u16	item;
 
-	if( wk->dat->used_item != ITEM_DUMMY_DATA ){
-		BBAG_ItemIconCharChg( wk, wk->dat->used_item, BBAG_CHRRES_ITEM7, BBAG_PALRES_ITEM7 );
-//		BBAG_ItemIconPlttChg( wk, wk->dat->used_item, 0, PAL_ID_ITEM1 );
+	if( wk->used_item != ITEM_DUMMY_DATA ){
+		BBAG_ItemIconCharChg( wk, wk->used_item, BBAG_CHRRES_ITEM7, BBAG_PALRES_ITEM7 );
+//		BBAG_ItemIconPlttChg( wk, wk->used_item, 0, PAL_ID_ITEM1 );
 		BBAG_ClactOn( wk->clwk[BBAG_CA_ITEM7], &P1_ItemIconPos );
 	}
 
@@ -904,7 +904,7 @@ static const POINTSEL_WORK * const CursorPosTable[] = {
 /*
 void BBAG_P1CursorMvTblMake( BBAG_WORK * wk )
 {
-	if( wk->dat->used_item != 0 ){
+	if( wk->used_item != 0 ){
 		BAPP_CursorMvWkSetMvTbl( wk->cmv_wk, P1_DEF_CMV_TBL );
 	}else{
 		BAPP_CursorMvWkSetMvTbl( wk->cmv_wk, P1_LST_CMV_TBL );
