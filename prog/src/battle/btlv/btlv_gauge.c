@@ -13,11 +13,13 @@
 #include "poke_tool/monsno_def.h"
 #include "print/printsys.h"
 #include "font/font.naix"
+#include "poke_tool/gauge_tool.h"
 
 #include "btlv_effect.h"
 #include "btlv_gauge.h"
 
 #include "pm_define.h"
+#include "sound/pm_sndsys.h"
 
 #include "arc_def.h"
 #include "battle/battgra_wb.naix"
@@ -47,16 +49,6 @@
 
 //数値の桁数
 #define BTLV_GAUGE_NUM_MAX ( 3 )
-
-// HPカラー
-enum
-{
-	HP_DOTTO_NULL = 0,		// HP=0
-	HP_DOTTO_RED,			// 赤
-	HP_DOTTO_YELLOW,		// 黄
-	HP_DOTTO_GREEN,			// 緑
-	HP_DOTTO_MAX			// HP=MHP
-};
 
 //ゲージパーツ
 enum
@@ -163,6 +155,7 @@ struct _BTLV_GAUGE_CLWK
   u32           exp_cellID;
 
   int           gauge_type;
+  int           gauge_dir;
 
   s32           hp;
   s32           hpmax;
@@ -179,7 +172,9 @@ struct _BTLV_GAUGE_CLWK
   u8            status;
   u8            getball;
 
-  int           calc_req;
+  u32           calc_req      :1;
+  u32           gauge_enable  :1;
+  u32                         :30;
 };
 
 struct _BTLV_GAUGE_WORK
@@ -194,8 +189,11 @@ struct _BTLV_GAUGE_WORK
 
   BTLV_GAUGE_CLWK bgcl[ BTLV_GAUGE_CLWK_MAX ];
 
-  u32             vanish_flag :1;
-  u32                         :31;
+  u32             vanish_flag   :1;
+  u32             bgm_fade_flag :1;
+  u32                           :30;
+
+  u32             now_bgm_no;
 
   HEAPID          heapID;
 };
@@ -211,14 +209,13 @@ static  void  Gauge_CalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
 static  s32   GaugeProc( s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 GaugeMax, u16 add_dec );
 static  u8    PutGaugeProc( s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 *gauge_chr, u8 GaugeMax );
 static  u32   DottoOffsetCalc( s32 nowHP, s32 beHP, s32 MaxHP, u8 GaugeMax );
-static  u8    GetNumDotto( u32 prm_now, u32 prm_max, u8 dot_max );
-static  u8    GetGaugeDottoColor( u32 put_dot, u32 max_dot );
-static  u8    GetHPGaugeDottoColor( u16 hp, u16 mhp, u32 max_dot );
 static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const POKEMON_PARAM* pp );
 static  void  PutSexOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
 static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAUGE_REQ req );
 static  void  PutHPNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, s32 nowHP );
 static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
+
+static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw );
 
 //============================================================================================
 /**
@@ -255,6 +252,9 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( HEAPID heapID )
   //フォント読み込み（独自フォントになる可能性があるので　現状はデフォルトフォントを読んでおく）
   bgw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, bgw->heapID );
 
+  //今鳴っているBGMを保存
+  bgw->now_bgm_no = PMSND_GetBGMsoundNo();
+
   return bgw;
 }
 
@@ -272,6 +272,10 @@ void  BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw )
   for( pos = 0 ;  pos < BTLV_GAUGE_CLWK_MAX ; pos++ )
   { 
     BTLV_GAUGE_Del( bgw, pos );
+  }
+  if( bgw->now_bgm_no != PMSND_GetBGMsoundNo() )
+  { 
+    PMSND_PopBGM();
   }
   GFL_CLGRP_PLTT_Release( bgw->plttID );
   GFL_CLACT_UNIT_Delete( bgw->clunit );
@@ -299,6 +303,8 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
       Gauge_CalcHP( bgw, &bgw->bgcl[ i ] );
     }
   }
+  //ピンチBGM再生チェック
+  pinch_bgm_check( bgw );
 }
 
 //============================================================================================
@@ -319,6 +325,7 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
   GF_ASSERT( bgw->bgcl[ pos ].base_clwk == NULL );
 
   bgw->bgcl[ pos ].gauge_type = type;
+  bgw->bgcl[ pos ].gauge_dir = pos & 1;
 
   switch( type ){ 
   default:
@@ -433,6 +440,8 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
     PutHPNumOBJ( bgw, &bgw->bgcl[ pos ], bgw->bgcl[ pos ].hp );
     PutLVNumOBJ( bgw, &bgw->bgcl[ pos ] );
   }
+
+  bgw->bgcl[ pos ].gauge_enable = 1;
 }
 
 //============================================================================================
@@ -577,23 +586,6 @@ static  void  Gauge_InitCalcHP( BTLV_GAUGE_CLWK* bgcl, int value )
 {
 	bgcl->hp_work = BTLV_GAUGE_HP_WORK_INIT_VALUE;
 	
-#if 0
-	if( bgcl->hp + damage < 0 ){
-		damage -= bgcl->hp + damage;
-	}
-	if( bgcl->hp + damage > bgcl->hpmax){
-		damage -= ( bgcl->hp + damage ) - bgcl->hpmax;
-	}
-	
-	//-- 旧ゲージ計算ルーチンに合わせるため、正負の逆転などを行う --//
-	bgcl->damage = -damage;
-	if( bgcl->hp < 0 ){
-		bgcl->hp = 0;
-	}
-	if( bgcl->hp > bgcl->hpmax ){
-		bgcl->hp = bgcl->hpmax;
-	}
-#endif
   bgcl->damage = bgcl->hp - value;
 	if( bgcl->hp < 0 ){
 		bgcl->hp = 0;
@@ -841,84 +833,6 @@ static u32 DottoOffsetCalc( s32 nowHP, s32 beHP, s32 MaxHP, u8 GaugeMax )
 	return ( abs( now_dotto - end_dotto ) );
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * @brief 現在値のゲージドット数を取得
- *
- * @param	prm_now		現在値
- * @param	prm_max		最大値
- * @param	dot_max		最大ドット数
- *
- * @return	ドット数
- */
-//--------------------------------------------------------------------------------------------
-static  u8 GetNumDotto( u32 prm_now, u32 prm_max, u8 dot_max )
-{
-	u8 put_dot;
-	
-	put_dot = prm_now * dot_max / prm_max;
-	if( put_dot == 0 && prm_now > 0 )   // ﾄﾞｯﾄ計算では0でも実際の値が1以上なら1ﾄﾞｯﾄにする
-  {
-		put_dot = 1;
-	}
-	return put_dot;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   表示ドットと最大ドットからHPゲージの色を取得する
- *
- * @param   put_dot		表示ドット数
- * @param   max_dot		最大ドット数
- *
- * @retval  ゲージカラー
- */
-//--------------------------------------------------------------
-static  u8 GetGaugeDottoColor( u32 put_dot, u32 max_dot )
-{
-	put_dot <<= 8;		//割り算使用の為、小数レベルまで見れるように固定小数化
-	max_dot <<= 8;
-	
-	if( put_dot > (max_dot/2) )
-  {
-		return HP_DOTTO_GREEN;		// 緑
-	}
-  else if( put_dot > ( max_dot / 5 ) )
-  {
-		return HP_DOTTO_YELLOW;		// 黄
-	}
-  else if( put_dot > 0 )
-  {
-		return HP_DOTTO_RED;		// 赤
-	}
-	return HP_DOTTO_NULL;			// HP=0
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * HPゲージのカラーを取得
- *
- * @param	hp			現在のHP
- * @param	mhp			最大HP
- * @param	max_dot		最大ドット数
- *
- * @return	ゲージカラー
- */
-//--------------------------------------------------------------------------------------------
-static  u8 GetHPGaugeDottoColor( u16 hp, u16 mhp, u32 max_dot )
-{
-	u32 put_dot;
-	
-	if( hp == mhp )
-  {
-    return HP_DOTTO_MAX;
-  }
-	
-	put_dot = GetNumDotto( hp, mhp, max_dot );
-
-	return GetGaugeDottoColor( put_dot, max_dot );
-}
-
 //--------------------------------------------------------------
 /**
  * @brief  ニックネーム描画
@@ -1037,15 +951,15 @@ static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAU
 		{
 			int dotto_color;
 			
-			dotto_color = GetGaugeDottoColor(put_dot, BTLV_GAUGE_HP_DOTTOMAX);
+			dotto_color = GAUGETOOL_GetGaugeDottoColor( put_dot, BTLV_GAUGE_HP_DOTTOMAX );
 			switch(dotto_color){
-			case HP_DOTTO_GREEN:
+			case GAUGETOOL_HP_DOTTO_GREEN:
 				parts_num = GP_HPBAR_GREEN;
 				break;
-			case HP_DOTTO_YELLOW:
+			case GAUGETOOL_HP_DOTTO_YELLOW:
 				parts_num = GP_HPBAR_YELLOW;
 				break;
-			case HP_DOTTO_RED:
+			case GAUGETOOL_HP_DOTTO_RED:
 			default:
 				parts_num = GP_HPBAR_RED;
 				break;
@@ -1213,5 +1127,61 @@ static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
                   (void*)( (u32)obj_vram + ( i + BTLV_GAUGE_LV_CHARSTART ) * 0x20 +
                   image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
 			            0x20);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ピンチBGM再生チェック
+ *
+ * @param bgw     BTLV_GAUGE_WORK管理構造体へのポインタ
+ */
+//--------------------------------------------------------------
+static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
+{ 
+  int i;
+
+  if( bgw->bgm_fade_flag )
+  { 
+    if( PMSND_CheckFadeOnBGM() == FALSE )
+    { 
+      bgw->bgm_fade_flag = 0;
+      if( bgw->now_bgm_no != PMSND_GetBGMsoundNo() )
+      { 
+        PMSND_PopBGM();
+        PMSND_FadeInBGM( 24 );
+      }
+      else
+      { 
+        PMSND_PushBGM();
+        PMSND_PlayBGM( SEQ_BATTLEPINCH );
+        PMSND_FadeInBGM( 8 );
+      }
+    }
+  }
+  else
+  { 
+    BOOL  pinch_flag = FALSE;
+
+    for( i = 0 ; i < BTLV_GAUGE_NUM_MAX ; i++ )
+    { 
+      if( ( bgw->bgcl[ i ].gauge_dir == 0 ) &&
+          ( bgw->bgcl[ i ].gauge_enable ) &&
+          ( bgw->bgcl[ i ].gauge_type != BTLV_GAUGE_TYPE_SAFARI ) )
+      { 
+        u8  color = GAUGETOOL_GetHPGaugeDottoColor( bgw->bgcl[ i ].hp, bgw->bgcl[ i ].hpmax, BTLV_GAUGE_HP_DOTTOMAX );
+
+        if( color == GAUGETOOL_HP_DOTTO_RED )
+        { 
+          pinch_flag = TRUE;
+        }
+      }
+    }
+    if( ( ( bgw->now_bgm_no != PMSND_GetBGMsoundNo() ) && ( pinch_flag == FALSE ) ) ||
+        ( ( bgw->now_bgm_no == PMSND_GetBGMsoundNo() ) && ( pinch_flag == TRUE ) ) )
+    { 
+      bgw->bgm_fade_flag = 1;
+      PMSND_FadeOutBGM( 8 );
+    }
   }
 }
