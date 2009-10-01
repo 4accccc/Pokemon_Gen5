@@ -92,7 +92,7 @@ EVENT_START   ev_pos_r02_rival_01
 	_OBJ_ANIME_WAIT()	
 
 	//ライバル：消す
-	_OBJ_DEL_EV( R02_RIVAL_01 )
+	_OBJ_DEL( R02_RIVAL_01 )		//ライバルのOBJをその場で消す
 	
 	//=================フラグ操作=================//
 	//T02にライバルが出現する
@@ -105,38 +105,6 @@ EVENT_START   ev_pos_r02_rival_01
 	//============================================//
 
 EVENT_END
-
-/**************************************************************/
-/*  R02 ママのイベントスクリプト*/
-/**************************************************************/
-EVENT_START   ev_r02_talkobj_mama
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r02_mama_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-EVENT_END
-
-/**************************************************************/
-/*  R02 BOY2の会話イベントスクリプト*/
-/**************************************************************/
-EVENT_START   ev_r02_talkobj_boy2
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r02_boy2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-EVENT_END
-
-/**************************************************************/
-/*  R02 GIRL2の会話のイベントスクリプト*/
-/**************************************************************/
-EVENT_START   ev_r02_talkobj_girl2
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r02_girl2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-EVENT_END
-
-
 //--------------------------------------------------------------------
 //ライバル:びっくりマークを出す                       
 //--------------------------------------------------------------------
@@ -178,3 +146,36 @@ _ANIME_LABEL	anm_shita_muku
 _ANIME_LABEL	anm_rival_saru
 	_ANIME_DATA AC_WALK_R_8F,10
 	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*  R02 ママのイベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_r02_talkobj_mama
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_r02_mama_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*  R02 BOY2の会話イベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_r02_talkobj_boy2
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_r02_boy2_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*  R02 GIRL2の会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_r02_talkobj_girl2
+  _TALK_OBJ_START()
+	_BALLOONWIN_TALKOBJ_OPEN( msg_r02_girl2_01 )
+	_AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
+
+
+
