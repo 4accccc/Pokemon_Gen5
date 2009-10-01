@@ -18,6 +18,7 @@ typedef enum{
   FLD_GIMMICK_GYM_NORM1,
   FLD_GIMMICK_GYM_NORM2,
   FLD_GIMMICK_GYM_ANTI,
+  FLD_GIMMICK_GYM_FLY,
 
   FLD_GIMMICK_MAX,			//ギミック最大数(ギミック無しを含めた数)
 
