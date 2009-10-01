@@ -95,6 +95,16 @@
 #include "fld3d_ci.h"
 
 //======================================================================
+//	DEBUG定義
+//======================================================================
+#ifdef PM_DEBUG
+
+#define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK    // フィールドマップ描画にかかる処理時間を求める
+
+#endif
+
+
+//======================================================================
 //	define
 //======================================================================
 //--------------------------------------------------------------
@@ -765,6 +775,13 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
 static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
+  // 描画にかかる micro second を表示
+#ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
+  OSTick debug_fieldmap_start_tick = OS_GetTick(); 
+  OSTick debug_fieldmap_end_tick;
+#endif
+  
+  
   FIELD_SUBSCREEN_Draw(fieldWork->fieldSubscreenWork);
   FIELD_CAMERA_Main( fieldWork->camera_control, GFL_UI_KEY_GetCont() );
   
@@ -779,6 +796,19 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 	// ゲームデータのフレーム分割用カウンタをリセット
 	GAMEDATA_ResetFrameSpritCount(GAMESYSTEM_GetGameData(gsys));
 
+
+  // 描画にかかる micro second を表示
+  // 1シンクに描画以外の処理もしているので、
+  // 10000 micro second以内になっているのが理想です。
+#ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
+  debug_fieldmap_end_tick = OS_GetTick();
+  debug_fieldmap_end_tick -= debug_fieldmap_start_tick;
+
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    OS_TPrintf( "draw_tick %d micro second\n", OS_TicksToMicroSeconds( debug_fieldmap_end_tick ) );
+  }
+#endif
   return MAINSEQ_RESULT_CONTINUE;
 }
 
