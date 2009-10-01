@@ -473,6 +473,10 @@
 		<language name="JPN" width="256">C-08-W</language>
 		<language name="JPN_KANJI" width="256">C-08-W</language>
 	</row>
+	<row id="msg_seq_c_08_b">
+		<language name="JPN" width="256">C-08-B</language>
+		<language name="JPN_KANJI" width="256">C-08-B</language>
+	</row>
 	<row id="msg_seq_c_09_w">
 		<language name="JPN" width="256">C-09-W</language>
 		<language name="JPN_KANJI" width="256">C-09-W</language>
@@ -497,25 +501,85 @@
 		<language name="JPN" width="256">R-A-WI</language>
 		<language name="JPN_KANJI" width="256">R-A-WI</language>
 	</row>
-	<row id="msg_seq_r_b">
-		<language name="JPN" width="256">R-B</language>
-		<language name="JPN_KANJI" width="256">R-B</language>
+	<row id="msg_seq_r_b_sp">
+		<language name="JPN" width="256">R-B-SP</language>
+		<language name="JPN_KANJI" width="256">R-B-SP</language>
 	</row>
-	<row id="msg_seq_r_c">
-		<language name="JPN" width="256">R-C</language>
-		<language name="JPN_KANJI" width="256">R-C</language>
+	<row id="msg_seq_r_b_su">
+		<language name="JPN" width="256">R-B-SU</language>
+		<language name="JPN_KANJI" width="256">R-B-SU</language>
 	</row>
-	<row id="msg_seq_r_d">
-		<language name="JPN" width="256">R-D</language>
-		<language name="JPN_KANJI" width="256">R-D</language>
+	<row id="msg_seq_r_b_au">
+		<language name="JPN" width="256">R-B-AU</language>
+		<language name="JPN_KANJI" width="256">R-B-AU</language>
 	</row>
-	<row id="msg_seq_r_e">
-		<language name="JPN" width="256">R-E</language>
-		<language name="JPN_KANJI" width="256">R-E</language>
+	<row id="msg_seq_r_b_wi">
+		<language name="JPN" width="256">R-B-WI</language>
+		<language name="JPN_KANJI" width="256">R-B-WI</language>
 	</row>
-	<row id="msg_seq_r_f">
-		<language name="JPN" width="256">R-F</language>
-		<language name="JPN_KANJI" width="256">R-F</language>
+	<row id="msg_seq_r_c_sp">
+		<language name="JPN" width="256">R-C-SP</language>
+		<language name="JPN_KANJI" width="256">R-C-SP</language>
+	</row>
+	<row id="msg_seq_r_c_su">
+		<language name="JPN" width="256">R-C-SU</language>
+		<language name="JPN_KANJI" width="256">R-C-SU</language>
+	</row>
+	<row id="msg_seq_r_c_au">
+		<language name="JPN" width="256">R-C-AU</language>
+		<language name="JPN_KANJI" width="256">R-C-AU</language>
+	</row>
+	<row id="msg_seq_r_c_wi">
+		<language name="JPN" width="256">R-C-WI</language>
+		<language name="JPN_KANJI" width="256">R-C-WI</language>
+	</row>
+	<row id="msg_seq_r_d_sp">
+		<language name="JPN" width="256">R-D-SP</language>
+		<language name="JPN_KANJI" width="256">R-D-SP</language>
+	</row>
+	<row id="msg_seq_r_d_su">
+		<language name="JPN" width="256">R-D-SU</language>
+		<language name="JPN_KANJI" width="256">R-D-SU</language>
+	</row>
+	<row id="msg_seq_r_d_au">
+		<language name="JPN" width="256">R-D-AU</language>
+		<language name="JPN_KANJI" width="256">R-D-AU</language>
+	</row>
+	<row id="msg_seq_r_d_wi">
+		<language name="JPN" width="256">R-D-WI</language>
+		<language name="JPN_KANJI" width="256">R-D-WI</language>
+	</row>
+	<row id="msg_seq_r_e_sp">
+		<language name="JPN" width="256">R-E-SP</language>
+		<language name="JPN_KANJI" width="256">R-E-SP</language>
+	</row>
+	<row id="msg_seq_r_e_su">
+		<language name="JPN" width="256">R-E-SU</language>
+		<language name="JPN_KANJI" width="256">R-E-SU</language>
+	</row>
+	<row id="msg_seq_r_e_au">
+		<language name="JPN" width="256">R-E-AU</language>
+		<language name="JPN_KANJI" width="256">R-E-AU</language>
+	</row>
+	<row id="msg_seq_r_e_wi">
+		<language name="JPN" width="256">R-E-WI</language>
+		<language name="JPN_KANJI" width="256">R-E-WI</language>
+	</row>
+	<row id="msg_seq_r_f_sp">
+		<language name="JPN" width="256">R-F-SP</language>
+		<language name="JPN_KANJI" width="256">R-F-SP</language>
+	</row>
+	<row id="msg_seq_r_f_su">
+		<language name="JPN" width="256">R-F-SU</language>
+		<language name="JPN_KANJI" width="256">R-F-SU</language>
+	</row>
+	<row id="msg_seq_r_f_au">
+		<language name="JPN" width="256">R-F-AU</language>
+		<language name="JPN_KANJI" width="256">R-F-AU</language>
+	</row>
+	<row id="msg_seq_r_f_wi">
+		<language name="JPN" width="256">R-F-WI</language>
+		<language name="JPN_KANJI" width="256">R-F-WI</language>
 	</row>
 	<row id="msg_seq_h_01">
 		<language name="JPN" width="256">H-01</language>
@@ -660,6 +724,14 @@
 	<row id="msg_seq_eye_10">
 		<language name="JPN" width="256">EYE-10</language>
 		<language name="JPN_KANJI" width="256">EYE-10</language>
+	</row>
+	<row id="msg_seq_eye_11">
+		<language name="JPN" width="256">EYE-11</language>
+		<language name="JPN_KANJI" width="256">EYE-11</language>
+	</row>
+	<row id="msg_seq_eye_12">
+		<language name="JPN" width="256">EYE-12</language>
+		<language name="JPN_KANJI" width="256">EYE-12</language>
 	</row>
 	<row id="msg_seq_vs_norapoke">
 		<language name="JPN" width="256">VS-NORAPOKE</language>
@@ -880,6 +952,18 @@
 	<row id="msg_seq_me_minigame">
 		<language name="JPN" width="256">ME-MINIGAME</language>
 		<language name="JPN_KANJI" width="256">ME-MINIGAME</language>
+	</row>
+	<row id="msg_seq_me_aishou_h">
+		<language name="JPN" width="256">ME-AISHOU-H</language>
+		<language name="JPN_KANJI" width="256">ME-AISHOU-H</language>
+	</row>
+	<row id="msg_seq_me_aishou_m">
+		<language name="JPN" width="256">ME-AISHOU-M</language>
+		<language name="JPN_KANJI" width="256">ME-AISHOU-M</language>
+	</row>
+	<row id="msg_seq_me_aishou_l">
+		<language name="JPN" width="256">ME-AISHOU-L</language>
+		<language name="JPN_KANJI" width="256">ME-AISHOU-L</language>
 	</row>
 	<row id="msg_seq_me_end">
 		<language name="JPN" width="256">ME-END</language>
