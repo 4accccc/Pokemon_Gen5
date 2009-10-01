@@ -81,17 +81,52 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 //-----------------------------------------------
 //static 定義
 //-----------------------------------------------
-
-
-static void _changeState(FIELD_ITEMMENU_WORK* pWork,StateFunc* state);
-static void _changeStateDebug(FIELD_ITEMMENU_WORK* pWork,StateFunc* state, int line);
-static void _itemNumSelectMenu(FIELD_ITEMMENU_WORK* pWork);
-static void _lineCallback(BMPMENULIST_WORK * mpWork,u32 param,u8 y);
+static void _changeState(FIELD_ITEMMENU_WORK* pWork,StateFunc state);
+static void _changeStateDebug(FIELD_ITEMMENU_WORK* pWork,StateFunc state, int line);
+static void _windowCreate(FIELD_ITEMMENU_WORK* pWork);
 static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork);
-static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork);
-static void _itemUseMenu(FIELD_ITEMMENU_WORK* pWork);
+ITEM_ST* ITEMMENU_GetItem(FIELD_ITEMMENU_WORK* pWork, int no);
+int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork);
+static void _ItemChangeSingle(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 );
+static void _ItemChange(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 );
+static void _pocketMessageDisp(FIELD_ITEMMENU_WORK* pWork,int newpocket);
+static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int newpocket);
+int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork);
+static BOOL _posplus(FIELD_ITEMMENU_WORK* pWork, int length);
+static BOOL _posminus(FIELD_ITEMMENU_WORK* pWork, int length);
+static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork);
+static BOOL _keyChangeItemCheck(FIELD_ITEMMENU_WORK* pWork);
+static BOOL _keyMoveCheck(FIELD_ITEMMENU_WORK* pWork);
+static BOOL _itemMovePositionTouchItem(FIELD_ITEMMENU_WORK* pWork);
+static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork);
+static void _itemTecniqueUseYesNo(FIELD_ITEMMENU_WORK* pWork);
+static void _itemTecniqueUseWait(FIELD_ITEMMENU_WORK* pWork);
+static void _itemTecniqueUseInit(FIELD_ITEMMENU_WORK* pWork);
+static void _itemTrashEndWait(FIELD_ITEMMENU_WORK* pWork);
+static void _itemTrashYesWait(FIELD_ITEMMENU_WORK* pWork);
+static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork);
+static void _itemTrashYesNo(FIELD_ITEMMENU_WORK* pWork);
+static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork);
+static void _itemTrash(FIELD_ITEMMENU_WORK* pWork);
+static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork);
+static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork);
 static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork);
-
+static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork );
+static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork );
+static void _itemSellYesnoInit( FIELD_ITEMMENU_WORK* pWork );
+static void _itemSellYesnoWait( FIELD_ITEMMENU_WORK* pWork );
+//static void BAG_ItemUseErrorMsgSet( MYSTATUS * myst, STRBUF * buf, u16 item, u32 err, FIELD_ITEMMENU_WORK * pWork );
+//u8 Bag_TalkMsgPrint( BAG_WORK * pWork, int type );
+//static int Bag_MenuUse( FIELD_ITEMMENU_WORK * pWork );
+static BOOL BAGMAIN_NPlanterUseCheck( u16 pocket, u16 item );
+static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl );
+static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork);
+int ITEMMENU_GetPosCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
+BOOL ITEMMENU_AddCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
+void ITEMMENU_RemoveCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
+static void _BttnCallBack( u32 bttnid, u32 event, void* p_work );
+static void	_VBlank( GFL_TCB *tcb, void *work );
+static void _startState(FIELD_ITEMMENU_WORK* pWork);
 
 #ifdef PM_DEBUG
 #define   _CHANGE_STATE(pWork, state)  _changeStateDebug(pWork ,state, __LINE__)
@@ -747,6 +782,7 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
     _CHANGE_STATE(pWork,_itemTrashYesNo);
   }
   else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
+    G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
@@ -795,6 +831,9 @@ static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
   WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   ITEMDISP_ItemInfoWindowDisp( pWork );
+    
+  //@TODO リストとBAR双方にOBJが使われているためバッティングする。OAMの半透明を切替るシステムが必要
+//  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 /*| GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1*/ | GX_BLEND_PLANEMASK_OBJ , -8 );
 
   _CHANGE_STATE(pWork,_itemTrashWait);
 }
@@ -834,7 +873,6 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       _CHANGE_STATE(pWork,NULL);
     }
     else if(BAG_MENU_SUTERU==pWork->ret_code2){  //すてる
-
       _CHANGE_STATE(pWork,_itemTrash);
     }
     else if(pWork->ret_item == ITEM_TAUNMAPPU){
@@ -846,7 +884,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       _CHANGE_STATE(pWork,NULL);
     }
     else if(pWork->ret_item == ITEM_PARESUHEGOO){
-      pWork->ret_code = BAG_NEXTPROC_PALACEJUMP;  //@@OO 仮 パレスへゴー
+      pWork->ret_code = BAG_NEXTPROC_PALACEJUMP;  //@TODO 仮 パレスへゴー
       _CHANGE_STATE(pWork,NULL);
     }
     else if(BAG_MENU_YAMERU==pWork->ret_code2){  //やめる
@@ -854,6 +892,10 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     }
     else if(BAG_MENU_TSUKAU==pWork->ret_code2){
       pWork->ret_code = BAG_NEXTPROC_ITEMUSE;  //つかう
+      _CHANGE_STATE(pWork,NULL);
+    }
+    else if(BAG_MENU_URU==pWork->ret_code2){
+      pWork->ret_code = BAG_NEXTPROC_SELL;  //うる
       _CHANGE_STATE(pWork,NULL);
     }
     else{
@@ -893,12 +935,17 @@ static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
       pWork->ret_item = item->id;
     }
   }
-  if(pWork->mode == BAG_MODE_POKELIST){
-    //    pWork->ret_code = BAG_NEXTPROC_ITEMHAVE_RET;
+  if(pWork->mode == BAG_MODE_POKELIST)
+  {
     pWork->ret_code = BAG_NEXTPROC_ITEMEQUIP;
     _CHANGE_STATE(pWork,NULL);
   }
-  else{
+  else if( pWork->mode == BAG_MODE_SELL )
+  {
+    _CHANGE_STATE(pWork,_itemSellInit);
+  }
+  else
+  {
     _itemUseWindowRewrite(pWork);
     ITEMDISP_ItemInfoMessageMake( pWork,pWork->ret_item );
     ITEMDISP_ItemInfoWindowDisp( pWork );
@@ -932,16 +979,25 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     return;
   }
 
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
+  // 決定
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE)
+  {
+    // アイテムに対する動作選択画面へ
     _CHANGE_STATE(pWork,_itemSelectState);
     return;
   }
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_B){
+
+  // キャンセル
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_B)
+  {
     pWork->ret_code = BAG_NEXTPROC_RETURN;
     _CHANGE_STATE(pWork,NULL);
     return;
   }
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT){
+
+  // 並び替え
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT)
+  {
     GFL_STD_MemClear(pWork->ScrollItem, sizeof(pWork->ScrollItem));
     MYITEM_ITEM_STCopy(pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE);  //取得
     pWork->moveMode = TRUE;
@@ -951,39 +1007,108 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     return;
   }
 
-  if( _itemScrollCheck(pWork) ){
+  // スクロール
+  if( _itemScrollCheck(pWork) )
+  {
     ITEMDISP_scrollCursorMove(pWork);
     bChange = TRUE;
   }
-  else if(_keyMoveCheck(pWork)){
+  else if(_keyMoveCheck(pWork))
+  {
     ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
     bChange = TRUE;
   }
+
   {
     int oldpocket = pWork->pocketno;
-    if(GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT){
+    if(GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT)
+    {
       pWork->pocketno++;
     }
-    if(GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT){
+    if(GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT)
+    {
       pWork->pocketno--;
     }
-    if(pWork->pocketno >= BAG_POKE_MAX){
+    if(pWork->pocketno >= BAG_POKE_MAX)
+    {
       pWork->pocketno = 0;
     }
-    if(pWork->pocketno < 0){
+    if(pWork->pocketno < 0)
+    {
       pWork->pocketno = BAG_POKE_MAX-1;
     }
-    if(oldpocket != pWork->pocketno){
+    if(oldpocket != pWork->pocketno)
+    {
       _pocketCursorChange(pWork, oldpocket, pWork->pocketno);
       bChange = TRUE;
     }
   }
 
-  if(bChange){
+  if(bChange)
+  {
     _windowRewrite(pWork);
   }
 
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  売るシーケンス 初期化
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
+{
+  pWork->trashNum = 1;  //初期化
+
+  ITEMDISP_NumFrameDisp(pWork);
+
+  ITEMDISP_TrashNumDisp(pWork,pWork->trashNum);
+
+  GFL_MSG_GetString( pWork->MsgManager, mes_shop_094, pWork->pStrBuf );
+  WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+  ITEMDISP_ItemInfoWindowDisp( pWork );
+
+  _CHANGE_STATE( pWork, _itemSellInputWait );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  売るシーケンス 入力待ち
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
+{
+  if(!ITEMDISP_MessageEndCheck(pWork)){
+    return;
+  }
+
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+  {
+    _CHANGE_STATE( pWork, _itemSellYesnoInit );
+  }
+
+}
+
+static void _itemSellYesnoInit( FIELD_ITEMMENU_WORK* pWork )
+{
+    _CHANGE_STATE( pWork, _itemSellYesnoWait );
+}
+
+static void _itemSellYesnoWait( FIELD_ITEMMENU_WORK* pWork )
+{
+  //@TODO 一端メインにもどす
+    _CHANGE_STATE( pWork, _itemKindSelectMenu );
+}
+
 
 #if 0
 //--------------------------------------------------------------------------------------------
@@ -1462,6 +1587,15 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   FIELD_ITEMMENU_WORK* pWork = ppWork;
 
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0);
+
+// @TODO 保坂のみショップから起動したことにする
+#ifdef DEBUG_ONLY_FOR_genya_hosaka
+  if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) == 0 )
+  {
+    pWork->mode = BAG_MODE_SELL;
+    HOSAKA_Printf("hook sell\n");
+  }
+#endif
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ITEMMENU, 0x28000 );
   pWork->heapID = HEAPID_ITEMMENU;

@@ -1074,6 +1074,13 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
       GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[i] , TRUE );
     }
 
+    // うる画面のときは×マークとチェエッ苦ボックスを非表示
+    if( pWork->mode == BAG_MODE_SELL )
+    {
+      GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[2] , FALSE );
+      GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[3] , FALSE );
+    }
+
   }
 
 }
@@ -1485,7 +1492,6 @@ BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
 void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork)
 {
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BAG, pWork->heapID );
-
 
   {
     void* arcData = GFL_ARCHDL_UTIL_Load( p_handle, NARC_bag_bag_win05_d_NSCR, 0, pWork->heapID );

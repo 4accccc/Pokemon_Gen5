@@ -90,14 +90,13 @@ struct _DEBUGITEM_PARAM {
   MYSTATUS            * mystatus;
   ITEMCHECK_WORK      icwk;             ///< アイテムチェックワーク FMENU_EVENT_WORKからコピー
   BAG_MODE            mode;             ///< バッグ呼び出しモード
-	HEAPID              heapID;
   BOOL                cycle_flg;        ///< 自転車かどうか？
 //  GMEVENT * event;
 
   // [PRIVATE]
 	ITEM_ST ScrollItem[ BAG_MYITEM_MAX ];	///< スクロールする為のアイテムリスト
   StateFunc * state;                    ///< ハンドルのプログラム状態
-  MYITEM_PTR pMyItem;
+  MYITEM_PTR  pMyItem;
 	GFL_BMPWIN* win;
   GFL_BMPWIN* itemInfoDispWin;
   GFL_BMPWIN* pocketNameWin;
@@ -112,6 +111,8 @@ struct _DEBUGITEM_PARAM {
   GFL_FONT*   fontHandle;
   BAG_CURSOR* pBagCursor;
   MenuFunc*   menu_func[BAG_MENUTBL_MAX];
+	HEAPID      heapID;
+
 	u32 objRes[3];          ///< CLACTリソース
   u32 cellRes[SCR_MAX];   ///< アイテムカーソル
 
