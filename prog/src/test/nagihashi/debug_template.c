@@ -21,7 +21,7 @@
 #include "app/app_taskmenu.h"
 #include "infowin/infowin.h"
 #include "ui/touchbar.h"
-#include "hoge_graphic.h"
+#include "../../ui/debug/ui_template_graphic.h"
 
 //archive
 #include "arc_def.h"
@@ -86,7 +86,7 @@ struct _SEQ_WORK
 typedef struct
 {
 	//グラフィックモジュール
-	HOGE_GRAPHIC_WORK	*p_graphic;
+	UI_TEMPLATE_GRAPHIC_WORK	*p_graphic;
 
 	//シーケンスシステム
 	SEQ_WORK			seq;
@@ -289,7 +289,7 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 	p_wk->p_tcbl		= GFL_TCBL_Init( HEAPID_NAGI_DEBUG_SUB, HEAPID_NAGI_DEBUG_SUB, 32, 32 );
 
 	//モジュール作成
-	p_wk->p_graphic	= HOGE_GRAPHIC_Init( HEAPID_NAGI_DEBUG_SUB, HEAPID_NAGI_DEBUG_SUB );
+	p_wk->p_graphic	= UI_TEMPLATE_GRAPHIC_Init( HEAPID_NAGI_DEBUG_SUB, HEAPID_NAGI_DEBUG_SUB );
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeOut );	//最初はFadeOutシーケンス
 
 	//INFOWINの設定
@@ -324,7 +324,7 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 		TOUCHBAR_SETUP	touchbar_setup;
 		touchbar_setup.p_item		= touchbar_icon_tbl;
 		touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);
-		touchbar_setup.p_unit		= HOGE_GRAPHIC_GetClunit( p_wk->p_graphic );
+		touchbar_setup.p_unit		= UI_TEMPLATE_GRAPHIC_GetClunit( p_wk->p_graphic );
 		touchbar_setup.bar_frm	= BAR_GRAPHIC_BG_FRAME_BAR_M;
 		touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;
 		touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;
@@ -358,7 +358,7 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 	TOUCHBAR_Exit( p_wk->p_touchbar );
 	INFOWIN_Exit();
 	SEQ_Exit( &p_wk->seq );
-	HOGE_GRAPHIC_Exit( p_wk->p_graphic );
+	UI_TEMPLATE_GRAPHIC_Exit( p_wk->p_graphic );
 
 	//共通モジュールの破棄
 	GFL_TCBL_Exit( p_wk->p_tcbl );
@@ -392,7 +392,7 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 	SEQ_Main( &p_wk->seq );
 
 	//描画
-	HOGE_GRAPHIC_2D_Draw( p_wk->p_graphic );
+	UI_TEMPLATE_GRAPHIC_2D_Draw( p_wk->p_graphic );
 
 	//INFO
 	INFOWIN_Update();

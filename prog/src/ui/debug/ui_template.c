@@ -21,7 +21,7 @@
 #include "infowin/infowin.h"
 
 //描画設定
-#include "hoge_graphic.h"
+#include "ui_template_graphic.h"
 
 //タッチバー
 #include "ui/touchbar.h"
@@ -105,7 +105,7 @@ typedef struct {
 	UI_TEMPLATE_BG_WORK   wk_bg;
 
 	//描画設定
-	HOGE_GRAPHIC_WORK			*p_graphic;
+	UI_TEMPLATE_GRAPHIC_WORK			*p_graphic;
 
 	//タッチバー
 	TOUCHBAR_WORK					*p_touchbar;
@@ -125,6 +125,19 @@ typedef struct {
  */
 //=============================================================================
 static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heap_id );
+
+//-------------------------------------
+///	INFOWIN
+//=====================================
+static void UITemplate_INFOWIN_Init( GAMESYS_WORK *p_gamesys, HEAPID heap_id );
+static void UITemplate_INFOWIN_Exit( void );
+static void UITemplate_INFOWIN_Main( void );
+//-------------------------------------
+///	タッチバー
+//=====================================
+static TOUCHBAR_WORK * UITemplate_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heap_id );
+static void UITemplate_TOUCHBAR_Exit( TOUCHBAR_WORK	*p_touchbar );
+static void UITemplate_TOUCHBAR_Main( TOUCHBAR_WORK	*p_touchbar );
 
 //=============================================================================
 /**
@@ -163,46 +176,18 @@ GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *
   wk->heap_id = HEAPID_UI_DEBUG;
 	
 	//描画設定初期化
-	wk->p_graphic	= HOGE_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heap_id );
+	wk->p_graphic	= UI_TEMPLATE_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heap_id );
 
 	//BGリソース読み込み
 	UITemplate_BG_LoadResource( &wk->wk_bg, wk->heap_id );
 
 	//INFOWINの初期化
-	{
-		GAME_COMM_SYS_PTR comm;
-		comm	= GAMESYSTEM_GetGameCommSysPtr(param->p_gamesys);
-		INFOWIN_Init( BG_FRAME_BAR_M, 
-				PLTID_BG_INFOWIN_M, comm, wk->heap_id );
-	}
+	UITemplate_INFOWIN_Init( param->p_gamesys, wk->heap_id );
 
 	//タッチバーの初期化
 	{	
-		TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
-		{	
-			{	
-				TOUCHBAR_ICON_RETURN,
-				{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
-			},
-			{	
-				TOUCHBAR_ICON_CLOSE,
-				{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
-			},
-			{	
-				TOUCHBAR_ICON_CHECK,
-				{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y_CHECK },
-			},
-		};
-		TOUCHBAR_SETUP	touchbar_setup;
-		touchbar_setup.p_item		= touchbar_icon_tbl;
-		touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);
-		touchbar_setup.p_unit		= HOGE_GRAPHIC_GetClunit( wk->p_graphic );
-		touchbar_setup.bar_frm	= BG_FRAME_BAR_M;
-		touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;
-		touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;
-		touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;
-
-		wk->p_touchbar	= TOUCHBAR_Init( &touchbar_setup, wk->heap_id );
+		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->p_graphic );
+		wk->p_touchbar	= UITemplate_TOUCHBAR_Init( clunit, wk->heap_id );
 	}
 
 
@@ -229,14 +214,15 @@ GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *
 { 
 	UI_TEMPLATE_MAIN_WORK* wk = mywk;
 
-	//タッチバー破棄
-	TOUCHBAR_Exit( wk->p_touchbar );
 
-	//INFOWIN破棄
-	INFOWIN_Exit();
+	//タッチバー
+	UITemplate_TOUCHBAR_Exit( wk->p_touchbar );
+
+	//INFWIN
+	UITemplate_INFOWIN_Exit();
 
 	//描画設定破棄
-	HOGE_GRAPHIC_Exit( wk->p_graphic );
+	UI_TEMPLATE_GRAPHIC_Exit( wk->p_graphic );
 
 
   GFL_PROC_FreeWork( proc );
@@ -270,14 +256,16 @@ GFL_PROC_RESULT UITemplateProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *
     return GFL_PROC_RES_FINISH;
   }
 
-	//INFOWINメイン
-	INFOWIN_Update();
+	//タッチバーメイン処理
+	UITemplate_TOUCHBAR_Main( wk->p_touchbar );
+
+	//INFWIN
+	UITemplate_INFOWIN_Main();
 
 	//描画設定メイン
-	HOGE_GRAPHIC_2D_Draw( wk->p_graphic );
+	UI_TEMPLATE_GRAPHIC_2D_Draw( wk->p_graphic );
 
-	//TOUCHBAR
-	TOUCHBAR_Main( wk->p_touchbar );
+
 
   return GFL_PROC_RES_CONTINUE;
 }
@@ -322,4 +310,109 @@ static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heap_id 
 
 	GFL_ARC_CloseDataHandle( handle );
 }
+//=============================================================================
+/**
+ *		INFOWIN
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	INFOWIN初期化
+ *
+ *	@param	GAMESYS_WORK *p_gamesys	ゲームシステム
+ *	@param	heap_id		ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_INFOWIN_Init( GAMESYS_WORK *p_gamesys, HEAPID heap_id )
+{	
+	GAME_COMM_SYS_PTR comm;
+	comm	= GAMESYSTEM_GetGameCommSysPtr(p_gamesys);
+	INFOWIN_Init( BG_FRAME_BAR_M, PLTID_BG_INFOWIN_M, comm, heap_id );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	INFOWIN破棄
+ *
+ *	@param	void 
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_INFOWIN_Exit( void )
+{	
+	INFOWIN_Exit();
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	INFWINメイン処理
+ *
+ *	@param	void 
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_INFOWIN_Main( void )
+{	
+	INFOWIN_Update();
+}
+//=============================================================================
+/**
+ *	TOUCHBAR
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBAR初期化
+ *
+ *	@param	GFL_CLUNIT *clunit	CLUNIT
+ *	@param	heap_id							ヒープID
+ *
+ *	@return	TOUCHBAR_WORK
+ */
+//-----------------------------------------------------------------------------
+static TOUCHBAR_WORK * UITemplate_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heap_id )
+{	
+	TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
+	{	
+		{	
+			TOUCHBAR_ICON_RETURN,
+			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
+		},
+		{	
+			TOUCHBAR_ICON_CLOSE,
+			{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
+		},
+		{	
+			TOUCHBAR_ICON_CHECK,
+			{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y_CHECK },
+		},
+	};
+	TOUCHBAR_SETUP	touchbar_setup;
+	touchbar_setup.p_item		= touchbar_icon_tbl;
+	touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);
+	touchbar_setup.p_unit		= clunit;
+	touchbar_setup.bar_frm	= BG_FRAME_BAR_M;
+	touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;
+	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;
+	touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;
 
+	return TOUCHBAR_Init( &touchbar_setup, heap_id );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBAR破棄
+ *
+ *	@param	TOUCHBAR_WORK	*p_touchbar タッチバー
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_TOUCHBAR_Exit( TOUCHBAR_WORK	*p_touchbar )
+{	
+	TOUCHBAR_Exit( p_touchbar );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBARメイン処理
+ *
+ *	@param	TOUCHBAR_WORK	*p_touchbar タッチバー
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_TOUCHBAR_Main( TOUCHBAR_WORK	*p_touchbar )
+{	
+	TOUCHBAR_Main( p_touchbar );
+}

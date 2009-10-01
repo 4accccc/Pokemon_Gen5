@@ -16,7 +16,7 @@
 #include "system/gfl_use.h"
 
 //外部公開
-#include "hoge_graphic.h"
+#include "ui_template_graphic.h"
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_
 //
 //	以下、データ	この箇所を変更すれば、OKです
@@ -351,7 +351,7 @@ typedef struct
 //-------------------------------------
 ///	グラフィックメインワーク
 //=====================================
-struct _HOGE_GRAPHIC_WORK
+struct _UI_TEMPLATE_GRAPHIC_WORK
 {
 	GRAPHIC_BG_WORK		bg;
 	GRAPHIC_OBJ_WORK	obj;
@@ -412,11 +412,11 @@ static void Graphic_3d_SetUp( void );
  *	@param	HEAPID heapID ヒープ
  */
 //-----------------------------------------------------------------------------
-HOGE_GRAPHIC_WORK * HOGE_GRAPHIC_Init( int display_select, HEAPID heapID )
+UI_TEMPLATE_GRAPHIC_WORK * UI_TEMPLATE_GRAPHIC_Init( int display_select, HEAPID heapID )
 {	
-	HOGE_GRAPHIC_WORK * p_wk;
-	p_wk	= GFL_HEAP_AllocMemory(heapID, sizeof(HOGE_GRAPHIC_WORK) );
-	GFL_STD_MemClear( p_wk, sizeof(HOGE_GRAPHIC_WORK) );
+	UI_TEMPLATE_GRAPHIC_WORK * p_wk;
+	p_wk	= GFL_HEAP_AllocMemory(heapID, sizeof(UI_TEMPLATE_GRAPHIC_WORK) );
+	GFL_STD_MemClear( p_wk, sizeof(UI_TEMPLATE_GRAPHIC_WORK) );
 
 	//レジスタ初期化
 	G2_BlendNone();
@@ -464,7 +464,7 @@ HOGE_GRAPHIC_WORK * HOGE_GRAPHIC_Init( int display_select, HEAPID heapID )
  *	@param	GRAPHIC_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void HOGE_GRAPHIC_Exit( HOGE_GRAPHIC_WORK *p_wk )
+void UI_TEMPLATE_GRAPHIC_Exit( UI_TEMPLATE_GRAPHIC_WORK *p_wk )
 {	
 	//VBLANKTask消去
 	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
@@ -490,7 +490,7 @@ void HOGE_GRAPHIC_Exit( HOGE_GRAPHIC_WORK *p_wk )
 	GXS_SetVisibleWnd( GX_WNDMASK_NONE );
 
 	//クリア
-	GFL_STD_MemClear( p_wk, sizeof(HOGE_GRAPHIC_WORK) );
+	GFL_STD_MemClear( p_wk, sizeof(UI_TEMPLATE_GRAPHIC_WORK) );
 	GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
@@ -500,7 +500,7 @@ void HOGE_GRAPHIC_Exit( HOGE_GRAPHIC_WORK *p_wk )
  *	@param	GRAPHIC_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void HOGE_GRAPHIC_2D_Draw( HOGE_GRAPHIC_WORK *p_wk )
+void UI_TEMPLATE_GRAPHIC_2D_Draw( UI_TEMPLATE_GRAPHIC_WORK *p_wk )
 {	
 #ifdef GRAPHIC_OBJ_USE
 	GRAPHIC_OBJ_Main( &p_wk->obj );
@@ -516,7 +516,7 @@ void HOGE_GRAPHIC_2D_Draw( HOGE_GRAPHIC_WORK *p_wk )
  *	@param	GRAPHIC_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void HOGE_GRAPHIC_3D_StartDraw( HOGE_GRAPHIC_WORK *p_wk )
+void UI_TEMPLATE_GRAPHIC_3D_StartDraw( UI_TEMPLATE_GRAPHIC_WORK *p_wk )
 {	
 #ifdef GRAPHIC_G3D_USE
 	GRAPHIC_G3D_StartDraw( &p_wk->g3d );
@@ -529,7 +529,7 @@ void HOGE_GRAPHIC_3D_StartDraw( HOGE_GRAPHIC_WORK *p_wk )
  *	@param	GRAPHIC_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void HOGE_GRAPHIC_3D_EndDraw( HOGE_GRAPHIC_WORK *p_wk )
+void UI_TEMPLATE_GRAPHIC_3D_EndDraw( UI_TEMPLATE_GRAPHIC_WORK *p_wk )
 {	
 #ifdef GRAPHIC_G3D_USE
 	GRAPHIC_G3D_EndDraw( &p_wk->g3d );
@@ -544,7 +544,7 @@ void HOGE_GRAPHIC_3D_EndDraw( HOGE_GRAPHIC_WORK *p_wk )
  *	@return	CLUNIT取得
  */
 //-----------------------------------------------------------------------------
-GFL_CLUNIT * HOGE_GRAPHIC_GetClunit( const HOGE_GRAPHIC_WORK *cp_wk )
+GFL_CLUNIT * UI_TEMPLATE_GRAPHIC_GetClunit( const UI_TEMPLATE_GRAPHIC_WORK *cp_wk )
 {	
 #ifdef GRAPHIC_OBJ_USE
 	return GRAPHIC_OBJ_GetUnit( &cp_wk->obj );
@@ -561,7 +561,7 @@ GFL_CLUNIT * HOGE_GRAPHIC_GetClunit( const HOGE_GRAPHIC_WORK *cp_wk )
  *	@return	CAMERA取得
  */
 //-----------------------------------------------------------------------------
-GFL_G3D_CAMERA * HOGE_GRAPHIC_GetCamera( const HOGE_GRAPHIC_WORK *cp_wk )
+GFL_G3D_CAMERA * UI_TEMPLATE_GRAPHIC_GetCamera( const UI_TEMPLATE_GRAPHIC_WORK *cp_wk )
 {	
 #ifdef GRAPHIC_G3D_USE
 	return GRAPHIC_G3D_GetCamera( &cp_wk->g3d );
@@ -584,7 +584,7 @@ GFL_G3D_CAMERA * HOGE_GRAPHIC_GetCamera( const HOGE_GRAPHIC_WORK *cp_wk )
 //-----------------------------------------------------------------------------
 static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work )
 {
-	HOGE_GRAPHIC_WORK *p_wk	= p_work;
+	UI_TEMPLATE_GRAPHIC_WORK *p_wk	= p_work;
 #ifdef GRAPHIC_BG_USE
 	GRAPHIC_BG_VBlankFunction( &p_wk->bg );
 #endif //GRAPHIC_BG_USE
