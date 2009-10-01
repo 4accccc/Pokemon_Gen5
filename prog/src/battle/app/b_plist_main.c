@@ -1874,21 +1874,28 @@ static void BPL_BgGraphicSet( BPLIST_WORK * wk )
 	hdl  = GFL_ARC_OpenDataHandle( ARCID_B_PLIST_GRA,  wk->dat->heap ); 
 	
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		hdl, NARC_b_plist_gra_b_plist_NCGR, GFL_BG_FRAME3_S, 0, 0, 0, wk->dat->heap );
+		hdl, NARC_b_plist_gra_b_plist_lz_NCGR, GFL_BG_FRAME3_S, 0, 0, TRUE, wk->dat->heap );
 
 	{
 		NNSG2dScreenData * dat;
 		void * buf;
-		
+/*		
 		buf = GFL_ARC_LoadDataAllocByHandle(
 						hdl, NARC_b_plist_gra_b_plist_anm_NSCR, wk->dat->heap );
 		NNS_G2dGetUnpackedScreenData( buf, &dat );
+*/
+		buf = GFL_ARCHDL_UTIL_LoadScreen(
+						hdl, NARC_b_plist_gra_b_plist_anm_lz_NSCR, TRUE, &dat, wk->dat->heap );
 		BattlePokeList_ButtonScreenMake( wk, (u16 *)dat->rawData );
 		GFL_HEAP_FreeMemory( buf );
 
+/*
 		buf = GFL_ARC_LoadDataAllocByHandle(
 						hdl, NARC_b_plist_gra_b_plist_anm2_NSCR, wk->dat->heap );
 		NNS_G2dGetUnpackedScreenData( buf, &dat );
+*/
+		buf = GFL_ARCHDL_UTIL_LoadScreen(
+						hdl, NARC_b_plist_gra_b_plist_anm2_lz_NSCR, TRUE, &dat, wk->dat->heap );
 		BattlePokeList_ButtonScreenMake2( wk, (u16 *)dat->rawData );
 		GFL_HEAP_FreeMemory( buf );
 	}
@@ -2690,14 +2697,14 @@ static void BPL_PageChange( BPLIST_WORK * wk, u8 next_page )
 
 static const u32 ScreenArc[][2] =
 {	// ボタンBGスクリーン, 背景BGスクリーン
-	{ NARC_b_plist_gra_poke_sel_t_NSCR, NARC_b_plist_gra_poke_sel_u_NSCR },				// ポケモン選択ページ
-	{ NARC_b_plist_gra_poke_chg_t_NSCR, NARC_b_plist_gra_poke_chg_u_NSCR },				// ポケモン入れ替えページ
-	{ NARC_b_plist_gra_st_main_t_NSCR, NARC_b_plist_gra_st_main_u_NSCR },				// ステータスメインページ
-	{ NARC_b_plist_gra_st_waza_sel_t_NSCR, NARC_b_plist_gra_st_waza_sel_u_NSCR },		// ステータス詳細ページ
-	{ NARC_b_plist_gra_st_waza_main_t_NSCR, NARC_b_plist_gra_st_waza_main_u_NSCR },		// ステータス技ページ
-	{ NARC_b_plist_gra_item_waza_t_NSCR, NARC_b_plist_gra_item_waza_u_NSCR },			// PP回復技選択ページ
-	{ NARC_b_plist_gra_waza_delb_sel_t_NSCR, NARC_b_plist_gra_waza_delb_sel_u_NSCR },	// ステータス技忘れ１ページ（戦闘技選択）
-	{ NARC_b_plist_gra_waza_delb_main_t_NSCR, NARC_b_plist_gra_waza_delb_main_u_NSCR },	// ステータス技忘れ２ページ（戦闘技詳細）
+	{ NARC_b_plist_gra_poke_sel_t_lz_NSCR, NARC_b_plist_gra_poke_sel_u_lz_NSCR },				// ポケモン選択ページ
+	{ NARC_b_plist_gra_poke_chg_t_lz_NSCR, NARC_b_plist_gra_poke_chg_u_lz_NSCR },				// ポケモン入れ替えページ
+	{ NARC_b_plist_gra_st_main_t_lz_NSCR, NARC_b_plist_gra_st_main_u_lz_NSCR },				// ステータスメインページ
+	{ NARC_b_plist_gra_st_waza_sel_t_lz_NSCR, NARC_b_plist_gra_st_waza_sel_u_lz_NSCR },		// ステータス詳細ページ
+	{ NARC_b_plist_gra_st_waza_main_t_lz_NSCR, NARC_b_plist_gra_st_waza_main_u_lz_NSCR },		// ステータス技ページ
+	{ NARC_b_plist_gra_item_waza_t_lz_NSCR, NARC_b_plist_gra_item_waza_u_lz_NSCR },			// PP回復技選択ページ
+	{ NARC_b_plist_gra_waza_delb_sel_t_lz_NSCR, NARC_b_plist_gra_waza_delb_sel_u_lz_NSCR },	// ステータス技忘れ１ページ（戦闘技選択）
+	{ NARC_b_plist_gra_waza_delb_main_t_lz_NSCR, NARC_b_plist_gra_waza_delb_main_u_lz_NSCR },	// ステータス技忘れ２ページ（戦闘技詳細）
 //	{ NARC_b_plist_gra_waza_delc_sel_t_NSCR, NARC_b_plist_gra_waza_delc_sel_u_NSCR },	// ステータス技忘れ３ページ（コンテスト技詳細）
 //	{ NARC_b_plist_gra_waza_delc_main_t_NSCR, NARC_b_plist_gra_waza_delc_main_u_NSCR },	// ステータス技忘れ４ページ（コンテスト技選択）
 };
@@ -2719,8 +2726,12 @@ static void BPL_PageChgBgScreenChg( BPLIST_WORK * wk, u8 page )
 	u32	i;
 
 	for( i=0; i<2; i++ ){
+/*
 		buf = GFL_ARC_LoadDataAlloc( ARCID_B_PLIST_GRA, ScreenArc[page][i], wk->dat->heap );
 		NNS_G2dGetUnpackedScreenData( buf, &dat );
+*/
+		buf = GFL_ARC_UTIL_LoadScreen(
+			ARCID_B_PLIST_GRA, ScreenArc[page][i], TRUE, &dat, wk->dat->heap );
 		GFL_BG_WriteScreen( GFL_BG_FRAME2_S+i, (u16 *)dat->rawData, 0, 0, 32, 24 );
 		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S+i );
 		GFL_HEAP_FreeMemory( buf );

@@ -49,12 +49,15 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .ncg.NCGR:
 	g2dcvtr $< -bg
+	ntrcomp -l 2 -o $*_lz.NCGR $*.NCGR
 
 .nsc.NSCR:
 	g2dcvtr $<
+	ntrcomp -l 2 -o $*_lz.NSCR $*.NSCR
 
 .nce.NCER:
-	g2dcvtr $<
+	g2dcvtr $< -br
+	ntrcomp -l 2 -o $*_lz.NCGR $*.NCGR
 
 endif
 
