@@ -717,7 +717,7 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
   //イベント未起動状態セット
   tmp->RideEvt = -1;
 
-
+/**   //@todo
   //イニット関数に入れる処理　今だけここにおく
   {
     gmk_sv_work->NowRaleIdx[0] = 0;
@@ -730,6 +730,7 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
     gmk_sv_work->StopPlatformIdx[2] = PLATFORM_NO_STOP;
     gmk_sv_work->StopPlatformIdx[3] = PLATFORM_NO_STOP;
   }
+*/  
 }
 
 static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
