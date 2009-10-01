@@ -2126,8 +2126,7 @@ static u8 BPL_PokemonSelect( BPLIST_WORK * wk )
 
 	case BPLIST_UI_LIST_RETURN:
 	case CURSORMOVE_CANCEL:					// キャンセル
-		wk->dat->sel_poke = (u8)ret;
-		ret = BPL_SEL_EXIT;
+		wk->dat->sel_poke = BPL_SEL_EXIT;
 		return TRUE;
 
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
