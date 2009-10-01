@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-11T18:58:47"/>
+	<create user="matsumiya" host="W00207" date="2009-10-01T17:42:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="545"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="699"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,66 +294,30 @@
 
 	<row id="msg_c01_inventor_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・最初にC01に来たとき
-　POSでイベント開始
+・ジムバッジ取得後
+　POS（ジムの前）でイベント開始
 ・主人公に隣接してメッセージ表示
 ・表示後、連れ歩きで
 　ｃ01ｒ0101へ</comment>
 		<attribute name="キャラ指定">発明家</attribute>
-		<language name="JPN" width="256">ウェルカム！
-[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
-あなた　アララギはかせの
-しりあいの　トレーナー　だよね[BE:00:ページ切り替え（行送り）]
-きいてた　すがたと　おんなじ[BE:01:ページ切り替え（クリア）]
-ごめんごめん[BE:01:ページ切り替え（クリア）]
-あたしは　マコモ
-いわゆる　はつめいか　です[BE:01:ページ切り替え（クリア）]
-アララギはかせ　から
-きいているかも　しれないけれど[BE:01:ページ切り替え（クリア）]
-あたしも　あなたたちの
-てだすけを　するんだよね！[BE:01:ページ切り替え（クリア）]
-ちょっと　ついてきて</language>
-		<language name="JPN_KANJI" width="256">ウェルカム！
-[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
-あなた　アララギはかせの
-しりあいの　トレーナー　だよね[BE:00:ページ切り替え（行送り）]
-きいてた　すがたと　おんなじ[BE:01:ページ切り替え（クリア）]
-ごめんごめん[BE:01:ページ切り替え（クリア）]
-あたしは　マコモ
-いわゆる　はつめいか　です[BE:01:ページ切り替え（クリア）]
-アララギはかせ　から
-きいているかも　しれないけれど[BE:01:ページ切り替え（クリア）]
-あたしも　あなたたちの
-てだすけを　するんだよね！[BE:01:ページ切り替え（クリア）]
-ちょっと　ついてきて</language>
-	</row>
-
-	<row id="msg_c01_inventor_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・ジムバッジ入手後
-　ポケモンジムの前に出現
-・ポケモンジムから出ると
-　！マーク表示後
-　隣接してメッセージ表示
-
-・表示後、c01r0101のほうに移動
-・画面外に消えると
-　主人公操作可能に</comment>
-		<attribute name="キャラ指定">発明家</attribute>
 		<language name="JPN" width="256">ヤッホー！[BE:01:ページ切り替え（クリア）]
 その　ようすだと
-ジムバッジを　てにいれたみたいね[BE:00:ページ切り替え（行送り）]
-おめでとう！[BE:01:ページ切り替え（クリア）]
-でさ　さらに
-おめでたい　はなしが　あるんだけど[BE:00:ページ切り替え（行送り）]
-よければ　あたしの　ラボに　きてみて</language>
+ジムバッジを　てに入れたみたいね[BE:01:ページ切り替え（クリア）]
+いい　かんじ！
+じゃあ　アタシに　ついてきて！</language>
 		<language name="JPN_KANJI" width="256">ヤッホー！[BE:01:ページ切り替え（クリア）]
-その　ようすだと
-ジムバッジを　てにいれたみたいね[BE:00:ページ切り替え（行送り）]
-おめでとう！[BE:01:ページ切り替え（クリア）]
-でさ　さらに
-おめでたい　はなしが　あるんだけど[BE:00:ページ切り替え（行送り）]
-よければ　あたしの　ラボに　きてみて</language>
+その　様子だと
+ジムバッジを　手に入れたみたいね[BE:01:ページ切り替え（クリア）]
+いい　感じ！
+じゃあ　アタシに　ついてきて！</language>
+	</row>
+
+	<row id="msg_c01_inventor_02" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>♀
+・削除予定ラベル</comment>
+		<attribute name="キャラ指定">発明家</attribute>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_c01_musical_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
@@ -591,19 +555,17 @@
 初心者トレーナーが　多いわ</language>
 	</row>
 
-	<row id="msg_c01_woman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c01_woman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♀
 ・メッセージ修正予定</comment>
 		<attribute name="キャラ指定">WOMAN2
 女性</attribute>
-		<language name="JPN" width="256">あなた
-おともだちと　つうしん　してる？[BE:01:ページ切り替え（クリア）]
-Ｃギアを　つかいこなして
-つうしん　するのが　トレンドですって</language>
-		<language name="JPN_KANJI" width="256">あなた
-お友達と　通信してる？[BE:01:ページ切り替え（クリア）]
-Ｃギアを　使いこなして
-通信するのが　トレンドですって</language>
+		<language name="JPN" width="256">Ｃギアって　ツールがあれば
+みえない　むせんが　どれほど[BE:00:ページ切り替え（行送り）]
+とびかっているか　わかるんだって！</language>
+		<language name="JPN_KANJI" width="256">Ｃギアって　ツールがあれば
+目には見えない　無線が　どれほど[BE:00:ページ切り替え（行送り）]
+飛び交っているか　わかるんだって！</language>
 	</row>
 
 	<row id="msg_c01_babygirl1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
