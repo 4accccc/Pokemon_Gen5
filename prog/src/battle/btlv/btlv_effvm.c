@@ -30,7 +30,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define DEBUG_OS_PRINT
+//#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -929,7 +929,7 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_w
 
   beeiw->vmh = vmh;
   beeiw->move_type = ( int )VMGetU32( vmh );
-  beeiw->src = BTLEFF_CAMERA_POS_NONE;
+  beeiw->src = BTLEFF_PARTICLE_PLAY_SIDE_NONE;
   beeiw->src_pos.x = ( fx32 )VMGetU32( vmh );
   beeiw->src_pos.y = ( fx32 )VMGetU32( vmh );
   beeiw->src_pos.z = ( fx32 )VMGetU32( vmh );
@@ -2105,6 +2105,12 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
     {
       return FALSE;
     }
+    if( bevw->camera_ortho_on_flag )
+    {
+      bevw->camera_ortho_on_flag = 0; //カメラ移動後、正射影に戻すフラグ
+      bevw->camera_projection = BTLEFF_CAMERA_PROJECTION_PERSPECTIVE;
+      BTLV_MCSS_SetOrthoMode( BTLV_EFFECT_GetMcssWork() );
+    }
   }
   //ポケモン移動終了？
   if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
@@ -2216,13 +2222,6 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
     { 
       return FALSE;
     }
-  }
-
-  if( bevw->camera_ortho_on_flag )
-  {
-    bevw->camera_ortho_on_flag = 0; //カメラ移動後、正射影に戻すフラグ
-    bevw->camera_projection = BTLEFF_CAMERA_PROJECTION_PERSPECTIVE;
-    BTLV_MCSS_SetOrthoMode( BTLV_EFFECT_GetMcssWork() );
   }
 
   return TRUE;
