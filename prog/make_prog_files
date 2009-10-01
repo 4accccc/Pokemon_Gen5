@@ -183,7 +183,8 @@ SRCS  +=    $(SOUNDSRC) \
 		poke_tool/status_rcv.c \
         system/bgwinfrm.c \
         field/scrcmd_gym_init.c \
-        poke_tool/gauge_tool.c
+        poke_tool/gauge_tool.c \
+        system/gra_tool.c
 
 #================================================
 # ここから下はオーバーレイプログラム定義
@@ -456,8 +457,8 @@ SRCS_OVERLAY_WATANABE_SAMPLE  = test/tetsu/sample/g3d_mapper.c \
 #===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_UI_COMMON = ui/ui_scene.c \
                          ui/touchbar.c \
-                         ui/print_tool.c
-
+                         ui/print_tool.c \
+                         ui/nsbtx_to_clwk.c
 # コンフィグ画面
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS

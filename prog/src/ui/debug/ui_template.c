@@ -28,6 +28,12 @@
 //描画設定
 #include "ui_template_graphic.h"
 
+//テクスチャをOAMに転送
+#include "ui/nsbtx_to_clwk.h"
+
+//マップモデルのnsbtx
+#include "fieldmap/fldmmdl_mdlres.naix"
+
 //タッチバー
 #include "ui/touchbar.h"
 
@@ -45,24 +51,29 @@
 //アプリ共通素材
 #include "app/app_menu_common.h"
 
+//アーカイブ
+#include "arc_def.h"
+
 //外部公開
 #include "ui_template.h"
 
 
-//@TODO とりあえずマイクテストのリソース
-#include "arc_def.h"
+//@TODO BG読み込み とりあえずマイクテストのリソース
 #include "message.naix"
 #include "mictest.naix"	// アーカイブ
 #include "msg/msg_mictest.h"  // GMM
 
-// 下記defineをコメントアウトすると、機能を取り除ける
+//=============================================================================
+// 下記defineをコメントアウトすると、機能を取り除けます
+//=============================================================================
 #define UI_TEMPLATE_POKE_ICON
 #define UI_TEMPLATE_INFOWIN
 #define UI_TEMPLATE_TOUCHBAR
 #define UI_TEMPLATE_MCSS
 #define UI_TEMPLATE_TASKMENU
 #define UI_TEMPLATE_TYPEICON
-
+#define UI_TEMPLATE_OAM_MAPMODEL  // マップモデルをOAMで表示
+#define UI_TEMPLATE_ITEM_ICON     // どうぐアイコン
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -101,6 +112,7 @@ enum
 	//メインOBJ
 	PLTID_OBJ_TOUCHBAR_M	= 0,
 	PLTID_OBJ_TYPEICON_M	= 3,
+  PLTID_OBJ_OAM_MAPMODEL_M = 4,
 	//サブOBJ
 };
 
@@ -160,6 +172,13 @@ typedef struct
 	GFL_CLWK									*type_clwk;
 #endif //UI_TEMPLATE_TYPEICON
 
+#ifdef UI_TEMPLATE_OAM_MAPMODEL
+  u32                       oam_mmdl_ncg;
+  u32                       oam_mmdl_ncl;
+  u32                       oam_mmdl_nce;
+	GFL_CLWK									*oam_mmdl_clwk;
+#endif // UI_TEMPLATE_OAM_MAPMODEL
+
 } UI_TEMPLATE_MAIN_WORK;
 
 
@@ -212,6 +231,15 @@ static void UITemplate_TASKMENU_Main( APP_TASKMENU_WORK *menu );
 //=====================================
 static void UITemplate_TYPEICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heap_id );
 static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk );
+
+#ifdef UI_TEMPLATE_OAM_MAPMODEL
+//-------------------------------------
+///	OAMでマップモデル表示
+//=====================================
+static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, GFL_CLUNIT *unit, HEAPID heap_id );
+static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
+#endif // UI_TEMPLATE_OAM_MAPMODEL
+
 //-------------------------------------
 ///	その他
 //=====================================
@@ -321,6 +349,14 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
 	}
 #endif //UI_TEMPLATE_TYPEICON
 
+#ifdef UI_TEMPLATE_OAM_MAPMODEL
+  //OAMマップモデルの読み込み
+  {
+		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
+		UITemplate_OAM_MAPMODEL_CreateCLWK( wk, NARC_fldmmdl_mdlres_hero_nsbtx, clunit, wk->heap_id );
+  }
+#endif //UI_TEMPLATE_OAM_MAPMODEL
+
 	//@todo	フェードシーケンスがないので
 	GX_SetMasterBrightness(0);
 	GXS_SetMasterBrightness(0);
@@ -347,6 +383,11 @@ static GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk,
 	//属性アイコンの破棄
 	UITemplate_TYPEICON_DeleteCLWK( wk );
 #endif //UI_TEMPLATE_TYPEICON
+
+#ifdef UI_TEMPLATE_OAM_MAPMODEL
+  //OAMマップモデルの破棄
+  UITemplate_OAM_MAPMODEL_DeleteCLWK( wk );
+#endif //UI_TEMPLATE_OAM_MAPMODEL
 
 #ifdef UI_TEMPLATE_TASKMENU
 	//TASKMENUシステム＆リソース破棄
@@ -815,3 +856,137 @@ static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
 	GFL_CLGRP_CGR_Release( wk->type_ncg );
 	GFL_CLGRP_CELLANIM_Release( wk->type_nce );
 }
+
+#ifdef UI_TEMPLATE_OAM_MAPMODEL
+//=============================================================================
+/**
+ *	OAM_MAPMODEL
+ */
+//=============================================================================
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OAMマップモデル 作成 (人物OBJ特化仕様)
+ *
+ *	@param	UI_TEMPLATE_MAIN_WORK *wk
+ *	@param	tex_idx
+ *	@param	sx
+ *	@param	sy
+ *	@param	GFL_CLUNIT *unit	CLUNIT
+ *	@param	heap_id						ヒープID
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, GFL_CLUNIT *unit, HEAPID heap_id )
+{	
+  //リソース読み込み
+	{	
+		ARCHANDLE *p_handle;
+  	
+		p_handle	= GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heap_id );
+
+		wk->oam_mmdl_ncl	= GFL_CLGRP_PLTT_Register( p_handle, 
+				APP_COMMON_GetNull4x4PltArcIdx(), CLSYS_DRAW_MAIN, PLTID_OBJ_OAM_MAPMODEL_M*0x20, heap_id );
+
+		wk->oam_mmdl_ncg	= GFL_CLGRP_CGR_Register( p_handle,
+				APP_COMMON_GetNull4x4CharArcIdx(), FALSE, CLSYS_DRAW_MAIN, heap_id );
+
+		wk->oam_mmdl_nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
+				APP_COMMON_GetNull4x4CellArcIdx( APP_COMMON_MAPPING_128K ),
+				APP_COMMON_GetNull4x4AnimeArcIdx( APP_COMMON_MAPPING_128K ), heap_id );
+
+		GFL_ARC_CloseDataHandle( p_handle );	
+	}
+
+	//CLWK作成
+	{	
+		GFL_CLWK_DATA	cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+		cldata.pos_x	= 64;
+		cldata.pos_y	= 50;
+		wk->oam_mmdl_clwk	=		GFL_CLACT_WK_Create( unit,
+				wk->oam_mmdl_ncg,
+				wk->oam_mmdl_ncl,
+				wk->oam_mmdl_nce,
+				&cldata,
+				CLSYS_DEFREND_MAIN,
+				heap_id );
+	}
+
+  // テクスチャを転送
+  // 人物は基本 4 x 4
+  CLWK_TransNSBTX( wk->oam_mmdl_clwk, ARCID_MMDL_RES, tex_idx, 0, 4, 4, 0, CLSYS_DRAW_MAIN, heap_id );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OAMマップモデル 破棄
+ *
+ *	@param	UI_TEMPLATE_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk )
+{
+	//CLWK破棄
+	GFL_CLACT_WK_Remove( wk->oam_mmdl_clwk );
+
+	//リソース破棄
+	GFL_CLGRP_PLTT_Release( wk->oam_mmdl_ncl );
+	GFL_CLGRP_CGR_Release( wk->oam_mmdl_ncg );
+	GFL_CLGRP_CELLANIM_Release( wk->oam_mmdl_nce );
+}
+
+#endif // UI_TEMPLATE_OAM_MAPMODEL
+
+
+#ifdef UI_TEMPLATE_ITEM_ICON
+#if 0
+static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
+{
+  if(pWork->cellicon!=NULL){
+    GFL_CLACT_WK_Remove( pWork->cellicon );
+    GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
+    GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
+  }
+
+
+  {
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_ITEMICON, pWork->heapID );
+
+    pWork->objRes[_CLACT_PLT] = GFL_CLGRP_PLTT_RegisterEx( p_handle ,
+                                                           ITEM_GetIndex(itemid,ITEM_GET_ICON_PAL) ,
+                                                           CLSYS_DRAW_SUB , 0, 0, 1 , pWork->heapID );
+    pWork->objRes[_CLACT_CHR] = GFL_CLGRP_CGR_Register( p_handle ,
+                                                        ITEM_GetIndex(itemid,ITEM_GET_ICON_CGX) ,
+                                                        FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+
+
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
+
+  {
+    GFL_CLWK_DATA cellInitData;
+
+
+    cellInitData.pos_x = _ITEMICON_SCR_X * 8+16;
+    cellInitData.pos_y = _ITEMICON_SCR_Y * 8+16;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+    pWork->cellicon = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                           pWork->objRes[_CLACT_CHR],
+                                           pWork->objRes[_CLACT_PLT],
+                                           pWork->objRes[_CLACT_ANM],
+                                           &cellInitData ,
+                                           CLSYS_DEFREND_SUB ,
+                                           pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellicon, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellicon, TRUE );
+  }
+}
+#endif
+
+#endif // UI_TEMPLATE_ITEM_ICON

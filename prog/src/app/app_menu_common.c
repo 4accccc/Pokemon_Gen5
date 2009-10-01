@@ -151,6 +151,46 @@ const u32 APP_COMMON_GetBarScrnArcIdx( void )
 	return NARC_app_menu_common_menu_bar_NSCR;
 }
 
+//--------------------------------------------------------------
+// アイテムアイコン(ポケアイコン用)
+//--------------------------------------------------------------
+
+const u32 APP_COMMON_GetPokeItemIconPltArcIdx( void )
+{	
+	return NARC_app_menu_common_item_icon_NCLR;
+}
+const u32 APP_COMMON_GetPokeItemIconCharArcIdx( void )
+{	
+	return NARC_app_menu_common_item_icon_NCGR;
+}
+const u32 APP_COMMON_GetPokeItemIconCellArcIdx( const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_item_icon_32k_NCER + mapping;
+}
+const u32 APP_COMMON_GetPokeItemIconAnimeArcIdx( const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_item_icon_32k_NANR + mapping;
+}
+
+//--------------------------------------------------------------
+//4 x 4 空データ取得（テクスチャ転送用）
+//--------------------------------------------------------------
+const u32 APP_COMMON_GetNull4x4PltArcIdx( void )
+{	
+	return NARC_app_menu_common_null_4x4_NCLR;
+}
+const u32 APP_COMMON_GetNull4x4CharArcIdx( void )
+{	
+	return NARC_app_menu_common_null_4x4_128k_NCGR;
+}
+const u32 APP_COMMON_GetNull4x4CellArcIdx( const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_null_4x4_32k_NCER + mapping;
+}
+const u32 APP_COMMON_GetNull4x4AnimeArcIdx( const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_null_4x4_32k_NANR + mapping;
+}
 
 //--------------------------------------------------------------------------------------------
 /**
