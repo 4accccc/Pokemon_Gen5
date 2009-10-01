@@ -79,3 +79,13 @@
 "item_icon_64k.NANR"
 "item_icon_128k.NCER"
 "item_icon_128k.NANR"
+
+"null_4x4.NCLR"
+"null_4x4_128k.NCGR"
+"null_4x4_32k.NCER"
+"null_4x4_64k.NCER"
+"null_4x4_128k.NCER"
+"null_4x4_32k.NANR"
+"null_4x4_64k.NANR"
+"null_4x4_128k.NANR"
+
