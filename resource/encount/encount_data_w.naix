@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: encount_data_w.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_ENCOUNT_DATA_W_NAIX_
+#define NARC_ENCOUNT_DATA_W_NAIX_
+
+enum {
+	NARC_encount_data_w_r01_bin = 0
+};
+
+/* NARC_ENCOUNT_DATA_W_NAIX_ */
+#endif
