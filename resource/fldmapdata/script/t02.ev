@@ -547,6 +547,7 @@ EVENT_START   ev_pos_t02_rival_speech
 	//Ｎと友達♂のバニッシュフラグセット
 	_FLAG_SET( FV_T02_NNN )
 	_FLAG_SET( FV_T02_RIVAL_02 )
+	_FLAG_SET( FV_T02PC0101_SUPPORT )
 
 	//============================================//
 	
