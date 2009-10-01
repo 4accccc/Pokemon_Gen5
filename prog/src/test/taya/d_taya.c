@@ -901,8 +901,8 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
         setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_NOZUPASU,   MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
         setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_MANYUURA,  MONSNO_AABOKKU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
       #else
-        setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_ARUSEUSU+2, MONSNO_ARUSEUSU+1, MONSNO_PERIPPAA, 0 );
-        setup_party( HEAPID_CORE, para->partyEnemy, MONSNO_ARUSEUSU+1, MONSNO_ARUSEUSU+2, MONSNO_IWAAKU,   0 );
+        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_ARUSEUSU+2, MONSNO_ARUSEUSU+1, MONSNO_PERIPPAA, 0 );
+        setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_ARUSEUSU+1, MONSNO_ARUSEUSU+2, MONSNO_IWAAKU,   0 );
       #endif
 
       {
