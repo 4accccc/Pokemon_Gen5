@@ -267,22 +267,22 @@ static const u8 * const ButtonBmpWinIndex[] = {
 
 static const BGWF_DATA ButtonAddData[] =
 {
-	{ NARC_b_bag_gra_pocket_button01_NSCR, 16, 8 },
-	{ NARC_b_bag_gra_pocket_button11_NSCR, 16, 8 },
-	{ NARC_b_bag_gra_pocket_button21_NSCR, 16, 8 },
-	{ NARC_b_bag_gra_pocket_button31_NSCR, 16, 8 },
+	{ NARC_b_bag_gra_pocket_button01_lz_NSCR, 16, 8 },
+	{ NARC_b_bag_gra_pocket_button11_lz_NSCR, 16, 8 },
+	{ NARC_b_bag_gra_pocket_button21_lz_NSCR, 16, 8 },
+	{ NARC_b_bag_gra_pocket_button31_lz_NSCR, 16, 8 },
 
-	{ NARC_b_bag_gra_item_button01_NSCR, 16, 6 },
-	{ NARC_b_bag_gra_item_button01_NSCR, 16, 6 },
-	{ NARC_b_bag_gra_item_button01_NSCR, 16, 6 },
-	{ NARC_b_bag_gra_item_button01_NSCR, 16, 6 },
-	{ NARC_b_bag_gra_item_button01_NSCR, 16, 6 },
-	{ NARC_b_bag_gra_item_button01_NSCR, 16, 6 },
+	{ NARC_b_bag_gra_item_button01_lz_NSCR, 16, 6 },
+	{ NARC_b_bag_gra_item_button01_lz_NSCR, 16, 6 },
+	{ NARC_b_bag_gra_item_button01_lz_NSCR, 16, 6 },
+	{ NARC_b_bag_gra_item_button01_lz_NSCR, 16, 6 },
+	{ NARC_b_bag_gra_item_button01_lz_NSCR, 16, 6 },
+	{ NARC_b_bag_gra_item_button01_lz_NSCR, 16, 6 },
 
-	{ NARC_b_bag_gra_return_button01_NSCR, 5, 5 },
-	{ NARC_b_bag_gra_left_button01_NSCR, 5, 5 },
-	{ NARC_b_bag_gra_right_button01_NSCR, 5, 5 },
-	{ NARC_b_bag_gra_use_button01_NSCR, 25, 5 },
+	{ NARC_b_bag_gra_return_button01_lz_NSCR, 5, 5 },
+	{ NARC_b_bag_gra_left_button01_lz_NSCR, 5, 5 },
+	{ NARC_b_bag_gra_right_button01_lz_NSCR, 5, 5 },
+	{ NARC_b_bag_gra_use_button01_lz_NSCR, 25, 5 },
 };
 
 
@@ -308,7 +308,7 @@ void BBAGANM_ButtonInit( BBAG_WORK * wk )
 	for( i=0; i<BBAG_BGWF_MAX; i++ ){
 		BGWINFRM_Add( wk->bgwfrm, i, GFL_BG_FRAME2_S, ButtonAddData[i].sx, ButtonAddData[i].sy );
 		BGWINFRM_PutAreaSet( wk->bgwfrm, i, 0, 64, 0, 64 );
-		BGWINFRM_FrameSetArcHandle( wk->bgwfrm, i, ah, ButtonAddData[i].arc, FALSE );
+		BGWINFRM_FrameSetArcHandle( wk->bgwfrm, i, ah, ButtonAddData[i].arc, TRUE );
 	}
 
 	GFL_ARC_CloseDataHandle( ah );

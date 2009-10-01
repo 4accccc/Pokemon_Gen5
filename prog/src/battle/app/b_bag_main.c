@@ -1246,16 +1246,16 @@ static void BBAG_BgGraphicSet( BBAG_WORK * wk )
 	hdl = GFL_ARC_OpenDataHandle( ARCID_B_BAG_GRA, wk->dat->heap );
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		hdl, NARC_b_bag_gra_b_bag_bg_NCGR,
-		GFL_BG_FRAME2_S, 0, 0, 0, wk->dat->heap );
+		hdl, NARC_b_bag_gra_b_bag_bg_lz_NCGR,
+		GFL_BG_FRAME2_S, 0, 0, TRUE, wk->dat->heap );
 
 	GFL_ARCHDL_UTIL_TransVramScreen(
-		hdl, NARC_b_bag_gra_b_bag_button_NSCR,
-		GFL_BG_FRAME2_S, 0, 0, 0, wk->dat->heap );
+		hdl, NARC_b_bag_gra_b_bag_button_lz_NSCR,
+		GFL_BG_FRAME2_S, 0, 0, TRUE, wk->dat->heap );
 
 	GFL_ARCHDL_UTIL_TransVramScreen(
-		hdl, NARC_b_bag_gra_b_bag_base_NSCR,
-		GFL_BG_FRAME3_S, 0, 0, 0, wk->dat->heap );
+		hdl, NARC_b_bag_gra_b_bag_base_lz_NSCR,
+		GFL_BG_FRAME3_S, 0, 0, TRUE, wk->dat->heap );
 
 /*
 	{

@@ -409,8 +409,8 @@ static void CostResLoad( BBAG_WORK * wk )
 	ah = GFL_ARC_OpenDataHandle( ARCID_B_BAG_GRA, wk->dat->heap );
 
   wk->chrRes[BBAG_CHRRES_COST] = GFL_CLGRP_CGR_Register(
-																		ah, NARC_b_bag_gra_test_cost_NCGR,
-																		FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
+																		ah, NARC_b_bag_gra_test_cost_lz_NCGR,
+																		TRUE, CLSYS_DRAW_SUB, wk->dat->heap );
   wk->palRes[BBAG_PALRES_COST] = GFL_CLGRP_PLTT_Register(
 																		ah, NARC_b_bag_gra_test_cost_NCLR,
 																		CLSYS_DRAW_SUB, BBAG_PALRES_COST*32, wk->dat->heap );
