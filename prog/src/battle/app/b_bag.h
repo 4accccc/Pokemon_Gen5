@@ -58,8 +58,8 @@ typedef struct {
   u8  cursor_flg;   // カーソル表示フラグ
   u8  ret_page;     // 使用したアイテムのポケット
 
-  s16 item_pos[5];  // アイテム位置
-  s16 item_scr[5];  // アイテムスクロールカウンタ
+  s16 item_pos[BATTLE_BAG_POKE_MAX];  // アイテム位置
+  s16 item_scr[BATTLE_BAG_POKE_MAX];  // アイテムスクロールカウンタ
 
 //  u16 used_item;    // 前回使用したアイテム
 //  u8  used_poke;    // 前回使用したアイテムのポケット

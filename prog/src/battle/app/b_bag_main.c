@@ -269,7 +269,7 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 
 //		cur = BattleWorkBagCursorGet( dat->bw );
 		cur = wk->cur;
-		for( i=0; i<5; i++ ){
+		for( i=0; i<BATTLE_BAG_POKE_MAX; i++ ){
 			MYITEM_BattleBagCursorGet( cur, i, &wk->dat->item_pos[i], &wk->dat->item_scr[i] );
 		}
 		wk->used_item = MYITEM_BattleBagLastItemGet( cur );
@@ -358,7 +358,8 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 //	FontProc_LoadFont( FONT_TOUCH, wk->dat->heap );
 
 //	wk->poke_id = (u8)MyItem_BattleBagPocketPagePosGet( BattleWorkBagCursorGet(wk->dat->bw) );
-	wk->poke_id = (u8)MYITEM_BattleBagPocketPagePosGet( wk->cur );
+//	wk->poke_id = (u8)MYITEM_BattleBagPocketPagePosGet( wk->cur );
+	wk->poke_id = 0;
 
 	BattleBag_PocketInit( wk );
 

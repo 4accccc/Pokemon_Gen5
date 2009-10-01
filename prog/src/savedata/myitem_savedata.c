@@ -39,11 +39,11 @@ typedef struct {
 
 // 戦闘のバッグのカーソル位置
 typedef struct {
-	s16	scr[5];
-	s16	pos[5];
-	u16	item;
-	u16	page;
-	u16	pocket;		// ポケットページの位置
+	s16	scr[BATTLE_BAG_POKE_MAX];
+	s16	pos[BATTLE_BAG_POKE_MAX];
+	u16	item;			// 最後に使ったアイテム
+	u16	page;			// 最後に使ったアイテムのポケット
+//	u16	pocket;
 }BTLBAG_CURSOR;
 
 // バッグのカーソル位置データ
@@ -885,25 +885,30 @@ u16 MYITEM_BattleBagLastPageGet( BAG_CURSOR * wk )
  * @return	最後に使った道具
  */
 //------------------------------------------------------------------
+/*
 u16 MYITEM_BattleBagPocketPagePosGet( BAG_CURSOR * wk )
 {
 	return wk->btl.pocket;
 }
+*/
 
 //------------------------------------------------------------------
 /**
  * @brief	戦闘バッグのカーソル位置セット
  * @param	wk		カーソルデータ
- * @param	pocket	ポケットID
  * @param	pos		カーソル位置
  * @param	scr		スクロールカウンタ
  * @return	none
  */
 //------------------------------------------------------------------
-void MYITEM_BattleBagCursorSet( BAG_CURSOR * wk, u16 pocket, s16 pos, s16 scr )
+void MYITEM_BattleBagCursorSet( BAG_CURSOR * wk, s16 * pos, s16 * scr )
 {
-	wk->btl.pos[pocket] = pos;
-	wk->btl.scr[pocket] = scr;
+	u32	i;
+
+	for( i=0; i<BATTLE_BAG_POKE_MAX; i++ ){
+		wk->btl.pos[i] = pos[i];
+		wk->btl.scr[i] = scr[i];
+	}
 }
 
 //------------------------------------------------------------------
@@ -916,11 +921,14 @@ void MYITEM_BattleBagCursorSet( BAG_CURSOR * wk, u16 pocket, s16 pos, s16 scr )
 void MYITEM_BattleBagCursorPosInit( BAG_CURSOR * wk )
 {
 	u32	i;
+	s16 p[BATTLE_BAG_POKE_MAX];
 
-	for( i=0; i<5; i++ ){
-		MYITEM_BattleBagCursorSet( wk, i, 0, 0 );
+
+	for( i=0; i<BATTLE_BAG_POKE_MAX; i++ ){
+		p[i] = 0;
 	}
-	MYITEM_BattleBagPocketPagePosSet( wk, 0 );
+	MYITEM_BattleBagCursorSet( wk, p, p );
+//	MYITEM_BattleBagPocketPagePosSet( wk, 0 );
 }
 
 //------------------------------------------------------------------
@@ -945,10 +953,12 @@ void MYITEM_BattleBagLastItemSet( BAG_CURSOR * wk, u16 item, u16 page )
  * @return	最後に使った道具
  */
 //------------------------------------------------------------------
+/*
 void MYITEM_BattleBagPocketPagePosSet( BAG_CURSOR * wk, u16 pocket )
 {
 	wk->btl.pocket = pocket;
 }
+*/
 
 // 外部参照インデックスを作る時のみ有効(ゲーム中は無効)
 #ifdef CREATE_INDEX

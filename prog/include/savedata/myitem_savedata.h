@@ -43,6 +43,8 @@ typedef	struct {
 
 #define	BAG_POKE_MAX		( 5 )		// ポケット最大数
 
+#define	BATTLE_BAG_POKE_MAX		( 4 )		// バトルバッグのポケット最大数
+
 #define DUMMY_SHORTCUT_MAX (10) //便利ぼたん@@OO削除予定
 
 //==============================================================================
@@ -110,10 +112,10 @@ extern void MYITEM_FieldBagPocketSet( BAG_CURSOR * wk, u16 pocket );
 extern void MYITEM_BattleBagCursorGet( BAG_CURSOR * wk, u16 pocket, s16 * pos, s16 * scr );
 extern u16 MYITEM_BattleBagLastItemGet( BAG_CURSOR * wk );
 extern u16 MYITEM_BattleBagLastPageGet( BAG_CURSOR * wk );
-extern u16 MYITEM_BattleBagPocketPagePosGet( BAG_CURSOR * wk );
-extern void MYITEM_BattleBagCursorSet( BAG_CURSOR * wk, u16 pocket, s16 pos, s16 scr );
+//extern u16 MYITEM_BattleBagPocketPagePosGet( BAG_CURSOR * wk );
+extern void MYITEM_BattleBagCursorSet( BAG_CURSOR * wk, s16 * pos, s16 * scr );
 extern void MYITEM_BattleBagLastItemSet( BAG_CURSOR * wk, u16 item, u16 page );
-extern void MYITEM_BattleBagPocketPagePosSet( BAG_CURSOR * wk, u16 pocket );
+//extern void MYITEM_BattleBagPocketPagePosSet( BAG_CURSOR * wk, u16 pocket );
 extern void MYITEM_BattleBagCursorPosInit( BAG_CURSOR * wk );
 
 
