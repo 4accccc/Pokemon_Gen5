@@ -354,13 +354,20 @@ BOOL MMDL_HitCheckRailMoveFellow( const MMDL * mmdl, const RAIL_LOCATION* next_l
     {
 			if( MMDL_CheckStatusBit( cmdl,MMDL_STABIT_FELLOW_HIT_NON) == 0 )
       {
-        MMDL_GetRailLocation( cmdl, &mdl_location );
-        FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &mdl_location, &mdl_pos );
-
-//        TOMOYA_Printf( "grid_r 0x%x my_pos x[0x%x]y[0x%x]z[0x%x] mdl_pos x[0x%x]y[0x%x]z[0x%x] \n", grid_r, my_pos.x, my_pos.y, my_pos.z, mdl_pos.x, mdl_pos.y, mdl_pos.z );
-        if( FIELD_RAIL_TOOL_HitCheckSphere( &my_pos, &mdl_pos, grid_r ) )
+        if( MMDL_CheckStatusBit( cmdl,MMDL_STABIT_RAIL_MOVE) == 0 )
         {
-          return TRUE;
+          OS_TPrintf( "!!!!!!!!!!rail上にグリッド移動のモデルがいます。!!!!!!!!!!!!\n" );
+        }
+        else
+        {
+          MMDL_GetRailLocation( cmdl, &mdl_location );
+          FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &mdl_location, &mdl_pos );
+
+  //        TOMOYA_Printf( "grid_r 0x%x my_pos x[0x%x]y[0x%x]z[0x%x] mdl_pos x[0x%x]y[0x%x]z[0x%x] \n", grid_r, my_pos.x, my_pos.y, my_pos.z, mdl_pos.x, mdl_pos.y, mdl_pos.z );
+          if( FIELD_RAIL_TOOL_HitCheckSphere( &my_pos, &mdl_pos, grid_r ) )
+          {
+            return TRUE;
+          }
         }
       }
     }

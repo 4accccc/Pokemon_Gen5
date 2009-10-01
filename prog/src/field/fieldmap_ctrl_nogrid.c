@@ -57,7 +57,7 @@ static const RAIL_LOCATION locationStart = {
 //======================================================================
 //	ダミーNPC
 //======================================================================
-//#define DEBUG_TEST_NPC
+#define DEBUG_TEST_NPC
 
 #ifdef DEBUG_TEST_NPC
 static const MMDL_HEADER dummyNpc = 
@@ -140,6 +140,7 @@ static void mapCtrlNoGrid_Create(
 	FIELDMAP_CTRL_NOGRID_WORK *work;
   FIELD_PLAYER_NOGRID* p_ngrid_player;
 
+  // ZONEIDからレール情報をよみこむ
   {
     FLDNOGRID_RESISTDATA* p_resist;
 
@@ -152,11 +153,10 @@ static void mapCtrlNoGrid_Create(
     GFL_HEAP_FreeMemory( p_resist );
   }
 
+  // レールマップ用プレイヤーワーク作成
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
-
 	work = FIELDMAP_CTRL_NOGRID_WORK_Create( fieldWork, FIELDMAP_GetHeapID( fieldWork ) );
 	FIELDMAP_SetMapCtrlWork( fieldWork, work );
-
   p_ngrid_player = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( work );
 
   //カメラ座標セット
@@ -176,6 +176,7 @@ static void mapCtrlNoGrid_Create(
 
 
 #ifdef DEBUG_TEST_NPC
+  // NPC表示実験
   {
     MMDLSYS* fos = FIELDMAP_GetMMdlSys( fieldWork );
     int i;
@@ -217,18 +218,6 @@ static void mapCtrlNoGrid_Delete( FIELDMAP_WORK *fieldWork )
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
 	FIELDMAP_CTRL_NOGRID_WORK* work = FIELDMAP_GetMapCtrlWork( fieldWork );
 
-#ifdef DEBUG_TEST_NPC
-  {
-    int i;
-
-    for( i=0; i<NELEMS(sc_initLocation); i++ )
-    {
-//      MMDL_Delete( s_DUMMY_MDL[i] );
-//      s_DUMMY_MDL[i] = NULL;
-    }
-  }
-#endif
-
   FIELDMAP_CTRL_NOGRID_WORK_Delete( work );
   
 	FLDNOGRID_MAPPER_Release( p_mapper );
@@ -258,10 +247,12 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 
   if( FIELDMAP_GetZoneID( fieldWork ) != ZONE_ID_C03P02 )
   {
+    // 通常マップはこれだけでよい
     FIELDMAP_CTRL_NOGRID_WORK_Main( work );
   }
   else
   {
+    // C03P02は、特殊処理
     u32 now_areaID;
     BOOL auto_move = FALSE;
     const FLD_SCENEAREA* cp_fldscenearea = FLDNOGRID_MAPPER_GetSceneAreaMan( p_mapper );
@@ -320,7 +311,7 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 
 #ifdef C3P02_DEBUG_CAMERA_NOT_MOVE
     {
-      FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldwork );
+      FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( fieldWork );
       
       // カメラを動かさないで、主人公に向ける
       FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( p_mapper, FALSE );
