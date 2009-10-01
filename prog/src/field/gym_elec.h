@@ -10,7 +10,7 @@
 #ifndef __GYM_ELEC_H__
 #define __GYM_ELEC_H__
 
-#include "field/fieldmap_proc.h"
+#include "field/fieldmap_proc.h"  //for FIELDMAP_WORK
 
 extern void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork);
 extern void GYM_ELEC_End(FIELDMAP_WORK *fieldWork);

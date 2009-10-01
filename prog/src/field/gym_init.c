@@ -11,6 +11,7 @@
 #include "field_gimmick_def.h"
 #include "gym_elec_sv.h"
 #include "gym_normal_sv.h"
+#include "gym_anti_sv.h"
 
 //--------------------------------------------------------------
 /**
@@ -71,8 +72,30 @@ void GYM_INIT_Normal(GAMESYS_WORK *gsys, const u8 inRoomNo)
     gmk_sv_work->GmkUnrock = FALSE;
   }
 
-  for(i=0;i<WALL_NUM_MAX;i++){
+  for(i=0;i<NRM_WALL_NUM_MAX;i++){
     gmk_sv_work->Wall[i] = 0;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * ÉAÉìÉ`ÉWÉÄèâä˙âª
+ * @param	
+ * @return
+ */
+//--------------------------------------------------------------
+void GYM_INIT_Anti(GAMESYS_WORK *gsys)
+{
+  u8 i;
+  GYM_ANTI_SV_WORK *gmk_sv_work;
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
+  }
+
+  for (i=0;i<ANTI_SW_NUM_MAX;i++){
+    gmk_sv_work->Sw[i] = 0;
   }
 }
 

@@ -14,5 +14,6 @@
 
 extern void GYM_INIT_Elec(GAMESYS_WORK *gsys);
 extern void GYM_INIT_Normal(GAMESYS_WORK *gsys, const u8 inRoomNo);
+extern void GYM_INIT_Anti(GAMESYS_WORK *gsys);
 
 #endif  //__GYM_INIT_H__

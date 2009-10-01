@@ -9,7 +9,7 @@
 #ifndef __GYM_NORMAL_H__
 #define __GYM_NORMAL_H__
 
-#include "field/fieldmap_proc.h"
+#include "field/fieldmap_proc.h"  //for FIELDMAP_WORK
 
 extern void GYM_NORMAL_SetupRoom1(FIELDMAP_WORK *fieldWork);
 extern void GYM_NORMAL_SetupRoom2(FIELDMAP_WORK *fieldWork);

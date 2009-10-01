@@ -15,6 +15,7 @@
 #include "field_gimmick_h01.h"
 #include "gym_elec.h"
 #include "gym_normal.h"
+#include "gym_anti.h"
 
 extern void GYM_SetupTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_EndTest(FIELDMAP_WORK *fieldWork);
@@ -28,6 +29,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   GYM_ELEC_Setup,
   GYM_NORMAL_SetupRoom1,
   GYM_NORMAL_SetupRoom2,
+  GYM_ANTI_Setup,
 
 };
 
@@ -38,6 +40,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   GYM_ELEC_End,
   GYM_NORMAL_End,
   GYM_NORMAL_End,
+  GYM_ANTI_End,
 
 };
 
@@ -48,12 +51,13 @@ const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   GYM_ELEC_Move,
   GYM_NORMAL_Move,
   GYM_NORMAL_Move,
-
+  GYM_ANTI_Move,
 };
 
 
 const static FLD_GMK_HIT_CHECK FldGimmickHitCheck[FLD_GIMMICK_MAX] = {
 	NULL,					//0:–³‚µ
+  NULL,
   NULL,
   NULL,
   NULL,

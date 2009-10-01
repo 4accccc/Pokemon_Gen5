@@ -9,12 +9,12 @@
 
 #define __GYM_NORMAL_SV_H__
 
-#define WALL_NUM_MAX  (6)
+#define NRM_WALL_NUM_MAX  (6)
 //ノーマルジムセーブワーク
 typedef struct GYM_NORMAL_SV_WORK_tag
 {
   BOOL GmkUnrock;
-  u8 Wall[WALL_NUM_MAX];
+  u8 Wall[NRM_WALL_NUM_MAX];
   u8 dummy[2];
 }GYM_NORMAL_SV_WORK;
 
