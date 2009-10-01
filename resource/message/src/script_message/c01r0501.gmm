@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-11T18:33:53"/>
+	<create user="matsumiya" host="W00207" date="2009-10-01T14:07:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="539"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="693"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c01r0501_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c01r0501_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・フィールド技の説明（必須）
 ・posを踏むと主人公に隣接して
@@ -309,7 +309,7 @@
 いいことを　教えてあげましょうか</language>
 	</row>
 
-	<row id="msg_c01r0501_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c01r0501_glasses_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・再度話しかけると
@@ -320,7 +320,7 @@
 いいものを　あげるのに……</language>
 	</row>
 
-	<row id="msg_c01r0501_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c01r0501_glasses_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・はい選択時
 ・アイテム入手処理へ</comment>
@@ -356,7 +356,7 @@
 プレゼント　しましょう！</language>
 	</row>
 
-	<row id="msg_c01r0501_glasses_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c01r0501_glasses_04" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・アイテム入手後
 　以降、繰り返し</comment>
@@ -377,16 +377,16 @@
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">クロック『おっ　[1:00:トレーナー名:0]
 ポケモンジムに　ちょうせん　するまえに[BE:00:ページ切り替え（行送り）]
-ここで　べんきょう　するのかい？[BE:01:ページ切り替え（クリア）]
+ここで　べんきょう　するのか？[BE:01:ページ切り替え（クリア）]
 さっきまで　ここに
 ジムリーダーが　いてさ[BE:00:ページ切り替え（行送り）]
-タイプのこと　おしえてもらったんだ</language>
+タイプのこと　おしえてもらったよ</language>
 		<language name="JPN_KANJI" width="256">クロック『おっ　[1:00:トレーナー名:0]
 ポケモンジムに　挑戦する前に[BE:00:ページ切り替え（行送り）]
-ここで　勉強するのかい？[BE:01:ページ切り替え（クリア）]
+ここで　勉強するのか？[BE:01:ページ切り替え（クリア）]
 さっきまで　ここに
 ジムリーダーが　いてさ[BE:00:ページ切り替え（行送り）]
-タイプのこと　教えてもらったんだ</language>
+タイプのこと　教えてもらったよ</language>
 	</row>
 
 	<row id="msg_c01r0501_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -396,12 +396,12 @@
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">クロック『ジムに　ちょうせん　するなら
 できるかぎり　いろんな　タイプの[BE:00:ページ切り替え（行送り）]
-ポケモンを　そろえたほうが　いいな[BE:01:ページ切り替え（クリア）]
+ポケモンを　そろえたほうが　いい[BE:01:ページ切り替え（クリア）]
 あと　キズぐすりも　たくさん
 もっていたほうが　あんしん　かもな</language>
 		<language name="JPN_KANJI" width="256">クロック『ジムに　挑戦するなら
 できるかぎり　いろんな　タイプの[BE:00:ページ切り替え（行送り）]
-ポケモンを　そろえたほうが　いいな[BE:01:ページ切り替え（クリア）]
+ポケモンを　そろえたほうが　いい[BE:01:ページ切り替え（クリア）]
 あと　キズぐすり　とかも
 たくさん　持っていたほうが　安心だな</language>
 	</row>
@@ -449,21 +449,21 @@
 ポケモンが　驚き　進化をやめる</language>
 	</row>
 
-	<row id="msg_c01r0501_trainerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・メッセージ修正予定
-・技マシンは何度でも使える</comment>
+	<row id="msg_c01r0501_trainerm_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
 		<language name="JPN" width="256">わざマシンを　つかうことでしか
 おぼえない　わざも　ある[BE:01:ページ切り替え（クリア）]
-だが　わざマシンは　いちど　つかうと
-なくなるので　どの　ポケモンに[BE:00:ページ切り替え（行送り）]
-つかうべきか　まようんだよなあ……</language>
+わざマシンは　なんどでも　つかえるから
+どんどん　つかうのも　いいかもな[BE:01:ページ切り替え（クリア）]
+おぼえさせた　わざが　いまいちだったら
+べつの　わざマシンを　つかえばいいし</language>
 		<language name="JPN_KANJI" width="256">わざマシンを　使うことでしか
 覚えない　わざも　ある[BE:01:ページ切り替え（クリア）]
-だが　わざマシンは　一度　使うと
-なくなるので　どの　ポケモンに[BE:00:ページ切り替え（行送り）]
-使うべきか　迷うんだよなあ……</language>
+わざマシンは　何度でも　使えるから
+どんどん使うのも　いいかもな[BE:01:ページ切り替え（クリア）]
+覚えさせた　技が　気に入らなければ
+別の　わざマシンを　使えばいいし</language>
 	</row>
 
 	<row id="msg_c01r0501_boy3_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
