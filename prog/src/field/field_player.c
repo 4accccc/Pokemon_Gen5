@@ -13,6 +13,8 @@
 #include "field_sound.h"
 #include "field_player.h"
 
+#include "field_player_grid.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -35,6 +37,7 @@ typedef struct
 struct _FIELD_PLAYER
 {
 	HEAPID heapID;
+  GAMESYS_WORK *gsys;
 	FIELDMAP_WORK *fieldWork;
   PLAYER_WORK *playerWork;
    
@@ -88,6 +91,7 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 	fld_player = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_PLAYER) );
   fld_player->playerWork = playerWork;
 	fld_player->fieldWork = fieldWork;
+  fld_player->gsys = FIELDMAP_GetGameSysWork( fieldWork );
 	fld_player->pos = *pos;
   fld_player->map_type = type;
 
@@ -173,15 +177,23 @@ void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player )
 /**
  * 自機イベント移動チェック
  * @param fld_player FIELD_PLAYER
- * @param dir 移動方向
+ * @param key_trg 入力キートリガ情報
+ * @param key_cont 入力キーコンテニュー情報
  * @param evbit PLAYER_EVENTBIT
  * @retval BOOL TRUE=自機イベント移動発生
  */
 //--------------------------------------------------------------
-GMEVENT * FIELD_PLAYER_CheckMoveEvent(
-    FIELD_PLAYER *fld_player, u16 dir, PLAYER_EVENTBIT evbit )
+GMEVENT * FIELD_PLAYER_CheckMoveEvent( FIELD_PLAYER *fld_player,
+    int key_trg, int key_cont, PLAYER_EVENTBIT evbit )
 {
-  return( NULL );
+  GMEVENT *event = NULL;
+  
+  if( fld_player->map_type == FLDMAP_CTRLTYPE_GRID ){
+    event = FIELD_PLAYER_GRID_CheckMoveEvent(
+        fld_player, key_trg, key_cont, evbit );
+  }
+  
+  return( event );
 }
 
 //======================================================================
@@ -440,6 +452,18 @@ int FIELD_PLAYER_GetSex( const FIELD_PLAYER *fld_player )
   return( fld_player->sex );
 }
 
+//--------------------------------------------------------------
+/**
+ * FIELD_PLAYER GAMESYS_WORK取得
+ * @param fld_player FIELD_PLAYER
+ * @retval GAMESYS_WORK*
+ */
+//--------------------------------------------------------------
+GAMESYS_WORK * FIELD_PLAYER_GetGameSysWork( FIELD_PLAYER *fld_player )
+{
+  return( fld_player->gsys );
+}
+
 //======================================================================
 /// 性別、OBJコード、各フォーム
 //======================================================================
@@ -637,8 +661,7 @@ void FIELD_PLAYER_ChangeMoveForm(
   
   {
     FIELDMAP_WORK *fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
-    GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
-    GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+    GAMEDATA *gdata = GAMESYSTEM_GetGameData( fld_player->gsys );
     u32 zone_id = FIELDMAP_GetZoneID( fieldWork );
     FIELD_SOUND_ChangePlayZoneBGM( gdata, form, zone_id );
   }

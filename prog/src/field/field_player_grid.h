@@ -45,13 +45,18 @@ extern void FIELD_PLAYER_GRID_Delete( FIELD_PLAYER_GRID *g_jiki );
 extern void FIELD_PLAYER_GRID_Move(
 		FIELD_PLAYER_GRID *g_jiki, int key_trg, int key_cont );
 
-extern void FIELD_PLAYER_GRID_ForceStop( FIELD_PLAYER *fld_player );
+extern PLAYER_MOVE_VALUE FIELD_PLAYER_GRID_GetMoveValue(
+    FIELD_PLAYER_GRID *gjiki, u16 dir );
 
 extern void FIELD_PLAYER_GRID_SetRequest(
   FIELD_PLAYER_GRID *gjiki, FIELD_PLAYER_GRID_REQBIT req_bit );
 extern void FIELD_PLAYER_GRID_UpdateRequest( FIELD_PLAYER_GRID *gjiki );
 
+extern BOOL FIELD_PLAYER_GRID_CheckStartMove(
+    FIELD_PLAYER_GRID *gjiki, u16 dir );
 
+extern void FIELD_PLAYER_GRID_ForceStop( FIELD_PLAYER *fld_player );
+extern BOOL FIELD_PLAYER_GRID_SetMoveStop( FIELD_PLAYER_GRID *gjiki );
 extern void FIELD_PLAYER_GRID_SetEffectTaskWork(
     FIELD_PLAYER_GRID *gjiki, FLDEFF_TASK *task );
 extern FLDEFF_TASK * FIELD_PLAYER_GRID_GetEffectTaskWork(
@@ -60,8 +65,10 @@ extern void FIELD_PLAYER_SetNaminori( FIELD_PLAYER_GRID *gjiki );
 extern void FIELD_PLAYER_SetNaminoriEnd( FIELD_PLAYER_GRID *gjiki );
 extern u16 FIELD_PLAYER_GRID_GetKeyDir( FIELD_PLAYER_GRID *gjiki, int key );
 
-//field_player_grid_event.c
+extern FIELD_PLAYER * FIELD_PLAYER_GRID_GetFieldPlayer(
+    FIELD_PLAYER_GRID *gjiki );
+extern MMDL * FIELD_PLAYER_GRID_GetMMdl( FIELD_PLAYER_GRID *gjiki );
 
-extern BOOL FIELD_PLAYER_GRID_CheckMoveEvent(
-    FIELD_PLAYER *fld_player, FIELD_PLAYER_GRID *gjiki,
-    u16 dir, PLAYER_EVENTBIT evbit );
+//field_player_grid_event.c
+extern GMEVENT * FIELD_PLAYER_GRID_CheckMoveEvent( FIELD_PLAYER *fld_player,
+    int key_trg, int key_cont, PLAYER_EVENTBIT evbit );

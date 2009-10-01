@@ -434,3 +434,14 @@ BOOL MAPATTR_VALUE_CheckEncountGrassB( const MAPATTR_VALUE val )
   return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 怪力穴
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckKairikiAna( const MAPATTR_VALUE val )
+{
+  return( val == 0x1d );
+}

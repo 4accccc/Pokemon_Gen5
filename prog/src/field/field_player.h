@@ -89,8 +89,8 @@ extern FIELD_PLAYER * FIELD_PLAYER_Create(
 extern void FIELD_PLAYER_Delete( FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player );
-extern GMEVENT * FIELD_PLAYER_CheckMoveEvent(
-    FIELD_PLAYER *fld_player, u16 dir, PLAYER_EVENTBIT evbit );
+extern GMEVENT * FIELD_PLAYER_CheckMoveEvent( FIELD_PLAYER *fld_player,
+    int key_trg, int key_cont, PLAYER_EVENTBIT evbit );
 
 //参照、設定
 extern void FIELD_PLAYER_GetPos(
@@ -115,6 +115,7 @@ extern PLAYER_MOVE_FORM FIELD_PLAYER_GetMoveForm(
 extern void FIELD_PLAYER_SetMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form );
 extern int FIELD_PLAYER_GetSex( const FIELD_PLAYER *fld_player );
+extern GAMESYS_WORK * FIELD_PLAYER_GetGameSysWork( FIELD_PLAYER *fld_player );
 
 //性別、OBJコード、各フォーム
 extern u16 FIELD_PLAYER_GetDrawFormToOBJCode(

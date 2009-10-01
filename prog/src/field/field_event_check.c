@@ -270,10 +270,15 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
   
 //☆☆☆自機状態イベントチェック
   if( !(req.debugRequest) ){
-    u16 dir = DIR_NOT;
     PLAYER_EVENTBIT evbit = PLAYER_EVENTBIT_NON;
-
-    event = FIELD_PLAYER_CheckMoveEvent( req.field_player, dir, evbit );
+     EVENTWORK *ev = GAMEDATA_GetEventWork( req.gamedata );
+    
+    if( EVENTWORK_SYS_FLAG_Kairiki(ev,SYS_FLAG_MODE_CHECK) == TRUE ){
+      evbit |= PLAYER_EVENTBIT_KAIRIKI;
+    }
+    
+    event = FIELD_PLAYER_CheckMoveEvent(
+        req.field_player, req.key_trg, req.key_cont, evbit );
     
     if( event != NULL ){
       return event;

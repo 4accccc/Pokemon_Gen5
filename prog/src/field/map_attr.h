@@ -80,3 +80,5 @@ extern BOOL MAPATTR_VALUE_CheckEncountGrassB1( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckEncountGrassB2( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckEncountGrassA( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckEncountGrassB( const MAPATTR_VALUE val );
+
+extern BOOL MAPATTR_VALUE_CheckKairikiAna( const MAPATTR_VALUE val );
