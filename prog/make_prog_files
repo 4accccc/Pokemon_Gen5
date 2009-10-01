@@ -71,6 +71,7 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/game_event.c \
         gamesystem/game_data.c \
         gamesystem/msgspeed.c \
+	gamesystem/btl_setup.c \
         map/dp3format.c \
         field/zonedata.c \
         field/areadata.c \
