@@ -110,9 +110,9 @@ enum
 	PLTID_BG_BACK_S				=	0,
 
 	//メインOBJ
-	PLTID_OBJ_TOUCHBAR_M	= 0,
-	PLTID_OBJ_TYPEICON_M	= 3,
-  PLTID_OBJ_OAM_MAPMODEL_M = 4,
+	PLTID_OBJ_TOUCHBAR_M	= 0, // 3本使用
+	PLTID_OBJ_TYPEICON_M	= 3, // 3本使用
+  PLTID_OBJ_OAM_MAPMODEL_M = 6, // 1本使用
 	//サブOBJ
 };
 
@@ -236,7 +236,7 @@ static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk );
 //-------------------------------------
 ///	OAMでマップモデル表示
 //=====================================
-static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, GFL_CLUNIT *unit, HEAPID heap_id );
+static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heap_id );
 static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
 #endif // UI_TEMPLATE_OAM_MAPMODEL
 
@@ -352,8 +352,12 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
   //OAMマップモデルの読み込み
   {
+    // 主人公は現状 0=後ろ, 1=後ろアニメ1, 2=後ろアニメ2, 3=正面....
+    // トレーナーなどは違う可能性があるので注意。
+    u16 ptn_ofs = 3;
+
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
-		UITemplate_OAM_MAPMODEL_CreateCLWK( wk, NARC_fldmmdl_mdlres_hero_nsbtx, clunit, wk->heap_id );
+		UITemplate_OAM_MAPMODEL_CreateCLWK( wk, NARC_fldmmdl_mdlres_hero_nsbtx, ptn_ofs, clunit, wk->heap_id );
   }
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 
@@ -870,6 +874,7 @@ static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
  *
  *	@param	UI_TEMPLATE_MAIN_WORK *wk
  *	@param	tex_idx
+ *	@param  ptn_ofs
  *	@param	sx
  *	@param	sy
  *	@param	GFL_CLUNIT *unit	CLUNIT
@@ -878,7 +883,7 @@ static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, GFL_CLUNIT *unit, HEAPID heap_id )
+static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heap_id )
 {	
   //リソース読み込み
 	{	
@@ -915,8 +920,13 @@ static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 t
 	}
 
   // テクスチャを転送
-  // 人物は基本 4 x 4
-  CLWK_TransNSBTX( wk->oam_mmdl_clwk, ARCID_MMDL_RES, tex_idx, 0, 4, 4, 0, CLSYS_DRAW_MAIN, heap_id );
+  {
+    // 人物は基本 4 x 4
+    int sx = 4;
+    int sy = 4;
+
+    CLWK_TransNSBTX( wk->oam_mmdl_clwk, ARCID_MMDL_RES, tex_idx, ptn_ofs, sx, sy, 0, CLSYS_DRAW_MAIN, heap_id );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -943,7 +953,8 @@ static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk )
 
 
 #ifdef UI_TEMPLATE_ITEM_ICON
-#if 0
+//@TODO 整形
+#if 0 
 static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
 {
   if(pWork->cellicon!=NULL){

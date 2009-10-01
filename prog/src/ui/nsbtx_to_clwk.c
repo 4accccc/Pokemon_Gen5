@@ -33,7 +33,7 @@
  */
 //=============================================================================
 
-static void OBJ_CgxChangeTransShiftVramOfs( GFL_CLWK* act, u8 * buf, u32 siz, u32 VramOfs, NNS_G2D_VRAM_TYPE vram_type );
+//static void OBJ_CgxChangeTransShiftVramOfs( GFL_CLWK* act, u8 * buf, u32 siz, u32 VramOfs, CLSYS_DRAW_TYPE vram_type );
 
 //=============================================================================
 /**
@@ -99,37 +99,34 @@ void CLWK_TransNSBTX( GFL_CLWK* act, u32 arc_idx, u32 tex_idx, u8 ptn_ofs, u16 s
 		ChangesInto_RawData_1D_from_2D( pRawData, sx, 0, 0, sx, sy, pBuf );
 
     // CLWKに流し込む
-#if 0
     {
-      //@TODO 何故かサイズオーバーする。
       u16 res_idx = GFL_CLACT_WK_GetCgrIndex( act ); 
-      HOSAKA_Printf("res_idx=%d \n");
       GFL_CLGRP_CGR_ReplaceEx( res_idx, pBuf, trans_size, VramOfs, vram_type );
     }
-#else
-		OBJ_CgxChangeTransShiftVramOfs( act, pBuf, trans_size, VramOfs, vram_type );
-#endif
+//	OBJ_CgxChangeTransShiftVramOfs( act, pBuf, trans_size, VramOfs, vram_type );
 
 		GFL_HEAP_FreeMemory( pBuf );
 	}
 
 	//パレットロウデータ取得
 	{
-		NNSG2dImagePaletteProxy* ipp = NULL;
+		NNSG2dImagePaletteProxy ipp;
 		u32 vram;
 
 		pStart = (u8*)pTex + pTex->plttInfo.ofsPlttData;
 		DC_FlushRange( pStart, TRANS_PAL_SIZE );
 		
-    GFL_CLACT_WK_GetPlttProxy( act, ipp );
-		vram = NNS_G2dGetImagePaletteLocation( ipp, vram_type );
+    GFL_CLACT_WK_GetPlttProxy( act, &ipp );
 
-		if( vram_type == NNS_G2D_VRAM_TYPE_2DMAIN )
+	  if( vram_type == CLSYS_DRAW_MAIN || vram_type == CLSYS_DRAW_MAX )
 		{
+		  vram = NNS_G2dGetImagePaletteLocation( &ipp, NNS_G2D_VRAM_TYPE_2DMAIN );
 			GX_LoadOBJPltt( pStart, vram, TRANS_PAL_SIZE );
 		}
-		else
+
+    if( vram_type == CLSYS_DRAW_SUB || vram_type == CLSYS_DRAW_MAX )
 		{
+		  vram = NNS_G2dGetImagePaletteLocation( &ipp, NNS_G2D_VRAM_TYPE_2DSUB );
 			GXS_LoadOBJPltt( pStart, vram, TRANS_PAL_SIZE );
 		}
 	}
@@ -146,7 +143,7 @@ void CLWK_TransNSBTX( GFL_CLWK* act, u32 arc_idx, u32 tex_idx, u8 ptn_ofs, u16 s
 //=============================================================================
 
 // tomoyaさんに GFL_CLGRP_CGR_ReplaceEx を作っていただいため、不要になりました。
-#if 1
+#if 0
 //-----------------------------------------------------------------------------
 /**
  *	@brief	OBJに割り当てられているキャラデータ（CGX）を書き換える 
@@ -159,30 +156,29 @@ void CLWK_TransNSBTX( GFL_CLWK* act, u32 arc_idx, u32 tex_idx, u8 ptn_ofs, u16 s
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void OBJ_CgxChangeTransShiftVramOfs( GFL_CLWK* act, u8 * buf, u32 siz, u32 VramOfs, NNS_G2D_VRAM_TYPE vram_type )
+static void OBJ_CgxChangeTransShiftVramOfs( GFL_CLWK* act, u8 * buf, u32 siz, u32 VramOfs, CLSYS_DRAW_TYPE vram_type )
 {
-	NNSG2dImageProxy * ipc;
+	NNSG2dImageProxy ipc;
 	u32	cgx;
 
-  GFL_CLACT_WK_GetImgProxy( act, ipc );
-
-	cgx = NNS_G2dGetImageLocation( ipc, vram_type );
-	cgx += VramOfs;
+  GFL_CLACT_WK_GetImgProxy( act, &ipc );
 
 	DC_FlushRange( buf, siz );
 
-	switch( vram_type )
-	{
-		case NNS_G2D_VRAM_TYPE_2DMAIN:
-			GX_LoadOBJ( buf, cgx, siz );
-			break;
+	if( vram_type == CLSYS_DRAW_MAIN || vram_type == CLSYS_DRAW_MAX )
+  {
+    cgx = NNS_G2dGetImageLocation( &ipc, NNS_G2D_VRAM_TYPE_2DMAIN );
+    cgx += VramOfs;
+		GX_LoadOBJ( buf, cgx, siz );
+  }
 
-		case NNS_G2D_VRAM_TYPE_2DSUB:
-			GXS_LoadOBJ( buf, cgx, siz );
-			break;
+  if( vram_type == CLSYS_DRAW_SUB || vram_type == CLSYS_DRAW_MAX )
+  { 
+    cgx = NNS_G2dGetImageLocation( &ipc, NNS_G2D_VRAM_TYPE_2DSUB );
+    cgx += VramOfs;
+    GXS_LoadOBJ( buf, cgx, siz );
+  }
 
-		default : GF_ASSERT(0);
-	};
 }
 #endif
 
