@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-14T15:51:44"/>
+	<create user="matsumiya" host="W00207" date="2009-09-30T19:24:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -304,7 +304,7 @@
 トレーナーの　強さが　わかるのよ</language>
 	</row>
 
-	<row id="msg_c01r0301_man2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0301_man2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ポケモン交換前
 ・はい／いいえの選択肢表示
@@ -325,7 +325,7 @@
 君の　１２３４５　交換しようぜ</language>
 	</row>
 
-	<row id="msg_c01r0301_man2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0301_man2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・はい選択
 　ポケモン選択画面で条件を満たすポケモンを選択
@@ -343,7 +343,7 @@
 １２３４５　大切に　するから！</language>
 	</row>
 
-	<row id="msg_c01r0301_man2_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0301_man2_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・はい選択
 　ポケモン選択画面で条件を満たしていない
@@ -356,7 +356,7 @@
 １２３４５　なんだけどさ……</language>
 	</row>
 
-	<row id="msg_c01r0301_man2_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0301_man2_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・いいえ選択
 　もしくはポケモン選択画面で「やめる」を選択</comment>
@@ -368,7 +368,7 @@
 ポケモン交換　してくれよな！</language>
 	</row>
 
-	<row id="msg_c01r0301_man2_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0301_man2_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ポケモン交換終了後</comment>
 		<language name="JPN" width="256">ポケモンこうかんを　したから
