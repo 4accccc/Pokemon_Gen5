@@ -37,7 +37,7 @@
 //=====================================
 #define GRAPHIC_BG_USE	//OFF‚É‚·‚é‚ÆBGŽg—p‚µ‚Ü‚¹‚ñ
 #define GRAPHIC_OBJ_USE	//OFF‚É‚·‚é‚ÆOBJŽg—p‚µ‚Ü‚¹‚ñ
-//#define GRAPHIC_G3D_USE	//OFF‚É‚·‚é‚Æ3DŽg—p‚µ‚Ü‚¹‚ñ
+#define GRAPHIC_G3D_USE	//OFF‚É‚·‚é‚Æ3DŽg—p‚µ‚Ü‚¹‚ñ
 //-------------------------------------
 ///	ƒoƒ“ƒNÝ’è
 //=====================================
@@ -49,10 +49,10 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 	GX_VRAM_SUB_BGEXTPLTT_NONE, // ƒTƒu2DƒGƒ“ƒWƒ“‚ÌBGŠg’£ƒpƒŒƒbƒg
 	GX_VRAM_OBJ_128_B,					// ƒƒCƒ“2DƒGƒ“ƒWƒ“‚ÌOBJ
 	GX_VRAM_OBJEXTPLTT_NONE,		// ƒƒCƒ“2DƒGƒ“ƒWƒ“‚ÌOBJŠg’£ƒpƒŒƒbƒg
-	GX_VRAM_SUB_OBJ_128_D,      // ƒTƒu2DƒGƒ“ƒWƒ“‚ÌOBJ
+	GX_VRAM_SUB_OBJ_16_I,	      // ƒTƒu2DƒGƒ“ƒWƒ“‚ÌOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,// ƒTƒu2DƒGƒ“ƒWƒ“‚ÌOBJŠg’£ƒpƒŒƒbƒg
-	GX_VRAM_TEX_NONE,						// ƒeƒNƒXƒ`ƒƒƒCƒ[ƒWƒXƒƒbƒg
-	GX_VRAM_TEXPLTT_NONE,				// ƒeƒNƒXƒ`ƒƒƒpƒŒƒbƒgƒXƒƒbƒg
+	GX_VRAM_TEX_0_D,						// ƒeƒNƒXƒ`ƒƒƒCƒ[ƒWƒXƒƒbƒg
+	GX_VRAM_TEXPLTT_0_F,				// ƒeƒNƒXƒ`ƒƒƒpƒŒƒbƒgƒXƒƒbƒg
 	GX_OBJVRAMMODE_CHAR_1D_128K,// ƒƒCƒ“‰æ–ÊOBJƒ}ƒbƒsƒ“ƒOƒ‚[ƒh		
 	GX_OBJVRAMMODE_CHAR_1D_128K,// ƒTƒu‰æ–ÊOBJƒ}ƒbƒsƒ“ƒOƒ‚[ƒh
 };
@@ -70,7 +70,7 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 //=====================================
 static const GFL_BG_SYS_HEADER sc_bgsys_header	=
 {	
-	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_2D	//ƒOƒ‰ƒtƒBƒbƒNƒ‚[ƒhAƒƒCƒ“BG–ÊÝ’èAƒTƒuBG–ÊÝ’èABG0–ÊÝ’è
+	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D	//ƒOƒ‰ƒtƒBƒbƒNƒ‚[ƒhAƒƒCƒ“BG–ÊÝ’èAƒTƒuBG–ÊÝ’èABG0–ÊÝ’è
 };
 //-------------------------------------
 ///	BG–ÊÝ’è
@@ -84,6 +84,7 @@ static const struct
 }	sc_bgsetup[]	=
 {	
 	//MAIN------------------------
+#if 0	//3DÝ’è‚Ì‚½‚ß‚¢‚ç‚È‚¢
 	{	
 		GFL_BG_FRAME0_M,	//Ý’è‚·‚éƒtƒŒ[ƒ€
 		{
@@ -95,6 +96,7 @@ static const struct
 		GFL_BG_MODE_TEXT,	//BG‚ÌŽí—Þ
 		TRUE,	//‰Šú•\Ž¦
 	},
+#endif
 	{	
 		GFL_BG_FRAME1_M,	//Ý’è‚·‚éƒtƒŒ[ƒ€
 		{
@@ -243,7 +245,7 @@ static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//ƒ^[ƒQƒbƒ
 static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target, HEAPID heapID )
 {
-#if 1	//ŽË‰e
+#if 0	//ŽË‰e
 	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
 									FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
 									FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),

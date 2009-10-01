@@ -3193,7 +3193,7 @@ static BOOL debugMenuCallProc_UITemplate( DEBUG_MENU_EVENT_WORK *p_wk )
 	GFL_STD_MemClear( p_param, sizeof(DEBUG_UITEMPLATE_EVENT_WORK) );
 
 	p_param->p_gamesys	= p_gamesys;
-	p_param->param.p_gamesys	= p_gamesys;
+	p_param->param.gamesys	= p_gamesys;
 	p_param->p_event		= p_event;
 	p_param->p_field		= p_field;
 

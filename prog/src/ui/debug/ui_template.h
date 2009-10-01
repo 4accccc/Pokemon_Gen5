@@ -24,10 +24,6 @@
  *					外部公開
 */
 //=============================================================================
-extern GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
-extern GFL_PROC_RESULT UITemplateProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
-extern GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
-
 extern const GFL_PROC_DATA UITemplateProcData;
 
 //=============================================================================
@@ -46,13 +42,5 @@ extern const GFL_PROC_DATA UITemplateProcData;
 //=====================================
 typedef struct
 {	
-	GAMESYS_WORK				*p_gamesys;	//[in]ゲームシステム
+	GAMESYS_WORK				*gamesys;	//[in]ゲームシステム
 }UI_TEMPLATE_PARAM;
-
-//=============================================================================
-/**
- *								プロトタイプ宣言
- */
-//=============================================================================
-
-
