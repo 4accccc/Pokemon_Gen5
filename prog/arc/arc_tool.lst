@@ -198,3 +198,4 @@
   ARCID_PC_RECOVERY "pc_recovery_anime.narc" # ポケセン回復アニメーション
   ARCID_GYM_NORMAL "fieldmap/gym_normal.narc"  #ノーマルジム
   ARCID_MUSICAL_PROGRAM "mus_prog_data.narc"  #ミュージカルデフォルト配信データ
+  ARCID_FLD3D_CI "fld3d_ci.narc"  #フィールド3Dカットイン用データ
