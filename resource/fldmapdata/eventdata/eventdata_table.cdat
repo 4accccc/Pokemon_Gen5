@@ -65,6 +65,10 @@
 #ifndef ZONE_C01GYM0101_EVC_H
 #define ZONE_C01GYM0101_EVC_H
 
+#define C01GYM0101_SUNGLASSES_01           0
+#define C01GYM0101_LEADER1_01              1
+#define C01GYM0101_LEADER1_02              2
+#define C01GYM0101_LEADER1_03              3
 
 #endif //ZONE_C01GYM0101_EVC_H
 //#include "tmp/c01pc0101.h"
@@ -3332,14 +3336,102 @@ const CONNECT_DATA DOOR_EVENT_C01GYM0101[] = {
 	},
 };
 const int ConnectCount_C01GYM0101 = NELEMS(DOOR_EVENT_C01GYM0101);
+const FLDMMDL_HEADER OBJ_EVENT_C01GYM0101[] = {
+	{
+		C01GYM0101_SUNGLASSES_01,
+		SUNGLASSES,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01GYM0101_SUNGLASSES_01,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		13,
+		28,
+		FX32_CONST(0),
+	},
+	{
+		C01GYM0101_LEADER1_01,
+		LEADER1,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01GYM0101_LEADER1_01,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		10,
+		2,
+		FX32_CONST(48),
+	},
+	{
+		C01GYM0101_LEADER1_02,
+		LEADER1,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01GYM0101_LEADER1_02,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		9,
+		2,
+		FX32_CONST(48),
+	},
+	{
+		C01GYM0101_LEADER1_03,
+		LEADER1,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C01GYM0101_LEADER1_01,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		11,
+		2,
+		FX32_CONST(48),
+	},
+};
+const int ObjCount_C01GYM0101 = NELEMS(OBJ_EVENT_C01GYM0101);
+const BG_TALK_DATA BG_EVENT_C01GYM0101[] = {
+	{//C01GYM0101_POKEZOU_01 = 0
+		SCRID_C01GYM0101_POKEZOU_01,  //event id
+		BG_TALK_TYPE_NORMAL, //type
+		8, 29,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+	{//C01GYM0101_POKEZOU_02 = 1
+		SCRID_C01GYM0101_POKEZOU_02,  //event id
+		BG_TALK_TYPE_NORMAL, //type
+		12, 29,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+};
+const int BgCount_C01GYM0101 = NELEMS(BG_EVENT_C01GYM0101);
 
 static const EVENTDATA_TABLE event_c01gym0101 = {
-	0,
-	0,
+	2,
+	4,
 	3,
 	0,
-	(void *)NULL,
-	(void *)NULL,
+	(void *)&BG_EVENT_C01GYM0101,
+	(void *)&OBJ_EVENT_C01GYM0101,
 	(void *)&DOOR_EVENT_C01GYM0101,
 	(void *)NULL,
 };
