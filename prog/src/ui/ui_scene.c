@@ -98,6 +98,8 @@ UI_SCENE_CNT_PTR UI_SCENE_CNT_Create( HEAPID heapID, const UI_SCENE_FUNC_SET* fu
 //-----------------------------------------------------------------------------
 void UI_SCENE_CNT_Delete( UI_SCENE_CNT_PTR ptr )
 {	
+  GF_ASSERT( ptr );
+
 	GFL_HEAP_FreeMemory( ptr );
 }
 
@@ -243,7 +245,9 @@ void UI_SCENE_CNT_SetNextScene( UI_SCENE_CNT_PTR ptr, int scene_id )
 //-----------------------------------------------------------------------------
 int UI_SCENE_CNT_GetSceneID( UI_SCENE_CNT_PTR ptr )
 {	
-	return ptr->scene_id;
+  GF_ASSERT( ptr );
+	
+  return ptr->scene_id;
 }
 
 //-----------------------------------------------------------------------------
