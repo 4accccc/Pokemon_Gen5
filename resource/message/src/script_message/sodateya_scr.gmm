@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-30T21:23:47"/>
+	<create user="matsumiya" host="W00207" date="2009-10-01T17:47:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -699,7 +699,7 @@
 		<comment>メニュー用
 ・性別なし</comment>
 		<attribute name="キャラ指定">メニュー用</attribute>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]</language>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]　ＬＶ[2:02:３桁:1]</language>
 		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]</language>
 	</row>
 
