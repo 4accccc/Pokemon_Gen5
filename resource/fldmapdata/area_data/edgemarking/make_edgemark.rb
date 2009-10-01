@@ -54,7 +54,7 @@ def getRGB(line)
   b = Integer(column[2])
   if r >= 32 then raise InputDataError, "B‚Ì’l‚ª§ŒÀ‚ğ‰z‚¦‚Ä‚¢‚Ü‚·" end
   value = Integer( b * 1024 + g * 32 + r )
-  //value = Integer( r * 1024 + g * 32 + b )
+  #value = Integer( r * 1024 + g * 32 + b )
   puts "R=#{r} G=#{g} B=#{b} rgb = #{sprintf("%04x",value)}"
   return value
 end
