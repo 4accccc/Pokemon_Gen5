@@ -737,7 +737,7 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
       if( bench_poke_cnt )
       {
         u8 put_cnt = (bench_poke_cnt > pos_cnt)?  pos_cnt : bench_poke_cnt;
-        BTL_Printf( "  控えポケの数=%d, 出すべきポケ数=%d  pos=", bench_poke_cnt, put_cnt);
+        BTL_Printf( "  控えポケの数=%d, 出すべきポケ数=%d  pos=", bench_poke_cnt, put_cnt );
         for(i=0; i<put_cnt; ++i)
         {
           BTL_SERVER_RequestChangePokemon( wk->server, posAry[i] );
@@ -750,7 +750,6 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
       else{
         BTL_Printf("Client[%d]にはもう戦えるポケがいないことを通知\n", clientID);
         BTL_SERVER_NotifyGiveupClientID( wk->server, i );
-//        result = TRUE;
       }
     }
   }
@@ -1429,6 +1428,12 @@ static void scproc_Move( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   posIdx = BTL_PARTY_FindMember( party, bpp );
   if( (posIdx == 0) || (posIdx == 2) )
   {
+    BtlPokePos pos1, pos2;
+
+    pos1 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
+    pos2 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, 1 );
+    BTL_POSPOKE_Swap( &wk->pospokeWork, pos1, pos2 );
+
     BTL_PARTY_SwapMembers( party, posIdx, 1 );
     SCQUE_PUT_ACT_MemberMove( wk->que, clientID, posIdx );
   }else{

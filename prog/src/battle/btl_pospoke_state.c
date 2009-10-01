@@ -100,6 +100,22 @@ void BTL_POSPOKE_PokeIn( BTL_POSPOKE_WORK* wk, BtlPokePos pos,  u8 pokeID )
 
 //=============================================================================================
 /**
+ * ポケモン位置交換
+ *
+ * @param   wk
+ * @param   pos1
+ * @param   pos2
+ */
+//=============================================================================================
+void BTL_POSPOKE_Swap( BTL_POSPOKE_WORK* wk, BtlPokePos pos1, BtlPokePos pos2 )
+{
+  BTL_POSPOKE_STATE tmp = wk->state[ pos1 ];
+  wk->state[ pos1 ] = wk->state[ pos2 ];
+  wk->state[ pos2 ] = tmp;
+}
+
+//=============================================================================================
+/**
  * 指定クライアントの担当している「位置」の内、空きになっている数を返す
  *
  * @param   wk

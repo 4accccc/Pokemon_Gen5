@@ -539,6 +539,17 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
       return TRUE;
     }
   }
+
+  // @todo 現状、キー操作のみでムーブ処理している
+  if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE )
+  {
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+      BTL_ACTION_SetMoveParam( wk->destActionParam );
+      SePlayDecide();
+      return TRUE;
+    }
+  }
+
   return FALSE;
 }
 //----------------------------------------------------------------------------------

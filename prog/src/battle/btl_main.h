@@ -178,6 +178,7 @@ static inline BOOL BTL_MAINUTIL_IsTripleCenterPos( BtlPokePos pos )
  */
 //----------------------------------------------------------------------------------------------
 extern MYITEM_PTR BTL_MAIN_GetItemDataPtr( BTL_MAIN_MODULE* wk );
+extern BAG_CURSOR* BTL_MAIN_GetBagCursorData( BTL_MAIN_MODULE* wk );
 
 
 

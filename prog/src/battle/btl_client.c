@@ -100,7 +100,6 @@ struct _BTL_CLIENT {
   BTL_POKESELECT_PARAM    pokeSelParam;
   BTL_POKESELECT_RESULT   pokeSelResult;
   CANT_ESC_CONTROL        cantEscCtrl;
-  BBAG_DATA               bagData;
 
 
   u8  myID;
@@ -503,10 +502,15 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
   case SEQ_SELECT_WAZA_WAIT:
     if( BTLV_UI_SelectWaza_Wait(wk->viewCore) )
     {
-      if( BTL_ACTION_GetAction(wk->procAction) == BTL_ACTION_NULL ){
+      BtlAction action = BTL_ACTION_GetAction( wk->procAction );
+
+      if( action == BTL_ACTION_NULL ){
         (*seq) = SEQ_SELECT_ACTION;
       }
-      else{
+      else if( action == BTL_ACTION_MOVE ){
+        (*seq) = SEQ_CHECK_DONE;
+      }else
+      {
         if( is_unselectable_waza(wk, wk->procPoke, wk->actionParam[wk->procPokeIdx].fight.waza, &wk->strParam) )
         {
           if( wk->strParam.stdFlag ){
@@ -1265,7 +1269,11 @@ static u8 storeMyChangePokePos( BTL_CLIENT* wk, BtlPokePos* myCoverPos )
   u32 i, cnt;
 
   numChangePoke = BTL_ADAPTER_GetRecvData( wk->adapter, (const void*)&changePokePos );
-  BTL_Printf(" 全Client, 選択すべきポケモン数=%d\n", numChangePoke);
+  BTL_Printf(" 全Client, 選択すべきポケモン数=%d\n　位置=", numChangePoke);
+  for(i=0; i<numChangePoke; ++i){
+    BTL_PrintfSimple("%d,", changePokePos[i]);
+  }
+  BTL_PrintfSimple("\n");
 
   for(i=0, cnt=0; i<numChangePoke; ++i)
   {
@@ -2135,6 +2143,8 @@ static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args )
       pos2 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, 1 );
       vpos1 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos1 );
       vpos2 = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos2 );
+
+      BTL_Printf("ムーブ: %d <-> %d\n", pos1, pos2 );
 
       BTLV_ACT_MoveMember_Start( wk->viewCore, clientID, vpos1, vpos2, posIdx, 1 );
       (*seq)++;

@@ -513,11 +513,13 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     BTLV_SCD_Cleanup( wk->scrnD );
 
     wk->bagData.myitem = BTL_MAIN_GetItemDataPtr( wk->mainModule );
+    wk->bagData.bagcursor = BTL_MAIN_GetBagCursorData( wk->mainModule );
     wk->bagData.mode = bagMode;
     wk->bagData.font = wk->fontHandle;
     wk->bagData.heap = wk->heapID;
     wk->bagData.energy = energy;
     wk->bagData.reserved_energy = reserved_energy;
+
 
     wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
     wk->plistData.font = wk->fontHandle;
@@ -1325,7 +1327,7 @@ void BTLV_ACT_MoveMember_Start( BTLV_CORE* wk, u8 clientID, u8 vpos1, u8 vpos2, 
 //=============================================================================================
 BOOL BTLV_ACT_MoveMember_Wait( BTLV_CORE* wk )
 {
-  return FALSE;
+  return BTL_UTIL_CallProc( &wk->subProc );
 }
 static BOOL subprocMoveMember( int* seq, void* wk_adrs )
 {
