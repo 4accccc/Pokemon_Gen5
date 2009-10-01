@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-10T20:34:21"/>
+	<create user="matsumiya" host="W00207" date="2009-10-01T18:12:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="237"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,8 +292,211 @@
 	</lock>
 
 
-	<row id="msg_c01r0102_trainerm_01">
-		<comment>♂</comment>
+	<row id="msg_c01r0102_inventor_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀
+・メッセージ表示後
+　！マーク表示
+・続けてmsg_c01r0102_inventor_02</comment>
+		<attribute name="キャラ指定">発明家</attribute>
+		<language name="JPN" width="256">あらためて　じこしょうかい　するね[BE:01:ページ切り替え（クリア）]
+アタシは　マコモ（仮）
+いわゆる　はつめいか　です[BE:01:ページ切り替え（クリア）]
+アララギはかせ　とは
+だいがくじだい　からの　ともだちでさ[BE:00:ページ切り替え（行送り）]
+アナタたちの　てだすけを　たのまれたの</language>
+		<language name="JPN_KANJI" width="256">改めて　自己紹介するね[BE:01:ページ切り替え（クリア）]
+アタシは　マコモ（仮）
+いわゆる　発明家です[BE:01:ページ切り替え（クリア）]
+アララギ博士とは
+大学時代からの　友達でさ[BE:00:ページ切り替え（行送り）]
+アナタたちの　手助けを頼まれたの</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀
+・メッセージ表示後パソコンを触るアニメ
+・アニメ後、元の位置に戻って
+　msg_c01r0102_inventor_03表示</comment>
+		<attribute name="キャラ指定">発明家</attribute>
+		<language name="JPN" width="256">あっ！　そのＣギア
+つかえるように　とうろくしてあげる</language>
+		<language name="JPN_KANJI" width="256">あっ！　そのＣギア
+使えるように　登録してあげる</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀
+・アイテム入手
+・No000「わざマシン？？：いあいぎり」</comment>
+		<attribute name="キャラ指定">発明家</attribute>
+		<language name="JPN" width="256">で　アタシからの　バックアップです
+この　わざマシンを　どうぞ！</language>
+		<language name="JPN_KANJI" width="256">で　アタシからの　バックアップです
+この　わざマシンを　どうぞ！</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">発明家</attribute>
+		<language name="JPN" width="256">ポケモンが　おぼえる　わざには
+たたかっていない　ときでも[BE:00:ページ切り替え（行送り）]
+つかえる　わざが　あるの！[BE:01:ページ切り替え（クリア）]
+その　わざマシンを　つかうと
+ほそいきを　きることが　できる[BE:00:ページ切り替え（行送り）]
+いあいぎりと　いう　わざが　つかえるわ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　おぼえる　技には
+たたかっていない　ときでも[BE:00:ページ切り替え（行送り）]
+使える　技があるの[BE:01:ページ切り替え（クリア）]
+その　わざマシンを　使うと
+細い木を　切ることが　できる[BE:00:ページ切り替え（行送り）]
+いあいぎりと　いう　わざが　使えるわ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀
+・メッセージ後、踊りだすようなアニメ
+・続けてmsg_c01r0102_inventor_06</comment>
+		<attribute name="キャラ指定">発明家</attribute>
+		<language name="JPN" width="256">……で　てだすけ　じゃなくて
+おねがいしても　いいかな？[BE:01:ページ切り替え（クリア）]
+あのね　サンヨウシティの　はずれに
+ゆめのあとち　って　いわれてる[BE:00:ページ切り替え（行送り）]
+ばしょが　あるんだけど[BE:01:ページ切り替え（クリア）]
+そこにいる　ポケモン　ムシャーナの
+「？？？？？」が　ほしいんだ[BE:01:ページ切り替え（クリア）]
+それが　あれば！
+アタシの　けんきゅうが　かんせいするの！[BE:01:ページ切り替え（クリア）]
+いい？　かんせいすると
+なんと！　なんとよ！[BE:00:ページ切り替え（行送り）]
+ゆめのなかに　はいれるのです！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……で　手助けじゃなくて
+お願いしても　いいかな？[BE:01:ページ切り替え（クリア）]
+あのね　サンヨウシティの　外れに
+夢の跡地って　いわれてる[BE:00:ページ切り替え（行送り）]
+場所が　あるんだけど[BE:01:ページ切り替え（クリア）]
+そこにいる　ポケモン　ムシャーナの
+「？？？？？」が　欲しいんだ[BE:01:ページ切り替え（クリア）]
+それが　あれば！
+アタシの　研究が　完成するの！[BE:01:ページ切り替え（クリア）]
+いい？　完成すると
+なんと！　なんとよ！[BE:00:ページ切り替え（行送り）]
+夢の中に　入れるのです！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀
+・このメッセージ表示後は
+　msg_c01r0102_inventor_07を
+　繰り返し表示</comment>
+		<attribute name="キャラ指定">発明家</attribute>
+		<language name="JPN" width="256">……ごめんなさい
+つい　おどっちゃうのよね[BE:01:ページ切り替え（クリア）]
+いろんな　ポケモンに　であう
+きっかけにもなると　おもって[BE:00:ページ切り替え（行送り）]
+ゆめのあとち　にいる　ムシャーナの
+「？？？？？」を　とってきてください</language>
+		<language name="JPN_KANJI" width="256">……ごめんなさい
+つい　踊っちゃうのよね[BE:01:ページ切り替え（クリア）]
+いろんな　ポケモンに　出会う
+きっかけにもなると　思って[BE:00:ページ切り替え（行送り）]
+夢の跡地にいる　ムシャーナの
+「？？？？？」を　取ってきてください</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀
+・msg_c01r0102_inventor_05表示後
+　重要アイテム「？？？」所有するまで
+　繰り返し表示</comment>
+		<attribute name="キャラ指定">発明家</attribute>
+		<language name="JPN" width="256">マコモ『ゆめのあとちに　いる
+ふしぎなポケモン　ムシャーナ[BE:01:ページ切り替え（クリア）]
+そのポケモンが　みせる　ゆめは
+ときとして　げんじつに　おきるの！[BE:01:ページ切り替え（クリア）]
+その　けんきゅうを　かんせい　させるには
+ムシャーナの　「？？？？？」が　ひつようなの</language>
+		<language name="JPN_KANJI" width="256">マコモ『夢の跡地に　いる
+不思議なポケモン　ムシャーナ[BE:01:ページ切り替え（クリア）]
+そのポケモンが　見せる　夢は
+時として　現実に　起きるの！[BE:01:ページ切り替え（クリア）]
+その　研究を　完成させるには
+ムシャーナの　「？？？？？」が　必要なんだ</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀
+・重要アイテム「？？？」所有時
+・以降、PDWのチュートリアル用の
+　メッセージ追加予定</comment>
+		<attribute name="キャラ指定">発明家</attribute>
+		<language name="JPN" width="256">マコモ『それって！
+ムシャーナの　「？？？？？」！？[BE:01:ページ切り替え（クリア）]
+以下　ポケモンドリームワールドの
+チュートリアル　メッセージ予定</language>
+		<language name="JPN_KANJI" width="256">マコモ『それって！
+ムシャーナの　「？？？？？」！？[BE:01:ページ切り替え（クリア）]
+以下　ポケモンドリームワールドの
+チュートリアル　メッセージ予定</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_09" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀
+・PDW関連メッセージの予定</comment>
+		<attribute name="キャラ指定">発明家</attribute>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c01r0102_girl3_01">
+		<comment>♀
+・会話後、パソコンメニューの
+　「だれかのパソコン」が
+　「？？？のパソコン」に変更</comment>
+		<attribute name="キャラ指定">パソコン管理者
+ＧＩＲＬ3</attribute>
+		<language name="JPN" width="256">あなた　トレーナー？
+じゃあ　ポケモンセンターの
+パソコン　つかっていますか？
+あたし　あの　ボックスを
+かんりしています　？？？です</language>
+		<language name="JPN_KANJI" width="256">あなた　トレーナー？
+じゃあ　ポケモンセンターの
+パソコン　つかっていますか？
+あたし　あの　ボックスを
+管理しています　？？？です</language>
+	</row>
+
+	<row id="msg_c01r0102_girl3_02">
+		<comment>♀
+・msg_c01r0102_girl3_01表示後から
+　PDWのチュートリアル終了まで</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c01r0102_girl3_03">
+		<comment>♀
+・msg_c01r0102_inventor_07表示後
+　＝ＰＤＷのチュートリアル後
+（イベント追加の可能性あり）</comment>
+		<language name="JPN" width="256">ポケモンドリームワールドに行くなら
+そのパソコンを　つかって　いいですよ</language>
+		<language name="JPN_KANJI" width="256">ポケモンドリームワールドに行くなら
+その　パソコンを使って　いいですよ</language>
+	</row>
+
+	<row id="msg_c01r0101_books_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>本棚
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">本棚</attribute>
+		<language name="JPN" width="256">Ｃギアの　マニュアル</language>
+		<language name="JPN_KANJI" width="256">Ｃギアの　マニュアル</language>
+	</row>
+
+	<row id="msg_c01r0102_trainerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>♂
+・削除予定ラベル</comment>
 		<attribute name="キャラ指定">TRAINERM
 エリート♂</attribute>
 		<language name="JPN" width="256">つよい　ポケモンを　そだてることが
@@ -306,8 +509,9 @@
 トレーナーの　強さと　いえるよね</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_01">
-		<comment>♀</comment>
+	<row id="msg_c01r0102_girl3_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>♀
+・削除予定ラベル</comment>
 		<attribute name="キャラ指定">GIRL3
 少女（聡明）</attribute>
 		<language name="JPN" width="256">ポケモンの　とくせいに　ついて
@@ -318,9 +522,9 @@
 勝負を　有利に　すすめられるわ</language>
 	</row>
 
-	<row id="msg_c01r0102_boy3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c01r0102_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
-・アイテム入手処理（仮）</comment>
+・削除予定ラベル</comment>
 		<attribute name="キャラ指定">BOY3
 少年（聡明）</attribute>
 		<language name="JPN" width="256">じょうたいいじょうに　させられると
@@ -335,9 +539,9 @@
 というわけで　これ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01r0102_boy3_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c01r0102_boy3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
-・アイテム入手後</comment>
+・削除予定ラベル</comment>
 		<attribute name="キャラ指定">BOY3
 少年（聡明）</attribute>
 		<language name="JPN" width="256">ポケモンの　とくせいに　よっては

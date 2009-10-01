@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-01T17:42:27"/>
+	<create user="matsumiya" host="W00207" date="2009-10-01T17:49:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="545"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="699"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -300,16 +300,16 @@
 ・表示後、連れ歩きで
 　ｃ01ｒ0101へ</comment>
 		<attribute name="キャラ指定">発明家</attribute>
-		<language name="JPN" width="256">ヤッホー！[BE:01:ページ切り替え（クリア）]
-その　ようすだと
-ジムバッジを　てに入れたみたいね[BE:01:ページ切り替え（クリア）]
-いい　かんじ！
-じゃあ　アタシに　ついてきて！</language>
-		<language name="JPN_KANJI" width="256">ヤッホー！[BE:01:ページ切り替え（クリア）]
-その　様子だと
-ジムバッジを　手に入れたみたいね[BE:01:ページ切り替え（クリア）]
-いい　感じ！
-じゃあ　アタシに　ついてきて！</language>
+		<language name="JPN" width="256">ヤッホー！
+アタシは　マコモ[BE:01:ページ切り替え（クリア）]
+アララギはかせに　たのまれて
+アナタに　わたすものが　あるんだ[BE:00:ページ切り替え（行送り）]
+ちょっと　ついてきて！</language>
+		<language name="JPN_KANJI" width="256">ヤッホー！
+アタシは　マコモ[BE:01:ページ切り替え（クリア）]
+アララギ博士に　頼まれて
+アナタに　渡すものが　あるんだ[BE:00:ページ切り替え（行送り）]
+ちょっと　ついてきて！</language>
 	</row>
 
 	<row id="msg_c01_inventor_02" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
