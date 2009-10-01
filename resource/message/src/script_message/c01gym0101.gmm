@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-30T16:06:49"/>
+	<create user="matsumiya" host="W00207" date="2009-10-01T18:26:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="182"/>
+		<id position="0" width="184"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -373,9 +373,7 @@
 	<row id="msg_c01gym0101_leader1_05a">
 		<comment>♂：ジムリーダー「ポッド」（画面左）
 最初に選んだポケモンが、くさタイプ
-・戦闘前メッセージ
-・表示後、主人公の前に移動してから
-　戦闘画面へ</comment>
+・表示後、主人公、移動可能</comment>
 		<language name="JPN" width="256">ということで
 ほのおタイプの　つかいて　である[BE:00:ページ切り替え（行送り）]
 オレ　ポッドが　あいてをするぜ！</language>
@@ -387,9 +385,7 @@
 	<row id="msg_c01gym0101_leader1_05b" text-color="#008000,,,#008000,,#008000,,,,,,,,,,,,,">
 		<comment>♂：ジムリーダー「コーン」（画面中）
 最初に選んだポケモンが、ほのおタイプ
-・戦闘前メッセージ
-・表示後、主人公の前に移動してから
-　戦闘画面へ</comment>
+・表示後、主人公、移動可能</comment>
 		<language name="JPN" width="256">ということで
 みずタイプの　ポケモンが　すきな[BE:00:ページ切り替え（行送り）]
 ポッドが　あいてを　してやるぜ！</language>
@@ -401,15 +397,52 @@
 	<row id="msg_c01gym0101_leader1_05c">
 		<comment>♂：ジムリーダー「デント」（画面右）
 最初に選んだポケモンが、みずタイプ
-・戦闘前メッセージ
-・表示後、主人公の前に移動してから
-　戦闘画面へ</comment>
+・表示後、主人公、移動可能</comment>
 		<language name="JPN" width="256">ということで
 くさタイプを　つかいこなす[BE:00:ページ切り替え（行送り）]
 デントが　あいて　だぜ！</language>
 		<language name="JPN_KANJI" width="256">ということで
 くさタイプを　使いこなす[BE:00:ページ切り替え（行送り）]
 デントが　相手だぜ！</language>
+	</row>
+
+	<row id="msg_c01gym0101_leader1_20a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：ジムリーダー「ポッド」（画面左）
+最初に選んだポケモンが、くさタイプ
+・msg_c01gym0101_leader1_05a表示後に会話
+・戦闘前メッセージ</comment>
+		<language name="JPN" width="256">さんにんの　なかで
+いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
+あいてを　してやるよ！</language>
+		<language name="JPN_KANJI" width="256">さんにんの　なかで
+いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
+あいてを　してやるよ！</language>
+	</row>
+
+	<row id="msg_c01gym0101_leader1_20b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：ジムリーダー「コーン」（画面中）
+最初に選んだポケモンが、ほのおタイプ
+・msg_c01gym0101_leader1_05b表示後に会話
+・戦闘前メッセージ</comment>
+		<language name="JPN" width="256">さんにんの　なかで
+いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
+あいてを　してやるよ！</language>
+		<language name="JPN_KANJI" width="256">さんにんの　なかで
+いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
+あいてを　してやるよ！</language>
+	</row>
+
+	<row id="msg_c01gym0101_leader1_20c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：ジムリーダー「デント」（画面右）
+最初に選んだポケモンが、みずタイプ
+・msg_c01gym0101_leader1_05c表示後に会話
+・戦闘前メッセージ</comment>
+		<language name="JPN" width="256">さんにんの　なかで
+いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
+あいてを　してやるよ！</language>
+		<language name="JPN_KANJI" width="256">さんにんの　なかで
+いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
+あいてを　してやるよ！</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_06a">
