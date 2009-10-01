@@ -2187,8 +2187,9 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
     }
   }
   //SEÄ¶
-  if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
-      ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_SEALL ) )
+//  if( ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_ALL ) ||
+//      ( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_SEALL ) )
+  if( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_SEALL )
   { 
     if( ( PMSND_CheckPlaySE() ) || ( bevw->se_play_wait_flag ) || ( bevw->se_effect_enable_flag ) )
     { 
