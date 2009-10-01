@@ -1275,6 +1275,26 @@ extern void GFL_CLACT_WK_SetImgProxy( GFL_CLWK* p_wk, const NNSG2dImageProxy* cp
 extern void GFL_CLACT_WK_GetImgProxy( const GFL_CLWK* cp_wk,  NNSG2dImageProxy* p_img );
 //----------------------------------------------------------------------------
 /**
+ *	@brief	CLGRP CGRインデックスを取得
+ *
+ *	@param	cp_wk			セルアクターワーク
+ *
+ *	@retval CLGRP CGRインデックス
+ */
+//-----------------------------------------------------------------------------
+extern u16 GFL_CLACT_WK_GetCgrIndex( const GFL_CLWK* cp_wk );
+//----------------------------------------------------------------------------
+/**
+ *	@brief	CLGRP PLTTインデックスを取得
+ *
+ *	@param	cp_wk			セルアクターワーク
+ *
+ *	@retval CLGRP PLTTインデックス
+ */
+//-----------------------------------------------------------------------------
+extern u16 GFL_CLACT_WK_GetPlttIndex( const GFL_CLWK* cp_wk );
+//----------------------------------------------------------------------------
+/**
  *	@brief	ソフト優先順位の設定
  *	
  *	@param	p_wk			セルアクターワーク
