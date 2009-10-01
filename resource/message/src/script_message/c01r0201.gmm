@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-10T12:18:47"/>
+	<create user="matsumiya" host="W00207" date="2009-10-01T13:50:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,10 +292,10 @@
 	</lock>
 
 
-	<row id="msg_c01r0201_bigman_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0201_bigman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手前
-　0＝内容未定</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">BIGMAN
 太った青年</attribute>
 		<language name="JPN" width="256">おっ！　きみの　ポケモン
@@ -339,14 +339,12 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">OLDWOMAN1
 おばあさん</attribute>
-		<language name="JPN" width="256">おじいさんに　まけると
-もう　あいて　してもらえないかも　って[BE:01:ページ切り替え（クリア）]
-ひっしの　おもいで
-ポケモンを　そだてていたんですよ</language>
-		<language name="JPN_KANJI" width="256">おじいさんに　負けると
-もう　相手して　もらえないかも　って[BE:01:ページ切り替え（クリア）]
-必死の　思いで
-ポケモンを　育てていたんですよ</language>
+		<language name="JPN" width="256">そういう　いみ　では
+あたしと　じいさんは[BE:00:ページ切り替え（行送り）]
+あいしょうが　よかったのよ</language>
+		<language name="JPN_KANJI" width="256">そういう　意味では
+あたしと　じいさんは[BE:00:ページ切り替え（行送り）]
+相性が　良かったのよ</language>
 	</row>
 
 	<flowchart-group-list>
