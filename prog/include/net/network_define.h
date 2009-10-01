@@ -126,6 +126,7 @@ enum NetworkCommandHeaderNo_e {
 	GFL_NET_CMD_WIFIGTS		= (WB_NET_WIFIGTS<<8),		///< GTS
 };
 
+#include "net_irc.h"
 
 
 #endif //__NETWORK_DEFINE_H__

@@ -1047,9 +1047,9 @@ extern void GFL_NET_DebugPrintOn(void);
 #include "net_wifi.h"
 #endif //GFL_NET_WIFI
 
-#if GFL_NET_IRC
-#include "net_irc.h"
-#endif	//GFL_NET_IRC
+//#if GFL_NET_IRC
+//#include "net_irc.h"
+//#endif	//GFL_NET_IRC
 
 #include "net_command.h"
 #include "net_handle.h"

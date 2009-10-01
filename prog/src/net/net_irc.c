@@ -12,7 +12,8 @@
 //#include "tool/net_ring_buff.h"
 //#include "tool/net_queue.h"
 //#include "net_handle.h"
-#include "net_irc.h"
+#include "net/irc.h"
+#include "net/net_irc.h"
 
 
 //==============================================================================

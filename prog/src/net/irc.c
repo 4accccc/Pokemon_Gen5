@@ -1,8 +1,8 @@
 #include <nitro.h>
 
-#include "irc.h"
+#include "net/irc.h"
 #ifdef DHC_DEBUG  
-#include "draw.h"
+//#include "draw.h"
 #endif
 
 /***********************************************************************
@@ -149,7 +149,7 @@ extern void IRC_Move(void)
 
 #ifdef DHC_DEBUG  
   static u8 count = 0;
-  SetTextColor(RGB555_GREEN);
+//  SetTextColor(RGB555_GREEN);
 #endif
   dhc_setreadwait(50); // 40 OK? 30 NG
   dhc_setwritewait(50); // 40 OK? 30 NG
@@ -157,13 +157,13 @@ extern void IRC_Move(void)
   *********************************************************************/
   size = (u32)dhc_read(buf);
 #ifdef DHC_DEBUG  
-  if(size){ // 生データの先頭を少し見る
-	u32 i, s;
-	s = size; if(s > 8){ s = 8; }
-	FillRect(0, 8, 8*9+8*3*8, 8, RGB555_BLACK);
-	DrawText(0, 8, "size %2d:", size);
-	for(i=0;i<s;i++){ DrawText((int)(8*9+8*3*i), 8, "%02X", buf[i]); }
-  }
+//  if(size){ // 生データの先頭を少し見る
+//	u32 i, s;
+//	s = size; if(s > 8){ s = 8; }
+//	FillRect(0, 8, 8*9+8*3*8, 8, RGB555_BLACK);
+//	DrawText(0, 8, "size %2d:", size);
+//	for(i=0;i<s;i++){ DrawText((int)(8*9+8*3*i), 8, "%02X", buf[i]); }
+//  }
 #endif
   if(size > 1){ // 1バイトのネゴシエーションコマンドはチェックしない
 	u16 checksum, mysum;
@@ -217,9 +217,9 @@ extern void IRC_Move(void)
 	  }else{
 		OS_Printf("新規接続要求受信 -> レスポンス送信\n", buf[0]);
 	  }
-	  if(flg_connect == FALSE){ ClearFrame(RGB555_BLACK); }
-	  DrawText(32, 0, ">REQ");
-	  DrawText(32+8*5, 0, "RES>");
+//	  if(flg_connect == FALSE){ ClearFrame(RGB555_BLACK); }
+//	  DrawText(32, 0, ">REQ");
+//	  DrawText(32+8*5, 0, "RES>");
 #endif
 	  break;
 	case 0xFA: // 接続要求応答をIRCから受信した(DHC エミュレート用)
@@ -229,7 +229,7 @@ extern void IRC_Move(void)
 	  dhc_write(NULL, 0, 0xF8, myUnitNumber); // COMMAND_ACK 相当の処理
 #ifdef DHC_DEBUG  
 	  OS_Printf("レスポンス受信 -> ACK 送信\n");
-	  DrawText(8*4*2, 0, ">RES ACK>");
+	 // DrawText(8*4*2, 0, ">RES ACK>");
 #endif
 	  flg_connect = TRUE; flg_restore = FALSE; isTry = FALSE;
 	  break;
@@ -240,7 +240,7 @@ extern void IRC_Move(void)
 	  }else{
 		OS_Printf("ACK 受信 -> 新規接続完了 SIZE %d\n", size);
 	  }
-	  DrawText(32+8*5*2, 0, ">ACK");
+	  //DrawText(32+8*5*2, 0, ">ACK");
 #endif
 	  unit_number = buf[1]; // ユニット番号
 	  if(flg_restore){ 
@@ -288,23 +288,16 @@ extern void IRC_Move(void)
 	  }
 	}
 	if(OS_TicksToMilliSeconds(OS_GetTick() - timeout) > 100){ // タイムアウト
-	  if(flg_restore && (retry_count < NUM_DS_RETRY)){
-#ifdef DHC_DEBUG  
-		OS_Printf("RESTORE TIMEOUT %d msec\n", (u32)OS_TicksToMilliSeconds(OS_GetTick() - timeout));
-#endif
-		IRC_Shutdown();
-	  }else{
-		if(IRC_IsConnect()){ 
-#ifdef DHC_DEBUG  
-		  if(flg_restore){
-			OS_Printf("復帰中のタイムアウト!!\n");
-		  }else{
-			OS_Printf("通常状態でのタイムアウト!!\n");
-		  }
-#endif
-		  IRC_Shutdown(); 
-		}
-		isTry = FALSE; // 接続トライ中フラグをクリア
+
+    if(flg_restore && (retry_count < NUM_DS_RETRY)){
+      OS_Printf("タイムアウト!!%d\n",retry_count);
+      IRC_Shutdown();
+	  }
+    else{
+      if(IRC_IsConnect()){ 
+        IRC_Shutdown(); 
+      }
+      isTry = FALSE; // 接続トライ中フラグをクリア
 	  }
 	}
   }

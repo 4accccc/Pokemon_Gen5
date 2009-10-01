@@ -9,6 +9,7 @@
 
 #include <nitro.h>
 #include "gflib.h"
+#include "net/net_irc.h"
 
 //--------------------------------------------
 //“à•”ŠÖ”ˆê——
