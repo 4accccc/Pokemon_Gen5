@@ -266,7 +266,7 @@ class ZoneDataFile < OutputFile
 		name = column[@cl.cNAME].upcase
 		encount_id = case column[@cl.cENCOUNT]
 			when "›"
-				"NARC_enc_data_#{id.downcase}enc_bin"
+				"NARC_encount_data_w_#{id.downcase}_bin"
 			else
 				"enc_dummy"
 			end

@@ -75,6 +75,7 @@ enum {
 #include "../../message/script_message.naix"     //message archive ID定義ファイル
 #include "..\..\message\dst\msg_place_name.h"   //地名表示用文字列ID定義ファイル
 #include "header/maptype.h"
+#include "../../encount/encount_data_w.naix"  //エンカウントデータID定義ファイル
 
 enum {
 	//event_dummy = NARC_zone_event_zone_dummy_total_bin,
