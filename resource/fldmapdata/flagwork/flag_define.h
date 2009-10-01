@@ -125,7 +125,7 @@
 #define FE_T02R0302_BALLGET                109 /* 0x006d カノコタウン民家２F：親父からスーパーボール入手した */
 #define FE_C01R0102_ITEM_GET               110 /* 0x006e サンヨウシティビルＡ ２Ｆ：アイテム入手イベント（アイテム未定） */
 #define FE_C01R0201_ITEM_GET               111 /* 0x006f サンヨウシティビルＢ １Ｆ：アイテム入手イベント（ピントレンズ） */
-		/* not used   112(0x0070) */
+#define FE_SODATEYA_FIRSTTALK              112 /* 0x0070 育て屋受付：初回会話フラグ */
 		/* not used   113(0x0071) */
 		/* not used   114(0x0072) */
 		/* not used   115(0x0073) */

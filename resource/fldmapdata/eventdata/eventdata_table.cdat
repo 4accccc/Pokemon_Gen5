@@ -12772,7 +12772,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 		0,
 		0,
 		0,
-		777,
+		776,
 		741,
 		FX32_CONST(0),
 	},
@@ -12789,22 +12789,33 @@ const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 		0,
 		0,
 		0,
-		778,
+		777,
 		741,
 		FX32_CONST(0),
 	},
 };
 const int ObjCount_T01 = NELEMS(OBJ_EVENT_T01);
+const POS_EVENT_DATA POS_EVENT_T01[] = {
+	{//POS_T01_STOPPER_01 = 0
+		SCRID_POS_T01_STOPPER_01,
+		786, 740,
+		7, 1,
+		0,  //height
+		0,
+		WK_SCENE_T01,
+	},
+};
+const int PosCount_T01 = NELEMS(POS_EVENT_T01);
 
 static const EVENTDATA_TABLE event_t01 = {
 	0,
 	5,
 	4,
-	0,
+	1,
 	(void *)NULL,
 	(void *)&OBJ_EVENT_T01,
 	(void *)&DOOR_EVENT_T01,
-	(void *)NULL,
+	(void *)&POS_EVENT_T01,
 };
 #include "../script/t01r0101_def.h"
 const CONNECT_DATA DOOR_EVENT_T01R0101[] = {

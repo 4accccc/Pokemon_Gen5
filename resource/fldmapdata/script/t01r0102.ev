@@ -43,21 +43,21 @@ _EVENT_DATA_END
 /*  T01R0102 ライバル会話用イベントスクリプト（ポケモン入手前）*/
 /**************************************************************/
 EVENT_START   ev_t01r0102_black_test01
-  _TALK_OBJ_START()
+	_TALK_OBJ_START()
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
 	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0102_black_test01 )
 	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_BALLOONWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
 /*  T01R0102 サポート会話用イベントスクリプト（ポケモン入手前）*/
 /**************************************************************/
 EVENT_START   ev_t01r0102_white_test01
-  _TALK_OBJ_START()
+	_TALK_OBJ_START()
 	_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0102_white_test01 )
 	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_BALLOONWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
@@ -65,16 +65,16 @@ EVENT_END
 /**************************************************************/
 //炎タイプ（仮）
 EVENT_START   ev_t01r0102_poke_get0
+	_TALKWIN_OPEN()
 
-  _TALKWIN_OPEN()
-  _TALKMSG(msg_t01r0102_ball1_fire_01)
+	_TALKMSG(msg_t01r0102_ball1_fire_01)
 	_AB_KEYWAIT()
 	_YES_NO_WIN( SCWK_ANSWER )
-  _TALKWIN_CLOSE()
+	_TALKWIN_CLOSE()
 
-  IF $SCWK_ANSWER == 0 THEN
+	IF $SCWK_ANSWER == 0 THEN
       _CALL t01r0102_poke_get_yes
-  ENDIF
+	ENDIF
 EVENT_END
 
 //草タイプ（仮）
@@ -142,7 +142,7 @@ t01r0102_poke_get_yes:
 	_BALLOONWIN_CLOSE()
 
 //ここで画面フェード
-	_BLACK_OUT( 8 )
+	_BLACK_OUT( DISP_FADE_SPEED )
 	_DISP_FADE_END_CHECK()
 
 //ボール削除
@@ -151,7 +151,7 @@ t01r0102_poke_get_yes:
 	_OBJ_DEL( T01R0102_BALL3 )
 
 	_AB_KEYWAIT()
-	_BLACK_IN( 8 )
+	_BLACK_IN( DISP_FADE_SPEED )
 	_DISP_FADE_END_CHECK()
 
 //サポートとポケモン勝負
@@ -169,10 +169,10 @@ ev_t01r0102_poke_battle:
 	_BALLOONWIN_CLOSE()
 
 //ここで画面フェード
-	_BLACK_OUT( 8 )
+	_BLACK_OUT( DISP_FADE_SPEED )
 	_DISP_FADE_END_CHECK()
 	_AB_KEYWAIT()
-	_BLACK_IN( 8 )
+	_BLACK_IN( DISP_FADE_SPEED )
 	_DISP_FADE_END_CHECK()
 
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_white_test04,T01R0102_HEROINE )
@@ -189,10 +189,10 @@ ev_t01r0102_poke_battle:
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 //ここで画面フェード
-	_BLACK_OUT( 8 )
+	_BLACK_OUT( DISP_FADE_SPEED )
 	_DISP_FADE_END_CHECK()
 	_AB_KEYWAIT()
-	_BLACK_IN( 8 )
+	_BLACK_IN( DISP_FADE_SPEED )
 	_DISP_FADE_END_CHECK()
 //ここでライバル専用曲終了
 	_BGM_STOP()
@@ -224,7 +224,7 @@ ev_t01r0102_poke_battle:
 	_FLAG_SET( FV_T01R0102_BALL01 )
 	_FLAG_SET( FV_T01R0102_BALL02 )
 
-  _RET
+	_RET
 
 /**************************************************************/
 /*  T01R0102 GAME MACHINEのBG用イベントスクリプト*/

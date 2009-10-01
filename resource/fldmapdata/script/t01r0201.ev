@@ -55,9 +55,15 @@ EVENT_START	ev_t01r0201_scene_change_01
 	_OBJ_ANIME_WAIT()
 
 	//サポート：消す（バニッシュフラグもたちます）
-	_OBJ_DEL_EV( T01R0201_SUPPORT_01 )
+	_OBJ_DEL( T01R0201_SUPPORT_01 )
 
 //================フラグ操作==================//
+
+	//サポート宅のサポートを非表示
+	_FLAG_SET( FV_T01R0201_SUPPORT )
+
+	//研究所前にサポート表示
+	_FLAG_RESET( FV_T01_SUPPORT )
 
 	//友達出発イベント見た
 	$WK_SCENE_T01R0201 = 1
