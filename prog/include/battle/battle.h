@@ -140,6 +140,7 @@ typedef struct {
   BtlCompetitor   competitor;
   BtlRule         rule;
   BtlLandForm     landForm;
+  BtlWeather      weather;
 
   GFL_NETHANDLE*  netHandle;
   BtlCommMode     commMode;
@@ -154,6 +155,7 @@ typedef struct {
 
   const MYSTATUS*   statusPlayer; ///< プレイヤーのステータス
   MYITEM*           itemData;     ///< アイテムデータ
+  BAG_CURSOR*       bagCursor;    ///< バッグカーソルデータ
   TrainerID         trID;         ///<対戦相手トレーナーID（7/31ROMでトレーナーエンカウントを実現するための暫定）
 
   u16       musicDefault;   ///< デフォルト時のBGMナンバー
