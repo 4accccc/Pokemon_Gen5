@@ -41,6 +41,8 @@ typedef enum
   MCST_POKEDATA ,
   MCST_ALL_POKEDATA ,
   MCST_STRMDATA ,
+  MCST_PROGRAMDATA ,
+  MCST_MESSAGEDATA ,
   
   MCST_MAX,
 }MUS_COMM_SEND_TYPE;
@@ -52,6 +54,8 @@ typedef enum
   MCFT_MUSICAL_IDX,
   MCFT_GAME_STATE,
   MCFT_GAME_STATE_ALL,
+  MCFT_PROGRAM_SIZE,
+  MCFT_MESSAGE_SIZE,
   MCFT_STRM_SIZE,
   MCFT_USE_BUTTON_REQ,    //子機が親機へ使用リクエスト
   MCFT_USE_BUTTON,        //親機が子機へ使用通知
@@ -123,6 +127,10 @@ struct _MUS_COMM_WORK
   u8  strmDivIdx;
   BOOL isSendStrmMode;
   BOOL isSendingStrmData;
+  BOOL isPostProgramSize;
+  BOOL isPostMessageSize;
+  BOOL isPostProgramData;
+  BOOL isPostMessageData;
   MUS_COMM_DIVSEND_STATE divSendState;
   
   u8 useButtonAttentionPoke;
@@ -150,6 +158,13 @@ static void MUS_COMM_Update_SendStrmData( MUS_COMM_WORK *work );
 static void MUS_COMM_Post_StrmData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 static u8*    MUS_COMM_Post_StrmDataBuff( int netID, void* pWork , int size );
 
+const BOOL MUS_COMM_Send_ProgramData( MUS_COMM_WORK *work );
+static void MUS_COMM_Post_ProgramData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+static u8*    MUS_COMM_Post_ProgramDataBuff( int netID, void* pWork , int size );
+const BOOL MUS_COMM_Send_MessageData( MUS_COMM_WORK *work );
+static void MUS_COMM_Post_MessageData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+static u8*    MUS_COMM_Post_MessageDataBuff( int netID, void* pWork , int size );
+
 static void* MUS_COMM_GetUserData(void* pWork);
 static int MUS_COMM_GetUserDataSize(void* pWork);
 static void MUS_COMM_CheckUserData( MUS_COMM_WORK *work );
@@ -166,6 +181,8 @@ static const NetRecvFuncTable MusCommRecvTable[MCST_MAX] =
   { MUS_COMM_Post_MusPokeData , MUS_COMM_Post_MusPokeDataBuff },
   { MUS_COMM_Post_AllMusPokeData , MUS_COMM_Post_AllMusPokeDataBuff },
   { MUS_COMM_Post_StrmData , MUS_COMM_Post_StrmDataBuff },
+  { MUS_COMM_Post_ProgramData , MUS_COMM_Post_ProgramDataBuff },
+  { MUS_COMM_Post_MessageData , MUS_COMM_Post_MessageDataBuff },
 };
 
 //--------------------------------------------------------------
@@ -261,7 +278,7 @@ void MUS_COMM_InitComm( MUS_COMM_WORK* work )
     HEAPID_NETWORK,         //
     GFL_WICON_POSX,GFL_WICON_POSY,  // 通信アイコンXY位置
     MUSICAL_COMM_MEMBER_NUM,        //_MAXNUM,  //最大接続人数
-    48,                     //_MAXSIZE, //最大送信バイト数
+    24,                     //_MAXSIZE, //最大送信バイト数
     MUS_COMM_BEACON_MAX,    //_BCON_GET_NUM,  // 最大ビーコン収集数
     TRUE,                   // CRC計算
     TRUE,                  // MP通信＝親子型通信モードかどうか
@@ -271,7 +288,7 @@ void MUS_COMM_InitComm( MUS_COMM_WORK* work )
 #if GFL_NET_IRC
     IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
-    512 - 4*48,//MP親最大サイズ 512まで
+    512 - 4*24,//MP親最大サイズ 512まで
     0,//dummy
   };  
   
@@ -307,6 +324,10 @@ void MUS_COMM_InitComm( MUS_COMM_WORK* work )
   work->isStartGame = FALSE;
   work->strmDivIdx = 0;
   work->isSendStrmMode = FALSE;
+  work->isPostProgramSize = FALSE;
+  work->isPostMessageSize = FALSE;
+  work->isPostProgramData = FALSE;
+  work->isPostMessageData = FALSE;
   work->divSendState = MCDS_NONE;
   work->isReqSendState = FALSE;
   work->useButtonAttentionPoke = MUSICAL_COMM_MEMBER_NUM;
@@ -721,6 +742,26 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
     }
     break;
 
+  case MCFT_PROGRAM_SIZE:
+    if( work->mode == MCM_CHILD )
+    {
+      work->distData->programData = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_STRM , pkt->value );
+      work->distData->programDataSize = pkt->value;
+    }
+    work->isPostProgramSize = TRUE;
+    
+    break;
+    
+  case MCFT_MESSAGE_SIZE:
+    if( work->mode == MCM_CHILD )
+    {
+      work->distData->messageData = GFL_HEAP_AllocMemory( HEAPID_MUSICAL_STRM , pkt->value );
+      work->distData->messageDataSize = pkt->value;
+    }
+    work->isPostMessageSize = TRUE;
+    
+    break;
+    
   case MCFT_STRM_SIZE:
     if( work->mode == MCM_PARENT )
     {
@@ -1031,6 +1072,98 @@ const BOOL MUS_COMM_CheckFinishSendStrm( MUS_COMM_WORK *work )
     return TRUE;
   }
   return FALSE;
+}
+
+#pragma mark [> programData&msgData func
+
+const BOOL MUS_COMM_Send_ProgramSize( MUS_COMM_WORK *work )
+{
+  const BOOL ret = MUS_COMM_Send_FlagServer( work , MCFT_PROGRAM_SIZE , 
+                                work->distData->programDataSize , 
+                                GFL_NET_SENDID_ALLUSER );
+  return ret;
+}
+
+const BOOL MUS_COMM_Send_MessageSize( MUS_COMM_WORK *work )
+{
+  const BOOL ret = MUS_COMM_Send_FlagServer( work , MCFT_MESSAGE_SIZE , 
+                                work->distData->messageDataSize , 
+                                GFL_NET_SENDID_ALLUSER );
+  return ret;
+}
+
+const BOOL MUS_COMM_Send_ProgramData( MUS_COMM_WORK *work )
+{
+  ARI_TPrintf("Send ProgramData \n");
+  {
+    GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
+    BOOL ret = GFL_NET_SendDataEx( parentHandle , GFL_NET_SENDID_ALLUSER , 
+                              MCST_PROGRAMDATA , work->distData->programDataSize , 
+                              work->distData->programData , TRUE , FALSE , TRUE );
+    if( ret == FALSE )
+    {
+      ARI_TPrintf("Send ProgramData is failued!!\n");
+    }
+    return ret;
+  }
+}
+
+static void MUS_COMM_Post_ProgramData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+  MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
+  ARI_TPrintf("MusComm Finish Post ProgramData.\n");
+  work->isPostProgramData = TRUE;
+}
+
+static u8* MUS_COMM_Post_ProgramDataBuff( int netID, void* pWork , int size )
+{
+  MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
+  return work->distData->programData;
+}
+
+const BOOL MUS_COMM_Send_MessageData( MUS_COMM_WORK *work )
+{
+  ARI_TPrintf("Send MessageData \n");
+  {
+    GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
+    BOOL ret = GFL_NET_SendDataEx( parentHandle , GFL_NET_SENDID_ALLUSER , 
+                              MCST_MESSAGEDATA , work->distData->messageDataSize , 
+                              work->distData->messageData , TRUE , FALSE , TRUE );
+    if( ret == FALSE )
+    {
+      ARI_TPrintf("Send MessageData is failued!!\n");
+    }
+    return ret;
+  }}
+
+static void MUS_COMM_Post_MessageData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+  MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
+  ARI_TPrintf("MusComm Finish Post MessageData.\n");
+  work->isPostMessageData = TRUE;
+}
+
+static u8*    MUS_COMM_Post_MessageDataBuff( int netID, void* pWork , int size )
+{
+  MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
+  return work->distData->messageData;
+}
+
+const BOOL MUS_COMM_IsPostProgramSize( const MUS_COMM_WORK *work )
+{
+  return work->isPostProgramSize;
+}
+const BOOL MUS_COMM_IsPostMessageSize( const MUS_COMM_WORK *work )
+{
+  return work->isPostMessageSize;
+}
+const BOOL MUS_COMM_IsPostProgramData( const MUS_COMM_WORK *work )
+{
+  return work->isPostProgramData;
+}
+const BOOL MUS_COMM_IsPostMessageData( const MUS_COMM_WORK *work )
+{
+  return work->isPostMessageData;
 }
 
 #pragma mark [> outer func

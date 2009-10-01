@@ -47,6 +47,8 @@ typedef struct
   void *programData;
   void *messageData;
   void *strmData;
+  u32  programDataSize;
+  u32  messageDataSize;
   u32  strmDataSize;
 }MUSICAL_DISTRIBUTE_DATA;
 

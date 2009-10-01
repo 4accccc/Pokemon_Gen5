@@ -56,6 +56,13 @@ typedef enum
   MPS_POST_WAIT_ALL_MUS_POKE,
   MPS_POST_WAIT_START_ACTING,
   
+  //開始前同期データ
+  MPS_SEND_PROGRAM_SIZE,
+  MPS_WAIT_SEND_PROGRAM_SIZE,
+  MPS_WAIT_SEND_PROGRAM_DATA,
+  MPS_WAIT_SEND_MESSAGE_SIZE,
+  MPS_WAIT_SEND_MESSAGE_DATA,
+  
   MPS_FINISH,
 }MUSICAL_PROC_STATE;
 
@@ -240,8 +247,8 @@ void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData )
 void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , HEAPID heapId )
 {
   //FIXME:セーブデータからの取得
-  distData->programData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_PROGDATA , FALSE , heapId );
-  distData->messageData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_GMMDATA , FALSE , heapId );
+  distData->programData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_PROGDATA , FALSE , heapId , &distData->programDataSize );
+  distData->messageData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_GMMDATA , FALSE , heapId , &distData->messageDataSize );
   distData->strmData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_STRMDATA , FALSE , heapId , &distData->strmDataSize );
 }
 
@@ -352,12 +359,11 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
       
       case MCM_PARENT:  //仮
         MUSICAL_SYSTEM_LoadDistributeData( work->distData , HEAPID_MUSICAL_STRM );
-        work->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_PROC , work->distData );
         work->state = MPS_INIT_DRESSUP_SEND_MUSICAL_IDX;
         break;
 
       case MCM_CHILD:  //仮
-        work->state = MPS_INIT_DRESSUP;
+        work->state = MPS_WAIT_SEND_PROGRAM_DATA;
         break;
       }
     }
@@ -366,10 +372,70 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
   case MPS_INIT_DRESSUP_SEND_MUSICAL_IDX:
     if( MUS_COMM_Send_MusicalIndex( work->commWork ) == TRUE )
     {
-      work->state = MPS_INIT_DRESSUP_SEND_STRM;
+      work->state = MPS_SEND_PROGRAM_SIZE;
     }
     break;
     
+  //開始前同期データ
+  case MPS_SEND_PROGRAM_SIZE:
+    if( MUS_COMM_Send_ProgramSize( work->commWork ) == TRUE )
+    {
+      work->state = MPS_WAIT_SEND_PROGRAM_SIZE;
+    }
+    break;
+
+  case MPS_WAIT_SEND_PROGRAM_SIZE:
+    if( MUS_COMM_IsPostProgramSize( work->commWork ) == TRUE )
+    {
+      if( MUS_COMM_Send_ProgramData( work->commWork ) == TRUE )
+      {
+        work->state = MPS_WAIT_SEND_PROGRAM_DATA;
+      }
+    }
+    break;
+
+  case MPS_WAIT_SEND_PROGRAM_DATA:
+    if( MUS_COMM_IsPostProgramData( work->commWork ) == TRUE )
+    {
+      if( MUS_COMM_GetMode( work->commWork ) == MCM_PARENT )
+      {
+        if( MUS_COMM_Send_MessageSize( work->commWork ) == TRUE )
+        {
+          work->state = MPS_WAIT_SEND_MESSAGE_SIZE;
+        }
+      }
+      else
+      {
+        work->state = MPS_WAIT_SEND_MESSAGE_DATA;
+      }
+    }
+    break;
+
+  case MPS_WAIT_SEND_MESSAGE_SIZE:
+    if( MUS_COMM_IsPostMessageSize( work->commWork ) == TRUE )
+    {
+      if( MUS_COMM_Send_MessageData( work->commWork ) == TRUE )
+      {
+        work->state = MPS_WAIT_SEND_MESSAGE_DATA;
+      }
+    }
+    break;
+
+  case MPS_WAIT_SEND_MESSAGE_DATA:
+    if( MUS_COMM_IsPostMessageData( work->commWork ) == TRUE )
+    {
+      work->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_PROC , work->distData );
+      if( MUS_COMM_GetMode( work->commWork ) == MCM_PARENT )
+      {
+        work->state = MPS_INIT_DRESSUP_SEND_STRM;
+      }
+      else
+      {
+        work->state = MPS_INIT_DRESSUP;
+      }
+    }
+    break;
+
   case MPS_INIT_DRESSUP_SEND_STRM:
     MUS_COMM_Start_SendStrmData( work->commWork );
     work->state = MPS_INIT_DRESSUP;
