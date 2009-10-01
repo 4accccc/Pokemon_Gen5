@@ -52,7 +52,9 @@ static GMEVENT_RESULT PushSwEvt( GMEVENT* event, int* seq, void* work );
 //--------------------------------------------------------------
 void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
 {
-  ;
+  //汎用ワーク確保
+  GMK_TMP_WK_AllocWork
+      (fieldWork, GYM_ANTI_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(GYM_ANTI_TMP));
 }
 
 //--------------------------------------------------------------
