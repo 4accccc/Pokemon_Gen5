@@ -3030,7 +3030,7 @@ static BOOL debugMenuCallProc_ChangePlayerSex( DEBUG_MENU_EVENT_WORK *wk )
 FS_EXTERN_OVERLAY(worldtrade);
 #include "net/dwc_rapcommon.h"
 //-------------------------------------
-///	デバッグ空を飛ぶ用ワーク	
+///	デバッグGTS用ワーク	
 //=====================================
 typedef struct 
 {
@@ -3161,7 +3161,7 @@ static GMEVENT_RESULT debugMenuWifiGts( GMEVENT *p_event, int *p_seq, void *p_wk
 //======================================================================
 FS_EXTERN_OVERLAY(ui_debug);
 //-------------------------------------
-///	デバッグ空を飛ぶ用ワーク	
+///	デバッグUIテンプレート用ワーク	
 //=====================================
 typedef struct 
 {
