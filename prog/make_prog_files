@@ -398,7 +398,11 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/gym_elec.c \
         field/event_pc_recovery.c \
         field/gym_normal.c \
-        field/field_player_grid_event.c
+        field/field_player_grid_event.c \
+        field/fld_particle.c \
+        field/fld3d_ci.c \
+        field/gym_anti.c
+
 
 # フィールド天気
 #===> SRCS_OVERLAY_FIELDMAP
