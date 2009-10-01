@@ -649,14 +649,10 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   FIELD_FUNC_RANDOM_GENERATE_InitDebug( fieldWork->heapID );
 #endif  //USE_DEBUGWIN_SYSTEM
 
-  OS_Printf("%d heap = %x\n",fieldWork->heapID, GFI_HEAP_GetHeapFreeSize(fieldWork->heapID));
-
   //フィールドパーティクル
   fieldWork->FldPrtclSys = FLD_PRTCL_Init(fieldWork->heapID);
   //フィールド3Dカットイン
   fieldWork->Fld3dCiPtr = FLD3D_CI_Init(fieldWork->heapID, fieldWork->FldPrtclSys);
-
-  OS_Printf("%d heap = %x\n",fieldWork->heapID, GFI_HEAP_GetHeapFreeSize(fieldWork->heapID));
 
   return MAINSEQ_RESULT_NEXTSEQ;
 }
@@ -1668,12 +1664,6 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
 
   //フィールド拡張3ＤＯＢＪ描画
   FLD_EXP_OBJ_Draw( fieldWork->ExpObjCntPtr );
-
-  if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-    FLD3D_CI_CallCatIn( fieldWork->gsys, fieldWork->Fld3dCiPtr, 0 );
-    ///FLD_PRTCL_Generate(fieldWork->FldPrtclSys);
-  }
-  OS_Printf("__%d heap = %x\n",fieldWork->heapID, GFI_HEAP_GetHeapFreeSize(fieldWork->heapID));
 
   FLD_PRTCL_Main();
   FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
