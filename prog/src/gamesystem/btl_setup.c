@@ -29,6 +29,17 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BtlLandFo
 }
 
 
+//=============================================================================================
+/**
+ * シングル 野生戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   partyEnemy
+ * @param   landForm
+ * @param   weather
+ */
+//=============================================================================================
 void BTL_SETUP_Single_Wild( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather )
 {
@@ -42,6 +53,18 @@ void BTL_SETUP_Single_Wild( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   dst->trID = TRID_NULL;
 }
 
+//=============================================================================================
+/**
+ * シングル ゲーム内トレーナー対戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   partyEnemy
+ * @param   landForm
+ * @param   weather
+ * @param   trID
+ */
+//=============================================================================================
 void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID )
 {
@@ -55,6 +78,16 @@ void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   dst->trID = trID;
 }
 
+//=============================================================================================
+/**
+ * シングル 通信対戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   netHandle
+ * @param   commMode
+ */
+//=============================================================================================
 void BTL_SETUP_Single_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode )
 {
@@ -72,3 +105,74 @@ void BTL_SETUP_Single_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   dst->trID = TRID_NULL;
 }
 
+//=============================================================================================
+/**
+ * ダブル ゲーム内トレーナー対戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   partyEnemy
+ * @param   landForm
+ * @param   weather
+ * @param   trID
+ */
+//=============================================================================================
+void BTL_SETUP_Double_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID )
+{
+  setup_common( dst, gameData, landForm, weather );
+
+  dst->engine = BTL_ENGINE_ALONE;
+  dst->competitor = BTL_COMPETITOR_TRAINER;
+  dst->rule = BTL_RULE_DOUBLE;
+
+  dst->partyEnemy1 = partyEnemy;
+  dst->trID = trID;
+}
+
+//=============================================================================================
+/**
+ * ダブル 通信対戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   netHandle
+ * @param   commMode
+ */
+//=============================================================================================
+void BTL_SETUP_Double_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  GFL_NETHANDLE* netHandle, BtlCommMode commMode )
+{
+  setup_common( dst, gameData, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
+
+  dst->engine = BTL_ENGINE_ALONE;
+  dst->competitor = BTL_COMPETITOR_COMM;
+  dst->rule = BTL_RULE_DOUBLE;
+
+  dst->trID = TRID_NULL;
+}
+
+//=============================================================================================
+/**
+ * トリプル ゲーム内トレーナー対戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   partyEnemy
+ * @param   landForm
+ * @param   weather
+ * @param   trID
+ */
+//=============================================================================================
+void BTL_SETUP_Triple_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID )
+{
+  setup_common( dst, gameData, landForm, weather );
+
+  dst->engine = BTL_ENGINE_ALONE;
+  dst->competitor = BTL_COMPETITOR_TRAINER;
+  dst->rule = BTL_RULE_TRIPLE;
+
+  dst->partyEnemy1 = partyEnemy;
+  dst->trID = trID;
+}
