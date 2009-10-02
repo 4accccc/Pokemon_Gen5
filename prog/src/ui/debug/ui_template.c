@@ -48,6 +48,10 @@
 //タスクメニュー
 #include "app/app_taskmenu.h"
 
+//どうぐアイコン
+#include "item/item.h"
+#include "item_icon.naix"
+
 //アプリ共通素材
 #include "app/app_menu_common.h"
 
@@ -71,9 +75,9 @@
 #define UI_TEMPLATE_TOUCHBAR
 #define UI_TEMPLATE_MCSS
 #define UI_TEMPLATE_TASKMENU
-#define UI_TEMPLATE_TYPEICON
-#define UI_TEMPLATE_OAM_MAPMODEL  // マップモデルをOAMで表示
+#define UI_TEMPLATE_TYPEICON      // 分類、技アイコン
 #define UI_TEMPLATE_ITEM_ICON     // どうぐアイコン
+#define UI_TEMPLATE_OAM_MAPMODEL  // マップモデルをOAMで表示
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -113,6 +117,7 @@ enum
 	PLTID_OBJ_TOUCHBAR_M	= 0, // 3本使用
 	PLTID_OBJ_TYPEICON_M	= 3, // 3本使用
   PLTID_OBJ_OAM_MAPMODEL_M = 6, // 1本使用
+  PLTID_OBJ_ITEMICON_M = 7,     // 1本使用
 	//サブOBJ
 };
 
@@ -202,8 +207,13 @@ typedef struct
 #endif //UI_TEMPLATE_TYPEICON
 
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
-  UI_TEMPLATE_CLWK_SET      oam_clwk_set;
+  UI_TEMPLATE_CLWK_SET      clset_oam_mmdl;
 #endif // UI_TEMPLATE_OAM_MAPMODEL
+
+#ifdef UI_TEMPLATE_ITEM_ICON
+  UI_TEMPLATE_CLWK_SET      clset_item_icon;
+#endif //UI_TEMPLATE_ITEM_ICON
+
 
 #ifdef	UI_TEMPLATE_PRINT_TOOL
 	//プリントユーティリティ
@@ -270,12 +280,20 @@ static void UITemplate_TASKMENU_Main( APP_TASKMENU_WORK *menu );
 static void UITemplate_TYPEICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heap_id );
 static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk );
 
+#ifdef UI_TEMPLATE_ITEM_ICON
+//-------------------------------------
+///	どうぐアイコン
+//=====================================
+static void UITemplate_ITEM_ICON_CreateCLWK( UI_TEMPLATE_CLWK_SET* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heap_id );
+static void UITemplate_ITEM_ICON_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk );
+#endif // UI_TEMPLATE_ITEM_ICON
+
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
 //-------------------------------------
 ///	OAMでマップモデル表示
 //=====================================
 static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_CLWK_SET *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heap_id );
-static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
+static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk );
 #endif // UI_TEMPLATE_OAM_MAPMODEL
 
 //=============================================================================
@@ -388,11 +406,19 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
     // 主人公は現状 0=後ろ, 1=後ろアニメ1, 2=後ろアニメ2, 3=正面....
     // トレーナーなどは違う可能性があるので注意。
     u16 ptn_ofs = 3;
-
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
-		UITemplate_OAM_MAPMODEL_CreateCLWK( &wk->oam_clwk_set, NARC_fldmmdl_mdlres_hero_nsbtx, ptn_ofs, clunit, wk->heap_id );
+
+		UITemplate_OAM_MAPMODEL_CreateCLWK( &wk->clset_oam_mmdl, NARC_fldmmdl_mdlres_hero_nsbtx, ptn_ofs, clunit, wk->heap_id );
   }
 #endif //UI_TEMPLATE_OAM_MAPMODEL
+
+#ifdef UI_TEMPLATE_ITEM_ICON
+  // どうぐアイコンの読み込み
+  { 
+		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
+    UITemplate_ITEM_ICON_CreateCLWK( &wk->clset_item_icon, ITEM_KIZUGUSURI, clunit, wk->heap_id );
+  }
+#endif //UI_TEMPLATE_ITEM_ICON
 
 	//@todo	フェードシーケンスがないので
 	GX_SetMasterBrightness(0);
@@ -421,9 +447,17 @@ static GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk,
 	UITemplate_TYPEICON_DeleteCLWK( wk );
 #endif //UI_TEMPLATE_TYPEICON
 
+#ifdef UI_TEMPLATE_ITEM_ICON
+#endif //UI_TEMPLATE_ITEM_ICON
+
+#ifdef UI_TEMPLATE_ITEM_ICON
+  //どうぐアイコンの破棄
+  UITemplate_ITEM_ICON_DeleteCLWK( &wk->clset_item_icon );
+#endif //UI_TEMPLATE_ITEM_ICON
+
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
   //OAMマップモデルの破棄
-  UITemplate_OAM_MAPMODEL_DeleteCLWK( wk );
+  UITemplate_OAM_MAPMODEL_DeleteCLWK( &wk->clset_oam_mmdl );
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 
 #ifdef UI_TEMPLATE_TASKMENU
@@ -892,6 +926,8 @@ static void UITemplate_TASKMENU_Main( APP_TASKMENU_WORK *menu )
 {	
 	APP_TASKMENU_UpdateMenu( menu );
 }
+
+#ifdef UI_TEMPLATE_TYPEICON
 //=============================================================================
 /**
  *	TYPEICON
@@ -967,6 +1003,56 @@ static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
 	GFL_CLGRP_CELLANIM_Release( wk->type_nce );
 }
 
+#endif //UI_TEMPLATE_TYPEICON
+
+#ifdef UI_TEMPLATE_ITEM_ICON
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  どうぐアイコン生成
+ *
+ *	@param	UI_TEMPLATE_CLWK_SET* wk
+ *	@param	item_id
+ *	@param	unit
+ *	@param	heap_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_ITEM_ICON_CreateCLWK( UI_TEMPLATE_CLWK_SET* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heap_id )
+{	
+  CLWK_SET_PARAM prm;
+
+  prm.arc_id    = ARCID_ITEMICON;
+  prm.pltt_id   = ITEM_GetIndex( item_id, ITEM_GET_ICON_PAL );
+  prm.ncg_id    = ITEM_GetIndex( item_id, ITEM_GET_ICON_CGX );
+  prm.cell_id   = NARC_item_icon_itemicon_NCER;
+  prm.anm_id    = NARC_item_icon_itemicon_NANR;
+  prm.draw_type = CLSYS_DRAW_MAIN;
+  prm.pltt_line = PLTID_OBJ_ITEMICON_M;
+  prm.px        = 32 + 16;
+  prm.py        = 32;
+
+  UITemplate_OBJ_CreateCLWK( wk, &prm, unit, heap_id );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief	どうぐアイコン破棄
+ *
+ *	@param	UI_TEMPLATE_CLWK_SET* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_ITEM_ICON_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk )
+{
+  UItemplate_OBJ_DeleteCLWK( wk );
+}
+
+#endif // UI_TEMPLATE_ITEM_ICON
+
+
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
 //=============================================================================
 /**
@@ -979,7 +1065,7 @@ static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
 /**
  *	@brief  OAMマップモデル 作成 (人物OBJ特化仕様)
  *
- *	@param	UI_TEMPLATE_MAIN_WORK *wk
+ *	@param	UI_TEMPLATE_CLWK_SET *wk
  *	@param	tex_idx
  *	@param  ptn_ofs
  *	@param	sx
@@ -1020,68 +1106,17 @@ static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_CLWK_SET *wk, u16 te
 /**
  *	@brief  OAMマップモデル 破棄
  *
- *	@param	UI_TEMPLATE_MAIN_WORK* wk 
+ *	@param	UI_TEMPLATE_CLWK_SET* wk 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk )
+static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk )
 {
-  UItemplate_OBJ_DeleteCLWK( &wk->oam_clwk_set );
+  UItemplate_OBJ_DeleteCLWK( wk );
 }
 
 #endif // UI_TEMPLATE_OAM_MAPMODEL
-
-
-#ifdef UI_TEMPLATE_ITEM_ICON
-//@TODO 整形
-#if 0 
-static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
-{
-  if(pWork->cellicon!=NULL){
-    GFL_CLACT_WK_Remove( pWork->cellicon );
-    GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
-    GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
-  }
-
-
-  {
-    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_ITEMICON, pWork->heapID );
-
-    pWork->objRes[_CLACT_PLT] = GFL_CLGRP_PLTT_RegisterEx( p_handle ,
-                                                           ITEM_GetIndex(itemid,ITEM_GET_ICON_PAL) ,
-                                                           CLSYS_DRAW_SUB , 0, 0, 1 , pWork->heapID );
-    pWork->objRes[_CLACT_CHR] = GFL_CLGRP_CGR_Register( p_handle ,
-                                                        ITEM_GetIndex(itemid,ITEM_GET_ICON_CGX) ,
-                                                        FALSE , CLSYS_DRAW_SUB , pWork->heapID );
-
-
-    GFL_ARC_CloseDataHandle( p_handle );
-  }
-
-  {
-    GFL_CLWK_DATA cellInitData;
-
-
-    cellInitData.pos_x = _ITEMICON_SCR_X * 8+16;
-    cellInitData.pos_y = _ITEMICON_SCR_Y * 8+16;
-    cellInitData.anmseq = 0;
-    cellInitData.softpri = 0;
-    cellInitData.bgpri = 0;
-    pWork->cellicon = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                           pWork->objRes[_CLACT_CHR],
-                                           pWork->objRes[_CLACT_PLT],
-                                           pWork->objRes[_CLACT_ANM],
-                                           &cellInitData ,
-                                           CLSYS_DEFREND_SUB ,
-                                           pWork->heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellicon, TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellicon, TRUE );
-  }
-}
-#endif
-
-#endif // UI_TEMPLATE_ITEM_ICON
 
 
 #ifdef	UI_TEMPLATE_PRINT_TOOL
