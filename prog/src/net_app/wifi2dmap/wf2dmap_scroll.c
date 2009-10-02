@@ -82,7 +82,8 @@ void WF2DMAP_SCRContSysMain( WF2DMAP_SCROLL* p_data, const WF2DMAP_OBJWK* cp_obj
 //-----------------------------------------------------------------------------
 void WF2DMAP_SCROLLSysDataInit( WF2DMAP_SCROLL* p_sys )
 {
-	memset( p_sys, 0, sizeof(WF2DMAP_SCROLL) );
+//	memset( p_sys, 0, sizeof(WF2DMAP_SCROLL) );
+  GFL_STD_MemClear(p_sys, sizeof(WF2DMAP_SCROLL) );
 }
 
 //----------------------------------------------------------------------------

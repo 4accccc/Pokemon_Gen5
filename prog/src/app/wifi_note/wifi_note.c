@@ -1807,7 +1807,7 @@ GFL_PROC_RESULT WifiNoteProc_Init( GFL_PROC * proc, int * seq , void *pwk, void 
 	// ワーク作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFINOTE, 0xC0000 );
 	p_wk = GFL_PROC_AllocWork( proc, sizeof(WFNOTE_WK), HEAPID_WIFINOTE );
-	memset( p_wk, 0, sizeof(WFNOTE_WK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFNOTE_WK) );
 	p_wk->pp = pwk;
 	
 //	デバッグ起動で名前が無い時用
@@ -2274,7 +2274,7 @@ static void Data_FrIdxMake( WFNOTE_DATA* p_data )
 	int i;
 	WIFI_LIST* p_list;
 
-	memset( &p_data->idx, 0, sizeof(WFNOTE_IDXDATA) );
+	GFL_STD_MemFill( &p_data->idx, 0, sizeof(WFNOTE_IDXDATA) );
 
 	p_list = SaveData_GetWifiListData( p_data->p_save );
 

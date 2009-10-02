@@ -4630,7 +4630,7 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
   out_flag = FALSE;
 
   // バックアップと比較する
-  if( memcmp( wk->index2No, wk->index2NoBackUp, sizeof(u8)*WIFIP2PMATCH_MEMBER_MAX ) != 0 ){
+  if( GFL_STD_MemComp( wk->index2No, wk->index2NoBackUp, sizeof(u8)*WIFIP2PMATCH_MEMBER_MAX ) != 0 ){
 
     // 人が変わった
     // バックアップ側にいて、最新版にいないやつはOUT
@@ -4693,7 +4693,8 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
     }
 
     // 最新版に変更
-    memcpy( wk->index2NoBackUp, wk->index2No, sizeof(u8)*WIFIP2PMATCH_MEMBER_MAX );
+   // memcpy( wk->index2NoBackUp, wk->index2No, sizeof(u8)*WIFIP2PMATCH_MEMBER_MAX );
+    GFL_STD_MemCopy(  wk->index2No, wk->index2NoBackUp,sizeof(u8)*WIFIP2PMATCH_MEMBER_MAX );
 
     // ボタン全描画リクエスト
     MCVSys_BttnAllWriteReq( wk );
@@ -8164,7 +8165,7 @@ static void MCVSys_Init( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 heapID 
     {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
   };
 
-  memset( &wk->view, 0, sizeof(WIFIP2PMATCH_VIEW) );
+  GFL_STD_MemFill( &wk->view, 0, sizeof(WIFIP2PMATCH_VIEW) );
 
   // 表示設定
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2, VISIBLE_ON );

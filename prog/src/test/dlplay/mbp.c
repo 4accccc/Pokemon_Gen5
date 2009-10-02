@@ -139,7 +139,8 @@ void MBP_Init(u32 ggid, u16 tgid)
 #define DEFAULT_FAVORIT_COLOR    1
     myUser.favoriteColor = DEFAULT_FAVORIT_COLOR;
     myUser.nameLength = (u8)info->ncd.owner.nickname.length;
-    MI_CpuCopy8(info->ncd.owner.nickname.name, myUser.name, NVRAM_CONFIG_NICKNAME_LENGTH * 2);
+  //@@OO TWLDSKに代わったのでNVRAMConfig構造体のメンバにnameがなくなったらしい
+    //GFL_STD_MemCopy(info->ncd.owner.nickname.name, myUser.name, NVRAM_CONFIG_NICKNAME_LENGTH * 2);
 #endif
 
     myUser.playerNo = 0;               // 親機は0番

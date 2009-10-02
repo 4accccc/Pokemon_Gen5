@@ -84,7 +84,7 @@ struct _VOICETR_WORK {
 	int req;
 	int getdataCount;
 	BOOL bEnd;
-	DWCGHTTPPost post;
+//	DWCGHTTPPost post;
 	u8 mac[6];
 //	u8 buffer[0x102];
 };

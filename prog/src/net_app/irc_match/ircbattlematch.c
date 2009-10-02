@@ -143,7 +143,7 @@ static const NetRecvFuncTable _PacketTbl[] = {
 };
 
 #define _MAXNUM   (2)         // 最大接続人数
-#define _MAXSIZE  (120)        // 最大送信バイト数
+#define _MAXSIZE  (100)        // 最大送信バイト数
 #define _BCON_GET_NUM (16)    // 最大ビーコン収集数
 
 static GFLNetInitializeStruct aGFLNetInit = {

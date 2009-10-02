@@ -28,7 +28,7 @@
 #include "pokeicon/pokeicon.h"
 #include "system\gfl_use.h"
 #include "gamesystem/msgspeed.h"
-
+#if 0
 
 //==============================================================================
 //	íËêîíËã`
@@ -1358,4 +1358,12 @@ const GFL_PROC_DATA DebugMatsudaIrcMatchProcData = {
 	DebugMatsudaMainProcEnd,
 };
 
+#endif
+
+
+const GFL_PROC_DATA DebugMatsudaIrcMatchProcData = {
+	NULL,
+	NULL,
+	NULL,
+};
 

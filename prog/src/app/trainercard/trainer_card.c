@@ -232,7 +232,7 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TR_CARD, 0x50000 );
 
 	wk = GFL_PROC_AllocWork( proc, sizeof(TR_CARD_WORK), HEAPID_TR_CARD );
-	memset( wk, 0, sizeof(TR_CARD_WORK) );
+	GFL_STD_MemFill( wk, 0, sizeof(TR_CARD_WORK) );
 
 	wk->heapId = HEAPID_TR_CARD;
 	wk->ObjWork.heapId = HEAPID_TR_CARD;

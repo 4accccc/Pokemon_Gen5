@@ -8,6 +8,7 @@
 //============================================================================================
 #include <gflib.h>
 #include <dwc.h>
+#include <ghttp/dwci_ghttp.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "arc_def.h"

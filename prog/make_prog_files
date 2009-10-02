@@ -55,7 +55,7 @@ NETWORKSRC =  net/net_icondata.c \
         net_app/union/colosseum_comm_command.c \
         net_app/union/colosseum.c
 
-
+###        net_old/net_old.c \
 
 #常駐プログラム
 SRCS  +=    $(SOUNDSRC) \
@@ -242,10 +242,15 @@ SRCS  +=    $(SOUNDSRC) \
 
 # wifiプログラムのライブラリ
 #===> main
+#LIB=>          libdwcnonport.a
+#LIB=>          libdwcnd.a
+#LIB=>          libdwcnas.a
+#LIB=>          libdwcghttp.a
+#LIB=>          libdwcmatch.a
 #LIB=>          libdwcauth.a
-#LIB=>          libdwcbase.a
 #LIB=>          libdwcac.a
 #LIB=>          libdwcgscommon.a
+#LIB=>          libdwcgdb.a
 #LIB=>          libdwcgsghttp.a
 #LIB=>          libdwcgsgp.a
 #LIB=>          libdwcgsgstats.a
@@ -258,7 +263,6 @@ SRCS  +=    $(SOUNDSRC) \
 #LIB=>          libcps.a
 #LIB=>          libssl.a
 #LIB=>          libwcm.a
-#LIB=>          libstubsmd5.a
 SRCS_OVERLAY_DEV_WIFILIB   = net/net_dummy.c
 
 
@@ -282,8 +286,7 @@ SRCS_OVERLAY_DEV_WIRELESS   =   net/net_devwireless.c \
 # ircプログラム
 #===> SRCS_OVERLAY_DEV_WIRELESS
 SRCS_OVERLAY_DEV_IRC    =   net/net_devirc.c \
-                net/net_irc.c \
-                net/irc.c
+                net/net_irc.c
 
 #wifi設定画面
 #===> SRCS_OVERLAY_DEV_WIFI
@@ -768,13 +771,99 @@ SRCS_OVERLAY_PALACE = app/palace/palace_edit.c \
 #WIFI 世界 共通
 #===> SRCS_OVERLAY_DEV_WIFI
 #LIB=>          libdwcnd.a
-#LIB=>          libdwcnhttp.a
+#LIB=>          libnhttp.a
 SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
               libdpw/dpwi_session.c \
 							libdpw/dpw_tr.c
 
+#### 古い通信プログラム WIFI広場以外使用禁止
+####===> SRCS_OVERLAY_DPW_COMMON
+####SRCS_OVERLAY_NETOLD = net_old/comm_ring_buff.c \
+#                      net_old/comm_dwc_rapcommon.c \
+#                      net_old/comm_command.c \
+#                      net_old/comm_queue.c \
+#                      net_old/comm_tool.c \
+#                      net_old/comm_system.c \
+#                      net_old/comm_info.c \
+#                      net_old/comm_local.c \
+##                      net_old/comm_wifihistory.c \
+#                      net_old/comm_state.c \
+#                      net_old/comm_dwc_rap.c \
+#                      net_old/comm_dwc_lobbylib.c \
+#                      net_old/com_dwc_warning.c \
+#                      net_old/com_error_warning_reset.c
+
+##Wi-Fi広場
+##===> SRCS_OVERLAY_NETOLD
+##LIB=>          libdwcbm.a
+##LIB=>          libdwcaccount.a
+##LIB=>          libdwcgschat.a
+##LIB=>          libdwcppwlobby.a
+##LIB=>          libdwcilobby.a
+###LIB=>          libdwcenc.a
+#SRCS_OVERLAY_WIFILOBBY_COMMON   = net_app/wifi_lobby/wifi_lobby.c \
+###                    net_app/wifi_lobby/wflby_system.c \
+###                    net_app/wifi_lobby/wflby_apl.c \
+###                    net_app/wifi_lobby/wflby_def.c \
+###                    net_app/wifi_lobby/lobby_news_data.c \
+###                  net/dwc_lobbylib.c \
+###                net_app/wifi_lobby/wflby_3dobj.c \
+###                    net_app/wifi_lobby/worldtimer_place.c
+
+####WIFILOBBY
+####===>SRCS_OVERLAY_WIFILOBBY_COMMON
+###SRCS_OVERLAY_WIFILOBBY_CONNECT    = net_app/wifi_lobby/wflby_connect.c
+
+####wifiロビーニュース
+####===> SRCS_OVERLAY_WIFILOBBY_COMMON
+###SRCS_OVERLAY_LOBBYNEWS =	net_app/wifi_lobby/lobby_news.c 
+
+####足跡ボード
+####===> SRCS_OVERLAY_WIFILOBBY_COMMON
+###SRCS_OVERLAY_FOOTPRINT_BOARD =	net_app/wifi_lobby/footprint_main.c \
+###								net_app/wifi_lobby/footprint_stamp.c \
+###								net_app/wifi_lobby/footprint_tool.c \
+###								net_app/wifi_lobby/footprint_comm.c \
+###								poke_tool/pokefoot.c
+
+####WIFILOBBY
+####===>SRCS_OVERLAY_WIFILOBBY_COMMON
+###SRCS_OVERLAY_WIFILOBBY_ANKETO   = net_app/wifi_lobby/wflby_anketo.c
+
+
+####WIFILOBBY
+####===>SRCS_OVERLAY_WIFILOBBY_COMMON
+###SRCS_OVERLAY_WORLDTIMER   = net_app/wifi_lobby/worldtimer.c
+
+####WIFILOBBY
+####===>SRCS_OVERLAY_WIFILOBBY_COMMON
+###SRCS_OVERLAY_WIFILOBBY_ROOM   = net_app/wifi_lobby/wflby_3dmatrix.c \
+###                  net_app/wifi_lobby/wflby_mapcont.c \
+###                  net_app/wifi_lobby/wflby_3dobjcont.c \
+###                  net_app/wifi_lobby/wflby_room.c \
+###                  net_app/wifi_lobby/wflby_camera.c \
+###                  net_app/wifi_lobby/wflby_3dmapobj.c \
+###                  net_app/wifi_lobby/wflby_3dmapobj_cont.c \
+###                  net_app/wifi_lobby/wflby_event.c \
+###                  net_app/wifi_lobby/wflby_ev_def.c \
+###                  net_app/wifi_lobby/wflby_ev_mg.c \
+###                  net_app/wifi_lobby/wflby_ev_talk.c \
+###                  net_app/wifi_lobby/wflby_gadget.c \
+###                  net_app/wifi_lobby/wflby_light.c \
+###                  net_app/wifi_lobby/wflby_timeevent.c \
+###                  net_app/wifi_lobby/wflby_fire.c \
+###                  net_app/wifi_lobby/wflby_ev_anketo.c \
+###                  net_app/wifi_lobby/wflby_float.c
+
+####wifiミニゲームツール
+####===> SRCS_OVERLAY_WIFILOBBY_COMMON
+###SRCS_OVERLAY_MINIGAME_COMMON = net_app/wifi_lobby/minigame_tool.c \
+###							   net_app/wifi_lobby/minigame_commcomand.c \
+###							   net_app/wifi_lobby/minigame_commcomand_func.c
+
 # WIFI2DMAP
-#===> SRCS_OVERLAY_DPW_COMMON
+#####===> SRCS_OVERLAY_WIFILOBBY_ROOM
+#===> SRCS_OVERLAY_WIFICLUB
 SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
               net_app/wifi2dmap/wf2dmap_map.c \
               net_app/wifi2dmap/wf2dmap_obj.c \
@@ -796,12 +885,11 @@ SRCS_OVERLAY_WIFINOTE = app/wifi_note/wifi_note.c \
 
 
 # 松田デバッグ
-#===> SRCS_OVERLAY_DPW_COMMON
+#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_MATSUDA_DEBUG  = test/matsuda/d_matsu.c \
         test/matsuda/d_matsu_net.c \
         test/matsuda/d_matsu_match.c \
         test/matsuda/d_matsu_item.c \
-        test/matsuda/d_matsu_list.c \
         test/matsuda/d_matsu_huge_beacon.c \
         test/matsuda/huge_beacon.c \
         test/matsuda/d_save.c \
@@ -826,7 +914,7 @@ SRCS_OVERLAY_WORLDTRADE	= net_app/wifi_worldtrade/worldtrade.c \
 													net_app/wifi_worldtrade/worldtrade_adapter.c
 
 #ポケモンステータス
-#===> SRCS_OVERLAY_WORLDTRADE
+#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
         app/p_status/p_status.c \
 		app/p_status/p_sta_sub.c \
@@ -837,7 +925,7 @@ SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
 		app/p_status/ribbon.c
 
 #	名木橋デバッグ
-#===> SRCS_OVERLAY_WORLDTRADE
+#===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 																test/nagihashi/debug_irc_name.c \

@@ -252,7 +252,8 @@ WF2DMAP_OBJWK* WF2DMAP_OBJWkNew( WF2DMAP_OBJSYS* p_sys, const WF2DMAP_OBJDATA* c
 //-----------------------------------------------------------------------------
 void WF2DMAP_OBJWkDel( WF2DMAP_OBJWK* p_wk )
 {
-	memset( p_wk, 0, sizeof(WF2DMAP_OBJWK) );
+//	memset( p_wk, 0, sizeof(WF2DMAP_OBJWK) );
+  GFL_STD_MemClear(p_wk, sizeof(WF2DMAP_OBJWK));
 }
 
 //----------------------------------------------------------------------------

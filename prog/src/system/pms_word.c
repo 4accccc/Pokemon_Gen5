@@ -487,7 +487,7 @@ PMSW_AIKOTOBA_TBL* PMSW_AIKOTOBATBL_Init( u32 heapID )
 
 	// メモリ確保
 	p_tbl = GFL_HEAP_AllocMemory( heapID, sizeof(PMSW_AIKOTOBA_TBL) );
-	memset( p_tbl, 0, sizeof(PMSW_AIKOTOBA_TBL) );
+  GFL_STD_MemFill( p_tbl, 0, sizeof(PMSW_AIKOTOBA_TBL) );
 
 	// データ読み込み
 	p_tbl->p_data	= GFL_ARC_UTIL_LoadEx( ARCID_PMS_AIKOTOBA_DATA,

@@ -6,7 +6,7 @@
 //============================================================================================
 #pragma once
 
-#include "../../../../resource/fldmapdata/camera_data/fieldcameraformat.h"
+#include "../../../resource/fldmapdata/camera_data/fieldcameraformat.h"
 
 
 //------------------------------------------------------------------

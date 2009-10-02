@@ -909,10 +909,11 @@ static BOOL TESTMODE_ITEM_SelectFuncSample1( TESTMODE_WORK *work , const int idx
 #endif
 
 FS_EXTERN_OVERLAY(matsuda_debug);
-extern const GFL_PROC_DATA DebugMatsudaListProcData;
+//extern const GFL_PROC_DATA DebugMatsudaListProcData;
+extern const GFL_PROC_DATA DebugSaveProcData;
 static BOOL TESTMODE_ITEM_SelectFuncMatsuda( TESTMODE_WORK *work , const int idx )
 {
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(matsuda_debug), &DebugMatsudaListProcData, NULL);
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(matsuda_debug), &DebugSaveProcData, NULL);
 	return TRUE;
 }
 

@@ -96,7 +96,8 @@ typedef struct
   u8 friend_status[FRIENDLIST_MAXSIZE];   //WC_GetFriendStatusDataの戻り値
   u8 friendinfo[FRIENDLIST_MAXSIZE][MYDWC_STATUS_DATA_SIZE_MAX]; //WC_GetFriendStatusDataで得られる値
   u32 friendupdate_index;
-
+  u8 connectionUserData[DWC_CONNECTION_USERDATA_LEN];// 新機能 繋ぐ時のユーザーデータただし4バイト
+  
   int state;
   int matching_type;
 
@@ -198,15 +199,15 @@ static void FriendStatusCallback(int index, u8 status, const char* statusString,
 static void DeleteFriendListCallback(int deletedIndex, int srcIndex, void* param);
 static void BuddyFriendCallback(int index, void* param);
 
-static void ConnectToAnybodyCallback(DWCError error, BOOL cancel, void* param);
-static void SendDoneCallback( int size, u8 aid );
-static void UserRecvCallback( u8 aid, u8* buffer, int size );
+static void ConnectToAnybodyCallback(DWCError error, BOOL cancel, BOOL self,BOOL isServer,int index, void *param);
+static void SendDoneCallback( int size, u8 aid, void* param);
+static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param );
 static void ConnectionClosedCallback(DWCError error, BOOL isLocal, BOOL isServer, u8  aid, int index, void* param);
 //static int handleError();
 static int EvaluateAnybodyCallback(int index, void* param);
 static int mydwc_step(void);
 
-static void recvTimeoutCallback(u8 aid);
+static void recvTimeoutCallback(u8 aid, void* param);
 static BOOL _isSendableReliable(void);
 static void mydwc_releaseRecvBuff(int aid);
 static void mydwc_releaseRecvBuffAll(void);
@@ -497,6 +498,38 @@ void GFL_NET_DWC_SetConnectCallback( MYDWCConnectFunc pFunc, void* pWork )
   _dWork->pConnectWork =pWork;
 }
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   マッチメイクで、今できているグループに新たに別のクライアントが接続を開始した時に呼ばれる
+ * @param   index  新規接続クライアントの友達リストインデックス。
+                   新規接続クライアントが友達でなければ-1となる。
+ * @param 	param  	コールバック用パラメータ
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+
+static void RandomNewClientCallback(int index,void *param)
+{
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   新規接続クライアントの参加を決定する最終段階で、アプリケーション側に判断を求めるために呼び出されるコールバックです。
+ * @param   index  新規接続クライアントが、DWC_ConnectToAnybodyAsync/DWC_ConnectToFriendsAsync/DWC_SetupGameServer/DWC_ConnectToGameServerAsync/DWC_ConnectToGameServerByGroupID関数のconnectionUserDataに設定した値を格納しているバッファへのポインタ。u8[DWC_CONNECTION_USERDATA_LEN]分のサイズ。
+ * @param 	param  	コールバック用パラメータ
+ * @retval  TRUE  	新規接続クライアントを受け入れる。
+ * @retval  FALSE 	新規接続クライアントの受け入れを拒否する。
+ */
+//------------------------------------------------------------------------------
+
+
+static BOOL attemptCallback(u8 *newClientUserData,void *param)
+{
+  return TRUE;
+}
+
 //==============================================================================
 /**
  * ランダム対戦を行う関数。ランダムマッチ中は数十フレーム処理が返ってこないことがある。
@@ -506,31 +539,40 @@ void GFL_NET_DWC_SetConnectCallback( MYDWCConnectFunc pFunc, void* pWork )
 //-----#if TESTOHNO
 const static char randommatch_query[] = "%s = \'%s\'";
 
+
+#define PPW_LOBBY_MATCHMAKING_KEY  "a"  //@@OOかり
+
 int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit )
 {
+  
 
+  
   GF_ASSERT( _dWork != NULL );
 
-  if( _dWork->state != MDSTATE_LOGIN ) return 0;
+  if( _dWork->state != MDSTATE_LOGIN )
+  {
+    return 0;
+  }
   mydwc_releaseRecvBuffAll();
 
 
-  {
-    int result;
-    DWCMatchOptMinComplete moc={TRUE, 2, {0,0}, 0};
-    moc.timeout = timelimit*1000;
-    //        DWCMatchOptMinComplete moc={TRUE, 2, {0,0}, _RANDOMMATCH_TIMEOUT*1000};
-    //	    if(!bParent){
-    //            moc.timeout = 1; // 子機に時間の主導権がないように短く設定する
-    //        }
-    result = DWC_SetMatchingOption(DWC_MATCH_OPTION_MIN_COMPLETE,&moc,sizeof(moc));
-    GF_ASSERT( result == DWC_SET_MATCH_OPT_RESULT_SUCCESS );
-  }
+/*   { //@@OO TWLには関数が無かったので削除
+ *     int result;
+ *     DWCMatchOptMinComplete moc={TRUE, 2, {0,0}, 0};
+ *     moc.timeout = timelimit*1000;
+ *     //        DWCMatchOptMinComplete moc={TRUE, 2, {0,0}, _RANDOMMATCH_TIMEOUT*1000};
+ *     //	    if(!bParent){
+ *     //            moc.timeout = 1; // 子機に時間の主導権がないように短く設定する
+ *     //        }
+ *     result = DWC_SetMatchingOption(DWC_MATCH_OPTION_MIN_COMPLETE,&moc,sizeof(moc));
+ *     GF_ASSERT( result == DWC_SET_MATCH_OPT_RESULT_SUCCESS );
+ *   }
+ */
   GF_ASSERT(DWC_AddMatchKeyString(0,PPW_LOBBY_MATCHMAKING_KEY,(const char *)keyStr)!=0);
   {
     MI_CpuClear8(_dWork->randommatch_query,_MATCHSTRINGNUM);
     sprintf((char*)_dWork->randommatch_query,randommatch_query,PPW_LOBBY_MATCHMAKING_KEY,keyStr);
-    GF_ASSERT(strlen((const char*)_dWork->randommatch_query) < _MATCHSTRINGNUM);
+    GF_ASSERT(GFL_STD_StrLen((const char*)_dWork->randommatch_query) < _MATCHSTRINGNUM);
   }
   if(bParent){
     DWC_AddMatchKeyString(1,(const char*)_dWork->randommatch_query,(const char*)_dWork->randommatch_query);
@@ -547,27 +589,35 @@ int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit
   MYDWC_DEBUGPRINT("mydwc_startmatch %d ",numEntry);
   _dWork->maxConnectNum = numEntry;
 
-  DWC_ConnectToAnybodyAsync
+  if(FALSE==DWC_ConnectToAnybodyAsync
     (
+      DWC_TOPOLOGY_TYPE_FULLMESH,
       numEntry,
       (const char*)_dWork->randommatch_query,
       ConnectToAnybodyCallback,
       NULL,
+      RandomNewClientCallback,
+      NULL,
       EvaluateAnybodyCallback,
+      NULL,
+      attemptCallback,
+      _dWork->connectionUserData,
       NULL
-      );
+      )){
+    return 0;
+  }
   _dWork->matching_type = MDTYPE_RANDOM;
   // 送信コールバックの設定
-  DWC_SetUserSendCallback( SendDoneCallback );
+  DWC_SetUserSendCallback( SendDoneCallback,NULL );
 
   // 受信コールバックの設定
-  DWC_SetUserRecvCallback( UserRecvCallback );
+  DWC_SetUserRecvCallback( UserRecvCallback,NULL );
 
   // コネクションクローズコールバックを設定
   DWC_SetConnectionClosedCallback(ConnectionClosedCallback, NULL);
 
   // タイムアウトコールバックの設定
-  DWC_SetUserRecvTimeoutCallback( recvTimeoutCallback );
+  DWC_SetUserRecvTimeoutCallback( recvTimeoutCallback,NULL );
 
   _dWork->sendbufflag = 0;
 
@@ -641,39 +691,9 @@ int GFL_NET_DWC_stepmatch( int isCancel )
 
   case MDSTATE_CANCEL:
   case MDSTATE_FAIL:
-    if( _dWork->matching_type == MDTYPE_RANDOM)  //参照先が間違っていたので修正 07.12.06 k.ohno
     {
-      // ランダムマッチ
-      // キャンセル処理中
-      MYDWC_DEBUGPRINT("ランダムマッチ	CANCEL処理＝＝＝＝＝＝\n");
-      if( !DWC_CancelMatching() )
-      {
-      }
-      break;
-    } else {
-      int ret;
-
-      ret = DWC_CloseAllConnectionsHard();
+      DWC_CloseAllConnectionsHard();
       finishcancel();	  // コールバック内でSTATEを変えないように修正した為 RETURNに関係なく状態変更する
-#if 0
-      if( ret == 1 )
-      {
-        // 子機がいない→コールバック無しで終了
-        // 2006.7.4 yoshihara 修正
-        finishcancel();
-      }
-      else if (ret == 0)
-      {
-        // コールバックが帰ってきているはず
-        finishcancel();
-      }
-      else
-      {
-        // 2006.7.4 yoshihara 修正
-        finishcancel();
-        //					MYDWC_DEBUGPRINT("Now unable to disconnect.\n");
-      }
-#endif
     }
     break;    //   06.05.12追加
   case MDSTATE_MATCHED:
@@ -1002,7 +1022,7 @@ static void LoginCallback(DWCError error, int profileID, void *param)
 /*---------------------------------------------------------------------------*
   タイムアウトコールバック関数
  *---------------------------------------------------------------------------*/
-static void recvTimeoutCallback(u8 aid)
+static void recvTimeoutCallback(u8 aid, void* param)
 {
   MYDWC_DEBUGPRINT("DWCタイムアウト - %d",aid);
   // コネクションを閉じる
@@ -1125,7 +1145,7 @@ static void setTimeoutTime(void)
 }
 
 
-static void setConnectionBuffer(int index)
+static void setTimerAndFlg(int index)
 {
   int i,j;
 
@@ -1138,15 +1158,20 @@ static void setConnectionBuffer(int index)
 /*---------------------------------------------------------------------------*
   友達無指定接続コールバック関数
  *---------------------------------------------------------------------------*/
-static void ConnectToAnybodyCallback(DWCError error, BOOL cancel, void* param)
+static void ConnectToAnybodyCallback(DWCError error,
+             BOOL cancel,
+             BOOL self,
+             BOOL isServer,
+             int index,
+             void *param)
 {
 #pragma unused(param)
 
   if (error == DWC_ERROR_NONE){
     if (!cancel){
       // 見知らぬ人たちとのコネクション設立完了
-      MYDWC_DEBUGPRINT("接続完了 %d\n",DWC_GetMyAID());
-      setConnectionBuffer(1 - DWC_GetMyAID() );
+      MYDWC_DEBUGPRINT("接続完了 %d\n",index);
+      setTimerAndFlg(index);
     }
     else {
       MYDWC_DEBUGPRINT("キャンセル完了\n");
@@ -1180,7 +1205,7 @@ static int  EvaluateAnybodyCallback(int index, void* param)
 /** -------------------------------------------------------------------------
   送信完了コールバック
   ---------------------------------------------------------------------------*/
-static void SendDoneCallback( int size, u8 aid )
+static void SendDoneCallback( int size, u8 aid,void* param )
 {
 #pragma unused(size)
   // 送信バッファをあける
@@ -1214,7 +1239,7 @@ static void _setOpVchat(u32 topcode)
 /** -------------------------------------------------------------------------
   受信完了コールバック
   ---------------------------------------------------------------------------*/
-static void UserRecvCallback( u8 aid, u8* buffer, int size )
+static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
 {
 #pragma unused( aid, buffer, size )
 
@@ -2027,10 +2052,22 @@ int GFL_NET_DWC_StartGame( int target,int maxnum, BOOL bVCT )
   }
   _dWork->bConnectCallback = TRUE;
   if ( target < 0 ){
-    ans = DWC_SetupGameServer((u8)num, SetupGameServerCallback, NULL, NewClientCallback, NULL);
+    ans = DWC_SetupGameServer(DWC_TOPOLOGY_TYPE_FULLMESH,
+                              (u8)num,
+                              SetupGameServerCallback, NULL,
+                              NewClientCallback, NULL,
+                              attemptCallback,
+                              _dWork->connectionUserData,
+                              NULL
+                              );
     _dWork->matching_type = MDTYPE_PARENT;
   } else {
-    ans = DWC_ConnectToGameServerAsync(target,ConnectToGameServerCallback,NULL,NewClientCallback,NULL);
+    ans = DWC_ConnectToGameServerAsync(DWC_TOPOLOGY_TYPE_FULLMESH,
+                                       target,ConnectToGameServerCallback,NULL,NewClientCallback,NULL,
+                                       attemptCallback,
+                                       _dWork->connectionUserData,
+                                       NULL
+                                       );
     _dWork->matching_type = MDTYPE_CHILD;
   }
   if(!ans){
@@ -2051,16 +2088,16 @@ int GFL_NET_DWC_StartGame( int target,int maxnum, BOOL bVCT )
   _dWork->state = MDSTATE_MATCHING;
 
   // 送信コールバックの設定
-  DWC_SetUserSendCallback( SendDoneCallback );
+  DWC_SetUserSendCallback( SendDoneCallback,NULL );
 
   // 受信コールバックの設定
-  DWC_SetUserRecvCallback( UserRecvCallback );
+  DWC_SetUserRecvCallback( UserRecvCallback,NULL );
 
   // コネクションクローズコールバックを設定
   DWC_SetConnectionClosedCallback(ConnectionClosedCallback, NULL);
 
   // タイムアウトコールバックの設定
-  DWC_SetUserRecvTimeoutCallback( recvTimeoutCallback );
+  DWC_SetUserRecvTimeoutCallback( recvTimeoutCallback,NULL );
 
   _dWork->sendbufflag = 0;
 
@@ -2120,6 +2157,20 @@ static void SetupGameServerCallback(DWCError error,
         }
       }
 
+
+      if (_dWork->blockClient || bFriendOnly){
+        if(index!=-1){
+          DWC_CloseConnectionHardFromServer(index);
+/*
+このクローズは相手ホストにも通知され、相手ホストではクローズコールバック
+DWCConnectionClosedCallbackが呼び出されます。
+ただし、このクローズ通知はUDP通信で一度しか送信されないため、
+通信路の状況などによっては相手に届かない可能性もあります。
+ */
+        }
+      }
+
+#if 0
       if (_dWork->blockClient || bFriendOnly){
         u32 bitmap = ~_dWork->BlockUse_BackupBitmap & DWC_GetAIDBitmap();
         u32 aidbitmap = DWC_GetAIDBitmap();	// (DWC_CloseConnectionHardBitmapのなかで、ClosedCallbackがよばれるため)
@@ -2133,7 +2184,8 @@ static void SetupGameServerCallback(DWCError error,
           return;
         }
       }
-
+#endif
+      
       // 接続が確立したときのみ、
       // 代入する形に修正
       // 080624
@@ -2147,8 +2199,7 @@ static void SetupGameServerCallback(DWCError error,
         MYDWC_DEBUGPRINT("自分タイムアウト %x\n",_dWork->BlockUse_BackupBitmap);
       }
       else{
-        // バッファの確保
-        setConnectionBuffer(index);
+        setTimerAndFlg(index);
       }
     }
     else
@@ -2200,8 +2251,7 @@ static void ConnectToGameServerCallback(DWCError error,
         // 二人対戦限定なので、ここにはこないはず。
         MYDWC_DEBUGPRINT("新規につながりました\n");
       }
-      // 受信バッファセット
-      setConnectionBuffer(index);
+      setTimerAndFlg(index);
     }
     else {
       if (self){
@@ -2451,10 +2501,22 @@ BOOL mydwc_VChatGetSend( void )
 }
 
 
-static void _blockCallback(void* param)
+//  _dWork->blockClient = _BLOCK_CALLBACK;
+
+static void _blockCallback(DWCSuspendResult result, BOOL suspend, void *data)
 {
-  _dWork->blockClient = _BLOCK_CALLBACK;
+  if(DWC_SUSPEND_SUCCESS == result){
+    if(suspend){
+      _dWork->blockClient = _BLOCK_CALLBACK;
+    }
+    else{
+      _dWork->blockClient = _BLOCK_NONE;
+    }
+  }
 }
+
+   
+
 
 //==============================================================================
 /**
@@ -2463,13 +2525,21 @@ static void _blockCallback(void* param)
  * @retval  none
  */
 //==============================================================================
-int GFL_NET_DWC_SetClientBlock(void)
+BOOL GFL_NET_DWC_SetClientBlock(void)
 {
+#if 0
   if(_dWork->blockClient==_BLOCK_NONE){
     _dWork->blockClient = _BLOCK_START;
     DWC_StopSCMatchingAsync(_blockCallback,NULL);
   }
   return (_dWork->blockClient==_BLOCK_CALLBACK);
+#endif
+
+
+  return DWC_RequestSuspendMatchAsync(TRUE,
+                                      _blockCallback,
+                                      NULL);
+
 }
 
 //==============================================================================
@@ -2479,9 +2549,12 @@ int GFL_NET_DWC_SetClientBlock(void)
  * @retval  none
  */
 //==============================================================================
-void GFL_NET_DWC_ResetClientBlock(void)
+BOOL GFL_NET_DWC_ResetClientBlock(void)
 {
-  _dWork->blockClient = _BLOCK_NONE;
+  return DWC_RequestSuspendMatchAsync(FALSE,
+                                      _blockCallback,
+                                      NULL);
+//  _dWork->blockClient = _BLOCK_NONE;
 }
 
 //==============================================================================

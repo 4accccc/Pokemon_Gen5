@@ -114,13 +114,55 @@ Property
 	# ROM HEADER TEMPLATE: Provided to every product by NINTENDO
 	#
 	#RomHeaderTemplate	./etc/rom_header.template.sbin
-	RomHeaderTemplate	./spec/rom_header_adaj.template.sbin
+	#	RomHeaderTemplate	./spec/rom_header_adaj.template.sbin
+	#RomHeaderLtd $(TWLSDK_ROOT)/tools/bin/rom_header.LTD.sbin
 
 	#
 	# BANNER FILE: generated from Banner Spec File
 	#
 	#BannerFile		./etc/myGameBanner.bnr
 	BannerFile		./spec/pokemon_WB.bnr
+	#BannerFile		$(TWLSDK_ROOT)/include/twl/specfiles/default.bnr
+
+	#
+	# Digest parameters:
+	#
+	#DigestParam		1024 32
+
+
+	#
+	# CardRegion: card region [Japan/America/Europe/Australia]
+	#
+	#CardRegion	ALL
+
+
+	#
+	# Codec mode:
+	#  don't have to edit
+	#
+	#CodecMode		$(MAKEROM_CODEC_MODE)
+
+	#
+	# WRAM mapping: [MAP_TS_HYB/MAP_TS_LTD]
+	#  don't have to edit
+	#
+	#WramMapping		$(MAKEROM_WRAM_MAPPING)
+
+	#
+	# Disp WiFiConnection Icon for Launcher  [TRUE/FALSE]
+	#
+	#WiFiConnectionIcon	FALSE
+
+	#
+	# Disp DSWireless Icon for Launcher  [TRUE/FALSE]
+	#
+	#DSWirelessIcon	FALSE
+
+	#
+	# Agree EULA [TRUE/FALSE]
+	#
+	#AgreeEULA	FALSE
+
 
 	###
 	###

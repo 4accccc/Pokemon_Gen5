@@ -167,7 +167,7 @@ GFL_PROC_RESULT MySignProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OEKAKI, 0x60000 );
 
 		wk = GFL_PROC_AllocWork( proc, sizeof(MYSIGN_WORK), HEAPID_OEKAKI );
-		memset( wk, 0, sizeof(MYSIGN_WORK) );
+		GFL_STD_MemFill( wk, 0, sizeof(MYSIGN_WORK) );
 		GFL_BG_Init( HEAPID_OEKAKI );
 
 		// 文字列マネージャー生成
@@ -1917,6 +1917,6 @@ void MYSIGN_BmpCutOamSize( GFL_BMPWIN* cp_bmp, int oam_csx, int oam_csy, int bmp
 		buff_in =  ((i + bmp_cmy) * GFL_BMPWIN_GetScreenSizeX(cp_bmp));
 		buff_in += bmp_cmx;
 		buff_in *= MYSIGN_CHAR_BYTE;
-		memcpy( char_buff + buff_out, (char*)(GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp(cp_bmp)) ) + buff_in , MYSIGN_CHAR_BYTE * oam_csx );
+		GFL_STD_MemCopy( (char*)(GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp(cp_bmp)) ) + buff_in , char_buff + buff_out,  MYSIGN_CHAR_BYTE * oam_csx );
 	}
 }

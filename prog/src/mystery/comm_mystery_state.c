@@ -510,9 +510,9 @@ int CommMysteryCheckParentBeacon(MYSTERYGIFT_WORK *wk)
 			if(p->event_id)
 			{
 #if 0
-	memcpy(&wk->gift_data.gd2.b, p, sizeof(GIFT_DATA2_B));
+	GFL_STD_MemCopy(p, &wk->gift_data.gd2.b, sizeof(GIFT_DATA2_B));
 #endif
-	memcpy(&wk->gift_data.beacon, p, sizeof(GIFT_BEACON));
+	GFL_STD_MemCopy(p, &wk->gift_data.beacon, sizeof(GIFT_BEACON));
 #if 0//def DEBUG_ONLY_FOR_mituhara
 	OS_Printf("ビーコンデータを %d に受け取りました！\n", i);
 	OS_Printf("event_id = %d\n", p->event_id);

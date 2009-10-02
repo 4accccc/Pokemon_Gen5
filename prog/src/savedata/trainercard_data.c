@@ -47,7 +47,7 @@ int TRCSave_GetSaveDataSize(void)
 //==============================================================================
 void TRCSave_InitSaveData(TR_CARD_SV_PTR outTrCard)
 {
-	memset( outTrCard, 0, sizeof(TR_CARD_SV_DATA) );
+	GFL_STD_MemFill( outTrCard, 0, sizeof(TR_CARD_SV_DATA) );
 
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_TRCARD)
 	SVLD_SetCrc(GMDATA_ID_TRCARD);

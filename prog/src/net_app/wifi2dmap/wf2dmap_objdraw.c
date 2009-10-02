@@ -391,7 +391,8 @@ void WF2DMAP_OBJDrawWkDel( WF2DMAP_OBJDRAWWK* p_wk )
 {
 	// ƒ[ƒN”jŠü
 	WF_2DC_WkDel( p_wk->p_drawwk );
-	memset( p_wk, 0, sizeof(WF2DMAP_OBJDRAWWK) );
+	//memset( p_wk, 0, sizeof(WF2DMAP_OBJDRAWWK) );
+  GFL_STD_MemClear(p_wk, sizeof(WF2DMAP_OBJDRAWWK));
 }
 
 //----------------------------------------------------------------------------

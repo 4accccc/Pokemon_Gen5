@@ -336,20 +336,20 @@ extern BOOL mydwc_VChatGetSend( void );
 //==============================================================================
 /**
  * @brief   クライアント接続を一時的に中止します
- * @param   none
- * @retval  none
+            あくまでコールバックが呼ばれるまではブロックされません
+ * @retval  成功か失敗
  */
 //==============================================================================
-extern int GFL_NET_DWC_SetClientBlock(void);
+extern BOOL GFL_NET_DWC_SetClientBlock(void);
 
 //==============================================================================
 /**
  * @brief   クライアント接続を許可に戻します
- * @param   none
- * @retval  none
+            あくまでコールバックが呼ばれるまではブロック解除されません
+ * @retval  成功か失敗
  */
 //==============================================================================
-extern void GFL_NET_DWC_ResetClientBlock(void);
+extern BOOL GFL_NET_DWC_ResetClientBlock(void);
 //==============================================================================
 /**
  * @brief   MYDWCが初期化済みかどうか
@@ -419,7 +419,5 @@ extern void GFL_NET_DWC_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl);
 extern SAVE_RESULT GFL_NET_DWC_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl);
 
 
-#if GFL_NET_WIFI
-#include <ppwlobby/ppw_lobby.h>
-#endif
+//#include <ppwlobby/ppw_lobby.h>
 

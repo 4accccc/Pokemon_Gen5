@@ -813,7 +813,7 @@ static u8 PutGaugeProc( s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 *gauge_
 //--------------------------------------------------------------
 static u32 DottoOffsetCalc( s32 nowHP, s32 beHP, s32 MaxHP, u8 GaugeMax )
 {
-	s8  now_dotto, end_dotto;
+	s8  now_dotto, end_dotto,ret_dotto;
 	u8  GaugeMaxDot;
 	s32 endHP;
 	
@@ -830,7 +830,8 @@ static u32 DottoOffsetCalc( s32 nowHP, s32 beHP, s32 MaxHP, u8 GaugeMax )
   }
 	now_dotto = nowHP * GaugeMaxDot / MaxHP;
 	end_dotto = endHP * GaugeMaxDot / MaxHP;
-	return ( abs( now_dotto - end_dotto ) );
+  ret_dotto = now_dotto - end_dotto;
+	return ( GFL_STD_Abs( ret_dotto ) );
 }
 
 //--------------------------------------------------------------

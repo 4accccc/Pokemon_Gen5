@@ -22,9 +22,10 @@
 		@li
 */
 
+#include <gflib.h>
 #include <dwc.h>
 
-#include <nonport.h>
+#include <nonport/dwc_nonport.h>
 #include "include/libdpw/dpwi_encrypt.h"
 
 #ifdef _NITRO
@@ -130,10 +131,14 @@ DpwiEncResult DpwiEncrypt(u32 pid, const u8* src, int len, u8* outbuf, int outle
 	tmpbuf[3] = (u8)((sum      ) & 0xff);
 
 	// base64 でエンコードする
-	B64Encode(	(const char*)tmpbuf,
-				(char*)outbuf,
-				(int)(len + SIZE_CHECKSUM + SIZE_PID),
-				2 /* url safe */ );
+  {
+    int ret = DWC_Base64Encode(	(const char*)tmpbuf,
+                                (int)(len + SIZE_CHECKSUM + SIZE_PID),
+                                (char*)outbuf,
+                                outlen );
+//                                2 /* url safe */ );
+    GF_ASSERT(ret != -1);
+  }
 
 	// NULL終端する
 	((char*)outbuf)[DpwiB64Size((u32)(len + SIZE_CHECKSUM + SIZE_PID))] = '\0';

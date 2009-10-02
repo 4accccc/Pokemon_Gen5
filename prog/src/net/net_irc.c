@@ -12,7 +12,7 @@
 //#include "tool/net_ring_buff.h"
 //#include "tool/net_queue.h"
 //#include "net_handle.h"
-#include "net/irc.h"
+#include <nitro/irc.h>
 #include "net/net_irc.h"
 
 
@@ -42,6 +42,7 @@
 ///送信データ管理value値のレンジ
 #define SEND_CHECK_VALUE_RANGE		(0xf)	//4bit内の数値にする事!!
 
+#define _ID (12)
 
 //--------------------------------------------------------------
 //	エラーコード
@@ -99,8 +100,26 @@ BOOL GFL_NET_IRC_SendTurnGet(void);
 BOOL GFL_NET_IRC_SendLockFlagGet(void);
 BOOL GFL_NET_IRC_SendCheck(void);
 void GFL_NET_IRC_UpdateSendData(void);
-static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 value);
+static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id);
 static int IRC_TargetIDGet(void);
+
+
+static void _IRC_SendRapper(u8* buf, u8 size, u8 command, u8 value)
+{
+  u8 buff[IRC_TRNS_MAX];
+
+  GF_ASSERT(size < IRC_TRNS_MAX-2);
+
+  buff[0] = command;
+  buff[1] = value;
+  if(buf){
+    GFL_STD_MemCopy(buf, &buff[2], IRC_TRNS_MAX-2);
+  }
+  IRC_Send(buff, size+2,  command);
+
+}
+
+
 
 
 //--------------------------------------------------------------
@@ -119,9 +138,9 @@ void GFL_NET_IRC_Init(u32 irc_timeout)
 	GFL_STD_MemClear(&NetIrcSys, sizeof(NET_IRC_SYS));
 	NetIrcSys.timeout = irc_timeout;
 	NetIrcSys.my_unit_number = WM_GetNextTgid() & 0xff;
-	IRC_Init();
+	IRC_Init(_ID);
 	IRC_SetRecvCallback(IRC_ReceiveCallback);
-	IRC_SetUnitNumber(NetIrcSys.my_unit_number);
+	//IRC_SetUnitNumber(NetIrcSys.my_unit_number);
 //	GFL_NET_SystemIrcModeInit();
 }
 
@@ -242,7 +261,7 @@ void GFL_NET_IRC_Send(u8 *buf, u8 size, u8 command)
 #endif
 	
 	value = NetIrcSys.my_value | (NetIrcSys.last_value << 4);
-	IRC_Send(buf, size, command, value);
+	_IRC_SendRapper(buf, size, command, value);
 	NetIrcSys.send_buf = buf;
 	NetIrcSys.send_size = size;
 	NetIrcSys.send_command = command;
@@ -264,14 +283,14 @@ void GFL_NET_IRC_CommandContinue(void)
 
 	if(nis->send_turn == TRUE){
 		if(nis->retry_send_reserve == TRUE){	//再接続後の予約がある場合はそちらを送信
-			IRC_Send(nis->send_buf, nis->send_size, nis->send_command, 
+			_IRC_SendRapper(nis->send_buf, nis->send_size, nis->send_command, 
 				nis->send_value | (NetIrcSys.last_value << 4));
 			OS_TPrintf("予約送信 value = %d\n", nis->send_value);
 			nis->retry_send_reserve = 0;
 		}
 		else{
 			//通信継続の為のsend_turnだけ回す
-			IRC_Send(NULL, 0, GF_NET_COMMAND_CONTINUE, 
+			_IRC_SendRapper(NULL, 0, GF_NET_COMMAND_CONTINUE, 
 				nis->send_value | (NetIrcSys.last_value << 4));
 		}
 		nis->send_turn = 0;
@@ -303,13 +322,17 @@ int GFL_NET_IRC_System_GetCurrentAid(void)
  * @param   value		
  */
 //--------------------------------------------------------------
-static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 value)
+static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
 {
 	int send_id;
 	int send_value, receive_value;
+  u8 value;
 	
-	size -= IRC_HEADER_SIZE;
-	
+//	size -= IRC_HEADER_SIZE;
+
+  value = data[1];
+
+  
 	send_value = value & 0xf;
 	receive_value = value >> 4;
 
@@ -367,7 +390,8 @@ static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 value)
 
 	send_id = IRC_TargetIDGet();
 	if(NetIrcSys.recieve_func != NULL){
-		NetIrcSys.recieve_func(send_id, (u16*)data, size);
+    u16* x = (u16*)data;
+		NetIrcSys.recieve_func(send_id, &x[1], size-2);
 	}
 }
 
@@ -559,7 +583,7 @@ void GFL_NET_IRC_Move(void)
 					return;
 				}
 				else if(nis->retry_time == NET_IRC_RETRY_START_WAIT){
-					IRC_Init();
+					IRC_Init(_ID);
 					IRC_SetRecvCallback(IRC_ReceiveCallback);
 					IRC_SetUnitNumber(NetIrcSys.my_unit_number);
 					nis->retry_time++;

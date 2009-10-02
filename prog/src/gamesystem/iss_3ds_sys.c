@@ -339,7 +339,7 @@ static void UpdatePan( ISS_3DS_SYS* system, u8 index )
     // ƒpƒ“‚ğİ’è
     PMSND_SetStatusBGM_EX( track, 256, 0, pan );
 
-#ifdef ISS_3DS_SYS_DEBUG:
+#ifdef ISS_3DS_SYS_DEBUG
     OBATA_Printf( "pan = %d\n", pan );
 #endif
   }

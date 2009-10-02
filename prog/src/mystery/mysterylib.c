@@ -95,7 +95,7 @@ void MysteryLib_Init(int heapid)
 	MYSTERYLIB_WORK *wk = GetMysteryLibWorkPtr();
 	//  if(wk->init_flag == TRUE)	return;
 
-	memset(wk, 0, sizeof(MYSTERYLIB_WORK));
+	GFL_STD_MemFill(wk, 0, sizeof(MYSTERYLIB_WORK));
 	wk->init_flag = TRUE;
 	wk->heapid = heapid;
 	wk->isInitClact = FALSE;

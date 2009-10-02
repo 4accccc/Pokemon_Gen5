@@ -65,7 +65,7 @@ void SODATEYA_WORK_InitWork( void* work )
   SODATEYA_WORK* sodateya = (SODATEYA_WORK*)work;
 
   // ‰Šú‰»
-	memset( sodateya, 0, sizeof(SODATEYA_WORK) ); 
+	GFL_STD_MemFill( sodateya, 0, sizeof(SODATEYA_WORK) ); 
 	sodateya->haveEgg     = FALSE;
 	sodateya->eggLayCount = 0;
 }

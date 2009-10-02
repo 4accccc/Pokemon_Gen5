@@ -186,6 +186,7 @@ void GFLUser_Main(void)
 {
   GFL_UI_Main();
   GFL_NET_Main();  //キーの処理の後すぐに通信を処理したい為ここに配置
+//  NetOld_Update();
 
 #ifdef PM_DEBUG
   //デバッグシステム

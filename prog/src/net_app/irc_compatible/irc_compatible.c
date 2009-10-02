@@ -41,7 +41,7 @@
 ///	デバッグ
 //=====================================
 #ifdef PM_DEBUG
-#ifdef defined DEBUG_ONLY_FOR_toru_nagihashi
+#if defined( DEBUG_ONLY_FOR_toru_nagihashi)
 //#define DEBUG_RETURN_TO_PROG	//戻るボタンを押すと次へ進む
 #endif	//DEBUG_ONLY_FOR_toru_nagihashi
 #endif	//PM_DEBUG

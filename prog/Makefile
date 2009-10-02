@@ -28,16 +28,17 @@ LINCLUDES      = ./include \
 #----------------------------------------------------------------------------
 GFLIB_DIR		=	../lib/gflib/
 LINCLUDES		+= 	$(GFLIB_DIR)/include
-LLIBRARY_DIRS	=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
-LLIBRARIES		=  	gflib.a
+LLIBRARY_DIRS	+=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
+LLIBRARIES		+=  	gflib.a
+
 
 # wifiをオーバーレイで使用する場合のLibrary定義
-LDEPENDS_NEF = $(NITRODWC_LIB_DEPENDS)
-NITRODWC_LIB_MODULES_   = bm account
-NITRODWC_LIB_GSMODULES_ = 
+LDEPENDS_NEF += $(NITRODWC_LIB_DEPENDS)
+TWLDWC_LIB_MODULES_   = bm account common
+TWLDWC_LIB_GSMODULES_ = 
 
 # nitrosystemをオーバーレイで使用する場合のLibrary定義
-NITROSYSTEM_LIBS = \
+TWLSYSTEM_LIBS = \
 		libnnsfnd$(NITRO_LIBSUFFIX).a \
 		libnnsgfd$(NITRO_LIBSUFFIX).a \
 		libnnsg2d$(NITRO_LIBSUFFIX).a \
@@ -47,7 +48,7 @@ NITROSYSTEM_LIBS = \
 #----------------------------------------------------------------------------
 #パーティクルのためのライブラリを追加
 #----------------------------------------------------------------------------
-LLIBRARY_DIRS	+= ./library/spl/$(NITRO_BUILDTYPE)
+LLIBRARY_DIRS	+= ./library/spl/$(TWL_BUILDTYPE)
 LLIBRARIES		+= ./libjn_spl.a
 
 #----------------------------------------------------------------------------
@@ -114,12 +115,12 @@ endif
 # VRAM内に無線ライブラリが配置されるコンポーネント定義 #
 
 #MY_COMPONENT_NAME	= ichneumon
-#MAKEROM_ARM7	= $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM7)/$(MY_COMPONENT_NAME)_sub$(TS_VERSION).nef
+#MAKEROM_ARM7	= $(TWL_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(TWL_BUILDTYPE_ARM7)/$(MY_COMPONENT_NAME)_sub$(TS_VERSION).nef
 
 #----------------------------------------------------------------------------
 # 任天堂Cryptライブラリを追加
 #----------------------------------------------------------------------------
-LLIBARIES += libcrypto$(NITRO_LIBSUFFIX).a
+LLIBARIES += libcrypto$(TWL_LIBSUFFIX).a
 
 #----------------------------------------------------------------------------
 #	ロムに含まれるファイルの指定  default.rsfファイルで使用している
@@ -170,17 +171,19 @@ TARGET_BIN	=	main.srl
 #--------------------------------------- ----------------------------
 # システム定義
 #
-include $(NITROSYSTEM_ROOT)/build/buildtools/commondefs
-include $(NITROSYSTEM_ROOT)/build/buildtools/nnslibdefs
-include $(NITROSYSTEM_ROOT)/build/buildtools/modulerules
+
+include	$(TWLVCT_ROOT)/build/buildtools/commondefs
+
+include $(TWLSYSTEM_ROOT)/build/buildtools/commondefs
+include $(TWLSYSTEM_ROOT)/build/buildtools/nnslibdefs
+include $(TWLSYSTEM_ROOT)/build/buildtools/modulerules
 
 #----------------------------------------------------------------------------
 #	WiFi定義
 #----------------------------------------------------------------------------
-#include	$(NITRODWC_ROOT)/build/buildtools/commondefs
-#include	$(NITRODWC_ROOT)/build/buildtools/modulerules
-include	$(NITROVCT_ROOT)/build/buildtools/commondefs
-include	$(NITROVCT_ROOT)/build/buildtools/modulerules
+#include	$(TWLDWC_ROOT)/build/buildtools/commondefs
+#include	$(TWLDWC_ROOT)/build/buildtools/modulerules
+include	$(TWLVCT_ROOT)/build/buildtools/modulerules
 
 #----------------------------------------------------------------------------
 #	makefileがインクルードするファイルが更新されたらmakelcfが動作するようにした
@@ -217,8 +220,8 @@ $(PRECOMPILE_CC_MCH):	$(VER_FILE)
 -include $(PRECOMPILE_CC_MCH).d
 $(PRECOMPILE_CC_MCH):%_cc.mch:
 		$(CC) $(PRECOMPILE_CCFLAGS) $(INCLUDES) $(PRECOMPILE_SRC) -MD -precompile $(PRECOMPILE_CC_MCH)
-		$(MOVE_SRC_DEPEND)
-		$(MV) $(DEPENDDIR)/$(*F).d $@.d
+##		$(MOVE_SRC_DEPEND)
+##		$(MV) $(DEPENDDIR)/$(*F).d $@.d
 $(OBJS):  $(PRECOMPILE_CC_MCH)
 
 CCFLAGS +=	-thumb
@@ -237,13 +240,13 @@ source:
 #	ソースあたりオブジェクトサイズ算出
 #----------------------------------------------------------------------------
 analyze:
-	ruby ../tools/analyze/objsize/get_objsize.rb ./bin/$(NITRO_BUILDTYPE)/$(TARGET_BIN:.srl=.nef).xmap|sort > analyze.result
+	ruby ../tools/analyze/objsize/get_objsize.rb ./bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.nef).xmap|sort > analyze.result
 
 #----------------------------------------------------------------------------
 #	オーバーレイマップ可視化
 #----------------------------------------------------------------------------
 overlaymap:
-	../tools/analyze/overlaymap/overlaymap $(PROJECT_PROGDIR)/bin/$(NITRO_BUILDTYPE)/$(TARGET_BIN:.srl=.nef).xmap
+	../tools/analyze/overlaymap/overlaymap $(PROJECT_PROGDIR)/bin/$(TWL_BUILDTYPE)/$(TARGET_BIN:.srl=.nef).xmap
 	#dot -Tpng ../tools/analyze/overlaymap/overlaymap.dot >overlaymap.png
 
 #----------------------------------------------------------------------------
@@ -256,5 +259,5 @@ warning:
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 echo_buildtype:
-	@echo $(NITRO_BUILDTYPE)
+	@echo $(TWL_BUILDTYPE)
 

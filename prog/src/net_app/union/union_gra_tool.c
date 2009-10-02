@@ -51,7 +51,7 @@ static void CharCopy1_1D_from_2D(const u8* src, u8* dst, int* ofs, int* bofs, in
 	u32 dat;
 	
 	for (i = 0; i < 8; i++){
-		memcpy(&dst[ *bofs ], &src[ *ofs ], cs);
+		GFL_STD_MemCopy(&src[ *ofs ], &dst[ *bofs ],  cs);
 		*ofs  += len;
 		*bofs += cs;
 	}

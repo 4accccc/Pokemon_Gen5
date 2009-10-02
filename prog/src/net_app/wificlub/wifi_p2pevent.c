@@ -26,7 +26,7 @@
 
 #include "field/event_wificlub.h"
 
-#include "net_app/balloon.h"
+//#include "net_app/balloon.h"
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -118,7 +118,7 @@ static const u8 sc_P2P_FOUR_MATCH_MAX[ WFP2PMF_TYPE_NUM ] = {
 };
 
 
-#define _BLOCK (1)
+#define _BLOCK (0)
 
 //-------------------------------------
 #if _BLOCK
@@ -144,8 +144,8 @@ static u32 P2P_FourWaitEnd( EV_P2PEVENT_WORK* p_wk ){}
 static BALLOON_PROC_WORK* BL_ProcSet( GMEVENT* fsys, u32 heapID, u32 vchat );
 static void BL_ProcEnd( BALLOON_PROC_WORK* p_wk );
 #else
-static BALLOON_PROC_WORK* BL_ProcSet( GMEVENT* fsys, u32 heapID, u32 vchat ){}
-static void BL_ProcEnd( BALLOON_PROC_WORK* p_wk ){}
+//static BALLOON_PROC_WORK* BL_ProcSet( GMEVENT* fsys, u32 heapID, u32 vchat ){}
+//static void BL_ProcEnd( BALLOON_PROC_WORK* p_wk ){}
 #endif
 
 // レコード ミニゲーム遊んだスコア設定
@@ -393,7 +393,9 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_BALLOON:
     // ミニゲームスコア設定
     //    P2P_Record_Minigame( fsys );
+#if _BLOCK
     ep2p->work = BL_ProcSet(pClub->event,HEAPID_NETWORK,ep2p->vchat);
+#endif
     ep2p->seq++;
     break;
 
@@ -401,7 +403,9 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     if( !GAMESYSTEM_EVENT_IsExists(pClub->gsys) ){    //サブプロセス終了待ち
       //        if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){   //サブプロセス終了待ち
       ep2p->seq = P2P_MATCH_BOARD;
+#if _BLOCK
       BL_ProcEnd( ep2p->work );
+#endif
     }
     break;
 

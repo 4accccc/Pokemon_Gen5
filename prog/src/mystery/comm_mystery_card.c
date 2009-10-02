@@ -2202,7 +2202,7 @@ void MysteryCard_DisplayCardOnly(GFL_BG_INI *bgl, void *p, int heapid)
 
 	// カード表示に必要なワークエリアの設定
 	wk = GFL_HEAP_AllocMemory(heapid, sizeof(MYSTERYCARD_WORK));
-	memset(wk, 0, sizeof(MYSTERYCARD_WORK));
+	GFL_STD_MemFill(wk, 0, sizeof(MYSTERYCARD_WORK));
 	wk->bgl = bgl;
 	wk->heapid = heapid;
 

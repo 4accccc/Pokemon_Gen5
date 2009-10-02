@@ -297,7 +297,7 @@ void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, u32 
 	WF2DMAP_POS map_siz;
 	u32 map_no=0;
 	
-	memset( p_mcr, 0, sizeof(WIFI_MATCHROOM) );
+	GFL_STD_MemFill( p_mcr, 0, sizeof(WIFI_MATCHROOM) );
 
     if(friendNum != 0){
         map_no = (friendNum-1) / WCR_MAPDATA_1BLOCKOBJNUM;
@@ -376,7 +376,7 @@ void WIFI_MCR_Dest( WIFI_MATCHROOM* p_mcr )
 	// BGL破棄
 	WcrBgContDest( p_mcr->p_bgl );
 
-	memset( p_mcr, 0, sizeof(WIFI_MATCHROOM) );
+	GFL_STD_MemFill( p_mcr, 0, sizeof(WIFI_MATCHROOM) );
 }
 
 //----------------------------------------------------------------------------
@@ -733,7 +733,7 @@ void WIFI_MCR_DelPeople( MCR_MOVEOBJ* p_obj )
 	// オブジェクト管理破棄
 	WF2DMAP_OBJWkDel( p_obj->p_obj );
 
-	memset( p_obj, 0, sizeof(MCR_MOVEOBJ) );
+	GFL_STD_MemFill( p_obj, 0, sizeof(MCR_MOVEOBJ) );
 }
 
 //----------------------------------------------------------------------------

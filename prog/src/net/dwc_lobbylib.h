@@ -9,9 +9,9 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-#ifndef __DWC_LOBBYLIB_H__
-#define __DWC_LOBBYLIB_H__
+#pragma once
 
+#if _WIFILOBBY  //ƒ‰ƒCƒuƒ‰ƒŠ‚ª‚­‚é‚Ü‚Å•Â½’†
 #include <ppwlobby/ppw_lobby.h>
 
 #include "savedata/save_control.h"
@@ -409,5 +409,5 @@ extern void DWC_LOBBY_DEBUG_SetProfile( const void* cp_data, u32 userid );			// 
 
 #endif
 
-#endif		// __DWC_LOBBYLIB_H__
+#endif
 

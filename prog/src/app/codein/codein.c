@@ -85,7 +85,7 @@ static GFL_PROC_RESULT CI_Proc_Init( GFL_PROC * proc, int * seq , void *pwk, voi
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CODEIN, HEAP_SIZE_CODEIN );
 	
 	wk = GFL_PROC_AllocWork( proc, sizeof( CODEIN_WORK ), HEAPID_CODEIN );
-	memset( wk, 0, sizeof( CODEIN_WORK ) );
+	GFL_STD_MemFill( wk, 0, sizeof( CODEIN_WORK ) );
 	wk->param = *( ( CODEIN_PARAM* )pwk );
 	
 	///< ‰Šú‰»

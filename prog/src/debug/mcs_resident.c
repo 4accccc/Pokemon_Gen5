@@ -273,7 +273,7 @@ static void HeapConflictVisitorFunc(void* memBlock, NNSFndHeapHandle heapHandle,
 	blockInfo->size = NNS_FndGetSizeForMBlockExpHeap(memBlock)+0x10;
 
   if( GetFileName(blockInfo->filename, header->filename) == FALSE ){
-    strcpy( blockInfo->filename, "SYSTEM ALLOC" );
+    STD_StrCpy( blockInfo->filename, "SYSTEM ALLOC" );
     blockInfo->lineNo = 0;
   }else{
     blockInfo->lineNo = header->lineNum;
@@ -296,7 +296,7 @@ static u32	GetExistMemoryBlocksInfo( HEAPID heapID, u32 pBuf )
 	heapStatus->allocatableSize = GFI_HEAP_GetHeapAllocatableSize(heapID);
 	heapStatus->heapID = heapID;
 	heapStatus->numMemoryBlocks = GFI_HEAP_GetBlockCount(heapID);
-	strcpy( heapStatus->name, heapNameTable[heapID] );
+	STD_StrCpy( heapStatus->name, heapNameTable[heapID] );
 
   //拡張ヒープから確保したメモリブロック全て（Allocされたもの）に対し、指定した関数を呼ばせる
 	numMemoryTotal = 0;

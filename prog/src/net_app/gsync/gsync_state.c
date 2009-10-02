@@ -22,8 +22,11 @@
 #include "system/wipe.h"
 #include "net/network_define.h"
 #include "savedata/wifilist.h"
-#include "msg\msg_d_ohno.h"
+#include "msg/msg_d_ohno.h"
 
+#define _TWLDWC_HTTP (0)
+
+#if _TWLDWC_HTTP
 
 typedef struct _G_SYNC_WORK G_SYNC_WORK;
 
@@ -456,10 +459,12 @@ static const GFL_DISP_VRAM vramBank = {
 		GX_OBJVRAMMODE_CHAR_1D_32K,	// メインOBJマッピングモード
 		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 };
+#endif
 
 
 static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+#if _TWLDWC_HTTP
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PROC, 0x70000 );//テスト
 
 	{
@@ -545,10 +550,12 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 		
 		_CHANGE_STATE(_ghttpInit);
 	}
+#endif
   return GFL_PROC_RES_FINISH;
 }
 static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+#if _TWLDWC_HTTP
 	G_SYNC_WORK* pWork = mywk;
 	StateFunc* state = pWork->state;
 
@@ -556,12 +563,14 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
 		state( pWork );
 		return GFL_PROC_RES_CONTINUE;
 	}
+#endif
 	return GFL_PROC_RES_FINISH;
 }
 
 static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	G_SYNC_WORK* pWork = mywk;
+#if _TWLDWC_HTTP
+  G_SYNC_WORK* pWork = mywk;
 
 	GFL_STR_DeleteBuffer(pWork->strbuf);
 	GFL_STR_DeleteBuffer(pWork->strbufEx);
@@ -572,6 +581,7 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
 
 	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_PROC);  //テスト
+#endif
   return GFL_PROC_RES_FINISH;
 }
 

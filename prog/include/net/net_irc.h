@@ -9,7 +9,8 @@
 #ifndef __NET_IRC_H__
 #define __NET_IRC_H__
 
-#include "irc.h"
+//#include <irc.h>
+#include <nitro/irc.h>
 
 
 //==============================================================================

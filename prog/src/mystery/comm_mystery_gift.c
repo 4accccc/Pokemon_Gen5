@@ -789,17 +789,17 @@ static GIFT_DELIVERY *CommSetSaveData(MYSTERYGIFT_WORK *wk)
 
 	switch(wk->comm_type){
 	case MYSTERYCOMM_TYPE_DIRECT:
-		memcpy(gdata, CommGetMysteryGiftRecvBuff(0, NULL, 0), sizeof(GIFT_DATA));
+		GFL_STD_MemCopy( CommGetMysteryGiftRecvBuff(0, NULL, 0),gdata, sizeof(GIFT_DATA));
 		/* 受信したデータの暗号をdecode */
 		MysteryLib_DecodeCryptoData(&wk->gift_data, &wk->gift_data.data, HEAPID_MYSTERYGIFT);
 		break;
 	case MYSTERYCOMM_TYPE_BEACON:
 		gcp = (GIFT_COMM_PACK *)wk->recvbuf;
-		memcpy(gdata, &gcp->data, sizeof(GIFT_DATA));
+		GFL_STD_MemCopy( &gcp->data, gdata,sizeof(GIFT_DATA));
 #if 0
-		memcpy(beacon, &gcp->data.card.beacon, sizeof(GIFT_BEACON));
+		GFL_STD_MemCopy( &gcp->data.card.beacon,beacon, sizeof(GIFT_BEACON));
 #else
-		memcpy(beacon, &gcp->beacon, sizeof(GIFT_BEACON));
+		GFL_STD_MemCopy(&gcp->beacon,beacon,  sizeof(GIFT_BEACON));
 #endif
 		break;
 	}
@@ -1908,7 +1908,7 @@ static GFL_PROC_RESULT MysteryGiftProc_Init(GFL_PROC *proc, int * seq, void *pwk
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP , HEAPID_MYSTERYGIFT, 0x100000);
 	wk = GFL_PROC_AllocWork(proc, sizeof(MYSTERYGIFT_WORK), HEAPID_MYSTERYGIFT);
 	/* 初期化不良が怖いのでワークはゼロクリア */
-	memset(wk, 0, sizeof(MYSTERYGIFT_WORK));
+	GFL_STD_MemFill(wk, 0, sizeof(MYSTERYGIFT_WORK));
 	
 	/* 各種変数の初期化 */
 //	wk->bgl = GFL_BG_GetBGL();	//たぶん使うところは無い
