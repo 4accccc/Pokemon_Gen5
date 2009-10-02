@@ -71,8 +71,12 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 #	$(COPY) pl_batt_obj.narc platinum_data/
 #	$(COPY) pl_batt_obj_*.h platinum_data/
 
-nsbmd: $(notdir $(IMDFILE:.imd=.nsbmd))
-%.nsbmd: $(RES_3DDIR)%.imd
+#nsbmd: $(notdir $(IMDFILE:.imd=.nsbmd))
+#%.nsbmd: $(RES_3DDIR)%.imd
+#	g3dcvtr $<
+
+nsbmd: $(IMDFILE:.imd=.nsbmd)
+$(notdir %.nsbmd): %.imd
 	g3dcvtr $<
 
 nsbca: $(notdir $(ICAFILE:.ica=.nsbca))
