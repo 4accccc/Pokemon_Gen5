@@ -52,14 +52,22 @@ endif
 #	make do-build ルール
 #------------------------------------------------------------------------------
 do-build: $(TARGETDIR)/$(targetname).narc
-	@g3dcvtr test_cart.imd
-	nnsarc -cl -l -n -i $(NARCNAME) -S fld_spa.lst > arc_rsult.txt
+	
 
 #コピー実行する
 $(TARGETDIR)/$(targetname).narc:  $(targetname).narc 
 	@echo copying $(targetname).narc
 	@$(COPY) $(targetname).narc $(TARGETDIR)
 	@$(COPY) $(targetname).naix $(TARGETDIR)
+
+#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+# コピー先のnarcが古い場合実行する
+$(targetname).narc: fld_gimmick_assign.xls ../zonetable/zone_id.h
+	@g3dcvtr test_cart.imd
+	nnsarc -cl -l -n -i $(NARCNAME) -S fld_spa.lst > arc_rsult.txt
+endif
+
 
 
 #------------------------------------------------------------------------------
