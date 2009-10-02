@@ -128,6 +128,34 @@ typedef struct
 {
 	int dummy;
 } UI_TEMPLATE_BG_WORK;
+
+//--------------------------------------------------------------
+///	CLWK管理ワーク
+//==============================================================
+typedef struct {
+  u32       res_ncg;
+  u32       res_ncl;
+  u32       res_nce;
+  GFL_CLWK* clwk;
+} UI_TEMPLATE_CLWK_SET;
+
+//--------------------------------------------------------------
+///	CLWK初期化パラメータ
+//==============================================================
+typedef struct {
+  CLSYS_DRAW_TYPE draw_type; ///< 描画先タイプ
+  u32 arc_id;   ///< アーカイブNO
+  u32 pltt_id;  ///< パレットリソースNO
+  u32 ncg_id;   ///< キャラクタリソースNO
+  u32 cell_id;  ///< セルリソースNO
+  u32 anm_id;   ///< セルアニメリソースNO
+  u8 pltt_line; ///< パレット転送先NO
+  u8 px;        ///< X座標
+  u8 py;        ///< Y座標
+  u8 padding[1];
+} CLWK_SET_PARAM;
+
+
 //--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
@@ -166,6 +194,7 @@ typedef struct
 
 #ifdef UI_TEMPLATE_TYPEICON
 	//分類、技アイコン
+  UI_TEMPLATE_CLWK_SET      type_clwk_set;
 	u32												type_ncg;
 	u32												type_ncl;
 	u32												type_nce;
@@ -173,10 +202,7 @@ typedef struct
 #endif //UI_TEMPLATE_TYPEICON
 
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
-  u32                       oam_mmdl_ncg;
-  u32                       oam_mmdl_ncl;
-  u32                       oam_mmdl_nce;
-	GFL_CLWK									*oam_mmdl_clwk;
+  UI_TEMPLATE_CLWK_SET      oam_clwk_set;
 #endif // UI_TEMPLATE_OAM_MAPMODEL
 
 #ifdef	UI_TEMPLATE_PRINT_TOOL
@@ -206,6 +232,12 @@ typedef struct
 static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
 static GFL_PROC_RESULT UITemplateProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
 static GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk );
+//-------------------------------------
+///	汎用処理ユーティリティ
+//=====================================
+static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heap_id );
+static void UITemplate_OBJ_CreateCLWK( UI_TEMPLATE_CLWK_SET* wk, CLWK_SET_PARAM* prm, GFL_CLUNIT* unit, HEAPID heap_id );
+static void UItemplate_OBJ_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk );
 //-------------------------------------
 ///	INFOWIN
 //=====================================
@@ -242,14 +274,9 @@ static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk );
 //-------------------------------------
 ///	OAMでマップモデル表示
 //=====================================
-static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heap_id );
+static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_CLWK_SET *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heap_id );
 static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
 #endif // UI_TEMPLATE_OAM_MAPMODEL
-
-//-------------------------------------
-///	その他
-//=====================================
-static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heap_id );
 
 //=============================================================================
 /**
@@ -363,7 +390,7 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
     u16 ptn_ofs = 3;
 
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
-		UITemplate_OAM_MAPMODEL_CreateCLWK( wk, NARC_fldmmdl_mdlres_hero_nsbtx, ptn_ofs, clunit, wk->heap_id );
+		UITemplate_OAM_MAPMODEL_CreateCLWK( &wk->oam_clwk_set, NARC_fldmmdl_mdlres_hero_nsbtx, ptn_ofs, clunit, wk->heap_id );
   }
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 
@@ -535,6 +562,79 @@ static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heap_id 
 
 	GFL_ARC_CloseDataHandle( handle );
 }
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  汎用リソース読み込み＆アクター生成処理
+ *
+ *	@param	UI_TEMPLATE_CLWK_SET* wk
+ *	@param	prm
+ *	@param	unit
+ *	@param	heap_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_OBJ_CreateCLWK( UI_TEMPLATE_CLWK_SET* wk, CLWK_SET_PARAM* prm, GFL_CLUNIT* unit, HEAPID heap_id )
+{
+  //リソース読み込み
+	{	
+		ARCHANDLE *p_handle;
+  	
+		p_handle	= GFL_ARC_OpenDataHandle( prm->arc_id, heap_id );
+
+		wk->res_ncl	= GFL_CLGRP_PLTT_Register( p_handle,
+        prm->pltt_id, prm->draw_type, prm->pltt_line*0x20, heap_id );
+
+		wk->res_ncg	= GFL_CLGRP_CGR_Register( p_handle,
+        prm->ncg_id, FALSE, prm->draw_type, heap_id );
+
+		wk->res_nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
+        prm->cell_id,	prm->anm_id, heap_id );
+
+		GFL_ARC_CloseDataHandle( p_handle );	
+	}
+
+	//CLWK作成
+	{	
+		GFL_CLWK_DATA	cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+		cldata.pos_x	= prm->px;
+		cldata.pos_y	= prm->py;
+		wk->clwk = GFL_CLACT_WK_Create( unit,
+				wk->res_ncg,
+				wk->res_ncl,
+				wk->res_nce,
+				&cldata,
+				prm->draw_type,
+				heap_id );
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  汎用リソース読み込み＆アクター削除処理
+ *
+ *	@param	UI_TEMPLATE_CLWK_SET* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void UItemplate_OBJ_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk )
+{
+	//CLWK破棄
+	GFL_CLACT_WK_Remove( wk->clwk );
+
+	//リソース破棄
+	GFL_CLGRP_PLTT_Release( wk->res_ncl );
+	GFL_CLGRP_CGR_Release( wk->res_ncg );
+	GFL_CLGRP_CELLANIM_Release( wk->res_nce );
+}
+
+
+
+
 //=============================================================================
 /**
  *		INFOWIN
@@ -874,6 +974,7 @@ static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
  */
 //=============================================================================
 
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  OAMマップモデル 作成 (人物OBJ特化仕様)
@@ -889,41 +990,21 @@ static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heap_id )
+static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_CLWK_SET *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heap_id )
 {	
-  //リソース読み込み
-	{	
-		ARCHANDLE *p_handle;
-  	
-		p_handle	= GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heap_id );
+  CLWK_SET_PARAM prm;
 
-		wk->oam_mmdl_ncl	= GFL_CLGRP_PLTT_Register( p_handle, 
-				APP_COMMON_GetNull4x4PltArcIdx(), CLSYS_DRAW_MAIN, PLTID_OBJ_OAM_MAPMODEL_M*0x20, heap_id );
+  prm.arc_id    = APP_COMMON_GetArcId();
+  prm.pltt_id   = APP_COMMON_GetNull4x4PltArcIdx();
+  prm.ncg_id    = APP_COMMON_GetNull4x4CharArcIdx();
+  prm.cell_id   = APP_COMMON_GetNull4x4CellArcIdx( APP_COMMON_MAPPING_128K );
+  prm.anm_id    = APP_COMMON_GetNull4x4AnimeArcIdx( APP_COMMON_MAPPING_128K );
+  prm.draw_type = CLSYS_DRAW_MAIN;
+  prm.pltt_line = PLTID_OBJ_OAM_MAPMODEL_M;
+  prm.px        = 16;
+  prm.py        = 32;
 
-		wk->oam_mmdl_ncg	= GFL_CLGRP_CGR_Register( p_handle,
-				APP_COMMON_GetNull4x4CharArcIdx(), FALSE, CLSYS_DRAW_MAIN, heap_id );
-
-		wk->oam_mmdl_nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
-				APP_COMMON_GetNull4x4CellArcIdx( APP_COMMON_MAPPING_128K ),
-				APP_COMMON_GetNull4x4AnimeArcIdx( APP_COMMON_MAPPING_128K ), heap_id );
-
-		GFL_ARC_CloseDataHandle( p_handle );	
-	}
-
-	//CLWK作成
-	{	
-		GFL_CLWK_DATA	cldata;
-		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-		cldata.pos_x	= 64;
-		cldata.pos_y	= 50;
-		wk->oam_mmdl_clwk	=		GFL_CLACT_WK_Create( unit,
-				wk->oam_mmdl_ncg,
-				wk->oam_mmdl_ncl,
-				wk->oam_mmdl_nce,
-				&cldata,
-				CLSYS_DEFREND_MAIN,
-				heap_id );
-	}
+  UITemplate_OBJ_CreateCLWK( wk, &prm, unit, heap_id );
 
   // テクスチャを転送
   {
@@ -931,7 +1012,7 @@ static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 t
     int sx = 4;
     int sy = 4;
 
-    CLWK_TransNSBTX( wk->oam_mmdl_clwk, ARCID_MMDL_RES, tex_idx, ptn_ofs, sx, sy, 0, CLSYS_DRAW_MAIN, heap_id );
+    CLWK_TransNSBTX( wk->clwk, ARCID_MMDL_RES, tex_idx, ptn_ofs, sx, sy, 0, prm.draw_type, heap_id );
   }
 }
 
@@ -946,13 +1027,7 @@ static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 t
 //-----------------------------------------------------------------------------
 static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk )
 {
-	//CLWK破棄
-	GFL_CLACT_WK_Remove( wk->oam_mmdl_clwk );
-
-	//リソース破棄
-	GFL_CLGRP_PLTT_Release( wk->oam_mmdl_ncl );
-	GFL_CLGRP_CGR_Release( wk->oam_mmdl_ncg );
-	GFL_CLGRP_CELLANIM_Release( wk->oam_mmdl_nce );
+  UItemplate_OBJ_DeleteCLWK( &wk->oam_clwk_set );
 }
 
 #endif // UI_TEMPLATE_OAM_MAPMODEL
@@ -1100,3 +1175,5 @@ static void PrintTool_PrintHP( UI_TEMPLATE_MAIN_WORK * wk )
 				wk->heapID );						// ヒープＩＤ
 }
 #endif	// UI_TEMPLATE_PRINT_TOOL
+
+
