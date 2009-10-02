@@ -12,4 +12,10 @@ FMMDL_RESLIST_NCGIMD = \
 	monsterball.imd \
 	obj_kabi32.imd \
 	accordion.imd \
-	none.imd
+	none.imd \
+	gethero.imd \
+	getheroine.imd \
+	reporthero.imd \
+	reportheroine.imd \
+	pchero.imd \
+	pcheroine.imd

@@ -24,7 +24,13 @@ enum {
 	NARC_fldmmdl_mdlres_monsterball_nsbtx = 10,
 	NARC_fldmmdl_mdlres_obj_kabi32_nsbtx = 11,
 	NARC_fldmmdl_mdlres_accordion_nsbtx = 12,
-	NARC_fldmmdl_mdlres_none_nsbtx = 13
+	NARC_fldmmdl_mdlres_none_nsbtx = 13,
+	NARC_fldmmdl_mdlres_gethero_nsbtx = 14,
+	NARC_fldmmdl_mdlres_getheroine_nsbtx = 15,
+	NARC_fldmmdl_mdlres_reporthero_nsbtx = 16,
+	NARC_fldmmdl_mdlres_reportheroine_nsbtx = 17,
+	NARC_fldmmdl_mdlres_pchero_nsbtx = 18,
+	NARC_fldmmdl_mdlres_pcheroine_nsbtx = 19
 };
 
 /* NARC_FLDMMDL_MDLRES_NAIX_ */

@@ -154,6 +154,12 @@
 #define BASKETM (0x95) //149 バスケ選手
 #define SUPPORT (0x96) //150 サポート
 #define NONE (0x97) //151 透明なもの
-#define OBJCODEMAX (0x98) //152 最大
+#define GETHERO (0x98) //152 主人公男ゲット
+#define GETHEROINE (0x99) //153 主人公女ゲット
+#define REPORTHERO (0x9a) //154 主人公男レポート
+#define REPORTHEROINE (0x9b) //155 主人公女レポート
+#define PCHERO (0x9c) //156 主人公男差し出し
+#define PCHEROINE (0x9d) //157 主人公女差し出し
+#define OBJCODEMAX (0x9e) //158 最大
 
 #endif
