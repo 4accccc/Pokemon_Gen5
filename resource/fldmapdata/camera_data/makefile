@@ -81,7 +81,7 @@ field_camera.bin: $(DATATXT)
 	@echo "camera parameter convert"
 	@echo "//" > temp.c
 	@cat dummy_header.h field_camera.dat |unix2dos > temp.c
-	@$(CC) $(CCFLAGS) $(INCLUDES) $(INCPATH)  -c temp.c -MD -o temp.o
+	@$(CC) $(INCLUDES) $(INCPATH)  -c temp.c -MD -o temp.o
 	@$(MWLD) -dis -o field_camera.elf temp.o
 	@$(ELF2BIN) field_camera.elf
 	@-rm temp.o temp.c temp.d
