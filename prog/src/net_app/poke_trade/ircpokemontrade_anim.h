@@ -11,34 +11,28 @@
 
 
 // ゆっくりで調整してからはやめる
-#define ALL_SLOW_SPEED_NUM (8)    ///< 八倍おそい
+#define ALL_SLOW_SPEED_NUM (1)    ///< ?倍おそい
 
 
 #define ANIM_SPEED  (FX32_ONE / ALL_SLOW_SPEED_NUM)
 
+#define _BALL_PARTICLE_START   (120)  ///モンスターボールが打ちあがる パーティクル開始
+#define _POKEUP_WHITEOUT_START (240)  //モンスターボールが打ちあがった際のホワイトアウト
+#define _POKEUP_WHITEOUT_TIMER (14)  //モンスターボールが打ちあがった際のホワイトアウト時間
+#define _POKEUP_WHITEIN_START  (255)  //ポケモン交換シーン前のフェードイン
+#define _POKEUP_WHITEIN_TIMER (15)  //ポケモン交換シーン前のフェードイン時間
 
-#define _TRADE01_ANMCOUNT (30)   //交換選択
-#define _TRADE02_ANMCOUNT (30)   //交換選択から真ん中に移動するまで
-#define _TRADE03_ANMCOUNT (30)   //真ん中からぼーるになるまで
-#define _TRADE04_ANMCOUNT (30)   //ボール発光
-#define _TRADE05_ANMCOUNT (30)   //光の筋 飛び開始
-#define _TRADE06_ANMCOUNT (30)   //飛んでいく
-#define _TRADE07_ANMCOUNT (30)   //光飛び交う空間
-#define _TRADE08_ANMCOUNT (30)   //上下ポケモン登場
-#define _TRADE09_ANMCOUNT (30)   //とまる
-#define _TRADE10_ANMCOUNT (30)   //ポケモン左右外に
-#define _TRADE11_ANMCOUNT (30)   //正面背面入れ替わって中に
-#define _TRADE12_ANMCOUNT (30)   //とまる
-#define _TRADE13_ANMCOUNT (30)   //上下に移動
-#define _TRADE14_ANMCOUNT (30)   //ホワイトアウト
-#define _TRADE15_ANMCOUNT (30)   //ボール振ってくる
-#define _TRADE16_ANMCOUNT (90)   //落ちてる最中
-#define _TRADE17_ANMCOUNT (30)   //ぶつかり波紋
-#define _TRADE18_ANMCOUNT (30)   //おちたエフェクト
-#define _TRADE19_ANMCOUNT (30)   //はもんひろがる
-#define _TRADE20_ANMCOUNT (30)   //ブラックアウト
-#define _TRADE21_ANMCOUNT (30)   //ボール落ちる
-#define _TRADE22_ANMCOUNT (30)   //？
-#define _TRADE23_ANMCOUNT (30)   //発光
-#define _TRADE24_ANMCOUNT (30)   //ポケモン出てくる
 
+#define _POKECHANGE_WHITEOUT_START (510)  //ポケモン交換シーンのホワイトアウト
+#define _POKECHANGE_WHITEOUT_TIMER (14)  //ポケモン交換シーンのホワイトアウト時間
+#define _POKECHANGE_WHITEIN_START  (525)  //ボールおち前のフェードイン
+#define _POKECHANGE_WHITEIN_TIMER (15)  //ボールおち前のフェードイン時間
+
+
+#define _POKESPLASH_WHITEOUT_START (720)  //ボールおちシーンのホワイトアウト
+#define _POKESPLASH_WHITEOUT_TIMER (14)  //ボールおちシーンのホワイトアウト時間
+#define _POKESPLASH_WHITEIN_START  (735)  //もう一回ボール落ちのフェードイン
+#define _POKESPLASH_WHITEIN_TIMER (45)  //もう一回ボール落ちのフェードイン時間
+
+
+#define _DEMO_END (960)

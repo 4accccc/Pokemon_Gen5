@@ -9,6 +9,7 @@
  */
 //============================================================================================
 #include <gflib.h>
+#include <dwc.h>
 #include "arc_def.h"
 #include "net/network_define.h"
 #include "savedata/save_tbl.h"

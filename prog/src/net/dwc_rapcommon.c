@@ -12,6 +12,7 @@
 #include "gflib.h"
 
 #if GFL_NET_WIFI
+#include <dwc.h>
 
 #include "net/dwc_rapcommon.h"
 
@@ -45,8 +46,10 @@ int mydwc_init(int heapID)
  * @retval  none
  */
 //==============================================================================
-void GFL_NET_WIFI_InitUserData( DWCUserData *userdata )
+void GFL_NET_WIFI_InitUserData( void *userdata )
 {
+  DWCUserData *pUserdata = userdata;
+  
     // ユーザデータ作成をする。
 	MI_CpuClearFast(userdata, sizeof(DWCUserData));
     if( !DWC_CheckUserData( userdata ) ){

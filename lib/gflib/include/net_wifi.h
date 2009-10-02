@@ -332,7 +332,10 @@ typedef BOOL (*GFL_NET_MYDWCConnectModeCheckFunc) (int index,void* pWork);
 #define DWCRAP_STARTGAME_FIRSTSAVE (-4)
 
 #define STEPMATCH_CONTINUE 0
-#define STEPMATCH_SUCCESS  (DWC_ERROR_NUM)
+
+#define __ERROR_FRIENDS_SHORTAGE_DWC  (10)  ///< @todo 強引な結びつけ dev_wifiで確認している状態
+
+#define STEPMATCH_SUCCESS  (1000)    //昔はDWC_ERROR_NUM
 #define STEPMATCH_CANCEL (STEPMATCH_SUCCESS+1)
 #define STEPMATCH_FAIL (STEPMATCH_SUCCESS+2)
 #define STEPMATCH_TIMEOUT (STEPMATCH_SUCCESS+3)
@@ -346,8 +349,8 @@ typedef BOOL (*GFL_NET_MYDWCConnectModeCheckFunc) (int index,void* pWork);
 // ここから下はデバイスが逆アクセスする為に必要なものなので使用しないでください
 extern void GFI_NET_NetWifiSaveUserDataFunc(void);
 extern void GFI_NET_NetWifiMargeFrinedDataFunc(int deletedIndex,int srcIndex);
-extern DWCUserData* GFI_NET_GetMyDWCUserData(void);
-extern DWCFriendData* GFI_NET_GetMyDWCFriendData(void);
+extern void* GFI_NET_GetMyDWCUserData(void);  //DWCUserData
+extern void* GFI_NET_GetMyDWCFriendData(void);//DWCFriendData
 extern int GFI_NET_GetFriendNumMax(void);
 
 #endif //GFL_NET_WIFI

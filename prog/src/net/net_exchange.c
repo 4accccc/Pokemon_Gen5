@@ -7,6 +7,7 @@
  */
 //==============================================================================
 #include <gflib.h>
+#include <dwc.h>
 #include "net/net_exchange.h"
 #include "savedata\wifilist.h"
 

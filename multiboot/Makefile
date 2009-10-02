@@ -120,11 +120,11 @@ TARGET_BIN	=	main.srl
 
 EXT_OBJS += $(patsubst %, arc/%, $(GAME_FILE_TREE:.narc=.o))
 
-include	$(TWLVCT_ROOT)/build/buildtools/commondefs
+#include	$(TWLVCT_ROOT)/build/buildtools/commondefs
 include $(TWLSYSTEM_ROOT)/build/buildtools/commondefs
 include $(TWLSYSTEM_ROOT)/build/buildtools/nnslibdefs
 include $(TWLSYSTEM_ROOT)/build/buildtools/modulerules
-include	$(TWLVCT_ROOT)/build/buildtools/modulerules
+#include	$(TWLVCT_ROOT)/build/buildtools/modulerules
 
 
 #----------------------------------------------------------------------------

@@ -41,6 +41,12 @@ typedef enum
 } CELL_OBJECT_MODEL;
 
 
+typedef enum
+{
+  SETUP_TRADE_BG_MODE_NORMAL,
+  SETUP_TRADE_BG_MODE_DEMO,
+} SETUP_TRADE_BG_MODE;
+
 
 #define _TIMING_ENDNO (12)
 
@@ -140,6 +146,7 @@ struct _IRC_POKEMON_TRADE {
 	GFL_BMPWIN* StatusWin[2*4];
 
 	TOUCH_SW_SYS			*TouchSubWindowSys;
+  GFL_PTC_PTR ptc;
 
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
@@ -273,6 +280,14 @@ extern void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_G3dDraw(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SetSubdispGraphicDemo(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_GraphicFreeVram(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_SetMainDispGraphic(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_ResetSubDispGraphic(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_SetSubDispGraphic(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_3DGraphicSetUp( IRC_POKEMON_TRADE* pWork );
+extern void IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE type);
+extern void IRC_POKETRADE_CreatePokeIconResource(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_InitBoxCursor(IRC_POKEMON_TRADE* pWork);
+
 
 extern void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork );
 extern void IRC_POKETRADEDEMO_Main( IRC_POKEMON_TRADE* pWork );

@@ -12,6 +12,7 @@
 #include "gflib.h"
 
 #if GFL_NET_WIFI
+#include <dwc.h>
 
 //#include "net_wireless.h"
 #include "net/dwc_rapcommon.h"

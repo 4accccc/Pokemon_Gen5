@@ -151,6 +151,10 @@ static NetWork* _pWork = NULL;
 static void _DevBootFunc(HEAPID heapID, NetErrorFunc errorFunc)
 {
   GFL_NET_WifiStart( heapID, errorFunc );
+
+  //@todo ’u‚«Š·‚¦‚ª•K—v
+  GF_ASSERT(DWC_ERROR_FRIENDS_SHORTAGE == __ERROR_FRIENDS_SHORTAGE_DWC);
+
 }
 
 //------------------------------------------------------------------------------

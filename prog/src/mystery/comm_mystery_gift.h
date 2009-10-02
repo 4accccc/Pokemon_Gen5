@@ -8,10 +8,10 @@
  * $Id: comm_mystery_gift.h,v 1.25 2006/08/12 06:29:26 mitsuhara Exp $
  */
 //============================================================================================
-#ifndef __COMM_MYSTERY_GIFT_H__
-#define __COMM_MYSTERY_GIFT_H__
+#pragma once
 
 #include "savedata/mystery_data.h"
+#include <dwc.h>
 
 
 
@@ -198,5 +198,4 @@ extern void WifiMysteryGift_ErrorDisp(MYSTERYGIFT_WORK *wk);
 extern void SetTimeWaitIconEx(MYSTERYGIFT_WORK *wk, int flag);
 
 
-#endif	// __COMM_MYSTERY_GIFT_H__
 /*  */

@@ -8,6 +8,7 @@
 //============================================================================================
 
 #include <gflib.h>
+#include <dwc.h>
 #include "arc_def.h"
 #include "message.naix"
 #include "msg/msg_wifi_lobby.h"
@@ -1020,13 +1021,13 @@ static int WifiP2PMatch_CancelEnableWaitDP( WIFIP2PMATCH_WORK *wk, int seq );
 static int WifiP2PMatch_FirstSaving2( WIFIP2PMATCH_WORK *wk, int seq );
 
 
-static DWCUserData* _getMyUserData(void* pWork)
+static void* _getMyUserData(void* pWork)  //DWCUserData
 {
   WIFIP2PMATCH_WORK *wk = (WIFIP2PMATCH_WORK*)pWork;
   return WifiList_GetMyUserInfo(SaveData_GetWifiListData(wk->pSaveData));
 }
 
-static DWCFriendData* _getFriendData(void* pWork)
+static void* _getFriendData(void* pWork)  //DWCFriendData
 {
   WIFIP2PMATCH_WORK *wk = (WIFIP2PMATCH_WORK*)pWork;
   //    NET_PRINT("Friend %d\n",WifiList_GetFriendDataNum(SaveData_GetWifiListData(wk->pSaveData)));

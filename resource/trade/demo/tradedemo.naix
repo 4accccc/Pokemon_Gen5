@@ -2,7 +2,7 @@
 	Archive file index definition.
 	File: tradedemo.naix
 
-	This file was created by NINTENDO NITRO-System Archiver.
+	This file was created by NINTENDO TWL-System Archiver.
 
 
  *****************************************************************************/
@@ -39,7 +39,8 @@ enum {
 	NARC_tradedemo_trade_01_nsbmd = 25,
 	NARC_tradedemo_trade_01_nsbta = 26,
 	NARC_tradedemo_trade_ball_nsbmd = 27,
-	NARC_tradedemo_balloon_spa = 28
+	NARC_tradedemo_trailer_nsbmd = 28,
+	NARC_tradedemo_balloon_spa = 29
 };
 
 /* NARC_TRADEDEMO_NAIX_ */

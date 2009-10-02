@@ -79,21 +79,6 @@ typedef struct
 //-------------------------------------------------------------------------------------------
 static void _demoInit( HEAPID heap_id )
 {
-  //VRAM設定
-  //	GFL_DISP_SetBank(&sc_VRAM_param );
-
-  // BGL初期化
-  //	GFL_BG_Init( heap_id );	// システム初期化
-  //	GFL_BG_SetBGMode( &sc_BG_mode );	  // BGモード設定
-  //	GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &sc_BGCNT1_M, GFL_BG_MODE_TEXT );	// MAIN_BG1の設定
-  //	GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );						// MAIN_BG0を表示ON
-  //	GFL_BG_SetBGControl3D( PRIORITY_MAIN_BG0 );		              // 3D面の表示優先順位を設定
-
-  // 3Dシステムを初期化
-  // GFL_G3D_Init(
-  //   GFL_G3D_VMANLNK, GFL_G3D_TEX128K,
-  //    GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0x1000, heap_id, NULL );
-
 
   
   // ライト作成
@@ -146,10 +131,9 @@ static const GFL_G3D_UTIL_RES res_table_reel[] =
 
 static const GFL_G3D_UTIL_RES res_table_trade1[] =
 {
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade_ball_nsbmd,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade_01_nsbmd,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade_01_nsbca,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade_01_nsbta,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome2_nsbmd,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome2_nsbca,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome2_nsbta,    GFL_G3D_UTIL_RESARC },
 };
 
 static const GFL_G3D_UTIL_RES res_table_trade_trade[] =
@@ -182,8 +166,8 @@ static const GFL_G3D_UTIL_RES res_table_trade_end[] =
 
 static const GFL_G3D_UTIL_ANM anm_table_trade1[] =
 {
+  { 1, 0 },
   { 2, 0 },
-  { 3, 0 },
 };
 
 static const GFL_G3D_UTIL_ANM anm_table_trade_nomal[] =
@@ -219,9 +203,9 @@ static const GFL_G3D_UTIL_OBJ obj_table_reel[] =
 static const GFL_G3D_UTIL_OBJ obj_table_trade1[] =
 {
   {
-    1,                         // モデルリソースID
+    0,                         // モデルリソースID
     0,                         // モデルデータID(リソース内部INDEX)
-    1,                         // テクスチャリソースID
+    0,                         // テクスチャリソースID
     anm_table_trade1,           // アニメテーブル(複数指定のため)
     NELEMS(anm_table_trade1),   // アニメリソース数
   },
@@ -490,14 +474,19 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
     int i;
 
 
-
   // 初期化処理
   _demoInit( pWork->heapID );
   // 3D管理ユーティリティーのセットアップ
   pWork->g3dUtil = GFL_G3D_UTIL_Create( 20, 20, pWork->heapID );
 
-  Finalize(pWork);
+	//パーティクルシステムワーク初期化
+	GFL_PTC_Init(pWork->heapID);
 
+  {
+    void* heap;
+    heap = GFL_HEAP_AllocMemory(pWork->heapID, PARTICLE_LIB_HEAP_SIZE);
+    pWork->ptc = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, TRUE, pWork->heapID);
+  }
   // カメラ作成
   if(pWork->camera==NULL)
   {
@@ -511,6 +500,15 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
   }
   modelset[pWork->modelno].setCamera(pWork);
 
+
+	//リソース読み込み＆登録
+  {
+  	void *resource;
+    resource = GFL_PTC_LoadArcResource(
+      ARCID_POKETRADEDEMO, NARC_tradedemo_balloon_spa, pWork->heapID);
+    GFL_PTC_SetResource(pWork->ptc, resource, TRUE, NULL);
+  }
+  
 }
 
 
@@ -532,7 +530,13 @@ void IRC_POKETRADEDEMO_Main( IRC_POKEMON_TRADE* pWork )
 //============================================================================================
 void IRC_POKETRADEDEMO_End( IRC_POKEMON_TRADE* pWork )
 {
-
+  {
+  	void *heap;
+	
+    heap = GFL_PTC_GetHeapPtr(pWork->ptc);
+    GFL_PTC_Exit();
+    GFL_HEAP_FreeMemory(heap);
+  }
 
   // カメラ破棄
   if(pWork->camera)
@@ -635,6 +639,7 @@ static void Finalize( IRC_POKEMON_TRADE* pWork )
       break;
     }
   }
+  pWork->objCount = 0;
 
 }
 
@@ -679,6 +684,10 @@ static void Draw( IRC_POKEMON_TRADE* pWork )
   // 描画
   GFL_G3D_DRAW_Start();
   GFL_G3D_DRAW_SetLookAt();
+
+  GFL_PTC_DrawAll();	//パーティクル描画
+  GFL_PTC_CalcAll();	//パーティクル計算
+
   {
     int i;
     for( i=0; i<pWork->objCount; i++ )
@@ -692,5 +701,6 @@ static void Draw( IRC_POKEMON_TRADE* pWork )
 //  frame += anime_speed;
   //  ICA_ANIME_IncAnimeFrame( pWork->icaAnime, anime_speed );
 }
+
 
 

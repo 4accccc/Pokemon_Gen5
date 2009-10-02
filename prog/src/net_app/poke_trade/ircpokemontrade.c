@@ -1,7 +1,7 @@
 //=============================================================================
 /**
  * @file	  ircpokemontrade.c
- * @bfief	  ポケモン交換して通信を終了する
+ * @brief	  ポケモン交換して通信を終了する
  * @author  ohno_katsumi@gamefreak.co.jp
  * @date	  09/07/09
  */
@@ -9,6 +9,10 @@
 
 #include <gflib.h>
 
+#if PM_DEBUG
+#include "debug/debugwin_sys.h"
+#include "test/debug_pause.h"
+#endif
 
 #include "arc_def.h"
 #include "net/network_define.h"
@@ -16,7 +20,6 @@
 #include "ircpokemontrade.h"
 #include "system/main.h"
 
-#include "poke_icon.naix"
 #include "message.naix"
 #include "print/printsys.h"
 #include "print/global_font.h"
@@ -770,7 +773,15 @@ void IRC_POKMEONTRADE_ChangeFinish(IRC_POKEMON_TRADE* pWork)
   PSTATUS_SUB_PokeDeleteMcss(pWork, 0);
   PSTATUS_SUB_PokeDeleteMcss(pWork, 1);
 
-  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
+  {
+    int i;
+    for(i = 0;i< CUR_NUM;i++){
+      if(pWork->curIcon[i]){
+        GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[i], TRUE );
+      }
+    }
+  }
+  
   _InitBoxName(pWork->pBox,pWork->nowBoxno,pWork);  //再描画
 
   IRC_POKETRADE_MessageWindowClear(pWork);
@@ -995,318 +1006,7 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
 
 }
 
-#define FIELD_CLSYS_RESOUCE_MAX		(100)
 
-
-//--------------------------------------------------------------
-///	セルアクター　初期化データ
-//--------------------------------------------------------------
-static const GFL_CLSYS_INIT fldmapdata_CLSYS_Init =
-{
-  0, 0,
-  0, 512,
-  GFL_CLSYS_OAMMAN_INTERVAL, 128-GFL_CLSYS_OAMMAN_INTERVAL,
-  GFL_CLSYS_OAMMAN_INTERVAL, 128-GFL_CLSYS_OAMMAN_INTERVAL, //通信アイコン部分
-  0,
-  FIELD_CLSYS_RESOUCE_MAX,
-  FIELD_CLSYS_RESOUCE_MAX,
-  FIELD_CLSYS_RESOUCE_MAX,
-  FIELD_CLSYS_RESOUCE_MAX,
-  16, 16,
-};
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	環境セットアップコールバック関数
- */
-//-----------------------------------------------------------------------------
-static void Graphic_3d_SetUp( void )
-{
-  // ３Ｄ使用面の設定(表示＆プライオリティー)
-  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-
-  // 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
-  G3X_SetShading( GX_SHADING_TOON); //GX_SHADING_HIGHLIGHT );
-  G3X_AntiAlias( FALSE );
-  G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
-  G3X_AlphaBlend( FALSE );		// アルファブレンド　オン
-  G3X_EdgeMarking( FALSE );
-  G3X_SetFog( TRUE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
-
-  // クリアカラーの設定
-  G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,63,FALSE);	//color,alpha,depth,polygonID,fog
-  // ビューポートの設定
-  G3_ViewPort(0, 0, 255, 191);
-
-  // ライト設定
-  {
-    static const GFL_G3D_LIGHT sc_GFL_G3D_LIGHT[] =
-    {
-      {
-        { 0, -FX16_ONE, 0 },
-        GX_RGB( 16,16,16),
-      },
-      {
-        { 0, FX16_ONE, 0 },
-        GX_RGB( 16,16,16),
-      },
-      {
-        { 0, -FX16_ONE, 0 },
-        GX_RGB( 16,16,16),
-      },
-      {
-        { 0, -FX16_ONE, 0 },
-        GX_RGB( 16,16,16),
-      },
-    };
-    int i;
-
-    for( i=0; i<NELEMS(sc_GFL_G3D_LIGHT); i++ ){
-      GFL_G3D_SetSystemLight( i, &sc_GFL_G3D_LIGHT[i] );
-    }
-  }
-
-  //レンダリングスワップバッファ
-  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
-  G2_SetBG0Priority(2);
-}
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   BG領域設定
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _createBg(IRC_POKEMON_TRADE* pWork)
-{
-  {
-    static const GFL_DISP_VRAM vramBank = {
-      GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-      GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-      GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-      GX_VRAM_SUB_BGEXTPLTT_32_H,		// サブ2DエンジンのBG拡張パレット
-      GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-      GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
-      GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
-      GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-      GX_VRAM_TEX_0_B,				// テクスチャイメージスロット
-      GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
-      GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
-      GX_OBJVRAMMODE_CHAR_1D_128K,		// サブOBJマッピングモード
-    };
-    GFL_DISP_SetBank( &vramBank );
-
-
-    GFL_CLACT_SYS_Create(	&fldmapdata_CLSYS_Init, &vramBank, pWork->heapID );
-
-
-  }
-  {
-    static const GFL_BG_SYS_HEADER sysHeader = {
-      GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
-      };
-    GFL_BG_SetBGMode( &sysHeader );
-  }
-  GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
-  GFL_DISP_GXS_SetVisibleControlDirect(0);
-
-  {
-    int frame = GFL_BG_FRAME3_M;
-    GFL_BG_BGCNT_HEADER bgcntText = {
-      0, 0, 0x800, 0,
-      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x8000,
-      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-      };
-
-    GFL_BG_SetBGControl(
-      frame, &bgcntText, GFL_BG_MODE_TEXT );
-    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_LoadScreenReq( frame );
-  }
-  {
-    int frame = GFL_BG_FRAME2_M;
-    GFL_BG_BGCNT_HEADER bgcntText = {
-      0, 0, 0x800, 0,
-      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x10000, 0x8000,
-      GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
-      };
-
-    GFL_BG_SetBGControl(
-      frame, &bgcntText, GFL_BG_MODE_TEXT );
-    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_LoadScreenReq( frame );
-  }
-  {
-    int frame = GFL_BG_FRAME1_M;
-    GFL_BG_BGCNT_HEADER bgcntText = {
-      0, 0, 0x800, 0,
-      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x10000, 0x8000,
-      GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
-      };
-
-    GFL_BG_SetBGControl(
-      frame, &bgcntText, GFL_BG_MODE_TEXT );
-    //		GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_LoadScreenReq( frame );
-  }
-  {
-    int frame = GFL_BG_FRAME0_S;
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-      3, 0, 0, FALSE
-      };
-    GFL_BG_SetBGControl(
-      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    //		GFL_BG_LoadScreenReq( frame );
-    //        GFL_BG_ClearFrame(frame);
-  }
-  {
-    int frame = GFL_BG_FRAME1_S;
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-      1, 0, 0, FALSE
-      };
-
-    GFL_BG_SetBGControl(
-      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-
-    //		GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_LoadScreenReq( frame );
-    //        GFL_BG_ClearFrame(frame);
-  }
-  {
-    int frame = GFL_BG_FRAME2_S;
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x10000,GX_BG_EXTPLTT_01,
-      2, 0, 0, FALSE
-      };
-
-    GFL_BG_SetBGControl(
-      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-
-    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 64, 32, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_LoadScreenReq( frame );
-  }
-  {
-    int frame = GFL_BG_FRAME3_S;
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xc800, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
-      };
-
-    GFL_BG_SetBGControl(
-      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 24, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_LoadScreenReq( frame );
-  }
-
-  GFL_BG_SetBGControl3D( 0 );
-  GFL_BG_SetVisible( GFL_BG_FRAME0_M , TRUE );
-
-
-  //3D系の初期化
-  { //3D系の設定
-    static const VecFx32 cam_pos = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(300.0f)};
-    static const VecFx32 cam_target = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(0.0f)};
-    static const VecFx32 cam_up = {0,FX32_ONE,0};
-    //エッジマーキングカラー
-    static  const GXRgb edge_color_table[8]=
-    { GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
-    GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
-                  0, pWork->heapID, Graphic_3d_SetUp );
-#if 1
-
-    //正射影カメラ
-    pWork->pCamera =  GFL_G3D_CAMERA_Create( GFL_G3D_PRJORTH,
-                                             FX32_ONE*12.0f,
-                                             0,
-                                             0,
-                                             FX32_ONE*16.0f,
-                                             (FX32_ONE),
-                                             (FX32_ONE*300),
-                                             NULL,
-                                             &cam_pos,
-                                             &cam_up,
-                                             &cam_target,
-                                             pWork->heapID );
-
-    GFL_G3D_CAMERA_Switching( pWork->pCamera );
-    //エッジマーキングカラーセット
-    G3X_SetEdgeColorTable( edge_color_table );
-    G3X_EdgeMarking( TRUE );
-
-    GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );
-#endif
-
-  }
-
-
-}
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   BOXカーソル表示
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _initBoxCursor(IRC_POKEMON_TRADE* pWork)
-{
-  GFL_CLWK_DATA cellInitData;
-  u8 pltNum,i;
-  GFL_CLACTPOS pos;
-
-  //素材
-  {
-    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
-    pWork->cellRes[CHAR_SCROLLBAR] =
-      GFL_CLGRP_CGR_Register( p_handle , NARC_trade_wb_trade_obj01_NCGR ,
-                              FALSE , CLSYS_DRAW_SUB , pWork->heapID );
-    pWork->cellRes[PAL_SCROLLBAR] =
-      GFL_CLGRP_PLTT_Register(
-        p_handle ,NARC_trade_wb_trade_obj_NCLR , CLSYS_DRAW_SUB ,
-        _OBJPLT_BOX * 32 , pWork->heapID  );
-    pWork->cellRes[ANM_SCROLLBAR] =
-      GFL_CLGRP_CELLANIM_Register(
-        p_handle , NARC_trade_wb_trade_obj01_NCER, NARC_trade_wb_trade_obj01_NANR , pWork->heapID  );
-
-    GFL_ARC_CloseDataHandle( p_handle );
-
-  }
-
-  {
-    GFL_CLWK_DATA cellInitData;
-    cellInitData.pos_x = 128;
-    cellInitData.pos_y = CONTROL_PANEL_Y;
-    cellInitData.anmseq = 2;
-    cellInitData.bgpri = 1;
-    pWork->curIcon[2] = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                             pWork->cellRes[CHAR_SCROLLBAR],
-                                             pWork->cellRes[PAL_SCROLLBAR],
-                                             pWork->cellRes[ANM_SCROLLBAR],
-                                             &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[2] , TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[2], TRUE );
-  }
-
-}
 
 
 //------------------------------------------------------------------------------
@@ -1323,7 +1023,10 @@ static void _dispInit(IRC_POKEMON_TRADE* pWork)
   GFL_BMPWIN_Init( pWork->heapID );
   GFL_FONTSYS_Init();
 
-  _createBg(pWork);
+  IRC_POKETRADE_SetMainDispGraphic(pWork);
+  IRC_POKETRADE_SetSubDispGraphic(pWork);
+  IRC_POKETRADE_3DGraphicSetUp( pWork );
+
 
   GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
 
@@ -1345,55 +1048,10 @@ static void _dispInit(IRC_POKEMON_TRADE* pWork)
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 120 , 0 , pWork->heapID );
 
 
-  _initBoxCursor(pWork);
-
-  //ポケアイコン用リソース
-  //キャラクタは各プレートで
-#if 1
-  {
-    int line,i;
-    ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
-    pWork->cellRes[PLT_POKEICON] =
-      GFL_CLGRP_PLTT_RegisterComp( arcHandlePoke ,
-                                   POKEICON_GetPalArcIndex() , CLSYS_DRAW_SUB ,
-                                   _OBJPLT_POKEICON*32 , pWork->heapID  );
-    pWork->cellRes[ANM_POKEICON] =
-      GFL_CLGRP_CELLANIM_Register( arcHandlePoke ,
-                                   POKEICON_GetCellSubArcIndex() , POKEICON_GetAnmArcIndex(), pWork->heapID  );
-
-    for(line =0 ;line < _LING_LINENO_MAX; line++){
-      for(i = 0;i < BOX_VERTICAL_NUM; i++){
-        GFL_CLWK_DATA cellInitData;
-
-        //         pWork->pokeIconNcgRes[line][i] =
-        //         GFL_CLGRP_CGR_Register( arcHandle , POKEICON_GetCgxArcIndex(ppp) , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
-
-        cellInitData.pos_x = 0;
-        cellInitData.pos_y = 0;
-        cellInitData.anmseq = POKEICON_ANM_HPMAX;
-        cellInitData.softpri = 0;
-        cellInitData.bgpri = 1;
-
-        pWork->pokeIconNcgRes[line][i] = GFL_CLGRP_CGR_Register( arcHandlePoke ,NARC_poke_icon_poke_icon_tam_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
-        pWork->pokeIcon[line][i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                        pWork->pokeIconNcgRes[line][i],
-                                                        pWork->cellRes[PLT_POKEICON],
-                                                        pWork->cellRes[ANM_POKEICON],
-                                                        &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
-        GFL_CLACT_WK_SetAutoAnmFlag( pWork->pokeIcon[line][i] , FALSE );
-        GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[line][i], FALSE );
-      }
+  IRC_POKETRADE_InitBoxCursor(pWork);
 
 
-    }
-
-    GFL_ARC_CloseDataHandle(arcHandlePoke);
-
-
-
-  }
-#endif
-
+  IRC_POKETRADE_CreatePokeIconResource(pWork);
 
   IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);  //ポケモンの表示
 
@@ -1403,7 +1061,7 @@ static void _dispInit(IRC_POKEMON_TRADE* pWork)
 
 #if 1
   pWork->mcssSys = MCSS_Init( 2 , pWork->heapID );
-  MCSS_SetTextureTransAdrs( pWork->mcssSys , 0x8000 );
+  MCSS_SetTextureTransAdrs( pWork->mcssSys , 0x10000 );
   MCSS_SetOrthoMode( pWork->mcssSys );
 #endif
 
@@ -1449,19 +1107,18 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
 
 //------------------------------------------------------------------------------
 /**
- * @brief   PROCスタート
- * @retval  none
+ * @brief        PROCスタート
+ * @param pwk    EVENT_IRCBATTLE_WORKが必要
+ * @retval       none
  */
 //------------------------------------------------------------------------------
 static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   int i;
   EVENT_IRCBATTLE_WORK* pParentWork = pwk;
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0xD0000 );
-
+  
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x110000 );
   GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
-
-
   {
     IRC_POKEMON_TRADE *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_POKEMON_TRADE ), HEAPID_IRCBATTLE );
     GFL_STD_MemClear(pWork, sizeof(IRC_POKEMON_TRADE));
@@ -1510,9 +1167,10 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
 
     _dispInit(pWork);
     IRC_POKETRADEDEMO_Init(pWork);
+    DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );
+    DEBUG_PAUSE_SetEnable( TRUE );
   }
-
-
+  
   return GFL_PROC_RES_FINISH;
 }
 
@@ -1527,11 +1185,16 @@ static GFL_PROC_RESULT IrcBattleFriendProcMain( GFL_PROC * proc, int * seq, void
 {
   IRC_POKEMON_TRADE* pWork = mywk;
   GFL_PROC_RESULT retCode = GFL_PROC_RES_FINISH;
-
   StateFunc* state = pWork->state;
+
+  if(DEBUGWIN_IsActive()){
+    return GFL_PROC_RES_CONTINUE;
+  }
+    
+  
   if(state != NULL){
     state(pWork);
-    pWork->anmCount--;
+    pWork->anmCount++;
     retCode = GFL_PROC_RES_CONTINUE;
   }
   //ポケモンセットをコール
@@ -1580,6 +1243,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
   IRC_POKEMON_TRADE* pWork = mywk;
   EVENT_IRCBATTLE_WORK* pParentWork = pwk;
 
+  DEBUGWIN_ExitProc();
   if(GFL_NET_IsInit()){
     GFL_NET_DelCommandTable(GFL_NET_CMD_IRCTRADE);
   }

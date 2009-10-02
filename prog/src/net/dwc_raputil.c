@@ -8,6 +8,7 @@
 //=============================================================================
 
 #include <gflib.h>
+#include <dwc.h>
 #include "system/main.h"
 #include "net/dwc_raputil.h"
 

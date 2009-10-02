@@ -18,7 +18,7 @@ extern "C" {
 #define GFL_NET_IRC     (1)   ///< IRC‚ðƒQ[ƒ€‚ÅŽg—p‚·‚éê‡ ON
 
 #if GFL_NET_WIFI
-#include <dwc.h>
+//#include <dwc.h>
 #endif  //GFL_NET_WIFI
 
 
@@ -236,8 +236,8 @@ typedef void (*NetConnectNegotiation)(void* pWork,int netID); ///< ƒlƒSƒVƒG[ƒVƒ
 
 typedef void (*NetDeleteFriendListCallback)(int deletedIndex, int srcIndex, void* pWork); ///< ƒtƒŒƒ“ƒhƒŠƒXƒgíœƒR[ƒ‹ƒoƒbƒN
 
-typedef DWCUserData* (*NetGetDWCUserDataCallback)(void* pWork); ///< DWC‚Ìƒ†[ƒUƒf[ƒ^iŽ©•ª‚Ìƒf[ƒ^j‚ð“¾‚é
-typedef DWCFriendData* (*NetGetDWCFriendDataCallback)(void* pWork); ///< DWCŒ`Ž®‚Ì—F’BƒŠƒXƒg
+typedef void* (*NetGetDWCUserDataCallback)(void* pWork); ///< DWC‚Ìƒ†[ƒUƒf[ƒ^iŽ©•ª‚Ìƒf[ƒ^j‚ð“¾‚éDWCUserData
+typedef void* (*NetGetDWCFriendDataCallback)(void* pWork); ///< DWCŒ`Ž®‚Ì—F’BƒŠƒXƒgDWCFriendData
 
 
 /// @brief ’ÊM‚Ì‰Šú‰»—p\‘¢‘Ì
@@ -791,7 +791,7 @@ extern int GFL_NET_StateGetWifiErrorNo(void);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_WIFI_InitUserData(DWCUserData *pUserdata);
+extern void GFL_NET_WIFI_InitUserData(void *pUserdata);
 #endif
 
 //==============================================================================
