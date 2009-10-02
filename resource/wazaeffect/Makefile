@@ -29,8 +29,11 @@ SUBDIRS	= graphic
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)/macro_define
-
+#MWAS,MWLD
+#include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
 include	$(COMMONDEFS_CCTYPE_CW)
+#Moduleルール
+include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
 #リソースファイルの存在するディレクトリを指定
 RES_DIR = ./esf_file/
@@ -41,7 +44,7 @@ CNV_DIR = ./
 #コンバート対象のファイルツリーを生成
 WAZAEFFSRCS	:= $(wildcard $(RES_DIR)?e_???.esf)
 
-.PHONY:	do-build clean sub_dir esf
+.PHONY:	do-build clean graphic
 
 .SUFFIXES:	.s
 
@@ -49,12 +52,12 @@ WAZAEFFSRCS	:= $(wildcard $(RES_DIR)?e_???.esf)
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-do-build:	sub_dir esf $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
+do-build:	graphic esf $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
 else
-do-build:	sub_dir $(TARGETDIR)/$(NARCNAME)
+do-build:	graphic $(TARGETDIR)/$(NARCNAME)
 endif
 
-sub_dir:
+graphic:
 	@$(MAKE_SUBDIR)
 
 $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
@@ -68,8 +71,10 @@ esf: $(notdir $(WAZAEFFSRCS:.esf=.s)) $(notdir $(WAZAEFFSRCS:.esf=.bin))
 	ruby eescmk.rb c:/home/pokemon_wb/prog/src/battle/btlv/btlv_effvm_def.h $(RES_DIR)$*.esf c:/home/pokemon_wb/
 
 %.bin: %.s ../../prog/src/battle/btlv/btlv_effvm_def.h
-	$(MWAS) $< -o $*.o
-	$(MWLD) -dis -o $*.elf $*.o
+#	$(MWAS) $< -o $*.o
+#	$(MWLD) -dis -o $*.elf $*.o
+	/cygdrive/c/Program\ Files/Freescale/CW\ for\ NINTENDO\ DSi\ V1.1/ARM_Tools/Command_Line_Tools/mwasmarm.exe $< -o $*.o
+	/cygdrive/c/Program\ Files/Freescale/CW\ for\ NINTENDO\ DSi\ V1.1/ARM_Tools/Command_Line_Tools/mwldarm.exe -dis -o $*.elf $*.o
 	../../tools/elf2bin $*.elf
 
 $(NARCNAME): $(notdir $(WAZAEFFSRCS:.esf=.bin))

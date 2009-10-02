@@ -30,8 +30,11 @@ SUBDIRS	=
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)/macro_define
-
+#MWAS,MWLD
+include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
 include	$(COMMONDEFS_CCTYPE_CW)
+#Moduleルール
+include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
 .PHONY:	do-build clean
 

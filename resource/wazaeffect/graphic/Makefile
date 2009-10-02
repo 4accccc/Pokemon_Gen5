@@ -31,8 +31,6 @@ SUBDIRS	=
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)/macro_define
 
-include	$(COMMONDEFS_CCTYPE_CW)
-
 #リソースファイルの存在するディレクトリを指定
 RES_DIR = ./
 
@@ -44,7 +42,7 @@ WAZAEFFNCG	:= $(wildcard $(RES_DIR)*.ncg)
 WAZAEFFNSC	:= $(wildcard $(RES_DIR)*.nsc)
 WAZAEFFNCL	:= $(wildcard $(RES_DIR)*.ncl)
 
-.PHONY:	do-build clean
+.PHONY:	do-build clean waza_eff_gra.scr ncgr nscr nclr
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
