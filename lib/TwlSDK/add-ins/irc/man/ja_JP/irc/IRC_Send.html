@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<title>IRC_Send</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">IRC_Send</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;irc.h&gt;</CODE><BR> 
+  <BR>
+  <PRE><CODE>void IRC_Send(u8 *buf, u8 size, u8 command);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+<TABLE border="1" width="100%">
+  <TBODY>
+    <TR>
+      <TD width="13%"><EM><STRONG>*buf</STRONG></EM></TD>
+      <TD width="87%">送信したいデータの先頭アドレス。コマンドのみ送りたい場合はNULLを指定してください。</TD>
+    </TR>
+    <TR>
+      <TD width="13%"><EM><STRONG>size</STRONG></EM></TD>
+      <TD width="87%">送信するデータのバイト数。</TD>
+    </TR>
+	<TR>
+      <TD width="13%"><EM><STRONG>command</STRONG></EM></TD>
+      <TD width="87%">通信内容を識別するためのコマンド番号。偶数のみ使用可能ですが、内容はアプリケーションで自由に設定してください。</TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<h2>返り値</h2>
+なし
+
+<H2>説明</H2>
+<P>データを送信するための関数です。一度に128バイトまで送信可能です。相手にデータが届いた際に<CODE><A href="IRC_SetRecvCallback.html">IRC_SetRecvCallback</A>で指定したコールバックが相手側で呼ばれます。
+</CODE></p>
+</P>
+
+<h2>参照</h2>
+<p><CODE><A href="IRC_SetRecvCallback.html">IRC_SetRecvCallback</A>
+</CODE></p>
+<H2>履歴</H2>
+<P>
+2008/06/12 初版</P>
+</body>
+</html>

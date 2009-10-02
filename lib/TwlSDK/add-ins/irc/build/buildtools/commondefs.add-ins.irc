@@ -1,0 +1,41 @@
+#! make -f
+#----------------------------------------------------------------------------
+# Project:  TwlSDK
+# File:     commondefs.add-ins.irc
+#
+# Copyright 2009 Nintendo.  All rights reserved.
+#
+# These coded instructions, statements, and computer programs contain
+# proprietary information of Nintendo of America Inc. and/or Nintendo
+# Company Ltd., and are protected by Federal copyright law.  They may
+# not be disclosed to third parties or copied or duplicated in any form,
+# in whole or in part, without the prior written consent of Nintendo.
+#
+# $Date:: 2009-04-30#$
+# $Rev: 10490 $
+# $Author: yosizaki $
+#----------------------------------------------------------------------------
+
+ifndef	TWL_ADDIN_IRC_DEFS
+TWL_ADDIN_IRC_DEFS      =
+
+# IRCライブラリを使用するための各種設定。
+
+TWL_ADDIN_IRC_ROOT             ?= $(TWLSDK_ROOT)/add-ins/irc
+TWL_ADDIN_IRC_CYGROOT          ?= $(subst $(SPACE),\ ,$(subst \,/,$(TWL_ADDIN_IRC_ROOT)))
+TWL_ADDIN_IRC_INCDIR           ?= $(TWL_ADDIN_IRC_CYGROOT)/include
+TWL_ADDIN_IRC_LIBDIR           ?= $(TWL_ADDIN_IRC_CYGROOT)/lib/$(TWL_LIBTYPE)
+TWL_ADDIN_IRC_LIBS             ?= libirc$(TWL_LIBSUFFIX).a
+
+TWL_ADDIN_IRC_INSTALL_ROOT     ?= $(TWL_ADDIN_IRC_CYGROOT)
+TWL_ADDIN_IRC_INSTALL_LIBDIR   ?= $(TWL_ADDIN_IRC_CYGROOT)/lib/$(TWL_LIBTYPE)
+
+ifeq ($(filter ARM7,$(NITRO_PROC)$(TWL_PROC)),)
+EINCLUDES                      += $(TWL_ADDIN_IRC_INCDIR)
+ELIBRARY_DIRS                  += $(TWL_ADDIN_IRC_LIBDIR)
+ELIBRARIES                     += $(TWL_ADDIN_IRC_LIBS)
+endif
+
+endif
+
+#===== End of commondefs.add-ins.irc =====

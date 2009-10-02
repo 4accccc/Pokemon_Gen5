@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<title>IRC_Connect</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">IRC_Connect</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+<CODE>#include &lt;irc.h&gt;</CODE><BR> 
+  <BR>
+  <PRE><CODE>void IRC_Connect(void);</CODE></PRE></dd> 
+</dl>
+
+<h2>引数</h2>
+なし
+<h2>返り値</h2>
+なし
+
+<H2>説明</H2>
+<P>赤外線リンクを張るための通信開始関数です。最初に接続要求を出した側が内部的にSenderになります。<BR>どちらかが出した接続要求が届く前に相手の接続要求が届いた場合は失敗します。<BR>
+接続が完了したかどうかは<CODE><A href="IRC_IsConnect.html">IRC_IsConnect</A>で確認でき、どちらがSenderになったかは<CODE><A href="IRC_IsSender.html">IRC_IsSender</A>で確認できます。
+</CODE></p>
+</P>
+
+
+<h2>参照</h2>
+<p>
+<CODE><A href="IRC_IsConnect.html">IRC_IsConnect</A>
+<CODE><A href="IRC_IsSender.html">IRC_IsSender</A>
+</CODE></p>
+<H2>履歴</H2>
+<P>
+2008/06/12 初版</P>
+</body>
+</html>
