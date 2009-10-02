@@ -4,6 +4,7 @@
 #**
 ##-----------------------------------------------------------------------------
 
+USERS	= matsuda
 
 SUBDIRS		=
 
@@ -12,8 +13,9 @@ POKECOL:=$(wildcard *.ncl)
 
 RES_DIR	= .
 
-include	$(NITROSDK_ROOT)/build/buildtools/commondefs.cctype.CW
-include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
+include	$(PROJECT_RSCDIR)\macro_define
+include	$(COMMONDEFS_CCTYPE_CW)
+
 
 #Makeで生成される*.bin/*.narcはmake cleanの削除対象にする
 LDIRT_CLEAN	= $(POKEGRA:.nce=.NCGR) \
@@ -54,3 +56,14 @@ pokefoot.narc: $(POKEGRA:.nce=.NCER) $(POKECOL:.ncl=.NCLR) pokefoot.scr
 	nnsarc -c -l -n -i pokefoot.narc -S pokefoot.scr
 	xcopy /d /y pokefoot.narc .\\..\\
 	xcopy /d /y pokefoot.naix .\\..\\
+
+
+#------------------------------------------------------------------------------
+#	make clean ルール
+#※生成ファイルを削除するように記述を変更してください
+#------------------------------------------------------------------------------
+clean:
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
+	@$(MAKE_SUBDIR)
+endif
+	rm -f *.N??R
