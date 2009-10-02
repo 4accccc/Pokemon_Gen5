@@ -22,6 +22,8 @@
 #include "script.h"     //for SCRIPT_CallScript
 #include "../../../resource/fldmapdata/script/c04gym0101_def.h"  //for SCRID_～
 
+#include "gym_elec_local_def.h"
+
 #define GYM_ELEC_UNIT_IDX (0)
 #define GYM_ELEC_TMP_ASSIGN_ID  (1)
 
@@ -161,19 +163,19 @@ static const u8 CommPlatFormIdx[CAPSULE_NUM_MAX] = {
 //レールごとの停車アニメフレーム（1レール2つずつ）
 //1箇所しか止まらないレールは2データとも同じ値を入れる。ICAデータ依存
 static const fx32 StopFrame[RALE_NUM_MAX][RALE_PLATFORM_NUM_MAX] = {
-  {0, FX32_ONE*15},     //レール1
-  {0, FX32_ONE*33},   //レール2
+  {0, FX32_ONE*R_STOP_FRM1},     //レール1
+  {0, FX32_ONE*R_STOP_FRM2},   //レール2
   {0, FX32_ONE*0},     //レール3
-  {0, FX32_ONE*125},     //レール4
+  {0, FX32_ONE*R_STOP_FRM4},     //レール4
   {0, FX32_ONE*0},     //レール5
-  {0, FX32_ONE*57},     //レール6
+  {0, FX32_ONE*R_STOP_FRM6},     //レール6
   {0, FX32_ONE*0},     //レール7
-  {0, FX32_ONE*113},     //レール8
+  {0, FX32_ONE*R_STOP_FRM8},     //レール8
 };
 
 //カプセルごとのレール移動アニメ共通部分フレーム（アニメデータ依存）
 static const u16 CommFrame[CAPSULE_NUM_MAX] = {
-  4,120,40,70
+  COMM_FRM1,COMM_FRM2,COMM_FRM3,COMM_FRM4
 };
 
 //リソースの並び順番
@@ -1136,7 +1138,6 @@ static GMEVENT_RESULT ChangePointEvt( GMEVENT* event, int* seq, void* work )
     (*seq)++;
     break;
   case 1: //アニメ待ち
-#if 1    
     {
       
       u8 sw_obj_idx;
@@ -1154,13 +1155,6 @@ static GMEVENT_RESULT ChangePointEvt( GMEVENT* event, int* seq, void* work )
         return GMEVENT_RES_FINISH;
       }
     }
-#else
-    {
-      //路線ポイント切り替え（アニメ切り替え）
-      ChgRale(fieldWork, ptr);
-      return GMEVENT_RES_FINISH;
-    }
-#endif
   }
   return GMEVENT_RES_CONTINUE;
 }
