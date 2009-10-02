@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-30T17:50:23"/>
+	<create user="matsumiya" host="W00207" date="2009-10-02T16:59:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,13 +292,12 @@
 	</lock>
 
 
-	<row id="msg_c02r0301_woman2_01">
+	<row id="msg_c02r0301_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・仮
-・シナリオ進行でアクセショップに</comment>
+・No000「アクセサリーいれ」入手前</comment>
 		<attribute name="キャラ指定">WOMAN2
 女性（金髪）</attribute>
-		<language name="JPN" width="256">むさくるしい　そうこだけど
+		<language name="JPN" width="256">むさくるしい　そうこ　だけど
 ステキな　おみせに　しちゃうから！[BE:01:ページ切り替え（クリア）]
 うるものは　きまっているの[BE:01:ページ切り替え（クリア）]
 ポケモンに　つける　アクセサリーよ！</language>
@@ -308,13 +307,73 @@
 ポケモンに　つける　アクセサリーよ！</language>
 	</row>
 
-	<row id="msg_c02r0301_poke_01">
+	<row id="msg_c02r0301_woman2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・No000「アクセサリーいれ」入手後
+　初回メッセージ</comment>
+		<language name="JPN" width="256">アクセサリー</language>
+		<language name="JPN_KANJI" width="256">ようやく　売るものが　そろったわ！[BE:01:ページ切り替え（クリア）]
+あら　あなた！
+アクセサリーいれを　もっているのね[BE:00:ページ切り替え（行送り）]
+よかったら　なにか　買わない?</language>
+	</row>
+
+	<row id="msg_c02r0301_woman2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・No000「アクセサリーいれ」入手後
+　2回目以降</comment>
+		<language name="JPN" width="256">アクセサリー</language>
+		<language name="JPN_KANJI" width="256">アクセサリー</language>
+	</row>
+
+	<row id="msg_c02r0301_girl1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：なつき度チェック
+・なつき度をチェックして対応したメッセージに続く
+
+0＝先頭のポケモン（タマゴ除く）</comment>
+		<attribute name="キャラ指定">女の子</attribute>
+		<language name="JPN" width="256">まあ　すてきな　トレーナーさん
+どんな　ポケモンと　いっしょなの？▼
+あら　あなたの　[1:00:トレーナー名:0]……▼</language>
+		<language name="JPN_KANJI" width="256">まあ　すてきな　トレーナーさん
+どんな　ポケモンと　いっしょなの？▼
+あら　あなたの　[1:00:トレーナー名:0]……▼</language>
+	</row>
+
+	<row id="msg_c02r0301_girl1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：なつき度チェック
+・なつき度120～255</comment>
+		<language name="JPN" width="256">あなたに　なついているのね
+いっしょにいると　しあわせ　なのね</language>
+		<language name="JPN_KANJI" width="256">あなたに　なついているのね
+いっしょにいると　しあわせ　なのね</language>
+	</row>
+
+	<row id="msg_c02r0301_girl1_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：なつき度チェック
+・なつき度70～119</comment>
+		<language name="JPN" width="256">うん　すこし　なついている
+そんな　かんじかしら</language>
+		<language name="JPN_KANJI" width="256">うん　すこし　なついている
+そんな　かんじかしら</language>
+	</row>
+
+	<row id="msg_c02r0301_girl1_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：なつき度チェック
+・なつき度0～69</comment>
+		<language name="JPN" width="256">うーん……
+まだまだ　これからって　かんじね</language>
+		<language name="JPN_KANJI" width="256">うーん……
+まだまだ　これからって　かんじね</language>
+	</row>
+
+	<row id="msg_c02r0301_poke_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>ポケモン
 ・暫定
 ・あわせて鳴き声SE</comment>
 		<attribute name="キャラ指定">ポケモン
 ・未定</attribute>
-		<language name="JPN" width="256">ポケモン『？？？</language>
+		<language name="JPN" width="256">ポケモン『ぷぎゃー！</language>
 		<language name="JPN_KANJI" width="256">ポケモン『ぷぎゃー！</language>
 	</row>
 
