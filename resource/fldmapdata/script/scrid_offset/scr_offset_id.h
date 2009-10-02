@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2009 09/25 (Fri) 19:53
+ * @date  2009 10/01 (Thu) 21:34
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -39,6 +39,9 @@
 
 #define ID_INIT_SCR_OFFSET               (9600) //初期化スクリプト
 #define ID_INIT_SCR_OFFSET_END           (9699)
+
+#define ID_HIDEN_OFFSET                  (10000) //秘伝技スクリプト
+#define ID_HIDEN_OFFSET_END              (10099)
 
 
 #endif  /* SCR_OFFSET_ID_H */

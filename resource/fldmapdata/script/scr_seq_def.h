@@ -699,12 +699,27 @@
 
 //--------------------------------------------------------------
 /**
- *  _ASM_FLAG_CHECK フラグチェック
+ *  _FLAG_CHECK フラグチェック
+ *  @param チェックするフラグナンバー
+ *  @param 結果を格納するワーク
+ */
+//--------------------------------------------------------------
+#define _FLAG_CHECK( num, wk ) _ASM_FLAG_CHECK num,wk
+  
+  .macro  _ASM_FLAG_CHECK num,wk
+  .short  EV_SEQ_FLAG_CHECK
+  .short  \num
+  .short  \wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _ASM_FLAG_CHECK_VM フラグチェック
  *  @param チェックするフラグナンバー
  */
 //--------------------------------------------------------------
-  .macro  _ASM_FLAG_CHECK num
-  .short  EV_SEQ_FLAG_CHECK
+  .macro  _ASM_FLAG_CHECK_VM num
+  .short  EV_SEQ_FLAG_CHECK_VM
   .short  \num
   .endm
 
@@ -716,7 +731,7 @@
  */
 //--------------------------------------------------------------
   .macro  _IF_FLAGON_JUMP num,adrs
-  _ASM_FLAG_CHECK \num
+  _ASM_FLAG_CHECK_VM \num
   _IF_JUMP  FLGON,\adrs
   .endm
 
@@ -729,7 +744,7 @@
 //--------------------------------------------------------------
 
   .macro  _IF_FLAGOFF_JUMP num,adrs
-  _ASM_FLAG_CHECK \num
+  _ASM_FLAG_CHECK_VM \num
   _IF_JUMP  FLGOFF,\adrs
   .endm
 
@@ -741,7 +756,7 @@
  */
 //--------------------------------------------------------------
   .macro  _IF_FLAGON_CALL num,adrs
-  _ASM_FLAG_CHECK \num
+  _ASM_FLAG_CHECK_VM \num
   _IF_CALL  FLGON,\adrs
   .endm
 
@@ -753,7 +768,7 @@
  */
 //--------------------------------------------------------------
   .macro  _IF_FLAGOFF_CALL num,adrs
-  _ASM_FLAG_CHECK \num
+  _ASM_FLAG_CHECK_VM \num
   _IF_CALL  FLGOFF,\adrs
   .endm
 
@@ -830,6 +845,7 @@
  *  @param wk2 代入する値が格納されたワーク
  */
 //--------------------------------------------------------------
+#define _LDWK( wk1, wk2 ) _ASM_LDWK wk1,wk2
   .macro  _ASM_LDWK  wk1,wk2
   .short  EV_SEQ_LD_WK_WK
   .short  \wk1
@@ -1302,6 +1318,23 @@
   .byte   \idx
   .short  \pocket_id
   .endm
+
+//--------------------------------------------------------------
+/**
+ * 手持ちポケモンのニックネームを指定タグにセット
+ * @param idx セットするタグナンバー
+ * @param pos ニックネームを取得する手持ちポケモン順番
+ * @param pocket_id   バッグのポケット名を指すID
+ */
+//--------------------------------------------------------------
+#define _NICK_NAME( idx, pos ) _ASM_NICK_NAME idx, pos
+
+  .macro  _ASM_NICK_NAME idx, pos
+  .short  EV_SEQ_NICK_NAME
+  .byte   \idx
+  .short  \pos
+  .endm
+
 
 //======================================================================
 //  視線トレーナー関連
@@ -2369,6 +2402,41 @@
   .short \ret_wk
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _CHECK_POKE_WAZA
+ * @brief 指定された技を覚えているか調べる
+ * @param ret_wk チェック結果を格納するワーク 0=覚えていない 1=覚えている
+ * @param wazano チェックする技ナンバー
+ * @param tno 調べる手持ちポケモンの一番号
+ */
+//--------------------------------------------------------------
+#define _CHECK_POKE_WAZA( ret_wk, wazano, tno ) \
+    _ASM_CHECK_POKE_WAZA ret_wk, wazano, tno
+
+  .macro _ASM_CHECK_POKE_WAZA ret_wk, wazano, tno
+  .short EV_SEQ_CHK_POKE_WAZA
+  .short \ret_wk
+  .short \wazano
+  .short \tno
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _CHECK_POKE_WAZA_GROUP 
+ * @brief 指定された技を覚えているか調べる（手持ち全体）
+ * @param ret_wk チェック結果を格納するワーク 技を覚えている手持ち位置。 6=覚えていない
+ * @param wazano チェックする技ナンバー
+ */
+//--------------------------------------------------------------
+#define _CHECK_POKE_WAZA_GROUP( ret_wk, wazano ) \
+    _ASM_CHECK_POKE_WAZA_GROUP ret_wk, wazano
+
+  .macro _ASM_CHECK_POKE_WAZA_GROUP ret_wk, wazano
+  .short EV_SEQ_CHK_POKE_WAZA_GROUP
+  .short \ret_wk
+  .short \wazano
+  .endm
 
 //======================================================================
 // お金
@@ -2662,7 +2730,6 @@
   .macro _ASM_SODATEYA_LOVE_CHECK ret_wk
   .short EV_SEQ_SODATEYA_LOVE_CHECK
   .endm
-
 
 //======================================================================
 //

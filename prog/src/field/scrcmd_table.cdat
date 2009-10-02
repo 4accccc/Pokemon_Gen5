@@ -103,11 +103,11 @@
   //イベントフラグ関連
   DEF_CMD( EvCmdFlagSet, EV_SEQ_FLAG_SET )
   DEF_CMD( EvCmdFlagReset, EV_SEQ_FLAG_RESET )
-  DEF_CMD( EvCmdFlagCheck, EV_SEQ_FLAG_CHECK )
+  DEF_CMD( EvCmdFlagCheckVM, EV_SEQ_FLAG_CHECK_VM )
   DEF_CMD( EvCmdFlagCheckWk, EV_SEQ_FLAG_CHECK_WK )
 
   DEF_CMD( EvCmdFlagSetWk, EV_SEQ_FLAG_SET_WK )
-  NO_CMD()
+  DEF_CMD( EvCmdFlagCheck, EV_SEQ_FLAG_CHECK )
   NO_CMD()
   NO_CMD()
   
@@ -202,7 +202,7 @@
   DEF_CMD( EvCmdWazaName, EV_SEQ_WAZA_NAME )
 
   DEF_CMD( EvCmdPocketName, EV_SEQ_POCKET_NAME )
-  NO_CMD()
+  DEF_CMD( EvCmdNickName, EV_SEQ_NICK_NAME )
   NO_CMD()
   NO_CMD()
 
@@ -347,8 +347,8 @@
   NO_CMD()
   NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdChkPokeWaza, EV_SEQ_CHK_POKE_WAZA )
+  DEF_CMD( EvCmdChkPokeWazaGroup, EV_SEQ_CHK_POKE_WAZA_GROUP )
   NO_CMD()
   NO_CMD()
 

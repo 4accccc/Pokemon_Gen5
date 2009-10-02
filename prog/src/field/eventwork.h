@@ -63,14 +63,8 @@ extern void EVENTWORK_ResetEventFlag( EVENTWORK * ev, u16 flag_no);
 extern u16 * EVENTWORK_GetEventWorkAdrs( EVENTWORK * ev, u16 work_no );
 
 //----------------------------------------------------------
-//  EVENTWORK SYS_FLAG操作の為の関数
-//----------------------------------------------------------
-extern BOOL EVENTWORK_SYS_FLAG_Kairiki( EVENTWORK *ev, SYS_FLAG_MODE mode );
-
-//----------------------------------------------------------
 //	セーブデータ取得のための関数
 //----------------------------------------------------------
 //extern EVENTWORK * SaveData_GetEventWork(SAVEDATA * sv);
-
 
 #endif	//__EVENTFLAG_H__

@@ -1,0 +1,130 @@
+//======================================================================
+//                hiden
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "../../../prog/include/msg/script/msg_hiden.h"
+  //.include  "zone_hiden.h"
+
+//--------------------------------------------------------------
+//               スクリプト本体
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+//               スクリプトテーブル
+//--------------------------------------------------------------
+_EVENT_DATA    ev_hiden_kairiki
+_EVENT_DATA    ev_hiden_kairiki_menu
+_EVENT_DATA_END
+
+
+/**************************************************************/
+/*            FLAG_CHANGE_LABEL                               */
+/*
+ * 注意！(06.02.09現在)
+ * EV_SCRIPT_WORKを確保していないので、
+ * SCWK_ANSWERなどのワークは使用することが出来ない！
+ * LOCALWORK0などを使用するようにする！
+ *
+ * 共通スクリプトについては現状使用不可！
+ * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
+ * あまりつかわないかも？
+ */
+/**************************************************************/
+//ev_hiden_flag_change:
+//  _END
+
+/**************************************************************/
+/*  かいりき */
+/**************************************************************/
+EVENT_START ev_hiden_kairiki
+  _TALK_OBJ_START()
+  _TALKWIN_OPEN()
+  _FLAG_CHECK( SYS_FLAG_KAIRIKI, SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == 1 THEN
+    _CALL ev_hiden_kairiki_already
+  ELSE
+	  _CHECK_POKE_WAZA_GROUP(	SCWK_ANSWER, WAZANO_KAIRIKI )
+    
+    IF $SCWK_ANSWER == 6 THEN
+      _CALL ev_hiden_kairiki_ng
+    ELSE
+//    バッジチェック
+//	  _SYS_FLAG_BADGE_GET		BADGE_ID_C02, SCWK_ANSWER
+//	  _IFVAL_JUMP		SCWK_ANSWER,EQ,0, ev_hiden_kairiki_ng
+      _TALKMSG( msg_kairiki_01 )
+      _YES_NO_WIN( SCWK_ANSWER )
+      _TALKWIN_CLOSE()
+      
+      IF $SCWK_ANSWER == 0 THEN
+        _CALL ev_hiden_kairiki_02
+      ENDIF
+    ENDIF
+  ENDIF
+EVENT_END
+
+//すでにかいりきをつかっている場合
+ev_hiden_kairiki_already:
+	_TALKMSG( msg_kairiki_04 )
+	_LAST_KEYWAIT()
+	_TALKWIN_CLOSE()
+	_END
+
+//秘伝わざもっていない場合
+ev_hiden_kairiki_ng:
+	_TALKMSG( msg_kairiki_03 )
+	_LAST_KEYWAIT()
+	_TALKWIN_CLOSE()
+	_END
+
+//かいりき発動
+ev_hiden_kairiki_02:
+	_FLAG_SET( SYS_FLAG_KAIRIKI )			//かいりきフラグセット
+	_CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_KAIRIKI )
+	_LDWK( SCWK_TEMP0, SCWK_ANSWER )
+  
+	_NICK_NAME( 0, SCWK_ANSWER )
+  _TALKWIN_OPEN()
+  _TALKMSG( msg_kairiki_05 )
+  _AB_KEYWAIT()
+  _TALKWIN_CLOSE()
+  
+//	_CUTIN			SCWK_TEMP0 //カットイン
+//	_TALK_CLOSE		//カットインでMSG用BGがクリアされている対処
+  
+  _TALKWIN_OPEN()
+	_TALKMSG( msg_kairiki_06 )
+	_LAST_KEYWAIT()
+	_TALKWIN_CLOSE()
+
+//冒険ノート
+//	_GET_NOW_ZONE_ID	SCWK_TEMP0
+//	_FNOTE_DATA_MAKE	FNOTE_ID_KAIRIKI,SCWK_TEMP0,0,0,0
+	_END
+
+//かいりき　メニューから発動
+EVENT_START ev_hiden_kairiki_menu
+  _TALKWIN_OPEN()
+	_FLAG_CHECK( SYS_FLAG_KAIRIKI, SCWK_ANSWER ) //かいりきフラグチェック
+
+  IF $SCWK_ANSWER == 1 THEN
+    _CALL ev_hiden_kairiki_already
+  ELSE
+    _FLAG_SET( SYS_FLAG_KAIRIKI )			//かいりきフラグセット
+    _NICK_NAME( 0, SCWK_PARAM0 )
+    _TALKMSG( msg_kairiki_05 )
+	  _TALKWIN_CLOSE()
+
+//    _CUTIN SCWK_PARAM0 //カットイン
+    
+    _TALKWIN_OPEN()
+    _TALKMSG( msg_kairiki_06 )
+    _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+//    _GET_NOW_ZONE_ID	SCWK_TEMP0
+//    _FNOTE_DATA_MAKE	FNOTE_ID_KAIRIKI,SCWK_TEMP0,0,0,0
+  ENDIF
+EVENT_END

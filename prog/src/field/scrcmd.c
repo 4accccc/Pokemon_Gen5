@@ -47,7 +47,6 @@
 #include "scrcmd_enviroments.h"
 #include "scrcmd_sodateya.h"
 
-
 #include "../../../resource/fldmapdata/script/usescript.h"
 
 //======================================================================
@@ -701,13 +700,31 @@ static VMCMD_RESULT EvCmdFlagReset( VMHANDLE *core, void *wk )
  * @return  VMCMD_RESULT
  */
 //--------------------------------------------------------------
-static VMCMD_RESULT EvCmdFlagCheck( VMHANDLE * core, void *wk )
+static VMCMD_RESULT EvCmdFlagCheckVM( VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
   u16  flag = VMGetU16( core );
   core->cmp_flag = EVENTWORK_CheckEventFlag( evwork, flag );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * フラグのチェック
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdFlagCheck( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+  u16  flag = VMGetU16( core );
+  u16 *ret_wk = SCRCMD_GetVMWork( core, work );
+  *ret_wk = EVENTWORK_CheckEventFlag( evwork, flag );
   return VMCMD_RESULT_CONTINUE;
 }
 

@@ -121,6 +121,7 @@ VMCMD_RESULT EvCmdWazaName( VMHANDLE *core, void *wk )
   WORDSET_RegisterWazaName( *wordset, idx, wazano );
   return VMCMD_RESULT_CONTINUE;
 }
+
 //--------------------------------------------------------------------------------------------
 /**
  * ポケット名を指定バッファに登録
@@ -144,3 +145,28 @@ VMCMD_RESULT EvCmdPocketName(VMHANDLE * core, void *wk )
 	return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * 手持ちポケモンのニックネームを指定バッファに登録
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdNickName( VMHANDLE *core, void *wk )
+{
+  POKEMON_PARAM *pp;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
+  POKEPARTY *party = GAMEDATA_GetMyPokemon( gamedata );
+	WORDSET **wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+	u8 idx = VMGetU8( core );
+	u16 pos = SCRCMD_GetVMWorkValue( core, work );
+  
+	//ポケモンへのポインタ取得
+  pp = PokeParty_GetMemberPointer( party, pos );
+    
+	//POKEMON_PARAMからPOKEMON_PASO_PARAMに渡しているので注意！(田谷さんに確認済み)
+  WORDSET_RegisterPokeNickName( *wordset, idx, pp );
+	return VMCMD_RESULT_CONTINUE;
+}

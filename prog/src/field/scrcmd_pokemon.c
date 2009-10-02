@@ -257,3 +257,85 @@ VMCMD_RESULT EvCmdSubtractGold( VMHANDLE * core, void * wk )
   MyStatus_SetGold( mystatus, gold );
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * 手持ちポケモンが指定された技を覚えているかチェック
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdChkPokeWaza( VMHANDLE *core, void *wk )
+{
+  POKEMON_PARAM *pp;
+  GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
+  POKEPARTY *party = GAMEDATA_GetMyPokemon( gamedata );
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  u16 waza = SCRCMD_GetVMWorkValue( core, wk );
+  u16 tno = SCRCMD_GetVMWorkValue( core, wk );
+  
+  *ret_wk = 0;
+  pp = PokeParty_GetMemberPointer( party, tno );
+  
+  //たまごチェック
+  if( PP_Get(pp,ID_PARA_tamago_flag,NULL) != 0 ){
+    return VMCMD_RESULT_CONTINUE;
+  }
+  
+  //技リストからチェック
+  if( PP_Get(pp,ID_PARA_waza1,NULL) == waza ||
+      PP_Get(pp,ID_PARA_waza2,NULL) == waza ||
+      PP_Get(pp,ID_PARA_waza3,NULL) == waza ||
+      PP_Get(pp,ID_PARA_waza4,NULL) == waza ){
+    *ret_wk = 1;
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 手持ちポケモンが指定された技を覚えているかチェック　手持ちポケモン全体
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdChkPokeWazaGroup( VMHANDLE *core, void *wk )
+{
+  int i,max;
+  POKEMON_PARAM *pp;
+  GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
+  POKEPARTY *party = GAMEDATA_GetMyPokemon( gamedata );
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  u16 waza = SCRCMD_GetVMWorkValue( core, wk );
+  
+  max = PokeParty_GetPokeCount( party );
+
+#ifdef DEBUG_ONLY_FOR_kagaya  //test
+  *ret_wk = 0;
+  return VMCMD_RESULT_CONTINUE;
+#endif
+  
+  for( i = 0, *ret_wk = 6; i < max; i++ ){
+    pp = PokeParty_GetMemberPointer( party, i );
+    
+    //たまごチェック
+    if( PP_Get(pp,ID_PARA_tamago_flag,NULL) != 0 ){
+      continue;
+    }
+    
+    //技リストからチェック
+    if( PP_Get(pp,ID_PARA_waza1,NULL) == waza ||
+        PP_Get(pp,ID_PARA_waza2,NULL) == waza ||
+        PP_Get(pp,ID_PARA_waza3,NULL) == waza ||
+        PP_Get(pp,ID_PARA_waza4,NULL) == waza ){
+      *ret_wk = i;
+      break;
+    }
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+

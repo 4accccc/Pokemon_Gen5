@@ -196,6 +196,8 @@
 #include "../../frontier/frontier_def.h"			//フロンティア定義
 #endif //wb null
 
+#include "../../../prog/include/waza_tool/wazano_def.h" //ワザNo
+
 //ワイプフェードの基本の値
 #define SCR_WIPE_DIV				(WIPE_DEF_DIV)
 #define SCR_WIPE_SYNC				(WIPE_DEF_SYNC)

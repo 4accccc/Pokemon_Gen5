@@ -129,7 +129,7 @@ static GMEVENT * gjiki_CheckMoveHitEvent(
 #ifdef DEBUG_ONLY_FOR_kagaya
   evbit |= PLAYER_EVENTBIT_KAIRIKI;
 #endif
-
+  
   if( (evbit & PLAYER_EVENTBIT_KAIRIKI) ){
     event = gjiki_CheckEventKairiki( gjiki, dir, val );
   }

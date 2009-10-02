@@ -245,6 +245,7 @@ u16 * EVENTWORK_GetEventWorkAdrs( EVENTWORK * ev, u16 work_no )
 //======================================================================
 //  イベントワーク　システムフラグ関連
 //======================================================================
+#if 0
 //--------------------------------------------------------------
 /**
  * システムフラグ　セット
@@ -328,3 +329,4 @@ BOOL EVENTWORK_SYS_FLAG_Kairiki( EVENTWORK *ev, SYS_FLAG_MODE mode )
 {
   return sysflag_Common( ev, mode, SYS_FLAG_KAIRIKI );
 }
+#endif //#if 0

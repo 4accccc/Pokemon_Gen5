@@ -6,4 +6,5 @@ UNIQ_SCRIPTFILES	= \
 	trainer.ev \
   init_scr.ev \
   sodateya_scr.ev \
-  pokecen_scr.ev
+  pokecen_scr.ev \
+  hiden.ev

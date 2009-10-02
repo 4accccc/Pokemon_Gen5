@@ -25,3 +25,7 @@ extern VMCMD_RESULT EvCmdGetPartyBattlePokeCount( VMHANDLE * core, void *wk );
 
 extern VMCMD_RESULT EvCmdAddGold( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdSubtractGold( VMHANDLE * core, void * wk );
+
+extern VMCMD_RESULT EvCmdChkPokeWaza( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdChkPokeWazaGroup( VMHANDLE *core, void *wk );
+

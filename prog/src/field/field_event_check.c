@@ -59,6 +59,8 @@
 #include "field_gimmick_def.h"  //for FLD_GIMMICK_GYM_ELEC
 #include "gym_elec.h"     //for GYM_ELEC_CreateMoveEvt
 
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+
 //======================================================================
 //======================================================================
 
@@ -273,7 +275,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     PLAYER_EVENTBIT evbit = PLAYER_EVENTBIT_NON;
      EVENTWORK *ev = GAMEDATA_GetEventWork( req.gamedata );
     
-    if( EVENTWORK_SYS_FLAG_Kairiki(ev,SYS_FLAG_MODE_CHECK) == TRUE ){
+    if( EVENTWORK_CheckEventFlag(ev,SYS_FLAG_KAIRIKI) == TRUE ){
       evbit |= PLAYER_EVENTBIT_KAIRIKI;
     }
     
@@ -320,6 +322,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 	  			u32 scr_id = MMDL_GetEventID( fmmdl_talk );
   				MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
           FIELD_PLAYER_GRID_ForceStop( req.field_player );
+#ifdef DEBUG_ONLY_FOR_kagaya
+          if( MMDL_GetOBJCode(fmmdl_talk) == ROCK ){
+            scr_id = 10000;
+          }
+#endif
   				return EVENT_FieldTalk( gsys, fieldWork,
   					scr_id, fmmdl_player, fmmdl_talk, req.heapID );
   			}
