@@ -54,7 +54,7 @@ static void print_file_info( const char* filename, int line )
 
   for(i=0; names[i].longName!=NULL; ++i)
   {
-    if( !strcmp(names[i].longName, filename) )
+    if( !GFL_STD_StrCmp(names[i].longName, filename) )
     {
       break;
     }
