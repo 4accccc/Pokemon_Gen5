@@ -31,25 +31,25 @@ SUBDIRS	=
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
 
-IMGFILE	:= $(wildcard *.bmp)
-COLFILE	:= $(wildcard *.ncl)
-FONTFILE := $(wildcard *.nftr)
+IMGFILE  := $(wildcard *.bmp)
+FONTFILE := $(IMGFILE:.bmp=.nftr)
+GFONTFILE := $(FONTFILE:.nftr=.gftr)
+COLSRCFILE  := $(wildcard *.ncl)
+COLFILE  := $(COLSRCFILE:.ncl=.nclr)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
-.SUFFIXES:	.bmp
 
 #bmpデータからの生成ルール
-do-build: $(IMGFILE:.bmp=.nftr)
 %.nftr: %.bmp
 	fontcvtrc -i bmp -if $< -io pokemon_wb.xlor -ib 2 -o nitro -of $@
 	xcopy /D /Y $@ w:\font
 
-do-build: $(FONTFILE:.nftr=.gftr)
+
 %.gftr: %.nftr
 	fontex $< $@
 
-do-build: $(COLFILE:.ncl=.nclr)
+
 %.nclr: %.ncl
 	g2dcvtr $< -pcm
 
@@ -58,7 +58,7 @@ do-build: $(COLFILE:.ncl=.nclr)
 
 endif
 
-
+.SUFFIXES: .bmp .nftr .gftr .ncl .nclr
 .PHONY:	do-build clean subdir
 
 #------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
-$(NARCNAME):	$(IMGFILE:.bmp=.nftr) $(COLFILE:.ncl=.nclr) $(FONTFILE:.nftr=.gftr)
+$(NARCNAME): $(FONTFILE) $(GFONTFILE) $(COLFILE)
 	nnsarc -c -l -n -i $(NARCNAME) -S arclist.txt > error
 	$(NAIXCUT) $(NAIXNAME)
 
