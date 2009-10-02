@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-02T16:59:34"/>
+	<create user="matsumiya" host="W00207" date="2009-10-02T17:56:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		<comment>♀：なつき度チェック
 ・なつき度をチェックして対応したメッセージに続く
 
-0＝先頭のポケモン（タマゴ除く）</comment>
+0＝先頭のポケモン（タマゴ/ひんし除く）</comment>
 		<attribute name="キャラ指定">女の子</attribute>
 		<language name="JPN" width="256">まあ　すてきな　トレーナーさん
 どんな　ポケモンと　いっしょなの？▼
