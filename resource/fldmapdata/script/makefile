@@ -4,7 +4,7 @@
 # Copyright 2005 GameFreak.inc  All rights reserved.
 #----------------------------------------------------------------------------
 #対象ユーザー
-USERS = kagaya matsumiya tamada nakatsui masafumi_saitou suginaka_katsunori mai_ando murakami_naoto hozumi_yukiko iwasawa obata_toshihiro ariizumi_nobuhiko tomoya_takahashi saitou
+USERS = kagaya matsumiya tamada nakatsui masafumi_saitou suginaka_katsunori mai_ando murakami_naoto hozumi_yukiko iwasawa obata_toshihiro ariizumi_nobuhiko tomoya_takahashi saitou ohno
 
 #共通マクロ
 include $(PROJECT_RSCDIR)/macro_define
@@ -33,8 +33,9 @@ COMPILE_TARGETS	= $(UNIQ_SCRIPTFILES:.ev=.bin) $(SCRIPTFILES:.ev=.bin)
 ARCHIVE_TARGETS = $(SCRIPTFILES:.ev=.bin) $(UNIQ_SCRIPTFILES:.ev=.bin)
 
 #MWAS,MWLD
-include	$(NITROSDK_ROOT)/build/buildtools/commondefs.cctype.CW
 include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
+## この定義はcommondefsの下に書く必要がある
+include	$(COMMONDEFS_CCTYPE_CW)
 
 #Moduleルール
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
