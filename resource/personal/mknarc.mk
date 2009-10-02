@@ -36,8 +36,7 @@ ELF2BIN = ../../tools/elf2bin.exe
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
-
-include	$(NITROSDK_ROOT)/build/buildtools/commondefs.cctype.CW
+include	$(COMMONDEFS_CCTYPE_CW)
 
 .PHONY:	do-build clean
 

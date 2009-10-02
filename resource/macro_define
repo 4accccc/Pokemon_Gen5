@@ -22,6 +22,13 @@ define ECHO_CURDIR
 endef
 
 
+#
+#commondefs.cctype.CWのファイル位置がNitro->TWLで異なるのでここに定義して全部参照するように修正
+#
+COMMONDEFS_CCTYPE_CW =	$(NITROSDK_ROOT)/build/buildtools/nitro/commondefs.cctype.CW
+
+
+
 #------------------------------------------------------------------------------
 # コピーの方法を記述
 #------------------------------------------------------------------------------

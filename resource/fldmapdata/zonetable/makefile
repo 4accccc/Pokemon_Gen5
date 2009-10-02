@@ -83,7 +83,7 @@ LINCLUDES	+= $(dir $<)
 #----------------------------------------------------------------------------
 #	Ｃソース→バイナリ変換を可能にするための設定
 #----------------------------------------------------------------------------
-include	$(NITROSDK_ROOT)/build/buildtools/commondefs.cctype.CW
+include	$(COMMONDEFS_CCTYPE_CW)
 include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
 
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
