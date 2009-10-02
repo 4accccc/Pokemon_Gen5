@@ -18,10 +18,12 @@ TMPDIR	= ./temp
 include	fldeff_list
 
 #G3Dコンバータへのパス
-G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
+#G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
+G3DCVTR	= g3dcvtr.exe
 
 #G2Dコンバータへのパス
-G2DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g2dcvtr.exe
+#G2DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g2dcvtr.exe
+G2DCVTR	= g2dcvtr.exe
 
 #--------------------------------------------------
 #	ファイルリスト置き換え
