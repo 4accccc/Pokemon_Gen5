@@ -18,6 +18,8 @@ typedef struct{
   POKEPARTY*      partyPartner; ///< 2vs2時の味方AI（不要ならnull）
   POKEPARTY*      partyEnemy1;  ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
   POKEPARTY*      partyEnemy2;  ///< 2vs2時の２番目敵AI用（不要ならnull）
+  u8              standing_pos; ///< 立ち位置
+  u8              padding[3];
 }COLOSSEUM_BATTLE_SETUP;
 
 

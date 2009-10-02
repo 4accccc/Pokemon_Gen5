@@ -29,6 +29,7 @@
 #include "pm_define.h"
 #include "field\event_colosseum_battle.h"
 #include "union_tool.h"
+#include "app\pms_input.h"
 
 #include "field/event_ircbattle.h"
 #include "net_app\irc_compatible.h"
@@ -68,6 +69,7 @@ typedef struct{
 static BOOL OneselfSeq_NormalInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_Leave(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ConnectReqInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ConnectReqExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
@@ -123,6 +125,11 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
   {//UNION_STATUS_LEAVE
     NULL,
     OneselfSeq_Leave,
+    NULL,
+  },
+  {//UNION_STATUS_CHAT_CALL
+    NULL,
+    OneselfSeq_ChatCallUpdate,
     NULL,
   },
   {//UNION_STATUS_CONNECT_REQ
@@ -615,6 +622,16 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
     return TRUE;
   }
   
+  //チャット入力のショートカットボタン押下チェック
+  {
+    FIELD_SUBSCREEN_WORK * subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
+
+    if(FIELD_SUBSCREEN_GetAction(subscreen) == FIELD_SUBSCREEN_ACTION_UNION_CHAT){
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_CHAT_CALL);
+      return TRUE;
+    }
+  }
+
   //出口チェック
   if(UnionTool_CheckWayOut(fieldWork) == TRUE){
     if(unisys->debug_wayout_walk == TRUE){
@@ -644,6 +661,62 @@ static BOOL OneselfSeq_Leave(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, 
 {
   unisys->finish = TRUE;
   return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ユニオンルーム退出：更新
+ *
+ * @param   unisys		
+ * @param   situ		  
+ * @param   seq		    
+ *
+ * @retval  BOOL		
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
+{
+  switch(*seq){
+  case 0:
+    {
+    	PMSI_PARAM	*initParam;
+    	PMS_DATA  pmsDat;
+
+    	initParam = PMSI_PARAM_Create(PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, 
+    	  GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data), HEAPID_UNION);
+    	PMSDAT_Init(&pmsDat, PMS_TYPE_UNION);
+    	PMSI_PARAM_SetInitializeDataSentence( initParam, &pmsDat );
+
+      unisys->parent_work = initParam;
+      UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_CHAT, initParam);
+    }
+    (*seq)++;
+    break;
+  case 1:
+    if(UnionSubProc_IsExits(unisys) == FALSE){
+      OS_TPrintf("サブPROC終了\n");
+      (*seq)++;
+    }
+    break;
+  case 2:
+    {
+     	PMSI_PARAM	*initParam = unisys->parent_work;
+    	PMS_DATA pmsdata;
+     	
+    	// 簡易会話を更新したか？
+    	if( PMSI_PARAM_CheckCanceled( initParam ) == FALSE ){
+    		// 簡易会話取得
+    		PMSI_PARAM_GetInputDataSentence( initParam,  &pmsdata);
+      	// ビーコンデータの簡易会話を書き換える & 通信データに反映
+        UnionChat_SetMyPmsData(unisys, &pmsdata);
+  	  }
+    }
+    GFL_HEAP_FreeMemory(unisys->parent_work);
+    unisys->parent_work = NULL;
+    return TRUE;
+  }
+  
+  return FALSE;
 }
 
 //--------------------------------------------------------------

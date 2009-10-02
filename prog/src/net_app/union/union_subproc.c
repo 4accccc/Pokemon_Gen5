@@ -26,6 +26,7 @@
 #include "savedata/sp_ribbon_save.h"
 #include "colosseum.h"
 #include "colosseum_tool.h"
+#include "app\pms_input.h"
 
 #include "net_app\poke_trade\ircpokemontrade.h"
 
@@ -53,6 +54,7 @@ static BOOL SubEvent_ColosseumWarpMulti(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR uni
 static BOOL SubEvent_UnionWarp(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 static BOOL SubEvent_Battle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
+static BOOL SubEvent_Chat(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq);
 
 
 //--------------------------------------------------------------
@@ -230,6 +232,11 @@ static const struct{
   },
   {//UNION_SUBPROC_ID_COLOSSEUM_TRAINERCARD
     SubEvent_TrainerCard,
+    UNION_PLAY_CATEGORY_MAX,  //MAX=変更しない
+    UNION_PLAY_CATEGORY_MAX,
+  },
+  {//UNION_SUBPROC_ID_CHAT
+    SubEvent_Chat,
     UNION_PLAY_CATEGORY_MAX,  //MAX=変更しない
     UNION_PLAY_CATEGORY_MAX,
   },
@@ -650,6 +657,34 @@ static BOOL SubEvent_Battle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMA
   switch(*seq){
   case 0:
     *child_event = EVENT_ColosseumBattle(gsys, fieldWork, situ->play_category, pwk);
+    break;
+  default:
+    return TRUE;
+  }
+  
+  (*seq)++;
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：簡易会話入力画面
+ *
+ * @param   gsys		
+ * @param   unisys		
+ * @param   fieldWork		
+ * @param   pwk		
+ * @param   seq		
+ *
+ * @retval  GMEVENT *		
+ */
+//--------------------------------------------------------------
+static BOOL SubEvent_Chat(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, void *pwk, GMEVENT * parent_event, GMEVENT **child_event, u8 *seq)
+{
+  switch(*seq){
+  case 0:
+    *child_event = EVENT_FieldSubProc(
+  	    gsys, fieldWork, FS_OVERLAY_ID(pmsinput), &ProcData_PMSInput, pwk);
     break;
   default:
     return TRUE;

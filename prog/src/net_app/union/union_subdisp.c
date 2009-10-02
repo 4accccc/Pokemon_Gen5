@@ -20,6 +20,7 @@
 #include "union_chat.h"
 #include "infowin/infowin.h"
 #include "app_menu_common.naix"
+#include "field/fieldmap.h"
 
 
 //==============================================================================
@@ -699,7 +700,15 @@ static void _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub)
     crect.left = clpos.x - 10;
     crect.right = clpos.x + 10;
     if(crect.left < x && crect.right > x && crect.top < y && crect.bottom > y){
-      _UniSub_IconPalChange(unisub, i);
+      if(i == UNISUB_ACTOR_APPEAL_CHAT){
+        FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(unisub->gsys);
+        FIELD_SUBSCREEN_WORK *subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
+        
+        FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_UNION_CHAT);
+      }
+      else{
+        _UniSub_IconPalChange(unisub, i);
+      }
       return;
     }
   }

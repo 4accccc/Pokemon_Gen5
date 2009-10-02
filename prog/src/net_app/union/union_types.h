@@ -70,6 +70,8 @@ enum{
   UNION_STATUS_ENTER,       ///<ユニオンルームへ進入
   UNION_STATUS_LEAVE,       ///<ユニオンルームから退出
   
+  UNION_STATUS_CHAT_CALL,       ///<簡易会話入力画面呼び出し
+  
   UNION_STATUS_CONNECT_REQ,     ///<接続リクエスト実行中
   UNION_STATUS_CONNECT_ANSWER,  ///<接続リクエストを受けた側が返信として接続しにいっている状態
   UNION_STATUS_TALK_PARENT,     ///<接続確立後の会話(親)
@@ -228,6 +230,8 @@ typedef enum{
   UNION_SUBPROC_ID_POKELIST,                ///<ポケモンリスト呼び出し
   UNION_SUBPROC_ID_BATTLE,                  ///<戦闘遷移
   UNION_SUBPROC_ID_COLOSSEUM_TRAINERCARD,   ///<コロシアムでのトレーナーカード
+  
+  UNION_SUBPROC_ID_CHAT,                    ///<簡易会話入力画面
   
   UNION_SUBPROC_ID_MAX,
 }UNION_SUBPROC_ID;
