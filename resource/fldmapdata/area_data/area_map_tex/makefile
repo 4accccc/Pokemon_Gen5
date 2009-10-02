@@ -58,7 +58,8 @@ CLEANFILES	= $(subst $(DQ),,$(NSBTXFILESDIR)/*.nsbtx $(MARGED_TEXIMD_DIR)/*.imd)
 #----------------------------------------------------------------------------
 #	ツールへのパス指定
 #----------------------------------------------------------------------------
-G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
+G3DCVTR	= g3dcvtr.exe
+#G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
 TEX_MAG = $(PROJECT_ROOT)tools/imdtools/tex_mag/tex_mag.exe
 
 .PHONY:	do-build clean
