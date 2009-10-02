@@ -176,3 +176,25 @@ void BTL_SETUP_Triple_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   dst->partyEnemy1 = partyEnemy;
   dst->trID = trID;
 }
+
+//=============================================================================================
+/**
+ * ƒgƒŠƒvƒ‹ ’ÊM‘Îí
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   netHandle
+ * @param   commMode
+ */
+//=============================================================================================
+void BTL_SETUP_Triple_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  GFL_NETHANDLE* netHandle, BtlCommMode commMode )
+{
+  setup_common( dst, gameData, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
+
+  dst->engine = BTL_ENGINE_ALONE;
+  dst->competitor = BTL_COMPETITOR_COMM;
+  dst->rule = BTL_RULE_TRIPLE;
+
+  dst->trID = TRID_NULL;
+}
