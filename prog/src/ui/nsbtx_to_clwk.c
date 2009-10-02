@@ -116,6 +116,7 @@ void CLWK_TransNSBTX( GFL_CLWK* act, u32 arc_idx, u32 tex_idx, u8 ptn_ofs, u16 s
 		pStart = (u8*)pTex + pTex->plttInfo.ofsPlttData;
 		DC_FlushRange( pStart, TRANS_PAL_SIZE );
 		
+    // CLWKが参照しているパレットプロクシに転送
     GFL_CLACT_WK_GetPlttProxy( act, &ipp );
 
 	  if( vram_type == CLSYS_DRAW_MAIN || vram_type == CLSYS_DRAW_MAX )
