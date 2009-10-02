@@ -154,6 +154,31 @@ void BTL_SETUP_Double_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 
 //=============================================================================================
 /**
+ * ダブル（マルチ）通信対戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   netHandle
+ * @param   commMode
+ * @param   commPos
+ */
+//=============================================================================================
+void BTL_SETUP_Multi_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  GFL_NETHANDLE* netHandle, BtlCommMode commMode, u8 commPos )
+{
+  setup_common( dst, gameData, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
+
+  dst->engine = BTL_ENGINE_ALONE;
+  dst->competitor = BTL_COMPETITOR_COMM;
+  dst->rule = BTL_RULE_DOUBLE;
+  dst->multiMode = TRUE;
+  dst->commPos = commPos;
+
+  dst->trID = TRID_NULL;
+}
+
+//=============================================================================================
+/**
  * トリプル ゲーム内トレーナー対戦
  *
  * @param   dst
