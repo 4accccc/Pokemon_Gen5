@@ -101,18 +101,18 @@ endif
 clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
-	rm -f *.NANR
-	rm -f *.NCER
-	rm -f *.NSCR
-	rm -f *.NCGR
-	rm -f *.NCLR
-	rm -f *.narc
-	rm -f *.naix
-	rm -r *.h
-	rm -f $(targetname).narc
-	rm -f $(targetname).naix
+	rm -rf *.NANR
+	rm -rf *.NCER
+	rm -rf *.NSCR
+	rm -rf *.NCGR
+	rm -rf *.NCLR
+	rm -rf *.narc
+	rm -rf *.naix
+	rm -rf *.h
+	rm -rf $(targetname).narc
+	rm -rf $(targetname).naix
 endif
-	rm -f $(TARGETDIR)/$(targetname).narc
-	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -rf $(TARGETDIR)/$(targetname).narc
+	rm -rf $(TARGETDIR)/$(targetname).naix
 
 
