@@ -15,16 +15,32 @@ REM ##################################################
 REM		ディレクトリパス定義
 REM ##################################################
 SET WBLIBDIR=%PROJECT_ROOT%lib
-SET CWFolder_NITRO=C:\Program Files\Freescale\CW for NINTENDO DS V2.0
-SET CW_NITROSDK_ROOT=%WBLIBDIR%\NitroSDK
-SET LM_LICENSE_FILE=C:\Program Files\Freescale\CW for NINTENDO DS V2.0\license.dat
-SET NITROSDK_ROOT=%WBLIBDIR%\NitroSDK
-SET NITROSYSTEM_ROOT=%WBLIBDIR%\NitroSystem
-SET NITROWIFI_ROOT=%WBLIBDIR%\NitroWifi
-SET NITRODWC_ROOT=%WBLIBDIR%\NitroDWC
+SET CWFolder_NITRO=C:\Program Files\Freescale\CW for NINTENDO DSi V1.1\
+SET CWFOLDER_TWL=C:\Program Files\Freescale\CW for NINTENDO DSi V1.1\
+SET CW_NITROSDK_ROOT=%WBLIBDIR%\TwlSDK
+SET CW_TWLSDK_ROOT=%WBLIBDIR%\TwlSDK
+SET LM_LICENSE_FILE=C:\Program Files\Freescale\CW for NINTENDO DSi V1.1\license.dat
+SET NITROSDK_ROOT=%WBLIBDIR%\TwlSDK
+SET NITROSYSTEM_ROOT=%WBLIBDIR%\TwlSystem
+SET NITROWIFI_ROOT=%WBLIBDIR%\TwlDWC
+SET NITRODWC_ROOT=%WBLIBDIR%\TwlDWC
+
+REM ハイブリッド対応は今後行う
+REM SET TWLSDK_PLATFORM=TWL NITRO
+SET TWLSDK_PLATFORM=NITRO
+
+SET TWLSYSTEM_ROOT=%WBLIBDIR%\TwlSystem
+SET TWLSDK_ROOT=%WBLIBDIR%\TwlSDK
+SET TWLWIFI_ROOT=%WBLIBDIR%\TwlDWC
+SET TWLDWC_ROOT=%WBLIBDIR%\TwlDWC
+
+SET TWLVCT_ROOT=%WBLIBDIR%\libVCT
+SET TWLLIBVCT_ROOT=%WBLIBDIR%\libVCT
+SET TWLCRYPTO_ROOT=%WBLIBDIR%\NitroCrypto
 SET NITROVCT_ROOT=%WBLIBDIR%\libVCT
 SET NITROLIBVCT_ROOT=%WBLIBDIR%\libVCT
 SET NITROCRYPTO_ROOT=%WBLIBDIR%\NitroCrypto
+
 SET GFL_MAKE_DIR=C:/home/gflib/gflib/
 SET GFL_PROJECT_DIR=%PROJECT_ROOT%lib/gflib/
 SET BMDS_SDK_ROOT=%PROJECT_ROOT%lib/BMDS_SDK/
@@ -34,7 +50,7 @@ SET SVN_EDITOR=c:\tools\vim\gvim
 REM ##################################################
 REM		パスの追加
 REM ##################################################
-PATH=%PROJECT_ROOT%;%PROJECT_ROOT%\tools;c:\tools\subversion\bin;c:\cygwin\bin;c:\tools\vim;C:\tools;%NITROSDK_ROOT%\tools\bin;%NITROSYSTEM_ROOT%\tools\win\bin;%PATH%;
+PATH=%PROJECT_ROOT%;%PROJECT_ROOT%\tools;c:\tools\subversion\bin;c:\cygwin\bin;c:\tools\vim;C:\tools;%NITROSDK_ROOT%\tools\bin;%NITROSYSTEM_ROOT%\tools\bin;%PATH%;
 
 REM ##################################################
 REM		マクロ定義
