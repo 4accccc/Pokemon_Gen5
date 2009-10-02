@@ -63,8 +63,10 @@
 
 //TCB_TransformCommand2Waza
 #define TTC2W_SCROLL_COUNT ( 8 )
-#define TTC2W_START_SCROLL_X ( 256 )
-#define TTC2W_START_SCROLL_Y ( 0x1c0 )
+#define TTC2W_START_SCROLL_X1 ( 256 )
+#define TTC2W_START_SCROLL_Y1 ( 0x1c0 )
+#define TTC2W_START_SCROLL_X2 ( 0 )
+#define TTC2W_START_SCROLL_Y2 ( 0x1c0 )
 #define TTC2W_SCROLL_SPEED ( 64 / TTC2W_SCROLL_COUNT )
 
 //TCB_TransformWaza2Command
@@ -731,12 +733,12 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
                                         GFL_BG_FRAME0_S, 0, 0, FALSE, biw->heapID );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, NARC_battgra_wb_battle_w_bg3_NCGR,
                                         GFL_BG_FRAME3_S, 0, 0x8000, FALSE, biw->heapID );
-  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg0_NSCR,
-                                   GFL_BG_FRAME0_S, 0, 0, FALSE, biw->heapID );
-  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
-                                   GFL_BG_FRAME1_S, 0, 0, FALSE, biw->heapID );
+//  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+//                                  GFL_BG_FRAME0_S, 0, 0, FALSE, biw->heapID );
+//  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
+//                                   GFL_BG_FRAME1_S, 0, 0, FALSE, biw->heapID );
 //  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg2_NSCR,
- //                                  GFL_BG_FRAME2_S, 0, 0, FALSE, biw->heapID );
+//                                  GFL_BG_FRAME2_S, 0, 0, FALSE, biw->heapID );
   GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg3_NSCR,
                                    GFL_BG_FRAME3_S, 0, 0, FALSE, biw->heapID );
   PaletteWorkSet_ArcHandle( BTLV_EFFECT_GetPfd(), biw->handle, NARC_battgra_wb_battle_w_bg_NCLR,
@@ -815,9 +817,21 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
-    SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X, TTC2W_START_SCROLL_Y, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
+    SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X1, TTC2W_START_SCROLL_Y1, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
+    /*
+    if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->biw->
+    { 
+      SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X2, TTC2W_START_SCROLL_Y2, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
+    }
+    else
+    { 
+      SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X1, TTC2W_START_SCROLL_Y1, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
+    }
+    */
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
     SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
@@ -952,6 +966,8 @@ static  void  TCB_TransformDir2Waza( GFL_TCB* tcb, void* work )
     break;
   }
   */
+  GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+                                   GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
   GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
                                    GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
   GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );

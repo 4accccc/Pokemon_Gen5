@@ -18,9 +18,10 @@ typedef struct _BTLV_INPUT_WORK BTLV_INPUT_WORK;
 
 ///技選択画面構成用のデータ
 typedef struct{
-  u16 wazano[ PTL_WAZA_MAX ];
-  u16 pp[ PTL_WAZA_MAX ];
-  u16 ppmax[ PTL_WAZA_MAX ];
+  u16         wazano[ PTL_WAZA_MAX ];
+  u16         pp[ PTL_WAZA_MAX ];
+  u16         ppmax[ PTL_WAZA_MAX ];
+  BtlvMcssPos pos;
 }BTLV_INPUT_WAZA_PARAM;
 
 ///攻撃対象選択画面構成用のデータ
