@@ -16,6 +16,8 @@
 #include "sound/pm_sndsys.h"
 #include "debug/gf_mcs.h"
 
+#include "debug/mcs_resident.h"
+
 #define GFL_MCS_RESIDENT_ID	(9876543)
 
 enum {
@@ -30,7 +32,7 @@ typedef struct {
 
 #define MCSRSDCOMM_HEADER_SIZE (sizeof(MCSRSDCOMM_HEADER) - sizeof(u32))
 
-void	GFL_MCS_Resident(void);
+//void	GFL_MCS_Resident(void);
 static u32	GetExistMemoryBlocksInfo( HEAPID heapID, u32 pBuf );
 
 #define SENDBUF_SIZE (0x10000)
@@ -50,6 +52,7 @@ void	GFL_MCS_Resident(void)
 		MCSRSDCOMM_HEADER* recv = (MCSRSDCOMM_HEADER*)MCSRSD_recvBuffer;
 		switch(recv->comm){
 		case MCSRSDCOMM_REQHEAPSTATUS:
+#if 0
 			{
 				MCSRSDCOMM_HEADER* commHeader = (MCSRSDCOMM_HEADER*)MCSRSD_sendBuffer;
 				u32 sendSize;
@@ -69,10 +72,39 @@ void	GFL_MCS_Resident(void)
 					}
 				}
 			}
+#else
+			GFL_MCS_Resident_SendHeapStatus();
+#endif
 			break;
 		}
 	}
 }
+
+//----------------------------------------------------------------
+/**
+ *  ヒープステータス転送
+ */
+//----------------------------------------------------------------
+BOOL	GFL_MCS_Resident_SendHeapStatus(void)
+{
+	MCSRSDCOMM_HEADER* commHeader = (MCSRSDCOMM_HEADER*)MCSRSD_sendBuffer;
+	u32 sendSize;
+	int i;
+
+	commHeader->comm = MCSRSDCOMM_HEAPSTATUS;
+
+	// ヒープ情報作成＆転送
+	for(i=0; i<HEAPID_CHILD_MAX-1; i++){
+		sendSize = GetExistMemoryBlocksInfo( i, (u32)&commHeader->param);
+		if(sendSize){
+			sendSize += MCSRSDCOMM_HEADER_SIZE;	// ヘッダ情報分加算
+			//OS_Printf("trans heapInfo ... size %x, heapID %d\n", sendSize, i);
+			GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
+		}
+	}
+	return TRUE;
+}
+
 
 //============================================================================================
 /**

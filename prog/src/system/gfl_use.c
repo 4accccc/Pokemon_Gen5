@@ -33,6 +33,7 @@
 #include "debug/debugwin_sys.h"
 #include "debug/gf_mcs.h"
 #include "sound/snd_viewer_mcs.h"
+#include "debug/mcs_resident.h"
 #endif //PM_DEBUG
 
 //=============================================================================================
@@ -74,7 +75,6 @@ BOOL  mcs_recv_auto;
 static void mcsRecv( void );
 #endif
 
-extern void	GFL_MCS_Resident(void);
 //=============================================================================================
 //
 //      関数
@@ -391,6 +391,20 @@ static void gfluse_AssertFinish( void )
     // VBlank待ち
     // (これを有効にすると、デバッカで停止させたときにコールスタックが表示されない)
 //    OS_WaitIrq(TRUE,OS_IE_V_BLANK);
+  }
+}
+
+//--------------------------------------------------------------------------
+/**
+ * MCS常駐アプリへのリクエスト
+ */
+//--------------------------------------------------------------------------
+BOOL GFUser_SendHeapStatus(void);
+
+BOOL GFUser_SendHeapStatus(void)
+{
+  if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
+		GFL_MCS_Resident_SendHeapStatus();
   }
 }
 
