@@ -12,8 +12,9 @@ include $(PROJECT_RSCDIR)/macro_define
 #----------------------------------------------------------------------------
 #	アセンブラ→バイナリ生成に必要な定義ファイルをインクルード
 #----------------------------------------------------------------------------
-include	$(COMMONDEFS_CCTYPE_CW)
+#MWAS,MWLD
 include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
+include	$(COMMONDEFS_CCTYPE_CW)
 #include $(DP_ROOT)/modulerules.GF
 include $(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
