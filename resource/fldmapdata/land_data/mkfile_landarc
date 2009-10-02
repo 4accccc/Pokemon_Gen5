@@ -23,7 +23,8 @@ DIR_OUTPUT = land_output/
 DIR_TEMP = land_temp/
 DIR_RES = land_res/
 
-G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
+#G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
+G3DCVTR	= g3dcvtr.exe
 
 HEIGHTCNV =	$(PROJECT_ROOT)tools/heightcnv/imdcnv01
 HEIGHTRETFILE = $(PROJECT_ROOT)tools/heightcnv/return.txt
