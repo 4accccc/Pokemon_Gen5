@@ -13,7 +13,8 @@ TARGET_RES_ARCIDX = $(FMMDL_RES_ARCIDX_FILE)
 -include $(FMMDLLIST_RES)
 
 #G3Dコンバータ
-G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
+#G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
+G3DCVTR	= g3dcvtr.exe
 
 #imdテクスチャソートコンバータ
 IMDSORTCVTR = $(PROJECT_ROOT)/tools/imd_tex_sort.rb
