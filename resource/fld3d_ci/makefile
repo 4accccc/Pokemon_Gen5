@@ -63,7 +63,7 @@ $(TARGETDIR)/$(targetname).narc:  $(targetname).narc
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: fld_gimmick_assign.xls ../zonetable/zone_id.h
+$(targetname).narc:
 	@g3dcvtr test_cart.imd
 	nnsarc -cl -l -n -i $(NARCNAME) -S fld_spa.lst > arc_rsult.txt
 endif
