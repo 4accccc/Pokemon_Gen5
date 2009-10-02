@@ -1890,7 +1890,7 @@ void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos )
     const BTL_POKEPARAM*  bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, defPos );
     int                   value = BPP_GetValue( bpp, BPP_HP );
 
-    BTLV_EFFECT_CalcGauge( BTL_MAIN_BtlPosToViewPos( wk->mainModule, defPos ), value );
+    BTLV_EFFECT_CalcGaugeHP( BTL_MAIN_BtlPosToViewPos( wk->mainModule, defPos ), value );
   }
   BTLV_EFFECT_Damage( BTL_MAIN_BtlPosToViewPos(wk->mainModule, defPos) );
 #endif
@@ -2160,7 +2160,7 @@ void BTLV_SCU_StartHPGauge( BTLV_SCU* wk, BtlPokePos pos )
     const BTL_POKEPARAM*  bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, pos );
     int                   value = BPP_GetValue( bpp, BPP_HP );
 
-    BTLV_EFFECT_CalcGauge( BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos ), value );
+    BTLV_EFFECT_CalcGaugeHP( BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos ), value );
   }
 #endif
 }

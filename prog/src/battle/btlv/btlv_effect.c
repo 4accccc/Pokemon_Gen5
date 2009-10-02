@@ -426,17 +426,31 @@ void  BTLV_EFFECT_DelGauge( int position )
 {
   BTLV_GAUGE_Del( bew->bgw, position );
 }
+
 //============================================================================================
 /**
- * @brief  Žw’è‚³‚ê‚½ˆÊ’u‚ÌƒQ[ƒWŒvŽZ
+ * @brief  Žw’è‚³‚ê‚½ˆÊ’u‚ÌHPƒQ[ƒWŒvŽZ
  *
  * @param[in] position  ŒvŽZ‚·‚éƒQ[ƒWˆÊ’u
  * @param[in] value     ŒvŽZ—Ê
  */
 //============================================================================================
-void  BTLV_EFFECT_CalcGauge( int position, int value )
+void  BTLV_EFFECT_CalcGaugeHP( int position, int value )
 {
-  BTLV_GAUGE_Calc( bew->bgw, position, value );
+  BTLV_GAUGE_CalcHP( bew->bgw, position, value );
+}
+
+//============================================================================================
+/**
+ * @brief  Žw’è‚³‚ê‚½ˆÊ’u‚ÌEXPƒQ[ƒWŒvŽZ
+ *
+ * @param[in] position  ŒvŽZ‚·‚éƒQ[ƒWˆÊ’u
+ * @param[in] value     ŒvŽZ—Ê
+ */
+//============================================================================================
+void  BTLV_EFFECT_CalcGaugeEXP( int position, int value )
+{
+  BTLV_GAUGE_CalcEXP( bew->bgw, position, value );
 }
 
 //============================================================================================

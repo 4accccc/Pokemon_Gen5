@@ -57,15 +57,20 @@ enum
   GP_HPBAR_YELLOW = 0x09 * 0x20,      //HPバー黄
   GP_HPBAR_RED    = 0x12 * 0x20,      //HPバー赤
 
-  GP_NUM_0        = 0x29 * 0x20,      //数字０
-  GP_NUM_1        = 0x2a * 0x20,      //数字１
-  GP_SPACE        = 0x33 * 0x20,      //空白
-  GP_LV           = 0x34 * 0x20,      //LVラベル
+  GP_BALL         = 0x1b * 0x20,      //捕獲ボール
 
   GP_MALE_U       = 0x1c * 0x20,      //♂上
   GP_MALE_D       = 0x1d * 0x20,      //♂下
   GP_FEMALE_U     = 0x1e * 0x20,      //♀上
   GP_FEMALE_D     = 0x1f * 0x20,      //♀下
+
+  GP_EXPBAR       = 0x20 * 0x20,      //EXPバー
+
+  GP_NUM_0        = 0x29 * 0x20,      //数字０
+  GP_NUM_1        = 0x2a * 0x20,      //数字１
+  GP_SPACE        = 0x33 * 0x20,      //空白
+  GP_LV           = 0x34 * 0x20,      //LVラベル
+
 };
 
 enum
@@ -88,11 +93,11 @@ enum
   BTLV_GAUGE_POS_D_X = 56,
   BTLV_GAUGE_POS_D_Y = 52,
 
-  BTLV_GAUGE_POS_E_X = 0,
-  BTLV_GAUGE_POS_E_Y = 0,
+  BTLV_GAUGE_POS_E_X = 192,
+  BTLV_GAUGE_POS_E_Y = 160,
 
-  BTLV_GAUGE_POS_F_X = 0,
-  BTLV_GAUGE_POS_F_Y = 0,
+  BTLV_GAUGE_POS_F_X = 48,
+  BTLV_GAUGE_POS_F_Y = 76,
 
   BTLV_GAUGE_HPNUM_X  = 24,
   BTLV_GAUGE_HPNUM_Y  = 13,
@@ -120,6 +125,7 @@ enum
   BTLV_GAUGE_NOWHP_CHARSTART = 0x00,
   BTLV_GAUGE_MAXHP_CHARSTART = 0x04,
   BTLV_GAUGE_LV_CHARSTART = 0x2c,
+  BTLV_GAUGE_EXP_CHARSTART = 0x01,
 };
 
 typedef enum
@@ -162,8 +168,8 @@ struct _BTLV_GAUGE_CLWK
   s32           hp_work;
 
   s32           exp;
-  s32           expmax;
-  s32           expadd;
+  s32           exp_max;
+  s32           exp_add;
   s32           exp_work;
   s32           damage;
 
@@ -172,9 +178,10 @@ struct _BTLV_GAUGE_CLWK
   u8            status;
   u8            getball;
 
-  u32           calc_req      :1;
+  u32           hp_calc_req   :1;
+  u32           exp_calc_req  :1;
   u32           gauge_enable  :1;
-  u32                         :30;
+  u32                         :29;
 };
 
 struct _BTLV_GAUGE_WORK
@@ -206,6 +213,8 @@ struct _BTLV_GAUGE_WORK
 
 static  void  Gauge_InitCalcHP( BTLV_GAUGE_CLWK* bgcl, int value );
 static  void  Gauge_CalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
+static  void  Gauge_InitCalcEXP( BTLV_GAUGE_CLWK* bgcl, int add_exp );
+static  void  Gauge_CalcEXP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
 static  s32   GaugeProc( s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 GaugeMax, u16 add_dec );
 static  u8    PutGaugeProc( s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 *gauge_chr, u8 GaugeMax );
 static  u32   DottoOffsetCalc( s32 nowHP, s32 beHP, s32 MaxHP, u8 GaugeMax );
@@ -298,9 +307,13 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
 
   for( i = 0 ; i < BTLV_GAUGE_CLWK_MAX ; i++ )
   { 
-    if( bgw->bgcl[ i ].calc_req )
+    if( bgw->bgcl[ i ].hp_calc_req )
     { 
       Gauge_CalcHP( bgw, &bgw->bgcl[ i ] );
+    }
+    if( bgw->bgcl[ i ].exp_calc_req )
+    { 
+      Gauge_CalcEXP( bgw, &bgw->bgcl[ i ] );
     }
   }
   //ピンチBGM再生チェック
@@ -409,14 +422,27 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
     bgw->bgcl[ pos ].hp       = BPP_GetValue( bpp, BPP_HP );
     bgw->bgcl[ pos ].hpmax    = BPP_GetValue( bpp, BPP_MAX_HP );
     bgw->bgcl[ pos ].hp_work  = BTLV_GAUGE_HP_WORK_INIT_VALUE;
-
-    bgw->bgcl[ pos ].exp      = PP_Get( pp, ID_PARA_exp,    NULL );
-    bgw->bgcl[ pos ].expmax   = 0;
-    bgw->bgcl[ pos ].expadd   = 0;
-    bgw->bgcl[ pos ].exp_work = 0;
     bgw->bgcl[ pos ].damage   = 0;
 
     bgw->bgcl[ pos ].level    = BPP_GetValue( bpp, BPP_LEVEL );
+
+    if( bgw->bgcl[ pos ].level < 100 )
+    { 
+      bgw->bgcl[ pos ].exp      = PP_Get( pp, ID_PARA_exp,    NULL ) - PP_GetMinExp( pp );
+      bgw->bgcl[ pos ].exp_max  = POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
+                                                      BPP_GetValue( bpp, BPP_FORM ),
+                                                      BPP_GetValue( bpp, BPP_LEVEL ) + 1 ) -
+                                  PP_GetMinExp( pp );
+    }
+    else
+    { 
+      bgw->bgcl[ pos ].exp      = 0;
+      bgw->bgcl[ pos ].exp_max  = 0;
+    }
+
+    bgw->bgcl[ pos ].exp_work = BTLV_GAUGE_HP_WORK_INIT_VALUE;
+    bgw->bgcl[ pos ].exp_add  = 0;
+
     bgw->bgcl[ pos ].status   = 0;
     bgw->bgcl[ pos ].getball  = 0;
   
@@ -524,16 +550,30 @@ void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int pos_x, int p
 
 //============================================================================================
 /**
- *  @brief  ゲージ計算
+ *  @brief  HPゲージ計算
  *
  *  @param[in] bgw    BTLV_GAUGE_WORK管理構造体へのポインタ
  *  @param[in] pos    立ち位置
  *  @param[in] value  最終的に到達する値
  */
 //============================================================================================
-void  BTLV_GAUGE_Calc( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
+void  BTLV_GAUGE_CalcHP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
 { 
   Gauge_InitCalcHP( &bgw->bgcl[ pos ], value );
+}
+
+//============================================================================================
+/**
+ *  @brief  EXPゲージ計算
+ *
+ *  @param[in] bgw    BTLV_GAUGE_WORK管理構造体へのポインタ
+ *  @param[in] pos    立ち位置
+ *  @param[in] value  加算する経験値
+ */
+//============================================================================================
+void  BTLV_GAUGE_CalcEXP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
+{ 
+  Gauge_InitCalcEXP( &bgw->bgcl[ pos ], value );
 }
 
 //============================================================================================
@@ -551,7 +591,7 @@ BOOL  BTLV_GAUGE_CheckExecute( BTLV_GAUGE_WORK *bgw )
 
   for( i = 0 ; i < BTLV_GAUGE_CLWK_MAX ; i++ )
   { 
-    if( bgw->bgcl[ i ].calc_req )
+    if( ( bgw->bgcl[ i ].hp_calc_req ) || ( bgw->bgcl[ i ].exp_calc_req ) )
     { 
       return TRUE;
     }
@@ -576,8 +616,8 @@ void  BTLV_GAUGE_SetDrawEnable( BTLV_GAUGE_WORK* bgw, BOOL on_off )
 /**
  * @brief   HPバーの計算を開始する前に作業用ワーク等の初期化を行う
  *
- * @param   gauge		ゲージワークへのポインタ
- * @param[in] value  最終的に到達する値
+ * @param[in] bgw   ゲージワークへのポインタ
+ * @param[in] value 最終的に到達する値
  *
  * Gauge_CalcHPを実行する前に必ず呼び出して置く必要があります。
  */
@@ -593,14 +633,14 @@ static  void  Gauge_InitCalcHP( BTLV_GAUGE_CLWK* bgcl, int value )
 	if( bgcl->hp > bgcl->hpmax ){
 		bgcl->hp = bgcl->hpmax;
 	}
-  bgcl->calc_req = 1;
+  bgcl->hp_calc_req = 1;
 }
 
 //--------------------------------------------------------------
 /**
  * @brief   HPバーの計算と書き込みを行う
  *
- * @param   gauge		ゲージワークへのポインタ
+ * @param   bgw		ゲージワークへのポインタ
  *
  * Gauge_InitCalcHPを先に呼んである必要があります。
  */
@@ -611,16 +651,87 @@ static  void  Gauge_CalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
 	
   calc_hp = GaugeProc( bgcl->hpmax, bgcl->hp, bgcl->damage, &bgcl->hp_work, BTLV_GAUGE_HP_CHARMAX, 1 );
   PutGaugeOBJ( bgw, bgcl, BTLV_GAUGE_REQ_HP );
-	if(calc_hp == -1){
+	if( calc_hp == -1 ){
 		//計算終了時にゲージワークのhpパラメータを最新の値(ダメージ計算後)で更新しておく
 		bgcl->hp -= bgcl->damage;
     PutHPNumOBJ( bgw, bgcl, bgcl->hp );
-    bgcl->calc_req = 0;
+    bgcl->hp_calc_req = 0;
+    bgcl->hp_work = 0;
 	}
 	else{
     PutHPNumOBJ( bgw, bgcl, calc_hp );
 	}
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief   EXPバーの計算を開始する前に作業用ワーク等の初期化を行う
+ *
+ * @param   bgw		    ゲージワークへのポインタ
+ * @param   add_exp		加算するEXP値
+ *
+ * Gauge_CalcEXPを実行する前に必ず呼び出して置く必要があります。
+ */
+//--------------------------------------------------------------
+static  void  Gauge_InitCalcEXP( BTLV_GAUGE_CLWK* bgcl, int add_exp )
+{
+	bgcl->exp_work = BTLV_GAUGE_HP_WORK_INIT_VALUE;
+
+	if( bgcl->exp + add_exp < 0 )
+  {
+		add_exp -= bgcl->exp + add_exp;
+	}
+	if( bgcl->exp + add_exp > bgcl->exp_max)
+  {
+		add_exp -= ( bgcl->exp + add_exp ) - bgcl->exp_max;
+	}
+
+	//-- 旧ゲージ計算ルーチンに合わせるため、正負の逆転などを行う --//
+	 bgcl->exp_add = -add_exp;
+	if( bgcl->exp < 0 )
+  {
+		bgcl->exp = 0;
+	}
+	if( bgcl->exp > bgcl->exp_max )
+  {
+		bgcl->exp = bgcl->exp_max;
+	}
+  bgcl->exp_calc_req = 1;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   EXPバーの計算と書き込みを行う
+ *
+ * @param   bgw		ゲージワークへのポインタ
+ *
+ * @retval  -1=終了。　-1以外=計算途中の数字(画面に表示する数値)
+ *
+ * Gauge_InitCalcEXPを先に呼んである必要があります。
+ */
+//--------------------------------------------------------------
+static  void  Gauge_CalcEXP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
+{
+	s32 calc_exp;
+  s32 dotto_offset;
+	
+  dotto_offset = DottoOffsetCalc( bgcl->exp, bgcl->exp_add, bgcl->exp_max, BTLV_GAUGE_EXP_CHARMAX );
+  if( dotto_offset == 0 )
+  { 
+    dotto_offset = 1;
+  }
+  dotto_offset = GFL_STD_Abs( bgcl->exp_add / dotto_offset );
+  calc_exp = GaugeProc( bgcl->exp_max, bgcl->exp, bgcl->exp_add, &bgcl->exp_work, BTLV_GAUGE_EXP_CHARMAX, dotto_offset );
+  PutGaugeOBJ( bgw, bgcl, BTLV_GAUGE_REQ_EXP );
+	if(calc_exp == -1)
+  {
+		//計算終了時にゲージワークのexpパラメータを最新の値(ダメージ計算後)で更新しておく
+		bgcl->exp -= bgcl->exp_add;
+    bgcl->exp_calc_req = 0;
+    bgcl->exp_work = 0;
+	}
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -933,7 +1044,7 @@ static  void  PutSexOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
 static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAUGE_REQ req )
 {
 	u8  i;
-  u8  gauge_chr[ BTLV_GAUGE_HP_CHARMAX ];
+  u8  gauge_chr[ BTLV_GAUGE_EXP_CHARMAX ];
 
 	u16 parts_num;
 	u8  put_dot;
@@ -942,10 +1053,10 @@ static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAU
 	NNSG2dImageProxy image;
 	
 	obj_vram = G2_GetOBJCharPtr();
-  GFL_CLACT_WK_GetImgProxy( bgcl->hp_clwk, &image );
 
 	switch(req){
 	case BTLV_GAUGE_REQ_HP:
+    GFL_CLACT_WK_GetImgProxy( bgcl->hp_clwk, &image );
 		put_dot = PutGaugeProc( bgcl->hpmax, bgcl->hp, bgcl->damage, &bgcl->hp_work, gauge_chr, BTLV_GAUGE_HP_CHARMAX );
 
 		//ゲージの表示ドット数から色とパーツアドレスを取得
@@ -970,37 +1081,28 @@ static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAU
 			MI_CpuCopy16( &bgw->parts_address[ parts_num + ( gauge_chr[ i ] << 5 ) ],
                     (void*)( (u32)obj_vram + ( i + BTLV_GAUGE_HP_CHARSTART ) * 0x20 +
                     image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
-                    0x20);
+                    0x20 );
 		}
 		break;
 	
 	case BTLV_GAUGE_REQ_EXP:
-#if 0
-		PutGaugeProc(gauge->max_exp, gauge->exp, gauge->add_exp,
-				&gauge->exp_work, gauge_chr, BAR_EXP_CHARMAX);
-		level = gauge->level;
-		if(level == 100){
-			for(i = 0; i < BAR_EXP_CHARMAX; i++){
-				gauge_chr[i] = 0;
+    GFL_CLACT_WK_GetImgProxy( bgcl->exp_clwk, &image );
+		PutGaugeProc( bgcl->exp_max, bgcl->exp, bgcl->exp_add, &bgcl->exp_work, gauge_chr, BTLV_GAUGE_EXP_CHARMAX );
+		level = bgcl->level;
+		if( level == 100 ) 
+    {
+			for( i = 0; i < BTLV_GAUGE_EXP_CHARMAX ; i++ ) 
+      {
+				gauge_chr[ i ] = 0;
 			}
 		}
 		
-		parts_address = GetGaugePartsAdrs(GP_EXP);
-		for(i = 0; i < BAR_EXP_CHARMAX; i++){
-			if(i < EXPBAR_NEXT_OAM){
-				MI_CpuCopy16(parts_address + (gauge_chr[i] << 5),
-					(void*)((u32)obj_vram + EXPBAR_FAST_HIGH + (i * 0x20)
-					+ image->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DMAIN]),
-					0x20);
-			}
-			else{
-				MI_CpuCopy16(parts_address + (gauge_chr[i] << 5),
-					(void*)((u32)obj_vram + EXPBAR_SECOND_HIGH + ((i-EXPBAR_NEXT_OAM) * 0x20)
-					+ image->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DMAIN]),
-					0x20);
-			}
+		for(i = 0; i < BTLV_GAUGE_EXP_CHARMAX; i++){
+			MI_CpuCopy16( &bgw->parts_address[ GP_EXPBAR + ( gauge_chr[ i ] << 5 ) ],
+                    (void*)( (u32)obj_vram + ( i + BTLV_GAUGE_EXP_CHARSTART ) * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DMAIN ] ),
+                    0x20 );
 		}
-#endif
 		break;
 	}
 }
@@ -1186,3 +1288,4 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
     }
   }
 }
+
