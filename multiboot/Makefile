@@ -104,6 +104,7 @@ MAKEROM_ROMROOT  = ./
 ##MAKEROM_ROMFILES = $(subst ,,$(FILE_TREE))
 
 -include arc/file_tree.inc
+
 EDEPENDS_BIN += $(patsubst %, arc/%, $(GAME_FILE_TREE:.narc=.o))
 
 
@@ -117,23 +118,14 @@ ROM_SPEC= default.rsf
 #TARGET_NEF	=	main.nef	TARGET_BINに.srlを指定すると.nefも一緒に生成される
 TARGET_BIN	=	main.srl
 
-#--------------------------------------- ----------------------------
-# システム定義
-#
-include $(NITROSYSTEM_ROOT)/build/buildtools/commondefs
-include $(NITROSYSTEM_ROOT)/build/buildtools/nnslibdefs
-include $(NITROSYSTEM_ROOT)/build/buildtools/modulerules
+EXT_OBJS += $(patsubst %, arc/%, $(GAME_FILE_TREE:.narc=.o))
 
-#----------------------------------------------------------------------------
-#	WiFi定義
-#----------------------------------------------------------------------------
-ifeq	($(TWLSDK_PLATFORM),TWL)
-include	$(NITRODWC_ROOT)/build/buildtools/commondefs
-include	$(NITRODWC_ROOT)/build/buildtools/modulerules
-else
-include	$(NITROVCT_ROOT)/build/buildtools/commondefs
-include	$(NITROVCT_ROOT)/build/buildtools/modulerules
-endif
+include	$(TWLVCT_ROOT)/build/buildtools/commondefs
+include $(TWLSYSTEM_ROOT)/build/buildtools/commondefs
+include $(TWLSYSTEM_ROOT)/build/buildtools/nnslibdefs
+include $(TWLSYSTEM_ROOT)/build/buildtools/modulerules
+include	$(TWLVCT_ROOT)/build/buildtools/modulerules
+
 
 #----------------------------------------------------------------------------
 #	makefileがインクルードするファイルが更新されたらmakelcfが動作するようにした
@@ -171,12 +163,15 @@ MAKEROM_MB = $(patsubst %, arc/%, $(GAME_FILE_TREE))
 #----------------------------------------------------------------------------
 #	.narcから生成された.oをリンクに含めるための記述
 #----------------------------------------------------------------------------
-EXT_OBJS += $(patsubst %, arc/%, $(GAME_FILE_TREE:.narc=.o))
+#SOBJS_CC +=  $(MAKEROM_MB:.narc=.o)
+
+#--------------------------------------- ----------------------------
+# システム定義 &WiFi定義
+#
 
 
 #--------------------------------------- ----------------------------
 do-build: precompile $(MAKEROM_MB:.narc=.o) $(TARGETS)
-
 
 #----------------------------------------------------------------------------
 #	ソースのみのリコンパイル
@@ -214,8 +209,7 @@ $(PRECOMPILE_CC_MCH):	$(VER_FILE)
 -include $(PRECOMPILE_CC_MCH).d
 $(PRECOMPILE_CC_MCH):%_cc.mch:
 		$(CC) $(PRECOMPILE_CCFLAGS) $(INCLUDES) $(PRECOMPILE_SRC) -MD -precompile $(PRECOMPILE_CC_MCH)
-		$(MOVE_SRC_DEPEND)
-		$(MV) $(DEPENDDIR)/$(*F).d $@.d
+##		$(MOVE_SRC_DEPEND)
+##		$(MV) $(DEPENDDIR)/$(*F).d $@.d
 $(OBJS):  $(PRECOMPILE_CC_MCH)
-
 
