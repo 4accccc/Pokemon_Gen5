@@ -27,6 +27,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+
+//【修正（安藤さん）】ちょっと手間ですがラベルの命名規則を修正しますか…。
+//【修正（安藤さん）】看板のスクリプトが配置されていないようです。作成方法は説明していない気もするので、分からない場合は斉藤マに聞いてください。
+
 _EVENT_DATA ev_r01_poke_getdemo
 _EVENT_DATA ev_r01_talkobj_boy1
 _EVENT_DATA ev_r01_talkobj_girl1
@@ -58,6 +62,9 @@ DEFINE_LOCAL  TEMP_00 //ローカル変数定義を宣言
 /**************************************************************/
 /*   R01　ポケモン捕獲デモ                                    */
 /**************************************************************/
+
+//【修正（安藤さん）】ev_dummy: の意味は何だろう？玉田さん作成？
+
 ev_dummy:
 EVENT_START   ev_r01_poke_getdemo
 //POSイベント、POSごとに主人公移動アニメ
@@ -88,6 +95,9 @@ EVENT_START   ev_r01_poke_getdemo
   //ここではPOSX,POSZは参照できないが、TEMP_00は参照できる
   _PLAYER_POS_GET( TEMP_00, LOCALWORK0 )
 ev_dummy_end:
+
+//【修正（安藤さん）】↓の大量コメントアウト箇所は削除するのが良いです
+
 /*
   IF $POSX == 786 THEN
       _OBJ_ANIME( MMDL_ID_PLAYER,anime_r01_guide00a )
@@ -107,11 +117,13 @@ ev_dummy_end:
   ENDIF
 */
 
+	//【修正（安藤さん）】ここ以降、_AB_KEYWAIT()で２重待ちになっている箇所が複数あるようです。
+
 //ライバル、アニメ＋メッセージ
 	_OBJ_ANIME( R01_RIVAL,anime_R01_pokeget0 )
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_OPEN( msg_r01_black_01,R01_RIVAL )
-	_AB_KEYWAIT()
+	_AB_KEYWAIT()		//←コレとか２重待ちになってます。消しちゃってください。
 	_BALLOONWIN_CLOSE()
 
 //博士、メッセージ＋アニメ
@@ -120,11 +132,12 @@ ev_dummy_end:
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME( R01_HAKASE2,anime_R01_pokeget1 )
 	_OBJ_ANIME_WAIT()
-//画面フェード
-/*	_BGM_PLAY BANK_BGM_BATTLE01*/
+
+	//【仮】ポケモン捕獲デモ。仮処理で画面フェードを入れています。
+/*	_BGM_PLAY BANK_BGM_BATTLE01*/		//←これも消しちゃっていいです。理由を書くと長くなりますが聞きたい場合は斉藤マまで！
 	_WHITE_OUT( 8 )
 	_DISP_FADE_END_CHECK()
-	_AB_KEYWAIT()
+	_AB_KEYWAIT()			//【修正（安藤さん）】松宮さん作成だと思いますが、フリーズだと思ってしまうのでキーウェイトは消してください。
 	_WHITE_IN( 8 )
 	_DISP_FADE_END_CHECK()
 /*	_BGM_STOP
@@ -137,7 +150,7 @@ ev_dummy_end:
 	_BALLOONWIN_OBJMSG_OPEN( msg_r01_hakase2_02,R01_HAKASE2 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-  
+
 //モンスターボール入手
 	_ITEM_EVENT_KEYWAIT(ITEM_MONSUTAABOORU, 5)
 
@@ -203,15 +216,22 @@ ev_dummy_end:
 	_OBJ_DEL( R01_RIVAL )
 	_OBJ_DEL( R01_HEROINE )
 
+//============フラグ操作============//
+
+	//博士＆ライバル＆サポートを非表示
 	_FLAG_SET( FV_R01_HAKASE )
 	_FLAG_SET( FV_R01_RIVAL )
 	_FLAG_SET( FV_R01_SUPPORT )
 
-   $WK_SCENE_R01 = 1
+	//捕獲デモのpos無効。捕獲回数対決イベントのpos有効
+	$WK_SCENE_R01 = 1
+
+//==================================//
+
 EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*              【修正（安藤さん）】イベント名を！            */
 /**************************************************************/
 EVENT_START   ev_r01_talkobj_boy1
   _TALK_OBJ_START()
@@ -257,6 +277,9 @@ EVENT_END
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
+//【修正（安藤さん）】コメントアウトしている箇所の削除。イベント名を明記。
+//もう一つ↓のイベントも同様です。
+
 EVENT_START   ev_r01_talkobj_girl1
   _EASY_TALK_ITEM_EVENT(ITEM_MASUTAABOORU, 2, FH_01, msg_r01_girl1_01, msg_r01_girl1_02, msg_r01_girl1_02 )
 /*
@@ -274,7 +297,7 @@ EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START   ev_r01_talkobj_man1
-  _TALK_OBJ_START()
+	_TALK_OBJ_START()
 	_BALLOONWIN_TALKOBJ_OPEN( msg_r01_man1_01 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
@@ -291,11 +314,11 @@ EVENT_START   ev_r01_poke_count_rivel
 	//カウント勝負によって返答を分岐
 	IF $WK_SCENE_R01 == 1 THEN
 	//カウント前
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_black_10)
-ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_black_10)
+	ELSE
 	//カウント後
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_black_11)
-ENDIF
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_black_11)
+	ENDIF
 EVENT_END
 
 
@@ -336,6 +359,7 @@ EVENT_START   ev_pos_r01_pokecount
 	ENDSWITCH
 } //ローカル変数の参照制限範囲、ここまで。
 
+
 //カウント勝負質問
 _BALLOONWIN_OBJMSG_OPEN( msg_r01_white_10,R01_HEROINE02)
 _YES_NO_WIN( SCWK_ANSWER )
@@ -364,6 +388,14 @@ EVENT_END
 EVENT_START   ev_r01_pokecount02
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_white_13)
 EVENT_END
+
+
+
+
+
+//【修正（安藤さん）】アニメラベルは anm_ で始めてください。またゾーン名を大文字にする必要はありません。
+//松宮さん作成箇所のためだと思いますが、記述ルールと違っている箇所が多いので、お手数ですが修正をお願いします。
+
 
 /**************************************************************/
 /*   R01　カウント用：POSで主人公移動                    */
@@ -394,6 +426,7 @@ _ANIME_LABEL	anime_r01_guide01c
 /* きずぐすり渡す女子                                    */
 /**************************************************************/
 EVENT_START   ev_r01_girl1
+	//【修正（安藤さん）】キズぐすり入手イベントが未作成のようです。
 
 EVENT_END
 

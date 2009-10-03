@@ -19,6 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+
+//【修正（安藤さん）】上から４つ、ラベル修正しますか
+//【修正（安藤さん）】看板イベントがなさそうです。
 _EVENT_DATA    ev_r03_talkobj_oldwoman1
 _EVENT_DATA    ev_r03_talkobj_woman3
 _EVENT_DATA    ev_r03_talkobj_babygirl1a
@@ -64,7 +67,7 @@ EVENT_START   ev_pos_r03_rival_01
 	
 	//戦闘突入
 	_BLACK_OUT(2)
-	_AB_KEYWAIT()
+	_AB_KEYWAIT()			//【修正（安藤さん）】これは外しちゃいましょう。あと戦闘の仮処理なので【仮】を入れておいてください。
 	_DISP_FADE_END_CHECK()
 	_BLACK_IN(2)
 	_DISP_FADE_END_CHECK()
@@ -261,9 +264,11 @@ EVENT_START   ev_pos_r03_rival_04
 	_OBJ_DEL(R03_HAKAIM_02)
 	_FLAG_SET(FV_R03_RIVAL_01)
 	_FLAG_SET(FV_R03_POKE)
+
+	//【修正（安藤さん）】ワークを 2 にしたことでイベントフローがどうなるかを簡単に書いておいてください
 	$WK_SCENE_R03 = 2
-	
-	
+
+
 EVENT_END
 
 
@@ -381,6 +386,9 @@ _ANIME_LABEL	anm_r03_rival_06
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_WALK_L_8F,12
 	_ANIME_DATA	ACMD_END,0
+
+
+//【修正（安藤さん）】これ以降、全部EASYコマンドに直せると思います。
 
 /**************************************************************/
 /*  R03 OLDWOMAN1の会話のイベントスクリプト*/
