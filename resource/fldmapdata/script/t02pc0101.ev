@@ -20,26 +20,10 @@ _EVENT_DATA		ev_t02pc0101_woman1_1
 _EVENT_DATA		ev_t02pc0101_middlewoman1_1
 _EVENT_DATA		ev_t02pc0101_doctor_guide
 _EVENT_DATA		ev_t02pc0101_support_01
-_EVENT_DATA		ev_zone_t02pc0101
+_EVENT_DATA		ev_zone_t02pc0101					//現状未使用。field_init_labelとして再利用します。斉藤マ091003
 _EVENT_DATA		ev_t02pc0101_rival_01
 _EVENT_DATA_END
 
-
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/*
- * 注意！(06.02.09現在)
- * EV_SCRIPT_WORKを確保していないので、
- * SCWK_ANSWERなどのワークは使用することが出来ない！
- * LOCALWORK0などを使用するようにする！
- *
- * 共通スクリプトについては現状使用不可！
- * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
- * あまりつかわないかも？
- */
-/**************************************************************/
-//ev_t02pc0101_flag_change:
-//  _END
 
 /**************************************************************/
 /*     博士によるポケセン案内イベント 杉中                    */
@@ -67,9 +51,10 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	//ポケモンセンターの凄いところ！
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02pc0101_hakase2_02,T02PC0101_DOCTOR )
 	_BALLOONWIN_CLOSE()
-	
+
+	//【杉中くん】読むだけでいいです。↓の流れを実装する場合、どのように組めば良いか考えておいて下さい。
 	//【仮】自機がカウンターで会話を起こさず移動した場合引き戻される
-	
+
 		//【仮】ちょっと　どこへ　いくと　いうんだい？
 	
 	//【仮】回復処理
@@ -129,21 +114,22 @@ EVENT_START   ev_t02pc0101_scene_change_01
 	//友達♀：ショップに向く
 	_OBJ_ANIME( T02PC0101_SUPPORT_01, anm_support_shop )
 	_OBJ_ANIME_WAIT()
-	
+
+	//【杉中くん】ワーク操作も↓のフラグワーク操作コメントのところににまとめてください。理由が分からない場合は斉藤マに聞いてください。
 	//博士案内イベント終了
 	$WK_SCENE_T02PC0101 = 1
 
-	//===================================//
-	
+	//=========フラグワーク操作==========//
+
 	//友達♂ストッパー解除
 	_FLAG_SET( FV_T02_RIVAL )
-	
+
 	//演説イベントフラグ開始
 	_FLAG_RESET( FV_T02_SAGE )
 	_FLAG_RESET( FV_T02_HAKAI )
 	_FLAG_RESET( FV_T02_NNN )
 	_FLAG_RESET( FV_T02_RIVAL_02 )
-	
+
 	//===================================//
 
 EVENT_END
@@ -291,6 +277,9 @@ EVENT_END
 /**************************************************************/
 /*    T02 MIDDLEWOMAN1の会話用イベントスクリプト              */
 /**************************************************************/
+
+//【杉中くん】GMMファイルでは、コメントに削除予定とあります。松宮さんに確認して不要であれば消してください。
+
 EVENT_START   ev_t02pc0101_middlewoman1_1
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02pc0101_middlewoman1_01 )
 EVENT_END
