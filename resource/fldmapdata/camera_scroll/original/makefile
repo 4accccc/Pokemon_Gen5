@@ -84,7 +84,7 @@ $(targetname).narc: $(XLSFILE) $(HEADERDUMMY_TARGET)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
-	-rm	$(LIST_FILE)
+	-rm	-rf $(LIST_FILE)
 
 $(HEADERDUMMY_TARGET):$(HEADERDIR)field_camera.h
 	rm -f *.bin

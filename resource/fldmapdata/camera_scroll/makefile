@@ -83,7 +83,7 @@ endif
 clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
-	rm -r *.bin
+	rm -f *.bin
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif
