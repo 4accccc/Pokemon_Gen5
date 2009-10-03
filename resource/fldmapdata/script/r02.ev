@@ -15,6 +15,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+
+//【修正（村上くん）】ラベルを命名規則で統一してください。
+//【修正（村上くん）】看板のイベントが未作成のようです。
 _EVENT_DATA    ev_pos_r02_rival_01
 _EVENT_DATA    ev_r02_talkobj_mama
 _EVENT_DATA    ev_r02_talkobj_boy2
@@ -56,6 +59,7 @@ EVENT_START   ev_pos_r02_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：ウェイトを持たせる
+	//【修正（村上くん）】ウェイトは専用のコマンドがあります。_TIME_WAIT( time ) です。使い方はいつもの方法でチェックするのだ！
 	_OBJ_ANIME( R02_RIVAL_01,anm_16wait)
 	_OBJ_ANIME_WAIT()
 	
@@ -93,7 +97,10 @@ EVENT_START   ev_pos_r02_rival_01
 
 	//ライバル：消す
 	_OBJ_DEL( R02_RIVAL_01 )		//ライバルのOBJをその場で消す
-	
+
+	//【修正（村上くん）】ナイスコメント！分かりやすくてとても良いですが、フラグ操作とワーク操作はまとめちゃってＯＫです。
+	//"フラグワーク操作"のコメントの間で、フラグとワークの値変更を行ってください。
+
 	//=================フラグ操作=================//
 	//T02にライバルが出現する
 	_FLAG_RESET  ( FV_T02PC0101_RIVAL )  
@@ -146,35 +153,40 @@ _ANIME_LABEL	anm_shita_muku
 _ANIME_LABEL	anm_rival_saru
 	_ANIME_DATA AC_WALK_R_8F,10
 	_ANIME_DATA	ACMD_END,0
-	
+
+
+//【修正（村上くん）】ランニングシューズ入手イベントが未作成のようです。
+//ランニングシューズ追加コマンドが無いかもしれませんが、メッセージの流れだけでもお願いします。
 /**************************************************************/
 /*  R02 ママのイベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r02_talkobj_mama
-  _TALK_OBJ_START()
+	_TALK_OBJ_START()
 	_BALLOONWIN_TALKOBJ_OPEN( msg_r02_mama_01 )
 	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_BALLOONWIN_CLOSE()
 EVENT_END
 
+
+//【修正（村上くん）】↓２つのイベントは、EASY系コマンドで１行にまとめてください。
 /**************************************************************/
 /*  R02 BOY2の会話イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r02_talkobj_boy2
-  _TALK_OBJ_START()
+	_TALK_OBJ_START()
 	_BALLOONWIN_TALKOBJ_OPEN( msg_r02_boy2_01 )
 	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_BALLOONWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
 /*  R02 GIRL2の会話のイベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r02_talkobj_girl2
-  _TALK_OBJ_START()
+	_TALK_OBJ_START()
 	_BALLOONWIN_TALKOBJ_OPEN( msg_r02_girl2_01 )
 	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_BALLOONWIN_CLOSE()
 EVENT_END
 
 
