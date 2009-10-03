@@ -32,6 +32,7 @@
 #include "net_app/union/colosseum_types.h"
 #include "field/event_fldmmdl_control.h"
 #include "field/event_colosseum_battle.h"
+#include "gamesystem\btl_setup.h"
 
 
 //============================================================================================
@@ -149,66 +150,66 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UN
   int multi;
   GMEVENT *event;
 
-  switch(play_category){
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:         //コロシアム
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:       //コロシアム
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:   //コロシアム
-    rule = BTL_RULE_SINGLE;
-    multi = 0;
-    break;
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:         //コロシアム
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:       //コロシアム
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:   //コロシアム
-    rule = BTL_RULE_DOUBLE;
-    multi = 0;
-    break;
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50:         //コロシアム
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE:       //コロシアム
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD:   //コロシアム
-    rule = BTL_RULE_TRIPLE;
-    multi = 0;
-    break;
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50:         //コロシアム
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE:       //コロシアム
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD:   //コロシアム
-    rule = BTL_RULE_TRIPLE; //※check まだローテーションの定義が無い
-    multi = 0;
-    break;
-  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //コロシアム
-    rule = BTL_RULE_DOUBLE;
-    multi = 1;
-    break;
-  default:
-    GF_ASSERT(0);
-    return NULL;
-  }
-
   event = GMEVENT_Create(
     gsys, NULL, EVENT_ColosseumBattleMain, sizeof(EVENT_COLOSSEUM_BATTLE_WORK));
   cbw = GMEVENT_GetEventWork(event);
   cbw->gsys = gsys;
   cbw->fieldmap = fieldmap;
   para = &cbw->para;
-  {
-    para->engine = BTL_ENGINE_ALONE;
-    para->competitor = BTL_COMPETITOR_COMM;
-    para->rule = rule;
 
-    para->commMode = BTL_COMM_DS;
-    para->multiMode = multi;
-
-    para->partyPlayer = setup->partyPlayer;
-    para->partyEnemy1 = setup->partyEnemy1;   ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
-    para->partyPartner = setup->partyPartner; ///< 2vs2時の味方AI（不要ならnull）
-    para->partyEnemy2 = setup->partyEnemy2;    ///< 2vs2時の２番目敵AI用（不要ならnull）
-    para->statusPlayer =  GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
-
-    para->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-    para->netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
-
-    para->musicDefault = SEQ_BA_TEST_250KB;   ///< デフォルト時のBGMナンバー
-    para->musicPinch = SEQ_BA_PINCH_TEST_150KB;     ///< ピンチ時のBGMナンバー
+  switch(play_category){
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:         //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50_SHOOTER:         //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:       //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE_SHOOTER:       //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:   //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD_SHOOTER:   //コロシアム
+    BTL_SETUP_Single_Comm(para, GAMESYSTEM_GetGameData(gsys), 
+      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS);
+    break;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:         //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50_SHOOTER:         //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:       //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE_SHOOTER:       //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:   //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD_SHOOTER:   //コロシアム
+    BTL_SETUP_Double_Comm(para, GAMESYSTEM_GetGameData(gsys), 
+      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS);
+    break;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50:         //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50_SHOOTER:         //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE:       //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE_SHOOTER:       //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD:   //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD_SHOOTER:   //コロシアム
+    BTL_SETUP_Triple_Comm(para, GAMESYSTEM_GetGameData(gsys), 
+      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS);
+    break;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50:         //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50_SHOOTER:         //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE:       //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE_SHOOTER:       //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD:   //コロシアム
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD_SHOOTER:   //コロシアム
+    //※check まだローテーションの定義が無いのでとりあえずトリプル指定
+    BTL_SETUP_Triple_Comm(para, GAMESYSTEM_GetGameData(gsys), 
+      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS);
+    break;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:      //コロシアム
+    BTL_SETUP_Multi_Comm(para, GAMESYSTEM_GetGameData(gsys), 
+      GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, setup->standing_pos);
+    break;
+  default:
+    GF_ASSERT_MSG(0, "play_category = %d\n", play_category);
+    return NULL;
   }
+
+  para->partyPlayer = setup->partyPlayer;
+#if 0 //戦闘内部でシェアしあうので、ここで指定はいらない
+  para->partyEnemy1 = setup->partyEnemy1;   ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
+  para->partyPartner = setup->partyPartner; ///< 2vs2時の味方AI（不要ならnull）
+  para->partyEnemy2 = setup->partyEnemy2;    ///< 2vs2時の２番目敵AI用（不要ならnull）
+#endif
   return event;
 }
 
