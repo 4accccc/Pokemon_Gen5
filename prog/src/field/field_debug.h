@@ -3,7 +3,7 @@
  * @file	field_debug.c
  * @brief	フィールドデバッグ処理
  * @author	kagaya
- * @data	08.09.29
+ * @date	08.09.29
  */
 //======================================================================
 #ifndef FIELD_DEBUG_H_FILE

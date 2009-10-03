@@ -5,7 +5,7 @@
  *	@file		field_3dpriority.h
  *	@brief	フィールド上で、３D面をBGのように扱う場合の、カメラニア面からの表示オフセット値
  *	@author	tomoya takahashi
- *	@data		2009.05.11
+ *	@date		2009.05.11
  *
  *	モジュール名：
  */

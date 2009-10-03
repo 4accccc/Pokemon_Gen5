@@ -3,7 +3,7 @@
  * @file  fldeff_reflect.c
  * @brief  フィールド 映り込み
  * @author  kagaya
- * @data  05.07.13
+ * @date  05.07.13
  */
 //======================================================================
 #include <gflib.h>

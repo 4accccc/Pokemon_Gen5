@@ -5,7 +5,7 @@
  *	@file		fld_scenearea.h
  *	@brief  フィールド　特殊シーン領域管理
  *	@author	tomoya takahashi
- *	@data		2009.05.22
+ *	@date		2009.05.22
  *
  *	モジュール名：FLD_SCENEAREA
  */

@@ -3,7 +3,7 @@
  * @file  event_trainer_eye.c
  * @brief  トレーナー視線イベント
  * @author  kagaya
- * @data  05.10.03
+ * @date  05.10.03
  */
 //======================================================================
 #include <gflib.h>

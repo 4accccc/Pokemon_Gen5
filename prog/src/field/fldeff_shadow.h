@@ -3,7 +3,7 @@
  * @file	fldeff_shadow.h
  * @brief	フィールドOBJ影
  * @author	kagaya
- * @data	05.07.13
+ * @date	05.07.13
  */
 //======================================================================
 #pragma once

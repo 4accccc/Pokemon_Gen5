@@ -18,8 +18,6 @@
 #include "scrcmd_work.h"
 #include "scrcmd_menuwin.h"
 
-#include "sound/pm_sndsys.h"        //PMSND_PlaySystemSE
-#include "sound/wb_sound_data.sadl" //SEQ_SE_MESSAGE
 
 //======================================================================
 //  ‚Í‚¢A‚¢‚¢‚¦@ˆ—
@@ -443,7 +441,6 @@ static BOOL balloonWin_Write( SCRCMD_WORK *work, u16 objID, u16 arcID, u16 msgID
   }
   
   SCRCMD_WORK_SetFldMsgWinStream( work, (FLDMSGWIN_STREAM*)tmsg );
-  PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
   return( TRUE );
 }
 
@@ -611,7 +608,6 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
       tmsg = FLDTALKMSGWIN_AddStrBuf( fparam->msgBG, idx, pos_p, *msgbuf );
       
       SCRCMD_WORK_SetFldMsgWinStream( work, (FLDMSGWIN_STREAM*)tmsg );
-      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       
       VMCMD_SetWait( core, BallonWinMsgWait );
       return VMCMD_RESULT_SUSPEND;

@@ -3,7 +3,7 @@
  * @file	field_comm_actor.c
  * @brief	
  * @author
- * @data
+ * @date
  */
 //======================================================================
 #include <gflib.h>

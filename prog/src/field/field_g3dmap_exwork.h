@@ -5,7 +5,7 @@
  *	@file		field_g3dmap_exwork.h
  *	@brief	field_g3d_mapperのGFL_G3D_MAP拡張ワーク管理処理
  *	@author	tomoya takahashi
- *	@data		2009.05.01
+ *	@date		2009.05.01
  *
  *	モジュール名：FLD_G3D_MAP_EXWORK
  */

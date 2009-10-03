@@ -4,7 +4,7 @@
  * @file	field_easytp.h
  * @brief	フィールド簡易タッチパネル
  * @author	kagaya
- * @data	08.09.30
+ * @date	08.09.30
  */
 //======================================================================
 #ifndef __FIELD_EASYTP_H__

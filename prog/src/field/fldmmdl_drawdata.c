@@ -3,7 +3,7 @@
  * @file	fieldobj_drawdata.c
  * @brief	フィールド動作モデル描画データ
  * @author	kagaya
- * @data	05.07.20
+ * @date	05.07.20
  */
 //======================================================================
 #include "fldmmdl.h"

@@ -5,7 +5,7 @@
  *	@file		field_ground_anime.h
  *	@brief	フィールド地面アニメーション管理システム
  *	@author	tomoya takahshi
- *	@data		2009.04.30
+ *	@date		2009.04.30
  *
  *	モジュール名：FIELD_GRANM
  */

@@ -3,7 +3,7 @@
  * @file	fldeff_shadow.c
  * @brief	フィールドOBJ影
  * @author	kagaya
- * @data	05.07.13
+ * @date	05.07.13
  */
 //======================================================================
 #include <gflib.h>
