@@ -401,6 +401,10 @@
 		<language name="JPN" width="256">BGM-NAMINORI</language>
 		<language name="JPN_KANJI" width="256">BGM-NAMINORI</language>
 	</row>
+	<row id="msg_seq_bgm_e_dendouiri">
+		<language name="JPN" width="256">BGM-E-DENDOUIRI</language>
+		<language name="JPN_KANJI" width="256">BGM-E-DENDOUIRI</language>
+	</row>
 	<row id="msg_seq_bgm_ending">
 		<language name="JPN" width="256">BGM-ENDING</language>
 		<language name="JPN_KANJI" width="256">BGM-ENDING</language>
@@ -629,6 +633,10 @@
 		<language name="JPN" width="256">BGM-BATTLETOWER2</language>
 		<language name="JPN_KANJI" width="256">BGM-BATTLETOWER2</language>
 	</row>
+	<row id="msg_seq_bgm_pokemon_league">
+		<language name="JPN" width="256">BGM-POKEMON-LEAGUE</language>
+		<language name="JPN_KANJI" width="256">BGM-POKEMON-LEAGUE</language>
+	</row>
 	<row id="msg_seq_bgm_d_01">
 		<language name="JPN" width="256">BGM-D-01</language>
 		<language name="JPN_KANJI" width="256">BGM-D-01</language>
@@ -660,6 +668,10 @@
 	<row id="msg_seq_bgm_d_08">
 		<language name="JPN" width="256">BGM-D-08</language>
 		<language name="JPN_KANJI" width="256">BGM-D-08</language>
+	</row>
+	<row id="msg_seq_bgm_d_champroad">
+		<language name="JPN" width="256">BGM-D-CHAMPROAD</language>
+		<language name="JPN_KANJI" width="256">BGM-D-CHAMPROAD</language>
 	</row>
 	<row id="msg_seq_bgm_e_tsureteke1">
 		<language name="JPN" width="256">BGM-E-TSURETEKE1</language>
@@ -812,50 +824,6 @@
 	<row id="msg_seq_bgm_gts">
 		<language name="JPN" width="256">BGM-GTS</language>
 		<language name="JPN_KANJI" width="256">BGM-GTS</language>
-	</row>
-	<row id="msg_seq_bgm_test_250kb">
-		<language name="JPN" width="256">BGM-TEST-250KB</language>
-		<language name="JPN_KANJI" width="256">BGM-TEST-250KB</language>
-	</row>
-	<row id="msg_seq_bgm_test_200kb">
-		<language name="JPN" width="256">BGM-TEST-200KB</language>
-		<language name="JPN_KANJI" width="256">BGM-TEST-200KB</language>
-	</row>
-	<row id="msg_seq_bgm_e_test_200kb">
-		<language name="JPN" width="256">BGM-E-TEST-200KB</language>
-		<language name="JPN_KANJI" width="256">BGM-E-TEST-200KB</language>
-	</row>
-	<row id="msg_seq_bgm_e_test_150kb">
-		<language name="JPN" width="256">BGM-E-TEST-150KB</language>
-		<language name="JPN_KANJI" width="256">BGM-E-TEST-150KB</language>
-	</row>
-	<row id="msg_seq_bgm_me_test_150kb">
-		<language name="JPN" width="256">BGM-ME-TEST-150KB</language>
-		<language name="JPN_KANJI" width="256">BGM-ME-TEST-150KB</language>
-	</row>
-	<row id="msg_seq_bgm_me_test_100kb">
-		<language name="JPN" width="256">BGM-ME-TEST-100KB</language>
-		<language name="JPN_KANJI" width="256">BGM-ME-TEST-100KB</language>
-	</row>
-	<row id="msg_seq_bgm_ba_test_250kb">
-		<language name="JPN" width="256">BGM-BA-TEST-250KB</language>
-		<language name="JPN_KANJI" width="256">BGM-BA-TEST-250KB</language>
-	</row>
-	<row id="msg_seq_bgm_ba_test_200kb">
-		<language name="JPN" width="256">BGM-BA-TEST-200KB</language>
-		<language name="JPN_KANJI" width="256">BGM-BA-TEST-200KB</language>
-	</row>
-	<row id="msg_seq_bgm_ba_pinch_test_150kb">
-		<language name="JPN" width="256">BGM-BA-PINCH-TEST-150KB</language>
-		<language name="JPN_KANJI" width="256">BGM-BA-PINCH-TEST-150KB</language>
-	</row>
-	<row id="msg_seq_bgm_wb_ba_test_250kb">
-		<language name="JPN" width="256">BGM-WB-BA-TEST-250KB</language>
-		<language name="JPN_KANJI" width="256">BGM-WB-BA-TEST-250KB</language>
-	</row>
-	<row id="msg_seq_bgm_wb_ba_pinch_test_150kb">
-		<language name="JPN" width="256">BGM-WB-BA-PINCH-TEST-150KB</language>
-		<language name="JPN_KANJI" width="256">BGM-WB-BA-PINCH-TEST-150KB</language>
 	</row>
 	<row id="msg_seq_bgm_end">
 		<language name="JPN" width="256">BGM-END</language>
