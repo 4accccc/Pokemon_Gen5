@@ -79,31 +79,6 @@ const DEPEND_FUNCTIONS * FIELDDATA_GetFieldFunctions(u16 mapid)
 //============================================================================================
 //============================================================================================
 
-//------------------------------------------------------------------
-/// land_data
-//------------------------------------------------------------------
-#define	NARC_nogrid_mapblock_h01a_dummy	NARC_nogrid_mapblock_h01a_00_01_ngpack
-#include "fieldmap/map_land_data.naix"
-static const FLDMAPPER_MAPDATA newbridgemap[] = {
-	{ NARC_map_land_data_h01a_00_00_ngpack }, //{ NARC_nogrid_mapblock_h01a_dummy },
-	{ NARC_map_land_data_h01a_01_00_ngpack },
-
-	{ NARC_map_land_data_h01a_00_01_ngpack },
-	{ NARC_map_land_data_h01a_01_01_ngpack },
-
-	{ NARC_map_land_data_h01a_00_02_ngpack },
-	{ NARC_map_land_data_h01a_01_02_ngpack },
-};
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static const FLDMAPPER_MAPDATA test_c3map[] = {
-	{ NARC_map_land_data_C3_00_01_ngpack },
-	{ NARC_map_land_data_C3_00_02_ngpack },
-	{ NARC_map_land_data_C3_01_01_ngpack },
-	{ NARC_map_land_data_C3_01_02_ngpack },
-};
-
 
 
 
@@ -142,8 +117,8 @@ const SCENE_DATA resistMapTbl[] = {
       FLDMAPPER_MODE_SCROLL_NONE, 
 			ARCID_FLDMAP_LANDDATA,
 
-			2,	3, NELEMS(newbridgemap),
-			newbridgemap,
+			2,	3, 1,
+			NULL,
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
 			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
@@ -151,7 +126,7 @@ const SCENE_DATA resistMapTbl[] = {
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
 		}, 
 		&FieldMapCtrl_NoGridFunctions,
-		FALSE,
+		TRUE,
 	},
   //RSC_NOGRID_C3 = 2,
 	{	//実験マップ　C3
@@ -162,8 +137,8 @@ const SCENE_DATA resistMapTbl[] = {
       FLDMAPPER_MODE_SCROLL_NONE, 
 			ARCID_FLDMAP_LANDDATA,
 
-			2,  2, NELEMS(test_c3map),
-			test_c3map, 
+			2,  2, 1,
+			NULL, 
 
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
 			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
@@ -171,7 +146,7 @@ const SCENE_DATA resistMapTbl[] = {
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
 		}, 
 		&FieldMapCtrl_NoGridFunctions,
-		FALSE,
+		TRUE,
 	},
   //RSC_GRID_PALACE = 3,
 	{	//実験マップ グリッド移動   パレス
