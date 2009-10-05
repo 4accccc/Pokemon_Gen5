@@ -77,6 +77,7 @@
 	ARCID_GROW_TBL		"personal/growtbl.narc"			#成長曲線テーブル
 	ARCID_WOTBL			"personal/wotbl.narc"			#技覚えテーブル
 	ARCID_EVOTBL			"personal/evo.narc"			#進化テーブル
+	ARCID_PMSTBL			"personal/pms.narc"			#種ポケモンテーブル
 	ARCID_WAZA_TBL		"waza_tbl/waza_tbl.narc"			#技テーブル
 	ARCID_NET_ERR		"net_err.narc"					#通信エラー画面
 	ARCID_FONT			"font/font.narc"		# フォントデータ
