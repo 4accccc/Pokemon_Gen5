@@ -300,7 +300,7 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
     pWork->pMoveMcss[0]=NULL;
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
     pWork->pMoveMcss[1]=NULL;
-//    _CHANGE_STATE(pWork,_changeDemo_ModelTrade24);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade24);
   }
 }
   

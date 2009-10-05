@@ -665,8 +665,6 @@ static void _changeMenuWait(IRC_POKEMON_TRADE* pWork)
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
 
       IRC_POKETRADE_MessageWindowOpen(pWork,  POKETRADE_STR_09);
-      pWork->selectIndex = pWork->underSelectIndex;
-      pWork->selectBoxno = pWork->underSelectBoxno;
 
       _CHANGE_STATE(pWork, _pokeSendDataState);
 
@@ -700,6 +698,8 @@ static void _dispSubStateWait(IRC_POKEMON_TRADE* pWork)
 
     if(selectno==0){
       //‘ŠŽè‚ÉŒ©‚¹‚é
+      pWork->selectIndex = pWork->underSelectIndex;
+      pWork->selectBoxno = pWork->underSelectBoxno;
       _CHANGE_STATE(pWork, _changeMenuOpen);
     }
     else{
