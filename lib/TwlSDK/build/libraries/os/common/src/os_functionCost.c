@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 #include <nitro/os.h>
 
@@ -148,14 +148,14 @@ void OS_InitFunctionCost(void *buf, u32 size)
 {
     OSFunctionCostInfo **infoPtr;
 
-    SDK_ASSERTMSG(((u32)buf & 3) == 0, "FunctionCost buffer must be aligned by 4");
-    SDK_ASSERTMSG((size >= OSi_COSTINFO_SIZEOF_HEADERPART + sizeof(OSFunctionCost)),
+    SDK_TASSERTMSG(((u32)buf & 3) == 0, "FunctionCost buffer must be aligned by 4");
+    SDK_TASSERTMSG((size >= OSi_COSTINFO_SIZEOF_HEADERPART + sizeof(OSFunctionCost)),
                   "to small FunctionCost buffer");
 
     //---- need Tick
     if (!OS_IsTickAvailable())
     {
-        OS_Panic("OS_InitFunctionCost: need tick.\n");
+        OS_TPanic("OS_InitFunctionCost: need tick.\n");
     }
 
 #ifdef SDK_NO_THREAD
@@ -163,7 +163,7 @@ void OS_InitFunctionCost(void *buf, u32 size)
     infoPtr = &OSi_DefaultFunctionCostInfo;
 #else
     //---- pointer to requiredCostInfo is in OSThread structure
-    SDK_ASSERTMSG(OS_IsThreadAvailable(), "OS_InitFunctionCost: thread system not initialized.");
+    SDK_TASSERTMSG(OS_IsThreadAvailable(), "OS_InitFunctionCost: thread system not initialized.");
     infoPtr = (OSFunctionCostInfo **)&(OS_GetCurrentThread()->profiler);
 
     OSi_SetSystemCallbackInSwitchThread(OSi_CalcThreadInterval);
@@ -300,7 +300,7 @@ BOOL OS_CheckFunctionCostBuffer(void *buf)
 
     if (*(u32 *)(infoPtr->limit - 1) != OSi_FUNCTIONCOST_CHECKNUM_BUFFER)
     {
-        //OS_Printf("OVER!\n");
+        //OS_TPrintf("OVER!\n");
         return FALSE;
     }
 
@@ -602,17 +602,17 @@ void OS_CalcThreadStatistics(void *statBuf, OSThread *thread)
             if (bp->entry.name == OSi_FUNCTIONCOST_EXIT_TAG)
             {
 #ifdef OSi_FUNCTIONCOST_THREAD_INTERVAL
-                OS_Printf("----: %x %x\n", bp->entry.time, bp->entry.interval);
+                OS_TPrintf("----: %x %x\n", bp->entry.time, bp->entry.interval);
 #else
-                OS_Printf("----: %x\n", bp->entry.time);
+                OS_TPrintf("----: %x\n", bp->entry.time);
 #endif
             }
             else
             {
 #ifdef OSi_FUNCTIONCOST_THREAD_INTERVAL
-                OS_Printf("%s: %x %x\n", bp->entry.name, bp->entry.time, bp->entry.interval);
+                OS_TPrintf("%s: %x %x\n", bp->entry.name, bp->entry.time, bp->entry.interval);
 #else
-                OS_Printf("%s: %x\n", bp->entry.name, bp->entry.time);
+                OS_TPrintf("%s: %x\n", bp->entry.name, bp->entry.time);
 #endif
             }
 #endif
@@ -666,7 +666,7 @@ BOOL OS_CheckStatisticsBuffer(void *statBuf)
 
     if (*(u32 *)(infoPtr->limit - 1) != OSi_FUNCTIONCOST_CHECKNUM_BUFFER)
     {
-        //OS_Printf("OVER!\n");
+        //OS_TPrintf("OVER!\n");
         return FALSE;
     }
 
@@ -699,7 +699,7 @@ void OS_DumpStatistics(void *statBuf)
     return;
 #endif
 
-    OS_Printf("---- functionCost statistics\n");
+    OS_TPrintf("---- functionCost statistics\n");
 
     while ((u32)p < (u32)infoPtr->limit)
     {
@@ -707,7 +707,7 @@ void OS_DumpStatistics(void *statBuf)
         if (p->name && (p->name != OSi_FUNCTIONCOST_CHECKNUM_BUFFER))
         {
             displayed = TRUE;
-            OS_Printf("%s: count %d, cost %lld\n", p->name, p->count, p->time);
+            OS_TPrintf("%s: count %d, cost %lld\n", p->name, p->count, p->time);
         }
 
         p++;
@@ -715,7 +715,7 @@ void OS_DumpStatistics(void *statBuf)
 
     if (!displayed)
     {
-        OS_Printf("no data\n");
+        OS_TPrintf("no data\n");
     }
 }
 

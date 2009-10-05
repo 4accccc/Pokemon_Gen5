@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
-<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
 <META http-equiv="Content-Style-Type" content="text/css">
 <TITLE>OS_SetUserExceptionHandler</TITLE>
 <LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
@@ -62,14 +62,15 @@
 <P><BR>
 <BR>
 <B>IS-TWL-DEBUGGER での例外について</B></P>
-<P><A href="about_exception.html">概要(例外)</A> にも記述してあるように、<FONT color="#ff0000"><B>IS-TWL-DEBUGGER では例外時のコンテキスト表示を行ったり、ユーザの例外ハンドラの呼び出しを行ったりすることが出来ません。IS-TWL-DEBUGGER
-上で TWL モードで動作しているときも、NITRO モードで動作しているときも同様に出来ません。</B></FONT>例外が発生したときはデバッガがそこでCPUを停止しますので、デバッガのレジスタウィンドウやコールスタックウィンドウなどの情報を元に調べるようにしてください。</P>
+<P><A href="about_exception.html">概要(例外)</A> に記述してあるように、<FONT color="#ff0000"><B>IS-TWL-DEBUGGER ではユーザの例外ハンドラの呼び出しを行うことが出来ません。IS-TWL-DEBUGGER
+上で TWL モードで動作しているときも、NITRO モードで動作しているときも同様に出来ません。</B></FONT>例外が発生したときはデバッガがそこでCPUを停止しますので、デバッガの表示するコンテキスト情報や、デバッガのコールスタックウィンドウなどの情報を元に調べるようにしてください。</P>
 <H2>参照</H2>
 <P><A href="about_exception.html">概要(例外)</A><BR>
 <CODE><A href="OS_InitException.html">OS_InitException</A>, <A href="../context/OS_InitContext.html">OS_InitContext</A><BR>
 </CODE></P>
 <H2>履歴</H2>
-<P>2008/04/18 例外時のコンテキストについての説明を追加<BR>
+<P>2009/07/01 IS-TWL-DEBUGGER でのデバッガ表示について修正<BR>
+2008/04/18 例外時のコンテキストについての説明を追加<BR>
 2005/03/08 用語統一 [割込み] → [割り込み]<br>
 2004/02/19 初版</P>
 </BODY>

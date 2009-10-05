@@ -178,6 +178,13 @@ SECTIONS
 					<STATIC.LIBRARY=.wram:t>
 					<END.STATIC.LIBRARIES>
 					. = ALIGN(4);
+					<FOREACH.STATIC.OBJECTS=.main>
+					<STATIC.OBJECT=.main:t>
+					<END.STATIC.OBJECTS>
+					<FOREACH.STATIC.LIBRARIES=.main>
+					<STATIC.LIBRARY=.main:t>
+					<END.STATIC.LIBRARIES>
+					. = ALIGN(4);
 					<FOREACH.STATIC.OBJECTS=.sdata>
 					<STATIC.OBJECT=.sdata:t>
 					<END.STATIC.OBJECTS>
@@ -301,6 +308,13 @@ SECTIONS
 						<AUTOLOAD.LIBRARY=.wram:t>
 						<END.AUTOLOAD.LIBRARIES>
 						. = ALIGN(4);
+						<FOREACH.AUTOLOAD.OBJECTS=.main>
+						<AUTOLOAD.OBJECT=.main:t>
+						<END.AUTOLOAD.OBJECTS>
+						<FOREACH.AUTOLOAD.LIBRARIES=.main>
+						<AUTOLOAD.LIBRARY=.main:t>
+						<END.AUTOLOAD.LIBRARIES>
+						. = ALIGN(4);
 						<FOREACH.AUTOLOAD.OBJECTS=.sdata>
 						<AUTOLOAD.OBJECT=.sdata:t>
 						<END.AUTOLOAD.OBJECTS>
@@ -358,6 +372,13 @@ SECTIONS
 						<END.AUTOLOAD.OBJECTS>
 						<FOREACH.AUTOLOAD.LIBRARIES=.wram>
 						<AUTOLOAD.LIBRARY=.wram.bss:t>
+						<END.AUTOLOAD.LIBRARIES>
+						. = ALIGN(4);
+						<FOREACH.AUTOLOAD.OBJECTS=.main>
+						<AUTOLOAD.OBJECT=.main.bss:t>
+						<END.AUTOLOAD.OBJECTS>
+						<FOREACH.AUTOLOAD.LIBRARIES=.main>
+						<AUTOLOAD.LIBRARY=.main.bss:t>
 						<END.AUTOLOAD.LIBRARIES>
 						. = ALIGN(4);
 						#:::::::::: bss

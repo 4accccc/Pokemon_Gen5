@@ -25,8 +25,8 @@ BOOL SSP_SetJpegEncoderDateTimeNow(void);
 
 <h2>説明</h2>
 <p>JPEGに埋め込む撮影日時情報に現在の日時を登録します。<BR>
-本関数は内部で <code><a href="../../rtc/RTC_GetDateTime.html">RTC_GetDateTime()</a></code> を呼び出した後に、<code><a href="SSP_SetJpegEncoderDateTime.html">SSP_SetJpegEncoderDateTime()</a></code> と同等の処理を行っているため、事前に <code><a href="../../rtc/RTC_Init.html">RTC_Init()</a></code> を呼び出す必要があります。<BR>
-本関数が 0 以外を返す場面は <code><a href="../../rtc/RTC_GetDateTime.html">RTC_GetDateTime()</a></code> が失敗した場合のみとなります。<BR>
+本関数は内部で <code><a href="SSP_GetDateTime.html">SSP_GetDateTime()</a></code> を呼び出した後に、<code><a href="SSP_SetJpegEncoderDateTime.html">SSP_SetJpegEncoderDateTime()</a></code> を呼び出しています。<BR>
+本関数が 0 以外を返す場面は <code><a href="SSP_GetDateTime.html">SSP_GetDateTime()</a></code> が失敗した場合のみとなります。<BR>
 <BR>
 この情報は、IFD0 の DateTime と、ExifIFD の DateTimeOriginal タグ、DateTimeDigitized タグとして登録されます<br>
 <br>
@@ -37,13 +37,13 @@ BOOL SSP_SetJpegEncoderDateTimeNow(void);
 
 <h2>参照</h2>
 <p><code>
-<a href="../../rtc/RTC_Init.html">RTC_Init</a>
-<a href="../../rtc/RTC_GetDateTime.html">RTC_GetDateTime</a>
+<a href="SSP_GetDateTime.html">SSP_GetDateTime</a>,
 <a href="SSP_StartJpegEncoder.html">SSP_StartJpegEncoder</a>
 </code></p>
 
 <h2>履歴</h2>
 <p>
+2009/07/16 関数の内部動作にあった説明に変更<br>
 2008/11/04 日時情報がクリアされる条件について説明追加<br>
 2008/09/15 初版<br />
 </p>

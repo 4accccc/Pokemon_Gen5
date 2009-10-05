@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
-<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
 <META http-equiv="Content-Style-Type" content="text/css">
 <TITLE>OS_DumpProtectionRegion</TITLE>
 <LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
@@ -21,15 +21,21 @@
 <H2>返り値</H2>
 <P>なし。</P>
 <H2>説明</H2>
-<P>プロテクションリージョンの設定を表示します。<BR>
-これはデバッグ用の関数ですので、FINALROM 版では何もしません。</P>
+<P>プロテクションリージョンの設定を表示します。</P>
+<P>これはデバッグ用の関数ですので、FINALROM 版では何もしません。</P>
+<H3><BR>
+表示モードについて</H3>
+<P>この関数のように、全ての情報を確実に表示することが速度よりも優先される場合は、一時的にでも表示をブロッキングモードに設定することをお奨めします。詳細は
+<CODE><A href="../debug/OS_SetPrintBlockingMode.html">OS_SetPrintBlockingMode()</A></CODE> を参照してください。</P>
 <H2>内部動作</H2>
 <P>システム制御コプロセッサ CP15 のレジスタ6を参照します。</P>
 
 <H2>参照</H2>
 <P><CODE><A href="OS_EnableProtectionUnit.html">OS_EnableProtectionUnit</A>, <A href="OS_DisableProtectionUnit.html">OS_DisableProtectionUnit</A><BR>
-<A href="OS_GetProtectionRegion.html">OS_GetProtectionRegion*</A>, <A href="OS_SetProtectionRegion.html">OS_SetProtectionRegion*</A></CODE></P>
+<A href="OS_GetProtectionRegion.html">OS_GetProtectionRegion*</A>, <A href="OS_SetProtectionRegion.html">OS_SetProtectionRegion*</A></CODE><BR>
+<CODE><A href="../debug/OS_SetPrintBlockingMode.html">OS_SetPrintBlockingMode()</A></CODE></P>
 <H2>履歴</H2>
-<P>2007/10/25 初版</P>
+<P>2009/07/27 表示モードについて追加<BR>
+2007/10/25 初版</P>
 </BODY>
 </HTML>

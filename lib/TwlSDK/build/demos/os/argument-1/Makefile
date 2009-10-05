@@ -11,8 +11,8 @@
 # not be disclosed to third parties or copied or duplicated in any form,
 # in whole or in part, without the prior written consent of Nintendo.
 #
-# $Date:: 2009-06-04#$
-# $Rev: 10698 $
+# $Date:: 2009-06-18#$
+# $Rev: 10784 $
 # $Author: okubata_ryoma $
 #----------------------------------------------------------------------------
 TARGET_PLATFORM	=	TWL NITRO
@@ -52,8 +52,9 @@ do-build:	$(TARGETS)
 ifndef	SKIP_DEMO
 	@echo "-- replace argument data" $(NITRO_STDOUT)
 ifneq	($(filter TWL,$(TARGET_PLATFORM_LIST)),)
-	$(BURYARG_TWL) -q $(TARGETS)           $(ARGUMENT_STR)
+#	$(BURYARG_TWL) -q $(TARGETS)           $(ARGUMENT_STR)
 	$(BURYARG_TWL) -q $(TARGETS:.srl=.tlf) $(ARGUMENT_STR)
+	$(MAKEROM) $(MAKEROM_FLAGS) $(MAKEROM_DEFS) $(ROM_SPEC_M) $(call empath,$(TARGETS))
 else
 	$(BURYARG_NITRO) -q $(TARGETS)           $(ARGUMENT_STR)
 	$(BURYARG_NITRO) -q $(TARGETS:.srl=.nlf) 

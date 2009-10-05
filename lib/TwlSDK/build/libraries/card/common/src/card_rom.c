@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-07-14#$
+  $Rev: 10904 $
+  $Author: yosizaki $
 
  *---------------------------------------------------------------------------*/
 
@@ -174,7 +174,6 @@ BOOL CARDi_IsTwlRom(void)
  *---------------------------------------------------------------------------*/
 static BOOL CARDi_IsNormalMode(void)
 {
-    const CARDRomHeader *ch = (void*)CARD_GetRomHeader();
     const CARDRomHeaderTWL *oh = CARD_GetOwnRomHeaderTWL();
 
     return OS_IsRunOnTwl() &&
@@ -281,7 +280,7 @@ u32 CARDi_ReadRomStatusCore(void)
 void CARD_RefreshRom(void)
 {
     SDK_ASSERT(CARD_IsAvailable());
-    SDK_ASSERTMSG(CARDi_GetTargetMode() == CARD_TARGET_ROM, "must be locked by CARD_LockRom()");
+    SDK_TASSERTMSG(CARDi_GetTargetMode() == CARD_TARGET_ROM, "must be locked by CARD_LockRom()");
 
 #if defined(SDK_ARM9)
     (void)CARDi_WaitForTask(&cardi_common, TRUE, NULL, NULL);
@@ -578,7 +577,7 @@ void CARDi_ReadRom(u32 dma,
 
     SDK_ASSERT(CARD_IsAvailable());
     SDK_ASSERT(CARDi_GetTargetMode() == CARD_TARGET_ROM);
-    SDK_ASSERTMSG((dma != 0), "cannot specify DMA channel 0");
+    SDK_TASSERTMSG((dma != 0), "cannot specify DMA channel 0");
 
     // CARDアクセスに対する正当性の判定。
     CARD_CheckEnabled();
@@ -674,7 +673,7 @@ u32 CARDi_ReadRomID(void)
     u32     ret = 0;
 
     SDK_ASSERT(CARD_IsAvailable());
-    SDK_ASSERTMSG(CARDi_GetTargetMode() == CARD_TARGET_ROM, "must be locked by CARD_LockRom()");
+    SDK_TASSERTMSG(CARDi_GetTargetMode() == CARD_TARGET_ROM, "must be locked by CARD_LockRom()");
 
 #if defined(SDK_ARM9)
     (void)CARDi_WaitForTask(&cardi_common, TRUE, NULL, NULL);

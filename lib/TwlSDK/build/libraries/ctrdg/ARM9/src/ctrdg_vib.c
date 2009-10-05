@@ -23,7 +23,7 @@
 #ifdef SDK_FINALROM
 #define VIBi_FatalError(...) (void)0;
 #else
-#define VIBi_FatalError(...) OS_Panic(__VA_ARGS__)
+#define VIBi_FatalError(...) OS_TPanic(__VA_ARGS__)
 #endif
 
 #define VIBi_INTR_DELAY_TICK    (19)
@@ -134,7 +134,7 @@ void VIB_End(void)
     ステータスはライブラリ側でコピーしますので、メモリを確保しておく必要はありません。
     
     振動開始前にハードウェア制限のチェックを行います。
-    制限に反していた場合、DEBUG又はRELEASEビルドでは、OS_Panic 関数でメッセージを表示し、
+    制限に反していた場合、DEBUG又はRELEASEビルドでは、OS_TPanic 関数でメッセージを表示し、
     プログラムを停止します。FINALROMビルドでは、パルス振動が開始されません。
     
     @sa VIBPulseState

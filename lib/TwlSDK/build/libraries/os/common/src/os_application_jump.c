@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <twl/os.h>
@@ -387,7 +387,7 @@ BOOL OS_JumpToSystemMenu( void )
     else
 #endif
     {
-        OS_Warning("This Hardware don't support this funciton");
+        OS_TWarning("This Hardware don't support this funciton");
     }
     return result;
 }
@@ -419,7 +419,7 @@ BOOL OS_RebootSystem( void )
     else
 #endif
     {
-        OS_Warning("This Hardware don't support this funciton");
+        OS_TWarning("This Hardware don't support this funciton");
         return FALSE;
     }
 }

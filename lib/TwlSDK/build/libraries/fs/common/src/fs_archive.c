@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-07-14#$
+  $Rev: 10906 $
+  $Author: yosizaki $
 
  *---------------------------------------------------------------------------*/
 
@@ -115,7 +115,7 @@ static void FSi_EndCommand(FSFile *file, FSResult ret)
     // 結果を格納
     {
         FSCommandType   command = FSi_GetCurrentCommand(file);
-        if (!FSi_IsEventCommand(command))
+        if (!FSi_IsEventCommand(command) && (arc != NULL))
         {
             arc->command = command;
             arc->result = ret;
@@ -489,17 +489,21 @@ static void FSi_ExecuteAsyncCommand(FSFile *file)
  *---------------------------------------------------------------------------*/
 static void FSi_ExecuteSyncCommand(FSFile *file)
 {
-    FSArchive   * const arc = file->arc;
-    FSResult            result;
     // 必要なら順番を待ってからコマンドを処理する
-    FSi_WaitConditionOn(&file->stat, FS_FILE_STATUS_OPERATING, file->queue);
-    result = FSi_InvokeCommand(file, FSi_GetCurrentCommand(file));
-    FSi_EndCommand(file, result);
-    // ここで処理すべき非同期型のコマンドがあればかわりに実行
-    file = FSi_NextCommand(arc, TRUE);
-    if (file)
+    FSi_WaitConditionChange(&file->stat, FS_FILE_STATUS_OPERATING, FS_FILE_STATUS_BUSY, file->queue);
+    // すでにキャンセルされたなど、実行権が自分に無い場合には何もしない。
+    if ((file->stat & FS_FILE_STATUS_OPERATING) != 0)
     {
-        FSi_ExecuteAsyncCommand(file);
+        FSArchive   * const arc = file->arc;
+        FSResult            result;
+        result = FSi_InvokeCommand(file, FSi_GetCurrentCommand(file));
+        FSi_EndCommand(file, result);
+        // ここで処理すべき非同期型のコマンドがあればかわりに実行
+        file = FSi_NextCommand(arc, TRUE);
+        if (file)
+        {
+            FSi_ExecuteAsyncCommand(file);
+        }
     }
 }
 
@@ -829,7 +833,7 @@ FSArchive* FS_NormalizePath(const char *path, u32 *baseid, char *relpath)
                 arc = FS_FindArchive(path, i);
                 if (!arc)
                 {
-                    OS_Warning("archive \"%*s\" is not found.", i, path);
+                    OS_TWarning("archive \"%*s\" is not found.", i, path);
                 }
                 path += i + 1;
                 if (FSi_IsSlash((u8)*path))

@@ -44,13 +44,17 @@
 <p>ファイルポインタが正しく移動されれば TRUE を返し、そうでない場合は FALSE を返します。</p>
 
 <H2>説明</H2>
-<P>
+<p>
 origin で指定した基準位置から offset 分を加算した位置にファイルポインタを移動します。<BR>
-origin の種類は、<code><A href="../fs_seek_file_mode_type.html">FSSeekFileMode</a></code>型で定義されています。<BR>
-指定した位置がファイル先頭より前の場合、ファイルポインタは先頭になります。<BR>
-指定した位置がファイル終端より後の場合、ファイルポインタは終端になります。<BR>
-<BR>
-</P>
+origin の種類は、<code><A href="../fs_seek_file_mode_type.html">FSSeekFileMode</a></code>型で定義されています。</p>
+
+<p style="color:Red;">指定した新しい位置がファイルの先頭または終端の範囲を超えてしまう場合、
+得られる結果はNITRO-SDKとTWL-SDKで異なりますのでご注意ください。</p>
+<table>
+<tr><td>NITRO-SDK</td><td>ファイルポインタは先頭または終端の範囲内におさまるよう補正されます。</td></tr>
+<tr><td>TWL-SDK</td><td>処理は失敗してFALSEを返し、<code><a href="FS_GetResultCode.html">FS_GetResultCode()</a></code>は<a href="../fs_result_const.html">FS_RESULT_INVALID_PARAMETER</a>を返します。</td></tr>
+</table>
+
 <h2>参照</h2>
 <p><CODE>
 <A href="../fs_file_type.html">FSFile</A> 
@@ -63,6 +67,7 @@ origin の種類は、<code><A href="../fs_seek_file_mode_type.html">FSSeekFileMode</
 
 <H2>履歴</H2>
 <P>
+2009/07/29 範囲外へ移動した際の挙動がNITRO-SDKとTWL-SDKで異なる旨の注意を追記<br />
 2008/10/02 参照リストを一部更新<br />
 2004/04/01 初版<br />
 </P>

@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-26#$
+  $Rev: 10826 $
+  $Author: yosizaki $
  *---------------------------------------------------------------------------*/
 
 #ifndef NITRO_GXCOMMON_H_
@@ -102,8 +102,8 @@ typedef u32 VecFx10;
 #define GX_FX16_FX10_MAX          (fx16)(0x0fff)
 #define GX_FX16_FX10_MIN          (fx16)(0xf000)
 
-#define GX_FX32_FX10_MAX          (fx32)(0x00000fff);
-#define GX_FX32_FX10_MIN          (fx32)(0xfffff000);
+#define GX_FX32_FX10_MAX          (fx32)(0x00000fff)
+#define GX_FX32_FX10_MIN          (fx32)(0xfffff000)
 
 #define GX_VEC_FX10_X_SHIFT       0
 #define GX_VEC_FX10_Y_SHIFT       10

@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include "../include/gxstate.h"
@@ -68,7 +68,7 @@ void GX_InitGXState()
 #endif
 
 #define SDK_CONFLICT_ASSERT(a, b, name1, name2) \
-    SDK_ASSERTMSG(!(a & b),                        \
+    SDK_TASSERTMSG(!(a & b),                        \
                   "VRAM Bank conflicts between "#name1" and "#name2" (0x%02x, 0x%02x)\n", \
                   a, b)
 
@@ -199,12 +199,12 @@ void GX_StateCheck_VRAMCnt_()
 }
 
 #define SDK_REGION_ASSERT(name, r1, r2, d1, d2)     \
-    SDK_ASSERTMSG(((r1) <= (d1)) && ((r2) >= (d2)), \
+    SDK_TASSERTMSG(((r1) <= (d1)) && ((r2) >= (d2)), \
                   "Region allocated to "#name" is (0x%08x -> 0x%08x),\n"\
                   "access occured (0x%08x -> 0x%08x).", r1, r2, d1, d2)
 
 #define SDK_REGION_ASSERT_EX(name, r1, r2, r3, r4, d1, d2)     \
-    SDK_ASSERTMSG(( ((r1) <= (d1)) && ((r2) >= (d2)) ) || ( ((r3) <= (d1)) && ((r4) >= (d2)) ), \
+    SDK_TASSERTMSG(( ((r1) <= (d1)) && ((r2) >= (d2)) ) || ( ((r3) <= (d1)) && ((r4) >= (d2)) ), \
                   "Region allocated to "#name" is (0x%08x -> 0x%08x, 0x%08x -> 0x%08x),\n"\
                   "access occured (0x%08x -> 0x%08x).", r1, r2, r3, r4, d1, d2)
 
@@ -285,6 +285,8 @@ void GX_RegionCheck_BG_(u32 first, u32 last)
     u16     vram_abcd;
     u16     vram_efg;
     u32     abcd_size, efg_size;
+
+    abcd_size = efg_size = 0;
 
     SDK_ASSERT(HW_VRAM_A_SIZE == HW_VRAM_B_SIZE &&
                HW_VRAM_A_SIZE == HW_VRAM_C_SIZE && HW_VRAM_A_SIZE == HW_VRAM_D_SIZE);
@@ -447,27 +449,27 @@ void GX_RegionCheck_TexPltt_(GXVRamTexPltt texPltt, u32 first, u32 last)
     {
     case GX_VRAM_TEXPLTT_0_F:
     case GX_VRAM_TEXPLTT_0_G:
-        SDK_ASSERTMSG(last <= 0x04000,
+        SDK_TASSERTMSG(last <= 0x04000,
                       "Texture pallete 0x04000-0x18000 not available(0x%5x->0x%5x)", first, last);
         break;
 
     case GX_VRAM_TEXPLTT_01_FG:
-        SDK_ASSERTMSG(last <= 0x08000,
+        SDK_TASSERTMSG(last <= 0x08000,
                       "Texture pallete 0x08000-0x18000 not available(0x%5x->0x%5x)", first, last);
         break;
 
     case GX_VRAM_TEXPLTT_0123_E:
-        SDK_ASSERTMSG(last <= 0x10000,
+        SDK_TASSERTMSG(last <= 0x10000,
                       "Texture pallete 0x10000-0x18000 not available(0x%5x->0x%5x)", first, last);
         break;
 
     case GX_VRAM_TEXPLTT_01234_EF:
-        SDK_ASSERTMSG(last <= 0x14000,
+        SDK_TASSERTMSG(last <= 0x14000,
                       "Texture pallete 0x14000-0x18000 not available(0x%5x->0x%5x)", first, last);
         break;
 
     case GX_VRAM_TEXPLTT_012345_EFG:
-        SDK_ASSERTMSG(last <= 0x18000, "Illegal Address/size specified(0x%5x->0x%5x)", first, last);
+        SDK_TASSERTMSG(last <= 0x18000, "Illegal Address/size specified(0x%5x->0x%5x)", first, last);
         break;
 
     default:
@@ -488,7 +490,7 @@ void GX_RegionCheck_Tex_(GXVRamTex tex, u32 first, u32 last)
     case GX_VRAM_TEX_0_B:
     case GX_VRAM_TEX_0_C:
     case GX_VRAM_TEX_0_D:
-        SDK_ASSERTMSG(last <= 0x20000,
+        SDK_TASSERTMSG(last <= 0x20000,
                       "Texture slot 0x20000-0x80000 not available(0x%5x->0x%5x)", first, last);
         break;
 
@@ -498,7 +500,7 @@ void GX_RegionCheck_Tex_(GXVRamTex tex, u32 first, u32 last)
     case GX_VRAM_TEX_01_AC:
     case GX_VRAM_TEX_01_AD:
     case GX_VRAM_TEX_01_BD:
-        SDK_ASSERTMSG(last <= 0x40000,
+        SDK_TASSERTMSG(last <= 0x40000,
                       "Texture slot 0x40000-0x80000 not available(0x%5x->0x%5x)", first, last);
         break;
 
@@ -506,12 +508,12 @@ void GX_RegionCheck_Tex_(GXVRamTex tex, u32 first, u32 last)
     case GX_VRAM_TEX_012_BCD:
     case GX_VRAM_TEX_012_ABD:
     case GX_VRAM_TEX_012_ACD:
-        SDK_ASSERTMSG(last <= 0x60000,
+        SDK_TASSERTMSG(last <= 0x60000,
                       "Texture slot 0x60000-0x80000 not available(0x%5x->0x%5x)", first, last);
         break;
 
     case GX_VRAM_TEX_0123_ABCD:
-        SDK_ASSERTMSG(last <= 0x80000, "Illegal Address/size specified(0x%5x->0x%5x)", first, last);
+        SDK_TASSERTMSG(last <= 0x80000, "Illegal Address/size specified(0x%5x->0x%5x)", first, last);
         break;
 
     default:

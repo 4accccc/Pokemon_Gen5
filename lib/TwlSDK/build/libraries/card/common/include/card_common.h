@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-26#$
+  $Rev: 10827 $
+  $Author: yosizaki $
 
  *---------------------------------------------------------------------------*/
 #ifndef NITRO_LIBRARIES_CARD_COMMON_H__
@@ -73,10 +73,12 @@ typedef enum
 CARDTargetMode;
 
 typedef u32 CARDAccessLevel;
-#define CARD_ACCESS_LEVEL_NONE      0
-#define CARD_ACCESS_LEVEL_BACKUP    1
-#define CARD_ACCESS_LEVEL_ROM       2
-#define CARD_ACCESS_LEVEL_FULL      3
+#define CARD_ACCESS_LEVEL_NONE      0x0000UL
+#define CARD_ACCESS_LEVEL_BACKUP_R  0x0001UL
+#define CARD_ACCESS_LEVEL_BACKUP_W  0x0002UL
+#define CARD_ACCESS_LEVEL_BACKUP    (u32)(CARD_ACCESS_LEVEL_BACKUP_R | CARD_ACCESS_LEVEL_BACKUP_W)
+#define CARD_ACCESS_LEVEL_ROM       0x0004UL
+#define CARD_ACCESS_LEVEL_FULL      (u32)(CARD_ACCESS_LEVEL_BACKUP | CARD_ACCESS_LEVEL_ROM)
 
 
 /*---------------------------------------------------------------------------*/

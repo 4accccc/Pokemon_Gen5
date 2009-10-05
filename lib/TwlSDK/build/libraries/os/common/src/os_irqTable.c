@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-07-14#$
+  $Rev: 10898 $
+  $Author: yada $
 
  *---------------------------------------------------------------------------*/
 #include <nitro/os.h>
@@ -262,9 +262,7 @@ void OSi_IrqCallback(int index)
 {
     OSIrqMask imask = (1UL << OSi_IrqCallbackInfoIndex[index]);
     void    (*callback) (void *) = OSi_IrqCallbackInfo[index].func;
-	u32     enable = OSi_IrqCallbackInfo[index].enable;
 
-//OS_Printf( "irq %d\n", index  );
     //---- clear callback
     OSi_IrqCallbackInfo[index].func = NULL;
 
@@ -278,7 +276,7 @@ void OSi_IrqCallback(int index)
     OS_SetIrqCheckFlag(imask);
 
     //---- restore IRQEnable
-    if (!enable)
+    if (!OSi_IrqCallbackInfo[index].enable)
     {
         (void)OS_DisableIrqMask(imask);
     }

@@ -45,7 +45,7 @@
 <H2>説明</H2>
 <P>文字列から、引数データへ変換して指定のバッファに格納します。</P>
 <P>ここで変換された引数データは、<A href="OS_GetArgc.html"><CODE>OS_GetArgc</CODE></A> や <CODE><A href="OS_GetArgv.html">OS_GetArgv</A></CODE> や <CODE><A href="OS_GetOpt.html">OS_GetOpt</A></CODE> などで取得することが出来ます。デフォルトでは、システム内で持っている引数バッファ領域
-( <CODE><A href="../../tools/buryarg.html">buryarg</A></CODE> ツールや <CODE><A href="../../tools/buryargTWL.html">buryarg.TWL</A></CODE> ツールによって引数データが埋め込まれます) が用いられますが、<CODE><A href="OS_SetArgumentBuffer.html">OS_SetArgumentBuffer()</A></CODE> で別の引数バッファへと切り換えることが出来ます。</P>
+( <CODE><A href="../../tools/buryarg.html">buryarg</A></CODE> ツールや <CODE><A href="../../tools/buryarg.html">buryarg.TWL</A></CODE> ツールによって引数データが埋め込まれます) が用いられますが、<CODE><A href="OS_SetArgumentBuffer.html">OS_SetArgumentBuffer()</A></CODE> で別の引数バッファへと切り換えることが出来ます。</P>
 <P><EM><B>str</B></EM> には引数データの元となる文字列を、<EM><B>cs</B></EM> には引数のセパレータ文字を指定します。</P>
 <BLOCKQUOTE><B>(例)<BR>
 </B>セパレータが&quot; &quot;(スペース) であるときに、&quot;-a&quot; と &quot;123&quot; と &quot;test string&quot; という3つの引数を与える場合は、</BLOCKQUOTE>
@@ -58,10 +58,10 @@
 <P>この関数は、FINALROM ビルドでは何もしません。</P>
 <H2>参照</H2>
 <P><CODE><A href="OS_GetArgv.html">OS_GetArgv</A>, <A href="OS_GetArgc.html">OS_GetArgc</A>, <A href="OS_GetOpt.html">OS_GetOpt</A><BR>
-<A href="../../tools/buryarg.html">buryarg ツール</A>,</CODE> <CODE><A href="../../tools/buryargTWL.html">buryarg.TWL ツール</A></CODE><BR>
+<A href="../../tools/buryarg.html">buryarg ツール</A>,</CODE> <CODE><A href="../../tools/buryarg.html">buryarg.TWL ツール</A></CODE><BR>
 <CODE><A href="OS_GetArgumentBuffer.html">OS_GetArgumentBuffer</A>, <A href="OS_ConvertToArguments.html">OS_ConvertToArguments</A></CODE></P>
 <H2>履歴</H2>
-<P>2008/07/09 <CODE><A href="../../tools/buryargTWL.html">buryarg.TWL</A></CODE> について追記<BR>
+<P>2008/07/09 <CODE><A href="../../tools/buryarg.html">buryarg.TWL</A></CODE> について追記<BR>
 2005/09/09 初版</P>
 </BODY>
 </HTML>

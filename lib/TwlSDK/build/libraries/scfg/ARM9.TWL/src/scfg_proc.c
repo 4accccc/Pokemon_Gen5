@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
 
  *---------------------------------------------------------------------------*/
 #include <nitro/pxi/common/fifo.h>
@@ -146,7 +146,7 @@ static void SCFGi_CommonCallback( PXIFifoTag tag, u32 pxiData, BOOL err )
 	switch( command )
 	{
 		case SCFGi_PXI_COMMAND_READ:
-			//OS_Printf("ARM9: (%d) %04x\n", ordinal, data);
+			//OS_TPrintf("ARM9: (%d) %04x\n", ordinal, data);
 			SCFGi_FuseInfo.fuseData |= (((u64)data) << (ordinal << 4));
 			SCFGi_FuseInfo.readFlag |= (1 << ordinal);
 
@@ -176,7 +176,7 @@ static void SCFGi_CommonCallback( PXIFifoTag tag, u32 pxiData, BOOL err )
 			break;
 		default:
 			//---- unknown pxi command
-			OS_Panic("illegal SCFG Pxi.");
+			OS_TPanic("illegal SCFG Pxi.");
 	}
 }
 

@@ -47,8 +47,10 @@
 <BR>
 例えば３つのファイルを含むディレクトリを<A href="FS_FindDir.html">FS_FindDir</A>関数で開き、<BR>
 そのディレクトリリストを使用して本関数を呼び出すと、<BR>
-３回 TRUE を返して４回目以降は FALSE を返します。<BR>
-<BR>
+３回 TRUE を返して４回目以降は FALSE を返します。</p>
+<p><a href="../overview/about_Archive.html#NAND">NANDアーカイブ</a>や<a href="../overview/about_Archive.html#SDMC">SDメモリカードアーカイブ</a>など、
+更新時刻やファイル属性などの詳細情報を取得したい場合には<code><a href="../directory/FS_ReadDirectory.html">FS_ReadDirectory()</a></code>を使用すべきです。
+</p>
 <H2>注意</H2>
 <p><font color="#800000">
 この関数を割り込みハンドラ(IRQモード)から呼び出すことはできません。<br>
@@ -63,10 +65,12 @@
 <A href="FS_TellDir.html">FS_TellDir</A> 
 <A href="FS_SeekDir.html">FS_SeekDir</A> 
 <A href="FS_RewindDir.html">FS_RewindDir</A> 
+<a href="../directory/FS_ReadDirectory.html">FS_ReadDirectory</a>
 </CODE></p>
 
 <H2>履歴</H2>
 <P>
+2009/07/16 FS_ReadDirectoryに関する説明を追記<br>
 2004/09/24 呼び出し時および完了の条件についての注意を記述追加<br>
 2004/04/08 FSDirとFSFileの統合による記述修正<BR>
 2004/04/01 初版<BR>

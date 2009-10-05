@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-11-04#$
-  $Rev: 9197 $
-  $Author: yosizaki $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #ifndef NITRO_MISC_H_
@@ -43,7 +43,7 @@ extern "C" {
 #ifdef  SDK_DEBUG
 #ifndef SDK_ASSERT
 #define SDK_ASSERT(exp) \
-             (void) ((exp) || (OSi_Panic(__FILE__, __LINE__, "Failed assertion " #exp), 0))
+             (void) ((exp) || (OSi_TPanic(__FILE__, __LINE__, "Failed assertion " #exp), 0))
 #endif
 #else  // SDK_DEBUG
 #ifndef SDK_ASSERT

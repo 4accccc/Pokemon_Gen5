@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-17#$
+  $Rev: 10762 $
+  $Author: mizutani_nakaba $
  *---------------------------------------------------------------------------*/
 #include <nitro/os.h>
 #include <nitro/std/string.h>
@@ -24,8 +24,6 @@
 
 #ifndef OS_NO_ARGUMENT
 
-#ifdef SDK_NITRO
-//---- for Nitro
 #include <nitro/version_begin.h>
 //---- This area is for argument string, and may be
 //     modified from external tools.
@@ -38,10 +36,6 @@ static OSArgumentBuffer OSi_ArgumentBuffer = {
 
 //---- pointer to current argument buffer
 const char *sCurrentArgBuffer = &OSi_ArgumentBuffer.buffer[0];
-#endif
-#ifdef SDK_TWL
-const char *sCurrentArgBuffer = (const char*)(HW_TWL_ROM_HEADER_BUF + 0xe00);
-#endif
 
 static const char *match_opt(int optchar, const char *optstring);
 #endif //ifndef OS_NO_ARGUMENT

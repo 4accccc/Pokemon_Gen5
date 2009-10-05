@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #ifndef NITRO_GX_BGCNT_H_
@@ -1231,7 +1231,7 @@ static inline void G2S_SetBG2Control256Bmp(GXBGScrSize256Bmp screenSize,
     GX_BG_SCRSIZE_256BMP_ASSERT(screenSize);
     GX_BG_AREAOVER_ASSERT(areaOver);
     GX_BG_BMPSCRBASE_ASSERT(screenBase);
-    SDK_ASSERTMSG(screenSize != GX_BG_SCRSIZE_256BMP_512x512,
+    SDK_TASSERTMSG(screenSize != GX_BG_SCRSIZE_256BMP_512x512,
                   "SUB 2D engine does not support GX_BG_SCRSIZE_256BMP_512x512");
     GXS_BGMODE_WARNING1(G2S_SetBG2Control256Bmp, 5);
 
@@ -1323,9 +1323,9 @@ static inline void G2S_SetBG2ControlDCBmp(GXBGScrSizeDcBmp screenSize,
     GX_BG_SCRSIZE_DCBMP_ASSERT(screenSize);
     GX_BG_AREAOVER_ASSERT(areaOver);
     GX_BG_BMPSCRBASE_ASSERT(screenBase);
-    SDK_ASSERTMSG(screenSize != GX_BG_SCRSIZE_DCBMP_512x256,
+    SDK_TASSERTMSG(screenSize != GX_BG_SCRSIZE_DCBMP_512x256,
                   "SUB 2D engine does not support GX_BG_SCRSIZE_DCBMP_512x256");
-    SDK_ASSERTMSG(screenSize != GX_BG_SCRSIZE_DCBMP_512x512,
+    SDK_TASSERTMSG(screenSize != GX_BG_SCRSIZE_DCBMP_512x512,
                   "SUB 2D engine does not support GX_BG_SCRSIZE_DCBMP_512x512");
     GXS_BGMODE_WARNING1(G2S_SetBG2ControlDCBmp, 5);
 
@@ -1806,7 +1806,7 @@ static inline void G2S_SetBG3Control256Bmp(GXBGScrSize256Bmp screenSize,
     GX_BG_SCRSIZE_256BMP_ASSERT(screenSize);
     GX_BG_AREAOVER_ASSERT(areaOver);
     GX_BG_BMPSCRBASE_ASSERT(screenBase);
-    SDK_ASSERTMSG(screenSize != GX_BG_SCRSIZE_256BMP_512x512,
+    SDK_TASSERTMSG(screenSize != GX_BG_SCRSIZE_256BMP_512x512,
                   "SUB 2D engine does not support GX_BG_SCRSIZE_256BMP_512x512");
     GXS_BGMODE_WARNING3(G2S_SetBG3Control256Bmp, 3, 4, 5);
 

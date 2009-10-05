@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
 
  *---------------------------------------------------------------------------*/
 #include <nitro/os.h>
@@ -512,7 +512,7 @@ void OS_DumpProtectionRegion( void )
 	u32 i_permit = OS_GetIPermissionsForProtectionRegion();
 	u32 d_permit = OS_GetDPermissionsForProtectionRegion();
 
-	OS_Printf("----Protection Region\nPR ICache DCache IPermit DPermit  Address    Size\n");
+	OS_TPrintf("----Protection Region\nPR ICache DCache IPermit DPermit  Address    Size\n");
 	for( n=0; n<OS_PROTECTION_REGION_NUM; n++ )
 	{
 		char* dpermit;
@@ -533,7 +533,7 @@ void OS_DumpProtectionRegion( void )
 			default: dpermit = "??"; break;
 		}
 
-		OS_Printf(" %d   %c      %c      %s      %s    0x%08x 0x%x\n",
+		OS_TPrintf(" %d   %c      %c      %s      %s    0x%08x 0x%x\n",
 				  n,
 				  (i_cache & (1<<n))? 'O': '-',
 				  (d_cache & (1<<n))? 'O': '-',

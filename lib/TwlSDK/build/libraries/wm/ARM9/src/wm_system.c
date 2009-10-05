@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include    <nitro/wm.h>
@@ -629,7 +629,7 @@ static void WmReceiveFifo(PXIFifoTag tag, u32 fifo_buf_adr, BOOL err)
         }
         else
         {
-            OS_Printf("ARM9: no callback function\n");
+            OS_TPrintf("ARM9: no callback function\n");
 
         }
     }
@@ -868,17 +868,17 @@ void WMi_DebugPrintSendQueue(WMPortSendQueue *queue)
     DC_InvalidateRange(wm9buf->status, WM_STATUS_BUF_SIZE);     // ARM7ステータス領域のキャッシュを無効化
     queueData = status->sendQueueData;
 
-    OS_Printf("head = %d, tail = %d, ", queue->head, queue->tail);
+    OS_TPrintf("head = %d, tail = %d, ", queue->head, queue->tail);
     if (queue->tail != WM_SEND_QUEUE_END)
     {
-        OS_Printf("%s", (queueData[queue->tail].next == WM_SEND_QUEUE_END) ? "valid" : "invalid");
+        OS_TPrintf("%s", (queueData[queue->tail].next == WM_SEND_QUEUE_END) ? "valid" : "invalid");
     }
-    OS_Printf("\n");
+    OS_TPrintf("\n");
     for (index = queue->head; index != WM_SEND_QUEUE_END; index = queueData[index].next)
     {
         WMPortSendQueueData *data = &(queueData[index]);
 
-        OS_Printf("queueData[%d] -> %d { port=%d, destBitmap=%x, size=%d } \n", index, data->next,
+        OS_TPrintf("queueData[%d] -> %d { port=%d, destBitmap=%x, size=%d } \n", index, data->next,
                   data->port, data->destBitmap, data->size);
     }
 
@@ -902,22 +902,22 @@ void WMi_DebugPrintAllSendQueue(void)
     DC_InvalidateRange(wm9buf->status, WM_STATUS_BUF_SIZE);     // ARM7ステータス領域のキャッシュを無効化
     for (iPrio = 0; iPrio < WM_PRIORITY_LEVEL; iPrio++)
     {
-        OS_Printf("== send queue [%d]\n", iPrio);
+        OS_TPrintf("== send queue [%d]\n", iPrio);
         WMi_DebugPrintSendQueue(&status->sendQueue[iPrio]);
     }
     for (iPrio = 0; iPrio < WM_PRIORITY_LEVEL; iPrio++)
     {
-        OS_Printf("== ready queue [%d]\n", iPrio);
+        OS_TPrintf("== ready queue [%d]\n", iPrio);
         WMi_DebugPrintSendQueue(&status->readyQueue[iPrio]);
     }
-    OS_Printf("== free queue\n");
-    OS_Printf(" head: %d, tail: %d\n", status->sendQueueFreeList.head,
+    OS_TPrintf("== free queue\n");
+    OS_TPrintf(" head: %d, tail: %d\n", status->sendQueueFreeList.head,
               status->sendQueueFreeList.tail);
 //    WMi_DebugPrintSendQueue( &status->sendQueueFreeList );
 #else
     DC_InvalidateRange(wm9buf->status, WM_STATUS_BUF_SIZE);     // ARM7ステータス領域のキャッシュを無効化
-    OS_Printf("== ready queue [2]\n");
-    OS_Printf(" head: %d, tail: %d\n", status->readyQueue[2].head, status->readyQueue[2].tail);
+    OS_TPrintf("== ready queue [2]\n");
+    OS_TPrintf(" head: %d, tail: %d\n", status->readyQueue[2].head, status->readyQueue[2].tail);
 #endif
 
 }
@@ -1229,7 +1229,7 @@ static void WmSleepCallback(void *)
      * 無線通信中に OS_GoSleepMode() を実行することは *
      * 禁止されています。                             *
      * ---------------------------------------------- */
-    OS_Panic("Could not sleep during wireless communications.");
+    OS_TPanic("Could not sleep during wireless communications.");
 }
 
 #ifdef SDK_TWL

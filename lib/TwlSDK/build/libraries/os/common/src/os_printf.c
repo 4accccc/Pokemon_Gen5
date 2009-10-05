@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-23#$
+  $Rev: 10797 $
+  $Author: yada $
  *---------------------------------------------------------------------------*/
 #include        <nitro.h>
 #include        <nitro/dbghost.h>
@@ -164,14 +164,17 @@ static void OS_FPutStringInit(int console, const char *str)
 	}
 #else
 	//---- arm7
-    if ( consoleType & OS_CONSOLE_TWLDEBUGGER )
+    if ( (OSPrintServerBuffer *)PXI_GetComponentParam() == NULL )
     {
-		OS_FPutString = OS_FPutStringISTD;
-	}
-	else
-	{
         OS_FPutString = OS_FPutStringPrnSrv;
-	}
+    }
+    else
+    {
+        if ( consoleType & OS_CONSOLE_TWLDEBUGGER )
+        {
+            OS_FPutString = OS_FPutStringISTD;
+        }
+    }
 #endif
 
     OS_FPutString(console, str);

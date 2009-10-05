@@ -11,9 +11,9 @@
 # not be disclosed to third parties or copied or duplicated in any form,
 # in whole or in part, without the prior written consent of Nintendo.
 #
-# $Date:: 2008-09-18#$
-# $Rev: 8573 $
-# $Author: okubata_ryoma $
+# $Date:: 2009-07-03#$
+# $Rev: 10859 $
+# $Author: yosizaki $
 #----------------------------------------------------------------------------
 
 SUBDIRS          =
@@ -31,6 +31,10 @@ SRCDIR           = ./src
 #  RomSpeedType  {1TROM|MROM}
 # と記述する必要があります。
 NITRO_ROMSPEED   = MROM
+
+# 転送速度計測用のサンプルファイル
+MAKEROM_ROMROOT     = $(ROOT)/build/demos/snd/stream/files
+MAKEROM_ROMFILES    = kart_title.32.wav
 
 include	$(TWLSDK_ROOT)/build/buildtools/commondefs
 

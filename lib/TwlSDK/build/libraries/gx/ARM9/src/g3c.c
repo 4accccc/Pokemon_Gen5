@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 //
 //      -DSDK_WIN32 -DSDK_HAS_LONG_LONG_INT for GCC
@@ -557,7 +557,7 @@ void G3C_UpdateGXDLInfo(GXDLInfo *info, int n)
 {
     info->curr_param += n;
 
-    SDK_ASSERTMSG(((u32)(info->curr_param) - (u32)info->bottom <= info->length),
+    SDK_TASSERTMSG(((u32)(info->curr_param) - (u32)info->bottom <= info->length),
                   "Buffer overflow ! : Current DL buffer doesn't have enough capacity for new commands\n");
 
     if (((u32)(++info->curr_cmd) & 0x3) == 0)
@@ -571,7 +571,7 @@ void G3C_UpdateGXDLInfo(GXDLInfo *info, int n)
         info->curr_cmd = (u8 *)(info->curr_param++);
     }
 
-    SDK_ASSERTMSG(((u32)(info->curr_cmd) - (u32)info->bottom <= info->length),
+    SDK_TASSERTMSG(((u32)(info->curr_cmd) - (u32)info->bottom <= info->length),
                   "Buffer overflow ! : Current DL buffer doesn't have enough capacity for new commands\n");
 }
 

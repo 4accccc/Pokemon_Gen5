@@ -9,18 +9,24 @@
 </HEAD>
 <BODY>
 <H1 align="left">初期化 (overview) <IMG src="../../image/NTR.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"></H1>
-<P>TWL-SDK を用いた開発において、NITRO、TWL ともにユーザの <CODE>NitroMain()</CODE> 関数に制御が移った後は、必ず最初に <CODE><A href="OS_Init.html" target="_self">OS_Init()</A></CODE> を呼び出してください。<CODE>OS_Init()</CODE> 内で呼ばれている関数は動作に必須なものであり、順序を変更することは出来ません。<BR>
+<P>TWL-SDK を用いた開発において、NITRO、TWL ともにユーザの <CODE>NitroMain()</CODE> あるいは <CODE>TwlMain()</CODE> に制御が移った後は、必ず最初に <CODE><A href="OS_Init.html" target="_self">OS_Init()</A></CODE> を呼び出してください。<CODE>OS_Init()</CODE> 内で呼ばれている関数は動作に必須なものであり、順序を変更することは出来ません。<BR>
 （ただし、実装に C++ を用いるサンプルデモの os/cplusplus-1 では、メモリ管理の初期化を行う必要から <CODE>OS_Init()</CODE> を <CODE>NitroMain()</CODE> より前に呼んでいます。）
 </P>
 
 <P>動作がNITROモードかTWLモードかによって、 <CODE>OS_Init()</CODE> 内で呼ばれる関数が一部変化します。詳細は <CODE><A href="OS_Init.html">OS_Init()</A></CODE> をご覧下さい。
 </P>
 
+<H2>Main 関数について</H2>
+<P>NITRO、TWL に対する開発において、ユーザに制御が移った後最初に呼ばれる関数として、<BR>
+<CODE>NitroMain()</CODE> もしくは <CODE>TwlMain()</CODE> を用意する必要があります。名前は違いますが、二つの関数に特に大きな違いはありません。<BR>
+ただし、<CODE>TwlMain()</CODE> は ROMタイプが NITRO ROM の場合は使用できません。
+</P>
+
 <H2>参照</H2>
 <P><CODE><A href="OS_Init.html">OS_Init()</A>, <A href="../list_os.html">OS関数一覧</A><BR>
 </CODE></P>
 <H2>履歴</H2>
-<P>
+<P>2009/06/18 Main関数について追記<BR>
 2009/06/03 初版</P>
 </BODY>
 </HTML>

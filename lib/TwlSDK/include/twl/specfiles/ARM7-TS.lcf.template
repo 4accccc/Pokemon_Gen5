@@ -2,7 +2,7 @@
 #  Project:  TwlSDK - include
 #  File:     ARM7-BB.lcf.template
 #
-#  Copyright 2007-2008 Nintendo.  All rights reserved.
+#  Copyright 2007-2009 Nintendo.  All rights reserved.
 #
 #  These coded instructions, statements, and computer programs contain
 #  proprietary information of Nintendo of America Inc. and/or Nintendo
@@ -10,8 +10,8 @@
 #  not be disclosed to third parties or copied or duplicated in any form,
 #  in whole or in part, without the prior written consent of Nintendo.
 #
-#  $Date:: 2008-09-18#$
-#  $Rev: 8573 $
+#  $Date:: 2009-06-10#$
+#  $Rev: 10734 $
 #  $Author: okubata_ryoma $
 #---------------------------------------------------------------------------
 MEMORY
@@ -280,6 +280,12 @@ SECTIONS
 				<FOREACH.AUTOLOAD.LIBRARIES=.wram>
 				<AUTOLOAD.LIBRARY=.wram:t>
 				<END.AUTOLOAD.LIBRARIES>
+				<FOREACH.AUTOLOAD.OBJECTS=.main>
+				<AUTOLOAD.OBJECT=.main:t>
+				<END.AUTOLOAD.OBJECTS>
+				<FOREACH.AUTOLOAD.LIBRARIES=.main>
+				<AUTOLOAD.LIBRARY=.main:t>
+				<END.AUTOLOAD.LIBRARIES>
 				<FOREACH.AUTOLOAD.OBJECTS=.sdata>
 				<AUTOLOAD.OBJECT=.sdata:t>
 				<END.AUTOLOAD.OBJECTS>
@@ -326,6 +332,12 @@ SECTIONS
 				<END.AUTOLOAD.OBJECTS>
 				<FOREACH.AUTOLOAD.LIBRARIES=.wram>
 				<AUTOLOAD.LIBRARY=.wram.bss:t>
+				<END.AUTOLOAD.LIBRARIES>
+				<FOREACH.AUTOLOAD.OBJECTS=.main>
+				<AUTOLOAD.OBJECT=.main.bss:t>
+				<END.AUTOLOAD.OBJECTS>
+				<FOREACH.AUTOLOAD.LIBRARIES=.main>
+				<AUTOLOAD.LIBRARY=.main.bss:t>
 				<END.AUTOLOAD.LIBRARIES>
 				<FOREACH.AUTOLOAD.OBJECTS=.sbss>
 				<AUTOLOAD.OBJECT=.sbss:t>

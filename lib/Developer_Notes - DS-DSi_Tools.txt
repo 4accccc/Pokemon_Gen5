@@ -1,0 +1,366 @@
+===============================================================================
+Freescale CodeWarrior® Development Studio for Nintendo DSi 1.1
+===============================================================================
+
+December 5, 2008
+
+CONTENTS
+
+  + Important Notes
+  + IS-NITRO-DEBUGGER and IS-TWL-DEBUGGER software
+  + Installing CodeWarrior for NINTENDO DSi
+  + New Features
+  + Summary of Changes
+  + Helpful Tips
+  + Restrictions
+  + Known Issues
+
+===============================================================================
+         Important Notes. Please Read Before Using The Tools!
+===============================================================================
+
+NOTE: For version 1.1 and beyond, Nintendo TWL is renamed Nintendo DSi.
+
+This is a collection of important information concerning last-minute changes 
+and other topics that deserve special attention. Please read these notes 
+carefully, they supersede the manuals and other documentation.
+
+
+*** THE PRODUCT LICENSE WILL EXPIRE MARCH 31, 2009 ***
+
+
+IMPORTANT!
+
+When this version of the IDE opens a project which was created
+by previous versions of CW for Nintendo DS®, the IDE will perform a
+project conversion to update to the current IDE.
+
+You should not use the converted projects with older versions of CW for
+Nintendo DS. The project files will be renamed with a suffix of "old.mcp"
+before the conversion occurs. You may continue using the "old.mcp" project 
+files in older versions of CW for Nintendo DS.
+
+A warning is displayed before this project conversion occurs and the user can 
+choose to cancel and prevent project conversion.
+
+For example when opening a project named "SimpleProject.mcp", the IDE will 
+convert the project and create a "SimpleProject.old.mcp" in the same location 
+as SimpleProject.mcp.
+
+===============================================================================
+IS-NITRO-DEBUGGER and IS-TWL-DEBUGGER software
+===============================================================================
+
+All stationery and examples in this version use the libisdmainparm.a library
+for debug output. You MUST install IS-NITRO-DEBUGGER and IS-TWL-DEBUGGER   
+before installing CodeWarrior for DSi. It is also required to use the 
+IS-NITRO-DEBUGGER/IS-TWL-DEBUGGER hardware from the CodeWarrior debugger. 
+We recommend you install the latest IS-NITRO-DEBUGGER/IS-TWL-DEBUGGER
+software available on the Nintendo site to prevent unexpected problems caused 
+by a DLL conflict.
+
+If you choose to install even though the IS-NITRO-DEBUGGER or IS-TWL-DEBUGGER 
+is not installed, you must perform these steps to complete the CodeWarrior
+installation:
+
+1) Install a debugger, which will create the required environment variable.
+
+   - DS:  Install IS-NITRO-DEBUGGER. Creates variable IS_NITRO_DIR.
+   - DSi: Install IS-TWL-DEBUGGER. Creates variable IS_TWL_DEBUGGER_DIR.
+
+2) Run this batch file in the CodeWarrior installation directory:
+   
+   {CW}\bin\setTWLSrcTree.bat
+   
+   This will ensure that your source trees are created correctly.
+
+===============================================================================
+Installing CodeWarrior for Nintendo DSi
+===============================================================================
+
+* HOW TO INSTALL
+----------------
+Run CW_NINTENDO_DSi_R1.1.exe to install this version.
+
+See Known Issues below if you are installing on a system with Windows Vista.
+
+* ENVIRONMENT VARIABLES
+-----------------------
+The installer has been modified to attempt to detect an installation of the 
+TWL SDK and Nitro SDK. It will look for the SDKs at these locations in this order:
+    1. environment variable TWLSDK_ROOT for TWL and NITROSDK_ROOT for Nitro.
+    2. environment variable IRISSDK_ROOT
+    3. root of the C: drive, using the default folder names
+
+In all cases, the installer will confirm the path found, or ask for a path, 
+before continuing the installation. The installer will then create the 
+environment variable CW_TWLSDK_ROOT for TWL and CW_NITROSDK_ROOT for Nitro to 
+point to the selected path.
+
+* SOURCE TREE CREATION
+----------------------
+The installer will ask the user to restart after completion. This allows it
+to create source trees in CodeWarrior. The created source tree for TWL is 
+{TWLSDK_ROOT} and it will point to the environment variable CW_TWLSDK_ROOT 
+described above. The created source tree for Nitro is {NITROSDK_ROOT} and it 
+will point to the environment variable CW_NITROSDK_ROOT described above.
+
+NOTE: If the path used during installation does not point to a valid TWL SDK 
+file structure or Nitro SDK file structure, the CodeWarrior projects will 
+not build correctly. To correct this, make sure that the environment variables 
+CW_TWLSDK_ROOT and CW_NITROSDK_ROOT are set to a valid path. (see Known Issues 
+below if you are installing on Windows Vista)
+
+* FAILURE HANDLING
+------------------
+If you get an error upon restarting your machine, the source tree creation has 
+likely failed. The installation requires that the IDE be launched, and a 
+failure is sometimes due to an unexpected IDE startup state. 
+
+If a failure occurs, you can easily add the source tree by navigating to the 
+{CW}\bin folder and running the setTWLSrcTree.bat batch file.
+
+* SDK INTEROPERABILITY
+----------------------------
+If you install a new revision of the TWL SDK or the Nitro SDK, please remember 
+to update the CodeWarrior environment variables, CW_TWLSDK_ROOT or 
+CW_NITROSDK_ROOT, to point to the new location.
+
+===============================================================================
+New Features
+===============================================================================
+
+- Support is now available to add the LTD Libraries to the LTDMAIN section. 
+  This is shown with the TWL Hybrid stationery. In order to manually place the 
+  LTD libraries in the LTDMAIN section, you will need to do the following:
+
+   1. In the "Overlays" tab of your CodeWarrior project, right click to select 
+      "Create Overlay Group...". The name "@LTDMAIN" should be entered for the 
+      group. 
+   
+   2. Once the group has been created, double-click "@LTDMAIN", and enter the 
+      "FF" as the "Base Code Address". 
+
+      *  Please note that the "@LTDMAIN" group must be placed on a memory 
+         address that is higher than the address of other shared overlay 
+         groups. Please make sure that "@LTDMAIN" is located after standard 
+         overlay groups.
+   
+   3. Expand the group "@LTDMAIN" and double-click "New Overlay" to rename the 
+      overlay to "LTDMAIN".
+
+   4. Drag your LTD libraries and other files into "LTDMAIN". The files can 
+      also be added by right clicking "LTDMAIN" and selecting "Add Files...".
+
+- A new prefix file called twl_TS_LTD_prefix.h has been added to 
+  ARM_EABI_Support/TWL/prefix. It defines SDK_TWLLTD and should be used with 
+  all LTD projects. It has been included in all new LTD stationeries.
+  The existing file twl_TS_prefix.h remains to be used with all hybrid projects 
+  since it defines SDK_TWLHYB. 
+  
+   *  Please note that the definition for SDK_RELEASE has been removed from
+      twl_TS_prefix.h and is not included in twl_TS_LTD_prefix. This definition
+      was removed to resolve conflicts that could occur when compiling ROM build
+      targets. The removal of this definition may cause other projects to not
+      build. To resolve the break, the proper SDK target definition should be 
+      added to the C/C++ Preprocessor panel.
+
+- This product was tested on the following operating systems:
+
+   *  Microsoft® Windows XP® with SP3
+   *  Microsoft Windows XP with SP2
+   *  Microsoft Windows Vista® with SP1
+
+===============================================================================
+Summary of Changes in this release - DSi Release 1.1
+===============================================================================
+
+- MTWX31868  Create unified installer including DS tool 
+
+- MTWX31870  Change CW product name for official product name
+
+- MTWX31872  Update NITRO support for SDK 5.0 
+
+- MTWX31873  Create stationery for exclusive (LTD) application 
+
+- MTWX31875  Create stationery for NAND application 
+
+- MTWX31896  LTD libraries are located in common static section for hybrid 
+             application 
+
+- MTWX31993  Change the parameter of "TARGET_PLATFORM" option of                             
+             "makerom.TWL.exe" in the stationery
+
+- MTWX32501  Prefix file for TWL "twl_TS_prefix.h" has incorrect definition
+
+See ChangeHistory.txt for previous changes to CodeWarrior for the DS and DSi.
+
+See ARM_Compiler_Notes.txt for change to ARM Compiler in this release
+
+See ARM_Linker_Notes.txt for changes to ARM linker in this release.
+
+===============================================================================
+Helpful Tips
+===============================================================================
+
+- Multiple Preferences/Workspaces - Normally, the preference settings for
+  CodeWarrior installations are maintained globally here: 
+  C:\Documents and Settings\(user name)\Local Settings\
+    Application Data\Metrowerks
+
+  It is recommended that the two files below, be copied into the same directory
+  as "..\bin\IDE.exe" for all CodeWarrior installations:
+	1. CodeWarrior IDE 5.9 Prefs...(IDE settings)
+  	2. default-5.9.0.cww...........(default work space)
+
+  This will allow you to associate each version of the CodeWarrior tools with
+  its own settings.
+
+- The DSi project stationery uses #define SDK_TS_VERSION 400 for X4 hardware 
+  support. If you are using a different version of the hardware, be sure to
+  update this define in Twl_TS.h to match your setup.
+
+===============================================================================
+Restrictions
+===============================================================================
+
+- Unavailable features
+  Some features described in the IDE User's Guide are not available in this 
+  product. The following list of features are not available or are not 
+  supported:
+
+  * Creating a new project from a makefile (Chapter 3 of the IDE User's Guide)
+  * Creating a console application (Chapter 8 of the IDE User's Guide)
+  * Flash Programmer (Chapter 22 of the IDE User's Guide)
+  * Hardware Diagnostics tools (Chapter 22 of the IDE User's Guide)
+  * Logic Analyzer (Chapter 22 of the IDE User's Guide)
+
+- Source Tree creation 
+  If during the installation of CodeWarrior, you specify a folder that does 
+  not exist for an environment variable, then the source tree creation will
+  fail. This sometimes occurs when a user does not install the SDKs and IS
+  tools prior to installing CodeWarrior. It is recommended that you first 
+  install the platform SDK and IS tools before installing CodeWarrior. 
+
+- Limitations of the Makefile Exporter 
+  The exporter creates a rudimentary makefile. The makefile needs to be 
+  modified to work properly with the GNU make utility. The makefile that the 
+  IDE generates contains text that will help you identify the corrections and 
+  additions that you need to make. You must also add the build commands, 
+  compiler switches, and options that you want the make utility to use.
+
+  These limitations mean that the Makefile Exporter will tend to be more 
+  successful exporting a makefile on simple CodeWarrior projects.
+
+  To access the Makefile Exporter, use the Project menu and select Export 
+  Project as Gnu makefile
+
+- Limitation of the Expression Window
+  When debugging variables of the same name across multiple scopes, 
+  the expressions window sometimes does not correctly reflect all values of 
+  the variables in each scope. 
+
+- The environment variable, CW_MULTICORE_FOCUS_ONLY=TRUE, should not be 
+  changed or removed. When debugging more than one device, it specifies that 
+  the multicore menu applies only to the device whose debug session is 
+  currently in focus.
+
+- Debugger cannot step into FS_StartOverlay()
+  You can set a breakpoint within the FS_StartOverlay() function but not on 
+  line 508. Debugger cannot stop on breakpoint set on line 508 in 
+  FS_StartOverlay().
+
+- Debugging DSi EL relocatable modules
+  To properly debug EL relocatable modules, it is necessary to build these 
+  modules with the partial linking function of the linker (-partial option). 
+  Building relocatable modules with the static library (-library option) will
+  not allow the debugger to properly debug the file.
+
+  There are two ways to allow the debugger to load the symbolic information for
+  the EL relocatable modules and allow source level debugging to be available 
+  when the elf file is dragged and dropped into the IDE. Ensure that the 
+  partially linked files containing symbolic information are in either:
+    * the same directory as the .tlf file
+    * the search path for the project created by the drag and drop action
+
+- DSi Watchpoint Limitations
+  When a watchpoint is hit, the debugger may stop one or two instructions after
+  the watchpoint hit occurred. This is due to a restriction in the hardware. 
+
+  When two watchpoints are set, the watchpoint dialog will display the 
+  message,"Watchpoint at address ?". Because of the hardware restriction, it 
+  is not possible for the debugger to know which watchpoint has been hit.
+
+===============================================================================
+Known Issues
+===============================================================================
+
+- FB6033     If you open a source file that includes a character code that the
+             IDE cannot convert into the Shift-JIS, such as wave dash U+301C, 
+             the result in the editor will be garbled.
+
+- MTWX28573  If the IDE Extras setting, "Used text-based projects", is turned
+             off and you attempt to open a text-based project with the
+             workspace or from the file menu, you may see the error message,
+             "Resource File Error 207008. Unable to open project..." To view
+             the contents of the text-based project you can drag and drop the
+            .mcp file into the IDE.
+
+- MTWX30362  When using the memory view and stepping, sometimes the view will 
+             refresh and position itself to an incorrect address. To restore 
+             the previous position, click in the "Display" field and press 
+             Enter. 
+
+- MTWX31311  The output strings by OS_Printf()/OS_TPrintf() may be broken when 
+             a large number of strings are output continuously.
+
+- When installing under Windows Vista, the installer creates environment 
+  variables that point to the SDK directories. Sometimes the 
+  installer does not create the environment variable correctly. You can see 
+  and modify the environmental variables in the CodeWarrior Source Trees 
+  settings panel.
+
+  To see if the environmental variables have been defined correctly:
+  1. Open the CodeWarrior IDE
+  2. Select Edit > Preferences, then select Source Trees (listed under General) 
+  3. Make sure that TWLSDK_ROOT, CW_TWLSDK_ROOT, NITROSDK_ROOT,
+     CW_NITROSDK_ROOT are defined to point to the root of your SDK
+     installations and IS_TWL_DEBUGGER_DIR and IS_NITRO_DIR, are defined to 
+     point to the IS_TWL_DEBUGGER and IS-NITRO-Debugger installation
+     directories.
+
+     If the installer did not define the TWL paths correctly, do the following:
+	 a. Type TWLSDK_ROOT in Source Tree Information section's Name field
+	 b. Select Absolute Path in the Type field
+	 c. Press Choose to browse to and select root directory of TWL SDK
+	 d. Click Add button
+         e. Repeat steps a through d to add IS_TWL_DEBUGGER_DIR and 
+            CW_TWLSDK_ROOT
+	 f. Click Apply button; Click OK button to close panel
+
+     If the installer did not define the Nitro paths correctly, do the 
+     following:
+	 a. Type NITROSDK_ROOT in Source Tree Information section’s Name field
+	 b. Select Absolute Path in the Type field
+	 c. Press Choose to browse to and select root directory of Nitro SDK
+	 d. Click Add button
+	 e. Repeat steps a through d to add IS_NITRO_DIR and CW_NITROSDK_ROOT
+	 f. Click Apply button; Click OK button to close panel
+
+- Make sure the path to the Ensata emulator is valid in this file:
+	{CW}\bin\\plugins\support\Nitro\IS\est_cw_debugger.ini
+  Otherwise, when you try to debug, you will get an error message stating that 
+  you should update the file. If you close the IDE after seeing this alert,
+  IDE may crash.
+
+- .bin files in a directory with Japanese characters are not loading
+  correctly.
+
+- Remote Connections in some cases may not show up. If this occurs, edit the
+  file and remove the "global" remote connection.
+
+- If you use the DS Profiling feature to display profiling data for your 
+  project, you may notice that a Trace menu item becomes available on the Data
+  menu. The Trace window can be displayed by selecting it, but it will not
+  display meaningful data since the Trace feature is unimplemented at this
+  time.

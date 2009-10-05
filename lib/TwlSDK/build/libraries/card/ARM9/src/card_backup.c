@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-26#$
+  $Rev: 10827 $
+  $Author: yosizaki $
 
  *---------------------------------------------------------------------------*/
 
@@ -529,21 +529,24 @@ static void CARDi_IdentifyBackupCore(CARDiCommon * p)
 
   Description:  バックアップ操作コマンドの開始処理
 
-  Arguments:    callback   完了コールバック (不使用なら NULL)
+  Arguments:    level      バックアップに対して要求されるアクセスモード
+                callback   完了コールバック (不使用なら NULL)
                 arg        完了コールバックの引数 (不使用なら無視される)
 
   Returns:      None.
  *---------------------------------------------------------------------------*/
-static void CARDi_BeginBackupCommand(MIDmaCallback callback, void *arg)
+static void CARDi_BeginBackupCommand(CARDAccessLevel level, MIDmaCallback callback, void *arg)
 {
     SDK_USING_BACKUP();
     SDK_ASSERT(CARD_IsAvailable());
-    SDK_ASSERTMSG(CARDi_GetTargetMode() == CARD_TARGET_BACKUP,
+    SDK_TASSERTMSG(CARDi_GetTargetMode() == CARD_TARGET_BACKUP,
                   "[CARD] current locking target is not backup.");
     CARD_CheckEnabled();
-    if ((CARDi_GetAccessLevel() & CARD_ACCESS_LEVEL_BACKUP) == 0)
+    if ((CARDi_GetAccessLevel() & level) != level)
     {
-        OS_TPanic("this program cannot access CARD-backup!");
+        OS_TPanic("this program cannot %s%s CARD-backup!",
+                (level & CARD_ACCESS_LEVEL_BACKUP_R) ? "READ" : "",
+                (level & CARD_ACCESS_LEVEL_BACKUP_W) ? "WRITE" : "");
     }
     (void)CARDi_WaitForTask(&cardi_common, TRUE, callback, arg);
 }
@@ -569,9 +572,10 @@ BOOL CARDi_RequestStreamCommand(u32 src, u32 dst, u32 len,
                                 MIDmaCallback callback, void *arg, BOOL is_async,
                                 CARDRequest req_type, int req_retry, CARDRequestMode req_mode)
 {
+    CARDAccessLevel level = (req_mode == CARD_REQUEST_MODE_RECV) ? CARD_ACCESS_LEVEL_BACKUP_R : CARD_ACCESS_LEVEL_BACKUP_W;
     SDK_ASSERT(CARD_GetCurrentBackupType() != CARD_BACKUP_TYPE_NOT_USE);
 
-    CARDi_BeginBackupCommand(callback, arg);
+    CARDi_BeginBackupCommand(level, callback, arg);
 
     {
         CARDiCommon *p = &cardi_common;
@@ -600,7 +604,7 @@ int CARDi_AccessStatus(CARDRequest command, u8 value)
 {
     SDK_ASSERT(CARD_GetCurrentBackupType() != CARD_BACKUP_TYPE_NOT_USE);
 
-    CARDi_BeginBackupCommand(NULL, NULL);
+    CARDi_BeginBackupCommand(CARD_ACCESS_LEVEL_NONE, NULL, NULL);
 
     // タスク引数がわりにテンポラリバッファを使用。
     CARDi_backup_cache_page_buf[0] = value;
@@ -630,7 +634,7 @@ BOOL CARDi_RequestWriteSectorCommand(u32 src, u32 dst, u32 len, BOOL verify,
 {
     SDK_ASSERT(CARD_GetCurrentBackupType() != CARD_BACKUP_TYPE_NOT_USE);
 
-    CARDi_BeginBackupCommand(callback, arg);
+    CARDi_BeginBackupCommand(CARD_ACCESS_LEVEL_BACKUP_W, callback, arg);
 
     {
         CARDiCommon *p = &cardi_common;
@@ -659,7 +663,7 @@ BOOL CARD_IdentifyBackup(CARDBackupType type)
         OS_TPanic("cannot specify CARD_BACKUP_TYPE_NOT_USE.");
     }
 
-    CARDi_BeginBackupCommand(NULL, NULL);
+    CARDi_BeginBackupCommand(CARD_ACCESS_LEVEL_NONE, NULL, NULL);
 
     CARDi_IdentifyBackupCore2(type);
 

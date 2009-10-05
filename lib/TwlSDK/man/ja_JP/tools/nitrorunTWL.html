@@ -41,12 +41,12 @@ TD,TH{
 
 <H2>説明</H2>
 <P><FONT color=#ff0000>このコマンドは TWL ROM 用のものです。NITRO ROM については <CODE><A href="nitrorun.html">nitrorun</A></CODE> を参照してください。</FONT></P>
-<P>　<CODE>nitrorun.TWL</CODE> は、<CODE><A href="buryargTWL.html">buryarg.TWL</A></CODE> と<CODE><A href="loadrunTWL.html">loadrun.TWL</A></CODE> を起動し、コマンドラインから引数を与え、srl ファイルの引数領域を書き換えて
+<P>　<CODE>nitrorun.TWL</CODE> は、<CODE><A href="buryarg.html">buryarg.TWL</A></CODE> と<CODE><A href="loadrunTWL.html">loadrun.TWL</A></CODE> を起動し、コマンドラインから引数を与え、srl ファイルの引数領域を書き換えて
 IS-TWL-DEBUGGER 等にダウンロードして実行するという一連の動作を行なうためのスクリプトです。</P>
 <P>具体的には、</P>
-<BLOCKQUOTE><CODE><A href="buryargTWL.html">buryarg.TWL</A> --stdout ... &gt; temporaryFile<BR>
+<BLOCKQUOTE><CODE><A href="buryarg.html">buryarg.TWL</A> --stdout ... &gt; temporaryFile<BR>
 <A href="loadrunTWL.html">loadrun.TWL</A> ... temporaryFile</CODE></BLOCKQUOTE>
-<P>と、<CODE><A href="buryargTWL.html">buryarg.TWL</A></CODE> と <CODE><A href="loadrunTWL.html">loadrun.TWL</A></CODE> を連続で呼び出しています。<CODE><A href="nitrorun.html">nitrorun</A></CODE> ではパイプで結合していましたが、TWL ではデバッガへsrl をロードする方法が異なっていてその方法が使えないので2つのコマンドに分けています。</P>
+<P>と、<CODE><A href="buryarg.html">buryarg.TWL</A></CODE> と <CODE><A href="loadrunTWL.html">loadrun.TWL</A></CODE> を連続で呼び出しています。<CODE><A href="nitrorun.html">nitrorun</A></CODE> ではパイプで結合していましたが、TWL ではデバッガへsrl をロードする方法が異なっていてその方法が使えないので2つのコマンドに分けています。</P>
 <P>なお、TWL ROM に対する操作であるのに &quot;<CODE>nitrorun.TWL</CODE>&quot; というコマンド名になっているのは、旧NITRO SDK の時から存在していた
 <CODE><A href="nitrorun.html">nitrorun</A></CODE> に合わせたのと、TWL向けであることを示すために &quot;.TWL &quot; を付けるという他のコマンドの命名規則に倣ったためです。</P>
 <H2>使用方法</H2>
@@ -54,7 +54,7 @@ IS-TWL-DEBUGGER 等にダウンロードして実行するという一連の動作を行なうためのスクリ
 <P><CODE>% nitrorun.TWL [OPTION]... [[TWLSRLFILE] [ARGUMENT]...]</CODE></P>
 <P><CODE>TWLSRLFILE</CODE> は、実行する ROM ファイルです。srl ファイルを指定できます。</P>
 <P><CODE><B>-h</B></CODE> または <CODE><B>--help</B></CODE> オプションは、簡単な使い方を表示します。</P>
-<P><B><CODE>--bopt</CODE></B> オプションは、<CODE><A href="buryargTWL.html">buryarg.TWL</A></CODE> コマンドに渡すオプションを指定します。但し <CODE>--stdin</CODE> オプションは予め付けられるので記述する必要はありません。</P>
+<P><B><CODE>--bopt</CODE></B> オプションは、<CODE><A href="buryarg.html">buryarg.TWL</A></CODE> コマンドに渡すオプションを指定します。但し <CODE>--stdin</CODE> オプションは予め付けられるので記述する必要はありません。</P>
 <P><B><CODE>--lopt</CODE></B> オプションは、<CODE><A href="loadrunTWL.html">loadrun.TWL</A></CODE> コマンドに渡すオプションを指定します。</P>
 <P><CODE><B>-v</B></CODE> または <CODE><B>--verbose</B></CODE> オプションを指定すると、詳細な動作の説明を表示します。</P>
 <P><CODE><B>-n</B></CODE> または <CODE><B>--noexec</B></CODE> オプションは、指定するとコマンドの実行を行ないません。<CODE>-v</CODE> オプションと併せて使用することで、どのようなコマンドが実行されるかを確認することが可能です。</P>
@@ -65,19 +65,19 @@ IS-TWL-DEBUGGER 等にダウンロードして実行するという一連の動作を行なうためのスクリ
 (例1)</B></P>
 <BLOCKQUOTE><CODE>nitrorun.TWL <FONT color="#ff6600">main.srl</FONT> <FONT color="#cc0099">100 300</FONT></CODE></BLOCKQUOTE>
 <BLOCKQUOTE>は、</BLOCKQUOTE>
-<BLOCKQUOTE><CODE><A href="buryargTWL.html">buryarg.TWL</A> --stdout <FONT color="#ff6600">main.srl</FONT> <FONT color="#cc0099">100 300</FONT> &gt; tmpFile<BR>
+<BLOCKQUOTE><CODE><A href="buryarg.html">buryarg.TWL</A> --stdout <FONT color="#ff6600">main.srl</FONT> <FONT color="#cc0099">100 300</FONT> &gt; tmpFile<BR>
 <A href="loadrunTWL.html">loadrun.TWL</A> tmpFile</CODE></BLOCKQUOTE>
 <BLOCKQUOTE>というコマンドが実行されます。</BLOCKQUOTE>
 <P><B>(例2)</B></P>
 <BLOCKQUOTE><CODE>nitrorun.TWL --bopt　&quot;<FONT color="#00cc66">-f rep.dat</FONT>&quot; --lopt &quot;<FONT color="#ff0033">-t 300 -a \&quot;ABORT\&quot;</FONT> &quot; <FONT color="#ff6600">main.srl</FONT> <FONT color="#cc0099">100 300</FONT></CODE></BLOCKQUOTE>
 <BLOCKQUOTE>は、</BLOCKQUOTE>
-<BLOCKQUOTE><CODE><A href="buryargTWL.html">buryarg.TWL</A> --stdout <FONT color="#00cc66">-f rep.dat</FONT> <FONT color="#ff6600">main.srl</FONT> <FONT color="#cc0099">100 300</FONT> &gt; tmpFile<BR>
+<BLOCKQUOTE><CODE><A href="buryarg.html">buryarg.TWL</A> --stdout <FONT color="#00cc66">-f rep.dat</FONT> <FONT color="#ff6600">main.srl</FONT> <FONT color="#cc0099">100 300</FONT> &gt; tmpFile<BR>
 <A href="loadrunTWL.html">loadrun.TWL</A> <FONT color="#ff0033">-t 300 -a &quot;ABORT&quot;</FONT> tmpFile</CODE></BLOCKQUOTE>
 <BLOCKQUOTE><CODE>というコマンドが実行されます。</CODE></BLOCKQUOTE>
 <H2>場所</H2>
 <P><CODE>$TwlSDK/tools/bin/nitrorun.TWL</CODE></P>
 <H2>参照</H2>
-<P><CODE><A href="buryargTWL.html">buryarg.TWL</A>, <A href="loadrunTWL.html">loadrun.TWL</A>, <A href="nitrorun.html">nitrorun</A></CODE></P>
+<P><CODE><A href="buryarg.html">buryarg.TWL</A>, <A href="loadrunTWL.html">loadrun.TWL</A>, <A href="nitrorun.html">nitrorun</A></CODE></P>
 <H2>履歴</H2>
 <P>2008/07/10 初版</P>
 </BODY>

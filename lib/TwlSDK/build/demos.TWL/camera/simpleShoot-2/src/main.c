@@ -269,7 +269,6 @@ void TwlMain(void)
     OS_InitThread();
     OS_InitTick();
     OS_InitAlarm();
-    MI_InitNDmaConfig();
     FS_Init( FS_DMA_NOT_USE );
 
     // Vƒuƒ‰ƒ“ƒNŠ„‚è‚İİ’è

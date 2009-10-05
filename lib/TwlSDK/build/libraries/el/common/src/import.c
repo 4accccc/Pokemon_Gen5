@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <twl/el/common/import.h>
@@ -23,9 +23,9 @@ void ELi_UnresolvedFunc(void)
 {
     const char* const message = "An unresolved function is called!";
 #ifdef SDK_DEBUG
-    OS_Panic("%s: %s()", message, ELi_LastFunctionName ? ELi_LastFunctionName : "unknown" );
+    OS_TPanic("%s: %s()", message, ELi_LastFunctionName ? ELi_LastFunctionName : "unknown" );
 #else
-    OS_Panic("%s", message );
+    OS_TPanic("%s", message );
 #endif
 }
 

@@ -11,8 +11,8 @@
 # not be disclosed to third parties or copied or duplicated in any form,
 # in whole or in part, without the prior written consent of Nintendo.
 #
-# $Date:: 2009-06-04#$
-# $Rev: 10698 $
+# $Date:: 2009-07-10#$
+# $Rev: 10886 $
 # $Author: okubata_ryoma $
 #----------------------------------------------------------------------------
 ifndef TWLSDK_TWL_COMMONDEFS_
@@ -215,8 +215,8 @@ else
 LCFILE					?= $(DEFAULT_LCFILE)
 endif
 
-TARGETS					?= $(addprefix $(BINDIR)/,$(TARGET_BIN) $(TARGET_ELF) $(TARGET_SIGN_BIN) $(TARGET_NAND_SRL))	\
-						   $(addprefix $(OBJDIR)/,$(TARGET_OBJ)) 														\
+TARGETS					?= $(addprefix $(BINDIR)/,$(TARGET_BIN) $(TARGET_ELF) $(TARGET_SIGN_BIN))	\
+						   $(addprefix $(OBJDIR)/,$(TARGET_OBJ)) 									\
 						   $(addprefix $(LIBDIR)/,$(TARGET_LIB))
 
 TARGET_BIN_BASENAME		 = $(patsubst %.TWL,%,$(notdir $(basename $(firstword $(TARGET_BIN) $(TARGET_ELF)))))
@@ -280,6 +280,7 @@ TWL_LIBS_EX		?= librtcex$(TWL_LIBSUFFIX).a			\
 				   libaes$(TWL_LIBSUFFIX).a
 
 TWL_LIBS		+= $(if $(TWL_PROFILE_TYPE),libos.$(TWL_PROFILE_TYPE)$(TWL_LIBSUFFIX).a)
+TWL_LIBS		+= $(if $(filter TRUE,$(TWL_NANDAPP)),libna$(TWL_LIBSUFFIX).a)
 
 else #	($(CODEGEN_PROC),ARM7)
 
@@ -355,6 +356,17 @@ NEWDIRS			?= $(strip $(if $(SRCS),$(OBJDIR) $(DEPENDDIR))			\
 GDIRT_CLEAN_DIRS	:= ./obj ./bin ./lib ./depend
 GDIRT_CLOBBER_DIRS	:=
 
+### NAND APP settings
+ifeq	($(TWL_NANDAPP),TRUE)
+ifeq	($(CODEGEN_PROC),ARM9)
+DEFAULT_ROM_SPEC	 = $(TWL_SPECDIR)/ROM-$(TWL_PLATFORM)_nand.rsf
+
+INT_ROM_EXT			:=	nand.srl
+TMP_NAND_SRL		?= $(addprefix $(BINDIR)/,$(TARGET_BIN_BASENAME).$(INT_ROM_EXT))
+TITLE_VERSION_LO	?=	0
+endif
+endif
+
 endif
 
 
@@ -376,6 +388,7 @@ MAKELST			:= $(TWL_TOOLSDIR)/bin/makelst.exe
 STRIPDEBUG		:= $(TWL_TOOLSDIR)/bin/stripdebug.exe
 MAKERSF			:= $(TWL_TOOLSDIR)/bin/makersf.pl
 LOADRUN			:= $(TWL_TOOLSDIR)/bin/loadrun.TWL.exe
+MAKETAD			:= $(TWL_TOOLSDIR)/bin/maketad.exe
 
 MAKELCF_FLAGS	 			?=
 MAKEBANNER_FLAGS			?=

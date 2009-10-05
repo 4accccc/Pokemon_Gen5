@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-07-03#$
+  $Rev: 10856 $
+  $Author: yosizaki $
 
  *---------------------------------------------------------------------------*/
 
@@ -2245,11 +2245,12 @@ BOOL FS_ReadDirectoryW(FSFile *file, FSDirectoryEntryInfoW *info)
   Description:  FSDirectoryEntryInfo構造体からFSDirEntry構造体への変換
 
   Arguments:    entry       変換先のFSDirEntry構造体
+                arc         変換元の情報を取得したアーカイブ
                 info        変換元のFSDirectoryEntryInfo構造体
 
   Returns:      成功すればTRUE
  *---------------------------------------------------------------------------*/
-static void FSi_ConvertToDirEntry(FSDirEntry *entry, const FSDirectoryEntryInfo *info)
+static void FSi_ConvertToDirEntry(FSDirEntry *entry, FSArchive *arc, const FSDirectoryEntryInfo *info)
 {
     entry->name_len = info->longname_length;
     if (entry->name_len > sizeof(entry->name) - 1)
@@ -2262,6 +2263,7 @@ static void FSi_ConvertToDirEntry(FSDirEntry *entry, const FSDirectoryEntryInfo 
     {
         entry->is_directory = FALSE;
         entry->file_id.file_id = FS_INVALID_FILE_ID;
+        entry->file_id.arc = NULL;
     }
     else if ((info->attributes & FS_ATTRIBUTE_IS_DIRECTORY) != 0)
     {
@@ -2274,6 +2276,7 @@ static void FSi_ConvertToDirEntry(FSDirEntry *entry, const FSDirectoryEntryInfo 
     {
         entry->is_directory = FALSE;
         entry->file_id.file_id = info->id;
+        entry->file_id.arc = arc;
     }
 }
 
@@ -2351,7 +2354,7 @@ BOOL FS_ReadDir(FSFile *file, FSDirEntry *entry)
     FSDirectoryEntryInfo    info[1];
     if (FS_ReadDirectory(file, info))
     {
-        FSi_ConvertToDirEntry(entry, info);
+        FSi_ConvertToDirEntry(entry, FS_GetAttachedArchive(file), info);
         retval = TRUE;
     }
     return retval;

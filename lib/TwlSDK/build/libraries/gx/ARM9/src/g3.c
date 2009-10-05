@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <nitro/gx/g3.h>
@@ -85,7 +85,7 @@ u32 G3_EndMakeDL(GXDLInfo *info)
     info->curr_cmd = (u8 *)info->curr_param;
 
     SDK_ASSERT((u32)info->bottom < (u32)info->curr_cmd);
-    SDK_ASSERTMSG(((u32)info->curr_cmd - (u32)info->bottom <= info->length),
+    SDK_TASSERTMSG(((u32)info->curr_cmd - (u32)info->bottom <= info->length),
                   "Buffer overflow ! : Current DL buffer doesn't have enough capacity for new commands\n");
 
     sz = (u32)((u32)info->curr_cmd - (u32)info->bottom);

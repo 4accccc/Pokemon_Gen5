@@ -10,8 +10,8 @@
 # not be disclosed to third parties or copied or duplicated in any form,
 # in whole or in part, without the prior written consent of Nintendo.
 #
-# $Date:: 2008-09-26#$
-# $Rev: 8700 $
+# $Date:: 2009-06-16#$
+# $Rev: 10761 $
 # $Author: ooshimay $
 #----------------------------------------------------------------------------
 #
@@ -54,7 +54,7 @@ Property
 	#
 	# REMASTER VERSION: Mastering version
 	#
-	#RomVersion		0
+	#RemasterVersion		0
 
 	#
 	# ROM SPEED TYPE: [MROM/1TROM/UNDEFINED]

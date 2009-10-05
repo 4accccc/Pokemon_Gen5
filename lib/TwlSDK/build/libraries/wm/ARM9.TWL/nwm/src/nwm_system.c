@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <twl.h>
@@ -112,7 +112,14 @@ void NWMi_ReceiveFifo9(PXIFifoTag tag, u32 fifo_buf_adr, BOOL err)
         NWM_WARNING("NWM9 FIFO receive error.(NULL address) :%d\n", err);
         return;
     }
-
+    
+    // apiid が想定外の値(NWM_APIID_ASYNC_KIND_MAX 以上) の場合
+    if(pCallback->apiid >= NWM_APIID_ASYNC_KIND_MAX)
+    {
+        NWM_WARNING("Receive Unknown APIID(%d)\n",pCallback->apiid);
+        return;
+    }
+    
     DC_InvalidateRange(w9b->fifo7to9, NWM_APIFIFO_BUF_SIZE);
     DC_InvalidateRange(w9b->status, NWM_STATUS_BUF_SIZE);
     if ((u32)pCallback != (u32)(w9b->fifo7to9))
@@ -409,7 +416,7 @@ static void NwmSleepCallback(void *)
      * 無線通信中に OS_GoSleepMode() を実行することは *
      * 禁止されています。                             *
      * ---------------------------------------------- */
-    OS_Panic("Could not sleep during wireless communications.");
+    OS_TPanic("Could not sleep during wireless communications.");
 }
 
 /*---------------------------------------------------------------------------*

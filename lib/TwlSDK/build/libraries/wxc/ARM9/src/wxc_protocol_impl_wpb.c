@@ -616,12 +616,12 @@ BOOL WXCi_PacketRecvHook(WXCProtocolContext * protocol, const WXCPacketInfo * pa
     /* WPB は親機として子機と通信する場合と、子機として親機と通信する場合で処理が異なる */
     if (WXC_IsParentMode())
     {
-        PrintPassBuffer(packet->buffer, "parent recv");
-
         if (packet->buffer == NULL || packet->length == 0)
         {
             return FALSE;              /* 通信を継続する */
         }
+
+        PrintPassBuffer(packet->buffer, "parent recv");
 
         /* まず受信バッファからpass_recv_bufにコピー */
         pass_copy_to_structure(((u8 *)packet->buffer), &(pass_ctrl->recv_buf));

@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-15#$
+  $Rev: 10752 $
+  $Author: terui $
  *---------------------------------------------------------------------------*/
 #include <nitro/os.h>
 
@@ -121,6 +121,11 @@ static void OSi_CountUpTick(void)
     OSi_EnterTimerCallback(OSi_TICK_TIMER, (void (*)(void *))OSi_CountUpTick, 0);
 }
 
+#ifdef SDK_ARM7
+#ifdef SDK_TWL
+extern u32 MIC_GetDelayIF(void);
+#endif
+#endif
 /*---------------------------------------------------------------------------*
   Name:         OS_GetTick
 
@@ -142,7 +147,15 @@ OSTick OS_GetTick(void)
     countH = OSi_TickCounter & 0xffffffffffffULL;
 
     //---- check if timer interrupt bit is on
+#ifdef SDK_ARM7
+#ifdef SDK_TWL
+    if (((reg_OS_IF | MIC_GetDelayIF()) & OSi_TICK_IE_TIMER) && !(countL & 0x8000))
+#else
     if (reg_OS_IF & OSi_TICK_IE_TIMER && !(countL & 0x8000))
+#endif
+#else
+    if (reg_OS_IF & OSi_TICK_IE_TIMER && !(countL & 0x8000))
+#endif
     {
         countH++;
     }

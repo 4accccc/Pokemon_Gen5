@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <nitro.h>
@@ -298,7 +298,7 @@ PRCi_CalcStrokeDistance_Fine(fx32 *score,
         width++;
         if (width > normalizeSize)
         {
-            OS_Warning
+            OS_TWarning
                 ("too small normalizeSize. PRCPrototypeList.normalizeSize seems smaller than actual data.");
         }
     }
@@ -344,7 +344,7 @@ PRCi_CalcStrokeDistance_Fine(fx32 *score,
             || protoStrokeLength * lengthFilterRatio < inputStrokeLength)
         {
 #ifdef PRC_DEBUG_RECOGNIZE_DEEPLY
-            OS_Printf("Skipped because of length filter %d <=> %d\n", FX_Whole(inputStrokeLength),
+            OS_TPrintf("Skipped because of length filter %d <=> %d\n", FX_Whole(inputStrokeLength),
                       FX_Whole(protoStrokeLength));
 #endif
             return;
@@ -526,7 +526,7 @@ PRCi_CalcStrokeDistance_Fine(fx32 *score,
             fInBeamLow = TRUE;
             maxScore = 0;
             maxScoreN = 1;
-//            OS_Printf(" beam: [%d, %d]\n", beamLow, beamHigh);
+//            OS_TPrintf(" beam: [%d, %d]\n", beamLow, beamHigh);
             if (beamLow > 1)
             {
                 sumScore_(beamLow - 1, iProto) = 0;
@@ -613,7 +613,7 @@ PRCi_CalcStrokeDistance_Fine(fx32 *score,
             localScore = sumScore_(iInput, iProto) - sumScore_(iInput + dx, iProto + dy);
             angleScore = angleScores_(iInput, iProto) + angleScores_(iInput + 1, iProto + 1);
 
-            OS_Printf(" %2d <-> %2d : 0.%03d = 0.%03d * 0.%03d, average from begin: 0.%03d\n",
+            OS_TPrintf(" %2d <-> %2d : 0.%03d = 0.%03d * 0.%03d, average from begin: 0.%03d\n",
                       iInput, iProto, localScore / normalizeSize,
                       localScore * 512 / angleScore / normalizeSize, angleScore * 2,
                       sumScore_(iInput, iProto) / nMatches_(iInput, iProto) / normalizeSize);
@@ -623,12 +623,12 @@ PRCi_CalcStrokeDistance_Fine(fx32 *score,
         }
         localScore = sumScore_(iInput, iProto);
         angleScore = angleScores_(iInput, iProto) + angleScores_(iInput + 1, iProto + 1);
-        OS_Printf(" %2d <-> %2d : 0.%03d = 0.%03d * 0.%03d\n", iInput, iProto,
+        OS_TPrintf(" %2d <-> %2d : 0.%03d = 0.%03d * 0.%03d\n", iInput, iProto,
                   localScore / normalizeSize, localScore * 512 / angleScore / normalizeSize,
                   angleScore * 2);
     }
 
-    OS_Printf("total: %d, matches: %d\n", sumScore_(inputSize - 1, protoSize - 1),
+    OS_TPrintf("total: %d, matches: %d\n", sumScore_(inputSize - 1, protoSize - 1),
               nMatches_(inputSize - 1, protoSize - 1));
 #endif
 

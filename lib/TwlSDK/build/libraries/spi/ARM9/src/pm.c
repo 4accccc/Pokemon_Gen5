@@ -10,8 +10,8 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-04-21#$
-  $Rev: 10443 $
+  $Date:: 2009-06-18#$
+  $Rev: 10775 $
   $Author: yada $
  *---------------------------------------------------------------------------*/
 #include <nitro/spi/ARM9/pm.h>
@@ -1475,11 +1475,8 @@ void PM_GoSleepMode(PMWakeUpTrigger trigger, PMLogic logic, u16 keyPattern)
     prepIntrMask = OS_DisableIrqMask( OS_IE_MASK_ALL );
 
     //---- interrupt setting
-	{
-		// enable PXI from ARM7 and TIMER0(if needed)
-		OSIntrMode intr = OS_IE_FIFO_RECV | (OS_IsTickAvailable()? OS_IE_TIMER0: 0 );
-		(void)OS_SetIrqMask( intr );
-	}
+    // enable PXI from ARM7 and TIMER0(if needed)
+    (void)OS_SetIrqMask( OS_IE_FIFO_RECV | (OS_IsTickAvailable()? OS_IE_TIMER0: 0 ) );
     (void)OS_RestoreInterrupts(prepIntrMode);
     (void)OS_EnableIrq();
 
@@ -1537,6 +1534,7 @@ void PM_GoSleepMode(PMWakeUpTrigger trigger, PMLogic logic, u16 keyPattern)
 							  | (preTop? PM_BACKLIGHT_RECOVER_TOP_ON: PM_BACKLIGHT_RECOVER_TOP_OFF)
 							  | (preBottom? PM_BACKLIGHT_RECOVER_BOTTOM_ON: PM_BACKLIGHT_RECOVER_BOTTOM_OFF));
 
+        (void)OS_SetIrqMask( OS_IE_FIFO_RECV );
         (void)PMi_SendSleepStart(param, (u16)(logic | keyPattern));
     }
 
@@ -1546,6 +1544,8 @@ void PM_GoSleepMode(PMWakeUpTrigger trigger, PMLogic logic, u16 keyPattern)
 		OS_Halt();
 	}
     //==========================
+
+    (void)OS_SetIrqMask( OS_IE_FIFO_RECV | (OS_IsTickAvailable()? OS_IE_TIMER0: 0 ) );
 
     //---- check card remove
     if ((trigger & PM_TRIGGER_CARD) && (OS_GetRequestIrqMask() & OS_IE_CARD_IREQ))
@@ -1579,7 +1579,7 @@ void PM_GoSleepMode(PMWakeUpTrigger trigger, PMLogic logic, u16 keyPattern)
     OS_SpinWaitSysCycles(PMi_LCD_WAIT_SYS_CYCLES);
 
     //---- restore all interrupt
-    (void)OS_DisableInterrupts();
+    (void)OS_DisableIrq();
     (void)OS_SetIrqMask(prepIntrMask);
     (void)OS_RestoreInterrupts(prepIntrMode);
     (void)OS_RestoreIrq(prepIrq);

@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
 
  *---------------------------------------------------------------------------*/
 
@@ -104,9 +104,9 @@ static void CARDi_PulledOutCallback(PXIFifoTag tag, u32 data, BOOL err)
     else
     {
 #ifndef SDK_FINALROM
-        OS_Panic("illegal card pxi command.");
+        OS_TPanic("illegal card pxi command.");
 #else
-        OS_Panic("");
+        OS_TPanic("");
 #endif
     }
 }

@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 
@@ -308,7 +308,7 @@ void VEC_Normalize(const VecFx32 *pSrc, VecFx32 *pDst)
     t = (fx64)pSrc->x * pSrc->x;
     t += (fx64)pSrc->y * pSrc->y;
     t += (fx64)pSrc->z * pSrc->z;      // in s39.24 format
-    SDK_ASSERTMSG(t > 0, "*pSrc is (0, 0, 0)");
+    SDK_TASSERTMSG(t > 0, "*pSrc is (0, 0, 0)");
 
     SDK_WARNING(1LL << (FX32_SHIFT + FX32_SHIFT + FX64C_SHIFT) >= (u64)t, "*pSrc is too large!");
 
@@ -347,7 +347,7 @@ void VEC_Fx16Normalize(const VecFx16 *pSrc, VecFx16 *pDst)
     t = pSrc->x * pSrc->x;
     t += pSrc->y * pSrc->y;
     t += pSrc->z * pSrc->z;            // in s39.24 format
-    SDK_ASSERTMSG(t > 0, "*pSrc is (0, 0, 0)");
+    SDK_TASSERTMSG(t > 0, "*pSrc is (0, 0, 0)");
 
     CP_SetDiv64_64(1LL << (FX32_SHIFT + FX32_SHIFT + FX64C_SHIFT), (u64)t);
     CP_SetSqrt64((u64)(t << 2));

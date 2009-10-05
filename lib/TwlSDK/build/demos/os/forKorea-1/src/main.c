@@ -10,12 +10,16 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17 #$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-16 #$
+  $Rev: 10758 $
+  $Author: ooshimay $
  *---------------------------------------------------------------------------*/
 
+#ifdef SDK_TWL
+#include <twl.h>
+#else
 #include <nitro.h>
+#endif
 
 #include "DEMO.h"
 
@@ -32,7 +36,11 @@
 
   Returns:      None.
  *---------------------------------------------------------------------------*/
+#ifdef SDK_TWL
+void TwlMain(void)
+#else
 void NitroMain(void)
+#endif
 {
     OS_Init();
     (void)OS_EnableIrq();

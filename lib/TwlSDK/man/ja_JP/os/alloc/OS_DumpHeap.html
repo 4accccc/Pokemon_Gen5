@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
-<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
 <META http-equiv="Content-Style-Type" content="text/css">
 <TITLE>OS_DumpHeap</TITLE>
 <LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
@@ -34,10 +34,16 @@
 <P>ヒープ内部の情報を表示します。<BR>
 これはデバッグ用の関数です。</P>
 <P>ヒープのあるアリーナを指定する必要があります。アリーナはアリーナID <B><I>id</I></B> で指定します。この値については <CODE><A href="../arena/OS_InitArena.html">OS_InitArena()</A></CODE> を参照してください。</P>
+<H3><BR>
+表示モードについて</H3>
+<P>この関数のように、全ての情報を確実に表示することが速度よりも優先される場合は、一時的にでも表示をブロッキングモードに設定することをお奨めします。詳細は
+<CODE><A href="../debug/OS_SetPrintBlockingMode.html">OS_SetPrintBlockingMode()</A></CODE> を参照してください。</P>
 <H2>参照</H2>
 <P><CODE><A href="../arena/OS_InitArena.html">OS_InitArena</A>, <A href="OS_InitAlloc.html">OS_InitAlloc</A><BR>
+<A href="../debug/OS_SetPrintBlockingMode.html">OS_SetPrintBlockingMode()</A><BR>
 </CODE></P>
 <H2>履歴</H2>
-<P>2004/01/06 初版</P>
+<P>2009/07/27 表示モードについて追加<BR>
+2004/01/06 初版</P>
 </BODY>
 </HTML>

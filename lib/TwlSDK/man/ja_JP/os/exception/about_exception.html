@@ -82,15 +82,32 @@
 　CPSR=2000001F SPSR=00000000 CP15=0005707D</CODE><BR>
 <BR>
 </BLOCKQUOTE>
+<P><BR>
+なお、IS-TWL-DEBUGGER では例外発生した時にデバッガ自体がこの表示を行います。
+(IS-TWL-DEBUGGER v1.06 以降で可能です)　 表示の形式は上のと異なります。以下は表示例です。</P>
+<BLOCKQUOTE style="background-color:#ffffc0;"><BR>
+　<CODE>[[ 致命的エラー : ARM9CPU は &quot;データアクセス例外&quot; が発生したため実行を停止しました ]]<BR>
+<BR>
+　Symbol: STATIC:0x02000C8C<BR>
+　02000C8C: E591B000 LDR R11, [R1]<BR>
+<BR>
+　CPSR:6000001F <BR>
+　R0:0000007B R1:00000000 R2:00000100 R3:000003E8<BR>
+　R4:000007D0 R5:00000BB8 R6:00000FA0 R7:00001388<BR>
+　R8:02000C84 R9:000000FF R10:000000EE R11:00000000<BR>
+　R12:00000123 SP:027E3750 LR:02000C5C PC:02000C8C</CODE><BR>
+<BR>
+</BLOCKQUOTE>
 <H2>ユーザハンドラの設定</H2>
-<P>例外が発生したときに、ユーザが設定した例外ハンドラに制御を移すことが可能です。<A href="OS_SetUserExceptionHandler.html" target="_self"><CODE>OS_SetUserExceptionHandler()</CODE></A> でハンドラを登録してください。詳細はリファレンスを参照してください。</P>
+<P>IS-NITRO-DEBUGGER や、DS実機、TWL実機では、例外が発生したときに、ユーザが設定した例外ハンドラに制御を移すことが可能です。<A href="OS_SetUserExceptionHandler.html" target="_self"><CODE>OS_SetUserExceptionHandler()</CODE></A> でハンドラを登録してください。詳細はリファレンスを参照してください。</P>
 <H2>例外時コンテキスト表示やユーザ例外ハンドラの呼び出しの可能な環境</H2>
-<P>動作環境別で、例外発生時にデバッグウィンドウ(コンソール)へコンテキスト表示が行えるかどうかと、ユーザの例外ハンドラに制御を移すことが出来るかを示します。ただし
-<B><FONT color="#ff0000">OK</FONT></B> となっている箇所でも、FINALROM ビルドでは、<CODE><A href="../debug/OS_FPrintf.html">OS_FPrintf()</A></CODE> が使用できないので動作環境に依らず 例外時のコンテキスト表示は出来ません。ユーザの例外ハンドラの呼び出しは
-ビルドに依存しません。</P>
+<P>動作環境別に、例外発生時にデバッグウィンドウ(コンソール)へコンテキスト表示が行えるかどうかと、ユーザの例外ハンドラに制御を移すことが出来るかを示します。</P>
+<P>表中の「例外発生時のコンテキスト表示」は、「例外時のコンテキスト表示」で示したように、IS-NITRO-DEBUGGER ではSDKが行い、IS-TWL-DEBUGGER では デバッガが行います。SDK が表示を行う場合、表示に使っている <CODE><A href="../debug/OS_FPrintf.html">OS_FPrintf()</A></CODE> が FINALROMビルドでは使用できないので、「<FONT color="#ff0000"><B>OK</B></FONT> (SDKが表示)」となっているものは、FINALROM ビルドではコンテキスト表示は出来ません。「<FONT color="#ff0000"><B>OK</B></FONT> (デバッガが表示)」となっているものは、デバッガが表示を行いますので、FINALROMビルドであっても表示することが出来ます。</P>
+<P>また、表中の「ユーザの例外ハンドラの呼び出し」は、FINALROM ビルドかどうかというビルド種類には依存しません。</P>
 <P>この表は動作環境で切り分けられていることにご注意ください。例えば、 HYBRID
 ROM を NITRO モードで動作させる場合、IS-TWL-DEBUGGER 上なら例外発生時のコンテキスト表示は行えませんが、同じ
-ROM を 同じモードで動作させても IS-NITRO-DEBUGGER 上なら表示可能です。</P>
+ROM を 同じモードで動作させても IS-NITRO-DEBUGGER 上なら表示可能です。<BR>
+</P>
 <TABLE border="1">
   <TBODY>
     <TR>
@@ -115,7 +132,7 @@ ROM を 同じモードで動作させても IS-NITRO-DEBUGGER 上なら表示可能です。</P>
     </TR>
     <TR>
       <TD>IS-NITRO-DEBUGGER</TD>
-      <TD><FONT color="#ff0000"><B>OK</B></FONT></TD>
+      <TD><FONT color="#ff0000"><B>OK</B></FONT> (SDKが表示)</TD>
       <TD><FONT color="#ff0000"><B>OK</B></FONT></TD>
     </TR>
     <TR>
@@ -125,12 +142,12 @@ ROM を 同じモードで動作させても IS-NITRO-DEBUGGER 上なら表示可能です。</P>
     </TR>
     <TR>
       <TD>IS-TWL-DEBUGGER　(一般開発用: ARM9)</TD>
-      <TD><B>N/A</B></TD>
+      <TD><B><FONT color="#ff0000">OK</FONT></B> (デバッガが表示)</TD>
       <TD><B>N/A</B></TD>
     </TR>
     <TR>
       <TD>IS-TWL-DEBUGGER　(コンポーネント開発用　ARM9 + ARM7)</TD>
-      <TD><B>N/A</B></TD>
+      <TD><B><FONT color="#ff0000">OK</FONT></B> (デバッガが表示)</TD>
       <TD><B>N/A</B></TD>
     </TR>
     <TR>
@@ -150,12 +167,12 @@ ROM を 同じモードで動作させても IS-NITRO-DEBUGGER 上なら表示可能です。</P>
     </TR>
     <TR>
       <TD>IS-TWL-DEBUGGER　(一般開発用: ARM9)</TD>
-      <TD><B>N/A</B></TD>
+      <TD><B><FONT color="#ff0000">OK</FONT></B> (デバッガが表示)</TD>
       <TD><B>N/A</B></TD>
     </TR>
     <TR>
       <TD>IS-TWL-DEBUGGER　(コンポーネント開発用　ARM9 + ARM7)</TD>
-      <TD><B>N/A</B></TD>
+      <TD><B><FONT color="#ff0000">OK</FONT></B> (デバッガが表示)</TD>
       <TD><B>N/A</B></TD>
     </TR>
   </TBODY>
@@ -163,7 +180,9 @@ ROM を 同じモードで動作させても IS-NITRO-DEBUGGER 上なら表示可能です。</P>
 <P><BR>
 </P>
 <H2>例外発生の流れ</H2>
-<P>例外が発生すると、例外ベクタの領域にジャンプします。例外ベクタは前述の通り、通常はハイベクタとなりますので、例えばデータアボート例外ならば
+<P>以下の例外発生の流れは、IS-NITRO-DEBUGGER や、DS実機、TWL実機 のものです。IS-TWL-DEBUGGER
+では例外が発生するとその時点で CPU の動作が止まり、デバッガに制御が移りますので図のような動作にはなりません。</P>
+<P>IS-NITRO-DEBUGGER 、DS実機、TWL実機では、例外が発生すると例外ベクタの領域にジャンプします。例外ベクタは前述の通り、通常はハイベクタとなりますので、例えばデータアボート例外ならば
 0xFFFFFF10 に制御が移ります。</P>
 <P>次にシステム領域内の HW_EXCP_VECTOR_MAIN (0x2FFFFD9C) に格納されているアドレスに制御が移ります。
 (ARM7 では専用ワークRAM のオフセット 0x7FDC の位置となります。) 　ここにはTWL-SDK
@@ -177,7 +196,8 @@ ROM を 同じモードで動作させても IS-NITRO-DEBUGGER 上なら表示可能です。</P>
 <A href="../list_os.html#Exception">OS関数一覧(例外)</A><BR>
 </CODE></P>
 <H2>履歴</H2>
-<P>2008/04/18 例外時コンテキスト表示環境の表追加など<BR>
+<P>2009/07/01 環境による動作の違いを記述<BR>
+2008/04/18 例外時コンテキスト表示環境の表追加など<BR>
 2005/03/08 用語統一 [割込み] → [割り込み]<br>
 2004/12/14 用語や語尾など修正<BR>
 2004/11/16 初版</P>

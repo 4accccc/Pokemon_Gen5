@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #ifndef	TWL_AES_COMMON_TYPE_H_
@@ -45,7 +45,7 @@ extern "C" {
 
 
 #define AESi_ASSERT_MAC_LENGTH(x)                               \
-    SDK_ASSERTMSG( ((x) == AES_MAC_LENGTH_4)                    \
+    SDK_TASSERTMSG( ((x) == AES_MAC_LENGTH_4)                    \
                 || ((x) == AES_MAC_LENGTH_6)                    \
                 || ((x) == AES_MAC_LENGTH_8)                    \
                 || ((x) == AES_MAC_LENGTH_10)                   \

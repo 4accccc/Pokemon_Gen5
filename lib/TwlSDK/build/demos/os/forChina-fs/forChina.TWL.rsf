@@ -10,9 +10,9 @@
 # not be disclosed to third parties or copied or duplicated in any form,
 # in whole or in part, without the prior written consent of Nintendo.
 #
-# $Date:: 2009-05-28#$
-# $Rev: 10641 $
-# $Author: mizutani_nakaba $
+# $Date:: 2009-06-24#$
+# $Rev: 10811 $
+# $Author: nishikawa_takeshi $
 #----------------------------------------------------------------------------
 #
 #  TWL ROM SPEC FILE
@@ -108,7 +108,8 @@ Property
 	###
 
 	#
-	# ROM HEADER Ltd: Provided to every product by NINTENDO
+	# ROM HEADER Ltd:
+	#  don't have to edit
 	#
 	RomHeaderLtd	$(TWLSDK_ROOT)/tools/bin/rom_header.LTD.sbin
 
@@ -124,9 +125,9 @@ Property
 	WramMapping		$(MAKEROM_WRAM_MAPPING)
 
 	#
-	# CardRegion: card region [Japan/America/Europe/Australia]
+	# CardRegion: card region [Japan/America/Europe/Australia/Korea/China]
 	#
-	CardRegion	ALL
+	CardRegion	China
 
 	#
 	# Codec mode:

@@ -43,7 +43,7 @@
     </TR>
     <TR>
       <TD width="200"><EM><STRONG><FONT face="Courier New">blink</FONT></STRONG></EM></TD>
-      <TD width="800">電源 LED を変速点滅させる場合には TRUE を指定します。</TD>
+      <TD width="800">電源 LED を変速点滅させる場合には TRUE を指定します。<BR>(この設定は ニンテンドーDS、ニンテンドーDS Lite および IS-NITRO-EMULATOR でのみ有効です。 )</TD>
     </TR>
   </tbody>
 </table>
@@ -60,7 +60,7 @@ wmSysBufは、<A href="WM_Finish.html">WM_Finish( )</A>もしくは<A href="WM_End.htm
 初期化処理を細かく制御する場合にはこれらの関数を別々に使用するようにして下さい。
 </P>
 <P>
-<A href="WM_Initialize.html">WM_Initialize( )</A>とは異なり、この関数で初期化を行うと、電波を発信するようなオペレーションは一切行えません。その代わり、電源 LED を点滅させないことが可能となっています。電波を発信しないオペレーションとしては、Passive モードでのスキャンと、チャンネル占有率の計測があります。
+<A href="WM_Initialize.html">WM_Initialize( )</A>とは異なり、この関数で初期化を行うと、電波を発信するようなオペレーションは一切行えません。その代わり、ニンテンドーDS、ニンテンドーDS Lite および IS-NITRO-EMULATOR 上で動作させた場合にも電源 LED を点滅させないことが可能となっています。電波を発信しないオペレーションとしては、Passive モードでのスキャンと、チャンネル占有率の計測があります。
 </P>
 
 <h2>参照</h2>
@@ -70,6 +70,7 @@ wmSysBufは、<A href="WM_Finish.html">WM_Finish( )</A>もしくは<A href="WM_End.htm
 
 <H2>履歴</H2>
 <P>
+2009/07/10 LED 点滅の仕様について追記<BR>
 2007/11/12 初版<BR>
 </P>
 </body>

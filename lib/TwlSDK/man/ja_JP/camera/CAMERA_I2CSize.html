@@ -62,8 +62,8 @@ Exなしの関数は、コンテキストA/B両方の設定を変更します。<BR>
 <code>CAMERA_I2CSizeAsync()</code> は <code>CAMERA_I2CSize()</code> とは異なり、制御をすぐに戻し非同期で実行されます。<BR>
 処理の完了を確認するにはcallbackを利用してください。<BR>
 <BR>
-なお、<code><A href="CAMERA_I2CFrameRate.html">CAMERA_I2CFrameRate*()</A></code> で CAMERA_FRAME_RATE_30_TO_5 もしくは CAMERA_FRAME_RATE_30 を
-設定してある状態にもかかわらず、本関数で CAMERA_SIZE_VGA を設定するとキャプチャデータが受信できなくなりますので、この 2 つの設定を
+なお、<code><A href="CAMERA_I2CFrameRate.html">CAMERA_I2CFrameRate*()</A></code> で CAMERA_FRAME_RATE_30_TO_10, CAMERA_FRAME_RATE_30_TO_5 もしくは CAMERA_FRAME_RATE_30 を
+設定してある状態にもかかわらず、本関数で CAMERA_SIZE_VGA もしくは CAMERA_SIZE_DS_LCDx4 を設定するとキャプチャデータが受信できなくなりますので、この 2 つの設定を
 同時に使用しないようにしてください。<br>
 <br>
 <font color="red">注意：</font><br>
@@ -75,6 +75,7 @@ Exなしの関数は、コンテキストA/B両方の設定を変更します。<BR>
 <P><CODE><A href="CAMERASelect.html">CAMERASelect</A>、<A href="CAMERAContext.html">CAMERAContext</A>、<A href="CAMERASize.html">CAMERASize</A>、<A href="CAMERACallback.html">CAMERACallback</A>、<A href="CAMERAResult.html">CAMERAResult</A></CODE></P>
 <H2>履歴</H2>
 <P>
+2009/07/03 使用条件についての情報の更新<br>
 2009/03/25 キャプチャ動作中のカメラ設定の変更について追記<br>
 2008/10/30 CAMERA_SELECT_BOTHも指定できることを追記<br>
 2008/01/23 VGAサイズで30fpsのキャプチャができない件の説明追加<BR>

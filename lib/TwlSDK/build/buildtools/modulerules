@@ -11,8 +11,8 @@
 # not be disclosed to third parties or copied or duplicated in any form,
 # in whole or in part, without the prior written consent of Nintendo.
 #
-# $Date:: 2008-10-29#$
-# $Rev: 9146 $
+# $Date:: 2009-07-10#$
+# $Rev: 10886 $
 # $Author: okubata_ryoma $
 #----------------------------------------------------------------------------
 ifndef TWLSDK_TOP_MODULERULES_
@@ -36,6 +36,7 @@ TWLSDK_MSG_LINK			= "     link:"
 TWLSDK_MSG_MAKE_LCF		= " make lcf:"
 TWLSDK_MSG_MAKE_MCH		= " make mch:"
 TWLSDK_MSG_MAKE_SRL		= " make srl:"
+TWLSDK_MSG_MAKE_TAD		= " make tad:"
 TWLSDK_MSG_SIGN			= "     sign:"
 TWLSDK_MSG_MAKE_BNR		= " make bnr:"
 TWLSDK_MSG_VERSION		= " make ver:"

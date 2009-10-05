@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <nitro/gx/gx.h>
@@ -64,7 +64,7 @@ void GX_Init()
             lockResult = OS_GetLockID();
             if (lockResult == OS_LOCK_ID_ERROR)
             {
-                OS_Panic("Could not get lock ID for VRAM exclusive.\n");
+                OS_TPanic("Could not get lock ID for VRAM exclusive.\n");
             }
             GXi_VRamLockId = (u16)lockResult;
         }
@@ -550,11 +550,13 @@ u32 GX_SetDefaultNDMA(u32 ndma_no)
 
         enabled = OS_DisableInterrupts();
 
-        GXi_DmaId = ndma_no+4;
+        GXi_DmaId = ndma_no;
+        if(ndma_no != GX_DMA_NOT_USE)
+            GXi_DmaId += 4;
 
         (void)OS_RestoreInterrupts(enabled);
 
-        if (previous > 3)
+        if ((previous > 3)&&(previous != GX_DMA_NOT_USE))
         {
             return previous-4;
         }

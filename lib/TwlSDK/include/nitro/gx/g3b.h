@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #ifndef NITRO_G3B_H_
@@ -34,12 +34,12 @@ extern "C" {
 
 //  VC.net does not support '...'
 #ifdef  _MSC_VER
-#define SDK_ASSERTMSG(exp, msg)                 ((void) 0)
+#define SDK_TASSERTMSG(exp, msg)                 ((void) 0)
 #ifndef __cplusplus
 #define inline __inline
 #endif
 #else
-#define SDK_ASSERTMSG(exp, ...)                 ((void) 0)
+#define SDK_TASSERTMSG(exp, ...)                 ((void) 0)
 #endif
 #endif
 
@@ -950,7 +950,7 @@ static inline void G3B_UpdateGXDLInfo(GXDLInfo *info, int n)
     info->curr_cmd = (u8 *)(info->curr_param + n);
     info->curr_param = (u32 *)(info->curr_cmd + 4);
 
-    SDK_ASSERTMSG(((u32)(info->curr_cmd) - (u32)info->bottom <= info->length),
+    SDK_TASSERTMSG(((u32)(info->curr_cmd) - (u32)info->bottom <= info->length),
                   "Buffer overflow ! : Current DL buffer doesn't have enough capacity for new commands\n");
 }
 

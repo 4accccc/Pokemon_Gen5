@@ -11,9 +11,9 @@
 # not be disclosed to third parties or copied or duplicated in any form,
 # in whole or in part, without the prior written consent of Nintendo.
 #
-# $Date:: 2008-12-22#$
-# $Rev: 9714 $
-# $Author: okubata_ryoma $
+# $Date:: 2009-06-11#$
+# $Rev: 10743 $
+# $Author: okajima_manabu $
 #----------------------------------------------------------------------------
 
 TARGET_PLATFORM :=  NITRO
@@ -21,7 +21,7 @@ TARGET_PLATFORM :=  NITRO
 INCDIR      =   ../common/include ./include
 SRCDIR      =   ./src ../common/src 
 
-LLIBRARIES  =   libwvr$(NITRO_LIBSUFFIX).a
+LLIBRARIES  =   libwvr$(TWL_LIBSUFFIX).a
 
 SRCS        =   main.c      \
                 font.c      \
@@ -41,8 +41,9 @@ TARGET_BIN  =   child.srl
 
 #------------------------------------------------------#
 # VRAM内に無線ライブラリが配置されるコンポーネント定義 #
-MY_COMPONENT_NAME   =   ichneumon
-MAKEROM_ARM7        =   $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM7)/$(MY_COMPONENT_NAME)_sub.$(NITRO_ELF_EXT)
+
+DEFAULT_COMP_ARM7	=	ichneumon
+
 #------------------------------------------------------#
 
 include $(TWLSDK_ROOT)/build/buildtools/commondefs

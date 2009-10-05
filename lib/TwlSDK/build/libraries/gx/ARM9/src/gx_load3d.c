@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 #include <nitro/gx/gx_load.h>
 #include <nitro/gx/gx_vramcnt.h>
@@ -125,7 +125,7 @@ void GX_LoadTexEx(GXVRamTex tex, const void *pSrc, u32 destSlotAddr, u32 szByte)
     SDK_ALIGN4_ASSERT(szByte);
     SDK_ALIGN4_ASSERT(destSlotAddr);
     SDK_ALIGN4_ASSERT(pSrc);
-    SDK_ASSERTMSG((GX_GetBankForLCDC() & tex) == tex,
+    SDK_TASSERTMSG((GX_GetBankForLCDC() & tex) == tex,
                   "Banks specified by tex must be on LCDC space.");
     GX_VRAM_TEX_ASSERT(tex);
 
@@ -389,7 +389,7 @@ static const u16 sTexPlttStartAddrTable[8] = {
 void GX_LoadTexPlttEx(GXVRamTexPltt texPltt, const void *pSrc, u32 destSlotAddr, u32 szByte)
 {
     u32     base;
-    SDK_ASSERTMSG((GX_GetBankForLCDC() & texPltt) == texPltt,
+    SDK_TASSERTMSG((GX_GetBankForLCDC() & texPltt) == texPltt,
                   "Banks specified by texPltt must be on LCDC space.");
 
     GX_VRAM_TEXPLTT_ASSERT(texPltt);

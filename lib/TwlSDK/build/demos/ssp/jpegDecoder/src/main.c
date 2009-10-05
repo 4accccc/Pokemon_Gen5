@@ -30,6 +30,8 @@ static u32 WriteBufferSize;
 
 #include "DEMO.h"
 
+static SSPJpegDecoderFastContext DecWorkMMem;
+
 /*---------------------------------------------------------------------------*
   Name:         MyAlloc
 
@@ -111,6 +113,8 @@ void TwlMain(void)
 void NitroMain(void)
 #endif
 {
+    int retryCount=0;
+
     /* OS‚Ì‰Šú‰» */
     OS_Init();
     OS_InitTick();
@@ -140,6 +144,7 @@ void NitroMain(void)
     OS_TPrintf("    SSP JpegDecoder Test\n");
     OS_TPrintf("===================================\n");
 
+    do
     {
         s16 decode_file_width, decode_file_height;
         
@@ -147,6 +152,7 @@ void NitroMain(void)
         u32 length;
         FSFile file[1];
         
+        SSPJpegDecoderFastContext *pCtx = &DecWorkMMem;
         
         FS_InitFile(file);
         if( !FS_OpenFileEx(file, "rom:/decode.jpg", FS_FILEMODE_R) )
@@ -176,14 +182,26 @@ void NitroMain(void)
             decode_file_height = 192;
             OutputBuffer = MyAlloc(decode_file_width * decode_file_height * sizeof(u16));
             
-            result = SSP_StartJpegDecoder(data, length, OutputBuffer, &decode_file_width, &decode_file_height, SSP_JPEG_RGB555);
+            if(retryCount == 0)
+            {
+                result = SSP_StartJpegDecoder(data, length, OutputBuffer, &decode_file_width, &decode_file_height, SSP_JPEG_RGB555);
+            }
+            else
+            {
+                result = SSP_StartJpegDecoderFast(pCtx, data, length, OutputBuffer, decode_file_width, decode_file_height, SSP_JPEG_RGB555);
+                decode_file_width = (s16)pCtx->width;
+                decode_file_height = (s16)pCtx->height;
+            }
             
             jpegDecode_end = OS_GetTick();
             
             if(result == 0)
                 OS_Panic("Failed Cpu Decode\n");
             
-            OS_TPrintf("[TIMER] MAIN SSP_StartJpegDecoder time[usec] = %d\n", OS_TicksToMicroSeconds(jpegDecode_end - jpegDecode_begin));
+            if(retryCount == 0)
+                 OS_TPrintf("[TIMER] MAIN SSP_StartJpegDecoder time[usec] = %d\n", OS_TicksToMicroSeconds(jpegDecode_end - jpegDecode_begin));
+            else
+                 OS_TPrintf("[TIMER] MAIN SSP_StartJpegDecoderFast time[usec] = %d\n", OS_TicksToMicroSeconds(jpegDecode_end - jpegDecode_begin));
             OS_TPrintf("[DEBUG] MAIN decode_file_width = %d : decode_file_height = %d\n", decode_file_width, decode_file_height);
             
             {
@@ -243,14 +261,26 @@ void NitroMain(void)
             decode_file_height = SSP_JPEG_THUMBNAIL_HEIGHT;
             OutputBuffer = MyAlloc(decode_file_width * decode_file_height * sizeof(u16));
             
-            result = SSP_StartJpegDecoder(data, length, OutputBuffer, &decode_file_width, &decode_file_height, SSP_JPEG_THUMBNAIL | SSP_JPEG_RGB555);
+            if(retryCount == 0)
+            {
+                result = SSP_StartJpegDecoder(data, length, OutputBuffer, &decode_file_width, &decode_file_height, SSP_JPEG_THUMBNAIL | SSP_JPEG_RGB555);
+            }
+            else
+            {
+                result = SSP_StartJpegDecoderFast(pCtx, data, length, OutputBuffer, decode_file_width, decode_file_height, SSP_JPEG_THUMBNAIL | SSP_JPEG_RGB555);
+                decode_file_width = (s16)pCtx->width;
+                decode_file_height = (s16)pCtx->height;
+            }
             
             jpegDecode_end = OS_GetTick();
             
             if(result == 0)
                 OS_Panic("Failed Cpu Decode\n");
             
-            OS_TPrintf("[TIMER] Thumbnail SSP_StartJpegDecoder time[usec] = %d\n", OS_TicksToMicroSeconds(jpegDecode_end - jpegDecode_begin));
+            if(retryCount == 0)
+                OS_TPrintf("[TIMER] Thumbnail SSP_StartJpegDecoder time[usec] = %d\n", OS_TicksToMicroSeconds(jpegDecode_end - jpegDecode_begin));
+            else
+                OS_TPrintf("[TIMER] Thumbnail SSP_StartJpegDecoderFast time[usec] = %d\n", OS_TicksToMicroSeconds(jpegDecode_end - jpegDecode_begin));
             OS_TPrintf("[DEBUG] Thumbnail decode_file_width = %d : decode_file_height = %d\n", decode_file_width, decode_file_height);
             
             
@@ -285,7 +315,28 @@ void NitroMain(void)
             MyFree(OutputBuffer);
         }
         MyFree(data);
-    }
+
+        if(retryCount < 1)
+        {
+            OS_TPrintf("Press A button\n");
+            while(1)
+            {
+                DEMOReadKey();
+                if(DEMO_IS_PRESS(PAD_BUTTON_A))
+                {
+                    retryCount++;
+                    break;
+                }
+                OS_WaitVBlankIntr();
+            }
+        }
+        else
+            retryCount++;
+    }while(retryCount < 2);
+    OS_TPrintf("\n");
+    OS_TPrintf("===================================\n");
+    OS_TPrintf("    End\n");
+    OS_TPrintf("===================================\n");
     OS_Terminate();
 }
 

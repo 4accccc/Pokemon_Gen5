@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <nitro.h>
@@ -352,8 +352,8 @@ static void TPi_TpCallback(PXIFifoTag tag, u32 data, BOOL err)
     case SPI_PXI_RESULT_INVALID_COMMAND:
     default:
         // àŸèÌèIóπ
-//        OS_Printf("result=%x\n",result);
-        OS_Panic("Get illegal TP command from ARM7!\n");
+//        OS_TPrintf("result=%x\n",result);
+        OS_TPanic("Get illegal TP command from ARM7!\n");
         return;
     }
 }

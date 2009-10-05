@@ -14,7 +14,6 @@
 ROM を実行できるために、デバッグや自動テストなどに有効です。ただしこの仕組みは開発時に使用することだけを想定していますので、FINALROM
 ビルドでは使うことが出来ません。</P>
 <P>また、<FONT color="#ff0000">HYBRID ROM を NITROモードで動作させたときも使用出来ません。</FONT></P>
-<P><FONT color="#ff0000"><B>*注: 本バージョンのTWL-SDK では TWLモードに限り FINALROM でも引数データが有効になります。これは後のバージョンからは修正され、無効となりますのでご注意下さい。</B></FONT></P>
 <H2>引数データ領域</H2>
 <P>引数データを格納するための領域は NITRO ROM と TWL ROM で異なります。</P>
 <P>NITRO ROM では、アプリケーションの変数領域に確保されます。この領域は ARM9
@@ -26,8 +25,8 @@ ROM を実行できるために、デバッグや自動テストなどに有効です。ただしこの仕組みは開
 <P><IMG src="argumentArea3.gif" width="475" height="280" border="0"></P>
 <P>引数データ領域は <CODE>OS_ARGUMENT_BUFFER_SIZE</CODE> バイトの大きさを持ちます。この値は NITRO, TWL ともに 256 と定義されています。</P>
 <H2>引数情報の設定</H2>
-<P>srl ファイルに対して引数データを設定するツールとして <CODE><A href="../../tools/buryarg.html">buryarg</A></CODE> や <CODE><A href="../../tools/buryargTWL.html">buryarg.TWL</A></CODE> が用意されています。</P>
-<P>NITRO ROM と TWL ROM で使用するツールが異なります。NITRO ROM に対しては <CODE><A href="../../tools/buryarg.html">buryarg</A></CODE> を、TWL ROM に対しては <CODE><A href="../../tools/buryargTWL.html">buryarg.TWL</A></CODE> を用いて下さい。</P>
+<P>srl ファイルに対して引数データを設定するツールとして <CODE><A href="../../tools/buryarg.html">buryarg</A></CODE> や <CODE><A href="../../tools/buryarg.html">buryarg.TWL</A></CODE> が用意されています。</P>
+<P>NITRO ROM と TWL ROM で使用するツールが異なります。NITRO ROM に対しては <CODE><A href="../../tools/buryarg.html">buryarg</A></CODE> を、TWL ROM に対しては <CODE><A href="../../tools/buryarg.html">buryarg.TWL</A></CODE> を用いて下さい。</P>
 <P>なお、srl ファイルではなく、その代わりに NITRO ROM の場合には nlf ファイルを、TWL
 ROM の場合には tlf ファイルを指定することも出来ます。その場合は nlf ファイルまたは
 tlf ファイルを解析してROM を構成するファイルを書き換えます。またこの場合、引数データ領域に書き込まれる「プログラム名」は書き換えたファイルの名前になります。</P>
@@ -43,19 +42,17 @@ nlf ファイルや tlf ファイルに対して引数データを埋め込んだ場合は srl ファイルから
 <H2>FINALROM の場合</H2>
 <P>この引数を与えることの出来る仕組みは開発用途で用意されたものですので、FINALROM
 ビルドの ROM で使用することは出来ません。ROM 外からパラメータを与えることが出来る仕組みが残っていることで、思わぬ不具合が発生したりすることを防ぐという意味もあります。そのため、FINALROM
-ビルドでは <CODE><A href="OS_GetArgc.html">OS_GetArgc()</A></CODE> は必ず 0 を返し、<CODE><A href="OS_GetArgv.html">OS_GetArgv()</A></CODE> は必ず NULL を返すことになっています。<FONT color="#ff0000"><B><BR>
-*注: 本バージョンのTWL-SDK では TWLモードの FINALROM でも引数データが有効になっています。これは後のバージョンからは修正され、無効となりますのでご注意下さい。</B></FONT></P>
+ビルドでは <CODE><A href="OS_GetArgc.html">OS_GetArgc()</A></CODE> は必ず 0 を返し、<CODE><A href="OS_GetArgv.html">OS_GetArgv()</A></CODE> は必ず NULL を返すことになっています。</P>
 <P>NITRO ROM の FINALROM ビルド版では引数データを格納する領域さえ用意されません。従って、FINALROMビルドの
 NITRO ROM には <CODE><A href="../../tools/buryarg.html">buryarg</A></CODE> ツールを適用することが出来ません。一方、TWL ROM では ROMヘッダの一定の領域が引数データ領域になっているので
-FINALROM 版であっても <CODE><A href="../../tools/buryargTWL.html">buryarg.TWL</A></CODE> ツールを適用することは出来ます。しかし上に記述したように取得できる値は
+FINALROM 版であっても <CODE><A href="../../tools/buryarg.html">buryarg.TWL</A></CODE> ツールを適用することは出来ます。しかし上に記述したように取得できる値は
 0 であったり NULL であったりの一定のものでしかありません。</P>
 <H2>引数データの埋め込みと実行</H2>
-<P><CODE><A href="../../tools/buryarg.html">buryarg</A></CODE> や <CODE><A href="../../tools/buryargTWL.html">buryarg.TWL</A></CODE> による引数の埋め込みと、<CODE><A href="../../tools/loadrun.html">loadrun</A></CODE> や <CODE><A href="../../tools/loadrunTWL.html">loadrun.TWL</A></CODE> による実行とを一度に指定するスクリプト <CODE><A href="../../tools/nitrorun.html">nitrorun</A></CODE> と <CODE><A href="../../tools/nitrorunTWL.html">nitrorun.TWL</A></CODE> が用意されています。</P>
+<P><CODE><A href="../../tools/buryarg.html">buryarg</A></CODE> や <CODE><A href="../../tools/buryarg.html">buryarg.TWL</A></CODE> による引数の埋め込みと、<CODE><A href="../../tools/loadrun.html">loadrun</A></CODE> や <CODE><A href="../../tools/loadrunTWL.html">loadrun.TWL</A></CODE> による実行とを一度に指定するスクリプト <CODE><A href="../../tools/nitrorun.html">nitrorun</A></CODE> と <CODE><A href="../../tools/nitrorunTWL.html">nitrorun.TWL</A></CODE> が用意されています。</P>
 <H2>参照</H2>
 <P><CODE><A href="../list_os.html#Debug-Argument">OS関数一覧(デバッグ(引数))</A><BR>
 </CODE></P>
 <H2>履歴</H2>
-<P>2009/08/25 本バージョン(TWL-SDK 5.2) ではFINALROMでの引数の扱いに仕様と異なる点があることを追記<BR>
-2008/07/10 初版</P>
+<P>2008/07/10 初版</P>
 </BODY>
 </HTML>

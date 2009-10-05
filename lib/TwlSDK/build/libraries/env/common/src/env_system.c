@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-12-16#$
-  $Rev: 9661 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
  
 #include <nitro.h>
@@ -457,12 +457,12 @@ static ENVResource *ENVi_SearchByFullNameFromResourceSet(ENVResource * resSet, c
 {
     ENVResource *ir = resSet;
 #if 0
-    OS_Printf("set=%x\n", ir);
+    OS_TPrintf("set=%x\n", ir);
 #endif
     for (; ir->name; ir++)
     {
 #if 0
-        OS_Printf("comp %x %x\n", ir->name, fullName);
+        OS_TPrintf("comp %x %x\n", ir->name, fullName);
 #endif
         if (!STD_CompareString(ir->name, fullName))
         {

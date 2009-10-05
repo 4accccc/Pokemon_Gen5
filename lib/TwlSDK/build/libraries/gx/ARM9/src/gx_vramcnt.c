@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <nitro/gx/gx_vramcnt.h>
@@ -1205,7 +1205,7 @@ static void GxCheckExclusive(u16 vramMap)
 {
     if (!OSi_TryLockVram(vramMap, GXi_VRamLockId))
     {
-        OS_Panic("VRAM bank is locked by another library.\n");
+        OS_TPanic("VRAM bank is locked by another library.\n");
     }
 }
 

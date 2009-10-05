@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <nitro/snd/common/bank.h>
@@ -75,8 +75,8 @@ void SND_AssignWaveArc(SNDBankData *bank, int index, SNDWaveArc *waveArc)
     SDK_NULL_ASSERT(bank);
     SDK_NULL_ASSERT(waveArc);
 #ifdef SDK_ARM9
-    SDK_ASSERTMSG(((u32)bank & 0x1f) == 0, "bank address must be aligned 32 bytes boundary.");
-    SDK_ASSERTMSG(((u32)waveArc & 0x1f) == 0, "waveArc address must be aligned 32 bytes boundary.");
+    SDK_TASSERTMSG(((u32)bank & 0x1f) == 0, "bank address must be aligned 32 bytes boundary.");
+    SDK_TASSERTMSG(((u32)waveArc & 0x1f) == 0, "waveArc address must be aligned 32 bytes boundary.");
 #endif
     SDK_MINMAX_ASSERT(index, 0, SND_BANK_TO_WAVEARC_MAX - 1);
 
@@ -150,7 +150,7 @@ void SND_DestroyBank(SNDBankData *bank)
 
     SDK_NULL_ASSERT(bank);
 #ifdef SDK_ARM9
-    SDK_ASSERTMSG(((u32)bank & 0x1f) == 0, "bank address must be aligned 32 bytes boundary.");
+    SDK_TASSERTMSG(((u32)bank & 0x1f) == 0, "bank address must be aligned 32 bytes boundary.");
 #endif
 
     SNDi_LockMutex();
@@ -206,7 +206,7 @@ void SND_DestroyWaveArc(SNDWaveArc *waveArc)
 
     SDK_NULL_ASSERT(waveArc);
 #ifdef SDK_ARM9
-    SDK_ASSERTMSG(((u32)waveArc & 0x1f) == 0, "waveArc address must be aligned 32 bytes boundary.");
+    SDK_TASSERTMSG(((u32)waveArc & 0x1f) == 0, "waveArc address must be aligned 32 bytes boundary.");
 #endif
 
     SNDi_LockMutex();

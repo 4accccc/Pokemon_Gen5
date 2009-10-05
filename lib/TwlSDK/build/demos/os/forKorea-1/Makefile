@@ -11,11 +11,11 @@
 # not be disclosed to third parties or copied or duplicated in any form,
 # in whole or in part, without the prior written consent of Nintendo.
 #
-# $Date:: 2008-10-30#$
-# $Rev: 9161 $
-# $Author: hatamoto_minoru $
+# $Date:: 2009-06-16#$
+# $Rev: 10758 $
+# $Author: ooshimay $
 #----------------------------------------------------------------------------
-TARGET_PLATFORM	    = NITRO
+TARGET_PLATFORM	    = TWL NITRO
 
 SUBDIRS             =
 
@@ -27,7 +27,13 @@ SRCS                = main.c
 include	$(TWLSDK_ROOT)/build/buildtools/commondefs
 include	$(TWLSDK_ROOT)/build/buildtools/commondefs.gx.demolib
 
+ROM_SPEC            = 
+
+ifeq ($(TARGET_PLATFORM),TWL)
+ROM_SPEC            = forKorea.TWL.rsf
+else
 ROM_SPEC            = forKorea.rsf
+endif
 
 #----------------------------------------------------------------------------
 

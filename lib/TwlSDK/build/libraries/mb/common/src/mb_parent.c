@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-11#$
+  $Rev: 10742 $
+  $Author: yosizaki $
  *---------------------------------------------------------------------------*/
 
 #include "mb_private.h"
@@ -561,20 +561,15 @@ static void MBi_CommParentRecvDataPerChild(void *arg, u16 child)
     switch (hd.type)                   // データタイプ別の処理
     {
     case MB_COMM_TYPE_CHILD_FILEREQ:
+
+        if (p_data != NULL)
         {
             // MB_COMM_PSTATE_CONNECTEDの場合のみ受け入れる
             if (state == MB_COMM_PSTATE_CONNECTED)
             {
                 MBCommRequestData req_data;
-
-                if (p_data == NULL)
-                {
-                    // 子機のリクエストデータがすべて揃うまで次のステートには移行しない。
-                    break;
-                }
-
+                // 子機のリクエストデータがすべて揃うまで次のステートには移行しない。
                 MI_CpuCopy8(p_data, &req_data, MB_COMM_REQ_DATA_SIZE);
-
                 pPwork->childggid[child - 1] = req_data.ggid;
                 pPwork->childversion[child - 1] = req_data.version;
                 MB_DEBUG_OUTPUT("Child [%2d] MB_IPL_VERSION : %04x\n", child, req_data.version);

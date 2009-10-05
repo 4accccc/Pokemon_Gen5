@@ -11,12 +11,13 @@
 # not be disclosed to third parties or copied or duplicated in any form,
 # in whole or in part, without the prior written consent of Nintendo.
 #
-# $Date:: 2008-12-22#$
-# $Rev: 9714 $
+# $Date:: 2009-06-24#$
+# $Rev: 10808 $
 # $Author: okubata_ryoma $
 #----------------------------------------------------------------------------
 
-TARGET_PLATFORM :=  NITRO
+TARGET_PLATFORM :=  NITRO TWL
+TWL_ARCHGEN		:=	HYBRID
 
 # 子機ブート用バイナリを作成
 SUBDIRS     =   child
@@ -41,7 +42,7 @@ SRCS        =   main.c      \
                 font.c      \
                 gmain.c
 
-LLIBRARIES  =   libwvr$(NITRO_LIBSUFFIX).a
+LLIBRARIES  =   libwvr$(TWL_LIBSUFFIX).a
 
 # WH モジュール は wireless_shared へ移動しました.
 
@@ -57,23 +58,13 @@ SRCDIR      +=  $(MBP_DIR)
 INCDIR      +=  $(MBP_DIR)
 SRCS        +=  $(MBP_DIR)/mbp.c
 
-
-TARGET_NEF  =   main.nef
+TARGET_NEF	 =	main.nef
 TARGET_BIN  =   main.srl
-
-ROM_SPEC    =   main.rsf
 
 # MBのコールバック内で複雑な処理をする場合には、lcfファイルで
 # IRQスタックサイズを少し大きめに設定しておいた方が安全です。
 # 特にOS_Printf()は大量のスタックを消費するので、コールバック内では
 # できるだけ軽量版のOS_TPrintf()を使用するようにしてください。
-
-# ifeq  ($(NITRO_PLATFORM),TEG)
-# MAKELCF_FLAGS +=  -DADDRESS_MAIN=0x02004000
-# else
-# MAKELCF_FLAGS +=  -DADDRESS_MAIN=0x02000000
-# endif
-# LCFILE_SPEC   =   main.lsf
 
 # makerom settings
 MAKEROM_ROMROOT     =   ./data
@@ -81,18 +72,42 @@ MAKEROM_ROMFILES    =   *.srl
 
 #------------------------------------------------------#
 # VRAM内に無線ライブラリが配置されるコンポーネント定義 #
-MY_COMPONENT_NAME   =   ichneumon
-MAKEROM_ARM7        =   $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM7)/$(MY_COMPONENT_NAME)_sub.$(NITRO_ELF_EXT)
+
+DEFAULT_COMP_ARM7	=	ichneumon
+
 #------------------------------------------------------#
 
 include $(TWLSDK_ROOT)/build/buildtools/commondefs
 
 #----------------------------------------------------------------------------
 
+# ichneumon.TWL はサイズの関係で CWforDSi 版にのみ含まれるため、それを使用するデモはビルドしない
+ifneq	($(SDK_CW_BUILD_VERSION_CC),)
+ifeq	($(shell expr "$(SDK_CW_BUILD_VERSION_CC)" "<=" 3.0),1)
+TARGET_PLATFORM_LIST		:= $(filter-out TWL, $(TARGET_PLATFORM_LIST))
+endif
+endif
+
+#----------------------------------------------------------------------------
+
+ifeq ($(TARGET_PLATFORM),TWL)
+ROM_SPEC			 =	main.TWL.rsf
+else
+ROM_SPEC			 =	main.rsf
+endif
+
 do-build:	$(TARGETS)
 
 #----------------------------------------------------------------------------
 
 include $(TWLSDK_ROOT)/build/buildtools/modulerules
+
+ifdef	TWL_ELFTOBIN
+$(TARGETS): $(ELFTOBIN_ARM7)
+
+else	#TWL_ELFTOBIN
+$(TARGETS): $(MAKEROM_ARM7)
+
+endif	#TWL_ELFTOBIN
 
 #===== End of Makefile =====

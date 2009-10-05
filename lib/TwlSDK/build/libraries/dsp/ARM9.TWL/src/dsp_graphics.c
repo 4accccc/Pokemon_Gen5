@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 #include <twl.h>
 #include <twl/dsp.h>
@@ -137,13 +137,13 @@ static void DSPi_GraphicsEvents(void *userdata)
         }
         else if (replyReg == DSP_STATE_FAIL)
         {
-            OS_Warning("a process on DSP is failed.\n");
+            OS_TWarning("a process on DSP is failed.\n");
             isBusy = FALSE;
             isAsync = FALSE;
         }
         else
         {
-            OS_Warning("unknown error occured.\n");
+            OS_TWarning("unknown error occured.\n");
             isBusy = FALSE;
             isAsync = FALSE;
         }
@@ -303,7 +303,7 @@ BOOL DSPi_ScalingCore(const void* src, void* dst, u16 img_width, u16 img_height,
     u16 command;
     
     // 制約条件チェック
-    SDK_ASSERTMSG(CheckLimitation(rx, ry, mode, width), "DSP_Scaling: arguments exceed the limit.");
+    SDK_TASSERTMSG(CheckLimitation(rx, ry, mode, width), "DSP_Scaling: arguments exceed the limit.");
     
     // もう一度 DSP がビジー状態かどうか確認する
     if (isBusy)
@@ -384,7 +384,7 @@ BOOL DSPi_ScalingFxCore(const void* src, void* dst, u16 img_width, u16 img_heigh
     u16 command;
     
     // 制約条件チェック
-    SDK_ASSERTMSG(CheckLimitation(FX_FX32_TO_F32(rx), FX_FX32_TO_F32(ry), mode, width), "DSP_Scaling: arguments exceed the limit.");
+    SDK_TASSERTMSG(CheckLimitation(FX_FX32_TO_F32(rx), FX_FX32_TO_F32(ry), mode, width), "DSP_Scaling: arguments exceed the limit.");
     
     // もう一度 DSP がビジー状態かどうか確認する
     if (isBusy)

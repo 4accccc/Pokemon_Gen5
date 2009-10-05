@@ -10,8 +10,8 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
   $Author:$
  *---------------------------------------------------------------------------*/
 
@@ -691,7 +691,7 @@ static void MATHi_DFT(fx32 *data, fx32 *ret, u32 nShift, const fx16 *sinTable)
 			ti = FX_Mul(data[k * 2 + 1], wr) - FX_Mul(data[k * 2], wi);
 			ret[j * 2]     += tr;
 			ret[j * 2 + 1] += ti;
-#if 0
+#ifdef SDK_ARM9
 			if(j == 1)
 			{
 				// tr, ti, wr, wi
@@ -699,7 +699,7 @@ static void MATHi_DFT(fx32 *data, fx32 *ret, u32 nShift, const fx16 *sinTable)
 						  FX_FX32_TO_F32(tr), FX_FX32_TO_F32(ti),
 						  FX_FX32_TO_F32(wr), FX_FX32_TO_F32(wi) );
 			}
-#endif
+#endif /* SDK_ARM9 */
 			//if( tr > 10000 )
 			{
 				//OS_Printf("tr = %f, ti = %f\n", FX_FX32_TO_F32(tr), FX_FX32_TO_F32(ti));

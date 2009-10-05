@@ -10,8 +10,8 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-11-27#$
-  $Rev: 9427 $
+  $Date:: 2009-06-26#$
+  $Rev: 10827 $
   $Author: yosizaki $
 
  *---------------------------------------------------------------------------*/
@@ -115,6 +115,13 @@ typedef struct CARDRomHeaderTWL
         u32     game_card_on :1;            // NANDアプリでゲームカード電源ON（ノーマルモード）
 		u32     :2;
         u32     game_card_nitro_mode :1;    // NANDアプリでゲームカードNTR互換領域へアクセス
+		u32     :2;
+        u32     photo_access_read :1;       // "photo:" archive read-access control
+        u32     photo_access_write :1;      // "photo:" archive write-access control
+        u32     sdmc_access_read :1;        // "sdmc:" archive read-access control
+        u32     sdmc_access_write :1;       // "sdmc:" archive write-access control
+        u32     backup_access_read :1;      // CARD-backup read-access control
+        u32     backup_access_write :1;     // CARD-backup write-access control
         u32     :0;
     }access_control;
     u8                  reserved_0x1B8[8];          // 予約 (all 0)

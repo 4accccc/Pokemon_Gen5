@@ -8,7 +8,7 @@
 <LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
 </HEAD>
 <BODY>
-<H1 align="left">OS_ResetSystem <img src="../../image/NTR.gif" align="middle"></H1>
+<H1 align="left">OS_ResetSystem <img src="../../image/TWL.gif" align="middle"><img src="../../image/NTR.gif" align="middle"></H1>
 <H2>構文</H2>
 <DL>
   <DD><CODE>#include &lt;nitro/os.h&gt;</CODE><BR>
@@ -34,12 +34,13 @@
 <P>再実行に必要な処理は本関数を呼び出す前に行なう必要があります。</P>
 <P>本関数を呼ぶためには、<CODE><A href="OS_InitReset.html">OS_InitReset()</A></CODE> が予め呼ばれている必要があります。ただし、<A href="OS_InitReset.html"><CODE>OS_InitReset()</CODE></A> は <A href="../init/OS_Init.html"><CODE>OS_Init()</CODE></A> から呼ばれていますので、<CODE><A href="../init/OS_Init.html">OS_Init()</A></CODE> を呼んでいる場合はアプリケーションで呼ぶ必要はありません。</P>
 <P>マルチブート子機からのリセットは行えません。本関数が呼ばれた場合、<CODE><A href="../debug/OS_Panic.html">OS_Panic()</A></CODE> で停止します。マルチブート子機かどうかの判定は<CODE><A href="../../mb/common/MB_IsMultiBootChild.html">MB_IsMultiBootChild()</A></CODE> を使用しています。</P>
-<P><font color="#ff0000">TWLモードで動作している場合もソフトウェアリセットは行えません。</font>本関数が呼ばれた場合、<CODE><A href="../debug/OS_Panic.html">OS_Panic()</A></CODE> で停止します。その場合は代わりにハードウェアリセットを利用した <code><A href="../appJump/OS_RebootSystem.html">OS_RebootSystem()</A></code> を使用することができます。</P>
+<P><font color="#ff0000">NANDアプリとして動作している場合もソフトウェアリセットは行えません。</font>本関数が呼ばれた場合、<CODE><A href="../debug/OS_Panic.html">OS_Panic()</A></CODE> で停止します。その場合は代わりにハードウェアリセットを利用した <code><A href="../appJump/OS_RebootSystem.html">OS_RebootSystem()</A></code> を使用することができます。</P>
 <P>ワイヤレス通信中の場合は、通信を停止し、WMライブラリを初期化前の状態に戻す手順を踏んだ上でソフトウェアリセットを行って下さい。</P>
 <H2>参照</H2>
 <P><CODE><A href="OS_InitReset.html">OS_InitReset</A>, <A href="OS_GetResetParameter.html">OS_GetResetParameter</A>, <A href="../../mb/common/MB_IsMultiBootChild.html">MB_IsMultiBootChild()</A></CODE></P>
 <H2>履歴</H2>
 <P>
+2009/07/02 TWLモードでもソフトウェアリセットに対応したため記述を修正。<br />
 2009/06/08 NITROモード専用機能として記述を修正。<BR>
 2008/04/01 リセット前に通信を停止する必要がある旨を追加<BR>
 2006/12/05 リセットパラメータに関する記述を追加<BR>

@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include "mb_private.h"
@@ -261,6 +261,9 @@ BOOL MB_ReadSegment(FSFile *file, void *buf, u32 len)
             *(u32 *)((u32)p_rom + 0x60) |= 0x00406000;
         }
 
+        /* ROM サイズチェック */
+        SDK_ASSERT( p_rom->main_size  > 0 && p_rom->sub_size > 0);
+        
         /* MB_AUTHCODE_SIZE分 のバイナリ値を読み込む */
         if (rest >= MB_AUTHCODE_SIZE)
         {
@@ -612,17 +615,17 @@ void   *MB_UnregisterFile(const MBGameRegistry *game_reg)
         }
     }
 
-    if (fileID != pPwork->fileinfo[fileID].game_info.fileNo)
-    {
-        OS_TWarning("Registerd File ID does not correspond with File ID in Registry List.\n");
-        (void)OS_RestoreInterrupts(enabled);    /* 割り込み禁止解除 */
-        return NULL;
-    }
-
-    /* 一致するfileinfoが見つからなかったら、異常終了 */
+    /* 一致するfileinfoが見つからなかったら、異常終了 (fileIDが未初期化の状態を避けるため場所を変更) */
     if (i == MB_MAX_FILE)
     {
         OS_TWarning("Cannot find corresponding GameRegistry\n");
+        (void)OS_RestoreInterrupts(enabled);    /* 割り込み禁止解除 */
+        return NULL;
+    }
+    
+    if (fileID != pPwork->fileinfo[fileID].game_info.fileNo)
+    {
+        OS_TWarning("Registerd File ID does not correspond with File ID in Registry List.\n");
         (void)OS_RestoreInterrupts(enabled);    /* 割り込み禁止解除 */
         return NULL;
     }
@@ -747,7 +750,7 @@ static void MBi_SetSegmentInfo(const RomHeader * mbRomHeaderp,
         else
         {
             // ロードプログラムのアドレスもしくはアドレス＋サイズがロード可能エリアを超えている
-            OS_Panic("ARM9 boot code out of the load area. : addr = %x  size = %x\n",
+            OS_TPanic("ARM9 boot code out of the load area. : addr = %x  size = %x\n",
                      (u32)romRegp->offset, romRegp->length);
         }
         break;
@@ -803,7 +806,7 @@ static void MBi_SetSegmentInfo(const RomHeader * mbRomHeaderp,
             // エラー判定
             if (error_flag == TRUE)
             {
-                OS_Panic("ARM7 boot code out of the load area. : addr = %x  size = %x\n",
+                OS_TPanic("ARM7 boot code out of the load area. : addr = %x  size = %x\n",
                          (u32)romRegp->offset, romRegp->length);
             }
 

@@ -258,9 +258,9 @@ static void CTRDGi_CallbackForInitModuleInfo(PXIFifoTag tag, u32 data, BOOL err)
     else
     {
 #ifndef SDK_FINALROM
-        OS_Panic("illegal Cartridge pxi command.");
+        OS_TPanic("illegal Cartridge pxi command.");
 #else
-        OS_Panic("");
+        OS_TPanic("");
 #endif
     }
 }
@@ -340,9 +340,9 @@ static void CTRDGi_PulledOutCallback(PXIFifoTag tag, u32 data, BOOL err)
     else
     {
 #ifndef SDK_FINALROM
-        OS_Panic("illegal Cartridge pxi command.");
+        OS_TPanic("illegal Cartridge pxi command.");
 #else
-        OS_Panic("");
+        OS_TPanic("");
 #endif
     }
 }

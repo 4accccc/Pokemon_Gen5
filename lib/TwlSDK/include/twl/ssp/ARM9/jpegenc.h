@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-07-06#$
+  $Rev: 10865 $
+  $Author: kitase_hirotake $
  *---------------------------------------------------------------------------*/
 
 #ifndef TWL_SSP_JPEGENC_H_
@@ -290,6 +290,84 @@ static inline u32 SSP_StartJpegEncoderLiteEx(const void* src, u8 *dst, u32 limit
     
     return result;
 }
+
+/*---------------------------------------------------------------------------*
+  Name:         SSP_GetJpegEncoderFastBufferSize
+
+  Description:  エンコードに必要なワークサイズを返す (高速版)
+                SSP_StartJpegEncoderFast用のワークサイズです。
+
+  Arguments:    option   : オプション(ビット論理和)
+                           SSP_JPEG_RGB555: RGB555形式からエンコード。
+                           SSP_JPEG_YUV422: YUV422形式からエンコード。
+                                  形式指定が無い場合はRGB555形式とみなします。
+                           SSP_JPEG_THUMBNAIL: サムネイル付きエンコード。
+
+  Returns:      必要なメモリサイズ
+ *---------------------------------------------------------------------------*/
+u32 SSP_GetJpegEncoderFastBufferSize(u32 option);
+
+/*---------------------------------------------------------------------------*
+  Name:         SSP_StartJpegEncoderFast
+
+  Description:  JPEGエンコードする (高速版)
+                ※SSP_StartJpegEncoderExとは無関係。
+                サンプリングが１の場合、width,heightは８の倍数
+                サンプリングが２の場合、width,heightは16の倍数でないといけない
+                サンプリングが３の場合、widthは16の倍数,heightは８の倍数でないといけない
+                src, dst, wrkには4バイトアラインメントが必要です。
+
+  Arguments:    src    :     画像データ(左上から右下へのRGB555/YUV422データ)
+                dst   :      エンコードされたJPEGデータを入れる場所
+                limit :      dstの限界サイズ(これを超えるとエンコード失敗)
+                wrk :        ワークエリア
+                width :      画像の横幅
+                height :     画像の縦幅
+                quality :    エンコードのクオリティ(1-100)
+                sampling :   主画像のサンプリング(1=YUV444,2=YUV420,3=YUV422。サムネイルは内部的に3固定)
+                option : オプション(ビット論理和)
+                           SSP_JPEG_RGB555: RGB555形式からエンコード。
+                           SSP_JPEG_YUV422: YUV422形式からエンコード。
+                                  形式指定が無い場合はエラーになります。
+                           SSP_JPEG_THUMBNAIL: サムネイル付きエンコード。
+
+  Returns:      エンコードされたJPEGのサイズ(0の場合はエンコード失敗)
+ *---------------------------------------------------------------------------*/
+u32 SSP_StartJpegEncoderFast(const void* src, u8 *dst, u32 limit, u8 *wrk,
+                             u32 width, u32 height,
+                             u32 quality, u32 sampling, u32 option);
+
+/*---------------------------------------------------------------------------*
+  Name:         SSP_StartJpegEncoderFastEx
+
+  Description:  JPEGエンコードする (高速版)
+                ※SSP_StartJpegEncoderExとは無関係。
+                サンプリングが１の場合、width,heightは８の倍数
+                サンプリングが２の場合、width,heightは16の倍数でないといけない
+                サンプリングが３の場合、widthは16の倍数,heightは８の倍数でないといけない
+                src, dst, wrkには4バイトアラインメントが必要です。
+
+  Arguments:    src    :     画像データ(左上から右下へのRGB555/YUV422データ)
+                dst   :      エンコードされたJPEGデータを入れる場所
+                limit :      dstの限界サイズ(これを超えるとエンコード失敗)
+                wrk :        ワークエリア
+                width :      画像の横幅
+                height :     画像の縦幅
+                quality :    エンコードのクオリティ(1-100)
+                sampling :   主画像のサンプリング(1=YUV444,2=YUV420,3=YUV422。サムネイルは内部的に3固定)
+                option : オプション(ビット論理和)
+                           SSP_JPEG_RGB555: RGB555形式からエンコード。
+                           SSP_JPEG_YUV422: YUV422形式からエンコード。
+                                  形式指定が無い場合はエラーになります。
+                           SSP_JPEG_THUMBNAIL: サムネイル付きエンコード。
+                sign :       署名付加を行う場合は TRUE を指定する。
+
+  Returns:      エンコードされたJPEGのサイズ(0の場合はエンコード失敗)
+ *---------------------------------------------------------------------------*/
+u32 SSP_StartJpegEncoderFastEx(const void* src, u8 *dst, u32 limit, u8 *wrk,
+                               u32 width, u32 height,
+                               u32 quality, u32 sampling, u32 option, BOOL sign);
+
 
 #ifdef __cplusplus
 } /* extern "C" */

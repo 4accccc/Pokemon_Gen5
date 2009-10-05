@@ -11,7 +11,7 @@
   in whole or in part, without the prior written consent of Nintendo.
 
   $Date:: 2009-08-20#$
-  $Rev: 10997 $
+  $Rev: 10998 $
   $Author: yada $
  *---------------------------------------------------------------------------*/
 
@@ -349,7 +349,7 @@ void OS_InitChina(const char **isbn, OSChinaIsbn param)
     OSi_InitCommon();
 
     //---- Check possible to boot
-    CheckLanguageCode();
+//    CheckLanguageCode(); ãNìÆêßå¿ÇÕìPîp
 
     //---- Display logo and notes about health care
     OS_ShowAttentionChina(isbn, param);

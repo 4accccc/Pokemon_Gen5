@@ -2,9 +2,9 @@
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
-<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
 <META http-equiv="Content-Style-Type" content="text/css">
-<TITLE>OS_IsRunOnEmulator</TITLE>
+<TITLE>OS_InitPrintServer</TITLE>
 <LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
 </HEAD>
 <BODY>
@@ -21,10 +21,41 @@
 <P>なし。</P>
 <H2>説明</H2>
 <P>ARM7 からのデバッグメッセージを表示するための初期化関数です。</P>
-<P>これは SDKライブラリのデバッグ用の関数ですので、アプリケーションで使用する必要はありません。
+<P>これは SDKライブラリのデバッグ用の関数ですので、通常のアプリケーションで使用する必要はありません。主にライブラリやミドルウェア開発者が使用することを想定しています。
+
+<P><CODE><A href="../init/OS_Init.html">OS_Init()</A></CODE> の前にこの関数を呼び出して下さい。 
+<P><CODE>OS_InitPrintServer()</CODE> では、ARM7のデバッグ出力用バッファをメインメモリ上のARM9/ARM7 共用エリアに確保します。その後、ARM7 でデバッグ出力を行うとこのバッファに文字列を格納します。ARM9 では定期的に(毎フレーム程度が望ましいです)、このバッファの中身を出力するようにします。バッファの中身を出力するには <CODE><A href="OS_PrintServer.html">OS_PrintServer()</A></CODE> を呼び出します。
+
+<BLOCKQUOTE style="background-color:#ffffcc"><B>(例)</B><BR>
+<CODE><BR>
+void NitroMain(void)<BR>
+{<BR>
+　　<FONT color="#ff0000">OS_InitPrintServer();</FONT><BR>
+　　OS_Init();<BR>
+　　　：<BR>
+<BR>
+　　//---- main loop<BR>
+　　while(1)<BR>
+　　{<BR>
+　　　<FONT color="#ff0000">OS_PrintServer();</FONT><BR>
+　　　SVC_WaitVBlankIntr();<BR>
+　　　　　　：<BR>
+　　}<BR>
+<BR>
+}</CODE></BLOCKQUOTE>
+<P><BR>
+この OS の PrintServer の機能を使って ARM7 の文字列を出力する場合、ARM7
+で出力先コンソールをどこにしていても、ARM9 の標準出力先となります。</P>
+<P>FINALROM ビルドでは、<CODE>OS_InitPrintServer()</CODE> および <CODE><A href="OS_PrintServer.html">OS_PrintServer()</A></CODE> は何もしないコードに置き換えられます。</P>
+<H3><BR>
+使用するメモリ</H3>
+<P>ARM7 のデバッグ出力を格納するバッファを確保する場所は、メインメモリ上 ARM9
+/ ARM7 共用エリアとなっています。そのサイズは文字列バッファとして 1KByte
+と、出力位置を表すポインタとして 8Byte となります。</P>
 <H2>参照</H2>
 <P><CODE><A href="OS_PrintServer.html">OS_PrintServer</A></CODE></P>
 <H2>履歴</H2>
-<P>2005/08/19 初版</P>
+<P>2009/06/25 関数の使用方法を記述<BR>
+2005/08/19 初版</P>
 </BODY>
 </HTML>

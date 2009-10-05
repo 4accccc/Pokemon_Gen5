@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-11-21#$
-  $Rev: 9387 $
-  $Author: kitase_hirotake $
+  $Date:: 2009-06-11#$
+  $Rev: 10742 $
+  $Author: yosizaki $
  *---------------------------------------------------------------------------*/
 
 #include <twl.h>
@@ -412,6 +412,8 @@ DSPPipe* DSP_LoadPipe(DSPPipe *pipe, int port, int peer)
         OS_SleepThread(DSPiBlockingQueue);
     }
     (void)OS_RestoreInterrupts(bak);
+    if (((port >= 0) && (port < DSP_PIPE_PORT_MAX)) &&
+        ((peer >= 0) && (peer < DSP_PIPE_PEER_MAX)))
     {
         DSPPipeMonitor *monitor = (DSPPipeMonitor *)DSPiPipeMonitorAddress;
         DSPPipe        *target = &monitor->pipe[port][peer];
@@ -644,19 +646,22 @@ void DSP_HookPipeNotification(void)
                 u16     recvdata = DSP_RecvData(DSP_PIPE_COMMAND_REGISTER);
                 int     port = (recvdata >> 1);
                 int     peer = (recvdata & 1);
-                // ARM側に監視元が存在するならパイプ情報を確認。
-                if (DSPiCallback[port])
+                if ((port >= 0) && (port < DSP_PIPE_PORT_MAX))
                 {
-                    (*DSPiCallback[port])(DSPiCallbackArgument[port], port, peer);
-                }
-                else
-                {
-                    DSPPipe pipe[1];
-                    (void)DSP_LoadPipe(pipe, port, peer);
-                    // DSP側で開いたファイルの更新ならスレッドへ通知。
-                    if ((peer == DSP_PIPE_INPUT) && ((pipe->flags & DSP_PIPE_FLAG_BOUND) != 0))
+                    // ARM側に監視元が存在するならパイプ情報を確認。
+                    if (DSPiCallback[port])
                     {
-                        DSPi_NotifyFileIOUpdation(port);
+                        (*DSPiCallback[port])(DSPiCallbackArgument[port], port, peer);
+                    }
+                    else
+                    {
+                        DSPPipe pipe[1];
+                        (void)DSP_LoadPipe(pipe, port, peer);
+                        // DSP側で開いたファイルの更新ならスレッドへ通知。
+                        if ((peer == DSP_PIPE_INPUT) && ((pipe->flags & DSP_PIPE_FLAG_BOUND) != 0))
+                        {
+                            DSPi_NotifyFileIOUpdation(port);
+                        }
                     }
                 }
             }

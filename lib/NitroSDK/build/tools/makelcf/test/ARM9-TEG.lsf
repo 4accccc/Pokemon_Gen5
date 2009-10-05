@@ -1,8 +1,0 @@
-#
-#  Linker Command Script Spec File
-#
-Static main
-{
-	Address		0x02004000
-	Object		*
-}

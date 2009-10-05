@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-10-16#$
-  $Rev: 8978 $
-  $Author: yada $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 #ifndef TWL_COMMON_MI_DMA_H_
 #define TWL_COMMON_MI_DMA_H_
@@ -69,15 +69,15 @@ static inline void MIi_CallCallback(MINDmaCallback callback, void *arg)
 //================================================================================
 //         ASSERT
 //================================================================================
-#define MIi_ASSERT_DMANO( dmaNo )        SDK_ASSERTMSG( (dmaNo) <= MI_DMA_MAX_NUM, "illegal DMA No." )
-#define MIi_ASSERT_MUL2( size )          SDK_ASSERTMSG( ((size) & 1) == 0, "size & 1 must be 0" )
-#define MIi_ASSERT_MUL4( size )          SDK_ASSERTMSG( ((size) & 3) == 0, "size & 3 must be 0" )
-#define MIi_ASSERT_SRC_ALIGN512( src )   SDK_ASSERTMSG( ((u32)(src) & 511) == 0, "source address must be in 512-byte alignment" )
-#define MIi_ASSERT_SRC_ALIGN4( src )     SDK_ASSERTMSG( ((u32)(src) & 3) == 0, "source address must be in 4-byte alignment" )
-#define MIi_ASSERT_SRC_ALIGN2( src )     SDK_ASSERTMSG( ((u32)(src) & 1) == 0, "source address must be in 2-byte alignment" )
-#define MIi_ASSERT_DEST_ALIGN4( dest )   SDK_ASSERTMSG( ((u32)(dest) & 3) == 0, "destination address must be in 4-byte alignment" )
-#define MIi_ASSERT_DEST_ALIGN2( dest )   SDK_ASSERTMSG( ((u32)(dest) & 1) == 0, "destination address must be in 2-byte alignment" )
-#define MIi_ASSERT_TIMERNO( timerNo )    SDK_ASSERTMSG( (timerNo) <= 3, "illegal Timer No." );
+#define MIi_ASSERT_DMANO( dmaNo )        SDK_TASSERTMSG( (dmaNo) <= MI_DMA_MAX_NUM, "illegal DMA No." )
+#define MIi_ASSERT_MUL2( size )          SDK_TASSERTMSG( ((size) & 1) == 0, "size & 1 must be 0" )
+#define MIi_ASSERT_MUL4( size )          SDK_TASSERTMSG( ((size) & 3) == 0, "size & 3 must be 0" )
+#define MIi_ASSERT_SRC_ALIGN512( src )   SDK_TASSERTMSG( ((u32)(src) & 511) == 0, "source address must be in 512-byte alignment" )
+#define MIi_ASSERT_SRC_ALIGN4( src )     SDK_TASSERTMSG( ((u32)(src) & 3) == 0, "source address must be in 4-byte alignment" )
+#define MIi_ASSERT_SRC_ALIGN2( src )     SDK_TASSERTMSG( ((u32)(src) & 1) == 0, "source address must be in 2-byte alignment" )
+#define MIi_ASSERT_DEST_ALIGN4( dest )   SDK_TASSERTMSG( ((u32)(dest) & 3) == 0, "destination address must be in 4-byte alignment" )
+#define MIi_ASSERT_DEST_ALIGN2( dest )   SDK_TASSERTMSG( ((u32)(dest) & 1) == 0, "destination address must be in 2-byte alignment" )
+#define MIi_ASSERT_TIMERNO( timerNo )    SDK_TASSERTMSG( (timerNo) <= 3, "illegal Timer No." );
 
 
 //================================================================================

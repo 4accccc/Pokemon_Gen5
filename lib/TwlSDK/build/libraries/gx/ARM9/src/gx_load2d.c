@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <nitro/gx/gx_load.h>
@@ -737,22 +737,22 @@ void GX_LoadBGExtPltt(const void *pSrc, u32 destSlotAddr, u32 szByte)
     {
     case GX_VRAM_BGEXTPLTT_0123_E:
     case GX_VRAM_BGEXTPLTT_0123_FG:
-        SDK_ASSERTMSG(destSlotAddr + szByte <= 0x8000,
+        SDK_TASSERTMSG(destSlotAddr + szByte <= 0x8000,
                       "Illegal address/size specified(0x%5x->0x%5x)",
                       destSlotAddr, destSlotAddr + szByte);
         break;
 
     case GX_VRAM_BGEXTPLTT_23_G:
-        SDK_ASSERTMSG(destSlotAddr + szByte <= 0x8000,
+        SDK_TASSERTMSG(destSlotAddr + szByte <= 0x8000,
                       "Illegal address/size specified(0x%5x->0x%5x)",
                       destSlotAddr, destSlotAddr + szByte);
-        SDK_ASSERTMSG(destSlotAddr >= 0x4000,
+        SDK_TASSERTMSG(destSlotAddr >= 0x4000,
                       "BGExtPltt 0x0000 - 0x4000 not available(0x%5x->0x%5x)",
                       destSlotAddr, destSlotAddr + szByte);
         break;
 
     case GX_VRAM_BGEXTPLTT_01_F:
-        SDK_ASSERTMSG(destSlotAddr + szByte <= 0x4000,
+        SDK_TASSERTMSG(destSlotAddr + szByte <= 0x4000,
                       "BGExtPltt 0x4000 - 0x8000 not available(0x%5x->0x%5x)",
                       destSlotAddr, destSlotAddr + szByte);
         break;
@@ -914,7 +914,7 @@ void GXS_BeginLoadBGExtPltt()
     // BGExtPltt slot to LCDC
     sSubBGExtPltt = GX_ResetBankForSubBGExtPltt();
 
-    SDK_ASSERTMSG(GX_VRAM_SUB_BGEXTPLTT_0123_H == sSubBGExtPltt, "Sub BGExtPltt not allocated");
+    SDK_TASSERTMSG(GX_VRAM_SUB_BGEXTPLTT_0123_H == sSubBGExtPltt, "Sub BGExtPltt not allocated");
 }
 
 
@@ -940,7 +940,7 @@ void GXS_LoadBGExtPltt(const void *pSrc, u32 destSlotAddr, u32 szByte)
     SDK_ALIGN4_ASSERT(destSlotAddr);
     SDK_ALIGN4_ASSERT(szByte);
 
-    SDK_ASSERTMSG(destSlotAddr + szByte <= 0x8000,
+    SDK_TASSERTMSG(destSlotAddr + szByte <= 0x8000,
                   "Illegal address/size specified(0x%5x->0x%5x)",
                   destSlotAddr, destSlotAddr + szByte);
 
@@ -995,7 +995,7 @@ void GXS_BeginLoadOBJExtPltt()
     // BGExtPltt slot to LCDC
     sSubOBJExtPltt = GX_ResetBankForSubOBJExtPltt();
 
-    SDK_ASSERTMSG(GX_VRAM_SUB_OBJEXTPLTT_0_I == sSubOBJExtPltt, "Sub OBJExtPltt not allocated");
+    SDK_TASSERTMSG(GX_VRAM_SUB_OBJEXTPLTT_0_I == sSubOBJExtPltt, "Sub OBJExtPltt not allocated");
 }
 
 
@@ -1021,7 +1021,7 @@ void GXS_LoadOBJExtPltt(const void *pSrc, u32 destSlotAddr, u32 szByte)
     SDK_ALIGN4_ASSERT(destSlotAddr);
     SDK_ALIGN4_ASSERT(szByte);
 
-    SDK_ASSERTMSG(destSlotAddr + szByte <= 0x2000,
+    SDK_TASSERTMSG(destSlotAddr + szByte <= 0x2000,
                   "Illegal address/size specified(0x%5x->0x%5x)",
                   destSlotAddr, destSlotAddr + szByte);
 

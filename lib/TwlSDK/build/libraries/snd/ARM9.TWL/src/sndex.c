@@ -10,8 +10,8 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-29#$
-  $Rev: 10832 $
+  $Date:: 2009-07-13#$
+  $Rev: 10889 $
   $Author: nishimoto_takashi $
  *---------------------------------------------------------------------------*/
 
@@ -1400,10 +1400,16 @@ void SNDEXi_SetVolumeSwitchCallback(SNDEXCallback callback, void* arg)
 SNDEXResult SNDEXi_SetIgnoreHWVolume(u8 volume, BOOL eightlv)
 {
     SNDEXResult result;
-    result = SNDEXi_GetVolumeEx(&storeVolume);
-    if (result != SNDEX_RESULT_SUCCESS)
+    
+    // 前回 SetIgnoreHWVolume を呼んでから ResetIgnoreHWVolume が実行されていない場合は
+    // 音量値を保存しない
+    if (!isStoreVolume)
     {
-        return result;
+        result = SNDEXi_GetVolumeEx(&storeVolume);
+        if (result != SNDEX_RESULT_SUCCESS)
+        {
+            return result;
+        }
     }
     
     // 指定した音量へ変更

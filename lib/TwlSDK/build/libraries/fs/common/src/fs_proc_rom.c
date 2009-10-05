@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-12-08#$
-  $Rev: 9544 $
-  $Author: yosizaki $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
 
  *---------------------------------------------------------------------------*/
 
@@ -302,7 +302,7 @@ u32 FS_GetDefaultDMA(void)
  *---------------------------------------------------------------------------*/
 u32 FS_SetDefaultDMA(u32 dma_no)
 {
-    SDK_ASSERTMSG(dma_no != 0, "cannot use DMA channel 0 for ROM access");
+    SDK_TASSERTMSG(dma_no != 0, "cannot use DMA channel 0 for ROM access");
     {
         OSIntrMode bak_psr = OS_DisableInterrupts();
         u32     bak_dma_no = fsi_default_dma_no;

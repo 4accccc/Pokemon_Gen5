@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<title>SSP_GetJpegEncoderFastBufferSize</title>
+<link rel="stylesheet" href="../../css/nitro.css" type="text/css" />
+</head>
+<body>
+
+<h1>SSP_GetJpegEncoderFastBufferSize <img src="../../image/NTR.gif" align="middle"><img src="../../image/TWL.gif" align="middle"></H1>
+<H2>構文</H2>
+
+<pre><code>
+u32 SSP_GetJpegEncoderFastBufferSize(u32 option);
+</code></pre>
+
+<h2>引数</h2>
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width:13%"><em><strong>option</strong></em></td>
+<td style="width:87%">エンコードオプション (SSP_JPEG_RGB555 / SSP_JPEG_YUV422 / SSP_JPEG_THUMBNAIL)</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>返り値</h2>
+<p>エンコードに必要なバッファサイズを返す</p>
+
+<h2>説明</h2>
+<p><code><a href="SSP_StartJpegEncoderFast.html">SSP_StartJpegEncoderFast()</a></code> でエンコードを行う際に、作業用バッファとして必要となるサイズを取得します。<br>
+本関数に与える引数については、<code><a href="SSP_StartJpegEncoderFast.html">SSP_StartJpegEncoderFast()</a></code> に与えるものと同じものとするようにしてください。
+</p>
+
+<h2>参照</h2>
+<p><code>
+<a href="SSP_StartJpegEncoderFast.html">SSP_StartJpegEncoderFast</a>
+</code></p>
+
+<h2>履歴</h2>
+<p>
+2009/06/29 初版<br>
+</p>
+</body>
+</html>

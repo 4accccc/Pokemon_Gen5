@@ -21,17 +21,23 @@ TWL-System に含まれています。
 別途 TWL-System を入手してください。
 </P>
 <P>
-TWL ビットマップフォントは本体内蔵フォントとして TWL 本体に内蔵されています。
+TWL-System のfontcvtr.exe を使用することで、NITRO フォントをビットマップ形式に変換することができます。
+その際には文字順序ファイル（xlor）としてTWL bitmap font table をご使用ください。
+</P>
+<P>
+TWL ビットマップフォントは本体内蔵フォントとして TWL 本体に内蔵されています。<BR>
 NAND アプリでは本体内蔵フォントを利用することができますので、
-SRL に含めることなく TWL ビットマップフォントを使用することができます。
-本体内蔵フォントについては「<a href="../na/sharedFont/about_sharedFont.html">本体内蔵フォント</a>」を参照してください。
-カードアプリでは本体内蔵フォントを利用できませんので SRL に含めてご使用ください。
+SRL に含めることなく TWL ビットマップフォントを使用することができます。<BR>
+本体内蔵フォントについては「<a href="../na/sharedFont/about_sharedFont.html">本体内蔵フォント</a>」を参照してください。<BR>
+但し韓国向け本体用拡張フォントはサイズが大きいためTWL 本体に内蔵されていませんので、SRL に含めてご使用ください。<BR>
+またカードアプリにおいても本体内蔵フォントを利用できませんので SRL に含めてご使用ください。
 </P>
 
 <H2>ライセンス</H2>
 <P>
 TWL ビットマップフォントは NITRO / TWL アプリケーションであれば自由に使用することができます。
-また影入れ、ふちいれなどの加工を行って使用することも問題ありません。
+また中国版以外のフォントに関しては影入れ、ふちいれなどの加工を行って使用することも問題ありません。
+中国版のフォントを使用する際は改変しないで下さい。
 </P>
 
 <H2>場所</H2>
@@ -41,7 +47,12 @@ TWL ビットマップフォントは TWL-SDK の $TwlSDK/data/font ディレクトリにあります。
 サイズだけが異なります。
 </P>
 
-<table class="table">
+<P>
+また中国版、韓国版とも中サイズと小サイズのフォントについては、同じグリフを元にしており文字自体の見た目の大きさは変わりません。
+</P>
+
+<table class="table float_left">
+<caption>全世界向け本体用フォント</caption>
 <thead>
 <tr><th>ファイル名<th>内容
 </thead>
@@ -52,21 +63,60 @@ TWL ビットマップフォントは TWL-SDK の $TwlSDK/data/font ディレクトリにあります。
 </tbody>
 </table>
 
+<table class="table float_left">
+<caption>中国向け本体用フォント</caption>
+<thead>
+<tr><th>ファイル名<th>内容
+</thead>
+<tbody>
+<tr><th>tbf_cn_l.NFTR<td>TWL ビットマップフォント 大
+<tr><th>tbf_cn_m.NFTR<td>TWL ビットマップフォント 中
+<tr><th>tbf_cn_s.NFTR<td>TWL ビットマップフォント 小
+</tbody>
+</table>
+
+<table class="table float_left">
+<caption>韓国向け本体用フォント</caption>
+<thead>
+<tr><th>ファイル名<th>内容
+</thead>
+<tbody>
+<tr><th>tbf_kr_l.NFTR<td>TWL ビットマップフォント 大
+<tr><th>tbf_kr_m.NFTR<td>TWL ビットマップフォント 中
+<tr><th>tbf_kr_s.NFTR<td>TWL ビットマップフォント 小
+</tbody>
+</table>
+
+<table class="table float_left">
+<caption>韓国向け本体用拡張フォント</caption>
+<thead>
+<tr><th>ファイル名<th>内容
+</thead>
+<tbody>
+<tr><th>tbf_kr_ex_l.NFTR<td>TWL ビットマップフォント 大
+<tr><th>tbf_kr_ex_m.NFTR<td>TWL ビットマップフォント 中
+<tr><th>tbf_kr_ex_s.NFTR<td>TWL ビットマップフォント 小
+</tbody>
+</table>
+
+<br clear="all">
+
 <H2>フォントのパラメータ</H2>
 <P>
 TWL ビットマップフォントの NITRO フォントパラメータは下記の表のとおりです。
 それぞれの用語の意味については TWL-System のドキュメントを参照してください。
 </P>
 
-<table class="table">
+<table class="table float_left">
+<caption>全世界向け本体用フォント</caption>
 <thead>
 <tr><th>サイズ          <th>大<th>中<th>小
 </thead>
 <tbody>
-<tr><th>データサイズ    <td>618,676 bytes<td>353,536 bytes<td>220,968 bytes
+<tr><th>データサイズ    <td>668,280 bytes<td>403,140 bytes<td>270,572 bytes
 <tr><th>セル幅          <td>16 px<td>12 px<td>10 px
 <tr><th>セル高さ        <td>21 px<td>16 px<td>12 px
-<tr><th>ベースライン位置<td>17 px<td>13 px<td>11 px
+<tr><th>ベースライン位置<td>17 px<td>13 px<td>10 px
 <tr><th>最大文字幅      <td>17 px<td>13 px<td>11 px
 <tr><th>改行幅          <td>21 px<td>16 px<td>12 px
 <tr><th>bpp             <td colspan="3">2 bit / pixel (4階調)
@@ -75,30 +125,116 @@ TWL ビットマップフォントの NITRO フォントパラメータは下記の表のとおりです。
 </tbody>
 </table>
 
+<table class="table float_left">
+<caption>中国向け本体用フォント</caption>
+<thead>
+<tr><th>サイズ          <th>大<th>中<th>小
+</thead>
+<tbody>
+<tr><th>データサイズ    <td>712,264 bytes<td>429,736 bytes<td>359,104 bytes
+<tr><th>セル幅          <td>16 px<td>12 px<td>12 px
+<tr><th>セル高さ        <td>21 px<td>16 px<td>13 px
+<tr><th>ベースライン位置<td>17 px<td>13 px<td>11 px
+<tr><th>最大文字幅      <td>16 px<td>13 px<td>12 px
+<tr><th>改行幅          <td>21 px<td>16 px<td>13 px
+<tr><th>bpp             <td colspan="3">2 bit / pixel (2階調、中間2色は未使用)
+<tr><th>代替文字        <td colspan="3">U+0020 (半角スペース)
+<tr><th>エンコーディング<td colspan="3">UTF-16
+</tbody>
+</table>
+
+<table class="table float_left">
+<caption>韓国向け本体用フォント(拡張フォントと共通)</caption>
+<thead>
+<tr><th>サイズ          <th>大<th>中<th>小
+</thead>
+<tbody>
+<tr><th>データサイズ    <td>332,220 bytes<td>199,776 bytes<td>155,628 bytes
+<tr><th>セル幅          <td>16 px<td>12 px<td>12 px
+<tr><th>セル高さ        <td>21 px<td>16 px<td>12 px
+<tr><th>ベースライン位置<td>17 px<td>13 px<td>10 px
+<tr><th>最大文字幅      <td>16 px<td>12 px<td>12 px
+<tr><th>改行幅          <td>21 px<td>16 px<td>12 px
+<tr><th>bpp             <td colspan="3">2 bit / pixel (2階調、中間2色は未使用)
+<tr><th>代替文字        <td colspan="3">U+0020 (半角スペース)
+<tr><th>エンコーディング<td colspan="3">UTF-16
+</tbody>
+</table>
+
+<br clear="all">
+
 <H2>文字セット</H2>
 <P>
 内蔵フォントはおおよそ以下の文字セットをカバーできます。
 エンコーディングは UTF-16 です。
 </P>
-<ul>
-<li>ASCII
-<li>ISO 8859-1
-<li>ISO 8859-7
-<li>CP 932
-<li>CP 1252
-<li>CP 1253
-<li>JIS X0201
-<li>JIS X0208
-<li>DS 外字
-<li>Wii 外字
-</ul>
 
+<table class="table">
+<thead>
+<tr><th>全世界向け本体用フォント<th>中国向け本体用フォント<th>韓国向け本体用フォント<th>韓国向け本体用拡張フォント
+</thead>
+<tbody>
+<tr><td>
+  <ul>
+  <li>ASCII
+  <li>ISO 8859-1
+  <li>ISO 8859-7
+  <li>CP 932
+  <li>CP 1252
+  <li>CP 1253
+  <li>JIS X0201
+  <li>JIS X0208
+  <li>DS 外字
+  <li>Wii 外字
+  </ul>
+<td>
+  <ul>
+  <li>ASCII
+  <li>ISO 8859-1
+  <li>ISO 8859-7
+  <li>CP 1252
+  <li>CP 1253
+  <li>Full Width Ascii 94
+  <li>Hirakana Katakana 169
+  <li>Hanzi Common Level1 2500
+  <li>Hanzi Common Level2 998 
+  <li>GB2312
+  <li>DS 外字
+  <li>Wii 外字
+  </ul>
+<td>
+  <ul>
+  <li>ASCII
+  <li>ISO 8859-1
+  <li>ISO 8859-7
+  <li>CP 1252
+  <li>CP 1253
+  <li>Full Width Ascii 94
+  <li>Hirakana Katakana 169
+  <li>Hangul Symbol 539
+  <li>Hangul Jamo Compatibility 94
+  <li>KSX1001 2350
+  <li>DS 外字
+  <li>Wii 外字
+  </ul>
+<td>
+  <ul>
+  <li>韓国向け本体用フォント
+  <li>Hangul Additional 8822
+  </ul>
+</tbody>
+</table>
 
 <H2>グリフイメージ</H2>
 <P>
 参考として各フォント内のグリフ一覧を掲載します。
 </P>
-<table class="table">
+<P>
+既知の不具合として、中国向け本体用フォントのWii 外字のフォント小において、U+E06B(３列目右から５つめの[?])には他の字には通常設けられている右端のスペース1pixが確保されていません。
+今後修正する予定はありませんので、注意してご使用ください。
+</P>
+<table class="table float_left">
+<caption>全世界向け本体用フォント</caption>
 <thead>
 <tr><th>グリフ種別<th>グリフ画像
 </thead>
@@ -112,9 +248,52 @@ TWL ビットマップフォントの NITRO フォントパラメータは下記の表のとおりです。
 <tr><th>Wii 外字                <td><a href="tbf/wii_extension_l.png">フォント大</a> <a href="tbf/wii_extension_m.png">フォント中</a> <a href="tbf/wii_extension_s.png">フォント小</a>
 </table>
 
+<table class="table float_left">
+<caption>中国向け本体用フォント</caption>
+<thead>
+<tr><th>グリフ種別<th>グリフ画像
+</thead>
+<tr><th>ASCII                   <td><a href="tbf_cn/ascii_l.png">フォント大</a> <a href="tbf_cn/ascii_m.png">フォント中</a> <a href="tbf_cn/ascii_s.png">フォント小</a>
+<tr><th>欧州文字                <td><a href="tbf_cn/european_l.png">フォント大</a> <a href="tbf_cn/european_m.png">フォント中</a> <a href="tbf_cn/european_s.png">フォント小</a>
+<tr><th>Full Width Ascii 94     <td><a href="tbf_cn/Full_Width_Ascii_94_l.png">フォント大</a> <a href="tbf_cn/Full_Width_Ascii_94_m.png">フォント中</a> <a href="tbf_cn/Full_Width_Ascii_94_s.png">フォント小</a>
+<tr><th>Hirakana Katakana 169   <td><a href="tbf_cn/Hirakana_Katakana_16_l.png">フォント大</a> <a href="tbf_cn/Hirakana_Katakana_16_m.png">フォント中</a> <a href="tbf_cn/Hirakana_Katakana_16_s.png">フォント小</a>
+<tr><th>Hanzi Common Level1     <td><a href="tbf_cn/Hanzi_Common_Level1_l.png">フォント大</a> <a href="tbf_cn/Hanzi_Common_Level1_m.png">フォント中</a> <a href="tbf_cn/Hanzi_Common_Level1_s.png">フォント小</a>
+<tr><th>Hanzi Common Level2     <td><a href="tbf_cn/Hanzi_Common_Level2_l.png">フォント大</a> <a href="tbf_cn/Hanzi_Common_Level2_m.png">フォント中</a> <a href="tbf_cn/Hanzi_Common_Level2_s.png">フォント小</a>
+<tr><th>GB2312                  <td><a href="tbf_cn/GB2312_l.png">フォント大</a> <a href="tbf_cn/GB2312_m.png">フォント中</a> <a href="tbf_cn/GB2312_s.png">フォント小</a>
+<tr><th>DS 外字                 <td><a href="tbf_cn/ds_extension_l.png">フォント大</a> <a href="tbf_cn/ds_extension_m.png">フォント中</a> <a href="tbf_cn/ds_extension_s.png">フォント小</a>
+<tr><th>Wii 外字                <td><a href="tbf_cn/wii_extension_l.png">フォント大</a> <a href="tbf_cn/wii_extension_m.png">フォント中</a> <a href="tbf_cn/wii_extension_s.png">フォント小</a>
+</table>
+
+<table class="table float_left">
+<caption>韓国向け本体用フォント</caption>
+<thead>
+<tr><th>グリフ種別<th>グリフ画像
+</thead>
+<tr><th>ASCII                   <td><a href="tbf_kr/ascii_l.png">フォント大</a> <a href="tbf_kr/ascii_m.png">フォント中</a> <a href="tbf_kr/ascii_s.png">フォント小</a>
+<tr><th>欧州文字                <td><a href="tbf_kr/european_l.png">フォント大</a> <a href="tbf_kr/european_m.png">フォント中</a> <a href="tbf_kr/european_s.png">フォント小</a>
+<tr><th>Full Width Ascii 94     <td><a href="tbf_kr/Full_Width_Ascii_94_l.png">フォント大</a> <a href="tbf_kr/Full_Width_Ascii_94_m.png">フォント中</a> <a href="tbf_kr/Full_Width_Ascii_94_s.png">フォント小</a>
+<tr><th>Hirakana Katakana 169   <td><a href="tbf_kr/Hirakana_Katakana_16_l.png">フォント大</a> <a href="tbf_kr/Hirakana_Katakana_16_m.png">フォント中</a> <a href="tbf_kr/Hirakana_Katakana_16_s.png">フォント小</a>
+<tr><th>Hangul Symbol 539       <td><a href="tbf_kr/Hangul_Symbol_539_l.png">フォント大</a> <a href="tbf_kr/Hangul_Symbol_539_m.png">フォント中</a> <a href="tbf_kr/Hangul_Symbol_539_s.png">フォント小</a>
+<tr><th>Hangul Jamo Compatibility 94<td><a href="tbf_kr/Hangul_Jamo_Compatibility_94_l.png">フォント大</a> <a href="tbf_kr/Hangul_Jamo_Compatibility_94_m.png">フォント中</a> <a href="tbf_kr/Hangul_Jamo_Compatibility_94_s.png">フォント小</a>
+<tr><th>KSX1001 2350            <td><a href="tbf_kr/KSX1001_2350_l.png">フォント大</a> <a href="tbf_kr/KSX1001_2350_m.png">フォント中</a> <a href="tbf_kr/KSX1001_2350_s.png">フォント小</a>
+<tr><th>DS 外字                 <td><a href="tbf_kr/ds_extension_l.png">フォント大</a> <a href="tbf_kr/ds_extension_m.png">フォント中</a> <a href="tbf_kr/ds_extension_s.png">フォント小</a>
+<tr><th>Wii 外字                <td><a href="tbf_kr/wii_extension_l.png">フォント大</a> <a href="tbf_kr/wii_extension_m.png">フォント中</a> <a href="tbf_kr/wii_extension_s.png">フォント小</a>
+</table>
+
+<table class="table float_left">
+<caption>韓国向け本体用拡張フォント</caption>
+<thead>
+<tr><th>グリフ種別<th>グリフ画像
+</thead>
+<tr><th>Hangul Additional 8822  <td><a href="tbf_kr/Hangul_Additional_8822_l.png">フォント大</a> <a href="tbf_kr/Hangul_Additional_8822_m.png">フォント中</a> <a href="tbf_kr/Hangul_Additional_8822_s.png">フォント小</a>
+</table>
+
+<br clear="all">
 
 <H2>履歴</H2>
 <P>
+2009/07/06 韓国向けの拡張フォントの情報を追記<BR>
+2009/06/24 全世界向け本体のデータサイズの修正とサイズ小のベースライン位置を10に修正、fontcvtr.exe の順序ファイルについて追記、中韓向けのフォントの情報を追記<BR>
 2008/09/16 初版
 </P>
 

@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-09#$
+  $Rev: 10718 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <nitro.h>
@@ -99,11 +99,14 @@ void MBi_SetParentPieceBuffer(MbRequestPieceBuf * buf)
  *---------------------------------------------------------------------------*/
 void MBi_ClearParentPieceBuffer(u16 child_aid)
 {
+    // child_aid 範囲チェック
+    SDK_ASSERT(child_aid != 0 && child_aid <= MB_MAX_CHILD);
+
     if (req_buf == NULL)
     {
         return;
     }
-
+    
     MI_CpuClear8(req_buf->data_buf[child_aid - 1],
                  MB_COMM_CALC_REQ_DATA_BUF_SIZE(req_data_piece.bufSize));
     req_buf->data_bmp[child_aid - 1] = 0;
@@ -166,6 +169,8 @@ u8     *MBi_MakeParentSendBuffer(const MBCommParentBlockHeader * hdr, u8 *sendbu
 u8     *MBi_SetRecvBufferFromChild(const u8 *recvbuf, MBCommChildBlockHeader * hdr, u16 child_id)
 {
     u8     *ptr = (u8 *)recvbuf;
+    
+    SDK_ASSERT(child_id != 0 && child_id <= MB_MAX_CHILD);
 
     hdr->type = *ptr++;
 
@@ -220,6 +225,8 @@ static u8 *MBi_ReceiveRequestDataPiece(const MBCommChildBlockHeader * hdr, u16 c
     u8      piece;
     u8     *ptr;
 
+    SDK_ASSERT(child != 0 && child <= MB_MAX_CHILD);
+    
     if (req_buf == NULL)
     {
         return NULL;
@@ -231,7 +238,7 @@ static u8 *MBi_ReceiveRequestDataPiece(const MBCommChildBlockHeader * hdr, u16 c
     {
         return NULL;
     }
-
+    
     ptr = ((u8 *)req_buf->data_buf[child - 1]) + (piece * req_data_piece.size);
 
     MI_CpuCopy8(&hdr->req_data.data[0], ptr, (u32)req_data_piece.size);
@@ -264,6 +271,8 @@ static u8 *MBi_ReceiveRequestDataPiece(const MBCommChildBlockHeader * hdr, u16 c
 static BOOL IsGetAllRequestData(u16 child)
 {
     u16     i;
+    
+    SDK_ASSERT(child != 0 && child <= MB_MAX_CHILD);
 
     /* Pieceが集まったかを判定 */
     for (i = 0; i < req_data_piece.num; i++)

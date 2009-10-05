@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-07-03#$
+  $Rev: 10855 $
+  $Author: yosizaki $
  *---------------------------------------------------------------------------*/
 #ifndef TWL_DSP_BYTEACCESS_H_
 #define TWL_DSP_BYTEACCESS_H_
@@ -47,6 +47,8 @@ typedef u32 DSPAddrInARM;   // DSP内アドレスをバイト単位に変換した型
 #define DSP_ADDR_TO_DSP(address)    (u16)((u32)(address) >> 1)
 #define DSP_WORD_TO_ARM(word)       (u16)((word) << 1)
 #define DSP_WORD_TO_DSP(word)       (u16)((word) >> 1)
+#define DSP_WORD_TO_ARM32(word)     (u32)((word) << 1)
+#define DSP_WORD_TO_DSP32(word)     (u32)((word) >> 1)
 #define DSP_32BIT_TO_ARM(value)     (u32)(((u32)(value) >> 16) | ((u32)(value) << 16))
 #define DSP_32BIT_TO_DSP(value)     (u32)(((u32)(value) >> 16) | ((u32)(value) << 16))
 #ifdef SDK_TWL

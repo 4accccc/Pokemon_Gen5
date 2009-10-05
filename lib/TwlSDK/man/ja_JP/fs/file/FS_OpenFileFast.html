@@ -42,17 +42,20 @@
 <H2>説明</H2>
 <P>指定したファイルIDでファイルを開きます。<BR>
 このIDは<code><A href="FS_ReadDir.html">FS_ReadDir()</A></code>によって取得します。<BR>
-<BR>
+<code><A href="../directory/FS_ReadDirectory.html">FS_ReadDirectory()</A></code>を使用する場合は、
+得られるID(<A href="../FSDirectoryEntryInfo.html">FSDirectoryEntryInfo.id</A>)の形式が<A href="../fs_file_type.html">FSFile</a>構造体ではないため、
+<A href="../fs_file_type.html">FSFile</a>構造体を別途用意してarcとfile_idを直接設定する必要があります。<BR>
 </P>
 <h2>注意</h2>
-<P>アプリケーションは、シンボル NITRO_MAKEROM
-を有効にしてROMファイルシステムを含んでいる必要があります。<br>
-<br>
-<font color="#800000">
-この関数を割り込みハンドラ(IRQモード)から呼び出すことはできません。<br>
-また、割り込みを禁止したままの状態にあると処理が完了しない場合がある点に注意して下さい。<br>
-</font>
-</P>
+<ul>
+<li style='color:Red;'>
+この関数を割り込みハンドラ(IRQモード)から呼び出すことはできません。<br />
+また、割り込みを禁止したままの状態にあると処理が完了しない場合がある点に注意して下さい。</li>
+<li style='color:Red;'>開いたファイルの構造体はシステムリソースに関連付けられるため、
+別の構造体にそのままコピーしても情報の移動や複製はできません。
+詳細は<code><a href='../fs_file_type.html'>FSFile構造体</a></code>をご参照ください。</li>
+</ul>
+
 <h2>参照</h2>
 <p><CODE>
 <A href="../fs_file_id_type.html">FSFileID</A> 
@@ -66,10 +69,14 @@
 <A href="FS_SeekFileToEnd.html">FS_SeekFileToEnd</A> 
 <A href="FS_ReadDir.html">FS_ReadDir</A> 
 <A href="../fs_dir_entry_type.html">FSDirEntry</A>
+<A href="../directory/FS_ReadDirectory.html">FS_ReadDirectory</A>
+<A href="../FSDirectoryEntryInfo.html">FSDirectoryEntryInfo</A>
 </CODE></p>
 
 <H2>履歴</H2>
 <P>
+2009/07/29 構造体の値コピーが無保証である旨を追記<br />
+2009/07/16 FS_ReadDirectoryを使用する際の制約について追記<br />
 2008/10/02 参照リストを一部更新<br />
 2004/11/02 引数名をヘッダファイルと同一に訂正<br>
 2004/09/24 呼び出し時および完了の条件についての注意を記述追加<br>

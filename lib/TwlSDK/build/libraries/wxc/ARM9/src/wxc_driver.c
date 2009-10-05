@@ -274,8 +274,8 @@ static void WXCi_CallSendEvent(WXCDriverWork * driver)
          * これは MP 通信確立時に1回だけ保持したほうが効率的?
          * 実際 wxc_api.c に全く同じ処理がある.
          */
-        const u16 max_length = (driver->own_aid == 0) ?
-            driver->parent_param->parentMaxSize : driver->target_bss->gameInfo.childMaxSize;
+        const u16 max_length = (u16)((driver->own_aid == 0) ?
+            driver->parent_param->parentMaxSize : driver->target_bss->gameInfo.childMaxSize);
         WXCPacketInfo packet;
         packet.bitmap = driver->peer_bitmap;
         packet.length = max_length;

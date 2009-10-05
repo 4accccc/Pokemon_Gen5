@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-07-16#$
+  $Rev: 10913 $
+  $Author: kitase_hirotake $
  *---------------------------------------------------------------------------*/
 #include <twl.h>
 #include <twl/dsp.h>
@@ -45,6 +45,7 @@
 
 // DSPサウンド再生中フラグ。
 static BOOL DSPiSoundPlaying = FALSE;
+static OSAlarm DSPiSoundAlarm;
 
 // 現在のDSPサウンド再生優先度。
 static int DSPiSoundPriority = DSP_SOUND_PRIORITY_NONE;
@@ -89,6 +90,13 @@ static void DSPiShutterPostProcessCallback( SNDEXResult result, void* arg )
 /*---------------------------------------------------------------------------*/
 /* functions */
 
+// DSPからのサウンド再生後のリングバッファの空再生待ち後に発生する関数
+static void sound_handler(void* arg)
+{
+#pragma unused(arg)
+    DSPiSoundPlaying = FALSE;
+}
+
 /*---------------------------------------------------------------------------*
   Name:         DSPi_PipeCallbackForSound
 
@@ -120,7 +128,9 @@ static void DSPi_PipeCallbackForSound(void *userdata, int port, int peer)
                 // 停止コマンド。
                 if ((response.ctrl & DSP_AUDIO_DRIVER_CONTROL_MASK) == DSP_AUDIO_DRIVER_CONTROL_STOP)
                 {
-                    DSPiSoundPlaying = FALSE;
+                    //DSPiSoundPlaying = FALSE;
+                    OS_CreateAlarm(&DSPiSoundAlarm);
+                    OS_SetAlarm(&DSPiSoundAlarm, OS_MilliSecondsToTicks(30), sound_handler, NULL);
                     if(DSPiSoundPriority == DSP_SOUND_PRIORITY_SHUTTER)
                     {
                           // シャッターのサウンド設定を戻す関数は必ず成功する
@@ -429,7 +439,7 @@ BOOL DSPi_IsSoundPlayingCore(void)
  *---------------------------------------------------------------------------*/
 BOOL DSPi_IsShutterSoundPlayingCore(void)
 {
-    return DSPiPlayingShutter;
+    return (DSPiSoundPlaying | DSPiPlayingShutter);
 }
 
 /*---------------------------------------------------------------------------*
@@ -531,7 +541,7 @@ void DSPi_SyncSamplingBufferCore(void)
             int     len = end - DSPiReadPosition;
             while (len > 0)
             {
-                int     segment = MATH_MIN(len, DSP_WORD_TO_DSP(DSPiLocalRingLength - DSPiLocalRingOffset));
+                int     segment = (int)MATH_MIN(len, DSP_WORD_TO_DSP32(DSPiLocalRingLength - DSPiLocalRingOffset));
                 DSP_LoadData(DSP_ADDR_TO_ARM(DSPiAudioCapture.bufferAddress + DSPiReadPosition),
                              &DSPiLocalRingBuffer[DSPiLocalRingOffset], DSP_WORD_TO_ARM(segment));
                 len -= segment;
@@ -540,7 +550,7 @@ void DSPi_SyncSamplingBufferCore(void)
                 {
                     DSPiReadPosition -= DSPiAudioCapture.bufferLength;
                 }
-                DSPiLocalRingOffset += DSP_WORD_TO_ARM(segment);
+                DSPiLocalRingOffset += (int)DSP_WORD_TO_ARM32(segment);
                 if (DSPiLocalRingOffset >= DSPiLocalRingLength)
                 {
                     DSPiLocalRingOffset -= DSPiLocalRingLength;

@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-11-06#$
-  $Rev: 9235 $
-  $Author: yada $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
 
  *---------------------------------------------------------------------------*/
 #include <nitro.h>
@@ -357,8 +357,8 @@ void   *OS_GetArenaHi(OSArenaId id)
 {
     SDK_ASSERT(OSi_Initialized);
     SDK_ARENAID_ASSERT(id);
-    SDK_ASSERTMSG((u32)OSi_GetArenaInfo().lo[id] != 0xffffffff, OS_ERR_GETARENALO_INIT);
-    SDK_ASSERTMSG((u32)OSi_GetArenaInfo().lo[id] <= (u32)OSi_GetArenaInfo().hi[id],
+    SDK_TASSERTMSG((u32)OSi_GetArenaInfo().lo[id] != 0xffffffff, OS_ERR_GETARENALO_INIT);
+    SDK_TASSERTMSG((u32)OSi_GetArenaInfo().lo[id] <= (u32)OSi_GetArenaInfo().hi[id],
                   OS_ERR_GETARENALO_INVALID);
 
     return OSi_GetArenaInfo().hi[id];
@@ -377,8 +377,8 @@ void   *OS_GetArenaLo(OSArenaId id)
 {
     SDK_ASSERT(OSi_Initialized);
     SDK_ARENAID_ASSERT(id);
-    SDK_ASSERTMSG((u32)OSi_GetArenaInfo().lo[id] != 0xffffffff, OS_ERR_GETARENALO_INIT);
-    SDK_ASSERTMSG((u32)OSi_GetArenaInfo().lo[id] <= (u32)OSi_GetArenaInfo().hi[id],
+    SDK_TASSERTMSG((u32)OSi_GetArenaInfo().lo[id] != 0xffffffff, OS_ERR_GETARENALO_INIT);
+    SDK_TASSERTMSG((u32)OSi_GetArenaInfo().lo[id] <= (u32)OSi_GetArenaInfo().hi[id],
                   OS_ERR_GETARENALO_INVALID);
 
     return OSi_GetArenaInfo().lo[id];
@@ -799,10 +799,10 @@ void OS_DumpArenaInfo( OSArenaId id, BOOL isInfoLine )
 
 	if ( isInfoLine )
 	{
-		OS_Printf(" NAME         ID   LO addr   HI addr     size\n" );
+		OS_TPrintf(" NAME         ID   LO addr   HI addr     size\n" );
 	}
 
-    OS_Printf("%12s   %1d  %8x  %8x  %8x\n",
+    OS_TPrintf("%12s   %1d  %8x  %8x  %8x\n",
 			  arenaName[(int)id],
 			  id,
 			  OS_GetArenaLo(id),
@@ -836,7 +836,7 @@ void OS_DumpAllArenaInfo(void)
 		isInfoLine = FALSE;
 	}
 
-	OS_Printf("\n");
+	OS_TPrintf("\n");
 }
 #endif  // ifndef SDK_FINALROM
 

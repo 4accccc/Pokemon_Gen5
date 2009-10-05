@@ -21,11 +21,11 @@ u32 TCL_GetJpegEncoderBufferSize( u32 option );
 <h2>引数</h2>
 <p>
 <table>
-<tr><td>option<td><code>SSP_GetJpegEncoderLiteBufferSize</code> に渡すオプション</table>
+<tr><td>option<td><code>SSP_GetJpegEncoderFastBufferSize</code> に渡すオプション</table>
 </p>
 
 <h2>返り値</h2>
-<p><code>SSP_GetJpegEncoderLiteBufferSize</code> の返り値</p>
+<p><code>SSP_GetJpegEncoderFastBufferSize</code> の返り値</p>
 
 <h2>説明</h2>
 <p><a href="TCL_EncodeAndWritePicture.html"><code>TCL_EncodeAndWritePicture(Ex)</code></a> を呼び出す際のjpegエンコードワークバッファのサイズを返します。</p>
@@ -39,6 +39,7 @@ u32 TCL_GetJpegEncoderBufferSize( u32 option );
 
 <h2>履歴</h2>
 <p>
+2009/06/29 内部で呼び出す SSP の関数変更<br>
 2009/04/30 内部で呼び出す SSP の関数変更<br>
 2008/12/05 初版<br/>
 </p>

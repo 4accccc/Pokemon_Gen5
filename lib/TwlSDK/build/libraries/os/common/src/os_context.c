@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 #include <nitro/os.h>
 #include <nitro/memorymap.h>
@@ -229,19 +229,19 @@ void OS_DumpContext(OSContext *context)
 #ifndef SDK_FINALROM
     s32     i;
 
-    OS_Printf("context=%08x\n", context);
+    OS_TPrintf("context=%08x\n", context);
     if (context)
     {
-        OS_Printf("CPSR  %08x\n", context->cpsr);
+        OS_TPrintf("CPSR  %08x\n", context->cpsr);
         for (i = 0; i < 13; i++)
         {
-            OS_Printf("R%02d   %08x\n", i, context->r[i]);
+            OS_TPrintf("R%02d   %08x\n", i, context->r[i]);
         }
-        OS_Printf("SP    %08x\n", context->sp);
-        OS_Printf("LR    %08x\n", context->lr);
-        OS_Printf("PC+4  %08x\n", context->pc_plus4);
+        OS_TPrintf("SP    %08x\n", context->sp);
+        OS_TPrintf("LR    %08x\n", context->lr);
+        OS_TPrintf("PC+4  %08x\n", context->pc_plus4);
 #ifdef  SDK_CONTEXT_HAS_SP_SVC
-        OS_Printf("SPsvc %08x\n", context->sp_svc);
+        OS_TPrintf("SPsvc %08x\n", context->sp_svc);
 #endif
     }
 #else

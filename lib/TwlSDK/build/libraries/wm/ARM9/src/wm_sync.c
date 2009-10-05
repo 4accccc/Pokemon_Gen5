@@ -10,8 +10,8 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-11-19#$
-  $Rev: 9342 $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
   $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
@@ -290,8 +290,8 @@ WMMpRecvData *WM_ReadMPData(const WMMpRecvHeader *header, u16 aid)
         return NULL;
     }
 
-    // 受信データが存在するか？
-    if (header->count == 0)
+    // 受信データが存在するか？ || count フィールドが異常値でないか？
+    if (header->count == 0 || header->count > WM_NUM_MAX_CHILD)
     {
         return NULL;
     }
@@ -304,8 +304,9 @@ WMMpRecvData *WM_ReadMPData(const WMMpRecvHeader *header, u16 aid)
     {
         // 指定されたAIDの子機データならそのポインタを返す
         if (recvdata_p[i]->aid == aid)
+        {
             return recvdata_p[i];
-
+        }
         ++i;
         recvdata_p[i] = (WMMpRecvData *)((u32)(recvdata_p[i - 1]) + header->length);
     }
@@ -551,8 +552,8 @@ WMOtherElements WM_GetOtherElements(WMBssDesc *bssDesc)
         curr_elem_len = (u16)(elems.element[i].length + 2);
         elems_len_counter += curr_elem_len;
 
-        // OS_Printf("eles_len        =%d\n", elems_len);
-        // OS_Printf("eles_len_counter=%d\n", elems_len_counter);
+        // OS_TPrintf("eles_len        =%d\n", elems_len);
+        // OS_TPrintf("eles_len_counter=%d\n", elems_len_counter);
 
         // elements全体の長さを超えた場合はエラーとし、
         // elementは無かったものとして通知する
@@ -597,7 +598,7 @@ u16 WM_GetNextTgid(void)
         }
         else
         {
-            OS_Warning("failed to get RTC-data to create unique TGID!\n");
+            OS_TWarning("failed to get RTC-data to create unique TGID!\n");
         }
     }
     /* 一意な値を種にしつつ毎回インクリメントする */

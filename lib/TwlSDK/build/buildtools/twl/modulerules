@@ -11,8 +11,8 @@
 # not be disclosed to third parties or copied or duplicated in any form,
 # in whole or in part, without the prior written consent of Nintendo.
 #
-# $Date:: 2008-12-12#$
-# $Rev: 9649 $
+# $Date:: 2009-07-10#$
+# $Rev: 10886 $
 # $Author: okubata_ryoma $
 #----------------------------------------------------------------------------
 ifndef TWLSDK_MODULERULES_
@@ -147,6 +147,22 @@ $(BINDIR)/%.bin $(BINDIR)/%.srl: $(BINDIR)/%.$(TWL_ELF_EXT) $(LDEPENDS_BIN) $(ED
 endif	# -ARM9
 endif	# -USE_MY_RULE_BIN
 endif	# -TWL_MAKEROM
+
+ifeq	($(TWL_NANDAPP),TRUE)
+ifndef USE_MY_RULE_TAD
+.PRECIOUS: $(BINDIR)/%.$(INT_ROM_EXT)
+
+MAKETAD_OPTION	+= -v $(TITLE_VERSION_LO)
+
+ifeq	($(CODEGEN_PROC),ARM9)
+%.tad:	%.$(INT_ROM_EXT) $(MAKETAD)
+ifdef SILENT
+	echo $(TWLSDK_MSG_MAKE_TAD) $(notdir $@)
+endif
+	$(MAKETAD) $< $(MAKETAD_OPTION) -o $@
+endif	# -ARM9
+endif	# -USE_MY_RULE_TAD
+endif	# -TWL_NANDAPP
 
 endif	# -FORCE_BUILD
 

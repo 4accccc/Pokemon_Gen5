@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-15#$
+  $Rev: 10750 $
+  $Author: kitase_hirotake $
  *---------------------------------------------------------------------------*/
 
 #include <twl.h>
@@ -240,7 +240,6 @@ void TwlMain(void)
     OS_InitThread();
     OS_InitTick();
     OS_InitAlarm();
-    MI_InitNDmaConfig();
     FS_Init( FS_DMA_NOT_USE );
 
     // VÉuÉâÉìÉNäÑÇËçûÇ›ê›íË

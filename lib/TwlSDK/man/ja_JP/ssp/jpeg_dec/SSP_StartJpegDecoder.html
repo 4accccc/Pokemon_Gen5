@@ -56,12 +56,13 @@ BOOL SSP_StartJpegDecoder(u8* data, u32 size, void* dst, s16* width, s16* height
 <p>JPEGファイルを RGB555 形式の画像データにデコードします。<br>
 デコードできるJPEGファイルは YUV420、YUV422、YUV444 のものに限られます。<BR>
 <br>
-option に SSP_JPEG_THUMBNAIL を指定した場合はサムネイル画像のデコードを行い、指定しなかった場合はメイン画像のデコードを行います。<br>
+option に SSP_JPEG_THUMBNAIL を指定した場合はサムネイル画像のデコードを行い、何も指定しなかった場合( 0 を指定した場合)は、メイン画像のデコードを行います。<br>
 <br>
 </p>
 
 <h2>履歴</h2>
 <p>
+2009/07/28 option の指定についての説明修正<br>
 2009/01/09 署名についての記述を削除<br>
 2008/11/04 デコードの失敗について説明追加<br>
 2008/10/09 RSFファイルの設定について追記<br>

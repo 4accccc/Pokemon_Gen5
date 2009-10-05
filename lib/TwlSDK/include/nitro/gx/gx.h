@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #ifndef NITRO_GX_GX_H_
@@ -305,7 +305,7 @@ typedef enum
 GXPower;
 
 
-#define GX_POWER_ASSERT(x) SDK_ASSERTMSG( ( ( (x) & ~GX_POWER_ALL ) == 0  ), \
+#define GX_POWER_ASSERT(x) SDK_TASSERTMSG( ( ( (x) & ~GX_POWER_ALL ) == 0  ), \
                                           "GX_POWER_LCD is obsolete. please use PM_SetLCDPower()\n" )
 
 //----------------------------------------------------------------------------
@@ -1365,6 +1365,28 @@ static inline void GX_InitEx(u32 dma_no)
 }
 
 /*---------------------------------------------------------------------------*
+  Name:         GX_InitNDMAEx
+
+  Description:  Initializes the registers for graphics(except 3D) 
+                with set default ndmaNo.
+
+  Arguments:    none
+                
+  Returns:      none
+ *---------------------------------------------------------------------------*/
+#ifdef SDK_TWL
+static inline void GX_InitNDMAEx(u32 ndma_no)
+{
+    SDK_ASSERT(ndma_no <= MI_DMA_MAX_NUM || ndma_no == GX_DMA_NOT_USE);
+
+    GXi_DmaId = ndma_no;
+    if(ndma_no != GX_DMA_NOT_USE)
+        GXi_DmaId += 4;
+    GX_Init();
+}
+#endif
+
+/*---------------------------------------------------------------------------*
   Name:         GX_GetDefaultDMA
 
   Description:  get default DMA channel.
@@ -1396,7 +1418,8 @@ static inline u32 GX_GetDefaultNDMA(void)
 {
     if (GXi_DmaId > 3)
     {
-        return (GXi_DmaId - 4);
+        if(GXi_DmaId <= 7)
+            return (GXi_DmaId - 4);
     }
     return GX_DMA_NOT_USE;
 }

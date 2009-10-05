@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
-<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
 <META http-equiv="Content-Style-Type" content="text/css">
 <TITLE>PM_DumpExitCallback</TITLE>
 <LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
@@ -24,9 +24,15 @@
 この関数は TWLモード専用です。</P>
 <P>前処理コールバック、後処理コールバック、両方のコールバックリストの情報を表示します。</P>
 <P>この関数はデバッグ用途のものなので、FINALROM版では何も動作しません。</P>
+<H3><BR>
+表示モードについて</H3>
+<P>この関数のように全ての情報を確実に表示することが速度よりも優先される場合は、一時的にでも表示をブロッキングモードに設定することをお奨めします。詳細は
+<CODE><A href="../../os/debug/OS_SetPrintBlockingMode.html">OS_SetPrintBlockingMode()</A></CODE> を参照してください。</P>
 <H2>参照</H2>
-<P><A href="about_exit.html">概要(ハードウェアリセット・シャットダウン)</A></P>
+<P><A href="about_exit.html">概要(ハードウェアリセット・シャットダウン)</A><BR>
+<CODE><A href="../../os/debug/OS_SetPrintBlockingMode.html">OS_SetPrintBlockingMode</A></CODE></P>
 <H2>履歴</H2>
-<P>2008/06/12 初版</P>
+<P>2009/07/27 表示モードについて追記<BR>
+2008/06/12 初版</P>
 </BODY>
 </HTML>

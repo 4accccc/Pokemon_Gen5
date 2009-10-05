@@ -25,19 +25,23 @@ BOOL SSP_GetDateTime(void);
 
 <h2>説明</h2>
 <p>現在の日付と時刻を取得します。<BR>
-本関数は内部で <code><a href="../../rtc/RTC_GetDateTime.html">RTC_GetDateTime()</a></code> を呼び出しているだけの関数となっており、<code><a href="SSP_SetJpegEncoderDateTimeNow.html">SSP_SetJpegEncoderDateTimeNow()</a>,<a href="SSP_StartJpegEncoder.html">SSP_StartJpegEncoder()</a></code> の内部から呼ばれます。<BR>
-本関数は weak シンボルでコンパイルされますので、ユーザが独自で関数を定義すれば、それで上書きされます。
+本関数は内部で <code><a href="../../rtc/RTC_GetDateTime.html">RTC_GetDateTime()</a></code> を呼び出しているだけの関数となっており、<code><a href="SSP_SetJpegEncoderDateTimeNow.html">SSP_SetJpegEncoderDateTimeNow()</a>,<a href="SSP_StartJpegEncoder.html">SSP_StartJpegEncoder()</a>,<a href="SSP_StartJpegEncoderWithEncodeData.html">SSP_StartJpegEncoderWithEncodeData()</a></code> 等の内部から呼ばれます。<BR>
+本関数は weak シンボルでコンパイルされますので、ユーザが独自で関数を定義すれば、それで上書きされます。<br>
+上書きしない場合は <code><a href="../../rtc/RTC_GetDateTime.html">RTC_GetDateTime()</a></code> のために、事前に <code><a href="../../rtc/RTC_Init.html">RTC_Init()</a></code> を呼び出す必要があります。
 </p>
 
 <h2>参照</h2>
 <p><code>
-<a href="../../rtc/RTC_GetDateTime.html">RTC_GetDateTime</a>
-<a href="SSP_SetJpegEncoderDateTimeNow.html">SSP_SetJpegEncoderDateTimeNow</a>
-<a href="SSP_StartJpegEncoder.html">SSP_StartJpegEncoder</a>
+<a href="../../rtc/RTC_GetDateTime.html">RTC_GetDateTime</a>,
+<a href="../../rtc/RTC_Init.html">RTC_Init</a>,
+<a href="SSP_SetJpegEncoderDateTimeNow.html">SSP_SetJpegEncoderDateTimeNow</a>,
+<a href="SSP_StartJpegEncoder.html">SSP_StartJpegEncoder</a>,
+<a href="SSP_StartJpegEncoderWithEncodeData.html">SSP_StartJpegEncoderWithEncodeData</a>
 </code></p>
 
 <h2>履歴</h2>
 <p>
+2009/07/16 <code><a href="../../rtc/RTC_Init.html">RTC_Init()</a></code> を呼び出す必要があることを追記<br>
 2008/09/15 初版<br />
 </p>
 </body>

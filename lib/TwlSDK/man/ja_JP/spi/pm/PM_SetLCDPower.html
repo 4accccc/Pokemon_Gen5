@@ -63,8 +63,7 @@ TRUE を返します。<br>
 <font color="red">そのため、LCD OFF の後に LCD ON にする場合は、別途<code><a href="../../gx/gx/GX_DispOn.html">GX_DispOn()</a></code>を
 呼び出す必要がある点に注意してください。</font>
 </P>
-<P>なお、LCDのスイッチをオフにする前に呼び出しておく必要があるという制限は
-<CODE><A href="../../gx/gx/GX_DispOn.html">GX_DispOn()</A></CODE> にはありますが、<CODE><A href="../../gx/gx/GXS_DispOn.html">GXS_DispOn()</A></CODE> にはありません。(ただしアプリケーションでは上下画面の表示 ON/ OFF を同時に操作することが多いと思われます)</P>
+<P>なお、LCDのスイッチをオフにする前に、<code><a href="../../gx/gx/GX_DispOff.html">GX_DispOff()</a></code> を呼び出しておく必要はありますが、<code><a href="../../gx/gx/GXS_DispOff.html">GXS_DispOff()</a></code> は呼び出しておく必要はありません。(ただしアプリケーションでは上下画面の表示 ON/ OFF を同時に操作することが多いと思われます)</P>
 <P>本関数では、内部でいくつかの PM 関数を呼び出します。そこでは、そのPM関数が成功するまで呼び続けるという処理が入っています。他のデバイスが
 SPI を占有していて BUSY 状態が長く続くような状況だと、本関数から戻るのが遅れる場合があります。</P>
 
@@ -83,7 +82,8 @@ LCD オフ時のサウンドについて</H3>
 <H2>参照</H2>
 <P><CODE><A href="PM_Init.html">PM_Init</A>, <A href="PM_GetLCDPower.html">PM_GetLCDPower</A></CODE></P>
 <H2>履歴</H2>
-<P>2009/06/03 <CODE>PM_Init()</CODE> についての記述を削除 (<CODE>OS_Init()</CODE> が必須となったため)<BR>
+<P>2009/07/08 <CODE><A href="../../gx/gx/GXS_DispOff.html">GXS_DispOff()</A></CODE> についての誤記修正<br>
+2009/06/03 <CODE>PM_Init()</CODE> についての記述を削除 (<CODE>OS_Init()</CODE> が必須となったため)<BR>
 2009/04/13 <CODE><A href="../../gx/gx/GXS_DispOff.html">GXS_DispOff()</A></CODE> について追記<BR>
 2009/02/03 LCD OFF から LCD ON にした場合の処理について追記<br>
 2009/01/16 <code><a href="../../gx/gx/GX_DispOff.html">GX_DispOff()</a></code> の呼び出しに関する説明文の修正<br>

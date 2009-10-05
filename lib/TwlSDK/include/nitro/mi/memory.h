@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
 
  *---------------------------------------------------------------------------*/
 
@@ -69,8 +69,8 @@ void    MIi_CpuMoveFast(const void *src, void *dest, u32 size);
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuFill32(void *dest, u32 data, u32 size)
 {
-    SDK_ASSERTMSG((size & 3) == 0, "size & 3 must be 0");
-    SDK_ASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
+    SDK_TASSERTMSG((size & 3) == 0, "size & 3 must be 0");
+    SDK_TASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
 
     MIi_CpuClear32(data, dest, size);
 }
@@ -88,9 +88,9 @@ static inline void MI_CpuFill32(void *dest, u32 data, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuCopy32(const void *src, void *dest, u32 size)
 {
-    SDK_ASSERTMSG((size & 3) == 0, "size & 3 must be 0");
-    SDK_ASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
-    SDK_ASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
+    SDK_TASSERTMSG((size & 3) == 0, "size & 3 must be 0");
+    SDK_TASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
+    SDK_TASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
 
     MIi_CpuCopy32(src, dest, size);
 }
@@ -123,9 +123,9 @@ static inline void MI_CpuClear32(void *dest, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuSend32(const void *src, volatile void *dest, u32 size)
 {
-    SDK_ASSERTMSG((size & 3) == 0, "size & 3 must be 0");
-    SDK_ASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
-    SDK_ASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
+    SDK_TASSERTMSG((size & 3) == 0, "size & 3 must be 0");
+    SDK_TASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
+    SDK_TASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
 
     MIi_CpuSend32(src, dest, size);
 }
@@ -144,9 +144,9 @@ static inline void MI_CpuSend32(const void *src, volatile void *dest, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuRecv32(volatile const void *src, void *dest, u32 size)
 {
-    SDK_ASSERTMSG((size & 3) == 0, "size & 3 must be 0");
-    SDK_ASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
-    SDK_ASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
+    SDK_TASSERTMSG((size & 3) == 0, "size & 3 must be 0");
+    SDK_TASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
+    SDK_TASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
 
     MIi_CpuRecv32(src, dest, size);
 }
@@ -165,9 +165,9 @@ static inline void MI_CpuRecv32(volatile const void *src, void *dest, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuPipe32(volatile const void *src, volatile void *dest, u32 size)
 {
-    SDK_ASSERTMSG((size & 3) == 0, "size & 3 must be 0");
-    SDK_ASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
-    SDK_ASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
+    SDK_TASSERTMSG((size & 3) == 0, "size & 3 must be 0");
+    SDK_TASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
+    SDK_TASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
 
     MIi_CpuPipe32(src, dest, size);
 }
@@ -185,9 +185,9 @@ static inline void MI_CpuPipe32(volatile const void *src, volatile void *dest, u
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuMove32(const void *src, void *dest, u32 size)
 {
-    SDK_ASSERTMSG((size & 3) == 0, "size & 3 must be 0");
-    SDK_ASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
-    SDK_ASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
+    SDK_TASSERTMSG((size & 3) == 0, "size & 3 must be 0");
+    SDK_TASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
+    SDK_TASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
 
     MIi_CpuMove32(src, dest, size);
 }
@@ -205,8 +205,8 @@ static inline void MI_CpuMove32(const void *src, void *dest, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void* MI_CpuFind32(const void *src, u32 data, u32 size)
 {
-    SDK_ASSERTMSG((size & 3) == 0, "size & 3 must be 0");
-    SDK_ASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
+    SDK_TASSERTMSG((size & 3) == 0, "size & 3 must be 0");
+    SDK_TASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
 
     return MIi_CpuFind32(src, data, size);
 }
@@ -226,9 +226,9 @@ static inline void* MI_CpuFind32(const void *src, u32 data, u32 size)
  *---------------------------------------------------------------------------*/
 static inline int MI_CpuComp32(const void *mem1, const void *mem2, u32 size)
 {
-    SDK_ASSERTMSG((size & 3) == 0, "size & 3 must be 0");
-    SDK_ASSERTMSG(((u32)mem1 & 3) == 0, "target address 1 must be in 4-byte alignment");
-    SDK_ASSERTMSG(((u32)mem2 & 3) == 0, "target address 2 must be in 4-byte alignment");
+    SDK_TASSERTMSG((size & 3) == 0, "size & 3 must be 0");
+    SDK_TASSERTMSG(((u32)mem1 & 3) == 0, "target address 1 must be in 4-byte alignment");
+    SDK_TASSERTMSG(((u32)mem2 & 3) == 0, "target address 2 must be in 4-byte alignment");
 
     return MIi_CpuComp32(mem1, mem2, size);
 }
@@ -249,8 +249,8 @@ static inline int MI_CpuComp32(const void *mem1, const void *mem2, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuFill16(void *dest, u16 data, u32 size)
 {
-    SDK_ASSERTMSG((size & 1) == 0, "size & 1 must be 0");
-    SDK_ASSERTMSG(((u32)dest & 1) == 0, "source address must be in 2-byte alignment");
+    SDK_TASSERTMSG((size & 1) == 0, "size & 1 must be 0");
+    SDK_TASSERTMSG(((u32)dest & 1) == 0, "source address must be in 2-byte alignment");
 
     MIi_CpuClear16(data, dest, size);
 }
@@ -268,9 +268,9 @@ static inline void MI_CpuFill16(void *dest, u16 data, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuCopy16(const void *src, void *dest, u32 size)
 {
-    SDK_ASSERTMSG((size & 1) == 0, "size & 1 must be 0");
-    SDK_ASSERTMSG(((u32)src & 1) == 0, "source address must be in 2-byte alignment");
-    SDK_ASSERTMSG(((u32)dest & 1) == 0, "destination address must be in 2-byte alignment");
+    SDK_TASSERTMSG((size & 1) == 0, "size & 1 must be 0");
+    SDK_TASSERTMSG(((u32)src & 1) == 0, "source address must be in 2-byte alignment");
+    SDK_TASSERTMSG(((u32)dest & 1) == 0, "destination address must be in 2-byte alignment");
 
     MIi_CpuCopy16(src, dest, size);
 }
@@ -303,9 +303,9 @@ static inline void MI_CpuClear16(void *dest, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuSend16(const void *src, volatile void *dest, u32 size)
 {
-    SDK_ASSERTMSG((size & 1) == 0, "size & 1 must be 0");
-    SDK_ASSERTMSG(((u32)src & 1) == 0, "source address must be in 2-byte alignment");
-    SDK_ASSERTMSG(((u32)dest & 1) == 0, "destination address must be in 2-byte alignment");
+    SDK_TASSERTMSG((size & 1) == 0, "size & 1 must be 0");
+    SDK_TASSERTMSG(((u32)src & 1) == 0, "source address must be in 2-byte alignment");
+    SDK_TASSERTMSG(((u32)dest & 1) == 0, "destination address must be in 2-byte alignment");
 
     MIi_CpuSend16(src, dest, size);
 }
@@ -324,9 +324,9 @@ static inline void MI_CpuSend16(const void *src, volatile void *dest, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuRecv16(volatile const void *src, void *dest, u32 size)
 {
-    SDK_ASSERTMSG((size & 1) == 0, "size & 1 must be 0");
-    SDK_ASSERTMSG(((u32)src & 1) == 0, "source address must be in 2-byte alignment");
-    SDK_ASSERTMSG(((u32)dest & 1) == 0, "destination address must be in 2-byte alignment");
+    SDK_TASSERTMSG((size & 1) == 0, "size & 1 must be 0");
+    SDK_TASSERTMSG(((u32)src & 1) == 0, "source address must be in 2-byte alignment");
+    SDK_TASSERTMSG(((u32)dest & 1) == 0, "destination address must be in 2-byte alignment");
 
     MIi_CpuRecv16(src, dest, size);
 }
@@ -345,9 +345,9 @@ static inline void MI_CpuRecv16(volatile const void *src, void *dest, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuPipe16(volatile const void *src, volatile void *dest, u32 size)
 {
-    SDK_ASSERTMSG((size & 1) == 0, "size & 1 must be 0");
-    SDK_ASSERTMSG(((u32)src & 1) == 0, "source address must be in 2-byte alignment");
-    SDK_ASSERTMSG(((u32)dest & 1) == 0, "destination address must be in 2-byte alignment");
+    SDK_TASSERTMSG((size & 1) == 0, "size & 1 must be 0");
+    SDK_TASSERTMSG(((u32)src & 1) == 0, "source address must be in 2-byte alignment");
+    SDK_TASSERTMSG(((u32)dest & 1) == 0, "destination address must be in 2-byte alignment");
 
     MIi_CpuPipe16(src, dest, size);
 }
@@ -365,9 +365,9 @@ static inline void MI_CpuPipe16(volatile const void *src, volatile void *dest, u
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuMove16(const void *src, void *dest, u32 size)
 {
-    SDK_ASSERTMSG((size & 1) == 0, "size & 1 must be 0");
-    SDK_ASSERTMSG(((u32)src & 1) == 0, "source address must be in 2-byte alignment");
-    SDK_ASSERTMSG(((u32)dest & 1) == 0, "destination address must be in 2-byte alignment");
+    SDK_TASSERTMSG((size & 1) == 0, "size & 1 must be 0");
+    SDK_TASSERTMSG(((u32)src & 1) == 0, "source address must be in 2-byte alignment");
+    SDK_TASSERTMSG(((u32)dest & 1) == 0, "destination address must be in 2-byte alignment");
 
     MIi_CpuMove16(src, dest, size);
 }
@@ -385,8 +385,8 @@ static inline void MI_CpuMove16(const void *src, void *dest, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void* MI_CpuFind16(const void *src, u16 data, u32 size)
 {
-    SDK_ASSERTMSG((size & 1) == 0, "size & 1 must be 0");
-    SDK_ASSERTMSG(((u32)src & 1) == 0, "source address must be in 2-byte alignment");
+    SDK_TASSERTMSG((size & 1) == 0, "size & 1 must be 0");
+    SDK_TASSERTMSG(((u32)src & 1) == 0, "source address must be in 2-byte alignment");
 
     return MIi_CpuFind16(src, data, size);
 }
@@ -406,9 +406,9 @@ static inline void* MI_CpuFind16(const void *src, u16 data, u32 size)
  *---------------------------------------------------------------------------*/
 static inline int MI_CpuComp16(const void *mem1, const void *mem2, u32 size)
 {
-    SDK_ASSERTMSG((size & 1) == 0, "size & 1 must be 0");
-    SDK_ASSERTMSG(((u32)mem1 & 1) == 0, "target address 1 must be in 2-byte alignment");
-    SDK_ASSERTMSG(((u32)mem2 & 1) == 0, "target address 2 must be in 2-byte alignment");
+    SDK_TASSERTMSG((size & 1) == 0, "size & 1 must be 0");
+    SDK_TASSERTMSG(((u32)mem1 & 1) == 0, "target address 1 must be in 2-byte alignment");
+    SDK_TASSERTMSG(((u32)mem2 & 1) == 0, "target address 2 must be in 2-byte alignment");
 
     return MIi_CpuComp16(mem1, mem2, size);
 }
@@ -429,8 +429,8 @@ static inline int MI_CpuComp16(const void *mem1, const void *mem2, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuFillFast(void *dest, u32 data, u32 size)
 {
-    SDK_ASSERTMSG((size & 3) == 0, "size & 3 must be 0");
-    SDK_ASSERTMSG(((u32)dest & 3) == 0, "source address must be in 4-byte alignment");
+    SDK_TASSERTMSG((size & 3) == 0, "size & 3 must be 0");
+    SDK_TASSERTMSG(((u32)dest & 3) == 0, "source address must be in 4-byte alignment");
 
     MIi_CpuClearFast(data, dest, size);
 }
@@ -448,9 +448,9 @@ static inline void MI_CpuFillFast(void *dest, u32 data, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuCopyFast(const void *src, void *dest, u32 size)
 {
-    SDK_ASSERTMSG((size & 3) == 0, "size & 3 must be 0");
-    SDK_ASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
-    SDK_ASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
+    SDK_TASSERTMSG((size & 3) == 0, "size & 3 must be 0");
+    SDK_TASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
+    SDK_TASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
 
     MIi_CpuCopyFast(src, dest, size);
 }
@@ -467,8 +467,8 @@ static inline void MI_CpuCopyFast(const void *src, void *dest, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuClearFast(void *dest, u32 size)
 {
-    SDK_ASSERTMSG((size & 3) == 0, "size & 3 must be 0");
-    SDK_ASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
+    SDK_TASSERTMSG((size & 3) == 0, "size & 3 must be 0");
+    SDK_TASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
 
     MI_CpuFillFast(dest, 0, size);
 }
@@ -485,9 +485,9 @@ static inline void MI_CpuClearFast(void *dest, u32 size)
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuSendFast( register const void *src, register volatile void *dest, register u32 size )
 {
-    SDK_ASSERTMSG((size & 3) == 0, "size & 3 must be 0");
-    SDK_ASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
-    SDK_ASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
+    SDK_TASSERTMSG((size & 3) == 0, "size & 3 must be 0");
+    SDK_TASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
+    SDK_TASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
 
 	MIi_CpuSendFast(src, dest, size);
 }
@@ -505,9 +505,9 @@ static inline void MI_CpuSendFast( register const void *src, register volatile v
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuRecvFast(volatile const void *src, register void *dest, register u32 size)
 {
-    SDK_ASSERTMSG((size & 3) == 0, "size & 3 must be 0");
-    SDK_ASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
-    SDK_ASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
+    SDK_TASSERTMSG((size & 3) == 0, "size & 3 must be 0");
+    SDK_TASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
+    SDK_TASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
 
 	MIi_CpuRecvFast(src, dest, size);
 }
@@ -525,9 +525,9 @@ static inline void MI_CpuRecvFast(volatile const void *src, register void *dest,
  *---------------------------------------------------------------------------*/
 static inline void MI_CpuMoveFast(const void *src, void *dest, u32 size)
 {
-    SDK_ASSERTMSG((size & 3) == 0, "size & 3 must be 0");
-    SDK_ASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
-    SDK_ASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
+    SDK_TASSERTMSG((size & 3) == 0, "size & 3 must be 0");
+    SDK_TASSERTMSG(((u32)src & 3) == 0, "source address must be in 4-byte alignment");
+    SDK_TASSERTMSG(((u32)dest & 3) == 0, "destination address must be in 4-byte alignment");
 
     MIi_CpuMoveFast(src, dest, size);
 }

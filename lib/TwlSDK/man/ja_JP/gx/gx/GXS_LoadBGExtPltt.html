@@ -44,11 +44,15 @@
 <B>(注意1) </B>内部でDMA転送を行うので、前もって転送元のデータを<CODE><A href="../../os/cache/DC_FlushRange.html" target="_self">DC_FlushRange()</A></CODE> 等を用いてメインメモリに書き出しておく必要があります。<BR>
 <B>(注意2) </B>転送元と転送先で領域が重なる場合については動作結果は不定です。<BR>
 <B>(注意3)</B> <CODE><A href="GXS_BeginLoadBGExtPltt.html">GXS_BeginLoadBGExtPltt()</A></CODE> と<CODE><A href="GXS_EndLoadBGExtPltt.html">GXS_EndLoadBGExtPltt()</A></CODE> の間では<CODE><A href="GX_SetBankForSubBGExtPltt.html">GX_SetBankForSubBGExtPltt()</A>, <A href="GX_ResetBankForSubBGExtPltt.html">GX_ResetBankForSubBGExtPltt()</A>, <A href="GX_DisableBankForSubBGExtPltt.html">GX_DisableBankForSubBGExtPltt()</A></CODE> を呼びださないでください。<BR>
-<B>(注意4)</B> BG面によってパレットとして使用することのできるメモリ空間が異なります。BG2のパレットは0x4000-0x6000(スロット2)、BG3のパレットは0x6000-0x8000(スロット3)にパレットデータを置かなくてはなりません。BG0は0x0000-0x2000(スロット0)か0x4000-0x6000(スロット2)を<CODE><A href="../g2/G2S_SetBG0Control.html">G2S_SetBG0Control()</A></CODE> によって選択でき、BG1は、0x2000-0x4000(スロット1)か0x6000-0x8000(スロット3)を<CODE><A href="../g2/G2S_SetBG1Control.html">G2S_SetBG1Control()</A></CODE> によって選択できます。</P>
+<B>(注意4)</B> BG面によってパレットとして使用することのできるメモリ空間が異なります。BG2のパレットは0x4000-0x5FFF(スロット2)、BG3のパレットは0x6000-0x7FFF(スロット3)にパレットデータを置かなくてはなりません。BG0は0x0000-0x1FFF(スロット0)か0x4000-0x5FFF(スロット2)を<CODE><A href="../g2/G2S_SetBG0Control.html">G2S_SetBG0Control()</A></CODE> によって選択でき、BG1は、0x2000-0x3FFF(スロット1)か0x6000-0x7FFF(スロット3)を<CODE><A href="../g2/G2S_SetBG1Control.html">G2S_SetBG1Control()</A></CODE> によって選択できます。</P>
 
 <h2>参照</h2>
 <P><A href="GXS_BeginLoadBGExtPltt.html">GXS_BeginLoadBGExtPltt</A>, <A href="GXS_EndLoadBGExtPltt.html">GXS_EndLoadBGExtPltt</A></P>
 <H2>履歴</H2>
+<P>Ver. 2009/07/24</P>
+<UL>
+  <LI>パレットデータの配置制限に関する説明の修正
+</UL>
 <P>Ver. 2004/03/01</P>
 <UL>
   <LI>パレットデータの配置制限についての注意

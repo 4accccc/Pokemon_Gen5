@@ -40,14 +40,15 @@ NitroMain()<BR>
 <P>この例の場合、最初に 0 と表示され、以降リセットをかけるたびに 1、2、3、…と表示されます。</P>
 <H2>内部動作</H2>
 <P>リセットパラメータは<CODE>HW_RESET_PARAMETER_BUF</CODE> 以降の4バイトの領域に格納されています。ここはシステム共有領域内に位置し、リセット時にクリアされません。本関数ではその領域の値を読んで返します。<br />
-ただし<CODE><A href="OS_ResetSystem.html">OS_ResetSystem()</A></CODE>はNITROモードでしか呼び出すことが出来ませんので、
-TWLモードでこの関数を呼び出しても得られる値は常に0となります。
+ただし<CODE><A href="OS_ResetSystem.html">OS_ResetSystem()</A></CODE>はカードブートアプリでしか呼び出すことが出来ませんので、
+それ以外の起動モードでこの関数を呼び出しても得られる値は常に0となります。
 </P>
 <H2>参照</H2>
 <P><CODE><A href="OS_InitReset.html">OS_InitReset</A>, <A href="OS_ResetSystem.html">OS_ResetSystem</A><BR>
 </CODE></P>
 <H2>履歴</H2>
 <P>
+2009/07/02 TWLモードでもソフトウェアリセットに対応したため記述を修正。<br />
 2009/06/08 OS_ResetSystem()がNITROモード専用機能である旨を追記。<BR>
 2004/09/01 初版</P>
 </BODY>

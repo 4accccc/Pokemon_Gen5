@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 #include <nitro.h>
 
@@ -82,7 +82,7 @@ void EXT_Printf(const char *fmt, ...)
 {
     va_list vlist;
 
-    OS_Printf("<AUTO-TEST> ");
+    OS_TPrintf("<AUTO-TEST> ");
     va_start(vlist, fmt);
     OS_VPrintf(fmt, vlist);
     va_end(vlist);
@@ -148,7 +148,7 @@ void EXT_TestScreenShot(u32 testFrame, u32 checkSum)
     const u32 prevTestFrame = testFrame - 1;
     const u32 nextTestFrame = testFrame + 1;
 
-    SDK_ASSERTMSG((testFrame > 0)
+    SDK_TASSERTMSG((testFrame > 0)
                   && (testFrame < (u32)COUNTER_MAX_),
                   "illegal input value for numFrames in EXT_TestScreenShot");
 
@@ -229,7 +229,7 @@ void EXT_TestResetCounter()
 void EXT_TestSetVRAMForScreenShot(GXVRamLCDC vram)
 {
     // TODO: If I could know more about vram usage, I could check the param more strictly.
-    SDK_ASSERTMSG(vram == GX_VRAM_LCDC_A || vram == GX_VRAM_LCDC_B || vram == GX_VRAM_LCDC_C
+    SDK_TASSERTMSG(vram == GX_VRAM_LCDC_A || vram == GX_VRAM_LCDC_B || vram == GX_VRAM_LCDC_C
                   || vram == GX_VRAM_LCDC_D, "Currentry VRAM_A B C D are supported for capturing.");
 
     vramForCapture_ = vram;

@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
 <META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
 <META http-equiv="Content-Style-Type" content="text/css">
-<TITLE>buryarg</TITLE>
+<TITLE>buryarg[.TWL]</TITLE>
 <LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
 <STYLE type="text/css">
 <!--
@@ -38,19 +38,20 @@ TD,TH{
 </HEAD>
 <BODY>
 <H1 align="left">buryarg <IMG src="../image/NTR.gif" align="middle"></H1>
+<H1 align="left">buryarg.TWL <IMG src="../image/TWL.gif" align="middle"></H1>
 <H2>説明</H2>
-<P><FONT color=#ff0000>このコマンドは NITRO ROM 用のものです。TWL ROM については <CODE><A href="buryargTWL.html">buryarg.TWL</A></CODE> を参照してください。</FONT></P>
 <P>TWL SDK では、ROMイメージに引数データ領域を設け、その部分を起動前に書き換えることで、プログラムに
 C言語 の argc, argv 形式の引数として利用できるパラメータを与える仕組みを提供しています。ROM
 イメージファイルを直接書き換えることが出来るので、プログラムを再コンパイルしなくても複数の条件下でプログラムを試すことが出来ます。</P>
-<P><CODE>buryarg</CODE> は、指定のバイナリデータに対して、引数データ領域に引数データを書き込むためのツールです。なお、このツールは NITRO ROM に対して操作するものですので、TWL HYBRID ROM や TWL LIMITED ROM に対しては <CODE><A href="buryargTWL.html">buryarg.TWL</A></CODE> を参照してください。</P>
+<P><CODE>buryarg[.TWL]</CODE> は、指定のバイナリデータに対して、引数データ領域に引数データを書き込むためのツールです。なお、<CODE>buryarg</CODE> は NITRO ROM に対して、<CODE>buryarg.TWL</CODE> は TWL HYBRID ROM や TWL LIMITED ROM に対して使用します。</P>
 <P>またプログラム内で引数データ領域を参照していない場合は、その領域は作成されません。領域が作成されていない
-ROM に対しては <CODE>buryarg</CODE> を適用することができません。</P>
+ROM に対しては <CODE>buryarg[.TWL]</CODE> を適用することができません。</P>
+<P>TWL SDK 5.3 より、<CODE>buryarg.TWL</CODE> での引数データの埋め込み方法が、<CODE>buryarg</CODE> と同じ仕様に変更されました。これにより、TWL HYBRID ROM に対して埋め込んだ引数データを NITRO モードで読むことができなかった問題が解決されています。<BR>
+但し、<CODE>buryarg.TWL</CODE> の使用に際しては、注意事項があります。後述の <A href="#AttentionTwlRom">TWL ROM での注意</A> をお読みください。</P>
 <H2>使用方法</H2>
 <H3>起動コマンド</H3>
-<P><CODE>% buryarg [OPTION]... NITROSRLFILE [argument]...</CODE></P>
-<P><CODE>NITROSRLFILE</CODE> は、書き換えの元となる ROM ファイルです。通常は srl ファイルですが、nlf
-ファイルを指定すると、nlf ファイルを解析して ARM9 の常駐モジュールファイルに対し操作を行います。</P>
+<P><CODE>% buryarg [OPTION]... SRLFILE [argument]...</CODE></P>
+<P><CODE>SRLFILE</CODE> は、書き換えの元となる ROM ファイル (srl) です。但し、ROM ファイルリスト (nlf or tlf) を指定することもできます。ROM ファイルリストを指定すると、<CODE>buryarg[.TWL]</CODE> は内容を解析して ARM9 の常駐モジュールファイルに対し操作を行います。</P>
 <P><CODE><B>-r</B> または <B>--remain</B></CODE> オプションを指定すると元のファイルを残します。デフォルトでは元ファイルを変更しますので、元のファイルを変更したくない場合はこのオプションを指定します。なお別名のファイルは、元ファイルに &quot;<CODE>.argAdded</CODE> &quot; のついたファイル名となります。 <CODE>-o</CODE> オプションで出力ファイルを選択した場合はこのオプションを指定しなくても元ファイルは変更されません。</P>
 <P><CODE><B>-o</B> または <B>--output</B> オプションは引数をとります。このオプションは、出力ファイルを、-o=dest.srl</CODE> または <CODE>-o dest.srl </CODE>のように指定します。<FONT color="#ff0000">出力ファイルとして元ファイルと同じファイルを指定しないようにしてください。</FONT>また、出力ファイルとして &quot;<CODE>-</CODE>&quot; (マイナス) を指定すると、標準出力に対し出力します。( <CODE>-o-</CODE> のように指定します。)　後述の <CODE>--stdout</CODE> も参照してください。</P>
 <P><CODE><B>--stdout</B></CODE> は、<CODE>-o-</CODE> の指定と同じです。標準出力に対し出力します。</P>
@@ -61,9 +62,9 @@ ROM に対しては <CODE>buryarg</CODE> を適用することができません。</P>
 <P><CODE><B>-h</B></CODE> または <CODE><B>--help</B></CODE> オプションは、簡単な使い方を表示します。</P>
 <P><CODE><B>-d</B></CODE> または <CODE><B>--debug</B></CODE> オプションは、デバッグのためのオプションです。置き換えるデータをダンプします。</P>
 <P><CODE><B>--version</B></CODE> オプションは、コマンドのバージョンを表示します。</P>
+<BR>
 <H3>引数データ領域</H3>
-<P>コンパイルした直後の NITRO ROM データの中の引数データ領域にはその領域を識別するための文字列が書き込まれています。<CODE>buryarg</CODE> では、この文字列を ROM から探し出して、その直後に引数データを書き込みます。位置を見つけるための文字列は書き換わりませんので、同じ
-ROM データに対して何度でも引数データを書き込むことが出来ます。</P>
+<P>コンパイルした直後の ROM データの中の引数データ領域にはその領域を識別するための文字列が書き込まれています。<CODE>buryarg[.TWL]</CODE> では、この文字列を ROM から探し出して、その直後に引数データを書き込みます。位置を見つけるための文字列は書き換わりませんので、同じ ROM データに対して何度でも引数データを書き込むことが出来ます。</P>
 <BLOCKQUOTE><IMG src="buryarg_image1.gif" border="0"></BLOCKQUOTE>
 <P>プログラム中からは、引数領域のデータに <A href="../os/argument/OS_GetArgc.html"><CODE>OS_GetArgc()</CODE></A> 、 <CODE><A href="../os/argument/OS_GetArgv.html">OS_GetArgv()</A></CODE> でアクセスすることが出来ます。<BR>
 </P>
@@ -74,34 +75,44 @@ ROM データに対して何度でも引数データを書き込むことが出来ます。</P>
 <B>(注意)</B> 以下のようなミスにご注意ください。</P>
 <BLOCKQUOTE>・<CODE>-o</CODE> オプションで、入力ファイルと同じファイルを指定した。<BR>
 　→ 上書きしたい場合にはこのような指定をする必要がありません。デフォルトでその動作を行ないます。</BLOCKQUOTE>
-<BLOCKQUOTE>・ srl ファイルに対して引数データの書き換えを行なった。そして nlf ファイルから起動した。<BR>
-　→ nlf から起動した場合、nlf ファイルにかかれているモジュールがデバッガに読み込まれるので、srl
-に対して書き換えを行ってもそれを反映させることは出来ません。nlf ファイルから起動するのなら、<CODE>buryarg</CODE> で nlf ファイルを指定して書き換えを行ってください。</BLOCKQUOTE>
-<BLOCKQUOTE>・nlf ファイルに対してデータの書き換えを行なった。そして srl ファイルを起動した。<BR>
-　→ 上の例の逆です。srl ファイルに対して引数データの書き換えを行なってください。</BLOCKQUOTE>
+<BLOCKQUOTE>・ROM ファイル (srl) に対して引数データの書き換えを行なった。そして ROM ファイルリスト (nlf or tlf) から起動した。<BR>
+　→ ROM ファイルリスト から起動した場合、ファイルに書かれているモジュールがデバッガに読み込まれるので、ROM ファイルに対して書き換えを行ってもそれを反映させることは出来ません。ROM ファイルリストから起動するのなら、<CODE>buryarg[.TWL]</CODE> で ROM ファイルリストを指定して書き換えを行ってください。</BLOCKQUOTE>
+<BLOCKQUOTE>・ROM ファイルリスト (nlf or tlf) に対してデータの書き換えを行なった。そして ROM ファイル (srl) を起動した。<BR>
+　→ 上の例の逆です。ROM ファイルに対して引数データの書き換えを行なってください。</BLOCKQUOTE>
 <BLOCKQUOTE>・引数データ領域のないイメージに対して引数データ書き換えを行なおうとした。<BR>
-　→ 古いSDK で作成された ROM イメージには引数データを書き込む領域が用意されていません。そのイメージに対して <CODE>buryarg</CODE> コマンドを実行すると、引数データ領域を表す文字列が見つからないというエラーを表示して終了します。<BR>
+　→ 古い SDK で作成された ROM イメージには引数データを書き込む領域が用意されていません。そのイメージに対して <CODE>buryarg[.TWL]</CODE> コマンドを実行すると、引数データ領域を表す文字列が見つからないというエラーを表示して終了します。<BR>
 　→ <FONT color="#ff0000">プログラム中一度も引数データ領域を参照していない場合はコンパイル時に引数データ領域がデッドストリップされます。</FONT>すなわち <CODE>OS_GetArgc()</CODE> や <CODE>OS_GetArgv()</CODE> が一度も呼び出されていないような場合ですが、この場合もエラーとなります。</BLOCKQUOTE>
 <BLOCKQUOTE>・FINALROM ビルドのイメージに対して引数データ書き換えを行なおうとした。<BR>
 　→ <FONT color="#ff0000">FINALROM ビルドのイメージには引数データを格納する領域がありません。</FONT></BLOCKQUOTE>
-<BLOCKQUOTE>・TWL モードのROM に対して引数データ書き換えを行おうとした。<BR>
-　→ <FONT color="#ff0000">このコマンドで書き換えが可能なのは NITRO ROM のみです。</FONT>TWLモードの ROM には <CODE>buryarg</CODE> ではなく、<CODE><A href="buryargTWL.html">buryarg.TWL</A></CODE> コマンドを用いてください。</BLOCKQUOTE>
-<H3><BR>
-FINALROM と引数データ</H3>
-<P>FINALROM では引数データを扱うことが出来ません。引数データを格納する領域がありませんし、<CODE><A href="../os/argument/OS_GetArgc.html">OS_GetArgc()</A></CODE> は必ず0 を返し、<CODE><A href="../os/argument/OS_GetArgv.html">OS_GetArgv()</A></CODE> は必ず NULL を返すようになります。FINALROM で引数データを扱えないのは、最終的にプログラムが外部から与えることの出来るデータに依存したままだとそれがセキュリティホールになってしまうかもしれないからです。</P>
-<P>FINALROM であってもプログラム中の判定ルーチンは消さない限り残ります。FINALROM
-では意味のないコードではあるのですが、注意が必要です。(たとえば ステージ数30という触れ込みのゲームで
+<BLOCKQUOTE>・常駐領域に圧縮をかけたイメージに対して引数データ書き換えを行なおうとした。<BR>
+　→ 常駐領域に圧縮がかかっていると、文字列を探し出すことができなくなり、エラーとなります。引数データを埋め込む場合は、圧縮をかけないようにしてください。</BLOCKQUOTE>
+<BR>
+<H3>FINALROM と引数データ</H3>
+<P>FINALROM では引数データを扱うことが出来ません。引数データを格納する領域がありませんし、<CODE><A href="../os/argument/OS_GetArgc.html">OS_GetArgc()</A></CODE> は必ず 0 を返し、<CODE><A href="../os/argument/OS_GetArgv.html">OS_GetArgv()</A></CODE> は必ず NULL を返すようになります。FINALROM で引数データを扱えないのは、最終的にプログラムが外部から与えることの出来るデータに依存したままだとそれがセキュリティホールになってしまうかもしれないからです。</P>
+<P>FINALROM であってもプログラム中の判定ルーチンは消さない限り残ります。FINALROM では意味のないコードではあるのですが、注意が必要です。(たとえば ステージ数30という触れ込みのゲームで
 &quot;引数データがSTAGE&gt;30 ならば&quot; などという判定ルーチンを解析されたりすると、隠しステージがあるのではないかという推測に繋がるかもしれません。)</P>
+<BR>
+<A name="AttentionTwlRom"></a>
+<H3>TWL ROM での注意</H3>
+<P>TWL ROM では、ROM イメージ作成時にハッシュ値の計算を行っています。よって、ROM イメージに対して <CODE>buryarg.TWL</CODE> を使用して引数データを埋め込んでしまうと、ハッシュ値が変わってしまい、起動することができなくなります。<BR>
+TWL ROM の場合には、ROM ファイルリスト (tlf) に対して <CODE>buryarg.TWL</CODE> を使用し、その後に <A href="./makerom.html"><CODE>makerom.TWL</CODE></A> を使用して ROM ファイル (srl) を作成しなおすようにしてください。<BR>
+この方法を行うには、OS ライブラリの <A href="../demos/os/osdemos.html">サンプルデモ</A> が参考になります。</P>
+
 <H2>場所</H2>
-<P><CODE>$TwlSDK/tools/bin/buryarg.exe</CODE></P>
+<P>
+<CODE>$TwlSDK/tools/bin/buryarg.exe</CODE><BR>
+<CODE>$TwlSDK/tools/bin/buryarg.TWL.exe</CODE><BR>
+</P>
 <H2>参照</H2>
-<P><CODE><A href="../os/argument/OS_GetArgc.html">OS_GetArgc</A>, <A href="../os/argument/OS_GetArgv.html">OS_GetArgv</A>, <A href="../os/argument/OS_GetOpt.html">OS_GetOpt*</A></CODE><BR>
-<CODE><A href="buryargTWL.html">buryarg.TWL</A></CODE></P>
+<P><CODE><A href="../os/argument/OS_GetArgc.html">OS_GetArgc</A>, <A href="../os/argument/OS_GetArgv.html">OS_GetArgv</A>, <A href="../os/argument/OS_GetOpt.html">OS_GetOpt*</A></CODE></P>
 <H2>履歴</H2>
-<P>2008/07/08 TWL 用には <CODE><A href="buryargTWL.html">buryarg.TWL</A></CODE> を用いるよう追記<BR>
+<P>
+2009/05/25 <CODE>buryarg.TWL</CODE> の仕様を <CODE>buryarg</CODE> と統一。それに伴い、マニュアルも統合。圧縮と併用できない旨を追記。<BR>
+2008/07/08 TWL 用には <CODE><A href="buryarg.html">buryarg.TWL</A></CODE> を用いるよう追記<BR>
 2008/06/24 TWL ではこの仕組みが使用できないことを記述<BR>
 2005/08/30 参照に <CODE>OS_GetOpt*</CODE> を追加。<CODE>--stdout</CODE> を追加<BR>
 2005/07/22 nlf ファイルへの対応<BR>
-2005/07/21 初版作成</P>
+2005/07/21 初版作成<BR>
+</P>
 </BODY>
 </HTML>

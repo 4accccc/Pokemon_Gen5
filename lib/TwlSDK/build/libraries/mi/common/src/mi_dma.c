@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <nitro.h>
@@ -1377,7 +1377,7 @@ void MIi_CheckAnotherAutoDMA(u32 dmaNo, u32 dmaType)
             || timing == MI_DMA_TIMING_GXFIFO
             || timing == MI_DMA_TIMING_V_BLANK || timing == MI_DMA_TIMING_H_BLANK)
         {
-            OS_Panic("cannot start auto DMA at the same time.");
+            OS_TPanic("cannot start auto DMA at the same time.");
         }
     }
 }
@@ -1428,7 +1428,7 @@ void MIi_CheckDma0SourceAddress(u32 dmaNo, u32 src, u32 size, u32 dir)
         if (addStart == 0x04000000 || addStart >= 0x08000000 ||
             addEnd == 0x04000000 || addEnd >= 0x08000000)
         {
-            OS_Panic("illegal DMA0 source address.");
+            OS_TPanic("illegal DMA0 source address.");
         }
     }
 }

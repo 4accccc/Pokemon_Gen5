@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
 
  *---------------------------------------------------------------------------*/
 #include <nitro.h>
@@ -121,7 +121,7 @@ void OS_EndVAlarm(void)
     //---- check if any valarm exists
     if (OSi_UseVAlarm)
     {
-        SDK_ASSERTMSG(!OSi_VAlarmQueue.head,
+        SDK_TASSERTMSG(!OSi_VAlarmQueue.head,
                       "OS_EndVAlarm: Cannot end v-alarm system while using v-alarm.");
         OSi_UseVAlarm = FALSE;
     }
@@ -316,15 +316,15 @@ void OS_SetVAlarm(OSVAlarm *alarm, s16 count, s16 delay, OSVAlarmHandler handler
     s32     currentVCount;
     s32     currentVFrame;
 
-    //OS_Printf( "**OS_SetVAlarm alarm=%x count=%d\n", alarm, count);
+    //OS_TPrintf( "**OS_SetVAlarm alarm=%x count=%d\n", alarm, count);
     SDK_ASSERT(OSi_UseVAlarm);
-    SDK_ASSERTMSG(handler, "OS_SetVAlarm: handler must not be NULL.");
+    SDK_TASSERTMSG(handler, "OS_SetVAlarm: handler must not be NULL.");
     if (!alarm || alarm->handler)
     {
 #ifndef SDK_FINALROM
-        OS_Panic("v-alarm could be already used.");
+        OS_TPanic("v-alarm could be already used.");
 #else
-        OS_Panic("");
+        OS_TPanic("");
 #endif
     }
 
@@ -375,16 +375,16 @@ void OS_SetPeriodicVAlarm(OSVAlarm *alarm, s16 count, s16 delay, OSVAlarmHandler
     s32     currentVFrame;
 
     SDK_ASSERT(OSi_UseVAlarm);
-    SDK_ASSERTMSG(handler, "OS_SetPeriodicVAlarm: handler must not be NULL\n");
-    SDK_ASSERTMSG(0 <= delay
+    SDK_TASSERTMSG(handler, "OS_SetPeriodicVAlarm: handler must not be NULL\n");
+    SDK_TASSERTMSG(0 <= delay
                   && delay <= OSi_VHIGHT,
                   "OS_SetPeriodicVAlarm:  illegal permissible range of delay.");
     if (!alarm || alarm->handler)
     {
 #ifndef SDK_FINALROM
-        OS_Panic("v-alarm could be already used.");
+        OS_TPanic("v-alarm could be already used.");
 #else
-        OS_Panic("");
+        OS_TPanic("");
 #endif
     }
 
@@ -455,11 +455,11 @@ void OS_SetVAlarmTag(OSVAlarm *alarm, u32 tag)
 #ifdef SDK_DEBUG
     SDK_ASSERT(OSi_UseVAlarm);
     SDK_ASSERT(alarm);
-    SDK_ASSERTMSG(tag > 0, "OSSetVAlarmTag: Tag must be >0.");
+    SDK_TASSERTMSG(tag > 0, "OSSetVAlarmTag: Tag must be >0.");
 #else
     if (tag == 0)
     {
-        OS_Panic("");
+        OS_TPanic("");
     }
 #endif
 
@@ -549,11 +549,11 @@ void OS_CancelVAlarms(u32 tag)
 
 #ifdef SDK_DEBUG
     SDK_ASSERT(OSi_UseVAlarm);
-    SDK_ASSERTMSG(tag > 0, "OSCancelVAlarms: Tag must be >0.");
+    SDK_TASSERTMSG(tag > 0, "OSCancelVAlarms: Tag must be >0.");
 #else
     if (tag == 0)
     {
-        OS_Panic("");
+        OS_TPanic("");
     }
 #endif
 
@@ -613,7 +613,7 @@ static void OSi_VAlarmHandler(void *)
         check = OSi_CompareVCount(alarm, currentVFrame, currentVCount);
 
 #ifdef DEBUGPRINT
-        OS_Printf("[%d:%d %d] %d %d check=%d \n",
+        OS_TPrintf("[%d:%d %d] %d %d check=%d \n",
                   alarm->arg, alarm->frame, alarm->fire, currentVFrame, currentVCount, check);
 #endif
 
@@ -759,12 +759,12 @@ void OS_DumpVAlarm(void)
     OSVAlarm *alarm;
     OSVAlarm *next;
 
-    OS_Printf("---------------- current vcount = %d\n", (s16)GX_GetVCount());
+    OS_TPrintf("---------------- current vcount = %d\n", (s16)GX_GetVCount());
     for (alarm = OSi_VAlarmQueue.head; alarm; alarm = next)
     {
         next = alarm->next;
 
-        OS_Printf("%08x fire=%d:%d delay=%d arg=%2d prev=%08x next=%08x\n", alarm,
+        OS_TPrintf("%08x fire=%d:%d delay=%d arg=%2d prev=%08x next=%08x\n", alarm,
                   alarm->frame, alarm->fire, alarm->delay, alarm->arg, alarm->prev, alarm->next);
     }
 

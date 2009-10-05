@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
 
  *---------------------------------------------------------------------------*/
 #include <nitro/os.h>
@@ -366,15 +366,15 @@ void   *OS_AllocFromHeap(OSArenaId id, OSHeapHandle heap, u32 size)
     long    leftoverSize;              // size of any leftover
     OSIntrMode enabled = OS_DisableInterrupts();
 
-    //OS_Printf( "id=%d heap=%x size=%x\n",id, heap, size );
+    //OS_TPrintf( "id=%d heap=%x size=%x\n",id, heap, size );
 
 #ifdef  SDK_DEBUG
     long    requested = (long)size;
 #endif // SDK_DEBUG
 
     //---- check arena id
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_ALLOCFROMHEAP_INVID);
-    SDK_ASSERTMSG(OSiHeapInfo[id], OS_ERR_ALLOCFROMHEAP_NOINFO);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_ALLOCFROMHEAP_INVID);
+    SDK_TASSERTMSG(OSiHeapInfo[id], OS_ERR_ALLOCFROMHEAP_NOINFO);
     heapInfo = OSiHeapInfo[id];
 
     //---- check exist heap and size>0
@@ -390,10 +390,10 @@ void   *OS_AllocFromHeap(OSArenaId id, OSHeapHandle heap, u32 size)
         heap = heapInfo->currentHeap;
     }
 
-    SDK_ASSERTMSG(heapInfo->heapArray, OS_ERR_ALLOCFROMHEAP_NOHEAP);
-    SDK_ASSERTMSG(0 < ((long)size), OS_ERR_ALLOCFROMHEAP_INVSIZE);
-    SDK_ASSERTMSG(0 <= heap && heap < heapInfo->numHeaps, OS_ERR_ALLOCFROMHEAP_INVHEAP);
-    SDK_ASSERTMSG(0 <= heapInfo->heapArray[heap].size, OS_ERR_ALLOCFROMHEAP_INVHEAP);
+    SDK_TASSERTMSG(heapInfo->heapArray, OS_ERR_ALLOCFROMHEAP_NOHEAP);
+    SDK_TASSERTMSG(0 < ((long)size), OS_ERR_ALLOCFROMHEAP_INVSIZE);
+    SDK_TASSERTMSG(0 <= heap && heap < heapInfo->numHeaps, OS_ERR_ALLOCFROMHEAP_INVHEAP);
+    SDK_TASSERTMSG(0 <= heapInfo->heapArray[heap].size, OS_ERR_ALLOCFROMHEAP_INVHEAP);
 
     hd = &heapInfo->heapArray[heap];
 
@@ -413,14 +413,14 @@ void   *OS_AllocFromHeap(OSArenaId id, OSHeapHandle heap, u32 size)
     if (cell == NULL)
     {
 #ifdef  SDK_DEBUG
-        OS_Printf("OS_AllocFromHeap: Warning- failed to allocate %d bytes\n", size);
+        OS_TPrintf("OS_AllocFromHeap: Warning- failed to allocate %d bytes\n", size);
 #endif // SDK_DEBUG
         (void)OS_RestoreInterrupts(enabled);
         return NULL;
     }
 
-    SDK_ASSERTMSG(OFFSET(cell, ALIGNMENT) == 0, OS_ERR_ALLOCFROMHEAP_BROKENHEAP);
-    SDK_ASSERTMSG(cell->hd == NULL, OS_ERR_ALLOCFROMHEAP_BROKENHEAP);
+    SDK_TASSERTMSG(OFFSET(cell, ALIGNMENT) == 0, OS_ERR_ALLOCFROMHEAP_BROKENHEAP);
+    SDK_TASSERTMSG(cell->hd == NULL, OS_ERR_ALLOCFROMHEAP_BROKENHEAP);
 
     leftoverSize = cell->size - (long)size;
     if (leftoverSize < MINOBJSIZE)
@@ -455,7 +455,7 @@ void   *OS_AllocFromHeap(OSArenaId id, OSHeapHandle heap, u32 size)
         }
         else
         {
-            SDK_ASSERTMSG(hd->free == cell, OS_ERR_ALLOCFROMHEAP_BROKENHEAP);
+            SDK_TASSERTMSG(hd->free == cell, OS_ERR_ALLOCFROMHEAP_BROKENHEAP);
             hd->free = newCell;
         }
     }
@@ -503,13 +503,13 @@ void   *OS_AllocFixed(OSArenaId id, void **rstart, void **rend)
     OSIntrMode enabled = OS_DisableInterrupts();
 
     //---- check arena id
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_ALLOCFIXED_INVID);
-    SDK_ASSERTMSG(OSiHeapInfo[id], OS_ERR_ALLOCFIXED_NOINFO);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_ALLOCFIXED_INVID);
+    SDK_TASSERTMSG(OSiHeapInfo[id], OS_ERR_ALLOCFIXED_NOINFO);
     heapInfo = OSiHeapInfo[id];
 
-    SDK_ASSERTMSG(heapInfo->heapArray, OS_ERR_ALLOCFIXED_NOHEAP);
-    SDK_ASSERTMSG(start < end, OS_ERR_ALLOCFIXED_INVRANGE);
-    SDK_ASSERTMSG(RangeSubset(start, end, heapInfo->arenaStart, heapInfo->arenaEnd), OS_ERR_ALLOCFIXED_INVRANGE);
+    SDK_TASSERTMSG(heapInfo->heapArray, OS_ERR_ALLOCFIXED_NOHEAP);
+    SDK_TASSERTMSG(start < end, OS_ERR_ALLOCFIXED_INVRANGE);
+    SDK_TASSERTMSG(RangeSubset(start, end, heapInfo->arenaStart, heapInfo->arenaEnd), OS_ERR_ALLOCFIXED_INVRANGE);
 
     //---- Check overlap with any allocated blocks.
     for (i = 0; i < heapInfo->numHeaps; i++)
@@ -523,7 +523,7 @@ void   *OS_AllocFixed(OSArenaId id, void **rstart, void **rend)
         if (DLOverlap(hd->allocated, start, end))
         {
 #ifdef  SDK_DEBUG
-            OS_Printf("OS_AllocFixed: Warning - failed to allocate from %p to %p\n", start, end);
+            OS_TPrintf("OS_AllocFixed: Warning - failed to allocate from %p to %p\n", start, end);
 #endif // SDK_DEBUG
             (void)OS_RestoreInterrupts(enabled);
             return NULL;
@@ -679,8 +679,8 @@ void OS_FreeToHeap(OSArenaId id, OSHeapHandle heap, void *ptr)
     OSIntrMode enabled = OS_DisableInterrupts();
 
     //---- check arena id
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_FREETOHEAP_INVID);
-    SDK_ASSERTMSG(OSiHeapInfo[id], OS_ERR_FREETOHEAP_NOINFO);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_FREETOHEAP_INVID);
+    SDK_TASSERTMSG(OSiHeapInfo[id], OS_ERR_FREETOHEAP_NOINFO);
     heapInfo = OSiHeapInfo[id];
 
     if (heap < 0)
@@ -688,25 +688,25 @@ void OS_FreeToHeap(OSArenaId id, OSHeapHandle heap, void *ptr)
         heap = heapInfo->currentHeap;
     }
 
-    SDK_ASSERTMSG(heapInfo->heapArray, OS_ERR_FREETOHEAP_NOHEAP);
+    SDK_TASSERTMSG(heapInfo->heapArray, OS_ERR_FREETOHEAP_NOHEAP);
 #ifdef SDK_DEBUG
 #if defined(SDK_TWL) && !defined(SDK_TWLLTD)
     if ( OSi_ExtraHeapArenaId != id || OSi_ExtraHeapHandle != heap )
     {
 #endif
-        SDK_ASSERTMSG(InRange(ptr, (char *)heapInfo->arenaStart + HEADERSIZE, (char *)heapInfo->arenaEnd), OS_ERR_FREETOHEAP_INVPTR);
+        SDK_TASSERTMSG(InRange(ptr, (char *)heapInfo->arenaStart + HEADERSIZE, (char *)heapInfo->arenaEnd), OS_ERR_FREETOHEAP_INVPTR);
 #if defined(SDK_TWL) && !defined(SDK_TWLLTD)
     }
 #endif
 #endif
-    SDK_ASSERTMSG(OFFSET(ptr, ALIGNMENT) == 0, OS_ERR_FREETOHEAP_INVPTR);
-    SDK_ASSERTMSG(0 <= heapInfo->heapArray[heap].size, OS_ERR_FREETOHEAP_INVHEAP);
+    SDK_TASSERTMSG(OFFSET(ptr, ALIGNMENT) == 0, OS_ERR_FREETOHEAP_INVPTR);
+    SDK_TASSERTMSG(0 <= heapInfo->heapArray[heap].size, OS_ERR_FREETOHEAP_INVHEAP);
 
     cell = (Cell *) ((char *)ptr - HEADERSIZE);
     hd = &heapInfo->heapArray[heap];
 
-    SDK_ASSERTMSG(cell->hd == hd, OS_ERR_FREETOHEAP_INVPTR);
-    SDK_ASSERTMSG(DLLookup(hd->allocated, cell), OS_ERR_FREETOHEAP_INVPTR);
+    SDK_TASSERTMSG(cell->hd == hd, OS_ERR_FREETOHEAP_INVPTR);
+    SDK_TASSERTMSG(DLLookup(hd->allocated, cell), OS_ERR_FREETOHEAP_INVPTR);
 
 #ifdef  SDK_DEBUG
     cell->hd = NULL;
@@ -743,8 +743,8 @@ void OS_FreeAllToHeap(OSArenaId id, OSHeapHandle heap)
     OSIntrMode enabled = OS_DisableInterrupts();
 
     //---- check arena id
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_FREETOHEAP_INVID);
-    SDK_ASSERTMSG(OSiHeapInfo[id], OS_ERR_FREETOHEAP_NOINFO);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_FREETOHEAP_INVID);
+    SDK_TASSERTMSG(OSiHeapInfo[id], OS_ERR_FREETOHEAP_NOINFO);
     heapInfo = OSiHeapInfo[id];
 
     if (heap < 0)
@@ -752,8 +752,8 @@ void OS_FreeAllToHeap(OSArenaId id, OSHeapHandle heap)
         heap = heapInfo->currentHeap;
     }
 
-    SDK_ASSERTMSG(heapInfo->heapArray, "heap not initialized");
-    SDK_ASSERTMSG(0 <= heapInfo->heapArray[heap].size, "invalid heap handle");
+    SDK_TASSERTMSG(heapInfo->heapArray, "heap not initialized");
+    SDK_TASSERTMSG(0 <= heapInfo->heapArray[heap].size, "invalid heap handle");
 
     hd = &heapInfo->heapArray[heap];
     while ((cell = hd->allocated) != NULL)
@@ -797,13 +797,13 @@ OSHeapHandle OS_SetCurrentHeap(OSArenaId id, OSHeapHandle heap)
     OSIntrMode enabled = OS_DisableInterrupts();
 
     //---- check arena id
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_SETCURRENTHEAP_INVID);
-    SDK_ASSERTMSG(OSiHeapInfo[id], OS_ERR_SETCURRENTHEAP_NOINFO);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_SETCURRENTHEAP_INVID);
+    SDK_TASSERTMSG(OSiHeapInfo[id], OS_ERR_SETCURRENTHEAP_NOINFO);
     heapInfo = OSiHeapInfo[id];
 
-    SDK_ASSERTMSG(heapInfo->heapArray, OS_ERR_SETCURRENTHEAP_NOHEAP);
-    SDK_ASSERTMSG(0 <= heap && heap < heapInfo->numHeaps, OS_ERR_SETCURRENTHEAP_INVHEAP);
-    SDK_ASSERTMSG(0 <= heapInfo->heapArray[heap].size, OS_ERR_SETCURRENTHEAP_INVHEAP);
+    SDK_TASSERTMSG(heapInfo->heapArray, OS_ERR_SETCURRENTHEAP_NOHEAP);
+    SDK_TASSERTMSG(0 <= heap && heap < heapInfo->numHeaps, OS_ERR_SETCURRENTHEAP_INVHEAP);
+    SDK_TASSERTMSG(0 <= heapInfo->heapArray[heap].size, OS_ERR_SETCURRENTHEAP_INVHEAP);
     prev = heapInfo->currentHeap;
     heapInfo->currentHeap = heap;
 
@@ -835,12 +835,12 @@ void   *OS_InitAlloc(OSArenaId id, void *arenaStart, void *arenaEnd, int maxHeap
     OSIntrMode enabled = OS_DisableInterrupts();
 
     //---- check arena id
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_INITALLOC_INVID);
-    SDK_ASSERTMSG(OSiHeapInfo[id] == NULL, OS_ERR_INITALLOC_INVINFO);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_INITALLOC_INVID);
+    SDK_TASSERTMSG(OSiHeapInfo[id] == NULL, OS_ERR_INITALLOC_INVINFO);
 
-    SDK_ASSERTMSG(0 < maxHeaps, OS_ERR_INITALLOC_INVNUMHEAPS);
-    SDK_ASSERTMSG((char *)arenaStart < (char *)arenaEnd, OS_ERR_INITALLOC_INVRANGE);
-    SDK_ASSERTMSG(maxHeaps <= ((char *)arenaEnd - (char *)arenaStart) / sizeof(HeapDesc), OS_ERR_INITALLOC_INSRANGE);
+    SDK_TASSERTMSG(0 < maxHeaps, OS_ERR_INITALLOC_INVNUMHEAPS);
+    SDK_TASSERTMSG((char *)arenaStart < (char *)arenaEnd, OS_ERR_INITALLOC_INVRANGE);
+    SDK_TASSERTMSG(maxHeaps <= ((char *)arenaEnd - (char *)arenaStart) / sizeof(HeapDesc), OS_ERR_INITALLOC_INSRANGE);
 
     //---- save heapInfo
     heapInfo = arenaStart;
@@ -871,7 +871,7 @@ void   *OS_InitAlloc(OSArenaId id, void *arenaStart, void *arenaEnd, int maxHeap
 
     heapInfo->arenaStart = arenaStart;
     heapInfo->arenaEnd = (void *)TRUNC(arenaEnd, ALIGNMENT);
-    SDK_ASSERTMSG(MINOBJSIZE <= (char *)heapInfo->arenaEnd - (char *)heapInfo->arenaStart, OS_ERR_INITALLOC_INSRANGE);
+    SDK_TASSERTMSG(MINOBJSIZE <= (char *)heapInfo->arenaEnd - (char *)heapInfo->arenaStart, OS_ERR_INITALLOC_INSRANGE);
 
     (void)OS_RestoreInterrupts(enabled);
     return heapInfo->arenaStart;
@@ -889,7 +889,7 @@ void   *OS_InitAlloc(OSArenaId id, void *arenaStart, void *arenaEnd, int maxHeap
  *---------------------------------------------------------------------------*/
 void OS_ClearAlloc(OSArenaId id)
 {
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_CLEARALLOC_INVID);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_CLEARALLOC_INVID);
     OSiHeapInfo[id] = NULL;
 }
 
@@ -917,19 +917,19 @@ OSHeapHandle OS_CreateHeap(OSArenaId id, void *start, void *end)
 
     OSIntrMode enabled = OS_DisableInterrupts();
 
-    //OS_Printf( "OS_CreateHeap  id=%d start=%x, end=%x\n", id, start, end );
+    //OS_TPrintf( "OS_CreateHeap  id=%d start=%x, end=%x\n", id, start, end );
     //---- check arena id
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_CREATEHEAP_INVID);
-    SDK_ASSERTMSG(OSiHeapInfo[id], OS_ERR_CREATEHEAP_NOINFO);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_CREATEHEAP_INVID);
+    SDK_TASSERTMSG(OSiHeapInfo[id], OS_ERR_CREATEHEAP_NOINFO);
     heapInfo = OSiHeapInfo[id];
 
-    SDK_ASSERTMSG(heapInfo->heapArray, OS_ERR_CREATEHEAP_NOHEAP);
-    SDK_ASSERTMSG(start < end, OS_ERR_CREATEHEAP_INVRANGE);
+    SDK_TASSERTMSG(heapInfo->heapArray, OS_ERR_CREATEHEAP_NOHEAP);
+    SDK_TASSERTMSG(start < end, OS_ERR_CREATEHEAP_INVRANGE);
     start = (void *)ROUND(start, ALIGNMENT);
     end = (void *)TRUNC(end, ALIGNMENT);
-    SDK_ASSERTMSG(start < end, OS_ERR_CREATEHEAP_INVRANGE);
-    SDK_ASSERTMSG(RangeSubset(start, end, heapInfo->arenaStart, heapInfo->arenaEnd), OS_ERR_CREATEHEAP_INVRANGE);
-    SDK_ASSERTMSG(MINOBJSIZE <= (char *)end - (char *)start, OS_ERR_CREATEHEAP_INSRANGE);
+    SDK_TASSERTMSG(start < end, OS_ERR_CREATEHEAP_INVRANGE);
+    SDK_TASSERTMSG(RangeSubset(start, end, heapInfo->arenaStart, heapInfo->arenaEnd), OS_ERR_CREATEHEAP_INVRANGE);
+    SDK_TASSERTMSG(MINOBJSIZE <= (char *)end - (char *)start, OS_ERR_CREATEHEAP_INSRANGE);
 
 #ifdef  SDK_DEBUG
     //---- Check that the range does not overlap with
@@ -940,8 +940,8 @@ OSHeapHandle OS_CreateHeap(OSArenaId id, void *start, void *end)
         {
             continue;
         }
-        SDK_ASSERTMSG(!DLOverlap(heapInfo->heapArray[heap].free, start, end), OS_ERR_CREATEHEAP_INVRANGE);
-        SDK_ASSERTMSG(!DLOverlap(heapInfo->heapArray[heap].allocated, start, end), OS_ERR_CREATEHEAP_INVRANGE);
+        SDK_TASSERTMSG(!DLOverlap(heapInfo->heapArray[heap].free, start, end), OS_ERR_CREATEHEAP_INVRANGE);
+        SDK_TASSERTMSG(!DLOverlap(heapInfo->heapArray[heap].allocated, start, end), OS_ERR_CREATEHEAP_INVRANGE);
     }
 #endif // SDK_DEBUG
 
@@ -974,7 +974,7 @@ OSHeapHandle OS_CreateHeap(OSArenaId id, void *start, void *end)
 
     //---- Could not find free descriptor
 #ifdef  SDK_DEBUG
-    OS_Printf("OS_CreateHeap: Warning - Failed to find free heap descriptor.");
+    OS_TPrintf("OS_CreateHeap: Warning - Failed to find free heap descriptor.");
 #endif // SDK_DEBUG
 
     (void)OS_RestoreInterrupts(enabled);
@@ -1002,11 +1002,11 @@ OSHeapHandle OS_CreateExtraHeap(OSArenaId id)
     Cell   *cell;
 
     OSIntrMode enabled = OS_DisableInterrupts();
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_CREATEHEAP_INVID);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_CREATEHEAP_INVID);
 
     heapInfo = OSiHeapInfo[id];
-    SDK_ASSERTMSG(heapInfo, OS_ERR_CREATEHEAP_NOINFO);
-    SDK_ASSERTMSG(heapInfo->heapArray, OS_ERR_CREATEHEAP_NOHEAP);
+    SDK_TASSERTMSG(heapInfo, OS_ERR_CREATEHEAP_NOINFO);
+    SDK_TASSERTMSG(heapInfo->heapArray, OS_ERR_CREATEHEAP_NOHEAP);
 
     //---- available only on NITRO
     if ( ! OS_IsRunOnTwl() && OSi_ExtraHeapHandle < 0 )
@@ -1069,13 +1069,13 @@ void OS_DestroyHeap(OSArenaId id, OSHeapHandle heap)
     OSIntrMode enabled = OS_DisableInterrupts();
 
     //---- check arena id
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_DESTROYHEAP_INVID);
-    SDK_ASSERTMSG(OSiHeapInfo[id], OS_ERR_DESTROYHEAP_NOINFO);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_DESTROYHEAP_INVID);
+    SDK_TASSERTMSG(OSiHeapInfo[id], OS_ERR_DESTROYHEAP_NOINFO);
     heapInfo = OSiHeapInfo[id];
 
-    SDK_ASSERTMSG(heapInfo->heapArray, OS_ERR_DESTROYHEAP_NOHEAP);
-    SDK_ASSERTMSG(0 <= heap && heap < heapInfo->numHeaps, OS_ERR_DESTROYHEAP_INVHEAP);
-    SDK_ASSERTMSG(0 <= heapInfo->heapArray[heap].size, OS_ERR_DESTROYHEAP_INVHEAP);
+    SDK_TASSERTMSG(heapInfo->heapArray, OS_ERR_DESTROYHEAP_NOHEAP);
+    SDK_TASSERTMSG(0 <= heap && heap < heapInfo->numHeaps, OS_ERR_DESTROYHEAP_INVHEAP);
+    SDK_TASSERTMSG(0 <= heapInfo->heapArray[heap].size, OS_ERR_DESTROYHEAP_INVHEAP);
 
     hd = &heapInfo->heapArray[heap];
 
@@ -1084,7 +1084,7 @@ void OS_DestroyHeap(OSArenaId id, OSHeapHandle heap)
     size = DLSize(hd->free);
     if (hd->size != size)
     {
-        OS_Printf("OS_DestroyHeap(%d): Warning - free list size %d, heap size %d\n", heap, size, hd->size);
+        OS_TPrintf("OS_DestroyHeap(%d): Warning - free list size %d, heap size %d\n", heap, size, hd->size);
     }
 #endif // SDK_DEBUG
 
@@ -1136,28 +1136,28 @@ void OS_AddToHeap(OSArenaId id, OSHeapHandle heap, void *start, void *end)
     OSIntrMode enabled = OS_DisableInterrupts();
 
     //---- check arena id
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_ADDTOHEAP_INVID);
-    SDK_ASSERTMSG(OSiHeapInfo[id], OS_ERR_ADDTOHEAP_NOINFO);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_ADDTOHEAP_INVID);
+    SDK_TASSERTMSG(OSiHeapInfo[id], OS_ERR_ADDTOHEAP_NOINFO);
     heapInfo = OSiHeapInfo[id];
 
-    SDK_ASSERTMSG(heapInfo->heapArray, OS_ERR_ADDTOHEAP_NOHEAP);
-    SDK_ASSERTMSG(0 <= heap && heap < heapInfo->numHeaps, OS_ERR_ADDTOHEAP_INVHEAP);
-    SDK_ASSERTMSG(0 <= heapInfo->heapArray[heap].size, OS_ERR_ADDTOHEAP_INVHEAP);
+    SDK_TASSERTMSG(heapInfo->heapArray, OS_ERR_ADDTOHEAP_NOHEAP);
+    SDK_TASSERTMSG(0 <= heap && heap < heapInfo->numHeaps, OS_ERR_ADDTOHEAP_INVHEAP);
+    SDK_TASSERTMSG(0 <= heapInfo->heapArray[heap].size, OS_ERR_ADDTOHEAP_INVHEAP);
 
     hd = &heapInfo->heapArray[heap];
 
-    SDK_ASSERTMSG(start < end, OS_ERR_ADDTOHEAP_INVRANGE);
+    SDK_TASSERTMSG(start < end, OS_ERR_ADDTOHEAP_INVRANGE);
 
     start = (void *)ROUND(start, ALIGNMENT);
     end = (void *)TRUNC(end, ALIGNMENT);
-    SDK_ASSERTMSG(MINOBJSIZE <= (char *)end - (char *)start, OS_ERR_ADDTOHEAP_INSRANGE);
+    SDK_TASSERTMSG(MINOBJSIZE <= (char *)end - (char *)start, OS_ERR_ADDTOHEAP_INSRANGE);
 
 #ifdef SDK_DEBUG
 #if defined(SDK_TWL) && !defined(SDK_TWLLTD)
     if ((u32)start != (u32)HW_MAIN_MEM_PARAMETER_BUF && (u32)end != (u32)(HW_MAIN_MEM_PARAMETER_BUF + HW_MAIN_MEM_PARAMETER_BUF_SIZE) )
     {
 #endif
-        SDK_ASSERTMSG(RangeSubset(start, end, heapInfo->arenaStart, heapInfo->arenaEnd), OS_ERR_ADDTOHEAP_INVRANGE);
+        SDK_TASSERTMSG(RangeSubset(start, end, heapInfo->arenaStart, heapInfo->arenaEnd), OS_ERR_ADDTOHEAP_INVRANGE);
 #if defined(SDK_TWL) && !defined(SDK_TWLLTD)
     }
 #endif
@@ -1172,8 +1172,8 @@ void OS_AddToHeap(OSArenaId id, OSHeapHandle heap, void *start, void *end)
         {
             continue;
         }
-        SDK_ASSERTMSG(!DLOverlap(heapInfo->heapArray[i].free, start, end), OS_ERR_ADDTOHEAP_INVRANGE);
-        SDK_ASSERTMSG(!DLOverlap(heapInfo->heapArray[i].allocated, start, end), OS_ERR_ADDTOHEAP_INVRANGE);
+        SDK_TASSERTMSG(!DLOverlap(heapInfo->heapArray[i].free, start, end), OS_ERR_ADDTOHEAP_INVRANGE);
+        SDK_TASSERTMSG(!DLOverlap(heapInfo->heapArray[i].allocated, start, end), OS_ERR_ADDTOHEAP_INVRANGE);
     }
 #endif // SDK_DEBUG
 
@@ -1236,7 +1236,7 @@ void OS_AddExtraAreaToHeap(OSArenaId id, OSHeapHandle heap)
 {                                                                        \
     if ( !(exp) )                                                        \
     {                                                                    \
-        OS_Printf( "OS_CheckHeap: Failed " #exp " in %d\n", __LINE__ );  \
+        OS_TPrintf( "OS_CheckHeap: Failed " #exp " in %d\n", __LINE__ );  \
         goto exit_OS_CheckHeap; /* goto is not beautiful, but less codes */ \
     }                                                                    \
 } while (0)
@@ -1246,7 +1246,7 @@ void OS_AddExtraAreaToHeap(OSArenaId id, OSHeapHandle heap)
 {                                                                        \
     if ( !(exp) )                                                        \
     {                                                                    \
-        OS_Printf( "OS_CheckHeap: Failed in %d\n", __LINE__ );  \
+        OS_TPrintf( "OS_CheckHeap: Failed in %d\n", __LINE__ );  \
         goto exit_OS_CheckHeap; /* goto is not beautiful, but less codes */ \
     }                                                                    \
 } while (0)
@@ -1273,8 +1273,8 @@ s32 OS_CheckHeap(OSArenaId id, OSHeapHandle heap)
     OSIntrMode enabled = OS_DisableInterrupts();
 
     //---- check arena id
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_CHECKHEAP_INVID);
-    SDK_ASSERTMSG(OSiHeapInfo[id], OS_ERR_CHECKHEAP_NOINFO);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_CHECKHEAP_INVID);
+    SDK_TASSERTMSG(OSiHeapInfo[id], OS_ERR_CHECKHEAP_NOINFO);
     heapInfo = OSiHeapInfo[id];
 
     //---- heap<0  means current heap
@@ -1371,30 +1371,30 @@ u32 OS_ReferentSize(OSArenaId id, void *ptr)
     OSIntrMode enabled = OS_DisableInterrupts();
 
     //---- check arena id
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_REFERENTSIZE_INVID);
-    SDK_ASSERTMSG(OSiHeapInfo[id], OS_ERR_REFERENTSIZE_NOINFO);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_REFERENTSIZE_INVID);
+    SDK_TASSERTMSG(OSiHeapInfo[id], OS_ERR_REFERENTSIZE_NOINFO);
     heapInfo = OSiHeapInfo[id];
 
-    SDK_ASSERTMSG(heapInfo->heapArray, OS_ERR_REFERENT_NOHEAP);
+    SDK_TASSERTMSG(heapInfo->heapArray, OS_ERR_REFERENT_NOHEAP);
 #ifdef SDK_DEBUG
 #if defined(SDK_TWL) && !defined(SDK_TWLLTD)
         if ( OSi_ExtraHeapArenaId != id )
         {
 #endif
-    SDK_ASSERTMSG(InRange(ptr, (char *)heapInfo->arenaStart + HEADERSIZE, (char *)heapInfo->arenaEnd), OS_ERR_REFERENT_INVPTR);
+    SDK_TASSERTMSG(InRange(ptr, (char *)heapInfo->arenaStart + HEADERSIZE, (char *)heapInfo->arenaEnd), OS_ERR_REFERENT_INVPTR);
 #if defined(SDK_TWL) && !defined(SDK_TWLLTD)
         }
 #endif
 #endif
-    SDK_ASSERTMSG(OFFSET(ptr, ALIGNMENT) == 0, OS_ERR_REFERENT_INVPTR);
+    SDK_TASSERTMSG(OFFSET(ptr, ALIGNMENT) == 0, OS_ERR_REFERENT_INVPTR);
 
     cell = (Cell *) ((char *)ptr - HEADERSIZE);
 
-    SDK_ASSERTMSG(cell->hd, OS_ERR_REFERENT_INVPTR);
-    SDK_ASSERTMSG(((char *)cell->hd - (char *)heapInfo->heapArray) % sizeof(HeapDesc) == 0, OS_ERR_REFERENT_INVPTR);
-    SDK_ASSERTMSG(heapInfo->heapArray <= cell->hd && cell->hd < &heapInfo->heapArray[heapInfo->numHeaps], OS_ERR_REFERENT_INVPTR);
-    SDK_ASSERTMSG(0 <= cell->hd->size, OS_ERR_REFERENT_INVPTR);
-    SDK_ASSERTMSG(DLLookup(cell->hd->allocated, cell), OS_ERR_REFERENT_INVPTR);
+    SDK_TASSERTMSG(cell->hd, OS_ERR_REFERENT_INVPTR);
+    SDK_TASSERTMSG(((char *)cell->hd - (char *)heapInfo->heapArray) % sizeof(HeapDesc) == 0, OS_ERR_REFERENT_INVPTR);
+    SDK_TASSERTMSG(heapInfo->heapArray <= cell->hd && cell->hd < &heapInfo->heapArray[heapInfo->numHeaps], OS_ERR_REFERENT_INVPTR);
+    SDK_TASSERTMSG(0 <= cell->hd->size, OS_ERR_REFERENT_INVPTR);
+    SDK_TASSERTMSG(DLLookup(cell->hd->allocated, cell), OS_ERR_REFERENT_INVPTR);
 
     (void)OS_RestoreInterrupts(enabled);
     return (u32)(cell->size - HEADERSIZE);
@@ -1419,62 +1419,64 @@ void OS_DumpHeap(OSArenaId id, OSHeapHandle heap)
     OSIntrMode enabled = OS_DisableInterrupts();
 
     //---- check arena id
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_DUMPHEAP_INVID);
-    SDK_ASSERTMSG(OSiHeapInfo[id], OS_ERR_DUMPHEAP_NOINFO);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_DUMPHEAP_INVID);
+    SDK_TASSERTMSG(OSiHeapInfo[id], OS_ERR_DUMPHEAP_NOINFO);
     heapInfo = OSiHeapInfo[id];
 
-    SDK_ASSERTMSG(heapInfo && heapInfo->heapArray, OS_ERR_DUMPHEAP_NOHEAP);
+    SDK_TASSERTMSG(heapInfo && heapInfo->heapArray, OS_ERR_DUMPHEAP_NOHEAP);
 
     //---- heap<0  means current heap
     if (heap < 0)
     {
         heap = heapInfo->currentHeap;
     }
-    SDK_ASSERTMSG(0 <= heap && heap < heapInfo->numHeaps, OS_ERR_DUMPHEAP_INVHEAP);
+    SDK_TASSERTMSG(0 <= heap && heap < heapInfo->numHeaps, OS_ERR_DUMPHEAP_INVHEAP);
 
     hd = &heapInfo->heapArray[heap];
     if (hd->size < 0)
     {
-        OS_Printf("----Inactive\n");
+        OS_TPrintf("----Inactive\n");
         return;
     }
 
-    SDK_ASSERTMSG(0 <= OS_CheckHeap(id, heap), OS_ERR_DUMPHEAP_BROKENHEAP);
+    SDK_TASSERTMSG(0 <= OS_CheckHeap(id, heap), OS_ERR_DUMPHEAP_BROKENHEAP);
 
+#ifdef SDK_ARM9
 #ifdef  SDK_DEBUG
     OS_Printf("padding %d/(%f%%) header %d/(%f%%) payload %d/(%f%%)\n",
               hd->paddingBytes, 100.0 * hd->paddingBytes / hd->size,
               hd->headerBytes, 100.0 * hd->headerBytes / hd->size,
               hd->payloadBytes, 100.0 * hd->payloadBytes / hd->size);
 #endif // SDK_DEBUG
+#endif /* SDK_ARM9 */
 
-    OS_Printf("  addr    size     end      prev     next\n");
+    OS_TPrintf("  addr    size     end      prev     next\n");
 
-    OS_Printf("----Allocated\n");
-    SDK_ASSERTMSG(hd->allocated == NULL || hd->allocated->prev == NULL, OS_ERR_DUMPHEAP_BROKENHEAP);
+    OS_TPrintf("----Allocated\n");
+    SDK_TASSERTMSG(hd->allocated == NULL || hd->allocated->prev == NULL, OS_ERR_DUMPHEAP_BROKENHEAP);
     if ( ! hd->allocated )
     {
-        OS_Printf("None.\n");
+        OS_TPrintf("None.\n");
     }
     else
     {
         for (cell = hd->allocated; cell; cell = cell->next)
         {
-            OS_Printf("%08x %6x %08x %08x %08x\n",
+            OS_TPrintf("%08x %6x %08x %08x %08x\n",
                       cell, cell->size, (char *)cell + cell->size, cell->prev, cell->next);
         }
     }
 
-    OS_Printf("----Free\n");
+    OS_TPrintf("----Free\n");
     if ( ! hd->free )
     {
-        OS_Printf("None.\n");
+        OS_TPrintf("None.\n");
     }
     else
     {
         for (cell = hd->free; cell; cell = cell->next)
         {
-            OS_Printf("%08x %6x %08x %08x %08x\n",
+            OS_TPrintf("%08x %6x %08x %08x %08x\n",
                       cell, cell->size, (char *)cell + cell->size, cell->prev, cell->next);
         }
     }
@@ -1508,8 +1510,8 @@ void OS_VisitAllocated(OSArenaId id, OSAllocVisitor visitor)
     OSIntrMode enabled = OS_DisableInterrupts();
 
     //---- check arena id
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, OS_ERR_VISITALLOCATED_INVID);
-    SDK_ASSERTMSG(OSiHeapInfo[id], OS_ERR_VISITALLOCATED_NOINFO);
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, OS_ERR_VISITALLOCATED_INVID);
+    SDK_TASSERTMSG(OSiHeapInfo[id], OS_ERR_VISITALLOCATED_NOINFO);
     heapInfo = OSiHeapInfo[id];
 
     for (heap = 0; heap < heapInfo->numHeaps; heap++)
@@ -1684,26 +1686,26 @@ void OS_ClearHeap(OSArenaId id, OSHeapHandle heap, void *start, void *end)
     OSIntrMode enabled = OS_DisableInterrupts();
 
     //---- check arena id
-    SDK_ASSERTMSG(id < OS_ARENA_MAX, "invalid id");
+    SDK_TASSERTMSG(id < OS_ARENA_MAX, "invalid id");
 
     heapInfo = OSiHeapInfo[id];
 
-    SDK_ASSERTMSG(heapInfo && heapInfo->heapArray, "heap not initialized");
-    SDK_ASSERTMSG(start < end, "invalid range");
+    SDK_TASSERTMSG(heapInfo && heapInfo->heapArray, "heap not initialized");
+    SDK_TASSERTMSG(start < end, "invalid range");
     start = (void *)ROUND(start, ALIGNMENT);
     end = (void *)TRUNC(end, ALIGNMENT);
-    SDK_ASSERTMSG(start < end, "invalid range");
+    SDK_TASSERTMSG(start < end, "invalid range");
 #ifdef SDK_DEBUG
 #if defined(SDK_TWL) && !defined(SDK_TWLLTD)
     if ( OSi_ExtraHeapArenaId != id || OSi_ExtraHeapHandle != heap )
     {
 #endif
-        SDK_ASSERTMSG(RangeSubset(start, end, heapInfo->arenaStart, heapInfo->arenaEnd), "invalid range");
+        SDK_TASSERTMSG(RangeSubset(start, end, heapInfo->arenaStart, heapInfo->arenaEnd), "invalid range");
 #if defined(SDK_TWL) && !defined(SDK_TWLLTD)
     }
 #endif
 #endif
-    SDK_ASSERTMSG(MINOBJSIZE <= (char *)end - (char *)start, "too small range");
+    SDK_TASSERTMSG(MINOBJSIZE <= (char *)end - (char *)start, "too small range");
 
     //---- heap<0  means current heap
     if (heap < 0)

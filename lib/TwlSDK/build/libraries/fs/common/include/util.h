@@ -10,8 +10,8 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-25#$
-  $Rev: 8648 $
+  $Date:: 2009-07-14#$
+  $Rev: 10906 $
   $Author: yosizaki $
 
  *---------------------------------------------------------------------------*/
@@ -200,6 +200,29 @@ int FSi_DecrementUnicodePosition(const u16 *str, int pos);
 int FSi_DecrementUnicodePositionToSlash(const u16 *str, int pos);
 
 /*---------------------------------------------------------------------------*
+  Name:         FSi_WaitConditionChange
+
+  Description:  指定ビットのいずれかが既定の状態になるまでスリープ
+
+  Arguments:    flags            監視するビット集合
+                on               1になりえるビット
+                off              0になりえるビット
+                queue            スリープ用のキューまたはNULL
+
+  Returns:      None.
+ *---------------------------------------------------------------------------*/
+SDK_INLINE void FSi_WaitConditionChange(u32 *flags, u32 on, u32 off, OSThreadQueue *queue)
+{
+    OSIntrMode bak = OS_DisableInterrupts();
+    while ((!on || ((*flags & on) == 0)) &&
+           (!off || ((*flags & off) != 0)))
+    {
+        OS_SleepThread(queue);
+    }
+    (void)OS_RestoreInterrupts(bak);
+}
+
+/*---------------------------------------------------------------------------*
   Name:         FSi_WaitConditionOn
 
   Description:  特定のビットが1になるまでスリープ
@@ -212,12 +235,7 @@ int FSi_DecrementUnicodePositionToSlash(const u16 *str, int pos);
  *---------------------------------------------------------------------------*/
 SDK_INLINE void FSi_WaitConditionOn(u32 *flags, u32 bits, OSThreadQueue *queue)
 {
-    OSIntrMode bak = OS_DisableInterrupts();
-    while ((*flags & bits) == 0)
-    {
-        OS_SleepThread(queue);
-    }
-    (void)OS_RestoreInterrupts(bak);
+    FSi_WaitConditionChange(flags, bits, 0, queue);
 }
 
 /*---------------------------------------------------------------------------*
@@ -233,12 +251,7 @@ SDK_INLINE void FSi_WaitConditionOn(u32 *flags, u32 bits, OSThreadQueue *queue)
  *---------------------------------------------------------------------------*/
 SDK_INLINE void FSi_WaitConditionOff(u32 *flags, u32 bits, OSThreadQueue *queue)
 {
-    OSIntrMode bak = OS_DisableInterrupts();
-    while ((*flags & bits) != 0)
-    {
-        OS_SleepThread(queue);
-    }
-    (void)OS_RestoreInterrupts(bak);
+    FSi_WaitConditionChange(flags, 0, bits, queue);
 }
 
 /*---------------------------------------------------------------------------*

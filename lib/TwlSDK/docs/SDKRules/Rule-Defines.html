@@ -18,7 +18,7 @@
   <TBODY>
     <TR>
       <TH valign="top" align="left">TWLSDK_ROOT<BR>
-      NITROSDK_ROOT<BR>
+      (NITROSDK_ROOT)<BR>
       <FONT color="#ff0000">★重要</FONT></TH>
       <TD valign="top" align="left">
       TWL-SDK がインストールされているディレクトリであり、$TwlSDK が展開されているディレクトリを設定します。<BR><BR>
@@ -59,7 +59,7 @@
     </TR>
     <TR>
       <TH valign="top" align="left">CWFOLDER_TWL<BR>
-      CWFOLDER_NITRO<BR></TH>
+      (CWFOLDER_NITRO)<BR></TH>
       <TD valign="top" align="left">CodeWarrior のインストールされているディレクトリです。<BR>
       CodeWarrior for NITRO をインストールすると CWFOLDER_NITRO が自動的に設定されます。<BR>
       cygwin の bash で設定するときは<BR>
@@ -77,7 +77,7 @@
     </TR>
     <TR>
       <TH align="left" valign="top">IS_TWL_DEBUGGER_DIR<BR>
-      IS_NITRO_DIR</TH>
+      (IS_NITRO_DIR)</TH>
       <TD valign="top" align="left">IS-TWL-DEBUGGER 関連ファイルのインストールされているディレクトリです。<BR>
       IS-TWL-DEBUGGER をインストールすると自動的に設定されます。<BR>
       この環境変数があると自動的に IS-TWL-DEBUGGER 関連のライブラリがリンクされます。<BR><BR>
@@ -97,7 +97,7 @@
   <COL span="1" width="160">
   <TBODY>
     <TR>
-      <TH valign="top" align="left">TWL_PROC<BR>NITRO_PROC<BR>
+      <TH valign="top" align="left">TWL_PROC<BR>(NITRO_PROC)<BR>
       <FONT color="#a0a0a0">※変更不要</FONT></TH>
       <TD align="left">ARM9(メインプロセッサ) と ARM7(サブプロセッサ) どちらのプロセッサ用コードを生成するのかを設定します。<BR>
       <FONT color="#ff0000">初期値のままでご使用ください。</FONT><BR>
@@ -144,7 +144,7 @@
     </TR>
     <TR>
       <TH valign="top" align="left">TWL_CODEGEN<BR>
-      NITRO_CODEGEN</TH>
+      (NITRO_CODEGEN)</TH>
       <TD align="left">コンパイラおよびアセンブラに Arm と Thumb どのバイナリコードを生成するのかを設定します。<BR>
       ソース内で明示的に指定がなければこの設定に添ってコードが生成されます。<BR><BR>
       このビルドスイッチに指定されている値を Makefile 内で参照したい場合は、commondefs 後に参照してください。<BR>
@@ -171,11 +171,11 @@
     </TR>
     <TR>
       <TH valign="top" align="left">TWL_DEBUG<BR>
+      (NITRO_DEBUG)<BR>
       TWL_RELEASE<BR>
+      (NITRO_RELEASE)<BR>
       TWL_FINALROM<BR>
-      NITRO_DEBUG<BR>
-      NITRO_RELEASE<BR>
-      NITRO_FINALROM<BR>
+      (NITRO_FINALROM)<BR>
       <FONT color="#ff0000">★重要</FONT></TH>
       <TD align="left">ターゲットのビルドタイプを DEBUG 版か RELEASE 版か FINALROM 版から選択できます。<BR>
       この設定によって make コマンド実行時にコンパイルオプションやリンクされるライブラリが変更されます。<BR>
@@ -185,9 +185,9 @@
     </TR>
     <TR>
       <TH valign="top" align="left">TWL_STD_PCHDR<BR>
+      (NITRO_STD_PCHDR)<BR>
       TWL_NO_STD_PCHDR<BR>
-      NITRO_STD_PCHDR<BR>
-      NITRO_NO_STD_PCHDR</TH>
+      (NITRO_NO_STD_PCHDR)</TH>
       <TD valign="top" align="left">
       TWL_STD_PCHDR に何かの値が設定されていた場合には、ビルドシステムはビルドに先立ち $TwlSDK/include/twl.h をプリコンパイルし、
       その結果をファイルのビルド時に読み込みます。<BR>
@@ -196,7 +196,7 @@
       <strong style="color:#FF6633">初期値 : TWL_STD_PCHDR=True</strong></TD>
     </TR>
     <TR>
-      <TH valign="top" align="left">TWLSDK_LANG<BR>NITROSDK_LANG</TH>
+      <TH valign="top" align="left">TWLSDK_LANG<BR>(NITROSDK_LANG)</TH>
       <TD valign="top" align="left">TwlSDK のコンパイルオプションを日本語用/英語用に切り替えます。<BR>
       日本語の場合 "-enc SJIS" が、英語の場合 "-enc ascii" というオプションが設定されます。
       <table class="style_table" cellspacing="1" border="1" bgcolor="#CCFFCC">
@@ -214,7 +214,7 @@
       </TABLE>
     </TR>
     <TR>
-      <TH valign="top" align="left">TWL_ROMSPEED<BR>NITRO_ROMSPEED</TH>
+      <TH valign="top" align="left">TWL_ROMSPEED<BR>(NITRO_ROMSPEED)</TH>
       <TD valign="top" align="left">
       デフォルトの RSF ファイルを使用する場合、Property セクションの RomSpeedType パラメータへ指定する設定値を与えます。<BR>
       具体的には、makerom.TWL.exe ツールへ与える MAKEROM_ROMSPEED シンボルに設定される値となります。<BR>
@@ -241,26 +241,26 @@
       </TD>
     </TR>
     <TR>
-      <TH valign="top" align="left">TWL_COMPRESS<BR>NITRO_COMPRESS<BR>
+      <TH valign="top" align="left">TWL_COMPRESS<BR>(NITRO_COMPRESS)<BR>
       <FONT color="#ff0000">★重要</FONT></TH>
       <TD valign="top" align="left">何か値が設定されていた場合にはリンク終了後に STATIC/OVERLAY セグメントを圧縮します。<BR><BR>
       <strong style="color:#FF6633">初期値 : なし (圧縮しない)</strong></TD>
     </TR>
     <TR>
-      <TH valign="top" align="left">TWL_DIGEST<BR>NITRO_DIGEST</TH>
+      <TH valign="top" align="left">TWL_DIGEST<BR>(NITRO_DIGEST)</TH>
       <TD valign="top" align="left">このビルドスイッチはアプリケーションにのみ有効で、SDKのビルド時には無視されます。<BR>
       何か値が設定されていた場合には、オーバーレイを使用するDSダウンロードプレイ子機プログラムとしてビルドします。<BR><BR>
       <strong style="color:#FF6633">初期値 : なし</strong></TD>
     </TR>
     <TR>
-      <TH valign="top" align="left">TWL_PROFILE<BR>NITRO_PROFILE</TH>
+      <TH valign="top" align="left">TWL_PROFILE<BR>(NITRO_PROFILE)</TH>
       <TD valign="top" align="left">何か値が設定されていた場合は、コンパイル時に -profile オプションが追加されます。<BR>
       主に DEBUG 時に使用され、これによりアプリケーション実行時における各関数への出入りの追跡が可能になります。<BR>
       詳しい使用法については OS_DumpCallTrace 関数を参考にしてください。<BR><BR>
       <strong style="color:#FF6633">初期値 : なし (-profile オプション無効 )</strong></TD>
     </TR>
     <TR>
-      <TH valign="top" align="left">TWL_MEMSIZE<BR>NITRO_MEMSIZE<BR>
+      <TH valign="top" align="left">TWL_MEMSIZE<BR>(NITRO_MEMSIZE)<BR>
       <FONT color="#a0a0a0">※変更不要</FONT></TH>
       <TD valign="top" align="left">
       TWL のコンパイルターゲットのメインメモリサイズを指定します。<BR>
@@ -302,14 +302,14 @@
       </TD>
     </TR>
     <TR>
-      <TH valign="top" align="left">TWL_NO_OPT_G<BR>NITRO_NO_OPT_G</TH>
+      <TH valign="top" align="left">TWL_NO_OPT_G<BR>(NITRO_NO_OPT_G)</TH>
       <TD valign="top" align="left">
       何か値が設定されていた場合は、通常のコンパイルおよびリンク時に指定されている -g オプションを外します。<BR>
       これにより大規模なプロジェクトにおいて問題となるリンク処理時間の短縮が期待できます。<BR><BR>
       <strong style="color:#FF6633">初期値 : なし (-g オプション有効)</strong></TD>
     </TR>
     <TR>
-      <TH valign="top" align="left">TWL_SVC_WAITVBLANK_COMPATIBLE<BR>NITRO_SVC_WAITVBLANK_COMPATIBLE<BR></TH>
+      <TH valign="top" align="left">TWL_SVC_WAITVBLANK_COMPATIBLE<BR>(NITRO_SVC_WAITVBLANK_COMPATIBLE)<BR></TH>
       <TD valign="top" align="left">
       SVC_WaitVBlankIntr 関数呼び出しを自動的に OS_WaitVBlankIntr 関数呼び出しに置換したくない場合に定義します。<BR>
       ただし、SVC_WaitVBlankIntr 関数は低優先度のスレッドにリソースを開放しない仕様であり、使い方によっては問題が発生するため、
@@ -407,6 +407,11 @@
             <TD><strong>mongoose</strong></TD>
             <TD>NITRO ROM の場合 mongoose コンポーネントを使用し、<BR>
                 HYBRID ROM の場合 mongoose.TWL コンポーネントを使用します。</TD>
+          </TR>
+          <TR>
+            <TD><strong>ichneumon</strong></TD>
+            <TD>NITRO ROM の場合 ichneumon コンポーネントを使用し、<BR>
+                HYBRID ROM の場合 ichneumon.TWL コンポーネントを使用します。</TD>
           </TR>
           <TR>
             <TD><strong>racoon</strong></TD>

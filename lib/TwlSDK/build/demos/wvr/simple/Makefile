@@ -11,16 +11,17 @@
 # not be disclosed to third parties or copied or duplicated in any form,
 # in whole or in part, without the prior written consent of Nintendo.
 #
-# $Date:: 2008-12-22#$
-# $Rev: 9714 $
+# $Date:: 2009-06-24#$
+# $Rev: 10808 $
 # $Author: okubata_ryoma $
 #----------------------------------------------------------------------------
 
-TARGET_PLATFORM :=  NITRO
+TARGET_PLATFORM :=  NITRO TWL
+TWL_ARCHGEN		:=	HYBRID
 
 SRCS        =   main.c font.c
 
-LLIBRARIES  =   libwvr$(NITRO_LIBSUFFIX).a
+LLIBRARIES  =   libwvr$(TWL_LIBSUFFIX).a
 
 # wh サンプルモジュールを使用
 WH_DIR      =   $(ROOT)/build/demos/wireless_shared/wh
@@ -29,13 +30,23 @@ LINCLUDES   =   $(WH_DIR)
 
 #------------------------------------------------------#
 # VRAM内に無線ライブラリが配置されるコンポーネント定義 #
-MY_COMPONENT_NAME   =   ichneumon
-MAKEROM_ARM7        =   $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM7)/$(MY_COMPONENT_NAME)_sub.$(NITRO_ELF_EXT)
+
+DEFAULT_COMP_ARM7	=	ichneumon
+
 #------------------------------------------------------#
 
 TARGET_BIN  =   main.srl
 
 include $(TWLSDK_ROOT)/build/buildtools/commondefs
+
+#----------------------------------------------------------------------------
+
+# ichneumon.TWL はサイズの関係で CWforDSi 版にのみ含まれるため、それを使用するデモはビルドしない
+ifneq	($(SDK_CW_BUILD_VERSION_CC),)
+ifeq	($(shell expr "$(SDK_CW_BUILD_VERSION_CC)" "<=" 3.0),1)
+TARGET_PLATFORM_LIST		:= $(filter-out TWL, $(TARGET_PLATFORM_LIST))
+endif
+endif
 
 #----------------------------------------------------------------------------
 

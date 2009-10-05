@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #ifndef NITRO_OS_THREAD_H_
@@ -500,7 +500,7 @@ static inline u32 OS_GetMaxThreadId(void)
 #ifndef SDK_THREAD_INFINITY
 static inline OSThread *OS_GetThread(u32 id)
 {
-    SDK_ASSERTMSG(id < OS_THREAD_MAX_NUM, "Thread id illegal\n");
+    SDK_TASSERTMSG(id < OS_THREAD_MAX_NUM, "Thread id illegal\n");
     return OS_GetThreadInfo()->entry[id];
 }
 #else
@@ -518,7 +518,7 @@ extern OSThread *OS_GetThread(u32 id);
  *---------------------------------------------------------------------------*/
 static inline u32 OS_GetThreadId(const OSThread *thread)
 {
-    SDK_ASSERTMSG(thread, "null thread pointer.");
+    SDK_TASSERTMSG(thread, "null thread pointer.");
     return thread->id;
 }
 
@@ -533,7 +533,7 @@ static inline u32 OS_GetThreadId(const OSThread *thread)
  *---------------------------------------------------------------------------*/
 static inline OSThreadState OS_GetThreadState(const OSThread *thread)
 {
-    SDK_ASSERTMSG(thread, "null thread pointer.");
+    SDK_TASSERTMSG(thread, "null thread pointer.");
     return thread->state;
 }
 
@@ -548,7 +548,7 @@ static inline OSThreadState OS_GetThreadState(const OSThread *thread)
  *---------------------------------------------------------------------------*/
 static inline OSContext *OS_GetThreadContext(const OSThread *thread)
 {
-    SDK_ASSERTMSG(thread, "null thread pointer.");
+    SDK_TASSERTMSG(thread, "null thread pointer.");
     return (OSContext *)&thread->context;
 }
 

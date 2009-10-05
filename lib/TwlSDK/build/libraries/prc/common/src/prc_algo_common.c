@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <nitro.h>
@@ -142,7 +142,7 @@ PRC_InitPrototypeDBEx_Common(PRCPrototypeDB_Common *protoDB,
                                                         protoDB->wholeStrokeCount,
                                                         protoDB->patternCount);
 #ifdef SDK_DEBUG
-    SDK_ASSERTMSG((bufferSize ==
+    SDK_TASSERTMSG((bufferSize ==
                    PRC_GetPrototypeDBBufferSizeEx_Common(prototypeList, kindMask,
                                                          ignoreDisabledEntries, param)),
                   "Internal Error: bufferSize mismatch.");
@@ -214,7 +214,7 @@ PRC_InitInputPatternEx_Common(PRCInputPattern_Common *pattern,
 
     bufferSize = PRCi_SetPatternBufferInfo_Common(&WAInfo, buffer, maxPointCount, maxStrokeCount);
 #ifdef SDK_DEBUG
-    SDK_ASSERTMSG((bufferSize ==
+    SDK_TASSERTMSG((bufferSize ==
                    PRCi_GetInputPatternBufferSize_Common(maxPointCount, maxStrokeCount)),
                   "Internal Error: bufferSize mismatch.");
 #endif
@@ -264,18 +264,18 @@ void PRCi_PrintPatternData_Common(PRCiPatternData_Common *data)
 {
     int     iStroke, iPoint;
 
-    OS_Printf("  strokeCount: %d\n", data->strokeCount);
-    OS_Printf("  pointCount:  %d\n", data->pointCount);
-    OS_Printf("  wholeLength: %d.%03d\n", FMT_FX(data->wholeLength));
-    OS_Printf("  wholeBoundingBox: (%d, %d) - (%d, %d)\n", FMT_BB(data->wholeBoundingBox));
+    OS_TPrintf("  strokeCount: %d\n", data->strokeCount);
+    OS_TPrintf("  pointCount:  %d\n", data->pointCount);
+    OS_TPrintf("  wholeLength: %d.%03d\n", FMT_FX(data->wholeLength));
+    OS_TPrintf("  wholeBoundingBox: (%d, %d) - (%d, %d)\n", FMT_BB(data->wholeBoundingBox));
     for (iStroke = 0; iStroke < data->strokeCount; iStroke++)
     {
-        OS_Printf("  Stroke #%d\n", iStroke);
-        OS_Printf("    index : %d\n", data->strokes[iStroke]);
-        OS_Printf("    size  : %d\n", data->strokeSizes[iStroke]);
-        OS_Printf("    length: %d.%03d\n", FMT_FX(data->strokeLengths[iStroke]));
-        OS_Printf("    ratio : %d.%03d\n", FMT_FX(data->strokeRatios[iStroke]));
-        OS_Printf("    strokeBoundingBoxes: (%d, %d) - (%d, %d)\n",
+        OS_TPrintf("  Stroke #%d\n", iStroke);
+        OS_TPrintf("    index : %d\n", data->strokes[iStroke]);
+        OS_TPrintf("    size  : %d\n", data->strokeSizes[iStroke]);
+        OS_TPrintf("    length: %d.%03d\n", FMT_FX(data->strokeLengths[iStroke]));
+        OS_TPrintf("    ratio : %d.%03d\n", FMT_FX(data->strokeRatios[iStroke]));
+        OS_TPrintf("    strokeBoundingBoxes: (%d, %d) - (%d, %d)\n",
                   FMT_BB(data->strokeBoundingBoxes[iStroke]));
         for (iPoint = 0; iPoint < data->strokeSizes[iStroke]; iPoint++)
         {
@@ -283,10 +283,10 @@ void PRCi_PrintPatternData_Common(PRCiPatternData_Common *data)
 
             index = data->strokes[iStroke] + iPoint;
 
-            OS_Printf("      #%d: pointArray[%d] = (%d, %d)\n", iPoint, index,
+            OS_TPrintf("      #%d: pointArray[%d] = (%d, %d)\n", iPoint, index,
                       FMT_POINT(data->pointArray[index]));
-//            OS_Printf("        length: %d.%03d, ratio: %d.%03d (%d.%03d), angle: %d\n",
-            OS_Printf("        length: %d.%03d, ratio: %d.%03d, angle: %d\n",
+//            OS_TPrintf("        length: %d.%03d, ratio: %d.%03d (%d.%03d), angle: %d\n",
+            OS_TPrintf("        length: %d.%03d, ratio: %d.%03d, angle: %d\n",
                       FMT_FX(data->lineSegmentLengthArray[index]),
                       FMT_FX(data->lineSegmentRatioToStrokeArray[index]),
 //                FMT_FX(data->lineSegmentRatioToWholeArray[index]),
@@ -294,14 +294,14 @@ void PRCi_PrintPatternData_Common(PRCiPatternData_Common *data)
         }
     }
 #if 0
-    OS_Printf("  pointArray:\n");
+    OS_TPrintf("  pointArray:\n");
     for (iPoint = 0; iPoint < data->pointCount; iPoint++)
     {
         int     index = iPoint;
 
-        OS_Printf("    pointArray[%d] = (%d, %d)\n", index, FMT_POINT(data->pointArray[index]));
-//        OS_Printf("      length: %d.%03d, ratio: %d.%03d (%d.%03d), angle: %d\n",
-        OS_Printf("      length: %d.%03d, ratio: %d.%03d, angle: %d\n",
+        OS_TPrintf("    pointArray[%d] = (%d, %d)\n", index, FMT_POINT(data->pointArray[index]));
+//        OS_TPrintf("      length: %d.%03d, ratio: %d.%03d (%d.%03d), angle: %d\n",
+        OS_TPrintf("      length: %d.%03d, ratio: %d.%03d, angle: %d\n",
                   FMT_FX(data->lineSegmentLengthArray[index]),
                   FMT_FX(data->lineSegmentRatioToStrokeArray[index]),
 //            FMT_FX(data->lineSegmentRatioToWholeArray[index]),
@@ -683,7 +683,7 @@ PRCi_ExtractInputPattern_Common(PRCInputPattern_Common *pattern,
                                               (void *)data->pointArray);
             break;
         default:
-            OS_Warning("invalid resample method type");
+            OS_TWarning("invalid resample method type");
             break;
         }
 
@@ -693,7 +693,7 @@ PRCi_ExtractInputPattern_Common(PRCInputPattern_Common *pattern,
         }
     }
 //    end = OS_GetTick();
-//    OS_Printf("// Resample: %lldμs\n", OS_TicksToMicroSeconds(end-start));
+//    OS_TPrintf("// Resample: %lldμs\n", OS_TicksToMicroSeconds(end-start));
 //    }
 
     SDK_ASSERT(selectedPointNum <= maxPointCount);
@@ -826,7 +826,7 @@ PRCi_ExtractInputPattern_Common(PRCInputPattern_Common *pattern,
                 }
             }
         }
-        SDK_ASSERTMSG(newFlag, "Internal error: non-terminated resampled stroke.");
+        SDK_TASSERTMSG(newFlag, "Internal error: non-terminated resampled stroke.");
     }
 
     data->pointCount = wholePointCount;
@@ -842,7 +842,7 @@ PRCi_ExtractInputPattern_Common(PRCInputPattern_Common *pattern,
 //    start = OS_GetTick();
     PRCi_CalcExtraValues_Common((PRCiPatternData_Common *)data);
 //    end = OS_GetTick();
-//    OS_Printf("// CalcExtraValues: %lldμs\n", OS_TicksToMicroSeconds(end-start));
+//    OS_TPrintf("// CalcExtraValues: %lldμs\n", OS_TicksToMicroSeconds(end-start));
 //    }
 
     if (normalizeSize > 0)
@@ -951,11 +951,11 @@ void PRCi_CalcExtraValues_Common(PRCiPatternData_Common *data)
             {
                 // 1ストローク終了
 
-                SDK_ASSERTMSG(!newFlag, "the pattern contains a zero-length stroke.");
+                SDK_TASSERTMSG(!newFlag, "the pattern contains a zero-length stroke.");
 
                 if (strokeLength == 0)
                 {
-                    OS_Warning("the pattern contains a zero-Euclid-length stroke.");
+                    OS_TWarning("the pattern contains a zero-Euclid-length stroke.");
                     strokeLength = PRC_TINY_LENGTH;
                 }
 
@@ -1006,11 +1006,11 @@ void PRCi_CalcExtraValues_Common(PRCiPatternData_Common *data)
 
             point++;
         }
-        SDK_ASSERTMSG(newFlag, "the pattern contains a non-terminated stroke.");
+        SDK_TASSERTMSG(newFlag, "the pattern contains a non-terminated stroke.");
 
         if (data->wholeLength == 0)
         {
-            OS_Warning("the pattern is zero-Euclid-length.");
+            OS_TWarning("the pattern is zero-Euclid-length.");
             data->wholeLength = PRC_TINY_LENGTH;
         }
     }

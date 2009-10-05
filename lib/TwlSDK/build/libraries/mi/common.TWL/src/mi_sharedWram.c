@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-12-03#$
-  $Rev: 9490 $
-  $Author: yada $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 #ifdef SDK_ARM9
 #include <twl.h>
@@ -932,7 +932,7 @@ static void MIi_CallbackForPxi( PXIFifoTag tag, u32 data, BOOL sendType )
 		u32         retval = 0;
 
 		MIi_TakeApartData( data, &command, &wram, &proc, &param );
-//OS_Printf("  com=%d wram=%d proc=%d param=0x%x\n", command, wram, proc, param );
+//OS_TPrintf("  com=%d wram=%d proc=%d param=0x%x\n", command, wram, proc, param );
 
 #ifdef SDK_ARM9
 		switch( command )
@@ -2467,31 +2467,31 @@ void MI_DumpWramList(MIWramPos wram)
 	int maxNum = (wram == MI_WRAM_A)? MI_WRAM_A_MAX_NUM: MI_WRAM_B_MAX_NUM;
 	
 	//---- wram address
-	OS_Printf("----WRAM-%c (%x-%x)\n",
+	OS_TPrintf("----WRAM-%c (%x-%x)\n",
 			  'A'+(int)wram,
 			  MI_GetWramMapStart(wram),  MI_GetWramMapEnd(wram) );
 
 	//---- explanatory
-	OS_Printf("      ALLOC  RESERVE\n");
+	OS_TPrintf("      ALLOC  RESERVE\n");
 
 	//---- each slot info
 	for( n=0; n<maxNum; n++ )
 	{
 		//---- slot num
-		OS_Printf("slot%d  ", n);
+		OS_TPrintf("slot%d  ", n);
 
 		//---- allocated proc
 		if ( MI_GetWramBankEnable( wram, n ) )
 		{
-			OS_Printf("%s   ", getMasterStr( MI_GetWramBankMaster( wram, n ) ) );
+			OS_TPrintf("%s   ", getMasterStr( MI_GetWramBankMaster( wram, n ) ) );
 		}
 		else
 		{
-			OS_Printf("----   ");
+			OS_TPrintf("----   ");
 		}
 
 		//---- reserved proc
-		OS_Printf("%s\n", getMasterStr( MI_GetWramReservation( wram, n ) ) );
+		OS_TPrintf("%s\n", getMasterStr( MI_GetWramReservation( wram, n ) ) );
 	}
 #endif
 }
@@ -2511,7 +2511,7 @@ void MI_DumpWramListAll(void)
 	MI_DumpWramList( MI_WRAM_A );
 	MI_DumpWramList( MI_WRAM_B );
 	MI_DumpWramList( MI_WRAM_C );
-	OS_Printf("\n");
+	OS_TPrintf("\n");
 #endif // ifndef SDK_FINALROM
 }
 

@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include	<nitro.h>
@@ -1020,7 +1020,8 @@ static void WBTi_NotifyCompletionCallback(WBTContext * work, WBTCommandType even
     WBTCommand *current = WBT_GetCurrentCommand(work);
     WBTRecvToken *token = &work->peer_param[aid].recv_token;
     /* ’Ê’m‚Í 1 ‰ñ‚¾‚¯”­¶ */
-    if (current->my_cmd_counter == token->token_peer_cmd_counter)
+    if ((current != NULL) &&
+        (current->my_cmd_counter == token->token_peer_cmd_counter))
     {
         int     peer_bmp = (1 << aid);
         current->peer_cmd_counter = token->token_peer_cmd_counter;
@@ -1585,7 +1586,7 @@ WBT_RegisterBlockInfo(WBTContext * work, WBTBlockInfoList *list, u32 id,
             /* id ‚ªŠù‚É work ‚É“o˜^‚³‚ê‚Ä‚¢‚½ê‡‚Í FALSE ‚ð•Ô‚µ‚ÄI—¹ */
             if ((*pp)->data_info.id == id)
             {
-                OS_Warning("block_id is registered already.");
+                OS_TWarning("block_id is registered already.");
                 return FALSE;
             }
         }

@@ -10,6 +10,68 @@
 <HR>
 <DL>
 <DT>
+<A href="#sdk_5_3_%E6%AD%A3%E5%BC%8F%E7%89%88">■TWL-SDK 5.3&#160;正式版</A> (2009/08/07)</DT>
+<DD><A href="#note77-01">Note 77-01: (TOOL) TwlNmenu で tad を「Card」モードから参照できない不具合の修正</A></DD>
+<DD><A href="#note77-02">Note 77-02: (WXC) すれちがい中継所対応関連のドキュメントとツール追加</A></DD>
+<DD><A href="#KnownIssues_5_3_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK 5.3&#160;正式版での既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#sdk_5_3_RC">■TWL-SDK 5.3&#160;RC</A> (2009/07/21)</DT>
+<DD><A href="#note76-01">Note 76-01: (CARD) サンプルデモの修正</A></DD>
+<DD><A href="#note76-02">Note 76-02: (DSP) DSP_IsSoundPlaying, DSP_IsShutterSoundPlaying 関数の修正</A></DD>
+<DD><A href="#note76-03">Note 76-03: (DSP) マイクサンプリングのバッファサイズ不具合修正</A></DD>
+<DD><A href="#note76-04">Note 76-04: (DevEnv) TWL ビットマップフォントに韓国語拡張フォントを追加</A></DD>
+<DD><A href="#note76-05">Note 76-05: (DevEnv) TWL-SDK 移行ガイドの修正</A></DD>
+<DD><A href="#note76-06">Note 76-06: (FS) FSFile 構造体のコピー禁止を明記</A></DD>
+<DD><A href="#note76-07">Note 76-07: (FS) FS_CancelFile 関数の不具合修正</A></DD>
+<DD><A href="#note76-08">Note 76-08: (FS) FS_ReadDir 関数のファイル ID に関する不具合修正</A></DD>
+<DD><A href="#note76-09">Note 76-09: (FS) システムシャットダウン時の不具合修正</A></DD>
+<DD><A href="#note76-10">Note 76-10: (GX) BG 平面のアフィン変換関数のリファレンス修正</A></DD>
+<DD><A href="#note76-11">Note 76-11: (MIC) 自動サンプリングの頻繁な開始・停止の反復による不具合修正</A></DD>
+<DD><A href="#note76-12">Note 76-12: (NA) NAND アプリ ROM アーカイブの非同期処理に関する修正</A></DD>
+<DD><A href="#note76-13">Note 76-13: (OS) DMA 転送割込み後の割込み許可設定の修正</A></DD>
+<DD><A href="#note76-14">Note 76-14: (OS) TWL 専用 ROM の警告画面に中国語/韓国語用の画像を追加</A></DD>
+<DD><A href="#note76-15">Note 76-15: (PM) PM_SetLCDPower 関数のリファレンス修正</A></DD>
+<DD><A href="#note76-16">Note 76-16: (SND) SNDEX_SetIgnoreHWVolume 関数を連続で呼び出した場合の挙動変更</A></DD>
+<DD><A href="#note76-17">Note 76-17: (SSP) 関数リファレンスの修正</A></DD>
+<DD><A href="#note76-18">Note 76-18: (TWL 無線) 電源電圧低下時自動シャットダウンでの TWL 無線終了処理の追加</A></DD>
+<DD><A href="#KnownIssues_5_3_RC">SDK 5.3&#160;RCでの既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
+<A href="#sdk_5_3_PR">■TWL-SDK 5.3&#160;PR</A> (2009/07/01)</DT>
+<DD><A href="#note75-01">Note 75-01: (CAMERA) CAMERA_I2CAutoExposure 関数で直ちに AE を停止できない不具合の修正</A></DD>
+<DD><A href="#note75-02">Note 75-02: (DevEnv) ARM7 コンポーネントでの中国アプリ起動抑制処理の削除</A></DD>
+<DD><A href="#note75-03">Note 75-03: (DevEnv) TWL-SDK パッケージのビルドに使用する CodeWarrior のバージョン変更</A></DD>
+<DD><A href="#note75-04">Note 75-04: (DevEnv) TWLビットマップフォントに中韓フォントを追加</A></DD>
+<DD><A href="#note75-05">Note 75-05: (GX) GX_FX32_FX10 定数マクロの修正</A></DD>
+<DD><A href="#note75-06">Note 75-06: (GX) GX_GetDefaultNDMA 関数の修正</A></DD>
+<DD><A href="#note75-07">Note 75-07: (GX) GX_InitNDMAEx 関数の追加</A></DD>
+<DD><A href="#note75-08">Note 75-08: (GX) GX_SetDefaultNDMA 関数の修正</A></DD>
+<DD><A href="#note75-09">Note 75-09: (OS) IS-TWL-DEBUGGER での ARM7 デバッグ出力</A></DD>
+<DD><A href="#note75-10">Note 75-10: (OS) TWL モードでのソフトウェアリセット対応</A></DD>
+<DD><A href="#note75-11">Note 75-11: (OS) forKorea-1 デモの修正</A></DD>
+<DD><A href="#note75-12">Note 75-12: (OS) 中国向けアプリケーションの起動制限を廃止</A></DD>
+<DD><A href="#note75-13">Note 75-13: (PM) Tick システムを使用している際のスリープ不具合の修正</A></DD>
+<DD><A href="#note75-14">Note 75-14: (SND) サウンドアラームの不具合修正</A></DD>
+<DD><A href="#note75-15">Note 75-15: (SSP) SSP_StartJpegDecoderFast 関数の追加</A></DD>
+<DD><A href="#note75-16">Note 75-16: (SSP) 高速版 JPEG エンコード関数の追加</A></DD>
+<DD><A href="#note75-17">Note 75-17: (TCL) PhotoChecker ツールの修正</A></DD>
+<DD><A href="#note75-18">Note 75-18: (TCL) TCL_EncodeAndWritePicture[Ex] 関数の変更</A></DD>
+<DD><A href="#note75-19">Note 75-19: (TOOL) TWL ROM の引数データ埋め込み方法を変更</A></DD>
+<DD><A href="#note75-20">Note 75-20: (TOOL) TwlNmenu の プログレスバーの表示の不具合修正</A></DD>
+<DD><A href="#note75-21">Note 75-21: (TOOL) compstatic の不具合修正、及び仕様の変更</A></DD>
+<DD><A href="#note75-22">Note 75-22: (TOOL) makebanner、makebanner.TWL における中国語、韓国語タイトルの表示可能文字チェックの修正</A></DD>
+<DD><A href="#note75-23">Note 75-23: (TOOL) makerom の -M オプションの動作不良の修正</A></DD>
+<DD><A href="#note75-24">Note 75-24: (TOOL) makerom.TWL の変更</A></DD>
+<DD><A href="#note75-25">Note 75-25: (TP) ペンアップを正しく認識できない不具合の修正</A></DD>
+<DD><A href="#note75-26">Note 75-26: (WM) TWL 無線でマイナス値の RSSI が来た場合の修正</A></DD>
+<DD><A href="#note75-27">Note 75-27: (WVR) WVR ライブラリの HYBRID ROM 対応</A></DD>
+<DD><A href="#KnownIssues_5_3_PR">SDK 5.3&#160;PRでの既知の問題点</A></DD>
+</DL>
+<DL>
+<DT>
 <A href="#sdk_5_2_%E6%AD%A3%E5%BC%8F%E7%89%88">■TWL-SDK 5.2&#160;正式版</A> (2009/06/10)</DT>
 <DD><A href="#note74-01">Note 74-01: (DevEnv) Changelog Note 73-01 の訂正</A></DD>
 <DD><A href="#note74-02">Note 74-02: (DevEnv) Copyright の更新</A></DD>
@@ -283,6 +345,320 @@
 <DD><A href="#note67-34">Note 67-34: (TWL 無線) TWL 無線による通信中にリセットした場合にハングアップする不具合の修正</A></DD>
 <DD><A href="#KnownIssues_5_0_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK 5.0&#160;正式版での既知の問題点</A></DD>
 </DL>
+<HR>
+<H2 style="line-height: 0"><A name="sdk_5_3_%E6%AD%A3%E5%BC%8F%E7%89%88">■ TWL-SDK Version 5.3&#160;正式版</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/07/31)</P></DIV>
+<HR>
+<H3><A name="note77-01">Note 77-01: (TOOL) TwlNmenu で tad を「Card」モードから参照できない不具合の修正</A></H3>
+<P><description>
+        <a href="changelog.html#note73-28">Note 73-28</a> の修正により、TwlNmenu で tad を「Card」モードから参照できない状態になっていましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note77-02">Note 77-02: (WXC) すれちがい中継所対応関連のドキュメントとツール追加</A></H3>
+<P><description>
+        $TwlSDK/docs/TechnicalNotes/AboutWXC.pdf にすれちがい中継所対応関連の説明を追記し、すれちがい通信中継所プログラムとして RelayStation.srl を追加しました。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_5_3_%E6%AD%A3%E5%BC%8F%E7%89%88">SDK 5.3&#160;正式版 での既知の問題点</A></H3>
+<knownissues>
+      <description>
+        <ul>
+          <li>DSP_StartSampling 関数で DSP からマイク入力を取得する際、まれに波形データがランダムに乱れ続けてしまう症状が確認されています。<br>
+本件発生時は DSP 起動直後から症状が現れるため、起動直後の初期数十サンプルデータのみを確認してプラスマイナス 16384 以上に大きく振幅している場合だけその場で DSP コンポーネントを再起動する、といった方法で応急的にこの問題を回避することができます。</li>
+        </ul>
+      </description>
+    </knownissues><HR>
+<H2 style="line-height: 0"><A name="sdk_5_3_RC">■ TWL-SDK Version 5.3&#160;RC</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/07/21)</P></DIV>
+<HR>
+<H3><A name="note76-01">Note 76-01: (CARD) サンプルデモの修正</A></H3>
+<P><description>
+        card-mrom および card-1trom サンプルデモで、カードの ROM 領域アドレスを取得する方法がサンプルとして適切ではありませんでしたので、ファイル情報から正しく取得するよう修正しました。
+      </description></P>
+<HR>
+<H3><A name="note76-02">Note 76-02: (DSP) DSP_IsSoundPlaying, DSP_IsShutterSoundPlaying 関数の修正</A></H3>
+<P><description>
+        DSP からのサウンド再生の完了を調べる上記の関数において、再生完了の判定処理に一部不正確な点があったため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note76-03">Note 76-03: (DSP) マイクサンプリングのバッファサイズ不具合修正</A></H3>
+<P><description>
+        DSP_StartSampling 関数でサンプリングバッファのサイズを 64kB 以上に指定すると、その後に呼び出された DSP_SyncSamplingBuffer 関数の内部処理で無限ループしてしまう場合があり、この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note76-04">Note 76-04: (DevEnv) TWL ビットマップフォントに韓国語拡張フォントを追加</A></H3>
+<P><description>
+        TWL ビットマップフォントに韓国語拡張フォントを $TwlSDK/data/font/tbf_kr_ex_*.NFTR に追加しました。<br>
+        詳細は、関数リファレンスの [関連情報]-[リソースデータ解説]-[TWL ビットマップフォント] をご参照ください。
+      </description></P>
+<HR>
+<H3><A name="note76-05">Note 76-05: (DevEnv) TWL-SDK 移行ガイドの修正</A></H3>
+<P><description>
+        $TwlSDK/docs/TechnicalNotes/AboutNitroToTwl.pdf に以下の修正を行いました。
+        <ul>
+          <li>ライブラリの利用するメモリ使用量の増加を修正<br>TWL-SDK 5.3 より CodeWarrior for NINTENDO DSi が使用されていることに伴い、メモリ使用量が、TWL-SDK 5.2 以前に比べて減少しました。</li>
+          <li>TWL-SDK 5.3 より CodeWarrior for NINTENDO DSi への移行を追加</li>
+          <li>TWL-SDK 5.0 以前の変更点の記載が漏れていたたため以下追加しました。
+          <ul>
+            <li>STD_CompareLString 関数の修正</li>
+            <li>TWL-SDK 上の inline 関数 を static inline 関数 に変更</li>
+            <li>FS のエラーに FS_RESULT_NO_ENTRY の追加</li>
+            <li>FS で操作可能なファイルサイズを 2G バイトに制限</li>
+            <li>FS_SeekFile 関数の仕様変更</li>
+            <li>PAD_Read 関数の十字キー禁則入力への対応</li>
+            <li>RTC の日時設定関数に誤使用防止処置の追加</li>
+            <li>OS_TPrintfEx 関数の出力書式 %b の動作の修正</li>
+          </ul>
+</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note76-06">Note 76-06: (FS) FSFile 構造体のコピー禁止を明記</A></H3>
+<P><description>
+        ファイルを開いた状態の FSFile 構造体はシステムリソースに管理されているため、別の FSFile 構造体にそのままコピーできない旨を関数リファレンスに追記しました。
+      </description></P>
+<HR>
+<H3><A name="note76-07">Note 76-07: (FS) FS_CancelFile 関数の不具合修正</A></H3>
+<P><description>
+        FS_CancelFile 関数でキャンセル要求されたコマンドが、実際にキャンセルされるよりも早く FS_WaitAsync 関数で完了待ちすると関数から復帰しなくなってしまうという不具合があり、この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note76-08">Note 76-08: (FS) FS_ReadDir 関数のファイル ID に関する不具合修正</A></H3>
+<P><description>
+        FS_ReadDir 関数で得られるファイル ID の情報の一部が不定な内容を含んでおり FS_OpenFileFast 関数で使用できないという不具合がありましたので、この問題を修正しました。<br>
+        この不具合は TWL-SDK 5.0 以降でのみ発生していました。
+      </description></P>
+<HR>
+<H3><A name="note76-09">Note 76-09: (FS) システムシャットダウン時の不具合修正</A></H3>
+<P><description>
+        NAND アクセス中のシャットダウン処理に関して <a href="changelog.html#note72-12">Note 72-12</a> で修正された不具合が一部の稀なタイミングでまだ再現することがあり、この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note76-10">Note 76-10: (GX) BG 平面のアフィン変換関数のリファレンス修正</A></H3>
+<P><description>
+        以下の関数の関数リファレンスに対して、アフィン変換の説明修正および例の追加を行いました。
+        <ul>
+          <li>G2_SetBG2Affine.html</li>
+          <li>G2_SetBG3Affine.html</li>
+          <li>G2S_SetBG2Affine.html</li>
+          <li>G2S_SetBG3Affine.html</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note76-11">Note 76-11: (MIC) 自動サンプリングの頻繁な開始・停止の反復による不具合修正</A></H3>
+<P><description>
+        自動サンプリングの開始と停止を頻繁に繰り返し続けた場合、タイミングによってはマイクの状態遷移が上手くいかないことがあり、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note76-12">Note 76-12: (NA) NAND アプリ ROM アーカイブの非同期処理に関する修正</A></H3>
+<P><description>
+        NAND アプリ環境で ROM アーカイブのファイルに対して FS_ReadFileAsync 関数で非同期読み込みを指定した場合、実際には常に同期処理として扱われてしまっており、この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note76-13">Note 76-13: (OS) DMA 転送割込み後の割込み許可設定の修正</A></H3>
+<P><description>
+        これまで DMA の転送割込みハンドラが呼ばれた後は、その転送設定を行った時点の割込み許可設定に戻していましたが、ハンドラ内で新たな転送設定を行うことが出来るようにハンドラ内で設定をしなおした場合には、そちらが優先されるよう修正しました。
+      </description></P>
+<HR>
+<H3><A name="note76-14">Note 76-14: (OS) TWL 専用 ROM の警告画面に中国語/韓国語用の画像を追加</A></H3>
+<P><description>
+        中国語/韓国語版の TWL 専用 ROM を NITRO モードで動かした場合にも、警告画面が表示されるように変更しました。
+      </description></P>
+<HR>
+<H3><A name="note76-15">Note 76-15: (PM) PM_SetLCDPower 関数のリファレンス修正</A></H3>
+<P><description>
+        PM_SetLCDPower 関数のリファレンスに一部誤った記述があったため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note76-16">Note 76-16: (SND) SNDEX_SetIgnoreHWVolume 関数を連続で呼び出した場合の挙動変更</A></H3>
+<P><description>
+        SNDEX_SetIgnoreHWVolume 関数を連続で呼び出した場合、SNDEX_ResetIgnoreHWVolume 関数実行時にリセットされる音量値が上書きされるようになっていましたが、それを SNDEX_SetIgnoreHWVolume 関数呼び出し時から変更されないように修正しました。
+      </description></P>
+<HR>
+<H3><A name="note76-17">Note 76-17: (SSP) 関数リファレンスの修正</A></H3>
+<P><description>
+        SSP ライブラリの関数リファレンスにおいて、一部、内部動作とあっていない説明がありましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note76-18">Note 76-18: (TWL 無線) 電源電圧低下時自動シャットダウンでの TWL 無線終了処理の追加</A></H3>
+<P><description>
+        バッテリー残量不足により自動シャットダウンが発生した際に TWL 無線による通信を行っていた場合、終了時の後処理コールバックで TWL 無線の終了処理を行うように変更しました。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_5_3_RC">SDK 5.3&#160;RC での既知の問題点</A></H3>
+<knownissues>
+      <description>
+        <ul>
+          <li>DSP_StartSampling 関数で DSP からマイク入力を取得する際、まれに波形データがランダムに乱れ続けてしまう症状が確認されています。<br>
+本件発生時は DSP 起動直後から症状が現れるため、起動直後の初期数十サンプルデータのみを確認してプラスマイナス 16384 以上に大きく振幅している場合だけその場で DSP コンポーネントを再起動する、といった方法で応急的にこの問題を回避することができます。</li>
+        </ul>
+      </description>
+    </knownissues><HR>
+<H2 style="line-height: 0"><A name="sdk_5_3_PR">■ TWL-SDK Version 5.3&#160;PR</A></H2>
+<DIV style="text-align: right"><P style="line-height: 0">(2009/07/01)</P></DIV>
+<HR>
+<H3><A name="note75-01">Note 75-01: (CAMERA) CAMERA_I2CAutoExposure 関数で直ちに AE を停止できない不具合の修正</A></H3>
+<P><description>
+        CAMERA_I2CAutoExposure 関数で AE を停止させる処理をした場合に、(その処理自体も含めて) CAMERA_I2CAutoExposure 関数および CAMERA_I2CAutoWhiteBalance 関数の設定が直ちに反映されない状態になっていましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note75-02">Note 75-02: (DevEnv) ARM7 コンポーネントでの中国アプリ起動抑制処理の削除</A></H3>
+<P><description>
+        中国向け本体以外で中国アプリを起動した際の起動抑制処理に関わる処理を削除しました。
+      </description></P>
+<HR>
+<H3><A name="note75-03">Note 75-03: (DevEnv) TWL-SDK パッケージのビルドに使用する CodeWarrior のバージョン変更</A></H3>
+<P><description>
+        TWL-SDK パッケージのビルドに使用する CodeWarrior を CodeWarrior for DSi v1.1 patch1 に変更しました。
+      </description></P>
+<HR>
+<H3><A name="note75-04">Note 75-04: (DevEnv) TWLビットマップフォントに中韓フォントを追加</A></H3>
+<P><description>
+        TWL ビットマップフォントに中国語、韓国語のフォントを $TwlSDK/data/font に追加しました。<br>
+        詳細は、関数リファレンスの [関連情報]-[リソースデータ解説]-[TWL ビットマップフォント] をご参照ください。
+      </description></P>
+<HR>
+<H3><A name="note75-05">Note 75-05: (GX) GX_FX32_FX10 定数マクロの修正</A></H3>
+<P><description>
+        定数マクロ GX_FX32_FX10_MAX、GX_FX32_FX10_MIN は、定義の中に不要なセミコロンを含んでいましたので、セミコロンを除去しました。
+      </description></P>
+<HR>
+<H3><A name="note75-06">Note 75-06: (GX) GX_GetDefaultNDMA 関数の修正</A></H3>
+<P><description>
+        GX_DMA_NOT_USE を設定している状態で GX_GetDefaultNDMA 関数を呼び出した場合、GX_DMA_NOT_USE が返ってこない不具合がありましたので、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note75-07">Note 75-07: (GX) GX_InitNDMAEx 関数の追加</A></H3>
+<P><description>
+        GX_InitEx 関数に NDMA 番号を指定できるようにした GX_InitNDMAEx 関数を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note75-08">Note 75-08: (GX) GX_SetDefaultNDMA 関数の修正</A></H3>
+<P><description>
+        GX_SetDefaultNDMA 関数で GX_DMA_NOT_USE を設定した場合、正常に設定できない不具合があったため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note75-09">Note 75-09: (OS) IS-TWL-DEBUGGER での ARM7 デバッグ出力</A></H3>
+<P><description>
+        ARM7 からのデバッグ出力をバッファに一旦格納し、実際の出力を ARM9 が行う PrintServer 機能を IS-TWL-DEBUGGER でも使用できるように変更しました。<br>
+        (これまでは IS-NITRO-DEBUGGER でのみ使用可能でした)<br>
+        詳細は OS_InitPrintServer 関数のリファレンスを参照してください。
+      </description></P>
+<HR>
+<H3><A name="note75-10">Note 75-10: (OS) TWL モードでのソフトウェアリセット対応</A></H3>
+<P><description>
+        TWL モードで動作しているカードアプリでも OS_ResetSystem 関数によるソフトウェアリセットを使用できるよう、内部処理を変更しました。
+      </description></P>
+<HR>
+<H3><A name="note75-11">Note 75-11: (OS) forKorea-1 デモの修正</A></H3>
+<P><description>
+        これまで OS の forKorea-1 デモは NITRO モードのみビルドするように設定されていましたが、TWL モードでもビルドするように修正しました。
+      </description></P>
+<HR>
+<H3><A name="note75-12">Note 75-12: (OS) 中国向けアプリケーションの起動制限を廃止</A></H3>
+<P><description>
+        中国向けアプリケーションは、言語設定が中国語のとき以外に起動させることができませんでしたが、この制限を廃止しました。
+      </description></P>
+<HR>
+<H3><A name="note75-13">Note 75-13: (PM) Tick システムを使用している際のスリープ不具合の修正</A></H3>
+<P><description>
+        OS の Tick システムを使用している場合、スリープの瞬間に Tick システムで使用している TIMER0 割込みが発生することで ARM9 と ARM7 の休止タイミングがずれてしまい、復帰時に不具合が発生する場合がありました。<br>
+        これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note75-14">Note 75-14: (SND) サウンドアラームの不具合修正</A></H3>
+<P><description>
+        TWL モードでビルドされたコンポーネントを使用したアプリケーションが NITRO 上で実行、もしくは TWL 上で CODEC-DS モードで実行した場合、マイクの自動サンプリング中にサウンドアラームを使用すると、設定したアラームより最大 125ms アラーム通知が遅延する場合がある、という不具合がありました。<br>
+        この不具合を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note75-15">Note 75-15: (SSP) SSP_StartJpegDecoderFast 関数の追加</A></H3>
+<P><description>
+        SSP_StartJpegDecoder 関数より高速に JPEG のデコードが行える SSP_StartJpegDecoderFast 関数を追加しました。
+      </description></P>
+<HR>
+<H3><A name="note75-16">Note 75-16: (SSP) 高速版 JPEG エンコード関数の追加</A></H3>
+<P><description>
+        SSP_StartJpegEncoder, SSP_StartJpegEncoderLite 関数より高速に JPEG のエンコードが行える SSP_StartJpegEncoderFast 関数を追加しました。<br><br>
+        また、SSP_StartJpegEncoderFast 関数が使用する作業用バッファのサイズを求める SSP_GetJpegEncoderFastBufferSize 関数も合わせて追加しました。
+      </description></P>
+<HR>
+<H3><A name="note75-17">Note 75-17: (TCL) PhotoChecker ツールの修正</A></H3>
+<P><description>
+        PhotoChecker ツールにおいて、DSi カメラで作成したフレーム画像を不正データと誤認識していたため、これを修正しました。
+      </description></P>
+<HR>
+<H3><A name="note75-18">Note 75-18: (TCL) TCL_EncodeAndWritePicture[Ex] 関数の変更</A></H3>
+<P><description>
+        TCL_EncodeAndWritePicture[Ex] 関数が内部で使用するエンコード関数を SSP_StartJpegEncoderLite 関数から SSP_StartJpegEncoderFast 関数に変更しました。
+      </description></P>
+<HR>
+<H3><A name="note75-19">Note 75-19: (TOOL) TWL ROM の引数データ埋め込み方法を変更</A></H3>
+<P><description>
+        TWL 用 ROM への引数データ埋め込み方法を NITRO 用 ROM と同じ方法に変更しました。<br>
+        この変更により、HYBRID 用 ROM を NITRO モードで動作させたときに、引数データにアクセスできなかった問題が解決しています。
+      </description></P>
+<HR>
+<H3><A name="note75-20">Note 75-20: (TOOL) TwlNmenu の プログレスバーの表示の不具合修正</A></H3>
+<P><description>
+        21MByte を超える SRL を持つ tad をインポートした場合に、プログレスバーが途中でリセットされてしまう不具合がありましたので、これを修正しました。<br>
+        なおこの不具合は実際のインポートと関係ありませんので、過去の TwlNmenu を使用してもインポート自体は正常に行われます。
+      </description></P>
+<HR>
+<H3><A name="note75-21">Note 75-21: (TOOL) compstatic の不具合修正、及び仕様の変更</A></H3>
+<P><description>
+        改行コードの含まれない圧縮除外リストファイルを読み込ませると強制終了してしまう不具合があり、これを修正しました。<br>
+        圧縮除外リストに記述するオーバーレイモジュール名は、大文字・小文字の区別がされないように仕様を変更しました。<br>
+        圧縮除外リストに存在しないオーバーレイモジュール名があった場合、エラーになるように仕様を変更しました。
+      </description></P>
+<HR>
+<H3><A name="note75-22">Note 75-22: (TOOL) makebanner、makebanner.TWL における中国語、韓国語タイトルの表示可能文字チェックの修正</A></H3>
+<P><description>
+        バナーの中国語、韓国語に設定可能な文字が以下のように変更されたことに伴い、makebanner、makebanner.TWL の文字チェックを修正しました。<br><br>
+        韓国語のみ禁止<br>
+        文字コード：0x3005：[々]<br><br>
+        中国語、韓国語ともに禁止<br>
+        文字コード：0x309B：[゛]<br>
+        文字コード：0x309C：[゜]<br>
+        文字コード：0x309D：[ゝ]<br>
+        文字コード：0x309E：[ゞ]<br>
+      </description></P>
+<HR>
+<H3><A name="note75-23">Note 75-23: (TOOL) makerom の -M オプションの動作不良の修正</A></H3>
+<P><description>
+        NITRO-SDK 4.1 RC で修正された <a href="changelog-nitro.html#note47-04">Note 47-04</a> の不具合が再現してしまっていたため、この問題を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note75-24">Note 75-24: (TOOL) makerom.TWL の変更</A></H3>
+<P><description>
+        makerom.TWL に以下の変更を行いました。
+        <ul>
+          <li>中韓版 ROM の作成において、CardRegion プロパティと ForChina/ForKorea プロパティが両方とも設定されているかをチェックする判定処理を追加しました。<br>
+              CardRegion プロパティを China/Korea に設定する場合には、ForChina/ForKorea プロパティを TRUE に設定してください。</li>
+          <li>CardRegion プロパティが China に設定されたとき、すべてのレーティング団体のレーティング情報を FREE(全年齢) に設定する処理を追加しました。</li>
+          <li>NITRO-SDK 4.1 RC で修正された <a href="changelog-nitro.html#note47-04">Note 47-04</a> の不具合が再現してしまっていたため、この問題を修正しました。</li>
+        </ul>
+      </description></P>
+<HR>
+<H3><A name="note75-25">Note 75-25: (TP) ペンアップを正しく認識できない不具合の修正</A></H3>
+<P><description>
+        CODEC-TWL モードでタッチパネルを使用した場合に、個体差により、稀にペンアップを正しく認識することができず、結果的にペンアップの瞬間に不正な座標データが取得される場合がありました。<br>
+        この問題を修正するために CODEC のパラメータ調整を行いました。
+      </description></P>
+<HR>
+<H3><A name="note75-26">Note 75-26: (WM) TWL 無線でマイナス値の RSSI が来た場合の修正</A></H3>
+<P><description>
+        TWL 無線で、マイナス値の RSSI が来た場合、正の値として評価されてしまい、リンク強度が強く見えてしまう不具合を修正しました。
+      </description></P>
+<HR>
+<H3><A name="note75-27">Note 75-27: (WVR) WVR ライブラリの HYBRID ROM 対応</A></H3>
+<P><description>
+        HYBRID ROM でも WVR ライブラリが使用できるよう修正しました。<br>
+        また、この変更に伴い HYBRID ROM 用に ichneumon.TWL コンポーネントを追加しました。
+      </description></P>
+<HR>
+<H3><A name="KnownIssues_5_3_PR">SDK 5.3&#160;PR での既知の問題点</A></H3>
+<P>　ありません。</P>
 <HR>
 <H2 style="line-height: 0"><A name="sdk_5_2_%E6%AD%A3%E5%BC%8F%E7%89%88">■ TWL-SDK Version 5.2&#160;正式版</A></H2>
 <DIV style="text-align: right"><P style="line-height: 0">(2009/06/10)</P></DIV>

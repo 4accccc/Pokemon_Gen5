@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-11-06#$
-  $Rev: 9229 $
-  $Author: yada $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
 
  *---------------------------------------------------------------------------*/
 #include <nitro/hw/common/armArch.h>
@@ -473,9 +473,9 @@ void OS_SetIrqStackChecker(void)
  *---------------------------------------------------------------------------*/
 void OS_SetIrqStackWarningOffset(u32 offset)
 {
-    SDK_ASSERTMSG((offset & 3) == 0, "Offset must be aligned by 4");
-    SDK_ASSERTMSG(offset > 0, "Cannot set warning level to stack top.");
-    SDK_ASSERTMSG(offset < ((u32)SDK_IRQ_STACKSIZE), "Cannot set warning level over stack bottom.");
+    SDK_TASSERTMSG((offset & 3) == 0, "Offset must be aligned by 4");
+    SDK_TASSERTMSG(offset > 0, "Cannot set warning level to stack top.");
+    SDK_TASSERTMSG(offset < ((u32)SDK_IRQ_STACKSIZE), "Cannot set warning level over stack bottom.");
 
     //---- remember warning offset
     OSi_IrqStackWarningOffset = offset;
@@ -503,13 +503,13 @@ void OS_SetIrqStackWarningOffset(u32 offset)
  *---------------------------------------------------------------------------*/
 OSStackStatus OS_GetIrqStackStatus(void)
 {
-    //OS_Printf("CHECK OF %x\n", (*(u32 *)(OSi_IRQ_STACK_TOP) ) );
-    //OS_Printf("CHECK AO %x\n", (*(u32 *)(OSi_IRQ_STACK_TOP + OSi_IrqStackWarningOffset) ) );
-    //OS_Printf("CHECK UF %x\n", (*(u32 *)(OSi_IRQ_STACK_BOTTOM - sizeof(u32))) );
+    //OS_TPrintf("CHECK OF %x\n", (*(u32 *)(OSi_IRQ_STACK_TOP) ) );
+    //OS_TPrintf("CHECK AO %x\n", (*(u32 *)(OSi_IRQ_STACK_TOP + OSi_IrqStackWarningOffset) ) );
+    //OS_TPrintf("CHECK UF %x\n", (*(u32 *)(OSi_IRQ_STACK_BOTTOM - sizeof(u32))) );
 
-    //OS_Printf(" - OF %x\n", OSi_IRQ_STACK_CHECKNUM_TOP);
-    //OS_Printf(" - AO %x\n", OSi_IRQ_STACK_CHECKNUM_WARN);
-    //OS_Printf(" - UF %x\n", OSi_IRQ_STACK_CHECKNUM_BOTTOM);
+    //OS_TPrintf(" - OF %x\n", OSi_IRQ_STACK_CHECKNUM_TOP);
+    //OS_TPrintf(" - AO %x\n", OSi_IRQ_STACK_CHECKNUM_WARN);
+    //OS_TPrintf(" - UF %x\n", OSi_IRQ_STACK_CHECKNUM_BOTTOM);
 
     //---- Check if overflow
     if (*(u32 *)(OSi_IRQ_STACK_TOP) != OSi_IRQ_STACK_CHECKNUM_TOP)

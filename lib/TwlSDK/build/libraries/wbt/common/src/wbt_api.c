@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include	<nitro.h>
@@ -38,7 +38,7 @@ static WBTCommandList cmd_q[2];
 /*---------------------------------------------------------------------------*
   Name:         WBT_PrintBTList
 
-  Description:  ブロック情報リストをOS_Printfで表示する
+  Description:  ブロック情報リストをOS_TPrintfで表示する
 
   Arguments:    none
 
@@ -49,10 +49,10 @@ void WBT_PrintBTList(void)
     WBTBlockInfoList *list = wbti_command_work->list;
     for (; list != NULL; list = list->next)
     {
-        OS_Printf("BTList id = %d\n", list->data_info.id);
-        OS_Printf("  data size %d\n", list->data_info.block_size);
-        OS_Printf("  uid %s\n", list->data_info.user_id);
-        OS_Printf("  info ptr = %p\n", &(list->data_info));
+        OS_TPrintf("BTList id = %d\n", list->data_info.id);
+        OS_TPrintf("  data size %d\n", list->data_info.block_size);
+        OS_TPrintf("  uid %s\n", list->data_info.user_id);
+        OS_TPrintf("  info ptr = %p\n", &(list->data_info));
     }
 }
 
@@ -330,14 +330,14 @@ WBT_RegisterBlock(WBTBlockInfoList *block_info_list, WBTBlockId block_id, const 
     // block_id のチェック
     if ( block_id <= WBT_BLOCK_ID_MIN )
     {
-        OS_Warning("block_id must be bigger than WBT_BLOCK_ID_MIN.");
+        OS_TWarning("block_id must be bigger than WBT_BLOCK_ID_MIN.");
         return FALSE;
     }
     
     // 登録済みデータブロック総数チェック
     if ( WBT_NumOfRegisteredBlock() >= WBT_NUM_MAX_BLOCK_INFO_ID )
     {
-        OS_Warning("Number of registerd data blocks is full.");
+        OS_TWarning("Number of registerd data blocks is full.");
         return FALSE;
     }
     return WBT_RegisterBlockInfo(wbti_command_work, block_info_list, block_id, user_id,

@@ -29,13 +29,15 @@ int TCL_CalcNumEnableToTakePictures( const TCLAccessor* pAccessor );
 <p>撮影可能な写真枚数(取得に失敗した場合は負値)</p>
 
 <h2>説明</h2>
-<p>撮影可能な写真枚数を計算します。</p>
+<p>撮影可能な写真枚数を計算します。<br>
+本関数では空き容量に若干のマージンをとっているため、1 以上の値が返ってきた場合は確実に 1 枚以上の写真が保存できることになります。</p>
 <p>アクセサは <a href="TCL_LoadTable.html"><code>TCL_LoadTable</code></a> や <a href="TCL_CreateTable.html"><code>TCL_CreateTable</code></a> などで初期化されている必要があります。</p>
 
 <h2>参照</h2>
 
 <h2>履歴</h2>
 <p>
+2009/06/29 撮影可能枚数の計算方法についての説明追加<br>
 2008/10/07 初版<br/>
 </p>
 

@@ -28,13 +28,11 @@
 <H2>説明</H2>
 
 <P>ROMファイル中に埋め込まれた、引数データに従って引数の個数を返します。</P>
-<P>引数は、NITRO ROM の場合は <CODE><A href="../../tools/buryarg.html">buryarg</A></CODE> ツールによって、TWL ROM の場合は <CODE><A href="../../tools/buryargTWL.html">buryarg.TWL</A></CODE> ツールによって、ROM ファイル中に引数データとして埋め込まれます。この関数はその引数データの引数の個数を調べるためのものですが、プログラム名
-( <CODE><A href="../../tools/buryarg.html">buryarg</A></CODE> や <A href="../../tools/buryargTWL.html"><CODE>buryarg.TWL</CODE></A> を実行したときに指定したROM ファイル名 ) も含めてカウントしますので、引数がない場合は
+<P>引数は、NITRO ROM の場合は <CODE><A href="../../tools/buryarg.html">buryarg</A></CODE> ツールによって、TWL ROM の場合は <CODE><A href="../../tools/buryarg.html">buryarg.TWL</A></CODE> ツールによって、ROM ファイル中に引数データとして埋め込まれます。この関数はその引数データの引数の個数を調べるためのものですが、プログラム名
+( <CODE><A href="../../tools/buryarg.html">buryarg</A></CODE> や <A href="../../tools/buryarg.html"><CODE>buryarg.TWL</CODE></A> を実行したときに指定したROM ファイル名 ) も含めてカウントしますので、引数がない場合は
 1 を返します。</P>
 <P>引数データが埋め込まれていない場合は 0 を返します。</P>
-<P><FONT color="#ff0000">FINALROM ビルドでは、必ず 0 を返します。</FONT><BR>
-<FONT color="#ff0000"><B>*注: FINALROMビルドでは 0 を返すのが正しい仕様ですが、本バージョンのTWL-SDK
-では TWLモードに限り FINALROM でも引数データが有効になります。これは後のバージョンからは修正されます。</B></FONT></P>
+<P><FONT color="#ff0000">FINALROM ビルドでは、必ず 0 を返します。</FONT></P>
 <P>(例)</P>
 <BLOCKQUOTE style="background-color:#ffffc0"><CODE>　　　　buryarg main.srl A B C</CODE> と指定していた場合、<BR>
 <BR>
@@ -44,10 +42,9 @@
 </CODE></BLOCKQUOTE>
 <H2>参照</H2>
 <P><CODE><A href="OS_GetArgv.html">OS_GetArgv</A>, <A href="OS_GetOpt.html">OS_GetOpt</A><BR>
-<A href="../../tools/buryarg.html">buryarg ツール</A>, <A href="../../tools/buryargTWL.html">buryarg.TWL ツール</A></CODE></P>
+<A href="../../tools/buryarg.html">buryarg ツール</A>, <A href="../../tools/buryarg.html">buryarg.TWL ツール</A></CODE></P>
 <H2>履歴</H2>
-<P>2009/08/25 本バージョン(TWL-SDK 5.2) ではFINALROMでの引数の扱いに仕様と異なる点があることを追記<BR>
-2008/06/23 NITRO と TWL で場合分けした。<BR>
+<P>2008/06/23 NITRO と TWL で場合分けした。<BR>
 2005/07/21 初版</P>
 </BODY>
 </HTML>

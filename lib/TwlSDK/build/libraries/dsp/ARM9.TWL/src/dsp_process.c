@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-11-21#$
-  $Rev: 9387 $
-  $Author: kitase_hirotake $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 
@@ -114,7 +114,7 @@ static void DSPi_ShutdownCallback(void *arg)
 static void DSPi_PreSleepCallback(void *arg)
 {
 #pragma unused( arg )
-    OS_Panic("Could not sleep while DSP is processing.\n");
+    OS_TPanic("Could not sleep while DSP is processing.\n");
 }
 
 /*---------------------------------------------------------------------------*

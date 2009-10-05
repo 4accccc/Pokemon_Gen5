@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <nitro/code32.h>              // Always generate ARM binary for efficiency
@@ -504,9 +504,9 @@ void MTX_FrustumW(fx32 t, fx32 b, fx32 l, fx32 r, fx32 n, fx32 f, fx32 scaleW, M
     fx32    dblN;
 
     SDK_NULL_ASSERT(mtx);
-    SDK_ASSERTMSG(t != b, "MTX_Frustum: 't' and 'b' clipping planes are equal.");
-    SDK_ASSERTMSG(l != r, "MTX_Frustum: 'l' and 'r' clipping planes are equal.");
-    SDK_ASSERTMSG(n != f, "MTX_Frustum: 'n' and 'f' clipping planes are equal.");
+    SDK_TASSERTMSG(t != b, "MTX_Frustum: 't' and 'b' clipping planes are equal.");
+    SDK_TASSERTMSG(l != r, "MTX_Frustum: 'l' and 'r' clipping planes are equal.");
+    SDK_TASSERTMSG(n != f, "MTX_Frustum: 'n' and 'f' clipping planes are equal.");
 
     SDK_MINMAX_ASSERT(f, -0x10000 * FX32_ONE, 0x10000 * FX32_ONE - 1);
     SDK_MINMAX_ASSERT(n, -0x10000 * FX32_ONE, 0x10000 * FX32_ONE - 1);
@@ -577,10 +577,10 @@ void MTX_PerspectiveW(fx32 fovySin, fx32 fovyCos, fx32 aspect, fx32 n, fx32 f, f
     fx64    t;
 
     SDK_NULL_ASSERT(mtx);
-    SDK_ASSERTMSG(fovySin > 0 && fovySin < FX32_ONE, "G3_Perspective: sine of fovy out of range.");
-    SDK_ASSERTMSG(fovyCos > -FX32_ONE
+    SDK_TASSERTMSG(fovySin > 0 && fovySin < FX32_ONE, "G3_Perspective: sine of fovy out of range.");
+    SDK_TASSERTMSG(fovyCos > -FX32_ONE
                   && fovyCos < FX32_ONE, "G3_Perspective: cosine of fovy out of range.");
-    SDK_ASSERTMSG(aspect != 0, "G3_Perspective: aspect is 0.");
+    SDK_TASSERTMSG(aspect != 0, "G3_Perspective: aspect is 0.");
 
     SDK_MINMAX_ASSERT(f, -0x10000 * FX32_ONE, 0x10000 * FX32_ONE - 1);
     SDK_MINMAX_ASSERT(n, -0x10000 * FX32_ONE, 0x10000 * FX32_ONE - 1);
@@ -636,9 +636,9 @@ void MTX_OrthoW(fx32 t, fx32 b, fx32 l, fx32 r, fx32 n, fx32 f, fx32 scaleW, Mtx
     fx64c   inv1, inv2, inv3;
 
     SDK_NULL_ASSERT(mtx);
-    SDK_ASSERTMSG(t != b, "G3_Ortho: 't' and 'b' clipping planes are equal.");
-    SDK_ASSERTMSG(l != r, "G3_Ortho: 'l' and 'r' clipping planes are equal.");
-    SDK_ASSERTMSG(n != f, "G3_Ortho: 'n' and 'f' clipping planes are equal.");
+    SDK_TASSERTMSG(t != b, "G3_Ortho: 't' and 'b' clipping planes are equal.");
+    SDK_TASSERTMSG(l != r, "G3_Ortho: 'l' and 'r' clipping planes are equal.");
+    SDK_TASSERTMSG(n != f, "G3_Ortho: 'n' and 'f' clipping planes are equal.");
 
     SDK_MINMAX_ASSERT(f, -0x10000 * FX32_ONE, 0x10000 * FX32_ONE - 1);
     SDK_MINMAX_ASSERT(n, -0x10000 * FX32_ONE, 0x10000 * FX32_ONE - 1);

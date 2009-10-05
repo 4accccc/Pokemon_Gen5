@@ -2,9 +2,9 @@
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
-<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.0.0 for Windows">
+<META name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 7.0.1.0 for Windows">
 <META http-equiv="Content-Style-Type" content="text/css">
-<TITLE>OS_IsRunOnEmulator</TITLE>
+<TITLE>OS_PrintServer</TITLE>
 <LINK rel="stylesheet" href="../../css/nitro.css" type="text/css">
 </HEAD>
 <BODY>
@@ -21,10 +21,18 @@
 <P>なし。</P>
 <H2>説明</H2>
 <P>ARM7 からのデバッグメッセージを表示するための関数です。</P>
-<P>これは SDKライブラリのデバッグ用の関数ですので、アプリケーションで使用する必要はありません。
+<P>これは SDKライブラリのデバッグ用の関数ですので、通常のアプリケーションで使用する必要はありません。主にライブラリやミドルウェア開発者が使用することを想定しています。
+<P>この関数は、ARM7 が書き込んだ出力用のバッファの内容を書き出す関数で、定期的に(毎フレームに一回程度)
+呼び出すようにしてください。詳細は <CODE><A href="OS_InitPrintServer.html">OS_InitPrintServer()</A></CODE> を参照してください。
+
+<P><CODE><A href="OS_InitPrintServer.html">OS_InitPrintServer()</A></CODE> が呼び出されていない状況で <CODE>OS_PrintServer()</CODE> を呼び出しても何も行いません。
+
+<P>FINALROM ビルドでは、<CODE><A href="OS_InitPrintServer.html">OS_InitPrintServer()</A></CODE> および <CODE>OS_PrintServer()</CODE> は何もしないコードに置き換えられます。
+
 <H2>参照</H2>
 <P><CODE><A href="OS_InitPrintServer.html">OS_InitPrintServer</A></CODE></P>
 <H2>履歴</H2>
-<P>2005/08/19 初版</P>
+<P>2009/06/26 関数の使用方法を記述<BR>
+2005/08/19 初版</P>
 </BODY>
 </HTML>

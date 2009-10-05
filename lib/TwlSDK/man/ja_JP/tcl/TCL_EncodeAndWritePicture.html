@@ -56,7 +56,7 @@ TCLResult TCL_EncodeAndWritePictureEx( TCLAccessor* pAccessor ,
 <p><a href="TCLResult.html">処理結果</a></p>
 
 <h2>説明</h2>
-<p>元画像をjpegエンコードし、保存します。内部で <code>SSP_StartJpegEncoderLite</code> を呼び出します。</p>
+<p>元画像をjpegエンコードし、保存します。内部で <code>SSP_StartJpegEncoderFast</code> を呼び出します。</p>
 <p>元画像はVGAサイズである必要があります。</p>
 <p>ワークバッファは <a href="TCL_GetJpegEncoderBufferSize.html"><code>TCL_GetJpegEncoderBufferSize</code></a> で求めたサイズ分確保する必要があります。</p>
 <p>エンコードに成功後、jpeg画像の次回保存先パスへの保存と管理ファイルの上書き処理を行います。</p>
@@ -74,6 +74,7 @@ quality を限界まで下げても成功しなかった場合は TCL_RESULT_ERROR_OTHER を返します
 
 <h2>履歴</h2>
 <p>
+2009/06/29 内部で呼び出す SSP の関数変更<br>
 2009/04/30 内部で呼び出す SSP の関数変更<br>
 2009/04/16 内部のエンコードに失敗した場合の動作について追記<br>
 2008/12/05 初版<br/>

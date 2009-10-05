@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-26#$
+  $Rev: 10827 $
+  $Author: yosizaki $
 
  *---------------------------------------------------------------------------*/
 
@@ -125,13 +125,26 @@ CARDAccessLevel CARDi_GetAccessLevel(void)
     else
     {
         const CARDRomHeaderTWL *header = CARD_GetOwnRomHeaderTWL();
+        BOOL                    backupPowerOn = FALSE;
         if (header->access_control.game_card_nitro_mode)
         {
-            level = CARD_ACCESS_LEVEL_FULL;
+            level |= CARD_ACCESS_LEVEL_ROM;
+            backupPowerOn = TRUE;
         }
         else if (header->access_control.game_card_on)
         {
-            level = CARD_ACCESS_LEVEL_BACKUP;
+            backupPowerOn = TRUE;
+        }
+        if (backupPowerOn)
+        {
+            if (header->access_control.backup_access_read)
+            {
+                level |= CARD_ACCESS_LEVEL_BACKUP_R;
+            }
+            if (header->access_control.backup_access_write)
+            {
+                level |= CARD_ACCESS_LEVEL_BACKUP_W;
+            }
         }
     }
 #endif

@@ -38,6 +38,9 @@ BOOL FS_OpenTopLevelDirectory(<a href="../fs_file_type.html">FSFile</a> *dir);
 <ul>
 <li>この関数を割り込みハンドラ(IRQモード)から呼び出すことはできません。<br />
 また、割り込みを禁止したままの状態にあると処理が完了しない場合がある点に注意して下さい。</li>
+<li style='color:Red;'>開いたファイルの構造体はシステムリソースに関連付けられるため、
+別の構造体にそのままコピーしても情報の移動や複製はできません。
+詳細は<code><a href='../fs_file_type.html'>FSFile構造体</a></code>をご参照ください。</li>
 </ul>
 
 <h2>参照</h2>
@@ -50,6 +53,7 @@ BOOL FS_OpenTopLevelDirectory(<a href="../fs_file_type.html">FSFile</a> *dir);
 
 <h2>履歴</h2>
 <p>
+2009/07/29 構造体の値コピーが無保証である旨を追記<br />
 2008/12/04 初版<br />
 </p>
 </body>

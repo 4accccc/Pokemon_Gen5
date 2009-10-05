@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 #include <nitro/hw/common/armArch.h>
 #include <nitro/memorymap.h>
@@ -21,7 +21,11 @@
 //#define OSiDEBUG
 
 //---- displaying function OSi_ExPrintf
+#ifdef SDK_ARM9
 #define OSi_ExPrintf( ... )   OS_FPrintf(OS_PRINT_OUTPUT_ERROR, __VA_ARGS__)
+#else /* SDK_ARM7 */
+#define OSi_ExPrintf( ... )   OS_TPrintf(__VA_ARGS__)
+#endif
 
 static asm void OSi_ExceptionHandler( void );
 static asm void OSi_GetAndDisplayContext( void );

@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 #include <twl.h>
 #include <twl/camera.h>
@@ -655,7 +655,7 @@ static void CAMERA_MonitorThread(void* arg)
 CAMERAResult CAMERA_InitCore(void)
 {
     //---- check if tick system is available
-    SDK_ASSERTMSG(OS_IsTickAvailable(), "CAMERA_Init: camera system needs of tick system.");
+    SDK_TASSERTMSG(OS_IsTickAvailable(), "CAMERA_Init: camera system needs of tick system.");
 
     // èâä˙âªçœÇ›ÇämîF
     if (cameraInitialized)

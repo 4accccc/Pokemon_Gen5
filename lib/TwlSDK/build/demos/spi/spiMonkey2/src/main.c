@@ -10,8 +10,8 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-12-22#$
-  $Rev: 9714 $
+  $Date:: 2009-07-06#$
+  $Rev: 10864 $
   $Author: okubata_ryoma $
  *---------------------------------------------------------------------------*/
 
@@ -179,7 +179,6 @@ void NitroMain(void)
     OS_Printf("ARM9: MIC demo started.\n");
     OS_Printf("   up/down    -> change sampling span\n");
     OS_Printf("   left/right -> change bit range\n");
-    OS_Printf("   select     -> change loop setting\n");
     OS_Printf("\n");
     PrintfVariableData();
     gTpData.touch = TP_TOUCH_OFF;

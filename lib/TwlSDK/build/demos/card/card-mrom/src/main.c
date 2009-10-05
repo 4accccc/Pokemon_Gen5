@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-07-17#$
+  $Rev: 10925 $
+  $Author: yosizaki $
  *---------------------------------------------------------------------------*/
 
 
@@ -30,14 +30,22 @@
  *---------------------------------------------------------------------------*/
 void NitroMain(void)
 {
+    FSFile      file[1];
     OS_Init();
     OS_InitTick();
     CARD_Init();
     (void)OS_EnableIrq();
     (void)OS_EnableInterrupts();
+    FS_Init(FS_DMA_NOT_USE);
 
     // 大量のリードアクセスを 10 回繰り返して転送速度を計測。
     // DMA転送は割り込みハンドラのオーバーヘッドがかかるのでCPU転送を使用する。
+    FS_InitFile(file);
+    if (!FS_OpenFile(file, "kart_title.32.wav"))
+    {
+        OS_TPanic("cannot open testfile!");
+    }
+    else
     {
         enum
         { BUFFER_SIZE = 1 * 1024 * 1024 };
@@ -45,12 +53,13 @@ void NitroMain(void)
         int         i;
         OSTick      t;
         const u16   id = (u16)OS_GetLockID();
+        const u32   addr = FS_GetFileImageTop(file);
 
         CARD_LockRom(id);
         for (i = 0; i < 10; ++i)
         {
             t = OS_GetTick();
-            CARD_ReadRom(MI_DMA_NOT_USE, CARD_GetOwnRomHeader()->main_rom_offset, buf, BUFFER_SIZE);
+            CARD_ReadRom(MI_DMA_NOT_USE, (const void *)addr, buf, BUFFER_SIZE);
             t = OS_GetTick() - t;
             /* n[B/s] = 1[MB] / t[us] */
             OS_Printf("[%2d] ... %10.6f[B/s]\n", i + 1,
@@ -58,6 +67,7 @@ void NitroMain(void)
         }
         CARD_UnlockRom(id);
 
+        (void)FS_CloseFile(file);
         OS_TPrintf("[end]\n");
     }
 

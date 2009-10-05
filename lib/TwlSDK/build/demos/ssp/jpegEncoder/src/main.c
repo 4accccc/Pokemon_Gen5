@@ -37,6 +37,14 @@ static u8* decodeOutputBuffer;
 
 #include "DEMO.h"
 
+static const char* sDebugMessageFunc[4] = 
+{
+    "SSP_StartJpegEncoder",
+    "SSP_StartJpegEncoderWithEncodeData",
+    "SSP_StartJpegEncoderLite",
+    "SSP_StartJpegEncoderFast"
+};
+
 /*---------------------------------------------------------------------------*
   Name:         MyAlloc
 
@@ -204,10 +212,15 @@ void NitroMain(void)
                         tmpBuf = (u8*)MyAlloc(SSP_GetJpegEncoderBufferSize(256,192,SSP_JPEG_OUTPUT_YUV422,option));
                         OS_TPrintf("SSP_GetJpegEncoderBufferSize()=%d\n", SSP_GetJpegEncoderBufferSize(256,192,SSP_JPEG_OUTPUT_YUV422,option));
                     }
-                    else
+                    else if(retryCount == 2)
                     {
                         tmpBuf = (u8*)MyAlloc(SSP_GetJpegEncoderLiteBufferSize(option));
                         OS_TPrintf("SSP_GetJpegEncoderLiteBufferSize()=%d\n", SSP_GetJpegEncoderLiteBufferSize(option));
+                    }
+                    else
+                    {
+                        tmpBuf = (u8*)MyAlloc(SSP_GetJpegEncoderFastBufferSize(option));
+                        OS_TPrintf("SSP_GetJpegEncoderFastBufferSize()=%d\n", SSP_GetJpegEncoderFastBufferSize(option));
                     }
                     
                     if ( !SSP_SetJpegEncoderDateTimeNow() )
@@ -234,11 +247,15 @@ void NitroMain(void)
                         encodeOutputSize = SSP_StartJpegEncoderLite(data, encodeOutputBuffer, OUTPUT_DATA_SIZE, tmpBuf, 256, 192, 90, SSP_JPEG_OUTPUT_YUV422, option);
                         MyFree(data);
                         break;
+                    case 3:
+                        encodeOutputSize = SSP_StartJpegEncoderFast(data, encodeOutputBuffer, OUTPUT_DATA_SIZE, tmpBuf, 256, 192, 90, SSP_JPEG_OUTPUT_YUV422, option);
+                        MyFree(data);
+                        break;
                     }
                     
                     core_end = OS_GetTick();
                     
-                    OS_TPrintf("[TIMER] Core SSP_StartJpegEncoder time[usec] = %d\n", OS_TicksToMicroSeconds(core_end - core_begin));
+                    OS_TPrintf("[TIMER] Core %s time[usec] = %d\n", sDebugMessageFunc[retryCount], OS_TicksToMicroSeconds(core_end - core_begin));
 
                     MyFree( tmpBuf );
                 }
@@ -246,7 +263,7 @@ void NitroMain(void)
 
             jpegEncode_end = OS_GetTick();
             
-            OS_TPrintf("[TIMER] SSP_StartJpegEncoder time[usec] = %d\n", OS_TicksToMicroSeconds(jpegEncode_end - jpegEncode_begin));
+            OS_TPrintf("[TIMER] %s time[usec] = %d\n", sDebugMessageFunc[retryCount], OS_TicksToMicroSeconds(jpegEncode_end - jpegEncode_begin));
             OS_TPrintf("encodeOutputSize=%d\n", encodeOutputSize);
         }
         
@@ -324,56 +341,9 @@ void NitroMain(void)
                 OS_TPrintf("MakerNoteUserSize = 0x%X\n", makerNoteUserSize);
             }
             MyFree(decodeOutputBuffer);
-            
-            jpegDecode_begin = OS_GetTick();
-            
-            decode_file_width = SSP_JPEG_THUMBNAIL_WIDTH;
-            decode_file_height = SSP_JPEG_THUMBNAIL_HEIGHT;
-            decodeOutputBuffer = MyAlloc(decode_file_width * decode_file_height * sizeof(u16));
-            
-            result = SSP_StartJpegDecoder(encodeOutputBuffer, encodeOutputSize, decodeOutputBuffer, &decode_file_width, &decode_file_height, SSP_JPEG_THUMBNAIL | SSP_JPEG_RGB555);
-            
-            jpegDecode_end = OS_GetTick();
-            
-            if(result == 0)
-                OS_Panic("Failed Cpu Decode\n");
-            
-            OS_TPrintf("[TIMER] Thumbnail SSP_StartJpegDecoder time[usec] = %d\n", OS_TicksToMicroSeconds(jpegDecode_end - jpegDecode_begin));
-            OS_TPrintf("[DEBUG] Thumbnail decode_file_width = %d : decode_file_height = %d\n", decode_file_width, decode_file_height);
-            
-            
-            // 日時を表示してみる
-            {
-                u8 dateTime[20];
-                
-                (void)SSP_GetJpegDecoderDateTime(dateTime);
-                OS_TPrintf("DateTimeOriginal = %s\n", dateTime);
-            }
-            {
-                char software[30];
-                u32 initialCode;
-                
-                (void)SSP_GetJpegDecoderSoftware(software);
-                // EXIFのsoftwareタグにはイニシャルコードがリトルエンディアンで入っている
-                MI_CpuCopy8(software, &initialCode, 4);
-                OS_TPrintf("InitialCode = %c%c%c%c\n", initialCode>>24, initialCode>>16, initialCode>>8, initialCode);
-            }
-            // メーカーノートのアドレス、サイズを取得
-            {
-                u8 *makerNotePhotoAddr = SSP_GetJpegDecoderMakerNoteAddrEx(SSP_MAKERNOTE_PHOTO);
-                u16 makerNotePhotoSize = SSP_GetJpegDecoderMakerNoteSizeEx(SSP_MAKERNOTE_PHOTO);
-                u8 *makerNoteUserAddr = SSP_GetJpegDecoderMakerNoteAddrEx(SSP_MAKERNOTE_USER);
-                u16 makerNoteUserSize = SSP_GetJpegDecoderMakerNoteSizeEx(SSP_MAKERNOTE_USER);
-                
-                OS_TPrintf("makerNotePhotoAddr = 0x%X\n", makerNotePhotoAddr);
-                OS_TPrintf("makerNotePhotoSize = 0x%X\n", makerNotePhotoSize);
-                OS_TPrintf("MakerNoteUserAddr = 0x%X\n", makerNoteUserAddr);
-                OS_TPrintf("MakerNoteUserSize = 0x%X\n", makerNoteUserSize);
-            }
-            MyFree(decodeOutputBuffer);
         }
 
-        if(retryCount < 2)
+        if(retryCount < 3)
         {
             OS_TPrintf("Press A button\n");
             while(1)
@@ -389,6 +359,10 @@ void NitroMain(void)
         }
         else
             retryCount++;
-    }while(retryCount < 3);
+    }while(retryCount < 4);
+    OS_TPrintf("\n");
+    OS_TPrintf("===================================\n");
+    OS_TPrintf("    End\n");
+    OS_TPrintf("===================================\n");
     OS_Terminate();
 }

@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <nitro.h>
@@ -247,9 +247,9 @@ GetMixedPoint(PRCPoint *p, const PRCPoint *p1, int w1, const PRCPoint *p2, int w
 {
     int     a, w;
     a = (p1->x * w1 + p2->x * w2);
-    SDK_ASSERTMSG(a >= 0, "a < 0: (%d, %d)*%d-(%d, %d)*%d", p1->x, p1->y, w1, p2->x, p2->y, w2);
+    SDK_TASSERTMSG(a >= 0, "a < 0: (%d, %d)*%d-(%d, %d)*%d", p1->x, p1->y, w1, p2->x, p2->y, w2);
     w = w1 + w2;
-    SDK_ASSERTMSG(w > 0, "w <= 0: (%d, %d)*%d-(%d, %d)*%d", p1->x, p1->y, w1, p2->x, p2->y, w2);
+    SDK_TASSERTMSG(w > 0, "w <= 0: (%d, %d)*%d-(%d, %d)*%d", p1->x, p1->y, w1, p2->x, p2->y, w2);
     {
         OSIntrMode enabled;
         enabled = OS_DisableInterrupts();
@@ -335,7 +335,7 @@ PRCi_CalcStrokeDistance_Superfine(fx32 *score,
         width++;
         if (width > normalizeSize)
         {
-            OS_Warning
+            OS_TWarning
                 ("too small normalizeSize. PRCPrototypeList.normalizeSize seems too smaller than actual data.");
         }
     }
@@ -389,7 +389,7 @@ PRCi_CalcStrokeDistance_Superfine(fx32 *score,
             || protoStrokeLength * lengthFilterRatio < inputStrokeLength)
         {
 #ifdef PRC_DEBUG_RECOGNIZE_DEEPLY
-            OS_Printf("Skipped because of length filter %d <=> %d\n", FX_Whole(inputStrokeLength),
+            OS_TPrintf("Skipped because of length filter %d <=> %d\n", FX_Whole(inputStrokeLength),
                       FX_Whole(protoStrokeLength));
 #endif
             return;
@@ -518,7 +518,7 @@ PRCi_CalcStrokeDistance_Superfine(fx32 *score,
             localScore = sumScore_(iInput, iProto) - sumScore_(iInput + dx, iProto + dy);
             angleScore = angleScores_(iInput, iProto) + angleScores_(iInput + 1, iProto + 1);
 
-            OS_Printf(" %2d <-> %2d : 0.%03d = 0.%03d * 0.%03d, average from begin: 0.%03d\n",
+            OS_TPrintf(" %2d <-> %2d : 0.%03d = 0.%03d * 0.%03d, average from begin: 0.%03d\n",
                       iInput, iProto, localScore / normalizeSize,
                       localScore * 512 / angleScore / normalizeSize, angleScore * 2,
                       sumScore_(iInput, iProto) / nMatches_(iInput, iProto) / normalizeSize);
@@ -528,12 +528,12 @@ PRCi_CalcStrokeDistance_Superfine(fx32 *score,
         }
         localScore = sumScore_(iInput, iProto);
         angleScore = angleScores_(iInput, iProto) + angleScores_(iInput + 1, iProto + 1);
-        OS_Printf(" %2d <-> %2d : 0.%03d = 0.%03d * 0.%03d\n", iInput, iProto,
+        OS_TPrintf(" %2d <-> %2d : 0.%03d = 0.%03d * 0.%03d\n", iInput, iProto,
                   localScore / normalizeSize, localScore * 512 / angleScore / normalizeSize,
                   angleScore * 2);
     }
 
-    OS_Printf("total: %d, matches: %d\n", sumScore_(inputSize - 1, protoSize - 1),
+    OS_TPrintf("total: %d, matches: %d\n", sumScore_(inputSize - 1, protoSize - 1),
               nMatches_(inputSize - 1, protoSize - 1));
 #endif
 
@@ -628,10 +628,10 @@ PRCi_CalcStrokeDistance_Superfine(fx32 *score,
         nMatches++;
 
 #ifdef PRC_DEBUG_RECOGNIZE
-        OS_Printf("-----\n");
+        OS_TPrintf("-----\n");
         for (iMatch = 0; iMatch < nMatches; iMatch++)
         {
-            OS_Printf(" <%d> v <%d>\n", inputMatch[iMatch], protoMatch[iMatch]);
+            OS_TPrintf(" <%d> v <%d>\n", inputMatch[iMatch], protoMatch[iMatch]);
         }
 #endif
 //#define PRC_DEBUG_RECOGNIZE_DEEPLY
@@ -648,7 +648,7 @@ PRCi_CalcStrokeDistance_Superfine(fx32 *score,
             fx32    inputOrigNextRatio, protoOrigNextRatio;
             int     loopEnd, i;
 #ifdef PRC_DEBUG_RECOGNIZE_DEEPLY
-            OS_Printf(" [%d, %d] - [%d, %d]\n", inputMatch[iMatch], protoMatch[iMatch],
+            OS_TPrintf(" [%d, %d] - [%d, %d]\n", inputMatch[iMatch], protoMatch[iMatch],
                       inputMatch[iMatch + 1], protoMatch[iMatch + 1]);
 #endif
             inputLocalLength = 0;
@@ -687,19 +687,19 @@ PRCi_CalcStrokeDistance_Superfine(fx32 *score,
             localScore = 0;
             loopEnd = (inputMatch[iMatch + 1] - iInput) + (protoMatch[iMatch + 1] - iProto) + 1;
 #ifdef PRC_DEBUG_RECOGNIZE_DEEPLY
-            OS_Printf("length: %d, %d\n", inputLocalLength, protoLocalLength);
+            OS_TPrintf("length: %d, %d\n", inputLocalLength, protoLocalLength);
 #endif
             for (i = 0; i < loopEnd; i++)
             {
 #ifdef PRC_DEBUG_RECOGNIZE_DEEPLY
-                OS_Printf(" [%d, %d]", iInput, iProto);
-                OS_Printf("  Ratio: %3d %3d\n", FX_Whole(inputNextRatio * 100),
+                OS_TPrintf(" [%d, %d]", iInput, iProto);
+                OS_TPrintf("  Ratio: %3d %3d\n", FX_Whole(inputNextRatio * 100),
                           FX_Whole(protoNextRatio * 100));
 #endif
-                SDK_ASSERTMSG(iInput <= inputMatch[iMatch + 1],
+                SDK_TASSERTMSG(iInput <= inputMatch[iMatch + 1],
                               "iInput(%d) > inputMatch[iMatch+1](%d)\n", iInput,
                               inputMatch[iMatch + 1]);
-                SDK_ASSERTMSG(iProto <= protoMatch[iMatch + 1],
+                SDK_TASSERTMSG(iProto <= protoMatch[iMatch + 1],
                               "iProto(%d) > protoMatch[iMatch+1](%d)\n", iProto,
                               protoMatch[iMatch + 1]);
                 if (inputNextRatio <= protoNextRatio)
@@ -707,7 +707,7 @@ PRCi_CalcStrokeDistance_Superfine(fx32 *score,
                     fx32    ratio;
                     PRCPoint protoPoint;
 #ifdef PRC_DEBUG_RECOGNIZE_DEEPLY
-                    OS_Printf(" inc iInput: score=%d, ratio=%d\n",
+                    OS_TPrintf(" inc iInput: score=%d, ratio=%d\n",
                               FX_Whole(inputNextRatio * (angleScores_(iInput, iProto))),
                               FX_Whole(100 * inputNextRatio));
 #endif
@@ -733,7 +733,7 @@ PRCi_CalcStrokeDistance_Superfine(fx32 *score,
                             * (doubleWidth - CityBlockDistance(&inputPoints[iInput], &protoPoint));
 #ifdef PRC_DEBUG_CHECK_OVERFLOW
                         if (prevScore > localScore)
-                            OS_Warning("Internal Error: score overflow\n");
+                            OS_TWarning("Internal Error: score overflow\n");
                     }
 #endif
 
@@ -747,7 +747,7 @@ PRCi_CalcStrokeDistance_Superfine(fx32 *score,
                     fx32    ratio;
                     PRCPoint inputPoint;
 #ifdef PRC_DEBUG_RECOGNIZE_DEEPLY
-                    OS_Printf(" inc iProto: score=%d, length=%d\n",
+                    OS_TPrintf(" inc iProto: score=%d, length=%d\n",
                               FX_Whole(protoNextRatio * (angleScores_(iInput, iProto))),
                               FX_Whole(100 * protoNextRatio));
 #endif
@@ -773,7 +773,7 @@ PRCi_CalcStrokeDistance_Superfine(fx32 *score,
                             * (doubleWidth - CityBlockDistance(&protoPoints[iProto], &inputPoint));
 #ifdef PRC_DEBUG_CHECK_OVERFLOW
                         if (prevScore > localScore)
-                            OS_Warning("Internal Error: score overflow\n");
+                            OS_TWarning("Internal Error: score overflow\n");
                     }
 #endif
 
@@ -791,12 +791,12 @@ PRCi_CalcStrokeDistance_Superfine(fx32 *score,
                 weight = tmp;
             }
             weightedScore += FX_Mul(localScore / 256, weight);
-            SDK_ASSERTMSG(weight != 0,
+            SDK_TASSERTMSG(weight != 0,
                           "inputStrokeLength: %d, inputLocalLength: %d, protoStrokeLength: %d, protoLocalLength: %d\n",
                           inputStrokeLength, inputLocalLength, protoStrokeLength, protoLocalLength);
             totalWeight += weight;
         }
-        SDK_ASSERTMSG(totalWeight != 0, "nMatches: %d", nMatches);
+        SDK_TASSERTMSG(totalWeight != 0, "nMatches: %d", nMatches);
         {
             fx32    ratio;
             ratio = (inputStrokeRatio >= protoStrokeRatio) ? inputStrokeRatio : protoStrokeRatio;

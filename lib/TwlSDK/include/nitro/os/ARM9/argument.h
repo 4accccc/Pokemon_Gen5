@@ -10,8 +10,8 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
+  $Date:: 2009-07-06#$
+  $Rev: 10864 $
   $Author: okubata_ryoma $
  *---------------------------------------------------------------------------*/
 #ifndef NITRO_OS_ARGUMENT_H_
@@ -28,12 +28,10 @@ extern "C" {
 //---- force to be available argument area
 //#define OS_ARGUMENT_FORCE_TO_BE_AVAILABLE   TRUE
 
-// if finalrom, no argument (for NITRO)
-#ifndef SDK_TWL
+// if finalrom, no argument
 #ifdef SDK_FINALROM
 #define OS_NO_ARGUMENT      TRUE
 #define OS_NO_ARGC_AND_ARGV TRUE
-#endif
 #endif
 
 // if forced, let argument area available
@@ -63,8 +61,6 @@ extern "C" {
 //---- argument string buffer size
 #define OS_ARGUMENT_BUFFER_SIZE  	256
 
-#ifndef SDK_TWL
-//==== Argument defines for NITRO
 //---- argument buffer identification string (max 17 chars)
 #define OS_ARGUMENT_ID_STRING      	":$@$Argument$@$:"
 #define OS_ARGUMENT_ID_STRING_BUFFER_SIZE 18
@@ -81,19 +77,6 @@ typedef struct OSArgumentBuffer
 #endif
 }
 OSArgumentBuffer;
-
-#else // ifndef SDK_TWL
-//==== Argument defines for TWL
-typedef struct OSArgumentBuffer
-{
-#if defined(SDK_WIN32) || defined(SDK_FROM_TOOL)
-    char    buffer[OS_ARGUMENT_BUFFER_SIZE];
-#else
-	const char buffer[OS_ARGUMENT_BUFFER_SIZE];
-#endif
-}
-OSArgumentBuffer;
-#endif
 
 /*---------------------------------------------------------------------------*
   Name:         OS_GetArgc

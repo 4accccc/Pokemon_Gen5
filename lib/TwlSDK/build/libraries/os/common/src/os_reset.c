@@ -10,8 +10,8 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-08#$
-  $Rev: 10706 $
+  $Date:: 2009-07-09#$
+  $Rev: 10877 $
   $Author: yosizaki $
  *---------------------------------------------------------------------------*/
 #include        <nitro.h>
@@ -29,7 +29,7 @@
 //---------------- local functions
 #ifdef SDK_ARM9
 static void OSi_CpuClear32(register u32 data, register void *destp, register u32 size);
-static void OSi_ReloadRomData(void);
+static void OSi_ReloadRomData(BOOL ontwl);
 static void OSi_ReadCardRom32(u32 src, void *dst, int len);
 #endif // ifdef SDK_ARM9
 
@@ -103,9 +103,9 @@ void OS_ResetSystem(u32 parameter)
         ((OS_IsRunOnTwl() == TRUE) && ((*((u32*)(HW_TWL_ROM_HEADER_BUF + 0x234)) & 0x00000004) != 0)))
     {
 #ifndef SDK_FINALROM
-        OS_Panic("Only card booted application can execute software reset.\nSee OS_ResetSystem() reference manual.");
+        OS_TPanic("Only card booted application can execute software reset.\nSee OS_ResetSystem() reference manual.");
 #else
-        OS_Panic("");
+        OS_TPanic("");
 #endif
     }
 #else
@@ -113,20 +113,9 @@ void OS_ResetSystem(u32 parameter)
     if (MB_IsMultiBootChild())
     {
 #ifndef SDK_FINALROM
-        OS_Panic("Cannot reset from MB child.\nSee OS_ResetSystem() reference manual.");
+        OS_TPanic("Cannot reset from MB child.\nSee OS_ResetSystem() reference manual.");
 #else
-        OS_Panic("");
-#endif
-    }
-#endif
-    //---- stop if reset on TWL-mode
-#ifdef  SDK_TWL
-    if (OS_IsRunOnTwl())
-    {
-#ifndef SDK_FINALROM
-        OS_Panic("Cannot reset on TWL-mode.\nSee OS_ResetSystem() reference manual.");
-#else
-        OS_Panic("");
+        OS_TPanic("");
 #endif
     }
 #endif
@@ -207,8 +196,128 @@ void OS_ResetSystem(void)
 #pragma dont_inline reset
 #endif // ifdef SDK_ARM9
 
+#define SDK_OS_RESET_COMPACT
+
 #if defined(SDK_TWL) && defined(SDK_ARM9)
 #include <twl/itcm_begin.h>
+
+#if defined(SDK_OS_RESET_COMPACT)
+// ソフトウェアリセットの最終段階で使用するSVC処理をまとめてITCMへ退避。
+#include <nitro/code16.h>
+#define SVC_ID_SHA1_INIT   36
+#define SVC_ID_SHA1_UPDATE 37
+#define SVC_ID_SHA1_FINAL  38
+#define SVC_ID_CALC_SHA1   39
+#define SVC_ID_CMP_SHA1    40
+asm static BOOL OSi_VerifyStaticSegmentHash(const u8 *src, u32 len, const void *digest)
+{
+#define VAR_STACK_DIGEST  (0)
+#define VAR_STACK_PADBUF  (VAR_STACK_DIGEST  + SVC_SHA1_DIGEST_SIZE)
+#define VAR_STACK_CONTEXT (VAR_STACK_PADBUF  + SVC_SHA1_BLOCK_SIZE)
+#define VAR_STACK_TOTAL   (VAR_STACK_CONTEXT + sizeof(SVCSHA1Context))
+    PUSH    {R3, R4, R5, R6, R7, LR}
+    SUB     SP, #VAR_STACK_TOTAL // 0xB8
+    MOV     R4, R1 // len
+    MOV     R5, R0 // src
+    MOV     R7, R2 // digest
+    // SHA-1構造体を初期化。
+    ADD     R0, SP, #VAR_STACK_CONTEXT
+    MOV     R3, #SVCSHA1Context.sha_block
+    ADD     R3, R0
+    MOV     R2, #0
+    STR     R2, [R3]
+    SWI     SVC_ID_SHA1_INIT
+    // ipadを入力。
+    LDR     R0, =@key
+    ADD     R1, SP, #VAR_STACK_PADBUF
+    MOV     R2, #0x0
+    MOV     R3, #0x36
+@0:
+    LDRB    R6, [R0, R2]
+    EOR     R6, R3
+    STRB    R6, [R1, R2]
+    ADD     R2, R2, #0x1
+    CMP     R2, #SVC_SHA1_BLOCK_SIZE
+    BLT     @0
+    ADD     R0, SP, #VAR_STACK_CONTEXT
+    SWI     SVC_ID_SHA1_UPDATE
+    // メッセージを入力。
+    ADD     R0, SP, #VAR_STACK_CONTEXT
+    MOV     R1, R5
+    MOV     R2, R4
+    SWI     SVC_ID_SHA1_UPDATE
+    // iハッシュを算出。
+    ADD     R0, SP, #VAR_STACK_DIGEST
+    ADD     R1, SP, #VAR_STACK_CONTEXT
+    SWI     SVC_ID_SHA1_FINAL
+    // SHA-1構造体を初期化。
+    ADD     R0, SP, #VAR_STACK_CONTEXT
+    MOV     R3, #SVCSHA1Context.sha_block
+    ADD     R3, R0
+    MOV     R2, #0
+    STR     R2, [R3]
+    SWI     SVC_ID_SHA1_INIT
+    // opadを入力。
+    LDR     R0, =@key
+    ADD     R1, SP, #VAR_STACK_PADBUF
+    MOV     R2, #0x0
+    MOV     R3, #0x5C
+@1:
+    LDRB    R6, [R0, R2]
+    EOR     R6, R3
+    STRB    R6, [R1, R2]
+    ADD     R2, R2, #0x1
+    CMP     R2, #SVC_SHA1_BLOCK_SIZE
+    BLT     @1
+    ADD     R0, SP, #VAR_STACK_CONTEXT
+    SWI     SVC_ID_SHA1_UPDATE
+    // iハッシュを入力。
+    ADD     R0, SP, #VAR_STACK_CONTEXT
+    ADD     R1, SP, #VAR_STACK_DIGEST
+    MOV     R2, #SVC_SHA1_DIGEST_SIZE
+    SWI     SVC_ID_SHA1_UPDATE
+    // oハッシュを算出。
+    ADD     R0, SP, #VAR_STACK_DIGEST
+    ADD     R1, SP, #VAR_STACK_CONTEXT
+    SWI     SVC_ID_SHA1_FINAL
+    // oハッシュを比較。
+    ADD     R0, SP, #VAR_STACK_DIGEST
+    MOV     R1, R7
+    SWI     SVC_ID_CMP_SHA1
+    CMP     R0, #0x0
+    BEQ     @2
+    MOV     R0, #0x1
+@2:
+    ADD     SP, #0xB8
+    POP     {R3, R4, R5, R6, R7, PC}
+    NOP
+#undef VAR_STACK_DIGEST
+#undef VAR_STACK_PADBUF
+#undef VAR_STACK_CONTEXT
+#undef VAR_STACK_TOTAL
+@key:
+    dcd 0xDEC00621
+    dcd 0x3FCE98BA
+    dcd 0x9DE392A6
+    dcd 0x01EDF246
+    dcd 0x08CCE376
+    dcd 0xFA632356
+    dcd 0xDFECD4CA
+    dcd 0x3478629A
+    dcd 0x3C636D8F
+    dcd 0x92CA22FE
+    dcd 0x23978820
+    dcd 0xC2AECFD2
+    dcd 0xFE8D6732
+    dcd 0x986483CA
+    dcd 0x373EFDAC
+    dcd 0x24584687
+}
+#include <nitro/codereset.h>
+#include <nitro/code32.h>
+#endif
+
+#if !defined(SDK_OS_RESET_COMPACT)
 #define OSi_TCM_REGION_BASE_MASK  HW_C9_TCMR_BASE_MASK  // 0xfffff000
 static asm u32 OSi_GetDTCMAddress(void)
 {
@@ -217,6 +326,7 @@ static asm u32 OSi_GetDTCMAddress(void)
     and      r0, r0, r1
     bx       lr
 }
+#endif
 /*---------------------------------------------------------------------------*
   Name:         OSi_VerifyStaticSegments
 
@@ -233,10 +343,14 @@ static void OSi_VerifyStaticSegments(void)
     if ((((const u8 *)header)[0x1C] & 0x01) != 0)
     {
         int                     i;
+#if !defined(SDK_OS_RESET_COMPACT)
         // use DTCM as workarea
         u8                     *work = (u8 *)OSi_GetDTCMAddress();
         SVCHMACSHA1Context     *context = (SVCHMACSHA1Context *)&work[0];
         u8                     *digest = &work[sizeof(SVCHMACSHA1Context)];
+#else
+        BOOL OSi_VerifyStaticSegmentHash(const u8 *src, u32 len, const void *digest);
+#endif
         // calculate and verify HMAC-SHA1 of the static segments
         enum { SEGMENT_TOTAL = 4 };
         struct Segment { u8 *address; u32 size; } *(table[SEGMENT_TOTAL]);
@@ -251,6 +365,7 @@ static void OSi_VerifyStaticSegments(void)
         compareDigests[3] = header->sub_ltd_static_digest;
         for (i = 0; i < SEGMENT_TOTAL; ++i)
         {
+#if !defined(SDK_OS_RESET_COMPACT)
             static const u8 hmacKey[] =
             {
                 0x21, 0x06, 0xc0, 0xde, 0xba, 0x98, 0xce, 0x3f,
@@ -262,6 +377,7 @@ static void OSi_VerifyStaticSegments(void)
                 0x32, 0x67, 0x8d, 0xfe, 0xca, 0x83, 0x64, 0x98,
                 0xac, 0xfd, 0x3e, 0x37, 0x87, 0x46, 0x58, 0x24,
             };
+#endif
             const u8   *address = table[i]->address;
             u32         size = table[i]->size;
             if (i == 0)
@@ -269,10 +385,14 @@ static void OSi_VerifyStaticSegments(void)
                 address += 0x4000;
                 size -= 0x4000;
             }
+#if !defined(SDK_OS_RESET_COMPACT)
             SVC_HMACSHA1Init(context, hmacKey, sizeof(hmacKey));
             SVC_HMACSHA1Update(context, address, size);
             SVC_HMACSHA1GetHash(context, digest);
             result &= (SVC_CompareSHA1(digest, compareDigests[i]) != FALSE);
+#else
+            result &= OSi_VerifyStaticSegmentHash(address, size, compareDigests[i]);
+#endif
         }
     }
     // if any segment is invalid, enter the endless-loop
@@ -318,13 +438,13 @@ __attribute__((never_inline))
 #ifdef  SDK_TWL
     if (OS_IsRunOnTwl() == TRUE)
     {
-        OSi_ReloadTwlRomData();
+        OSi_ReloadRomData(TRUE);
         OSi_VerifyStaticSegments();
     }
     else
 #endif
     {
-        OSi_ReloadRomData();
+        OSi_ReloadRomData(FALSE);
     }
 
     //---- do boot
@@ -555,52 +675,154 @@ static asm void  OSi_CpuClear32( register u32 data, register void *destp, regist
 
   Returns:      None.
  *---------------------------------------------------------------------------*/
-static void OSi_ReloadRomData(void)
+static asm void OSi_ReloadRomData(BOOL ontwl)
 {
-    u32     p = (u32)HW_ROM_HEADER_BUF;
-    const u32 rom_base = *(u32 *)HW_ROM_BASE_OFFSET_BUF;
+    stmfd   sp!, {r4, lr}
+    mov     r4, r0
 
-    /* if necessary, reload ROM header. */
-    if (rom_base >= 0x8000)
-        OSi_ReadCardRom32(rom_base, (void *)p, 0x160);
+#ifdef SDK_TWL
+@shakeHand01:
+    cmp     r4, #0
+    beq     @shakeHand01_end
+    /* ARM7 と同期 */
+    ldr     r0, =HW_BOOT_SYNC_PHASE
+    mov     r1, #1
+    strh    r1, [r0]
+    ldr     r0, =HW_BOOT_SHAKEHAND_9
+    ldr     r1, =HW_BOOT_SHAKEHAND_7
+    ldrh    r2, [r1]
+    ldrh    r3, [r0]
+@shakeHand01_loop:
+    add     r3, r3, #1
+    strh    r3, [r0]
+    ldrh    r12, [r1]
+    cmp     r2, r12
+    beq     @shakeHand01_loop
+    add     r3, r3, #1
+    strh    r3, [r0]
+@shakeHand01_end:
+#endif // SDK_TWL
 
-    {
-        u32     src_arm9 = *(u32 *)(p + 0x20);
-        u32     dst_arm9 = *(u32 *)(p + 0x28);
-        u32     len_arm9 = *(u32 *)(p + 0x2c);
-        u32     src_arm7 = *(u32 *)(p + 0x30);
-        u32     dst_arm7 = *(u32 *)(p + 0x38);
-        u32     len_arm7 = *(u32 *)(p + 0x3c);
+    // 必要ならROMヘッダを再ロード。 (NTRモード動作時のみ)
+    cmp     r4, #0
+    movne   r0, #0
+    ldreq   r0, =HW_ROM_BASE_OFFSET_BUF
+    ldreq   r0, [r0]
+    stmfd   sp!, {r0}
+    cmp     r0, #0x8000
+    ldrcs   r1, =HW_ROM_HEADER_BUF
+    movcs   r2, #0x160
+    blcs    OSi_ReadCardRom32
 
-        {
-            OSIntrMode bak_cpsr = OS_DisableInterrupts();
-            DC_StoreAll();
-            DC_InvalidateAll();
-            (void)OS_RestoreInterrupts(bak_cpsr);
-        }
-        IC_InvalidateAll();
-        DC_WaitWriteBufferEmpty();
+@loadStatic:
+    /* ARM9 用バイナリをロード */
+    ldr     r12, =HW_ROM_HEADER_BUF
+    ldr     r0, [r12, #0x20]
+    ldr     r1, [r12, #0x28]
+    ldr     r2, [r12, #0x2c]
+    ldr     r3, [sp]
+    add     r0, r0, r3
+    subs    r3, r0, #0x8000
+    movlt   r0, #0x8000
+    sublt   r1, r1, r3
+    addlt   r2, r2, r3
+    cmp     r2, #0
+    blgt    OSi_ReadCardRom32
+    /* ARM7 用バイナリをロード */
+    ldr     r12, =HW_ROM_HEADER_BUF
+    ldr     r0, [r12, #0x30]
+    ldr     r1, [r12, #0x38]
+    ldr     r2, [r12, #0x3c]
+    ldr     r3, [sp]
+    add     r0, r0, r3
+    cmp     r2, #0
+    blgt    OSi_ReadCardRom32
+    ldmfd   sp!, {r0}
 
-        //OS_Printf("A9 %x %x %x %x\n", *(u32*)(p+0x20), *(u32*)(p+0x24), *(u32*)(p+0x28), *(u32*)(p+0x2c) );
-        //OS_Printf("A7 %x %x %x %x\n", *(u32*)(p+0x30), *(u32*)(p+0x34), *(u32*)(p+0x38), *(u32*)(p+0x3c) );
+#ifdef SDK_TWL
+@loadLtdStatic:
+    cmp     r4, #0
+    beq     @loadLtdStatic_end
+    /* ARM9 用拡張バイナリをロード */
+    ldr     r12, =HW_TWL_ROM_HEADER_BUF
+    ldr     r0, [r12, #0x1c0]
+    ldr     r1, [r12, #0x1c8]
+    ldr     r2, [r12, #0x1cc]
+    add     r0, r0, #0x4000
+    add     r1, r1, #0x4000
+    sub     r2, r2, #0x4000
+    subs    r3, r0, #0x8000
+    movlt   r0, #0x8000
+    sublt   r1, r1, r3
+    addlt   r2, r2, r3
+    cmp     r2, #0
+    blgt    OSi_ReadCardRom32
+    /* ARM7 用拡張バイナリをロード */
+    ldr     r12, =HW_TWL_ROM_HEADER_BUF
+    ldr     r0, [r12, #0x1d0]
+    ldr     r1, [r12, #0x1d8]
+    ldr     r2, [r12, #0x1dc]
+    add     r0, r0, #0x4000
+    add     r1, r1, #0x4000
+    sub     r2, r2, #0x4000
+    subs    r3, r0, #0x8000
+    movlt   r0, #0x8000
+    sublt   r1, r1, r3
+    addlt   r2, r2, r3
+    cmp     r2, #0
+    blgt    OSi_ReadCardRom32
+@loadLtdStatic_end:
+#endif // SDK_TWL
 
-        /* add base-offset. */
-        src_arm9 += rom_base;
-        src_arm7 += rom_base;
+    // キャッシュをすべてフラッシュ。
+@arrangeCache:
+    /* DC_StoreAll() */
+    mov     r1, #0
+@arrangeCache_loop01:
+    mov     r0, #0
+@arrangeCache_loop02:
+    orr     r2, r1, r0
+    mcr     p15, 0, r2, c7, c10, 2
+    add     r0, r0, #HW_CACHE_LINE_SIZE
+    cmp     r0, #(HW_DCACHE_SIZE / 4)
+    blt     @arrangeCache_loop02
+    adds    r1, r1, #(1 << HW_C7_CACHE_SET_NO_SHIFT)
+    bne     @arrangeCache_loop01
+    /* DC_InvalidateAll() */
+    mov     r0, #0
+    mcr     p15, 0, r0, c7, c6, 0
+    /* IC_InvalidateAll() */
+//  mov     r0, #0
+    mcr     p15, 0, r0, c7, c5, 0
+    /* DC_WaitWriteBufferEmpty() */
+//  mov     r0, #0
+    mcr     p15, 0, r0, c7, c10, 4
 
-        //---- ARM9 code
-        if (src_arm9 < 0x8000)         // top 32KByte of the rom cannot be read.
-        {
-            u32     diff = 0x8000 - src_arm9;
-            src_arm9 = 0x8000;
-            dst_arm9 += diff;
-            len_arm9 -= diff;
-        }
-        OSi_ReadCardRom32(src_arm9, (void *)dst_arm9, (int)len_arm9);
+#ifdef SDK_TWL
+    cmp     r4, #0
+    beq     @shakeHand02_end
+    /* ARM7 と同期 */
+    /* 退避した拡張バイナリの先頭部分の復帰が必要 */
+    mov     r3, #2
+    ldr     r0, =HW_BOOT_SYNC_PHASE
+    strh    r3, [r0]
+    ldr     r0, =HW_BOOT_SHAKEHAND_9
+    ldr     r1, =HW_BOOT_SHAKEHAND_7
+    ldrh    r2, [r1]
+    ldrh    r3, [r0]
+@shakeHand02_loop:
+    add     r3, r3, #1
+    strh    r3, [r0]
+    ldrh    r12, [r1]
+    cmp     r2, r12
+    beq     @shakeHand02_loop
+    add     r3, r3, #1
+    strh    r3, [r0]
+@shakeHand02_end:
+#endif // SDK_TWL
 
-        //---- ARM7 code
-        OSi_ReadCardRom32(src_arm7, (void *)dst_arm7, (int)len_arm7);
-    }
+    ldmfd   sp!, {r4, pc}
+//  bx      lr
 }
 
 /*---------------------------------------------------------------------------*
@@ -713,133 +935,6 @@ static void OSi_ReadCardRom32(u32 src, void *dst, int len)
  *---------------------------------------------------------------------------*/
 #ifdef  SDK_ARM9
 //---------------- ARM9
-#include <twl/itcm_begin.h>
-static asm void
-OSi_ReloadTwlRomData(void)
-{
-    stmfd   sp!, {lr}
-@shakeHand01:
-    /* ARM7 と同期 */
-    ldr     r0, =HW_BOOT_SYNC_PHASE
-    mov     r1, #1
-    strh    r1, [r0]
-    ldr     r0, =HW_BOOT_SHAKEHAND_9
-    ldr     r1, =HW_BOOT_SHAKEHAND_7
-    ldrh    r2, [r1]
-    ldrh    r3, [r0]
-@shakeHand01_loop:
-    add     r3, r3, #1
-    strh    r3, [r0]
-    ldrh    r12, [r1]
-    cmp     r2, r12
-    beq     @shakeHand01_loop
-    add     r3, r3, #1
-    strh    r3, [r0]
-
-    /* TWLモード動作時は ROM ベースオフセットを変更不可能 */
-    mov     r0, #0
-    stmfd   sp!, {r0}
-
-@loadStatic:
-    /* ARM9 用バイナリをロード */
-    ldr     r12, =HW_ROM_HEADER_BUF
-    ldr     r0, [r12, #0x20]
-    ldr     r1, [r12, #0x28]
-    ldr     r2, [r12, #0x2c]
-    ldr     r3, [sp]
-    add     r0, r0, r3
-    subs    r3, r0, #0x8000
-    movlt   r0, #0x8000
-    sublt   r1, r1, r3
-    addlt   r2, r2, r3
-    cmp     r2, #0
-    blgt    OSi_ReadCardRom32
-    /* ARM7 用バイナリをロード */
-    ldr     r12, =HW_ROM_HEADER_BUF
-    ldr     r0, [r12, #0x30]
-    ldr     r1, [r12, #0x38]
-    ldr     r2, [r12, #0x3c]
-    ldr     r3, [sp]
-    add     r0, r0, r3
-    cmp     r2, #0
-    blgt    OSi_ReadCardRom32
-
-@loadLtdStatic:
-    /* ARM9 用拡張バイナリをロード */
-    ldr     r12, =HW_TWL_ROM_HEADER_BUF
-    ldr     r0, [r12, #0x1c0]
-    ldr     r1, [r12, #0x1c8]
-    ldr     r2, [r12, #0x1cc]
-    add     r0, r0, #0x4000
-    add     r1, r1, #0x4000
-    sub     r2, r2, #0x4000
-    subs    r3, r0, #0x8000
-    movlt   r0, #0x8000
-    sublt   r1, r1, r3
-    addlt   r2, r2, r3
-    cmp     r2, #0
-    blgt    OSi_ReadCardRom32
-    /* ARM7 用拡張バイナリをロード */
-    ldr     r12, =HW_TWL_ROM_HEADER_BUF
-    ldr     r0, [r12, #0x1d0]
-    ldr     r1, [r12, #0x1d8]
-    ldr     r2, [r12, #0x1dc]
-    add     r0, r0, #0x4000
-    add     r1, r1, #0x4000
-    sub     r2, r2, #0x4000
-    subs    r3, r0, #0x8000
-    movlt   r0, #0x8000
-    sublt   r1, r1, r3
-    addlt   r2, r2, r3
-    cmp     r2, #0
-    blgt    OSi_ReadCardRom32
-    /* 退避した拡張バイナリの先頭部分の復帰が必要 */
-    mov     r3, #2
-@arrangeCache:
-    ldmfd   sp!, {r0}
-    /* DC_StoreAll() */
-    mov     r1, #0
-@arrangeCache_loop01:
-    mov     r0, #0
-@arrangeCache_loop02:
-    orr     r2, r1, r0
-    mcr     p15, 0, r2, c7, c10, 2
-    add     r0, r0, #HW_CACHE_LINE_SIZE
-    cmp     r0, #(HW_DCACHE_SIZE / 4)
-    blt     @arrangeCache_loop02
-    adds    r1, r1, #(1 << HW_C7_CACHE_SET_NO_SHIFT)
-    bne     @arrangeCache_loop01
-    /* DC_InvalidateAll() */
-    mov     r0, #0
-    mcr     p15, 0, r0, c7, c6, 0
-    /* IC_InvalidateAll() */
-//  mov     r0, #0
-    mcr     p15, 0, r0, c7, c5, 0
-    /* DC_WaitWriteBufferEmpty() */
-//  mov     r0, #0
-    mcr     p15, 0, r0, c7, c10, 4
-
-    /* ARM7 と同期 */
-    ldr     r0, =HW_BOOT_SYNC_PHASE
-    strh    r3, [r0]
-    ldr     r0, =HW_BOOT_SHAKEHAND_9
-    ldr     r1, =HW_BOOT_SHAKEHAND_7
-    ldrh    r2, [r1]
-    ldrh    r3, [r0]
-@shakeHand02_loop:
-    add     r3, r3, #1
-    strh    r3, [r0]
-    ldrh    r12, [r1]
-    cmp     r2, r12
-    beq     @shakeHand02_loop
-    add     r3, r3, #1
-    strh    r3, [r0]
-
-    ldmfd   sp!, {pc}
-//  bx      lr
-}
-#include <twl/itcm_end.h>
-
 #else   // ifdef SDK_ARM9
 //---------------- ARM7
 #include <twl/ltdwram_begin.h>

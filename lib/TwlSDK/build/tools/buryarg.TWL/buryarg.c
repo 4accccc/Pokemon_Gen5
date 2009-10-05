@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-17#$
+  $Rev: 10762 $
+  $Author: mizutani_nakaba $
  *---------------------------------------------------------------------------*/
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,7 +43,8 @@
 #define ERROR_ILLEGAL_TLF_FILE					15
 
 //---- version
-#define VERSION_STRING     " 1.1  Copyright 2008 Nintendo. All right reserved."
+#define VERSION_STRING     " 1.2  Copyright 2008 Nintendo. All right reserved."
+// ver 1.2  引数データの位置を buryarg と同じ位置に変更
 // ver 1.1  fixed bug on --stdout option
 // ver 1.0  applied for TWL
 
@@ -579,7 +580,7 @@ void analyzeTlfFile(void)
 {
     char    lineBuffer[1024];
     BOOL    isFound_T = FALSE;
-    BOOL    isFound_H = FALSE;
+    BOOL    isFound_9 = FALSE;
 
     fseek(gTlfFile, 0, SEEK_SET);
 
@@ -603,14 +604,13 @@ void analyzeTlfFile(void)
             isFound_T = TRUE;
         }
 
-		if ( !strncmp(lineBuffer, "H,", 2))
+		if (!strncmp(lineBuffer, "9,", 2) && isFound_T)
 		{
 			char *sp = &lineBuffer[0];
 			char *dp = &gInputFileNameString[0];
 			int count=0;
 
-			//while (*sp && count <=2)
-			while (*sp && count <=0)
+			while (*sp && count <=2)
 			{
 				if (*sp++ == '\"')
 				{
@@ -626,12 +626,12 @@ void analyzeTlfFile(void)
 			//---- set argv[0]
 			addString(getTailFileName(gInputFileNameString));
 
-			isFound_H = TRUE;
+			isFound_9 = TRUE;
 		}
     }
 
     //---- check if found file name
-    if (!isFound_H)
+    if (!isFound_9)
     {
         displayError(ERROR_ILLEGAL_TLF_FILE);
     }
@@ -822,19 +822,87 @@ void closeFiles(void)
 //================================================================================
 //                      バッファ置き換え
 //================================================================================
-#define ROM_ARG_BUF_OFS 0x0e00
-
 void replaceToSpecifiedString(void)
 {
-    long    bufPosition = ROM_ARG_BUF_OFS;
+    BOOL    isFindMark = FALSE;
+    int     markIndex = 0;
+    long    bufPosition;
     int     n;
     int     inputChar;
+
+    const int markLength = strlen(gArgIdString);
+
+    //---- search argument idendification string in bin file
+    while (1)
+    {
+        if ((inputChar = fgetc(gInputFile)) == EOF)
+        {
+            break;
+        }
+
+        if (inputChar == gArgIdString[markIndex])
+        {
+            markIndex++;
+            if (markIndex == markLength)
+            {
+                long    topPosition = ftell(gInputFile) - markLength;
+                bufPosition = topPosition + OS_ARGUMENT_ID_STRING_BUFFER_SIZE + sizeof(u16);
+
+                if (gVerboseMode)
+                {
+                    printf("found argument identification string at 0x%x byte from top.\n",
+                           (int)topPosition);
+                }
+                isFindMark = TRUE;
+                break;
+            }
+        }
+        else
+        {
+            if (markIndex > 0)
+            {
+                markIndex = 0;
+                if (inputChar == gArgIdString[0])
+                {
+                    markIndex++;
+                }
+            }
+        }
+    }
+
+    //---- check if mark not found
+    if (!isFindMark)
+    {
+        displayError(ERROR_MARK_NOT_FOUND);
+    }
+
+    //---- position check
+    if (bufPosition < 0)
+    {
+        displayError(ERROR_BAD_MARK_POSITION);
+    }
+
+    //---- get buffer size
+    fseek(gInputFile, bufPosition - sizeof(u16), SEEK_SET);
+    gArgStringSize = (int)(fgetc(gInputFile) + (fgetc(gInputFile) << 8));
+
+    if (gVerboseMode)
+    {
+        printf("buffer size = 0x%x byte\n", gArgStringSize);
+    }
+
+    if (gArgStringSize < 0 || gArgStringSize > ARGUMENT_BUF_SIZE)
+    {
+        displayError(ERROR_BAD_ARGUMENT_SIZE);
+    }
+
+    //---- put forced endmark to replace buffer
+    gArgString[gArgStringSize - 2] = '\0';
+    gArgString[gArgStringSize - 1] = '\0';
 
     //---- replacement
     if (gReplacementMode)
     {
-		gArgStringSize = OS_ARGUMENT_BUFFER_SIZE;
-
         fseek(gInputFile, bufPosition, SEEK_SET);
         for (n = 0; n < gArgStringSize; n++)
         {
@@ -848,8 +916,6 @@ void replaceToSpecifiedString(void)
     }
     else
     {
-        gArgStringSize = gArgStringIndex;
-
         fseek(gInputFile, 0, SEEK_SET);
         n = 0;
         while ((inputChar = fgetc(gInputFile)) != EOF)

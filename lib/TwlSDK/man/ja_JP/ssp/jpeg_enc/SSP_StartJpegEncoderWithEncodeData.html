@@ -72,16 +72,23 @@ u32 SSP_StartJpegEncoderWithEncodeData(u8 *dst, u32 limit, u8 *wrk, u32 width, u
 <br>
 <font color="red">注意：</font><br>
 本関数は完了後にエンコードの成功、失敗問わず、<code><a href="SSP_SetJpegEncoderDateTime.html">SSP_SetJpegEncoderDateTime()</a>,<a href="SSP_SetJpegEncoderDateTimeNow.html">SSP_SetJpegEncoderDateTimeNow()</a>,<a href="SSP_SetJpegEncoderMakerNote.html">SSP_SetJpegEncoderMakerNote()</a>,<a href="SSP_SetJpegEncoderMakerNoteEx.html">SSP_SetJpegEncoderMakerNoteEx()</a></code> で設定した値はクリアされます。<br>
-また、本関数は事前に <code><a href="SSP_SetJpegEncoderDateTime.html">SSP_SetJpegEncoderDateTime()</a></code> もしくは <code><a href="SSP_SetJpegEncoderDateTimeNow.html">SSP_SetJpegEncoderDateTimeNow()</a></code> を呼び出していない場合、内部で <code><a href="../../rtc/RTC_GetDateTime.html">RTC_GetDateTime()</a></code> が呼ばれます。
+また、本関数は事前に <code><a href="SSP_SetJpegEncoderDateTime.html">SSP_SetJpegEncoderDateTime()</a></code> もしくは <code><a href="SSP_SetJpegEncoderDateTimeNow.html">SSP_SetJpegEncoderDateTimeNow()</a></code> を呼び出していない場合、内部で <code><a href="SSP_GetDateTime.html">SSP_GetDateTime()</a></code> が呼ばれます。
 </p>
 
 <h2>参照</h2>
 <p><code>
-<a href="SSP_SetJpegEncoderDateTime.html">SSP_SetJpegEncoderDateTime</a>, <a href="SSP_SetJpegEncoderDateTimeNow.html">SSP_SetJpegEncoderDateTimeNow</a>, <a href="SSP_ConvertJpegEncodeData.html">SSP_ConvertJpegEncodeData</a>, <a href="SSP_StartJpegEncoder.html">SSP_StartJpegEncodder</a>
+<a href="SSP_SetJpegEncoderDateTime.html">SSP_SetJpegEncoderDateTime</a>,
+<a href="SSP_SetJpegEncoderDateTimeNow.html">SSP_SetJpegEncoderDateTimeNow</a>,
+<a href="SSP_ConvertJpegEncodeData.html">SSP_ConvertJpegEncodeData</a>,
+<a href="SSP_StartJpegEncoder.html">SSP_StartJpegEncoder</a>,
+<a href="SSP_SetJpegEncoderMakerNote.html">SSP_SetJpegEncoderMakerNote</a>,
+<a href="SSP_SetJpegEncoderMakerNoteEx.html">SSP_SetJpegEncoderMakerNoteEx</a>,
+<a href="SSP_GetDateTime.html">SSP_GetDateTime</a>
 </code></p>
 
 <h2>履歴</h2>
 <p>
+2009/07/16 関数の内部動作にあった説明に変更<br>
 2009/04/28 アライメントの制限について追記<br>
 2008/11/14 初版
 </p>

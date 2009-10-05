@@ -63,8 +63,8 @@
 <IMG src="../../image/BPT.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"> TWLƒrƒ‹ƒh‚È‚çAWRAM-A/B/C ‚Ì‰Šú‰»‚ðs‚¢‚Ü‚·B( <CODE><A href="../../mi/wram/MI_InitWramManager.html">MI_InitWramManager()</A></CODE> )<BR>
 <IMG src="../../image/BPT.gif" align="middle"><IMG src="../../image/TWL.gif" align="middle"> TWLƒ‚[ƒh‚È‚çƒVƒXƒeƒ€Ý’è‚Ì‰Šú‰»‚ðs‚¢‚Ü‚·B( <CODE>SCFG_Init()</CODE> )</BLOCKQUOTE>
 <P><BR>
-NITROATWL ‚Æ‚à‚Éƒ†[ƒU‚Ì <CODE>NitroMain()</CODE> ŠÖ”‚É§Œä‚ªˆÚ‚Á‚½Œã‚ÍAÅ‰‚É <CODE>OS_Init()</CODE> ‚ðŒÄ‚Ño‚µ‚Ä‚­‚¾‚³‚¢B<CODE>OS_Init()</CODE> “à‚ÅŒÄ‚Î‚ê‚Ä‚¢‚éŠÖ”‚Í“®ì‚É•K{‚È‚à‚Ì‚Å‚ ‚èA‡˜‚ð•ÏX‚·‚é‚±‚Æ‚Ío—ˆ‚Ü‚¹‚ñB</P>
-<P>CTRDG ‚ÉŠÖ‚µ‚Ä‚ÍAƒAƒNƒZƒX‚µ‚È‚¢‚±‚Æ‚ª”»‚Á‚Ä‚¢‚éê‡‚É‚ÍAƒƒ‚ƒŠè—L—Ê‚ðŒ¸‚ç‚·•û–@‚ª’ñ‹Ÿ‚³‚ê‚Ä‚¢‚Ü‚·B<CODE><A href="../../ctrdg/CTRDG_Init.html">CTRDG_Init()</A></CODE> ‚ðŽQÆ‚µ‚Ä‚­‚¾‚³‚¢B</P>
+NITROATWL ‚Æ‚à‚Éƒ†[ƒU‚Ì <CODE>NitroMain()</CODE> ‚ ‚é‚¢‚Í <CODE>TwlMain()</CODE> ‚É§Œä‚ªˆÚ‚Á‚½Œã‚ÍAÅ‰‚É <CODE>OS_Init()</CODE> ‚ðŒÄ‚Ño‚µ‚Ä‚­‚¾‚³‚¢B<CODE>OS_Init()</CODE> “à‚ÅŒÄ‚Î‚ê‚Ä‚¢‚éŠÖ”‚Í“®ì‚É•K{‚È‚à‚Ì‚Å‚ ‚èA‡˜‚ð•ÏX‚·‚é‚±‚Æ‚Ío—ˆ‚Ü‚¹‚ñB</P>
+<P>CTRDG ‚ÉŠÖ‚µ‚Ä‚ÍAƒAƒNƒZƒX‚µ‚È‚¢‚±‚Æ‚ª”»‚Á‚Ä‚¢‚éê‡‚É‚ÍAƒƒ‚ƒŠè—L—Ê‚ðŒ¸‚ç‚·•û–@‚ª’ñ‹Ÿ‚³‚ê‚Ä‚¢‚Ü‚·B<CODE><A href="../../ctrdg/CTRDG_Init.html">CTRDG_Init()</A></CODE> A <CODE><A href="../../ctrdg/CTRDG_DummyInit.html">CTRDG_DummyInit()</A></CODE> ‚ðŽQÆ‚µ‚Ä‚­‚¾‚³‚¢B</P>
 <P>ARM9 ‘¤‚Ì <CODE>OS_Init()</CODE> ‚Å‚ÍAƒ`ƒbƒNƒVƒXƒeƒ€‚Ì‰Šú‰»‚âƒAƒ‰[ƒ€ƒVƒXƒeƒ€‚Ì‰Šú‰»‚Ís‚È‚Á‚Ä‚¢‚Ü‚¹‚ñB•K—v‚È‚ç‚ÎA<CODE>OS_Init()</CODE> ‚ÌŒã‚É <CODE><A href="../time/OS_InitTick.html">OS_InitTick()</A></CODE> A<CODE><A href="../alarm/OS_InitAlarm.html">OS_InitAlarm()</A></CODE> ‚ð (‚±‚Ì‡‚Å) ŒÄ‚Ño‚µ‚Ä‚­‚¾‚³‚¢B</P>
 <H2>ŽQÆ</H2>
 <P><CODE><A href="../thread/OS_InitThread.html">OS_InitThread</A>, <A href="../arena/OS_InitArena.html">OS_InitArena</A>, <A href="../irq/OS_InitIrqTable.html">OS_InitIrqTable</A>, <A href="../time/OS_InitTick.html">OS_InitTick</A>, <BR>
@@ -72,7 +72,9 @@ NITROATWL ‚Æ‚à‚Éƒ†[ƒU‚Ì <CODE>NitroMain()</CODE> ŠÖ”‚É§Œä‚ªˆÚ‚Á‚½Œã‚ÍAÅ‰‚
 <A href="../../spi/pm/PM_Init.html">PM_Init</A>, <A href="../reset/OS_InitReset.html">OS_InitReset</A>, <A href="../../ctrdg/CTRDG_Init.html">CTRDG_Init</A>, <A href="../../card/common/CARD_Init.html">CARD_Init</A>,<BR>
 <A href="../time/OS_InitTick.html">OS_InitTick</A>, <A href="../alarm/OS_InitAlarm.html">OS_InitAlarm</A>, <A href="../stack/OS_SetIrqStackChecker.html">OS_SetIrqStackChecker</A></CODE></P>
 <H2>—š—ð</H2>
-<P>2009/04/13 ARM9‘¤‚ÌƒXƒŒƒbƒh‰Šú‰»‚É‚Â‚¢‚Äu•K—v‚È‚çv‚ðíœB<CODE><A href="../../ctrdg/CTRDG_Init.html">CTRDG_Init()</A></CODE> ‚Ìƒƒ‚ƒŠè—L—Ê’áŒ¸‚É‚Â‚¢‚Ä’Ç‹L<BR>
+<P>2009/07/01 CTRDG ‚ÉŠÖ‚·‚éŽQÆæ‚ðC³<BR>
+2009/06/18 <CODE>TwlMain()</CODE> ‚É‚Â‚¢‚Ä’Ç‹L<BR>
+2009/04/13 ARM9‘¤‚ÌƒXƒŒƒbƒh‰Šú‰»‚É‚Â‚¢‚Äu•K—v‚È‚çv‚ðíœB<CODE><A href="../../ctrdg/CTRDG_Init.html">CTRDG_Init()</A></CODE> ‚Ìƒƒ‚ƒŠè—L—Ê’áŒ¸‚É‚Â‚¢‚Ä’Ç‹L<BR>
 2008/07/11 TWL ƒ‚[ƒh‚Ì‰Šú‰»‚É‚Â‚¢‚Ä‹Lq<BR>
 2005/07/19 <CODE>OS_SetIrqStackChecker()</CODE> ‚ð’Ç‰Á<BR>
 2005/03/14 ƒŠƒ“ƒNæ‚Ìƒ~ƒX‚ð’ù³<BR>

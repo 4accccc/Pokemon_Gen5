@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <nitro/snd/common/command.h>
@@ -901,7 +901,7 @@ static void PxiFifoCallback(PXIFifoTag tag, u32 data, BOOL /*err */ )
     {
         /* ëóêMë§Ç≈ó}êßÇµÇƒÇ¢ÇÈÇÃÇ≈ÅAé∏îsÇµÇ»Ç¢ÇÕÇ∏ */
         result = OS_SendMessage(&sCommandMesgQueue, (OSMessage)data, OS_MESSAGE_NOBLOCK);
-        SDK_ASSERTMSG(result, "Failed OS_SendMessage");
+        SDK_TASSERTMSG(result, "Failed OS_SendMessage");
     }
     else
     {

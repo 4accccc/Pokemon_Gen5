@@ -10,8 +10,8 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
+  $Date:: 2009-07-15#$
+  $Rev: 10908 $
   $Author: okubata_ryoma $
 
  *---------------------------------------------------------------------------*/
@@ -46,6 +46,8 @@
 #define MCCNT0_MASTER_ON	0x8000 /* CARD マスター ON */
 #define MCCNT0_MASTER_OFF	0x0000 /* CARD マスター OFF */
 
+#define CARD_BACKUP_TYPE_VENDER_IRC		(0xFF) // IRC ベンダー種別
+#define IRC_BACKUP_WAIT		50     // IRC SPI のコマンド送信間隔
 
 /*---------------------------------------------------------------------------*/
 /* variables */
@@ -272,6 +274,23 @@ static BOOL CARDi_WaitPrevCommand(void)
 }
 
 /*---------------------------------------------------------------------------*
+  Name:         CARDi_WaitBusyforIRC
+
+  Description:  IRC-SPI の完了を待つ.
+
+  Arguments:    None
+
+  Returns:      None.
+ *---------------------------------------------------------------------------*/
+SDK_INLINE void CARDi_WaitBusyforIRC(void)
+{
+    u16 tick = OS_GetTickLo();
+    while(OS_TicksToMicroSeconds(OS_GetTickLo() - tick) < IRC_BACKUP_WAIT)
+    {
+    }
+}
+
+/*---------------------------------------------------------------------------*
   Name:         CARDi_CommArray
 
   Description:  コマンド発行の共通処理.
@@ -283,24 +302,50 @@ static BOOL CARDi_WaitPrevCommand(void)
 
   Returns:      None.
  *---------------------------------------------------------------------------*/
+static BOOL need_command = TRUE;
+
 void CARDi_CommArray(const void *src, void *dst, u32 len, void (*func) (CARDiParam *))
 {
     CARDiParam *const p = &cardi_param;
+    CARDiCommandArg *const arg = cardi_common.cmd;
+    // IRC かどうかをベンダーコード 0xFF かどうかで判断
+    BOOL isIRC = ((u8)((arg->type >> CARD_BACKUP_TYPE_VENDER_SHIFT) & CARD_BACKUP_TYPE_VENDER_MASK) == CARD_BACKUP_TYPE_VENDER_IRC) ? TRUE : FALSE;
     p->src = (u32)src;
     p->dst = (u32)dst;
-    CARDi_EnableSpi(CSPI_CONTINUOUS_ON);
+
+    // IRC 対応で CLK が 4M 以外を設定する場合が出てきたため明記
+    CARDi_EnableSpi(CSPI_CONTINUOUS_ON | MCCNT0_SPI_CLK_4M);
+
     for (; len > 0; --len)
     {
+        if(need_command)
+        {
+            if(isIRC)
+            {
+                vu16 dummy_read;
+                
+                CARDi_WaitBusyforIRC(); // IRC 内蔵 CPU 特有の wait
+                CARDi_EnableSpi(CSPI_CONTINUOUS_ON | MCCNT0_SPI_CLK_1M); // SPI にコマンドを送信する際は 1MHz に設定
+                CARDi_WaitBusy();
+                reg_MI_MCD0 = 0x00;  // SSU とバックアップデバイスを切り換え
+                CARDi_WaitBusy();
+                dummy_read = reg_MI_MCD0;
+                need_command = FALSE;
+                CARDi_WaitBusyforIRC(); // IRC 内蔵 CPU 特有の wait
+                CARDi_EnableSpi(CSPI_CONTINUOUS_ON | MCCNT0_SPI_CLK_4M);
+            }
+        }
         if (!--p->rest_comm)
         {
-            CARDi_EnableSpi(CSPI_CONTINUOUS_OFF);
+            CARDi_EnableSpi(CSPI_CONTINUOUS_OFF | MCCNT0_SPI_CLK_4M);
+            need_command = TRUE;
         }
         CARDi_WaitBusy();
         (*func) (p);
     }
     if (!p->rest_comm)
     {
-        reg_MI_MCCNT0 = (u16)(MCCNT0_MASTER_OFF | MCCNT0_INT_OFF);
+        reg_MI_MCCNT0 = (u16)(MCCNT0_MASTER_OFF | MCCNT0_INT_OFF | MCCNT0_SPI_CLK_4M);
     }
 }
 

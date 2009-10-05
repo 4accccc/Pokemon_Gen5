@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
 
  *---------------------------------------------------------------------------*/
 
@@ -54,7 +54,7 @@ static BOOL is_init = FALSE;
 void FS_Init(u32 default_dma_no)
 {
 #if defined(FS_IMPLEMENT)
-    SDK_ASSERTMSG(default_dma_no != 0, "cannot use DMA channel 0 for ROM access");
+    SDK_TASSERTMSG(default_dma_no != 0, "cannot use DMA channel 0 for ROM access");
     if (!is_init)
     {
         is_init = TRUE;

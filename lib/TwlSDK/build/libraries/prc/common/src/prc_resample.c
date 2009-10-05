@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include <nitro.h>
@@ -318,13 +318,13 @@ PRC_ResampleStrokes_Angle(u16 *selectedPoints,
                 selectedPoints[selectedPointNum] = (u16)iPoint;
                 selectedPointNum++;
                 prevPoint = *point;
-                newFlag = FALSE;
-                firstFlag = TRUE;
                 if (iPoint + 1 < size)
                 {
                     prevAngle =
                         FX_Atan2Idx(((point + 1)->y - point->y) << FX32_SHIFT,
                                     ((point + 1)->x - point->x) << FX32_SHIFT);
+                    newFlag = FALSE;
+                    firstFlag = TRUE;
                 }
             }
             else
@@ -353,9 +353,9 @@ PRC_ResampleStrokes_Angle(u16 *selectedPoints,
                                 selectedPoints[selectedPointNum] = (u16)iPoint;
                                 selectedPointNum++;
                                 prevAngle = currAngle;
+                                firstFlag = FALSE;
                             }
                         }
-                        firstFlag = FALSE;
                     }
                     else
                     {
@@ -653,7 +653,7 @@ PRC_ResampleStrokes_Recursive(u16 *selectedPoints,
             }
         }
     }
-//end = OS_GetTick(); OS_Printf("// sort in resample: %lldƒÊs selectedPointNum=%d\n", OS_TicksToMicroSeconds(end-start), selectedPointNum); }
+//end = OS_GetTick(); OS_TPrintf("// sort in resample: %lldƒÊs selectedPointNum=%d\n", OS_TicksToMicroSeconds(end-start), selectedPointNum); }
     return (*pSelectedPointNum > 0);
 }
 

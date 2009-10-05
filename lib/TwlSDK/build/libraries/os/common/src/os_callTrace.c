@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-18#$
-  $Rev: 8573 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 #include <nitro/os.h>
 
@@ -152,15 +152,15 @@ void OS_InitCallTrace(void *buf, u32 size, OSCallTraceMode mode)
 {
     OSCallTraceInfo **infoPtr;
 
-    SDK_ASSERTMSG(((u32)buf & 3) == 0, "CallTrace buffer must be aligned by 4");
-    SDK_ASSERTMSG((size >= OSi_TRACEINFO_SIZEOF_HEADERPART + sizeof(OSCallTrace)),
+    SDK_TASSERTMSG(((u32)buf & 3) == 0, "CallTrace buffer must be aligned by 4");
+    SDK_TASSERTMSG((size >= OSi_TRACEINFO_SIZEOF_HEADERPART + sizeof(OSCallTrace)),
                   "to small CallTrace buffer");
 
 #ifdef SDK_NO_THREAD
     //---- pointer to callTraceInfo is in static valiable
     infoPtr = &OSi_DefaultCallTraceInfo;
 #else
-    SDK_ASSERTMSG(OS_IsThreadAvailable(), "CallTrace need thread system.");
+    SDK_TASSERTMSG(OS_IsThreadAvailable(), "CallTrace need thread system.");
     //---- pointer to callTraceInfo is in OSThread structure
     infoPtr = (OSCallTraceInfo **)&(OS_GetCurrentThread()->profiler);
 #endif
@@ -538,7 +538,7 @@ const char *OSi_DumpCurrentLr_str[] = {
 void OSi_DumpCurrentLr(u32 lr, int strIndex)
 {
     BOOL    e = OS_DisableCallTrace();
-    OS_Printf("%s: lr=%08x\n", OSi_DumpCurrentLr_str[strIndex], lr);
+    OS_TPrintf("%s: lr=%08x\n", OSi_DumpCurrentLr_str[strIndex], lr);
     (void)OS_RestoreCallTrace(e);
 }
 
@@ -574,13 +574,13 @@ void OSi_DumpOneInfo(OSCallTrace *p)
             {
                 space = 10;
             }
-            OS_Printf("%s", &("          \0"[10 - space]));
+            OS_TPrintf("%s", &("          \0"[10 - space]));
             n -= space;
         }
     }
 #endif
 
-    OS_Printf("%s: lr=%08x"
+    OS_TPrintf("%s: lr=%08x"
 #ifdef OS_CALLTRACE_RECORD_R0
               ", r0=%08x"
 #endif
@@ -690,7 +690,7 @@ void OSi_DumpCallTrace_core(u32 returnAddress)
     BOOL    e = OS_DisableCallTrace();
 
     OSCallTraceInfo *info = OSi_GetCallTraceInfo();
-    SDK_ASSERTMSG(info && info->current, "Not Initialize functionTrace");
+    SDK_TASSERTMSG(info && info->current, "Not Initialize functionTrace");
 
     if (returnAddress)
     {
@@ -797,8 +797,8 @@ void OSi_Abort_CallTraceFull(u32 name, u32 returnAddress, u32 r0, u32 sp)
 
     BOOL    e = OS_DisableCallTrace(); // not restore status in this function.
 
-    OS_Printf("***Error: CallTrace stack overflow");
-    OS_Printf(" in %s: lr=%08x"
+    OS_TPrintf("***Error: CallTrace stack overflow");
+    OS_TPrintf(" in %s: lr=%08x"
 #ifdef OS_CALLTRACE_RECORD_R0
               ", r0=%08x"
 #endif
@@ -851,8 +851,8 @@ void OSi_Abort_CallTraceLess(u32 returnAddress)
 {
     BOOL    e = OS_DisableCallTrace(); // not restore status in this function.
 
-    OS_Printf("***Error: CallTrace stack underflow.");
-    OS_Printf(" (lr=%08x)\n", returnAddress);
+    OS_TPrintf("***Error: CallTrace stack underflow.");
+    OS_TPrintf(" (lr=%08x)\n", returnAddress);
 
     OS_Terminate();
 }

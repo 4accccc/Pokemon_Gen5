@@ -47,7 +47,7 @@
 <P><CODE>MI_DumpWramList()</CODE> の <I><B>wram</B></I> は対象となる WRAM で、<CODE><A href="../mi_constant.html">MIWramPos</A></CODE> 型です。<CODE>MI_WRAM_A, MI_WRAM_B, MI_WRAM_C</CODE> のいずれかとなります。<CODE>MI_DumpWramListAll()</CODE> はすべての WRAM を対象にします。</P>
 <P>表示は以下のようになります。<BR>
 </P>
-<BLOCKQUOTE>
+<BLOCKQUOTE style="background-color:#ffffcc">
 <P><CODE>----WRAM-A (3000000-2ffffff)<BR>
 　　　　ALLOC RESERVE<BR>
 slot0　 ARM9　 ARM9<BR>
@@ -57,22 +57,23 @@ slot3 　---- 　----<BR>
 </CODE></P>
 </BLOCKQUOTE>
 <P>ALLOC は割り当てられているプロセッサをあらわします。上の例では、slot 0
-が ARM9 に、slot1 と slot2 が ARM7 に割り当てられています。slot3 はまだ割り当てられていません。<BR>
-<BR>
-RESERVE は予約されているプロセッサを表します。上の例では slot0 が ARM9
+が ARM9 に、slot1 と slot2 が ARM7 に割り当てられています。slot3 はまだ割り当てられていません。</P>
+<P>RESERVE は予約されているプロセッサを表します。上の例では slot0 が ARM9
 に予約されており、slot1 が ARM7 に割り当てられています。slot2 と slot3
-は予約されていません。<BR>
-<BR>
-上の例では WRAM-A の領域が 0x3000000-0x2ffffff と示されていますが、ARM9
-から読めないように設定されている場合などこのように始端より終端が下位アドレスとなることがあります。</P>
+は予約されていません。</P>
+<P>上の例では WRAM-A の領域が <CODE>0x3000000-0x2ffffff</CODE> と示されていますが、ARM9 から読めないように設定されている場合などこのように始端より終端が下位アドレスとなることがあります。</P>
 <P><CODE>MI_DumpWramList_A</CODE> は <CODE>MI_DumpWramList( MI_WRAM_A )</CODE> の define です。<BR>
 <CODE>MI_DumpWramList_B</CODE> は <CODE>MI_DumpWramList( MI_WRAM_B )</CODE> の define です。<BR>
-<CODE>MI_DumpWramList_C</CODE> は <CODE>MI_DumpWramList( MI_WRAM_C )</CODE> の define です。<BR>
-</P>
+<CODE>MI_DumpWramList_C</CODE> は <CODE>MI_DumpWramList( MI_WRAM_C )</CODE> の define です。</P>
+<H3><BR>
+表示モードについて</H3>
+<P>この関数のように全ての情報を確実に表示することが速度よりも優先される場合は、一時的にでも表示をブロッキングモードに設定することをお奨めします。詳細は
+<CODE><A href="../../os/debug/OS_SetPrintBlockingMode.html">OS_SetPrintBlockingMode()</A></CODE> を参照してください。</P>
 <h2>参照</h2>
-<P><A href="about_Wram.html">概要(ワークRAM)</A>、<A href="../mi_constant.html">MI関連の定数</A></P>
-
+<P><A href="about_Wram.html">概要(ワークRAM)</A>、<A href="../mi_constant.html">MI関連の定数</A><BR>
+<CODE><A href="../../os/debug/OS_SetPrintBlockingMode.html">OS_SetPrintBlockingMode</A></CODE></P>
 <H2>履歴</H2>
-<P>2007/10/24 初版</P>
+<P>2009/07/27 表示モードについて追記<BR>
+2007/10/24 初版</P>
 </body>
 </html>

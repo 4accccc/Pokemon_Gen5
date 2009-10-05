@@ -47,7 +47,9 @@ test1: lr=0x0200426c, r0=0x000000c8</CODE></BLOCKQUOTE>
 の４レジスタを含めると１関数呼び出しにつき16バイト余計に消費されることになります。<BR>
 表示しているR0は、関数が呼ばれた時の値で、C言語関数ならば、第一引数を表します。R1 は第二引数、R2は第三引数、R3は第四引数です。該当の引数を取らない関数については特に意味のない不定値となります。<CODE>OS_DumpCallTrace()</CODE> 、<CODE><A href="OS_DumpThreadCallTrace.html">OS_DumpThreadCallTrace()</A></CODE> 自体の呼び出しについては R0 以下の情報を表示しません。</P>
 <P>この関数はデバッグ用の関数ですので、最終ROM版(FINALROM)ライブラリでは何も動作を行ないません。</P>
-<P>集計結果の表示のように、全ての情報を確実に表示することが速度よりも優先される場合は、一時的にでも表示をブロッキングモードに設定することをお奨めします。詳細は
+<H3><BR>
+表示モードについて</H3>
+<P>この関数のように、全ての情報を確実に表示することが速度よりも優先される場合は、一時的にでも表示をブロッキングモードに設定することをお奨めします。詳細は
 <CODE><A href="../debug/OS_SetPrintBlockingMode.html">OS_SetPrintBlockingMode()</A></CODE> を参照してください。</P>
 <H2>参照</H2>
 <P><CODE><A href="OS_InitCallTrace.html">OS_InitCallTrace</A>, <A href="OS_DumpThreadCallTrace.html">OS_DumpThreadCallTrace</A><BR>

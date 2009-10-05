@@ -10,8 +10,8 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-12-08#$
-  $Rev: 9573 $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
   $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
  
@@ -61,7 +61,7 @@ BOOL OSi_JumpToMachineSetting(u8 dest)
 //                case OS_TWL_REGION_KOREA:
                 /* 上記以外のリージョンも FALSE で終了 */
                 default:
-                    OS_Warning("Region Error.");
+                    OS_TWarning("Region Error.");
                     return FALSE;
             }
             break;
@@ -81,7 +81,7 @@ BOOL OSi_JumpToMachineSetting(u8 dest)
 //                case OS_TWL_REGION_KOREA:
                 /* 上記以外のリージョンも FALSE で終了 */
                 default:
-                    OS_Warning("Region Error.");
+                    OS_TWarning("Region Error.");
                     return FALSE;
             }
             break;
@@ -106,7 +106,7 @@ BOOL OSi_JumpToMachineSetting(u8 dest)
         case  OS_TWL_MACHINE_SETTING_SYSTEM_INITIALIZE:
             break;
         default:
-            OS_Warning("Unknown Destination");
+            OS_TWarning("Unknown Destination");
             return FALSE;
     }
 
@@ -122,13 +122,13 @@ BOOL OSi_JumpToMachineSetting(u8 dest)
         
         if(result != OS_DELIVER_ARG_SUCCESS )
         {
-            OS_Warning("Failed to Set DeliverArgument.");
+            OS_TWarning("Failed to Set DeliverArgument.");
             return FALSE;
         }
         result = OS_EncodeDeliverArg();
         if(result != OS_DELIVER_ARG_SUCCESS )
         {
-            OS_Warning("Failed to Encode DeliverArgument.");
+            OS_TWarning("Failed to Encode DeliverArgument.");
             return FALSE;
         }
     }
@@ -253,7 +253,7 @@ BOOL OS_JumpToInternetSetting(void)
     else
 #endif
     {
-        OS_Warning("This Hardware don't support this funciton");
+        OS_TWarning("This Hardware don't support this funciton");
     }
     return result;
 }
@@ -281,7 +281,7 @@ BOOL OS_JumpToEULAViewer(void)
     else
 #endif
     {
-        OS_Warning("This Hardware don't support this funciton");
+        OS_TWarning("This Hardware don't support this funciton");
     }
     return result;
 }
@@ -308,7 +308,7 @@ BOOL OS_JumpToWirelessSetting(void)
     else
 #endif
     {
-        OS_Warning("This Hardware don't support this funciton");
+        OS_TWarning("This Hardware don't support this funciton");
     }
     return result;
 }

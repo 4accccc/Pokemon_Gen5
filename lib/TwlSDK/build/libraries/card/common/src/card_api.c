@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-12-05#$
-  $Rev: 9518 $
-  $Author: yosizaki $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
 
  *---------------------------------------------------------------------------*/
 
@@ -176,7 +176,7 @@ void CARD_CheckEnabled(void)
 {
     if (!CARD_IsEnabled())
     {
-        OS_Panic("NITRO-CARD permission denied");
+        OS_TPanic("NITRO-CARD permission denied");
     }
 }
 

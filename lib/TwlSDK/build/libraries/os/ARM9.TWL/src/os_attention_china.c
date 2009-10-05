@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-07-10#$
+  $Rev: 10883 $
+  $Author: mizutani_nakaba $
  *---------------------------------------------------------------------------*/
 
 #include <os_attention.h>
@@ -53,8 +53,8 @@ static u8 *OSi_LoadImageChina(IMAGE_OBJ_INDEX index, u32 *p_size)
     extern u8   _binary_attention_limited_china_02nbfc_bin_end[];
     extern u8   _binary_attention_limited_china_02nbfs_bin[];
     extern u8   _binary_attention_limited_china_02nbfs_bin_end[];
-    extern u8   _binary_attention_limited_nbfp_bin[];
-    extern u8   _binary_attention_limited_nbfp_bin_end[];
+    extern u8   _binary_attention_limited_china_nbfp_bin[];
+    extern u8   _binary_attention_limited_china_nbfp_bin_end[];
 
     static u8 *ptr_table[IMAGE_OBJ_NUM] =
     {
@@ -62,7 +62,7 @@ static u8 *OSi_LoadImageChina(IMAGE_OBJ_INDEX index, u32 *p_size)
         _binary_attention_limited_china_01nbfs_bin,
         _binary_attention_limited_china_02nbfc_bin,
         _binary_attention_limited_china_02nbfs_bin,
-        _binary_attention_limited_nbfp_bin
+        _binary_attention_limited_china_nbfp_bin
     };
 
     static u8 *ptr_end_table[IMAGE_OBJ_NUM] =
@@ -71,7 +71,7 @@ static u8 *OSi_LoadImageChina(IMAGE_OBJ_INDEX index, u32 *p_size)
         _binary_attention_limited_china_01nbfs_bin_end,
         _binary_attention_limited_china_02nbfc_bin_end,
         _binary_attention_limited_china_02nbfs_bin_end,
-        _binary_attention_limited_nbfp_bin_end
+        _binary_attention_limited_china_nbfp_bin_end
     };
 
     if(p_size)

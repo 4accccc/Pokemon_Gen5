@@ -42,7 +42,7 @@
 <BR>
 この処理は、<code><a href="FS_GetOverlayAddress.html">FS_GetOverlayAddress()</a></code> で取得されるアドレスから<BR>
 <code><a href="FS_GetOverlayTotalSize.html">FS_GetOverlayTotalSize()</a></code> で取得される範囲に対して<BR>
-DTCM および ITCM を無効化したのちに全領域を0で初期化することと等価です。<BR>
+データキャッシュおよび命令キャッシュを無効化したのちに全領域を0で初期化することと等価です。<BR>
 <BR>
 この関数は、<code><A href="FS_GetOverlayFileID.html">FS_GetOverlayFileID()</A></code> などを組み合わせて<br>
 オーバーレイのロードを非同期に行うために使用されます。<br>
@@ -65,6 +65,7 @@ DTCM および ITCM を無効化したのちに全領域を0で初期化することと等価です。<BR>
 
 <H2>履歴</H2>
 <P>
+2007/07/29 「キャッシュ」を「TCM」としていた誤記を訂正<br />
 2004/10/19 記述とリンク先を若干修正<br>
 2004/09/24 各種オーバーレイ関数の関係について例を記述追加<br>
 2004/09/09 初版<BR>

@@ -50,11 +50,24 @@ typedef  struct  FSFile
 メンバは全て内部処理でのみ使用され、直接これらを操作することは禁止されます。<BR>
 <BR>
 </P>
+
 <H2>注意</H2>
-<P>この型の内部表現は将来の拡張で変更される可能性があります。<BR>
-現在の実装におけるサイズやメンバに依存したプログラミングは避けてください。<BR>
-<BR>
-</P>
+<ul style='color:Red;'>
+<li>この構造体の内部表現は将来の拡張で変更される可能性があります。
+現在の実装におけるサイズやメンバに依存したプログラミングは避けてください。</li>
+<li>この構造体はリスト要素やシステムリソースへの双方向ポインタを内部に保持しているため、
+構造体ごと単純に値コピーしても内容を移動・複製することはできません。
+そのようなオブジェクトの動作は保証されません。
+<div><pre style='color:Black;border:1px solid Black;'><code>
+<span style='color:#008000'>// 例: このように複製されたfile2の動作は無保証です。</span>
+FSFile file1, file2;
+<a href='file/FS_InitFile.html'>FS_InitFile</a>(&amp;file1);
+<a href='file/FS_OpenFileEx.html'>FS_OpenFileEx</a>(&amp;file1, "rom/file1.bin", FS_FILEMODE_R);
+file2 = file1;
+</code></pre></div>
+</li>
+</ul>
+
 <h2>参照</h2>
 <p><CODE>
 <A href="file/FS_OpenFileEx.html">FS_OpenFileEx</A> 
@@ -74,6 +87,7 @@ typedef  struct  FSFile
 
 <H2>履歴</H2>
 <P>
+2009/07/14 構造体の値コピーが無保証である旨を追記<br />
 2009/01/14 構造体定義をヘッダファイルと同一に訂正<br>
 2008/10/02 参照リストを一部更新<br />
 2004/11/02 構造体定義をヘッダファイルと同一に訂正<br>

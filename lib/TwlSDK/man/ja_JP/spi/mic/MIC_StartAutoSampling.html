@@ -41,6 +41,7 @@
 <H2>説明</H2>
 <P>
 マイクの自動サンプリングを開始します。<BR>
+サンプリング前には <CODE><A href="../pm/PM_SetAmp.html">PM_SetAmp*()</A></CODE> によってプログラマブルゲインアンプをオンにして下さい。<BR>
 この関数はARM7に自動サンプリング開始要求を発行し、ARM7からの応答を待って処理結果を返します。<BR>
 <CODE><A href="MIC_StartAutoSamplingAsync.html">MIC_StartAutoSamplingAsync()</A></CODE>の同期版です。<BR>
 なお、入力音量が最大値及び最小値を越える場合には出力データはクランプされます。
@@ -69,6 +70,7 @@ CODECをCODEC-TWLモードで動作させる場合には任意の周波数では自動サンプリングを行う
 
 <H2>履歴</H2>
 <P>
+Ver. 2009/06/25 PM_SetAmp*() の使用について追記<BR>
 Ver. 2009/05/14 CODECに関する説明の追記、TWLアイコンの追加<BR>
 Ver. 2008/01/09 CODECモードによる動作の差異について説明を修正<BR>
 Ver. 2007/11/17 TWLプラットフォームでの動作説明を追加<BR>

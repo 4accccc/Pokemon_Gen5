@@ -44,27 +44,36 @@ void G2_SetBG2Affine(
     </TR>
     <TR>
       <TD><em><strong><font face="Courier New">x1</font></strong></em></TD>
-      <TD>回転前座標のX成分</TD>
+      <TD>回転前座標のX成分（Hオフセットの設定）</TD>
     </TR>
     <TR>
       <TD><em><strong><font face="Courier New">y1</font></strong></em></TD>
-      <TD>回転前座標のY成分</TD>
+      <TD>回転前座標のY成分（Vオフセットの設定）</TD>
     </TR>
   </table>
 <h2>返り値</h2>
 <p>なし。</p>
 <H2>説明</H2>
-<P>BG2のアフィン変換を設定します。アフィン変換後の点(x2, y2)は以下の式で求められます。</P>
-<P><span lang=EN-US style='font-size:10.5pt;mso-bidi-font-size:
-12.0pt;font-family:Century;mso-fareast-font-family:"ＭＳ 明朝";mso-bidi-font-family:
-"Times New Roman";mso-font-kerning:1.0pt;mso-ansi-language:EN-US;mso-fareast-language:
-JA;mso-bidi-language:AR-SA'></span><span lang=EN-US style='font-size:10.5pt;mso-bidi-font-size:
-12.0pt;font-family:Century;mso-fareast-font-family:"ＭＳ 明朝";mso-bidi-font-family:
-"Times New Roman";mso-font-kerning:1.0pt;mso-ansi-language:EN-US;mso-fareast-language:
-JA;mso-bidi-language:AR-SA'><span style='mso-text-raise:-15.0pt'><IMG width="313" height="48" src="bg_affine_formula.gif" v:shapes="_x0000_i1025"></span></span></P>
+<P>BG2のアフィン変換を設定します。</P>
+<P>スクリーン上の点 (centerX, centerY) を中心とする回転・拡大/縮小は以下の式で求められます。</P>
+<P><IMG width="297" height="48" src="bg_affine_formula_1.gif" v:shapes="_x0000_i1025"></P>
+<P>平行移動は、スクリーンに対し、表示画面とのオフセット (x1, y1) をドット単位で指定します。</P>
+<BLOCKQUOTE style="background-color:#ffffcc">
+<CODE>
+<PRE>
+<B>(例)</B>
+BG2スクリーンを点 (centerX, centerY) を中心に変換行列 mtx で回転・拡大/縮小し、
+x 軸方向に dx，y 軸方向に dy 平行移動します。
+<dl>
+G2_SetBG2Affine(
+    mtx,
+    centerX, centerY,
+    dx, dy );
+</CODE></dl><PRE></BLOCKQUOTE>
 <h2>参照</h2>
 <P><A href="G2_SetBG3Affine.html">G2_SetBG3Affine</A></P>
 <H2>履歴</H2>
-<P>Ver. 2004/01/19</P>
+<P>2009/07/10 アフィン変換の説明の修正および例の追加<BR>
+2004/01/19 初版</P>
 </body>
 </html>

@@ -140,7 +140,7 @@ void WXC_AddBlockSequence(WXCProtocolContext * protocol,
     result =
         WXC_GetCurrentBlockImpl(protocol)->AddData(protocol, send_buf, send_size, recv_buf,
                                                    recv_max);
-    SDK_ASSERTMSG(result, "sequence is now busy.");
+    SDK_TASSERTMSG(result, "sequence is now busy.");
 }
 
 /*---------------------------------------------------------------------------*

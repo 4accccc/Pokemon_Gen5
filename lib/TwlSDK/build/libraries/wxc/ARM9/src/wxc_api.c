@@ -93,8 +93,12 @@ static void WXCi_SeekNextBlock(void)
         /* 登録されたデータが無い場合は, 仕方ないので空のブロックを選択 */
         target = WXC_FindNextBlock(work->protocol, NULL, 0, TRUE);
     }
-    WXC_SetCurrentBlock(work->protocol, target);
-    work->parent_param.ggid = target->ggid;
+    // 念のため、プロトコルを全くインストールしていない場合を考慮。
+    if (target != NULL)
+    {
+        WXC_SetCurrentBlock(work->protocol, target);
+        work->parent_param.ggid = target->ggid;
+    }
 }
 
 /*---------------------------------------------------------------------------*

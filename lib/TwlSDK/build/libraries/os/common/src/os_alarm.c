@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 #include <nitro/os.h>
 
@@ -80,7 +80,7 @@ static void OSi_SetTimer(OSAlarm *alarm)
         timerCount = 0;
     }
 
-//OS_Printf( "**OSi_SetTimer  alarm=%x, fire=%llx  time=%llx delta=%lld timeCount=%x \n", alarm, alarm->fire, time, delta, (int)timerCount );
+//OS_TPrintf( "**OSi_SetTimer  alarm=%x, fire=%llx  time=%llx delta=%lld timeCount=%x \n", alarm, alarm->fire, time, delta, (int)timerCount );
 
     //---- set count and let timer be enable
     OS_SetTimerCount((OSTimer)OSi_ALARM_TIMER, timerCount);
@@ -106,7 +106,7 @@ void OS_InitAlarm(void)
         OSi_UseAlarm = TRUE;
 
         //---- check if tick system is available
-        SDK_ASSERTMSG(OS_IsTickAvailable(), "OS_InitAlarm: alarm system needs of tick system.");
+        SDK_TASSERTMSG(OS_IsTickAvailable(), "OS_InitAlarm: alarm system needs of tick system.");
 
         //---- OS reserves OSi_ALARM_TIMER
         SDK_ASSERT(!OSi_IsTimerReserved(OSi_ALARM_TIMER));
@@ -141,7 +141,7 @@ void OS_EndAlarm(void)
     //---- check if any alarm exists
     if (OSi_UseAlarm)
     {
-        SDK_ASSERTMSG(!OSi_AlarmQueue.head,
+        SDK_TASSERTMSG(!OSi_AlarmQueue.head,
                       "OS_EndAlarm: Cannot end alarm system while using alarm.");
 
         //---- unset timer reservation by OS
@@ -279,15 +279,15 @@ void OS_SetAlarm(OSAlarm *alarm, OSTick tick, OSAlarmHandler handler, void *arg)
 {
     OSIntrMode enabled;
 
-    //OS_Printf( "**OS_SetAlarm e=%x alarm=%x tick=%x  handler%x\n", enabled, alarm, tick, handler );
+    //OS_TPrintf( "**OS_SetAlarm e=%x alarm=%x tick=%x  handler%x\n", enabled, alarm, tick, handler );
     SDK_ASSERT(OSi_UseAlarm);
-    SDK_ASSERTMSG(handler, "OS_SetAlarm: handler must not be NULL.");
+    SDK_TASSERTMSG(handler, "OS_SetAlarm: handler must not be NULL.");
     if (!alarm || alarm->handler)
     {
 #ifndef SDK_FINALROM
-        OS_Panic("alarm could be already used.");
+        OS_TPanic("alarm could be already used.");
 #else
-        OS_Panic("");
+        OS_TPanic("");
 #endif
     }
 
@@ -324,16 +324,16 @@ void OS_SetPeriodicAlarm(OSAlarm *alarm, OSTick start, OSTick period, OSAlarmHan
 {
     u32     enabled;
 
-    //OS_Printf( "**SetPeriodicAlarm s=%llx p=%llx\n", start, period );
+    //OS_TPrintf( "**SetPeriodicAlarm s=%llx p=%llx\n", start, period );
     SDK_ASSERT(OSi_UseAlarm);
-    SDK_ASSERTMSG(handler, "OS_SetPeriodicAlarm: handler must not be NULL\n");
-    SDK_ASSERTMSG(period > 0, "OS_SetPeriodicAlarm: bad period specified.");
+    SDK_TASSERTMSG(handler, "OS_SetPeriodicAlarm: handler must not be NULL\n");
+    SDK_TASSERTMSG(period > 0, "OS_SetPeriodicAlarm: bad period specified.");
     if (!alarm || alarm->handler)
     {
 #ifndef SDK_FINALROM
-        OS_Panic("alarm could be already used.");
+        OS_TPanic("alarm could be already used.");
 #else
-        OS_Panic("");
+        OS_TPanic("");
 #endif
     }
 
@@ -458,7 +458,7 @@ static void OSi_ArrangeTimer(void)
     tick = OS_GetTick();
     alarm = OSi_AlarmQueue.head;
 
-    //OS_Printf( "**Arrange  alarm=%x  time=%llx  file=%llx\n", alarm, time, alarm->fire );
+    //OS_TPrintf( "**Arrange  alarm=%x  time=%llx  file=%llx\n", alarm, time, alarm->fire );
 
     //---- no alarm
     if (alarm == NULL)
@@ -528,7 +528,7 @@ void OS_SetAlarmTag(OSAlarm *alarm, u32 tag)
 {
     SDK_ASSERT(OSi_UseAlarm);
     SDK_ASSERT(alarm);
-    SDK_ASSERTMSG(tag > 0, "OS_SetAlarmTag: Tag must be >0.");
+    SDK_TASSERTMSG(tag > 0, "OS_SetAlarmTag: Tag must be >0.");
 
     alarm->tag = tag;
 }
@@ -550,7 +550,7 @@ void OS_CancelAlarms(u32 tag)
     OSAlarm *next;
 
     SDK_ASSERT(OSi_UseAlarm);
-    SDK_ASSERTMSG(tag > 0, "OSCancelAlarms: Tag must be >0.");
+    SDK_TASSERTMSG(tag > 0, "OSCancelAlarms: Tag must be >0.");
 
     if (tag == 0)
     {

@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-17#$
-  $Rev: 8556 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 
 #include    <nitro/wm.h>
@@ -679,7 +679,7 @@ static void WmDataSharingReceiveData(WMDataSharingInfo *dsInfo, u16 aid, u16 *da
                 if (!(dsInfo->ds[writeIndex].aidBitmap & aidBit))
                 {
                     // 2つまでバッファに貯めるが、それ以上は捨てる
-                    OS_Warning("received too many DataSharing packets from aid %d. discarded.\n",
+                    OS_TWarning("received too many DataSharing packets from aid %d. discarded.\n",
                                aid);
                     return;
                 }
@@ -687,7 +687,7 @@ static void WmDataSharingReceiveData(WMDataSharingInfo *dsInfo, u16 aid, u16 *da
             else
             {
                 // doubleMode ではなければ、バッファに貯めるのは1つまで
-                OS_Warning("received too many DataSharing packets from aid %d. discarded.\n", aid);
+                OS_TWarning("received too many DataSharing packets from aid %d. discarded.\n", aid);
                 return;
             }
         }
@@ -804,8 +804,8 @@ void WmDataSharingSendDataSet(WMDataSharingInfo *dsInfo, BOOL delayed)
  *---------------------------------------------------------------------------*/
 u16    *WM_GetSharedDataAddress(WMDataSharingInfo *dsInfo, WMDataSet *receiveData, u16 aid)
 {
-    u32     aidBitmap = receiveData->aidBitmap;
-    u32     receivedBitmap = receiveData->receivedBitmap;
+    u32     aidBitmap;
+    u32     receivedBitmap;
     u32     aidBit = (1U << aid);
 
     // パラメータチェック
@@ -821,6 +821,9 @@ u16    *WM_GetSharedDataAddress(WMDataSharingInfo *dsInfo, WMDataSet *receiveDat
         return NULL;
     }
 
+    aidBitmap = receiveData->aidBitmap;
+    receivedBitmap = receiveData->receivedBitmap;
+    
     if (!(aidBitmap & aidBit))
     {
 //        WM_WARNING("Parameter \"aid\" must be a member of \"receiveData->aidBitmap\".\n");

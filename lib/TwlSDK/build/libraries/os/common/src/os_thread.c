@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2008-09-26#$
-  $Rev: 8676 $
-  $Author: yada $
+  $Date:: 2009-06-19#$
+  $Rev: 10786 $
+  $Author: okajima_manabu $
  *---------------------------------------------------------------------------*/
 #ifdef SDK_TWL
 #include <twl/memorymap.h>
@@ -412,7 +412,7 @@ static void OSi_RemoveThreadFromList(OSThread *thread)
         t = t->next;
     }
 
-    SDK_ASSERTMSG(t, "Cannot remove thread from list.");
+    SDK_TASSERTMSG(t, "Cannot remove thread from list.");
 
     if (!pre)
     {
@@ -562,7 +562,7 @@ void OS_InitThread(void)
     //---- around IRQ
     OSi_ThreadInfo.isNeedRescheduling = FALSE;
     OSi_ThreadInfo.irqDepth = 0;
-    SDK_ASSERTMSG(OSi_IRQ_STACKSIZE > 0, "IRQ STACKSIZE must be >0");
+    SDK_TASSERTMSG(OSi_IRQ_STACKSIZE > 0, "IRQ STACKSIZE must be >0");
 
     //---- store thread info pointer
 #ifdef SDK_ARM9
@@ -623,11 +623,11 @@ void OS_CreateThread(OSThread *thread,
     OSIntrMode enable;
     int     index;
 
-    SDK_ASSERTMSG(OSi_GetCurrentThread(), "thread system were not initialized");
-    SDK_ASSERTMSG(OS_THREAD_PRIORITY_MIN <= prio
+    SDK_TASSERTMSG(OSi_GetCurrentThread(), "thread system were not initialized");
+    SDK_TASSERTMSG(OS_THREAD_PRIORITY_MIN <= prio
                   && prio <= OS_THREAD_PRIORITY_MAX, "invalid priority");
-    SDK_ASSERTMSG(stackSize % STACK_ALIGN == 0, "stack size must be aligned by %d", STACK_ALIGN);
-    SDK_ASSERTMSG((u32)stack % STACK_ALIGN == 0, "stack must be aligned by %d", STACK_ALIGN);
+    SDK_TASSERTMSG(stackSize % STACK_ALIGN == 0, "stack size must be aligned by %d", STACK_ALIGN);
+    SDK_TASSERTMSG((u32)stack % STACK_ALIGN == 0, "stack must be aligned by %d", STACK_ALIGN);
 
     enable = OS_DisableInterrupts();
 
@@ -635,7 +635,7 @@ void OS_CreateThread(OSThread *thread,
     //---- search free entry
     if ((index = OSi_SearchFreeEntry()) < 0)
     {
-        SDK_ASSERTMSG(index >= 0, "OS_CreateThread: thread entry not allocated");
+        SDK_TASSERTMSG(index >= 0, "OS_CreateThread: thread entry not allocated");
         (void)OS_RestoreInterrupts(enable);
         return;
     }
@@ -1418,25 +1418,25 @@ void OS_DumpThreadList(void)
     int     i;
 #endif
 
-    OS_Printf("thread list top %08x\n", OSi_ThreadInfo.list);
+    OS_TPrintf("thread list top %08x\n", OSi_ThreadInfo.list);
 
 #ifndef SDK_THREAD_INFINITY
-    OS_Printf("No:  address  prio     next\n");
+    OS_TPrintf("No:  address  prio     next\n");
     for (i = 0; i < OS_THREAD_MAX_NUM; i++)
     {
         OSThread *thread = OSi_ThreadInfo.entry[i];
-        OS_Printf("%02d: %08x %5d %08x\n", i, thread, (thread) ? thread->priority : 0,
+        OS_TPrintf("%02d: %08x %5d %08x\n", i, thread, (thread) ? thread->priority : 0,
                   (thread) ? thread->next : 0);
     }
 #else
-    //    OS_Printf("Id:  address  prio     next\n");
-    OS_Printf("Id:  address  prio     next st  queue.h  queue.t   link.p   link.n\n");
+    //    OS_TPrintf("Id:  address  prio     next\n");
+    OS_TPrintf("Id:  address  prio     next st  queue.h  queue.t   link.p   link.n\n");
     {
         OSThread *thread = OSi_ThreadInfo.list;
         while (thread)
         {
-            //                  OS_Printf("%02d: %08x %5d %08x\n", thread->id, thread, thread->priority, thread->next );
-            OS_Printf("%02d: %08x %5d %08x  %d %8x %8x %8x %8x\n", thread->id, thread,
+            //                  OS_TPrintf("%02d: %08x %5d %08x\n", thread->id, thread, thread->priority, thread->next );
+            OS_TPrintf("%02d: %08x %5d %08x  %d %8x %8x %8x %8x\n", thread->id, thread,
                       thread->priority, thread->next, thread->state,
                       (thread->queue) ? thread->queue->head : (OSThread *)1,
                       (thread->queue) ? thread->queue->tail : (OSThread *)1, thread->link.prev,
@@ -1610,8 +1610,8 @@ asm u32 OSi_GetCurrentStackPointer( void )
  *---------------------------------------------------------------------------*/
 void OS_SetThreadStackWarningOffset(OSThread *thread, u32 offset)
 {
-    SDK_ASSERTMSG((offset & 3) == 0, "Offset must be aligned by 4");
-    SDK_ASSERTMSG(OS_GetThreadContext(thread)->sp > thread->stackTop + offset,
+    SDK_TASSERTMSG((offset & 3) == 0, "Offset must be aligned by 4");
+    SDK_TASSERTMSG(OS_GetThreadContext(thread)->sp > thread->stackTop + offset,
                   "Cannot set warning level below current sp.");
 
     //---- remember warning offset
@@ -1640,9 +1640,9 @@ BOOL OS_SetThreadPriority(OSThread *thread, u32 prio)
     OSThread *pre = NULL;
     OSIntrMode enable;
 
-    SDK_ASSERTMSG(OS_THREAD_PRIORITY_MIN <= prio
+    SDK_TASSERTMSG(OS_THREAD_PRIORITY_MIN <= prio
                   && prio <= OS_THREAD_PRIORITY_MAX, "invalid priority");
-    SDK_ASSERTMSG(thread != &OSi_IdleThread, "cannot change idle thread priority.");
+    SDK_TASSERTMSG(thread != &OSi_IdleThread, "cannot change idle thread priority.");
 
     enable = OS_DisableInterrupts();
 
@@ -1695,7 +1695,7 @@ BOOL OS_SetThreadPriority(OSThread *thread, u32 prio)
  *---------------------------------------------------------------------------*/
 u32 OS_GetThreadPriority(const OSThread *thread)
 {
-    SDK_ASSERTMSG(thread, "OS_GetThreadPriority: bad thread");
+    SDK_TASSERTMSG(thread, "OS_GetThreadPriority: bad thread");
 
     return thread->priority;
 }
@@ -1714,9 +1714,9 @@ void OS_Sleep(u32 msec)
 {
     OSAlarm alarm;
 
-    SDK_ASSERTMSG(OS_IsTickAvailable()
+    SDK_TASSERTMSG(OS_IsTickAvailable()
                   && OS_IsAlarmAvailable(), "OS_Sleep: need to start Tick and Alarm beforehand.");
-    SDK_ASSERTMSG(OSi_IsThreadInitialized, "OS_Sleep: thread system not initialized.");
+    SDK_TASSERTMSG(OSi_IsThreadInitialized, "OS_Sleep: thread system not initialized.");
 
     OS_CreateAlarm(&alarm);
     {

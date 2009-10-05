@@ -10,9 +10,9 @@
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
 
-  $Date:: 2009-06-04#$
-  $Rev: 10698 $
-  $Author: okubata_ryoma $
+  $Date:: 2009-06-24#$
+  $Rev: 10812 $
+  $Author: sato_masaki $
  *---------------------------------------------------------------------------*/
 
 #ifndef LIBRARIES_NWM_ARM9_NWM_H__
@@ -419,8 +419,7 @@ typedef struct NWMConnectCallback
     u16     retcode;
     u16     channel;
     u8      bssid[NWM_SIZE_BSSID];
-    s8      rssi;
-    u8      padding;
+    s16     rssi;
     u16     aid;                       // CONNECTEDのときのみ、自身に割り当てられたAID
     u16     reason;                    // 切断時のreason. NWMReasonCode で定義される。
     u16     listenInterval;
@@ -454,7 +453,7 @@ typedef struct NWMReceivingFrameCallback
   u16   apiid;
   u16   retcode;
   u16   port;
-  u16   rssi;
+  s16   rssi;
   u32   length;
   NWMRecvFrameHdr *recvBuf;
 

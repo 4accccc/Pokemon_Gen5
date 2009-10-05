@@ -11,8 +11,8 @@
 # not be disclosed to third parties or copied or duplicated in any form,
 # in whole or in part, without the prior written consent of Nintendo.
 #
-# $Date:: 2009-06-04#$
-# $Rev: 10698 $
+# $Date:: 2009-07-10#$
+# $Rev: 10884 $
 # $Author: okubata_ryoma $
 #----------------------------------------------------------------------------
 TARGET_PLATFORM		:= TWL NITRO
@@ -39,7 +39,7 @@ SUBDIRS_P	+=  makerom.TWL		\
                 cmptad			\
                 aesconv         \
                 compstatic.TWL	\
-                makebanner.TWL	
+                makebanner.TWL
 endif
 endif
 
@@ -60,7 +60,7 @@ SUBDIRS_P   +=  makerom            \
                 init2env           \
                 makebanner-default \
                 showversion        \
-				tad2rom			   \
+                tad2rom            \
                 xml2env            \
                 slicerom           \
                 emuchild           \
