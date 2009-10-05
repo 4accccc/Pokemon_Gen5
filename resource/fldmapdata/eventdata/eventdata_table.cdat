@@ -5,6 +5,7 @@
 #include "../script/init_scr_def.h"
 #include "../script/sodateya_scr_def.h"
 #include "../script/pokecen_scr_def.h"
+#include "../script/hiden_def.h"
 //#include "tmp/bcwftest.h"
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕdata/bcwftest.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_BCWFTEST_EVD_H
@@ -3317,19 +3318,19 @@ static const EVENTDATA_TABLE event_c01 = {
 #include "../script/c01gym0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C01GYM0101[] = {
 	{//DOOR_ID_C01GYM0101_C01_EXIT01 = 0
-		{152, 0, 488},
+		{184, 0, 696},
 		ZONE_ID_C01, DOOR_ID_C01_C01GYM0101_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C01GYM0101_C01_EXIT02 = 1
-		{168, 0, 488},
+		{200, 0, 696},
 		ZONE_ID_C01, DOOR_ID_C01_C01GYM0101_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
 	},
 	{//DOOR_ID_C01GYM0101_C01_EXIT03 = 2
-		{184, 0, 488},
+		{216, 0, 696},
 		ZONE_ID_C01, DOOR_ID_C01_C01GYM0101_EXIT01,
 		EXIT_DIR_UP,//direction
 		EXIT_TYPE_MAT //type
@@ -3350,8 +3351,8 @@ const FLDMMDL_HEADER OBJ_EVENT_C01GYM0101[] = {
 		0,
 		0,
 		0,
-		13,
-		28,
+		15,
+		41,
 		FX32_CONST(0),
 	},
 	{
@@ -3367,9 +3368,9 @@ const FLDMMDL_HEADER OBJ_EVENT_C01GYM0101[] = {
 		0,
 		0,
 		0,
-		10,
-		2,
-		FX32_CONST(48),
+		11,
+		3,
+		FX32_CONST(16),
 	},
 	{
 		C01GYM0101_LEADER1_02,
@@ -3384,9 +3385,9 @@ const FLDMMDL_HEADER OBJ_EVENT_C01GYM0101[] = {
 		0,
 		0,
 		0,
-		9,
-		2,
-		FX32_CONST(48),
+		12,
+		3,
+		FX32_CONST(16),
 	},
 	{
 		C01GYM0101_LEADER1_03,
@@ -3394,16 +3395,16 @@ const FLDMMDL_HEADER OBJ_EVENT_C01GYM0101[] = {
 		MV_DMY,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_C01GYM0101_LEADER1_01,
+		SCRID_C01GYM0101_LEADER1_03,
 		DIR_DOWN,
 		0,
 		0,
 		0,
 		0,
 		0,
-		11,
-		2,
-		FX32_CONST(48),
+		13,
+		3,
+		FX32_CONST(16),
 	},
 };
 const int ObjCount_C01GYM0101 = NELEMS(OBJ_EVENT_C01GYM0101);
@@ -3411,14 +3412,14 @@ const BG_TALK_DATA BG_EVENT_C01GYM0101[] = {
 	{//C01GYM0101_POKEZOU_01 = 0
 		SCRID_C01GYM0101_POKEZOU_01,  //event id
 		BG_TALK_TYPE_NORMAL, //type
-		8, 29,
+		10, 40,
 		0,  //height
 		BG_TALK_DIR_ALL,//direction
 	},
 	{//C01GYM0101_POKEZOU_02 = 1
 		SCRID_C01GYM0101_POKEZOU_02,  //event id
 		BG_TALK_TYPE_NORMAL, //type
-		12, 29,
+		14, 40,
 		0,  //height
 		BG_TALK_DIR_ALL,//direction
 	},
