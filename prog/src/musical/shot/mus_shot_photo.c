@@ -28,6 +28,8 @@
 #include "musical/stage/sta_act_bg.h"
 #include "musical/stage/sta_act_light.h"
 
+#include "debug/debugwin_sys.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -85,6 +87,8 @@ struct _MUS_SHOT_PHOTO_WORK
   GFL_BMPWIN      *msgWinTitle;
   GFL_FONT        *fontHandleSmall;
   GFL_FONT        *fontHandleLarge;
+  
+//  void *debWork;
 };
 
 //======================================================================
@@ -96,6 +100,9 @@ static void MUS_SHOT_PHOTO_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 b
 static void MUS_SHOT_PHOTO_ExitGraphic( MUS_SHOT_PHOTO_WORK *work );
 static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work );
 static void MUS_SHOT_PHOTO_SetupMessage( MUS_SHOT_PHOTO_WORK *work );
+
+void MUS_SHOT_PHOTO_InitDebug( MUS_SHOT_PHOTO_WORK *work );
+void MUS_SHOT_PHOTO_TermDebug( MUS_SHOT_PHOTO_WORK *work );
 
 //--------------------------------------------------------------
 //	‰Šú‰»
@@ -137,6 +144,11 @@ MUS_SHOT_PHOTO_WORK* MUS_SHOT_PHOTO_InitSystem( MUSICAL_SHOT_DATA *shotData , HE
 
   STA_POKE_System_SetScrollOffset( work->pokeSys , MUS_PHOTO_SCROLL_OFFSET ); 
   STA_BG_SetScrollOffset( work->bgSys , MUS_PHOTO_SCROLL_OFFSET );
+
+#if USE_DEBUGWIN_SYSTEM
+  MUS_SHOT_PHOTO_InitDebug( work );
+#endif
+
   return work;
 }
 
@@ -146,6 +158,9 @@ MUS_SHOT_PHOTO_WORK* MUS_SHOT_PHOTO_InitSystem( MUSICAL_SHOT_DATA *shotData , HE
 void MUS_SHOT_PHOTO_ExitSystem( MUS_SHOT_PHOTO_WORK *work )
 {
   u8 i;
+#if USE_DEBUGWIN_SYSTEM
+  MUS_SHOT_PHOTO_TermDebug( work );
+#endif
   STA_LIGHT_ExitSystem( work->lightSys );
   STA_BG_ExitSystem( work->bgSys );
   STA_POKE_ExitSystem( work->pokeSys );
@@ -429,4 +444,86 @@ static void MUS_SHOT_PHOTO_SetupMessage( MUS_SHOT_PHOTO_WORK *work )
   GFL_BMPWIN_TransVramCharacter( work->msgWinTitle );
   GFL_BMPWIN_MakeScreen( work->msgWinTitle );
   GFL_BG_LoadScreenReq( MUS_PHOTO_FRAME_MSG );
+}
+
+
+#pragma mark [>debug
+
+#define MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER (50)
+typedef struct 
+{
+  BOOL startAnm;
+}MUS_SHOT_DEBUGWORK;
+
+static void MUS_SHOT_Debug_UpdateBgNo( void* userWork , DEBUGWIN_ITEM* item );
+static void MUS_SHOT_Debug_DrawBgNo( void* userWork , DEBUGWIN_ITEM* item );
+
+void MUS_SHOT_PHOTO_InitDebug( MUS_SHOT_PHOTO_WORK *work )
+{
+//  work->debWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(MUS_SHOT_DEBUGWORK) );
+//  work->debWork->startAnm = FALSE;
+  DEBUGWIN_InitProc( MUS_PHOTO_FRAME_MSG , work->fontHandleLarge );
+
+  DEBUGWIN_AddGroupToTop( MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , "MusicalShot" , work->heapId );
+
+  DEBUGWIN_AddItemToGroupEx( MUS_SHOT_Debug_UpdateBgNo   ,MUS_SHOT_Debug_DrawBgNo   , (void*)work , MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , work->heapId );
+
+}
+
+void MUS_SHOT_PHOTO_TermDebug( MUS_SHOT_PHOTO_WORK *work )
+{
+  DEBUGWIN_RemoveGroup( MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER );
+  DEBUGWIN_ExitProc();
+//  GFL_HEAP_FreeMemory( work->debWork );
+}
+
+static void MUS_SHOT_Debug_UpdateBgNo( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
+  
+  BOOL isUpdate = FALSE;
+  
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+  {
+    if( work->shotData->bgNo == 0 )
+    {
+      work->shotData->bgNo = MUSICAL_BACK_NUM-1;
+    }
+    else
+    {
+      work->shotData->bgNo--;
+    }
+    isUpdate = TRUE;
+  }
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  {
+    if( work->shotData->bgNo == MUSICAL_BACK_NUM-1 )
+    {
+      work->shotData->bgNo = 0;
+    }
+    else
+    {
+      work->shotData->bgNo++;
+    }
+    isUpdate = TRUE;
+  }
+  
+  if( isUpdate == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+  
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    STA_BG_ExitSystem( work->bgSys );
+    work->bgSys = STA_BG_InitSystem( work->heapId , NULL );
+    STA_BG_CreateBg( work->bgSys , work->shotData->bgNo );
+  }
+}
+
+static void MUS_SHOT_Debug_DrawBgNo( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "BgNo[%2d]",work->shotData->bgNo );
+  
 }
