@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-01T16:18:45"/>
+	<create user="matsumiya" host="W00207" date="2009-10-05T22:24:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -506,12 +506,13 @@
 （仮メッセージ）</language>
 	</row>
 
-	<row id="msg_d01r0101_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d01r0101_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・廃墟内のPOSを踏んだとき
 ・主人公に隣接してメッセージ表示
 　その後、所定POSまで移動
-・主人公が</comment>
+・移動すると下記のポケモンのアニメ
+　※何か遊びを入れたい</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『！[BE:01:ページ切り替え（クリア）]
 なんだか　あっちの　方から
