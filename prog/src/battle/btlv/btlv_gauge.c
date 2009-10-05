@@ -1257,7 +1257,7 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
       else
       { 
         PMSND_PushBGM();
-        PMSND_PlayBGM( SEQ_BATTLEPINCH );
+        PMSND_PlayBGM( SEQ_BGM_BATTLEPINCH );
         PMSND_FadeInBGM( 8 );
       }
     }

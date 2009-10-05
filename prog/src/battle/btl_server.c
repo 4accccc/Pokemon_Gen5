@@ -415,7 +415,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     break;
 
   case 3:
-    PMSND_PlayBGM( SEQ_WIN1 );
+    PMSND_PlayBGM( SEQ_BGM_WIN1 );
     (*seq)++;
     break;
   case 4:

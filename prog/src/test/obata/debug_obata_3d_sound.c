@@ -218,7 +218,7 @@ static GFL_PROC_RESULT DEBUG_OBATA_3D_SOUND_MainProcFunc_Main( GFL_PROC* proc, i
   switch( *seq )
   {
   case 0:
-    PMSND_PlayBGM( SEQ_H_01 );
+    PMSND_PlayBGM( SEQ_BGM_H_01 );
     ++( *seq );
   case 1:
     end = Main( work );

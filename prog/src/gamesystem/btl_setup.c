@@ -22,8 +22,8 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BtlLandFo
   dst->itemData     = GAMEDATA_GetMyItem( gameData );
   dst->bagCursor    = GAMEDATA_GetBagCursor( gameData );
 
-  dst->musicDefault = SEQ_WB_BA_TEST_250KB;
-  dst->musicPinch = SEQ_WB_BA_PINCH_TEST_150KB;
+  dst->musicDefault = SEQ_BGM_VS_NORAPOKE;
+  dst->musicPinch = SEQ_BGM_BATTLEPINCH;
 
   dst->result = BTL_RESULT_WIN;
 }

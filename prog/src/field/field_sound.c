@@ -348,11 +348,11 @@ u32 FIELD_SOUND_GetFieldBGMNo(
     GAMEDATA *gdata, PLAYER_MOVE_FORM form, u32 zone_id )
 {
   if( form == PLAYER_MOVE_FORM_SWIM ){
-    return( SEQ_NAMINORI );
+    return( SEQ_BGM_NAMINORI );
   }
   
   if( form == PLAYER_MOVE_FORM_CYCLE ){
-    return( SEQ_BICYCLE );
+    return( SEQ_BGM_BICYCLE );
   }
   
   return( fsnd_GetMapBGMIndex(gdata,zone_id) );

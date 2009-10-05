@@ -1927,7 +1927,7 @@ static GFL_PROC_RESULT MysteryGiftProc_Init(GFL_PROC *proc, int * seq, void *pwk
 	/* サウンドデータロード */
 	Snd_DataSetByScene( SND_SCENE_HUSIGI, SEQ_PRESENT, 1 );
 #endif
-	PMSND_PlayNextBGM(SEQ_WIFI_PRESENT, 60, 0);
+	PMSND_PlayNextBGM(SEQ_BGM_WIFI_PRESENT, 60, 0);
 
 	/* AGBからのダウンロードかどうかのフラグを設定 */
 /*

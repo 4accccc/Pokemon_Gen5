@@ -353,8 +353,8 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
     para->partyEnemy2 = NULL;   ///< 2vs2時の２番目敵AI用（不要ならnull）
     para->statusPlayer =  GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
 
-    para->musicDefault = SEQ_BA_TEST_250KB;   ///< デフォルト時のBGMナンバー
-    para->musicPinch = SEQ_BA_PINCH_TEST_150KB;     ///< ピンチ時のBGMナンバー
+    para->musicDefault = SEQ_BGM_VS_NORAPOKE;   ///< デフォルト時のBGMナンバー
+    para->musicPinch = SEQ_BGM_BATTLEPINCH;     ///< ピンチ時のBGMナンバー
 
     PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), para->partyPlayer);
   }

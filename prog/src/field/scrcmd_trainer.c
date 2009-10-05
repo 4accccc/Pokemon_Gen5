@@ -566,7 +566,7 @@ VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
 
-  FIELD_SOUND_PushPlayEventBGM( fsnd, SEQ_EYE_01 ); //wb kari
+  FIELD_SOUND_PushPlayEventBGM( fsnd, SEQ_BGM_EYE_01 ); //wb kari
   return 0;
 #endif
 }

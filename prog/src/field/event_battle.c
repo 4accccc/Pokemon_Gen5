@@ -388,9 +388,9 @@ static void BATTLE_SETUP_PARAM_DebugConstructer(BATTLE_SETUP_PARAM * para, GAMES
   para->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
   
   //デフォルト時のBGMナンバー
-  para->musicDefault = SEQ_WB_BA_TEST_250KB;
+  para->musicDefault = SEQ_BGM_VS_NORAPOKE;
   //ピンチ時のBGMナンバー
-  para->musicPinch = SEQ_WB_BA_PINCH_TEST_150KB;
+  para->musicPinch = SEQ_BGM_BATTLEPINCH;
 }
 
 //--------------------------------------------------------------

@@ -611,9 +611,9 @@ static void enc_CreateBattleParam(
   { //BGM設定
     //デフォルト時のBGMナンバー
 //  param->musicDefault = SEQ_WB_BA_TEST_250KB;
-    param->musicDefault = SEQ_VS_NORAPOKE;
+    param->musicDefault = SEQ_BGM_VS_NORAPOKE;
     //ピンチ時のBGMナンバー
-    param->musicPinch = SEQ_WB_BA_PINCH_TEST_150KB;
+    param->musicPinch = SEQ_BGM_BATTLEPINCH;
   }
 }
 
@@ -670,9 +670,9 @@ static void enc_CreateTrainerBattleParam(
   { //BGM設定
     //デフォルト時のBGMナンバー
 //  param->musicDefault = SEQ_WB_BA_TEST_250KB;
-    param->musicDefault = SEQ_VS_NORAPOKE;
+    param->musicDefault = SEQ_BGM_VS_NORAPOKE;
     //ピンチ時のBGMナンバー
-    param->musicPinch = SEQ_WB_BA_PINCH_TEST_150KB;
+    param->musicPinch = SEQ_BGM_BATTLEPINCH;
   }
 }
 

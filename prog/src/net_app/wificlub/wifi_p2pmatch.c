@@ -2941,7 +2941,7 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
   {        // Ú‘±‚ª‚Ü‚¾
 
     Snd_DataSetByScene( SND_SCENE_P2P, SEQ_WIFILOBBY, 1 );
-    PMSND_PlayNextBGM(SEQ_WIFI_ACCESS, 60, 0);
+    PMSND_PlayNextBGM(SEQ_BGM_WIFI_ACCESS, 60, 0);
     MainMenuMsgInit(wk);// BMPWIN“o˜^E•`‰æ
     if( !DWC_CheckHasProfile( WifiList_GetMyUserInfo(wk->pList) ) )
     {

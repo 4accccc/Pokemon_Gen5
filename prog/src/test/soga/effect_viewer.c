@@ -181,7 +181,7 @@ static  const int pokemon_pos_table[][2]={
 };
 
 static  const int bgm_table[]={ 
-  SEQ_VS_NORAPOKE,
+  SEQ_BGM_VS_NORAPOKE,
 };
 
 FS_EXTERN_OVERLAY(battle);
