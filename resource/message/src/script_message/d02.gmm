@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-29T11:58:27"/>
+	<create user="matsumiya" host="W00207" date="2009-10-05T21:34:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="262"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -302,6 +302,64 @@
 		<language name="JPN_KANJI" width="256">森と　いっても
 次の街への　通り道だから[BE:00:ページ切り替え（行送り）]
 迷ったりしないわよ　きっと</language>
+	</row>
+
+	<row id="msg_d02_hakaim1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・10月ROM用
+・c02ジムバッジ取得で削除
+・GRIDX=597
+　GRIDZ=583</comment>
+		<attribute name="キャラ指定">敵組織したっぱ</attribute>
+		<language name="JPN" width="256">まちがった　かちかんを
+ハカイするためなら……</language>
+		<language name="JPN_KANJI" width="256">間違った　価値観を
+ハカイするためなら……</language>
+	</row>
+
+	<row id="msg_d02_hakaim2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・10月ROM用
+・c02ジムバッジ取得で削除
+・GRIDX=597
+　GRIDZ=584</comment>
+		<attribute name="キャラ指定">敵組織したっぱ</attribute>
+		<language name="JPN" width="256">なかまが　ごうりゅう　したなら
+さくせんを　じっこうする！</language>
+		<language name="JPN_KANJI" width="256">仲間が　合流し次第
+作戦を　実行する！</language>
+	</row>
+
+	<row id="msg_d02_hakaiw_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・10月ROM用
+・c02ジムバッジ取得で削除
+・GRIDX=597
+　GRIDZ=585</comment>
+		<attribute name="キャラ指定">敵組織したっぱ</attribute>
+		<language name="JPN" width="256">すべての　ポケモンを　かいほうする……
+なんて　すばらしいんでしょう</language>
+		<language name="JPN_KANJI" width="256">すべての　ポケモンを　解放する……
+なんて　すばらしいんでしょう</language>
+	</row>
+
+	<row id="msg_d02_leader3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・盗難イベント中
+　c02でのmsg_c02_leader3_03か
+　msg_c02_leader3_04表示後に出現
+・会話後、d02r0101へ移動
+　画面外に消えると、主人公操作可能</comment>
+		<attribute name="キャラ指定">アーティ
+C03ジムリーダー</attribute>
+		<language name="JPN" width="256">アーティ『このさきが
+ヤグルマのもり　だよ[BE:01:ページ切り替え（クリア）]
+たしかに　ここに　にげられると
+やっかい　かもね</language>
+		<language name="JPN_KANJI" width="256">アーティ『この先が
+ヤグルマの森　だよ[BE:01:ページ切り替え（クリア）]
+確かに　ここに　逃げられると
+やっかい　かもね</language>
 	</row>
 
 	<flowchart-group-list>

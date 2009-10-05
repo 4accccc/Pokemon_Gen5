@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-30T16:05:37"/>
+	<create user="matsumiya" host="W00207" date="2009-10-05T21:45:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,9 +235,9 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="202"/>
+		<comment position="4" width="290"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="166">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="35" top="215" right="740" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="35" top="218" right="740" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="733" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,136 +292,536 @@
 	</lock>
 
 
-	<row id="msg_c02gym0101_leader_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>戦闘前メッセージ</comment>
-		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c02gym0101_counter1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・通常時
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">受付嬢その１</attribute>
+		<language name="JPN" width="256">ようこそ！
+シッポウはくぶつかん　へ</language>
+		<language name="JPN_KANJI" width="256">ようこそ！
+シッポウ博物館へ</language>
 	</row>
 
-	<row id="msg_c02gym0101_leader_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>戦闘後メッセージ</comment>
-		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c02gym0101_counter1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・盗難イベント発生時
+・仮メッセージ</comment>
+		<language name="JPN" width="256">ドロボウは　すうにんで
+てんじひんを　うばっていきました……</language>
+		<language name="JPN_KANJI" width="256">ドロボウは　数人で
+展示品を　奪っていきました……</language>
 	</row>
 
-	<row id="msg_c02gym0101_leader_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>ファンファーレ＋バッジ入手処理</comment>
-		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は　アロエから
-？？？？？バッジを　もらった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　アロエから
-？？？？？バッジを　もらった！</language>
+	<row id="msg_c02gym0101_counter2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・通常時
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">受付嬢その２</attribute>
+		<language name="JPN" width="256">ポケモンジムへは
+はくぶつかんの　おくから　いけます！</language>
+		<language name="JPN_KANJI" width="256">ポケモンジムへは
+博物館の　奥から　行けます！</language>
 	</row>
 
-	<row id="msg_c02gym0101_leader_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>アイテム入手処理</comment>
-		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c02gym0101_counter2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・盗難イベント発生時
+・仮メッセージ</comment>
+		<language name="JPN" width="256">いきなり　ポケモンで　おどろかされて……
+なにも　できなかったんです……</language>
+		<language name="JPN_KANJI" width="256">いきなり　ポケモンで　驚かされて……
+なにも　できなかったんです……</language>
 	</row>
 
-	<row id="msg_c02gym0101_leader_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>アイテム入手処理後
-</comment>
-		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_c02gym0101_leader_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>msg_c02gym0101_leader_05
-表示後に再度会話</comment>
-		<attribute name="キャラ指定">LEADER2</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_c02gym0101_glasses_01" text-color=",,,#ff0000,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c02gym0101_ad_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・ジムバッジ取得前＋アイテム入手前
-・ジムに入ると
-　主人公に隣接してメッセージ表示
-・No???「おいしいみず」入手</comment>
-		<attribute name="キャラ指定">GLASSES
-サングラス</attribute>
-		<language name="JPN" width="256">ジムリーダーさがし
-たいへん　だったッすよね[BE:01:ページ切り替え（クリア）]
-これを　さしあげますよ</language>
-		<language name="JPN_KANJI" width="256">ジムリーダー探し
-大変だったッすよね[BE:01:ページ切り替え（クリア）]
-これを　さしあげますよ</language>
+・初回
+・GRIDX＝11～13
+　GRIDZ=22のPOSを踏んだとき
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">副館長（Assistant　Director）
+助手♂</attribute>
+		<language name="JPN" width="256">どうも　わたくし
+副館長の　？？？　です[BE:01:ページ切り替え（クリア）]
+では　わたくしが　館内を
+簡単に　案内いたしましょう</language>
+		<language name="JPN_KANJI" width="256">どうも　わたくし
+副館長の　？？？　です[BE:01:ページ切り替え（クリア）]
+では　わたくしが　館内を
+簡単に　案内いたしましょう</language>
 	</row>
 
-	<row id="msg_c02gym0101_glasses_02" text-color=",,,#ff0000,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c02gym0101_ad_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・ジムバッジ取得前＋アイテム入手後
-・ジムバッジ取得まで繰り返し</comment>
-		<language name="JPN" width="256">ポケモンしょうぶの　きほんは
-タイプの　あいしょう　なんですよね[BE:01:ページ切り替え（クリア）]
-あいてのポケモンに　たいして
-ゆうりなタイプの　ポケモン[BE:00:ページ切り替え（行送り）]
-ゆうりなタイプの　わざをえらべば[BE:00:ページ切り替え（行送り）]
-しょうりは　めのまえ　ッすよね</language>
-		<language name="JPN_KANJI" width="256">ポケモン勝負の　基本は
-タイプの　相性　なんですよね[BE:01:ページ切り替え（クリア）]
-相手のポケモンに　対して
-有利なタイプの　ポケモン[BE:00:ページ切り替え（行送り）]
-有利なタイプの　技を　選べば[BE:00:ページ切り替え（行送り）]
-勝利は　目前ッすよね</language>
+・骨格（予定）
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">副館長（Assistant　Director）
+助手♂</attribute>
+		<language name="JPN" width="256">骨格……
+大昔の　ポケモン……</language>
+		<language name="JPN_KANJI" width="256">骨格……
+大昔の　ポケモン……</language>
 	</row>
 
-	<row id="msg_c02gym0101_glasses_03" text-color=",,,#ff0000,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c02gym0101_ad_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・ジムバッジ取得後</comment>
-		<language name="JPN" width="256">ジムバッジを　てにいれた
-きょう　という　すばらしい　ひを[BE:00:ページ切り替え（行送り）]
-いつまでも　おぼえていてほしいッすね</language>
-		<language name="JPN_KANJI" width="256">ジムバッジを　手に入れた
-今日という　素晴らしい日を[BE:00:ページ切り替え（行送り）]
-いつまでも　覚えていてほしいッすね</language>
+・仮面（予定）
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">副館長（Assistant　Director）
+助手♂</attribute>
+		<language name="JPN" width="256">仮面を　かぶることで
+ポケモンの　魂を　宿したり……</language>
+		<language name="JPN_KANJI" width="256">仮面を　かぶることで
+ポケモンの　魂を　宿したり……</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>ジムバッジ取得前</comment>
-		<attribute name="キャラ指定">ポケモン像</attribute>
-		<language name="JPN" width="256">シッポウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
-ジムリーダー　アロエ
-にんてい　トレーナー！</language>
-		<language name="JPN_KANJI" width="256">シッポウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
-ジムリーダー　アロエ
-にんてい　トレーナー！</language>
+	<row id="msg_c02gym0101_ad_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・古い石（予定）
+　Wverなら「ダークストーン（黒）」
+　Bverなら「ライトストーン（しろ）」
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">副館長（Assistant　Director）
+助手♂</attribute>
+		<language name="JPN" width="256">ああ　それは
+ただの　ふるいいし　です[BE:01:ページ切り替え（クリア）]
+古代の城ってところで見つかったのですが
+古い以外には　まったく[BE:00:ページ切り替え（行送り）]
+価値の　ない　ものでして……[BE:01:ページ切り替え（クリア）]
+ただ　きれいなので
+展示しております</language>
+		<language name="JPN_KANJI" width="256">ああ　それは
+ただの　ふるいいし　です[BE:01:ページ切り替え（クリア）]
+古代の城ってところで見つかったのですが
+古い以外には　まったく[BE:00:ページ切り替え（行送り）]
+価値の　ない　ものでして……[BE:01:ページ切り替え（クリア）]
+ただ　きれいなので
+展示しております</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>ジムバッジ取得後</comment>
-		<attribute name="キャラ指定">ポケモン像</attribute>
-		<language name="JPN" width="256">シッポウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
-ジムリーダー　アロエ
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">シッポウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
-ジムリーダー　アロエ
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0]</language>
+	<row id="msg_c02gym0101_ad_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・隕石（予定）
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">副館長（Assistant　Director）
+助手♂</attribute>
+		<language name="JPN" width="256">同じ石でも　こちらはすごいですよ
+いん石～[BE:01:ページ切り替え（クリア）]
+なにかしらの
+宇宙エネルギーを　秘めています</language>
+		<language name="JPN_KANJI" width="256">同じ石でも　こちらはすごいですよ
+いん石～[BE:01:ページ切り替え（クリア）]
+なにかしらの
+宇宙エネルギーを　秘めています</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>？？後</comment>
-		<attribute name="キャラ指定">ポケモン像</attribute>
-		<language name="JPN" width="256">シッポウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
-ジムリーダー　アロエ
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ともだち♂[BE:00:ページ切り替え（行送り）]
-ともだち♀</language>
-		<language name="JPN_KANJI" width="256">シッポウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
-ジムリーダー　アロエ
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-ともだち♂[BE:00:ページ切り替え（行送り）]
-ともだち♀</language>
+	<row id="msg_c02gym0101_ad_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ジム（予定）
+・ジムバッジ取得まで
+　この位置でこのメッセージ繰り返し
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">副館長（Assistant　Director）
+助手♂</attribute>
+		<language name="JPN" width="256">この　扉の　先が
+ポケモンジムと　なっております[BE:01:ページ切り替え（クリア）]
+一番　奥で　強くて　やさしい
+ジムリーダーが　待ってます[BE:01:ページ切り替え（クリア）]
+あ！　ひょっとして　最初から
+ジムが目的でしたか？[BE:01:ページ切り替え（クリア）]
+それだとしたら　足止めして
+申し訳なかったです……</language>
+		<language name="JPN_KANJI" width="256">この　扉の　先が
+ポケモンジムと　なっております[BE:01:ページ切り替え（クリア）]
+一番　奥で　強くて　やさしい
+ジムリーダーが　待ってます[BE:01:ページ切り替え（クリア）]
+あ！　ひょっとして　最初から
+ジムが目的でしたか？[BE:01:ページ切り替え（クリア）]
+それだとしたら　足止めして
+申し訳なかったです……</language>
+	</row>
+
+	<row id="msg_c02gym0101_leader_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・盗難イベント時
+　POSを踏むとメッセージ表示
+　表示後、博物館の外へ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">C02ジムリーダー
+アロエ</attribute>
+		<language name="JPN" width="256">アロエ『なんてこったい……[BE:01:ページ切り替え（クリア）]
+プラズマ団ってのが　展示品を
+あらかた　持って行ってんだね……</language>
+		<language name="JPN_KANJI" width="256">アロエ『なんてこったい……[BE:01:ページ切り替え（クリア）]
+プラズマ団ってのが　展示品を
+あらかた　持って行ってんだね……</language>
+	</row>
+
+	<row id="msg_c02gym0101_ad_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ジムバッジ取得後～盗難イベント解決前
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">副館長（Assistant　Director）
+助手♂</attribute>
+		<language name="JPN" width="256">？？？『あの　骨格標本は……
+アロエが　大好きな　もの……</language>
+		<language name="JPN_KANJI" width="256">？？？『あの　骨格標本は……
+アロエが　大好きな　もの……</language>
+	</row>
+
+	<row id="msg_c02gym0101_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・盗難イベント中
+　メッセージは繰り返し
+・削除タイミングは盗難イベントクリア時（仮）</comment>
+		<attribute name="キャラ指定">サポート（友達♀）</attribute>
+		<language name="JPN" width="256">ホワイティ『ドロボウだなんて
+あたし　ゆるせない！</language>
+		<language name="JPN_KANJI" width="256">ホワイティ『ドロボウだなんて
+あたし　ゆるせない！</language>
+	</row>
+
+	<row id="msg_c02gym0101_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・盗難イベント中
+　メッセージは繰り返し
+・削除タイミングは盗難イベントクリア時（仮）</comment>
+		<attribute name="キャラ指定">ライバル（友達♂）</attribute>
+		<language name="JPN" width="256">クロック『プラズマ団のせいで
+ジムリーダー　いないのか……[BE:00:ページ切り替え（行送り）]
+なんとも　迷惑な　話だな</language>
+		<language name="JPN_KANJI" width="256">クロック『プラズマ団のせいで
+ジムリーダー　いないのか……[BE:00:ページ切り替え（行送り）]
+なんとも　迷惑な　話だな</language>
+	</row>
+
+	<row id="msg_c02gym0101_ad_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・盗難イベント解決後
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">副館長（Assistant　Director）
+助手♂</attribute>
+		<language name="JPN" width="256">骨格標本って　不思議なんですよ
+以下　仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">骨格標本って　不思議なんですよ
+以下　仮メッセージ</language>
+	</row>
+
+	<row id="msg_c02gym0101_man1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・通常時
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">見物客その１
+MAN1</attribute>
+		<language name="JPN" width="256">世界各国の　珍しいモノ……
+そう考えると　ロマンの　集合体だね</language>
+		<language name="JPN_KANJI" width="256">世界各国の　珍しいモノ……
+そう考えると　ロマンの　集合体だね</language>
+	</row>
+
+	<row id="msg_c02gym0101_man1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・盗難イベント発生時
+・仮メッセージ</comment>
+		<language name="JPN" width="256">あわわわわ！</language>
+		<language name="JPN_KANJI" width="256">あわわわわ！</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・通常時
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">見物客その２
+GIRL3</attribute>
+		<language name="JPN" width="256">ここの　ジムリーダーは　カセキや
+ポケモンの骨の　研究も　しているってね</language>
+		<language name="JPN_KANJI" width="256">ここの　ジムリーダーは　カセキや
+ポケモンの骨の　研究も　しているってね</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_012" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・盗難イベント発生時
+・仮メッセージ</comment>
+		<language name="JPN" width="256">泥棒たちの　あの　大胆な行動……
+自分たちの　正義を　信じているみたい</language>
+		<language name="JPN_KANJI" width="256">泥棒たちの　あの　大胆な行動……
+自分たちの　正義を　信じているみたい</language>
+	</row>
+
+	<row id="msg_c02gym0101_oldman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・通常時
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">見物客その３
+OLDMAN1</attribute>
+		<language name="JPN" width="256">いん石と　一緒に　宇宙から来た
+ポケモンも　いるかもしれんのう</language>
+		<language name="JPN_KANJI" width="256">いん石と　一緒に　宇宙から来た
+ポケモンも　いるかもしれんのう</language>
+	</row>
+
+	<row id="msg_c02gym0101_oldman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・盗難イベント発生時
+・仮メッセージ</comment>
+		<language name="JPN" width="256">あの　プラズマだん　というのは
+いったい　なにもの　なんだ！？</language>
+		<language name="JPN_KANJI" width="256">あの　プラズマだん　というのは
+いったい　なにもの　なんだ！？</language>
+	</row>
+
+	<row id="msg_c02gym0101_fossil_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：化石の復元
+・プレイヤーが化石を持っているときは
+　続けてmsg_c02gym0101_fossil_02
+・プレイヤーのポケモンを預かっているときは
+　続けてmsg_c02gym0101_fossil_07
+・持っていないときは
+　続けてmsg_c02gym0101_fossil_09</comment>
+		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
+		<language name="JPN" width="256">わたし　ここで　ポケモンの
+カセキの　けんきゅうを　しています▼</language>
+		<language name="JPN_KANJI" width="256">わたし　ここで　ポケモンの
+カセキの　研究を　しています▼</language>
+	</row>
+
+	<row id="msg_c02gym0101_fossil_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：化石の復元
+・はい／いいえの選択肢表示
+　はい　→化石１個→msg_c02gym0101_fossil_06
+　はい　→化石２個以上→msg_c02gym0101_fossil_03
+　いいえ→msg_c02gym0101_fossil_05</comment>
+		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
+		<language name="JPN" width="256">あなた　カセキ　もっていますね
+ポケモンに　もどしますか？</language>
+		<language name="JPN_KANJI" width="256">あなた　カセキ　持っていますね
+ポケモンに　戻しますか？</language>
+	</row>
+
+	<row id="msg_c02gym0101_fossil_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：化石の復元
+・アイテムリスト画面へ</comment>
+		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
+		<language name="JPN" width="256">どの　カセキを
+ポケモンに　ふくげん　しますか？</language>
+		<language name="JPN_KANJI" width="256">どの　カセキを
+ポケモンに　復元　しますか？</language>
+	</row>
+
+	<row id="msg_c02gym0101_fossil_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：化石の復元
+・化石２個以上ではい選択したとき
+　アイテムリストから選んだ化石を削除</comment>
+		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
+		<language name="JPN" width="256">わかりました！　その　カセキを
+ポケモンに　もどしますね！</language>
+		<language name="JPN_KANJI" width="256">わかりました！　その　カセキを
+ポケモンに　戻しますね！</language>
+	</row>
+
+	<row id="msg_c02gym0101_fossil_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：化石の復元
+・いいえ選択
+・もしくはリストでやめる選択</comment>
+		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
+		<language name="JPN" width="256">カセキを　ふくげん　しないのですか
+わかりました！</language>
+		<language name="JPN_KANJI" width="256">カセキを　復元　しないのですか
+わかりました！</language>
+	</row>
+
+	<row id="msg_c02gym0101_fossil_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：化石の復元
+・化石復元中
+・ME終了すると続けてmsg_c02gym0101_fossil_07</comment>
+		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
+		<language name="JPN" width="256">いま　カセキを
+ポケモンに　ふくげん　しています！</language>
+		<language name="JPN_KANJI" width="256">いま　カセキを
+ポケモンに　復元　しています！</language>
+	</row>
+
+	<row id="msg_c02gym0101_fossil_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：化石の復元
+・化石復元
+　続けてmsg_c02gym0101_fossil_08
+・でも手持ちポケモンリストがいっぱいのときは
+　続けてmsg_c02gym0101_fossil_10</comment>
+		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
+		<language name="JPN" width="256">もどりました！！▼
+これが　[1:00:トレーナー名:0]ですよ！
+だいじに　してあげて　ください▼</language>
+		<language name="JPN_KANJI" width="256">戻りました！！▼
+これが　[1:00:トレーナー名:0]ですよ！
+大事に　してあげて　ください▼</language>
+	</row>
+
+	<row id="msg_c02gym0101_fossil_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>続けてmsg_c02gym0101_fossil_12
+
+0＝主人公名
+1＝ポケモン名</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:03:ポケモンタイプ:0]は
+[1:00:トレーナー名:1]を　てにいれた！▼</language>
+		<language name="JPN_KANJI" width="256">[1:03:ポケモンタイプ:0]は
+[1:00:トレーナー名:1]を　てにいれた！▼</language>
+	</row>
+
+	<row id="msg_c02gym0101_fossil_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>はい／いいえの選択肢表示
+・はい　→名前入力画面に
+・いいえ→終了</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">てにいれた　[1:00:トレーナー名:1]に
+ニックネームを　つけますか？</language>
+		<language name="JPN_KANJI" width="256">てにいれた　[1:00:トレーナー名:1]に
+ニックネームを　つけますか？</language>
+	</row>
+
+	<row id="msg_c02gym0101_fossil_10" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀：化石の復元</comment>
+		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
+		<language name="JPN" width="256">と　おもいましたが
+ポケモンが　いっぱい　ですね▼
+たいせつに　あずかっておくので
+また　とりに　きてくださいね！</language>
+		<language name="JPN_KANJI" width="256">と　思いましたが
+ポケモンが　いっぱい　ですね▼
+大切に　預かっておくので
+また　とりに　きてくださいね！</language>
+	</row>
+
+	<row id="msg_c02gym0101_meteor_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>BGメッセージ
+・パーティ内にデオキシスがいないとき</comment>
+		<attribute name="キャラ指定">隕石共通</attribute>
+		<language name="JPN" width="256">うちゅうから　ふってきた
+ふしぎな　いんせきが　おかれている……</language>
+		<language name="JPN_KANJI" width="256">宇宙から　降ってきた
+不思議な　いん石が　展示されている……</language>
+	</row>
+
+	<row id="msg_c02gym0101_meteor_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>BGメッセージ
+・パーティ内にデオキシスがいるとき
+・パーティ内のデオキシスが
+　スピードフォルムにチェンジする
+・手持ちのデオキシスが
+　スピードフォルムでも、このメッセージ</comment>
+		<attribute name="キャラ指定">隕石その１</attribute>
+		<language name="JPN" width="256">いんせきに　ちかづいたことで
+ある　ポケモンの▽
+うごく　はやさが　たかまった！</language>
+		<language name="JPN_KANJI" width="256">いん石に　近づいたことで
+ある　ポケモンの▽
+動く早さが　高まった！</language>
+	</row>
+
+	<row id="msg_c02gym0101_meteor_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>BGメッセージ
+・パーティ内にデオキシスがいるとき
+・パーティ内のデオキシスが
+　ディフェンスフォルムにチェンジする
+・手持ちのデオキシスが
+　ディフェンスフォルムでも、このメッセージ</comment>
+		<attribute name="キャラ指定">隕石その２</attribute>
+		<language name="JPN" width="256">いんせきに　ちかづいたことで
+ある　ポケモンの▽
+まもる　ちからが　つよまった！</language>
+		<language name="JPN_KANJI" width="256">いん石に　近づいたことで
+ある　ポケモンの▽
+守る力が　強まった！</language>
+	</row>
+
+	<row id="msg_c02gym0101_meteor_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>BGメッセージ
+・パーティ内にデオキシスがいるとき
+・パーティ内のデオキシスが
+　オフェンスフォルムにチェンジする
+・手持ちのデオキシスが
+　アタックフォルムでも、このメッセージ</comment>
+		<attribute name="キャラ指定">隕石その３</attribute>
+		<language name="JPN" width="256">いんせきに　ちかづいたことで
+ある　ポケモンの▽
+たたかう　ちからが　つよまった！</language>
+		<language name="JPN_KANJI" width="256">いん石に　近づいたことで
+ある　ポケモンの▽
+闘う力が　強まった！</language>
+	</row>
+
+	<row id="msg_c02gym0101_meteor_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>BGメッセージ
+・パーティ内にデオキシスがいるとき
+・パーティ内のデオキシスが
+　ノーマルフォルムにチェンジする
+・手持ちのデオキシスが
+　ノーマルフォルムでも、このメッセージ</comment>
+		<attribute name="キャラ指定">隕石その４</attribute>
+		<language name="JPN" width="256">いんせきに　ちかづいたことで
+ある　ポケモンは　バランスのとれた▽
+すがたと　なった</language>
+		<language name="JPN_KANJI" width="256">いん石に　近づいたことで
+ある　ポケモンは▽
+バランスのとれた　姿と　なった</language>
+	</row>
+
+	<row id="msg_c02gym0101_plate_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">展示物の解説プレート</attribute>
+		<language name="JPN" width="256">てんじぶつの　かいせつ　その１</language>
+		<language name="JPN_KANJI" width="256">展示物の　解説その１</language>
+	</row>
+
+	<row id="msg_c02gym0101_plate_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">展示物の解説プレート</attribute>
+		<language name="JPN" width="256">てんじぶつの　かいせつ　その２</language>
+		<language name="JPN_KANJI" width="256">展示物の　解説その２</language>
+	</row>
+
+	<row id="msg_c02gym0101_plate_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">展示物の解説プレート</attribute>
+		<language name="JPN" width="256">てんじぶつの　かいせつ　その３</language>
+		<language name="JPN_KANJI" width="256">展示物の　解説その３</language>
+	</row>
+
+	<row id="msg_c02gym0101_plate_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">展示物の解説プレート</attribute>
+		<language name="JPN" width="256">てんじぶつの　かいせつ　その４</language>
+		<language name="JPN_KANJI" width="256">展示物の　解説その４</language>
+	</row>
+
+	<row id="msg_c02gym0101_plate_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">展示物の解説プレート</attribute>
+		<language name="JPN" width="256">てんじぶつの　かいせつ　その５</language>
+		<language name="JPN_KANJI" width="256">展示物の　解説その５</language>
+	</row>
+
+	<row id="msg_c02gym0101_plate_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">展示物の解説プレート</attribute>
+		<language name="JPN" width="256">てんじぶつの　かいせつ　その６</language>
+		<language name="JPN_KANJI" width="256">展示物の　解説その６</language>
+	</row>
+
+	<row id="msg_c02gym0101_plate_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">展示物の解説プレート</attribute>
+		<language name="JPN" width="256">てんじぶつの　かいせつ　その７</language>
+		<language name="JPN_KANJI" width="256">展示物の　解説その７</language>
 	</row>
 
 	<flowchart-group-list>

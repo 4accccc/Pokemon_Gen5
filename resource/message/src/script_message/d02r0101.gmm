@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-29T12:24:45"/>
+	<create user="matsumiya" host="W00207" date="2009-10-05T21:36:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="165"/>
+		<comment position="4" width="278"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="112">
 		</attribute>
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="184" right="950" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="31" top="190" right="732" bottom="802" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="527"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<band id="0" index="1" style="0000" width="526"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="540"/>
+		<band id="2" index="3" style="0000" width="539"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="694"/>
+		<band id="4" index="0" style="0000" width="693"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,6 +335,237 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_d02r0101_leader3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・森の入り口付近
+・メッセージ表示後
+　画面上部に移動
+・画面外に消えると主人公操作可能</comment>
+		<attribute name="キャラ指定">C03ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『ああ
+森のにおい……[BE:01:ページ切り替え（クリア）]
+えーっとね
+ここを　まっすぐ　行くと　出口[BE:01:ページ切り替え（クリア）]
+それ以外に　この森からは　出られない
+なので　オレが　そこに立っていれば[BE:00:ページ切り替え（行送り）]
+ドロボウたちは　逃げられない　っと[BE:01:ページ切り替え（クリア）]
+じゃあ　あとは　ヨロシクね</language>
+		<language name="JPN_KANJI" width="256">アーティ『ああ
+森のにおい……[BE:01:ページ切り替え（クリア）]
+えーっとね
+ここを　まっすぐ　行くと　出口[BE:01:ページ切り替え（クリア）]
+それ以外に　この森からは　出られない
+なので　オレが　そこに立っていれば[BE:00:ページ切り替え（行送り）]
+ドロボウたちは　逃げられない　っと[BE:01:ページ切り替え（クリア）]
+じゃあ　あとは　ヨロシクね</language>
+	</row>
+
+	<row id="msg_d02r0101_leader3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・h01r0101接続手前に配置
+・ストッパー状態
+　話しかけたとき用</comment>
+		<attribute name="キャラ指定">C03ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『……んうん？[BE:01:ページ切り替え（クリア）]
+こっちには……
+ドロボウたち　来てないよ[BE:01:ページ切り替え（クリア）]
+虫ポケモンにも　聞いたけれど
+だれも　通ってないようだよ</language>
+		<language name="JPN_KANJI" width="256">アーティ『……んうん？[BE:01:ページ切り替え（クリア）]
+こっちには……
+ドロボウたち　来てないよ[BE:01:ページ切り替え（クリア）]
+虫ポケモンにも　聞いたけれど
+だれも　通ってないようだよ</language>
+	</row>
+
+	<row id="msg_d02r0101_leader3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・h01r0101接続手前に配置
+・ストッパー状態
+　posを踏んだとき用
+・メッセージ表示後、押し戻される</comment>
+		<attribute name="キャラ指定">C03ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『……んうん？[BE:01:ページ切り替え（クリア）]
+こっちには……
+ドロボウたち　来てないよ[BE:01:ページ切り替え（クリア）]
+虫ポケモンにも　聞いたけれど
+だれも　通ってないようだよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アーティ『……んうん？[BE:01:ページ切り替え（クリア）]
+こっちには……
+ドロボウたち　来てないよ[BE:01:ページ切り替え（クリア）]
+虫ポケモンにも　聞いたけれど
+だれも　通ってないようだよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d02r0101_hakaim1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・メッセージ表示後、トレーナー戦闘に
+※このトレーナーを探す遊びを実装したい
+　要検討</comment>
+		<attribute name="キャラ指定">敵組織</attribute>
+		<language name="JPN" width="256">したっぱ『ちっ！
+にげみちは　ないか！？</language>
+		<language name="JPN_KANJI" width="256">したっぱ『ちっ！
+にげみちは　ないか！？</language>
+	</row>
+
+	<row id="msg_d02r0101_hakaim1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後
+・続けて、c03ジムリーダーが隣接して
+　msg_d02r0101_leader3_04表示</comment>
+		<attribute name="キャラ指定">敵組織</attribute>
+		<language name="JPN" width="256">したっぱ『まけた
+わかった！　これは返す！</language>
+		<language name="JPN_KANJI" width="256">したっぱ『まけた
+わかった！　これは返す！</language>
+	</row>
+
+	<row id="msg_d02r0101_leader3_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・画面外からc02ジムリーダー登場</comment>
+		<attribute name="キャラ指定">C03ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『ああ　良かった！[BE:01:ページ切り替え（クリア）]
+なんだか　虫ポケモンが　騒ぐから
+きてみたら　これで　解決だよね</language>
+		<language name="JPN_KANJI" width="256">アーティ『ああ　良かった！[BE:01:ページ切り替え（クリア）]
+なんだか　虫ポケモンが　騒ぐから
+きてみたら　これで　解決だよね</language>
+	</row>
+
+	<row id="msg_d02r0101_leader2_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・まずメッセージだけ表示
+・その後、画面下からc02ジムリーダー出現
+　主人公たち付近に来るとmsg_d02r0101_leader2_02</comment>
+		<attribute name="キャラ指定">C02ジムリーダー
+アロエ</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]！　アーティ！
+おつかれさん！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！　アーティ！
+おつかれさん！！</language>
+	</row>
+
+	<row id="msg_d02r0101_leader2_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・続けて
+　msg_d02r0101_hakaim1_03</comment>
+		<attribute name="キャラ指定">C02ジムリーダー
+アロエ</attribute>
+		<language name="JPN" width="256">アロエ『こいつが　最後の　一人
+物を　取り返せば　終わりだよ[BE:01:ページ切り替え（クリア）]
+さ！　その　盗んだ
+ふるいいし　返してもらうからね</language>
+		<language name="JPN_KANJI" width="256">アロエ『こいつが　最後の　一人
+物を　取り返せば　終わりだよ[BE:01:ページ切り替え（クリア）]
+さ！　その　盗んだ
+ふるいいし　返してもらうからね</language>
+	</row>
+
+	<row id="msg_d02r0101_hakaim1_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・続けて
+　msg_d02r0101_leader3_05</comment>
+		<attribute name="キャラ指定">敵組織</attribute>
+		<language name="JPN" width="256">したっぱ『おまえら　シッポウジムに
+ヒウンジムの　リーダーだな！？[BE:00:ページ切り替え（行送り）]
+なぜ　われわれの　じゃまをする？</language>
+		<language name="JPN_KANJI" width="256">したっぱ『おまえら　シッポウジムに
+ヒウンジムの　リーダーだな！？[BE:00:ページ切り替え（行送り）]
+なぜ　われわれの　じゃまをする？</language>
+	</row>
+
+	<row id="msg_d02r0101_leader3_05" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・</comment>
+		<language name="JPN" width="256">アーティ『ジャマも　なにも……
+人のものを　盗んだら　泥棒でしょうよ</language>
+		<language name="JPN_KANJI" width="256">アーティ『ジャマも　なにも……
+人のものを　盗んだら　泥棒でしょうよ</language>
+	</row>
+
+	<row id="msg_d02r0101_hakaim1_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・メッセージ表示後、ジムリーダー2人の間を走り去る</comment>
+		<attribute name="キャラ指定">敵組織</attribute>
+		<language name="JPN" width="256">したっぱ『……おまえらは
+ポケモンを　苦しめているくせに！</language>
+		<language name="JPN_KANJI" width="256">したっぱ『……おまえらは
+ポケモンを　苦しめているくせに！</language>
+	</row>
+
+	<row id="msg_d02r0101_leader2_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・したっぱの動作モデルが画面外に消えた後
+　！マーク表示続けて、このメッセージ
+・続けてmsg_d02r0101_leader3_06</comment>
+		<attribute name="キャラ指定">C02ジムリーダー
+アロエ</attribute>
+		<language name="JPN" width="256">アロエ『あっ！！</language>
+		<language name="JPN_KANJI" width="256">アロエ『あっ！！</language>
+	</row>
+
+	<row id="msg_d02r0101_leader3_06" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・動作モデルが消えたほうをみながら
+・続けて主人公と向き合って
+　msg_d02r0101_leader3_07表示</comment>
+		<attribute name="キャラ指定">C03ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『追いかけなくても　いいでしょ[BE:01:ページ切り替え（クリア）]
+盗まれた　物は　取り返したし
+あんまり　追い詰めると[BE:00:ページ切り替え（行送り）]
+なにを　しでかすか　わかんないです[BE:01:ページ切り替え（クリア）]
+じゃあ　アロエねえさん
+オレ　戻りますから……</language>
+		<language name="JPN_KANJI" width="256">アーティ『追いかけなくても　いいでしょ[BE:01:ページ切り替え（クリア）]
+盗まれた　物は　取り返したし
+あんまり　追い詰めると[BE:00:ページ切り替え（行送り）]
+なにを　しでかすか　わかんないです[BE:01:ページ切り替え（クリア）]
+じゃあ　アロエねえさん
+オレ　戻りますから……</language>
+	</row>
+
+	<row id="msg_d02r0101_leader3_07" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、画面上に移動</comment>
+		<attribute name="キャラ指定">C03ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]だっけ[BE:01:ページ切り替え（クリア）]
+ポケモンジムで　君の　挑戦を
+待っているよ！　うん　楽しみだな</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]だっけ[BE:01:ページ切り替え（クリア）]
+ポケモンジムで　君の　挑戦を
+待っているよ！　うん　楽しみだな</language>
+	</row>
+
+	<row id="msg_d02r0101_leader2_04" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・メッセージ表示後
+　画面下（というかd02）方面に移動
+・画面外に消えると、主人公、操作可能に</comment>
+		<attribute name="キャラ指定">C02ジムリーダー
+アロエ</attribute>
+		<language name="JPN" width="256">アロエ『[1:00:トレーナー名:0]　ありがとうよ
+あんたのように
+やさしい　トレーナーなら[BE:01:ページ切り替え（クリア）]
+一緒にいる　ポケモンも
+しあわせ　だよ[BE:01:ページ切り替え（クリア）]
+じゃあ　わたしは　ふるいいしを
+博物館に　戻すからさ</language>
+		<language name="JPN_KANJI" width="256">アロエ『[1:00:トレーナー名:0]　ありがとうよ
+あんたのように
+やさしい　トレーナーなら[BE:01:ページ切り替え（クリア）]
+一緒にいる　ポケモンも
+しあわせ　だよ[BE:01:ページ切り替え（クリア）]
+じゃあ　わたしは　ふるいいしを
+博物館に　戻すからさ</language>
+	</row>
 
 	<row id="msg_d02r0101_sportsm_01">
 		<comment>♀

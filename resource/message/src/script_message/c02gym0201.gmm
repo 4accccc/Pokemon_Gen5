@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-30T16:05:52"/>
+	<create user="matsumiya" host="W00207" date="2009-10-05T16:33:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="248"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="299"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c02gym0101_glasses_01" back-color="#80ffff,,,,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02gym0101_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手前
 ・ジムに入ると
@@ -300,41 +300,72 @@
 ・No???「おいしいみず」入手</comment>
 		<attribute name="キャラ指定">GLASSES
 サングラス</attribute>
-		<language name="JPN" width="256">ジムリーダーさがし
-たいへん　だったッすよね[BE:01:ページ切り替え（クリア）]
-これを　さしあげますよ</language>
-		<language name="JPN_KANJI" width="256">ジムリーダー探し
-大変だったッすよね[BE:01:ページ切り替え（クリア）]
-これを　さしあげますよ</language>
+		<language name="JPN" width="256">はくぶつかんの　そのおくで
+ちょうせんしゃを　まつ　ポケモンジム……[BE:00:ページ切り替え（行送り）]
+なんだか　ふんいき　あるっすよね[BE:01:ページ切り替え（クリア）]
+というわけで
+これを　さしあげるッす！</language>
+		<language name="JPN_KANJI" width="256">博物館の　その奥で
+挑戦者を待つ　ポケモンジム……[BE:00:ページ切り替え（行送り）]
+なんだか　雰囲気あるっすよね[BE:01:ページ切り替え（クリア）]
+というわけで
+これを　さしあげるッす！</language>
 	</row>
 
-	<row id="msg_c02gym0101_glasses_02" back-color="#80ffff,,,,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02gym0101_glasses_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
 ・ジムバッジ取得まで繰り返し</comment>
-		<language name="JPN" width="256">ポケモンしょうぶの　きほんは
-タイプの　あいしょう　なんですよね[BE:01:ページ切り替え（クリア）]
-あいてのポケモンに　たいして
-ゆうりなタイプの　ポケモン[BE:00:ページ切り替え（行送り）]
-ゆうりなタイプの　わざをえらべば[BE:00:ページ切り替え（行送り）]
-しょうりは　めのまえ　ッすよね</language>
-		<language name="JPN_KANJI" width="256">ポケモン勝負の　基本は
-タイプの　相性　なんですよね[BE:01:ページ切り替え（クリア）]
-相手のポケモンに　対して
-有利なタイプの　ポケモン[BE:00:ページ切り替え（行送り）]
-有利なタイプの　技を　選べば[BE:00:ページ切り替え（行送り）]
-勝利は　目前ッすよね</language>
+		<language name="JPN" width="256">ジムリーダーの　アロエさんは
+ノーマルタイプの　ポケモンを　つかう[BE:01:ページ切り替え（クリア）]
+……いいっすか
+ノーマルタイプの　じゃくてんは[BE:00:ページ切り替え（行送り）]
+かくとうタイプ　なんすよね！[BE:01:ページ切り替え（クリア）]
+あと　ノーマルタイプの　ポケモンは
+いろんな　タイプの　わざを　おぼえます[BE:01:ページ切り替え（クリア）]
+きをつけないと　いがいな　わざを
+つかわれて　くろう　するかもです！</language>
+		<language name="JPN_KANJI" width="256">ジムリーダーの　アロエさんは
+ノーマルタイプの　ポケモンを　つかう[BE:01:ページ切り替え（クリア）]
+……いいか　ノーマルタイプの
+弱点は　格闘タイプなんすよね！[BE:01:ページ切り替え（クリア）]
+あと　ノーマルタイプの　ポケモンは
+いろんな　タイプの　わざを　覚えます[BE:01:ページ切り替え（クリア）]
+気をつけないと　意外な　わざを
+使われて　苦戦するかもしれないっすね！</language>
 	</row>
 
-	<row id="msg_c02gym0101_glasses_03" back-color="#80ffff,,,,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02gym0101_glasses_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・ジムバッジ取得後</comment>
-		<language name="JPN" width="256">ジムバッジを　てにいれた
-きょう　という　すばらしい　ひを[BE:00:ページ切り替え（行送り）]
-いつまでも　おぼえていてほしいッすね</language>
-		<language name="JPN_KANJI" width="256">ジムバッジを　手に入れた
-今日という　素晴らしい日を[BE:00:ページ切り替え（行送り）]
-いつまでも　覚えていてほしいッすね</language>
+・ジムバッジ取得後
+・盗難事件クリアまでは
+　msg_c02gym0101_glasses_04</comment>
+		<language name="JPN" width="256">はじめて　ここに　きたときと
+ジムバッジを　てにしたあとの[BE:01:ページ切り替え（クリア）]
+みなさんの　ひょうじょうの　ちがいを
+みくべるのが　すき　なんですよね</language>
+		<language name="JPN_KANJI" width="256">はじめて　ここに来たときと
+ジムバッジを　手にした後の[BE:01:ページ切り替え（クリア）]
+みなさんの　表情の　違いを
+見比べるのが　好きなんですよね</language>
+	</row>
+
+	<row id="msg_c02gym0101_glasses_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・盗難事件の間
+・メッセージ表示後、うろうろさせる？</comment>
+		<language name="JPN" width="256">きいたっすか？　へんな　やつらが
+はくぶつかんに　どかどか　きて……[BE:01:ページ切り替え（クリア）]
+ああ！　ジムバッジ！！
+おめでとうございます！[BE:01:ページ切り替え（クリア）]
+で　はくぶつかん　ですよ！
+ああ　どうしましょう！？</language>
+		<language name="JPN_KANJI" width="256">聞いたっすか？　変な　やつらが
+博物館に　どかどか　きて……[BE:01:ページ切り替え（クリア）]
+ああ！　ジムバッジ！！
+おめでとうございます！[BE:01:ページ切り替え（クリア）]
+で　博物館ですよ！
+ああ　どうしましょう！？</language>
 	</row>
 
 	<row id="msg_c02gym0101_statue_01" back-color="#8080ff,,,,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
