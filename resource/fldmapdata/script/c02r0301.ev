@@ -8,9 +8,7 @@
   .text
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c02r0301.h"
-
-	//【修正（村上くん）】↓これは不要だと思います。
-  .include	"../../../prog/include/poke_tool/monsno_def.h" //鳴き声のインクルードファイル
+  
   //.include  "c02r0301.h"
 
 //--------------------------------------------------------------
@@ -48,19 +46,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c02r0301_talkobj_poke
 
-//↓これ消しておきましょう。読みにくくなります。
-
-/*  
-  _TALK_OBJ_START()
-	_VOICE_PLAY( 1, 0 )
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0301_poke_01 )
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-*/
-
-	//【修正（村上くん）】↓使い方が間違っています。マジックナンバーにならないよう、定義名をつかってください。
-	//コメントでフォローしているのは良いです！ただ、仮の場合は "【仮】" と書いて下さい。Grepかけるときに漏れてしまいます。
-
-	_EASY_TALK_POKEVOICE( 1, msg_c02r0301_poke_01 )	//仮でヒトカゲの鳴き声（1）。
+	_EASY_TALK_POKEVOICE( MONSNO_HUSIGIDANE, msg_c02r0301_poke_01 )	//【仮】フシギダネの鳴き声。
 
 EVENT_END
