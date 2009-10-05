@@ -186,7 +186,8 @@ SRCS  +=    $(SOUNDSRC) \
         poke_tool/gauge_tool.c \
         system/gra_tool.c \
         field/field_comm/field_beacon_message.c \
-        field/field_status.c
+        field/field_status.c \
+				system/pokegra.c
 
 
 #================================================
