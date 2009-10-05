@@ -55,6 +55,31 @@ void BTL_SETUP_Single_Wild( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 
 //=============================================================================================
 /**
+ * ダブル 野生戦
+ *
+ * @param   dst
+ * @param   gameData
+ * @param   partyEnemy
+ * @param   landForm
+ * @param   weather
+ */
+//=============================================================================================
+void BTL_SETUP_Double_Wild( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather )
+{
+  setup_common( dst, gameData, landForm, weather );
+
+  dst->engine = BTL_ENGINE_ALONE;
+  dst->competitor = BTL_COMPETITOR_WILD;
+  dst->rule = BTL_RULE_DOUBLE;
+
+  dst->partyEnemy1 = partyEnemy;
+  dst->trID = TRID_NULL;
+}
+
+
+//=============================================================================================
+/**
  * シングル ゲーム内トレーナー対戦
  *
  * @param   dst

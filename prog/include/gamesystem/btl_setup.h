@@ -21,6 +21,9 @@ extern void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameDat
 extern void BTL_SETUP_Single_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode );
 
+extern void BTL_SETUP_Double_Wild( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
+  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather );
+
 extern void BTL_SETUP_Double_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID );
 
