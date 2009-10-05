@@ -20,9 +20,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 
-//【修正（村上くん）】ラベルを命名規則で統一。
-_EVENT_DATA    ev_c02pc0101_talkobj_girl2
-_EVENT_DATA    ev_c02pc0101_talkobj_backpackerm
+_EVENT_DATA    ev_c02pc0101_girl2_01
+_EVENT_DATA    ev_c02pc0101_backpackerm_01
 _EVENT_DATA_END
 
 
@@ -32,25 +31,20 @@ _EVENT_DATA_END
 //ev_c02pc0101_flag_change:
 //  _END
 
-
-//【修正（村上くん）】↓全部EASY系コマンドでまとめてください。
-
 /**************************************************************/
 /*  C02PC0101 GIRL2の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c02pc0101_talkobj_girl2
-	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02pc0101_girl2_01 )
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+EVENT_START    ev_c02pc0101_girl2_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02pc0101_girl2_01)  
+
 EVENT_END
 
 /**************************************************************/
 /*  C02PC0101 BACKPACKERMの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c02pc0101_talkobj_backpackerm
-	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02pc0101_backpackerm_01 )
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+EVENT_START   ev_c02pc0101_backpackerm_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02pc0101_backpackerm_01) 
+	
 EVENT_END
