@@ -79,6 +79,7 @@ struct _GAMEDATA{
 
   u8 intrude_num;         ///<侵入している時の接続人数
   u8 intrude_my_id;       ///<侵入している自分のNetID
+  FIELD_BEACON_MSG_DATA *fbmData; //フィールドビーコンメッセージデータ
 };
 
 //==============================================================================
@@ -169,6 +170,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   //歩数カウント
   gd->fieldmap_walk_count = 0;
 
+  //上にココの時点で名前が入っていると書いてあったので、初期化に使用。
+  gd->fbmData = FIELD_BEACON_MSG_CreateData( heapID , GAMEDATA_GetMyStatus(gd) );
+
   if(SaveControl_NewDataFlagGet(gd->sv_control_ptr) == FALSE){
   }
 
@@ -180,6 +184,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 //------------------------------------------------------------------
 void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
+  FIELD_BEACON_MSG_DeleteData( gamedata->fbmData );
 	BGM_INFO_DeleteSystem(gamedata->bgm_info_sys);
   GFL_HEAP_FreeMemory(gamedata->bagcursor);
   MMDLSYS_FreeSystem(gamedata->mmdlsys);
@@ -190,6 +195,7 @@ void GAMEDATA_Delete(GAMEDATA * gamedata)
   FIELD_SOUND_Delete( gamedata->field_sound );
   GFL_HEAP_FreeMemory(gamedata);
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 PLAYER_WORK * GAMEDATA_GetPlayerWork(GAMEDATA * gamedata, u32 player_id)
@@ -760,6 +766,21 @@ void GAMEDATA_SetAlwaysNetFlag( GAMEDATA *gamedata, BOOL is_on )
 	NETWORK_SEARCH_MODE mode	= is_on? NETWORK_SEARCH_ON: NETWORK_SEARCH_OFF;
 	CONFIG_SetNetworkSearchMode( gamedata->config, mode );
 }
+
+//==================================================================
+/**
+ * フィールドビーコンメッセージデータ取得
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ *
+ * @retval  
+ */
+//==================================================================
+FIELD_BEACON_MSG_DATA* GAMEDATA_GetFieldBeaconMessageData( GAMEDATA *gamedata )
+{
+  return gamedata->fbmData;
+}
+
 //==============================================================================
 //	ゲームデータが持つ情報を元にセーブ
 //==============================================================================

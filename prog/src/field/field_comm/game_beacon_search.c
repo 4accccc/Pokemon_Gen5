@@ -15,7 +15,7 @@
 #include "field/game_beacon_search.h"
 #include "gamesystem/game_comm.h"
 #include "field/field_comm/field_comm_func.h"
-#include "field_beacon_message.h"
+#include "field/field_beacon_message.h"
 
 
 //==============================================================================
@@ -46,6 +46,8 @@ typedef struct _GAME_BEACON_SYS
   BOOL fatal_err;   ///<TRUE:エラー発生
   GBS_BEACON beacon_send_data;    ///<送信ビーコンデータ
   GBS_TARGET_INFO target_info;    ///<ビーコンで見つけた相手の情報
+  
+  FIELD_BEACON_MSG_SYS *fbmSys;
 }GAME_BEACON_SYS;
 
 
@@ -124,8 +126,11 @@ static const GFLNetInitializeStruct aGFLNetInit = {
 void * GameBeacon_Init(int *seq, void *pwk)
 {
 	GAME_BEACON_SYS_PTR gbs;
+  GAMESYS_WORK *gsys = pwk;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
 	
 	gbs = GFL_HEAP_AllocClearMemory(GFL_HEAP_LOWID(HEAPID_PROC), sizeof(GAME_BEACON_SYS));
+	gbs->fbmSys = FIELD_BEACON_MSG_InitSystem( GAMEDATA_GetFieldBeaconMessageData(gamedata) , GFL_HEAP_LOWID(HEAPID_PROC) );
 	return gbs;
 }
 
@@ -205,6 +210,7 @@ BOOL GameBeacon_ExitWait(int *seq, void *pwk, void *pWork)
   GAME_BEACON_SYS_PTR gbs = pWork;
 
   if(gbs->status == GBS_STATUS_NULL){
+    FIELD_BEACON_MSG_ExitSystem( gbs->fbmSys );
     GFL_HEAP_FreeMemory(gbs);
     return TRUE;
   }
@@ -296,10 +302,9 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
     
     beacon = GameBeacon_BeaconSearch(gbs, &hit_index);
     if(beacon != NULL){
-      FIELD_BEACON_MSG_CheckBeacon( NULL , beacon );
-      if( beacon->beacon_type != GBS_BEACONN_TYPE_MESSAGE ){
-        u8 *mac_address;
+      if( beacon->beacon_type == GBS_BEACONN_TYPE_PLACE ){
         int i;
+        u8 *mac_address;
         
         GFL_STD_MemClear(target, sizeof(GBS_TARGET_INFO));
         target->gsid = beacon->gsid;
@@ -337,14 +342,18 @@ static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_in
   
   for(i = 0; i < SCAN_PARENT_COUNT_MAX; i++){
   	bcon_buff = GFL_NET_GetBeaconData(i);
-  	if(bcon_buff != NULL && bcon_buff->member_num <= bcon_buff->member_max){
-  		OS_TPrintf("ビーコン受信　%d番 gsid = %d\n", i, bcon_buff->gsid);
-  		if(target_index == -1){
-        target_index = i;
-      }
-      else{
-        if(GameBeacon_CompareBeacon(bcon_buff, GFL_NET_GetBeaconData(target_index)) == bcon_buff){
+  	if(bcon_buff != NULL )
+  	{
+      FIELD_BEACON_MSG_CheckBeacon( gbs->fbmSys , bcon_buff , GFL_NET_GetBeaconMacAddress(i) );
+    	if(bcon_buff->member_num <= bcon_buff->member_max){
+    		//OS_TPrintf("ビーコン受信　%d番 gsid = %d\n", i, bcon_buff->gsid);
+    		if(target_index == -1){
           target_index = i;
+        }
+        else{
+          if(GameBeacon_CompareBeacon(bcon_buff, GFL_NET_GetBeaconData(target_index)) == bcon_buff){
+            target_index = i;
+          }
         }
       }
   	}
@@ -371,6 +380,7 @@ static void* GameBeacon_GetBeaconData(void* pWork)
   GAME_BEACON_SYS_PTR gbs = pWork;
   
   GameBeacon_SetBeaconParam(&gbs->beacon_send_data);
+  FIELD_BEACON_MSG_SetBeaconMessage( gbs->fbmSys , &gbs->beacon_send_data );
   return &gbs->beacon_send_data;
 }
 
@@ -388,7 +398,7 @@ static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon)
   beacon->member_num = GFL_NET_GetConnectNum();
   beacon->member_max = 4;
   beacon->error = GFL_NET_SystemGetErrorCode();
-  beacon->beacon_type = GBS_BEACONN_TYPE_MESSAGE;
+  beacon->beacon_type = GBS_BEACONN_TYPE_NONE;
 }
 
 //--------------------------------------------------------------

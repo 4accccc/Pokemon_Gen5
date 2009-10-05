@@ -8,6 +8,7 @@
 //==============================================================================
 #pragma once
 
+#include "buflen.h"
 
 //==============================================================================
 //  型定義
@@ -17,12 +18,15 @@ typedef struct _GAME_BEACON_SYS * GAME_BEACON_SYS_PTR;
 
 enum
 {
+  GBS_BEACONN_TYPE_NONE,
   GBS_BEACONN_TYPE_PLACE,
   GBS_BEACONN_TYPE_MESSAGE,
 
   GBS_BEACONN_TYPE_MAX,
 };
 
+#define BEACON_MESSAGE_DATA_NAME_LENGTH (PERSON_NAME_SIZE+EOM_SIZE)
+#define BEACON_MESSAGE_DATA_WORD_NUM (4)
 
 //==============================================================================
 //  構造体定義
@@ -34,7 +38,22 @@ typedef struct
   u8 member_num;      ///<現在の参加人数
   u8 member_max;      ///<最大人数
   u8 error;           ///<エラー状況
-  u8 beacon_type;     ///<ビーコンの種類
+  u8 beacon_type;     ///<ビーコンの種類 GBS_BEACONN_TYPE
+  union
+  {
+    struct MESSAGE_DATA
+    {
+      u16 word[BEACON_MESSAGE_DATA_WORD_NUM];
+      STRCODE name[BEACON_MESSAGE_DATA_NAME_LENGTH];  //8
+      
+      u8  msgCnt;
+      u8  pad[3];
+    }bmData;
+    struct DUMMY_DATA
+    {
+      u32 data[8];
+    }dummyData;
+  };
 }GBS_BEACON;
 
 
