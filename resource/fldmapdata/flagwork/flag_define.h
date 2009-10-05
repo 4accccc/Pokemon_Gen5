@@ -521,17 +521,17 @@
 
 #define FV_AREA_START                      500 /* 0x01f4  */
 
-#define FV_T01R0102_RIVAL                  500 /* 0x01f4 2009年7月ロム用設定 */
-#define FV_T01R0102_SUPPORT                501 /* 0x01f5 2009年7月ロム用設定 */
-#define FV_T01R0102_BALL00                 502 /* 0x01f6 2009年7月ロム用設定 */
-#define FV_T01R0102_BALL01                 503 /* 0x01f7 2009年7月ロム用設定 */
-#define FV_T01R0102_BALL02                 504 /* 0x01f8 2009年7月ロム用設定 */
-#define FV_T01R0401_HAKASE                 505 /* 0x01f9 2009年7月ロム用設定 */
-#define FV_T01R0401_RIVAL                  506 /* 0x01fa 2009年7月ロム用設定 */
-#define FV_T01R0401_SUPPORT                507 /* 0x01fb 2009年7月ロム用設定 */
-#define FV_R01_HAKASE                      508 /* 0x01fc １番道路の博士 */
-#define FV_R01_RIVAL                       509 /* 0x01fd １番道路のライバル */
-#define FV_R01_SUPPORT                     510 /* 0x01fe １番道路のサポート */
+#define FV_T01R0102_RIVAL                  500 /* 0x01f4 自宅２階：ポケモン入手イベントのライバル */
+#define FV_T01R0102_SUPPORT                501 /* 0x01f5 自宅２階：ポケモン入手イベントのサポート */
+#define FV_T01R0102_BALL00                 502 /* 0x01f6 自宅２階：ポケモン入手イベントのボール１ */
+#define FV_T01R0102_BALL01                 503 /* 0x01f7 自宅２階：ポケモン入手イベントのボール２ */
+#define FV_T01R0102_BALL02                 504 /* 0x01f8 自宅２階：ポケモン入手イベントのボール３ */
+#define FV_T01R0401_HAKASE                 505 /* 0x01f9 カノコタウン研究所：アララギ博士 */
+#define FV_T01R0401_RIVAL                  506 /* 0x01fa カノコタウン研究所：ライバル */
+#define FV_T01R0401_SUPPORT                507 /* 0x01fb カノコタウン研究所：サポート */
+#define FV_R01_HAKASE                      508 /* 0x01fc １番道路：アララギ博士 */
+#define FV_R01_RIVAL                       509 /* 0x01fd １番道路：ライバル */
+#define FV_R01_SUPPORT                     510 /* 0x01fe １番道路：サポート */
 #define FV_T02PC0101_HAKASE                511 /* 0x01ff カラクサタウンＰＣの博士 */
 #define FV_T01R0201_SUPPORT                512 /* 0x0200 サポートの自宅：出発イベントのサポート */
 #define FV_T01_RIVAL                       513 /* 0x0201 研究所前：ストッパーのライバル */
