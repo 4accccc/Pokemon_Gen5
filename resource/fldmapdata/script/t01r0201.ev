@@ -17,14 +17,14 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_t01r0201_middleman1_01
 _EVENT_DATA    ev_t01r0201_middlewoman1_01
-_EVENT_DATA    ev_t01r0201_scene_change_01
+_EVENT_DATA    ev_scene_t01r0201_support_01
 _EVENT_DATA_END
 
 
 /************************************************************/
 /*					SCENE_CHANGE_LABEL						*/
 /************************************************************/
-EVENT_START	ev_t01r0201_scene_change_01
+EVENT_START	ev_scene_t01r0201_support_01
 //初めてサポートの家に入ったとき、出発イベント
 
 	//主人公：前へ歩く
