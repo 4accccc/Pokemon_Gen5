@@ -20,11 +20,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 
-//【修正（村上くん）】ラベルを命名規則で統一。
-//↓のイベントはEASY系コマンドにかえてください。
-
-_EVENT_DATA    ev_c02r0201_talkobj_musician
-_EVENT_DATA    ev_c02r0201_talkobj_babyboy1
+_EVENT_DATA    ev_c02r0201_musician_01
+_EVENT_DATA    ev_c02r0201_babyboy1_01
 _EVENT_DATA_END
 
 
@@ -37,19 +34,17 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C02R0201 MUSICIANの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c02r0201_talkobj_musician
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0201_musician_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START  ev_c02r0201_musician_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0201_musician_01 )  
+	 
 EVENT_END
 
 /**************************************************************/
 /*  C02R0201 BABYBOY1の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c02r0201_talkobj_babyboy1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0201_babyboy1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c02r0201_babyboy1_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0201_babyboy1_01 ) 
+	
 EVENT_END
