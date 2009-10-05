@@ -423,10 +423,10 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_football01_00_01.nsbmd \
 	$(DIR_TEMP)/m_gym0101_00_01.nsbmd \
 	$(DIR_TEMP)/m_gym0601_00_01.nsbmd \
+	$(DIR_TEMP)/C3_00_00.nsbmd	$(DIR_TEMP)/C3_00_00.bhc \
 	$(DIR_TEMP)/C3_00_01.nsbmd	$(DIR_TEMP)/C3_00_01.bhc \
-	$(DIR_TEMP)/C3_00_02.nsbmd	$(DIR_TEMP)/C3_00_02.bhc \
+	$(DIR_TEMP)/C3_01_00.nsbmd	$(DIR_TEMP)/C3_01_00.bhc \
 	$(DIR_TEMP)/C3_01_01.nsbmd	$(DIR_TEMP)/C3_01_01.bhc \
-	$(DIR_TEMP)/C3_01_02.nsbmd	$(DIR_TEMP)/C3_01_02.bhc \
 	$(DIR_TEMP)/h01a_00_00.nsbmd	$(DIR_TEMP)/h01a_00_00.bhc \
 	$(DIR_TEMP)/h01a_00_01.nsbmd	$(DIR_TEMP)/h01a_00_01.bhc \
 	$(DIR_TEMP)/h01a_00_02.nsbmd	$(DIR_TEMP)/h01a_00_02.bhc \

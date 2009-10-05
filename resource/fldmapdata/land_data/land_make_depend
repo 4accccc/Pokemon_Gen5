@@ -3846,6 +3846,23 @@ $(DIR_TEMP)/m_gym0601_00_01.nsbmd: $(DIR_RES)/m_gym0601_00_01.imd
 	@echo create_nsbmd m_gym0601_00_01
 	@$(G3DCVTR) $(DIR_RES)/m_gym0601_00_01.imd -o $(DIR_TEMP)/m_gym0601_00_01.nsbmd
 
+#C3_00_00
+$(DIR_OUTPUT)/C3_00_00.ngpack: $(DIR_TEMP)/C3_00_00.nsbmd $(DIR_TEMP)/C3_00_00.bhc $(DIR_RES)/C3_00_00.3dmd
+	@echo create ngpack C3_00_00
+	@$(BINLINKER) $(DIR_TEMP)/C3_00_00.nsbmd $(DIR_TEMP)/C3_00_00.bhc $(DIR_RES)/C3_00_00.3dmd $(DIR_OUTPUT)/C3_00_00.ngpack BR
+
+$(DIR_TEMP)/C3_00_00.nsbmd: $(DIR_RES)/C3_00_00.imd
+	@echo create_nsbmd C3_00_00
+	@$(G3DCVTR) $(DIR_RES)/C3_00_00.imd -emdl -o $(DIR_TEMP)/C3_00_00.nsbmd
+
+$(DIR_TEMP)/C3_00_00.bhc: $(DIR_RES)/C3_00_00h.imd
+	@echo create_bhc C3_00_00
+	@echo ./$(DIR_RES)/C3_00_00h > heightlist.lst
+	@echo \#END >> heightlist.lst
+	@$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE) > convresult
+	@ruby pad4byte.rb $(DIR_RES)/C3_00_00h.bhc $(DIR_TEMP)/C3_00_00.bhc
+	@rm $(DIR_RES)/C3_00_00h.bhc
+
 #C3_00_01
 $(DIR_OUTPUT)/C3_00_01.ngpack: $(DIR_TEMP)/C3_00_01.nsbmd $(DIR_TEMP)/C3_00_01.bhc $(DIR_RES)/C3_00_01.3dmd
 	@echo create ngpack C3_00_01
@@ -3863,22 +3880,22 @@ $(DIR_TEMP)/C3_00_01.bhc: $(DIR_RES)/C3_00_01h.imd
 	@ruby pad4byte.rb $(DIR_RES)/C3_00_01h.bhc $(DIR_TEMP)/C3_00_01.bhc
 	@rm $(DIR_RES)/C3_00_01h.bhc
 
-#C3_00_02
-$(DIR_OUTPUT)/C3_00_02.ngpack: $(DIR_TEMP)/C3_00_02.nsbmd $(DIR_TEMP)/C3_00_02.bhc $(DIR_RES)/C3_00_02.3dmd
-	@echo create ngpack C3_00_02
-	@$(BINLINKER) $(DIR_TEMP)/C3_00_02.nsbmd $(DIR_TEMP)/C3_00_02.bhc $(DIR_RES)/C3_00_02.3dmd $(DIR_OUTPUT)/C3_00_02.ngpack BR
+#C3_01_00
+$(DIR_OUTPUT)/C3_01_00.ngpack: $(DIR_TEMP)/C3_01_00.nsbmd $(DIR_TEMP)/C3_01_00.bhc $(DIR_RES)/C3_01_00.3dmd
+	@echo create ngpack C3_01_00
+	@$(BINLINKER) $(DIR_TEMP)/C3_01_00.nsbmd $(DIR_TEMP)/C3_01_00.bhc $(DIR_RES)/C3_01_00.3dmd $(DIR_OUTPUT)/C3_01_00.ngpack BR
 
-$(DIR_TEMP)/C3_00_02.nsbmd: $(DIR_RES)/C3_00_02.imd
-	@echo create_nsbmd C3_00_02
-	@$(G3DCVTR) $(DIR_RES)/C3_00_02.imd -emdl -o $(DIR_TEMP)/C3_00_02.nsbmd
+$(DIR_TEMP)/C3_01_00.nsbmd: $(DIR_RES)/C3_01_00.imd
+	@echo create_nsbmd C3_01_00
+	@$(G3DCVTR) $(DIR_RES)/C3_01_00.imd -emdl -o $(DIR_TEMP)/C3_01_00.nsbmd
 
-$(DIR_TEMP)/C3_00_02.bhc: $(DIR_RES)/C3_00_02h.imd
-	@echo create_bhc C3_00_02
-	@echo ./$(DIR_RES)/C3_00_02h > heightlist.lst
+$(DIR_TEMP)/C3_01_00.bhc: $(DIR_RES)/C3_01_00h.imd
+	@echo create_bhc C3_01_00
+	@echo ./$(DIR_RES)/C3_01_00h > heightlist.lst
 	@echo \#END >> heightlist.lst
 	@$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE) > convresult
-	@ruby pad4byte.rb $(DIR_RES)/C3_00_02h.bhc $(DIR_TEMP)/C3_00_02.bhc
-	@rm $(DIR_RES)/C3_00_02h.bhc
+	@ruby pad4byte.rb $(DIR_RES)/C3_01_00h.bhc $(DIR_TEMP)/C3_01_00.bhc
+	@rm $(DIR_RES)/C3_01_00h.bhc
 
 #C3_01_01
 $(DIR_OUTPUT)/C3_01_01.ngpack: $(DIR_TEMP)/C3_01_01.nsbmd $(DIR_TEMP)/C3_01_01.bhc $(DIR_RES)/C3_01_01.3dmd
@@ -3896,23 +3913,6 @@ $(DIR_TEMP)/C3_01_01.bhc: $(DIR_RES)/C3_01_01h.imd
 	@$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE) > convresult
 	@ruby pad4byte.rb $(DIR_RES)/C3_01_01h.bhc $(DIR_TEMP)/C3_01_01.bhc
 	@rm $(DIR_RES)/C3_01_01h.bhc
-
-#C3_01_02
-$(DIR_OUTPUT)/C3_01_02.ngpack: $(DIR_TEMP)/C3_01_02.nsbmd $(DIR_TEMP)/C3_01_02.bhc $(DIR_RES)/C3_01_02.3dmd
-	@echo create ngpack C3_01_02
-	@$(BINLINKER) $(DIR_TEMP)/C3_01_02.nsbmd $(DIR_TEMP)/C3_01_02.bhc $(DIR_RES)/C3_01_02.3dmd $(DIR_OUTPUT)/C3_01_02.ngpack BR
-
-$(DIR_TEMP)/C3_01_02.nsbmd: $(DIR_RES)/C3_01_02.imd
-	@echo create_nsbmd C3_01_02
-	@$(G3DCVTR) $(DIR_RES)/C3_01_02.imd -emdl -o $(DIR_TEMP)/C3_01_02.nsbmd
-
-$(DIR_TEMP)/C3_01_02.bhc: $(DIR_RES)/C3_01_02h.imd
-	@echo create_bhc C3_01_02
-	@echo ./$(DIR_RES)/C3_01_02h > heightlist.lst
-	@echo \#END >> heightlist.lst
-	@$(HEIGHTCNV) heightlist.lst < $(HEIGHTRETFILE) > convresult
-	@ruby pad4byte.rb $(DIR_RES)/C3_01_02h.bhc $(DIR_TEMP)/C3_01_02.bhc
-	@rm $(DIR_RES)/C3_01_02h.bhc
 
 #h01a_00_00
 $(DIR_OUTPUT)/h01a_00_00.ngpack: $(DIR_TEMP)/h01a_00_00.nsbmd $(DIR_TEMP)/h01a_00_00.bhc $(DIR_RES)/h01a_00_00.3dmd

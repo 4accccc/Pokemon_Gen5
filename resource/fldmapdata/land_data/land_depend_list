@@ -423,10 +423,10 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_football01_00_01.3dppack \
 	$(DIR_OUTPUT)/m_gym0101_00_01.3dppack \
 	$(DIR_OUTPUT)/m_gym0601_00_01.3dppack \
+	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
-	$(DIR_OUTPUT)/C3_00_02.ngpack \
+	$(DIR_OUTPUT)/C3_01_00.ngpack \
 	$(DIR_OUTPUT)/C3_01_01.ngpack \
-	$(DIR_OUTPUT)/C3_01_02.ngpack \
 	$(DIR_OUTPUT)/h01a_00_00.ngpack \
 	$(DIR_OUTPUT)/h01a_00_01.ngpack \
 	$(DIR_OUTPUT)/h01a_00_02.ngpack \

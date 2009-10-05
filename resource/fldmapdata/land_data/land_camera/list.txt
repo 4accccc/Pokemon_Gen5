@@ -149,3 +149,5 @@
 "GATE03.bin"
 "GATE04.bin"
 "GATE05.bin"
+"c03.bin"
+"H01A.bin"
