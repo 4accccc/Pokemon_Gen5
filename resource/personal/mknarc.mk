@@ -16,6 +16,7 @@ USERS	=	sogabe niishino
 PERSONAL	= personal.narc
 WOTBL			= wotbl.narc
 EVOTBL		= evo.narc
+PMSTBL		= pms.narc
 GROWTBL		= growtbl.narc
 
 #------------------------------------------------------------------------------
@@ -33,6 +34,7 @@ WOTFILES:=$(wildcard wot_*.s)
 EVOFILES:=$(wildcard evo_*.s)
 
 ELF2BIN = ../../tools/elf2bin.exe
+PMSEED = ../../tools/personal_conv/pmseed.exe
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
@@ -81,6 +83,8 @@ wotbl.narc: $(WOTFILES:.s=.bin)
 	nnsarc -c -l -n wotbl.narc wot_*.bin
 evo.narc: $(EVOFILES:.s=.bin)
 	nnsarc -c -l -n evo.narc evo_*.bin
+	$(PMSEED)
+
 
 #進化テーブルデータ生成
 #do-build: evo.narc
@@ -93,7 +97,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)$(PERSONAL) $(TARGETDIR)$(WOTBL) $(TARGETDIR)$(EVOTBL) $(TARGETDIR)$(GROWTBL)
+do-build:	$(TARGETDIR)$(PERSONAL) $(TARGETDIR)$(WOTBL) $(TARGETDIR)$(EVOTBL) $(TARGETDIR)$(PMSTBL) $(TARGETDIR)$(GROWTBL)
 
 $(TARGETDIR)$(PERSONAL):	$(PERSONAL)
 	$(COPY)	$(PERSONAL) $(TARGETDIR)
@@ -103,6 +107,9 @@ $(TARGETDIR)$(WOTBL):	$(WOTBL)
 
 $(TARGETDIR)$(EVOTBL):	$(EVOTBL)
 	$(COPY)	$(EVOTBL) $(TARGETDIR)
+
+$(TARGETDIR)$(PMSTBL):	$(PMSTBL)
+	$(COPY)	$(PMSTBL) $(TARGETDIR)
 
 $(TARGETDIR)$(GROWTBL):	$(GROWTBL)
 	$(COPY)	$(GROWTBL) $(TARGETDIR)
@@ -115,9 +122,11 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f $(PERSONAL)
 	-rm -f $(WOTBL)
 	-rm -f $(EVOTBL)
+	-rm -f $(PMSTBL)
 	-rm -f *.bin
 endif
 	-rm -f $(TARGETDIR)$(PERSONAL)
 	-rm -f $(TARGETDIR)$(WOTBL)
 	-rm -f $(TARGETDIR)$(EVOTBL)
+	-rm -f $(TARGETDIR)$(PMSTBL)
 
