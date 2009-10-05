@@ -61,6 +61,8 @@ typedef enum {
   POKEPER_ID_pltt_only,       //別フォルム時パレットのみ変化
   POKEPER_ID_rank,            //ポケモンランク
   POKEPER_ID_padding,         //パディング
+  POKEPER_ID_height,          //高さ
+  POKEPER_ID_weight,          //重さ
 
   POKEPER_ID_machine1,        //技マシンフラグ１
   POKEPER_ID_machine2,        //技マシンフラグ２
@@ -84,6 +86,23 @@ typedef enum {
   POKEPER_COLOR_PINK,     //桃
 }PokePersonal_Color;
 
+/*
+１：怪獣
+２：水棲
+３：虫
+４：鳥
+５：動物
+６：妖精
+７：植物
+８：人型
+９：甲殻
+10：無機物
+11：不定形
+12：魚
+13：メタモン
+14：ドラゴン
+15：無生殖
+*/
 
 //--------------------------------------------------------------
 /**
