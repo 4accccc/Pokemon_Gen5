@@ -447,6 +447,7 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 
 #ifdef UI_TEMPLATE_POKE_ICON
+  // ポケアイコンの読み込み
   {
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
     UITemplate_POKE_ICON_CreateCLWK( wk, MONSNO_HUSIGIDANE, 0, FALSE, clunit, wk->heap_id );
@@ -1150,10 +1151,14 @@ static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons
     
     UITemplate_OBJ_LoadResource( &wk->clres_poke_icon, &prm, unit, heap_id );
 
-    wk->clwk_poke_icon = UITemplate_OBJ_CreateCLWK( &wk->clres_poke_icon, unit, 48, 32, 0, heap_id );
+    // アニメシーケンスで指定( 0=瀕死, 1=HP最大, 2=HP緑, 3=HP黄, 4=HP赤, 5=状態異常 )
+    wk->clwk_poke_icon = UITemplate_OBJ_CreateCLWK( &wk->clres_poke_icon, unit, 48, 32, 1, heap_id );
 
     // 上にアイテムアイコンを描画するので優先度を下げておく
     GFL_CLACT_WK_SetSoftPri( wk->clwk_poke_icon, 1 );
+
+    // オートアニメ ON
+    GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk_poke_icon, TRUE );
 
     {
       u8 pal_num = POKEICON_GetPalNum( mons, form_no, egg );
@@ -1177,7 +1182,8 @@ static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons
     UITemplate_OBJ_LoadResource( &wk->clres_poke_item, &prm, unit, heap_id );
 
     // アニメシーケンスで指定( 0=どうぐ, 1=メール, 2=ボール )
-    wk->clwk_poke_item = UITemplate_OBJ_CreateCLWK( &wk->clres_poke_item, unit, 48+2, 32+1, 2, heap_id );
+    // ※位置調整はとりあえずの値です。
+    wk->clwk_poke_item = UITemplate_OBJ_CreateCLWK( &wk->clres_poke_item, unit, 48+1*8+4, 32+4, 2, heap_id );
   }
 
 }
