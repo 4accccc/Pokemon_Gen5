@@ -16,12 +16,14 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 
-//【修正（村上くん）】ラベルを命名規則で統一してください。
 //【修正（村上くん）】看板のイベントが未作成のようです。
 _EVENT_DATA    ev_pos_r02_rival_01
-_EVENT_DATA    ev_r02_talkobj_mama
-_EVENT_DATA    ev_r02_talkobj_boy2
-_EVENT_DATA    ev_r02_talkobj_girl2
+_EVENT_DATA    ev_r02_mama_01
+_EVENT_DATA    ev_r02_boy2_01
+_EVENT_DATA    ev_r02_girl2_01
+_EVENT_DATA	   ev_bg_r02_board_01
+_EVENT_DATA	   ev_bg_r02_board_02
+
 _EVENT_DATA_END
 
 
@@ -59,8 +61,8 @@ EVENT_START   ev_pos_r02_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：ウェイトを持たせる
-	//【修正（村上くん）】ウェイトは専用のコマンドがあります。_TIME_WAIT( time ) です。使い方はいつもの方法でチェックするのだ！
-	_OBJ_ANIME( R02_RIVAL_01,anm_16wait)
+	
+	_TIME_WAIT  ( 16 ) 
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル草むらを向く
@@ -68,7 +70,7 @@ EVENT_START   ev_pos_r02_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：ウェイトを持たせる
-	_OBJ_ANIME( R02_RIVAL_01,anm_16wait)
+	_TIME_WAIT  ( 16 )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：メッセージ
@@ -76,7 +78,7 @@ EVENT_START   ev_pos_r02_rival_01
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル：ウェイトを持たせる
-	_OBJ_ANIME( R02_RIVAL_01,anm_16wait)
+	_TIME_WAIT  ( 16 )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：主人公を向く
@@ -88,7 +90,7 @@ EVENT_START   ev_pos_r02_rival_01
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル：ウェイトを持たせる
-	_OBJ_ANIME( R02_RIVAL_01,anm_16wait)
+	_TIME_WAIT  ( 16 )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：去る
@@ -98,17 +100,14 @@ EVENT_START   ev_pos_r02_rival_01
 	//ライバル：消す
 	_OBJ_DEL( R02_RIVAL_01 )		//ライバルのOBJをその場で消す
 
-	//【修正（村上くん）】ナイスコメント！分かりやすくてとても良いですが、フラグ操作とワーク操作はまとめちゃってＯＫです。
-	//"フラグワーク操作"のコメントの間で、フラグとワークの値変更を行ってください。
-
-	//=================フラグ操作=================//
+	//==============フラグワーク操作==============//
+	
 	//T02にライバルが出現する
 	_FLAG_RESET  ( FV_T02PC0101_RIVAL )  
-	//============================================//
 	
-	//==============フラグワーク操作==============//
 	//R02のライバルの長い草イベントを無効にする
 	$WK_SCENE_R02 = 1
+	
 	//============================================//
 
 EVENT_END
@@ -117,13 +116,6 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_bikkuri_mark
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//ライバル:ウェイト16待つ                            
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_16wait
-	_ANIME_DATA	AC_WAIT_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -160,34 +152,55 @@ _ANIME_LABEL	anm_rival_saru
 /**************************************************************/
 /*  R02 ママのイベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_r02_talkobj_mama
+EVENT_START   ev_r02_mama_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r02_mama_01)
+/*
 	_TALK_OBJ_START()
 	_BALLOONWIN_TALKOBJ_OPEN( msg_r02_mama_01 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
+*/
 EVENT_END
 
 
-//【修正（村上くん）】↓２つのイベントは、EASY系コマンドで１行にまとめてください。
+
 /**************************************************************/
 /*  R02 BOY2の会話イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_r02_talkobj_boy2
-	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r02_boy2_01 )
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+EVENT_START   ev_r02_boy2_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r02_boy2_01) 
+	
 EVENT_END
 
 /**************************************************************/
 /*  R02 GIRL2の会話のイベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_r02_talkobj_girl2
-	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r02_girl2_01 )
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+EVENT_START   ev_r02_girl2_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r02_girl2_01) 
+
 EVENT_END
+
+/**************************************************************/
+/*  R02 看板1のイベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_bg_r02_board_01
+
+	_EASY_MSG(msg_r02_sign1_01) //看板1:2番道路
+
+EVENT_END
+
+/**************************************************************/
+/*  R02 看板2のイベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_bg_r02_board_02
+
+	_EASY_MSG(msg_r02_sign2_01) //看板2:2番道路
+
+EVENT_END
+
 
 
 
