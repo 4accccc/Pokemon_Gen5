@@ -28,6 +28,7 @@
 #include "gamesystem/game_data.h"       //MAP_MATRIX
 #include "field/field_sound_proc.h"
 #include "sound/bgm_info.h"
+#include "field/field_status.h"
 
 //============================================================================================
 //============================================================================================
@@ -36,12 +37,6 @@ enum {
 	
 	PLAYER_ID_MINE = PLAYER_MAX - 1,    ///<自分自身のプレイヤーID
 };
-
-///マップモード
-typedef enum{
-  MAPMODE_NORMAL,     ///<通常状態
-  MAPMODE_INTRUDE,    ///<侵入中
-}MAPMODE;
 
 //============================================================================================
 //============================================================================================
@@ -400,24 +395,12 @@ extern FIELD_SOUND * GAMEDATA_GetFieldSound( GAMEDATA *gamedata );
 
 //==================================================================
 /**
- * マップモード設定
- *
+ * @brief
  * @param   gamedata		GAMEDATAへのポインタ
- * @param   map_mode		マップモード
+ * @return  FIELD_STATUS
  */
 //==================================================================
-extern void GAMEDATA_SetMapMode(GAMEDATA *gamedata, MAPMODE map_mode);
-
-//==================================================================
-/**
- * マップモード取得
- *
- * @param   gamedata		GAMEDATAへのポインタ
- *
- * @retval  MAPMODE		マップモード
- */
-//==================================================================
-extern MAPMODE GAMEDATA_GetMapMode(const GAMEDATA *gamedata);
+extern FIELD_STATUS * GAMEDATA_GetFieldStatus(GAMEDATA * gamedata);
 
 //==================================================================
 /**
