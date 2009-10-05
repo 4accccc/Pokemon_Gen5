@@ -321,7 +321,7 @@ static const int initNoData[NOIDX_MAX] = {
 	0,					//NOIDX_SEPITCH
 };
 
-#define NAMEMSG_STARTIDX_BGM	(msg_seq_dummy)
+#define NAMEMSG_STARTIDX_BGM	(msg_seq_bgm_dummy)
 #define NAMEMSG_STARTIDX_SE		(msg_seq_se_dummy)
 #define NAMEMSG_STARTIDX_VOICE	(msg_seq_pv)
 
