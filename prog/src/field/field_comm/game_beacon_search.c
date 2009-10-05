@@ -15,6 +15,7 @@
 #include "field/game_beacon_search.h"
 #include "gamesystem/game_comm.h"
 #include "field/field_comm/field_comm_func.h"
+#include "field_beacon_message.h"
 
 
 //==============================================================================
@@ -101,7 +102,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
 	4,//_BCON_GET_NUM,  // 最大ビーコン収集数
 	TRUE,		// CRC計算
 	FALSE,		// MP通信＝親子型通信モードかどうか
-	GFL_NET_TYPE_WIRELESS_SCANONLY,		//通信タイプの指定
+	GFL_NET_TYPE_WIRELESS,		//通信タイプの指定
 	TRUE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
 	WB_NET_FIELDMOVE_SERVICEID,	//GameServiceID
 #if GFL_NET_IRC
@@ -284,7 +285,7 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
     return NULL;
   }
   if(gbs->status == GBS_STATUS_INIT){
-    GFL_NET_StartBeaconScan();
+    GFL_NET_Changeover(NULL);
     gbs->status = GBS_STATUS_UPDATE;
     return NULL;
   }
@@ -295,16 +296,19 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
     
     beacon = GameBeacon_BeaconSearch(gbs, &hit_index);
     if(beacon != NULL){
-      u8 *mac_address;
-      int i;
-      
-      GFL_STD_MemClear(target, sizeof(GBS_TARGET_INFO));
-      target->gsid = beacon->gsid;
-      target->member_num = beacon->member_num;
-      target->member_max = beacon->member_max;
-      mac_address = GFL_NET_GetBeaconMacAddress(hit_index);
-      for(i = 0; i < 6; i++){
-        target->macAddress[i] = mac_address[i];
+      FIELD_BEACON_MSG_CheckBeacon( NULL , beacon );
+      if( beacon->beacon_type != GBS_BEACONN_TYPE_MESSAGE ){
+        u8 *mac_address;
+        int i;
+        
+        GFL_STD_MemClear(target, sizeof(GBS_TARGET_INFO));
+        target->gsid = beacon->gsid;
+        target->member_num = beacon->member_num;
+        target->member_max = beacon->member_max;
+        mac_address = GFL_NET_GetBeaconMacAddress(hit_index);
+        for(i = 0; i < 6; i++){
+          target->macAddress[i] = mac_address[i];
+        }
       }
     }
   }
@@ -384,6 +388,7 @@ static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon)
   beacon->member_num = GFL_NET_GetConnectNum();
   beacon->member_max = 4;
   beacon->error = GFL_NET_SystemGetErrorCode();
+  beacon->beacon_type = GBS_BEACONN_TYPE_MESSAGE;
 }
 
 //--------------------------------------------------------------

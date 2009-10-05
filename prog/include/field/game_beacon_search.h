@@ -15,6 +15,14 @@
 ///ゲーム通信管理ワークの不定形ポインタ
 typedef struct _GAME_BEACON_SYS * GAME_BEACON_SYS_PTR;
 
+enum
+{
+  GBS_BEACONN_TYPE_PLACE,
+  GBS_BEACONN_TYPE_MESSAGE,
+
+  GBS_BEACONN_TYPE_MAX,
+};
+
 
 //==============================================================================
 //  構造体定義
@@ -26,7 +34,7 @@ typedef struct
   u8 member_num;      ///<現在の参加人数
   u8 member_max;      ///<最大人数
   u8 error;           ///<エラー状況
-  u8 padding;
+  u8 beacon_type;     ///<ビーコンの種類
 }GBS_BEACON;
 
 

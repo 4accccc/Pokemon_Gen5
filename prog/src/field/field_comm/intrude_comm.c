@@ -391,6 +391,7 @@ static void IntrudeComm_CreateBeaconData(GBS_BEACON *beacon)
   beacon->member_num = GFL_NET_GetConnectNum();
   beacon->member_max = FIELD_COMM_MEMBER_MAX;
   beacon->error = GFL_NET_SystemGetErrorCode();
+  beacon->beacon_type = GBS_BEACONN_TYPE_PLACE;
 }
 
 //--------------------------------------------------------------
