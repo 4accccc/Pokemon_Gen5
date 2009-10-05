@@ -22,7 +22,6 @@
 #include "field/rail_location.h"  //RAIL_LOCATION
 #include "field/eventdata_sxy.h"
 #include "field/fldmmdl.h"
-#include "field/field_status_local.h" //FIELD_STATUS
 
 #include "event_fieldmap_control.h"
 #include "event_mapchange.h"
@@ -808,8 +807,7 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
 
   //※check　スクリプトでマップ作成前に実行できるタイミングが出来れば、そこ行うようにしたい
   if(loc_req->zone_id == ZONE_ID_PALACETEST){
-    FIELD_STATUS_SetMapMode( GAMEDATA_GetFieldStatus( gamedata ), MAPMODE_INTRUDE );
-    //GAMEDATA_SetMapMode(gamedata, MAPMODE_INTRUDE);
+    GAMEDATA_SetMapMode(gamedata, MAPMODE_INTRUDE);
   }
   //※check　ユニオンルームへの移動を受付スクリプトで制御するようになったらサブスクリーンモードの
   //         変更もそのスクリプト内で行うようにする

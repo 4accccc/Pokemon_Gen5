@@ -35,7 +35,6 @@
 #include "field/field_rail_loader.h"    //FIELD_RAIL_LOADER
 #include "sound/bgm_info.h"
 #include "field/map_matrix.h"     //MAP_MATRIX
-#include "field/field_status.h"   //FIELD_STATUS
 
 //============================================================================================
 //============================================================================================
@@ -68,15 +67,13 @@ struct _GAMEDATA{
   
   FIELD_SOUND *field_sound; ///<フィールドサウンド管理
 
-  FIELD_STATUS * fldstatus;  ///<フィールドマップ情報
-
   int fieldmap_walk_count; ///<フィールドマップ歩数カウント
   u8 season_id;				///<季節指定ID
   u8 subscreen_mode; ///< フィールド下画面の状態
   u8 subscreen_type;
   u8 frameSpritcount;    ///< フレーム分割動作で動作する場合のカウント
   u8 frameSpritEnable;   ///< フレーム分割動作で動作する場合の許可
-
+  u8 map_mode;            ///<マップモード(MAPMODE)
   u8 intrude_num;         ///<侵入している時の接続人数
   u8 intrude_my_id;       ///<侵入している自分のNetID
 };
@@ -159,8 +156,6 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   //フィールドサウンド管理
   gd->field_sound = FIELD_SOUND_Create( heapID );
 
-  gd->fldstatus = FIELD_STATUS_Create( heapID );
-
   gd->bagcursor = MYITEM_BagCursorAlloc( heapID );
   gd->myitem = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYITEM);
   gd->my_pokeparty = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYPOKE);
@@ -186,7 +181,6 @@ void GAMEDATA_Delete(GAMEDATA * gamedata)
 	FIELD_RAIL_LOADER_Delete( gamedata->railLoader );
   MAP_MATRIX_Delete( gamedata->mapMatrix );
   EVENTDATA_SYS_Delete(gamedata->evdata);
-  FIELD_STATUS_Delete( gamedata->fldstatus );
   FIELD_SOUND_Delete( gamedata->field_sound );
   GFL_HEAP_FreeMemory(gamedata);
 }
@@ -696,14 +690,29 @@ void PLAYERWORK_SetMoveForm( PLAYER_WORK *player, PLAYER_MOVE_FORM form )
 
 //==================================================================
 /**
- * @brief   FIELD_STATUSの取得
+ * マップモード設定
+ *
  * @param   gamedata		GAMEDATAへのポインタ
- * @return  FIELD_STATUS
+ * @param   map_mode		マップモード
  */
 //==================================================================
-FIELD_STATUS * GAMEDATA_GetFieldStatus(GAMEDATA * gamedata)
+void GAMEDATA_SetMapMode(GAMEDATA *gamedata, MAPMODE map_mode)
 {
-  return gamedata->fldstatus;
+  gamedata->map_mode = map_mode;
+}
+
+//==================================================================
+/**
+ * マップモード取得
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ *
+ * @retval  MAPMODE		マップモード
+ */
+//==================================================================
+MAPMODE GAMEDATA_GetMapMode(const GAMEDATA *gamedata)
+{
+  return gamedata->map_mode;
 }
 
 //==================================================================

@@ -184,7 +184,9 @@ SRCS  +=    $(SOUNDSRC) \
         system/bgwinfrm.c \
         field/scrcmd_gym_init.c \
         poke_tool/gauge_tool.c \
-        system/gra_tool.c
+        system/gra_tool.c \
+        field/field_comm/field_beacon_message.c
+
 
 #================================================
 # ここから下はオーバーレイプログラム定義
