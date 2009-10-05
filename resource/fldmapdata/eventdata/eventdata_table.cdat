@@ -2798,8 +2798,8 @@
 #define T01R0102_BALL2                     0
 #define T01R0102_BALL3                     1
 #define T01R0102_BALL1                     2
-#define T01R0102_RIVAL                     3
-#define T01R0102_HEROINE                   4
+#define T01R0102_RIVAL_01                  3
+#define T01R0102_SUPPORT_01                4
 
 #endif //ZONE_T01R0102_EVC_H
 //#include "tmp/t01r0201.h"
@@ -12951,37 +12951,37 @@ const FLDMMDL_HEADER OBJ_EVENT_T01R0102[] = {
 		FX32_CONST(0),
 	},
 	{
-		T01R0102_RIVAL,
+		T01R0102_RIVAL_01,
 		RIVEL,
-		MV_LEFT,
+		MV_DMY,
 		EV_TYPE_NORMAL,
 		FV_T01R0102_RIVAL,
-		SCRID_T01R0102_BLACK_TEST01,
-		DIR_LEFT,
+		SCRID_T01R0102_RIVAL_01,
+		DIR_DOWN,
 		0,
 		0,
 		0,
 		0,
 		0,
-		8,
-		2,
+		5,
+		4,
 		FX32_CONST(0),
 	},
 	{
-		T01R0102_HEROINE,
-		HEROINE,
+		T01R0102_SUPPORT_01,
+		SUPPORT,
 		MV_LEFT,
 		EV_TYPE_NORMAL,
 		FV_T01R0102_SUPPORT,
-		SCRID_T01R0102_WHITE_TEST01,
+		SCRID_T01R0102_SUPPORT_01,
 		DIR_LEFT,
 		0,
 		0,
 		0,
 		0,
 		0,
-		6,
-		6,
+		9,
+		2,
 		FX32_CONST(0),
 	},
 };
@@ -13045,16 +13045,27 @@ const BG_TALK_DATA BG_EVENT_T01R0102[] = {
 	},
 };
 const int BgCount_T01R0102 = NELEMS(BG_EVENT_T01R0102);
+const POS_EVENT_DATA POS_EVENT_T01R0102[] = {
+	{//POS_T01R0102_STOPPER = 0
+		SCRID_POS_T01R0102_STOPPER,
+		8, 2,
+		1, 1,
+		0,  //height
+		1,
+		WK_SCENE_T01R0102,
+	},
+};
+const int PosCount_T01R0102 = NELEMS(POS_EVENT_T01R0102);
 
 static const EVENTDATA_TABLE event_t01r0102 = {
 	8,
 	5,
 	1,
-	0,
+	1,
 	(void *)&BG_EVENT_T01R0102,
 	(void *)&OBJ_EVENT_T01R0102,
 	(void *)&DOOR_EVENT_T01R0102,
-	(void *)NULL,
+	(void *)&POS_EVENT_T01R0102,
 };
 #include "../script/t01r0201_def.h"
 const CONNECT_DATA DOOR_EVENT_T01R0201[] = {
