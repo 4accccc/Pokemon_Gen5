@@ -170,7 +170,7 @@ typedef struct {
   u32 cell_id;  ///< セルリソースNO
   u32 anm_id;   ///< セルアニメリソースNO
   u8 pltt_line; ///< パレット転送先NO
-  u8 padding[1];
+  u8 padding[3];
 } CLWK_RES_PARAM;
 
 //--------------------------------------------------------------
