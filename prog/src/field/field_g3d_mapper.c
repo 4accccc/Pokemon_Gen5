@@ -22,6 +22,7 @@
 #include "fieldmap_resist.h"
 #include "field_g3dmap_exwork.h"
 #include "field_ground_anime.h"
+#include "field/field_status_local.h" //FIELD_STATUS
 
 #include "system/g3d_tool.h"
 
@@ -603,7 +604,8 @@ BOOL DEBUG_Field_Grayscale(GFL_G3D_RES *g3Dres)
   GAMEDATA *gamedata;
   
   gamedata = GAMESYSTEM_GetGameData(DEBUG_GameSysWorkPtrGet());
-  if(GAMEDATA_GetMapMode( gamedata ) != MAPMODE_INTRUDE){
+  //if(GAMEDATA_GetMapMode( gamedata ) != MAPMODE_INTRUDE){
+  if (FIELD_STATUS_GetMapMode( GAMEDATA_GetFieldStatus( gamedata) ) != MAPMODE_INTRUDE ) {
     return FALSE;
   }
   game_comm = GAMESYSTEM_GetGameCommSysPtr( DEBUG_GameSysWorkPtrGet() );
