@@ -144,7 +144,7 @@ static void TouchYesNoStart( TOUCH_SW_SYS* touch_sub_window_sys )
 //--------------------------------------------------------------
 //	ポケモンMCSS作成
 //--------------------------------------------------------------
-static void PSTATUS_SUB_PokeCreateMcss( IRC_POKEMON_TRADE *pWork ,int no, const POKEMON_PASO_PARAM *ppp )
+void IRCPOKETRADE_PokeCreateMcss( IRC_POKEMON_TRADE *pWork ,int no, int bFront, const POKEMON_PASO_PARAM *ppp )
 {
   MCSS_ADD_WORK addWork;
   VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
@@ -152,20 +152,20 @@ static void PSTATUS_SUB_PokeCreateMcss( IRC_POKEMON_TRADE *pWork ,int no, const 
 
   GF_ASSERT( pWork->pokeMcss[no] == NULL );
 
-  if(no==0){
+  if(bFront){
     MCSS_TOOL_MakeMAWPPP( ppp , &addWork , MCSS_DIR_FRONT );
   }
   else{
     MCSS_TOOL_MakeMAWPPP( ppp , &addWork , MCSS_DIR_BACK );
   }
-  pWork->pokeMcss[no] = MCSS_Add( pWork->mcssSys , xpos[no] , PSTATUS_MCSS_POS_Y ,0 , &addWork );
+  pWork->pokeMcss[no] = MCSS_Add( pWork->mcssSys , xpos[no] , PSTATUS_MCSS_POS_Y , 1000 , &addWork );
   MCSS_SetScale( pWork->pokeMcss[no] , &scale );
 }
 
 //--------------------------------------------------------------
 //	ポケモンMCSS削除
 //--------------------------------------------------------------
-static void PSTATUS_SUB_PokeDeleteMcss( IRC_POKEMON_TRADE *pWork,int no  )
+void IRCPOKETRADE_PokeDeleteMcss( IRC_POKEMON_TRADE *pWork,int no  )
 {
   if( pWork->pokeMcss[no] == NULL ){
     return;
@@ -234,9 +234,10 @@ static void _setPokemonStatusMessage(IRC_POKEMON_TRADE *pWork, int side,const PO
 //--------------------------------------------------------------
 static void _Pokemonset(IRC_POKEMON_TRADE *pWork, int side, const POKEMON_PASO_PARAM* ppp )
 {
-  PSTATUS_SUB_PokeDeleteMcss(pWork, side);
-  PSTATUS_SUB_PokeCreateMcss(pWork, side, ppp );
+  IRCPOKETRADE_PokeDeleteMcss(pWork, side);
 
+  IRCPOKETRADE_PokeCreateMcss(pWork, side, 1-side, ppp);
+  
   pWork->bPokemonSet[side]=TRUE;
 
   _setPokemonStatusMessage(pWork,side ,ppp);
@@ -770,8 +771,8 @@ void IRC_POKMEONTRADE_ChangeFinish(IRC_POKEMON_TRADE* pWork)
   pWork->selectBoxno = 0;
   pWork->selectIndex = -1;
   pWork->pCatchCLWK = NULL;
-  PSTATUS_SUB_PokeDeleteMcss(pWork, 0);
-  PSTATUS_SUB_PokeDeleteMcss(pWork, 1);
+  IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
+  IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
 
   {
     int i;
@@ -924,10 +925,10 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
         if(pWork->touckON){
           pWork->BoxScrollNum -= (x - pWork->x)*2;
           if(0 > pWork->BoxScrollNum){
-            pWork->BoxScrollNum+=2976;
+            pWork->BoxScrollNum+=TOTAL_DOT_MAX;
           }
-          if(2976 <= pWork->BoxScrollNum){
-            pWork->BoxScrollNum-=2976;
+          if(TOTAL_DOT_MAX <= pWork->BoxScrollNum){
+            pWork->BoxScrollNum-=TOTAL_DOT_MAX;
           }
           IRC_POKETRADE_TrayDisp(pWork);
           IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
@@ -1061,7 +1062,7 @@ static void _dispInit(IRC_POKEMON_TRADE* pWork)
 
 #if 1
   pWork->mcssSys = MCSS_Init( 2 , pWork->heapID );
-  MCSS_SetTextureTransAdrs( pWork->mcssSys , 0x10000 );
+  MCSS_SetTextureTransAdrs( pWork->mcssSys , 0x30000 );
   MCSS_SetOrthoMode( pWork->mcssSys );
 #endif
 
@@ -1212,17 +1213,22 @@ static GFL_PROC_RESULT IrcBattleFriendProcMain( GFL_PROC * proc, int * seq, void
     GFL_FONTSYS_SetColor(1, 2, 15);
   }
   GFL_TCBL_Main( pWork->pMsgTcblSys );
+
+  
   PRINTSYS_QUE_Main(pWork->SysMsgQue);
 
-  IRC_POKETRADEDEMO_Main(pWork);
 
   GFL_G3D_DRAW_Start();
-  GFL_G3D_DRAW_SetLookAt();
   GFL_G3D_CAMERA_Switching( pWork->pCamera );
+
+  GFL_G3D_DRAW_SetLookAt();
 
   MCSS_Main( pWork->mcssSys );
   MCSS_Draw( pWork->mcssSys );
   //IRC_POKETRADE_G3dDraw(pWork);
+
+  IRC_POKETRADEDEMO_Main(pWork);
+
   GFL_G3D_DRAW_End();
 
 

@@ -505,6 +505,9 @@ void IRC_POKETRADE_AllDeletePokeIconResource(IRC_POKEMON_TRADE* pWork)
   for(i = 0 ; i < _LING_LINENO_MAX ; i++){
     _deletePokeIconResource(pWork,i);
   }
+
+  GFL_HEAP_FreeMemory(pWork->pCharMem);
+  pWork->pCharMem = NULL;
 }
 
 
@@ -729,7 +732,7 @@ static void  PokeIconCgxLoad(IRC_POKEMON_TRADE* pWork )
   GF_ASSERT(MONSNO_MAX < 650);
   pWork->pCharMem = GFL_HEAP_AllocMemory(pWork->heapID, 4*8*4*4*650 );
   
-  for(i=0;i<MONSNO_MAX; i++){ //@@OO フォルム違いを持ってくる必要あり
+  for(i=0;i<MONSNO_MAX; i++){ //@todo フォルム違いを持ってくる必要あり
   
     arcIndex = POKEICON_GetCgxArcIndexByMonsNumber( i, 0, 0 );
     pMem = GFL_ARCHDL_UTIL_LoadBGCharacter(pokeicon_ah, arcIndex, FALSE, &pCharData, pWork->heapID);
@@ -1041,14 +1044,17 @@ void IRC_POKETRADE_3DGraphicSetUp( IRC_POKEMON_TRADE* pWork )
 {
   //3D系の初期化
   { //3D系の設定
-    static const VecFx32 cam_pos = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(300.0f)};
-    static const VecFx32 cam_target = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(0.0f)};
+    static const VecFx32 cam_pos = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(1010.0f)};
+    static const VecFx32 cam_target = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(900.0f)};
     static const VecFx32 cam_up = {0,FX32_ONE,0};
     //エッジマーキングカラー
     static  const GXRgb edge_color_table[8]=
     { GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
-    GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
+    GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
                   0, pWork->heapID, Graphic_3d_SetUp );
+
+ //   GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
+    
 #if 1
 
     //正射影カメラ

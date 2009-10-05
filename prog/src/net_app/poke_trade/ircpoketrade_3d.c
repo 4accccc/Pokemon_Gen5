@@ -131,9 +131,9 @@ static const GFL_G3D_UTIL_RES res_table_reel[] =
 
 static const GFL_G3D_UTIL_RES res_table_trade1[] =
 {
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome2_nsbmd,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome2_nsbca,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome2_nsbta,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome3_nsbmd,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome3_nsbca,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome3_nsbta,    GFL_G3D_UTIL_RESARC },
 };
 
 static const GFL_G3D_UTIL_RES res_table_trade_trade[] =
@@ -279,11 +279,11 @@ static void _cameraSetTrade01(IRC_POKEMON_TRADE* pWork)
 {
   VecFx32 campos;
   VecFx32 tarpos;
-  fx32 far= 200*FX32_ONE;
+  fx32 far= 2000*FX32_ONE;
   fx32 near= FX32_ONE;
 
   campos.x = 0;
-  campos.y = 2*FX32_ONE;
+  campos.y = 3*FX32_ONE;
   campos.z = 15*FX32_ONE;
   tarpos.x = 0;
   tarpos.y = 0;
@@ -370,20 +370,28 @@ static void _moveSetTrade01(IRC_POKEMON_TRADE* pWork,GFL_G3D_OBJSTATUS* pStatus)
   VEC_Set( &pStatus->scale, FX32_ONE, FX32_ONE, FX32_ONE );
   MTX_Identity33( &pStatus->rotate );
 
-
+#if 1
   {
 
     VecFx32 campos;
 
     GFL_G3D_CAMERA_GetPos( pWork->camera, &campos );
-    if(GFL_UI_KEY_GetCont()==PAD_KEY_UP){
-      campos.z += FX32_ONE;
+    
+    if(GFL_UI_KEY_GetCont() == PAD_KEY_UP){
+      campos.y += FX32_ONE/2;
     }
-    if(GFL_UI_KEY_GetCont()==PAD_KEY_DOWN){
-      campos.z -= FX32_ONE;
+    if(GFL_UI_KEY_GetCont() == PAD_KEY_DOWN){
+      campos.y -= FX32_ONE/2;
+    }
+    if(GFL_UI_KEY_GetCont() == PAD_KEY_LEFT){
+      campos.z += FX32_ONE/2;
+    }
+    if(GFL_UI_KEY_GetCont() == PAD_KEY_RIGHT){
+      campos.z -= FX32_ONE/2;
     }
     GFL_G3D_CAMERA_SetPos( pWork->camera, &campos );
   }
+#endif
   
   // ƒJƒƒ‰XV
   //  ICA_ANIME_SetCameraStatus( pWork->icaAnime, pWork->camera );
@@ -649,10 +657,11 @@ static void Finalize( IRC_POKEMON_TRADE* pWork )
  * @breif •`‰æ
  */
 //--------------------------------------------------------------------------------------------
+
 static void Draw( IRC_POKEMON_TRADE* pWork )
 {
   static fx32 frame = 0;
-  static fx32 anime_speed = ANIM_SPEED;
+  static fx32 anime_speed = FX32_ONE/2;  // 1/60‚Å‚Ì“®ì‚Ìˆ×
   GFL_G3D_OBJSTATUS status;
 
 
@@ -696,7 +705,7 @@ static void Draw( IRC_POKEMON_TRADE* pWork )
       GFL_G3D_DRAW_DrawObject( obj, &status );
     }
   }
-  GFL_G3D_DRAW_End();
+//  GFL_G3D_DRAW_End();
 
 //  frame += anime_speed;
   //  ICA_ANIME_IncAnimeFrame( pWork->icaAnime, anime_speed );
