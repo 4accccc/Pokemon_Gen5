@@ -79,7 +79,7 @@
 #define UI_TEMPLATE_TASKMENU
 #define UI_TEMPLATE_TYPEICON      // 分類、技アイコン
 #define UI_TEMPLATE_ITEM_ICON     // どうぐアイコン
-#define UI_TEMPLATE_POKE_ICON     // ポケアイコン
+#define UI_TEMPLATE_POKE_ICON     // ポケアイコン(ポケアイコン用アイテムアイコン込み)
 #define UI_TEMPLATE_OAM_MAPMODEL  // マップモデルをOAMで表示
 
 FS_EXTERN_OVERLAY(ui_common);
@@ -121,7 +121,8 @@ enum
 	PLTID_OBJ_TYPEICON_M	= 3, // 3本使用
   PLTID_OBJ_OAM_MAPMODEL_M = 6, // 1本使用
   PLTID_OBJ_POKEICON_M = 7,     // 3本使用
-  PLTID_OBJ_ITEMICON_M = 10,
+  PLTID_OBJ_POKEITEM_M = 10,    // 1本使用
+  PLTID_OBJ_ITEMICON_M = 11,
 	//サブOBJ
 };
 
@@ -139,14 +140,14 @@ typedef struct
 } UI_TEMPLATE_BG_WORK;
 
 //--------------------------------------------------------------
-///	CLWK管理ワーク
+///	OBJリソース管理ワーク
 //==============================================================
 typedef struct {
-  u32       res_ncg;
-  u32       res_ncl;
-  u32       res_nce;
-  GFL_CLWK* clwk;
-} UI_TEMPLATE_CLWK_SET;
+  u32               res_ncg;
+  u32               res_ncl;
+  u32               res_nce;
+  CLSYS_DRAW_TYPE   draw_type;
+} UI_TEMPLATE_CLWK_RES;
 
 //--------------------------------------------------------------
 ///	圧縮フラグビット
@@ -169,10 +170,8 @@ typedef struct {
   u32 cell_id;  ///< セルリソースNO
   u32 anm_id;   ///< セルアニメリソースNO
   u8 pltt_line; ///< パレット転送先NO
-  u8 px;        ///< X座標
-  u8 py;        ///< Y座標
   u8 padding[1];
-} CLWK_SET_PARAM;
+} CLWK_RES_PARAM;
 
 //--------------------------------------------------------------
 ///	メインワーク
@@ -212,22 +211,29 @@ typedef struct
 
 #ifdef UI_TEMPLATE_TYPEICON
 	//分類、技アイコン
-	u32												type_ncg;
-	u32												type_ncl;
-	u32												type_nce;
-	GFL_CLWK									*type_clwk;
+  UI_TEMPLATE_CLWK_RES      clres_type_icon;
+  GFL_CLWK                  *clwk_type_icon;
 #endif //UI_TEMPLATE_TYPEICON
 
 #ifdef UI_TEMPLATE_ITEM_ICON
-  UI_TEMPLATE_CLWK_SET      clset_item_icon;
+  // どうぐアイコン
+  UI_TEMPLATE_CLWK_RES      clres_item_icon;
+  GFL_CLWK                  *clwk_item_icon;
 #endif //UI_TEMPLATE_ITEM_ICON
 
 #ifdef UI_TEMPLATE_POKE_ICON
-  UI_TEMPLATE_CLWK_SET      clset_poke_icon;
+  // ポケアイコン
+  UI_TEMPLATE_CLWK_RES      clres_poke_icon;
+  GFL_CLWK                  *clwk_poke_icon;
+  // ポケアイコン用アイテムアイコン
+  UI_TEMPLATE_CLWK_RES      clres_poke_item;
+  GFL_CLWK                  *clwk_poke_item;
 #endif //UI_TEMPLATE_POKE_ICON
 
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
-  UI_TEMPLATE_CLWK_SET      clset_oam_mmdl;
+  // OAMマップモデル
+  UI_TEMPLATE_CLWK_RES      clres_oam_mmdl;
+  GFL_CLWK                  *clwk_oam_mmdl;
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 
 #ifdef	UI_TEMPLATE_PRINT_TOOL
@@ -261,8 +267,9 @@ static GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk,
 ///	汎用処理ユーティリティ
 //=====================================
 static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heap_id );
-static void UITemplate_OBJ_CreateCLWK( UI_TEMPLATE_CLWK_SET* wk, CLWK_SET_PARAM* prm, GFL_CLUNIT* unit, HEAPID heap_id );
-static void UItemplate_OBJ_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk );
+static void UITemplate_OBJ_LoadResource( UI_TEMPLATE_CLWK_RES* p_res, CLWK_RES_PARAM* prm, GFL_CLUNIT* unit, HEAPID heap_id );
+static void UItemplate_OBJ_UnLoadResource( UI_TEMPLATE_CLWK_RES* p_res );
+static GFL_CLWK* UITemplate_OBJ_CreateCLWK( UI_TEMPLATE_CLWK_RES* p_res, GFL_CLUNIT* unit, u8 px, u8 py, u8 anim, HEAPID heap_id );
 //-------------------------------------
 ///	INFOWIN
 //=====================================
@@ -289,34 +296,37 @@ static void UITemplate_MCSS_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk );
 static APP_TASKMENU_WORK * UITemplate_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *p_msg, HEAPID heap_id );
 static void UITemplate_TASKMENU_Exit( APP_TASKMENU_WORK *menu );
 static void UITemplate_TASKMENU_Main( APP_TASKMENU_WORK *menu );
+
+#ifdef UI_TEMPLATE_TYPEICON
 //-------------------------------------
 ///	分類、技アイコン
 //=====================================
 static void UITemplate_TYPEICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heap_id );
 static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk );
+#endif //UI_TEMPLATE_TYPEICON
 
 #ifdef UI_TEMPLATE_ITEM_ICON
 //-------------------------------------
 ///	どうぐアイコン
 //=====================================
-static void UITemplate_ITEM_ICON_CreateCLWK( UI_TEMPLATE_CLWK_SET* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heap_id );
-static void UITemplate_ITEM_ICON_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk );
+static void UITemplate_ITEM_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heap_id );
+static void UITemplate_ITEM_ICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
 #endif //UI_TEMPLATE_ITEM_ICON
 
 #ifdef UI_TEMPLATE_POKE_ICON
 //-------------------------------------
 ///	ポケアイコン
 //=====================================
-static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_CLWK_SET* wk, u32 mons, u32 form_no, BOOL egg, GFL_CLUNIT* unit, HEAPID heap_id );
-static void UITemplate_POKE_ICON_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk );
+static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons, u32 form_no, BOOL egg, GFL_CLUNIT* unit, HEAPID heap_id );
+static void UITemplate_POKE_ICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
 #endif //UI_TEMPLATE_POKE_ICON
 
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
 //-------------------------------------
 ///	OAMでマップモデル表示
 //=====================================
-static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_CLWK_SET *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heap_id );
-static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk );
+static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heap_id );
+static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 
 
@@ -432,14 +442,14 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
     u16 ptn_ofs = 3;
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
 
-		UITemplate_OAM_MAPMODEL_CreateCLWK( &wk->clset_oam_mmdl, NARC_fldmmdl_mdlres_hero_nsbtx, ptn_ofs, clunit, wk->heap_id );
+		UITemplate_OAM_MAPMODEL_CreateCLWK( wk, NARC_fldmmdl_mdlres_hero_nsbtx, ptn_ofs, clunit, wk->heap_id );
   }
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 
 #ifdef UI_TEMPLATE_POKE_ICON
   {
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
-    UITemplate_POKE_ICON_CreateCLWK( &wk->clset_item_icon, MONSNO_HUSIGIDANE, 0, FALSE, clunit, wk->heap_id );
+    UITemplate_POKE_ICON_CreateCLWK( wk, MONSNO_HUSIGIDANE, 0, FALSE, clunit, wk->heap_id );
   }
 #endif //UI_TEMPLATE_POKE_ICON
 
@@ -447,7 +457,7 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
   // どうぐアイコンの読み込み
   { 
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
-    UITemplate_ITEM_ICON_CreateCLWK( &wk->clset_item_icon, ITEM_KIZUGUSURI, clunit, wk->heap_id );
+    UITemplate_ITEM_ICON_CreateCLWK( wk, ITEM_KIZUGUSURI, clunit, wk->heap_id );
   }
 #endif //UI_TEMPLATE_ITEM_ICON
 
@@ -483,16 +493,16 @@ static GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk,
 
 #ifdef UI_TEMPLATE_ITEM_ICON
   //どうぐアイコンの破棄
-  UITemplate_ITEM_ICON_DeleteCLWK( &wk->clset_item_icon );
+  UITemplate_ITEM_ICON_DeleteCLWK( wk );
 #endif //UI_TEMPLATE_ITEM_ICON
 
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
   //OAMマップモデルの破棄
-  UITemplate_OAM_MAPMODEL_DeleteCLWK( &wk->clset_oam_mmdl );
+  UITemplate_OAM_MAPMODEL_DeleteCLWK( wk );
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 
 #ifdef UI_TEMPLATE_POKE_ICON
-   UITemplate_POKE_ICON_DeleteCLWK( &wk->clset_poke_icon );
+   UITemplate_POKE_ICON_DeleteCLWK( wk );
 #endif //UI_TEMPLATE_POKE_ICON
 
 #ifdef UI_TEMPLATE_TASKMENU
@@ -635,9 +645,9 @@ static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heap_id 
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  汎用リソース読み込み＆アクター生成処理
+ *	@brief  OBJリソース読み込み
  *
- *	@param	UI_TEMPLATE_CLWK_SET* wk
+ *	@param	UI_TEMPLATE_CLWK_RES* p_res
  *	@param	prm
  *	@param	unit
  *	@param	heap_id 
@@ -645,70 +655,91 @@ static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heap_id 
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_OBJ_CreateCLWK( UI_TEMPLATE_CLWK_SET* wk, CLWK_SET_PARAM* prm, GFL_CLUNIT* unit, HEAPID heap_id )
+static void UITemplate_OBJ_LoadResource( UI_TEMPLATE_CLWK_RES* p_res, CLWK_RES_PARAM* prm, GFL_CLUNIT* unit, HEAPID heap_id )
 {
-  //リソース読み込み
-	{	
-		ARCHANDLE *p_handle;
-    BOOL comp_ncg = ( prm->comp_flg & CLWK_RES_COMP_NCGR );
-  	
-		p_handle	= GFL_ARC_OpenDataHandle( prm->arc_id, heap_id );
+  ARCHANDLE *p_handle;
 
-    if( prm->comp_flg & CLWK_RES_COMP_NCLR )
-    {
-      wk->res_ncl	= GFL_CLGRP_PLTT_RegisterComp( p_handle,
-          prm->pltt_id, prm->draw_type, prm->pltt_line*0x20, heap_id );
-    }
-    else
-    {
-      wk->res_ncl	= GFL_CLGRP_PLTT_Register( p_handle,
-          prm->pltt_id, prm->draw_type, prm->pltt_line*0x20, heap_id );
-    }
-    
-    wk->res_ncg	= GFL_CLGRP_CGR_Register( p_handle,
-        prm->ncg_id, comp_ncg, prm->draw_type, heap_id );
+  BOOL comp_ncg = ( prm->comp_flg & CLWK_RES_COMP_NCGR );
+  
+  p_handle	= GFL_ARC_OpenDataHandle( prm->arc_id, heap_id );
 
-		wk->res_nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
-        prm->cell_id,	prm->anm_id, heap_id );
+  if( prm->comp_flg & CLWK_RES_COMP_NCLR )
+  {
+    p_res->res_ncl	= GFL_CLGRP_PLTT_RegisterComp( p_handle,
+        prm->pltt_id, prm->draw_type, prm->pltt_line*0x20, heap_id );
+  }
+  else
+  {
+    p_res->res_ncl	= GFL_CLGRP_PLTT_Register( p_handle,
+        prm->pltt_id, prm->draw_type, prm->pltt_line*0x20, heap_id );
+  }
 
-		GFL_ARC_CloseDataHandle( p_handle );	
-	}
+  p_res->res_ncg	= GFL_CLGRP_CGR_Register( p_handle,
+      prm->ncg_id, comp_ncg, prm->draw_type, heap_id );
 
-	//CLWK作成
-	{	
-		GFL_CLWK_DATA	cldata;
-		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-		cldata.pos_x	= prm->px;
-		cldata.pos_y	= prm->py;
-		wk->clwk = GFL_CLACT_WK_Create( unit,
-				wk->res_ncg,
-				wk->res_ncl,
-				wk->res_nce,
-				&cldata,
-				prm->draw_type,
-				heap_id );
-	}
+  p_res->res_nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
+      prm->cell_id,	prm->anm_id, heap_id );
+
+  // 描画先を保持
+  p_res->draw_type = prm->draw_type;
+
+  GFL_ARC_CloseDataHandle( p_handle );	
+
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  汎用リソース読み込み＆アクター削除処理
+ *	@brief  OBJ リソース破棄
  *
- *	@param	UI_TEMPLATE_CLWK_SET* wk 
+ *	@param	UI_TEMPLATE_CLWK_RES* p_res 
  *
- *	@retval
+ *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void UItemplate_OBJ_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk )
+static void UItemplate_OBJ_UnLoadResource( UI_TEMPLATE_CLWK_RES* p_res )
 {
-	//CLWK破棄
-	GFL_CLACT_WK_Remove( wk->clwk );
-
-	//リソース破棄
-	GFL_CLGRP_PLTT_Release( wk->res_ncl );
-	GFL_CLGRP_CGR_Release( wk->res_ncg );
-	GFL_CLGRP_CELLANIM_Release( wk->res_nce );
+	GFL_CLGRP_PLTT_Release( p_res->res_ncl );
+	GFL_CLGRP_CGR_Release( p_res->res_ncg );
+	GFL_CLGRP_CELLANIM_Release( p_res->res_nce );
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OBJ CLWK生成
+ *
+ *	@param	UI_TEMPLATE_CLWK_RES* p_res
+ *	@param	unit
+ *	@param	px
+ *	@param	py
+ *	@param	anim
+ *	@param	heap_id 
+ *
+ *	@retval clwk 
+ */
+//-----------------------------------------------------------------------------
+static GFL_CLWK* UITemplate_OBJ_CreateCLWK( UI_TEMPLATE_CLWK_RES* p_res, GFL_CLUNIT* unit, u8 px, u8 py, u8 anim, HEAPID heap_id )
+{
+  GFL_CLWK_DATA	cldata = {0};
+  GFL_CLWK* clwk;
+
+  GF_ASSERT( p_res );
+
+  cldata.pos_x	= px;
+  cldata.pos_y	= py;
+
+  clwk = GFL_CLACT_WK_Create( unit,
+      p_res->res_ncg,
+      p_res->res_ncl,
+      p_res->res_nce,
+      &cldata,
+      p_res->draw_type,
+      heap_id );
+
+  GFL_CLACT_WK_SetAnmSeq( clwk, anim );
+
+  return clwk;
+}
+
 
 
 
@@ -990,43 +1021,23 @@ static void UITemplate_TASKMENU_Main( APP_TASKMENU_WORK *menu )
 //-----------------------------------------------------------------------------
 static void UITemplate_TYPEICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heap_id )
 {	
-	//リソース読み込み
-	{	
-		ARCHANDLE *p_handle;
+  CLWK_RES_PARAM prm;
 
-		p_handle	= GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heap_id );
+  prm.draw_type = CLSYS_DRAW_MAIN;
+  prm.comp_flg  = CLWK_RES_COMP_NONE;
+  prm.arc_id    = APP_COMMON_GetArcId();
+  prm.pltt_id   = APP_COMMON_GetPokeTypePltArcIdx();
+  prm.ncg_id    = APP_COMMON_GetPokeTypeCharArcIdx(type);
+  prm.cell_id   = APP_COMMON_GetPokeTypeCellArcIdx( APP_COMMON_MAPPING_128K );
+  prm.anm_id    = APP_COMMON_GetPokeTypeAnimeArcIdx( APP_COMMON_MAPPING_128K );
+  prm.pltt_line = PLTID_OBJ_TYPEICON_M;
+  
+  UITemplate_OBJ_LoadResource( &wk->clres_type_icon, &prm, unit, heap_id );
 
-		wk->type_ncl	= GFL_CLGRP_PLTT_Register( p_handle, 
-				APP_COMMON_GetPokeTypePltArcIdx(), CLSYS_DRAW_MAIN, PLTID_OBJ_TYPEICON_M*0x20, heap_id );
-
-		wk->type_ncg	= GFL_CLGRP_CGR_Register( p_handle,
-				APP_COMMON_GetPokeTypeCharArcIdx(type), FALSE, CLSYS_DRAW_MAIN, heap_id );
-
-		wk->type_nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
-				APP_COMMON_GetPokeTypeCellArcIdx(APP_COMMON_MAPPING_128K ),
-				APP_COMMON_GetPokeTypeAnimeArcIdx( APP_COMMON_MAPPING_128K ), heap_id );
-
-
-		GFL_ARC_CloseDataHandle( p_handle );	
-	}
-
-
-	//CLWK作成
-	{	
-		GFL_CLWK_DATA	cldata;
-		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-		cldata.pos_x	= 128;
-		cldata.pos_y	= 50;
-		wk->type_clwk	=		GFL_CLACT_WK_Create( unit,
-				wk->type_ncg,
-				wk->type_ncl,
-				wk->type_nce,
-				&cldata,
-				CLSYS_DEFREND_MAIN,
-				heap_id );
-		GFL_CLACT_WK_SetPlttOffs( wk->type_clwk, APP_COMMON_GetPokeTypePltOffset(type),
+  wk->clwk_type_icon = UITemplate_OBJ_CreateCLWK( &wk->clres_type_icon, unit, 128, 50, 0, heap_id );
+		
+  GFL_CLACT_WK_SetPlttOffs( wk->clwk_type_icon, APP_COMMON_GetPokeTypePltOffset(type),
 				CLWK_PLTTOFFS_MODE_PLTT_TOP );
-	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -1039,12 +1050,9 @@ static void UITemplate_TYPEICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, PokeType 
 static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
 {	
 	//CLWK破棄
-	GFL_CLACT_WK_Remove( wk->type_clwk );
-
+	GFL_CLACT_WK_Remove( wk->clwk_type_icon );
 	//リソース破棄
-	GFL_CLGRP_PLTT_Release( wk->type_ncl );
-	GFL_CLGRP_CGR_Release( wk->type_ncg );
-	GFL_CLGRP_CELLANIM_Release( wk->type_nce );
+  UItemplate_OBJ_UnLoadResource( &wk->clres_type_icon );
 }
 
 #endif //UI_TEMPLATE_TYPEICON
@@ -1060,7 +1068,7 @@ static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
 /**
  *	@brief  どうぐアイコン生成
  *
- *	@param	UI_TEMPLATE_CLWK_SET* wk
+ *	@param	UI_TEMPLATE_MAIN_WORK *wk
  *	@param	item_id
  *	@param	unit
  *	@param	heap_id 
@@ -1068,9 +1076,9 @@ static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_ITEM_ICON_CreateCLWK( UI_TEMPLATE_CLWK_SET* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heap_id )
+static void UITemplate_ITEM_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heap_id )
 {	
-  CLWK_SET_PARAM prm;
+  CLWK_RES_PARAM prm;
 
   prm.draw_type = CLSYS_DRAW_MAIN;
   prm.comp_flg  = CLWK_RES_COMP_NONE;
@@ -1080,24 +1088,27 @@ static void UITemplate_ITEM_ICON_CreateCLWK( UI_TEMPLATE_CLWK_SET* wk, u16 item_
   prm.cell_id   = NARC_item_icon_itemicon_NCER;
   prm.anm_id    = NARC_item_icon_itemicon_NANR;
   prm.pltt_line = PLTID_OBJ_ITEMICON_M;
-  prm.px        = 16;
-  prm.py        = 32;
+  
+  UITemplate_OBJ_LoadResource( &wk->clres_item_icon, &prm, unit, heap_id );
 
-  UITemplate_OBJ_CreateCLWK( wk, &prm, unit, heap_id );
+  wk->clwk_item_icon = UITemplate_OBJ_CreateCLWK( &wk->clres_item_icon, unit, 16, 32, 0, heap_id );
 }
 
 //-----------------------------------------------------------------------------
 /**
  *	@brief	どうぐアイコン破棄
  *
- *	@param	UI_TEMPLATE_CLWK_SET* wk 
+ *	@param	UI_TEMPLATE_MAIN_WORK *wk
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_ITEM_ICON_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk )
+static void UITemplate_ITEM_ICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk )
 {
-  UItemplate_OBJ_DeleteCLWK( wk );
+	//CLWK破棄
+	GFL_CLACT_WK_Remove( wk->clwk_item_icon );
+  //リソース開放
+  UItemplate_OBJ_UnLoadResource( &wk->clres_item_icon );
 }
 
 #endif //UI_TEMPLATE_ITEM_ICON
@@ -1114,34 +1125,59 @@ static void UITemplate_ITEM_ICON_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk )
 /**
  *	@brief  ポケアイコン 生成
  *
- *	@param	UI_TEMPLATE_CLWK_SET* wk
+ *	@param	UI_TEMPLATE_MAIN_WORK *wk
  *	@param	unit
  *	@param	heap_id 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_CLWK_SET* wk, u32 mons, u32 form_no, BOOL egg, GFL_CLUNIT* unit, HEAPID heap_id )
+static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons, u32 form_no, BOOL egg, GFL_CLUNIT* unit, HEAPID heap_id )
 {
-  CLWK_SET_PARAM prm;
-
-  prm.draw_type = CLSYS_DRAW_MAIN;
-  prm.comp_flg  = CLWK_RES_COMP_NCLR;
-  prm.arc_id    = ARCID_POKEICON;
-  prm.pltt_id   = POKEICON_GetPalArcIndex();
-//  prm.ncg_id    = POKEICON_GetCgxArcIndex(ppp);
-  prm.ncg_id    = POKEICON_GetCgxArcIndexByMonsNumber( mons, form_no, egg );
-  prm.cell_id   = POKEICON_GetCellArcIndex(); 
-  prm.anm_id    = POKEICON_GetAnmArcIndex();
-  prm.pltt_line = PLTID_OBJ_POKEICON_M;
-  prm.px        = 16 + 64;
-  prm.py        = 32;
-  
-  UITemplate_OBJ_CreateCLWK( wk, &prm, unit, heap_id );
-
+  // ポケアイコン本体
   {
-    u8 pal_num = POKEICON_GetPalNum( mons, form_no, egg );
-    GFL_CLACT_WK_SetPlttOffs( wk->clwk, pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+    CLWK_RES_PARAM prm;
+
+    prm.draw_type = CLSYS_DRAW_MAIN;
+    prm.comp_flg  = CLWK_RES_COMP_NCLR;
+    prm.arc_id    = ARCID_POKEICON;
+    prm.pltt_id   = POKEICON_GetPalArcIndex();
+  //  prm.ncg_id    = POKEICON_GetCgxArcIndex(ppp);
+    prm.ncg_id    = POKEICON_GetCgxArcIndexByMonsNumber( mons, form_no, egg );
+    prm.cell_id   = POKEICON_GetCellArcIndex(); 
+    prm.anm_id    = POKEICON_GetAnmArcIndex();
+    prm.pltt_line = PLTID_OBJ_POKEICON_M;
+    
+    UITemplate_OBJ_LoadResource( &wk->clres_poke_icon, &prm, unit, heap_id );
+
+    wk->clwk_poke_icon = UITemplate_OBJ_CreateCLWK( &wk->clres_poke_icon, unit, 48, 32, 0, heap_id );
+
+    // 上にアイテムアイコンを描画するので優先度を下げておく
+    GFL_CLACT_WK_SetSoftPri( wk->clwk_poke_icon, 1 );
+
+    {
+      u8 pal_num = POKEICON_GetPalNum( mons, form_no, egg );
+      GFL_CLACT_WK_SetPlttOffs( wk->clwk_poke_icon, pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+    }
+  }
+
+  // ポケアイコン用アイテムアイコン
+  {
+    CLWK_RES_PARAM prm;
+
+    prm.draw_type = CLSYS_DRAW_MAIN;
+    prm.comp_flg  = CLWK_RES_COMP_NONE;
+    prm.arc_id    = APP_COMMON_GetArcId();
+    prm.pltt_id   = APP_COMMON_GetPokeItemIconPltArcIdx();
+    prm.ncg_id    = APP_COMMON_GetPokeItemIconCharArcIdx();
+    prm.cell_id   = APP_COMMON_GetPokeItemIconCellArcIdx();
+    prm.anm_id    = APP_COMMON_GetPokeItemIconAnimeArcIdx();
+    prm.pltt_line = PLTID_OBJ_POKEITEM_M;
+    
+    UITemplate_OBJ_LoadResource( &wk->clres_poke_item, &prm, unit, heap_id );
+
+    // アニメシーケンスで指定( 0=どうぐ, 1=メール, 2=ボール )
+    wk->clwk_poke_item = UITemplate_OBJ_CreateCLWK( &wk->clres_poke_item, unit, 48+2, 32+1, 2, heap_id );
   }
 
 }
@@ -1150,14 +1186,22 @@ static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_CLWK_SET* wk, u32 mons,
 /**
  *	@brief  ポケアイコン 破棄
  *
- *	@param	UI_TEMPLATE_CLWK_SET* wk 
+ *	@param	UI_TEMPLATE_MAIN_WORK *wk
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_POKE_ICON_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk )
+static void UITemplate_POKE_ICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk )
 { 
-  UItemplate_OBJ_DeleteCLWK( wk );
+	//CLWK破棄
+	GFL_CLACT_WK_Remove( wk->clwk_poke_icon );
+  //リソース開放
+  UItemplate_OBJ_UnLoadResource( &wk->clres_poke_icon );
+	
+  //CLWK破棄
+	GFL_CLACT_WK_Remove( wk->clwk_poke_item );
+  //リソース開放
+  UItemplate_OBJ_UnLoadResource( &wk->clres_poke_item );
 }
 
 #endif //UI_TEMPLATE_POKE_ICON
@@ -1169,12 +1213,11 @@ static void UITemplate_POKE_ICON_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk )
  */
 //=============================================================================
 
-
 //-----------------------------------------------------------------------------
 /**
  *	@brief  OAMマップモデル 作成 (人物OBJ特化仕様)
  *
- *	@param	UI_TEMPLATE_CLWK_SET *wk
+ *	@param	UI_TEMPLATE_MAIN_WORK *wk
  *	@param	tex_idx
  *	@param  ptn_ofs
  *	@param	sx
@@ -1185,9 +1228,9 @@ static void UITemplate_POKE_ICON_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_CLWK_SET *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heap_id )
+static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heap_id )
 {	
-  CLWK_SET_PARAM prm;
+  CLWK_RES_PARAM prm;
 
   prm.draw_type = CLSYS_DRAW_MAIN;
   prm.comp_flg  = CLWK_RES_COMP_NONE;
@@ -1197,10 +1240,11 @@ static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_CLWK_SET *wk, u16 te
   prm.cell_id   = APP_COMMON_GetNull4x4CellArcIdx();
   prm.anm_id    = APP_COMMON_GetNull4x4AnimeArcIdx();
   prm.pltt_line = PLTID_OBJ_OAM_MAPMODEL_M;
-  prm.px        = 16 + 32;
-  prm.py        = 32;
 
-  UITemplate_OBJ_CreateCLWK( wk, &prm, unit, heap_id );
+  // リソース読み込み
+  UITemplate_OBJ_LoadResource( &wk->clres_oam_mmdl, &prm, unit, heap_id );
+  // CLWK生成
+  wk->clwk_oam_mmdl = UITemplate_OBJ_CreateCLWK( &wk->clres_oam_mmdl, unit, 80, 32, 0, heap_id );
 
   // テクスチャを転送
   {
@@ -1208,7 +1252,7 @@ static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_CLWK_SET *wk, u16 te
     int sx = 4;
     int sy = 4;
 
-    CLWK_TransNSBTX( wk->clwk, ARCID_MMDL_RES, tex_idx, ptn_ofs, sx, sy, 0, prm.draw_type, heap_id );
+    CLWK_TransNSBTX( wk->clwk_oam_mmdl, ARCID_MMDL_RES, tex_idx, ptn_ofs, sx, sy, 0, prm.draw_type, heap_id );
   }
 }
 
@@ -1216,14 +1260,17 @@ static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_CLWK_SET *wk, u16 te
 /**
  *	@brief  OAMマップモデル 破棄
  *
- *	@param	UI_TEMPLATE_CLWK_SET* wk 
+ *	@param	UI_TEMPLATE_MAIN_WORK *wk
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_CLWK_SET* wk )
+static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk )
 {
-  UItemplate_OBJ_DeleteCLWK( wk );
+	//CLWK破棄
+	GFL_CLACT_WK_Remove( wk->clwk_oam_mmdl );
+  //リソース開放
+  UItemplate_OBJ_UnLoadResource( &wk->clres_oam_mmdl );
 }
 
 #endif //UI_TEMPLATE_OAM_MAPMODEL
