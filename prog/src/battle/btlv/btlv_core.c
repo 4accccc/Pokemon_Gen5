@@ -69,6 +69,7 @@ struct _BTLV_CORE {
   BBAG_DATA             bagData;
   BPLIST_DATA           plistData;
   u8                    selectItemSeq;
+  u8                    fActionPrevButton;
 
   GFL_TCBLSYS*  tcbl;
   BTLV_SCU*     scrnU;
@@ -283,7 +284,7 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
   case 1:
     if( BTLV_SCU_WaitMsg(core->scrnU) )
     {
-      BTLV_SCD_StartActionSelect( core->scrnD, core->procPokeParam, core->actionParam );
+      BTLV_SCD_StartActionSelect( core->scrnD, core->procPokeParam, core->fActionPrevButton, core->actionParam );
       (*seq)++;
     }
     break;
@@ -387,16 +388,17 @@ static BOOL mainproc_call( BTLV_CORE* core )
  *
  * @param   core
  * @param   bpp           対象ポケモンデータ
- * @param   fReturnable   TRUEなら「にげる」表示／FALSEなら「もどる」表示
+ * @param   fPrevButton   TRUEなら「もどる」表示／FALSEなら「にげる」表示
  * @param   dest          [out] 行動結果パラメータ
  */
 //=============================================================================================
-void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BOOL fReturnable, BTL_ACTION_PARAM* dest )
+void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BOOL fPrevButton, BTL_ACTION_PARAM* dest )
 {
   core->procPokeParam = bpp;
   core->procPokeID = BPP_GetID( bpp );
   core->actionParam = dest;
   core->playerAction = BTL_ACTION_NULL;
+  core->fActionPrevButton = !fPrevButton;
   mainproc_setup( core, CmdProc_SelectAction );
 }
 //=============================================================================================

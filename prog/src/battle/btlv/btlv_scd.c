@@ -112,6 +112,7 @@ struct _BTLV_SCD {
 
   SEL_TARGET_WORK   selTargetWork;
   u8                selTargetDone;
+  u8                fActionPrevButton;
 
   BtlAction  selActionResult;
   const BTLV_CORE* vcore;
@@ -282,11 +283,12 @@ static BOOL spstack_call( BTLV_SCD* wk )
 //=============================================================================================
 //  アクション選択処理
 //=============================================================================================
-void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
+void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BOOL fPrevButton, BTL_ACTION_PARAM* dest )
 {
   wk->bpp = bpp;
   wk->destActionParam = dest;
   wk->selActionResult = BTL_ACTION_NULL;
+  wk->fActionPrevButton = fPrevButton;
 
   spstack_push( wk, selectAction_init, selectActionRoot_loop );
 }

@@ -438,7 +438,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     /* fallthru */
   case SEQ_SELECT_ACTION:
     BTL_Printf("アクション選択(%d体目=ID:%d）開始します\n", wk->procPokeIdx, BPP_GetID(wk->procPoke));
-    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->checkedPokeCnt==0), wk->procAction );
+    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->checkedPokeCnt!=0), wk->procAction );
     (*seq) = SEQ_CHECK_ACTION;
     break;
   case SEQ_CHECK_ACTION:
