@@ -645,7 +645,8 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
       u8 itemID, targetIdx;
       itemID = BTLV_ITEMSELECT_GetItemID( wk->viewCore );
       targetIdx = BTLV_ITEMSELECT_GetTargetIdx( wk->viewCore );
-      if( itemID != ITEM_DUMMY_DATA ){
+      if( (itemID != ITEM_DUMMY_DATA) && (targetIdx != BPL_SEL_EXIT) )
+      {
         u8 cost = BTLV_ITEMSELECT_GetCost( wk->viewCore );
         if( wk->shooterEnergy >= cost ){
           wk->shooterEnergy -= cost;

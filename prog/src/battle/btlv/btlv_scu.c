@@ -87,9 +87,11 @@ typedef struct {
   GFL_BMPWIN*       win;
   GFL_BMP_DATA*     bmp;
   const BTL_POKEPARAM*  bpp;
-  BTLV_SCU*       parentWk;
-  u16           hp;
-  u8            pokePos;
+  BTLV_SCU*         parentWk;
+  u16               hp;
+  u8                pokePos;
+  u8                vpos;
+  u8                dispFlag;
 }STATUS_WIN;
 
 typedef struct {
@@ -2213,6 +2215,43 @@ static void taskHPGauge( GFL_TCBL* tcbl, void* wk_adrs )
 
 //=============================================================================================
 /**
+ * HPゲージのムーブ動作を開始
+ *
+ * @param   wk
+ * @param   pos1
+ * @param   pos2
+ */
+//=============================================================================================
+void BTLV_SCU_MoveGauge_Start( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 )
+{
+  statwin_cleanup( &wk->statusWin[ pos1 ] );
+  statwin_cleanup( &wk->statusWin[ pos2 ] );
+
+  statwin_setup( &wk->statusWin[ pos1 ], wk, pos1 );
+  statwin_setup( &wk->statusWin[ pos2 ], wk, pos2 );
+
+  statwin_reset_data( &wk->statusWin[ pos1 ] );
+  statwin_reset_data( &wk->statusWin[ pos2 ] );
+
+  statwin_disp_start( &wk->statusWin[ pos1 ] );
+  statwin_disp_start( &wk->statusWin[ pos2 ] );
+}
+//=============================================================================================
+/**
+ * HPゲージのムーブ動作 終了待ち
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTLV_SCU_MoveGauge_Wait( BTLV_SCU* wk )
+{
+  return TRUE;
+}
+
+//=============================================================================================
+/**
  * きのみ食べるアクション開始
  *
  * @param   wk
@@ -2420,11 +2459,13 @@ static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, BtlPokePos pokePos )
   px = winpos[viewPos].x;
   py = winpos[viewPos].y;
 
-  BTL_PrintfSimple("[STATWIN Setup] pokePos=%d, viewPos=%d (%d,%d)\n", pokePos, viewPos, px, py);
 
   stwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, px, py, STATWIN_WIDTH, STATWIN_HEIGHT,
       PALIDX_POKEWIN, GFL_BMP_CHRAREA_GET_F );
   stwin->bmp = GFL_BMPWIN_GetBmp( stwin->win );
+
+  stwin->dispFlag = FALSE;
+  stwin->vpos = viewPos;
 
   statwin_reset_data( stwin );
 }
@@ -2432,6 +2473,10 @@ static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, BtlPokePos pokePos )
 static void statwin_cleanup( STATUS_WIN* stwin )
 {
   GFL_BMPWIN_Delete( stwin->win );
+  if( stwin->dispFlag ){
+    BTLV_EFFECT_DelGauge( stwin->vpos );
+    stwin->dispFlag = FALSE;
+  }
 }
 
 static void statwin_reset_data( STATUS_WIN* stwin )
@@ -2457,6 +2502,7 @@ static void statwin_disp_start( STATUS_WIN* stwin )
 #else
   u8 viewPos = BTL_MAIN_BtlPosToViewPos( stwin->parentWk->mainModule, stwin->pokePos );
   BTLV_EFFECT_SetGauge( stwin->bpp, viewPos );
+  stwin->dispFlag = TRUE;
 #endif
 }
 

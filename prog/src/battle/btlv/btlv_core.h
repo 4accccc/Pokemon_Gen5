@@ -22,6 +22,9 @@ typedef  struct _BTLV_CORE    BTLV_CORE;
 //----------------------------------------------------------------------
 // 参照ヘッダ include
 //----------------------------------------------------------------------
+#include "../app/b_bag.h"
+#include "../app/b_plist.h"
+
 #include "battle/btl_main.h"
 #include "battle/btl_client.h"
 #include "battle/btl_action.h"
@@ -229,6 +232,7 @@ extern BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk );
 extern u16 BTLV_ITEMSELECT_GetItemID( BTLV_CORE* wk );
 extern u8  BTLV_ITEMSELECT_GetCost( BTLV_CORE* wk );
 extern u8  BTLV_ITEMSELECT_GetTargetIdx( BTLV_CORE* wk );
+extern void BTLV_ITEMSELECT_ReflectUsedItem( BTLV_CORE* wk );
 
 //-----------------------------------------------------------
 // 各種下請けから呼び出される関数

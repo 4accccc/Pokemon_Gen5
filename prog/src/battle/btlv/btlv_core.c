@@ -520,7 +520,6 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.energy = energy;
     wk->bagData.reserved_energy = reserved_energy;
 
-
     wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
     wk->plistData.font = wk->fontHandle;
     wk->plistData.heap = wk->heapID;
@@ -627,6 +626,23 @@ u8 BTLV_ITEMSELECT_GetTargetIdx( BTLV_CORE* wk )
 {
   BTL_Printf(" Item Target Index = %d\n",wk->plistData.sel_poke );
   return wk->plistData.sel_poke;
+}
+//=============================================================================================
+/**
+ * アイテム使用時、カーソルデータに反映する
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_ITEMSELECT_ReflectUsedItem( BTLV_CORE* wk )
+{
+  if( (wk->bagData.ret_item != ITEM_DUMMY_DATA)
+  &&  (wk->plistData.sel_poke != BPL_SEL_EXIT)
+  &&  (wk->bagData.mode != BBAG_MODE_SHOOTER)
+  ){
+    MYITEM_BattleBagCursorSet( wk->bagData.bagcursor, wk->bagData.item_pos, wk->bagData.item_scr );
+    MYITEM_BattleBagLastItemSet( wk->bagData.bagcursor, wk->bagData.ret_item, wk->bagData.ret_page );
+  }
 }
 
 //--------------------------------------
@@ -1291,8 +1307,10 @@ typedef struct {
   u8 clientID;
   u8 vpos1;
   u8 vpos2;
-  BtlPokePos  posIdx1;
-  BtlPokePos  posIdx2;
+  u8 posIdx1;
+  u8 posIdx2;
+  BtlPokePos  pos1;
+  BtlPokePos  pos2;
 }MOVE_MEMBER_WORK;
 
 //=============================================================================================
@@ -1313,6 +1331,8 @@ void BTLV_ACT_MoveMember_Start( BTLV_CORE* wk, u8 clientID, u8 vpos1, u8 vpos2, 
   subwk->vpos2 = vpos2;
   subwk->posIdx1 = posIdx1;
   subwk->posIdx2 = posIdx2;
+  subwk->pos1 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx1 );
+  subwk->pos2 = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx2 );
 
   BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocMoveMember );
 }
@@ -1363,7 +1383,17 @@ static BOOL subprocMoveMember( int* seq, void* wk_adrs )
     break;
 
   case 2:
-    return TRUE;
+    if( !BTLV_EFFECT_CheckExecute() ){
+      BTLV_SCU_MoveGauge_Start( wk->scrnU, subwk->pos1, subwk->pos2 );
+      (*seq)++;
+    }
+    break;
+
+  case 3:
+    if( BTLV_SCU_MoveGauge_Wait(wk->scrnU) ){
+      return TRUE;
+    }
+    break;
   }
   return FALSE;
 }
