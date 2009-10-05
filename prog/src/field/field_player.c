@@ -356,7 +356,7 @@ FIELDMAP_WORK * FIELD_PLAYER_GetFieldMapWork( FIELD_PLAYER *fld_player )
  * @retval MMDL*
  */
 //--------------------------------------------------------------
-MMDL * FIELD_PLAYER_GetMMdl( FIELD_PLAYER *fld_player )
+MMDL * FIELD_PLAYER_GetMMdl( const FIELD_PLAYER *fld_player )
 {
 	return( fld_player->fldmmdl );
 }
@@ -464,6 +464,76 @@ GAMESYS_WORK * FIELD_PLAYER_GetGameSysWork( FIELD_PLAYER *fld_player )
   return( fld_player->gsys );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレイヤー位置のアトリビュートの取得
+ *
+ *	@param	fld_player  FIELD_PLAYER
+ *
+ *	@return マップアトリビュート
+ */
+//-----------------------------------------------------------------------------
+MAPATTR FIELD_PLAYER_GetMapAttr( const FIELD_PLAYER *fld_player )
+{
+  MAPATTR attr;
+  
+  if( fld_player->map_type == FLDMAP_CTRLTYPE_GRID )
+  {
+    VecFx32 pos;  
+    FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fld_player->fieldWork );
+
+    FIELD_PLAYER_GetPos( fld_player, &pos );
+    attr = MAPATTR_GetAttribute( mapper, &pos );
+  }
+  else if( fld_player->map_type == FLDMAP_CTRLTYPE_NOGRID )
+  {
+    RAIL_LOCATION location;
+    const MMDL * mmdl = FIELD_PLAYER_GetMMdl( (FIELD_PLAYER*)fld_player );
+    const FLDNOGRID_MAPPER* mapper = FIELDMAP_GetFldNoGridMapper( fld_player->fieldWork );
+
+    MMDL_GetRailLocation( mmdl, &location );
+    attr = FLDNOGRID_MAPPER_GetAttr( mapper, &location );
+  }
+  
+  return( attr );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  dir方向のアトリビュートの取得
+ *
+ *	@param	fld_player  FIELD_PLAYER
+ *	@param	dir         方向
+ *
+ *	@return マップアトリビュート
+ */
+//-----------------------------------------------------------------------------
+MAPATTR FIELD_PLAYER_GetDirMapAttr( const FIELD_PLAYER *fld_player, u16 dir )
+{
+  MAPATTR attr;
+  
+  if( fld_player->map_type == FLDMAP_CTRLTYPE_GRID )
+  {
+    VecFx32 pos;  
+    FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fld_player->fieldWork );
+
+    FIELD_PLAYER_GetDirPos( fld_player, dir, &pos );
+    attr = MAPATTR_GetAttribute( mapper, &pos );
+  }
+  else if( fld_player->map_type == FLDMAP_CTRLTYPE_NOGRID )
+  {
+    RAIL_LOCATION location;
+    MMDL * mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+    FLDNOGRID_MAPPER* mapper = FIELDMAP_GetFldNoGridMapper( fld_player->fieldWork );
+
+    MMDL_GetRailDirLocation( mmdl, dir, &location );
+    attr = FLDNOGRID_MAPPER_GetAttr( mapper, &location );
+  }
+  
+  return( attr );
+}
+
+
 //======================================================================
 /// 性別、OBJコード、各フォーム
 //======================================================================
@@ -566,9 +636,9 @@ PLAYER_DRAW_FORM FIELD_PLAYER_GetOBJCodeToDrawForm( int sex, u16 code )
  */
 //--------------------------------------------------------------
 void FIELD_PLAYER_GetDirGridPos(
-		FIELD_PLAYER *fld_player, u16 dir, s16 *gx, s16 *gy, s16 *gz )
+		const FIELD_PLAYER *fld_player, u16 dir, s16 *gx, s16 *gy, s16 *gz )
 {
-	MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
+	const MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
 	
 	*gx = MMDL_GetGridPosX( fmmdl );
 	*gy = MMDL_GetGridPosY( fmmdl );
@@ -586,7 +656,7 @@ void FIELD_PLAYER_GetDirGridPos(
  */
 //--------------------------------------------------------------
 void FIELD_PLAYER_GetDirPos(
-		FIELD_PLAYER *fld_player, u16 dir, VecFx32 *pos )
+		const FIELD_PLAYER *fld_player, u16 dir, VecFx32 *pos )
 {
   s16 gx,gy,gz;
   FIELD_PLAYER_GetDirGridPos( fld_player, dir, &gx, &gy, &gz );
@@ -605,9 +675,9 @@ void FIELD_PLAYER_GetDirPos(
  */
 //--------------------------------------------------------------
 void FIELD_PLAYER_GetFrontGridPos(
-		FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, s16 *gz )
+		const FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, s16 *gz )
 {
-	MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
+	const MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
 	u16 dir = MMDL_GetDirDisp( fmmdl );
   FIELD_PLAYER_GetDirGridPos( fld_player, dir, gx, gy, gz );
 }
@@ -619,9 +689,9 @@ void FIELD_PLAYER_GetFrontGridPos(
  * @retval BOOL TRUE=生存
  */
 //--------------------------------------------------------------
-BOOL FIELD_PLAYER_CheckLiveMMdl( FIELD_PLAYER *fld_player )
+BOOL FIELD_PLAYER_CheckLiveMMdl( const FIELD_PLAYER *fld_player )
 {
-  MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
+  const MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
   
   if( fmmdl == NULL ){
     return( FALSE );

@@ -101,7 +101,7 @@ extern u16 FIELD_PLAYER_GetDir( const FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_SetDir( FIELD_PLAYER *fld_player, u16 dir );
 extern FIELDMAP_WORK * FIELD_PLAYER_GetFieldMapWork(
 		FIELD_PLAYER *fld_player );
-extern MMDL * FIELD_PLAYER_GetMMdl( FIELD_PLAYER *fld_player );
+extern MMDL * FIELD_PLAYER_GetMMdl( const FIELD_PLAYER *fld_player );
 extern FLDMAPPER_GRIDINFODATA * FIELD_PLAYER_GetGridInfoData(
 		FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_SetMoveValue(
@@ -116,6 +116,8 @@ extern void FIELD_PLAYER_SetMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form );
 extern int FIELD_PLAYER_GetSex( const FIELD_PLAYER *fld_player );
 extern GAMESYS_WORK * FIELD_PLAYER_GetGameSysWork( FIELD_PLAYER *fld_player );
+extern MAPATTR FIELD_PLAYER_GetMapAttr( const FIELD_PLAYER *fld_player );
+extern MAPATTR FIELD_PLAYER_GetDirMapAttr( const FIELD_PLAYER *fld_player, u16 dir );
 
 //性別、OBJコード、各フォーム
 extern u16 FIELD_PLAYER_GetDrawFormToOBJCode(
@@ -129,11 +131,13 @@ extern PLAYER_DRAW_FORM FIELD_PLAYER_GetOBJCodeToDrawForm(
 
 //ツール
 extern void FIELD_PLAYER_GetDirGridPos(
-		FIELD_PLAYER *fld_player, u16 dir, s16 *gx, s16 *gy, s16 *gz );
+		const FIELD_PLAYER *fld_player, u16 dir, s16 *gx, s16 *gy, s16 *gz );
 extern void FIELD_PLAYER_GetDirPos(
-		FIELD_PLAYER *fld_player, u16 dir, VecFx32 *pos );
+		const FIELD_PLAYER *fld_player, u16 dir, VecFx32 *pos );
 extern void FIELD_PLAYER_GetFrontGridPos(
-		FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, s16 *gz );
-extern BOOL FIELD_PLAYER_CheckLiveMMdl( FIELD_PLAYER *fld_player );
+		const FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, s16 *gz );
+extern BOOL FIELD_PLAYER_CheckLiveMMdl( const FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_ChangeMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form );
+
+

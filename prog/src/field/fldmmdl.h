@@ -410,9 +410,9 @@ typedef struct
 	unsigned short param2;		///<指定パラメタ 2
 	short move_limit_x;			///<X方向移動制限
 	short move_limit_z;			///<Z方向移動制限
-	unsigned short gx;			///<グリッドX
-	unsigned short gz;			///<グリッドZ
-	int y;						///<Y値 fx32型
+  unsigned short gx;			///<グリッドX
+  unsigned short gz;			///<グリッドZ
+  int y;						///<Y値 fx32型
 }MMDL_HEADER;
 
 typedef MMDL_HEADER FLDMMDL_HEADER; //旧名
@@ -1031,5 +1031,6 @@ extern BOOL MMDL_HitCheckRailMoveFellow(
 	const MMDL * mmdl, const RAIL_LOCATION* location );
 extern MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATION* location, BOOL old_hit );
 extern BOOL MMDL_GetRailFrontLocation( const MMDL *mmdl, RAIL_LOCATION* location );
+extern BOOL MMDL_GetRailDirLocation( const MMDL *mmdl, u16 dir, RAIL_LOCATION* location );
 
 #endif //MMDL_H_FILE

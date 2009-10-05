@@ -450,6 +450,29 @@ BOOL MMDL_GetRailFrontLocation( const MMDL *mmdl, RAIL_LOCATION* location )
   return FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, sc_DIR_TO_RAILKEY[dir], location ); 
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  dir方向のロケーションを取得
+ *
+ *	@param	mmdl        モデル
+ *	@param	dir         方向
+ *	@param	location    レールロケーション格納先
+ *
+ *	@retval TRUE  移動可能
+ *	@retval FALSE 移動不可能
+ */
+//-----------------------------------------------------------------------------
+BOOL MMDL_GetRailDirLocation( const MMDL *mmdl, u16 dir, RAIL_LOCATION* location )
+{
+  const MMDLSYS* cp_sys = MMDL_GetMMdlSys( mmdl );
+  const FLDNOGRID_MAPPER* cp_mapper = MMDLSYS_GetNOGRIDMapper( cp_sys );
+  const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
+
+  MMDL_GetRailLocation( mmdl, location );
+  TOMOYA_Printf( "dir %d  line_grid %d\n", dir, location->line_grid );
+  return FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, sc_DIR_TO_RAILKEY[dir], location ); 
+}
+
 
 //----------------------------------------------------------------------------
 /**

@@ -273,7 +273,6 @@ BOOL FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc )
   BOOL ret = FALSE;
   BOOL companion;
   int gx,gz;
-  VecFx32 pos;
   
   MAPATTR attr;
   
@@ -284,13 +283,11 @@ BOOL FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc )
 	ENC_COMMON_DATA enc_data[ENC_MONS_NUM_MAX];
   
   FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
-  FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( enc->fwork );
   
   BATTLE_SETUP_PARAM *setup;
 	ENC_FLD_SPA fld_spa;
   
-  FIELD_PLAYER_GetPos( fplayer, &pos );
-  attr = MAPATTR_GetAttribute( mapper, &pos );
+  attr = FIELD_PLAYER_GetMapAttr( fplayer );
   
   if( attr == MAPATTR_ERROR ){
     return( FALSE );
