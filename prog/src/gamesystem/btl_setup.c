@@ -149,6 +149,11 @@ void BTL_SETUP_Double_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_DOUBLE;
 
+  dst->netHandle = netHandle;
+  dst->commMode = commMode;
+  dst->netID = GFL_NET_GetNetID( netHandle );
+  dst->multiMode = FALSE;
+
   dst->trID = TRID_NULL;
 }
 
@@ -171,8 +176,11 @@ void BTL_SETUP_Multi_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   dst->engine = BTL_ENGINE_ALONE;
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_DOUBLE;
+
+  dst->netHandle = netHandle;
+  dst->commMode = commMode;
+  dst->netID = GFL_NET_GetNetID( netHandle );
   dst->multiMode = TRUE;
-  dst->commPos = commPos;
 
   dst->trID = TRID_NULL;
 }
@@ -220,6 +228,11 @@ void BTL_SETUP_Triple_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   dst->engine = BTL_ENGINE_ALONE;
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_TRIPLE;
+
+  dst->netHandle = netHandle;
+  dst->commMode = commMode;
+  dst->netID = GFL_NET_GetNetID( netHandle );
+  dst->multiMode = 0;
 
   dst->trID = TRID_NULL;
 }
