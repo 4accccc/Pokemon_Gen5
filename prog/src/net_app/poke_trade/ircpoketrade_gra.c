@@ -510,33 +510,6 @@ void IRC_POKETRADE_AllDeletePokeIconResource(IRC_POKEMON_TRADE* pWork)
   pWork->pCharMem = NULL;
 }
 
-
-
-static const POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_DATA* boxData , int lineno, int verticalindex , IRC_POKEMON_TRADE* pWork)
-{
-
-  if(lineno > HAND_HORIZONTAL_NUM){
-    int tray = LINE2TRAY(lineno);
-    int index = LINE2POKEINDEX(lineno, verticalindex);
-    
-    return BOXDAT_GetPokeDataAddress(boxData,tray,index);
-  }
-	{
-		POKEPARTY* party = pWork->pMyParty;
-
-    if(verticalindex <3){
-      int index = lineno * 3 + verticalindex;
-      if(index < PokeParty_GetPokeCount(party)){
-        const POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , index );
-        return PP_GetPPPPointerConst( pp );
-      }
-		}
-	}
-	return NULL;
-
-}
-
-
 static void _calcPokeIconPos(int line,int index, GFL_CLACTPOS* pos)
 {
 	static const u8	iconSize = 24;
@@ -548,25 +521,53 @@ static void _calcPokeIconPos(int line,int index, GFL_CLACTPOS* pos)
 }
 
 
+static BOOL _getPokeDataAddress(BOX_DATA* boxData , int lineno, int verticalindex , IRC_POKEMON_TRADE* pWork, POKEMON_PARAM* pp)
+{
+
+  if(lineno > HAND_HORIZONTAL_NUM){
+    int tray = LINE2TRAY(lineno);
+    int index = LINE2POKEINDEX(lineno, verticalindex);
+
+    return IRCPOKEMONTRADE_GetPokeDataAddress(boxData, tray, index, pWork, pp);
+  }
+	{
+		POKEPARTY* party = pWork->pMyParty;
+
+    if(verticalindex <3){
+      int index = lineno * 3 + verticalindex;
+      if(index < PokeParty_GetPokeCount(party)){
+        GFL_STD_MemCopy( PokeParty_GetMemberPointer( party , index ), pp, POKETOOL_GetWorkSize());
+        return TRUE;
+      }
+		}
+	}
+	return FALSE;
+
+}
+
+
 //ラインにあわせたポケモン表示
 static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_DATA* boxData ,int line)
 {
   int i,k;
+  POKEMON_PARAM* pp;
 	void *obj_vram = G2S_GetOBJCharPtr();
 	ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
 
   k =  _Line2RingLineIconGet(pWork, line);
 
+  pp = GFL_HEAP_AllocClearMemory(pWork->heapID, POKETOOL_GetWorkSize());
 	for( i = 0 ; i < BOX_VERTICAL_NUM ; i++ )
 	{
     {
       int	fileNo,monsno,formno,bEgg;
-      const POKEMON_PASO_PARAM* ppp = _getPokeDataAddress(boxData, line, i, pWork);
-      pWork->pokeIconLine[k][i] = line;
-      if(!ppp){
+
+      if(!_getPokeDataAddress(boxData, line, i,pWork, pp)){
         continue;
       }
-      monsno = PPP_Get(ppp,ID_PARA_monsno,NULL);
+
+      pWork->pokeIconLine[k][i] = line;
+      monsno = PP_Get(pp,ID_PARA_monsno,NULL);
       if( monsno == 0 ){	//ポケモンがいるかのチェック
         continue;
       }
@@ -579,13 +580,9 @@ static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_DATA* boxData ,
         GFL_CLACTPOS pos;
         NNSG2dImageProxy aproxy;
           
- //         pWork->pokeIconNcgRes[line][i] =
-   //         GFL_CLGRP_CGR_Register( arcHandle , POKEICON_GetCgxArcIndex(ppp) , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
-
-   //     OS_TPrintf("変更 k%d i%d %d %d\n",k,i,pWork->pokeIconNo[k][i],monsno);
         pWork->pokeIconNo[k][i] = monsno;
         
-        pltNum = POKEICON_GetPalNumGetByPPP( ppp );
+        pltNum = POKEICON_GetPalNumGetByPPP( PP_GetPPPPointerConst(pp) );
         _calcPokeIconPos(line, i, &pos);
 
         GFL_CLACT_WK_GetImgProxy( pWork->pokeIcon[k][i], &aproxy );
@@ -599,6 +596,7 @@ static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_DATA* boxData ,
       }
     }
   }
+  GFL_HEAP_FreeMemory(pp);
   GFL_ARC_CloseDataHandle( arcHandle );
 }
 
@@ -748,12 +746,7 @@ static void  PokeIconCgxLoad(IRC_POKEMON_TRADE* pWork )
 
 //--------------------------------------------------------------------------------------------
 /**
- * リングバッファのライン番号を返す
- *
- * @param	appwk	ボックス画面アプリワーク
- * @param	ppp		POKEMON_PASO_PARAM
- * @param	chr		NNSG2dCharacterData
- *
+ * @brief   リングバッファのライン番号を返す
  * @return	buf
  */
 //--------------------------------------------------------------------------------------------

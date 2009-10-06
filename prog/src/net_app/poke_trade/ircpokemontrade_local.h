@@ -191,7 +191,7 @@ typedef struct
 
 struct _IRC_POKEMON_TRADE {
   u8 FriendPokemonCol[732];         ///< 相手のポケモンBOXにあるポケモン色
-  POKEMON_PASO_PARAM* recvPoke[2];  ///< 受け取ったポケモンを格納する場所
+  POKEMON_PARAM* recvPoke[2];  ///< 受け取ったポケモンを格納する場所
   BOOL bPokemonSet[2];              ///<
   //	EVENT_IRCBATTLE_WORK* pParentWork;
   StateFunc* state;      ///< ハンドルのプログラム状態
@@ -361,7 +361,8 @@ extern void IRC_POKETRADEDEMO_RemoveModel( IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(IRC_POKEMON_TRADE* pWork);
 
 extern void IRCPOKETRADE_PokeDeleteMcss( IRC_POKEMON_TRADE *pWork,int no  );
-extern void IRCPOKETRADE_PokeCreateMcss( IRC_POKEMON_TRADE *pWork ,int no, int bFront, const POKEMON_PASO_PARAM *ppp );
+extern void IRCPOKETRADE_PokeCreateMcss( IRC_POKEMON_TRADE *pWork ,int no, int bFront, const POKEMON_PARAM *pp );
+extern BOOL IRCPOKEMONTRADE_GetPokeDataAddress(BOX_DATA* boxData , int trayNo, int index,IRC_POKEMON_TRADE* pWork,POKEMON_PARAM* pp);
 
 
 

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-09-03T18:40:11"/>
+	<create user="ohno" host="W00141" date="2009-10-06T17:52:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="690"/>
 		<band id="3" index="3" style="0000" width="690"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -492,6 +492,91 @@
 しばらくおまちください</language>
 		<language name="JPN_KANJI" width="256">セーブしています
 しばらくおまちください</language>
+	</row>
+
+	<row id="POKETRADE_STR_30">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]</language>
+	</row>
+
+	<row id="POKETRADE_STR_31">
+		<language name="JPN" width="256">HP</language>
+		<language name="JPN_KANJI" width="256">HP</language>
+	</row>
+
+	<row id="POKETRADE_STR_32">
+		<language name="JPN" width="256">こうげき</language>
+		<language name="JPN_KANJI" width="256">こうげき</language>
+	</row>
+
+	<row id="POKETRADE_STR_33">
+		<language name="JPN" width="256">ぼうぎょ</language>
+		<language name="JPN_KANJI" width="256">ぼうぎょ</language>
+	</row>
+
+	<row id="POKETRADE_STR_34">
+		<language name="JPN" width="256">とくこう</language>
+		<language name="JPN_KANJI" width="256">とくこう</language>
+	</row>
+
+	<row id="POKETRADE_STR_35">
+		<language name="JPN" width="256">とくぼう</language>
+		<language name="JPN_KANJI" width="256">とくぼう</language>
+	</row>
+
+	<row id="POKETRADE_STR_36">
+		<language name="JPN" width="256">すばやさ</language>
+		<language name="JPN_KANJI" width="256">すばやさ</language>
+	</row>
+
+	<row id="POKETRADE_STR_37">
+		<language name="JPN" width="256">せいかく</language>
+		<language name="JPN_KANJI" width="256">せいかく</language>
+	</row>
+
+	<row id="POKETRADE_STR_38">
+		<language name="JPN" width="256">とくせい</language>
+		<language name="JPN_KANJI" width="256">とくせい</language>
+	</row>
+
+	<row id="POKETRADE_STR_39">
+		<language name="JPN" width="256">もちもの</language>
+		<language name="JPN_KANJI" width="256">もちもの</language>
+	</row>
+
+	<row id="POKETRADE_STR_40">
+		<language name="JPN" width="256">[2:02:３桁:0]／[2:02:３桁:1]</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]／[2:02:３桁:1]</language>
+	</row>
+
+	<row id="POKETRADE_STR_41">
+		<language name="JPN" width="256">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="POKETRADE_STR_42">
+		<language name="JPN" width="256">[1:08:せいかく:0]</language>
+		<language name="JPN_KANJI" width="256">[1:08:せいかく:0]</language>
+	</row>
+
+	<row id="POKETRADE_STR_43">
+		<language name="JPN" width="256">[1:06:とくせい名:0]</language>
+		<language name="JPN_KANJI" width="256">[1:06:とくせい名:0]</language>
+	</row>
+
+	<row id="POKETRADE_STR_44">
+		<language name="JPN" width="256">[1:09:どうぐ名:0]</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]</language>
+	</row>
+
+	<row id="POKETRADE_STR_45">
+		<language name="JPN" width="256">もっているわざ</language>
+		<language name="JPN_KANJI" width="256">もっているわざ</language>
+	</row>
+
+	<row id="POKETRADE_STR_46">
+		<language name="JPN" width="256">[1:07:わざ名:0]</language>
+		<language name="JPN_KANJI" width="256">[1:07:わざ名:0]</language>
 	</row>
 
 	<flowchart-group-list>

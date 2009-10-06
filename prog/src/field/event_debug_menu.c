@@ -2832,9 +2832,10 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
 		int i,j;
 		BOX_DATA* pBox = SaveData_GetBoxData(GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gameSys)));
 
-		for(i=0;i < 18;i++){
+		for(i=0;i < BOX_MAX_TRAY;i++){
 			for(j=0;j < 30;j++){
-				int monsno =GFUser_GetPublicRand(MONSNO_END-1)+1;
+//				int monsno =GFUser_GetPublicRand(MONSNO_END-1)+1;
+        int monsno = i+10;
 				OS_TPrintf("%d  %d %dì¬\n",monsno, i, j);
 				PP_Setup(pp,  monsno , 30, PTL_SETUP_ID_AUTO);
 
