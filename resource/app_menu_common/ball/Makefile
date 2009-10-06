@@ -70,18 +70,17 @@ subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc: $(targetname).narc
-	echo "hoge"
+#$(TARGETDIR)/$(targetname).narc: $(targetname).narc
 #	$(COPY) $(targetname).narc $(TARGETDIR)
 #	$(COPY) $(targetname).naix $(TARGETDIR)
 
 #ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(cobjects)
-	CP *.NCGR ./../
-	CP *.NCLR ./../
-	CP *.NCER ./../
-	CP *.NANR ./../
+#$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(cobjects)
+#	CP *.NCGR ./../
+#	CP *.NCLR ./../
+#	CP *.NCER ./../
+#	CP *.NANR ./../
 #endif
 
 #------------------------------------------------------------------------------
