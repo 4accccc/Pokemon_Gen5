@@ -58,7 +58,7 @@ extern void SCRCMD_WORK_Delete( SCRCMD_WORK *work );
 
 //参照、取得
 extern HEAPID SCRCMD_WORK_GetHeapID( SCRCMD_WORK *work );
-extern HEAPID SCRCMD_WORK_GetTempHeapID( SCRCMD_WORK *work );
+//extern HEAPID SCRCMD_WORK_GetTempHeapID( SCRCMD_WORK *work );
 extern u16 SCRCMD_WORK_GetZoneID( SCRCMD_WORK *work );
 extern u16 SCRCMD_WORK_GetScriptID( SCRCMD_WORK *work );
 extern GAMESYS_WORK * SCRCMD_WORK_GetGameSysWork( SCRCMD_WORK *work );
@@ -74,6 +74,9 @@ extern FLDMSGWIN_STREAM * SCRCMD_WORK_GetFldMsgWinStream( SCRCMD_WORK *work );
 extern void SCRCMD_WORK_SetTalkMsgWinTailPos(
     SCRCMD_WORK *work, const VecFx32 *pos );
 extern const VecFx32 * SCRCMD_WORK_GetTalkMsgWinTailPos( SCRCMD_WORK *work );
+
+extern void SCRCMD_WORK_SetCallProcTCB( SCRCMD_WORK *work, GFL_TCB *tcb );
+extern GFL_TCB * SCRCMD_WORK_GetCallProcTCB( SCRCMD_WORK *work );
 
 //アニメーションコマンド
 extern void SCRCMD_WORK_SetMMdlAnmTCB( SCRCMD_WORK *work, GFL_TCB *tcb );

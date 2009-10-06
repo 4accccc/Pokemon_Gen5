@@ -15,8 +15,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_hiden_kairiki
-_EVENT_DATA    ev_hiden_kairiki_menu
+_EVENT_DATA ev_hiden_kairiki
+_EVENT_DATA ev_hiden_kairiki_menu
+_EVENT_DATA ev_hiden_naminori
+_EVENT_DATA ev_hiden_naminori_menu
 _EVENT_DATA_END
 
 
@@ -43,18 +45,18 @@ EVENT_START ev_hiden_kairiki
   _TALK_OBJ_START()
   _TALKWIN_OPEN()
   _FLAG_CHECK( SYS_FLAG_KAIRIKI, SCWK_ANSWER )
-
+  
   IF $SCWK_ANSWER == 1 THEN
     _CALL ev_hiden_kairiki_already
   ELSE
-	  _CHECK_POKE_WAZA_GROUP(	SCWK_ANSWER, WAZANO_KAIRIKI )
+    _CHECK_POKE_WAZA_GROUP(  SCWK_ANSWER, WAZANO_KAIRIKI )
     
     IF $SCWK_ANSWER == 6 THEN
       _CALL ev_hiden_kairiki_ng
     ELSE
 //    バッジチェック
-//	  _SYS_FLAG_BADGE_GET		BADGE_ID_C02, SCWK_ANSWER
-//	  _IFVAL_JUMP		SCWK_ANSWER,EQ,0, ev_hiden_kairiki_ng
+//    _SYS_FLAG_BADGE_GET    BADGE_ID_C02, SCWK_ANSWER
+//    _IFVAL_JUMP    SCWK_ANSWER,EQ,0, ev_hiden_kairiki_ng
       _TALKMSG( msg_kairiki_01 )
       _YES_NO_WIN( SCWK_ANSWER )
       _TALKWIN_CLOSE()
@@ -68,55 +70,55 @@ EVENT_END
 
 //すでにかいりきをつかっている場合
 ev_hiden_kairiki_already:
-	_TALKMSG( msg_kairiki_04 )
-	_LAST_KEYWAIT()
-	_TALKWIN_CLOSE()
-	_END
+  _TALKMSG( msg_kairiki_04 )
+  _LAST_KEYWAIT()
+  _TALKWIN_CLOSE()
+  _END
 
 //秘伝わざもっていない場合
 ev_hiden_kairiki_ng:
-	_TALKMSG( msg_kairiki_03 )
-	_LAST_KEYWAIT()
-	_TALKWIN_CLOSE()
-	_END
+  _TALKMSG( msg_kairiki_03 )
+  _LAST_KEYWAIT()
+  _TALKWIN_CLOSE()
+  _END
 
 //かいりき発動
 ev_hiden_kairiki_02:
-	_FLAG_SET( SYS_FLAG_KAIRIKI )			//かいりきフラグセット
-	_CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_KAIRIKI )
-	_LDWK( SCWK_TEMP0, SCWK_ANSWER )
+  _FLAG_SET( SYS_FLAG_KAIRIKI )      //かいりきフラグセット
+  _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_KAIRIKI )
+  _LDWK( SCWK_TEMP0, SCWK_ANSWER )
   
-	_NICK_NAME( 0, SCWK_ANSWER )
+  _NICK_NAME( 0, SCWK_ANSWER )
   _TALKWIN_OPEN()
   _TALKMSG( msg_kairiki_05 )
   _AB_KEYWAIT()
   _TALKWIN_CLOSE()
   
-//	_CUTIN			SCWK_TEMP0 //カットイン
-//	_TALK_CLOSE		//カットインでMSG用BGがクリアされている対処
+//  _CUTIN      SCWK_TEMP0 //カットイン
+//  _TALK_CLOSE    //カットインでMSG用BGがクリアされている対処
   
   _TALKWIN_OPEN()
-	_TALKMSG( msg_kairiki_06 )
-	_LAST_KEYWAIT()
-	_TALKWIN_CLOSE()
+  _TALKMSG( msg_kairiki_06 )
+  _LAST_KEYWAIT()
+  _TALKWIN_CLOSE()
 
 //冒険ノート
-//	_GET_NOW_ZONE_ID	SCWK_TEMP0
-//	_FNOTE_DATA_MAKE	FNOTE_ID_KAIRIKI,SCWK_TEMP0,0,0,0
-	_END
+//  _GET_NOW_ZONE_ID  SCWK_TEMP0
+//  _FNOTE_DATA_MAKE  FNOTE_ID_KAIRIKI,SCWK_TEMP0,0,0,0
+  _END
 
 //かいりき　メニューから発動
 EVENT_START ev_hiden_kairiki_menu
   _TALKWIN_OPEN()
-	_FLAG_CHECK( SYS_FLAG_KAIRIKI, SCWK_ANSWER ) //かいりきフラグチェック
+  _FLAG_CHECK( SYS_FLAG_KAIRIKI, SCWK_ANSWER ) //かいりきフラグチェック
 
   IF $SCWK_ANSWER == 1 THEN
     _CALL ev_hiden_kairiki_already
   ELSE
-    _FLAG_SET( SYS_FLAG_KAIRIKI )			//かいりきフラグセット
+    _FLAG_SET( SYS_FLAG_KAIRIKI )      //かいりきフラグセット
     _NICK_NAME( 0, SCWK_PARAM0 )
     _TALKMSG( msg_kairiki_05 )
-	  _TALKWIN_CLOSE()
+    _TALKWIN_CLOSE()
 
 //    _CUTIN SCWK_PARAM0 //カットイン
     
@@ -124,7 +126,89 @@ EVENT_START ev_hiden_kairiki_menu
     _TALKMSG( msg_kairiki_06 )
     _LAST_KEYWAIT()
     _TALKWIN_CLOSE()
-//    _GET_NOW_ZONE_ID	SCWK_TEMP0
-//    _FNOTE_DATA_MAKE	FNOTE_ID_KAIRIKI,SCWK_TEMP0,0,0,0
+//    _GET_NOW_ZONE_ID  SCWK_TEMP0
+//    _FNOTE_DATA_MAKE  FNOTE_ID_KAIRIKI,SCWK_TEMP0,0,0,0
   ENDIF
+EVENT_END
+
+/**************************************************************/
+/*  なみのり */
+/**************************************************************/
+EVENT_START ev_hiden_naminori
+  _TALK_OBJ_START()
+  
+  _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_NAMINORI )
+  
+  IF $SCWK_ANSWER == 6 THEN
+    _CALL ev_hiden_naminori_ng
+  ELSE
+    //バッジチェック
+//  _SYS_FLAG_BADGE_GET    BADGE_ID_C05, SCWK_ANSWER
+//  _IFVAL_JUMP    SCWK_ANSWER,EQ,0, ev_hiden_naminori_ng
+    
+    //ペアチェック
+//  _SYS_FLAG_PAIR_GET    SCWK_ANSWER
+//  _IFVAL_JUMP    SCWK_ANSWER,EQ,1, ev_hiden_naminori_pair_ng
+    
+    _TALKWIN_OPEN()
+    _TALKMSG( msg_naminori_01 )
+    _YES_NO_WIN( SCWK_ANSWER )
+    _TALKWIN_CLOSE()
+    
+    IF $SCWK_ANSWER == 0 THEN
+      _CALL ev_hiden_naminori_02
+    ENDIF
+  ENDIF
+EVENT_END
+
+//秘伝わざもっていない場合
+ev_hiden_naminori_ng:
+  _TALKWIN_OPEN()
+  _TALKMSG( msg_naminori_03 )
+  _LAST_KEYWAIT()
+  _TALKWIN_CLOSE()
+  _END
+
+/*
+ev_hiden_naminori_pair_ng:
+  _TALKMSG    msg_naminori_03
+  _LAST_KEYWAIT
+  _TALK_CLOSE
+  _JUMP      ev_hiden_end_bg
+*/
+
+//波乗り発動
+ev_hiden_naminori_02:
+  _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_NAMINORI )
+  _LDWK( SCWK_TEMP0, SCWK_ANSWER )
+  _NICK_NAME( 0, SCWK_ANSWER )
+  
+  _TALKWIN_OPEN()
+  _TALKMSG( msg_naminori_02 )
+  _AB_KEYWAIT()
+  _TALKWIN_CLOSE()
+  
+  //_CUTIN      SCWK_TEMP0
+  _NAMINORI()
+  
+  //冒険ノート
+//_GET_NOW_ZONE_ID  SCWK_TEMP0
+//_FNOTE_DATA_MAKE  FNOTE_ID_NAMINORI,SCWK_TEMP0,0,0,0
+  _END
+
+//めにゅーから「なみのり」発動
+//SCWK_PARAM0に使用したポケモンの位置番号
+EVENT_START ev_hiden_naminori_menu
+  _NICK_NAME( 0, SCWK_PARAM0 )
+  _TALKWIN_OPEN()
+  _TALKMSG( msg_naminori_02 )
+  _TALKWIN_CLOSE()
+  
+//_OBJ_PAUSE_CLEAR  FLDOBJ_ID_PLAYER
+  _NAMINORI()
+//_OBJ_PAUSE  FLDOBJ_ID_PLAYER
+
+  //冒険ノート
+//  _GET_NOW_ZONE_ID  SCWK_TEMP0
+//  _FNOTE_DATA_MAKE  FNOTE_ID_NAMINORI,SCWK_TEMP0,0,0,0
 EVENT_END

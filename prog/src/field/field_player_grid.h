@@ -72,3 +72,9 @@ extern MMDL * FIELD_PLAYER_GRID_GetMMdl( FIELD_PLAYER_GRID *gjiki );
 //field_player_grid_event.c
 extern GMEVENT * FIELD_PLAYER_GRID_CheckMoveEvent( FIELD_PLAYER *fld_player,
     int key_trg, int key_cont, PLAYER_EVENTBIT evbit );
+
+extern GFL_TCB * FIELD_PLAYER_GRID_SetEventNaminoriStart(
+    FIELD_PLAYER *fld_player, u16 dir, MAPATTR attr, HEAPID heapID );
+extern BOOL FIELD_PLAYER_GRID_CheckEventNaminoriStart( GFL_TCB *tcb );
+extern void FIELD_PLAYER_GRID_DeleteEventNaminoriStart( GFL_TCB *tcb );
+

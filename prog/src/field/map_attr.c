@@ -445,3 +445,15 @@ BOOL MAPATTR_VALUE_CheckKairikiAna( const MAPATTR_VALUE val )
 {
   return( val == 0x1d );
 }
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 岸
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckShore( const MAPATTR_VALUE val )
+{
+  return( val == 0x41 );
+}

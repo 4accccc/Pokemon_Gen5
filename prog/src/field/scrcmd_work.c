@@ -57,6 +57,7 @@ struct _TAG_SCRCMD_WORK
 	FLDMSGWIN_STREAM *msgWinStream;
 	VecFx32 talkMsgWinTailPos;
   
+  GFL_TCB *tcb_callproc;
 	GFL_TCB *tcb_anm_tbl[SCRCMD_ACMD_MAX];
   
   SCRCMD_MENU_WORK menuWork;
@@ -119,6 +120,7 @@ HEAPID SCRCMD_WORK_GetHeapID( SCRCMD_WORK *work )
 	return( work->heapID );
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * SCRCMD_WORK ƒeƒ“ƒ|ƒ‰ƒŠ—pHEAPIDŽæ“¾
@@ -130,6 +132,7 @@ HEAPID SCRCMD_WORK_GetTempHeapID( SCRCMD_WORK *work )
 {
   return( work->temp_heapID );
 }
+#endif
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -277,6 +280,32 @@ void SCRCMD_WORK_SetTalkMsgWinTailPos(
 const VecFx32 * SCRCMD_WORK_GetTalkMsgWinTailPos( SCRCMD_WORK *work )
 {
   return( &work->talkMsgWinTailPos );
+}
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ *
+ */
+//--------------------------------------------------------------
+void SCRCMD_WORK_SetCallProcTCB( SCRCMD_WORK *work, GFL_TCB *tcb )
+{
+  work->tcb_callproc = tcb;
+}
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ *
+ */
+//--------------------------------------------------------------
+GFL_TCB * SCRCMD_WORK_GetCallProcTCB( SCRCMD_WORK *work )
+{
+  return( work->tcb_callproc );
 }
 
 //======================================================================

@@ -53,7 +53,8 @@
 #include "net_app/union/union_main.h"
 #include "event_comm_error.h"
 
-#include "../../../resource/fldmapdata/script/bg_attr_def.h"  //SCRID_BG_MSG_～
+#include "../../../resource/fldmapdata/script/bg_attr_def.h" //SCRID_BG_MSG_～
+#include "../../../resource/fldmapdata/script/hiden_def.h"
 
 #include "field_gimmick.h"   //for FLDGMK_GimmickCodeCheck
 #include "field_gimmick_def.h"  //for FLD_GIMMICK_GYM_ELEC
@@ -373,7 +374,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
           return event;
        }
       }
-#endif         
+#endif
       #ifdef PM_DEBUG
       if( !(req.debugRequest) ){
         event = checkEvent_PlayerNaminoriEnd( &req, gsys, fieldWork );
@@ -1395,6 +1396,7 @@ typedef struct
 {
   int wait;
   u16 dir;
+  u16 attr_kishi_flag;
   GAMESYS_WORK *gsys;
   FIELDMAP_WORK *fieldWork;
 }EVWORK_NAMINORI;
@@ -1430,8 +1432,17 @@ static GMEVENT_RESULT event_NaminoriStart(
       gz = MMDL_GetGridPosZ( mmdl );
       MMDL_GetVectorPos( mmdl, &pos );
       MMDL_TOOL_GetCenterGridPos( gx, gz, &pos );
-      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32*2 ); //2マス先
-  
+      
+      {
+        fx32 range = GRID_FX32; //１マス先
+        
+        if( work->attr_kishi_flag == TRUE ){
+          range <<= 1; //２マス先
+        }
+      
+        MMDL_TOOL_AddDirVector( dir, &pos, range );
+      }
+      
       height = 0;
       MMDL_GetMapPosHeight( mmdl, &pos, &height );
       pos.y = height;
@@ -1458,7 +1469,12 @@ static GMEVENT_RESULT event_NaminoriStart(
   case 2:
     {
       u16 dir = MMDL_GetDirDisp( mmdl );
-      u16 ac = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_2G_16F );
+      u16 ac = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_1G_8F );
+      
+      if( work->attr_kishi_flag == TRUE ){
+        ac = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_2G_16F );
+      }
+      
       MMDL_SetAcmd( mmdl, ac );
     }
     (*seq)++;
@@ -1562,7 +1578,10 @@ static GMEVENT_RESULT event_NaminoriEnd(
     FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_NORMAL );
     FIELD_PLAYER_GRID_UpdateRequest( gjiki );
     {
-      u16 ac = MMDL_ChangeDirAcmdCode( work->dir, AC_JUMP_U_2G_16F );
+      u16 ac = MMDL_ChangeDirAcmdCode( work->dir, AC_JUMP_U_1G_8F );
+      if( work->attr_kishi_flag == TRUE ){
+        ac = MMDL_ChangeDirAcmdCode( work->dir, AC_JUMP_U_2G_16F );
+      }
       MMDL_SetAcmd( mmdl, ac );
     }
     (*seq)++;
@@ -1581,7 +1600,8 @@ static GMEVENT_RESULT event_NaminoriEnd(
 }
 
 static GMEVENT * eventSet_NaminoriEnd( const EV_REQUEST *req,
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 dir )
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
+    u16 dir, BOOL attr_kishi_flag )
 {
   GMEVENT *event;
   EVWORK_NAMINORI *work;
@@ -1592,6 +1612,7 @@ static GMEVENT * eventSet_NaminoriEnd( const EV_REQUEST *req,
   work->gsys = gsys;
   work->fieldWork = fieldWork;
   work->dir = dir;
+  work->attr_kishi_flag = attr_kishi_flag;
   return( event );
 }
 
@@ -1609,9 +1630,11 @@ static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
     
   if( form == PLAYER_MOVE_FORM_SWIM ) //波乗り
   {
+    BOOL kishi;
     VecFx32 pos;
     MAPATTR attr;
     MAPATTR_FLAG attr_flag;
+    MAPATTR_VALUE attr_value;
     FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fieldWork );
     FIELDMAP_CTRL_GRID *gridMap =
       FIELDMAP_GetMapCtrlWork( fieldWork );
@@ -1624,16 +1647,26 @@ static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
       FIELD_PLAYER_GetDirPos( fld_player, dir, &pos );
       attr = MAPATTR_GetAttribute( mapper, &pos );
       attr_flag = MAPATTR_GetAttrFlag( attr );
-    
+      attr_value = MAPATTR_GetAttrValue( attr );
+      
+      kishi = FALSE;
+
+      if( MAPATTR_VALUE_CheckShore(attr_value) == TRUE ){ //岸
+        MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 ); //もう一歩先
+        attr = MAPATTR_GetAttribute( mapper, &pos );
+        attr_flag = MAPATTR_GetAttrFlag( attr );
+        kishi = TRUE;
+      }
+      
       if( (attr_flag&MAPATTR_FLAGBIT_HITCH) == 0 && //進入可能で
           (attr_flag&MAPATTR_FLAGBIT_WATER) == 0 ){ //水以外
         GMEVENT *event;
-        event = eventSet_NaminoriEnd( req, gsys, fieldWork, dir );
+        event = eventSet_NaminoriEnd( req, gsys, fieldWork, dir, kishi );
         return( event );
       }
     }
   }
-
+  
   return NULL;
 }
 
@@ -1760,6 +1793,65 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
       return check_attr_data[i].script_id;
     }
   }
+  
+  //波乗りアトリビュート話し掛けチェック
+  if( FIELD_PLAYER_GetMoveForm(req->field_player) != PLAYER_MOVE_FORM_SWIM )
+  {
+    MAPATTR_FLAG attr_flag = MAPATTR_GetAttrFlag( attr );
+
+    if( MAPATTR_VALUE_CheckShore(attr_val) == TRUE ||
+        (MAPATTR_GetHitchFlag(attr) == FALSE &&
+         (attr_flag&MAPATTR_FLAGBIT_WATER) ) )
+    {
+      return SCRID_HIDEN_NAMINORI;
+    }
+  }
+  
   return EVENTDATA_ID_NONE;
 }
 
+//--------------------------------------------------------------
+/**
+ * 手持ちポケモン技チェック
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+#if 0
+VMCMD_RESULT EvCmdChkPokeWazaGroup( VMHANDLE *core, void *wk )
+{
+  int i,max;
+  POKEMON_PARAM *pp;
+  GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
+  POKEPARTY *party = GAMEDATA_GetMyPokemon( gamedata );
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  u16 waza = SCRCMD_GetVMWorkValue( core, wk );
+  
+  max = PokeParty_GetPokeCount( party );
+
+#ifdef DEBUG_ONLY_FOR_kagaya  //test
+  *ret_wk = 0;
+  return VMCMD_RESULT_CONTINUE;
+#endif
+  
+  for( i = 0, *ret_wk = 6; i < max; i++ ){
+    pp = PokeParty_GetMemberPointer( party, i );
+    
+    //たまごチェック
+    if( PP_Get(pp,ID_PARA_tamago_flag,NULL) != 0 ){
+      continue;
+    }
+    
+    //技リストからチェック
+    if( PP_Get(pp,ID_PARA_waza1,NULL) == waza ||
+        PP_Get(pp,ID_PARA_waza2,NULL) == waza ||
+        PP_Get(pp,ID_PARA_waza3,NULL) == waza ||
+        PP_Get(pp,ID_PARA_waza4,NULL) == waza ){
+      *ret_wk = i;
+      break;
+    }
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+#endif

@@ -372,6 +372,182 @@ static GMEVENT_RESULT event_Kairki( GMEVENT *event, int *seq, void *wk )
 }
 
 //======================================================================
+//  波乗りイベント
+//======================================================================
+typedef struct
+{
+  u16 seq;
+  s16 wait;
+  u16 end_flag;
+  u16 dir;
+  u16 kishi_flag;
+  FIELDMAP_WORK *fieldmap;
+  FIELD_PLAYER *fld_player;
+  FIELD_PLAYER_GRID *gjiki;
+}EVWORK_NAMINORI;
+
+static void evtcb_NaminoriStart( GFL_TCB *tcb, void *wk );
+
+//--------------------------------------------------------------
+/**
+ * 波乗り開始イベントセット
+ * @param fld_player FIELD_PLAYER
+ * @param dir 移動方向 DIR_UP等
+ * @param attr 波乗りを行うMAPATTR
+ * @param heapID イベント実行用HEAPID
+ * @retval GFL_TCB*
+ */
+//--------------------------------------------------------------
+GFL_TCB * FIELD_PLAYER_GRID_SetEventNaminoriStart(
+    FIELD_PLAYER *fld_player, u16 dir, MAPATTR attr, HEAPID heapID )
+{
+  EVWORK_NAMINORI *work;
+  
+  work = GFL_HEAP_AllocClearMemoryLo( heapID, sizeof(EVWORK_NAMINORI) );
+  
+  work->fieldmap = FIELD_PLAYER_GetFieldMapWork( fld_player );
+  work->dir = dir;
+  work->fld_player = fld_player;
+  
+  {
+    FIELDMAP_CTRL_GRID *gridmap = FIELDMAP_GetMapCtrlWork( work->fieldmap );
+    work->gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridmap );
+  }
+  
+  {
+    MAPATTR_VALUE val;
+    val = MAPATTR_GetAttrValue( attr );
+    
+    if( MAPATTR_VALUE_CheckShore(val) == TRUE ){
+      work->kishi_flag = TRUE;
+    }
+  }
+  
+  {
+    GFL_TCBSYS *tcbsys = FIELDMAP_GetFieldmapTCBSys( work->fieldmap );
+    GFL_TCB *tcb = GFL_TCB_AddTask( tcbsys, evtcb_NaminoriStart, work, 0 );
+    return( tcb );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 波乗り開始イベント　チェック
+ * @param tcb FIELD_PLAYER_GRID_SetEventNaminoriStart()戻り値
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_GRID_CheckEventNaminoriStart( GFL_TCB *tcb )
+{
+  EVWORK_NAMINORI *work;
+  work = GFL_TCB_GetWork( tcb );
+  return( work->end_flag );
+}
+
+//--------------------------------------------------------------
+/**
+ * 波乗り開始イベント　削除
+ * @param tcb FIELD_PLAYER_GRID_SetEventNaminoriStart()戻り値
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_GRID_DeleteEventNaminoriStart( GFL_TCB *tcb )
+{
+  EVWORK_NAMINORI *work;
+  work = GFL_TCB_GetWork( tcb );
+  GFL_HEAP_FreeMemory( work );
+  GFL_TCB_DeleteTask( tcb );
+}
+
+//--------------------------------------------------------------
+/**
+ * 波乗り開始イベントタスク
+ * @param tcb GFL_TCB*
+ * @param wk tcb work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void evtcb_NaminoriStart( GFL_TCB *tcb, void *wk )
+{
+  FLDEFF_TASK *task;
+  EVWORK_NAMINORI *work = wk;
+  PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( work->fld_player );
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( work->fld_player );
+  
+  switch( work->seq )
+  {
+  case 0: //波乗りポケモン出現
+    {
+      u16 dir;
+      s16 gx,gz;
+      fx32 height;
+      VecFx32 pos;
+      dir = MMDL_GetDirDisp( mmdl );
+      gx = MMDL_GetGridPosX( mmdl );
+      gz = MMDL_GetGridPosZ( mmdl );
+      MMDL_GetVectorPos( mmdl, &pos );
+      MMDL_TOOL_GetCenterGridPos( gx, gz, &pos );
+      
+      {
+        fx32 range = GRID_FX32; //１マス先
+        
+        if( work->kishi_flag == TRUE ){
+          range <<= 1; //２マス先
+        }
+      
+        MMDL_TOOL_AddDirVector( dir, &pos, range );
+      }
+      
+      height = 0;
+      MMDL_GetMapPosHeight( mmdl, &pos, &height );
+      pos.y = height;
+     
+      {
+        FLDEFF_CTRL *fectrl;
+        fectrl = FIELDMAP_GetFldEffCtrl( work->fieldmap );
+        task = FLDEFF_NAMIPOKE_SetMMdl( fectrl, dir, &pos, mmdl, FALSE );
+        FIELD_PLAYER_GRID_SetEffectTaskWork( work->gjiki, task );
+      }
+    }
+    
+    work->seq++;
+    break;
+  case 1:
+    work->wait++;
+    if( work->wait > 15 ){
+      work->seq++;
+    }
+    break;
+  case 2:
+    {
+      u16 dir = MMDL_GetDirDisp( mmdl );
+      u16 ac = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_1G_8F );
+      
+      if( work->kishi_flag == TRUE ){
+        ac = MMDL_ChangeDirAcmdCode( dir, AC_JUMP_U_2G_16F );
+      }
+      
+      MMDL_SetAcmd( mmdl, ac );
+    }
+    work->seq++;
+    break;
+  case 3:
+    if( MMDL_CheckEndAcmd(mmdl) == TRUE ){
+      MMDL_EndAcmd( mmdl );
+      task = FIELD_PLAYER_GRID_GetEffectTaskWork( work->gjiki );
+      FLDEFF_NAMIPOKE_SetJointFlag( task, TRUE );
+      FIELD_PLAYER_SetNaminori( work->gjiki );
+      
+      work->end_flag = TRUE;
+      work->seq++;
+    }
+    break;
+  case 4:
+    break;
+  }
+}
+
+//======================================================================
 //  parts
 //======================================================================
 //--------------------------------------------------------------
