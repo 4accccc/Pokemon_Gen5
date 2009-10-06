@@ -17,7 +17,6 @@ typedef struct FLD3D_CI_tag * FLD3D_CI_PTR;
 
 extern FLD3D_CI_PTR FLD3D_CI_Init(const HEAPID inHeapID, FLD_PRTCL_SYS_PTR inPrtclSysPtr);
 extern void FLD3D_CI_End(FLD3D_CI_PTR ptr);
-extern void FLD3D_CI_Setup(FLD3D_CI_PTR ptr, const GFL_G3D_UTIL_SETUP *inSetup);
 extern void FLD3D_CI_Draw( FLD3D_CI_PTR ptr );
 extern void FLD3D_CI_CallCatIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo );
 

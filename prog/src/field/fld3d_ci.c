@@ -34,13 +34,43 @@ typedef struct FLD3D_CI_tag
   u8 CutInNo;
 }FLD3D_CI;
 
+//バイナリデータフォーマット
+typedef struct {
+  u16 SpaIdx;
+  u16 SpaWait;
+  u16 MdlAObjIdx;
+  u16 MdlAAnm1Idx;
+  u16 MdlAAnm2Idx;
+  u16 MdlAAnmWait;
+  u16 MdlBObjIdx;
+  u16 MdlBAnm1Idx;
+  u16 MdlBAnm2Idx;
+  u16 MdlBAnmWait;
+}RES_DEF_DAT;
+
+typedef struct {
+  GFL_G3D_UTIL_RES *Res;
+  GFL_G3D_UTIL_OBJ *Obj;
+  GFL_G3D_UTIL_ANM *Anm;
+  GFL_G3D_UTIL_SETUP Setup;
+  u16 SpaWait;
+  u16 MdlAAnmWait;
+  u16 MdlBAnmWait;
+  u8 ResNum;
+  u8 ObjNum;
+  u8 AnmNum;
+  u8 Dummy[3];
+}RES_SETUP_DAT;
+
 typedef struct {
   GAMESYS_WORK * gsys;
   FLD3D_CI_PTR CiPtr;
+  RES_SETUP_DAT SetupDat;
 }FLD3D_CI_EVENT_WORK;
 
-static void SetupResource(FLD3D_CI_PTR ptr, const u8 inCutInNo);
-static void DeleteResource(FLD3D_CI_PTR ptr);
+static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCutInNo);
+static void SetupResourceCore(FLD3D_CI_PTR ptr, const GFL_G3D_UTIL_SETUP *inSetup);
+static void DeleteResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat);
 static BOOL PlayParticle(FLD3D_CI_PTR ptr);
 static BOOL PlayMdlAnm1(FLD3D_CI_PTR ptr);
 static BOOL PlayMdlAnm2(FLD3D_CI_PTR ptr);
@@ -51,6 +81,9 @@ static GMEVENT_RESULT CatInEvt( GMEVENT* event, int* seq, void* work );
 
 static void ParticleCallBack(GFL_EMIT_PTR emit);    //@todo
 static void Generate(FLD3D_CI_PTR ptr);    //@todo
+
+static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID inHeapID);
+static void DeleteRes(RES_SETUP_DAT *outDat);
 
 //@todo
 //--リソース関連--
@@ -99,10 +132,6 @@ FLD3D_CI_PTR FLD3D_CI_Init(const HEAPID inHeapID, FLD_PRTCL_SYS_PTR inPrtclSysPt
     ptr->g3Dcamera = GFL_G3D_CAMERA_CreateDefault(
         &pos, &target, inHeapID );
   }
-#if 0
-  //モデル作成 @todo
-  FLD3D_CI_Setup(ptr, &Setup);
-#endif
   return ptr;
 }
 
@@ -132,7 +161,16 @@ void FLD3D_CI_End(FLD3D_CI_PTR ptr)
   GFL_HEAP_FreeMemory( ptr );
 }
 
-void FLD3D_CI_Setup(FLD3D_CI_PTR ptr, const GFL_G3D_UTIL_SETUP *inSetup)
+//--------------------------------------------------------------------------------------------
+/**
+ * リソースセットアップ
+ *
+ * @param   
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void SetupResourceCore(FLD3D_CI_PTR ptr, const GFL_G3D_UTIL_SETUP *inSetup)
 {
   u16 i;
   u16 unitIdx;
@@ -242,7 +280,7 @@ static GMEVENT_RESULT CatInEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 1:
     //リソースロード
-    SetupResource(ptr, ptr->CutInNo);
+    SetupResource(ptr, &evt_work->SetupDat, ptr->CutInNo);
     (*seq)++;
     break;
   case 2:
@@ -274,7 +312,7 @@ static GMEVENT_RESULT CatInEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 5:
     //リソース解放処理
-    DeleteResource(ptr);
+    DeleteResource(ptr, &evt_work->SetupDat);
     (*seq)++;
     break;
   case 6:
@@ -327,13 +365,15 @@ static BOOL PlayMdlAnm2(FLD3D_CI_PTR ptr)
   return FALSE;
 }
 
-static void SetupResource(FLD3D_CI_PTR ptr, const u8 inCutInNo)
+static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCutInNo)
 {
   //パーティクル生成
   ptr->PrtclPtr = FLD_PRTCL_Create(ptr->PrtclSys);
+  //セットアップデータ作成
+  CreateRes(outDat, inCutInNo, ptr->HeapID);
   
   //3Ｄモデルリソースをセットアップ
-  FLD3D_CI_Setup(ptr, &Setup);
+  SetupResourceCore(ptr, /*&Setup*/&outDat->Setup);
   //パーティクルリソースセットアップ
   {
     void *resource;
@@ -348,8 +388,9 @@ static void SetupResource(FLD3D_CI_PTR ptr, const u8 inCutInNo)
   ptr->MdlAnm2Wait = 0;
 }
 
-static void DeleteResource(FLD3D_CI_PTR ptr)
+static void DeleteResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat)
 {
+  DeleteRes(outDat);
   GFL_G3D_UTIL_DelUnit( ptr->Util, ptr->UnitIdx );
   ptr->UnitIdx = UNIT_NONE;
   FLD_PRTCL_Delete(ptr->PrtclSys);
@@ -396,4 +437,90 @@ static void ParticleCallBack(GFL_EMIT_PTR emit)
 	pos.z = 0x40;
 	SPL_SetEmitterPosition(emit, &pos);
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief	リソース作成関数
+ *
+ * @param	
+ *
+ * @retval	none	
+ *
+ */
+//--------------------------------------------------------------
+static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID inHeapID)
+{
+  RES_DEF_DAT def_dat;
+  u8 res_num,obj_num,anm_num;
+  //アーカイブからリソース定義をロード
+  GFL_ARC_LoadData(&def_dat, ARCID_FLD3D_CI_SETUP, inResArcIdx);
+  //リソース数を調べる
+  res_num = 1;  //@todo
+  //OBJ数を調べる
+  obj_num = 1;  //@todo
+  //アニメ数を調べる
+  anm_num = 0;  //@todo
+  //リソーステーブルアロケート
+  if (res_num){
+    outDat->Res = GFL_HEAP_AllocClearMemory(inHeapID, sizeof(GFL_G3D_UTIL_RES)*res_num);
+  }
+  //ＯＢＪテーブルアロケート
+  if(obj_num){
+    outDat->Obj = GFL_HEAP_AllocClearMemory(inHeapID, sizeof(GFL_G3D_UTIL_OBJ)*obj_num);
+  }
+  //アニメテーブルアロケート
+  if(anm_num){
+    outDat->Anm = GFL_HEAP_AllocClearMemory(inHeapID, sizeof(GFL_G3D_UTIL_ANM)*anm_num);
+  }
+
+  //リソース数記憶
+  outDat->ResNum = res_num;
+  outDat->ObjNum = obj_num;
+  outDat->AnmNum = anm_num;
+  //ウェイト記憶
+  outDat->SpaWait = def_dat.SpaWait;
+  outDat->MdlAAnmWait = def_dat.MdlAAnmWait;
+  outDat->MdlBAnmWait = def_dat.MdlBAnmWait;
+
+  //↓@todo　const セットができない・・・
+  outDat->Res->arcive = ARCID_FLD3D_CI;
+  outDat->Res->datID = def_dat.MdlAObjIdx;
+  outDat->Res->arcType = GFL_G3D_UTIL_RESARC;
+
+  outDat->Obj->mdlresID = 0;  
+  outDat->Obj->mdldatID = 0;
+  outDat->Obj->texresID = 0;
+  outDat->Obj->anmTbl = outDat->Anm;
+  outDat->Obj->anmCount = anm_num;
+
+  outDat->Setup.resTbl = outDat->Res;
+  outDat->Setup.resCount = res_num;
+  outDat->Setup.objTbl = outDat->Obj;
+  outDat->Setup.objCount = obj_num;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	リソース破棄関数
+ *
+ * @param	
+ *
+ * @retval	none	
+ *
+ */
+//--------------------------------------------------------------
+static void DeleteRes(RES_SETUP_DAT *outDat)
+{
+  if (outDat->Anm != NULL){
+    GFL_HEAP_FreeMemory( outDat->Anm );
+  }
+  if (outDat->Obj != NULL){
+    GFL_HEAP_FreeMemory( outDat->Obj );
+  }
+  if(outDat->Res != NULL){
+    GFL_HEAP_FreeMemory( outDat->Res );
+  }
+}
+
+
 
