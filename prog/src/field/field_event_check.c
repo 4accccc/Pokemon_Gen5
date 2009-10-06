@@ -62,6 +62,8 @@
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
+#include "waza_tool/wazano_def.h"
+
 //======================================================================
 //======================================================================
 
@@ -141,6 +143,8 @@ static MMDL * getFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap );
 static MMDL * getRailFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap );
 
 static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap);
+
+static int checkPokeWazaGroup( GAMEDATA *gdata, u32 waza_no );
 
 //======================================================================
 //
@@ -1783,7 +1787,6 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
   mapper = FIELDMAP_GetFieldG3Dmapper( fieldMap );
   attr = MAPATTR_GetAttribute( mapper, &pos );
   attr_val = MAPATTR_GetAttrValue( attr );
-  
 
   for (i = 0; i < NELEMS(check_attr_data); i++)
   {
@@ -1798,12 +1801,15 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
   if( FIELD_PLAYER_GetMoveForm(req->field_player) != PLAYER_MOVE_FORM_SWIM )
   {
     MAPATTR_FLAG attr_flag = MAPATTR_GetAttrFlag( attr );
-
+    
     if( MAPATTR_VALUE_CheckShore(attr_val) == TRUE ||
         (MAPATTR_GetHitchFlag(attr) == FALSE &&
          (attr_flag&MAPATTR_FLAGBIT_WATER) ) )
     {
-      return SCRID_HIDEN_NAMINORI;
+      //本来はバッジチェックも入る。
+      if( checkPokeWazaGroup(req->gamedata,WAZANO_NAMINORI) != 6 ){
+        return SCRID_HIDEN_NAMINORI;
+      }
     }
   }
   
@@ -1813,28 +1819,20 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
 //--------------------------------------------------------------
 /**
  * 手持ちポケモン技チェック
- * @param
- * @retval
+ * @param gdata GAMEDATA
+ * @param waza_no チェックする技ナンバー
+ * @retval int 6=技無し
  */
 //--------------------------------------------------------------
-#if 0
-VMCMD_RESULT EvCmdChkPokeWazaGroup( VMHANDLE *core, void *wk )
+static int checkPokeWazaGroup( GAMEDATA *gdata, u32 waza_no )
 {
   int i,max;
   POKEMON_PARAM *pp;
-  GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
-  POKEPARTY *party = GAMEDATA_GetMyPokemon( gamedata );
-  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
-  u16 waza = SCRCMD_GetVMWorkValue( core, wk );
+  POKEPARTY *party = GAMEDATA_GetMyPokemon( gdata );
   
   max = PokeParty_GetPokeCount( party );
-
-#ifdef DEBUG_ONLY_FOR_kagaya  //test
-  *ret_wk = 0;
-  return VMCMD_RESULT_CONTINUE;
-#endif
   
-  for( i = 0, *ret_wk = 6; i < max; i++ ){
+  for( i = 0; i < max; i++ ){
     pp = PokeParty_GetMemberPointer( party, i );
     
     //たまごチェック
@@ -1843,15 +1841,17 @@ VMCMD_RESULT EvCmdChkPokeWazaGroup( VMHANDLE *core, void *wk )
     }
     
     //技リストからチェック
-    if( PP_Get(pp,ID_PARA_waza1,NULL) == waza ||
-        PP_Get(pp,ID_PARA_waza2,NULL) == waza ||
-        PP_Get(pp,ID_PARA_waza3,NULL) == waza ||
-        PP_Get(pp,ID_PARA_waza4,NULL) == waza ){
-      *ret_wk = i;
-      break;
+    if( PP_Get(pp,ID_PARA_waza1,NULL) == waza_no ||
+        PP_Get(pp,ID_PARA_waza2,NULL) == waza_no ||
+        PP_Get(pp,ID_PARA_waza3,NULL) == waza_no ||
+        PP_Get(pp,ID_PARA_waza4,NULL) == waza_no ){
+      return i;
     }
   }
-  
-  return VMCMD_RESULT_CONTINUE;
-}
+
+#ifdef DEBUG_ONLY_FOR_kagaya  //test
+  return 0;
 #endif
+   
+  return 6;
+}
