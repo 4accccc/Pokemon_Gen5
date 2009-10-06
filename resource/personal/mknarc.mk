@@ -32,6 +32,7 @@ SUBDIRS	=
 PERFILES:=$(wildcard per_*.s)
 WOTFILES:=$(wildcard wot_*.s)
 EVOFILES:=$(wildcard evo_*.s)
+PMSFILES:=$(wildcard pms_*.bin)
 
 ELF2BIN = ../../tools/elf2bin.exe
 PMSEED = ../../tools/personal_conv/pmseed.exe
@@ -83,14 +84,8 @@ wotbl.narc: $(WOTFILES:.s=.bin)
 	nnsarc -c -l -n wotbl.narc wot_*.bin
 evo.narc: $(EVOFILES:.s=.bin)
 	nnsarc -c -l -n evo.narc evo_*.bin
-	$(PMSEED)
-
-
-#進化テーブルデータ生成
-#do-build: evo.narc
-#evo.narc: $(EVOFILES:.s=.bin)
-#	nnsarc -c -l -n evo.narc evo_*.bin
-#	../../../../pmgs_conv/personalcnv/pmseed
+pms.narc: $(PMSFILES)
+	nnsarc -c -l -n pms.narc pms_*.bin
 
 endif
 

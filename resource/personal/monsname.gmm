@@ -2370,7 +2370,7 @@
 	</row>
 
 	<row id="MONSNAME_509">
-		<language name="JPN">ユメバクラ</language>
+		<language name="JPN">ムシャーナ</language>
 	</row>
 
 	<row id="MONSNAME_510">
@@ -2438,11 +2438,11 @@
 	</row>
 
 	<row id="MONSNAME_526">
-		<language name="JPN">カビッチ</language>
+		<language name="JPN">チラン</language>
 	</row>
 
 	<row id="MONSNAME_527">
-		<language name="JPN">カビーニ</language>
+		<language name="JPN">チララン</language>
 	</row>
 
 	<row id="MONSNAME_528">
@@ -2454,11 +2454,11 @@
 	</row>
 
 	<row id="MONSNAME_530">
-		<language name="JPN">チャーク</language>
+		<language name="JPN">ミネズミ</language>
 	</row>
 
 	<row id="MONSNAME_531">
-		<language name="JPN">ドチャック</language>
+		<language name="JPN">ミルホッグ</language>
 	</row>
 
 	<row id="MONSNAME_532">
@@ -2466,7 +2466,15 @@
 	</row>
 
 	<row id="MONSNAME_533">
-		<language name="JPN">ムジャジャ</language>
+		<language name="JPN">ムンナ</language>
+	</row>
+
+	<row id="MONSNAME_534">
+		<language name="JPN">タマゴ</language>
+	</row>
+
+	<row id="MONSNAME_535">
+		<language name="JPN">タマゴ</language>
 	</row>
 
 	<flowchart-group-list>
