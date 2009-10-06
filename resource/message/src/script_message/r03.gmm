@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-18T18:29:08"/>
+	<create user="matsumiya" host="W00207" date="2009-10-06T12:52:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="260"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -312,11 +312,11 @@
 ・主人公に隣接するとメッセージ表示
 ・表示後、トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">とｋもだち♂「[1:00:トレーナー名:0]！　オレたちも
+		<language name="JPN" width="256">ともだち♂「[1:00:トレーナー名:0]！　オレたちも
 サンヨウジムで　バッジを　もらったぜ！[BE:01:ページ切り替え（クリア）]
 なにが　いいたいか　わかるだろ？[BE:00:ページ切り替え（行送り）]
 そう　しょうぶ　しようぜ！</language>
-		<language name="JPN_KANJI" width="256">とｋもだち♂「[1:00:トレーナー名:0]！　オレたちも
+		<language name="JPN_KANJI" width="256">ともだち♂「[1:00:トレーナー名:0]！　オレたちも
 サンヨウジムで　バッジを　もらったぜ！[BE:01:ページ切り替え（クリア）]
 なにが　いいたいか　わかるだろ？[BE:00:ページ切り替え（行送り）]
 そう　しょうぶ　しようぜ！</language>
@@ -382,10 +382,10 @@
 　したっぱの近くに移動させる
 ・続けてmsg_r03_white_02</comment>
 		<attribute name="キャラ指定">？？？団したっぱ</attribute>
-		<language name="JPN" width="256">？？？だん『おれたちはな
+		<language name="JPN" width="256">プラズマだん『おれたちはな
 ポケモンを　たすけて　いるんだぞ！</language>
-		<language name="JPN_KANJI" width="256">おれたちはな　ポケモンを
-助けて　いるんだぞ！</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『おれたちはな
+ポケモンを　助けて　いるんだぞ！</language>
 	</row>
 
 	<row id="msg_r03_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -404,10 +404,10 @@
 　倍速でc02側に移動
 ・続けてmsg_r03_white_03</comment>
 		<attribute name="キャラ指定">？？？団したっぱ</attribute>
-		<language name="JPN" width="256">？？？だん『なんだ……？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">プラズマだん『なんだ……？[BE:01:ページ切り替え（クリア）]
 １……　２……　３にんか
 あいてをするのは　ちょっとめんどうだな</language>
-		<language name="JPN_KANJI" width="256">？？？だん『なんだ……？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">プラズマ団『なんだ……？[BE:01:ページ切り替え（クリア）]
 １……　２……　３にんか
 あいてをするのは　ちょっとめんどうだな</language>
 	</row>
@@ -504,9 +504,9 @@
 		<comment>♂
 ・続けてmsg_r03_hakaim_04</comment>
 		<attribute name="キャラ指定">？？？団したっぱ</attribute>
-		<language name="JPN" width="256">？？？だん『おれたちは
-ポケモンを　解放するんだ！</language>
-		<language name="JPN_KANJI" width="256">？？？だん『おれたちは
+		<language name="JPN" width="256">プラズマだん『おれたちは
+ポケモンを　かいほう　するんだ！</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『おれたちは
 ポケモンを　解放するんだ！</language>
 	</row>
 
@@ -514,9 +514,9 @@
 		<comment>♂
 ・続けてmsg_r03_black_09</comment>
 		<attribute name="キャラ指定">？？？団したっぱ</attribute>
-		<language name="JPN" width="256">？？？だん『だから
-ポケモンを　奪うんだ！</language>
-		<language name="JPN_KANJI" width="256">？？？だん『だから
+		<language name="JPN" width="256">プラズマだん『だから
+ポケモンを　うばうんだ！</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『だから
 ポケモンを　奪うんだ！</language>
 	</row>
 
@@ -538,9 +538,9 @@
 ・戦闘後メッセージ
 ・続けてmsg_r03_black_10</comment>
 		<attribute name="キャラ指定">？？？団したっぱ</attribute>
-		<language name="JPN" width="256">？？？だん『お前たち　トレーナーは
+		<language name="JPN" width="256">プラズマだん『お前たち　トレーナーは
 ポケモンを　苦しめているぞ……</language>
-		<language name="JPN_KANJI" width="256">？？？だん『お前たち　トレーナーは
+		<language name="JPN_KANJI" width="256">プラズマ団『お前たち　トレーナーは
 ポケモンを　苦しめているぞ……</language>
 	</row>
 
@@ -562,9 +562,9 @@
 ・表示後、こいつら退場
 ・そのあと、友達♀登場</comment>
 		<attribute name="キャラ指定">？？？団したっぱ</attribute>
-		<language name="JPN" width="256">？？？だん『くっ……　いつか
+		<language name="JPN" width="256">プラズマだん『くっ……　いつか
 じぶんたちの　おろかさに　きづけ……</language>
-		<language name="JPN_KANJI" width="256">？？？だん『くっ……　いつか
+		<language name="JPN_KANJI" width="256">プラズマ団『くっ……　いつか
 じぶんたちの　おろかさに　きづけ……</language>
 	</row>
 
@@ -608,12 +608,12 @@
 ・7月末ROM用</comment>
 		<attribute name="キャラ指定">WOMAN3
 保育士</attribute>
-		<language name="JPN" width="256">この　ニコニコほいくえんは
+		<language name="JPN" width="256">この　？？？？ほいくえんは
 なかよしが　モットー　なのね[BE:01:ページ切り替え（クリア）]
 だから　ポケモンしょうぶも　なかよく
 ポケモン２ひき　ずつ　だしあって[BE:00:ページ切り替え（行送り）]
 ダブルバトルで　しょうぶ　するのよ！</language>
-		<language name="JPN_KANJI" width="256">この　ニコニコ保育園は
+		<language name="JPN_KANJI" width="256">この　？？？？保育園は
 なかよしが　モットー　なのね[BE:01:ページ切り替え（クリア）]
 だから　ポケモン勝負も　なかよく
 ポケモン２匹ずつ　だしあって　勝負[BE:00:ページ切り替え（行送り）]
