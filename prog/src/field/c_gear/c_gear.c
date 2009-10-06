@@ -27,6 +27,8 @@
 #include "msg/msg_c_gear.h"
 #include "msg/msg_invasion.h"
 
+#include "field/field_beacon_message.h"
+
 #define _NET_DEBUG (1)  //デバッグ時は１
 #define _BRIGHTNESS_SYNC (0)  // フェードのＳＹＮＣは要調整
 
@@ -148,6 +150,7 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 #define GEAR_MAIN_FRAME   (GFL_BG_FRAME2_S)
 #define GEAR_BMPWIN_FRAME   (GFL_BG_FRAME1_S)
 #define GEAR_BUTTON_FRAME   (GFL_BG_FRAME0_S)
+#define GEAR_FB_MESSAGE   (GFL_BG_FRAME3_S)
 
 
 typedef void (StateFunc)(C_GEAR_WORK* pState);
@@ -201,6 +204,10 @@ struct _C_GEAR_WORK {
 	u8 cellMoveCreateCount;
 	u8 cellMoveType;
 	BOOL bPanelEdit;
+	
+	//FieldBeaconMessage用
+	FIELD_BEACON_MSG_DATA *fbmData;
+	GFL_BMPWIN *fbmArea;
 };
 
 
@@ -773,13 +780,13 @@ static void _createSubBg(C_GEAR_WORK* pWork)
 		int frame = GEAR_MAIN_FRAME;
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, 0x4000,GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, 0x6000,GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 			};
 		GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
 		GFL_BG_SetVisible( frame, VISIBLE_ON );
-		GFL_BG_SetPriority( frame, 2 );
+		GFL_BG_SetPriority( frame, 3 );
 		//  GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
 
 		GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
@@ -789,23 +796,7 @@ static void _createSubBg(C_GEAR_WORK* pWork)
 		int frame = GEAR_BMPWIN_FRAME;
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x4000,GX_BG_EXTPLTT_01,
-			0, 0, 0, FALSE
-			};
-		GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-
-		GFL_BG_SetVisible( frame, VISIBLE_ON );
-		GFL_BG_SetPriority( frame, 0 );
-
-		GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-		GFL_BG_LoadScreenReq( frame );
-	}
-
-	{
-		int frame = GEAR_BUTTON_FRAME;
-		GFL_BG_BGCNT_HEADER TextBgCntDat = {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x4000,GX_BG_EXTPLTT_01,
+			GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x6000,GX_BG_EXTPLTT_01,
 			0, 0, 0, FALSE
 			};
 		GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -816,6 +807,39 @@ static void _createSubBg(C_GEAR_WORK* pWork)
 		GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		GFL_BG_LoadScreenReq( frame );
 	}
+
+	{
+		int frame = GEAR_BUTTON_FRAME;
+		GFL_BG_BGCNT_HEADER TextBgCntDat = {
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x6000,GX_BG_EXTPLTT_01,
+			0, 0, 0, FALSE
+			};
+		GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+
+		GFL_BG_SetVisible( frame, VISIBLE_ON );
+		GFL_BG_SetPriority( frame, 2 );
+
+		GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_LoadScreenReq( frame );
+	}
+#if FIELD_BEACON_MESSAGE_ON	
+	{
+		int frame = GEAR_FB_MESSAGE;
+		GFL_BG_BGCNT_HEADER TextBgCntDat = {
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000, 0x6000,GX_BG_EXTPLTT_01,
+			0, 0, 0, FALSE
+			};
+		GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+
+		GFL_BG_SetVisible( frame, VISIBLE_ON );
+		GFL_BG_SetPriority( frame, 0 );
+
+		GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_LoadScreenReq( frame );
+	}
+#endif FIELD_BEACON_MESSAGE_ON	
 
 	//  G2S_SetBlendAlpha( GEAR_MAIN_FRAME, GEAR_BMPWIN_FRAME , 3, 16 );
 	//   G2S_SetBlendAlpha( GEAR_MAIN_FRAME, GEAR_BUTTON_FRAME , 16, 16 );
@@ -1163,6 +1187,9 @@ static void _workEnd(C_GEAR_WORK* pWork)
 	GFL_BG_FreeCharacterArea(GEAR_MAIN_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar),
 													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subchar));
 
+#if FIELD_BEACON_MESSAGE_ON	
+	GFL_BG_FreeBGControl(GEAR_FB_MESSAGE);
+#endif //FIELD_BEACON_MESSAGE_ON	
 	GFL_BG_FreeBGControl(GEAR_BUTTON_FRAME);
 	GFL_BG_FreeBGControl(GEAR_BMPWIN_FRAME);
 	GFL_BG_FreeBGControl(GEAR_MAIN_FRAME);
@@ -1403,7 +1430,12 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 	_modeInit(pWork);
 
 
-	
+#if FIELD_BEACON_MESSAGE_ON	
+	pWork->fbmData = GAMEDATA_GetFieldBeaconMessageData( GAMESYSTEM_GetGameData( pGameSys ) );
+	pWork->fbmArea = GFL_BMPWIN_Create(GEAR_FB_MESSAGE, 0, 0, 8, 20,
+																			 _BUTTON_MSG_PAL,  GFL_BMP_CHRAREA_GET_B );
+#endif //FIELD_BEACON_MESSAGE_ON	
+
 	//	_CHANGE_STATE( pWork, _modeInit);
 	return pWork;
 }
@@ -1449,6 +1481,38 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 			pWork->plt_counter=0;
 		}
 	}
+	
+	
+#if FIELD_BEACON_MESSAGE_ON	
+	if( FIELD_BEACON_MESSAGE_GetRefreshDataFlg( pWork->fbmData ) == TRUE )
+	{
+    u8 i;
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pWork->fbmArea ) , 0 );
+    for( i=0 ; i<FBM_MESSAGE_DATA_NUM ; i++ )
+    {
+      STRBUF *str = FIELD_BEACON_MESSAGE_GetFieldMessage( pWork->fbmData , i , pWork->heapID );
+      if( str != NULL )
+      {
+        PRINTSYS_Print( GFL_BMPWIN_GetBmp( pWork->fbmArea ) , 0 , i*16 ,
+                        str , pWork->pFontHandle );
+        GFL_STR_DeleteBuffer( str );
+      }
+    }
+    GFL_BMPWIN_MakeTransWindow_VBlank( pWork->fbmArea );
+    FIELD_BEACON_MESSAGE_ResetRefreshDataFlg( pWork->fbmData );
+  }
+  //デバッグ発言
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+  {
+    u16 word[BEACON_MESSAGE_DATA_WORD_NUM];
+    word[0] = 1;
+    word[1] = GFL_STD_MtRand(0x10000);
+    word[2] = GFL_STD_MtRand(0x10000);
+    word[3] = GFL_STD_MtRand(0x10000);
+    FIELD_BEACON_MESSAGE_SetWord( pWork->fbmData , word );
+    OS_TPrintf("SendMessage\n");
+  }
+#endif //FIELD_BEACON_MESSAGE_ON	
 }
 
 
@@ -1486,6 +1550,10 @@ void CGEAR_Exit( C_GEAR_WORK* pWork )
 
 	GFL_NET_ChangeIconPosition(GFL_WICON_POSX,GFL_WICON_POSY);
 	GFL_NET_ReloadIcon();
+	
+#if FIELD_BEACON_MESSAGE_ON	
+	GFL_BMPWIN_Delete( pWork->fbmArea );
+#endif //FIELD_BEACON_MESSAGE_ON	
 	
 	_workEnd(pWork);
 	G2S_BlendNone();

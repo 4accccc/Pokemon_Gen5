@@ -20,8 +20,6 @@
 //  define
 //======================================================================
 #pragma mark [> define
-#define FBM_MESSAGE_DATA_NUM (10)
-#define FBM_SENDER_STATE_NUM (20)
 #define FBM_INVALID_IDX (0xFF)
 #define FBM_SEND_CNT_MAX (0x80)
 
@@ -66,6 +64,9 @@ struct _FIELD_BEACON_MSG_DATA
   //データををリングバッファ状態にするために先頭Idxを取っておく
   u8 postDataTop;
   u8 senderDataTop;
+  
+  u8 isRefresh : 1;
+  u8 pad       : 7;
 };
 
 //ビーコンメッセージのシステム
@@ -81,6 +82,7 @@ struct _FIELD_BEACON_MSG_SYS
 static const BOOL FIELD_BEACON_MSG_CompSenderData( FIELD_BEACON_MSG_SYS *fbmSys , GBS_BEACON *beacon , u8 *macAddress );
 static const u8 FIELD_BEACON_MSG_AddSenderData( FIELD_BEACON_MSG_SYS *fbmSys , GBS_BEACON *beacon , u8 *macAddress );
 static void FIELD_BEACON_MSG_AddMessageData( FIELD_BEACON_MSG_SYS *fbmSys , GBS_BEACON *beacon , const u8 senderIdx );
+static const u8 FIELD_BEACON_MSG_GetDataIdx_OrderNew_To_DataIdx( FIELD_BEACON_MSG_DATA *fbmData , const u8 orderNewIdx );
 
 //--------------------------------------------------------------
 //	メッセージデータの作成
@@ -124,6 +126,7 @@ void FIELD_BEACON_MSG_ResetData( FIELD_BEACON_MSG_DATA* fbmData  , MYSTATUS *myS
   
   fbmData->postDataTop = 0;
   fbmData->senderDataTop = 0;
+  fbmData->isRefresh = 0;
   //自分の名前セット
   GFL_STD_MemCopy16( MyStatus_GetMyName(myStatus) , fbmData->selfMsgData.name , sizeof(STRCODE)*BEACON_MESSAGE_DATA_NAME_LENGTH );
   
@@ -190,19 +193,6 @@ void FIELD_BEACON_MSG_CheckBeacon( FIELD_BEACON_MSG_SYS *fbmSys , GBS_BEACON *be
     }
   }
 
-  //デバッグ発言
-#if DEB_ARI
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-  {
-    u16 word[BEACON_MESSAGE_DATA_WORD_NUM];
-    word[0] = GFL_STD_MtRand(0x10000);
-    word[1] = GFL_STD_MtRand(0x10000);
-    word[2] = GFL_STD_MtRand(0x10000);
-    word[3] = GFL_STD_MtRand(0x10000);
-    FIELD_BEACON_MESSAGE_SetWord( fbmSys->fbmData , word );
-    OS_TPrintf("SendMessage[%d]\n",fbmSys->fbmData->selfMsgData.senderIdx);
-  }
-#endif
 }
 
 //--------------------------------------------------------------
@@ -298,6 +288,7 @@ static void FIELD_BEACON_MSG_AddMessageData( FIELD_BEACON_MSG_SYS *fbmSys , GBS_
     fbmSys->fbmData->postMsgData[idx].senderIdx = senderIdx;
   }
   
+  fbmSys->fbmData->isRefresh = 1;
 }
 
 //--------------------------------------------------------------
@@ -316,5 +307,73 @@ void FIELD_BEACON_MESSAGE_SetWord( FIELD_BEACON_MSG_DATA *fbmData , u16 *word )
   else
   {
     fbmData->selfMsgData.senderIdx++;
+  }
+}
+
+//--------------------------------------------------------------
+//	メッセージに更新があったか？
+//--------------------------------------------------------------
+const BOOL FIELD_BEACON_MESSAGE_GetRefreshDataFlg( FIELD_BEACON_MSG_DATA *fbmData )
+{
+  if( fbmData->isRefresh == 1 )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+//	メッセージに更新フラグを落とす
+//--------------------------------------------------------------
+void FIELD_BEACON_MESSAGE_ResetRefreshDataFlg( FIELD_BEACON_MSG_DATA *fbmData )
+{
+  fbmData->isRefresh = 0;
+}
+
+//--------------------------------------------------------------
+//	新しい順の番号をデータ番号で返す
+//--------------------------------------------------------------
+static const u8 FIELD_BEACON_MSG_GetDataIdx_OrderNew_To_DataIdx( FIELD_BEACON_MSG_DATA *fbmData , const u8 orderNewIdx )
+{
+  if( fbmData->postDataTop >= orderNewIdx )
+  {
+    return fbmData->postDataTop - orderNewIdx;
+  }
+  else
+  {
+    return fbmData->postDataTop + FBM_MESSAGE_DATA_NUM - orderNewIdx;
+  }
+  
+}
+
+//--------------------------------------------------------------
+//	メッセージの取得
+//--------------------------------------------------------------
+//このインデックスは新しい順に０～返してくれる
+STRBUF* FIELD_BEACON_MESSAGE_GetFieldMessage( FIELD_BEACON_MSG_DATA *fbmData , const u8 idx , const HEAPID heapId )
+{
+  if( idx >= FBM_MESSAGE_DATA_NUM )
+  {
+    GF_ASSERT_MSG( idx < FBM_MESSAGE_DATA_NUM , "Field beacon message: Message index is over !!\n" );
+    return NULL;
+  } 
+  
+  {
+    const u8 dataIdx = FIELD_BEACON_MSG_GetDataIdx_OrderNew_To_DataIdx( fbmData , idx );
+    if( fbmData->postMsgData[dataIdx].senderIdx == FBM_INVALID_IDX )
+    {
+      return NULL;
+    }
+    else
+    {
+      STRBUF *str = GFL_STR_CreateBuffer( 32 , heapId );
+      const u8 senderIdx = fbmData->postMsgData[dataIdx].senderIdx;
+
+      GFL_STR_SetStringCode( str , fbmData->postMsgData[dataIdx].name );
+      GFL_STR_AddCode( str , L'：' );
+      GFL_STR_AddCode( str , L'0'+(fbmData->senderData[senderIdx].cnt/10) );
+      GFL_STR_AddCode( str , L'0'+(fbmData->senderData[senderIdx].cnt%10) );
+      return str;
+    }
   }
 }

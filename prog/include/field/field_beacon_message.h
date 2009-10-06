@@ -16,6 +16,12 @@
 //  define
 //======================================================================
 #pragma mark [> define
+//受信するメッセージの数
+#define FBM_MESSAGE_DATA_NUM (10)
+//送信者のバッファの数
+#define FBM_SENDER_STATE_NUM (20)
+
+#define FIELD_BEACON_MESSAGE_ON (0)
 
 //======================================================================
 //  enum
@@ -56,3 +62,7 @@ extern void FIELD_BEACON_MSG_CheckBeacon( FIELD_BEACON_MSG_SYS *fbmSys , GBS_BEA
 //	メッセージ系
 //--------------------------------------------------------------
 extern void FIELD_BEACON_MESSAGE_SetWord( FIELD_BEACON_MSG_DATA *fbmData , u16 *word );
+extern const BOOL FIELD_BEACON_MESSAGE_GetRefreshDataFlg( FIELD_BEACON_MSG_DATA *fbmData );
+extern void FIELD_BEACON_MESSAGE_ResetRefreshDataFlg( FIELD_BEACON_MSG_DATA *fbmData );
+
+extern STRBUF* FIELD_BEACON_MESSAGE_GetFieldMessage( FIELD_BEACON_MSG_DATA *fbmData , const u8 idx , const HEAPID heapId );
