@@ -9,8 +9,10 @@
 
 #define __GYM_NORMAL_LOCAL_DEF_H__
 
+//一部屋目
 #define WALL0_GX  (16)  //一部屋目の正解本棚X座標
 #define WALL0_GZ  (16)  //一部屋目の正解本棚Z座標
+//二部屋目
 #define WALL1_GX  (16)  //二部屋目の正解本棚X座標
 #define WALL1_GZ  (16)  //二部屋目の正解本棚Z座標
 #define WALL2_GX  (1)
