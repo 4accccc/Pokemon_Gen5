@@ -85,4 +85,10 @@ DEP_INDOOR	=	\
 	$(RESDIR)/drumset01.nsbmd \
 	$(RESDIR)/d0stair_u01.nsbmd \
 	$(RESDIR)/d0stair_d01.nsbmd \
+	$(RESDIR)/in_vender01.nsbmd \
+	$(RESDIR)/c04_object01.nsbmd \
+	$(RESDIR)/c04_object02.nsbmd \
+	$(RESDIR)/c04_object03.nsbmd \
+	$(RESDIR)/c04_object04.nsbmd \
+	$(RESDIR)/c04_object05.nsbmd \
 
