@@ -42,6 +42,7 @@ do-build:	$(TARGET)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
 $(TARGET):	$(CDAT)
 	ruby make_table.rb $(CDAT) > $(TARGET)
+	cat tmp/*.h > total_header.h
 
 $(TMPDIR)/%.cdat: data/%.mev
 	ruby make_event.rb $<
