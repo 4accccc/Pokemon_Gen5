@@ -367,3 +367,29 @@ u32 POKEICON_GetAnmArcIndex(void)
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * セルアニメのアーカイブインデックス取得
+ *
+ * @param	none
+ *
+ * @return	アーカイブインデックス
+ */
+//--------------------------------------------------------------------------------------------
+u32 POKEICON_GetAnmSubArcIndex(void)
+{
+	GXOBJVRamModeChar vrammode;
+	
+	vrammode = GXS_GetOBJVRamModeChar();
+	switch(vrammode){
+	case GX_OBJVRAMMODE_CHAR_1D_32K:
+		return NARC_poke_icon_poke_icon_32k_NANR;
+	case GX_OBJVRAMMODE_CHAR_1D_64K:
+		return NARC_poke_icon_poke_icon_64k_NANR;
+	case GX_OBJVRAMMODE_CHAR_1D_128K:
+		return NARC_poke_icon_poke_icon_128k_NANR;
+	default:
+		GF_ASSERT(0);	//非対応のマッピングモード
+		return NARC_poke_icon_poke_icon_128k_NANR;
+	}
+}

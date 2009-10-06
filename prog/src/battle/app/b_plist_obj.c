@@ -398,7 +398,7 @@ static void BPL_ClactPokeLoad( BPLIST_WORK * wk )
   wk->celRes[BPLIST_CELRES_POKE] = GFL_CLGRP_CELLANIM_Register(
 																		ah,
 																		POKEICON_GetCellSubArcIndex(),
-																		POKEICON_GetAnmArcIndex(),
+																		POKEICON_GetAnmSubArcIndex(),
 																		wk->dat->heap );
 
   GFL_ARC_CloseDataHandle( ah );

@@ -50,5 +50,6 @@ extern u32 POKEICON_GetPalArcIndex(void);
 extern u32 POKEICON_GetCellArcIndex(void);
 extern u32 POKEICON_GetCellSubArcIndex(void);
 extern u32 POKEICON_GetAnmArcIndex(void);
+extern u32 POKEICON_GetAnmSubArcIndex(void);
 
 #endif	//__POKEICON_H__
