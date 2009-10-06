@@ -439,6 +439,19 @@
   NO_CMD()
   NO_CMD()
 
+  //手持ちポケモンのPOKEMON_PARAM取得系
+  DEF_CMD( EvCmdGetPokemonFriendValue, EV_SEQ_GET_TEMOTI_NATSUKI )
+  DEF_CMD( EvCmdSetPokemonFriendValue, EV_SEQ_SET_TEMOTI_NATSUKI )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

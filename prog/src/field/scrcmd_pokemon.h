@@ -19,6 +19,8 @@ extern VMCMD_RESULT EvCmdPokemonRecover( VMHANDLE * core, void *wk );
 
 extern VMCMD_RESULT EvCmdCheckPokemonHP( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdCheckPokemonEgg( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdGetPokemonFriendValue( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdSetPokemonFriendValue( VMHANDLE * core, void *wk );
 
 extern VMCMD_RESULT EvCmdGetPartyPokeCount( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetPartyBattlePokeCount( VMHANDLE * core, void *wk );

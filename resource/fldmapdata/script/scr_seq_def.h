@@ -2438,7 +2438,82 @@
   .short \wazano
   .endm
 
-//======================================================================
+//--------------------------------------------------------------
+/**
+ * @def _GET_TEMOTI_NATSUKI
+ * @brief 手持ちポケモンのなつき度チェック
+ * @param ret_wk  チェック結果を受け取るワーク
+ * @param pos     チェックするポケモンの位置（０～５）
+ * @return        チェックしたポケモンのなつき度
+ */
+//--------------------------------------------------------------
+#define _GET_TEMOTI_NATSUKI( ret_wk, pos ) \
+    _ASM_CHECK_GET_TEMOTI_NATSUKI ret_wk, pos
+
+  .macro  _ASM_CHECK_GET_TEMOTI_NATSUKI ret_wk, pos
+  .short  EV_SEQ_GET_TEMOTI_NATSUKI
+  .short  \ret_wk
+  .short  \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SET_TEMOTI_NATSUKI
+ * @brief 手持ちポケモンのなつき度をセット
+ * @param pos     なつき度を操作するポケモンの位置（０～５）
+ * @param value   設定したいなつき度
+ * @param mode    コマンドの呼び出しモード(0:セット,1:加算,2:減算)
+ */
+//--------------------------------------------------------------
+#define _SET_TEMOTI_NATSUKI( pos, value ) \
+    _ASM_CHECK_SET_TEMOTI_NATSUKI pos, value
+
+  .macro  _ASM_CHECK_SET_TEMOTI_NATSUKI pos,value
+  .short  EV_SEQ_GET_TEMOTI_NATSUKI
+  .short  \ret_wk
+  .short  \pos
+  .byte   0
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _ADD_TEMOTI_NATSUKI
+ * @brief 手持ちポケモンのなつき度を加算
+ * @param pos     なつき度を操作するポケモンの位置（０～５）
+ * @param value   加算したい値
+ * @param mode    コマンドの呼び出しモード(0:セット,1:加算,2:減算)
+ */
+//--------------------------------------------------------------
+#define _ADD_TEMOTI_NATSUKI( pos, value ) \
+    _ASM_CHECK_ADD_TEMOTI_NATSUKI pos, value
+
+  .macro  _ASM_CHECK_ADD_TEMOTI_NATSUKI pos,value
+  .short  EV_SEQ_SET_TEMOTI_NATSUKI
+  .short  \pos
+  .short  \value
+  .byte   1
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SUB_TEMOTI_NATSUKI
+ * @brief 手持ちポケモンのなつき度を減算
+ * @param pos     なつき度を操作するポケモンの位置（０～５）
+ * @param value   減算したい値
+ * @param mode    コマンドの呼び出しモード(0:セット,1:加算,2:減算)
+ */
+//--------------------------------------------------------------
+#define _SUB_TEMOTI_NATSUKI( pos, value ) \
+    _ASM_CHECK_SUB_TEMOTI_NATSUKI pos, value
+
+  .macro  _ASM_CHECK_SUB_TEMOTI_NATSUKI pos,value
+  .short  EV_SEQ_SET_TEMOTI_NATSUKI
+  .short  \pos
+  .short  \value
+  .byte   2
+  .endm
+
+  //======================================================================
 // お金
 //======================================================================
 //--------------------------------------------------------------

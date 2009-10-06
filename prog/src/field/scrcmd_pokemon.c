@@ -173,6 +173,105 @@ VMCMD_RESULT EvCmdCheckPokemonEgg( VMHANDLE * core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * @brief 手持ちポケモンのなつき度を取得
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetPokemonFriendValue( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
+  u16*            ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
+  u16             pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
+
+  POKEPARTY*    party = GAMEDATA_GetMyPokemon( SCRCMD_WORK_GetGameData(work) );
+  int             max = PokeParty_GetPokeCountMax( party );
+  u8            friend = 0;
+  POKEMON_PARAM* param = NULL;
+
+  // ポケモン指定に対する例外処理
+  if( (pos < 0) || (PokeParty_GetPokeCountMax(party) <= pos) )
+  {
+    *ret_wk = 0;
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  // なつき度取得
+  param       = PokeParty_GetMemberPointer( party, pos );
+  if(PP_Get( param, ID_PARA_tamago_flag, NULL ) == TRUE){
+    friend = PP_Get( param, ID_PARA_friend, NULL); 
+  }
+
+  // 結果を格納
+  *ret_wk = friend;
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちポケモンのなつき度をセット
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetPokemonFriendValue( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
+  u16             pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
+  u16             value = SCRCMD_GetVMWorkValue( core, wk );  // 設定値
+  u8              mode = VMGetU8( core );  // 設定モード(0:セット,1:足す,2:引く)
+
+  POKEPARTY*    party = GAMEDATA_GetMyPokemon( SCRCMD_WORK_GetGameData(work) );
+  u8            friend = 0;
+  POKEMON_PARAM* param = NULL;
+
+  // ポケモン指定に対する例外処理
+  if( (pos < 0) || (PokeParty_GetPokeCountMax(party) <= pos) )
+  {
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  // なつき度取得
+  param       = PokeParty_GetMemberPointer( party, pos );
+  if(PP_Get( param, ID_PARA_tamago_flag, NULL ) == TRUE)  //タマゴならなにもしない
+  {
+    return VMCMD_RESULT_CONTINUE;
+  }
+  friend = PP_Get( param, ID_PARA_friend, NULL); 
+
+  switch(mode)
+  {
+  case 0: //セット
+    if(value > 256){
+      friend = 255;
+    }else if(value < 0){
+      friend = 0;
+    }else{
+      friend = value;
+    }
+    break;
+  case 1: //加算
+    if((friend + value) > 256) {
+      friend = 255;
+    }else{
+      friend += value;
+    }
+    break;
+  case 2: //減算
+    if(friend < value){
+      friend = 0;
+    }else{
+      friend -= value;
+    }
+  }
+  PP_Put( param, ID_PARA_friend, friend); 
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief 手持ちポケモンの数を取得
  * @param	core		仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
