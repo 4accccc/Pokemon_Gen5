@@ -23,7 +23,8 @@ SUBDIRS	=	zonetable/zoneindex \
 					fld_gimmick_assign \
 					gimmick \
 					camera_scroll \
-					zonetable
+					zonetable \
+					pushrock
 					
 
 .PHONY:	do-build clean
