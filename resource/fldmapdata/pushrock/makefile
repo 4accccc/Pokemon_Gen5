@@ -36,3 +36,4 @@ $(TARGET): $(XLS_ROCKPOS) $(ZONEID_HEADER) $(OBJID_HEADER)
 	
 clean:
 	-rm -f $(TARGET)
+	-rm -f $(CSV_ROCKPOS)
