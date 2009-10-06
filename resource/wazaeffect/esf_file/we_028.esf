@@ -11,6 +11,8 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_028.spa
 &
 #001
 %00
+ポケモン円移動	攻撃側	Ｙ軸左	シフトＨ＋	0	2	10:0:1	0
+タイマーによるウエイト	6
 パーティクルデータロード	w_028
 エミッタ移動	w_028	W_028_028_SUNAKAKE_KEMURI	直線	攻撃側	防御側	2:0:0
 エミッタ移動	w_028	W_028_028_SUNAKAKE_KONA	直線	攻撃側	防御側	2:0:0
