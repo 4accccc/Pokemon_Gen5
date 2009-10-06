@@ -67,7 +67,7 @@ endif
 do-build:	subdir $(TARGETDIR)/$(targetname).narc
 
 subdir:
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、サブファルダのmakefileを利用する
 	@$(MAKE_SUBDIR)
 endif
 
@@ -88,7 +88,9 @@ endif
 #※生成ファイルを削除するように記述を変更してください
 #------------------------------------------------------------------------------
 clean:
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、サブファルダのmakefileを利用する
 	@$(MAKE_SUBDIR)
+endif
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCGR
 	rm -f *.NCLR
