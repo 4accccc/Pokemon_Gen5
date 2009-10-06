@@ -9,7 +9,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c02r0301.h"
   
-  //.include  "c02r0301.h"
+  .include  "c02r0301.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,10 +19,11 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 
-//【修正（村上くん）】イベントの大幅な修正が入ったようです。GMMファイルで確認をお願いします！
+//
 
-_EVENT_DATA    ev_c02r0301_talkobj_woman2
-_EVENT_DATA    ev_c02r0301_talkobj_poke
+_EVENT_DATA    ev_c02r0301_woman2_01
+_EVENT_DATA    ev_c02r0301_poke_01
+_EVENT_DATA    ev_c02r0301_girl1_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -34,17 +35,80 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C02R0301 WOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c02r0301_talkobj_woman2
-	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c02r0301_woman2_01 )
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+EVENT_START   ev_c02r0301_woman2_01
+
+
+_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0301_woman2_01  )
+
+//【仮】アクセサリー入れ、入手場所、アクセサリーの仕様が分からない為、保留
+//アクセサリー入れを持っているかどうかで、分岐
+/*
+	_ITEM_CHK  ( ITEM_AKUSESARIIIRE,  1,  ret_wk    )  
+	
+	IF $ret_wk == 1 THEN     //アクセサリー入れがある＝1、ない＝0
+  	//「ある」場合の処理
+  	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0301_woman2_02  ) 
+  	
+  
+	ELSE
+  	//「ない」場合の処理
+  
+  	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0301_woman2_01  ) 
+  	
+	ENDIF
+*/
+
 EVENT_END
 
 /**************************************************************/
+/*  C02R0301 GIRL1の会話用イベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_c02r0301_girl1_01
+
+	DEFINE_LOCAL	nathuki_check
+	
+	//手持ちポケモン先頭（0番）のなつき度を保存
+	_GET_TEMOTI_NATSUKI( nathuki_check, 0 )
+	
+	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0301_girl1_01  ) 
+	
+
+	_OBJ_ANIME_WAIT()
+	
+	//手持ちポケモン先頭（0番）のなつき度で分岐
+	
+	IF $nathuki_check < 70 THEN     
+  		//なつき度が0～69の処理
+  		//まだまだ　これからって　かんじね
+  		
+  		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0301_girl1_04  )
+  	
+  	ELSE
+		IF $nathuki_check < 120 THEN
+  			//なつき度が70～119の処理
+  			//うん　すこし　なついている
+  			
+  			_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0301_girl1_03 )
+  	
+  		ELSE
+  			
+  			IF $nathuki_check < 255 THEN
+  				//なつき度が120～255の処理
+  				//あなたに　なついているのね
+  				
+  				_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0301_girl1_02 )
+  			
+  			ELSE
+  				
+  			ENDIF
+  		ENDIF
+	ENDIF
+	
+EVENT_END
+/**************************************************************/
 /*  C02R0301 POKEの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c02r0301_talkobj_poke
+EVENT_START   ev_c02r0301_poke_01
 
 	_EASY_TALK_POKEVOICE( MONSNO_HUSIGIDANE, msg_c02r0301_poke_01 )	//【仮】フシギダネの鳴き声。
 
