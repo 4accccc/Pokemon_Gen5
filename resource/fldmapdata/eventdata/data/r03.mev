@@ -1,10 +1,10 @@
 #event data
-#save date:2009/09/29 14:52:01
+#save date:2009/10/06 15:08:09
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/09/29 14:52:01
+#save date:2009/10/06 15:08:09
 2
 #hold event type:
 1
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_R03_TALKOBJ_OLDWOMAN1
+SCRID_R03_OLDWOMAN1
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -53,7 +53,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_R03_TALKOBJ_BABYGIRL1B
+SCRID_R03_BABYGIRL1B
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -82,7 +82,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_R03_TALKOBJ_BABYGIRL1A
+SCRID_R03_BABYGIRL1A
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -111,7 +111,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_R03_TALKOBJ_WOMAN3
+SCRID_R03_WOMAN3
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -333,7 +333,7 @@ DIR_LEFT
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/09/29 14:52:01
+#save date:2009/10/06 15:08:09
 2
 #hold event type:
 1
@@ -343,7 +343,7 @@ DIR_LEFT
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/09/29 14:52:01
+#save date:2009/10/06 15:08:09
 2
 #hold event type:
 1
@@ -398,7 +398,7 @@ WK_SCENE_R03
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/09/29 14:52:01
+#save date:2009/10/06 15:08:09
 2
 #hold event type:
 1

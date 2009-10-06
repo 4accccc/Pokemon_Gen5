@@ -20,12 +20,11 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 
-//【修正（安藤さん）】上から４つ、ラベル修正しますか
 //【修正（安藤さん）】看板イベントがなさそうです。
-_EVENT_DATA    ev_r03_talkobj_oldwoman1
-_EVENT_DATA    ev_r03_talkobj_woman3
-_EVENT_DATA    ev_r03_talkobj_babygirl1a
-_EVENT_DATA    ev_r03_talkobj_babygirl1b
+_EVENT_DATA    ev_r03_oldwoman1
+_EVENT_DATA    ev_r03_woman3
+_EVENT_DATA    ev_r03_babygirl1a
+_EVENT_DATA    ev_r03_babygirl1b
 _EVENT_DATA    ev_pos_r03_rival_01
 _EVENT_DATA    ev_pos_r03_rival_02
 _EVENT_DATA    ev_r03_rival_03
@@ -42,7 +41,7 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*  R03 POSで友達とバトル、ハカイ団と出会う*/
+/*  R03 POSで友達とバトル、プラズマ団と出会う*/
 /**************************************************************/
 EVENT_START   ev_pos_r03_rival_01
 
@@ -65,9 +64,8 @@ EVENT_START   ev_pos_r03_rival_01
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
-	//戦闘突入
+	//戦闘突入（仮）
 	_BLACK_OUT(2)
-	_AB_KEYWAIT()			//【修正（安藤さん）】これは外しちゃいましょう。あと戦闘の仮処理なので【仮】を入れておいてください。
 	_DISP_FADE_END_CHECK()
 	_BLACK_IN(2)
 	_DISP_FADE_END_CHECK()
@@ -76,7 +74,7 @@ EVENT_START   ev_pos_r03_rival_01
 	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_02,R03_RIVAL)
 	_AB_KEYWAIT()
 	
-	//サポート、ハカイ団に気づいて駆け寄る。
+	//サポート、プラズマ団に気づいて駆け寄る。
 	_OBJ_ANIME(R03_SUPPORT,anm_r03_support_01)
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_OPEN(msg_r03_white_01,R03_SUPPORT)
@@ -86,7 +84,7 @@ EVENT_START   ev_pos_r03_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	
-	//主人公とライバルハカイ団のもとに移動
+	//主人公とライバルプラズマ団のもとに移動
 	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_03,R03_RIVAL)
 	_AB_KEYWAIT()
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_r03_player_01)
@@ -95,7 +93,7 @@ EVENT_START   ev_pos_r03_rival_01
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_r03_rival_02)
 	_OBJ_ANIME_WAIT()
 	
-	//幼女とハカイ団
+	//幼女とプラズマ団
 	_BALLOONWIN_OBJMSG_OPEN(msg_r03_babygirl1_01,R03_BABYGIRL_02)
 	_AB_KEYWAIT()
 	_BALLOONWIN_OBJMSG_OPEN(msg_r03_hakaim_01,R03_HAKAIM_02)
@@ -106,7 +104,7 @@ EVENT_START   ev_pos_r03_rival_01
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
-	//ハカイ団逃走
+	//プラズマ団逃走
 	_OBJ_ANIME(R03_HAKAIM_02,anm_r03_hakai_01)
 	_OBJ_ANIME(R03_HAKAIM_01,anm_r03_hakai_01)
 	_OBJ_ANIME_WAIT()
@@ -125,6 +123,7 @@ EVENT_START   ev_pos_r03_rival_01
 		_BALLOONWIN_CLOSE()
 		_OBJ_ANIME(R03_RIVAL,anm_r03_rival_03)
 		_OBJ_ANIME_WAIT()
+		//プラズマ団のPOSイベント起動
 		$WK_SCENE_R03 = 1
 	ELSE
   //「いいえ」
@@ -137,7 +136,7 @@ EVENT_START   ev_pos_r03_rival_01
 EVENT_END
 
 /**************************************************************/
-/*  R03 POSハカイ団と戦うオッケーを出すまで戻す*/
+/*  R03 POSプラズマ団と戦うオッケーを出すまで戻す*/
 /**************************************************************/
 EVENT_START   ev_pos_r03_rival_02
 	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_07,R03_RIVAL)
@@ -147,14 +146,14 @@ EVENT_START   ev_pos_r03_rival_02
 EVENT_END
 
 /**************************************************************/
-/*  R03 ハカイ団と戦う前の幼女*/
+/*  R03 プラズマ団と戦う前の幼女*/
 /**************************************************************/
 EVENT_START   ev_r03_babygirl_02
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03_babygirl1_02)
 EVENT_END
 
 /**************************************************************/
-/*  R03 ハカイ団と戦う前のサポート*/
+/*  R03 プラズマ団と戦う前のサポート*/
 /**************************************************************/
 EVENT_START   ev_r03_support_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03_white_04)
@@ -162,7 +161,7 @@ EVENT_END
 
 
 /**************************************************************/
-/*  R03 ハカイ団と戦うかライバルから質問*/
+/*  R03 プラズマ団と戦うかライバルから質問*/
 /**************************************************************/
 EVENT_START   ev_r03_rival_03
 	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_04,R03_RIVAL)
@@ -177,6 +176,7 @@ EVENT_START   ev_r03_rival_03
 		_BALLOONWIN_CLOSE()
 		_OBJ_ANIME(R03_RIVAL,anm_r03_rival_03)
 		_OBJ_ANIME_WAIT()
+		//プラズマ団のPOSイベント起動
 		$WK_SCENE_R03 = 1
 	ELSE
   //「いいえ」
@@ -188,14 +188,15 @@ EVENT_START   ev_r03_rival_03
 EVENT_END
 
 /**************************************************************/
-/*  R03 ライバルと一緒にハカイ団と戦う*/
+/*  R03 ライバルと一緒にプラズマ団と戦う*/
 /**************************************************************/
 EVENT_START   ev_pos_r03_rival_04
+	
 	//主人公、ライバルの隣へ
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_r03_player_03)
 	_OBJ_ANIME_WAIT()
 	
-	//ライバルとハカイ団会話
+	//ライバルとプラズマ団会話
 	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_08,R03_RIVAL)
 	_AB_KEYWAIT()
 	_BALLOONWIN_OBJMSG_OPEN(msg_r03_hakaim_03,R03_HAKAIM_02)
@@ -206,7 +207,7 @@ EVENT_START   ev_pos_r03_rival_04
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
-	//ハカイ団とダブルバトル！
+	//プラズマ団とダブルバトル！
 	_BLACK_OUT(2)
 	_AB_KEYWAIT()
 	_DISP_FADE_END_CHECK()
@@ -219,7 +220,7 @@ EVENT_START   ev_pos_r03_rival_04
 	_BLACK_IN(2)
 	_DISP_FADE_END_CHECK()
 	
-	//ライバルとハカイ団会話
+	//ライバルとプラズマ団会話
 	_BALLOONWIN_OBJMSG_OPEN(msg_r03_hakaim_05,R03_HAKAIM_02)
 	_AB_KEYWAIT()
 	_BALLOONWIN_OBJMSG_OPEN(msg_r03_black_10,R03_RIVAL)
@@ -228,7 +229,7 @@ EVENT_START   ev_pos_r03_rival_04
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
-	//ハカイ団逃走
+	//プラズマ団逃走
 	_OBJ_ANIME(R03_HAKAIM_02,anm_r03_hakai_01)
 	_OBJ_ANIME(R03_HAKAIM_01,anm_r03_hakai_01)
 	_OBJ_ANIME_WAIT()
@@ -265,7 +266,7 @@ EVENT_START   ev_pos_r03_rival_04
 	_FLAG_SET(FV_R03_RIVAL_01)
 	_FLAG_SET(FV_R03_POKE)
 
-	//【修正（安藤さん）】ワークを 2 にしたことでイベントフローがどうなるかを簡単に書いておいてください
+	//r03のイベントをすべて起動しなくする
 	$WK_SCENE_R03 = 2
 
 
@@ -307,7 +308,7 @@ _ANIME_LABEL	anm_r03_support_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R03ライバルとサポートと一緒にハカイ団の元へ
+//	R03ライバルとサポートと一緒にプラズマ団の元へ
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03_rival_02
@@ -316,7 +317,7 @@ _ANIME_LABEL	anm_r03_rival_02
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------
-//	R03ハカイ団逃げる
+//	R03プラズマ団逃げる
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03_hakai_01
@@ -335,7 +336,7 @@ _ANIME_LABEL	anm_r03_player_02
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R03ライバル、ハカイ団を追う
+//	R03ライバル、プラズマ団を追う
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03_rival_03
@@ -387,46 +388,31 @@ _ANIME_LABEL	anm_r03_rival_06
 	_ANIME_DATA	AC_WALK_L_8F,12
 	_ANIME_DATA	ACMD_END,0
 
-
-//【修正（安藤さん）】これ以降、全部EASYコマンドに直せると思います。
-
 /**************************************************************/
 /*  R03 OLDWOMAN1の会話のイベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_r03_talkobj_oldwoman1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r03_oldwoman1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_r03_oldwoman1
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03_oldwoman1_01)
 EVENT_END
 
 /**************************************************************/
 /*  R03 WOMAN3の会話のイベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_r03_talkobj_woman3
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r03_woman3_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_r03_woman3
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03_woman3_01)
 EVENT_END
 
 /**************************************************************/
 /*  R03 BABYGIRL1aの会話のイベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_r03_talkobj_babygirl1a
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r03_babygirl1a_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_r03_babygirl1a
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03_babygirl1a_01)
 EVENT_END
 
 /**************************************************************/
 /*  R03 BABYGIRL1bの会話のイベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_r03_talkobj_babygirl1b
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r03_babygirl1b_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_r03_babygirl1b
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r03_babygirl1b_01)
 EVENT_END
 
