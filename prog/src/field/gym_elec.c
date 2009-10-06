@@ -666,8 +666,12 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
       u8 anm_idx;
 
       obj_idx = OBJ_CAP_1+i;
-      anm_idx = ANM_CAP_MOV1+(i*2);
-      //レール移動の決定(偶数インデックスを有効)
+      if ( gmk_sv_work->LeverSw[i] ){
+        anm_idx = ANM_CAP_MOV1+(i*2)+1; //切り替え後
+      }else{
+        anm_idx = ANM_CAP_MOV1+(i*2); //デフォルト
+      }
+      //レール移動の決定
       FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ELEC_UNIT_IDX, obj_idx, anm_idx, TRUE);
       //蓋アニメをセットして止めておく
       FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ELEC_UNIT_IDX, obj_idx, ANM_CAP_OPCL, TRUE);
@@ -879,10 +883,12 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
   {
     GAMESYS_WORK *gsys  = FIELDMAP_GetGameSysWork( fieldWork );
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-      test_GYM_ELEC_ChangePoint(gsys, 3);
+      ///test_GYM_ELEC_ChangePoint(gsys, 3);
+      //GX_ResetBankForTex(); 
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-      test_GYM_ELEC_CallMoveEvt(gsys);
+      //test_GYM_ELEC_CallMoveEvt(gsys);
+      //GX_SetBankForTex(GX_VRAM_TEX_012_ABC);
     }
     if (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT ){
       FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
