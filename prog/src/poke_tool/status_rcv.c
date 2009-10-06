@@ -912,13 +912,28 @@ static u8 Friend_Up( POKEMON_PARAM * pp, s32 now, s32 prm, u16 place, u32 heap )
 //============================================================================================
 //============================================================================================
 //--------------------------------------------------------------------------------------------
-/**
+/**ポケモン回復処理(単体・全体
  */
 //--------------------------------------------------------------------------------------------
-void PokeParty_RecoverAll(POKEPARTY * party)
+void PokeParam_RecoverAll(POKEMON_PARAM * pp)
 {
-	int i, j, total;
+  int j;
 	u32 buf;
+	//HP全回復
+	buf = PP_Get( pp, ID_PARA_hpmax, NULL );
+	PP_Put(pp, ID_PARA_hp, buf);
+	//状態異常回復
+	buf = 0;
+	PP_Put(pp, ID_PARA_condition, buf);
+	//PP全回復
+	for (j = 0; j < 4; j++) {
+		if (PP_RcvCheck(pp,j) == TRUE) {
+			PP_Recover(pp, j, PP_RCV_ALL);
+		}
+	}
+}void PokeParty_RecoverAll(POKEPARTY * party)
+{
+	int i,total;
 	POKEMON_PARAM * pp;
 
 	total = PokeParty_GetPokeCount(party);
@@ -927,20 +942,10 @@ void PokeParty_RecoverAll(POKEPARTY * party)
 		if (PP_Get(pp, ID_PARA_poke_exist, NULL) == FALSE) {
 			continue;
 		}
-		//HP全回復
-		buf = PP_Get( pp, ID_PARA_hpmax, NULL );
-		PP_Put(pp, ID_PARA_hp, buf);
-		//状態異常回復
-		buf = 0;
-		PP_Put(pp, ID_PARA_condition, buf);
-		//PP全回復
-		for (j = 0; j < 4; j++) {
-			if (PP_RcvCheck(pp,j) == TRUE) {
-				PP_Recover(pp, j, PP_RCV_ALL);
-			}
-		}
-
+		PokeParam_RecoverAll( pp );
 	}
 }
+
+
 
 
