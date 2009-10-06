@@ -11,7 +11,7 @@
 #include <gflib.h>
 #include "system/gra_tool.h"
 
-#include "nsbtx_to_clwk.h"
+#include "ui/nsbtx_to_clwk.h"
 
 #include "arc_def.h"
 
