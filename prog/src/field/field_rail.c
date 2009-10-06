@@ -394,6 +394,27 @@ void FIELD_RAIL_MAN_GetBindWorkPos( const FIELD_RAIL_MAN * man, VecFx32* pos )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バインドした、レールワークが動作しているかチェック
+ *
+ *	@retval TRUE  動作している
+ *	@retval FALSE 動作していない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_RAIL_MAN_IsBindWorkMove( const FIELD_RAIL_MAN * man )
+{
+  GF_ASSERT( man );
+  if(man->camera_bind_work)
+  {
+    if( FIELD_RAIL_WORK_IsAction( man->camera_bind_work ) || FIELD_RAIL_WORK_IsLastAction( man->camera_bind_work ) )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
 #ifdef PM_DEBUG
 // デバック専用、バインドしたワークを編集可能な形で取得
 FIELD_RAIL_WORK* FIELD_RAIL_MAN_DEBUG_GetBindWork( const FIELD_RAIL_MAN * man )
