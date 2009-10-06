@@ -136,7 +136,7 @@ extern u32 APP_COMMON_GetDummyAnimeArcIdx( const APP_COMMON_MAPPING mapping );
 
 //ボールアイコン取得
 //2*2キャラのアイコンです。大きい方はアイテムアイコンから取得してください
-extern u32 APP_COMMON_GetBallPltArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping );
-extern u32 APP_COMMON_GetBallCharArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping );
+extern u32 APP_COMMON_GetBallPltArcIdx( const BALL_ID ball );
+extern u32 APP_COMMON_GetBallCharArcIdx( const BALL_ID ball );
 extern u32 APP_COMMON_GetBallCellArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping );
 extern u32 APP_COMMON_GetBallAnimeArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping );

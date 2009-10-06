@@ -517,6 +517,7 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
 #endif //UI_TEMPLATE_ITEM_ICON
 
 #ifdef UI_TEMPLATE_POKE2D
+	//ポケモンOBJ,BG読みこみ
 	UITemplate_POKE2D_LoadResourceBG( wk, wk->heapID );
 	{	
 		GFL_CLUNIT *clunit = UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
@@ -524,6 +525,14 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
 		UITemplate_POKE2D_CreateCLWK( wk, clunit, wk->heapID );
 	}
 #endif //UI_TEMPLATE_POKE2D
+
+#ifdef UI_TEMPLATE_BALL
+  // どうぐアイコンの読み込み
+  { 
+		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
+    UITemplate_BALLICON_CreateCLWK( wk, BALLID_MONSUTAABOORU, clunit, wk->heapID );
+  }
+#endif //UI_TEMPLATE_BALL
 
 	//@todo	フェードシーケンスがないので
 	GX_SetMasterBrightness(0);
@@ -546,6 +555,11 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
 static GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	UI_TEMPLATE_MAIN_WORK* wk = mywk;
+
+#ifdef UI_TEMPLATE_BALL
+  // どうぐアイコンの破棄
+   UITemplate_BALLICON_DeleteCLWK( wk );
+#endif //UI_TEMPLATE_BALL
 
 #ifdef UI_TEMPLATE_POKE2D
 	UITemplate_POKE2D_DeleteCLWK( wk );
