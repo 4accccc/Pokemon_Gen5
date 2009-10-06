@@ -16,6 +16,12 @@
 #include "fieldmap.h"
 #include "map_attr.h"
 
+#include "fldeff_shadow.h"
+#include "fldeff_kemuri.h"
+#include "fldeff_grass.h"
+#include "fldeff_footmark.h"
+#include "fldeff_reflect.h"
+
 #define MMDL_RAIL_NULL  // fldmmdl_move‚©‚ç‚Á‚Ä‚«‚½A¡Œã‘g‚İ‚Ş‰Â”\«‚ª‚ ‚éˆ—
 
 //-----------------------------------------------------------------------------
@@ -112,6 +118,10 @@ static void MMdl_MapAttrSEProc_1(
 		MMDL * mmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
 
 
+
+
+
+static FLDEFF_CTRL * mmdl_GetFldEffCtrl( MMDL *mmdl );
 
 
 
@@ -1338,4 +1348,24 @@ static void MMdl_MapAttrSEProc_1(
 	#endif
 
 #endif
+}
+
+
+
+
+
+
+
+//--------------------------------------------------------------
+/**
+ * FLDEFF_CTRLæ“¾
+ * @param mmdl  MMDL*
+ * @retval FLDEFF_CTRL*
+ */
+//--------------------------------------------------------------
+static FLDEFF_CTRL * mmdl_GetFldEffCtrl( MMDL *mmdl )
+{
+  const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+  FIELDMAP_WORK *fieldMapWork = MMDLSYS_GetFieldMapWork( (MMDLSYS*)mmdlsys );
+  return( FIELDMAP_GetFldEffCtrl(fieldMapWork) );
 }

@@ -473,6 +473,35 @@ BOOL MMDL_GetRailDirLocation( const MMDL *mmdl, u16 dir, RAIL_LOCATION* location
   return FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, sc_DIR_TO_RAILKEY[dir], location ); 
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  dir方向にレールで進んだ場合のグリッド座標を設定する
+ *
+ *	@param	mmdl    モデルワーク
+ *	@param	dir     方向
+ */
+//-----------------------------------------------------------------------------
+void MMDL_Rail_UpdateGridPosDir( MMDL *mmdl, u16 dir )
+{
+  const MMDLSYS* cp_sys = MMDL_GetMMdlSys( mmdl );
+  const FLDNOGRID_MAPPER* cp_mapper = MMDLSYS_GetNOGRIDMapper( cp_sys );
+  const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
+  VecFx32 pos;
+  RAIL_LOCATION location;
+
+  MMDL_GetRailLocation( mmdl, &location );
+  FIELD_RAIL_MAN_CalcRailKeyPos( cp_railman, &location, sc_DIR_TO_RAILKEY[dir], &pos ); 
+  
+  // 3D座標をグリッドに設定する
+	MMDL_SetOldGridPosX( mmdl, MMDL_GetGridPosX(mmdl) );
+	MMDL_SetOldGridPosY( mmdl, MMDL_GetGridPosY(mmdl) );
+	MMDL_SetOldGridPosZ( mmdl, MMDL_GetGridPosZ(mmdl) );
+	
+	MMDL_SetGridPosX( mmdl, SIZE_GRID_FX32(pos.x) );
+	MMDL_SetGridPosY( mmdl, SIZE_GRID_FX32(pos.y) );
+	MMDL_SetGridPosZ( mmdl, SIZE_GRID_FX32(pos.z) );
+}
+
 
 //----------------------------------------------------------------------------
 /**

@@ -553,6 +553,34 @@ fx32 FIELD_RAIL_MAN_GetRailGridSize( const FIELD_RAIL_MAN * man )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ロケーションをキーの方向に１グリッド分進めた３D座標を取得
+ *
+ *	@param	man             マネージャ
+ *	@param	now_location    今のロケーション
+ *	@param	key             キー
+ *	@param	pos             ３D座標
+ *
+ *	@retval TRUE  １グリッド進める
+ *	@retval FALSE １グリッドすすめない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_RAIL_MAN_CalcRailKeyPos(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * now_location, RAIL_KEY key, VecFx32* pos)
+{
+  GF_ASSERT( man );
+  GF_ASSERT( now_location );
+  GF_ASSERT( pos );
+
+  FIELD_RAIL_WORK_SetLocation( man->calc_work, now_location );
+  FIELD_RAIL_WORK_ForwardReq( man->calc_work, RAIL_FRAME_1, key );
+  FIELD_RAIL_WORK_Update( man->calc_work );
+  FIELD_RAIL_WORK_GetPos( man->calc_work, pos );
+
+  return FIELD_RAIL_WORK_IsLastAction( man->calc_work );
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  ロケーションをキーの方向に１グリッド分進めたロケーションを取得
  *
  *	@param	man             マネージャ

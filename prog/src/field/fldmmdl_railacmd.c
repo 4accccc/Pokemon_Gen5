@@ -81,7 +81,7 @@ static void AcRailDirSet( MMDL * mmdl, int dir )
 {
 	MMDL_SetDirDisp( mmdl, dir );
 	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
-//	MMDL_UpdateGridPosCurrent( mmdl );
+	MMDL_UpdateGridPosCurrent( mmdl );
 	MMDL_IncAcmdSeq( mmdl );
 }
 
@@ -160,7 +160,7 @@ static void AcRailWalkInit( MMDL * mmdl, int dir, s16 wait, u16 draw )
 {
 
   MMDL_ReqRailMove( mmdl, dir, wait );
-//	MMDL_UpdateGridPosDir( mmdl, dir );
+	MMDL_Rail_UpdateGridPosDir( mmdl, dir );
 	MMDL_SetDirAll( mmdl, dir );
 	MMDL_SetDrawStatus( mmdl, draw );
 	MMDL_OnStatusBit( mmdl, MMDL_STABIT_MOVE_START );
@@ -504,7 +504,7 @@ static void AcRailStayWalkWorkInit( MMDL * mmdl, int dir, s16 wait, u16 draw )
 	
 	MMDL_SetDirDisp( mmdl, dir );
 	MMDL_SetDrawStatus( mmdl, draw );
-//	MMDL_UpdateGridPosCurrent( mmdl );
+	MMDL_UpdateGridPosCurrent( mmdl );
 	MMDL_IncAcmdSeq( mmdl );
 }
 
