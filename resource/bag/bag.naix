@@ -51,7 +51,12 @@ enum {
 	NARC_bag_bag_win04_d_NCGR = 37,
 	NARC_bag_bag_win04_d_NCLR = 38,
 	NARC_bag_bag_win05_d_NCGR = 39,
-	NARC_bag_bag_win05_d_NSCR = 40
+	NARC_bag_bag_win05_d_NCLR = 40,
+	NARC_bag_bag_win05_d_NSCR = 41,
+	NARC_bag_bag_win06_d_NANR = 42,
+	NARC_bag_bag_win06_d_NCER = 43,
+	NARC_bag_bag_win06_d_NCGR = 44,
+	NARC_bag_bag_win06_d_NCLR = 45
 };
 
 /* NARC_BAG_NAIX_ */
