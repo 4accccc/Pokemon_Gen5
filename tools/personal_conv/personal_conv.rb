@@ -422,8 +422,10 @@ end
   cnt = 0
   open( ARGV[ ARGV_READ_FILE ] ) {|fp_r|
     while str = fp_r.gets
+      str = str.tr( "\"\r\n", "" )
+      split_data = str.split(/,/)
+      next if split_data.size <= 1       #サーバからのエクスポートでゴミレコードが入ることがあるので、排除する
       read_data[ cnt ] = str
-      read_data[ cnt ] = read_data[ cnt ].tr( "\"\r\n", "" )
       cnt += 1
     end
   }
