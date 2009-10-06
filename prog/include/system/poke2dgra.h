@@ -12,6 +12,7 @@
 
 #include "poke_tool/poke_tool.h"
 #include "system/pokegra.h"
+#include "app/app_menu_common.h"
 
 //=============================================================================
 /**
