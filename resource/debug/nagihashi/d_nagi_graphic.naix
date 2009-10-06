@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: d_nagi_graphic.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_D_NAGI_GRAPHIC_NAIX_
+#define NARC_D_NAGI_GRAPHIC_NAIX_
+
+enum {
+	NARC_d_nagi_graphic_back_NCGR = 0,
+	NARC_d_nagi_graphic_back_NCLR = 1,
+	NARC_d_nagi_graphic_back_NSCR = 2
+};
+
+/* NARC_D_NAGI_GRAPHIC_NAIX_ */
+#endif

@@ -13,8 +13,12 @@
 #include "system/gfl_use.h"
 #include "system/main.h"	//HEAPID
 
+//ポケモンの絵
+#include "system/poke2dgra.h"
+
 //アーカイブ
 #include "arc_def.h"
+#include "arc\debug\d_nagi_graphic.naix"
 
 //プリント
 #include "font/font.naix"
@@ -30,11 +34,17 @@
 */
 //=============================================================================
 //-------------------------------------
+///	マクロ
+//=====================================
+#define MATH_ROUND(x,min,max)	(x < min ? max: x > max ? min: x)
+
+//-------------------------------------
 ///	フレーム
 //=====================================
 enum
 {	
 	BG_FRAME_PRINT_M	= GFL_BG_FRAME0_M,
+	BG_FRAME_BACK_S	= GFL_BG_FRAME0_S,
 };
 //-------------------------------------
 ///	パレット
@@ -42,33 +52,18 @@ enum
 enum
 {	
 	//メインBG
-	PLTID_BG_POKEMON_M		= 0,
-	PLTID_BG_TOUCHBAR_M		= 13,
-	PLTID_BG_INFOWIN_M		= 15,
+	PLTID_BG_M		= 0,
+
+	//サブBG
+	PLTID_BG_BACK_S		= 0,
 
 	//メインOBJ
-	PLTID_OBJ_POKEMON_M		= 0,
-	PLTID_OBJ_TOUCHBAR_M	= 13,
+	PLTID_OBJ_M		= 0,
+
+	//サブOBJ
+	PLTID_OBJ_POKE1_S		= 0,
+	PLTID_OBJ_POKE2_S		= 1,
 };
-//-------------------------------------
-///	リソースインデックス
-//=====================================
-enum 
-{
-	RESID_OBJ_PM1_CHR,
-	RESID_OBJ_PM2_CHR,
-	RESID_OBJ_PM3_CHR,
-
-	RESID_OBJ_PM1_PLT,
-	RESID_OBJ_PM2_PLT,
-	RESID_OBJ_PM3_PLT,
-
-	RESID_OBJ_PM1_CEL,
-	RESID_OBJ_PM2_CEL,
-	RESID_OBJ_PM3_CEL,
-
-	RESID_MAX,
-} ;
 //-------------------------------------
 ///	CLWKインデックス
 //=====================================
@@ -76,14 +71,56 @@ typedef enum
 {
 	CLWKID_POKE1,
 	CLWKID_POKE2,
-	CLWKID_POKE3,
 	CLWKID_MAX,
 } CLWKID;
+//-------------------------------------
+///	リソースインデックス
+//=====================================
+enum 
+{
+	RESID_OBJ_PM1_CHR,
+	RESID_OBJ_PM2_CHR,
+
+	RESID_OBJ_PM1_PLT,
+	RESID_OBJ_PM2_PLT,
+
+	RESID_OBJ_PM1_CEL,
+	RESID_OBJ_PM2_CEL,
+
+	RESID_MAX,
+} ;
 
 //-------------------------------------
 ///	デバッグプリント
 //=====================================
 #define DEBUGPRINT_STRBUFF_LEN	(255)
+
+//-------------------------------------
+///	ポケモングラフィック
+//=====================================
+static const GFL_POINT	sc_pokemon_pos[CLWKID_MAX]	=
+{	
+	{	
+		64,96
+	},
+	{	
+		128+64,96
+	}
+};
+enum
+{	
+	POKEDATA_PARAM_MONSNO,
+	POKEDATA_PARAM_FORMNO,
+	POKEDATA_PARAM_SEX,
+	POKEDATA_PARAM_RARE,
+	POKEDATA_PARAM_MAX,
+};
+
+//-------------------------------------
+///	シンク
+//=====================================
+#define CONT_CURSORMOVE_SYNC	(10)
+
 
 //=============================================================================
 /**
@@ -118,11 +155,17 @@ typedef struct
 //=====================================
 typedef struct 
 {
-	int mons_no;
-	int form_no;
-	int sex;
-	int rare;
-	int dir;
+	union
+	{	
+		struct
+		{	
+			int mons_no;
+			int form_no;
+			int sex;
+			int rare;
+		};
+		int a[POKEDATA_PARAM_MAX];
+	};
 } POKEGRA_DATA;
 
 //-------------------------------------
@@ -133,7 +176,7 @@ typedef struct
 	//CLWK
 	GFL_CLWK			*p_clwk[CLWKID_MAX];
 	//リソース
-	u16						res[RESID_MAX];
+	u32						res[RESID_MAX];
 } POKEGRA_WORK;
 //-------------------------------------
 ///	デバッグプリント用画面
@@ -172,6 +215,16 @@ typedef struct
 
 	//シーケンスシステム
 	SEQ_WORK			seq;
+
+	//ポケモングラフィック
+	POKEGRA_WORK	pokegra;
+
+	//ポケモンの情報
+	POKEGRA_DATA	max;
+	POKEGRA_DATA	min;
+	POKEGRA_DATA	now;
+	int						cursor;
+	u32						sync;
 
 	//デバッグプリントシステム
 	DEBUGPRINT_WORK	print;
@@ -227,7 +280,7 @@ static GFL_CLUNIT* GRAPHIC_OBJ_GetClunit( const GRAPHIC_OBJ_WORK *cp_wk );
 static void POKEGRA_Init( POKEGRA_WORK *p_wk, GFL_CLUNIT *clunit, HEAPID heapID );
 static void POKEGRA_Exit( POKEGRA_WORK *p_wk );
 static void POKEGRA_Main( POKEGRA_WORK *p_wk );
-static void POKEGRA_ReLoad( POKEGRA_WORK *p_wk, CLWKID clwkID, const POKEGRA_DATA *p_data );
+static void POKEGRA_ReLoad( POKEGRA_WORK *p_wk, GFL_CLUNIT *clunit, const POKEGRA_DATA *cp_data, HEAPID heapID );
 //-------------------------------------
 ///	DEBUGPRINT
 //=====================================
@@ -238,6 +291,7 @@ static void DEBUGPRINT_Close( DEBUGPRINT_WORK *p_wk );
 static void DEBUGPRINT_Print( DEBUGPRINT_WORK *p_wk, u16 x, u16 y, const char *cp_str );
 static void DEBUGPRINT_PrintV( DEBUGPRINT_WORK *p_wk, u16 x, u16 y, const char *cp_str, ... );
 static void DEBUGPRINT_Clear( DEBUGPRINT_WORK *p_wk );
+static void DEBUGPRINT_Update( DEBUGPRINT_WORK *p_wk, const int *cp_cursor, const POKEGRA_DATA *cp_now, const POKEGRA_DATA *cp_max );
 //-------------------------------------
 ///	SEQ
 //=====================================
@@ -253,6 +307,12 @@ static void SEQ_End( SEQ_WORK *p_wk );
 static void SEQFUNC_FadeOut( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_FadeIn( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
+//-------------------------------------
+///	ETC
+//=====================================
+static void BG_LoadResource( HEAPID heapID );
+static void POKEGRADATA_GetMinMax( POKEGRA_DATA *p_min, POKEGRA_DATA *p_max, POKEGRA_DATA *p_now, HEAPID heapID );
+
 //=============================================================================
 /**
  *					データ
@@ -438,11 +498,24 @@ static GFL_PROC_RESULT DEBUG_POKE2DCHECK_PROC_Init
 	//グラフィック初期化
 	GRAPHIC_Init( &p_wk->graphic, HEAPID_NAGI_DEBUG_SUB );
 
+	BG_LoadResource( HEAPID_NAGI_DEBUG_SUB );
+
 	//モジュール初期化
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeOut );	//最初はFadeOutシーケンス
+	{	
+		GFL_CLUNIT *clunit	= GRAPHIC_GetClunit( &p_wk->graphic );
+		POKEGRA_Init( &p_wk->pokegra, clunit, HEAPID_NAGI_DEBUG_SUB );
+	}
 	DEBUGPRINT_Init( &p_wk->print, BG_FRAME_PRINT_M, 32, 24, HEAPID_NAGI_DEBUG_SUB );
 	DEBUGPRINT_Open( &p_wk->print );
 
+	GFL_STD_MemClear( &p_wk->now, sizeof(POKEGRA_DATA) );
+	p_wk->now.mons_no	= MONSNO_HUSIGIDANE;
+
+	POKEGRADATA_GetMinMax( &p_wk->min, &p_wk->max, &p_wk->now, HEAPID_NAGI_DEBUG_SUB );
+
+	//初期プリント
+	DEBUGPRINT_Update( &p_wk->print, &p_wk->cursor, &p_wk->now, &p_wk->max );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -466,6 +539,7 @@ static GFL_PROC_RESULT DEBUG_POKE2DCHECK_PROC_Exit
 	//モジュール破棄
 	DEBUGPRINT_Close( &p_wk->print );
 	DEBUGPRINT_Exit( &p_wk->print );
+	POKEGRA_Exit( &p_wk->pokegra );
 	SEQ_Exit( &p_wk->seq );
 
 	//グラフィック破棄
@@ -539,7 +613,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, HEAPID heapID )
 		GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
 		GX_VRAM_OBJ_128_B,					// メイン2DエンジンのOBJ
 		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-		GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJ_128_D,       // サブ2DエンジンのOBJ
 		GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
 		GX_VRAM_TEX_NONE,						// テクスチャイメージスロット
 		GX_VRAM_TEXPLTT_NONE,				// テクスチャパレットスロット
@@ -824,6 +898,15 @@ static GFL_CLUNIT* GRAPHIC_OBJ_GetClunit( const GRAPHIC_OBJ_WORK *cp_wk )
  *	ポケモンの絵
  */
 //=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモンの絵初期化
+ *
+ *	@param	POKEGRA_WORK *p_wk	ワーク
+ *	@param	*clunit		CLUNIT
+ *	@param	heapID		ヒープID
+ */
+//-----------------------------------------------------------------------------
 static void POKEGRA_Init( POKEGRA_WORK *p_wk, GFL_CLUNIT *clunit, HEAPID heapID )
 {	
 	GFL_STD_MemClear( p_wk, sizeof(POKEGRA_WORK) );
@@ -837,48 +920,130 @@ static void POKEGRA_Init( POKEGRA_WORK *p_wk, GFL_CLUNIT *clunit, HEAPID heapID 
 		}
 	}
 
-	//POKEMON_PASO_PARAM	*p_ppp;
-
-
-
-
-	
-	//CLWK作成
+	//リソース作成
+	//デフォルトはふしぎだね
+	{	
+		POKEGRA_DATA pokedata;
+		GFL_STD_MemClear( &pokedata, sizeof(POKEGRA_DATA) );
+		pokedata.mons_no	= MONSNO_HUSIGIDANE;
+		POKEGRA_ReLoad( p_wk, clunit, &pokedata, heapID );
+	}
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモン絵破棄
+ *
+ *	@param	POKEGRA_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
 static void POKEGRA_Exit( POKEGRA_WORK *p_wk )
 {	
+	int i;
+	for( i = 0; i < CLWKID_MAX; i++ )
+	{	
+		//リソース破棄
+		if( p_wk->res[RESID_OBJ_PM1_CHR + i] != GFL_CLGRP_REGISTER_FAILED )
+		{	
+			GFL_CLGRP_CGR_Release( p_wk->res[RESID_OBJ_PM1_CHR + i] );
+		}
+		if( p_wk->res[RESID_OBJ_PM1_PLT + i] != GFL_CLGRP_REGISTER_FAILED )
+		{	
+			GFL_CLGRP_PLTT_Release( p_wk->res[RESID_OBJ_PM1_PLT + i] );
+		}
+		if( p_wk->res[RESID_OBJ_PM1_CEL + i] != GFL_CLGRP_REGISTER_FAILED )
+		{	
+			GFL_CLGRP_CELLANIM_Release( p_wk->res[RESID_OBJ_PM1_CEL + i] );
+		}
+	}
 
 	GFL_STD_MemClear( p_wk, sizeof(POKEGRA_WORK) );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモンの絵メイン
+ *
+ *	@param	POKEGRA_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
 static void POKEGRA_Main( POKEGRA_WORK *p_wk )
 {	
 
 }
-static void POKEGRA_ReLoad( POKEGRA_WORK *p_wk, CLWKID clwkID, const POKEGRA_DATA *p_data )
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモンの絵再読み込み
+ *
+ *	@param	POKEGRA_WORK *p_wk				ワーク
+ *	@param	*clunit										ユニット
+ *	@param	POKEGRA_DATA *cp_data			データ
+ *	@param	heapID										ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void POKEGRA_ReLoad( POKEGRA_WORK *p_wk, GFL_CLUNIT *clunit, const POKEGRA_DATA *cp_data, HEAPID heapID )
 {	
-	//リソース破棄
-	if( p_wk->res[RESID_OBJ_PM1_CHR + clwkID] != GFL_CLGRP_REGISTER_FAILED )
+	int i;
+	for( i = 0; i < CLWKID_MAX; i++ )
 	{	
-		GFL_CLGRP_CGR_Release( p_wk->res[RESID_OBJ_PM1_CHR + clwkID] );
+		//リソース破棄
+		if( p_wk->res[RESID_OBJ_PM1_CHR + i] != GFL_CLGRP_REGISTER_FAILED )
+		{	
+			GFL_CLGRP_CGR_Release( p_wk->res[RESID_OBJ_PM1_CHR + i] );
+		}
+		if( p_wk->res[RESID_OBJ_PM1_PLT + i] != GFL_CLGRP_REGISTER_FAILED )
+		{	
+			GFL_CLGRP_PLTT_Release( p_wk->res[RESID_OBJ_PM1_PLT + i] );
+		}
+		if( p_wk->res[RESID_OBJ_PM1_CEL + i] != GFL_CLGRP_REGISTER_FAILED )
+		{	
+			GFL_CLGRP_CELLANIM_Release( p_wk->res[RESID_OBJ_PM1_CEL + i] );
+		}
+	
+		//CLWK破棄
+		if( p_wk->p_clwk[ i ] )
+		{	
+			GFL_CLACT_WK_Remove( p_wk->p_clwk[ i ] );
+		}
 	}
-	if( p_wk->res[RESID_OBJ_PM1_PLT + clwkID] != GFL_CLGRP_REGISTER_FAILED )
-	{	
-		GFL_CLGRP_PLTT_Release( p_wk->res[RESID_OBJ_PM1_PLT + clwkID] );
-	}
-	if( p_wk->res[RESID_OBJ_PM1_CEL + clwkID] != GFL_CLGRP_REGISTER_FAILED )
-	{	
-		GFL_CLGRP_CELLANIM_Release( p_wk->res[RESID_OBJ_PM1_CEL + clwkID] );
-	}
-
-	//CLWK破棄
-	if( p_wk->p_clwk[ clwkID ] )
-	{	
-		GFL_CLACT_WK_Remove( p_wk->p_clwk[ clwkID ] );
-	}
-
+	
 	//リソース読みこみ
 	{	
-		//PP_Create
+		ARCHANDLE *p_handle	= POKE2DGRA_OpenHandle( heapID );
+		int dir;
+		int sex;
+	
+		for( i = 0; i < CLWKID_MAX; i++ )
+		{	
+			dir = i;
+			if( cp_data->sex == 0 )
+			{	
+				sex	= PTL_SEX_MALE;
+			}
+			else if( cp_data->sex == 1 )
+			{	
+				sex	= PTL_SEX_FEMALE;
+			}
+			p_wk->res[RESID_OBJ_PM1_CHR + i]	= POKE2DGRA_OBJ_CGR_Register( p_handle, cp_data->mons_no, cp_data->form_no, sex, cp_data->rare, dir, CLSYS_DRAW_SUB, heapID );
+			p_wk->res[RESID_OBJ_PM1_PLT + i]	= POKE2DGRA_OBJ_PLTT_Register( p_handle, cp_data->mons_no, cp_data->form_no, sex, cp_data->rare, dir, CLSYS_DRAW_SUB, (i+PLTID_OBJ_POKE1_S)*0x20, heapID );
+			p_wk->res[RESID_OBJ_PM1_CEL + i]	= POKE2DGRA_OBJ_CELLANM_Register( cp_data->mons_no, cp_data->form_no, sex, cp_data->rare, dir, APP_COMMON_MAPPING_128K, CLSYS_DRAW_SUB, heapID );
+		}
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
+	
+	//CLWK読みこみ
+	for( i = 0; i < CLWKID_MAX; i++ )
+	{	
+		GFL_CLWK_DATA	cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+		cldata.pos_x	= sc_pokemon_pos[i].x;
+		cldata.pos_y	= sc_pokemon_pos[i].y;
+		p_wk->p_clwk[ i ]	= GFL_CLACT_WK_Create( clunit,
+				p_wk->res[RESID_OBJ_PM1_CHR+i],
+				p_wk->res[RESID_OBJ_PM1_PLT+i],
+				p_wk->res[RESID_OBJ_PM1_CEL+i],
+				&cldata,
+				CLSYS_DEFREND_SUB,
+				heapID
+					);
 	}
 }
 //=============================================================================
@@ -905,7 +1070,7 @@ static void DEBUGPRINT_Init( DEBUGPRINT_WORK *p_wk, u8 frm, u8 w, u8 h, HEAPID h
 
 	//デバッグプリント用フォント
 	p_wk->p_font	= GFL_FONT_Create( ARCID_FONT,
-				NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );	
+				NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );	
 
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( DEBUGPRINT_STRBUFF_LEN, heapID );
 }
@@ -997,7 +1162,6 @@ static void DEBUGPRINT_Close( DEBUGPRINT_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void DEBUGPRINT_Print( DEBUGPRINT_WORK *p_wk, u16 x, u16 y, const char *cp_str )
 {	
-	STRBUF	*p_strbuf;
   int bufLen = DEBUGPRINT_STRBUFF_LEN-1;
   STRCODE strCode[DEBUGPRINT_STRBUFF_LEN];
 
@@ -1007,7 +1171,7 @@ static void DEBUGPRINT_Print( DEBUGPRINT_WORK *p_wk, u16 x, u16 y, const char *c
   GFL_STR_SetStringCode( p_wk->p_strbuf, strCode );
 
 	//書き込み
-	PRINTSYS_Print( p_wk->p_bmp, x, y, p_strbuf, p_wk->p_font );
+	PRINTSYS_Print( p_wk->p_bmp, x, y, p_wk->p_strbuf, p_wk->p_font );
 }
 
 //----------------------------------------------------------------------------
@@ -1041,6 +1205,41 @@ static void DEBUGPRINT_Clear( DEBUGPRINT_WORK *p_wk )
 	GFL_BMP_Clear( p_wk->p_bmp, 0 );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デバッグプリントメイン
+ *
+ *	@param	DEBUGPRINT_WORK *p_wk	ワーク
+ *	@param	int *p_cursor					現在のカーソル
+ *	@param	POKEGRA_DATA *cp_now	データ現在
+ *	@param	POKEGRA_DATA *cp_max	データ最大
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGPRINT_Update( DEBUGPRINT_WORK *p_wk, const int *cp_cursor, const POKEGRA_DATA *cp_now, const POKEGRA_DATA *cp_max )
+{	
+	enum
+	{	
+		START_X	= 16,
+		START_Y	= 32,
+	};
+
+	DEBUGPRINT_Clear( p_wk );
+
+	DEBUGPRINT_PrintV( p_wk, START_X, START_Y+*cp_cursor*16, "→" );
+	DEBUGPRINT_PrintV( p_wk, START_X+16, START_Y, "図鑑番号：%d/%d" , cp_now->mons_no,
+			cp_max->mons_no );
+	DEBUGPRINT_PrintV( p_wk, START_X+16, START_Y+16, "フォルム：%d/%d" , cp_now->form_no,
+			cp_max->form_no );
+	DEBUGPRINT_PrintV( p_wk, START_X+16, START_Y+32, "せいべつ：%d/%d" , cp_now->sex,
+			cp_max->sex );
+	DEBUGPRINT_PrintV( p_wk, START_X+16, START_Y+48, "レア：%d/%d" , cp_now->rare,
+				cp_max->rare );
+
+	DEBUGPRINT_Print( p_wk, START_X+32, 112, "上下で選択" );
+	DEBUGPRINT_Print( p_wk, START_X+32, 128, "左右で変更" );
+	DEBUGPRINT_Print( p_wk, START_X+32, 144, "LRで10ずつ変更" );
+	DEBUGPRINT_Print( p_wk, START_X+32, 160, "SELECTで終了" );
+}
 //=============================================================================
 /**
  *						SEQ
@@ -1240,12 +1439,157 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 		SEQ_FADEIN_WAIT,
 		SEQ_EXIT,
 	};	
+	enum
+	{	
+		UPDATE_NONE		= 0,
+		UPDATE_CHANGE	= 1<<0,
+		UPDATE_CUSOR	= 1<<1,
+	};
 
 	POKE2DCHECK_WORK	*p_wk	= p_param;
+	int is_update;
 
-	if( GFL_UI_TP_GetTrg() )
+	is_update	= UPDATE_NONE;
+
+	//ポケモン番号	MONSNO_MAX
+	//フォルム		POKEPER_ID_form_max	
+	//せいべつ		POKEPER_ID_sex
+	//レア				off. on
+	
+	//キー操作
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+	{
+		p_wk->cursor--;
+		p_wk->cursor	= p_wk->cursor < 0 ? POKEDATA_PARAM_MAX-1: p_wk->cursor;
+
+		is_update	= UPDATE_CUSOR;
+	}
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+	{
+		p_wk->cursor++;
+		p_wk->cursor	%= POKEDATA_PARAM_MAX;
+
+		is_update	= UPDATE_CUSOR;
+	}
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT
+		|| GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+	{
+		p_wk->now.a[ p_wk->cursor ]--;
+		p_wk->now.a[ p_wk->cursor ]	= MATH_ROUND( p_wk->now.a[ p_wk->cursor ], p_wk->min.a[ p_wk->cursor ], p_wk->max.a[ p_wk->cursor ]);
+		is_update	= UPDATE_CHANGE;
+	}
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT
+		|| GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+	{
+		p_wk->now.a[ p_wk->cursor ]++;
+		p_wk->now.a[ p_wk->cursor ]	= MATH_ROUND( p_wk->now.a[ p_wk->cursor ], p_wk->min.a[ p_wk->cursor ], p_wk->max.a[ p_wk->cursor ]);
+		is_update	= UPDATE_CHANGE;
+	}
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+	{
+		p_wk->now.a[ p_wk->cursor ]-=10;
+		p_wk->now.a[ p_wk->cursor ]	= MATH_ROUND( p_wk->now.a[ p_wk->cursor ], p_wk->min.a[ p_wk->cursor ], p_wk->max.a[ p_wk->cursor ]);
+		is_update	= UPDATE_CHANGE;
+	}
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+	{
+		p_wk->now.a[ p_wk->cursor ]+=10;
+		p_wk->now.a[ p_wk->cursor ]	= MATH_ROUND( p_wk->now.a[ p_wk->cursor ], p_wk->min.a[ p_wk->cursor ], p_wk->max.a[ p_wk->cursor ]);
+		is_update	= UPDATE_CHANGE;
+	}
+
+	//ポケモン読み替え
+	if( is_update & UPDATE_CHANGE )
+	{	
+		GFL_CLUNIT *clunit	= GRAPHIC_GetClunit( &p_wk->graphic );
+		POKEGRADATA_GetMinMax( &p_wk->min, &p_wk->max, &p_wk->now, HEAPID_NAGI_DEBUG_SUB );
+		POKEGRA_ReLoad( &p_wk->pokegra, clunit, &p_wk->now, HEAPID_NAGI_DEBUG_SUB );
+	}
+
+	//文字描画UPDATE
+	if( is_update )
+	{	
+		DEBUGPRINT_Update( &p_wk->print, &p_wk->cursor, &p_wk->now, &p_wk->max );
+	}
+
+
+	//終了
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
 	{
 		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 	}
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief BG読みこみ
+ */
+//-----------------------------------------------------------------------------
+static void BG_LoadResource( HEAPID heapID )
+{	
+	//素材読み込み
+	ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_DEBUG_NAGI, heapID );
+
+	//PLT
+	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_d_nagi_graphic_back_NCLR,
+			PALTYPE_SUB_BG, PLTID_BG_BACK_S*0x20, 0, heapID );
+
+	//CHR
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_d_nagi_graphic_back_NCGR, 
+			BG_FRAME_BACK_S, 0, 0, FALSE, heapID );	
+
+	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_d_nagi_graphic_back_NSCR,
+			BG_FRAME_BACK_S, 0, 0, FALSE, heapID );
+
+	GFL_ARC_CloseDataHandle( p_handle );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	最小値と最大値を取得
+ *
+ *	@param	POKEGRA_DATA *p_min			最小
+ *	@param	POKEGRA_DATA *p_max			最大
+ *	@param	POKEGRA_DATA *cp_now		現在の値
+ */
+//-----------------------------------------------------------------------------
+static void POKEGRADATA_GetMinMax( POKEGRA_DATA *p_min, POKEGRA_DATA *p_max, POKEGRA_DATA *p_now, HEAPID heapID )
+{	
+	GFL_STD_MemClear( p_min, sizeof(POKEGRA_DATA) );
+	GFL_STD_MemClear( p_max, sizeof(POKEGRA_DATA) );
+	p_min->mons_no	= 1;
+	p_min->rare			= 0;
+	p_min->form_no	= 0;
+	p_max->mons_no	= MONSNO_END;
+	p_max->rare			= 1;
+
+	if( p_now )
+	{	
+		POKEMON_PERSONAL_DATA*	p_ppd;
+		p_ppd	= POKE_PERSONAL_OpenHandle( p_now->mons_no, p_now->form_no, heapID );
+	
+		p_max->form_no	= POKE_PERSONAL_GetParam( p_ppd, POKEPER_ID_form_max );
+		{	
+			u32 sex;
+			sex	= POKE_PERSONAL_GetParam( p_ppd, POKEPER_ID_sex );
+			switch( sex )
+			{	
+			case POKEPER_SEX_MALE:
+			case POKEPER_SEX_UNKNOWN:
+				p_min->sex			= 0;
+				p_max->sex			= 0;
+				p_now->sex			= 0;
+				break;
+			case POKEPER_SEX_FEMALE:
+				p_min->sex			= 1;
+				p_max->sex			= 1;
+				p_now->sex			= 1;
+				break;
+			default:
+				p_max->sex			= 0;
+				p_max->sex			= 1;
+			}
+		}
+
+		POKE_PERSONAL_CloseHandle( p_ppd );
+	}
+}
