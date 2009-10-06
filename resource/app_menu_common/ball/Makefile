@@ -56,17 +56,15 @@ aobjects = $(subst .nce,.NANR,$(esources))
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(targetname).narc
-
-subdir:
-	@$(MAKE_SUBDIR)
-
-# コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(cobjects)
+do-build:	subdir $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(cobjects)
 	CP *.NCGR ./../
 	CP *.NCLR ./../
 	CP *.NCER ./../
 	CP *.NANR ./../
+
+subdir:
+	@$(MAKE_SUBDIR)
+
 
 #------------------------------------------------------------------------------
 #	make clean ルール
