@@ -7,15 +7,7 @@
  *        09.08.06 GSより移植
  */
 //============================================================================================
-#ifndef	STATUS_RCV_H
-#define	STATUS_RCV_H
-#undef	GLOBAL
-#ifdef	STATUS_RCV_H_GLOBAL
-#define	GLOBAL /*	*/
-#else
-#define	GLOBAL extern
-#endif
-
+#pragma once
 
 //============================================================================================
 //	定数定義
@@ -39,7 +31,7 @@
  * @retval	"FALSE = 使用不可"
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 StatusRecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id );
+extern u8 StatusRecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -55,7 +47,7 @@ GLOBAL u8 StatusRecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id
  * @retval	"FALSE = 使用不可"
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 PokeParty_StatusRecoverCheck(
+extern u8 PokeParty_StatusRecoverCheck(
 			POKEPARTY * party, u16 item, u8 pos1, u8 pos2, u32 heap_id );
 
 //--------------------------------------------------------------------------------------------
@@ -72,7 +64,7 @@ GLOBAL u8 PokeParty_StatusRecoverCheck(
  * @retval	"FALSE = 使用不可"
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 StatusRecover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 heap_id );
+extern u8 StatusRecover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 heap_id );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -89,7 +81,7 @@ GLOBAL u8 StatusRecover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 h
  * @retval	"FALSE = 使用不可"
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 PokeParty_StatusRecover(
+extern u8 PokeParty_StatusRecover(
 			POKEPARTY * party, u16 item, u8 pos1, u8 pos2, u16 place, u32 heap_id );
 
 
@@ -98,13 +90,10 @@ GLOBAL u8 PokeParty_StatusRecover(
  * 単体全回復
  */
 //--------------------------------------------------------------------------------------------
-void PokeParam_RecoverAll(POKEMON_PARAM * pp);
+extern void PokeParam_RecoverAll(POKEMON_PARAM * pp);
 //--------------------------------------------------------------------------------------------
 /**
  * パーティー全回復
  */
 //--------------------------------------------------------------------------------------------
 extern void PokeParty_RecoverAll(POKEPARTY * party);
-
-#undef GLOBAL
-#endif	/* STATUS_RCV_H */
