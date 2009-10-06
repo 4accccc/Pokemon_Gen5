@@ -109,7 +109,7 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
       RTCDate date;
       MUSICAL_SHOT_DATA *shotData = work->shotInitWork->musShotData;
       GFL_RTC_GetDate( &date );
-      shotData->bgNo = 0;
+      shotData->bgNo = 1;
       shotData->spotBit = 2;
       shotData->year = date.year;
       shotData->month = date.month;

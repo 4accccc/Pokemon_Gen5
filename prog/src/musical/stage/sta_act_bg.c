@@ -123,7 +123,7 @@ void	STA_BG_DrawSystem( STA_BG_SYS *work )
     
   	MTX_Identity33(&objState.rotate);
     GFL_G3D_DRAW_DrawObject( work->g3dobj , &objState );
-    
+    /*
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
     {
       OS_Printf("[%.2f][%.2f][%.2f]:[%.2f]\n",FX_FX32_TO_F32(objState.trans.x),FX_FX32_TO_F32(objState.trans.y),FX_FX32_TO_F32(objState.trans.z),FX_FX32_TO_F32(objState.scale.x));
@@ -178,6 +178,7 @@ void	STA_BG_DrawSystem( STA_BG_SYS *work )
         objState.trans.x -= FX32_CONST(0.25f);
       }
     }
+    */
   }
 }
 
@@ -224,7 +225,7 @@ void	STA_BG_DeleteBg( STA_BG_SYS* work )
   {
     GFL_G3D_DeleteResource( work->anmRes[i] );
   }
-
+  GFL_G3D_FreeVramTexture( work->mdlRes );
   GFL_G3D_DeleteResource( work->mdlRes );
 }
 

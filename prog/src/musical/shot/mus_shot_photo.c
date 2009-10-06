@@ -35,6 +35,8 @@
 //======================================================================
 #pragma mark [> define
 
+#define MUS_PHOTO_USE_DEBUG ((USE_DEBUGWIN_SYSTEM)&(1))
+
 #define MUS_PHOTO_SCROLL_OFFSET (128)
 
 #define MUS_PHOTO_FRAME_3D ( GFL_BG_FRAME0_M )
@@ -64,6 +66,15 @@
 //	typedef struct
 //======================================================================
 #pragma mark [> struct
+#if MUS_PHOTO_USE_DEBUG
+typedef struct 
+{
+  BOOL startAnm;
+  s16  scroll;
+}MUS_SHOT_DEBUGWORK;
+#endif
+
+
 struct _MUS_SHOT_PHOTO_WORK
 {
   HEAPID heapId;
@@ -88,7 +99,9 @@ struct _MUS_SHOT_PHOTO_WORK
   GFL_FONT        *fontHandleSmall;
   GFL_FONT        *fontHandleLarge;
   
-//  void *debWork;
+#if MUS_PHOTO_USE_DEBUG
+  MUS_SHOT_DEBUGWORK debWork;
+#endif
 };
 
 //======================================================================
@@ -145,7 +158,7 @@ MUS_SHOT_PHOTO_WORK* MUS_SHOT_PHOTO_InitSystem( MUSICAL_SHOT_DATA *shotData , HE
   STA_POKE_System_SetScrollOffset( work->pokeSys , MUS_PHOTO_SCROLL_OFFSET ); 
   STA_BG_SetScrollOffset( work->bgSys , MUS_PHOTO_SCROLL_OFFSET );
 
-#if USE_DEBUGWIN_SYSTEM
+#if MUS_PHOTO_USE_DEBUG
   MUS_SHOT_PHOTO_InitDebug( work );
 #endif
 
@@ -158,7 +171,7 @@ MUS_SHOT_PHOTO_WORK* MUS_SHOT_PHOTO_InitSystem( MUSICAL_SHOT_DATA *shotData , HE
 void MUS_SHOT_PHOTO_ExitSystem( MUS_SHOT_PHOTO_WORK *work )
 {
   u8 i;
-#if USE_DEBUGWIN_SYSTEM
+#if MUS_PHOTO_USE_DEBUG
   MUS_SHOT_PHOTO_TermDebug( work );
 #endif
   STA_LIGHT_ExitSystem( work->lightSys );
@@ -186,7 +199,14 @@ void MUS_SHOT_PHOTO_ExitSystem( MUS_SHOT_PHOTO_WORK *work )
 void MUS_SHOT_PHOTO_UpdateSystem( MUS_SHOT_PHOTO_WORK *work )
 {
   //アニメさせないために呼ばない
-  //STA_BG_UpdateSystem( work->bgSys );
+#if MUS_PHOTO_USE_DEBUG
+  if( work->debWork.startAnm == TRUE )
+#else
+  if( 0 )
+#endif
+  {
+    STA_BG_UpdateSystem( work->bgSys );
+  }
   STA_POKE_UpdateSystem( work->pokeSys );
   MUS_POKE_DRAW_UpdateSystem( work->drawSys ); 
   STA_LIGHT_UpdateSystem( work->lightSys );
@@ -448,15 +468,20 @@ static void MUS_SHOT_PHOTO_SetupMessage( MUS_SHOT_PHOTO_WORK *work )
 
 
 #pragma mark [>debug
+#if MUS_PHOTO_USE_DEBUG
 
 #define MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER (50)
-typedef struct 
+struct _MUS_SHOT_DEBUGWORK
 {
   BOOL startAnm;
-}MUS_SHOT_DEBUGWORK;
+};
 
 static void MUS_SHOT_Debug_UpdateBgNo( void* userWork , DEBUGWIN_ITEM* item );
 static void MUS_SHOT_Debug_DrawBgNo( void* userWork , DEBUGWIN_ITEM* item );
+static void MUS_SHOT_Debug_UpdateAnime( void* userWork , DEBUGWIN_ITEM* item );
+static void MUS_SHOT_Debug_DrawAnime( void* userWork , DEBUGWIN_ITEM* item );
+static void MUS_SHOT_Debug_UpdateScroll( void* userWork , DEBUGWIN_ITEM* item );
+static void MUS_SHOT_Debug_DrawScroll( void* userWork , DEBUGWIN_ITEM* item );
 
 void MUS_SHOT_PHOTO_InitDebug( MUS_SHOT_PHOTO_WORK *work )
 {
@@ -467,6 +492,11 @@ void MUS_SHOT_PHOTO_InitDebug( MUS_SHOT_PHOTO_WORK *work )
   DEBUGWIN_AddGroupToTop( MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , "MusicalShot" , work->heapId );
 
   DEBUGWIN_AddItemToGroupEx( MUS_SHOT_Debug_UpdateBgNo   ,MUS_SHOT_Debug_DrawBgNo   , (void*)work , MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MUS_SHOT_Debug_UpdateAnime  ,MUS_SHOT_Debug_DrawAnime   , (void*)work , MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MUS_SHOT_Debug_UpdateScroll  ,MUS_SHOT_Debug_DrawScroll   , (void*)work , MUS_SHOT_PHOTO_DEBUG_GROUP_NUMBER , work->heapId );
+
+  work->debWork.startAnm = FALSE;
+  work->debWork.scroll = MUS_PHOTO_SCROLL_OFFSET;
 
 }
 
@@ -518,6 +548,7 @@ static void MUS_SHOT_Debug_UpdateBgNo( void* userWork , DEBUGWIN_ITEM* item )
     STA_BG_ExitSystem( work->bgSys );
     work->bgSys = STA_BG_InitSystem( work->heapId , NULL );
     STA_BG_CreateBg( work->bgSys , work->shotData->bgNo );
+    MUS_SHOT_PHOTO_UpdateSystem( work );
   }
 }
 
@@ -525,5 +556,95 @@ static void MUS_SHOT_Debug_DrawBgNo( void* userWork , DEBUGWIN_ITEM* item )
 {
   MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
   DEBUGWIN_ITEM_SetNameV( item , "BgNo[%2d]",work->shotData->bgNo );
+}
+
+static void MUS_SHOT_Debug_UpdateAnime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  u8 i;
+  MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    if( work->debWork.startAnm == TRUE )
+    {
+      for( i=0;i<MUSICAL_POKE_MAX;i++ )
+      {
+        STA_POKE_StopAnime( work->pokeSys , work->pokeWork[i] );
+      }
+      work->debWork.startAnm = FALSE;
+    }
+    else
+    {
+      for( i=0;i<MUSICAL_POKE_MAX;i++ )
+      {
+        STA_POKE_StartAnime( work->pokeSys , work->pokeWork[i] );
+      }
+      work->debWork.startAnm = TRUE;
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MUS_SHOT_Debug_DrawAnime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  static const char strArr[2][4] = {"OFF","ON"};
+  MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
+
+  DEBUGWIN_ITEM_SetNameV( item , "Anime[%3s]",strArr[work->debWork.startAnm] );
   
 }
+
+static void MUS_SHOT_Debug_UpdateScroll( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
+  BOOL isUpdate = FALSE;
+  u8 value = 1;
+
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+  {
+    value = 8;
+  }
+  
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    work->debWork.scroll+=value;
+    if( work->debWork.scroll > 256 )
+    {
+      work->debWork.scroll = 256;
+    }
+    isUpdate = TRUE;
+  }
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    work->debWork.scroll-=value;
+    if( work->debWork.scroll < 0 )
+    {
+      work->debWork.scroll = 0;
+    }
+    isUpdate = TRUE;
+  }
+  if( isUpdate == TRUE )
+  {
+    //初期スクロール分のカメラ位置
+    VecFx32 cam_pos = { 0 ,  MUSICAL_CAMERA_POS_Y , MUSICAL_CAMERA_POS_Z};
+    VecFx32 cam_target = { 0, MUSICAL_CAMERA_TRG_Y , MUSICAL_CAMERA_TRG_Z };
+    cam_pos.x = MUSICAL_POS_X( work->debWork.scroll );
+    cam_target.x = MUSICAL_POS_X( work->debWork.scroll );
+    GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
+    GFL_G3D_CAMERA_SetTarget( work->camera , &cam_target );
+    GFL_G3D_CAMERA_Switching( work->camera );
+
+    DEBUGWIN_RefreshScreen();
+
+    MUS_SHOT_PHOTO_UpdateSystem( work );
+  }
+}
+
+static void MUS_SHOT_Debug_DrawScroll( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_SHOT_PHOTO_WORK *work = (MUS_SHOT_PHOTO_WORK*)userWork;
+
+  DEBUGWIN_ITEM_SetNameV( item , "Scroll[%d]",work->debWork.scroll );
+  
+}
+
+#endif //MUS_PHOTO_USE_DEBUG
