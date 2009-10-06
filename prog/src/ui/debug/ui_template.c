@@ -85,6 +85,7 @@
 #define UI_TEMPLATE_POKE_ICON     // ポケアイコン(ポケアイコン用アイテムアイコン込み)
 #define UI_TEMPLATE_OAM_MAPMODEL  // マップモデルをOAMで表示
 #define UI_TEMPLATE_POKE2D				// ポケモンBG,OBJ読みこみ
+#define UI_TEMPLATE_BALL					// ボールアイコン読みこみ
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -130,6 +131,7 @@ enum
   PLTID_OBJ_POKEITEM_M = 10,    // 1本使用
   PLTID_OBJ_ITEMICON_M = 11,
   PLTID_OBJ_POKE_M = 12,
+  PLTID_OBJ_BALLICON_M = 13, // 1本使用
 	//サブOBJ
 };
 
@@ -250,6 +252,12 @@ typedef struct
 	GFL_CLWK									*clwk_poke2d;
 #endif //UI_TEMPLATE_POKE2D
 
+#ifdef UI_TEMPLATE_BALL
+  // ポケアイコン
+  UI_TEMPLATE_CLWK_RES      clres_ball;
+  GFL_CLWK                  *clwk_ball;
+#endif //UI_TEMPLATE_BALL
+
 
 #ifdef	UI_TEMPLATE_PRINT_TOOL
 	//プリントユーティリティ
@@ -368,6 +376,13 @@ static void UITemplate_POKE2D_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, GFL_CLUNIT 
 static void UITemplate_POKE2D_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk );
 #endif //UI_TEMPLATE_POKE2D
 
+#ifdef UI_TEMPLATE_BALL
+//-------------------------------------
+///	ボールアイコン
+//=====================================
+static void UITemplate_BALLICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, BALL_ID ballID, GFL_CLUNIT *unit, HEAPID heapID );
+static void UITemplate_BALLICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
+#endif //UI_TEMPLATE_BALL
 
 //=============================================================================
 /**
@@ -1472,6 +1487,56 @@ static void UITemplate_POKE2D_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
 	GFL_CLACT_WK_Remove( wk->clwk_poke2d );
 }
 #endif //UI_TEMPLATE_POKE2D
+
+#ifdef UI_TEMPLATE_BALL
+//=============================================================================
+/**
+ *	ボールアイコン
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボールアイコン作成
+ *
+ *	@param	UI_TEMPLATE_MAIN_WORK *wk	ワーク
+ *	@param	ballID	ぼーるID 
+ *	@param	*unit		CLUNIT
+ *	@param	heapID	ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_BALLICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, BALL_ID ballID, GFL_CLUNIT *unit, HEAPID heapID )
+{	
+  CLWK_RES_PARAM prm;
+
+  prm.draw_type = CLSYS_DRAW_MAIN;
+  prm.comp_flg  = CLWK_RES_COMP_NONE;
+  prm.arc_id    = APP_COMMON_GetArcId();
+  prm.pltt_id   = APP_COMMON_GetBallPltArcIdx( ballID );
+  prm.ncg_id    = APP_COMMON_GetBallCharArcIdx( ballID );
+  prm.cell_id   = APP_COMMON_GetBallCellArcIdx( ballID, APP_COMMON_MAPPING_128K );
+  prm.anm_id    = APP_COMMON_GetBallAnimeArcIdx( ballID, APP_COMMON_MAPPING_128K );
+  prm.pltt_line = PLTID_OBJ_BALLICON_M;
+
+  // リソース読み込み
+  UITemplate_OBJ_LoadResource( &wk->clres_ball, &prm, unit, heapID );
+  // CLWK生成
+  wk->clwk_ball = UITemplate_OBJ_CreateCLWK( &wk->clres_ball, unit, 96, 32, 0, heapID );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボールアイコン破棄
+ *
+ *	@param	UI_TEMPLATE_MAIN_WORK* wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_BALLICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk )
+{	
+	//CLWK破棄
+	GFL_CLACT_WK_Remove( wk->clwk_ball );
+  //リソース開放
+  UItemplate_OBJ_UnLoadResource( &wk->clres_ball );
+}
+#endif //UI_TEMPLATE_BALL
 
 #ifdef	UI_TEMPLATE_PRINT_TOOL
 //=============================================================================
