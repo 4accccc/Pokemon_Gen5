@@ -2764,6 +2764,11 @@ static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_w
       GAMEDATA *gmData = GAMESYSTEM_GetGameData(p_wk->p_gamesys);
       POKEPARTY *party = GAMEDATA_GetMyPokemon(gmData);
       
+      {
+        u16 oyaName[6] = {L'‚Å',L'‚Î',L'‚®',L'‚Û',L'‚¯',0xFFFF};
+        PP_Put( p_wk->pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+        PP_Put( p_wk->pp , ID_PARA_oyasex , PTL_SEX_MALE );
+      }
       //è‚¿‚É‹ó‚«‚ª‚ ‚ê‚Î“ü‚ê‚é
       if( PokeParty_GetPokeCount( party ) < 6 )
       {
