@@ -212,7 +212,7 @@ static u8 BPL_StInfoWazaSelect( BPLIST_WORK * wk );
 static u8 BPL_StWazaSelect( BPLIST_WORK * wk );
 static int BPL_TPCheck( BPLIST_WORK * wk, const GFL_UI_TP_HITTBL * tbl );
 /*ª[GS_CONVERT_TAG]*/
-static void BPL_PageChange( BPLIST_WORK * wk, u8 next_page );
+static BOOL BPL_PageChange( BPLIST_WORK * wk, u8 next_page );
 static void BPL_PageChgBgScreenChg( BPLIST_WORK * wk, u8 page );
 static u8 BPL_IrekaeCheck( BPLIST_WORK * wk );
 static u8 BPL_NextPokeGet( BPLIST_WORK * wk, s32 pos, s32 mv );
@@ -1320,7 +1320,9 @@ static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqPage1Chg( BPLIST_WORK * wk )
 {
-	BPL_PageChange( wk, BPLIST_PAGE_SELECT );
+	if( BPL_PageChange( wk, BPLIST_PAGE_SELECT ) == FALSE ){
+		return SEQ_BPL_PAGE1_CHG;
+	}
 	return SEQ_BPL_SELECT;
 }
 
@@ -1335,7 +1337,9 @@ static int BPL_SeqPage1Chg( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqPageChgIrekae( BPLIST_WORK * wk )
 {
-	BPL_PageChange( wk, BPLIST_PAGE_POKE_CHG );
+	if( BPL_PageChange( wk, BPLIST_PAGE_POKE_CHG ) == FALSE ){
+		return SEQ_BPL_PAGECHG_IREKAE;
+	}
 	return SEQ_BPL_IREKAE;
 }
 
@@ -1350,7 +1354,9 @@ static int BPL_SeqPageChgIrekae( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqPageChgStatus( BPLIST_WORK * wk )
 {
-	BPL_PageChange( wk, BPLIST_PAGE_MAIN );
+	if( BPL_PageChange( wk, BPLIST_PAGE_MAIN ) == FALSE ){
+		return SEQ_BPL_PAGECHG_STMAIN;
+	}
 	return SEQ_BPL_ST_MAIN;
 }
 
@@ -1365,7 +1371,9 @@ static int BPL_SeqPageChgStatus( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqPageChgStWazaSel( BPLIST_WORK * wk )
 {
-	BPL_PageChange( wk, BPLIST_PAGE_WAZA_SEL );
+	if( BPL_PageChange( wk, BPLIST_PAGE_WAZA_SEL ) == TRUE ){
+		return SEQ_BPL_PAGECHG_WAZASEL;
+	}
 	return SEQ_BPL_ST_WAZASEL;
 }
 
@@ -1380,7 +1388,9 @@ static int BPL_SeqPageChgStWazaSel( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqPageChgWazaInfo( BPLIST_WORK * wk )
 {
-	BPL_PageChange( wk, BPLIST_PAGE_SKILL );
+	if( BPL_PageChange( wk, BPLIST_PAGE_SKILL ) == TRUE ){
+		return SEQ_BPL_PAGECHG_WAZAINFO;
+	}
 	return SEQ_BPL_ST_SKILL;
 }
 
@@ -1395,7 +1405,9 @@ static int BPL_SeqPageChgWazaInfo( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqPageChgWazaSetSel( BPLIST_WORK * wk )
 {
-	BPL_PageChange( wk, BPLIST_PAGE_WAZASET_BS );
+	if( BPL_PageChange( wk, BPLIST_PAGE_WAZASET_BS ) == TRUE ){
+		return SEQ_BPL_PAGECHG_WAZASET_S;
+	}
 	return SEQ_BPL_WAZADEL_SEL;
 }
 
@@ -1410,6 +1422,9 @@ static int BPL_SeqPageChgWazaSetSel( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqPageChgWazaSetEnter( BPLIST_WORK * wk )
 {
+	if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
+		return SEQ_BPL_PAGECHG_WAZASET_I;
+	}
 	BattlePokelist_WazaTypeSet( wk );
 	BPL_PageChange( wk, BPLIST_PAGE_WAZASET_BI );
 	return SEQ_BPL_WAZADEL_MAIN;
@@ -1426,7 +1441,9 @@ static int BPL_SeqPageChgWazaSetEnter( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqPageChgPPRcv( BPLIST_WORK * wk )
 {
-	BPL_PageChange( wk, BPLIST_PAGE_PP_RCV );
+	if( BPL_PageChange( wk, BPLIST_PAGE_PP_RCV ) == FALSE ){
+		return SEQ_BPL_PAGECHG_PPRCV;
+	}
 
 	if( ITEM_GetParam( wk->dat->item, ITEM_PRM_ALL_PP_RCV, wk->dat->heap ) != 0 ){
 		return SEQ_BPL_PPALLRCV;
@@ -2670,8 +2687,12 @@ static void BPL_ContestWazaHeartPut( BPLIST_WORK * wk, u8 page )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void BPL_PageChange( BPLIST_WORK * wk, u8 next_page )
+static BOOL BPL_PageChange( BPLIST_WORK * wk, u8 next_page )
 {
+	if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
+		return FALSE;
+	}
+
 	BPL_PageChgBgScreenChg( wk, next_page );
 
 	GFL_BG_ClearScreenCodeVReq( GFL_BG_FRAME0_S, 0 );
@@ -2692,6 +2713,8 @@ static void BPL_PageChange( BPLIST_WORK * wk, u8 next_page )
 	BattlePokeList_ButtonPalSet( wk, next_page );
 
 	wk->page = next_page;
+
+	return TRUE;
 }
 
 static const u32 ScreenArc[][2] =
