@@ -1374,7 +1374,7 @@ static void UITemplate_POKE2D_LoadResourceBG( UI_TEMPLATE_MAIN_WORK *wk, HEAPID 
 
 	//ポケモンの絵を転送
 	//1は↑で1キャラ作成したので。
-	POKE2DGRA_BG_TransResource( ppp, POKEGRA_DIR_FRONT, BG_FRAME_POKE_M,
+	POKE2DGRA_BG_TransResourcePPP( ppp, POKEGRA_DIR_FRONT, BG_FRAME_POKE_M,
 			1, PLTID_BG_POKE_M, heapID );
 
 	//スクリーンに書き込んで転送
@@ -1414,9 +1414,9 @@ static void UITemplate_POKE2D_LoadResourceOBJ( UI_TEMPLATE_MAIN_WORK *wk, HEAPID
 	//ハンドル
 	handle	= POKE2DGRA_OpenHandle( heapID );
 	//リソース読みこみ
-	wk->ncg_poke2d	= POKE2DGRA_OBJ_CGR_Register( handle, ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, heapID );
-	wk->ncl_poke2d	= POKE2DGRA_OBJ_PLTT_Register( handle, ppp, POKEGRA_DIR_FRONT ,CLSYS_DRAW_MAIN,  PLTID_OBJ_POKE_M*0x20,  heapID );
-	wk->nce_poke2d	= POKE2DGRA_OBJ_CELLANM_Register( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, heapID );
+	wk->ncg_poke2d	= POKE2DGRA_OBJ_CGR_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, heapID );
+	wk->ncl_poke2d	= POKE2DGRA_OBJ_PLTT_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT ,CLSYS_DRAW_MAIN,  PLTID_OBJ_POKE_M*0x20,  heapID );
+	wk->nce_poke2d	= POKE2DGRA_OBJ_CELLANM_RegisterPPP( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, heapID );
 	GFL_ARC_CloseDataHandle( handle );
 
 	//PP破棄

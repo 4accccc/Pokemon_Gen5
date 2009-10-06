@@ -13,6 +13,7 @@
 
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/poketype.h"
+#include "item/item.h"
 
 //==============================================================================
 //	定数定義
@@ -63,6 +64,9 @@ enum{
 
 //ポケモンタイプのパレットの本数
 #define APP_COMMON_POKETYPE_PLT_NUM (3)
+
+//ボールアイコンのパレットの本数
+#define APP_COMMON_BALL_PLT_NUM (1)
 
 //セルの読みわけに使うマッピングモード定義
 typedef enum
@@ -129,3 +133,10 @@ extern u32 APP_COMMON_GetStatusIconAnime( POKEMON_PARAM * pp );
 //ポケモン絵OBJのためのダミーセル取得
 extern u32 APP_COMMON_GetDummyCellArcIdx( const APP_COMMON_MAPPING mapping );
 extern u32 APP_COMMON_GetDummyAnimeArcIdx( const APP_COMMON_MAPPING mapping );
+
+//ボールアイコン取得
+//2*2キャラのアイコンです。大きい方はアイテムアイコンから取得してください
+extern u32 APP_COMMON_GetBallPltArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping );
+extern u32 APP_COMMON_GetBallCharArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping );
+extern u32 APP_COMMON_GetBallCellArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping );
+extern u32 APP_COMMON_GetBallAnimeArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping );

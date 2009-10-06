@@ -319,3 +319,64 @@ u32 APP_COMMON_GetDummyAnimeArcIdx( const APP_COMMON_MAPPING mapping )
 {	
 	return NARC_app_menu_common_poke2dgra_dummy_32k_NANR + mapping;
 }
+//=============================================================================
+/**
+ *	ボールアイコン
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	パレットリソース番号取得
+ *
+ *	@param	const BALL_ID ball					ボールID
+ *	@param	APP_COMMON_MAPPING mapping	マッピングモード
+ *
+ *	@return	パレットアーカイブインデックス
+ */
+//-----------------------------------------------------------------------------
+u32 APP_COMMON_GetBallPltArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_poke2dgra_dummy_32k_NANR + mapping;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	キャラリソース番号取得
+ *
+ *	@param	const BALL_ID ball					ボールID
+ *	@param	APP_COMMON_MAPPING mapping	マッピングモード
+ *
+ *	@return	キャラアーカイブインデックス
+ */
+//-----------------------------------------------------------------------------
+u32 APP_COMMON_GetBallCharArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_poke2dgra_dummy_32k_NANR + mapping;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	セルリソース番号取得
+ *
+ *	@param	const BALL_ID ball					ボールID
+ *	@param	APP_COMMON_MAPPING mapping	マッピングモード
+ *
+ *	@return	セルアーカイブインデックス
+ */
+//-----------------------------------------------------------------------------
+u32 APP_COMMON_GetBallCellArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_poke2dgra_dummy_32k_NANR + mapping;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	セルアニメリソース番号取得
+ *
+ *	@param	const BALL_ID ball					ボールID
+ *	@param	APP_COMMON_MAPPING mapping	マッピングモード
+ *
+ *	@return	パレットアーカイブインデックス
+ */
+//-----------------------------------------------------------------------------
+u32 APP_COMMON_GetBallAnimeArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_poke2dgra_dummy_32k_NANR + mapping;
+}

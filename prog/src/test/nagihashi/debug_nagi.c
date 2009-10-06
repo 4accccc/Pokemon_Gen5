@@ -36,6 +36,7 @@
 #include "net_app/worldtrade.h"
 #include "app/config_panel.h"
 #include "debug_template.h"
+#include "debug_poke2dcheck.h"
 
 #include "savedata/irc_compatible_savedata.h"
 
@@ -49,7 +50,6 @@
 ///	リストの最大文字数
 //=====================================
 #define LISTDATA_STR_LENGTH	(32)
-
 
 //-------------------------------------
 ///	エクスターン
@@ -232,6 +232,7 @@ static void LISTDATA_CallProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcGts( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcConfig( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcTemplate( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallProcPoke2DCheck( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_FullRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcTownMap( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -312,6 +313,7 @@ enum
 	LISTDATA_SEQ_PROC_GTS,
 	LISTDATA_SEQ_PROC_CONFIG,
 	LISTDATA_SEQ_PROC_TEMPLATE,
+	LISTDATA_SEQ_PROC_POKE2DCHECK,
 
 	LISTDATA_SEQ_MAX,
 };
@@ -334,6 +336,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 	LISTDATA_CallProcGts,
 	LISTDATA_CallProcConfig,
 	LISTDATA_CallProcTemplate,
+	LISTDATA_CallProcPoke2DCheck,
 };
 
 //-------------------------------------
@@ -343,6 +346,9 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 {	
 	{	
 		L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
+	},
+	{	
+		L"ポケモン２Dチェック", LISTDATA_SEQ_PROC_POKE2DCHECK,
 	},
 	{	
 		L"コンフィグ", LISTDATA_SEQ_PROC_CONFIG
@@ -889,6 +895,17 @@ static void LISTDATA_CallProcConfig( DEBUG_NAGI_MAIN_WORK *p_wk )
 static void LISTDATA_CallProcTemplate( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DebugTemplate_ProcData, &p_wk->template_param );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモン２Dグラフィックチェック
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_CallProcPoke2DCheck( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DebugPoke2D_ProcData, NULL );
 }
 //----------------------------------------------------------------------------
 /**
