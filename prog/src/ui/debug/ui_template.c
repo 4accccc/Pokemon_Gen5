@@ -55,6 +55,9 @@
 #include "item/item.h"
 #include "item_icon.naix"
 
+//ポケモンBG,OBJ読みこみ
+#include "system/poke2dgra.h"
+
 //アプリ共通素材
 #include "app/app_menu_common.h"
 
@@ -81,6 +84,7 @@
 #define UI_TEMPLATE_ITEM_ICON     // どうぐアイコン
 #define UI_TEMPLATE_POKE_ICON     // ポケアイコン(ポケアイコン用アイテムアイコン込み)
 #define UI_TEMPLATE_OAM_MAPMODEL  // マップモデルをOAMで表示
+#define UI_TEMPLATE_POKE2D				// ポケモンBG,OBJ読みこみ
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -91,7 +95,7 @@ FS_EXTERN_OVERLAY(ui_common);
 //=============================================================================
 enum
 { 
-  UI_TEMPLATE_HEAP_SIZE = 0x20000,  ///< ヒープサイズ
+  UI_TEMPLATE_HEAP_SIZE = 0x24000,  ///< ヒープサイズ
 };
 
 //-------------------------------------
@@ -100,7 +104,8 @@ enum
 enum
 {	
 	BG_FRAME_BAR_M	= GFL_BG_FRAME1_M,
-	BG_FRAME_BACK_M	= GFL_BG_FRAME2_M,
+	BG_FRAME_POKE_M	= GFL_BG_FRAME2_M,
+	BG_FRAME_BACK_M	= GFL_BG_FRAME3_M,
 	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
 };
 //-------------------------------------
@@ -110,6 +115,7 @@ enum
 {	
 	//メインBG
 	PLTID_BG_BACK_M				= 0,
+	PLTID_BG_POKE_M				= 1,
 	PLTID_BG_TASKMENU_M		= 11,
 	PLTID_BG_TOUCHBAR_M		= 13,
 	PLTID_BG_INFOWIN_M		= 15,
@@ -123,6 +129,7 @@ enum
   PLTID_OBJ_POKEICON_M = 7,     // 3本使用
   PLTID_OBJ_POKEITEM_M = 10,    // 1本使用
   PLTID_OBJ_ITEMICON_M = 11,
+  PLTID_OBJ_POKE_M = 12,
 	//サブOBJ
 };
 
@@ -178,7 +185,7 @@ typedef struct {
 //==============================================================
 typedef struct 
 {
-  HEAPID heap_id;
+  HEAPID heapID;
 
 	UI_TEMPLATE_BG_WORK				wk_bg;
 
@@ -194,7 +201,7 @@ typedef struct
 	//MCSS
 	MCSS_SYS_WORK							*mcss_sys;
 	MCSS_WORK									*mcss_wk;
-#endif //UI_TEMPLATE_MSCC
+#endif //UI_TEMPLATE_MCSS
 
 	//フォント
 	GFL_FONT									*font;
@@ -236,6 +243,14 @@ typedef struct
   GFL_CLWK                  *clwk_oam_mmdl;
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 
+#ifdef UI_TEMPLATE_POKE2D
+	u32												ncg_poke2d;
+	u32												ncl_poke2d;
+	u32												nce_poke2d;
+	GFL_CLWK									*clwk_poke2d;
+#endif //UI_TEMPLATE_POKE2D
+
+
 #ifdef	UI_TEMPLATE_PRINT_TOOL
 	//プリントユーティリティ
 	PRINT_UTIL								print_util;
@@ -266,42 +281,54 @@ static GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk,
 //-------------------------------------
 ///	汎用処理ユーティリティ
 //=====================================
-static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heap_id );
-static void UITemplate_OBJ_LoadResource( UI_TEMPLATE_CLWK_RES* p_res, CLWK_RES_PARAM* prm, GFL_CLUNIT* unit, HEAPID heap_id );
-static void UItemplate_OBJ_UnLoadResource( UI_TEMPLATE_CLWK_RES* p_res );
-static GFL_CLWK* UITemplate_OBJ_CreateCLWK( UI_TEMPLATE_CLWK_RES* p_res, GFL_CLUNIT* unit, u8 px, u8 py, u8 anim, HEAPID heap_id );
+static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heapID );
+static void UITemplate_OBJ_LoadResource( UI_TEMPLATE_CLWK_RES* res, CLWK_RES_PARAM* prm, GFL_CLUNIT* unit, HEAPID heapID );
+static void UItemplate_OBJ_UnLoadResource( UI_TEMPLATE_CLWK_RES* res );
+static GFL_CLWK* UITemplate_OBJ_CreateCLWK( UI_TEMPLATE_CLWK_RES* res, GFL_CLUNIT* unit, u8 px, u8 py, u8 anim, HEAPID heapID );
+
+#ifdef UI_TEMPLATE_INFOWIN
 //-------------------------------------
 ///	INFOWIN
 //=====================================
-static void UITemplate_INFOWIN_Init( GAMESYS_WORK *gamesys, HEAPID heap_id );
+static void UITemplate_INFOWIN_Init( GAMESYS_WORK *gamesys, HEAPID heapID );
 static void UITemplate_INFOWIN_Exit( void );
 static void UITemplate_INFOWIN_Main( void );
+#endif //UI_TEMPLATE_INFOWIN
+
+#ifdef UI_TEMPLATE_TOUCHBAR
 //-------------------------------------
 ///	タッチバー
 //=====================================
-static TOUCHBAR_WORK * UITemplate_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heap_id );
+static TOUCHBAR_WORK * UITemplate_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID );
 static void UITemplate_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar );
 static void UITemplate_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar );
+#endif //UI_TEMPLATE_TOUCHBAR
+
+#ifdef UI_TEMPLATE_MCSS
 //-------------------------------------
 ///	MCSS
 //=====================================
-static MCSS_SYS_WORK * UITemplate_MCSS_Init( u16 wk_max, HEAPID heap_id );
+static MCSS_SYS_WORK * UITemplate_MCSS_Init( u16 wk_max, HEAPID heapID );
 static void UITemplate_MCSS_Exit( MCSS_SYS_WORK * mcss );
 static void UITemplate_MCSS_Draw( MCSS_SYS_WORK * mcss );
 static MCSS_WORK * UITemplate_MCSS_CreateWkPP( MCSS_SYS_WORK * mcss, POKEMON_PARAM *pp, const VecFx32 *pos );
 static void UITemplate_MCSS_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk );
+#endif //UI_TEMPLATE_MCSS
+
+#ifdef UI_TEMPLATE_TASKMENU
 //-------------------------------------
 ///	リストシステムはい、いいえ
 //=====================================
-static APP_TASKMENU_WORK * UITemplate_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *p_msg, HEAPID heap_id );
+static APP_TASKMENU_WORK * UITemplate_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *msg, HEAPID heapID );
 static void UITemplate_TASKMENU_Exit( APP_TASKMENU_WORK *menu );
 static void UITemplate_TASKMENU_Main( APP_TASKMENU_WORK *menu );
+#endif //UI_TEMPLATE_TASKMENU
 
 #ifdef UI_TEMPLATE_TYPEICON
 //-------------------------------------
 ///	分類、技アイコン
 //=====================================
-static void UITemplate_TYPEICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heap_id );
+static void UITemplate_TYPEICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heapID );
 static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk );
 #endif //UI_TEMPLATE_TYPEICON
 
@@ -309,7 +336,7 @@ static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk );
 //-------------------------------------
 ///	どうぐアイコン
 //=====================================
-static void UITemplate_ITEM_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heap_id );
+static void UITemplate_ITEM_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heapID );
 static void UITemplate_ITEM_ICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
 #endif //UI_TEMPLATE_ITEM_ICON
 
@@ -317,7 +344,7 @@ static void UITemplate_ITEM_ICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
 //-------------------------------------
 ///	ポケアイコン
 //=====================================
-static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons, u32 form_no, BOOL egg, GFL_CLUNIT* unit, HEAPID heap_id );
+static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons, u32 form_no, BOOL egg, GFL_CLUNIT* unit, HEAPID heapID );
 static void UITemplate_POKE_ICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
 #endif //UI_TEMPLATE_POKE_ICON
 
@@ -325,9 +352,21 @@ static void UITemplate_POKE_ICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
 //-------------------------------------
 ///	OAMでマップモデル表示
 //=====================================
-static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heap_id );
+static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heapID );
 static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
 #endif //UI_TEMPLATE_OAM_MAPMODEL
+
+#ifdef UI_TEMPLATE_POKE2D
+//-------------------------------------
+///	ポケモンOBJ,BG読みこみ
+//=====================================
+static void UITemplate_POKE2D_LoadResourceBG( UI_TEMPLATE_MAIN_WORK *wk, HEAPID heapID );
+static void UITemplate_POKE2D_UnLoadResourceBG( UI_TEMPLATE_MAIN_WORK *wk );
+static void UITemplate_POKE2D_LoadResourceOBJ( UI_TEMPLATE_MAIN_WORK *wk, HEAPID heapID );
+static void UITemplate_POKE2D_UnLoadResourceOBJ( UI_TEMPLATE_MAIN_WORK *wk );
+static void UITemplate_POKE2D_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
+static void UITemplate_POKE2D_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk );
+#endif //UI_TEMPLATE_POKE2D
 
 
 //=============================================================================
@@ -375,62 +414,62 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
   GFL_STD_MemClear( wk, sizeof(UI_TEMPLATE_MAIN_WORK) );
 
   // 初期化
-  wk->heap_id = HEAPID_UI_DEBUG;
+  wk->heapID = HEAPID_UI_DEBUG;
 	
 	//描画設定初期化
-	wk->graphic	= UI_TEMPLATE_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heap_id );
+	wk->graphic	= UI_TEMPLATE_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
 
 	//フォント作成
 	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
-												GFL_FONT_LOADTYPE_FILE, FALSE, wk->heap_id );
+												GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
 	//メッセージ
 	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-			NARC_message_mictest_dat, wk->heap_id );
+			NARC_message_mictest_dat, wk->heapID );
 
 	//PRINT_QUE作成
-	wk->print_que		= PRINTSYS_QUE_Create( wk->heap_id );
+	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
 
 	//BGリソース読み込み
-	UITemplate_BG_LoadResource( &wk->wk_bg, wk->heap_id );
+	UITemplate_BG_LoadResource( &wk->wk_bg, wk->heapID );
 
 #ifdef UI_TEMPLATE_INFOWIN
 	//INFOWINの初期化
-	UITemplate_INFOWIN_Init( param->gamesys, wk->heap_id );
+	UITemplate_INFOWIN_Init( param->gamesys, wk->heapID );
 #endif //UI_TEMPLATE_INFOWIN
 
 #ifdef UI_TEMPLATE_TOUCHBAR
 	//タッチバーの初期化
 	{	
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
-		wk->touchbar	= UITemplate_TOUCHBAR_Init( clunit, wk->heap_id );
+		wk->touchbar	= UITemplate_TOUCHBAR_Init( clunit, wk->heapID );
 	}
 #endif //UI_TEMPLATE_TOUCHBAR
 
 #ifdef UI_TEMPLATE_MCSS
 	//MCSS初期化&ワーク作成
-	wk->mcss_sys	= UITemplate_MCSS_Init( 1, wk->heap_id );
+	wk->mcss_sys	= UITemplate_MCSS_Init( 1, wk->heapID );
 	{
 		POKEMON_PARAM	*pp;  
-		VecFx32 pos	= { 0, 0, 0	};
+		VecFx32 pos	= { 0, -FX32_ONE*10, 0	};
 
-		pp	= PP_Create( MONSNO_HUSIGIDANE, 0, 0, wk->heap_id );
+		pp	= PP_Create( MONSNO_HUSIGIBANA, 0, 0, wk->heapID );
 		wk->mcss_wk		= UITemplate_MCSS_CreateWkPP( wk->mcss_sys, pp, &pos );
 		GFL_HEAP_FreeMemory( pp );
 	}
-#endif //UI_TEMPLATE_MSCC
+#endif //UI_TEMPLATE_MCSS
 
 #ifdef UI_TEMPLATE_TASKMENU
 	//TASKMENUリソース読み込み＆初期化
-	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_BAR_M, PLTID_BG_TASKMENU_M, wk->font, wk->print_que, wk->heap_id );
-	wk->menu			= UITemplate_TASKMENU_Init( wk->menu_res, wk->msg, wk->heap_id );
+	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_BAR_M, PLTID_BG_TASKMENU_M, wk->font, wk->print_que, wk->heapID );
+	wk->menu			= UITemplate_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
 #endif //UI_TEMPLATE_TASKMENU
 
 #ifdef UI_TEMPLATE_TYPEICON
 	//属性アイコンの読み込み
 	{	
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
-		UITemplate_TYPEICON_CreateCLWK( wk, POKETYPE_KUSA, clunit, wk->heap_id );
+		UITemplate_TYPEICON_CreateCLWK( wk, POKETYPE_KUSA, clunit, wk->heapID );
 	}
 #endif //UI_TEMPLATE_TYPEICON
 
@@ -442,7 +481,7 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
     u16 ptn_ofs = 3;
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
 
-		UITemplate_OAM_MAPMODEL_CreateCLWK( wk, NARC_fldmmdl_mdlres_hero_nsbtx, ptn_ofs, clunit, wk->heap_id );
+		UITemplate_OAM_MAPMODEL_CreateCLWK( wk, NARC_fldmmdl_mdlres_hero_nsbtx, ptn_ofs, clunit, wk->heapID );
   }
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 
@@ -450,7 +489,7 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
   // ポケアイコンの読み込み
   {
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
-    UITemplate_POKE_ICON_CreateCLWK( wk, MONSNO_HUSIGIDANE, 0, FALSE, clunit, wk->heap_id );
+    UITemplate_POKE_ICON_CreateCLWK( wk, MONSNO_HUSIGIDANE, 0, FALSE, clunit, wk->heapID );
   }
 #endif //UI_TEMPLATE_POKE_ICON
 
@@ -458,9 +497,18 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
   // どうぐアイコンの読み込み
   { 
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
-    UITemplate_ITEM_ICON_CreateCLWK( wk, ITEM_KIZUGUSURI, clunit, wk->heap_id );
+    UITemplate_ITEM_ICON_CreateCLWK( wk, ITEM_KIZUGUSURI, clunit, wk->heapID );
   }
 #endif //UI_TEMPLATE_ITEM_ICON
+
+#ifdef UI_TEMPLATE_POKE2D
+	UITemplate_POKE2D_LoadResourceBG( wk, wk->heapID );
+	{	
+		GFL_CLUNIT *clunit = UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
+		UITemplate_POKE2D_LoadResourceOBJ( wk, wk->heapID );
+		UITemplate_POKE2D_CreateCLWK( wk, clunit, wk->heapID );
+	}
+#endif //UI_TEMPLATE_POKE2D
 
 	//@todo	フェードシーケンスがないので
 	GX_SetMasterBrightness(0);
@@ -483,6 +531,12 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
 static GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	UI_TEMPLATE_MAIN_WORK* wk = mywk;
+
+#ifdef UI_TEMPLATE_POKE2D
+	UITemplate_POKE2D_DeleteCLWK( wk );
+	UITemplate_POKE2D_UnLoadResourceOBJ( wk );
+	UITemplate_POKE2D_UnLoadResourceBG( wk );
+#endif //UI_TEMPLATE_POKE2D
 
 #ifdef UI_TEMPLATE_TYPEICON
 	//属性アイコンの破棄
@@ -513,7 +567,7 @@ static GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk,
 #endif //UI_TEMPLATE_TASKMENU
 
 #ifdef UI_TEMPLATE_MCSS
-	//MSCC破棄
+	//MCSS破棄
 	UITemplate_MCSS_DeleteWk( wk->mcss_sys, wk->mcss_wk );
 	UITemplate_MCSS_Exit( wk->mcss_sys );
 #endif //UI_TEMPLATE_MCSS
@@ -542,7 +596,7 @@ static GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk,
 
 	//PROC用メモリ解放
   GFL_PROC_FreeWork( proc );
-  GFL_HEAP_DeleteHeap( wk->heap_id );
+  GFL_HEAP_DeleteHeap( wk->heapID );
 
 	//オーバーレイ破棄
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
@@ -612,33 +666,33 @@ static GFL_PROC_RESULT UITemplateProc_Main( GFL_PROC *proc, int *seq, void *pwk,
  *	@brief  BG管理モジュール リソース読み込み
  *
  *	@param	UI_TEMPLATE_BG_WORK* wk BG管理ワーク
- *	@param	heap_id 
+ *	@param	heapID 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heap_id )
+static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heapID )
 {
   //@TODO とりあえずマイクテストのリソース
 	ARCHANDLE	*handle;
 
-	handle	= GFL_ARC_OpenDataHandle( ARCID_MICTEST_GRA, heap_id );
+	handle	= GFL_ARC_OpenDataHandle( ARCID_MICTEST_GRA, heapID );
 
 	// 上下画面ＢＧパレット転送
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_down_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x20, heap_id );
-	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_up_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heap_id );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_down_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x20, heapID );
+	GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_mictest_back_bg_up_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x20, heapID );
 	
   //	----- 下画面 -----
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_mictest_back_bg_down_NCGR,
-						BG_FRAME_BACK_S, 0, 0, 0, heap_id );
+						BG_FRAME_BACK_S, 0, 0, 0, heapID );
 	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_mictest_back_bg_down_NSCR,
-						BG_FRAME_BACK_S, 0, 0, 0, heap_id );	
+						BG_FRAME_BACK_S, 0, 0, 0, heapID );	
 
 	//	----- 上画面 -----
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_mictest_back_bg_up_NCGR,
-						BG_FRAME_BACK_M, 0, 0, 0, heap_id );
+						BG_FRAME_BACK_M, 0, 0, 0, heapID );
 	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_mictest_back_bg_up_NSCR,
-						BG_FRAME_BACK_M, 0, 0, 0, heap_id );		
+						BG_FRAME_BACK_M, 0, 0, 0, heapID );		
 
 	GFL_ARC_CloseDataHandle( handle );
 }
@@ -648,43 +702,43 @@ static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heap_id 
 /**
  *	@brief  OBJリソース読み込み
  *
- *	@param	UI_TEMPLATE_CLWK_RES* p_res
+ *	@param	UI_TEMPLATE_CLWK_RES* res
  *	@param	prm
  *	@param	unit
- *	@param	heap_id 
+ *	@param	heapID 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_OBJ_LoadResource( UI_TEMPLATE_CLWK_RES* p_res, CLWK_RES_PARAM* prm, GFL_CLUNIT* unit, HEAPID heap_id )
+static void UITemplate_OBJ_LoadResource( UI_TEMPLATE_CLWK_RES* res, CLWK_RES_PARAM* prm, GFL_CLUNIT* unit, HEAPID heapID )
 {
-  ARCHANDLE *p_handle;
+  ARCHANDLE *handle;
 
   BOOL comp_ncg = ( prm->comp_flg & CLWK_RES_COMP_NCGR );
   
-  p_handle	= GFL_ARC_OpenDataHandle( prm->arc_id, heap_id );
+  handle	= GFL_ARC_OpenDataHandle( prm->arc_id, heapID );
 
   if( prm->comp_flg & CLWK_RES_COMP_NCLR )
   {
-    p_res->res_ncl	= GFL_CLGRP_PLTT_RegisterComp( p_handle,
-        prm->pltt_id, prm->draw_type, prm->pltt_line*0x20, heap_id );
+    res->res_ncl	= GFL_CLGRP_PLTT_RegisterComp( handle,
+        prm->pltt_id, prm->draw_type, prm->pltt_line*0x20, heapID );
   }
   else
   {
-    p_res->res_ncl	= GFL_CLGRP_PLTT_Register( p_handle,
-        prm->pltt_id, prm->draw_type, prm->pltt_line*0x20, heap_id );
+    res->res_ncl	= GFL_CLGRP_PLTT_Register( handle,
+        prm->pltt_id, prm->draw_type, prm->pltt_line*0x20, heapID );
   }
 
-  p_res->res_ncg	= GFL_CLGRP_CGR_Register( p_handle,
-      prm->ncg_id, comp_ncg, prm->draw_type, heap_id );
+  res->res_ncg	= GFL_CLGRP_CGR_Register( handle,
+      prm->ncg_id, comp_ncg, prm->draw_type, heapID );
 
-  p_res->res_nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
-      prm->cell_id,	prm->anm_id, heap_id );
+  res->res_nce	= GFL_CLGRP_CELLANIM_Register( handle,
+      prm->cell_id,	prm->anm_id, heapID );
 
   // 描画先を保持
-  p_res->draw_type = prm->draw_type;
+  res->draw_type = prm->draw_type;
 
-  GFL_ARC_CloseDataHandle( p_handle );	
+  GFL_ARC_CloseDataHandle( handle );	
 
 }
 
@@ -692,49 +746,49 @@ static void UITemplate_OBJ_LoadResource( UI_TEMPLATE_CLWK_RES* p_res, CLWK_RES_P
 /**
  *	@brief  OBJ リソース破棄
  *
- *	@param	UI_TEMPLATE_CLWK_RES* p_res 
+ *	@param	UI_TEMPLATE_CLWK_RES* res 
  *
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void UItemplate_OBJ_UnLoadResource( UI_TEMPLATE_CLWK_RES* p_res )
+static void UItemplate_OBJ_UnLoadResource( UI_TEMPLATE_CLWK_RES* res )
 {
-	GFL_CLGRP_PLTT_Release( p_res->res_ncl );
-	GFL_CLGRP_CGR_Release( p_res->res_ncg );
-	GFL_CLGRP_CELLANIM_Release( p_res->res_nce );
+	GFL_CLGRP_PLTT_Release( res->res_ncl );
+	GFL_CLGRP_CGR_Release( res->res_ncg );
+	GFL_CLGRP_CELLANIM_Release( res->res_nce );
 }
 
 //-----------------------------------------------------------------------------
 /**
  *	@brief  OBJ CLWK生成
  *
- *	@param	UI_TEMPLATE_CLWK_RES* p_res
+ *	@param	UI_TEMPLATE_CLWK_RES* res
  *	@param	unit
  *	@param	px
  *	@param	py
  *	@param	anim
- *	@param	heap_id 
+ *	@param	heapID 
  *
  *	@retval clwk 
  */
 //-----------------------------------------------------------------------------
-static GFL_CLWK* UITemplate_OBJ_CreateCLWK( UI_TEMPLATE_CLWK_RES* p_res, GFL_CLUNIT* unit, u8 px, u8 py, u8 anim, HEAPID heap_id )
+static GFL_CLWK* UITemplate_OBJ_CreateCLWK( UI_TEMPLATE_CLWK_RES* res, GFL_CLUNIT* unit, u8 px, u8 py, u8 anim, HEAPID heapID )
 {
   GFL_CLWK_DATA	cldata = {0};
   GFL_CLWK* clwk;
 
-  GF_ASSERT( p_res );
+  GF_ASSERT( res );
 
   cldata.pos_x	= px;
   cldata.pos_y	= py;
 
   clwk = GFL_CLACT_WK_Create( unit,
-      p_res->res_ncg,
-      p_res->res_ncl,
-      p_res->res_nce,
+      res->res_ncg,
+      res->res_ncl,
+      res->res_nce,
       &cldata,
-      p_res->draw_type,
-      heap_id );
+      res->draw_type,
+      heapID );
 
   GFL_CLACT_WK_SetAnmSeq( clwk, anim );
 
@@ -745,6 +799,7 @@ static GFL_CLWK* UITemplate_OBJ_CreateCLWK( UI_TEMPLATE_CLWK_RES* p_res, GFL_CLU
 
 
 
+#ifdef UI_TEMPLATE_INFOWIN
 //=============================================================================
 /**
  *		INFOWIN
@@ -755,14 +810,14 @@ static GFL_CLWK* UITemplate_OBJ_CreateCLWK( UI_TEMPLATE_CLWK_RES* p_res, GFL_CLU
  *	@brief	INFOWIN初期化
  *
  *	@param	GAMESYS_WORK *gamesys	ゲームシステム
- *	@param	heap_id		ヒープID
+ *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_INFOWIN_Init( GAMESYS_WORK *gamesys, HEAPID heap_id )
+static void UITemplate_INFOWIN_Init( GAMESYS_WORK *gamesys, HEAPID heapID )
 {	
 	GAME_COMM_SYS_PTR comm;
 	comm	= GAMESYSTEM_GetGameCommSysPtr(gamesys);
-	INFOWIN_Init( BG_FRAME_BAR_M, PLTID_BG_INFOWIN_M, comm, heap_id );
+	INFOWIN_Init( BG_FRAME_BAR_M, PLTID_BG_INFOWIN_M, comm, heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -786,6 +841,9 @@ static void UITemplate_INFOWIN_Main( void )
 {	
 	INFOWIN_Update();
 }
+#endif //UI_TEMPLATE_INFOWIN
+
+#ifdef UI_TEMPLATE_TOUCHBAR
 //=============================================================================
 /**
  *	TOUCHBAR
@@ -796,12 +854,12 @@ static void UITemplate_INFOWIN_Main( void )
  *	@brief	TOUCHBAR初期化
  *
  *	@param	GFL_CLUNIT *clunit	CLUNIT
- *	@param	heap_id							ヒープID
+ *	@param	heapID							ヒープID
  *
  *	@return	TOUCHBAR_WORK
  */
 //-----------------------------------------------------------------------------
-static TOUCHBAR_WORK * UITemplate_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heap_id )
+static TOUCHBAR_WORK * UITemplate_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID )
 {	
 	//アイコンの設定
 	//数分作る
@@ -832,7 +890,7 @@ static TOUCHBAR_WORK * UITemplate_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heap
 	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;			//OBJﾊﾟﾚｯﾄ
 	touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
 
-	return TOUCHBAR_Init( &touchbar_setup, heap_id );
+	return TOUCHBAR_Init( &touchbar_setup, heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -856,6 +914,9 @@ static void UITemplate_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar )
 {	
 	TOUCHBAR_Main( touchbar );
 }
+#endif //UI_TEMPLATE_TOUCHBAR
+
+#ifdef UI_TEMPLATE_MCSS
 //=============================================================================
 /**
  *		MCSS
@@ -865,16 +926,16 @@ static void UITemplate_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar )
 /**
  *	@brief	MCSS初期化
  *
- *	@param	u16 wk_max		MSCCのワーク作成最大数
- *	@param	heap_id				ヒープID
+ *	@param	u16 wk_max		MCSSのワーク作成最大数
+ *	@param	heapID				ヒープID
  *
  *	@return	MCSS_SYS
  */
 //-----------------------------------------------------------------------------
-static MCSS_SYS_WORK * UITemplate_MCSS_Init( u16 wk_max, HEAPID heap_id )
+static MCSS_SYS_WORK * UITemplate_MCSS_Init( u16 wk_max, HEAPID heapID )
 {	
 	MCSS_SYS_WORK *mcss;
-	mcss = MCSS_Init( wk_max , heap_id );
+	mcss = MCSS_Init( wk_max , heapID );
 	MCSS_SetTextureTransAdrs( mcss, 0 );
 	MCSS_SetOrthoMode( mcss );
 	return mcss;
@@ -939,6 +1000,9 @@ static void UITemplate_MCSS_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk )
 	MCSS_SetVanishFlag( wk );
 	MCSS_Del(mcss,wk);
 }
+#endif //UI_TEMPLATE_MCSS
+
+#ifdef UI_TEMPLATE_TASKMENU
 //----------------------------------------------------------------------------
 /**
  *	@brief	TASKMENUの初期化
@@ -946,7 +1010,7 @@ static void UITemplate_MCSS_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk )
  *	@param	menu_res	リソース
  */
 //-----------------------------------------------------------------------------
-static APP_TASKMENU_WORK * UITemplate_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *p_msg, HEAPID heap_id )
+static APP_TASKMENU_WORK * UITemplate_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *msg, HEAPID heapID )
 {	
 	int i;
 	APP_TASKMENU_INITWORK	init;
@@ -956,13 +1020,13 @@ static APP_TASKMENU_WORK * UITemplate_TASKMENU_Init( APP_TASKMENU_RES *menu_res,
 	//窓の設定
 	for( i = 0; i < NELEMS(item); i++ )
 	{	
-		item[i].str	= GFL_MSG_CreateString( p_msg, 0 );	//文字列
+		item[i].str	= GFL_MSG_CreateString( msg, 0 );	//文字列
 		item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;	//文字色
 		item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL;	//窓の種類
 	}
 
 	//初期化
-	init.heapId		= heap_id;
+	init.heapId		= heapID;
 	init.itemNum	= NELEMS(item);
 	init.itemWork = item;
 	init.posType	= ATPT_RIGHT_DOWN;
@@ -1002,6 +1066,7 @@ static void UITemplate_TASKMENU_Main( APP_TASKMENU_WORK *menu )
 {	
 	APP_TASKMENU_UpdateMenu( menu );
 }
+#endif //UI_TEMPLATE_TASKMENU
 
 #ifdef UI_TEMPLATE_TYPEICON
 //=============================================================================
@@ -1015,12 +1080,12 @@ static void UITemplate_TASKMENU_Main( APP_TASKMENU_WORK *menu )
  *
  *	@param	PokeType					タイプ
  *	@param	GFL_CLUNIT *unit	CLUNIT
- *	@param	heap_id						ヒープID
+ *	@param	heapID						ヒープID
  *
  *	@return	CLWK
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_TYPEICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heap_id )
+static void UITemplate_TYPEICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heapID )
 {	
   CLWK_RES_PARAM prm;
 
@@ -1033,9 +1098,9 @@ static void UITemplate_TYPEICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, PokeType 
   prm.anm_id    = APP_COMMON_GetPokeTypeAnimeArcIdx( APP_COMMON_MAPPING_128K );
   prm.pltt_line = PLTID_OBJ_TYPEICON_M;
   
-  UITemplate_OBJ_LoadResource( &wk->clres_type_icon, &prm, unit, heap_id );
+  UITemplate_OBJ_LoadResource( &wk->clres_type_icon, &prm, unit, heapID );
 
-  wk->clwk_type_icon = UITemplate_OBJ_CreateCLWK( &wk->clres_type_icon, unit, 128, 50, 0, heap_id );
+  wk->clwk_type_icon = UITemplate_OBJ_CreateCLWK( &wk->clres_type_icon, unit, 128, 50, 0, heapID );
 		
   GFL_CLACT_WK_SetPlttOffs( wk->clwk_type_icon, APP_COMMON_GetPokeTypePltOffset(type),
 				CLWK_PLTTOFFS_MODE_PLTT_TOP );
@@ -1072,12 +1137,12 @@ static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
  *	@param	UI_TEMPLATE_MAIN_WORK *wk
  *	@param	item_id
  *	@param	unit
- *	@param	heap_id 
+ *	@param	heapID 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_ITEM_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heap_id )
+static void UITemplate_ITEM_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heapID )
 {	
   CLWK_RES_PARAM prm;
 
@@ -1090,9 +1155,9 @@ static void UITemplate_ITEM_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u16 item
   prm.anm_id    = NARC_item_icon_itemicon_NANR;
   prm.pltt_line = PLTID_OBJ_ITEMICON_M;
   
-  UITemplate_OBJ_LoadResource( &wk->clres_item_icon, &prm, unit, heap_id );
+  UITemplate_OBJ_LoadResource( &wk->clres_item_icon, &prm, unit, heapID );
 
-  wk->clwk_item_icon = UITemplate_OBJ_CreateCLWK( &wk->clres_item_icon, unit, 16, 32, 0, heap_id );
+  wk->clwk_item_icon = UITemplate_OBJ_CreateCLWK( &wk->clres_item_icon, unit, 16, 32, 0, heapID );
 }
 
 //-----------------------------------------------------------------------------
@@ -1128,12 +1193,12 @@ static void UITemplate_ITEM_ICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk )
  *
  *	@param	UI_TEMPLATE_MAIN_WORK *wk
  *	@param	unit
- *	@param	heap_id 
+ *	@param	heapID 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons, u32 form_no, BOOL egg, GFL_CLUNIT* unit, HEAPID heap_id )
+static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons, u32 form_no, BOOL egg, GFL_CLUNIT* unit, HEAPID heapID )
 {
   // ポケアイコン本体
   {
@@ -1149,10 +1214,10 @@ static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons
     prm.anm_id    = POKEICON_GetAnmArcIndex();
     prm.pltt_line = PLTID_OBJ_POKEICON_M;
     
-    UITemplate_OBJ_LoadResource( &wk->clres_poke_icon, &prm, unit, heap_id );
+    UITemplate_OBJ_LoadResource( &wk->clres_poke_icon, &prm, unit, heapID );
 
     // アニメシーケンスで指定( 0=瀕死, 1=HP最大, 2=HP緑, 3=HP黄, 4=HP赤, 5=状態異常 )
-    wk->clwk_poke_icon = UITemplate_OBJ_CreateCLWK( &wk->clres_poke_icon, unit, 48, 32, 1, heap_id );
+    wk->clwk_poke_icon = UITemplate_OBJ_CreateCLWK( &wk->clres_poke_icon, unit, 48, 32, 1, heapID );
 
     // 上にアイテムアイコンを描画するので優先度を下げておく
     GFL_CLACT_WK_SetSoftPri( wk->clwk_poke_icon, 1 );
@@ -1179,11 +1244,11 @@ static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons
     prm.anm_id    = APP_COMMON_GetPokeItemIconAnimeArcIdx();
     prm.pltt_line = PLTID_OBJ_POKEITEM_M;
     
-    UITemplate_OBJ_LoadResource( &wk->clres_poke_item, &prm, unit, heap_id );
+    UITemplate_OBJ_LoadResource( &wk->clres_poke_item, &prm, unit, heapID );
 
     // アニメシーケンスで指定( 0=どうぐ, 1=メール, 2=ボール )
     // ※位置調整はとりあえずの値です。
-    wk->clwk_poke_item = UITemplate_OBJ_CreateCLWK( &wk->clres_poke_item, unit, 48+1*8+4, 32+4, 2, heap_id );
+    wk->clwk_poke_item = UITemplate_OBJ_CreateCLWK( &wk->clres_poke_item, unit, 48+1*8+4, 32+4, 2, heapID );
   }
 
 }
@@ -1229,12 +1294,12 @@ static void UITemplate_POKE_ICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk )
  *	@param	sx
  *	@param	sy
  *	@param	GFL_CLUNIT *unit	CLUNIT
- *	@param	heap_id						ヒープID
+ *	@param	heapID						ヒープID
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heap_id )
+static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heapID )
 {	
   CLWK_RES_PARAM prm;
 
@@ -1248,9 +1313,9 @@ static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 t
   prm.pltt_line = PLTID_OBJ_OAM_MAPMODEL_M;
 
   // リソース読み込み
-  UITemplate_OBJ_LoadResource( &wk->clres_oam_mmdl, &prm, unit, heap_id );
+  UITemplate_OBJ_LoadResource( &wk->clres_oam_mmdl, &prm, unit, heapID );
   // CLWK生成
-  wk->clwk_oam_mmdl = UITemplate_OBJ_CreateCLWK( &wk->clres_oam_mmdl, unit, 80, 32, 0, heap_id );
+  wk->clwk_oam_mmdl = UITemplate_OBJ_CreateCLWK( &wk->clres_oam_mmdl, unit, 80, 32, 0, heapID );
 
   // テクスチャを転送
   {
@@ -1258,7 +1323,7 @@ static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 t
     int sx = 4;
     int sy = 4;
 
-    CLWK_TransNSBTX( wk->clwk_oam_mmdl, ARCID_MMDL_RES, tex_idx, ptn_ofs, sx, sy, 0, prm.draw_type, heap_id );
+    CLWK_TransNSBTX( wk->clwk_oam_mmdl, ARCID_MMDL_RES, tex_idx, ptn_ofs, sx, sy, 0, prm.draw_type, heapID );
   }
 }
 
@@ -1281,6 +1346,132 @@ static void UITemplate_OAM_MAPMODEL_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk )
 
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 
+
+#ifdef UI_TEMPLATE_POKE2D
+//=============================================================================
+/**
+ *	ポケモンOBJ,BG読みこみ
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモンBG読みこみ
+ *
+ *	@param	UI_TEMPLATE_MAIN_WORK *wk	ワーク
+ *	@param	heapID										ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_POKE2D_LoadResourceBG( UI_TEMPLATE_MAIN_WORK *wk, HEAPID heapID )
+{	
+
+	POKEMON_PASO_PARAM	*ppp;
+	
+	//PPP作成
+	ppp	= (POKEMON_PASO_PARAM	*)PP_Create( MONSNO_KAMEKKUSU, 0, 0, heapID );
+
+	//1キャラ目に空白キャラいれて
+	GFL_BG_FillCharacter( BG_FRAME_POKE_M, 0, 1,  0 );
+
+	//ポケモンの絵を転送
+	//1は↑で1キャラ作成したので。
+	POKE2DGRA_BG_TransResource( ppp, POKEGRA_DIR_FRONT, BG_FRAME_POKE_M,
+			1, PLTID_BG_POKE_M, heapID );
+
+	//スクリーンに書き込んで転送
+	POKE2DGRA_BG_WriteScreen( BG_FRAME_POKE_M, 1, PLTID_BG_POKE_M, 32/2-12/2+12, 24/2-12/2 );
+	GFL_BG_LoadScreenReq( BG_FRAME_POKE_M );
+
+	//PPP破棄
+	GFL_HEAP_FreeMemory( ppp );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモンBG破棄
+ *
+ *	@param	UI_TEMPLATE_MAIN_WORK *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_POKE2D_UnLoadResourceBG( UI_TEMPLATE_MAIN_WORK *wk )
+{		
+	GFL_BG_FillCharacterRelease( BG_FRAME_POKE_M, 1, 0 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リソース読みこみ
+ *
+ *	@param	UI_TEMPLATE_MAIN_WORK *wk	ワーク
+ *	@param	heapID										ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_POKE2D_LoadResourceOBJ( UI_TEMPLATE_MAIN_WORK *wk, HEAPID heapID )
+{	
+	POKEMON_PASO_PARAM	*ppp;
+	ARCHANDLE						*handle;
+
+	//PPP作成
+	ppp	= (POKEMON_PASO_PARAM	*)PP_Create( MONSNO_RIZAADON, 0, 0, heapID );
+
+	//ハンドル
+	handle	= POKE2DGRA_OpenHandle( heapID );
+	//リソース読みこみ
+	wk->ncg_poke2d	= POKE2DGRA_OBJ_CGR_Register( handle, ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, heapID );
+	wk->ncl_poke2d	= POKE2DGRA_OBJ_PLTT_Register( handle, ppp, POKEGRA_DIR_FRONT ,CLSYS_DRAW_MAIN,  PLTID_OBJ_POKE_M*0x20,  heapID );
+	wk->nce_poke2d	= POKE2DGRA_OBJ_CELLANM_Register( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, heapID );
+	GFL_ARC_CloseDataHandle( handle );
+
+	//PP破棄
+	GFL_HEAP_FreeMemory( ppp );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リソース破棄
+ *
+ *	@param	UI_TEMPLATE_MAIN_WORK *wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_POKE2D_UnLoadResourceOBJ( UI_TEMPLATE_MAIN_WORK *wk )
+{	
+	//リソース破棄
+	GFL_CLGRP_PLTT_Release( wk->ncl_poke2d );
+	GFL_CLGRP_CGR_Release( wk->ncg_poke2d );
+	GFL_CLGRP_CELLANIM_Release( wk->nce_poke2d );
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	CLWK作成
+ *
+ *	@param	UI_TEMPLATE_MAIN_WORK *wk	ワーク
+ *	@param	*clunit	ユニット
+ *	@param	heapID	ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_POKE2D_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID )
+{	
+	GFL_CLWK_DATA	cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+		cldata.pos_x	= 38;
+		cldata.pos_y	= 80;
+		wk->clwk_poke2d	= GFL_CLACT_WK_Create( clunit, 
+				wk->ncg_poke2d,
+				wk->ncl_poke2d,
+				wk->nce_poke2d,
+				&cldata, 
+				CLSYS_DEFREND_MAIN, heapID );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	CLWK破棄
+ *
+ *	@param	UI_TEMPLATE_MAIN_WORK *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_POKE2D_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
+{	
+	GFL_CLACT_WK_Remove( wk->clwk_poke2d );
+}
+#endif //UI_TEMPLATE_POKE2D
 
 #ifdef	UI_TEMPLATE_PRINT_TOOL
 //=============================================================================

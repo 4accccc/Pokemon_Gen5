@@ -74,7 +74,7 @@ void* POKE2DGRA_LoadCharacter( NNSG2dCharacterData **ncg_data, const POKEMON_PAS
  *	@param	dir														絵の方向
  *	@param	frm														読込先フレーム
  *	@param	chr_offs											キャラオフセット
- *	@param	plt_offs											パレットオフセット
+ *	@param	plt_offs											パレットオフセット(0～15)
  *	@param	heapID												ヒープID
  */
 //-----------------------------------------------------------------------------
@@ -115,7 +115,7 @@ void POKE2DGRA_BG_TransResource( const POKEMON_PASO_PARAM* ppp, int dir, u32 frm
 		p_handle	= GFL_ARC_OpenDataHandle( arc, heapID );
 
 		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, plt,
-				paltype, plt_offs, POKEGRA_POKEMON_PLT_SIZE, heapID );
+				paltype, plt_offs*0x20, POKEGRA_POKEMON_PLT_SIZE, heapID );
 
 		p_buff	= POKE2DGRA_LoadCharacter( &ncg_data, ppp, dir, heapID );
 		GFL_BG_LoadCharacter( frm, ncg_data->pRawData, POKEGRA_POKEMON_CHARA_SIZE, chr_offs );
@@ -134,7 +134,7 @@ void POKE2DGRA_BG_TransResource( const POKEMON_PASO_PARAM* ppp, int dir, u32 frm
  *	@param	dir														絵の方向
  *	@param	frm														読込先フレーム
  *	@param	chr_offs											キャラオフセット
- *	@param	plt														パレットオフセット
+ *	@param	plt														パレットオフセット(0～15)
  *	@param	heapID												ヒープID
  *
  *
