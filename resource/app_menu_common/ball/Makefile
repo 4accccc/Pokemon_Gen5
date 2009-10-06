@@ -5,11 +5,6 @@
 #------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------
-#※コンバートを行う人のユーザーIDをここに書く
-#------------------------------------------------------------------------------
-USERS	= ariizumi_nobuhiko toru_nagihashi ibe_mana hiro_nakamura
-
-#------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname = app_menu_common
@@ -41,7 +36,6 @@ cobjects = $(subst .nce,.NCGR,$(esources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
 .SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
 
@@ -57,31 +51,22 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .nce.NCER:
 	g2dcvtr $< -ncn
 
-endif
-
 .PHONY:	do-build clean subdir
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(targetname).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
 
-# narc のコピーだけ実行する
-#$(TARGETDIR)/$(targetname).narc: $(targetname).narc
-#	$(COPY) $(targetname).narc $(TARGETDIR)
-#	$(COPY) $(targetname).naix $(TARGETDIR)
-
-#ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-#$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(cobjects)
-#	CP *.NCGR ./../
-#	CP *.NCLR ./../
-#	CP *.NCER ./../
-#	CP *.NANR ./../
-#endif
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(cobjects)
+	CP *.NCGR ./../
+	CP *.NCLR ./../
+	CP *.NCER ./../
+	CP *.NANR ./../
 
 #------------------------------------------------------------------------------
 #	make clean ルール
@@ -89,11 +74,10 @@ subdir:
 #------------------------------------------------------------------------------
 clean:
 	@$(MAKE_SUBDIR)
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCGR
 	rm -f *.NCLR
 	rm -f *.NCER
 	rm -f *.NANR
-endif
+
 
 

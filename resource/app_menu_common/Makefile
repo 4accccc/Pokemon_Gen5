@@ -67,7 +67,9 @@ endif
 do-build:	subdir $(TARGETDIR)/$(targetname).narc
 
 subdir:
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 	@$(MAKE_SUBDIR)
+endif
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
