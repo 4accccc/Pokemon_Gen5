@@ -1,0 +1,87 @@
+
+#------------------------------------------------------------------------------
+#※コンバート作業が必要なユーザーの名前を記述する
+#------------------------------------------------------------------------------
+USERS	=	saitou
+
+#------------------------------------------------------------------------------
+#※ここに作成するnarc名を書く
+#------------------------------------------------------------------------------
+targetname = gym_fly
+
+#------------------------------------------------------------------------------
+#※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
+#------------------------------------------------------------------------------
+FLDMAP = fieldmap
+TARGETDIR = $(PROJECT_ARCDIR)$(FLDMAP)
+
+#------------------------------------------------------------------------------
+#※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
+#------------------------------------------------------------------------------
+SUBDIRS	=
+
+#共通ルールファイルのインクルード
+include	$(PROJECT_RSCDIR)\macro_define
+
+include data_list
+
+#------------------------------------------------------------------------------
+#データ
+#------------------------------------------------------------------------------
+ARCLIST = arc_list.txt
+
+LDIRT_CLEAN = $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix
+#コンバート対象者のみ、中間ファイル削除
+ifeq	($(CONVERTUSER),true)	
+LDIRT_CLEAN += $(targetname).narc $(targetname).naix arc_result.txt
+endif
+
+LINCLUDES	= $(NITROSDK_ROOT)/include
+LINCLUDES	+= $(dir $<)
+
+INCPATH	= -I$(NITROSDK_ROOT)/include
+
+#------------------------------------------------------------------------------
+#ツール
+#------------------------------------------------------------------------------
+
+ICA_CNV = ../../../../tools/ica/ica_converter.rb
+
+.PHONY:	do-build clean
+
+
+
+do-build: $(TARGETDIR)/$(targetname).narc
+
+#コピー実行する
+$(TARGETDIR)/$(targetname).narc:  $(targetname).narc 
+	@echo copying $(targetname).narc
+	@$(COPY) $(targetname).narc $(TARGETDIR)
+	@$(COPY) $(targetname).naix $(TARGETDIR)
+
+#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+#.SUFFIXES:	.nsbmd .imd
+#imdデータからの生成ルール
+%.nsbmd:	data/cannon/%.imd
+#	@echo $<をコンバート
+	@g3dcvtr $<
+
+%.nsbca:	data/cannon/%.ica
+#	@echo $<をコンバート
+	@g3dcvtr $<
+
+%.nsbma:	data/cannon/%.ima
+#	@echo $<をコンバート
+	@g3dcvtr $<
+
+%.bin:	data/null/%.ica
+	@ruby $(ICA_CNV) -t $< $@
+
+# コピー先のnarcが古い場合実行する
+$(targetname).narc: $(DATA_LIST)
+	@nnsarc -i -cl -l -n $(targetname).narc -S $(ARCLIST) > arc_result.txt
+	@-rm -f *.nsb*
+	@-rm -f *.bin
+
+endif

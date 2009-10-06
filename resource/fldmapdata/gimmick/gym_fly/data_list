@@ -1,0 +1,6 @@
+DATA_LIST = \
+     cannon_01_00.nsbmd \
+		 cannon_01_00.nsbca \
+     cannon_01_00.nsbma \
+     null_01_00.bin
+

@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gym_fly.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2009-10-06T21:51:08
+ *****************************************************************************/
+
+#ifndef NARC_GYM_FLY_NAIX_
+#define NARC_GYM_FLY_NAIX_
+
+enum {
+	NARC_gym_fly_cannon_01_00_nsbmd = 0,
+	NARC_gym_fly_cannon_01_00_nsbca = 1,
+	NARC_gym_fly_cannon_01_00_nsbma = 2,
+	NARC_gym_fly_null_01_00_bin = 3
+};
+
+/* NARC_GYM_FLY_NAIX_ */
+#endif
