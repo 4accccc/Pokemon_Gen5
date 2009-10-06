@@ -13,6 +13,7 @@
 #include "poke_tool/poke_tool.h"
 #include "system/pokegra.h"
 #include "app/app_menu_common.h"
+#include "poke_tool/monsno_def.h"
 
 //=============================================================================
 /**
