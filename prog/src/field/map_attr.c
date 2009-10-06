@@ -37,13 +37,13 @@
 MAPATTR MAPATTR_GetAttribute( FLDMAPPER *mapper, const VecFx32 *pos )
 {
   MAPATTR attr = MAPATTR_ERROR;
-#if 1
+#if 0 //’P‘w
   FLDMAPPER_GRIDINFO gridInfo;
   
   if( FLDMAPPER_GetGridInfo(mapper,pos,&gridInfo) == TRUE ){
     attr = gridInfo.gridData[0].attr;  
   }
-#else
+#else //•¡‘w‘Î‰ž
   FLDMAPPER_GRIDINFODATA gridData;
   if( FLDMAPPER_GetGridData(mapper,pos,&gridData) == TRUE){
     return gridData.attr;
