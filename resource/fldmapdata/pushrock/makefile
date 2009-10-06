@@ -10,7 +10,7 @@ include $(PROJECT_RSCDIR)/macro_define
 #---------------------------------------------------------------
 #	Še—v‘f
 #---------------------------------------------------------------
-TARGET = fldmmdl_rockpos.cdat
+TARGET = rockpos.cdat
 
 XLS_ROCKPOS = rockpos.xls
 CSV_ROCKPOS = rockpos.csv
