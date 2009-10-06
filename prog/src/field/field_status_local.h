@@ -43,4 +43,11 @@ extern MAPMODE FIELD_STATUS_GetMapMode(const FIELD_STATUS * fldstatus);
 //------------------------------------------------------------------
 extern void FIELD_STATUS_SetMapMode(FIELD_STATUS * fldstatus, MAPMODE map_mode);
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern void FIELD_STATUS_SetFieldInitFlag( FIELD_STATUS * fldstatus, BOOL flag );
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern BOOL FIELD_STATUS_GetFieldInitFlag( const FIELD_STATUS * fldstatus );
 

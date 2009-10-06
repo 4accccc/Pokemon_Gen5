@@ -89,6 +89,7 @@
 #include "field_gimmick.h"
 #include "gmk_tmp_wk.h"
 
+#include "field_status_local.h" //FIELD_STATUS_～
 #include "script.h"   //SCRIPT_CallZoneChangeScript
 
 #include "fld_particle.h"
@@ -654,6 +655,16 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   //フィールド3Dカットイン
   fieldWork->Fld3dCiPtr = FLD3D_CI_Init(fieldWork->heapID, fieldWork->FldPrtclSys);
 
+  { //フィールド初期化スクリプトの呼び出し
+    FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
+    if ( FIELD_STATUS_GetFieldInitFlag( fldstatus ) ) 
+    {
+      SCRIPT_CallFieldInitScript( fieldWork->gsys, fieldWork->heapID );
+      FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus( fieldWork->gamedata ), FALSE );
+    } else {
+      SCRIPT_CallFieldRecoverScript( fieldWork->gsys, fieldWork->heapID );
+    }
+  }
   return MAINSEQ_RESULT_NEXTSEQ;
 }
 

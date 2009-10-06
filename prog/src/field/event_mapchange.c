@@ -4,6 +4,8 @@
  * @brief マップ遷移関連イベント
  * @date	2008.11.04
  * @author	tamada GAME FREAK inc.
+ *
+ * @todo  FIELD_STATUS_SetFieldInitFlagをどこかに機能としてまとめるべきか検討
  */
 //============================================================================================
 #include <gflib.h>
@@ -99,6 +101,9 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 		case GAMEINIT_MODE_FIRST:
 		case GAMEINIT_MODE_DEBUG:
       SCRIPT_CallGameStartInitScript( gsys, GFL_HEAPID_APP );
+      { 
+        FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
+      }
 			break;
 		}
 
@@ -271,6 +276,10 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
 
     //マップモードなど機能指定を解除する
     MAPCHG_releaseMapTools( gsys );
+
+    { 
+      FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
+    }
 
     //新しいマップモードなど機能指定を行う
     MAPCHG_setupMapTools( gsys, &mcw->loc_req );
@@ -595,6 +604,9 @@ void MAPCHG_GameOver( GAMESYS_WORK * gsys )
   //マップモードなど機能指定を解除する
   MAPCHG_releaseMapTools( gsys );
 
+  { 
+    FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
+  }
   //新しいマップモードなど機能指定を行う
   MAPCHG_setupMapTools( gsys, &loc_req );
   
