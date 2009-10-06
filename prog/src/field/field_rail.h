@@ -283,7 +283,7 @@ extern void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man);
+extern BOOL FIELD_RAIL_MAN_UpdateCamera(FIELD_RAIL_MAN * man);
 
 
 //------------------------------------------------------------------
@@ -359,7 +359,7 @@ extern void FIELD_RAIL_WORK_GetPos(const FIELD_RAIL_WORK * work, VecFx32 * pos);
 extern RAIL_FRAME FIELD_RAIL_WORK_GetActionFrame( const FIELD_RAIL_WORK * work );
 extern RAIL_KEY FIELD_RAIL_WORK_GetActionKey( const FIELD_RAIL_WORK * work );
 extern BOOL FIELD_RAIL_WORK_IsAction( const FIELD_RAIL_WORK * work );
-extern BOOL FIELD_RAIL_WORK_GetLastAction( const FIELD_RAIL_WORK * work );
+extern BOOL FIELD_RAIL_WORK_IsLastAction( const FIELD_RAIL_WORK * work );
 
 
 //------------------------------------------------------------------

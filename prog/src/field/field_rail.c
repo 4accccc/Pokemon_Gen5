@@ -136,6 +136,7 @@ struct _FIELD_RAIL_MAN{
   // カメラ情報
   FIELD_CAMERA * field_camera;
   const FIELD_RAIL_WORK * camera_bind_work;
+  BOOL camera_update; // カメラ強制アップデート
 
   // ロケーションのみでの計算用
   FIELD_RAIL_WORK* calc_work;
@@ -363,6 +364,7 @@ void FIELD_RAIL_MAN_DeleteWork( FIELD_RAIL_MAN * man, FIELD_RAIL_WORK* work )
 void FIELD_RAIL_MAN_BindCamera( FIELD_RAIL_MAN * man, const FIELD_RAIL_WORK* work )
 {
   man->camera_bind_work = work;
+  man->camera_update    = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -450,9 +452,12 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man)
 //------------------------------------------------------------------
 /**
  * @brief カメラ状態のアップデート
+ *
+ * @retval  TRUE  カメラ状態の更新
+ * @retval  FALSE カメラ状態を変えなかった
  */
 //------------------------------------------------------------------
-void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man)
+BOOL FIELD_RAIL_MAN_UpdateCamera(FIELD_RAIL_MAN * man)
 {
   const FIELD_RAIL_WORK * work = man->camera_bind_work;
 	const RAIL_CAMERA_SET* camera_set;
@@ -460,18 +465,25 @@ void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man)
 
   if (!man->active_flag)
   {
-    return;
+    return FALSE;
   }
   
   if ( !work )
   {
-    return ;
+    return FALSE;
   }
 
   if (isValidRail(work) == FALSE)
   {
-    return;
+    return FALSE;
   }
+
+  // 動作したフレームかチェック
+  if( (FIELD_RAIL_WORK_IsLastAction( work ) == FALSE) && (man->camera_update == FALSE) )
+  {
+    return FALSE;
+  }
+
 
   switch (work->type)
   {
@@ -496,6 +508,10 @@ void FIELD_RAIL_MAN_UpdateCamera(const FIELD_RAIL_MAN * man)
   {
     func(man);
   }
+
+  man->camera_update = FALSE;
+
+  return TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -538,7 +554,7 @@ BOOL FIELD_RAIL_MAN_CalcRailKeyLocation(const FIELD_RAIL_MAN * man, const RAIL_L
   FIELD_RAIL_WORK_Update( man->calc_work );
   FIELD_RAIL_WORK_GetLocation( man->calc_work, next_location );
 
-  return FIELD_RAIL_WORK_GetLastAction( man->calc_work );
+  return FIELD_RAIL_WORK_IsLastAction( man->calc_work );
 }
 
 
@@ -910,7 +926,7 @@ BOOL FIELD_RAIL_WORK_IsAction( const FIELD_RAIL_WORK * work )
  *	@retval FALSE 移動しなかった
  */
 //-----------------------------------------------------------------------------
-BOOL FIELD_RAIL_WORK_GetLastAction( const FIELD_RAIL_WORK * work )
+BOOL FIELD_RAIL_WORK_IsLastAction( const FIELD_RAIL_WORK * work )
 {
 	GF_ASSERT( work );
 	return work->last_move;
