@@ -292,7 +292,7 @@ static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, 
 	mons_no	-= 1;
 
 	file_start	= POKEGRA_FILE_MAX * mons_no;
-	file_offset	= (dir == POKEGRA_DIR_FRONT) ? 0: POKEGRA_BACK_M_NCGR;
+	file_offset	= (dir == POKEGRA_DIR_FRONT) ? POKEGRA_FRONT_M_NCGR: POKEGRA_BACK_M_NCGR;
 
 	//–{—ˆ‚Í•ÊƒtƒHƒ‹ƒ€ˆ—‚ğ“ü‚ê‚é@todo
 #if defined(DEBUG_ONLY_FOR_sogabe) || defined(DEBUG_ONLY_FOR_toru_nagihashi)

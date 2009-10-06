@@ -287,3 +287,35 @@ u32 APP_COMMON_GetStatusIconAnime( POKEMON_PARAM * pp )
 		return APP_COMMON_ST_ICON_NONE;
 	}
 }
+//=============================================================================
+/**
+ *	ポケモン絵OBJのためのダミーセル
+ */
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ダミーセルアーカイブインデックス
+ *
+ *	@param	const APP_COMMON_MAPPING mapping マッピングモード
+ *
+ *	@return	リソース番号
+ */
+//-----------------------------------------------------------------------------
+u32 APP_COMMON_GetDummyCellArcIdx( const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_poke2dgra_dummy_32k_NCER + mapping;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ダミーアニメアーカイブインデックス取得
+ *
+ *	@param	const APP_COMMON_MAPPING mapping	マッピングモード
+ *
+ *	@return	リソース番号
+ */
+//-----------------------------------------------------------------------------
+u32 APP_COMMON_GetDummyAnimeArcIdx( const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_poke2dgra_dummy_32k_NANR + mapping;
+}

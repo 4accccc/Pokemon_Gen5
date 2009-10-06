@@ -19,6 +19,17 @@
 #define	POKEGRA_DIR_FRONT	( 0 )	//正面
 #define	POKEGRA_DIR_BACK	( 1 )	//背面
 
+//-------------------------------------
+///	リソース
+//=====================================
+#define POKEGRA_POKEMON_CHARA_WIDTH		(12)	//ポケモン絵のキャラ幅
+#define POKEGRA_POKEMON_CHARA_HEIGHT	(12)	//ポケモン絵のキャラ高さ
+
+#define POKEGRA_POKEMON_CHARA_SIZE		(POKEGRA_POKEMON_CHARA_WIDTH*POKEGRA_POKEMON_CHARA_HEIGHT*GFL_BG_1CHRDATASIZ)	//ポケモンのキャラサイズ
+
+#define POKEGRA_POKEMON_PLT_NUM				(1)	//ポケモン1体分のパレット使用本数
+#define POKEGRA_POKEMON_PLT_SIZE			(POKEGRA_POKEMON_PLT_NUM*0x20)	//ポケモン1体分のパレットサイズ
+
 //=============================================================================
 /**
  *					構造体宣言

@@ -187,7 +187,8 @@ SRCS  +=    $(SOUNDSRC) \
         system/gra_tool.c \
         field/field_comm/field_beacon_message.c \
         field/field_status.c \
-				system/pokegra.c
+				system/pokegra.c \
+				system/poke2dgra.c
 
 
 #================================================
@@ -929,13 +930,6 @@ SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
 		app/p_status/p_sta_oam.c \
 		app/p_status/ribbon.c
 
-#	名木橋デバッグ
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_UI_COMMON
-SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
-																test/nagihashi/debug_irc_name.c \
-																test/nagihashi/debug_template.c
-
 # 小幡デバッグ
 #===> main
 SRCS_OVERLAY_OBATA_DEBUG = test/obata/debug_obata_menu.c \
@@ -970,3 +964,9 @@ SRCS_OVERLAY_MICTEST	= app/mictest/mictest.c
 SRCS_OVERLAY_UI_DEBUG = ui/debug/ui_template.c \
 												ui/debug/ui_template_graphic.c
 
+#	名木橋デバッグ
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_UI_DEBUG
+SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
+																test/nagihashi/debug_irc_name.c \
+																test/nagihashi/debug_template.c

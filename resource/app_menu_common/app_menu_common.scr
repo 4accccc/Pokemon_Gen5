@@ -89,3 +89,9 @@
 "null_4x4_64k.NANR"
 "null_4x4_128k.NANR"
 
+"poke2dgra_dummy_32k.NCER"
+"poke2dgra_dummy_64k.NCER"
+"poke2dgra_dummy_128k.NCER"
+"poke2dgra_dummy_32k.NANR"
+"poke2dgra_dummy_64k.NANR"
+"poke2dgra_dummy_128k.NANR"

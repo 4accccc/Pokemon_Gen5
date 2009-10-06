@@ -22,6 +22,7 @@
 #include "infowin/infowin.h"
 #include "ui/touchbar.h"
 #include "../../ui/debug/ui_template_graphic.h"
+#include "system/poke2dgra.h"
 
 //archive
 #include "arc_def.h"
@@ -37,6 +38,8 @@
 //	mine
 #include "debug_template.h"
 
+FS_EXTERN_OVERLAY(ui_common);
+FS_EXTERN_OVERLAY(ui_debug);
 
 //=============================================================================
 /**
@@ -48,7 +51,8 @@
 //=====================================
 enum
 {	
-	BAR_GRAPHIC_BG_FRAME_BAR_M	= GFL_BG_FRAME0_M,
+	BG_FRAME_BAR_M	= GFL_BG_FRAME1_M,
+	BG_FRAME_POKEMON_M	= GFL_BG_FRAME2_M,
 };
 //-------------------------------------
 ///	パレット
@@ -56,12 +60,26 @@ enum
 enum
 {	
 	//メインBG
-	PLTID_BG_INFOWIN_M	= 0,
-	PLTID_BG_TOUCHBAR_M	= 3,
+	PLTID_BG_POKEMON_M		= 0,
+	PLTID_BG_TOUCHBAR_M		= 13,
+	PLTID_BG_INFOWIN_M		= 15,
 
 	//メインOBJ
-	PLTID_OBJ_TOUCHBAR_M	= 0,
+	PLTID_OBJ_POKEMON_M		= 0,
+	PLTID_OBJ_TOUCHBAR_M	= 13,
 };
+//-------------------------------------
+///	リソースインデックス
+//=====================================
+enum 
+{
+	OBJRESID_PM_CHR,
+	OBJRESID_PM_PLT,
+	OBJRESID_PM_CEL,
+
+	OBJRESID_MAX,
+} ;
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -93,6 +111,10 @@ typedef struct
 
 	//タッチバー
 	TOUCHBAR_WORK	*p_touchbar;
+
+	//ポケモン正面OBJ
+	u32						objres[OBJRESID_MAX];
+	GFL_CLWK			*p_clwk;
 
 	//共通で使うフォント
 	GFL_FONT			*p_font;
@@ -156,100 +178,6 @@ const GFL_PROC_DATA DebugTemplate_ProcData =
  *					データ
  */
 //=============================================================================
-//-------------------------------------
-///	BG設定
-//=====================================
-enum
-{	
-	GRAPHIC_BG_FRAME_BAR_M,				//バーやタイトル
-	GRAPHIC_BG_FRAME_FONT_M,			//メインフォント
-	GRAPHIC_BG_FRAME_WND_M,				//ウィンドウ
-	GRAPHIC_BG_FRAME_DECIDE_M,		//最終確認ウィンドウ
-
-	GRAPHIC_BG_FRAME_TEXT_S,			//ウィンドウ
-	GRAPHIC_BG_FRAME_BACK_S,			//背景
-
-	GRAPHIC_BG_FRAME_MAX
-};
-static const struct 
-{
-	u32									frame;
-	GFL_BG_BGCNT_HEADER	bgcnt_header;
-	u32									mode;
-}	sc_bgsetup[GRAPHIC_BG_FRAME_MAX]	=
-{	
-	//MAIN
-	//GRAPHIC_BG_FRAME_BAR_M
-	{	
-		GFL_BG_FRAME0_M,
-		{
-			0, 0, 0x800, 0,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
-			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
-		},
-		GFL_BG_MODE_TEXT
-	},
-	//GRAPHIC_BG_FRAME_FONT_M
-	{	
-		GFL_BG_FRAME1_M,
-		{
-			0, 0, 0x1000, 0,
-			GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
-			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
-		},
-		GFL_BG_MODE_TEXT
-	},
-	//GRAPHIC_BG_FRAME_WND_M
-	{	
-		GFL_BG_FRAME2_M,
-		{
-			0, 0, 0x1000, 0,
-			GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
-			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
-		},
-		GFL_BG_MODE_TEXT
-	},
-	//GRAPHIC_BG_FRAME_DECIDE_M
-	{	
-		GFL_BG_FRAME3_M,
-		{
-			0, 0, 0x800, 0,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x2800, GX_BG_CHARBASE_0x14000, GFL_BG_CHRSIZ_256x256,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-		},
-		GFL_BG_MODE_TEXT
-	},
-
-	//SUB
-	{	
-		GFL_BG_FRAME0_S,
-		{
-			0, 0, 0x800, 0,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-		},
-		GFL_BG_MODE_TEXT
-	},
-	{	
-		GFL_BG_FRAME1_S,
-		{
-			0, 0, 0x800, 0,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-		},
-		GFL_BG_MODE_TEXT
-	},
-
-};
-//フレーム取得用マクロ
-#define GRAPHIC_BG_GetFrame( x )	(sc_bgsetup[ x ].frame)
-
 
 //=============================================================================
 /**
@@ -273,11 +201,15 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 	TEMPLATE_WORK		*p_wk;
 	TEMPLATE_PARAM	*p_param;
 
+	//オーバーレイ読み込み
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_debug));
+
 	//引数受け取り
 	p_param	= p_param_adrs;
 
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAGI_DEBUG_SUB, 0x20000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAGI_DEBUG_SUB, 0x30000 );
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(TEMPLATE_WORK), HEAPID_NAGI_DEBUG_SUB );
 	GFL_STD_MemClear( p_wk, sizeof(TEMPLATE_WORK) );
@@ -289,7 +221,7 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 	p_wk->p_tcbl		= GFL_TCBL_Init( HEAPID_NAGI_DEBUG_SUB, HEAPID_NAGI_DEBUG_SUB, 32, 32 );
 
 	//モジュール作成
-	p_wk->p_graphic	= UI_TEMPLATE_GRAPHIC_Init( HEAPID_NAGI_DEBUG_SUB, HEAPID_NAGI_DEBUG_SUB );
+	p_wk->p_graphic	= UI_TEMPLATE_GRAPHIC_Init( 0, HEAPID_NAGI_DEBUG_SUB );
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeOut );	//最初はFadeOutシーケンス
 
 	//INFOWINの設定
@@ -299,7 +231,7 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 		{	
 			comm	= GAMESYSTEM_GetGameCommSysPtr(p_param->p_gamesys);
 		}
-		INFOWIN_Init( BAR_GRAPHIC_BG_FRAME_BAR_M, 
+		INFOWIN_Init( BG_FRAME_BAR_M, 
 				PLTID_BG_INFOWIN_M,
 				comm, HEAPID_NAGI_DEBUG_SUB );
 	}
@@ -325,13 +257,63 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 		touchbar_setup.p_item		= touchbar_icon_tbl;
 		touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);
 		touchbar_setup.p_unit		= UI_TEMPLATE_GRAPHIC_GetClunit( p_wk->p_graphic );
-		touchbar_setup.bar_frm	= BAR_GRAPHIC_BG_FRAME_BAR_M;
+		touchbar_setup.bar_frm	= BG_FRAME_BAR_M;
 		touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;
 		touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;
 		touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;
 
 		p_wk->p_touchbar	= TOUCHBAR_Init( &touchbar_setup, HEAPID_NAGI_DEBUG_SUB );
 
+	}
+
+	//ポケモンOBJ
+	{	
+		POKEMON_PASO_PARAM	*p_ppp;
+		ARCHANDLE						*p_handle;
+			
+		p_ppp	= (POKEMON_PASO_PARAM	*)PP_Create( 3, 0, 0, HEAPID_NAGI_DEBUG_SUB );
+
+		p_handle	= POKE2DGRA_OpenHandle( HEAPID_NAGI_DEBUG_SUB );
+		p_wk->objres[ OBJRESID_PM_CHR ]	= POKE2DGRA_OBJ_CGR_Register( p_handle, p_ppp, POKEGRA_DIR_BACK, CLSYS_DRAW_MAIN, HEAPID_NAGI_DEBUG_SUB );
+		p_wk->objres[ OBJRESID_PM_PLT ]	= POKE2DGRA_OBJ_PLTT_Register( p_handle, p_ppp, POKEGRA_DIR_BACK ,CLSYS_DRAW_MAIN,  PLTID_OBJ_POKEMON_M,  HEAPID_NAGI_DEBUG_SUB );
+		p_wk->objres[ OBJRESID_PM_CEL ]	= POKE2DGRA_OBJ_CELLANM_Register( p_ppp, POKEGRA_DIR_BACK, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, HEAPID_NAGI_DEBUG_SUB );
+		GFL_ARC_CloseDataHandle( p_handle );
+
+		GFL_HEAP_FreeMemory( p_ppp );
+
+	}
+	{	
+		GFL_CLUNIT					*p_unit;
+		GFL_CLWK_DATA	cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+		cldata.pos_x	= 188;
+		cldata.pos_y	= 96;
+
+		p_unit	= UI_TEMPLATE_GRAPHIC_GetClunit( p_wk->p_graphic );
+		p_wk->p_clwk	= GFL_CLACT_WK_Create( p_unit, 
+				p_wk->objres[OBJRESID_PM_CHR],
+				p_wk->objres[OBJRESID_PM_PLT],
+				p_wk->objres[OBJRESID_PM_CEL],
+				&cldata, 
+				CLSYS_DEFREND_MAIN, HEAPID_NAGI_DEBUG_SUB );
+	}
+
+	//ポケモンBG
+	{	
+		POKEMON_PASO_PARAM	*p_ppp;
+
+		p_ppp	= (POKEMON_PASO_PARAM	*)PP_Create( 6, 0, 0, HEAPID_NAGI_DEBUG_SUB );
+
+		GFL_BG_FillCharacter( BG_FRAME_POKEMON_M, 0, 1,  0 );
+
+		POKE2DGRA_BG_TransResource( p_ppp, POKEGRA_DIR_BACK, BG_FRAME_POKEMON_M,
+				1, PLTID_BG_POKEMON_M, HEAPID_NAGI_DEBUG_SUB );
+
+		POKE2DGRA_BG_WriteScreen( BG_FRAME_POKEMON_M, 1, PLTID_BG_POKEMON_M, 0, 4 );
+		GFL_BG_LoadScreenReq( BG_FRAME_POKEMON_M );
+
+		GFL_HEAP_FreeMemory( p_ppp );
 	}
 
 	return GFL_PROC_RES_FINISH;
@@ -354,6 +336,19 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 	
 	p_wk	= p_wk_adrs;
 
+	//ポケモンBG破棄
+	{	
+		GFL_BG_FillCharacterRelease( BG_FRAME_POKEMON_M, 1, 0 );
+	}
+
+	//ポケモンOBJ破棄
+	{	
+		GFL_CLACT_WK_Remove( p_wk->p_clwk );	
+		GFL_CLGRP_PLTT_Release( p_wk->objres[ OBJRESID_PM_PLT ] );
+		GFL_CLGRP_CGR_Release( p_wk->objres[ OBJRESID_PM_CHR ] );
+		GFL_CLGRP_CELLANIM_Release( p_wk->objres[ OBJRESID_PM_CEL ] );
+	}
+
 	//モジュール破棄
 	TOUCHBAR_Exit( p_wk->p_touchbar );
 	INFOWIN_Exit();
@@ -369,6 +364,11 @@ static GFL_PROC_RESULT DEBUG_TEMPLATE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 	GFL_PROC_FreeWork( p_proc );
 	//ヒープ破棄
 	GFL_HEAP_DeleteHeap( HEAPID_NAGI_DEBUG_SUB );
+
+	//オーバーレイ破棄
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_debug));
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
+
 	
 	return GFL_PROC_RES_FINISH;
 }

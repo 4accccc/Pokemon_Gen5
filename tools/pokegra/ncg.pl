@@ -11,10 +11,15 @@
 #
 #====================================================================================
 use File::Basename;
+use Fcntl qw(:seek); # seek の位置を指定するオプションを使用するために使用
 
-use constant NCG_HEAD_SIZE			=>	4 + 2 + 2 + 4 + 2 + 2 + 4 + 4 + 4 + 4 + 4;
-use constant NCG_LINE_SIZE			=>	0x180;
-use constant NCG_LINE_SIZE_AMARI	=>	0x400 - NCG_LINE_SIZE;
+
+use constant NCG_HEAD_SIZE			=>	(4 + 2 + 2 + 4 + 2 + 2 + 4 + 4 + 4 + 4 + 4);
+use constant NCG_LINE_SIZE4			=>	0x80;
+use constant NCG_LINE_SIZE8			=>	0x100;
+use constant NCG_LINE_ALL_SIZE	=>	0x400;
+use constant NCG_LINE_SIZE8_AMARI		=>	(NCG_LINE_ALL_SIZE - NCG_LINE_SIZE8);
+use constant NCG_LINE_SIZE12_AMARI	=>	(NCG_LINE_ALL_SIZE - (NCG_LINE_SIZE4 + NCG_LINE_SIZE8));
 use constant NCG_X	=>	12;
 use constant NCG_Y	=>	12;
 
@@ -75,12 +80,38 @@ sub NCGRMake
 	}
 
 	#ヘッダーデータを読み込み
-	read NCG, $header, NCG_HEAD_SIZE; 
+	read NCG, $header, NCG_HEAD_SIZE;
 
-	for( $i = 0 ; $i < NCG_X ; $i++ ){
-		read NCG, $data, NCG_LINE_SIZE;
+	#12x12のOAMは無いので、8x8,4*8,8*4,4*4の4つのOAMにあわせる
+	#8x8
+	seek( NCG, NCG_HEAD_SIZE, SEEK_SET);
+	for( $i = 0 ; $i < 8; $i++ ){
+		read NCG, $data, NCG_LINE_SIZE8;
 		print NCGR $data;
-		read NCG, $data, NCG_LINE_SIZE_AMARI;
+		read NCG, $data, NCG_LINE_SIZE8_AMARI;
+	}
+	#4x8
+	seek( NCG, NCG_HEAD_SIZE, SEEK_SET);
+	for( $i = 0 ; $i < 8; $i++ ){
+		read NCG, $data, NCG_LINE_SIZE8;
+		read NCG, $data, NCG_LINE_SIZE4;
+		print NCGR $data;
+		read NCG, $data, NCG_LINE_SIZE12_AMARI;
+	}
+	#8x4
+	seek( NCG, (NCG_HEAD_SIZE+(NCG_LINE_ALL_SIZE*8)), SEEK_SET);
+	for( $i = 0 ; $i < 4; $i++ ){
+		read NCG, $data, NCG_LINE_SIZE8;
+		print NCGR $data;
+		read NCG, $data, NCG_LINE_SIZE8_AMARI;
+	}
+	#4x4
+	seek( NCG, (NCG_HEAD_SIZE+(NCG_LINE_ALL_SIZE*8)), SEEK_SET);
+	for( $i = 0 ; $i < 4; $i++ ){
+		read NCG, $data, NCG_LINE_SIZE8;
+		read NCG, $data, NCG_LINE_SIZE4;
+		print NCGR $data;
+		read NCG, $data, NCG_LINE_SIZE12_AMARI;
 	}
 
 	close( NCG );

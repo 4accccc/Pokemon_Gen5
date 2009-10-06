@@ -88,7 +88,13 @@ enum {
 	NARC_app_menu_common_null_4x4_128k_NCER = 74,
 	NARC_app_menu_common_null_4x4_32k_NANR = 75,
 	NARC_app_menu_common_null_4x4_64k_NANR = 76,
-	NARC_app_menu_common_null_4x4_128k_NANR = 77
+	NARC_app_menu_common_null_4x4_128k_NANR = 77,
+	NARC_app_menu_common_poke2dgra_dummy_32k_NCER = 78,
+	NARC_app_menu_common_poke2dgra_dummy_64k_NCER = 79,
+	NARC_app_menu_common_poke2dgra_dummy_128k_NCER = 80,
+	NARC_app_menu_common_poke2dgra_dummy_32k_NANR = 81,
+	NARC_app_menu_common_poke2dgra_dummy_64k_NANR = 82,
+	NARC_app_menu_common_poke2dgra_dummy_128k_NANR = 83
 };
 
 /* NARC_APP_MENU_COMMON_NAIX_ */
