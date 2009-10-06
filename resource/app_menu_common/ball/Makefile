@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= ariizumi_nobuhiko toru_nagihashi ibe_mana hiro_nakamura genya_hosaka
+USERS	= ariizumi_nobuhiko toru_nagihashi ibe_mana hiro_nakamura
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -71,17 +71,18 @@ subdir:
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
+	echo "hoge"
 #	$(COPY) $(targetname).narc $(TARGETDIR)
 #	$(COPY) $(targetname).naix $(TARGETDIR)
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+#ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(cobjects)
 	CP *.NCGR ./../
 	CP *.NCLR ./../
 	CP *.NCER ./../
 	CP *.NANR ./../
-endif
+#endif
 
 #------------------------------------------------------------------------------
 #	make clean ルール
