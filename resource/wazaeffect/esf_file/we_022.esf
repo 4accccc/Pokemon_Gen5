@@ -41,6 +41,8 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_022.spa
 &
 #001
 %00
+ポケモン円移動	攻撃側	Ｙ軸右	シフトＨ－	0	3	10:2:1	0
+エフェクト終了待ち	すべて
 カメラ移動	追従	防御側	16	0	8
 SE再生	SEQ_SE_BC01	デフォルト	0	0	100	0	0
 エフェクト終了待ち	すべて
