@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fld3d_ci_setup.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2009-10-05T21:47:18
+ *****************************************************************************/
+
+#ifndef NARC_FLD3D_CI_SETUP_NAIX_
+#define NARC_FLD3D_CI_SETUP_NAIX_
+
+enum {
+	NARC_fld3d_ci_setup_ci_0_bin = 0
+};
+
+/* NARC_FLD3D_CI_SETUP_NAIX_ */
+#endif
