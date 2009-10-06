@@ -46,7 +46,24 @@
 
 #define _1CHAR (8)
 
+// SE再定義
+enum
+{ 
+  SE_BAG_SELL   = SEQ_SE_SYS_22,  ///< 売却音
+  SE_BAG_TRASH  = SEQ_SE_SYS_08,  ///< 捨てる音
+};
 
+//=============================================================================
+// 目次
+//=============================================================================
+//  __TECNIQUE  技マシン シーケンス
+//  __TRASH     捨てる シーケンス
+//  __SELL      売る シーケンス
+
+
+//=============================================================================
+// データテーブル
+//=============================================================================
 //ならびは savedata/myitem_savedata.hに準拠
 // コールバックは_BttnCallBack
 static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
@@ -99,6 +116,9 @@ static BOOL _keyChangeItemCheck(FIELD_ITEMMENU_WORK* pWork);
 static BOOL _keyMoveCheck(FIELD_ITEMMENU_WORK* pWork);
 static BOOL _itemMovePositionTouchItem(FIELD_ITEMMENU_WORK* pWork);
 static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork);
+static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork);
+static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork);
+static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork);
 static void _itemTecniqueUseYesNo(FIELD_ITEMMENU_WORK* pWork);
 static void _itemTecniqueUseWait(FIELD_ITEMMENU_WORK* pWork);
 static void _itemTecniqueUseInit(FIELD_ITEMMENU_WORK* pWork);
@@ -108,13 +128,13 @@ static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork);
 static void _itemTrashYesNo(FIELD_ITEMMENU_WORK* pWork);
 static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork);
 static void _itemTrash(FIELD_ITEMMENU_WORK* pWork);
-static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork);
-static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork);
-static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork);
 static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellYesnoInit( FIELD_ITEMMENU_WORK* pWork );
-static void _itemSellYesnoWait( FIELD_ITEMMENU_WORK* pWork );
+static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork );
+static void _itemSellEndMsgWait( FIELD_ITEMMENU_WORK* pWork );
+static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork );
+static s32 _get_item_sell_price( int item_no, int input_num, HEAPID heapID );
 //static void BAG_ItemUseErrorMsgSet( MYSTATUS * myst, STRBUF * buf, u16 item, u32 err, FIELD_ITEMMENU_WORK * pWork );
 //u8 Bag_TalkMsgPrint( BAG_WORK * pWork, int type );
 //static int Bag_MenuUse( FIELD_ITEMMENU_WORK * pWork );
@@ -158,7 +178,7 @@ static void _changeState(FIELD_ITEMMENU_WORK* pWork,StateFunc state)
 #ifdef PM_DEBUG
 static void _changeStateDebug(FIELD_ITEMMENU_WORK* pWork,StateFunc state, int line)
 {
-  OS_Printf("BAG STATE: %d\n",line);
+  OS_TPrintf("BAG STATE: %d\n",line);
   _changeState(pWork, state);
 }
 #endif
@@ -595,248 +615,6 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
     _windowRewrite(pWork);
   }
 }
-//------------------------------------------------------------------------------
-/**
- * @brief   技マシン確認中 はいいえまち
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _itemTecniqueUseYesNo(FIELD_ITEMMENU_WORK* pWork)
-{
-  u32 ret = 0;//= TOUCH_SW_Main( pWork->pTouchSWSys );
-
-  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-
-    if(selectno==0){
-      ITEMDISP_ListPlateClear( pWork );
-      pWork->ret_code = BAG_NEXTPROC_WAZASET;
-      _CHANGE_STATE(pWork,NULL);
-    }
-    else{
-      ITEMDISP_ListPlateClear( pWork );
-      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-      _CHANGE_STATE(pWork,_itemKindSelectMenu);
-    }
-    APP_TASKMENU_CloseMenu(pWork->pAppTask);
-    pWork->pAppTask=NULL;
-    G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
-  }
-
-}
-
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   技マシン確認中
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _itemTecniqueUseWait(FIELD_ITEMMENU_WORK* pWork)
-{
-  if(!ITEMDISP_MessageEndCheck(pWork)){
-    return;
-  }
-
-  ITEMDISP_YesNoStart(pWork);
-
-  _CHANGE_STATE(pWork,_itemTecniqueUseYesNo);
-
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   技マシン起動
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _itemTecniqueUseInit(FIELD_ITEMMENU_WORK* pWork)
-{
-
-  GFL_MSG_GetString( pWork->MsgManager, msg_bag_065, pWork->pStrBuf );
-  WORDSET_RegisterWazaName(pWork->WordSet, 0, ITEM_GetWazaNo( pWork->ret_item ));
-  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  ITEMDISP_ItemInfoWindowDisp( pWork );
-  _CHANGE_STATE(pWork,_itemTecniqueUseWait);
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   アイテムを捨てる為の操作 はいまち
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _itemTrashEndWait(FIELD_ITEMMENU_WORK* pWork)
-{
-  if(PAD_BUTTON_DECIDE == GFL_UI_KEY_GetTrg()){
-    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-    _CHANGE_STATE(pWork,_itemKindSelectMenu);
-  }
-}
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   アイテムを捨てる為の操作 はいまち
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _itemTrashYesWait(FIELD_ITEMMENU_WORK* pWork)
-{
-  if(!ITEMDISP_MessageEndCheck(pWork)){
-    return;
-  }
-  _windowRewrite(pWork);
-  _CHANGE_STATE(pWork,_itemTrashEndWait);
-
-
-
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   アイテムを捨てる為の操作 はいいいえまち
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork)
-{
-  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-    APP_TASKMENU_CloseMenu(pWork->pAppTask);
-    pWork->pAppTask=NULL;
-    G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
-    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-
-    if(selectno==0){
-      //消した
-      MYITEM_SubItem(pWork->pMyItem, pWork->ret_item, pWork->trashNum, pWork->heapID );
-
-      GFL_MSG_GetString( pWork->MsgManager, msg_bag_055, pWork->pStrBuf );
-      WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
-      WORDSET_RegisterNumber(pWork->WordSet, 1, pWork->trashNum,
-                             3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
-      WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-      ITEMDISP_ItemInfoWindowDisp( pWork );
-
-      // 再描画---
-
-
-
-      _CHANGE_STATE(pWork,_itemTrashYesWait);
-    }
-    else{
-      _CHANGE_STATE(pWork,_itemKindSelectMenu);
-    }
-  }
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   アイテムを捨てる為の操作
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _itemTrashYesNo(FIELD_ITEMMENU_WORK* pWork)
-{
-  if(!ITEMDISP_MessageEndCheck(pWork)){
-    return;
-  }
-  ITEMDISP_YesNoStart(pWork);
-  _CHANGE_STATE(pWork,_itemTrashYesNoWait);
-}
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   アイテムを捨てる為の操作
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
-{
-  ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
-  int backup = pWork->trashNum;
-
-  if(!ITEMDISP_MessageEndCheck(pWork)){
-    return;
-  }
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
-    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-
-    GFL_MSG_GetString( pWork->MsgManager, msg_bag_056, pWork->pStrBuf );
-    WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
-    WORDSET_RegisterNumber(pWork->WordSet, 1, pWork->trashNum,
-                           3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
-    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-    ITEMDISP_ItemInfoWindowDisp( pWork );
-    _CHANGE_STATE(pWork,_itemTrashYesNo);
-  }
-  else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
-    G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
-    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-    _CHANGE_STATE(pWork,_itemKindSelectMenu);
-  }
-
-  if(GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
-    pWork->trashNum++;
-  }
-  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_DOWN){
-    pWork->trashNum--;
-  }
-  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_RIGHT){
-    pWork->trashNum += 10;
-  }
-  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_LEFT){
-    pWork->trashNum -= 10;
-  }
-
-
-  if(item->no < pWork->trashNum){
-    pWork->trashNum = item->no;
-  }
-  else if(pWork->trashNum < 1){
-    pWork->trashNum = 1;
-  }
-  if(pWork->trashNum != backup){
-    ITEMDISP_TrashNumDisp(pWork,pWork->trashNum);
-  }
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   アイテムを捨てる為の表示
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
-{
-  pWork->trashNum = 1;  //初期化
-
-  ITEMDISP_NumFrameDisp(pWork);
-
-  ITEMDISP_TrashNumDisp(pWork,pWork->trashNum);
-
-  GFL_MSG_GetString( pWork->MsgManager, msg_bag_054, pWork->pStrBuf );
-  WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
-  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  ITEMDISP_ItemInfoWindowDisp( pWork );
-    
-  //@TODO リストとBAR双方にOBJが使われているためバッティングする。OAMの半透明を切替るシステムが必要
-//  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 /*| GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1*/ | GX_BLEND_PLANEMASK_OBJ , -8 );
-
-  _CHANGE_STATE(pWork,_itemTrashWait);
-}
 
 //------------------------------------------------------------------------------
 /**
@@ -1051,6 +829,273 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 
 }
 
+//=============================================================================
+//
+//
+//  __TECNIQUE 技マシン シーケンス
+//
+//
+//=============================================================================
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   技マシン確認中 はいいえまち
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemTecniqueUseYesNo(FIELD_ITEMMENU_WORK* pWork)
+{
+  u32 ret = 0;//= TOUCH_SW_Main( pWork->pTouchSWSys );
+
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+
+    if(selectno==0){
+      ITEMDISP_ListPlateClear( pWork );
+      pWork->ret_code = BAG_NEXTPROC_WAZASET;
+      _CHANGE_STATE(pWork,NULL);
+    }
+    else{
+      ITEMDISP_ListPlateClear( pWork );
+      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+      _CHANGE_STATE(pWork,_itemKindSelectMenu);
+    }
+    // YESNOの後始末
+    ITEMDISP_YesNoExit(pWork);
+  }
+
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   技マシン確認中
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemTecniqueUseWait(FIELD_ITEMMENU_WORK* pWork)
+{
+  if(!ITEMDISP_MessageEndCheck(pWork)){
+    return;
+  }
+
+  ITEMDISP_YesNoStart(pWork);
+
+  _CHANGE_STATE(pWork,_itemTecniqueUseYesNo);
+
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   技マシン起動
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemTecniqueUseInit(FIELD_ITEMMENU_WORK* pWork)
+{
+
+  GFL_MSG_GetString( pWork->MsgManager, msg_bag_065, pWork->pStrBuf );
+  WORDSET_RegisterWazaName(pWork->WordSet, 0, ITEM_GetWazaNo( pWork->ret_item ));
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+  ITEMDISP_ItemInfoWindowDisp( pWork );
+  _CHANGE_STATE(pWork,_itemTecniqueUseWait);
+}
+
+//=============================================================================
+//
+//
+//  __TRASH 捨てる シーケンス
+//
+//
+//=============================================================================
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテムを捨てる為の操作 はいまち
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemTrashEndWait(FIELD_ITEMMENU_WORK* pWork)
+{
+  // @TODO タッチ
+  if(PAD_BUTTON_DECIDE == GFL_UI_KEY_GetTrg()){
+    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+    _CHANGE_STATE(pWork,_itemKindSelectMenu);
+  }
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテムを捨てる為の操作 はいまち
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemTrashYesWait(FIELD_ITEMMENU_WORK* pWork)
+{
+  if(!ITEMDISP_MessageEndCheck(pWork)){
+    return;
+  }
+  _windowRewrite(pWork);
+  _CHANGE_STATE(pWork,_itemTrashEndWait);
+
+
+
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテムを捨てる為の操作 はいいいえまち
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork)
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    
+    // YESNOの後始末
+    ITEMDISP_YesNoExit(pWork);
+    
+    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+
+    if(selectno==0){
+      // 手持ちからアイテム削除
+      MYITEM_SubItem(pWork->pMyItem, pWork->ret_item, pWork->InputNum, pWork->heapID );
+
+      // 捨てる音
+      GFL_SOUND_PlaySE( SE_BAG_TRASH );
+
+      GFL_MSG_GetString( pWork->MsgManager, msg_bag_055, pWork->pStrBuf );
+      WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
+      WORDSET_RegisterNumber(pWork->WordSet, 1, pWork->InputNum,
+                             3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+      WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+      ITEMDISP_ItemInfoWindowDisp( pWork );
+
+      // 再描画---
+
+      _CHANGE_STATE(pWork,_itemTrashYesWait);
+    }
+    else{
+      _CHANGE_STATE(pWork,_itemKindSelectMenu);
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテムを捨てる為の操作
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemTrashYesNo(FIELD_ITEMMENU_WORK* pWork)
+{
+  if(!ITEMDISP_MessageEndCheck(pWork)){
+    return;
+  }
+  ITEMDISP_YesNoStart(pWork);
+  _CHANGE_STATE(pWork,_itemTrashYesNoWait);
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテムを捨てる為の操作
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
+{
+  ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
+  int backup = pWork->InputNum;
+
+  if(!ITEMDISP_MessageEndCheck(pWork)){
+    return;
+  }
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
+    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+
+    GFL_MSG_GetString( pWork->MsgManager, msg_bag_056, pWork->pStrBuf );
+    WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
+    WORDSET_RegisterNumber(pWork->WordSet, 1, pWork->InputNum,
+                           3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    ITEMDISP_ItemInfoWindowDisp( pWork );
+    _CHANGE_STATE(pWork,_itemTrashYesNo);
+  }
+  else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
+    G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
+    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+    _CHANGE_STATE(pWork,_itemKindSelectMenu);
+  }
+
+  if(GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
+    pWork->InputNum++;
+  }
+  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_DOWN){
+    pWork->InputNum--;
+  }
+  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_RIGHT){
+    pWork->InputNum += 10;
+  }
+  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_LEFT){
+    pWork->InputNum -= 10;
+  }
+
+
+  if(item->no < pWork->InputNum){
+    pWork->InputNum = item->no;
+  }
+  else if(pWork->InputNum < 1){
+    pWork->InputNum = 1;
+  }
+  if(pWork->InputNum != backup){
+    ITEMDISP_TrashNumDisp(pWork,pWork->InputNum);
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテムを捨てる為の表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
+{
+  pWork->InputNum = 1;  //初期化
+
+  ITEMDISP_NumFrameDisp(pWork);
+
+  ITEMDISP_TrashNumDisp(pWork,pWork->InputNum);
+
+  GFL_MSG_GetString( pWork->MsgManager, msg_bag_054, pWork->pStrBuf );
+  WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+  ITEMDISP_ItemInfoWindowDisp( pWork );
+    
+  //@TODO リストとBAR双方にOBJが使われているためバッティングする。OAMの半透明を切替るシステムが必要
+//  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 /*| GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1*/ | GX_BLEND_PLANEMASK_OBJ , -8 );
+
+  _CHANGE_STATE(pWork,_itemTrashWait);
+}
+
+
+//=============================================================================
+//
+//
+//  __SELL 売る シーケンス
+//
+//
+//=============================================================================
 //-----------------------------------------------------------------------------
 /**
  *	@brief  売るシーケンス 初期化
@@ -1062,11 +1107,46 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
 {
-  pWork->trashNum = 1;  //初期化
+  // 買えないもの判定
+  {
+    s32 val;
+    s32 event;
+
+    val   = ITEM_GetParam( pWork->ret_item, ITEM_PRM_PRICE, pWork->heapID );
+    event = ITEM_GetParam( pWork->ret_item, ITEM_PRM_EVENT, pWork->heapID );
+
+    // 売値が0、もじくは重要フラグがONの時は売れない
+    if( val == 0 || event )
+    {
+      // 「○○○を　かいとることは　できません」
+      GFL_MSG_GetString( pWork->MsgManager, mes_shop_093, pWork->pStrBuf );
+      WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
+      WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf );
+      ITEMDISP_ItemInfoWindowDisp( pWork );
+
+      _CHANGE_STATE( pWork, _itemSellEndMsgWait );
+      return;
+    }
+  }
+
+  pWork->InputNum = 1;  //初期化
+
+  // アイテムがひとつしかない場合、入力をスキップ
+  {
+    ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
+
+    HOSAKA_Printf("item->no:%d \n", item->no );
+
+    if( item->no == 1 )
+    {
+      _CHANGE_STATE( pWork, _itemSellYesnoInit );
+      return;
+    }
+  }
 
   ITEMDISP_NumFrameDisp(pWork);
 
-  ITEMDISP_TrashNumDisp(pWork,pWork->trashNum);
+  ITEMDISP_TrashNumDisp(pWork,pWork->InputNum);
 
   GFL_MSG_GetString( pWork->MsgManager, mes_shop_094, pWork->pStrBuf );
   WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
@@ -1091,24 +1171,184 @@ static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
     return;
   }
 
+  // @TODO タッチ対応
+
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
   {
+    // 決定
     _CHANGE_STATE( pWork, _itemSellYesnoInit );
+  }
+  else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
+  {
+    // キャンセル
+    _CHANGE_STATE( pWork, _itemSellExit );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  売るシーケンス YESNO開始
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _itemSellYesnoInit( FIELD_ITEMMENU_WORK* pWork )
+{
+  // 数値入力フレームクリア
+  GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+  
+  // YESNO開始
+  ITEMDISP_YesNoStart(pWork);
+
+  // それでしたら XXXXXX円で おひきとり　いたしましょう
+  {
+    s32 val;
+
+    // 売値を取得
+    val = _get_item_sell_price( pWork->ret_item, pWork->InputNum, pWork->heapID );
+  
+    GFL_MSG_GetString( pWork->MsgManager, mes_shop_095, pWork->pStrBuf );
+    WORDSET_RegisterNumber(pWork->WordSet, 0, val,
+                             6, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    ITEMDISP_ItemInfoWindowDisp( pWork );
+  }
+
+    _CHANGE_STATE( pWork, _itemSellYesnoInput );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  売るシーケンス YESNO選択まち
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
+{
+  if(!ITEMDISP_MessageEndCheck(pWork)){
+    return;
+  }
+
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask))
+  {
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+
+    // YESNOの後始末
+    ITEMDISP_YesNoExit(pWork);
+
+    switch( selectno )
+    {
+      case 0 :
+        // YES
+        {
+          s32 val;
+
+          // 売値を取得
+          val = _get_item_sell_price( pWork->ret_item, pWork->InputNum, pWork->heapID );
+
+          // 手持ちからアイテム削除
+          MYITEM_SubItem( pWork->pMyItem, pWork->ret_item, pWork->InputNum, pWork->heapID );
+
+          // 所持金増加
+          Mystatus_AddGold( pWork->mystatus, val );
+
+          // 売却音
+          GFL_SOUND_PlaySE( SE_BAG_SELL );
+  
+          // 再描画
+          _windowRewrite(pWork);
+
+          // 「○○○を　わたして XXXXXX円 うけとった」
+          GFL_MSG_GetString( pWork->MsgManager, mes_shop_096, pWork->pStrBuf );
+          WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
+          WORDSET_RegisterNumber(pWork->WordSet, 1, val,
+                                   6, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+          WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+          ITEMDISP_ItemInfoWindowDisp( pWork );
+
+          _CHANGE_STATE( pWork, _itemSellEndMsgWait );
+        }
+        break;
+
+      case 1 :
+        // NO
+        _CHANGE_STATE( pWork, _itemSellExit );
+        break;
+
+      default : GF_ASSERT(0);
+    }
   }
 
 }
 
-static void _itemSellYesnoInit( FIELD_ITEMMENU_WORK* pWork )
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  売るシーケンス 売った後のメッセージウィエト
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _itemSellEndMsgWait( FIELD_ITEMMENU_WORK* pWork )
 {
-    _CHANGE_STATE( pWork, _itemSellYesnoWait );
+  if(!ITEMDISP_MessageEndCheck(pWork)){
+    return;
+  }
+
+  // 入力待ち
+  if( ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) || GFL_UI_TP_GetTrg() )
+  {
+    _CHANGE_STATE( pWork, _itemSellExit );
+  }
 }
 
-static void _itemSellYesnoWait( FIELD_ITEMMENU_WORK* pWork )
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  売るシーケンス 終了
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
 {
-  //@TODO 一端メインにもどす
-    _CHANGE_STATE( pWork, _itemKindSelectMenu );
+  GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+
+  _CHANGE_STATE( pWork, _itemKindSelectMenu );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムの売値を取得
+ *
+ *	@param	int item_no 売るアイテムNO
+ *	@param	input_num   売る個数
+ *	@param	heapID      ヒープID
+ *
+ *	@retval s32 売値
+ */
+//-----------------------------------------------------------------------------
+static s32 _get_item_sell_price( int item_no, int input_num, HEAPID heapID )
+{
+  s32 val;
+
+  val = ITEM_GetParam( item_no, ITEM_PRM_PRICE, heapID );
+
+  // 売り値は半分
+  val /= 2;
+
+  // 個数
+  val *= input_num;
+
+  return val;
+}
 
 #if 0
 //--------------------------------------------------------------------------------------------

@@ -158,7 +158,7 @@ struct _DEBUGITEM_PARAM {
   int subbg2;
   int barbg;
   int numFrameBg;
-  int trashNum;
+  int InputNum;
 	int pocketno;  //今さしているポケット番号
 	int curpos;   //今さしているカーソル番号
   int oamlistpos; //OAMLIST の 先頭位置 -1から開始
@@ -273,5 +273,6 @@ extern void ITEMDISP_SetVisible(void);
 extern void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_TrashNumDisp(FIELD_ITEMMENU_WORK* pWork,int num);
 extern void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_YesNoExit(FIELD_ITEMMENU_WORK* pWork);
 
 

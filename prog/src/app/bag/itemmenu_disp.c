@@ -51,8 +51,14 @@
 #include "system/main.h"			//GFL_HEAPID_APP参照
 
 
+enum
+{ 
+  // パレットオフセット
+  PALOFS_NUM_FRAME = 3,   ///< 数値入力フレーム
+};
 
 #define ITEMREPORT_FRAME (GFL_BG_FRAME2_S)
+
 #define _UP_ITEMNAME_INITX (5)
 #define _UP_ITEMNAME_INITY (6)
 #define _UP_ITEMNAME_SIZEX (14)
@@ -343,13 +349,15 @@ static void _load_parts( FIELD_ITEMMENU_WORK* pWork, ARCHANDLE* p_handle )
   pWork->cellRes[_ANM_BAGPOCKET] = GFL_CLGRP_CELLANIM_Register( p_handle, parts_cer, parts_anm , pWork->heapID );
 }
 
-//------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 /**
- * @brief   絵の初期化
- * @retval  none
+ *	@brief  グラフィック初期化
+ *
+ *	@param	pWork
+ *
+ *	@retval none
  */
-//------------------------------------------------------------------------------
-
+//-----------------------------------------------------------------------------
 void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 {
   G2_BlendNone();
@@ -412,7 +420,10 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     pWork->numFrameBg =
       GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
         p_handle, NARC_bag_bag_win05_d_NCGR, GFL_BG_FRAME3_M, 0, 0, pWork->heapID);
-
+        
+    //数字フレーム用パレット
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win05_d_NCLR,
+                                      PALTYPE_MAIN_BG, PALOFS_NUM_FRAME*0x20, 1*0x20,  pWork->heapID);
 
     GFL_ARC_CloseDataHandle(p_handle);
   }
@@ -429,6 +440,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
   {
     ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON , pWork->heapID );
+
     //下画面バー
     GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_app_menu_common_menu_bar_NCLR ,
                                       PALTYPE_MAIN_BG , 8*32 , 32 , pWork->heapID );
@@ -514,6 +526,15 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
   }
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  グラフィック消去
+ *
+ *	@param	pWork
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
 {
 
@@ -532,7 +553,6 @@ void ITEMDISP_graphicDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_M,
                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->barbg),
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->barbg));
-
 }
 
 //------------------------------------------------------------------------------
@@ -695,6 +715,16 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
 
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	pWork
+ *	@param	itemid
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
 {
   if(pWork->cellicon!=NULL){
@@ -740,6 +770,15 @@ static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  描画 主処理
+ *
+ *	@param	pWork
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 void _dispMain(FIELD_ITEMMENU_WORK* pWork)
 {
   GFL_CLACT_SYS_Main(); // CLSYSメイン
@@ -751,7 +790,15 @@ void _dispMain(FIELD_ITEMMENU_WORK* pWork)
 
 
 
-
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  セルリソース 生成
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
@@ -800,6 +847,15 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  セル生成
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 {
 
@@ -871,6 +927,15 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  セル メッセージ表示
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
@@ -918,6 +983,15 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  セル VRAM転送
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
@@ -1133,6 +1207,16 @@ static GFL_CLACTPOS pokectCellPos[]={
 
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork
+ *	@param	pocketno 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno )
 {
   int anm[] = {
@@ -1495,15 +1579,19 @@ void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork)
 
   {
     void* arcData = GFL_ARCHDL_UTIL_Load( p_handle, NARC_bag_bag_win05_d_NSCR, 0, pWork->heapID );
+
     NNSG2dScreenData *scrnData;
 
     if( NNS_G2dGetUnpackedScreenData( arcData, &scrnData ) )
     {
-      int i,xs=scrnData->screenWidth/8,ys=scrnData->screenHeight/8;
-      u16* buff=(u16*)&scrnData->rawData;
-
+      int i;
+      int xs = scrnData->screenWidth/8;
+      int ys = scrnData->screenHeight/8;
+      u16* buff = (u16*)&scrnData->rawData;
+ 
+      // パレット指定
       for(i=0;i<(xs*ys);i++){
-        buff[i] += GFL_ARCUTIL_TRANSINFO_GetPos(pWork->numFrameBg) | 0x1000;
+        buff[i] += GFL_ARCUTIL_TRANSINFO_GetPos(pWork->numFrameBg) | (0x1000 * PALOFS_NUM_FRAME);
       }
 
       GFL_BG_WriteScreen(
@@ -1540,14 +1628,15 @@ void ITEMDISP_TrashNumDisp(FIELD_ITEMMENU_WORK* pWork,int num)
 
 }
 
-//------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 /**
- * @brief   はいいいえウインドウ
- * @retval  none
+ *  @brief   はいいいえウインドウ 開始
+ *
+ *	@param	pWork
+ *
+ *	@retval none
  */
-//------------------------------------------------------------------------------
-
-
+//-----------------------------------------------------------------------------
 void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork)
 {
   int i;
@@ -1571,4 +1660,20 @@ void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork)
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
   G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  はいいいえウィンドウ 終了
+ *
+ *	@param	pWork
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void ITEMDISP_YesNoExit(FIELD_ITEMMENU_WORK* pWork)
+{
+  APP_TASKMENU_CloseMenu(pWork->pAppTask);
+  pWork->pAppTask=NULL;
+  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
 }
