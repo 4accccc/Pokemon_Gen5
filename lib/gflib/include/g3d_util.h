@@ -22,30 +22,30 @@ typedef enum {
 
 //	リソース配列設定用テーブル構造体
 typedef struct {
-	const u32						arcive;		//指定アーカイブＩＤもしくはアーカイブパスポインタ
-	const u16						datID;		//アーカイブ内データＩＤ
-	const GFL_G3D_UTIL_RESTYPE		arcType;	//指定アーカイブタイプ
+	u32						arcive;		//指定アーカイブＩＤもしくはアーカイブパスポインタ
+	u16						datID;		//アーカイブ内データＩＤ
+	GFL_G3D_UTIL_RESTYPE		arcType;	//指定アーカイブタイプ
 }GFL_G3D_UTIL_RES;
 
 typedef struct {
-	const u16				anmresID;	//アニメリソースＩＤ
-	const u16				anmdatID;	//アニメデータＩＤ(リソース内部ＩＮＤＥＸ)
+	u16				anmresID;	//アニメリソースＩＤ
+	u16				anmdatID;	//アニメデータＩＤ(リソース内部ＩＮＤＥＸ)
 }GFL_G3D_UTIL_ANM;
 
 typedef struct {
-	const u16				mdlresID;	//モデルリソースＩＤ
-	const u16				mdldatID;	//モデルデータＩＤ(リソース内部ＩＮＤＥＸ)
-	const u16				texresID;	//テクスチャリソースＩＤ
+	u16				mdlresID;	//モデルリソースＩＤ
+	u16				mdldatID;	//モデルデータＩＤ(リソース内部ＩＮＤＥＸ)
+	u16				texresID;	//テクスチャリソースＩＤ
 	const GFL_G3D_UTIL_ANM*	anmTbl;		//アニメテーブル（複数設定のため）
-	const u16				anmCount;	//アニメリソース数
+	u16				anmCount;	//アニメリソース数
 }GFL_G3D_UTIL_OBJ;
 
 typedef struct {
 	const GFL_G3D_UTIL_RES*	resTbl;		//リソーステーブル
-	const u16				resCount;	//リソース数
+	u16				resCount;	//リソース数
 
 	const GFL_G3D_UTIL_OBJ*	objTbl;		//オブジェクト設定テーブル
-	const u16				objCount;	//オブジェクト数
+	u16				objCount;	//オブジェクト数
 
 }GFL_G3D_UTIL_SETUP;
 
