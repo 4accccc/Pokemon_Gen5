@@ -69,6 +69,9 @@ struct _FIELD_PLAYER_NOGRID
 	FIELDMAP_WORK* p_fieldwork;
   
   FIELD_RAIL_WORK* p_railwork;
+
+  u16 form_change_req;
+  u16 form_change;
 } ;
 
 //======================================================================
@@ -82,6 +85,7 @@ static BOOL nogridPC_Move_CalcSetGroundMove(
 		VecFx32* pos, VecFx32* vecMove, fx32 speed );
 
 
+static void updateFormChange( FIELD_PLAYER_NOGRID* p_player );
 
 
 //======================================================================
@@ -244,6 +248,9 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int k
 	u16 dir;
 	BOOL debug_flag;
   PLAYER_MOVE_FORM form;
+
+  // FORM変更処理
+  updateFormChange( p_player );
   
 	dir = DIR_NOT;
 	if( (key_cont&PAD_KEY_UP) ){
@@ -348,6 +355,22 @@ void FIELD_PLAYER_NOGRID_GetPos( const FIELD_PLAYER_NOGRID* cp_player, VecFx32* 
 FIELD_RAIL_WORK* FIELD_PLAYER_NOGRID_GetRailWork( const FIELD_PLAYER_NOGRID* cp_player )
 {
   return cp_player->p_railwork;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自機  FORM　変更
+ *
+ *	@param	p_player
+ *	@param	form 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_NOGRID_ChangeForm( FIELD_PLAYER_NOGRID* p_player, PLAYER_MOVE_FORM form )
+{
+  GF_ASSERT( form < PLAYER_MOVE_FORM_MAX );
+  
+  p_player->form_change_req = TRUE;
+  p_player->form_change     = form;
 }
 
 
@@ -591,6 +614,24 @@ static BOOL nogridPC_Move_CalcSetGroundMove(
 
 
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フォルムの変更
+ *
+ *	@param	p_player 
+ */
+//-----------------------------------------------------------------------------
+static void updateFormChange( FIELD_PLAYER_NOGRID* p_player )
+{
+  if( p_player->form_change_req )
+  {
+    FIELD_PLAYER_ChangeMoveForm( p_player->p_player, p_player->form_change );
+    FIELD_PLAYER_SetMoveForm( p_player->p_player, p_player->form_change );
+
+    p_player->form_change_req = FALSE;
+  }
+}
 
 
 

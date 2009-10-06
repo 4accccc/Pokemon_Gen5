@@ -139,8 +139,13 @@ extern void FIELD_CAMERA_Main( FIELD_CAMERA* camera, u16 key_cont);
 //------------------------------------------------------------------
 //	カメラモードの変更
 //------------------------------------------------------------------
+// カメラの計算モードを切り替えます。
 extern void FIELD_CAMERA_SetMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mode );
+// カメラモードを取得します。
 extern FIELD_CAMERA_MODE FIELD_CAMERA_GetMode( const FIELD_CAMERA * camera );
+// カメラモードを変更します。
+// 1つ前のターゲット座標＋カメラ座標からmode用の値の計算も行います。
+extern void FIELD_CAMERA_ChangeMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mode );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

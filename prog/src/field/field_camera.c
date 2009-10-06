@@ -136,6 +136,14 @@ static void ControlParameter_Direct( FIELD_CAMERA * camera, u16 key_cont );
 
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+static void modeChange_SetVecAngel( FIELD_CAMERA * camera, const VecFx32* cp_vec );
+static void modeChange_CalcCameraPos( FIELD_CAMERA * camera );
+static void modeChange_CalcTargetPos( FIELD_CAMERA * camera );
+static void modeChange_CalcDirectPos( FIELD_CAMERA * camera );
+
+
+//------------------------------------------------------------------
 // カメラ可動エリア判定
 //------------------------------------------------------------------
 static void cameraArea_UpdateTarget( const FIELD_CAMERA_AREA * cp_area, VecFx32* p_target );
@@ -252,6 +260,34 @@ FIELD_CAMERA_MODE FIELD_CAMERA_GetMode( const FIELD_CAMERA * camera )
 	GF_ASSERT( camera );
 	return camera->mode;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラモード　モードの変更
+ *
+ *	@param	camera
+ *	@param	mode 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_ChangeMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mode )
+{
+  static void (*pFunc[ FIELD_CAMERA_MODE_MAX ])( FIELD_CAMERA* camera ) = {
+    modeChange_CalcCameraPos,
+    modeChange_CalcTargetPos,
+    modeChange_CalcDirectPos,
+  };
+  
+	GF_ASSERT( camera );
+  GF_ASSERT( mode < FIELD_CAMERA_MODE_MAX );
+  
+  if( camera->mode != mode )
+  {
+    camera->mode = mode;
+
+    pFunc[ camera->mode ]( camera );
+  }
+}
+
 
 
 //============================================================================================
@@ -531,6 +567,92 @@ static void ControlParameter_Direct( FIELD_CAMERA * camera, u16 key_cont )
 	updateCamPosBinding( camera );
   updateCameraArea( camera );
   updateG3Dcamera(camera);
+}
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	camera
+ *	@param	cp_vec 
+ */
+//-----------------------------------------------------------------------------
+static void modeChange_SetVecAngel( FIELD_CAMERA * camera, const VecFx32* cp_vec )
+{
+  VecFx32 dist, xz_dist;
+  fx32 len;
+  fx32 xz_len;
+  u16 pitch, yaw;
+  
+  // 距離
+  len = VEC_Mag( cp_vec );
+  
+  // 計算正規化
+  VEC_Normalize( cp_vec, &dist );
+  
+  // 平面と高さの比率を求める
+  VEC_Set( &xz_dist, dist.x, 0, dist.z );
+  xz_len = VEC_Mag( &xz_dist );
+
+  // pitck
+  pitch = FX_Atan2Idx( dist.y, xz_len );
+
+  // yaw
+  yaw = FX_Atan2Idx( dist.x, dist.z );
+
+  // 設定
+  camera->angle_pitch   = pitch;
+  camera->angle_yaw     = yaw;
+  camera->angle_len     = len;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラモードをカメラ座標計算モードに変更
+ *
+ *	@param	camera  カメラワーク
+ */
+//-----------------------------------------------------------------------------
+static void modeChange_CalcCameraPos( FIELD_CAMERA * camera )
+{
+  VecFx32 dist;
+  
+  // ターゲットからカメラまでのベクトルを求める
+  VEC_Subtract( &camera->camPos, &camera->target, &dist );
+
+  modeChange_SetVecAngel( camera, &dist );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラモードをターゲット座標計算モードに変更
+ *
+ *	@param	camera  カメラワーク
+ */
+//-----------------------------------------------------------------------------
+static void modeChange_CalcTargetPos( FIELD_CAMERA * camera )
+{
+  VecFx32 dist;
+  
+  // カメラからターゲットまでのベクトルを求める
+  VEC_Subtract( &camera->target, &camera->camPos, &dist );
+
+  modeChange_SetVecAngel( camera, &dist );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラモードを直接指定モードに変更
+ *
+ *	@param	camera  カメラワーク
+ */
+//-----------------------------------------------------------------------------
+static void modeChange_CalcDirectPos( FIELD_CAMERA * camera )
+{
+  // 何もする必要なし
 }
 
 
