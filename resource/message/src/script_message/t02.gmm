@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-05T20:15:50"/>
+	<create user="matsumiya" host="W00207" date="2009-10-06T12:49:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="533"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="687"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -394,14 +394,14 @@
 		<attribute name="キャラ指定">七賢者ゲーチス</attribute>
 		<language name="JPN" width="256">わたくしの　なまえは
 ゲーチス[BE:01:ページ切り替え（クリア）]
-エターニティという　そしきで
+プラズマだん　という　そしきで
 しどうしゃを　している　ものです[BE:01:ページ切り替え（クリア）]
 きょう　みなさんに
 おはなしするのは　ポケモンを[BE:00:ページ切り替え（行送り）]
 じゆうに　しましょう　ということです</language>
 		<language name="JPN_KANJI" width="256">わたくしの　名前は
 ゲーチス[BE:01:ページ切り替え（クリア）]
-エターニティという　組織で
+プラズマ団という　組織で
 指導者を　している　ものです[BE:01:ページ切り替え（クリア）]
 今日　みなさんに　お話しするのは
 ポケモン解放について　です</language>
