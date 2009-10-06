@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-30T19:59:47"/>
+	<create user="matsumiya" host="W00207" date="2009-10-06T14:55:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="247" top="176" right="951" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="696"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -293,21 +293,38 @@
 
 
 	<row id="msg_c04gym0101_leader_01">
-		<comment>戦闘前メッセージ</comment>
+		<comment>♀
+・戦闘前メッセージ</comment>
 		<attribute name="キャラ指定">LEADER4</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ウフフ　あまりの
+スピードに　クラクラしてない？[BE:01:ページ切り替え（クリア）]
+次は　愛しの　ポケモンたちで
+アナタを　クラクラ　させちゃうけど</language>
+		<language name="JPN_KANJI" width="256">ウフフ　あまりの
+スピードに　クラクラしてない？[BE:01:ページ切り替え（クリア）]
+次は　愛しの　ポケモンたちで
+アナタを　クラクラ　させちゃうけど</language>
 	</row>
 
 	<row id="msg_c04gym0101_leader_02">
-		<comment>戦闘後メッセージ</comment>
+		<comment>♀
+・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">LEADER4</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ステキ……
+ホレボレするような　たたかいかた[BE:01:ページ切り替え（クリア）]
+アナタ　いい　トレーナーね
+なんだか　感激したわ[BE:00:ページ切り替え（行送り）]
+これを……！</language>
+		<language name="JPN_KANJI" width="256">ステキ……
+ホレボレするような　たたかいかた[BE:01:ページ切り替え（クリア）]
+アナタ　いい　トレーナーね
+なんだか　感激したわ[BE:00:ページ切り替え（行送り）]
+これを……！</language>
 	</row>
 
 	<row id="msg_c04gym0101_leader_03">
-		<comment>ファンファーレ＋バッジ入手処理</comment>
+		<comment>♀
+・ファンファーレ＋バッジ入手処理</comment>
 		<attribute name="キャラ指定">LEADER4</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　カミツレから
 ボルトバッジを　もらった！</language>
@@ -316,44 +333,132 @@
 	</row>
 
 	<row id="msg_c04gym0101_leader_04">
-		<comment>アイテム入手処理</comment>
+		<comment>♀
+・アイテム入手処理</comment>
 		<attribute name="キャラ指定">LEADER4</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ボルトバッジが　あれば
+レベル５０までの　ポケモンは[BE:00:ページ切り替え（行送り）]
+アナタに　従ってくれる[BE:01:ページ切り替え（クリア）]
+それと　これは
+わたしの　好きな　わざ……[BE:00:ページ切り替え（行送り）]
+よければ　アナタも　つかって</language>
+		<language name="JPN_KANJI" width="256">ボルトバッジが　あれば
+レベル５０までの　ポケモンは[BE:00:ページ切り替え（行送り）]
+アナタに　従ってくれる[BE:01:ページ切り替え（クリア）]
+それと　これは
+わたしの　好きな　わざ……[BE:00:ページ切り替え（行送り）]
+よければ　アナタも　つかって</language>
 	</row>
 
 	<row id="msg_c04gym0101_leader_05">
-		<comment>アイテム入手処理後
-</comment>
+		<comment>♀
+・アイテム入手処理後</comment>
 		<attribute name="キャラ指定">LEADER4</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">わざマシンのかいせつ（よてい）</language>
+		<language name="JPN_KANJI" width="256">わざマシンの解説（予定）</language>
 	</row>
 
 	<row id="msg_c04gym0101_leader_06">
-		<comment>msg_c04gym0101_leader_05
+		<comment>♀
+・msg_c04gym0101_leader_05
 表示後に再度会話</comment>
 		<attribute name="キャラ指定">LEADER4</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">アナタ……
+ホドモエシティには　いった？[BE:01:ページ切り替え（クリア）]
+きっと　はしが　あがっていて
+すすめないと　おもうけど[BE:01:ページ切り替え（クリア）]
+そうね……
+ワタシが　わたれるようにするわ[BE:00:ページ切り替え（行送り）]
+５ばんどうろで　まっていて</language>
+		<language name="JPN_KANJI" width="256">アナタ……
+ホドモエシティには　行った？[BE:01:ページ切り替え（クリア）]
+きっと　橋が　上がっていて
+進めないと　思うけど[BE:01:ページ切り替え（クリア）]
+そうね……
+ワタシが　渡れるようにするわ[BE:00:ページ切り替え（行送り）]
+５番道路で　待っていて</language>
+	</row>
+
+	<row id="msg_c04gym0101_leader_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・h02開通後
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">LEADER4</attribute>
+		<language name="JPN" width="256">じぶんの　したいこと……
+ポケモンの　したいこと……[BE:01:ページ切り替え（クリア）]
+それが　おなじとき　すごいことが
+できそうだと　おもわない？</language>
+		<language name="JPN_KANJI" width="256">自分の　したいこと……
+ポケモンの　したいこと……[BE:01:ページ切り替え（クリア）]
+それが　いっしょのとき
+すごいことが　できそうだと　思わない？</language>
 	</row>
 
 	<row id="msg_c04gym0101_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-ジムバッジ取得前</comment>
+・ジムバッジ取得前＋アイテム入手前
+・ジムに入ると
+　主人公に隣接してメッセージ表示
+・No???「おいしいみず」入手</comment>
 		<attribute name="キャラ指定">GLASSES
 サングラス</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">どうっすか？
+おどろいたでしょう！？[BE:01:ページ切り替え（クリア）]
+このジムは　みてのとおり
+ジェットコースター　なんすよね！！[BE:01:ページ切り替え（クリア）]
+まあ　とりあえずは
+これを　さしあげるッす！</language>
+		<language name="JPN_KANJI" width="256">どうっすか？
+驚いたでしょう！？[BE:01:ページ切り替え（クリア）]
+このジムは　見てのとおり
+ジェットコースター　なんすよね！！[BE:01:ページ切り替え（クリア）]
+まあ　とりあえずは
+これを　さしあげるッす！</language>
 	</row>
 
 	<row id="msg_c04gym0101_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-ジムバッジ取得後</comment>
+・ジムバッジ取得前＋アイテム入手後
+・ジムバッジ取得まで繰り返し</comment>
 		<attribute name="キャラ指定">GLASSES
 サングラス</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">この　ジェットコースター　ジムは
+まず　コースターに　のる！[BE:01:ページ切り替え（クリア）]
+つぎに　プラットフォーム……
+あしばですね！　そこで[BE:00:ページ切り替え（行送り）]
+ポイントを　きりかえる[BE:01:ページ切り替え（クリア）]
+ときとして　たおした　あいての
+コースターにも　のってすすむ！[BE:01:ページ切り替え（クリア）]
+そうやって　ジムリーダーの　いる
+ばしょを　めざしてくださいっす！</language>
+		<language name="JPN_KANJI" width="256">この　ジェットコースター　ジムは
+まず　コースターに　乗る！[BE:01:ページ切り替え（クリア）]
+つぎに　プラットフォーム……
+足場ですね！　そこで[BE:00:ページ切り替え（行送り）]
+ポイントを　切り替える[BE:01:ページ切り替え（クリア）]
+ときとして　倒した　相手の
+コースターにも　乗り　進む！[BE:01:ページ切り替え（クリア）]
+そうやって　ジムリーダーの　いる
+場所を　目指してくださいっす！</language>
+	</row>
+
+	<row id="msg_c04gym0101_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・ジムバッジ取得後
+※ジェットコースタームービー
+　ローラーコースタームービー</comment>
+		<language name="JPN" width="256">カミツレさんの　まぶしく
+かれいな　でんきこうげき！[BE:01:ページ切り替え（クリア）]
+それを　うわまわった　あんたと
+ポケモンとの　コンビネーション！[BE:01:ページ切り替え（クリア）]
+まさに　まさに
+ジェットコースター　ムービー　っすよ！</language>
+		<language name="JPN_KANJI" width="256">カミツレさんの　まぶしく
+華麗な　電気攻撃！[BE:01:ページ切り替え（クリア）]
+それを　上回った　あんたと
+ポケモンとの　コンビネーション！[BE:01:ページ切り替え（クリア）]
+まさに　まさに
+ジェットコースター　ムービー　っすよ！</language>
 	</row>
 
 	<row id="msg_c04gym0101_statue_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
