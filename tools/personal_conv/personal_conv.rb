@@ -53,6 +53,9 @@
   u8    rank;           //ポケモンランク
   u8    padding;        //パディング
 
+  u16   height;         //高さ
+  u16   weight;         //重さ
+
   u32   machine1;       //技マシンフラグ１
   u32   machine2;       //技マシンフラグ２
   u32   machine3;       //技マシンフラグ２
@@ -166,6 +169,8 @@ class PARA
     OTHERFORM
     RANK
     PLTT_ONLY
+    HEIGHT
+    WEIGHT
     MAX
   ]
 end
@@ -437,6 +442,7 @@ end
   fp_monsno = open( "monsno_def.h", "w" )
   fp_gra = open( "pokegra_wb.scr", "w" )
   fp_lst = open( "pokegra_wb.lst", "w" )
+  fp_num = open( "zukan2grano.txt", "w" )
   gmm = GMM::new
   gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "monsname.gmm" )
 
@@ -509,6 +515,8 @@ end
 	    fp_gra.printf( "\"pbwb_%s%s.NCEC\"\n",     split_data[ PARA::GRA_NO ], form_name )
 	    fp_gra.printf( "\"pmwb_%s%s_n.NCLR\"\n",   split_data[ PARA::GRA_NO ], form_name )
 	    fp_gra.printf( "\"pmwb_%s%s_r.NCLR\"\n",   split_data[ PARA::GRA_NO ], form_name )
+
+      fp_num.printf( "%s\n", split_data[ PARA::GRA_NO ] )
 
       gra_no = split_data[ PARA::GRA_NO ].to_i
 
@@ -603,15 +611,27 @@ end
   #他のスクリプトで使用するためのポケモンNoHashを生成
   fp_hash = open( "monsno_hash.rb", "w" )
   fp_hash.printf("#! ruby -Ks\n\n" )
+
+  #モンスターナンバーハッシュテーブル
   fp_hash.printf("\t$monsno_hash = {\n" )
   monsno.size.times {|no|
     split_data = read_data[ no ].split(/,/)
     fp_hash.printf("\t\t\"%s\"=>%d,\n", split_data[ PARA::POKENAME ], monsno[ split_data[ PARA::POKENAME ] ] )
   }
   fp_hash.printf("\t}\n" )
+
+  #フォルムナンバー最大値ハッシュテーブル
+  fp_hash.printf("\t$formmax_hash = {\n" )
+  monsno.size.times {|no|
+    split_data = read_data[ no ].split(/,/)
+    fp_hash.printf("\t\t\"%s\"=>%d,\n", split_data[ PARA::POKENAME ], form[ no ].get_form_max )
+  }
+  fp_hash.printf("\t}\n" )
   fp_hash.close
 
   #gmmファイルの後始末
+  gmm.make_row_index( "MONSNAME_", monsno_max, "タマゴ" )
+  gmm.make_row_index( "MONSNAME_", monsno_max + 1, "タマゴ" )
   gmm.close_gmm
 
   #タマゴは独自の持ち方をする
@@ -645,6 +665,7 @@ end
 
   fp_gra.close
   fp_lst.close
+  fp_num.close
 
   fp_monsno.printf( "#define\t\tMONSNO_TAMAGO\t\t\t\t( %d )\n", monsno_max )
   fp_monsno.printf( "#define\t\tMONSNO_DAMETAMAGO\t\t( %d )\n", monsno_max + 1 )
@@ -786,6 +807,7 @@ end
   cnt = 1
   other_form = 0
   form_gra_index = 0
+  seed = []
   read_data.size.times {|i|
     split_data = read_data[ i ].split(/,/)
     if split_data[ PARA::POKENAME ] == ""
@@ -897,6 +919,18 @@ end
       fp_per.printf( "\t.byte\t\t%s\t\t//ポケモンランク\n", rank_table[ split_data[ PARA::RANK ] ] )
       fp_per.print( "\t.byte\t\t0\t\t//パディング\n" )
 
+      if split_data[ PARA::HEIGHT ] == "" || split_data[ PARA::HEIGHT ] == nil
+        fp_per.printf( "\t.short\t\t10\t\t//高さ\n" )
+      else
+        fp_per.printf( "\t.short\t\t%s\t\t//高さ\n", split_data[ PARA::HEIGHT ] )
+      end
+
+      if split_data[ PARA::WEIGHT ] == "" || split_data[ PARA::WEIGHT ] == nil
+        fp_per.printf( "\t.short\t\t10\t\t//重さ\n" )
+      else
+        fp_per.printf( "\t.short\t\t%s\t\t//重さ\n", split_data[ PARA::WEIGHT ] )
+      end
+
       waza_machine = split_data[ PARA::WAZA_MACHINE ].split(//)
       machine[ 0 ] = 0
       machine[ 1 ] = 0
@@ -935,13 +969,22 @@ end
       fp_wot.print( "\t.include perdata.h\n\n" )
       waza_cnt = 0
       while split_data[ PARA::WAZA1 + waza_cnt ] != ""
+#u16バージョン（旧フォーマット）
+#=begin
         level = ( split_data[ PARA::WAZA_LV1 + waza_cnt ].to_i ) << 9
         fp_wot.printf( "\t.short\t%d|%s\n", level, label.make_label( "WAZANO_", split_data[ PARA::WAZA1 + waza_cnt ] ) )
+#=end
+#u32バージョン
+=begin
+        fp_wot.printf( "\t.short\t%s\n", split_data[ PARA::WAZA_LV1 + waza_cnt ] )
+        fp_wot.printf( "\t.short\t%s\n", label.make_label( "WAZANO_", split_data[ PARA::WAZA1 + waza_cnt ] ) )
+=end
         waza_cnt += 1
         if waza_cnt == 25
           break
         end
       end
+      fp_wot.print( "\t.short\t0xffff\n" )
       fp_wot.print( "\t.short\t0xffff\n" )
       fp_wot.close
       printf( "wot_%03d.s 生成終了\n", cnt )
@@ -978,6 +1021,9 @@ end
         else
           fp_evo.printf( "\t.short\t%s\t\t//進化%dポケモン\n", label.make_label( "MONSNO_", split_data[ PARA::SHINKA_POKE1 + evo_cnt ] ), evo_cnt + 1 )
         end
+        if split_data[ PARA::SHINKA_POKE1 + evo_cnt ] != ""
+          seed[ monsno[ split_data[ PARA::SHINKA_POKE1 + evo_cnt ] ] ] = cnt
+        end
       end
       fp_evo.close
       printf( "evo_%03d.s 生成終了\n", cnt )
@@ -988,6 +1034,19 @@ end
     end
   }
   print "パーソナルデータ生成終了\n"
+
+  for i in 0..monsno_max - 1
+    printf( "pms_%03d.bin 生成中\n", i )
+    str = sprintf( "pms_%03d.bin", i )
+    fp_pms = open( str, "wb" )
+    pms = i
+    while seed[ pms ] != nil
+      pms = seed[ pms ]
+    end
+    fp_pms.write( [ pms ].pack("s") )
+    fp_pms.close
+    printf( "pms_%03d.bin 生成終了\n", i )
+  end
 
   #タイムスタンプ比較用のダミーファイルを生成
   fp_w = open( "out_end", "w" )
