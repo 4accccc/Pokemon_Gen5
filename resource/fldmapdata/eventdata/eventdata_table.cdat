@@ -349,6 +349,7 @@
 
 #define C02R0301_POKE                      0
 #define C02R0301_WOMAN2                    1
+#define C02R0301_GIRL1_01                  2
 
 #endif //ZONE_C02R0301_EVC_H
 //#include "tmp/c02r0401.h"
@@ -4710,14 +4711,14 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0301[] = {
 		MV_DIR_RND,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_C02R0301_TALKOBJ_POKE,
+		SCRID_C02R0301_POKE_01,
 		DIR_DOWN,
 		0,
 		0,
 		0,
 		0,
 		3,
-		5,
+		3,
 		4,
 		FX32_CONST(48),
 	},
@@ -4727,7 +4728,7 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0301[] = {
 		MV_DIR_RND,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_C02R0301_TALKOBJ_WOMAN2,
+		SCRID_C02R0301_WOMAN2_01,
 		DIR_DOWN,
 		0,
 		0,
@@ -4738,12 +4739,29 @@ const FLDMMDL_HEADER OBJ_EVENT_C02R0301[] = {
 		8,
 		FX32_CONST(0),
 	},
+	{
+		C02R0301_GIRL1_01,
+		GIRL1,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02R0301_GIRL1_01,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		4,
+		4,
+		FX32_CONST(48),
+	},
 };
 const int ObjCount_C02R0301 = NELEMS(OBJ_EVENT_C02R0301);
 
 static const EVENTDATA_TABLE event_c02r0301 = {
 	0,
-	2,
+	3,
 	4,
 	0,
 	(void *)NULL,
@@ -11559,17 +11577,24 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 };
 const int ObjCount_R02 = NELEMS(OBJ_EVENT_R02);
 const BG_TALK_DATA BG_EVENT_R02[] = {
-	{//BG_R02_BOARD_01 = 0
-		SCRID_BG_R02_BOARD_01,  //event id
+	{//BG_R02_BOARD1_01 = 0
+		SCRID_BG_R02_BOARD1_01,  //event id
 		BG_TALK_TYPE_BOARD, //type
 		755, 646,
 		0,  //height
 		BG_TALK_DIR_ALL,//direction
 	},
-	{//BG_R02_BOARD_02 = 1
-		SCRID_BG_R02_BOARD_02,  //event id
+	{//BG_R02_BOARD2_01 = 1
+		SCRID_BG_R02_BOARD2_01,  //event id
 		BG_TALK_TYPE_BOARD, //type
 		783, 616,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+	{//BG_R02_BOARD3_01 = 2
+		SCRID_BG_R02_BOARD3_01,  //event id
+		BG_TALK_TYPE_BOARD, //type
+		771, 632,
 		0,  //height
 		BG_TALK_DIR_ALL,//direction
 	},
@@ -11588,7 +11613,7 @@ const POS_EVENT_DATA POS_EVENT_R02[] = {
 const int PosCount_R02 = NELEMS(POS_EVENT_R02);
 
 static const EVENTDATA_TABLE event_r02 = {
-	2,
+	3,
 	10,
 	4,
 	1,

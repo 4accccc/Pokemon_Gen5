@@ -21,8 +21,9 @@ _EVENT_DATA    ev_pos_r02_rival_01
 _EVENT_DATA    ev_r02_mama_01
 _EVENT_DATA    ev_r02_boy2_01
 _EVENT_DATA    ev_r02_girl2_01
-_EVENT_DATA	   ev_bg_r02_board_01
-_EVENT_DATA	   ev_bg_r02_board_02
+_EVENT_DATA	   ev_bg_r02_board1_01
+_EVENT_DATA	   ev_bg_r02_board2_01
+_EVENT_DATA	   ev_bg_r02_board3_01
 
 _EVENT_DATA_END
 
@@ -186,7 +187,7 @@ EVENT_END
 /**************************************************************/
 /*  R02 看板1のイベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_bg_r02_board_01
+EVENT_START   ev_bg_r02_board1_01
 
 	_EASY_MSG(msg_r02_sign1_01) //看板1:2番道路
 
@@ -195,12 +196,20 @@ EVENT_END
 /**************************************************************/
 /*  R02 看板2のイベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_bg_r02_board_02
+EVENT_START   ev_bg_r02_board2_01
 
 	_EASY_MSG(msg_r02_sign2_01) //看板2:2番道路
 
 EVENT_END
 
+/**************************************************************/
+/*  R02 看板3のイベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_bg_r02_board3_01
+
+	_EASY_MSG(msg_r02_sign3_01) //看板3:お得な掲示板
+
+EVENT_END
 
 
 
