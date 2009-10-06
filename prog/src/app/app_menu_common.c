@@ -163,41 +163,13 @@ const u32 APP_COMMON_GetPokeItemIconCharArcIdx( void )
 {	
 	return NARC_app_menu_common_item_icon_NCGR;
 }
-const u32 APP_COMMON_GetPokeItemIconCellArcIdx( void )
+const u32 APP_COMMON_GetPokeItemIconCellArcIdx( const APP_COMMON_MAPPING mapping )
 {	
-	GXOBJVRamModeChar vrammode;
-	
-	vrammode = GX_GetOBJVRamModeChar();
-	switch(vrammode){
-	case GX_OBJVRAMMODE_CHAR_1D_32K:
-		return NARC_app_menu_common_item_icon_32k_NCER;
-	case GX_OBJVRAMMODE_CHAR_1D_64K:
-		return NARC_app_menu_common_item_icon_64k_NCER;
-	case GX_OBJVRAMMODE_CHAR_1D_128K:
-		return NARC_app_menu_common_item_icon_128k_NCER;
-	default:
-		GF_ASSERT(0);	//非対応のマッピングモード
-	}
-		
-  return NARC_app_menu_common_item_icon_128k_NCER;
+	return NARC_app_menu_common_item_icon_32k_NCER + mapping;
 }
-const u32 APP_COMMON_GetPokeItemIconAnimeArcIdx( void )
+const u32 APP_COMMON_GetPokeItemIconAnimeArcIdx( const APP_COMMON_MAPPING mapping )
 {	
-	GXOBJVRamModeChar vrammode;
-	
-	vrammode = GX_GetOBJVRamModeChar();
-	switch(vrammode){
-	case GX_OBJVRAMMODE_CHAR_1D_32K:
-		return NARC_app_menu_common_item_icon_32k_NANR;
-	case GX_OBJVRAMMODE_CHAR_1D_64K:
-		return NARC_app_menu_common_item_icon_64k_NANR;
-	case GX_OBJVRAMMODE_CHAR_1D_128K:
-		return NARC_app_menu_common_item_icon_128k_NANR;
-	default:
-		GF_ASSERT(0);	//非対応のマッピングモード
-	}
-		
-  return NARC_app_menu_common_item_icon_128k_NANR;
+	return NARC_app_menu_common_item_icon_32k_NANR + mapping;
 }
 
 //--------------------------------------------------------------
@@ -211,41 +183,13 @@ const u32 APP_COMMON_GetNull4x4CharArcIdx( void )
 {	
 	return NARC_app_menu_common_null_4x4_128k_NCGR;
 }
-const u32 APP_COMMON_GetNull4x4CellArcIdx( void )
+const u32 APP_COMMON_GetNull4x4CellArcIdx( const APP_COMMON_MAPPING mapping )
 {	
-	GXOBJVRamModeChar vrammode;
-	
-	vrammode = GX_GetOBJVRamModeChar();
-	switch(vrammode){
-	case GX_OBJVRAMMODE_CHAR_1D_32K:
-    return NARC_app_menu_common_null_4x4_32k_NCER;
-	case GX_OBJVRAMMODE_CHAR_1D_64K:
-    return NARC_app_menu_common_null_4x4_64k_NCER;
-	case GX_OBJVRAMMODE_CHAR_1D_128K:
-    return NARC_app_menu_common_null_4x4_128k_NCER;
-	default:
-		GF_ASSERT(0);	//非対応のマッピングモード
-	}
-		
-  return NARC_app_menu_common_null_4x4_128k_NCER;
+  return NARC_app_menu_common_null_4x4_32k_NCER + mapping;
 }
-const u32 APP_COMMON_GetNull4x4AnimeArcIdx( void )
+const u32 APP_COMMON_GetNull4x4AnimeArcIdx( const APP_COMMON_MAPPING mapping )
 {	
-	GXOBJVRamModeChar vrammode;
-	
-	vrammode = GX_GetOBJVRamModeChar();
-	switch(vrammode){
-	case GX_OBJVRAMMODE_CHAR_1D_32K:
-    return NARC_app_menu_common_null_4x4_32k_NANR;
-	case GX_OBJVRAMMODE_CHAR_1D_64K:
-    return NARC_app_menu_common_null_4x4_64k_NANR;
-	case GX_OBJVRAMMODE_CHAR_1D_128K:
-    return NARC_app_menu_common_null_4x4_128k_NANR;
-	default:
-		GF_ASSERT(0);	//非対応のマッピングモード
-	}
-		
-  return NARC_app_menu_common_null_4x4_128k_NANR;
+  return NARC_app_menu_common_null_4x4_32k_NANR + mapping;
 }
 
 //--------------------------------------------------------------------------------------------

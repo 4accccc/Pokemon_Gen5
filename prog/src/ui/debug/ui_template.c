@@ -1269,8 +1269,8 @@ static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons
     prm.arc_id    = APP_COMMON_GetArcId();
     prm.pltt_id   = APP_COMMON_GetPokeItemIconPltArcIdx();
     prm.ncg_id    = APP_COMMON_GetPokeItemIconCharArcIdx();
-    prm.cell_id   = APP_COMMON_GetPokeItemIconCellArcIdx();
-    prm.anm_id    = APP_COMMON_GetPokeItemIconAnimeArcIdx();
+    prm.cell_id   = APP_COMMON_GetPokeItemIconCellArcIdx( APP_COMMON_MAPPING_128K );
+    prm.anm_id    = APP_COMMON_GetPokeItemIconAnimeArcIdx( APP_COMMON_MAPPING_128K );
     prm.pltt_line = PLTID_OBJ_POKEITEM_M;
     
     UITemplate_OBJ_LoadResource( &wk->clres_poke_item, &prm, unit, heapID );
@@ -1337,8 +1337,8 @@ static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 t
   prm.arc_id    = APP_COMMON_GetArcId();
   prm.pltt_id   = APP_COMMON_GetNull4x4PltArcIdx();
   prm.ncg_id    = APP_COMMON_GetNull4x4CharArcIdx();
-  prm.cell_id   = APP_COMMON_GetNull4x4CellArcIdx();
-  prm.anm_id    = APP_COMMON_GetNull4x4AnimeArcIdx();
+  prm.cell_id   = APP_COMMON_GetNull4x4CellArcIdx( APP_COMMON_MAPPING_128K );
+  prm.anm_id    = APP_COMMON_GetNull4x4AnimeArcIdx( APP_COMMON_MAPPING_128K );
   prm.pltt_line = PLTID_OBJ_OAM_MAPMODEL_M;
 
   // ÉäÉ\Å[ÉXì«Ç›çûÇ›
