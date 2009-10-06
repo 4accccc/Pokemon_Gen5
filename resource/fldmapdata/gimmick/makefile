@@ -6,7 +6,8 @@ include $(PROJECT_RSCDIR)\macro_define
 #zonetable‚ª––”öA‚Æ‚¢‚¤‡”Ô‚Í•ÏX‚µ‚Ä‚Í‚¢‚¯‚È‚¢B
 
 SUBDIRS	=	gym_denki \
-					gym_normal
+					gym_normal \
+					gym_fly
 
 .PHONY:	do-build clean
 
