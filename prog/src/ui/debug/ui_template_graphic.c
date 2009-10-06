@@ -5,7 +5,34 @@
  *	@brief	グラフィック設定
  *	@author	Toru=Nagihashi
  *	@data		2009.09.30
+ *	@version {1.0}
+ *	@note 
+ *	{	
+ *	○概要
+ *	ui_template_graphicはファイルごとコピペして使うことができる、グラフィック設定モジュールです。
+ *	リソース読み込み、CLWK作成等は行わず、グラフィックの設定のみ行います。
+ *	基本的に、.c上部のデータの書き換えだけで、BG,OBJ,G3Dの設定を変更でき、
+ *	毎回書くような処理を軽減する目的で書かれております。
  *
+ *	例えば、GFL_BG_BGCNT_HEADERの設定を変えておけば、
+ *	勝手に設定が読み込まれる、と言った感じです。
+ *	
+ *	○中身
+ *	ui_template_graphic.cの中身は、データ部と、関数部にわかれております。
+ *	・以下、データ…と書かれたところから、以上がデータと書かれたところまでが
+ *	データ部です。（現時点で22行～319行）
+ * 	この中を変えるだけで、簡単に描画設定が終わる、というのを狙っております。
+ *
+ *	・構造体宣言から下が関数部です。
+ *	基本変更する必要はありませんが、アプリ内で自分好みに変えたいときは、
+ *	ご変更ください。
+ *
+ *	○使用方法
+ *	１．使用したいフォルダへコピーしリネーム ui_template, UI_TEMPLATE -> config CONFIGなど
+ *	２．共通設定にて、使用グラフィックのマクロを設定、バンク設定
+ *	３．BG,OBJ,3Dなど、使用するグラフィックを設定
+ *	４．外部公開関数を使い、使用したいソースと接続
+ * 	}
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 //ライブラリ
@@ -228,13 +255,13 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 ///	テクスチャ、ﾊﾟﾚｯﾄのVRAMｻｲｽﾞ
 //=====================================
 #define GRAPHIC_G3D_TEXSIZE	(GFL_G3D_TEX128K)	//バンクのテクスチャイメージスロットｻｲｽﾞとあわせてください
-#define GRAPHIC_G3D_PLTSIZE	(GFL_G3D_PLT32K)//バンクのﾊﾟﾚｯﾄイメージスロットｻｲｽﾞとあわせてください
+#define GRAPHIC_G3D_PLTSIZE	(GFL_G3D_PLT32K)	//バンクのﾊﾟﾚｯﾄイメージスロットｻｲｽﾞとあわせてください
 
 //-------------------------------------
 ///	カメラ位置
 //=====================================
 static const VecFx32 sc_CAMERA_PER_POS		= { 0,0,FX32_CONST( 70 ) };	//位置
-static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };					//上情報
+static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };					//上方向
 static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//ターゲット
 
 //-------------------------------------
@@ -252,7 +279,7 @@ static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 									defaultCameraAspect, 0,
 									defaultCameraNear, defaultCameraFar, 0,
 									cp_pos, cp_up, cp_target, heapID );
-#else	//正射影
+#else	//正射影	クリップ面は適当です
 	return GFL_G3D_CAMERA_CreateOrtho( 
 		// const fx32 top, const fx32 bottom, const fx32 left, const fx32 right, 
 			FX32_CONST(24), -FX32_CONST(24), -FX32_CONST(32), FX32_CONST(32),
