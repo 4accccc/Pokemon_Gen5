@@ -324,6 +324,8 @@ GMEVENT *GYM_FLY_Shot(GAMESYS_WORK *gsys, const u8 inShotIdx, const u8 inShotDir
   //打ち出し方向をセット
   tmp->ShotDir = inShotDir;
 
+  return event;
+
 }
 
 //--------------------------------------------------------------

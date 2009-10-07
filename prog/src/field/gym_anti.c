@@ -115,6 +115,7 @@ GMEVENT *GYM_ANTI_SwOn(GAMESYS_WORK *gsys, const u8 inSwIdx)
   //スイッチインデックスをセット
   tmp->SwIdx = inSwIdx;
 
+  return event;
 }
 
 //--------------------------------------------------------------
@@ -141,6 +142,8 @@ GMEVENT *GYM_ANTI_OpenDoor(GAMESYS_WORK *gsys, const u8 inDoorIdx)
     
   //ドアインデックスをセット
   tmp->DoorIdx = inDoorIdx;
+
+  return event;
 
 }
 
