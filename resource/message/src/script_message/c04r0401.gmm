@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T17:11:54"/>
+	<create user="matsumiya" host="W00207" date="2009-10-07T12:22:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="248" top="176" right="952" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,50 @@
 	</lock>
 
 
-	<row id="msg_c04r0401_test1_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c04r0401_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ
+・下記OBJと隣接</comment>
+		<attribute name="キャラ指定">BADMAN</attribute>
+		<language name="JPN" width="256">ぼくたちは　サッカーだいすき　でね
+しあい　だけでなく[BE:00:ページ切り替え（行送り）]
+れんしゅうも　けんがく　しているのさ</language>
+		<language name="JPN_KANJI" width="256">ぼくたちは　サッカー大好きでね
+試合だけでなく　練習も見学しているのさ</language>
+	</row>
+
+	<row id="msg_c04r0401_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ
+・上記OBJと隣接</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">ひとと　ポケモンとが　おりなす
+あたらしい　かたちの　サッカー[BE:00:ページ切り替え（行送り）]
+これって　スポーツの　しんかけいかも</language>
+		<language name="JPN_KANJI" width="256">人と　ポケモンとが　織り成す
+新しい　形の　サッカー[BE:00:ページ切り替え（行送り）]
+これって　スポーツの　進化系かも</language>
+	</row>
+
+	<row id="msg_c04r0401_sunglasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">コートで　れんしゅうちゅうの
+せんしゅに　はなしかけると[BE:00:ページ切り替え（行送り）]
+ポケモンしょうぶを　いどまれるぞ！</language>
+		<language name="JPN_KANJI" width="256">練習中の　選手に　話しかけると
+ポケモン勝負を　挑まれるぞ！</language>
+	</row>
+
+	<row id="msg_c04r0401_fighterw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">FIGHTERW</attribute>
+		<language name="JPN" width="256">サッカーせんしゅの　ボールさばき
+しあいでも　しょうぶでも　たっしゃよ！</language>
+		<language name="JPN_KANJI" width="256">サッカー選手の　ボールさばき
+試合でも　勝負でも　達者よ！</language>
 	</row>
 
 	<flowchart-group-list>
