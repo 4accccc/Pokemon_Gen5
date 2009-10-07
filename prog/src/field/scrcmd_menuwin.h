@@ -20,6 +20,10 @@ extern VMCMD_RESULT EvCmdBmpMenuInitEx( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBmpMenuMakeList( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBmpMenuStart( VMHANDLE *core, void *wk );
 
+extern VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGoldWinUpdate( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGoldWinClose( VMHANDLE *core, void *wk );
+
 extern VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk );

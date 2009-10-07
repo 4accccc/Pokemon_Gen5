@@ -95,6 +95,9 @@
 #include "fld_particle.h"
 #include "fld3d_ci.h"
 
+#include "savedata/sodateya_work.h"
+#include "sodateya.h"
+
 //======================================================================
 //	DEBUG定義
 //======================================================================
@@ -229,6 +232,7 @@ struct _FIELDMAP_WORK
 	FIELD_COMM_MAIN *commSys;
 	
 	FLDMSGBG *fldMsgBG;
+  FLDMSGWIN *goldMsgWin;  // 所持金表示用ウィンドウ
 
 	FIELD_PLACE_NAME* placeNameSys;	// 地名表示ウィンドウ
   FLD_EXP_OBJ_CNT_PTR ExpObjCntPtr;
@@ -276,6 +280,8 @@ struct _FIELDMAP_WORK
 
   FLD_PRTCL_SYS_PTR FldPrtclSys;
   FLD3D_CI_PTR Fld3dCiPtr;
+
+  SODATEYA* sodateya;  // 育て屋
 
 };
 
@@ -498,6 +504,8 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   fieldWork->fldMsgBG = FLDMSGBG_Setup(
       fieldWork->heapID, fieldWork->g3Dcamera );
 
+  fieldWork->goldMsgWin = NULL;
+
   // 地名表示システム作成
   fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( fieldWork->heapID, fieldWork->fldMsgBG );
 
@@ -654,6 +662,13 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   fieldWork->FldPrtclSys = FLD_PRTCL_Init(fieldWork->heapID);
   //フィールド3Dカットイン
   fieldWork->Fld3dCiPtr = FLD3D_CI_Init(fieldWork->heapID, fieldWork->FldPrtclSys);
+
+  // 育て屋
+  {
+    SAVE_CONTROL_WORK* scw = GAMEDATA_GetSaveControlWork( fieldWork->gamedata );
+    SODATEYA_WORK* work = SODATEYA_WORK_GetSodateyaWork( scw );
+    fieldWork->sodateya = SODATEYA_Create( fieldWork->heapID, fieldWork, work );
+  }
 
   { //フィールド初期化スクリプトの呼び出し
     FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
@@ -816,6 +831,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
     OS_TPrintf( "draw_tick %d micro second\n", OS_TicksToMicroSeconds( debug_fieldmap_end_tick ) );
   }
 #endif
+
+
   return MAINSEQ_RESULT_CONTINUE;
 }
 
@@ -908,6 +925,12 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   FIELD_PLAYER_Delete( fieldWork->field_player );
   
   FLDMAPPER_ReleaseData( fieldWork->g3Dmapper );
+
+  // 所持金表示ウィンドウ破棄
+  if( fieldWork->goldMsgWin )
+  {
+    FLDMSGWIN_Delete( fieldWork->goldMsgWin );
+  }
   
   FLDMSGBG_Delete( fieldWork->fldMsgBG );
 
@@ -915,6 +938,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 
 	GAMEDATA_SetFrameSpritEnable(GAMESYSTEM_GetGameData(gsys), FALSE);
 	GFL_UI_StartFrameRateMode( GFL_UI_FRAMERATE_60 );
+
+  // 育て屋
+  SODATEYA_Delete( fieldWork->sodateya );
 
 #if USE_DEBUGWIN_SYSTEM
   FIELD_FUNC_RANDOM_GENERATE_TermDebug( );
@@ -1480,6 +1506,43 @@ extern GFL_TCBSYS* FIELDMAP_GetFieldmapTCBSys( FIELDMAP_WORK * fieldWork )
 void FIELDMAP_SetNowPosTarget( FIELDMAP_WORK *fieldWork, const VecFx32 *pos )
 {
   fieldWork->target_now_pos_p = pos;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 所持金表示用ウィンドウを取得
+ * @param fieldWork FIELDMAP_WORK
+ * @retval 所持金表示用ウィンドウ
+ */
+//--------------------------------------------------------------
+FLDMSGWIN * FIELDMAP_GetGoldMsgWin( FIELDMAP_WORK *fieldWork )
+{
+  return fieldWork->goldMsgWin;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 所持金表示用ウィンドウをセット
+ * @param fieldWork FIELDMAP_WORK
+ * @param msgWin    FLDMSGWIN
+ * @retval 所持金表示用ウィンドウ
+ */
+//--------------------------------------------------------------
+void FIELDMAP_SetGoldMsgWin( FIELDMAP_WORK *fieldWork, FLDMSGWIN *msgWin )
+{
+  fieldWork->goldMsgWin = msgWin;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 育て屋を取得
+ * @param fieldWork FIELDMAP_WORK
+ * @retval 育て屋
+ */
+//--------------------------------------------------------------
+SODATEYA* FIELDMAP_GetSodateya( FIELDMAP_WORK* fieldWork )
+{
+  return fieldWork->sodateya;
 }
 
 //======================================================================

@@ -113,6 +113,12 @@
 #define REZI_WORK_CAPTURE_NG		(280)				//捕獲失敗
 #define REZI_WORK_CAPTURE_OK		(290)				//捕獲成功
 
+// 手持ちポケモン数カウントモード
+#define POKECOUNT_MODE_TOTAL         (0)  // 手持ちの数
+#define POKECOUNT_MODE_NOT_EGG       (1)  // タマゴを除く手持ちの数
+#define POKECOUNT_MODE_BATTLE_ENABLE (2)  // 戦える(タマゴと瀕死を除いた)ポケモン数
+#define POKECOUNT_MODE_ONLY_EGG      (3)  // タマゴの数(駄目タマゴを除く)
+
 
 #endif	/* SCRIPT_DEF_H */
 

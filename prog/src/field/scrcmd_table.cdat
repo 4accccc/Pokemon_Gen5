@@ -157,9 +157,9 @@
   DEF_CMD( EvCmdBalloonWinClose, EV_SEQ_BALLOONWIN_CLOSE )
   NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdGoldWinOpen, EV_SEQ_GOLD_WIN_OPEN )
+  DEF_CMD( EvCmdGoldWinClose, EV_SEQ_GOLD_WIN_CLOSE )
+  DEF_CMD( EvCmdGoldWinUpdate, EV_SEQ_GOLD_WIN_UPDATE )
   NO_CMD()
   
   //ìÆçÏÉÇÉfÉã
@@ -202,12 +202,16 @@
   DEF_CMD( EvCmdWazaName, EV_SEQ_WAZA_NAME )
 
   DEF_CMD( EvCmdPocketName, EV_SEQ_POCKET_NAME )
+  DEF_CMD( EvCmdPartyPokeMonsName, EV_SEQ_TEMOTI_MONS_NAME )
+  DEF_CMD( EvCmdPartyPokeNickName, EV_SEQ_TEMOTI_NICK_NAME )
+  DEF_CMD( EvCmdSodateyaPokeMonsName, EV_SEQ_SODATEYA_MONS_NAME )
+
   DEF_CMD( EvCmdNickName, EV_SEQ_NICK_NAME )
   NO_CMD()
   NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdSodateyaPokeNickName, EV_SEQ_SODATEYA_NICK_NAME )
+  DEF_CMD( EvCmdNumber, EV_SEQ_NUMBER )
   NO_CMD()
   NO_CMD()
   
@@ -408,8 +412,8 @@
   DEF_CMD( EvCmdCheckPokemonEgg, EV_SEQ_CHECK_TEMOTI_EGG )
   DEF_CMD( EvCmdGetPartyPokeCount, EV_SEQ_GET_PARTY_POKE_COUNT )
 
-  DEF_CMD( EvCmdGetPartyBattlePokeCount, EV_SEQ_GET_PARTY_BATTLE_POKE_COUNT )
-  NO_CMD()
+  DEF_CMD( EvCmdGetPartyPokeMonsNo, EV_SEQ_GET_PARTY_POKE_MONSNO )
+  DEF_CMD( EvCmdGetPartyPokeFormNo, EV_SEQ_GET_PARTY_POKE_FORMNO )
   NO_CMD()
   NO_CMD()
 
@@ -420,19 +424,25 @@
   DEF_CMD( EvCmdGetSodateyaPokemonNum, EV_SEQ_GET_SODATEYA_POKEMON_NUM )
 
   DEF_CMD( EvCmdSodateyaLoveCheck, EV_SEQ_SODATEYA_LOVE_CHECK )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdTrustPokeToSodateya, EV_SEQ_POKE_TO_SODATEYA )
+  DEF_CMD( EvCmdCheckOutPokeFromSodateya, EV_SEQ_POKE_FROM_SODATEYA )
+  DEF_CMD( EvCmdGetSodateyaPokeMonsNo, EV_SEQ_GET_SODATEYA_POKE_MONSNO )
 
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdGetSodateyaPokeFormNo, EV_SEQ_GET_SODATEYA_POKE_FORMNO )
+  DEF_CMD( EvCmdGetSodateyaPokeLv, EV_SEQ_GET_SODATEYA_POKE_LV )
+  DEF_CMD( EvCmdGetSodateyaPokeGrowUpLv, EV_SEQ_GET_SODATEYA_POKE_GROWUP_LV )
+  DEF_CMD( EvCmdGetSodateyaPokeTakeBackCharge, EV_SEQ_GET_SODATEYA_POKE_CHARGE )
+
+  // é©ëOÇ≈í«â¡
+  DEF_CMD( EvCmdSodateyaSelectTemotiPokemon, EV_SEQ_SODATEYA_SELECT_POKEMON )
+  DEF_CMD( EvCmdGetSodateyaPokeSex, EV_SEQ_GET_SODATEYA_POKE_SEX )
   NO_CMD()
   NO_CMD()
 
   // Ç®ã‡
   DEF_CMD( EvCmdAddGold, EV_SEQ_ADD_GOLD )
   DEF_CMD( EvCmdSubtractGold, EV_SEQ_SUBTRACT_GOLD )
-  NO_CMD()
+  DEF_CMD( EvCmdCheckGold, EV_SEQ_CHECK_GOLD )
   NO_CMD()
 
   NO_CMD()

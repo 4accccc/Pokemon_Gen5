@@ -28,6 +28,12 @@
 #include "msgdata.h"
 #include "print/wordset.h"
 
+#include "savedata/sodateya_work.h"
+#include "sodateya.h"
+#include "fieldmap.h"
+
+#include "print/str_tool.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -145,6 +151,115 @@ VMCMD_RESULT EvCmdPocketName(VMHANDLE * core, void *wk )
 	return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * 手持ちポケモンの種族名を指定バッファに登録
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPartyPokeMonsName(VMHANDLE * core, void *wk ) 
+{
+  SCRCMD_WORK*    work = wk;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
+  WORDSET**    wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+ 	u8               idx = VMGetU8( core );
+  u16              pos = SCRCMD_GetVMWorkValue( core, work );
+  POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
+  POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
+
+  WORDSET_RegisterPokeMonsName( *wordset, idx, param );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 手持ちポケモンのニックネームを指定バッファに登録
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPartyPokeNickName(VMHANDLE * core, void *wk ) 
+{
+  SCRCMD_WORK*    work = wk;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
+  WORDSET**    wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+ 	u8               idx = VMGetU8( core );
+  u16              pos = SCRCMD_GetVMWorkValue( core, work );
+  POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
+  POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
+
+  WORDSET_RegisterPokeNickName( *wordset, idx, param );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 育て屋のポケモンの種族名を指定バッファに登録
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSodateyaPokeMonsName(VMHANDLE * core, void *wk ) 
+{
+  SCRCMD_WORK*       work = wk;
+  SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET**       wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+ 	u8                  idx = VMGetU8( core );
+  u16                 pos = SCRCMD_GetVMWorkValue( core, work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  SODATEYA*      sodateya = FIELDMAP_GetSodateya( fieldmap );
+  const POKEMON_PARAM* pp = SODATEYA_GetPokemonParam( sodateya, pos );
+
+  WORDSET_RegisterPokeMonsName( *wordset, idx, pp );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 育て屋のポケモンのニックネームを指定バッファに登録
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSodateyaPokeNickName(VMHANDLE * core, void *wk ) 
+{
+  SCRCMD_WORK*       work = wk;
+  SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET**       wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+ 	u8                  idx = VMGetU8( core );
+  u16                 pos = SCRCMD_GetVMWorkValue( core, work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  SODATEYA*      sodateya = FIELDMAP_GetSodateya( fieldmap );
+  const POKEMON_PARAM* pp = SODATEYA_GetPokemonParam( sodateya, pos );
+
+  WORDSET_RegisterPokeNickName( *wordset, idx, pp );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 数字を指定バッファに登録
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdNumber(VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK*    work = wk;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET**    wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+ 	u8               idx = VMGetU8( core );
+  u16              num = SCRCMD_GetVMWorkValue( core, work );
+  u16             keta = SCRCMD_GetVMWorkValue( core, work );
+
+  WORDSET_RegisterNumber( *wordset, idx, num, keta, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  return VMCMD_RESULT_CONTINUE;
+}
 //--------------------------------------------------------------
 /**
  * 手持ちポケモンのニックネームを指定バッファに登録

@@ -34,6 +34,9 @@
 #include "fieldmap_func_def.h"
 #include "fld_exp_obj.h"
 
+#include "savedata/sodateya_work.h"
+#include "sodateya.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -92,3 +95,6 @@ extern FLDMAPFUNC_SYS * FIELDMAP_GetFldmapFuncSys( FIELDMAP_WORK * fieldWork );
 extern FLD_EXP_OBJ_CNT_PTR FIELDMAP_GetExpObjCntPtr( FIELDMAP_WORK *fieldWork );
 extern GFL_TCBSYS* FIELDMAP_GetFieldmapTCBSys( FIELDMAP_WORK * fieldWork );
 extern void FIELDMAP_SetNowPosTarget( FIELDMAP_WORK *fieldWork, const VecFx32 *pos );
+extern FLDMSGWIN * FIELDMAP_GetGoldMsgWin( FIELDMAP_WORK *fieldWork );
+extern void FIELDMAP_SetGoldMsgWin( FIELDMAP_WORK *fieldWork, FLDMSGWIN *msgWin );
+extern SODATEYA* FIELDMAP_GetSodateya( FIELDMAP_WORK* fieldWork );

@@ -413,6 +413,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fld3d_ci.c \
         field/gym_anti.c \
         field/gym_fly.c \
+        field/sodateya.c \
         field/scrcmd_hiden.c
 
 

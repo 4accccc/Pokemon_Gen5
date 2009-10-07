@@ -40,6 +40,9 @@
 //======================================================================
 //  proto
 //======================================================================
+static int GetPokeCount_NOT_EGG( const POKEPARTY* party );
+static int GetPokeCount_BATTLE_ENABLE( const POKEPARTY* party );
+static int GetPokeCount_ONLY_EGG( const POKEPARTY* party );
 
 //======================================================================
 //  ポケモン関連
@@ -278,37 +281,146 @@ VMCMD_RESULT EvCmdSetPokemonFriendValue( VMHANDLE * core, void *wk )
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGetPartyPokeCount( VMHANDLE * core, void *wk )
+VMCMD_RESULT EvCmdGetPartyPokeMonsNo( VMHANDLE * core, void *wk )
 {
-  SCRCMD_WORK* work = (SCRCMD_WORK*)wk;
-  u16*       ret_wk = SCRCMD_GetVMWork( core, work );
-  GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
-  POKEPARTY*  party = GAMEDATA_GetMyPokemon( gdata );
+  SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
+  u16*          ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
+  u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
+  GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
+  POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
 
-  *ret_wk = (u16)PokeParty_GetPokeCount( party );
+  *ret_wk = (u16)PP_Get( param, ID_PARA_monsno, NULL );
+  OBATA_Printf( "EvCmdGetPartyPokeMonsNo : %d\n", *ret_wk );
   return VMCMD_RESULT_CONTINUE;
-} 
-
+}
 
 //--------------------------------------------------------------
 /**
- * @brief 戦える手持ちポケモンの数を取得
- *     (手持ちからタマゴ, 瀕死のポケモンを除いた数を取得する)
+ * @brief 手持ちポケモンの形状ナンバーを取得する
  * @param	core		仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGetPartyBattlePokeCount( VMHANDLE * core, void *wk )
+VMCMD_RESULT EvCmdGetPartyPokeFormNo( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
+  u16*          ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
+  u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
+  GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
+  POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
+
+  *ret_wk = (u16)PP_Get( param, ID_PARA_form_no, NULL );
+  OBATA_Printf( "EvCmdGetPartyPokeFormNo : %d\n", *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちポケモンの数を取得
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetPartyPokeCount( VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK* work = (SCRCMD_WORK*)wk;
   u16*       ret_wk = SCRCMD_GetVMWork( core, work );
+  u16          mode = SCRCMD_GetVMWorkValue( core, wk );
   GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
   POKEPARTY*  party = GAMEDATA_GetMyPokemon( gdata );
+  int           num = 0;
 
-  *ret_wk = (u16)PokeParty_GetBattlePokeNum( party );
+  // 指定されたモードに応じたポケモン数をカウント
+  switch( mode )
+  {
+  case POKECOUNT_MODE_TOTAL:
+    num = PokeParty_GetPokeCount( party );
+    break;
+  case POKECOUNT_MODE_NOT_EGG:
+    num = GetPokeCount_NOT_EGG( party );
+    break;
+  case POKECOUNT_MODE_BATTLE_ENABLE:
+    num = GetPokeCount_BATTLE_ENABLE( party );
+    break;
+  case POKECOUNT_MODE_ONLY_EGG:
+    num = GetPokeCount_ONLY_EGG( party );
+    break;
+  default:
+    num = 0;
+    break;
+  }
+
+  *ret_wk = (u16)num;
   return VMCMD_RESULT_CONTINUE;
 } 
+
+//--------------------------------------------------------------
+// タマゴを除く手持ちポケモンの数を取得する
+static int GetPokeCount_NOT_EGG( const POKEPARTY* party )
+{
+  int i;
+  int num = 0;
+  int max = PokeParty_GetPokeCount( party );  // 全ポケモン数
+  POKEMON_PARAM* param;
+  u32 tamago_flag;
+
+  // タマゴ以外のポケモン数をカウント
+  for( i=0; i<max; i++ )
+  {
+    param       = PokeParty_GetMemberPointer( party, i );
+    tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
+    if( tamago_flag != TRUE ) num++;
+  }
+  return num;
+}
+
+//--------------------------------------------------------------
+// 戦える(タマゴと瀕死を除いた)ポケモン数を取得する
+static int GetPokeCount_BATTLE_ENABLE( const POKEPARTY* party )
+{
+  int i;
+  int num = 0;
+  int max = PokeParty_GetPokeCount( party );  // 全ポケモン数
+  POKEMON_PARAM* param;
+  u32 tamago_flag;
+  u32 hp;
+
+  // 戦えるポケモン数をカウント
+  for( i=0; i<max; i++ )
+  {
+    param       = PokeParty_GetMemberPointer( party, i );
+    tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
+    hp          = PP_Get( param, ID_PARA_hp, NULL );
+    if( ( tamago_flag != TRUE ) && ( 0 < hp ) ) num++;
+  }
+  return num;
+}
+
+//--------------------------------------------------------------
+// タマゴの数(駄目タマゴを除く)を取得する
+static int GetPokeCount_ONLY_EGG( const POKEPARTY* party )
+{
+  int i;
+  int num = 0;
+  int max = PokeParty_GetPokeCount( party );  // 全ポケモン数
+  POKEMON_PARAM* param;
+  u32 tamago_flag;
+  u32 fusei_tamago_flag;
+
+  // 駄目じゃないタマゴの数をカウント
+  for( i=0; i<max; i++ )
+  {
+    param             = PokeParty_GetMemberPointer( party, i );
+    tamago_flag       = PP_Get( param, ID_PARA_tamago_flag, NULL );
+    fusei_tamago_flag = PP_Get( param, ID_PARA_fusei_tamago_flag, NULL );
+    if( ( tamago_flag == TRUE ) && ( fusei_tamago_flag == FALSE ) ) num++;
+  }
+  return num;
+}
 
 
 //--------------------------------------------------------------
@@ -322,7 +434,6 @@ VMCMD_RESULT EvCmdGetPartyBattlePokeCount( VMHANDLE * core, void *wk )
 VMCMD_RESULT EvCmdAddGold( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK*   work = (SCRCMD_WORK*)wk;
-  u16*         ret_wk = SCRCMD_GetVMWork( core, work );
   GAMEDATA*     gdata = SCRCMD_WORK_GetGameData( work );
   PLAYER_WORK* player = GAMEDATA_GetMyPlayerWork( gdata );
   MYSTATUS*  mystatus = &player->mystatus;
@@ -345,7 +456,6 @@ VMCMD_RESULT EvCmdAddGold( VMHANDLE * core, void * wk )
 VMCMD_RESULT EvCmdSubtractGold( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK*   work = (SCRCMD_WORK*)wk;
-  u16*         ret_wk = SCRCMD_GetVMWork( core, work );
   GAMEDATA*     gdata = SCRCMD_WORK_GetGameData( work );
   PLAYER_WORK* player = GAMEDATA_GetMyPlayerWork( gdata );
   MYSTATUS*  mystatus = &player->mystatus;
@@ -354,6 +464,33 @@ VMCMD_RESULT EvCmdSubtractGold( VMHANDLE * core, void * wk )
 
   gold = gold - val;
   MyStatus_SetGold( mystatus, gold );
+
+  OBATA_Printf( "EvCmdSubtractGold : %d\n", gold );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 所持金の不足チェック
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCheckGold( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*   work = (SCRCMD_WORK*)wk;
+  u16*         ret_wk = SCRCMD_GetVMWork( core, work );
+  u16             val = SCRCMD_GetVMWorkValue( core, wk );
+  GAMEDATA*     gdata = SCRCMD_WORK_GetGameData( work );
+  PLAYER_WORK* player = GAMEDATA_GetMyPlayerWork( gdata );
+  MYSTATUS*  mystatus = &player->mystatus;
+  u32            gold = MyStatus_GetGold( mystatus );
+
+  if( val <= gold ) *ret_wk = TRUE;
+  else              *ret_wk = FALSE; 
+
+  OBATA_Printf( "EvCmdCheckGold : %d\n", *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
 

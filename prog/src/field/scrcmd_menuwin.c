@@ -9,6 +9,7 @@
  */
 //======================================================================
 
+#include <wchar.h>
 #include <gflib.h>
 
 #include "system/vm_cmd.h"
@@ -17,6 +18,9 @@
 #include "script_local.h"
 #include "scrcmd_work.h"
 #include "scrcmd_menuwin.h"
+
+
+#include "fieldmap.h"
 
 
 //======================================================================
@@ -233,6 +237,89 @@ VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   VMCMD_SetWait( core, TalkMsgWait );
   return VMCMD_RESULT_SUSPEND;
 }
+
+//--------------------------------------------------------------
+/**
+ * 所持金ウィンドウを表示する
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//-------------------------------------------------------------- 
+VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = wk;
+  u16                   x = SCRCMD_GetVMWorkValue( core, work );
+  u16                   y = SCRCMD_GetVMWorkValue( core, work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  PLAYER_WORK*     player = GAMEDATA_GetMyPlayerWork( gdata );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDMSGBG*        msg_bg = FIELDMAP_GetFldMsgBG( fieldmap );
+  FLDMSGWIN*      msg_win = FIELDMAP_GetGoldMsgWin( fieldmap );
+  GFL_MSGDATA*   msg_data = SCRCMD_WORK_GetMsgData( work );
+
+  // 表示中のウィンドウを削除
+  if( msg_win != NULL )
+  {
+    FLDMSGWIN_Delete( msg_win );
+  }
+
+  // ウィンドウを表示
+  msg_win = FLDMSGWIN_Add( msg_bg, msg_data, x, y, 14, 2 );
+  FIELDMAP_SetGoldMsgWin( fieldmap, msg_win );
+
+  // ウィンドウ内のメッセージを設定
+  {
+    STRCODE code[128];
+    HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
+    STRBUF*    buf = GFL_STR_CreateBuffer( 128, heap_id );
+    u32 gold = MyStatus_GetGold( &player->mystatus );
+    swprintf( code, 128, L"おこずかい  %6d円", gold );
+    GFL_STR_SetStringCodeOrderLength( buf, code, wcslen(code)+1 );
+    FLDMSGWIN_PrintStrBuf( msg_win, 0, 0, buf );
+    GFL_STR_DeleteBuffer( buf );
+  }
+
+  OBATA_Printf( "EvCmdGoldWinOpen\n" );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 所持金ウィンドウを更新する
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//-------------------------------------------------------------- 
+VMCMD_RESULT EvCmdGoldWinUpdate( VMHANDLE *core, void *wk )
+{
+  // 再表示する
+  return EvCmdGoldWinOpen( core, wk );
+}
+
+//--------------------------------------------------------------
+/**
+ * 所持金ウィンドウを消去する
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//-------------------------------------------------------------- 
+VMCMD_RESULT EvCmdGoldWinClose( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDMSGWIN*      msg_win = FIELDMAP_GetGoldMsgWin( fieldmap );
+
+  if( msg_win )
+  {
+    FLDMSGWIN_Delete( msg_win );
+    FIELDMAP_SetGoldMsgWin( fieldmap, NULL );
+  }
+  OBATA_Printf( "EvCmdGoldWinClose\n" );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
