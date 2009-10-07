@@ -653,6 +653,14 @@
 		<language name="JPN">トクジ</language>
 	</row>
 
+	<row id="hakaim1_03">
+		<language name="JPN">したっぱ</language>
+	</row>
+
+	<row id="hakaim1_04">
+		<language name="JPN">したっぱ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

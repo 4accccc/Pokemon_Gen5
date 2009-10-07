@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-10-06T14:21:28"/>
+	<create user="taya" host="W00146" date="2009-05-29T17:54:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="-16" top="176" right="689" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,2677 +335,2146 @@
 
 	<row id="MONSNAME_000">
 		<language name="JPN">ーーーーー</language>
-		<language name="JPN_KANJI">ーーーーー</language>
 	</row>
 
 	<row id="MONSNAME_001">
 		<language name="JPN">フシギダネ</language>
-		<language name="JPN_KANJI">フシギダネ</language>
 	</row>
 
 	<row id="MONSNAME_002">
 		<language name="JPN">フシギソウ</language>
-		<language name="JPN_KANJI">フシギソウ</language>
 	</row>
 
 	<row id="MONSNAME_003">
 		<language name="JPN">フシギバナ</language>
-		<language name="JPN_KANJI">フシギバナ</language>
 	</row>
 
 	<row id="MONSNAME_004">
 		<language name="JPN">ヒトカゲ</language>
-		<language name="JPN_KANJI">ヒトカゲ</language>
 	</row>
 
 	<row id="MONSNAME_005">
 		<language name="JPN">リザード</language>
-		<language name="JPN_KANJI">リザード</language>
 	</row>
 
 	<row id="MONSNAME_006">
 		<language name="JPN">リザードン</language>
-		<language name="JPN_KANJI">リザードン</language>
 	</row>
 
 	<row id="MONSNAME_007">
 		<language name="JPN">ゼニガメ</language>
-		<language name="JPN_KANJI">ゼニガメ</language>
 	</row>
 
 	<row id="MONSNAME_008">
 		<language name="JPN">カメール</language>
-		<language name="JPN_KANJI">カメール</language>
 	</row>
 
 	<row id="MONSNAME_009">
 		<language name="JPN">カメックス</language>
-		<language name="JPN_KANJI">カメックス</language>
 	</row>
 
 	<row id="MONSNAME_010">
 		<language name="JPN">キャタピー</language>
-		<language name="JPN_KANJI">キャタピー</language>
 	</row>
 
 	<row id="MONSNAME_011">
 		<language name="JPN">トランセル</language>
-		<language name="JPN_KANJI">トランセル</language>
 	</row>
 
 	<row id="MONSNAME_012">
 		<language name="JPN">バタフリー</language>
-		<language name="JPN_KANJI">バタフリー</language>
 	</row>
 
 	<row id="MONSNAME_013">
 		<language name="JPN">ビードル</language>
-		<language name="JPN_KANJI">ビードル</language>
 	</row>
 
 	<row id="MONSNAME_014">
 		<language name="JPN">コクーン</language>
-		<language name="JPN_KANJI">コクーン</language>
 	</row>
 
 	<row id="MONSNAME_015">
 		<language name="JPN">スピアー</language>
-		<language name="JPN_KANJI">スピアー</language>
 	</row>
 
 	<row id="MONSNAME_016">
 		<language name="JPN">ポッポ</language>
-		<language name="JPN_KANJI">ポッポ</language>
 	</row>
 
 	<row id="MONSNAME_017">
 		<language name="JPN">ピジョン</language>
-		<language name="JPN_KANJI">ピジョン</language>
 	</row>
 
 	<row id="MONSNAME_018">
 		<language name="JPN">ピジョット</language>
-		<language name="JPN_KANJI">ピジョット</language>
 	</row>
 
 	<row id="MONSNAME_019">
 		<language name="JPN">コラッタ</language>
-		<language name="JPN_KANJI">コラッタ</language>
 	</row>
 
 	<row id="MONSNAME_020">
 		<language name="JPN">ラッタ</language>
-		<language name="JPN_KANJI">ラッタ</language>
 	</row>
 
 	<row id="MONSNAME_021">
 		<language name="JPN">オニスズメ</language>
-		<language name="JPN_KANJI">オニスズメ</language>
 	</row>
 
 	<row id="MONSNAME_022">
 		<language name="JPN">オニドリル</language>
-		<language name="JPN_KANJI">オニドリル</language>
 	</row>
 
 	<row id="MONSNAME_023">
 		<language name="JPN">アーボ</language>
-		<language name="JPN_KANJI">アーボ</language>
 	</row>
 
 	<row id="MONSNAME_024">
 		<language name="JPN">アーボック</language>
-		<language name="JPN_KANJI">アーボック</language>
 	</row>
 
 	<row id="MONSNAME_025">
 		<language name="JPN">ピカチュウ</language>
-		<language name="JPN_KANJI">ピカチュウ</language>
 	</row>
 
 	<row id="MONSNAME_026">
 		<language name="JPN">ライチュウ</language>
-		<language name="JPN_KANJI">ライチュウ</language>
 	</row>
 
 	<row id="MONSNAME_027">
 		<language name="JPN">サンド</language>
-		<language name="JPN_KANJI">サンド</language>
 	</row>
 
 	<row id="MONSNAME_028">
 		<language name="JPN">サンドパン</language>
-		<language name="JPN_KANJI">サンドパン</language>
 	</row>
 
 	<row id="MONSNAME_029">
 		<language name="JPN">ニドラン♀</language>
-		<language name="JPN_KANJI">ニドラン♀</language>
 	</row>
 
 	<row id="MONSNAME_030">
 		<language name="JPN">ニドリーナ</language>
-		<language name="JPN_KANJI">ニドリーナ</language>
 	</row>
 
 	<row id="MONSNAME_031">
 		<language name="JPN">ニドクイン</language>
-		<language name="JPN_KANJI">ニドクイン</language>
 	</row>
 
 	<row id="MONSNAME_032">
 		<language name="JPN">ニドラン♂</language>
-		<language name="JPN_KANJI">ニドラン♂</language>
 	</row>
 
 	<row id="MONSNAME_033">
 		<language name="JPN">ニドリーノ</language>
-		<language name="JPN_KANJI">ニドリーノ</language>
 	</row>
 
 	<row id="MONSNAME_034">
 		<language name="JPN">ニドキング</language>
-		<language name="JPN_KANJI">ニドキング</language>
 	</row>
 
 	<row id="MONSNAME_035">
 		<language name="JPN">ピッピ</language>
-		<language name="JPN_KANJI">ピッピ</language>
 	</row>
 
 	<row id="MONSNAME_036">
 		<language name="JPN">ピクシー</language>
-		<language name="JPN_KANJI">ピクシー</language>
 	</row>
 
 	<row id="MONSNAME_037">
 		<language name="JPN">ロコン</language>
-		<language name="JPN_KANJI">ロコン</language>
 	</row>
 
 	<row id="MONSNAME_038">
 		<language name="JPN">キュウコン</language>
-		<language name="JPN_KANJI">キュウコン</language>
 	</row>
 
 	<row id="MONSNAME_039">
 		<language name="JPN">プリン</language>
-		<language name="JPN_KANJI">プリン</language>
 	</row>
 
 	<row id="MONSNAME_040">
 		<language name="JPN">プクリン</language>
-		<language name="JPN_KANJI">プクリン</language>
 	</row>
 
 	<row id="MONSNAME_041">
 		<language name="JPN">ズバット</language>
-		<language name="JPN_KANJI">ズバット</language>
 	</row>
 
 	<row id="MONSNAME_042">
 		<language name="JPN">ゴルバット</language>
-		<language name="JPN_KANJI">ゴルバット</language>
 	</row>
 
 	<row id="MONSNAME_043">
 		<language name="JPN">ナゾノクサ</language>
-		<language name="JPN_KANJI">ナゾノクサ</language>
 	</row>
 
 	<row id="MONSNAME_044">
 		<language name="JPN">クサイハナ</language>
-		<language name="JPN_KANJI">クサイハナ</language>
 	</row>
 
 	<row id="MONSNAME_045">
 		<language name="JPN">ラフレシア</language>
-		<language name="JPN_KANJI">ラフレシア</language>
 	</row>
 
 	<row id="MONSNAME_046">
 		<language name="JPN">パラス</language>
-		<language name="JPN_KANJI">パラス</language>
 	</row>
 
 	<row id="MONSNAME_047">
 		<language name="JPN">パラセクト</language>
-		<language name="JPN_KANJI">パラセクト</language>
 	</row>
 
 	<row id="MONSNAME_048">
 		<language name="JPN">コンパン</language>
-		<language name="JPN_KANJI">コンパン</language>
 	</row>
 
 	<row id="MONSNAME_049">
 		<language name="JPN">モルフォン</language>
-		<language name="JPN_KANJI">モルフォン</language>
 	</row>
 
 	<row id="MONSNAME_050">
 		<language name="JPN">ディグダ</language>
-		<language name="JPN_KANJI">ディグダ</language>
 	</row>
 
 	<row id="MONSNAME_051">
 		<language name="JPN">ダグトリオ</language>
-		<language name="JPN_KANJI">ダグトリオ</language>
 	</row>
 
 	<row id="MONSNAME_052">
 		<language name="JPN">ニャース</language>
-		<language name="JPN_KANJI">ニャース</language>
 	</row>
 
 	<row id="MONSNAME_053">
 		<language name="JPN">ペルシアン</language>
-		<language name="JPN_KANJI">ペルシアン</language>
 	</row>
 
 	<row id="MONSNAME_054">
 		<language name="JPN">コダック</language>
-		<language name="JPN_KANJI">コダック</language>
 	</row>
 
 	<row id="MONSNAME_055">
 		<language name="JPN">ゴルダック</language>
-		<language name="JPN_KANJI">ゴルダック</language>
 	</row>
 
 	<row id="MONSNAME_056">
 		<language name="JPN">マンキー</language>
-		<language name="JPN_KANJI">マンキー</language>
 	</row>
 
 	<row id="MONSNAME_057">
 		<language name="JPN">オコリザル</language>
-		<language name="JPN_KANJI">オコリザル</language>
 	</row>
 
 	<row id="MONSNAME_058">
 		<language name="JPN">ガーディ</language>
-		<language name="JPN_KANJI">ガーディ</language>
 	</row>
 
 	<row id="MONSNAME_059">
 		<language name="JPN">ウインディ</language>
-		<language name="JPN_KANJI">ウインディ</language>
 	</row>
 
 	<row id="MONSNAME_060">
 		<language name="JPN">ニョロモ</language>
-		<language name="JPN_KANJI">ニョロモ</language>
 	</row>
 
 	<row id="MONSNAME_061">
 		<language name="JPN">ニョロゾ</language>
-		<language name="JPN_KANJI">ニョロゾ</language>
 	</row>
 
 	<row id="MONSNAME_062">
 		<language name="JPN">ニョロボン</language>
-		<language name="JPN_KANJI">ニョロボン</language>
 	</row>
 
 	<row id="MONSNAME_063">
 		<language name="JPN">ケーシィ</language>
-		<language name="JPN_KANJI">ケーシィ</language>
 	</row>
 
 	<row id="MONSNAME_064">
 		<language name="JPN">ユンゲラー</language>
-		<language name="JPN_KANJI">ユンゲラー</language>
 	</row>
 
 	<row id="MONSNAME_065">
 		<language name="JPN">フーディン</language>
-		<language name="JPN_KANJI">フーディン</language>
 	</row>
 
 	<row id="MONSNAME_066">
 		<language name="JPN">ワンリキー</language>
-		<language name="JPN_KANJI">ワンリキー</language>
 	</row>
 
 	<row id="MONSNAME_067">
 		<language name="JPN">ゴーリキー</language>
-		<language name="JPN_KANJI">ゴーリキー</language>
 	</row>
 
 	<row id="MONSNAME_068">
 		<language name="JPN">カイリキー</language>
-		<language name="JPN_KANJI">カイリキー</language>
 	</row>
 
 	<row id="MONSNAME_069">
 		<language name="JPN">マダツボミ</language>
-		<language name="JPN_KANJI">マダツボミ</language>
 	</row>
 
 	<row id="MONSNAME_070">
 		<language name="JPN">ウツドン</language>
-		<language name="JPN_KANJI">ウツドン</language>
 	</row>
 
 	<row id="MONSNAME_071">
 		<language name="JPN">ウツボット</language>
-		<language name="JPN_KANJI">ウツボット</language>
 	</row>
 
 	<row id="MONSNAME_072">
 		<language name="JPN">メノクラゲ</language>
-		<language name="JPN_KANJI">メノクラゲ</language>
 	</row>
 
 	<row id="MONSNAME_073">
 		<language name="JPN">ドククラゲ</language>
-		<language name="JPN_KANJI">ドククラゲ</language>
 	</row>
 
 	<row id="MONSNAME_074">
 		<language name="JPN">イシツブテ</language>
-		<language name="JPN_KANJI">イシツブテ</language>
 	</row>
 
 	<row id="MONSNAME_075">
 		<language name="JPN">ゴローン</language>
-		<language name="JPN_KANJI">ゴローン</language>
 	</row>
 
 	<row id="MONSNAME_076">
 		<language name="JPN">ゴローニャ</language>
-		<language name="JPN_KANJI">ゴローニャ</language>
 	</row>
 
 	<row id="MONSNAME_077">
 		<language name="JPN">ポニータ</language>
-		<language name="JPN_KANJI">ポニータ</language>
 	</row>
 
 	<row id="MONSNAME_078">
 		<language name="JPN">ギャロップ</language>
-		<language name="JPN_KANJI">ギャロップ</language>
 	</row>
 
 	<row id="MONSNAME_079">
 		<language name="JPN">ヤドン</language>
-		<language name="JPN_KANJI">ヤドン</language>
 	</row>
 
 	<row id="MONSNAME_080">
 		<language name="JPN">ヤドラン</language>
-		<language name="JPN_KANJI">ヤドラン</language>
 	</row>
 
 	<row id="MONSNAME_081">
 		<language name="JPN">コイル</language>
-		<language name="JPN_KANJI">コイル</language>
 	</row>
 
 	<row id="MONSNAME_082">
 		<language name="JPN">レアコイル</language>
-		<language name="JPN_KANJI">レアコイル</language>
 	</row>
 
 	<row id="MONSNAME_083">
 		<language name="JPN">カモネギ</language>
-		<language name="JPN_KANJI">カモネギ</language>
 	</row>
 
 	<row id="MONSNAME_084">
 		<language name="JPN">ドードー</language>
-		<language name="JPN_KANJI">ドードー</language>
 	</row>
 
 	<row id="MONSNAME_085">
 		<language name="JPN">ドードリオ</language>
-		<language name="JPN_KANJI">ドードリオ</language>
 	</row>
 
 	<row id="MONSNAME_086">
 		<language name="JPN">パウワウ</language>
-		<language name="JPN_KANJI">パウワウ</language>
 	</row>
 
 	<row id="MONSNAME_087">
 		<language name="JPN">ジュゴン</language>
-		<language name="JPN_KANJI">ジュゴン</language>
 	</row>
 
 	<row id="MONSNAME_088">
 		<language name="JPN">ベトベター</language>
-		<language name="JPN_KANJI">ベトベター</language>
 	</row>
 
 	<row id="MONSNAME_089">
 		<language name="JPN">ベトベトン</language>
-		<language name="JPN_KANJI">ベトベトン</language>
 	</row>
 
 	<row id="MONSNAME_090">
 		<language name="JPN">シェルダー</language>
-		<language name="JPN_KANJI">シェルダー</language>
 	</row>
 
 	<row id="MONSNAME_091">
 		<language name="JPN">パルシェン</language>
-		<language name="JPN_KANJI">パルシェン</language>
 	</row>
 
 	<row id="MONSNAME_092">
 		<language name="JPN">ゴース</language>
-		<language name="JPN_KANJI">ゴース</language>
 	</row>
 
 	<row id="MONSNAME_093">
 		<language name="JPN">ゴースト</language>
-		<language name="JPN_KANJI">ゴースト</language>
 	</row>
 
 	<row id="MONSNAME_094">
 		<language name="JPN">ゲンガー</language>
-		<language name="JPN_KANJI">ゲンガー</language>
 	</row>
 
 	<row id="MONSNAME_095">
 		<language name="JPN">イワーク</language>
-		<language name="JPN_KANJI">イワーク</language>
 	</row>
 
 	<row id="MONSNAME_096">
 		<language name="JPN">スリープ</language>
-		<language name="JPN_KANJI">スリープ</language>
 	</row>
 
 	<row id="MONSNAME_097">
 		<language name="JPN">スリーパー</language>
-		<language name="JPN_KANJI">スリーパー</language>
 	</row>
 
 	<row id="MONSNAME_098">
 		<language name="JPN">クラブ</language>
-		<language name="JPN_KANJI">クラブ</language>
 	</row>
 
 	<row id="MONSNAME_099">
 		<language name="JPN">キングラー</language>
-		<language name="JPN_KANJI">キングラー</language>
 	</row>
 
 	<row id="MONSNAME_100">
 		<language name="JPN">ビリリダマ</language>
-		<language name="JPN_KANJI">ビリリダマ</language>
 	</row>
 
 	<row id="MONSNAME_101">
 		<language name="JPN">マルマイン</language>
-		<language name="JPN_KANJI">マルマイン</language>
 	</row>
 
 	<row id="MONSNAME_102">
 		<language name="JPN">タマタマ</language>
-		<language name="JPN_KANJI">タマタマ</language>
 	</row>
 
 	<row id="MONSNAME_103">
 		<language name="JPN">ナッシー</language>
-		<language name="JPN_KANJI">ナッシー</language>
 	</row>
 
 	<row id="MONSNAME_104">
 		<language name="JPN">カラカラ</language>
-		<language name="JPN_KANJI">カラカラ</language>
 	</row>
 
 	<row id="MONSNAME_105">
 		<language name="JPN">ガラガラ</language>
-		<language name="JPN_KANJI">ガラガラ</language>
 	</row>
 
 	<row id="MONSNAME_106">
 		<language name="JPN">サワムラー</language>
-		<language name="JPN_KANJI">サワムラー</language>
 	</row>
 
 	<row id="MONSNAME_107">
 		<language name="JPN">エビワラー</language>
-		<language name="JPN_KANJI">エビワラー</language>
 	</row>
 
 	<row id="MONSNAME_108">
 		<language name="JPN">ベロリンガ</language>
-		<language name="JPN_KANJI">ベロリンガ</language>
 	</row>
 
 	<row id="MONSNAME_109">
 		<language name="JPN">ドガース</language>
-		<language name="JPN_KANJI">ドガース</language>
 	</row>
 
 	<row id="MONSNAME_110">
 		<language name="JPN">マタドガス</language>
-		<language name="JPN_KANJI">マタドガス</language>
 	</row>
 
 	<row id="MONSNAME_111">
 		<language name="JPN">サイホーン</language>
-		<language name="JPN_KANJI">サイホーン</language>
 	</row>
 
 	<row id="MONSNAME_112">
 		<language name="JPN">サイドン</language>
-		<language name="JPN_KANJI">サイドン</language>
 	</row>
 
 	<row id="MONSNAME_113">
 		<language name="JPN">ラッキー</language>
-		<language name="JPN_KANJI">ラッキー</language>
 	</row>
 
 	<row id="MONSNAME_114">
 		<language name="JPN">モンジャラ</language>
-		<language name="JPN_KANJI">モンジャラ</language>
 	</row>
 
 	<row id="MONSNAME_115">
 		<language name="JPN">ガルーラ</language>
-		<language name="JPN_KANJI">ガルーラ</language>
 	</row>
 
 	<row id="MONSNAME_116">
 		<language name="JPN">タッツー</language>
-		<language name="JPN_KANJI">タッツー</language>
 	</row>
 
 	<row id="MONSNAME_117">
 		<language name="JPN">シードラ</language>
-		<language name="JPN_KANJI">シードラ</language>
 	</row>
 
 	<row id="MONSNAME_118">
 		<language name="JPN">トサキント</language>
-		<language name="JPN_KANJI">トサキント</language>
 	</row>
 
 	<row id="MONSNAME_119">
 		<language name="JPN">アズマオウ</language>
-		<language name="JPN_KANJI">アズマオウ</language>
 	</row>
 
 	<row id="MONSNAME_120">
 		<language name="JPN">ヒトデマン</language>
-		<language name="JPN_KANJI">ヒトデマン</language>
 	</row>
 
 	<row id="MONSNAME_121">
 		<language name="JPN">スターミー</language>
-		<language name="JPN_KANJI">スターミー</language>
 	</row>
 
 	<row id="MONSNAME_122">
 		<language name="JPN">バリヤード</language>
-		<language name="JPN_KANJI">バリヤード</language>
 	</row>
 
 	<row id="MONSNAME_123">
 		<language name="JPN">ストライク</language>
-		<language name="JPN_KANJI">ストライク</language>
 	</row>
 
 	<row id="MONSNAME_124">
 		<language name="JPN">ルージュラ</language>
-		<language name="JPN_KANJI">ルージュラ</language>
 	</row>
 
 	<row id="MONSNAME_125">
 		<language name="JPN">エレブー</language>
-		<language name="JPN_KANJI">エレブー</language>
 	</row>
 
 	<row id="MONSNAME_126">
 		<language name="JPN">ブーバー</language>
-		<language name="JPN_KANJI">ブーバー</language>
 	</row>
 
 	<row id="MONSNAME_127">
 		<language name="JPN">カイロス</language>
-		<language name="JPN_KANJI">カイロス</language>
 	</row>
 
 	<row id="MONSNAME_128">
 		<language name="JPN">ケンタロス</language>
-		<language name="JPN_KANJI">ケンタロス</language>
 	</row>
 
 	<row id="MONSNAME_129">
 		<language name="JPN">コイキング</language>
-		<language name="JPN_KANJI">コイキング</language>
 	</row>
 
 	<row id="MONSNAME_130">
 		<language name="JPN">ギャラドス</language>
-		<language name="JPN_KANJI">ギャラドス</language>
 	</row>
 
 	<row id="MONSNAME_131">
 		<language name="JPN">ラプラス</language>
-		<language name="JPN_KANJI">ラプラス</language>
 	</row>
 
 	<row id="MONSNAME_132">
 		<language name="JPN">メタモン</language>
-		<language name="JPN_KANJI">メタモン</language>
 	</row>
 
 	<row id="MONSNAME_133">
 		<language name="JPN">イーブイ</language>
-		<language name="JPN_KANJI">イーブイ</language>
 	</row>
 
 	<row id="MONSNAME_134">
 		<language name="JPN">シャワーズ</language>
-		<language name="JPN_KANJI">シャワーズ</language>
 	</row>
 
 	<row id="MONSNAME_135">
 		<language name="JPN">サンダース</language>
-		<language name="JPN_KANJI">サンダース</language>
 	</row>
 
 	<row id="MONSNAME_136">
 		<language name="JPN">ブースター</language>
-		<language name="JPN_KANJI">ブースター</language>
 	</row>
 
 	<row id="MONSNAME_137">
 		<language name="JPN">ポリゴン</language>
-		<language name="JPN_KANJI">ポリゴン</language>
 	</row>
 
 	<row id="MONSNAME_138">
 		<language name="JPN">オムナイト</language>
-		<language name="JPN_KANJI">オムナイト</language>
 	</row>
 
 	<row id="MONSNAME_139">
 		<language name="JPN">オムスター</language>
-		<language name="JPN_KANJI">オムスター</language>
 	</row>
 
 	<row id="MONSNAME_140">
 		<language name="JPN">カブト</language>
-		<language name="JPN_KANJI">カブト</language>
 	</row>
 
 	<row id="MONSNAME_141">
 		<language name="JPN">カブトプス</language>
-		<language name="JPN_KANJI">カブトプス</language>
 	</row>
 
 	<row id="MONSNAME_142">
 		<language name="JPN">プテラ</language>
-		<language name="JPN_KANJI">プテラ</language>
 	</row>
 
 	<row id="MONSNAME_143">
 		<language name="JPN">カビゴン</language>
-		<language name="JPN_KANJI">カビゴン</language>
 	</row>
 
 	<row id="MONSNAME_144">
 		<language name="JPN">フリーザー</language>
-		<language name="JPN_KANJI">フリーザー</language>
 	</row>
 
 	<row id="MONSNAME_145">
 		<language name="JPN">サンダー</language>
-		<language name="JPN_KANJI">サンダー</language>
 	</row>
 
 	<row id="MONSNAME_146">
 		<language name="JPN">ファイヤー</language>
-		<language name="JPN_KANJI">ファイヤー</language>
 	</row>
 
 	<row id="MONSNAME_147">
 		<language name="JPN">ミニリュウ</language>
-		<language name="JPN_KANJI">ミニリュウ</language>
 	</row>
 
 	<row id="MONSNAME_148">
 		<language name="JPN">ハクリュー</language>
-		<language name="JPN_KANJI">ハクリュー</language>
 	</row>
 
 	<row id="MONSNAME_149">
 		<language name="JPN">カイリュー</language>
-		<language name="JPN_KANJI">カイリュー</language>
 	</row>
 
 	<row id="MONSNAME_150">
 		<language name="JPN">ミュウツー</language>
-		<language name="JPN_KANJI">ミュウツー</language>
 	</row>
 
 	<row id="MONSNAME_151">
 		<language name="JPN">ミュウ</language>
-		<language name="JPN_KANJI">ミュウ</language>
 	</row>
 
 	<row id="MONSNAME_152">
 		<language name="JPN">チコリータ</language>
-		<language name="JPN_KANJI">チコリータ</language>
 	</row>
 
 	<row id="MONSNAME_153">
 		<language name="JPN">ベイリーフ</language>
-		<language name="JPN_KANJI">ベイリーフ</language>
 	</row>
 
 	<row id="MONSNAME_154">
 		<language name="JPN">メガニウム</language>
-		<language name="JPN_KANJI">メガニウム</language>
 	</row>
 
 	<row id="MONSNAME_155">
 		<language name="JPN">ヒノアラシ</language>
-		<language name="JPN_KANJI">ヒノアラシ</language>
 	</row>
 
 	<row id="MONSNAME_156">
 		<language name="JPN">マグマラシ</language>
-		<language name="JPN_KANJI">マグマラシ</language>
 	</row>
 
 	<row id="MONSNAME_157">
 		<language name="JPN">バクフーン</language>
-		<language name="JPN_KANJI">バクフーン</language>
 	</row>
 
 	<row id="MONSNAME_158">
 		<language name="JPN">ワニノコ</language>
-		<language name="JPN_KANJI">ワニノコ</language>
 	</row>
 
 	<row id="MONSNAME_159">
 		<language name="JPN">アリゲイツ</language>
-		<language name="JPN_KANJI">アリゲイツ</language>
 	</row>
 
 	<row id="MONSNAME_160">
 		<language name="JPN">オーダイル</language>
-		<language name="JPN_KANJI">オーダイル</language>
 	</row>
 
 	<row id="MONSNAME_161">
 		<language name="JPN">オタチ</language>
-		<language name="JPN_KANJI">オタチ</language>
 	</row>
 
 	<row id="MONSNAME_162">
 		<language name="JPN">オオタチ</language>
-		<language name="JPN_KANJI">オオタチ</language>
 	</row>
 
 	<row id="MONSNAME_163">
 		<language name="JPN">ホーホー</language>
-		<language name="JPN_KANJI">ホーホー</language>
 	</row>
 
 	<row id="MONSNAME_164">
 		<language name="JPN">ヨルノズク</language>
-		<language name="JPN_KANJI">ヨルノズク</language>
 	</row>
 
 	<row id="MONSNAME_165">
 		<language name="JPN">レディバ</language>
-		<language name="JPN_KANJI">レディバ</language>
 	</row>
 
 	<row id="MONSNAME_166">
 		<language name="JPN">レディアン</language>
-		<language name="JPN_KANJI">レディアン</language>
 	</row>
 
 	<row id="MONSNAME_167">
 		<language name="JPN">イトマル</language>
-		<language name="JPN_KANJI">イトマル</language>
 	</row>
 
 	<row id="MONSNAME_168">
 		<language name="JPN">アリアドス</language>
-		<language name="JPN_KANJI">アリアドス</language>
 	</row>
 
 	<row id="MONSNAME_169">
 		<language name="JPN">クロバット</language>
-		<language name="JPN_KANJI">クロバット</language>
 	</row>
 
 	<row id="MONSNAME_170">
 		<language name="JPN">チョンチー</language>
-		<language name="JPN_KANJI">チョンチー</language>
 	</row>
 
 	<row id="MONSNAME_171">
 		<language name="JPN">ランターン</language>
-		<language name="JPN_KANJI">ランターン</language>
 	</row>
 
 	<row id="MONSNAME_172">
 		<language name="JPN">ピチュー</language>
-		<language name="JPN_KANJI">ピチュー</language>
 	</row>
 
 	<row id="MONSNAME_173">
 		<language name="JPN">ピィ</language>
-		<language name="JPN_KANJI">ピィ</language>
 	</row>
 
 	<row id="MONSNAME_174">
 		<language name="JPN">ププリン</language>
-		<language name="JPN_KANJI">ププリン</language>
 	</row>
 
 	<row id="MONSNAME_175">
 		<language name="JPN">トゲピー</language>
-		<language name="JPN_KANJI">トゲピー</language>
 	</row>
 
 	<row id="MONSNAME_176">
 		<language name="JPN">トゲチック</language>
-		<language name="JPN_KANJI">トゲチック</language>
 	</row>
 
 	<row id="MONSNAME_177">
 		<language name="JPN">ネイティ</language>
-		<language name="JPN_KANJI">ネイティ</language>
 	</row>
 
 	<row id="MONSNAME_178">
 		<language name="JPN">ネイティオ</language>
-		<language name="JPN_KANJI">ネイティオ</language>
 	</row>
 
 	<row id="MONSNAME_179">
 		<language name="JPN">メリープ</language>
-		<language name="JPN_KANJI">メリープ</language>
 	</row>
 
 	<row id="MONSNAME_180">
 		<language name="JPN">モココ</language>
-		<language name="JPN_KANJI">モココ</language>
 	</row>
 
 	<row id="MONSNAME_181">
 		<language name="JPN">デンリュウ</language>
-		<language name="JPN_KANJI">デンリュウ</language>
 	</row>
 
 	<row id="MONSNAME_182">
 		<language name="JPN">キレイハナ</language>
-		<language name="JPN_KANJI">キレイハナ</language>
 	</row>
 
 	<row id="MONSNAME_183">
 		<language name="JPN">マリル</language>
-		<language name="JPN_KANJI">マリル</language>
 	</row>
 
 	<row id="MONSNAME_184">
 		<language name="JPN">マリルリ</language>
-		<language name="JPN_KANJI">マリルリ</language>
 	</row>
 
 	<row id="MONSNAME_185">
 		<language name="JPN">ウソッキー</language>
-		<language name="JPN_KANJI">ウソッキー</language>
 	</row>
 
 	<row id="MONSNAME_186">
 		<language name="JPN">ニョロトノ</language>
-		<language name="JPN_KANJI">ニョロトノ</language>
 	</row>
 
 	<row id="MONSNAME_187">
 		<language name="JPN">ハネッコ</language>
-		<language name="JPN_KANJI">ハネッコ</language>
 	</row>
 
 	<row id="MONSNAME_188">
 		<language name="JPN">ポポッコ</language>
-		<language name="JPN_KANJI">ポポッコ</language>
 	</row>
 
 	<row id="MONSNAME_189">
 		<language name="JPN">ワタッコ</language>
-		<language name="JPN_KANJI">ワタッコ</language>
 	</row>
 
 	<row id="MONSNAME_190">
 		<language name="JPN">エイパム</language>
-		<language name="JPN_KANJI">エイパム</language>
 	</row>
 
 	<row id="MONSNAME_191">
 		<language name="JPN">ヒマナッツ</language>
-		<language name="JPN_KANJI">ヒマナッツ</language>
 	</row>
 
 	<row id="MONSNAME_192">
 		<language name="JPN">キマワリ</language>
-		<language name="JPN_KANJI">キマワリ</language>
 	</row>
 
 	<row id="MONSNAME_193">
 		<language name="JPN">ヤンヤンマ</language>
-		<language name="JPN_KANJI">ヤンヤンマ</language>
 	</row>
 
 	<row id="MONSNAME_194">
 		<language name="JPN">ウパー</language>
-		<language name="JPN_KANJI">ウパー</language>
 	</row>
 
 	<row id="MONSNAME_195">
 		<language name="JPN">ヌオー</language>
-		<language name="JPN_KANJI">ヌオー</language>
 	</row>
 
 	<row id="MONSNAME_196">
 		<language name="JPN">エーフィ</language>
-		<language name="JPN_KANJI">エーフィ</language>
 	</row>
 
 	<row id="MONSNAME_197">
 		<language name="JPN">ブラッキー</language>
-		<language name="JPN_KANJI">ブラッキー</language>
 	</row>
 
 	<row id="MONSNAME_198">
 		<language name="JPN">ヤミカラス</language>
-		<language name="JPN_KANJI">ヤミカラス</language>
 	</row>
 
 	<row id="MONSNAME_199">
 		<language name="JPN">ヤドキング</language>
-		<language name="JPN_KANJI">ヤドキング</language>
 	</row>
 
 	<row id="MONSNAME_200">
 		<language name="JPN">ムウマ</language>
-		<language name="JPN_KANJI">ムウマ</language>
 	</row>
 
 	<row id="MONSNAME_201">
 		<language name="JPN">アンノーン</language>
-		<language name="JPN_KANJI">アンノーン</language>
 	</row>
 
 	<row id="MONSNAME_202">
 		<language name="JPN">ソーナンス</language>
-		<language name="JPN_KANJI">ソーナンス</language>
 	</row>
 
 	<row id="MONSNAME_203">
 		<language name="JPN">キリンリキ</language>
-		<language name="JPN_KANJI">キリンリキ</language>
 	</row>
 
 	<row id="MONSNAME_204">
 		<language name="JPN">クヌギダマ</language>
-		<language name="JPN_KANJI">クヌギダマ</language>
 	</row>
 
 	<row id="MONSNAME_205">
 		<language name="JPN">フォレトス</language>
-		<language name="JPN_KANJI">フォレトス</language>
 	</row>
 
 	<row id="MONSNAME_206">
 		<language name="JPN">ノコッチ</language>
-		<language name="JPN_KANJI">ノコッチ</language>
 	</row>
 
 	<row id="MONSNAME_207">
 		<language name="JPN">グライガー</language>
-		<language name="JPN_KANJI">グライガー</language>
 	</row>
 
 	<row id="MONSNAME_208">
 		<language name="JPN">ハガネール</language>
-		<language name="JPN_KANJI">ハガネール</language>
 	</row>
 
 	<row id="MONSNAME_209">
 		<language name="JPN">ブルー</language>
-		<language name="JPN_KANJI">ブルー</language>
 	</row>
 
 	<row id="MONSNAME_210">
 		<language name="JPN">グランブル</language>
-		<language name="JPN_KANJI">グランブル</language>
 	</row>
 
 	<row id="MONSNAME_211">
 		<language name="JPN">ハリーセン</language>
-		<language name="JPN_KANJI">ハリーセン</language>
 	</row>
 
 	<row id="MONSNAME_212">
 		<language name="JPN">ハッサム</language>
-		<language name="JPN_KANJI">ハッサム</language>
 	</row>
 
 	<row id="MONSNAME_213">
 		<language name="JPN">ツボツボ</language>
-		<language name="JPN_KANJI">ツボツボ</language>
 	</row>
 
 	<row id="MONSNAME_214">
 		<language name="JPN">ヘラクロス</language>
-		<language name="JPN_KANJI">ヘラクロス</language>
 	</row>
 
 	<row id="MONSNAME_215">
 		<language name="JPN">ニューラ</language>
-		<language name="JPN_KANJI">ニューラ</language>
 	</row>
 
 	<row id="MONSNAME_216">
 		<language name="JPN">ヒメグマ</language>
-		<language name="JPN_KANJI">ヒメグマ</language>
 	</row>
 
 	<row id="MONSNAME_217">
 		<language name="JPN">リングマ</language>
-		<language name="JPN_KANJI">リングマ</language>
 	</row>
 
 	<row id="MONSNAME_218">
 		<language name="JPN">マグマッグ</language>
-		<language name="JPN_KANJI">マグマッグ</language>
 	</row>
 
 	<row id="MONSNAME_219">
 		<language name="JPN">マグカルゴ</language>
-		<language name="JPN_KANJI">マグカルゴ</language>
 	</row>
 
 	<row id="MONSNAME_220">
 		<language name="JPN">ウリムー</language>
-		<language name="JPN_KANJI">ウリムー</language>
 	</row>
 
 	<row id="MONSNAME_221">
 		<language name="JPN">イノムー</language>
-		<language name="JPN_KANJI">イノムー</language>
 	</row>
 
 	<row id="MONSNAME_222">
 		<language name="JPN">サニーゴ</language>
-		<language name="JPN_KANJI">サニーゴ</language>
 	</row>
 
 	<row id="MONSNAME_223">
 		<language name="JPN">テッポウオ</language>
-		<language name="JPN_KANJI">テッポウオ</language>
 	</row>
 
 	<row id="MONSNAME_224">
 		<language name="JPN">オクタン</language>
-		<language name="JPN_KANJI">オクタン</language>
 	</row>
 
 	<row id="MONSNAME_225">
 		<language name="JPN">デリバード</language>
-		<language name="JPN_KANJI">デリバード</language>
 	</row>
 
 	<row id="MONSNAME_226">
 		<language name="JPN">マンタイン</language>
-		<language name="JPN_KANJI">マンタイン</language>
 	</row>
 
 	<row id="MONSNAME_227">
 		<language name="JPN">エアームド</language>
-		<language name="JPN_KANJI">エアームド</language>
 	</row>
 
 	<row id="MONSNAME_228">
 		<language name="JPN">デルビル</language>
-		<language name="JPN_KANJI">デルビル</language>
 	</row>
 
 	<row id="MONSNAME_229">
 		<language name="JPN">ヘルガー</language>
-		<language name="JPN_KANJI">ヘルガー</language>
 	</row>
 
 	<row id="MONSNAME_230">
 		<language name="JPN">キングドラ</language>
-		<language name="JPN_KANJI">キングドラ</language>
 	</row>
 
 	<row id="MONSNAME_231">
 		<language name="JPN">ゴマゾウ</language>
-		<language name="JPN_KANJI">ゴマゾウ</language>
 	</row>
 
 	<row id="MONSNAME_232">
 		<language name="JPN">ドンファン</language>
-		<language name="JPN_KANJI">ドンファン</language>
 	</row>
 
 	<row id="MONSNAME_233">
 		<language name="JPN">ポリゴン２</language>
-		<language name="JPN_KANJI">ポリゴン２</language>
 	</row>
 
 	<row id="MONSNAME_234">
 		<language name="JPN">オドシシ</language>
-		<language name="JPN_KANJI">オドシシ</language>
 	</row>
 
 	<row id="MONSNAME_235">
 		<language name="JPN">ドーブル</language>
-		<language name="JPN_KANJI">ドーブル</language>
 	</row>
 
 	<row id="MONSNAME_236">
 		<language name="JPN">バルキー</language>
-		<language name="JPN_KANJI">バルキー</language>
 	</row>
 
 	<row id="MONSNAME_237">
 		<language name="JPN">カポエラー</language>
-		<language name="JPN_KANJI">カポエラー</language>
 	</row>
 
 	<row id="MONSNAME_238">
 		<language name="JPN">ムチュール</language>
-		<language name="JPN_KANJI">ムチュール</language>
 	</row>
 
 	<row id="MONSNAME_239">
 		<language name="JPN">エレキッド</language>
-		<language name="JPN_KANJI">エレキッド</language>
 	</row>
 
 	<row id="MONSNAME_240">
 		<language name="JPN">ブビィ</language>
-		<language name="JPN_KANJI">ブビィ</language>
 	</row>
 
 	<row id="MONSNAME_241">
 		<language name="JPN">ミルタンク</language>
-		<language name="JPN_KANJI">ミルタンク</language>
 	</row>
 
 	<row id="MONSNAME_242">
 		<language name="JPN">ハピナス</language>
-		<language name="JPN_KANJI">ハピナス</language>
 	</row>
 
 	<row id="MONSNAME_243">
 		<language name="JPN">ライコウ</language>
-		<language name="JPN_KANJI">ライコウ</language>
 	</row>
 
 	<row id="MONSNAME_244">
 		<language name="JPN">エンテイ</language>
-		<language name="JPN_KANJI">エンテイ</language>
 	</row>
 
 	<row id="MONSNAME_245">
 		<language name="JPN">スイクン</language>
-		<language name="JPN_KANJI">スイクン</language>
 	</row>
 
 	<row id="MONSNAME_246">
 		<language name="JPN">ヨーギラス</language>
-		<language name="JPN_KANJI">ヨーギラス</language>
 	</row>
 
 	<row id="MONSNAME_247">
 		<language name="JPN">サナギラス</language>
-		<language name="JPN_KANJI">サナギラス</language>
 	</row>
 
 	<row id="MONSNAME_248">
 		<language name="JPN">バンギラス</language>
-		<language name="JPN_KANJI">バンギラス</language>
 	</row>
 
 	<row id="MONSNAME_249">
 		<language name="JPN">ルギア</language>
-		<language name="JPN_KANJI">ルギア</language>
 	</row>
 
 	<row id="MONSNAME_250">
 		<language name="JPN">ホウオウ</language>
-		<language name="JPN_KANJI">ホウオウ</language>
 	</row>
 
 	<row id="MONSNAME_251">
 		<language name="JPN">セレビィ</language>
-		<language name="JPN_KANJI">セレビィ</language>
 	</row>
 
 	<row id="MONSNAME_252">
 		<language name="JPN">キモリ</language>
-		<language name="JPN_KANJI">キモリ</language>
 	</row>
 
 	<row id="MONSNAME_253">
 		<language name="JPN">ジュプトル</language>
-		<language name="JPN_KANJI">ジュプトル</language>
 	</row>
 
 	<row id="MONSNAME_254">
 		<language name="JPN">ジュカイン</language>
-		<language name="JPN_KANJI">ジュカイン</language>
 	</row>
 
 	<row id="MONSNAME_255">
 		<language name="JPN">アチャモ</language>
-		<language name="JPN_KANJI">アチャモ</language>
 	</row>
 
 	<row id="MONSNAME_256">
 		<language name="JPN">ワカシャモ</language>
-		<language name="JPN_KANJI">ワカシャモ</language>
 	</row>
 
 	<row id="MONSNAME_257">
 		<language name="JPN">バシャーモ</language>
-		<language name="JPN_KANJI">バシャーモ</language>
 	</row>
 
 	<row id="MONSNAME_258">
 		<language name="JPN">ミズゴロウ</language>
-		<language name="JPN_KANJI">ミズゴロウ</language>
 	</row>
 
 	<row id="MONSNAME_259">
 		<language name="JPN">ヌマクロー</language>
-		<language name="JPN_KANJI">ヌマクロー</language>
 	</row>
 
 	<row id="MONSNAME_260">
 		<language name="JPN">ラグラージ</language>
-		<language name="JPN_KANJI">ラグラージ</language>
 	</row>
 
 	<row id="MONSNAME_261">
 		<language name="JPN">ポチエナ</language>
-		<language name="JPN_KANJI">ポチエナ</language>
 	</row>
 
 	<row id="MONSNAME_262">
 		<language name="JPN">グラエナ</language>
-		<language name="JPN_KANJI">グラエナ</language>
 	</row>
 
 	<row id="MONSNAME_263">
 		<language name="JPN">ジグザグマ</language>
-		<language name="JPN_KANJI">ジグザグマ</language>
 	</row>
 
 	<row id="MONSNAME_264">
 		<language name="JPN">マッスグマ</language>
-		<language name="JPN_KANJI">マッスグマ</language>
 	</row>
 
 	<row id="MONSNAME_265">
 		<language name="JPN">ケムッソ</language>
-		<language name="JPN_KANJI">ケムッソ</language>
 	</row>
 
 	<row id="MONSNAME_266">
 		<language name="JPN">カラサリス</language>
-		<language name="JPN_KANJI">カラサリス</language>
 	</row>
 
 	<row id="MONSNAME_267">
 		<language name="JPN">アゲハント</language>
-		<language name="JPN_KANJI">アゲハント</language>
 	</row>
 
 	<row id="MONSNAME_268">
 		<language name="JPN">マユルド</language>
-		<language name="JPN_KANJI">マユルド</language>
 	</row>
 
 	<row id="MONSNAME_269">
 		<language name="JPN">ドクケイル</language>
-		<language name="JPN_KANJI">ドクケイル</language>
 	</row>
 
 	<row id="MONSNAME_270">
 		<language name="JPN">ハスボー</language>
-		<language name="JPN_KANJI">ハスボー</language>
 	</row>
 
 	<row id="MONSNAME_271">
 		<language name="JPN">ハスブレロ</language>
-		<language name="JPN_KANJI">ハスブレロ</language>
 	</row>
 
 	<row id="MONSNAME_272">
 		<language name="JPN">ルンパッパ</language>
-		<language name="JPN_KANJI">ルンパッパ</language>
 	</row>
 
 	<row id="MONSNAME_273">
 		<language name="JPN">タネボー</language>
-		<language name="JPN_KANJI">タネボー</language>
 	</row>
 
 	<row id="MONSNAME_274">
 		<language name="JPN">コノハナ</language>
-		<language name="JPN_KANJI">コノハナ</language>
 	</row>
 
 	<row id="MONSNAME_275">
 		<language name="JPN">ダーテング</language>
-		<language name="JPN_KANJI">ダーテング</language>
 	</row>
 
 	<row id="MONSNAME_276">
 		<language name="JPN">スバメ</language>
-		<language name="JPN_KANJI">スバメ</language>
 	</row>
 
 	<row id="MONSNAME_277">
 		<language name="JPN">オオスバメ</language>
-		<language name="JPN_KANJI">オオスバメ</language>
 	</row>
 
 	<row id="MONSNAME_278">
 		<language name="JPN">キャモメ</language>
-		<language name="JPN_KANJI">キャモメ</language>
 	</row>
 
 	<row id="MONSNAME_279">
 		<language name="JPN">ペリッパー</language>
-		<language name="JPN_KANJI">ペリッパー</language>
 	</row>
 
 	<row id="MONSNAME_280">
 		<language name="JPN">ラルトス</language>
-		<language name="JPN_KANJI">ラルトス</language>
 	</row>
 
 	<row id="MONSNAME_281">
 		<language name="JPN">キルリア</language>
-		<language name="JPN_KANJI">キルリア</language>
 	</row>
 
 	<row id="MONSNAME_282">
 		<language name="JPN">サーナイト</language>
-		<language name="JPN_KANJI">サーナイト</language>
 	</row>
 
 	<row id="MONSNAME_283">
 		<language name="JPN">アメタマ</language>
-		<language name="JPN_KANJI">アメタマ</language>
 	</row>
 
 	<row id="MONSNAME_284">
 		<language name="JPN">アメモース</language>
-		<language name="JPN_KANJI">アメモース</language>
 	</row>
 
 	<row id="MONSNAME_285">
 		<language name="JPN">キノココ</language>
-		<language name="JPN_KANJI">キノココ</language>
 	</row>
 
 	<row id="MONSNAME_286">
 		<language name="JPN">キノガッサ</language>
-		<language name="JPN_KANJI">キノガッサ</language>
 	</row>
 
 	<row id="MONSNAME_287">
 		<language name="JPN">ナマケロ</language>
-		<language name="JPN_KANJI">ナマケロ</language>
 	</row>
 
 	<row id="MONSNAME_288">
 		<language name="JPN">ヤルキモノ</language>
-		<language name="JPN_KANJI">ヤルキモノ</language>
 	</row>
 
 	<row id="MONSNAME_289">
 		<language name="JPN">ケッキング</language>
-		<language name="JPN_KANJI">ケッキング</language>
 	</row>
 
 	<row id="MONSNAME_290">
 		<language name="JPN">ツチニン</language>
-		<language name="JPN_KANJI">ツチニン</language>
 	</row>
 
 	<row id="MONSNAME_291">
 		<language name="JPN">テッカニン</language>
-		<language name="JPN_KANJI">テッカニン</language>
 	</row>
 
 	<row id="MONSNAME_292">
 		<language name="JPN">ヌケニン</language>
-		<language name="JPN_KANJI">ヌケニン</language>
 	</row>
 
 	<row id="MONSNAME_293">
 		<language name="JPN">ゴニョニョ</language>
-		<language name="JPN_KANJI">ゴニョニョ</language>
 	</row>
 
 	<row id="MONSNAME_294">
 		<language name="JPN">ドゴーム</language>
-		<language name="JPN_KANJI">ドゴーム</language>
 	</row>
 
 	<row id="MONSNAME_295">
 		<language name="JPN">バクオング</language>
-		<language name="JPN_KANJI">バクオング</language>
 	</row>
 
 	<row id="MONSNAME_296">
 		<language name="JPN">マクノシタ</language>
-		<language name="JPN_KANJI">マクノシタ</language>
 	</row>
 
 	<row id="MONSNAME_297">
 		<language name="JPN">ハリテヤマ</language>
-		<language name="JPN_KANJI">ハリテヤマ</language>
 	</row>
 
 	<row id="MONSNAME_298">
 		<language name="JPN">ルリリ</language>
-		<language name="JPN_KANJI">ルリリ</language>
 	</row>
 
 	<row id="MONSNAME_299">
 		<language name="JPN">ノズパス</language>
-		<language name="JPN_KANJI">ノズパス</language>
 	</row>
 
 	<row id="MONSNAME_300">
 		<language name="JPN">エネコ</language>
-		<language name="JPN_KANJI">エネコ</language>
 	</row>
 
 	<row id="MONSNAME_301">
 		<language name="JPN">エネコロロ</language>
-		<language name="JPN_KANJI">エネコロロ</language>
 	</row>
 
 	<row id="MONSNAME_302">
 		<language name="JPN">ヤミラミ</language>
-		<language name="JPN_KANJI">ヤミラミ</language>
 	</row>
 
 	<row id="MONSNAME_303">
 		<language name="JPN">クチート</language>
-		<language name="JPN_KANJI">クチート</language>
 	</row>
 
 	<row id="MONSNAME_304">
 		<language name="JPN">ココドラ</language>
-		<language name="JPN_KANJI">ココドラ</language>
 	</row>
 
 	<row id="MONSNAME_305">
 		<language name="JPN">コドラ</language>
-		<language name="JPN_KANJI">コドラ</language>
 	</row>
 
 	<row id="MONSNAME_306">
 		<language name="JPN">ボスゴドラ</language>
-		<language name="JPN_KANJI">ボスゴドラ</language>
 	</row>
 
 	<row id="MONSNAME_307">
 		<language name="JPN">アサナン</language>
-		<language name="JPN_KANJI">アサナン</language>
 	</row>
 
 	<row id="MONSNAME_308">
 		<language name="JPN">チャーレム</language>
-		<language name="JPN_KANJI">チャーレム</language>
 	</row>
 
 	<row id="MONSNAME_309">
 		<language name="JPN">ラクライ</language>
-		<language name="JPN_KANJI">ラクライ</language>
 	</row>
 
 	<row id="MONSNAME_310">
 		<language name="JPN">ライボルト</language>
-		<language name="JPN_KANJI">ライボルト</language>
 	</row>
 
 	<row id="MONSNAME_311">
 		<language name="JPN">プラスル</language>
-		<language name="JPN_KANJI">プラスル</language>
 	</row>
 
 	<row id="MONSNAME_312">
 		<language name="JPN">マイナン</language>
-		<language name="JPN_KANJI">マイナン</language>
 	</row>
 
 	<row id="MONSNAME_313">
 		<language name="JPN">バルビート</language>
-		<language name="JPN_KANJI">バルビート</language>
 	</row>
 
 	<row id="MONSNAME_314">
 		<language name="JPN">イルミーゼ</language>
-		<language name="JPN_KANJI">イルミーゼ</language>
 	</row>
 
 	<row id="MONSNAME_315">
 		<language name="JPN">ロゼリア</language>
-		<language name="JPN_KANJI">ロゼリア</language>
 	</row>
 
 	<row id="MONSNAME_316">
 		<language name="JPN">ゴクリン</language>
-		<language name="JPN_KANJI">ゴクリン</language>
 	</row>
 
 	<row id="MONSNAME_317">
 		<language name="JPN">マルノーム</language>
-		<language name="JPN_KANJI">マルノーム</language>
 	</row>
 
 	<row id="MONSNAME_318">
 		<language name="JPN">キバニア</language>
-		<language name="JPN_KANJI">キバニア</language>
 	</row>
 
 	<row id="MONSNAME_319">
 		<language name="JPN">サメハダー</language>
-		<language name="JPN_KANJI">サメハダー</language>
 	</row>
 
 	<row id="MONSNAME_320">
 		<language name="JPN">ホエルコ</language>
-		<language name="JPN_KANJI">ホエルコ</language>
 	</row>
 
 	<row id="MONSNAME_321">
 		<language name="JPN">ホエルオー</language>
-		<language name="JPN_KANJI">ホエルオー</language>
 	</row>
 
 	<row id="MONSNAME_322">
 		<language name="JPN">ドンメル</language>
-		<language name="JPN_KANJI">ドンメル</language>
 	</row>
 
 	<row id="MONSNAME_323">
 		<language name="JPN">バクーダ</language>
-		<language name="JPN_KANJI">バクーダ</language>
 	</row>
 
 	<row id="MONSNAME_324">
 		<language name="JPN">コータス</language>
-		<language name="JPN_KANJI">コータス</language>
 	</row>
 
 	<row id="MONSNAME_325">
 		<language name="JPN">バネブー</language>
-		<language name="JPN_KANJI">バネブー</language>
 	</row>
 
 	<row id="MONSNAME_326">
 		<language name="JPN">ブーピッグ</language>
-		<language name="JPN_KANJI">ブーピッグ</language>
 	</row>
 
 	<row id="MONSNAME_327">
 		<language name="JPN">パッチール</language>
-		<language name="JPN_KANJI">パッチール</language>
 	</row>
 
 	<row id="MONSNAME_328">
 		<language name="JPN">ナックラー</language>
-		<language name="JPN_KANJI">ナックラー</language>
 	</row>
 
 	<row id="MONSNAME_329">
 		<language name="JPN">ビブラーバ</language>
-		<language name="JPN_KANJI">ビブラーバ</language>
 	</row>
 
 	<row id="MONSNAME_330">
 		<language name="JPN">フライゴン</language>
-		<language name="JPN_KANJI">フライゴン</language>
 	</row>
 
 	<row id="MONSNAME_331">
 		<language name="JPN">サボネア</language>
-		<language name="JPN_KANJI">サボネア</language>
 	</row>
 
 	<row id="MONSNAME_332">
 		<language name="JPN">ノクタス</language>
-		<language name="JPN_KANJI">ノクタス</language>
 	</row>
 
 	<row id="MONSNAME_333">
 		<language name="JPN">チルット</language>
-		<language name="JPN_KANJI">チルット</language>
 	</row>
 
 	<row id="MONSNAME_334">
 		<language name="JPN">チルタリス</language>
-		<language name="JPN_KANJI">チルタリス</language>
 	</row>
 
 	<row id="MONSNAME_335">
 		<language name="JPN">ザングース</language>
-		<language name="JPN_KANJI">ザングース</language>
 	</row>
 
 	<row id="MONSNAME_336">
 		<language name="JPN">ハブネーク</language>
-		<language name="JPN_KANJI">ハブネーク</language>
 	</row>
 
 	<row id="MONSNAME_337">
 		<language name="JPN">ルナトーン</language>
-		<language name="JPN_KANJI">ルナトーン</language>
 	</row>
 
 	<row id="MONSNAME_338">
 		<language name="JPN">ソルロック</language>
-		<language name="JPN_KANJI">ソルロック</language>
 	</row>
 
 	<row id="MONSNAME_339">
 		<language name="JPN">ドジョッチ</language>
-		<language name="JPN_KANJI">ドジョッチ</language>
 	</row>
 
 	<row id="MONSNAME_340">
 		<language name="JPN">ナマズン</language>
-		<language name="JPN_KANJI">ナマズン</language>
 	</row>
 
 	<row id="MONSNAME_341">
 		<language name="JPN">ヘイガニ</language>
-		<language name="JPN_KANJI">ヘイガニ</language>
 	</row>
 
 	<row id="MONSNAME_342">
 		<language name="JPN">シザリガー</language>
-		<language name="JPN_KANJI">シザリガー</language>
 	</row>
 
 	<row id="MONSNAME_343">
 		<language name="JPN">ヤジロン</language>
-		<language name="JPN_KANJI">ヤジロン</language>
 	</row>
 
 	<row id="MONSNAME_344">
 		<language name="JPN">ネンドール</language>
-		<language name="JPN_KANJI">ネンドール</language>
 	</row>
 
 	<row id="MONSNAME_345">
 		<language name="JPN">リリーラ</language>
-		<language name="JPN_KANJI">リリーラ</language>
 	</row>
 
 	<row id="MONSNAME_346">
 		<language name="JPN">ユレイドル</language>
-		<language name="JPN_KANJI">ユレイドル</language>
 	</row>
 
 	<row id="MONSNAME_347">
 		<language name="JPN">アノプス</language>
-		<language name="JPN_KANJI">アノプス</language>
 	</row>
 
 	<row id="MONSNAME_348">
 		<language name="JPN">アーマルド</language>
-		<language name="JPN_KANJI">アーマルド</language>
 	</row>
 
 	<row id="MONSNAME_349">
 		<language name="JPN">ヒンバス</language>
-		<language name="JPN_KANJI">ヒンバス</language>
 	</row>
 
 	<row id="MONSNAME_350">
 		<language name="JPN">ミロカロス</language>
-		<language name="JPN_KANJI">ミロカロス</language>
 	</row>
 
 	<row id="MONSNAME_351">
 		<language name="JPN">ポワルン</language>
-		<language name="JPN_KANJI">ポワルン</language>
 	</row>
 
 	<row id="MONSNAME_352">
 		<language name="JPN">カクレオン</language>
-		<language name="JPN_KANJI">カクレオン</language>
 	</row>
 
 	<row id="MONSNAME_353">
 		<language name="JPN">カゲボウズ</language>
-		<language name="JPN_KANJI">カゲボウズ</language>
 	</row>
 
 	<row id="MONSNAME_354">
 		<language name="JPN">ジュペッタ</language>
-		<language name="JPN_KANJI">ジュペッタ</language>
 	</row>
 
 	<row id="MONSNAME_355">
 		<language name="JPN">ヨマワル</language>
-		<language name="JPN_KANJI">ヨマワル</language>
 	</row>
 
 	<row id="MONSNAME_356">
 		<language name="JPN">サマヨール</language>
-		<language name="JPN_KANJI">サマヨール</language>
 	</row>
 
 	<row id="MONSNAME_357">
 		<language name="JPN">トロピウス</language>
-		<language name="JPN_KANJI">トロピウス</language>
 	</row>
 
 	<row id="MONSNAME_358">
 		<language name="JPN">チリーン</language>
-		<language name="JPN_KANJI">チリーン</language>
 	</row>
 
 	<row id="MONSNAME_359">
 		<language name="JPN">アブソル</language>
-		<language name="JPN_KANJI">アブソル</language>
 	</row>
 
 	<row id="MONSNAME_360">
 		<language name="JPN">ソーナノ</language>
-		<language name="JPN_KANJI">ソーナノ</language>
 	</row>
 
 	<row id="MONSNAME_361">
 		<language name="JPN">ユキワラシ</language>
-		<language name="JPN_KANJI">ユキワラシ</language>
 	</row>
 
 	<row id="MONSNAME_362">
 		<language name="JPN">オニゴーリ</language>
-		<language name="JPN_KANJI">オニゴーリ</language>
 	</row>
 
 	<row id="MONSNAME_363">
 		<language name="JPN">タマザラシ</language>
-		<language name="JPN_KANJI">タマザラシ</language>
 	</row>
 
 	<row id="MONSNAME_364">
 		<language name="JPN">トドグラー</language>
-		<language name="JPN_KANJI">トドグラー</language>
 	</row>
 
 	<row id="MONSNAME_365">
 		<language name="JPN">トドゼルガ</language>
-		<language name="JPN_KANJI">トドゼルガ</language>
 	</row>
 
 	<row id="MONSNAME_366">
 		<language name="JPN">パールル</language>
-		<language name="JPN_KANJI">パールル</language>
 	</row>
 
 	<row id="MONSNAME_367">
 		<language name="JPN">ハンテール</language>
-		<language name="JPN_KANJI">ハンテール</language>
 	</row>
 
 	<row id="MONSNAME_368">
 		<language name="JPN">サクラビス</language>
-		<language name="JPN_KANJI">サクラビス</language>
 	</row>
 
 	<row id="MONSNAME_369">
 		<language name="JPN">ジーランス</language>
-		<language name="JPN_KANJI">ジーランス</language>
 	</row>
 
 	<row id="MONSNAME_370">
 		<language name="JPN">ラブカス</language>
-		<language name="JPN_KANJI">ラブカス</language>
 	</row>
 
 	<row id="MONSNAME_371">
 		<language name="JPN">タツベイ</language>
-		<language name="JPN_KANJI">タツベイ</language>
 	</row>
 
 	<row id="MONSNAME_372">
 		<language name="JPN">コモルー</language>
-		<language name="JPN_KANJI">コモルー</language>
 	</row>
 
 	<row id="MONSNAME_373">
 		<language name="JPN">ボーマンダ</language>
-		<language name="JPN_KANJI">ボーマンダ</language>
 	</row>
 
 	<row id="MONSNAME_374">
 		<language name="JPN">ダンバル</language>
-		<language name="JPN_KANJI">ダンバル</language>
 	</row>
 
 	<row id="MONSNAME_375">
 		<language name="JPN">メタング</language>
-		<language name="JPN_KANJI">メタング</language>
 	</row>
 
 	<row id="MONSNAME_376">
 		<language name="JPN">メタグロス</language>
-		<language name="JPN_KANJI">メタグロス</language>
 	</row>
 
 	<row id="MONSNAME_377">
 		<language name="JPN">レジロック</language>
-		<language name="JPN_KANJI">レジロック</language>
 	</row>
 
 	<row id="MONSNAME_378">
 		<language name="JPN">レジアイス</language>
-		<language name="JPN_KANJI">レジアイス</language>
 	</row>
 
 	<row id="MONSNAME_379">
 		<language name="JPN">レジスチル</language>
-		<language name="JPN_KANJI">レジスチル</language>
 	</row>
 
 	<row id="MONSNAME_380">
 		<language name="JPN">ラティアス</language>
-		<language name="JPN_KANJI">ラティアス</language>
 	</row>
 
 	<row id="MONSNAME_381">
 		<language name="JPN">ラティオス</language>
-		<language name="JPN_KANJI">ラティオス</language>
 	</row>
 
 	<row id="MONSNAME_382">
 		<language name="JPN">カイオーガ</language>
-		<language name="JPN_KANJI">カイオーガ</language>
 	</row>
 
 	<row id="MONSNAME_383">
 		<language name="JPN">グラードン</language>
-		<language name="JPN_KANJI">グラードン</language>
 	</row>
 
 	<row id="MONSNAME_384">
 		<language name="JPN">レックウザ</language>
-		<language name="JPN_KANJI">レックウザ</language>
 	</row>
 
 	<row id="MONSNAME_385">
 		<language name="JPN">ジラーチ</language>
-		<language name="JPN_KANJI">ジラーチ</language>
 	</row>
 
 	<row id="MONSNAME_386">
 		<language name="JPN">デオキシス</language>
-		<language name="JPN_KANJI">デオキシス</language>
 	</row>
 
 	<row id="MONSNAME_387">
 		<language name="JPN">ナエトル</language>
-		<language name="JPN_KANJI">ナエトル</language>
 	</row>
 
 	<row id="MONSNAME_388">
 		<language name="JPN">ハヤシガメ</language>
-		<language name="JPN_KANJI">ハヤシガメ</language>
 	</row>
 
 	<row id="MONSNAME_389">
 		<language name="JPN">ドダイトス</language>
-		<language name="JPN_KANJI">ドダイトス</language>
 	</row>
 
 	<row id="MONSNAME_390">
 		<language name="JPN">ヒコザル</language>
-		<language name="JPN_KANJI">ヒコザル</language>
 	</row>
 
 	<row id="MONSNAME_391">
 		<language name="JPN">モウカザル</language>
-		<language name="JPN_KANJI">モウカザル</language>
 	</row>
 
 	<row id="MONSNAME_392">
 		<language name="JPN">ゴウカザル</language>
-		<language name="JPN_KANJI">ゴウカザル</language>
 	</row>
 
 	<row id="MONSNAME_393">
 		<language name="JPN">ポッチャマ</language>
-		<language name="JPN_KANJI">ポッチャマ</language>
 	</row>
 
 	<row id="MONSNAME_394">
 		<language name="JPN">ポッタイシ</language>
-		<language name="JPN_KANJI">ポッタイシ</language>
 	</row>
 
 	<row id="MONSNAME_395">
 		<language name="JPN">エンペルト</language>
-		<language name="JPN_KANJI">エンペルト</language>
 	</row>
 
 	<row id="MONSNAME_396">
 		<language name="JPN">ムックル</language>
-		<language name="JPN_KANJI">ムックル</language>
 	</row>
 
 	<row id="MONSNAME_397">
 		<language name="JPN">ムクバード</language>
-		<language name="JPN_KANJI">ムクバード</language>
 	</row>
 
 	<row id="MONSNAME_398">
 		<language name="JPN">ムクホーク</language>
-		<language name="JPN_KANJI">ムクホーク</language>
 	</row>
 
 	<row id="MONSNAME_399">
 		<language name="JPN">ビッパ</language>
-		<language name="JPN_KANJI">ビッパ</language>
 	</row>
 
 	<row id="MONSNAME_400">
 		<language name="JPN">ビーダル</language>
-		<language name="JPN_KANJI">ビーダル</language>
 	</row>
 
 	<row id="MONSNAME_401">
 		<language name="JPN">コロボーシ</language>
-		<language name="JPN_KANJI">コロボーシ</language>
 	</row>
 
 	<row id="MONSNAME_402">
 		<language name="JPN">コロトック</language>
-		<language name="JPN_KANJI">コロトック</language>
 	</row>
 
 	<row id="MONSNAME_403">
 		<language name="JPN">コリンク</language>
-		<language name="JPN_KANJI">コリンク</language>
 	</row>
 
 	<row id="MONSNAME_404">
 		<language name="JPN">ルクシオ</language>
-		<language name="JPN_KANJI">ルクシオ</language>
 	</row>
 
 	<row id="MONSNAME_405">
 		<language name="JPN">レントラー</language>
-		<language name="JPN_KANJI">レントラー</language>
 	</row>
 
 	<row id="MONSNAME_406">
 		<language name="JPN">スボミー</language>
-		<language name="JPN_KANJI">スボミー</language>
 	</row>
 
 	<row id="MONSNAME_407">
 		<language name="JPN">ロズレイド</language>
-		<language name="JPN_KANJI">ロズレイド</language>
 	</row>
 
 	<row id="MONSNAME_408">
 		<language name="JPN">ズガイドス</language>
-		<language name="JPN_KANJI">ズガイドス</language>
 	</row>
 
 	<row id="MONSNAME_409">
 		<language name="JPN">ラムパルド</language>
-		<language name="JPN_KANJI">ラムパルド</language>
 	</row>
 
 	<row id="MONSNAME_410">
 		<language name="JPN">タテトプス</language>
-		<language name="JPN_KANJI">タテトプス</language>
 	</row>
 
 	<row id="MONSNAME_411">
 		<language name="JPN">トリデプス</language>
-		<language name="JPN_KANJI">トリデプス</language>
 	</row>
 
 	<row id="MONSNAME_412">
 		<language name="JPN">ミノムッチ</language>
-		<language name="JPN_KANJI">ミノムッチ</language>
 	</row>
 
 	<row id="MONSNAME_413">
 		<language name="JPN">ミノマダム</language>
-		<language name="JPN_KANJI">ミノマダム</language>
 	</row>
 
 	<row id="MONSNAME_414">
 		<language name="JPN">ガーメイル</language>
-		<language name="JPN_KANJI">ガーメイル</language>
 	</row>
 
 	<row id="MONSNAME_415">
 		<language name="JPN">ミツハニー</language>
-		<language name="JPN_KANJI">ミツハニー</language>
 	</row>
 
 	<row id="MONSNAME_416">
 		<language name="JPN">ビークイン</language>
-		<language name="JPN_KANJI">ビークイン</language>
 	</row>
 
 	<row id="MONSNAME_417">
 		<language name="JPN">パチリス</language>
-		<language name="JPN_KANJI">パチリス</language>
 	</row>
 
 	<row id="MONSNAME_418">
 		<language name="JPN">ブイゼル</language>
-		<language name="JPN_KANJI">ブイゼル</language>
 	</row>
 
 	<row id="MONSNAME_419">
 		<language name="JPN">フローゼル</language>
-		<language name="JPN_KANJI">フローゼル</language>
 	</row>
 
 	<row id="MONSNAME_420">
 		<language name="JPN">チェリンボ</language>
-		<language name="JPN_KANJI">チェリンボ</language>
 	</row>
 
 	<row id="MONSNAME_421">
 		<language name="JPN">チェリム</language>
-		<language name="JPN_KANJI">チェリム</language>
 	</row>
 
 	<row id="MONSNAME_422">
 		<language name="JPN">カラナクシ</language>
-		<language name="JPN_KANJI">カラナクシ</language>
 	</row>
 
 	<row id="MONSNAME_423">
 		<language name="JPN">トリトドン</language>
-		<language name="JPN_KANJI">トリトドン</language>
 	</row>
 
 	<row id="MONSNAME_424">
 		<language name="JPN">エテボース</language>
-		<language name="JPN_KANJI">エテボース</language>
 	</row>
 
 	<row id="MONSNAME_425">
 		<language name="JPN">フワンテ</language>
-		<language name="JPN_KANJI">フワンテ</language>
 	</row>
 
 	<row id="MONSNAME_426">
 		<language name="JPN">フワライド</language>
-		<language name="JPN_KANJI">フワライド</language>
 	</row>
 
 	<row id="MONSNAME_427">
 		<language name="JPN">ミミロル</language>
-		<language name="JPN_KANJI">ミミロル</language>
 	</row>
 
 	<row id="MONSNAME_428">
 		<language name="JPN">ミミロップ</language>
-		<language name="JPN_KANJI">ミミロップ</language>
 	</row>
 
 	<row id="MONSNAME_429">
 		<language name="JPN">ムウマージ</language>
-		<language name="JPN_KANJI">ムウマージ</language>
 	</row>
 
 	<row id="MONSNAME_430">
 		<language name="JPN">ドンカラス</language>
-		<language name="JPN_KANJI">ドンカラス</language>
 	</row>
 
 	<row id="MONSNAME_431">
 		<language name="JPN">ニャルマー</language>
-		<language name="JPN_KANJI">ニャルマー</language>
 	</row>
 
 	<row id="MONSNAME_432">
 		<language name="JPN">ブニャット</language>
-		<language name="JPN_KANJI">ブニャット</language>
 	</row>
 
 	<row id="MONSNAME_433">
 		<language name="JPN">リーシャン</language>
-		<language name="JPN_KANJI">リーシャン</language>
 	</row>
 
 	<row id="MONSNAME_434">
 		<language name="JPN">スカンプー</language>
-		<language name="JPN_KANJI">スカンプー</language>
 	</row>
 
 	<row id="MONSNAME_435">
 		<language name="JPN">スカタンク</language>
-		<language name="JPN_KANJI">スカタンク</language>
 	</row>
 
 	<row id="MONSNAME_436">
 		<language name="JPN">ドーミラー</language>
-		<language name="JPN_KANJI">ドーミラー</language>
 	</row>
 
 	<row id="MONSNAME_437">
 		<language name="JPN">ドータクン</language>
-		<language name="JPN_KANJI">ドータクン</language>
 	</row>
 
 	<row id="MONSNAME_438">
 		<language name="JPN">ウソハチ</language>
-		<language name="JPN_KANJI">ウソハチ</language>
 	</row>
 
 	<row id="MONSNAME_439">
 		<language name="JPN">マネネ</language>
-		<language name="JPN_KANJI">マネネ</language>
 	</row>
 
 	<row id="MONSNAME_440">
 		<language name="JPN">ピンプク</language>
-		<language name="JPN_KANJI">ピンプク</language>
 	</row>
 
 	<row id="MONSNAME_441">
 		<language name="JPN">ペラップ</language>
-		<language name="JPN_KANJI">ペラップ</language>
 	</row>
 
 	<row id="MONSNAME_442">
 		<language name="JPN">ミカルゲ</language>
-		<language name="JPN_KANJI">ミカルゲ</language>
 	</row>
 
 	<row id="MONSNAME_443">
 		<language name="JPN">フカマル</language>
-		<language name="JPN_KANJI">フカマル</language>
 	</row>
 
 	<row id="MONSNAME_444">
 		<language name="JPN">ガバイト</language>
-		<language name="JPN_KANJI">ガバイト</language>
 	</row>
 
 	<row id="MONSNAME_445">
 		<language name="JPN">ガブリアス</language>
-		<language name="JPN_KANJI">ガブリアス</language>
 	</row>
 
 	<row id="MONSNAME_446">
 		<language name="JPN">ゴンベ</language>
-		<language name="JPN_KANJI">ゴンベ</language>
 	</row>
 
 	<row id="MONSNAME_447">
 		<language name="JPN">リオル</language>
-		<language name="JPN_KANJI">リオル</language>
 	</row>
 
 	<row id="MONSNAME_448">
 		<language name="JPN">ルカリオ</language>
-		<language name="JPN_KANJI">ルカリオ</language>
 	</row>
 
 	<row id="MONSNAME_449">
 		<language name="JPN">ヒポポタス</language>
-		<language name="JPN_KANJI">ヒポポタス</language>
 	</row>
 
 	<row id="MONSNAME_450">
 		<language name="JPN">カバルドン</language>
-		<language name="JPN_KANJI">カバルドン</language>
 	</row>
 
 	<row id="MONSNAME_451">
 		<language name="JPN">スコルピ</language>
-		<language name="JPN_KANJI">スコルピ</language>
 	</row>
 
 	<row id="MONSNAME_452">
 		<language name="JPN">ドラピオン</language>
-		<language name="JPN_KANJI">ドラピオン</language>
 	</row>
 
 	<row id="MONSNAME_453">
 		<language name="JPN">グレッグル</language>
-		<language name="JPN_KANJI">グレッグル</language>
 	</row>
 
 	<row id="MONSNAME_454">
 		<language name="JPN">ドクロッグ</language>
-		<language name="JPN_KANJI">ドクロッグ</language>
 	</row>
 
 	<row id="MONSNAME_455">
 		<language name="JPN">マスキッパ</language>
-		<language name="JPN_KANJI">マスキッパ</language>
 	</row>
 
 	<row id="MONSNAME_456">
 		<language name="JPN">ケイコウオ</language>
-		<language name="JPN_KANJI">ケイコウオ</language>
 	</row>
 
 	<row id="MONSNAME_457">
 		<language name="JPN">ネオラント</language>
-		<language name="JPN_KANJI">ネオラント</language>
 	</row>
 
 	<row id="MONSNAME_458">
 		<language name="JPN">タマンタ</language>
-		<language name="JPN_KANJI">タマンタ</language>
 	</row>
 
 	<row id="MONSNAME_459">
 		<language name="JPN">ユキカブリ</language>
-		<language name="JPN_KANJI">ユキカブリ</language>
 	</row>
 
 	<row id="MONSNAME_460">
 		<language name="JPN">ユキノオー</language>
-		<language name="JPN_KANJI">ユキノオー</language>
 	</row>
 
 	<row id="MONSNAME_461">
 		<language name="JPN">マニューラ</language>
-		<language name="JPN_KANJI">マニューラ</language>
 	</row>
 
 	<row id="MONSNAME_462">
 		<language name="JPN">ジバコイル</language>
-		<language name="JPN_KANJI">ジバコイル</language>
 	</row>
 
 	<row id="MONSNAME_463">
 		<language name="JPN">ベロベルト</language>
-		<language name="JPN_KANJI">ベロベルト</language>
 	</row>
 
 	<row id="MONSNAME_464">
 		<language name="JPN">ドサイドン</language>
-		<language name="JPN_KANJI">ドサイドン</language>
 	</row>
 
 	<row id="MONSNAME_465">
 		<language name="JPN">モジャンボ</language>
-		<language name="JPN_KANJI">モジャンボ</language>
 	</row>
 
 	<row id="MONSNAME_466">
 		<language name="JPN">エレキブル</language>
-		<language name="JPN_KANJI">エレキブル</language>
 	</row>
 
 	<row id="MONSNAME_467">
 		<language name="JPN">ブーバーン</language>
-		<language name="JPN_KANJI">ブーバーン</language>
 	</row>
 
 	<row id="MONSNAME_468">
 		<language name="JPN">トゲキッス</language>
-		<language name="JPN_KANJI">トゲキッス</language>
 	</row>
 
 	<row id="MONSNAME_469">
 		<language name="JPN">メガヤンマ</language>
-		<language name="JPN_KANJI">メガヤンマ</language>
 	</row>
 
 	<row id="MONSNAME_470">
 		<language name="JPN">リーフィア</language>
-		<language name="JPN_KANJI">リーフィア</language>
 	</row>
 
 	<row id="MONSNAME_471">
 		<language name="JPN">グレイシア</language>
-		<language name="JPN_KANJI">グレイシア</language>
 	</row>
 
 	<row id="MONSNAME_472">
 		<language name="JPN">グライオン</language>
-		<language name="JPN_KANJI">グライオン</language>
 	</row>
 
 	<row id="MONSNAME_473">
 		<language name="JPN">マンムー</language>
-		<language name="JPN_KANJI">マンムー</language>
 	</row>
 
 	<row id="MONSNAME_474">
 		<language name="JPN">ポリゴンＺ</language>
-		<language name="JPN_KANJI">ポリゴンＺ</language>
 	</row>
 
 	<row id="MONSNAME_475">
 		<language name="JPN">エルレイド</language>
-		<language name="JPN_KANJI">エルレイド</language>
 	</row>
 
 	<row id="MONSNAME_476">
 		<language name="JPN">ダイノーズ</language>
-		<language name="JPN_KANJI">ダイノーズ</language>
 	</row>
 
 	<row id="MONSNAME_477">
 		<language name="JPN">ヨノワール</language>
-		<language name="JPN_KANJI">ヨノワール</language>
 	</row>
 
 	<row id="MONSNAME_478">
 		<language name="JPN">ユキメノコ</language>
-		<language name="JPN_KANJI">ユキメノコ</language>
 	</row>
 
 	<row id="MONSNAME_479">
 		<language name="JPN">ロトム</language>
-		<language name="JPN_KANJI">ロトム</language>
 	</row>
 
 	<row id="MONSNAME_480">
 		<language name="JPN">ユクシー</language>
-		<language name="JPN_KANJI">ユクシー</language>
 	</row>
 
 	<row id="MONSNAME_481">
 		<language name="JPN">エムリット</language>
-		<language name="JPN_KANJI">エムリット</language>
 	</row>
 
 	<row id="MONSNAME_482">
 		<language name="JPN">アグノム</language>
-		<language name="JPN_KANJI">アグノム</language>
 	</row>
 
 	<row id="MONSNAME_483">
 		<language name="JPN">ディアルガ</language>
-		<language name="JPN_KANJI">ディアルガ</language>
 	</row>
 
 	<row id="MONSNAME_484">
 		<language name="JPN">パルキア</language>
-		<language name="JPN_KANJI">パルキア</language>
 	</row>
 
 	<row id="MONSNAME_485">
 		<language name="JPN">ヒードラン</language>
-		<language name="JPN_KANJI">ヒードラン</language>
 	</row>
 
 	<row id="MONSNAME_486">
 		<language name="JPN">レジギガス</language>
-		<language name="JPN_KANJI">レジギガス</language>
 	</row>
 
 	<row id="MONSNAME_487">
 		<language name="JPN">ギラティナ</language>
-		<language name="JPN_KANJI">ギラティナ</language>
 	</row>
 
 	<row id="MONSNAME_488">
 		<language name="JPN">クレセリア</language>
-		<language name="JPN_KANJI">クレセリア</language>
 	</row>
 
 	<row id="MONSNAME_489">
 		<language name="JPN">フィオネ</language>
-		<language name="JPN_KANJI">フィオネ</language>
 	</row>
 
 	<row id="MONSNAME_490">
 		<language name="JPN">マナフィ</language>
-		<language name="JPN_KANJI">マナフィ</language>
 	</row>
 
 	<row id="MONSNAME_491">
 		<language name="JPN">ダークライ</language>
-		<language name="JPN_KANJI">ダークライ</language>
 	</row>
 
 	<row id="MONSNAME_492">
 		<language name="JPN">シェイミ</language>
-		<language name="JPN_KANJI">シェイミ</language>
 	</row>
 
 	<row id="MONSNAME_493">
 		<language name="JPN">アルセウス</language>
-		<language name="JPN_KANJI">アルセウス</language>
 	</row>
 
 	<row id="MONSNAME_494">
 		<language name="JPN">ピンボー</language>
-		<language name="JPN_KANJI">ピンボー</language>
 	</row>
 
 	<row id="MONSNAME_495">
 		<language name="JPN">モグリュー</language>
-		<language name="JPN_KANJI">モグリュー</language>
 	</row>
 
 	<row id="MONSNAME_496">
 		<language name="JPN">ゴリダルマ</language>
-		<language name="JPN_KANJI">ゴリダルマ</language>
 	</row>
 
 	<row id="MONSNAME_497">
 		<language name="JPN">ワニグラス</language>
-		<language name="JPN_KANJI">ワニグラス</language>
 	</row>
 
 	<row id="MONSNAME_498">
 		<language name="JPN">サンダイル</language>
-		<language name="JPN_KANJI">サンダイル</language>
 	</row>
 
 	<row id="MONSNAME_499">
 		<language name="JPN">レイバーン</language>
-		<language name="JPN_KANJI">レイバーン</language>
 	</row>
 
 	<row id="MONSNAME_500">
 		<language name="JPN">クルミル</language>
-		<language name="JPN_KANJI">クルミル</language>
 	</row>
 
 	<row id="MONSNAME_501">
 		<language name="JPN">ハハコモリ</language>
-		<language name="JPN_KANJI">ハハコモリ</language>
 	</row>
 
 	<row id="MONSNAME_502">
 		<language name="JPN">オノックス</language>
-		<language name="JPN_KANJI">オノックス</language>
 	</row>
 
 	<row id="MONSNAME_503">
 		<language name="JPN">カーメント</language>
-		<language name="JPN_KANJI">カーメント</language>
 	</row>
 
 	<row id="MONSNAME_504">
 		<language name="JPN">バンビーナ</language>
-		<language name="JPN_KANJI">バンビーナ</language>
 	</row>
 
 	<row id="MONSNAME_505">
 		<language name="JPN">ケンホロウ</language>
-		<language name="JPN_KANJI">ケンホロウ</language>
 	</row>
 
 	<row id="MONSNAME_506">
 		<language name="JPN">プルンス</language>
-		<language name="JPN_KANJI">プルンス</language>
 	</row>
 
 	<row id="MONSNAME_507">
 		<language name="JPN">マメパト</language>
-		<language name="JPN_KANJI">マメパト</language>
 	</row>
 
 	<row id="MONSNAME_508">
 		<language name="JPN">ライブラ</language>
-		<language name="JPN_KANJI">ライブラ</language>
 	</row>
 
 	<row id="MONSNAME_509">
-		<language name="JPN">ユメバクラ</language>
-		<language name="JPN_KANJI">ユメバクラ</language>
+		<language name="JPN">ムシャーナ</language>
 	</row>
 
 	<row id="MONSNAME_510">
 		<language name="JPN">チュリネ</language>
-		<language name="JPN_KANJI">チュリネ</language>
 	</row>
 
 	<row id="MONSNAME_511">
 		<language name="JPN">ハトーボー</language>
-		<language name="JPN_KANJI">ハトーボー</language>
 	</row>
 
 	<row id="MONSNAME_512">
 		<language name="JPN">ドレディア</language>
-		<language name="JPN_KANJI">ドレディア</language>
 	</row>
 
 	<row id="MONSNAME_513">
 		<language name="JPN">モコウモリ</language>
-		<language name="JPN_KANJI">モコウモリ</language>
 	</row>
 
 	<row id="MONSNAME_514">
 		<language name="JPN">モコット</language>
-		<language name="JPN_KANJI">モコット</language>
 	</row>
 
 	<row id="MONSNAME_515">
 		<language name="JPN">メリコット</language>
-		<language name="JPN_KANJI">メリコット</language>
 	</row>
 
 	<row id="MONSNAME_516">
 		<language name="JPN">サボッテン</language>
-		<language name="JPN_KANJI">サボッテン</language>
 	</row>
 
 	<row id="MONSNAME_517">
 		<language name="JPN">クルマユ</language>
-		<language name="JPN_KANJI">クルマユ</language>
 	</row>
 
 	<row id="MONSNAME_518">
 		<language name="JPN">グロッケン</language>
-		<language name="JPN_KANJI">グロッケン</language>
 	</row>
 
 	<row id="MONSNAME_519">
 		<language name="JPN">カーオケン</language>
-		<language name="JPN_KANJI">カーオケン</language>
 	</row>
 
 	<row id="MONSNAME_520">
 		<language name="JPN">シキジカ</language>
-		<language name="JPN_KANJI">シキジカ</language>
 	</row>
 
 	<row id="MONSNAME_521">
 		<language name="JPN">ヒダルマ</language>
-		<language name="JPN_KANJI">ヒダルマ</language>
 	</row>
 
 	<row id="MONSNAME_522">
 		<language name="JPN">ゾロア</language>
-		<language name="JPN_KANJI">ゾロア</language>
 	</row>
 
 	<row id="MONSNAME_523">
 		<language name="JPN">ゾロアーク</language>
-		<language name="JPN_KANJI">ゾロアーク</language>
 	</row>
 
 	<row id="MONSNAME_524">
 		<language name="JPN">シロベア</language>
-		<language name="JPN_KANJI">シロベア</language>
 	</row>
 
 	<row id="MONSNAME_525">
 		<language name="JPN">シャーベア</language>
-		<language name="JPN_KANJI">シャーベア</language>
 	</row>
 
 	<row id="MONSNAME_526">
-		<language name="JPN">カビッチ</language>
-		<language name="JPN_KANJI">カビッチ</language>
+		<language name="JPN">チラン</language>
 	</row>
 
 	<row id="MONSNAME_527">
-		<language name="JPN">カビーニ</language>
-		<language name="JPN_KANJI">カビーニ</language>
+		<language name="JPN">チララン</language>
 	</row>
 
 	<row id="MONSNAME_528">
 		<language name="JPN">ドゴウモリ</language>
-		<language name="JPN_KANJI">ドゴウモリ</language>
 	</row>
 
 	<row id="MONSNAME_529">
 		<language name="JPN">プルキング</language>
-		<language name="JPN_KANJI">プルキング</language>
 	</row>
 
 	<row id="MONSNAME_530">
-		<language name="JPN">チャーク</language>
-		<language name="JPN_KANJI">チャーク</language>
+		<language name="JPN">ミネズミ</language>
 	</row>
 
 	<row id="MONSNAME_531">
-		<language name="JPN">ドチャック</language>
-		<language name="JPN_KANJI">ドチャック</language>
+		<language name="JPN">ミルホッグ</language>
 	</row>
 
 	<row id="MONSNAME_532">
 		<language name="JPN">ナスカドリ</language>
-		<language name="JPN_KANJI">ナスカドリ</language>
 	</row>
 
 	<row id="MONSNAME_533">
-		<language name="JPN">ムジャジャ</language>
-		<language name="JPN_KANJI">ムジャジャ</language>
+		<language name="JPN">ムンナ</language>
 	</row>
 
 	<row id="MONSNAME_534">
 		<language name="JPN">タマゴ</language>
-		<language name="JPN_KANJI">タマゴ</language>
+	</row>
+
+	<row id="MONSNAME_535">
+		<language name="JPN">タマゴ</language>
 	</row>
 
 	<flowchart-group-list>

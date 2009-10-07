@@ -3,7 +3,7 @@
  * @file	monsno_def.h
  * @bfief	ポケモンNoのDefine定義ファイル
  * @author	PersonalConverter
- * @date	2009-09-18
+ * @date	2009-10-07
  * パーソナルコンバータから生成されました
 */
 //============================================================================================
@@ -518,6 +518,51 @@
 #define		MONSNO_PURUNSU			( 506 )
 #define		MONSNO_MAMEPATO			( 507 )
 #define		MONSNO_RAIBURA			( 508 )
+#define		MONSNO_MUSYAANA			( 509 )
+#define		MONSNO_TYURINE			( 510 )
+#define		MONSNO_HATOOBOO			( 511 )
+#define		MONSNO_DOREDHIA			( 512 )
+#define		MONSNO_MOKOUMORI		( 513 )
+#define		MONSNO_MOKOTTO			( 514 )
+#define		MONSNO_MERIKOTTO		( 515 )
+#define		MONSNO_SABOTTEN			( 516 )
+#define		MONSNO_KURUMAYU			( 517 )
+#define		MONSNO_GUROKKEN			( 518 )
+#define		MONSNO_KAAOKEN			( 519 )
+#define		MONSNO_SIKIZIKA			( 520 )
+#define		MONSNO_HIDARUMA			( 521 )
+#define		MONSNO_ZOROA				( 522 )
+#define		MONSNO_ZOROAAKU			( 523 )
+#define		MONSNO_SIROBEA			( 524 )
+#define		MONSNO_SYAABEA			( 525 )
+#define		MONSNO_TIRAN				( 526 )
+#define		MONSNO_TIRARAN			( 527 )
+#define		MONSNO_DOGOUMORI		( 528 )
+#define		MONSNO_PURUKINGU		( 529 )
+#define		MONSNO_MINEZUMI			( 530 )
+#define		MONSNO_MIRUHOGGU		( 531 )
+#define		MONSNO_NASUKADORI		( 532 )
+#define		MONSNO_MUNNA				( 533 )
+#define		MONSNO_TAMAGO				( 534 )
+#define		MONSNO_DAMETAMAGO		( 535 )
+#define		MONSNO_END					( 533 )
+#define		MONSNO_MAX					( 535 )
+
+//MAKEを通すために旧名称定義も暫定でいれておく#define		MONSNO_PINBOO				( 494 )
+#define		MONSNO_MOGURYUU			( 495 )
+#define		MONSNO_GORIDARUMA		( 496 )
+#define		MONSNO_WANIGURASU		( 497 )
+#define		MONSNO_SANDAIRU			( 498 )
+#define		MONSNO_REIBAAN			( 499 )
+#define		MONSNO_KURUMIRU			( 500 )
+#define		MONSNO_HAHAKOMORI		( 501 )
+#define		MONSNO_ONOKKUSU			( 502 )
+#define		MONSNO_KAAMENTO			( 503 )
+#define		MONSNO_BANBIINA			( 504 )
+#define		MONSNO_KENHOROU			( 505 )
+#define		MONSNO_PURUNSU			( 506 )
+#define		MONSNO_MAMEPATO			( 507 )
+#define		MONSNO_RAIBURA			( 508 )
 #define		MONSNO_YUMEBAKURA		( 509 )
 #define		MONSNO_TYURINE			( 510 )
 #define		MONSNO_HATOOBOO			( 511 )
@@ -543,10 +588,6 @@
 #define		MONSNO_DOTYAKKU			( 531 )
 #define		MONSNO_NASUKADORI		( 532 )
 #define		MONSNO_MUZYAZYA			( 533 )
-#define		MONSNO_TAMAGO				( 534 )
-#define		MONSNO_DAMETAMAGO		( 535 )
-#define		MONSNO_END					( 533 )
-#define		MONSNO_MAX					( 535 )
 
 //別フォルム定義
 //アンノーン

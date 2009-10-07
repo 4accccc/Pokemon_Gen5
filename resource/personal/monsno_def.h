@@ -3,7 +3,7 @@
  * @file	monsno_def.h
  * @bfief	ポケモンNoのDefine定義ファイル
  * @author	PersonalConverter
- * @date	2009-10-06
+ * @date	2009-10-07
  * パーソナルコンバータから生成されました
 */
 //============================================================================================
@@ -547,7 +547,8 @@
 #define		MONSNO_DAMETAMAGO		( 535 )
 #define		MONSNO_END					( 533 )
 #define		MONSNO_MAX					( 535 )
-#define		MONSNO_PINBOO				( 494 )
+
+//MAKEを通すために旧名称定義も暫定でいれておく#define		MONSNO_PINBOO				( 494 )
 #define		MONSNO_MOGURYUU			( 495 )
 #define		MONSNO_GORIDARUMA		( 496 )
 #define		MONSNO_WANIGURASU		( 497 )
