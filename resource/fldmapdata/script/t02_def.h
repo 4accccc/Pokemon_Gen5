@@ -21,5 +21,6 @@
 #define SCRID_T02_RIVAL_02 (14)
 #define SCRID_POS_T02_RIVAL_SPEECH (15)
 #define SCRID_T02_N_01 (16)
+#define SCRID_T02_SIGN1_01 (17)
 
 #endif //_T02_DEF_H_
