@@ -27,10 +27,12 @@ enum {
 	NARC_fldeff_c_mark_dl_nsbmd = 13,
 	NARC_fldeff_c_mark_dr_nsbmd = 14,
 	NARC_fldeff_shibuki01_nsbmd = 15,
-	NARC_fldeff_hero_kemu_nsbtp = 16,
-	NARC_fldeff_kusaeff_nsbtp = 17,
-	NARC_fldeff_shibuki01_nsbca = 18,
-	NARC_fldeff_shibuki01_nsbta = 19
+	NARC_fldeff_ripple_nsbmd = 16,
+	NARC_fldeff_hero_kemu_nsbtp = 17,
+	NARC_fldeff_kusaeff_nsbtp = 18,
+	NARC_fldeff_ripple_nsbtp = 19,
+	NARC_fldeff_shibuki01_nsbca = 20,
+	NARC_fldeff_shibuki01_nsbta = 21
 };
 
 /* NARC_FLDEFF_NAIX_ */
