@@ -22,7 +22,7 @@
 #include "script.h"     //for SCRIPT_CallScript
 #include "../../../resource/fldmapdata/script/c04gym0101_def.h"  //for SCRID_Å`
 
-#include "gym_elec_local_def.h"
+#include "../../../resource/fldmapdata/gimmick/gym_denki/gym_elec_local_def.cdat"
 
 #define GYM_ELEC_UNIT_IDX (0)
 #define GYM_ELEC_TMP_ASSIGN_ID  (1)
