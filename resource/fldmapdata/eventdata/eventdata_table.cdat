@@ -2423,6 +2423,7 @@
 #define R02_TRAINER_06                     7
 #define R02_RIVAL_01                       8
 #define ROCK_01                            9
+#define R02_MAMA_01                       10
 
 #endif //ZONE_R02_EVC_H
 //#include "tmp/r02r0101.h"
@@ -11584,6 +11585,23 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 		652,
 		FX32_CONST(0),
 	},
+	{
+		R02_MAMA_01,
+		WOMAN1,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_DUMMY,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		764,
+		648,
+		FX32_CONST(0),
+	},
 };
 const int ObjCount_R02 = NELEMS(OBJ_EVENT_R02);
 const BG_TALK_DATA BG_EVENT_R02[] = {
@@ -11616,6 +11634,14 @@ const POS_EVENT_DATA POS_EVENT_R02[] = {
 		758, 633,
 		1, 1,
 		0,  //height
+		1,
+		WK_SCENE_R02,
+	},
+	{//POS_R02_MAMA_01 = 1
+		SCRID_POS_R02_MAMA_01,
+		756, 648,
+		1, 1,
+		0,  //height
 		0,
 		WK_SCENE_R02,
 	},
@@ -11624,9 +11650,9 @@ const int PosCount_R02 = NELEMS(POS_EVENT_R02);
 
 static const EVENTDATA_TABLE event_r02 = {
 	3,
-	10,
+	11,
 	4,
-	1,
+	2,
 	(void *)&BG_EVENT_R02,
 	(void *)&OBJ_EVENT_R02,
 	(void *)&DOOR_EVENT_R02,

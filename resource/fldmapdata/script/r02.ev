@@ -16,11 +16,12 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 
-//【修正（村上くん）】看板のイベントが未作成のようです。
 _EVENT_DATA    ev_pos_r02_rival_01
-_EVENT_DATA    ev_r02_mama_01
+_EVENT_DATA    ev_pos_r02_mama_01
+
 _EVENT_DATA    ev_r02_boy2_01
 _EVENT_DATA    ev_r02_girl2_01
+
 _EVENT_DATA	   ev_bg_r02_board1_01
 _EVENT_DATA	   ev_bg_r02_board2_01
 _EVENT_DATA	   ev_bg_r02_board3_01
@@ -48,6 +49,7 @@ _EVENT_DATA_END
 /*				ライバル：草むら説明イベント				*/
 /************************************************************/
 EVENT_START   ev_pos_r02_rival_01
+//【仮】2番道路の構造が変わる場合があるので、ポスや動きは仮になっている。
 	
 	//ライバル：メッセージ
 	_BALLOONWIN_OBJMSG_OPEN( msg_r02_black_01, R02_RIVAL_01 )
@@ -107,7 +109,7 @@ EVENT_START   ev_pos_r02_rival_01
 	_FLAG_RESET  ( FV_T02PC0101_RIVAL )  
 	
 	//R02のライバルの長い草イベントを無効にする
-	$WK_SCENE_R02 = 1
+	$WK_SCENE_R02 = 2
 	
 	//============================================//
 
@@ -148,24 +150,117 @@ _ANIME_LABEL	anm_rival_saru
 	_ANIME_DATA	ACMD_END,0
 
 
-//【修正（村上くん）】ランニングシューズ入手イベントが未作成のようです。
-//ランニングシューズ追加コマンドが無いかもしれませんが、メッセージの流れだけでもお願いします。
+//【仮】2番道路の形状が変化する可能性があるので、POSについては仮
 /**************************************************************/
 /*  R02 ママのイベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_r02_mama_01
+EVENT_START   ev_pos_r02_mama_01
 
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r02_mama_01)
-/*
-	_TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_r02_mama_01 )
-	_AB_KEYWAIT()
+	//ママが主人公を呼ぶ
+	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_01, R02_MAMA_01)
 	_BALLOONWIN_CLOSE()
-*/
+
+	//主人公、ママの声に気づく
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_bikkuri_mark)
+	_OBJ_ANIME_WAIT()
+	
+	//主人公、ママの方へ振り向く
+	_OBJ_ANIME(  MMDL_ID_PLAYER,anm_player_migi_muku)
+	_OBJ_ANIME_WAIT()
+	
+	//ママが主人公の方へ来る
+	_OBJ_ANIME( R02_MAMA_01,anm_mama_kuru)
+	_OBJ_ANIME_WAIT()
+	
+	//ママ「やっと　おいついた」
+	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_02, R02_MAMA_01)
+
+//【仮】ランニングシューズ入手イベントは、現在メッセージのみ。
+	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_03, R02_MAMA_01)
+
+//-----------------------------------------------------------	
+	_AB_KEYWAIT()
+	
+	//ママがランニングシューズの説明
+	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_04, R02_MAMA_01)
+	_BALLOONWIN_CLOSE()
+	
+	_TIME_WAIT( 16 )
+	
+	//ママ「あなたは　ひとりじゃ～」
+	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_05, R02_MAMA_01)
+	_BALLOONWIN_CLOSE()
+	
+	//ママが帰っていく
+	_OBJ_ANIME( R02_MAMA_01,anm_mama_saru1)
+	_OBJ_ANIME_WAIT()
+	
+	//ママ、気になって振り向く
+	_OBJ_ANIME( R02_MAMA_01,anm_mama_furimuku)
+	_OBJ_ANIME_WAIT()
+	
+	//ママが帰っていく
+	_OBJ_ANIME( R02_MAMA_01,anm_mama_saru2)
+	_OBJ_ANIME_WAIT()
+	
+	//ママ：画面から消す
+	_OBJ_DEL( R02_MAMA_01  )
+	
+	//==============フラグワーク操作==============//
+	
+	//R02のママを表示されなくする
+	_FLAG_SET  ( FV_R02_MOTHER  )  
+	
+	//R02のランニングシューズイベントを無効にする
+	$WK_SCENE_R02 = 1
+	
+	//============================================//
+	
 EVENT_END
 
+//--------------------------------------------------------------------
+//ママ:主人公に接近                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mama_kuru
+	_ANIME_DATA AC_WALK_L_8F,7
+	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//ママ:2番道路から去る1                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mama_saru1
+	_ANIME_DATA AC_WALK_R_8F,3
+	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//ママ:2番道路から去る2                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mama_saru2
+	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ママ:振り向く                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mama_furimuku
+	_ANIME_DATA AC_DIR_L,40
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公:びっくりマークを出す                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_bikkuri_mark
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//主人公:右を向く                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_migi_muku
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0	
+
+	
 /**************************************************************/
 /*  R02 BOY2の会話イベントスクリプト*/
 /**************************************************************/
@@ -183,6 +278,17 @@ EVENT_START   ev_r02_girl2_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r02_girl2_01) 
 
 EVENT_END
+
+/**************************************************************/
+/*  R02 GIRL2の会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START  ev_r02_mama_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r02_mama_01) 
+
+EVENT_END
+
+
 
 /**************************************************************/
 /*  R02 看板1のイベントスクリプト*/

@@ -2319,6 +2319,7 @@
 #define R02_TRAINER_06                     7
 #define R02_RIVAL_01                       8
 #define ROCK_01                            9
+#define R02_MAMA_01                       10
 
 #endif //ZONE_R02_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Ídata/r02r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
