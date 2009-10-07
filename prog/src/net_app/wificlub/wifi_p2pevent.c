@@ -127,7 +127,7 @@ static void P2P_FourWaitInit( EV_P2PEVENT_WORK* p_wk, GMEVENT* fsys, u32 heapID,
 static u32 P2P_FourWaitEnd( EV_P2PEVENT_WORK* p_wk );
 #else
 static void P2P_FourWaitInit( EV_P2PEVENT_WORK* p_wk, GMEVENT* fsys, u32 heapID, u32 type ){}
-static u32 P2P_FourWaitEnd( EV_P2PEVENT_WORK* p_wk ){}
+static u32 P2P_FourWaitEnd( EV_P2PEVENT_WORK* p_wk ){ return P2P_MATCH_BOARD; }
 #endif
 
 //  ÇΩÇ‹Ç¢ÇÍê›íË
