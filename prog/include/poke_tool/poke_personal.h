@@ -86,23 +86,6 @@ typedef enum {
   POKEPER_COLOR_PINK,     //桃
 }PokePersonal_Color;
 
-/*
-１：怪獣
-２：水棲
-３：虫
-４：鳥
-５：動物
-６：妖精
-７：植物
-８：人型
-９：甲殻
-10：無機物
-11：不定形
-12：魚
-13：メタモン
-14：ドラゴン
-15：無生殖
-*/
 
 //--------------------------------------------------------------
 /**
@@ -114,6 +97,25 @@ enum {
   POKEPER_SEX_MALE = 0,     ///<オスのみ
   POKEPER_SEX_FEMALE = 254,   ///<メスのみ
   POKEPER_SEX_UNKNOWN = 255,    ///<性別なし
+};
+
+enum{
+  // こづくりグループ
+POKEPER_EGG_GROUP_KAIJUU,     //１：怪獣
+POKEPER_EGG_GROUP_SUISEI,     //２：水棲
+POKEPER_EGG_GROUP_MUSI,       //３：虫
+POKEPER_EGG_GROUP_TORI,       // ４：鳥
+POKEPER_EGG_GROUP_DOUBUTU,    //５：動物
+POKEPER_EGG_GROUP_YOUSEI,     // ６：妖精
+POKEPER_EGG_GROUP_SYOKUBUTU,  // ７：植物
+POKEPER_EGG_GROUP_HITOGATA,   // ８：人型
+POKEPER_EGG_GROUP_KOUKAKU,    // ９：甲殻
+POKEPER_EGG_GROUP_MUKIBUTU,   // 10：無機物
+POKEPER_EGG_GROUP_FUTEIKEI,   // 11：不定形
+POKEPER_EGG_GROUP_SAKANA,     // 12：魚
+POKEPER_EGG_GROUP_METAMON,    // 13：メタモン
+POKEPER_EGG_GROUP_DORAGON,    // 14：ドラゴン
+POKEPER_EGG_GROUP_MUSEISYOKU, //15：無生殖
 };
 //--------------------------------------------------------------
 /**
