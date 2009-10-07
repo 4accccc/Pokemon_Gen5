@@ -20,6 +20,9 @@ TARGETDIR = $(PROJECT_ARCDIR)$(FLDMAP)
 #------------------------------------------------------------------------------
 SUBDIRS	=
 
+
+CDAT = gym_elec_local_def.cdat
+
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
@@ -46,12 +49,14 @@ INCPATH	= -I$(NITROSDK_ROOT)/include
 #------------------------------------------------------------------------------
 
 ICA_CNV = ../../../../tools/ica/ica_converter.rb
+DEF_MAKE = ../def_write.rb
+XLS_CNV = ../../../../tools/exceltool/xls2xml/tab_out.rb
 
 .PHONY:	do-build clean
 
 
 
-do-build: $(TARGETDIR)/$(targetname).narc
+do-build: $(TARGETDIR)/$(targetname).narc $(CDAT)
 
 #clean:
 #	@rm -f $(TARGETDIR)/$(targetname).narc
@@ -92,4 +97,7 @@ $(targetname).narc: $(DATA_LIST)
 	@-rm -f *.nsb*
 	@-rm -f *.bin
 
+$(CDAT): def_make.xls
+	ruby $(XLS_CNV) -c def_make.xls > def_make.csv
+	ruby $(DEF_MAKE) def_make.csv $(CDAT)
 endif
