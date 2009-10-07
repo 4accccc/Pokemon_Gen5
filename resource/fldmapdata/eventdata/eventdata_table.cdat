@@ -13695,6 +13695,16 @@ const FLDMMDL_HEADER OBJ_EVENT_T02[] = {
 	},
 };
 const int ObjCount_T02 = NELEMS(OBJ_EVENT_T02);
+const BG_TALK_DATA BG_EVENT_T02[] = {
+	{//T02_SIGN1_01 = 0
+		SCRID_T02_SIGN1_01,  //event id
+		BG_TALK_TYPE_BOARD, //type
+		778, 651,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+};
+const int BgCount_T02 = NELEMS(BG_EVENT_T02);
 const POS_EVENT_DATA POS_EVENT_T02[] = {
 	{//POSID_T02_HAKAI_STOP = 0
 		SCRID_POS_T02_HAKAI_STOP,
@@ -13724,11 +13734,11 @@ const POS_EVENT_DATA POS_EVENT_T02[] = {
 const int PosCount_T02 = NELEMS(POS_EVENT_T02);
 
 static const EVENTDATA_TABLE event_t02 = {
-	0,
+	1,
 	13,
 	5,
 	3,
-	(void *)NULL,
+	(void *)&BG_EVENT_T02,
 	(void *)&OBJ_EVENT_T02,
 	(void *)&DOOR_EVENT_T02,
 	(void *)&POS_EVENT_T02,
