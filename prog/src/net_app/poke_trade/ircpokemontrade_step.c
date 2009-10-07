@@ -125,7 +125,7 @@ static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
 
     
     IRC_POKETRADE_AllDeletePokeIconResource(pWork);
-    for(i = 0;i< CUR_NUM;i++){
+    for(i = 0;i< CELL_DISP_NUM;i++){
       if(pWork->curIcon[i]){
         GFL_CLACT_WK_Remove(pWork->curIcon[i]);
       }

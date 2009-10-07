@@ -60,7 +60,19 @@ typedef enum
 
 
 #define _BRIGHTNESS_SYNC (2)  // フェードのＳＹＮＣは要調整
-#define CUR_NUM (3)
+
+
+typedef enum
+{
+  CELL_CUR_SELECT,
+  CELL_CUR_MOJI,
+  CELL_CUR_SCROLLBAR,
+  CELL_CUR_POKE_SELECT,
+  CELL_DISP_NUM
+} _CUR_RESOURCE;
+
+
+//#define CUR_NUM (3)
 #define _BUTTON_WIN_PAL   (15)  // ウインドウ
 #define _BUTTON_MSG_PAL   (14)  // メッセージフォント
 #define	FBMP_COL_WHITE		(15)
@@ -265,7 +277,7 @@ struct _IRC_POKEMON_TRADE {
   u32 pokeIconForm[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   u8 pokeIconLine[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
 
-  GFL_CLWK* curIcon[CUR_NUM];
+  GFL_CLWK* curIcon[CELL_DISP_NUM];
 
   int windowNum;
   int anmCount;
@@ -363,6 +375,7 @@ extern void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(IRC_POKEMON_TRADE* pWork);
 extern void IRCPOKETRADE_PokeDeleteMcss( IRC_POKEMON_TRADE *pWork,int no  );
 extern void IRCPOKETRADE_PokeCreateMcss( IRC_POKEMON_TRADE *pWork ,int no, int bFront, const POKEMON_PARAM *pp );
 extern BOOL IRCPOKEMONTRADE_GetPokeDataAddress(BOX_DATA* boxData , int trayNo, int index,IRC_POKEMON_TRADE* pWork,POKEMON_PARAM* pp);
+extern void IRC_POKETRADE_SetMainStatusBG(IRC_POKEMON_TRADE* pWork);
 
 
 

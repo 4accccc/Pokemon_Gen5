@@ -1239,3 +1239,38 @@ void IRC_POKETRADE_InitBoxCursor(IRC_POKEMON_TRADE* pWork)
 
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   上画面のステータス表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_SetMainStatusBG(IRC_POKEMON_TRADE* pWork)
+{
+
+	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
+	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+																				 NARC_trade_wb_trade_stbg03_NSCR,
+																				 GFL_BG_FRAME2_M, 0,
+																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
+																				 pWork->heapID);
+	GFL_ARC_CloseDataHandle( p_handle );
+
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 128;
+    cellInitData.pos_y = 16;
+    cellInitData.anmseq = CELL_CUR_POKE_SELECT;
+    cellInitData.bgpri = 1;
+    pWork->curIcon[CELL_CUR_POKE_SELECT] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                                pWork->cellRes[CHAR_SCROLLBAR],
+                                                                pWork->cellRes[PAL_SCROLLBAR],
+                                                                pWork->cellRes[ANM_SCROLLBAR],
+                                                                &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_SELECT] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT], TRUE );
+  }
+
+  
+}

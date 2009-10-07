@@ -629,10 +629,14 @@ static void _pokemonStatusStart(IRC_POKEMON_TRADE* pWork)
 
   IRCPOKETRADE_PokeDeleteMcss(pWork,1);  //相手のを消す
 
+  IRC_POKETRADEDEMO_RemoveModel( pWork);  //リールを消す
+  IRC_POKETRADE_MessageWindowClose(pWork);  //下のメッセージを消す
+
+  
   if(1){//自分の位置調整
     VecFx32 apos;
     MCSS_GetPosition( pWork->pokeMcss[0] ,&apos );
-    apos.x = _MCSS_POS_X(190);
+    apos.x = _MCSS_POS_X(200);
     apos.y = _MCSS_POS_Y(100);
     apos.z = 1000;
     MCSS_SetPosition( pWork->pokeMcss[0] ,&apos );
@@ -740,12 +744,17 @@ static void _pokemonStatusStart(IRC_POKEMON_TRADE* pWork)
   }
 
   
-  
   GFL_BMPWIN_MakeScreen(pWork->MyInfoWin);
   GFL_BMPWIN_TransVramCharacter(pWork->MyInfoWin);
   GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
 
 
+  IRC_POKETRADE_SetMainStatusBG(pWork);
+  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+
+
+  
+  
   _CHANGE_STATE(pWork, _pokemonStatusWait);
 
 }
@@ -945,7 +954,7 @@ void IRC_POKMEONTRADE_ChangeFinish(IRC_POKEMON_TRADE* pWork)
 
   {
     int i;
-    for(i = 0;i< CUR_NUM;i++){
+    for(i = 0;i< CELL_DISP_NUM;i++){
       if(pWork->curIcon[i]){
         GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[i], TRUE );
       }
@@ -1475,7 +1484,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
   IRC_POKETRADE_AllDeletePokeIconResource(pWork);
 
 
-  for(i = 0;i< CUR_NUM;i++){
+  for(i = 0;i< CELL_DISP_NUM;i++){
     if(pWork->curIcon[i]){
       GFL_CLACT_WK_Remove(pWork->curIcon[i]);
     }
