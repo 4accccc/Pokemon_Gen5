@@ -367,7 +367,7 @@ static const struct {
 	u16     blk2adrs;	// 12 bit shift
 	u16     blk2size;	// 12 bit shift
 } sTexStartAddrTable[16] = {
-	{0, 0, 0},																											// GX_VRAM_TEX_NONE
+	{0, 0, 0, 0},																										// GX_VRAM_TEX_NONE
 	{TEX_ADRSDEF_A, TEX_SIZEDEF_A,	0, 0},													// GX_VRAM_TEX_0_A
 	{TEX_ADRSDEF_B, TEX_SIZEDEF_B,	0, 0},													// GX_VRAM_TEX_0_B
 	{TEX_ADRSDEF_A,	TEX_SIZEDEF_AB,	0, 0},													// GX_VRAM_TEX_01_AB
@@ -412,11 +412,14 @@ BOOL	GFL_MCS_Resident_SendTexVramStatus(void)
 	vStatus->size2 = blk2size;
 	sendSize = sizeof(MCSRSDCOMM_HEADER_SIZE) + sizeof(MCSDATA_TEXVRAMSTATUS);
 	GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
+	OS_Printf("texvram status send %d, %d, %d\n", vStatus->type, vStatus->size1, vStatus->size2);
 			
 	if(vStatus->size1){
+		OS_Printf("texvram send 1\n");
 		GFL_MCS_Write(GFL_MCS_RESIDENT_ID, (void*)(blk1adrs << 12), (blk1size << 12));
 	}
 	if(vStatus->size2){
+		OS_Printf("texvram send 2\n");
 		GFL_MCS_Write(GFL_MCS_RESIDENT_ID, (void*)(blk2adrs << 12), (blk2size << 12));
 	}
 

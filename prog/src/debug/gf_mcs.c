@@ -933,8 +933,7 @@ BOOL	GFL_MCS_Read( u32 categoryID, void* pReadBuf, u32 readBufSize )
 					NNS_McsReadStream(linkStatus->key.channelID2, pReadBuf, recvSize, &readResult);
 					readSize -= recvSize;
 					(u8*)pReadBuf += recvSize;
-
-					if(recvSize){ sendIdle(&linkStatus->key); }
+					sendIdle(&linkStatus->key);
 				}
 			}
 		}
@@ -985,6 +984,7 @@ BOOL	GFL_MCS_Write( u32 categoryID, const void* pWriteBuf, u32 writeSize )
 				}
 			}
 		}
+		while(checkIdle(&linkStatus->key) == FALSE){ NNS_McsPollingIdle(); }
 	}
 	return TRUE;
 }
