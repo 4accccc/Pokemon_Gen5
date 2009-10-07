@@ -551,7 +551,7 @@
 #define FV_D01_GYM_LEADER                  527 /* 0x020f 廃墟入り口：ジムリーダー */
 #define FV_T02_RIVAL_02                    528 /* 0x0210 カラクサタウン：イベント誘導 */
 #define FV_R02_MOTHER                      529 /* 0x0211 ２番道路：ランニングシューズ入手イベントのママ */
-		/* not used   530(0x0212) */
+#define FV_C01GYM0101_LEADERS              530 /* 0x0212 C01ジム：３兄弟リーダーのうち後から出てくる二人 */
 		/* not used   531(0x0213) */
 		/* not used   532(0x0214) */
 		/* not used   533(0x0215) */
