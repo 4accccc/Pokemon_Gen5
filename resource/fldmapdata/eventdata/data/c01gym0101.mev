@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/05 11:07:44
+#save date:2009/10/07 19:02:04
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01gym0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/05 11:07:44
+#save date:2009/10/07 19:02:04
 2
 #hold event type:
 1
@@ -67,7 +67,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--72 16 200
+-56 16 200
 #event number: 2
 #type
 1
@@ -80,7 +80,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C01GYM0101_LEADERS
 #Event Script Name
 SCRID_C01GYM0101_LEADER1_02
 #Direction Type Number
@@ -109,7 +109,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C01GYM0101_LEADERS
 #Event Script Name
 SCRID_C01GYM0101_LEADER1_03
 #Direction Type Number
@@ -125,12 +125,12 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
--40 16 200
+-56 16 200
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/05 11:07:44
+#save date:2009/10/07 19:02:04
 2
 #hold event type:
 1
@@ -162,17 +162,32 @@ SCRID_C01GYM0101_POKEZOU_02
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/05 11:07:44
+#save date:2009/10/07 19:02:04
 2
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POSID_C01GYM0101_LEADER_BATTLE
+#Pos Script Name
+SCRID_POS_C01GYM0101_LEADER_BATTLE
+#Event Trigger Work Name
+WK_SCENE_C01GYM0101
+#Event Trigger Work Value
 0
+#Pos Event Size X
+3
+#Pos Event Size Z
+1
+#position
+-72 16 152
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/05 11:07:44
+#save date:2009/10/07 19:02:04
 2
 #hold event type:
 1
