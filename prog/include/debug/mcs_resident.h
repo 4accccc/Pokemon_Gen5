@@ -2,3 +2,4 @@
 
 extern void	GFL_MCS_Resident(void);
 extern BOOL	GFL_MCS_Resident_SendHeapStatus(void);
+extern BOOL	GFL_MCS_Resident_SendTexVramStatus(void);

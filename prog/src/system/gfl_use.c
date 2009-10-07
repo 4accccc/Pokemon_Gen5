@@ -405,6 +405,8 @@ BOOL GFUser_SendHeapStatus(void)
 {
   if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
 		GFL_MCS_Resident_SendHeapStatus();
+		return TRUE;
   }
+	return FALSE;
 }
 

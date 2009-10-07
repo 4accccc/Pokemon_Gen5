@@ -23,6 +23,8 @@
 enum {
 	MCSRSDCOMM_REQHEAPSTATUS = 1,
 	MCSRSDCOMM_HEAPSTATUS,
+	MCSRSDCOMM_REQVRAMSTATUS,
+	MCSRSDCOMM_VRAMSTATUS,
 };
 
 typedef struct {
@@ -32,12 +34,9 @@ typedef struct {
 
 #define MCSRSDCOMM_HEADER_SIZE (sizeof(MCSRSDCOMM_HEADER) - sizeof(u32))
 
-//void	GFL_MCS_Resident(void);
-static u32	GetExistMemoryBlocksInfo( HEAPID heapID, u32 pBuf );
-
-#define SENDBUF_SIZE (0x10000)
-#define RECVBUF_SIZE (0x10000)
-u8 MCSRSD_sendBuffer[SENDBUF_SIZE];
+#define SENDBUF_SIZE (0x02000)
+#define RECVBUF_SIZE (0x02000)
+static u8 MCSRSD_sendBuffer[SENDBUF_SIZE];
 static u8 MCSRSD_recvBuffer[RECVBUF_SIZE];
 //============================================================================================
 /**
@@ -52,39 +51,30 @@ void	GFL_MCS_Resident(void)
 		MCSRSDCOMM_HEADER* recv = (MCSRSDCOMM_HEADER*)MCSRSD_recvBuffer;
 		switch(recv->comm){
 		case MCSRSDCOMM_REQHEAPSTATUS:
-#if 0
-			{
-				MCSRSDCOMM_HEADER* commHeader = (MCSRSDCOMM_HEADER*)MCSRSD_sendBuffer;
-				u32 sendSize;
-				int i;
-
-				commHeader->comm = MCSRSDCOMM_HEAPSTATUS;
-
-				// ヒープ情報作成＆転送
-				for(i=0; i<HEAPID_CHILD_MAX-1; i++){
-					ISDPrintSetBlockingMode(1);
-					sendSize = GetExistMemoryBlocksInfo( i, (u32)&commHeader->param);
-					if(sendSize){
-						sendSize += MCSRSDCOMM_HEADER_SIZE;	// ヘッダ情報分加算
-						//OS_Printf("trans heapInfo ... size %x, heapID %d\n", sendSize, i);
-						GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
-						ISDPrintSetBlockingMode(0);
-					}
-				}
-			}
-#else
 			GFL_MCS_Resident_SendHeapStatus();
-#endif
+			break;
+		case MCSRSDCOMM_REQVRAMSTATUS:
+			GFL_MCS_Resident_SendTexVramStatus();
 			break;
 		}
 	}
+	if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y){
+		//GFL_MCS_Resident_SendTexVramStatus();
+	}
 }
 
-//----------------------------------------------------------------
+//============================================================================================
 /**
- *  ヒープステータス転送
+ *
+ * @brief	ヒープ情報取得
+ *		GFLにある関数（デバッグウインドウに出力する関数）、構造体
+ *		をそのままコピーしているので整合性に常に注意すること。
+ *		MCS用のプログラムをGFLに内蔵するのには抵抗があるため
+ *		あえてこの方法で実装する
+ *
  */
-//----------------------------------------------------------------
+static u32	GetExistMemoryBlocksInfo( HEAPID heapID, u32 pBuf );
+//============================================================================================
 BOOL	GFL_MCS_Resident_SendHeapStatus(void)
 {
 	MCSRSDCOMM_HEADER* commHeader = (MCSRSDCOMM_HEADER*)MCSRSD_sendBuffer;
@@ -105,18 +95,6 @@ BOOL	GFL_MCS_Resident_SendHeapStatus(void)
 	return TRUE;
 }
 
-
-//============================================================================================
-/**
- *
- * @brief	ヒープ情報取得
- *		GFLにある関数（デバッグウインドウに出力する関数）、構造体
- *		をそのままコピーしているので整合性に常に注意すること。
- *		MCS用のプログラムをGFLに内蔵するのには抵抗があるため
- *		あえてこの方法で実装する
- *
- */
-//============================================================================================
 //----------------------------------------------------------------
 /**
  *  ユーザーメモリブロックヘッダ定義（サイズ:MEMHEADER_USERINFO_SIZE = 26 ）
@@ -345,6 +323,104 @@ static u32	GetExistMemoryBlocksInfo( HEAPID heapID, u32 pBuf )
 	//GFL_HEAP_DEBUG_PrintExistMemoryBlocks(heapID);
 	return sendSize;
 }
+
+
+//============================================================================================
+/**
+ *
+ * @brief	VRAM情報取得
+ *
+ */
+//============================================================================================
+typedef struct {
+	u16		type;			// VRAM割り振りタイプ
+	u16		size1;		// ブロック1サイズ(>>12)
+	u16		size2;		// ブロック2サイズ(>>12)
+	u8		pad[2];
+}MCSDATA_TEXVRAMSTATUS;
+
+//----------------------------------------------------------------------------
+// LCDCスペース内配置データテーブル
+//----------------------------------------------------------------------------
+#define TEX_ADRSDEF_A		((u16)(HW_LCDC_VRAM_A >> 12))
+#define TEX_ADRSDEF_B		((u16)(HW_LCDC_VRAM_B >> 12))
+#define TEX_ADRSDEF_C		((u16)(HW_LCDC_VRAM_C >> 12))
+#define TEX_ADRSDEF_D		((u16)(HW_LCDC_VRAM_D >> 12))
+#define TEX_SIZEDEF_A		((u16)(HW_VRAM_A_SIZE >> 12))
+#define TEX_SIZEDEF_B		((u16)(HW_VRAM_B_SIZE >> 12))
+#define TEX_SIZEDEF_C		((u16)(HW_VRAM_C_SIZE >> 12))
+#define TEX_SIZEDEF_D		((u16)(HW_VRAM_D_SIZE >> 12))
+#define TEX_SIZEDEF_AB	((u16)((HW_VRAM_A_SIZE + HW_VRAM_B_SIZE) >> 12))
+#define TEX_SIZEDEF_BC	((u16)((HW_VRAM_B_SIZE + HW_VRAM_C_SIZE) >> 12))
+#define TEX_SIZEDEF_CD	((u16)((HW_VRAM_C_SIZE + HW_VRAM_D_SIZE) >> 12))
+#define TEX_SIZEDEF_ABC	((u16)((HW_VRAM_A_SIZE + HW_VRAM_B_SIZE + HW_VRAM_C_SIZE) >> 12))
+#define TEX_SIZEDEF_BCD	((u16)((HW_VRAM_D_SIZE + HW_VRAM_C_SIZE + HW_VRAM_D_SIZE) >> 12))
+#define TEX_SIZEDEF_ABCD ((u16)((HW_VRAM_A_SIZE+HW_VRAM_B_SIZE+HW_VRAM_C_SIZE+HW_VRAM_D_SIZE)>>12))
+static const struct {
+	u16     blk1adrs;	// 12 bit shift
+	u16     blk1size;	// 12 bit shift
+	u16     blk2adrs;	// 12 bit shift
+	u16     blk2size;	// 12 bit shift
+} sTexStartAddrTable[16] = {
+	{0, 0, 0},																											// GX_VRAM_TEX_NONE
+	{TEX_ADRSDEF_A, TEX_SIZEDEF_A,	0, 0},													// GX_VRAM_TEX_0_A
+	{TEX_ADRSDEF_B, TEX_SIZEDEF_B,	0, 0},													// GX_VRAM_TEX_0_B
+	{TEX_ADRSDEF_A,	TEX_SIZEDEF_AB,	0, 0},													// GX_VRAM_TEX_01_AB
+	{TEX_ADRSDEF_C,	TEX_SIZEDEF_C,	0, 0},													// GX_VRAM_TEX_0_C
+	{TEX_ADRSDEF_A, TEX_SIZEDEF_A,	TEX_ADRSDEF_C, TEX_SIZEDEF_C},	// GX_VRAM_TEX_01_AC
+	{TEX_ADRSDEF_B, TEX_SIZEDEF_BC,	0, 0},													// GX_VRAM_TEX_01_BC
+	{TEX_ADRSDEF_A, TEX_SIZEDEF_ABC, 0, 0},													// GX_VRAM_TEX_012_ABC
+	{TEX_ADRSDEF_D, TEX_SIZEDEF_D,	0, 0},													// GX_VRAM_TEX_0_D
+	{TEX_ADRSDEF_A,	TEX_SIZEDEF_A,	TEX_ADRSDEF_D, TEX_SIZEDEF_D},	// GX_VRAM_TEX_01_AD
+	{TEX_ADRSDEF_B,	TEX_SIZEDEF_B,	TEX_ADRSDEF_D, TEX_SIZEDEF_D},	// GX_VRAM_TEX_01_BD
+	{TEX_ADRSDEF_A,	TEX_SIZEDEF_AB,	TEX_ADRSDEF_D, TEX_SIZEDEF_D},	// GX_VRAM_TEX_012_ABD
+	{TEX_ADRSDEF_C, TEX_SIZEDEF_CD,	0, 0},													// GX_VRAM_TEX_01_CD
+	{TEX_ADRSDEF_A, TEX_SIZEDEF_A,	TEX_ADRSDEF_C, TEX_SIZEDEF_CD},	// GX_VRAM_TEX_012_ACD
+	{TEX_ADRSDEF_B, TEX_SIZEDEF_BCD, 0, 0},													// GX_VRAM_TEX_012_BCD
+	{TEX_ADRSDEF_A, TEX_SIZEDEF_ABCD, 0, 0},												// GX_VRAM_TEX_0123_ABCD
+};
+
+BOOL	GFL_MCS_Resident_SendTexVramStatus(void)
+{
+	MCSRSDCOMM_HEADER* commHeader = (MCSRSDCOMM_HEADER*)MCSRSD_sendBuffer;
+	MCSDATA_TEXVRAMSTATUS* vStatus;
+  u32 blk1adrs, blk2adrs, blk1size, blk2size;
+	u32 sendSize;
+	GXVRamTex stTex = (GXVRamTex)(0);
+	int i;
+
+	commHeader->comm = MCSRSDCOMM_VRAMSTATUS;
+
+	vStatus = (MCSDATA_TEXVRAMSTATUS*)&commHeader->param;
+
+  //テクスチャスロットをLCDCスペースに割り振る + 現在の割り振り状態を取得
+  stTex = GX_ResetBankForTex();
+	vStatus->type = stTex;
+
+	// VRAM情報作成＆転送
+	blk1adrs = (u32)sTexStartAddrTable[stTex].blk1adrs;
+	blk1size = (u32)sTexStartAddrTable[stTex].blk1size;
+	blk2adrs = (u32)sTexStartAddrTable[stTex].blk2adrs;
+	blk2size = (u32)sTexStartAddrTable[stTex].blk2size;
+
+	vStatus->size1 = blk1size;
+	vStatus->size2 = blk2size;
+	sendSize = sizeof(MCSRSDCOMM_HEADER_SIZE) + sizeof(MCSRSDCOMM_HEADER);
+	GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
+			
+	if(vStatus->size1){
+		GFL_MCS_Write(GFL_MCS_RESIDENT_ID, (void*)(blk1adrs << 12), (blk1size << 12));
+	}
+	if(vStatus->size2){
+		GFL_MCS_Write(GFL_MCS_RESIDENT_ID, (void*)(blk2adrs << 12), (blk2size << 12));
+	}
+
+	// テクスチャスロットの復帰
+	GX_SetBankForTex(stTex);
+
+	return TRUE;
+}
+
 
 #endif
 
