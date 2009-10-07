@@ -414,7 +414,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/gym_anti.c \
         field/gym_fly.c \
         field/sodateya.c \
-        field/scrcmd_hiden.c
+        field/scrcmd_hiden.c \
+        field/fldeff_ripple.c
 
 
 # フィールド天気

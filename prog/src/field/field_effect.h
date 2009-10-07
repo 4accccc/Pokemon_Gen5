@@ -32,6 +32,7 @@ typedef enum
   FLDEFF_PROCID_GYOE, ///<‚Ñ‚Á‚­‚èƒ}[ƒN
   FLDEFF_PROCID_FOOTMARK, ///<‘«Õ
   FLDEFF_PROCID_REFLECT, ///<‰f‚èž‚Ý
+  FLDEFF_PROCID_RIPPLE, ///<…”g–ä
   FLDEFF_PROCID_MAX, ///<Å‘å
 }FLDEFF_PROCID;
 
