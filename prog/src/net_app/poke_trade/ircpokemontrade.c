@@ -620,13 +620,13 @@ static void _pokemonStatusStart(IRC_POKEMON_TRADE* pWork)
   IRCPOKETRADE_PokeDeleteMcss(pWork,1);  //相手のを消す
 
   IRC_POKETRADEDEMO_RemoveModel( pWork);  //リールを消す
-  IRC_POKETRADE_MessageWindowClose(pWork);  //下のメッセージを消す
+  IRC_POKETRADE_MessageWindowClear(pWork);  //下のメッセージを消す
 
   
   if(1){//自分の位置調整
     VecFx32 apos;
     MCSS_GetPosition( pWork->pokeMcss[0] ,&apos );
-    apos.x = _MCSS_POS_X(200);
+    apos.x = _MCSS_POS_X(205);
     apos.y = _MCSS_POS_Y(100);
     apos.z = 1000;
     MCSS_SetPosition( pWork->pokeMcss[0] ,&apos );

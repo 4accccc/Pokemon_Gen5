@@ -33,6 +33,13 @@
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
 
 
+
+#define _CLACT_SOFTPRI_POKESEL_BAR  (3)
+#define _CLACT_SOFTPRI_SCROLL_BAR  (4)
+#define _CLACT_SOFTPRI_POKELIST  (5)
+
+
+
 static void IRC_POKETRADE_TrayInit(IRC_POKEMON_TRADE* pWork,int subchar);
 static void IRC_POKETRADE_TrayExit(IRC_POKEMON_TRADE* pWork);
 static int _DotToLine(int pos);
@@ -452,7 +459,7 @@ void IRC_POKETRADE_CreatePokeIconResource(IRC_POKEMON_TRADE* pWork)
         cellInitData.pos_x = 0;
         cellInitData.pos_y = 0;
         cellInitData.anmseq = POKEICON_ANM_HPMAX;
-        cellInitData.softpri = 0;
+        cellInitData.softpri = _CLACT_SOFTPRI_POKELIST;
         cellInitData.bgpri = 1;
 
         pWork->pokeIconNcgRes[line][i] = GFL_CLGRP_CGR_Register( arcHandlePoke ,NARC_poke_icon_poke_icon_tam_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
@@ -565,7 +572,6 @@ static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_DATA* boxData ,
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
       }
       else if(pWork->pokeIconNo[k][i] != monsno){
-        GFL_CLWK_DATA cellInitData;
         u8 pltNum;
         GFL_CLACTPOS pos;
         NNSG2dImageProxy aproxy;
@@ -1189,7 +1195,6 @@ void IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE type)
 
 void IRC_POKETRADE_InitBoxCursor(IRC_POKEMON_TRADE* pWork)
 {
-  GFL_CLWK_DATA cellInitData;
   u8 pltNum,i;
   GFL_CLACTPOS pos;
 
@@ -1216,6 +1221,7 @@ void IRC_POKETRADE_InitBoxCursor(IRC_POKEMON_TRADE* pWork)
     cellInitData.pos_x = 128;
     cellInitData.pos_y = CONTROL_PANEL_Y;
     cellInitData.anmseq = 2;
+    cellInitData.softpri = _CLACT_SOFTPRI_SCROLL_BAR;
     cellInitData.bgpri = 1;
     pWork->curIcon[2] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                              pWork->cellRes[CHAR_SCROLLBAR],
@@ -1251,6 +1257,7 @@ void IRC_POKETRADE_SetMainStatusBG(IRC_POKEMON_TRADE* pWork)
     cellInitData.pos_x = 128;
     cellInitData.pos_y = 16;
     cellInitData.anmseq = CELL_CUR_POKE_SELECT;
+    cellInitData.softpri = _CLACT_SOFTPRI_POKESEL_BAR;
     cellInitData.bgpri = 1;
     pWork->curIcon[CELL_CUR_POKE_SELECT] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                                 pWork->cellRes[CHAR_SCROLLBAR],
@@ -1260,6 +1267,36 @@ void IRC_POKETRADE_SetMainStatusBG(IRC_POKEMON_TRADE* pWork)
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_SELECT] , TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT], TRUE );
   }
-
-  
+/*
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 128;
+    cellInitData.pos_y = 16;
+    cellInitData.anmseq = CELL_CUR_POKE_SELECT;
+    cellInitData.softpri = _CLACT_SOFTPRI_POKESEL_BAR;
+    cellInitData.bgpri = 1;
+    pWork->curIcon[CELL_CUR_POKE_PLAYER] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                                pWork->cellRes[CHAR_SCROLLBAR],
+                                                                pWork->cellRes[PAL_SCROLLBAR],
+                                                                pWork->cellRes[ANM_SCROLLBAR],
+                                                                &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_PLAYER] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_PLAYER], TRUE );
+  }
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 128;
+    cellInitData.pos_y = 16;
+    cellInitData.anmseq = CELL_CUR_POKE_SELECT;
+    cellInitData.softpri = _CLACT_SOFTPRI_POKESEL_BAR;
+    cellInitData.bgpri = 1;
+    pWork->curIcon[CELL_CUR_POKE_SELECT] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                                pWork->cellRes[CHAR_SCROLLBAR],
+                                                                pWork->cellRes[PAL_SCROLLBAR],
+                                                                pWork->cellRes[ANM_SCROLLBAR],
+                                                                &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_SELECT] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT], TRUE );
+  }
+  */
 }
