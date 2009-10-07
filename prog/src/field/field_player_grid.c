@@ -1592,7 +1592,7 @@ static void gjikiCycle_SetMove_Walk(
   if( debug_flag == TRUE ){
     code = AC_WALK_U_2F;
   }else{
-    code = AC_WALK_U_4F;
+    code = AC_WALK_U_2F;
   }
   
   code = MMDL_ChangeDirAcmdCode( dir, code );
