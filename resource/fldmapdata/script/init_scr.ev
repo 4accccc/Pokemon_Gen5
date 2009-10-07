@@ -37,7 +37,7 @@ SP_EVENT_START  ev_init_script
 	//自宅２階：サポート（後から出現するため）
 	_FLAG_SET( FV_T01R0102_SUPPORT )
 
-
-
+	//サンヨウシティジム：ジムリーダー２人（演出で出現するため）
+	_FLAG_SET( FV_C01GYM0101_LEADERS )
 
 SP_EVENT_END
