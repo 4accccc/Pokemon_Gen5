@@ -689,7 +689,8 @@ static void DEBUG_SetSTRBUF_ZoneIDName(u32 heapID, u32 zoneID, STRBUF *strBuf );
 ///「ジャンプ」コマンドで選択可能なゾーンID
 static const u16 JumpZoneID_ListTbl[] = {
   ZONE_ID_UNION,
-  ZONE_ID_PALACETEST,
+  ZONE_ID_PALACE01,
+  ZONE_ID_PALACE02,
 };
 
 //--------------------------------------------------------------
