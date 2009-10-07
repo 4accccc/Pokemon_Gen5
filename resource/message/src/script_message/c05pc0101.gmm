@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-08-04T11:27:08"/>
+	<create user="matsumiya" host="W00207" date="2009-10-07T15:58:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,8 +292,9 @@
 	</lock>
 
 
-	<row id="msg_c05pc0101_middlewoman1_01">
-		<comment>♀</comment>
+	<row id="msg_c05pc0101_middlewoman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN1
 おばさん</attribute>
 		<language name="JPN" width="256">ホドモエ　めいぶつの
@@ -302,8 +303,9 @@
 マーケットには　行ったかい？</language>
 	</row>
 
-	<row id="msg_c05pc0101_girl1_01">
-		<comment>♂</comment>
+	<row id="msg_c05pc0101_girl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">GIRL1
 少女</attribute>
 		<language name="JPN" width="256">ヤーコンさんは　いっけん
