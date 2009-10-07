@@ -5,6 +5,7 @@
 #---------------------------------------------------------------
 #	共通ルールファイルのインクルード
 #---------------------------------------------------------------
+USERS = kagaya takahashi
 include $(PROJECT_RSCDIR)/macro_define
 
 #---------------------------------------------------------------
@@ -30,10 +31,16 @@ CSVCVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 #---------------------------------------------------------------
 do-build: $(TARGET)
 
-$(TARGET): $(XLS_ROCKPOS) $(ZONEID_HEADER) $(OBJID_HEADER)
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
+$(CSV_ROCKPOS): $(XLS_ROCKPOS)
 	@$(CSVCVTR) -o $(CSV_ROCKPOS) -p 1 -s csv $(XLS_ROCKPOS)
+endif
+
+$(TARGET): $(CSV_ROCKPOS) $(ZONEID_HEADER) $(OBJID_HEADER)
 	@ruby rockpos.rb $(CSV_ROCKPOS) $(TARGET)
 	
 clean:
 	-rm -f $(TARGET)
+ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	-rm -f $(CSV_ROCKPOS)
+endif
