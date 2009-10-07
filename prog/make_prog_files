@@ -638,9 +638,6 @@ SRCS_OVERLAY_IRCBATTLEMATCH = net_app/irc_match/ircbattlematch.c \
 								net_app/poke_trade/ircpoketrade_3d.c \
 								net_app/poke_trade/ircpoketrade_gra.c
 
-# バトル大会
-#===> SRCS_OVERLAY_BATTLE
-SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = net_app/irc_battle/irc_battle_main.c
 
 # 不思議な贈り物
 #===> SRCS_OVERLAY_DEV_WIFI
