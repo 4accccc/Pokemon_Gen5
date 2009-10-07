@@ -66,7 +66,6 @@ struct _TAG_FLDEFF_SHADOW
   GFL_G3D_RND *g3d_rnd;
   GFL_G3D_OBJ *g3d_obj;
   
-  VecFx32 rotate;
   VecFx32 scale;
 };
 
@@ -169,26 +168,6 @@ void FLDEFF_SHADOW_Delete( FLDEFF_CTRL *fectrl, void *work )
 	FLDEFF_SHADOW *sd = work;
   shadow_DeleteResource( sd );
   GFL_HEAP_FreeMemory( sd );
-}
-
-//--------------------------------------------------------------
-/**
- * ‰e@ƒOƒ[ƒoƒ‹‰ñ“]Šp“x‚ðŽw’è
- * @param fectrl FLDEFF_CTRL
- * @param rot_x XŽ²Šp“x
- * @param rot_y YŽ²Šp“x
- * @param rot_z ZŽ²Šp“x
- * @retval nothing
- */
-//--------------------------------------------------------------
-void FLDEFF_SHADOW_SetGlobalRotate(
-    FLDEFF_CTRL *fectrl, u16 rot_x, u16 rot_y, u16 rot_z )
-{
-	FLDEFF_SHADOW *sd = FLDEFF_CTRL_GetEffectWork(
-      fectrl, FLDEFF_PROCID_SHADOW  );
-  sd->rotate.x = rot_x;
-  sd->rotate.y = rot_y;
-  sd->rotate.z = rot_z;
 }
 
 //--------------------------------------------------------------
@@ -374,9 +353,9 @@ static void shadowTask_Draw( FLDEFF_TASK *task, void *wk )
     MTX_Identity33( &status.rotate );
     #else //‰ñ“]‰Â”\‚É
     {
-      const VecFx32 *rot = &work->eff_shadow->rotate;
+      u16 camera_yaw = MMDLSYS_GetTargetCameraAngleYaw( MMDL_GetMMdlSys( work->fmmdl ) );
       GFL_CALC3D_MTX_CreateRot(
-          (u16)rot->x, (u16)rot->y, (u16)rot->z, &status.rotate );
+          0, camera_yaw, 0, &status.rotate );
       status.scale = work->eff_shadow->scale;
     }
     #endif

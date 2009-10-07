@@ -180,13 +180,23 @@ void FLDEFF_GRASS_SetMMdl( FLDEFF_CTRL *fectrl, MMDL *fmmdl, BOOL anm )
   MMDL_TOOL_GetCenterGridPos( head.init_gx, head.init_gz, &pos );
   pos.y = MMDL_GetVectorPosY( fmmdl );
   
-  MMDL_GetMapPosHeight( fmmdl, &pos, &h );
-  pos.y = h;
+  // レール動作の設定
+  if( MMDL_CheckStatusBit( fmmdl, MMDL_STABIT_RAIL_MOVE ) )
+  {
+    pos.y += FX32_CONST(4);  
+  }
+  // グリッド動作の設定
+  else
+  {
+    MMDL_GetMapPosHeight( fmmdl, &pos, &h );
+    pos.y = h;
+    
+    pos.y += NUM_FX32(4);
+    pos.z += NUM_FX32(12);
+  }
   
-  pos.y += NUM_FX32(4);
-  pos.z += NUM_FX32(12);
   head.pos = pos;
-  
+
   FLDEFF_CTRL_AddTask(
       fectrl, &DATA_grassTaskHeader, NULL, anm, &head, 0 );
 }

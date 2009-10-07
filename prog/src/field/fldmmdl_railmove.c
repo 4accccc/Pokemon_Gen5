@@ -22,7 +22,7 @@
 #include "fldeff_footmark.h"
 #include "fldeff_reflect.h"
 
-#define MMDL_RAIL_NULL  // fldmmdl_moveから持ってきた、今後組み込む可能性がある処理
+//#define MMDL_RAIL_NULL  // fldmmdl_moveから持ってきた、今後組み込む可能性がある処理
 
 //-----------------------------------------------------------------------------
 /**
@@ -53,7 +53,7 @@ static BOOL MMdl_UpdateCurrentRailAttr( MMDL * mmdl );
 
 
 // アトリビュート関係
-// 形だけで、中身は未実装　090826 tomoya
+// @TODO 形だけで、中身は未実装　090826 tomoya
 static void MMdl_MapAttrProc_MoveStartFirst( MMDL * mmdl );
 static void MMdl_MapAttrProc_MoveStartSecond( MMDL * mmdl );
 static void MMdl_MapAttrProc_MoveStartJumpSecond( MMDL * mmdl );
