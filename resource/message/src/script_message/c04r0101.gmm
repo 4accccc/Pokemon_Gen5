@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T16:55:23"/>
+	<create user="matsumiya" host="W00207" date="2009-10-07T12:39:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,55 @@
 	</lock>
 
 
-	<row id="msg_c04r0101_test1_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c04r0101_railman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">RAILMAN
+鉄道員</attribute>
+		<language name="JPN" width="256">こちら　ギアステーションからは
+バトルサブウェイに　のれますよ！</language>
+		<language name="JPN_KANJI" width="256">こちら　ギアステーションからは
+バトルサブウェイに　乗れますよ！</language>
+	</row>
+
+	<row id="msg_c04r0101_railman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">RAILMAN
+鉄道員</attribute>
+		<language name="JPN" width="256">バトルサブウェイ！[BE:01:ページ切り替え（クリア）]
+そのなのとおり　トレーナーが
+しょうぶを　くりひろげる　ちかてつです</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイ！[BE:01:ページ切り替え（クリア）]
+その名のとおり　トレーナーが
+勝負を　繰り広げる　地下鉄です</language>
+	</row>
+
+	<row id="msg_c04r0101_fighterm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・仮メッセージ
+・エンディング前</comment>
+		<attribute name="キャラ指定">FIGHTERM</attribute>
+		<language name="JPN" width="256">バトルサブウェイは
+ぜんぶで　７ろせん！[BE:01:ページ切り替え（クリア）]
+だが　まだ　こうじちゅうで
+のれるのは　１ろせんのみ　だそうだ</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイは　全７路線！[BE:01:ページ切り替え（クリア）]
+だが　まだ工事中で
+乗れるのは　１路線のみ　だそうだ</language>
+	</row>
+
+	<row id="msg_c04r0101_fighterm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・仮メッセージ
+・エンディング後</comment>
+		<language name="JPN" width="256">バトルサブウェイは
+ぜんぶで　７ろせん！[BE:01:ページ切り替え（クリア）]
+このホームから　とおくなるにつれて
+てごわい　トレーナーが　のっている</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイは　全７路線！[BE:01:ページ切り替え（クリア）]
+このホームから　遠くなるにつれて
+手ごわい　トレーナーが　乗っている</language>
 	</row>
 
 	<flowchart-group-list>

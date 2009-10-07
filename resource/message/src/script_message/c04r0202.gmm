@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-09-14T12:45:01"/>
+	<create user="matsumiya" host="W00207" date="2009-10-06T21:06:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -300,16 +300,22 @@
 	</row>
 
 	<row id="msg_mus_01_001">
-		<language name="JPN" width="256">まずは　ドレスアップ。</language>
-		<language name="JPN_KANJI" width="256">まずは　ドレスアップ。</language>
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">まずは　ドレスアップ！</language>
+		<language name="JPN_KANJI" width="256">まずは　ドレスアップ！</language>
 	</row>
 
 	<row id="msg_mus_02_001">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">ミュージカル　はじまるよ～</language>
 		<language name="JPN_KANJI" width="256">ミュージカル　始まるよ～</language>
 	</row>
 
 	<row id="msg_mus_03_001">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">おつかれさま～</language>
 		<language name="JPN_KANJI" width="256">お疲れさま～</language>
 	</row>
