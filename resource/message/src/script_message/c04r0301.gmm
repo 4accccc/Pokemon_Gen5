@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T17:11:48"/>
+	<create user="matsumiya" host="W00207" date="2009-10-07T15:04:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="186"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,72 @@
 	</lock>
 
 
-	<row id="msg_c04r0301_test1_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c04r0301_infomationw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・仮メッセージ
+・月曜日</comment>
+		<attribute name="キャラ指定">INFOMATIONW
+受付♀</attribute>
+		<language name="JPN" width="256">ほんじつ　しあいは　ございませんが
+かんきゃくせきから　せんしゅの[BE:00:ページ切り替え（行送り）]
+れんしゅうを　みることは　できますよ</language>
+		<language name="JPN_KANJI" width="256">本日　試合は　ございませんが
+選手の　練習をみることは　できますよ</language>
+	</row>
+
+	<row id="msg_c04r0301_infomationw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・仮メッセージ
+・月曜日以外</comment>
+		<language name="JPN" width="256">ほんじつ　しあいは　ございませんが
+かんきゃくせきから　せんしゅの[BE:00:ページ切り替え（行送り）]
+れんしゅうを　みることは　できますよ</language>
+		<language name="JPN_KANJI" width="256">本日　試合は　ございませんが
+選手の　練習をみることは　できますよ</language>
+	</row>
+
+	<row id="msg_c04r0301_trainerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">こどものころってさ　やきゅうせんしゅや
+スポーツせんしゅに　あこがれるよな</language>
+		<language name="JPN_KANJI" width="256">子供のころってさ　野球選手や
+スポーツ選手に　あこがれるよな</language>
+	</row>
+
+	<row id="msg_c04r0301_ol_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">OL</attribute>
+		<language name="JPN" width="256">すきな　せんしゅと
+おそろいの　ポケモン　そだてているの</language>
+		<language name="JPN_KANJI" width="256">好きな　選手と
+おそろいの　ポケモン　育てているの</language>
+	</row>
+
+	<row id="msg_c04r0301_boy2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">ぼくも　あの　ピッチャーのように
+モンスターボールを　なげたいな</language>
+		<language name="JPN_KANJI" width="256">ぼくも　あの　ピッチャーのように
+モンスターボールを　なげたいな</language>
+	</row>
+
+	<row id="msg_c04r0301_baseballm_01">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BASEBALLM</attribute>
+		<language name="JPN" width="256">あはは！　てを　けがしているから
+サインは　できないんだ！　ごめん！[BE:01:ページ切り替え（クリア）]
+で　キミは　トレーナーカードに
+どんな　サインを　かいているのかな？</language>
+		<language name="JPN_KANJI" width="256">あはは！　手を　怪我しているから
+サインは　できないんだ！　ごめん！[BE:01:ページ切り替え（クリア）]
+で　キミは　トレーナーカードに
+どんな　サインを　かいているのかな？</language>
 	</row>
 
 	<flowchart-group-list>
