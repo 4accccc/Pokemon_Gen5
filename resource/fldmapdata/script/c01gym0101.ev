@@ -7,10 +7,9 @@
 //======================================================================
 
   .text
-
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c01gym0101.h"
-  //.include  "c01gym0101.h"
+  .include  "c01gym0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -26,6 +25,7 @@ _EVENT_DATA		ev_c01gym0101_pokezou_02
 _EVENT_DATA		ev_c01gym0101_leader1_01
 _EVENT_DATA		ev_c01gym0101_leader1_02
 _EVENT_DATA		ev_c01gym0101_leader1_03
+_EVENT_DATA		ev_pos_c01gym0101_leader_battle
 _EVENT_DATA_END
 
 
@@ -46,69 +46,177 @@ ev_c01gym0101:
 /*     ジム前のサングラス男  ジムバッジ入手前                 */
 /**************************************************************/
 EVENT_START		ev_c01gym0101_sunglasses_01
-	_EASY_TALK_ITEM_EVENT(ITEM_OISIIMIZU, 1, FH_01, msg_c01gym0101_glasses_01, msg_c01gym0101_glasses_02, msg_c01gym0101_glasses_02 )
+	
+	//分岐処理・ジムバッジのフラグが０か１か
+
+	//ジムバッジフラグが０の場合
+	
+		_EASY_TALK_ITEM_EVENT(ITEM_OISIIMIZU, 1, FH_01, msg_c01gym0101_glasses_01, msg_c01gym0101_glasses_02, msg_c01gym0101_glasses_02 )	
+		
+	//ジムバッジフラグがそれ以外の場合
+	
+		//ジムバッジを　てにいれた　きょう　という　すばらしい　ひを
+	
 EVENT_END
 
 /**************************************************************/
-/*     ポケモン像１  ジムバッジ入手前 		                  */
+/*     ポケモン像１  	      					              */
 /**************************************************************/
 EVENT_START		ev_c01gym0101_pokezou_01
-	_EASY_MSG( msg_c01gym0101_statue_01 )
+
+	//分岐処理・ジムバッジのフラグが０か１か
+
+	//ジムバッジフラグが０の場合
+		
+		_EASY_MSG( msg_c01gym0101_statue_01 )
+	
+	//ジムバッジフラグがそれ以外の場合　ジムクリア
+		
+		//分岐処理・C02到着フラグが０の場合
+		
+			//_EASY_MSG( msg_c01gym0101_statue_02 )
+		
+		//C02到着フラグがそれ以外の場合
+
+			//_EASY_MSG( msg_c01gym0101_statue_03 )
+
 EVENT_END
 
 /**************************************************************/
-/*     ポケモン像２  ジムバッジ入手前 		                  */
+/*     ポケモン像２  						                  */
 /**************************************************************/
 EVENT_START		ev_c01gym0101_pokezou_02
-	_EASY_MSG( msg_c01gym0101_statue_01 )
+
+	//分岐処理・ジムバッジのフラグが０か１か
+
+	//ジムバッジフラグが０の場合
+		
+		//_EASY_MSG( msg_c01gym0101_statue_01 )
+	
+	//ジムバッジフラグがそれ以外の場合　ジムクリア
+
+		//分岐処理・C02到着していないなら
+		IF FLAG_OFF ( SYS_FLAG_ARRIVE_C02 ) THEN
+			_EASY_MSG( msg_c01gym0101_statue_02 )
+		
+		ELSE
+		//C02到着している場合
+			_EASY_MSG( msg_c01gym0101_statue_03 )
+		
+		ENDIF
+		
 EVENT_END
 
 /**************************************************************/
 /*     コーン・ポッド・デント	ジムバトル　ＰＯＳ発動        */
 /**************************************************************/
-//EVENT_START	
-
-	//POSを踏む
+EVENT_START	ev_pos_c01gym0101_leader_battle
+	
+	//ローカル変数を定義
+	DEFINE_LOCAL	HERO_X
+	DEFINE_LOCAL	HERO_Z
+	
+	//自機の位置取得
+	_PLAYER_POS_GET( HERO_X,HERO_Z )
+	
+	IF $HERO_X == 11 THEN
+	//X軸が11グリッドの場合
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_11 )
+		_OBJ_ANIME_WAIT()
+	ELSIF $HERO_X == 12 THEN
+	//X軸が12グリッドの場合
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_12 )
+		_OBJ_ANIME_WAIT()
+	ELSE
+	//X軸が13グリッドの場合
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_13 )
+		_OBJ_ANIME_WAIT()
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//コーン：その場ジャンプ
+	_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_leader_jump )
+	_OBJ_ANIME_WAIT()
 	
 	//ようこそ！！　サンヨウシティ　ポケモンジムへ！
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_01 , C01GYM0101_LEADER1_01 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 	
-	//ポッドとデントのバニッシュフラグをreset
 	
+	//ポッドとデントのバニッシュフラグをreset、オブジェクトを出現させる。
+	_FLAG_RESET( FV_C01GYM0101_LEADERS )
+	_OBJ_ADD( C01GYM0101_LEADER1_02 )
+	_OBJ_ADD( C01GYM0101_LEADER1_03 )
+
 	//ポッドとデント：コーンから左右に１マス展開し、自機の方に向く
+	_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_pod_tenkai )
+	_OBJ_ANIME( C01GYM0101_LEADER1_03, anm_dento_tenkai )
+	_OBJ_ANIME_WAIT()
 	
-	//オレたちは　それぞれ
+	//コーン：その場ジャンプ
+	_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_leader_jump )
+	_OBJ_ANIME_WAIT()
+	
+	//オレたちは　それぞれ		
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_02 , C01GYM0101_LEADER1_01 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 	
 	//ポッド：くるっとその場で回る
-	
+	_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_leader_turn )
+	_OBJ_ANIME_WAIT()
+
 	//オレは　ほのおタイプの　ポケモンで
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_03a , C01GYM0101_LEADER1_02 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 	
 	//コーン：くるっとその場で回る
+	_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_leader_turn )
+	_OBJ_ANIME_WAIT()	
 	
 	//みずタイプの　ポケモンが　すきな
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_03b , C01GYM0101_LEADER1_01 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()	
 	
 	//デント：くるっとその場で回る
+	_OBJ_ANIME( C01GYM0101_LEADER1_03, anm_leader_turn )
+	_OBJ_ANIME_WAIT()		
 	
 	//そして　オレが　くさタイプの
-	
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_03c , C01GYM0101_LEADER1_03 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()	
+
 	//三人一斉にその場ジャンプ
+	_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_leader_jump )
+	_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_leader_jump )
+	_OBJ_ANIME( C01GYM0101_LEADER1_03, anm_leader_jump )
+	_OBJ_ANIME_WAIT()	
 	
 	//オレたち　３人は！
-	
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_04 , C01GYM0101_LEADER1_01 )
+	_AB_KEYWAIT()
+	_BALLOONWIN_CLOSE()	
+
 	//分岐処理・最初に選んだポケモンから苦手なタイプになる
-		
-		
-		
 		
 		//くさタイプ選択の場合
 		
 		//ポッド：自機の前に移動
+		_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_pod_move )
+		_OBJ_ANIME_WAIT()	
 		
 		//コーン：場所をポッドと交代
+		_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_corn_podchange )
+		_OBJ_ANIME_WAIT()		
 	
 		//ということで　ほのおタイプの
-		
-		
-		
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_05a , C01GYM0101_LEADER1_02 )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()			
 		
 		//ほのおタイプ選択の場合
 		
@@ -125,106 +233,206 @@ EVENT_END
 	
 		//ということで　くさタイプを
 
-//EVENT_END
+	//wkに１追加
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	ジムリーダー　その場ジャンプ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_leader_jump
+	_ANIME_DATA	AC_STAY_JUMP_D_16F,1
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	ジムリーダー　その場ターン
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_leader_turn
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	自機　近づく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_player_tikaduku_11
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_player_tikaduku_12
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_tikaduku_13
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	ポッド・デント　左右展開
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_pod_tenkai
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_dento_tenkai
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	コーン・ポッド・デント　自機前移動
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_corn_move
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_pod_move
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dento_move
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	コーン　場所交代
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_corn_podchange
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_corn_dentochange
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*         ジムリーダーコーン（画面中央）  戦闘前             */
 /**************************************************************/
-//EVENT_START		ev_c01gym0101_leader1_01
-		//さんにんの　なかで　いちばん　つよい　オレが
-		
-		//戦闘処理
+EVENT_START		ev_c01gym0101_leader1_01
 
-		//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
+		//分岐処理・ジムバッジのフラグが０か１か
 
-		//～～は　コーンから　トライバッジを　もらった
+		//ジムバッジフラグが０の場合
+
+			//さんにんの　なかで　いちばん　つよい　オレが
+			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20b )
+			_AB_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			
+			//戦闘処理
+
+			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06b , C01GYM0101_LEADER1_01 )
+			_AB_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+
+			//～～は　コーンから　トライバッジを　もらった
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07b , C01GYM0101_LEADER1_01 )
+			_AB_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+
+			//トライバッジ入手処理
 		
-		//トライバッジ入手処理
+			//ジムバッジは　トレーナーの　つよさの　あかし！
 		
-		//ジムバッジは　トレーナーの　つよさの　あかし！
+			//その　わざマシンの　なかみは　～～！！
 		
-		//その　わざマシンの　なかみは　～～！！
+			//ジムバッジフラグに１代入
 		
-		//バニッシュフラグセット
+		//ジムバッジフラグがそれ以外の場合
 		
-		//バニッシュフラグリセット
+			//オレたち　イッシュちほう　では　まだまだ　かけだしの　ジムリーダー
 		
-//EVENT_END
+EVENT_END
 		
 /**************************************************************/
 /*         ジムリーダーポッド（画面左）  戦闘前	              */
 /**************************************************************/
-//EVENT_START		ev_c01gym0101_leader1_02
-		//さんにんの　なかで　いちばん　つよい　オレが
-		
-		//戦闘処理
+EVENT_START		ev_c01gym0101_leader1_02
 
-		//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
+		//分岐処理・ジムバッジのフラグが０か１か
 
-		//～～は　ポッドから　トライバッジを　もらった
+		//ジムバッジフラグが０の場合
+
+			//さんにんの　なかで　いちばん　つよい　オレが
 		
-		//トライバッジ入手処理
+			//戦闘処理
+
+			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
+
+			//～～は　ポッドから　トライバッジを　もらった
 		
-		//ポッド：コーンの場所へ移動
+			//トライバッジ入手処理
 		
-		//コーン：自機の前に移動
+			//ポッド：コーンの場所へ移動
 		
-		//ジムバッジは　トレーナーの　つよさの　あかし！
+			//コーン：自機の前に移動
 		
-		//その　わざマシンの　なかみは　～～！！
+			//ジムバッジは　トレーナーの　つよさの　あかし！
 		
-		//バニッシュフラグセット
+			//その　わざマシンの　なかみは　～～！！
 		
-		//バニッシュフラグリセット
-				
-//EVENT_END
+			//ジムバッジフラグに１代入
+			
+		//ジムバッジのフラグがそれ以外の場合
+			
+			//わざマシンは　なんどだって　つかえると　いうことは
+		
+EVENT_END
 
 /**************************************************************/
 /*         ジムリーダーデント（画面右）  戦闘前	              */
 /**************************************************************/
-//EVENT_START		ev_c01gym0101_leader1_03
-		//さんにんの　なかで　いちばん　つよい　オレが
-		
-		//戦闘処理
-
-		//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
-
-		//～～は　デントから　トライバッジを　もらった
-		
-		//トライバッジ入手処理
-		
-		//デント：コーンの場所へ移動
-		
-		//コーン：自機の前に移動
-		
-		//ジムバッジは　トレーナーの　つよさの　あかし！
-		
-		//その　わざマシンの　なかみは　～～！！
-		
-		//バニッシュフラグセット
-		
-		//バニッシュフラグリセット
-		
-//EVENT_END
-
-/**************************************************************/
-/*         ジムリーダーコーン（画面中央）戦闘後               */
-/**************************************************************/
-EVENT_START		ev_c01gym0101_leader1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1_10 )
-EVENT_END
-
-/**************************************************************/
-/*         ジムリーダーポッド（画面左）  戦闘後               */
-/**************************************************************/
-EVENT_START		ev_c01gym0101_leader1_02
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1_11 )
-EVENT_END
-
-/**************************************************************/
-/*         ジムリーダーデント（画面右）  戦闘後               */
-/**************************************************************/
 EVENT_START		ev_c01gym0101_leader1_03
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1_12 )
+
+		//分岐処理・ジムバッジのフラグが０か１か
+
+		//ジムバッジフラグが０の場合
+
+			//さんにんの　なかで　いちばん　つよい　オレが
+		
+			//戦闘処理
+
+			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
+
+			//～～は　デントから　トライバッジを　もらった
+		
+			//トライバッジ入手処理
+		
+			//デント：コーンの場所へ移動
+		
+			//コーン：自機の前に移動
+		
+			//ジムバッジは　トレーナーの　つよさの　あかし！
+		
+			//その　わざマシンの　なかみは　～～！！
+		
+			//ジムバッジフラグに１代入
+			
+		//ジムバッジフラグが１の場合
+			
+		//オレたちが　もし　１７にん　きょうだい　だったら
+		
 EVENT_END
 
