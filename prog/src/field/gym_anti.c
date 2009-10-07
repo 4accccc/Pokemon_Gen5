@@ -70,7 +70,7 @@ void GYM_ANTI_End(FIELDMAP_WORK *fieldWork)
   //”Ä—pƒ[ƒN‰ð•ú
   GMK_TMP_WK_FreeWork(fieldWork, GYM_ANTI_TMP_ASSIGN_ID);
   //‚n‚a‚i‰ð•ú
-  FLD_EXP_OBJ_DelUnit( ptr, GYM_ANTI_UNIT_IDX );
+///  FLD_EXP_OBJ_DelUnit( ptr, GYM_ANTI_UNIT_IDX );
 }
 
 //--------------------------------------------------------------
