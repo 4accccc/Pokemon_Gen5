@@ -63,10 +63,15 @@ module PmScript
     #---------------------------------------------
     def undef_all_var_alias( count )
       names = Array.new
-      while count < @alias_count
-        @alias_count -= 1
-        names << @alias_stack[@alias_count]
-        @alias_stack.delete_at(@alias_count)
+      now_count = @alias_count
+      #while count < @alias_count
+      while count < now_count
+        now_count -= 1
+        names << @alias_stack[now_count]
+        @alias_stack[now_count] = ""
+        #@alias_count -= 1
+        #names << @alias_stack[@alias_count]
+        #@alias_stack.delete_at(@alias_count)
       end
       return names
     end
