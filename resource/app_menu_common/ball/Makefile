@@ -39,7 +39,7 @@ RES_OBJ =  $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(cobject
 .SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
 
 .ncl.NCLR:
-	g2dcvtr $<
+	g2dcvtr $< -pcm
 	CP $*.NCLR ./../
 
 .ncg.NCGR:
