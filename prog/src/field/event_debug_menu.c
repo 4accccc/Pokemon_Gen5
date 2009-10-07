@@ -53,6 +53,9 @@
 
 #include "field_sound.h"
 
+#include "eventwork.h"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -170,6 +173,8 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_UITemplate( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk );
 
+static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk );
+
 //======================================================================
 //  デバッグメニューリスト
 //======================================================================
@@ -206,7 +211,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 	{ DEBUG_FIELD_STR40, debugMenuCallProc_ChangePlayerSex },
 	{	DEBUG_FIELD_STR42, debugMenuCallProc_WifiGts },
 	{	DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },
-	{ DEBUG_FIELD_STR01, NULL },
+  { DEBUG_FIELD_STR45, debugMenuCallProc_Kairiki },
 };
 
 //--------------------------------------------------------------
@@ -3242,4 +3247,23 @@ static GMEVENT_RESULT debugMenuUITemplate( GMEVENT *p_event, int *p_seq, void *p
 	}
 
 	return GMEVENT_RES_CONTINUE ;
+}
+
+//======================================================================
+//  怪力
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 怪力実行
+ * @param wk DEBUG_MENU_EVENT_WORK*
+ * @retval BOOL TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk )
+{
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+  EVENTWORK_SetEventFlag( evwork, SYS_FLAG_KAIRIKI );
+  return( FALSE );
 }
