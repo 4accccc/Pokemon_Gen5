@@ -34,8 +34,8 @@ typedef struct {
 
 #define MCSRSDCOMM_HEADER_SIZE (sizeof(MCSRSDCOMM_HEADER) - sizeof(u32))
 
-#define SENDBUF_SIZE (0x02000)
-#define RECVBUF_SIZE (0x02000)
+#define SENDBUF_SIZE (0x08000)
+#define RECVBUF_SIZE (0x08000)
 static u8 MCSRSD_sendBuffer[SENDBUF_SIZE];
 static u8 MCSRSD_recvBuffer[RECVBUF_SIZE];
 //============================================================================================
@@ -82,14 +82,19 @@ BOOL	GFL_MCS_Resident_SendHeapStatus(void)
 	int i;
 
 	commHeader->comm = MCSRSDCOMM_HEAPSTATUS;
+	commHeader->param = 0;
+	for(i=0; i<HEAPID_CHILD_MAX-1; i++){
+		if(GFI_HEAP_GetHeapTotalSize(i) != 0){ commHeader->param++; }
+	}
+	sendSize = sizeof(MCSRSDCOMM_HEADER_SIZE) + sizeof(u32);
+	GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
 
 	// ヒープ情報作成＆転送
 	for(i=0; i<HEAPID_CHILD_MAX-1; i++){
-		sendSize = GetExistMemoryBlocksInfo( i, (u32)&commHeader->param);
+		sendSize = GetExistMemoryBlocksInfo( i, (u32)MCSRSD_sendBuffer);
 		if(sendSize){
-			sendSize += MCSRSDCOMM_HEADER_SIZE;	// ヘッダ情報分加算
-			//OS_Printf("trans heapInfo ... size %x, heapID %d\n", sendSize, i);
 			GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
+			//OS_Printf("send Heap Status %d, %d\n", i, sendSize);
 		}
 	}
 	return TRUE;
@@ -316,7 +321,7 @@ static u32	GetExistMemoryBlocksInfo( HEAPID heapID, u32 pBuf )
 	heapStatus->numMemoryTotal = numMemoryTotal;
 	sendSize = (sizeof(MCSDATA_HEAPSTATUS) - sizeof(MCSDATA_HEAPBLOCKINFO)) 
 						+  sizeof(MCSDATA_HEAPBLOCKINFO) * numMemoryTotal;
-  if(sendSize > (SENDBUF_SIZE - MCSRSDCOMM_HEADER_SIZE)){
+  if(sendSize > SENDBUF_SIZE){
 		OS_Printf("ヒープ情報量が多すぎて転送できません HEAPID = &d", heapID);
 		return 0;		// オーバーフロー
 	}
@@ -405,7 +410,7 @@ BOOL	GFL_MCS_Resident_SendTexVramStatus(void)
 
 	vStatus->size1 = blk1size;
 	vStatus->size2 = blk2size;
-	sendSize = sizeof(MCSRSDCOMM_HEADER_SIZE) + sizeof(MCSRSDCOMM_HEADER);
+	sendSize = sizeof(MCSRSDCOMM_HEADER_SIZE) + sizeof(MCSDATA_TEXVRAMSTATUS);
 	GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
 			
 	if(vStatus->size1){
