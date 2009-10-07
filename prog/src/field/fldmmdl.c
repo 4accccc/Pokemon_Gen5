@@ -4722,7 +4722,7 @@ static int rockpos_GetPosNumber( const u16 zone_id, const u16 obj_id )
     o = DATA_MMDL_PushRockPosNum[i][1];
     
     if( z == zone_id && o == obj_id ){
-      return( i );
+      return( DATA_MMDL_PushRockPosNum[i][2] );
     }
     
     i++;

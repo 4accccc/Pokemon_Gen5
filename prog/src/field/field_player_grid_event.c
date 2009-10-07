@@ -312,7 +312,7 @@ static GMEVENT_RESULT event_Kairki( GMEVENT *event, int *seq, void *wk )
     (*seq)++;
     
     if( work->ana_flag == FALSE ){
-      (*seq) = 9;
+      (*seq) = 4;
     }
   
     PMSND_PlaySE( SEQ_SE_FLD_04 );
@@ -344,7 +344,7 @@ static GMEVENT_RESULT event_Kairki( GMEVENT *event, int *seq, void *wk )
       }
     }
     break;
-  case 3:
+  case 3: //‰ö—ÍŒŠ‚Í‚Ü‚è ’…’nŒã‚ÌU“®
     MMDL_SetVectorOuterDrawOffsetPos( work->mmdl, &work->offs );
     work->offs.y = -work->offs.y;
     work->frame++;
@@ -361,10 +361,11 @@ static GMEVENT_RESULT event_Kairki( GMEVENT *event, int *seq, void *wk )
       MMDL_InitPosition( work->mmdl, &pos, work->dir );
       MMDL_SetVectorOuterDrawOffsetPos( work->mmdl, &work->offs );
       MMDL_SetStatusBitHeightGetOFF( work->mmdl, FALSE );
-      (*seq) = 9;
+      MMDL_ROCKPOS_SavePos( work->mmdl );
+      (*seq)++;
     }
     break;
-  case 9:
+  case 4:
     return( GMEVENT_RES_FINISH );
   }
   

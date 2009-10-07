@@ -133,11 +133,12 @@ struct _TAG_FLDMSGWIN_STREAM
 {
 	GFL_BMPWIN *bmpwin;
 	FLDMSGPRINT_STREAM *msgPrintStream;
+  FLDMSGPRINT *msgPrint;
   const GFL_MSGDATA *msgData; //ユーザーから
   STRBUF *strBuf;
 	FLDMSGBG *fmb;
 };
-
+ 
 //======================================================================
 //	proto
 //======================================================================
@@ -1352,6 +1353,10 @@ void FLDMSGWIN_STREAM_Delete( FLDMSGWIN_STREAM *msgWin )
 	  FLDMSGPRINT_STREAM_Delete( msgWin->msgPrintStream );
   }
   
+  if( msgWin->msgPrint != NULL ){
+    FLDMSGPRINT_Delete( msgWin->msgPrint );
+  }
+
   GFL_STR_DeleteBuffer( msgWin->strBuf );
 	GFL_HEAP_FreeMemory( msgWin );
 }
@@ -1469,6 +1474,41 @@ void FLDMSGWIN_STREAM_WriteWindow( FLDMSGWIN_STREAM *msgWin )
 	BmpWinFrame_Write( msgWin->bmpwin,
       WINDOW_TRANS_ON, 1, FLDMSGBG_PANO_MENU );
   FLDMSGWIN_STREAM_ClearMessage( msgWin );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGWIN_STREAM メッセージウィンドウ　メッセージ一括表示
+ * @param msgWin FLDMSGWIN_STREAM
+ * @param x X表示座標
+ * @param y Y表示座標
+ * @param strBuf 表示するSTRBUF
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGWIN_STREAM_AllPrintStrBuf(
+    FLDMSGWIN_STREAM *msgWin, u16 x, u16 y, STRBUF *strBuf )
+{
+  if( msgWin->msgPrint != NULL ){
+    FLDMSGPRINT_Delete( msgWin->msgPrint );
+  }
+  
+  msgWin->msgPrint = FLDMSGPRINT_SetupPrint(
+      msgWin->fmb, NULL, msgWin->bmpwin );
+  
+  FLDMSGPRINT_PrintStrBuf( msgWin->msgPrint, x, y, strBuf );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGWIN_STREAM メッセージウィンドウ　メッセージ一括表示　転送チェック
+ * @param msgWin FLDMSGWIN_STREAM
+ * @retval BOOL TRUE=転送終了
+ */
+//--------------------------------------------------------------
+BOOL FLDMSGWIN_STREAM_CheckAllPrintTrans( FLDMSGWIN_STREAM *msgWin )
+{
+  return( FLDMSGPRINT_CheckPrintTrans(msgWin->msgPrint) );
 }
 
 //======================================================================

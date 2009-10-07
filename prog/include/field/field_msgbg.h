@@ -216,6 +216,9 @@ extern FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_AddTalkWin(
 extern void FLDMSGWIN_STREAM_ClearMessage( FLDMSGWIN_STREAM *msgWin );
 extern void FLDMSGWIN_STREAM_ClearWindow( FLDMSGWIN_STREAM *msgWin );
 extern void FLDMSGWIN_STREAM_WriteWindow( FLDMSGWIN_STREAM *msgWin );
+extern void FLDMSGWIN_STREAM_AllPrintStrBuf(
+    FLDMSGWIN_STREAM *msgWin, u16 x, u16 y, STRBUF *strBuf );
+extern BOOL FLDMSGWIN_STREAM_CheckAllPrintTrans( FLDMSGWIN_STREAM *msgWin );
 
 //吹き出しメッセージウィンドウ
 extern FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
