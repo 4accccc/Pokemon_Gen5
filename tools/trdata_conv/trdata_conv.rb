@@ -489,3 +489,6 @@ end
 	fp_trtypesex.print( "\n" )
 	fp_trtypesex.close
 
+  #タイムスタンプ比較用のダミーファイルを生成
+  fp_w = open( "out_end", "w" )
+  fp_w.close
