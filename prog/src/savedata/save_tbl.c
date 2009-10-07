@@ -339,7 +339,12 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_SODATEYA_WORK,
     (FUNC_GET_SIZE)SODATEYA_WORK_GetWorkSize,
     (FUNC_INIT_WORK)SODATEYA_WORK_InitWork,
-  }
+  },
+	{
+		GMDATA_ID_ROCKPOS,
+		(FUNC_GET_SIZE)MMDL_ROCKPOS_GetWorkSize,
+		(FUNC_INIT_WORK)MMDL_ROCKPOS_Init,
+	},
 };
 
 //--------------------------------------------------------------

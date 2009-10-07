@@ -36,6 +36,12 @@
 #define MMDL_POST_LAYER_MAX (16)  //FLDMAPPER_GRIDINFO_MAXと同じ値にしてます
 
 //--------------------------------------------------------------
+/// かいりき岩が参照、保存する座標データ数
+//--------------------------------------------------------------
+#define MMDL_ROCKPOS_MAX (30)
+#define ROCKPOS_INIT (0xffffffff) ///<MMDL_ROCKPOS 座標初期化値
+
+//--------------------------------------------------------------
 ///	エイリアスシンボル
 //--------------------------------------------------------------
 enum
@@ -74,6 +80,8 @@ struct _TAG_MMDLSYS
 	const OBJCODE_PARAM *pOBJCodeParamTbl; ///<OBJCODE_PARAM
   
   void *fieldMapWork; ///<FIELDMAP_WORK <-各ワーク単位での接続が良い。
+  
+  MMDL_ROCKPOS *rockpos; ///<かいりき岩座標 セーブデータポインタ
   
   const u16 *targetCameraAngleYaw; //グローバルで参照するカメラ
 };
@@ -197,6 +205,14 @@ struct _TAG_MMDL_SAVEDATA
 	MMDL_SAVEWORK SaveWorkBuf[MMDL_SAVEMMDL_MAX];
 };
 
+//--------------------------------------------------------------
+/// MMDL_ROCKPOS
+//--------------------------------------------------------------
+struct _TAG_MMDL_ROCKPOS
+{
+  VecFx32 pos;
+};
+
 //======================================================================
 //	proto
 //======================================================================
@@ -272,6 +288,13 @@ static BOOL MMdlHeader_CheckAlies( const MMDL_HEADER *head );
 static int MMdlHeader_GetAliesZoneID( const MMDL_HEADER *head );
 static BOOL MMdlSys_CheckEventFlag( EVENTWORK *evwork, u16 flag_no );
 
+//MMDL_ROCKPOS
+static BOOL mmdl_rockpos_CheckSetPos( const MMDL_ROCKPOS *rockpos );
+static int rockpos_GetPosNumber( const u16 zone_id, const u16 obj_id );
+static int mmdl_rockpos_GetPosNumber( const MMDL *mmdl );
+static BOOL mmdl_rockpos_CheckPos( const MMDL *mmdl );
+static BOOL mmdl_rockpos_GetPos( const MMDL *mmdl, VecFx32 *pos );
+
 //======================================================================
 //	フィールド動作モデル　システム
 //======================================================================
@@ -280,16 +303,19 @@ static BOOL MMdlSys_CheckEventFlag( EVENTWORK *evwork, u16 flag_no );
  * MMDLSYS システム作成
  * @param	heapID	HEAPID
  * @param	max	動作モデル最大数
+ * @param rockpos MMDL_ROCKPOS 怪力岩が参照、保存するデータ
  * @retval	MMDLSYS* 作成されたMMDLSYS*
  */
 //--------------------------------------------------------------
-MMDLSYS * MMDLSYS_CreateSystem( HEAPID heapID, u32 max )
+MMDLSYS * MMDLSYS_CreateSystem(
+    HEAPID heapID, u32 max, MMDL_ROCKPOS *rockpos )
 {
 	MMDLSYS *fos;
 	fos = GFL_HEAP_AllocClearMemory( heapID, MMDLSYS_SIZE );
 	fos->pMMdlBuf = GFL_HEAP_AllocClearMemory( heapID, max*MMDL_SIZE );
 	fos->mmdl_max = max;
 	fos->sysHeapID = heapID;
+  fos->rockpos = rockpos;
 	return( fos );
 }
 
@@ -440,8 +466,8 @@ MMDL * MMDLSYS_AddMMdl(
 	mmdl = MMdlSys_SearchSpaceMMdl( fos );
 	GF_ASSERT( mmdl != NULL );
 	
-	MMdl_SetHeader( mmdl, head, NULL );
 	MMdl_InitWork( mmdl, fos );
+	MMdl_SetHeader( mmdl, head, NULL );
 	MMDL_SetZoneID( mmdl, zone_id );
 	
 	if( MMDLSYS_CheckStatusBit(fos,MMDLSYS_STABIT_MOVE_INIT_COMP) ){
@@ -678,31 +704,43 @@ static void MMdl_SetHeader(
 //--------------------------------------------------------------
 static void MMdl_SetHeaderPos( MMDL *mmdl, const MMDL_HEADER *head )
 {
-	int pos;
+  fx32 set_y;
 	VecFx32 vec;
+	int pos,set_gx,set_gz;
 	
-	pos = head->gx;
-	vec.x = GRID_SIZE_FX32( pos ) + MMDL_VEC_X_GRID_OFFS_FX32;
-	MMDL_SetInitGridPosX( mmdl, pos );
-	MMDL_SetOldGridPosX( mmdl, pos );
-	MMDL_SetGridPosX( mmdl, pos );
+  if( mmdl_rockpos_CheckPos(mmdl) == FALSE ){
+    set_gx = head->gx;
+    set_gz = head->gz;
+    set_y = head->y;
+  }else{
+    mmdl_rockpos_GetPos( mmdl, &vec );
+    set_gx = SIZE_GRID_FX32( vec.x );
+    set_gz = SIZE_GRID_FX32( vec.z );
+    set_y = vec.y;
+  }
+  
+	vec.x = GRID_SIZE_FX32( set_gx ) + MMDL_VEC_X_GRID_OFFS_FX32;
+	MMDL_SetInitGridPosX( mmdl, head->gx );
+	MMDL_SetOldGridPosX( mmdl, set_gx );
+	MMDL_SetGridPosX( mmdl, set_gx );
 	
-	pos = head->y;		//pos設定はfx32型で来る。
-	vec.y = (fx32)pos;
-	pos = SIZE_GRID_FX32( pos );
+	pos = SIZE_GRID_FX32( head->y );		//pos設定はfx32型で来る。
 	MMDL_SetInitGridPosY( mmdl, pos );
+  
+	vec.y = set_y;
+  pos = SIZE_GRID_FX32( set_y );
 	MMDL_SetOldGridPosY( mmdl, pos );
 	MMDL_SetGridPosY( mmdl, pos );
 	
-	pos = head->gz;
-	vec.z = GRID_SIZE_FX32( pos ) + MMDL_VEC_Z_GRID_OFFS_FX32;
-	MMDL_SetInitGridPosZ( mmdl, pos );
-	MMDL_SetOldGridPosZ( mmdl, pos );
-	MMDL_SetGridPosZ( mmdl, pos );
+	vec.z = GRID_SIZE_FX32( set_gz ) + MMDL_VEC_Z_GRID_OFFS_FX32;
+	MMDL_SetInitGridPosZ( mmdl, head->gz );
+	MMDL_SetOldGridPosZ( mmdl, set_gz );
+	MMDL_SetGridPosZ( mmdl, set_gz );
 	
 	MMDL_SetVectorPos( mmdl, &vec );
-
-  IWASAWA_Printf("Mmdl (%d,%d) h = %d\n",FX_Whole(vec.x),FX_Whole(vec.z),FX_Whole(vec.y));
+  
+  IWASAWA_Printf( "Mmdl (%d,%d) h = %d\n",
+      FX_Whole(vec.x), FX_Whole(vec.z), FX_Whole(vec.y) );
 }
 
 //--------------------------------------------------------------
@@ -4616,6 +4654,173 @@ void MMDL_DrawPopProcDummy( MMDL * mmdl )
 }
 
 //======================================================================
+//  MMDL_ROCKPOS,かいりき岩が参照、保存する座標データ
+//======================================================================
+//--------------------------------------------------------------
+/// 参照位置データ
+//--------------------------------------------------------------
+#include "../../../resource/fldmapdata/eventdata/total_header.h"
+#include "../../../resource/fldmapdata/zonetable/zone_id.h"
+#include "../../../resource/fldmapdata/pushrock/rockpos.cdat"
+
+//--------------------------------------------------------------
+/**
+ * MMDL_ROCKPOS ワークサイズを取得
+ * @param nothing
+ * @retval u32 ワークサイズ
+ */
+//--------------------------------------------------------------
+u32 MMDL_ROCKPOS_GetWorkSize( void )
+{
+  return( sizeof(MMDL_ROCKPOS)*MMDL_ROCKPOS_MAX );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL_ROCKPOS ワーク初期化
+ * @param p MMDL_ROCKPOS*
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void MMDL_ROCKPOS_Init( void *p )
+{
+  MI_CpuFill32( p, ROCKPOS_INIT, sizeof(MMDL_ROCKPOS)*MMDL_ROCKPOS_MAX );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL_ROCKPOS 座標がセットされているかどうか
+ * @param rockpos MMDL_ROCKPOS
+ * @retval  BOOL TRUE=セット済み
+ */
+//--------------------------------------------------------------
+static BOOL mmdl_rockpos_CheckSetPos( const MMDL_ROCKPOS *rockpos )
+{
+  if( (u32)rockpos->pos.x != ROCKPOS_INIT &&
+      (u32)rockpos->pos.y != ROCKPOS_INIT &&
+      (u32)rockpos->pos.z != ROCKPOS_INIT ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL_ROCKPOS 指定IDが使用する座標ワーク位置。
+ * @param zone_id ZONE ID
+ * @param obj_id OBJ ID
+ * @retval int 使用する座標ワークの位置番号。MMDL_ROCKPOS_MAX=無し。
+ */
+//--------------------------------------------------------------
+static int rockpos_GetPosNumber( const u16 zone_id, const u16 obj_id )
+{
+  u16 z,o;
+  int i = 0;
+  
+  do{
+    z = DATA_MMDL_PushRockPosNum[i][0];
+    o = DATA_MMDL_PushRockPosNum[i][1];
+    
+    if( z == zone_id && o == obj_id ){
+      return( i );
+    }
+    
+    i++;
+  }while( (z != ROCKPOS_DATA_END && o != ROCKPOS_DATA_END) );
+  
+  return( MMDL_ROCKPOS_MAX );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL_ROCKPOS 指定の動作モデルが座標を保持しているかどうか
+ * @param mmdl  MMDL*
+ * @retval int 保持している位置番号。MMDL_ROCKPOS_MAX=保持無し。
+ */
+//--------------------------------------------------------------
+static int mmdl_rockpos_GetPosNumber( const MMDL *mmdl )
+{
+  int no = MMDL_ROCKPOS_MAX;
+  
+  if( MMDL_GetOBJCode(mmdl) == ROCK ){
+    u16 zone_id = MMDL_GetZoneID( mmdl );
+    u16 obj_id = MMDL_GetOBJID( mmdl );
+    no = rockpos_GetPosNumber( zone_id, obj_id );
+  }
+  
+  return( no );
+}
+
+//--------------------------------------------------------------
+/**
+ * 指定OBJの座標が専用ワークに保存されているか
+ * @param mmdl MMDL*
+ * @retval  BOOL TRUE=保存あり。FALSE=無し。もしくは初期値のまま。
+ */
+//--------------------------------------------------------------
+static BOOL mmdl_rockpos_CheckPos( const MMDL *mmdl )
+{
+  int no = mmdl_rockpos_GetPosNumber( mmdl );
+  
+  if( no != MMDL_ROCKPOS_MAX ){
+    const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+    const MMDL_ROCKPOS *rockpos = &mmdlsys->rockpos[no];
+    return( mmdl_rockpos_CheckSetPos(rockpos) );
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 指定の動作モデルが保存している座標を取得
+ * @param mmdl MMDL*
+ * @param pos 座標保存先
+ * @retval BOOL TRUE=取得 FALSE=取得できない。
+ * @note かいりき岩OBJのみが対象。違う場合はアサート。
+ */
+//--------------------------------------------------------------
+static BOOL mmdl_rockpos_GetPos( const MMDL *mmdl, VecFx32 *pos )
+{
+  int no = mmdl_rockpos_GetPosNumber( mmdl );
+  
+  if( no != MMDL_ROCKPOS_MAX ){
+    const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+    const MMDL_ROCKPOS *rockpos = &mmdlsys->rockpos[no];
+    
+    if( mmdl_rockpos_CheckSetPos(rockpos) ){
+      *pos = rockpos->pos;
+      return( TRUE );
+    }
+  }
+  
+  GF_ASSERT( 0 );
+  return( FALSE );
+}
+ 
+//--------------------------------------------------------------
+/**
+ * 指定の動作モデルの座標をMMDL_ROCKPOSに保存。
+ * @param mmdl MMDL*
+ * @retval nothing
+ * @note かいりき岩OBJのみが対象。
+ */
+//--------------------------------------------------------------
+void MMDL_ROCKPOS_SavePos( const MMDL *mmdl )
+{
+  int no = mmdl_rockpos_GetPosNumber( mmdl );
+  
+  if( no != MMDL_ROCKPOS_MAX ){
+    VecFx32 pos;
+    const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+    MMDL_ROCKPOS *rockpos = &mmdlsys->rockpos[no];
+    MMDL_GetVectorPos( mmdl, &pos );
+    rockpos->pos = pos;
+    return;
+  }
+}
+
+//======================================================================
 //	debug
 //======================================================================
 #ifdef DEBUG_MMDL
@@ -4680,8 +4885,6 @@ FLDNOGRID_MAPPER * MMDLSYS_GetNOGRIDMapper( const MMDLSYS *fos )
   GF_ASSERT( fos );
   return fos->pNOGRIDMapper;
 }
-
-
 
 //======================================================================
 //

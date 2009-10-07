@@ -154,8 +154,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
 	// railデータ読み込みシステム
   gd->railLoader = FIELD_RAIL_LOADER_Create( heapID );
+  
   //動作モデル
-  gd->mmdlsys = MMDLSYS_CreateSystem( heapID, MMDL_MDL_MAX );
+  gd->mmdlsys = MMDLSYS_CreateSystem( heapID, MMDL_MDL_MAX, SaveControl_DataPtrGet(gd->sv_control_ptr,GMDATA_ID_ROCKPOS) );
   
   //フィールドサウンド管理
   gd->field_sound = FIELD_SOUND_Create( heapID );

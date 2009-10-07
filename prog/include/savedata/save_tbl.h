@@ -81,7 +81,8 @@ enum{
   GMDATA_ID_GIMMICK_WORK,    //ギミック
   GMDATA_ID_BATTLE_BOX,    //バトルボックス
   GMDATA_ID_SODATEYA_WORK,  // 育て屋ワーク
-
+  GMDATA_ID_ROCKPOS, //かいりき岩
+  
 	GMDATA_ID_MAX,
 };
 

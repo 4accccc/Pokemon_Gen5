@@ -366,6 +366,8 @@ typedef struct _TAG_MMDL MMDL;
 typedef struct _TAG_MMDL_BLACTCONT MMDL_BLACTCONT;
 ///MMDL_SAVEDATA
 typedef struct _TAG_MMDL_SAVEDATA MMDL_SAVEDATA;
+///MMDL_ROCKPOS
+typedef struct _TAG_MMDL_ROCKPOS MMDL_ROCKPOS;
 
 //--------------------------------------------------------------
 ///	アトリビュート型 元:map_attr.h
@@ -561,7 +563,8 @@ typedef struct
 extern u32 MMDL_BUFFER_GetWorkSize( void );
 extern void MMDL_BUFFER_InitBuffer( void *p );
 
-extern MMDLSYS * MMDLSYS_CreateSystem( HEAPID heapID, u32 max );
+extern MMDLSYS * MMDLSYS_CreateSystem(
+    HEAPID heapID, u32 max, MMDL_ROCKPOS *rockpos );
 extern void MMDLSYS_FreeSystem( MMDLSYS *fos );
 
 extern void MMDLSYS_SetupProc(
@@ -838,6 +841,10 @@ extern void MMDL_DrawPushProcDummy( MMDL * mmdl );
 extern void MMDL_DrawPopProcDummy( MMDL * mmdl );
 
 extern void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code );
+
+extern u32 MMDL_ROCKPOS_GetWorkSize( void );
+extern void MMDL_ROCKPOS_Init( void *p );
+extern void MMDL_ROCKPOS_SavePos( const MMDL *mmdl );
 
 #ifdef DEBUG_MMDL
 extern u8 * DEBUG_MMDL_GetOBJCodeString( u16 code, HEAPID heapID );
