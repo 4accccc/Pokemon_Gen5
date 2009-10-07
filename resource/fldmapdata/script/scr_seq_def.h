@@ -1013,6 +1013,56 @@
   .short  EV_SEQ_BALLOONWIN_CLOSE
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  @def _GOLD_WIN_OPEN
+ *  @brief 所持金ウィンドウを表示する
+ *  @param x 表示x位置(キャラ単位)
+ *  @param y 表示x位置(キャラ単位)
+ *  @param none
+ */
+//--------------------------------------------------------------
+#define _GOLD_WIN_OPEN( x, y ) \
+    _ASM_GOLD_WIN_OPEN x, y
+
+  .macro _ASM_GOLD_WIN_OPEN x, y
+  .short EV_SEQ_GOLD_WIN_OPEN
+  .short \x
+  .short \y
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def _GOLD_WIN_CLOSE
+ *  @brief 所持金ウィンドウを消去する
+ *  @param none
+ */
+//--------------------------------------------------------------
+#define _GOLD_WIN_CLOSE() \
+    _ASM_GOLD_WIN_CLOSE
+
+  .macro _ASM_GOLD_WIN_CLOSE
+  .short EV_SEQ_GOLD_WIN_CLOSE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def _GOLD_WIN_UPDATE
+ *  @brief 所持金ウィンドウを更新する
+ *  @param x 表示x位置(キャラ単位)
+ *  @param y 表示x位置(キャラ単位)
+ *  @param none
+ */
+//--------------------------------------------------------------
+#define _GOLD_WIN_UPDATE( x, y ) \
+    _ASM_GOLD_WIN_UPDATE x, y
+
+  .macro _ASM_GOLD_WIN_UPDATE x, y
+  .short EV_SEQ_GOLD_WIN_UPDATE
+  .short \x
+  .short \y
+  .endm
+
 //======================================================================
 //  動作モデル
 //======================================================================
@@ -1317,6 +1367,88 @@
   .short  EV_SEQ_POCKET_NAME
   .byte   \idx
   .short  \pocket_id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  手持ちポケモンの種族名を指定タグにセット
+ * @param idx セットするタグナンバー
+ * @param pos セットするポケモンを指定
+ */
+//--------------------------------------------------------------
+#define _TEMOTI_MONS_NAME( idx, pos ) \
+    _ASM_TEMOTI_MONS_NAME idx, pos
+
+  .macro _ASM_TEMOTI_MONS_NAME idx, pos
+  .short EV_SEQ_TEMOTI_MONS_NAME
+  .byte  \idx
+  .short \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  手持ちポケモンのニックネームを指定タグにセット
+ * @param idx セットするタグナンバー
+ * @param pos セットするポケモンを指定
+ */
+//--------------------------------------------------------------
+#define _TEMOTI_NICK_NAME( idx, pos ) \
+    _ASM_TEMOTI_NICK_NAME idx, pos
+
+  .macro _ASM_TEMOTI_NICK_NAME idx, pos
+  .short EV_SEQ_TEMOTI_NICK_NAME
+  .byte  \idx
+  .short \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  育て屋のポケモンの種族名を指定タグにセット
+ * @param idx セットするタグナンバー
+ * @param pos セットするポケモンを指定
+ */
+//--------------------------------------------------------------
+#define _SODATEYA_MONS_NAME( idx, pos ) \
+    _ASM_SODATEYA_MONS_NAME idx, pos
+
+  .macro _ASM_SODATEYA_MONS_NAME idx, pos
+  .short EV_SEQ_SODATEYA_MONS_NAME
+  .byte  \idx
+  .short \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  育て屋のポケモンのニックネームを指定タグにセット
+ * @param idx セットするタグナンバー
+ * @param pos セットするポケモンを指定
+ */
+//--------------------------------------------------------------
+#define _SODATEYA_NICK_NAME( idx, pos ) \
+    _ASM_SODATEYA_NICK_NAME idx, pos
+
+  .macro _ASM_SODATEYA_NICK_NAME idx, pos
+  .short EV_SEQ_SODATEYA_NICK_NAME
+  .byte  \idx
+  .short \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 数値を指定タグにセット
+ * @param  idx セットするタグナンバー
+ * @param  num セットする数値
+ * @param keta 桁数
+ */
+//--------------------------------------------------------------
+#define _NUMBER( idx, num, keta ) \
+    _ASM_NUMBER idx, num, keta
+
+  .macro _ASM_NUMBER idx, num, keta
+  .short EV_SEQ_NUMBER
+  .byte  \idx
+  .short \num
+  .short \keta
   .endm
 
 //--------------------------------------------------------------
@@ -1844,7 +1976,7 @@
 #define _VOICE_PLAY( monsno, formno ) \
     _ASM_VOICE_PLAY monsno, formno
 
-  .macro  _ASM_VOICE_PLAY monsno
+  .macro  _ASM_VOICE_PLAY monsno, formno
   .short  EV_SEQ_VOICE_PLAY
   .short  \monsno
   .byte  0
@@ -2375,31 +2507,53 @@
  * @def _GET_PARTY_POKE_COUNT
  * @brief 手持ちポケモンの数を取得
  * @param ret_wk チェック結果を受け取るワーク
+ * @param count_mode 数え方指定(POKECOUNT_MODE_XXXX)
  * @retval u16 手持ちポケモンの数
  */
 //--------------------------------------------------------------
-#define _GET_PARTY_POKE_COUNT( ret_wk ) \
-    _ASM_GET_PARTY_POKE_COUNT ret_wk
+#define _GET_PARTY_POKE_COUNT( ret_wk, count_mode ) \
+    _ASM_GET_PARTY_POKE_COUNT ret_wk, count_mode
 
-  .macro _ASM_GET_PARTY_POKE_COUNT ret_wk
+  .macro _ASM_GET_PARTY_POKE_COUNT ret_wk, count_mode
   .short EV_SEQ_GET_PARTY_POKE_COUNT
   .short \ret_wk
+  .short \count_mode
   .endm
 
 //--------------------------------------------------------------
 /**
- * @def _GET_PARTY_BATTLE_POKE_COUNT
- * @brief 戦える手持ちポケモンの数を取得
- * @param ret_wk チェック結果を受け取るワーク
- * @retval u16 戦える手持ちポケモンの数
+ * @def _GET_PARTY_POKE_MONSNO
+ * @brief 指定した手持ちポケモンのモンスターナンバーを取得する
+ * @param ret_wk 結果を受け取るワーク
+ * @param pos    モンスターナンバーを調べる手持ちポケモン番号
+ * @retval u16   指定ポケモンのモンスターナンバー
  */
 //--------------------------------------------------------------
-#define _GET_PARTY_BATTLE_POKE_COUNT( ret_wk ) \
-    _ASM_GET_PARTY_BATTLE_POKE_COUNT ret_wk
+#define _GET_PARTY_POKE_MONSNO( ret_wk, pos ) \
+    _ASM_GET_PARTY_POKE_MONSNO ret_wk, pos
 
-  .macro _ASM_GET_PARTY_BATTLE_POKE_COUNT ret_wk
-  .short EV_SEQ_GET_PARTY_BATTLE_POKE_COUNT
+  .macro _ASM_GET_PARTY_POKE_MONSNO ret_wk, pos
+  .short EV_SEQ_GET_PARTY_POKE_MONSNO
   .short \ret_wk
+  .short \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_PARTY_POKE_FORMNO
+ * @brief 指定した手持ちポケモンの形状ナンバーを取得する
+ * @param ret_wk 結果を受け取るワーク
+ * @param pos    形状ナンバーを調べる手持ちポケモン番号
+ * @retval u16   指定ポケモンの形状ナンバー
+ */
+//--------------------------------------------------------------
+#define _GET_PARTY_POKE_FORMNO( ret_wk, pos ) \
+    _ASM_GET_PARTY_POKE_FORMNO ret_wk, pos
+
+  .macro _ASM_GET_PARTY_POKE_FORMNO ret_wk, pos
+  .short EV_SEQ_GET_PARTY_POKE_FORMNO
+  .short \ret_wk
+  .short \pos
   .endm
 
 //--------------------------------------------------------------
@@ -2520,7 +2674,7 @@
 /**
  * @def _ADD_GOLD
  * @brief お金を増やす
- * @param value 増やす量
+ * @param value 増やす金額(円)
  */
 //--------------------------------------------------------------
 #define _ADD_GOLD( value ) \
@@ -2534,8 +2688,8 @@
 //--------------------------------------------------------------
 /**
  * @def _SUBTRACT_GOLD
- * @brief お金を増やす
- * @param value 増やす量
+ * @brief お金を減らす
+ * @param value 減らす金額(円)
  */
 //--------------------------------------------------------------
 #define _SUBTRACT_GOLD( value ) \
@@ -2543,6 +2697,25 @@
 
   .macro _ASM_SUBTRACT_GOLD value
   .short EV_SEQ_SUBTRACT_GOLD
+  .short \value
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _CHECK_GOLD
+ * @brief 指定金額を持っているかどうかチェックする
+ * @param ret_wk 判定結果を受け取るワーク
+ * @param value  判定する金額(円)
+ * @retval TRUE  指定金額を持っている場合
+ * @retval FALSE 指定金額を持っていない場合
+ */
+//--------------------------------------------------------------
+#define _CHECK_GOLD( ret_wk, value ) \
+    _ASM_CHECK_GOLD ret_wk, value
+
+  .macro _ASM_CHECK_GOLD ret_wk, value
+  .short EV_SEQ_CHECK_GOLD
+  .short \ret_wk
   .short \value
   .endm
   
@@ -2804,6 +2977,163 @@
 
   .macro _ASM_SODATEYA_LOVE_CHECK ret_wk
   .short EV_SEQ_SODATEYA_LOVE_CHECK
+  .short \ret_wk
+  .endm
+//--------------------------------------------------------------
+/**
+ * ポケモンを育て屋に預ける
+ *
+ * @param pos 預けるポケモンの手持ち番号
+ */
+//--------------------------------------------------------------
+#define _POKE_TO_SODATEYA( pos ) \
+    _ASM_POKE_TO_SODATEYA pos
+
+  .macro _ASM_POKE_TO_SODATEYA pos
+  .short EV_SEQ_POKE_TO_SODATEYA
+  .short \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * ポケモンを育て屋から受け取る
+ *
+ * @param pos 受け取るポケモンの育て屋内番号(0 or 1)
+ */
+//--------------------------------------------------------------
+#define _POKE_FROM_SODATEYA( pos ) \
+    _ASM_POKE_FROM_SODATEYA pos
+
+  .macro _ASM_POKE_FROM_SODATEYA pos
+  .short EV_SEQ_POKE_FROM_SODATEYA
+  .short \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 育て屋に預けているポケモンのモンスターナンバーを取得する
+ *
+ * @param ret_wk 取得したモンスターナンバーの格納先
+ * @param pos    取得対象ポケモンの育て屋内インデックス
+ * @retval u16   指定ポケモンのモンスターナンバー
+ */
+//--------------------------------------------------------------
+#define _GET_SODATEYA_POKE_MONSNO( ret_wk, pos ) \
+    _ASM_GET_SODATEYA_POKE_MONSNO ret_wk, pos
+
+  .macro _ASM_GET_SODATEYA_POKE_MONSNO ret_wk, pos
+  .short EV_SEQ_GET_SODATEYA_POKE_MONSNO
+  .short \ret_wk
+  .short \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 育て屋に預けているポケモンの形状ナンバーを取得する
+ *
+ * @param ret_wk 取得した形状ナンバーの格納先
+ * @param pos    取得対象ポケモンの育て屋内インデックス
+ * @retval u16   指定ポケモンの形状ナンバー
+ */
+//--------------------------------------------------------------
+#define _GET_SODATEYA_POKE_FORMNO( ret_wk, pos ) \
+    _ASM_GET_SODATEYA_POKE_FORMNO ret_wk, pos
+
+  .macro _ASM_GET_SODATEYA_POKE_FORMNO ret_wk, pos
+  .short EV_SEQ_GET_SODATEYA_POKE_FORMNO
+  .short \ret_wk
+  .short \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 育て屋に預けているポケモンの現在のレベルを取得する
+ *
+ * @param ret_wk 取得したレベルの格納先
+ * @param pos    取得対象ポケモンの育て屋内インデックス
+ * @retval u16   指定ポケモンのレベル
+ */
+//--------------------------------------------------------------
+#define _GET_SODATEYA_POKE_LV( ret_wk, pos ) \
+    _ASM_GET_SODATEYA_POKE_LV ret_wk, pos
+
+  .macro _ASM_GET_SODATEYA_POKE_LV ret_wk, pos
+  .short EV_SEQ_GET_SODATEYA_POKE_LV
+  .short \ret_wk
+  .short \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 育て屋に預けているポケモンについて, 成長したレベルを取得する
+ *
+ * @param ret_wk 取得した値の格納先
+ * @param pos    取得対象ポケモンの育て屋内インデックス
+ * @retval u16   指定ポケモンが成長したレベル
+ */
+//--------------------------------------------------------------
+#define _GET_SODATEYA_POKE_GROWUP_LV( ret_wk, pos ) \
+    _ASM_GET_SODATEYA_POKE_GROWUP_LV ret_wk, pos
+
+  .macro _ASM_GET_SODATEYA_POKE_GROWUP_LV ret_wk, pos
+  .short EV_SEQ_GET_SODATEYA_POKE_GROWUP_LV
+  .short \ret_wk
+  .short \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 育て屋に預けているポケモンについて, 引き取り料金を取得する
+ *
+ * @param ret_wk 取得した値の格納先
+ * @param pos    取得対象ポケモンの育て屋内インデックス
+ * @retval u16   指定ポケモンの引き取り料金
+ */
+//--------------------------------------------------------------
+#define _GET_SODATEYA_POKE_CHARGE( ret_wk, pos ) \
+    _ASM_GET_SODATEYA_POKE_CHARGE ret_wk, pos
+
+  .macro _ASM_GET_SODATEYA_POKE_CHARGE ret_wk, pos
+  .short EV_SEQ_GET_SODATEYA_POKE_CHARGE
+  .short \ret_wk
+  .short \pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 手持ちポケモン選択画面を呼び出す
+ *
+ * @param ret_wk 選択結果の格納先
+ * @retval u16   選択結果
+ */
+//--------------------------------------------------------------
+#define _SODATEYA_SELECT_POKEMON( ret_wk ) \
+    _ASM_SODATEYA_SELECT_POKEMON ret_wk
+
+  .macro _ASM_SODATEYA_SELECT_POKEMON ret_wk
+  .short EV_SEQ_SODATEYA_SELECT_POKEMON
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 育て屋に預けているポケモンについて, 性別を取得する
+ *
+ * @param ret_wk 取得した値の格納先
+ * @param pos    取得対象ポケモンの育て屋内インデックス
+ * @retval u16   指定ポケモンの性別
+ *               オス = 0
+ *               メス = 1
+ *               性別なし = 2
+ */
+//--------------------------------------------------------------
+#define _GET_SODATEYA_POKE_SEX( ret_wk, pos ) \
+    _ASM_GET_SODATEYA_POKE_SEX ret_wk, pos
+
+  .macro _ASM_GET_SODATEYA_POKE_SEX ret_wk, pos
+  .short EV_SEQ_GET_SODATEYA_POKE_SEX
+  .short \ret_wk
+  .short \pos
   .endm
 
 //======================================================================
