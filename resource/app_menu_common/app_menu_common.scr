@@ -74,10 +74,10 @@
 "item_icon.NCGR"
 "item_icon.NCLR"
 "item_icon_32k.NCER"
-"item_icon_32k.NANR"
 "item_icon_64k.NCER"
-"item_icon_64k.NANR"
 "item_icon_128k.NCER"
+"item_icon_32k.NANR"
+"item_icon_64k.NANR"
 "item_icon_128k.NANR"
 
 "null_4x4.NCLR"
