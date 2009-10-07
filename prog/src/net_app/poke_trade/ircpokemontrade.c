@@ -305,29 +305,19 @@ static void _getPokeIconPos(int index, GFL_CLACTPOS* pos)
 }
 
 
-BOOL IRCPOKEMONTRADE_GetPokeDataAddress(BOX_DATA* boxData , int trayNo, int index,IRC_POKEMON_TRADE* pWork,POKEMON_PARAM* pp)
+POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_DATA* boxData , int trayNo, int index,IRC_POKEMON_TRADE* pWork)
 {
   POKEMON_PASO_PARAM* ppp;
   if(trayNo!=BOX_MAX_TRAY){
-    OS_TPrintf("traynum %d \n",trayNo);
-    ppp = BOXDAT_GetPokeDataAddress(boxData,trayNo,index);
-    if(ppp){
-      POKEMON_PARAM* crpp = PP_CreateByPPP(ppp,pWork->heapID );
-      PP_Renew(crpp);
-      GFL_STD_MemCopy(crpp,pp,POKETOOL_GetWorkSize());
-      GFL_HEAP_FreeMemory(crpp);
-      return TRUE;
-    }
+    return BOXDAT_GetPokeDataAddress(boxData,trayNo,index);
   }
   else{
     POKEPARTY* party = pWork->pMyParty;
     if(index < PokeParty_GetPokeCount(party)){
-      GFL_STD_MemCopy( PokeParty_GetMemberPointer( party , index ), pp, POKETOOL_GetWorkSize());
-      return TRUE;
+      return (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst( PokeParty_GetMemberPointer( party , index ) );
     }
   }
-  return FALSE;
-
+  return NULL;
 }
 
 
@@ -1044,11 +1034,10 @@ static void _endWaitState(IRC_POKEMON_TRADE* pWork)
 
 static BOOL _PokemonsetAndSendData(IRC_POKEMON_TRADE* pWork)
 { //選択ポケモン表示
-  POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory(pWork->heapID,POKETOOL_GetWorkSize());
   BOOL bRet = FALSE;
-
-  GF_ASSERT(IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->selectBoxno, pWork->selectIndex,pWork, pp));
-
+  POKEMON_PASO_PARAM* ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->selectBoxno, pWork->selectIndex,pWork);
+  POKEMON_PARAM* pp = PP_CreateByPPP(ppp,pWork->heapID);
+  
   if(!GFL_NET_IsInit() || GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON, POKETOOL_GetWorkSize(), pp)){
     _Pokemonset(pWork,0,pp);
 #if PM_DEBUG

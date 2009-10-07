@@ -521,28 +521,20 @@ static void _calcPokeIconPos(int line,int index, GFL_CLACTPOS* pos)
 }
 
 
-static BOOL _getPokeDataAddress(BOX_DATA* boxData , int lineno, int verticalindex , IRC_POKEMON_TRADE* pWork, POKEMON_PARAM* pp)
+static POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_DATA* boxData , int lineno, int verticalindex , IRC_POKEMON_TRADE* pWork)
 {
-
   if(lineno > HAND_HORIZONTAL_NUM){
     int tray = LINE2TRAY(lineno);
     int index = LINE2POKEINDEX(lineno, verticalindex);
-
-    return IRCPOKEMONTRADE_GetPokeDataAddress(boxData, tray, index, pWork, pp);
+    return IRCPOKEMONTRADE_GetPokeDataAddress(boxData, tray, index, pWork);
   }
-	{
-		POKEPARTY* party = pWork->pMyParty;
-
+	else{
     if(verticalindex <3){
       int index = lineno * 3 + verticalindex;
-      if(index < PokeParty_GetPokeCount(party)){
-        GFL_STD_MemCopy( PokeParty_GetMemberPointer( party , index ), pp, POKETOOL_GetWorkSize());
-        return TRUE;
-      }
+      return IRCPOKEMONTRADE_GetPokeDataAddress(boxData, BOX_MAX_TRAY, index, pWork);
 		}
 	}
-	return FALSE;
-
+	return NULL;
 }
 
 
@@ -550,24 +542,22 @@ static BOOL _getPokeDataAddress(BOX_DATA* boxData , int lineno, int verticalinde
 static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_DATA* boxData ,int line)
 {
   int i,k;
-  POKEMON_PARAM* pp;
+  POKEMON_PASO_PARAM* ppp;
 	void *obj_vram = G2S_GetOBJCharPtr();
 	ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
 
   k =  _Line2RingLineIconGet(pWork, line);
 
-  pp = GFL_HEAP_AllocClearMemory(pWork->heapID, POKETOOL_GetWorkSize());
 	for( i = 0 ; i < BOX_VERTICAL_NUM ; i++ )
 	{
     {
       int	fileNo,monsno,formno,bEgg;
-
-      if(!_getPokeDataAddress(boxData, line, i,pWork, pp)){
+      ppp = _getPokeDataAddress(boxData, line, i,pWork);
+      if(!ppp){
         continue;
       }
-
       pWork->pokeIconLine[k][i] = line;
-      monsno = PP_Get(pp,ID_PARA_monsno,NULL);
+      monsno = PPP_Get(ppp,ID_PARA_monsno,NULL);
       if( monsno == 0 ){	//ポケモンがいるかのチェック
         continue;
       }
@@ -582,7 +572,7 @@ static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_DATA* boxData ,
           
         pWork->pokeIconNo[k][i] = monsno;
         
-        pltNum = POKEICON_GetPalNumGetByPPP( PP_GetPPPPointerConst(pp) );
+        pltNum = POKEICON_GetPalNumGetByPPP( ppp );
         _calcPokeIconPos(line, i, &pos);
 
         GFL_CLACT_WK_GetImgProxy( pWork->pokeIcon[k][i], &aproxy );
@@ -596,7 +586,6 @@ static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_DATA* boxData ,
       }
     }
   }
-  GFL_HEAP_FreeMemory(pp);
   GFL_ARC_CloseDataHandle( arcHandle );
 }
 
