@@ -19,7 +19,8 @@
  * @brief	ボックスデータの不完全型定義
  */
 //---------------------------------------------------------------------------
-typedef struct _BOX_DATA BOX_DATA;
+typedef struct _BOX_MANAGER BOX_MANAGER;
+typedef struct _BOX_SAVEDATA BOX_SAVEDATA;
 typedef struct _BOX_TRAY_DATA BOX_TRAY_DATA;
 
 //------------------------------------------------------------
@@ -47,18 +48,16 @@ typedef struct _BOX_TRAY_DATA BOX_TRAY_DATA;
 #define BOXDAT_TRAYNUM_ERROR		(BOX_MAX_TRAY)	///< 空きのあるトレイサーチで、見つからなかった時などの戻り値
 
 
-extern BOX_DATA * SaveData_GetBoxData(SAVE_CONTROL_WORK * sv);
-
 //------------------------------------------------------------------
 /**
  * ボックスデータ領域を作成（セーブデータ読み込み時に１回だけ）
  *
  * @param   heapID		作成先ヒープＩＤ
  *
- * @retval  BOX_DATA*	作成されたボックスデータのポインタ
+ * @retval  BOX_MANAGER*	作成されたボックスデータのポインタ
  */
 //------------------------------------------------------------------
-extern BOX_DATA* BOXDAT_Create( u32 heapID );
+extern BOX_MANAGER* BOXDAT_Create( u32 heapID );
 
 
 //------------------------------------------------------------------
@@ -68,7 +67,7 @@ extern BOX_DATA* BOXDAT_Create( u32 heapID );
  * @param   boxdat		ボックスデータのポインタ
  */
 //------------------------------------------------------------------
-extern void BOXDAT_Init( BOX_DATA* boxdat );
+extern void BOXDAT_Init( BOX_SAVEDATA* boxdat );
 
 //------------------------------------------------------------------
 /**
@@ -82,6 +81,19 @@ extern u32 BOXDAT_GetTotalSize( void );
 
 //------------------------------------------------------------------
 /**
+ * ボックス管理マネージャーの取得
+ */
+//------------------------------------------------------------------
+extern BOX_MANAGER * BOX_DAT_InitManager( const HEAPID heapId , SAVE_CONTROL_WORK * sv);
+//------------------------------------------------------------------
+/**
+ * ボックス管理マネージャーの開放
+ */
+//------------------------------------------------------------------
+extern void BOX_DAT_ExitManager( BOX_MANAGER *box );
+
+//------------------------------------------------------------------
+/**
  * ボックス全体からから空き領域を探してポケモンデータを格納
  *
  * @param   box			ボックスデータポインタ
@@ -90,7 +102,7 @@ extern u32 BOXDAT_GetTotalSize( void );
  * @retval  BOOL		TRUE=格納された／FALSE=空きが無い
  */
 //------------------------------------------------------------------
-extern BOOL BOXDAT_PutPokemon( BOX_DATA* box, POKEMON_PASO_PARAM* poke );
+extern BOOL BOXDAT_PutPokemon( BOX_MANAGER* box, POKEMON_PASO_PARAM* poke );
 
 //------------------------------------------------------------------
 /**
@@ -103,7 +115,7 @@ extern BOOL BOXDAT_PutPokemon( BOX_DATA* box, POKEMON_PASO_PARAM* poke );
  * @retval  BOOL		TRUE=格納された／FALSE=空きが無い
  */
 //------------------------------------------------------------------
-extern BOOL BOXDAT_PutPokemonBox( BOX_DATA* box, u32 boxNum, POKEMON_PASO_PARAM* poke );
+extern BOOL BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 boxNum, POKEMON_PASO_PARAM* poke );
 
 //------------------------------------------------------------------
 /**
@@ -118,7 +130,7 @@ extern BOOL BOXDAT_PutPokemonBox( BOX_DATA* box, u32 boxNum, POKEMON_PASO_PARAM*
  * @retval  BOOL		TRUE=格納された／FALSE=空きが無い
  */
 //------------------------------------------------------------------
-extern BOOL BOXDAT_PutPokemonPos( BOX_DATA* box, u32 boxNum, u32 pos, POKEMON_PASO_PARAM* poke );
+extern BOOL BOXDAT_PutPokemonPos( BOX_MANAGER* box, u32 boxNum, u32 pos, POKEMON_PASO_PARAM* poke );
 
 
 //------------------------------------------------------------------
@@ -130,7 +142,7 @@ extern BOOL BOXDAT_PutPokemonPos( BOX_DATA* box, u32 boxNum, u32 pos, POKEMON_PA
  * @retval  u32		空きのあるトレイナンバー／見つからなければ BOXDAT_TRAYNUM_ERROR が返る
  */
 //------------------------------------------------------------------
-extern u32 BOXDAT_GetEmptyTrayNumber( const BOX_DATA* box );
+extern u32 BOXDAT_GetEmptyTrayNumber( const BOX_MANAGER* box );
 
 //------------------------------------------------------------------
 /**
@@ -143,7 +155,7 @@ extern u32 BOXDAT_GetEmptyTrayNumber( const BOX_DATA* box );
  *
  */
 //------------------------------------------------------------------
-extern void BOXDAT_ChangePokeData( BOX_DATA * box, u32 trayNum, u32 pos1, u32 pos2 );
+extern void BOXDAT_ChangePokeData( BOX_MANAGER * box, u32 trayNum, u32 pos1, u32 pos2 );
 
 //------------------------------------------------------------------
 /**
@@ -155,7 +167,7 @@ extern void BOXDAT_ChangePokeData( BOX_DATA * box, u32 trayNum, u32 pos1, u32 po
  *
  */
 //------------------------------------------------------------------
-extern void BOXDAT_ClearPokemon( BOX_DATA* box, u32 trayNum, u32 pos );
+extern void BOXDAT_ClearPokemon( BOX_MANAGER* box, u32 trayNum, u32 pos );
 
 //------------------------------------------------------------------
 /**
@@ -166,43 +178,43 @@ extern void BOXDAT_ClearPokemon( BOX_DATA* box, u32 trayNum, u32 pos );
  * @retval  u32		
  */
 //------------------------------------------------------------------
-extern u32 BOXDAT_GetPokeExistCountTotal( const BOX_DATA* box );
-extern u32 BOXDAT_GetPokeExistCount2Total( const BOX_DATA* box );
+extern u32 BOXDAT_GetPokeExistCountTotal( const BOX_MANAGER* box );
+extern u32 BOXDAT_GetPokeExistCount2Total( const BOX_MANAGER* box );
 
-extern u32 BOXDAT_GetEmptySpaceTotal( const BOX_DATA* box );
-extern u32 BOXDAT_GetEmptySpaceTray( const BOX_DATA* box, u32 trayNum );
+extern u32 BOXDAT_GetEmptySpaceTotal( const BOX_MANAGER* box );
+extern u32 BOXDAT_GetEmptySpaceTray( const BOX_MANAGER* box, u32 trayNum );
 
-extern u32 BOXDAT_GetCureentTrayNumber( const BOX_DATA* box );
-extern void BOXDAT_SetCureentTrayNumber( BOX_DATA* box, u32 num );
-extern u32 BOXDAT_GetWallPaperNumber( const BOX_DATA* box, u32 trayNumber );
-extern void BOXDAT_SetWallPaperNumber( BOX_DATA* box, u32 trayNum, u32 wallPaperNumber );
-extern void BOXDAT_GetBoxName( const BOX_DATA* box, u32 trayNumber, STRBUF* buf );
-extern void BOXDAT_SetBoxName( BOX_DATA* box, u32 trayNumber, const STRBUF* src );
-extern u32 BOXDAT_GetPokeExistCount( const BOX_DATA* box, u32 trayNumber );
-extern u32 BOXDAT_GetPokeExistCount2( const BOX_DATA* box, u32 trayNumber );
-extern POKEMON_PASO_PARAM* BOXDAT_GetPokeDataAddress( const BOX_DATA* box, u32 boxNum, u32 pos );
-extern BOOL BOXDAT_GetEmptyTrayNumberAndPos( const BOX_DATA* box, int* trayNum, int* pos );
-extern u32 BOXDAT_PokeParaGet( const BOX_DATA* box, u32 trayNum, u32 pos, int param, void* buf );
-extern void BOXDAT_PokeParaPut( BOX_DATA* box, u32 trayNum, u32 pos, int param, u32 arg );
+extern u32 BOXDAT_GetCureentTrayNumber( const BOX_MANAGER* box );
+extern void BOXDAT_SetCureentTrayNumber( BOX_MANAGER* box, u32 num );
+extern u32 BOXDAT_GetWallPaperNumber( const BOX_MANAGER* box, u32 trayNumber );
+extern void BOXDAT_SetWallPaperNumber( BOX_MANAGER* box, u32 trayNum, u32 wallPaperNumber );
+extern void BOXDAT_GetBoxName( const BOX_MANAGER* box, u32 trayNumber, STRBUF* buf );
+extern void BOXDAT_SetBoxName( BOX_MANAGER* box, u32 trayNumber, const STRBUF* src );
+extern u32 BOXDAT_GetPokeExistCount( const BOX_MANAGER* box, u32 trayNumber );
+extern u32 BOXDAT_GetPokeExistCount2( const BOX_MANAGER* box, u32 trayNumber );
+extern POKEMON_PASO_PARAM* BOXDAT_GetPokeDataAddress( const BOX_MANAGER* box, u32 boxNum, u32 pos );
+extern BOOL BOXDAT_GetEmptyTrayNumberAndPos( const BOX_MANAGER* box, int* trayNum, int* pos );
+extern u32 BOXDAT_PokeParaGet( const BOX_MANAGER* box, u32 trayNum, u32 pos, int param, void* buf );
+extern void BOXDAT_PokeParaPut( BOX_MANAGER* box, u32 trayNum, u32 pos, int param, u32 arg );
 
 
 //==============================================================================================
 // だいすきクラブ壁紙
 //==============================================================================================
-extern void BOXDAT_SetDaisukiKabegamiFlag( BOX_DATA* box, u32 number );
-extern BOOL BOXDAT_GetDaisukiKabegamiFlag( const BOX_DATA* box, u32 number );
-extern u32  BOXDAT_GetDaiukiKabegamiCount( const BOX_DATA* box );
+extern void BOXDAT_SetDaisukiKabegamiFlag( BOX_MANAGER* box, u32 number );
+extern BOOL BOXDAT_GetDaisukiKabegamiFlag( const BOX_MANAGER* box, u32 number );
+extern u32  BOXDAT_GetDaiukiKabegamiCount( const BOX_MANAGER* box );
 
 
-extern void BOXDAT_SetTrayUseBit(BOX_DATA* box, const u8 inTrayIdx);
-extern void BOXDAT_SetTrayUseBitAll(BOX_DATA* box);
-extern void BOXDAT_ClearTrayUseBits(BOX_DATA* box);
-extern u32 BOXDAT_GetTrayUseBits(const BOX_DATA* box);
+extern void BOXDAT_SetTrayUseBit(BOX_MANAGER* box, const u8 inTrayIdx);
+extern void BOXDAT_SetTrayUseBitAll(BOX_MANAGER* box);
+extern void BOXDAT_ClearTrayUseBits(BOX_MANAGER* box);
+extern u32 BOXDAT_GetTrayUseBits(const BOX_MANAGER* box);
 extern u32 BOXDAT_GetOneBoxDataSize(void);
-extern void BOXDAT_CheckBoxDummyData(BOX_DATA* box);
+extern void BOXDAT_CheckBoxDummyData(BOX_MANAGER* box);
 
 
-extern void BOXDAT_SetPPPData_Tray( u8 trayIdx , void *dataPtr , BOX_DATA *boxData );
+extern void BOXDAT_SetPPPData_Tray( u8 trayIdx , void *dataPtr , BOX_MANAGER *boxData );
 
 //==============================================================================================
 // ボックスデータ分割処理

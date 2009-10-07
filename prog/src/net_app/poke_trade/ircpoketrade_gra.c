@@ -528,7 +528,7 @@ static void _calcPokeIconPos(int line,int index, GFL_CLACTPOS* pos)
 }
 
 
-static POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_DATA* boxData , int lineno, int verticalindex , IRC_POKEMON_TRADE* pWork)
+static POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_MANAGER* boxData , int lineno, int verticalindex , IRC_POKEMON_TRADE* pWork)
 {
   if(lineno > HAND_HORIZONTAL_NUM){
     int tray = LINE2TRAY(lineno);
@@ -546,7 +546,7 @@ static POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_DATA* boxData , int lineno, i
 
 
 //ラインにあわせたポケモン表示
-static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_DATA* boxData ,int line)
+static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_MANAGER* boxData ,int line)
 {
   int i,k;
   POKEMON_PASO_PARAM* ppp;
@@ -628,7 +628,7 @@ static int _boxScrollNum2Line(IRC_POKEMON_TRADE* pWork)
 
 
 
-void IRC_POKETRADE_InitBoxIcon( BOX_DATA* boxData ,IRC_POKEMON_TRADE* pWork )
+void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,IRC_POKEMON_TRADE* pWork )
 {
   int i,line = _boxScrollNum2Line(pWork);
 

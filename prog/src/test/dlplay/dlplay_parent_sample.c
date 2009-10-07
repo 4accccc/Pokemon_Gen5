@@ -516,7 +516,7 @@ static BOOL	DLPlaySend_SaveMain( DLPLAY_SEND_DATA *dlData )
 	{
 	case 0:	
 		{
-		BOX_DATA *pBoxData;
+		BOX_MANAGER *pBoxData;
 		DLPLAY_LARGE_PACKET *lPacket;
 		//セーブ前準備
 		DLPlayFunc_ClearString( parentData->msgSys_ );

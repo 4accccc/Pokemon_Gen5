@@ -32,7 +32,7 @@ typedef struct{
 	WORLDTRADE_DATA *worldtrade_data;	// 世界交換データ
 	SYSTEMDATA		*systemdata;		// システムセーブデータ（DPWライブラリ用ともだちコードを保存）
 	POKEPARTY       *myparty;			// 手持ちポケモン
-	BOX_DATA        *mybox;				// ボックスデータ
+	BOX_MANAGER        *mybox;				// ボックスデータ
 	ZUKAN_WORK      *zukanwork;			// 図鑑データ
 	WIFI_LIST		*wifilist;			// ともだち手帳
 	WIFI_HISTORY	*wifihistory;		// 地球儀データ

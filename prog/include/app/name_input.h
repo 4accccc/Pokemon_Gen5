@@ -83,7 +83,7 @@ typedef struct {
 
 	// --------ポケモン捕獲でボックス転送になった時に必要-------------
 	int get_msg_id; 	// ポケモン捕獲の時にBOX転送が発生した時のメッセージIDが入る
-	BOX_DATA  *boxdata;	// ポケモン捕獲の時にBOX転送が発生した時に、BOXの名前を取得するために必要
+	BOX_MANAGER  *boxdata;	// ポケモン捕獲の時にBOX転送が発生した時に、BOXの名前を取得するために必要
 	CONFIG    *config;  // コンフィグ構造体
 } NAMEIN_PARAM;
 

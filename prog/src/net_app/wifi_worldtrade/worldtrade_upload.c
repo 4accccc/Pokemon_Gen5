@@ -2419,7 +2419,7 @@ static int Subseq_MessageWait( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static void UploadPokemonDataDelete( WORLDTRADE_WORK *wk, int flag )
 {
-//	BOXDAT_PutPokemonBox( BOX_DATA* box, u32 boxNum, POKEMON_PASO_PARAM* poke );
+//	BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 boxNum, POKEMON_PASO_PARAM* poke );
 
 	// ŽèŽ‚¿‚©‚ç‚Å‚È‚¯‚ê‚ÎBOX‚Ìƒ|ƒPƒ‚ƒ“‚ðÁ‹Ž‚·‚é
 	if(wk->BoxTrayNo!=18){

@@ -255,7 +255,7 @@ struct _IRC_POKEMON_TRADE {
   //  ICA_ANIME* icaAnime;
   //  GFL_G3D_CAMERA* camera;
 
-  BOX_DATA* pBox;
+  BOX_MANAGER* pBox;
   MYSTATUS* pMy;
   POKEPARTY* pMyParty;
   GFL_G3D_CAMERA    *camera;
@@ -351,7 +351,7 @@ extern void IRC_POKETRADE_MessageWindowClose(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_MessageWindowClear(IRC_POKEMON_TRADE* pWork);
 extern BOOL IRC_POKETRADE_MessageEndCheck(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_TrayDisp(IRC_POKEMON_TRADE* pWork);
-extern void IRC_POKETRADE_InitBoxIcon( BOX_DATA* boxData ,IRC_POKEMON_TRADE* pWork );
+extern void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,IRC_POKEMON_TRADE* pWork );
 extern void IRC_POKETRADE_AllDeletePokeIconResource(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_G3dDraw(IRC_POKEMON_TRADE* pWork);
@@ -377,7 +377,7 @@ extern void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(IRC_POKEMON_TRADE* pWork);
 
 extern void IRCPOKETRADE_PokeDeleteMcss( IRC_POKEMON_TRADE *pWork,int no  );
 extern void IRCPOKETRADE_PokeCreateMcss( IRC_POKEMON_TRADE *pWork ,int no, int bFront, const POKEMON_PARAM *pp );
-extern POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_DATA* boxData , int trayNo, int index,IRC_POKEMON_TRADE* pWork);
+extern POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_MANAGER* boxData , int trayNo, int index,IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SetMainStatusBG(IRC_POKEMON_TRADE* pWork);
 
 

@@ -165,6 +165,8 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 //		FontProc_LoadFont( FONT_TOUCH, HEAPID_WORLDTRADE );
 		{	
 			WORLDTRADE_PARAM *wt_param	= param; 
+			wt_param->mybox	= BOX_DAT_InitManager(HEAPID_PROC , wt_param->savedata);
+
 			WT_PRINT_Init( &wk->print, wt_param->config );
 		}
 		OS_Printf("-------------------------------ƒvƒƒbƒN‰Šú‰»\n");
@@ -584,6 +586,7 @@ static void InitWork( WORLDTRADE_WORK *wk, WORLDTRADE_PARAM *param )
 //------------------------------------------------------------------
 static void FreeWork( WORLDTRADE_WORK *wk )
 {
+  BOX_DAT_ExitManager(wk->param->mybox);
 	
 
 }

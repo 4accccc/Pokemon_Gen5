@@ -790,7 +790,7 @@ static int BBAG_ItemUse( BBAG_WORK * wk )
 
 		{	// 手持ち・ボックスいっぱい
 			POKEPARTY * party = BattleWorkPokePartyGet( dat->bw, dat->client_no );
-			BOX_DATA * box = BattleWorkBoxDataGet( dat->bw );
+			BOX_MANAGER * box = BattleWorkBoxDataGet( dat->bw );
 
 			if( PokeParty_GetPokeCount( party ) == 6 &&
 				BOXDAT_GetEmptyTrayNumber( box ) == BOXDAT_TRAYNUM_ERROR ){

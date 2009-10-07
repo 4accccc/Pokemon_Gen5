@@ -21,7 +21,8 @@
 
 
 static void PPP_RecoverPP(POKEMON_PASO_PARAM* pp){}  //ダミー関数
-static BOX_TRAY_DATA* BOXTRAYDAT_GetTrayData( const BOX_DATA *boxData , const u32 trayNum );
+static BOX_TRAY_DATA* BOXTRAYDAT_GetTrayData( const BOX_MANAGER *boxData , const u32 trayNum );
+static BOX_SAVEDATA* BOXDAT_GetBoxSaveData( const BOX_MANAGER *boxData );
 
 
 
@@ -35,12 +36,11 @@ struct _BOX_TRAY_DATA
 //	u8 dummy[TRAY_DUMMY_NUM];
 };
 
-struct _BOX_DATA{
+struct _BOX_SAVEDATA{
 //	BOX_TRAY_DATA		btd[BOX_MAX_TRAY];  //WBよりトレーが個別のセーブになります。
 	//ここより下のデータが２５６バイトアライメントされたところにマッピングされる
 	u32					currentTrayNumber;								//4
 	u32					UseBoxBits;										//4
-	SAVE_CONTROL_WORK *sv;  //4 トレーアクセス用
 	STRCODE				trayName[BOX_MAX_TRAY][BOX_TRAYNAME_BUFSIZE];	//2*20*24 = 960
 	u8					wallPaper[BOX_MAX_TRAY];						//24
 	u8					daisukiBitFlag;									//1
@@ -54,19 +54,24 @@ struct _BOX_DATA{
 	//フッター情報のみの書き込みの際に、フラッシュページをまたがなくなる
 };
 
+
 // 構造体が想定のサイズとなっているかチェック
 #ifdef PM_DEBUG
 #ifdef _NITRO
 SDK_COMPILER_ASSERT(sizeof(BOX_TRAY_DATA) == 4080); //ヘッダ分減らしました
-SDK_COMPILER_ASSERT(sizeof(BOX_DATA) == 0x3e8);
+SDK_COMPILER_ASSERT(sizeof(BOX_SAVEDATA) == 0x3e4);
 #endif
 #endif
+
+struct _BOX_MANAGER{
+	SAVE_CONTROL_WORK *sv;
+};
 
 
 //==============================================================
 // Prototype
 //==============================================================
-static void boxdata_init( BOX_DATA* boxdat );
+static void boxdata_init( BOX_SAVEDATA* boxdat );
 
 
 //------------------------------------------------------------------
@@ -74,7 +79,7 @@ static void boxdata_init( BOX_DATA* boxdat );
  * ボックスデータ初期化
  */
 //------------------------------------------------------------------
-void BOXDAT_Init( BOX_DATA* boxdat )
+void BOXDAT_Init( BOX_SAVEDATA* boxdat )
 {
 	boxdata_init(boxdat);
 ///	SaveData_RequestTotalSave();金銀で削除
@@ -89,8 +94,8 @@ void BOXDAT_Init( BOX_DATA* boxdat )
 u32 BOXDAT_GetTotalSize( void )
 {
 
-	OS_Printf("ボックスデータサイズ%x\n",sizeof( BOX_DATA ));
-	return sizeof( BOX_DATA );
+	OS_Printf("ボックスデータサイズ%x\n",sizeof( BOX_SAVEDATA ));
+	return sizeof( BOX_SAVEDATA );
 }
 
 
@@ -102,7 +107,7 @@ u32 BOXDAT_GetTotalSize( void )
  *
  */
 //------------------------------------------------------------------
-static void boxdata_init( BOX_DATA* boxdat )
+static void boxdata_init( BOX_SAVEDATA* boxdat )
 {
 	u32 i, p;
 	GFL_MSGDATA*  msgman;
@@ -142,6 +147,12 @@ static void boxdata_init( BOX_DATA* boxdat )
 	boxdat->currentTrayNumber = 0;
 
 }
+
+static BOX_SAVEDATA* BOXDAT_GetBoxSaveData( const BOX_MANAGER *boxData )
+{
+  return SaveControl_DataPtrGet(boxData->sv, GMDATA_ID_BOXDATA);
+}
+
 //------------------------------------------------------------------
 /**
  * ボックス全体からから空き領域を探してポケモンデータを格納
@@ -152,11 +163,12 @@ static void boxdata_init( BOX_DATA* boxdat )
  * @retval  BOOL		TRUE=格納された／FALSE=空きが無い
  */
 //------------------------------------------------------------------
-BOOL BOXDAT_PutPokemon( BOX_DATA* box, POKEMON_PASO_PARAM* poke )
+BOOL BOXDAT_PutPokemon( BOX_MANAGER* box, POKEMON_PASO_PARAM* poke )
 {
 	u32 b;
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 
-	b = box->currentTrayNumber;
+	b = boxData->currentTrayNumber;
 	do
 	{
 		PPP_RecoverPP(poke);
@@ -173,7 +185,7 @@ BOOL BOXDAT_PutPokemon( BOX_DATA* box, POKEMON_PASO_PARAM* poke )
 			b = 0;
 		}
 
-	}while( b != box->currentTrayNumber );
+	}while( b != boxData->currentTrayNumber );
 
 	return FALSE;
 }
@@ -189,15 +201,16 @@ BOOL BOXDAT_PutPokemon( BOX_DATA* box, POKEMON_PASO_PARAM* poke )
  * @retval  BOOL		TRUE=格納された／FALSE=空きが無い
  */
 //------------------------------------------------------------------
-BOOL BOXDAT_PutPokemonBox( BOX_DATA* box, u32 trayNum, POKEMON_PASO_PARAM* poke )
+BOOL BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 trayNum, POKEMON_PASO_PARAM* poke )
 {
 	u32 i;
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 
 	PPP_RecoverPP(poke);
 
 	if( trayNum == BOXDAT_TRAYNUM_CURRENT )
 	{
-		trayNum = box->currentTrayNumber;
+		trayNum = boxData->currentTrayNumber;
 	}
 
 	for(i = 0; i < BOX_MAX_POS; i++)
@@ -226,13 +239,14 @@ BOOL BOXDAT_PutPokemonBox( BOX_DATA* box, u32 trayNum, POKEMON_PASO_PARAM* poke 
  * @retval  BOOL		TRUE=格納された／FALSE=空きが無い
  */
 //------------------------------------------------------------------
-BOOL BOXDAT_PutPokemonPos( BOX_DATA* box, u32 trayNum, u32 pos, POKEMON_PASO_PARAM* poke )
+BOOL BOXDAT_PutPokemonPos( BOX_MANAGER* box, u32 trayNum, u32 pos, POKEMON_PASO_PARAM* poke )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	PPP_RecoverPP(poke);
 
 	if( trayNum == BOXDAT_TRAYNUM_CURRENT )
 	{
-		trayNum = box->currentTrayNumber;
+		trayNum = boxData->currentTrayNumber;
 	}
 
 	if(	(trayNum < BOX_MAX_TRAY)
@@ -263,7 +277,7 @@ BOOL BOXDAT_PutPokemonPos( BOX_DATA* box, u32 trayNum, u32 pos, POKEMON_PASO_PAR
  *
  */
 //------------------------------------------------------------------
-void BOXDAT_ChangePokeData( BOX_DATA * box, u32 trayNum, u32 pos1, u32 pos2 )
+void BOXDAT_ChangePokeData( BOX_MANAGER * box, u32 trayNum, u32 pos1, u32 pos2 )
 {
   BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
 	POKEMON_PASO_PARAM	tmp = trayData->ppp[pos1];
@@ -283,11 +297,12 @@ void BOXDAT_ChangePokeData( BOX_DATA * box, u32 trayNum, u32 pos1, u32 pos2 )
  *
  */
 //------------------------------------------------------------------
-void BOXDAT_ClearPokemon( BOX_DATA* box, u32 trayNum, u32 pos )
+void BOXDAT_ClearPokemon( BOX_MANAGER* box, u32 trayNum, u32 pos )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	if( trayNum == BOXDAT_TRAYNUM_CURRENT )
 	{
-		trayNum = box->currentTrayNumber;
+		trayNum = boxData->currentTrayNumber;
 	}
 
 	if( (pos < BOX_MAX_POS) && (trayNum < BOX_MAX_TRAY) )
@@ -312,9 +327,10 @@ void BOXDAT_ClearPokemon( BOX_DATA* box, u32 trayNum, u32 pos )
  * @retval  u32		カレントトレイナンバー
  */
 //------------------------------------------------------------------
-u32 BOXDAT_GetCureentTrayNumber( const BOX_DATA* box )
+u32 BOXDAT_GetCureentTrayNumber( const BOX_MANAGER* box )
 {
-	return box->currentTrayNumber;
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
+	return boxData->currentTrayNumber;
 }
 //------------------------------------------------------------------
 /**
@@ -325,11 +341,12 @@ u32 BOXDAT_GetCureentTrayNumber( const BOX_DATA* box )
  * @retval  u32		空きのあるトレイナンバー／見つからなければ BOXDAT_TRAYNUM_ERROR
  */
 //------------------------------------------------------------------
-u32 BOXDAT_GetEmptyTrayNumber( const BOX_DATA* box )
+u32 BOXDAT_GetEmptyTrayNumber( const BOX_MANAGER* box )
 {
 	int tray, pos;
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 
-	tray = box->currentTrayNumber;
+	tray = boxData->currentTrayNumber;
 
 	while(1)
 	{
@@ -345,7 +362,7 @@ u32 BOXDAT_GetEmptyTrayNumber( const BOX_DATA* box )
 		{
 			tray = 0;
 		}
-		if( tray == box->currentTrayNumber )
+		if( tray == boxData->currentTrayNumber )
 		{
 			break;
 		}
@@ -365,13 +382,14 @@ u32 BOXDAT_GetEmptyTrayNumber( const BOX_DATA* box )
  *
  */
 //------------------------------------------------------------------
-BOOL BOXDAT_GetEmptyTrayNumberAndPos( const BOX_DATA* box, int* trayNum, int* pos )
+BOOL BOXDAT_GetEmptyTrayNumberAndPos( const BOX_MANAGER* box, int* trayNum, int* pos )
 {
 	int t, p;
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 
 	if( *trayNum == BOXDAT_TRAYNUM_CURRENT )
 	{
-		*trayNum = box->currentTrayNumber;
+		*trayNum = boxData->currentTrayNumber;
 	}
 
 	t = *trayNum;
@@ -412,7 +430,7 @@ BOOL BOXDAT_GetEmptyTrayNumberAndPos( const BOX_DATA* box, int* trayNum, int* po
  * @retval  u32		空きの数
  */
 //------------------------------------------------------------------
-u32 BOXDAT_GetEmptySpaceTotal( const BOX_DATA* box )
+u32 BOXDAT_GetEmptySpaceTotal( const BOX_MANAGER* box )
 {
 	int t, pos;
 	u32 cnt;
@@ -443,15 +461,16 @@ u32 BOXDAT_GetEmptySpaceTotal( const BOX_DATA* box )
  * @retval  u32		空きの数
  */
 //------------------------------------------------------------------
-u32 BOXDAT_GetEmptySpaceTray( const BOX_DATA* box, u32 trayNum )
+u32 BOXDAT_GetEmptySpaceTray( const BOX_MANAGER* box, u32 trayNum )
 {
 	int pos;
 	u32 cnt;
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
   BOX_TRAY_DATA *trayData;
 
 	if( trayNum == BOXDAT_TRAYNUM_CURRENT )
 	{
-		trayNum = box->currentTrayNumber;
+		trayNum = boxData->currentTrayNumber;
 	}
 	GF_ASSERT( trayNum < BOX_MAX_TRAY );
 
@@ -477,11 +496,12 @@ u32 BOXDAT_GetEmptySpaceTray( const BOX_DATA* box, u32 trayNum )
  * @param   num		カレントトレイナンバー
  */
 //------------------------------------------------------------------
-void BOXDAT_SetCureentTrayNumber( BOX_DATA* box, u32 num )
+void BOXDAT_SetCureentTrayNumber( BOX_MANAGER* box, u32 num )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	if( num < BOX_MAX_TRAY )
 	{
-		box->currentTrayNumber = num;
+		boxData->currentTrayNumber = num;
 		//SaveData_RequestTotalSave();	//金銀で削除　ポケモン以外のデータはいかなる場合も書くのでこの関数でリクエストしなくてＯＫ
 	}
 	else
@@ -499,11 +519,12 @@ void BOXDAT_SetCureentTrayNumber( BOX_DATA* box, u32 num )
  * @retval  u32		壁紙ナンバー
  */
 //------------------------------------------------------------------
-u32 BOXDAT_GetWallPaperNumber( const BOX_DATA* box, u32 trayNum )
+u32 BOXDAT_GetWallPaperNumber( const BOX_MANAGER* box, u32 trayNum )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	if( trayNum < BOX_MAX_TRAY )
 	{
-		return box->wallPaper[trayNum];
+		return boxData->wallPaper[trayNum];
 	}
 	else
 	{
@@ -541,15 +562,16 @@ static BOOL WallPaperNumberCheck( u32 num )
  *
  */
 //------------------------------------------------------------------
-void BOXDAT_SetWallPaperNumber( BOX_DATA* box, u32 trayNum, u32 wallPaperNumber )
+void BOXDAT_SetWallPaperNumber( BOX_MANAGER* box, u32 trayNum, u32 wallPaperNumber )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	if( trayNum == BOXDAT_TRAYNUM_CURRENT )
 	{
-		trayNum = box->currentTrayNumber;
+		trayNum = boxData->currentTrayNumber;
 	}
 
 	if(	trayNum < BOX_MAX_TRAY && WallPaperNumberCheck(wallPaperNumber) == TRUE ){
-		box->wallPaper[trayNum] = wallPaperNumber;
+		boxData->wallPaper[trayNum] = wallPaperNumber;
 		//SaveData_RequestTotalSave();	金銀で削除　ポケモン以外のデータはいかなる場合も書くのでこの関数でリクエストしなくてＯＫ	
 	}else{
 		GF_ASSERT(0);
@@ -566,16 +588,17 @@ void BOXDAT_SetWallPaperNumber( BOX_DATA* box, u32 trayNum, u32 wallPaperNumber 
  *
  */
 //------------------------------------------------------------------
-void BOXDAT_GetBoxName( const BOX_DATA* box, u32 trayNumber, STRBUF* buf )
+void BOXDAT_GetBoxName( const BOX_MANAGER* box, u32 trayNumber, STRBUF* buf )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	if( trayNumber == BOXDAT_TRAYNUM_CURRENT )
 	{
-		trayNumber = box->currentTrayNumber;
+		trayNumber = boxData->currentTrayNumber;
 	}
 
 	if( trayNumber < BOX_MAX_TRAY )
 	{
-		GFL_STR_SetStringCode( buf, box->trayName[trayNumber] );
+		GFL_STR_SetStringCode( buf, boxData->trayName[trayNumber] );
 	}
 	else
 	{
@@ -593,16 +616,17 @@ void BOXDAT_GetBoxName( const BOX_DATA* box, u32 trayNumber, STRBUF* buf )
  *
  */
 //------------------------------------------------------------------
-void BOXDAT_SetBoxName( BOX_DATA* box, u32 trayNumber, const STRBUF* src )
+void BOXDAT_SetBoxName( BOX_MANAGER* box, u32 trayNumber, const STRBUF* src )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	if( trayNumber == BOXDAT_TRAYNUM_CURRENT )
 	{
-		trayNumber = box->currentTrayNumber;
+		trayNumber = boxData->currentTrayNumber;
 	}
 
 	if( trayNumber < BOX_MAX_TRAY )
 	{
-		GFL_STR_GetStringCode( src, box->trayName[trayNumber], BOX_TRAYNAME_BUFSIZE );
+		GFL_STR_GetStringCode( src, boxData->trayName[trayNumber], BOX_TRAYNAME_BUFSIZE );
 		//SaveData_RequestTotalSave();	//金銀で削除　ポケモン以外のデータはいかなる場合も書くのでこの関数でリクエストしなくてＯＫ
 	}
 }
@@ -616,11 +640,12 @@ void BOXDAT_SetBoxName( BOX_DATA* box, u32 trayNumber, const STRBUF* src )
  * @retval  u32		トレイに格納されているポケモン数
  */
 //------------------------------------------------------------------
-u32 BOXDAT_GetPokeExistCount( const BOX_DATA* box, u32 trayNum )
+u32 BOXDAT_GetPokeExistCount( const BOX_MANAGER* box, u32 trayNum )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	if( trayNum == BOXDAT_TRAYNUM_CURRENT )
 	{
-		trayNum = box->currentTrayNumber;
+		trayNum = boxData->currentTrayNumber;
 	}
 
 	if( trayNum < BOX_MAX_TRAY )
@@ -654,11 +679,12 @@ u32 BOXDAT_GetPokeExistCount( const BOX_DATA* box, u32 trayNum )
  * @retval  u32		トレイに格納されているポケモン数
  */
 //------------------------------------------------------------------
-u32 BOXDAT_GetPokeExistCount2( const BOX_DATA* box, u32 trayNum )
+u32 BOXDAT_GetPokeExistCount2( const BOX_MANAGER* box, u32 trayNum )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	if( trayNum == BOXDAT_TRAYNUM_CURRENT )
 	{
-		trayNum = box->currentTrayNumber;
+		trayNum = boxData->currentTrayNumber;
 	}
 
 	if( trayNum < BOX_MAX_TRAY )
@@ -694,7 +720,7 @@ u32 BOXDAT_GetPokeExistCount2( const BOX_DATA* box, u32 trayNum )
  * @retval  u32		
  */
 //------------------------------------------------------------------
-u32 BOXDAT_GetPokeExistCountTotal( const BOX_DATA* box )
+u32 BOXDAT_GetPokeExistCountTotal( const BOX_MANAGER* box )
 {
 	u32 cnt, i;
 
@@ -714,7 +740,7 @@ u32 BOXDAT_GetPokeExistCountTotal( const BOX_DATA* box )
  * @retval  u32		
  */
 //------------------------------------------------------------------
-u32 BOXDAT_GetPokeExistCount2Total( const BOX_DATA* box )
+u32 BOXDAT_GetPokeExistCount2Total( const BOX_MANAGER* box )
 {
 	u32 cnt, i;
 
@@ -738,15 +764,16 @@ u32 BOXDAT_GetPokeExistCount2Total( const BOX_DATA* box )
  * @retval  u32			PPPGet 戻り値
  */
 //------------------------------------------------------------------
-u32 BOXDAT_PokeParaGet( const BOX_DATA* box, u32 trayNum, u32 pos, int param, void* buf )
+u32 BOXDAT_PokeParaGet( const BOX_MANAGER* box, u32 trayNum, u32 pos, int param, void* buf )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	BOX_TRAY_DATA *trayData;
 	GF_ASSERT((trayNum<BOX_MAX_TRAY)||(trayNum == BOXDAT_TRAYNUM_CURRENT));
 	GF_ASSERT(pos<BOX_MAX_POS);
 
 	if( trayNum == BOXDAT_TRAYNUM_CURRENT )
 	{
-		trayNum = box->currentTrayNumber;
+		trayNum = boxData->currentTrayNumber;
 	}
   trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
 
@@ -766,15 +793,16 @@ u32 BOXDAT_PokeParaGet( const BOX_DATA* box, u32 trayNum, u32 pos, int param, vo
  *
  */
 //------------------------------------------------------------------
-void BOXDAT_PokeParaPut( BOX_DATA* box, u32 trayNum, u32 pos, int param, u32 arg )
+void BOXDAT_PokeParaPut( BOX_MANAGER* box, u32 trayNum, u32 pos, int param, u32 arg )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
   BOX_TRAY_DATA *trayData;
 	GF_ASSERT((trayNum<BOX_MAX_TRAY)||(trayNum == BOXDAT_TRAYNUM_CURRENT));
 	GF_ASSERT(pos<BOX_MAX_POS);
 
 	if( trayNum == BOXDAT_TRAYNUM_CURRENT )
 	{
-		trayNum = box->currentTrayNumber;
+		trayNum = boxData->currentTrayNumber;
 	}
 
   trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
@@ -805,15 +833,16 @@ void BOXDAT_PokeParaPut( BOX_DATA* box, u32 trayNum, u32 pos, int param, u32 arg
  * @retval  POKEMON_PASO_PARAM*		
  */
 //------------------------------------------------------------------
-POKEMON_PASO_PARAM* BOXDAT_GetPokeDataAddress( const BOX_DATA* box, u32 trayNum, u32 pos )
+POKEMON_PASO_PARAM* BOXDAT_GetPokeDataAddress( const BOX_MANAGER* box, u32 trayNum, u32 pos )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
   BOX_TRAY_DATA *trayData;
 	GF_ASSERT( ((trayNum<BOX_MAX_TRAY)||(trayNum == BOXDAT_TRAYNUM_CURRENT)) );
 	GF_ASSERT( (pos<BOX_MAX_POS) );
 
 	if( trayNum == BOXDAT_TRAYNUM_CURRENT )
 	{
-		trayNum = box->currentTrayNumber;
+		trayNum = boxData->currentTrayNumber;
 	}
   trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
 
@@ -841,11 +870,12 @@ POKEMON_PASO_PARAM* BOXDAT_GetPokeDataAddress( const BOX_DATA* box, u32 trayNum,
  *
  */
 //------------------------------------------------------------------
-void BOXDAT_SetDaisukiKabegamiFlag( BOX_DATA* box, u32 number )
+void BOXDAT_SetDaisukiKabegamiFlag( BOX_MANAGER* box, u32 number )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	GF_ASSERT( number < BOX_EX_WALLPAPER_MAX );
 
-	box->daisukiBitFlag |= (1 << number);
+	boxData->daisukiBitFlag |= (1 << number);
 ///	SaveData_RequestTotalSave();金銀で削除　ポケモン以外のデータはいかなる場合も書くのでこの関数でリクエストしなくてＯＫ
 }
 
@@ -859,11 +889,12 @@ void BOXDAT_SetDaisukiKabegamiFlag( BOX_DATA* box, u32 number )
  * @retval  BOOL		TRUEで取得している
  */
 //------------------------------------------------------------------
-BOOL BOXDAT_GetDaisukiKabegamiFlag( const BOX_DATA* box, u32 number )
+BOOL BOXDAT_GetDaisukiKabegamiFlag( const BOX_MANAGER* box, u32 number )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	GF_ASSERT( number < BOX_EX_WALLPAPER_MAX );
 
-	return (box->daisukiBitFlag & (1<<number)) != 0;
+	return (boxData->daisukiBitFlag & (1<<number)) != 0;
 }
 
 //------------------------------------------------------------------
@@ -875,7 +906,7 @@ BOOL BOXDAT_GetDaisukiKabegamiFlag( const BOX_DATA* box, u32 number )
  * @retval  u32		
  */
 //------------------------------------------------------------------
-u32 BOXDAT_GetDaiukiKabegamiCount( const BOX_DATA* box )
+u32 BOXDAT_GetDaiukiKabegamiCount( const BOX_MANAGER* box )
 {
 	u32 i, cnt;
 
@@ -899,10 +930,11 @@ u32 BOXDAT_GetDaiukiKabegamiCount( const BOX_DATA* box )
  * @retval  none
  */
 //------------------------------------------------------------------
-void BOXDAT_SetTrayUseBit(BOX_DATA* box, const u8 inTrayIdx)
+void BOXDAT_SetTrayUseBit(BOX_MANAGER* box, const u8 inTrayIdx)
 {
 	u8 bit;
 	u32 data = 0;
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	if (inTrayIdx >= BOX_MAX_TRAY){
 		GF_ASSERT_MSG(0,"ボックストレーインデックス不正\n");
 		return;
@@ -911,7 +943,7 @@ void BOXDAT_SetTrayUseBit(BOX_DATA* box, const u8 inTrayIdx)
 	bit = (0b1);
 	data = bit << inTrayIdx;
 
-	box->UseBoxBits |= data;
+	boxData->UseBoxBits |= data;
 }
 
 //------------------------------------------------------------------
@@ -924,10 +956,11 @@ void BOXDAT_SetTrayUseBit(BOX_DATA* box, const u8 inTrayIdx)
  * @retval  none
  */
 //------------------------------------------------------------------
-void BOXDAT_SetTrayUseBitAll(BOX_DATA* box)
+void BOXDAT_SetTrayUseBitAll(BOX_MANAGER* box)
 {
-	box->UseBoxBits = TRAY_ALL_USE_BIT;
-	OS_Printf("全ビットオン%x\n",box->UseBoxBits);
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
+	boxData->UseBoxBits = TRAY_ALL_USE_BIT;
+	OS_Printf("全ビットオン%x\n",boxData->UseBoxBits);
 }
 
 //------------------------------------------------------------------
@@ -940,9 +973,10 @@ void BOXDAT_SetTrayUseBitAll(BOX_DATA* box)
  * @retval  none
  */
 //------------------------------------------------------------------
-void BOXDAT_ClearTrayUseBits(BOX_DATA* box)
+void BOXDAT_ClearTrayUseBits(BOX_MANAGER* box)
 {
-	box->UseBoxBits = 0;
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
+	boxData->UseBoxBits = 0;
 	OS_Printf("トレー編集ビット全クリア\n");
 }
 
@@ -955,9 +989,10 @@ void BOXDAT_ClearTrayUseBits(BOX_DATA* box)
  * @retval  u32		編集ビット群
  */
 //------------------------------------------------------------------
-u32 BOXDAT_GetTrayUseBits(const BOX_DATA* box)
+u32 BOXDAT_GetTrayUseBits(const BOX_MANAGER* box)
 {
-	return box->UseBoxBits;
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
+	return boxData->UseBoxBits;
 }
 
 //------------------------------------------------------------------
@@ -980,7 +1015,7 @@ u32 BOXDAT_GetOneBoxDataSize(void)
  *
  */
 //------------------------------------------------------------------
-void BOXDAT_CheckBoxDummyData(BOX_DATA* box)
+void BOXDAT_CheckBoxDummyData(BOX_MANAGER* box)
 {
   //ダミーは無くしました。
   /*
@@ -996,13 +1031,19 @@ void BOXDAT_CheckBoxDummyData(BOX_DATA* box)
 
 }
 
-extern BOX_DATA * SaveData_GetBoxData(SAVE_CONTROL_WORK * sv)
+BOX_MANAGER * BOX_DAT_InitManager( const HEAPID heapId , SAVE_CONTROL_WORK * sv)
 {
-	BOX_DATA* pData;
-	pData = SaveControl_DataPtrGet(sv, GMDATA_ID_BOXDATA);
+	BOX_MANAGER* pData;
+	pData = GFL_HEAP_AllocMemory( heapId , sizeof( BOX_MANAGER ) );
 	pData->sv = sv;
+	OS_TPrintf("[[%x]]\n",*pData);
 	return pData;
 
+}
+void BOX_DAT_ExitManager( BOX_MANAGER *box )
+{
+	OS_TPrintf("[[%x]]\n",*box);
+  GFL_HEAP_FreeMemory( box );
 }
 
 
@@ -1014,8 +1055,9 @@ extern BOX_DATA * SaveData_GetBoxData(SAVE_CONTROL_WORK * sv)
  * @param	boxData		ボックスセーブデータへのポインタ
  */
 //---------------------------------------------------------------------------
-void BOXDAT_SetPPPData_Tray( u8 trayIdx , void *dataPtr , BOX_DATA *boxData )
+void BOXDAT_SetPPPData_Tray( u8 trayIdx , void *dataPtr , BOX_MANAGER *box )
 {
+  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	//通信用に切り分け、解読シーケンスをはさむか？
 	// 将来作り直す必要がある
 //	GFL_STD_MemCopy( dataPtr , (void*)boxData->ppp[trayIdx] , 0x88*30 );
@@ -1040,7 +1082,7 @@ u32 BOXTRAYDAT_GetTotalSize( void )
   return sizeof( BOX_TRAY_DATA );
 }
 
-static BOX_TRAY_DATA* BOXTRAYDAT_GetTrayData( const BOX_DATA *boxData , const u32 trayNum )
+static BOX_TRAY_DATA* BOXTRAYDAT_GetTrayData( const BOX_MANAGER *boxData , const u32 trayNum )
 {
   return SaveControl_DataPtrGet(boxData->sv, GMDATA_ID_BOXTRAY_01+trayNum);
 }

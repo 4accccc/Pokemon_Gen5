@@ -97,8 +97,8 @@ static void PokemonIconSet( POKEMON_PASO_PARAM *paso, GFL_CLWK* icon, GFL_CLWK* 
 static void* CharDataGetbyHandle( ARCHANDLE *handle, u32 dataIdx, NNSG2dCharacterData** charData, u32 heapID );
 static  int CompareSearchData( Dpw_Tr_PokemonDataSimple *poke,  Dpw_Tr_PokemonSearchData *search );
 static void PokeIconPalSet( Dpw_Tr_PokemonDataSimple *box, GFL_CLWK* *icon, Dpw_Tr_PokemonSearchData *want, WORLDTRADE_POKEBUF *pbuf);
-static  int CheckPocket( POKEPARTY *party, BOX_DATA *box,  int  tray, int pos );
-static  int PokemonCheck( POKEPARTY *party, BOX_DATA *box,  int  tray, int pos  );
+static  int CheckPocket( POKEPARTY *party, BOX_MANAGER *box,  int  tray, int pos );
+static  int PokemonCheck( POKEPARTY *party, BOX_MANAGER *box,  int  tray, int pos  );
 static  int ExchangeCheck( WORLDTRADE_WORK *wk );
 static  int PokeRibbonCheck( POKEMON_PASO_PARAM *ppp );
 static  int PokeNewFormCheck( POKEMON_PASO_PARAM *ppp );
@@ -2097,7 +2097,7 @@ static void NowBoxPageInfoGet( WORLDTRADE_WORK *wk, int now)
 	u16 monsno[30],i,flag;
 	POKEMON_PARAM      *pp;
 	POKEMON_PASO_PARAM *paso;
-	BOX_DATA *boxdata = wk->param->mybox;
+	BOX_MANAGER *boxdata = wk->param->mybox;
 	ARCHANDLE* handle;
 	WORLDTRADE_POKEBUF *pokebuf;
 	
@@ -2201,7 +2201,7 @@ int WorldTrade_GetPPorPPP( int tray )
  * @retval  POKEMON_PASO_PARAM *		取得したポケモンデータのポインタ
  */
 //==============================================================================
-POKEMON_PASO_PARAM *WorldTrade_GetPokePtr( POKEPARTY *party, BOX_DATA *box,  int  tray, int pos )
+POKEMON_PASO_PARAM *WorldTrade_GetPokePtr( POKEPARTY *party, BOX_MANAGER *box,  int  tray, int pos )
 {
 	// てもち
 	if(WorldTrade_GetPPorPPP( tray )){
@@ -2227,7 +2227,7 @@ POKEMON_PASO_PARAM *WorldTrade_GetPokePtr( POKEPARTY *party, BOX_DATA *box,  int
  * @retval  int		
  */
 //==============================================================================
-static int CheckPocket( POKEPARTY *party, BOX_DATA *box,  int  tray, int pos )
+static int CheckPocket( POKEPARTY *party, BOX_MANAGER *box,  int  tray, int pos )
 {
 	// てもちだった時は残りを数える
 	if(WorldTrade_GetPPorPPP( tray )){
@@ -2367,7 +2367,7 @@ static int PokeNewItemCheck( POKEMON_PASO_PARAM *ppp )
  * @retval  int		WANT_POKE_NO, WANT_POME_YES, WANT_POKE_TAMAGO
  */
 //==============================================================================
-static int PokemonCheck( POKEPARTY *party, BOX_DATA *box,  int  tray, int pos  )
+static int PokemonCheck( POKEPARTY *party, BOX_MANAGER *box,  int  tray, int pos  )
 {
 	POKEMON_PASO_PARAM *ppp = WorldTrade_GetPokePtr(party, box, tray, pos );
 	

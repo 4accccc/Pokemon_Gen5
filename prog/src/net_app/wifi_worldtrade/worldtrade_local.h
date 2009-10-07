@@ -668,7 +668,7 @@ extern  int WorldTrade_Search_End(WORLDTRADE_WORK *wk, int seq);
 extern int WorldTrade_Box_Init(WORLDTRADE_WORK *wk, int seq);
 extern int WorldTrade_Box_Main(WORLDTRADE_WORK *wk, int seq);
 extern int WorldTrade_Box_End(WORLDTRADE_WORK *wk, int seq);
-extern POKEMON_PASO_PARAM *WorldTrade_GetPokePtr( POKEPARTY *party, BOX_DATA *box,  int  tray, int pos );
+extern POKEMON_PASO_PARAM *WorldTrade_GetPokePtr( POKEPARTY *party, BOX_MANAGER *box,  int  tray, int pos );
 extern int WorldTrade_GetPPorPPP( int tray );
 extern BOOL WorldTrade_PokemonMailCheck( POKEMON_PARAM *pp );
 

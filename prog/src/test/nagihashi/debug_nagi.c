@@ -853,7 +853,6 @@ static void LISTDATA_CallProcGts( DEBUG_NAGI_MAIN_WORK *p_wk )
 	p_wk->gts_param.worldtrade_data	= SaveData_GetWorldTradeData(p_wk->gts_param.savedata);
 	p_wk->gts_param.systemdata			= SaveData_GetSystemData(p_wk->gts_param.savedata);
 	p_wk->gts_param.myparty					= SaveData_GetTemotiPokemon(p_wk->gts_param.savedata);
-	p_wk->gts_param.mybox						= SaveData_GetBoxData(p_wk->gts_param.savedata);
 	p_wk->gts_param.zukanwork				= NULL;
 	p_wk->gts_param.wifilist				= SaveData_GetWifiListData(p_wk->gts_param.savedata);
 	p_wk->gts_param.wifihistory			= SaveData_GetWifiHistory(p_wk->gts_param.savedata);

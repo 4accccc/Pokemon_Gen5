@@ -305,7 +305,7 @@ static void _getPokeIconPos(int index, GFL_CLACTPOS* pos)
 }
 
 
-POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_DATA* boxData , int trayNo, int index,IRC_POKEMON_TRADE* pWork)
+POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_MANAGER* boxData , int trayNo, int index,IRC_POKEMON_TRADE* pWork)
 {
   POKEMON_PASO_PARAM* ppp;
   if(trayNo!=BOX_MAX_TRAY){
@@ -331,7 +331,7 @@ POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_DATA* boxData , int t
  */
 //------------------------------------------------------------------------------
 
-static void _InitBoxName( BOX_DATA* boxData , u8 trayNo ,IRC_POKEMON_TRADE* pWork )
+static void _InitBoxName( BOX_MANAGER* boxData , u8 trayNo ,IRC_POKEMON_TRADE* pWork )
 {
 
 
@@ -1294,13 +1294,13 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
 
     if(pParentWork){
       GAMEDATA* pGameData = GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pParentWork));
-      pWork->pBox = SaveData_GetBoxData( GAMEDATA_GetSaveControlWork(pGameData)  );
+      pWork->pBox = BOX_DAT_InitManager(pWork->heapID,SaveControl_GetPointer());
       pWork->pMy = GAMEDATA_GetMyStatus( pGameData );
       pWork->pMyParty = GAMEDATA_GetMyPokemon(pGameData);
     }
 #if PM_DEBUG
     else{
-      pWork->pBox = SaveData_GetBoxData(SaveControl_GetPointer());
+      pWork->pBox = BOX_DAT_InitManager(pWork->heapID,SaveControl_GetPointer());
       pWork->pMy = MyStatus_AllocWork(pWork->heapID);
       pWork->pMyParty = PokeParty_AllocPartyWork(pWork->heapID);
     }
@@ -1370,7 +1370,6 @@ static GFL_PROC_RESULT IrcBattleFriendProcMain( GFL_PROC * proc, int * seq, void
     _Pokemonset(pWork, 1, pWork->recvPoke[pWork->pokemonsetCall-1]);
     pWork->pokemonsetCall=0;
   }
-
 
   GFL_CLACT_SYS_Main(); // CLSYSƒƒCƒ“
   if(pWork->pAppTask){
@@ -1484,6 +1483,8 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
 
+  //BOXManagerŠJ•ú’Ç‰Á
+  BOX_DAT_ExitManager( pWork->pBox );
 
   GFL_CLACT_SYS_Delete();
   GFL_G3D_Exit();
