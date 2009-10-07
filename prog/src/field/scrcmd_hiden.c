@@ -17,6 +17,7 @@
 #include "script_def.h"
 #include "scrcmd.h"
 #include "scrcmd_work.h"
+#include "scrcmd_hiden.h"
 
 #include "fieldmap.h"
 #include "field_player_grid.h"

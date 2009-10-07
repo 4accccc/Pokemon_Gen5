@@ -211,20 +211,19 @@ static void FMenuTakeFieldInfo(FMENU_EVENT_WORK* mwk);
 //--------------------------------------------------------------
 static const FMENU_CALLPROC FldMapMenu_CallProcList[FMIT_MAX] =
 {
-  { NULL },
-  { FMenuCallProc_PokeStatus },
-  { FMenuCallProc_Zukan },
-  { FMenuCallProc_Bag },
-  { FMenuCallProc_MyTrainerCard },
-  { FMenuCallProc_Report },
-  { FMenuCallProc_Config },
-  { FMenuCallProc_Chat },
+  NULL,
+  FMenuCallProc_PokeStatus,
+  FMenuCallProc_Zukan,
+  FMenuCallProc_Bag,
+  FMenuCallProc_MyTrainerCard,
+  FMenuCallProc_Report,
+  FMenuCallProc_Config,
+  FMenuCallProc_Chat,
 };
 
 //--------------------------------------------------------------
 /// 子Procデータテーブル
 //--------------------------------------------------------------
-
 static const FMENU_SUBPROC_DATA FldMapMenu_SubProcData[FMENU_APP_MAX] =
 {
   { //  FMENU_APP_POKELIST,
