@@ -19,6 +19,8 @@ _EVENT_DATA ev_hiden_kairiki
 _EVENT_DATA ev_hiden_kairiki_menu
 _EVENT_DATA ev_hiden_naminori
 _EVENT_DATA ev_hiden_naminori_menu
+_EVENT_DATA ev_hiden_iaigiri
+_EVENT_DATA ev_hiden_iaigiri_menu
 _EVENT_DATA_END
 
 
@@ -211,4 +213,95 @@ EVENT_START ev_hiden_naminori_menu
   //冒険ノート
 //  _GET_NOW_ZONE_ID  SCWK_TEMP0
 //  _FNOTE_DATA_MAKE  FNOTE_ID_NAMINORI,SCWK_TEMP0,0,0,0
+EVENT_END
+
+/**************************************************************/
+/*  居合い切り */
+/**************************************************************/
+EVENT_START ev_hiden_iaigiri
+  _TALK_OBJ_START()
+  
+  _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_IAIGIRI )
+  
+  IF $SCWK_ANSWER == 6 THEN
+    _CALL ev_hiden_iaigiri_ng
+  ELSE
+    //バッジチェック
+//  _SYS_FLAG_BADGE_GET BADGE_ID_C04, SCWK_ANSWER
+//  _IFVAL_JUMP    SCWK_ANSWER,EQ,0, ev_hiden_iaigiri_ng
+    _TALKWIN_OPEN()
+    _TALKMSG( msg_iai_01 )
+    _YES_NO_WIN( SCWK_ANSWER )
+    
+    IF $SCWK_ANSWER == 0 THEN
+      _CALL ev_hiden_iaigiri_02
+    ELSE
+      _TALKWIN_CLOSE()
+    ENDIF
+  ENDIF
+EVENT_END
+
+//居合い切り　秘伝わざもっていない場合
+ev_hiden_iaigiri_ng:
+  _TALKWIN_OPEN()
+	_TALKMSG( msg_iai_03 )
+	_LAST_KEYWAIT()
+	_TALKWIN_CLOSE()
+	_END
+
+//居合い切り実行
+ev_hiden_iaigiri_02:
+  _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_IAIGIRI )
+  _LDWK( SCWK_TEMP0,SCWK_ANSWER )
+  
+  _NICK_NAME( 0, SCWK_ANSWER )
+  _TALKMSG( msg_iai_02 )
+  _AB_KEYWAIT()
+  _TALKWIN_CLOSE()
+  
+  //カットイン
+//  _CUTIN      SCWK_TEMP0 //カットイン
+  
+  //居合い切りエフェクト
+//  _HIDENEFF_START 0,SCWK_TEMP1  // SCWK_TEMP1に1が入ったらエフェクト終了
+//  _TIME_WAIT    EV_HIDEN_IAIGIRI_OBJDEL_WAIT,SCWK_ANSWER
+  
+  _OBJ_DEL_EX( SCWK_TARGET_OBJID )
+
+  //冒険ノート
+//  _GET_NOW_ZONE_ID  SCWK_TEMP0
+//  _FNOTE_DATA_MAKE  FNOTE_ID_IAIGIRI,SCWK_TEMP0,0,0,0
+
+// エフェクトが終わるまで待つ
+ev_hiden_iaigiri_02_eff_end_loop:
+  _TIME_WAIT( 1 )
+  // エフェクト終了待ち
+//  _IFVAL_JUMP    SCWK_TEMP1,EQ,0, ev_hiden_iaigiri_02_eff_end_loop
+  _END
+
+//居合い切り　メニューから
+EVENT_START ev_hiden_iaigiri_menu
+  _TALK_OBJ_START()
+  
+	_NICK_NAME( 0, SCWK_PARAM0 )
+  _TALKWIN_OPEN()
+	_TALKMSG( msg_iai_02 )
+	_TALKWIN_CLOSE()
+  
+  //カットイン
+//	_CUTIN			SCWK_PARAM0
+  
+  //居合い切りエフェクト
+//	_HIDENEFF_START 0,SCWK_TEMP1	// SCWK_TEMP1に1が入ったらエフェクト終了
+//	_TIME_WAIT		EV_HIDEN_IAIGIRI_OBJDEL_WAIT,SCWK_ANSWER
+  
+	_OBJ_DEL_EX( SCWK_TARGET_OBJID )
+  
+  //冒険ノート
+//	_GET_NOW_ZONE_ID	SCWK_TEMP0
+//	_FNOTE_DATA_MAKE	FNOTE_ID_IAIGIRI,SCWK_TEMP0,0,0,0
+
+ev_hiden_iaigiri_menu_eff_end_loop: // エフェクトが終わるまで待つ
+//	_TIME_WAIT		1,SCWK_ANSWER
+//	_IFVAL_JUMP		SCWK_TEMP1,EQ,0, ev_hiden_iaigiri_menu_eff_end_loop
 EVENT_END
