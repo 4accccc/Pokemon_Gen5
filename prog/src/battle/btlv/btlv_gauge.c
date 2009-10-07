@@ -126,6 +126,9 @@ enum
   BTLV_GAUGE_MAXHP_CHARSTART = 0x04,
   BTLV_GAUGE_LV_CHARSTART = 0x2c,
   BTLV_GAUGE_EXP_CHARSTART = 0x01,
+
+  BTLV_GAUGE_TYPE_3vs3_YOFFSET_E = -16,   //3vs3時のゲージY方向オフセット（相手側）
+  BTLV_GAUGE_TYPE_3vs3_YOFFSET_M = -24,   //3vs3時のゲージY方向オフセット（自分側）
 };
 
 typedef enum
@@ -381,11 +384,11 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
 
   //CLWK
   { 
-    static GFL_CLWK_DATA gauge = {
+    GFL_CLWK_DATA gauge = {
       0, 0,     //x, y
       0, 0, 0,  //アニメ番号、優先順位、BGプライオリティ
     };
-    static  const GFL_CLACTPOS  gauge_pos[]={ 
+    GFL_CLACTPOS  gauge_pos[]={ 
       { BTLV_GAUGE_POS_AA_X, BTLV_GAUGE_POS_AA_Y },
       { BTLV_GAUGE_POS_BB_X, BTLV_GAUGE_POS_BB_Y },
       { BTLV_GAUGE_POS_A_X, BTLV_GAUGE_POS_A_Y },
@@ -407,7 +410,7 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
     bgw->bgcl[ pos ].hp_clwk = GFL_CLACT_WK_Create( bgw->clunit,
                                                     bgw->bgcl[ pos ].hp_charID, bgw->plttID, bgw->bgcl[ pos ].hp_cellID,
                                                     &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
-    if( ( pos & 1 ) == 0 )
+    if( ( ( pos & 1 ) == 0 ) && ( bgw->bgcl[ pos ].gauge_type != BTLV_GAUGE_TYPE_3vs3 ) )
     { 
       bgw->bgcl[ pos ].exp_clwk = GFL_CLACT_WK_Create( bgw->clunit,
                                                        bgw->bgcl[ pos ].exp_charID, bgw->plttID, bgw->bgcl[ pos ].exp_cellID,
@@ -497,7 +500,7 @@ void  BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos )
     bgw->bgcl[ pos ].hpnum_clwk = NULL;
     bgw->bgcl[ pos ].hp_clwk    = NULL;
 
-    if( ( pos & 1 ) == 0 )
+    if( bgw->bgcl[ pos ].exp_clwk )
     { 
       GFL_CLGRP_CGR_Release( bgw->bgcl[ pos ].exp_charID );
       GFL_CLGRP_CELLANIM_Release( bgw->bgcl[ pos ].exp_cellID );
@@ -520,11 +523,24 @@ void  BTLV_GAUGE_Del( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos )
 void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int pos_x, int pos_y )
 { 
   GFL_CLACTPOS  cl_pos;
-  GFL_CLACTPOS  pos_ofs[]={ 
+  GFL_CLACTPOS  hp_pos_ofs[]={ 
     { BTLV_GAUGE_MINE_HP_X, BTLV_GAUGE_MINE_HP_Y },
     { BTLV_GAUGE_ENEMY_HP_X, BTLV_GAUGE_ENEMY_HP_Y },
   };
 
+  if( bgw->bgcl[ pos ].gauge_type == BTLV_GAUGE_TYPE_3vs3 )
+  { 
+    int pos_ofs_y[]={ 
+      0, 0,
+      BTLV_GAUGE_TYPE_3vs3_YOFFSET_M + 8,
+      BTLV_GAUGE_TYPE_3vs3_YOFFSET_E,
+      BTLV_GAUGE_TYPE_3vs3_YOFFSET_M + 4,
+      BTLV_GAUGE_TYPE_3vs3_YOFFSET_E,
+      BTLV_GAUGE_TYPE_3vs3_YOFFSET_M,
+      BTLV_GAUGE_TYPE_3vs3_YOFFSET_E,
+    };
+    pos_y += pos_ofs_y[ pos ];
+  }
   cl_pos.x = pos_x;
   cl_pos.y = pos_y;
   GFL_CLACT_WK_SetPos( bgw->bgcl[ pos ].base_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
@@ -536,8 +552,8 @@ void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int pos_x, int p
     GFL_CLACT_WK_SetPos( bgw->bgcl[ pos ].hpnum_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
   }
 
-  cl_pos.x = pos_x + pos_ofs[ pos & 1 ].x;
-  cl_pos.y = pos_y + pos_ofs[ pos & 1 ].y;
+  cl_pos.x = pos_x + hp_pos_ofs[ pos & 1 ].x;
+  cl_pos.y = pos_y + hp_pos_ofs[ pos & 1 ].y;
   GFL_CLACT_WK_SetPos( bgw->bgcl[ pos ].hp_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
 
   if( bgw->bgcl[ pos ].exp_clwk )

@@ -12,7 +12,7 @@
 
 #include "battle/btl_common.h"
 
-#define BTLV_INPUT_DIR_MAX  ( 6 )   //対象選択MAX
+#define BTLV_INPUT_DIR_MAX  ( TEMOTI_POKEMAX )   //対象選択MAX
 
 typedef struct _BTLV_INPUT_WORK BTLV_INPUT_WORK;
 
@@ -43,6 +43,18 @@ typedef struct{
   u8                    client_type;
   u8                    pokesele_type;  ///<対象選択タイプ
 }BTLV_INPUT_SCENE_PARAM;
+
+typedef enum
+{ 
+  BTLV_INPUT_CENTER_BUTTON_ESCAPE = FALSE,
+  BTLV_INPUT_CENTER_BUTTON_MODORU = TRUE,
+}BTLV_INPUT_CENTER_BUTTON_TYPE;
+
+///コマンド選択画面構成用のワーク
+typedef struct{
+  BTLV_INPUT_DIR_PARAM          bidp[ BTLV_INPUT_DIR_MAX ];
+  BTLV_INPUT_CENTER_BUTTON_TYPE center_button_type;
+}BTLV_INPUT_COMMAND_PARAM;
 
 typedef enum
 { 

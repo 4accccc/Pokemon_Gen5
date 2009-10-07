@@ -63,10 +63,8 @@
 
 //TCB_TransformCommand2Waza
 #define TTC2W_SCROLL_COUNT ( 8 )
-#define TTC2W_START_SCROLL_X1 ( 256 )
-#define TTC2W_START_SCROLL_Y1 ( 0x1c0 )
-#define TTC2W_START_SCROLL_X2 ( 0 )
-#define TTC2W_START_SCROLL_Y2 ( 0x1c0 )
+#define TTC2W_START_SCROLL_X ( 256 )
+#define TTC2W_START_SCROLL_Y ( 0x1c0 )
 #define TTC2W_SCROLL_SPEED ( 64 / TTC2W_SCROLL_COUNT )
 
 //TCB_TransformWaza2Command
@@ -287,9 +285,10 @@ struct _BTLV_INPUT_WORK
   ARCHANDLE*            handle;
   BTLV_INPUT_TYPE       type;
   BTLV_INPUT_SCRTYPE    scr_type;
-  u32                   tcb_execute_flag  :1;
-  u32                   tcb_execute_count :3;
-  u32                                     :28;
+  u32                   tcb_execute_flag    :1;
+  u32                   tcb_execute_count   :3;
+  u32                   center_button_type  :1;
+  u32                                       :27;
 
   //OBJリソース
   u32                   objcharID;
@@ -492,8 +491,8 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
   biw->bmp_win = GFL_BMPWIN_Create( GFL_BG_FRAME0_S, 32, 4, 32, 12, 0, GFL_BMP_CHRAREA_GET_B );
   biw->bmp_data = GFL_BMPWIN_GetBmp( biw->bmp_win );
   GFL_BMP_Clear( biw->bmp_data, 0x00 );
-  GFL_BMPWIN_MakeScreen( biw->bmp_win );
   GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
+  GFL_BMPWIN_MakeScreen( biw->bmp_win );
   GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
 
   //情報ステータスバー初期化
@@ -627,9 +626,11 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     break;
   case BTLV_INPUT_SCRTYPE_COMMAND:
     {
+      BTLV_INPUT_COMMAND_PARAM* bicp = ( BTLV_INPUT_COMMAND_PARAM * )param;
       int i;
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
       biw->tcb_execute_flag = 1;
+      biw->center_button_type = bicp->center_button_type;
       ttw->biw = biw;
 
       for( i = 0 ; i < 4 ; i++ )
@@ -643,7 +644,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       }
       else
       {
-        BTLV_INPUT_CreateBallGauge( biw, ( BTLV_INPUT_DIR_PARAM * )param, 0 );
+        BTLV_INPUT_CreateBallGauge( biw, bicp->bidp, 0 );
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Command, ttw, 1 );
       }
     }
@@ -698,6 +699,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl )
 {
   int hit;
+
   //下画面変形中は入力を無視
   if( biw->tcb_execute_flag )
   {
@@ -781,6 +783,26 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
+    if( ttw->biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE )
+    { 
+      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    }
+    else
+    { 
+      if( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE )
+      { 
+        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0e_NSCR,
+                                         GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+      }
+      else
+      { 
+        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0d_NSCR,
+                                         GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+      }
+    }
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
+                                     GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     PMSND_PlaySE( SEQ_SE_OPEN2 );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
@@ -817,21 +839,19 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
-                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
-                                     GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
-    SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X1, TTC2W_START_SCROLL_Y1, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
-    /*
-    if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->biw->
-    { 
-      SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X2, TTC2W_START_SCROLL_Y2, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
+    if( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE )
+    {
+     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0b_NSCR,
+                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     }
     else
     { 
-      SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X1, TTC2W_START_SCROLL_Y1, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
+     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     }
-    */
+    GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+    SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X, TTC2W_START_SCROLL_Y, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
     SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
@@ -966,8 +986,6 @@ static  void  TCB_TransformDir2Waza( GFL_TCB* tcb, void* work )
     break;
   }
   */
-  GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
-                                   GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
   GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
                                    GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
   GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
@@ -1445,6 +1463,11 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
     }
   }
   biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
+  //3vs3のときは移動ボタンも存在するので、2個分押せるボタンにする
+  if( biw->type == BTLV_INPUT_TYPE_TRIPLE )
+  { 
+    biw->button_exist[ i + 1 ] = TRUE;  //押せるボタンかどうかチェック
+  }
 
   WORDSET_Delete( wordset );
   GFL_STR_DeleteBuffer( wazaname_p );

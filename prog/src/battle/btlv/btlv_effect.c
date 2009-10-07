@@ -58,6 +58,7 @@ struct _BTLV_EFFECT_WORK
   int               execute_flag;
   int               tcb_execute_flag;
   HEAPID            heapID;
+  BtlRule           rule;
 
   int               trainer_index[ BTLV_MCSS_POS_MAX ];
 };
@@ -135,6 +136,8 @@ void  BTLV_EFFECT_Init( BtlRule rule, int index, HEAPID heapID )
       bew->trainer_index[ index ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
     }
   }
+
+  bew->rule = rule;
 
   //VBlankŠÖ”
   bew->v_tcb = GFUser_VIntr_CreateTCB( BTLV_EFFECT_VBlank, NULL, 1 );
@@ -412,7 +415,14 @@ void  BTLV_EFFECT_DelTrainer( int position )
 //============================================================================================
 void  BTLV_EFFECT_SetGauge( const BTL_POKEPARAM* bpp, int position )
 {
-  BTLV_GAUGE_Add( bew->bgw, bpp, BTLV_GAUGE_TYPE_1vs1, position );
+  if( bew->rule == BTL_RULE_TRIPLE )
+  { 
+    BTLV_GAUGE_Add( bew->bgw, bpp, BTLV_GAUGE_TYPE_3vs3, position );
+  }
+  else
+  { 
+    BTLV_GAUGE_Add( bew->bgw, bpp, BTLV_GAUGE_TYPE_1vs1, position );
+  }
 }
 
 //============================================================================================

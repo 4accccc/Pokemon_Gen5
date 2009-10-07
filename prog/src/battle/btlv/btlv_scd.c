@@ -343,12 +343,13 @@ static const GFL_UI_TP_HITTBL BattleMenuTouchData[] = {
 };
 ///‹Z‘I‘ðƒ^ƒbƒ`ƒpƒlƒ‹—ÌˆæÝ’è
 static const GFL_UI_TP_HITTBL SkillMenuTouchData[] = {
-  //UP DOWN LEFT RIGHT
-  {3*8, 10*8, 0*8, 0x10*8},   //‹Z1
-  {3*8, 10*8, 0x10*8, 255}, //‹Z2
-  {0xb*8, 0x12*8, 0*8, 0x10*8}, //‹Z3
-  {0xb*8, 0x12*8, 0x10*8, 255}, //‹Z4
-  {0x12*8, 0x18*8, 0x16*8, 255},  //ƒLƒƒƒ“ƒZƒ‹
+  //UP    DOWN    LEFT    RIGHT
+  {0x03*8, 0x0a*8, 0x00*8, 0x10*8},   //‹Z1
+  {0x03*8, 0x0a*8, 0x10*8, 255},      //‹Z2
+  {0x0b*8, 0x12*8, 0x00*8, 0x10*8},   //‹Z3
+  {0x0b*8, 0x12*8, 0x10*8, 255},      //‹Z4
+  {0x12*8, 0x18*8, 0x16*8, 255},      //ƒLƒƒƒ“ƒZƒ‹
+  {0x12*8, 0x18*8, 0x00*8, 0x0a*8},   //ˆÚ“®i3vs3Žž‚Ì‚Ýj
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 
@@ -402,13 +403,13 @@ static void printBtnWaza( BTLV_SCD* wk, u16 btnIdx, u16 col, const STRBUF* str )
 static BOOL selectAction_init( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;
-  BTLV_INPUT_DIR_PARAM  bidp[ TEMOTI_POKEMAX ];
+  BTLV_INPUT_COMMAND_PARAM  bicp;
   const BTL_PARTY* party;
   const BTL_POKEPARAM* bpp;
   const POKEMON_PARAM* pp;
   u16 members, hp, i;
 
-  MI_CpuClear16( &bidp, sizeof( BTLV_INPUT_DIR_PARAM ) * TEMOTI_POKEMAX );
+  MI_CpuClear16( &bicp, sizeof( BTLV_INPUT_COMMAND_PARAM ) );
 
   party = wk->playerParty;
   members = BTL_PARTY_GetMemberCount( party );
@@ -423,20 +424,22 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
     {
       if( PP_Get( pp, ID_PARA_condition, NULL ) )
       {
-        bidp[ i ].status = BTLV_INPUT_STATUS_NG;
+        bicp.bidp[ i ].status = BTLV_INPUT_STATUS_NG;
       }
       else
       {
-        bidp[ i ].status = BTLV_INPUT_STATUS_ALIVE;
+        bicp.bidp[ i ].status = BTLV_INPUT_STATUS_ALIVE;
       }
     }
     else
     {
-      bidp[ i ].status = BTLV_INPUT_STATUS_DEAD;
+      bicp.bidp[ i ].status = BTLV_INPUT_STATUS_DEAD;
     }
   }
 
-  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_COMMAND, bidp );
+  bicp.center_button_type = wk->fActionPrevButton;
+
+  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_COMMAND, &bicp );
 
   return TRUE;
 }
@@ -504,6 +507,9 @@ static BOOL selectWaza_init( int* seq, void* wk_adrs )
     biwp.ppmax[ i ]   = 0;
   }
 
+  biwp.pos = BTL_MAIN_BtlPosToViewPos( wk->mainModule,
+                                       BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID( wk->bpp ) ) );
+
   BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_WAZA, &biwp );
 
   return TRUE;
@@ -540,12 +546,8 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
       SePlayDecide();
       return TRUE;
     }
-  }
-
-  // @todo Œ»óAƒL[‘€ì‚Ì‚Ý‚Åƒ€[ƒuˆ—‚µ‚Ä‚¢‚é
-  if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE )
-  {
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+    else if( ( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ) && ( hit == 5 ) )
+    { 
       BTL_ACTION_SetMoveParam( wk->destActionParam );
       SePlayDecide();
       return TRUE;
