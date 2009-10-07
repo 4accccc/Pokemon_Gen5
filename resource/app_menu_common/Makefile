@@ -28,10 +28,10 @@ SUBDIRS	= ball
 include	$(PROJECT_RSCDIR)\macro_define
 
 # 自動でリソースを集める
-lsources:=$(wildcard *.ncl)
-gsources:=$(wildcard *.ncg)
-ssources:=$(wildcard *.nsc)
-esources:=$(wildcard *.nce)
+lsources:=$(wildcard *.ncl) $(wildcard ./ball/*.ncl)
+gsources:=$(wildcard *.ncg) $(wildcard ./ball/*.ncg)
+ssources:=$(wildcard *.nsc) $(wildcard ./ball/*.nsc)
+esources:=$(wildcard *.nce) $(wildcard ./ball/*.nce)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
@@ -71,6 +71,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、サブファルダのmakefileを利用す
 	@$(MAKE_SUBDIR)
 endif
 
+
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
@@ -82,6 +83,8 @@ $(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) 
 	nnsarc -c -l -n -i $(targetname) -S app_menu_common.scr
 	$(NAIXCUT) $(targetname).naix
 endif
+
+
 
 #------------------------------------------------------------------------------
 #	make clean ルール

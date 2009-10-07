@@ -36,31 +36,37 @@ cobjects = $(subst .nce,.NCGR,$(esources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
 
+RES_OBJ =  $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(cobjects)
+
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
 .SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
 
 .ncl.NCLR:
 	g2dcvtr $<
+	CP $*.NCLR ./../
 
 .ncg.NCGR:
 	g2dcvtr $< -bg
+	CP $*.NCGR ./../
 
 .nsc.NSCR:
 	g2dcvtr $<
+	CP $*.NSCR ./../
 
 .nce.NCER:
 	g2dcvtr $< -ncn
+	CP $*.NCER ./../
+	CP $*.NANR ./../
 
 .PHONY:	do-build clean subdir
+
+# コピー先のnarcが古い場合実行する
+#$(targetname).narc: subdir $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(cobjects)
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(cobjects)
-	CP *.NCGR ./../
-	CP *.NCLR ./../
-	CP *.NCER ./../
-	CP *.NANR ./../
+do-build:	subdir $(RES_OBJ)
 
 subdir:
 	@$(MAKE_SUBDIR)
