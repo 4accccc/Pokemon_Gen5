@@ -25,6 +25,8 @@
 #include "field/intrude_comm.h"
 #include "intrude_comm_command.h"
 #include "system/net_err.h"
+#include "field/zonedata.h"
+#include "field/field_g3d_mapper.h"
 
 #include "message.naix"
 #include "msg/msg_d_field.h"
@@ -66,6 +68,7 @@ static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, voi
 static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm);
 static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*work);
 static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor);
+static void _PalaceFieldConnect(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm);
 
 
 //==============================================================================
@@ -88,6 +91,8 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
   int i;
   BOOL update_ret;
+
+  _PalaceFieldConnect(fieldWork, gameSys, pcActor, intcomm);
   
   //パレスマップに来たかチェック
   DEBUG_PalaceMapInCheck(fieldWork, gameSys, game_comm, pcActor);
@@ -160,13 +165,13 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     }
   }
   
-  if(zone_id != ZONE_ID_PALACETEST){
+  if(ZONEDATA_IsPalace(zone_id) == FALSE){
     return NULL;
   }
   
   FIELD_PLAYER_GetPos( pcActor, &pos );
-  if(pos.x >= FX32_CONST(744) && pos.x <= FX32_CONST(776) 
-      && pos.z >= FX32_CONST(72) && pos.z <= FX32_CONST(88-1)){
+  if(pos.x >= FX32_CONST(1496) && pos.x <= FX32_CONST(1528) 
+      && pos.z >= FX32_CONST(504) && pos.z <= FX32_CONST(504)){
     pos.x = 12536 << FX32_SHIFT;
     pos.y = 0;
     pos.z = 12120 << FX32_SHIFT;
@@ -189,8 +194,9 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     
     FIELD_PLAYER_GetPos( pcActor, &pos );
     pos.x >>= FX32_SHIFT;
-    if(GFL_NET_GetConnectNum() <= 1 && (pos.x <= 536 || pos.x >= 1000)){
-      left_right = pos.x <= 536 ? 0 : 1;
+    pos.z >>= FX32_SHIFT;
+    if(GFL_NET_GetConnectNum() <= 1 && ((pos.x <= 888 && pos.x >= 888-32) || (pos.x >= 2184 && pos.x <= 2184+32)) && (pos.z >= 440 && pos.z <= 504)){
+      left_right = pos.x <= 888 ? 0 : 1;
       return EVENT_DebugPalaceNGWin( gameSys, fieldWork, pcActor, left_right );
     }
   }
@@ -397,14 +403,14 @@ static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
       
       FIELD_PLAYER_GetPos( pcActor, &pos );
       pos.x >>= FX32_SHIFT;
-      if( !((pos.x >= 512 && pos.x <= 648) || (pos.x >= 888 && pos.x <= 1016)) ){
+      if( !((pos.x <= 1016) || (pos.x >= 2056)) ){
         //橋ではない場所にいるなら通信は開始しない
         return;
       }
     }
     
     //ビーコンサーチ状態でパレスに入ってきた場合
-    if(zone_id == ZONE_ID_PALACETEST && comm_no == GAME_COMM_NO_FIELD_BEACON_SEARCH){
+    if(ZONEDATA_IsPalace(zone_id) == TRUE && comm_no == GAME_COMM_NO_FIELD_BEACON_SEARCH){
       OS_TPrintf("ビーコンサーチを終了\n");
       GameCommSys_ExitReq(game_comm);
       debug_palace_comm_seq++;
@@ -412,7 +418,7 @@ static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     }
     
     //親として起動している場合のチェック
-    if(zone_id != ZONE_ID_PALACETEST || GFL_NET_IsExit() == FALSE || comm_no != GAME_COMM_NO_NULL){
+    if(ZONEDATA_IsPalace(zone_id) == FALSE || GFL_NET_IsExit() == FALSE || comm_no != GAME_COMM_NO_NULL){
       return;
     }
     debug_palace_comm_seq++;
@@ -439,13 +445,13 @@ static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
     }
     break;
   case 3:
-    if(zone_id == ZONE_ID_PALACETEST){
+    if(ZONEDATA_IsPalace(zone_id) == TRUE){
 //      PALACE_DEBUG_CreateNumberAct(intcomm->palace, GFL_HEAP_LOWID(GFL_HEAPID_APP));
       debug_palace_comm_seq++;
     }
     break;
   case 4:
-    if(zone_id != ZONE_ID_PALACETEST){
+    if(ZONEDATA_IsPalace(zone_id) == FALSE){
 //      PALACE_DEBUG_DeleteNumberAct(intcomm->palace);
       debug_palace_comm_seq = 3;
     }
@@ -479,7 +485,79 @@ GMEVENT * DEBUG_PalaceJamp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIEL
   	pos.x = 760 << FX32_SHIFT;
   	pos.y = 0;
   	pos.z = 234 << FX32_SHIFT;
-  	jump_zone = ZONE_ID_PALACETEST;
+  	jump_zone = ZONE_ID_PALACE01;
   }
   return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, jump_zone, &pos, 0);
+}
+
+//--------------------------------------------------------------
+/**
+ * パレスマップの端に来たらマップループ処理を行う
+ *
+ * @param   fieldWork		
+ * @param   gameSys		
+ * @param   pcActor		
+ * @param   intcomm		
+ */
+//--------------------------------------------------------------
+static int debug_flag = 0;
+static void _PalaceFieldConnect(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm)
+{
+  PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
+  ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
+  VecFx32 pos;
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSys);
+  
+#if 0
+  if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION || intcomm == NULL){
+    return;
+  }
+#endif
+
+  if(ZONEDATA_IsPalace(zone_id) == FALSE){
+    return;
+  }
+  
+  FIELD_PLAYER_GetPos( pcActor, &pos );
+  pos.x >>= FX32_SHIFT;
+  pos.z >>= FX32_SHIFT;
+  
+  if(/*debug_flag == 0 &&*/ ((pos.x < PALACE_MAP_RANGE_LEFT_X) || (pos.x > PALACE_MAP_RANGE_RIGHT_X))){
+//  if(debug_flag == 0 && (pos.x == 200) || (pos.x == 2888)){
+    MAP_MATRIX *mmatrix;
+		u16 matrix_id;
+    
+    mmatrix = MAP_MATRIX_Create( HEAPID_WORLD );
+    matrix_id = ZONEDATA_GetMatrixID( ZONE_ID_PALACE01 );
+    MAP_MATRIX_Init(mmatrix, matrix_id, ZONE_ID_PALACE01);
+
+    FLDMAPPER_Connect( FIELDMAP_GetFieldG3Dmapper( fieldWork ), mmatrix );
+
+    MAP_MATRIX_Delete( mmatrix );
+    debug_flag++;
+
+    {
+      VecFx32 pos, new_pos;
+      s32 offs_left, offs_right;
+
+      FIELD_PLAYER_GetPos( pcActor, &pos );
+      new_pos = pos;
+      
+      offs_left = FX_Whole(pos.x) - PALACE_MAP_RANGE_LEFT_X;
+      if(offs_left <= 0){
+        new_pos.x = (PALACE_MAP_RANGE_RIGHT_X + offs_left) << FX32_SHIFT;
+      }
+      else{
+        offs_right = FX_Whole(pos.x) - PALACE_MAP_RANGE_RIGHT_X;
+        if(offs_right >= 0){
+          new_pos.x = (PALACE_MAP_RANGE_LEFT_X + offs_right) << FX32_SHIFT;
+        }
+      }
+      FIELD_PLAYER_SetPos( pcActor, &new_pos );
+    }
+  }
+  
+  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
+    debug_flag = 0;
+  }
 }

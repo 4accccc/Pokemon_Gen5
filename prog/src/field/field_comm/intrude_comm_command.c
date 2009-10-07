@@ -12,7 +12,7 @@
 #include "net/network_define.h"
 #include "intrude_types.h"
 #include "intrude_comm_command.h"
-#include "fieldmap/zone_id.h"
+#include "field/zonedata.h"
 
 
 //==============================================================================
@@ -230,7 +230,7 @@ static void _IntrudeRecv_PlayerStatus(const int netID, const int size, const voi
     if(target_status->zone_id != my_zone_id){
       target_status->player_pack.vanish = TRUE;   //違うゾーンにいるので非表示
     }
-    else if(target_status->zone_id != ZONE_ID_PALACETEST 
+    else if(ZONEDATA_IsPalace(target_status->zone_id) == FALSE
         && target_status->palace_area != intcomm->intrude_status_mine.palace_area){
       //通常フィールドの同じゾーンに居ても、侵入先ROMが違うなら非表示
       target_status->player_pack.vanish = TRUE;

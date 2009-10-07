@@ -68,7 +68,7 @@ GMEVENT * EVENT_PalaceJumpUse(FIELDMAP_WORK *fieldWork,GAMESYS_WORK *gsys)
   	pos.x = 760 << FX32_SHIFT;
   	pos.y = 0;
   	pos.z = 234 << FX32_SHIFT;
-  	jump_zone = ZONE_ID_PALACETEST;
+  	jump_zone = ZONE_ID_PALACE01;
   }
   return DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, jump_zone, &pos, 0);
 }

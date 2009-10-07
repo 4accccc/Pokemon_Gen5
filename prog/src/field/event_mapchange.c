@@ -818,8 +818,8 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
   GF_ASSERT( fieldmap == NULL );
 
-  //※check　スクリプトでマップ作成前に実行できるタイミングが出来れば、そこ行うようにしたい
-  if(loc_req->zone_id == ZONE_ID_PALACETEST){
+  //※check　スクリプトでマップ作成前に実行できるタイミングが出来れば、そこで行うようにしたい
+  if(ZONEDATA_IsPalace(loc_req->zone_id) == TRUE){
     FIELD_STATUS_SetMapMode( GAMEDATA_GetFieldStatus( gamedata ), MAPMODE_INTRUDE );
     //GAMEDATA_SetMapMode(gamedata, MAPMODE_INTRUDE);
   }

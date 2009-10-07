@@ -11,13 +11,13 @@
 #include "buflen.h"
 
 #include "field/game_beacon_search.h"
-#include "fieldmap/zone_id.h"
 #include "message.naix"
 #include "msg/msg_invasion.h"
 #include "net_app/union/union_main.h"
 #include "field/fieldmap_proc.h"
 #include "field/intrude_comm.h"
 #include "system/net_err.h"
+#include "field/zonedata.h"
 
 
 //==============================================================================
@@ -564,13 +564,13 @@ void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZON
     player_status->zone_id = zone_id;
     player_status->same_count = 0;
   }
-  else if(zone_id == ZONE_ID_PALACETEST){
+  else if(ZONEDATA_IsPalace(zone_id) == TRUE){
     player_status->same_count++;
   }
   player_status->invasion_netid = invasion_netid;
   
   //メッセージ作成
-  if(zone_id == ZONE_ID_PALACETEST){
+  if(ZONEDATA_IsPalace(zone_id) == TRUE){
     if(player_status->same_count == 0){
       GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test01_01 + comm_net_id);
       GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test03_01 + comm_net_id);
@@ -583,8 +583,8 @@ void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZON
       OS_TPrintf("INFO:継続してパレスにいます net_id = %d\n", comm_net_id);
     }
   }
-  else if(player_status->old_zone_id == ZONE_ID_PALACETEST && comm_net_id != invasion_netid
-      && zone_id != ZONE_ID_PALACETEST && invasion_netid == GFL_NET_SystemGetCurrentID()){
+  else if(ZONEDATA_IsPalace(player_status->old_zone_id) == TRUE && comm_net_id != invasion_netid
+      && ZONEDATA_IsPalace(zone_id) == FALSE && invasion_netid == GFL_NET_SystemGetCurrentID()){
     GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test07_01 + comm_net_id);
     OS_TPrintf("INFO:街に侵入してきた！ net_id = %d\n", comm_net_id);
   }

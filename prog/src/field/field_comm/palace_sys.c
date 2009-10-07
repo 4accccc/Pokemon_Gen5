@@ -17,26 +17,20 @@
 
 #include "arc_def.h"
 #include "palace.naix"
-#include "fieldmap/zone_id.h"
 #include "system/main.h"
 #include "message.naix"
 #include "msg/msg_invasion.h"
 #include "system/bmp_oam.h"
 #include "msg\msg_d_matsu.h"
 #include "print/wordset.h"
+#include "field/zonedata.h"
+#include "intrude_field.h"
+#include "fieldmap/zone_id.h"
 
 
 //==============================================================================
 //  定数定義
 //==============================================================================
-///パレスマップの範囲(この座標外に出た場合、ワープさせる必要がある)
-enum{
-  PALACE_MAP_RANGE_LEFT_X = 512,
-  PALACE_MAP_RANGE_RIGHT_X = 1024,
-
-  PALACE_MAP_RANGE_LEN = 512,     ///<パレスマップのX長
-};
-
 ///パレスエリア番号初期値(まだ通信が接続されていなくて、自分が何番目か分からない状態)
 #define PALACE_AREA_NO_NULL     (128)
 
@@ -80,7 +74,7 @@ typedef struct _PALACE_SYS_WORK{
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
-static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, INTRUDE_COMM_SYS_PTR intcomm);
+static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, INTRUDE_COMM_SYS_PTR intcomm, FIELDMAP_WORK *fieldWork);
 static void PALACE_DEBUG_UpdateNumber(PALACE_SYS_PTR palace, FIELDMAP_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm);
 static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELDMAP_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm, int area_no);
 static void _WindowSetup(PALACE_SYS_PTR palace, FIELDMAP_WORK *fieldWork);
@@ -204,7 +198,7 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
 #endif
 
   //自機の位置確認し、ワープ処理
-  PALACE_SYS_PosUpdate(palace, plwork, fldply, intcomm);
+  PALACE_SYS_PosUpdate(palace, plwork, fldply, intcomm, fieldWork);
 
   PALACE_DEBUG_UpdateNumber(palace, fieldWork, intcomm);
   
@@ -228,7 +222,7 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
  * @param   fldply		
  */
 //--------------------------------------------------------------
-static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, INTRUDE_COMM_SYS_PTR intcomm)
+static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER *fldply, INTRUDE_COMM_SYS_PTR intcomm, FIELDMAP_WORK *fieldWork)
 {
   ZONEID zone_id;
   VecFx32 pos, new_pos;
@@ -236,7 +230,7 @@ static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIE
   int new_area, now_area;
   
   zone_id = PLAYERWORK_getZoneID(plwork);
-  if(zone_id != ZONE_ID_PALACETEST || FIELD_PLAYER_CheckLiveMMdl(fldply) == FALSE){
+  if(ZONEDATA_IsPalace(zone_id) == FALSE || FIELD_PLAYER_CheckLiveMMdl(fldply) == FALSE){
     return;
   }
   
@@ -267,7 +261,21 @@ static void PALACE_SYS_PosUpdate(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIE
     }
     OS_TPrintf("palace:ワープ old_x=%d, new_x=%d, old_area=%d, new_area=%d\n", 
       FX_Whole(pos.x), FX_Whole(new_pos.x), now_area, new_area);
+
+    {//ループ用マップ読み込み
+      MAP_MATRIX *mmatrix;
+  		u16 matrix_id;
+      
+      mmatrix = MAP_MATRIX_Create( HEAPID_WORLD );
+      matrix_id = ZONEDATA_GetMatrixID( ZONE_ID_PALACE01 );
+      MAP_MATRIX_Init(mmatrix, matrix_id, ZONE_ID_PALACE01);
+
+      FLDMAPPER_Connect( FIELDMAP_GetFieldG3Dmapper( fieldWork ), mmatrix );
+
+      MAP_MATRIX_Delete( mmatrix );
+    }
   }
+
   FIELD_PLAYER_SetPos( fldply, &new_pos );
   if(palace->area != PALACE_AREA_NO_NULL){
     palace->area = new_area;
