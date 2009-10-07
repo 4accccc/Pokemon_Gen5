@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-07T15:16:32"/>
+	<create user="matsumiya" host="W00207" date="2009-10-07T15:25:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -306,36 +306,36 @@
 		<language name="JPN_KANJI" width="256">Ｎ『テストメッセージ</language>
 	</row>
 
-	<row id="msg_c04r0302_dummy_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0302_girl4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">プロって　れんしゅうを　みるだけでも
-すごいって　わかるもんだねー</language>
+すごいって　わかるんだねー</language>
 		<language name="JPN_KANJI" width="256">プロって　練習を　見るだけでも
-すごいって　わかるもんだねー</language>
+すごいって　わかるんだねー</language>
 	</row>
 
-	<row id="msg_c04r0302_dummy_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0302_boy2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">やきゅうがうまくて　ポケモンがつよい！
 そんな　おとなに　なりたいや！</language>
 		<language name="JPN_KANJI" width="256">野球がうまくて　ポケモンが強い！
 そんな　大人に　なりたいや！</language>
 	</row>
 
-	<row id="msg_c04r0302_dummy_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0302_woman3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">WOMAN3</attribute>
 		<language name="JPN" width="256">グラウンドの　うえでは
 いつでも　しんけんしょうぶ！</language>
 		<language name="JPN_KANJI" width="256">グラウンドの　上では
 いつでも　真剣勝負！</language>
 	</row>
 
-	<row id="msg_c04r0302_dummy_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0302_mountain_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">MOUNTAIN</attribute>
 		<language name="JPN" width="256">しろいボール　ひとつで
 ひとも　ポケモンも　えがおになれる[BE:01:ページ切り替え（クリア）]
 やきゅうとは　ふしぎな　ものだ</language>
