@@ -68,6 +68,9 @@ struct  pokemon_personal_data
   u8    rank;           //ポケモンランク
   u8    padding;        //パディング
 
+  u16   height;         //高さ
+  u16   weight;         //重さ
+
   u32   machine1;       //技マシンフラグ１
   u32   machine2;       //技マシンフラグ２
   u32   machine3;       //技マシンフラグ２

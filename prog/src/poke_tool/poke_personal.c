@@ -258,6 +258,12 @@ u32 POKE_PERSONAL_GetParam( POKEMON_PERSONAL_DATA *ppd, PokePersonalParamID para
   case POKEPER_ID_padding:          //パディング
 		ret = ppd->padding;
 		break;
+  case POKEPER_ID_height:           //高さ
+		ret = ppd->height;
+		break;
+  case POKEPER_ID_weight:           //重さ
+		ret = ppd->weight;
+		break;
 	case POKEPER_ID_machine1:		      //技マシンフラグ１
 		ret = ppd->machine1;
 		break;
@@ -308,7 +314,7 @@ static u16 get_personalID( u16 mons_no, u16 form_no )
     return mons_no;
   }
 
-  mons_no = ppd.form_index + form_no;
+  mons_no = ppd.form_index + form_no - 1;
 
 	return mons_no;
 
