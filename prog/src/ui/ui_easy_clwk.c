@@ -50,10 +50,10 @@
 /**
  *	@brief  OBJリソース読み込み
  *
- *	@param	UI_EASY_CLWK_RES* res
- *	@param	prm
- *	@param	unit                        GFL_CLUNIT*
- *	@param	heapID 
+ *	@param	UI_EASY_CLWK_RES* res   リソースセット
+ *	@param	prm 初期化パラメータ
+ *	@param	GFL_CLUNIT* unit ユニット
+ *	@param	heapID  ヒープＩＤ
  *
  *	@retval none
  */
@@ -94,7 +94,7 @@ void UI_EASY_CLWK_LoadResource( UI_EASY_CLWK_RES* res, UI_EAYSY_CLWK_RES_PARAM* 
 /**
  *	@brief  OBJ リソース破棄
  *
- *	@param	UI_EASY_CLWK_RES* res 
+ *	@param	UI_EASY_CLWK_RES* res リソースセット
  *
  *	@retval none
  */
@@ -115,9 +115,9 @@ void UI_EASY_CLWK_UnLoadResource( UI_EASY_CLWK_RES* res )
  *	@param	px      初期X座標
  *	@param	py      初期Y座標
  *	@param	anim    初期アニメシーケンス
- *	@param	heapID 
+ *	@param	heapID  ヒープＩＤ
  *
- *	@retval clwk 
+ *	@retval clwk    アクターポインタ
  */
 //-----------------------------------------------------------------------------
 GFL_CLWK* UI_EASY_CLWK_CreateCLWK( UI_EASY_CLWK_RES* res, GFL_CLUNIT* unit, u8 px, u8 py, u8 anim, HEAPID heapID )

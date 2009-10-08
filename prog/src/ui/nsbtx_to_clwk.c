@@ -46,15 +46,15 @@
 /**
  *	@brief  nsbtxをニトロキャラクタ、ニトロパレットに変換してCLWKに転送
  *
- *	@param	GFL_CLWK* act
- *	@param  arc_idx
- *	@param	tex_idx
- *	@param	ptn_ofs
- *	@param	sx
- *	@param	sy
- *	@param	VramOfs
- *	@param	vram_type
- *	@param	HeapID 
+ *	@param	GFL_CLWK* act ユニット
+ *	@param  arc_idx   アーカイブＩＤ
+ *	@param	tex_idx   テクスチャのARC内インデックス
+ *	@param  ptn_ofs   テクスチャオフセット（アニメパターンのオフセット）
+ *	@param	sx        サイズＸ（キャラ単位）
+ *	@param	sy        サイズＹ（キャラ単位）
+ *	@param	VramOfs   転送先オフ（登録済みCGRが転送されているアドレスからのオフセット）
+ * @param   vramType  転送先VramType  
+ *	@param	HeapID    ヒープＩＤ
  *
  *	@retval
  */
