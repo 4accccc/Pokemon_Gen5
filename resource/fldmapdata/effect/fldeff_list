@@ -6,7 +6,8 @@
 #---------------------------------------------------------------
 G3D_FE_ANMITP = hero_kemu.itp \
   kusaeff.itp \
-  ripple.itp
+  ripple.itp \
+  shibuki.itp
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　icaアニメ定義
@@ -47,7 +48,8 @@ G3D_FE_MDL = kage.imd \
   c_mark_dl.imd \
   c_mark_dr.imd \
   shibuki01.imd \
-  ripple.imd
+  ripple.imd \
+  shibuki.imd
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　テクスチャ定義
