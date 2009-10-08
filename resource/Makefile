@@ -99,7 +99,8 @@ SUBDIRS	=	wmi \
 			mictest \
 			pokemon_center \
 			fld3d_ci \
-			encount
+			encount \
+			battle_championship
 
 include $(RESOURCE_MACRO)
 

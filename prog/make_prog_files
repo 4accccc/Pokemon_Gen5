@@ -619,6 +619,10 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
     		battle/app/b_plist_ui.c
 #			battle/btlv/finger_cursor.c \
 
+# ƒoƒgƒ‹‘å‰ï
+#===> SRCS_OVERLAY_BATTLE
+SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = net_app/irc_battle/irc_battle_main.c
+
 # WIFICLUB
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS

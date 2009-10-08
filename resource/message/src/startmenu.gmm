@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-08-27T17:43:00"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-10-06T12:08:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -390,7 +390,7 @@
 		</language>
 	</columns>
 
-	<dialog left="108" top="151" right="998" bottom="764" maximized="no" rayout="Vertical2">
+	<dialog left="103" top="159" right="993" bottom="772" maximized="no" rayout="Vertical2">
 		<comment-input left="453" top="448" right="800" bottom="600" visible="no"/>
 		<tag-palette left="453" top="133" right="800" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="496"/>
@@ -444,8 +444,8 @@
 
 	<row id="START_MENU_STR_ITEM_05">
 		<comment>世界大会参加用メニューです</comment>
-		<language name="JPN" font=" 1:font_system" width="192">GBSせつぞく</language>
-		<language name="JPN_KANJI">GBS接続</language>
+		<language name="JPN" font=" 1:font_system" width="192">バトル　たいかい</language>
+		<language name="JPN_KANJI">バトル　たいかい</language>
 	</row>
 
 	<row id="START_MENU_STR_ITEM_01_02">

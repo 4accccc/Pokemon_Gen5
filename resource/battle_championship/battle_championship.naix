@@ -1,0 +1,22 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: battle_championship.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_BATTLE_CHAMPIONSHIP_NAIX_
+#define NARC_BATTLE_CHAMPIONSHIP_NAIX_
+
+enum {
+	NARC_battle_championship_connect_NCLR = 0,
+	NARC_battle_championship_connect_NCGR = 1,
+	NARC_battle_championship_connect_sub_NCGR = 2,
+	NARC_battle_championship_connect_01_NSCR = 3,
+	NARC_battle_championship_connect_sub_NSCR = 4
+};
+
+/* NARC_BATTLE_CHAMPIONSHIP_NAIX_ */
+#endif

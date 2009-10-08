@@ -175,7 +175,7 @@ static BOOL MUS_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID G
 
 inline static void MUS_COMM_SetCommState( MUS_COMM_WORK *work , const MUS_COMM_STATE commState );
 
-static const NetRecvFuncTable MusCommRecvTable[MCST_MAX] = 
+static const NetRecvFuncTable MusCommRecvTable[] = 
 {
   { MUS_COMM_Post_Flag   ,NULL  },
   { MUS_COMM_Post_MusPokeData , MUS_COMM_Post_MusPokeDataBuff },

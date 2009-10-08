@@ -28,6 +28,7 @@
 #include "title/startmenu.h"
 #include "title/title.h"
 #include "title/game_start.h"
+#include "net_app/irc_battle.h"
 #include "test/ariizumi/ari_debug.h"
 //======================================================================
 //  define
@@ -197,6 +198,7 @@ static const START_MENU_ITEM_SETTING ItemSettingData[SMI_MAX] =
   {  4 , START_MENU_ITEM_TempCheck , START_MENU_ITEM_CommonSelect , START_MENU_ITEM_CommonDraw },
 };
 
+FS_EXTERN_OVERLAY(battle_championship);
 
 
 //--------------------------------------------------------------
@@ -268,8 +270,9 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
     GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(wifi_util), &WifiUtilProcData, NULL);
         break;
             
-    case SMI_GBS_CONNECT: //GlobalBattleStation接続
-      GameStart_Beginning();
+    case SMI_GBS_CONNECT: //バトル大会メニュー
+      // @todo irc_battleではなく大会メニューへつなぐ
+      GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &IRC_BATTLE_ProcData, NULL);
       break;
                 
     case SMI_RETURN_TITLE:
