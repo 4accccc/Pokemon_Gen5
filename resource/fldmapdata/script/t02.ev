@@ -525,6 +525,10 @@ EVENT_START   ev_pos_t02_rival_speech
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME_WAIT()
+	
+	//群集消す
+	_FLAG_SET( FV_T02_MAN )
+	_OBJ_DEL( T02_BOODLE_01 )
 
 	//Ｎ：自機の真横に移動
 	_OBJ_ANIME( T02_N_01, anm_n_tikaduku )
@@ -571,7 +575,11 @@ EVENT_START   ev_pos_t02_rival_speech
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
-	//【仮】Ｎとポケモンしょうぶ	バトル未実装
+	//【仮】Ｎとポケモンしょうぶ。仮処理で画面フェードを入れています。
+	_WHITE_OUT( 8 )
+	_DISP_FADE_END_CHECK()
+	_WHITE_IN( 4 )
+	_DISP_FADE_END_CHECK()
 
 	//……負けたか　ボクの　友達たち　ありがとう
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_boss_04 , T02_N_01 )
