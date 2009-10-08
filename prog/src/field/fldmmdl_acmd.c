@@ -11,6 +11,9 @@
 #include "fldmmdl.h"
 #include "fldmmdl_procacmd.h"
 
+#include "sound/pm_sndsys.h"
+#include "sound/wb_sound_data.sadl"
+
 #include "fieldmap.h"
 #include "fldeff_gyoe.h"
 
@@ -878,7 +881,7 @@ static int AC_WalkR16F_0( MMDL * mmdl )
 //--------------------------------------------------------------
 /**
  * AC_WALK_U_8F 0
- * @param	mmdl	MMDL * 
+ *|| @param	mmdl	MMDL * 
  * @retval	int		TRUE=çƒãA
  */
 //--------------------------------------------------------------
@@ -1533,9 +1536,7 @@ static void AcJumpWorkInitMain(
 	MMDL_IncAcmdSeq( mmdl );
 	
 	if( se ){
-#if 0
-		Snd_SePlay( se );
-#endif
+    PMSND_PlaySE( se );
 	}
 }
 
@@ -1560,7 +1561,7 @@ static void AcJumpWorkInit(
 			wait, draw, h_type, h_speed, SE_JUMP );
 #else
 	AcJumpWorkInitMain( mmdl, dir, val,
-			wait, draw, h_type, h_speed, 0 );
+			wait, draw, h_type, h_speed, SEQ_SE_DANSA );
 #endif
 }
 
