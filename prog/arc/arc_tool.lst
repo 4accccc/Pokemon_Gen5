@@ -204,3 +204,4 @@
 	ARCID_DEBUG_NAGI		"debug\d_nagi_graphic.narc"	#名木橋デバッグ用グラフィックデータ
   ARCID_APP_BALL  "app_ball.narc" #ボールアイコン グラフィックデータ
 	ARCID_BATTLE_CHAMPIONSHIP		"battle_championship.narc"	#バトル大会用
+  ARCID_GYM_FLY "fieldmap/gym_fly.narc"  #飛行ジム
