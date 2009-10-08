@@ -16,7 +16,8 @@ USERS	=	sogabe nishino
 #------------------------------------------------------------------------------
 
 HEADER = monsno_def.h
-HASHFILE = monsno_hash.rb
+MONSNOHASHFILE = monsno_hash.rb
+WOTHASHFILE = wazaoboe_hash.rb
 GMMFILE = monsname.gmm
 SCRFILE = pokegra_wb.scr
 LSTFILE = pokegra_wb.lst
@@ -60,7 +61,7 @@ out_end: personal_wb.csv
 	ruby ../../tools/personal_conv/personal_conv.rb $< ../message/template.gmm
 endif
 
-do-build: $(TARGETDIR)$(HEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(HASHFILE) $(SCRDIR)$(SCRFILE) $(LSTDIR)$(LSTFILE) $(SCRDIR)$(OTHERFORMFILE) $(SCRDIR)$(OTHERPLTTFILE)
+do-build: $(TARGETDIR)$(HEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(SCRDIR)$(SCRFILE) $(LSTDIR)$(LSTFILE) $(SCRDIR)$(OTHERFORMFILE) $(SCRDIR)$(OTHERPLTTFILE)
 
 $(TARGETDIR)$(HEADER):	$(HEADER)
 	$(COPY)	$(HEADER) $(TARGETDIR)
@@ -68,8 +69,11 @@ $(TARGETDIR)$(HEADER):	$(HEADER)
 $(GMMDIR)$(GMMFILE):	$(GMMFILE)
 	$(COPY)	$(GMMFILE) $(GMMDIR)
 
-$(HASHDIR)$(HASHFILE):	$(HASHFILE)
-	$(COPY)	$(HASHFILE) $(HASHDIR)
+$(HASHDIR)$(MONSNOHASHFILE):	$(MONSNOHASHFILE)
+	$(COPY)	$(MONSNOHASHFILE) $(HASHDIR)
+
+$(HASHDIR)$(WOTHASHFILE):	$(WOTHASHFILE)
+	$(COPY)	$(WOTHASHFILE) $(HASHDIR)
 
 $(SCRDIR)$(SCRFILE):	$(SCRFILE)
 	$(COPY)	$(SCRFILE) $(SCRDIR)
@@ -91,14 +95,16 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f *.s
 	-rm -f $(HEADER)
 	-rm -f $(GMMFILE)
-	-rm -f $(HASHFILE)
+	-rm -f $(MONSNOHASHFILE)
+	-rm -f $(WOTHASHFILE)
 	-rm -f $(LSTFILE)
 	-rm -f *.scr
 	-rm -f out_end
 endif
 	-rm -f $(TARGETDIR)$(HEADER)
 	-rm -f $(GMMDIR)$(GMMFILE)
-	-rm -f $(HASHDIR)$(HASHFILE)
+	-rm -f $(HASHDIR)$(MONSNOHASHFILE)
+	-rm -f $(HASHDIR)$(WOTHASHFILE)
 	-rm -f $(LSTDIR)$(LSTFILE)
 	-rm -f $(SCRDIR)*.scr
 
