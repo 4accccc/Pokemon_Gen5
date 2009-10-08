@@ -47,6 +47,7 @@
 #include "scrcmd_enviroments.h"
 #include "scrcmd_sodateya.h"
 #include "scrcmd_hiden.h"
+#include "scrcmd_player.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

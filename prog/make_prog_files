@@ -152,6 +152,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/scrcmd_work.c \
         field/scrcmd_enviroments.c \
         field/scrcmd_pokemon.c \
+        field/scrcmd_player.c \
         field/scrcmd_sodateya.c \
         test/matsuda/wflby_debug.c \
         test/ariizumi/debug_pause.c \

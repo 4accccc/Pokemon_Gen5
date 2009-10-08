@@ -27,10 +27,6 @@ extern VMCMD_RESULT EvCmdGetPartyPokeCount( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetPartyPokeMonsNo( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetPartyPokeFormNo( VMHANDLE * core, void *wk );
 
-extern VMCMD_RESULT EvCmdAddGold( VMHANDLE * core, void * wk );
-extern VMCMD_RESULT EvCmdSubtractGold( VMHANDLE * core, void * wk );
-extern VMCMD_RESULT EvCmdCheckGold( VMHANDLE * core, void * wk );
-
 extern VMCMD_RESULT EvCmdChkPokeWaza( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdChkPokeWazaGroup( VMHANDLE *core, void *wk );
 
