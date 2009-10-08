@@ -209,6 +209,8 @@ static GMEVENT * gjiki_CheckEventKairiki(
 //======================================================================
 //  ‰ö—ÍƒCƒxƒ“ƒg
 //======================================================================
+#define KAIRIKI_FALLDOWN_HEIGHT (NUM_FX32(-14))
+
 //--------------------------------------------------------------
 /// EVENT_KAIRIKI_WORK
 //--------------------------------------------------------------
@@ -218,6 +220,7 @@ typedef struct
   u16 dir;
   u16 ana_flag;
   s16 frame;
+  fx32 bottom;
   VecFx32 offs;
   MMDL *mmdl;
   MMDL *mmdl_jiki;
@@ -284,10 +287,6 @@ static GMEVENT_RESULT event_Kairki( GMEVENT *event, int *seq, void *wk )
       }
     }
     
-    if( work->ana_flag == TRUE ){
-      MMDL_SetStatusBitHeightGetOFF( work->mmdl, TRUE );
-    }
-
     {
       u16 code = MMDL_ChangeDirAcmdCode( work->dir, AC_WALK_U_16F );
       MMDL_SetAcmd( work->mmdl, code );
@@ -309,36 +308,43 @@ static GMEVENT_RESULT event_Kairki( GMEVENT *event, int *seq, void *wk )
       break;
     }
     
-    (*seq)++;
-    
     if( work->ana_flag == FALSE ){
       (*seq) = 4;
+    }else{
+      VecFx32 pos;
+      
+      MMDL_GetVectorPos( work->mmdl, &pos );
+      MMDL_GetMapPosHeight( work->mmdl, &pos, &work->bottom );
+      work->bottom += KAIRIKI_FALLDOWN_HEIGHT;
+      
+      MMDL_SetStatusBitHeightGetOFF( work->mmdl, TRUE );
+      MMDL_SetStatusBitFellowHit( work->mmdl, FALSE );
+
+      (*seq)++;
     }
-  
+
     PMSND_PlaySE( SEQ_SE_FLD_04 );
     break;
   case 2: //‰ö—ÍŒŠ‚Í‚Ü‚è
     {
-      fx32 y;
       VecFx32 pos;
       MMDL_GetVectorPos( work->mmdl, &pos );
-      MMDL_GetMapPosHeight( work->mmdl, &pos, &y );
-      
-      if( y < pos.y ){
+  
+      if( work->bottom < pos.y ){
         pos.y -= 0x4000;
-        if( y > pos.y ){
-          pos.y = y;
+        if( work->bottom > pos.y ){
+          pos.y = work->bottom;
         }
-      }else if( y > pos.y ){
+      }else if( work->bottom > pos.y ){
         pos.y += 0x4000;
-        if( y < pos.y ){
-          pos.y = y;
+        if( work->bottom < pos.y ){
+          pos.y = work->bottom;
         }
       }
-      
-	    MMDL_SetVectorPos( work->mmdl, &pos );
-
-      if( y == pos.y ){
+     
+  	  MMDL_SetVectorPos( work->mmdl, &pos );
+     
+      if( work->bottom == pos.y ){
         work->offs.y = NUM_FX32( 2 );
         (*seq)++;
       }
@@ -348,6 +354,7 @@ static GMEVENT_RESULT event_Kairki( GMEVENT *event, int *seq, void *wk )
     MMDL_SetVectorOuterDrawOffsetPos( work->mmdl, &work->offs );
     work->offs.y = -work->offs.y;
     work->frame++;
+    
     if( (work->frame&0x04) ){
       if( work->offs.y < 0 ){
         work->offs.y += NUM_FX32( 1 );
@@ -355,12 +362,12 @@ static GMEVENT_RESULT event_Kairki( GMEVENT *event, int *seq, void *wk )
         work->offs.y -= NUM_FX32( 1 );
       }
     }
+    
     if( work->offs.y == 0 ){
       VecFx32 pos;
       MMDL_GetVectorPos( work->mmdl, &pos );
       MMDL_InitPosition( work->mmdl, &pos, work->dir );
       MMDL_SetVectorOuterDrawOffsetPos( work->mmdl, &work->offs );
-      MMDL_SetStatusBitHeightGetOFF( work->mmdl, FALSE );
       MMDL_ROCKPOS_SavePos( work->mmdl );
       (*seq)++;
     }

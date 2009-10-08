@@ -11,13 +11,13 @@
 #include "fldmmdl.h"
 
 #include "fieldmap.h"
-#include "map_attr.h"
 
 #include "fldeff_shadow.h"
 #include "fldeff_kemuri.h"
 #include "fldeff_grass.h"
 #include "fldeff_footmark.h"
 #include "fldeff_reflect.h"
+#include "fldeff_ripple.h"
 
 //======================================================================
 //	define
@@ -68,68 +68,68 @@ static void MMdl_MapAttrProc_MoveEnd( MMDL * fmmdl );
 static void MMdl_MapAttrProc_MoveEndJump( MMDL * fmmdl );
 
 static void MMdl_MapAttrHeight_02(
-		MMDL * fmmdl,MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl,MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static void MMdl_MapAttrGrassProc_0(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 static void MMdl_MapAttrGrassProc_12(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static void MMdl_MapAttrFootMarkProc_1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static void MMdl_MapAttrSplashProc_012(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 static void MMdl_MapAttrSplashProc_Jump1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static void MMdl_MapAttrShadowProc_0(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 static void MMdl_MapAttrShadowProc_1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 static void MMdl_MapAttrShadowProc_2(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static void MMdl_MapAttrGroundSmokeProc_2(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static void MMdl_MapAttrLGrassProc_0(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 static void MMdl_MapAttrLGrassProc_1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static void MMdl_MapAttrNGrassProc_0(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 static void MMdl_MapAttrNGrassProc_1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static void MMdl_MapAttrPoolProc_1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 static void MMdl_MapAttrPoolProc_2(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static void MMdl_MapAttrSwampProc_1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 static void MMdl_MapAttrSwampProc_2(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static void MMdl_MapAttrReflect_01(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 static void MMdl_MapAttrReflect_2(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static void MMdl_MapAttrBridgeProc_01(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static void MMdl_MapAttrSEProc_1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm );
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm );
 
 static BOOL MMdl_HitCheckMoveAttr(
 	const MMDL * fmmdl, const VecFx32 pos );
 
 #ifndef MMDL_PL_NULL
-static BOOL (* const DATA_HitCheckAttr_Now[DIR_MAX4])( MATR attr );
-static BOOL (* const DATA_HitCheckAttr_Next[DIR_MAX4])( MATR attr );
+static BOOL (* const DATA_HitCheckAttr_Now[DIR_MAX4])( MAPATTR attr );
+static BOOL (* const DATA_HitCheckAttr_Next[DIR_MAX4])( MAPATTR attr );
 #endif
 
 static BOOL MMdl_GetMapGridInfo(
@@ -327,8 +327,8 @@ static void MMdl_MapAttrProc_MoveStartFirst( MMDL * fmmdl )
 	MMDL_UpdateCurrentMapAttr( fmmdl );
 	
 	if( MMDL_CheckCompletedDrawInit(fmmdl) == TRUE ){
-		MATR now = MMDL_GetMapAttr( fmmdl );
-		MATR old = MMDL_GetMapAttrOld( fmmdl );
+		MAPATTR now = MMDL_GetMapAttr( fmmdl );
+		MAPATTR old = MMDL_GetMapAttrOld( fmmdl );
 		const OBJCODE_PARAM *prm =
 			MMDL_GetOBJCodeParam( fmmdl, MMDL_GetOBJCode(fmmdl) );
 		
@@ -355,8 +355,8 @@ static void MMdl_MapAttrProc_MoveStartSecond( MMDL * fmmdl )
 	MMDL_UpdateCurrentMapAttr( fmmdl );
 	
 	if( MMDL_CheckCompletedDrawInit(fmmdl) == TRUE ){
-		MATR now = MMDL_GetMapAttr( fmmdl );
-		MATR old = MMDL_GetMapAttrOld( fmmdl );
+		MAPATTR now = MMDL_GetMapAttr( fmmdl );
+		MAPATTR old = MMDL_GetMapAttrOld( fmmdl );
 		const OBJCODE_PARAM *prm =
 			MMDL_GetOBJCodeParam( fmmdl, MMDL_GetOBJCode(fmmdl) );
 
@@ -387,8 +387,8 @@ static void MMdl_MapAttrProc_MoveStartJumpSecond( MMDL * fmmdl )
 	MMDL_UpdateCurrentMapAttr( fmmdl );
 	
 	if( MMDL_CheckCompletedDrawInit(fmmdl) == TRUE ){
-		MATR now = MMDL_GetMapAttr( fmmdl );
-		MATR old = MMDL_GetMapAttrOld( fmmdl );
+		MAPATTR now = MMDL_GetMapAttr( fmmdl );
+		MAPATTR old = MMDL_GetMapAttrOld( fmmdl );
 		const OBJCODE_PARAM *prm =
 			MMDL_GetOBJCodeParam( fmmdl, MMDL_GetOBJCode(fmmdl) );
 
@@ -412,8 +412,8 @@ static void MMdl_MapAttrProc_MoveEnd( MMDL * fmmdl )
 	MMDL_UpdateCurrentMapAttr( fmmdl );
 	
 	if( MMDL_CheckCompletedDrawInit(fmmdl) == TRUE ){
-		MATR now = MMDL_GetMapAttr( fmmdl );
-		MATR old = MMDL_GetMapAttrOld( fmmdl );
+		MAPATTR now = MMDL_GetMapAttr( fmmdl );
+		MAPATTR old = MMDL_GetMapAttrOld( fmmdl );
 		const OBJCODE_PARAM *prm =
 			MMDL_GetOBJCodeParam( fmmdl, MMDL_GetOBJCode(fmmdl) );
 		
@@ -439,8 +439,8 @@ static void MMdl_MapAttrProc_MoveEndJump( MMDL * fmmdl )
 	MMDL_UpdateCurrentMapAttr( fmmdl );
 	
 	if( MMDL_CheckCompletedDrawInit(fmmdl) == TRUE ){
-		MATR now = MMDL_GetMapAttr( fmmdl );
-		MATR old = MMDL_GetMapAttrOld( fmmdl );
+		MAPATTR now = MMDL_GetMapAttr( fmmdl );
+		MAPATTR old = MMDL_GetMapAttrOld( fmmdl );
 		const OBJCODE_PARAM *prm =
 			MMDL_GetOBJCodeParam( fmmdl, MMDL_GetOBJCode(fmmdl) );
 		
@@ -470,36 +470,36 @@ static void MMdl_MapAttrProc_MoveEndJump( MMDL * fmmdl )
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrHeight_02(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef MMDL_PL_NULL
 	if( MMDL_CheckStatusBitAttrOffsetOFF(fmmdl) == FALSE ){
-		if( MATR_IsSwampDeep(now) == TRUE ||
-			MATR_IsSwampGrassDeep(now) == TRUE ){
+		if( MAPATTR_IsSwampDeep(now) == TRUE ||
+			MAPATTR_IsSwampGrassDeep(now) == TRUE ){
 			VecFx32 vec = { 0, ATTROFFS_Y_NUMA_DEEP, 0 };
 			MMDL_SetVectorAttrDrawOffsetPos( fmmdl, &vec );
 			return;
 		}
 		
-		if( MATR_IsSwamp(now) == TRUE || MATR_IsSwampGrass(now) == TRUE ){
+		if( MAPATTR_IsSwamp(now) == TRUE || MAPATTR_IsSwampGrass(now) == TRUE ){
 			VecFx32 vec = { 0, ATTROFFS_Y_NUMA, 0 };
 			MMDL_SetVectorAttrDrawOffsetPos( fmmdl, &vec );
 			return;
 		}
 		
-		if( MATR_IsSnowDeepMost(now) == TRUE ){
+		if( MAPATTR_IsSnowDeepMost(now) == TRUE ){
 			VecFx32 vec = { 0, ATTROFFS_Y_YUKI_DEEP_MOST, 0 };
 			MMDL_SetVectorAttrDrawOffsetPos( fmmdl, &vec );
 			return;
 		}
 		
-		if( MATR_IsSnowDeep(now) == TRUE ){
+		if( MAPATTR_IsSnowDeep(now) == TRUE ){
 			VecFx32 vec = { 0, ATTROFFS_Y_YUKI_DEEP, 0 };
 			MMDL_SetVectorAttrDrawOffsetPos( fmmdl, &vec );
 			return;
 		}
 		
-		if( MATR_IsShallowSnow(now) == TRUE ){
+		if( MAPATTR_IsShallowSnow(now) == TRUE ){
 			VecFx32 vec = { 0, ATTROFFS_Y_YUKI, 0 };
 			MMDL_SetVectorAttrDrawOffsetPos( fmmdl, &vec );
 			return;
@@ -527,7 +527,7 @@ static void MMdl_MapAttrHeight_02(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrGrassProc_0(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
   {
     MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( now );
@@ -550,7 +550,7 @@ static void MMdl_MapAttrGrassProc_0(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrGrassProc_12(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
   {
     if( now != MAPATTR_ERROR ){
@@ -577,7 +577,7 @@ static void MMdl_MapAttrGrassProc_12(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrFootMarkProc_1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
   if( old != MAPATTR_ERROR ){
     MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( old );
@@ -608,10 +608,10 @@ static void MMdl_MapAttrFootMarkProc_1(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrSplashProc_012(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef MMDL_PL_NULL
-	if( MATR_IsShoal(now) == TRUE ){
+	if( MAPATTR_IsShoal(now) == TRUE ){
 		if( MMDL_CheckStatusBitShoalEffect(fmmdl) == FALSE ){
 			FE_fmmdlSplash_Add( fmmdl, TRUE );
 			MMDL_SetStatusBitShoalEffect( fmmdl, TRUE );
@@ -632,7 +632,7 @@ static void MMdl_MapAttrSplashProc_012(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrSplashProc_Jump1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
 	MMDL_SetStatusBitShoalEffect( fmmdl, FALSE );
 }
@@ -650,7 +650,7 @@ static void MMdl_MapAttrSplashProc_Jump1(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrShadowProc_0(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
 	MMdl_MapAttrShadowProc_1( fmmdl, now, old, prm );
 }
@@ -665,7 +665,7 @@ static void MMdl_MapAttrShadowProc_0(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrShadowProc_1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
   {
   	const MMDLSYS *fos = MMDL_GetMMdlSys( fmmdl );
@@ -692,7 +692,7 @@ static void MMdl_MapAttrShadowProc_1(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrShadowProc_2(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef MMDL_PL_NULL
 	{
@@ -707,15 +707,15 @@ static void MMdl_MapAttrShadowProc_2(
 		return;
 	}
 	
-	if( MATR_IsGrass(now) == TRUE ||
-		MATR_IsLongGrass(now) == TRUE ||
+	if( MAPATTR_IsGrass(now) == TRUE ||
+		MAPATTR_IsLongGrass(now) == TRUE ||
 		MMdl_CheckMapAttrKind_Water(fmmdl,now) == TRUE ||
-		MATR_IsPoolCheck(now) == TRUE ||
-		MATR_IsShoal(now) == TRUE ||
+		MAPATTR_IsPoolCheck(now) == TRUE ||
+		MAPATTR_IsShoal(now) == TRUE ||
 		MMdl_CheckMapAttrKind_Snow(fmmdl,now) == TRUE ||
-		MATR_IsSwamp(now) == TRUE ||
-		MATR_IsSwampGrass(now) == TRUE ||
-		MATR_IsMirrorReflect(now) ){
+		MAPATTR_IsSwamp(now) == TRUE ||
+		MAPATTR_IsSwampGrass(now) == TRUE ||
+		MAPATTR_IsMirrorReflect(now) ){
 		MMDL_OnStatusBit( fmmdl, MMDL_STABIT_SHADOW_VANISH );
 	}else{
 		MMDL_OffStatusBit( fmmdl, MMDL_STABIT_SHADOW_VANISH );
@@ -736,7 +736,7 @@ static void MMdl_MapAttrShadowProc_2(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrGroundSmokeProc_2(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
   {
     FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
@@ -758,10 +758,10 @@ static void MMdl_MapAttrGroundSmokeProc_2(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrLGrassProc_0(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef MMDL_PL_NULL
-	if( MATR_IsLongGrass(now) == TRUE ){
+	if( MAPATTR_IsLongGrass(now) == TRUE ){
 		FE_fmmdlLGrass_Add( fmmdl, FALSE );
 	}
 	#endif
@@ -778,10 +778,10 @@ static void MMdl_MapAttrLGrassProc_0(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrLGrassProc_1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef MMDL_PL_NULL
-	if( MATR_IsLongGrass(now) == TRUE ){
+	if( MAPATTR_IsLongGrass(now) == TRUE ){
 		FE_fmmdlLGrass_Add( fmmdl, TRUE );
 	}
 	#endif
@@ -801,10 +801,10 @@ static void MMdl_MapAttrLGrassProc_1(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrNGrassProc_0(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef MMDL_PL_NULL
-	if( MATR_IsSwampGrass(now) == TRUE ){
+	if( MAPATTR_IsSwampGrass(now) == TRUE ){
 		FE_fmmdlNGrass_Add( fmmdl, FALSE );
 	}
 	#endif
@@ -821,10 +821,10 @@ static void MMdl_MapAttrNGrassProc_0(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrNGrassProc_1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef MMDL_PL_NULL
-	if( MATR_IsSwampGrass(now) == TRUE ){
+	if( MAPATTR_IsSwampGrass(now) == TRUE ){
 		FE_fmmdlNGrass_Add( fmmdl, TRUE );
 	}
 	#endif
@@ -844,16 +844,18 @@ static void MMdl_MapAttrNGrassProc_1(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrPoolProc_1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
-	#ifndef MMDL_PL_NULL
-	if( MATR_IsPoolCheck(old) == TRUE ){
+  MAPATTR_VALUE val = MAPATTR_GetAttrValue( old );
+  
+	if( MAPATTR_VALUE_CheckPool(val) == TRUE ){
+#if 0
 		FE_fmmdlRippleSet( fmmdl,
 			MMDL_GetOldGridPosX(fmmdl),
 			MMDL_GetOldGridPosY(fmmdl), 
 			MMDL_GetOldGridPosZ(fmmdl) );
+#endif
 	}
-	#endif
 }
 
 //--------------------------------------------------------------
@@ -867,16 +869,18 @@ static void MMdl_MapAttrPoolProc_1(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrPoolProc_2(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
-	#ifndef MMDL_PL_NULL
-	if( MATR_IsPoolCheck(now) == TRUE ){
+  MAPATTR_VALUE val = MAPATTR_GetAttrValue( now );
+
+	if( MAPATTR_VALUE_CheckPool(val) == TRUE ){
+#if 0
 		FE_fmmdlRippleSet( fmmdl,
 			MMDL_GetGridPosX(fmmdl),
 			MMDL_GetGridPosY(fmmdl), 
 			MMDL_GetGridPosZ(fmmdl) );
+#endif
 	}
-	#endif
 }
 
 //======================================================================
@@ -893,10 +897,10 @@ static void MMdl_MapAttrPoolProc_2(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrSwampProc_1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef MMDL_PL_NULL
-	if( MATR_IsSwamp(old) == TRUE ){
+	if( MAPATTR_IsSwamp(old) == TRUE ){
 		FE_fmmdlNRippleSet( fmmdl,
 			MMDL_GetOldGridPosX(fmmdl),
 			MMDL_GetOldGridPosY(fmmdl), 
@@ -916,10 +920,10 @@ static void MMdl_MapAttrSwampProc_1(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrSwampProc_2(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef MMDL_PL_NULL
-	if( MATR_IsSwamp(now) == TRUE ){
+	if( MAPATTR_IsSwamp(now) == TRUE ){
 		FE_fmmdlNRippleSet( fmmdl,
 			MMDL_GetGridPosX(fmmdl),
 			MMDL_GetGridPosY(fmmdl), 
@@ -942,7 +946,7 @@ static void MMdl_MapAttrSwampProc_2(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrReflect_01(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
   if( prm->reflect_type == MMDL_REFLECT_NON ){
     return;
@@ -1004,7 +1008,7 @@ static void MMdl_MapAttrReflect_01(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrReflect_2(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
 	if( prm->reflect_type == MMDL_REFLECT_NON ||
 		MMDL_CheckStatusBitReflect(fmmdl) == FALSE ){
@@ -1045,13 +1049,13 @@ static void MMdl_MapAttrReflect_2(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrBridgeProc_01(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef MMDL_PL_NULL
-	if( MATR_IsBridgeFlag(now) == TRUE ){
+	if( MAPATTR_IsBridgeFlag(now) == TRUE ){
 		MMDL_SetStatusBitBridge( fmmdl, TRUE );
 	}else if( MMDL_CheckStatusBitBridge(fmmdl) == TRUE ){
-		if( MATR_IsBridge(now) == FALSE ){
+		if( MAPATTR_IsBridge(now) == FALSE ){
 			MMDL_SetStatusBitBridge( fmmdl, FALSE );
 		}
 	}
@@ -1072,10 +1076,10 @@ static void MMdl_MapAttrBridgeProc_01(
  */
 //--------------------------------------------------------------
 static void MMdl_MapAttrSEProc_1(
-		MMDL * fmmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
+		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
 	#ifndef MMDL_PL_NULL
-	if( MATR_IsSnow(now) ){
+	if( MAPATTR_IsSnow(now) ){
 		Snd_SePlay( SEQ_SE_DP_YUKIASHI );
 	}
 	#endif
@@ -1346,23 +1350,23 @@ static BOOL MMdl_HitCheckMoveAttr(
 ///	現在位置アトリビュートから判定する移動制御アトリビュートチェック関数
 //--------------------------------------------------------------
 #ifndef MMDL_PL_NULL
-static BOOL (* const DATA_HitCheckAttr_Now[DIR_MAX4])( MATR attr ) =
+static BOOL (* const DATA_HitCheckAttr_Now[DIR_MAX4])( MAPATTR attr ) =
 {
-	MATR_IsBadMoveUpCheck,
-	MATR_IsBadMoveDownCheck,
-	MATR_IsBadMoveLeftCheck,
-	MATR_IsBadMoveRightCheck,
+	MAPATTR_IsBadMoveUpCheck,
+	MAPATTR_IsBadMoveDownCheck,
+	MAPATTR_IsBadMoveLeftCheck,
+	MAPATTR_IsBadMoveRightCheck,
 };
 
 //--------------------------------------------------------------
 ///	未来位置アトリビュートから判定する移動制御アトリビュートチェック関数
 //--------------------------------------------------------------
-static BOOL (* const DATA_HitCheckAttr_Next[DIR_MAX4])( MATR attr ) =
+static BOOL (* const DATA_HitCheckAttr_Next[DIR_MAX4])( MAPATTR attr ) =
 {
-	MATR_IsBadMoveDownCheck,
-	MATR_IsBadMoveUpCheck,
-	MATR_IsBadMoveRightCheck,
-	MATR_IsBadMoveLeftCheck,
+	MAPATTR_IsBadMoveDownCheck,
+	MAPATTR_IsBadMoveUpCheck,
+	MAPATTR_IsBadMoveRightCheck,
+	MAPATTR_IsBadMoveLeftCheck,
 };
 #endif
 
@@ -1377,11 +1381,11 @@ static BOOL (* const DATA_HitCheckAttr_Next[DIR_MAX4])( MATR attr ) =
 static BOOL MMdl_CheckMapAttrKind_Water( MMDL * fmmdl, u32 attr )
 {
 	#ifndef MMDL_PL_NULL
-	if( MATR_IsBridgeWater(attr) ){
+	if( MAPATTR_IsBridgeWater(attr) ){
 		if( MMDL_CheckStatusBitBridge(fmmdl) == FALSE ){
 			return( TRUE );
 		}
-	}else if( MATR_IsWater(attr) ){
+	}else if( MAPATTR_IsWater(attr) ){
 		return( TRUE );
 	}
 	#endif
@@ -1399,11 +1403,11 @@ static BOOL MMdl_CheckMapAttrKind_Water( MMDL * fmmdl, u32 attr )
 static BOOL MMdl_CheckMapAttrKind_Sand( MMDL * fmmdl, u32 attr )
 {
 	#ifndef MMDL_PL_NULL
-	if( MATR_IsBridgeSand(attr) ){
+	if( MAPATTR_IsBridgeSand(attr) ){
 		if( MMDL_CheckStatusBitBridge(fmmdl) == FALSE ){
 			return( TRUE );
 		}
-	}else if( MATR_IsSand(attr) ){
+	}else if( MAPATTR_IsSand(attr) ){
 		return( TRUE );
 	}
 	#endif
@@ -1421,11 +1425,11 @@ static BOOL MMdl_CheckMapAttrKind_Sand( MMDL * fmmdl, u32 attr )
 static BOOL MMdl_CheckMapAttrKind_Snow( MMDL * fmmdl, u32 attr )
 {
 	#ifndef MMDL_PL_NULL
-	if( MATR_IsBridgeSnowShallow(attr) ){
+	if( MAPATTR_IsBridgeSnowShallow(attr) ){
 		if( MMDL_CheckStatusBitBridge(fmmdl) == FALSE ){
 			return( TRUE );
 		}
-	}else if( MATR_IsSnow(attr) ){
+	}else if( MAPATTR_IsSnow(attr) ){
 		return( TRUE );
 	}
 	#endif
@@ -1444,11 +1448,11 @@ static BOOL MMdl_CheckMapAttrKind_MostShallowSnow(
 		MMDL * fmmdl, u32 attr )
 {
 	#ifndef MMDL_PL_NULL
-	if( MATR_IsBridgeSnowShallow(attr) ){
+	if( MAPATTR_IsBridgeSnowShallow(attr) ){
 		if( MMDL_CheckStatusBitBridge(fmmdl) == FALSE ){
 			return( TRUE );
 		}
-	}else if( MATR_IsMostShallowSnow(attr) ){
+	}else if( MAPATTR_IsMostShallowSnow(attr) ){
 		return( TRUE );
 	}
 	#endif	
@@ -1467,7 +1471,7 @@ static BOOL MMdl_CheckMapAttrKind_Bridge( MMDL * fmmdl, u32 attr )
 {
 	if( MMDL_CheckStatusBitBridge(fmmdl) == TRUE ){
 		#ifndef MMDL_PL_NULL
-		if( MATR_IsBridge(attr) == TRUE ){
+		if( MAPATTR_IsBridge(attr) == TRUE ){
 			return( TRUE );
 		}
 		#endif
@@ -1488,7 +1492,7 @@ static BOOL MMdl_CheckMapAttrKind_BridgeV( MMDL * fmmdl, u32 attr )
 {
 	if( MMDL_CheckStatusBitBridge(fmmdl) == TRUE ){
 	#ifndef MMDL_PL_NULL
-		if( MATR_IsBridgeV(attr) == TRUE ){
+		if( MAPATTR_IsBridgeV(attr) == TRUE ){
 			return( TRUE );
 		}
 	#endif
@@ -1509,7 +1513,7 @@ static BOOL MMdl_CheckMapAttrKind_BridgeH( MMDL * fmmdl, u32 attr )
 {
 	if( MMDL_CheckStatusBitBridge(fmmdl) == TRUE ){
 	#ifndef MMDL_PL_NULL
-		if( MATR_IsBridgeH(attr) == TRUE ){
+		if( MAPATTR_IsBridgeH(attr) == TRUE ){
 			return( TRUE );
 		}
 	#endif
@@ -1684,19 +1688,19 @@ void MMDL_UpdateGridPosCurrent( MMDL * fmmdl )
  * 現在のグリッド座標から指定方向先のアトリビュートを取得
  * @param	fmmdl	MMDL *
  * @param	dir		DIR_UP等
- * @retval	u32		MATR
+ * @retval	u32		MAPATTR
  */
 //--------------------------------------------------------------
-u32 MMDL_GetMapDirAttr( MMDL * fmmdl, u16 dir )
+MAPATTR MMDL_GetMapDirAttr( MMDL * fmmdl, u16 dir )
 {
-	u32 attr = MAPATTR_ERROR;
+	MAPATTR attr = MAPATTR_ERROR;
   VecFx32 pos;
   const FLDMAPPER *pG3DMapper;
   
   MMDL_GetVectorPos( fmmdl, &pos );
   MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
   MMDL_GetMapPosAttr( fmmdl, &pos, &attr );
-
+  
 	return( attr );
 }
 

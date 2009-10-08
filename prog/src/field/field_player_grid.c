@@ -2074,6 +2074,19 @@ static u32 gjiki_HitCheckMove(
   
   if( MMDL_GetMapPosAttr(mmdl,&pos,attr) == FALSE ){
     *attr = MAPATTR_ERROR;
+  }else if( (hit&MMDL_MOVEHITBIT_ATTR) ){ //一部無効とする判定をチェック
+    MAPATTR_VALUE attr_val;
+    attr_val = MAPATTR_GetAttrValue( *attr );
+    
+    if( MAPATTR_VALUE_CheckKairikiAna(attr_val) == TRUE ){
+      const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+      
+      KAGAYA_Printf( "穴チェックきました\n" );
+      
+      if( MMDLSYS_ROCKPOS_CheckRockFalled(mmdlsys,&pos) == TRUE ){
+        hit &= ~MMDL_MOVEHITBIT_ATTR;
+      }
+    }
   }
   
   return( hit );

@@ -467,9 +467,15 @@ MMDL * MMDLSYS_AddMMdl(
 	GF_ASSERT( mmdl != NULL );
 	
 	MMdl_InitWork( mmdl, fos );
-	MMdl_SetHeader( mmdl, head, NULL );
 	MMDL_SetZoneID( mmdl, zone_id );
-	
+	MMdl_SetHeader( mmdl, head, NULL );
+  
+  if( mmdl_rockpos_CheckPos(mmdl) == TRUE ){
+    MMDL_OnStatusBit( mmdl,
+        MMDL_STABIT_FELLOW_HIT_NON |
+        MMDL_STABIT_HEIGHT_GET_OFF );
+  }
+  
 	if( MMDLSYS_CheckStatusBit(fos,MMDLSYS_STABIT_MOVE_INIT_COMP) ){
 		MMdl_InitMoveWork( fos, mmdl );
 		MMdl_InitMoveProc( fos, mmdl );
@@ -1137,7 +1143,7 @@ static void MMdl_SaveData_LoadMMdl(
 	
 		MMDL_SetVectorPos( mmdl, &pos );
 	}
-
+  
 	{ //ステータスビット復帰
 		MMDL_OnStatusBit( mmdl,
 			MMDL_STABIT_USE |
@@ -1151,11 +1157,11 @@ static void MMdl_SaveData_LoadMMdl(
 			MMDL_STABIT_JUMP_START |
 			MMDL_STABIT_JUMP_END |
 			MMDL_STABIT_MOVE_END |
-			MMDL_STABIT_FELLOW_HIT_NON |
+//			MMDL_STABIT_FELLOW_HIT_NON | //change wb
 			MMDL_STABIT_TALK_OFF |
 			MMDL_STABIT_DRAW_PUSH |
-			MMDL_STABIT_BLACT_ADD_PRAC |
-			MMDL_STABIT_HEIGHT_GET_OFF );
+			MMDL_STABIT_BLACT_ADD_PRAC );
+//			MMDL_STABIT_HEIGHT_GET_OFF ); //change wb
 		
 		MMDL_OffStatusBit( mmdl,
 			MMDL_STABIT_SHADOW_SET |
@@ -4696,8 +4702,8 @@ void MMDL_ROCKPOS_Init( void *p )
 //--------------------------------------------------------------
 static BOOL mmdl_rockpos_CheckSetPos( const MMDL_ROCKPOS *rockpos )
 {
-  if( (u32)rockpos->pos.x != ROCKPOS_INIT &&
-      (u32)rockpos->pos.y != ROCKPOS_INIT &&
+  if( (u32)rockpos->pos.x != ROCKPOS_INIT ||
+      (u32)rockpos->pos.y != ROCKPOS_INIT ||
       (u32)rockpos->pos.z != ROCKPOS_INIT ){
     return( TRUE );
   }
@@ -4818,6 +4824,35 @@ void MMDL_ROCKPOS_SavePos( const MMDL *mmdl )
     rockpos->pos = pos;
     return;
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * 指定位置にかいりき岩OBJが落ちているか
+ * @param mmdlsys MMDLSYS*
+ * @param pos チェックする座標
+ * @retval BOOL TRUE=岩が落ちている
+ */
+//--------------------------------------------------------------
+BOOL MMDLSYS_ROCKPOS_CheckRockFalled(
+    const MMDLSYS *mmdlsys, const VecFx32 *pos )
+{
+  s16 gx,gz;
+  MMDL *mmdl;
+  
+  gx = SIZE_GRID_FX32( pos->x );
+  gz = SIZE_GRID_FX32( pos->z );
+  
+  mmdl = MMDLSYS_SearchGridPosEx(
+      mmdlsys, gx, gz, pos->y, GRID_FX32, FALSE );
+  
+  if( mmdl != NULL ){
+    if( mmdl_rockpos_CheckPos(mmdl) == TRUE ){
+      return( TRUE );
+    }
+  }
+  
+  return( FALSE );
 }
 
 //======================================================================

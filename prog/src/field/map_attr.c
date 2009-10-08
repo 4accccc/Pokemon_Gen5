@@ -457,3 +457,15 @@ BOOL MAPATTR_VALUE_CheckShore( const MAPATTR_VALUE val )
 {
   return( val == 0x41 );
 }
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 水溜り
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckPool( const MAPATTR_VALUE val )
+{
+  return( val == 0x14 );
+}

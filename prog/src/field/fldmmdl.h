@@ -18,6 +18,7 @@
 #include "field_g3d_mapper.h"
 #include "field_nogrid_mapper.h"
 #include "eventwork.h"
+#include "map_attr.h"
 
 #include "arc/fieldmap/fldmmdl_objcode.h"
 #include "fldmmdl_code.h"
@@ -370,7 +371,7 @@ typedef struct _TAG_MMDL_SAVEDATA MMDL_SAVEDATA;
 typedef struct _TAG_MMDL_ROCKPOS MMDL_ROCKPOS;
 
 //--------------------------------------------------------------
-///	アトリビュート型 元:map_attr.h
+///	アトリビュート型 元:pl map_attr.h 後に消します。
 //--------------------------------------------------------------
 typedef u32 MATR;
 
@@ -845,6 +846,8 @@ extern void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code );
 extern u32 MMDL_ROCKPOS_GetWorkSize( void );
 extern void MMDL_ROCKPOS_Init( void *p );
 extern void MMDL_ROCKPOS_SavePos( const MMDL *mmdl );
+extern BOOL MMDLSYS_ROCKPOS_CheckRockFalled(
+    const MMDLSYS *mmdlsys, const VecFx32 *pos );
 
 #ifdef DEBUG_MMDL
 extern u8 * DEBUG_MMDL_GetOBJCodeString( u16 code, HEAPID heapID );
@@ -910,7 +913,7 @@ extern BOOL MMDL_GetMapPosHeight(
 
 extern void MMDL_UpdateGridPosDir( MMDL * mmdl, u16 dir );
 extern void MMDL_UpdateGridPosCurrent( MMDL * mmdl );
-extern u32 MMDL_GetMapDirAttr( MMDL * mmdl, u16 dir );
+extern MAPATTR MMDL_GetMapDirAttr( MMDL * mmdl, u16 dir );
 
 extern void MMDL_AddVectorPos( MMDL * mmdl, const VecFx32 *val );
 extern void MMDL_AddVectorPosDir( MMDL * mmdl, u16 dir, fx32 val );

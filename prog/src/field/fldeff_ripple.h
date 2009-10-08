@@ -28,4 +28,4 @@
 extern void * FLDEFF_RIPPLE_Init( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void FLDEFF_RIPPLE_Delete( FLDEFF_CTRL *fectrl, void *work );
 
-extern void FLDEFF_RIPPLE_SetMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl );
+extern void FLDEFF_RIPPLE_Set( FLDEFF_CTRL *fectrlm, s16 gx, s16 gy, s16 gz );

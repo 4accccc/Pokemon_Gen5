@@ -18,6 +18,8 @@
 //======================================================================
 //	define
 //======================================================================
+#define RIPPLE_DRAW_Y_OFFSET (-FX32_ONE*(8))		///<水波紋描画オフセット
+#define RIPPLE_DRAW_Z_OFFSET (FX32_ONE*(1))
 
 //======================================================================
 //	struct
@@ -61,8 +63,8 @@ typedef struct
 //======================================================================
 //	プロトタイプ
 //======================================================================
-static void ripple_InitResource( FLDEFF_RIPPLE *kemu );
-static void ripple_DeleteResource( FLDEFF_RIPPLE *kemu );
+static void ripple_InitResource( FLDEFF_RIPPLE *ripple );
+static void ripple_DeleteResource( FLDEFF_RIPPLE *ripple );
 
 static const FLDEFF_TASK_HEADER DATA_rippleTaskHeader;
 
@@ -79,13 +81,13 @@ static const FLDEFF_TASK_HEADER DATA_rippleTaskHeader;
 //--------------------------------------------------------------
 void * FLDEFF_RIPPLE_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
 {
-	FLDEFF_RIPPLE *kemu;
+	FLDEFF_RIPPLE *ripple;
 	
-	kemu = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDEFF_RIPPLE) );
-	kemu->fectrl = fectrl;
+	ripple = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDEFF_RIPPLE) );
+	ripple->fectrl = fectrl;
   
-	ripple_InitResource( kemu );
-	return( kemu );
+	ripple_InitResource( ripple );
+	return( ripple );
 }
 
 //--------------------------------------------------------------
@@ -98,9 +100,9 @@ void * FLDEFF_RIPPLE_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
 //--------------------------------------------------------------
 void FLDEFF_RIPPLE_Delete( FLDEFF_CTRL *fectrl, void *work )
 {
-	FLDEFF_RIPPLE *kemu = work;
-  ripple_DeleteResource( kemu );
-  GFL_HEAP_FreeMemory( kemu );
+	FLDEFF_RIPPLE *ripple = work;
+  ripple_DeleteResource( ripple );
+  GFL_HEAP_FreeMemory( ripple );
 }
 
 //======================================================================
@@ -113,17 +115,17 @@ void FLDEFF_RIPPLE_Delete( FLDEFF_CTRL *fectrl, void *work )
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void ripple_InitResource( FLDEFF_RIPPLE *kemu )
+static void ripple_InitResource( FLDEFF_RIPPLE *ripple )
 {
   ARCHANDLE *handle;
   
-  handle = FLDEFF_CTRL_GetArcHandleEffect( kemu->fectrl );
+  handle = FLDEFF_CTRL_GetArcHandleEffect( ripple->fectrl );
   
-  kemu->g3d_res_mdl	=
+  ripple->g3d_res_mdl	=
     GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_ripple_nsbmd );
-  GFL_G3D_TransVramTexture( kemu->g3d_res_mdl );
+  GFL_G3D_TransVramTexture( ripple->g3d_res_mdl );
 
-  kemu->g3d_res_anm	=
+  ripple->g3d_res_anm	=
     GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_ripple_nsbtp );
 }
 
@@ -134,10 +136,10 @@ static void ripple_InitResource( FLDEFF_RIPPLE *kemu )
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void ripple_DeleteResource( FLDEFF_RIPPLE *kemu )
+static void ripple_DeleteResource( FLDEFF_RIPPLE *ripple )
 {
- 	GFL_G3D_DeleteResource( kemu->g3d_res_anm );
- 	GFL_G3D_DeleteResource( kemu->g3d_res_mdl );
+ 	GFL_G3D_DeleteResource( ripple->g3d_res_anm );
+ 	GFL_G3D_DeleteResource( ripple->g3d_res_mdl );
 }
 
 //======================================================================
@@ -151,22 +153,24 @@ static void ripple_DeleteResource( FLDEFF_RIPPLE *kemu )
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLDEFF_RIPPLE_SetMMdl( MMDL *fmmdl, FLDEFF_CTRL *fectrl )
+void FLDEFF_RIPPLE_Set( FLDEFF_CTRL *fectrlm, s16 gx, s16 gy, s16 gz )
 {
+#if 0
   VecFx32 pos;
-  FLDEFF_RIPPLE *kemu;
+  FLDEFF_RIPPLE *ripple;
   TASKHEADER_RIPPLE head;
   
   MMDL_GetVectorPos( fmmdl, &pos );
   pos.y += FX32_ONE*1;
   pos.z += FX32_ONE*12;
   
-  kemu = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_RIPPLE );
-  head.eff_ripple = kemu;
+  ripple = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_RIPPLE );
+  head.eff_ripple = ripple;
   head.pos = pos;
   
   FLDEFF_CTRL_AddTask(
       fectrl, &DATA_rippleTaskHeader, NULL, 0, &head, 0 );
+#endif
 }
 
 //--------------------------------------------------------------
