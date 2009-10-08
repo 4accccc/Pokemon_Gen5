@@ -1,0 +1,32 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gym_anti.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2009-10-08T17:22:17
+ *****************************************************************************/
+
+#ifndef NARC_GYM_ANTI_NAIX_
+#define NARC_GYM_ANTI_NAIX_
+
+enum {
+	NARC_gym_anti_gym01_b_f_nsbmd = 0,
+	NARC_gym_anti_gym01_b_f_nsbca = 1,
+	NARC_gym_anti_gym01_b_f_nsbta = 2,
+	NARC_gym_anti_gym01_b_w_nsbmd = 3,
+	NARC_gym_anti_gym01_b_w_nsbca = 4,
+	NARC_gym_anti_gym01_b_w_nsbta = 5,
+	NARC_gym_anti_gym01_b_l_nsbmd = 6,
+	NARC_gym_anti_gym01_b_l_nsbca = 7,
+	NARC_gym_anti_gym01_b_l_nsbta = 8,
+	NARC_gym_anti_gym01_c_f_nsbmd = 9,
+	NARC_gym_anti_gym01_c_f_nsbca = 10,
+	NARC_gym_anti_gym01_c_w_nsbmd = 11,
+	NARC_gym_anti_gym01_c_w_nsbca = 12,
+	NARC_gym_anti_gym01_c_l_nsbmd = 13,
+	NARC_gym_anti_gym01_c_l_nsbca = 14
+};
+
+/* NARC_GYM_ANTI_NAIX_ */
+#endif

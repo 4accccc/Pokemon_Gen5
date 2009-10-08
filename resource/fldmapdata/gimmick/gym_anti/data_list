@@ -1,0 +1,16 @@
+DATA_LIST = \
+    gym01_b_f.nsbmd \
+    gym01_b_f.nsbca \
+    gym01_b_f.nsbta \
+    gym01_b_w.nsbmd \
+    gym01_b_w.nsbca \
+    gym01_b_w.nsbta \
+    gym01_b_l.nsbmd \
+    gym01_b_l.nsbca \
+    gym01_b_l.nsbta \
+    gym01_c_f.nsbmd \
+    gym01_c_f.nsbca \
+    gym01_c_w.nsbmd \
+    gym01_c_w.nsbca \
+    gym01_c_l.nsbmd \
+    gym01_c_l.nsbca
