@@ -221,6 +221,22 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/t05_01_00.3dppack \
 	$(DIR_OUTPUT)/t05_00_01.3dppack \
 	$(DIR_OUTPUT)/t05_01_01.3dppack \
+	$(DIR_OUTPUT)/h05_a00_00.3dppack \
+	$(DIR_OUTPUT)/h05_a01_00.3dppack \
+	$(DIR_OUTPUT)/h05_a02_00.3dppack \
+	$(DIR_OUTPUT)/h05_a03_00.3dppack \
+	$(DIR_OUTPUT)/h05_a04_00.3dppack \
+	$(DIR_OUTPUT)/h05_a05_00.3dppack \
+	$(DIR_OUTPUT)/h05_a06_00.3dppack \
+	$(DIR_OUTPUT)/h05_a07_00.3dppack \
+	$(DIR_OUTPUT)/h05_a00_01.3dppack \
+	$(DIR_OUTPUT)/h05_a01_01.3dppack \
+	$(DIR_OUTPUT)/h05_a02_01.3dppack \
+	$(DIR_OUTPUT)/h05_a03_01.3dppack \
+	$(DIR_OUTPUT)/h05_a04_01.3dppack \
+	$(DIR_OUTPUT)/h05_a05_01.3dppack \
+	$(DIR_OUTPUT)/h05_a06_01.3dppack \
+	$(DIR_OUTPUT)/h05_a07_01.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \

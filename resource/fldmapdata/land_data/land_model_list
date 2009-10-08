@@ -221,6 +221,22 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/t05_01_00.nsbmd \
 	$(DIR_TEMP)/t05_00_01.nsbmd \
 	$(DIR_TEMP)/t05_01_01.nsbmd \
+	$(DIR_TEMP)/h05_a00_00.nsbmd \
+	$(DIR_TEMP)/h05_a01_00.nsbmd \
+	$(DIR_TEMP)/h05_a02_00.nsbmd \
+	$(DIR_TEMP)/h05_a03_00.nsbmd \
+	$(DIR_TEMP)/h05_a04_00.nsbmd \
+	$(DIR_TEMP)/h05_a05_00.nsbmd \
+	$(DIR_TEMP)/h05_a06_00.nsbmd \
+	$(DIR_TEMP)/h05_a07_00.nsbmd \
+	$(DIR_TEMP)/h05_a00_01.nsbmd \
+	$(DIR_TEMP)/h05_a01_01.nsbmd \
+	$(DIR_TEMP)/h05_a02_01.nsbmd \
+	$(DIR_TEMP)/h05_a03_01.nsbmd \
+	$(DIR_TEMP)/h05_a04_01.nsbmd \
+	$(DIR_TEMP)/h05_a05_01.nsbmd \
+	$(DIR_TEMP)/h05_a06_01.nsbmd \
+	$(DIR_TEMP)/h05_a07_01.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
