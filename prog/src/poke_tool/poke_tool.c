@@ -82,6 +82,7 @@ static void change_monsno_sub_sex( POKEMON_PASO_PARAM* ppp, u16 new_monsno, u16 
 //============================================================================================
 static  u32 GrowTable[ GROW_TBL_SIZE ];         //成長曲線テーブル
 static  STRCODE StrBuffer[STRBUFFER_LEN];       //文字列バッファ
+static  STRCODE StrBufferSub[STRBUFFER_LEN];    //文字列バッファ
 static  POKEMON_PERSONAL_DATA PersonalDataWork; //ポケモン１体分のパーソナルデータ構造体
 static  u16  PersonalLatestMonsNo;              //直前に読み込んだパーソナルデータ引数（モンスターナンバー）
 static  u16  PersonalLatestFormNo;              //直前に読み込んだパーソナルデータ引数（フォルムナンバー）
@@ -1206,6 +1207,60 @@ u32 PPP_CalcLevel( const POKEMON_PASO_PARAM *ppp )
 
   return POKETOOL_CalcLevel( mons_no, form_no, exp );
 }
+
+//=============================================================================================
+/**
+ * ポケモンデータとプレイヤーデータの親一致チェック
+ *
+ * @param   pp        ポケモンデータ
+ * @param   player    プレイヤーデータ
+ *
+ * @retval  BOOL      プレイヤーデータがポケモンの親ならTRUE
+ */
+//=============================================================================================
+BOOL PP_IsMatchOya( const POKEMON_PARAM* pp, const MYSTATUS* player )
+{
+  return PPP_IsMatchOya( &pp->ppp, player );
+}
+//=============================================================================================
+/**
+ * ボックスポケモンデータとプレイヤーデータの親一致チェック
+ *
+ * @param   ppp       ボックスポケモンデータ
+ * @param   player    プレイヤーデータ
+ *
+ * @retval  BOOL      プレイヤーデータがポケモンの親ならTRUE
+ */
+//=============================================================================================
+BOOL PPP_IsMatchOya( const POKEMON_PASO_PARAM* ppp, const MYSTATUS* player )
+{
+  u8 fastFlag = PPP_FastModeOn( (POKEMON_PASO_PARAM*)ppp );
+  BOOL result = FALSE;
+
+  {
+    u32 playerID = MyStatus_GetID( player );
+    u32 oyaID = PPP_Get( ppp, ID_PARA_id_no, NULL );
+
+    u32 playerSex = MyStatus_GetMySex( player );
+    u32 oyaSex = PPP_Get( ppp, ID_PARA_oyasex, NULL );
+
+    MyStatus_CopyNameStrCode( player, StrBuffer, NELEMS(StrBuffer) );
+    PPP_Get( ppp, ID_PARA_oyaname_raw, StrBufferSub );
+
+    if( (playerID == oyaID)
+    &&  (playerSex == oyaSex)
+    &&  (STRTOOL_Comp(StrBuffer, StrBufferSub) == 0)
+    ){
+      result = TRUE;
+    }
+  }
+
+  PPP_FastModeOff( (POKEMON_PASO_PARAM*)ppp, fastFlag );
+
+  return result;
+}
+
+
 //============================================================================================
 /**
  *  ポケモンナンバー、経験値からポケモンのレベルを計算

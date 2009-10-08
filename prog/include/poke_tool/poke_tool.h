@@ -11,8 +11,10 @@
 
 #include <heapsys.h>
 
+#include "savedata\mystatus.h"
 #include "poke_tool\poketype.h"
 #include "poke_tool\poke_personal.h"
+
 
 // 性別
 #define PTL_SEX_MALE    (0)   ///<オス
@@ -113,30 +115,30 @@
 #endif
 
 //=========================================================================
-//	ポケモンコンディションビット
+//  ポケモンコンディションビット
 //=========================================================================
 
-#define	PTL_CONDITION_NEMURI			      ( 0x00000007 )				//眠り
-#define	PTL_CONDITION_DOKU				      ( 0x00000008 )				//毒
-#define	PTL_CONDITION_YAKEDO			      ( 0x00000010 )				//やけど
-#define	PTL_CONDITION_KOORI				      ( 0x00000020 )				//こおり
-#define	PTL_CONDITION_MAHI				      ( 0x00000040 )				//まひ
-#define	PTL_CONDITION_DOKUDOKU			    ( 0x00000080 )				//どくどく
-#define	PTL_CONDITION_DOKUDOKU_CNT	    ( 0x00000f00 )				//どくどくカウンタ
- 
-#define	PTL_CONDITION_DOKUALL			      ( 0x00000f88 )				//どく全部
+#define PTL_CONDITION_NEMURI            ( 0x00000007 )        //眠り
+#define PTL_CONDITION_DOKU              ( 0x00000008 )        //毒
+#define PTL_CONDITION_YAKEDO            ( 0x00000010 )        //やけど
+#define PTL_CONDITION_KOORI             ( 0x00000020 )        //こおり
+#define PTL_CONDITION_MAHI              ( 0x00000040 )        //まひ
+#define PTL_CONDITION_DOKUDOKU          ( 0x00000080 )        //どくどく
+#define PTL_CONDITION_DOKUDOKU_CNT      ( 0x00000f00 )        //どくどくカウンタ
 
-#define	PTL_CONDITION_NEMURI_OFF		    ( 0x00000007 ^ 0xffffffff )		//眠り
-#define	PTL_CONDITION_DOKU_OFF			    ( 0x00000008 ^ 0xffffffff )		//毒
-#define	PTL_CONDITION_YAKEDO_OFF		    ( 0x00000010 ^ 0xffffffff )		//やけど
-#define	PTL_CONDITION_KOORI_OFF			    ( 0x00000020 ^ 0xffffffff )		//こおり
-#define	PTL_CONDITION_MAHI_OFF			    ( 0x00000040 ^ 0xffffffff )		//まひ
-#define	PTL_CONDITION_DOKUDOKU_CNT_OFF	( 0x00000f00 ^ 0xffffffff )		//どくどくカウンタ
-#define	PTL_CONDITION_POISON_OFF		    ( ( CONDITION_DOKU | CONDITION_DOKUDOKU | CONDITION_DOKUDOKU_CNT ) ^ 0xffffffff )
+#define PTL_CONDITION_DOKUALL           ( 0x00000f88 )        //どく全部
 
-#define	PTL_DOKUDOKU_COUNT				      ( 0x00000100 )
+#define PTL_CONDITION_NEMURI_OFF        ( 0x00000007 ^ 0xffffffff )   //眠り
+#define PTL_CONDITION_DOKU_OFF          ( 0x00000008 ^ 0xffffffff )   //毒
+#define PTL_CONDITION_YAKEDO_OFF        ( 0x00000010 ^ 0xffffffff )   //やけど
+#define PTL_CONDITION_KOORI_OFF         ( 0x00000020 ^ 0xffffffff )   //こおり
+#define PTL_CONDITION_MAHI_OFF          ( 0x00000040 ^ 0xffffffff )   //まひ
+#define PTL_CONDITION_DOKUDOKU_CNT_OFF  ( 0x00000f00 ^ 0xffffffff )   //どくどくカウンタ
+#define PTL_CONDITION_POISON_OFF        ( ( CONDITION_DOKU | CONDITION_DOKUDOKU | CONDITION_DOKUDOKU_CNT ) ^ 0xffffffff )
 
-#define	PTL_CONDITION_BAD				        ( 0x000000ff )
+#define PTL_DOKUDOKU_COUNT              ( 0x00000100 )
+
+#define PTL_CONDITION_BAD               ( 0x000000ff )
 
 //=========================================================================
 //  ポケモンのフォルムナンバー定義
@@ -657,6 +659,10 @@ extern  void  PP_RecoverWazaPPAll( POKEMON_PARAM* pp );
 
 // パラメータ設定系（その他）
 extern  void  PP_SetSick( POKEMON_PARAM* pp, PokeSick sick );
+
+// 親の一致チェック
+extern BOOL PP_IsMatchOya( const POKEMON_PARAM* pp, const MYSTATUS* player );
+extern BOOL PPP_IsMatchOya( const POKEMON_PASO_PARAM* ppp, const MYSTATUS* player );
 
 
 // 領域初期化
