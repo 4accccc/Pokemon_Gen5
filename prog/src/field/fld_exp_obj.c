@@ -457,5 +457,19 @@ void FLD_EXP_OBJ_ValidCntAnm(
   }
 
   anm->Valid = inValid;
-
 }
+
+fx32 FLD_EXP_OBJ_GetAnimeFrame(
+                        FLD_EXP_OBJ_CNT_PTR ptr,
+                        const u16 inUnitIdx,
+                        const u16 inObjIdx,
+                        const u16 inAnmIdx)
+{
+  BOOL rc;
+  int frame = 0;
+  GFL_G3D_OBJ *g3Dobj = FLD_EXP_OBJ_GetUnitObj(ptr, inUnitIdx, inObjIdx);
+  rc = GFL_G3D_OBJECT_GetAnimeFrame( g3Dobj, inAnmIdx, &frame );
+  GF_ASSERT(rc);
+  return frame;
+}
+
