@@ -14,7 +14,8 @@ include $(PROJECT_RSCDIR)/macro_define
 TARGET = rockpos.cdat
 
 XLS_ROCKPOS = rockpos.xls
-CSV_ROCKPOS = rockpos.csv
+CSV_ROCKPOS = rockpos.txt
+OLD_CSV_ROCKPOS = rockpos.csv
 
 ZONEID_HEADER = $(PROJECT_RSCDIR)/fldmapdata/zonetable/zone_id.h
 OBJID_HEADER = $(PROJECT_RSCDIR)/fldmapdata/eventdata/total_header.h
@@ -41,6 +42,7 @@ $(TARGET): $(CSV_ROCKPOS) $(ZONEID_HEADER) $(OBJID_HEADER)
 	
 clean:
 	-rm -f $(TARGET)
+	-rm -f $(OLD_CSV_ROCKPOS)
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	-rm -f $(CSV_ROCKPOS)
 endif
