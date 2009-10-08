@@ -44,6 +44,7 @@
 #include "savedata/mystatus.h"
 #include "itemmenu_local.h"
 
+#include "msg/msg_itempocket.h"
 #include "bag_parts_d_NANR_LBLDEFS.h"
 
 //------------------------------------------------------------------
@@ -414,9 +415,9 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     //下画面アイコン
     _load_parts( pWork, p_handle );
 
-    //数字のフレーム
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win01_d_NCLR,
                                       PALTYPE_MAIN_BG, 1*0x20, 2*0x20,  pWork->heapID);
+    //数字のフレーム
     pWork->numFrameBg =
       GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
         p_handle, NARC_bag_bag_win05_d_NCGR, GFL_BG_FRAME3_M, 0, 0, pWork->heapID);
@@ -467,7 +468,6 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
   }
   //下画面ボタン
   ITEMDISP_InitTaskBar(pWork);
-
 
   {
     u8 i;
@@ -668,11 +668,11 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
     32, 5,
     _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
-
-  pWork->winNumFrame =
-    GFL_BMPWIN_Create(
-      GFL_BG_FRAME3_M,	_WINNUM_INITX, _WINNUM_INITY, _WINNUM_SIZEX, _WINNUM_SIZEY,	_WINNUM_PAL,
-      GFL_BMP_CHRAREA_GET_B );
+  pWork->winNumFrame = GFL_BMPWIN_Create(
+      GFL_BG_FRAME3_M,	
+      _WINNUM_INITX, _WINNUM_INITY,
+      _WINNUM_SIZEX, _WINNUM_SIZEY,	
+      _WINNUM_PAL, GFL_BMP_CHRAREA_GET_B );
 
   pWork->winItemName = GFL_BMPWIN_Create(
     ITEMREPORT_FRAME,
@@ -691,7 +691,6 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
     _UP_ITEMREPORT_INITX, _UP_ITEMREPORT_INITY,
     _UP_ITEMREPORT_SIZEX, _UP_ITEMREPORT_SIZEY,
     _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
-
 
   GFL_BMPWIN_MakeScreen( pWork->winItemName );
   GFL_BMPWIN_MakeScreen( pWork->winItemNum );
@@ -1148,20 +1147,14 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
       GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[i] , TRUE );
     }
 
-    // うる画面のときは×マークとチェエッ苦ボックスを非表示
+    // うる画面のときは×マークとチェックボックスを非表示
     if( pWork->mode == BAG_MODE_SELL )
     {
-      GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[2] , FALSE );
-      GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[3] , FALSE );
+      GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_CHECK_BOX] , FALSE );
+      GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_EXIT] , FALSE );
     }
-
   }
-
 }
-
-
-
-
 
 
 //------------------------------------------------------------------------------
@@ -1616,8 +1609,10 @@ void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork)
 
 void ITEMDISP_TrashNumDisp(FIELD_ITEMMENU_WORK* pWork,int num)
 {
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winNumFrame), 3 );
-  GFL_FONTSYS_SetColor( 0xf, 0xa, 3 );
+  u8 backColor = 5;
+
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winNumFrame), backColor );
+  GFL_FONTSYS_SetColor( 0xf, 0xe, backColor );
   GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
   WORDSET_RegisterNumber(pWork->WordSet, 0, num,
                          3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
@@ -1626,6 +1621,128 @@ void ITEMDISP_TrashNumDisp(FIELD_ITEMMENU_WORK* pWork,int num)
   GFL_BMPWIN_TransVramCharacter(pWork->winNumFrame);
   GFL_BMPWIN_MakeScreen(pWork->winNumFrame);
 
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  BARメッセージ生成
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ITEMDISP_BarMessageCreate( FIELD_ITEMMENU_WORK* pWork )
+{
+  pWork->pocketNameWin = GFL_BMPWIN_Create(
+    GFL_BG_FRAME2_M,
+    _POCKETNAME_DISP_INITX, _POCKETNAME_DISP_INITY,
+    _POCKETNAME_DISP_SIZEX, _POCKETNAME_DISP_SIZEY,
+    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+
+  pWork->winGoldCap = GFL_BMPWIN_Create(
+    GFL_BG_FRAME2_M,
+    _GOLD_CAP_DISP_INITX, _GOLD_CAP_DISP_INITY, 
+    _GOLD_CAP_DISP_SIZEX,	_GOLD_CAP_DISP_SIZEY,
+    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+
+  pWork->winGold = GFL_BMPWIN_Create(
+    GFL_BG_FRAME2_M, 
+    _GOLD_DISP_INITX, _GOLD_DISP_INITY,
+    _GOLD_DISP_SIZEX,	_GOLD_DISP_SIZEY,
+    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+
+  GFL_BMPWIN_MakeScreen( pWork->pocketNameWin );
+
+  ITEMDISP_PocketMessage(pWork, pWork->pocketno);
+  ITEMDISP_ChangePocketCell( pWork, pWork->pocketno );
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  BARメッセージ削除
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ITEMDISP_BarMessageDelete( FIELD_ITEMMENU_WORK* pWork )
+{ 
+  GFL_BMPWIN_Delete(pWork->pocketNameWin);
+  GFL_BMPWIN_Delete(pWork->winGold);
+  GFL_BMPWIN_Delete(pWork->winGoldCap);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケット名の表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void ITEMDISP_PocketMessage(FIELD_ITEMMENU_WORK* pWork,int newpocket)
+{
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->pocketNameWin), 0 );
+  GFL_FONTSYS_SetColor( _POCKETNAME_FONT_PAL_L, _POCKETNAME_FONT_PAL_S, _POCKETNAME_FONT_PAL_B );
+  GFL_MSG_GetString(pWork->MsgManagerPocket, msg_pocket_001+newpocket, pWork->pStrBuf );
+
+  {  //センタリング
+    u32 dot =PRINTSYS_GetStrWidth(pWork->pStrBuf, pWork->fontHandle, 0);
+    dot = (80 - dot )/2;
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->pocketNameWin), dot, 4, pWork->pStrBuf, pWork->fontHandle);
+  }
+
+  GFL_BMPWIN_TransVramCharacter(pWork->pocketNameWin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_M);
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  おこづかい表示開始
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ITEMDISP_GoldDispIn( FIELD_ITEMMENU_WORK* pWork )
+{ 
+  // 左右カーソル非表示
+  GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_LEFT] , FALSE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_RIGHT] , FALSE );
+
+  // ポケット名非表示
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pWork->pocketNameWin ), 0 );
+  GFL_BMPWIN_TransVramCharacter(pWork->pocketNameWin);
+
+  // おこづかい表示
+
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_M);
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  おこづかい表示終了
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ITEMDISP_GoldDispOut( FIELD_ITEMMENU_WORK* pWork )
+{
+  // 左右カーソル表示
+  GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_LEFT] , TRUE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_RIGHT] , TRUE );
+  // おこづかい非表示
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pWork->winGold ), 0 );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pWork->winGoldCap ), 0 );
+  GFL_BMPWIN_TransVramCharacter( pWork->winGold );
+  GFL_BMPWIN_TransVramCharacter( pWork->winGoldCap );
+
+  // ポケット名表示
+  ITEMDISP_PocketMessage( pWork, pWork->pocketno );
 }
 
 //-----------------------------------------------------------------------------

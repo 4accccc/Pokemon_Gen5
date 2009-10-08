@@ -24,7 +24,6 @@
 #include "bag.naix"
 #include "msg/msg_d_field.h"
 #include "msg/msg_bag.h"
-#include "msg/msg_itempocket.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "field/fieldmap.h"
@@ -49,8 +48,10 @@
 // SE再定義
 enum
 { 
-  SE_BAG_SELL   = SEQ_SE_SYS_22,  ///< 売却音
-  SE_BAG_TRASH  = SEQ_SE_SYS_08,  ///< 捨てる音
+  SE_BAG_SELL         = SEQ_SE_SYS_22,  ///< 売却音
+  SE_BAG_TRASH        = SEQ_SE_SYS_08,  ///< 捨てる音
+  SE_BAG_CURSOR_MOVE  = SEQ_SE_SELECT1, ///< バッグカーソル移動(上下キー)
+  SE_BAG_POCKET_MOVE  = SEQ_SE_SELECT4, ///< バッグポケット選択(左右キー)
 };
 
 //=============================================================================
@@ -106,7 +107,6 @@ ITEM_ST* ITEMMENU_GetItem(FIELD_ITEMMENU_WORK* pWork, int no);
 int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork);
 static void _ItemChangeSingle(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 );
 static void _ItemChange(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 );
-static void _pocketMessageDisp(FIELD_ITEMMENU_WORK* pWork,int newpocket);
 static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int newpocket);
 int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork);
 static BOOL _posplus(FIELD_ITEMMENU_WORK* pWork, int length);
@@ -320,28 +320,6 @@ static void _ItemChange(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 )
 
 //------------------------------------------------------------------------------
 /**
- * @brief   ポケット名の表示
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _pocketMessageDisp(FIELD_ITEMMENU_WORK* pWork,int newpocket)
-{
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->pocketNameWin), 0 );
-  GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
-  GFL_MSG_GetString(pWork->MsgManagerPocket, msg_pocket_001+newpocket, pWork->pStrBuf );
-
-  {  //センタリング
-    u32 dot =PRINTSYS_GetStrWidth(pWork->pStrBuf, pWork->fontHandle, 0);
-    dot = (80 - dot )/2;
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->pocketNameWin), dot, 4, pWork->pStrBuf, pWork->fontHandle);
-  }
-  GFL_BMPWIN_TransVramCharacter(pWork->pocketNameWin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_M);
-}
-
-//------------------------------------------------------------------------------
-/**
  * @brief   ポケットに応じたカーソル位置を覚えておく 新しいポケットでのカーソル位置を引き出す
  * @retval  none
  */
@@ -357,7 +335,7 @@ static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int ne
   pWork->curpos = cur;
   pWork->oamlistpos = scr - 1;
   ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
-  _pocketMessageDisp(pWork, newpocket);
+  ITEMDISP_PocketMessage(pWork, newpocket);
   ITEMDISP_ChangePocketCell( pWork,newpocket );
   ITEMDISP_ItemInfoWindowChange(pWork,newpocket);
 
@@ -376,13 +354,16 @@ int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork)
   return pWork->curpos + pWork->oamlistpos + 1;
 }
 
-//------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 /**
- * @brief   キーがした押されたときの処理
- * @retval  none
+ *	@brief  下キーが押された時の処理
+ *
+ *	@param	pWork
+ *	@param	length
+ *
+ *	@retval none
  */
-//------------------------------------------------------------------------------
-
+//-----------------------------------------------------------------------------
 static BOOL _posplus(FIELD_ITEMMENU_WORK* pWork, int length)
 {
   BOOL bChange = FALSE;
@@ -401,10 +382,23 @@ static BOOL _posplus(FIELD_ITEMMENU_WORK* pWork, int length)
     pWork->curpos++;
     bChange = TRUE;
   }
+
+  GFL_SOUND_PlaySE( SE_BAG_CURSOR_MOVE );
+
   return bChange;
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  上キーが押された時の処理
+ *
+ *	@param	pWork
+ *	@param	length
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
 static BOOL _posminus(FIELD_ITEMMENU_WORK* pWork, int length)
 {
   BOOL bChange = FALSE;
@@ -423,6 +417,9 @@ static BOOL _posminus(FIELD_ITEMMENU_WORK* pWork, int length)
     pWork->curpos--;
     bChange = TRUE;
   }
+
+  GFL_SOUND_PlaySE( SE_BAG_CURSOR_MOVE );
+  
   return bChange;
 }
 
@@ -801,10 +798,12 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     int oldpocket = pWork->pocketno;
     if(GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT)
     {
+      GFL_SOUND_PlaySE( SE_BAG_POCKET_MOVE );
       pWork->pocketno++;
     }
     if(GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT)
     {
+      GFL_SOUND_PlaySE( SE_BAG_POCKET_MOVE );
       pWork->pocketno--;
     }
     if(pWork->pocketno >= BAG_POKE_MAX)
@@ -1884,14 +1883,8 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   //  pWork->pTouchSWSys = TOUCH_SW_AllocWork(pWork->heapID);
 
-  pWork->pocketNameWin = GFL_BMPWIN_Create(
-    GFL_BG_FRAME2_M,
-    _POCKETNAME_DISP_INITX, _POCKETNAME_DISP_INITY,
-    _POCKETNAME_DISP_SIZEX, _POCKETNAME_DISP_SIZEY,
-    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
-  GFL_BMPWIN_MakeScreen( pWork->pocketNameWin );
-  _pocketMessageDisp(pWork, pWork->pocketno);
-  ITEMDISP_ChangePocketCell( pWork, pWork->pocketno );
+
+  ITEMDISP_BarMessageCreate( pWork );
 
 	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME3_M, _SUBLIST_NORMAL_PAL,pWork->fontHandle, pWork->SysMsgQue, pWork->heapID  );
 
@@ -1974,9 +1967,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
   GFL_STR_DeleteBuffer(pWork->pExpStrBuf);
   WORDSET_Delete(pWork->WordSet);
 
-
-  GFL_BMPWIN_Delete(pWork->pocketNameWin);
-
+  ITEMDISP_BarMessageDelete( pWork );
 
   if(pWork->itemInfoDispWin){
 

@@ -77,6 +77,17 @@ enum WAZAICON_CELL
   SCR_NCG_SKILL_TYPE_TOKUSHU,
 };
 
+// バーアイコンのCLWK配列インデックス
+enum
+{ 
+  BAR_ICON_LEFT = 0,
+  BAR_ICON_RIGHT,
+  BAR_ICON_CHECK_BOX,
+  BAR_ICON_EXIT,
+  BAR_ICON_RETURN,
+  BAR_ICON_MAX,
+};
+
 
 typedef struct _DEBUGITEM_PARAM FIELD_ITEMMENU_WORK;
 typedef void (StateFunc)(FIELD_ITEMMENU_WORK* wk);
@@ -84,6 +95,7 @@ typedef int (MenuFunc)(FIELD_ITEMMENU_WORK* wk);
 
 struct _DEBUGITEM_PARAM {
   // [IN] 初期化時に外部から受け渡されるメンバ
+  // @TODO コンフィグ
   FIELDMAP_WORK       * fieldmap;
   GAMESYS_WORK        * gsys;
   SAVE_CONTROL_WORK   * ctrl;
@@ -134,7 +146,7 @@ struct _DEBUGITEM_PARAM {
   GFL_CLWK  *clwkPocketIcon;
   GFL_CLWK  *clwkWazaKind;
   GFL_CLWK  *clwkWazaType;
-  GFL_CLWK  *clwkBarIcon[5];
+  GFL_CLWK  *clwkBarIcon[ BAR_ICON_MAX ];
 	GFL_TCBLSYS *pMsgTcblSys;
   PRINT_STREAM* pStream;
   TOUCH_SW_SYS* pTouchSWSys;
@@ -144,6 +156,8 @@ struct _DEBUGITEM_PARAM {
   GFL_BMPWIN* winItemReport;
   GFL_BMPWIN* menuWin[5];
   GFL_BMPWIN* winNumFrame;
+  GFL_BMPWIN* winGoldCap;
+  GFL_BMPWIN* winGold;
 
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
@@ -197,6 +211,12 @@ struct _DEBUGITEM_PARAM {
 #define _PAL_BAG_PARTS_CELL (10)  // バッグのパーツCELLのパレット展開位置
 #define _PAL_MENU_CHECKBOX_CELL (12)  // チェックボックスのパレット展開位置
 
+// ポケット名の文字色
+#define _POCKETNAME_FONT_PAL_L (0xF)
+#define _POCKETNAME_FONT_PAL_S (0x2)
+#define _POCKETNAME_FONT_PAL_B (0x0)
+
+
 #define	FBMP_COL_WHITE		(15)
 #define WINCLR_COL(col)	(((col)<<4)|(col))
 
@@ -205,6 +225,16 @@ struct _DEBUGITEM_PARAM {
 #define _ITEMUSE_DISP_INITY (10)
 #define _ITEMUSE_DISP_SIZEX (8)
 #define _ITEMUSE_DISP_SIZEY (10)
+
+#define _GOLD_CAP_DISP_INITX (2)
+#define _GOLD_CAP_DISP_INITY (22)
+#define _GOLD_CAP_DISP_SIZEX (8)
+#define _GOLD_CAP_DISP_SIZEY (2)
+
+#define _GOLD_DISP_INITX (11)
+#define _GOLD_DISP_INITY (22)
+#define _GOLD_DISP_SIZEX (7)
+#define _GOLD_DISP_SIZEY (2)
 
 
 #define _POCKETNAME_DISP_INITX (4)
@@ -217,7 +247,7 @@ struct _DEBUGITEM_PARAM {
 #define _WINNUM_INITY (13)
 #define _WINNUM_SIZEX (11)
 #define _WINNUM_SIZEY (2)
-#define _WINNUM_PAL (1)
+#define _WINNUM_PAL (3)
 
 #define _WINNUM_SCR_INITX (16)
 #define _WINNUM_SCR_INITY (12)
@@ -272,6 +302,11 @@ extern void ITEMMENU_RemoveCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
 extern void ITEMDISP_SetVisible(void);
 extern void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_TrashNumDisp(FIELD_ITEMMENU_WORK* pWork,int num);
+extern void ITEMDISP_BarMessageCreate( FIELD_ITEMMENU_WORK* pWork );
+extern void ITEMDISP_BarMessageDelete( FIELD_ITEMMENU_WORK* pWork );
+extern void ITEMDISP_PocketMessage(FIELD_ITEMMENU_WORK* pWork,int newpocket);
+extern void ITEMDISP_GoldDispIn( FIELD_ITEMMENU_WORK* pWork );
+extern void ITEMDISP_GoldDispOut( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_YesNoExit(FIELD_ITEMMENU_WORK* pWork);
 
