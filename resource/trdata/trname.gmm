@@ -462,7 +462,7 @@
 	</row>
 
 	<row id="futago_02">
-		<language name="JPN">クミとマキ</language>
+		<language name="JPN">ミキとマキ</language>
 	</row>
 
 	<row id="tanpan_03">
@@ -470,7 +470,7 @@
 	</row>
 
 	<row id="mini_03">
-		<language name="JPN">ミカ</language>
+		<language name="JPN">カナ</language>
 	</row>
 
 	<row id="worker2_01">
@@ -659,6 +659,18 @@
 
 	<row id="hakaim1_04">
 		<language name="JPN">したっぱ</language>
+	</row>
+
+	<row id="basket_01">
+		<language name="JPN">マーク</language>
+	</row>
+
+	<row id="basket_02">
+		<language name="JPN">トニー</language>
+	</row>
+
+	<row id="schoolb_03">
+		<language name="JPN">ツトム</language>
 	</row>
 
 	<flowchart-group-list>

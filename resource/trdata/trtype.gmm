@@ -513,6 +513,10 @@
 		<language name="JPN">さぎょういん</language>
 	</row>
 
+	<row id="MSG_TRTYPE_BASKET">
+		<language name="JPN">バスケせんしゅ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
