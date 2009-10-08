@@ -205,3 +205,4 @@
   ARCID_APP_BALL  "app_ball.narc" #ボールアイコン グラフィックデータ
 	ARCID_BATTLE_CHAMPIONSHIP		"battle_championship.narc"	#バトル大会用
   ARCID_GYM_FLY "fieldmap/gym_fly.narc"  #飛行ジム
+  ARCID_GYM_ANTI "fieldmap/gym_anti.narc"  #相反ジム
