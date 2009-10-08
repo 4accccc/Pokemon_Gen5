@@ -16,27 +16,13 @@
 
 #include "arc/fieldmap/gym_anti.naix"
 
+#include "../../../resource/fldmapdata/gimmick/gym_anti/gym_anti_local_def.cdat"
+
+
 #define GYM_ANTI_UNIT_IDX (0)
 #define GYM_ANTI_TMP_ASSIGN_ID  (1)
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
-
-//スイッチグリッド座標
-#define SW1_GX    (10)
-#define SW1_GZ    (25)
-#define SW2_GX    (10)
-#define SW2_GZ    (20)
-#define SW3_GX    (10)
-#define SW3_GZ    (10)
-
-//カーテングリッド座標
-#define CTN1_GX    (15)
-#define CTN1_GZ    (25)
-#define CTN2_GX    (15)
-#define CTN2_GZ    (20)
-#define CTN3_GX    (15)
-#define CTN3_GZ    (10)
-
 
 #define SW1_X  (SW1_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
 #define SW1_Z  (SW1_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
@@ -232,7 +218,14 @@ static BOOL test_GYM_ANTI_OpenDoor(GAMESYS_WORK *gsys, const u8 inDoorIdx);
 //--------------------------------------------------------------
 void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
 {
+  GYM_ANTI_SV_WORK *gmk_sv_work;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
+  }
+
   //汎用ワーク確保
   GMK_TMP_WK_AllocWork
       (fieldWork, GYM_ANTI_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(GYM_ANTI_TMP));
@@ -275,9 +268,37 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
 
   //セーブ状況による初期アニメをセット
   {
-    
-    //フレームセット  @todo
-        ;
+    u8 i;
+    for (i=0;i<ANTI_SW_NUM_MAX;i++){
+      if ( gmk_sv_work->Sw[i] ){
+        //アニメセット
+        EXP_OBJ_ANM_CNT_PTR anm;
+        u8 sw_obj_idx;
+        u8 door_obj_idx;
+        sw_obj_idx = OBJ_SW_1 + i;
+        door_obj_idx = OBJ_DOOR_1 + i;
+        {
+          //アニメを有効
+          FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0, TRUE);
+          anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0);
+          FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+          //1回再生設定
+          FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+          //@todo　最終フレームにする
+          ;
+        }
+        {
+          //アニメを有効
+          FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ANTI_UNIT_IDX, door_obj_idx, 0, TRUE);
+          anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ANTI_UNIT_IDX, door_obj_idx, 0);
+          FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+          //1回再生設定
+          FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+          //@todo　最終フレームにする
+          ;
+        }
+      }
+    }
   }
 
 }
