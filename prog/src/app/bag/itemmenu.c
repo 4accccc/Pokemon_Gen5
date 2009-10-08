@@ -1129,6 +1129,9 @@ static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
   }
 
   pWork->InputNum = 1;  //初期化
+  
+  // おこづかい表示開始
+  ITEMDISP_GoldDispIn( pWork );
 
   // アイテムがひとつしかない場合、入力をスキップ
   {
@@ -1319,6 +1322,9 @@ static void _itemSellEndMsgWait( FIELD_ITEMMENU_WORK* pWork )
 static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
 {
   GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+  
+  // おこづかい表示終了
+  ITEMDISP_GoldDispOut( pWork );
 
   _CHANGE_STATE( pWork, _itemKindSelectMenu );
 }

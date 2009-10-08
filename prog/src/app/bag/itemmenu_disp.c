@@ -1652,8 +1652,6 @@ void ITEMDISP_BarMessageCreate( FIELD_ITEMMENU_WORK* pWork )
     _GOLD_DISP_SIZEX,	_GOLD_DISP_SIZEY,
     _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
-  GFL_BMPWIN_MakeScreen( pWork->pocketNameWin );
-
   ITEMDISP_PocketMessage(pWork, pWork->pocketno);
   ITEMDISP_ChangePocketCell( pWork, pWork->pocketno );
 }
@@ -1693,8 +1691,7 @@ void ITEMDISP_PocketMessage(FIELD_ITEMMENU_WORK* pWork,int newpocket)
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->pocketNameWin), dot, 4, pWork->pStrBuf, pWork->fontHandle);
   }
 
-  GFL_BMPWIN_TransVramCharacter(pWork->pocketNameWin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_M);
+  GFL_BMPWIN_MakeTransWindow_VBlank( pWork->pocketNameWin );
 }
 
 //-----------------------------------------------------------------------------
@@ -1716,9 +1713,34 @@ void ITEMDISP_GoldDispIn( FIELD_ITEMMENU_WORK* pWork )
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pWork->pocketNameWin ), 0 );
   GFL_BMPWIN_TransVramCharacter(pWork->pocketNameWin);
 
+  //===============================================================
   // おこづかい表示
+  //===============================================================
+  {
+    GFL_BMP_DATA* bmpGold;
+    GFL_BMP_DATA* bmpGoldCap;
 
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_M);
+    bmpGold = GFL_BMPWIN_GetBmp( pWork->winGold );
+    bmpGoldCap = GFL_BMPWIN_GetBmp( pWork->winGoldCap );
+
+    GFL_FONTSYS_SetColor( _POCKETNAME_FONT_PAL_L, _POCKETNAME_FONT_PAL_S, _POCKETNAME_FONT_PAL_B );
+
+    GFL_BMP_Clear( bmpGold , 0 );
+    GFL_BMP_Clear( bmpGoldCap , 0 );
+
+    //「おこづかい」
+    GFL_MSG_GetString( pWork->MsgManager, mes_shop_097, pWork->pStrBuf );
+    PRINTSYS_Print( bmpGoldCap, 0, 4, pWork->pStrBuf, pWork->fontHandle );
+    GFL_BMPWIN_MakeTransWindow_VBlank( pWork->winGoldCap );
+
+    //「円」
+    GFL_MSG_GetString( pWork->MsgManager, mes_shop_098, pWork->pStrBuf );
+    WORDSET_RegisterNumber(pWork->WordSet, 0, MyStatus_GetGold( pWork->mystatus ),
+                            6, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    PRINTSYS_Print( bmpGold, 0, 4, pWork->pExpStrBuf, pWork->fontHandle );
+    GFL_BMPWIN_MakeTransWindow_VBlank( pWork->winGold );
+  }
 }
 
 //-----------------------------------------------------------------------------

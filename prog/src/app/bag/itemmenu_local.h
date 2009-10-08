@@ -227,14 +227,14 @@ struct _DEBUGITEM_PARAM {
 #define _ITEMUSE_DISP_SIZEY (10)
 
 #define _GOLD_CAP_DISP_INITX (2)
-#define _GOLD_CAP_DISP_INITY (22)
+#define _GOLD_CAP_DISP_INITY (21)
 #define _GOLD_CAP_DISP_SIZEX (8)
-#define _GOLD_CAP_DISP_SIZEY (2)
+#define _GOLD_CAP_DISP_SIZEY (3)
 
 #define _GOLD_DISP_INITX (11)
-#define _GOLD_DISP_INITY (22)
-#define _GOLD_DISP_SIZEX (7)
-#define _GOLD_DISP_SIZEY (2)
+#define _GOLD_DISP_INITY (21)
+#define _GOLD_DISP_SIZEX (9)
+#define _GOLD_DISP_SIZEY (3)
 
 
 #define _POCKETNAME_DISP_INITX (4)
