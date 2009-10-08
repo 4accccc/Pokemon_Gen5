@@ -61,6 +61,7 @@
 //アプリ共通素材
 #include "app/app_menu_common.h"
 #include "app/app_res_ball.h"
+#include "app/app_res_type.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -1121,18 +1122,18 @@ static void UITemplate_TYPEICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, PokeType 
 
   prm.draw_type = CLSYS_DRAW_MAIN;
   prm.comp_flg  = CLWK_RES_COMP_NONE;
-  prm.arc_id    = APP_COMMON_GetArcId();
-  prm.pltt_id   = APP_COMMON_GetPokeTypePltArcIdx();
-  prm.ncg_id    = APP_COMMON_GetPokeTypeCharArcIdx(type);
-  prm.cell_id   = APP_COMMON_GetPokeTypeCellArcIdx( APP_COMMON_MAPPING_128K );
-  prm.anm_id    = APP_COMMON_GetPokeTypeAnimeArcIdx( APP_COMMON_MAPPING_128K );
+  prm.arc_id    = APP_RES_TYPE_GetArcId();
+  prm.pltt_id   = APP_RES_TYPE_GetPltArcIdx();
+  prm.ncg_id    = APP_RES_TYPE_GetCharArcIdx(type);
+  prm.cell_id   = APP_RES_TYPE_GetCellArcIdx( APP_RES_MAPPING_128K );
+  prm.anm_id    = APP_RES_TYPE_GetAnimeArcIdx( APP_RES_MAPPING_128K );
   prm.pltt_line = PLTID_OBJ_TYPEICON_M;
   
   UITemplate_OBJ_LoadResource( &wk->clres_type_icon, &prm, unit, heapID );
 
   wk->clwk_type_icon = UITemplate_OBJ_CreateCLWK( &wk->clres_type_icon, unit, 128, 50, 0, heapID );
 		
-  GFL_CLACT_WK_SetPlttOffs( wk->clwk_type_icon, APP_COMMON_GetPokeTypePltOffset(type),
+  GFL_CLACT_WK_SetPlttOffs( wk->clwk_type_icon, APP_RES_TYPE_GetPltOffset(type),
 				CLWK_PLTTOFFS_MODE_PLTT_TOP );
 }
 //----------------------------------------------------------------------------
