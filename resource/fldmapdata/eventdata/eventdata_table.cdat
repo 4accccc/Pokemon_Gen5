@@ -2422,7 +2422,7 @@
 #define R02_TRAINER_05                     6
 #define R02_TRAINER_06                     7
 #define R02_RIVAL_01                       8
-#define ROCK_01                            9
+#define R02_ROCK_01                        9
 #define R02_MAMA_01                       10
 
 #endif //ZONE_R02_EVC_H
@@ -11580,7 +11580,7 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 		FX32_CONST(0),
 	},
 	{
-		ROCK_01,
+		R02_ROCK_01,
 		ROCK,
 		MV_DMY,
 		EV_TYPE_NORMAL,
