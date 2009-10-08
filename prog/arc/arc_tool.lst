@@ -202,3 +202,4 @@
   ARCID_FLD3D_CI "fld3d_ci.narc"  #フィールド3Dカットイン用データ
   ARCID_FLD3D_CI_SETUP "fld3d_ci_setup.narc"  #フィールド3Dカットインセットアップ用データ
 	ARCID_DEBUG_NAGI		"debug\d_nagi_graphic.narc"	#名木橋デバッグ用グラフィックデータ
+  ARCID_APP_BALL  "app_ball.narc" #ボールアイコン グラフィックデータ

@@ -60,6 +60,7 @@
 
 //アプリ共通素材
 #include "app/app_menu_common.h"
+#include "app/app_res_ball.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -253,7 +254,7 @@ typedef struct
 #endif //UI_TEMPLATE_POKE2D
 
 #ifdef UI_TEMPLATE_BALL
-  // ポケアイコン
+  // ボールアイコン
   UI_TEMPLATE_CLWK_RES      clres_ball;
   GFL_CLWK                  *clwk_ball;
 #endif //UI_TEMPLATE_BALL
@@ -527,7 +528,7 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
 #endif //UI_TEMPLATE_POKE2D
 
 #ifdef UI_TEMPLATE_BALL
-  // どうぐアイコンの読み込み
+  // ボールアイコンの読み込み
   { 
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
     UITemplate_BALLICON_CreateCLWK( wk, BALLID_MONSUTAABOORU, clunit, wk->heapID );
@@ -1524,15 +1525,16 @@ static void UITemplate_BALLICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, BALL_ID b
 
   prm.draw_type = CLSYS_DRAW_MAIN;
   prm.comp_flg  = CLWK_RES_COMP_NONE;
-  prm.arc_id    = APP_COMMON_GetArcId();
-  prm.pltt_id   = APP_COMMON_GetBallPltArcIdx( ballID );
-  prm.ncg_id    = APP_COMMON_GetBallCharArcIdx( ballID );
-  prm.cell_id   = APP_COMMON_GetBallCellArcIdx( ballID, APP_COMMON_MAPPING_128K );
-  prm.anm_id    = APP_COMMON_GetBallAnimeArcIdx( ballID, APP_COMMON_MAPPING_128K );
+  prm.arc_id    = APP_RES_BALL_GetArcId();
+  prm.pltt_id   = APP_RES_BALL_GetBallPltArcIdx( ballID );
+  prm.ncg_id    = APP_RES_BALL_GetBallCharArcIdx( ballID );
+  prm.cell_id   = APP_RES_BALL_GetBallCellArcIdx( ballID, APP_COMMON_MAPPING_128K );
+  prm.anm_id    = APP_RES_BALL_GetBallAnimeArcIdx( ballID, APP_COMMON_MAPPING_128K );
   prm.pltt_line = PLTID_OBJ_BALLICON_M;
 
   // リソース読み込み
   UITemplate_OBJ_LoadResource( &wk->clres_ball, &prm, unit, heapID );
+
   // CLWK生成
   wk->clwk_ball = UITemplate_OBJ_CreateCLWK( &wk->clres_ball, unit, 96, 32, 0, heapID );
 }

@@ -13,6 +13,7 @@
 
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/poketype.h"
+#include "app/app_res_def.h"
 #include "item/item.h"
 
 //==============================================================================
@@ -67,14 +68,6 @@ enum{
 
 //ボールアイコンのパレットの本数
 #define APP_COMMON_BALL_PLT_NUM (1)
-
-//セルの読みわけに使うマッピングモード定義
-typedef enum
-{
-  APP_COMMON_MAPPING_32K,
-  APP_COMMON_MAPPING_64K,
-  APP_COMMON_MAPPING_128K,
-}APP_COMMON_MAPPING;
 
 // 状態異常アイコンのアニメ番号
 enum {

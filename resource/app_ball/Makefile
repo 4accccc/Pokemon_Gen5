@@ -1,10 +1,18 @@
 #------------------------------------------------------------------------------
-#	リソースのコンバートを行い、中間ファイルを1つ前のディレクトリにコピーする。
-#	- 一つ前のディレクトリのmakefileで以下の処理をいれる必要があります。
-#	-- このmakefileをコンバート対象者しか読み込まないように記述。
-#	-- .narc生成の依存対象にこのフォルダ内のリソースを追加。（wildcardで指定)
-#  2009.10.07 genya hosaka
+#  通信アイコンnarcを作るmakefile  
+#  コピーしてtargetnameを書き換えれば汎用的に使えます
+#  2008.08.19
 #------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------
+#※コンバートを行う人のユーザーIDをここに書く
+#------------------------------------------------------------------------------
+USERS	= genya_hosaka
+
+#------------------------------------------------------------------------------
+#※ここに作成するnarc名を書く
+#------------------------------------------------------------------------------
+targetname = app_ball
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -14,57 +22,68 @@ TARGETDIR = $(PROJECT_ARCDIR)
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	= 
+SUBDIRS	=
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
+BTNTBL = ruby $(PROJECT_ROOT)/tools/btndata/gfl_hittbl.rb
+
 # 自動でリソースを集める
 lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
-ssources:=$(wildcard *.nsc)
+csources:=$(wildcard *.nsc)
 esources:=$(wildcard *.nce)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
 gobjects = $(subst .ncg,.NCGR,$(gsources))
-sobjects = $(subst .nsc,.NSCR,$(ssources))
-cobjects = $(subst .nce,.NCGR,$(esources))
+cobjects = $(subst .nsc,.NSCR,$(csources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
 
-RES_OBJ =  $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(cobjects)
+LIST_FILE = list.txt
 
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
 .SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
 
 .ncl.NCLR:
-	g2dcvtr $< -pcm
-	CP $*.NCLR ./../
+	g2dcvtr $< 
 
 .ncg.NCGR:
 	g2dcvtr $< -bg
-	CP $*.NCGR ./../
 
 .nsc.NSCR:
 	g2dcvtr $<
-	CP $*.NSCR ./../
 
 .nce.NCER:
-	g2dcvtr $< -ncn
-	CP $*.NCER ./../
-	CP $*.NANR ./../
+	g2dcvtr $< -br -lbl
+
+endif
 
 .PHONY:	do-build clean subdir
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(RES_OBJ)
+do-build:	subdir $(TARGETDIR)/$(targetname).narc Makefile
 
 subdir:
 	@$(MAKE_SUBDIR)
 
+# narc のコピーだけ実行する
+$(TARGETDIR)/$(targetname).narc: $(targetname).narc
+	$(COPY) $(targetname).narc $(TARGETDIR)
+	$(COPY) $(targetname).naix $(TARGETDIR)
+
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
+# コピー先のnarcが古い場合実行する
+$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) 
+	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
+	$(NAIXCUT) $(targetname).naix
+endif
 
 #------------------------------------------------------------------------------
 #	make clean ルール
@@ -72,10 +91,20 @@ subdir:
 #------------------------------------------------------------------------------
 clean:
 	@$(MAKE_SUBDIR)
-	rm -f *.NCGR
-	rm -f *.NCLR
-	rm -f *.NCER
-	rm -f *.NANR
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
+	rm -rf *.NANR
+	rm -rf *.NCER
+	rm -rf *.NSCR
+	rm -rf *.NCGR
+	rm -rf *.NCLR
+	rm -rf *.narc
+	rm -rf *.naix
+	rm -rf *.h
+	rm -rf $(targetname).narc
+	rm -rf $(targetname).naix
+endif
+	rm -rf $(TARGETDIR)/$(targetname).narc
+	rm -rf $(TARGETDIR)/$(targetname).naix
 
 
 
