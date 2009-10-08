@@ -849,12 +849,11 @@ static void MMdl_MapAttrPoolProc_1(
   MAPATTR_VALUE val = MAPATTR_GetAttrValue( old );
   
 	if( MAPATTR_VALUE_CheckPool(val) == TRUE ){
-#if 0
-		FE_fmmdlRippleSet( fmmdl,
+		FLDEFF_RIPPLE_Set( 
+      mmdl_GetFldEffCtrl(fmmdl),
 			MMDL_GetOldGridPosX(fmmdl),
-			MMDL_GetOldGridPosY(fmmdl), 
-			MMDL_GetOldGridPosZ(fmmdl) );
-#endif
+			MMDL_GetOldGridPosZ(fmmdl),
+			MMDL_GetVectorPosY(fmmdl) );
 	}
 }
 
@@ -874,12 +873,11 @@ static void MMdl_MapAttrPoolProc_2(
   MAPATTR_VALUE val = MAPATTR_GetAttrValue( now );
 
 	if( MAPATTR_VALUE_CheckPool(val) == TRUE ){
-#if 0
-		FE_fmmdlRippleSet( fmmdl,
+		FLDEFF_RIPPLE_Set( 
+      mmdl_GetFldEffCtrl(fmmdl),
 			MMDL_GetGridPosX(fmmdl),
-			MMDL_GetGridPosY(fmmdl), 
-			MMDL_GetGridPosZ(fmmdl) );
-#endif
+			MMDL_GetGridPosZ(fmmdl),
+			MMDL_GetVectorPosY(fmmdl) );
 	}
 }
 

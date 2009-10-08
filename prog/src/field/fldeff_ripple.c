@@ -153,16 +153,15 @@ static void ripple_DeleteResource( FLDEFF_RIPPLE *ripple )
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLDEFF_RIPPLE_Set( FLDEFF_CTRL *fectrlm, s16 gx, s16 gy, s16 gz )
+void FLDEFF_RIPPLE_Set( FLDEFF_CTRL *fectrl, s16 gx, s16 gz, fx32 y )
 {
-#if 0
   VecFx32 pos;
   FLDEFF_RIPPLE *ripple;
   TASKHEADER_RIPPLE head;
   
-  MMDL_GetVectorPos( fmmdl, &pos );
-  pos.y += FX32_ONE*1;
-  pos.z += FX32_ONE*12;
+  MMDL_TOOL_GetCenterGridPos( gx, gz, &pos );
+  pos.y = y + RIPPLE_DRAW_Y_OFFSET;
+  pos.z += RIPPLE_DRAW_Z_OFFSET;
   
   ripple = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_RIPPLE );
   head.eff_ripple = ripple;
@@ -170,7 +169,6 @@ void FLDEFF_RIPPLE_Set( FLDEFF_CTRL *fectrlm, s16 gx, s16 gy, s16 gz )
   
   FLDEFF_CTRL_AddTask(
       fectrl, &DATA_rippleTaskHeader, NULL, 0, &head, 0 );
-#endif
 }
 
 //--------------------------------------------------------------
