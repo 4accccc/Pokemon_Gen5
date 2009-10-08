@@ -22,16 +22,16 @@ TARGETDIR = $(PROJECT_ARCDIR)
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	=
+SUBDIRS	= ball
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
 # 自動でリソースを集める
-lsources:=$(wildcard *.ncl)
-gsources:=$(wildcard *.ncg)
-ssources:=$(wildcard *.nsc)
-esources:=$(wildcard *.nce) 
+lsources:=$(wildcard *.ncl) $(wildcard ./ball/*.ncl)
+gsources:=$(wildcard *.ncg) $(wildcard ./ball/*.ncg)
+ssources:=$(wildcard *.nsc) $(wildcard ./ball/*.nsc)
+esources:=$(wildcard *.nce) $(wildcard ./ball/*.nce)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
@@ -67,7 +67,10 @@ endif
 do-build:	subdir $(TARGETDIR)/$(targetname).narc
 
 subdir:
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、サブファルダのmakefileを利用する
 	@$(MAKE_SUBDIR)
+endif
+
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
@@ -88,7 +91,9 @@ endif
 #※生成ファイルを削除するように記述を変更してください
 #------------------------------------------------------------------------------
 clean:
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、サブファルダのmakefileを利用する
 	@$(MAKE_SUBDIR)
+endif
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCGR
 	rm -f *.NCLR

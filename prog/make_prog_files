@@ -170,7 +170,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/fld_wipe_3dobj.c \
         debug/debug_system_group.c \
         app/app_menu_common.c \
-        app/app_res_ball.c \
         app/app_taskmenu.c \
         field/field_sound.c \
         tr_tool/tr_tool.c \

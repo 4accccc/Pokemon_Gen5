@@ -74,7 +74,6 @@ SUBDIRS	=	wmi \
 			bucket \
 			p_status \
 			app_menu_common \
-			app_ball \
 			irc_ranking \
 			iss \
 			townmap \

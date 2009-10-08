@@ -64,7 +64,6 @@
 
 //アプリ共通素材
 #include "app/app_menu_common.h"
-#include "app/app_res_ball.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -1399,16 +1398,15 @@ static void UITemplate_BALLICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, BALL_ID b
 
   prm.draw_type = CLSYS_DRAW_MAIN;
   prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NONE;
-  prm.arc_id    = APP_RES_BALL_GetArcId();
-  prm.pltt_id   = APP_RES_BALL_GetBallPltArcIdx( ballID );
-  prm.ncg_id    = APP_RES_BALL_GetBallCharArcIdx( ballID );
-  prm.cell_id   = APP_RES_BALL_GetBallCellArcIdx( ballID, APP_COMMON_MAPPING_128K );
-  prm.anm_id    = APP_RES_BALL_GetBallAnimeArcIdx( ballID, APP_COMMON_MAPPING_128K );
+  prm.arc_id    = APP_COMMON_GetArcId();
+  prm.pltt_id   = APP_COMMON_GetBallPltArcIdx( ballID );
+  prm.ncg_id    = APP_COMMON_GetBallCharArcIdx( ballID );
+  prm.cell_id   = APP_COMMON_GetBallCellArcIdx( ballID, APP_COMMON_MAPPING_128K );
+  prm.anm_id    = APP_COMMON_GetBallAnimeArcIdx( ballID, APP_COMMON_MAPPING_128K );
   prm.pltt_line = PLTID_OBJ_BALLICON_M;
 
   // リソース読み込み
   UI_EASY_CLWK_LoadResource( &wk->clres_ball, &prm, unit, heapID );
-
   // CLWK生成
   wk->clwk_ball = UI_EASY_CLWK_CreateCLWK( &wk->clres_ball, unit, 96, 32, 0, heapID );
 }
