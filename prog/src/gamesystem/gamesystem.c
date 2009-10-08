@@ -553,7 +553,7 @@ static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys)
 
 	{
 		int i,j;
-		BOX_MANAGER* pBox = BOX_DAT_InitManager(GFL_HEAPID_APP,GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys)));
+		BOX_MANAGER* pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(gsys));
 
 		for(i=0;i<18;i++){
 			for(j=0;j<5;j++){
@@ -571,7 +571,6 @@ static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys)
 				POKE_PERSONAL_CloseHandle(ppd);
 			}
 		}
-		BOX_DAT_ExitManager( pBox );
 	}
 	
 	GFL_HEAP_FreeMemory(pp);

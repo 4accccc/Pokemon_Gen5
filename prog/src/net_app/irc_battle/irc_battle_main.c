@@ -280,10 +280,22 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
 //  return GFL_PROC_RES_FINISH;
 }
 
+//比較用データの作成
 static void IRC_BATTLE_CreateCompareData( BATTLE_CHAMPIONSHIP_DATA *csData , IRC_BATTLE_COMPARE_MATCH *compareData )
 {
   compareData->championsipNumber = csData->number;
   compareData->championsipLeague = csData->league;
+}
+
+//データの比較
+static const BOOL IRC_BATTLE_CompareMatchData( IRC_BATTLE_WORK *work )
+{
+  u8 i;
+  for( i=0;i<IRC_BATTLE_MEMBER_NUM;i++ )
+  {
+//    work->postCmpareData[i]
+  }
+  return TRUE;
 }
 
 #pragma mark [>graphic func

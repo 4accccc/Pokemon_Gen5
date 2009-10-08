@@ -1036,13 +1036,11 @@ BOX_MANAGER * BOX_DAT_InitManager( const HEAPID heapId , SAVE_CONTROL_WORK * sv)
 	BOX_MANAGER* pData;
 	pData = GFL_HEAP_AllocMemory( heapId , sizeof( BOX_MANAGER ) );
 	pData->sv = sv;
-	OS_TPrintf("[[%x]]\n",*pData);
 	return pData;
 
 }
 void BOX_DAT_ExitManager( BOX_MANAGER *box )
 {
-	OS_TPrintf("[[%x]]\n",*box);
   GFL_HEAP_FreeMemory( box );
 }
 

@@ -30,6 +30,7 @@
 #include "sound/bgm_info.h"
 #include "field/field_status.h"
 #include "field/field_beacon_message.h" //FIELD_BEACON_MSG_DATA
+#include "savedata/box_savedata.h"      //BOX_MANAGER
 
 //============================================================================================
 //============================================================================================
@@ -199,6 +200,15 @@ extern MYITEM_PTR GAMEDATA_GetMyItem(const GAMEDATA * gamedata);
  */
 //--------------------------------------------------------------
 extern POKEPARTY * GAMEDATA_GetMyPokemon(const GAMEDATA * gamedata);
+
+//--------------------------------------------------------------
+/**
+ * @brief   ボックス管理構造体のポインタ取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @retval  ボックス管理構造体へのポインタ
+ */
+//--------------------------------------------------------------
+extern BOX_MANAGER * GAMEDATA_GetBoxManager(const GAMEDATA * gamedata);
 
 //--------------------------------------------------------------
 /**

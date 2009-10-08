@@ -1294,7 +1294,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
 
     if(pParentWork){
       GAMEDATA* pGameData = GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pParentWork));
-      pWork->pBox = BOX_DAT_InitManager(pWork->heapID,SaveControl_GetPointer());
+      pWork->pBox = GAMEDATA_GetBoxManager(pGameData);
       pWork->pMy = GAMEDATA_GetMyStatus( pGameData );
       pWork->pMyParty = GAMEDATA_GetMyPokemon(pGameData);
     }
@@ -1483,9 +1483,6 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
 
-  //BOXManagerŠJ•ú’Ç‰Á
-  BOX_DAT_ExitManager( pWork->pBox );
-
   GFL_CLACT_SYS_Delete();
   GFL_G3D_Exit();
   GFL_HEAP_FreeMemory(pWork->recvPoke[0]);
@@ -1503,6 +1500,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
   }
 #if PM_DEBUG
   else{
+    BOX_DAT_ExitManager(pWork->pBox);
     GFL_HEAP_FreeMemory(pWork->pMy);
     GFL_HEAP_FreeMemory(pWork->pMyParty);
   }

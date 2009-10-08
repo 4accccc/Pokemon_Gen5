@@ -79,6 +79,7 @@ extern void BOXDAT_Init( BOX_SAVEDATA* boxdat );
 extern u32 BOXDAT_GetTotalSize( void );
 
 
+//BOX_MANAGERはgamedata経由のアクセスになりました。
 //------------------------------------------------------------------
 /**
  * ボックス管理マネージャーの取得

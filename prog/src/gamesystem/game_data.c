@@ -58,6 +58,7 @@ struct _GAMEDATA{
   MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
   POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
 	CONFIG		*config;				///<コンフィグセーブデータへのポインタ
+  BOX_MANAGER *boxMng;      ///<ボックス管理構造体へのポインタ
 
   BGM_INFO_SYS* bgm_info_sys;	// BGM情報取得システム
 
@@ -167,6 +168,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->myitem = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYITEM);
   gd->my_pokeparty = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYPOKE);
 	gd->config	= SaveData_GetConfig( gd->sv_control_ptr );
+  gd->boxMng	= BOX_DAT_InitManager( heapID , gd->sv_control_ptr );
 
   //歩数カウント
   gd->fieldmap_walk_count = 0;
@@ -187,6 +189,7 @@ void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
   FIELD_BEACON_MSG_DeleteData( gamedata->fbmData );
 	BGM_INFO_DeleteSystem(gamedata->bgm_info_sys);
+  BOX_DAT_ExitManager( gamedata->boxMng );
   GFL_HEAP_FreeMemory(gamedata->bagcursor);
   MMDLSYS_FreeSystem(gamedata->mmdlsys);
 	FIELD_RAIL_LOADER_Delete( gamedata->railLoader );
@@ -350,6 +353,18 @@ MYITEM_PTR GAMEDATA_GetMyItem(const GAMEDATA * gamedata)
 POKEPARTY * GAMEDATA_GetMyPokemon(const GAMEDATA * gamedata)
 {
   return gamedata->my_pokeparty;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ボックス管理構造体のポインタ取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @retval  ボックス管理構造体へのポインタ
+ */
+//--------------------------------------------------------------
+BOX_MANAGER * GAMEDATA_GetBoxManager(const GAMEDATA * gamedata)
+{
+  return gamedata->boxMng;
 }
 
 //--------------------------------------------------------------

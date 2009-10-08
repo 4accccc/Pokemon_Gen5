@@ -2836,7 +2836,7 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
 
 	{
 		int i,j;
-		BOX_MANAGER* pBox = BOX_DAT_InitManager(HEAPID_FIELDMAP,GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gameSys)));
+		BOX_MANAGER* pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(gameSys));
 
 		for(i=0;i < BOX_MAX_TRAY;i++){
 			for(j=0;j < 30;j++){
@@ -2853,7 +2853,6 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
 				BOXDAT_PutPokemonBox(pBox, i, ppp);
 			}
 		}
-		BOX_DAT_ExitManager( pBox );
 	}
 	
 	GFL_HEAP_FreeMemory(pp);
@@ -3100,6 +3099,7 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
 		p_gts->gts.worldtrade_data	= SaveData_GetWorldTradeData(p_gts->gts.savedata);
 		p_gts->gts.systemdata				= SaveData_GetSystemData(p_gts->gts.savedata);
 		p_gts->gts.myparty					= SaveData_GetTemotiPokemon(p_gts->gts.savedata);
+		p_gts->gts.mybox	          = GAMEDATA_GetBoxManager(p_gamedata);
 		p_gts->gts.zukanwork				= NULL;
 		p_gts->gts.wifilist					= SaveData_GetWifiListData(p_gts->gts.savedata);
 		p_gts->gts.wifihistory			= SaveData_GetWifiHistory(p_gts->gts.savedata);
