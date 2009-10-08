@@ -1,0 +1,16 @@
+//このファイルはコンバーターから出力されます
+//※1は火のボタンとカーテン　2は水　3は草
+//ボタンのグリッド 位置定義
+#define SW1_GX (10)	//火
+#define SW1_GZ (25)	//火
+#define SW2_GX (10)	//水
+#define SW2_GZ (20)	//水
+#define SW3_GX (10)	//草
+#define SW3_GZ (10)	//草
+//カーテンのグリッド位置定義
+#define CTN1_GX (15)	//火
+#define CTN1_GZ (25)	//火
+#define CTN2_GX (15)	//水
+#define CTN2_GZ (20)	//水
+#define CTN3_GX (15)	//草
+#define CTN3_GZ (10)	//草

@@ -2,7 +2,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	saitou
+USERS	=	saitou suginaka_katsunori
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -52,7 +52,7 @@ XLS_CNV = ../../../../tools/exceltool/xls2xml/tab_out.rb
 
 .PHONY:	do-build clean
 
-do-build: $(TARGETDIR)/$(targetname).narc
+do-build: $(TARGETDIR)/$(targetname).narc $(CDAT)
 
 #コピー実行する
 $(TARGETDIR)/$(targetname).narc:  $(targetname).narc 
@@ -82,7 +82,7 @@ $(targetname).narc: $(DATA_LIST)
 	@-rm -f *.nsb*
 	@-rm -f *.bin
 
-#$(CDAT): def_make.xls
-#	ruby $(XLS_CNV) -c def_make.xls > def_make.csv
-#	ruby $(DEF_MAKE) def_make.csv $(CDAT)
+$(CDAT): def_make.xls
+	ruby $(XLS_CNV) -c def_make.xls > def_make.csv
+	ruby $(DEF_MAKE) def_make.csv $(CDAT)
 endif
