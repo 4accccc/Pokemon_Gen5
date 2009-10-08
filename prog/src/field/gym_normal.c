@@ -363,6 +363,7 @@ void GYM_NORMAL_Unrock(FIELDMAP_WORK *fieldWork)
   GYM_NORMAL_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_NORMAL_TMP_ASSIGN_ID);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
   GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+  gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_NORM1 );  //@todo
 
   gmk_sv_work->GmkUnrock = TRUE;
 }
@@ -374,6 +375,7 @@ BOOL GYM_NORMAL_CheckRock(FIELDMAP_WORK *fieldWork)
   GYM_NORMAL_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_NORMAL_TMP_ASSIGN_ID);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
   GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+  gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_NORM1 );  //@todo
 
   return gmk_sv_work->GmkUnrock;
 }
