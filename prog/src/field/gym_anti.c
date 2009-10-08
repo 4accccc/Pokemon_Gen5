@@ -14,10 +14,47 @@
 
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
-//#include "arc/fieldmap/gym_anti.naix"
+#include "arc/fieldmap/gym_anti.naix"
 
 #define GYM_ANTI_UNIT_IDX (0)
 #define GYM_ANTI_TMP_ASSIGN_ID  (1)
+
+#define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
+
+//スイッチグリッド座標
+#define SW1_GX    (10)
+#define SW1_GZ    (25)
+#define SW2_GX    (10)
+#define SW2_GZ    (20)
+#define SW3_GX    (10)
+#define SW3_GZ    (10)
+
+//カーテングリッド座標
+#define CTN1_GX    (15)
+#define CTN1_GZ    (25)
+#define CTN2_GX    (15)
+#define CTN2_GZ    (20)
+#define CTN3_GX    (15)
+#define CTN3_GZ    (10)
+
+
+#define SW1_X  (SW1_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW1_Z  (SW1_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW2_X  (SW2_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW2_Z  (SW2_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW3_X  (SW3_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW3_Z  (SW3_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+
+#define CTN1_X  (CTN1_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define CTN1_Z  (CTN1_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define CTN2_X  (CTN2_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define CTN2_Z  (CTN2_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define CTN3_X  (CTN3_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define CTN3_Z  (CTN3_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+
+//OBJのＹ座標
+#define OBJ3D_Y  (0*FIELD_CONST_GRID_FX32_SIZE)
+
 
 
 //ジム内部中の一時ワーク
@@ -27,6 +64,30 @@ typedef struct GYM_ANTI_TMP_tag
   u8 DoorIdx;
   u8 dummy[2];
 }GYM_ANTI_TMP;
+
+//リソースの並び順番
+enum {
+  RES_ID_SW1_MDL = 0,
+  RES_ID_SW2_MDL,
+  RES_ID_SW3_MDL,
+
+  RES_ID_CTN1_MDL,
+  RES_ID_CTN2_MDL,
+  RES_ID_CTN3_MDL,
+
+  RES_ID_SW1_MOV1,
+  RES_ID_SW1_MOV2,
+  RES_ID_SW2_MOV1,
+  RES_ID_SW2_MOV2,
+  RES_ID_SW3_MOV1,
+  RES_ID_SW3_MOV2,
+
+  RES_ID_CTN1_MOV,
+  RES_ID_CTN2_MOV,
+  RES_ID_CTN3_MOV,
+
+};
+
 
 //ＯＢＪインデックス
 enum {
@@ -38,10 +99,129 @@ enum {
   OBJ_DOOR_3,
 };
 
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
+	{ ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_f_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD　スイッチ火
+  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_w_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD　スイッチ水
+  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_l_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD　スイッチ草
+
+  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_c_f_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD　カーテン火
+  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_c_w_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD　カーテン水
+  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_c_l_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD　カーテン草
+
+  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_f_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　スイッチ火
+  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_f_nsbta, GFL_G3D_UTIL_RESARC }, //ITA　スイッチ火
+  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_w_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　スイッチ水
+  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_w_nsbta, GFL_G3D_UTIL_RESARC }, //ITA　スイッチ水
+  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_l_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　スイッチ草
+  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_b_l_nsbta, GFL_G3D_UTIL_RESARC }, //ITA　スイッチ草
+
+  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_c_f_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　カーテン火
+  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_c_w_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　カーテン水
+  { ARCID_GYM_ANTI, NARC_gym_anti_gym01_c_l_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　カーテン草
+};
+
+//3Dアニメ　スイッチ
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_sw1[] = {
+  { RES_ID_SW1_MOV1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_SW1_MOV2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+//3Dアニメ　スイッチ
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_sw2[] = {
+  { RES_ID_SW2_MOV1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_SW2_MOV2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+//3Dアニメ　スイッチ
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_sw3[] = {
+  { RES_ID_SW3_MOV1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_SW3_MOV2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+//3Dアニメ　カーテン
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_ctn1[] = {
+  { RES_ID_CTN1_MOV,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+//3Dアニメ　カーテン
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_ctn2[] = {
+  { RES_ID_CTN2_MOV,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+//3Dアニメ　カーテン
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_ctn3[] = {
+  { RES_ID_CTN3_MOV,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+//3Dオブジェクト設定テーブル
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
+  //スイッチ1
+  {
+		RES_ID_SW1_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_SW1_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_sw1,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_sw1),	//アニメリソース数
+	},
+  //スイッチ2
+  {
+		RES_ID_SW2_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_SW2_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_sw2,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_sw2),	//アニメリソース数
+	},
+  //スイッチ3
+  {
+		RES_ID_SW3_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_SW3_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_sw3,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_sw3),	//アニメリソース数
+	},
+  //カーテン1
+	{
+		RES_ID_CTN1_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_CTN1_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_ctn1,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_ctn1),	//アニメリソース数
+	},
+  //カーテン2
+  {
+		RES_ID_CTN2_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_CTN2_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_ctn2,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_ctn2),	//アニメリソース数
+	},
+  //カーテン3
+  {
+		RES_ID_CTN3_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_CTN3_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_ctn3,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_ctn3),	//アニメリソース数
+	},
+};
+
+static const GFL_G3D_UTIL_SETUP Setup = {
+  g3Dutil_resTbl,				//リソーステーブル
+	NELEMS(g3Dutil_resTbl),		//リソース数
+	g3Dutil_objTbl,				//オブジェクト設定テーブル
+	NELEMS(g3Dutil_objTbl),		//オブジェクト数
+};
+
+
 
 
 static GMEVENT_RESULT OpenDoorEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT PushSwEvt( GMEVENT* event, int* seq, void* work );
+
+#ifdef PM_DEBUG
+static BOOL test_GYM_ANTI_SwOn(GAMESYS_WORK *gsys, const u8 inSwIdx);
+static BOOL test_GYM_ANTI_OpenDoor(GAMESYS_WORK *gsys, const u8 inDoorIdx);
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -52,9 +232,54 @@ static GMEVENT_RESULT PushSwEvt( GMEVENT* event, int* seq, void* work );
 //--------------------------------------------------------------
 void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
 {
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   //汎用ワーク確保
   GMK_TMP_WK_AllocWork
       (fieldWork, GYM_ANTI_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(GYM_ANTI_TMP));
+  //必要なリソースの用意
+  FLD_EXP_OBJ_AddUnit(ptr, &Setup, GYM_ANTI_UNIT_IDX );
+  //スイッチ座標セット
+  {
+    VecFx32 pos = {SW1_X, OBJ3D_Y, SW1_Z};
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, OBJ_SW_1);
+    status->trans = pos;
+  }
+  {
+    VecFx32 pos = {SW2_X, OBJ3D_Y, SW2_Z};
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, OBJ_SW_2);
+    status->trans = pos;
+  }
+  {
+    VecFx32 pos = {SW3_X, OBJ3D_Y, SW3_Z};
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, OBJ_SW_3);
+    status->trans = pos;
+  }
+
+  //カーテン座標セット
+  {
+    VecFx32 pos = {CTN1_X, OBJ3D_Y, CTN1_Z};
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, OBJ_DOOR_1);
+    status->trans = pos;
+  }
+
+  {
+    VecFx32 pos = {CTN2_X, OBJ3D_Y, CTN2_Z};
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, OBJ_DOOR_2);
+    status->trans = pos;
+  }
+  {
+    VecFx32 pos = {CTN3_X, OBJ3D_Y, CTN3_Z};
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, OBJ_DOOR_3);
+    status->trans = pos;
+  }
+
+  //セーブ状況による初期アニメをセット
+  {
+    
+    //フレームセット  @todo
+        ;
+  }
+
 }
 
 //--------------------------------------------------------------
@@ -70,7 +295,7 @@ void GYM_ANTI_End(FIELDMAP_WORK *fieldWork)
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(fieldWork, GYM_ANTI_TMP_ASSIGN_ID);
   //ＯＢＪ解放
-///  FLD_EXP_OBJ_DelUnit( ptr, GYM_ANTI_UNIT_IDX );
+  FLD_EXP_OBJ_DelUnit( ptr, GYM_ANTI_UNIT_IDX );
 }
 
 //--------------------------------------------------------------
@@ -84,6 +309,18 @@ void GYM_ANTI_Move(FIELDMAP_WORK *fieldWork)
 {
   int i;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+
+  {
+    GAMESYS_WORK *gsys  = FIELDMAP_GetGameSysWork( fieldWork );
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+      test_GYM_ANTI_SwOn(gsys, 0);
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+      test_GYM_ANTI_OpenDoor(gsys, 0);
+    }
+  }
+
+
 
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
@@ -181,6 +418,8 @@ static GMEVENT_RESULT PushSwEvt( GMEVENT* event, int* seq, void* work )
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
         //頭出し
         FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0, 0 );
+        //1回再生設定
+        FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
       }
     }    
     (*seq)++;
@@ -237,6 +476,8 @@ static GMEVENT_RESULT OpenDoorEvt( GMEVENT* event, int* seq, void* work )
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
         //頭出し
         FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_ANTI_UNIT_IDX, door_obj_idx, 0, 0 );
+        //1回再生設定
+        FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
       }
     }    
     (*seq)++;
@@ -257,4 +498,57 @@ static GMEVENT_RESULT OpenDoorEvt( GMEVENT* event, int* seq, void* work )
   return GMEVENT_RES_CONTINUE;
 }
 
+#ifdef PM_DEBUG
+//--------------------------------------------------------------
+/**
+ * レバーの切り替えを行うイベント起動
+ * @param	
+ * @return
+ */
+//--------------------------------------------------------------
+static BOOL test_GYM_ANTI_SwOn(GAMESYS_WORK *gsys, const u8 inSwIdx)
+{
+  GYM_ANTI_SV_WORK *gmk_sv_work;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_ANTI_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ANTI_TMP_ASSIGN_ID);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+
+  gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
+
+  {
+    //イベントセット
+    GMEVENT * event = GMEVENT_Create( gsys, NULL, PushSwEvt, 0 );
+    GAMESYSTEM_SetEvent(gsys, event);
+    //操作予定インデックスをセット
+    tmp->SwIdx = inSwIdx;
+  }
+  return TRUE;
+  
+}
+
+static BOOL test_GYM_ANTI_OpenDoor(GAMESYS_WORK *gsys, const u8 inDoorIdx)
+{
+  GYM_ANTI_SV_WORK *gmk_sv_work;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_ANTI_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ANTI_TMP_ASSIGN_ID);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+  GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
+
+  gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
+
+  {
+    //イベントセット
+    GMEVENT * event = GMEVENT_Create( gsys, NULL, OpenDoorEvt, 0 );
+    GAMESYSTEM_SetEvent(gsys, event);
+    //操作予定インデックスをセット
+    tmp->DoorIdx = inDoorIdx;
+  }
+  return TRUE;
+  
+}
+
+#endif  //PM_DEBUG
 
