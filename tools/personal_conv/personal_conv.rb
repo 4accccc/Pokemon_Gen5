@@ -431,6 +431,7 @@ end
   }
 
   monsno = Hash::new
+  monsname = []
   form = []
   machine = []
   
@@ -481,6 +482,7 @@ end
       end
     else
       monsno[ split_data[ PARA::POKENAME ] ] = cnt
+      monsname[ cnt - 1 ] = split_data[ PARA::POKENAME ]
       fp_monsno.print( "#define\t\t" )
       label_str = label.make_label( "MONSNO_", split_data[ PARA::POKENAME ] )
       fp_monsno.print( label_str )
@@ -771,6 +773,9 @@ end
 
   print "ポケモンラベル＆グラフィックデータ圧縮リスト＆gmmファイル　生成終了\n"
 
+  #技覚えテーブルハッシュの生成
+  wothash = Hash::new
+
   print "パーソナルデータ生成中\n"
   #per_???.s生成
   print "per_000.s 生成中\n"
@@ -857,6 +862,10 @@ end
     split_data = read_data[ i ].split(/,/)
     if split_data[ PARA::POKENAME ] == ""
       other_form = 1
+    end
+
+    if wothash[ split_data[ PARA::POKENAME ] ] == nil
+      wothash[ split_data[ PARA::POKENAME ] ] = []
     end
 
     if other_form == 0 || ( other_form == 1 && split_data[ PARA::OTHERFORM ] == "●" )
@@ -1024,11 +1033,14 @@ end
         fp_wot.printf( "\t.short\t%s\n", split_data[ PARA::WAZA_LV1 + waza_cnt ] )
         fp_wot.printf( "\t.short\t%s\n", label.make_label( "WAZANO_", split_data[ PARA::WAZA1 + waza_cnt ] ) )
 =end
+        #技覚えハッシュテーブル生成
+        wothash[ split_data[ PARA::POKENAME ] ] << split_data[ PARA::WAZA1 + waza_cnt ]
         waza_cnt += 1
         if waza_cnt == 25
           break
         end
       end
+
       fp_wot.print( "\t.short\t0xffff\n" )
       fp_wot.print( "\t.short\t0xffff\n" )
       fp_wot.close
@@ -1078,6 +1090,22 @@ end
       cnt += 1
     end
   }
+
+  #技覚えハッシュテーブル生成
+  fp_wothash = open( "wazaoboe_hash.rb", "w" )
+  fp_wothash.printf("#! ruby -Ks\n\n" )
+  fp_wothash.printf("\t$wazaoboe_hash = {\n" )
+
+  monsname.size.times {|no|
+    fp_wothash.printf( "\t\t\"%s\"=>[\n", monsname[ no ] )
+    wothash[ monsname[ no ] ].size.times {|wot|
+      fp_wothash.printf( "\t\t\t\t\"%s\",\n", wothash[ monsname[ no ] ][ wot ] )
+    }
+    fp_wothash.printf( "\t\t],\n", monsname[ no ] )
+  }
+  fp_wothash.printf("\t}\n" )
+  fp_wothash.close
+
   print "パーソナルデータ生成終了\n"
 
   for i in 0..monsno_max - 1
