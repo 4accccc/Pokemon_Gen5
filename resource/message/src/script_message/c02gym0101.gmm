@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-05T21:45:35"/>
+	<create user="matsumiya" host="W00207" date="2009-10-08T19:39:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="35" top="218" right="740" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="35" top="218" right="739" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="733" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -337,46 +337,70 @@
 	<row id="msg_c02gym0101_ad_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・初回
-・GRIDX＝11～13
-　GRIDZ=22のPOSを踏んだとき
+・受付カウンターを越えたあたりに
+　POS設定
+・最初標本の前、上向きに鉢
+　posを踏むと！マーク表示後
+　下を向き、主人公に隣接してmsg_c02gym0101_ad_02
+・ホネ（大）→隕石→石→ジム
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">副館長（Assistant　Director）
+助手♂</attribute>
+		<language name="JPN" width="256">うーむ！　この　骨格標本は
+いつみても……　ホレボレしますな（仮）</language>
+		<language name="JPN_KANJI" width="256">うーむ！　この　骨格標本は
+いつみても……　ホレボレしますな（仮）</language>
+	</row>
+
+	<row id="msg_c02gym0101_ad_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
 		<language name="JPN" width="256">どうも　わたくし
 副館長の　？？？　です[BE:01:ページ切り替え（クリア）]
-では　わたくしが　館内を
-簡単に　案内いたしましょう</language>
+せっかく　いらしたのです　
+館内を　案内いたしましょう！
+いいんです
+遠慮しないでくださいませ（仮）</language>
 		<language name="JPN_KANJI" width="256">どうも　わたくし
 副館長の　？？？　です[BE:01:ページ切り替え（クリア）]
-では　わたくしが　館内を
-簡単に　案内いたしましょう</language>
+せっかく　いらしたのです　
+館内を　案内いたしましょう！
+いいんです
+遠慮しないでくださいませ（仮）</language>
 	</row>
 
-	<row id="msg_c02gym0101_ad_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_ad_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・骨格（予定）
+・骨格標本（大きい骨）（予定）
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
 		<language name="JPN" width="256">骨格……
 大昔の　ポケモン……</language>
 		<language name="JPN_KANJI" width="256">骨格……
-大昔の　ポケモン……</language>
-	</row>
-
-	<row id="msg_c02gym0101_ad_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・仮面（予定）
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">副館長（Assistant　Director）
-助手♂</attribute>
-		<language name="JPN" width="256">仮面を　かぶることで
-ポケモンの　魂を　宿したり……</language>
-		<language name="JPN_KANJI" width="256">仮面を　かぶることで
-ポケモンの　魂を　宿したり……</language>
+大昔の　ポケモン……（仮）</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・隕石（予定）
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">副館長（Assistant　Director）
+助手♂</attribute>
+		<language name="JPN" width="256">この　石は　すごいですよ
+いん石～[BE:01:ページ切り替え（クリア）]
+なにかしらの
+宇宙エネルギーを　秘めています</language>
+		<language name="JPN_KANJI" width="256">この　石は　すごいですよ
+いん石なんですよ！[BE:01:ページ切り替え（クリア）]
+なにかしらの
+宇宙エネルギーを　秘めています（仮）</language>
+	</row>
+
+	<row id="msg_c02gym0101_ad_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・古い石（予定）
 　Wverなら「ダークストーン（黒）」
@@ -384,62 +408,42 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
-		<language name="JPN" width="256">ああ　それは
+		<language name="JPN" width="256">ああ　こちらは
 ただの　ふるいいし　です[BE:01:ページ切り替え（クリア）]
 古代の城ってところで見つかったのですが
 古い以外には　まったく[BE:00:ページ切り替え（行送り）]
 価値の　ない　ものでして……[BE:01:ページ切り替え（クリア）]
 ただ　きれいなので
 展示しております</language>
-		<language name="JPN_KANJI" width="256">ああ　それは
+		<language name="JPN_KANJI" width="256">ああ　こちらは
 ただの　ふるいいし　です[BE:01:ページ切り替え（クリア）]
 古代の城ってところで見つかったのですが
 古い以外には　まったく[BE:00:ページ切り替え（行送り）]
 価値の　ない　ものでして……[BE:01:ページ切り替え（クリア）]
 ただ　きれいなので
-展示しております</language>
-	</row>
-
-	<row id="msg_c02gym0101_ad_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・隕石（予定）
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">副館長（Assistant　Director）
-助手♂</attribute>
-		<language name="JPN" width="256">同じ石でも　こちらはすごいですよ
-いん石～[BE:01:ページ切り替え（クリア）]
-なにかしらの
-宇宙エネルギーを　秘めています</language>
-		<language name="JPN_KANJI" width="256">同じ石でも　こちらはすごいですよ
-いん石～[BE:01:ページ切り替え（クリア）]
-なにかしらの
-宇宙エネルギーを　秘めています</language>
+展示しております（仮）</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・ジム（予定）
+・ジム（予定）……階段付近
 ・ジムバッジ取得まで
 　この位置でこのメッセージ繰り返し
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
-		<language name="JPN" width="256">この　扉の　先が
+		<language name="JPN" width="256">あの扉の　先が
 ポケモンジムと　なっております[BE:01:ページ切り替え（クリア）]
 一番　奥で　強くて　やさしい
 ジムリーダーが　待ってます[BE:01:ページ切り替え（クリア）]
-あ！　ひょっとして　最初から
-ジムが目的でしたか？[BE:01:ページ切り替え（クリア）]
-それだとしたら　足止めして
-申し訳なかったです……</language>
-		<language name="JPN_KANJI" width="256">この　扉の　先が
+ちなみに　ジムリーダーの　アロエは
+わたくしの　奥さん　なのです</language>
+		<language name="JPN_KANJI" width="256">あの扉の　先が
 ポケモンジムと　なっております[BE:01:ページ切り替え（クリア）]
 一番　奥で　強くて　やさしい
 ジムリーダーが　待ってます[BE:01:ページ切り替え（クリア）]
-あ！　ひょっとして　最初から
-ジムが目的でしたか？[BE:01:ページ切り替え（クリア）]
-それだとしたら　足止めして
-申し訳なかったです……</language>
+ちなみに　ジムリーダーの　アロエは
+わたくしの　奥さん　なのです</language>
 	</row>
 
 	<row id="msg_c02gym0101_leader_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -568,7 +572,7 @@ OLDMAN1</attribute>
 ・仮メッセージ</comment>
 		<language name="JPN" width="256">あの　プラズマだん　というのは
 いったい　なにもの　なんだ！？</language>
-		<language name="JPN_KANJI" width="256">あの　プラズマだん　というのは
+		<language name="JPN_KANJI" width="256">あの　プラズマ団　というのは
 いったい　なにもの　なんだ！？</language>
 	</row>
 
@@ -694,7 +698,7 @@ OLDMAN1</attribute>
 また　とりに　きてくださいね！</language>
 	</row>
 
-	<row id="msg_c02gym0101_meteor_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02gym0101_meteor_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>BGメッセージ
 ・パーティ内にデオキシスがいないとき</comment>
 		<attribute name="キャラ指定">隕石共通</attribute>
@@ -704,7 +708,7 @@ OLDMAN1</attribute>
 不思議な　いん石が　展示されている……</language>
 	</row>
 
-	<row id="msg_c02gym0101_meteor_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02gym0101_meteor_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>BGメッセージ
 ・パーティ内にデオキシスがいるとき
 ・パーティ内のデオキシスが
@@ -720,7 +724,7 @@ OLDMAN1</attribute>
 動く早さが　高まった！</language>
 	</row>
 
-	<row id="msg_c02gym0101_meteor_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02gym0101_meteor_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>BGメッセージ
 ・パーティ内にデオキシスがいるとき
 ・パーティ内のデオキシスが
@@ -736,7 +740,7 @@ OLDMAN1</attribute>
 守る力が　強まった！</language>
 	</row>
 
-	<row id="msg_c02gym0101_meteor_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02gym0101_meteor_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>BGメッセージ
 ・パーティ内にデオキシスがいるとき
 ・パーティ内のデオキシスが
@@ -752,7 +756,7 @@ OLDMAN1</attribute>
 闘う力が　強まった！</language>
 	</row>
 
-	<row id="msg_c02gym0101_meteor_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02gym0101_meteor_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>BGメッセージ
 ・パーティ内にデオキシスがいるとき
 ・パーティ内のデオキシスが
