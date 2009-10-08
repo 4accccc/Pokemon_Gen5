@@ -692,6 +692,8 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
         FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
         anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ELEC_UNIT_IDX, obj_idx, 1);
         FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+        //フレームセット  @todo
+        ;
       }
       //レールアニメの適用
       obj_idx = OBJ_RL_1+i;
@@ -704,6 +706,8 @@ void GYM_ELEC_Setup(FIELDMAP_WORK *fieldWork)
         FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
         anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ELEC_UNIT_IDX, obj_idx, 1);
         FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+        //フレームセット  @todo
+        ;
       }
     }
   }
