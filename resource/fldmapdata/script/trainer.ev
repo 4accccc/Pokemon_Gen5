@@ -1,49 +1,192 @@
-//====================================================================
-//
-//            トレーナーデータ
-//
-//  ●include/battle/trno_def.hを元にコンバートしています
-//
+//======================================================================
+// trainer.ev
+// ../../../prog/include/tr_tool/trno_def.hを元にコンバートしています
 //  ●コンバート実行
 //    trainer(.bat)
-//
 //  ●更新されるファイル
 //    trainer.ev
 //    trainer_def.h
-//
-//====================================================================
+//======================================================================
 
-  .text
+	.text
+	.include "scr_seq_def.h"
+ 	.include "../../../prog/include/tr_tool/tr_tool.h"
 
-  .include  "scr_seq_def.h"
-  .include  "../../../prog/include/tr_tool/tr_tool.h"
-
-//--------------------------------------------------------------------
-//              スクリプト本体
-//--------------------------------------------------------------------
-
-//--------------------------------------------------------------------
-//              スクリプトテーブル
-//--------------------------------------------------------------------
-_EVENT_DATA  ev_R02_TRAINER_01
-_EVENT_DATA  ev_R02_TRAINER_02
-_EVENT_DATA  ev_R02_TRAINER_03
-_EVENT_DATA  ev_R02_TRAINER_04
-_EVENT_DATA  ev_R02_TRAINER_05
-_EVENT_DATA  ev_R02_TRAINER_06
-_EVENT_DATA  ev_trainer_talk_battle
-_EVENT_DATA  ev_trainer_move_battle
+//----------------------------------------------------------------------
+// スクリプトテーブル
+//----------------------------------------------------------------------
+_EVENT_DATA ev_TRID_NULL
+_EVENT_DATA ev_TRID_TANPAN_01
+_EVENT_DATA ev_TRID_MINI_01
+_EVENT_DATA ev_TRID_SCHOOLB_01
+_EVENT_DATA ev_TRID_SCHOOLG_01
+_EVENT_DATA ev_TRID_TENNIS_01
+_EVENT_DATA ev_TRID_FOOTBALL_01
+_EVENT_DATA ev_TRID_TANPAN_02
+_EVENT_DATA ev_TRID_MINI_02
+_EVENT_DATA ev_TRID_WAITER_01
+_EVENT_DATA ev_TRID_WAITRESS_01
+_EVENT_DATA ev_TRID_LEADER1A_01
+_EVENT_DATA ev_TRID_LEADER1B_02
+_EVENT_DATA ev_TRID_LEADER1C_01
+_EVENT_DATA ev_TRID_CHILDCARE_01
+_EVENT_DATA ev_TRID_KINDERGARTENW_01
+_EVENT_DATA ev_TRID_KINDERGARTENM_01
+_EVENT_DATA ev_TRID_KINDERGARTENM_02
+_EVENT_DATA ev_TRID_FUTAGO_01
+_EVENT_DATA ev_TRID_BREEDERM_01
+_EVENT_DATA ev_TRID_BREEDERW_01
+_EVENT_DATA ev_TRID_LEADER2_01
+_EVENT_DATA ev_TRID_LEADER3_01
+_EVENT_DATA ev_TRID_LEADER4_01
+_EVENT_DATA ev_TRID_LEADER5_01
+_EVENT_DATA ev_TRID_LEADER6_01
+_EVENT_DATA ev_TRID_RANGERM_01
+_EVENT_DATA ev_TRID_RANGERW_01
+_EVENT_DATA ev_TRID_RANGERM_02
+_EVENT_DATA ev_TRID_RANGERW_02
+_EVENT_DATA ev_TRID_SCHOOLB_02
+_EVENT_DATA ev_TRID_SCHOOLG_02
+_EVENT_DATA ev_TRID_FUTAGO_02
+_EVENT_DATA ev_TRID_TANPAN_03
+_EVENT_DATA ev_TRID_MINI_03
+_EVENT_DATA ev_TRID_WORKER2_01
+_EVENT_DATA ev_TRID_WORKER2_02
+_EVENT_DATA ev_TRID_WORKER2_03
+_EVENT_DATA ev_TRID_WORKER2_04
+_EVENT_DATA ev_TRID_BACKPACKERM_01
+_EVENT_DATA ev_TRID_BACKPACKERW_01
+_EVENT_DATA ev_TRID_FISHING_01
+_EVENT_DATA ev_TRID_FISHING_02
+_EVENT_DATA ev_TRID_TENNIS_02
+_EVENT_DATA ev_TRID_BACKPACKERM_02
+_EVENT_DATA ev_TRID_BACKPACKERW_02
+_EVENT_DATA ev_TRID_MUSICIAN_01
+_EVENT_DATA ev_TRID_DANCER_01
+_EVENT_DATA ev_TRID_JUGGLING_01
+_EVENT_DATA ev_TRID_ARTIST_01
+_EVENT_DATA ev_TRID_BAKER_01
+_EVENT_DATA ev_TRID_ESPM_01
+_EVENT_DATA ev_TRID_ESPW_01
+_EVENT_DATA ev_TRID_RIVAL_01
+_EVENT_DATA ev_TRID_RIVAL_02
+_EVENT_DATA ev_TRID_RIVAL_03
+_EVENT_DATA ev_TRID_RIVAL_04
+_EVENT_DATA ev_TRID_RIVAL_05
+_EVENT_DATA ev_TRID_RIVAL_06
+_EVENT_DATA ev_TRID_SUPPORT_01
+_EVENT_DATA ev_TRID_SUPPORT_02
+_EVENT_DATA ev_TRID_SUPPORT_03
+_EVENT_DATA ev_TRID_HAKAIM1_01
+_EVENT_DATA ev_TRID_HAKAIM1_02
+_EVENT_DATA ev_TRID_BOSS_01
+_EVENT_DATA ev_TRID_BOSS_02
+_EVENT_DATA ev_TRID_PRINCE_01
+_EVENT_DATA ev_TRID_PRINCE_02
+_EVENT_DATA ev_TRID_PRINCESS_01
+_EVENT_DATA ev_TRID_PRINCESS_02
+_EVENT_DATA ev_TRID_PILOT_01
+_EVENT_DATA ev_TRID_PILOT_02
+_EVENT_DATA ev_TRID_WORKER1_01
+_EVENT_DATA ev_TRID_WORKER1_02
+_EVENT_DATA ev_TRID_WORKER1_03
+_EVENT_DATA ev_TRID_WORKER1_04
+_EVENT_DATA ev_TRID_WORKER1_05
+_EVENT_DATA ev_TRID_WORKER1_06
+_EVENT_DATA ev_TRID_WORKER1_07
+_EVENT_DATA ev_TRID_WORKER1_08
+_EVENT_DATA ev_TRID_HAKAIM1_03
+_EVENT_DATA ev_TRID_HAKAIM1_04
+_EVENT_DATA ev_trainer_talk_battle
+_EVENT_DATA ev_trainer_move_battle
 _EVENT_DATA_END
 
-ev_R02_TRAINER_01:
-ev_R02_TRAINER_02:
-ev_R02_TRAINER_03:
-ev_R02_TRAINER_04:
-ev_R02_TRAINER_05:
-ev_R02_TRAINER_06:
-//scr_copy_awk_label
-//コンバートに必要！
+ev_TRID_NULL:
+ev_TRID_TANPAN_01:
+ev_TRID_MINI_01:
+ev_TRID_SCHOOLB_01:
+ev_TRID_SCHOOLG_01:
+ev_TRID_TENNIS_01:
+ev_TRID_FOOTBALL_01:
+ev_TRID_TANPAN_02:
+ev_TRID_MINI_02:
+ev_TRID_WAITER_01:
+ev_TRID_WAITRESS_01:
+ev_TRID_LEADER1A_01:
+ev_TRID_LEADER1B_02:
+ev_TRID_LEADER1C_01:
+ev_TRID_CHILDCARE_01:
+ev_TRID_KINDERGARTENW_01:
+ev_TRID_KINDERGARTENM_01:
+ev_TRID_KINDERGARTENM_02:
+ev_TRID_FUTAGO_01:
+ev_TRID_BREEDERM_01:
+ev_TRID_BREEDERW_01:
+ev_TRID_LEADER2_01:
+ev_TRID_LEADER3_01:
+ev_TRID_LEADER4_01:
+ev_TRID_LEADER5_01:
+ev_TRID_LEADER6_01:
+ev_TRID_RANGERM_01:
+ev_TRID_RANGERW_01:
+ev_TRID_RANGERM_02:
+ev_TRID_RANGERW_02:
+ev_TRID_SCHOOLB_02:
+ev_TRID_SCHOOLG_02:
+ev_TRID_FUTAGO_02:
+ev_TRID_TANPAN_03:
+ev_TRID_MINI_03:
+ev_TRID_WORKER2_01:
+ev_TRID_WORKER2_02:
+ev_TRID_WORKER2_03:
+ev_TRID_WORKER2_04:
+ev_TRID_BACKPACKERM_01:
+ev_TRID_BACKPACKERW_01:
+ev_TRID_FISHING_01:
+ev_TRID_FISHING_02:
+ev_TRID_TENNIS_02:
+ev_TRID_BACKPACKERM_02:
+ev_TRID_BACKPACKERW_02:
+ev_TRID_MUSICIAN_01:
+ev_TRID_DANCER_01:
+ev_TRID_JUGGLING_01:
+ev_TRID_ARTIST_01:
+ev_TRID_BAKER_01:
+ev_TRID_ESPM_01:
+ev_TRID_ESPW_01:
+ev_TRID_RIVAL_01:
+ev_TRID_RIVAL_02:
+ev_TRID_RIVAL_03:
+ev_TRID_RIVAL_04:
+ev_TRID_RIVAL_05:
+ev_TRID_RIVAL_06:
+ev_TRID_SUPPORT_01:
+ev_TRID_SUPPORT_02:
+ev_TRID_SUPPORT_03:
+ev_TRID_HAKAIM1_01:
+ev_TRID_HAKAIM1_02:
+ev_TRID_BOSS_01:
+ev_TRID_BOSS_02:
+ev_TRID_PRINCE_01:
+ev_TRID_PRINCE_02:
+ev_TRID_PRINCESS_01:
+ev_TRID_PRINCESS_02:
+ev_TRID_PILOT_01:
+ev_TRID_PILOT_02:
+ev_TRID_WORKER1_01:
+ev_TRID_WORKER1_02:
+ev_TRID_WORKER1_03:
+ev_TRID_WORKER1_04:
+ev_TRID_WORKER1_05:
+ev_TRID_WORKER1_06:
+ev_TRID_WORKER1_07:
+ev_TRID_WORKER1_08:
+ev_TRID_HAKAIM1_03:
+ev_TRID_HAKAIM1_04:
 
+//----------------------------------------------------------------------
+// scr_trainer/trainer_base.ev
+//----------------------------------------------------------------------
 //******************************************************************
 //          会話からのトレーナー戦闘            
 //  SCWK_TEMP0  トレーナーID
