@@ -90,3 +90,8 @@
 "nsbmdfiles/c04_object03.nsbmd"
 "nsbmdfiles/c04_object04.nsbmd"
 "nsbmdfiles/c04_object05.nsbmd"
+"nsbmdfiles/box01.nsbmd"
+"nsbmdfiles/box02.nsbmd"
+"nsbmdfiles/chushion01.nsbmd"
+"nsbmdfiles/chushion02.nsbmd"
+"nsbmdfiles/gelboard01.nsbmd"

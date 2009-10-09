@@ -91,4 +91,9 @@ DEP_INDOOR	=	\
 	$(RESDIR)/c04_object03.nsbmd \
 	$(RESDIR)/c04_object04.nsbmd \
 	$(RESDIR)/c04_object05.nsbmd \
+	$(RESDIR)/box01.nsbmd \
+	$(RESDIR)/box02.nsbmd \
+	$(RESDIR)/chushion01.nsbmd \
+	$(RESDIR)/chushion02.nsbmd \
+	$(RESDIR)/gelboard01.nsbmd \
 

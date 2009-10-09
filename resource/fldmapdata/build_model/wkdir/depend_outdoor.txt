@@ -154,4 +154,12 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/sign02.nsbmd \
 	$(RESDIR)/sign03.nsbmd \
 	$(RESDIR)/sign04.nsbmd \
+	$(RESDIR)/out_vender01.nsbmd \
+	$(RESDIR)/out_dust01.nsbmd \
+	$(RESDIR)/c06_gym_01.nsbmd \
+	$(RESDIR)/c8_gym_02.nsbmd \
+	$(RESDIR)/tennis_01.nsbmd \
+	$(RESDIR)/palpark_01.nsbmd \
+	$(RESDIR)/badgegate_01.nsbmd \
+	$(RESDIR)/badgegate_02.nsbmd \
 
