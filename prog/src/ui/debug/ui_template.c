@@ -932,6 +932,8 @@ static APP_TASKMENU_WORK * UITemplate_TASKMENU_Init( APP_TASKMENU_RES *menu_res,
 	init.posType	= ATPT_RIGHT_DOWN;
 	init.charPosX	= 32;
 	init.charPosY = 21;
+	init.w				= APP_TASKMENU_PLATE_WIDTH;
+	init.h				= APP_TASKMENU_PLATE_HEIGHT;
 
 	menu	= APP_TASKMENU_OpenMenu( &init, menu_res );
 
