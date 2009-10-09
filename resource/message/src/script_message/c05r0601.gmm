@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-08-04T12:36:29"/>
+	<create user="matsumiya" host="W00207" date="2009-10-09T12:20:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="206"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,20 +292,34 @@
 	</lock>
 
 
-	<row id="msg_c05r0601_man3_01">
+	<row id="msg_c05r0601_man3_01" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・仮メッセージ
-・売り子その１</comment>
+・売り子その１
+　続けて、道具屋の処理へ</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
-		<language name="JPN" width="256">もってけ　ドロボー！[BE:01:ページ切り替え（クリア）]
-おっと　もっていくまえに
-おかねは　おいていってくれよ！</language>
-		<language name="JPN_KANJI" width="256">もってけ　ドロボー！[BE:01:ページ切り替え（クリア）]
-おっと　もっていくまえに
-おかねは　おいていってくれよ！</language>
+		<language name="JPN" width="256">ポケモンを　元気にする
+不思議な　漢方薬は　どうだい？</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　元気にする
+不思議な　漢方薬は　どうだい？</language>
 	</row>
 
-	<row id="msg_c05r0601_woman2_01">
+	<row id="msg_c05r0601_woman3_01" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ
+・上記OBJに隣接</comment>
+		<attribute name="キャラ指定">WOMAN3</attribute>
+		<language name="JPN" width="256">うちの　かんぽうやくは　わざわざ
+がいこくから　しいれた　すぐれもの[BE:01:ページ切り替え（クリア）]
+ききめは　すごいが　ちょっと　にがい！
+ポケモンも　ちょっと　にがてにしてるよ</language>
+		<language name="JPN_KANJI" width="256">うちの　漢方薬は　わざわざ
+外国から　仕入れた　優れもの[BE:01:ページ切り替え（クリア）]
+効き目は　すごいが　ちょっと　苦い！
+ポケモンも　ちょっと　苦手にしてるよ</language>
+	</row>
+
+	<row id="msg_c05r0601_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・売り子その２</comment>
@@ -316,7 +330,7 @@
 なんでも　みていってくださいね</language>
 	</row>
 
-	<row id="msg_c05r0601_badman_01">
+	<row id="msg_c05r0601_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・売り子その３</comment>
@@ -324,10 +338,10 @@
 		<language name="JPN" width="256">らっしゃえ！
 きょうは　おかいどく　だよ！</language>
 		<language name="JPN_KANJI" width="256">らっしゃえ！
-きょうは　おかいどく　だよ！</language>
+今日は　お買い得だよ！</language>
 	</row>
 
-	<row id="msg_c05r0601_sunglasses_01">
+	<row id="msg_c05r0601_sunglasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・売り子その４</comment>
@@ -338,7 +352,7 @@
 なんでも　かってけー！</language>
 	</row>
 
-	<row id="msg_c05r0601_trainerw_01">
+	<row id="msg_c05r0601_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
@@ -346,30 +360,30 @@
 こう　ものが　あふれていると[BE:00:ページ切り替え（行送り）]
 エネルギーを　かんじちゃう</language>
 		<language name="JPN_KANJI" width="256">なんていうか　なんていうか
-こう　ものが　あふれていると[BE:00:ページ切り替え（行送り）]
-エネルギーを　かんじちゃうね</language>
+こう　物が　あふれていると[BE:00:ページ切り替え（行送り）]
+エネルギーを　感じちゃうね</language>
 	</row>
 
-	<row id="msg_c05r0601_nurse_01">
+	<row id="msg_c05r0601_nurse_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">NURSE</attribute>
 		<language name="JPN" width="256">ホドモエは　りゅうつうの　まち[BE:01:ページ切り替え（クリア）]
 とおい　ちほうの
 めずらしい　しなも　そろってるわ！</language>
-		<language name="JPN_KANJI" width="256">ホドモエは　りゅうつうの　まち[BE:01:ページ切り替え（クリア）]
-とおい　ちほうの
-めずらしい　しなも　そろってるわ！</language>
+		<language name="JPN_KANJI" width="256">ホドモエは　流通の　街[BE:01:ページ切り替え（クリア）]
+遠い　地方の
+珍しい　品物も　手に入るわ！</language>
 	</row>
 
-	<row id="msg_c05r0601_workman_01">
+	<row id="msg_c05r0601_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
 		<language name="JPN" width="256">せかいが　うみで　つながるかぎり
 この　いちばには　なんでも　そろう！</language>
-		<language name="JPN_KANJI" width="256">せかいが　うみで　つながるかぎり
-この　いちばには　なんでも　そろう！</language>
+		<language name="JPN_KANJI" width="256">世界が　海で　つながるかぎり
+この　マーケットには　なんでも　そろう！</language>
 	</row>
 
 	<flowchart-group-list>

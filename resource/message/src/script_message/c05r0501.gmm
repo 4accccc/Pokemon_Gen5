@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-08-04T12:39:37"/>
+	<create user="matsumiya" host="W00207" date="2009-10-09T14:47:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,9 +292,36 @@
 	</lock>
 
 
+	<row id="msg_c05r0501_veteranw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・はい/いいえ
+　はい→
+　いいえ→
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">VETERANW</attribute>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256">
+あると　思いますか？</language>
+	</row>
+
+	<row id="msg_c05r0501_veteranw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・はい選択時</comment>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256">
+なるほど
+その考えも　わからなくもないです</language>
+	</row>
+
+	<row id="msg_c05r0501_veteranw_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・いいえ選択時</comment>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256">
+そうですね
+たしかに　そのとおりかもしれません</language>
+	</row>
+
 	<row id="msg_c05r0501_gentleman_01">
 		<comment>・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">いきるとは　まようこと[BE:01:ページ切り替え（クリア）]
 なやみ　とまどうたびに
 それぞれの　こたえを　みつけなさい</language>
@@ -303,9 +330,9 @@
 それぞれの　答えを　みつけなさい</language>
 	</row>
 
-	<row id="msg_c05r0501_veteranm_01">
+	<row id="msg_c05r0501_veteranm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">つよい　こころ　とは　なんだろう？
 やさしさとは　どういうことだ？[BE:01:ページ切り替え（クリア）]
 それを　もっている
@@ -316,9 +343,9 @@
 トレーナーや　ポケモンは　いるのか？</language>
 	</row>
 
-	<row id="msg_c05r0501_girl2_01">
+	<row id="msg_c05r0501_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">よろこぶこと……[BE:01:ページ切り替え（クリア）]
 その　ほんとうの　いみをしりたいなら
 かなしみの　いみを　しるべきです</language>
@@ -327,18 +354,18 @@
 悲しみの　意味を　知るべきです</language>
 	</row>
 
-	<row id="msg_c05r0501_oldwoman_01">
+	<row id="msg_c05r0501_oldwoman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">OLDWOMAN</attribute>
 		<language name="JPN" width="256">いきること　しぬこと……
 だれも　えらべないのです</language>
 		<language name="JPN_KANJI" width="256">生きること　死ぬこと……
 だれも　選べないのです</language>
 	</row>
 
-	<row id="msg_c05r0501_mountain_01">
+	<row id="msg_c05r0501_mountain_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">MOUNTAIN</attribute>
 		<language name="JPN" width="256">ひとも　ポケモンも
 じぶんのために　なにかをする……[BE:00:ページ切り替え（行送り）]
 だれかのために　なにかをする……[BE:00:ページ切り替え（行送り）]
@@ -351,9 +378,9 @@
 キャパが　あるとは　思えないのです</language>
 	</row>
 
-	<row id="msg_c05r0501_man1_01">
+	<row id="msg_c05r0501_man1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">MAN1</attribute>
 		<language name="JPN" width="256">いきると　いうことは
 あたえられた　じかんを　つかうこと[BE:01:ページ切り替え（クリア）]
 じかんは　とりもどせません
@@ -364,9 +391,9 @@
 そのことを　忘れないように……</language>
 	</row>
 
-	<row id="msg_c05r0501_woman2_01">
+	<row id="msg_c05r0501_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>・仮メッセージ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">しあわせとは　はかないもの……[BE:01:ページ切り替え（クリア）]
 ですから　えいえんの　しあわせ　など
 あるはずもなく　よくばらないことです</language>

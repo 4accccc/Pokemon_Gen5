@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-07T17:35:54"/>
+	<create user="matsumiya" host="W00207" date="2009-10-09T12:56:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="155"/>
+		<comment position="4" width="202"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -295,7 +295,8 @@
 	<row id="msg_c05r0201_oldman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ
-・アイテムをくれる？</comment>
+・アイテムをくれる？
+　条件を満たしていないとき</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">ほう！　おぬし
 ポケモンずかんを　もっておるのか[BE:01:ページ切り替え（クリア）]
@@ -309,6 +310,115 @@
 何匹　なんじゃ？[BE:01:ページ切り替え（クリア）]
 ５０匹　以上なら
 いいものを　やろうでは　ないか！</language>
+	</row>
+
+	<row id="msg_c05r0201_oldman1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ
+・アイテムをくれる？
+　条件を満たしているとき</comment>
+		<language name="JPN" width="256">ほう！　おぬし
+ポケモンずかんを　もっておるのか[BE:01:ページ切り替え（クリア）]
+それで　みつけた　ポケモンの　かずは
+なんびき　なんじゃ？[BE:01:ページ切り替え（クリア）]
+ほう！　５０ひき　いじょうか！
+では　これを　やろうでは　ないか！</language>
+		<language name="JPN_KANJI" width="256">ほう！　おぬし
+ポケモン図鑑を　持っておるのか[BE:01:ページ切り替え（クリア）]
+それで　見つけた　ポケモンの　数は
+何匹　なんじゃ？[BE:01:ページ切り替え（クリア）]
+ほう！　５０匹　以上か！
+では　これを　やろうでは　ないか！</language>
+	</row>
+
+	<row id="msg_c05r0201_oldman1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<language name="JPN" width="256">アイテムをもらったあと（かり）</language>
+		<language name="JPN_KANJI" width="256">この世界には　多くの　ポケモンがいて
+さまざまな　人間がいる！[BE:00:ページ切り替え（行送り）]
+それは　すばらしいこと　なんじゃ！</language>
+	</row>
+
+	<row id="msg_c05r0201_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・仮メッセージ
+・アイテム入手条件を満たしていないとき</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">アクセサリーを　ながめているだけで
+シアワセ気分に　なれるでしょ？</language>
+		<language name="JPN_KANJI" width="256">アクセサリーを　ながめているだけで
+シアワセ気分に　なれるでしょ？</language>
+	</row>
+
+	<row id="msg_c05r0201_woman2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ
+・10種以上</comment>
+		<language name="JPN" width="256">アナタの　もっている
+アクセサリーも　ステキ……！[BE:01:ページ切り替え（クリア）]
+１０しゅるいも　あるんだ
+じゃあ　アタシは　これをあげる！</language>
+		<language name="JPN_KANJI" width="256">アナタの　持っている
+アクセサリーも　ステキ……！[BE:01:ページ切り替え（クリア）]
+１０種類も　あるんだ
+じゃあ　アタシは　これをあげる！</language>
+	</row>
+
+	<row id="msg_c05r0201_woman2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ
+・50種以上</comment>
+		<language name="JPN" width="256">アナタの　もっている
+アクセサリーも　ステキ……！[BE:01:ページ切り替え（クリア）]
+５０しゅるいも　あるんだ
+じゃあ　アタシは　これをあげる！</language>
+		<language name="JPN_KANJI" width="256">アナタの　持っている
+アクセサリーも　ステキ……！[BE:01:ページ切り替え（クリア）]
+５０種類も　あるんだ
+じゃあ　アタシは　これをあげる！</language>
+	</row>
+
+	<row id="msg_c05r0201_woman2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ
+・100種以上</comment>
+		<language name="JPN" width="256">アナタの　もっている
+アクセサリーも　ステキ……！[BE:01:ページ切り替え（クリア）]
+１００しゅるいも　あるんだ
+じゃあ　アタシは　これをあげる！</language>
+		<language name="JPN_KANJI" width="256">アナタの　持っている
+アクセサリーも　ステキ……！[BE:01:ページ切り替え（クリア）]
+１００種類も　あるんだ
+じゃあ　アタシは　これをあげる！</language>
+	</row>
+
+	<row id="msg_c05r0201_woman2_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ
+・150種以上</comment>
+		<language name="JPN" width="256">アナタの　もっている
+アクセサリーも　ステキ……！[BE:01:ページ切り替え（クリア）]
+１５０しゅるいも　あるんだ
+じゃあ　アタシは　これをあげる！</language>
+		<language name="JPN_KANJI" width="256">アナタの　持っている
+アクセサリーも　ステキ……！[BE:01:ページ切り替え（クリア）]
+１５０種類も　あるんだ
+じゃあ　アタシは　これをあげる！</language>
+	</row>
+
+	<row id="msg_c05r0201_woman2_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ
+・200種以上</comment>
+		<language name="JPN" width="256">アナタの　もっている
+アクセサリーも　ステキ……！[BE:01:ページ切り替え（クリア）]
+２００しゅるいも　あるんだ
+じゃあ　アタシは　これをあげる！</language>
+		<language name="JPN_KANJI" width="256">アナタの　持っている
+アクセサリーも　ステキ……！[BE:01:ページ切り替え（クリア）]
+２００種類も　あるんだ
+じゃあ　アタシは　これをあげる！</language>
 	</row>
 
 	<flowchart-group-list>
