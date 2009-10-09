@@ -798,6 +798,186 @@ nsbtx_files/tex_set_out37_winter.nsbtx: src_imd_files/out35_test_gt_texset.imd
 	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out37_winter.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_out37_winter.imd -o nsbtx_files/tex_set_out37_winter.nsbtx -etex
 
+nsbtx_files/tex_set_out38_spring.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out38_spring.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out38_spring.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out38_spring.imd -o nsbtx_files/tex_set_out38_spring.nsbtx -etex
+
+nsbtx_files/tex_set_out38_summer.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out38_summer.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out38_summer.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out38_summer.imd -o nsbtx_files/tex_set_out38_summer.nsbtx -etex
+
+nsbtx_files/tex_set_out38_autumn.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out38_autumn.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out38_autumn.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out38_autumn.imd -o nsbtx_files/tex_set_out38_autumn.nsbtx -etex
+
+nsbtx_files/tex_set_out38_winter.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out38_winter.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out38_winter.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out38_winter.imd -o nsbtx_files/tex_set_out38_winter.nsbtx -etex
+
+nsbtx_files/tex_set_out39_spring.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out39_spring.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out39_spring.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out39_spring.imd -o nsbtx_files/tex_set_out39_spring.nsbtx -etex
+
+nsbtx_files/tex_set_out39_summer.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out39_summer.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out39_summer.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out39_summer.imd -o nsbtx_files/tex_set_out39_summer.nsbtx -etex
+
+nsbtx_files/tex_set_out39_autumn.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out39_autumn.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out39_autumn.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out39_autumn.imd -o nsbtx_files/tex_set_out39_autumn.nsbtx -etex
+
+nsbtx_files/tex_set_out39_winter.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out39_winter.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out39_winter.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out39_winter.imd -o nsbtx_files/tex_set_out39_winter.nsbtx -etex
+
+nsbtx_files/tex_set_out40_spring.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out40_spring.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out40_spring.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out40_spring.imd -o nsbtx_files/tex_set_out40_spring.nsbtx -etex
+
+nsbtx_files/tex_set_out40_summer.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out40_summer.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out40_summer.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out40_summer.imd -o nsbtx_files/tex_set_out40_summer.nsbtx -etex
+
+nsbtx_files/tex_set_out40_autumn.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out40_autumn.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out40_autumn.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out40_autumn.imd -o nsbtx_files/tex_set_out40_autumn.nsbtx -etex
+
+nsbtx_files/tex_set_out40_winter.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out40_winter.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out40_winter.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out40_winter.imd -o nsbtx_files/tex_set_out40_winter.nsbtx -etex
+
+nsbtx_files/tex_set_out41_spring.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out41_spring.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out41_spring.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out41_spring.imd -o nsbtx_files/tex_set_out41_spring.nsbtx -etex
+
+nsbtx_files/tex_set_out41_summer.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out41_summer.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out41_summer.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out41_summer.imd -o nsbtx_files/tex_set_out41_summer.nsbtx -etex
+
+nsbtx_files/tex_set_out41_autumn.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out41_autumn.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out41_autumn.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out41_autumn.imd -o nsbtx_files/tex_set_out41_autumn.nsbtx -etex
+
+nsbtx_files/tex_set_out41_winter.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out41_winter.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out41_winter.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out41_winter.imd -o nsbtx_files/tex_set_out41_winter.nsbtx -etex
+
+nsbtx_files/tex_set_out42_spring.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out42_spring.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out42_spring.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out42_spring.imd -o nsbtx_files/tex_set_out42_spring.nsbtx -etex
+
+nsbtx_files/tex_set_out42_summer.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out42_summer.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out42_summer.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out42_summer.imd -o nsbtx_files/tex_set_out42_summer.nsbtx -etex
+
+nsbtx_files/tex_set_out42_autumn.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out42_autumn.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out42_autumn.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out42_autumn.imd -o nsbtx_files/tex_set_out42_autumn.nsbtx -etex
+
+nsbtx_files/tex_set_out42_winter.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out42_winter.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out42_winter.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out42_winter.imd -o nsbtx_files/tex_set_out42_winter.nsbtx -etex
+
+nsbtx_files/tex_set_out43_spring.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out43_spring.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out43_spring.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out43_spring.imd -o nsbtx_files/tex_set_out43_spring.nsbtx -etex
+
+nsbtx_files/tex_set_out43_summer.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out43_summer.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out43_summer.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out43_summer.imd -o nsbtx_files/tex_set_out43_summer.nsbtx -etex
+
+nsbtx_files/tex_set_out43_autumn.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out43_autumn.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out43_autumn.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out43_autumn.imd -o nsbtx_files/tex_set_out43_autumn.nsbtx -etex
+
+nsbtx_files/tex_set_out43_winter.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out43_winter.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out43_winter.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out43_winter.imd -o nsbtx_files/tex_set_out43_winter.nsbtx -etex
+
+nsbtx_files/tex_set_out44_spring.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out44_spring.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out44_spring.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out44_spring.imd -o nsbtx_files/tex_set_out44_spring.nsbtx -etex
+
+nsbtx_files/tex_set_out44_summer.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out44_summer.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out44_summer.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out44_summer.imd -o nsbtx_files/tex_set_out44_summer.nsbtx -etex
+
+nsbtx_files/tex_set_out44_autumn.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out44_autumn.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out44_autumn.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out44_autumn.imd -o nsbtx_files/tex_set_out44_autumn.nsbtx -etex
+
+nsbtx_files/tex_set_out44_winter.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out44_winter.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out44_winter.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out44_winter.imd -o nsbtx_files/tex_set_out44_winter.nsbtx -etex
+
+nsbtx_files/tex_set_out45_spring.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out45_spring.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out45_spring.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out45_spring.imd -o nsbtx_files/tex_set_out45_spring.nsbtx -etex
+
+nsbtx_files/tex_set_out45_summer.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out45_summer.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out45_summer.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out45_summer.imd -o nsbtx_files/tex_set_out45_summer.nsbtx -etex
+
+nsbtx_files/tex_set_out45_autumn.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out45_autumn.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out45_autumn.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out45_autumn.imd -o nsbtx_files/tex_set_out45_autumn.nsbtx -etex
+
+nsbtx_files/tex_set_out45_winter.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out45_winter.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out45_winter.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out45_winter.imd -o nsbtx_files/tex_set_out45_winter.nsbtx -etex
+
+nsbtx_files/tex_set_out46_spring.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out46_spring.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out46_spring.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out46_spring.imd -o nsbtx_files/tex_set_out46_spring.nsbtx -etex
+
+nsbtx_files/tex_set_out46_summer.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out46_summer.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out46_summer.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out46_summer.imd -o nsbtx_files/tex_set_out46_summer.nsbtx -etex
+
+nsbtx_files/tex_set_out46_autumn.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out46_autumn.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out46_autumn.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out46_autumn.imd -o nsbtx_files/tex_set_out46_autumn.nsbtx -etex
+
+nsbtx_files/tex_set_out46_winter.nsbtx: src_imd_files/out35_test_gt_texset.imd
+	@echo src_imd_files/out35_test_gt_texset.imd Å® nsbtx_files/tex_set_out46_winter.nsbtx
+	@$(COPY) src_imd_files/out35_test_gt_texset.imd marged_imd_files/tex_set_out46_winter.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out46_winter.imd -o nsbtx_files/tex_set_out46_winter.nsbtx -etex
+
 nsbtx_files/tex_set_in01.nsbtx: src_imd_files/in01_local_texset.imd src_imd_files/in00_texset.imd src_imd_files/tex_griddmy.imd
 	@echo src_imd_files/in01_local_texset.imd + src_imd_files/in00_texset.imd Å® nsbtx_files/tex_set_in01.nsbtx
 	@-rm marged_imd_files/tex_set_in01.imd
