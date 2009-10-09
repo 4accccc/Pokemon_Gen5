@@ -45,6 +45,13 @@ extern const GFL_PROC_DATA ItemMenuProcData;
 
 #define _SUBMENU_LISTMAX (8)
 
+// 数値入力
+enum
+{ 
+  BAG_UI_TP_CUR_REPEAT_SYNC = 30,          ///< このフレームタッチし続けるとそれ以降毎フレームタッチ処理
+  BAG_UI_TP_CUR_HIGHSPEED_SYNC = 60 * 2,   ///< タッチしている時間がこのフレームを超えると移動量UP
+};
+
 enum _ITEMLISTCELL_RESOURCE
 {
   _PLT_CUR,
@@ -93,16 +100,16 @@ enum
 typedef enum
 { 
   BAG_INPUT_MODE_NULL = 0,
-  BAG_INPUT_MODE_TRASH,
-  BAG_INPUT_MODE_SELL,
+  BAG_INPUT_MODE_TRASH,   ///< すてるモード
+  BAG_INPUT_MODE_SELL,    ///< うるモード（金額表示あり）
 } BAG_INPUT_MODE;
 
 
-typedef struct _DEBUGITEM_PARAM FIELD_ITEMMENU_WORK;
+typedef struct _FIELD_ITEMMENU_PARAM FIELD_ITEMMENU_WORK;
 typedef void (StateFunc)(FIELD_ITEMMENU_WORK* wk);
 typedef int (MenuFunc)(FIELD_ITEMMENU_WORK* wk);
 
-struct _DEBUGITEM_PARAM {
+struct _FIELD_ITEMMENU_PARAM {
   // [IN] 初期化時に外部から受け渡されるメンバ
   // @TODO コンフィグ
   FIELDMAP_WORK       * fieldmap;
@@ -167,6 +174,7 @@ struct _DEBUGITEM_PARAM {
   GFL_BMPWIN* winNumFrame;
   GFL_BMPWIN* winGoldCap;
   GFL_BMPWIN* winGold;
+  GFL_BMPWIN* winSellGold;
 
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
@@ -177,6 +185,7 @@ struct _DEBUGITEM_PARAM {
   void *ncgRes; 
 
   BAG_INPUT_MODE InputMode;
+  int countTouch; ///< タッチカウンタ
   int InputNum;
   int mainbg;
   int subbg;
@@ -201,9 +210,6 @@ struct _DEBUGITEM_PARAM {
   int ret_item;  //選んだアイテム
   
 };
-
-#define DEBUG_ITEMDISP_FRAME (GFL_BG_FRAME1_M)
-
 
 #define _OBJPLT_SUB_POKE_TYPE (4) //サブ画面技タイプアイコンパレット位置
 
@@ -236,16 +242,23 @@ struct _DEBUGITEM_PARAM {
 #define _ITEMUSE_DISP_SIZEX (8)
 #define _ITEMUSE_DISP_SIZEY (10)
 
+// 「おこづかい」
 #define _GOLD_CAP_DISP_INITX (2)
 #define _GOLD_CAP_DISP_INITY (21)
 #define _GOLD_CAP_DISP_SIZEX (8)
 #define _GOLD_CAP_DISP_SIZEY (3)
 
+// おこづかい XXXXXX円
 #define _GOLD_DISP_INITX (11)
 #define _GOLD_DISP_INITY (21)
 #define _GOLD_DISP_SIZEX (9)
 #define _GOLD_DISP_SIZEY (3)
 
+// 数値入力ウィンドウ 売却金額
+#define _SELL_GOLD_DISP_INITX (17)
+#define _SELL_GOLD_DISP_INITY (15)
+#define _SELL_GOLD_DISP_SIZEX (11)
+#define _SELL_GOLD_DISP_SIZEY (2)
 
 #define _POCKETNAME_DISP_INITX (4)
 #define _POCKETNAME_DISP_INITY (21)
@@ -275,6 +288,7 @@ struct _DEBUGITEM_PARAM {
 #define FLD_SUBSCR_FADE_DIV (1)
 #define FLD_SUBSCR_FADE_SYNC (1)
 
+
 extern void _createSubBg(void);
 extern void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork);
@@ -289,7 +303,7 @@ extern void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_scrollCursorMove(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num);
 
-
+extern s32 ITEMMENU_SellPrice( int item_no, int input_num, HEAPID heapID );
 extern int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork);
 extern int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork);
 extern ITEM_ST* ITEMMENU_GetItem(FIELD_ITEMMENU_WORK* pWork,int no);
@@ -313,6 +327,7 @@ extern void ITEMDISP_SetVisible(void);
 extern void ITEMDISP_BarMessageCreate( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_BarMessageDelete( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_PocketMessage(FIELD_ITEMMENU_WORK* pWork,int newpocket);
+extern void ITEMDISP_GoldDispWrite( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_GoldDispIn( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_GoldDispOut( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork);

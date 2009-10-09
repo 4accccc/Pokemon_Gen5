@@ -636,6 +636,7 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_Delete(pWork->winItemNum);
   GFL_BMPWIN_Delete(pWork->winWaza);
   GFL_BMPWIN_Delete(pWork->winNumFrame);
+  GFL_BMPWIN_Delete(pWork->winSellGold);
 
   GFL_CLACT_WK_Remove( pWork->scrollCur );
   GFL_CLACT_WK_Remove( pWork->cellicon );
@@ -673,6 +674,12 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
       _WINNUM_INITX, _WINNUM_INITY,
       _WINNUM_SIZEX, _WINNUM_SIZEY,	
       _WINNUM_PAL, GFL_BMP_CHRAREA_GET_B );
+ 
+  pWork->winSellGold = GFL_BMPWIN_Create(
+    GFL_BG_FRAME3_M, 
+    _SELL_GOLD_DISP_INITX, _SELL_GOLD_DISP_INITY,
+    _SELL_GOLD_DISP_SIZEX, _SELL_GOLD_DISP_SIZEY,
+    _WINNUM_PAL, GFL_BMP_CHRAREA_GET_B );
 
   pWork->winItemName = GFL_BMPWIN_Create(
     ITEMREPORT_FRAME,
@@ -1662,6 +1669,42 @@ void ITEMDISP_PocketMessage(FIELD_ITEMMENU_WORK* pWork,int newpocket)
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  おこづかい表示
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void ITEMDISP_GoldDispWrite( FIELD_ITEMMENU_WORK* pWork )
+{
+  GFL_BMP_DATA* bmpGold;
+  GFL_BMP_DATA* bmpGoldCap;
+
+  bmpGold = GFL_BMPWIN_GetBmp( pWork->winGold );
+  bmpGoldCap = GFL_BMPWIN_GetBmp( pWork->winGoldCap );
+
+  GFL_FONTSYS_SetColor( _POCKETNAME_FONT_PAL_L, _POCKETNAME_FONT_PAL_S, _POCKETNAME_FONT_PAL_B );
+
+  GFL_BMP_Clear( bmpGold , 0 );
+  GFL_BMP_Clear( bmpGoldCap , 0 );
+
+  //「おこづかい」
+  GFL_MSG_GetString( pWork->MsgManager, mes_shop_097, pWork->pStrBuf );
+  PRINTSYS_Print( bmpGoldCap, 0, 4, pWork->pStrBuf, pWork->fontHandle );
+  GFL_BMPWIN_MakeTransWindow_VBlank( pWork->winGoldCap );
+
+  //「円」
+  GFL_MSG_GetString( pWork->MsgManager, mes_shop_098, pWork->pStrBuf );
+  WORDSET_RegisterNumber(pWork->WordSet, 0, MyStatus_GetGold( pWork->mystatus ),
+                          6, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+  PRINTSYS_Print( bmpGold, 0, 4, pWork->pExpStrBuf, pWork->fontHandle );
+  GFL_BMPWIN_MakeTransWindow_VBlank( pWork->winGold );
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  おこづかい表示開始
  *
  *	@param	FIELD_ITEMMENU_WORK* pWork 
@@ -1679,34 +1722,8 @@ void ITEMDISP_GoldDispIn( FIELD_ITEMMENU_WORK* pWork )
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pWork->pocketNameWin ), 0 );
   GFL_BMPWIN_TransVramCharacter(pWork->pocketNameWin);
 
-  //===============================================================
   // おこづかい表示
-  //===============================================================
-  {
-    GFL_BMP_DATA* bmpGold;
-    GFL_BMP_DATA* bmpGoldCap;
-
-    bmpGold = GFL_BMPWIN_GetBmp( pWork->winGold );
-    bmpGoldCap = GFL_BMPWIN_GetBmp( pWork->winGoldCap );
-
-    GFL_FONTSYS_SetColor( _POCKETNAME_FONT_PAL_L, _POCKETNAME_FONT_PAL_S, _POCKETNAME_FONT_PAL_B );
-
-    GFL_BMP_Clear( bmpGold , 0 );
-    GFL_BMP_Clear( bmpGoldCap , 0 );
-
-    //「おこづかい」
-    GFL_MSG_GetString( pWork->MsgManager, mes_shop_097, pWork->pStrBuf );
-    PRINTSYS_Print( bmpGoldCap, 0, 4, pWork->pStrBuf, pWork->fontHandle );
-    GFL_BMPWIN_MakeTransWindow_VBlank( pWork->winGoldCap );
-
-    //「円」
-    GFL_MSG_GetString( pWork->MsgManager, mes_shop_098, pWork->pStrBuf );
-    WORDSET_RegisterNumber(pWork->WordSet, 0, MyStatus_GetGold( pWork->mystatus ),
-                            6, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
-    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-    PRINTSYS_Print( bmpGold, 0, 4, pWork->pExpStrBuf, pWork->fontHandle );
-    GFL_BMPWIN_MakeTransWindow_VBlank( pWork->winGold );
-  }
+  ITEMDISP_GoldDispWrite( pWork );
 }
 
 //-----------------------------------------------------------------------------
@@ -1846,8 +1863,30 @@ void ITEMDISP_InputNumDisp(FIELD_ITEMMENU_WORK* pWork,int num)
                          3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
 
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winNumFrame), 0, 2, pWork->pExpStrBuf, pWork->fontHandle);
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winNumFrame), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
   GFL_BMPWIN_MakeTransWindow_VBlank(pWork->winNumFrame);
+
+  // 売却金額表示
+  if( pWork->InputMode == BAG_INPUT_MODE_SELL )
+  {
+    s32 val;
+    GFL_BMPWIN* win = pWork->winSellGold;
+
+    // 売値を取得
+    val = ITEMMENU_SellPrice( pWork->ret_item, pWork->InputNum, pWork->heapID );
+
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win), backColor );
+    GFL_FONTSYS_SetColor( 0xf, 0xe, backColor );
+    GFL_MSG_GetString(  pWork->MsgManager, mes_shop_100, pWork->pStrBuf );
+
+    WORDSET_RegisterNumber(pWork->WordSet, 0, val,
+                           6, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+
+    GFL_BMPWIN_MakeTransWindow_VBlank(win);
+  }
 }
 
 

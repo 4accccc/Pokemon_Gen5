@@ -134,7 +134,6 @@ static void _itemSellYesnoInit( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellEndMsgWait( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork );
-static s32 _get_item_sell_price( int item_no, int input_num, HEAPID heapID );
 static void InputNum_Start( FIELD_ITEMMENU_WORK* pWork, BAG_INPUT_MODE mode );
 static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork );
 static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork );
@@ -285,6 +284,44 @@ ITEM_ST* ITEMMENU_GetItem(FIELD_ITEMMENU_WORK* pWork, int no)
   return item;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムの売値を取得
+ *
+ *	@param	int item_no 売るアイテムNO
+ *	@param	input_num   売る個数
+ *	@param	heapID      ヒープID
+ *
+ *	@retval s32 売値
+ */
+//-----------------------------------------------------------------------------
+s32 ITEMMENU_SellPrice( int item_no, int input_num, HEAPID heapID )
+{
+  s32 val;
+
+  val = ITEM_GetParam( item_no, ITEM_PRM_PRICE, heapID );
+
+  // 売り値は半分
+  val /= 2;
+
+  // 個数
+  val *= input_num;
+
+  return val;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   アイテムインデックスをカーソルとリストの位置から計算
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork)
+{
+  return pWork->curpos + pWork->oamlistpos + 1;
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケットにあるアイテムの総数を返す
@@ -380,19 +417,6 @@ static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int ne
 
 
 }
-
-//------------------------------------------------------------------------------
-/**
- * @brief   アイテムインデックスをカーソルとリストの位置から計算
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork)
-{
-  return pWork->curpos + pWork->oamlistpos + 1;
-}
-
 //-----------------------------------------------------------------------------
 /**
  *	@brief  下キーが押された時の処理
@@ -1235,7 +1259,7 @@ static void _itemSellYesnoInit( FIELD_ITEMMENU_WORK* pWork )
     s32 val;
 
     // 売値を取得
-    val = _get_item_sell_price( pWork->ret_item, pWork->InputNum, pWork->heapID );
+    val = ITEMMENU_SellPrice( pWork->ret_item, pWork->InputNum, pWork->heapID );
   
     GFL_MSG_GetString( pWork->MsgManager, mes_shop_095, pWork->pStrBuf );
     WORDSET_RegisterNumber(pWork->WordSet, 0, val,
@@ -1277,7 +1301,7 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
           s32 val;
 
           // 売値を取得
-          val = _get_item_sell_price( pWork->ret_item, pWork->InputNum, pWork->heapID );
+          val = ITEMMENU_SellPrice( pWork->ret_item, pWork->InputNum, pWork->heapID );
 
           // 手持ちからアイテム削除
           MYITEM_SubItem( pWork->pMyItem, pWork->ret_item, pWork->InputNum, pWork->heapID );
@@ -1287,6 +1311,9 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
 
           // 売却音
           GFL_SOUND_PlaySE( SE_BAG_SELL );
+
+          // タスクバーおこづかい表示しなおし
+          ITEMDISP_GoldDispWrite( pWork );
   
           // 再描画
           _windowRewrite(pWork);
@@ -1357,32 +1384,6 @@ static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アイテムの売値を取得
- *
- *	@param	int item_no 売るアイテムNO
- *	@param	input_num   売る個数
- *	@param	heapID      ヒープID
- *
- *	@retval s32 売値
- */
-//-----------------------------------------------------------------------------
-static s32 _get_item_sell_price( int item_no, int input_num, HEAPID heapID )
-{
-  s32 val;
-
-  val = ITEM_GetParam( item_no, ITEM_PRM_PRICE, heapID );
-
-  // 売り値は半分
-  val /= 2;
-
-  // 個数
-  val *= input_num;
-
-  return val;
-}
-
-//-----------------------------------------------------------------------------
-/**
  *	@brief  数値入力 開始
  *
  *	@param	FIELD_ITEMMENU_WORK* pWork 
@@ -1392,10 +1393,10 @@ static s32 _get_item_sell_price( int item_no, int input_num, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void InputNum_Start( FIELD_ITEMMENU_WORK* pWork, BAG_INPUT_MODE mode )
 {
+  pWork->InputMode = mode;
+
   ITEMDISP_NumFrameDisp( pWork );
   ITEMDISP_InputNumDisp( pWork, pWork->InputNum );
-
-  pWork->InputMode = mode;
 
   // アイコン表示
   GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[ BAR_ICON_INPUT_U ], TRUE );
@@ -1434,35 +1435,99 @@ static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork )
 {
   ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
   int backup = pWork->InputNum;
+  int tp_result;
   
-  // @TODO タッチ入力
- 
-//  GFL_UI_TP_GetPointTrg(
+  const GFL_UI_TP_HITTBL tp_tbl[] = 
+  {
+    {
+      // 上ボタン
+      8*11+4, 8*11+8*3+4,
+      8*29+2, 8*29+8*3,
+    },
+    {
+      // 下ボタン
+      8*14+4, 8*14+8*3+4,
+      8*29+2, 8*29+8*3,
+    },
+    {
+      //終了データ
+      GFL_UI_TP_HIT_END,0,0,0,
+    }
+  };
+  
+  // タッチ入力
+  tp_result = GFL_UI_TP_HitCont( tp_tbl );
 
-  if(GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
-    pWork->InputNum++;
+  if( tp_result != GFL_UI_TP_HIT_NONE )
+  {
+    pWork->countTouch++;
   }
-  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_DOWN){
-    pWork->InputNum--;
+  else
+  {
+    pWork->countTouch = 0;
   }
-  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_RIGHT){
-    pWork->InputNum += 10;
+
+  if( pWork->countTouch == 1 || (pWork->countTouch > BAG_UI_TP_CUR_REPEAT_SYNC /*&& (pWork->countTouch % 8) == 0*/ ) )
+  {
+    switch( tp_result )
+    {
+    case 0 :
+      if( pWork->countTouch > BAG_UI_TP_CUR_HIGHSPEED_SYNC )
+      {
+        pWork->InputNum += 10;
+      }
+      else
+      {
+        pWork->InputNum++;
+      }
+      break;
+
+    case 1 :
+      if( pWork->countTouch > BAG_UI_TP_CUR_HIGHSPEED_SYNC )
+      {
+        pWork->InputNum -= 10;
+      }
+      else
+      {
+        pWork->InputNum--;
+      }
+      break;
+
+    default : GF_ASSERT(0);
+
+    }
   }
-  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_LEFT){
-    pWork->InputNum -= 10;
+
+  // キー入力
+  if( tp_result == GFL_UI_TP_HIT_NONE )
+  {
+    if(GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
+      pWork->InputNum++;
+    }
+    else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_DOWN){
+      pWork->InputNum--;
+    }
+    else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_RIGHT){
+      pWork->InputNum += 10;
+    }
+    else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_LEFT){
+      pWork->InputNum -= 10;
+    }
   }
   
+  // カンストチェック
   if(item->no < pWork->InputNum){
     pWork->InputNum = item->no;
   }
   else if(pWork->InputNum < 1){
     pWork->InputNum = 1;
   }
-
   
   // 表示更新
   if(pWork->InputNum != backup)
   {
+    // 移動音
+    GFL_SOUND_PlaySE( SE_BAG_CURSOR_MOVE );
 
     // ボタンアニメ
     if( pWork->InputNum < backup )
