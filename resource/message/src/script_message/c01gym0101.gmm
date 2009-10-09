@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-01T18:26:08"/>
+	<create user="matsumiya" host="W00207" date="2009-10-09T16:12:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -309,30 +309,30 @@
 	<row id="msg_c01gym0101_leader1_02" text-color="#008000,,,#008000,,#008000,,,,,,,,,,,,,">
 		<comment>♂：ジムリーダー「コーン」（画面中）
 ・続けてmsg_c01gym0101_leader1_03</comment>
-		<language name="JPN" width="256">オレたちは　それぞれ
+		<language name="JPN" width="256">ぼくたちは　それぞれ
 ほのおタイプ　くさタイプ　そして[BE:00:ページ切り替え（行送り）]
-みずタイプの　ポケモンの　つかいて！</language>
-		<language name="JPN_KANJI" width="256">オレたちは　それぞれ
+みずタイプの　ポケモンの　つかいてです！</language>
+		<language name="JPN_KANJI" width="256">ぼくたちは　それぞれ
 ほのおタイプ　くさタイプ　そして[BE:00:ページ切り替え（行送り）]
-みずタイプの　ポケモンの　使い手！</language>
+みずタイプの　ポケモンの　使い手です！</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_03a">
 		<comment>♂：ジムリーダー「ポッド」（画面左）
 ・続けてmsg_c01gym0101_leader1_04</comment>
 		<language name="JPN" width="256">オレは　ほのおタイプの
-ポケモンで　たたかう　ポッド！</language>
+ポケモンで　あばれる　ポッド！</language>
 		<language name="JPN_KANJI" width="256">オレは　ほのおタイプの
-ポケモンで　戦う　ポッド！</language>
+ポケモンで　暴れる　ポッド！</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_03b" text-color="#008000,,,#008000,,#008000,,,,,,,,,,,,,">
 		<comment>♂：ジムリーダー「コーン」（画面中）
 ・続けてmsg_c01gym0101_leader1_05</comment>
 		<language name="JPN" width="256">みずタイプの　ポケモンが　すきな
-オレ！　なまえは　コーン！</language>
+ぼく！　なまえは　コーン！</language>
 		<language name="JPN_KANJI" width="256">みずタイプの　ポケモンが　好きな
-オレ！　名前は　コーン！</language>
+ぼく！　名前は　コーン！</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_03c">
@@ -351,23 +351,23 @@
 　くさ→leader1_05a
 　ほのお→leader1_05ｂ
 　みず→leader1_05c</comment>
-		<language name="JPN" width="256">オレたち　３人は！[BE:01:ページ切り替え（クリア）]
-オマエが！
-さいしょに　えらんだ　ポケモンが[BE:00:ページ切り替え（行送り）]
-にがてなタイプの　ポケモンを　つかう！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ぼくたち　３人は！[BE:01:ページ切り替え（クリア）]
+きみが　さいしょに　えらんだ
+ポケモンが　にがてなタイプの[BE:00:ページ切り替え（行送り）]
+ポケモンを　つかいます！[BE:01:ページ切り替え（クリア）]
 あいてに　ゆうりな　タイプの
-ポケモンを　えらんで　たたかう！[BE:00:ページ切り替え（行送り）]
-これも　りっぱな　せんりゃく　だぜ！[BE:01:ページ切り替え（クリア）]
-そして　オマエが　えらんだのは
-[1:01:ポケモン種族名:0]　だったよな！</language>
-		<language name="JPN_KANJI" width="256">オレたち　３人は！[BE:01:ページ切り替え（クリア）]
+ポケモンを　えらんで　たたかう……[BE:00:ページ切り替え（行送り）]
+これも　りっぱな　せんりゃく　ですよね[BE:01:ページ切り替え（クリア）]
+そして　きみが　えらんだのは
+[1:01:ポケモン種族名:0]　でしたよね</language>
+		<language name="JPN_KANJI" width="256">ぼくたち　３人は！[BE:01:ページ切り替え（クリア）]
 キミが　最初に　選んだポケモンが
-苦手とする　タイプの　ポケモンを使う！[BE:01:ページ切り替え（クリア）]
+苦手とするタイプの　ポケモンを使います[BE:01:ページ切り替え（クリア）]
 相手に　有利なタイプの
-ポケモンを　選んで　戦う！[BE:00:ページ切り替え（行送り）]
-これも　立派な　戦略だぜ！[BE:01:ページ切り替え（クリア）]
-そして　オマエが　最初に　選んだのは
-[1:01:ポケモン種族名:0]　だったよな！</language>
+ポケモンを　選んで　戦う[BE:00:ページ切り替え（行送り）]
+これも　立派な　戦略ですよね[BE:01:ページ切り替え（クリア）]
+そして　きみが　最初に　選んだのは
+[1:01:ポケモン種族名:0]　でしたよね</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_05a">
@@ -375,10 +375,10 @@
 最初に選んだポケモンが、くさタイプ
 ・表示後、主人公、移動可能</comment>
 		<language name="JPN" width="256">ということで
-ほのおタイプの　つかいて　である[BE:00:ページ切り替え（行送り）]
+ほのおタイプで　もやしまくる[BE:00:ページ切り替え（行送り）]
 オレ　ポッドが　あいてをするぜ！</language>
 		<language name="JPN_KANJI" width="256">ということで
-ほのおタイプの　使い手である[BE:00:ページ切り替え（行送り）]
+ほのおタイプで　燃やしまくる[BE:00:ページ切り替え（行送り）]
 オレ　ポッドが　相手をするぜ！</language>
 	</row>
 
@@ -388,10 +388,10 @@
 ・表示後、主人公、移動可能</comment>
 		<language name="JPN" width="256">ということで
 みずタイプの　ポケモンが　すきな[BE:00:ページ切り替え（行送り）]
-ポッドが　あいてを　してやるぜ！</language>
+ポッドが　あいてを　いたします</language>
 		<language name="JPN_KANJI" width="256">ということで
 みずタイプの　ポケモンが　好きな[BE:00:ページ切り替え（行送り）]
-ポッドが　相手を　してやるぜ！</language>
+ポッドが　相手を　いたします！</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_05c">
@@ -414,9 +414,8 @@
 		<language name="JPN" width="256">さんにんの　なかで
 いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
 あいてを　してやるよ！</language>
-		<language name="JPN_KANJI" width="256">さんにんの　なかで
-いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
-あいてを　してやるよ！</language>
+		<language name="JPN_KANJI" width="256">イヤッホー！　兄弟のなかで
+一番　強い　オレと遊ぼうぜ！！</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_20b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -427,9 +426,9 @@
 		<language name="JPN" width="256">さんにんの　なかで
 いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
 あいてを　してやるよ！</language>
-		<language name="JPN_KANJI" width="256">さんにんの　なかで
-いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
-あいてを　してやるよ！</language>
+		<language name="JPN_KANJI" width="256">この　３人の　中で
+いちばん　強い　ぼくが[BE:00:ページ切り替え（行送り）]
+相手を　いたします！</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_20c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -440,9 +439,8 @@
 		<language name="JPN" width="256">さんにんの　なかで
 いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
 あいてを　してやるよ！</language>
-		<language name="JPN_KANJI" width="256">さんにんの　なかで
-いちばん　つよい　オレが[BE:00:ページ切り替え（行送り）]
-あいてを　してやるよ！</language>
+		<language name="JPN_KANJI" width="256">オレ　負けないよ！
+だって　兄弟で一番　強いし！</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_06a">
@@ -455,7 +453,7 @@
 		<language name="JPN" width="256">すごいぜ！　おまえ！！[BE:01:ページ切り替え（クリア）]
 ポケモンリーグの　きまりだ
 この　ジムバッジを　うけとってくれ</language>
-		<language name="JPN_KANJI" width="256">すごいぜ！　おまえ！！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">うわーッ！　おまえ　すげえ！！[BE:01:ページ切り替え（クリア）]
 ポケモンリーグの　決まりだ
 この　ジムバッジを　受け取ってくれ</language>
 	</row>
@@ -470,9 +468,9 @@
 		<language name="JPN" width="256">すごいぜ！　おまえ！！[BE:01:ページ切り替え（クリア）]
 ポケモンリーグの　きまりだ
 この　ジムバッジを　うけとってくれ</language>
-		<language name="JPN_KANJI" width="256">すごいぜ！　おまえ！！[BE:01:ページ切り替え（クリア）]
-ポケモンリーグの　決まりだ
-この　ジムバッジを　受け取ってくれ</language>
+		<language name="JPN_KANJI" width="256">すごいですね！[BE:01:ページ切り替え（クリア）]
+ポケモンリーグの　決まりです
+この　ジムバッジを　どうぞ！</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_06c">
@@ -486,8 +484,8 @@
 ポケモンリーグの　きまりだ
 この　ジムバッジを　うけとってくれ</language>
 		<language name="JPN_KANJI" width="256">すごいぜ！　おまえ！！[BE:01:ページ切り替え（クリア）]
-ポケモンリーグの　決まりだ
-この　ジムバッジを　受け取ってくれ</language>
+ポケモンリーグの　決まりなんだ
+この　ジムバッジを　もらってくれ！</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_07a">
@@ -537,11 +535,11 @@
 ・アイテム入手処理
 ・続けてmsg_c03gym0101_leader_05表示</comment>
 		<language name="JPN" width="256">ジムバッジは
-トレーナーの　つよさの　あかし！[BE:01:ページ切り替え（クリア）]
-あと　これも　もらってくれよ！！</language>
+トレーナーの　つよさの　あかしです[BE:01:ページ切り替え（クリア）]
+あと　これも　もらってください</language>
 		<language name="JPN_KANJI" width="256">ジムバッジは
-ポケモントレーナーの　強さの証！[BE:01:ページ切り替え（クリア）]
-あと　これも　もらってくれよ！！</language>
+トレーナーの　強さの証です！[BE:01:ページ切り替え（クリア）]
+あと　これも　もらってください</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_09" text-color="#008000,,,#008000,,#008000,,,,,,,,,,,,,">
@@ -550,32 +548,32 @@
 
 0＝道具名（No000「わざマシン00」）
 1＝技名（「１２３４５６７」）</comment>
-		<language name="JPN" width="256">その　[1:08:せいかく:0]の　なかみは
-[1:06:とくせい名:1]！！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">その　[1:09:どうぐ名:0]の　なかみは
+[1:07:わざ名:1]です！[BE:01:ページ切り替え（クリア）]
 （わざの　かいせつ　その１）
 （わざの　かいせつ　その２）[BE:01:ページ切り替え（クリア）]
 ちなみに　わざマシンは
-なんどだって　つかえるからな！！</language>
-		<language name="JPN_KANJI" width="256">その　[1:08:せいかく:0]の　なかみは
-[1:06:とくせい名:1]！！[BE:01:ページ切り替え（クリア）]
+なんどだって　つかえるんですよ</language>
+		<language name="JPN_KANJI" width="256">その　[1:09:どうぐ名:0]の　なかみは
+[1:07:わざ名:1]です！[BE:01:ページ切り替え（クリア）]
 （わざの　かいせつ　その１）
 （わざの　かいせつ　その２）[BE:01:ページ切り替え（クリア）]
 ちなみに　わざマシンは
-何度だって　使えるからな！！</language>
+何度だって　使えるんですよ</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_10" text-color="#008000,,,#008000,,#008000,,,,,,,,,,,,,">
 		<comment>♂：ジムリーダー「コーン」（画面中）
 ・msg_c01gym0101_leader_05
 　表示後に再度会話</comment>
-		<language name="JPN" width="256">オレたち　イッシュちほう　では
-まだまだ　かけだしの　ジムリーダー[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ぼくたち　イッシュちほう　では
+まだ　かけだしの　ジムリーダーです[BE:01:ページ切り替え（クリア）]
 ということは　ほかの　ジムリーダーは
-もっともっと　つよいって　ことさ！</language>
-		<language name="JPN_KANJI" width="256">オレたち　イッシュ地方では
-まだまだ　かけだしの　ジムリーダー[BE:01:ページ切り替え（クリア）]
+もっともっと　つよいって　ことですね</language>
+		<language name="JPN_KANJI" width="256">ぼくたち　イッシュ地方では
+まだ　かけだしの　ジムリーダーです[BE:01:ページ切り替え（クリア）]
 ということは　他の　ジムリーダーは
-もっともっと　強いって　ことさ！</language>
+もっともっと　強いって　ことですね</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_11">
