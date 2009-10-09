@@ -40,12 +40,11 @@ include $(PROJECT_RSCDIR)\macro_define
 #SUBDIRS	= ../../../../pokemon_wb_doc/particle/battleeffect
 #endif
 
-LDIRT_CLEAN = $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix $(TARGETDIR)/$(targetname2).narc $(TARGETDIR)/$(targetname2).naix
-
+#LDIRT_CLEAN = $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix $(TARGETDIR)/$(targetname2).narc $(TARGETDIR)/$(targetname2).naix
 #コンバート対象者のみ、中間ファイル削除
-ifeq	($(CONVERTUSER),true)	
-LDIRT_CLEAN += $(targetname).narc $(targetname).naix arc_result.txt $(targetname2).narc $(targetname2).naix arc_result2.txt
-endif
+#ifeq	($(CONVERTUSER),true)	
+#LDIRT_CLEAN += $(targetname).narc $(targetname).naix arc_result.txt $(targetname2).narc $(targetname2).naix arc_result2.txt
+#endif
 
 
 #コンバート対象のファイルツリーを生成
@@ -61,6 +60,19 @@ endif
 #------------------------------------------------------------------------------
 do-build: $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname2).narc
 	
+clean:
+	@rm -f $(TARGETDIR)/$(targetname).narc
+	@rm -f $(TARGETDIR)/$(targetname).naix
+	@rm -f $(TARGETDIR)/$(targetname2).narc
+	@rm -f $(TARGETDIR)/$(targetname2).naix
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+	@rm -f $(targetname).narc
+	@rm -f $(targetname).naix
+	@rm -f $(targetname2).narc
+	@rm -f $(targetname2).naix
+	@rm -f bin/*.bin
+endif
 
 #コピー実行する
 $(TARGETDIR)/$(targetname).narc:  $(targetname).narc 
