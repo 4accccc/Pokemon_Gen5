@@ -488,13 +488,15 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
   case 2:
     //自機アニメ終了待ち
     if(1){
-      //自機を非表示
       {
         MMDL * mmdl;
         FIELD_PLAYER *fld_player;
         fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
         mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+        //自機を非表示
         MMDL_SetStatusBitVanish(mmdl, TRUE);
+        //自機の高さ取得を禁止
+        MMDL_OnStatusBit( mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
       }
       //大砲アニメ再開
       {
@@ -546,6 +548,14 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
     }
     break;
   case 5:
+    {
+      MMDL * mmdl;
+      FIELD_PLAYER *fld_player;
+      fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+      mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+      //自機の高さ取得を開始
+      MMDL_OffStatusBit( mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
+    }
     //フレーム読み取り解放
     ICA_ANIME_Delete( tmp->IcaAnmPtr );
     return GMEVENT_RES_FINISH;
