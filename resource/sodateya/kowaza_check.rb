@@ -7,11 +7,13 @@
 # @auther obata
 # @date   2009.10.09
 #
+# 使用方法
+#  ruby kowaza_check.rb
+#
 ###################################################################################
 
 # ハッシュの取り込み
-require "C:/home/pokemon_wb/tools/hash/monsno_hash"   # モンスターNo.
-require "C:/home/pokemon_wb/tools/hash/wazaoboe_hash" # 技覚え
+require "hash"
 require "kowaza_table"
 require "potential_table"
 

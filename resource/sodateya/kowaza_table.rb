@@ -1,20 +1,30 @@
-# ハッシュの取り込み
-require "C:/home/pokemon_wb/tools/hash/monsno_hash"   # モンスターNo.
-require "C:/home/pokemon_wb/tools/hash/wazaoboe_hash" # 技覚え
+####################################################################################
+#
+# @brief 子技テーブル
+# @file kowaza_table.rb
+# @author obata
+# @date   2009.10.09
+#
+####################################################################################
+require "hash"
 
 
 #===================================================================================
-# 子技テーブル
+# ■子技テーブル
+#===================================================================================
+file = File.open( "kowaza_table.txt", "r" )
+$kowaza_table_data = file.readlines
+file.close 
+
+
+#===================================================================================
+# ■定数
 #===================================================================================
 DATA_INDEX_MONS_NO      = 0   # モンスターナンバー
 DATA_INDEX_MONS_NAME    = 2   # モンスター名
 DATA_INDEX_EGG_GROUP_1  = 5   # 子作りグループ1
 DATA_INDEX_EGG_GROUP_2  = 6   # 子作りグループ2
 DATA_INDEX_KOWAZA_START = 7   # 子技リスト開始位置
-
-file = File.open( "kowaza_table.txt", "r" )
-$kowaza_table_data = file.readlines
-file.close 
 
 
 #-----------------------------------------------------------------------------------
@@ -110,39 +120,4 @@ def GetPokemonListByWaza( waza_name )
   end 
 
   return list
-end
-
-
-
-
-#-----------------------------------------------------------------------------------
-# @brief モンスター名をモンスターナンバーに変換する
-# @param name モンスター名
-# @return モンスターナンバー
-#-----------------------------------------------------------------------------------
-def GetMonsNo( name )
-  monsno = $monsno_hash[ name ]
-  if monsno==nil then
-    abort( "モンスターネーム[#{name}]はハッシュに登録されていません。" )
-  end
-  return monsno
-end
-
-#-----------------------------------------------------------------------------------
-# @brief モンスターナンバーの最大値を取得する
-# @return ポケモン数
-#-----------------------------------------------------------------------------------
-def GetMaxMonsNo()
-  file = File.open( "../personal/monsno_def.h", "r" )
-  file.each do |line|
-    if line.index("MONSNO_END")!=nil then
-      i0 = line.index("(") + 1
-      i1 = line.index(")") - 1
-      str = line[i0..i1]
-      no = str.to_i
-      return no
-    end
-  end
-  file.close
-  return 0
-end
+end 
