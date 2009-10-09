@@ -19,7 +19,7 @@
 
 #include "system/main.h"    //for HEAPID_FIELDMAP
 #include "script.h"     //for SCRIPT_CallScript
-//#include "../../../resource/fldmapdata/script/c04gym0101_def.h"  //for SCRID_～
+#include "../../../resource/fldmapdata/script/c06gym0101_def.h"  //for SCRID_～
 
 
 
@@ -131,14 +131,12 @@ enum {
   RES_ID_CAN_MDL = 0,
   RES_ID_CAN_ANM1_ICA,
   RES_ID_CAN_ANM1_IMA,
-/**
   RES_ID_CAN_ANM2_ICA,
-  RES_ID_CAN_ANM2_ITP,
+  RES_ID_CAN_ANM2_IMA,
   RES_ID_CAN_ANM3_ICA,
-  RES_ID_CAN_ANM3_ITP,
+  RES_ID_CAN_ANM3_IMA,
   RES_ID_CAN_ANM4_ICA,
-  RES_ID_CAN_ANM4_ITP,
-*/  
+  RES_ID_CAN_ANM4_IMA,
 };
 
 //ＯＢＪインデックス
@@ -199,6 +197,12 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   
   { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　大砲アニメ1
   { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbma, GFL_G3D_UTIL_RESARC }, //IMA　大砲アニメ1
+  { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　大砲アニメ2
+  { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbma, GFL_G3D_UTIL_RESARC }, //IMA　大砲アニメ2
+  { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　大砲アニメ3
+  { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbma, GFL_G3D_UTIL_RESARC }, //IMA　大砲アニメ3
+  { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　大砲アニメ4
+  { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbma, GFL_G3D_UTIL_RESARC }, //IMA　大砲アニメ4
 #if 0  
   { ARCID_GYM_ELEC, NARC_gym_elec_gym04_rail_02a_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　大砲アニメ2
   { ARCID_GYM_ELEC, NARC_gym_elec_gym04_rail_02b_nsbca, GFL_G3D_UTIL_RESARC }, //ITP　大砲アニメ2
@@ -214,14 +218,12 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl[] = {
 	{ RES_ID_CAN_ANM1_ICA,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_CAN_ANM1_IMA,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
-#if 0
   { RES_ID_CAN_ANM2_ICA,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
-  { RES_ID_CAN_ANM2_ITP,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_CAN_ANM2_IMA,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_CAN_ANM3_ICA,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
-  { RES_ID_CAN_ANM3_ITP,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_CAN_ANM3_IMA,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_CAN_ANM4_ICA,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
-  { RES_ID_CAN_ANM4_ITP,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
-#endif
+  { RES_ID_CAN_ANM4_IMA,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
 
 //3Dオブジェクト設定テーブル
@@ -481,6 +483,9 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
           FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
         }
         //自機、大砲に入る
+        OS_Printf("スクリプトコール\n");
+        SCRIPT_CallScript( event, SCRID_PRG_C06GYM0101_PLAYER_IN,
+          NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
         (*seq)++;
       }
     }
