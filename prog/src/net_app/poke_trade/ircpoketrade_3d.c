@@ -25,9 +25,8 @@
 #include "pokeicon/pokeicon.h"
 
 #include "tradedemo.naix"
-#if PM_DEBUG
-#include "debug_obata.naix"
-#endif
+#include "system/ica_anime.h"
+#include "system/ica_camera.h"
 
 
 #define cameraPerspway  ( 0x0b60 )
@@ -370,7 +369,7 @@ static void _moveSetTrade01(IRC_POKEMON_TRADE* pWork,GFL_G3D_OBJSTATUS* pStatus)
   VEC_Set( &pStatus->scale, FX32_ONE, FX32_ONE, FX32_ONE );
   MTX_Identity33( &pStatus->rotate );
 
-#if 1
+#if 0
   {
 
     VecFx32 campos;
@@ -394,10 +393,25 @@ static void _moveSetTrade01(IRC_POKEMON_TRADE* pWork,GFL_G3D_OBJSTATUS* pStatus)
 #endif
   
   // カメラ更新
-  //  ICA_ANIME_SetCameraStatus( pWork->icaAnime, pWork->camera );
+//  ICA_ANIME_SetCameraStatus( pWork->icaAnime, pWork->camera );
+
+  ICA_CAMERA_SetCameraPos( pWork->camera ,pWork->icaCamera );
+  ICA_CAMERA_SetTargetPos( pWork->camera ,pWork->icaTarget );
+
   GFL_G3D_CAMERA_Switching(pWork->camera );
 
+  {
+    float x,y,z;
+    VecFx32 campos;
+    GFL_G3D_CAMERA_GetTarget( pWork->camera, &campos );
 
+    x = campos.x;
+    y = campos.y;
+    z = campos.z;
+    OS_Printf("POS X=%f Y=%f Z=%f\n",x/FX32_ONE,y/FX32_ONE,z/FX32_ONE);
+    
+  }
+  
 
   {
     // 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
@@ -552,6 +566,16 @@ void IRC_POKETRADEDEMO_End( IRC_POKEMON_TRADE* pWork )
     GFL_G3D_CAMERA_Delete( pWork->camera );
   }
 
+  if(pWork->icaCamera){
+    ICA_ANIME_Delete(pWork->icaCamera);
+    pWork->icaCamera=NULL;
+  }
+  if(pWork->icaTarget){
+    ICA_ANIME_Delete(pWork->icaTarget);
+    pWork->icaTarget=NULL;
+  }
+  
+
   Finalize( pWork );
   // 3D管理ユーティリティーの破棄
   GFL_G3D_UTIL_Delete( pWork->g3dUtil );
@@ -573,6 +597,19 @@ void IRC_POKETRADEDEMO_SetModel( IRC_POKEMON_TRADE* pWork, int modelno)
 
   modelset[pWork->modelno].setCamera(pWork);
 
+  if(modelno== TRADE01_OBJECT){
+  // icaデータをロード
+//    pWork->icaAnime = ICA_ANIME_CreateStreamingAlloc(
+  //    pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_matome4_bin, 10 );
+
+    pWork->icaCamera = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_icacamera_bin, 10 );
+    pWork->icaTarget = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_icatarget_bin, 10 );
+
+  }
+
+  
 }
 
 //============================================================================================
@@ -707,8 +744,12 @@ static void Draw( IRC_POKEMON_TRADE* pWork )
   }
 //  GFL_G3D_DRAW_End();
 
-//  frame += anime_speed;
-  //  ICA_ANIME_IncAnimeFrame( pWork->icaAnime, anime_speed );
+  if(pWork->icaCamera){
+    frame += anime_speed;
+//    ICA_ANIME_IncAnimeFrame( pWork->icaAnime, anime_speed );
+    ICA_ANIME_IncAnimeFrame( pWork->icaCamera, anime_speed );
+    ICA_ANIME_IncAnimeFrame( pWork->icaTarget, anime_speed );
+  }
 }
 
 

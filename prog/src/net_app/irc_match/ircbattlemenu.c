@@ -812,6 +812,8 @@ static void _YesNoStart(IRC_BATTLE_MENU* pWork)
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 14;
+	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
+	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_27, pWork->appitem[0].str);

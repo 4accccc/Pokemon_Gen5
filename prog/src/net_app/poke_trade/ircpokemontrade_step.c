@@ -514,7 +514,6 @@ static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, fx32 
 
 static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
 {
-
   if(!pMove){
     return;
   }
@@ -533,10 +532,7 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
     apos.y = pMove->zend - pMove->zstart;
     apos.y = apos.y / pMove->time;
     apos.y = pMove->zstart + apos.y * pMove->nowcount;
-
-    OS_TPrintf("setpos %d %d \n",apos.x / FX32_ONE, apos.y / FX32_ONE);
     MCSS_SetPosition( pMove->pMcss ,&apos );
-    
   }
   else{
     VecFx32 apos;

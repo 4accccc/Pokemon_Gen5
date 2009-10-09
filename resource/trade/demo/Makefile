@@ -137,10 +137,14 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 
 LIST_FILE = list.txt
 
+
 $(targetname).narc:  $(OBJ_FILE) Makefile
+	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t camera3.ica icacamera.bin
+	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t camera4.ica icatarget.bin
 	-ls -f *.N*R > $(LIST_FILE)
 	-ls -f *.nsb* >> $(LIST_FILE)
 	-ls -f *.spa >> $(LIST_FILE)
+	-ls -f *.bin >> $(LIST_FILE)
 	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(LIST_FILE)
 	nnsarc -r -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix

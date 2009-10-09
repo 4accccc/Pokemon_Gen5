@@ -91,6 +91,7 @@ enum NetworkServiceID_e {
   WB_NET_IRCFRIEND,       ///<赤外線ともだち交換
 	WB_NET_WIFIGTS,         ///<GTS
 	WB_NET_IRC_BATTLE,      ///<赤外線バトル・(大会用)
+	WB_NET_CAMERA_TEST,					///<カメラテスト
 	
   WB_NET_SERVICEID_MAX   // 終端
 };
@@ -125,7 +126,8 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_IRCTRADE = (WB_NET_IRCBATTLE<<8),  ///< IRCぽけこうかん
   GFL_NET_CMD_IRCFRIEND = (WB_NET_IRCFRIEND<<8),  ///< IRCともだちこうかん
 	GFL_NET_CMD_WIFIGTS		= (WB_NET_WIFIGTS<<8),		///< GTS
-	GFL_NET_CMD_IRC_BATTLE		= (WB_NET_IRC_BATTLE<<8),		///< GTS
+	GFL_NET_CMD_IRC_BATTLE		= (WB_NET_IRC_BATTLE<<8),		///< IRC
+	GFL_NET_CMD_CAMERA_TEST		= (WB_NET_CAMERA_TEST<<8),		///< カメラテスト
 };
 
 #include "net_irc.h"

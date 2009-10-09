@@ -220,6 +220,8 @@ void IRC_POKETRADE_AppMenuOpen(IRC_POKEMON_TRADE* pWork, int *menustr,int num)
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 24;
+	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
+	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
 
   for(i=0;i<num;i++){
     pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
@@ -1251,13 +1253,13 @@ void IRC_POKETRADE_SetMainStatusBG(IRC_POKEMON_TRADE* pWork)
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
 																				 pWork->heapID);
 	GFL_ARC_CloseDataHandle( p_handle );
-
+#if 1
   {
     GFL_CLWK_DATA cellInitData;
     cellInitData.pos_x = 128;
     cellInitData.pos_y = 16;
     cellInitData.anmseq = CELL_CUR_POKE_SELECT;
-    cellInitData.softpri = _CLACT_SOFTPRI_POKESEL_BAR;
+    cellInitData.softpri = _CLACT_SOFTPRI_SCROLL_BAR;
     cellInitData.bgpri = 1;
     pWork->curIcon[CELL_CUR_POKE_SELECT] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                                 pWork->cellRes[CHAR_SCROLLBAR],
@@ -1267,36 +1269,41 @@ void IRC_POKETRADE_SetMainStatusBG(IRC_POKEMON_TRADE* pWork)
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_SELECT] , TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT], TRUE );
   }
-/*
+#endif
   {
     GFL_CLWK_DATA cellInitData;
-    cellInitData.pos_x = 128;
+    ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
+    const POKEMON_PASO_PARAM* ppp1 = PP_GetPPPPointerConst(pWork->recvPoke[0]);
+    const POKEMON_PASO_PARAM* ppp2 = PP_GetPPPPointerConst(pWork->recvPoke[1]);
+
+    pWork->cellRes[CHAR_SELECT_POKEICON1] =
+      GFL_CLGRP_CGR_Register( arcHandlePoke , POKEICON_GetCgxArcIndex(ppp1) , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+    pWork->cellRes[CHAR_SELECT_POKEICON2] =
+      GFL_CLGRP_CGR_Register( arcHandlePoke , POKEICON_GetCgxArcIndex(ppp2) , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+
+    cellInitData.pos_x = 128-32;
     cellInitData.pos_y = 16;
-    cellInitData.anmseq = CELL_CUR_POKE_SELECT;
+    cellInitData.anmseq = 0;
     cellInitData.softpri = _CLACT_SOFTPRI_POKESEL_BAR;
     cellInitData.bgpri = 1;
     pWork->curIcon[CELL_CUR_POKE_PLAYER] = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                                pWork->cellRes[CHAR_SCROLLBAR],
-                                                                pWork->cellRes[PAL_SCROLLBAR],
-                                                                pWork->cellRes[ANM_SCROLLBAR],
+                                                                pWork->cellRes[CHAR_SELECT_POKEICON1],
+                                                                pWork->cellRes[PLT_POKEICON],
+                                                                pWork->cellRes[ANM_POKEICON],
                                                                 &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_PLAYER] , FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_PLAYER], TRUE );
-  }
-  {
-    GFL_CLWK_DATA cellInitData;
-    cellInitData.pos_x = 128;
-    cellInitData.pos_y = 16;
-    cellInitData.anmseq = CELL_CUR_POKE_SELECT;
-    cellInitData.softpri = _CLACT_SOFTPRI_POKESEL_BAR;
-    cellInitData.bgpri = 1;
-    pWork->curIcon[CELL_CUR_POKE_SELECT] = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                                pWork->cellRes[CHAR_SCROLLBAR],
+  
+  
+    cellInitData.pos_x = 128+32;
+    pWork->curIcon[CELL_CUR_POKE_FRIEND] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                                pWork->cellRes[CHAR_SELECT_POKEICON2],
                                                                 pWork->cellRes[PAL_SCROLLBAR],
                                                                 pWork->cellRes[ANM_SCROLLBAR],
                                                                 &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_SELECT] , FALSE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_FRIEND] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_FRIEND], TRUE );
+    GFL_ARC_CloseDataHandle(arcHandlePoke);
   }
-  */
+
 }

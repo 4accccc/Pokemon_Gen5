@@ -28,6 +28,7 @@
 #include "system/mcss_tool.h"
 #include "app/app_taskmenu.h"
 #include "ircpokemontrade_anim.h"
+#include "system/ica_anime.h"
 
 typedef enum
 {
@@ -152,6 +153,8 @@ typedef enum
   CHAR_SCROLLBAR,
   PAL_SCROLLBAR,
   ANM_SCROLLBAR,
+  CHAR_SELECT_POKEICON1,
+  CHAR_SELECT_POKEICON2,
 
   CEL_RESOURCE_MAX,
 } CEL_RESOURCE;
@@ -252,7 +255,9 @@ struct _IRC_POKEMON_TRADE {
 
   GFL_G3D_UTIL* g3dUtil;
   u16 unitIndex;
-  //  ICA_ANIME* icaAnime;
+//  ICA_ANIME* icaAnime;
+  ICA_ANIME* icaCamera;
+  ICA_ANIME* icaTarget;
   //  GFL_G3D_CAMERA* camera;
 
   BOX_MANAGER* pBox;
