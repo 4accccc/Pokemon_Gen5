@@ -383,6 +383,7 @@ BOOL FLDMAPPER_Connect( FLDMAPPER* g3Dmapper, const MAP_MATRIX* matrix )
   {
     OS_Printf( "------------------------------------------------\n" );
     OS_Printf( "error in FLDMAPPER_Connect. Map matrix size over\n" );
+    OS_Printf( "sizex=%d, sizez=%d, totalSize=%x\n", sizex, sizez, totalSize );
     OS_Printf( "------------------------------------------------\n" );
     return FALSE;
   }

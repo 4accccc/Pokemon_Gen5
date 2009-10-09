@@ -29,6 +29,8 @@
 
 #include "poke_tool/status_rcv.h" //PokeParty_RecoverAll
 
+#include "savedata/box_savedata.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -357,6 +359,47 @@ VMCMD_RESULT EvCmdGetPartyPokeCount( VMHANDLE * core, void *wk )
   *ret_wk = (u16)num;
   return VMCMD_RESULT_CONTINUE;
 } 
+
+//--------------------------------------------------------------
+/**
+ * @brief ボックス内のポケモン数を取得
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdGetBoxPokeCount( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK* work = (SCRCMD_WORK*)wk;
+  u16*       ret_wk = SCRCMD_GetVMWork( core, work );     // コマンド第1引数
+  u16          mode = SCRCMD_GetVMWorkValue( core, wk );  // コマンド第2引数
+  GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
+  BOX_MANAGER*  box = GAMEDATA_GetBoxManager( gdata );
+  POKEPARTY*  party = GAMEDATA_GetMyPokemon( gdata );
+  int           num = 0;
+
+  // 指定されたモードに応じたポケモン数をカウント
+  switch( mode )
+  {
+  case POKECOUNT_MODE_TOTAL:  // タマゴ込み
+    num = BOXDAT_GetPokeExistCountTotal( box );
+    break;
+  case POKECOUNT_MODE_NOT_EGG:  // タマゴを除く
+  case POKECOUNT_MODE_BATTLE_ENABLE:  // 戦える = タマゴ以外
+    num = BOXDAT_GetPokeExistCount2Total( box );
+    break;
+  case POKECOUNT_MODE_ONLY_EGG: // タマゴのみ
+    num  = BOXDAT_GetPokeExistCountTotal( box );
+    num -= BOXDAT_GetPokeExistCount2Total( box );
+    break;
+  default:
+    num = 0;
+    break;
+  }
+
+  *ret_wk = (u16)num;
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //--------------------------------------------------------------
 // タマゴを除く手持ちポケモンの数を取得する

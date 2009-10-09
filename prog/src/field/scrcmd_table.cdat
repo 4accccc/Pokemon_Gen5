@@ -455,10 +455,14 @@
   DEF_CMD( EvCmdSetPokemonFriendValue, EV_SEQ_SET_TEMOTI_NATSUKI )
   NO_CMD()
   NO_CMD()
-  NO_CMD()
   
   NO_CMD()
   NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  // ボックス関連
+  DEF_CMD( EvCmdGetBoxPokeCount, EV_SEQ_GET_BOX_POKE_COUNT )
   NO_CMD()
   NO_CMD()
   NO_CMD()

@@ -207,6 +207,7 @@ _RET
 //======================================================================
 sodateya_adopt_pokemon: 
 {
+  DEFINE_LOCAL box_count
   DEFINE_LOCAL loop
   $loop = TRUE
 
@@ -219,6 +220,16 @@ sodateya_adopt_pokemon:
       $message_id = msg_sodateya_oldwoman_05
       _CALL say
       _RET
+    ENDIF
+
+    // 手持ちが2匹以下でボックスが空の場合 ==> 終了
+    // (はまり回避のため)
+    IF $party_battle_num <= 2 THEN
+      _GET_BOX_POKE_COUNT( box_count, POKECOUNT_MODE_NOT_EGG )
+      IF $box_count == 0 THEN 
+        // @todo メッセージを表示
+        _RET
+      ENDIF
     ENDIF
 
     //「どのこを 育てる？」

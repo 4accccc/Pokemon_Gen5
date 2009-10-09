@@ -1828,19 +1828,6 @@
 
 
 #endif //ZONE_D04R2601_EVC_H
-//このファイルはdata/d04r2701.mevから自動生成されました
-#ifndef ZONE_D04R2701_EVD_H
-#define ZONE_D04R2701_EVD_H
-
-#define DOOR_ID_D04R2701_D04R0201_EXIT01  0
-
-#endif //ZONE_D04R2701_EVD_H
-//このファイルはdata/d04r2701.mevから自動生成されました
-#ifndef ZONE_D04R2701_EVC_H
-#define ZONE_D04R2701_EVC_H
-
-
-#endif //ZONE_D04R2701_EVC_H
 //このファイルはdata/d04r2801.mevから自動生成されました
 #ifndef ZONE_D04R2801_EVD_H
 #define ZONE_D04R2801_EVD_H
@@ -2221,21 +2208,6 @@
 
 
 #endif //ZONE_H01P01_EVC_H
-//このファイルはdata/h01p0101.mevから自動生成されました
-#ifndef ZONE_H01P0101_EVD_H
-#define ZONE_H01P0101_EVD_H
-
-#define DOOR_ID_H01P0101_D02R0101_EXIT03  0
-#define DOOR_ID_H01P0101_D02R0101_EXIT02  1
-#define DOOR_ID_H01P0101_D02R0101_EXIT01  2
-
-#endif //ZONE_H01P0101_EVD_H
-//このファイルはdata/h01p0101.mevから自動生成されました
-#ifndef ZONE_H01P0101_EVC_H
-#define ZONE_H01P0101_EVC_H
-
-
-#endif //ZONE_H01P0101_EVC_H
 //このファイルはdata/h02.mevから自動生成されました
 #ifndef ZONE_H02_EVD_H
 #define ZONE_H02_EVD_H
