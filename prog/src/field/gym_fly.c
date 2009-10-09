@@ -469,7 +469,7 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       u8 obj_idx;
       fx32 frm;
       obj_idx = tmp->ShotIdx;
-      frm = FLD_EXP_OBJ_GetAnimeFrame(ptr, GYM_FLY_UNIT_IDX, obj_idx, 0);
+      frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_FLY_UNIT_IDX, obj_idx, 0);
       //オープンフレーム到達監視
       if (frm >= 15*FX32_ONE){
         //大砲アニメ停止
@@ -514,7 +514,7 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       u8 obj_idx;
       fx32 frm;
       obj_idx = tmp->ShotIdx;
-      frm = FLD_EXP_OBJ_GetAnimeFrame(ptr, GYM_FLY_UNIT_IDX, obj_idx, 0);
+      frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_FLY_UNIT_IDX, obj_idx, 0);
       //発射フレーム到達チェック
       if (frm >= 30*FX32_ONE){
         //フレーム読み取り開始
