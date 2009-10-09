@@ -33,8 +33,7 @@ typedef struct _SODATEYA_WORK SODATEYA_WORK;
  * @brief É^É}ÉS
  */
 //-------------------------------------------------------------------------------------------
-const POKEMON_PARAM* SODATEYA_WORK_GetEgg( const SODATEYA_WORK* work );
-void SODATEYA_WORK_SetEgg( SODATEYA_WORK* work, const POKEMON_PARAM* egg );
+void SODATEYA_WORK_SetEgg( SODATEYA_WORK* work );
 void SODATEYA_WORK_ClrEgg( SODATEYA_WORK* work );
 
 //-------------------------------------------------------------------------------------------

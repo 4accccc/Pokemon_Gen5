@@ -20,6 +20,7 @@
 #include "sodateya.h" 
 
 #include "arc/arc_def.h"  // ARCID_PMSTBL
+#include "arc/kowaza.naix"
 #include "gamesystem/game_data.h"
 #include "savedata/mystatus.h"
 
@@ -60,7 +61,7 @@ static void SortSodateyaPokemon( SODATEYA_WORK* work );
 static u32 LoveCheck( const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2 );
 static u32 CalcLoveLv_normal( const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2 );
 static BOOL LayEggCheck( SODATEYA* sodateya );
-static void CreateEgg( SODATEYA* sodateya );
+static void CreateEgg( SODATEYA* sodateya, POKEMON_PARAM* egg );
 static void EggCordinate_monsno( 
     const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
 static void EggCordinate_personality(
@@ -71,7 +72,9 @@ static void EggCordinate_ability_rand(
     const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
 static void EggCordinate_rare(
     const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
-static void EggCordinate_waza_egg( const POKEMON_PARAM* father, POKEMON_PARAM* egg );
+static void EggCordinate_waza_default( POKEMON_PARAM* egg );
+static void EggCordinate_waza_egg( 
+    HEAPID heap_id, const POKEMON_PARAM* father, POKEMON_PARAM* egg );
 static void EggCordinate_waza_parent(
     const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
 static void EggCordinate_waza_machine(
@@ -207,7 +210,7 @@ void SODATEYA_TakeBackPokemon( SODATEYA* sodateya, int index, POKEPARTY* party )
 //---------------------------------------------------------------------------------------- 
 void SODATEYA_TakeBackEgg( SODATEYA* sodateya, POKEPARTY* party )
 {
-  const POKEMON_PARAM* egg;
+  POKEMON_PARAM* egg = PP_Create( 1, 1, 1, sodateya->heapID );
 
   // タマゴが存在しない場合
   if( SODATEYA_WORK_IsValidEgg( sodateya->work ) != TRUE )
@@ -218,10 +221,13 @@ void SODATEYA_TakeBackEgg( SODATEYA* sodateya, POKEPARTY* party )
     return;
   }
 
-  // タマゴを移動 (育て屋→手持ち)
-  egg = SODATEYA_WORK_GetEgg( sodateya->work );
+  // タマゴを作成し, 手持ちに追加
+  CreateEgg( sodateya, egg );
   PokeParty_Add( party, egg );
-  SODATEYA_WORK_ClrEgg( sodateya->work );
+
+  // タマゴを削除
+  SODATEYA_WORK_ClrEgg( sodateya->work ); 
+  GFL_HEAP_FreeMemory( egg );
 }
 
 //----------------------------------------------------------------------------------------
@@ -264,8 +270,8 @@ void SODATEYA_BreedPokemon( SODATEYA* sodateya )
   // 産卵チェック
   //if( LayEggCheck(sodateya) == TRUE ) // @todo テストのためにコメントアウト
   {
-    // タマゴ生成
-    CreateEgg( sodateya ); 
+    // タマゴが産まれたことを記憶
+    SODATEYA_WORK_SetEgg( sodateya->work );
   }
 }
 
@@ -718,15 +724,15 @@ static BOOL LayEggCheck( SODATEYA* sodateya )
  * @brief タマゴを作成する
  *
  * @param sodateya 育て屋さん
+ * @param egg      作成したタマゴパラメータの格納先
  */
 //---------------------------------------------------------------------------------------- 
-static void CreateEgg( SODATEYA* sodateya )
+static void CreateEgg( SODATEYA* sodateya, POKEMON_PARAM* egg )
 {
   int i;
   HEAPID heap_id = sodateya->heapID;
   const POKEMON_PARAM* father = NULL;
   const POKEMON_PARAM* mother = NULL;
-  POKEMON_PARAM* egg = NULL;
 
   // 父・母ポケモンを取得
   for( i=0; i<2; i++ )
@@ -744,25 +750,19 @@ static void CreateEgg( SODATEYA* sodateya )
     }
   }
 
-  // ダミー作成
-  egg = PP_Create( 0, 1, PTL_SETUP_ID_AUTO, heap_id ); 
-
   // タマゴを作成
   EggCordinate_monsno( father, mother, egg );              // モンスターナンバー
   EggCordinate_personality( father, mother, egg );         // 性格
   EggCordinate_special_ability( heap_id, mother, egg );    // 特性
   EggCordinate_ability_rand( father, mother, egg );        // 個体乱数
   EggCordinate_rare( father, mother, egg );                // レアポケ抽選
-  EggCordinate_waza_egg( father, egg );                    // 技 (タマゴ技)
+  EggCordinate_waza_default( egg );                        // 技 (デフォルト)
+  EggCordinate_waza_egg( heap_id, father, egg );           // 技 (タマゴ技)
   EggCordinate_waza_parent( father, mother, egg );         // 技 (両親共通の技)
   EggCordinate_waza_machine( heap_id, father, egg );       // 技 (父のマシン技)
   EggCordinate_pityuu( father, mother, egg );              // 特殊タマゴ (ピチュー)
   EggCordinate_karanakusi( father, mother, egg );          // 特殊タマゴ (カラナクシ)
   EggCordinate_finish( egg, sodateya );                    // 仕上げ
-
-  // 作成したタマゴをワークに格納
-  SODATEYA_WORK_SetEgg( sodateya->work, egg );
-  GFL_HEAP_FreeMemory( egg );
 }
 
 //---------------------------------------------------------------------------------------- 
@@ -1078,23 +1078,76 @@ static void EggCordinate_rare(
 
 //---------------------------------------------------------------------------------------- 
 /**
+ * @brief タマゴにデフォルト技を覚えさせる
+ *
+ * @param egg     設定するタマゴ
+ */
+//---------------------------------------------------------------------------------------- 
+static void EggCordinate_waza_default( POKEMON_PARAM* egg )
+{
+  int i;
+  u32 monsno, formno, level;
+  POKEPER_WAZAOBOE_CODE waza_table[POKEPER_WAZAOBOE_TABLE_ELEMS];
+
+  // 基本情報を取得
+  monsno = PP_Get( egg, ID_PARA_monsno, NULL );
+  formno = PP_Get( egg, ID_PARA_form_no, NULL );
+  level  = PP_Get( egg, ID_PARA_level, NULL );
+
+  // Lv.1で覚える技をセット
+  POKE_PERSONAL_LoadWazaOboeTable( monsno, formno, waza_table );
+  i = 0;
+  while( POKEPER_WAZAOBOE_IsEndCode( waza_table[i] ) )
+  {
+    int waza_lv = POKEPER_WAZAOBOE_GetLevel( waza_table[i] );
+    int waza_id = POKEPER_WAZAOBOE_GetWazaID( waza_table[i] );
+    if( level < waza_lv ) break;
+    else PP_SetWazaPush( egg, waza_id );
+    i++;
+  } 
+}
+
+//---------------------------------------------------------------------------------------- 
+/**
  * @brief タマゴ技を覚えさせる
  *        タマゴから孵るポケモンのみが覚えられる技のうち, 父ポケモンが覚えている技を習得
  *
- * @param father 父親ポケモン
- * @param egg    設定するタマゴ
+ * @param heap_id 使用するヒープID 
+ * @param father  父親ポケモン
+ * @param egg     設定するタマゴ
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_waza_egg( const POKEMON_PARAM* father, POKEMON_PARAM* egg )
+static void EggCordinate_waza_egg( 
+    HEAPID heap_id, const POKEMON_PARAM* father, POKEMON_PARAM* egg )
 {
-  int i;
+  int i, j;
+  u32 monsno = PP_Get( egg, ID_PARA_monsno, NULL );
+  u32 id_para[] = { ID_PARA_waza1, ID_PARA_waza2, ID_PARA_waza3, ID_PARA_waza4 };
+  u16 kowaza_num;
+  u16* kowaza;
 
-  // @todo 
+  // 子技テーブルを取得
+  kowaza = GFL_ARC_LoadDataAlloc( ARCID_KOWAZA, monsno, heap_id );
+  kowaza_num = kowaza[0];
+
   // 父親の全技をチェックする
   for( i=0; i<PTL_WAZA_MAX; i++ )
   {
+    u32 wazano = PP_Get( father, id_para[i], NULL );
+
     // 父親の技がタマゴ技なら, 習得する
+    for( j=1; j<=kowaza_num; j++ )
+    {
+      if( wazano == kowaza[j] )
+      {
+        PP_SetWazaPush( egg, wazano );
+        break;
+      }
+    }
   }
+
+  // 子技テーブル破棄
+  GFL_HEAP_FreeMemory( kowaza );
 }
 
 //---------------------------------------------------------------------------------------- 
@@ -1111,20 +1164,13 @@ static void EggCordinate_waza_parent(
     const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg )
 {
   int ifa, imo;
-  u32 monsno, formno, wazano;
-  POKEPER_WAZAOBOE_CODE waza_table[POKEPER_WAZAOBOE_TABLE_ELEMS];
   u32 id_para[] = { ID_PARA_waza1, ID_PARA_waza2, ID_PARA_waza3, ID_PARA_waza4 };
-
-  // 技覚えテーブルをロード
-  monsno = PP_Get( egg, ID_PARA_monsno, NULL );
-  formno = PP_Get( egg, ID_PARA_form_no, NULL );
-  POKE_PERSONAL_LoadWazaOboeTable( monsno, formno, waza_table );
 
   // 父の全技をチェック
   for( ifa=0; ifa<PTL_WAZA_MAX; ifa++ )
   {
     // 技コード取得
-    wazano = PP_Get( father, id_para[ifa], NULL );
+    u32 wazano = PP_Get( father, id_para[ifa], NULL );
 
     // 母も覚えているかどうかをチェック
     for( imo=0; imo<PTL_WAZA_MAX; imo++ )
@@ -1247,12 +1293,13 @@ static void EggCordinate_finish( POKEMON_PARAM* egg, SODATEYA* sodateya )
   {
     u32 id = MyStatus_GetID( mystatus );
     PP_Put( egg, ID_PARA_id_no, id );
+    OBATA_Printf( "EggCordinate_finish: id = %d\n", id );
   }
 
   // 親の名前
   {
     STRBUF* name = MyStatus_CreateNameString( mystatus, sodateya->heapID );
-    PP_Put( egg, ID_PARA_oyaname_raw, (u32)name );
+    PP_Put( egg, ID_PARA_oyaname, (u32)name );
     GFL_STR_DeleteBuffer( name );
   } 
 

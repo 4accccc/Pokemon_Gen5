@@ -34,7 +34,6 @@ typedef struct
 typedef struct
 {
   BOOL           valid;  // 有効フラグ
-  POKEMON_PARAM  param;  // パラメータ
 } SODATEYA_EGG_DATA;
 
 //===========================================================================================
@@ -53,32 +52,12 @@ struct _SODATEYA_WORK
 
 //-------------------------------------------------------------------------------------------
 /**
- * @brief タマゴを取得する
- *
- * @param work 育て屋ワーク
- * @return タマゴのパラメータ
- */
-//-------------------------------------------------------------------------------------------
-const POKEMON_PARAM* SODATEYA_WORK_GetEgg( const SODATEYA_WORK* work )
-{
-  if( work->egg.valid != TRUE )
-  {
-    OBATA_Printf( "----------------------------------------------\n" );
-    OBATA_Printf( "SODATEYA_WORK_GetEgg: タマゴを持っていません。\n" );
-    OBATA_Printf( "----------------------------------------------\n" );
-  }
-  return &(work->egg.param);
-}
-
-//-------------------------------------------------------------------------------------------
-/**
  * @brief タマゴを設定する
  *
  * @param work 育て屋ワーク
- * @param egg  タマゴのパラメータ
  */
 //-------------------------------------------------------------------------------------------
-void SODATEYA_WORK_SetEgg( SODATEYA_WORK* work, const POKEMON_PARAM* egg )
+void SODATEYA_WORK_SetEgg( SODATEYA_WORK* work )
 {
   if( work->egg.valid == TRUE )
   {
@@ -87,7 +66,6 @@ void SODATEYA_WORK_SetEgg( SODATEYA_WORK* work, const POKEMON_PARAM* egg )
     OBATA_Printf( "------------------------------------------------\n" );
     return;
   }
-  work->egg.param = *egg;
   work->egg.valid = TRUE;
 }
 

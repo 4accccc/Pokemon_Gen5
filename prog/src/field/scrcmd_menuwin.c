@@ -282,7 +282,7 @@ VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk )
   {
     STRCODE code[128];
     HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
-    STRBUF*    buf = GFL_STR_CreateBuffer( 128, heap_id );
+    STRBUF* buf = GFL_STR_CreateBuffer( 128, heap_id );
     u32 gold = MyStatus_GetGold( &player->mystatus );
     swprintf( code, 128, L"‚¨‚±‚¸‚©‚¢  %6d‰~", gold );
     GFL_STR_SetStringCodeOrderLength( buf, code, wcslen(code)+1 );
