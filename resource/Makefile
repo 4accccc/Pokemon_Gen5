@@ -99,7 +99,8 @@ SUBDIRS	=	wmi \
 			pokemon_center \
 			fld3d_ci \
 			encount \
-			battle_championship
+			battle_championship \
+			sodateya
 
 include $(RESOURCE_MACRO)
 
