@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-09-18T22:43:45"/>
+	<create user="taya" host="W00146" date="2009-10-09T19:37:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -322,12 +322,12 @@
 
 	<dialog left="240" top="137" right="921" bottom="651" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="198" top="443" right="629" bottom="841" visible="no"/>
+		<tag-palette left="198" top="443" right="629" bottom="841" visible="yes"/>
 		<band id="0" index="0" style="0001" width="506"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -411,10 +411,10 @@
 
 	<row id="BTL_STRID_STD_PutDouble" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>自分がくりだす　２体</comment>
-		<language name="JPN" width="216">ゆけっ！　[1:01:ポケモン種族名:0]！
-[1:01:ポケモン種族名:1]！</language>
-		<language name="JPN_KANJI" width="216">ゆけっ！　[1:01:ポケモン種族名:0]！
-[1:01:ポケモン種族名:1]！</language>
+		<language name="JPN" width="216">ゆけっ！　[1:02:ポケモンニックネーム:0]！
+[1:02:ポケモンニックネーム:1]！</language>
+		<language name="JPN_KANJI" width="216">ゆけっ！　[1:02:ポケモンニックネーム:0]！
+[1:02:ポケモンニックネーム:1]！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_PutSingle_NPC" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
@@ -473,6 +473,22 @@
 [1:09:どうぐ名:2]を　つかった！</language>
 		<language name="JPN_KANJI" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]は
 [1:09:どうぐ名:2]を　使った！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_GetExp" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>経験値取得（通常）</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[2:04:５桁:2] けいけんちを　もらった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[2:04:５桁:2] 経験値を　もらった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_GetExp_Bonus" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>経験値取得（おおめに）</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　おおめに
+[2:04:５桁:2] けいけんちを　もらった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　多めに
+[2:04:５桁:2] 経験値を　もらった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_UseItem_NoEffect" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
