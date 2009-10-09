@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	myitem.h
+ * @file	myitem_savedata.h
  * @brief	手持ちアイテム操作用ヘッダ
  * @author	tamada
  * @author	hiroyuki nakamura
@@ -10,6 +10,7 @@
 #ifndef	__MYITEM_SAVEDATA_H__
 #define	__MYITEM_SAVEDATA_H__
 
+#include "myitem_savedata_def.h"
 //============================================================================================
 //============================================================================================
 // バッグのカーソル位置
@@ -31,21 +32,8 @@ typedef	struct {
 
 #define	BAG_MYITEM_MAX (BAG_NORMAL_ITEM_MAX) //一番要素が大きい物
 
-//--------------------------------------------------------------
-//	この定義はitemconv_dp の datamake.cppと同じでなければいけない 2009.07.21
-//--------------------------------------------------------------
-// ポケットID
-#define	BAG_POKE_NORMAL		( 0 )		// 道具
-#define	BAG_POKE_DRUG		( 1 )		// 薬
-#define	BAG_POKE_WAZA		( 2 )		// 技マシン
-#define	BAG_POKE_NUTS		( 3 )		// 木の実
-#define	BAG_POKE_EVENT		( 4 )		// 大切な物
 
-#define	BAG_POKE_MAX		( 5 )		// ポケット最大数
-
-#define	BATTLE_BAG_POKE_MAX		( 4 )		// バトルバッグのポケット最大数
-
-#define DUMMY_SHORTCUT_MAX (10) //便利ぼたん@@OO削除予定
+#define DUMMY_SHORTCUT_MAX (10) //便利ボタンの最大数 @TODO 削除予定
 
 //==============================================================================
 //	型定義
