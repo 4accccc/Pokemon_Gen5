@@ -916,9 +916,13 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   req->talkRequest = ((req->key_trg & PAD_BUTTON_A) != 0);
 
   req->menuRequest = ((req->key_trg & PAD_BUTTON_X) != 0);
+  
+  req->moveRequest = 0;
 
   //–{“–‚Ívalue‚àŒ©‚é‚ªA¡‚ÍŽb’è
-  req->moveRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
+  if( FIELD_PLAYER_GetMoveValue(req->field_player) == PLAYER_MOVE_VALUE_WALK ){
+    req->moveRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
+  }
 
   req->stepRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
 
