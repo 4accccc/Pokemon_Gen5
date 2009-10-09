@@ -28,6 +28,7 @@
 #include "title/startmenu.h"
 #include "title/title.h"
 #include "title/game_start.h"
+#include "battle_championship/battle_championship.h"
 #include "net_app/irc_battle.h"
 #include "test/ariizumi/ari_debug.h"
 //======================================================================
@@ -272,6 +273,7 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
             
     case SMI_GBS_CONNECT: //バトル大会メニュー
       // @todo irc_battleではなく大会メニューへつなぐ
+      //GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &BATTLE_CHAMPIONSHIP_ProcData, NULL);
       GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(battle_championship), &IRC_BATTLE_ProcData, NULL);
       break;
                 

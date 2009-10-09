@@ -9,7 +9,7 @@
  */
 //======================================================================
 #pragma once
-#include "net_app/battle_championship_def.h"
+#include "battle_championship/battle_championship_def.h"
 
 //======================================================================
 //	define
@@ -29,6 +29,9 @@
 typedef struct
 {
   BATTLE_CHAMPIONSHIP_DATA *csData;
+  MYSTATUS    *statusPlayer; ///< プレイヤーのステータス
+  MYITEM      *itemData;     ///< アイテムデータ
+  BAG_CURSOR  *bagCursor;    ///< バッグカーソルデータ
 }IRC_BATTLE_INIT_WORK;
 
 //======================================================================

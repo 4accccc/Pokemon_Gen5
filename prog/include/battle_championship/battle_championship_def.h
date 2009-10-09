@@ -11,10 +11,12 @@
 #pragma once
 
 #include "buflen.h"
+#include "poke_tool/poke_tool.h"
 #include "savedata/save_control.h"
 #include "savedata/regulation.h"
 
 #define CHAMPIONSHIP_NAME_LEN (36+2)  //36+EOM
+#define CHAMPIONSHIP_POKE_NUM (6)
 
 typedef struct
 {
@@ -24,5 +26,10 @@ typedef struct
   
   REGULATION regulation;
   
+  POKEMON_PASO_PARAM *ppp[CHAMPIONSHIP_POKE_NUM];
+  
 }BATTLE_CHAMPIONSHIP_DATA;
 
+
+//デバッグ用
+extern void BATTLE_CHAMPIONSHIP_SetDebugData( BATTLE_CHAMPIONSHIP_DATA *csData , const HEAPID heapId ); 
