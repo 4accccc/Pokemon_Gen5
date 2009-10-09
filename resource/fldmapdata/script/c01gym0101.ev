@@ -26,6 +26,15 @@ _EVENT_DATA		ev_c01gym0101_leader1_01
 _EVENT_DATA		ev_c01gym0101_leader1_02
 _EVENT_DATA		ev_c01gym0101_leader1_03
 _EVENT_DATA		ev_pos_c01gym0101_leader_battle
+_EVENT_DATA		ev_pos_c01gym0101_button_kusa_01
+_EVENT_DATA		ev_pos_c01gym0101_button_honoo_01
+_EVENT_DATA		ev_pos_c01gym0101_button_mizu_01
+_EVENT_DATA		ev_pos_c01gym0101_button_kusa_02
+_EVENT_DATA		ev_pos_c01gym0101_button_honoo_02
+_EVENT_DATA		ev_pos_c01gym0101_button_mizu_02
+_EVENT_DATA		ev_pos_c01gym0101_button_kusa_03
+_EVENT_DATA		ev_pos_c01gym0101_button_honoo_03
+_EVENT_DATA		ev_pos_c01gym0101_button_mizu_03
 _EVENT_DATA_END
 
 
@@ -48,15 +57,15 @@ ev_c01gym0101:
 EVENT_START		ev_c01gym0101_sunglasses_01
 	_TALK_OBJ_START()
 	//分岐処理・ジムバッジのフラグが０か１か
-/*	IF FLAG_OFF(FH_01) THEN
+	IF FLAG_OFF(FH_01) THEN
 	//ジムバッジフラグが０の場合
 		_EASY_TALK_ITEM_EVENT(ITEM_OISIIMIZU, 1, FH_01, msg_c01gym0101_glasses_01, msg_c01gym0101_glasses_02, msg_c01gym0101_glasses_02 )	
-
 	//ジムバッジフラグがそれ以外の場合
-	ELSE*/
-		//ジムバッジを　てにいれた　きょう　という　すばらしい　ひを
+	ELSE
+	//ジムバッジを　てにいれた　きょう　という　すばらしい　ひを
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_glasses_03 )
-	
+	ENDIF
+
 EVENT_END
 
 /**************************************************************/
@@ -64,33 +73,14 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c01gym0101_pokezou_01
 
-	//分岐処理・ジムバッジのフラグが０か１か
-
+	//分岐処理・ジムバッジを入手しているかいないか
+	IF FLAG_OFF(FH_01) THEN
+	
 	//ジムバッジを取得していない場合
+		_EASY_MSG( msg_c01gym0101_statue_02 )
 	
 	//ジムバッジを取得している場合
-		//分岐処理・C02到着していないなら
-			IF FLAG_OFF( SYS_FLAG_ARRIVE_C02 ) THEN
-				_EASY_MSG( msg_c01gym0101_statue_02 )
-		//C02到着している場合
-			ELSE
-				_EASY_MSG( msg_c01gym0101_statue_03 )
-		ENDIF
-		
-EVENT_END
-
-/**************************************************************/
-/*     ポケモン像２  						                  */
-/**************************************************************/
-EVENT_START		ev_c01gym0101_pokezou_02
-
-	//分岐処理・ジムバッジのフラグが０か１か
-
-	//ジムバッジフラグが０の場合
-		
-		//_EASY_MSG( msg_c01gym0101_statue_01 )
-	
-	//ジムバッジフラグがそれ以外の場合　ジムクリア
+	ELSE
 
 		//分岐処理・C02到着していないなら
 		IF FLAG_OFF( SYS_FLAG_ARRIVE_C02 ) THEN
@@ -99,6 +89,32 @@ EVENT_START		ev_c01gym0101_pokezou_02
 		ELSE
 			_EASY_MSG( msg_c01gym0101_statue_03 )
 		ENDIF
+	ENDIF
+		
+EVENT_END
+
+/**************************************************************/
+/*     ポケモン像２  						                  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_pokezou_02
+
+	//分岐処理・ジムバッジを入手しているかいないか
+	IF FLAG_OFF(FH_01) THEN
+	
+	//ジムバッジを取得していない場合
+		_EASY_MSG( msg_c01gym0101_statue_02 )
+	
+	//ジムバッジを取得している場合
+	ELSE
+
+		//分岐処理・C02到着していないなら
+		IF FLAG_OFF( SYS_FLAG_ARRIVE_C02 ) THEN
+			_EASY_MSG( msg_c01gym0101_statue_02 )
+		//C02到着している場合
+		ELSE
+			_EASY_MSG( msg_c01gym0101_statue_03 )
+		ENDIF
+	ENDIF
 		
 EVENT_END
 
@@ -196,6 +212,10 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	_OBJ_ANIME( C01GYM0101_LEADER1_03, anm_leader_jump )
 	_OBJ_ANIME_WAIT()	
 	
+	//コーン：その場足ふみ
+	_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_leader_stay )
+	_OBJ_ANIME_WAIT()	
+	
 	//オレたち　３人は！
 	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_04 , C01GYM0101_LEADER1_01 )
 	_AB_KEYWAIT()
@@ -204,7 +224,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	//分岐処理・最初に選んだポケモンから苦手なタイプになる
 
 		//くさタイプ選択の場合
-	/*IF $HERO_X == 11 THEN
+	IF $HERO_X == 11 THEN
 		
 		//ポッド：自機の前に移動
 		_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_pod_move )	
@@ -221,8 +241,8 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 		//ほのおタイプ選択の場合
 	ELSIF $HERO_X == 12 THEN
 		
-		//コーン：その場で足踏み
-		_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_leader_stay )
+		//コーン：一歩前へ
+		_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_leader_walk )
 		
 		//ということで　みずタイプの
 		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_05b , C01GYM0101_LEADER1_01 )
@@ -243,7 +263,8 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_05c , C01GYM0101_LEADER1_03 )
 		_AB_KEYWAIT()
 		_BALLOONWIN_CLOSE()
-	*/
+	ENDIF
+	
 	//===========フラグワーク操作===========//
 	
 	//ジムリーダー演出イベント終了
@@ -267,6 +288,15 @@ _ANIME_LABEL	anm_leader_jump
 _ANIME_LABEL	anm_leader_stay
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ジムリーダー　１歩前へ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_leader_walk
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------
@@ -369,43 +399,40 @@ EVENT_START		ev_c01gym0101_leader1_01
 
 		//ジムバッジフラグが０の場合
 
-			//さんにんの　なかで　いちばん　つよい　オレが
-			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20b )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-			
-			//【仮】戦闘処理	画面フェードを仮で入れています。
-			_WHITE_OUT( 4 )
-			_DISP_FADE_END_CHECK()
-			_WHITE_IN( 4 )
-			_DISP_FADE_END_CHECK()
-
-			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06b , C01GYM0101_LEADER1_01 )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-
-			//～～は　コーンから　トライバッジを　もらった
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07b , C01GYM0101_LEADER1_01 )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-
-			//トライバッジ入手処理
+		//さんにんの　なかで　いちばん　つよい　オレが
+		_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20b )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 		
-			//ジムバッジは　トレーナーの　つよさの　あかし！
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-
-			//わざマシン入手
-			_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
-
-			//その　わざマシンの　なかみは　～～！！
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
+		//【仮】戦闘処理	画面フェードを仮で入れています。
+		/*_TRAINER_BTL_SET LEADER1C_01,0*/
 		
-			//ジムバッジフラグに１代入
+		//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06b , C01GYM0101_LEADER1_01 )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+
+		//～～は　コーンから　トライバッジを　もらった
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07b , C01GYM0101_LEADER1_01 )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+
+		//トライバッジ入手処理
+		
+		//ジムバッジは　トレーナーの　つよさの　あかし！
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+
+		//わざマシン入手
+		_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+
+		//その　わざマシンの　なかみは　～～！！
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+		//ジムバッジフラグに１代入
 		
 		//ジムバッジフラグがそれ以外の場合
 		
@@ -422,54 +449,54 @@ EVENT_START		ev_c01gym0101_leader1_02
 
 		//ジムバッジフラグが０の場合
 
-			//さんにんの　なかで　いちばん　つよい　オレが
-			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20a )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
+		//さんにんの　なかで　いちばん　つよい　オレが
+		_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20a )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 
-			//【仮】戦闘処理	画面フェードを仮で入れています。
-			_WHITE_OUT( 4 )
-			_DISP_FADE_END_CHECK()
-			_WHITE_IN( 4 )
-			_DISP_FADE_END_CHECK()
+		//【仮】戦闘処理	画面フェードを仮で入れています。
+		_WHITE_OUT( 4 )
+		_DISP_FADE_END_CHECK()
+		_WHITE_IN( 4 )
+		_DISP_FADE_END_CHECK()
 
-			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06a , C01GYM0101_LEADER1_02 )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-			
-			//～～は　ポッドから　トライバッジを　もらった
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07a , C01GYM0101_LEADER1_02 )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-
-			//トライバッジ入手処理
+		//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06a , C01GYM0101_LEADER1_02 )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 		
-			//ポッド：コーンの場所へ移動
-			_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_pod_return )
+		//～～は　ポッドから　トライバッジを　もらった
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07a , C01GYM0101_LEADER1_02 )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+
+		//トライバッジ入手処理
+		
+		//ポッド：コーンの場所へ移動
+		_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_pod_return )
 			
-			//コーン：自機の前に移動
-			_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_corn_podback )
-			_OBJ_ANIME_WAIT()
+		//コーン：自機の前に移動
+		_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_corn_podback )
+		_OBJ_ANIME_WAIT()
 			
-			//ジムバッジは　トレーナーの　つよさの　あかし！
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
+		//ジムバッジは　トレーナーの　つよさの　あかし！
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 
-			//わざマシン入手
-			_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+		//わざマシン入手
+		_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
 
-			//その　わざマシンの　なかみは　～～！！
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
+		//その　わざマシンの　なかみは　～～！！
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 
-			//ジムバッジフラグに１代入
+		//ジムバッジフラグに１代入
 			
 		//ジムバッジのフラグがそれ以外の場合
 			
-			//わざマシンは　なんどだって　つかえると　いうことは
+		//わざマシンは　なんどだって　つかえると　いうことは
 		
 EVENT_END
 
@@ -500,54 +527,54 @@ EVENT_START		ev_c01gym0101_leader1_03
 
 		//ジムバッジフラグが０の場合
 
-			//さんにんの　なかで　いちばん　つよい　オレが
-			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20c )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
+		//さんにんの　なかで　いちばん　つよい　オレが
+		_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20c )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 
-			//【仮】戦闘処理	画面フェードを仮で入れています。
-			_WHITE_OUT( 4 )
-			_DISP_FADE_END_CHECK()
-			_WHITE_IN( 4 )
-			_DISP_FADE_END_CHECK()
+		//【仮】戦闘処理	画面フェードを仮で入れています。
+		_WHITE_OUT( 4 )
+		_DISP_FADE_END_CHECK()
+		_WHITE_IN( 4 )
+		_DISP_FADE_END_CHECK()
 
-			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06c , C01GYM0101_LEADER1_03 )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
+		//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06c , C01GYM0101_LEADER1_03 )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 			
-			//～～は　ポッドから　トライバッジを　もらった
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07c , C01GYM0101_LEADER1_03 )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
+		//～～は　ポッドから　トライバッジを　もらった
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07c , C01GYM0101_LEADER1_03 )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 
-			//トライバッジ入手処理
+		//トライバッジ入手処理
 		
-			//デント：コーンの場所へ移動
-			_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_dento_return )
+		//デント：コーンの場所へ移動
+		_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_dento_return )
 			
-			//コーン：自機の前に移動
-			_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_corn_dentoback )
-			_OBJ_ANIME_WAIT()
+		//コーン：自機の前に移動
+		_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_corn_dentoback )
+		_OBJ_ANIME_WAIT()
 			
-			//ジムバッジは　トレーナーの　つよさの　あかし！
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
+		//ジムバッジは　トレーナーの　つよさの　あかし！
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 
-			//わざマシン入手
-			_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+		//わざマシン入手
+		_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
 
-			//その　わざマシンの　なかみは　～～！！
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
+		//その　わざマシンの　なかみは　～～！！
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 
-			//ジムバッジフラグに１代入
+		//ジムバッジフラグに１代入
 			
 		//ジムバッジのフラグがそれ以外の場合
 			
-			//わざマシンは　なんどだって　つかえると　いうことは
+		//わざマシンは　なんどだって　つかえると　いうことは
 		
 EVENT_END
 
@@ -568,4 +595,67 @@ _ANIME_LABEL	anm_corn_dentoback
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
-	
+
+/**************************************************************/
+/*     草ボタン１　ハズレ　ＰＯＳ発動					      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_kusa_01
+
+EVENT_END
+
+/**************************************************************/
+/*     炎ボタン１　ハズレ　ＰＯＳ発動					      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_honoo_01
+
+EVENT_END
+
+/**************************************************************/
+/*     水ボタン１　アタリ　ＰＯＳ発動					      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_mizu_01
+
+EVENT_END
+
+/**************************************************************/
+/*     草ボタン２　アタリ　ＰＯＳ発動					      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_kusa_02
+
+EVENT_END
+
+/**************************************************************/
+/*     炎ボタン２　ハズレ　ＰＯＳ発動					      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_honoo_02
+
+EVENT_END
+
+/**************************************************************/
+/*     水ボタン２　ハズレ　ＰＯＳ発動					      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_mizu_02
+
+EVENT_END
+
+/**************************************************************/
+/*     草ボタン３　ハズレ　ＰＯＳ発動					      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_kusa_03
+
+EVENT_END
+
+/**************************************************************/
+/*     炎ボタン３　アタリ　ＰＯＳ発動					      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_honoo_03
+
+EVENT_END
+
+/**************************************************************/
+/*     水ボタン３　ハズレ　ＰＯＳ発動					      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_mizu_03
+
+EVENT_END
+
