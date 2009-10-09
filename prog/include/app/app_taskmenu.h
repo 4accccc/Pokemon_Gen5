@@ -67,6 +67,12 @@ typedef struct
   APP_TASKMENU_POS_TYPE posType;
   u8  charPosX; //ウィンドウ開始位置(キャラ単位
   u8  charPosY;
+
+	//幅	（以前は幅のパラメータはありませんでした。
+	//			以前との互換性のため、0が渡ると内部で、デフォルト値にします。
+	//			互換性のためだけですので、0は今後渡さないようにしてください）
+	u8	w;	//キャラ単位
+	u8	h;	//キャラ単位
 }APP_TASKMENU_INITWORK;
 //※APP_TASKMENU_INITWORKはOpenMenu後開放しても問題ありません。
 

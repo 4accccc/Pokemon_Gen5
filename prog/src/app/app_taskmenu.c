@@ -154,7 +154,12 @@ APP_TASKMENU_WORK* APP_TASKMENU_OpenMenu( APP_TASKMENU_INITWORK *initWork, const
   work->anmCnt = 0;
   work->transAnmCnt = 0;
   
-  APP_TASKMENU_CreateMenuWin( work, res );
+
+	{	
+		work->initWork.w	= initWork->w == 0 ?  APP_TASKMENU_PLATE_WIDTH:  initWork->w;
+		work->initWork.h	= initWork->h == 0 ?  APP_TASKMENU_PLATE_HEIGHT: initWork->h;
+		APP_TASKMENU_CreateMenuWin( work, res );
+	}
 
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY )
   {
@@ -302,16 +307,16 @@ static void APP_TASKMENU_CreateMenuWin( APP_TASKMENU_WORK *work, const APP_TASKM
   }
   else
   {
-    menuLeft = work->initWork.charPosX - APP_TASKMENU_PLATE_WIDTH;
-    menuTop = work->initWork.charPosY - (APP_TASKMENU_PLATE_HEIGHT*work->initWork.itemNum);
+    menuLeft = work->initWork.charPosX - work->initWork.w;
+    menuTop = work->initWork.charPosY - (work->initWork.h*work->initWork.itemNum);
   }
   
   for(i=0;i<work->initWork.itemNum;i++)
   {
     u32 charAdr;
     work->menuWin[i] = GFL_BMPWIN_Create( work->res->frame ,
-                        menuLeft , menuTop+(i*APP_TASKMENU_PLATE_HEIGHT) , 
-                        APP_TASKMENU_PLATE_WIDTH , APP_TASKMENU_PLATE_HEIGHT , 
+                        menuLeft , menuTop+(i*work->initWork.h) , 
+                        work->initWork.w, work->initWork.h, 
                         work->res->plt+1 , GFL_BMP_CHRAREA_GET_B );
 
     //プレートの絵を送る
@@ -459,17 +464,17 @@ static void APP_TASKMENU_UpdateTP( APP_TASKMENU_WORK *work )
   }
   else
   {
-    menuLeft = work->initWork.charPosX - APP_TASKMENU_PLATE_WIDTH;
-    menuTop = work->initWork.charPosY - (APP_TASKMENU_PLATE_HEIGHT*work->initWork.itemNum);
+    menuLeft = work->initWork.charPosX - work->initWork.w;
+    menuTop = work->initWork.charPosY - (work->initWork.h*work->initWork.itemNum);
   }
   
   //テーブルの作成
   for( i=0 ; i<work->initWork.itemNum ; i++ )
   {
-    hitTbl[i].rect.top    = menuTop*8 + (APP_TASKMENU_PLATE_HEIGHT*8*i);
-    hitTbl[i].rect.bottom = menuTop*8 + (APP_TASKMENU_PLATE_HEIGHT*8*(i+1));
+    hitTbl[i].rect.top    = menuTop*8 + (work->initWork.h*8*i);
+    hitTbl[i].rect.bottom = menuTop*8 + (work->initWork.h*8*(i+1));
     hitTbl[i].rect.left   = menuLeft*8;
-    hitTbl[i].rect.right  = (menuLeft+APP_TASKMENU_PLATE_WIDTH)*8 - 1;
+    hitTbl[i].rect.right  = (menuLeft+work->initWork.w)*8 - 1;
   }
   hitTbl[i].circle.code = GFL_UI_TP_HIT_END;
   
