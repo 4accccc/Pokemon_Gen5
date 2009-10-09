@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-05T22:24:18"/>
+	<create user="ando_mai" host="W00168" date="2009-10-09T14:32:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,15 +307,15 @@
 		</language>
 	</columns>
 
-	<dialog left="53" top="214" right="752" bottom="818" maximized="no" rayout="Vertical2">
+	<dialog left="53" top="215" right="741" bottom="818" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="141" right="1280" bottom="539" visible="yes"/>
-		<band id="0" index="1" style="0000" width="524"/>
+		<band id="0" index="1" style="0000" width="513"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="537"/>
+		<band id="2" index="3" style="0000" width="526"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="691"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="680"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -349,13 +349,13 @@
 ……　……　……
 ……　……　……[BE:01:ページ切り替え（クリア）]
 [1:01:ポケモン種族名:0]　なのね！
-じゃあ　この　[1:01:ポケモン種族名:1]は　ぴったりよ</language>
+じゃあ　この　[1:01:ポケモン種族名:1]は　ぴったりよ▼</language>
 		<language name="JPN_KANJI" width="256">ねえねえ　あなた！　最初に
 もらった　ポケモンは　なあに？[BE:01:ページ切り替え（クリア）]
 ……　……　……
 ……　……　……[BE:01:ページ切り替え（クリア）]
 [1:01:ポケモン種族名:0]　なのね！
-じゃあ　この　[1:01:ポケモン種族名:1]は　ぴったりよ</language>
+じゃあ　この　[1:01:ポケモン種族名:1]は　ぴったりよ▼</language>
 	</row>
 
 	<row id="msg_d01r0101_girl_02">
@@ -374,12 +374,12 @@
 にがてな　[1:03:ポケモンタイプ:2]タイプの　ポケモンに[BE:00:ページ切り替え（行送り）]
 ゆうりな　タイプの　ポケモンだもん！[BE:01:ページ切り替え（クリア）]
 ねえねえ　あなた
-この　[1:01:ポケモン種族名:1]が　ほしい？</language>
+この　[1:01:ポケモン種族名:1]が　ほしい？▼</language>
 		<language name="JPN_KANJI" width="256">あなたの　[1:01:ポケモン種族名:0]が
 にがてな　[1:03:ポケモンタイプ:2]タイプの　ポケモンに[BE:00:ページ切り替え（行送り）]
 ゆうりな　タイプの　ポケモンだもん！[BE:01:ページ切り替え（クリア）]
 ねえねえ　あなた
-この　[1:01:ポケモン種族名:1]が　ほしい？</language>
+この　[1:01:ポケモン種族名:1]が　ほしい？▼</language>
 	</row>
 
 	<row id="msg_d01r0101_girl_03">
@@ -389,11 +389,11 @@
 		<language name="JPN" width="256">いっしょに　つれてあるける
 ポケモンは　６ひきよ[BE:01:ページ切り替え（クリア）]
 ほしかったら　ポケセンの
-パソコンに　あずけてきてね</language>
+パソコンに　あずけてきてね▼</language>
 		<language name="JPN_KANJI" width="256">同時に　連れてあるける
 ポケモンは　６匹よ[BE:01:ページ切り替え（クリア）]
 ほしかったら　ポケセンの
-パソコンに　預けてきてね</language>
+パソコンに　預けてきてね▼</language>
 	</row>
 
 	<row id="msg_d01r0101_girl_04">
@@ -402,9 +402,9 @@
 ・次回会話時はmsg_d01r0101_girl_02から</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">あらら　ほしくなったら
-また　はなしかけて</language>
+また　はなしかけて▼</language>
 		<language name="JPN_KANJI" width="256">あらら　ほしくなったら
-また　話しかけてね！</language>
+また　話しかけてね！▼</language>
 	</row>
 
 	<row id="msg_d01r0101_girl_05">
@@ -414,10 +414,10 @@
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">はい　どうぞ！[BE:01:ページ切り替え（クリア）]
 ほのおタイプの　わざを　つかえるから
-くさタイプに　あいしょう　いいわよ</language>
+くさタイプに　あいしょう　いいわよ▼</language>
 		<language name="JPN_KANJI" width="256">はい　どうぞ！[BE:01:ページ切り替え（クリア）]
 ほのおタイプの　技を　使えるから
-くさタイプに　相性　いいわよ</language>
+くさタイプに　相性　いいわよ▼</language>
 	</row>
 
 	<row id="msg_d01r0101_girl_06">
@@ -427,10 +427,10 @@
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">はい　どうぞ！[BE:01:ページ切り替え（クリア）]
 みずタイプの　わざを　つかえるから
-ほのおタイプに　あいしょう　いいわよ</language>
+ほのおタイプに　あいしょう　いいわよ▼</language>
 		<language name="JPN_KANJI" width="256">はい　どうぞ！[BE:01:ページ切り替え（クリア）]
 みずタイプの　技を　使えるから
-ほのおタイプに　相性　いいわよ</language>
+ほのおタイプに　相性　いいわよ▼</language>
 	</row>
 
 	<row id="msg_d01r0101_girl_07">
@@ -440,10 +440,10 @@
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">はい　どうぞ！[BE:01:ページ切り替え（クリア）]
 くさタイプの　わざを　つかえるから
-みずタイプに　あいしょう　いいわよ</language>
+みずタイプに　あいしょう　いいわよ▼</language>
 		<language name="JPN_KANJI" width="256">はい　どうぞ！[BE:01:ページ切り替え（クリア）]
 くさタイプの　技を　使えるから
-みずタイプに　相性　いいわよ</language>
+みずタイプに　相性　いいわよ▼</language>
 	</row>
 
 	<row id="msg_d01r0101_girl_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
@@ -452,21 +452,21 @@
 ※ポケモン名が未定</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-ポケモンを　てにいれた！</language>
+ポケモンを　てにいれた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-ポケモンを　てにいれた！</language>
+ポケモンを　てにいれた！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_girl_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d01r0101_girl_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>・はい／いいえの選択肢表示
 　はい　→名前入力画面に
 　いいえ→終了
 ※ポケモン名が未定</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">てにいれた　ポケモンに
-ニックネームを　つけますか？</language>
+ニックネームを　つけますか？▼</language>
 		<language name="JPN_KANJI" width="256">てにいれた　ポケモンに
-ニックネームを　つけますか？</language>
+ニックネームを　つけますか？▼</language>
 	</row>
 
 	<row id="msg_d01r0101_girl_10">
@@ -475,10 +475,10 @@
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">いろんなタイプの　ポケモンが　いれば
 どんな　ポケモンが　でてきても[BE:00:ページ切り替え（行送り）]
-きっと　なんとか　なるわよ！</language>
+きっと　なんとか　なるわよ！▼</language>
 		<language name="JPN_KANJI" width="256">いろんなタイプの　ポケモンが　いれば
 どんな　ポケモンが　でてきても[BE:00:ページ切り替え（行送り）]
-きっと　なんとか　なるわよ！</language>
+きっと　なんとか　なるわよ！▼</language>
 	</row>
 
 	<row id="msg_d01r0101_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -490,10 +490,10 @@
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]も
 おかしな　ゆめを　みせる[BE:00:ページ切り替え（行送り）]
-ふしぎな　ポケモンを　さがすの？</language>
+ふしぎな　ポケモンを　さがすの？▼</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]も
 おかしな　夢を　見せる[BE:00:ページ切り替え（行送り）]
-不思議な　ポケモンを　探すの？</language>
+不思議な　ポケモンを　探すの？▼</language>
 	</row>
 
 	<row id="msg_d01r0101_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -501,9 +501,9 @@
 ・廃墟内のPOSを踏む前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ホワイティ『ゆめのなかって……
-（仮メッセージ）</language>
+（仮メッセージ）▼</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『ゆめのなかって……
-（仮メッセージ）</language>
+（仮メッセージ）▼</language>
 	</row>
 
 	<row id="msg_d01r0101_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -517,11 +517,11 @@
 		<language name="JPN" width="256">ホワイティ『！[BE:01:ページ切り替え（クリア）]
 なんだか　あっちの　方から
 物音　聞こえなかった！？[BE:00:ページ切り替え（行送り）]
-ねえねえ　行ってみようよ！</language>
+ねえねえ　行ってみようよ！▼</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『！[BE:01:ページ切り替え（クリア）]
 なんだか　あっちの　方から
 物音　聞こえなかった！？[BE:00:ページ切り替え（行送り）]
-ねえねえ　行ってみようよ！</language>
+ねえねえ　行ってみようよ！▼</language>
 	</row>
 
 	<row id="msg_d01r0101_poke_01">
@@ -529,8 +529,8 @@
 ・アニメ後、画面外に移動</comment>
 		<attribute name="キャラ指定">ポケモン
 ムシャーナ</attribute>
-		<language name="JPN" width="256">ムシャーナ『……ぬぬは</language>
-		<language name="JPN_KANJI" width="256">ムシャーナ『……ぬぬは</language>
+		<language name="JPN" width="256">ムシャーナ『……ぬぬは▼</language>
+		<language name="JPN_KANJI" width="256">ムシャーナ『……ぬぬは▼</language>
 	</row>
 
 	<row id="msg_d01r0101_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -541,11 +541,11 @@
 		<language name="JPN" width="256">ホワイティ『いまの　ピンクいろのが
 ゆめをみせる　ポケモン……[BE:01:ページ切り替え（クリア）]
 あれ……　なに……？
-ねっ　[1:00:トレーナー名:0]　とってみて！</language>
+ねっ　[1:00:トレーナー名:0]　とってみて！▼</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『今の　ピンク色のが
 夢を見せる　ポケモン……[BE:01:ページ切り替え（クリア）]
 あれ……　なに……？
-ねっ　[1:00:トレーナー名:0]　とってみて！</language>
+ねっ　[1:00:トレーナー名:0]　とってみて！▼</language>
 	</row>
 
 	<row id="msg_d01r0101_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -561,13 +561,13 @@
 [1:00:トレーナー名:0]　
 マコモさんに　届けてあげて[BE:01:ページ切り替え（クリア）]
 あたし？　あたしはね
-さっきの　ポケモン　探してみる！</language>
+さっきの　ポケモン　探してみる！▼</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『それ　マコモさんが
 さがしていた　？？？？？？？　だよね[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]　
 マコモさんに　届けてあげて[BE:01:ページ切り替え（クリア）]
 あたし？　あたしはね
-さっきの　ポケモン　探してみる！</language>
+さっきの　ポケモン　探してみる！▼</language>
 	</row>
 
 	<flowchart-group-list>
