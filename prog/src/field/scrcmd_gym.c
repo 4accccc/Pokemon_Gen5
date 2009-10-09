@@ -31,7 +31,7 @@
 #include "gym_init.h"
 #include "gym_elec.h"
 #include "gym_normal.h"
-
+#include "gym_anti.h"
 
 //--電気--
 //--------------------------------------------------------------
@@ -52,6 +52,10 @@ VMCMD_RESULT EvCmdGymElec_PushSw( VMHANDLE *core, void *wk )
   sw_idx = VMGetU16( core );
 
   call_event = GYM_ELEC_ChangePoint(gsys, sw_idx);
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
 
   SCRIPT_EntryNextEvent( sc, call_event );
   
@@ -122,6 +126,10 @@ VMCMD_RESULT EvCmdGymNormal_MoveWall( VMHANDLE *core, void *wk )
   wall_idx = VMGetU16( core );
 
   call_event = GYM_NORMAL_MoveWall(gsys, wall_idx);
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
 
   SCRIPT_EntryNextEvent( sc, call_event );
   
@@ -147,11 +155,14 @@ VMCMD_RESULT EvCmdGymAnti_SwOn( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
   sw_idx = VMGetU16( core );
-/**
-  call_event = GYM_NORMAL_MoveWall(gsys, sw_idx);
+  call_event = GYM_ANTI_SwOn(gsys, sw_idx);
+  
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
 
-  SCRIPT_EntryNextEvent( sc, call_event );
-*/  
+  SCRIPT_EntryNextEvent( sc, call_event );  
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 
@@ -173,11 +184,13 @@ VMCMD_RESULT EvCmdGymAnti_OpenDoor( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
   door_idx = VMGetU16( core );
-/**
-  call_event = GYM_NORMAL_MoveWall(gsys, door_idx);
+  call_event = GYM_ANTI_OpenDoor(gsys, door_idx);
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
 
-  SCRIPT_EntryNextEvent( sc, call_event );
-*/  
+  SCRIPT_EntryNextEvent( sc, call_event );  
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 
