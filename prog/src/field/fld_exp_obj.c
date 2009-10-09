@@ -20,6 +20,7 @@ typedef struct EXP_OBJ_ANM_CNT_tag
   u8 dummy;
   fx32 AddFrm;
   BOOL Continue;
+  GFL_G3D_ANM* g3Danm;
 }EXP_OBJ_ANM_CNT;
 
 typedef struct ANM_LIST_tag
@@ -140,18 +141,15 @@ void FLD_EXP_OBJ_AddUnit(  FLD_EXP_OBJ_CNT_PTR ptr,
     VEC_Set( &status[i].scale, FX32_ONE, FX32_ONE, FX32_ONE );
 	  MTX_Identity33( &status[i].rotate );
     VEC_Set( &status[i].trans, 0, 0, 0 );
-#if 0
     {
       int j;
       GFL_G3D_OBJ *g3Dobj = FLD_EXP_OBJ_GetUnitObj(ptr, inIndex, i);
-      EXP_OBJ_ANM_CNT *anm_cnt;
       ANM_LIST *lst;
       lst = &ptr->Unit[inIndex].AnmList[i];
       for (j=0;j<lst->AnmNum;j++){
-        GFL_G3D_OBJECT_EnableAnime( g3Dobj, j );
+        lst->AnmCnt[j].g3Danm = GFL_G3D_OBJECT_GetG3Danm( g3Dobj, j );
       }
     }
-#endif    
   }
   GF_ASSERT(GFL_HEAP_CheckHeapSafe(ptr->HeapID) == TRUE);
 }
@@ -459,17 +457,16 @@ void FLD_EXP_OBJ_ValidCntAnm(
   anm->Valid = inValid;
 }
 
-fx32 FLD_EXP_OBJ_GetAnimeFrame(
-                        FLD_EXP_OBJ_CNT_PTR ptr,
-                        const u16 inUnitIdx,
-                        const u16 inObjIdx,
-                        const u16 inAnmIdx)
+fx32 FLD_EXP_OBJ_GetAnimeLastFrame(EXP_OBJ_ANM_CNT_PTR ptr )
 {
-  BOOL rc;
-  int frame = 0;
-  GFL_G3D_OBJ *g3Dobj = FLD_EXP_OBJ_GetUnitObj(ptr, inUnitIdx, inObjIdx);
-  rc = GFL_G3D_OBJECT_GetAnimeFrame( g3Dobj, inAnmIdx, &frame );
-  GF_ASSERT(rc);
+  fx32 frame = 0;
+  NNSG3dAnmObj* anm_obj;
+  anm_obj = GFL_G3D_ANIME_GetAnmObj( ptr->g3Danm ) ;
+
+  frame = NNS_G3dAnmObjGetNumFrame( anm_obj ) - FX32_ONE;
+
   return frame;
+
 }
+
 

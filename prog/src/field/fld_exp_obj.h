@@ -54,10 +54,6 @@ extern void FLD_EXP_OBJ_ValidCntAnm(
                         const u16 inAnmIdx,
                         const BOOL inValid);
 
-extern fx32 FLD_EXP_OBJ_GetAnimeFrame(
-                        FLD_EXP_OBJ_CNT_PTR ptr,
-                        const u16 inUnitIdx,
-                        const u16 inObjIdx,
-                        const u16 inAnmIdx);
+extern fx32 FLD_EXP_OBJ_GetAnimeLastFrame(EXP_OBJ_ANM_CNT_PTR ptr );
 
 #endif  //__FLD_EXP_OBJ_H__
