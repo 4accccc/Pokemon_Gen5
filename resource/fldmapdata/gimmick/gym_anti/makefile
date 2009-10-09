@@ -36,7 +36,7 @@ ARCLIST = arc_list.txt
 LDIRT_CLEAN = $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
-LDIRT_CLEAN += $(targetname).narc $(targetname).naix arc_result.txt
+LDIRT_CLEAN += $(targetname).narc $(targetname).naix arc_result.txt *.nsb*
 endif
 
 LINCLUDES	= $(NITROSDK_ROOT)/include
@@ -79,10 +79,18 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(DATA_LIST)
 	@nnsarc -i -cl -l -n $(targetname).narc -S $(ARCLIST) > arc_result.txt
-	@-rm -f *.nsb*
-	@-rm -f *.bin
+#	@-rm -f *.nsb*
 
+
+ifeq	($(USERNAME),saitou)
 $(CDAT): def_make.xls
 	ruby $(XLS_CNV) -c def_make.xls > def_make.csv
 	ruby $(DEF_MAKE) def_make.csv $(CDAT)
+endif
+ifeq	($(USERNAME),suginaka_katsunori)
+$(CDAT): def_make.xls
+	ruby $(XLS_CNV) -c def_make.xls > def_make.csv
+	ruby $(DEF_MAKE) def_make.csv $(CDAT)
+endif
+
 endif
