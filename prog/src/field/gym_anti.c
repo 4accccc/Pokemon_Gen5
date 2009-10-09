@@ -346,14 +346,16 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
         u8 door_obj_idx;
         door_obj_idx = OBJ_DOOR_1 + i;
         {
+          fx32 last_frm;
           //アニメを有効
           FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ANTI_UNIT_IDX, door_obj_idx, 0, TRUE);
           anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ANTI_UNIT_IDX, door_obj_idx, 0);
           FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
           //1回再生設定
           FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
-          //@todo　最終フレームにする
-          ;
+          //@最終フレームにする
+          last_frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
+          FLD_EXP_OBJ_SetObjAnmFrm(ptr,GYM_ANTI_UNIT_IDX, door_obj_idx, 0, last_frm);
         }
       }
     }
