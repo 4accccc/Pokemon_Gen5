@@ -906,20 +906,23 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       #endif
 
       {
-        u16 key = GFL_UI_KEY_GetTrg();
+        u16 key = GFL_UI_KEY_GetCont();
         if( key & PAD_BUTTON_L ){
           BTL_SETUP_Single_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
         }else if( key & PAD_BUTTON_R ){
           BTL_SETUP_Double_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
         }else{
           BTL_SETUP_Triple_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
+//          BTL_SETUP_Double_Wild( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
         }
         para->partyPlayer = wk->partyPlayer;
 
         {
+          static const STRCODE name[] = { 0x307e, 0x3055, 0x304a, 0xffff };
           STRBUF* hoge = GFL_STR_CreateBuffer( 32, HEAPID_CORE );
           OS_TPrintf("いまから\n");
-          MyStatus_CopyNameString( para->statusPlayer, hoge );
+//          MyStatus_CopyNameString( para->statusPlayer, hoge );
+          MyStatus_SetMyName( (MYSTATUS*)(para->statusPlayer), name );
           GFL_STR_DeleteBuffer( hoge );
         }
       }
@@ -1128,28 +1131,17 @@ static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk 
     if( GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), 0) )
     {
       BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
+      GFL_NETHANDLE* netHandle = GFL_NET_HANDLE_GetCurrentHandle();
 
-      para->engine = BTL_ENGINE_ALONE;
-      para->rule = BTL_RULE_DOUBLE;
-      para->competitor = BTL_COMPETITOR_COMM;
-
-      para->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      para->netID = GFL_NET_GetNetID( para->netHandle );
-      para->commMode = BTL_COMM_DS;
-      para->multiMode = 0;
-
-      para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ
-      para->partyEnemy1 = NULL;   ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
-      para->partyPartner = NULL;  ///< 2vs2時の味方AI（不要ならnull）
-      para->partyEnemy2 = NULL;   ///< 2vs2時の２番目敵AI用（不要ならnull）
-      para->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
-
-      if( para->netID == 0 ){
-        setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_PORIGON, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
+      wk->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );
+      if( GFL_NET_GetNetID(netHandle) == 0 ){
+        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_PORIGON, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
+      }else{
+        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_YADOKINGU, MONSNO_METAGUROSU, MONSNO_SUTAAMII, 0 );
       }
-      else{
-        setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_YADOKINGU, MONSNO_METAGUROSU, MONSNO_SUTAAMII, 0 );
-      }
+
+      BTL_SETUP_Double_Comm( para, wk->gameData, netHandle,  BTL_COMM_DS );
+      para->partyPlayer = wk->partyPlayer;
 
       DEBUG_PerformanceSetActive( FALSE );
       GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
