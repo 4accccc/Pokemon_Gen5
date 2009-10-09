@@ -1,6 +1,7 @@
 #include <gflib.h>
 #include "debug_obata_demo_test_setup.h"
 #include "system/ica_anime.h"
+#include "system/ica_camera.h"
 #include "system/main.h"
 #include "arc/arc_def.h"
 #include "arc/debug_obata.naix"
@@ -272,7 +273,7 @@ static void Draw( PROC_WORK* work )
   MTX_Identity33( &status.rotate );
 
   // カメラ更新
-  ICA_ANIME_SetCameraStatus( work->icaAnime, work->camera );
+  ICA_CAMERA_SetCameraStatus( work->camera, work->icaAnime );
   GFL_G3D_CAMERA_Switching( work->camera );
 
   // TEMP: カメラ設定

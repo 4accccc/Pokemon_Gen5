@@ -150,7 +150,7 @@ u32 ICA_ANIME_GetNowFrame( ICA_ANIME* anime );
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetTranslate( ICA_ANIME* anime, VecFx32* vec_dst );
+BOOL ICA_ANIME_GetTranslate( const ICA_ANIME* anime, VecFx32* vec_dst );
 
 //-----------------------------------------------------------------------------------
 /**
@@ -162,7 +162,7 @@ BOOL ICA_ANIME_GetTranslate( ICA_ANIME* anime, VecFx32* vec_dst );
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetRotate( ICA_ANIME* anime, VecFx32* vec_dst );
+BOOL ICA_ANIME_GetRotate( const ICA_ANIME* anime, VecFx32* vec_dst );
 
 //-----------------------------------------------------------------------------------
 /**
@@ -174,17 +174,7 @@ BOOL ICA_ANIME_GetRotate( ICA_ANIME* anime, VecFx32* vec_dst );
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetScale( ICA_ANIME* anime, VecFx32* vec_dst );
-
-//---------------------------------------------------------------------------
-/**
- * @brief カメラ座標・ターゲット座標を現在フレームの状態に設定する
- *
- * @param anime   設定アニメーション
- * @param camera  設定対象のカメラ
- */
-//---------------------------------------------------------------------------
-void ICA_ANIME_SetCameraStatus( ICA_ANIME* anime, GFL_G3D_CAMERA* camera );
+BOOL ICA_ANIME_GetScale( const ICA_ANIME* anime, VecFx32* vec_dst );
 
 
 //===================================================================================
@@ -203,7 +193,7 @@ void ICA_ANIME_SetCameraStatus( ICA_ANIME* anime, GFL_G3D_CAMERA* camera );
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetTranslateAt( ICA_ANIME* anime, VecFx32* vec_dst, int frame );
+BOOL ICA_ANIME_GetTranslateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame );
 
 //-----------------------------------------------------------------------------------
 /**
@@ -216,7 +206,7 @@ BOOL ICA_ANIME_GetTranslateAt( ICA_ANIME* anime, VecFx32* vec_dst, int frame );
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetRotateAt( ICA_ANIME* anime, VecFx32* vec_dst, int frame );
+BOOL ICA_ANIME_GetRotateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame );
 
 //-----------------------------------------------------------------------------------
 /**
@@ -229,4 +219,4 @@ BOOL ICA_ANIME_GetRotateAt( ICA_ANIME* anime, VecFx32* vec_dst, int frame );
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetScaleAt( ICA_ANIME* anime, VecFx32* vec_dst, int frame );
+BOOL ICA_ANIME_GetScaleAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame );

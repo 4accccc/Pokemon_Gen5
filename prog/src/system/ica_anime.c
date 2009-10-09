@@ -292,7 +292,7 @@ u32 ICA_ANIME_GetNowFrame( ICA_ANIME* anime )
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetTranslate( ICA_ANIME* anime, VecFx32* vec_dst )
+BOOL ICA_ANIME_GetTranslate( const ICA_ANIME* anime, VecFx32* vec_dst )
 {
   // 読み込んだファイルに平行移動データが存在する場合のみ取得可能
   if( anime->haveTrans )
@@ -318,7 +318,7 @@ BOOL ICA_ANIME_GetTranslate( ICA_ANIME* anime, VecFx32* vec_dst )
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetRotate( ICA_ANIME* anime, VecFx32* vec_dst )
+BOOL ICA_ANIME_GetRotate( const ICA_ANIME* anime, VecFx32* vec_dst )
 {
   // 読み込んだファイルに回転データが存在する場合のみ取得可能
   if( anime->haveRotate )
@@ -344,7 +344,7 @@ BOOL ICA_ANIME_GetRotate( ICA_ANIME* anime, VecFx32* vec_dst )
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetScale( ICA_ANIME* anime, VecFx32* vec_dst )
+BOOL ICA_ANIME_GetScale( const ICA_ANIME* anime, VecFx32* vec_dst )
 {
   // 読み込んだファイルに拡縮データが存在する場合のみ取得可能
   if( anime->haveScale )
@@ -358,52 +358,7 @@ BOOL ICA_ANIME_GetScale( ICA_ANIME* anime, VecFx32* vec_dst )
   }
 
   return FALSE;
-}
-
-//---------------------------------------------------------------------------
-/**
- * @brief カメラ座標・ターゲット座標を現在フレームの状態に設定する
- *
- * @param anime   設定アニメーション
- * @param camera  設定対象のカメラ
- */
-//---------------------------------------------------------------------------
-void ICA_ANIME_SetCameraStatus( ICA_ANIME* anime, GFL_G3D_CAMERA* camera )
-{
-  float x, y, z;
-  u16 rx, ry, rz;
-  MtxFx33 matrix;
-  VecFx32 rotate;
-  VecFx32 def_forward = { 0, 0, -FX32_ONE };
-  VecFx32 def_upward  = { 0, FX32_ONE, 0 }; 
-  VecFx32 pos, target, forward, upward;
-
-  // 回転行列を作成
-  ICA_ANIME_GetRotate( anime, &rotate );
-  x = FX_FX32_TO_F32( rotate.x );
-  y = FX_FX32_TO_F32( rotate.y );
-  z = FX_FX32_TO_F32( rotate.z );
-  while( x < 0 ) x += 360.0f;
-  while( y < 0 ) y += 360.0f;
-  while( z < 0 ) z += 360.0f;
-  rx = x / 360.0f * 0xffff;
-  ry = y / 360.0f * 0xffff;
-  rz = z / 360.0f * 0xffff; 
-  GFL_CALC3D_MTX_CreateRot( rx, ry, rz, &matrix );
-
-  // ベクトル回転でカメラの向きを算出
-  MTX_MultVec33( &def_forward, &matrix, &forward );
-  MTX_MultVec33( &def_upward, &matrix, &upward );
-
-  // カメラ・注視点位置を求める
-  ICA_ANIME_GetTranslate( anime, &pos );
-  VEC_Add( &pos, &forward, &target );
-
-  // カメラの設定
-  GFL_G3D_CAMERA_SetPos( camera, &pos );
-  GFL_G3D_CAMERA_SetTarget( camera, &target );
-  GFL_G3D_CAMERA_SetCamUp( camera, &upward );
-}
+} 
 
 
 //===================================================================================
@@ -421,7 +376,7 @@ void ICA_ANIME_SetCameraStatus( ICA_ANIME* anime, GFL_G3D_CAMERA* camera )
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetTranslateAt( ICA_ANIME* anime, VecFx32* vec_dst, int frame )
+BOOL ICA_ANIME_GetTranslateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame )
 {
   // 指定フレームをループさせる
   frame = frame % anime->frameSize;
@@ -450,7 +405,7 @@ BOOL ICA_ANIME_GetTranslateAt( ICA_ANIME* anime, VecFx32* vec_dst, int frame )
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetRotateAt( ICA_ANIME* anime, VecFx32* vec_dst, int frame )
+BOOL ICA_ANIME_GetRotateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame )
 {
   // 指定フレームをループさせる
   frame = frame % anime->frameSize;
@@ -479,7 +434,7 @@ BOOL ICA_ANIME_GetRotateAt( ICA_ANIME* anime, VecFx32* vec_dst, int frame )
  * @return データを取得できた場合 TRUE
  */
 //-----------------------------------------------------------------------------------
-BOOL ICA_ANIME_GetScaleAt( ICA_ANIME* anime, VecFx32* vec_dst, int frame )
+BOOL ICA_ANIME_GetScaleAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame )
 {
   // 指定フレームをループさせる
   frame = frame % anime->frameSize;
