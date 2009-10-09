@@ -28,15 +28,16 @@
 # [ 4]: scaleデータの有無(0:無, 1:有)     
 # [ 5]: rotateデータの有無(0:無, 1:有)
 # [ 6]: translateデータの有無(0:無, 1:有)
-# [ 7]: scale x (float)                   |
-# [11]: scale y (float)                   |
-# [15]: scale z (float)                   | 
-# [19]: rotate x (float)                  |
-# [23]: rotate y (float)                  |------1フレーム目のデータ
-# [27]: rotate z (float)                  |
-# [31]: translate x (float)               |
-# [35]: translate y (float)               |
-# [39]: translate z (float)               |
+# [ 7]: パディング
+# [ 8]: scale x (float)                   |
+# [12]: scale y (float)                   |
+# [16]: scale z (float)                   | 
+# [20]: rotate x (float)                  |
+# [24]: rotate y (float)                  |------1フレーム目のデータ
+# [28]: rotate z (float)                  |
+# [32]: translate x (float)               |
+# [36]: translate y (float)               |
+# [40]: translate z (float)               |
 # 以下、全フレーム分のデータが存在
 # また、オプション指定に該当しないデータは削減されます。
 # 
@@ -119,6 +120,9 @@ if output_translate==TRUE then
 else
   file.write( [0].pack( "C" ) )
 end
+
+# パディング
+file.write( [0].pack( "C" ) )
 
 # 全フレーム分のアニメーションデータを出力
 0.upto( ica.frameSize-1 ) do |i|

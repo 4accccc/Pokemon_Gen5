@@ -619,7 +619,7 @@ void UpdateBuf( ICA_ANIME* anime, fx32 start_frame )
 {
   int   i, j;
   int   frame     = (start_frame >> FX32_SHIFT) % anime->frameSize;
-  int   ofs       = 7;
+  int   ofs       = 8;  // ヘッダサイズ
   int   data_size = 0;
   void* data      = NULL;
 
