@@ -1138,6 +1138,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
           StatusRecover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
           PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
           
+          PMSND_PlaySystemSE( PLIST_SND_RECOVER );
         }
         else
         {
@@ -1205,6 +1206,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
       {
         PSTATUS_SubItem( work , work->plData->item );
       }
+      PMSND_PlaySystemSE( PLIST_SND_WAZA_MACHINE );
       break;
     
     case LSCL_OK_FULL:
@@ -1213,6 +1215,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
       PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , work->plData->waza );
       PLIST_MessageWaitInit( work , mes_pokelist_04_06 , FALSE , PSTATUS_MSGCB_ForgetSkill_ForgetCheck );
       PLIST_MSG_DeleteWordSet( work , work->msgWork );
+      PMSND_PlaySystemSE( PLIST_SND_WAZA_MACHINE );
       break;
 
     case LSCL_NG:
@@ -1575,7 +1578,6 @@ static void PLIST_SelectPokeTerm_Change( PLIST_WORK *work )
   {
   case PSSEL_SELECT:
     PLIST_ChangeAnimeInit( work );
-    PMSND_PlaySystemSE( PLIST_SND_CHANGE );
     break;
     
   case PSSEL_RETURN:
@@ -1618,11 +1620,13 @@ static void PLIST_SelectPokeTerm_BattleDecide( PLIST_WORK *work )
   if( work->plData->in_min > work->btlJoinNum )
   {
     PLIST_MessageWaitInit( work , mes_pokelist_04_60_1 + (work->plData->in_min-1) , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
+    PMSND_PlaySystemSE( PLIST_SND_ERROR );
   }
   else
   if( work->plData->in_max < work->btlJoinNum )
   {
     PLIST_MessageWaitInit( work , mes_pokelist_04_62_1 + (work->plData->in_max-1) , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
+    PMSND_PlaySystemSE( PLIST_SND_ERROR );
   }
   else
   {
@@ -2267,6 +2271,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
         //ŽÀÛ‚ÉÁ”ï‚Æ“K—p
         StatusRecover( work->selectPokePara , work->plData->item , work->menuRet-PMIT_WAZA_1 , work->plData->place , work->heapId );
         PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+        PMSND_PlaySystemSE( PLIST_SND_RECOVER );
       }
       else
       {
@@ -2385,6 +2390,7 @@ static void PLIST_ChangeAnime( PLIST_WORK *work )
       }
       //“ü‚ê‘Ö‚¦
       work->subSeq = PSSS_MOVE_IN;
+      PMSND_PlaySystemSE( PLIST_SND_CHANGE_IN );
     }
     break;
 
@@ -2413,6 +2419,8 @@ static void PLIST_ChangeAnimeInit( PLIST_WORK *work )
   work->mainSeq = PSMS_CHANGE_ANM;
   work->subSeq = PSSS_MOVE_OUT;
   work->anmCnt = 0;
+
+  PMSND_PlaySystemSE( PLIST_SND_CHANGE_OUT );
 
   GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
   GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[1] , FALSE );

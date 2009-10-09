@@ -104,6 +104,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         case 4:
           PP_Put( pPara , ID_PARA_hp , 1 );
           PP_Put( pPara , ID_PARA_item , 1 );
+          PP_Put( pPara , ID_PARA_tamago_flag , 1 );
           break;
         }
   #endif      
