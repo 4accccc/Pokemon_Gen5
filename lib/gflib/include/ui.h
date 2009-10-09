@@ -43,7 +43,8 @@ typedef enum {
   GFL_UI_SLEEP_SVLD = 0x01,      ///< セーブロード
   GFL_UI_SLEEP_AGBROM = 0x02,    ///< AGBアクセス
   GFL_UI_SLEEP_NET = 0x04,       ///< 通信全般
-  GFL_UI_SLEEP_USER = 0x08,      ///< ここからは外部定義になる
+  GFL_UI_SLEEP_MIC = 0x08,       ///< MIC
+  GFL_UI_SLEEP_USER = 0x10,      ///< ここからは外部定義になる
 } GF_UI_SLEEP_e;
 
 
