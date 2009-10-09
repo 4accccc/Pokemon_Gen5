@@ -2595,9 +2595,11 @@
 #ifndef ZONE_R05_EVC_H
 #define ZONE_R05_EVC_H
 
-#define R05_TREE                           0
-#define R05_ROCK                           1
-#define DUMMY_OBJ                          2
+#define R05_TREE_01                        0
+#define R05_TREE_02                        1
+#define R05_TREE_03                        2
+#define DUMMY_OBJ                          3
+#define DUMMY_FLD_ITEM_01                  4
 
 #endif //ZONE_R05_EVC_H
 //#include "tmp/r06.h"
@@ -12340,29 +12342,29 @@ const CONNECT_DATA DOOR_EVENT_R05[] = {
 const int ConnectCount_R05 = NELEMS(DOOR_EVENT_R05);
 const FLDMMDL_HEADER OBJ_EVENT_R05[] = {
 	{
-		R05_TREE,
+		R05_TREE_01,
 		TREE,
 		MV_DMY,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_DUMMY,
+		SCRID_HIDEN_IAIGIRI,
 		DIR_DOWN,
 		0,
 		0,
 		0,
 		0,
 		0,
-		354,
-		423,
+		357,
+		436,
 		FX32_CONST(0),
 	},
 	{
-		R05_ROCK,
-		ROCK,
+		R05_TREE_02,
+		TREE,
 		MV_DMY,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_DUMMY,
+		SCRID_HIDEN_IAIGIRI,
 		DIR_DOWN,
 		0,
 		0,
@@ -12370,13 +12372,30 @@ const FLDMMDL_HEADER OBJ_EVENT_R05[] = {
 		0,
 		0,
 		350,
-		423,
+		434,
+		FX32_CONST(0),
+	},
+	{
+		R05_TREE_03,
+		TREE,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_HIDEN_IAIGIRI,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		345,
+		437,
 		FX32_CONST(0),
 	},
 	{
 		DUMMY_OBJ,
-		BABYBOY1,
-		MV_RND,
+		BOY1,
+		MV_DMY,
 		EV_TYPE_NORMAL,
 		0,
 		SCRID_DUMMY,
@@ -12386,8 +12405,25 @@ const FLDMMDL_HEADER OBJ_EVENT_R05[] = {
 		0,
 		0,
 		0,
-		346,
-		423,
+		343,
+		424,
+		FX32_CONST(0),
+	},
+	{
+		DUMMY_FLD_ITEM_01,
+		MONSTERBALL,
+		MV_DMY,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_DUMMY,
+		DIR_DOWN,
+		0,
+		0,
+		0,
+		0,
+		0,
+		367,
+		424,
 		FX32_CONST(0),
 	},
 };
@@ -12395,7 +12431,7 @@ const int ObjCount_R05 = NELEMS(OBJ_EVENT_R05);
 
 static const EVENTDATA_TABLE event_r05 = {
 	0,
-	3,
+	5,
 	7,
 	0,
 	(void *)NULL,

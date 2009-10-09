@@ -2454,9 +2454,11 @@
 #ifndef ZONE_R05_EVC_H
 #define ZONE_R05_EVC_H
 
-#define R05_TREE                           0
-#define R05_ROCK                           1
-#define DUMMY_OBJ                          2
+#define R05_TREE_01                        0
+#define R05_TREE_02                        1
+#define R05_TREE_03                        2
+#define DUMMY_OBJ                          3
+#define DUMMY_FLD_ITEM_01                  4
 
 #endif //ZONE_R05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕdata/r06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
