@@ -1,10 +1,10 @@
 #event data
-#save date:2009/07/28 12:18:39
+#save date:2009/10/09 19:11:37
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d01r0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/28 12:18:39
+#save date:2009/10/09 19:11:37
 2
 #hold event type:
 1
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d01r0101.wms
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/28 12:18:39
+#save date:2009/10/09 19:11:37
 2
 #hold event type:
 1
@@ -24,7 +24,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d01r0101.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/28 12:18:39
+#save date:2009/10/09 19:11:37
 2
 #hold event type:
 1
@@ -34,7 +34,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d01r0101.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/28 12:18:39
+#save date:2009/10/09 19:11:37
 2
 #hold event type:
 1
@@ -42,56 +42,56 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d01r0101.wms
 10
 #event number: 0
 #Door Event Label
-DOOR_ID_D01R0101_D01_EXIT04
+DOOR_ID_D01R0101_C01_EXIT04
 #Next Zone ID Name
-ZONE_ID_D01
+ZONE_ID_C01
 #Next Door ID Name
-DOOR_ID_D01_D01R0101_EXIT04
+DOOR_ID_C01_D01R0101_EXIT04
 #Door Direction
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
--136 0 -216
+-104 0 -216
 #event number: 1
 #Door Event Label
-DOOR_ID_D01R0101_D01_EXIT03
+DOOR_ID_D01R0101_C01_EXIT03
 #Next Zone ID Name
-ZONE_ID_D01
+ZONE_ID_C01
 #Next Door ID Name
-DOOR_ID_D01_D01R0101_EXIT03
+DOOR_ID_C01_D01R0101_EXIT03
 #Door Direction
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
--136 0 -200
+-104 0 -200
 #event number: 2
 #Door Event Label
-DOOR_ID_D01R0101_D01_EXIT01
+DOOR_ID_D01R0101_C01_EXIT01
 #Next Zone ID Name
-ZONE_ID_D01
+ZONE_ID_C01
 #Next Door ID Name
-DOOR_ID_D01_D01R0101_EXIT01
+DOOR_ID_C01_D01R0101_EXIT01
 #Door Direction
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
--136 0 -168
+-104 0 -168
 #event number: 3
 #Door Event Label
-DOOR_ID_D01R0101_D01_EXIT02
+DOOR_ID_D01R0101_C01_EXIT02
 #Next Zone ID Name
-ZONE_ID_D01
+ZONE_ID_C01
 #Next Door ID Name
-DOOR_ID_D01_D01R0101_EXIT02
+DOOR_ID_C01_D01R0101_EXIT02
 #Door Direction
 EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_MAT
 #position
--136 0 -184
+-104 0 -184
 #event number: 4
 #Door Event Label
 DOOR_ID_D01R0101_D01R0201_EXIT01

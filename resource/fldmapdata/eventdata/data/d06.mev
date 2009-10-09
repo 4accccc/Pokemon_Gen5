@@ -1,10 +1,10 @@
 #event data
-#save date:2009/07/22 19:04:09
+#save date:2009/10/09 19:01:37
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/22 19:04:09
+#save date:2009/10/09 19:01:37
 2
 #hold event type:
 1
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06.wms
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/22 19:04:09
+#save date:2009/10/09 19:01:37
 2
 #hold event type:
 1
@@ -24,7 +24,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/22 19:04:09
+#save date:2009/10/09 19:01:37
 2
 #hold event type:
 1
@@ -34,12 +34,12 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/22 19:04:09
+#save date:2009/10/09 19:01:37
 2
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Door Event Label
 DOOR_ID_D06_D06R0101_EXIT01
@@ -52,6 +52,19 @@ EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_MAT
 #position
--168 16 -120
+-88 16 -120
+#event number: 1
+#Door Event Label
+DOOR_ID_D06_D06R0101_EXIT02
+#Next Zone ID Name
+ZONE_ID_D06R0101
+#Next Door ID Name
+DOOR_ID_D06R0101_D06_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_MAT
+#position
+-72 16 -120
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

@@ -27,6 +27,10 @@
 #define DOOR_ID_C01_EXIT15                7
 #define DOOR_ID_C01_EXIT11                8
 #define DOOR_ID_C01_C01GYM0101_EXIT01     9
+#define DOOR_ID_C01_D01R0101_EXIT01      10
+#define DOOR_ID_C01_D01R0101_EXIT02      11
+#define DOOR_ID_C01_D01R0101_EXIT03      12
+#define DOOR_ID_C01_D01R0101_EXIT04      13
 
 #endif //ZONE_C01_EVD_H
 //このファイルはdata/c01.mevから自動生成されました
@@ -1330,10 +1334,6 @@
 #ifndef ZONE_D01_EVD_H
 #define ZONE_D01_EVD_H
 
-#define DOOR_ID_D01_D01R0101_EXIT01       0
-#define DOOR_ID_D01_D01R0101_EXIT04       1
-#define DOOR_ID_D01_D01R0101_EXIT03       2
-#define DOOR_ID_D01_D01R0101_EXIT02       3
 
 #endif //ZONE_D01_EVD_H
 //このファイルはdata/d01.mevから自動生成されました
@@ -1349,10 +1349,10 @@
 #ifndef ZONE_D01R0101_EVD_H
 #define ZONE_D01R0101_EVD_H
 
-#define DOOR_ID_D01R0101_D01_EXIT04       0
-#define DOOR_ID_D01R0101_D01_EXIT03       1
-#define DOOR_ID_D01R0101_D01_EXIT01       2
-#define DOOR_ID_D01R0101_D01_EXIT02       3
+#define DOOR_ID_D01R0101_C01_EXIT04       0
+#define DOOR_ID_D01R0101_C01_EXIT03       1
+#define DOOR_ID_D01R0101_C01_EXIT01       2
+#define DOOR_ID_D01R0101_C01_EXIT02       3
 #define DOOR_ID_D01R0101_D01R0201_EXIT01  4
 #define DOOR_ID_D01R0101_D01R0201_EXIT02  5
 #define DOOR_ID_D01R0101_D01R0201_EXIT03  6
@@ -1828,6 +1828,19 @@
 
 
 #endif //ZONE_D04R2601_EVC_H
+//このファイルはdata/d04r2701.mevから自動生成されました
+#ifndef ZONE_D04R2701_EVD_H
+#define ZONE_D04R2701_EVD_H
+
+#define DOOR_ID_D04R2701_D04R0201_EXIT01  0
+
+#endif //ZONE_D04R2701_EVD_H
+//このファイルはdata/d04r2701.mevから自動生成されました
+#ifndef ZONE_D04R2701_EVC_H
+#define ZONE_D04R2701_EVC_H
+
+
+#endif //ZONE_D04R2701_EVC_H
 //このファイルはdata/d04r2801.mevから自動生成されました
 #ifndef ZONE_D04R2801_EVD_H
 #define ZONE_D04R2801_EVD_H
@@ -1973,6 +1986,7 @@
 #define ZONE_D06_EVD_H
 
 #define DOOR_ID_D06_D06R0101_EXIT01       0
+#define DOOR_ID_D06_D06R0101_EXIT02       1
 
 #endif //ZONE_D06_EVD_H
 //このファイルはdata/d06.mevから自動生成されました
@@ -2207,6 +2221,21 @@
 
 
 #endif //ZONE_H01P01_EVC_H
+//このファイルはdata/h01p0101.mevから自動生成されました
+#ifndef ZONE_H01P0101_EVD_H
+#define ZONE_H01P0101_EVD_H
+
+#define DOOR_ID_H01P0101_D02R0101_EXIT03  0
+#define DOOR_ID_H01P0101_D02R0101_EXIT02  1
+#define DOOR_ID_H01P0101_D02R0101_EXIT01  2
+
+#endif //ZONE_H01P0101_EVD_H
+//このファイルはdata/h01p0101.mevから自動生成されました
+#ifndef ZONE_H01P0101_EVC_H
+#define ZONE_H01P0101_EVC_H
+
+
+#endif //ZONE_H01P0101_EVC_H
 //このファイルはdata/h02.mevから自動生成されました
 #ifndef ZONE_H02_EVD_H
 #define ZONE_H02_EVD_H
