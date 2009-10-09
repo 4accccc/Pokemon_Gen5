@@ -13,6 +13,8 @@
 #include "gym_normal_sv.h"
 #include "gym_anti_sv.h"
 
+#include "../../../resource/fldmapdata/gimmick/gym_normal/gym_normal_exit_def.cdat"
+
 //--------------------------------------------------------------
 /**
  * “d‹CƒWƒ€‰Šú‰»
