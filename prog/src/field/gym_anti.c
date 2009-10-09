@@ -30,6 +30,18 @@
 #define SW2_Z  (SW2_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
 #define SW3_X  (SW3_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
 #define SW3_Z  (SW3_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW4_X  (SW4_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW4_Z  (SW4_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW5_X  (SW5_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW5_Z  (SW5_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW6_X  (SW6_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW6_Z  (SW6_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW7_X  (SW7_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW7_Z  (SW7_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW8_X  (SW8_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW8_Z  (SW8_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW9_X  (SW9_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
+#define SW9_Z  (SW9_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
 
 #define CTN1_X  (CTN1_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
 #define CTN1_Z  (CTN1_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
@@ -80,6 +92,12 @@ enum {
   OBJ_SW_1 = 0,
   OBJ_SW_2,
   OBJ_SW_3,
+  OBJ_SW_4,
+  OBJ_SW_5,
+  OBJ_SW_6,
+  OBJ_SW_7,
+  OBJ_SW_8,
+  OBJ_SW_9,
   OBJ_DOOR_1,
   OBJ_DOOR_2,
   OBJ_DOOR_3,
@@ -141,7 +159,7 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_ctn3[] = {
 
 //3Dオブジェクト設定テーブル
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
-  //スイッチ1
+  //スイッチ1（当たり　火）
   {
 		RES_ID_SW1_MDL, 	//モデルリソースID
 		0, 							  //モデルデータID(リソース内部INDEX)
@@ -149,7 +167,7 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 		g3Dutil_anmTbl_sw1,			//アニメテーブル(複数指定のため)
 		NELEMS(g3Dutil_anmTbl_sw1),	//アニメリソース数
 	},
-  //スイッチ2
+  //スイッチ2（当たり　水）
   {
 		RES_ID_SW2_MDL, 	//モデルリソースID
 		0, 							  //モデルデータID(リソース内部INDEX)
@@ -157,7 +175,7 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 		g3Dutil_anmTbl_sw2,			//アニメテーブル(複数指定のため)
 		NELEMS(g3Dutil_anmTbl_sw2),	//アニメリソース数
 	},
-  //スイッチ3
+  //スイッチ3（当たり　草）
   {
 		RES_ID_SW3_MDL, 	//モデルリソースID
 		0, 							  //モデルデータID(リソース内部INDEX)
@@ -165,7 +183,57 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 		g3Dutil_anmTbl_sw3,			//アニメテーブル(複数指定のため)
 		NELEMS(g3Dutil_anmTbl_sw3),	//アニメリソース数
 	},
-  //カーテン1
+
+  //スイッチ4（ハズレ　火）
+  {
+		RES_ID_SW1_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_SW1_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_sw1,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_sw1),	//アニメリソース数
+	},
+  //スイッチ5（ハズレ　水）
+  {
+		RES_ID_SW2_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_SW2_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_sw2,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_sw2),	//アニメリソース数
+	},
+  //スイッチ6（ハズレ　草）
+  {
+		RES_ID_SW3_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_SW3_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_sw3,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_sw3),	//アニメリソース数
+	},
+
+  //スイッチ7（ハズレ　火）
+  {
+		RES_ID_SW1_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_SW1_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_sw1,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_sw1),	//アニメリソース数
+	},
+  //スイッチ8（ハズレ　水）
+  {
+		RES_ID_SW2_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_SW2_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_sw2,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_sw2),	//アニメリソース数
+	},
+  //スイッチ9（ハズレ　草）
+  {
+		RES_ID_SW3_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_SW3_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_sw3,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_sw3),	//アニメリソース数
+	},
+  //カーテン1（火）
 	{
 		RES_ID_CTN1_MDL, 	//モデルリソースID
 		0, 							  //モデルデータID(リソース内部INDEX)
@@ -173,7 +241,7 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 		g3Dutil_anmTbl_ctn1,			//アニメテーブル(複数指定のため)
 		NELEMS(g3Dutil_anmTbl_ctn1),	//アニメリソース数
 	},
-  //カーテン2
+  //カーテン2（水）
   {
 		RES_ID_CTN2_MDL, 	//モデルリソースID
 		0, 							  //モデルデータID(リソース内部INDEX)
@@ -181,7 +249,7 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 		g3Dutil_anmTbl_ctn2,			//アニメテーブル(複数指定のため)
 		NELEMS(g3Dutil_anmTbl_ctn2),	//アニメリソース数
 	},
-  //カーテン3
+  //カーテン3（草）
   {
 		RES_ID_CTN3_MDL, 	//モデルリソースID
 		0, 							  //モデルデータID(リソース内部INDEX)
@@ -233,37 +301,39 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
   FLD_EXP_OBJ_AddUnit(ptr, &Setup, GYM_ANTI_UNIT_IDX );
   //スイッチ座標セット
   {
-    VecFx32 pos = {SW1_X, OBJ3D_Y, SW1_Z};
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, OBJ_SW_1);
-    status->trans = pos;
-  }
-  {
-    VecFx32 pos = {SW2_X, OBJ3D_Y, SW2_Z};
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, OBJ_SW_2);
-    status->trans = pos;
-  }
-  {
-    VecFx32 pos = {SW3_X, OBJ3D_Y, SW3_Z};
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, OBJ_SW_3);
-    status->trans = pos;
+    u8 i;
+    const VecFx32 pos[ANTI_SW_NUM_MAX] = {
+      {SW1_X, OBJ3D_Y, SW1_Z},
+      {SW2_X, OBJ3D_Y, SW2_Z},
+      {SW3_X, OBJ3D_Y, SW3_Z},
+      {SW4_X, OBJ3D_Y, SW4_Z},
+      {SW5_X, OBJ3D_Y, SW5_Z},
+      {SW6_X, OBJ3D_Y, SW6_Z},
+      {SW7_X, OBJ3D_Y, SW7_Z},
+      {SW8_X, OBJ3D_Y, SW8_Z},
+      {SW9_X, OBJ3D_Y, SW9_Z},
+    };
+
+    for (i=0;i<ANTI_SW_NUM_MAX;i++){
+      u8 obj_idx = OBJ_SW_1+i;
+      GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, obj_idx);
+      status->trans = pos[i];
+    }
   }
 
   //カーテン座標セット
   {
-    VecFx32 pos = {CTN1_X, OBJ3D_Y, CTN1_Z};
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, OBJ_DOOR_1);
-    status->trans = pos;
-  }
-
-  {
-    VecFx32 pos = {CTN2_X, OBJ3D_Y, CTN2_Z};
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, OBJ_DOOR_2);
-    status->trans = pos;
-  }
-  {
-    VecFx32 pos = {CTN3_X, OBJ3D_Y, CTN3_Z};
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, OBJ_DOOR_3);
-    status->trans = pos;
+    u8 i;
+    const VecFx32 pos[ANTI_SW_NUM_MAX] = {
+      {CTN1_X, OBJ3D_Y, CTN1_Z},
+      {CTN2_X, OBJ3D_Y, CTN2_Z},
+      {CTN3_X, OBJ3D_Y, CTN3_Z},
+    };
+    for (i=0;i<ANTI_DOOR_NUM_MAX;i++){
+      u8 obj_idx = OBJ_DOOR_1+i;
+      GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_ANTI_UNIT_IDX, obj_idx);
+      status->trans = pos[i];
+    }
   }
 
   //セーブ状況による初期アニメをセット
@@ -273,20 +343,8 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
       if ( gmk_sv_work->Sw[i] ){
         //アニメセット
         EXP_OBJ_ANM_CNT_PTR anm;
-        u8 sw_obj_idx;
         u8 door_obj_idx;
-        sw_obj_idx = OBJ_SW_1 + i;
         door_obj_idx = OBJ_DOOR_1 + i;
-        {
-          //アニメを有効
-          FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0, TRUE);
-          anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0);
-          FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
-          //1回再生設定
-          FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
-          //@todo　最終フレームにする
-          ;
-        }
         {
           //アニメを有効
           FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ANTI_UNIT_IDX, door_obj_idx, 0, TRUE);
@@ -300,7 +358,6 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
       }
     }
   }
-
 }
 
 //--------------------------------------------------------------
@@ -367,6 +424,10 @@ GMEVENT *GYM_ANTI_SwOn(GAMESYS_WORK *gsys, const u8 inSwIdx)
 
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
 
+  if (inSwIdx > ANTI_SW_NUM_MAX){
+    return NULL;
+  }
+
   //イベントコール
   event = GMEVENT_Create( gsys, NULL, PushSwEvt, 0 );
     
@@ -394,6 +455,10 @@ GMEVENT *GYM_ANTI_OpenDoor(GAMESYS_WORK *gsys, const u8 inDoorIdx)
   GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
 
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
+
+  if (inDoorIdx > ANTI_DOOR_NUM_MAX){
+    return NULL;
+  }
 
   //イベントコール
   event = GMEVENT_Create( gsys, NULL, OpenDoorEvt, 0 );
@@ -454,8 +519,6 @@ static GMEVENT_RESULT PushSwEvt( GMEVENT* event, int* seq, void* work )
       sw_anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0);
       if ( FLD_EXP_OBJ_ChkAnmEnd(sw_anm) ){
         OS_Printf("アニメ終了\n");
-        //スイッチ押下フラグオン
-        gmk_sv_work->Sw[tmp->SwIdx] = 1;
         return GMEVENT_RES_FINISH;
       }
     }
@@ -512,6 +575,8 @@ static GMEVENT_RESULT OpenDoorEvt( GMEVENT* event, int* seq, void* work )
       door_anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ANTI_UNIT_IDX, door_obj_idx, 0);
       if ( FLD_EXP_OBJ_ChkAnmEnd(door_anm) ){
         OS_Printf("アニメ終了\n");
+        //スイッチ押下フラグオン
+        gmk_sv_work->Sw[tmp->SwIdx] = 1;
         return GMEVENT_RES_FINISH;
       }
     }

@@ -1042,6 +1042,10 @@ GMEVENT *GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx)
 
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ELEC );
 
+  if (inLeverIdx >= LEVER_NUM_MAX){
+    return NULL;
+  }
+
   //イベントコール
   event = GMEVENT_Create( gsys, NULL, ChangePointEvt, 0 );
     

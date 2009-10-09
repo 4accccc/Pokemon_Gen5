@@ -387,6 +387,10 @@ GMEVENT * GYM_NORMAL_MoveWall(GAMESYS_WORK *gsys, const u8 inWallIdx)
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   GYM_NORMAL_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_NORMAL_TMP_ASSIGN_ID);
 
+  if (inWallIdx >= NRM_WALL_NUM_MAX){
+    return NULL;
+  }
+
   //イベントコール
   event = GMEVENT_Create( gsys, NULL, WallAnmEvt, 0 );
     
