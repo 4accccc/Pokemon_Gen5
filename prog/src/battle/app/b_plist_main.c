@@ -1371,7 +1371,7 @@ static int BPL_SeqPageChgStatus( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqPageChgStWazaSel( BPLIST_WORK * wk )
 {
-	if( BPL_PageChange( wk, BPLIST_PAGE_WAZA_SEL ) == TRUE ){
+	if( BPL_PageChange( wk, BPLIST_PAGE_WAZA_SEL ) == FALSE ){
 		return SEQ_BPL_PAGECHG_WAZASEL;
 	}
 	return SEQ_BPL_ST_WAZASEL;
@@ -1388,7 +1388,7 @@ static int BPL_SeqPageChgStWazaSel( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqPageChgWazaInfo( BPLIST_WORK * wk )
 {
-	if( BPL_PageChange( wk, BPLIST_PAGE_SKILL ) == TRUE ){
+	if( BPL_PageChange( wk, BPLIST_PAGE_SKILL ) == FALSE ){
 		return SEQ_BPL_PAGECHG_WAZAINFO;
 	}
 	return SEQ_BPL_ST_SKILL;
@@ -1405,7 +1405,7 @@ static int BPL_SeqPageChgWazaInfo( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqPageChgWazaSetSel( BPLIST_WORK * wk )
 {
-	if( BPL_PageChange( wk, BPLIST_PAGE_WAZASET_BS ) == TRUE ){
+	if( BPL_PageChange( wk, BPLIST_PAGE_WAZASET_BS ) == FALSE ){
 		return SEQ_BPL_PAGECHG_WAZASET_S;
 	}
 	return SEQ_BPL_WAZADEL_SEL;
