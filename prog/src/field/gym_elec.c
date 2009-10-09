@@ -816,7 +816,7 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work)
         gmk_sv_work->StopPlatformIdx[i] = RaleStopPlatform[rale_idx][stop_idx];
       }
     }
-    OS_Printf("%d::stop_plat %d\n",i, gmk_sv_work->StopPlatformIdx[i]);
+//    OS_Printf("%d::stop_plat %d\n",i, gmk_sv_work->StopPlatformIdx[i]);
   } //end for
 
   //--Ž©‹@Ž©“®ˆÚ“®•”--
