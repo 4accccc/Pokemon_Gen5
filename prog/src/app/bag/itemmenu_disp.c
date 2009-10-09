@@ -1269,6 +1269,9 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 24;
+	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
+	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
+
 
   for(i=0;i<num;i++){
     pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
@@ -1788,6 +1791,8 @@ void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork)
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 12;
+	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
+	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->MsgManager, MSG_ITEM_STR003, pWork->appitem[0].str);
