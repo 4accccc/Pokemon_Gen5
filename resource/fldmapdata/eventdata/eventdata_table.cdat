@@ -2415,15 +2415,9 @@
 
 #define R02_BOY2                           0
 #define R02_GIRL2                          1
-#define R02_TRAINER_01                     2
-#define R02_TRAINER_02                     3
-#define R02_TRAINER_03                     4
-#define R02_TRAINER_04                     5
-#define R02_TRAINER_05                     6
-#define R02_TRAINER_06                     7
-#define R02_RIVAL_01                       8
-#define R02_ROCK_01                        9
-#define R02_MAMA_01                       10
+#define R02_RIVAL_01                       2
+#define R02_ROCK_01                        3
+#define R02_MAMA_01                        4
 
 #endif //ZONE_R02_EVC_H
 //#include "tmp/r02r0101.h"
@@ -11463,108 +11457,6 @@ const FLDMMDL_HEADER OBJ_EVENT_R02[] = {
 		FX32_CONST(16),
 	},
 	{
-		R02_TRAINER_01,
-		BOY1,
-		MV_RIGHT,
-		EV_TYPE_TRAINER,
-		0,
-		SCRID_R02_TRAINER_01,
-		DIR_RIGHT,
-		2,
-		0,
-		0,
-		0,
-		0,
-		758,
-		646,
-		FX32_CONST(0),
-	},
-	{
-		R02_TRAINER_02,
-		GIRL1,
-		MV_RIGHT,
-		EV_TYPE_TRAINER,
-		0,
-		SCRID_R02_TRAINER_02,
-		DIR_RIGHT,
-		2,
-		0,
-		0,
-		0,
-		0,
-		757,
-		650,
-		FX32_CONST(0),
-	},
-	{
-		R02_TRAINER_03,
-		BOY1,
-		MV_LEFT,
-		EV_TYPE_TRAINER,
-		0,
-		SCRID_R02_TRAINER_03,
-		DIR_LEFT,
-		2,
-		0,
-		0,
-		0,
-		0,
-		753,
-		649,
-		FX32_CONST(0),
-	},
-	{
-		R02_TRAINER_04,
-		GIRL1,
-		MV_LEFT,
-		EV_TYPE_TRAINER,
-		0,
-		SCRID_R02_TRAINER_04,
-		DIR_LEFT,
-		2,
-		0,
-		0,
-		0,
-		0,
-		754,
-		649,
-		FX32_CONST(0),
-	},
-	{
-		R02_TRAINER_05,
-		WOMAN1,
-		MV_DOWN,
-		EV_TYPE_TRAINER,
-		0,
-		SCRID_R02_TRAINER_05,
-		DIR_DOWN,
-		2,
-		0,
-		0,
-		0,
-		0,
-		775,
-		630,
-		FX32_CONST(0),
-	},
-	{
-		R02_TRAINER_06,
-		MAN1,
-		MV_LEFT,
-		EV_TYPE_TRAINER,
-		0,
-		SCRID_R02_TRAINER_06,
-		DIR_LEFT,
-		2,
-		0,
-		0,
-		0,
-		0,
-		787,
-		618,
-		FX32_CONST(0),
-	},
-	{
 		R02_RIVAL_01,
 		RIVEL,
 		MV_UP,
@@ -11663,7 +11555,7 @@ const int PosCount_R02 = NELEMS(POS_EVENT_R02);
 
 static const EVENTDATA_TABLE event_r02 = {
 	3,
-	11,
+	5,
 	4,
 	2,
 	(void *)&BG_EVENT_R02,
@@ -12840,7 +12732,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 		MV_DOWN,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_SODATEYA_GRANDPA,
+		SCRID_T01_TALKOBJ_BIGMAN,
 		DIR_DOWN,
 		0,
 		0,
@@ -12874,7 +12766,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 		MV_RT2,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_SODATEYA_GRANDMA,
+		SCRID_T01_TALKOBJ_BABYGIRL1,
 		DIR_LEFT,
 		0,
 		0,

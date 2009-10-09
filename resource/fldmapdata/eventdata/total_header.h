@@ -2283,15 +2283,9 @@
 
 #define R02_BOY2                           0
 #define R02_GIRL2                          1
-#define R02_TRAINER_01                     2
-#define R02_TRAINER_02                     3
-#define R02_TRAINER_03                     4
-#define R02_TRAINER_04                     5
-#define R02_TRAINER_05                     6
-#define R02_TRAINER_06                     7
-#define R02_RIVAL_01                       8
-#define R02_ROCK_01                        9
-#define R02_MAMA_01                       10
+#define R02_RIVAL_01                       2
+#define R02_ROCK_01                        3
+#define R02_MAMA_01                        4
 
 #endif //ZONE_R02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕdata/r02r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
