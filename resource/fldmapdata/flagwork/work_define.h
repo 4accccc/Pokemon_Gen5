@@ -53,74 +53,50 @@
 #define OBJCHRWORKAREA_END               16431 /* 0x402f  */
 
 
-/* flags "" 16432 ～ 16495 */
+/* flags "sys_work.xls" 16432 ～ 16495 */
 
 #define WK_SYS_AREA_START                16432 /* 0x4030  */
 
-#define WK_SYS_000                       16432 /* 0x4030 領域確保による自動生成 */
-#define WK_SYS_001                       16433 /* 0x4031 領域確保による自動生成 */
-#define WK_SYS_002                       16434 /* 0x4032 領域確保による自動生成 */
-#define WK_SYS_003                       16435 /* 0x4033 領域確保による自動生成 */
-#define WK_SYS_004                       16436 /* 0x4034 領域確保による自動生成 */
-#define WK_SYS_005                       16437 /* 0x4035 領域確保による自動生成 */
-#define WK_SYS_006                       16438 /* 0x4036 領域確保による自動生成 */
-#define WK_SYS_007                       16439 /* 0x4037 領域確保による自動生成 */
-#define WK_SYS_008                       16440 /* 0x4038 領域確保による自動生成 */
-#define WK_SYS_009                       16441 /* 0x4039 領域確保による自動生成 */
-#define WK_SYS_010                       16442 /* 0x403a 領域確保による自動生成 */
-#define WK_SYS_011                       16443 /* 0x403b 領域確保による自動生成 */
-#define WK_SYS_012                       16444 /* 0x403c 領域確保による自動生成 */
-#define WK_SYS_013                       16445 /* 0x403d 領域確保による自動生成 */
-#define WK_SYS_014                       16446 /* 0x403e 領域確保による自動生成 */
-#define WK_SYS_015                       16447 /* 0x403f 領域確保による自動生成 */
-#define WK_SYS_016                       16448 /* 0x4040 領域確保による自動生成 */
-#define WK_SYS_017                       16449 /* 0x4041 領域確保による自動生成 */
-#define WK_SYS_018                       16450 /* 0x4042 領域確保による自動生成 */
-#define WK_SYS_019                       16451 /* 0x4043 領域確保による自動生成 */
-#define WK_SYS_020                       16452 /* 0x4044 領域確保による自動生成 */
-#define WK_SYS_021                       16453 /* 0x4045 領域確保による自動生成 */
-#define WK_SYS_022                       16454 /* 0x4046 領域確保による自動生成 */
-#define WK_SYS_023                       16455 /* 0x4047 領域確保による自動生成 */
-#define WK_SYS_024                       16456 /* 0x4048 領域確保による自動生成 */
-#define WK_SYS_025                       16457 /* 0x4049 領域確保による自動生成 */
-#define WK_SYS_026                       16458 /* 0x404a 領域確保による自動生成 */
-#define WK_SYS_027                       16459 /* 0x404b 領域確保による自動生成 */
-#define WK_SYS_028                       16460 /* 0x404c 領域確保による自動生成 */
-#define WK_SYS_029                       16461 /* 0x404d 領域確保による自動生成 */
-#define WK_SYS_030                       16462 /* 0x404e 領域確保による自動生成 */
-#define WK_SYS_031                       16463 /* 0x404f 領域確保による自動生成 */
-#define WK_SYS_032                       16464 /* 0x4050 領域確保による自動生成 */
-#define WK_SYS_033                       16465 /* 0x4051 領域確保による自動生成 */
-#define WK_SYS_034                       16466 /* 0x4052 領域確保による自動生成 */
-#define WK_SYS_035                       16467 /* 0x4053 領域確保による自動生成 */
-#define WK_SYS_036                       16468 /* 0x4054 領域確保による自動生成 */
-#define WK_SYS_037                       16469 /* 0x4055 領域確保による自動生成 */
-#define WK_SYS_038                       16470 /* 0x4056 領域確保による自動生成 */
-#define WK_SYS_039                       16471 /* 0x4057 領域確保による自動生成 */
-#define WK_SYS_040                       16472 /* 0x4058 領域確保による自動生成 */
-#define WK_SYS_041                       16473 /* 0x4059 領域確保による自動生成 */
-#define WK_SYS_042                       16474 /* 0x405a 領域確保による自動生成 */
-#define WK_SYS_043                       16475 /* 0x405b 領域確保による自動生成 */
-#define WK_SYS_044                       16476 /* 0x405c 領域確保による自動生成 */
-#define WK_SYS_045                       16477 /* 0x405d 領域確保による自動生成 */
-#define WK_SYS_046                       16478 /* 0x405e 領域確保による自動生成 */
-#define WK_SYS_047                       16479 /* 0x405f 領域確保による自動生成 */
-#define WK_SYS_048                       16480 /* 0x4060 領域確保による自動生成 */
-#define WK_SYS_049                       16481 /* 0x4061 領域確保による自動生成 */
-#define WK_SYS_050                       16482 /* 0x4062 領域確保による自動生成 */
-#define WK_SYS_051                       16483 /* 0x4063 領域確保による自動生成 */
-#define WK_SYS_052                       16484 /* 0x4064 領域確保による自動生成 */
-#define WK_SYS_053                       16485 /* 0x4065 領域確保による自動生成 */
-#define WK_SYS_054                       16486 /* 0x4066 領域確保による自動生成 */
-#define WK_SYS_055                       16487 /* 0x4067 領域確保による自動生成 */
-#define WK_SYS_056                       16488 /* 0x4068 領域確保による自動生成 */
-#define WK_SYS_057                       16489 /* 0x4069 領域確保による自動生成 */
-#define WK_SYS_058                       16490 /* 0x406a 領域確保による自動生成 */
-#define WK_SYS_059                       16491 /* 0x406b 領域確保による自動生成 */
-#define WK_SYS_060                       16492 /* 0x406c 領域確保による自動生成 */
-#define WK_SYS_061                       16493 /* 0x406d 領域確保による自動生成 */
-#define WK_SYS_062                       16494 /* 0x406e 領域確保による自動生成 */
-#define WK_SYS_063                       16495 /* 0x406f 領域確保による自動生成 */
+#define WK_SYS_FIRST_POKE_NO             16432 /* 0x4030 最初の３体から選んだポケモンナンバー */
+		/* not used 16433(0x4031) */
+		/* not used 16434(0x4032) */
+		/* not used 16435(0x4033) */
+		/* not used 16436(0x4034) */
+		/* not used 16437(0x4035) */
+		/* not used 16438(0x4036) */
+		/* not used 16439(0x4037) */
+		/* not used 16440(0x4038) */
+		/* not used 16441(0x4039) */
+		/* not used 16442(0x403a) */
+		/* not used 16443(0x403b) */
+		/* not used 16444(0x403c) */
+		/* not used 16445(0x403d) */
+		/* not used 16446(0x403e) */
+		/* not used 16447(0x403f) */
+		/* not used 16448(0x4040) */
+		/* not used 16449(0x4041) */
+		/* not used 16450(0x4042) */
+		/* not used 16451(0x4043) */
+		/* not used 16452(0x4044) */
+		/* not used 16453(0x4045) */
+		/* not used 16454(0x4046) */
+		/* not used 16455(0x4047) */
+		/* not used 16456(0x4048) */
+		/* not used 16457(0x4049) */
+		/* not used 16458(0x404a) */
+		/* not used 16459(0x404b) */
+		/* not used 16460(0x404c) */
+		/* not used 16461(0x404d) */
+		/* not used 16462(0x404e) */
+		/* not used 16463(0x404f) */
+		/* not used 16464(0x4050) */
+		/* not used 16465(0x4051) */
+		/* not used 16466(0x4052) */
+		/* not used 16467(0x4053) */
+		/* not used 16468(0x4054) */
+		/* not used 16469(0x4055) */
+		/* not used 16470(0x4056) */
+		/* not used 16471(0x4057) */
 
 #define WK_SYS_AREA_END                  16495 /* 0x406f  */
 
@@ -148,7 +124,7 @@
 #define WK_SCENE_T01                     16512 /* 0x4080 カノコタウン（フィールド）：イベント用ワーク */
 #define WK_SCENE_T01R0102                16513 /* 0x4081 主人公宅２階：イベント用ワーク */
 #define WK_SCENE_C01GYM0101              16514 /* 0x4082 C01ジム（三色ジム）：イベント用ワーク */
-		/* not used 16515(0x4083) */
+#define WK_SCENE_D01R0101                16515 /* 0x4083 廃墟：イベント用ワーク */
 		/* not used 16516(0x4084) */
 		/* not used 16517(0x4085) */
 		/* not used 16518(0x4086) */
