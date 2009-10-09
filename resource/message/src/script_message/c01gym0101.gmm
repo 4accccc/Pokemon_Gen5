@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-09T16:12:46"/>
+	<create user="matsumiya" host="W00207" date="2009-10-09T20:19:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -441,6 +441,39 @@
 あいてを　してやるよ！</language>
 		<language name="JPN_KANJI" width="256">オレ　負けないよ！
 だって　兄弟で一番　強いし！</language>
+	</row>
+
+	<row id="msg_c01gym0101_leader1_21a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂：ジムリーダー「ポッド」（画面左）
+最初に選んだポケモンが、くさタイプ
+・msg_c01gym0101_leader1_05a表示後に会話
+・戦闘しない場合用</comment>
+		<language name="JPN" width="256">なんだよーッ！
+オレが　たたかいたかったのになー！！</language>
+		<language name="JPN_KANJI" width="256">なんだよーッ！
+オレが　闘いたかったのになー！！</language>
+	</row>
+
+	<row id="msg_c01gym0101_leader1_21b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂：ジムリーダー「コーン」（画面中）
+最初に選んだポケモンが、ほのおタイプ
+・msg_c01gym0101_leader1_05b表示後に会話
+・戦闘しない場合用</comment>
+		<language name="JPN" width="256">ざんねんですね
+ぼくが　おあいて　したかったです</language>
+		<language name="JPN_KANJI" width="256">残念ですね
+ぼくが　お相手したかったです</language>
+	</row>
+
+	<row id="msg_c01gym0101_leader1_21c" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂：ジムリーダー「デント」（画面右）
+最初に選んだポケモンが、みずタイプ
+・msg_c01gym0101_leader1_05c表示後に会話
+・戦闘しない場合用</comment>
+		<language name="JPN" width="256">オレが　いちばん　つよいのに！
+どうして　みずタイプ　なんだよ！！</language>
+		<language name="JPN_KANJI" width="256">オレが　兄弟で一番　強いのに！
+どうして　みずタイプ　選んだんだよ！！</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_06a">
