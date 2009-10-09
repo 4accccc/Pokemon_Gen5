@@ -919,7 +919,6 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   
   req->moveRequest = 0;
 
-  //–{“–‚Ívalue‚àŒ©‚é‚ªA¡‚ÍŽb’è
   if( FIELD_PLAYER_GetMoveValue(req->field_player) == PLAYER_MOVE_VALUE_WALK ){
     req->moveRequest = ((req->player_state == PLAYER_MOVE_STATE_END));
   }
