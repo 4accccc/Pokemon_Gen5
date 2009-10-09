@@ -3221,6 +3221,8 @@ static void CONFIRM_Init( CONFIRM_WORK *p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_
 		p_wk->init.posType	 = ATPT_RIGHT_DOWN;
 		p_wk->init.charPosX = 32;
 		p_wk->init.charPosY = 24;
+		p_wk->init.w				= APP_TASKMENU_PLATE_WIDTH;
+		p_wk->init.h				= APP_TASKMENU_PLATE_HEIGHT;
 	}
 	
 }
