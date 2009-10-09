@@ -2,7 +2,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	saitou
+USERS	=	saitou murakami_naoto
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -19,6 +19,9 @@ TARGETDIR = $(PROJECT_ARCDIR)$(FLDMAP)
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
 SUBDIRS	=
+
+CDAT = gym_normal_local_def.cdat
+EXIT_CDAT = gym_normal_exit_def.cdat
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -44,20 +47,14 @@ INCPATH	= -I$(NITROSDK_ROOT)/include
 #------------------------------------------------------------------------------
 #ツール
 #------------------------------------------------------------------------------
+DEF_MAKE = ../def_write.rb
+XLS_CNV = ../../../../tools/exceltool/xls2xml/tab_out.rb
 
 .PHONY:	do-build clean
 
 
 
-do-build: $(TARGETDIR)/$(targetname).narc
-
-#clean:
-#	@rm -f $(TARGETDIR)/$(targetname).narc
-#	@rm -f $(TARGETDIR)/$(targetname).naix
-#ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
-#	@rm -f $(targetname).narc
-#	@rm -f $(targetname).naix
-#endif
+do-build: $(TARGETDIR)/$(targetname).narc $(CDAT) $(EXIT_CDAT)
 
 #コピー実行する
 $(TARGETDIR)/$(targetname).narc:  $(targetname).narc 
@@ -81,5 +78,25 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 $(targetname).narc: $(DATA_LIST)
 	@nnsarc -i -cl -l -n $(targetname).narc -S $(ARCLIST) > arc_result.txt
 #	@-rm -f *.nsb*
+
+ifeq	($(USERNAME),saitou)
+$(CDAT): wall_def_make.xls
+	ruby $(XLS_CNV) -c wall_def_make.xls > wall_def_make.csv
+	ruby $(DEF_MAKE) wall_def_make.csv $(CDAT)
+
+$(EXIT_CDAT): exit_def_make.xls
+	ruby $(XLS_CNV) -c exit_def_make.xls > exit_def_make.csv
+	ruby $(DEF_MAKE) exit_def_make.csv $(EXIT_CDAT)
+endif
+
+ifeq	($(USERNAME),murakami_naoto)
+$(CDAT): wall_def_make.xls
+	ruby $(XLS_CNV) -c wall_def_make.xls > wall_def_make.csv
+	ruby $(DEF_MAKE) wall_def_make.csv $(CDAT)
+
+$(EXIT_CDAT): exit_def_make.xls
+	ruby $(XLS_CNV) -c exit_def_make.xls > exit_def_make.csv
+	ruby $(DEF_MAKE) exit_def_make.csv $(EXIT_CDAT)
+endif
 
 endif
