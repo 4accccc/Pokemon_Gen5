@@ -3,7 +3,8 @@
 # _EVENT_DATA記述をtrainer.evに出力する
 #
 # 引数 trainer.rb path_trid path_sc 
-# script_file データに記述するスクリプトファイルのパス
+# path_trid 参照するトレーナーIDが定義されたファイルパス
+# path_sc データに記述するスクリプトファイルパス
 #=======================================================================
 $KCODE = "SJIS"
 
