@@ -73,7 +73,7 @@ VMCMD_RESULT EvCmdGymNormal_Init( VMHANDLE *core, void *wk )
 
   room_no = VMGetU16( core );
   GFL_OVERLAY_Load( FS_OVERLAY_ID(field_gym_init) );		//オーバーレイロード
-  GYM_INIT_Normal(gsys, room_no);
+  GYM_INIT_Normal(gsys);
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(field_gym_init));		//オーバーレイアンロード
 
   return VMCMD_RESULT_CONTINUE;

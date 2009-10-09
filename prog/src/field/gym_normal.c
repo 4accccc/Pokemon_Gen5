@@ -47,14 +47,8 @@
 //OBJのＹ座標
 #define OBJ3D_Y  (0*FIELD_CONST_GRID_FX32_SIZE)
 
-#define ROOM1_WALL_NUM  (1)
-#define ROOM2_WALL_NUM  (6)
+#define WALL_NUM  (1)
 
-
-enum {
-  NORM_GYM_R1 = 0,
-  NORM_GYM_R2
-};
 
 typedef struct POS_XZ_tag
 {
@@ -65,21 +59,16 @@ typedef struct POS_XZ_tag
 //ジム内部中の一時ワーク
 typedef struct GYM_NORMAL_TMP_tag
 {
-  u16 RoomNo;
   u16 WallIdx;
+  u16 dummy;
 }GYM_NORMAL_TMP;
 
 //ＯＢＪインデックス
 enum {
   OBJ_WALL_1 = 0,
-  OBJ_WALL_2,
-  OBJ_WALL_3,
-  OBJ_WALL_4,
-  OBJ_WALL_5,
-  OBJ_WALL_6,
 };
 
-//カプセルアニメの順番
+//アニメの順番
 enum{
   ANM_WALL_MOV = 0,
 };
@@ -90,19 +79,9 @@ enum {
   RES_ID_WALL_MOVE,
 };
 
-static const POS_XZ Room1WallPos[ROOM1_WALL_NUM] = {
+static const POS_XZ WallPos[WALL_NUM] = {
   {WALL0_X, WALL0_Z},
 };
-
-static const POS_XZ Room2WallPos[ROOM2_WALL_NUM] = {
-  {WALL1_X, WALL1_Z},
-  {WALL2_X, WALL2_Z},
-  {WALL3_X, WALL3_Z},
-  {WALL4_X, WALL4_Z},
-  {WALL5_X, WALL5_Z},
-  {WALL6_X, WALL6_Z},
-};
-
 
 //--リソース関連--
 //読み込む3Dリソース
@@ -117,7 +96,7 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl[] = {
 };
 
 //3Dオブジェクト設定テーブル
-static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl1[ROOM1_WALL_NUM] = {
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[WALL_NUM] = {
   //本棚1
 	{
 		RES_ID_WALL_MDL, 	//モデルリソースID
@@ -128,73 +107,12 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl1[ROOM1_WALL_NUM] = {
 	},
 };
 
-static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl2[ROOM2_WALL_NUM] = {
-  //本棚1
-	{
-		RES_ID_WALL_MDL, 	//モデルリソースID
-		0, 							  //モデルデータID(リソース内部INDEX)
-		RES_ID_WALL_MDL, 	//テクスチャリソースID
-		g3Dutil_anmTbl,			//アニメテーブル(複数指定のため)
-		NELEMS(g3Dutil_anmTbl),	//アニメリソース数
-	},
-  //本棚2
-	{
-		RES_ID_WALL_MDL, 	//モデルリソースID
-		0, 							  //モデルデータID(リソース内部INDEX)
-		RES_ID_WALL_MDL, 	//テクスチャリソースID
-		g3Dutil_anmTbl,			//アニメテーブル(複数指定のため)
-		NELEMS(g3Dutil_anmTbl),	//アニメリソース数
-	},
-  //本棚3
-	{
-		RES_ID_WALL_MDL, 	//モデルリソースID
-		0, 							  //モデルデータID(リソース内部INDEX)
-		RES_ID_WALL_MDL, 	//テクスチャリソースID
-		g3Dutil_anmTbl,			//アニメテーブル(複数指定のため)
-		NELEMS(g3Dutil_anmTbl),	//アニメリソース数
-	},
-  //本棚4
-	{
-		RES_ID_WALL_MDL, 	//モデルリソースID
-		0, 							  //モデルデータID(リソース内部INDEX)
-		RES_ID_WALL_MDL, 	//テクスチャリソースID
-		g3Dutil_anmTbl,			//アニメテーブル(複数指定のため)
-		NELEMS(g3Dutil_anmTbl),	//アニメリソース数
-	},
-  //本棚5
-	{
-		RES_ID_WALL_MDL, 	//モデルリソースID
-		0, 							  //モデルデータID(リソース内部INDEX)
-		RES_ID_WALL_MDL, 	//テクスチャリソースID
-		g3Dutil_anmTbl,			//アニメテーブル(複数指定のため)
-		NELEMS(g3Dutil_anmTbl),	//アニメリソース数
-	},
-  //本棚6
-	{
-		RES_ID_WALL_MDL, 	//モデルリソースID
-		0, 							  //モデルデータID(リソース内部INDEX)
-		RES_ID_WALL_MDL, 	//テクスチャリソースID
-		g3Dutil_anmTbl,			//アニメテーブル(複数指定のため)
-		NELEMS(g3Dutil_anmTbl),	//アニメリソース数
-	},
-};
-
-static const GFL_G3D_UTIL_SETUP Setup1 = {
+static const GFL_G3D_UTIL_SETUP Setup = {
   g3Dutil_resTbl,				//リソーステーブル
 	NELEMS(g3Dutil_resTbl),		//リソース数
-	g3Dutil_objTbl1,				//オブジェクト設定テーブル
-	NELEMS(g3Dutil_objTbl1),		//オブジェクト数
+	g3Dutil_objTbl,				//オブジェクト設定テーブル
+	NELEMS(g3Dutil_objTbl),		//オブジェクト数
 };
-
-static const GFL_G3D_UTIL_SETUP Setup2 = {
-  g3Dutil_resTbl,				//リソーステーブル
-	NELEMS(g3Dutil_resTbl),		//リソース数
-	g3Dutil_objTbl2,				//オブジェクト設定テーブル
-	NELEMS(g3Dutil_objTbl2),		//オブジェクト数
-};
-
-
-static void SetupRoom(FIELDMAP_WORK *fieldWork, const u8 inRoomNo);
 
 static GMEVENT_RESULT WallAnmEvt( GMEVENT* event, int* seq, void* work );
 
@@ -203,36 +121,12 @@ BOOL test_GYM_NORMAL_WallAnm(GAMESYS_WORK *gsys, const u8 inWallIdx);
 
 //--------------------------------------------------------------
 /**
- * セットアップ関数　部屋1
- * @param	
- * @return
- */
-//--------------------------------------------------------------
-void GYM_NORMAL_SetupRoom1(FIELDMAP_WORK *fieldWork)
-{
-  SetupRoom(fieldWork, NORM_GYM_R1);
-}
-
-//--------------------------------------------------------------
-/**
- * セットアップ関数　部屋2
- * @param	
- * @return
- */
-//--------------------------------------------------------------
-void GYM_NORMAL_SetupRoom2(FIELDMAP_WORK *fieldWork)
-{
-  SetupRoom(fieldWork, NORM_GYM_R2);
-}
-
-//--------------------------------------------------------------
-/**
  * セットアップ関数
  * @param	
  * @return
  */
 //--------------------------------------------------------------
-static void SetupRoom(FIELDMAP_WORK *fieldWork, const u8 inRoomNo)
+void GYM_NORMAL_Setup(FIELDMAP_WORK *fieldWork)
 {
   u8 wall_num;
   const POS_XZ *pos;
@@ -246,20 +140,13 @@ static void SetupRoom(FIELDMAP_WORK *fieldWork, const u8 inRoomNo)
       (fieldWork, GYM_NORMAL_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(GYM_NORMAL_TMP));
 
   tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_NORMAL_TMP_ASSIGN_ID);
-  tmp->RoomNo = inRoomNo;
 
-  if (inRoomNo == NORM_GYM_R1){
+  {
     //必要なリソースの用意
-    FLD_EXP_OBJ_AddUnit(ptr, &Setup1, GYM_NORMAL_UNIT_IDX );
-    wall_num = ROOM1_WALL_NUM;
-    pos = Room1WallPos;
-    gmk_id = FLD_GIMMICK_GYM_NORM1;
-  }else{
-    //必要なリソースの用意
-    FLD_EXP_OBJ_AddUnit(ptr, &Setup2, GYM_NORMAL_UNIT_IDX );
-    wall_num = ROOM2_WALL_NUM;
-    pos = Room2WallPos;
-    gmk_id = FLD_GIMMICK_GYM_NORM2;
+    FLD_EXP_OBJ_AddUnit(ptr, &Setup, GYM_NORMAL_UNIT_IDX );
+    wall_num = WALL_NUM;
+    pos = WallPos;
+    gmk_id = FLD_GIMMICK_GYM_NORM;
   }
 
   {
@@ -268,7 +155,7 @@ static void SetupRoom(FIELDMAP_WORK *fieldWork, const u8 inRoomNo)
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, gmk_id );
   }
 
-  //座標セット　カプセル
+  //座標セット
   {
     u8 i;
     for (i=0;i<wall_num;i++){
@@ -310,7 +197,6 @@ static void SetupRoom(FIELDMAP_WORK *fieldWork, const u8 inRoomNo)
   if (gmk_sv_work->GmkUnrock){
     ;
   }
-
 }
 
 //--------------------------------------------------------------
@@ -363,7 +249,7 @@ void GYM_NORMAL_Unrock(FIELDMAP_WORK *fieldWork)
   GYM_NORMAL_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_NORMAL_TMP_ASSIGN_ID);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
   GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
-  gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_NORM1 );  //@todo
+  gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_NORM );
 
   gmk_sv_work->GmkUnrock = TRUE;
 }
@@ -375,7 +261,7 @@ BOOL GYM_NORMAL_CheckRock(FIELDMAP_WORK *fieldWork)
   GYM_NORMAL_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_NORMAL_TMP_ASSIGN_ID);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
   GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
-  gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_NORM1 );  //@todo
+  gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_NORM );
 
   return gmk_sv_work->GmkUnrock;
 }
@@ -418,11 +304,7 @@ BOOL test_GYM_NORMAL_WallAnm(GAMESYS_WORK *gsys, const u8 inWallIdx)
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
   GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
 
-  if (tmp->RoomNo == NORM_GYM_R1){
-    gmk_id = FLD_GIMMICK_GYM_NORM1;
-  }else{
-    gmk_id = FLD_GIMMICK_GYM_NORM2;
-  }
+  gmk_id = FLD_GIMMICK_GYM_NORM;
 
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, gmk_id );
   tmp->WallIdx = inWallIdx;
@@ -452,11 +334,7 @@ static GMEVENT_RESULT WallAnmEvt( GMEVENT* event, int* seq, void* work )
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_NORMAL_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_NORMAL_TMP_ASSIGN_ID);
 
-  if (tmp->RoomNo == NORM_GYM_R1){
-    gmk_id = FLD_GIMMICK_GYM_NORM1;
-  }else{
-    gmk_id = FLD_GIMMICK_GYM_NORM2;
-  }
+  gmk_id = FLD_GIMMICK_GYM_NORM;
 
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );

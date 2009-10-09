@@ -46,22 +46,15 @@ void GYM_INIT_Elec(GAMESYS_WORK *gsys)
  * @return
  */
 //--------------------------------------------------------------
-void GYM_INIT_Normal(GAMESYS_WORK *gsys, const u8 inRoomNo)
+void GYM_INIT_Normal(GAMESYS_WORK *gsys)
 {
   u8 i;
-  int gmk_id;
   GYM_NORMAL_SV_WORK *gmk_sv_work;
-
-  if (inRoomNo == 0){
-    gmk_id = FLD_GIMMICK_GYM_NORM1;
-  }else{
-    gmk_id = FLD_GIMMICK_GYM_NORM2;
-  }
 
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
     GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
-    gmk_sv_work = GIMMICKWORK_Get( gmkwork, gmk_id );
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_NORM );
   }
 
   //PLAYERWORKから、初回位置座標を取得し、ギミック稼動後かどうかを判定する
