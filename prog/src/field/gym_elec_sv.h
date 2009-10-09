@@ -10,7 +10,7 @@
 #define __GYM_ELEC_SV_H__
 
 #define CAPSULE_NUM_MAX (4)
-#define LEVER_NUM_MAX (4)
+#define LEVER_NUM_MAX (CAPSULE_NUM_MAX)
 #define PLATFORM_NO_STOP (-1)
 
 typedef struct CAPSULE_DAT_tag
