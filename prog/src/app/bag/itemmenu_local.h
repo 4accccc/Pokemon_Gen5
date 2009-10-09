@@ -1,5 +1,3 @@
-
-
 //======================================================================
 /**
  * @file	  itemmenu.h
@@ -66,7 +64,6 @@ enum _ITEMLISTCELL_RESOURCE
   SCR_MAX ,
 };
 
-
 //技アイコンのリソース
 enum WAZAICON_CELL
 {
@@ -85,8 +82,20 @@ enum
   BAR_ICON_CHECK_BOX,
   BAR_ICON_EXIT,
   BAR_ICON_RETURN,
+  BAR_ICON_INPUT_U, ///< 数値入力上
+  BAR_ICON_INPUT_D, ///< 数値入力下
   BAR_ICON_MAX,
 };
+
+//--------------------------------------------------------------
+///	数値入力モード
+//==============================================================
+typedef enum
+{ 
+  BAG_INPUT_MODE_NULL = 0,
+  BAG_INPUT_MODE_TRASH,
+  BAG_INPUT_MODE_SELL,
+} BAG_INPUT_MODE;
 
 
 typedef struct _DEBUGITEM_PARAM FIELD_ITEMMENU_WORK;
@@ -167,12 +176,13 @@ struct _DEBUGITEM_PARAM {
   NNSG2dCharacterData *ncgData;
   void *ncgRes; 
 
+  BAG_INPUT_MODE InputMode;
+  int InputNum;
   int mainbg;
   int subbg;
   int subbg2;
   int barbg;
   int numFrameBg;
-  int InputNum;
 	int pocketno;  //今さしているポケット番号
 	int curpos;   //今さしているカーソル番号
   int oamlistpos; //OAMLIST の 先頭位置 -1から開始
@@ -300,8 +310,6 @@ extern int ITEMMENU_GetPosCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
 extern BOOL ITEMMENU_AddCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
 extern void ITEMMENU_RemoveCnvButtonItem(FIELD_ITEMMENU_WORK* pWork, int no);
 extern void ITEMDISP_SetVisible(void);
-extern void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork);
-extern void ITEMDISP_TrashNumDisp(FIELD_ITEMMENU_WORK* pWork,int num);
 extern void ITEMDISP_BarMessageCreate( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_BarMessageDelete( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_PocketMessage(FIELD_ITEMMENU_WORK* pWork,int newpocket);
@@ -309,5 +317,7 @@ extern void ITEMDISP_GoldDispIn( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_GoldDispOut( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_YesNoExit(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork);
+extern void ITEMDISP_InputNumDisp(FIELD_ITEMMENU_WORK* pWork,int num);
 
 

@@ -135,6 +135,9 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellEndMsgWait( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork );
 static s32 _get_item_sell_price( int item_no, int input_num, HEAPID heapID );
+static void InputNum_Start( FIELD_ITEMMENU_WORK* pWork, BAG_INPUT_MODE mode );
+static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork );
+static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork );
 //static void BAG_ItemUseErrorMsgSet( MYSTATUS * myst, STRBUF * buf, u16 item, u32 err, FIELD_ITEMMENU_WORK * pWork );
 //u8 Bag_TalkMsgPrint( BAG_WORK * pWork, int type );
 //static int Bag_MenuUse( FIELD_ITEMMENU_WORK * pWork );
@@ -230,13 +233,29 @@ static BMPMENULIST_HEADER _itemMenuListHeader = {
   NULL,		//表示に使用するフォントハンドル
 };
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ウィンドウ描画初期化
+ *
+ *	@param	pWork
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static void _windowCreate(FIELD_ITEMMENU_WORK* pWork)
 {
   _windowRewrite(pWork);
-
 }
 
-
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ウィンドウ再描画
+ *
+ *	@param	pWork
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
 
@@ -244,8 +263,6 @@ static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
   ITEMDISP_WazaInfoWindowChange(pWork);
   ITEMDISP_CellMessagePrint(pWork);
   pWork->bChange = TRUE;
-
-
 }
 
 //------------------------------------------------------------------------------
@@ -290,6 +307,17 @@ int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork)
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムデータ交換
+ *
+ *	@param	pWork
+ *	@param	no1
+ *	@param	no2 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static void _ItemChangeSingle(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 )
 {
   ITEM_ST temp;
@@ -299,6 +327,17 @@ static void _ItemChangeSingle(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 )
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アイテム交換処理
+ *
+ *	@param	pWork
+ *	@param	no1
+ *	@param	no2 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 static void _ItemChange(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 )
 {
   int i;
@@ -1013,14 +1052,16 @@ static void _itemTrashYesNo(FIELD_ITEMMENU_WORK* pWork)
 
 static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
 {
-  ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
-  int backup = pWork->InputNum;
-
   if(!ITEMDISP_MessageEndCheck(pWork)){
     return;
   }
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
-    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+
+  // 数値入力主処理
+  InputNum_Proc( pWork );
+
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE)
+  {
+    InputNum_Exit( pWork );
 
     GFL_MSG_GetString( pWork->MsgManager, msg_bag_056, pWork->pStrBuf );
     WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
@@ -1028,36 +1069,17 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
                            3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     ITEMDISP_ItemInfoWindowDisp( pWork );
+
     _CHANGE_STATE(pWork,_itemTrashYesNo);
   }
-  else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
+  else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL)
+  {
+    InputNum_Exit( pWork );
+    //@TODO ここで消していい？
+    //
     G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
-    GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
-  }
-
-  if(GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
-    pWork->InputNum++;
-  }
-  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_DOWN){
-    pWork->InputNum--;
-  }
-  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_RIGHT){
-    pWork->InputNum += 10;
-  }
-  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_LEFT){
-    pWork->InputNum -= 10;
-  }
-
-
-  if(item->no < pWork->InputNum){
-    pWork->InputNum = item->no;
-  }
-  else if(pWork->InputNum < 1){
-    pWork->InputNum = 1;
-  }
-  if(pWork->InputNum != backup){
-    ITEMDISP_TrashNumDisp(pWork,pWork->InputNum);
   }
 }
 
@@ -1072,9 +1094,8 @@ static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
 {
   pWork->InputNum = 1;  //初期化
 
-  ITEMDISP_NumFrameDisp(pWork);
-
-  ITEMDISP_TrashNumDisp(pWork,pWork->InputNum);
+  // 数値入力開始
+  InputNum_Start( pWork, BAG_INPUT_MODE_TRASH );
 
   GFL_MSG_GetString( pWork->MsgManager, msg_bag_054, pWork->pStrBuf );
   WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
@@ -1146,10 +1167,10 @@ static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
     }
   }
 
-  ITEMDISP_NumFrameDisp(pWork);
+  // 数値入力開始
+  InputNum_Start( pWork, BAG_INPUT_MODE_SELL );
 
-  ITEMDISP_TrashNumDisp(pWork,pWork->InputNum);
-
+  // 「○○○を　いくつ　うりますか？」
   GFL_MSG_GetString( pWork->MsgManager, mes_shop_094, pWork->pStrBuf );
   WORDSET_RegisterItemName(pWork->WordSet, 0,  pWork->ret_item );
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
@@ -1173,15 +1194,23 @@ static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
     return;
   }
 
-  // @TODO タッチ対応
+  // 売るシーケンス入力処理
+  InputNum_Proc( pWork );
 
+  // @TODO タッチ対応
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
   {
+    // 数値入力終了
+    InputNum_Exit( pWork );
+
     // 決定
     _CHANGE_STATE( pWork, _itemSellYesnoInit );
   }
   else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
   {
+    // 数値入力終了
+    InputNum_Exit( pWork );
+
     // キャンセル
     _CHANGE_STATE( pWork, _itemSellExit );
   }
@@ -1198,9 +1227,6 @@ static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void _itemSellYesnoInit( FIELD_ITEMMENU_WORK* pWork )
 {
-  // 数値入力フレームクリア
-  GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-  
   // YESNO開始
   ITEMDISP_YesNoStart(pWork);
 
@@ -1354,6 +1380,104 @@ static s32 _get_item_sell_price( int item_no, int input_num, HEAPID heapID )
 
   return val;
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  数値入力 開始
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void InputNum_Start( FIELD_ITEMMENU_WORK* pWork, BAG_INPUT_MODE mode )
+{
+  ITEMDISP_NumFrameDisp( pWork );
+  ITEMDISP_InputNumDisp( pWork, pWork->InputNum );
+
+  pWork->InputMode = mode;
+
+  // アイコン表示
+  GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[ BAR_ICON_INPUT_U ], TRUE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[ BAR_ICON_INPUT_D ], TRUE );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  数値入力 終了
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork )
+{
+  // 数値入力フレームクリア
+  GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+  
+  // アイコン非表示
+  GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[ BAR_ICON_INPUT_U ], FALSE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[ BAR_ICON_INPUT_D ], FALSE );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  数値入力 主処理
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork )
+{
+  ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
+  int backup = pWork->InputNum;
+  
+  // @TODO タッチ入力
+ 
+//  GFL_UI_TP_GetPointTrg(
+
+  if(GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
+    pWork->InputNum++;
+  }
+  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_DOWN){
+    pWork->InputNum--;
+  }
+  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_RIGHT){
+    pWork->InputNum += 10;
+  }
+  else if(GFL_UI_KEY_GetRepeat() == PAD_KEY_LEFT){
+    pWork->InputNum -= 10;
+  }
+  
+  if(item->no < pWork->InputNum){
+    pWork->InputNum = item->no;
+  }
+  else if(pWork->InputNum < 1){
+    pWork->InputNum = 1;
+  }
+
+  
+  // 表示更新
+  if(pWork->InputNum != backup)
+  {
+
+    // ボタンアニメ
+    if( pWork->InputNum < backup )
+    {
+      GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_INPUT_D ], 10 );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_INPUT_U ], 11 );
+    }
+
+    ITEMDISP_InputNumDisp(pWork,pWork->InputNum);
+  }
+}
+
 
 #if 0
 //--------------------------------------------------------------------------------------------

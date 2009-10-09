@@ -86,7 +86,6 @@ enum
 #define _BAR_CELL_CURSOR_EXIT (200-8)    //EXIT xボタン
 #define _BAR_CELL_CURSOR_RETURN (232-8) //RETURN Enterボタン
 
-
 typedef enum{
   _CLACT_PLT,
   _CLACT_CHR,
@@ -524,6 +523,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind , FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType , FALSE );
   }
+
 }
 
 //-----------------------------------------------------------------------------
@@ -716,7 +716,7 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  アイテムアイコン アニメ
  *
  *	@param	pWork
  *	@param	itemid
@@ -1113,11 +1113,14 @@ void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num)
 //------------------------------------------------------------------------------
 static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
 {
+  u8 i;
+  GFL_CLWK_DATA cellInitData;
 
-
-
-  //バーのボタン
-  {
+   cellInitData.softpri = 10;
+   cellInitData.bgpri = 1;
+  
+   //バーのボタン
+  { 
     const u8 anmIdxArr[] = { 4, 5, 6, 0, 1 };
     const u8 posXArr[] =
     {
@@ -1129,9 +1132,6 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
     };
 
     u8 i;
-    GFL_CLWK_DATA cellInitData;
-    cellInitData.softpri = 10;
-    cellInitData.bgpri = 1;
 
     for( i = 0;i < elementof(anmIdxArr) ; i++ )
     {
@@ -1154,6 +1154,32 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
       GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_EXIT] , FALSE );
     }
   }
+
+  // 数値入力ボタン初期化
+  {
+    const u8 anmIdxArr[] = { 3, 2 };
+    const u8 posYArr[] = { 8 * 12 + 1, 8 * 15 - 1 };
+  
+    for( i=0; i<elementof(anmIdxArr); i++ )
+    {
+      u8 clwk_id = BAR_ICON_INPUT_U + i;
+
+      cellInitData.pos_x = 8 * 29;
+      cellInitData.pos_y = posYArr[i];
+      cellInitData.anmseq = anmIdxArr[i];
+      cellInitData.bgpri = 0;
+    
+      pWork->clwkBarIcon[ clwk_id ] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                 pWork->cellRes[_NCG_COMMON],
+                                                 pWork->cellRes[_PLT_COMMON],
+                                                 pWork->cellRes[_ANM_COMMON],
+                                                 &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
+
+     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkBarIcon[ clwk_id ], TRUE );
+     GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[ clwk_id ] , FALSE );
+    }
+  }
+
 }
 
 
@@ -1562,69 +1588,6 @@ BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
   return TRUE;// 終わっている
 }
 
-//------------------------------------------------------------------------------
-/**
- * @brief   数字フレームの表示
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork)
-{
-  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BAG, pWork->heapID );
-
-  {
-    void* arcData = GFL_ARCHDL_UTIL_Load( p_handle, NARC_bag_bag_win05_d_NSCR, 0, pWork->heapID );
-
-    NNSG2dScreenData *scrnData;
-
-    if( NNS_G2dGetUnpackedScreenData( arcData, &scrnData ) )
-    {
-      int i;
-      int xs = scrnData->screenWidth/8;
-      int ys = scrnData->screenHeight/8;
-      u16* buff = (u16*)&scrnData->rawData;
- 
-      // パレット指定
-      for(i=0;i<(xs*ys);i++){
-        buff[i] += GFL_ARCUTIL_TRANSINFO_GetPos(pWork->numFrameBg) | (0x1000 * PALOFS_NUM_FRAME);
-      }
-
-      GFL_BG_WriteScreen(
-        GFL_BG_FRAME3_M, &scrnData->rawData,_WINNUM_SCR_INITX,_WINNUM_SCR_INITY,
-        scrnData->screenWidth/8,scrnData->screenHeight/8);
-      GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
-    }
-    GFL_HEAP_FreeMemory( arcData );
-
-  }
-
-  GFL_ARC_CloseDataHandle(p_handle);
-
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   数字の表示
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-void ITEMDISP_TrashNumDisp(FIELD_ITEMMENU_WORK* pWork,int num)
-{
-  u8 backColor = 5;
-
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winNumFrame), backColor );
-  GFL_FONTSYS_SetColor( 0xf, 0xe, backColor );
-  GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
-  WORDSET_RegisterNumber(pWork->WordSet, 0, num,
-                         3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
-  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winNumFrame), 0, 2, pWork->pExpStrBuf, pWork->fontHandle);
-  GFL_BMPWIN_TransVramCharacter(pWork->winNumFrame);
-  GFL_BMPWIN_MakeScreen(pWork->winNumFrame);
-
-}
 
 //-----------------------------------------------------------------------------
 /**
@@ -1821,3 +1784,70 @@ void ITEMDISP_YesNoExit(FIELD_ITEMMENU_WORK* pWork)
   pWork->pAppTask=NULL;
   G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   数字フレームの表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork)
+{
+  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BAG, pWork->heapID );
+
+  {
+    void* arcData = GFL_ARCHDL_UTIL_Load( p_handle, NARC_bag_bag_win05_d_NSCR, 0, pWork->heapID );
+
+    NNSG2dScreenData *scrnData;
+
+    if( NNS_G2dGetUnpackedScreenData( arcData, &scrnData ) )
+    {
+      int i;
+      int xs = scrnData->screenWidth/8;
+      int ys = scrnData->screenHeight/8;
+      u16* buff = (u16*)&scrnData->rawData;
+ 
+      // パレット指定
+      for(i=0;i<(xs*ys);i++){
+        buff[i] += GFL_ARCUTIL_TRANSINFO_GetPos(pWork->numFrameBg) | (0x1000 * PALOFS_NUM_FRAME);
+      }
+
+      GFL_BG_WriteScreen(
+        GFL_BG_FRAME3_M, &scrnData->rawData,_WINNUM_SCR_INITX,_WINNUM_SCR_INITY,
+        scrnData->screenWidth/8,scrnData->screenHeight/8);
+      GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+    }
+    GFL_HEAP_FreeMemory( arcData );
+
+  }
+
+  GFL_ARC_CloseDataHandle(p_handle);
+
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  数値入力 表示更新
+ *
+ *	@param	pWork
+ *	@param	num
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ITEMDISP_InputNumDisp(FIELD_ITEMMENU_WORK* pWork,int num)
+{
+  u8 backColor = 5;
+
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winNumFrame), backColor );
+  GFL_FONTSYS_SetColor( 0xf, 0xe, backColor );
+  GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
+  WORDSET_RegisterNumber(pWork->WordSet, 0, num,
+                         3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winNumFrame), 0, 2, pWork->pExpStrBuf, pWork->fontHandle);
+  GFL_BMPWIN_MakeTransWindow_VBlank(pWork->winNumFrame);
+}
+
+
