@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-01T18:12:25"/>
+	<create user="matsumiya" host="W00207" date="2009-10-10T12:37:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,7 +297,8 @@
 ・メッセージ表示後
 　！マーク表示
 ・続けてmsg_c01r0102_inventor_02</comment>
-		<attribute name="キャラ指定">発明家</attribute>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
 		<language name="JPN" width="256">あらためて　じこしょうかい　するね[BE:01:ページ切り替え（クリア）]
 アタシは　マコモ（仮）
 いわゆる　はつめいか　です[BE:01:ページ切り替え（クリア）]
@@ -453,8 +454,8 @@
 ・会話後、パソコンメニューの
 　「だれかのパソコン」が
 　「？？？のパソコン」に変更</comment>
-		<attribute name="キャラ指定">パソコン管理者
-ＧＩＲＬ3</attribute>
+		<attribute name="キャラ指定">ＧＩＲＬ3
+パソコン管理者</attribute>
 		<language name="JPN" width="256">あなた　トレーナー？
 じゃあ　ポケモンセンターの
 パソコン　つかっていますか？
