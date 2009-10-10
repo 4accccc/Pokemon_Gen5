@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-05T21:36:11"/>
+	<create user="matsumiya" host="W00207" date="2009-10-10T12:22:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -406,7 +406,7 @@
 ・メッセージ表示後、トレーナー戦闘に
 ※このトレーナーを探す遊びを実装したい
 　要検討</comment>
-		<attribute name="キャラ指定">敵組織</attribute>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
 		<language name="JPN" width="256">したっぱ『ちっ！
 にげみちは　ないか！？</language>
 		<language name="JPN_KANJI" width="256">したっぱ『ちっ！
@@ -418,7 +418,7 @@
 ・戦闘後
 ・続けて、c03ジムリーダーが隣接して
 　msg_d02r0101_leader3_04表示</comment>
-		<attribute name="キャラ指定">敵組織</attribute>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
 		<language name="JPN" width="256">したっぱ『まけた
 わかった！　これは返す！</language>
 		<language name="JPN_KANJI" width="256">したっぱ『まけた
