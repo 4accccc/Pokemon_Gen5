@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-29T22:39:26"/>
+	<create user="matsumiya" host="W00207" date="2009-10-10T16:03:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -293,46 +293,18 @@
 
 
 	<row id="msg_c01r0402_middleman2_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・クリア前</comment>
-		<attribute name="キャラ指定">MIDDLEMAN2
-太ったおじさん</attribute>
-		<language name="JPN" width="256">ハカイだん　だっけ？　みんな
-かんがえることが　ばらばらだから[BE:00:ページ切り替え（行送り）]
-あらそいが　おきると　いっておった[BE:01:ページ切り替え（クリア）]
-たしかに　そうかも　しれんなあ</language>
-		<language name="JPN_KANJI" width="256">ハカイ団　だっけ？　みんな
-考えることが　ばらばらだから[BE:00:ページ切り替え（行送り）]
-争いが　起きると　いっておった[BE:01:ページ切り替え（クリア）]
-たしかに　そうかも　しれんなあ</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c01r0402_middleman2_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・クリア後（仮）</comment>
-		<attribute name="キャラ指定">MIDDLEMAN2
-太ったおじさん</attribute>
-		<language name="JPN" width="256">ハカイだん　だっけ？　みんな
-かんがえることが　ばらばらだから[BE:00:ページ切り替え（行送り）]
-あらそいが　おきると　いっておった[BE:01:ページ切り替え（クリア）]
-だけどな……[BE:01:ページ切り替え（クリア）]
-おたがいを　たかめあう　きもちで
-きそいあえば　いいんだよなあ</language>
-		<language name="JPN_KANJI" width="256">ハカイ団　だっけ？　みんな
-考えることが　ばらばらだから[BE:00:ページ切り替え（行送り）]
-争いが　起きると　いっておった[BE:01:ページ切り替え（クリア）]
-だけどな……[BE:01:ページ切り替え（クリア）]
-お互いを　高めあう　気持ちで
-競い合えば　いいんだよなあ</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c01r0402_babyboy1_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<attribute name="キャラ指定">BABYBOY1
-男の子</attribute>
-		<language name="JPN" width="256">みんな　かんがえることが　おなじなら
-ポケモンしょうぶ　できないじゃん！</language>
-		<language name="JPN_KANJI" width="256">みんな　考えることが　同じなら
-ポケモンしょうぶ　できないじゃん！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>

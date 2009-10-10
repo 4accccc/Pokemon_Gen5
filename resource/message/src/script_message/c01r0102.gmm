@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-10T12:37:11"/>
+	<create user="matsumiya" host="W00207" date="2009-10-10T16:01:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -498,59 +498,29 @@
 	<row id="msg_c01r0102_trainerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・削除予定ラベル</comment>
-		<attribute name="キャラ指定">TRAINERM
-エリート♂</attribute>
-		<language name="JPN" width="256">つよい　ポケモンを　そだてることが
-トレーナーの　つよさなら[BE:01:ページ切り替え（クリア）]
-いろんな　ポケモンに　くわしいことも
-トレーナーの　つよさと　いえるよね</language>
-		<language name="JPN_KANJI" width="256">強い　ポケモンを　育てることが
-トレーナーの　強さなら[BE:01:ページ切り替え（クリア）]
-いろんな　ポケモンに　詳しいことも
-トレーナーの　強さと　いえるよね</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c01r0102_girl3_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀
 ・削除予定ラベル</comment>
-		<attribute name="キャラ指定">GIRL3
-少女（聡明）</attribute>
-		<language name="JPN" width="256">ポケモンの　とくせいに　ついて
-りかい　しておくことで[BE:00:ページ切り替え（行送り）]
-しょうぶを　ゆうりに　すすめられるわ</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　とくせいに　ついて
-理解しておくことで[BE:00:ページ切り替え（行送り）]
-勝負を　有利に　すすめられるわ</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c01r0102_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・削除予定ラベル</comment>
-		<attribute name="キャラ指定">BOY3
-少年（聡明）</attribute>
-		<language name="JPN" width="256">じょうたいいじょうに　させられると
-ポケモンしょうぶ　では　ふりになる[BE:01:ページ切り替え（クリア）]
-そんなときのため　トレーナーは
-じゅんびを　しておかないとね！[BE:01:ページ切り替え（クリア）]
-というわけで　これ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">状態異常に　させられると
-ポケモン勝負　では　不利になる[BE:01:ページ切り替え（クリア）]
-そんなときのため　トレーナーは
-準備を　しておかないとね！[BE:01:ページ切り替え（クリア）]
-というわけで　これ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c01r0102_boy3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・削除予定ラベル</comment>
-		<attribute name="キャラ指定">BOY3
-少年（聡明）</attribute>
-		<language name="JPN" width="256">ポケモンの　とくせいに　よっては
-じょうたいいじょうに　なることで[BE:00:ページ切り替え（行送り）]
-ゆうりになることも　あるんだって！</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　とくせいに　よっては
-状態異常に　なることで[BE:00:ページ切り替え（行送り）]
-有利になることも　あるんだって！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
