@@ -2392,6 +2392,24 @@ $(DIR_TEMP)/h03_a01_04.nsbmd: $(DIR_RES)/h03_a01_04.imd
 	@echo create_nsbmd h03_a01_04
 	@$(G3DCVTR) $(DIR_RES)/h03_a01_04.imd -o $(DIR_TEMP)/h03_a01_04.nsbmd
 
+#h03_a00_05
+$(DIR_OUTPUT)/h03_a00_05.3dppack: $(DIR_TEMP)/h03_a00_05.nsbmd $(DIR_RES)/h03_a00_05.bin $(DIR_RES)/h03_a00_05.3dmd
+	@echo create 3dppack h03_a00_05
+	@$(BINLINKER) $(DIR_TEMP)/h03_a00_05.nsbmd $(DIR_RES)/h03_a00_05.bin $(DIR_RES)/h03_a00_05.3dmd $(DIR_OUTPUT)/h03_a00_05.3dppack WB
+
+$(DIR_TEMP)/h03_a00_05.nsbmd: $(DIR_RES)/h03_a00_05.imd
+	@echo create_nsbmd h03_a00_05
+	@$(G3DCVTR) $(DIR_RES)/h03_a00_05.imd -o $(DIR_TEMP)/h03_a00_05.nsbmd
+
+#h03_a01_05
+$(DIR_OUTPUT)/h03_a01_05.3dppack: $(DIR_TEMP)/h03_a01_05.nsbmd $(DIR_RES)/h03_a01_05.bin $(DIR_RES)/h03_a01_05.3dmd
+	@echo create 3dppack h03_a01_05
+	@$(BINLINKER) $(DIR_TEMP)/h03_a01_05.nsbmd $(DIR_RES)/h03_a01_05.bin $(DIR_RES)/h03_a01_05.3dmd $(DIR_OUTPUT)/h03_a01_05.3dppack WB
+
+$(DIR_TEMP)/h03_a01_05.nsbmd: $(DIR_RES)/h03_a01_05.imd
+	@echo create_nsbmd h03_a01_05
+	@$(G3DCVTR) $(DIR_RES)/h03_a01_05.imd -o $(DIR_TEMP)/h03_a01_05.nsbmd
+
 #m_dun0101_00_00
 $(DIR_OUTPUT)/m_dun0101_00_00.3dppack: $(DIR_TEMP)/m_dun0101_00_00.nsbmd $(DIR_RES)/m_dun0101_00_00.bin $(DIR_RES)/m_dun0101_00_00_ex.bin $(DIR_RES)/m_dun0101_00_00.3dmd
 	@echo create 3dppack m_dun0101_00_00
