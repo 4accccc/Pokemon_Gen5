@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-10-10T16:53:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="159"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="220"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="262"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="38" top="314" right="741" bottom="935" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="695"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,229 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c04_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・仮メッセージ
+・ジムバッジ入手後
+　r05側ゲート前のPOSを踏むと
+　メッセージ表示後に
+　サポートが出現（出現場所未定）</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">ともだち♀『おーい　[1:00:トレーナー名:0]！</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『おーい　[1:00:トレーナー名:0]！</language>
+	</row>
+
+	<row id="msg_c04_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ表示後
+　サポートを戦闘に球場まで連れ歩き</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">あたしさ　やきゅうが　みたいの
+というわけで　いっしょに　きてね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">あたしさ　野球が　観たいの
+というわけで　一緒に　来てね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・球場前につくとメッセージ表示
+・表示後、サポートだけ球場内に</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">ともだち♀『ここだよ！
+ベースボールパーク！　たのしみ！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『ここだよ！
+ベースボールパーク！　楽しみ！！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_white_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・r05側ゲート前のPOSを踏むと
+　メッセージ表示後に
+　サポートが出現（出現場所未定）
+・あとはmsg_c04_white_02での
+　スクリプトと同じ処理</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">ともだち♀『ねえねえ　[1:00:トレーナー名:0]！！[BE:01:ページ切り替え（クリア）]
+さっき　いっしょに　やきゅうを
+みようって　いったでしょ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『ねえねえ　[1:00:トレーナー名:0]！！[BE:01:ページ切り替え（クリア）]
+さっき　一緒に
+野球を観ようって　言ったでしょ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_leader_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・仮メッセージ
+・Ｎとの戦闘後
+・POSはmsg_c04_white_01と同じ</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">カミツレ『遅くなって　ゴメン[BE:01:ページ切り替え（クリア）]
+ともだち♂って　トレーナーとの
+勝負が　長引いちゃった……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">カミツレ『遅くなって　ゴメン[BE:01:ページ切り替え（クリア）]
+ともだち♂って　トレーナーとの
+勝負が　長引いちゃった……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_leader_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・メッセージ表示後
+　r05側のゲートに消えていく
+・動作モデルが消えると主人公操作可能</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">さ　ホドモエシティに
+行けるように　してあげる[BE:01:ページ切り替え（クリア）]
+ワタシ　５番道路の
+橋の前で　待っているから[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">さ　ホドモエシティに
+行けるように　してあげる[BE:01:ページ切り替え（クリア）]
+ワタシ　５番道路の
+橋の前で　待っているから[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04_footballm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">FOOTBALLM
+アメフト選手</attribute>
+		<language name="JPN" width="256">スポーツの　まち！
+ライモンシティに　ようこそ！[BE:01:ページ切り替え（クリア）]
+すきな　スポーツしせつに
+あしを　はこんで　みてくれ！</language>
+		<language name="JPN_KANJI" width="256">スポーツの街！
+ライモンシティに　ようこそ！[BE:01:ページ切り替え（クリア）]
+好きな　スポーツ施設に
+足を　運んでみてくれ！</language>
+	</row>
+
+	<row id="msg_c04_cｌown_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">CLOWN
+ピエロ</attribute>
+		<language name="JPN" width="256">……おきゃくさん
+ここだけの　はなし　ですけど[BE:01:ページ切り替え（クリア）]
+じつは　ライモンシティって
+ポケモンしょうぶの　メッカですよ[BE:00:ページ切り替え（行送り）]
+そこかしらに　トレーナーがいますから</language>
+		<language name="JPN_KANJI" width="256">……お客さん
+ここだけの　話ですけど[BE:01:ページ切り替え（クリア）]
+実は　ライモンシティって
+ポケモン勝負の　メッカですよ[BE:00:ページ切り替え（行送り）]
+そこかしらに　トレーナーがいますから</language>
+	</row>
+
+	<row id="msg_c04_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BADMAN
+不良</attribute>
+		<language name="JPN" width="256">うっかり　ちかてつに　のったらよ
+つよいトレーナーに　ボロまけしたぜ[BE:01:ページ切り替え（クリア）]
+バトルサブウェイ……
+きたえて　ちょうせん　してやるよ！！</language>
+		<language name="JPN_KANJI" width="256">うっかり　地下鉄に　乗ったらよ
+強いトレーナーに　ボロ負けしたぜ[BE:01:ページ切り替え（クリア）]
+バトルサブウェイ……
+きたえて　挑戦してやるよ！！</language>
+	</row>
+
+	<row id="msg_c04_middleman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">MIDDLEMAN2
+太ったおじさん</attribute>
+		<language name="JPN" width="256">ここは　てんごく　なのか……？
+あっとうされて　こえもでないぞ</language>
+		<language name="JPN_KANJI" width="256">ここは　天国なのか……？
+圧倒されて　声もでないぞ</language>
+	</row>
+
+	<row id="msg_c04_backpackerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BACKPACKERW
+バックパッカー♀</attribute>
+		<language name="JPN" width="256">なんて　きらびやかな……
+いるだけで　きもちも　ゴージャス！！</language>
+		<language name="JPN_KANJI" width="256">なんて　きらびやかな……
+いるだけで　気持ちも　ゴージャス！！</language>
+	</row>
+
+	<row id="msg_c04_girl3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ
+・babygirl1、middlewoman1とセット</comment>
+		<attribute name="キャラ指定">GIRL3
+少女：聡明</attribute>
+		<language name="JPN" width="256">おりこうにしてた　ごほうびに
+ゆうえんちに　つれてきてもらったの！</language>
+		<language name="JPN_KANJI" width="256">おりこうにしてた　ごほうびに
+遊園地に　連れてきてもらったの！</language>
+	</row>
+
+	<row id="msg_c04_babygirl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BABYGIRL1
+女の子</attribute>
+		<language name="JPN" width="256">ぐるぐる　メリーゴーラウンドで
+まわっちゃうの！　ぐるぐるって！！</language>
+		<language name="JPN_KANJI" width="256">ぐるぐる　メリーゴーラウンドで
+まわっちゃうの！　ぐるぐるって！！</language>
+	</row>
+
+	<row id="msg_c04_middlewoman1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN1
+おばさん</attribute>
+		<language name="JPN" width="256">きいたけれど　ここの　ジムって
+ジェットコースターなんですって！？</language>
+		<language name="JPN_KANJI" width="256">聞いたけれど　ここの　ジムって
+ジェットコースターなんですって！？</language>
+	</row>
+
+	<row id="msg_c04_sign1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>看板分類：タウンマップ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">看板：街</attribute>
+		<language name="JPN" width="256">ライモンシティ</language>
+		<language name="JPN_KANJI" width="256">ライモンシティ</language>
+	</row>
+
+	<row id="msg_c04_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>・仮メッセージ</comment>
+		<attribute name="キャラ指定">看板：街</attribute>
+		<language name="JPN" width="256">ベースボールパーク</language>
+		<language name="JPN_KANJI" width="256">ベースボールパーク</language>
+	</row>
+
+	<row id="msg_c04_sign3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>・仮メッセージ</comment>
+		<attribute name="キャラ指定">看板：街</attribute>
+		<language name="JPN" width="256">サッカースタジアム</language>
+		<language name="JPN_KANJI" width="256">サッカースタジアム</language>
+	</row>
+
+	<row id="msg_c04_sign4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>・仮メッセージ</comment>
+		<attribute name="キャラ指定">看板：街</attribute>
+		<language name="JPN" width="256">フットボールコート</language>
+		<language name="JPN_KANJI" width="256">フットボールコート</language>
+	</row>
+
+	<row id="msg_c04_sign5_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>・仮メッセージ</comment>
+		<attribute name="キャラ指定">看板：街</attribute>
+		<language name="JPN" width="256">ミュージカル　シアター</language>
+		<language name="JPN_KANJI" width="256">ミュージカル劇場</language>
 	</row>
 
 	<flowchart-group-list>
