@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-09T19:21:40"/>
+	<create user="matsumiya" host="W00207" date="2009-10-09T19:24:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="211"/>
+		<comment position="4" width="269"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -295,6 +295,8 @@
 	<row id="msg_r04_stop_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ストッパー
+　GRIDX＝427、GRIDZ=593に配置
+　GRIDX=428～433を踏んだときもストッパー機能
 　ｃ03のジムバッジ入手前（仮）</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
 		<language name="JPN" width="256">なんだ？[BE:01:ページ切り替え（クリア）]
