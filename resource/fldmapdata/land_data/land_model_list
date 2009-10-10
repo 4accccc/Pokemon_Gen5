@@ -487,6 +487,8 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_gate08_00_00.nsbmd \
 	$(DIR_TEMP)/m_pal01_00_00.nsbmd \
 	$(DIR_TEMP)/m_mall02_00_00.nsbmd \
+	$(DIR_TEMP)/m_wbuill02_00_00.nsbmd \
+	$(DIR_TEMP)/m_bbuill02_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd	$(DIR_TEMP)/C3_00_00.bhc \
 	$(DIR_TEMP)/C3_00_01.nsbmd	$(DIR_TEMP)/C3_00_01.bhc \
 	$(DIR_TEMP)/C3_01_00.nsbmd	$(DIR_TEMP)/C3_01_00.bhc \

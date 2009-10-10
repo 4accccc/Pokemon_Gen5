@@ -487,6 +487,8 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_gate08_00_00.3dppack \
 	$(DIR_OUTPUT)/m_pal01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_mall02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_wbuill02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_bbuill02_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \
