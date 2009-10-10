@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-02T16:56:52"/>
+	<create user="matsumiya" host="W00207" date="2009-10-10T16:04:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -402,18 +402,8 @@
 	</row>
 
 	<row id="msg_c02r0101_badman_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">BADMAN
-不良</attribute>
-		<language name="JPN" width="256">こんな！
-ひろい　そうこに！[BE:00:ページ切り替え（行送り）]
-オレ　ひとりきり！</language>
-		<language name="JPN_KANJI" width="256">こんな！[BE:01:ページ切り替え（クリア）]
-広い　倉庫に！[BE:01:ページ切り替え（クリア）]
-オレ　一人きり！[BE:01:ページ切り替え（クリア）]
-なんとなく　買ったは　いいが
-なんだか　すっごく　さみしーのよ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
