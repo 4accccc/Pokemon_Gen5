@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-05T21:40:55"/>
+	<create user="matsumiya" host="W00207" date="2009-10-10T13:14:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="33" top="196" right="738" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="33" top="196" right="737" bottom="815" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="735" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -299,11 +299,11 @@
 ・POS＝ゲートを出てすぐあたり
 ・メッセージ表示後、ライバル戦闘で連れ歩き</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">クロック『新しい　街に着いたら
-まず　ポケモンセンター　だ[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">クロック『あたらしい　まちについたら
+まず　ポケモンセンター　だよな[BE:00:ページ切り替え（行送り）]
 オレに　ついてきな！</language>
 		<language name="JPN_KANJI" width="256">クロック『新しい　街に着いたら
-まず　ポケモンセンター　だ[BE:00:ページ切り替え（行送り）]
+まず　ポケモンセンター　だよな[BE:00:ページ切り替え（行送り）]
 オレに　ついてきな！</language>
 	</row>
 
@@ -473,8 +473,8 @@ C02ジムリーダー</attribute>
 		<attribute name="キャラ指定">アーティ
 C03ジムリーダー</attribute>
 		<language name="JPN" width="256">アーティ『……んうん？
-なんとなく　気分転換　かな？[BE:01:ページ切り替え（クリア）]
-でさ　なんとなく　大変そうだけど
+なんとなく　きぶんてんかん　かな？[BE:01:ページ切り替え（クリア）]
+でさ　なんとなく　たいへんそうだけど
 ひょっとして　なんか　あった？</language>
 		<language name="JPN_KANJI" width="256">アーティ『……んうん？
 なんとなく　気分転換　かな？[BE:01:ページ切り替え（クリア）]
@@ -489,7 +489,7 @@ C03ジムリーダー</attribute>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
 		<language name="JPN" width="256">アロエ『そうなんだよ！！
-展示品を　ごっそり　持って行かれてさ！</language>
+てんじひんを　もっていかれてさ！</language>
 		<language name="JPN_KANJI" width="256">アロエ『そうなんだよ！！
 展示品を　ごっそり　持って行かれてさ！</language>
 	</row>
@@ -501,7 +501,7 @@ C02ジムリーダー</attribute>
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">サポート（友達♀）</attribute>
 		<language name="JPN" width="256">ホワイティ『ねえねえ　[1:00:トレーナー名:0]
-どうして　博物館　空っぽなの？</language>
+どうして　はくぶつかん　からっぽなの？</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『ねえねえ　[1:00:トレーナー名:0]
 どうして　博物館　空っぽなの？</language>
 	</row>
@@ -516,8 +516,8 @@ C02ジムリーダー</attribute>
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">ライバル（友達♂）</attribute>
 		<language name="JPN" width="256">クロック『[1:00:トレーナー名:0]
-ジムバッジ　手に入れたかよ？[BE:01:ページ切り替え（クリア）]
-って　なんだか　騒々しいな</language>
+ジムバッジ　てにいれたかよ？[BE:01:ページ切り替え（クリア）]
+って　なんだか　そうぞうしいな</language>
 		<language name="JPN_KANJI" width="256">クロック『[1:00:トレーナー名:0]
 ジムバッジ　手に入れたかよ？[BE:01:ページ切り替え（クリア）]
 って　なんだか　騒々しいな</language>
@@ -532,12 +532,12 @@ C02ジムリーダー</attribute>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
 		<language name="JPN" width="256">アロエ『なんだいなんだい？
-この子達は……？[BE:00:ページ切り替え（行送り）]
-アンタの　友達かい？[BE:01:ページ切り替え（クリア）]
+このこたちは……？[BE:00:ページ切り替え（行送り）]
+アンタの　ともだちかい？[BE:01:ページ切り替え（クリア）]
 ……　……　……
 ……　……　……[BE:01:ページ切り替え（クリア）]
 なるほど　トレーナーなんだね！[BE:01:ページ切り替え（クリア）]
-それなら　手分けするよ
+それなら　てわけするよ
 あたしゃ　こっちね[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アロエ『なんだいなんだい？
 この子達は……？[BE:00:ページ切り替え（行送り）]
@@ -554,7 +554,7 @@ C02ジムリーダー</attribute>
 ・盗難イベント中
 ・続けてmsg_c02_leader2_06</comment>
 		<language name="JPN" width="256">そして　あんたたちは
-博物館に　残ってちょうだい！</language>
+はくぶつかんに　のこってちょうだい！</language>
 		<language name="JPN_KANJI" width="256">そして　あんたたちは
 博物館に　残ってちょうだい！</language>
 	</row>
@@ -570,10 +570,10 @@ C02ジムリーダー</attribute>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
 		<language name="JPN" width="256">で　アーティと　[1:00:トレーナー名:0]は
-ヤグルマの森を　探しておくれよ！[BE:01:ページ切り替え（クリア）]
+ヤグルマのもりを　さがしておくれよ！[BE:01:ページ切り替え（クリア）]
 いい？　アーティ
-あんたが　案内してやんな[BE:01:ページ切り替え（クリア）]
-じゃ　頼んだよ！</language>
+あんたが　あんない　してやんな[BE:01:ページ切り替え（クリア）]
+じゃ　たのんだよ！</language>
 		<language name="JPN_KANJI" width="256">で　アーティと　[1:00:トレーナー名:0]は
 ヤグルマの森を　探しておくれよ！[BE:01:ページ切り替え（クリア）]
 いい？　アーティ
@@ -591,8 +591,8 @@ C02ジムリーダー</attribute>
 C03ジムリーダー</attribute>
 		<language name="JPN" width="256">アーティ『さてさて……
 キミ……　[1:00:トレーナー名:0]くんだっけ？　[BE:01:ページ切り替え（クリア）]
-じゃあ　行こうか
-ドロボウ退治　とやらにさ</language>
+じゃあ　いこうか
+ドロボウたいじ　とやらにさ</language>
 		<language name="JPN_KANJI" width="256">アーティ『さてさて……
 キミ……　[1:00:トレーナー名:0]くんだっけ？　[BE:01:ページ切り替え（クリア）]
 じゃあ　行こうか
@@ -609,9 +609,9 @@ C03ジムリーダー</attribute>
 		<attribute name="キャラ指定">アーティ
 C03ジムリーダー</attribute>
 		<language name="JPN" width="256">アーティ『さてさて……
-アナタ……　[1:00:トレーナー名:0]さんだっけ？[BE:01:ページ切り替え（クリア）]
-じゃあ　行こうか
-ドロボウ退治　とやらにさ</language>
+キミ……　[1:00:トレーナー名:0]さんだっけ？[BE:01:ページ切り替え（クリア）]
+じゃあ　いこうか
+ドロボウたいじ　とやらにさ</language>
 		<language name="JPN_KANJI" width="256">アーティ『さてさて……
 アナタ……　[1:00:トレーナー名:0]さんだっけ？[BE:01:ページ切り替え（クリア）]
 じゃあ　行こうか
@@ -625,8 +625,8 @@ C03ジムリーダー</attribute>
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">サポート（友達♀）</attribute>
 		<language name="JPN" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]
-これを　持って行ってよ！[BE:01:ページ切り替え（クリア）]
-マコモさんから　預かってたの
+これを　もっていってよ！[BE:01:ページ切り替え（クリア）]
+マコモさんから　あずかってたの
 ダウジングマシン！</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『あっ　[1:00:トレーナー名:0]
 これを　持って行ってよ！[BE:01:ページ切り替え（クリア）]
@@ -640,8 +640,9 @@ C03ジムリーダー</attribute>
 ・続けてmsg_c02_black_04</comment>
 		<attribute name="キャラ指定">サポート（友達♀）</attribute>
 		<language name="JPN" width="256">ダウジングマシンを　つかうと
-目には見えないけれど　隠れている[BE:00:ページ切り替え（行送り）]
-道具の　場所が　わかるんだって！</language>
+めには　みえないけれど[BE:01:ページ切り替え（クリア）]
+かくれている　どうぐの
+ばしょが　わかるんだって！</language>
 		<language name="JPN_KANJI" width="256">ダウジングマシンを　つかうと
 目には見えないけれど　隠れている[BE:00:ページ切り替え（行送り）]
 道具の　場所が　わかるんだって！</language>
@@ -655,7 +656,7 @@ C03ジムリーダー</attribute>
 ・主人公、操作可能に</comment>
 		<attribute name="キャラ指定">ライバル（友達♂）</attribute>
 		<language name="JPN" width="256">クロック『なんだか　よくわからないけど
-博物館を　守れば　いいんだろ？</language>
+はくぶつかんを　まもれば　いいんだろ？</language>
 		<language name="JPN_KANJI" width="256">クロック『なんだか　よくわからないけど
 博物館を　守れば　いいんだろ？</language>
 	</row>
@@ -669,9 +670,9 @@ C03ジムリーダー</attribute>
 		<attribute name="キャラ指定">アロエ
 C02ジムリーダー</attribute>
 		<language name="JPN" width="256">アロエ『こっちの　ほうには
-プラズマ団　いないみたいだけど[BE:01:ページ切り替え（クリア）]
-ここを　動くわけにも　いかないし
-アンタ……　ヤグルマの森　たのんだよ！</language>
+プラズマだん　いないみたいだけど[BE:01:ページ切り替え（クリア）]
+ここを　うごくわけにも　いかないし
+アンタ……　ヤグルマのもり　たのんだよ！</language>
 		<language name="JPN_KANJI" width="256">アロエ『こっちの　ほうには
 プラズマ団　いないみたいだけど[BE:01:ページ切り替え（クリア）]
 ここを　動くわけにも　いかないし
