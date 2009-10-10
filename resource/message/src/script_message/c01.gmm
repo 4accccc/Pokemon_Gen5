@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-10T12:35:23"/>
+	<create user="matsumiya" host="W00207" date="2009-10-10T18:43:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -354,28 +354,18 @@
 	</row>
 
 	<row id="msg_c01_woman1_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♀：Cギア機能追加前
-・話しかけたとき</comment>
-		<attribute name="キャラ指定">お姉さん</attribute>
-		<language name="JPN" width="256">仮メッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c01_woman1_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♀：Cギア機能追加前
-・POSを踏んだとき
-・メッセージ表示後、連れ戻し</comment>
-		<attribute name="キャラ指定">お姉さん</attribute>
-		<language name="JPN" width="256">仮メッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c01_woman1_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♀：Cギア機能追加後
-・会話のみ</comment>
-		<attribute name="キャラ指定">お姉さん</attribute>
-		<language name="JPN" width="256">仮メッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c01_glasses_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
