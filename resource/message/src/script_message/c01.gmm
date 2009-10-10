@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-01T17:49:20"/>
+	<create user="matsumiya" host="W00207" date="2009-10-10T12:35:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="33" top="201" right="740" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="33" top="35" right="721" bottom="815" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="532"/>
+		<band id="0" index="1" style="0000" width="513"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="545"/>
+		<band id="2" index="3" style="0000" width="526"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="699"/>
+		<band id="4" index="0" style="0000" width="680"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -299,7 +299,8 @@
 ・主人公に隣接してメッセージ表示
 ・表示後、連れ歩きで
 　ｃ01ｒ0101へ</comment>
-		<attribute name="キャラ指定">発明家</attribute>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
 		<language name="JPN" width="256">ヤッホー！
 アタシは　マコモ[BE:01:ページ切り替え（クリア）]
 アララギはかせに　たのまれて
@@ -420,28 +421,28 @@
 ・画面外に消えると
 　主人公、操作可能に</comment>
 		<attribute name="キャラ指定">LEADER1</attribute>
-		<language name="JPN" width="256">ん？　オレが　このまちの
-ジムリーダー　だけど[BE:00:ページ切り替え（行送り）]
-オマエは……？[BE:01:ページ切り替え（クリア）]
-そっか　ジムに　ちょうせん　だな[BE:01:ページ切り替え（クリア）]
-でさ　おまえ……
+		<language name="JPN" width="256">え？　ぼくが　このまちの
+ジムリーダー　ですけど[BE:00:ページ切り替え（行送り）]
+きみは……？[BE:01:ページ切り替え（クリア）]
+そうですか　ジムに　ちょうせん[BE:01:ページ切り替え（クリア）]
+それで　きみ……
 さいしょに　えらんだ　ポケモンは？[BE:01:ページ切り替え（クリア）]
 [1:01:ポケモン種族名:0]か……　なるほど
-[1:03:ポケモンタイプ:1]タイプが　にがて　なんだな[BE:01:ページ切り替え（クリア）]
+[1:03:ポケモンタイプ:1]タイプが　にがてですね[BE:01:ページ切り替え（クリア）]
 きちんと　たいさく　しておいたほうが
-いいと　おもうぜ[BE:01:ページ切り替え（クリア）]
-んじゃ　ジムで　まってるからな！</language>
-		<language name="JPN_KANJI" width="256">ん？　オレが　このまちの
-ジムリーダー　だけど[BE:00:ページ切り替え（行送り）]
-オマエは……？[BE:01:ページ切り替え（クリア）]
-そっか　ジムに挑戦するんだ[BE:01:ページ切り替え（クリア）]
-でさ　おまえ……
+いいと　おもいますよ[BE:01:ページ切り替え（クリア）]
+それでは　ジムで　待っていますね！</language>
+		<language name="JPN_KANJI" width="256">え？　ぼくが　このまちの
+ジムリーダー　ですけど[BE:00:ページ切り替え（行送り）]
+きみは……？[BE:01:ページ切り替え（クリア）]
+そうですか　ジムに挑戦[BE:01:ページ切り替え（クリア）]
+それで　きみ……
 最初に　選んだ　ポケモンは？[BE:01:ページ切り替え（クリア）]
 [1:01:ポケモン種族名:0]か……　なるほど
-[1:03:ポケモンタイプ:1]タイプが　苦手なんだな[BE:01:ページ切り替え（クリア）]
+[1:03:ポケモンタイプ:1]タイプが　苦手ですね[BE:01:ページ切り替え（クリア）]
 きちんと　対策しておいたほうが
-いいと　思うぜ[BE:01:ページ切り替え（クリア）]
-んじゃ　ジムで　待ってるからな！</language>
+いいと　思いますよ[BE:01:ページ切り替え（クリア）]
+それでは　ジムで　待っていますね！</language>
 	</row>
 
 	<row id="msg_c01_stop_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
