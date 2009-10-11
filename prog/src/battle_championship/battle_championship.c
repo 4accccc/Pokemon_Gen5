@@ -638,11 +638,15 @@ void BATTLE_CHAMPIONSHIP_SetDebugData( BATTLE_CHAMPIONSHIP_DATA *csData , const 
   for( i=0;i<6;i++ )
   {
     csData->ppp[i] = GFL_HEAP_AllocMemory( heapId , POKETOOL_GetPPPWorkSize() );
-    PPP_Setup( csData->ppp[i] , i+1 , 10 , PTL_SETUP_ID_AUTO );
+    PPP_Clear( csData->ppp[i] );
+//    if( i<5 )
     {
-      const u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
-      PPP_Put( csData->ppp[i] , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
-      PPP_Put( csData->ppp[i] , ID_PARA_oyasex , PTL_SEX_MALE );
+      PPP_Setup( csData->ppp[i] , i+1 , 10 , PTL_SETUP_ID_AUTO );
+      {
+        const u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
+        PPP_Put( csData->ppp[i] , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+        PPP_Put( csData->ppp[i] , ID_PARA_oyasex , PTL_SEX_MALE );
+      }
     }
   }
  }

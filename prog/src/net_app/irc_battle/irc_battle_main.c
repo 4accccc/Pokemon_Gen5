@@ -11,6 +11,7 @@
 #include <gflib.h>
 
 #include "battle/battle.h"
+#include "gamesystem/btl_setup.h"
 #include "gamesystem/msgspeed.h"
 #include "print/printsys.h"
 #include "poke_tool/pokeparty.h"
@@ -135,6 +136,7 @@ typedef struct
 typedef struct
 {
   POKEPARTY *pokeParty;
+  u32 pad[3];
 }IRC_BATTLE_BATTLE_DATA;
 
 typedef struct
@@ -252,9 +254,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcInit( GFL_PROC * proc, int * seq , void *p
     work->initWork = GFL_HEAP_AllocClearMemory( work->heapId , sizeof(IRC_BATTLE_INIT_WORK) );
     work->initWork->csData = GFL_HEAP_AllocClearMemory( work->heapId , sizeof(BATTLE_CHAMPIONSHIP_DATA) );
     BATTLE_CHAMPIONSHIP_SetDebugData( work->initWork->csData , work->heapId );
-    work->initWork->statusPlayer = MyStatus_AllocWork( work->heapId );
-    work->initWork->itemData = MYITEM_AllocWork( work->heapId );
-    work->initWork->bagCursor = MYITEM_BagCursorAlloc( work->heapId );
+    work->initWork->gameData = GAMEDATA_Create( work->heapId );
   }
   else
   {
@@ -282,9 +282,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcTerm( GFL_PROC * proc, int * seq , void *p
   IRC_BATTLE_TermGraphic( work );
   if( pwk == NULL )
   {
-    GFL_HEAP_FreeMemory( work->initWork->bagCursor );
-    GFL_HEAP_FreeMemory( work->initWork->itemData );
-    GFL_HEAP_FreeMemory( work->initWork->statusPlayer );
+    GAMEDATA_Delete( work->initWork->gameData );
     GFL_HEAP_FreeMemory( work->initWork->csData );
     GFL_HEAP_FreeMemory( work->initWork );
   }
@@ -444,6 +442,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
       GFL_NET_TimingSyncStart( selfHandle , IBT_BATTLE_START );
+      //IRC_BATTLE_ShowMessage( work , IRC_BATTLE_MSG_04 );
       work->state = IBS_START_BATTLE_TIMMING;
     }
     break;
@@ -462,7 +461,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
 
   //バトル
   case IBS_BATTLE_FADEOUT://バトル
-    WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+    WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
     work->state = IBS_BATTLE_FADEOUT_WAIT;
     break;
@@ -472,13 +471,14 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
     {
       work->state = IBS_BATTLE_WAIT;
       IRC_BATTLE_InitBattleProc( work );
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, &work->battleParam );
+      GFL_PROC_SysCallProc( NO_OVERLAY_ID, &BtlProcData, &work->battleParam );
     }
     break;
 
   case IBS_BATTLE_WAIT:
+    OS_TPrintf("FinishBattle!!\n");
     IRC_BATTLE_ExitBattleProc( work );
-      work->state = IBS_BATTLE_FADEIN;
+    work->state = IBS_BATTLE_FADEIN;
     break;
 
   case IBS_BATTLE_FADEIN:
@@ -599,9 +599,14 @@ static void IRC_BATTLE_InitBattleProc( IRC_BATTLE_WORK *work )
 
   //呼び出し
   IRC_BATTLE_InitBattleSetupParam( work );
+
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
+  GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
+
 }
 static void IRC_BATTLE_InitBattleSetupParam( IRC_BATTLE_WORK *work )
 {
+  /*
   u8 selfId,enemyId;
   if( GFL_NET_IsParentMachine() == TRUE )
   {
@@ -622,7 +627,7 @@ static void IRC_BATTLE_InitBattleSetupParam( IRC_BATTLE_WORK *work )
   work->battleParam.weather = BTL_WEATHER_NONE;
   work->battleParam.netHandle = GFL_NET_HANDLE_GetCurrentHandle();
   work->battleParam.commMode = BTL_COMM_DS;
-  work->battleParam.commPos = selfId;
+  work->battleParam.commPos = 0;
   work->battleParam.netID = selfId;
   work->battleParam.multiMode = 0;
 
@@ -638,10 +643,18 @@ static void IRC_BATTLE_InitBattleSetupParam( IRC_BATTLE_WORK *work )
 
   work->battleParam.musicDefault = SEQ_BGM_VS_NORAPOKE;
   work->battleParam.musicPinch = SEQ_BGM_BATTLEPINCH;
+  */
+  
+  BTL_SETUP_Single_Comm( &work->battleParam , work->initWork->gameData , 
+                         GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS );
+
+  work->battleParam.partyPlayer = IRC_BATTLE_BattleData_GetPokeParty( work->sendBattleData );  ///< プレイヤーのパーティ
 }
 
 static void IRC_BATTLE_ExitBattleProc( IRC_BATTLE_WORK *work )
 {
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+  GFL_NET_DelCommandTable( GFL_NET_CMD_BATTLE );
   IRC_BATTLE_InitGraphic( work );
   IRC_BATTLE_LoadResource( work );
   IRC_BATTLE_InitMessage( work );
@@ -937,7 +950,7 @@ static void IRC_BATTLE_InitNet( IRC_BATTLE_WORK *work )
     work->sendBattleData = GFL_HEAP_AllocMemory( work->heapId , IRC_BATTLE_BATTLE_DATA_SEND_SIZE );
     for( i=0;i<IRC_BATTLE_MEMBER_NUM;i++)
     {
-      work->postBattleData[i] = GFL_HEAP_AllocMemory( work->heapId , IRC_BATTLE_BATTLE_DATA_SEND_SIZE );;
+      work->postBattleData[i] = GFL_HEAP_AllocMemory( work->heapId , IRC_BATTLE_BATTLE_DATA_SEND_SIZE );
       work->isPostCompareData[i] = FALSE;
       work->isPostBattleData[i] = FALSE;
     }
@@ -1030,6 +1043,12 @@ static void IRC_BATTLE_Post_BattleData( const int netID, const int size , const 
   IRC_BATTLE_WORK *work = (IRC_BATTLE_WORK*)pWork;
   ARI_TPrintf("Finish Post BattleData.\n");
   work->isPostBattleData[netID] = TRUE;
+  
+  //POKEPARTYのポインタ設定処理
+  {
+    IRC_BATTLE_BATTLE_DATA *battleData = work->postBattleData[netID];
+    battleData->pokeParty = IRC_BATTLE_BattleData_GetPokeParty( work->postBattleData[netID] );
+  }
 }
 
 static u8* IRC_BATTLE_Post_BattleDataBuff( int netID, void* pWork , int size )

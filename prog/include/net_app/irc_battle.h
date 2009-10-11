@@ -10,6 +10,7 @@
 //======================================================================
 #pragma once
 #include "battle_championship/battle_championship_def.h"
+#include "gamesystem/game_data.h"
 
 //======================================================================
 //	define
@@ -29,9 +30,7 @@
 typedef struct
 {
   BATTLE_CHAMPIONSHIP_DATA *csData;
-  MYSTATUS    *statusPlayer; ///< プレイヤーのステータス
-  MYITEM      *itemData;     ///< アイテムデータ
-  BAG_CURSOR  *bagCursor;    ///< バッグカーソルデータ
+  GAMEDATA *gameData;
 }IRC_BATTLE_INIT_WORK;
 
 //======================================================================

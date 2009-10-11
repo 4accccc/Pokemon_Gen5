@@ -505,7 +505,8 @@ BOOL GFL_NET_IRC_IsSender(void)
 BOOL GFL_NET_IRC_IsConnect(void)
 {
 	if(IRC_IsConnect() == TRUE){
-		if(IRC_GetUnitNumber() == NetIrcSys.target_unit_number){
+		//if(IRC_GetUnitNumber() == NetIrcSys.target_unit_number)
+		{
 			return TRUE;
 		}
 		OS_TPrintf("接続チェック：ターゲットユニットナンバーが違う\n");
@@ -585,7 +586,7 @@ void GFL_NET_IRC_Move(void)
 				else if(nis->retry_time == NET_IRC_RETRY_START_WAIT){
 					IRC_Init(_ID);
 					IRC_SetRecvCallback(IRC_ReceiveCallback);
-					IRC_SetUnitNumber(NetIrcSys.my_unit_number);
+					//IRC_SetUnitNumber(NetIrcSys.my_unit_number);
 					nis->retry_time++;
 					return;
 				}
