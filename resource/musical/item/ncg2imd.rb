@@ -7,9 +7,6 @@ def GetFileName(pathfile)
 	
 	file = pathfile.dup
 	file[0,last+1] = ""
-	p pathfile
-	p last
-	p file
 	return file
 end
 
@@ -19,7 +16,6 @@ def GetAddPath(path,word)
 	del_size = size-last
 	add_path = path.dup
 	add_path[last,del_size] = ""
-	p add_path
 	return add_path
 end
 
@@ -213,7 +209,6 @@ while tex_num < tex_num_max
 			end
 			width+=1
 			tex_data << char_dat
-			p char_dat
 		end
 		height+=1
 	end
@@ -238,7 +233,6 @@ tex_data_array.each { | tex |
 }
 
 #maker.each { | i |  i.Dump}
-p add_path + "/" + ncg_parser.GetPalFileName
 ncl_parser = NCL_STRUCT.new(1)
 ncl_parser.Pars(add_path + "/" + ncg_parser.GetPalFileName)
 
@@ -271,8 +265,6 @@ end
 
 #org_imd_path = GetAddPath(add_path,/tsure_data/)
 org_imd_path = "./"
-p org_imd_path+template
-p output_path + output_file_name
 #rewrite.OutPut(org_imd_path + template, output_path + "/" + output_file_name)
 rewrite.OutPut(org_imd_path + template, output_path + output_file_name)
 
