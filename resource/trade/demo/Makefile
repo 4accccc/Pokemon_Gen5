@@ -41,6 +41,9 @@ gsources:=$(wildcard *.ncg)
 csources:=$(wildcard *.nsc)
 esources:=$(wildcard *.nce)
 
+parsources:=$(wildcard *.spr)
+
+
 #3D
 IMDFILE = $(wildcard *.imd)
 ICAFILE = $(wildcard *.ica)
@@ -56,6 +59,9 @@ cobjects = $(subst .nsc,.NSCR,$(csources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
 
+spaobjects = $(subst .spt,.spa,$(parsources))
+
+
 #3D
 NSBMDFILE = $(IMDFILE:.imd=.nsbmd)
 #NSBTXFILE = $(IMDFILE:.imd=.nsbtx)	#テクスチャなしimdだとエラーがでる
@@ -65,8 +71,8 @@ NSBMAFILE = $(IMAFILE:.ima=.nsbma)
 NSBTPFILE = $(ITPFILE:.itp=.nsbtp)
 NSBTAFILE = $(ITAFILE:.ita=.nsbta)
 
-OBJ_FILE 	= $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) $(gobjects) \
-						$(NSBMDFILE) $(NSBTXFILE) $(NSBCAFILE) $(NSBVAFILE) $(NSBMAFILE) $(NSBTPFILE) $(NSBTAFILE) 
+OBJ_FILE 	= $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) $(gobjects) $(spaobjects)\
+						$(NSBMDFILE) $(NSBTXFILE) $(NSBCAFILE) $(NSBVAFILE) $(NSBMAFILE) $(NSBTPFILE) $(NSBTAFILE)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -141,7 +147,7 @@ LIST_FILE = list.txt
 $(targetname).narc:  $(OBJ_FILE) Makefile
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t camera3.ica icacamera.bin
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t camera4.ica icatarget.bin
-	../../../tools/SPRArchiver.exe -o head.h ./ ./ demo_tex001.spa
+	../../../tools/SPRArchiver.exe -o spahead.h ./ ./ demo_tex001.spa
 	-ls -f *.N*R > $(LIST_FILE)
 	-ls -f *.nsb* >> $(LIST_FILE)
 	-ls -f *.spa >> $(LIST_FILE)
