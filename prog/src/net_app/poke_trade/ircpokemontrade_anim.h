@@ -17,7 +17,7 @@
 
 #define _BALL_PARTICLE_START   (1300)  ///モンスターボールが打ちあがる パーティクル開始
 #define _POKEUP_WHITEOUT_START (480)  //モンスターボールが打ちあがった際のホワイトアウト
-#define _POKEUP_WHITEOUT_TIMER (28)  //モンスターボールが打ちあがった際のホワイトアウト時間
+#define _POKEUP_WHITEOUT_TIMER (29)  //モンスターボールが打ちあがった際のホワイトアウト時間 1/
 #define _POKEUP_WHITEIN_START  (510)  //ポケモン交換シーン前のフェードイン
 #define _POKEUP_WHITEIN_TIMER (30)  //ポケモン交換シーン前のフェードイン時間
 
@@ -32,13 +32,13 @@
 
 
 #define _POKECHANGE_WHITEOUT_START (1020)  //ポケモン交換シーンのホワイトアウト
-#define _POKECHANGE_WHITEOUT_TIMER (28)  //ポケモン交換シーンのホワイトアウト時間
+#define _POKECHANGE_WHITEOUT_TIMER (29)  //ポケモン交換シーンのホワイトアウト時間
 #define _POKECHANGE_WHITEIN_START  (1050)  //ボールおち前のフェードイン
 #define _POKECHANGE_WHITEIN_TIMER (30)  //ボールおち前のフェードイン時間
 
 
 #define _POKESPLASH_WHITEOUT_START (1440)  //ボールおちシーンのホワイトアウト
-#define _POKESPLASH_WHITEOUT_TIMER (28)  //ボールおちシーンのホワイトアウト時間
+#define _POKESPLASH_WHITEOUT_TIMER (29)  //ボールおちシーンのホワイトアウト時間
 #define _POKESPLASH_WHITEIN_START  (1470)  //もう一回ボール落ちのフェードイン
 #define _POKESPLASH_WHITEIN_TIMER (90)  //もう一回ボール落ちのフェードイン時間
 

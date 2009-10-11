@@ -1373,8 +1373,13 @@ void IRC_POKETRADE_ResetMainStatusBG(IRC_POKEMON_TRADE* pWork)
   GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_SELECT]);
   GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_PLAYER]);
   GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_FRIEND]);
-
+  pWork->curIcon[CELL_CUR_SCROLLBAR]=NULL;
+  pWork->curIcon[CELL_CUR_POKE_SELECT]=NULL;
+  pWork->curIcon[CELL_CUR_POKE_PLAYER]=NULL;
+  pWork->curIcon[CELL_CUR_POKE_FRIEND]=NULL;
   GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_SELECT_POKEICON1] );
   GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_SELECT_POKEICON2] );
+  pWork->cellRes[CHAR_SELECT_POKEICON1]=0;
+  pWork->cellRes[CHAR_SELECT_POKEICON2]=0;
 }
 

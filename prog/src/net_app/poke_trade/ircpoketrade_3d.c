@@ -698,7 +698,7 @@ static void Finalize( IRC_POKEMON_TRADE* pWork )
 static void Draw( IRC_POKEMON_TRADE* pWork )
 {
   static fx32 frame = 0;
-  static fx32 anime_speed = FX32_ONE/2;  // 1/60‚Å‚Ì“®ì‚Ìˆ×
+  static fx32 anime_speed = FX32_ONE;  // 1/60‚Å‚Ì“®ì‚Ìˆ×
   GFL_G3D_OBJSTATUS status;
 
 

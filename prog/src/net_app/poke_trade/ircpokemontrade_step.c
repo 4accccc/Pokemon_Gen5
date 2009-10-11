@@ -74,6 +74,11 @@ static void _setNextAnim(IRC_POKEMON_TRADE* pWork, int timer)
 }
 
 
+static void _WIPE_SYS_StartRap(int pattern, int wipe_m, int wipe_s, u16 color, int division, int piece_sync, int heap)
+{
+  WIPE_SYS_Start(pattern, wipe_m, wipe_s, color, division, piece_sync, heap);
+}
+
 
 void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(IRC_POKEMON_TRADE* pWork)
 {
@@ -190,12 +195,12 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
   }
   
   if(pWork->anmCount == _POKEUP_WHITEOUT_START){
-    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
+    _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
                    _POKEUP_WHITEOUT_TIMER, 1, pWork->heapID );
 
   }
   if(pWork->anmCount == _POKEUP_WHITEIN_START){
-    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
+    _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                    _POKEUP_WHITEIN_TIMER, 1, pWork->heapID );
   }
 
@@ -278,19 +283,19 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
   }
   
   if(pWork->anmCount == _POKECHANGE_WHITEOUT_START){
-    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
+    _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
                    _POKECHANGE_WHITEOUT_TIMER, 1, pWork->heapID );
   }
   if(pWork->anmCount == _POKECHANGE_WHITEIN_START){
-    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
+    _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                    _POKECHANGE_WHITEIN_TIMER, 1, pWork->heapID );
   }
   if(pWork->anmCount == _POKESPLASH_WHITEOUT_START){
-    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
+    _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
                    _POKESPLASH_WHITEOUT_TIMER, 1, pWork->heapID );
   }
   if(pWork->anmCount == _POKESPLASH_WHITEIN_START){
-    WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
+    _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                    _POKESPLASH_WHITEIN_TIMER, 1, pWork->heapID );
   }
   OS_TPrintf("C %d\n",pWork->anmCount);

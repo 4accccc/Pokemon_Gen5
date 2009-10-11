@@ -84,7 +84,7 @@ typedef enum
 #define _FONT_PARAM_SHADOW_RED (0x4)
 
 
-#define PLTID_OBJ_TYPEICON_M (12) //
+#define PLTID_OBJ_TYPEICON_M (10) // //3本
 #define PLTID_OBJ_BALLICON_M (13)  // 1本使用
 
 //#define CUR_NUM (3)
