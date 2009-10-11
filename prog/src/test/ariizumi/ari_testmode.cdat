@@ -69,6 +69,8 @@ static BOOL TESTMODE_ITEM_SelectFuncShot( TESTMODE_WORK *work , const int idx )
 
 //個人テストパート関係
 
+#define USE_CAMERA_TEST (defined(SDK_TWL))
+
 #include "app/pms_Input.h"
 #include "app/codein.h"
 #include "app/wifi_note.h"
@@ -87,6 +89,11 @@ static BOOL TESTMODE_ITEM_SelectDebPokeStatus( TESTMODE_WORK *work , const int i
 #if USE_MUSICAL_EDIT
 static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int idx );
 #endif //USE_MUSICAL_EDIT
+#if USE_CAMERA_TEST
+#include "test/ariizumi/camera_test.h"
+FS_EXTERN_OVERLAY(camera_test);
+static BOOL TESTMODE_ITEM_SelectDebCameraTest( TESTMODE_WORK *work , const int idx );
+#endif
 
 static TESTMODE_MENU_LIST menuAriizumi[] = 
 {
@@ -98,6 +105,9 @@ static TESTMODE_MENU_LIST menuAriizumi[] =
 #endif //USE_MUSICAL_EDIT
 	{L"友達手帳"				,TESTMODE_ITEM_SelectDebWifiNote },
 	{L"かんい文入力"			,TESTMODE_ITEM_SelectDebPmsInput },
+#if USE_CAMERA_TEST
+	{L"カメラテスト"			,TESTMODE_ITEM_SelectDebCameraTest },
+#endif
 	
 	{L"もどる"				,TESTMODE_ITEM_BackTopMenu },
 };
@@ -139,3 +149,10 @@ static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int i
 }
 #endif //USE_MUSICAL_EDIT
 
+#if USE_CAMERA_TEST
+static BOOL TESTMODE_ITEM_SelectDebCameraTest( TESTMODE_WORK *work , const int idx )
+{
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(camera_test), &CameraTastMainProcData, NULL);
+	return TRUE;
+}
+#endif //USE_CAMERA_TEST
