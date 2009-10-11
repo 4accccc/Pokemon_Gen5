@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-10-11T17:51:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,15 +229,15 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="130"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="239"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="124">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="15" top="236" right="720" bottom="856" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,11 +292,72 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d05_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ
+・冷凍コンテナの出入り口前に配置
+・メッセージ表示後
+　black_01表示</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">ヤーコンさんは
+ああ　いっているけれど[BE:01:ページ切り替え（クリア）]
+きみたちに　きがいが　およばないよう
+かんがえていると　おもうんだよな[BE:01:ページ切り替え（クリア）]
+なので　にげた
+プラズマだんが　みつかるまで[BE:00:ページ切り替え（行送り）]
+コンテナに　かくれていてよ[BE:01:ページ切り替え（クリア）]
+……まあ　まちを　うろついても
+ダイジョウブだと　おもうけどね</language>
+		<language name="JPN_KANJI" width="256">ヤーコンさんは
+ああ　いっているけれど[BE:01:ページ切り替え（クリア）]
+君たちに　危害が　及ばないよう
+考えていると　思うんだよな[BE:01:ページ切り替え（クリア）]
+なので　逃げた
+プラズマ団が　みつかるまで[BE:00:ページ切り替え（行送り）]
+コンテナに　隠れていてよ[BE:01:ページ切り替え（クリア）]
+……まあ　街を　うろついても
+ダイジョウブだと　思うけどね</language>
+	</row>
+
+	<row id="msg_d05_workman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ
+・msg_d05_black_01表示後に話しかけたとき
+・コンテナ内のプラズマ団に勝利すると
+　ここから削除</comment>
+		<language name="JPN" width="256">……まあ　まちを　うろついても
+ダイジョウブだと　おもうけどね</language>
+		<language name="JPN_KANJI" width="256">……まあ　街を　うろついても
+ダイジョウブだと　思うけどね</language>
+	</row>
+
+	<row id="msg_d05_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・表示後、d05r0101内へ</comment>
+		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
+		<language name="JPN" width="256">クロック『めんどくせーな！[BE:01:ページ切り替え（クリア）]
+プラズマだんが　みつかるまで
+コンテナの　なかに　いてやろうぜ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">クロック『めんどくせーな！[BE:01:ページ切り替え（クリア）]
+プラズマ団が　見つかるまで
+コンテナの中に　いてやろうぜ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d05_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・d05r0101内でプラズマ団に勝利後
+　画面暗転でここに復帰するとメッセージ表示
+・表示後、ライバルだけc05方面に移動
+　画面外に消えると操作可能に</comment>
+		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
+		<language name="JPN" width="256">クロック『さぎょうの　おっさん
+あわてて　ジムに　もどったよ[BE:01:ページ切り替え（クリア）]
+そうとうに　やばいんだろーな
+さ　オレたちも　いくぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">クロック『作業員の　おっさん
+あわてて　ジムに　戻ったよ[BE:01:ページ切り替え（クリア）]
+相当に　やばいんだろーな
+さ　オレたちも　行くぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
