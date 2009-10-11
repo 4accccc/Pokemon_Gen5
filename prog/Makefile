@@ -11,6 +11,10 @@
 export MAKEROM_ROMSPEED=1TROM
 #export MAKEROM_ROMSPEED=MROM
 
+TARGET_PLATFORM :=  NITRO
+## TWLSDK_PLATFORM :=  NITRO TWL
+TWL_ARCHGEN		:=	HYBRID
+
 # NITROSDK3.0付属ののプリコンパイルを読み込まない
 NITRO_NO_STD_PCHDR = True
 
@@ -33,9 +37,43 @@ LLIBRARIES		+=  	gflib.a
 
 
 # wifiをオーバーレイで使用する場合のLibrary定義
-LDEPENDS_NEF += $(NITRODWC_LIB_DEPENDS)
-TWLDWC_LIB_MODULES_   = bm account common
+LDEPENDS_NEF += $(TWLDWC_LIB_DEPENDS)
+TWLDWC_LIB_MODULES_   = bm account common ac
 TWLDWC_LIB_GSMODULES_ = 
+NITROVCT_LIBS = 
+
+# JPEGライブラリをオーバーレイする為の定義
+TWL_LIBS		= 								\
+				   libcard$(TWL_LIBSUFFIX).a	\
+				   libcp$(TWL_LIBSUFFIX).a		\
+				   libel$(TWL_LIBSUFFIX).a		\
+				   libenv$(TWL_LIBSUFFIX).a		\
+				   libext$(TWL_LIBSUFFIX).a		\
+				   libfs$(TWL_LIBSUFFIX).a		\
+				   libfx$(TWL_LIBSUFFIX).a		\
+				   libgx$(TWL_LIBSUFFIX).a		\
+				   libmath$(TWL_LIBSUFFIX).a	\
+				   libmb$(TWL_LIBSUFFIX).a		\
+				   libmi$(TWL_LIBSUFFIX).a		\
+				   libnvram$(TWL_LIBSUFFIX).a	\
+				   libos$(TWL_LIBSUFFIX).a		\
+				   libprc$(TWL_LIBSUFFIX).a		\
+				   libpxi$(TWL_LIBSUFFIX).a		\
+				   librtc$(TWL_LIBSUFFIX).a		\
+				   libscfg$(TWL_LIBSUFFIX).a	\
+				   libsnd$(TWL_LIBSUFFIX).a		\
+				   libspi$(TWL_LIBSUFFIX).a		\
+				   libstd$(TWL_LIBSUFFIX).a		\
+				   libwbt$(TWL_LIBSUFFIX).a		\
+				   libwfs$(TWL_LIBSUFFIX).a		\
+				   libwm$(TWL_LIBSUFFIX).a		\
+				   libctrdg$(TWL_LIBSUFFIX).a	\
+				   libcrypto$(TWL_LIBSUFFIX).a	\
+			       libcht$(TWL_LIBSUFFIX).a		\
+				   libwxc$(TWL_LIBSUFFIX).a		\
+				   $(notdir $(LIBSYSCALL_))		\
+				   $(notdir $(LIBSYSCALL_TWL_))	\
+				   $(CRT0_O)
 
 # nitrosystemをオーバーレイで使用する場合のLibrary定義
 TWLSYSTEM_LIBS = \
@@ -73,7 +111,7 @@ endif
 #----------------------------------------------------------------------------
 #	NitroのデフォルトLCFファイルでなく、作成したものを読み込む	
 #----------------------------------------------------------------------------
-LCFILE_SPEC	=	overlay/main.lsf
+LCFILE_SPEC	=	overlay/main$(NITRO_LIBSUFFIX).lsf
 MAKELCF_FLAGS	+=	-DADDRESS_MAIN=0x02000000
 
 
@@ -161,7 +199,7 @@ MAKEROM_FLAGS += -DGFL_MAKEROM_ROMFILES='$(GFL_MAKEROM_ROMFILES)'
 #----------------------------------------------------------------------------
 #	ロムスペックファイル読み込みのため追加
 #----------------------------------------------------------------------------
-ROM_SPEC= default.rsf
+ROM_SPEC= default$(TWL_LIBSUFFIX).rsf
 
 #----------------------------------------------------------------------------
 #	ターゲットファイル設定

@@ -247,6 +247,8 @@ SRCS  +=    $(SOUNDSRC) \
 # 要望・質問は森さんか大野にお願いします。
 #
 
+#
+#   VCTはランダムマッチにいらない
 # wifiプログラムのライブラリ
 #===> main
 #LIB=>          libdwcnonport.a
@@ -255,9 +257,8 @@ SRCS  +=    $(SOUNDSRC) \
 #LIB=>          libdwcghttp.a
 #LIB=>          libdwcmatch.a
 #LIB=>          libdwcauth.a
-#LIB=>          libdwcac.a
-#LIB=>          libdwcgscommon.a
 #LIB=>          libdwcgdb.a
+#LIB=>          libdwcgscommon.a
 #LIB=>          libdwcgsghttp.a
 #LIB=>          libdwcgsgp.a
 #LIB=>          libdwcgsgstats.a
@@ -266,10 +267,6 @@ SRCS  +=    $(SOUNDSRC) \
 #LIB=>          libdwcgsqr2.a
 #LIB=>          libdwcgsserverbrowsing.a
 #LIB=>          libvct.a
-#LIB=>          libsoc.a
-#LIB=>          libcps.a
-#LIB=>          libssl.a
-#LIB=>          libwcm.a
 SRCS_OVERLAY_DEV_WIFILIB   = net/net_dummy.c
 
 
@@ -297,7 +294,6 @@ SRCS_OVERLAY_DEV_IRC    =   net/net_devirc.c \
 
 #wifi設定画面
 #===> SRCS_OVERLAY_DEV_WIFI
-#LIB=>          libmb.a
 #LIB=>          libdwcutil.a
 SRCS_OVERLAY_WIFI_UTIL  = net/dwc_raputil.c
 
@@ -641,7 +637,7 @@ SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
 
 
 # IRCマッチングアプリケーション
-#===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_IRCBATTLEMATCH = net_app/irc_match/ircbattlematch.c \
                 net_app/friend_trade/ircbattlefriend.c \
 								net_app/poke_trade/ircpokemontrade.c \
@@ -985,3 +981,12 @@ SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 																test/nagihashi/debug_irc_name.c \
 																test/nagihashi/debug_template.c \
 																test/nagihashi/debug_poke2dcheck.c
+
+# カメラテスト
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
+#LIB=>          libssp.TWL.HYB.a
+SRCS_OVERLAY_CAMERA_TEST = test/ariizumi/camera_system.c \
+        test/ariizumi/camera_test.c \
+		test/ariizumi/jpeg_encoder.c

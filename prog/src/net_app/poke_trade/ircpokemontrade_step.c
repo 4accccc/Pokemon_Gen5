@@ -186,7 +186,7 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
   }
   
   if(pWork->anmCount == _BALL_PARTICLE_START){
-//    GFL_PTC_CreateEmitterCallback(pWork->ptc, 0, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, 0, NULL, pWork);
   }
   
   if(pWork->anmCount == _POKEUP_WHITEOUT_START){
@@ -200,8 +200,8 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
   }
 
   if(pWork->anmCount == _POKE_APPEAR_START){
-    IRCPOKETRADE_PokeCreateMcss(pWork, 0, 0, pWork->recvPoke[0] );
-    IRCPOKETRADE_PokeCreateMcss(pWork, 1, 1, pWork->recvPoke[1] );
+    IRCPOKETRADE_PokeCreateMcss(pWork, 0, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0) );
+    IRCPOKETRADE_PokeCreateMcss(pWork, 1, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );
     {  //èâä˙à íuê›íË
         VecFx32 apos;
         apos.x = PSTATUS_MCSS_POS_X1;
@@ -242,8 +242,8 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
 
     IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
     IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
-    IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, pWork->recvPoke[0] );
-    IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, pWork->recvPoke[1] );
+    IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,0) );
+    IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );
 
     
     {  //èâä˙à íuê›íË
@@ -319,7 +319,8 @@ static void _changeDemo_ModelTrade24(IRC_POKEMON_TRADE* pWork)
   
   IRC_POKETRADE_SetSubDispGraphic(pWork);
 
-  IRC_POKETRADE_GraphicInit(pWork);  //BGÇ
+  IRC_POKETRADE_GraphicInitMainDisp(pWork);
+  IRC_POKETRADE_GraphicInitSubDisp(pWork);
 
   IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
     

@@ -29,6 +29,8 @@
 #include "app/app_taskmenu.h"
 #include "ircpokemontrade_anim.h"
 #include "system/ica_anime.h"
+#include "ui/ui_easy_clwk.h"
+
 
 typedef enum
 {
@@ -75,6 +77,15 @@ typedef enum
   CELL_DISP_NUM
 } _CUR_RESOURCE;
 
+//パレットの定義はあっても良いと
+#define _FONT_PARAM_LETTER_BLUE (0x5)
+#define _FONT_PARAM_SHADOW_BLUE (0x6)
+#define _FONT_PARAM_LETTER_RED (0x3)
+#define _FONT_PARAM_SHADOW_RED (0x4)
+
+
+#define PLTID_OBJ_TYPEICON_M (12) //
+#define PLTID_OBJ_BALLICON_M (13)  // 1本使用
 
 //#define CUR_NUM (3)
 #define _BUTTON_WIN_PAL   (15)  // ウインドウ
@@ -159,6 +170,8 @@ typedef enum
   CEL_RESOURCE_MAX,
 } CEL_RESOURCE;
 
+
+
 // セットアップ番号
 enum
 {
@@ -166,6 +179,14 @@ enum
   SETUP_INDEX_ROUND,
   SETUP_INDEX_MAX
 };
+
+// ポケモンステータスを自分と相手を切り替える際のCELLの位置
+#define _POKEMON_SELECT1_CELLX  (128-32)
+#define _POKEMON_SELECT1_CELLY  (12)
+#define _POKEMON_SELECT2_CELLX  (128+32)
+#define _POKEMON_SELECT2_CELLY  (12)
+
+
 
 
 /// @brief 3Dモデルカラーフェード
@@ -205,10 +226,27 @@ typedef struct
 }_POKEMCSS_MOVE_WORK;
 
 
+typedef struct
+{
+  // ボールアイコン
+  UI_EASY_CLWK_RES      clres_ball;
+  GFL_CLWK              *clwk_ball;
+} _BALL_ICON_WORK;
 
 
-struct _IRC_POKEMON_TRADE {
+typedef struct
+{
+  // タイプアイコン
+  UI_EASY_CLWK_RES      clres_type_icon;
+  GFL_CLWK                  *clwk_type_icon;
+} _TYPE_ICON_WORK;
+
+
+
+
+struct _IRC_POKEMON_TRADE{
   u8 FriendPokemonCol[732];         ///< 相手のポケモンBOXにあるポケモン色
+  GFL_BMPWIN* StatusWin[2];
   POKEMON_PARAM* recvPoke[2];  ///< 受け取ったポケモンを格納する場所
   BOOL bPokemonSet[2];              ///<
   //	EVENT_IRCBATTLE_WORK* pParentWork;
@@ -220,7 +258,6 @@ struct _IRC_POKEMON_TRADE {
 
   GFL_ARCUTIL_TRANSINFO bgchar;
 
-  GFL_BMPWIN* StatusWin[2*4];
 
   TOUCH_SW_SYS			*TouchSubWindowSys;
   GFL_PTC_PTR ptc;
@@ -275,7 +312,9 @@ struct _IRC_POKEMON_TRADE {
   u32 cellRes[CEL_RESOURCE_MAX];
 
   //	GAMESYS_WORK* pGameSys;
-
+  _BALL_ICON_WORK aBallIcon[3];
+  _TYPE_ICON_WORK aTypeIcon[2];
+  
   GFL_CLUNIT	*cellUnit;
   GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
 
@@ -332,12 +371,13 @@ struct _IRC_POKEMON_TRADE {
   int ringLineNo;
 
   int modelno;  ///< 表示しているモデルの番号
+  int pokemonselectno;  ///< 自分と相手のポケモン選択中のどちらを指しているか
 
   u16* scrTray;
   u16* scrTemoti;
   u8* pCharMem;
 
-};
+} ;
 
 
 #define UNIT_NULL		(0xffff)
@@ -345,7 +385,9 @@ struct _IRC_POKEMON_TRADE {
 extern void IRC_POKMEONTRADE_ChangeFinish(IRC_POKEMON_TRADE* pWork);
 
 
-extern void IRC_POKETRADE_GraphicInit(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_GraphicInitMainDisp(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_GraphicInitSubDisp(IRC_POKEMON_TRADE* pWork);
+
 extern void IRC_POKETRADE_GraphicExit(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork,int pokeposx);
 extern void IRC_POKETRADE_SubStatusEnd(IRC_POKEMON_TRADE* pWork);
@@ -369,7 +411,7 @@ extern void IRC_POKETRADE_3DGraphicSetUp( IRC_POKEMON_TRADE* pWork );
 extern void IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE type);
 extern void IRC_POKETRADE_CreatePokeIconResource(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_InitBoxCursor(IRC_POKEMON_TRADE* pWork);
-
+extern POKEMON_PARAM* IRC_POKEMONTRADE_GetRecvPP(IRC_POKEMON_TRADE *pWork, int index);
 
 extern void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork );
 extern void IRC_POKETRADEDEMO_Main( IRC_POKEMON_TRADE* pWork );
@@ -384,6 +426,7 @@ extern void IRCPOKETRADE_PokeDeleteMcss( IRC_POKEMON_TRADE *pWork,int no  );
 extern void IRCPOKETRADE_PokeCreateMcss( IRC_POKEMON_TRADE *pWork ,int no, int bFront, const POKEMON_PARAM *pp );
 extern POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_MANAGER* boxData , int trayNo, int index,IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SetMainStatusBG(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_ResetMainStatusBG(IRC_POKEMON_TRADE* pWork);
 
 
 

@@ -1,6 +1,7 @@
 #----------------------------------------------------------------------------
 #  overlaytool.rb
 #  afetrを複数指定できるようにパッチ修正  2009.01.16 k.ohno
+#  TWL専用に改造                          2009.04.15 k.ohno
 #----------------------------------------------------------------------------
 
 
@@ -8,6 +9,7 @@
 OVERLAY_DIR			= "overlay"
 MAKE_PROG_FILE  	= "make_prog_files"
 OUTPUT_LSFFILE  	= OVERLAY_DIR + "/main.lsf"
+OUTPUT_TWL_LSFFILE  	= OVERLAY_DIR + "/main.TWL.HYB.lsf"
 OUTPUT_OVERLAYFILES	= OVERLAY_DIR + "/overlay_files"
 OUTPUT_OVERLAYTEXT  = OVERLAY_DIR + "/overlaymap.txt"
 
@@ -62,6 +64,30 @@ Autoload MCS_EX
 
 DEFAULT_LSFFILE
 
+
+##
+## TWL定義
+##
+bottom_lsf1 = <<BOTTOM_LSFFILE1
+
+
+Ltdautoload LTDMAIN
+{
+	# NITRO/TWL 共有のオーバーレイが在る場合は、さらにその後ろに配置する必要があります。
+  
+BOTTOM_LSFFILE1
+  
+bottom_lsf2 = <<BOTTOM_LSFFILE2
+  Object		* (.ltdmain)
+	Object		$(OBJS_LTDAUTOLOAD)
+	Library		$(LLIBS_EX) $(GLIBS_EX)
+}
+
+BOTTOM_LSFFILE2
+
+
+
+
 overlay_count        =  0
 overlay_table_num    =  0
 overlay_name		= ["main", "ITCM", "MCS_EX"]
@@ -76,6 +102,7 @@ line_get_flag     = 0
 line_count        = 1
 
 afterList = []
+overlayList = []
 afteroverlaycnt = 0
 
 USERNAME_SKIP = 1     #解釈しない
@@ -170,6 +197,9 @@ File.readlines(MAKE_PROG_FILE).each{ |line|
         if _targetname != "main" && _targetname!="MCS_EX" && _targetname != "ITCM" then
           _targetname = _targetname.downcase.sub(/srcs_overlay_/,"")
         end
+        ##オーバーレイのリストを全部取っておく
+        overlayList.push(overlay_name[overlay_table_num+2].downcase.sub(/srcs_overlay_/,""))
+        
         file.printf("Overlay %s\n{\n\tAfter\t%s\n",
         overlay_name[overlay_table_num+2].downcase.sub(/srcs_overlay_/,""),
         _targetname
@@ -256,6 +286,20 @@ File.open(OUTPUT_OVERLAYFILES,"w"){|file|
   end
 
 }
+
+##TWL用ファイルを作成する部分
+
+copycmd = "cp " + OUTPUT_LSFFILE+" "+OUTPUT_TWL_LSFFILE
+system(copycmd)
+
+fh = File.open(OUTPUT_TWL_LSFFILE,"a")
+fh.puts(bottom_lsf1)
+overlayList.each{ |line|
+  fh.printf("\tAfter\t%s\n",line )
+}
+fh.puts(bottom_lsf2)
+fh.close
+
 
 
 #オーバーレイのターゲットネームとその番号をテキストに吐き出す

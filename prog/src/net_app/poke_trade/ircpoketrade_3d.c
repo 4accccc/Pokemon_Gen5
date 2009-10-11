@@ -527,7 +527,7 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
   {
   	void *resource;
     resource = GFL_PTC_LoadArcResource(
-      ARCID_POKETRADEDEMO, NARC_tradedemo_balloon_spa, pWork->heapID);
+      ARCID_POKETRADEDEMO, NARC_tradedemo_demo_tex001_spa, pWork->heapID);
     GFL_PTC_SetResource(pWork->ptc, resource, TRUE, NULL);
   }
   

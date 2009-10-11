@@ -15,7 +15,7 @@
 //時間に関する事
 #define _POKEMON_CENTER_TIME   (60)  ///ポケモンが真ん中による時間
 
-#define _BALL_PARTICLE_START   (240)  ///モンスターボールが打ちあがる パーティクル開始
+#define _BALL_PARTICLE_START   (1300)  ///モンスターボールが打ちあがる パーティクル開始
 #define _POKEUP_WHITEOUT_START (480)  //モンスターボールが打ちあがった際のホワイトアウト
 #define _POKEUP_WHITEOUT_TIMER (28)  //モンスターボールが打ちあがった際のホワイトアウト時間
 #define _POKEUP_WHITEIN_START  (510)  //ポケモン交換シーン前のフェードイン
