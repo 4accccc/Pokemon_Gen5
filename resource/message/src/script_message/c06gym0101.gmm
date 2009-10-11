@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-30T20:52:15"/>
+	<create user="matsumiya" host="W00207" date="2009-10-08T15:37:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -340,7 +340,10 @@
 
 	<row id="msg_c06gym0101_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-ジムバッジ取得前</comment>
+・ジムバッジ取得前＋アイテム入手前
+・ジムに入ると
+　主人公に隣接してメッセージ表示
+・No???「おいしいみず」入手</comment>
 		<attribute name="キャラ指定">GLASSES
 サングラス</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
@@ -349,7 +352,17 @@
 
 	<row id="msg_c06gym0101_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-ジムバッジ取得後</comment>
+・ジムバッジ取得前＋アイテム入手後
+・ジムバッジ取得まで繰り返し</comment>
+		<attribute name="キャラ指定">GLASSES
+サングラス</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c06gym0101_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">GLASSES
 サングラス</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
