@@ -88,6 +88,24 @@ enum {
 	APP_COMMON_ST_ICON_NONE					// なし（アニメ番号的にもなし）
 };
 
+// ポケマークのアニメ番号
+enum {
+  APP_COMMON_POKE_MARK_CIRCLE_WHITE,    //○
+  APP_COMMON_POKE_MARK_CIRCLE_BLACK,    //●
+  APP_COMMON_POKE_MARK_TRIANGLE_WHITE,  //△
+  APP_COMMON_POKE_MARK_TRIANGLE_BLACK,  //▲ 
+  APP_COMMON_POKE_MARK_SQUARE_WHITE,    //□
+  APP_COMMON_POKE_MARK_SQUARE_BLACK,    //■
+  APP_COMMON_POKE_MARK_HEART_WHITE,     //ハート(白)
+  APP_COMMON_POKE_MARK_HEART_BLACK,     //ハート(黒)
+  APP_COMMON_POKE_MARK_STAR_WHITE,      //☆
+  APP_COMMON_POKE_MARK_STAR_BLACK,      //★
+  APP_COMMON_POKE_MARK_DIAMOND_WHITE,   //◇
+  APP_COMMON_POKE_MARK_DIAMOND_BLACK,   //◆
+  APP_COMMON_POKE_MARK_STAR_RED,        //★(赤・レア用)
+  APP_COMMON_POKE_MARK_POKERUSU,        //顔(ポケルス完治マーク)
+};
+
 
 //ARCIDの取得
 extern const u32 APP_COMMON_GetArcId(void);
@@ -140,3 +158,9 @@ extern u32 APP_COMMON_GetBallPltArcIdx( const BALL_ID ball );
 extern u32 APP_COMMON_GetBallCharArcIdx( const BALL_ID ball );
 extern u32 APP_COMMON_GetBallCellArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping );
 extern u32 APP_COMMON_GetBallAnimeArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping );
+
+//マークアイコン取得
+extern u32 APP_COMMON_GetPokeMarkPltArcIdx( void );
+extern u32 APP_COMMON_GetPokeMarkCharArcIdx( const APP_COMMON_MAPPING mapping );
+extern u32 APP_COMMON_GetPokeMarkCellArcIdx( const APP_COMMON_MAPPING mapping );
+extern u32 APP_COMMON_GetPokeMarkAnimeArcIdx( const APP_COMMON_MAPPING mapping );

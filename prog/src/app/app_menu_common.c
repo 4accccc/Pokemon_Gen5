@@ -326,3 +326,58 @@ u32 APP_COMMON_GetBallAnimeArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING 
 	GF_ASSERT_MSG( ball != BALLID_NULL, "ボールIDがNULLです\n" );
 	return NARC_app_menu_common_ball_32k_NANR + mapping;
 }
+//=============================================================================
+/**
+ *	マーク
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	パレットリソース番号取得
+ *
+ *	@return	パレットアーカイブインデックス
+ */
+//-----------------------------------------------------------------------------
+u32 APP_COMMON_GetPokeMarkPltArcIdx( void )
+{	
+	return NARC_app_menu_common_poke_mark_NCLR;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	キャラリソース番号取得
+ *
+ *	@param	APP_COMMON_MAPPING mapping	マッピングモード
+ *
+ *	@return	キャラアーカイブインデックス
+ */
+//-----------------------------------------------------------------------------
+u32 APP_COMMON_GetPokeMarkCharArcIdx( const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_poke_mark_32k_NCGR + mapping;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	セルリソース番号取得
+ *
+ *	@param	APP_COMMON_MAPPING mapping	マッピングモード
+ *
+ *	@return	セルアーカイブインデックス
+ */
+//-----------------------------------------------------------------------------
+u32 APP_COMMON_GetPokeMarkCellArcIdx( const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_poke_mark_32k_NCER + mapping;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	セルアニメリソース番号取得
+ *
+ *	@param	APP_COMMON_MAPPING mapping	マッピングモード
+ *
+ *	@return	パレットアーカイブインデックス
+ */
+//-----------------------------------------------------------------------------
+u32 APP_COMMON_GetPokeMarkAnimeArcIdx( const APP_COMMON_MAPPING mapping )
+{	
+	return NARC_app_menu_common_poke_mark_32k_NANR + mapping;
+}

@@ -148,7 +148,17 @@ enum {
 	NARC_app_menu_common_ball_128k_NCER = 134,
 	NARC_app_menu_common_ball_32k_NANR = 135,
 	NARC_app_menu_common_ball_64k_NANR = 136,
-	NARC_app_menu_common_ball_128k_NANR = 137
+	NARC_app_menu_common_ball_128k_NANR = 137,
+	NARC_app_menu_common_poke_mark_NCLR = 138,
+	NARC_app_menu_common_poke_mark_32k_NCGR = 139,
+	NARC_app_menu_common_poke_mark_64k_NCGR = 140,
+	NARC_app_menu_common_poke_mark_128k_NCGR = 141,
+	NARC_app_menu_common_poke_mark_32k_NCER = 142,
+	NARC_app_menu_common_poke_mark_64k_NCER = 143,
+	NARC_app_menu_common_poke_mark_128k_NCER = 144,
+	NARC_app_menu_common_poke_mark_32k_NANR = 145,
+	NARC_app_menu_common_poke_mark_64k_NANR = 146,
+	NARC_app_menu_common_poke_mark_128k_NANR = 147
 };
 
 /* NARC_APP_MENU_COMMON_NAIX_ */
