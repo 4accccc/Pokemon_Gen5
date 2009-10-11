@@ -113,52 +113,34 @@ static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
 {
   int i;
 
-  {
+  {  // フェード中
     _setFadeMask(pWork->pD2Fade);
     _EFFTOOL_CalcPaletteFade(pWork->pModelFade);
     _pokeMoveFunc(pWork->pMoveMcss[0]);
   }
  
-  if(pWork->anmCount > _POKEMON_CENTER_TIME){
+  if(pWork->anmCount > _POKEMON_CENTER_TIME){  //フェード完了
 
-
-    GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
+    GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0 );
     GFL_DISP_GXS_SetVisibleControlDirect( 0 );
-
-   
     IRC_POKETRADEDEMO_RemoveModel( pWork);
-
-    
     IRC_POKETRADE_AllDeletePokeIconResource(pWork);
     for(i = 0;i< CELL_DISP_NUM;i++){
       if(pWork->curIcon[i]){
         GFL_CLACT_WK_Remove(pWork->curIcon[i]);
       }
     }
-
-
-#if 1
-    for(i=0;i<2;i++){
+    for(i=1;i<2;i++){
       if( pWork->pokeMcss[i] ){
-
         IRCPOKETRADE_PokeDeleteMcss(pWork,i);
-//        IRCPOKETRADE_PokeCreateMcss(pWork, i, pWork->recvPoke[i] );
-
-        //MCSS_SetVanishFlag(pWork->pokeMcss[i]);
-        // 一時的に画面外に出す
-        //VecFx32 apos;
-        //apos.x -= FX32_ONE*30;
-        //apos.z -= FX32_ONE*30;
-        //MCSS_SetPosition( pWork->pokeMcss[i] ,&apos );
-
       }
     }
-#endif
 
     IRC_POKETRADE_GraphicFreeVram(pWork);
     IRC_POKETRADE_ResetSubDispGraphic(pWork);
+    IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork);
 
-   IRC_POKETRADEDEMO_SetModel( pWork, TRADE01_OBJECT);
+    IRC_POKETRADEDEMO_SetModel( pWork, TRADE01_OBJECT);
 
     IRC_POKETRADE_SetSubdispGraphicDemo(pWork);
 
@@ -170,6 +152,9 @@ static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
     pWork->pMoveMcss[0]=NULL;
     
     _setNextAnim(pWork, 0);
+
+//    GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
+
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade3);
   }
 
@@ -189,6 +174,14 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
     GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
     GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
   }
+
+  if(pWork->anmCount == _POKEMON_DELETE_TIME){
+    if( pWork->pokeMcss[0] ){
+      IRCPOKETRADE_PokeDeleteMcss(pWork,0);
+    }
+  }
+
+
   
   if(pWork->anmCount == _BALL_PARTICLE_START){
     GFL_PTC_CreateEmitterCallback(pWork->ptc, 0, NULL, pWork);

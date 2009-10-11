@@ -24,6 +24,7 @@
 #include "system/bmp_winframe.h"
 #include "savedata/box_savedata.h"
 #include "pokeicon/pokeicon.h"
+#include "app/app_menu_common.h"
 
 #include "ircbattle.naix"
 #include "trade.naix"
@@ -125,6 +126,8 @@ void IRC_POKETRADE_GraphicInitMainDisp(IRC_POKEMON_TRADE* pWork)
                                          pWork->heapID);
 	GFL_ARC_CloseDataHandle( p_handle );
 
+
+  
 }
 
 
@@ -163,6 +166,26 @@ void IRC_POKETRADE_GraphicInitSubDisp(IRC_POKEMON_TRADE* pWork)
 
 	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME3_S, _SUBLIST_NORMAL_PAL,
 			pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID );
+
+
+
+  if(pWork->cellRes[PLT_COMMON]==0){
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), pWork->heapID );
+    pWork->cellRes[CHAR_COMMON] =
+      GFL_CLGRP_CGR_Register( p_handle , APP_COMMON_GetBarIconCharArcIdx() ,
+                              FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+    pWork->cellRes[PLT_COMMON] =
+      GFL_CLGRP_PLTT_Register(
+        p_handle ,APP_COMMON_GetBarIconPltArcIdx() , CLSYS_DRAW_SUB ,
+        _OBJPLT_COMMON * 32 , pWork->heapID  );
+    pWork->cellRes[ANM_COMMON] =
+      GFL_CLGRP_CELLANIM_Register(
+        p_handle , APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_128K),
+        APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_128K) , pWork->heapID  );
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
+
+  
 }
 
 void IRC_POKETRADE_GraphicFreeVram(IRC_POKEMON_TRADE* pWork)
@@ -1383,3 +1406,43 @@ void IRC_POKETRADE_ResetMainStatusBG(IRC_POKEMON_TRADE* pWork)
   pWork->cellRes[CHAR_SELECT_POKEICON2]=0;
 }
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   上画面のステータス開放 & 下画面の選択アイコン開放
+ * @param   IRC_POKEMON_TRADE work
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_LeftPageMarkDisp(IRC_POKEMON_TRADE* pWork,int no)
+{
+
+  IRC_POKETRADE_LeftPageMarkRemove( pWork);
+
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 8;
+    cellInitData.pos_y = 8*20;
+    cellInitData.anmseq = no;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+    pWork->curIcon[CHAR_LEFTPAGE_MARK] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                             pWork->cellRes[CHAR_COMMON],
+                                             pWork->cellRes[PLT_COMMON],
+                                             pWork->cellRes[ANM_COMMON],
+                                             &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CHAR_LEFTPAGE_MARK] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CHAR_LEFTPAGE_MARK], TRUE );
+  }
+
+}
+
+
+void IRC_POKETRADE_LeftPageMarkRemove(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->curIcon[CHAR_LEFTPAGE_MARK]){
+    GFL_CLACT_WK_Remove(pWork->curIcon[CHAR_LEFTPAGE_MARK]);
+    pWork->curIcon[CHAR_LEFTPAGE_MARK]=NULL;
+  }
+}

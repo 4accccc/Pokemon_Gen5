@@ -12,6 +12,7 @@
 #if PM_DEBUG
 #include "debug/debugwin_sys.h"
 #include "test/debug_pause.h"
+#include "poke_tool/monsno_def.h"
 #endif
 
 #include "arc_def.h"
@@ -783,8 +784,6 @@ static void _pokeSexMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,IRC_P
 
 
 
-
-
 //--------------------------------------------------------------
 //	ポケモン状態文章セット
 //--------------------------------------------------------------
@@ -821,7 +820,7 @@ static void _setPokemonStatusMessage(IRC_POKEMON_TRADE *pWork, int side,POKEMON_
 //	ポケモン状態文章消去
 //--------------------------------------------------------------
 
-static void _resetPokemonStatusMessage(IRC_POKEMON_TRADE *pWork)
+void IRCPOKEMONTRADE_ResetPokemonStatusMessage(IRC_POKEMON_TRADE *pWork)
 {
   int i;
   
@@ -881,6 +880,9 @@ static void _changePokemonMyStDisp(IRC_POKEMON_TRADE* pWork,int pageno,int leftr
     _pokeHpHpmaxMsgDisp(pp, pWork->MyInfoWin, 8*8,4*8, pWork);
     _pokeATTACKSPEEDNumMsgDisp(pp, pWork->MyInfoWin, 10*8,6*8, pWork);
     _pokeSexMsgDisp(pp, pWork->MyInfoWin, 12*8, 0, pWork);
+
+    IRC_POKETRADE_LeftPageMarkDisp(pWork,APP_COMMON_BARICON_CURSOR_RIGHT);
+    
   }
   else{
     UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[0]);
@@ -892,6 +894,9 @@ static void _changePokemonMyStDisp(IRC_POKEMON_TRADE* pWork,int pageno,int leftr
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_38, pWork->pStrBuf );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 2*8, 14*8, pWork->pStrBuf, pWork->pFontHandle);
     _pokeAttributeMsgDisp(pp, pWork->MyInfoWin, 2*8, 16*8, pWork);
+
+   IRC_POKETRADE_LeftPageMarkDisp(pWork,APP_COMMON_BARICON_CURSOR_LEFT);
+
   }
 
     
@@ -1047,7 +1052,7 @@ static void _pokemonStatusStart(IRC_POKEMON_TRADE* pWork)
   IRC_POKETRADEDEMO_RemoveModel( pWork);  //リールを消す
   IRC_POKETRADE_MessageWindowClear(pWork);  //下のメッセージを消す
 
-  _resetPokemonStatusMessage(pWork); //上のステータス文章+OAMを消す
+  IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork); //上のステータス文章+OAMを消す
 
   pWork->pokemonselectno = 0;//自分から表示
   _changePokemonStatusDisp(pWork);
@@ -1681,6 +1686,32 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
     else{
       pWork->pBox = BOX_DAT_InitManager(pWork->heapID,SaveControl_GetPointer());
       pWork->pMy = MyStatus_AllocWork(pWork->heapID);
+
+      {
+        POKEMON_PARAM *pp;
+        int i,j;
+        BOX_MANAGER* pBox = pWork->pBox;
+        pp = PP_Create(MONSNO_ONOKKUSU, 100, 123456, HEAPID_IRCBATTLE);
+
+        for(i=0;i<24;i++){
+          for(j=0;j<3;j++){
+            u16 oyaName[5] = {L'デ',L'バ',L'ッ',L'グ',0xFFFF};
+            POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(MONSNO_MARIRU+i, 0, GFL_HEAPID_APP);
+            u32 ret = POKE_PERSONAL_GetParam(ppd,POKEPER_ID_sex);
+
+            PP_SetupEx(pp, MONSNO_ZENIGAME+i+j, i+j, 123456,PTL_SETUP_POW_AUTO, ret);
+            PP_Put( pp , ID_PARA_oyaname_raw , (u32)oyaName );
+            PP_Put( pp , ID_PARA_nickname_raw , (u32)oyaName );
+            PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex(  pWork->pMy ) );
+            
+            BOXDAT_PutPokemonBox(pBox, i, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));
+            
+            POKE_PERSONAL_CloseHandle(ppd);
+          }
+        }
+        GFL_HEAP_FreeMemory(pp);
+      }
+
       pWork->pMyParty = PokeParty_AllocPartyWork(pWork->heapID);
     }
 #endif
@@ -1830,12 +1861,21 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
   GFL_G3D_CAMERA_Delete(pWork->pCamera);
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
 
-
-  GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_BOX] );
-  GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_BOX]);
-  GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_BOX]);
-  GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_POKEICON]);
-  GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_POKEICON]);
+  for(i=0;i<PLT_RESOURCE_MAX;i++){
+    if(pWork->cellRes[i]!=0){
+      GFL_CLGRP_PLTT_Release(pWork->cellRes[i]);
+    }
+  }
+  for( ;i<CHAR_RESOURCE_MAX;i++){
+    if(pWork->cellRes[i]!=0){
+      GFL_CLGRP_CGR_Release(pWork->cellRes[i]);
+    }
+  }
+  for( ;i<ANM_RESOURCE_MAX;i++){
+    if(pWork->cellRes[i]!=0){
+      GFL_CLGRP_CELLANIM_Release(pWork->cellRes[i]);
+    }
+  }
 
   IRC_POKETRADE_GraphicExit(pWork);
 
