@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-07T14:44:08"/>
+	<create user="matsumiya" host="W00207" date="2009-10-11T14:15:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="951" bottom="795" maximized="no" rayout="Vertical2">
+	<dialog left="33" top="274" right="674" bottom="893" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="528"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<band id="0" index="1" style="0000" width="466"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="541"/>
+		<band id="2" index="3" style="0000" width="479"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="695"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="633"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -354,7 +354,7 @@
 アクセサリーを　アナタに　プレゼントよ！</language>
 	</row>
 
-	<row id="msg_c04r0201_stylist_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_man2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MAN2
@@ -369,7 +369,7 @@
 いっそう　チャーミングに　してるさ</language>
 	</row>
 
-	<row id="msg_c04r0201_stylist_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_man2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・5回以上参加</comment>
@@ -377,7 +377,7 @@
 		<language name="JPN_KANJI" width="256">テストメッセージ</language>
 	</row>
 
-	<row id="msg_c04r0201_stylist_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0201_man2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・10回以上参加</comment>
@@ -385,7 +385,7 @@
 		<language name="JPN_KANJI" width="256">テストメッセージ</language>
 	</row>
 
-	<row id="msg_c04r0201_stylistpoke_04" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_c04r0201_stylistpoke_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>ポケモン
 ・上記OBJに隣接</comment>
 		<attribute name="キャラ指定">ポケモン</attribute>
@@ -393,10 +393,24 @@
 		<language name="JPN_KANJI" width="256">ずもっ！！</language>
 	</row>
 
+	<row id="msg_c04r0201_dancer_02">
+		<attribute name="キャラ指定">ダンサー
+＝スタイリストその2</attribute>
+		<language name="JPN" width="256">スタイリストからの　アドバイス！[BE:01:ページ切り替え（クリア）]
+おんがくの　ふんいきに　あった
+アクセサリーで　ドレスアップすると[BE:00:ページ切り替え（行送り）]
+おきゃくさんも　だいまんぞく　だね！</language>
+		<language name="JPN_KANJI" width="256">スタイリストからの　アドバイス！[BE:01:ページ切り替え（クリア）]
+音楽の　雰囲気に　あった
+アクセサリーで　ドレスアップすると[BE:00:ページ切り替え（行送り）]
+お客さんも　大満足　だね！</language>
+	</row>
+
 	<row id="msg_c04r0201_maid_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
-		<attribute name="キャラ指定">MAID</attribute>
+		<attribute name="キャラ指定">MAID
+＝スタイリストその3</attribute>
 		<language name="JPN" width="256">ミュージカルの　本質は！[BE:01:ページ切り替え（クリア）]
 ミュージック！　ダンス！
 もちろん　それもあります！[BE:01:ページ切り替え（クリア）]
@@ -407,6 +421,137 @@
 もちろん　それもあります！[BE:01:ページ切り替え（クリア）]
 ですが　一番　重要なのは
 舞台で　輝く　ポケモンたちでッすッ！！</language>
+	</row>
+
+	<row id="msg_c04r0201_breederw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+･条件を満たすと出現
+・アイテムくれない
+0＝主人公名前</comment>
+		<attribute name="キャラ指定">BREEDERW
+＝ファンその１</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さん！　さっきの
+ミュージカル　さいこう　でした！[BE:01:ページ切り替え（クリア）]
+なんだか　げんきが　わいてくるんです
+これからも　がんばってください！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん！　さっきの
+ミュージカル　最高でした！[BE:01:ページ切り替え（クリア）]
+なんだか　元気が　わいてくるんです
+これからも　がんばってください！</language>
+	</row>
+
+	<row id="msg_c04r0201_breederw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・アイテムくれる</comment>
+		<language name="JPN" width="256">もし　よろしければ
+このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">もし　よろしければ
+このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04r0201_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+･条件を満たすと出現
+・アイテムくれない
+0＝主人公名前</comment>
+		<attribute name="キャラ指定">GIRL2
+＝ファンその２</attribute>
+		<language name="JPN" width="256">ポケモン　まぶしいほど
+かがやいていました！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さんの　センス
+あたしも　まねして　いきたいです！</language>
+		<language name="JPN_KANJI" width="256">ポケモン　まぶしいほど
+輝いていました！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さんの　センス
+あたしも　真似していきたいです！</language>
+	</row>
+
+	<row id="msg_c04r0201_girl2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・アイテムくれる</comment>
+		<language name="JPN" width="256">もし　よろしければ
+このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">もし　よろしければ
+このアクセ　つかってください！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04r0201_baker_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+･条件を満たすと出現
+・アイテムくれない
+0＝主人公名前</comment>
+		<attribute name="キャラ指定">BAKER
+＝ファンその３</attribute>
+		<language name="JPN" width="256">また　みにきますね
+[1:00:トレーナー名:0]さん[BE:01:ページ切り替え（クリア）]
+だって　じんせい　かわるほど
+すばらしかったんですもの</language>
+		<language name="JPN_KANJI" width="256">また　観に来ますね
+[1:00:トレーナー名:0]さん[BE:01:ページ切り替え（クリア）]
+だって　人生観　変わるほど
+すばらしかったんですもの</language>
+	</row>
+
+	<row id="msg_c04r0201_baker_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・アイテムくれる</comment>
+		<language name="JPN" width="256">この　グッズ……
+きにいってもらえると　うれしいです[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">この　グッズ……
+気に入ってもらえると　うれしいです[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04r0201_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+･条件を満たすと出現
+・アイテムくれない
+0＝主人公名前</comment>
+		<attribute name="キャラ指定">MAN3
+＝ファンその４</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+かんげきの　あまり
+ことばが　でてこないです……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+[1:00:トレーナー名:0]さん！[BE:01:ページ切り替え（クリア）]
+感激のあまり
+言葉が　でてこないです……</language>
+	</row>
+
+	<row id="msg_c04r0201_man3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・アイテムくれる</comment>
+		<language name="JPN" width="256">これ　オレの　きもちです
+グッズ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">これ　オレの　気持ちです
+グッズ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c04r0201_mountain_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+･条件を満たすと出現
+・アイテムくれない</comment>
+		<attribute name="キャラ指定">MOUNTAIN
+＝ファンその５</attribute>
+		<language name="JPN" width="256">よかったよ……
+アンタ　すごいよ……[BE:01:ページ切り替え（クリア）]
+ゆめや　きぼうが　つまっていて
+オレも　もういちど　やまにのぼるよ！</language>
+		<language name="JPN_KANJI" width="256">よかったよ……
+アンタ　すごいよ……[BE:01:ページ切り替え（クリア）]
+夢や　希望が　詰まっていて
+オレも　もう一度　山に登るよ！</language>
+	</row>
+
+	<row id="msg_c04r0201_mountain_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・アイテムくれる</comment>
+		<language name="JPN" width="256">めいわく　じゃなかったら
+これ　もらってくれ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">迷惑じゃなかったら
+これ　もらってくれ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
