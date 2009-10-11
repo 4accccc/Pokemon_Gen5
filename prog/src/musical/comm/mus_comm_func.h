@@ -98,10 +98,14 @@ const BOOL MUS_COMM_Send_ProgramSize( MUS_COMM_WORK *work );
 const BOOL MUS_COMM_Send_ProgramData( MUS_COMM_WORK *work );
 const BOOL MUS_COMM_Send_MessageSize( MUS_COMM_WORK *work );
 const BOOL MUS_COMM_Send_MessageData( MUS_COMM_WORK *work );
+const BOOL MUS_COMM_Send_ScriptSize( MUS_COMM_WORK *work );
+const BOOL MUS_COMM_Send_ScriptData( MUS_COMM_WORK *work );
 const BOOL MUS_COMM_IsPostProgramSize( const MUS_COMM_WORK *work );
 const BOOL MUS_COMM_IsPostProgramData( const MUS_COMM_WORK *work );
 const BOOL MUS_COMM_IsPostMessageSize( const MUS_COMM_WORK *work );
 const BOOL MUS_COMM_IsPostMessageData( const MUS_COMM_WORK *work );
+const BOOL MUS_COMM_IsPostScriptSize( const MUS_COMM_WORK *work );
+const BOOL MUS_COMM_IsPostScriptData( const MUS_COMM_WORK *work );
 
 //ミュージカルの役者IDXでデータを取得
 MUSICAL_POKE_PARAM* MUS_COMM_GetMusPokeParam( MUS_COMM_WORK *work , const u8 musicalIdx );

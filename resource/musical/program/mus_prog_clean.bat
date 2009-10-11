@@ -1,1 +1,1 @@
-del /S *.bin *.dat *.h *.swav *.narc
+del /S *.bin *.o *.s *.elf *.dat *.h *.swav *.narc

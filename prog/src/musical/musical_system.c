@@ -62,6 +62,8 @@ typedef enum
   MPS_WAIT_SEND_PROGRAM_DATA,
   MPS_WAIT_SEND_MESSAGE_SIZE,
   MPS_WAIT_SEND_MESSAGE_DATA,
+  MPS_WAIT_SEND_SCRIPT_SIZE,
+  MPS_WAIT_SEND_SCRIPT_DATA,
   
   MPS_FINISH,
 }MUSICAL_PROC_STATE;
@@ -72,7 +74,8 @@ enum
 {
   MUSICAL_ARCDATAID_PROGDATA = 0,
   MUSICAL_ARCDATAID_GMMDATA = 1,
-  MUSICAL_ARCDATAID_STRMDATA = 2,
+  MUSICAL_ARCDATAID_SCRIPTDATA = 2,
+  MUSICAL_ARCDATAID_STRMDATA = 3,
 };
 
 //======================================================================
@@ -222,6 +225,7 @@ MUSICAL_DISTRIBUTE_DATA* MUSICAL_SYSTEM_InitDistributeData( HEAPID workHeapId )
 
   distData->programData = NULL;
   distData->messageData = NULL;
+  distData->scriptData = NULL;
   distData->strmData = NULL;
 
   return distData;
@@ -237,6 +241,10 @@ void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData )
   {
     GFL_HEAP_FreeMemory( distData->messageData );
   }
+  if( distData->scriptData != NULL )
+  {
+    GFL_HEAP_FreeMemory( distData->scriptData );
+  }
   if( distData->strmData != NULL )
   {
     GFL_HEAP_FreeMemory( distData->strmData );
@@ -249,6 +257,7 @@ void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , HEAP
   //FIXME:セーブデータからの取得
   distData->programData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_PROGDATA , FALSE , heapId , &distData->programDataSize );
   distData->messageData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_GMMDATA , FALSE , heapId , &distData->messageDataSize );
+  distData->scriptData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_SCRIPTDATA , FALSE , heapId , &distData->scriptDataSize );
   distData->strmData = GFL_ARC_UTIL_LoadEx( ARCID_MUSICAL_PROGRAM , MUSICAL_ARCDATAID_STRMDATA , FALSE , heapId , &distData->strmDataSize );
 }
 
@@ -423,6 +432,33 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
 
   case MPS_WAIT_SEND_MESSAGE_DATA:
     if( MUS_COMM_IsPostMessageData( work->commWork ) == TRUE )
+    {
+      if( MUS_COMM_GetMode( work->commWork ) == MCM_PARENT )
+      {
+        if( MUS_COMM_Send_ScriptSize( work->commWork ) == TRUE )
+        {
+          work->state = MPS_WAIT_SEND_SCRIPT_SIZE;
+        }
+      }
+      else
+      {
+        work->state = MPS_WAIT_SEND_SCRIPT_DATA;
+      }
+    }
+    break;
+
+  case MPS_WAIT_SEND_SCRIPT_SIZE:
+    if( MUS_COMM_IsPostScriptSize( work->commWork ) == TRUE )
+    {
+      if( MUS_COMM_Send_ScriptData( work->commWork ) == TRUE )
+      {
+        work->state = MPS_WAIT_SEND_SCRIPT_DATA;
+      }
+    }
+    break;
+
+  case MPS_WAIT_SEND_SCRIPT_DATA:
+    if( MUS_COMM_IsPostScriptData( work->commWork ) == TRUE )
     {
       work->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_PROC , work->distData );
       if( MUS_COMM_GetMode( work->commWork ) == MCM_PARENT )

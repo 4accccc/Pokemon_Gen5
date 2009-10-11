@@ -14,7 +14,6 @@
 
 #include "arc_def.h"
 #include "musical_item.naix"
-#include "musical_script.naix"
 #include "stage_gra.naix"
 #include "message.naix"
 #include "print/printsys.h"
@@ -318,10 +317,6 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   STA_ACT_TermTransEffect( work );
   
   STA_SCRIPT_ExitSystem( work->scriptSys );
-  if( work->scriptData != NULL )
-  {
-    GFL_HEAP_FreeMemory( work->scriptData );
-  }
 
   if( SND_STRM_CheckSetUp() == TRUE &&
       SND_STRM_CheckPlay() == TRUE )
@@ -381,11 +376,7 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
       
       //‰‰Œ€•—
       //STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData );
-      if( work->scriptData != NULL )
-      {
-        GFL_HEAP_FreeMemory( work->scriptData );
-      }
-      work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_we_001_bin , FALSE , work->heapId );
+      work->scriptData = work->initWork->distData->scriptData;
       STA_ACT_StartScript( work );
     }
   }
@@ -481,7 +472,7 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
     break;
   
   case AMS_ACTING_START:
-    work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_we_001_bin , FALSE , work->heapId );
+    work->scriptData = work->initWork->distData->scriptData;
     STA_ACT_StartScript( work );
     work->mainSeq = AMS_ACTING_MAIN;
     break;
@@ -489,7 +480,6 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
   case AMS_ACTING_MAIN:
     if( STA_SCRIPT_GetRunningScriptNum( work->scriptSys ) == 0 )
     {
-      GFL_HEAP_FreeMemory( work->scriptData );
       work->scriptData = NULL;
       work->mainSeq = AMS_FADEOUT;
     }
