@@ -7,7 +7,7 @@ include	$(PROJECT_RSCDIR)\macro_define
 
 TARGETDIR = $(PROJECT_ARCDIR)/test_graphic
 
--include $(SOURCE_LIST)
+###-include $(SOURCE_LIST)
 
 NARCFILE		= $(wildcard *.narc)
 NAIXFILE		= $(wildcard *.naix)

@@ -59,9 +59,13 @@ enum {
 	NARC_tradedemo_trade_01_nsbmd = 45,
 	NARC_tradedemo_trade_01_nsbta = 46,
 	NARC_tradedemo_trade_ball_nsbmd = 47,
-	NARC_tradedemo_balloon_spa = 48,
-	NARC_tradedemo_icacamera_bin = 49,
-	NARC_tradedemo_icatarget_bin = 50
+	NARC_tradedemo_trailer_nsbmd = 48,
+	NARC_tradedemo_balloon_spa = 49,
+	NARC_tradedemo_demo_tex001_spa = 50,
+	NARC_tradedemo_out_spa = 51,
+	NARC_tradedemo_icacamera_bin = 52,
+	NARC_tradedemo_icatarget_bin = 53,
+	NARC_tradedemo_matome4_bin = 54
 };
 
 /* NARC_TRADEDEMO_NAIX_ */
