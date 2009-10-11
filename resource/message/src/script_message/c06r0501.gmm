@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-25T17:06:42"/>
+	<create user="matsumiya" host="W00207" date="2009-09-10T20:34:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,34 @@
 	</lock>
 
 
-	<row id="msg_c06r0501_test1_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c06r0501_boy3_01">
+		<comment>♂
+・アイテム入手処理（仮）</comment>
+		<attribute name="キャラ指定">BOY3
+少年（聡明）</attribute>
+		<language name="JPN" width="256">じょうたいいじょうに　させられると
+ポケモンしょうぶ　では　ふりになる[BE:01:ページ切り替え（クリア）]
+そんなときのため　トレーナーは
+じゅんびを　しておかないとね！[BE:01:ページ切り替え（クリア）]
+というわけで　これ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">状態異常に　させられると
+ポケモン勝負　では　不利になる[BE:01:ページ切り替え（クリア）]
+そんなときのため　トレーナーは
+準備を　しておかないとね！[BE:01:ページ切り替え（クリア）]
+というわけで　これ　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c06r0501_boy3_02">
+		<comment>♂
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">BOY3
+少年（聡明）</attribute>
+		<language name="JPN" width="256">ポケモンの　とくせいに　よっては
+じょうたいいじょうに　なることで[BE:00:ページ切り替え（行送り）]
+ゆうりになることも　あるんだって！</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　とくせいに　よっては
+状態異常に　なることで[BE:00:ページ切り替え（行送り）]
+有利になることも　あるんだって！</language>
 	</row>
 
 	<flowchart-group-list>
