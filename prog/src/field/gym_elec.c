@@ -1384,9 +1384,6 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       mmdl = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( fieldWork ) );
       //主人公アニメ終了待ち
       if( MMDL_CheckEndAcmd(mmdl) ){
-        //主人公消す
-        MMDL_SetStatusBitVanish(mmdl, TRUE);
-
         //カプセル閉まるアニメスタート
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
         (*seq)++;
@@ -1398,6 +1395,12 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     if( FLD_EXP_OBJ_ChkAnmEnd(anm) ){
       EXP_OBJ_ANM_CNT_PTR cap_anm;
       u8 anm_idx;
+      {
+        MMDL * mmdl;
+        mmdl = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( fieldWork ) );
+        //主人公消す
+        MMDL_SetStatusBitVanish(mmdl, TRUE);
+      }
       //カプセル蓋アニメ止める
       FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
       //カプセル移動アニメ再開
@@ -1443,6 +1446,15 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
         SetAnimeFrame(ptr, obj_idx, ANM_CAP_OPCL, 0);
         //再生
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+        
+        {
+          MMDL * mmdl;
+          FIELD_PLAYER *fld_player;
+          fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+          mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+          //主人公表示
+          MMDL_SetStatusBitVanish(mmdl, FALSE);
+        }
       }
     }
     (*seq)++;
@@ -1483,7 +1495,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
       mmdl = FIELD_PLAYER_GetMMdl( fld_player );
       //主人公表示
-      MMDL_SetStatusBitVanish(mmdl, FALSE);
+      //MMDL_SetStatusBitVanish(mmdl, FALSE);
       //主人公カプセルからでるアニメ
       MMDL_SetAcmd( mmdl, AC_WALK_D_8F );
     }
