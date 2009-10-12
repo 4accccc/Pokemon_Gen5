@@ -278,6 +278,12 @@
 #ifndef ZONE_C02GYM0101_EVC_H
 #define ZONE_C02GYM0101_EVC_H
 
+#define C02GYM0101_COUNTER1_01             0
+#define C02GYM0101_COUNTER1_02             1
+#define C02GYM0101_AD_01                   2
+#define C02GYM0101_OLDMAN_01               3
+#define C02GYM0101_MAN1_01                 4
+#define C02GYM0101_GIRL3_01                5
 
 #endif //ZONE_C02GYM0101_EVC_H
 //#include "tmp/c02pc0101.h"
@@ -4537,16 +4543,184 @@ const CONNECT_DATA DOOR_EVENT_C02GYM0101[] = {
 	},
 };
 const int ConnectCount_C02GYM0101 = NELEMS(DOOR_EVENT_C02GYM0101);
+const FLDMMDL_HEADER OBJ_EVENT_C02GYM0101[] = {
+	{
+		C02GYM0101_COUNTER1_01,
+		INFORMATIONW,
+		MV_RIGHT,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02GYM0101_COUNTER1_01,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		9,
+		25,
+		FX32_CONST(0),
+	},
+	{
+		C02GYM0101_COUNTER1_02,
+		INFORMATIONW,
+		MV_RIGHT,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02GYM0101_COUNTER2_01,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		9,
+		24,
+		FX32_CONST(0),
+	},
+	{
+		C02GYM0101_AD_01,
+		ASSISTANTM,
+		MV_UP,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02GYM0101_AD_01,
+		DIR_UP,
+		0,
+		0,
+		0,
+		0,
+		0,
+		12,
+		20,
+		FX32_CONST(0),
+	},
+	{
+		C02GYM0101_OLDMAN_01,
+		OLDMAN1,
+		MV_UP,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02GYM0101_OLDMAN_01,
+		DIR_UP,
+		0,
+		0,
+		0,
+		0,
+		0,
+		4,
+		16,
+		FX32_CONST(0),
+	},
+	{
+		C02GYM0101_MAN1_01,
+		MAN1,
+		MV_RND,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02GYM0101_MAN1_01,
+		DIR_RIGHT,
+		0,
+		0,
+		0,
+		0,
+		0,
+		18,
+		15,
+		FX32_CONST(0),
+	},
+	{
+		C02GYM0101_GIRL3_01,
+		GIRL3,
+		MV_DOWN,
+		EV_TYPE_NORMAL,
+		0,
+		SCRID_C02GYM0101_GIRL3_01,
+		DIR_UP,
+		0,
+		0,
+		0,
+		0,
+		0,
+		7,
+		5,
+		FX32_CONST(48),
+	},
+};
+const int ObjCount_C02GYM0101 = NELEMS(OBJ_EVENT_C02GYM0101);
+const BG_TALK_DATA BG_EVENT_C02GYM0101[] = {
+	{//BG_C02GYM0101_PLATE_01 = 0
+		SCRID_BG_C02GYM0101_PLATE_01,  //event id
+		BG_TALK_TYPE_BOARD, //type
+		14, 19,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+	{//BG_C02GYM0101_PLATE_02 = 1
+		SCRID_BG_C02GYM0101_PLATE_02,  //event id
+		BG_TALK_TYPE_BOARD, //type
+		6, 20,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+	{//BG_C02GYM0101_PLATE_07 = 2
+		SCRID_BG_C02GYM0101_PLATE_07,  //event id
+		BG_TALK_TYPE_BOARD, //type
+		18, 20,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+	{//BG_C02GYM0101_PLATE_03 = 3
+		SCRID_BG_C02GYM0101_PLATE_03,  //event id
+		BG_TALK_TYPE_BOARD, //type
+		4, 14,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+	{//BG_C02GYM0101_PLATE_04 = 4
+		SCRID_BG_C02GYM0101_PLATE_04,  //event id
+		BG_TALK_TYPE_BOARD, //type
+		5, 10,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+	{//BG_C02GYM0101_PLATE_05 = 5
+		SCRID_BG_C02GYM0101_PLATE_05,  //event id
+		BG_TALK_TYPE_BOARD, //type
+		19, 10,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+	{//BG_C02GYM0101_PLATE_06 = 6
+		SCRID_BG_C02GYM0101_PLATE_06,  //event id
+		BG_TALK_TYPE_BOARD, //type
+		20, 14,
+		0,  //height
+		BG_TALK_DIR_ALL,//direction
+	},
+};
+const int BgCount_C02GYM0101 = NELEMS(BG_EVENT_C02GYM0101);
+const POS_EVENT_DATA POS_EVENT_C02GYM0101[] = {
+	{//POS_C02GYM0101_AD_01 = 0
+		SCRID_POS_C02GYM0101_AD_01,
+		12, 22,
+		1, 1,
+		0,  //height
+		0,
+		WK_SCENE_C02GYM0101,
+	},
+};
+const int PosCount_C02GYM0101 = NELEMS(POS_EVENT_C02GYM0101);
 
 static const EVENTDATA_TABLE event_c02gym0101 = {
-	0,
-	0,
+	7,
+	6,
 	3,
-	0,
-	(void *)NULL,
-	(void *)NULL,
+	1,
+	(void *)&BG_EVENT_C02GYM0101,
+	(void *)&OBJ_EVENT_C02GYM0101,
 	(void *)&DOOR_EVENT_C02GYM0101,
-	(void *)NULL,
+	(void *)&POS_EVENT_C02GYM0101,
 };
 #include "../script/c02pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C02PC0101[] = {
@@ -12809,7 +12983,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 		MV_DOWN,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_SODATEYA_GRANDPA,
+		SCRID_T01_TALKOBJ_BIGMAN,
 		DIR_DOWN,
 		0,
 		0,
@@ -12843,7 +13017,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 		MV_RT2,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_SODATEYA_GRANDMA,
+		SCRID_T01_TALKOBJ_BABYGIRL1,
 		DIR_LEFT,
 		0,
 		0,

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c02gym0101.h"
-  //.include  "c02gym0101.h"
+  .include  "c02gym0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,6 +20,27 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c02gym0101
+_EVENT_DATA    ev_c02gym0101_counter1_01
+_EVENT_DATA    ev_c02gym0101_counter2_01
+_EVENT_DATA    ev_c02gym0101_ad_01
+
+//_EVENT_DATA    ev_c02gym0101_leader_01
+//_EVENT_DATA    ev_c02gym0101_white_01
+//_EVENT_DATA    ev_c02gym0101_black_01
+_EVENT_DATA    ev_c02gym0101_man1_01
+_EVENT_DATA    ev_c02gym0101_girl3_01
+_EVENT_DATA    ev_c02gym0101_oldman_01
+
+_EVENT_DATA    ev_bg_c02gym0101_plate_01
+_EVENT_DATA    ev_bg_c02gym0101_plate_02
+_EVENT_DATA    ev_bg_c02gym0101_plate_03
+_EVENT_DATA    ev_bg_c02gym0101_plate_04
+_EVENT_DATA    ev_bg_c02gym0101_plate_05
+_EVENT_DATA    ev_bg_c02gym0101_plate_06
+_EVENT_DATA    ev_bg_c02gym0101_plate_07
+
+_EVENT_DATA    ev_pos_c02gym0101_ad_01
+
 _EVENT_DATA_END
 
 
@@ -35,4 +56,318 @@ _EVENT_DATA_END
 ev_c02gym0101:
   //とりあえず最初のラベルだけ生成している
   _END
+  
+/**************************************************************/
+/*     博物館受付嬢 1                　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_c02gym0101_counter1_01
 
+	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_counter1_01)
+
+EVENT_END
+
+/**************************************************************/
+/*     博物館受付嬢 2                　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		ev_c02gym0101_counter2_01
+	
+	//ようこそ！　シッポウはくぶつかん　へ
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_counter2_01)
+
+EVENT_END
+/**************************************************************/
+/*     副館長												　*/
+/**************************************************************/
+EVENT_START		ev_c02gym0101_ad_01
+
+	//あの扉の　先が　ポケモンジムと　なっております
+  	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_ad_06 ) 
+
+EVENT_END
+/**************************************************************/
+/*     副館長の博物館案内イベント							　*/
+/**************************************************************/
+EVENT_START		ev_pos_c02gym0101_ad_01
+
+	//博物館案内イベント
+	
+		//うーむ！　この　骨格標本は　いつみても……　ホレボレしますな
+		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_01, C02GYM0101_AD_01 )
+		
+		
+		//副館長：発言を終えるまで、溜める（ホレボレしている）
+		_TIME_WAIT  ( 8 ) 
+		_OBJ_ANIME_WAIT()
+		
+		_BALLOONWIN_CLOSE()
+		
+		//副館長：！マーク
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_bikkuri_mark)
+		_OBJ_ANIME_WAIT()
+		
+		//副館長：主人公を向く
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_shita_muku)
+		_OBJ_ANIME_WAIT()
+		
+		//副館長：発言までに、ウェイトを持たせる
+		_TIME_WAIT  ( 32 ) 
+		_OBJ_ANIME_WAIT()
+		
+		//どうも　わたくし　副館長の　？？？　です　せっかく　いたしたのです～
+		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_02, C02GYM0101_AD_01 )
+		_TIME_WAIT  ( 8 ) 
+		_OBJ_ANIME_WAIT()
+		
+		_BALLOONWIN_CLOSE()
+		
+		//副館長：主人公の前まで来る
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_shita_kuru)
+		_OBJ_ANIME_WAIT()	
+		
+		//副館長：主人公が動くまで、ウェイトを持たせる（主人公の躊躇の表現）
+		_TIME_WAIT  ( 32 ) 
+		_OBJ_ANIME_WAIT()
+		
+		//副館長：展示物の方を向く
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_ue_muku)
+		_OBJ_ANIME_WAIT()	
+		
+		//副館長：展示物（骨（大））まで移動
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_hone_dai)	
+		
+		//主人公：展示物（骨（大））まで移動
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_hone_dai)
+		_OBJ_ANIME_WAIT()		
+		
+		//副館長：骨（大）の説明
+		//骨格……　大昔の　ポケモン……
+		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_03, C02GYM0101_AD_01 )
+		_TIME_WAIT  ( 8 ) 
+		_OBJ_ANIME_WAIT()
+		
+		_BALLOONWIN_CLOSE()
+		
+		//副館長：展示物（隕石）まで移動
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_inseki)	
+		
+		//主人公：展示物（隕石）まで移動
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_inseki)
+		_OBJ_ANIME_WAIT()		
+		
+		//副館長：隕石の説明
+		//この　石は　すごいですよ
+		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_04, C02GYM0101_AD_01 )
+		_TIME_WAIT  ( 8 ) 
+		_OBJ_ANIME_WAIT()
+		
+		_BALLOONWIN_CLOSE()
+		
+		//副館長：展示物（石）まで移動
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_ishi)	
+		
+		//主人公：展示物（石）まで移動
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_ishi)
+		_OBJ_ANIME_WAIT()		
+		
+		//副館長：石の説明
+		//ああ　こちらは　ただの　ふるいいし　です
+		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_05, C02GYM0101_AD_01 )
+		_TIME_WAIT  ( 8 ) 
+		_OBJ_ANIME_WAIT()
+		
+		_BALLOONWIN_CLOSE()
+		
+		//副館長：ジムまで移動
+		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_jimu)	
+		
+		//主人公：ジムまで移動
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_jimu)
+		_OBJ_ANIME_WAIT()		
+		
+		//副館長：ジムの説明
+		//あの扉の　先が　ポケモンジムと　なっております
+		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_06, C02GYM0101_AD_01 )
+		_TIME_WAIT  ( 8 ) 
+		_OBJ_ANIME_WAIT()
+		
+		_BALLOONWIN_CLOSE()
+		//==============フラグワーク操作==============//
+		
+		//博物館案内イベントを無効にする
+		$WK_SCENE_C02GYM0101 = 1
+		
+		//============================================//
+	
+EVENT_END
+//--------------------------------------------------------------------
+//副館長:びっくりマークを出す                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ad_bikkuri_mark
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------------
+//副館長:下を向く                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ad_shita_muku
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0	
+//--------------------------------------------------------------------
+//副館長:主人公の前まで移動                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ad_shita_kuru
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0	
+
+//--------------------------------------------------------------------
+//副館長:展示物（骨（大））を向く                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ad_ue_muku
+	_ANIME_DATA	AC_STAY_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0	
+	
+//--------------------------------------------------------------------
+//副館長:展示物（骨（大））の前まで移動                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ad_idou_hone_dai
+	_ANIME_DATA	AC_WALK_U_8F,1,1
+	_ANIME_DATA	AC_WALK_L_8F,1,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0	
+
+//--------------------------------------------------------------------
+//副館長:展示物（隕石）の前まで移動                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ad_idou_inseki
+	_ANIME_DATA	AC_WALK_L_8F,4,1
+	_ANIME_DATA	AC_WALK_U_8F,6,1
+	_ANIME_DATA	AC_WALK_L_8F,1,1
+	_ANIME_DATA	AC_WALK_U_8F,1,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0	
+	
+//--------------------------------------------------------------------
+//副館長:展示物（石）の前まで移動                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ad_idou_ishi
+
+	_ANIME_DATA	AC_WALK_U_8F,2,1
+	_ANIME_DATA	AC_WALK_R_8F,1,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0	
+
+//--------------------------------------------------------------------
+//副館長:ジムの前まで移動                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ad_idou_jimu
+	_ANIME_DATA	AC_WALK_R_8F,5,1
+	_ANIME_DATA	AC_WALK_U_8F,8,1
+	_ANIME_DATA	AC_WALK_R_8F,1,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0	
+		
+//--------------------------------------------------------------------
+//主人公:展示物（骨（大））の前まで移動                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou_hone_dai
+	_ANIME_DATA	AC_WALK_U_8F,2,1
+	_ANIME_DATA	ACMD_END,0	
+
+//--------------------------------------------------------------------
+//主人公:展示物（隕石）の前まで移動                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou_inseki
+	_ANIME_DATA	AC_WALK_L_8F,5,1
+	_ANIME_DATA	AC_WALK_U_8F,6,1
+	_ANIME_DATA	AC_WALK_L_8F,1,1
+	_ANIME_DATA	ACMD_END,0	
+
+//--------------------------------------------------------------------
+//主人公:展示物（石）の前まで移動                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou_ishi
+	_ANIME_DATA	AC_WALK_U_8F,3,1
+	_ANIME_DATA	ACMD_END,0	
+
+//--------------------------------------------------------------------
+//主人公:ジムの前まで移動                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idou_jimu
+_ANIME_DATA	AC_WALK_R_8F,6,1
+	_ANIME_DATA	AC_WALK_U_8F,7,1
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*     見物客その１　MAN1　             						*/
+/**************************************************************/
+EVENT_START		 ev_c02gym0101_man1_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_man1_01)
+EVENT_END
+/**************************************************************/
+/*     見物客その２　GIRL3               					　*/
+/**************************************************************/
+EVENT_START		 ev_c02gym0101_girl3_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_girl3_01)
+	
+EVENT_END
+/**************************************************************/
+/*     見物客その３　OLDMAN1               					 */
+/**************************************************************/
+EVENT_START		 ev_c02gym0101_oldman_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_oldman_01)
+	
+EVENT_END
+/**************************************************************/
+/*     展示物の解説プレート1               　　　　　　　　　*/
+/**************************************************************/
+
+EVENT_START		 ev_bg_c02gym0101_plate_01
+	
+	_EASY_MSG(msg_c02gym0101_plate_01)
+	
+EVENT_END
+/**************************************************************/
+/*     展示物の解説プレート2               　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0101_plate_02
+
+	_EASY_MSG(msg_c02gym0101_plate_02)
+EVENT_END
+/**************************************************************/
+/*     展示物の解説プレート3               　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0101_plate_03
+
+	_EASY_MSG(msg_c02gym0101_plate_03)
+EVENT_END
+/**************************************************************/
+/*     展示物の解説プレート4               　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0101_plate_04
+
+	_EASY_MSG(msg_c02gym0101_plate_04)
+EVENT_END
+/**************************************************************/
+/*     展示物の解説プレート5               　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0101_plate_05
+
+	_EASY_MSG(msg_c02gym0101_plate_05)
+EVENT_END
+/**************************************************************/
+/*     展示物の解説プレート6               　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0101_plate_06
+
+	_EASY_MSG(msg_c02gym0101_plate_06)
+EVENT_END
+/**************************************************************/
+/*     展示物の解説プレート7               　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0101_plate_07
+
+	_EASY_MSG(msg_c02gym0101_plate_07)
+EVENT_END
