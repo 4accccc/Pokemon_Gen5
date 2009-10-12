@@ -27,7 +27,7 @@ typedef struct GYM_ELEC_SV_WORK_tag
   u8 RaleChgReq[CAPSULE_NUM_MAX];
   u8 NowRaleIdx[CAPSULE_NUM_MAX];     //現在走行しているレールのインデックス(スイッチ非依存)
   u8 RideFlg[CAPSULE_NUM_MAX];      //カプセルに乗ったことがあるか？
-  u8 StopPlatformIdx[CAPSULE_NUM_MAX];
+  s8 StopPlatformIdx[CAPSULE_NUM_MAX];  //PLATFORM_NO_STOP (-1)　を使用するのでマイナス値を使用できるように。
 }GYM_ELEC_SV_WORK;
 
 #endif  //__GYM_ELEC_SV_H__
