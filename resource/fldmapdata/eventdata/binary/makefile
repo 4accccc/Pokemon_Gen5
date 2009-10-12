@@ -1,0 +1,103 @@
+#============================================================================
+#
+#		イベントデータコンバート用Makefile
+#
+#
+#
+#
+#		2009.05.25	tamada GAME FREAK inc.
+#
+#============================================================================
+
+#------------------------------------------------------------------------------
+#※コンバート作業が必要なユーザーの名前を記述する
+#------------------------------------------------------------------------------
+include ../../event_script_users_def
+
+#------------------------------------------------------------------------------
+#※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
+#------------------------------------------------------------------------------
+SUBDIRS =
+
+#------------------------------------------------------------------------------
+#※ここに作成するnarc名を書く
+#------------------------------------------------------------------------------
+targetname = eventdata
+
+#------------------------------------------------------------------------------
+#※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
+#------------------------------------------------------------------------------
+TARGETDIR = $(PROJECT_ARCDIR)/fieldmap/
+
+#共通ルールファイルのインクルード
+include $(PROJECT_RSCDIR)\macro_define
+
+
+ARCFIELDDIR = $(PROJECT_ARCDIR)/fieldmap/
+SRCFIELDDIR = $(PROJECT_PROGDIR)/src/field/
+HEADERFIELDDIR = $(PROJECT_PROGDIR)/include/field/
+SCRIPTDIR = ../../script/
+FLAGWORKDIR = ../../flagwork/
+TOTALHEADER = ../define/total_header.h
+
+
+DEPEND_FILE = ../define/binary_depend_file
+
+TMPDIR	= ../tmp
+DATADIR	= ../data
+SRCDATA = $(wildcard $(DATADIR)/*.mev)
+TGTDATA = $(basename $(notdir $(SRCDATA)))
+BINDAT = $(addprefix $(TMPDIR)/,$(addsuffix .bin,$(TGTDATA)))
+
+
+LIST_FILE 	= list.txt
+
+
+.PHONY:	do-build clean
+
+#------------------------------------------------------------------------------
+#	make do-build ルール
+#------------------------------------------------------------------------------
+do-build:	subdir $(TARGETDIR)/$(targetname).narc
+
+subdir:
+	@$(MAKE_SUBDIR)
+
+# narc のコピーだけ実行する
+$(TARGETDIR)/$(targetname).narc: $(targetname).narc
+	$(COPY) $(targetname).narc $(TARGETDIR)
+	$(COPY) $(targetname).naix $(TARGETDIR)
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
+
+
+# コピー先のnarcが古い場合実行する
+$(targetname).narc: $(BINDAT)
+	$(COPY) $(TMPDIR)/*.bin ./
+	ls *.bin > $(LIST_FILE)
+	echo dummy_data >> $(LIST_FILE)
+	$(ARCLIST_MAKE) $(LIST_FILE)
+	nnsarc -c -l -n -i -S $(LIST_FILE) $(targetname)
+	-rm *.bin
+	-rm $(LIST_FILE)
+
+
+#binary化の依存関係ファイルを取得
+include $(DEPEND_FILE)
+
+endif
+
+
+#------------------------------------------------------------------------------
+#	make cleanルール
+#------------------------------------------------------------------------------
+clean:
+	@$(MAKE_SUBDIR)
+	-rm $(TARGET_DIR)/$(targetname).narc
+	-rm $(TARGET_DIR)/$(targetname).naix
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
+	-rm $(targetname).narc
+	-rm $(targetname).naix
+	-rm $(TMPDIR)/*.bin
+endif
+
