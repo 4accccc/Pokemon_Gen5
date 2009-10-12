@@ -110,6 +110,7 @@ typedef struct GYM_ELEC_TMP_tag
 
   GFL_TCB *PlayerBack;
   GFL_TCB *TrGo;
+  GFL_TCB * AnmTcb;
 }GYM_ELEC_TMP;
 
 typedef struct STOP_DAT_tag
@@ -118,12 +119,6 @@ typedef struct STOP_DAT_tag
   int StopStart;        //停車開始フレーム
   int StopEnd;          //停車終了フレーム
 }STOP_DAT;
-
-//トレーナーエンカウント前アニメ
-static const MMDL_ACMD_LIST AcmdList[] = {
-  {AC_WALK_D_8F, 2},
-  {ACMD_END, 0},
-};
 
 //レールごとの停車プラットホーム
 static const s8 RaleStopPlatform[RALE_NUM_MAX][STOP_NUM_MAX] = {
@@ -469,6 +464,17 @@ static const GFL_G3D_UTIL_SETUP Setup = {
 	g3Dutil_objTbl,				//オブジェクト設定テーブル
 	NELEMS(g3Dutil_objTbl),		//オブジェクト数
 };
+
+static const MMDL_ACMD_LIST anime_up_table[] = {
+  AC_WALK_U_8F, 2,
+  ACMD_END, 0
+};
+
+static const MMDL_ACMD_LIST anime_down_table[] = {
+  AC_WALK_D_8F, 2,
+  ACMD_END, 0
+};
+
 
 
 static u8 GetPlatformIdx(const int inX, const int inZ);
@@ -1372,7 +1378,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
         {
           MMDL * mmdl;
           mmdl = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( fieldWork ) );
-          MMDL_SetAcmd( mmdl, AC_WALK_U_8F );
+          tmp->AnmTcb = MMDL_SetAcmdList( mmdl, anime_up_table);
         }
         (*seq)++;
       }
@@ -1380,10 +1386,8 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     break;
   case 2:
     {
-      MMDL * mmdl;
-      mmdl = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( fieldWork ) );
       //主人公アニメ終了待ち
-      if( MMDL_CheckEndAcmd(mmdl) ){
+      if( MMDL_CheckEndAcmdList(tmp->AnmTcb) ){
         //カプセル閉まるアニメスタート
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
         (*seq)++;
@@ -1452,6 +1456,8 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
           FIELD_PLAYER *fld_player;
           fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
           mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+          //下方向をセット
+          MMDL_SetDirDisp(mmdl,DIR_DOWN);
           //主人公表示
           MMDL_SetStatusBitVanish(mmdl, FALSE);
         }
@@ -1477,7 +1483,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
             platform_idx = gmk_sv_work->StopPlatformIdx[cap_idx];
             pos.x = PlatformXZ[platform_idx][0] * FIELD_CONST_GRID_FX32_SIZE;
             pos.x += GRID_HALF_SIZE;
-            pos.z = (PlatformXZ[platform_idx][1]-1) * FIELD_CONST_GRID_FX32_SIZE;
+            pos.z = (PlatformXZ[platform_idx][1]-2) * FIELD_CONST_GRID_FX32_SIZE;
             pos.z += GRID_HALF_SIZE;
             FIELD_PLAYER_SetPos( fld_player, &pos );
           }
@@ -1497,16 +1503,14 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       //主人公表示
       //MMDL_SetStatusBitVanish(mmdl, FALSE);
       //主人公カプセルからでるアニメ
-      MMDL_SetAcmd( mmdl, AC_WALK_D_8F );
+      tmp->AnmTcb = MMDL_SetAcmdList( mmdl, anime_down_table);
     }
     (*seq)++;
     break;
   case 8:
     {
-      MMDL * mmdl;
-      mmdl = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( fieldWork ) );
       //主人公アニメ終了待ち
-      if( MMDL_CheckEndAcmd(mmdl) ){
+      if( MMDL_CheckEndAcmdList(tmp->AnmTcb) ){
         //カプセル閉まるアニメスタート
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
         (*seq)++;
