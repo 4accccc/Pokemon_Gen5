@@ -398,7 +398,7 @@ void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BOOL
   core->procPokeID = BPP_GetID( bpp );
   core->actionParam = dest;
   core->playerAction = BTL_ACTION_NULL;
-  core->fActionPrevButton = !fPrevButton;
+  core->fActionPrevButton = fPrevButton;
   mainproc_setup( core, CmdProc_SelectAction );
 }
 //=============================================================================================

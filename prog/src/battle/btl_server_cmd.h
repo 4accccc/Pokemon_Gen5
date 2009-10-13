@@ -86,6 +86,8 @@ typedef enum {
   SC_ACT_KINOMI,            ///< きのみを食べる
   SC_ACT_KILL,              ///< 強制瀕死演出（みちづれ、一撃ワザなど）
   SC_ACT_MOVE,              ///< ムーブ
+  SC_ACT_EXP,               ///< 経験値取得
+  SC_ACT_EXP_LVUP,          ///< 経験値取得＋レベルアップ
   SC_TOKWIN_IN,             ///< とくせいウィンドウ表示イン [ClientID]
   SC_TOKWIN_OUT,            ///< とくせいウィンドウ表示アウト [ClientID]
   SC_MSG_WAZA,              ///< ワザメッセージ表示[ ClientID, wazaIdx ]
@@ -471,6 +473,14 @@ static inline void SCQUE_PUT_ACT_Kill( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 ef
 static inline void SCQUE_PUT_ACT_MemberMove( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 posIdx )
 {
   SCQUE_PUT_Common( que, SC_ACT_MOVE, clientID, posIdx );
+}
+static inline void SCQUE_PUT_ACT_AddExp( BTL_SERVER_CMD_QUE* que, u8 pokeID, u32 exp )
+{
+  SCQUE_PUT_Common( que, SC_ACT_EXP, pokeID, exp );
+}
+static inline void SCQUE_PUT_ACT_AddExpLevelup( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 hp, u8 atk, u8 def, u8 sp_atk, u8 sp_def, u8 agi )
+{
+  SCQUE_PUT_Common( que, SC_ACT_EXP_LVUP, pokeID, hp, atk, def, sp_atk, sp_def, agi );
 }
 
 

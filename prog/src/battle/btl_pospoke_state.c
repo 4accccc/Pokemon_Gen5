@@ -17,6 +17,7 @@
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static void set_pos_state( BTL_POSPOKE_WORK* wk, const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon, BtlPokePos pos );
+static void checkConfrontRec( BTL_POSPOKE_WORK* wk, BtlPokePos pos, BTL_POKE_CONTAINER* pokeCon );
 
 
 
@@ -26,6 +27,7 @@ void BTL_POSPOKE_InitWork( BTL_POSPOKE_WORK* wk, const BTL_MAIN_MODULE* mainModu
 
   for(i=0; i<NELEMS(wk->state); ++i){
     wk->state[i].fEnable = FALSE;
+    wk->state[i].existPokeID = BTL_POKEID_NULL;
   }
 
   switch( rule ){
@@ -50,7 +52,8 @@ static void set_pos_state( BTL_POSPOKE_WORK* wk, const BTL_MAIN_MODULE* mainModu
 
   BTL_MAIN_BtlPosToClientID_and_PosIdx( mainModule, pos, &clientID, &memberIdx );
   bpp = BTL_POKECON_GetClientPokeDataConst( pokeCon, clientID, memberIdx );
-  if( bpp != NULL )
+
+  if( bpp != NULL && !BPP_IsDead(bpp) )
   {
     wk->state[ pos ].existPokeID = BPP_GetID( bpp );
   }
@@ -91,11 +94,50 @@ void BTL_POSPOKE_PokeOut( BTL_POSPOKE_WORK* wk, u8 pokeID )
  * @param   pokeID
  */
 //=============================================================================================
-void BTL_POSPOKE_PokeIn( BTL_POSPOKE_WORK* wk, BtlPokePos pos,  u8 pokeID )
+void BTL_POSPOKE_PokeIn( BTL_POSPOKE_WORK* wk, BtlPokePos pos,  u8 pokeID, BTL_POKE_CONTAINER* pokeCon )
 {
   GF_ASSERT(wk->state[pos].fEnable);
   wk->state[pos].existPokeID = pokeID;
   BTL_Printf(" poke[%d] in to pos[%d]\n", pokeID, pos );
+
+  checkConfrontRec( wk, pos, pokeCon );
+}
+//----------------------------------------------------------------------------------
+/**
+ * 対面レコード更新
+ *
+ * @param   wk
+ * @param   pos
+ * @param   pokeCon
+ */
+//----------------------------------------------------------------------------------
+static void checkConfrontRec( BTL_POSPOKE_WORK* wk, BtlPokePos pos, BTL_POKE_CONTAINER* pokeCon )
+{
+  u32 i;
+  u8 pokeID = wk->state[pos].existPokeID;
+
+  if( pokeID != BTL_POKEID_NULL )
+  {
+    for(i=0; i<NELEMS(wk->state); ++i)
+    {
+      if( (wk->state[i].existPokeID != BTL_POKEID_NULL)
+      &&  (wk->state[i].existPokeID != pokeID )
+      ){
+        if( !BTL_MAINUTIL_IsFriendPokeID(wk->state[i].existPokeID, pokeID) )
+        {
+          BTL_POKEPARAM* bpp;
+
+          BTL_Printf("%d と%d が対面\n", pokeID, wk->state[i].existPokeID);
+
+          bpp = BTL_POKECON_GetPokeParam( pokeCon, wk->state[i].existPokeID );
+          BPP_CONFRONT_REC_Set( bpp, pokeID );
+
+          bpp = BTL_POKECON_GetPokeParam( pokeCon, pokeID );
+          BPP_CONFRONT_REC_Set( bpp, wk->state[i].existPokeID );
+        }
+      }
+    }
+  }
 }
 
 //=============================================================================================

@@ -166,6 +166,8 @@ static BOOL scProc_ACT_SimpleHP( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Kinomi( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
@@ -438,7 +440,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
     /* fallthru */
   case SEQ_SELECT_ACTION:
     BTL_Printf("アクション選択(%d体目=ID:%d）開始します\n", wk->procPokeIdx, BPP_GetID(wk->procPoke));
-    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->checkedPokeCnt!=0), wk->procAction );
+    BTLV_UI_SelectAction_Start( wk->viewCore, wk->procPoke, (wk->procPokeIdx!=0), wk->procAction );
     (*seq) = SEQ_CHECK_ACTION;
     break;
   case SEQ_CHECK_ACTION:
@@ -1470,6 +1472,8 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_SHOOTER_CHARGE,     scProc_OP_ShooterCharge   },
     { SC_ACT_KILL,              scProc_ACT_Kill           },
     { SC_ACT_MOVE,              scProc_ACT_Move           },
+    { SC_ACT_EXP,               scProc_ACT_Exp            },
+    { SC_ACT_EXP_LVUP,          scProc_ACT_ExpLvup        },
   };
 
 restart:
@@ -2160,6 +2164,63 @@ static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args )
   }
   return FALSE;
 }
+//---------------------------------------------------------------------------------------
+/**
+ *  経験値加算処理
+ *  args .. [0]:対象ポケモンID  [1]:経験値加算分
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
+{
+
+  switch( *seq ){
+  case 0:
+    {
+      u8 pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+      u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+
+      BTL_Printf("ポケ[%d] に経験値 %d\n", args[0], args[1] );
+      BTLV_EFFECT_CalcGaugeEXP( vpos, args[1] );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( !BTLV_EFFECT_CheckExecuteGauge() )
+    {
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+//---------------------------------------------------------------------------------------
+/**
+ *  経験値加算処理（レベルアップをともなう）
+ *  args .. [0]:対象ポケモンID  [1]:hp, atk, def, sp_atk, sp_def, agi
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    {
+      u8 pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+      u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+
+      BTLV_EFFECT_CalcGaugeEXP( vpos, 0 );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( !BTLV_EFFECT_CheckExecuteGauge() )
+    {
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+
 
 //---------------------------------------------------------------------------------------
 /**

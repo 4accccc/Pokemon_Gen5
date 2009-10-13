@@ -199,6 +199,8 @@ extern void BTL_CALC_ITEM_QuitSystem(void);
 extern s32  BTL_CALC_ITEM_GetParam( u16 item, u16 paramID );
 
 extern WazaID BTL_CALC_RandWaza( const u16* excludeWazaTbl, u16 tblElems );
+extern u32 BTL_CALC_CalcBaseExp( const BTL_POKEPARAM* bpp );
+
 
 #endif
 

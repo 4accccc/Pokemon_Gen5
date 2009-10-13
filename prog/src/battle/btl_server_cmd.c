@@ -39,8 +39,10 @@ typedef enum {
   // à¯êîÇQå¬ÇÃå^
   SC_ARGFMT_11byte = SC_ARGFMT(2,0),
   SC_ARGFMT_12byte = SC_ARGFMT(2,1),
-  SC_ARGFMT_4_4bit = SC_ARGFMT(2,2),
-  SC_ARGFMT_5_3bit = SC_ARGFMT(2,3),
+  SC_ARGFMT_14byte = SC_ARGFMT(2,2),
+  SC_ARGFMT_4_4bit = SC_ARGFMT(2,3),
+  SC_ARGFMT_5_3bit = SC_ARGFMT(2,4),
+
 
   // à¯êîÇRå¬ÇÃå^
   SC_ARGFMT_53bit_1byte = SC_ARGFMT(3,0),
@@ -59,6 +61,9 @@ typedef enum {
 
   // à¯êîÇUå¬ÇÃå^
   SC_ARGFMT_555555bit = SC_ARGFMT(6,0),
+
+  // à¯êîÇVå¬ÇÃå^
+  SC_ARGFMT_1111111byte = SC_ARGFMT(7,0),
 
   // ÉÅÉbÉZÅ[ÉWå^Åiâ¬ïœà¯êîÅj
   SC_ARGFMT_MSG   = SC_ARGFMT(0,0),
@@ -133,6 +138,8 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_1byte,            // SC_ACT_KINOMI
   SC_ARGFMT_5_3bit,           // SC_ACT_KILL
   SC_ARGFMT_5_3bit,           // SC_ACT_MOVE
+  SC_ARGFMT_14byte,           // SC_ACT_EXP
+  SC_ARGFMT_1111111byte,      // SC_ACT_EXP_LVUP
   SC_ARGFMT_1byte,            // SC_TOKWIN_IN
   SC_ARGFMT_1byte,            // SC_TOKWIN_OUT
 
@@ -255,6 +262,11 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
     scque_put1byte( que, args[0] );
     scque_put2byte( que, args[1] );
     break;
+  case SC_ARGFMT_14byte:
+    scque_put1byte( que, args[0] );
+    scque_put4byte( que, args[1] );
+    BTL_Printf("Put14bytes ... (%d), (%d)\n", args[0], args[1]);
+    break;
   case SC_ARGFMT_4_4bit:
     scque_put1byte( que, pack1_2args(args[0], args[1], 4, 4) );
     break;
@@ -328,6 +340,15 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
       scque_put2byte( que, pack2 );
     }
     break;
+  case SC_ARGFMT_1111111byte:
+    scque_put1byte( que, args[0] );
+    scque_put1byte( que, args[1] );
+    scque_put1byte( que, args[2] );
+    scque_put1byte( que, args[3] );
+    scque_put1byte( que, args[4] );
+    scque_put1byte( que, args[5] );
+    scque_put1byte( que, args[6] );
+    break;
 
   case SC_ARGFMT_POINT:
     break;
@@ -359,6 +380,11 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
   case SC_ARGFMT_12byte:
     args[0] = scque_read1byte( que );
     args[1] = scque_read2byte( que );
+    break;
+  case SC_ARGFMT_14byte:
+    args[0] = scque_read1byte( que );
+    args[1] = scque_read4byte( que );
+    BTL_Printf("Read14bytes ... (%d), (%d)\n", args[0], args[1]);
     break;
   case SC_ARGFMT_4_4bit:
     {
@@ -446,6 +472,17 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
       unpack_3args( 2, pack2, 5, 5, 5, args, 3 );
     }
     break;
+
+  case SC_ARGFMT_1111111byte:
+    args[0] = scque_read1byte( que );
+    args[1] = scque_read1byte( que );
+    args[2] = scque_read1byte( que );
+    args[3] = scque_read1byte( que );
+    args[4] = scque_read1byte( que );
+    args[5] = scque_read1byte( que );
+    args[6] = scque_read1byte( que );
+    break;
+
   case SC_ARGFMT_POINT:
     break;
   default:
@@ -499,7 +536,7 @@ void SCQUE_PUT_Common( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ... )
 //=============================================================================================
 u16 SCQUE_RESERVE_Pos( BTL_SERVER_CMD_QUE* que, ServerCmd cmd )
 {
-  GF_ASSERT( cmd < NELEMS(ServerCmdToFmtTbl) );
+  GF_ASSERT_MSG( cmd < NELEMS(ServerCmdToFmtTbl), "cmd=%d\n", cmd );
   {
     u16 pos;
     u8  fmt, arg_cnt, reserve_size, i;
@@ -590,7 +627,7 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
     cmd = scque_read2byte( que );
   }
 
-  GF_ASSERT( cmd < NELEMS(ServerCmdToFmtTbl) );
+  GF_ASSERT_MSG( cmd < NELEMS(ServerCmdToFmtTbl), "cmd=%d\n", cmd );
 
   {
     u8 fmt = ServerCmdToFmtTbl[ cmd ];

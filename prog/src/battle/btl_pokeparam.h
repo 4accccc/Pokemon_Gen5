@@ -184,6 +184,23 @@ static inline void BPP_WAZADMG_REC_Setup( BPP_WAZADMG_REC* rec, u8 pokeID, u16 w
 
 //--------------------------------------------------------------
 /**
+ *  レベルアップ時の各種パラメータ上昇値
+ */
+//--------------------------------------------------------------
+typedef struct {
+  u8  hp;
+  u8  atk;
+  u8  def;
+  u8  sp_atk;
+  u8  sp_def;
+  u8  agi;
+}BTL_LEVELUP_INFO;
+
+extern BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* exp, BTL_LEVELUP_INFO* info );
+
+
+//--------------------------------------------------------------
+/**
  *  関数プロトタイプ
  */
 //--------------------------------------------------------------
@@ -357,6 +374,10 @@ extern void BPP_MIGAWARI_Create( BTL_POKEPARAM* bpp, u16 migawariHP );
 extern void BPP_MIGAWARI_Delete( BTL_POKEPARAM* bpp );
 extern BOOL BPP_MIGAWARI_IsExist( const BTL_POKEPARAM* bpp );
 extern BOOL BPP_MIGAWARI_AddDamage( BTL_POKEPARAM* bpp, u16 damage );
+
+extern void BPP_CONFRONT_REC_Set( BTL_POKEPARAM* bpp, u8 pokeID );
+extern u8 BPP_CONFRONT_REC_GetCount( const BTL_POKEPARAM* bpp );
+extern u8 BPP_CONFRONT_REC_GetPokeID( const BTL_POKEPARAM* bpp, u8 idx );
 
 
 #endif

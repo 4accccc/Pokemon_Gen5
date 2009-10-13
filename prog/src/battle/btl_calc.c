@@ -552,6 +552,28 @@ WazaID BTL_CALC_RandWaza( const u16* excludeWazaTbl, u16 tblElems )
   return waza;
 }
 
+//=============================================================================================
+/**
+ * ポケモンを倒した時のベース経験値を計算
+ *
+ * @param   bpp   倒されたポケモン
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_CALC_CalcBaseExp( const BTL_POKEPARAM* bpp )
+{
+  u32 monsno = BPP_GetMonsNo( bpp );
+  u16 formNo = BPP_GetValue( bpp, BPP_FORM );
+  u16 level  = BPP_GetValue( bpp, BPP_LEVEL );
+
+  u32 exp = POKETOOL_GetPersonalParam( monsno, formNo, POKEPER_ID_give_exp );
+  exp = exp * level / 7;
+
+  return exp;
+}
+
+
 
 //=============================================================================================
 // アイテムデータ取得関連

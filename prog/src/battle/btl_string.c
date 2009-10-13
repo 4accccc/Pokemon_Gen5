@@ -585,6 +585,7 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
         if( tagGrp == TAGGROUP_NUMBER )
         {
           u8 keta = PRINTSYS_GetTagIndex( sp ) + 1;
+          BTL_Printf("[TAG] SetNumber : keta=%d, value=%d\n", keta, args[argIdx] );
           WORDSET_RegisterNumber( wset, bufIdx, args[argIdx], keta, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
         }
         else

@@ -158,6 +158,15 @@ typedef struct {
   void*           arg;
 }MSG_CALLBACK_PARAM;
 
+/**
+ *  経験値計算用ワーク
+ */
+typedef struct {
+  u8   fBonus;    ///< 多めにもらえたフラグ
+  u32  exp;       ///< もらえる経験値
+}CALC_EXP_WORK;
+
+
 //-----------------------------------------------------
 /**
  *  メインワーク
@@ -189,6 +198,7 @@ struct _BTL_SVFLOW_WORK {
   TARGET_POKE_REC     damagedPokemon;
   SVFL_WAZAPARAM      wazaParam;
   BTL_POSPOKE_WORK    pospokeWork;
+  CALC_EXP_WORK       calcExpWork[ BTL_PARTY_MEMBER_MAX ];
 
   BTL_EVENT_WORK_STACK        eventWork;
   HANDLER_EXHIBISION_MANAGER  HEManager;
@@ -384,6 +394,9 @@ static void scproc_turncheck_side( BTL_SVFLOW_WORK* wk );
 static void scproc_turncheck_side_callback( BtlSide side, BtlSideEffect sideEffect, void* arg );
 static void scproc_turncheck_weather( BTL_SVFLOW_WORK* wk );
 static void scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke );
+static void scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke );
+static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_POKEPARAM* deadPoke, CALC_EXP_WORK* result );
+static void getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_EXP_WORK* calcExp );
 static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* poke );
 static inline int roundValue( int val, int min, int max );
 static inline int roundMin( int val, int min );
@@ -1589,8 +1602,7 @@ static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nex
 
   GF_ASSERT(posIdx < clwk->numCoverPos);
 
-  if( posIdx != next_poke_idx )
-  {
+  if( posIdx != next_poke_idx ){
     BTL_PARTY_SwapMembers( party, posIdx, next_poke_idx );
   }
   bpp = BTL_PARTY_GetMemberData( party, posIdx );
@@ -1610,7 +1622,7 @@ static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nex
 
   {
     BtlPokePos  pos = BTL_MAIN_GetClientPokePos( wk->mainModule, clientID, posIdx );
-    BTL_POSPOKE_PokeIn( &wk->pospokeWork, pos, BPP_GetID(bpp) );
+    BTL_POSPOKE_PokeIn( &wk->pospokeWork, pos, BPP_GetID(bpp), wk->pokeCon );
   }
 }
 static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
@@ -4726,13 +4738,205 @@ static void scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
 
       SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Dead, pokeID );
       SCQUE_PUT_ACT_Dead( wk->que, pokeID );
-      BPP_Clear_ForDead( poke );
+      scproc_GetExp( wk, poke );
 
+      BPP_Clear_ForDead( poke );
       scproc_ClearPokeDependEffect( wk, poke );
       BTL_POSPOKE_PokeOut( &wk->pospokeWork, pokeID );
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * 経験値取得処理コマンド生成
+ *
+ * @param   wk
+ * @param   deadPoke    死んだポケモン
+ */
+//----------------------------------------------------------------------------------
+static void scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke )
+{
+  BtlCompetitor  competitor = BTL_MAIN_GetCompetitor( wk->mainModule );
+  if( (competitor == BTL_COMPETITOR_WILD)
+  ||  (competitor == BTL_COMPETITOR_TRAINER)
+  ){
+    u8 deadPokeID = BPP_GetID( deadPoke );
+    if( BTL_MAINUTIL_PokeIDtoSide(deadPokeID) == BTL_SIDE_2ND )
+    {
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, BTL_MAIN_GetPlayerClientID(wk->mainModule) );
+
+      BTL_Printf("経験値処理へ来ました\n");
+
+      getexp_calc( wk, party, deadPoke, wk->calcExpWork );
+      getexp_make_cmd( wk, party, wk->calcExpWork );
+    }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * 経験値計算結果を専用ワークに出力
+ *
+ * @param   wk
+ * @param   party     プレイヤー側パーティ
+ * @param   deadPoke  しんだポケモン
+ * @param   result    [out] 計算結果格納先
+ */
+//----------------------------------------------------------------------------------
+static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_POKEPARAM* deadPoke, CALC_EXP_WORK* result )
+{
+  u32 baseExp = BTL_CALC_CalcBaseExp( deadPoke );
+  u16 memberCount  = BTL_PARTY_GetMemberCount( party );
+  u16 gakusyuCount = 0;
+  const BTL_POKEPARAM* bpp;
+  u16 i;
+
+  // ワーククリア
+  for(i=0; i<BTL_PARTY_MEMBER_MAX; ++i){
+    result[i].exp = 0;
+  }
+
+  // がくしゅうそうち分の経験値計算
+  for(i=0; i<memberCount; ++i)
+  {
+    // 生きていてがくしゅうそうちを装備しているポケモンが対象
+    bpp = BTL_PARTY_GetMemberDataConst( party, i );
+    if( !BPP_IsDead(bpp)
+    &&  (BPP_GetItem(bpp) == ITEM_GAKUSYUUSOUTI)
+    ){
+      ++gakusyuCount;
+    }
+  }
+  if( gakusyuCount )
+  {
+    u32 gakusyuExp = baseExp / 2;
+    baseExp -= gakusyuExp;
+
+    for(i=0; i<memberCount; ++i)
+    {
+      bpp = BTL_PARTY_GetMemberDataConst( party, i );
+      if( !BPP_IsDead(bpp)
+      &&  (BPP_GetItem(bpp) == ITEM_GAKUSYUUSOUTI)
+      ){
+        result[i].exp = gakusyuExp / gakusyuCount;
+      }
+    }
+  }
+
+  BTL_Printf("基本となる経験値=%d\n", baseExp );
+
+
+  // 対戦経験値取得
+  {
+    u8 confrontCnt = BPP_CONFRONT_REC_GetCount( deadPoke );
+    u8 aliveCnt = 0;
+    u8 pokeID;
+
+    for(i=0; i<confrontCnt; ++i)
+    {
+      pokeID = BPP_CONFRONT_REC_GetPokeID( deadPoke, i );
+      bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+      if( !BPP_IsDead(bpp) ){
+        ++aliveCnt;
+      }
+    }
+    BTL_Printf("死亡ポケが対面した相手ポケの数=%d, その内、生きてる数=%d\n", confrontCnt, aliveCnt);
+
+    for(i=0; i<memberCount; ++i)
+    {
+      bpp = BTL_PARTY_GetMemberDataConst( party, i );
+      if( !BPP_IsDead(bpp) )
+      {
+        u8 j;
+        pokeID = BPP_GetID( bpp );
+        for(j=0; j<confrontCnt; ++j)
+        {
+          if( BPP_CONFRONT_REC_GetPokeID(deadPoke, j) == pokeID ){
+            BTL_Printf("メンバーIdx[%d]のポケに経験値%dを分配\n", i, (baseExp/aliveCnt));
+            result[i].exp += (baseExp / aliveCnt);
+          }
+        }
+      }
+    }
+  }
+
+  // ボーナス計算
+  for(i=0; i<BTL_PARTY_MEMBER_MAX; ++i)
+  {
+    if( result[i].exp )
+    {
+      const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
+      const POKEMON_PARAM* pp;
+      bpp = BTL_PARTY_GetMemberDataConst( party, i );
+      pp = BPP_GetSrcData( bpp );
+
+      // 他人が親ならボーナス
+      if( !PP_IsMatchOya(pp, status) )
+      {
+        // 外国の親なら1.7倍，そうじゃなければ1.5倍
+        fx32 ratio;
+        ratio = ( PP_Get(pp, ID_PARA_country_code, NULL) != MyStatus_GetRegionCode(status) )?
+            FX32_CONST(1.7f) : FX32_CONST(1.5f);
+
+        result[i].exp = BTL_CALC_MulRatio( result[i].exp, ratio );
+        result[i].fBonus = TRUE;
+      }
+      // しあわせタマゴ持ってたらボーナス
+      if( BPP_GetItem(bpp) == ITEM_SIAWASETAMAGO ){
+        result[i].exp = BTL_CALC_MulRatio( result[i].exp, FX32_CONST(1.5f) );
+        result[i].fBonus = TRUE;
+      }
+
+      BTL_Printf("メンバーIdx[%d]のポケに対し、最終経験値=%d\n", i, result[i].exp);
+    }
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * 経験値計算結果を元にコマンド生成
+ *
+ * @param   wk
+ * @param   party     プレイヤー側パーティ
+ * @param   calcExp   経験値計算結果ワーク
+ */
+//----------------------------------------------------------------------------------
+static void getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_EXP_WORK* calcExp )
+{
+  BTL_POKEPARAM* bpp;
+  u32 i;
+
+  for(i=0; i<BTL_PARTY_MEMBER_MAX; ++i)
+  {
+    if( calcExp[i].exp )
+    {
+      BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberData( party, i );
+      u32 exp   = calcExp[i].exp;
+      u16 strID = (calcExp[i].fBonus)? BTL_STRID_STD_GetExp_Bonus : BTL_STRID_STD_GetExp;
+      u8  pokeID = BPP_GetID( bpp );
+      BTL_LEVELUP_INFO  info;
+
+      BTL_Printf("経験値はいったメッセージ :strID=%d, pokeID=%d, exp=%d\n", strID, pokeID, exp);
+      SCQUE_PUT_MSG_STD( wk->que, strID, pokeID, exp );
+
+      while( exp )
+      {
+        if( BPP_AddExp(bpp, &exp, &info) )
+        {
+          BTL_Printf("レベルアップする経験値: exp=%d\n", exp);
+          SCQUE_PUT_ACT_AddExpLevelup( wk->que, pokeID,
+            info.hp, info.atk, info.def, info.sp_atk, info.sp_def, info.agi );
+        }
+        else
+        {
+          BTL_Printf("レベルアップしない経験値増: exp=%d\n", exp);
+          SCQUE_PUT_ACT_AddExp( wk->que, pokeID, exp );
+          break;
+        }
+      }
+    }
+  }
+}
+
 //--------------------------------------------------------------------------
 /**
  * 特定ポケモン依存の状態異常・サイドエフェクト等、各種ハンドラをクリアする
