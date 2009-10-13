@@ -35,7 +35,7 @@
 #include "message.naix"//	GMM
 #include "msg/msg_mictest.h"//	GMM
 
-// ===== TODO 未実装処理の仮定義 =====
+// ===== @TODO 未実装処理の仮定義 =====
 
 // BGM関連
 static void Snd_BgmFadeOut( int a, int b ){}
@@ -44,19 +44,8 @@ static void Snd_BgmFadeIn( int a, int b, int c){}
 #define BGM_VOL_MAX (127)
 #define BGM_FADEIN_START_VOL_NOW (0)
 
-// マイク関連
-//static BOOL Snd_MicIsAmpOnWaitFlag( void ){ return 0; }
-//static void Snd_MicStartAutoSampling( void* a ){}
-//static void Snd_MicStopAutoSampling( void ){}
-
-// スリープ制御関連
-enum { 
-  SLEEPTYPE_MIC = 0x08,     // マイクサンプリング時のスリープNGフラグ
-};
-static void sys_SleepNG( int a ){}
-static void sys_SleepOK( int a ){}
-
 // ===== ↑未実装処理の仮定義↑ =====
+
 
 /*
  *	マイクテスト任天堂規約
@@ -1505,7 +1494,7 @@ static void MicTest_MIC_Init( MICTEST_MIC_WORK *p_mic, u32 heap_id, MICCallback 
   SND_MIC_Init( heap_id );
 
 	//マイク時スリープを禁止に
-	sys_SleepNG( SLEEPTYPE_MIC );
+  GFL_UI_SleepDisable( GFL_UI_SLEEP_MIC );
 	
   //	バッファ作成
 	{	
@@ -1541,7 +1530,7 @@ static void MicTest_MIC_Exit( MICTEST_MIC_WORK *p_mic )
 	GFL_HEAP_FreeMemory( p_mic->p_buf_adrs );
   SND_MIC_Exit();
 	//マイク時スリープを許可
-	sys_SleepOK( SLEEPTYPE_MIC );
+	GFL_UI_SleepEnable( GFL_UI_SLEEP_MIC );
 }
 
 //----------------------------------------------------------------------------
