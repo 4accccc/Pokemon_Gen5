@@ -335,6 +335,8 @@ s32 ITEM_GetBufParam( ITEMDATA * item, u16 param )
     return (s32)item->btl_pocket;
   case ITEM_PRM_W_TYPE:       // ワークタイプ
     return (s32)item->work_type;
+	case ITEM_PRM_ITEM_TYPE:		// アイテム種類
+		return (s32)item->type;
 
   default:              // 汎用ワーク
     switch( item->work_type ){

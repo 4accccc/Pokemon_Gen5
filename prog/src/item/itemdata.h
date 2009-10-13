@@ -33,7 +33,7 @@ struct _ITEM_DATA {
 	u8	battle_func;		// battle機能
 	u8	work_type;			// ワークタイプ
 
-	u8	dmy;				// ダミー
+	u8	type;				// アイテム種類
 
 	u8	work[22];			// 汎用ワーク
 };
