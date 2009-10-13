@@ -245,10 +245,10 @@ static const GFL_G3D_UTIL_SETUP setup[] =
 {
   { res_table_reel, NELEMS(res_table_reel), obj_table_reel, NELEMS(obj_table_reel) },
   { res_table_trade1, NELEMS(res_table_trade1), obj_table_trade1, NELEMS(obj_table_trade1) },
-  { res_table_trade_trade, NELEMS(res_table_trade_trade), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
-  { res_table_trade_return, NELEMS(res_table_trade_return), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
-  { res_table_trade_splash, NELEMS(res_table_trade_splash), obj_table_trade_splash, NELEMS(obj_table_trade_splash) },
-  { res_table_trade_end, NELEMS(res_table_trade_end), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
+//  { res_table_trade_trade, NELEMS(res_table_trade_trade), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
+//  { res_table_trade_return, NELEMS(res_table_trade_return), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
+//  { res_table_trade_splash, NELEMS(res_table_trade_splash), obj_table_trade_splash, NELEMS(obj_table_trade_splash) },
+//  { res_table_trade_end, NELEMS(res_table_trade_end), obj_table_trade_normal, NELEMS(obj_table_trade_normal) },
 };
 
 
@@ -278,7 +278,7 @@ static void _cameraSetTrade01(IRC_POKEMON_TRADE* pWork)
 {
   VecFx32 campos;
   VecFx32 tarpos;
-  fx32 far= 2000*FX32_ONE;
+  fx32 far= 8000*FX32_ONE;
   fx32 near= FX32_ONE;
 
   campos.x = 0;
@@ -639,6 +639,7 @@ static void Initialize( IRC_POKEMON_TRADE* pWork, int modelno )
 {
 
   // ƒ†ƒjƒbƒg’Ç‰Á
+  GF_ASSERT(modelno < elementof(setup));
   {
     pWork->unitIndex = GFL_G3D_UTIL_AddUnit( pWork->g3dUtil, &setup[modelno] );
     pWork->objCount = setup[modelno].objCount;
