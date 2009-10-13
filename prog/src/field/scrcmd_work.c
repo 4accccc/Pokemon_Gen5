@@ -402,7 +402,7 @@ void SCRCMD_WORK_InitMenuWork( SCRCMD_WORK *work,
   menuWork->ret = ret;
   menuWork->wordset = wordset;
   menuWork->msgData = msgData;
-
+  
   if( menuWork->msgData == NULL ){ //メニュー用共通メッセージ
     menuWork->free_msg = TRUE;
     menuWork->msgData = GFL_MSG_Create(
@@ -507,6 +507,10 @@ BOOL SCRCMD_WORK_ProcMenu( SCRCMD_WORK *work )
   if( ret != FLDMENUFUNC_CANCEL ){	//決定
     *(menuWork->ret) = ret;
   }else{
+    if( menuWork->cancel == FALSE ){ //Bキャンセル有効ではない
+      return( FALSE );
+    }
+
     *(menuWork->ret) = EV_WIN_B_CANCEL;
   }
   
