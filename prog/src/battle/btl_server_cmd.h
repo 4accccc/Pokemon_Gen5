@@ -478,9 +478,9 @@ static inline void SCQUE_PUT_ACT_AddExp( BTL_SERVER_CMD_QUE* que, u8 pokeID, u32
 {
   SCQUE_PUT_Common( que, SC_ACT_EXP, pokeID, exp );
 }
-static inline void SCQUE_PUT_ACT_AddExpLevelup( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 hp, u8 atk, u8 def, u8 sp_atk, u8 sp_def, u8 agi )
+static inline void SCQUE_PUT_ACT_AddExpLevelup( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 level, u8 hp, u8 atk, u8 def, u8 sp_atk, u8 sp_def, u8 agi )
 {
-  SCQUE_PUT_Common( que, SC_ACT_EXP_LVUP, pokeID, hp, atk, def, sp_atk, sp_def, agi );
+  SCQUE_PUT_Common( que, SC_ACT_EXP_LVUP, pokeID, level, hp, atk, def, sp_atk, sp_def, agi );
 }
 
 

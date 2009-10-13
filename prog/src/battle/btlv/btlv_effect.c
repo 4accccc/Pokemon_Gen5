@@ -416,11 +416,11 @@ void  BTLV_EFFECT_DelTrainer( int position )
 void  BTLV_EFFECT_SetGauge( const BTL_POKEPARAM* bpp, int position )
 {
   if( bew->rule == BTL_RULE_TRIPLE )
-  { 
+  {
     BTLV_GAUGE_Add( bew->bgw, bpp, BTLV_GAUGE_TYPE_3vs3, position );
   }
   else
-  { 
+  {
     BTLV_GAUGE_Add( bew->bgw, bpp, BTLV_GAUGE_TYPE_1vs1, position );
   }
 }
@@ -463,6 +463,19 @@ void  BTLV_EFFECT_CalcGaugeEXP( int position, int value )
   BTLV_GAUGE_CalcEXP( bew->bgw, position, value );
 }
 
+//=============================================================================================
+/**
+ * @brief  指定された位置のEXPゲージレベルアップ
+ *
+ * @param   position    計算するゲージ位置
+ * @param   bpp         レベルアップ後のパラメータ
+ */
+//=============================================================================================
+void BTLV_EFFECT_CalcGaugeEXPLevelUp( int position, const BTL_POKEPARAM* bpp )
+{
+  BTLV_GAUGE_CalcEXPLevelUp( bew->bgw, bpp, position );
+}
+
 //============================================================================================
 /**
  * @brief  ゲージが計算中かチェック
@@ -472,6 +485,8 @@ BOOL  BTLV_EFFECT_CheckExecuteGauge( void )
 {
   return BTLV_GAUGE_CheckExecute( bew->bgw );
 }
+
+
 
 //============================================================================================
 /**

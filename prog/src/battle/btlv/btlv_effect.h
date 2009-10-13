@@ -86,6 +86,7 @@ extern  void              BTLV_EFFECT_SetGauge( const BTL_POKEPARAM* bpp, int po
 extern  void              BTLV_EFFECT_DelGauge( int position );
 extern  void              BTLV_EFFECT_CalcGaugeHP( int position, int value );
 extern  void              BTLV_EFFECT_CalcGaugeEXP( int position, int value );
+extern  void              BTLV_EFFECT_CalcGaugeEXPLevelUp( int position, const BTL_POKEPARAM* bpp );
 extern  BOOL              BTLV_EFFECT_CheckExecuteGauge( void );
 extern  void              BTLV_EFFECT_SetGaugeDrawEnable( BOOL on_off );
 extern  void              BTLV_EFFECT_SetBallGauge( const BTLV_BALL_GAUGE_PARAM* bbgp );

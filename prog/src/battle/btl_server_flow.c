@@ -4924,7 +4924,7 @@ static void getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
         {
           BTL_Printf("レベルアップする経験値: exp=%d\n", exp);
           SCQUE_PUT_ACT_AddExpLevelup( wk->que, pokeID,
-            info.hp, info.atk, info.def, info.sp_atk, info.sp_def, info.agi );
+            info.level, info.hp, info.atk, info.def, info.sp_atk, info.sp_def, info.agi );
         }
         else
         {

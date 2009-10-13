@@ -62,8 +62,8 @@ typedef enum {
   // à¯êîÇUå¬ÇÃå^
   SC_ARGFMT_555555bit = SC_ARGFMT(6,0),
 
-  // à¯êîÇVå¬ÇÃå^
-  SC_ARGFMT_1111111byte = SC_ARGFMT(7,0),
+  // à¯êîÇWå¬ÇÃå^
+  SC_ARGFMT_1x8byte = SC_ARGFMT(8,0),
 
   // ÉÅÉbÉZÅ[ÉWå^Åiâ¬ïœà¯êîÅj
   SC_ARGFMT_MSG   = SC_ARGFMT(0,0),
@@ -139,7 +139,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_5_3bit,           // SC_ACT_KILL
   SC_ARGFMT_5_3bit,           // SC_ACT_MOVE
   SC_ARGFMT_14byte,           // SC_ACT_EXP
-  SC_ARGFMT_1111111byte,      // SC_ACT_EXP_LVUP
+  SC_ARGFMT_1x8byte,          // SC_ACT_EXP_LVUP
   SC_ARGFMT_1byte,            // SC_TOKWIN_IN
   SC_ARGFMT_1byte,            // SC_TOKWIN_OUT
 
@@ -265,7 +265,6 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
   case SC_ARGFMT_14byte:
     scque_put1byte( que, args[0] );
     scque_put4byte( que, args[1] );
-    BTL_Printf("Put14bytes ... (%d), (%d)\n", args[0], args[1]);
     break;
   case SC_ARGFMT_4_4bit:
     scque_put1byte( que, pack1_2args(args[0], args[1], 4, 4) );
@@ -340,14 +339,13 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
       scque_put2byte( que, pack2 );
     }
     break;
-  case SC_ARGFMT_1111111byte:
-    scque_put1byte( que, args[0] );
-    scque_put1byte( que, args[1] );
-    scque_put1byte( que, args[2] );
-    scque_put1byte( que, args[3] );
-    scque_put1byte( que, args[4] );
-    scque_put1byte( que, args[5] );
-    scque_put1byte( que, args[6] );
+  case SC_ARGFMT_1x8byte:
+    {
+      int i;
+      for(i=0; i<8; ++i){
+        scque_put1byte( que, args[i] );
+      }
+    }
     break;
 
   case SC_ARGFMT_POINT:
@@ -384,7 +382,6 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
   case SC_ARGFMT_14byte:
     args[0] = scque_read1byte( que );
     args[1] = scque_read4byte( que );
-    BTL_Printf("Read14bytes ... (%d), (%d)\n", args[0], args[1]);
     break;
   case SC_ARGFMT_4_4bit:
     {
@@ -473,14 +470,13 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
     }
     break;
 
-  case SC_ARGFMT_1111111byte:
-    args[0] = scque_read1byte( que );
-    args[1] = scque_read1byte( que );
-    args[2] = scque_read1byte( que );
-    args[3] = scque_read1byte( que );
-    args[4] = scque_read1byte( que );
-    args[5] = scque_read1byte( que );
-    args[6] = scque_read1byte( que );
+  case SC_ARGFMT_1x8byte:
+    {
+      int i;
+      for(i=0; i<8; ++i){
+        args[i] = scque_read1byte( que );
+      }
+    }
     break;
 
   case SC_ARGFMT_POINT:

@@ -189,6 +189,7 @@ static inline void BPP_WAZADMG_REC_Setup( BPP_WAZADMG_REC* rec, u8 pokeID, u16 w
  */
 //--------------------------------------------------------------
 typedef struct {
+  u8  level;
   u8  hp;
   u8  atk;
   u8  def;
@@ -321,6 +322,7 @@ extern void BPP_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick );
 extern void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID );
 extern void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFunc, void* callbackWork );
 extern void BPP_GetNickName( const BTL_POKEPARAM* bpp, STRBUF* dst );
+extern void BPP_ReflectExp( BTL_POKEPARAM* bpp );
 
 extern BOOL BPP_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType );
 extern PokeSick BPP_GetPokeSick( const BTL_POKEPARAM* pp );

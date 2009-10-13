@@ -2059,6 +2059,7 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
       bpp->baseParam.sp_defence = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spedef, 0 );
       bpp->baseParam.agility = PP_Get( bpp->coreParam.ppSrc, ID_PARA_agi, 0 );
 
+      info->level  = bpp->baseParam.level;
       info->hp     = bpp->baseParam.hpMax - prevHP;
       info->atk    = bpp->baseParam.attack - info->atk;
       info->def    = bpp->baseParam.defence - info->def;
@@ -2079,7 +2080,24 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
   GFL_STD_MemClear( info, sizeof(*info) );
   return FALSE;
 }
-
+//=============================================================================================
+/**
+ * Srcポケモンデータに合わせて経験値、各種パラメータ値を反映させる（クライアント用）
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BPP_ReflectExp( BTL_POKEPARAM* bpp )
+{
+  bpp->exp = PP_Get( bpp->coreParam.ppSrc, ID_PARA_exp, 0 );
+  bpp->baseParam.level = PP_Get( bpp->coreParam.ppSrc, ID_PARA_level, 0 );
+  bpp->baseParam.hpMax = PP_Get( bpp->coreParam.ppSrc, ID_PARA_hpmax, 0 );
+  bpp->baseParam.attack = PP_Get( bpp->coreParam.ppSrc, ID_PARA_pow, 0 );
+  bpp->baseParam.defence = PP_Get( bpp->coreParam.ppSrc, ID_PARA_def, 0 );
+  bpp->baseParam.sp_attack = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spepow, 0 );
+  bpp->baseParam.sp_defence = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spedef, 0 );
+  bpp->baseParam.agility = PP_Get( bpp->coreParam.ppSrc, ID_PARA_agi, 0 );
+}
 
 
 
