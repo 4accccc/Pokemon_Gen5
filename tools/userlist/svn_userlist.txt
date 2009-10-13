@@ -13,6 +13,7 @@ ibe_mana
 ichinose
 iwao_kazumasa
 iwasawa
+james_turner
 kagaya
 kageyama_shota
 kawachimaru
