@@ -8,7 +8,8 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	 lee_hyunjung fuchino tamada nakatsui ibe_mana tanoue_reiko fujiwara_maiko ohkubo_tomohiko
+USERS	=	 lee_hyunjung fuchino tamada nakatsui ibe_mana tanoue_reiko \
+				 fujiwara_maiko ohkubo_tomohiko unno james_turner
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
