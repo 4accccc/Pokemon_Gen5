@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-10-13T11:41:18"/>
+	<create user="taya" host="W00146" date="2009-10-13T20:15:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -489,6 +489,14 @@
 [2:04:５桁:1] けいけんちを　もらった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　多めに
 [2:04:５桁:1] 経験値を　もらった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_LevelUp" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>レベルアップ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+レベル[2:02:３桁:1]　に　あがった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+レベル[2:02:３桁:1]　に　あがった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_UseItem_NoEffect" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
