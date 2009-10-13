@@ -35,6 +35,17 @@
 
 #define _BALL_PARTICLE_START   (1300)  ///モンスターボール激突 パーティクル開始
 
+
+#define _PARTICLE_DEMO2_START   (240)  ///パーティクル開始
+#define _PARTICLE_DEMO3_START   (300)  ///パーティクル開始
+#define _PARTICLE_DEMO3_START2  (1400)  ///パーティクル開始
+#define _PARTICLE_DEMO4_START   (-1)  ///パーティクル開始
+#define _PARTICLE_DEMO5_START   (240)  ///パーティクル開始
+#define _PARTICLE_DEMO6_START   (480)  ///パーティクル開始
+#define _PARTICLE_DEMO7_START   (1050)  ///パーティクル開始
+
+
+
 #define _POKECHANGE_WHITEOUT_START (1020)  //ポケモン交換シーンのホワイトアウト
 #define _POKECHANGE_WHITEOUT_TIMER (29)  //ポケモン交換シーンのホワイトアウト時間
 #define _POKECHANGE_WHITEIN_START  (1050)  //ボールおち前のフェードイン

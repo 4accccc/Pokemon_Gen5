@@ -186,6 +186,24 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
   if(pWork->anmCount == _BALL_PARTICLE_START){
     GFL_PTC_CreateEmitterCallback(pWork->ptc, 0, NULL, pWork);
   }
+  if(pWork->anmCount == _PARTICLE_DEMO2_START){
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, 1, NULL, pWork);
+  }
+  if(pWork->anmCount == _PARTICLE_DEMO3_START){
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, 2, NULL, pWork);
+  }
+  if(pWork->anmCount == _PARTICLE_DEMO3_START2){
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, 2, NULL, pWork);
+  }
+  if(pWork->anmCount == _PARTICLE_DEMO5_START){
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, 4, NULL, pWork);
+  }
+  if(pWork->anmCount == _PARTICLE_DEMO6_START){
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, 5, NULL, pWork);
+  }
+  if(pWork->anmCount == _PARTICLE_DEMO7_START){
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, 6, NULL, pWork);
+  }
   
   if(pWork->anmCount == _POKEUP_WHITEOUT_START){
     _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,

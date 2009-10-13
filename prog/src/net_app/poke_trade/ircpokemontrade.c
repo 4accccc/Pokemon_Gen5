@@ -899,6 +899,7 @@ static void _changePokemonMyStDisp(IRC_POKEMON_TRADE* pWork,int pageno,int leftr
 
   }
 
+  IRC_POKETRADE_SubStatusInit(pWork,pWork->x, pageno);  //‰æ–ÊBG•\Ž¦
     
   GFL_BMPWIN_MakeScreen(pWork->MyInfoWin);
   GFL_BMPWIN_TransVramCharacter(pWork->MyInfoWin);
@@ -1196,7 +1197,7 @@ static void _changeMenuOpen(IRC_POKEMON_TRADE* pWork)
 static void _dispSubStateWait(IRC_POKEMON_TRADE* pWork)
 {
   GFL_UI_TP_HITTBL tp_data[]={
-    { 21*8, 24*8, 0, 3*8},
+    { 20*8-4, 22*8+4, 8, 4*8+4},
     {GFL_UI_TP_HIT_END,0,0,0},
   };
 
@@ -1260,7 +1261,6 @@ static void _dispSubState(IRC_POKEMON_TRADE* pWork)
     int msg[]={POKETRADE_STR_03,POKETRADE_STR_02};
     IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
   }
-  IRC_POKETRADE_SubStatusInit(pWork,pWork->x);  //‰æ–Ê•\Ž¦
 
   {
     POKEMON_PASO_PARAM* ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox,

@@ -397,7 +397,7 @@ extern void IRC_POKETRADE_GraphicInitMainDisp(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_GraphicInitSubDisp(IRC_POKEMON_TRADE* pWork);
 
 extern void IRC_POKETRADE_GraphicExit(IRC_POKEMON_TRADE* pWork);
-extern void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork,int pokeposx);
+extern void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork,int pokeposx, int type);
 extern void IRC_POKETRADE_SubStatusEnd(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_AppMenuOpen(IRC_POKEMON_TRADE* pWork, int *menustr,int num);
 extern void IRC_POKETRADE_MessageOpen(IRC_POKEMON_TRADE* pWork, int msgno);
