@@ -1241,9 +1241,9 @@ static void TypeIconChange( BOX2_APP_WORK * appwk, u32 type, u32 objID, u32 resI
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_TypeIconChange( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info )
 {
-/*
 	if( info->tamago != 0 ){
 		GFL_CLACT_UNIT_SetDrawEnableCap( appwk->cap[BOX2OBJ_ID_TYPEICON1], ACT_OFF );
 		GFL_CLACT_UNIT_SetDrawEnableCap( appwk->cap[BOX2OBJ_ID_TYPEICON2], ACT_OFF );
@@ -1258,9 +1258,8 @@ void BOX2OBJ_TypeIconChange( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info )
 			GFL_CLACT_UNIT_SetDrawEnableCap( appwk->cap[BOX2OBJ_ID_TYPEICON2], ACT_OFF );
 		}
 	}
-*/
 }
-
+*/
 
 //============================================================================================
 //	•ÇŽ†ƒAƒCƒRƒ“
@@ -1461,10 +1460,12 @@ static void BoxObjAdd( BOX2_APP_WORK * appwk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_HandCursorVanish( BOX2_APP_WORK * appwk, BOOL flg )
 {
 //	BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_HAND_CURSOR, flg );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1478,16 +1479,16 @@ void BOX2OBJ_HandCursorVanish( BOX2_APP_WORK * appwk, BOOL flg )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_HandCursorSet( BOX2_APP_WORK * appwk, s16 px, s16 py, BOOL shadow )
 {
-/*
 	GFL_CLACT_WK_SetWldPosCap( appwk->cap[BOX2OBJ_ID_HAND_CURSOR], px, py );
 //ª[GS_CONVERT_TAG]
 	GFL_CLACT_WK_SetWldPosCap( appwk->cap[BOX2OBJ_ID_HAND_SHADOW], px, py+24 );
 //ª[GS_CONVERT_TAG]
 	BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_HAND_SHADOW, shadow );
-*/
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1498,9 +1499,9 @@ void BOX2OBJ_HandCursorSet( BOX2_APP_WORK * appwk, s16 px, s16 py, BOOL shadow )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_PokeCursorAdd( BOX2_SYS_WORK * syswk )
 {
-/*
 	BOX2_APP_WORK * appwk;
 	s16	x, y;
 	u16	posID;
@@ -1558,8 +1559,8 @@ void BOX2OBJ_PokeCursorAdd( BOX2_SYS_WORK * syswk )
 //ª[GS_CONVERT_TAG]
 		}
 	}
-*/
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1570,10 +1571,12 @@ void BOX2OBJ_PokeCursorAdd( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_PokeCursorDel( BOX2_SYS_WORK * syswk )
 {
 //	BOX2OBJ_PokeCursorVanish( syswk, FALSE );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1585,9 +1588,9 @@ void BOX2OBJ_PokeCursorDel( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_PokeCursorVanish( BOX2_SYS_WORK * syswk, BOOL flg )
 {
-/*
 	u32	i;
 
 	if( flg == TRUE ){
@@ -1612,8 +1615,8 @@ void BOX2OBJ_PokeCursorVanish( BOX2_SYS_WORK * syswk, BOOL flg )
 			}
 		}
 	}
-*/
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1624,9 +1627,9 @@ void BOX2OBJ_PokeCursorVanish( BOX2_SYS_WORK * syswk, BOOL flg )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_PokeCursorMove( BOX2_SYS_WORK * syswk )
 {
-/*
 	BOX2_APP_WORK * appwk;
 	s16	x, y;
 	u16	posID;
@@ -1645,8 +1648,8 @@ void BOX2OBJ_PokeCursorMove( BOX2_SYS_WORK * syswk )
 		GFL_CLACT_WK_SetWldPosCap(
 			appwk->cap[BOX2OBJ_ID_OUTLINE+i], x + PokeCursorXTbl[i], y + PokeCursorYTbl[i] );
 	}
-*/
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1725,13 +1728,13 @@ static void TrayObjAdd( BOX2_APP_WORK * appwk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BOX2OBJ_TrayMoveArrowVanish( BOX2_APP_WORK * appwk, BOOL flg )
 {
-/*
 	BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_L_ARROW, flg );
 	BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_R_ARROW, flg );
-*/
 }
+*/
 
 
 
