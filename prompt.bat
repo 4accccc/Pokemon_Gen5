@@ -25,8 +25,15 @@ SET NITROSYSTEM_ROOT=%WBLIBDIR%\TwlSystem
 SET NITROWIFI_ROOT=%WBLIBDIR%\TwlDWC
 SET NITRODWC_ROOT=%WBLIBDIR%\TwlDWC
 
-REM ハイブリッド対応は今後行う
+REM ####################################################
+REM ハイブリッド対応の場合下記の部分を有効にしてください ハイブリッドでない時は無効にしてください
+REM NITROとかくとIS-NITRO用 TWLとかくとTWL用 両方書くと両方が出来上がります
+REM ####################################################
 REM SET TWLSDK_PLATFORM=TWL NITRO
+
+REM ####################################################
+REM ハイブリッドでない場合下記の部分を有効にしてください ハイブリッドの時は無効にしてください
+REM ####################################################
 SET TWLSDK_PLATFORM=NITRO
 
 SET TWLSYSTEM_ROOT=%WBLIBDIR%\TwlSystem
