@@ -19,8 +19,16 @@
 #include "scrcmd_work.h"
 #include "scrcmd_menuwin.h"
 
-
 #include "fieldmap.h"
+
+#include "arc/script_message.naix"
+#include "msg/script/msg_common_scr.h"
+
+
+// 所持金表示ウィンドウ
+#define GOLD_WIN_WIDTH (14) // 幅(キャラクタ単位)
+#define GOLD_WIN_HEIGHT (2) // 高さ(キャラクタ単位)
+#define GOLD_WIN_KETA   (6) // 所持金数値の桁数
 
 
 //======================================================================
@@ -258,15 +266,22 @@ VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK*       work = wk;
-  u16                   x = SCRCMD_GetVMWorkValue( core, work );
-  u16                   y = SCRCMD_GetVMWorkValue( core, work );
+  u16                   x = SCRCMD_GetVMWorkValue( core, work );  // スクリプト第1引数
+  u16                   y = SCRCMD_GetVMWorkValue( core, work );  // スクリプト第2引数
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
-  PLAYER_WORK*     player = GAMEDATA_GetMyPlayerWork( gdata );
+  PLAYER_WORK*     player = GAMEDATA_GetMyPlayerWork( gdata ); 
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   FLDMSGBG*        msg_bg = FIELDMAP_GetFldMsgBG( fieldmap );
   FLDMSGWIN*      msg_win = FIELDMAP_GetGoldMsgWin( fieldmap );
-  GFL_MSGDATA*   msg_data = SCRCMD_WORK_GetMsgData( work );
+  SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET**       wordset = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+  STRBUF**        tempbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_TMPBUF );
+  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
+  GFL_MSGDATA*   msg_data = GFL_MSG_Create( 
+      GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_common_scr_dat, heap_id );
+  STRBUF*          strbuf = GFL_STR_CreateBuffer( 128, heap_id );
+  u32                gold = MyStatus_GetGold( &player->mystatus );
 
   // 表示中のウィンドウを削除
   if( msg_win != NULL )
@@ -275,20 +290,17 @@ VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk )
   }
 
   // ウィンドウを表示
-  msg_win = FLDMSGWIN_Add( msg_bg, msg_data, x, y, 14, 2 );
+  msg_win = FLDMSGWIN_Add( msg_bg, msg_data, x, y, GOLD_WIN_WIDTH, GOLD_WIN_HEIGHT );
   FIELDMAP_SetGoldMsgWin( fieldmap, msg_win );
 
-  // ウィンドウ内のメッセージを設定
-  {
-    STRCODE code[128];
-    HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
-    STRBUF* buf = GFL_STR_CreateBuffer( 128, heap_id );
-    u32 gold = MyStatus_GetGold( &player->mystatus );
-    swprintf( code, 128, L"おこずかい  %6d円", gold );
-    GFL_STR_SetStringCodeOrderLength( buf, code, wcslen(code)+1 );
-    FLDMSGWIN_PrintStrBuf( msg_win, 0, 0, buf );
-    GFL_STR_DeleteBuffer( buf );
-  }
+  // 文字列を作成
+  WORDSET_RegisterNumber( 
+      *wordset, 2, gold, GOLD_WIN_KETA, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  GFL_MSG_GetString( msg_data, msg_yen_01, *tempbuf );
+  WORDSET_ExpandStr( *wordset, strbuf, *tempbuf );
+  FLDMSGWIN_PrintStrBuf( msg_win, 0, 0, strbuf );
+  GFL_STR_DeleteBuffer( strbuf );
+  GFL_MSG_Delete( msg_data );
 
   OBATA_Printf( "EvCmdGoldWinOpen\n" );
   return VMCMD_RESULT_CONTINUE;
