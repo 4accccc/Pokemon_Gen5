@@ -228,7 +228,8 @@ sodateya_adopt_pokemon:
       _GET_BOX_POKE_COUNT( box_count, POKECOUNT_MODE_NOT_EGG )
       IF $box_count == 0 THEN 
         // @todo メッセージを表示
-        _VOICE_PLAY( 1, 0 )  // 【仮】
+        $message_id = msg_sodateya_oldwoman_17
+        _CALL say
         _RET
       ENDIF
     ENDIF

@@ -6,6 +6,7 @@
 #include "../script/sodateya_scr_def.h"
 #include "../script/pokecen_scr_def.h"
 #include "../script/hiden_def.h"
+#include "../script/fld_item_def.h"
 //#include "tmp/bcwftest.h"
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Ídata/bcwftest.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
 #ifndef ZONE_BCWFTEST_EVD_H
