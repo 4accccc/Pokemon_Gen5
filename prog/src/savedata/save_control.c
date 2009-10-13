@@ -14,6 +14,12 @@
 
 
 //==============================================================================
+//  定数定義
+//==============================================================================
+///セーブ系の関数内でテンポラリとして使用するヒープのID
+#define HEAPID_SAVE_TEMP        (GFL_HEAPID_APP)
+
+//==============================================================================
 //	構造体定義
 //==============================================================================
 ///セーブデータ管理ワーク構造体
@@ -48,11 +54,11 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(int heap_id)
 	ctrl->new_data_flag = TRUE;			//新規データ
 	ctrl->total_save_flag = TRUE;		//全体セーブ
 	ctrl->data_exists = FALSE;			//データは存在しない
-	ctrl->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal, GFL_HEAPID_APP);
+	ctrl->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal, heap_id);
 
 
 	//データ存在チェックを行っている
-	load_ret = GFL_BACKUP_Load(ctrl->sv_normal, GFL_HEAPID_APP);
+	load_ret = GFL_BACKUP_Load(ctrl->sv_normal, HEAPID_SAVE_TEMP);
 	ctrl->first_status = 0;
 	switch(load_ret){
 	case LOAD_RESULT_OK:				///<データ正常読み込み
@@ -156,7 +162,7 @@ SAVE_CONTROL_WORK * SaveControl_GetPointer(void)
 //--------------------------------------------------------------
 LOAD_RESULT SaveControl_Load(SAVE_CONTROL_WORK *ctrl)
 {
-	LOAD_RESULT result = GFL_BACKUP_Load(ctrl->sv_normal, GFL_HEAPID_APP);
+	LOAD_RESULT result = GFL_BACKUP_Load(ctrl->sv_normal, HEAPID_SAVE_TEMP);
 	
 	switch(result){
 	case LOAD_RESULT_OK:
@@ -294,7 +300,7 @@ void SaveControl_ClearData(SAVE_CONTROL_WORK * ctrl)
 //--------------------------------------------------------------
 void SaveControl_Erase(SAVE_CONTROL_WORK *ctrl)
 {
-	GFL_BACKUP_Erase(ctrl->sv_normal, GFL_HEAPID_APP);
+	GFL_BACKUP_Erase(ctrl->sv_normal, HEAPID_SAVE_TEMP);
 }
 
 //==================================================================

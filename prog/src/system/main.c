@@ -183,7 +183,7 @@ static	void	GameInit(void)
 	/* ユーザーレベルで必要な初期化をここに記述する */
 
 	//セーブ関連初期化
-	SaveControl_SystemInit(GFL_HEAPID_APP);	//※check 使用しているヒープIDは暫定
+	SaveControl_SystemInit(HEAPID_SAVE);
 
 
 	// 通信のデバッグプリントを行う定義
@@ -207,7 +207,7 @@ static	void	GameInit(void)
 
 	//通信エラー画面管理システム初期化
 	NetErr_SystemInit();
-	NetErr_SystemCreate(GFL_HEAPID_APP);//※check　とりあえずゲーム中、ずっとシステムが存在するようにしている
+	NetErr_SystemCreate(HEAPID_NET_ERR);//※check　とりあえずゲーム中、ずっとシステムが存在するようにしている
 
 	/* グローバルメッセージデータ＆フォント初期化 */
 	GLOBALMSG_Init( GFL_HEAPID_SYSTEM );

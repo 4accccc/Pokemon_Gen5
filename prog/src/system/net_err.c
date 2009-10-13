@@ -26,7 +26,7 @@
 //	定数定義
 //==============================================================================
 ///通信エラー画面で使用するテンポラリヒープ
-#define HEAPID_NET_ERR			(GFL_HEAPID_APP)
+#define HEAPID_NET_TEMP			(GFL_HEAPID_APP)
 
 ///通信エラー画面を終了させるボタン
 #define ERR_DISP_END_BUTTON		(PAD_BUTTON_A | PAD_BUTTON_B)
@@ -112,6 +112,8 @@ static void Local_ErrMessagePrint(void);
 //--------------------------------------------------------------
 void NetErr_SystemInit(void)
 {
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NET_ERR, NETERR_PUSH_CHARVRAM_SIZE + NETERR_PUSH_SCRNVRAM_SIZE + NETERR_PUSH_PLTTVRAM_SIZE + 0x100);  //+0x100はヘッダ分
+  
 	GFL_STD_MemClear(&NetErrSystem, sizeof(NET_ERR_SYSTEM));
 }
 
@@ -159,6 +161,8 @@ void NetErr_SystemExit(void)
 	GFL_HEAP_FreeMemory(nes->push_pltt_p);
 
 	GFL_STD_MemClear(nes, sizeof(NET_ERR_SYSTEM));
+	
+	GFL_HEAP_DeleteHeap(HEAPID_NET_ERR);
 }
 
 //==================================================================
@@ -462,7 +466,7 @@ static void Local_ErrDispDraw(void)
 	GFL_STD_MemClear32(G2_GetBG1CharPtr(), NETERR_PUSH_CHARVRAM_SIZE);
 
 	//キャラクタ
-	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NCGR, 0, HEAPID_NET_ERR);
+	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NCGR, 0, HEAPID_NET_TEMP);
 	if(NNS_G2dGetUnpackedBGCharacterData(arcData, &charData)){
 		DC_FlushRange(charData->pRawData, charData->szByte);
 		//念のためDMAを使用するのは避ける
@@ -473,7 +477,7 @@ static void Local_ErrDispDraw(void)
 	GFL_HEAP_FreeMemory(arcData);
 	
 	//スクリーン
-	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NSCR, 0, HEAPID_NET_ERR);
+	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NSCR, 0, HEAPID_NET_TEMP);
 	if( NNS_G2dGetUnpackedScreenData( arcData, &scrnData ) ){
 		DC_FlushRange(scrnData->rawData, scrnData->szByte);
 		GFL_STD_MemCopy16(scrnData->rawData, G2_GetBG1ScrPtr(), scrnData->szByte);
@@ -481,7 +485,7 @@ static void Local_ErrDispDraw(void)
 	GFL_HEAP_FreeMemory( arcData );
 	
 	//パレット
-	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NCLR, 0, HEAPID_NET_ERR);
+	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NCLR, 0, HEAPID_NET_TEMP);
 	cmpFlag = NNS_G2dGetUnpackedPaletteCompressInfo( arcData, &cmpInfo );
 	if( NNS_G2dGetUnpackedPaletteData( arcData, &palData ) ){
 		DC_FlushRange( palData->pRawData, NETERR_PUSH_PLTTVRAM_SIZE );
@@ -516,7 +520,7 @@ static void Local_ErrMessagePrint(void)
 	
 	//BMP作成
 	bmpdata = GFL_BMP_CreateInVRAM((void*)((u32)G2_GetBG1CharPtr() + MESSAGE_START_CHARNO*0x20), 
-		MESSAGE_X_LEN, MESSAGE_Y_LEN, GFL_BMP_16_COLOR, HEAPID_NET_ERR);
+		MESSAGE_X_LEN, MESSAGE_Y_LEN, GFL_BMP_16_COLOR, HEAPID_NET_TEMP);
 	
 	//メッセージOPEN
 	{
@@ -525,10 +529,10 @@ static void Local_ErrMessagePrint(void)
 		STRBUF *strbuf;
 
 		fontHandle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr,
-			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NET_ERR );
+			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NET_TEMP );
 		
 		mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
-			ARCID_MESSAGE, NARC_message_d_matsu_dat, HEAPID_NET_ERR);
+			ARCID_MESSAGE, NARC_message_d_matsu_dat, HEAPID_NET_TEMP);
 		strbuf = GFL_MSG_CreateString(mm, DM_MSG_ERR001);
 		PRINTSYS_Print(bmpdata, 0, 0, strbuf, fontHandle);
 

@@ -25,6 +25,7 @@
 #include "arc_def.h"
 #include "arc_file.h"
 //#include "net_old/net_old.h"
+#include "savedata/save_control.h"
 
 #include "textprint.h"
 
@@ -114,8 +115,10 @@ void GFLUser_Init(void)
   GFL_HEAP_Init(&hih[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0); //メインアリーナ
   GFL_HEAP_DTCM_Init( 0x2000 );       //ＤＴＣＭアリーナ
 
-    //STD 標準ライブラリ初期化（乱数やCRC）
-    GFL_STD_Init(GFL_HEAPID_SYSTEM);
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SAVE, HEAPSIZE_SAVE );
+
+  //STD 標準ライブラリ初期化（乱数やCRC）
+  GFL_STD_Init(GFL_HEAPID_SYSTEM);
   //アーカイブシステム初期化
   GFL_ARC_Init(&ArchiveFileTable[0],ARCID_TABLE_MAX);
 
@@ -154,7 +157,7 @@ void GFLUser_Init(void)
   //GFL_SOUND_Init(&sndHeap[0],SOUND_HEAP_SIZE);
 
   //バックアップシステム初期化
-  GFL_BACKUP_Init(GFL_HEAPID_APP);
+  GFL_BACKUP_Init(HEAPID_SAVE);
 
   //システムフォント初期化
   GFL_TEXT_CreateSystem( NULL );
@@ -247,6 +250,7 @@ void GFLUser_Exit(void)
   GFL_HEAP_FreeMemory(gfl_work->TCBMemVintr);
   GFL_OVERLAY_Exit();
   GFL_UI_Exit();
+  GFL_HEAP_DeleteHeap( HEAPID_SAVE );
   GFL_HEAP_DTCM_Exit();
   GFL_HEAP_Exit();
 }
