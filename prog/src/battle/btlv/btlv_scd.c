@@ -750,8 +750,10 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
 
   MI_CpuClear16( &bisp, sizeof(bisp) );
 
-  bisp.pokesele_type = WAZADATA_GetTarget( waza );
-  bisp.client_type = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) );
+  bisp.pos         = BTL_MAIN_BtlPosToViewPos( wk->mainModule,
+                                               BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) )
+                                             );
+  bisp.waza_target = WAZADATA_GetTarget( waza );
 
   BTL_Printf(" **** triple select **** \n");
   while( count-- )

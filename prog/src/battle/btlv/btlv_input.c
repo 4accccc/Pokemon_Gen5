@@ -44,6 +44,9 @@
 
 #define WAZATYPEICON_OAMSIZE  ( 32 * 8 )
 
+#define ALLOC_CHAR_SIZE ( 0xa00 )   //BG_FRAME2_Sで対象選択枠用キャラエリアをAllocするサイズ
+                                    /** @TODO ポケモンリストが正規になったらいらなくなる */
+
 //PP表示用カラー定義
 #define MSGCOLOR_PP_WHITE   ( PRINTSYS_LSB_Make( 1, 2, 0 ) )
 #define MSGCOLOR_PP_YELLOW  ( PRINTSYS_LSB_Make( 3, 4, 0 ) )
@@ -319,6 +322,8 @@ struct _BTLV_INPUT_WORK
 
   HEAPID                heapID;
 
+  u32                   alloc_char_area;
+
   u8                    button_exist[ BTLV_INPUT_BUTTON_MAX ];  //押せるボタンかどうかチェック
 };
 
@@ -544,6 +549,9 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
   GFL_TCB_DeleteTask( biw->main_loop );
 
   GFL_ARC_CloseDataHandle( biw->handle );
+
+  /** @TODO ポケモンリストが正規になったらいらなくなる */
+  GFL_BG_FreeCharacterArea( GFL_BG_FRAME2_S, biw->alloc_char_area, ALLOC_CHAR_SIZE );
 }
 
 //============================================================================================
@@ -733,6 +741,12 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
 {
   GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, NARC_battgra_wb_battle_w_bg_NCGR,
                                         GFL_BG_FRAME0_S, 0, 0, FALSE, biw->heapID );
+
+  /** @TODO ポケモンリストが正規になったらいらなくなる */
+  biw->alloc_char_area = GFL_BG_AllocCharacterArea( GFL_BG_FRAME2_S, ALLOC_CHAR_SIZE, GFL_BG_CHRAREA_GET_F );
+
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, NARC_battgra_wb_btl_sel_NCGR,
+                                        GFL_BG_FRAME2_S, 0, 0, FALSE, biw->heapID );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, NARC_battgra_wb_battle_w_bg3_NCGR,
                                         GFL_BG_FRAME3_S, 0, 0x8000, FALSE, biw->heapID );
 //  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
@@ -938,6 +952,7 @@ static  void  TCB_TransformWaza2Dir( GFL_TCB* tcb, void* work )
     break;
   }
   */
+  GFL_BG_SetScroll( GFL_BG_FRAME2_S, GFL_BG_SCROLL_X_SET, 256 );
   if( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE )
   {
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1c_NSCR,
@@ -986,6 +1001,7 @@ static  void  TCB_TransformDir2Waza( GFL_TCB* tcb, void* work )
     break;
   }
   */
+  GFL_BG_SetScroll( GFL_BG_FRAME2_S, GFL_BG_SCROLL_X_SET, 0 );
   GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
                                    GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
   GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
@@ -1034,6 +1050,7 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
+    GFL_BG_SetScroll( GFL_BG_FRAME2_S, GFL_BG_SCROLL_X_SET, 0 );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
     SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
@@ -1372,21 +1389,21 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
   WORDSET *wordset;
   PRINTSYS_LSB color;
   GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_btlv_input_dat, biw->heapID );
-  static  const int wazaname_pos[ PTL_WAZA_MAX ][ 2 ] =
+  int wazaname_pos[ PTL_WAZA_MAX ][ 2 ] =
   {
     { WAZANAME_X1, WAZANAME_Y1 },
     { WAZANAME_X2, WAZANAME_Y2 },
     { WAZANAME_X3, WAZANAME_Y3 },
     { WAZANAME_X4, WAZANAME_Y4 },
   };
-  static  const int ppmsg_pos[ PTL_WAZA_MAX ][ 2 ] =
+  int ppmsg_pos[ PTL_WAZA_MAX ][ 2 ] =
   {
     { PPMSG_X1, PPMSG_Y1 },
     { PPMSG_X2, PPMSG_Y2 },
     { PPMSG_X3, PPMSG_Y3 },
     { PPMSG_X4, PPMSG_Y4 },
   };
-  static  const int pp_pos[ PTL_WAZA_MAX ][ 2 ] =
+  int pp_pos[ PTL_WAZA_MAX ][ 2 ] =
   {
     { PP_X1, PP_Y1 },
     { PP_X2, PP_Y2 },
@@ -1493,8 +1510,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT
   WORDSET *wordset;
   PRINTSYS_LSB color;
   GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_btlv_input_dat, GFL_HEAP_LOWID(biw->heapID) );
-
-  static  const int monsname_pos[ 2 ][ BTLV_INPUT_DIR_MAX ][ 2 ] =
+  int monsname_pos[ 2 ][ BTLV_INPUT_DIR_MAX ][ 2 ] =
   {
     {
       { MONSNAME4_X3, MONSNAME4_Y3 },
@@ -1539,6 +1555,124 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT
   GFL_STR_DeleteBuffer( monsname_p );
 
   GFL_MSG_Delete( msg );
+
+  //選択枠表示
+  { 
+    int       pos = ( bisp->pos - BTLV_MCSS_POS_A ) / 2;
+    static  const ARCDATID  datID[ 2 ][ 3 ][ 14 ] = {  
+      //BUTTON_TYPE_DIR_4
+      { 
+        //BTLV_MCSS_POS_A
+        { 
+          NARC_battgra_wb_btl_sel_normal_l_NSCR,  ///< 自分以外１体（選択）
+          NARC_battgra_wb_btl_sel_nomine_l_NSCR,  ///< 自分以外全て
+          NARC_battgra_wb_btl_sel_enemy_sel_NSCR, ///< 相手側１体（選択）
+          NARC_battgra_wb_btl_sel_enemy_NSCR,     ///< 相手側全て
+          NARC_battgra_wb_btl_sel_mine_l_NSCR,    ///< 相手側１体ランダム
+          NARC_battgra_wb_btl_sel_mine_sel_NSCR,  ///< 自分を含む味方１体（選択）
+          NARC_battgra_wb_btl_sel_mine_r_NSCR,    ///< 自分以外の味方１体（選択）
+          NARC_battgra_wb_btl_sel_mine_l_NSCR,    ///< 自分のみ
+          NARC_battgra_wb_btl_sel_all_NSCR,       ///< 場に出ているポケモン全て
+          NARC_battgra_wb_btl_sel_mine_NSCR,      ///< 自分側陣営
+          NARC_battgra_wb_btl_sel_enemy_NSCR,     ///< 敵側陣営
+          NARC_battgra_wb_btl_sel_all_NSCR,       ///< 場全体（天候など）
+          NARC_battgra_wb_btl_sel_mine_l_NSCR,    ///< ゆびをふるなど特殊型
+          NARC_battgra_wb_btl_sel_normal_l_NSCR,  ///< 自分以外１体（遠距離）
+        },
+        //BTLV_MCSS_POS_C
+        { 
+          NARC_battgra_wb_btl_sel_normal_r_NSCR,  ///< 自分以外１体（選択）
+          NARC_battgra_wb_btl_sel_nomine_r_NSCR,  ///< 自分以外全て
+          NARC_battgra_wb_btl_sel_enemy_sel_NSCR, ///< 相手側１体（選択）
+          NARC_battgra_wb_btl_sel_enemy_NSCR,     ///< 相手側全て
+          NARC_battgra_wb_btl_sel_mine_r_NSCR,    ///< 相手側１体ランダム
+          NARC_battgra_wb_btl_sel_mine_sel_NSCR,  ///< 自分を含む味方１体（選択）
+          NARC_battgra_wb_btl_sel_mine_l_NSCR,    ///< 自分以外の味方１体（選択）
+          NARC_battgra_wb_btl_sel_mine_r_NSCR,    ///< 自分のみ
+          NARC_battgra_wb_btl_sel_all_NSCR,       ///< 場に出ているポケモン全て
+          NARC_battgra_wb_btl_sel_mine_NSCR,      ///< 自分側陣営
+          NARC_battgra_wb_btl_sel_enemy_NSCR,     ///< 敵側陣営
+          NARC_battgra_wb_btl_sel_all_NSCR,       ///< 場全体（天候など）
+          NARC_battgra_wb_btl_sel_mine_r_NSCR,    ///< ゆびをふるなど特殊型
+          NARC_battgra_wb_btl_sel_normal_r_NSCR,  ///< 自分以外１体（遠距離）
+        },
+        //BTLV_MCSS_POS_E
+        { 
+          0xffffffff,                             ///< 自分以外１体（選択）
+          0xffffffff,                             ///< 自分以外全て
+          0xffffffff,                             ///< 相手側１体（選択）
+          0xffffffff,                             ///< 相手側全て
+          0xffffffff,                             ///< 相手側１体ランダム
+          0xffffffff,                             ///< 自分を含む味方１体（選択）
+          0xffffffff,                             ///< 自分以外の味方１体（選択）
+          0xffffffff,                             ///< 自分のみ
+          0xffffffff,                             ///< 場に出ているポケモン全て
+          0xffffffff,                             ///< 自分側陣営
+          0xffffffff,                             ///< 敵側陣営
+          0xffffffff,                             ///< 場全体（天候など）
+          0xffffffff,                             ///< ゆびをふるなど特殊型
+          0xffffffff,                             ///< 自分以外１体（遠距離）
+        },
+      },
+      //BUTTON_TYPE_DIR_6
+      { 
+        //BTLV_MCSS_POS_A
+        { 
+          NARC_battgra_wb_btl_sel3_normal_l_NSCR,     ///< 自分以外１体（選択）
+          NARC_battgra_wb_btl_sel3_nomine_l_NSCR,     ///< 自分以外全て
+          NARC_battgra_wb_btl_sel3_enemy_sel_l_NSCR,  ///< 相手側１体（選択）
+          NARC_battgra_wb_btl_sel3_enemy_l_NSCR,      ///< 相手側全て
+          NARC_battgra_wb_btl_sel3_mine_l_NSCR,       ///< 相手側１体ランダム
+          NARC_battgra_wb_btl_sel3_mine_sel_NSCR,     ///< 自分を含む味方１体（選択）
+          NARC_battgra_wb_btl_sel3_pair_l_NSCR,       ///< 自分以外の味方１体（選択）
+          NARC_battgra_wb_btl_sel3_mine_l_NSCR,       ///< 自分のみ
+          NARC_battgra_wb_btl_sel3_all_NSCR,          ///< 場に出ているポケモン全て
+          NARC_battgra_wb_btl_sel3_mine_NSCR,         ///< 自分側陣営
+          NARC_battgra_wb_btl_sel3_enemy_c_NSCR,      ///< 敵側陣営
+          NARC_battgra_wb_btl_sel3_all_NSCR,          ///< 場全体（天候など）
+          NARC_battgra_wb_btl_sel3_mine_l_NSCR,       ///< ゆびをふるなど特殊型
+          NARC_battgra_wb_btl_sel3_long_l_NSCR,       ///< 自分以外１体（遠距離）
+        },
+        //BTLV_MCSS_POS_C
+        { 
+          NARC_battgra_wb_btl_sel3_normal_c_NSCR,     ///< 自分以外１体（選択）
+          NARC_battgra_wb_btl_sel3_nomine_c_NSCR,     ///< 自分以外全て
+          NARC_battgra_wb_btl_sel3_enemy_sel_c_NSCR,  ///< 相手側１体（選択）
+          NARC_battgra_wb_btl_sel3_enemy_c_NSCR,      ///< 相手側全て
+          NARC_battgra_wb_btl_sel3_mine_c_NSCR,       ///< 相手側１体ランダム
+          NARC_battgra_wb_btl_sel3_mine_sel_NSCR,     ///< 自分を含む味方１体（選択）
+          NARC_battgra_wb_btl_sel3_pair_c_NSCR,       ///< 自分以外の味方１体（選択）
+          NARC_battgra_wb_btl_sel3_mine_c_NSCR,       ///< 自分のみ
+          NARC_battgra_wb_btl_sel3_all_NSCR,          ///< 場に出ているポケモン全て
+          NARC_battgra_wb_btl_sel3_mine_NSCR,         ///< 自分側陣営
+          NARC_battgra_wb_btl_sel3_enemy_c_NSCR,      ///< 敵側陣営
+          NARC_battgra_wb_btl_sel3_all_NSCR,          ///< 場全体（天候など）
+          NARC_battgra_wb_btl_sel3_mine_c_NSCR,       ///< ゆびをふるなど特殊型
+          NARC_battgra_wb_btl_sel3_normal_c_NSCR,     ///< 自分以外１体（遠距離）
+        },
+        //BTLV_MCSS_POS_E
+        { 
+          NARC_battgra_wb_btl_sel3_normal_r_NSCR,     ///< 自分以外１体（選択）
+          NARC_battgra_wb_btl_sel3_nomine_r_NSCR,     ///< 自分以外全て
+          NARC_battgra_wb_btl_sel3_enemy_sel_r_NSCR,  ///< 相手側１体（選択）
+          NARC_battgra_wb_btl_sel3_enemy_r_NSCR,      ///< 相手側全て
+          NARC_battgra_wb_btl_sel3_mine_r_NSCR,       ///< 相手側１体ランダム
+          NARC_battgra_wb_btl_sel3_mine_sel_NSCR,     ///< 自分を含む味方１体（選択）
+          NARC_battgra_wb_btl_sel3_pair_r_NSCR,       ///< 自分以外の味方１体（選択）
+          NARC_battgra_wb_btl_sel3_mine_r_NSCR,       ///< 自分のみ
+          NARC_battgra_wb_btl_sel3_all_NSCR,          ///< 場に出ているポケモン全て
+          NARC_battgra_wb_btl_sel3_mine_NSCR,         ///< 自分側陣営
+          NARC_battgra_wb_btl_sel3_enemy_c_NSCR,      ///< 敵側陣営
+          NARC_battgra_wb_btl_sel3_all_NSCR,          ///< 場全体（天候など）
+          NARC_battgra_wb_btl_sel3_mine_r_NSCR,       ///< ゆびをふるなど特殊型
+          NARC_battgra_wb_btl_sel3_long_r_NSCR,       ///< 自分以外１体（遠距離）
+        },
+      },
+    };
+    OS_TPrintf("type:%d pos:%d target:%d\n", type, pos, bisp->waza_target );
+    GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, datID[ type ][ pos ][ bisp->waza_target ],
+                                     GFL_BG_FRAME2_S, 0x440, 0x40 * 14, FALSE, biw->heapID );
+  }
 }
 
 //--------------------------------------------------------------
