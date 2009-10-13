@@ -228,6 +228,7 @@ sodateya_adopt_pokemon:
       _GET_BOX_POKE_COUNT( box_count, POKECOUNT_MODE_NOT_EGG )
       IF $box_count == 0 THEN 
         // @todo メッセージを表示
+        _VOICE_PLAY( 1, 0 )  // 【仮】
         _RET
       ENDIF
     ENDIF
@@ -257,8 +258,7 @@ sodateya_adopt_pokemon:
         //「もう1匹 預けるかい？」
         $message_id = msg_sodateya_oldwoman_10
         _CALL ask
-        //『いいえ』を選択 ==> 終了
-        IF $ask_retval == 1 THEN
+        IF $ask_retval == 1 THEN   //『いいえ』を選択 ==> 終了
           $loop = FALSE 
         ENDIF
       // 最大数まであずけたらループを抜ける

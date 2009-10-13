@@ -268,7 +268,7 @@ void SODATEYA_BreedPokemon( SODATEYA* sodateya )
   SODATEYA_WORK_AddGrowUpExp( sodateya->work, EXP_PER_WALK );
 
   // 産卵チェック
-  //if( LayEggCheck(sodateya) == TRUE ) // @todo テストのためにコメントアウト
+  if( LayEggCheck(sodateya) == TRUE )
   {
     // タマゴが産まれたことを記憶
     SODATEYA_WORK_SetEgg( sodateya->work );
@@ -708,10 +708,14 @@ static BOOL LayEggCheck( SODATEYA* sodateya )
     // 産卵カウンタをリセット
     sodateya->layEggCount = 0;
 
-    // 乱数 < 相性 ==> 産卵
-    if( GFL_STD_MtRand(100) < SODATEYA_GetLoveLevel(sodateya) ) 
-    {
-      return TRUE; 
+    // 2体預けていたら産卵判定
+    if( 2 <= SODATEYA_WORK_GetPokemonNum( sodateya->work ) )
+    { 
+      // 乱数 < 相性 ==> 産卵
+      if( GFL_STD_MtRand(100) < SODATEYA_GetLoveLevel(sodateya) ) 
+      {
+        return TRUE; 
+      }
     }
   }
 
@@ -1304,7 +1308,7 @@ static void EggCordinate_finish( POKEMON_PARAM* egg, SODATEYA* sodateya )
   } 
 
   // タマゴフラグ
-  //PP_Put( egg, ID_PARA_tamago_flag, TRUE );       // @todo テストのためにコメントアウト
+  PP_Put( egg, ID_PARA_tamago_flag, TRUE );
 }
 
 //---------------------------------------------------------------------------------------- 
