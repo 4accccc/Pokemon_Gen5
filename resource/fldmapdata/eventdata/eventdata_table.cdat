@@ -211,6 +211,32 @@
 #define C01R0302_MAN1                      3
 
 #endif //ZONE_C01R0302_EVC_H
+//#include "tmp/c01r0401.h"
+//このファイルはdata/c01r0401.mevから自動生成されました
+#ifndef ZONE_C01R0401_EVD_H
+#define ZONE_C01R0401_EVD_H
+
+
+#endif //ZONE_C01R0401_EVD_H
+//このファイルはdata/c01r0401.mevから自動生成されました
+#ifndef ZONE_C01R0401_EVC_H
+#define ZONE_C01R0401_EVC_H
+
+
+#endif //ZONE_C01R0401_EVC_H
+//#include "tmp/c01r0402.h"
+//このファイルはdata/c01r0402.mevから自動生成されました
+#ifndef ZONE_C01R0402_EVD_H
+#define ZONE_C01R0402_EVD_H
+
+
+#endif //ZONE_C01R0402_EVD_H
+//このファイルはdata/c01r0402.mevから自動生成されました
+#ifndef ZONE_C01R0402_EVC_H
+#define ZONE_C01R0402_EVC_H
+
+
+#endif //ZONE_C01R0402_EVC_H
 //#include "tmp/c01r0501.h"
 //このファイルはdata/c01r0501.mevから自動生成されました
 #ifndef ZONE_C01R0501_EVD_H
@@ -287,6 +313,45 @@
 #define C02GYM0101_GIRL3_01                5
 
 #endif //ZONE_C02GYM0101_EVC_H
+//#include "tmp/c02gym0201.h"
+//このファイルはdata/c02gym0201.mevから自動生成されました
+#ifndef ZONE_C02GYM0201_EVD_H
+#define ZONE_C02GYM0201_EVD_H
+
+
+#endif //ZONE_C02GYM0201_EVD_H
+//このファイルはdata/c02gym0201.mevから自動生成されました
+#ifndef ZONE_C02GYM0201_EVC_H
+#define ZONE_C02GYM0201_EVC_H
+
+
+#endif //ZONE_C02GYM0201_EVC_H
+//#include "tmp/c02gym0202.h"
+//このファイルはdata/c02gym0202.mevから自動生成されました
+#ifndef ZONE_C02GYM0202_EVD_H
+#define ZONE_C02GYM0202_EVD_H
+
+
+#endif //ZONE_C02GYM0202_EVD_H
+//このファイルはdata/c02gym0202.mevから自動生成されました
+#ifndef ZONE_C02GYM0202_EVC_H
+#define ZONE_C02GYM0202_EVC_H
+
+
+#endif //ZONE_C02GYM0202_EVC_H
+//#include "tmp/c02gym0203.h"
+//このファイルはdata/c02gym0203.mevから自動生成されました
+#ifndef ZONE_C02GYM0203_EVD_H
+#define ZONE_C02GYM0203_EVD_H
+
+
+#endif //ZONE_C02GYM0203_EVD_H
+//このファイルはdata/c02gym0203.mevから自動生成されました
+#ifndef ZONE_C02GYM0203_EVC_H
+#define ZONE_C02GYM0203_EVC_H
+
+
+#endif //ZONE_C02GYM0203_EVC_H
 //#include "tmp/c02pc0101.h"
 //このファイルはdata/c02pc0101.mevから自動生成されました
 #ifndef ZONE_C02PC0101_EVD_H
@@ -895,6 +960,110 @@
 
 
 #endif //ZONE_C03R0201_EVC_H
+//#include "tmp/c03r0301.h"
+//このファイルはdata/c03r0301.mevから自動生成されました
+#ifndef ZONE_C03R0301_EVD_H
+#define ZONE_C03R0301_EVD_H
+
+
+#endif //ZONE_C03R0301_EVD_H
+//このファイルはdata/c03r0301.mevから自動生成されました
+#ifndef ZONE_C03R0301_EVC_H
+#define ZONE_C03R0301_EVC_H
+
+
+#endif //ZONE_C03R0301_EVC_H
+//#include "tmp/c03r0302.h"
+//このファイルはdata/c03r0302.mevから自動生成されました
+#ifndef ZONE_C03R0302_EVD_H
+#define ZONE_C03R0302_EVD_H
+
+
+#endif //ZONE_C03R0302_EVD_H
+//このファイルはdata/c03r0302.mevから自動生成されました
+#ifndef ZONE_C03R0302_EVC_H
+#define ZONE_C03R0302_EVC_H
+
+
+#endif //ZONE_C03R0302_EVC_H
+//#include "tmp/c03r0303.h"
+//このファイルはdata/c03r0303.mevから自動生成されました
+#ifndef ZONE_C03R0303_EVD_H
+#define ZONE_C03R0303_EVD_H
+
+
+#endif //ZONE_C03R0303_EVD_H
+//このファイルはdata/c03r0303.mevから自動生成されました
+#ifndef ZONE_C03R0303_EVC_H
+#define ZONE_C03R0303_EVC_H
+
+
+#endif //ZONE_C03R0303_EVC_H
+//#include "tmp/c03r0401.h"
+//このファイルはdata/c03r0401.mevから自動生成されました
+#ifndef ZONE_C03R0401_EVD_H
+#define ZONE_C03R0401_EVD_H
+
+
+#endif //ZONE_C03R0401_EVD_H
+//このファイルはdata/c03r0401.mevから自動生成されました
+#ifndef ZONE_C03R0401_EVC_H
+#define ZONE_C03R0401_EVC_H
+
+
+#endif //ZONE_C03R0401_EVC_H
+//#include "tmp/c03r0402.h"
+//このファイルはdata/c03r0402.mevから自動生成されました
+#ifndef ZONE_C03R0402_EVD_H
+#define ZONE_C03R0402_EVD_H
+
+
+#endif //ZONE_C03R0402_EVD_H
+//このファイルはdata/c03r0402.mevから自動生成されました
+#ifndef ZONE_C03R0402_EVC_H
+#define ZONE_C03R0402_EVC_H
+
+
+#endif //ZONE_C03R0402_EVC_H
+//#include "tmp/c03r0501.h"
+//このファイルはdata/c03r0501.mevから自動生成されました
+#ifndef ZONE_C03R0501_EVD_H
+#define ZONE_C03R0501_EVD_H
+
+
+#endif //ZONE_C03R0501_EVD_H
+//このファイルはdata/c03r0501.mevから自動生成されました
+#ifndef ZONE_C03R0501_EVC_H
+#define ZONE_C03R0501_EVC_H
+
+
+#endif //ZONE_C03R0501_EVC_H
+//#include "tmp/c03r0502.h"
+//このファイルはdata/c03r0502.mevから自動生成されました
+#ifndef ZONE_C03R0502_EVD_H
+#define ZONE_C03R0502_EVD_H
+
+
+#endif //ZONE_C03R0502_EVD_H
+//このファイルはdata/c03r0502.mevから自動生成されました
+#ifndef ZONE_C03R0502_EVC_H
+#define ZONE_C03R0502_EVC_H
+
+
+#endif //ZONE_C03R0502_EVC_H
+//#include "tmp/c03r0601.h"
+//このファイルはdata/c03r0601.mevから自動生成されました
+#ifndef ZONE_C03R0601_EVD_H
+#define ZONE_C03R0601_EVD_H
+
+
+#endif //ZONE_C03R0601_EVD_H
+//このファイルはdata/c03r0601.mevから自動生成されました
+#ifndef ZONE_C03R0601_EVC_H
+#define ZONE_C03R0601_EVC_H
+
+
+#endif //ZONE_C03R0601_EVC_H
 //#include "tmp/c04.h"
 //このファイルはdata/c04.mevから自動生成されました
 #ifndef ZONE_C04_EVD_H
@@ -934,6 +1103,214 @@
 #define C04GYM0101_BOY1_02                 1
 
 #endif //ZONE_C04GYM0101_EVC_H
+//#include "tmp/c04p01.h"
+//このファイルはdata/c04p01.mevから自動生成されました
+#ifndef ZONE_C04P01_EVD_H
+#define ZONE_C04P01_EVD_H
+
+
+#endif //ZONE_C04P01_EVD_H
+//このファイルはdata/c04p01.mevから自動生成されました
+#ifndef ZONE_C04P01_EVC_H
+#define ZONE_C04P01_EVC_H
+
+
+#endif //ZONE_C04P01_EVC_H
+//#include "tmp/c04pc0101.h"
+//このファイルはdata/c04pc0101.mevから自動生成されました
+#ifndef ZONE_C04PC0101_EVD_H
+#define ZONE_C04PC0101_EVD_H
+
+
+#endif //ZONE_C04PC0101_EVD_H
+//このファイルはdata/c04pc0101.mevから自動生成されました
+#ifndef ZONE_C04PC0101_EVC_H
+#define ZONE_C04PC0101_EVC_H
+
+
+#endif //ZONE_C04PC0101_EVC_H
+//#include "tmp/c04r0101.h"
+//このファイルはdata/c04r0101.mevから自動生成されました
+#ifndef ZONE_C04R0101_EVD_H
+#define ZONE_C04R0101_EVD_H
+
+
+#endif //ZONE_C04R0101_EVD_H
+//このファイルはdata/c04r0101.mevから自動生成されました
+#ifndef ZONE_C04R0101_EVC_H
+#define ZONE_C04R0101_EVC_H
+
+
+#endif //ZONE_C04R0101_EVC_H
+//#include "tmp/c04r0102.h"
+//このファイルはdata/c04r0102.mevから自動生成されました
+#ifndef ZONE_C04R0102_EVD_H
+#define ZONE_C04R0102_EVD_H
+
+
+#endif //ZONE_C04R0102_EVD_H
+//このファイルはdata/c04r0102.mevから自動生成されました
+#ifndef ZONE_C04R0102_EVC_H
+#define ZONE_C04R0102_EVC_H
+
+
+#endif //ZONE_C04R0102_EVC_H
+//#include "tmp/c04r0201.h"
+//このファイルはdata/c04r0201.mevから自動生成されました
+#ifndef ZONE_C04R0201_EVD_H
+#define ZONE_C04R0201_EVD_H
+
+
+#endif //ZONE_C04R0201_EVD_H
+//このファイルはdata/c04r0201.mevから自動生成されました
+#ifndef ZONE_C04R0201_EVC_H
+#define ZONE_C04R0201_EVC_H
+
+
+#endif //ZONE_C04R0201_EVC_H
+//#include "tmp/c04r0202.h"
+//このファイルはdata/c04r0202.mevから自動生成されました
+#ifndef ZONE_C04R0202_EVD_H
+#define ZONE_C04R0202_EVD_H
+
+
+#endif //ZONE_C04R0202_EVD_H
+//このファイルはdata/c04r0202.mevから自動生成されました
+#ifndef ZONE_C04R0202_EVC_H
+#define ZONE_C04R0202_EVC_H
+
+
+#endif //ZONE_C04R0202_EVC_H
+//#include "tmp/c04r0301.h"
+//このファイルはdata/c04r0301.mevから自動生成されました
+#ifndef ZONE_C04R0301_EVD_H
+#define ZONE_C04R0301_EVD_H
+
+
+#endif //ZONE_C04R0301_EVD_H
+//このファイルはdata/c04r0301.mevから自動生成されました
+#ifndef ZONE_C04R0301_EVC_H
+#define ZONE_C04R0301_EVC_H
+
+
+#endif //ZONE_C04R0301_EVC_H
+//#include "tmp/c04r0302.h"
+//このファイルはdata/c04r0302.mevから自動生成されました
+#ifndef ZONE_C04R0302_EVD_H
+#define ZONE_C04R0302_EVD_H
+
+
+#endif //ZONE_C04R0302_EVD_H
+//このファイルはdata/c04r0302.mevから自動生成されました
+#ifndef ZONE_C04R0302_EVC_H
+#define ZONE_C04R0302_EVC_H
+
+
+#endif //ZONE_C04R0302_EVC_H
+//#include "tmp/c04r0303.h"
+//このファイルはdata/c04r0303.mevから自動生成されました
+#ifndef ZONE_C04R0303_EVD_H
+#define ZONE_C04R0303_EVD_H
+
+
+#endif //ZONE_C04R0303_EVD_H
+//このファイルはdata/c04r0303.mevから自動生成されました
+#ifndef ZONE_C04R0303_EVC_H
+#define ZONE_C04R0303_EVC_H
+
+
+#endif //ZONE_C04R0303_EVC_H
+//#include "tmp/c04r0401.h"
+//このファイルはdata/c04r0401.mevから自動生成されました
+#ifndef ZONE_C04R0401_EVD_H
+#define ZONE_C04R0401_EVD_H
+
+
+#endif //ZONE_C04R0401_EVD_H
+//このファイルはdata/c04r0401.mevから自動生成されました
+#ifndef ZONE_C04R0401_EVC_H
+#define ZONE_C04R0401_EVC_H
+
+
+#endif //ZONE_C04R0401_EVC_H
+//#include "tmp/c04r0501.h"
+//このファイルはdata/c04r0501.mevから自動生成されました
+#ifndef ZONE_C04R0501_EVD_H
+#define ZONE_C04R0501_EVD_H
+
+
+#endif //ZONE_C04R0501_EVD_H
+//このファイルはdata/c04r0501.mevから自動生成されました
+#ifndef ZONE_C04R0501_EVC_H
+#define ZONE_C04R0501_EVC_H
+
+
+#endif //ZONE_C04R0501_EVC_H
+//#include "tmp/c04r0601.h"
+//このファイルはdata/c04r0601.mevから自動生成されました
+#ifndef ZONE_C04R0601_EVD_H
+#define ZONE_C04R0601_EVD_H
+
+
+#endif //ZONE_C04R0601_EVD_H
+//このファイルはdata/c04r0601.mevから自動生成されました
+#ifndef ZONE_C04R0601_EVC_H
+#define ZONE_C04R0601_EVC_H
+
+
+#endif //ZONE_C04R0601_EVC_H
+//#include "tmp/c04r0701.h"
+//このファイルはdata/c04r0701.mevから自動生成されました
+#ifndef ZONE_C04R0701_EVD_H
+#define ZONE_C04R0701_EVD_H
+
+
+#endif //ZONE_C04R0701_EVD_H
+//このファイルはdata/c04r0701.mevから自動生成されました
+#ifndef ZONE_C04R0701_EVC_H
+#define ZONE_C04R0701_EVC_H
+
+
+#endif //ZONE_C04R0701_EVC_H
+//#include "tmp/c04r0801.h"
+//このファイルはdata/c04r0801.mevから自動生成されました
+#ifndef ZONE_C04R0801_EVD_H
+#define ZONE_C04R0801_EVD_H
+
+
+#endif //ZONE_C04R0801_EVD_H
+//このファイルはdata/c04r0801.mevから自動生成されました
+#ifndef ZONE_C04R0801_EVC_H
+#define ZONE_C04R0801_EVC_H
+
+
+#endif //ZONE_C04R0801_EVC_H
+//#include "tmp/c04r0901.h"
+//このファイルはdata/c04r0901.mevから自動生成されました
+#ifndef ZONE_C04R0901_EVD_H
+#define ZONE_C04R0901_EVD_H
+
+
+#endif //ZONE_C04R0901_EVD_H
+//このファイルはdata/c04r0901.mevから自動生成されました
+#ifndef ZONE_C04R0901_EVC_H
+#define ZONE_C04R0901_EVC_H
+
+
+#endif //ZONE_C04R0901_EVC_H
+//#include "tmp/c04r1001.h"
+//このファイルはdata/c04r1001.mevから自動生成されました
+#ifndef ZONE_C04R1001_EVD_H
+#define ZONE_C04R1001_EVD_H
+
+
+#endif //ZONE_C04R1001_EVD_H
+//このファイルはdata/c04r1001.mevから自動生成されました
+#ifndef ZONE_C04R1001_EVC_H
+#define ZONE_C04R1001_EVC_H
+
+
+#endif //ZONE_C04R1001_EVC_H
 //#include "tmp/c05.h"
 //このファイルはdata/c05.mevから自動生成されました
 #ifndef ZONE_C05_EVD_H
@@ -1126,6 +1503,19 @@
 #define C05R0601_TRAINERW                  6
 
 #endif //ZONE_C05R0601_EVC_H
+//#include "tmp/c05r0701.h"
+//このファイルはdata/c05r0701.mevから自動生成されました
+#ifndef ZONE_C05R0701_EVD_H
+#define ZONE_C05R0701_EVD_H
+
+
+#endif //ZONE_C05R0701_EVD_H
+//このファイルはdata/c05r0701.mevから自動生成されました
+#ifndef ZONE_C05R0701_EVC_H
+#define ZONE_C05R0701_EVC_H
+
+
+#endif //ZONE_C05R0701_EVC_H
 //#include "tmp/c06.h"
 //このファイルはdata/c06.mevから自動生成されました
 #ifndef ZONE_C06_EVD_H
@@ -1410,6 +1800,344 @@
 
 
 #endif //ZONE_C08_EVC_H
+//#include "tmp/c08gym0101.h"
+//このファイルはdata/c08gym0101.mevから自動生成されました
+#ifndef ZONE_C08GYM0101_EVD_H
+#define ZONE_C08GYM0101_EVD_H
+
+
+#endif //ZONE_C08GYM0101_EVD_H
+//このファイルはdata/c08gym0101.mevから自動生成されました
+#ifndef ZONE_C08GYM0101_EVC_H
+#define ZONE_C08GYM0101_EVC_H
+
+
+#endif //ZONE_C08GYM0101_EVC_H
+//#include "tmp/c08pc0101.h"
+//このファイルはdata/c08pc0101.mevから自動生成されました
+#ifndef ZONE_C08PC0101_EVD_H
+#define ZONE_C08PC0101_EVD_H
+
+
+#endif //ZONE_C08PC0101_EVD_H
+//このファイルはdata/c08pc0101.mevから自動生成されました
+#ifndef ZONE_C08PC0101_EVC_H
+#define ZONE_C08PC0101_EVC_H
+
+
+#endif //ZONE_C08PC0101_EVC_H
+//#include "tmp/c08pc0801.h"
+//このファイルはdata/c08pc0801.mevから自動生成されました
+#ifndef ZONE_C08PC0801_EVD_H
+#define ZONE_C08PC0801_EVD_H
+
+
+#endif //ZONE_C08PC0801_EVD_H
+//このファイルはdata/c08pc0801.mevから自動生成されました
+#ifndef ZONE_C08PC0801_EVC_H
+#define ZONE_C08PC0801_EVC_H
+
+
+#endif //ZONE_C08PC0801_EVC_H
+//#include "tmp/c08r0101.h"
+//このファイルはdata/c08r0101.mevから自動生成されました
+#ifndef ZONE_C08R0101_EVD_H
+#define ZONE_C08R0101_EVD_H
+
+
+#endif //ZONE_C08R0101_EVD_H
+//このファイルはdata/c08r0101.mevから自動生成されました
+#ifndef ZONE_C08R0101_EVC_H
+#define ZONE_C08R0101_EVC_H
+
+
+#endif //ZONE_C08R0101_EVC_H
+//#include "tmp/c08r0102.h"
+//このファイルはdata/c08r0102.mevから自動生成されました
+#ifndef ZONE_C08R0102_EVD_H
+#define ZONE_C08R0102_EVD_H
+
+
+#endif //ZONE_C08R0102_EVD_H
+//このファイルはdata/c08r0102.mevから自動生成されました
+#ifndef ZONE_C08R0102_EVC_H
+#define ZONE_C08R0102_EVC_H
+
+
+#endif //ZONE_C08R0102_EVC_H
+//#include "tmp/c08r0201.h"
+//このファイルはdata/c08r0201.mevから自動生成されました
+#ifndef ZONE_C08R0201_EVD_H
+#define ZONE_C08R0201_EVD_H
+
+
+#endif //ZONE_C08R0201_EVD_H
+//このファイルはdata/c08r0201.mevから自動生成されました
+#ifndef ZONE_C08R0201_EVC_H
+#define ZONE_C08R0201_EVC_H
+
+
+#endif //ZONE_C08R0201_EVC_H
+//#include "tmp/c08r0202.h"
+//このファイルはdata/c08r0202.mevから自動生成されました
+#ifndef ZONE_C08R0202_EVD_H
+#define ZONE_C08R0202_EVD_H
+
+
+#endif //ZONE_C08R0202_EVD_H
+//このファイルはdata/c08r0202.mevから自動生成されました
+#ifndef ZONE_C08R0202_EVC_H
+#define ZONE_C08R0202_EVC_H
+
+
+#endif //ZONE_C08R0202_EVC_H
+//#include "tmp/c08r0301.h"
+//このファイルはdata/c08r0301.mevから自動生成されました
+#ifndef ZONE_C08R0301_EVD_H
+#define ZONE_C08R0301_EVD_H
+
+
+#endif //ZONE_C08R0301_EVD_H
+//このファイルはdata/c08r0301.mevから自動生成されました
+#ifndef ZONE_C08R0301_EVC_H
+#define ZONE_C08R0301_EVC_H
+
+
+#endif //ZONE_C08R0301_EVC_H
+//#include "tmp/c08r0302.h"
+//このファイルはdata/c08r0302.mevから自動生成されました
+#ifndef ZONE_C08R0302_EVD_H
+#define ZONE_C08R0302_EVD_H
+
+
+#endif //ZONE_C08R0302_EVD_H
+//このファイルはdata/c08r0302.mevから自動生成されました
+#ifndef ZONE_C08R0302_EVC_H
+#define ZONE_C08R0302_EVC_H
+
+
+#endif //ZONE_C08R0302_EVC_H
+//#include "tmp/c08r0401.h"
+//このファイルはdata/c08r0401.mevから自動生成されました
+#ifndef ZONE_C08R0401_EVD_H
+#define ZONE_C08R0401_EVD_H
+
+
+#endif //ZONE_C08R0401_EVD_H
+//このファイルはdata/c08r0401.mevから自動生成されました
+#ifndef ZONE_C08R0401_EVC_H
+#define ZONE_C08R0401_EVC_H
+
+
+#endif //ZONE_C08R0401_EVC_H
+//#include "tmp/c08r0402.h"
+//このファイルはdata/c08r0402.mevから自動生成されました
+#ifndef ZONE_C08R0402_EVD_H
+#define ZONE_C08R0402_EVD_H
+
+
+#endif //ZONE_C08R0402_EVD_H
+//このファイルはdata/c08r0402.mevから自動生成されました
+#ifndef ZONE_C08R0402_EVC_H
+#define ZONE_C08R0402_EVC_H
+
+
+#endif //ZONE_C08R0402_EVC_H
+//#include "tmp/c08r0501.h"
+//このファイルはdata/c08r0501.mevから自動生成されました
+#ifndef ZONE_C08R0501_EVD_H
+#define ZONE_C08R0501_EVD_H
+
+
+#endif //ZONE_C08R0501_EVD_H
+//このファイルはdata/c08r0501.mevから自動生成されました
+#ifndef ZONE_C08R0501_EVC_H
+#define ZONE_C08R0501_EVC_H
+
+
+#endif //ZONE_C08R0501_EVC_H
+//#include "tmp/c08r0601.h"
+//このファイルはdata/c08r0601.mevから自動生成されました
+#ifndef ZONE_C08R0601_EVD_H
+#define ZONE_C08R0601_EVD_H
+
+
+#endif //ZONE_C08R0601_EVD_H
+//このファイルはdata/c08r0601.mevから自動生成されました
+#ifndef ZONE_C08R0601_EVC_H
+#define ZONE_C08R0601_EVC_H
+
+
+#endif //ZONE_C08R0601_EVC_H
+//#include "tmp/c08r0701.h"
+//このファイルはdata/c08r0701.mevから自動生成されました
+#ifndef ZONE_C08R0701_EVD_H
+#define ZONE_C08R0701_EVD_H
+
+
+#endif //ZONE_C08R0701_EVD_H
+//このファイルはdata/c08r0701.mevから自動生成されました
+#ifndef ZONE_C08R0701_EVC_H
+#define ZONE_C08R0701_EVC_H
+
+
+#endif //ZONE_C08R0701_EVC_H
+//#include "tmp/c09.h"
+//このファイルはdata/c09.mevから自動生成されました
+#ifndef ZONE_C09_EVD_H
+#define ZONE_C09_EVD_H
+
+
+#endif //ZONE_C09_EVD_H
+//このファイルはdata/c09.mevから自動生成されました
+#ifndef ZONE_C09_EVC_H
+#define ZONE_C09_EVC_H
+
+
+#endif //ZONE_C09_EVC_H
+//#include "tmp/c09p01.h"
+//このファイルはdata/c09p01.mevから自動生成されました
+#ifndef ZONE_C09P01_EVD_H
+#define ZONE_C09P01_EVD_H
+
+
+#endif //ZONE_C09P01_EVD_H
+//このファイルはdata/c09p01.mevから自動生成されました
+#ifndef ZONE_C09P01_EVC_H
+#define ZONE_C09P01_EVC_H
+
+
+#endif //ZONE_C09P01_EVC_H
+//#include "tmp/c09p02.h"
+//このファイルはdata/c09p02.mevから自動生成されました
+#ifndef ZONE_C09P02_EVD_H
+#define ZONE_C09P02_EVD_H
+
+
+#endif //ZONE_C09P02_EVD_H
+//このファイルはdata/c09p02.mevから自動生成されました
+#ifndef ZONE_C09P02_EVC_H
+#define ZONE_C09P02_EVC_H
+
+
+#endif //ZONE_C09P02_EVC_H
+//#include "tmp/c09r0101.h"
+//このファイルはdata/c09r0101.mevから自動生成されました
+#ifndef ZONE_C09R0101_EVD_H
+#define ZONE_C09R0101_EVD_H
+
+
+#endif //ZONE_C09R0101_EVD_H
+//このファイルはdata/c09r0101.mevから自動生成されました
+#ifndef ZONE_C09R0101_EVC_H
+#define ZONE_C09R0101_EVC_H
+
+
+#endif //ZONE_C09R0101_EVC_H
+//#include "tmp/c09r0201.h"
+//このファイルはdata/c09r0201.mevから自動生成されました
+#ifndef ZONE_C09R0201_EVD_H
+#define ZONE_C09R0201_EVD_H
+
+
+#endif //ZONE_C09R0201_EVD_H
+//このファイルはdata/c09r0201.mevから自動生成されました
+#ifndef ZONE_C09R0201_EVC_H
+#define ZONE_C09R0201_EVC_H
+
+
+#endif //ZONE_C09R0201_EVC_H
+//#include "tmp/c09r0301.h"
+//このファイルはdata/c09r0301.mevから自動生成されました
+#ifndef ZONE_C09R0301_EVD_H
+#define ZONE_C09R0301_EVD_H
+
+
+#endif //ZONE_C09R0301_EVD_H
+//このファイルはdata/c09r0301.mevから自動生成されました
+#ifndef ZONE_C09R0301_EVC_H
+#define ZONE_C09R0301_EVC_H
+
+
+#endif //ZONE_C09R0301_EVC_H
+//#include "tmp/c09r0401.h"
+//このファイルはdata/c09r0401.mevから自動生成されました
+#ifndef ZONE_C09R0401_EVD_H
+#define ZONE_C09R0401_EVD_H
+
+
+#endif //ZONE_C09R0401_EVD_H
+//このファイルはdata/c09r0401.mevから自動生成されました
+#ifndef ZONE_C09R0401_EVC_H
+#define ZONE_C09R0401_EVC_H
+
+
+#endif //ZONE_C09R0401_EVC_H
+//#include "tmp/c09r0501.h"
+//このファイルはdata/c09r0501.mevから自動生成されました
+#ifndef ZONE_C09R0501_EVD_H
+#define ZONE_C09R0501_EVD_H
+
+
+#endif //ZONE_C09R0501_EVD_H
+//このファイルはdata/c09r0501.mevから自動生成されました
+#ifndef ZONE_C09R0501_EVC_H
+#define ZONE_C09R0501_EVC_H
+
+
+#endif //ZONE_C09R0501_EVC_H
+//#include "tmp/c09r0601.h"
+//このファイルはdata/c09r0601.mevから自動生成されました
+#ifndef ZONE_C09R0601_EVD_H
+#define ZONE_C09R0601_EVD_H
+
+
+#endif //ZONE_C09R0601_EVD_H
+//このファイルはdata/c09r0601.mevから自動生成されました
+#ifndef ZONE_C09R0601_EVC_H
+#define ZONE_C09R0601_EVC_H
+
+
+#endif //ZONE_C09R0601_EVC_H
+//#include "tmp/c11.h"
+//このファイルはdata/c11.mevから自動生成されました
+#ifndef ZONE_C11_EVD_H
+#define ZONE_C11_EVD_H
+
+
+#endif //ZONE_C11_EVD_H
+//このファイルはdata/c11.mevから自動生成されました
+#ifndef ZONE_C11_EVC_H
+#define ZONE_C11_EVC_H
+
+
+#endif //ZONE_C11_EVC_H
+//#include "tmp/closseum.h"
+//このファイルはdata/closseum.mevから自動生成されました
+#ifndef ZONE_CLOSSEUM_EVD_H
+#define ZONE_CLOSSEUM_EVD_H
+
+
+#endif //ZONE_CLOSSEUM_EVD_H
+//このファイルはdata/closseum.mevから自動生成されました
+#ifndef ZONE_CLOSSEUM_EVC_H
+#define ZONE_CLOSSEUM_EVC_H
+
+
+#endif //ZONE_CLOSSEUM_EVC_H
+//#include "tmp/closseum02.h"
+//このファイルはdata/closseum02.mevから自動生成されました
+#ifndef ZONE_CLOSSEUM02_EVD_H
+#define ZONE_CLOSSEUM02_EVD_H
+
+
+#endif //ZONE_CLOSSEUM02_EVD_H
+//このファイルはdata/closseum02.mevから自動生成されました
+#ifndef ZONE_CLOSSEUM02_EVC_H
+#define ZONE_CLOSSEUM02_EVC_H
+
+
+#endif //ZONE_CLOSSEUM02_EVC_H
 //#include "tmp/d01.h"
 //このファイルはdata/d01.mevから自動生成されました
 #ifndef ZONE_D01_EVD_H
@@ -2310,6 +3038,292 @@
 
 
 #endif //ZONE_D07R0601_EVC_H
+//#include "tmp/d07r0701.h"
+//このファイルはdata/d07r0701.mevから自動生成されました
+#ifndef ZONE_D07R0701_EVD_H
+#define ZONE_D07R0701_EVD_H
+
+
+#endif //ZONE_D07R0701_EVD_H
+//このファイルはdata/d07r0701.mevから自動生成されました
+#ifndef ZONE_D07R0701_EVC_H
+#define ZONE_D07R0701_EVC_H
+
+
+#endif //ZONE_D07R0701_EVC_H
+//#include "tmp/d08.h"
+//このファイルはdata/d08.mevから自動生成されました
+#ifndef ZONE_D08_EVD_H
+#define ZONE_D08_EVD_H
+
+
+#endif //ZONE_D08_EVD_H
+//このファイルはdata/d08.mevから自動生成されました
+#ifndef ZONE_D08_EVC_H
+#define ZONE_D08_EVC_H
+
+
+#endif //ZONE_D08_EVC_H
+//#include "tmp/d08r0101.h"
+//このファイルはdata/d08r0101.mevから自動生成されました
+#ifndef ZONE_D08R0101_EVD_H
+#define ZONE_D08R0101_EVD_H
+
+
+#endif //ZONE_D08R0101_EVD_H
+//このファイルはdata/d08r0101.mevから自動生成されました
+#ifndef ZONE_D08R0101_EVC_H
+#define ZONE_D08R0101_EVC_H
+
+
+#endif //ZONE_D08R0101_EVC_H
+//#include "tmp/d09r0101.h"
+//このファイルはdata/d09r0101.mevから自動生成されました
+#ifndef ZONE_D09R0101_EVD_H
+#define ZONE_D09R0101_EVD_H
+
+
+#endif //ZONE_D09R0101_EVD_H
+//このファイルはdata/d09r0101.mevから自動生成されました
+#ifndef ZONE_D09R0101_EVC_H
+#define ZONE_D09R0101_EVC_H
+
+
+#endif //ZONE_D09R0101_EVC_H
+//#include "tmp/d09r0201.h"
+//このファイルはdata/d09r0201.mevから自動生成されました
+#ifndef ZONE_D09R0201_EVD_H
+#define ZONE_D09R0201_EVD_H
+
+
+#endif //ZONE_D09R0201_EVD_H
+//このファイルはdata/d09r0201.mevから自動生成されました
+#ifndef ZONE_D09R0201_EVC_H
+#define ZONE_D09R0201_EVC_H
+
+
+#endif //ZONE_D09R0201_EVC_H
+//#include "tmp/d09r0301.h"
+//このファイルはdata/d09r0301.mevから自動生成されました
+#ifndef ZONE_D09R0301_EVD_H
+#define ZONE_D09R0301_EVD_H
+
+
+#endif //ZONE_D09R0301_EVD_H
+//このファイルはdata/d09r0301.mevから自動生成されました
+#ifndef ZONE_D09R0301_EVC_H
+#define ZONE_D09R0301_EVC_H
+
+
+#endif //ZONE_D09R0301_EVC_H
+//#include "tmp/d09r0401.h"
+//このファイルはdata/d09r0401.mevから自動生成されました
+#ifndef ZONE_D09R0401_EVD_H
+#define ZONE_D09R0401_EVD_H
+
+
+#endif //ZONE_D09R0401_EVD_H
+//このファイルはdata/d09r0401.mevから自動生成されました
+#ifndef ZONE_D09R0401_EVC_H
+#define ZONE_D09R0401_EVC_H
+
+
+#endif //ZONE_D09R0401_EVC_H
+//#include "tmp/d09r0501.h"
+//このファイルはdata/d09r0501.mevから自動生成されました
+#ifndef ZONE_D09R0501_EVD_H
+#define ZONE_D09R0501_EVD_H
+
+
+#endif //ZONE_D09R0501_EVD_H
+//このファイルはdata/d09r0501.mevから自動生成されました
+#ifndef ZONE_D09R0501_EVC_H
+#define ZONE_D09R0501_EVC_H
+
+
+#endif //ZONE_D09R0501_EVC_H
+//#include "tmp/d09r0601.h"
+//このファイルはdata/d09r0601.mevから自動生成されました
+#ifndef ZONE_D09R0601_EVD_H
+#define ZONE_D09R0601_EVD_H
+
+
+#endif //ZONE_D09R0601_EVD_H
+//このファイルはdata/d09r0601.mevから自動生成されました
+#ifndef ZONE_D09R0601_EVC_H
+#define ZONE_D09R0601_EVC_H
+
+
+#endif //ZONE_D09R0601_EVC_H
+//#include "tmp/d09r0701.h"
+//このファイルはdata/d09r0701.mevから自動生成されました
+#ifndef ZONE_D09R0701_EVD_H
+#define ZONE_D09R0701_EVD_H
+
+
+#endif //ZONE_D09R0701_EVD_H
+//このファイルはdata/d09r0701.mevから自動生成されました
+#ifndef ZONE_D09R0701_EVC_H
+#define ZONE_D09R0701_EVC_H
+
+
+#endif //ZONE_D09R0701_EVC_H
+//#include "tmp/d09r0801.h"
+//このファイルはdata/d09r0801.mevから自動生成されました
+#ifndef ZONE_D09R0801_EVD_H
+#define ZONE_D09R0801_EVD_H
+
+
+#endif //ZONE_D09R0801_EVD_H
+//このファイルはdata/d09r0801.mevから自動生成されました
+#ifndef ZONE_D09R0801_EVC_H
+#define ZONE_D09R0801_EVC_H
+
+
+#endif //ZONE_D09R0801_EVC_H
+//#include "tmp/d09r0901.h"
+//このファイルはdata/d09r0901.mevから自動生成されました
+#ifndef ZONE_D09R0901_EVD_H
+#define ZONE_D09R0901_EVD_H
+
+
+#endif //ZONE_D09R0901_EVD_H
+//このファイルはdata/d09r0901.mevから自動生成されました
+#ifndef ZONE_D09R0901_EVC_H
+#define ZONE_D09R0901_EVC_H
+
+
+#endif //ZONE_D09R0901_EVC_H
+//#include "tmp/d10.h"
+//このファイルはdata/d10.mevから自動生成されました
+#ifndef ZONE_D10_EVD_H
+#define ZONE_D10_EVD_H
+
+
+#endif //ZONE_D10_EVD_H
+//このファイルはdata/d10.mevから自動生成されました
+#ifndef ZONE_D10_EVC_H
+#define ZONE_D10_EVC_H
+
+
+#endif //ZONE_D10_EVC_H
+//#include "tmp/d10r0101.h"
+//このファイルはdata/d10r0101.mevから自動生成されました
+#ifndef ZONE_D10R0101_EVD_H
+#define ZONE_D10R0101_EVD_H
+
+
+#endif //ZONE_D10R0101_EVD_H
+//このファイルはdata/d10r0101.mevから自動生成されました
+#ifndef ZONE_D10R0101_EVC_H
+#define ZONE_D10R0101_EVC_H
+
+
+#endif //ZONE_D10R0101_EVC_H
+//#include "tmp/d11r0101.h"
+//このファイルはdata/d11r0101.mevから自動生成されました
+#ifndef ZONE_D11R0101_EVD_H
+#define ZONE_D11R0101_EVD_H
+
+
+#endif //ZONE_D11R0101_EVD_H
+//このファイルはdata/d11r0101.mevから自動生成されました
+#ifndef ZONE_D11R0101_EVC_H
+#define ZONE_D11R0101_EVC_H
+
+
+#endif //ZONE_D11R0101_EVC_H
+//#include "tmp/d11r0201.h"
+//このファイルはdata/d11r0201.mevから自動生成されました
+#ifndef ZONE_D11R0201_EVD_H
+#define ZONE_D11R0201_EVD_H
+
+
+#endif //ZONE_D11R0201_EVD_H
+//このファイルはdata/d11r0201.mevから自動生成されました
+#ifndef ZONE_D11R0201_EVC_H
+#define ZONE_D11R0201_EVC_H
+
+
+#endif //ZONE_D11R0201_EVC_H
+//#include "tmp/d11r0301.h"
+//このファイルはdata/d11r0301.mevから自動生成されました
+#ifndef ZONE_D11R0301_EVD_H
+#define ZONE_D11R0301_EVD_H
+
+
+#endif //ZONE_D11R0301_EVD_H
+//このファイルはdata/d11r0301.mevから自動生成されました
+#ifndef ZONE_D11R0301_EVC_H
+#define ZONE_D11R0301_EVC_H
+
+
+#endif //ZONE_D11R0301_EVC_H
+//#include "tmp/d12.h"
+//このファイルはdata/d12.mevから自動生成されました
+#ifndef ZONE_D12_EVD_H
+#define ZONE_D12_EVD_H
+
+
+#endif //ZONE_D12_EVD_H
+//このファイルはdata/d12.mevから自動生成されました
+#ifndef ZONE_D12_EVC_H
+#define ZONE_D12_EVC_H
+
+
+#endif //ZONE_D12_EVC_H
+//#include "tmp/d12r0101.h"
+//このファイルはdata/d12r0101.mevから自動生成されました
+#ifndef ZONE_D12R0101_EVD_H
+#define ZONE_D12R0101_EVD_H
+
+
+#endif //ZONE_D12R0101_EVD_H
+//このファイルはdata/d12r0101.mevから自動生成されました
+#ifndef ZONE_D12R0101_EVC_H
+#define ZONE_D12R0101_EVC_H
+
+
+#endif //ZONE_D12R0101_EVC_H
+//#include "tmp/d13.h"
+//このファイルはdata/d13.mevから自動生成されました
+#ifndef ZONE_D13_EVD_H
+#define ZONE_D13_EVD_H
+
+
+#endif //ZONE_D13_EVD_H
+//このファイルはdata/d13.mevから自動生成されました
+#ifndef ZONE_D13_EVC_H
+#define ZONE_D13_EVC_H
+
+
+#endif //ZONE_D13_EVC_H
+//#include "tmp/d13r0101.h"
+//このファイルはdata/d13r0101.mevから自動生成されました
+#ifndef ZONE_D13R0101_EVD_H
+#define ZONE_D13R0101_EVD_H
+
+
+#endif //ZONE_D13R0101_EVD_H
+//このファイルはdata/d13r0101.mevから自動生成されました
+#ifndef ZONE_D13R0101_EVC_H
+#define ZONE_D13R0101_EVC_H
+
+
+#endif //ZONE_D13R0101_EVC_H
+//#include "tmp/gt.h"
+//このファイルはdata/gt.mevから自動生成されました
+#ifndef ZONE_GT_EVD_H
+#define ZONE_GT_EVD_H
+
+
+#endif //ZONE_GT_EVD_H
+//このファイルはdata/gt.mevから自動生成されました
+#ifndef ZONE_GT_EVC_H
+#define ZONE_GT_EVC_H
+
+
+#endif //ZONE_GT_EVC_H
 //#include "tmp/h01.h"
 //このファイルはdata/h01.mevから自動生成されました
 #ifndef ZONE_H01_EVD_H
@@ -2344,6 +3358,32 @@
 
 
 #endif //ZONE_H01P01_EVC_H
+//#include "tmp/h01r0101.h"
+//このファイルはdata/h01r0101.mevから自動生成されました
+#ifndef ZONE_H01R0101_EVD_H
+#define ZONE_H01R0101_EVD_H
+
+
+#endif //ZONE_H01R0101_EVD_H
+//このファイルはdata/h01r0101.mevから自動生成されました
+#ifndef ZONE_H01R0101_EVC_H
+#define ZONE_H01R0101_EVC_H
+
+
+#endif //ZONE_H01R0101_EVC_H
+//#include "tmp/h01r0201.h"
+//このファイルはdata/h01r0201.mevから自動生成されました
+#ifndef ZONE_H01R0201_EVD_H
+#define ZONE_H01R0201_EVD_H
+
+
+#endif //ZONE_H01R0201_EVD_H
+//このファイルはdata/h01r0201.mevから自動生成されました
+#ifndef ZONE_H01R0201_EVC_H
+#define ZONE_H01R0201_EVC_H
+
+
+#endif //ZONE_H01R0201_EVC_H
 //#include "tmp/h02.h"
 //このファイルはdata/h02.mevから自動生成されました
 #ifndef ZONE_H02_EVD_H
@@ -2385,6 +3425,97 @@
 
 
 #endif //ZONE_H02_EVC_H
+//#include "tmp/h03.h"
+//このファイルはdata/h03.mevから自動生成されました
+#ifndef ZONE_H03_EVD_H
+#define ZONE_H03_EVD_H
+
+
+#endif //ZONE_H03_EVD_H
+//このファイルはdata/h03.mevから自動生成されました
+#ifndef ZONE_H03_EVC_H
+#define ZONE_H03_EVC_H
+
+
+#endif //ZONE_H03_EVC_H
+//#include "tmp/h04.h"
+//このファイルはdata/h04.mevから自動生成されました
+#ifndef ZONE_H04_EVD_H
+#define ZONE_H04_EVD_H
+
+
+#endif //ZONE_H04_EVD_H
+//このファイルはdata/h04.mevから自動生成されました
+#ifndef ZONE_H04_EVC_H
+#define ZONE_H04_EVC_H
+
+
+#endif //ZONE_H04_EVC_H
+//#include "tmp/h05.h"
+//このファイルはdata/h05.mevから自動生成されました
+#ifndef ZONE_H05_EVD_H
+#define ZONE_H05_EVD_H
+
+
+#endif //ZONE_H05_EVD_H
+//このファイルはdata/h05.mevから自動生成されました
+#ifndef ZONE_H05_EVC_H
+#define ZONE_H05_EVC_H
+
+
+#endif //ZONE_H05_EVC_H
+//#include "tmp/n01r0101.h"
+//このファイルはdata/n01r0101.mevから自動生成されました
+#ifndef ZONE_N01R0101_EVD_H
+#define ZONE_N01R0101_EVD_H
+
+
+#endif //ZONE_N01R0101_EVD_H
+//このファイルはdata/n01r0101.mevから自動生成されました
+#ifndef ZONE_N01R0101_EVC_H
+#define ZONE_N01R0101_EVC_H
+
+
+#endif //ZONE_N01R0101_EVC_H
+//#include "tmp/palace01.h"
+//このファイルはdata/palace01.mevから自動生成されました
+#ifndef ZONE_PALACE01_EVD_H
+#define ZONE_PALACE01_EVD_H
+
+
+#endif //ZONE_PALACE01_EVD_H
+//このファイルはdata/palace01.mevから自動生成されました
+#ifndef ZONE_PALACE01_EVC_H
+#define ZONE_PALACE01_EVC_H
+
+
+#endif //ZONE_PALACE01_EVC_H
+//#include "tmp/palace02.h"
+//このファイルはdata/palace02.mevから自動生成されました
+#ifndef ZONE_PALACE02_EVD_H
+#define ZONE_PALACE02_EVD_H
+
+
+#endif //ZONE_PALACE02_EVD_H
+//このファイルはdata/palace02.mevから自動生成されました
+#ifndef ZONE_PALACE02_EVC_H
+#define ZONE_PALACE02_EVC_H
+
+
+#endif //ZONE_PALACE02_EVC_H
+//#include "tmp/palacetest.h"
+//このファイルはdata/palacetest.mevから自動生成されました
+#ifndef ZONE_PALACETEST_EVD_H
+#define ZONE_PALACETEST_EVD_H
+
+
+#endif //ZONE_PALACETEST_EVD_H
+//このファイルはdata/palacetest.mevから自動生成されました
+#ifndef ZONE_PALACETEST_EVC_H
+#define ZONE_PALACETEST_EVC_H
+
+
+#endif //ZONE_PALACETEST_EVC_H
 //#include "tmp/r01.h"
 //このファイルはdata/r01.mevから自動生成されました
 #ifndef ZONE_R01_EVD_H
@@ -2509,6 +3640,45 @@
 
 
 #endif //ZONE_R03R0201_EVC_H
+//#include "tmp/r03r0301.h"
+//このファイルはdata/r03r0301.mevから自動生成されました
+#ifndef ZONE_R03R0301_EVD_H
+#define ZONE_R03R0301_EVD_H
+
+
+#endif //ZONE_R03R0301_EVD_H
+//このファイルはdata/r03r0301.mevから自動生成されました
+#ifndef ZONE_R03R0301_EVC_H
+#define ZONE_R03R0301_EVC_H
+
+
+#endif //ZONE_R03R0301_EVC_H
+//#include "tmp/r03r0302.h"
+//このファイルはdata/r03r0302.mevから自動生成されました
+#ifndef ZONE_R03R0302_EVD_H
+#define ZONE_R03R0302_EVD_H
+
+
+#endif //ZONE_R03R0302_EVD_H
+//このファイルはdata/r03r0302.mevから自動生成されました
+#ifndef ZONE_R03R0302_EVC_H
+#define ZONE_R03R0302_EVC_H
+
+
+#endif //ZONE_R03R0302_EVC_H
+//#include "tmp/r03r0303.h"
+//このファイルはdata/r03r0303.mevから自動生成されました
+#ifndef ZONE_R03R0303_EVD_H
+#define ZONE_R03R0303_EVD_H
+
+
+#endif //ZONE_R03R0303_EVD_H
+//このファイルはdata/r03r0303.mevから自動生成されました
+#ifndef ZONE_R03R0303_EVC_H
+#define ZONE_R03R0303_EVC_H
+
+
+#endif //ZONE_R03R0303_EVC_H
 //#include "tmp/r04.h"
 //このファイルはdata/r04.mevから自動生成されました
 #ifndef ZONE_R04_EVD_H
@@ -2634,6 +3804,71 @@
 
 
 #endif //ZONE_R06R0101_EVC_H
+//#include "tmp/r06r0201.h"
+//このファイルはdata/r06r0201.mevから自動生成されました
+#ifndef ZONE_R06R0201_EVD_H
+#define ZONE_R06R0201_EVD_H
+
+
+#endif //ZONE_R06R0201_EVD_H
+//このファイルはdata/r06r0201.mevから自動生成されました
+#ifndef ZONE_R06R0201_EVC_H
+#define ZONE_R06R0201_EVC_H
+
+
+#endif //ZONE_R06R0201_EVC_H
+//#include "tmp/r06r0202.h"
+//このファイルはdata/r06r0202.mevから自動生成されました
+#ifndef ZONE_R06R0202_EVD_H
+#define ZONE_R06R0202_EVD_H
+
+
+#endif //ZONE_R06R0202_EVD_H
+//このファイルはdata/r06r0202.mevから自動生成されました
+#ifndef ZONE_R06R0202_EVC_H
+#define ZONE_R06R0202_EVC_H
+
+
+#endif //ZONE_R06R0202_EVC_H
+//#include "tmp/r06r0203.h"
+//このファイルはdata/r06r0203.mevから自動生成されました
+#ifndef ZONE_R06R0203_EVD_H
+#define ZONE_R06R0203_EVD_H
+
+
+#endif //ZONE_R06R0203_EVD_H
+//このファイルはdata/r06r0203.mevから自動生成されました
+#ifndef ZONE_R06R0203_EVC_H
+#define ZONE_R06R0203_EVC_H
+
+
+#endif //ZONE_R06R0203_EVC_H
+//#include "tmp/r07.h"
+//このファイルはdata/r07.mevから自動生成されました
+#ifndef ZONE_R07_EVD_H
+#define ZONE_R07_EVD_H
+
+
+#endif //ZONE_R07_EVD_H
+//このファイルはdata/r07.mevから自動生成されました
+#ifndef ZONE_R07_EVC_H
+#define ZONE_R07_EVC_H
+
+
+#endif //ZONE_R07_EVC_H
+//#include "tmp/r07r0101.h"
+//このファイルはdata/r07r0101.mevから自動生成されました
+#ifndef ZONE_R07R0101_EVD_H
+#define ZONE_R07R0101_EVD_H
+
+
+#endif //ZONE_R07R0101_EVD_H
+//このファイルはdata/r07r0101.mevから自動生成されました
+#ifndef ZONE_R07R0101_EVC_H
+#define ZONE_R07R0101_EVC_H
+
+
+#endif //ZONE_R07R0101_EVC_H
 //#include "tmp/r08.h"
 //このファイルはdata/r08.mevから自動生成されました
 #ifndef ZONE_R08_EVD_H
@@ -2651,6 +3886,45 @@
 
 
 #endif //ZONE_R08_EVC_H
+//#include "tmp/r08r0101.h"
+//このファイルはdata/r08r0101.mevから自動生成されました
+#ifndef ZONE_R08R0101_EVD_H
+#define ZONE_R08R0101_EVD_H
+
+
+#endif //ZONE_R08R0101_EVD_H
+//このファイルはdata/r08r0101.mevから自動生成されました
+#ifndef ZONE_R08R0101_EVC_H
+#define ZONE_R08R0101_EVC_H
+
+
+#endif //ZONE_R08R0101_EVC_H
+//#include "tmp/r08r0102.h"
+//このファイルはdata/r08r0102.mevから自動生成されました
+#ifndef ZONE_R08R0102_EVD_H
+#define ZONE_R08R0102_EVD_H
+
+
+#endif //ZONE_R08R0102_EVD_H
+//このファイルはdata/r08r0102.mevから自動生成されました
+#ifndef ZONE_R08R0102_EVC_H
+#define ZONE_R08R0102_EVC_H
+
+
+#endif //ZONE_R08R0102_EVC_H
+//#include "tmp/r08r0201.h"
+//このファイルはdata/r08r0201.mevから自動生成されました
+#ifndef ZONE_R08R0201_EVD_H
+#define ZONE_R08R0201_EVD_H
+
+
+#endif //ZONE_R08R0201_EVD_H
+//このファイルはdata/r08r0201.mevから自動生成されました
+#ifndef ZONE_R08R0201_EVC_H
+#define ZONE_R08R0201_EVC_H
+
+
+#endif //ZONE_R08R0201_EVC_H
 //#include "tmp/r09.h"
 //このファイルはdata/r09.mevから自動生成されました
 #ifndef ZONE_R09_EVD_H
@@ -2672,6 +3946,201 @@
 
 
 #endif //ZONE_R09_EVC_H
+//#include "tmp/r09r0101.h"
+//このファイルはdata/r09r0101.mevから自動生成されました
+#ifndef ZONE_R09R0101_EVD_H
+#define ZONE_R09R0101_EVD_H
+
+
+#endif //ZONE_R09R0101_EVD_H
+//このファイルはdata/r09r0101.mevから自動生成されました
+#ifndef ZONE_R09R0101_EVC_H
+#define ZONE_R09R0101_EVC_H
+
+
+#endif //ZONE_R09R0101_EVC_H
+//#include "tmp/r09r0201.h"
+//このファイルはdata/r09r0201.mevから自動生成されました
+#ifndef ZONE_R09R0201_EVD_H
+#define ZONE_R09R0201_EVD_H
+
+
+#endif //ZONE_R09R0201_EVD_H
+//このファイルはdata/r09r0201.mevから自動生成されました
+#ifndef ZONE_R09R0201_EVC_H
+#define ZONE_R09R0201_EVC_H
+
+
+#endif //ZONE_R09R0201_EVC_H
+//#include "tmp/r09r0301.h"
+//このファイルはdata/r09r0301.mevから自動生成されました
+#ifndef ZONE_R09R0301_EVD_H
+#define ZONE_R09R0301_EVD_H
+
+
+#endif //ZONE_R09R0301_EVD_H
+//このファイルはdata/r09r0301.mevから自動生成されました
+#ifndef ZONE_R09R0301_EVC_H
+#define ZONE_R09R0301_EVC_H
+
+
+#endif //ZONE_R09R0301_EVC_H
+//#include "tmp/r09r0302.h"
+//このファイルはdata/r09r0302.mevから自動生成されました
+#ifndef ZONE_R09R0302_EVD_H
+#define ZONE_R09R0302_EVD_H
+
+
+#endif //ZONE_R09R0302_EVD_H
+//このファイルはdata/r09r0302.mevから自動生成されました
+#ifndef ZONE_R09R0302_EVC_H
+#define ZONE_R09R0302_EVC_H
+
+
+#endif //ZONE_R09R0302_EVC_H
+//#include "tmp/r09r0303.h"
+//このファイルはdata/r09r0303.mevから自動生成されました
+#ifndef ZONE_R09R0303_EVD_H
+#define ZONE_R09R0303_EVD_H
+
+
+#endif //ZONE_R09R0303_EVD_H
+//このファイルはdata/r09r0303.mevから自動生成されました
+#ifndef ZONE_R09R0303_EVC_H
+#define ZONE_R09R0303_EVC_H
+
+
+#endif //ZONE_R09R0303_EVC_H
+//#include "tmp/r10.h"
+//このファイルはdata/r10.mevから自動生成されました
+#ifndef ZONE_R10_EVD_H
+#define ZONE_R10_EVD_H
+
+
+#endif //ZONE_R10_EVD_H
+//このファイルはdata/r10.mevから自動生成されました
+#ifndef ZONE_R10_EVC_H
+#define ZONE_R10_EVC_H
+
+
+#endif //ZONE_R10_EVC_H
+//#include "tmp/r10r0101.h"
+//このファイルはdata/r10r0101.mevから自動生成されました
+#ifndef ZONE_R10R0101_EVD_H
+#define ZONE_R10R0101_EVD_H
+
+
+#endif //ZONE_R10R0101_EVD_H
+//このファイルはdata/r10r0101.mevから自動生成されました
+#ifndef ZONE_R10R0101_EVC_H
+#define ZONE_R10R0101_EVC_H
+
+
+#endif //ZONE_R10R0101_EVC_H
+//#include "tmp/r10r0201.h"
+//このファイルはdata/r10r0201.mevから自動生成されました
+#ifndef ZONE_R10R0201_EVD_H
+#define ZONE_R10R0201_EVD_H
+
+
+#endif //ZONE_R10R0201_EVD_H
+//このファイルはdata/r10r0201.mevから自動生成されました
+#ifndef ZONE_R10R0201_EVC_H
+#define ZONE_R10R0201_EVC_H
+
+
+#endif //ZONE_R10R0201_EVC_H
+//#include "tmp/r10r0301.h"
+//このファイルはdata/r10r0301.mevから自動生成されました
+#ifndef ZONE_R10R0301_EVD_H
+#define ZONE_R10R0301_EVD_H
+
+
+#endif //ZONE_R10R0301_EVD_H
+//このファイルはdata/r10r0301.mevから自動生成されました
+#ifndef ZONE_R10R0301_EVC_H
+#define ZONE_R10R0301_EVC_H
+
+
+#endif //ZONE_R10R0301_EVC_H
+//#include "tmp/r10r0401.h"
+//このファイルはdata/r10r0401.mevから自動生成されました
+#ifndef ZONE_R10R0401_EVD_H
+#define ZONE_R10R0401_EVD_H
+
+
+#endif //ZONE_R10R0401_EVD_H
+//このファイルはdata/r10r0401.mevから自動生成されました
+#ifndef ZONE_R10R0401_EVC_H
+#define ZONE_R10R0401_EVC_H
+
+
+#endif //ZONE_R10R0401_EVC_H
+//#include "tmp/r10r0501.h"
+//このファイルはdata/r10r0501.mevから自動生成されました
+#ifndef ZONE_R10R0501_EVD_H
+#define ZONE_R10R0501_EVD_H
+
+
+#endif //ZONE_R10R0501_EVD_H
+//このファイルはdata/r10r0501.mevから自動生成されました
+#ifndef ZONE_R10R0501_EVC_H
+#define ZONE_R10R0501_EVC_H
+
+
+#endif //ZONE_R10R0501_EVC_H
+//#include "tmp/r10r0601.h"
+//このファイルはdata/r10r0601.mevから自動生成されました
+#ifndef ZONE_R10R0601_EVD_H
+#define ZONE_R10R0601_EVD_H
+
+
+#endif //ZONE_R10R0601_EVD_H
+//このファイルはdata/r10r0601.mevから自動生成されました
+#ifndef ZONE_R10R0601_EVC_H
+#define ZONE_R10R0601_EVC_H
+
+
+#endif //ZONE_R10R0601_EVC_H
+//#include "tmp/r10r0701.h"
+//このファイルはdata/r10r0701.mevから自動生成されました
+#ifndef ZONE_R10R0701_EVD_H
+#define ZONE_R10R0701_EVD_H
+
+
+#endif //ZONE_R10R0701_EVD_H
+//このファイルはdata/r10r0701.mevから自動生成されました
+#ifndef ZONE_R10R0701_EVC_H
+#define ZONE_R10R0701_EVC_H
+
+
+#endif //ZONE_R10R0701_EVC_H
+//#include "tmp/r10r0801.h"
+//このファイルはdata/r10r0801.mevから自動生成されました
+#ifndef ZONE_R10R0801_EVD_H
+#define ZONE_R10R0801_EVD_H
+
+
+#endif //ZONE_R10R0801_EVD_H
+//このファイルはdata/r10r0801.mevから自動生成されました
+#ifndef ZONE_R10R0801_EVC_H
+#define ZONE_R10R0801_EVC_H
+
+
+#endif //ZONE_R10R0801_EVC_H
+//#include "tmp/r10r0901.h"
+//このファイルはdata/r10r0901.mevから自動生成されました
+#ifndef ZONE_R10R0901_EVD_H
+#define ZONE_R10R0901_EVD_H
+
+
+#endif //ZONE_R10R0901_EVD_H
+//このファイルはdata/r10r0901.mevから自動生成されました
+#ifndef ZONE_R10R0901_EVC_H
+#define ZONE_R10R0901_EVC_H
+
+
+#endif //ZONE_R10R0901_EVC_H
 //#include "tmp/r11.h"
 //このファイルはdata/r11.mevから自動生成されました
 #ifndef ZONE_R11_EVD_H
@@ -2694,6 +4163,32 @@
 
 
 #endif //ZONE_R11_EVC_H
+//#include "tmp/r11r0101.h"
+//このファイルはdata/r11r0101.mevから自動生成されました
+#ifndef ZONE_R11R0101_EVD_H
+#define ZONE_R11R0101_EVD_H
+
+
+#endif //ZONE_R11R0101_EVD_H
+//このファイルはdata/r11r0101.mevから自動生成されました
+#ifndef ZONE_R11R0101_EVC_H
+#define ZONE_R11R0101_EVC_H
+
+
+#endif //ZONE_R11R0101_EVC_H
+//#include "tmp/r11r0201.h"
+//このファイルはdata/r11r0201.mevから自動生成されました
+#ifndef ZONE_R11R0201_EVD_H
+#define ZONE_R11R0201_EVD_H
+
+
+#endif //ZONE_R11R0201_EVD_H
+//このファイルはdata/r11r0201.mevから自動生成されました
+#ifndef ZONE_R11R0201_EVC_H
+#define ZONE_R11R0201_EVC_H
+
+
+#endif //ZONE_R11R0201_EVC_H
 //#include "tmp/r12.h"
 //このファイルはdata/r12.mevから自動生成されました
 #ifndef ZONE_R12_EVD_H
@@ -2711,6 +4206,97 @@
 
 
 #endif //ZONE_R12_EVC_H
+//#include "tmp/r12r0101.h"
+//このファイルはdata/r12r0101.mevから自動生成されました
+#ifndef ZONE_R12R0101_EVD_H
+#define ZONE_R12R0101_EVD_H
+
+
+#endif //ZONE_R12R0101_EVD_H
+//このファイルはdata/r12r0101.mevから自動生成されました
+#ifndef ZONE_R12R0101_EVC_H
+#define ZONE_R12R0101_EVC_H
+
+
+#endif //ZONE_R12R0101_EVC_H
+//#include "tmp/r12r0201.h"
+//このファイルはdata/r12r0201.mevから自動生成されました
+#ifndef ZONE_R12R0201_EVD_H
+#define ZONE_R12R0201_EVD_H
+
+
+#endif //ZONE_R12R0201_EVD_H
+//このファイルはdata/r12r0201.mevから自動生成されました
+#ifndef ZONE_R12R0201_EVC_H
+#define ZONE_R12R0201_EVC_H
+
+
+#endif //ZONE_R12R0201_EVC_H
+//#include "tmp/r13.h"
+//このファイルはdata/r13.mevから自動生成されました
+#ifndef ZONE_R13_EVD_H
+#define ZONE_R13_EVD_H
+
+
+#endif //ZONE_R13_EVD_H
+//このファイルはdata/r13.mevから自動生成されました
+#ifndef ZONE_R13_EVC_H
+#define ZONE_R13_EVC_H
+
+
+#endif //ZONE_R13_EVC_H
+//#include "tmp/r13r0101.h"
+//このファイルはdata/r13r0101.mevから自動生成されました
+#ifndef ZONE_R13R0101_EVD_H
+#define ZONE_R13R0101_EVD_H
+
+
+#endif //ZONE_R13R0101_EVD_H
+//このファイルはdata/r13r0101.mevから自動生成されました
+#ifndef ZONE_R13R0101_EVC_H
+#define ZONE_R13R0101_EVC_H
+
+
+#endif //ZONE_R13R0101_EVC_H
+//#include "tmp/r13r0201.h"
+//このファイルはdata/r13r0201.mevから自動生成されました
+#ifndef ZONE_R13R0201_EVD_H
+#define ZONE_R13R0201_EVD_H
+
+
+#endif //ZONE_R13R0201_EVD_H
+//このファイルはdata/r13r0201.mevから自動生成されました
+#ifndef ZONE_R13R0201_EVC_H
+#define ZONE_R13R0201_EVC_H
+
+
+#endif //ZONE_R13R0201_EVC_H
+//#include "tmp/r14.h"
+//このファイルはdata/r14.mevから自動生成されました
+#ifndef ZONE_R14_EVD_H
+#define ZONE_R14_EVD_H
+
+
+#endif //ZONE_R14_EVD_H
+//このファイルはdata/r14.mevから自動生成されました
+#ifndef ZONE_R14_EVC_H
+#define ZONE_R14_EVC_H
+
+
+#endif //ZONE_R14_EVC_H
+//#include "tmp/r14r0101.h"
+//このファイルはdata/r14r0101.mevから自動生成されました
+#ifndef ZONE_R14R0101_EVD_H
+#define ZONE_R14R0101_EVD_H
+
+
+#endif //ZONE_R14R0101_EVD_H
+//このファイルはdata/r14r0101.mevから自動生成されました
+#ifndef ZONE_R14R0101_EVC_H
+#define ZONE_R14R0101_EVC_H
+
+
+#endif //ZONE_R14R0101_EVC_H
 //#include "tmp/r15.h"
 //このファイルはdata/r15.mevから自動生成されました
 #ifndef ZONE_R15_EVD_H
@@ -2730,6 +4316,32 @@
 
 
 #endif //ZONE_R15_EVC_H
+//#include "tmp/r15r0101.h"
+//このファイルはdata/r15r0101.mevから自動生成されました
+#ifndef ZONE_R15R0101_EVD_H
+#define ZONE_R15R0101_EVD_H
+
+
+#endif //ZONE_R15R0101_EVD_H
+//このファイルはdata/r15r0101.mevから自動生成されました
+#ifndef ZONE_R15R0101_EVC_H
+#define ZONE_R15R0101_EVC_H
+
+
+#endif //ZONE_R15R0101_EVC_H
+//#include "tmp/r15r0201.h"
+//このファイルはdata/r15r0201.mevから自動生成されました
+#ifndef ZONE_R15R0201_EVD_H
+#define ZONE_R15R0201_EVD_H
+
+
+#endif //ZONE_R15R0201_EVD_H
+//このファイルはdata/r15r0201.mevから自動生成されました
+#ifndef ZONE_R15R0201_EVC_H
+#define ZONE_R15R0201_EVC_H
+
+
+#endif //ZONE_R15R0201_EVC_H
 //#include "tmp/r16.h"
 //このファイルはdata/r16.mevから自動生成されました
 #ifndef ZONE_R16_EVD_H
@@ -2749,6 +4361,45 @@
 
 
 #endif //ZONE_R16_EVC_H
+//#include "tmp/r16r0101.h"
+//このファイルはdata/r16r0101.mevから自動生成されました
+#ifndef ZONE_R16R0101_EVD_H
+#define ZONE_R16R0101_EVD_H
+
+
+#endif //ZONE_R16R0101_EVD_H
+//このファイルはdata/r16r0101.mevから自動生成されました
+#ifndef ZONE_R16R0101_EVC_H
+#define ZONE_R16R0101_EVC_H
+
+
+#endif //ZONE_R16R0101_EVC_H
+//#include "tmp/r18.h"
+//このファイルはdata/r18.mevから自動生成されました
+#ifndef ZONE_R18_EVD_H
+#define ZONE_R18_EVD_H
+
+
+#endif //ZONE_R18_EVD_H
+//このファイルはdata/r18.mevから自動生成されました
+#ifndef ZONE_R18_EVC_H
+#define ZONE_R18_EVC_H
+
+
+#endif //ZONE_R18_EVC_H
+//#include "tmp/r18r0101.h"
+//このファイルはdata/r18r0101.mevから自動生成されました
+#ifndef ZONE_R18R0101_EVD_H
+#define ZONE_R18R0101_EVD_H
+
+
+#endif //ZONE_R18R0101_EVD_H
+//このファイルはdata/r18r0101.mevから自動生成されました
+#ifndef ZONE_R18R0101_EVC_H
+#define ZONE_R18R0101_EVC_H
+
+
+#endif //ZONE_R18R0101_EVC_H
 //#include "tmp/t01.h"
 //このファイルはdata/t01.mevから自動生成されました
 #ifndef ZONE_T01_EVD_H
@@ -3074,6 +4725,201 @@
 #define T02R0401_MAN2_01                   2
 
 #endif //ZONE_T02R0401_EVC_H
+//#include "tmp/t03.h"
+//このファイルはdata/t03.mevから自動生成されました
+#ifndef ZONE_T03_EVD_H
+#define ZONE_T03_EVD_H
+
+
+#endif //ZONE_T03_EVD_H
+//このファイルはdata/t03.mevから自動生成されました
+#ifndef ZONE_T03_EVC_H
+#define ZONE_T03_EVC_H
+
+
+#endif //ZONE_T03_EVC_H
+//#include "tmp/t03pc0101.h"
+//このファイルはdata/t03pc0101.mevから自動生成されました
+#ifndef ZONE_T03PC0101_EVD_H
+#define ZONE_T03PC0101_EVD_H
+
+
+#endif //ZONE_T03PC0101_EVD_H
+//このファイルはdata/t03pc0101.mevから自動生成されました
+#ifndef ZONE_T03PC0101_EVC_H
+#define ZONE_T03PC0101_EVC_H
+
+
+#endif //ZONE_T03PC0101_EVC_H
+//#include "tmp/t03r0101.h"
+//このファイルはdata/t03r0101.mevから自動生成されました
+#ifndef ZONE_T03R0101_EVD_H
+#define ZONE_T03R0101_EVD_H
+
+
+#endif //ZONE_T03R0101_EVD_H
+//このファイルはdata/t03r0101.mevから自動生成されました
+#ifndef ZONE_T03R0101_EVC_H
+#define ZONE_T03R0101_EVC_H
+
+
+#endif //ZONE_T03R0101_EVC_H
+//#include "tmp/t03r0201.h"
+//このファイルはdata/t03r0201.mevから自動生成されました
+#ifndef ZONE_T03R0201_EVD_H
+#define ZONE_T03R0201_EVD_H
+
+
+#endif //ZONE_T03R0201_EVD_H
+//このファイルはdata/t03r0201.mevから自動生成されました
+#ifndef ZONE_T03R0201_EVC_H
+#define ZONE_T03R0201_EVC_H
+
+
+#endif //ZONE_T03R0201_EVC_H
+//#include "tmp/t03r0301.h"
+//このファイルはdata/t03r0301.mevから自動生成されました
+#ifndef ZONE_T03R0301_EVD_H
+#define ZONE_T03R0301_EVD_H
+
+
+#endif //ZONE_T03R0301_EVD_H
+//このファイルはdata/t03r0301.mevから自動生成されました
+#ifndef ZONE_T03R0301_EVC_H
+#define ZONE_T03R0301_EVC_H
+
+
+#endif //ZONE_T03R0301_EVC_H
+//#include "tmp/t03r0401.h"
+//このファイルはdata/t03r0401.mevから自動生成されました
+#ifndef ZONE_T03R0401_EVD_H
+#define ZONE_T03R0401_EVD_H
+
+
+#endif //ZONE_T03R0401_EVD_H
+//このファイルはdata/t03r0401.mevから自動生成されました
+#ifndef ZONE_T03R0401_EVC_H
+#define ZONE_T03R0401_EVC_H
+
+
+#endif //ZONE_T03R0401_EVC_H
+//#include "tmp/t04.h"
+//このファイルはdata/t04.mevから自動生成されました
+#ifndef ZONE_T04_EVD_H
+#define ZONE_T04_EVD_H
+
+
+#endif //ZONE_T04_EVD_H
+//このファイルはdata/t04.mevから自動生成されました
+#ifndef ZONE_T04_EVC_H
+#define ZONE_T04_EVC_H
+
+
+#endif //ZONE_T04_EVC_H
+//#include "tmp/t04r0101.h"
+//このファイルはdata/t04r0101.mevから自動生成されました
+#ifndef ZONE_T04R0101_EVD_H
+#define ZONE_T04R0101_EVD_H
+
+
+#endif //ZONE_T04R0101_EVD_H
+//このファイルはdata/t04r0101.mevから自動生成されました
+#ifndef ZONE_T04R0101_EVC_H
+#define ZONE_T04R0101_EVC_H
+
+
+#endif //ZONE_T04R0101_EVC_H
+//#include "tmp/t04r0102.h"
+//このファイルはdata/t04r0102.mevから自動生成されました
+#ifndef ZONE_T04R0102_EVD_H
+#define ZONE_T04R0102_EVD_H
+
+
+#endif //ZONE_T04R0102_EVD_H
+//このファイルはdata/t04r0102.mevから自動生成されました
+#ifndef ZONE_T04R0102_EVC_H
+#define ZONE_T04R0102_EVC_H
+
+
+#endif //ZONE_T04R0102_EVC_H
+//#include "tmp/t04r0201.h"
+//このファイルはdata/t04r0201.mevから自動生成されました
+#ifndef ZONE_T04R0201_EVD_H
+#define ZONE_T04R0201_EVD_H
+
+
+#endif //ZONE_T04R0201_EVD_H
+//このファイルはdata/t04r0201.mevから自動生成されました
+#ifndef ZONE_T04R0201_EVC_H
+#define ZONE_T04R0201_EVC_H
+
+
+#endif //ZONE_T04R0201_EVC_H
+//#include "tmp/t04r0301.h"
+//このファイルはdata/t04r0301.mevから自動生成されました
+#ifndef ZONE_T04R0301_EVD_H
+#define ZONE_T04R0301_EVD_H
+
+
+#endif //ZONE_T04R0301_EVD_H
+//このファイルはdata/t04r0301.mevから自動生成されました
+#ifndef ZONE_T04R0301_EVC_H
+#define ZONE_T04R0301_EVC_H
+
+
+#endif //ZONE_T04R0301_EVC_H
+//#include "tmp/t05.h"
+//このファイルはdata/t05.mevから自動生成されました
+#ifndef ZONE_T05_EVD_H
+#define ZONE_T05_EVD_H
+
+
+#endif //ZONE_T05_EVD_H
+//このファイルはdata/t05.mevから自動生成されました
+#ifndef ZONE_T05_EVC_H
+#define ZONE_T05_EVC_H
+
+
+#endif //ZONE_T05_EVC_H
+//#include "tmp/t05r0101.h"
+//このファイルはdata/t05r0101.mevから自動生成されました
+#ifndef ZONE_T05R0101_EVD_H
+#define ZONE_T05R0101_EVD_H
+
+
+#endif //ZONE_T05R0101_EVD_H
+//このファイルはdata/t05r0101.mevから自動生成されました
+#ifndef ZONE_T05R0101_EVC_H
+#define ZONE_T05R0101_EVC_H
+
+
+#endif //ZONE_T05R0101_EVC_H
+//#include "tmp/t05r0201.h"
+//このファイルはdata/t05r0201.mevから自動生成されました
+#ifndef ZONE_T05R0201_EVD_H
+#define ZONE_T05R0201_EVD_H
+
+
+#endif //ZONE_T05R0201_EVD_H
+//このファイルはdata/t05r0201.mevから自動生成されました
+#ifndef ZONE_T05R0201_EVC_H
+#define ZONE_T05R0201_EVC_H
+
+
+#endif //ZONE_T05R0201_EVC_H
+//#include "tmp/t05r0301.h"
+//このファイルはdata/t05r0301.mevから自動生成されました
+#ifndef ZONE_T05R0301_EVD_H
+#define ZONE_T05R0301_EVD_H
+
+
+#endif //ZONE_T05R0301_EVD_H
+//このファイルはdata/t05r0301.mevから自動生成されました
+#ifndef ZONE_T05R0301_EVC_H
+#define ZONE_T05R0301_EVC_H
+
+
+#endif //ZONE_T05R0301_EVC_H
 //#include "tmp/union.h"
 //このファイルはdata/union.mevから自動生成されました
 #ifndef ZONE_UNION_EVD_H
@@ -3090,6 +4936,19 @@
 
 
 #endif //ZONE_UNION_EVC_H
+//#include "tmp/w17.h"
+//このファイルはdata/w17.mevから自動生成されました
+#ifndef ZONE_W17_EVD_H
+#define ZONE_W17_EVD_H
+
+
+#endif //ZONE_W17_EVD_H
+//このファイルはdata/w17.mevから自動生成されました
+#ifndef ZONE_W17_EVC_H
+#define ZONE_W17_EVC_H
+
+
+#endif //ZONE_W17_EVC_H
 
 #include "../script/bcwftest_def.h"
 const CONNECT_DATA DOOR_EVENT_BCWFTEST[] = {
@@ -4208,6 +6067,32 @@ static const EVENTDATA_TABLE event_c01r0302 = {
 	(void *)&DOOR_EVENT_C01R0302,
 	(void *)NULL,
 };
+#include "../script/c01r0401_def.h"
+//ConnectData_C01R0401[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c01r0401 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c01r0402_def.h"
+//ConnectData_C01R0402[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c01r0402 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
 #include "../script/c01r0501_def.h"
 const CONNECT_DATA DOOR_EVENT_C01R0501[] = {
 	{//DOOR_ID_C01R0501_EXIT01 = 0
@@ -4722,6 +6607,45 @@ static const EVENTDATA_TABLE event_c02gym0101 = {
 	(void *)&OBJ_EVENT_C02GYM0101,
 	(void *)&DOOR_EVENT_C02GYM0101,
 	(void *)&POS_EVENT_C02GYM0101,
+};
+#include "../script/c02gym0201_def.h"
+//ConnectData_C02GYM0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c02gym0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c02gym0202_def.h"
+//ConnectData_C02GYM0202[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c02gym0202 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c02gym0203_def.h"
+//ConnectData_C02GYM0203[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c02gym0203 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
 };
 #include "../script/c02pc0101_def.h"
 const CONNECT_DATA DOOR_EVENT_C02PC0101[] = {
@@ -7026,6 +8950,110 @@ static const EVENTDATA_TABLE event_c03r0201 = {
 	(void *)&DOOR_EVENT_C03R0201,
 	(void *)NULL,
 };
+#include "../script/c03r0301_def.h"
+//ConnectData_C03R0301[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c03r0301 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c03r0302_def.h"
+//ConnectData_C03R0302[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c03r0302 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c03r0303_def.h"
+//ConnectData_C03R0303[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c03r0303 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c03r0401_def.h"
+//ConnectData_C03R0401[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c03r0401 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c03r0402_def.h"
+//ConnectData_C03R0402[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c03r0402 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c03r0501_def.h"
+//ConnectData_C03R0501[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c03r0501 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c03r0502_def.h"
+//ConnectData_C03R0502[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c03r0502 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c03r0601_def.h"
+//ConnectData_C03R0601[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c03r0601 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
 #include "../script/c04_def.h"
 const CONNECT_DATA DOOR_EVENT_C04[] = {
 	{//DOOR_ID_C04_R04_EXIT01 = 0
@@ -7191,6 +9219,214 @@ static const EVENTDATA_TABLE event_c04gym0101 = {
 	(void *)&OBJ_EVENT_C04GYM0101,
 	(void *)NULL,
 	(void *)&POS_EVENT_C04GYM0101,
+};
+#include "../script/c04p01_def.h"
+//ConnectData_C04P01[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04p01 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04pc0101_def.h"
+//ConnectData_C04PC0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04pc0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04r0101_def.h"
+//ConnectData_C04R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04r0102_def.h"
+//ConnectData_C04R0102[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04r0102 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04r0201_def.h"
+//ConnectData_C04R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04r0202_def.h"
+//ConnectData_C04R0202[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04r0202 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04r0301_def.h"
+//ConnectData_C04R0301[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04r0301 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04r0302_def.h"
+//ConnectData_C04R0302[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04r0302 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04r0303_def.h"
+//ConnectData_C04R0303[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04r0303 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04r0401_def.h"
+//ConnectData_C04R0401[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04r0401 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04r0501_def.h"
+//ConnectData_C04R0501[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04r0501 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04r0601_def.h"
+//ConnectData_C04R0601[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04r0601 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04r0701_def.h"
+//ConnectData_C04R0701[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04r0701 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04r0801_def.h"
+//ConnectData_C04R0801[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04r0801 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04r0901_def.h"
+//ConnectData_C04R0901[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04r0901 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c04r1001_def.h"
+//ConnectData_C04R1001[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c04r1001 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
 };
 #include "../script/c05_def.h"
 const CONNECT_DATA DOOR_EVENT_C05[] = {
@@ -8153,6 +10389,19 @@ static const EVENTDATA_TABLE event_c05r0601 = {
 	(void *)&DOOR_EVENT_C05R0601,
 	(void *)NULL,
 };
+#include "../script/c05r0701_def.h"
+//ConnectData_C05R0701[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c05r0701 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
 #include "../script/c06_def.h"
 const CONNECT_DATA DOOR_EVENT_C06[] = {
 	{//DOOR_ID_C06_C06PC0101EXIT01 = 0
@@ -9005,6 +11254,344 @@ static const EVENTDATA_TABLE event_c08 = {
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_C08,
+	(void *)NULL,
+};
+#include "../script/c08gym0101_def.h"
+//ConnectData_C08GYM0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c08gym0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c08pc0101_def.h"
+//ConnectData_C08PC0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c08pc0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c08pc0801_def.h"
+//ConnectData_C08PC0801[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c08pc0801 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c08r0101_def.h"
+//ConnectData_C08R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c08r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c08r0102_def.h"
+//ConnectData_C08R0102[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c08r0102 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c08r0201_def.h"
+//ConnectData_C08R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c08r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c08r0202_def.h"
+//ConnectData_C08R0202[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c08r0202 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c08r0301_def.h"
+//ConnectData_C08R0301[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c08r0301 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c08r0302_def.h"
+//ConnectData_C08R0302[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c08r0302 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c08r0401_def.h"
+//ConnectData_C08R0401[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c08r0401 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c08r0402_def.h"
+//ConnectData_C08R0402[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c08r0402 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c08r0501_def.h"
+//ConnectData_C08R0501[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c08r0501 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c08r0601_def.h"
+//ConnectData_C08R0601[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c08r0601 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c08r0701_def.h"
+//ConnectData_C08R0701[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c08r0701 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c09_def.h"
+//ConnectData_C09[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c09 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c09p01_def.h"
+//ConnectData_C09P01[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c09p01 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c09p02_def.h"
+//ConnectData_C09P02[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c09p02 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c09r0101_def.h"
+//ConnectData_C09R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c09r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c09r0201_def.h"
+//ConnectData_C09R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c09r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c09r0301_def.h"
+//ConnectData_C09R0301[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c09r0301 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c09r0401_def.h"
+//ConnectData_C09R0401[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c09r0401 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c09r0501_def.h"
+//ConnectData_C09R0501[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c09r0501 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c09r0601_def.h"
+//ConnectData_C09R0601[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c09r0601 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/c11_def.h"
+//ConnectData_C11[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_c11 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/closseum_def.h"
+//ConnectData_CLOSSEUM[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_closseum = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/closseum02_def.h"
+//ConnectData_CLOSSEUM02[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_closseum02 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
 	(void *)NULL,
 };
 #include "../script/d01_def.h"
@@ -11203,6 +13790,292 @@ static const EVENTDATA_TABLE event_d07r0601 = {
 	(void *)&DOOR_EVENT_D07R0601,
 	(void *)NULL,
 };
+#include "../script/d07r0701_def.h"
+//ConnectData_D07R0701[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d07r0701 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d08_def.h"
+//ConnectData_D08[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d08 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d08r0101_def.h"
+//ConnectData_D08R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d08r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d09r0101_def.h"
+//ConnectData_D09R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d09r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d09r0201_def.h"
+//ConnectData_D09R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d09r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d09r0301_def.h"
+//ConnectData_D09R0301[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d09r0301 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d09r0401_def.h"
+//ConnectData_D09R0401[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d09r0401 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d09r0501_def.h"
+//ConnectData_D09R0501[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d09r0501 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d09r0601_def.h"
+//ConnectData_D09R0601[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d09r0601 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d09r0701_def.h"
+//ConnectData_D09R0701[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d09r0701 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d09r0801_def.h"
+//ConnectData_D09R0801[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d09r0801 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d09r0901_def.h"
+//ConnectData_D09R0901[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d09r0901 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d10_def.h"
+//ConnectData_D10[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d10 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d10r0101_def.h"
+//ConnectData_D10R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d10r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d11r0101_def.h"
+//ConnectData_D11R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d11r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d11r0201_def.h"
+//ConnectData_D11R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d11r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d11r0301_def.h"
+//ConnectData_D11R0301[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d11r0301 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d12_def.h"
+//ConnectData_D12[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d12 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d12r0101_def.h"
+//ConnectData_D12R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d12r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d13_def.h"
+//ConnectData_D13[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d13 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/d13r0101_def.h"
+//ConnectData_D13R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_d13r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/gt_def.h"
+//ConnectData_GT[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_gt = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
 #include "../script/h01_def.h"
 const CONNECT_DATA DOOR_EVENT_H01[] = {
 	{//DOOR_ID_H01_H01P01_EXIT01 = 0
@@ -11279,6 +14152,32 @@ static const EVENTDATA_TABLE event_h01p01 = {
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_H01P01,
+	(void *)NULL,
+};
+#include "../script/h01r0101_def.h"
+//ConnectData_H01R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_h01r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/h01r0201_def.h"
+//ConnectData_H01R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_h01r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
 	(void *)NULL,
 };
 #include "../script/h02_def.h"
@@ -11462,6 +14361,97 @@ static const EVENTDATA_TABLE event_h02 = {
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_H02,
+	(void *)NULL,
+};
+#include "../script/h03_def.h"
+//ConnectData_H03[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_h03 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/h04_def.h"
+//ConnectData_H04[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_h04 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/h05_def.h"
+//ConnectData_H05[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_h05 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/n01r0101_def.h"
+//ConnectData_N01R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_n01r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/palace01_def.h"
+//ConnectData_PALACE01[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_palace01 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/palace02_def.h"
+//ConnectData_PALACE02[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_palace02 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/palacetest_def.h"
+//ConnectData_PALACETEST[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_palacetest = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
 	(void *)NULL,
 };
 #include "../script/r01_def.h"
@@ -12270,6 +15260,45 @@ static const EVENTDATA_TABLE event_r03r0201 = {
 	(void *)&DOOR_EVENT_R03R0201,
 	(void *)NULL,
 };
+#include "../script/r03r0301_def.h"
+//ConnectData_R03R0301[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r03r0301 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r03r0302_def.h"
+//ConnectData_R03R0302[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r03r0302 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r03r0303_def.h"
+//ConnectData_R03R0303[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r03r0303 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
 #include "../script/r04_def.h"
 const CONNECT_DATA DOOR_EVENT_R04[] = {
 	{//DOOR_ID_R04_C04_EXIT01 = 0
@@ -12637,6 +15666,71 @@ static const EVENTDATA_TABLE event_r06r0101 = {
 	(void *)&DOOR_EVENT_R06R0101,
 	(void *)NULL,
 };
+#include "../script/r06r0201_def.h"
+//ConnectData_R06R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r06r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r06r0202_def.h"
+//ConnectData_R06R0202[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r06r0202 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r06r0203_def.h"
+//ConnectData_R06R0203[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r06r0203 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r07_def.h"
+//ConnectData_R07[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r07 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r07r0101_def.h"
+//ConnectData_R07R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r07r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
 #include "../script/r08_def.h"
 const CONNECT_DATA DOOR_EVENT_R08[] = {
 	{//DOOR_ID_R08_R09_EXIT01 = 0
@@ -12674,6 +15768,45 @@ static const EVENTDATA_TABLE event_r08 = {
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_R08,
+	(void *)NULL,
+};
+#include "../script/r08r0101_def.h"
+//ConnectData_R08R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r08r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r08r0102_def.h"
+//ConnectData_R08R0102[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r08r0102 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r08r0201_def.h"
+//ConnectData_R08R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r08r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
 	(void *)NULL,
 };
 #include "../script/r09_def.h"
@@ -12737,6 +15870,201 @@ static const EVENTDATA_TABLE event_r09 = {
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_R09,
+	(void *)NULL,
+};
+#include "../script/r09r0101_def.h"
+//ConnectData_R09R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r09r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r09r0201_def.h"
+//ConnectData_R09R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r09r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r09r0301_def.h"
+//ConnectData_R09R0301[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r09r0301 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r09r0302_def.h"
+//ConnectData_R09R0302[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r09r0302 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r09r0303_def.h"
+//ConnectData_R09R0303[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r09r0303 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r10_def.h"
+//ConnectData_R10[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r10 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r10r0101_def.h"
+//ConnectData_R10R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r10r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r10r0201_def.h"
+//ConnectData_R10R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r10r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r10r0301_def.h"
+//ConnectData_R10R0301[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r10r0301 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r10r0401_def.h"
+//ConnectData_R10R0401[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r10r0401 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r10r0501_def.h"
+//ConnectData_R10R0501[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r10r0501 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r10r0601_def.h"
+//ConnectData_R10R0601[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r10r0601 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r10r0701_def.h"
+//ConnectData_R10R0701[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r10r0701 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r10r0801_def.h"
+//ConnectData_R10R0801[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r10r0801 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r10r0901_def.h"
+//ConnectData_R10R0901[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r10r0901 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
 	(void *)NULL,
 };
 #include "../script/r11_def.h"
@@ -12808,6 +16136,32 @@ static const EVENTDATA_TABLE event_r11 = {
 	(void *)&DOOR_EVENT_R11,
 	(void *)NULL,
 };
+#include "../script/r11r0101_def.h"
+//ConnectData_R11R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r11r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r11r0201_def.h"
+//ConnectData_R11R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r11r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
 #include "../script/r12_def.h"
 const CONNECT_DATA DOOR_EVENT_R12[] = {
 	{//DOOR_ID_R12_R11_EXIT01 = 0
@@ -12845,6 +16199,97 @@ static const EVENTDATA_TABLE event_r12 = {
 	(void *)NULL,
 	(void *)NULL,
 	(void *)&DOOR_EVENT_R12,
+	(void *)NULL,
+};
+#include "../script/r12r0101_def.h"
+//ConnectData_R12R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r12r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r12r0201_def.h"
+//ConnectData_R12R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r12r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r13_def.h"
+//ConnectData_R13[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r13 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r13r0101_def.h"
+//ConnectData_R13R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r13r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r13r0201_def.h"
+//ConnectData_R13R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r13r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r14_def.h"
+//ConnectData_R14[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r14 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r14r0101_def.h"
+//ConnectData_R14R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r14r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
 	(void *)NULL,
 };
 #include "../script/r15_def.h"
@@ -12898,6 +16343,32 @@ static const EVENTDATA_TABLE event_r15 = {
 	(void *)&DOOR_EVENT_R15,
 	(void *)NULL,
 };
+#include "../script/r15r0101_def.h"
+//ConnectData_R15R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r15r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r15r0201_def.h"
+//ConnectData_R15R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r15r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
 #include "../script/r16_def.h"
 const CONNECT_DATA DOOR_EVENT_R16[] = {
 	{//DOOR_ID_R16_R15_EXIT01 = 0
@@ -12949,6 +16420,45 @@ static const EVENTDATA_TABLE event_r16 = {
 	(void *)&DOOR_EVENT_R16,
 	(void *)NULL,
 };
+#include "../script/r16r0101_def.h"
+//ConnectData_R16R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r16r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r18_def.h"
+//ConnectData_R18[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r18 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/r18r0101_def.h"
+//ConnectData_R18R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_r18r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
 #include "../script/t01_def.h"
 const CONNECT_DATA DOOR_EVENT_T01[] = {
 	{//DOOR_ID_T01_EXIT01 = 0
@@ -12984,7 +16494,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 		MV_DOWN,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_SODATEYA_GRANDPA,
+		SCRID_T01_TALKOBJ_BIGMAN,
 		DIR_DOWN,
 		0,
 		0,
@@ -13018,7 +16528,7 @@ const FLDMMDL_HEADER OBJ_EVENT_T01[] = {
 		MV_RT2,
 		EV_TYPE_NORMAL,
 		0,
-		SCRID_SODATEYA_GRANDMA,
+		SCRID_T01_TALKOBJ_BABYGIRL1,
 		DIR_LEFT,
 		0,
 		0,
@@ -14627,6 +18137,201 @@ static const EVENTDATA_TABLE event_t02r0401 = {
 	(void *)&DOOR_EVENT_T02R0401,
 	(void *)NULL,
 };
+#include "../script/t03_def.h"
+//ConnectData_T03[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t03 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/t03pc0101_def.h"
+//ConnectData_T03PC0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t03pc0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/t03r0101_def.h"
+//ConnectData_T03R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t03r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/t03r0201_def.h"
+//ConnectData_T03R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t03r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/t03r0301_def.h"
+//ConnectData_T03R0301[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t03r0301 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/t03r0401_def.h"
+//ConnectData_T03R0401[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t03r0401 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/t04_def.h"
+//ConnectData_T04[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t04 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/t04r0101_def.h"
+//ConnectData_T04R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t04r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/t04r0102_def.h"
+//ConnectData_T04R0102[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t04r0102 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/t04r0201_def.h"
+//ConnectData_T04R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t04r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/t04r0301_def.h"
+//ConnectData_T04R0301[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t04r0301 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/t05_def.h"
+//ConnectData_T05[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t05 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/t05r0101_def.h"
+//ConnectData_T05R0101[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t05r0101 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/t05r0201_def.h"
+//ConnectData_T05R0201[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t05r0201 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
+#include "../script/t05r0301_def.h"
+//ConnectData_T05R0301[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_t05r0301 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
 #include "../script/union_def.h"
 const CONNECT_DATA DOOR_EVENT_UNION[] = {
 	{//DOOR_ID_UNION_T02PC0101_EXIT01 = 0
@@ -14660,6 +18365,19 @@ static const EVENTDATA_TABLE event_union = {
 	(void *)&DOOR_EVENT_UNION,
 	(void *)NULL,
 };
+#include "../script/w17_def.h"
+//ConnectData_W17[]はデータがないため存在しない
+
+static const EVENTDATA_TABLE event_w17 = {
+	0,
+	0,
+	0,
+	0,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+	(void *)NULL,
+};
 
 static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_BCWFTEST, &event_bcwftest },
@@ -14672,9 +18390,14 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_C01R0202, &event_c01r0202 },
 	{ ZONE_ID_C01R0301, &event_c01r0301 },
 	{ ZONE_ID_C01R0302, &event_c01r0302 },
+	{ ZONE_ID_C01R0401, &event_c01r0401 },
+	{ ZONE_ID_C01R0402, &event_c01r0402 },
 	{ ZONE_ID_C01R0501, &event_c01r0501 },
 	{ ZONE_ID_C02, &event_c02 },
 	{ ZONE_ID_C02GYM0101, &event_c02gym0101 },
+	{ ZONE_ID_C02GYM0201, &event_c02gym0201 },
+	{ ZONE_ID_C02GYM0202, &event_c02gym0202 },
+	{ ZONE_ID_C02GYM0203, &event_c02gym0203 },
 	{ ZONE_ID_C02PC0101, &event_c02pc0101 },
 	{ ZONE_ID_C02R0101, &event_c02r0101 },
 	{ ZONE_ID_C02R0201, &event_c02r0201 },
@@ -14700,8 +18423,32 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_C03PC0101, &event_c03pc0101 },
 	{ ZONE_ID_C03R0101, &event_c03r0101 },
 	{ ZONE_ID_C03R0201, &event_c03r0201 },
+	{ ZONE_ID_C03R0301, &event_c03r0301 },
+	{ ZONE_ID_C03R0302, &event_c03r0302 },
+	{ ZONE_ID_C03R0303, &event_c03r0303 },
+	{ ZONE_ID_C03R0401, &event_c03r0401 },
+	{ ZONE_ID_C03R0402, &event_c03r0402 },
+	{ ZONE_ID_C03R0501, &event_c03r0501 },
+	{ ZONE_ID_C03R0502, &event_c03r0502 },
+	{ ZONE_ID_C03R0601, &event_c03r0601 },
 	{ ZONE_ID_C04, &event_c04 },
 	{ ZONE_ID_C04GYM0101, &event_c04gym0101 },
+	{ ZONE_ID_C04P01, &event_c04p01 },
+	{ ZONE_ID_C04PC0101, &event_c04pc0101 },
+	{ ZONE_ID_C04R0101, &event_c04r0101 },
+	{ ZONE_ID_C04R0102, &event_c04r0102 },
+	{ ZONE_ID_C04R0201, &event_c04r0201 },
+	{ ZONE_ID_C04R0202, &event_c04r0202 },
+	{ ZONE_ID_C04R0301, &event_c04r0301 },
+	{ ZONE_ID_C04R0302, &event_c04r0302 },
+	{ ZONE_ID_C04R0303, &event_c04r0303 },
+	{ ZONE_ID_C04R0401, &event_c04r0401 },
+	{ ZONE_ID_C04R0501, &event_c04r0501 },
+	{ ZONE_ID_C04R0601, &event_c04r0601 },
+	{ ZONE_ID_C04R0701, &event_c04r0701 },
+	{ ZONE_ID_C04R0801, &event_c04r0801 },
+	{ ZONE_ID_C04R0901, &event_c04r0901 },
+	{ ZONE_ID_C04R1001, &event_c04r1001 },
 	{ ZONE_ID_C05, &event_c05 },
 	{ ZONE_ID_C05GYM0101, &event_c05gym0101 },
 	{ ZONE_ID_C05PC0101, &event_c05pc0101 },
@@ -14711,6 +18458,7 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_C05R0401, &event_c05r0401 },
 	{ ZONE_ID_C05R0501, &event_c05r0501 },
 	{ ZONE_ID_C05R0601, &event_c05r0601 },
+	{ ZONE_ID_C05R0701, &event_c05r0701 },
 	{ ZONE_ID_C06, &event_c06 },
 	{ ZONE_ID_C06GYM0101, &event_c06gym0101 },
 	{ ZONE_ID_C06PC0101, &event_c06pc0101 },
@@ -14727,6 +18475,32 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_C07R0301, &event_c07r0301 },
 	{ ZONE_ID_C07R0401, &event_c07r0401 },
 	{ ZONE_ID_C08, &event_c08 },
+	{ ZONE_ID_C08GYM0101, &event_c08gym0101 },
+	{ ZONE_ID_C08PC0101, &event_c08pc0101 },
+	{ ZONE_ID_C08PC0801, &event_c08pc0801 },
+	{ ZONE_ID_C08R0101, &event_c08r0101 },
+	{ ZONE_ID_C08R0102, &event_c08r0102 },
+	{ ZONE_ID_C08R0201, &event_c08r0201 },
+	{ ZONE_ID_C08R0202, &event_c08r0202 },
+	{ ZONE_ID_C08R0301, &event_c08r0301 },
+	{ ZONE_ID_C08R0302, &event_c08r0302 },
+	{ ZONE_ID_C08R0401, &event_c08r0401 },
+	{ ZONE_ID_C08R0402, &event_c08r0402 },
+	{ ZONE_ID_C08R0501, &event_c08r0501 },
+	{ ZONE_ID_C08R0601, &event_c08r0601 },
+	{ ZONE_ID_C08R0701, &event_c08r0701 },
+	{ ZONE_ID_C09, &event_c09 },
+	{ ZONE_ID_C09P01, &event_c09p01 },
+	{ ZONE_ID_C09P02, &event_c09p02 },
+	{ ZONE_ID_C09R0101, &event_c09r0101 },
+	{ ZONE_ID_C09R0201, &event_c09r0201 },
+	{ ZONE_ID_C09R0301, &event_c09r0301 },
+	{ ZONE_ID_C09R0401, &event_c09r0401 },
+	{ ZONE_ID_C09R0501, &event_c09r0501 },
+	{ ZONE_ID_C09R0601, &event_c09r0601 },
+	{ ZONE_ID_C11, &event_c11 },
+	{ ZONE_ID_CLOSSEUM, &event_closseum },
+	{ ZONE_ID_CLOSSEUM02, &event_closseum02 },
 	{ ZONE_ID_D01, &event_d01 },
 	{ ZONE_ID_D01R0101, &event_d01r0101 },
 	{ ZONE_ID_D01R0201, &event_d01r0201 },
@@ -14781,15 +18555,49 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_D07R0401, &event_d07r0401 },
 	{ ZONE_ID_D07R0501, &event_d07r0501 },
 	{ ZONE_ID_D07R0601, &event_d07r0601 },
+	{ ZONE_ID_D07R0701, &event_d07r0701 },
+	{ ZONE_ID_D08, &event_d08 },
+	{ ZONE_ID_D08R0101, &event_d08r0101 },
+	{ ZONE_ID_D09R0101, &event_d09r0101 },
+	{ ZONE_ID_D09R0201, &event_d09r0201 },
+	{ ZONE_ID_D09R0301, &event_d09r0301 },
+	{ ZONE_ID_D09R0401, &event_d09r0401 },
+	{ ZONE_ID_D09R0501, &event_d09r0501 },
+	{ ZONE_ID_D09R0601, &event_d09r0601 },
+	{ ZONE_ID_D09R0701, &event_d09r0701 },
+	{ ZONE_ID_D09R0801, &event_d09r0801 },
+	{ ZONE_ID_D09R0901, &event_d09r0901 },
+	{ ZONE_ID_D10, &event_d10 },
+	{ ZONE_ID_D10R0101, &event_d10r0101 },
+	{ ZONE_ID_D11R0101, &event_d11r0101 },
+	{ ZONE_ID_D11R0201, &event_d11r0201 },
+	{ ZONE_ID_D11R0301, &event_d11r0301 },
+	{ ZONE_ID_D12, &event_d12 },
+	{ ZONE_ID_D12R0101, &event_d12r0101 },
+	{ ZONE_ID_D13, &event_d13 },
+	{ ZONE_ID_D13R0101, &event_d13r0101 },
+	{ ZONE_ID_GT, &event_gt },
 	{ ZONE_ID_H01, &event_h01 },
 	{ ZONE_ID_H01P01, &event_h01p01 },
+	{ ZONE_ID_H01R0101, &event_h01r0101 },
+	{ ZONE_ID_H01R0201, &event_h01r0201 },
 	{ ZONE_ID_H02, &event_h02 },
+	{ ZONE_ID_H03, &event_h03 },
+	{ ZONE_ID_H04, &event_h04 },
+	{ ZONE_ID_H05, &event_h05 },
+	{ ZONE_ID_N01R0101, &event_n01r0101 },
+	{ ZONE_ID_PALACE01, &event_palace01 },
+	{ ZONE_ID_PALACE02, &event_palace02 },
+	{ ZONE_ID_PALACETEST, &event_palacetest },
 	{ ZONE_ID_R01, &event_r01 },
 	{ ZONE_ID_R02, &event_r02 },
 	{ ZONE_ID_R02R0101, &event_r02r0101 },
 	{ ZONE_ID_R03, &event_r03 },
 	{ ZONE_ID_R03R0101, &event_r03r0101 },
 	{ ZONE_ID_R03R0201, &event_r03r0201 },
+	{ ZONE_ID_R03R0301, &event_r03r0301 },
+	{ ZONE_ID_R03R0302, &event_r03r0302 },
+	{ ZONE_ID_R03R0303, &event_r03r0303 },
 	{ ZONE_ID_R04, &event_r04 },
 	{ ZONE_ID_R04R0101, &event_r04r0101 },
 	{ ZONE_ID_R04R0201, &event_r04r0201 },
@@ -14797,12 +18605,49 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_R05, &event_r05 },
 	{ ZONE_ID_R06, &event_r06 },
 	{ ZONE_ID_R06R0101, &event_r06r0101 },
+	{ ZONE_ID_R06R0201, &event_r06r0201 },
+	{ ZONE_ID_R06R0202, &event_r06r0202 },
+	{ ZONE_ID_R06R0203, &event_r06r0203 },
+	{ ZONE_ID_R07, &event_r07 },
+	{ ZONE_ID_R07R0101, &event_r07r0101 },
 	{ ZONE_ID_R08, &event_r08 },
+	{ ZONE_ID_R08R0101, &event_r08r0101 },
+	{ ZONE_ID_R08R0102, &event_r08r0102 },
+	{ ZONE_ID_R08R0201, &event_r08r0201 },
 	{ ZONE_ID_R09, &event_r09 },
+	{ ZONE_ID_R09R0101, &event_r09r0101 },
+	{ ZONE_ID_R09R0201, &event_r09r0201 },
+	{ ZONE_ID_R09R0301, &event_r09r0301 },
+	{ ZONE_ID_R09R0302, &event_r09r0302 },
+	{ ZONE_ID_R09R0303, &event_r09r0303 },
+	{ ZONE_ID_R10, &event_r10 },
+	{ ZONE_ID_R10R0101, &event_r10r0101 },
+	{ ZONE_ID_R10R0201, &event_r10r0201 },
+	{ ZONE_ID_R10R0301, &event_r10r0301 },
+	{ ZONE_ID_R10R0401, &event_r10r0401 },
+	{ ZONE_ID_R10R0501, &event_r10r0501 },
+	{ ZONE_ID_R10R0601, &event_r10r0601 },
+	{ ZONE_ID_R10R0701, &event_r10r0701 },
+	{ ZONE_ID_R10R0801, &event_r10r0801 },
+	{ ZONE_ID_R10R0901, &event_r10r0901 },
 	{ ZONE_ID_R11, &event_r11 },
+	{ ZONE_ID_R11R0101, &event_r11r0101 },
+	{ ZONE_ID_R11R0201, &event_r11r0201 },
 	{ ZONE_ID_R12, &event_r12 },
+	{ ZONE_ID_R12R0101, &event_r12r0101 },
+	{ ZONE_ID_R12R0201, &event_r12r0201 },
+	{ ZONE_ID_R13, &event_r13 },
+	{ ZONE_ID_R13R0101, &event_r13r0101 },
+	{ ZONE_ID_R13R0201, &event_r13r0201 },
+	{ ZONE_ID_R14, &event_r14 },
+	{ ZONE_ID_R14R0101, &event_r14r0101 },
 	{ ZONE_ID_R15, &event_r15 },
+	{ ZONE_ID_R15R0101, &event_r15r0101 },
+	{ ZONE_ID_R15R0201, &event_r15r0201 },
 	{ ZONE_ID_R16, &event_r16 },
+	{ ZONE_ID_R16R0101, &event_r16r0101 },
+	{ ZONE_ID_R18, &event_r18 },
+	{ ZONE_ID_R18R0101, &event_r18r0101 },
 	{ ZONE_ID_T01, &event_t01 },
 	{ ZONE_ID_T01R0101, &event_t01r0101 },
 	{ ZONE_ID_T01R0102, &event_t01r0102 },
@@ -14820,7 +18665,23 @@ static const EVENTDATA_TOTAL_TABLES TotalTables[] = {
 	{ ZONE_ID_T02R0301, &event_t02r0301 },
 	{ ZONE_ID_T02R0302, &event_t02r0302 },
 	{ ZONE_ID_T02R0401, &event_t02r0401 },
+	{ ZONE_ID_T03, &event_t03 },
+	{ ZONE_ID_T03PC0101, &event_t03pc0101 },
+	{ ZONE_ID_T03R0101, &event_t03r0101 },
+	{ ZONE_ID_T03R0201, &event_t03r0201 },
+	{ ZONE_ID_T03R0301, &event_t03r0301 },
+	{ ZONE_ID_T03R0401, &event_t03r0401 },
+	{ ZONE_ID_T04, &event_t04 },
+	{ ZONE_ID_T04R0101, &event_t04r0101 },
+	{ ZONE_ID_T04R0102, &event_t04r0102 },
+	{ ZONE_ID_T04R0201, &event_t04r0201 },
+	{ ZONE_ID_T04R0301, &event_t04r0301 },
+	{ ZONE_ID_T05, &event_t05 },
+	{ ZONE_ID_T05R0101, &event_t05r0101 },
+	{ ZONE_ID_T05R0201, &event_t05r0201 },
+	{ ZONE_ID_T05R0301, &event_t05r0301 },
 	{ ZONE_ID_UNION, &event_union },
+	{ ZONE_ID_W17, &event_w17 },
 	{ 0, NULL }
 };
 
