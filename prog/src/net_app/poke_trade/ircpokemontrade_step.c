@@ -195,6 +195,12 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
   if(pWork->anmCount == _PARTICLE_DEMO3_START2){
     GFL_PTC_CreateEmitterCallback(pWork->ptc, 2, NULL, pWork);
   }
+  if(pWork->anmCount == _PARTICLE_DEMO4_START){
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, 3, NULL, pWork);
+  }
+  if(pWork->anmCount == _PARTICLE_DEMO4_START2){
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, 3, NULL, pWork);
+  }
   if(pWork->anmCount == _PARTICLE_DEMO5_START){
     GFL_PTC_CreateEmitterCallback(pWork->ptc, 4, NULL, pWork);
   }
