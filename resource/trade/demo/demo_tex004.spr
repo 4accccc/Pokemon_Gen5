@@ -43,7 +43,7 @@
 		pos_x="0"
 		pos_y="0"
 		pos_z="0"
-		init_vel_pos="1066"
+		init_vel_pos="1903"
 		init_vel_axis="3121"
 		base_scl="20480"
 		aspect="4096"
@@ -52,8 +52,8 @@
 		rtt_max="0"
 		init_rtt="0"
 		emtr_life="1"
-		ptcl_life="120"
-		ptcl_life_r="120"
+		ptcl_life="60"
+		ptcl_life_r="44"
 		offset_x="0"
 		offset_y="0"
 		gen_intvl="1"
@@ -76,7 +76,7 @@
 	<scl_anm
 		scl_s="0"
 		scl_n="0"
-		scl_e="5969"
+		scl_e="4020"
 		loop="0"
 		in="13"
 		out="80"
@@ -134,7 +134,7 @@
 	/>
 	<grvt
 		mag_x="0"
-		mag_y="-61"
+		mag_y="-122"
 		mag_z="0"
 	/>
 </spr>
