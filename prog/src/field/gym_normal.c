@@ -162,28 +162,26 @@ void GYM_NORMAL_Setup(FIELDMAP_WORK *fieldWork)
     u8 i;
     for (i=0;i<wall_num;i++){
       u8 obj_idx;
+      EXP_OBJ_ANM_CNT_PTR anm;
 
       obj_idx = OBJ_WALL_1+i;
       //1ループアニメ設定
       {
-        EXP_OBJ_ANM_CNT_PTR anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_NORMAL_UNIT_IDX, obj_idx, ANM_WALL_MOV);
+        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_NORMAL_UNIT_IDX, obj_idx, ANM_WALL_MOV);
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
         //1回再生設定
         FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
       }
       //セーブデータを見てアニメ終了前かどうか判定
       if (gmk_sv_work->Wall[i]){  //終了
+        fx32 last_frm;
         //最終フレームでストップ
         FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_NORMAL_UNIT_IDX, obj_idx, ANM_WALL_MOV, TRUE);
         //最終フレームセット
-        ;
+        last_frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
+        FLD_EXP_OBJ_SetObjAnmFrm(ptr,GYM_NORMAL_UNIT_IDX, obj_idx, 0, last_frm);
       }
     }
-  }
-
-  //既にギミック起動後の場合は正解の棚のみ最終フレームでストップ
-  if (gmk_sv_work->GmkUnrock){
-    ;
   }
 }
 
