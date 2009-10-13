@@ -172,6 +172,7 @@ struct _BTLV_GAUGE_CLWK
 
   s32           exp;
   s32           exp_max;
+  s32           next_exp_max;
   s32           exp_add;
   s32           exp_work;
   s32           damage;
@@ -183,8 +184,10 @@ struct _BTLV_GAUGE_CLWK
 
   u32           hp_calc_req   :1;
   u32           exp_calc_req  :1;
+  u32           level_up_req  :1;
   u32           gauge_enable  :1;
-  u32                         :29;
+  u32           seq_no        :4;
+  u32                         :24;
 };
 
 struct _BTLV_GAUGE_WORK
@@ -221,11 +224,12 @@ static  void  Gauge_CalcEXP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
 static  s32   GaugeProc( s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 GaugeMax, u16 add_dec );
 static  u8    PutGaugeProc( s32 MaxHP, s32 NowHP, s32 beHP, s32 *HP_Work, u8 *gauge_chr, u8 GaugeMax );
 static  u32   DottoOffsetCalc( s32 nowHP, s32 beHP, s32 MaxHP, u8 GaugeMax );
-static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const POKEMON_PARAM* pp );
+static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const BTL_POKEPARAM* bpp );
 static  void  PutSexOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
 static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAUGE_REQ req );
 static  void  PutHPNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, s32 nowHP );
 static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl );
+static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl );
 
 static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw );
 
@@ -317,6 +321,10 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
     if( bgw->bgcl[ i ].exp_calc_req )
     { 
       Gauge_CalcEXP( bgw, &bgw->bgcl[ i ] );
+    }
+    if( bgw->bgcl[ i ].level_up_req )
+    { 
+      Gauge_LevelUp( bgw, &bgw->bgcl[ i ] );
     }
   }
   //ピンチBGM再生チェック
@@ -420,8 +428,6 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
   }
 
   { 
-    const POKEMON_PARAM*  pp = BPP_GetSrcData( bpp );
-
     bgw->bgcl[ pos ].hp       = BPP_GetValue( bpp, BPP_HP );
     bgw->bgcl[ pos ].hpmax    = BPP_GetValue( bpp, BPP_MAX_HP );
     bgw->bgcl[ pos ].hp_work  = BTLV_GAUGE_HP_WORK_INIT_VALUE;
@@ -431,11 +437,15 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
 
     if( bgw->bgcl[ pos ].level < 100 )
     { 
-      bgw->bgcl[ pos ].exp      = PP_Get( pp, ID_PARA_exp,    NULL ) - PP_GetMinExp( pp );
+      int min_exp = POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
+                                        BPP_GetValue( bpp, BPP_FORM ),
+                                        BPP_GetValue( bpp, BPP_LEVEL ) );
+
+      bgw->bgcl[ pos ].exp      = BPP_GetValue( bpp, BPP_EXP ) - min_exp;
       bgw->bgcl[ pos ].exp_max  = POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
                                                       BPP_GetValue( bpp, BPP_FORM ),
                                                       BPP_GetValue( bpp, BPP_LEVEL ) + 1 ) -
-                                  PP_GetMinExp( pp );
+                                  min_exp;
     }
     else
     { 
@@ -463,9 +473,13 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BTLV_GAUGE
     }
 
     GaugeProc( bgw->bgcl[ pos ].hpmax, bgw->bgcl[ pos ].hp, 0, &bgw->bgcl[ pos ].hp_work, BTLV_GAUGE_HP_CHARMAX, 1 );
-    PutNameOBJ( bgw, &bgw->bgcl[ pos ], pp );
-    PutSexOBJ( bgw, &bgw->bgcl[ pos ] );
     PutGaugeOBJ( bgw, &bgw->bgcl[ pos ], BTLV_GAUGE_REQ_HP );
+    if( bgw->bgcl[ pos ].exp_clwk ){ 
+      GaugeProc( bgw->bgcl[ pos ].exp_max, bgw->bgcl[ pos ].exp, 0, &bgw->bgcl[ pos ].exp_work, BTLV_GAUGE_EXP_CHARMAX, 1 );
+      PutGaugeOBJ( bgw, &bgw->bgcl[ pos ], BTLV_GAUGE_REQ_EXP );
+    }
+    PutNameOBJ( bgw, &bgw->bgcl[ pos ], bpp );
+    PutSexOBJ( bgw, &bgw->bgcl[ pos ] );
     PutHPNumOBJ( bgw, &bgw->bgcl[ pos ], bgw->bgcl[ pos ].hp );
     PutLVNumOBJ( bgw, &bgw->bgcl[ pos ] );
   }
@@ -594,6 +608,39 @@ void  BTLV_GAUGE_CalcEXP( BTLV_GAUGE_WORK *bgw, BtlvMcssPos pos, int value )
 
 //============================================================================================
 /**
+ *  @brief  EXPゲージ計算（レベルアップ時）
+ *
+ *  @param[in] bgw    BTLV_GAUGE_WORK管理構造体へのポインタ
+ *  @param[in] bpp    計算するポケモンパラメータ
+ *  @param[in] pos    立ち位置
+ */
+//============================================================================================
+void  BTLV_GAUGE_CalcEXPLevelUp( BTLV_GAUGE_WORK *bgw, const BTL_POKEPARAM* bpp, BtlvMcssPos pos )
+{ 
+  int value = bgw->bgcl[ pos ].exp_max - bgw->bgcl[ pos ].exp;
+
+  bgw->bgcl[ pos ].hp       = BPP_GetValue( bpp, BPP_HP );
+  bgw->bgcl[ pos ].hpmax    = BPP_GetValue( bpp, BPP_MAX_HP );
+  bgw->bgcl[ pos ].hp_work  = BTLV_GAUGE_HP_WORK_INIT_VALUE;
+  bgw->bgcl[ pos ].damage   = 0;
+
+  bgw->bgcl[ pos ].level    = BPP_GetValue( bpp, BPP_LEVEL );
+
+  bgw->bgcl[ pos ].next_exp_max  = POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
+                                                       BPP_GetValue( bpp, BPP_FORM ),
+                                                       BPP_GetValue( bpp, BPP_LEVEL ) + 1 ) -
+                                   POKETOOL_GetMinExp( BPP_GetMonsNo( bpp ),
+                                                       BPP_GetValue( bpp, BPP_FORM ),
+                                                       BPP_GetValue( bpp, BPP_LEVEL ) );
+
+  bgw->bgcl[ pos ].seq_no = 0;
+  bgw->bgcl[ pos ].level_up_req = 1;
+
+  Gauge_InitCalcEXP( &bgw->bgcl[ pos ], value );
+}
+
+//============================================================================================
+/**
  *  @brief  ゲージ計算中かチェック
  *
  *  @param[in] bgw    BTLV_GAUGE_WORK管理構造体へのポインタ
@@ -607,7 +654,7 @@ BOOL  BTLV_GAUGE_CheckExecute( BTLV_GAUGE_WORK *bgw )
 
   for( i = 0 ; i < BTLV_GAUGE_CLWK_MAX ; i++ )
   { 
-    if( ( bgw->bgcl[ i ].hp_calc_req ) || ( bgw->bgcl[ i ].exp_calc_req ) )
+    if( ( bgw->bgcl[ i ].hp_calc_req ) || ( bgw->bgcl[ i ].exp_calc_req ) || ( bgw->bgcl[ i ].level_up_req ) )
     { 
       return TRUE;
     }
@@ -970,17 +1017,16 @@ static u32 DottoOffsetCalc( s32 nowHP, s32 beHP, s32 MaxHP, u8 GaugeMax )
  * @param pp		POKEMON_PARAM構造体
  */
 //--------------------------------------------------------------
-static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const POKEMON_PARAM* pp )
+static  void  PutNameOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, const BTL_POKEPARAM* bpp )
 { 
-  STRBUF*       monsname;
+  STRBUF* monsname = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, bgw->heapID );
   PRINTSYS_LSB  color = PRINTSYS_LSB_Make( 1, 2, 0 );
   GFL_BMP_DATA* bmp = GFL_BMP_Create( BTLV_GAUGE_BMP_SIZE_X, BTLV_GAUGE_BMP_SIZE_Y, GFL_BMP_16_COLOR, bgw->heapID );
   u8 letter, shadow, back;
 
   GFL_BMP_Clear( bmp, 0 );
-  monsname = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, bgw->heapID );
-  
-  PP_Get( pp, ID_PARA_nickname, monsname );
+
+  BPP_GetNickName( bpp, monsname );
 
   GFL_FONTSYS_GetColor( &letter, &shadow, &back );
   GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( color ), PRINTSYS_LSB_GetS( color ), PRINTSYS_LSB_GetB( color ) );
@@ -1249,6 +1295,44 @@ static  void  PutLVNumOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl )
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   ゲージレベルアップ処理
+ *
+ * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
+ * @param bgcl  ゲージワークへのポインタ
+ */
+//--------------------------------------------------------------
+static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
+{ 
+  if( bgcl->exp_calc_req )
+  { 
+    return;
+  }
+  switch( bgcl->seq_no ){ 
+  case 0:
+    /** @TODO レベルアップエフェクトを入れたい */
+    bgcl->seq_no++;
+    break;
+  case 1:
+    /** @TODO レベルアップエフェクト終了チェックを入れたい */
+    bgcl->seq_no++;
+    break;
+  case 2:
+    bgcl->exp       = 0;
+    bgcl->exp_max   = bgcl->next_exp_max;
+    bgcl->exp_work  = BTLV_GAUGE_HP_WORK_INIT_VALUE;
+    bgcl->exp_add   = 0;
+    GaugeProc( bgcl->hpmax, bgcl->hp, 0, &bgcl->hp_work, BTLV_GAUGE_HP_CHARMAX, 1 );
+    GaugeProc( bgcl->exp_max, bgcl->exp, 0, &bgcl->exp_work, BTLV_GAUGE_EXP_CHARMAX, 1 );
+    PutGaugeOBJ( bgw, bgcl, BTLV_GAUGE_REQ_HP );
+    PutGaugeOBJ( bgw, bgcl, BTLV_GAUGE_REQ_EXP );
+    PutHPNumOBJ( bgw, bgcl, bgcl->hp );
+    PutLVNumOBJ( bgw, bgcl );
+    bgcl->level_up_req = 0;
+    break;
+  }
+}
 //--------------------------------------------------------------
 /**
  * @brief   ピンチBGM再生チェック
