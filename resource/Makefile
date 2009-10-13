@@ -99,6 +99,7 @@ SUBDIRS	=	wmi \
 			pokemon_center \
 			fld3d_ci \
 			encount \
+            box \
 			battle_championship \
 			sodateya
 
