@@ -339,7 +339,7 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
   //セーブ状況による初期アニメをセット
   {
     u8 i;
-    for (i=0;i<ANTI_SW_NUM_MAX;i++){
+    for (i=0;i<ANTI_DOOR_NUM_MAX;i++){
       if ( gmk_sv_work->Sw[i] ){
         //アニメセット
         EXP_OBJ_ANM_CNT_PTR anm;
@@ -578,7 +578,7 @@ static GMEVENT_RESULT OpenDoorEvt( GMEVENT* event, int* seq, void* work )
       if ( FLD_EXP_OBJ_ChkAnmEnd(door_anm) ){
         OS_Printf("アニメ終了\n");
         //スイッチ押下フラグオン
-        gmk_sv_work->Sw[tmp->SwIdx] = 1;
+        gmk_sv_work->Sw[tmp->DoorIdx] = 1;
         return GMEVENT_RES_FINISH;
       }
     }
