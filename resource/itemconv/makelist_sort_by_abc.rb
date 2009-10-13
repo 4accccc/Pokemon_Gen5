@@ -28,7 +28,7 @@ else
   DST_BRIEF = "50音並替用のデータテーブルです。"
   DST_AUTOR = "genya_hosaka"
   DST_NOTE = "このファイルはmakelist_sort_by_abc.rbによって自動生成されたものです。"
-  DST_TBL_HEADER = "//50音昇順の優先度 添字:item_id \nstatic const u16 ItemSortByAbc[] ="
+  DST_TBL_HEADER = "//50音昇順の優先度 添字:item_id \nstatic const u16 ItemSortByAbc[] = {"
 end
 
 CSV_ROW_ID = 0 #IDの列
