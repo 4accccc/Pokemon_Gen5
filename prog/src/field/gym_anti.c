@@ -353,7 +353,7 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
           FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
           //1回再生設定
           FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
-          //@最終フレームにする
+          //最終フレームにする
           last_frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
           FLD_EXP_OBJ_SetObjAnmFrm(ptr,GYM_ANTI_UNIT_IDX, door_obj_idx, 0, last_frm);
         }
