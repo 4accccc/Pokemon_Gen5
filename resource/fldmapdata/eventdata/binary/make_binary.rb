@@ -525,8 +525,8 @@ class DoorEvent < AllEvent
     else
       #ポジションタイプレール
       output.write [headerArray.sarch( @rail_index )].pack("S")     #index
-      output.write [headerArray.sarch( @rail_front )].pack("S")     #front grid
-      output.write [headerArray.sarch( @rail_side )].pack("S")     #side grid
+      output.write [headerArray.sarch( @rail_front )].pack("s")     #front grid
+      output.write [headerArray.sarch( @rail_side )].pack("s")     #side grid
       output.write [headerArray.sarch( @rail_front_size )].pack("S")     #front_siz
       output.write [headerArray.sarch( @rail_side_size )].pack("S")     #side_siz
       output.write [0].pack("S")
@@ -621,8 +621,8 @@ class ObjEvent < AllEvent
       output.write [headerArray.sarch( fx32_y )].pack("i")
     else
       output.write [headerArray.sarch( @rail_index )].pack("S")  #index
-      output.write [headerArray.sarch( @rail_front )].pack("S")  #front
-      output.write [headerArray.sarch( @rail_side )].pack("S")   #side
+      output.write [headerArray.sarch( @rail_front )].pack("s")  #front
+      output.write [headerArray.sarch( @rail_side )].pack("s")   #side
       output.write [0].pack("S")
     end
   end
@@ -702,8 +702,8 @@ class PosEvent < AllEvent
     else
 
       output.write [headerArray.sarch( @rail_index )].pack("S")     #index
-      output.write [headerArray.sarch( @rail_front )].pack("S")     #front grid
-      output.write [headerArray.sarch( @rail_side )].pack("S")     #side grid
+      output.write [headerArray.sarch( @rail_front )].pack("s")     #front grid
+      output.write [headerArray.sarch( @rail_side )].pack("s")     #side grid
       output.write [headerArray.sarch( @rail_front_size )].pack("S")     #front_siz
       output.write [headerArray.sarch( @rail_side_size )].pack("S")     #side_siz
       output.write [0].pack("S")
@@ -777,8 +777,8 @@ class BgEvent < AllEvent
       output.write [headerArray.sarch( @y )].pack("i")
     else
       output.write [headerArray.sarch( @rail_index )].pack("S")     #index
-      output.write [headerArray.sarch( @rail_front )].pack("S")     #front grid
-      output.write [headerArray.sarch( @rail_side )].pack("S")     #side grid
+      output.write [headerArray.sarch( @rail_front )].pack("s")     #front grid
+      output.write [headerArray.sarch( @rail_side )].pack("s")     #side grid
       output.write [0].pack("S")
       output.write [0].pack("S")
       output.write [0].pack("S")
