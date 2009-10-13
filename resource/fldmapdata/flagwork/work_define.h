@@ -126,7 +126,7 @@
 #define WK_SCENE_C01GYM0101              16514 /* 0x4082 C01ジム（三色ジム）：イベント用ワーク */
 #define WK_SCENE_D01R0101                16515 /* 0x4083 廃墟：イベント用ワーク */
 #define WK_SCENE_C02GYM0101              16516 /* 0x4084 博物館：イベント用ワーク */
-		/* not used 16517(0x4085) */
+#define WK_SCENE_T01R0101                16517 /* 0x4085 自宅１階：イベント用ワーク */
 		/* not used 16518(0x4086) */
 		/* not used 16519(0x4087) */
 		/* not used 16520(0x4088) */

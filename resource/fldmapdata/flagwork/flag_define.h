@@ -556,7 +556,7 @@
 #define FV_D01R0101_SUPPORT_01             532 /* 0x0214 D01R0101：夢ポケモンについて教えてくれるサポート */
 #define FV_D01R0101_POKE_01                533 /* 0x0215 D01R0101：夢ポケモン */
 #define FV_D01R0101_ITEM_01                534 /* 0x0216 D01R0101：夢アイテム */
-		/* not used   535(0x0217) */
+#define FV_T01R0101_FRIENDS                535 /* 0x0217 主人公自宅１階の友達 */
 		/* not used   536(0x0218) */
 		/* not used   537(0x0219) */
 		/* not used   538(0x021a) */
