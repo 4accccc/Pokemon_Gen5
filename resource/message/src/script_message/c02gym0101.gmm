@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-08T19:39:42"/>
+	<create user="matsumiya" host="W00207" date="2009-10-13T17:49:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -576,200 +576,109 @@ OLDMAN1</attribute>
 いったい　なにもの　なんだ！？</language>
 	</row>
 
-	<row id="msg_c02gym0101_fossil_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀：化石の復元
-・プレイヤーが化石を持っているときは
-　続けてmsg_c02gym0101_fossil_02
-・プレイヤーのポケモンを預かっているときは
-　続けてmsg_c02gym0101_fossil_07
-・持っていないときは
-　続けてmsg_c02gym0101_fossil_09</comment>
+	<row id="msg_c02gym0101_fossil_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">わたし　ここで　ポケモンの
-カセキの　けんきゅうを　しています▼</language>
-		<language name="JPN_KANJI" width="256">わたし　ここで　ポケモンの
-カセキの　研究を　しています▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_fossil_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀：化石の復元
-・はい／いいえの選択肢表示
-　はい　→化石１個→msg_c02gym0101_fossil_06
-　はい　→化石２個以上→msg_c02gym0101_fossil_03
-　いいえ→msg_c02gym0101_fossil_05</comment>
+	<row id="msg_c02gym0101_fossil_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">あなた　カセキ　もっていますね
-ポケモンに　もどしますか？</language>
-		<language name="JPN_KANJI" width="256">あなた　カセキ　持っていますね
-ポケモンに　戻しますか？</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_fossil_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀：化石の復元
-・アイテムリスト画面へ</comment>
+	<row id="msg_c02gym0101_fossil_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">どの　カセキを
-ポケモンに　ふくげん　しますか？</language>
-		<language name="JPN_KANJI" width="256">どの　カセキを
-ポケモンに　復元　しますか？</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_fossil_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀：化石の復元
-・化石２個以上ではい選択したとき
-　アイテムリストから選んだ化石を削除</comment>
+	<row id="msg_c02gym0101_fossil_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">わかりました！　その　カセキを
-ポケモンに　もどしますね！</language>
-		<language name="JPN_KANJI" width="256">わかりました！　その　カセキを
-ポケモンに　戻しますね！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_fossil_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀：化石の復元
-・いいえ選択
-・もしくはリストでやめる選択</comment>
+	<row id="msg_c02gym0101_fossil_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">カセキを　ふくげん　しないのですか
-わかりました！</language>
-		<language name="JPN_KANJI" width="256">カセキを　復元　しないのですか
-わかりました！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_fossil_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀：化石の復元
-・化石復元中
-・ME終了すると続けてmsg_c02gym0101_fossil_07</comment>
+	<row id="msg_c02gym0101_fossil_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">いま　カセキを
-ポケモンに　ふくげん　しています！</language>
-		<language name="JPN_KANJI" width="256">いま　カセキを
-ポケモンに　復元　しています！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_fossil_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀：化石の復元
-・化石復元
-　続けてmsg_c02gym0101_fossil_08
-・でも手持ちポケモンリストがいっぱいのときは
-　続けてmsg_c02gym0101_fossil_10</comment>
+	<row id="msg_c02gym0101_fossil_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">もどりました！！▼
-これが　[1:00:トレーナー名:0]ですよ！
-だいじに　してあげて　ください▼</language>
-		<language name="JPN_KANJI" width="256">戻りました！！▼
-これが　[1:00:トレーナー名:0]ですよ！
-大事に　してあげて　ください▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_fossil_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>続けてmsg_c02gym0101_fossil_12
-
-0＝主人公名
-1＝ポケモン名</comment>
+	<row id="msg_c02gym0101_fossil_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">[1:03:ポケモンタイプ:0]は
-[1:00:トレーナー名:1]を　てにいれた！▼</language>
-		<language name="JPN_KANJI" width="256">[1:03:ポケモンタイプ:0]は
-[1:00:トレーナー名:1]を　てにいれた！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_fossil_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>はい／いいえの選択肢表示
-・はい　→名前入力画面に
-・いいえ→終了</comment>
+	<row id="msg_c02gym0101_fossil_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">てにいれた　[1:00:トレーナー名:1]に
-ニックネームを　つけますか？</language>
-		<language name="JPN_KANJI" width="256">てにいれた　[1:00:トレーナー名:1]に
-ニックネームを　つけますか？</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_fossil_10" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀：化石の復元</comment>
+	<row id="msg_c02gym0101_fossil_10" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">助手♀＝化石の復元</attribute>
-		<language name="JPN" width="256">と　おもいましたが
-ポケモンが　いっぱい　ですね▼
-たいせつに　あずかっておくので
-また　とりに　きてくださいね！</language>
-		<language name="JPN_KANJI" width="256">と　思いましたが
-ポケモンが　いっぱい　ですね▼
-大切に　預かっておくので
-また　とりに　きてくださいね！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_meteor_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>BGメッセージ
-・パーティ内にデオキシスがいないとき</comment>
+	<row id="msg_c02gym0101_meteor_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">隕石共通</attribute>
-		<language name="JPN" width="256">うちゅうから　ふってきた
-ふしぎな　いんせきが　おかれている……</language>
-		<language name="JPN_KANJI" width="256">宇宙から　降ってきた
-不思議な　いん石が　展示されている……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_meteor_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>BGメッセージ
-・パーティ内にデオキシスがいるとき
-・パーティ内のデオキシスが
-　スピードフォルムにチェンジする
-・手持ちのデオキシスが
-　スピードフォルムでも、このメッセージ</comment>
+	<row id="msg_c02gym0101_meteor_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">隕石その１</attribute>
-		<language name="JPN" width="256">いんせきに　ちかづいたことで
-ある　ポケモンの▽
-うごく　はやさが　たかまった！</language>
-		<language name="JPN_KANJI" width="256">いん石に　近づいたことで
-ある　ポケモンの▽
-動く早さが　高まった！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_meteor_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>BGメッセージ
-・パーティ内にデオキシスがいるとき
-・パーティ内のデオキシスが
-　ディフェンスフォルムにチェンジする
-・手持ちのデオキシスが
-　ディフェンスフォルムでも、このメッセージ</comment>
+	<row id="msg_c02gym0101_meteor_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">隕石その２</attribute>
-		<language name="JPN" width="256">いんせきに　ちかづいたことで
-ある　ポケモンの▽
-まもる　ちからが　つよまった！</language>
-		<language name="JPN_KANJI" width="256">いん石に　近づいたことで
-ある　ポケモンの▽
-守る力が　強まった！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_meteor_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>BGメッセージ
-・パーティ内にデオキシスがいるとき
-・パーティ内のデオキシスが
-　オフェンスフォルムにチェンジする
-・手持ちのデオキシスが
-　アタックフォルムでも、このメッセージ</comment>
+	<row id="msg_c02gym0101_meteor_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">隕石その３</attribute>
-		<language name="JPN" width="256">いんせきに　ちかづいたことで
-ある　ポケモンの▽
-たたかう　ちからが　つよまった！</language>
-		<language name="JPN_KANJI" width="256">いん石に　近づいたことで
-ある　ポケモンの▽
-闘う力が　強まった！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_meteor_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>BGメッセージ
-・パーティ内にデオキシスがいるとき
-・パーティ内のデオキシスが
-　ノーマルフォルムにチェンジする
-・手持ちのデオキシスが
-　ノーマルフォルムでも、このメッセージ</comment>
+	<row id="msg_c02gym0101_meteor_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">隕石その４</attribute>
-		<language name="JPN" width="256">いんせきに　ちかづいたことで
-ある　ポケモンは　バランスのとれた▽
-すがたと　なった</language>
-		<language name="JPN_KANJI" width="256">いん石に　近づいたことで
-ある　ポケモンは▽
-バランスのとれた　姿と　なった</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c02gym0101_plate_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
