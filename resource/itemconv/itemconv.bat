@@ -27,5 +27,6 @@ move itemname.gmm %2resource/message/src
 move iteminfo.gmm %2resource/message/src
 move itemtype.dat %1src/item
 move itemuse_def.h %1include/item
+move itemtype_def.h %1include/item
 cp itempocket_def.h %1include/item
 cp itemsort_abc_def.h %1src/app/bag
