@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2009 10/01 (Thu) 21:34
+ * @date  2009 10/13 (Tue) 20:28
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -33,6 +33,9 @@
 
 #define ID_TRAINER_2VS2_OFFSET           (5000) //2vs2トレーナースクリプト
 #define ID_TRAINER_2VS2_OFFSET_END       (6999)
+
+#define ID_FLD_ITEM_OFFSET               (7000) //フィールドアイテムスクリプト
+#define ID_FLD_ITEM_OFFSET_END           (7799)
 
 #define ID_HIDE_ITEM_OFFSET              (8000) //隠しアイテムスクリプト
 #define ID_HIDE_ITEM_OFFSET_END          (8799)
