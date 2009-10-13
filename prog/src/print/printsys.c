@@ -153,6 +153,7 @@ struct _PRINT_STREAM {
   u8    clearColor;
   u8    putPerFrame;
   u8    stopFlag;
+  u8    callbackResult;
 
   pPrintCallBack  callback_func;
   u32       org_arg;
@@ -1039,6 +1040,7 @@ PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
   stwk->pauseWait = 0;
   stwk->pauseReleaseFlag = FALSE;
   stwk->stopFlag = FALSE;
+  stwk->callbackResult = FALSE;
 
   return stwk;
 }
@@ -1148,6 +1150,13 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
 {
   PRINT_STREAM* wk = wk_adrs;
 
+  if( wk->callback_func != NULL && wk->callbackResult ){
+    wk->callbackResult = wk->callback_func( wk->arg );
+    if( wk->callbackResult ){
+      return;
+    }
+  }
+
   if( wk->stopFlag ){
     return;
   }
@@ -1176,13 +1185,6 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
           /* fallthru */
         default:
           wk->sp = print_next_char( &wk->printJob, wk->sp );
-
-          if( wk->callback_func )
-          {
-            wk->callback_func( wk->arg );
-            wk->arg = wk->current_arg;
-          }
-
           if( *(wk->sp) == EOM_CODE )
           {
             wk->state = PRINTSTREAM_STATE_DONE;
@@ -1193,6 +1195,11 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
           }
 
           GFL_BMPWIN_TransVramCharacter( wk->dstWin );
+          if( wk->callback_func )
+          {
+            wk->callbackResult = wk->callback_func( wk->arg );
+            wk->arg = wk->current_arg;
+          }
           break;
         }
       }
