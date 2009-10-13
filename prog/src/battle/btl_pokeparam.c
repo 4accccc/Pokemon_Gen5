@@ -593,6 +593,18 @@ int BPP_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid )
 }
 //=============================================================================================
 /**
+ * ニックネーム取得
+ *
+ * @param   bpp
+ * @param   dst
+ */
+//=============================================================================================
+void BPP_GetNickName( const BTL_POKEPARAM* bpp, STRBUF* dst )
+{
+  PP_Get( bpp->coreParam.ppSrc, ID_PARA_nickname, dst );
+}
+//=============================================================================================
+/**
  * 所有アイテムIDを返す
  *
  * @param   pp

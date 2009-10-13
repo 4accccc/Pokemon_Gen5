@@ -320,6 +320,7 @@ extern void BPP_CurePokeSick( BTL_POKEPARAM* pp );
 extern void BPP_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick );
 extern void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID );
 extern void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFunc, void* callbackWork );
+extern void BPP_GetNickName( const BTL_POKEPARAM* bpp, STRBUF* dst );
 
 extern BOOL BPP_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType );
 extern PokeSick BPP_GetPokeSick( const BTL_POKEPARAM* pp );
