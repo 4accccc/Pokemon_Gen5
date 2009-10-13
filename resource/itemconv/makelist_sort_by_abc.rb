@@ -64,6 +64,7 @@ reader.each { |row|
 reader.close
 
 # 昇順ソート
+# "ァ-ン"を"ぁ-ん"として扱う
 abc_sort = tbl.sort_by{|name, id| name.tr("ァ-ン","ぁ-ん") }
 
 #idとソート結果を結びつけたハッシュを生成
@@ -89,6 +90,7 @@ if OUTPUT_ARC == 1
   }
   dstFile.close;
 else
+  #ヘッダファイルで出力
   File.open( DST_FILENAME ,"w"){ |file|
 
     #ヘッダ出力
