@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2009-10-05T20:41:09" source="cannon_01_00.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2009-10-13T17:34:10" source="cannon_01_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2009-10-05T20:41:09" source="cannon_01_00.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2009-10-13T17:34:10" source="cannon_01_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-1.462158 0.000000 -1.155029" whd="3.090820 5.416992 2.309570"/>
+<box_test pos_scale="4" xyz="-1.462158 0.000000 -1.155029" whd="3.090820 5.468750 2.309570"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="cannon001"
@@ -35,7 +35,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="cannon001_pl"
-		path="C:/home/wb_data3d/field/in28/cannon/tex/cannon001.tga"
+		path="C:/home/wb_data3d/gimmick/gym_fly/cannon/tex/cannon001.tga"
 	>
 		<bitmap size="128">
 			bbbb bbbb aaaa aaa7 aaaa aaaa 666a 6666
@@ -61,7 +61,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="cannon002_pl"
-		path="C:/home/wb_data3d/field/in28/cannon/tex/cannon002.tga"
+		path="C:/home/wb_data3d/gimmick/gym_fly/cannon/tex/cannon002.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -121,7 +121,7 @@
 	/>
 	<material index="1" name="cannon002_lm1"
 		light0="off" light1="off" light2="off" light3="off"
-		face="front"
+		face="both"
 		alpha="0"
 		wire_mode="off"
 		polygon_mode="modulate"
@@ -145,7 +145,7 @@
 	/>
 	<material index="2" name="cannon002_lm2"
 		light0="off" light1="off" light2="off" light3="off"
-		face="front"
+		face="both"
 		alpha="0"
 		wire_mode="off"
 		polygon_mode="modulate"
@@ -517,8 +517,8 @@
 	<polygon index="3" name="polygon3"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-1.536133 -1.198730 -0.508789"
-		volume_max="1.536133 1.198730 0.508789"
+		volume_min="-1.536133 -1.302246 0.000000"
+		volume_max="1.536133 1.302246 0.000000"
 		volume_r="2.013916"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
@@ -530,13 +530,13 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 32.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="-1.536133 -1.198730 -0.508789"/>
+					<pos_xyz xyz="-1.536133 -1.302246 0.000000"/>
 					<tex st="32.000000 32.000000"/>
-					<pos_xy xy="1.536133 -1.198730"/>
+					<pos_xy xy="1.536133 -1.302246"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_yz yz="1.198730 0.508789"/>
+					<pos_xy xy="1.536133 1.302246"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-1.536133 1.198730"/>
+					<pos_xy xy="-1.536133 1.302246"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -544,8 +544,8 @@
 	<polygon index="4" name="polygon4"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-1.510986 -1.220215 -0.517822"
-		volume_max="1.510986 1.220215 0.517822"
+		volume_min="-1.510986 -1.325439 0.000000"
+		volume_max="1.510986 1.325439 0.000000"
 		volume_r="2.010010"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
@@ -557,13 +557,13 @@
 					<mtx idx="0"/>
 					<tex st="32.000000 32.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="-1.510986 -1.220215 -0.517822"/>
+					<pos_xyz xyz="-1.510986 -1.325439 0.000000"/>
 					<tex st="0.000000 32.000000"/>
-					<pos_xy xy="1.510986 -1.220215"/>
+					<pos_xy xy="1.510986 -1.325439"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_yz yz="1.220215 0.517822"/>
+					<pos_xy xy="1.510986 1.325439"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_xy xy="-1.510986 1.220215"/>
+					<pos_xy xy="-1.510986 1.325439"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -571,8 +571,8 @@
 	<polygon index="5" name="polygon5"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.979248 -0.764404 -0.324463"
-		volume_max="0.979248 0.764404 0.324463"
+		volume_min="-0.979248 -0.830322 0.000000"
+		volume_max="0.979248 0.830322 0.000000"
 		volume_r="1.283936"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
@@ -584,13 +584,13 @@
 					<mtx idx="0"/>
 					<tex st="32.000000 32.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="-0.979248 -0.764404 -0.324463"/>
+					<pos_xyz xyz="-0.979248 -0.830322 0.000000"/>
 					<tex st="0.000000 32.000000"/>
-					<pos_xy xy="0.979248 -0.764404"/>
+					<pos_xy xy="0.979248 -0.830322"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_yz yz="0.764404 0.324463"/>
+					<pos_xy xy="0.979248 0.830322"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_xy xy="-0.979248 0.764404"/>
+					<pos_xy xy="-0.979248 0.830322"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -598,8 +598,8 @@
 	<polygon index="6" name="polygon6"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.723633 -0.584473 -0.248047"
-		volume_max="0.723633 0.584473 0.248047"
+		volume_min="-0.723633 -0.634766 0.000000"
+		volume_max="0.723633 0.634766 0.000000"
 		volume_r="0.962646"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
@@ -611,13 +611,13 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 32.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="-0.723633 -0.584473 -0.248047"/>
+					<pos_xyz xyz="-0.723633 -0.634766 0.000000"/>
 					<tex st="32.000000 32.000000"/>
-					<pos_xy xy="0.723633 -0.584473"/>
+					<pos_xy xy="0.723633 -0.634766"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_yz yz="0.584473 0.248047"/>
+					<pos_xy xy="0.723633 0.634766"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-0.723633 0.584473"/>
+					<pos_xy xy="-0.723633 0.634766"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -913,13 +913,13 @@
 		billboard="y_on"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="11.096924 57.082031 10.185303"
+		translate="11.096924 57.082031 -0.063232"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-1.536133 -1.198730 -0.508789"
-		volume_max="1.536133 1.198730 0.508789"
+		volume_min="-1.536133 -1.302246 0.000000"
+		volume_max="1.536133 1.302246 0.000000"
 		volume_r="2.013916"
 	>
 		<display index="0" material="1" polygon="3" priority="0"/>
@@ -933,13 +933,13 @@
 		billboard="y_on"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-11.304932 49.770996 13.092773"
+		translate="-11.304932 49.770996 -0.063232"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-1.510986 -1.220215 -0.517822"
-		volume_max="1.510986 1.220215 0.517822"
+		volume_min="-1.510986 -1.325439 0.000000"
+		volume_max="1.510986 1.325439 0.000000"
 		volume_r="2.010010"
 	>
 		<display index="0" material="1" polygon="4" priority="0"/>
@@ -953,13 +953,13 @@
 		billboard="y_on"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="18.228516 49.643555 11.649414"
+		translate="18.228516 49.643555 -0.063232"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.979248 -0.764404 -0.324463"
-		volume_max="0.979248 0.764404 0.324463"
+		volume_min="-0.979248 -0.830322 0.000000"
+		volume_max="0.979248 0.830322 0.000000"
 		volume_r="1.283936"
 	>
 		<display index="0" material="2" polygon="5" priority="0"/>
@@ -973,13 +973,13 @@
 		billboard="y_on"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-17.498779 61.099609 11.331543"
+		translate="-17.498779 61.099609 -0.063232"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.723633 -0.584473 -0.248047"
-		volume_max="0.723633 0.584473 0.248047"
+		volume_min="-0.723633 -0.634766 0.000000"
+		volume_max="0.723633 0.634766 0.000000"
 		volume_r="0.962646"
 	>
 		<display index="0" material="2" polygon="6" priority="0"/>
