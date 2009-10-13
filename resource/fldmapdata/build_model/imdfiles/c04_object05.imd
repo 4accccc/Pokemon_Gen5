@@ -3,18 +3,18 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-10-05T20:47:36" source="c04_object02.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2009-10-07T16:36:48" source="c04_object05.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2009-10-05T20:47:36" source="c04_object02.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2009-10-07T16:36:48" source="c04_object05.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
-	pos_scale="6"
+	pos_scale="5"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-2.000000 0.000000 -2.000000" whd="4.000000 0.000000 4.000000"/>
+<box_test pos_scale="5" xyz="1.750000 1.875000 -4.082764" whd="2.500000 1.250000 2.165039"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="c4g_tenten.1"
@@ -35,7 +35,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c4g_tenten.1_pl"
-		path="C:/home/wb_data3d/build_model/indoor/c04_object02/tex/c4g_tenten.1.tga"
+		path="C:/home/wb_data3d/build_model/indoor/c04_object05/tex/c4g_tenten.1.tga"
 	>
 		<bitmap size="1024">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -173,7 +173,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c4g_tenten.2_pl"
-		path="C:/home/wb_data3d/build_model/indoor/c04_object02/tex/c4g_tenten.2.tga"
+		path="C:/home/wb_data3d/build_model/indoor/c04_object05/tex/c4g_tenten.2.tga"
 	>
 		<bitmap size="1024">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -352,9 +352,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 0.000000 -4.000000"
-		volume_max="4.000000 0.000000 4.000000"
-		volume_r="5.656738"
+		volume_min="1.750000 1.875000 -4.082520"
+		volume_max="4.250000 3.125000 -1.917480"
+		volume_r="6.670410"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -363,15 +363,15 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="-31.375000 95.375000"/>
+					<tex st="0.000000 64.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_s xyz="-4.000000 0.000000 4.000000"/>
-					<tex st="95.375000 95.375000"/>
-					<pos_xy xy="4.000000 0.000000"/>
-					<tex st="95.375000 -31.375000"/>
-					<pos_xz xz="4.000000 -4.000000"/>
-					<tex st="-31.375000 -31.375000"/>
-					<pos_xy xy="-4.000000 0.000000"/>
+					<pos_xyz xyz="1.750000 1.875000 -1.917480"/>
+					<tex st="64.000000 64.000000"/>
+					<pos_xy xy="4.250000 1.875000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_yz yz="3.125000 -4.082520"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="1.750000 3.125000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -379,7 +379,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="pPlane24" kind="mesh"
+	<node index="0" name="pasted__pPlane38" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -393,9 +393,9 @@
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 0.000000 -4.000000"
-		volume_max="4.000000 0.000000 4.000000"
-		volume_r="5.656738"
+		volume_min="1.750000 1.875000 -4.082520"
+		volume_max="4.250000 3.125000 -1.917480"
+		volume_r="6.670410"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
