@@ -121,6 +121,7 @@ struct _BTL_POKEPARAM {
   PokeTypePair  type;
   u16  tokusei;
   u16  actionAgility;
+  u32  exp;
 
   u16 turnCount;        ///< 継続して戦闘に出ているカウンタ
   u16 appearedTurn;     ///< 戦闘に出たターンを記録
@@ -285,7 +286,7 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
   bpp->type = PokeTypePair_Make( bpp->baseParam.type1, bpp->baseParam.type2 );
   bpp->tokusei = PP_Get( srcPP, ID_PARA_speabino, 0 );
   bpp->formNo = PP_Get( srcPP, ID_PARA_form_no, 0 );
-
+  bpp->exp = PP_Get( srcPP, ID_PARA_exp, NULL );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -552,6 +553,7 @@ int BPP_GetValue( const BTL_POKEPARAM* bpp, BppValueID vid )
 
   case BPP_TOKUSEI:         return bpp->tokusei;
   case BPP_FORM:            return bpp->formNo;
+  case BPP_EXP:             return bpp->exp;
 
   case BPP_HEAVY:           return 50;  // @@@ 今はてきとう
 
@@ -2020,7 +2022,7 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
   {
     u32 expNow, expBorder;
 
-    expNow = PP_Get( bpp->coreParam.ppSrc, ID_PARA_exp, NULL );
+    expNow = bpp->exp;
     expBorder = POKETOOL_GetMinExp( bpp->baseParam.monsno, bpp->formNo, bpp->baseParam.level+1 );
 
     if( (expNow + (*expRest)) >= expBorder )
@@ -2033,7 +2035,8 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
       info->sp_def = bpp->baseParam.sp_defence;
       info->agi    = bpp->baseParam.agility;
 
-      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, (expNow + expAdd) );
+      bpp->exp = (expNow + expAdd);
+      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );
       PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
 
       bpp->baseParam.level = PP_Get( bpp->coreParam.ppSrc, ID_PARA_level, 0 );
@@ -2056,7 +2059,8 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
     }
     else
     {
-      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, (expNow + (*expRest)) );
+      bpp->exp = expNow + (*expRest);
+      PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_exp, bpp->exp );
     }
   }
 
