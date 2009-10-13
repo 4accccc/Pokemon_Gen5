@@ -57,7 +57,7 @@ VMCMD_RESULT EvCmdGymElec_PushSw( VMHANDLE *core, void *wk )
     return VMCMD_RESULT_SUSPEND;
   }
 
-  SCRIPT_EntryNextEvent( sc, call_event );
+  SCRIPT_CallEvent( sc, call_event );
   
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
@@ -131,7 +131,7 @@ VMCMD_RESULT EvCmdGymNormal_MoveWall( VMHANDLE *core, void *wk )
     return VMCMD_RESULT_SUSPEND;
   }
 
-  SCRIPT_EntryNextEvent( sc, call_event );
+  SCRIPT_CallEvent( sc, call_event );
   
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
@@ -162,7 +162,7 @@ VMCMD_RESULT EvCmdGymAnti_SwOn( VMHANDLE *core, void *wk )
     return VMCMD_RESULT_SUSPEND;
   }
 
-  SCRIPT_EntryNextEvent( sc, call_event );  
+  SCRIPT_CallEvent( sc, call_event );  
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 
@@ -190,7 +190,7 @@ VMCMD_RESULT EvCmdGymAnti_OpenDoor( VMHANDLE *core, void *wk )
     return VMCMD_RESULT_SUSPEND;
   }
 
-  SCRIPT_EntryNextEvent( sc, call_event );  
+  SCRIPT_CallEvent( sc, call_event );  
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 
