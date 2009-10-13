@@ -98,7 +98,7 @@ SUBDIRS	=	wmi \
 			mictest \
 			pokemon_center \
 			fld3d_ci \
-			encount \
+			namein \
             box \
 			battle_championship \
 			sodateya

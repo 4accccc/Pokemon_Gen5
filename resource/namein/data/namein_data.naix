@@ -1,0 +1,25 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: namein_data.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_NAMEIN_DATA_NAIX_
+#define NARC_NAMEIN_DATA_NAIX_
+
+enum {
+	NARC_namein_data_keymap_kana_dat = 0,
+	NARC_namein_data_keymap_kata_dat = 1,
+	NARC_namein_data_keymap_abc_dat = 2,
+	NARC_namein_data_keymap_kigou_dat = 3,
+	NARC_namein_data_keymap_qwerty_dat = 4,
+	NARC_namein_data_change_dakuten_dat = 5,
+	NARC_namein_data_change_handakuten_dat = 6,
+	NARC_namein_data_change_qwerty_dat = 7
+};
+
+/* NARC_NAMEIN_DATA_NAIX_ */
+#endif

@@ -1,0 +1,8 @@
+"keymap_kana.dat"
+"keymap_kata.dat"
+"keymap_abc.dat"
+"keymap_kigou.dat"
+"keymap_qwerty.dat"
+"change_dakuten.dat"
+"change_handakuten.dat"
+"change_qwerty.dat"

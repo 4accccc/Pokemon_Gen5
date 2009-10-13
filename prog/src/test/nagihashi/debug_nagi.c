@@ -37,6 +37,7 @@
 #include "app/config_panel.h"
 #include "debug_template.h"
 #include "debug_poke2dcheck.h"
+#include "app/name_input.h"
 
 #include "savedata/irc_compatible_savedata.h"
 
@@ -168,6 +169,7 @@ typedef struct
 	TOWNMAP_PARAM					townmap_param;
 	WORLDTRADE_PARAM			gts_param;
 	TEMPLATE_PARAM				template_param;
+	NAMEIN_PARAM					namein_param;
 } DEBUG_NAGI_MAIN_WORK;
 
 //-------------------------------------
@@ -233,6 +235,7 @@ static void LISTDATA_CallProcGts( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcConfig( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcTemplate( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcPoke2DCheck( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallProcNamin( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_AddRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_FullRankData( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallProcTownMap( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -314,6 +317,7 @@ enum
 	LISTDATA_SEQ_PROC_CONFIG,
 	LISTDATA_SEQ_PROC_TEMPLATE,
 	LISTDATA_SEQ_PROC_POKE2DCHECK,
+	LISTDATA_SEQ_PROC_NAMEIN,
 
 	LISTDATA_SEQ_MAX,
 };
@@ -337,6 +341,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 	LISTDATA_CallProcConfig,
 	LISTDATA_CallProcTemplate,
 	LISTDATA_CallProcPoke2DCheck,
+	LISTDATA_CallProcNamin,
 };
 
 //-------------------------------------
@@ -351,6 +356,9 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 		L"ポケモン２Dチェック", LISTDATA_SEQ_PROC_POKE2DCHECK,
 	},
 	{	
+		L"名前入力", LISTDATA_SEQ_PROC_NAMEIN,
+	},
+	{	
 		L"コンフィグ", LISTDATA_SEQ_PROC_CONFIG
 	},
 	{	
@@ -360,11 +368,11 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	{	
 		L"GTS", LISTDATA_SEQ_PROC_GTS
 	},
-#endif
 	{	
 		L"結果", LISTDATA_SEQ_PROC_RESULT,
 	},
 
+#endif
 #if 0
 	{	
 		L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
@@ -379,7 +387,7 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 		L"運命値チェック", LISTDATA_SEQ_PROC_NAME_DEBUG,
 	},
 #endif
-#if 1
+#if 0
 	{	
 		L"ランキング", LISTDATA_SEQ_PROC_RANKING_DEBUG,
 	},
@@ -430,6 +438,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void 
 	GFL_STD_MemClear( p_wk, sizeof(DEBUG_NAGI_MAIN_WORK) );
 
 	CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
+	p_wk->namein_param.strbuf	= GFL_STR_CreateBuffer( 32, HEAPID_NAGI_DEBUG );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -458,6 +467,8 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Exit( GFL_PROC *p_proc, int *p_seq, void 
 		GFL_PROC_SysSetNextProc(
 				p_wk->overlay_Id, p_wk->p_procdata, p_wk->p_proc_work );
 	}
+
+	GFL_STR_DeleteBuffer( p_wk->namein_param.strbuf );
 
 	DeleteTemporaryModules( p_wk );
 
@@ -707,6 +718,7 @@ static void CreateTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void DeleteTemporaryModules( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
+
 	LIST_Exit( &p_wk->list );
 	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
 	MSG_Exit( &p_wk->msg );
@@ -906,6 +918,17 @@ static void LISTDATA_CallProcTemplate( DEBUG_NAGI_MAIN_WORK *p_wk )
 static void LISTDATA_CallProcPoke2DCheck( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DebugPoke2D_ProcData, NULL );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	名前入力
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_CallProcNamin( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &NameInputProcData, &p_wk->namein_param );
 }
 //----------------------------------------------------------------------------
 /**

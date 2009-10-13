@@ -202,6 +202,8 @@
   ARCID_BOX2_GRA  "box_gra.narc"   #ボックス画面グラフィック
   ARCID_FLD3D_CI_SETUP "fld3d_ci_setup.narc"  #フィールド3Dカットインセットアップ用データ
 	ARCID_DEBUG_NAGI		"debug\d_nagi_graphic.narc"	#名木橋デバッグ用グラフィックデータ
+	ARCID_NAMEIN_GRA		"namein_gra.narc"		#名前入力用グラフィック
+	ARCID_NAMEIN_DATA		"namein_data.narc"	#名前入力用データ
 	ARCID_BATTLE_CHAMPIONSHIP		"battle_championship.narc"	#バトル大会用
   ARCID_GYM_FLY "fieldmap/gym_fly.narc"  #飛行ジム
   ARCID_GYM_ANTI "fieldmap/gym_anti.narc"  #相反ジム

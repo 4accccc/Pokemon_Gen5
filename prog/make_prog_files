@@ -126,7 +126,9 @@ SRCS  +=    $(SOUNDSRC) \
         system/brightness.c \
         system/touch_subwindow.c \
         app/trainercard/trcard_sys.c \
-        app/name_input/name_input.c \
+        app/name_input/namein.c \
+				app/name_input/namein_graphic.c \
+				app/name_input/namein_data.c \
         app/pms_input/pmsi_param.c \
         sound/snd_viewer.c \
         sound/snd_viewer_mcs.c \
