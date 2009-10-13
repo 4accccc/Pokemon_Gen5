@@ -35,6 +35,15 @@ end
 
 #--------------------------------------------------------------
 #--------------------------------------------------------------
+def makeEvents( zone_ids )
+  zone_ids.each{|id|
+    command = "ruby ../eventdata/dummydata/make_dummy.rb #{id}"
+    system( command )
+  }
+end
+
+#--------------------------------------------------------------
+#--------------------------------------------------------------
 def makeGMMs( zone_ids )
   zone_ids.each{|id|
     target = SCRMSG_PATH + id + ".gmm"
@@ -134,6 +143,7 @@ end
 
 if ARGV[1] == "true" then
   ids = readIDs( ARGV[0] )
+  makeEvents( ids )
   makeGMMs( ids )
   makeScripts( ids )
   makeScriptsIndex( ids )

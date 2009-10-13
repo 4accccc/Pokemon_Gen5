@@ -9,8 +9,8 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../message/dst/script/msg_t040101.h"
-  //.include  "t040101.h"
+  .include  "msg_t04r0101.h"
+  //.include  "t04r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体

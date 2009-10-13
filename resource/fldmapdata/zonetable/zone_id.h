@@ -201,7 +201,7 @@
 #define ZONE_ID_T03R0301         (197)
 #define ZONE_ID_T03R0401         (198)
 #define ZONE_ID_T03PC0101        (199)
-#define ZONE_ID_T040101          (200)
+#define ZONE_ID_T04R0101         (200)
 #define ZONE_ID_T05R0101         (201)
 #define ZONE_ID_T05R0201         (202)
 #define ZONE_ID_T05R0301         (203)

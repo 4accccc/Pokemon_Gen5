@@ -10,6 +10,7 @@
 #define __USESCRIPT_H__
 
 #define	__ASM_NO_DEF_
+
 #define ASM_CPP							//pm_version.h
 
 //======================================================================
