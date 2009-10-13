@@ -487,6 +487,20 @@ extern void GFL_BG_LoadScreenBuffer( u8 frmnum, const void * dat, u32 datasiz );
 
 //--------------------------------------------------------------------------------------------
 /**
+ *  スクリーンデータをバッファにコピー（オフセット指定有り）
+ *
+ * @param frmnum    BGフレーム
+ * @param dat     指定データ
+ * @param datasizpx データサイズ
+ * @param offs    オフセット
+ *
+ * @retrn none
+ */
+//--------------------------------------------------------------------------------------------
+extern void GFL_BG_LoadScreenBufferOfs( u8 frmnum, const void * dat, u32 datasiz, u32 offs );
+
+//--------------------------------------------------------------------------------------------
+/**
  * キャラクター転送
  *
  * @param frmnum    BGフレーム番号
