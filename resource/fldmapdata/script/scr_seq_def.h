@@ -2848,7 +2848,7 @@
 #define _GYM_NORMAL_CHK_UNROCK(ret_wk) \
     _ASM_GYM_NORMAL_CHK_UNROCK ret_wk
 
-  .macro  _ASM_GYM_NORMAL_CHK_UNROCK
+  .macro  _ASM_GYM_NORMAL_CHK_UNROCK ret_wk
   .short  EV_SEQ_GYM_NORMAL_CHK_UNROCK
   .short  \ret_wk
   .endm
@@ -2862,7 +2862,7 @@
 #define _GYM_NORMAL_MOVE_WALL(wall_idx) \
     _ASM_GYM_NORMAL_MOVE_WALL wall_idx
 
-  .macro  _ASM_GYM_NORMAL_MOVE_WALL
+  .macro  _ASM_GYM_NORMAL_MOVE_WALL wall_idx
   .short  EV_SEQ_GYM_NORMAL_MOVE_WALL
   .short  \wall_idx
   .endm
@@ -2889,7 +2889,7 @@
 #define _GYM_ANTI_SW_ON(sw_idx) \
     _ASM_GYM_ANTI_SW_ON sw_idx
 
-  .macro  _ASM_GYM_ANTI_SW_ON
+  .macro  _ASM_GYM_ANTI_SW_ON sw_idx
   .short  EV_SEQ_GYM_ANTI_SW_ON
   .short  \sw_idx
   .endm
@@ -2903,7 +2903,7 @@
 #define _GYM_ANTI_OPEN_DOOR(door_idx) \
     _ASM_GYM_ANTI_OPEN_DOOR door_idx
 
-  .macro  _ASM_GYM_ANTI_OPEN_DOOR
+  .macro  _ASM_GYM_ANTI_OPEN_DOOR door_idx
   .short  EV_SEQ_GYM_ANTI_OPEN_DOOR
   .short  \door_idx
   .endm
