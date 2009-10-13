@@ -34,6 +34,11 @@ include	$(PROJECT_RSCDIR)\macro_define
 FOGFILE = $(wildcard *.fog)
 OBJ_FILE = $(FOGFILE:.fog=.dat)
 
+FOGIDX_TABLE = zonefog_table.xls
+FOGIDX_CSV = zonefog_table.csv
+
+ZONE_HADER = $(PROJECT_ARCDIR)/fieldmap/zone_id.h
+
 LIST_FILE 	= list.txt
 
 
@@ -73,8 +78,15 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(OBJ_FILE)
+$(targetname).narc: $(OBJ_FILE) $(FOGIDX_TABLE)
+	#.dat
 	-ls *.dat > $(LIST_FILE)
+
+	#list
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(FOGIDX_CSV) -p 0 -s csv $(FOGIDX_TABLE)
+	perl table_conv.pl $(FOGIDX_CSV) $(ZONE_HADER) $(LIST_FILE)
+	-ls *.bin >> $(LIST_FILE)
+
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix

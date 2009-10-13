@@ -41,7 +41,12 @@ ITPFILE = $(wildcard *.itp)
 ITAFILE = $(wildcard *.ita)
 
 TXTFILE = $(wildcard *.txt)
-XLSFILE = $(wildcard *.xls)
+XLSFILE = $(wildcard zone_*.xls)
+
+LISTXLSFILE = light_list.xls
+LISTCSVFILE = light_list.csv
+
+ZONE_HADER = $(PROJECT_ARCDIR)/fieldmap/zone_id.h
 
 ##########################################
 #ターゲットファイル
@@ -66,7 +71,7 @@ LIST_FILE 	= list.txt
 OBJ_FILE 	= $(NCLRFILE) $(NCERFILE) $(NSCRFILE) \
 			  $(NSBMDFILE) $(NSBCAFILE) $(NSBVAFILE) \
 			  $(NSBMAFILE) $(NSBTPFILE) $(NSBTAFILE) \
-			  $(DATFILE)
+			  $(DATFILE) $(LISTXLSFILE)
 
 
 
@@ -139,10 +144,14 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 ifeq	($(CONVERTUSER),true)	
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(OBJ_FILE) $(TXTFILE)
-	-ls *.txt > $(LIST_FILE)
 	-ls *.dat > $(LIST_FILE)
 	-ls *.N*R >> $(LIST_FILE)
 	-ls *.nsb* >> $(LIST_FILE)
+
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(LISTCSVFILE) -p 0 -s csv $(LISTXLSFILE)
+	perl table_conv.pl $(LISTCSVFILE) $(ZONE_HADER) $(LIST_FILE)
+	-ls *.bin >> $(LIST_FILE)
+
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix

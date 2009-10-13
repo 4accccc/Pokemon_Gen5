@@ -11,7 +11,8 @@
 #define NARC_FIELD_ZONE_LIGHT_NAIX_
 
 enum {
-	NARC_field_zone_light_zone_dummylight_dat = 0
+	NARC_field_zone_light_zone_dummylight_dat = 0,
+	NARC_field_zone_light_light_list_bin = 1
 };
 
 /* NARC_FIELD_ZONE_LIGHT_NAIX_ */

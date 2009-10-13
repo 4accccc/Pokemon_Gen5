@@ -611,7 +611,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
 	// ゾーンフォグシステム生成
 	fieldWork->zonefog = FIELD_ZONEFOGLIGHT_Create( fieldWork->heapID );
-	FIELD_ZONEFOGLIGHT_Load( fieldWork->zonefog, FIELD_ZONEFOGLIGHT_DATA_NONE, FIELD_ZONEFOGLIGHT_DATA_NONE, fieldWork->heapID );
+	FIELD_ZONEFOGLIGHT_LoadZoneID( fieldWork->zonefog, fieldWork->map_id, fieldWork->heapID );
 
   // ライトシステム生成
   {
@@ -2141,8 +2141,7 @@ static void zoneChange_SetZoneFogLight( FIELDMAP_WORK *fieldWork, u32 zone_id )
 
 	FIELD_ZONEFOGLIGHT_Clear( p_zonefog );
 	
-	FIELD_ZONEFOGLIGHT_Load( p_zonefog, FIELD_ZONEFOGLIGHT_DATA_NONE, FIELD_ZONEFOGLIGHT_DATA_NONE, fieldWork->heapID );
-//	FIELD_ZONEFOGLIGHT_Load( p_zonefog, 0, 0, fieldWork->heapID );
+	FIELD_ZONEFOGLIGHT_LoadZoneID( p_zonefog, zone_id, fieldWork->heapID );
 }
 
 //--------------------------------------------------------------
