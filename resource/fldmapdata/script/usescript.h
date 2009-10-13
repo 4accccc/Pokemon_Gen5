@@ -124,8 +124,8 @@
 
 #include "../zonetable/zone_id.h"     //ゾーンID参照
 
-//手持ちアイテム
-//#include "../../../prog/include/savedata/myitem_savedata_def.h"
+//トレーナーID
+#include "../../../prog/include/tr_tool/trno_def.h"
 
 #if 0 //wb null
 

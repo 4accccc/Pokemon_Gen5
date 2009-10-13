@@ -5,7 +5,7 @@
 #define _FLD_ITEM_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_FLD_ITEM_0 (1)
-#define SCRID_FLD_ITEM2 (2)
+#define SCRID_FLD_ITEM_0 (7000)
+#define SCRID_FLD_ITEM2 (7001)
 
 #endif //_FLD_ITEM_DEF_H_
