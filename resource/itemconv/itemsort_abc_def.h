@@ -6,6 +6,7 @@
  * @note	このファイルはmakelist_sort_by_abc.rbによって自動生成されたものです。
  */
 //=========================================================================
+#pragma once
 
 //50音昇順の優先度 添字:item_id 
 static const u16 ItemSortByAbc[] = {

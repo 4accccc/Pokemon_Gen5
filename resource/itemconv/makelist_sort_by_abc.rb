@@ -19,6 +19,8 @@ require "jcode"
 #===================================================================
 # 設定
 #===================================================================
+# 昇順ソート
+LOCALIZE = 0  # ローカライズの際、1にしてください。
 OUTPUT_ARC = 0    # 0=ヘッダ出力, 1=ARCで出力(u16ごとに生データ)
 
 if OUTPUT_ARC == 1
@@ -31,8 +33,19 @@ else
   DST_TBL_HEADER = "//50音昇順の優先度 添字:item_id \nstatic const u16 ItemSortByAbc[] = {"
 end
 
+if LOCALIZE == 0
+  # "ァ-ン"を"ぁ-ん"として扱う
+  TR_SRC_CODE = "ァ-ン"
+  TR_DST_CODE = "ぁ-ん"
+else
+  # "a-z"を"A-Z"として扱う
+  TR_SRC_CODE = "a-z"
+  TR_DST_CODE = "A-Z"
+end
+
 CSV_ROW_ID = 0 #IDの列
 CSV_ROW_NAME = 2; #名前データの列
+
 
 #===================================================================
 # 主処理
@@ -64,8 +77,7 @@ reader.each { |row|
 reader.close
 
 # 昇順ソート
-# "ァ-ン"を"ぁ-ん"として扱う
-abc_sort = tbl.sort_by{|name, id| name.tr("ァ-ン","ぁ-ん") }
+abc_sort = tbl.sort_by{|name, id| name.tr(TR_SRC_CODE,TR_DST_CODE) }
 
 #idとソート結果を結びつけたハッシュを生成
 count = 0;
@@ -101,7 +113,8 @@ else
     file.puts(" * @autor\t" + DST_AUTOR);
     file.puts(" * @note\t" + DST_NOTE);
     file.puts(" */");
-    file.puts("//=========================================================================\n\n");
+    file.puts("//=========================================================================\n");
+    file.puts("#pragma once\n\n");
     file.puts(DST_TBL_HEADER);
 
     #データテーブル出力
