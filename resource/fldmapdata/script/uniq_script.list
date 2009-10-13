@@ -7,4 +7,5 @@ UNIQ_SCRIPTFILES	= \
   init_scr.ev \
   sodateya_scr.ev \
   pokecen_scr.ev \
-  hiden.ev
+  hiden.ev \
+  fld_item.ev

@@ -832,6 +832,8 @@
  *  @param val 格納する値
  */
 //--------------------------------------------------------------
+#define _LDVAL( wk, val ) _ASM_LDVAL wk,val
+
   .macro  _ASM_LDVAL  wk,val
   .short  EV_SEQ_LD_WK_VAL
   .short  \wk
@@ -846,6 +848,7 @@
  */
 //--------------------------------------------------------------
 #define _LDWK( wk1, wk2 ) _ASM_LDWK wk1,wk2
+
   .macro  _ASM_LDWK  wk1,wk2
   .short  EV_SEQ_LD_WK_WK
   .short  \wk1
@@ -1331,7 +1334,7 @@
  *  @param itemno 名前を取得するアイテムナンバー
  */
 //--------------------------------------------------------------
-#define _ITEM_NAME( idx, itemno ) _ASM_ITEM_NAME idx, itemno
+#define _ITEM_WAZA_NAME( idx, itemno ) _ASM_ITEM_WAZA_NAME idx, itemno
 
 	.macro	_ASM_ITEM_WAZA_NAME	idx,itemno
 	.short	EV_SEQ_ITEM_WAZA_NAME
@@ -2274,6 +2277,19 @@
     .short  \item_no
     .short  \ret_wk
     .endm
+
+//--------------------------------------------------------------
+/**
+ * フィールドのアイテムイベント呼び出し
+ * @param no   アイテムナンバー
+ * @param num 加える値
+ */
+//--------------------------------------------------------------
+.macro _FLD_ITEM_EVENT no,num
+  _ASM_LDVAL SCWK_REG0,\no
+  _ASM_LDVAL SCWK_REG1,\num
+  _CALL ev_fld_item2
+.endm
 
 //======================================================================
 //  会話イベント関連
