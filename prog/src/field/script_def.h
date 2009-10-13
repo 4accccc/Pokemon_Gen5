@@ -15,12 +15,16 @@
 //	定義
 //
 //============================================================================================
-//特殊スクリプト定義
+///特殊スクリプト定義
 #define SP_SCRID_NONE				(0)
-#define SP_SCRID_SCENE_CHANGE		(1)
-#define SP_SCRID_ZONE_CHANGE		(2)
-#define SP_SCRID_FIELD_RECOVER	(3)			//注意！　フィールド初期化で呼ばれる
-#define SP_SCRID_FIELD_INIT 		(4)
+#define SP_SCRID_SCENE_CHANGE		(1)     ///<特殊スクリプトテーブルでのシーン発動イベントデータの指定ID
+#define SP_SCRID_ZONE_CHANGE		(2)     ///<特殊スクリプトテーブルでのゾーン切り替えスクリプトの指定ID
+#define SP_SCRID_FIELD_RECOVER	(3)			///<特殊スクリプトテーブルでのフィールド復帰スクリプト指定ID
+#define SP_SCRID_FIELD_INIT 		(4)			///<特殊スクリプトテーブルでのフィールド初期化スクリプト指定ID
+
+///イベントデータテーブル末尾を判定するための値
+#define EV_DATA_END_CODE  (0xfd13)  //適当な値
+
 
 //エイリアス識別用スクリプトID
 #define SP_SCRID_ALIES				(0xffff)
