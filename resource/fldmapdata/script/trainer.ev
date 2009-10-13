@@ -97,6 +97,9 @@ _EVENT_DATA ev_TRID_WORKER1_07
 _EVENT_DATA ev_TRID_WORKER1_08
 _EVENT_DATA ev_TRID_HAKAIM1_03
 _EVENT_DATA ev_TRID_HAKAIM1_04
+_EVENT_DATA ev_TRID_BASKET_01
+_EVENT_DATA ev_TRID_BASKET_02
+_EVENT_DATA ev_TRID_SCHOOLB_03
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
 _EVENT_DATA_END
@@ -183,6 +186,9 @@ ev_TRID_WORKER1_07:
 ev_TRID_WORKER1_08:
 ev_TRID_HAKAIM1_03:
 ev_TRID_HAKAIM1_04:
+ev_TRID_BASKET_01:
+ev_TRID_BASKET_02:
+ev_TRID_SCHOOLB_03:
 
 //----------------------------------------------------------------------
 // scr_trainer/trainer_base.ev
@@ -251,8 +257,8 @@ ev_trainer_common_11:
   */
   
   //戦闘呼び出し
-  _TRAINER_BTL_SET SCWK_TEMP0,0
-  _TRAINER_LOSE_CHECK  SCWK_ANSWER
+  _TRAINER_BTL_SET( SCWK_TEMP0,0 )
+  _TRAINER_LOSE_CHECK(  SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
 
   //これを外さないと、再戦トレーナーIDが書き換わってしまう！
@@ -430,8 +436,8 @@ ev_trainer_type_single:
 #endif
   _BALLOONWIN_CLOSE()
   
-  _TRAINER_BTL_SET  SCWK_TEMP0,0
-  _TRAINER_LOSE_CHECK  SCWK_ANSWER
+  _TRAINER_BTL_SET(  SCWK_TEMP0,0 )
+  _TRAINER_LOSE_CHECK(  SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
 
   //トレーナーフラグセット

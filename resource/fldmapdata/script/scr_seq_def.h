@@ -1549,7 +1549,10 @@
  *  @param tr_id_1 ÉgÉåÅ[ÉiÅ[ID1
  */
 //--------------------------------------------------------------
-  .macro  _TRAINER_BTL_SET  tr_id_0,tr_id_1
+#define _TRAINER_BTL_SET( tr_id0, tr_id1 ) \
+    _ASM_TRAINER_BTL_SET tr_id0, tr_id1
+  
+  .macro  _ASM_TRAINER_BTL_SET  tr_id_0,tr_id_1
   .short  EV_SEQ_TRAINER_BTL_SET
   .short  \tr_id_0
   .short  \tr_id_1
@@ -1651,7 +1654,9 @@
  *  @param ret_wk åãâ äiî[êÊ 0=îsñk 1=èüóò
  */
 //--------------------------------------------------------------
-  .macro  _TRAINER_LOSE_CHECK ret_wk
+#define _TRAINER_LOSE_CHECK( ret_wk ) _ASM_TRAINER_LOSE_CHECK ret_wk
+
+  .macro  _ASM_TRAINER_LOSE_CHECK ret_wk
   .short  EV_SEQ_LOSE_CHECK
   .short  \ret_wk
   .endm

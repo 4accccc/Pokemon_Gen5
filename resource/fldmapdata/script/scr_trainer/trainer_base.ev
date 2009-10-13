@@ -62,8 +62,8 @@ ev_trainer_common_11:
   */
   
   //戦闘呼び出し
-  _TRAINER_BTL_SET SCWK_TEMP0,0
-  _TRAINER_LOSE_CHECK  SCWK_ANSWER
+  _TRAINER_BTL_SET( SCWK_TEMP0,0 )
+  _TRAINER_LOSE_CHECK(  SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
 
   //これを外さないと、再戦トレーナーIDが書き換わってしまう！
@@ -241,8 +241,8 @@ ev_trainer_type_single:
 #endif
   _BALLOONWIN_CLOSE()
   
-  _TRAINER_BTL_SET  SCWK_TEMP0,0
-  _TRAINER_LOSE_CHECK  SCWK_ANSWER
+  _TRAINER_BTL_SET(  SCWK_TEMP0,0 )
+  _TRAINER_LOSE_CHECK(  SCWK_ANSWER )
   _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
 
   //トレーナーフラグセット
