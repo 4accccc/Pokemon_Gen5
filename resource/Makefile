@@ -101,6 +101,7 @@ SUBDIRS	=	wmi \
 			namein \
             box \
 			battle_championship \
+			waza_oshie \
 			sodateya
 
 include $(RESOURCE_MACRO)
