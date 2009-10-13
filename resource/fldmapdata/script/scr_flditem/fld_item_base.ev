@@ -76,6 +76,17 @@ ev_itemget_flditem_true_2:  //ê¨å˜èIóπèàóùÇªÇÃÇQ
   _GET_POCKET_ID( SCWK_TEMP0, SCWK_ANSWER )
   
   SWITCH $SCWK_ANSWER
+  CASE ITEMPOCKET_EVENT THEN
+    _CALL flditem_bag_poke_11
+  CASE ITEMPOCKET_NORMAL THEN //BALLÇ‡NORMALÇ…
+    _CALL flditem_bag_poke_10
+  CASE ITEMPOCKET_NUTS THEN
+    _CALL flditem_bag_poke_15
+  CASE ITEMPOCKET_DRUG THEN
+    _CALL flditem_bag_poke_14
+  CASE ITEMPOCKET_WAZA THEN
+    _CALL flditem_bag_poke_12
+/* wb
   CASE BAG_POKE_EVENT THEN
     _CALL flditem_bag_poke_11
   CASE BAG_POKE_NORMAL THEN
@@ -84,20 +95,15 @@ ev_itemget_flditem_true_2:  //ê¨å˜èIóπèàóùÇªÇÃÇQ
     _CALL flditem_bag_poke_15
   CASE BAG_POKE_DRUG THEN
     _CALL flditem_bag_poke_14
-/* wb
   CASE BAG_POKE_BALL THEN
     _CALL flditem_bag_poke_16
-*/
-/* wb
   CASE BAG_POKE_BATTLE THEN
     _CALL flditem_bag_poke_17
-*/
-/* wb
   CASE BAG_POKE_SEAL THEN
     _CALL flditem_bag_poke_13
-*/
   CASE BAG_POKE_WAZA THEN
     _CALL flditem_bag_poke_12
+*/
   ENDSWITCH
   _RET
 
