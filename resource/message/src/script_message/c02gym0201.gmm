@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-05T16:33:08"/>
+	<create user="matsumiya" host="W00207" date="2009-10-13T20:44:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="248" top="177" right="951" bottom="792" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="695"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -407,6 +407,491 @@
 [1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
 ともだち♂[BE:00:ページ切り替え（行送り）]
 ともだち♀</language>
+	</row>
+
+	<row id="msg_c02gym0101_assitantm1_01">
+		<comment>♀：トレーナー
+・フラグ成立前（本棚を向いている）</comment>
+		<attribute name="キャラ指定">本棚ストッパー１</attribute>
+		<language name="JPN" width="256">はなしかけたが　どくしょに
+むちゅうで　きづいてくれない……[BE:00:ページ切り替え（行送り）]
+あとで　はなしかけよう</language>
+		<language name="JPN_KANJI" width="256">話しかけたが　読書に
+夢中で　気づいてくれない……[BE:00:ページ切り替え（行送り）]
+あとで　話しかけよう</language>
+	</row>
+
+	<row id="msg_c02gym0101_assitantm1_02">
+		<comment>♀：トレーナー
+・フラグ成立後＝戦闘前（画面下を向いている）</comment>
+		<language name="JPN" width="256">このほんだなを　しらべたいの？
+べんきょうねっしんね……　わかったわ[BE:00:ページ切り替え（行送り）]
+わたしにかてたら　よませてあげる[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">この本棚を　調べたいの？
+勉強熱心ね……　わかったわ[BE:00:ページ切り替え（行送り）]
+私に勝てたら　読ませてあげる[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c02gym0101_assitantm1_03">
+		<comment>♀：トレーナー
+・戦闘後</comment>
+		<language name="JPN" width="256">ジムリーダーが　いる　へやに
+いくには　かくしつうろを　とおるのよ[BE:00:ページ切り替え（行送り）]
+がんばって　さがしてみて！</language>
+		<language name="JPN_KANJI" width="256">ジムリーダーが　いる　部屋に
+行くには　隠し通路を　通るのよ[BE:00:ページ切り替え（行送り）]
+がんばって　探してみて！</language>
+	</row>
+
+	<row id="msg_c02gym0101_assitantm2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：トレーナー
+・フラグ成立前（本棚を向いている）</comment>
+		<attribute name="キャラ指定">本棚ストッパー２</attribute>
+		<language name="JPN" width="256">はなしかけたが　どくしょに
+むちゅうで　きづいてくれない……[BE:00:ページ切り替え（行送り）]
+あとで　はなしかけよう</language>
+		<language name="JPN_KANJI" width="256">話しかけたが　読書に
+夢中で　気づいてくれない……[BE:00:ページ切り替え（行送り）]
+あとで　話しかけよう</language>
+	</row>
+
+	<row id="msg_c02gym0101_assitantm2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：トレーナー
+・フラグ成立後＝戦闘前（画面下を向いている）</comment>
+		<language name="JPN" width="256">ここの　ほんを　よみたいのか？
+オーケイ！　わかった！[BE:01:ページ切り替え（クリア）]
+ただ　そのまえに　ポケモンしょうぶを
+してもらえると　ありがたいな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ここの本を　読みたいのか？
+オーケイ！　わかった！[BE:01:ページ切り替え（クリア）]
+ただ　その前に　ポケモン勝負を
+してもらえると　ありがたいな[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c02gym0101_assitantm2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：トレーナー
+・戦闘後</comment>
+		<language name="JPN" width="256">ジムリーダーに　あいたいなら
+なぞなぞを　とくことだな！</language>
+		<language name="JPN_KANJI" width="256">ジムリーダーに　会いたいなら
+なぞなぞを　解くことだな！</language>
+	</row>
+
+	<row id="msg_c02gym0101_category_01">
+		<comment>続けてウインドウ表示</comment>
+		<attribute name="キャラ指定">ジャンル</attribute>
+		<language name="JPN" width="256">じどうしょの　ほんだなだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">児童書の　本棚だ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c02gym0101_category_02">
+		<language name="JPN" width="256">れきしの　ほんだなだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">歴史の　本棚だ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c02gym0101_category_03">
+		<language name="JPN" width="256">ぶんがくの　ほんだなだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">文学の　本棚だ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c02gym0101_category_04">
+		<language name="JPN" width="256">ぎじゅつの　ほんだなだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">技術の　本棚だ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c02gym0101_category_05">
+		<language name="JPN" width="256">ポケモンの　ほんだなだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　本棚だ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c02gym0101_category_06">
+		<language name="JPN" width="256">いがくの　ほんだなだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">医学の　本棚だ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>選択ウインドウ用</comment>
+		<attribute name="キャラ指定">本のタイトル</attribute>
+		<language name="JPN" width="256">じどうしょ　その１</language>
+		<language name="JPN_KANJI" width="256">児童書　その１</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">じどうしょ　その２</language>
+		<language name="JPN_KANJI" width="256">児童書　その２</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">じどうしょ　その３</language>
+		<language name="JPN_KANJI" width="256">児童書　その３</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">じどうしょ　その４</language>
+		<language name="JPN_KANJI" width="256">児童書　その４</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">じどうしょ　その５</language>
+		<language name="JPN_KANJI" width="256">児童書　その５</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">じどうしょ　その６</language>
+		<language name="JPN_KANJI" width="256">児童書　その６</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">れきし　その１</language>
+		<language name="JPN_KANJI" width="256">歴史　その１</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">れきし　その２</language>
+		<language name="JPN_KANJI" width="256">歴史　その２</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">れきし　その３</language>
+		<language name="JPN_KANJI" width="256">歴史　その３</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">れきし　その４</language>
+		<language name="JPN_KANJI" width="256">歴史　その４</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">れきし　その５</language>
+		<language name="JPN_KANJI" width="256">歴史　その５</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">れきし　その６</language>
+		<language name="JPN_KANJI" width="256">歴史　その６</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ぶんがく　その１</language>
+		<language name="JPN_KANJI" width="256">文学　その１</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_14" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ぶんがく　その２</language>
+		<language name="JPN_KANJI" width="256">文学　その２</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_15" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ぶんがく　その３</language>
+		<language name="JPN_KANJI" width="256">文学　その３</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_16" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ぶんがく　その４</language>
+		<language name="JPN_KANJI" width="256">文学　その４</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_17" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ぶんがく　その５</language>
+		<language name="JPN_KANJI" width="256">文学　その５</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_18" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ぶんがく　その６</language>
+		<language name="JPN_KANJI" width="256">文学　その６</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_19" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ぎじゅつ　その１</language>
+		<language name="JPN_KANJI" width="256">技術　その１</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_20" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ぎじゅつ　その２</language>
+		<language name="JPN_KANJI" width="256">技術　その２</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_21" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ぎじゅつ　その３</language>
+		<language name="JPN_KANJI" width="256">技術　その３</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_22" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ぎじゅつ　その４</language>
+		<language name="JPN_KANJI" width="256">技術　その４</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_23" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ぎじゅつ　その５</language>
+		<language name="JPN_KANJI" width="256">技術　その５</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_24" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ぎじゅつ　その６</language>
+		<language name="JPN_KANJI" width="256">技術　その６</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_25" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ポケモン　その１</language>
+		<language name="JPN_KANJI" width="256">ポケモン　その１</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_26" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ポケモン　その２</language>
+		<language name="JPN_KANJI" width="256">ポケモン　その２</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_27" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ポケモン　その３</language>
+		<language name="JPN_KANJI" width="256">ポケモン　その３</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_28" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ポケモン　その４</language>
+		<language name="JPN_KANJI" width="256">ポケモン　その４</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_29" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ポケモン　その５</language>
+		<language name="JPN_KANJI" width="256">ポケモン　その５</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_30" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">ポケモン　その６</language>
+		<language name="JPN_KANJI" width="256">ポケモン　その６</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_31" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">いがく　その１</language>
+		<language name="JPN_KANJI" width="256">医学　その１</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_32" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">いがく　その２</language>
+		<language name="JPN_KANJI" width="256">医学　その２</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_33" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">いがく　その３</language>
+		<language name="JPN_KANJI" width="256">医学　その３</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_34" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">いがく　その４</language>
+		<language name="JPN_KANJI" width="256">医学　その４</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_35" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">いがく　その５</language>
+		<language name="JPN_KANJI" width="256">医学　その５</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_36" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">いがく　その６</language>
+		<language name="JPN_KANJI" width="256">医学　その６</language>
+	</row>
+
+	<row id="msg_c02gym0101_headline_37" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_01">
+		<comment>本の中身</comment>
+		<attribute name="キャラ指定">本の内容</attribute>
+		<language name="JPN" width="256">じどうしょ　その１</language>
+		<language name="JPN_KANJI" width="256">児童書　その１</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_02">
+		<language name="JPN" width="256">じどうしょ　その２</language>
+		<language name="JPN_KANJI" width="256">児童書　その２</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_03">
+		<language name="JPN" width="256">じどうしょ　その３</language>
+		<language name="JPN_KANJI" width="256">児童書　その３</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_04">
+		<language name="JPN" width="256">じどうしょ　その４</language>
+		<language name="JPN_KANJI" width="256">児童書　その４</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_05">
+		<language name="JPN" width="256">じどうしょ　その５</language>
+		<language name="JPN_KANJI" width="256">児童書　その５</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_06">
+		<language name="JPN" width="256">じどうしょ　その６</language>
+		<language name="JPN_KANJI" width="256">児童書　その６</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_07">
+		<language name="JPN" width="256">れきし　その１</language>
+		<language name="JPN_KANJI" width="256">歴史　その１</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_08">
+		<language name="JPN" width="256">れきし　その２</language>
+		<language name="JPN_KANJI" width="256">歴史　その２</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_09">
+		<language name="JPN" width="256">れきし　その３</language>
+		<language name="JPN_KANJI" width="256">歴史　その３</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_10">
+		<language name="JPN" width="256">れきし　その４</language>
+		<language name="JPN_KANJI" width="256">歴史　その４</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_11">
+		<language name="JPN" width="256">れきし　その５</language>
+		<language name="JPN_KANJI" width="256">歴史　その５</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_12">
+		<language name="JPN" width="256">れきし　その６</language>
+		<language name="JPN_KANJI" width="256">歴史　その６</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_13">
+		<language name="JPN" width="256">ぶんがく　その１</language>
+		<language name="JPN_KANJI" width="256">文学　その１</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_14">
+		<language name="JPN" width="256">ぶんがく　その２</language>
+		<language name="JPN_KANJI" width="256">文学　その２</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_15">
+		<language name="JPN" width="256">ぶんがく　その３</language>
+		<language name="JPN_KANJI" width="256">文学　その３</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_16">
+		<language name="JPN" width="256">ぶんがく　その４</language>
+		<language name="JPN_KANJI" width="256">文学　その４</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_17">
+		<language name="JPN" width="256">ぶんがく　その５</language>
+		<language name="JPN_KANJI" width="256">文学　その５</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_18">
+		<language name="JPN" width="256">ぶんがく　その６</language>
+		<language name="JPN_KANJI" width="256">文学　その６</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_19">
+		<language name="JPN" width="256">ぎじゅつ　その１</language>
+		<language name="JPN_KANJI" width="256">技術　その１</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_20">
+		<language name="JPN" width="256">ぎじゅつ　その２</language>
+		<language name="JPN_KANJI" width="256">技術　その２</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_21">
+		<language name="JPN" width="256">ぎじゅつ　その３</language>
+		<language name="JPN_KANJI" width="256">技術　その３</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_22">
+		<language name="JPN" width="256">ぎじゅつ　その４</language>
+		<language name="JPN_KANJI" width="256">技術　その４</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_23">
+		<language name="JPN" width="256">ぎじゅつ　その５</language>
+		<language name="JPN_KANJI" width="256">技術　その５</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_24">
+		<language name="JPN" width="256">ぎじゅつ　その６</language>
+		<language name="JPN_KANJI" width="256">技術　その６</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_25">
+		<language name="JPN" width="256">ポケモン　その１</language>
+		<language name="JPN_KANJI" width="256">ポケモン　その１</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_26">
+		<language name="JPN" width="256">ポケモン　その２</language>
+		<language name="JPN_KANJI" width="256">ポケモン　その２</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_27">
+		<language name="JPN" width="256">ポケモン　その３</language>
+		<language name="JPN_KANJI" width="256">ポケモン　その３</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_28">
+		<language name="JPN" width="256">ポケモン　その４</language>
+		<language name="JPN_KANJI" width="256">ポケモン　その４</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_29">
+		<language name="JPN" width="256">ポケモン　その５</language>
+		<language name="JPN_KANJI" width="256">ポケモン　その５</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_30">
+		<language name="JPN" width="256">ポケモン　その６</language>
+		<language name="JPN_KANJI" width="256">ポケモン　その６</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_31">
+		<language name="JPN" width="256">いがく　その１</language>
+		<language name="JPN_KANJI" width="256">医学　その１</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_32">
+		<language name="JPN" width="256">いがく　その２</language>
+		<language name="JPN_KANJI" width="256">医学　その２</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_33">
+		<language name="JPN" width="256">いがく　その３</language>
+		<language name="JPN_KANJI" width="256">医学　その３</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_34">
+		<language name="JPN" width="256">いがく　その４</language>
+		<language name="JPN_KANJI" width="256">医学　その４</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_35">
+		<language name="JPN" width="256">いがく　その５</language>
+		<language name="JPN_KANJI" width="256">医学　その５</language>
+	</row>
+
+	<row id="msg_c02gym0101_book_36">
+		<language name="JPN" width="256">いがく　その６</language>
+		<language name="JPN_KANJI" width="256">医学　その６</language>
+	</row>
+
+	<row id="msg_c02gym0101_switch_01">
+		<comment>正解を選択したとき
+・なのでbookのラベルは35個でいいはず</comment>
+		<language name="JPN" width="256">「（ほんのタイトル」を　よむために
+とろうとしたら　ほんについている[BE:00:ページ切り替え（行送り）]
+ヒモを　ひっぱってしまった！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">「（本のタイトル」を　読むために
+取ろうとしたら　本についている[BE:00:ページ切り替え（行送り）]
+ヒモを　引っ張ってしまった！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c02gym0101_switch_02">
+		<language name="JPN" width="256">かいだんが　あらわれた！</language>
+		<language name="JPN_KANJI" width="256">かいだんが　あらわれた！</language>
 	</row>
 
 	<flowchart-group-list>
