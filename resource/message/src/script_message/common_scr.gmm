@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-14T15:34:57"/>
+	<create user="matsumiya" host="W00207" date="2009-10-13T13:17:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -588,6 +588,11 @@
 [1:12:バッグのポケット名:2][FF:00:色:0]ポケット　に　しまった▼</language>
 		<language name="JPN_KANJI">[1:00:トレーナー名:0]は　[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を[FF:00:色:2]
 [1:12:バッグのポケット名:2][FF:00:色:0]ポケット　に　しまった▼</language>
+	</row>
+
+	<row id="msg_yen_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<language name="JPN">[2:05:６桁:2]円</language>
+		<language name="JPN_KANJI">[2:05:６桁:2]円</language>
 	</row>
 
 	<flowchart-group-list>
