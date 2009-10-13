@@ -103,7 +103,7 @@ extern void BOX_DAT_ExitManager( BOX_MANAGER *box );
  * @retval  BOOL		TRUE=äiî[Ç≥ÇÍÇΩÅ^FALSE=ãÛÇ´Ç™ñ≥Ç¢
  */
 //------------------------------------------------------------------
-extern BOOL BOXDAT_PutPokemon( BOX_MANAGER* box, POKEMON_PASO_PARAM* poke );
+extern BOOL BOXDAT_PutPokemon( BOX_MANAGER* box, const POKEMON_PASO_PARAM* poke );
 
 //------------------------------------------------------------------
 /**
@@ -116,7 +116,7 @@ extern BOOL BOXDAT_PutPokemon( BOX_MANAGER* box, POKEMON_PASO_PARAM* poke );
  * @retval  BOOL		TRUE=äiî[Ç≥ÇÍÇΩÅ^FALSE=ãÛÇ´Ç™ñ≥Ç¢
  */
 //------------------------------------------------------------------
-extern BOOL BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 boxNum, POKEMON_PASO_PARAM* poke );
+extern BOOL BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 boxNum, const POKEMON_PASO_PARAM* poke );
 
 //------------------------------------------------------------------
 /**
@@ -131,7 +131,7 @@ extern BOOL BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 boxNum, POKEMON_PASO_PAR
  * @retval  BOOL		TRUE=äiî[Ç≥ÇÍÇΩÅ^FALSE=ãÛÇ´Ç™ñ≥Ç¢
  */
 //------------------------------------------------------------------
-extern BOOL BOXDAT_PutPokemonPos( BOX_MANAGER* box, u32 boxNum, u32 pos, POKEMON_PASO_PARAM* poke );
+extern BOOL BOXDAT_PutPokemonPos( BOX_MANAGER* box, u32 boxNum, u32 pos, const POKEMON_PASO_PARAM* poke );
 
 
 //------------------------------------------------------------------

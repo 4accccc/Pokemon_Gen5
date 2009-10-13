@@ -20,7 +20,7 @@
 #include "savedata/save_tbl.h"
 
 
-static void PPP_RecoverPP(POKEMON_PASO_PARAM* pp){}  //É_É~Å[ä÷êî
+static void PPP_RecoverPP(const POKEMON_PASO_PARAM* pp){}  //É_É~Å[ä÷êî
 static BOX_TRAY_DATA* BOXTRAYDAT_GetTrayData( const BOX_MANAGER *boxData , const u32 trayNum );
 static BOX_SAVEDATA* BOXDAT_GetBoxSaveData( const BOX_MANAGER *boxData );
 
@@ -163,7 +163,7 @@ static BOX_SAVEDATA* BOXDAT_GetBoxSaveData( const BOX_MANAGER *boxData )
  * @retval  BOOL		TRUE=äiî[Ç≥ÇÍÇΩÅ^FALSE=ãÛÇ´Ç™ñ≥Ç¢
  */
 //------------------------------------------------------------------
-BOOL BOXDAT_PutPokemon( BOX_MANAGER* box, POKEMON_PASO_PARAM* poke )
+BOOL BOXDAT_PutPokemon( BOX_MANAGER* box, const POKEMON_PASO_PARAM* poke )
 {
 	u32 b;
   BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
@@ -201,7 +201,7 @@ BOOL BOXDAT_PutPokemon( BOX_MANAGER* box, POKEMON_PASO_PARAM* poke )
  * @retval  BOOL		TRUE=äiî[Ç≥ÇÍÇΩÅ^FALSE=ãÛÇ´Ç™ñ≥Ç¢
  */
 //------------------------------------------------------------------
-BOOL BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 trayNum, POKEMON_PASO_PARAM* poke )
+BOOL BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 trayNum, const POKEMON_PASO_PARAM* poke )
 {
 	u32 i;
   BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
@@ -239,7 +239,7 @@ BOOL BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 trayNum, POKEMON_PASO_PARAM* po
  * @retval  BOOL		TRUE=äiî[Ç≥ÇÍÇΩÅ^FALSE=ãÛÇ´Ç™ñ≥Ç¢
  */
 //------------------------------------------------------------------
-BOOL BOXDAT_PutPokemonPos( BOX_MANAGER* box, u32 trayNum, u32 pos, POKEMON_PASO_PARAM* poke )
+BOOL BOXDAT_PutPokemonPos( BOX_MANAGER* box, u32 trayNum, u32 pos, const POKEMON_PASO_PARAM* poke )
 {
   BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 	PPP_RecoverPP(poke);

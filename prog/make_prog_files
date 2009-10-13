@@ -470,6 +470,7 @@ SRCS_OVERLAY_UI_COMMON = ui/ui_scene.c \
                          ui/touchbar.c \
                          ui/print_tool.c \
                          ui/nsbtx_to_clwk.c
+
 # コンフィグ画面
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
@@ -982,6 +983,21 @@ SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 																test/nagihashi/debug_template.c \
 																test/nagihashi/debug_poke2dcheck.c
 
+# ボックス
+#===> SRCS_OVERLAY_POKE_STATUS
+#===> SRCS_OVERLAY_BAG
+SRCS_OVERLAY_BOX    = app/box/box2.c \
+                      app/box\box2_main.c \
+                      app/box\box2_seq.c \
+                      app/box\box2_bmp.c \
+                      app/box\box2_obj.c \
+                      app/box\box2_ui.c \
+                      app/box\box2_bgwfrm.c
+
+#中村デバッグ
+#===> SRCS_OVERLAY_BOX
+SRCS_OVERLAY_NAKAHIRO_DEBUG = test/nakahiro/d_nakahiro.c
+
 # カメラテスト
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
@@ -990,3 +1006,4 @@ SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 SRCS_OVERLAY_CAMERA_TEST = test/ariizumi/camera_system.c \
         test/ariizumi/camera_test.c \
 		test/ariizumi/jpeg_encoder.c
+

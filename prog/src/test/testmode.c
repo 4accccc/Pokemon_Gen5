@@ -1003,8 +1003,12 @@ static BOOL TESTMODE_ITEM_SelectFuncMori( TESTMODE_WORK *work , const int idx )
 {
 	return TRUE;
 }
+
+FS_EXTERN_OVERLAY(nakahiro_debug);
+extern const GFL_PROC_DATA DebugNakahiroMainProcData;
 static BOOL TESTMODE_ITEM_SelectFuncNakamura( TESTMODE_WORK *work , const int idx )
 {
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(nakahiro_debug), &DebugNakahiroMainProcData, NULL);
 	return TRUE;
 }
 

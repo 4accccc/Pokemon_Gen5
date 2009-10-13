@@ -199,6 +199,7 @@
   ARCID_GYM_NORMAL "fieldmap/gym_normal.narc"  #ノーマルジム
   ARCID_MUSICAL_PROGRAM "mus_prog_data.narc"  #ミュージカルデフォルト配信データ
   ARCID_FLD3D_CI "fld3d_ci.narc"  #フィールド3Dカットイン用データ
+  ARCID_BOX2_GRA  "box_gra.narc"   #ボックス画面グラフィック
   ARCID_FLD3D_CI_SETUP "fld3d_ci_setup.narc"  #フィールド3Dカットインセットアップ用データ
 	ARCID_DEBUG_NAGI		"debug\d_nagi_graphic.narc"	#名木橋デバッグ用グラフィックデータ
 	ARCID_BATTLE_CHAMPIONSHIP		"battle_championship.narc"	#バトル大会用
