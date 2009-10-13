@@ -903,7 +903,13 @@ void GYM_ELEC_Move(FIELDMAP_WORK *fieldWork)
     if (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT ){
       FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
       GYM_ELEC_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
-      tmp->LeverIdx = 2;
+      if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
+        tmp->LeverIdx++;
+        if (tmp->LeverIdx>=4){
+          tmp->LeverIdx = 0;
+        }
+        OS_Printf("now_idx = %d\n",tmp->LeverIdx);
+      }
       ChgRale(fieldWork, ptr);
     }
   }
