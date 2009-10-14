@@ -413,26 +413,25 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
 
   party = wk->playerParty;
   members = BTL_PARTY_GetMemberCount( party );
+  BTL_Printf("members=%d\n", members);
 
-  for( i = 0 ; i < members ; i++ )
+  for(i=0; i<members; ++i)
   {
     bpp = BTL_PARTY_GetMemberDataConst( party, i );
     pp  = BPP_GetSrcData( bpp );
+    BTL_Printf("member[%d]=%p, %p\n", i, bpp, pp);
     hp = PP_Get( pp, ID_PARA_hp, NULL );
 
     if( hp )
     {
-      if( PP_Get( pp, ID_PARA_condition, NULL ) )
-      {
+      if( PP_Get(pp, ID_PARA_condition, NULL) ){
         bicp.bidp[ i ].status = BTLV_INPUT_STATUS_NG;
       }
-      else
-      {
+      else{
         bicp.bidp[ i ].status = BTLV_INPUT_STATUS_ALIVE;
       }
     }
-    else
-    {
+    else{
       bicp.bidp[ i ].status = BTLV_INPUT_STATUS_DEAD;
     }
   }
@@ -547,7 +546,7 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
       return TRUE;
     }
     else if( ( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ) && ( hit == 5 ) )
-    { 
+    {
       BTL_ACTION_SetMoveParam( wk->destActionParam );
       SePlayDecide();
       return TRUE;

@@ -304,9 +304,14 @@ BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
     break;
 
   case 1:
-    if( wk->subProc(wk, &wk->subSeq) )
-    {
-      BTL_ADAPTER_ReturnCmd( wk->adapter, wk->returnDataPtr, wk->returnDataSize );
+    if( wk->subProc(wk, &wk->subSeq) ){
+      BTL_Printf("ID[%d], 返信開始へ\n", wk->myID );
+      wk->myState++;
+    }
+    break;
+
+  case 2:
+    if( BTL_ADAPTER_ReturnCmd(wk->adapter, wk->returnDataPtr, wk->returnDataSize) ){
       wk->myState = 0;
       BTL_Printf("ID[%d], 返信しました\n", wk->myID );
     }

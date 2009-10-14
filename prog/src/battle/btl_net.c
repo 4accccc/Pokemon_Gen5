@@ -193,8 +193,7 @@ BOOL BTL_NET_IsInitialized( void )
     {
       TMP_SEND_BUFFER* tsb = &Sys->sendBuf[0];
       tsb->val32 = BTL_NET_SERVER_VERSION;
-      GFL_NET_SendData( Sys->netHandle, CMD_NOTIFY_SERVER_VER, sizeof(*tsb), tsb );
-      return TRUE;
+      return GFL_NET_SendData( Sys->netHandle, CMD_NOTIFY_SERVER_VER, sizeof(*tsb), tsb );
     }
     return FALSE;
   }
@@ -269,12 +268,14 @@ BOOL BTL_NET_IsServer( void )
 
 
 // 各マシンにクライアントIDを通知する（サーバからのみ呼び出し）
-void BTL_NET_NotifyClientID( NetID netID, const u8* clientID, u8 numCoverPos )
+// @todo これ変。担当場所IDをClientIDと呼んでいた頃の名残がある。
+BOOL BTL_NET_NotifyClientID( NetID netID, const u8* clientID, u8 numCoverPos )
 {
   GF_ASSERT(numCoverPos<=BTL_POSIDX_MAX);
 
   {
     TMP_SEND_BUFFER* tsbuf;
+    BOOL result;
     u8 i;
 
     BTL_Printf("netID=%d のマシンにクライアントIDを通知します。受け持ち場所数は%d,\n", netID, numCoverPos );
@@ -289,22 +290,21 @@ void BTL_NET_NotifyClientID( NetID netID, const u8* clientID, u8 numCoverPos )
     }
     BTL_Printf("]\n");
     tsbuf->val8[0] = numCoverPos;
+    tsbuf->val8[1] = *clientID;
 
-    BTL_Printf("  送信サイズ=%d, 内容=%d,%d,%d,%d\n",
-      sizeof(*tsbuf), tsbuf->val8[0], tsbuf->val8[1], tsbuf->val8[2], tsbuf->val8[3] );
-
-/*
-  BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCommand,
-      const u32 size, const void* data,
-      const BOOL bFast, const BOOL bRepeat, const BOOL bSendBuffLock )
-*/
-    GFL_NET_SendDataEx( Sys->netHandle, netID, CMD_NOTIFY_CLIENT_ID,
+    result = GFL_NET_SendDataEx( Sys->netHandle, netID, CMD_NOTIFY_CLIENT_ID,
           sizeof( *tsbuf ),
           tsbuf,
           FALSE,    // 優先度を高くする
           FALSE,    // 同一コマンドがキューに無い場合のみ送信する
           FALSE   // GFL_NETライブラリの外で保持するバッファを使用
     );
+
+    if( result ){
+      BTL_Printf("  送信成功：サイズ=%d, 内容=%d,%d,%d,%d\n",
+        sizeof(*tsbuf), tsbuf->val8[0], tsbuf->val8[1], tsbuf->val8[2], tsbuf->val8[3] );
+    }
+    return result;
   }
 }
 
@@ -321,9 +321,9 @@ static void recv_cliendID( const int netID, const int size, const void* pData, v
   for(i=0; i<tsb->val8[0]; i++)
   {
     Sys->myClientID[i] = tsb->val8[1+i];
-    BTL_Printf("%d ", tsb->val8[1+i]);
+    BTL_PrintfSimple("%d ", tsb->val8[1+i]);
   }
-  BTL_Printf("]\n");
+  BTL_PrintfSimple("]\n");
 }
 
 // 自分のクライアントIDが確定したか？
@@ -332,7 +332,7 @@ BOOL BTL_NET_IsClientIdDetermined( void )
   return Sys->myClientID[0] != BTL_CLIENT_MAX;
 }
 
-// 自分の担当するクライアントIDを取得
+// 自分の担当するクライアントIDを取得 @todo これ呼ばれてないし必要ないっぽい
 u8 BTL_NET_GetMyClientID( u8 idx )
 {
   GF_ASSERT( idx < BTL_CLIENT_MAX );
@@ -342,16 +342,16 @@ u8 BTL_NET_GetMyClientID( u8 idx )
 }
 
 // パーティデータを連絡する（全マシン相互）
-void BTL_NET_StartNotifyPartyData( const POKEPARTY* party )
+BOOL BTL_NET_StartNotifyPartyData( const POKEPARTY* party )
 {
   u32 size = PokeParty_GetWorkSize();
 
   BTL_Printf("パーティデータサイズ=%dbytes\n", size);
 
-  GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_PARTY_DATA,
+  return GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_PARTY_DATA,
         size,
         party,
-        FALSE,    // 優先度を高くする
+        FALSE,  // 優先度を高くする
         TRUE,   // 同一コマンドがキューに無い場合のみ送信する
         TRUE    // GFL_NETライブラリの外で保持するバッファを使用
   );
@@ -371,6 +371,18 @@ static void recv_partyData( const int netID, const int size, const void* pData, 
   Sys->tmpLargeBufUsedSize[ netID ] = size;
   BTL_Printf("netID=%dのパーティデータ受信完了, pData=%p, buf=%p\n",
       netID, pData, Sys->tmpLargeBuf[netID] );
+  {
+    POKEPARTY* party = (POKEPARTY*)(pData);
+    POKEMON_PARAM* pp;
+
+    u32 i, monsno, max = PokeParty_GetPokeCount( party );
+    BTL_Printf("  members = %d\n", max);
+    for(i=0; i<max; ++i){
+      pp = PokeParty_GetMemberPointer( party, i );
+      monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+      BTL_Printf("  monsno[%d] = %d\n", i, monsno);
+    }
+  }
 
 }
 
@@ -417,13 +429,13 @@ void BTL_NET_EndNotifyPartyData( void )
 }
 
 // プレイヤーデータデータを連絡する（全マシン相互）
-void BTL_NET_StartNotifyPlayerData( const MYSTATUS* playerData )
+BOOL BTL_NET_StartNotifyPlayerData( const MYSTATUS* playerData )
 {
   u32 size = MyStatus_GetWorkSize();
 
   BTL_Printf("プレイヤーデータサイズ=%dbytes\n", size);
 
-  GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_PLAYER_DATA,
+  return GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_PLAYER_DATA,
         size,
         playerData,
         FALSE,     // 優先度を高くする
@@ -542,14 +554,17 @@ BOOL BTL_NET_IsTimingSync( u8 timingID )
  *
  */
 //=============================================================================================
-void BTL_NET_SendToClient( u8 netID, const void* adrs, u32 size )
+BOOL BTL_NET_SendToClient( u8 netID, const void* adrs, u32 size )
 {
-  GFL_NET_SendDataEx( Sys->netHandle, netID, CMD_TO_CLIENT, size, adrs,
+  BOOL result = GFL_NET_SendDataEx( Sys->netHandle, netID, CMD_TO_CLIENT, size, adrs,
         FALSE,    // 優先度を高くする
         FALSE,    // 同一コマンドがキューに無い場合のみ送信する
-        TRUE    // GFL_NETライブラリの外で保持するバッファを使用
+        TRUE      // GFL_NETライブラリの外で保持するバッファを使用
   );
-  BTL_Printf("マシン(%d) に %d bytes 送信開始\n", netID, size);
+  if( result ){
+    BTL_Printf("マシン(%d) に %d bytes 送信開始\n", netID, size);
+  }
+  return result;
 }
 
 //=============================================================================================
@@ -629,17 +644,20 @@ u32 BTL_NET_GetReceivedCmdData( const void** ppDest )
 }
 
 
-void BTL_NET_ReturnToServer( const void* data, u32 size )
+BOOL BTL_NET_ReturnToServer( const void* data, u32 size )
 {
-  GFL_NET_SendDataEx( Sys->netHandle, Sys->serverNetID, CMD_TO_SERVER, size, data,
+  BOOL result;
+
+  result = GFL_NET_SendDataEx( Sys->netHandle, Sys->serverNetID, CMD_TO_SERVER, size, data,
         FALSE,    // 優先度を高くする
         TRUE,   // 同一コマンドがキューに無い場合のみ送信する
         TRUE    // GFL_NETライブラリの外で保持するバッファを使用
   );
-
-  Sys->serverCmdReceived = FALSE;
-  BTL_Printf("サーバへ返信, フラグオフ\n");
-
+  if( result ){
+    Sys->serverCmdReceived = FALSE;
+    BTL_Printf("サーバへ返信, フラグオフ\n");
+  }
+  return result;
 }
 
 

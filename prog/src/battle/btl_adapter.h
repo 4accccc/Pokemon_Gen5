@@ -78,7 +78,7 @@ extern u32 BTL_ADAPTER_GetReturnDataCount( BTL_ADAPTER* wk );
 // for clients
 extern BtlAdapterCmd BTL_ADAPTER_RecvCmd( BTL_ADAPTER* wk );
 extern u32 BTL_ADAPTER_GetRecvData( BTL_ADAPTER* wk, const void** ppRecv );
-extern void BTL_ADAPTER_ReturnCmd( BTL_ADAPTER* wk, const void* data, u32 size );
+extern BOOL BTL_ADAPTER_ReturnCmd( BTL_ADAPTER* wk, const void* data, u32 size );
 
 
 

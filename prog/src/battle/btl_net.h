@@ -62,10 +62,10 @@ extern BOOL BTL_NET_IsInitialized( void );
 extern void BTL_NET_QuitSystem( void );
 extern BOOL BTL_NET_IsServerDetermained( void );
 extern BOOL BTL_NET_IsServer( void );
-extern void BTL_NET_NotifyClientID( NetID netID, const u8* clientID, u8 numClients );
+extern BOOL BTL_NET_NotifyClientID( NetID netID, const u8* clientID, u8 numClients );
 extern BOOL BTL_NET_IsClientIdDetermined( void );
 extern u8 BTL_NET_GetMyClientID( u8 idx );
-extern void BTL_NET_StartNotifyPartyData( const POKEPARTY* party );
+extern BOOL BTL_NET_StartNotifyPartyData( const POKEPARTY* party );
 extern BOOL BTL_NET_IsCompleteNotifyPartyData( void );
 extern const POKEPARTY* BTL_NET_GetPartyData( int netID );
 extern void BTL_NET_EndNotifyPartyData( void );
@@ -73,17 +73,17 @@ extern void BTL_NET_EndNotifyPartyData( void );
 extern void BTL_NET_TimingSyncStart( u8 timingID );
 extern BOOL BTL_NET_IsTimingSync( u8 timingID );
 
-extern void BTL_NET_SendToClient( u8 netID, const void* adrs, u32 size );
+extern BOOL BTL_NET_SendToClient( u8 netID, const void* adrs, u32 size );
 
 extern BOOL BTL_NET_IsServerCmdReceived( void );
 extern u32 BTL_NET_GetReceivedCmdData( const void** ppDest );
 
-extern void BTL_NET_ReturnToServer( const void* data, u32 size );
+extern BOOL BTL_NET_ReturnToServer( const void* data, u32 size );
 extern BOOL BTL_NET_CheckReturnFromClient( void );
 extern u32 BTL_NET_GetRecvClientData( u8 netID, const void** pptr );
 extern void BTL_NET_ClearRecvData( void );
 
-extern void BTL_NET_StartNotifyPlayerData( const MYSTATUS* playerData );
+extern BOOL BTL_NET_StartNotifyPlayerData( const MYSTATUS* playerData );
 extern BOOL BTL_NET_IsCompleteNotifyPlayerData( void );
 extern void BTL_NET_EndNotifyPlayerData( void );
 extern const MYSTATUS* BTL_NET_GetPlayerData( int netID );

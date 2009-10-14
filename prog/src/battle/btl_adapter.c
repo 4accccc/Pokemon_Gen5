@@ -1,10 +1,10 @@
 //=============================================================================================
 /**
- * @file	btl_adapter.c
- * @brief	ポケモンWB バトルシステム	サーバ-クライアント間アダプター
- * @author	taya
+ * @file  btl_adapter.c
+ * @brief ポケモンWB バトルシステム サーバ-クライアント間アダプター
+ * @author  taya
  *
- * @date	2008.09.25	作成
+ * @date  2008.09.25  作成
  */
 //=============================================================================================
 #include <gflib.h>
@@ -17,28 +17,28 @@
 
 
 enum {
-	DATA_BUFFER_SIZE = BTL_SERVER_CMD_QUE_SIZE + 4,
+  DATA_BUFFER_SIZE = BTL_SERVER_CMD_QUE_SIZE + 4,
 };
 
 typedef enum {
 
-	AS_FREE = 0,
-	AS_CMD_RECEIVED,
-	AS_WAIT_SEND_TO_CLIENT,
-	AS_WAIT_RECV_FROM_CLIENT,
-	AS_DONE,
+  AS_FREE = 0,
+  AS_CMD_RECEIVED,
+  AS_WAIT_SEND_TO_CLIENT,
+  AS_WAIT_RECV_FROM_CLIENT,
+  AS_DONE,
 
 }AdapterState;
 
 
 typedef struct {
 
-	struct {
-		u16   cmd;
-		u16   size;
-	}	header;
+  struct {
+    u16   cmd;
+    u16   size;
+  } header;
 
-	u8    data[ DATA_BUFFER_SIZE ];
+  u8    data[ DATA_BUFFER_SIZE ];
 
 }SEND_DATA_BUFFER;
 
@@ -46,24 +46,24 @@ typedef struct {
  *
  */
 struct _BTL_ADAPTER {
-	GFL_NETHANDLE*	netHandle;
+  GFL_NETHANDLE*  netHandle;
 
-	const void*	returnDataAdrs;
-	u32			returnDataSize;
-	u8			returnDataPreparedFlag;
+  const void* returnDataAdrs;
+  u32     returnDataSize;
+  u8      returnDataPreparedFlag;
 
-	u8	myID;
-	u8	myState;
-	u8	processingCmd;
+  u8  myID;
+  u8  myState;
+  u8  processingCmd;
 
-	SEND_DATA_BUFFER   sendDataBuffer;
+  SEND_DATA_BUFFER   sendDataBuffer;
 };
 
 
 
 //-------------------------------------------------------------------------
 /**
- *	作成されたアダプタ管理用配列
+ *  作成されたアダプタ管理用配列
  * （１マシンに同一IDのアダプタは１つのみという条件の保守を簡単にするため）
  */
 //-------------------------------------------------------------------------
@@ -73,7 +73,7 @@ static u8 CommMode;
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static void _StartToReception( BTL_ADAPTER* wk );
+static BOOL _StartToReception( BTL_ADAPTER* wk );
 static BOOL _ReceptionClient( BTL_ADAPTER* wk );
 static inline void sendBuf_store( SEND_DATA_BUFFER* buf, BtlAdapterCmd cmd, const void* data, u32 dataSize );
 static inline u32 sendBuf_calcSize( const SEND_DATA_BUFFER* buf );
@@ -89,62 +89,62 @@ static inline u32 sendBuf_getData( const SEND_DATA_BUFFER* buf, const void** ppt
 //=============================================================================================
 void BTL_ADAPTERSYS_Init( BtlCommMode mode )
 {
-	int i;
+  int i;
 
-	for(i=0; i<BTL_CLIENT_MAX; i++)
-	{
-		AdappterTable[i] = NULL;
-	}
+  for(i=0; i<BTL_CLIENT_MAX; i++)
+  {
+    AdappterTable[i] = NULL;
+  }
 
-	CommMode = mode;
+  CommMode = mode;
 }
 //=============================================================================================
 /**
- * 	システム終了（バトルシステム終了時に１回だけ呼び出し）
+ *  システム終了（バトルシステム終了時に１回だけ呼び出し）
  */
 //=============================================================================================
 void BTL_ADAPTERSYS_Quit( void )
 {
-	// とくになにも
+  // とくになにも
 }
 
 
 BTL_ADAPTER*  BTL_ADAPTER_Create( GFL_NETHANDLE* netHandle, HEAPID heapID, u16 adapterID )
 {
-	BTL_ADAPTER* wk = NULL;
+  BTL_ADAPTER* wk = NULL;
 
-	if( AdappterTable[adapterID] == NULL )
-	{
-		wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_ADAPTER) );
-		wk->netHandle = netHandle;
-		wk->myID = adapterID;
-		wk->myState = AS_FREE;
-		wk->processingCmd = BTL_ACMD_NONE;
-		wk->returnDataPreparedFlag = FALSE;
-	}
+  if( AdappterTable[adapterID] == NULL )
+  {
+    wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_ADAPTER) );
+    wk->netHandle = netHandle;
+    wk->myID = adapterID;
+    wk->myState = AS_FREE;
+    wk->processingCmd = BTL_ACMD_NONE;
+    wk->returnDataPreparedFlag = FALSE;
+  }
 
-	// 非通信モード：同一IDは１つだけ作ってサーバ・クライアント双方から使い回し
-	if( CommMode == BTL_COMM_NONE )
-	{
-		if( AdappterTable[adapterID] == NULL )
-		{
-			AdappterTable[adapterID] = wk;
-		}
+  // 非通信モード：同一IDは１つだけ作ってサーバ・クライアント双方から使い回し
+  if( CommMode == BTL_COMM_NONE )
+  {
+    if( AdappterTable[adapterID] == NULL )
+    {
+      AdappterTable[adapterID] = wk;
+    }
 
-		return AdappterTable[ adapterID ];
-	}
-	// 通信モード：同一IDの生成リクエストが来ることはあり得ない
-	else
-	{
-		GF_ASSERT( AdappterTable[adapterID] == NULL );
-		AdappterTable[adapterID] = wk;
-		return AdappterTable[ adapterID ];
-	}
+    return AdappterTable[ adapterID ];
+  }
+  // 通信モード：同一IDの生成リクエストが来ることはあり得ない
+  else
+  {
+    GF_ASSERT( AdappterTable[adapterID] == NULL );
+    AdappterTable[adapterID] = wk;
+    return AdappterTable[ adapterID ];
+  }
 }
 
 void BTL_ADAPTER_Delete( BTL_ADAPTER* wk )
 {
-	GFL_HEAP_FreeMemory( wk );
+  GFL_HEAP_FreeMemory( wk );
 }
 
 
@@ -156,10 +156,10 @@ void BTL_ADAPTER_Delete( BTL_ADAPTER* wk )
 //--------------------------------------------------------------------------------------
 void BTL_ADAPTERSYS_BeginSetCmd( void )
 {
-	if( CommMode != BTL_COMM_NONE )
-	{
-		BTL_NET_ClearRecvData();
-	}
+  if( CommMode != BTL_COMM_NONE )
+  {
+    BTL_NET_ClearRecvData();
+  }
 }
 
 //--------------------------------------------------------------------------------------
@@ -169,252 +169,258 @@ void BTL_ADAPTERSYS_BeginSetCmd( void )
 //--------------------------------------------------------------------------------------
 void BTL_ADAPTERSYS_EndSetCmd( void )
 {
-	if( CommMode != BTL_COMM_NONE )
-	{
-		
-	}
+  if( CommMode != BTL_COMM_NONE )
+  {
+
+  }
 }
 
 //--------------------------------------------------------------------------------------
 /**
- * [SERVER用]	クライアントに対するコマンド送信を開始する
+ * [SERVER用] クライアントに対するコマンド送信を開始する
  *
- * @param   wk				アダプタモジュール
- * @param   cmd				コマンドナンバー
- * @param   sendData		送信データアドレス
- * @param	sendDataSize	送信データサイズ
+ * @param   wk        アダプタモジュール
+ * @param   cmd       コマンドナンバー
+ * @param   sendData    送信データアドレス
+ * @param sendDataSize  送信データサイズ
  *
  */
 //--------------------------------------------------------------------------------------
 void BTL_ADAPTER_SetCmd( BTL_ADAPTER* wk, BtlAdapterCmd cmd, const void* sendData, u32 sendDataSize )
 {
-	GF_ASSERT(wk->myState == AS_FREE);
+  GF_ASSERT(wk->myState == AS_FREE);
 
-	wk->myState = AS_CMD_RECEIVED;
-	wk->processingCmd = cmd;
+  wk->myState = AS_CMD_RECEIVED;
+  wk->processingCmd = cmd;
 
-	sendBuf_store( &wk->sendDataBuffer, cmd, sendData, sendDataSize );
+  sendBuf_store( &wk->sendDataBuffer, cmd, sendData, sendDataSize );
 
-	wk->returnDataAdrs = NULL;
-	wk->returnDataSize = 0;
-	wk->returnDataPreparedFlag = FALSE;
+  wk->returnDataAdrs = NULL;
+  wk->returnDataSize = 0;
+  wk->returnDataPreparedFlag = FALSE;
 
-	BTL_Printf(" %d, コマンド %d を送信開始します\n", wk->myID, wk->processingCmd );
+  BTL_Printf(" %d, コマンド %d を送信開始します\n", wk->myID, wk->processingCmd );
 }
 
 
 //--------------------------------------------------------------------------------------
 /**
- * [SERVER用]	送信したコマンドに対するクライアントからの返信を待つ
+ * [SERVER用] 送信したコマンドに対するクライアントからの返信を待つ
  *
- * @param   wk			アダプタモジュール
+ * @param   wk      アダプタモジュール
  *
- * @retval  BOOL		クライアントからの返信を受け取ったらTRUE
+ * @retval  BOOL    クライアントからの返信を受け取ったらTRUE
  */
 //--------------------------------------------------------------------------------------
 BOOL BTL_ADAPTER_WaitCmd( BTL_ADAPTER* wk )
 {
-	switch( wk->myState ){
-	case AS_CMD_RECEIVED:
-		_StartToReception( wk );
-		wk->myState = AS_WAIT_RECV_FROM_CLIENT;
-		/* fallthru */
-	case AS_WAIT_RECV_FROM_CLIENT:
-		if( !_ReceptionClient(wk) )
-		{
-			break;
-		}
-		wk->myState = AS_DONE;
-		/*fallthru*/;
-	case AS_DONE:
-		return TRUE;
-	}
-	return FALSE;
+  switch( wk->myState ){
+  case AS_CMD_RECEIVED:
+    if( !_StartToReception(wk) ){
+      break;
+    }
+    wk->myState = AS_WAIT_RECV_FROM_CLIENT;
+    /* fallthru */
+  case AS_WAIT_RECV_FROM_CLIENT:
+    if( !_ReceptionClient(wk) )
+    {
+      break;
+    }
+    wk->myState = AS_DONE;
+    /*fallthru*/;
+  case AS_DONE:
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------------------------------
 /**
- * [SERVER用]	クライアントから帰ってきたデータへのポインタを取得
+ * [SERVER用] クライアントから帰ってきたデータへのポインタを取得
  *
- * @param   wk				アダプタモジュール
+ * @param   wk        アダプタモジュール
  *
- * @retval  const void*		データポインタ
+ * @retval  const void*   データポインタ
  */
 //--------------------------------------------------------------------------------------
 const void* BTL_ADAPTER_GetReturnData( BTL_ADAPTER* wk )
 {
-	GF_ASSERT(wk->returnDataPreparedFlag);
-	return wk->returnDataAdrs;
+  GF_ASSERT(wk->returnDataPreparedFlag);
+  return wk->returnDataAdrs;
 }
 
 //--------------------------------------------------------------------------------------
 /**
- * [SERVER用]	クライアントから帰ってきたデータのサイズを取得
+ * [SERVER用] クライアントから帰ってきたデータのサイズを取得
  *
- * @param   wk		アダプタモジュール
+ * @param   wk    アダプタモジュール
  *
- * @retval  u32		データポインタ
+ * @retval  u32   データポインタ
  */
 //--------------------------------------------------------------------------------------
 u32 BTL_ADAPTER_GetReturnDataCount( BTL_ADAPTER* wk )
 {
-	GF_ASSERT(wk->returnDataPreparedFlag);
-	return wk->returnDataSize / sizeof(BTL_ACTION_PARAM);
+  GF_ASSERT(wk->returnDataPreparedFlag);
+  return wk->returnDataSize / sizeof(BTL_ACTION_PARAM);
 }
 
 //--------------------------------------------------------------------------------------
 /**
- * [SERVER用]	クライアントに送信するコマンドをリセットする
+ * [SERVER用] クライアントに送信するコマンドをリセットする
  *
- * @param   wk		アダプタモジュール
+ * @param   wk    アダプタモジュール
  *
  */
 //--------------------------------------------------------------------------------------
 void BTL_ADAPTER_ResetCmd( BTL_ADAPTER *wk )
 {
-	GF_ASSERT(wk->myState == AS_FREE || wk->myState == AS_DONE);
-	wk->myState = AS_FREE;
+  GF_ASSERT(wk->myState == AS_FREE || wk->myState == AS_DONE);
+  wk->myState = AS_FREE;
 
-	if( CommMode != BTL_COMM_NONE )
-	{
-		BTL_NET_ClearRecvData();
-	}
+  if( CommMode != BTL_COMM_NONE )
+  {
+    BTL_NET_ClearRecvData();
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------
 
 
-static void _StartToReception( BTL_ADAPTER* wk )
+static BOOL _StartToReception( BTL_ADAPTER* wk )
 {
-	// スタンドアロンなら処理不要
-	if( CommMode != BTL_COMM_NONE )
-	{
-		SEND_DATA_BUFFER* sendBuf = &wk->sendDataBuffer;
-		BTL_NET_SendToClient( wk->myID, sendBuf, sendBuf_calcSize(sendBuf) );
-	}
+  // スタンドアロンなら処理不要
+  if( CommMode != BTL_COMM_NONE )
+  {
+    SEND_DATA_BUFFER* sendBuf = &wk->sendDataBuffer;
+    return BTL_NET_SendToClient( wk->myID, sendBuf, sendBuf_calcSize(sendBuf) );
+  }
+  else{
+    return TRUE;
+  }
 }
 
 static BOOL _ReceptionClient( BTL_ADAPTER* wk )
 {
-	if( CommMode != BTL_COMM_NONE )
-	{
-		if( BTL_NET_CheckReturnFromClient() )
-		{
-			wk->returnDataSize = BTL_NET_GetRecvClientData( wk->myID, &wk->returnDataAdrs );
-			wk->returnDataPreparedFlag = TRUE;
-			BTL_Printf("クライアント(%d)からの返信データを取得\n", wk->myID );
-			return TRUE;
-		}
-		return FALSE;
-	}
-	else
-	{
-		return wk->returnDataPreparedFlag;
-	}
+  if( CommMode != BTL_COMM_NONE )
+  {
+    if( BTL_NET_CheckReturnFromClient() )
+    {
+      wk->returnDataSize = BTL_NET_GetRecvClientData( wk->myID, &wk->returnDataAdrs );
+      wk->returnDataPreparedFlag = TRUE;
+      BTL_Printf("クライアント(%d)からの返信データを取得\n", wk->myID );
+      return TRUE;
+    }
+    return FALSE;
+  }
+  else
+  {
+    return wk->returnDataPreparedFlag;
+  }
 }
 
 
 //--------------------------------------------------------------------------------------
 /**
- * [CLIENT用]	アダプタコマンド受信チェック
+ * [CLIENT用] アダプタコマンド受信チェック
  *
- * @param   wk		
+ * @param   wk
  *
- * @retval  BtlAdapterCmd		
+ * @retval  BtlAdapterCmd
  */
 //--------------------------------------------------------------------------------------
 BtlAdapterCmd BTL_ADAPTER_RecvCmd( BTL_ADAPTER* wk )
 {
-	// 通信時
-	if( CommMode != BTL_COMM_NONE )
-	{
-		if( BTL_NET_IsServerCmdReceived() )
-		{
-			SEND_DATA_BUFFER* sendBuf;
-			BtlAdapterCmd cmd;
+  // 通信時
+  if( CommMode != BTL_COMM_NONE )
+  {
+    if( BTL_NET_IsServerCmdReceived() )
+    {
+      SEND_DATA_BUFFER* sendBuf;
+      BtlAdapterCmd cmd;
 
-			BTL_NET_GetReceivedCmdData( (const void**)&sendBuf );
-			cmd = sendBuf_getCmd( sendBuf );
+      BTL_NET_GetReceivedCmdData( (const void**)&sendBuf );
+      cmd = sendBuf_getCmd( sendBuf );
 
-			BTL_Printf("サーバコマンド(%d)受信しました\n", cmd);
+      BTL_Printf("サーバコマンド(%d)受信しました\n", cmd);
 
-			return cmd;
-		}
-		else
-		{
-			return BTL_ACMD_NONE;
-		}
-	}
-	// 非通信時
-	else
-	{
-		if( wk->returnDataPreparedFlag == FALSE )
-		{
-			return sendBuf_getCmd( &wk->sendDataBuffer );
-		}
-		else
-		{
-			return BTL_ACMD_NONE;
-		}
-	}
+      return cmd;
+    }
+    else
+    {
+      return BTL_ACMD_NONE;
+    }
+  }
+  // 非通信時
+  else
+  {
+    if( wk->returnDataPreparedFlag == FALSE )
+    {
+      return sendBuf_getCmd( &wk->sendDataBuffer );
+    }
+    else
+    {
+      return BTL_ACMD_NONE;
+    }
+  }
 }
 
 //--------------------------------------------------------------------------------------
 /**
- * [CLIENT用]	アダプタコマンド実データ部受信
+ * [CLIENT用] アダプタコマンド実データ部受信
  *
- * @param   wk		
- * @param   ppRecv		
+ * @param   wk
+ * @param   ppRecv
  *
- * @retval  u32		
+ * @retval  u32
  */
 //--------------------------------------------------------------------------------------
 u32 BTL_ADAPTER_GetRecvData( BTL_ADAPTER* wk, const void** ppRecv )
 {
-	// 通信時
-	if( CommMode != BTL_COMM_NONE )
-	{
-		SEND_DATA_BUFFER* sendBuf;
+  // 通信時
+  if( CommMode != BTL_COMM_NONE )
+  {
+    SEND_DATA_BUFFER* sendBuf;
 
-		BTL_NET_GetReceivedCmdData( (const void**)&sendBuf );
-		return sendBuf_getData( sendBuf, ppRecv );
-	}
-	// 非通信時
-	else
-	{
-		return sendBuf_getData( &wk->sendDataBuffer, ppRecv );
-	}
+    BTL_NET_GetReceivedCmdData( (const void**)&sendBuf );
+    return sendBuf_getData( sendBuf, ppRecv );
+  }
+  // 非通信時
+  else
+  {
+    return sendBuf_getData( &wk->sendDataBuffer, ppRecv );
+  }
 }
 
-
-//--------------------------------------------------------------------------------------
+//=============================================================================================
 /**
- * 
+ * クライアント→サーバへコマンド返信
  *
- * @param   wk		
- * @param   data		
- * @param   size		
+ * @param   wk
+ * @param   data    返信データアドレス
+ * @param   size    返信データサイズ
  *
+ * @retval  BOOL    成功時TRUE（成功するまで毎フレーム呼ぶこと）
  */
-//--------------------------------------------------------------------------------------
-void BTL_ADAPTER_ReturnCmd( BTL_ADAPTER* wk, const void* data, u32 size )
+//=============================================================================================
+BOOL BTL_ADAPTER_ReturnCmd( BTL_ADAPTER* wk, const void* data, u32 size )
 {
-	// 通信時
-	if( CommMode != BTL_COMM_NONE )
-	{
-		BTL_NET_ReturnToServer( data, size );
-	}
-	// 非通信時
-	else
-	{
-		if( wk->returnDataPreparedFlag == FALSE )
-		{
-			wk->returnDataAdrs = data;
-			wk->returnDataSize = size;
-			wk->returnDataPreparedFlag = TRUE;
-		}
-	}
+  // 通信時
+  if( CommMode != BTL_COMM_NONE )
+  {
+    return BTL_NET_ReturnToServer( data, size );
+  }
+  // 非通信時
+  else
+  {
+    if( wk->returnDataPreparedFlag == FALSE )
+    {
+      wk->returnDataAdrs = data;
+      wk->returnDataSize = size;
+      wk->returnDataPreparedFlag = TRUE;
+    }
+    return TRUE;
+  }
 }
 
 
@@ -422,26 +428,26 @@ void BTL_ADAPTER_ReturnCmd( BTL_ADAPTER* wk, const void* data, u32 size )
 
 static inline void sendBuf_store( SEND_DATA_BUFFER* buf, BtlAdapterCmd cmd, const void* data, u32 dataSize )
 {
-	GF_ASSERT(dataSize < sizeof(buf->data));
+  GF_ASSERT(dataSize < sizeof(buf->data));
 
-	buf->header.cmd = cmd;
-	buf->header.size = dataSize;
-	GFL_STD_MemCopy( data, buf->data, dataSize );
+  buf->header.cmd = cmd;
+  buf->header.size = dataSize;
+  GFL_STD_MemCopy( data, buf->data, dataSize );
 }
 
 static inline u32 sendBuf_calcSize( const SEND_DATA_BUFFER* buf )
 {
-	return sizeof(buf->header) + buf->header.size;
+  return sizeof(buf->header) + buf->header.size;
 }
 
 static inline BtlAdapterCmd sendBuf_getCmd( const SEND_DATA_BUFFER* buf )
 {
-	return buf->header.cmd;
+  return buf->header.cmd;
 }
 
 static inline u32 sendBuf_getData( const SEND_DATA_BUFFER* buf, const void** pptr )
 {
-	*pptr = buf->data;
-	return buf->header.size;
+  *pptr = buf->data;
+  return buf->header.size;
 }
 
