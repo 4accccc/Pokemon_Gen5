@@ -323,7 +323,11 @@ void FIELD_PLAYER_SetPos( FIELD_PLAYER *fld_player, const VecFx32 *pos )
 //--------------------------------------------------------------
 u16 FIELD_PLAYER_GetDir( const FIELD_PLAYER *fld_player )
 {
+#if 0
 	return( fld_player->dir );
+#else //表示するアクターから直に取得
+  MMDL_GetDirDisp( fld_player->fldmmdl );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -336,7 +340,11 @@ u16 FIELD_PLAYER_GetDir( const FIELD_PLAYER *fld_player )
 //--------------------------------------------------------------
 void FIELD_PLAYER_SetDir( FIELD_PLAYER *fld_player, u16 dir )
 {
+#if 0
 	fld_player->dir = dir;
+#else //表示するアクターへ直にセット
+  MMDL_SetDirDisp( fld_player->fldmmdl, dir );
+#endif
 }
 
 //--------------------------------------------------------------
