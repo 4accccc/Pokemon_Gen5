@@ -502,7 +502,6 @@ static BOOL setup_comm_single( int* seq, void* work )
         BTL_Printf("ワシ、サーバーではない。\n");
         (*seq) = 2;
       }
-      (*seq)++;
     }
     break;
     // サーバマシンは各クライアントに各々のクライアントIDと責任領域数を通知する
