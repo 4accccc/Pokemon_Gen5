@@ -11,9 +11,11 @@
 #include "gamesystem/game_event.h"
 
 #define OBJCOUNT_MAX  (2)
-#define RESCOUNT_MAX  (2)
+#define RESCOUNT_MAX  (6)
 
 #define UNIT_NONE   (0xffffffff)
+
+#define NONDATA  (0xffff)
 
 
 typedef struct FLD3D_CI_tag
@@ -51,7 +53,8 @@ typedef struct {
 typedef struct {
   GFL_G3D_UTIL_RES *Res;
   GFL_G3D_UTIL_OBJ *Obj;
-  GFL_G3D_UTIL_ANM *Anm;
+  GFL_G3D_UTIL_ANM *Anm1;
+  GFL_G3D_UTIL_ANM *Anm2;
   GFL_G3D_UTIL_SETUP Setup;
   u16 SpaWait;
   u16 MdlAAnmWait;
@@ -59,7 +62,8 @@ typedef struct {
   u8 ResNum;
   u8 ObjNum;
   u8 AnmNum;
-  u8 Dummy[3];
+  u8 SpaIdx;
+  u8 Dummy[2];
 }RES_SETUP_DAT;
 
 typedef struct {
@@ -194,41 +198,11 @@ static void SetupResourceCore(FLD3D_CI_PTR ptr, const GFL_G3D_UTIL_SETUP *inSetu
 	  MTX_Identity33( &ptr->Status.rotate );
     VEC_Set( &ptr->Status.trans, 0, 0, 0 );
   }
-
-
-
-#if 0  
-
-  ptr->Unit[inIndex].ObjNum = obj_num;
-  ptr->Unit[inIndex].Valid = TRUE;
-  ptr->Unit[inIndex].UtilUnitIdx = unitIdx;
-
-  status = GFL_HEAP_AllocClearMemory(ptr->HeapID, sizeof(GFL_G3D_OBJSTATUS)*obj_num);
-  ptr->Unit[inIndex].ObjStatus = status;
-  ptr->Unit[inIndex].AnmList = GFL_HEAP_AllocClearMemory(ptr->HeapID, sizeof(ANM_LIST)*obj_num);
-  for(i=0;i<obj_num;i++){
-    const GFL_G3D_UTIL_OBJ * objTbl = inSetup->objTbl;
-    u16 anm_num = objTbl[i].anmCount;
-    AnmCntInit(&ptr->Unit[inIndex].AnmList[i], anm_num, ptr->HeapID);
-
-    VEC_Set( &status[i].scale, FX32_ONE, FX32_ONE, FX32_ONE );
-	  MTX_Identity33( &status[i].rotate );
-    VEC_Set( &status[i].trans, 0, 0, 0 );    
-  }
-  GF_ASSERT(GFL_HEAP_CheckHeapSafe(ptr->HeapID) == TRUE);
-#endif
 }
 
 void FLD3D_CI_Draw( FLD3D_CI_PTR ptr )
 {
-  static fx32 testZ = 0;
   u8 i,j;
-  {
-    if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
-      testZ -= (FX32_ONE*16);
-    }
-    VEC_Set( &ptr->Status.trans, 0, 0, testZ );
-  }
   //カメラ設定
   GFL_G3D_CAMERA_Switching( ptr->g3Dcamera );
   //ユニット数分ループ
@@ -295,9 +269,9 @@ static GMEVENT_RESULT CatInEvt( GMEVENT* event, int* seq, void* work )
       //パーティクル再生
       rc1 = PlayParticle(ptr);
       //3Ｄモデル1アニメ再生
-      rc2 = TRUE;
+      rc2 = PlayMdlAnm1(ptr);
       //3Ｄモデル2アニメ再生
-      rc3 = TRUE;
+      rc3 = PlayMdlAnm1(ptr);
 
       if (rc1&&rc2&&rc3){
         (*seq)++;
@@ -305,17 +279,11 @@ static GMEVENT_RESULT CatInEvt( GMEVENT* event, int* seq, void* work )
     }
     break;
   case 4:
-    //終了監視
-    if ( CheckAnmEnd(ptr) ){
-      (*seq)++;
-    }
-    break;
-  case 5:
     //リソース解放処理
     DeleteResource(ptr, &evt_work->SetupDat);
     (*seq)++;
     break;
-  case 6:
+  case 5:
     //終了
     return GMEVENT_RES_FINISH;
   }
@@ -333,10 +301,12 @@ static BOOL PlayParticle(FLD3D_CI_PTR ptr)
       //パーティクルジェネレート
       Generate(ptr);
       ptr->PartGene = 1;
-      return TRUE;
     }
   }else{
-    return TRUE;
+    //パーティクル終了判定
+    if ( FLD_PRTCL_CheckEmitEnd( ptr->PrtclSys ) ){
+      return TRUE;
+    }
   }
   return FALSE;
 }
@@ -347,8 +317,20 @@ static BOOL PlayMdlAnm1(FLD3D_CI_PTR ptr)
   if (ptr->MdlAnm1Wait > 0){
     ptr->MdlAnm1Wait--;
   }else{
+    BOOL rc;
+    u8 i;
+    u16 num;
+    GFL_G3D_OBJ* obj;
+    u16 obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( ptr->Util, ptr->UnitIdx );
+    obj = GFL_G3D_UTIL_GetObjHandle( ptr->Util, obj_idx );
+    num = GFL_G3D_OBJECT_GetAnimeCount( obj );
     //アニメ再生
-    ;
+    for (i=0;i<num;i++){
+      rc = GFL_G3D_OBJECT_IncAnimeFrame( obj, i, FX32_ONE );
+    }
+    if (rc == FALSE){
+      return TRUE;
+    }
   }
   return FALSE;
 }
@@ -360,7 +342,20 @@ static BOOL PlayMdlAnm2(FLD3D_CI_PTR ptr)
     ptr->MdlAnm2Wait--;
   }else{
     //アニメ再生
-    ;
+    BOOL rc;
+    u8 i;
+    u16 num;
+    GFL_G3D_OBJ* obj;
+    u16 obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( ptr->Util, ptr->UnitIdx );
+    obj = GFL_G3D_UTIL_GetObjHandle( ptr->Util, obj_idx+1 );
+    num = GFL_G3D_OBJECT_GetAnimeCount( obj );
+    //アニメ再生
+    for (i=0;i<num;i++){
+      rc = GFL_G3D_OBJECT_IncAnimeFrame( obj, i, FX32_ONE );
+    }
+    if (rc == FALSE){
+      return TRUE;
+    }
   }
   return FALSE;
 }
@@ -378,9 +373,25 @@ static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCu
   {
     void *resource;
     resource = FLD_PRTCL_LoadResource(ptr->PrtclSys,
-			ARCID_FLD3D_CI, /*NARC_particledata_title_part_spa*/0);
+			ARCID_FLD3D_CI, outDat->SpaIdx);
 
     FLD_PRTCL_SetResource(ptr->PrtclSys, resource, TRUE, NULL);
+  }
+  //アニメを有効にする
+  {
+    u8 i,j;
+    u16 obj_num,anm_num;
+    GFL_G3D_OBJ* obj;
+    u16 obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( ptr->Util, ptr->UnitIdx );
+    obj_num = GFL_G3D_UTIL_GetUnitObjCount( ptr->Util, ptr->UnitIdx );
+    for(i=0;i<obj_num;i++){
+      obj = GFL_G3D_UTIL_GetObjHandle( ptr->Util, obj_idx+i );
+      anm_num = GFL_G3D_OBJECT_GetAnimeCount( obj );
+      //アニメ有効
+      for (j=0;j<anm_num;j++){
+        GFL_G3D_OBJECT_EnableAnime( obj, j );
+      }
+    }
   }
   //ウェイト設定
   ptr->PrtclWait = 0;
@@ -413,10 +424,12 @@ static void Generate(FLD3D_CI_PTR ptr)
 ///  GFL_PTC_SetCameraType(sys->PrtclPtr, GFL_G3D_PRJORTH);
 	GFL_PTC_CreateEmitterCallback(ptr->PrtclPtr, 0,
 									ParticleCallBack, NULL);
+/**  
 	GFL_PTC_CreateEmitterCallback(ptr->PrtclPtr, 1,
 									ParticleCallBack, NULL);
 	GFL_PTC_CreateEmitterCallback(ptr->PrtclPtr, 2,
 									ParticleCallBack, NULL);
+*/                  
 }
 
 //--------------------------------------------------------------
@@ -451,15 +464,64 @@ static void ParticleCallBack(GFL_EMIT_PTR emit)
 static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID inHeapID)
 {
   RES_DEF_DAT def_dat;
-  u8 res_num,obj_num,anm_num;
+  u8 res_num,obj_num,anm1_num,anm2_num;
+  u8 obj_res_start,anm1_res_start,anm2_res_start;
+
   //アーカイブからリソース定義をロード
   GFL_ARC_LoadData(&def_dat, ARCID_FLD3D_CI_SETUP, inResArcIdx);
-  //リソース数を調べる
-  res_num = 1;  //@todo
+#if 0
+#ifdef PM_DEBUG
+  //アーカイブ内容をダンプ
+  OS_Printf("%d %d %d %d %d %d %d %d %d %d\n",
+      def_dat.SpaIdx,
+      def_dat.SpaWait,
+      def_dat.MdlAObjIdx,
+      def_dat.MdlAAnm1Idx,
+      def_dat.MdlAAnm2Idx,
+      def_dat.MdlAAnmWait,
+      def_dat.MdlBObjIdx,
+      def_dat.MdlBAnm1Idx,
+      def_dat.MdlBAnm2Idx,
+      def_dat.MdlBAnmWait);
+#endif
+#endif  
   //OBJ数を調べる
-  obj_num = 1;  //@todo
+  {
+    obj_num = 0;
+    if (def_dat.MdlAObjIdx != NONDATA){
+      obj_num++;
+    }
+    if (def_dat.MdlBObjIdx != NONDATA){
+      obj_num++;
+    }
+  }
   //アニメ数を調べる
-  anm_num = 0;  //@todo
+  {
+    anm1_num = 0;
+    anm2_num = 0;
+    if (def_dat.MdlAAnm1Idx != NONDATA){
+      anm1_num++;
+    }
+    if (def_dat.MdlAAnm2Idx != NONDATA){
+      anm1_num++;
+    }
+    if (def_dat.MdlBAnm1Idx != NONDATA){
+      anm2_num++;
+    }
+    if (def_dat.MdlBAnm2Idx != NONDATA){
+      anm2_num++;
+    }
+  }
+
+  obj_res_start = 0;
+  anm1_res_start = obj_res_start + obj_num;
+  anm2_res_start = anm1_res_start + anm1_num;
+
+  //リソース数を調べる
+  res_num = obj_num+anm1_num+anm2_num;
+#if 0
+  OS_Printf("obj_anm_res = %d %d %d %d\n",obj_num, anm1_num, anm2_num, res_num);
+#endif
   //リソーステーブルアロケート
   if (res_num){
     outDat->Res = GFL_HEAP_AllocClearMemory(inHeapID, sizeof(GFL_G3D_UTIL_RES)*res_num);
@@ -469,34 +531,80 @@ static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID 
     outDat->Obj = GFL_HEAP_AllocClearMemory(inHeapID, sizeof(GFL_G3D_UTIL_OBJ)*obj_num);
   }
   //アニメテーブルアロケート
-  if(anm_num){
-    outDat->Anm = GFL_HEAP_AllocClearMemory(inHeapID, sizeof(GFL_G3D_UTIL_ANM)*anm_num);
+  if(anm1_num){
+    outDat->Anm1 = GFL_HEAP_AllocClearMemory(inHeapID, sizeof(GFL_G3D_UTIL_ANM)*anm1_num);
+  }
+  //アニメテーブルアロケート
+  if(anm2_num){
+    outDat->Anm2 = GFL_HEAP_AllocClearMemory(inHeapID, sizeof(GFL_G3D_UTIL_ANM)*anm2_num);
   }
 
   //リソース数記憶
   outDat->ResNum = res_num;
   outDat->ObjNum = obj_num;
-  outDat->AnmNum = anm_num;
+  outDat->AnmNum = anm1_num+anm2_num;
   //ウェイト記憶
   outDat->SpaWait = def_dat.SpaWait;
   outDat->MdlAAnmWait = def_dat.MdlAAnmWait;
   outDat->MdlBAnmWait = def_dat.MdlBAnmWait;
 
-  //↓@todo　const セットができない・・・
-  outDat->Res->arcive = ARCID_FLD3D_CI;
-  outDat->Res->datID = def_dat.MdlAObjIdx;
-  outDat->Res->arcType = GFL_G3D_UTIL_RESARC;
+  {
+    u8 i;
+    u8 count = 0;
+    u16 arc_id[6];
+    arc_id[0] = def_dat.MdlAObjIdx;
+    arc_id[1] = def_dat.MdlBObjIdx;
+    arc_id[2] = def_dat.MdlAAnm1Idx;
+    arc_id[3] = def_dat.MdlAAnm2Idx;
+    arc_id[4] = def_dat.MdlBAnm1Idx;
+    arc_id[5] = def_dat.MdlBAnm2Idx;
 
-  outDat->Obj->mdlresID = 0;  
-  outDat->Obj->mdldatID = 0;
-  outDat->Obj->texresID = 0;
-  outDat->Obj->anmTbl = outDat->Anm;
-  outDat->Obj->anmCount = anm_num;
+    for (i=0;i<res_num;i++){
+      if ( arc_id[i] != NONDATA ){
+        outDat->Res[i].arcive = ARCID_FLD3D_CI;
+        outDat->Res[i].datID = arc_id[count];
+        outDat->Res[i].arcType = GFL_G3D_UTIL_RESARC;
+        count++;
+      }
+    }
+  }
+
+  {
+    u8 i;
+    for (i=0;i<anm1_num;i++){
+      outDat->Anm1[i].anmresID = anm1_res_start+i;
+      outDat->Anm1[i].anmdatID = 0;
+    }
+    for (i=0;i<anm2_num;i++){
+      outDat->Anm2[i].anmresID = anm2_res_start+i;
+      outDat->Anm2[i].anmdatID = 0;
+    }
+  }
+
+  {
+    u8 i;
+    for (i=0;i<obj_num;i++){
+      outDat->Obj[i].mdlresID = obj_res_start+i;  
+      outDat->Obj[i].mdldatID = 0;
+      outDat->Obj[i].texresID = obj_res_start+i;
+    }
+    if (obj_num>=1){
+      outDat->Obj[0].anmTbl = outDat->Anm1;
+      outDat->Obj[0].anmCount = anm1_num;
+    }
+    if (obj_num>=2){
+      outDat->Obj[1].anmTbl = outDat->Anm2;
+      outDat->Obj[1].anmCount = anm2_num;
+    }
+  }
+
 
   outDat->Setup.resTbl = outDat->Res;
   outDat->Setup.resCount = res_num;
   outDat->Setup.objTbl = outDat->Obj;
   outDat->Setup.objCount = obj_num;
+
+  outDat->SpaIdx = def_dat.SpaIdx;
 }
 
 //--------------------------------------------------------------
@@ -511,8 +619,11 @@ static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID 
 //--------------------------------------------------------------
 static void DeleteRes(RES_SETUP_DAT *outDat)
 {
-  if (outDat->Anm != NULL){
-    GFL_HEAP_FreeMemory( outDat->Anm );
+  if (outDat->Anm1 != NULL){
+    GFL_HEAP_FreeMemory( outDat->Anm1 );
+  }
+  if (outDat->Anm2 != NULL){
+    GFL_HEAP_FreeMemory( outDat->Anm2 );
   }
   if (outDat->Obj != NULL){
     GFL_HEAP_FreeMemory( outDat->Obj );
