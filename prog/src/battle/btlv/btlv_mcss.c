@@ -28,6 +28,9 @@
 #define BTLV_MCSS_DEFAULT_SHIFT ( FX32_SHIFT - 4 )          //ポリゴン１辺の基準の長さにするシフト値
 #define BTLV_MCSS_DEFAULT_LINE  ( 1 << BTLV_MCSS_DEFAULT_SHIFT )  //ポリゴン１辺の基準の長さ
 
+#define BTLV_MCSS_ORTHO_SCALE_MINE  ( FX32_ONE * 16 * 2 )
+#define BTLV_MCSS_ORTHO_SCALE_ENEMY ( FX32_ONE * 16 * 1 )
+
 enum{ 
   REVERSE_FLAG_OFF = 0,
   REVERSE_FLAG_ON,
@@ -98,6 +101,7 @@ static  void  TCB_BTLV_MCSS_MoveCircle( GFL_TCB *tcb, void *work );
 static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame );
 
 static  void  BTLV_MCSS_GetDefaultPos( BTLV_MCSS_WORK *bmw, VecFx32 *pos, BtlvMcssPos position );
+static  fx32  BTLV_MCSS_GetDefaultScale( BTLV_MCSS_WORK* bmw, BtlvMcssPos position, BTLV_MCSS_PROJECTION proj );
 
 #ifdef PM_DEBUG
 void  BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
@@ -108,69 +112,25 @@ void  BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, 
  *  ポケモンの立ち位置テーブル
  */
 //============================================================================================
-/*
-static  const VecFx32 poke_pos_table[]={
-  { FX_F32_TO_FX32( -2.5f ),  FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   8.0f ) },   //POS_AA
-  { FX_F32_TO_FX32(  4.5f ),  FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },   //POS_BB
-  { FX_F32_TO_FX32( -3.5f ),  FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(   8.5f ) },   //POS_A
-  { FX_F32_TO_FX32(  6.0f ),  FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  -9.0f ) },   //POS_B
-  { FX_F32_TO_FX32( -0.5f ),  FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(   9.0f ) },   //POS_C
-  { FX_F32_TO_FX32(  2.0f ),  FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -11.0f ) },   //POS_D
-  { FX_F32_TO_FX32( -2.5f ),  FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(  10.0f ) },   //POS_E
-  { FX_F32_TO_FX32(  4.5f ),  FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },   //POS_F
-};
-*/
-
-#define OFS_Y ( 0.3f )
-
-#if 0
-static  const VecFx32 poke_pos_table[]={
-  { FX_F32_TO_FX32( -2.5f + 3.000f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },   //POS_AA
-  { FX_F32_TO_FX32(  4.5f - 4.200f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -10.0f ) },   //POS_BB
-#if 1
-  { FX_F32_TO_FX32( -3.5f + 3.500f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },   //POS_A
-  { FX_F32_TO_FX32(  6.0f - 4.200f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -10.0f ) },   //POS_B
-  { FX_F32_TO_FX32( -0.5f + 3.500f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },   //POS_C
-  { FX_F32_TO_FX32(  2.0f - 4.200f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -10.0f ) },   //POS_D
-  { FX_F32_TO_FX32(  2.5f + 3.500f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },   //POS_E
-  { FX_F32_TO_FX32( -2.0f - 4.200f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -10.0f ) },   //POS_F
-#else
-  { 0xffffd000, 0x00000666, 0x00008000 },   //POS_A
-  { 0x00004900, 0x00000666, 0xffff5000 },   //POS_B
-  { 0x00000700, 0x00000666, 0x00005000 },   //POS_C
-  { 0x000002cd, 0x00000666, 0xffff7000 },   //POS_D
-  { 0x00005000, 0x00000666, 0x00007000 },   //POS_E
-  { 0xffffbccd, 0x00000666, 0xffff5000 },   //POS_F
-#endif
-
-  { FX_F32_TO_FX32( -2.5f + 3.000f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   7.5f - 0.5f ) },    //POS_TR_AA
-  { FX_F32_TO_FX32(  4.5f - 4.200f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( -25.0f ) },           //POS_TR_BB
-  { FX_F32_TO_FX32( -3.5f + 3.500f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   8.5f ) },           //POS_TR_A
-  { FX_F32_TO_FX32(  6.0f - 4.200f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(  -9.0f ) },           //POS_TR_B
-  { FX_F32_TO_FX32( -0.5f + 3.845f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   9.0f ) },           //POS_TR_C
-  { FX_F32_TO_FX32(  2.0f - 4.964f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( -11.0f ) },           //POS_TR_D
-};
-#endif
-
 static  const VecFx32 poke_pos_single_table[]={
-  { FX_F32_TO_FX32( -2.5f + 3.000f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },   //POS_AA
-  { FX_F32_TO_FX32(  4.5f - 4.200f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -10.0f ) },   //POS_BB
+  { 0x00000800, 0x00000666, 0x00007000 }, //POS_AA
+  { 0x000004cd, 0x00000666, 0xffff6000 }, //POS_BB
 };
 
 static  const VecFx32 poke_pos_double_table[]={
-  { FX_F32_TO_FX32( -3.5f + 3.500f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },   //POS_A
-  { FX_F32_TO_FX32(  6.0f - 4.200f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -10.0f ) },   //POS_B
-  { FX_F32_TO_FX32( -0.5f + 3.500f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32(   7.0f ) },   //POS_C
-  { FX_F32_TO_FX32(  2.0f - 4.200f ), FX_F32_TO_FX32( 0.7f - OFS_Y ), FX_F32_TO_FX32( -10.0f ) },   //POS_D
+  { 0x00000000, 0x00000666, 0x00007000 }, //POS_A
+  { 0x00001ccd, 0x00000666, 0xffff6000 }, //POS_B  
+  { 0x00003000, 0x00000666, 0x00007000 }, //POS_C
+  { 0xffffdccd, 0x00000666, 0xffff6000 }, //POS_D
 };
 
 static  const VecFx32 poke_pos_triple_table[]={
-  { 0xffffd000, 0x00000666, 0x00008000 },   //POS_A
-  { 0x00004900, 0x00000666, 0xffff5000 },   //POS_B
-  { 0x00000700, 0x00000666, 0x00005000 },   //POS_C
-  { 0x000002cd, 0x00000666, 0xffff7000 },   //POS_D
-  { 0x00005000, 0x00000666, 0x00007000 },   //POS_E
-  { 0xffffbccd, 0x00000666, 0xffff5000 },   //POS_F
+  { 0xffffc000, 0x00000666, 0x00007000 }, //POS_A
+  { 0x00004800, 0x00000666, 0xffff4000 }, //POS_B
+  { 0x00000c00, 0x00000666, 0x00004c00 }, //POS_C
+  { 0x00000bcd, 0x00000666, 0xffff7000 }, //POS_D
+  { 0x00005300, 0x00000666, 0x00006300 }, //POS_E
+  { 0xffffb9cd, 0x00000666, 0xffff4000 }, //POS_F
 };
 
 static  const VecFx32 trainer_pos_table[]={
@@ -187,39 +147,34 @@ static  const VecFx32 trainer_pos_table[]={
  *  ポケモンの立ち位置によるスケール補正テーブル
  */
 //============================================================================================
-static  const fx32  poke_scale_table[ BTLV_MCSS_PROJ_MAX ][ BTLV_MCSS_POS_TOTAL ]={
-  {
-    0x1030,   //POS_AA
-    0x119b,   //POS_BB
-    0x0f00,   //POS_A
-    0x10e0,   //POS_B
-    0x0d00,   //POS_C
-    0x1320,   //POS_D
-    0x1000,   //POS_E
-    0x1000,   //POS_F
-    0x1030,   //POS_TR_AA
-    0x119b,   //POS_TR_BB
-    0x0f00,   //POS_TR_A
-    0x10e0,   //POS_TR_B
-    0x0d00,   //POS_TR_C
-    0x1320,   //POS_TR_D
-  },
-  {
-    FX32_ONE * 16 * 2,
-    FX32_ONE * 16,
-    FX32_ONE * 16 * 2,
-    FX32_ONE * 16,
-    FX32_ONE * 16 * 2,
-    FX32_ONE * 16,
-    FX32_ONE * 16 * 2,
-    FX32_ONE * 16,
-    FX32_ONE * 16 * 2,
-    FX32_ONE * 16,
-    FX32_ONE * 16 * 2,
-    FX32_ONE * 16,
-    FX32_ONE * 16 * 2,
-    FX32_ONE * 16,
-  }
+static  const fx32 poke_scale_single_table[]={
+  0x1030,   //POS_AA
+  0x119b,   //POS_BB
+};
+
+static  const fx32 poke_scale_double_table[]={
+  0x0f00,   //POS_A
+  0x10e0,   //POS_B
+  0x0d00,   //POS_C
+  0x1320,   //POS_D
+};
+
+static  const fx32 poke_scale_triple_table[]={
+  0x00001200, //POS_A
+  0x00001200, //POS_B
+  0x00001270, //POS_C
+  0x000011b0, //POS_D
+  0x00000ed4, //POS_E
+  0x00001400, //POS_F
+};
+
+static  const fx32 trainer_scale_table[]={
+  0x1030,   //POS_TR_AA
+  0x119b,   //POS_TR_BB
+  0x0f00,   //POS_TR_A
+  0x10e0,   //POS_TR_B
+  0x0d00,   //POS_TR_C
+  0x1320,   //POS_TR_D
 };
 
 //============================================================================================
@@ -526,7 +481,7 @@ fx32  BTLV_MCSS_GetPokeDefaultScale( BTLV_MCSS_WORK *bmw, int position )
 //============================================================================================
 fx32  BTLV_MCSS_GetPokeDefaultScaleEx( BTLV_MCSS_WORK *bmw, int position, BTLV_MCSS_PROJECTION proj )
 {
-  return poke_scale_table[ proj ][ position ];
+  return BTLV_MCSS_GetDefaultScale( bmw, position, proj );
 }
 
 //============================================================================================
@@ -877,22 +832,21 @@ static  void  BTLV_MCSS_MakeMAWTrainer( int tr_type, MCSS_ADD_WORK* maw, int pos
 //============================================================================================
 static  void  BTLV_MCSS_SetDefaultScale( BTLV_MCSS_WORK *bmw, int position )
 {
-  VecFx32     scale;
+  VecFx32 scale;
+  fx32    def_scale;
 
   GF_ASSERT( position < BTLV_MCSS_POS_TOTAL );
   GF_ASSERT( bmw->mcss[ position ] );
 
-  VEC_Set( &scale,
-       poke_scale_table[ bmw->mcss_proj_mode ][ position ],
-       poke_scale_table[ bmw->mcss_proj_mode ][ position ],
-       FX32_ONE );
+  def_scale = BTLV_MCSS_GetDefaultScale( bmw, position, bmw->mcss_proj_mode );
+
+  VEC_Set( &scale, def_scale, def_scale, FX32_ONE );
 
   MCSS_SetScale( bmw->mcss[ position ], &scale );
 
-  VEC_Set( &scale,
-       poke_scale_table[ 0 ][ position ],
-       poke_scale_table[ 0 ][ position ] / 2,
-       FX32_ONE );
+  def_scale = BTLV_MCSS_GetDefaultScale( bmw, position, BTLV_MCSS_PROJ_PERSPECTIVE );
+
+  VEC_Set( &scale, def_scale, def_scale / 2, FX32_ONE );
 
   MCSS_SetShadowScale( bmw->mcss[ position ], &scale );
 }
@@ -1211,6 +1165,72 @@ static  void  BTLV_MCSS_GetDefaultPos( BTLV_MCSS_WORK *bmw, VecFx32 *pos, BtlvMc
   pos->x = pos_table->x;
   pos->y = pos_table->y;
   pos->z = pos_table->z;
+}
+
+//============================================================================================
+/**
+ * @brief MCSSの立ち位置ごとのデフォルトスケールを取得
+ *
+ * @param[in]   bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in]   position  MCSSの立ち位置
+ * @param[in]   proj      射影モード
+ */
+//============================================================================================
+static  fx32  BTLV_MCSS_GetDefaultScale( BTLV_MCSS_WORK* bmw, BtlvMcssPos position, BTLV_MCSS_PROJECTION proj )
+{ 
+  fx32 scale;
+
+  if( proj == BTLV_MCSS_PROJ_PERSPECTIVE )
+  { 
+    switch( position ){ 
+    case BTLV_MCSS_POS_AA:
+    case BTLV_MCSS_POS_BB:
+      scale = poke_scale_single_table[ position ];
+      break;
+    case BTLV_MCSS_POS_A:
+    case BTLV_MCSS_POS_B:
+    case BTLV_MCSS_POS_C:
+    case BTLV_MCSS_POS_D:
+      if( bmw->mcss_pos_3vs3 )
+      { 
+        scale = poke_scale_triple_table[ position - BTLV_MCSS_POS_A ];
+      }
+      else
+      { 
+        scale = poke_scale_double_table[ position - BTLV_MCSS_POS_A ];
+      }
+      break;
+    case BTLV_MCSS_POS_E:
+    case BTLV_MCSS_POS_F:
+      GF_ASSERT( bmw->mcss_pos_3vs3 == 1 );
+      scale = poke_scale_triple_table[ position - BTLV_MCSS_POS_A ];
+      break;
+    case BTLV_MCSS_POS_TR_AA:
+    case BTLV_MCSS_POS_TR_BB:
+    case BTLV_MCSS_POS_TR_A:
+    case BTLV_MCSS_POS_TR_B:
+    case BTLV_MCSS_POS_TR_C:
+    case BTLV_MCSS_POS_TR_D:
+      scale = trainer_scale_table[ position - BTLV_MCSS_POS_TR_AA ];
+      break;
+    default:
+      //定義されていないポジションが指定されています
+      GF_ASSERT( 0 );
+      break;
+    }
+  }
+  else
+  { 
+    if( position & 1 )
+    { 
+      scale = BTLV_MCSS_ORTHO_SCALE_ENEMY;
+    }
+    else
+    { 
+      scale = BTLV_MCSS_ORTHO_SCALE_MINE;
+    }
+  }
+  return scale;
 }
 
 #ifdef PM_DEBUG
