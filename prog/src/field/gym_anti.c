@@ -539,14 +539,9 @@ static GMEVENT_RESULT PushSwEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 1: //アニメ待ち 
     {
-      u8 sw_obj_idx;
-      EXP_OBJ_ANM_CNT_PTR sw_anm;
-      sw_obj_idx = OBJ_SW_1 + tmp->SwIdx;
-      sw_anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0);
-      if ( FLD_EXP_OBJ_ChkAnmEnd(sw_anm) ){
-        OS_Printf("アニメ終了\n");
-        return GMEVENT_RES_FINISH;
-      }
+      //フレーム切り替えによるアニメなので、アニメ待ちしない
+      OS_Printf("アニメ終了\n");
+      return GMEVENT_RES_FINISH;
     }
   }
   return GMEVENT_RES_CONTINUE;
