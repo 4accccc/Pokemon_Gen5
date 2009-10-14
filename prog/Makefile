@@ -12,13 +12,6 @@ export MAKEROM_ROMSPEED=1TROM
 #export MAKEROM_ROMSPEED=MROM
 
 
-## ハイブリッドにしない場合 下記の部分を有効にしてください ハイブリッドにする場合は無効にしてください
-TARGET_PLATFORM :=  NITRO
-
-## ハイブリッドにする場合 下記の部分を有効にしてください ハイブリッドにしない場合は無効にしてください
-## TWLSDK_PLATFORM :=  NITRO TWL
-
-
 TWL_ARCHGEN		:=	HYBRID
 
 # NITROSDK3.0付属ののプリコンパイルを読み込まない
