@@ -838,7 +838,7 @@ begin
     #d•¡‚ğ‚È‚­‚·
     depend_header = depend_header.uniq()
 
-    File.open( "#{ofilename}_make_list_depend.tmp", "w" ){|file|
+    File.open( "#{ofilename}.tmp", "w" ){|file|
       file.puts "##{ARGV[0]}"
       file.puts "#{ofilename}.bin:#{ARGV[0]} #{depend_header}"
       file.puts "\truby make_binary.rb $< #{depend_header}"

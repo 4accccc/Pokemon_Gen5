@@ -29,22 +29,30 @@ DATADIR	= ../data
 SRCDATA = $(wildcard $(DATADIR)/*.mev)
 TGTDATA = $(basename $(notdir $(SRCDATA)))
 HEADER = $(addprefix $(TMPDIR)/,$(addsuffix .h,$(TGTDATA)))
+TMPDATA = $(addprefix $(TMPDIR)/,$(addsuffix .tmp,$(TGTDATA)))
 
 TARGET = total_header.h
+TARGET2 = binary_depend_file
 
 .PHONY:	do-build clean test
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGET)
+do-build:	$(TARGET) $(TARGET2)
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
 $(TARGET):	$(HEADER)
 	cat $(TMPDIR)/*.h > $(TARGET)
-	cat $(TMPDIR)/*.tmp > binary_depend_file
+
+$(TARGET2):	$(TMPDATA)
+	cat $(TMPDIR)/*.tmp > $(TARGET2)
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
 
 $(TMPDIR)/%.h: $(DATADIR)/%.mev
+	ruby make_event.rb $<
+
+$(TMPDIR)/%.tmp: $(DATADIR)/%.mev
 	ruby make_event.rb $<
 endif
 
@@ -55,8 +63,10 @@ endif
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
 	-rm event_*.h event_*.tmp
-	-rm $(HEADER) $(TARGET)
+	-rm $(HEADER)
 endif
+	-rm $(TARGET) 
+	-rm $(TARGET2)
 
 test:
 	@echo $(HEADER)

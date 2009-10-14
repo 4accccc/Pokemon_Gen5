@@ -68,9 +68,6 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
-
-
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(BINDAT)
 	$(COPY) $(TMPDIR)/*.bin ./
@@ -81,6 +78,7 @@ $(targetname).narc: $(BINDAT)
 	-rm *.bin
 	-rm $(LIST_FILE)
 
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
 
 #binary化の依存関係ファイルを取得
 include $(DEPEND_FILE)
@@ -95,9 +93,9 @@ clean:
 	@$(MAKE_SUBDIR)
 	-rm $(TARGET_DIR)/$(targetname).narc
 	-rm $(TARGET_DIR)/$(targetname).naix
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
 	-rm $(targetname).narc
 	-rm $(targetname).naix
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
 	-rm $(TMPDIR)/*.bin
 endif
 

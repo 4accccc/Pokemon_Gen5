@@ -1,0 +1,15 @@
+//このファイルは../data/d01.mevから自動生成されました
+#ifndef ZONE_D01_EVD_H
+#define ZONE_D01_EVD_H
+
+
+#endif //ZONE_D01_EVD_H
+//このファイルは../data/d01.mevから自動生成されました
+#ifndef ZONE_D01_EVC_H
+#define ZONE_D01_EVC_H
+
+#define D01_BOY2                           0
+#define D01_SUPPORT                        1
+#define D01_GYMLD                          2
+
+#endif //ZONE_D01_EVC_H
