@@ -116,9 +116,9 @@ BOOL	TT_TrainerMessageCheck( TrainerID tr_id, int kindID, HEAPID heapID )
 
 	ret=FALSE;
 
-	size = GFL_ARC_GetDataSize( ARCID_TRTBL, 0 );
-	GFL_ARC_LoadDataOfs( &ofs, ARCID_TRTBL_OFS, 0, tr_id * 2, 2 );
-	handle = GFL_ARC_OpenDataHandle( ARCID_TRTBL, heapID );
+	size = GFL_ARC_GetDataSize( ARCID_TRMSGTBL, 0 );
+	GFL_ARC_LoadDataOfs( &ofs, ARCID_TRMSGTBL_OFS, 0, tr_id * 2, 2 );
+	handle = GFL_ARC_OpenDataHandle( ARCID_TRMSGTBL, heapID );
 
 	while( ofs != size ){
 		GFL_ARC_LoadDataOfsByHandle( handle, 0, ofs, 4, &data[ 0 ] );
@@ -154,9 +154,9 @@ void	TT_TrainerMessageGet( TrainerID tr_id, int kindID, STRBUF* str, HEAPID heap
 	u16           data[ 2 ];
   GFL_MSGDATA*  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trmsg_dat, heapID );
 
-	size = GFL_ARC_GetDataSize( ARCID_TRTBL, 0 );
-	GFL_ARC_LoadDataOfs( &ofs, ARCID_TRTBL_OFS, 0, tr_id * 2, 2 );
-	handle = GFL_ARC_OpenDataHandle( ARCID_TRTBL, heapID );
+	size = GFL_ARC_GetDataSize( ARCID_TRMSGTBL, 0 );
+	GFL_ARC_LoadDataOfs( &ofs, ARCID_TRMSGTBL_OFS, 0, tr_id * 2, 2 );
+	handle = GFL_ARC_OpenDataHandle( ARCID_TRMSGTBL, heapID );
 
 	while( ofs != size ){
 		GFL_ARC_LoadDataOfsByHandle( handle, 0, ofs, 4, &data[ 0 ] );
