@@ -141,7 +141,7 @@ while line = file_csv.gets
     get_itemsym(file_id,get_csvdata(csvdata,count,CSVNO_ITEMNAME)) )
   
   if( get_csvdata(csvdata,count,CSVNO_ITEMSYM) == nil )
-    printf( "ERROR アイテム名 %s がありません\n",
+    printf( "ERROR アイテム名 %s はありません\n",
            get_csvdata(csvdata,count,CSVNO_ITEMNAME) )
     error_end( file_csv, file_sc, file_id, file_ev, fpath_ev )
     exit 1
@@ -185,14 +185,14 @@ file_ev.printf( "_EVENT_DATA_END\n\n" )
 no = 0
 while no < count
   #見出し
-  file_ev.printf( "%s\n", STR_COMMENT0 )
+  file_ev.printf( "%s\n", STR_COMMENT1 )
   file_ev.printf( "// MAP=%s X=%s Y=%s ITEM=%s FLAG=%s\n",
     get_csvdata(csvdata,no,CSVNO_MAPLABEL),
     get_csvdata(csvdata,no,CSVNO_X),
     get_csvdata(csvdata,no,CSVNO_Y),
     get_csvdata(csvdata,no,CSVNO_ITEMNAME),
     get_csvdata(csvdata,no,CSVNO_NUM) )
-  file_ev.printf( "%s\n", STR_COMMENT0 )
+  file_ev.printf( "%s\n", STR_COMMENT1 )
   
   #スクリプト定義
   file_ev.printf( "EVENT_START ev_fld_item_%s\n",
@@ -206,63 +206,12 @@ end
 
 #ベーススクリプト出力
 file_ev.printf( "\n" )
-file_ev.printf( "%s\n", STR_COMMENT1 )
+file_ev.printf( "%s\n", STR_COMMENT0 )
 file_ev.printf( "// %s\n", fpath_sc )
-file_ev.printf( "%s\n", STR_COMMENT1 )
+file_ev.printf( "%s\n", STR_COMMENT0 )
 file_ev.write( file_sc.read )
 
 file_ev.close
 file_sc.close
 file_id.close
 file_csv.close
- 
-
-##################
-=begin
-  csvdata[count][CSVNO_MAPNAME] = str[CSVNO_MAPNAME]
-  csvdata[count][CSVNO_MAPLABEL] = str[CSVNO_MAPLABEL]
-  csvdata[count][CSVNO_X] = str[CSVNO_X]
-  csvdata[count][CSVNO_Y] = str[CSVNO_Y]
-  csvdata[count][CSVNO_ITEMNAME] = str[CSVNO_ITEMNAME]
-  csvdata[count][CSVNO_NUM] = str[CSVNO_NUM]
-  
-  printf( "count = %d\n", count )
-  p csvdata[ [count][CSVNO_MAPNAME] ]
-  p csvdata[ [count][CSVNO_MAPLABEL] ]
-  p csvdata[ [count][CSVNO_X] ]
-  p csvdata[ [count][CSVNO_Y] ]
-  p csvdata[ [count][CSVNO_ITEMNAME] ]
-  p csvdata[ [count][CSVNO_NUM] ]
-  
-  #アイテムシンボル取得
-  csvdata[ [count][CSVNO_ITEMSYM] ] =
-    get_itemsym( file_id, csvdata[[count][CSVNO_ITEMNAME]] )
-  
-  if( csvdata[[count][CSVNO_ITEMSYM]] == nil )
-    printf( "ERROR アイテム名 %s がありません\n",
-           csvdata[[count][CSVNO_ITEMNAME]] )
-    error_end( file_csv, file_sc, file_id, file_ev, fpath_ev )
-    exit 1
-  end
-
-  #フラグマックスを超えていたらエラー
-  if( csvdata[count][CSVNO_NUM] >= STR_FLAGNO_MAX )
-    printf( "ERROR フラグの最大数を超えています\n" )
-    error_end( file_csv, file_sc, file_id, file_ev, fpath_ev )
-    exit 1
-  end
-  
-  #同じ番号(フラグナンバーのオフセット)を使用していないかチェック
-  no = 0
-  while no < count
-    if( csvdata[no][CSVNO_NUM] == csvdata[count][CSVNO_NUM] )
-      printf( "ERROR 同じ値の定義があります リスト位置 %d,%d\n", no, count )
-      error_end( file_csv, file_sc, file_id, file_ev, fpath_ev )
-      exit 1
-    end
-    no = no + 1
-  end
-  
-  count = count + 1
-end
-=end
