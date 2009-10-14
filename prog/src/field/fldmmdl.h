@@ -461,7 +461,7 @@ typedef struct {
 //--------------------------------------------------------------
 typedef struct {
   u16 rail_index;       ///<レールインデックス
-  s16 front_grid;       ///<前方レールグリッド座標
+  u16 front_grid;       ///<前方レールグリッド座標
   s16 side_grid;        ///<サイドレールグリッド座標
 } MMDL_HEADER_RAILPOS;
 

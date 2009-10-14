@@ -34,7 +34,7 @@ typedef struct {
 /// レールポジション
 typedef struct {
   u16 rail_index;       ///<レールインデックス
-  s16 front_grid;       ///<前方レールグリッド座標  
+  u16 front_grid;       ///<前方レールグリッド座標  
   s16 side_grid;        ///<サイドレールグリッド座標
   u16 front_grid_size;  ///<前方範囲グリッドサイズ
   u16 side_grid_size;   ///<サイド範囲グリッドサイズ
@@ -68,7 +68,7 @@ typedef struct {
 /// レールポジション
 typedef struct {
   u16 rail_index;       ///<レールインデックス
-  s16 front_grid;       ///<前方レールグリッド座標
+  u16 front_grid;       ///<前方レールグリッド座標
   s16 side_grid;        ///<サイドレールグリッド座標
 } BG_TALK_DATA_RPOS;
 
@@ -100,7 +100,7 @@ typedef struct {
 /// レールポジション
 typedef struct {
   u16 rail_index;       ///<レールインデックス
-  s16 front_grid;       ///<前方レールグリッド座標
+  u16 front_grid;       ///<前方レールグリッド座標
   s16 side_grid;        ///<サイドレールグリッド座標
   u16 front_grid_size;  ///<前方範囲グリッドサイズ
   u16 side_grid_size;   ///<サイド範囲グリッドサイズ
