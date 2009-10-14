@@ -170,6 +170,10 @@ static void mapCtrlGrid_Create(
 
     GFL_HEAP_FreeMemory( p_rect );
   }
+  else
+  {
+    FIELD_CAMERA_ClearCameraArea( FIELDMAP_GetFieldCamera( fieldWork ) );
+  }
 }
 
 //--------------------------------------------------------------
@@ -184,6 +188,7 @@ static void mapCtrlGrid_Delete( FIELDMAP_WORK *fieldWork )
 	FIELDMAP_CTRL_GRID *gridWork;
 	gridWork = FIELDMAP_GetMapCtrlWork( fieldWork );
 	FIELD_PLAYER_GRID_Delete( gridWork->gridPlayer );
+  FIELD_CAMERA_ClearCameraArea( FIELDMAP_GetFieldCamera( fieldWork ) );
 	GFL_HEAP_FreeMemory( gridWork );
 }
 
@@ -321,7 +326,9 @@ static BOOL gym_check( u16 zone_id )
   case ZONE_ID_C06GYM0101:
   case ZONE_ID_C07GYM0101:
   case ZONE_ID_C08GYM0101:
-    
+  case ZONE_ID_C02GYM0201:
+  case ZONE_ID_C02GYM0202:   
+  case ZONE_ID_C02GYM0203:   
     return TRUE;
   }
 
