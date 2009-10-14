@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: trmsgtblofs.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2009-10-14T19:44:28
+ *****************************************************************************/
+
+#ifndef NARC_TRMSGTBLOFS_NAIX_
+#define NARC_TRMSGTBLOFS_NAIX_
+
+enum {
+	NARC_trmsgtblofs_trmsgtblofs_bin = 0
+};
+
+/* NARC_TRMSGTBLOFS_NAIX_ */
+#endif

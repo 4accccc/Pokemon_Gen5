@@ -13,15 +13,18 @@ USERS	=	sogabe
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname1	= trtbl
+targetname1	= trmsgtbl
 NARCNAME1	= $(targetname1).narc
-targetname2	= trtblofs
+targetname2	= trmsgtblofs
 NARCNAME2	= $(targetname2).narc
+GMMFILE = trmsg.gmm
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR	= $(PROJECT_ARCDIR)
+GMMDIR	= ../message/src/
+TOOLDIR = ../../tools/trmsg/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -42,19 +45,21 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .SUFFIXES: .s .bin
 
-do-build: trtbl.narc
-trtbl.narc: trtbl.bin
-	trtblmk trtbl.bin trtblofs.bin
-	nnsarc -c -l -n -i trtbl.narc trtbl.bin
-	nnsarc -c -l -n -i trtblofs.narc trtblofs.bin
+do-build: out_end trmsgtbl.bin trmsgtbl.narc
+trmsgtbl.narc: trmsgtbl.bin
+	$(TOOLDIR)trtblmk trmsgtbl.bin trmsgtblofs.bin
+	nnsarc -c -l -n -i trmsgtbl.narc trmsgtbl.bin
+	nnsarc -c -l -n -i trmsgtblofs.narc trmsgtblofs.bin
 
-do-build: trtbl.bin
-trtbl.bin:trtbl.s
+trmsgtbl.bin: trmsgtbl.s
 	$(MWAS) $< -o $*.o
 	$(MWLD) -dis -o $*.elf $*.o
 	elf2bin $*.elf
 	rm $*.o
 	rm $*.elf
+
+out_end: trmsg.csv
+	ruby $(TOOLDIR)trmsgconv.rb $< ../message/template.gmm
 
 endif
 
@@ -69,18 +74,23 @@ $(TARGETDIR)/$(NARCNAME1):	$(NARCNAME1)
 $(TARGETDIR)/$(NARCNAME2):	$(NARCNAME2)
 	$(COPY)	$(NARCNAME2) $(TARGETDIR)
 
+$(GMMDIR)$(GMMFILE):	$(GMMFILE)
+	$(COPY)	$(GMMFILE) $(GMMDIR)
+
 #------------------------------------------------------------------------------
 #	make cleanルール
 #------------------------------------------------------------------------------
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+	-rm -f out_end
 	-rm -f *.o
 	-rm -f *.elf
 	-rm -f *.bin
 	-rm -f $(NARCNAME1)
 	-rm -f $(NARCNAME2)
+	-rm -f $(GMMFILE)
 endif
 	-rm -f $(TARGETDIR)/$(NARCNAME1)
 	-rm -f $(TARGETDIR)/$(NARCNAME2)
-
+	-rm -f $(GMMDIR)$(GMMFILE)
 
