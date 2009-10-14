@@ -40,24 +40,28 @@ struct _TAG_FLDEFF_SPLASH
 };
 
 //--------------------------------------------------------------
-/// TASKWORK_SPLASH
-//--------------------------------------------------------------
-typedef struct
-{
-  FLDEFF_SPLASH *eff_splash;
-  GFL_G3D_OBJ *obj;
-  GFL_G3D_ANM *obj_anm;
-  GFL_G3D_RND *obj_rnd;
-}TASKWORK_SPLASH;
-
-//--------------------------------------------------------------
 /// TASKHEADER_SPLASH
 //--------------------------------------------------------------
 typedef struct
 {
+  BOOL joint;
   FLDEFF_SPLASH *eff_splash;
-  VecFx32 pos;
+  const MMDL *mmdl;
 }TASKHEADER_SPLASH;
+
+//--------------------------------------------------------------
+/// TASKWORK_SPLASH
+//--------------------------------------------------------------
+typedef struct
+{
+  int seq_no;
+  TASKHEADER_SPLASH head;
+  MMDL_CHECKSAME_DATA samedata;
+  
+  GFL_G3D_OBJ *obj;
+  GFL_G3D_ANM *obj_anm;
+  GFL_G3D_RND *obj_rnd;
+}TASKWORK_SPLASH;
 
 //======================================================================
 //	プロトタイプ
@@ -147,23 +151,21 @@ static void splash_DeleteResource( FLDEFF_SPLASH *splash )
 //--------------------------------------------------------------
 /**
  * 動作モデル用水飛沫　追加
- * @param fmmdl MMDL
  * @param FLDEFF_CTRL*
+ * @param fmmdl MMDL
+ * @param joint 接続フラグ TRUE=接続。
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLDEFF_SPLASH_Set( FLDEFF_CTRL *fectrl, s16 gx, s16 gz, fx32 y )
+void FLDEFF_SPLASH_SetMMdl(
+    FLDEFF_CTRL *fectrl, const MMDL *mmdl, BOOL joint )
 {
-  VecFx32 pos;
-  FLDEFF_SPLASH *splash;
   TASKHEADER_SPLASH head;
   
-  MMDL_TOOL_GetCenterGridPos( gx, gz, &pos );
-  pos.z += SPLASH_DRAW_Z_OFFSET;
-  
-  splash = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_SPLASH );
-  head.eff_splash = splash;
-  head.pos = pos;
+  head.joint = joint;
+  head.eff_splash = FLDEFF_CTRL_GetEffectWork(
+      fectrl, FLDEFF_PROCID_SPLASH );
+  head.mmdl = mmdl;
   
   FLDEFF_CTRL_AddTask(
       fectrl, &DATA_splashTaskHeader, NULL, 0, &head, 0 );
@@ -183,20 +185,24 @@ static void splashTask_Init( FLDEFF_TASK *task, void *wk )
   const TASKHEADER_SPLASH *head;
   
   head = FLDEFF_TASK_GetAddPointer( task );
-  work->eff_splash = head->eff_splash;
-  FLDEFF_TASK_SetPos( task, &head->pos );
+  work->head = *head;
+  
+  if( work->head.joint == TRUE ){
+    MMDL_InitCheckSameData( work->head.mmdl, &work->samedata );
+  }
   
   work->obj_rnd =
     GFL_G3D_RENDER_Create(
-        work->eff_splash->g3d_res_mdl, 0, work->eff_splash->g3d_res_mdl );
-  
+        work->head.eff_splash->g3d_res_mdl, 0,
+        work->head.eff_splash->g3d_res_mdl );
   work->obj_anm =
     GFL_G3D_ANIME_Create(
-        work->obj_rnd, work->eff_splash->g3d_res_anm, 0 );
-  
+        work->obj_rnd, work->head.eff_splash->g3d_res_anm, 0 );
   work->obj = GFL_G3D_OBJECT_Create(
       work->obj_rnd, &work->obj_anm, 1 );
   GFL_G3D_OBJECT_EnableAnime( work->obj, 0 );
+  
+  FLDEFF_TASK_CallUpdate( task ); //即反映
 }
 
 //--------------------------------------------------------------
@@ -227,8 +233,30 @@ static void splashTask_Update( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_SPLASH *work = wk;
   
-  if( GFL_G3D_OBJECT_IncAnimeFrame(work->obj,0,FX32_ONE) == FALSE ){
+  if( MMDL_CheckSameData(work->head.mmdl,&work->samedata) == FALSE ){
     FLDEFF_TASK_CallDelete( task );
+    return;
+  }
+  
+  if( work->head.joint == TRUE ){
+    if( MMDL_CheckStatusBitShoalEffect(work->head.mmdl) == FALSE ){
+      FLDEFF_TASK_CallDelete( task );
+      return;
+    }
+  }
+  
+  if( GFL_G3D_OBJECT_IncAnimeFrame(work->obj,0,FX32_ONE) == FALSE ){
+    if( work->head.joint == FALSE ){
+      FLDEFF_TASK_CallDelete( task );
+      return;
+    }
+  }
+  
+  {
+    VecFx32 pos;
+    MMDL_GetVectorPos( work->head.mmdl, &pos );
+    pos.z += SPLASH_DRAW_Z_OFFSET;
+    FLDEFF_TASK_SetPos( task, &pos );
   }
 }
 
@@ -245,7 +273,7 @@ static void splashTask_Draw( FLDEFF_TASK *task, void *wk )
   VecFx32 pos;
   TASKWORK_SPLASH *work = wk;
   GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
-
+  
   MTX_Identity33( &status.rotate );
   FLDEFF_TASK_GetPos( task, &status.trans );
   GFL_G3D_DRAW_DrawObjectCullingON( work->obj, &status );

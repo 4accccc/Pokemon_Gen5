@@ -18,6 +18,7 @@
 #include "fldeff_footmark.h"
 #include "fldeff_reflect.h"
 #include "fldeff_ripple.h"
+#include "fldeff_splash.h"
 
 //======================================================================
 //	define
@@ -610,16 +611,17 @@ static void MMdl_MapAttrFootMarkProc_1(
 static void MMdl_MapAttrSplashProc_012(
 		MMDL * fmmdl, MAPATTR now, MAPATTR old, const OBJCODE_PARAM *prm )
 {
-	#ifndef MMDL_PL_NULL
-	if( MAPATTR_IsShoal(now) == TRUE ){
+  MAPATTR_VALUE val = MAPATTR_GetAttrValue( now );
+  
+  if( MAPATTR_VALUE_CheckShoal(val) == TRUE ){
 		if( MMDL_CheckStatusBitShoalEffect(fmmdl) == FALSE ){
-			FE_fmmdlSplash_Add( fmmdl, TRUE );
+      FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
+      FLDEFF_SPLASH_SetMMdl( fectrl, fmmdl, TRUE );
 			MMDL_SetStatusBitShoalEffect( fmmdl, TRUE );
 		}
 	}else{
 		MMDL_SetStatusBitShoalEffect( fmmdl, FALSE );
 	}
-	#endif
 }
 
 //--------------------------------------------------------------

@@ -469,3 +469,15 @@ BOOL MAPATTR_VALUE_CheckPool( const MAPATTR_VALUE val )
 {
   return( val == 0x14 );
 }
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 浅瀬
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckShoal( const MAPATTR_VALUE val )
+{
+  return( val == 0x17 );
+}

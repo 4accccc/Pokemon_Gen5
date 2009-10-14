@@ -28,4 +28,5 @@
 extern void * FLDEFF_SPLASH_Init( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void FLDEFF_SPLASH_Delete( FLDEFF_CTRL *fectrl, void *work );
 
-extern void FLDEFF_SPLASH_Set( FLDEFF_CTRL *fectrl, s16 gx, s16 gz, fx32 y );
+extern void FLDEFF_SPLASH_SetMMdl(
+    FLDEFF_CTRL *fectrl, const MMDL *mmdl, BOOL joint );
