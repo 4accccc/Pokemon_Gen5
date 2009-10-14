@@ -23,6 +23,7 @@ extern void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 mapid);
 extern void * EVENTDATA_GetSpecialScriptData( EVENTDATA_SYSTEM * evdata );
 
 #include "field/eventwork.h"
+#include "field/rail_location.h"
 
 //check event
 extern u16 EVENTDATA_CheckPosEvent(
@@ -33,3 +34,12 @@ extern u16 EVENTDATA_CheckTalkBGEvent(
 extern u16 EVENTDATA_CheckTalkBoardEvent(
     const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
     const VecFx32 *pos, u16 talk_dir );
+
+extern u16 EVENTDATA_CheckPosEventRailLocation(
+  const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const RAIL_LOCATION *pos );
+extern u16 EVENTDATA_CheckTalkBGEventRailLocation(
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
+    const RAIL_LOCATION *pos, u16 talk_dir );
+extern u16 EVENTDATA_CheckTalkBoardEventRailLocation(
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
+    const RAIL_LOCATION *pos, u16 talk_dir );

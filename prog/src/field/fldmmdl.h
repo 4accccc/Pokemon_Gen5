@@ -351,6 +351,25 @@ typedef enum
   MMDL_OBJCODESEX_MAX, ///<最大
 }MMDL_OBJCODESEX;
 
+
+//--------------------------------------------------------------
+/// MMDL_HEADER ポジションタイプ 
+//--------------------------------------------------------------
+typedef enum
+{
+  MMDL_HEADER_POSTYPE_GRID = 0, ///<グリッドポジションタイプ
+  MMDL_HEADER_POSTYPE_RAIL,     ///<レールポジションタイプ
+
+  MMDL_HEADER_POSTYPE_MAX, ///<最大
+}MMDL_HEADER_POSTYPE;
+
+
+//--------------------------------------------------------------
+/// MMDL_HEADER ポジションバッファサイズ 
+//--------------------------------------------------------------
+#define MMDL_HEADER_POSBUF_SIZE ( 8 )
+
+
 //======================================================================
 //	struct
 //======================================================================
@@ -396,6 +415,7 @@ typedef u32 (*MMDL_DRAW_PROC_GET)(MMDL*,u32);///<描画取得関数
 //--------------------------------------------------------------
 typedef void (*MMDL_BLACTCONT_ADDACT_USERPROC)(u16 idx,void *init_work);
 
+
 //--------------------------------------------------------------
 ///	MMDL_HEADER構造体
 //--------------------------------------------------------------
@@ -413,12 +433,38 @@ typedef struct
 	unsigned short param2;		///<指定パラメタ 2
 	short move_limit_x;			///<X方向移動制限
 	short move_limit_z;			///<Z方向移動制限
-  unsigned short gx;			///<グリッドX
-  unsigned short gz;			///<グリッドZ
-  int y;						///<Y値 fx32型
+
+  u32 pos_type; ///<ポジションタイプ
+  u8  pos_buf[ MMDL_HEADER_POSBUF_SIZE ]; ///<ポジションバッファ
+  
 }MMDL_HEADER;
 
 typedef MMDL_HEADER FLDMMDL_HEADER; //旧名
+
+
+
+//--------------------------------------------------------------
+///	MMDL_HEADER_GRIDPOS構造体
+// pos_typeがMMDL_HEADER_POSTYPE_GRIDの場合の
+// pos_bufの内容
+//--------------------------------------------------------------
+typedef struct {
+  unsigned short gx;			///<グリッドX
+  unsigned short gz;			///<グリッドZ
+  int y;						///<Y値 fx32型
+} MMDL_HEADER_GRIDPOS;
+
+//--------------------------------------------------------------
+///	MMDL_HEADER_RAILPOS構造体
+// pos_typeがMMDL_HEADER_POSTYPE_RAILの場合の
+// pos_bufの内容
+//--------------------------------------------------------------
+typedef struct {
+  u16 rail_index;       ///<レールインデックス
+  s16 front_grid;       ///<前方レールグリッド座標
+  s16 side_grid;        ///<サイドレールグリッド座標
+} MMDL_HEADER_RAILPOS;
+
 
 //--------------------------------------------------------------
 ///	MMDL_MOVE_PROC_LIST構造体
@@ -589,6 +635,7 @@ extern MMDL * MMDLSYS_AddMMdlHeaderID( const MMDLSYS *fos,
 extern void MMDL_Delete( MMDL * mmdl );
 extern void MMDL_DeleteEvent( MMDL * mmdl, EVENTWORK *evwork );
 extern void MMDLSYS_DeleteMMdl( const MMDLSYS *fos );
+
 
 extern void MMDLSYS_Push( MMDLSYS *mmdlsys );
 extern void MMDLSYS_Pop( MMDLSYS *mmdlsys );
@@ -849,6 +896,10 @@ extern void MMDL_ROCKPOS_SavePos( const MMDL *mmdl );
 extern BOOL MMDLSYS_ROCKPOS_CheckRockFalled(
     const MMDLSYS *mmdlsys, const VecFx32 *pos );
 
+
+extern void MMDLHEADER_SetGridPos( MMDL_HEADER* head, u16 gx, u16 gz, int y );
+extern void MMDLHEADER_SetRailPos( MMDL_HEADER* head, u16 index, u16 front, u16 side );
+
 #ifdef DEBUG_MMDL
 extern u8 * DEBUG_MMDL_GetOBJCodeString( u16 code, HEAPID heapID );
 #endif
@@ -1028,6 +1079,16 @@ extern void MMDL_UpdateRailMove( MMDL * mmdl );
 //--------------------------------------------------------------
 //	fldmmdl_railmove_0.c
 //--------------------------------------------------------------
+extern void MMDL_SetRailHeaderBefore( MMDL* mmdl, const MMDL_HEADER* head );
+extern void MMDL_SetRailHeaderAfter( MMDL* mmdl, const MMDL_HEADER* head );
+
+// ロケーション保存領域処理
+// この処理は、MOVE_PROCが初期化されていないタイミングで、SetRailHeaderAfterが動作したときに、RailWorkの初期設定を渡すための処理です。
+//動作コード用ワークを使用しています。
+extern BOOL MMdl_CheckSetUpLocation( const MMDL* mmdl );
+extern BOOL MMdl_GetSetUpLocation( const MMDL* mmdl, RAIL_LOCATION* location );
+//-----------------------------------------------
+
 extern void MMDL_SetRailLocation( MMDL * fmmdl, const RAIL_LOCATION* location );
 extern void MMDL_GetRailLocation( const MMDL * fmmdl, RAIL_LOCATION* location );
 extern void MMDL_GetOldRailLocation( const MMDL * fmmdl, RAIL_LOCATION* location );

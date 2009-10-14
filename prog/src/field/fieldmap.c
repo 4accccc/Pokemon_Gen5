@@ -542,6 +542,12 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   
   //マップデータ登録
   FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res );
+
+  //NOGRIDマップデータ登録
+  if (FIELDMAP_GetMapControlType(fieldWork) == FLDMAP_CTRLTYPE_NOGRID)
+  {
+    FLDNOGRID_MAPPER_ResistDataArc( fieldWork->nogridMapper, ZONEDATA_GetRailDataID( fieldWork->map_id ), fieldWork->heapID );  
+  }
   
   //動作モデル初期化
   fldmapMain_MMDL_Init(fieldWork);

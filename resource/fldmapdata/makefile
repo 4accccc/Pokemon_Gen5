@@ -14,7 +14,7 @@ SUBDIRS	=	zonetable/zoneindex \
 					map_matrix \
 					build_model \
 					mm_list \
-					eventdata \
+					eventdata/define \
 					script \
 					effect \
 					rail_data \
@@ -24,6 +24,7 @@ SUBDIRS	=	zonetable/zoneindex \
 					gimmick \
 					camera_scroll \
 					pushrock \
+					eventdata/binary \
 					zonetable
 					
 

@@ -1930,14 +1930,17 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
 					0,	///<グリッドZ
 					0,	///<Y値 fx32型
 				};
+        MMDL_HEADER_GRIDPOS *gridpos;
+
 				
 				jiki = MMDLSYS_SearchOBJID(
 					work->fldmmdlsys, MMDL_ID_PLAYER );
 				
 				head.id = 250;
-				head.gx = MMDL_GetGridPosX( jiki ) + 2;
-				head.gz = MMDL_GetGridPosZ( jiki );
-				head.y = MMDL_GetVectorPosY( jiki );
+        MMDLHEADER_SetGridPos( &head, 
+            MMDL_GetGridPosX( jiki ) + 2,
+            MMDL_GetGridPosZ( jiki ),
+            MMDL_GetVectorPosY( jiki ) );
 				head.obj_code = work->obj_code;
 				work->fmmdl = MMDLSYS_AddMMdl(
 					work->fldmmdlsys, &head, 0 );

@@ -245,10 +245,11 @@ class ZoneDataFile < OutputFile
 			#matrixId = "NARC_map_matrix_#{column[@cl.cMATRIXID].downcase}_mat_bin"
 		end
 
-		event_id = column[@cl.cEVENT] == "›" ? "NARC_zone_event_zone_#{id.downcase}_total_bin" : "event_dummy"
+    #event_id = column[@cl.cEVENT] == "›" ? "NARC_eventdata_#{id.downcase}_bin" : "event_dummy"
 		#script = column[@cl.cSCRIPT] == "›" ? "NARC_script_seq_#{id.downcase}_bin" : "scr_dummy"
 		#sp_script = column[@cl.cSCRIPT] == "›" ? "NARC_script_seq_sp_#{id.downcase}_bin" : "sp_scr_dummy"
 		#msg = column[@cl.cMSG] == "›" ? "NARC_script_message_#{id.downcase}_dat" : "msg_dummy"
+    event_id = "NARC_eventdata_#{id.downcase}_bin"
 		script =  "NARC_script_seq_#{id.downcase}_bin"
 		sp_script =  "NARC_script_seq_sp_#{id.downcase}_bin"
 		msg = "NARC_script_message_#{id.downcase}_dat"

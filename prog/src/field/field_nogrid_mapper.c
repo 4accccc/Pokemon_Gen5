@@ -14,6 +14,7 @@
 #include "gflib.h"
 
 #include "arc/fieldmap/field_rail_data.naix"
+#include "arc_def.h"
 
 #include "field_nogrid_mapper.h"
 
@@ -136,6 +137,31 @@ void FLDNOGRID_MAPPER_ResistData( FLDNOGRID_MAPPER* p_mapper, const FLDNOGRID_RE
         FLD_SCENEAREA_LOADER_GetDataNum( p_mapper->p_areaLoader ),
         FLD_SCENEAREA_LOADER_GetFunc( p_mapper->p_areaLoader ) );
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アーカイブデータからデータ設定
+ *
+ *	@param	p_mapper
+ *	@param	dataID
+ *	@param	heapID 
+ */
+//-----------------------------------------------------------------------------
+void FLDNOGRID_MAPPER_ResistDataArc( FLDNOGRID_MAPPER* p_mapper, u32 dataID, u32 heapID )
+{
+  FLDNOGRID_RESISTDATA* p_resist;
+  u32 size;
+
+  size = GFL_ARC_GetDataSize( ARCID_FLD_RAILSETUP, dataID );
+
+  p_resist = GFL_HEAP_AllocClearMemoryLo( heapID, size );
+
+  GFL_ARC_LoadData( p_resist, ARCID_FLD_RAILSETUP, dataID );
+
+  FLDNOGRID_MAPPER_ResistData( p_mapper, p_resist, heapID );  
+
+  GFL_HEAP_FreeMemory( p_resist );
 }
 
 

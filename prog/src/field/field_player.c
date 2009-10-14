@@ -108,10 +108,12 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 	if( fld_player->fldmmdl == NULL )	//新規
 	{
 		MMDL_HEADER head;
+    MMDL_HEADER_GRIDPOS *gridpos;
 		head = data_MMdlHeader;
-		head.gx = SIZE_GRID_FX32( pos->x );
-		head.gz = SIZE_GRID_FX32( pos->z );
-		head.y = pos->y;
+    gridpos = (MMDL_HEADER_GRIDPOS *)head.pos_buf;
+		gridpos->gx = SIZE_GRID_FX32( pos->x );
+		gridpos->gz = SIZE_GRID_FX32( pos->z );
+		gridpos->y = pos->y;
     head.obj_code = FIELD_PLAYER_GetMoveFormToOBJCode(
         sex, PLAYER_MOVE_FORM_NORMAL ); 
 		fld_player->fldmmdl = MMDLSYS_AddMMdl( fmmdlsys, &head, 0 );
@@ -757,9 +759,7 @@ static const MMDL_HEADER data_MMdlHeader =
 	0,	///<指定パラメタ 2
 	MOVE_LIMIT_NOT,	///<X方向移動制限
 	MOVE_LIMIT_NOT,	///<Z方向移動制限
-	0,	///<グリッドX
-	0,	///<グリッドZ
-	0,	///<Y値 fx32型
+  MMDL_HEADER_POSTYPE_GRID,
 };
 
 //--------------------------------------------------------------

@@ -34,6 +34,16 @@ extern int EVENTDATA_SearchConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const
 
 //------------------------------------------------------------------
 /**
+ * @brief	出入口情報を探す
+ * @param	evdata	イベントデータへのポインタ
+ * @param	rail_location		探すレールロケーション
+ * @return	int	出入口データのインデックスEXIT_ID_NONEのとき、出入口は存在しない
+ */
+//------------------------------------------------------------------
+extern int EVENTDATA_SearchConnectIDByRailLocation(const EVENTDATA_SYSTEM * evdata, const RAIL_LOCATION* rail_location);
+
+//------------------------------------------------------------------
+/**
  * @brief	出入口情報をインデックス指定で取得する
  * @param	evdata			イベントデータへのポインタ
  * @param	exit_id			出入口情報のインデックス
@@ -130,3 +140,50 @@ extern u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata );
 //------------------------------------------------------------------
 extern const POS_EVENT_DATA * EVENTDATA_GetPosEvent( 
     const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos );
+
+//------------------------------------------------------------------
+/**
+ * @brief	座標イベントを取得
+ * @param	evdata イベントデータへのポインタ
+ * @param evwork イベントワークへのポインタ 
+ * @param location チェックするレールロケーション
+ * @retval NULL = イベントなし
+ */
+//------------------------------------------------------------------
+extern const POS_EVENT_DATA * EVENTDATA_GetPosEventRailLocation( 
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const RAIL_LOCATION* location );
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  出入り口イベント　中心３D座標を取得
+ *  
+ *	@param	data    イベント
+ *	@param	pos     座標格納先
+ */
+//-----------------------------------------------------------------------------
+extern void EVENTDATA_GetConnectCenterPos( const CONNECT_DATA * data, VecFx32* pos );
+extern void EVENTDATA_GetConnectCenterRailLocation( const CONNECT_DATA * data, RAIL_LOCATION* location );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BG話しかけイベント　中心３D座標を取得
+ *  
+ *	@param	data    イベント
+ *	@param	pos     座標格納先
+ */
+//-----------------------------------------------------------------------------
+extern void EVENTDATA_GetBGTalkCenterPos( const BG_TALK_DATA * data, VecFx32* pos );
+extern void EVENTDATA_GetBGTalkCenterRailLocation( const BG_TALK_DATA * data, RAIL_LOCATION* location );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POS発動イベント　中心３D座標を取得
+ *  
+ *	@param	data    イベント
+ *	@param	pos     座標格納先
+ */
+//-----------------------------------------------------------------------------
+extern void EVENTDATA_GetPosEventCenterPos( const POS_EVENT_DATA * data, VecFx32* pos );
+extern void EVENTDATA_GetPosEventCenterRailLocation( const POS_EVENT_DATA * data, RAIL_LOCATION* location );
+

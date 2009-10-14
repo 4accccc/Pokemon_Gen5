@@ -129,4 +129,18 @@ extern void MMDL_RailDmy_Move( MMDL * fmmdl );
 extern void MMDL_RailDmy_Delete( MMDL * fmmdl );
 extern void MMDL_RailDmy_Return( MMDL * fmmdl );
 
+extern void MMDL_RailDirRnd_ALL_Init( MMDL * fmmdl );
+extern void MMDL_RailDirRnd_UL_Init( MMDL * fmmdl );
+extern void MMDL_RailDirRnd_UR_Init( MMDL * fmmdl );
+extern void MMDL_RailDirRnd_DL_Init( MMDL * fmmdl );
+extern void MMDL_RailDirRnd_DR_Init( MMDL * fmmdl );
+extern void MMDL_RailDirRnd_UDL_Init( MMDL * fmmdl );
+extern void MMDL_RailDirRnd_UDR_Init( MMDL * fmmdl );
+extern void MMDL_RailDirRnd_ULR_Init( MMDL * fmmdl );
+extern void MMDL_RailDirRnd_DLR_Init( MMDL * fmmdl );
+extern void MMDL_RailDirRnd_UD_Init( MMDL * fmmdl );
+extern void MMDL_RailDirRnd_LR_Init( MMDL * fmmdl );
+extern void MMDL_RailDirRnd_Move( MMDL * fmmdl );
+extern void MMDL_RailDirRnd_Delete( MMDL * fmmdl );
+
 #endif //MMDL_PROCMOVE_H_FILE

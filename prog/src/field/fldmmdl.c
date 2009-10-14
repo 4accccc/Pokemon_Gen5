@@ -220,7 +220,9 @@ struct _TAG_MMDL_ROCKPOS
 static void MMdlSys_DeleteProc( MMDLSYS *fos );
 
 //MMDL 追加、削除
-static void MMdl_SetHeader(
+static void MMdl_SetHeaderBefore(
+	MMDL * mmdl, const MMDL_HEADER *head, void *sys );
+static void MMdl_SetHeaderAfter(
 	MMDL * mmdl, const MMDL_HEADER *head, void *sys );
 static void MMdl_SetHeaderPos(MMDL *mmdl,const MMDL_HEADER *head);
 static void MMdl_InitWork( MMDL * mmdl, const MMDLSYS *sys );
@@ -468,7 +470,7 @@ MMDL * MMDLSYS_AddMMdl(
 	
 	MMdl_InitWork( mmdl, fos );
 	MMDL_SetZoneID( mmdl, zone_id );
-	MMdl_SetHeader( mmdl, head, NULL );
+	MMdl_SetHeaderBefore( mmdl, head, NULL );
   
   if( mmdl_rockpos_CheckPos(mmdl) == TRUE ){
     MMDL_OnStatusBit( mmdl,
@@ -486,6 +488,7 @@ MMDL * MMDLSYS_AddMMdl(
 	}
 	
 	MMdlSys_IncrementOBJCount( (MMDLSYS*)MMDL_GetMMdlSys(mmdl) );
+	MMdl_SetHeaderAfter( mmdl, head, NULL );
 	return( mmdl );
 }
 
@@ -510,14 +513,17 @@ MMDL * MMDLSYS_AddMMdlParam( const MMDLSYS *fos,
 {
   MMDL *mmdl;
   MMDL_HEADER head;
+  MMDL_HEADER_GRIDPOS *gridpos;
 	MI_CpuClear8( &head, sizeof(MMDL_HEADER) );
   
   head.id = id;
   head.obj_code = code;
   head.move_code = move;
   head.dir = dir;
-  head.gx = gx;
-  head.gz = gz;
+  head.pos_type = MMDL_HEADER_POSTYPE_GRID;
+  gridpos = (MMDL_HEADER_GRIDPOS*)head.pos_buf;
+  gridpos->gx = gx;
+  gridpos->gz = gz;
   
   mmdl = MMDLSYS_AddMMdl( fos, &head, zone_id );
   return( mmdl );
@@ -681,7 +687,7 @@ void MMDLSYS_DeleteMMdl( const MMDLSYS *fos )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void MMdl_SetHeader(
+static void MMdl_SetHeaderBefore(
 	MMDL * mmdl, const MMDL_HEADER *head, void *sys )
 {
 	MMDL_SetOBJID( mmdl, head->id );
@@ -697,7 +703,37 @@ static void MMdl_SetHeader(
 	MMDL_SetMoveLimitX( mmdl, head->move_limit_x );
 	MMDL_SetMoveLimitZ( mmdl, head->move_limit_z );
 	
-	MMdl_SetHeaderPos( mmdl, head );
+  // 座標タイプにより、位置の初期化方法を変更
+  if( head->pos_type == MMDL_HEADER_POSTYPE_GRID )
+  {
+  	MMdl_SetHeaderPos( mmdl, head );
+  }
+  else
+  {
+    MMDL_SetRailHeaderBefore( mmdl, head );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL フィールド動作モデル　ヘッダー情報反映  動作モデルの登録完了後処理
+ * @param	mmdl		設定するMMDL * 
+ * @param	head		反映する情報を纏めたMMDL_HEADER *
+ * @param	fsys		FIELDSYS_WORK *
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void MMdl_SetHeaderAfter(
+	MMDL * mmdl, const MMDL_HEADER *head, void *sys )
+{
+  // 座標タイプにより、位置の初期化方法を変更
+  if( head->pos_type == MMDL_HEADER_POSTYPE_GRID )
+  {
+  }
+  else
+  {
+    MMDL_SetRailHeaderAfter( mmdl, head );
+  }
 }
 
 //--------------------------------------------------------------
@@ -713,11 +749,16 @@ static void MMdl_SetHeaderPos( MMDL *mmdl, const MMDL_HEADER *head )
   fx32 set_y;
 	VecFx32 vec;
 	int pos,set_gx,set_gz;
+  const MMDL_HEADER_GRIDPOS *gridpos;
+
+  GF_ASSERT( head->pos_type == MMDL_HEADER_POSTYPE_GRID );
+  
+  gridpos = (const MMDL_HEADER_GRIDPOS*)head->pos_buf;
 	
   if( mmdl_rockpos_CheckPos(mmdl) == FALSE ){
-    set_gx = head->gx;
-    set_gz = head->gz;
-    set_y = head->y;
+    set_gx = gridpos->gx;
+    set_gz = gridpos->gz;
+    set_y = gridpos->y;
   }else{
     mmdl_rockpos_GetPos( mmdl, &vec );
     set_gx = SIZE_GRID_FX32( vec.x );
@@ -726,11 +767,11 @@ static void MMdl_SetHeaderPos( MMDL *mmdl, const MMDL_HEADER *head )
   }
   
 	vec.x = GRID_SIZE_FX32( set_gx ) + MMDL_VEC_X_GRID_OFFS_FX32;
-	MMDL_SetInitGridPosX( mmdl, head->gx );
+	MMDL_SetInitGridPosX( mmdl, gridpos->gx );
 	MMDL_SetOldGridPosX( mmdl, set_gx );
 	MMDL_SetGridPosX( mmdl, set_gx );
 	
-	pos = SIZE_GRID_FX32( head->y );		//pos設定はfx32型で来る。
+	pos = SIZE_GRID_FX32( gridpos->y );		//pos設定はfx32型で来る。
 	MMDL_SetInitGridPosY( mmdl, pos );
   
 	vec.y = set_y;
@@ -739,7 +780,7 @@ static void MMdl_SetHeaderPos( MMDL *mmdl, const MMDL_HEADER *head )
 	MMDL_SetGridPosY( mmdl, pos );
 	
 	vec.z = GRID_SIZE_FX32( set_gz ) + MMDL_VEC_Z_GRID_OFFS_FX32;
-	MMDL_SetInitGridPosZ( mmdl, head->gz );
+	MMDL_SetInitGridPosZ( mmdl, gridpos->gz );
 	MMDL_SetOldGridPosZ( mmdl, set_gz );
 	MMDL_SetGridPosZ( mmdl, set_gz );
 	
@@ -4665,7 +4706,7 @@ void MMDL_DrawPopProcDummy( MMDL * mmdl )
 //--------------------------------------------------------------
 /// 参照位置データ
 //--------------------------------------------------------------
-#include "../../../resource/fldmapdata/eventdata/total_header.h"
+#include "../../../resource/fldmapdata/eventdata/define/total_header.h"
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 #include "../../../resource/fldmapdata/pushrock/rockpos.cdat"
 
@@ -4854,6 +4895,53 @@ BOOL MMDLSYS_ROCKPOS_CheckRockFalled(
   
   return( FALSE );
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ヘッダーにグリッドマップポジションを設定
+ *	@param	head    ヘッダー
+ *	@param	gx      ｘグリッド座標
+ *	@param	gz      ｚグリッド座標
+ *	@param	y       ｙ座標
+ */
+//-----------------------------------------------------------------------------
+void MMDLHEADER_SetGridPos( MMDL_HEADER* head, u16 gx, u16 gz, int y )
+{
+  MMDL_HEADER_GRIDPOS* pos;
+  
+  GF_ASSERT( head );
+  head->pos_type = MMDL_HEADER_POSTYPE_GRID;
+  pos = (MMDL_HEADER_GRIDPOS*)head->pos_buf;
+
+  pos->gx = gx;
+  pos->gz = gz;
+  pos->y  = y;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ヘッダーにレールマップポジションを設定
+ *
+ *	@param	head    ヘッダー
+ *	@param	index   インデックス
+ *	@param	front   フロントグリッド座標
+ *	@param	side    サイドグリッド座標
+ */
+//-----------------------------------------------------------------------------
+void MMDLHEADER_SetRailPos( MMDL_HEADER* head, u16 index, u16 front, u16 side )
+{
+  MMDL_HEADER_RAILPOS* pos;
+  
+  GF_ASSERT( head );
+  head->pos_type = MMDL_HEADER_POSTYPE_RAIL;
+  pos = (MMDL_HEADER_RAILPOS*)head->pos_buf;
+
+  pos->rail_index = index;
+  pos->front_grid = front;
+  pos->side_grid  = side;
+}
+
 
 //======================================================================
 //	debug

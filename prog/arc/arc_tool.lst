@@ -209,4 +209,4 @@
   ARCID_GYM_ANTI "fieldmap/gym_anti.narc"  #相反ジム
   ARCID_KOWAZA "kowaza.narc"  # 子技データ
   ARCID_WAZAOSHIE_GRA	"waza_oshie_gra.narc"		# 技教え/思い出し画面グラフィック
-
+	ARCID_FLD_EVENTDATA		"fieldmap\eventdata.narc"	#フィールドイベントデータ

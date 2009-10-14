@@ -157,3 +157,7 @@ extern BOOL ZONEDATA_IsFieldMatrixID(u16 zone_id);
 extern u16 ZONEDATA_GetEncountDataID(u16 zone_id);
 
 
+//------------------------------------------------------------------
+// イベントデータ指定IDの取得
+//------------------------------------------------------------------
+extern u16 ZONEDATA_GetEventDataArcID(u16 zone_id);

@@ -14,7 +14,7 @@
 typedef struct {
   u16 rail_index; //index of point or line
   u8 type;        // FIELD_RAIL_TYPE
-  u8 key;
+  u8 key;         // RAIL_KEY
   s8 width_grid;   // RAILグリッド
   s8 line_grid;    // RAILグリッド
 
@@ -24,3 +24,15 @@ typedef struct {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void RAIL_LOCATION_Init(RAIL_LOCATION * railLoc);
+
+
+//------------------------------------------------------------------
+// RAIL_KEYとDIRの変換
+//  
+//  DIR_～をRAIL_KEY_～に変換
+//------------------------------------------------------------------
+// RAIL_KEY to DIR
+extern u32 FIELD_RAIL_TOOL_ConvertRailKeyToDir( u32 key );
+// DIR to RAIL_KEY
+extern u32 FIELD_RAIL_TOOL_ConvertDirToRailKey( u32 dir );
+

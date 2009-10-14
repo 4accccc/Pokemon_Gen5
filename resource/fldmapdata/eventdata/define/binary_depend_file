@@ -38,6 +38,14 @@
 ../tmp/c01r0302.bin:../data/c01r0302.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c01r0302.h ../../script/c01r0302_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c01r0301.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c01r0302.h ../../script/c01r0302_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c01r0301.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
 
+#../data/c01r0401.mev
+../tmp/c01r0401.bin:../data/c01r0401.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c01r0401.h ../../script/c01r0401_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c01r0401.h ../../script/c01r0401_def.h 
+
+#../data/c01r0402.mev
+../tmp/c01r0402.bin:../data/c01r0402.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c01r0402.h ../../script/c01r0402_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c01r0402.h ../../script/c01r0402_def.h 
+
 #../data/c01r0501.mev
 ../tmp/c01r0501.bin:../data/c01r0501.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c01r0501.h ../../script/c01r0501_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c01.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c01r0501.h ../../script/c01r0501_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c01.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
@@ -47,8 +55,20 @@
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02.h ../../script/c02_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c02r0201.h ../../../../prog/include/field/eventdata_type.h ../tmp/c02r0101.h ../tmp/c02r0301.h ../tmp/c02r0401.h ../tmp/c02r0501.h ../tmp/c02pc0101.h ../tmp/c02r0601.h ../tmp/c02r0701.h ../tmp/c02gym0101.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
 
 #../data/c02gym0101.mev
-../tmp/c02gym0101.bin:../data/c02gym0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02gym0101.h ../../script/c02gym0101_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c02.h ../../../../prog/include/field/eventdata_type.h 
-	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02gym0101.h ../../script/c02gym0101_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c02.h ../../../../prog/include/field/eventdata_type.h 
+../tmp/c02gym0101.bin:../data/c02gym0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02gym0101.h ../../script/c02gym0101_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c02.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../flagwork/work_define.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02gym0101.h ../../script/c02gym0101_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c02.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../flagwork/work_define.h 
+
+#../data/c02gym0201.mev
+../tmp/c02gym0201.bin:../data/c02gym0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02gym0201.h ../../script/c02gym0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02gym0201.h ../../script/c02gym0201_def.h 
+
+#../data/c02gym0202.mev
+../tmp/c02gym0202.bin:../data/c02gym0202.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02gym0202.h ../../script/c02gym0202_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02gym0202.h ../../script/c02gym0202_def.h 
+
+#../data/c02gym0203.mev
+../tmp/c02gym0203.bin:../data/c02gym0203.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02gym0203.h ../../script/c02gym0203_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02gym0203.h ../../script/c02gym0203_def.h 
 
 #../data/c02pc0101.mev
 ../tmp/c02pc0101.bin:../data/c02pc0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02pc0101.h ../../script/c02pc0101_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c02.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
@@ -150,6 +170,38 @@
 ../tmp/c03r0201.bin:../data/c03r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0201.h ../../script/c03r0201_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c03p05.h ../../../../prog/include/field/eventdata_type.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0201.h ../../script/c03r0201_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c03p05.h ../../../../prog/include/field/eventdata_type.h 
 
+#../data/c03r0301.mev
+../tmp/c03r0301.bin:../data/c03r0301.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0301.h ../../script/c03r0301_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0301.h ../../script/c03r0301_def.h 
+
+#../data/c03r0302.mev
+../tmp/c03r0302.bin:../data/c03r0302.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0302.h ../../script/c03r0302_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0302.h ../../script/c03r0302_def.h 
+
+#../data/c03r0303.mev
+../tmp/c03r0303.bin:../data/c03r0303.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0303.h ../../script/c03r0303_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0303.h ../../script/c03r0303_def.h 
+
+#../data/c03r0401.mev
+../tmp/c03r0401.bin:../data/c03r0401.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0401.h ../../script/c03r0401_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0401.h ../../script/c03r0401_def.h 
+
+#../data/c03r0402.mev
+../tmp/c03r0402.bin:../data/c03r0402.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0402.h ../../script/c03r0402_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0402.h ../../script/c03r0402_def.h 
+
+#../data/c03r0501.mev
+../tmp/c03r0501.bin:../data/c03r0501.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0501.h ../../script/c03r0501_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0501.h ../../script/c03r0501_def.h 
+
+#../data/c03r0502.mev
+../tmp/c03r0502.bin:../data/c03r0502.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0502.h ../../script/c03r0502_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0502.h ../../script/c03r0502_def.h 
+
+#../data/c03r0601.mev
+../tmp/c03r0601.bin:../data/c03r0601.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0601.h ../../script/c03r0601_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c03r0601.h ../../script/c03r0601_def.h 
+
 #../data/c04.mev
 ../tmp/c04.bin:../data/c04.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04.h ../../script/c04_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r04.h ../../../../prog/include/field/eventdata_type.h ../tmp/r05.h ../tmp/r16.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04.h ../../script/c04_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r04.h ../../../../prog/include/field/eventdata_type.h ../tmp/r05.h ../tmp/r16.h 
@@ -157,6 +209,70 @@
 #../data/c04gym0101.mev
 ../tmp/c04gym0101.bin:../data/c04gym0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04gym0101.h ../../script/c04gym0101_def.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../flagwork/work_define.h ../../../../prog/include/field/eventdata_type.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04gym0101.h ../../script/c04gym0101_def.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../flagwork/work_define.h ../../../../prog/include/field/eventdata_type.h 
+
+#../data/c04p01.mev
+../tmp/c04p01.bin:../data/c04p01.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04p01.h ../../script/c04p01_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04p01.h ../../script/c04p01_def.h 
+
+#../data/c04pc0101.mev
+../tmp/c04pc0101.bin:../data/c04pc0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04pc0101.h ../../script/c04pc0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04pc0101.h ../../script/c04pc0101_def.h 
+
+#../data/c04r0101.mev
+../tmp/c04r0101.bin:../data/c04r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0101.h ../../script/c04r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0101.h ../../script/c04r0101_def.h 
+
+#../data/c04r0102.mev
+../tmp/c04r0102.bin:../data/c04r0102.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0102.h ../../script/c04r0102_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0102.h ../../script/c04r0102_def.h 
+
+#../data/c04r0201.mev
+../tmp/c04r0201.bin:../data/c04r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0201.h ../../script/c04r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0201.h ../../script/c04r0201_def.h 
+
+#../data/c04r0202.mev
+../tmp/c04r0202.bin:../data/c04r0202.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0202.h ../../script/c04r0202_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0202.h ../../script/c04r0202_def.h 
+
+#../data/c04r0301.mev
+../tmp/c04r0301.bin:../data/c04r0301.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0301.h ../../script/c04r0301_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0301.h ../../script/c04r0301_def.h 
+
+#../data/c04r0302.mev
+../tmp/c04r0302.bin:../data/c04r0302.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0302.h ../../script/c04r0302_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0302.h ../../script/c04r0302_def.h 
+
+#../data/c04r0303.mev
+../tmp/c04r0303.bin:../data/c04r0303.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0303.h ../../script/c04r0303_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0303.h ../../script/c04r0303_def.h 
+
+#../data/c04r0401.mev
+../tmp/c04r0401.bin:../data/c04r0401.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0401.h ../../script/c04r0401_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0401.h ../../script/c04r0401_def.h 
+
+#../data/c04r0501.mev
+../tmp/c04r0501.bin:../data/c04r0501.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0501.h ../../script/c04r0501_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0501.h ../../script/c04r0501_def.h 
+
+#../data/c04r0601.mev
+../tmp/c04r0601.bin:../data/c04r0601.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0601.h ../../script/c04r0601_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0601.h ../../script/c04r0601_def.h 
+
+#../data/c04r0701.mev
+../tmp/c04r0701.bin:../data/c04r0701.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0701.h ../../script/c04r0701_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0701.h ../../script/c04r0701_def.h 
+
+#../data/c04r0801.mev
+../tmp/c04r0801.bin:../data/c04r0801.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0801.h ../../script/c04r0801_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0801.h ../../script/c04r0801_def.h 
+
+#../data/c04r0901.mev
+../tmp/c04r0901.bin:../data/c04r0901.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0901.h ../../script/c04r0901_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r0901.h ../../script/c04r0901_def.h 
+
+#../data/c04r1001.mev
+../tmp/c04r1001.bin:../data/c04r1001.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r1001.h ../../script/c04r1001_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c04r1001.h ../../script/c04r1001_def.h 
 
 #../data/c05.mev
 ../tmp/c05.bin:../data/c05.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c05.h ../../script/c05_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/h02.h ../../../../prog/include/field/eventdata_type.h ../tmp/c05r0101.h ../tmp/c05r0201.h ../tmp/c05r0301.h ../tmp/c05r0401.h ../tmp/c05r0601.h ../tmp/c05pc0101.h ../tmp/c05gym0101.h ../tmp/c05r0501.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
@@ -193,6 +309,10 @@
 #../data/c05r0601.mev
 ../tmp/c05r0601.bin:../data/c05r0601.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c05r0601.h ../../script/c05r0601_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c05.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c05r0601.h ../../script/c05r0601_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c05.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
+
+#../data/c05r0701.mev
+../tmp/c05r0701.bin:../data/c05r0701.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c05r0701.h ../../script/c05r0701_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c05r0701.h ../../script/c05r0701_def.h 
 
 #../data/c06.mev
 ../tmp/c06.bin:../data/c06.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c06.h ../../script/c06_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c06pc0101.h ../../../../prog/include/field/eventdata_type.h ../tmp/c06r0301.h ../tmp/c06r0401.h ../tmp/c06gym0101.h ../tmp/c06r0201.h ../tmp/c06r0101.h ../tmp/c06r0501.h ../tmp/d06r0101.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
@@ -257,6 +377,110 @@
 #../data/c08.mev
 ../tmp/c08.bin:../data/c08.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08.h ../../script/c08_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r09.h ../../../../prog/include/field/eventdata_type.h ../tmp/r11.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08.h ../../script/c08_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r09.h ../../../../prog/include/field/eventdata_type.h ../tmp/r11.h 
+
+#../data/c08gym0101.mev
+../tmp/c08gym0101.bin:../data/c08gym0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08gym0101.h ../../script/c08gym0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08gym0101.h ../../script/c08gym0101_def.h 
+
+#../data/c08pc0101.mev
+../tmp/c08pc0101.bin:../data/c08pc0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08pc0101.h ../../script/c08pc0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08pc0101.h ../../script/c08pc0101_def.h 
+
+#../data/c08pc0801.mev
+../tmp/c08pc0801.bin:../data/c08pc0801.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08pc0801.h ../../script/c08pc0801_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08pc0801.h ../../script/c08pc0801_def.h 
+
+#../data/c08r0101.mev
+../tmp/c08r0101.bin:../data/c08r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0101.h ../../script/c08r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0101.h ../../script/c08r0101_def.h 
+
+#../data/c08r0102.mev
+../tmp/c08r0102.bin:../data/c08r0102.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0102.h ../../script/c08r0102_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0102.h ../../script/c08r0102_def.h 
+
+#../data/c08r0201.mev
+../tmp/c08r0201.bin:../data/c08r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0201.h ../../script/c08r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0201.h ../../script/c08r0201_def.h 
+
+#../data/c08r0202.mev
+../tmp/c08r0202.bin:../data/c08r0202.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0202.h ../../script/c08r0202_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0202.h ../../script/c08r0202_def.h 
+
+#../data/c08r0301.mev
+../tmp/c08r0301.bin:../data/c08r0301.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0301.h ../../script/c08r0301_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0301.h ../../script/c08r0301_def.h 
+
+#../data/c08r0302.mev
+../tmp/c08r0302.bin:../data/c08r0302.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0302.h ../../script/c08r0302_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0302.h ../../script/c08r0302_def.h 
+
+#../data/c08r0401.mev
+../tmp/c08r0401.bin:../data/c08r0401.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0401.h ../../script/c08r0401_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0401.h ../../script/c08r0401_def.h 
+
+#../data/c08r0402.mev
+../tmp/c08r0402.bin:../data/c08r0402.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0402.h ../../script/c08r0402_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0402.h ../../script/c08r0402_def.h 
+
+#../data/c08r0501.mev
+../tmp/c08r0501.bin:../data/c08r0501.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0501.h ../../script/c08r0501_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0501.h ../../script/c08r0501_def.h 
+
+#../data/c08r0601.mev
+../tmp/c08r0601.bin:../data/c08r0601.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0601.h ../../script/c08r0601_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0601.h ../../script/c08r0601_def.h 
+
+#../data/c08r0701.mev
+../tmp/c08r0701.bin:../data/c08r0701.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0701.h ../../script/c08r0701_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08r0701.h ../../script/c08r0701_def.h 
+
+#../data/c09.mev
+../tmp/c09.bin:../data/c09.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09.h ../../script/c09_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09.h ../../script/c09_def.h 
+
+#../data/c09p01.mev
+../tmp/c09p01.bin:../data/c09p01.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09p01.h ../../script/c09p01_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09p01.h ../../script/c09p01_def.h 
+
+#../data/c09p02.mev
+../tmp/c09p02.bin:../data/c09p02.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09p02.h ../../script/c09p02_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09p02.h ../../script/c09p02_def.h 
+
+#../data/c09r0101.mev
+../tmp/c09r0101.bin:../data/c09r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09r0101.h ../../script/c09r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09r0101.h ../../script/c09r0101_def.h 
+
+#../data/c09r0201.mev
+../tmp/c09r0201.bin:../data/c09r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09r0201.h ../../script/c09r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09r0201.h ../../script/c09r0201_def.h 
+
+#../data/c09r0301.mev
+../tmp/c09r0301.bin:../data/c09r0301.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09r0301.h ../../script/c09r0301_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09r0301.h ../../script/c09r0301_def.h 
+
+#../data/c09r0401.mev
+../tmp/c09r0401.bin:../data/c09r0401.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09r0401.h ../../script/c09r0401_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09r0401.h ../../script/c09r0401_def.h 
+
+#../data/c09r0501.mev
+../tmp/c09r0501.bin:../data/c09r0501.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09r0501.h ../../script/c09r0501_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09r0501.h ../../script/c09r0501_def.h 
+
+#../data/c09r0601.mev
+../tmp/c09r0601.bin:../data/c09r0601.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09r0601.h ../../script/c09r0601_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c09r0601.h ../../script/c09r0601_def.h 
+
+#../data/c11.mev
+../tmp/c11.bin:../data/c11.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c11.h ../../script/c11_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c11.h ../../script/c11_def.h 
+
+#../data/closseum02.mev
+../tmp/closseum02.bin:../data/closseum02.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/closseum02.h ../../script/closseum02_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/closseum02.h ../../script/closseum02_def.h 
+
+#../data/closseum.mev
+../tmp/closseum.bin:../data/closseum.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/closseum.h ../../script/closseum_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/closseum.h ../../script/closseum_def.h 
 
 #../data/d01.mev
 ../tmp/d01.bin:../data/d01.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d01.h ../../script/d01_def.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../flagwork/work_define.h ../../../../prog/include/field/eventdata_type.h 
@@ -474,6 +698,94 @@
 ../tmp/d07r0601.bin:../data/d07r0601.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d07r0601.h ../../script/d07r0601_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/d07r0201.h ../../../../prog/include/field/eventdata_type.h ../tmp/d07r0301.h ../tmp/d07r0401.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d07r0601.h ../../script/d07r0601_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/d07r0201.h ../../../../prog/include/field/eventdata_type.h ../tmp/d07r0301.h ../tmp/d07r0401.h 
 
+#../data/d07r0701.mev
+../tmp/d07r0701.bin:../data/d07r0701.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d07r0701.h ../../script/d07r0701_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d07r0701.h ../../script/d07r0701_def.h 
+
+#../data/d08.mev
+../tmp/d08.bin:../data/d08.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d08.h ../../script/d08_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d08.h ../../script/d08_def.h 
+
+#../data/d08r0101.mev
+../tmp/d08r0101.bin:../data/d08r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d08r0101.h ../../script/d08r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d08r0101.h ../../script/d08r0101_def.h 
+
+#../data/d09r0101.mev
+../tmp/d09r0101.bin:../data/d09r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0101.h ../../script/d09r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0101.h ../../script/d09r0101_def.h 
+
+#../data/d09r0201.mev
+../tmp/d09r0201.bin:../data/d09r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0201.h ../../script/d09r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0201.h ../../script/d09r0201_def.h 
+
+#../data/d09r0301.mev
+../tmp/d09r0301.bin:../data/d09r0301.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0301.h ../../script/d09r0301_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0301.h ../../script/d09r0301_def.h 
+
+#../data/d09r0401.mev
+../tmp/d09r0401.bin:../data/d09r0401.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0401.h ../../script/d09r0401_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0401.h ../../script/d09r0401_def.h 
+
+#../data/d09r0501.mev
+../tmp/d09r0501.bin:../data/d09r0501.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0501.h ../../script/d09r0501_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0501.h ../../script/d09r0501_def.h 
+
+#../data/d09r0601.mev
+../tmp/d09r0601.bin:../data/d09r0601.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0601.h ../../script/d09r0601_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0601.h ../../script/d09r0601_def.h 
+
+#../data/d09r0701.mev
+../tmp/d09r0701.bin:../data/d09r0701.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0701.h ../../script/d09r0701_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0701.h ../../script/d09r0701_def.h 
+
+#../data/d09r0801.mev
+../tmp/d09r0801.bin:../data/d09r0801.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0801.h ../../script/d09r0801_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0801.h ../../script/d09r0801_def.h 
+
+#../data/d09r0901.mev
+../tmp/d09r0901.bin:../data/d09r0901.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0901.h ../../script/d09r0901_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d09r0901.h ../../script/d09r0901_def.h 
+
+#../data/d10.mev
+../tmp/d10.bin:../data/d10.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d10.h ../../script/d10_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d10.h ../../script/d10_def.h 
+
+#../data/d10r0101.mev
+../tmp/d10r0101.bin:../data/d10r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d10r0101.h ../../script/d10r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d10r0101.h ../../script/d10r0101_def.h 
+
+#../data/d11r0101.mev
+../tmp/d11r0101.bin:../data/d11r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d11r0101.h ../../script/d11r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d11r0101.h ../../script/d11r0101_def.h 
+
+#../data/d11r0201.mev
+../tmp/d11r0201.bin:../data/d11r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d11r0201.h ../../script/d11r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d11r0201.h ../../script/d11r0201_def.h 
+
+#../data/d11r0301.mev
+../tmp/d11r0301.bin:../data/d11r0301.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d11r0301.h ../../script/d11r0301_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d11r0301.h ../../script/d11r0301_def.h 
+
+#../data/d12.mev
+../tmp/d12.bin:../data/d12.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d12.h ../../script/d12_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d12.h ../../script/d12_def.h 
+
+#../data/d12r0101.mev
+../tmp/d12r0101.bin:../data/d12r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d12r0101.h ../../script/d12r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d12r0101.h ../../script/d12r0101_def.h 
+
+#../data/d13.mev
+../tmp/d13.bin:../data/d13.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d13.h ../../script/d13_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d13.h ../../script/d13_def.h 
+
+#../data/d13r0101.mev
+../tmp/d13r0101.bin:../data/d13r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d13r0101.h ../../script/d13r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d13r0101.h ../../script/d13r0101_def.h 
+
+#../data/gt.mev
+../tmp/gt.bin:../data/gt.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/gt.h ../../script/gt_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/gt.h ../../script/gt_def.h 
+
 #../data/h01.mev
 ../tmp/h01.bin:../data/h01.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h01.h ../../script/h01_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/h01p01.h ../../../../prog/include/field/eventdata_type.h ../tmp/c03.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h01.h ../../script/h01_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/h01p01.h ../../../../prog/include/field/eventdata_type.h ../tmp/c03.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
@@ -482,9 +794,45 @@
 ../tmp/h01p01.bin:../data/h01p01.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h01p01.h ../../script/h01p01_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/d02r0101.h ../../../../prog/include/field/eventdata_type.h ../tmp/h01.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h01p01.h ../../script/h01p01_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/d02r0101.h ../../../../prog/include/field/eventdata_type.h ../tmp/h01.h 
 
+#../data/h01r0101.mev
+../tmp/h01r0101.bin:../data/h01r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h01r0101.h ../../script/h01r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h01r0101.h ../../script/h01r0101_def.h 
+
+#../data/h01r0201.mev
+../tmp/h01r0201.bin:../data/h01r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h01r0201.h ../../script/h01r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h01r0201.h ../../script/h01r0201_def.h 
+
 #../data/h02.mev
 ../tmp/h02.bin:../data/h02.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h02.h ../../script/h02_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c05.h ../../../../prog/include/field/eventdata_type.h ../tmp/r05.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h02.h ../../script/h02_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c05.h ../../../../prog/include/field/eventdata_type.h ../tmp/r05.h 
+
+#../data/h03.mev
+../tmp/h03.bin:../data/h03.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h03.h ../../script/h03_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h03.h ../../script/h03_def.h 
+
+#../data/h04.mev
+../tmp/h04.bin:../data/h04.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h04.h ../../script/h04_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h04.h ../../script/h04_def.h 
+
+#../data/h05.mev
+../tmp/h05.bin:../data/h05.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h05.h ../../script/h05_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/h05.h ../../script/h05_def.h 
+
+#../data/n01r0101.mev
+../tmp/n01r0101.bin:../data/n01r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/n01r0101.h ../../script/n01r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/n01r0101.h ../../script/n01r0101_def.h 
+
+#../data/palace01.mev
+../tmp/palace01.bin:../data/palace01.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/palace01.h ../../script/palace01_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/palace01.h ../../script/palace01_def.h 
+
+#../data/palace02.mev
+../tmp/palace02.bin:../data/palace02.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/palace02.h ../../script/palace02_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/palace02.h ../../script/palace02_def.h 
+
+#../data/palacetest.mev
+../tmp/palacetest.bin:../data/palacetest.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/palacetest.h ../../script/palacetest_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/palacetest.h ../../script/palacetest_def.h 
 
 #../data/r01.mev
 ../tmp/r01.bin:../data/r01.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r01.h ../../script/r01_def.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../../../prog/include/field/eventdata_type.h ../../flagwork/work_define.h 
@@ -509,6 +857,18 @@
 #../data/r03r0201.mev
 ../tmp/r03r0201.bin:../data/r03r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r03r0201.h ../../script/r03r0201_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r03.h ../../../../prog/include/field/eventdata_type.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r03r0201.h ../../script/r03r0201_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r03.h ../../../../prog/include/field/eventdata_type.h 
+
+#../data/r03r0301.mev
+../tmp/r03r0301.bin:../data/r03r0301.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r03r0301.h ../../script/r03r0301_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r03r0301.h ../../script/r03r0301_def.h 
+
+#../data/r03r0302.mev
+../tmp/r03r0302.bin:../data/r03r0302.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r03r0302.h ../../script/r03r0302_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r03r0302.h ../../script/r03r0302_def.h 
+
+#../data/r03r0303.mev
+../tmp/r03r0303.bin:../data/r03r0303.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r03r0303.h ../../script/r03r0303_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r03r0303.h ../../script/r03r0303_def.h 
 
 #../data/r04.mev
 ../tmp/r04.bin:../data/r04.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r04.h ../../script/r04_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c04.h ../../../../prog/include/field/eventdata_type.h ../tmp/c03p04.h ../tmp/r04r0101.h ../tmp/r04r0201.h 
@@ -538,29 +898,177 @@
 ../tmp/r06r0101.bin:../data/r06r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r06r0101.h ../../script/r06r0101_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r06.h ../../../../prog/include/field/eventdata_type.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r06r0101.h ../../script/r06r0101_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r06.h ../../../../prog/include/field/eventdata_type.h 
 
+#../data/r06r0201.mev
+../tmp/r06r0201.bin:../data/r06r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r06r0201.h ../../script/r06r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r06r0201.h ../../script/r06r0201_def.h 
+
+#../data/r06r0202.mev
+../tmp/r06r0202.bin:../data/r06r0202.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r06r0202.h ../../script/r06r0202_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r06r0202.h ../../script/r06r0202_def.h 
+
+#../data/r06r0203.mev
+../tmp/r06r0203.bin:../data/r06r0203.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r06r0203.h ../../script/r06r0203_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r06r0203.h ../../script/r06r0203_def.h 
+
+#../data/r07.mev
+../tmp/r07.bin:../data/r07.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r07.h ../../script/r07_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r07.h ../../script/r07_def.h 
+
+#../data/r07r0101.mev
+../tmp/r07r0101.bin:../data/r07r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r07r0101.h ../../script/r07r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r07r0101.h ../../script/r07r0101_def.h 
+
 #../data/r08.mev
 ../tmp/r08.bin:../data/r08.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r08.h ../../script/r08_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r09.h ../../../../prog/include/field/eventdata_type.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r08.h ../../script/r08_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r09.h ../../../../prog/include/field/eventdata_type.h 
+
+#../data/r08r0101.mev
+../tmp/r08r0101.bin:../data/r08r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r08r0101.h ../../script/r08r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r08r0101.h ../../script/r08r0101_def.h 
+
+#../data/r08r0102.mev
+../tmp/r08r0102.bin:../data/r08r0102.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r08r0102.h ../../script/r08r0102_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r08r0102.h ../../script/r08r0102_def.h 
+
+#../data/r08r0201.mev
+../tmp/r08r0201.bin:../data/r08r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r08r0201.h ../../script/r08r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r08r0201.h ../../script/r08r0201_def.h 
 
 #../data/r09.mev
 ../tmp/r09.bin:../data/r09.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r09.h ../../script/r09_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r08.h ../../../../prog/include/field/eventdata_type.h ../tmp/c08.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r09.h ../../script/r09_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r08.h ../../../../prog/include/field/eventdata_type.h ../tmp/c08.h 
 
+#../data/r09r0101.mev
+../tmp/r09r0101.bin:../data/r09r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r09r0101.h ../../script/r09r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r09r0101.h ../../script/r09r0101_def.h 
+
+#../data/r09r0201.mev
+../tmp/r09r0201.bin:../data/r09r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r09r0201.h ../../script/r09r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r09r0201.h ../../script/r09r0201_def.h 
+
+#../data/r09r0301.mev
+../tmp/r09r0301.bin:../data/r09r0301.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r09r0301.h ../../script/r09r0301_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r09r0301.h ../../script/r09r0301_def.h 
+
+#../data/r09r0302.mev
+../tmp/r09r0302.bin:../data/r09r0302.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r09r0302.h ../../script/r09r0302_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r09r0302.h ../../script/r09r0302_def.h 
+
+#../data/r09r0303.mev
+../tmp/r09r0303.bin:../data/r09r0303.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r09r0303.h ../../script/r09r0303_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r09r0303.h ../../script/r09r0303_def.h 
+
+#../data/r10.mev
+../tmp/r10.bin:../data/r10.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10.h ../../script/r10_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10.h ../../script/r10_def.h 
+
+#../data/r10r0101.mev
+../tmp/r10r0101.bin:../data/r10r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0101.h ../../script/r10r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0101.h ../../script/r10r0101_def.h 
+
+#../data/r10r0201.mev
+../tmp/r10r0201.bin:../data/r10r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0201.h ../../script/r10r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0201.h ../../script/r10r0201_def.h 
+
+#../data/r10r0301.mev
+../tmp/r10r0301.bin:../data/r10r0301.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0301.h ../../script/r10r0301_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0301.h ../../script/r10r0301_def.h 
+
+#../data/r10r0401.mev
+../tmp/r10r0401.bin:../data/r10r0401.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0401.h ../../script/r10r0401_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0401.h ../../script/r10r0401_def.h 
+
+#../data/r10r0501.mev
+../tmp/r10r0501.bin:../data/r10r0501.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0501.h ../../script/r10r0501_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0501.h ../../script/r10r0501_def.h 
+
+#../data/r10r0601.mev
+../tmp/r10r0601.bin:../data/r10r0601.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0601.h ../../script/r10r0601_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0601.h ../../script/r10r0601_def.h 
+
+#../data/r10r0701.mev
+../tmp/r10r0701.bin:../data/r10r0701.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0701.h ../../script/r10r0701_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0701.h ../../script/r10r0701_def.h 
+
+#../data/r10r0801.mev
+../tmp/r10r0801.bin:../data/r10r0801.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0801.h ../../script/r10r0801_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0801.h ../../script/r10r0801_def.h 
+
+#../data/r10r0901.mev
+../tmp/r10r0901.bin:../data/r10r0901.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0901.h ../../script/r10r0901_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r10r0901.h ../../script/r10r0901_def.h 
+
 #../data/r11.mev
 ../tmp/r11.bin:../data/r11.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r11.h ../../script/r11_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c08.h ../../../../prog/include/field/eventdata_type.h ../tmp/r12.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r11.h ../../script/r11_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/c08.h ../../../../prog/include/field/eventdata_type.h ../tmp/r12.h 
+
+#../data/r11r0101.mev
+../tmp/r11r0101.bin:../data/r11r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r11r0101.h ../../script/r11r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r11r0101.h ../../script/r11r0101_def.h 
+
+#../data/r11r0201.mev
+../tmp/r11r0201.bin:../data/r11r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r11r0201.h ../../script/r11r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r11r0201.h ../../script/r11r0201_def.h 
 
 #../data/r12.mev
 ../tmp/r12.bin:../data/r12.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r12.h ../../script/r12_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r11.h ../../../../prog/include/field/eventdata_type.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r12.h ../../script/r12_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r11.h ../../../../prog/include/field/eventdata_type.h 
 
+#../data/r12r0101.mev
+../tmp/r12r0101.bin:../data/r12r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r12r0101.h ../../script/r12r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r12r0101.h ../../script/r12r0101_def.h 
+
+#../data/r12r0201.mev
+../tmp/r12r0201.bin:../data/r12r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r12r0201.h ../../script/r12r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r12r0201.h ../../script/r12r0201_def.h 
+
+#../data/r13.mev
+../tmp/r13.bin:../data/r13.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r13.h ../../script/r13_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r13.h ../../script/r13_def.h 
+
+#../data/r13r0101.mev
+../tmp/r13r0101.bin:../data/r13r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r13r0101.h ../../script/r13r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r13r0101.h ../../script/r13r0101_def.h 
+
+#../data/r13r0201.mev
+../tmp/r13r0201.bin:../data/r13r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r13r0201.h ../../script/r13r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r13r0201.h ../../script/r13r0201_def.h 
+
+#../data/r14.mev
+../tmp/r14.bin:../data/r14.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r14.h ../../script/r14_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r14.h ../../script/r14_def.h 
+
+#../data/r14r0101.mev
+../tmp/r14r0101.bin:../data/r14r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r14r0101.h ../../script/r14r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r14r0101.h ../../script/r14r0101_def.h 
+
 #../data/r15.mev
 ../tmp/r15.bin:../data/r15.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r15.h ../../script/r15_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r16.h ../../../../prog/include/field/eventdata_type.h ../tmp/bcwftest.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r15.h ../../script/r15_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r16.h ../../../../prog/include/field/eventdata_type.h ../tmp/bcwftest.h 
 
+#../data/r15r0101.mev
+../tmp/r15r0101.bin:../data/r15r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r15r0101.h ../../script/r15r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r15r0101.h ../../script/r15r0101_def.h 
+
+#../data/r15r0201.mev
+../tmp/r15r0201.bin:../data/r15r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r15r0201.h ../../script/r15r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r15r0201.h ../../script/r15r0201_def.h 
+
 #../data/r16.mev
 ../tmp/r16.bin:../data/r16.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r16.h ../../script/r16_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r15.h ../../../../prog/include/field/eventdata_type.h ../tmp/c04.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r16.h ../../script/r16_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/r15.h ../../../../prog/include/field/eventdata_type.h ../tmp/c04.h 
+
+#../data/r16r0101.mev
+../tmp/r16r0101.bin:../data/r16r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r16r0101.h ../../script/r16r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r16r0101.h ../../script/r16r0101_def.h 
+
+#../data/r18.mev
+../tmp/r18.bin:../data/r18.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r18.h ../../script/r18_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r18.h ../../script/r18_def.h 
+
+#../data/r18r0101.mev
+../tmp/r18r0101.bin:../data/r18r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r18r0101.h ../../script/r18r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/r18r0101.h ../../script/r18r0101_def.h 
 
 #../data/t01.mev
 ../tmp/t01.bin:../data/t01.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t01.h ../../script/t01_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/t01r0101.h ../../../../prog/include/field/eventdata_type.h ../tmp/t01r0201.h ../tmp/t01r0301.h ../tmp/t01r0401.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../flagwork/work_define.h 
@@ -630,7 +1138,71 @@
 ../tmp/t02r0401.bin:../data/t02r0401.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t02r0401.h ../../script/t02r0401_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/t02.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t02r0401.h ../../script/t02r0401_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/t02.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/include/field/field_dir.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h 
 
+#../data/t03.mev
+../tmp/t03.bin:../data/t03.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t03.h ../../script/t03_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t03.h ../../script/t03_def.h 
+
+#../data/t03pc0101.mev
+../tmp/t03pc0101.bin:../data/t03pc0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t03pc0101.h ../../script/t03pc0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t03pc0101.h ../../script/t03pc0101_def.h 
+
+#../data/t03r0101.mev
+../tmp/t03r0101.bin:../data/t03r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t03r0101.h ../../script/t03r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t03r0101.h ../../script/t03r0101_def.h 
+
+#../data/t03r0201.mev
+../tmp/t03r0201.bin:../data/t03r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t03r0201.h ../../script/t03r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t03r0201.h ../../script/t03r0201_def.h 
+
+#../data/t03r0301.mev
+../tmp/t03r0301.bin:../data/t03r0301.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t03r0301.h ../../script/t03r0301_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t03r0301.h ../../script/t03r0301_def.h 
+
+#../data/t03r0401.mev
+../tmp/t03r0401.bin:../data/t03r0401.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t03r0401.h ../../script/t03r0401_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t03r0401.h ../../script/t03r0401_def.h 
+
+#../data/t04.mev
+../tmp/t04.bin:../data/t04.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t04.h ../../script/t04_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t04.h ../../script/t04_def.h 
+
+#../data/t04r0101.mev
+../tmp/t04r0101.bin:../data/t04r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t04r0101.h ../../script/t04r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t04r0101.h ../../script/t04r0101_def.h 
+
+#../data/t04r0102.mev
+../tmp/t04r0102.bin:../data/t04r0102.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t04r0102.h ../../script/t04r0102_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t04r0102.h ../../script/t04r0102_def.h 
+
+#../data/t04r0201.mev
+../tmp/t04r0201.bin:../data/t04r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t04r0201.h ../../script/t04r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t04r0201.h ../../script/t04r0201_def.h 
+
+#../data/t04r0301.mev
+../tmp/t04r0301.bin:../data/t04r0301.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t04r0301.h ../../script/t04r0301_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t04r0301.h ../../script/t04r0301_def.h 
+
+#../data/t05.mev
+../tmp/t05.bin:../data/t05.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t05.h ../../script/t05_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t05.h ../../script/t05_def.h 
+
+#../data/t05r0101.mev
+../tmp/t05r0101.bin:../data/t05r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t05r0101.h ../../script/t05r0101_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t05r0101.h ../../script/t05r0101_def.h 
+
+#../data/t05r0201.mev
+../tmp/t05r0201.bin:../data/t05r0201.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t05r0201.h ../../script/t05r0201_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t05r0201.h ../../script/t05r0201_def.h 
+
+#../data/t05r0301.mev
+../tmp/t05r0301.bin:../data/t05r0301.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t05r0301.h ../../script/t05r0301_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/t05r0301.h ../../script/t05r0301_def.h 
+
 #../data/union.mev
 ../tmp/union.bin:../data/union.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/union.h ../../script/union_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/t02pc0101.h ../../../../prog/include/field/eventdata_type.h 
 	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/union.h ../../script/union_def.h ../../../../prog/arc/fieldmap/zone_id.h ../tmp/t02pc0101.h ../../../../prog/include/field/eventdata_type.h 
+
+#../data/w17.mev
+../tmp/w17.bin:../data/w17.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/w17.h ../../script/w17_def.h 
+	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/w17.h ../../script/w17_def.h 
 

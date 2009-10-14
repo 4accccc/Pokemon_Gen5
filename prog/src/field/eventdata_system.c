@@ -18,6 +18,8 @@
 #include "field/eventdata_sxy.h"
 
 #include "field/location.h"
+#include "field/rail_location.h"
+#include "field_rail.h"
 
 #include "fldmmdl.h"
 #include "script.h"
@@ -28,12 +30,21 @@
 #include "field/zonedata.h"
 //============================================================================================
 //============================================================================================
+#ifdef PM_DEBUG
+
+//#define DEBUG_EVENTDATA_PRINT // 読み込んだイベントデータを出力
+
+#endif  // PM_DEBUG
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
 	EVDATA_SIZE = 0x800,
 	SPSCR_DATA_SIZE = 0x100,
 };
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 
 //------------------------------------------------------------------
 /**
@@ -68,10 +79,7 @@ typedef struct {
   u8 connect_count;
   u8 pos_count;
 
-  void * bg_data;
-  void * npc_data;
-  void * connect_data;
-  void * pos_data;
+  u32 buf[];  ///<データ　TalkBG NPC CONNECT POS の順に格納
 
 }EVENTDATA_TABLE;
 
@@ -87,7 +95,8 @@ typedef struct {
 
 #define WORKID_DUMMY    LOCAL_WORK_START
 //生成したイベントデータを全部インクルード
-#include "../../../resource/fldmapdata/eventdata/eventdata_table.cdat"
+//binaryを読み込む形に変更  prog/arc/fieldmap/eventdata.narc
+//#include "../../../resource/fldmapdata/eventdata/eventdata_table.cdat"
 
 
 #if 0
@@ -132,9 +141,43 @@ static const int ConnectCount_C03 = NELEMS(ConnectData_C03);
 
 //============================================================================================
 //============================================================================================
+#ifdef DEBUG_EVENTDATA_PRINT
+static void debugPrint_Connect( const CONNECT_DATA* cp_data );
+static void debugPrint_BGTalk( const BG_TALK_DATA* cp_data );
+static void debugPrint_MMLD( const MMDL_HEADER* cp_data );
+static void debugPrint_PosData( const POS_EVENT_DATA* cp_data );
+#endif  //DEBUG_EVENTDATA_PRINT
+
+//============================================================================================
+//============================================================================================
 static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id);
 static void loadSpecialScriptData( EVENTDATA_SYSTEM * evdata, u16 zone_id );
 
+
+//============================================================================================
+// CONNECT_DATA ポジション
+//============================================================================================
+static void ConnectData_GPOS_GetPos( const CONNECT_DATA* cp_data, VecFx32* p_pos );
+static BOOL ConnectData_GPOS_IsHit( const CONNECT_DATA* cp_data, const VecFx32* cp_pos );
+static void ConnectData_RPOS_GetLocation( const CONNECT_DATA* cp_data, RAIL_LOCATION* p_location );
+static BOOL ConnectData_RPOS_IsHit( const CONNECT_DATA* cp_data, const RAIL_LOCATION* cp_location );
+
+
+//============================================================================================
+// BG_TALK_DATA ポジション
+//============================================================================================
+static void BGTalkData_GPOS_GetPos( const BG_TALK_DATA* cp_data, VecFx32* p_pos );
+static BOOL BGTalkData_GPOS_IsHit( const BG_TALK_DATA* cp_data, const VecFx32* cp_pos );
+static void BGTalkData_RPOS_GetLocation( const BG_TALK_DATA* cp_data, RAIL_LOCATION* p_location );
+static BOOL BGTalkData_RPOS_IsHit( const BG_TALK_DATA* cp_data, const RAIL_LOCATION* cp_location );
+
+//============================================================================================
+// POS_EVENT_DATA ポジション
+//============================================================================================
+static void PosEventData_GPOS_GetPos( const POS_EVENT_DATA* cp_data, VecFx32* p_pos );
+static BOOL PosEventData_GPOS_IsHit( const POS_EVENT_DATA* cp_data, const VecFx32* cp_pos );
+static void PosEventData_RPOS_GetLocation( const POS_EVENT_DATA* cp_data, RAIL_LOCATION* p_location );
+static BOOL PosEventData_RPOS_IsHit( const POS_EVENT_DATA* cp_data, const RAIL_LOCATION* cp_location );
 
 
 //============================================================================================
@@ -221,33 +264,81 @@ static void loadSpecialScriptData( EVENTDATA_SYSTEM * evdata, u16 zone_id )
 static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 {
   int i;
-  const EVENTDATA_TOTAL_TABLES * tables = TotalTables;
-  for (i = 0; i < ZONE_ID_MAX; i++, tables ++)
-  {
-    if (tables->table == NULL) return; //centinel
-    if (tables->zone_id == zone_id)
-    {
-      break;
-    }
-  }
-  evdata->npc_count = tables->table->npc_count;
-  evdata->npc_data = tables->table->npc_data;
-  evdata->connect_count = tables->table->connect_count;
-  evdata->connect_data = tables->table->connect_data;
-  evdata->bg_count = tables->table->bg_count;
-  evdata->bg_data = tables->table->bg_data;
-  evdata->pos_count = tables->table->pos_count;
-  evdata->pos_data = tables->table->pos_data;
+  const EVENTDATA_TABLE* table;
+  s32 ofs;
+  const u8* buf;
+  u32 arcID;
+
+  arcID = ZONEDATA_GetEventDataArcID(zone_id);
+  GFL_ARC_LoadData(evdata->load_buffer, ARCID_FLD_EVENTDATA,  
+      ZONEDATA_GetEventDataArcID(zone_id) );
+
+  // サイズオーバーチェック
+  GF_ASSERT( EVDATA_SIZE > GFL_ARC_GetDataSize( ARCID_FLD_EVENTDATA, ZONEDATA_GetEventDataArcID(zone_id) ) );
+  
+  table = (const EVENTDATA_TABLE*)evdata->load_buffer; 
+  buf = (const u8*)table->buf;
+  ofs = 0;
+
+  // データ格納
+  evdata->bg_count = table->bg_count;
+  evdata->bg_data = (const BG_TALK_DATA*)&buf[ofs];
+  ofs += sizeof(BG_TALK_DATA) * table->bg_count;
+  evdata->npc_count = table->npc_count;
+  evdata->npc_data = (const MMDL_HEADER*)&buf[ofs];
+  ofs += sizeof(MMDL_HEADER) * table->npc_count;
+  evdata->connect_count = table->connect_count;
+  evdata->connect_data = (const CONNECT_DATA*)&buf[ofs];
+  ofs += sizeof(CONNECT_DATA) * table->connect_count;
+  evdata->pos_count = table->pos_count;
+  evdata->pos_data = (const POS_EVENT_DATA*)&buf[ofs];
 
   for (i = 0; i < evdata->connect_count; i++)
   {
     const CONNECT_DATA * cnct = &evdata->connect_data[i];
-    TAMADA_Printf("CNCT:ID%02d (%08x, %08x, %08x)", i, cnct->pos.x, cnct->pos.y, cnct->pos.z);
-    TAMADA_Printf(" (%3d, %3d, %3d)\n",
-        cnct->pos.x / FIELD_CONST_GRID_SIZE,
-        cnct->pos.y / FIELD_CONST_GRID_SIZE,
-        cnct->pos.z / FIELD_CONST_GRID_SIZE);
+    if( cnct->pos_type == EVENTDATA_POSTYPE_GRID )
+    {
+      const CONNECT_DATA_GPOS* cp_pos = (const CONNECT_DATA_GPOS*)cnct->pos_buf;
+      TAMADA_Printf("CNCT:ID%02d (%08x, %08x, %08x)", i, cp_pos->x, cp_pos->y, cp_pos->z);
+      TAMADA_Printf(" (%3d, %3d, %3d)\n",
+          cp_pos->x / FIELD_CONST_GRID_SIZE,
+          cp_pos->y / FIELD_CONST_GRID_SIZE,
+          cp_pos->z / FIELD_CONST_GRID_SIZE);
+    }
+    else
+    {
+      const CONNECT_DATA_RPOS* cp_pos = (const CONNECT_DATA_RPOS*)cnct->pos_buf;
+      TAMADA_Printf("CNCT:ID%02d (rail_index:%d line:%d width:%d)\n", i, cp_pos->rail_index, cp_pos->front_grid, cp_pos->side_grid);
+    }
   }
+
+
+#ifdef DEBUG_EVENTDATA_PRINT
+  {
+    OS_TPrintf( "DEBUG PRINT Event Load ZoneID %d\n", zone_id );
+    
+    // 接続情報
+    for( i=0; i<evdata->connect_count; i++ )
+    {
+      debugPrint_Connect( &evdata->connect_data[i] );
+    }
+
+    for( i=0; i<evdata->bg_count; i++ )
+    {
+      debugPrint_BGTalk( &evdata->bg_data[i] );
+    }
+
+    for( i=0; i<evdata->npc_count; i++ )
+    {
+      debugPrint_MMLD( &evdata->npc_data[i] );
+    }
+
+    for( i=0; i<evdata->pos_count; i++ )
+    {
+      debugPrint_PosData( &evdata->pos_data[i] );
+    }
+  }
+#endif // DEBUG_EVENTDATA_PRINT
 }
 
 
@@ -262,34 +353,47 @@ static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 //============================================================================================
 #define	ZONE_ID_SPECIAL		(0x0fff)
 #define	EXIT_ID_SPECIAL		(0x0100)
-	enum {
-		OFS_X = 0,
-		OFS_Y = 0,
-		OFS_Z = 0,
+enum {
+  CONNECT_POS_OFS_X = 0,
+  CONNECT_POS_OFS_Y = 0,
+  CONNECT_POS_OFS_Z = 0,
 
-    RANGE = 2,
-	};
+  CONNECT_DATA_RANGE = 2,
+};
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 int EVENTDATA_SearchConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos)
 {
 	int i;
-	int x,y,z;
 	const CONNECT_DATA * cnct = evdata->connect_data;
-	x = FX_Whole(pos->x) - OFS_X;
-	y = FX_Whole(pos->y) - OFS_Y;
-	z = FX_Whole(pos->z) - OFS_Z;
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
-		if (cnct->pos.x != x) continue;
-		//if (cnct->pos.y != y) continue;
-		if (!(cnct->pos.y - RANGE < y && y < cnct->pos.y + RANGE) ) continue;
-		if (cnct->pos.z != z) continue;
-		TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
-		TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,pos->x, y,pos->y, z,pos->z);
-		return i;
+    if( ConnectData_GPOS_IsHit( cnct, pos ) )
+    {
+  		TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
+      
+	  	//TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,pos->x, y,pos->y, z,pos->z);
+		  return i;
+    }
 	}
 	return EXIT_ID_NONE;
 }
+
+int EVENTDATA_SearchConnectIDByRailLocation(const EVENTDATA_SYSTEM * evdata, const RAIL_LOCATION* rail_location)
+{
+	int i;
+	const CONNECT_DATA * cnct = evdata->connect_data;
+	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
+    if( ConnectData_RPOS_IsHit( cnct, rail_location ) )
+    {
+  		TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
+      
+	  	//TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,pos->x, y,pos->y, z,pos->z);
+		  return i;
+    }
+	}
+	return EXIT_ID_NONE;
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const CONNECT_DATA * EVENTDATA_GetConnectByID(const EVENTDATA_SYSTEM * evdata, u16 exit_id)
@@ -317,7 +421,7 @@ BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * l
 {
   /** TODO:　見た目含めてオフセットを再計算すること */
   enum{ GRIDSIZE = 8, MV = GRIDSIZE * FX32_ONE};
-  static const VecFx32 ofs = { OFS_X * FX32_ONE, OFS_Y * FX32_ONE, 0 * FX32_ONE };
+//  static const VecFx32 ofs = { CONNECT_POS_OFS_X * FX32_ONE, CONNECT_POS_OFS_Y * FX32_ONE, 0 * FX32_ONE }; GPOS_GetPos内で行っています。
 
 	const CONNECT_DATA * connect = EVENTDATA_GetConnectByID(evdata, exit_id);
 	if (connect == NULL) {
@@ -333,15 +437,12 @@ BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * l
 	}
 	//loc->zone_id = connect->link_zone_id;
 	//loc->exit_id = connect->link_exit_id;
-	//loc->pos = connect->pos;
-	VEC_Set(&loc->pos,
-			connect->pos.x * FX32_ONE,
-			connect->pos.y * FX32_ONE,
-			connect->pos.z * FX32_ONE);
-  VEC_Add(&loc->pos, &ofs, &loc->pos);
 	loc->dir_id = connect->exit_dir;
 	loc->zone_id = evdata->now_zone_id;
 	loc->exit_id = exit_id;
+
+	//loc->pos = connect->pos;
+	ConnectData_GPOS_GetPos( connect, &loc->pos );
 
 	return TRUE;
 }
@@ -371,16 +472,16 @@ int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, const Vec
   }
 
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
-    VEC_Set(&check, cnct->pos.x * FX32_ONE, cnct->pos.y * FX32_ONE, cnct->pos.z * FX32_ONE);
+    ConnectData_GPOS_GetPos(cnct, &check );
     len = VEC_Distance(&check, sphere); 
     
     if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_R)
     {
-      TAMADA_Printf("CNCT:ID%02d (%08x, %08x, %08x)", i, cnct->pos.x, cnct->pos.y, cnct->pos.z);
+      TAMADA_Printf("CNCT:ID%02d (%08x, %08x, %08x)", i, FX_Whole(check.x), FX_Whole(check.y), FX_Whole(check.z));
       TAMADA_Printf(" (%3d, %3d, %3d)",
-          cnct->pos.x / FIELD_CONST_GRID_SIZE,
-          cnct->pos.y / FIELD_CONST_GRID_SIZE,
-          cnct->pos.z / FIELD_CONST_GRID_SIZE);
+          FX_Whole(check.x) / FIELD_CONST_GRID_SIZE,
+          FX_Whole(check.y) / FIELD_CONST_GRID_SIZE,
+          FX_Whole(check.z) / FIELD_CONST_GRID_SIZE);
       TAMADA_Printf("\tlen = %d\n", FX_Whole(len) );
     }
     if ( len > HIT_RANGE) continue;
@@ -438,8 +539,11 @@ u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata )
 }
 
 //============================================================================================
-//  イベント関連
+//  POSイベント関連
 //============================================================================================
+enum {
+  POS_EVENT_DATA_RANGE = 2,
+};
 //------------------------------------------------------------------
 /**
  * @brief	座標イベントチェック
@@ -459,19 +563,11 @@ const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
     u16 i = 0;
     u16 *work_val;
     u16 max = evdata->pos_count;
-    int gx = SIZE_GRID_FX32( pos->x );
-    int gz = SIZE_GRID_FX32( pos->z );
-    s16 y = FX_Whole(pos->y);
 
     for( ; i < max; i++, data++ )
     {
-      if( gz < data->gz || gz >= (data->gz+data->sz) ){
-        continue;
-      }
-      if( gx < data->gx || gx >= (data->gx+data->sx) ){
-        continue;
-      }
-      if( y < (data->height - RANGE) || y > (data->height + RANGE)){
+      if( !PosEventData_GPOS_IsHit(data, pos) )
+      {
         continue;
       }
       {
@@ -484,6 +580,45 @@ const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
   }
   return NULL;
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief	座標イベントを取得
+ * @param	evdata イベントデータへのポインタ
+ * @param evwork イベントワークへのポインタ 
+ * @param location チェックするレールロケーション
+ * @retval NULL = イベントなし
+ */
+//------------------------------------------------------------------
+const POS_EVENT_DATA * EVENTDATA_GetPosEventRailLocation( 
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const RAIL_LOCATION* location )
+{
+  const POS_EVENT_DATA *data = evdata->pos_data;
+  
+  if( data != NULL )
+  {
+    u16 i = 0;
+    u16 *work_val;
+    u16 max = evdata->pos_count;
+
+    for( ; i < max; i++, data++ )
+    {
+      if( !PosEventData_RPOS_IsHit(data, location) )
+      {
+        continue;
+      }
+      {
+        work_val = EVENTWORK_GetEventWorkAdrs( evwork, data->workID );
+        if( (*work_val) == data->param ){
+          return data;
+        }
+      }
+    }
+  }
+  return NULL;
+}
+
+
 
 //------------------------------------------------------------------
 /**
@@ -505,18 +640,46 @@ u16 EVENTDATA_CheckPosEvent(
   return EVENTDATA_ID_NONE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ * @brief	座標イベントチェック
+ * @param	evdata イベントデータへのポインタ
+ * @param evwork イベントワークへのポインタ 
+ * @param pos チェックする座標
+ * @retval u16 EVENTDATA_ID_NONE = イベントなし
+ */
+//-----------------------------------------------------------------------------
+u16 EVENTDATA_CheckPosEventRailLocation(
+  const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const RAIL_LOCATION *pos )
+{
+  const POS_EVENT_DATA* data = EVENTDATA_GetPosEventRailLocation( evdata,evwork,pos );
+  
+  if( data != NULL ){
+    return data->id;
+  }
+  return EVENTDATA_ID_NONE;
+}
+
+
+//============================================================================================
+//  BGTALKイベント関連
+//============================================================================================
+enum {
+  BG_TALK_DATA_RANGE = 2,
+};
+
 //------------------------------------------------------------------
 /**
- * @brief	BG話し掛けイベントチェック
+ * @brief	BG話し掛けイベントチェック    内部でPOSTYPEを判断
  * @param	evdata イベントデータへのポインタ
- * @param pos チェックする座標
+ * @param pos チェックする座標　　VecFx32* or RAIL_LOCATION*
  * @param talk_dir 話し掛け対象の向き
  * @retval u16 EVENTDATA_ID_NONE = イベントなし
  */
 //------------------------------------------------------------------
-u16 EVENTDATA_CheckTalkBGEvent(
+static u16 EventData_CheckTalkBGEventBase( 
     const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
-    const VecFx32 *pos, u16 talk_dir )
+    const void *pos, u16 talk_dir )
 {
   const BG_TALK_DATA *data = evdata->bg_data;
   
@@ -524,17 +687,23 @@ u16 EVENTDATA_CheckTalkBGEvent(
   {
     u16 i = 0;
     u16 max = evdata->bg_count;
-    int gx = SIZE_GRID_FX32( pos->x );
-    int gz = SIZE_GRID_FX32( pos->z );
-    int y = FX_Whole( pos->y ); 
     for( ; i < max; i++, data++ )
     {
-      if( gz != data->gz || gx != data->gx ){
-        continue;
+      if(data->pos_type == EVENTDATA_POSTYPE_GRID)
+      {
+        if( !BGTalkData_GPOS_IsHit( data, pos ) )
+        {
+          continue;
+        }
       }
-      if( y < (data->height - RANGE) || y > (data->height + RANGE)){
-        continue;
+      else
+      {
+        if( !BGTalkData_RPOS_IsHit( data, pos ) )
+        {
+          continue;
+        }
       }
+      
       if( data->type == BG_TALK_TYPE_HIDE )
       {
         u16 flag = SCRIPT_GetHideItemFlagNoByScriptID( data->id );
@@ -588,6 +757,83 @@ u16 EVENTDATA_CheckTalkBGEvent(
   
   return EVENTDATA_ID_NONE;
 }
+  
+//------------------------------------------------------------------
+/**
+ * @brief	BG話し掛けイベントチェック
+ * @param	evdata イベントデータへのポインタ
+ * @param pos チェックする座標
+ * @param talk_dir 話し掛け対象の向き
+ * @retval u16 EVENTDATA_ID_NONE = イベントなし
+ */
+//------------------------------------------------------------------
+u16 EVENTDATA_CheckTalkBGEvent(
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
+    const VecFx32 *pos, u16 talk_dir )
+{
+  return EventData_CheckTalkBGEventBase( evdata, evwork, pos, talk_dir );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	BG話し掛けイベントチェック
+ * @param	evdata イベントデータへのポインタ
+ * @param pos チェックする座標
+ * @param talk_dir 話し掛け対象の向き
+ * @retval u16 EVENTDATA_ID_NONE = イベントなし
+ */
+//------------------------------------------------------------------
+u16 EVENTDATA_CheckTalkBGEventRailLocation(
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
+    const RAIL_LOCATION *pos, u16 talk_dir )
+{
+  return EventData_CheckTalkBGEventBase( evdata, evwork, pos, talk_dir );
+}
+
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	看板話し掛けイベントチェック    内部でPOSTYPE判定
+ * @param	evdata イベントデータへのポインタ
+ * @param pos チェックする座標
+ * @param talk_dir 話し掛け対象の向き
+ * @retval u16 EVENTDATA_ID_NONE = イベントなし
+ */
+//------------------------------------------------------------------
+static u16 EventData_CheckTalkBoardEventBase( 
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
+    const void *pos, u16 talk_dir )
+{
+  const BG_TALK_DATA *data = evdata->bg_data;
+  
+  if( talk_dir != DIR_UP && data != NULL )
+  {
+    u16 i = 0;
+    u16 max = evdata->bg_count;
+    
+    for( ; i < max; i++, data++ )
+    {
+      if( data->pos_type == EVENTDATA_POSTYPE_GRID )
+      {
+        if( !BGTalkData_GPOS_IsHit( data, pos ) )
+        {
+          continue;
+        }
+      }
+      else
+      {
+        if( !BGTalkData_RPOS_IsHit( data, pos ) )
+        {
+          continue;
+        }
+      }
+      return data->id;
+    }
+  }
+  
+  return EVENTDATA_ID_NONE;
+}
 
 //------------------------------------------------------------------
 /**
@@ -602,30 +848,93 @@ u16 EVENTDATA_CheckTalkBoardEvent(
     const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
     const VecFx32 *pos, u16 talk_dir )
 {
-  const BG_TALK_DATA *data = evdata->bg_data;
-  
-  if( talk_dir != DIR_UP && data != NULL )
-  {
-    u16 i = 0;
-    u16 max = evdata->bg_count;
-    int gx = SIZE_GRID_FX32( pos->x );
-    int gz = SIZE_GRID_FX32( pos->z );
-    int y = FX_Whole( pos->y ); 
-    
-    for( ; i < max; i++, data++ )
-    {
-      if( data->type != BG_TALK_TYPE_BOARD || gz != data->gz || gx != data->gx ){
-        continue;
-      }
-      if( y < (data->height - RANGE) || y > (data->height + RANGE)){
-        continue;
-      }
-      return data->id;
-    }
-  }
-  
-  return EVENTDATA_ID_NONE;
+  return EventData_CheckTalkBoardEventBase( evdata, evwork, pos, talk_dir );
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief	看板話し掛けイベントチェック
+ * @param	evdata イベントデータへのポインタ
+ * @param pos チェックする座標
+ * @param talk_dir 話し掛け対象の向き
+ * @retval u16 EVENTDATA_ID_NONE = イベントなし
+ */
+//------------------------------------------------------------------
+u16 EVENTDATA_CheckTalkBoardEventRailLocation(
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork,
+    const RAIL_LOCATION *pos, u16 talk_dir )
+{
+  return EventData_CheckTalkBoardEventBase( evdata, evwork, pos, talk_dir );
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  出入り口イベント　中心３D座標を取得
+ *  
+ *	@param	data    イベント
+ *	@param	pos     座標格納先
+ */
+//-----------------------------------------------------------------------------
+void EVENTDATA_GetConnectCenterPos( const CONNECT_DATA * data, VecFx32* pos )
+{
+  GF_ASSERT( data );
+  GF_ASSERT( pos );
+  ConnectData_GPOS_GetPos( data, pos );
+}
+void EVENTDATA_GetConnectCenterRailLocation( const CONNECT_DATA * data, RAIL_LOCATION* location )
+{
+  GF_ASSERT( data );
+  GF_ASSERT( location );
+  ConnectData_RPOS_GetLocation( data, location );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BG話しかけイベント　中心３D座標を取得
+ *  
+ *	@param	data    イベント
+ *	@param	pos     座標格納先
+ */
+//-----------------------------------------------------------------------------
+void EVENTDATA_GetBGTalkCenterPos( const BG_TALK_DATA * data, VecFx32* pos )
+{
+  GF_ASSERT( data );
+  GF_ASSERT( pos );
+  BGTalkData_GPOS_GetPos( data, pos );
+}
+void EVENTDATA_GetBGTalkCenterRailLocation( const BG_TALK_DATA * data, RAIL_LOCATION* location )
+{
+  GF_ASSERT( data );
+  GF_ASSERT( location );
+  BGTalkData_RPOS_GetLocation( data, location );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POS発動イベント　中心３D座標を取得
+ *  
+ *	@param	data    イベント
+ *	@param	pos     座標格納先
+ */
+//-----------------------------------------------------------------------------
+void EVENTDATA_GetPosEventCenterPos( const POS_EVENT_DATA * data, VecFx32* pos )
+{
+  GF_ASSERT( data );
+  GF_ASSERT( pos );
+  PosEventData_GPOS_GetPos( data, pos );
+}
+void EVENTDATA_GetPosEventCenterRailLocation( const POS_EVENT_DATA * data, RAIL_LOCATION* location )
+{
+  GF_ASSERT( data );
+  GF_ASSERT( location );
+  PosEventData_RPOS_GetLocation( data, location );
+}
+
+
+
 
 //============================================================================================
 //
@@ -677,4 +986,523 @@ const int SampleFldMMdlHeaderCount_R01 = NELEMS(SampleFldMMdlHeader_R01);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+
+
+
+
+
+//============================================================================================
+// CONNECT_DATA ポジション
+//============================================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  中心　３D座標の取得
+ *
+ *	@param	cp_data   データ
+ *	@param	p_pos     座標格納先
+ */
+//-----------------------------------------------------------------------------
+static void ConnectData_GPOS_GetPos( const CONNECT_DATA* cp_data, VecFx32* p_pos )
+{
+  const CONNECT_DATA_GPOS * cp_pos;
+  
+  GF_ASSERT( cp_data );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_GRID );
+
+  cp_pos = (const CONNECT_DATA_GPOS *)cp_data->pos_buf;
+
+  p_pos->x = (cp_pos->x + (cp_pos->sizex/2) + CONNECT_POS_OFS_X)<<FX32_SHIFT;
+  p_pos->y = (cp_pos->y + CONNECT_POS_OFS_Y)<<FX32_SHIFT;
+  p_pos->z = (cp_pos->z + (cp_pos->sizez/2) + CONNECT_POS_OFS_Z)<<FX32_SHIFT;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  グリッド座標と３D座標の判定
+ *
+ *	@param	cp_data   データ
+ *	@param	cp_pos    ３D座標
+ *
+ *	@retval TRUE  ヒットした
+ *	@retval FALSE ヒットしない
+ */
+//-----------------------------------------------------------------------------
+static BOOL ConnectData_GPOS_IsHit( const CONNECT_DATA* cp_data, const VecFx32* cp_pos )
+{
+  const CONNECT_DATA_GPOS * cp_gpos;
+  int x, y, z;
+  
+  GF_ASSERT( cp_data );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_GRID );
+
+  // グリッドポジション取得
+  cp_gpos = (const CONNECT_DATA_GPOS *)cp_data->pos_buf;
+
+
+	x = FX_Whole(cp_pos->x) - CONNECT_POS_OFS_X;
+	y = FX_Whole(cp_pos->y) - CONNECT_POS_OFS_Y;
+	z = FX_Whole(cp_pos->z) - CONNECT_POS_OFS_Z;
+
+  if( (cp_gpos->x <= x) && ((cp_gpos->x+cp_gpos->sizex) > x) )
+  {
+    if( ((cp_gpos->y-CONNECT_DATA_RANGE) <= y) && ((cp_gpos->y+CONNECT_DATA_RANGE) > y) )
+    {
+      if( (cp_gpos->z <= z) && ((cp_gpos->z+cp_gpos->sizez) > z) )
+      {
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  中心　レールロケーションの取得
+ *
+ *	@param	cp_data     データ
+ *	@param	p_location  レールロケーションの格納先
+ */
+//-----------------------------------------------------------------------------
+static void ConnectData_RPOS_GetLocation( const CONNECT_DATA* cp_data, RAIL_LOCATION* p_location )
+{
+  const CONNECT_DATA_RPOS * cp_pos;
+  
+  GF_ASSERT( cp_data );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL );
+
+  cp_pos = (const CONNECT_DATA_RPOS *)cp_data->pos_buf;
+
+  p_location->rail_index  = cp_pos->rail_index;
+  p_location->type        = FIELD_RAIL_TYPE_LINE;
+  p_location->key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( cp_data->exit_dir );
+  p_location->width_grid  = cp_pos->side_grid + (cp_pos->side_grid_size/2);
+  p_location->line_grid   = cp_pos->front_grid + (cp_pos->front_grid_size/2);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レール座標の判定
+ *
+ *	@param	cp_data       データ
+ *	@param	cp_location   レールロケーション
+ *
+ *	@retval TRUE  範囲内
+ *	@retval FALSE 範囲外
+ */
+//-----------------------------------------------------------------------------
+static BOOL ConnectData_RPOS_IsHit( const CONNECT_DATA* cp_data, const RAIL_LOCATION* cp_location )
+{
+  const CONNECT_DATA_RPOS * cp_pos;
+  
+  GF_ASSERT( cp_data );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL );
+
+  cp_pos = (const CONNECT_DATA_RPOS *)cp_data->pos_buf;
+
+  if( cp_pos->rail_index == cp_location->rail_index )
+  {
+    if( (cp_pos->front_grid <= cp_location->line_grid) && ((cp_pos->front_grid+cp_pos->front_grid_size) > cp_location->line_grid) )
+    {
+      if( (cp_pos->side_grid <= cp_location->width_grid) && ((cp_pos->side_grid+cp_pos->side_grid_size) > cp_location->width_grid) )
+      {
+        return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
+}
+
+
+
+//============================================================================================
+// BG_TALK_DATA ポジション
+//============================================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGTalk　グリッドマップ　３D座標の取得
+ *
+ *	@param	cp_data データ
+ *	@param	p_pos   ３D座標格納先
+ */
+//-----------------------------------------------------------------------------
+static void BGTalkData_GPOS_GetPos( const BG_TALK_DATA* cp_data, VecFx32* p_pos )
+{
+  const BG_TALK_DATA_GPOS* cp_pos;
+
+  GF_ASSERT( cp_data );
+  GF_ASSERT( p_pos );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_GRID );
+
+  cp_pos = (const BG_TALK_DATA_GPOS*)cp_data->pos_buf; 
+
+  VEC_Set( p_pos, GRID_TO_FX32(cp_pos->gx), cp_pos->height<<FX32_SHIFT, GRID_TO_FX32(cp_pos->gz) );
+  
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGTalk グリッドマップ　座標あたり判定
+ *
+ *	@param	cp_data   データ
+ *	@param	cp_pos    ３D座標
+ *
+ *	@retval TRUE  範囲内
+ *	@retval FALSE 範囲外
+ */
+//-----------------------------------------------------------------------------
+static BOOL BGTalkData_GPOS_IsHit( const BG_TALK_DATA* cp_data, const VecFx32* cp_pos )
+{
+  const BG_TALK_DATA_GPOS* cp_gpos;
+  int gx, gz, y;
+
+  GF_ASSERT( cp_data );
+  GF_ASSERT( cp_pos );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_GRID );
+
+  cp_gpos = (const BG_TALK_DATA_GPOS*)cp_data->pos_buf; 
+
+  gx  = SIZE_GRID_FX32(cp_pos->x);
+  gz  = SIZE_GRID_FX32(cp_pos->z);
+  y   = FX_Whole(cp_pos->y);
+  
+  if( (cp_gpos->gx == gx) && (cp_gpos->gz == gz) )
+  {
+    if( ((cp_gpos->height-BG_TALK_DATA_RANGE) <= y) && ((cp_gpos->height+BG_TALK_DATA_RANGE) > y) )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGTalk  レールロケーションの取得
+ *
+ *	@param	cp_data       データ
+ *	@param	p_location    レールロケーション格納先
+ */
+//-----------------------------------------------------------------------------
+static void BGTalkData_RPOS_GetLocation( const BG_TALK_DATA* cp_data, RAIL_LOCATION* p_location )
+{
+  const BG_TALK_DATA_RPOS * cp_pos;
+  
+  GF_ASSERT( cp_data );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL );
+
+  cp_pos = (const BG_TALK_DATA_RPOS *)cp_data->pos_buf;
+
+  p_location->rail_index  = cp_pos->rail_index;
+  p_location->type        = FIELD_RAIL_TYPE_LINE;
+  p_location->key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( cp_data->dir );
+  p_location->width_grid  = cp_pos->side_grid;
+  p_location->line_grid   = cp_pos->front_grid;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レール座標の判定
+ *
+ *	@param	cp_data       データ
+ *	@param	cp_location   レールロケーション
+ *
+ *	@retval TRUE  範囲内
+ *	@retval FALSE 範囲外
+ */
+//-----------------------------------------------------------------------------
+static BOOL BGTalkData_RPOS_IsHit( const BG_TALK_DATA* cp_data, const RAIL_LOCATION* cp_location )
+{
+  const BG_TALK_DATA_RPOS * cp_pos;
+  
+  GF_ASSERT( cp_data );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL );
+
+  cp_pos = (const BG_TALK_DATA_RPOS *)cp_data->pos_buf;
+
+  if( cp_pos->rail_index == cp_location->rail_index )
+  {
+    if( cp_pos->front_grid == cp_location->line_grid )
+    {
+      if( cp_pos->side_grid == cp_location->width_grid )
+      {
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+
+//============================================================================================
+// POS_EVENT_DATA ポジション
+//============================================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PosEvent　グリッドマップ　３D座標の取得
+ *
+ *	@param	cp_data データ
+ *	@param	p_pos   ３D座標格納先
+ */
+//-----------------------------------------------------------------------------
+static void PosEventData_GPOS_GetPos( const POS_EVENT_DATA* cp_data, VecFx32* p_pos )
+{
+  const POS_EVENT_DATA_GPOS* cp_pos;
+
+  GF_ASSERT( cp_data );
+  GF_ASSERT( p_pos );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_GRID );
+
+  cp_pos = (const POS_EVENT_DATA_GPOS*)cp_data->pos_buf; 
+
+  VEC_Set( p_pos, 
+      GRID_TO_FX32(cp_pos->gx) + FX_Div( GRID_TO_FX32(cp_pos->sx), FX32_CONST(2) ),
+      cp_pos->height<<FX32_SHIFT,
+      GRID_TO_FX32(cp_pos->gz) + FX_Div( GRID_TO_FX32(cp_pos->sz), FX32_CONST(2) ) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PosEvent グリッドマップ　座標あたり判定
+ *
+ *	@param	cp_data   データ
+ *	@param	cp_pos    ３D座標
+ *
+ *	@retval TRUE  範囲内
+ *	@retval FALSE 範囲外
+ */
+//-----------------------------------------------------------------------------
+static BOOL PosEventData_GPOS_IsHit( const POS_EVENT_DATA* cp_data, const VecFx32* cp_pos )
+{
+  const POS_EVENT_DATA_GPOS* cp_gpos;
+  int gx, gz, y;
+
+  GF_ASSERT( cp_data );
+  GF_ASSERT( cp_pos );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_GRID );
+
+  cp_gpos = (const POS_EVENT_DATA_GPOS*)cp_data->pos_buf; 
+
+  gx  = SIZE_GRID_FX32(cp_pos->x);
+  gz  = SIZE_GRID_FX32(cp_pos->z);
+  y   = FX_Whole(cp_pos->y);
+  
+  if( (cp_gpos->gx <= gx) && ((cp_gpos->gx+cp_gpos->sx) > gx) )
+  {
+    if( (cp_gpos->gz <= gz) && ((cp_gpos->gz+cp_gpos->sz) > gz) )
+    {
+      if( ((cp_gpos->height-BG_TALK_DATA_RANGE) <= y) && ((cp_gpos->height+BG_TALK_DATA_RANGE) > y) )
+      {
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PosEvent  レールロケーションの取得
+ *
+ *	@param	cp_data       データ
+ *	@param	p_location    レールロケーション格納先
+ */
+//-----------------------------------------------------------------------------
+static void PosEventData_RPOS_GetLocation( const POS_EVENT_DATA* cp_data, RAIL_LOCATION* p_location )
+{
+  const POS_EVENT_DATA_RPOS * cp_pos;
+  
+  GF_ASSERT( cp_data );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL );
+
+  cp_pos = (const POS_EVENT_DATA_RPOS *)cp_data->pos_buf;
+
+  p_location->rail_index  = cp_pos->rail_index;
+  p_location->type        = FIELD_RAIL_TYPE_LINE;
+  p_location->key         = 0;
+  p_location->width_grid  = cp_pos->side_grid + (cp_pos->side_grid_size/2);
+  p_location->line_grid   = cp_pos->front_grid + (cp_pos->front_grid_size/2);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PosEvent レール座標の判定
+ *
+ *	@param	cp_data       データ
+ *	@param	cp_location   レールロケーション
+ *
+ *	@retval TRUE  範囲内
+ *	@retval FALSE 範囲外
+ */
+//-----------------------------------------------------------------------------
+static BOOL PosEventData_RPOS_IsHit( const POS_EVENT_DATA* cp_data, const RAIL_LOCATION* cp_location )
+{
+  const POS_EVENT_DATA_RPOS * cp_pos;
+  
+  GF_ASSERT( cp_data );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL );
+
+  cp_pos = (const POS_EVENT_DATA_RPOS *)cp_data->pos_buf;
+
+  if( cp_pos->rail_index == cp_location->rail_index )
+  {
+    if( (cp_pos->front_grid <= cp_location->line_grid) && ((cp_pos->front_grid+cp_pos->front_grid_size) > cp_location->line_grid) )
+    {
+      if( (cp_pos->side_grid <= cp_location->width_grid) && ((cp_pos->side_grid+cp_pos->side_grid_size) > cp_location->width_grid) )
+      {
+        return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
+}
+
+
+
+#ifdef DEBUG_EVENTDATA_PRINT
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ドアデータの表示
+ */
+//-----------------------------------------------------------------------------
+static void debugPrint_Connect( const CONNECT_DATA* cp_data )
+{
+  OS_TPrintf( "print CONNECT_DATA\n" );
+  OS_TPrintf( "link_zone_id=%d\n", cp_data->link_zone_id );
+  OS_TPrintf( "link_exit_id=%d\n", cp_data->link_exit_id );
+  OS_TPrintf( "exit_dir=%d\n", cp_data->exit_dir );
+  OS_TPrintf( "exit_type=%d\n", cp_data->exit_type );
+
+  OS_TPrintf( "pos_type=%d\n", cp_data->pos_type );
+
+  if( cp_data->pos_type == EVENTDATA_POSTYPE_GRID )
+  {
+    const CONNECT_DATA_GPOS* cp_pos = (const CONNECT_DATA_GPOS*)cp_data->pos_buf;
+    OS_TPrintf( "x=%d\n", cp_pos->x );
+    OS_TPrintf( "y=%d\n", cp_pos->y );
+    OS_TPrintf( "z=%d\n", cp_pos->z );
+    OS_TPrintf( "sizex=%d\n", cp_pos->sizex );
+    OS_TPrintf( "sizez=%d\n", cp_pos->sizez );
+  }
+  else
+  {
+    const CONNECT_DATA_RPOS* cp_pos = (const CONNECT_DATA_RPOS*)cp_data->pos_buf;
+    OS_TPrintf( "rail_index=%d\n", cp_pos->rail_index );
+    OS_TPrintf( "front_grid=%d\n", cp_pos->front_grid );
+    OS_TPrintf( "side_grid=%d\n", cp_pos->side_grid );
+    OS_TPrintf( "front_grid_size=%d\n", cp_pos->front_grid_size );
+    OS_TPrintf( "side_grid_size=%d\n", cp_pos->side_grid_size );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BG話しかけデータの表示
+ */
+//-----------------------------------------------------------------------------
+static void debugPrint_BGTalk( const BG_TALK_DATA* cp_data )
+{
+  OS_TPrintf( "print BG_TALK_DATA\n" );
+  OS_TPrintf( "id=%d\n", cp_data->id );
+  OS_TPrintf( "type=%d\n", cp_data->type );
+  OS_TPrintf( "dir=%d\n", cp_data->dir );
+
+  OS_TPrintf( "pos_type=%d\n", cp_data->pos_type );
+
+  if( cp_data->pos_type == EVENTDATA_POSTYPE_GRID )
+  {
+    const BG_TALK_DATA_GPOS* cp_pos = (const BG_TALK_DATA_GPOS*)cp_data->pos_buf;
+    OS_TPrintf( "gx=%d\n", cp_pos->gx );
+    OS_TPrintf( "gz=%d\n", cp_pos->gz );
+    OS_TPrintf( "height=%d\n", cp_pos->height );
+  }
+  else
+  {
+    const BG_TALK_DATA_RPOS* cp_pos = (const BG_TALK_DATA_RPOS*)cp_data->pos_buf;
+    OS_TPrintf( "rail_index=%d\n", cp_pos->rail_index );
+    OS_TPrintf( "front_grid=%d\n", cp_pos->front_grid );
+    OS_TPrintf( "side_grid=%d\n", cp_pos->side_grid );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NPC情報の表示
+ */
+//-----------------------------------------------------------------------------
+static void debugPrint_MMLD( const MMDL_HEADER* cp_data )
+{
+  OS_TPrintf( "print MMDL_HEADER\n" );
+  OS_TPrintf( "id=%d\n", cp_data->id );
+  OS_TPrintf( "obj_code=%d\n", cp_data->obj_code );
+  OS_TPrintf( "move_code=%d\n", cp_data->move_code );
+  OS_TPrintf( "event_type=%d\n", cp_data->event_type );
+  OS_TPrintf( "event_flag=%d\n", cp_data->event_flag );
+  OS_TPrintf( "event_id=%d\n", cp_data->event_id );
+  OS_TPrintf( "dir=%d\n", cp_data->dir );
+  OS_TPrintf( "param0=%d\n", cp_data->param0 );
+  OS_TPrintf( "param1=%d\n", cp_data->param1 );
+  OS_TPrintf( "param2=%d\n", cp_data->param2 );
+  OS_TPrintf( "move_limit_x=%d\n", cp_data->move_limit_x );
+  OS_TPrintf( "move_limit_z=%d\n", cp_data->move_limit_z );
+
+  OS_TPrintf( "pos_type=%d\n", cp_data->pos_type );
+
+  if( cp_data->pos_type == MMDL_HEADER_POSTYPE_GRID )
+  {
+    const MMDL_HEADER_GRIDPOS* cp_pos = (const MMDL_HEADER_GRIDPOS*)cp_data->pos_buf;
+    OS_TPrintf( "gx=%d\n", cp_pos->gx );
+    OS_TPrintf( "gz=%d\n", cp_pos->gz );
+    OS_TPrintf( "y=%d\n", cp_pos->y );
+  }
+  else
+  {
+    const MMDL_HEADER_RAILPOS* cp_pos = (const MMDL_HEADER_RAILPOS*)cp_data->pos_buf;
+    OS_TPrintf( "rail_index=%d\n", cp_pos->rail_index );
+    OS_TPrintf( "front_grid=%d\n", cp_pos->front_grid );
+    OS_TPrintf( "side_grid=%d\n", cp_pos->side_grid );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POS発動データの表示
+ */
+//-----------------------------------------------------------------------------
+static void debugPrint_PosData( const POS_EVENT_DATA* cp_data )
+{
+  OS_TPrintf( "print POS_EVENT_DATA\n" );
+  OS_TPrintf( "id=%d\n", cp_data->id );
+  OS_TPrintf( "param=%d\n", cp_data->param );
+  OS_TPrintf( "workID=%d\n", cp_data->workID );
+
+  OS_TPrintf( "pos_type=%d\n", cp_data->pos_type );
+
+  if( cp_data->pos_type == EVENTDATA_POSTYPE_GRID )
+  {
+    const POS_EVENT_DATA_GPOS* cp_pos = (const POS_EVENT_DATA_GPOS*)cp_data->pos_buf;
+    OS_TPrintf( "gx=%d\n", cp_pos->gx );
+    OS_TPrintf( "gz=%d\n", cp_pos->gz );
+    OS_TPrintf( "sx=%d\n", cp_pos->sx );
+    OS_TPrintf( "sz=%d\n", cp_pos->sz );
+    OS_TPrintf( "height=%d\n", cp_pos->height );
+  }
+  else
+  {
+    const POS_EVENT_DATA_RPOS* cp_pos = (const POS_EVENT_DATA_RPOS*)cp_data->pos_buf;
+    OS_TPrintf( "rail_index=%d\n", cp_pos->rail_index );
+    OS_TPrintf( "front_grid=%d\n", cp_pos->front_grid );
+    OS_TPrintf( "side_grid=%d\n", cp_pos->side_grid );
+    OS_TPrintf( "front_grid_size=%d\n", cp_pos->front_grid_size );
+    OS_TPrintf( "side_grid_size=%d\n", cp_pos->side_grid_size );
+  }
+}
+
+#endif //DEBUG_EVENTDATA_PRINT
+
+
+
 

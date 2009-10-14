@@ -119,7 +119,18 @@
 #define MV_RND_H_LIM	0x43 ///<ランダムに横移動 移動チェック移動制限のみ
 #define MV_COMM_ACTOR 0x44 ///<通信アクター動作
 #define MV_RAIL_DMY 0x45 ///<レールマップ　動作なし
-#define MV_CODE_MAX		0x46		///<コード最大（プログラム判定専用
+#define MV_RAIL_DIR_RND_ALL		0x46		///<レールマップ　ランダムに方向切り替え
+#define MV_RAIL_DIR_RND_UL		0x47		///<レールマップ　ランダムに方向切り替え
+#define MV_RAIL_DIR_RND_UR		0x48		///<レールマップ　ランダムに方向切り替え
+#define MV_RAIL_DIR_RND_DL		0x49		///<レールマップ　ランダムに方向切り替え
+#define MV_RAIL_DIR_RND_DR		0x4a		///<レールマップ　ランダムに方向切り替え
+#define MV_RAIL_DIR_RND_UDL		0x4b		///<レールマップ　ランダムに方向切り替え
+#define MV_RAIL_DIR_RND_UDR		0x4c		///<レールマップ　ランダムに方向切り替え
+#define MV_RAIL_DIR_RND_ULR		0x4d		///<レールマップ　ランダムに方向切り替え
+#define MV_RAIL_DIR_RND_DLR		0x4e		///<レールマップ　ランダムに方向切り替え
+#define MV_RAIL_DIR_RND_UD		0x4f		///<レールマップ　ランダムに方向切り替え
+#define MV_RAIL_DIR_RND_LR		0x50		///<レールマップ　ランダムに方向切り替え
+#define MV_CODE_MAX		0x51		///<コード最大（プログラム判定専用
 #define MV_CODE_NOT		0xff		///<非動作コード(プログラム判定専用
 
 /*　未対応

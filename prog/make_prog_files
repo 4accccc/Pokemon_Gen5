@@ -135,6 +135,7 @@ SRCS  +=    $(SOUNDSRC) \
         system/laster.c \
         field/fldmmdl.c \
         field/fldmmdl_move.c \
+				field/fldmmdl_railsetup.c \
         system/pms_data.c \
         system/pms_word.c \
         musical/musical_system.c \
@@ -330,8 +331,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/fldmmdl_drawdata.c \
 				field/fldmmdl_blact.c \
 				field/fldmmdl_railmove.c \
-				field/fldmmdl_railmove_0.c \
 				field/fldmmdl_railacmd.c \
+				field/fldmmdl_railmove_0.c \
 				field/event_fieldtalk.c \
 				field/event_debug_item.c \
 				field/fldmmdl_draw_0.c \

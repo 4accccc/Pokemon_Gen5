@@ -18,7 +18,7 @@ CSV_ROCKPOS = rockpos.txt
 OLD_CSV_ROCKPOS = rockpos.csv
 
 ZONEID_HEADER = $(PROJECT_RSCDIR)/fldmapdata/zonetable/zone_id.h
-OBJID_HEADER = $(PROJECT_RSCDIR)/fldmapdata/eventdata/total_header.h
+OBJID_HEADER = $(PROJECT_RSCDIR)/fldmapdata/eventdata/define/total_header.h
 
 CSVCVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 

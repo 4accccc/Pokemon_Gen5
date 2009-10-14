@@ -34,6 +34,9 @@
 #define C3P02_DEBUG_CAMERA_NOT_MOVE // カメラを動かさない
 #endif //DEBUG_ONLY_FOR_lee_hyunjung
 
+//@TODO 人物が回転してしまうため、アングルポインタを渡さない
+#define DEBUG_PEOPLE_ANGLE_CUT 
+
 #endif  // 
 
 //======================================================================
@@ -57,7 +60,7 @@ static const RAIL_LOCATION locationStart = {
 //======================================================================
 //	ダミーNPC
 //======================================================================
-#define DEBUG_TEST_NPC
+//#define DEBUG_TEST_NPC
 
 #ifdef DEBUG_TEST_NPC
 static const MMDL_HEADER dummyNpc = 
@@ -140,19 +143,6 @@ static void mapCtrlNoGrid_Create(
 	FIELDMAP_CTRL_NOGRID_WORK *work;
   FIELD_PLAYER_NOGRID* p_ngrid_player;
 
-  // ZONEIDからレール情報をよみこむ
-  {
-    FLDNOGRID_RESISTDATA* p_resist;
-
-    p_resist = GFL_ARC_UTIL_Load( ARCID_FLD_RAILSETUP, 
-        ZONEDATA_GetRailDataID( FIELDMAP_GetZoneID(fieldWork) ),
-        FALSE, FIELDMAP_GetHeapID(fieldWork) );
-
-    FLDNOGRID_MAPPER_ResistData( p_mapper, p_resist, FIELDMAP_GetHeapID(fieldWork) );  
-
-    GFL_HEAP_FreeMemory( p_resist );
-  }
-
   // レールマップ用プレイヤーワーク作成
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 	work = FIELDMAP_CTRL_NOGRID_WORK_Create( fieldWork, FIELDMAP_GetHeapID( fieldWork ) );
@@ -170,6 +160,10 @@ static void mapCtrlNoGrid_Create(
   FIELD_PLAYER_NOGRID_GetPos( p_ngrid_player, pos );
 //
 	
+#ifdef DEBUG_PEOPLE_ANGLE_CUT
+    MMDLSYS_SetJoinShadow( FIELDMAP_GetMMdlSys( fieldWork ), FALSE );
+	  MMDLSYS_SetupDrawProc( FIELDMAP_GetMMdlSys( fieldWork ), NULL );
+#endif
 
 	FIELD_PLAYER_SetPos( fld_player, pos );
 	FIELD_PLAYER_SetDir( fld_player, dir );
@@ -217,6 +211,10 @@ static void mapCtrlNoGrid_Delete( FIELDMAP_WORK *fieldWork )
 {
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
 	FIELDMAP_CTRL_NOGRID_WORK* work = FIELDMAP_GetMapCtrlWork( fieldWork );
+
+#ifdef DEBUG_PEOPLE_ANGLE_CUT
+    MMDLSYS_SetJoinShadow( FIELDMAP_GetMMdlSys( fieldWork ), TRUE );
+#endif
 
   FIELDMAP_CTRL_NOGRID_WORK_Delete( work );
   

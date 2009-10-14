@@ -177,9 +177,10 @@ static MMDL * UNION_CHAR_AddOBJ(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata, u8 tra
   head = UnionChar_MMdlHeader;
   head.id = chara_index;
   head.obj_code = UnionView_GetObjCode(trainer_view);
-  head.gx = UnionCharPosTbl[oya_chara_index].x + LinkParentOffsetPosTbl[child_chara_index].x;
-  head.gz = UnionCharPosTbl[oya_chara_index].z + LinkParentOffsetPosTbl[child_chara_index].z;
-  
+  MMDLHEADER_SetGridPos( &head,
+      UnionCharPosTbl[oya_chara_index].x + LinkParentOffsetPosTbl[child_chara_index].x,
+      UnionCharPosTbl[oya_chara_index].z + LinkParentOffsetPosTbl[child_chara_index].z,
+      0 );
   OS_TPrintf("obj_code = %d, id = %d\n", head.obj_code, chara_index);
   addmdl = MMDLSYS_AddMMdl(mdlsys, &head, ZONE_ID_UNION);
   return addmdl;

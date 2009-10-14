@@ -76,10 +76,12 @@ enum {
 #include "..\..\message\dst\msg_place_name.h"   //地名表示用文字列ID定義ファイル
 #include "header/maptype.h"
 #include "../../encount/encount_data_w.naix"  //エンカウントデータID定義ファイル
+#include "../eventdata/binary/eventdata.naix"      //eventdata ID 定義ファイル
 
 enum {
 	//event_dummy = NARC_zone_event_zone_dummy_total_bin,
-	event_dummy = 0xd000,
+	//event_dummy = 0xd000,
+	event_dummy = NARC_eventdata_dummy_data,
 
 	enc_dummy = 0xffff
 };

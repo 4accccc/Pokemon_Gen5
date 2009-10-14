@@ -373,6 +373,27 @@ void FIELD_PLAYER_NOGRID_ChangeForm( FIELD_PLAYER_NOGRID* p_player, PLAYER_MOVE_
   p_player->form_change     = form;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自機　強制停止　ノーグリッドマップ用
+ *
+ *	@param	p_player  プレイヤーワーク
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_NOGRID_ForceStop( FIELD_PLAYER_NOGRID* p_player )
+{
+  // 長いアクションコマンドなどが出来てきたら必要
+  if( p_player->move_state == PLAYER_MOVE_HITCH )
+  {
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_player->p_player );
+    u16 dir = MMDL_GetDirDisp( mmdl );
+    MMDL_FreeAcmd( mmdl );
+    MMDL_SetDirDisp( mmdl, dir );
+    MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
+    FIELD_PLAYER_SetMoveValue( p_player->p_player, PLAYER_MOVE_VALUE_STOP );
+  }
+}
+
 
 
 

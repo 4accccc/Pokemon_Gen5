@@ -21,14 +21,125 @@
 */
 //-----------------------------------------------------------------------------
 
-
-// DIRからレールキーに変換
-static const u8 sc_DIR_TO_RAILKEY[DIR_MAX4] = 
+//--------------------------------------------------------------
+///	方向テーブルID
+//--------------------------------------------------------------
+enum
 {
-  RAIL_KEY_UP,
-  RAIL_KEY_DOWN,
-  RAIL_KEY_LEFT,
-  RAIL_KEY_RIGHT,
+	DIRID_MvDirRndDirTbl = 0,
+	DIRID_MvDirRndDirTbl_UL,
+	DIRID_MvDirRndDirTbl_UR,
+	DIRID_MvDirRndDirTbl_DL,
+	DIRID_MvDirRndDirTbl_DR,
+	DIRID_MvDirRndDirTbl_UDL,
+	DIRID_MvDirRndDirTbl_UDR,
+	DIRID_MvDirRndDirTbl_ULR,
+	DIRID_MvDirRndDirTbl_DLR,
+	DIRID_MvDirRndDirTbl_UD,
+	DIRID_MvDirRndDirTbl_LR,
+	DIRID_END,
+	DIRID_MAX,
+
+	WAIT_END = -1,
+};
+
+//--------------------------------------------------------------
+//	DIR_TBL構造体
+//--------------------------------------------------------------
+typedef struct
+{
+	int id;
+	const int *tbl;
+}DIR_TBL;
+//--------------------------------------------------------------
+///	DIR_RND ウェイトテーブル
+//--------------------------------------------------------------
+static const int DATA_MvDirRndWaitTbl[] =
+{ 16, 32, 48, 64, WAIT_END };
+
+//--------------------------------------------------------------
+///	DIR_RND 方向テーブル
+//--------------------------------------------------------------
+static const int DATA_MvDirRndDirTbl[] =
+{ DIR_UP, DIR_DOWN, DIR_LEFT, DIR_RIGHT, DIR_NOT };
+
+//--------------------------------------------------------------
+/// RND_UL 方向テーブル
+//--------------------------------------------------------------
+static const int DATA_MvDirRndDirTbl_UL[] =
+{ DIR_UP, DIR_LEFT, DIR_NOT };
+
+//--------------------------------------------------------------
+/// RND_UR 方向テーブル
+//--------------------------------------------------------------
+static const int DATA_MvDirRndDirTbl_UR[] =
+{ DIR_UP, DIR_RIGHT, DIR_NOT };
+
+//--------------------------------------------------------------
+/// RND_DL 方向テーブル
+//--------------------------------------------------------------
+static const int DATA_MvDirRndDirTbl_DL[] =
+{ DIR_DOWN, DIR_LEFT, DIR_NOT };
+
+//--------------------------------------------------------------
+/// RND_DR 方向テーブル
+//--------------------------------------------------------------
+static const int DATA_MvDirRndDirTbl_DR[] =
+{ DIR_DOWN, DIR_RIGHT, DIR_NOT };
+
+//--------------------------------------------------------------
+/// RND_UDL 方向テーブル
+//--------------------------------------------------------------
+static const int DATA_MvDirRndDirTbl_UDL[] =
+{ DIR_UP, DIR_DOWN, DIR_LEFT, DIR_NOT };
+
+//--------------------------------------------------------------
+/// RND_UDR 方向テーブル
+//--------------------------------------------------------------
+static const int DATA_MvDirRndDirTbl_UDR[] =
+{ DIR_UP, DIR_DOWN, DIR_RIGHT, DIR_NOT };
+
+//--------------------------------------------------------------
+/// RND_ULR 方向テーブル
+//--------------------------------------------------------------
+static const int DATA_MvDirRndDirTbl_ULR[] =
+{ DIR_UP, DIR_LEFT, DIR_RIGHT, DIR_NOT };
+
+//--------------------------------------------------------------
+/// RND_DLR 方向テーブル
+//--------------------------------------------------------------
+static const int DATA_MvDirRndDirTbl_DLR[] =
+{ DIR_DOWN, DIR_LEFT, DIR_RIGHT, DIR_NOT };
+
+//--------------------------------------------------------------
+/// RND_UD 方向テーブル
+//--------------------------------------------------------------
+static const int DATA_MvDirRndDirTbl_UD[] =
+{ DIR_UP, DIR_DOWN, DIR_NOT };
+
+//--------------------------------------------------------------
+/// RND_LR 方向テーブル
+//--------------------------------------------------------------
+static const int DATA_MvDirRndDirTbl_LR[] =
+{ DIR_LEFT, DIR_RIGHT, DIR_NOT };
+
+//--------------------------------------------------------------
+///	テーブルデータ
+//--------------------------------------------------------------
+static const DIR_TBL DATA_MoveDirTbl[DIRID_MAX] =
+{
+	{DIRID_MvDirRndDirTbl,DATA_MvDirRndDirTbl},
+	{DIRID_MvDirRndDirTbl_UL,DATA_MvDirRndDirTbl_UL},
+	{DIRID_MvDirRndDirTbl_UR,DATA_MvDirRndDirTbl_UR},
+	{DIRID_MvDirRndDirTbl_DL,DATA_MvDirRndDirTbl_DL},
+	{DIRID_MvDirRndDirTbl_DR,DATA_MvDirRndDirTbl_DR},
+	{DIRID_MvDirRndDirTbl_UDL,DATA_MvDirRndDirTbl_UDL},
+	{DIRID_MvDirRndDirTbl_UDR,DATA_MvDirRndDirTbl_UDR},
+	{DIRID_MvDirRndDirTbl_ULR,DATA_MvDirRndDirTbl_ULR},
+	{DIRID_MvDirRndDirTbl_DLR,DATA_MvDirRndDirTbl_DLR},
+	{DIRID_MvDirRndDirTbl_UD,DATA_MvDirRndDirTbl_UD},
+	{DIRID_MvDirRndDirTbl_LR,DATA_MvDirRndDirTbl_LR},
+	{DIRID_END,NULL},
 };
 
 
@@ -44,10 +155,14 @@ static const u8 sc_DIR_TO_RAILKEY[DIR_MAX4] =
 //-----------------------------------------------------------------------------
 //-------------------------------------
 ///	レール共通構造体
+//　必ず、ワークのトップにこの構造体を入れること！！！
+//
+//location.type が FIELD_RAIL_TYPE_MAXのとき、設定ロケーションデータなしになります。
 //=====================================
 typedef struct 
 {
   FIELD_RAIL_WORK* rail_wk;           ///<レール移動ワーク 4byte
+  RAIL_LOCATION location;             ///<レールロケーション 8bytie
 } MV_RAIL_COMMON_WORK;
 #define MV_RAIL_COMMON_WORK_SIZE (sizeof(MV_RAIL_COMMON_WORK))		///<MV_RAIL_COMMONサイズ
 
@@ -61,6 +176,17 @@ typedef struct
 } MV_RAIL_DMY_WORK;
 #define MV_RAIL_DMY_WORK_SIZE (sizeof(MV_RAIL_DMY_WORK))		///<MV_RAIL_DMYサイズ
 
+//-------------------------------------
+///	MV_RAIL_DIR_RND_WORK構造体
+//=====================================
+typedef struct 
+{
+  MV_RAIL_COMMON_WORK rail_wk;
+  s16 wait;
+  u16 tbl_id;
+} MV_RAIL_DIR_RND_WORK;
+#define MV_RAIL_DIR_RND_WORK_SIZE (sizeof(MV_RAIL_DIR_RND_WORK))		///<MV_RAIL_DIR_RNDサイズ
+
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
@@ -71,11 +197,31 @@ typedef struct
 static RAIL_KEY MMdl_ConvertDir_RailKey( u16 dir );
 static RAIL_FRAME MMdl_ConvertWait_RailFrame( s16 wait );
 
+static void* MMdl_RailDefaultInit( MMDL* fmmdl, u32 work_size );
+
+// RNDテーブル
+static int TblNumGet( const int *tbl, int end );
+static int TblRndGet( const int *tbl, int end );
+static int TblIDRndGet( int id, int end );
+static const int * MoveDirTblIDSearch( int id );
+
 // COMMON
 static void MMdl_RailCommon_Init( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl );
 static void MMdl_RailCommon_Move( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl );
 static void MMdl_RailCommon_Delete( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl );
 static void MMdl_RailCommon_Return( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl );
+
+static void MMdl_RailCommon_SetSaveLocation( MV_RAIL_COMMON_WORK* p_work, const RAIL_LOCATION* location );
+static void MMdl_RailCommon_ReflectSaveLocation( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl );
+
+
+
+// DIR_RND
+static void DirRndWorkInit( MMDL * fmmdl, int id );
+static void DirRndWorkMove( MMDL * fmmdl );
+static void DirRndWorkDelete( MMDL * fmmdl );
+
+
 
 
 
@@ -447,7 +593,7 @@ BOOL MMDL_GetRailFrontLocation( const MMDL *mmdl, RAIL_LOCATION* location )
 
   MMDL_GetRailLocation( mmdl, location );
   TOMOYA_Printf( "dir %d  line_grid %d\n", dir, location->line_grid );
-  return FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, sc_DIR_TO_RAILKEY[dir], location ); 
+  return FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), location ); 
 }
 
 //----------------------------------------------------------------------------
@@ -470,7 +616,7 @@ BOOL MMDL_GetRailDirLocation( const MMDL *mmdl, u16 dir, RAIL_LOCATION* location
 
   MMDL_GetRailLocation( mmdl, location );
   TOMOYA_Printf( "dir %d  line_grid %d\n", dir, location->line_grid );
-  return FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, sc_DIR_TO_RAILKEY[dir], location ); 
+  return FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), location ); 
 }
 
 //----------------------------------------------------------------------------
@@ -490,7 +636,7 @@ void MMDL_Rail_UpdateGridPosDir( MMDL *mmdl, u16 dir )
   RAIL_LOCATION location;
 
   MMDL_GetRailLocation( mmdl, &location );
-  FIELD_RAIL_MAN_CalcRailKeyPos( cp_railman, &location, sc_DIR_TO_RAILKEY[dir], &pos ); 
+  FIELD_RAIL_MAN_CalcRailKeyPos( cp_railman, &location, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), &pos ); 
   
   // 3D座標をグリッドに設定する
 	MMDL_SetOldGridPosX( mmdl, MMDL_GetGridPosX(mmdl) );
@@ -513,8 +659,7 @@ void MMDL_Rail_UpdateGridPosDir( MMDL *mmdl, u16 dir )
 void MMDL_RailDmy_Init( MMDL * fmmdl )
 {
   MV_RAIL_DMY_WORK* p_work;
-	p_work = MMDL_InitMoveProcWork( fmmdl, MV_RAIL_DMY_WORK_SIZE );
-  MMdl_RailCommon_Init( &p_work->rail_wk, fmmdl );
+	p_work = MMdl_RailDefaultInit( fmmdl, MV_RAIL_DMY_WORK_SIZE );
 }
 
 //----------------------------------------------------------------------------
@@ -562,6 +707,137 @@ void MMDL_RailDmy_Return( MMDL * fmmdl )
 
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  振り向き　全方向ランダム  初期化
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailDirRnd_ALL_Init( MMDL * fmmdl )
+{
+	DirRndWorkInit( fmmdl, DIRID_MvDirRndDirTbl );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  振り向き　UP　LEFT　方向ランダム　初期化
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailDirRnd_UL_Init( MMDL * fmmdl )
+{
+	DirRndWorkInit( fmmdl, DIRID_MvDirRndDirTbl_UL );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  振り向き　UP　RIGHT　方向ランダム　初期化
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailDirRnd_UR_Init( MMDL * fmmdl )
+{
+	DirRndWorkInit( fmmdl, DIRID_MvDirRndDirTbl_UR );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  振り向き　DOWN　LEFT　方向ランダム　初期化
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailDirRnd_DL_Init( MMDL * fmmdl )
+{
+	DirRndWorkInit( fmmdl, DIRID_MvDirRndDirTbl_DL );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  振り向き　DOWN　RIGHT　方向ランダム　初期化
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailDirRnd_DR_Init( MMDL * fmmdl )
+{
+	DirRndWorkInit( fmmdl, DIRID_MvDirRndDirTbl_DR );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  振り向き　UP　DOWN　LEFT　方向ランダム　初期化
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailDirRnd_UDL_Init( MMDL * fmmdl )
+{
+	DirRndWorkInit( fmmdl, DIRID_MvDirRndDirTbl_UDL );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  振り向き　UP　DOWN　RIGHT　方向ランダム　初期化
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailDirRnd_UDR_Init( MMDL * fmmdl )
+{
+	DirRndWorkInit( fmmdl, DIRID_MvDirRndDirTbl_UDR );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  振り向き　UP　LEFT　RIGHT　方向ランダム　初期化
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailDirRnd_ULR_Init( MMDL * fmmdl )
+{
+	DirRndWorkInit( fmmdl, DIRID_MvDirRndDirTbl_ULR );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  振り向き　DOWN　LEFT　RIGHT　方向ランダム　初期化
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailDirRnd_DLR_Init( MMDL * fmmdl )
+{
+	DirRndWorkInit( fmmdl, DIRID_MvDirRndDirTbl_DLR );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  振り向き　UP　DOWN　方向ランダム　初期化
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailDirRnd_UD_Init( MMDL * fmmdl )
+{
+	DirRndWorkInit( fmmdl, DIRID_MvDirRndDirTbl_UD );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  振り向き　LEFT　RIGHT　方向ランダム　初期化
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailDirRnd_LR_Init( MMDL * fmmdl )
+{
+	DirRndWorkInit( fmmdl, DIRID_MvDirRndDirTbl_LR );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  方向ランダム　メイン
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailDirRnd_Move( MMDL * fmmdl )
+{
+  DirRndWorkMove( fmmdl );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  方向ランダム　破棄
+ */
+//-----------------------------------------------------------------------------
+void MMDL_RailDirRnd_Delete( MMDL * fmmdl )
+{
+  DirRndWorkDelete( fmmdl );
+}
+
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -580,7 +856,7 @@ void MMDL_RailDmy_Return( MMDL * fmmdl )
 static RAIL_KEY MMdl_ConvertDir_RailKey( u16 dir )
 {
   GF_ASSERT( dir < DIR_MAX4 );
-  return sc_DIR_TO_RAILKEY[dir];
+  return FIELD_RAIL_TOOL_ConvertDirToRailKey(dir);
 }
 
 //----------------------------------------------------------------------------
@@ -623,6 +899,101 @@ static RAIL_FRAME MMdl_ConvertWait_RailFrame( s16 wait )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  基本初期か処理
+ *
+ *	@param	fmmdl       モデル
+ *	@param	work_size   ワークサイズ
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+static void* MMdl_RailDefaultInit( MMDL* fmmdl, u32 work_size )
+{
+  MV_RAIL_COMMON_WORK* p_work;
+  RAIL_LOCATION location;
+  BOOL setup;
+
+  setup = MMdl_GetSetUpLocation( fmmdl, &location );
+  
+	p_work = MMDL_InitMoveProcWork( fmmdl, work_size );
+  MMdl_RailCommon_Init( p_work, fmmdl );
+
+  if( setup )
+  {
+    MMDL_SetRailLocation( fmmdl, &location );
+  }
+
+  return p_work;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * 方向テーブル要素数取得
+ * @param	tbl		データテーブル。終端にend
+ * @param	end		テーブル終端とする値
+ * @retval	int		tbl要素数
+ */
+//--------------------------------------------------------------
+static int TblNumGet( const int *tbl, int end )
+{
+	int i=0; while(tbl[i]!=end){i++;} GF_ASSERT(i&&"TblNumGet()要素数0"); return(i);
+}
+
+//--------------------------------------------------------------
+/**
+ * テーブルデータからランダムで値取得
+ * @param	tbl		データテーブル。終端にend
+ * @param	end		テーブル終端とする値
+ * @retval	int		tbl内部の値
+ */
+//--------------------------------------------------------------
+static int TblRndGet( const int *tbl, int end )
+{
+#if 0
+	return( tbl[gf_rand()%TblNumGet(tbl,end)] );
+#else
+	return( tbl[GFUser_GetPublicRand(TblNumGet(tbl,end))] );
+#endif
+}
+
+//--------------------------------------------------------------
+/**
+ * 方向IDからテーブルデータを取得しランダムで値取得
+ * @param	tbl		データテーブル。終端にend
+ * @param	end		テーブル終端とする値
+ * @retval	int		tbl内部の値
+ */
+//--------------------------------------------------------------
+static int TblIDRndGet( int id, int end )
+{
+	const int *tbl = MoveDirTblIDSearch( id );
+	return( tbl[GFUser_GetPublicRand(TblNumGet(tbl,end))] );
+}
+
+//--------------------------------------------------------------
+/**
+ * DATA_MoveDirTbl検索
+ * @param	id		検索ID
+ * @retval	int		ヒットしたテーブル*
+ */
+//--------------------------------------------------------------
+static const int * MoveDirTblIDSearch( int id )
+{
+	const DIR_TBL *tbl = DATA_MoveDirTbl;
+	
+	while( tbl->id != DIRID_END ){
+		if( tbl->id == id ){ return( tbl->tbl ); }
+		tbl++;
+	}
+	
+	GF_ASSERT( 0 && "MoveDirTblIDSearch()ID異常" );
+	return( NULL );
+}
+
+
 // COMMON
 //----------------------------------------------------------------------------
 /**
@@ -637,6 +1008,7 @@ static void MMdl_RailCommon_Init( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl )
   FLDNOGRID_MAPPER* p_mapper = MMDLSYS_GetNOGRIDMapper( cp_sys );
 
   p_work->rail_wk = FLDNOGRID_MAPPER_CreateRailWork( p_mapper );
+  p_work->location.type = FIELD_RAIL_TYPE_MAX; // 設定データなし
 }
 
 //----------------------------------------------------------------------------
@@ -661,7 +1033,12 @@ static void MMdl_RailCommon_Delete( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl )
 {
   const MMDLSYS* cp_sys = MMDL_GetMMdlSys( fmmdl );
   FLDNOGRID_MAPPER* p_mapper = MMDLSYS_GetNOGRIDMapper( cp_sys );
+  RAIL_LOCATION location;
 
+
+  // 位置情報の保存
+  FIELD_RAIL_WORK_GetLocation( p_work->rail_wk, &location );
+  MMdl_RailCommon_SetSaveLocation( p_work, &location );
   FLDNOGRID_MAPPER_DeleteRailWork( p_mapper, p_work->rail_wk );
 }
 
@@ -678,8 +1055,93 @@ static void MMdl_RailCommon_Return( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl )
   FLDNOGRID_MAPPER* p_mapper = MMDLSYS_GetNOGRIDMapper( cp_sys );
 
   p_work->rail_wk = FLDNOGRID_MAPPER_CreateRailWork( p_mapper );
+
+  // セーブロケーションの反映
+  MMdl_RailCommon_ReflectSaveLocation( p_work, fmmdl );
 }
 
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブロケーションの設定
+ *
+ *	@param	p_work
+ *	@param	location 
+ */
+//-----------------------------------------------------------------------------
+static void MMdl_RailCommon_SetSaveLocation( MV_RAIL_COMMON_WORK* p_work, const RAIL_LOCATION* location )
+{
+  p_work->location = *location;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブロケーションの反映
+ *
+ *	@param	p_work
+ *	@param	fmmdl 
+ */
+//-----------------------------------------------------------------------------
+static void MMdl_RailCommon_ReflectSaveLocation( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl )
+{
+  if( p_work->location.type != FIELD_RAIL_TYPE_MAX )
+  {
+    FIELD_RAIL_WORK_SetLocation( p_work->rail_wk, &p_work->location );
+    p_work->location.type = FIELD_RAIL_TYPE_MAX;
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  方向ランダムワーク　初期か
+ *
+ *	@param	fmmdl   モデル
+ *	@param	id      方向テーブルID
+ */
+//-----------------------------------------------------------------------------
+static void DirRndWorkInit( MMDL * fmmdl, int id )
+{
+  MV_RAIL_DIR_RND_WORK* p_wk;
+
+  p_wk = MMdl_RailDefaultInit( fmmdl, MV_RAIL_DIR_RND_WORK_SIZE );
+
+  p_wk->wait    = TblRndGet( DATA_MvDirRndWaitTbl, WAIT_END );			//待ち時間セット
+  p_wk->tbl_id  = id;
+
+	MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );					//描画ステータス　停止
+	MMDL_OffStatusBitMove( fmmdl );								//常に停止中
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  方向ランダムワーク　メイン
+ *
+ *	@param	fmmdl 
+ */
+//-----------------------------------------------------------------------------
+static void DirRndWorkMove( MMDL * fmmdl )
+{
+	MV_RAIL_DIR_RND_WORK* p_wk = MMDL_GetMoveProcWork( fmmdl );
+	
+  p_wk->wait--;
+
+  if( p_wk->wait <= 0 )
+  {									//待ち時間 0
+    p_wk->wait = TblRndGet( DATA_MvDirRndWaitTbl, WAIT_END );
+    MMDL_SetDirDisp( fmmdl, TblIDRndGet(p_wk->tbl_id,DIR_NOT) );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  方向ランダムワーク　破棄
+ *
+ *	@param	fmmdl 
+ */
+//-----------------------------------------------------------------------------
+static void DirRndWorkDelete( MMDL * fmmdl )
+{
+}
 

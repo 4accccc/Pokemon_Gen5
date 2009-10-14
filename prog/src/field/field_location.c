@@ -16,11 +16,27 @@
 
 #include "gflib.h"
 #include "field/rail_location.h"
+#include "field/field_dir.h"
 
 #include "field_rail.h"
 
 //============================================================================================
 //============================================================================================
+
+//============================================================================================
+//
+//
+//      DIRとRAIL_KEYの対応データ
+//
+//
+//============================================================================================
+static const u8 sc_DIR_TO_RAILKEY[DIR_MAX4] = 
+{
+  RAIL_KEY_UP,
+  RAIL_KEY_DOWN,
+  RAIL_KEY_LEFT,
+  RAIL_KEY_RIGHT,
+};
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 
@@ -36,4 +52,55 @@ void RAIL_LOCATION_Init(RAIL_LOCATION * railLoc)
   railLoc->line_grid = 0;
   railLoc->width_grid = 0;
   railLoc->key = RAIL_KEY_NULL;
+}
+
+
+//------------------------------------------------------------------
+// RAIL_KEYとDIRの変換
+//  
+//  DIR_～をRAIL_KEY_～に変換
+//------------------------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@brief  RAIL_KEYをDIRに変換
+ *
+ *	@param	key キー
+ *
+ *	@return　DIR
+ */
+//-----------------------------------------------------------------------------
+u32 FIELD_RAIL_TOOL_ConvertRailKeyToDir( u32 key )
+{
+  int i;
+
+  GF_ASSERT( key < RAIL_KEY_MAX );
+
+  for( i=0; i<DIR_MAX4; i++ )
+  {
+    if( sc_DIR_TO_RAILKEY[i] == key )
+    {
+      return i;
+    }
+  }
+
+  GF_ASSERT( 0 );
+  return 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  DIRをRAIL_KEYに変換
+ *
+ *	@param	dir   DIR
+ *
+ *	@return RAIL_KEY
+ */
+//-----------------------------------------------------------------------------
+u32 FIELD_RAIL_TOOL_ConvertDirToRailKey( u32 dir )
+{
+  // 対応しているのは
+  // DIR_UP DIR_DOWN DIR_LEFT DIR_RIGHT
+  GF_ASSERT( dir < DIR_MAX4 );
+
+  return sc_DIR_TO_RAILKEY[dir];
 }

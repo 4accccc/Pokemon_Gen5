@@ -605,6 +605,7 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
   EV_REQUEST req;
 	GMEVENT *event;
 	FIELDMAP_WORK *fieldWork = work;
+  FIELDMAP_CTRL_NOGRID_WORK *mapctrl_work = FIELDMAP_GetMapCtrlWork( fieldWork );
   
   setupRequest( &req, gsys, fieldWork );
 
@@ -634,13 +635,14 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
   //座標イベントチェック
   if( req.moveRequest )
   {
-    /*
-    VecFx32 pos;
+    //*
+    RAIL_LOCATION pos;
+    const MMDL* player = FIELD_PLAYER_GetMMdl( req.field_player );
     u16 id;
     EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-    FIELD_PLAYER_GetPos( req.field_player, &pos );
+    MMDL_GetRailLocation( player, &pos );
     
-    id = EVENTDATA_CheckPosEvent( req.evdata, evwork, &pos );
+    id = EVENTDATA_CheckPosEventRailLocation( req.evdata, evwork, &pos );
     
     if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
       event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
@@ -684,21 +686,21 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 
   //看板イベントチェック
   if( req.stepRequest ){
-    /*
+    //*
     u16 id;
-    VecFx32 pos;
+    RAIL_LOCATION pos;
     EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-    MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
+    const MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
     u16 dir = MMDL_GetDirDisp( fmmdl );
   
-    FIELD_PLAYER_GetPos( req.field_player, &pos );
-    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+    // 1歩前のレールロケーション取得
+    MMDL_GetRailFrontLocation( fmmdl, &pos );
   
     {
       //OBJ看板チェック
     }
     
-    id = EVENTDATA_CheckTalkBoardEvent( req.evdata, evwork, &pos, dir );
+    id = EVENTDATA_CheckTalkBoardEventRailLocation( req.evdata, evwork, &pos, dir );
     
     if( id != EVENTDATA_ID_NONE ){
       event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
@@ -739,36 +741,32 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
       MMDL *fmmdl_talk = getRailFrontTalkOBJ( &req, fieldWork );
       if( fmmdl_talk != NULL )
       {
-//        u32 scr_id = MMDL_GetEventID( fmmdl_talk );
-//        MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
-//        FIELD_PLAYER_GRID_ForceStop( req.field_player );
-//        return EVENT_FieldTalk( gsys, fieldWork,
-//          scr_id, fmmdl_player, fmmdl_talk, req.heapID );
-
-        if(WIPE_SYS_EndCheck()){
-            return EVENT_FieldMapMenu( gsys, fieldWork, req.heapID );
-        }
+        u32 scr_id = MMDL_GetEventID( fmmdl_talk );
+        FIELD_PLAYER_NOGRID* player_nogrid = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( mapctrl_work );
+        MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
+        
+        FIELD_PLAYER_NOGRID_ForceStop( player_nogrid );
+        return EVENT_FieldTalk( gsys, fieldWork,
+          scr_id, fmmdl_player, fmmdl_talk, req.heapID );
       }
     }
     
-    /*
     { //BG話し掛け
       u16 id;
-      VecFx32 pos;
+      RAIL_LOCATION pos;
       EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
       MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
       u16 dir = MMDL_GetDirDisp( fmmdl );
       
-      FIELD_PLAYER_GetPos( req.field_player, &pos );
-      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-      id = EVENTDATA_CheckTalkBGEvent( req.evdata, evwork, &pos, dir );
+      MMDL_GetRailFrontLocation( fmmdl, &pos );
+      id = EVENTDATA_CheckTalkBGEventRailLocation( req.evdata, evwork, &pos, dir );
       
       if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
         event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
         return event;
       }
     }
-
+    /*
     { //BG Attribute 話しかけ
       u16 id = checkTalkAttrEvent( &req, fieldWork );
       if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
@@ -851,7 +849,7 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 		return event;
 	}
   
-	
+  /*	
 	//デバッグ：パレスで木に触れたらワープ
   {
     GMEVENT *ev;
@@ -861,6 +859,7 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
       return ev;
     }
 	}
+  //*/
 	return NULL;
 }
 

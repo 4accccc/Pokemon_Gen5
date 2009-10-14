@@ -866,6 +866,142 @@ static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailDmy =
 	MMDL_RailDmy_Return,					///<復帰関数
 };
 
+//--------------------------------------------------------------
+/// MV_RAIL_DIR_RND_ALL
+//--------------------------------------------------------------
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailDirRndALL =
+{
+	MV_RAIL_DIR_RND_ALL,					///<動作コード
+	MMDL_RailDirRnd_ALL_Init,			///<初期化関数
+	MMDL_RailDirRnd_Move,					///<動作関数
+  MMDL_RailDirRnd_Delete,				///<削除関数
+	MMDL_MoveReturnProcDummy,			///<復帰関数
+};
+
+//--------------------------------------------------------------
+/// MV_RAIL_DIR_RND_UL
+//--------------------------------------------------------------
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailDirRndUL =
+{
+	MV_RAIL_DIR_RND_UL,					///<動作コード
+	MMDL_RailDirRnd_UL_Init,			///<初期化関数
+	MMDL_RailDirRnd_Move,					///<動作関数
+  MMDL_RailDirRnd_Delete,				///<削除関数
+	MMDL_MoveReturnProcDummy,			///<復帰関数
+};
+
+//--------------------------------------------------------------
+/// MV_RAIL_DIR_RND_UR
+//--------------------------------------------------------------
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailDirRndUR =
+{
+	MV_RAIL_DIR_RND_UR,					///<動作コード
+	MMDL_RailDirRnd_UR_Init,			///<初期化関数
+	MMDL_RailDirRnd_Move,					///<動作関数
+  MMDL_RailDirRnd_Delete,				///<削除関数
+	MMDL_MoveReturnProcDummy,			///<復帰関数
+};
+
+//--------------------------------------------------------------
+/// MV_RAIL_DIR_RND_DL
+//--------------------------------------------------------------
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailDirRndDL =
+{
+	MV_RAIL_DIR_RND_DL,					///<動作コード
+	MMDL_RailDirRnd_DL_Init,			///<初期化関数
+	MMDL_RailDirRnd_Move,					///<動作関数
+  MMDL_RailDirRnd_Delete,				///<削除関数
+	MMDL_MoveReturnProcDummy,			///<復帰関数
+};
+
+//--------------------------------------------------------------
+/// MV_RAIL_DIR_RND_DR
+//--------------------------------------------------------------
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailDirRndDR =
+{
+	MV_RAIL_DIR_RND_DR,					///<動作コード
+	MMDL_RailDirRnd_DR_Init,			///<初期化関数
+	MMDL_RailDirRnd_Move,					///<動作関数
+  MMDL_RailDirRnd_Delete,				///<削除関数
+	MMDL_MoveReturnProcDummy,			///<復帰関数
+};
+
+//--------------------------------------------------------------
+/// MV_RAIL_DIR_RND_UDL
+//--------------------------------------------------------------
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailDirRndUDL =
+{
+	MV_RAIL_DIR_RND_UDL,					///<動作コード
+	MMDL_RailDirRnd_UDL_Init,			///<初期化関数
+	MMDL_RailDirRnd_Move,					///<動作関数
+  MMDL_RailDirRnd_Delete,				///<削除関数
+	MMDL_MoveReturnProcDummy,			///<復帰関数
+};
+
+//--------------------------------------------------------------
+/// MV_RAIL_DIR_RND_UDR
+//--------------------------------------------------------------
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailDirRndUDR =
+{
+	MV_RAIL_DIR_RND_UDR,					///<動作コード
+	MMDL_RailDirRnd_UDR_Init,			///<初期化関数
+	MMDL_RailDirRnd_Move,					///<動作関数
+  MMDL_RailDirRnd_Delete,				///<削除関数
+	MMDL_MoveReturnProcDummy,			///<復帰関数
+};
+
+//--------------------------------------------------------------
+/// MV_RAIL_DIR_RND_ULR
+//--------------------------------------------------------------
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailDirRndULR =
+{
+	MV_RAIL_DIR_RND_ULR,					///<動作コード
+	MMDL_RailDirRnd_ULR_Init,			///<初期化関数
+	MMDL_RailDirRnd_Move,					///<動作関数
+  MMDL_RailDirRnd_Delete,				///<削除関数
+	MMDL_MoveReturnProcDummy,			///<復帰関数
+};
+
+//--------------------------------------------------------------
+/// MV_RAIL_DIR_RND_DLR
+//--------------------------------------------------------------
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailDirRndDLR =
+{
+	MV_RAIL_DIR_RND_DLR,					///<動作コード
+	MMDL_RailDirRnd_DLR_Init,			///<初期化関数
+	MMDL_RailDirRnd_Move,					///<動作関数
+  MMDL_RailDirRnd_Delete,				///<削除関数
+	MMDL_MoveReturnProcDummy,			///<復帰関数
+};
+
+//--------------------------------------------------------------
+/// MV_RAIL_DIR_RND_UD
+//--------------------------------------------------------------
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailDirRndUD =
+{
+	MV_RAIL_DIR_RND_UD,					///<動作コード
+	MMDL_RailDirRnd_UD_Init,			///<初期化関数
+	MMDL_RailDirRnd_Move,					///<動作関数
+  MMDL_RailDirRnd_Delete,				///<削除関数
+	MMDL_MoveReturnProcDummy,			///<復帰関数
+};
+
+//--------------------------------------------------------------
+/// MV_RAIL_DIR_RND_LR
+//--------------------------------------------------------------
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailDirRndLR =
+{
+	MV_RAIL_DIR_RND_LR,					///<動作コード
+	MMDL_RailDirRnd_LR_Init,			///<初期化関数
+	MMDL_RailDirRnd_Move,					///<動作関数
+  MMDL_RailDirRnd_Delete,				///<削除関数
+	MMDL_MoveReturnProcDummy,			///<復帰関数
+};
+
+
+
+
+
 //==============================================================================
 //	フィールド動作モデル 動作関数まとめ
 //==============================================================================
@@ -949,6 +1085,17 @@ const MMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[MV_CODE_MAX] =
 	&DATA_FieldOBJMove_RndHLim,								//MV_RND_H_LIM
   &DATA_FieldOBJMove_CommActor,           //MV_COMM_ACTOR
   &DATA_FieldOBJMove_RailDmy,             //MV_RAIL_DMY
+  &DATA_FieldOBJMove_RailDirRndALL,       //MV_RAIL_DIR_RND_ALL
+  &DATA_FieldOBJMove_RailDirRndUL,       //MV_RAIL_DIR_RND_UL
+  &DATA_FieldOBJMove_RailDirRndUR,       //MV_RAIL_DIR_RND_UR
+  &DATA_FieldOBJMove_RailDirRndDL,       //MV_RAIL_DIR_RND_DL
+  &DATA_FieldOBJMove_RailDirRndDR,       //MV_RAIL_DIR_RND_DR
+  &DATA_FieldOBJMove_RailDirRndUDL,       //MV_RAIL_DIR_RND_UDL
+  &DATA_FieldOBJMove_RailDirRndUDR,       //MV_RAIL_DIR_RND_UDR
+  &DATA_FieldOBJMove_RailDirRndULR,       //MV_RAIL_DIR_RND_ULR
+  &DATA_FieldOBJMove_RailDirRndDLR,       //MV_RAIL_DIR_RND_DLR
+  &DATA_FieldOBJMove_RailDirRndUD,       //MV_RAIL_DIR_RND_UD
+  &DATA_FieldOBJMove_RailDirRndLR,       //MV_RAIL_DIR_RND_LR
 };
 
 //==============================================================================

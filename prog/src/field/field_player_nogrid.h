@@ -49,6 +49,8 @@ extern FIELD_RAIL_WORK* FIELD_PLAYER_NOGRID_GetRailWork( const FIELD_PLAYER_NOGR
 // é©ã@FORMÇÃïœçX
 extern void FIELD_PLAYER_NOGRID_ChangeForm( FIELD_PLAYER_NOGRID* p_player, PLAYER_MOVE_FORM form );
 
+// é©ã@ìÆçÏÇÃí‚é~
+extern void FIELD_PLAYER_NOGRID_ForceStop( FIELD_PLAYER_NOGRID* p_player );
 
 
 

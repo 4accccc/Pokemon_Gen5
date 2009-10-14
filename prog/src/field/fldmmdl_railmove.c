@@ -763,6 +763,7 @@ static void MMdl_MapAttrSplashProc_Jump1(
 static void MMdl_MapAttrShadowProc_0(
 		MMDL * mmdl, MATR now, MATR old, const OBJCODE_PARAM *prm )
 {
+
 	MMdl_MapAttrShadowProc_1( mmdl, now, old, prm );
 }
 

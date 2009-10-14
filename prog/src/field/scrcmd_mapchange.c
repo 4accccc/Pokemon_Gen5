@@ -122,8 +122,10 @@ VMCMD_RESULT EvCmdMapChangeBySandStream( VMHANDLE *core, void *wk )
     event = EVENTDATA_GetPosEvent( evdata, evwork, &pos );
     if( event )
     {
-      disappear_pos.x = GRID_TO_FX32( event->gx ) + FX_Div( GRID_TO_FX32( event->sx ), 2<<FX32_SHIFT );
-      disappear_pos.z = GRID_TO_FX32( event->gz ) + FX_Div( GRID_TO_FX32( event->sz ), 2<<FX32_SHIFT );
+      EVENTDATA_GetPosEventCenterPos( event, &disappear_pos );
+      // 直接アクセスできなくなったので上の関数に変更しました　091007 tomoya takahashi
+//      disappear_pos.x = GRID_TO_FX32( event->gx ) + FX_Div( GRID_TO_FX32( event->sx ), 2<<FX32_SHIFT );
+//      disappear_pos.z = GRID_TO_FX32( event->gz ) + FX_Div( GRID_TO_FX32( event->sz ), 2<<FX32_SHIFT );
     }
   }
   

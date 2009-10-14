@@ -11,11 +11,30 @@
 #include <gflib.h>
 
 #include "field/fieldmap_proc.h"
+#include "field/field_dir.h"
 
 #include "field_rail.h"
 #include "field_rail_access.h"
 
 #include "field_camera.h"
+
+#ifdef PM_DEBUG
+
+//#define DEBUG_RAIL_PRINT  // レールのデバック出力　（大量）
+
+#endif // PM_DEBUG
+
+
+#ifdef DEBUG_RAIL_PRINT
+
+#define DEBUG_RAIL_Printf( ... )  OS_TPrintf( __VA_ARGS__ )
+
+#else // DEBUG_RAIL_PRINT
+
+#define DEBUG_RAIL_Printf( ... )  ((void)0)
+
+#endif // DEBUG_RAIL_PRINT
+
 
 //============================================================================================
 //============================================================================================
@@ -70,6 +89,8 @@ static const RAIL_CAMERA_SET RAIL_CAMERA_SET_Default =
   0,
   0,
 };
+
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 
@@ -792,6 +813,8 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
   // 初期化
   clearRail( work, work->rail_dat );
 
+  GF_ASSERT( location->type < FIELD_RAIL_TYPE_MAX );
+  
   if( location->type==FIELD_RAIL_TYPE_POINT )
   {
     // 点初期化
@@ -1089,7 +1112,7 @@ void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
 
 		if (set_key != RAIL_KEY_NULL)
 		{
-			OS_TPrintf("RAIL:%s :line_ofs=%d line_ofs_max=%d width_ofs=%d width_ofs_max=%d\n",
+			DEBUG_RAIL_Printf("RAIL:%s :line_ofs=%d line_ofs_max=%d width_ofs=%d width_ofs_max=%d\n",
 					debugGetRailKeyName(set_key), 
           RAIL_OFS_TO_GRID(work->line_ofs), RAIL_OFS_TO_GRID(work->line_ofs_max), 
           RAIL_OFS_TO_GRID(work->width_ofs) + RAIL_OFS_TO_GRID(work->width_ofs_max), 
@@ -1102,7 +1125,7 @@ void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
 
 		if (type != work->type)
 		{
-			OS_TPrintf("RAIL:change to ");
+			DEBUG_RAIL_Printf("RAIL:change to ");
 			debugPrintRailInfo(work);
 		}
 
@@ -1321,6 +1344,9 @@ BOOL FIELD_RAIL_TOOL_HitCheckSphere( const VecFx32* person, const VecFx32* check
 
 
 
+
+
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -1347,8 +1373,7 @@ static RAIL_KEY setLine(FIELD_RAIL_WORK * work, const RAIL_LINE * line, RAIL_KEY
   GF_ASSERT(line->name);
   if (work->type == FIELD_RAIL_TYPE_LINE)
   {
-//    TAMADA_Printf("RAIL: LINE \"%s\" to %s \"%s\"\n",
-    OS_TPrintf("RAIL: LINE \"%s\" to %s \"%s\"\n",
+    TAMADA_Printf("RAIL: LINE \"%s\" to %s \"%s\"\n",
         work->line->name, debugGetRailKeyName(key), line->name);
   }
   else
@@ -2485,19 +2510,19 @@ static void debugPrintWholeVector(const char * before, const VecFx32 * vec, cons
 {
   if (before)
   {
-    OS_TPrintf("%s",before);
+    DEBUG_RAIL_Printf("%s",before);
   }
-  OS_TPrintf("( %d, %d, %d)", FX_Whole(vec->x), FX_Whole(vec->y), FX_Whole(vec->z));
+  DEBUG_RAIL_Printf("( %d, %d, %d)", FX_Whole(vec->x), FX_Whole(vec->y), FX_Whole(vec->z));
   if (after)
   {
-    OS_TPrintf("%s",after);
+    DEBUG_RAIL_Printf("%s",after);
   }
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void debugPrintHexVector(const VecFx32 * vec)
 {
-  OS_TPrintf("(%08x, %08x, %08x)\n", (vec->x), (vec->y), (vec->z));
+  DEBUG_RAIL_Printf("(%08x, %08x, %08x)\n", (vec->x), (vec->y), (vec->z));
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -2509,9 +2534,9 @@ static void debugPrintPoint(const char * before, const RAIL_POINT * point, const
   }
   else
   {
-    if (before) OS_TPrintf("%s", before);
-    OS_TPrintf("( NULL )");
-    if (after) OS_TPrintf("%s", after);
+    if (before) DEBUG_RAIL_Printf("%s", before);
+    DEBUG_RAIL_Printf("( NULL )");
+    if (after) DEBUG_RAIL_Printf("%s", after);
   }
 }
 //------------------------------------------------------------------
@@ -2523,7 +2548,7 @@ static void debugPrintDegree(const VecFx32 * p0, const VecFx32 * p1)
     VEC_Normalize( p0, &s );
     VEC_Normalize( p1, &e );
     angle = FX_AcosIdx( VEC_DotProduct( &s, &e ) );
-    OS_TPrintf("Degree: %08x\n",angle);
+    DEBUG_RAIL_Printf("Degree: %08x\n",angle);
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -2540,7 +2565,7 @@ static const char * debugGetRailKeyName(RAIL_KEY key)
 static void debugPrintRailInfo(const FIELD_RAIL_WORK * work)
 {
   FIELD_RAIL_TYPE type = work->type;
-  OS_TPrintf("%d(%s:%08x)\n",
+  DEBUG_RAIL_Printf("%d(%s:%08x)\n",
       type,
       getRailName(work),
       work->dummy);
