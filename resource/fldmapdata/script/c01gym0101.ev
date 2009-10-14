@@ -35,8 +35,30 @@ _EVENT_DATA		ev_pos_c01gym0101_button_mizu_02
 _EVENT_DATA		ev_pos_c01gym0101_button_kusa_03
 _EVENT_DATA		ev_pos_c01gym0101_button_honoo_03
 _EVENT_DATA		ev_pos_c01gym0101_button_mizu_03
+_EVENT_DATA		ev_c01gym0101_curtain_01a
+_EVENT_DATA		ev_c01gym0101_curtain_01b
+_EVENT_DATA		ev_c01gym0101_curtain_01c
+_EVENT_DATA		ev_c01gym0101_curtain_01d
+_EVENT_DATA		ev_c01gym0101_curtain_01e
+_EVENT_DATA		ev_c01gym0101_curtain_01f
+_EVENT_DATA		ev_c01gym0101_curtain_01g
+_EVENT_DATA		ev_c01gym0101_curtain_02a
+_EVENT_DATA		ev_c01gym0101_curtain_02b
+_EVENT_DATA		ev_c01gym0101_curtain_02c
+_EVENT_DATA		ev_c01gym0101_curtain_02d
+_EVENT_DATA		ev_c01gym0101_curtain_02e
+_EVENT_DATA		ev_c01gym0101_curtain_02f
+_EVENT_DATA		ev_c01gym0101_curtain_02g
+_EVENT_DATA		ev_c01gym0101_curtain_03a
+_EVENT_DATA		ev_c01gym0101_curtain_03b
+_EVENT_DATA		ev_c01gym0101_curtain_03c
+_EVENT_DATA		ev_c01gym0101_curtain_03d
+_EVENT_DATA		ev_c01gym0101_curtain_03e
+_EVENT_DATA		ev_c01gym0101_curtain_03f
+_EVENT_DATA		ev_c01gym0101_curtain_03g
 _EVENT_DATA_END
 
+//LOCALWORK10～13まで使用しました。同マップ内の使用を禁止します。
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -54,6 +76,9 @@ ev_c01gym0101:
 /**************************************************************/
 /*     ジム前のサングラス男  ジムバッジ入手前                 */
 /**************************************************************/
+
+//【仮】	ジムバッジフラグがない
+
 EVENT_START		ev_c01gym0101_sunglasses_01
 	_TALK_OBJ_START()
 	//分岐処理・ジムバッジのフラグが０か１か
@@ -71,6 +96,9 @@ EVENT_END
 /**************************************************************/
 /*     ポケモン像１  	      					              */
 /**************************************************************/
+
+//【仮】	ジムバッジフラグがない　到着フラグが動いていない？
+
 EVENT_START		ev_c01gym0101_pokezou_01
 
 	//分岐処理・ジムバッジを入手しているかいないか
@@ -96,6 +124,9 @@ EVENT_END
 /**************************************************************/
 /*     ポケモン像２  						                  */
 /**************************************************************/
+
+//【仮】	ジムバッジフラグがない　到着フラグが動いていない？
+
 EVENT_START		ev_c01gym0101_pokezou_02
 
 	//分岐処理・ジムバッジを入手しているかいないか
@@ -121,6 +152,9 @@ EVENT_END
 /**************************************************************/
 /*     コーン・ポッド・デント	ジムバトル　ＰＯＳ発動        */
 /**************************************************************/
+
+//【仮】	ジムバッジフラグがない　最初に選んだポケモン処理がない
+
 EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 	//ローカル変数を定義
@@ -151,7 +185,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 	//ようこそ！！　サンヨウシティ　ポケモンジムへ！
 	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_01 , C01GYM0101_LEADER1_01 )
-	_AB_KEYWAIT()
+	
 	_BALLOONWIN_CLOSE()
 	
 	//ポッドとデントのバニッシュフラグをreset、オブジェクトを出現させる。
@@ -170,7 +204,6 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 	//オレたちは　それぞれ		
 	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_02 , C01GYM0101_LEADER1_01 )
-	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
 	//ポッド：くるっとその場で回る
@@ -179,7 +212,6 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 
 	//オレは　ほのおタイプの　ポケモンで
 	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_03a , C01GYM0101_LEADER1_02 )
-	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
 	//コーン：くるっとその場で回る
@@ -188,7 +220,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 	//みずタイプの　ポケモンが　すきな
 	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_03b , C01GYM0101_LEADER1_01 )
-	_AB_KEYWAIT()
+	
 	_BALLOONWIN_CLOSE()	
 	
 	//デント：くるっとその場で回る
@@ -197,7 +229,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 	//そして　オレが　くさタイプの
 	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_03c , C01GYM0101_LEADER1_03 )
-	_AB_KEYWAIT()
+	
 	_BALLOONWIN_CLOSE()	
 
 	//三人一斉に１マス下がる
@@ -218,13 +250,12 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 	//オレたち　３人は！
 	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_04 , C01GYM0101_LEADER1_01 )
-	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()	
 
 	//分岐処理・最初に選んだポケモンから苦手なタイプになる
 
 		//くさタイプ選択の場合
-	IF $HERO_X == 11 THEN
+	IF $WK_SYS_FIRST_POKE_NO  == MONSNO_HUSIGIDANE THEN
 		
 		//ポッド：自機の前に移動
 		_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_pod_move )	
@@ -235,18 +266,16 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 		//ということで　ほのおタイプの
 		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_05a , C01GYM0101_LEADER1_02 )
-		_AB_KEYWAIT()
 		_BALLOONWIN_CLOSE()			
 		
 		//ほのおタイプ選択の場合
-	ELSIF $HERO_X == 12 THEN
+	ELSIF $WK_SYS_FIRST_POKE_NO  == MONSNO_HITOKAGE THEN
 		
 		//コーン：一歩前へ
 		_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_leader_walk )
 		
 		//ということで　みずタイプの
 		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_05b , C01GYM0101_LEADER1_01 )
-		_AB_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
 		//みずタイプ選択の場合
@@ -261,7 +290,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 		//ということで　くさタイプを
 		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_05c , C01GYM0101_LEADER1_03 )
-		_AB_KEYWAIT()
+		
 		_BALLOONWIN_CLOSE()
 	ENDIF
 	
@@ -393,109 +422,135 @@ _ANIME_LABEL	anm_corn_dentochange
 /**************************************************************/
 /*         ジムリーダーコーン（画面中央）  戦闘前             */
 /**************************************************************/
+
+//【仮】	ジムバッジフラグがない
+
 EVENT_START		ev_c01gym0101_leader1_01
 	_TALK_OBJ_START()
-		//分岐処理・ジムバッジのフラグが０か１か
+	
+	//分岐：ジムバッジ取得しているか、いないか
 
-		//ジムバッジフラグが０の場合
+	//ジムバッジを取得していない場合
+			
+		//分岐：炎タイプを選択しているか、いないか
 
-		//さんにんの　なかで　いちばん　つよい　オレが
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20b )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+		//炎タイプを選択している場合
 		
-		//【仮】戦闘処理	画面フェードを仮で入れています。
-		/*_TRAINER_BTL_SET LEADER1C_01,0*/
-		
-		//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06b , C01GYM0101_LEADER1_01 )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+		IF $WK_SYS_FIRST_POKE_NO == MONSNO_HITOKAGE THEN
 
-		//～～は　コーンから　トライバッジを　もらった
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07b , C01GYM0101_LEADER1_01 )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+			//さんにんの　なかで　いちばん　つよい　オレが
+			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20b )
+			_BALLOONWIN_CLOSE()
+		
+			//【仮】戦闘処理	画面フェードを仮で入れています。
+			/*_TRAINER_BTL_SET LEADER1C_01,0*/
+		
+			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06b , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_CLOSE()
 
-		//トライバッジ入手処理
-		
-		//ジムバッジは　トレーナーの　つよさの　あかし！
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+			//～～は　コーンから　トライバッジを　もらった
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07b , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_CLOSE()
 
-		//わざマシン入手
-		_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+			//トライバッジ入手処理
+		
+			//ジムバッジは　トレーナーの　つよさの　あかし！
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_CLOSE()
 
-		//その　わざマシンの　なかみは　～～！！
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+			//わざマシン入手
+			_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+
+			//その　わざマシンの　なかみは　～～！！
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_CLOSE()
 		
-		//ジムバッジフラグに１代入
+			//ジムバッジ入手フラグをＯＮにする
+
+
+
+		//炎タイプ選択じゃない場合
+		ELSE
+			//ざんねん　ですね　ぼくが　おあいて　したかったです
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_21b , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_CLOSE()
+			
+		ENDIF
+	//ジムバッジ入手後の場合
 		
-		//ジムバッジフラグがそれ以外の場合
-		
-			//オレたち　イッシュちほう　では　まだまだ　かけだしの　ジムリーダー
+		//ぼくたち　イッシュちほう　では　まだ　かけだしの　ジムリーダーです
 		
 EVENT_END
 		
 /**************************************************************/
 /*         ジムリーダーポッド（画面左）  戦闘前	              */
 /**************************************************************/
+
+//【仮】	ジムバッジフラグがない
+
 EVENT_START		ev_c01gym0101_leader1_02
 	_TALK_OBJ_START()
-		//分岐処理・ジムバッジのフラグが０か１か
+	//分岐：ジムバッジ取得しているか、いないか
 
-		//ジムバッジフラグが０の場合
+	//ジムバッジを取得していない場合
+			
+		//分岐：草タイプを選択しているか、いないか
 
-		//さんにんの　なかで　いちばん　つよい　オレが
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20a )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+			//草タイプを選択している場合
+		IF $WK_SYS_FIRST_POKE_NO == MONSNO_HUSIGIDANE THEN
 
-		//【仮】戦闘処理	画面フェードを仮で入れています。
-		_WHITE_OUT( 4 )
-		_DISP_FADE_END_CHECK()
-		_WHITE_IN( 4 )
-		_DISP_FADE_END_CHECK()
+			//さんにんの　なかで　いちばん　つよい　オレが
+			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20a )
+			_BALLOONWIN_CLOSE()
 
-		//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06a , C01GYM0101_LEADER1_02 )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+			//【仮】戦闘処理	画面フェードを仮で入れています。
+			_WHITE_OUT( 4 )
+			_DISP_FADE_END_CHECK()
+			_WHITE_IN( 4 )
+			_DISP_FADE_END_CHECK()
+
+			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06a , C01GYM0101_LEADER1_02 )
+			_BALLOONWIN_CLOSE()
+			
+			//～～は　ポッドから　トライバッジを　もらった
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07a , C01GYM0101_LEADER1_02 )
+			_BALLOONWIN_CLOSE()
+
+			//トライバッジ入手処理
 		
-		//～～は　ポッドから　トライバッジを　もらった
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07a , C01GYM0101_LEADER1_02 )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+			//ポッド：コーンの場所へ移動
+			_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_pod_return )
+			
+			//コーン：自機の前に移動
+			_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_corn_podback )
+			_OBJ_ANIME_WAIT()
+			
+			//ジムバッジは　トレーナーの　つよさの　あかし！
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_CLOSE()
 
-		//トライバッジ入手処理
+			//わざマシン入手
+			_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+
+			//その　わざマシンの　なかみは　～～！！
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_CLOSE()
+
+			//ジムバッジ入手フラグをＯＮにする
+
+		//草タイプ選択じゃない場合
+		ELSE
+			
+			//なんだよーッ！　オレが　たたかいたかったのになー！！
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_21a , C01GYM0101_LEADER1_02 )
+			_BALLOONWIN_CLOSE()
 		
-		//ポッド：コーンの場所へ移動
-		_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_pod_return )
-			
-		//コーン：自機の前に移動
-		_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_corn_podback )
-		_OBJ_ANIME_WAIT()
-			
-		//ジムバッジは　トレーナーの　つよさの　あかし！
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+		ENDIF
 
-		//わざマシン入手
-		_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
-
-		//その　わざマシンの　なかみは　～～！！
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-
-		//ジムバッジフラグに１代入
-			
-		//ジムバッジのフラグがそれ以外の場合
-			
+	//ジムバッジ入手後の場合
+		
 		//わざマシンは　なんどだって　つかえると　いうことは
 		
 EVENT_END
@@ -523,58 +578,69 @@ _ANIME_LABEL	anm_corn_podback
 /**************************************************************/
 EVENT_START		ev_c01gym0101_leader1_03
 	_TALK_OBJ_START()
-		//分岐処理・ジムバッジのフラグが０か１か
 
-		//ジムバッジフラグが０の場合
+	//分岐：ジムバッジ取得しているか、いないか
 
-		//さんにんの　なかで　いちばん　つよい　オレが
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20c )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-
-		//【仮】戦闘処理	画面フェードを仮で入れています。
-		_WHITE_OUT( 4 )
-		_DISP_FADE_END_CHECK()
-		_WHITE_IN( 4 )
-		_DISP_FADE_END_CHECK()
-
-		//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06c , C01GYM0101_LEADER1_03 )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+	//ジムバッジを取得していない場合
 			
-		//～～は　ポッドから　トライバッジを　もらった
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07c , C01GYM0101_LEADER1_03 )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+		//分岐：水タイプを選択しているか、いないか
 
-		//トライバッジ入手処理
+		//水タイプを選択している場合
+		IF $WK_SYS_FIRST_POKE_NO == MONSNO_ZENIGAME THEN
+
+			//さんにんの　なかで　いちばん　つよい　オレが
+			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20c )
+			_BALLOONWIN_CLOSE()
+
+			//【仮】戦闘処理	画面フェードを仮で入れています。
+			_WHITE_OUT( 4 )
+			_DISP_FADE_END_CHECK()
+			_WHITE_IN( 4 )
+			_DISP_FADE_END_CHECK()
+
+			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06c , C01GYM0101_LEADER1_03 )
+			_BALLOONWIN_CLOSE()
+				
+			//～～は　デントから　トライバッジを　もらった
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07c , C01GYM0101_LEADER1_03 )
+			_BALLOONWIN_CLOSE()
+
+			//トライバッジ入手処理
 		
-		//デント：コーンの場所へ移動
-		_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_dento_return )
+			//デント：コーンの場所へ移動
+			_OBJ_ANIME( C01GYM0101_LEADER1_03, anm_dento_return )
 			
-		//コーン：自機の前に移動
-		_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_corn_dentoback )
-		_OBJ_ANIME_WAIT()
+			//コーン：自機の前に移動
+			_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_corn_dentoback )
+			_OBJ_ANIME_WAIT()
 			
-		//ジムバッジは　トレーナーの　つよさの　あかし！
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+			//ジムバッジは　トレーナーの　つよさの　あかし！
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_CLOSE()
 
-		//わざマシン入手
-		_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+			//わざマシン入手
+			_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
 
-		//その　わざマシンの　なかみは　～～！！
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
-		_AB_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+			//その　わざマシンの　なかみは　～～！！
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
+			_BALLOONWIN_CLOSE()
 
-		//ジムバッジフラグに１代入
-			
-		//ジムバッジのフラグがそれ以外の場合
-			
-		//わざマシンは　なんどだって　つかえると　いうことは
+			//ジムバッジ入手フラグをＯＮにする
+
+
+
+		//水タイプ選択じゃない場合
+		ELSE		
+			//オレが　いちばん　つよいのに！　どうして　みずタイプ　なんだよ！
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_21c , C01GYM0101_LEADER1_03 )
+			_BALLOONWIN_CLOSE()
+
+		ENDIF
+	
+	//ジムバッジ入手後の場合
+		
+		//オレたちが　もし　１７人　きょうだい　だったら
 		
 EVENT_END
 
@@ -601,12 +667,42 @@ _ANIME_LABEL	anm_corn_dentoback
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_kusa_01
 
+	//草ボタン１踏んだアニメーション
+	_GYM_ANTI_SW_ON(5)
+	
+	//分岐：炎カーテンが開いている？
+	
+		//開いていない場合
+		IF $LOCALWORK11 == 0 THEN
+		
+			//ＳＥ：ブッブー
+			
+		//開いている場合
+		ELSE
+		
+		ENDIF
+
 EVENT_END
 
 /**************************************************************/
 /*     炎ボタン１　ハズレ　ＰＯＳ発動					      */
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_honoo_01
+
+	//炎ボタン１踏んだアニメーション
+	_GYM_ANTI_SW_ON(3)
+
+	//分岐：炎カーテンが開いている？
+	
+		//開いていない場合
+		IF $LOCALWORK11 == 0 THEN
+		
+			//ＳＥ：ブッブー
+			
+		//開いている場合
+		ELSE
+		
+		ENDIF
 
 EVENT_END
 
@@ -615,12 +711,96 @@ EVENT_END
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_mizu_01
 
+	//水ボタン１踏んだアニメーション
+	//_GYM_ANTI_SW_ON(1)
+
+	//分岐：炎カーテンが開いている？
+	
+		//開いていない場合
+		IF $LOCALWORK11 == 0 THEN
+			//透明OBJの移動
+			_OBJ_ANIME( C01GYM0101_CURTAIN_01A, anm_curtain_open_a )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_01B, anm_curtain_open_a )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_01C, anm_curtain_open_a )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_01D, anm_curtain_open_a )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_01E, anm_curtain_open_b )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_01F, anm_curtain_open_b )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_01G, anm_curtain_open_b )
+			
+			//炎カーテン開くアニメーション
+			_GYM_ANTI_OPEN_DOOR(0)
+			_OBJ_ANIME_WAIT()
+			
+			//ＳＥ：ピンポーンピンポーン
+			
+			//===========フラグワーク操作===========//
+	
+			//炎カーテン開く
+			$LOCALWORK11 = 1
+	
+			//======================================//			
+			
+		//開いている場合
+		ELSE
+
+		ENDIF
+
 EVENT_END
+
+//--------------------------------------------------------------
+//	カーテン開く Ａ～Ｄ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_curtain_open_a
+	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	カーテン開く Ｅ～Ｇ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_curtain_open_b
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*     草ボタン２　アタリ　ＰＯＳ発動					      */
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_kusa_02
+
+	//草ボタン２踏んだアニメーション
+	//_GYM_ANTI_SW_ON(2)
+
+	//分岐：水カーテンが開いている？
+	
+		//開いていない場合
+		IF $LOCALWORK12 == 0 THEN
+		
+			//透明OBJの移動
+			_OBJ_ANIME( C01GYM0101_CURTAIN_02A, anm_curtain_open_a )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_02B, anm_curtain_open_a )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_02C, anm_curtain_open_a )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_02D, anm_curtain_open_a )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_02E, anm_curtain_open_b )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_02F, anm_curtain_open_b )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_02G, anm_curtain_open_b )
+			
+			
+			//水カーテン開くアニメーション
+			_GYM_ANTI_OPEN_DOOR(1)
+			_OBJ_ANIME_WAIT()
+			
+			//ＳＥ：ピンポーンピンポーン
+
+			//===========フラグワーク操作===========//
+	
+			//水カーテン開く
+			$LOCALWORK12 = 1
+	
+			//======================================//
+
+		//開いている場合
+		ELSE
+		
+		ENDIF
 
 EVENT_END
 
@@ -629,12 +809,42 @@ EVENT_END
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_honoo_02
 
+	//炎ボタン２踏んだアニメーション
+	_GYM_ANTI_SW_ON(6)
+
+	//分岐：水カーテンが開いている？
+	
+		//開いていない場合
+		IF $LOCALWORK12 == 0 THEN
+		
+			//ＳＥ：ブッブー
+			
+		//開いている場合
+		ELSE
+		
+		ENDIF
+
 EVENT_END
 
 /**************************************************************/
 /*     水ボタン２　ハズレ　ＰＯＳ発動					      */
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_mizu_02
+
+	//水ボタン２踏んだアニメーション
+	_GYM_ANTI_SW_ON(4)
+
+	//分岐：水カーテンが開いている？
+	
+		//開いていない場合
+		IF $LOCALWORK12 == 0 THEN
+		
+			//ＳＥ：ブッブー
+			
+		//開いている場合
+		ELSE
+		
+		ENDIF
 
 EVENT_END
 
@@ -643,12 +853,63 @@ EVENT_END
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_kusa_03
 
+	//草ボタン３踏んだアニメーション
+	_GYM_ANTI_SW_ON(8)
+
+	//分岐：草カーテンが開いている？
+	
+		//開いていない場合
+		IF $LOCALWORK13 == 0 THEN
+		
+			//ＳＥ：ブッブー
+			
+		//開いている場合
+		ELSE
+		
+		ENDIF
+
 EVENT_END
 
 /**************************************************************/
 /*     炎ボタン３　アタリ　ＰＯＳ発動					      */
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_honoo_03
+
+	//炎ボタン３踏んだアニメーション
+	_GYM_ANTI_SW_ON(0)
+
+	//分岐：草カーテンが開いている？
+	
+		//開いていない場合
+		IF $LOCALWORK13 == 0 THEN
+		
+			//透明OBJの移動
+			_OBJ_ANIME( C01GYM0101_CURTAIN_03A, anm_curtain_open_a )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_03B, anm_curtain_open_a )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_03C, anm_curtain_open_a )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_03D, anm_curtain_open_a )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_03E, anm_curtain_open_b )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_03F, anm_curtain_open_b )
+			_OBJ_ANIME( C01GYM0101_CURTAIN_03G, anm_curtain_open_b )
+			_OBJ_ANIME_WAIT()
+			
+			//草カーテン開くアニメーション
+			_GYM_ANTI_OPEN_DOOR(2)
+
+			
+			//ＳＥ：ピンポーンピンポーン
+			
+			//===========フラグワーク操作===========//
+	
+			//水カーテン開く
+			$LOCALWORK13 = 1
+	
+			//======================================//
+			
+		//開いている場合
+		ELSE
+		
+		ENDIF
 
 EVENT_END
 
@@ -657,5 +918,114 @@ EVENT_END
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_mizu_03
 
+	//水ボタン３踏んだアニメーション
+	_GYM_ANTI_SW_ON(7)
+
+	//分岐：草カーテンが開いている？
+	
+		//開いていない場合
+		IF $LOCALWORK13 == 0 THEN
+		
+			//ＳＥ：ブッブー
+			
+		//開いている場合
+		ELSE
+		
+		ENDIF
+
 EVENT_END
+
+/**************************************************************/
+/*     炎カーテン	１番目	Ａ～Ｇ						      */
+/**************************************************************/
+EVENT_START	ev_c01gym0101_curtain_01a
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_01b
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_01c
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_01d
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_01e
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_01f
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_01g
+
+EVENT_END
+
+/**************************************************************/
+/*     水カーテン	２番目	Ａ～Ｇ						      */
+/**************************************************************/
+EVENT_START	ev_c01gym0101_curtain_02a
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_02b
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_02c
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_02d
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_02e
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_02f
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_02g
+
+EVENT_END
+
+/**************************************************************/
+/*     草カーテン	３番目	Ａ～Ｇ						      */
+/**************************************************************/
+EVENT_START	ev_c01gym0101_curtain_03a
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_03b
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_03c
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_03d
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_03e
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_03f
+
+EVENT_END
+
+EVENT_START	ev_c01gym0101_curtain_03g
+
+EVENT_END
+
 

@@ -6,7 +6,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../../prog/include/msg/script/msg_c01r0101.h"
-  //.include  "c01r0101.h"
+  .include  "c01r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -15,10 +15,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c01r0101_talkobj_inventor
-_EVENT_DATA    ev_c01r0101_talkobj_bigman
-_EVENT_DATA    ev_c01r0101_talkobj_woman1
-_EVENT_DATA    ev_c01r0101_talkobj_boy3
+_EVENT_DATA    ev_c01r0101_inventor_01
+_EVENT_DATA    ev_c01r0101_bigman_01
+_EVENT_DATA    ev_c01r0101_woman1_01
+_EVENT_DATA    ev_c01r0101_boy3_01
 _EVENT_DATA_END
 
 
@@ -43,13 +43,13 @@ _EVENT_DATA_END
 /**************************************************************/
 
 /**************************************************************/
-/*  C01R0101 INVENTORの会話用イベントスクリプト*/
+/*  C01R0101 INVENTORの会話用イベントスクリプト				  */
 /**************************************************************/
 
 	//【仮】大幅な修正が必要。作成しなおし
 
 
-EVENT_START   ev_c01r0101_talkobj_inventor
+EVENT_START   ev_c01r0101_inventor_01
 	_TALK_OBJ_START()
 
 	//【仮】Cギア入手イベント
@@ -66,7 +66,7 @@ EVENT_END
 /**************************************************************/
 /*  C01R0101 BIGMANの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c01r0101_talkobj_bigman
+EVENT_START   ev_c01r0101_bigman_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0101_bigman_01 )
 EVENT_END
 
@@ -74,14 +74,26 @@ EVENT_END
 /**************************************************************/
 /*  C01R0101 WOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c01r0101_talkobj_woman1
+EVENT_START   ev_c01r0101_woman1_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0101_woman1_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C01R0101 BOY3の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c01r0101_talkobj_boy3
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0101_boy3_01 )
+EVENT_START   ev_c01r0101_boy3_01
+
+
+//【仮】ジムバッジフラグ未実装のため、仮フラグ
+	IF FLAG_ON( FH_01 ) THEN
+
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0101_boy3_02 )
+
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0101_boy3_01 )
+	
+	ENDIF	
+
 EVENT_END
 
