@@ -103,13 +103,13 @@ enum
 	PLT_BG_FONT_M				= 15,	//フォント色
 
 	//メインOBJ
-	PLT_OBJ_CURSOR_M	= 0,		//文字列の下のバーOBJ
-	PLT_OBJ_PC_M	=	1,				//PC
+	PLT_OBJ_CURSOR_M		= 0,	//文字列の下のバーOBJ
+	PLT_OBJ_PC_M				=	1,	//PC
 
 	//サブBG
-	PLT_BG_S	= 0,
+	PLT_BG_S						= 0,
 	//サブOBJ
-	PLT_OBJ_S	= 0,
+	PLT_OBJ_S						= 0,
 } ;
 
 //-------------------------------------
@@ -122,7 +122,6 @@ typedef enum
 	RESID_OBJ_COMMON_CEL,
 	RESID_OBJ_MAX,
 } RESID;
-
 
 //-------------------------------------
 ///	OBJ
@@ -172,7 +171,6 @@ typedef enum
 	STRINPUT_SP_CHANGE_DAKUTEN,			//濁点
 	STRINPUT_SP_CHANGE_HANDAKUTEN,	//半濁点
 } STRINPUT_SP_CHANGE;
-
 
 //-------------------------------------
 ///	KEYMAP
@@ -244,6 +242,12 @@ static const u8 sc_keymove_default[KEYMAP_KEYMOVE_BUFF_MAX]	=
 #define KEYBOARD_BMPWIN_Y		(5)
 #define KEYBOARD_BMPWIN_W		(26)
 #define KEYBOARD_BMPWIN_H		(15)
+//モード切替移動
+#define KYEBOARD_CHANGEMOVE_START_Y			(0)
+#define KYEBOARD_CHANGEMOVE_END_Y				(-88)
+#define KYEBOARD_CHANGEMOVE_SYNC				(30)
+#define KYEBOARD_CHANGEMOVE_START_ALPHA	(0)
+#define KYEBOARD_CHANGEMOVE_END_ALPHA		(16)
 //状態
 typedef enum
 {	
@@ -380,9 +384,9 @@ typedef struct
 //=====================================
 typedef struct 
 {
-	KEYMAP_WORK			keymap;	//キー情報
-	KEYANM_WORK			keyanm;	//キーアニメ
-	GFL_POINT				cursor;	//カーソル位置
+	KEYMAP_WORK			keymap;			//キー情報
+	KEYANM_WORK			keyanm;			//キーアニメ
+	GFL_POINT				cursor;			//カーソル位置
 	GFL_BMPWIN			*p_bmpwin;	//BMPWIN
 	KEYBOARD_STATE	state;			//状態
 	KEYBOARD_INPUT	input;			//入力種類
@@ -393,6 +397,12 @@ typedef struct
 	HEAPID					heapID;			//ヒープID(Main内で読みこみがあるため)
 	NAMEIN_INPUTTYPE mode;			//入力モード（かな・ABCとか）
 	BOOL						is_shift;		//シフトを押しているか
+	//以下、モード切替演出用
+	u16							change_move_cnt;	//モード切替のときのアニメカウント
+	u16							change_move_seq;	//モード切替のときのシーケンス
+	BOOL						is_change_anm;		//モード切替のアニメリクエスト
+	NAMEIN_INPUTTYPE change_mode;			//モード切替する入力モード（かな・ABCとか）
+	BOOL						is_btn_move;			//ボタンも動作するか
 } KEYBOARD_WORK;
 //-------------------------------------
 ///	メインワーク
@@ -504,10 +514,9 @@ static KEYBOARD_STATE KEYBOARD_GetState( const KEYBOARD_WORK *cp_wk );
 static KEYBOARD_INPUT KEYBOARD_GetInput( const KEYBOARD_WORK *cp_wk, STRCODE *p_str );
 static BOOL KEYBOARD_IsShift( const KEYBOARD_WORK *cp_wk );
 static BOOL KEYBOARD_PrintMain( KEYBOARD_WORK *p_wk );
-static void Keyboard_StartMove( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode );
-static BOOL Keyboard_IsMove( const KEYBOARD_WORK *cp_wk );
-static void Keyboard_StartKeyAnm( const KEYBOARD_WORK *cp_wk );
-static void Keyboard_MainKeyAnm( const KEYBOARD_WORK *cp_wk );
+static BOOL Keyboard_StartMove( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode );
+static BOOL Keyboard_MainMove( KEYBOARD_WORK *p_wk );
+static void Keyboard_ChangeMode( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode );
 //-------------------------------------
 ///	その他
 //=====================================
@@ -534,6 +543,9 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
  *					外部参照
 */
 //=============================================================================
+//-------------------------------------
+///	プロセステーブル
+//=====================================
 const GFL_PROC_DATA NameInputProcData =
 {	
 	NAMEIN_PROC_Init,
@@ -2654,25 +2666,9 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk )
 					/* fallthrough */
 				case KEYMAP_KEYTYPE_QWERTY:	//ローマ字モード
 					p_wk->input = KEYBOARD_INPUT_CHAGETYPE;
-					p_wk->mode	= type - KEYMAP_KEYTYPE_KANA;
-
-					KEYMAP_Delete( &p_wk->keymap );
-					KEYMAP_Create( &p_wk->keymap, p_wk->mode, p_wk->heapID );
-
-					GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );
-					KEYMAP_Print( &p_wk->keymap, &p_wk->util, p_wk->p_que, p_wk->p_font, p_wk->heapID );
-
-					if( type == KEYMAP_KEYTYPE_QWERTY )
+					if( Keyboard_StartMove( p_wk, type - KEYMAP_KEYTYPE_KANA ) )
 					{	
-							GFL_ARC_UTIL_TransVramScreen( ARCID_NAMEIN_GRA, NARC_namein_gra_name_romaji_NSCR,
-									BG_FRAME_KEY_M, 0, 0, FALSE, p_wk->heapID );
-							GFL_BG_SetVisible( BG_FRAME_BTN_M, FALSE );
-					}
-					else
-					{	
-						GFL_ARC_UTIL_TransVramScreen( ARCID_NAMEIN_GRA, NARC_namein_gra_name_kana_NSCR,
-								BG_FRAME_KEY_M, 0, 0, FALSE, p_wk->heapID );
-						GFL_BG_SetVisible( BG_FRAME_BTN_M, TRUE );
+						p_wk->state	= KEYBOARD_STATE_MOVE;
 					}
 					break;
 
@@ -2704,12 +2700,19 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk )
 					KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_DECIDE, &rect );
 				}
 			}
-			break;
 		}
+		break;
+
 	case KEYBOARD_STATE_INPUT:	//入力
 		break;
+
 	case KEYBOARD_STATE_MOVE:		//移動中
+		if( Keyboard_MainMove( p_wk ) )
+		{	
+			p_wk->state	= KEYBOARD_STATE_WAIT;
+		}
 		break;
+
 	default:
 		GF_ASSERT(0);
 	}
@@ -2789,45 +2792,177 @@ static BOOL KEYBOARD_PrintMain( KEYBOARD_WORK *p_wk )
  *
  *	@param	KEYBOARD_WORK *p_wk	ワーク
  *	@param	mode								モード
+ *	@retval TRUE 開始可能	FALSE不可能
  */
 //-----------------------------------------------------------------------------
-static void Keyboard_StartMove( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode )
+static BOOL Keyboard_StartMove( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode )
 {	
+	if( p_wk->change_mode != mode )
+	{	
+		p_wk->change_mode			= mode;
+		p_wk->change_move_cnt	= 0;
+		p_wk->change_move_seq	= 0;
+		p_wk->is_change_anm		= TRUE;
+/*
+		G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG3,
+			GX_BLEND_PLANEMASK_BG0 |GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BD,
+			KYEBOARD_CHANGEMOVE_START_ALPHA, 16 );
+*/
+	
+		p_wk->is_btn_move	 = p_wk->change_mode == NAMEIN_INPUTTYPE_QWERTY
+												|| p_wk->mode == NAMEIN_INPUTTYPE_QWERTY;
 
+	
+		if( p_wk->is_btn_move )
+		{	
+			//フォントとフレームとボタンが動く
+			G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 |
+					GX_BLEND_PLANEMASK_BG3, KYEBOARD_CHANGEMOVE_START_ALPHA );
+		}
+		else
+		{
+			//フォントとフレームだけ動く
+			G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG3,
+					KYEBOARD_CHANGEMOVE_START_ALPHA );
+		}
+		return TRUE;
+	}
+	return FALSE;
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	キーボード	入力モード変更時の動作アニメ動作チェック
+ *	@brief	キーボード	入力モード変更時の動作アニメ動作
  *
  *	@param	KEYBOARD_WORK *p_wk	ワーク
  *
- *	@retval	TRUE動作中	FALSE処理していない
+ *	@retval	TRUE終了	FALSE処理中or処理していない
  */
 //-----------------------------------------------------------------------------
-static BOOL Keyboard_IsMove( const KEYBOARD_WORK *cp_wk )
-{	
-	return 0;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	キーボード	キーを押したときのアニメ開始
- *
- *	@param	const KEYBOARD_WORK *cp_wk	ワーク
- */
-//-----------------------------------------------------------------------------
-static void Keyboard_StartKeyAnm( const KEYBOARD_WORK *cp_wk )
-{	
-
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	キーボード	キーを押したときのアニメ処理中
- *
- *	@param	const KEYBOARD_WORK *cp_wk	ワーク
- */
-//-----------------------------------------------------------------------------
-static void Keyboard_MainKeyAnm( const KEYBOARD_WORK *cp_wk )
+static BOOL Keyboard_MainMove( KEYBOARD_WORK *p_wk )
 {
+	enum
+	{	
+		SEQ_DOWN_MAIN,
+		SEQ_CHANGE_MODE,
+		SEQ_UP_INIT,
+		SEQ_UP_MAIN,
+		SEQ_END,
+	};
+	s16 scroll_y;
+	s16	alpha;
+
+	if( p_wk->is_change_anm )
+	{	
+		switch( p_wk->change_move_seq )
+		{	
+		case SEQ_DOWN_MAIN:
+			scroll_y	= KYEBOARD_CHANGEMOVE_START_Y
+				+ (KYEBOARD_CHANGEMOVE_END_Y-KYEBOARD_CHANGEMOVE_START_Y)
+				* p_wk->change_move_cnt / KYEBOARD_CHANGEMOVE_SYNC;
+
+			alpha			= KYEBOARD_CHANGEMOVE_START_ALPHA
+				- (KYEBOARD_CHANGEMOVE_END_ALPHA-KYEBOARD_CHANGEMOVE_START_ALPHA)
+				* p_wk->change_move_cnt / KYEBOARD_CHANGEMOVE_SYNC;
+
+			//G2_ChangeBlendAlpha( alpha, 16 );
+			G2_ChangeBlendBrightness( alpha );
+			GFL_BG_SetScroll( BG_FRAME_KEY_M, GFL_BG_SCROLL_Y_SET, scroll_y );
+			GFL_BG_SetScroll( BG_FRAME_FONT_M, GFL_BG_SCROLL_Y_SET, scroll_y );
+			if( p_wk->is_btn_move )
+			{	
+				GFL_BG_SetScroll( BG_FRAME_BTN_M, GFL_BG_SCROLL_Y_SET, scroll_y );
+			}
+			if( p_wk->change_move_cnt++ > KYEBOARD_CHANGEMOVE_SYNC )
+			{	
+				p_wk->change_move_cnt	= 0;
+				p_wk->change_move_seq			= SEQ_CHANGE_MODE;
+			}
+			break;
+
+		case SEQ_CHANGE_MODE:
+			Keyboard_ChangeMode( p_wk, p_wk->change_mode );
+			p_wk->change_move_seq	= SEQ_UP_INIT;
+			break;
+
+		case SEQ_UP_INIT:
+			p_wk->change_move_cnt	= KYEBOARD_CHANGEMOVE_SYNC;
+			p_wk->change_move_seq	= SEQ_UP_MAIN;
+			break;
+
+		case SEQ_UP_MAIN:
+			scroll_y	= KYEBOARD_CHANGEMOVE_START_Y
+				+ (KYEBOARD_CHANGEMOVE_END_Y-KYEBOARD_CHANGEMOVE_START_Y)
+				* p_wk->change_move_cnt / KYEBOARD_CHANGEMOVE_SYNC;
+
+			alpha			= KYEBOARD_CHANGEMOVE_START_ALPHA
+				- (KYEBOARD_CHANGEMOVE_END_ALPHA-KYEBOARD_CHANGEMOVE_START_ALPHA)
+				* p_wk->change_move_cnt / KYEBOARD_CHANGEMOVE_SYNC;
+
+			//G2_ChangeBlendAlpha( alpha, 16 );
+			G2_ChangeBlendBrightness( alpha );
+			GFL_BG_SetScroll( BG_FRAME_KEY_M, GFL_BG_SCROLL_Y_SET, scroll_y );
+			GFL_BG_SetScroll( BG_FRAME_FONT_M, GFL_BG_SCROLL_Y_SET, scroll_y );
+			if( p_wk->is_btn_move )		
+			{	
+				GFL_BG_SetScroll( BG_FRAME_BTN_M, GFL_BG_SCROLL_Y_SET, scroll_y );
+			}
+			if( p_wk->change_move_cnt-- == 0 )
+			{	
+				p_wk->change_move_seq	= SEQ_END;
+			}
+			break;
+
+		case SEQ_END:
+			G2_BlendNone();
+			p_wk->is_change_anm	= FALSE;
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	キーボード	モード切替
+ *
+ *	@param	KEYBOARD_WORK *p_wk	ワーク
+ *	@param	mode								モード
+ */
+//-----------------------------------------------------------------------------
+static void Keyboard_ChangeMode( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode )
+{	
+	if( p_wk->mode != mode )
+	{	
+		//キー配列作成しなおし
+		KEYMAP_Delete( &p_wk->keymap );
+		KEYMAP_Create( &p_wk->keymap, mode, p_wk->heapID );
+
+		//キー配列描画
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );
+		KEYMAP_Print( &p_wk->keymap, &p_wk->util, p_wk->p_que, p_wk->p_font, p_wk->heapID );
+
+		//モードにより、読み込むスクリーンを切り替え
+		if( mode == NAMEIN_INPUTTYPE_QWERTY )
+		{	
+			GFL_ARC_UTIL_TransVramScreen( ARCID_NAMEIN_GRA, NARC_namein_gra_name_romaji_NSCR,
+					BG_FRAME_KEY_M, 0, 0, FALSE, p_wk->heapID );
+			GFL_BG_SetVisible( BG_FRAME_BTN_M, FALSE );
+
+			//@todoカーソル位置変更 qwertになったとき、もどるとき
+			
+
+			//@todo変換バッファを消す処理
+		}
+		else
+		{	
+			GFL_ARC_UTIL_TransVramScreen( ARCID_NAMEIN_GRA, NARC_namein_gra_name_kana_NSCR,
+					BG_FRAME_KEY_M, 0, 0, FALSE, p_wk->heapID );
+			GFL_BG_SetVisible( BG_FRAME_BTN_M, TRUE );
+		}
+
+		//変更したのでモード代入
+		p_wk->mode	= mode;
+	}
 }
 //=============================================================================
 /**
