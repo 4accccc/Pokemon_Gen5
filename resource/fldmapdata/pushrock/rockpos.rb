@@ -1,8 +1,10 @@
 #=======================================================================
 # rockpos.rb
 # かいりきで汚水わが参照、保存する座標データ位置を作成
-# land_list.rb land.csv..
-# land.csv テキスト変換済みの地形データ管理表 複数指定可能
+#
+# 引数　rockpos.rb fpath_csv fpath_cdat
+# fpath_csv 管理表csvファイルパス
+# fpath_cdat 作成するcdatファイルパス
 #=======================================================================
 $KCODE = "SJIS"
 
@@ -14,12 +16,12 @@ STR_PUSHROCK_DATA_END = "ROCKPOS_DATA_END"
 #=======================================================================
 # 変換
 #=======================================================================
-fname_csv = ARGV[0]
-fname_cdat = ARGV[1]
-file_csv = File.open( fname_csv, "r" )
-file_cdat = File.open( fname_cdat, "w" )
+fpath_csv = ARGV[0]
+fpath_cdat = ARGV[1]
+file_csv = File.open( fpath_csv, "r" )
+file_cdat = File.open( fpath_cdat, "w" )
 
-file_cdat.printf( "//%s\n", fname_cdat )
+file_cdat.printf( "//%s\n", fpath_cdat )
 file_cdat.printf( "//このファイルはコンバータから出力されました\n\n" )
 file_cdat.printf( "#define %s (0xffff)\n\n", STR_PUSHROCK_DATA_END )
 file_cdat.printf( "//[Zone ID, OBJ ID, Use Number, Padding 4byte]\n" )
