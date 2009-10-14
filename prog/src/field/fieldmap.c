@@ -752,11 +752,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
   if( GAMESYSTEM_GetEvent(gsys) == NULL) {
     //登録テーブルごとに個別のメイン処理を呼び出し
-    fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos );
-    
-    //Mapシステムに位置を渡している。
-    //これがないとマップ移動しないので注意
-    FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
+    fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos ); 
   }
 
   // 地名表示システム動作処理
@@ -766,7 +762,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   FIELD_PLAYER_Update( fieldWork->field_player );
 
   //通信用処理(プレイヤーの座標の設定とか
-  IntrudeField_UpdateCommSystem( fieldWork, fieldWork->gsys, fieldWork->field_player );
+  IntrudeField_UpdateCommSystem( fieldWork, fieldWork->gsys, fieldWork->field_player ); 
   Union_Main(GAMESYSTEM_GetGameCommSysPtr(gsys), fieldWork);
   
   FIELD_SUBSCREEN_Main(fieldWork->fieldSubscreenWork);
@@ -795,8 +791,12 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     fieldWork->now_pos = *fieldWork->target_now_pos_p;
   }
 
+  //Mapシステムに位置を渡している。
+  //これがないとマップ移動しないので注意
+  FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
+
   // Visualにかかわる処理
-	fldmap_G3D_Control( fieldWork );
+	fldmap_G3D_Control( fieldWork );        
 
   return MAINSEQ_RESULT_CONTINUE;
 }
