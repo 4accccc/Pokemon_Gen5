@@ -162,8 +162,8 @@ VMCMD_RESULT EvCmdGetWeek( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetBadgeFlag( VMHANDLE * core, void *wk )
 {
-  u16 badge_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  u16 badge_id = SCRCMD_GetVMWorkValue( core, wk );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
 
   *ret_wk = MyStatus_GetBadgeFlag( GAMEDATA_GetMyStatus(gdata), badge_id );
