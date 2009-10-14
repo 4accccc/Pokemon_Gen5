@@ -2,21 +2,29 @@
 	Archive file index definition.
 	File: fld3d_ci.naix
 
-	This file was created by NINTENDO NITRO-System Archiver.
+	This file was created by NINTENDO TWL-System Archiver.
 
-<<<<<<< .mine
-	Update:2009-10-02T10:28:15
-=======
-	Update:2009-10-02T11:43:32
->>>>>>> .r8604
+	Update:2009-10-14T15:24:30
  *****************************************************************************/
 
 #ifndef NARC_FLD3D_CI_NAIX_
 #define NARC_FLD3D_CI_NAIX_
 
 enum {
-	NARC_fld3d_ci_test_spa = 0,
-	NARC_fld3d_ci_test_cart_nsbmd = 1
+	NARC_fld3d_ci_cut_get1_bg_nsbmd = 0,
+	NARC_fld3d_ci_cut_get1_bg_nsbca = 1,
+	NARC_fld3d_ci_cut_get1_bg_nsbma = 2,
+	NARC_fld3d_ci_cut_get1_item_nsbmd = 3,
+	NARC_fld3d_ci_cut_get1_item_nsbca = 4,
+	NARC_fld3d_ci_cut_get1_item_nsbta = 5,
+	NARC_fld3d_ci_cut_get2_bg_nsbmd = 6,
+	NARC_fld3d_ci_cut_get2_bg_nsbca = 7,
+	NARC_fld3d_ci_cut_get2_bg_nsbta = 8,
+	NARC_fld3d_ci_cut_get2_item_nsbmd = 9,
+	NARC_fld3d_ci_cut_get2_item_nsbma = 10,
+	NARC_fld3d_ci_cut_get2_item_nsbta = 11,
+	NARC_fld3d_ci_get1_spa = 12,
+	NARC_fld3d_ci_get2_spa = 13
 };
 
 /* NARC_FLD3D_CI_NAIX_ */

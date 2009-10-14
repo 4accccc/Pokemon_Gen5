@@ -11,7 +11,7 @@ def GetIdxByStr(vec, str)
     ret_idx = vec.index(str)
     if ret_idx == nil then
       #エラー
-      p "ERROR::指定文字列が見つからない"
+      printf("ERROR::指定文字列が見つからない %s\n",str)
       exit -1
     end
   end
@@ -28,8 +28,15 @@ list_file = open("ci_list","w")
 vec = Array.new
 while line = res_file.gets
   file_name = line.delete("\"")
-  tmp = /\./.match(file_name)
-  name = tmp.pre_match
+  tmp1 = file_name.sub(/.nsbmd/,".imd")
+  tmp2 = tmp1.sub(/.nsbca/,".ica")
+  tmp3 = tmp2.sub(/.nsbta/,".ita")
+  tmp4 = tmp3.sub(/.nsbtp/,".itp")
+  tmp5 = tmp4.sub(/.nsbma/,".ima")
+  tmp = tmp5.sub(/.nsbva/,".iva")
+  name = tmp.chomp("\n").chomp("\r")
+#  tmp = /\./.match(file_name)
+#  name = tmp.pre_match
   p name
   vec << name
 end

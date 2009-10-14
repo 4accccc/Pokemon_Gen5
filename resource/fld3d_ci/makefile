@@ -33,6 +33,9 @@ TARGETDIR	= $(PROJECT_ARCDIR)
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
 
+
+include nsbdata
+
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
@@ -75,7 +78,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 endif
 
 #コピー実行する
-$(TARGETDIR)/$(targetname).narc:  $(targetname).narc 
+$(TARGETDIR)/$(targetname).narc:  $(targetname).narc
 	@echo copying $(targetname).narc
 	@$(COPY) $(targetname).narc $(TARGETDIR)
 	@$(COPY) $(targetname).naix $(TARGETDIR)
@@ -88,13 +91,25 @@ $(TARGETDIR)/$(targetname2).narc:  $(targetname2).narc
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 # コピー先のnarcが古い場合実行する
-$(targetname).narc:
-	@g3dcvtr test_cart.imd
-	nnsarc -cl -l -n -i $(NARCNAME) -S fld_spa.lst > arc_rsult.txt
+$(targetname).narc: $(NSB_DATA)
+	nnsarc -cl -l -n -i $(NARCNAME) -S fld_ci.lst > arc_rsult.txt
 
 $(targetname2).narc: fld3d_ci.xls
 	ruby $(XLS_CNV) -c fld3d_ci.xls > fld3d_ci.csv
-	ruby setupdat.rb fld3d_ci.csv fld_spa.lst
+	ruby setupdat.rb fld3d_ci.csv fld_ci.lst
 	nnsarc -cl -l -n -i $(NARCNAME2) -S ci_list > arc_rsult2.txt
+
+%.nsbmd: data/%.imd
+	@g3dcvtr $<
+
+%.nsbca: data/%.ica
+	@g3dcvtr $<
+
+%.nsbta: data/%.ita
+	@g3dcvtr $<
+
+%.nsbma: data/%.ima
+	@g3dcvtr $<
+	
 endif
 
