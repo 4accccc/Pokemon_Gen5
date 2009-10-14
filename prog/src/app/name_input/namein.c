@@ -100,6 +100,7 @@ enum
 	PLT_BG_KEY_NORMAL_M	= 1,	//背景基本色パレット
 	PLT_BG_KEY_MOVE_M		= 2,	//背景移動時パレット
 	PLT_BG_KEY_DECIDE_M	= 3,	//背景決定用パレット
+	PLT_BG_KEY_PRESS_M	= 4,	//押し続け用パレット
 
 	PLT_BG_FONT_M				= 15,	//フォント色
 
@@ -345,6 +346,8 @@ typedef struct
 	GFL_RECT		range;			//ボタンの矩形
 	KEYANM_TYPE type;				//アニメの種類
 	BOOL				is_start;		//開始フラグ
+	BOOL				is_shift;		//シフト押下フラグ
+	NAMEIN_INPUTTYPE mode;	//モード
 } KEYANM_WORK;
 
 //-------------------------------------
@@ -499,10 +502,10 @@ static GFL_CLWK *OBJ_GetClwk( const OBJ_WORK *cp_wk, CLWKID clwkID );
 //-------------------------------------
 ///	パレットアニメ
 //=====================================
-static void KEYANM_Init( KEYANM_WORK *p_wk, HEAPID heapID );
+static void KEYANM_Init( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, HEAPID heapID );
 static void KEYANM_Exit( KEYANM_WORK *p_wk );
-static void KEYANM_Start( KEYANM_WORK *p_wk, KEYANM_TYPE type, const GFL_RECT *cp_rect );
-static void KEYANM_Main( KEYANM_WORK *p_wk );
+static void KEYANM_Start( KEYANM_WORK *p_wk, KEYANM_TYPE type, const GFL_RECT *cp_rect, BOOL is_shift, NAMEIN_INPUTTYPE mode );
+static void KEYANM_Main( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode );
 static void KEYANM_Reset( KEYANM_WORK *p_wk );
 static BOOL KeyAnm_PltFade( u16 *p_buff, u16 *p_cnt, u16 add, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end );
 //-------------------------------------
@@ -769,6 +772,8 @@ static void BG_Init( BG_WORK *p_wk, HEAPID heapID )
 				PALTYPE_MAIN_BG, PLT_BG_STR_M*0x20, 0, heapID );
 		GFL_ARCHDL_UTIL_TransVramPaletteEx( p_handle, NARC_namein_gra_name_bg_NCLR,
 				PALTYPE_MAIN_BG, PLT_BG_KEY_MOVE_M*0x20, PLT_BG_KEY_DECIDE_M*0x20, 0x20, heapID );
+		GFL_ARCHDL_UTIL_TransVramPaletteEx( p_handle, NARC_namein_gra_name_bg_NCLR,
+				PALTYPE_MAIN_BG, PLT_BG_KEY_MOVE_M*0x20, PLT_BG_KEY_PRESS_M*0x20, 0x20, heapID );
 
 		//CHR
 		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_namein_gra_name_bg_NCGR, 
@@ -973,16 +978,18 @@ static GFL_CLWK *OBJ_GetClwk( const OBJ_WORK *cp_wk, CLWKID clwkID )
  *	@brief	キーアニメ	初期化
  *
  *	@param	KEYANM_WORK *p_wk	ワーク
+ *	@param	mode							モード
  *	@param	heapID						ヒープID
  */
 //-----------------------------------------------------------------------------
-static void KEYANM_Init( KEYANM_WORK *p_wk, HEAPID heapID )
+static void KEYANM_Init( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, HEAPID heapID )
 {	
 	void *p_buff;
 	NNSG2dPaletteData	*p_plt;
 
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(KEYANM_WORK) );
+	p_wk->mode	= mode;
 
 	//もとのパレットから色情報を保存
 	p_buff	= GFL_ARC_UTIL_LoadPalette( ARCID_NAMEIN_GRA, NARC_namein_gra_name_bg_NCLR, &p_plt, heapID );
@@ -1006,6 +1013,9 @@ static void KEYANM_Init( KEYANM_WORK *p_wk, HEAPID heapID )
 
 	//パレット破棄
 	GFL_HEAP_FreeMemory( p_buff );
+
+	//モードボタン押下のため
+	KEYANM_Start( p_wk, KEYANM_TYPE_NONE, &p_wk->range, FALSE, mode );	
 }
 //----------------------------------------------------------------------------
 /**
@@ -1026,24 +1036,49 @@ static void KEYANM_Exit( KEYANM_WORK *p_wk )
  *	@param	KEYANM_WORK *p_wk		ワーク
  *	@param	type								移動タイプ
  *	@param	GFL_RECT *cp_rect		矩形
+ *	@param	is_shift						シフトを押しているか
+ *	@param	mode								モード
  */
 //-----------------------------------------------------------------------------
-static void KEYANM_Start( KEYANM_WORK *p_wk, KEYANM_TYPE type, const GFL_RECT *cp_rect )
+static void KEYANM_Start( KEYANM_WORK *p_wk, KEYANM_TYPE type, const GFL_RECT *cp_rect, BOOL is_shift, NAMEIN_INPUTTYPE mode )
 {	
-	p_wk->range	= *cp_rect;
-	p_wk->type	= type;
+	p_wk->type			= type;
+	p_wk->is_shift	= is_shift;
+	p_wk->mode			= mode;
 
 	//他のキーを全て元に戻す
 	GFL_BG_ChangeScreenPalette( BG_FRAME_BTN_M, 0, 0, 32, 24, PLT_BG_KEY_NORMAL_M );
 	GFL_BG_ChangeScreenPalette( BG_FRAME_KEY_M, 0, 0, 32, 24, PLT_BG_KEY_NORMAL_M );
 
 	//キーの色を張替え
-	GFL_BG_ChangeScreenPalette( BG_FRAME_BTN_M, cp_rect->left, cp_rect->top,
-			cp_rect->right - cp_rect->left, cp_rect->bottom - cp_rect->top,
-			PLT_BG_KEY_NORMAL_M + type );
-	GFL_BG_ChangeScreenPalette( BG_FRAME_KEY_M, cp_rect->left, cp_rect->top,
-			cp_rect->right - cp_rect->left, cp_rect->bottom - cp_rect->top,
-			PLT_BG_KEY_NORMAL_M + type );
+	if( cp_rect )
+	{	
+		p_wk->range	= *cp_rect;
+		
+		GFL_BG_ChangeScreenPalette( BG_FRAME_BTN_M, cp_rect->left, cp_rect->top,
+				cp_rect->right - cp_rect->left, cp_rect->bottom - cp_rect->top,
+				PLT_BG_KEY_NORMAL_M + type );
+		GFL_BG_ChangeScreenPalette( BG_FRAME_KEY_M, cp_rect->left, cp_rect->top,
+				cp_rect->right - cp_rect->left, cp_rect->bottom - cp_rect->top,
+				PLT_BG_KEY_NORMAL_M + type );
+	}
+
+	//SHIFT押していれば、そこを色変え
+	if( is_shift && mode == NAMEIN_INPUTTYPE_QWERTY )
+	{	
+		GFL_BG_ChangeScreenPalette( BG_FRAME_KEY_M, 3, 16,
+			4, 3, PLT_BG_KEY_PRESS_M );
+		GFL_BG_ChangeScreenPalette( BG_FRAME_KEY_M, 23, 16,
+			4, 3, PLT_BG_KEY_PRESS_M );
+	}
+
+	//モードのボタンを色買え
+	{	
+		GFL_BG_ChangeScreenPalette( BG_FRAME_KEY_M, 3 + mode * 2, 20,
+			2, 3, PLT_BG_KEY_PRESS_M );
+		GFL_BG_ChangeScreenPalette( BG_FRAME_BTN_M, 3 + mode * 2, 20,
+			2, 3, PLT_BG_KEY_PRESS_M );
+	}
 
 	//スクリーンリクエスト
 	GFL_BG_LoadScreenReq( BG_FRAME_BTN_M );
@@ -1053,23 +1088,27 @@ static void KEYANM_Start( KEYANM_WORK *p_wk, KEYANM_TYPE type, const GFL_RECT *c
 	GFL_STD_MemClear( p_wk->cnt, sizeof(u16)*0x10 );
 	p_wk->decide_cnt	= 0;
 
-	p_wk->is_start	= TRUE;
-
+	if( type != KEYANM_TYPE_NONE )
+	{	
+		p_wk->is_start	= TRUE;
+	}
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief	キーアニメ	メイン処理
  *
  *	@param	KEYANM_WORK *p_wk ワーク
+ *	@param	NAMEIN_INPUTTYPE	現在のモード
  */
 //-----------------------------------------------------------------------------
-static void KEYANM_Main( KEYANM_WORK *p_wk )
+static void KEYANM_Main( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode )
 {	
 	u8 plt_num;
 	u16 add;
 	int i;
 	BOOL is_end;
 
+	//モード別おす処理
 	if( p_wk->is_start )
 	{	
 		//モード別処理
@@ -1086,7 +1125,7 @@ static void KEYANM_Main( KEYANM_WORK *p_wk )
 			//終了したら自分でモード切替
 			if( p_wk->decide_cnt++ > KEYANM_DECIDE_CNT )
 			{	
-				KEYANM_Start( p_wk, KEYANM_TYPE_MOVE, &p_wk->range );
+				KEYANM_Start( p_wk, KEYANM_TYPE_MOVE, &p_wk->range, p_wk->is_shift, p_wk->mode );
 			}
 			break;
 		}
@@ -1096,6 +1135,12 @@ static void KEYANM_Main( KEYANM_WORK *p_wk )
 		{	
 			KeyAnm_PltFade( &p_wk->color[i], &p_wk->cnt[i], add, plt_num, i, p_wk->plt_normal[i], p_wk->plt_flash[i] );
 		}
+	}
+
+	//モード切替時のリフレッシュ
+	if( p_wk->mode != mode )
+	{	
+		KEYANM_Start( p_wk, KEYANM_TYPE_NONE, &p_wk->range, p_wk->is_shift, mode );
 	}
 }
 //----------------------------------------------------------------------------
@@ -2675,7 +2720,7 @@ static void KEYBOARD_Init( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode, GFL_FONT 
 	p_wk->mode			= mode;
 
 	//キーアニメ作成
-	KEYANM_Init( &p_wk->keyanm, heapID );
+	KEYANM_Init( &p_wk->keyanm, mode, heapID );
 
 	//キーマップ作成
 	KEYMAP_Create( &p_wk->keymap, mode, heapID );
@@ -2779,7 +2824,7 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk )
 					//移動アニメ
 					if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
 					{	
-						KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect );
+						KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );
 					}
 				}
 				if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
@@ -2852,7 +2897,7 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk )
 				//決定アニメ
 				if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
 				{	
-					KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_DECIDE, &rect );
+					KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_DECIDE, &rect, p_wk->is_shift, p_wk->mode );
 				}
 			}
 		}
@@ -2872,7 +2917,7 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk )
 		GF_ASSERT(0);
 	}
 
-	KEYANM_Main( &p_wk->keyanm );
+	KEYANM_Main( &p_wk->keyanm, p_wk->mode );
 
 	KEYBOARD_PrintMain( p_wk );
 }
