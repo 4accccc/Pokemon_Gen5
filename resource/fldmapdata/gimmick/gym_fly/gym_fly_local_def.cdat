@@ -89,5 +89,10 @@
 #define CAN_DOWN_OP_FRM (15)	//基準大砲下向きのとき
 #define CAN_LEFT_OP_FRM (30)	//基準大砲左向きのとき
 #define CAN_RIGHT_OP_FRM (30)	//基準大砲右向きのとき
+//大砲扉の開くフレーム
+#define CAN_UP_CL_FRM (30)	//基準大砲上向きのとき
+#define CAN_DOWN_CL_FRM (30)	//基準大砲下向きのとき
+#define CAN_LEFT_CL_FRM (45)	//基準大砲左向きのとき
+#define CAN_RIGHT_CL_FRM (45)	//基準大砲右向きのとき
 //打ち出し時自機表示フレーム(アニメデータ依存)
 #define SHOT_APP_FRM (41)
