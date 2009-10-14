@@ -22,6 +22,7 @@ typedef enum {
   BTL_NET_TIMING_NULL = 0,    ///< 無効値
 
   BTL_NET_TIMING_INITIALIZE,
+  BTL_NET_TIMING_POKEDATA_SEND,
   BTL_NET_TIMING_CLIENTID_DETERMINE,
   BTL_NET_TIMING_SETUP_END,
 
@@ -31,10 +32,10 @@ typedef enum {
 typedef struct {
 
   u8  serverVersion;    ///< サーババージョン
-  u8  commPos;      ///< 対戦部屋立ち位置（マルチ等で利用）
+  u8  commPos;          ///< 対戦部屋立ち位置（マルチ等で利用）
   u8  netID      : 4;   ///< ネットID
   u8  pokeCount  : 4;   ///< 参加ポケモン数
-  u8  pokeData[1];    ///< ポケモンデータ部
+  u8  pokeData[1];      ///< ポケモンデータ部
 
 }BTL_NET_INITIALIZE_DATA;
 

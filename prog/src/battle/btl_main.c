@@ -554,10 +554,16 @@ static BOOL setup_comm_single( int* seq, void* work )
     break;
   case 5:
     BTL_NET_EndNotifyPartyData();
-    BTL_NET_StartNotifyPlayerData( sp->statusPlayer );
+    BTL_NET_TimingSyncStart( BTL_NET_TIMING_POKEDATA_SEND );
     (*seq)++;
     break;
   case 6:
+    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_POKEDATA_SEND) ){
+      BTL_NET_StartNotifyPlayerData( sp->statusPlayer );
+      (*seq)++;
+    }
+    break;
+  case 7:
     if( BTL_NET_IsCompleteNotifyPlayerData() )
     {
       u32 i;
@@ -568,11 +574,11 @@ static BOOL setup_comm_single( int* seq, void* work )
       (*seq)++;
     }
     break;
-  case 7:
+  case 8:
     BTL_NET_EndNotifyPlayerData();
     (*seq)++;
     break;
-  case 8:
+  case 9:
     wk->posCoverClientID[BTL_POS_1ST_0] = 0;
     wk->posCoverClientID[BTL_POS_2ND_0] = 1;
     wk->myOrgPos = (wk->myClientID == 0)? BTL_POS_1ST_0 : BTL_POS_2ND_0;
@@ -620,7 +626,7 @@ static BOOL setup_comm_single( int* seq, void* work )
 
     (*seq)++;
     break;
-  case 9:
+  case 10:
     BTL_Printf("セットアップ完了\n");
     return TRUE;
   }
@@ -726,10 +732,15 @@ static BOOL setup_comm_double( int* seq, void* work )
     break;
   case 5:
     BTL_NET_EndNotifyPartyData();
-    BTL_NET_StartNotifyPlayerData( sp->statusPlayer );
+    BTL_NET_TimingSyncStart( BTL_NET_TIMING_POKEDATA_SEND );
     (*seq)++;
-    break;
   case 6:
+    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_POKEDATA_SEND) ){
+      BTL_NET_StartNotifyPlayerData( sp->statusPlayer );
+      (*seq)++;
+    }
+    break;
+  case 7:
     if( BTL_NET_IsCompleteNotifyPlayerData() )
     {
       u32 i;
@@ -740,11 +751,11 @@ static BOOL setup_comm_double( int* seq, void* work )
       (*seq)++;
     }
     break;
-  case 7:
+  case 8:
     BTL_NET_EndNotifyPlayerData();
     (*seq)++;
     break;
-  case 8:
+  case 9:
     if( sp->multiMode == 0 )
     {
       wk->posCoverClientID[BTL_POS_1ST_0] = 0;
@@ -823,7 +834,7 @@ static BOOL setup_comm_double( int* seq, void* work )
     }
     (*seq)++;
     break;
-  case 9:
+  case 10:
     BTL_Printf("セットアップ完了\n");
     return TRUE;
   }
