@@ -17,6 +17,20 @@ COL_FILENAME = 1
 COL_ANIME_IDX = 8
 COL_PROG_IDX = 9
 COL_SUBMODEL_IDX = 10
+COL_SUBMODEL_X = 11
+COL_SUBMODEL_Y = 12
+COL_SUBMODEL_Z = 13
+
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+class SubModelPos
+  attr_reader :x, :y, :z
+  def initialize x, y, z
+    @x = Integer(x)
+    @y = Integer(y)
+    @z = Integer(z)
+  end
+end
 
 #------------------------------------------------------------------------------
 # 各配置モデルごとのアニメ指定IDのテーブルを生成する
@@ -59,11 +73,12 @@ end
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def makeIndexes(anm_arr, prog_arr, submodel_arr)
+def makeIndexes(anm_arr, prog_arr, submodel_arr, pos_arr)
 
   output = ""
   anm_arr.each_index{|idx|
     output += [anm_arr[idx], prog_arr[idx], submodel_arr[idx]].pack("SSS")
+    output += [pos_arr[idx].x, pos_arr[idx].y, pos_arr[idx].z].pack("sss")
   }
   return output
 end
@@ -112,6 +127,7 @@ syms = Array.new
 anime_ids = Array.new
 progs = Array.new
 submodels = Array.new
+submodel_pos = Array.new
 
 input_file.gets
 
@@ -132,6 +148,9 @@ while line = input_file.gets
   anime_ids << getAnimeID(anm_dic, column[COL_ANIME_IDX])
   progs << getProgID(column[COL_PROG_IDX])
   submodels << column[COL_SUBMODEL_IDX]
+  submodel_pos << SubModelPos.new( column[COL_SUBMODEL_X],
+                                  column[COL_SUBMODEL_Y],
+                                  column[COL_SUBMODEL_Z] ) 
   puts "#{line}"
 end
 
@@ -141,7 +160,7 @@ syms.each_index{|idx|
 #  printf("%-16s %04x, %04x %04x\n", syms[idx], anime_ids[idx], progs[idx], submodel_ids[idx])
 }
 bin_file = File.open(BIN_FILE, "wb")
-bin_file.write makeIndexes(anime_ids, progs, submodel_ids)
+bin_file.write makeIndexes(anime_ids, progs, submodel_ids, submodel_pos)
 bin_file.close
 
 dep_file.printf("\n")

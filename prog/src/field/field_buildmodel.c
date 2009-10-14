@@ -777,6 +777,9 @@ static void BMINFO_Load(FIELD_BMODEL_MAN * man, u16 file_id)
     u16 anime_id;     ///<アニメ指定
     u16 prog_id;      ///<プログラム指定
     u16 submodel_id;  ///<サブモデル指定
+    s16 submodel_x;
+    s16 submodel_y;
+    s16 submodel_z;
   }BM_INFO_BIN;
 
   enum {
