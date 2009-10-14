@@ -50,11 +50,26 @@ enum {
 	NARC_encount_data_w_d04r3201_bin = 36,
 	NARC_encount_data_w_d04r3301_bin = 37,
 	NARC_encount_data_w_d04r3401_bin = 38,
-	NARC_encount_data_w_r01_bin = 39,
-	NARC_encount_data_w_r02_bin = 40,
-	NARC_encount_data_w_r03_bin = 41,
-	NARC_encount_data_w_r04_bin = 42,
-	NARC_encount_data_w_r05_bin = 43
+	NARC_encount_data_w_d05_bin = 39,
+	NARC_encount_data_w_d06r0101_bin = 40,
+	NARC_encount_data_w_d06r0201_bin = 41,
+	NARC_encount_data_w_d06r0301_bin = 42,
+	NARC_encount_data_w_d07r0201_bin = 43,
+	NARC_encount_data_w_d07r0301_bin = 44,
+	NARC_encount_data_w_d07r0401_bin = 45,
+	NARC_encount_data_w_d07r0501_bin = 46,
+	NARC_encount_data_w_d08_bin = 47,
+	NARC_encount_data_w_d08r0101_bin = 48,
+	NARC_encount_data_w_r01_bin = 49,
+	NARC_encount_data_w_r02_bin = 50,
+	NARC_encount_data_w_r03_bin = 51,
+	NARC_encount_data_w_r04_bin = 52,
+	NARC_encount_data_w_r05_bin = 53,
+	NARC_encount_data_w_r06_bin = 54,
+	NARC_encount_data_w_r07_bin = 55,
+	NARC_encount_data_w_r08_bin = 56,
+	NARC_encount_data_w_r09_bin = 57,
+	NARC_encount_data_w_r_P_O_bin = 58
 };
 
 /* NARC_ENCOUNT_DATA_W_NAIX_ */
