@@ -30,11 +30,14 @@ REM ƒnƒCƒuƒŠƒbƒh‘Î‰ž‚Ìê‡‰º‹L‚Ì•”•ª‚ð—LŒø‚É‚µ‚Ä‚­‚¾‚³‚¢ ƒnƒCƒuƒŠƒbƒh‚Å‚È‚¢Žž‚Í–
 REM NITRO‚Æ‚©‚­‚ÆIS-NITRO—p TWL‚Æ‚©‚­‚ÆTWL—p —¼•û‘‚­‚Æ—¼•û‚ªo—ˆã‚ª‚è‚Ü‚·
 REM ####################################################
 REM SET TWLSDK_PLATFORM=TWL NITRO
+REM SET TARGET_PLATFORM=TWL NITRO
 
 REM ####################################################
 REM ƒnƒCƒuƒŠƒbƒh‚Å‚È‚¢ê‡‰º‹L‚Ì•”•ª‚ð—LŒø‚É‚µ‚Ä‚­‚¾‚³‚¢ ƒnƒCƒuƒŠƒbƒh‚ÌŽž‚Í–³Œø‚É‚µ‚Ä‚­‚¾‚³‚¢
 REM ####################################################
 SET TWLSDK_PLATFORM=NITRO
+SET TARGET_PLATFORM=NITRO
+
 
 SET TWLSYSTEM_ROOT=%WBLIBDIR%\TwlSystem
 SET TWLSDK_ROOT=%WBLIBDIR%\TwlSDK
