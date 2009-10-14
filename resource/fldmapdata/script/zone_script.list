@@ -604,5 +604,9 @@ SCRIPTFILES += \
 	sp_d09r0901.ev \
 	h05.ev \
 	sp_h05.ev \
+	c02gym0102.ev \
+	sp_c02gym0102.ev \
+	d09.ev \
+	sp_d09.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö
