@@ -582,7 +582,7 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
           argIdx -= argIdxDec;
         }
         BTL_Printf("bufIdx=%d ....\n", bufIdx);
-        if( tagGrp == TAGGROUP_NUMBER )
+        if( tagGrp == PRINTSYS_TAGGROUP_NUM )
         {
           u8 keta = PRINTSYS_GetTagIndex( sp ) + 1;
           BTL_Printf("[TAG] SetNumber : keta=%d, value=%d\n", keta, args[argIdx] );

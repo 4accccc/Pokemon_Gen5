@@ -533,17 +533,43 @@ inline BOOL PRINT_UTIL_Trans( PRINT_UTIL* wk, PRINT_QUE* que )
 //------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------
 
+// タグ大分類
 typedef enum {
-  TAGGROUP_WORD = 1,
-  TAGGROUP_NUMBER = 2,
-}PrintSys_TagGroup;
+  PRINTSYS_TAGGROUP_WORD = 1,           ///< 通常の単語
+  PRINTSYS_TAGGROUP_NUM  = 2,           ///< 数値
+  PRINTSYS_TAGGROUP_CTRL_GEN = 189,     ///< 汎用コントロール
+  PRINTSYS_TAGGROUP_CTRL_STREAM = 190,  ///< ストリームコントロール
+}PrintSysTagGroup;
+
+// 汎用コントロールタイプ
+typedef enum {
+  PRINTSYS_CTRL_GENERAL_COLOR        = (0x0000), ///< 色変更
+  PRINTSYS_CTRL_GENERAL_RESET_COLOR  = (0x0001), ///< 色変更
+  PRINTSYS_CTRL_GENERAL_X_RIGHTFIT   = (0x0002), ///< Ｘ座標右寄せ
+  PRINTSYS_CTRL_GENERAL_X_CENTERING  = (0x0003), ///< Ｘ座標センタリング
+  PRINTSYS_CTRL_GENERAL_X_ADD        = (0x0004), ///< Ｘ座標を加算
+}PrintSysGenCtrlCode;
+
+// ストリームコントロールタイプ
+typedef enum {
+  PRINTSYS_CTRL_STREAM_LINE_FEED     = (0x0000), ///< 改ページ（行送り待ち）
+  PRINTSYS_CTRL_STREAM_PAGE_CLEAR    = (0x0001), ///< 改ページ（描画クリア待ち）
+  PRINTSYS_CTRL_STREAM_CHANGE_WAIT   = (0x0002), ///< 描画ウェイト変更（１回）
+  PRINTSYS_CTRL_STREAM_SET_WAIT      = (0x0003), ///< 描画ウェイト変更（永続）
+  PRINTSYS_CTRL_STREAM_RESET_WAIT    = (0x0004), ///< 描画ウェイトをデフォルトに戻す
+  PRINTSYS_CTRL_STREAM_CHANGE_ARGV   = (0x0005), ///< コールバック引数を変更（１回）
+  PRINTSYS_CTRL_STREAM_SET_ARGV      = (0x0006), ///< コールバック引数を変更（永続）
+  PRINTSYS_CTRL_STREAM_RESET_ARGV    = (0x0007), ///< コールバック引数をデフォルトに戻す
+  PRINTSYS_CTRL_STREAM_FORCE_CLEAR   = (0x0008), ///< 強制描画クリア
+}PrintSysStreamCtrlCode;
 
 
 extern STRCODE PRINTSYS_GetTagStartCode( void );
 extern BOOL PRINTSYS_IsWordSetTagGroup( const STRCODE* sp );
-extern PrintSys_TagGroup  PRINTSYS_GetTagGroup( const STRCODE* sp );
+extern PrintSysTagGroup  PRINTSYS_GetTagGroup( const STRCODE* sp );
 extern u8  PRINTSYS_GetTagIndex( const STRCODE* sp );
 extern u16 PRINTSYS_GetTagParam( const STRCODE* sp, u16 paramIdx );
 extern const STRCODE* PRINTSYS_SkipTag( const STRCODE* sp );
+extern void PRINTSYS_CreateTagCode( STRBUF* str, PrintSysTagGroup tagGrp, u8 tagIdx, u8 numParams, const u16* params );
 
 #endif

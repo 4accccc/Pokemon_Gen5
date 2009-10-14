@@ -100,6 +100,7 @@ struct _BTL_MAIN_MODULE {
   u32       bonusMoney;
 
   BTL_PROC    subProc;
+  BTL_PROC    subsubProc;
   pMainLoop   mainLoop;
 
 

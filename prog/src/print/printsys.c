@@ -13,6 +13,8 @@
 
 #include "print/printsys.h"
 
+
+
 //==============================================================
 // Consts
 //==============================================================
@@ -25,23 +27,6 @@ enum {
   // 改行コード、終端コード
   EOM_CODE      = 0xffff,
   CR_CODE       = 0xfffe,
-
-  // 汎用コントロールタイプ
-  CTRL_GENERAL_COLOR        = (0x0000), ///< 色変更
-  CTRL_GENERAL_RESET_COLOR  = (0x0001), ///< 色変更
-  CTRL_GENERAL_X_RIGHTFIT   = (0x0002), ///< Ｘ座標右寄せ
-  CTRL_GENERAL_X_CENTERING  = (0x0003), ///< Ｘ座標センタリング
-
-  // 流れるメッセージ中のみ有効なコントロールタイプ
-  CTRL_STREAM_LINE_FEED     = (0x0000), ///< 改ページ（行送り待ち）
-  CTRL_STREAM_PAGE_CLEAR    = (0x0001), ///< 改ページ（描画クリア待ち）
-  CTRL_STREAM_CHANGE_WAIT   = (0x0002), ///< 描画ウェイト変更（１回）
-  CTRL_STREAM_SET_WAIT      = (0x0003), ///< 描画ウェイト変更（永続）
-  CTRL_STREAM_RESET_WAIT    = (0x0004), ///< 描画ウェイトをデフォルトに戻す
-  CTRL_STREAM_CHANGE_ARGV   = (0x0005), ///< コールバック引数を変更（１回）
-  CTRL_STREAM_SET_ARGV      = (0x0006), ///< コールバック引数を変更（永続）
-  CTRL_STREAM_RESET_ARGV    = (0x0007), ///< コールバック引数をデフォルトに戻す
-  CTRL_STREAM_FORCE_CLEAR   = (0x0008), ///< 強制描画クリア
 
   // システムコントロール
   CTRL_SYSTEM_COLOR     = (0x0000),
@@ -194,6 +179,7 @@ static void ctrlStreamTag( PRINT_STREAM* wk );
 static u32 get_line_width( const STRCODE* sp, GFL_FONT* font, u16 margin, const STRCODE** endPtr );
 static inline u8 STR_TOOL_GetTagGroup( const STRCODE* sp );
 static inline u8 STR_TOOL_GetTagIndex( const STRCODE* sp );
+static inline STRCODE STR_TOOL_CreateTagCode( PrintSysTagGroup grp, u8 index );
 static inline u16 STR_TOOL_GetTagParam( const STRCODE* sp, u16 paramIndex );
 static inline const STRCODE* STR_TOOL_SkipTag( const STRCODE* sp );
 static inline u16 STR_TOOL_GetTagNumber( const STRCODE* sp );
@@ -857,7 +843,7 @@ static void put1char_16to256( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* f
 static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
 {
   switch( STR_TOOL_GetTagNumber(sp) ){
-  case CTRL_GENERAL_COLOR:
+  case PRINTSYS_CTRL_GENERAL_COLOR:
     {
       u8 colL, colS, colB;
 
@@ -869,7 +855,7 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
     }
     break;
 
-  case CTRL_GENERAL_RESET_COLOR:
+  case PRINTSYS_CTRL_GENERAL_RESET_COLOR:
     {
       u8 colL, colS, colB;
       PRINTSYS_LSB_GetLSB( wk->defColor, &colL, &colS, &colB );
@@ -877,7 +863,7 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
     }
     break;
 
-  case CTRL_GENERAL_X_RIGHTFIT:
+  case PRINTSYS_CTRL_GENERAL_X_RIGHTFIT:
     {
       int areaWidth, strWidth;
 
@@ -887,7 +873,7 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
     }
     break;
 
-  case CTRL_GENERAL_X_CENTERING:
+  case PRINTSYS_CTRL_GENERAL_X_CENTERING:
     {
       int bmpWidth, strWidth;
 
@@ -903,6 +889,10 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
         wk->write_x = wk->org_x;
       }
     }
+    break;
+
+  case PRINTSYS_CTRL_GENERAL_X_ADD:
+    wk->write_x += STR_TOOL_GetTagParam( sp, 0 );
     break;
 
   default:
@@ -1261,7 +1251,7 @@ static void ctrlStreamTag( PRINT_STREAM* wk )
   BOOL skipCR = FALSE;  // 直後の改行を無視する
 
   switch( STR_TOOL_GetTagNumber(wk->sp) ){
-  case CTRL_STREAM_LINE_FEED:
+  case PRINTSYS_CTRL_STREAM_LINE_FEED:
     wk->state = PRINTSTREAM_STATE_PAUSE;
     wk->pauseType = PRINTSTREAM_PAUSE_LINEFEED;
     wk->pauseWait = 0;
@@ -1270,7 +1260,7 @@ static void ctrlStreamTag( PRINT_STREAM* wk )
     wk->printJob.write_y = 0;
     skipCR = TRUE;
     break;
-  case CTRL_STREAM_PAGE_CLEAR:
+  case PRINTSYS_CTRL_STREAM_PAGE_CLEAR:
     wk->state = PRINTSTREAM_STATE_PAUSE;
     wk->pauseType = PRINTSTREAM_PAUSE_CLEAR;
     wk->pauseWait = 0;
@@ -1279,27 +1269,27 @@ static void ctrlStreamTag( PRINT_STREAM* wk )
     wk->printJob.write_y = 0;
     skipCR = TRUE;
     break;
-  case CTRL_STREAM_CHANGE_WAIT:
+  case PRINTSYS_CTRL_STREAM_CHANGE_WAIT:
     wk->wait = STR_TOOL_GetTagParam( wk->sp, 0 );
     break;
-  case CTRL_STREAM_SET_WAIT:
+  case PRINTSYS_CTRL_STREAM_SET_WAIT:
     wk->current_wait = STR_TOOL_GetTagParam( wk->sp, 0 );;
     break;
-  case CTRL_STREAM_RESET_WAIT:  ///< 描画ウェイトをデフォルトに戻す
+  case PRINTSYS_CTRL_STREAM_RESET_WAIT:  ///< 描画ウェイトをデフォルトに戻す
     wk->current_wait = wk->org_wait;
     break;
-  case CTRL_STREAM_CHANGE_ARGV: ///< コールバック引数を変更（１回）
+  case PRINTSYS_CTRL_STREAM_CHANGE_ARGV: ///< コールバック引数を変更（１回）
     wk->arg = STR_TOOL_GetTagParam( wk->sp, 0 );;
     break;
-  case CTRL_STREAM_SET_ARGV:    ///< コールバック引数を変更（永続）
+  case PRINTSYS_CTRL_STREAM_SET_ARGV:    ///< コールバック引数を変更（永続）
     wk->current_arg = STR_TOOL_GetTagParam( wk->sp, 0 );
     wk->arg = STR_TOOL_GetTagParam( wk->sp, 0 );
     break;
-  case CTRL_STREAM_RESET_ARGV:  ///< コールバック引数をデフォルトに戻す
+  case PRINTSYS_CTRL_STREAM_RESET_ARGV:  ///< コールバック引数をデフォルトに戻す
     wk->current_arg = wk->org_arg;
     wk->arg = wk->org_arg;
     break;
-  case CTRL_STREAM_FORCE_CLEAR:
+  case PRINTSYS_CTRL_STREAM_FORCE_CLEAR:
     GFL_BMP_Clear( wk->dstBmp, wk->clearColor );
     break;
   }
@@ -1491,13 +1481,39 @@ BOOL PRINTSYS_IsWordSetTagGroup( const STRCODE* sp )
  *
  * @param   sp    文字列ポインタ（タグ開始コードをポイントしていること）
  *
- * @retval  PrintSys_TagGroup   タググループ（gmm の ポケモンWB（単語），ポケモンWB（数値）等）
+ * @retval  PrintSysTagGroup   タググループ（gmm の ポケモンWB（単語），ポケモンWB（数値）等）
  */
 //=============================================================================================
-PrintSys_TagGroup PRINTSYS_GetTagGroup( const STRCODE* sp )
+PrintSysTagGroup PRINTSYS_GetTagGroup( const STRCODE* sp )
 {
   return STR_TOOL_GetTagGroup( sp );
 }
+
+//=============================================================================================
+/**
+ * タグコードを文字列化してバッファに格納
+ *
+ * @param   str         [out] 格納先バッファ
+ * @param   tagGrp
+ * @param   tagIdx
+ * @param   numParams
+ * @param   params
+ *
+ */
+//=============================================================================================
+void PRINTSYS_CreateTagCode( STRBUF* str, PrintSysTagGroup tagGrp, u8 tagIdx, u8 numParams, const u16* params )
+{
+  GFL_STR_AddCode( str, SPCODE_TAG_START_ );
+  GFL_STR_AddCode( str, STR_TOOL_CreateTagCode(tagGrp, tagIdx) );
+  GFL_STR_AddCode( str, numParams );
+  {
+    u8 i;
+    for(i=0; i<numParams; ++i){
+      GFL_STR_AddCode( str, params[i] );
+    }
+  }
+}
+
 //=============================================================================================
 /**
  * タグインデックス取得
@@ -1588,6 +1604,21 @@ static inline u8 STR_TOOL_GetTagIndex( const STRCODE* sp )
 
   return 0xffff;
 }
+//----------------------------------------------------------------------------------
+/**
+ * タググループ、グループ内インデックスからタグコードを生成
+ *
+ * @param   grp
+ * @param   index
+ *
+ * @retval  inline STRCODE
+ */
+//----------------------------------------------------------------------------------
+static inline STRCODE STR_TOOL_CreateTagCode( PrintSysTagGroup grp, u8 index )
+{
+  return (grp & 0xff) << 8 | index;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * タグ開始コードを指している文字列から、そのタグのタイプを取得

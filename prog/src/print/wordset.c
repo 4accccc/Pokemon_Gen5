@@ -37,6 +37,7 @@ typedef struct {
   u8  preposition;    ///< 前置詞ＩＤ
   u8  grammer : 7;    ///< 文法性
   u8  form : 1;       ///< 単数・複数（0 = 単数）
+  u8  deco_id;        ///< デコ文字ID
 }WORDSET_PARAM;
 
 
@@ -223,6 +224,10 @@ static void RegisterWord( WORDSET* wordset, u32 bufID, const STRBUF* str, const 
     {
       wordset->word[bufID].param = *param;
     }
+    else
+    {
+      GFL_STD_MemClear( &wordset->word[bufID].param, sizeof(wordset->word[bufID].param) );
+    }
     GFL_STR_CopyBuffer( wordset->word[bufID].str, str );
   }
 }
@@ -402,6 +407,26 @@ void WORDSET_RegisterPMSWord( WORDSET* wordset, u32 bufID, PMS_WORD word )
 {
   PMSW_GetStr( word, wordset->tmpBuf , wordset->heapID );
   RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+}
+extern void WORDSET_RegisterPMSDeco( WORDSET* wordset, u32 bufID, PMS_DECO_ID decoID );
+//------------------------------------------------------------------
+/**
+ * 指定バッファに簡易会話デコ文字を登録
+ *
+ * @param   wordset   ワードセットオブジェクト
+ * @param   bufID     何番のバッファに登録するか
+ * @param   decoID    デコ文字
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterPMSDeco( WORDSET* wordset, u32 bufID, PMS_DECO_ID decoID )
+{
+  GF_ASSERT_MSG( bufID < wordset->max, "bufID=%d, wordmax=%d", bufID, wordset->max );
+
+  if( bufID < wordset->max )
+  {
+    wordset->word[bufID].param.deco_id = decoID;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -794,9 +819,14 @@ void WORDSET_ExpandStr( const WORDSET* wordset, STRBUF* dstbuf, const STRBUF* sr
       {
         u32 word_id;
 
-        word_id = PRINTSYS_GetTagParam(src, 0);
-
+        word_id = PRINTSYS_GetTagParam( src, 0 );
         GF_ASSERT( word_id < wordset->max );
+
+        // デコキャラが出てきたらＸ加算タグを埋め込んでおく
+        if( wordset->word[ word_id ].param.deco_id != PMS_DECOID_NULL ){
+          u16 add_x = PMS_DECO_WIDTH;
+          PRINTSYS_CreateTagCode( wordset->word[word_id].str, PRINTSYS_TAGGROUP_CTRL_GEN, PRINTSYS_CTRL_GENERAL_X_ADD, 1, &add_x );
+        }
 
         // [[[海外版ではパラメータの解釈が必要]]]
         GFL_STR_AddString( dstbuf, wordset->word[ word_id ].str );
