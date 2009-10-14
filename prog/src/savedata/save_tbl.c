@@ -38,6 +38,7 @@
 #include "savedata/battle_rec.h"
 #include "savedata/battle_box_save.h"
 #include "savedata/sodateya_work.h"
+#include "savedata/misc.h"
 
 //==============================================================================
 //	íËêîíËã`
@@ -344,6 +345,12 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_ROCKPOS,
 		(FUNC_GET_SIZE)MMDL_ROCKPOS_GetWorkSize,
 		(FUNC_INIT_WORK)MMDL_ROCKPOS_Init,
+	},
+	{	
+		//ñ¢ï™óﬁÉèÅ[ÉN
+		GMDATA_ID_MISC,
+		(FUNC_GET_SIZE)MISC_GetWorkSize,
+		(FUNC_INIT_WORK)MISC_Init,
 	},
 };
 
