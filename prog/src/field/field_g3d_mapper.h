@@ -150,3 +150,12 @@ extern BOOL DEBUG_Field_Grayscale(GFL_G3D_RES *g3Dres);
  */
 //--------------------------------------------------------------
 BOOL FLDMAPPER_Connect( FLDMAPPER* g3Dmapper, const MAP_MATRIX* matrix ); 
+
+//--------------------------------------------------------------
+/**
+ * @brief デバッグ出力関数
+ *
+ * @param g3Dmapper 状態を出力したいマッパー
+ */
+//--------------------------------------------------------------
+extern void FLDMAPPER_DebugPrint( const FLDMAPPER* g3Dmapper );

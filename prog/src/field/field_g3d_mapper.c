@@ -356,6 +356,8 @@ BOOL FLDMAPPER_Connect( FLDMAPPER* g3Dmapper, const MAP_MATRIX* matrix )
   u32 totalSize;            // 新マップの総ブロック数
   FLDMAPPER_MAPDATA* blocks;// 新マップの実マップデータ
 
+  OBATA_Printf( "FLDMAPPER_Connect: start\n" );
+
   // 追加マップのサイズを取得
   add_sizex     = MAP_MATRIX_GetMapBlockSizeWidth( matrix );
   add_sizez     = MAP_MATRIX_GetMapBlockSizeHeight( matrix );
@@ -424,9 +426,85 @@ BOOL FLDMAPPER_Connect( FLDMAPPER* g3Dmapper, const MAP_MATRIX* matrix )
 
   // 後始末
   GFL_HEAP_FreeMemory( blocks );
+  OBATA_Printf( "FLDMAPPER_Connect: end\n" );
   return TRUE;
 }
 
+
+//--------------------------------------------------------------
+/**
+ * @brief デバッグ出力関数
+ *
+ * @param g3Dmapper 状態を出力したいマッパー
+ */
+//--------------------------------------------------------------
+void FLDMAPPER_DebugPrint( const FLDMAPPER* g3Dmapper )
+{
+  int ix, iz, i, index; 
+
+  OS_Printf( "================================================\n" );
+
+  OS_Printf( "blockWidth  = %d\n", FX_Whole(g3Dmapper->blockWidth) );
+  OS_Printf( "blockHeight = %d\n", FX_Whole(g3Dmapper->blockHeight) );
+  switch( g3Dmapper->mode )
+  {
+  case FLDMAPPER_MODE_SCROLL_NONE:    OS_Printf( "mode = FLDMAPPER_MODE_SCROLL_NONE\n" ); break;
+  case FLDMAPPER_MODE_SCROLL_XZ:      OS_Printf( "mode = FLDMAPPER_MODE_SCROLL_XZ\n" ); break;
+  case FLDMAPPER_MODE_SCROLL_XZ_LOOP: OS_Printf( "mode = FLDMAPPER_MODE_SCROLL_XZ_LOOP\n" ); break;
+  case FLDMAPPER_MODE_SCROLL_Y:       OS_Printf( "mode = FLDMAPPER_MODE_SCROLL_Y\n" ); break;
+  default:                            OS_Printf( "mode = error\n" ); break;
+  }
+  OS_Printf( "sizex  = %d\n", g3Dmapper->sizex );
+  OS_Printf( "sizez  = %d\n", g3Dmapper->sizez );
+  OS_Printf( "totalSize  = %d\n", g3Dmapper->totalSize );
+
+  OS_Printf( "blocks-------------------\n" );
+  index = 0;
+  for( iz=0; iz<g3Dmapper->sizez; iz++ ) {
+    for( ix=0; ix<g3Dmapper->sizex; ix++ ) {
+      OS_Printf( "%d ", g3Dmapper->blocks[ index++ ] ); 
+    }
+    OS_Printf( "\n" );
+  }
+
+  OS_Printf( "blockXNum = %d\n", g3Dmapper->blockXNum );
+  OS_Printf( "blockZNum = %d\n", g3Dmapper->blockZNum );
+  OS_Printf( "blockNum = %d\n", g3Dmapper->blockNum );
+
+  OS_Printf( "nowBlockIdx = %d\n", g3Dmapper->nowBlockIdx );
+  OS_Printf( "posCont = %d, %d, %d\n", 
+      FX_Whole(g3Dmapper->posCont.x), FX_Whole(g3Dmapper->posCont.y), FX_Whole(g3Dmapper->posCont.z) );
+
+  OS_Printf( "blockWk-----------------------\n" );
+  index = 0;
+  for( iz=0; iz<g3Dmapper->sizez; iz++ )
+  {
+    for( ix=0; ix<g3Dmapper->sizex; ix++ )
+    {
+      BOOL on_memory = FALSE;
+      for( i=0; i<g3Dmapper->blockNum; i++ )
+      {
+        if( g3Dmapper->blockWk[i].blockInfo.blockIdx == index )
+        {
+          on_memory = TRUE;
+          break;
+        }
+      }
+      if( on_memory )
+      {
+        OS_Printf( "■" );
+      }
+      else
+      {
+        OS_Printf( "□" );
+      }
+      index++;
+    }
+    OS_Printf( "\n" );
+  }
+
+  OS_Printf( "================================================\n" );
+}
 
 
 //============================================================================================
@@ -815,24 +893,22 @@ static void GetMapperBlockIdxXZ_Loop( const FLDMAPPER* g3Dmapper, const VecFx32*
     {
       iz += sizez;
     }
+    for( j=0; j<g3Dmapper->blockXNum; j++ )
     {
-  	  for( j=0; j<g3Dmapper->blockXNum; j++ )
+      // 設定するブロックのX値を求める 
+      set_x = start_x + j;
+      ix = set_x % sizex;
+      if(ix < 0)
       {
-        // 設定するブロックのX値を求める 
-        set_x = start_x + j;
-        ix = set_x % sizex;
-        if(ix < 0)
-        {
-          ix += sizex;
-        }
-        {
-          idx = (i*g3Dmapper->blockXNum) + j;
-          BLOCKINFO_SetBlockIdx( &new[idx].newBlockInfo, (iz * sizex) + ix );
-          BLOCKINFO_SetBlockTrans( &new[idx].newBlockInfo, 
-             FX_Mul(set_x<<FX32_SHIFT, blockWidth) + blockHalfWidth,
-             0,
-             FX_Mul(set_z<<FX32_SHIFT, blockWidth) + blockHalfWidth ); 
-        }
+        ix += sizex;
+      }
+      {
+        idx = (i*g3Dmapper->blockXNum) + j;
+        BLOCKINFO_SetBlockIdx( &new[idx].newBlockInfo, (iz * sizex) + ix );
+        BLOCKINFO_SetBlockTrans( &new[idx].newBlockInfo, 
+            FX_Mul(set_x<<FX32_SHIFT, blockWidth) + blockHalfWidth,
+            0,
+            FX_Mul(set_z<<FX32_SHIFT, blockWidth) + blockHalfWidth ); 
       }
     }
   } 
@@ -924,7 +1000,7 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
 			for( j=0; j<g3Dmapper->blockNum; j++ )
       {
         new_blockIdx = BLOCKINFO_GetBlockIdx( &new[j].newBlockInfo );
-				if(( now_blockIdx == new_blockIdx )&&(delFlag == FALSE ))
+				if( (now_blockIdx == new_blockIdx) && (delFlag == FALSE) ) 
         { 
           // 除外する前に, 座標をコピー
           // (小さいマップでループ表示する場合, 同じIDのブロックが座標だけ変更して現れることがあるため)
@@ -973,6 +1049,7 @@ static BOOL	ReloadMapperBlock( FLDMAPPER* g3Dmapper, BLOCK_NEWREQ* new )
 
 					if( mapdatID != FLDMAPPER_MAPDATA_NULL )
           { 
+            OBATA_Printf( "*****************\n" );
 						GFL_G3D_MAP_SetLoadReq( g3Dmapper->blockWk[j].g3Dmap, mapdatID );
 						GFL_G3D_MAP_SetTrans( g3Dmapper->blockWk[j].g3Dmap, &trans );
 						GFL_G3D_MAP_SetDrawSw( g3Dmapper->blockWk[j].g3Dmap, TRUE );

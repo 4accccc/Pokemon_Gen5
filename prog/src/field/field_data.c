@@ -154,7 +154,7 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_FILETYPE_NORMAL,
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       3,1,
-      FLDMAPPER_MODE_SCROLL_NONE, 
+      FLDMAPPER_MODE_SCROLL_XZ_LOOP, 
 			ARCID_FLDMAP_LANDDATA,
 
 			1,  1, 1,		//dummy map matrix data
