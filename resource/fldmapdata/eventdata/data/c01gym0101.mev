@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/13 18:42:39
+#save date:2009/10/14 17:57:27
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01gym0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/13 18:42:39
+#save date:2009/10/14 17:57:27
 2
 #hold event type:
 1
@@ -739,7 +739,7 @@ DIR_DOWN
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/13 18:42:39
+#save date:2009/10/14 17:57:27
 2
 #hold event type:
 1
@@ -771,12 +771,12 @@ SCRID_C01GYM0101_POKEZOU_02
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/13 18:42:39
+#save date:2009/10/14 17:57:27
 2
 #hold event type:
 1
 #hold event number:
-10
+46
 #event number: 0
 #Pos Event Label
 POSID_C01GYM0101_LEADER_BATTLE
@@ -794,26 +794,26 @@ WK_SCENE_C01GYM0101
 -72 16 152
 #event number: 1
 #Pos Event Label
-POSID_C01GYM0101_BUTTON_KUSA_01
+POSID_C01GYM0101_BUTTON_HONOO_OFF_01
 #Pos Script Name
-SCRID_POS_C01GYM0101_BUTTON_KUSA_01
+SCRID_POS_C01GYM0101_BUTTON_HONOO1_OFF
 #Event Trigger Work Name
 LOCALWORK10
 #Event Trigger Work Value
-0
+1
 #Pos Event Size X
 1
 #Pos Event Size Z
 1
 #position
--104 0 -328
+-72 0 -328
 #event number: 2
 #Pos Event Label
 POSID_C01GYM0101_BUTTON_KUSA_02
 #Pos Script Name
 SCRID_POS_C01GYM0101_BUTTON_KUSA_02
 #Event Trigger Work Name
-LOCALWORK12
+LOCALWORK10
 #Event Trigger Work Value
 0
 #Pos Event Size X
@@ -873,7 +873,7 @@ POSID_C01GYM0101_BUTTON_HONOO_03
 #Pos Script Name
 SCRID_POS_C01GYM0101_BUTTON_HONOO_03
 #Event Trigger Work Name
-LOCALWORK13
+LOCALWORK10
 #Event Trigger Work Value
 0
 #Pos Event Size X
@@ -888,7 +888,7 @@ POSID_C01GYM0101_BUTTON_MIZU_01
 #Pos Script Name
 SCRID_POS_C01GYM0101_BUTTON_MIZU_01
 #Event Trigger Work Name
-LOCALWORK11
+LOCALWORK10
 #Event Trigger Work Value
 0
 #Pos Event Size X
@@ -927,11 +927,551 @@ LOCALWORK10
 1
 #position
 -8 0 -8
+#event number: 10
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_KUSA_01
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_KUSA_01
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-104 0 -328
+#event number: 11
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_KUSA_OFF_01
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_KUSA1_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-120 0 -328
+#event number: 12
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_KUSA_OFF_02
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_KUSA1_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-104 0 -312
+#event number: 13
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_KUSA_OFF_03
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_KUSA1_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-88 0 -328
+#event number: 14
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_KUSA_OFF_04
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_KUSA1_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-104 0 -344
+#event number: 15
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_KUSA_OFF_09
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_KUSA3_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-120 0 -8
+#event number: 16
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_KUSA_OFF_10
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_KUSA3_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-104 0 8
+#event number: 17
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_KUSA_OFF_11
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_KUSA3_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-88 0 -8
+#event number: 18
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_KUSA_OFF_12
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_KUSA3_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-104 0 -24
+#event number: 19
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_KUSA_OFF_05
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_KUSA2_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-120 0 -168
+#event number: 20
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_KUSA_OFF_06
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_KUSA2_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-104 0 -152
+#event number: 21
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_KUSA_OFF_07
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_KUSA2_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-88 0 -168
+#event number: 22
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_KUSA_OFF_08
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_KUSA2_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-104 0 -184
+#event number: 23
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_HONOO_OFF_02
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_HONOO1_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-56 0 -312
+#event number: 24
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_HONOO_OFF_03
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_HONOO1_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-40 0 -328
+#event number: 25
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_HONOO_OFF_04
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_HONOO1_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-56 0 -344
+#event number: 26
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_HONOO_OFF_09
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_HONOO3_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-72 0 -8
+#event number: 27
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_HONOO_OFF_10
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_HONOO3_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-56 0 8
+#event number: 28
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_HONOO_OFF_11
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_HONOO3_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-40 0 -8
+#event number: 29
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_HONOO_OFF_12
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_HONOO3_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-56 0 -24
+#event number: 30
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_HONOO_OFF_05
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_HONOO2_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-72 0 -168
+#event number: 31
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_HONOO_OFF_06
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_HONOO2_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-56 0 -152
+#event number: 32
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_HONOO_OFF_07
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_HONOO2_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-40 0 -168
+#event number: 33
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_HONOO_OFF_08
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_HONOO2_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-56 0 -184
+#event number: 34
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_MIZU_OFF_01
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_MIZU1_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-24 0 -328
+#event number: 35
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_MIZU_OFF_02
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_MIZU1_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-8 0 -312
+#event number: 36
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_MIZU_OFF_03
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_MIZU1_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+8 0 -328
+#event number: 37
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_MIZU_OFF_04
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_MIZU1_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-8 0 -344
+#event number: 38
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_MIZU_OFF_09
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_MIZU3_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-24 0 -8
+#event number: 39
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_MIZU_OFF_10
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_MIZU3_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-8 0 8
+#event number: 40
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_MIZU_OFF_11
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_MIZU3_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+8 0 -8
+#event number: 41
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_MIZU_OFF_12
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_MIZU3_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-8 0 -24
+#event number: 42
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_MIZU_OFF_05
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_MIZU2_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-24 0 -168
+#event number: 43
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_MIZU_OFF_06
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_MIZU2_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-8 0 -152
+#event number: 44
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_MIZU_OFF_07
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_MIZU2_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+8 0 -168
+#event number: 45
+#Pos Event Label
+POSID_C01GYM0101_BUTTON_MIZU_OFF_08
+#Pos Script Name
+SCRID_POS_C01GYM0101_BUTTON_MIZU2_OFF
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+-8 0 -184
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/13 18:42:39
+#save date:2009/10/14 17:57:27
 2
 #hold event type:
 1

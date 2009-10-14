@@ -3,8 +3,8 @@
 #define ZONE_C01_EVD_H
 
 #define DOOR_ID_C01_EXIT10                0
-#define DOOR_ID_C01_EXIT01                1
-#define DOOR_ID_C01_EXIT03                2
+#define DOOR_ID_C01_C01R0101_EXIT01       1
+#define DOOR_ID_C01_C01R0201_EXIT01       2
 #define DOOR_ID_C01_EXIT05                3
 #define DOOR_ID_C01_EXIT12                4
 #define DOOR_ID_C01_EXIT14                5
