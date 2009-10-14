@@ -67,6 +67,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
 endif
 	-rm $(TARGET) 
 	-rm $(TARGET2)
+	-rm ../tmp/*.cdat
+	-rm ../tmp/*_make_list_depend*
 
 test:
 	@echo $(HEADER)
