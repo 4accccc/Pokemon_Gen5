@@ -17,6 +17,5 @@
 #define T01_BABYGIRL1                      2
 #define T01_SUPPORT_01                     3
 #define T01_RIVAL_01                       4
-#define TR_PRINCE_02                       5
 
 #endif //ZONE_T01_EVC_H
