@@ -23,6 +23,7 @@
 
 #include "system/rtc_tool.h"  //GFL_RTC_GetTimeZone
 #include "field/zonedata.h"   //ZONEDATA_GetMessageArcID
+#include "savedata/mystatus.h"  //MyStatus_～
 
 //======================================================================
 //======================================================================
@@ -109,6 +110,9 @@ VMCMD_RESULT EvCmdGetTrainerCardRank( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+
+//======================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * 時間帯の取得
@@ -126,4 +130,81 @@ VMCMD_RESULT EvCmdGetTimeZone( VMHANDLE *core, void *wk )
   *ret_wk = GFL_RTC_GetTimeZone();
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * 曜日の取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ * @todo  RTCから直接取得しているが、本当にそれでよいのか？検討する
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetWeek( VMHANDLE * core, void *wk )
+{
+  RTCDate now_date;
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  GFL_RTC_GetDate( &now_date );
+  *ret_wk = now_date.week;
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * バッジフラグの取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetBadgeFlag( VMHANDLE * core, void *wk )
+{
+  u16 badge_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
+
+  *ret_wk = MyStatus_GetBadgeFlag( GAMEDATA_GetMyStatus(gdata), badge_id );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * バッジフラグのセット
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetBadgeFlag( VMHANDLE * core, void *wk )
+{
+  u16 badge_id = SCRCMD_GetVMWorkValue( core, wk );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
+
+  MyStatus_SetBadgeFlag( GAMEDATA_GetMyStatus(gdata), badge_id );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * バッジフラグ取得数のカウント
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetBadgeCount( VMHANDLE * core, void *wk )
+{
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
+
+  *ret_wk = MyStatus_GetBadgeCount( GAMEDATA_GetMyStatus(gdata) );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
 
