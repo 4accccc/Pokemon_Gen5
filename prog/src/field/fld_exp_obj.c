@@ -323,7 +323,6 @@ void FLD_EXP_OBJ_PlayAnime( FLD_EXP_OBJ_CNT_PTR ptr )
   //ユニット数分ループ
   for (i=0;i<FLD_EXP_OBJ_UNIT_MAX;i++){
     if (ptr->Unit[i].Valid == TRUE){
-      u16 obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( ptr->ObjUtil, ptr->Unit[i].UtilUnitIdx );
       u16 obj_count = GFL_G3D_UTIL_GetUnitObjCount( ptr->ObjUtil, ptr->Unit[i].UtilUnitIdx );
       for (j=0;j<obj_count;j++){
         GFL_G3D_OBJ *pObj = FLD_EXP_OBJ_GetUnitObj(ptr, i, j);
