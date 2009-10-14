@@ -16,6 +16,7 @@
 #include    "waza_tool/wazadata.h"
 #include    "print/global_msg.h"
 #include    "print/str_tool.h"
+#include    "system/gfl_use.h"
 
 #include    "poke_tool_def.h"
 #include    "poke_personal_local.h"
@@ -343,7 +344,7 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
 //IDナンバーセット
   if( id == PTL_SETUP_ID_AUTO )
   {
-    id = __GFL_STD_MtRand();
+    id = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
   }
   //トレーナーの持ちポケモンは個性乱数を固定にしてレアは出さないようにするので、IDで調整をする
   else if( id == PTL_SETUP_ID_NOT_RARE )
@@ -356,7 +357,8 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
 //個性乱数セット
   if( rnd == PTL_SETUP_RND_AUTO )
   {
-    rnd = __GFL_STD_MtRand();
+    rnd = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
+      __GFL_STD_MtRand();
   }
   else if( rnd == PTL_SETUP_RND_RARE )
   {
