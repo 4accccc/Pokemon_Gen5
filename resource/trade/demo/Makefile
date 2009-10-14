@@ -147,6 +147,8 @@ LIST_FILE = list.txt
 $(targetname).narc:  $(OBJ_FILE) Makefile
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t camera3.ica icacamera.bin
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t camera4.ica icatarget.bin
+	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t ball_001.ica ball_001.bin
+	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t ball_002.ica ball_002.bin
 	../../../tools/SPRArchiver.exe -o spahead.h ./ ./ demo_tex001.spa
 	-ls -f *.N*R > $(LIST_FILE)
 	-ls -f *.nsb* >> $(LIST_FILE)

@@ -1271,13 +1271,13 @@ void IRC_POKETRADE_InitBoxCursor(IRC_POKEMON_TRADE* pWork)
     cellInitData.anmseq = 2;
     cellInitData.softpri = _CLACT_SOFTPRI_SCROLL_BAR;
     cellInitData.bgpri = 1;
-    pWork->curIcon[2] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+    pWork->curIcon[CELL_CUR_SCROLLBAR] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                              pWork->cellRes[CHAR_SCROLLBAR],
                                              pWork->cellRes[PAL_SCROLLBAR],
                                              pWork->cellRes[ANM_SCROLLBAR],
                                              &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[2] , TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[2], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_SCROLLBAR] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
   }
 
 }

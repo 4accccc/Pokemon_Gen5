@@ -400,7 +400,7 @@ static void _moveSetTrade01(IRC_POKEMON_TRADE* pWork,GFL_G3D_OBJSTATUS* pStatus)
 
   GFL_G3D_CAMERA_Switching(pWork->camera );
 
-  {
+  if(0){
     float x,y,z;
     VecFx32 campos;
     GFL_G3D_CAMERA_GetTarget( pWork->camera, &campos );
@@ -455,6 +455,42 @@ static void _moveSetTrade01(IRC_POKEMON_TRADE* pWork,GFL_G3D_OBJSTATUS* pStatus)
       }
     }
   }
+
+  if(pWork->pBallInPer){
+    VecFx32 pos;
+    ICA_ANIME_GetTranslate( pWork->icaBallin, &pos );
+    GFL_PTC_SetEmitterPosition(pWork->pBallInPer, &pos);
+
+    if(1){
+      float x,y,z;
+      x = pos.x;
+      y = pos.y;
+      z = pos.z;
+      OS_Printf("INPOS X=%f Y=%f Z=%f\n",x/FX32_ONE,y/FX32_ONE,z/FX32_ONE);
+    }
+
+
+  }
+  if(pWork->pBallOutPer){
+    VecFx32 pos;
+    ICA_ANIME_GetTranslate( pWork->icaBallout, &pos );
+    GFL_PTC_SetEmitterPosition(pWork->pBallOutPer, &pos);
+
+    if(1){
+      float x,y,z;
+      x = pos.x;
+      y = pos.y;
+      z = pos.z;
+      OS_Printf("OUTPOS X=%f Y=%f Z=%f\n",x/FX32_ONE,y/FX32_ONE,z/FX32_ONE);
+    }
+
+  }
+    
+
+  // ƒJƒƒ‰ˆÊ’u‚ð‹‚ß‚é
+
+
+  
 }
 
 
@@ -574,6 +610,14 @@ void IRC_POKETRADEDEMO_End( IRC_POKEMON_TRADE* pWork )
     ICA_ANIME_Delete(pWork->icaTarget);
     pWork->icaTarget=NULL;
   }
+  if(pWork->icaBallin){
+    ICA_ANIME_Delete(pWork->icaBallin);
+    pWork->icaBallin=NULL;
+  }
+  if(pWork->icaBallout){
+    ICA_ANIME_Delete(pWork->icaBallout);
+    pWork->icaBallout=NULL;
+  }
   
 
   Finalize( pWork );
@@ -606,7 +650,13 @@ void IRC_POKETRADEDEMO_SetModel( IRC_POKEMON_TRADE* pWork, int modelno)
       pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_icacamera_bin, 10 );
     pWork->icaTarget = ICA_ANIME_CreateStreamingAlloc(
       pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_icatarget_bin, 10 );
+    pWork->icaBallin = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_001_bin, 10 );
+    pWork->icaBallout = ICA_ANIME_CreateStreamingAlloc(
+      pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_002_bin, 10 );
 
+
+    
   }
 
   
@@ -750,6 +800,8 @@ static void Draw( IRC_POKEMON_TRADE* pWork )
 //    ICA_ANIME_IncAnimeFrame( pWork->icaAnime, anime_speed );
     ICA_ANIME_IncAnimeFrame( pWork->icaCamera, anime_speed );
     ICA_ANIME_IncAnimeFrame( pWork->icaTarget, anime_speed );
+    ICA_ANIME_IncAnimeFrame( pWork->icaBallout, anime_speed );
+    ICA_ANIME_IncAnimeFrame( pWork->icaBallin, anime_speed );
   }
 }
 

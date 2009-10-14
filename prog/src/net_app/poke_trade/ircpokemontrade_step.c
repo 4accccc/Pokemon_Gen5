@@ -46,6 +46,7 @@
 #include "ircpokemontrade_local.h"
 
 
+static void _changeDemo_ModelTrade0(IRC_POKEMON_TRADE* pWork);
 static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork);
 static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork);
 static void _changeDemo_ModelTrade24(IRC_POKEMON_TRADE* pWork);
@@ -56,6 +57,9 @@ static void	_freePaletteFade( _EFFTOOL_PAL_FADE_WORK* pwk );
 static void  _EFFTOOL_CalcPaletteFade( _EFFTOOL_PAL_FADE_WORK *epfw );
 static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, fx32 xend, fx32 zend, HEAPID heapID);
 static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove);
+
+
+
 
 
 //------------------------------------------------------------------
@@ -70,7 +74,6 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove);
 static void _setNextAnim(IRC_POKEMON_TRADE* pWork, int timer)
 {
   pWork->anmCount = timer;
-  
 }
 
 
@@ -79,12 +82,56 @@ static void _WIPE_SYS_StartRap(int pattern, int wipe_m, int wipe_s, u16 color, i
   WIPE_SYS_Start(pattern, wipe_m, wipe_s, color, division, piece_sync, heap);
 }
 
+//MCSS終了の為のコールバック
+static void _McssAnmStop( u32 data, fx32 currentFrame )
+{
+  IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)data;
+
+  MCSS_SetAnmStopFlag( pWork->pokeMcss[0]);
+  pWork->mcssStop[0] = TRUE;
+}
+
+
+static void _ballinEmitFunc(GFL_EMIT_PTR pEmiter)
+{
+  IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetTempPtr();
+  
+  pWork->pBallInPer = pEmiter;
+  OS_TPrintf("PAR IN %x\n",pWork->pBallInPer);
+}
+
+static void _balloutEmitFunc(GFL_EMIT_PTR pEmiter)
+{
+  IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetTempPtr();
+  pWork->pBallOutPer = GFL_PTC_CreateEmitterCallback(pWork->ptc, 6, NULL, pWork);
+  OS_TPrintf("PAR OUT %x\n",pWork->pBallOutPer);
+}
+
 
 void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(IRC_POKEMON_TRADE* pWork)
 {
   VecFx32 apos;
   int i;
 
+  _CHANGE_STATE(pWork,_changeDemo_ModelTrade0);
+
+}
+
+
+
+
+
+void _changeDemo_ModelTrade0(IRC_POKEMON_TRADE* pWork)
+{
+  VecFx32 apos;
+  int i;
+
+    //待機アニメが止まるのを待つ
+  MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
+
+  pWork->mcssStop[0] = FALSE;
+  _setNextAnim(pWork, 0);
+  
   pWork->pD2Fade = GFL_HEAP_AllocClearMemory(pWork->heapID, sizeof(_D2_PAL_FADE_WORK));
   pWork->pD2Fade->pal_fade_time = _POKEMON_CENTER_TIME;
   pWork->pD2Fade->pal_fade_nowcount = 0;
@@ -99,6 +146,8 @@ void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(IRC_POKEMON_TRADE* pWork)
     _pokeMoveCreate(pWork->pokeMcss[0], _POKEMON_CENTER_TIME,
                     _POKE_PRJORTH_RIGHT/2, FX32_ONE*4.5f, pWork->heapID);
 
+  MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
+
   MCSS_SetPaletteFade( pWork->pokeMcss[1], 0, 16, _POKEMON_CENTER_TIME/16, 0 );
 
   GFL_BG_SetBackGroundColor(GFL_BG_FRAME1_M ,0);
@@ -106,6 +155,10 @@ void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(IRC_POKEMON_TRADE* pWork)
   
   _setNextAnim(pWork, 0);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade1);
+
+  pWork->pBallInPer = NULL;
+  pWork->pBallOutPer = NULL;
+  
 
 }
 
@@ -117,6 +170,9 @@ static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
     _setFadeMask(pWork->pD2Fade);
     _EFFTOOL_CalcPaletteFade(pWork->pModelFade);
     _pokeMoveFunc(pWork->pMoveMcss[0]);
+  }
+  if(pWork->mcssStop[0]!=TRUE){  //アニメ終了待ち
+    return;
   }
  
   if(pWork->anmCount > _POKEMON_CENTER_TIME){  //フェード完了
@@ -202,7 +258,7 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
     GFL_PTC_CreateEmitterCallback(pWork->ptc, 3, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO5_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, 4, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, 4, _ballinEmitFunc, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO6_START){
     GFL_PTC_CreateEmitterCallback(pWork->ptc, 5, NULL, pWork);

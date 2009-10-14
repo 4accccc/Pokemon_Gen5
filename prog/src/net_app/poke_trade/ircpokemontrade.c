@@ -155,16 +155,19 @@ void IRCPOKETRADE_PokeCreateMcss( IRC_POKEMON_TRADE *pWork ,int no, int bFront, 
   MCSS_ADD_WORK addWork;
   VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
   int xpos[] = { PSTATUS_MCSS_POS_X1 , PSTATUS_MCSS_POS_X2};
+  int z;
 
   GF_ASSERT( pWork->pokeMcss[no] == NULL );
 
   if(bFront){
     MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_FRONT );
+    z=1000;
   }
   else{
     MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_BACK );
+    z=999;
   }
-  pWork->pokeMcss[no] = MCSS_Add( pWork->mcssSys , xpos[no] , PSTATUS_MCSS_POS_Y , 1000 , &addWork );
+  pWork->pokeMcss[no] = MCSS_Add( pWork->mcssSys , xpos[no] , PSTATUS_MCSS_POS_Y , z , &addWork );
   MCSS_SetScale( pWork->pokeMcss[no] , &scale );
 }
 
@@ -1234,6 +1237,7 @@ static void _dispSubStateWait(IRC_POKEMON_TRADE* pWork)
     }
     else{
       _CHANGE_STATE(pWork, _touchState);
+      GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
     }
     UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[0]);
 
@@ -1270,6 +1274,8 @@ static void _dispSubState(IRC_POKEMON_TRADE* pWork)
     _changePokemonMyStDisp(pWork, pWork->pokemonselectno , (pWork->x < 128), pp);
     GFL_HEAP_FreeMemory(pp);
   }
+
+  GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
   
   _CHANGE_STATE(pWork,_dispSubStateWait);
 }
@@ -1694,14 +1700,14 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
         pp = PP_Create(MONSNO_ONOKKUSU, 100, 123456, HEAPID_IRCBATTLE);
 
         for(i=0;i<24;i++){
-          for(j=0;j<3;j++){
+          for(j=0;j < 2;j++){
             u16 oyaName[5] = {L'デ',L'バ',L'ッ',L'グ',0xFFFF};
             POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(MONSNO_MARIRU+i, 0, GFL_HEAPID_APP);
             u32 ret = POKE_PERSONAL_GetParam(ppd,POKEPER_ID_sex);
 
-            PP_SetupEx(pp, MONSNO_ZENIGAME+i+j, i+j, 123456,PTL_SETUP_POW_AUTO, ret);
+            PP_SetupEx(pp, MONSNO_RIZAADON, i+j, 123456,PTL_SETUP_POW_AUTO, ret);
             PP_Put( pp , ID_PARA_oyaname_raw , (u32)oyaName );
-            PP_Put( pp , ID_PARA_nickname_raw , (u32)oyaName );
+        //    PP_Put( pp , ID_PARA_nickname_raw , (u32)oyaName );
             PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex(  pWork->pMy ) );
             
             BOXDAT_PutPokemonBox(pBox, i, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));

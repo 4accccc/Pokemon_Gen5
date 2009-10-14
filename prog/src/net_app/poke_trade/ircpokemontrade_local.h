@@ -304,6 +304,10 @@ struct _IRC_POKEMON_TRADE{
   ICA_ANIME* icaCamera;
   ICA_ANIME* icaTarget;
   //  GFL_G3D_CAMERA* camera;
+  ICA_ANIME* icaBallin;
+  GFL_EMIT_PTR pBallInPer;
+  ICA_ANIME* icaBallout;
+  GFL_EMIT_PTR pBallOutPer;
 
   BOX_MANAGER* pBox;
   MYSTATUS* pMy;
@@ -312,6 +316,7 @@ struct _IRC_POKEMON_TRADE{
 
   MCSS_SYS_WORK *mcssSys;
   MCSS_WORK     *pokeMcss[2];
+  BOOL     mcssStop[2];
   _POKEMCSS_MOVE_WORK* pMoveMcss[2];
 
   GFL_ARCUTIL_TRANSINFO subchar;
