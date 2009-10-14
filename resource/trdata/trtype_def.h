@@ -3,7 +3,7 @@
  * @file	trtype_def.h
  * @bfief	トレーナータイプ定義
  * @author	TrainerDataConverter
- * @date	2009-10-08
+ * @date	2009-10-14
  * @author	このファイルは、コンバータが吐き出したファイルです
 */
 //============================================================================================
@@ -57,4 +57,5 @@
 #define	TRTYPE_PILOT    ( 43 )    //パイロット
 #define	TRTYPE_WORKER1    ( 44 )    //さぎょういん
 #define	TRTYPE_BASKET    ( 45 )    //バスケせんしゅ
-#define	TRTYPE_MAX	( 46 )
+#define	TRTYPE_SCIENTISTW    ( 46 )    //けんきゅういん
+#define	TRTYPE_MAX	( 47 )

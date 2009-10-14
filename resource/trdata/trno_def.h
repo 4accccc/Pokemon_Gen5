@@ -3,7 +3,7 @@
  * @file	trno_def.h
  * @bfief	トレーナーID定義ファイル
  * @author	TrainerDataConverter
- * @date	2009-10-08
+ * @date	2009-10-14
  * @author	このファイルは、コンバータが吐き出したファイルです
 */
 //============================================================================================
@@ -96,6 +96,10 @@
 #define	TRID_BASKET_01   ( 82 ) 
 #define	TRID_BASKET_02   ( 83 ) 
 #define	TRID_SCHOOLB_03   ( 84 ) 
+#define	TRID_TANPAN_04   ( 85 ) 
+#define	TRID_SCHOOLB_04   ( 86 ) 
+#define	TRID_SCHOOLG_03   ( 87 ) 
+#define	TRID_SCIENTISTW_01   ( 88 ) 
 
 #ifndef __ASM_NO_DEF_  //これ以降はアセンブラでは無視
 typedef  int TrainerID;

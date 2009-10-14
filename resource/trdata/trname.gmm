@@ -673,6 +673,22 @@
 		<language name="JPN">ツトム</language>
 	</row>
 
+	<row id="tanpan_04">
+		<language name="JPN">カズキ</language>
+	</row>
+
+	<row id="schoolb_04">
+		<language name="JPN">フミオ</language>
+	</row>
+
+	<row id="schoolg_03">
+		<language name="JPN">チエコ</language>
+	</row>
+
+	<row id="scientistw_01">
+		<language name="JPN">サトミ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
