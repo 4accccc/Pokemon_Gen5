@@ -119,6 +119,7 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
 static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
 static GMEVENT * checkSubScreenEvent(
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
+static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 
 static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork);
 
@@ -229,25 +230,13 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 //☆☆☆ステップチェック（一歩移動or振り向き）がここから
   //戦闘移行チェック
   if( req.isGridMap ){
-    FIELD_ENCOUNT * encount = FIELDMAP_GetEncount(fieldWork);
-    #ifdef PM_DEBUG
-    if( !(req.debugRequest) ){
-      if( req.stepRequest ){
-        if( FIELD_ENCOUNT_CheckEncount(encount) == TRUE ){
-          return EVENT_Battle( gsys, fieldWork );
-        }
+  
+    { //ノーマルエンカウントイベント起動チェック
+      GMEVENT* enc_event = checkNormalEncountEvent( &req, gsys, fieldWork );
+      if(enc_event != NULL){
+        return enc_event;
       }
     }
-    #else
-    if( req.stepRequest ){
-			if(!GFL_NET_IsInit())
-			{
-				if( FIELD_ENCOUNT_CheckEncount(encount) == TRUE ){
-					return EVENT_Battle( gsys, fieldWork );
-				}
-			}
-    }
-    #endif
   }
   
 
@@ -662,25 +651,10 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 //☆☆☆ステップチェック（一歩移動or振り向き）がここから
   //戦闘移行チェック
   {
-    FIELD_ENCOUNT * encount = FIELDMAP_GetEncount(fieldWork);
-    #ifdef PM_DEBUG
-    if( !(req.debugRequest) ){
-      if( req.stepRequest ){
-        if( FIELD_ENCOUNT_CheckEncount(encount) == TRUE ){
-          return EVENT_Battle( gsys, fieldWork );
-        }
-      }
+    GMEVENT* enc_event = checkNormalEncountEvent( &req, gsys, fieldWork );
+    if(enc_event != NULL){
+      return enc_event;
     }
-    #else
-    if( req.stepRequest ){
-			if(!GFL_NET_IsInit())
-			{
-				if( FIELD_ENCOUNT_CheckEncount(encount) == TRUE ){
-					return EVENT_Battle( gsys, fieldWork );
-				}
-			}
-    }
-    #endif
   }
   
 
@@ -1258,6 +1232,33 @@ static GMEVENT * checkSubScreenEvent(
 
 //--------------------------------------------------------------
 /**
+ * フィールドノーマルエンカウントイベント起動チェック
+ * @param gsys GAMESYS_WORK
+ * @param	fieldWork FIELDMAP_WORK
+ * @retval GMEVENT NULL イベント無し
+ */
+//--------------------------------------------------------------
+static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
+{
+  FIELD_ENCOUNT * encount = FIELDMAP_GetEncount(fieldWork);
+#ifdef PM_DEBUG
+  if( req->debugRequest ){
+    return NULL;
+  }
+#endif
+  if( !(req->stepRequest) ){
+    return NULL;
+  }
+#ifndef PM_DEBUG
+  if(GFL_NET_IsInit()){
+    return NULL;
+  }
+#endif
+  return FIELD_ENCOUNT_CheckEncount(encount);
+}
+
+//--------------------------------------------------------------
+/**
  * イベント起動チェック　決定ボタン入力時に発生するイベントチェック
  * @param fieldWork FIELDMAP_WORK
  * @param event 発生イベントプロセス格納先
@@ -1320,7 +1321,6 @@ static BOOL event_CheckEventPushKey( FIELDMAP_WORK *fieldWork,
 {
   return FALSE;
 }
-
 //======================================================================
 //  便利ボタンイベント
 //======================================================================

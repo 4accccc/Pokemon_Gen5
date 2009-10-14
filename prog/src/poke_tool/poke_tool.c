@@ -535,9 +535,7 @@ static void change_monsno_sub_sex( POKEMON_PASO_PARAM* ppp, u16 next_monsno, u16
   ppd = Personal_Load( old_monsno, form_no );
   old_param = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
 
-  if( (next_param == POKEPER_SEX_MALE)
-  ||  (next_param == POKEPER_SEX_FEMALE)
-  ||  (next_param == POKEPER_SEX_UNKNOWN)
+  if( PokePersonal_SexVecTypeGet( next_param ) != POKEPER_SEXTYPE_FIX
   ||  (old_param == POKEPER_SEX_UNKNOWN)
   ){
     u32 rnd = PPP_Get( ppp, ID_PARA_personal_rnd, NULL );
@@ -1443,10 +1441,7 @@ u32  POKETOOL_CalcPersonalRand( u16 mons_no, u16 form_no, u8 chr, u8 sex )
     if( sex == PTL_SEX_MALE ){
       POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
       u8 sex_param = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
-      if( (sex_param != POKEPER_SEX_MALE)
-      &&  (sex_param != POKEPER_SEX_FEMALE)
-      &&  (sex_param != POKEPER_SEX_UNKNOWN)
-      ){
+      if( PokePersonal_SexVecTypeGet( sex_param ) != POKEPER_SEXTYPE_FIX){
         byte = sex_param+1; // ÉIÉXÇ…ÇµÇΩÇ¢èÍçáÇÃÇ›í≤êÆ
       }
     }

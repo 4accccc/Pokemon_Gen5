@@ -46,26 +46,31 @@ class CEncTable
   end
 
   #データエラーチェック
-  def check_err column,enc_prob,dat_len,dat_name
+  def check_disable column,enc_prob,dat_len,null_check_len,dat_name
     #データの有無チェック
     if enc_prob == 0 then
       #読み飛ばして終了
       column.slice!(0..(dat_len-1))
       return true
     end
-
     #エラーチェック
     null_idx = column.index("")
-    if null_idx != nil && null_idx < dat_len then
-      printf("%s データエラー 不正な空欄があります <= %s\n",@zone_name,dat_name)
+    if null_idx != nil && null_idx < null_check_len then
+      printf("%s データエラー %d列目に不正な空欄があります <= %s 確率=%d\n",@zone_name,null_idx,dat_name,enc_prob)
       exit 1 
     end
     return false
   end
 
+  #フォルム取得
+  def form_get str_form
+    form = str_form == "" ? 0 : str_form.to_i
+    return form
+  end
+
   #グランドデータ数値パース(破壊的メソッドなので注意)
   def perse_ground_val column,enc_prob,dat_name
-    if check_err(column,enc_prob,GROUND_MONS_DATA_LEN,dat_name) == true then
+    if check_disable(column,enc_prob,GROUND_MONS_DATA_LEN,GROUND_MONS_NUM,dat_name) == true then
       return 
     end
 
@@ -74,14 +79,14 @@ class CEncTable
       @mons_list << $_enc_poke.new 
       cp = @mons_list.last()
       cp.lv_min = cp.lv_max = column[i].to_i 
-      cp.form = column[i+GROUND_MONS_NUM].to_i 
+      cp.form = form_get(column[i+GROUND_MONS_NUM])
     }
     column.slice!(0..(GROUND_MONS_DATA_LEN-1))
   end
 
   #水上データ数値パース
   def perse_water_val column,enc_prob,dat_name
-    if check_err(column,enc_prob,WATER_MONS_DATA_LEN,dat_name) == true then
+    if check_disable(column,enc_prob,WATER_MONS_DATA_LEN,WATER_MONS_NUM*2,dat_name) == true then
       return 
     end
 
@@ -91,7 +96,7 @@ class CEncTable
       cp = @mons_list.last()
       cp.lv_min = column[i].to_i 
       cp.lv_max = column[i+1].to_i 
-      cp.form = column[i+(WATER_MONS_NUM*2)].to_i 
+      cp.form = form_get(column[i+(WATER_MONS_NUM*2)])
     }
     column.slice!(0..(WATER_MONS_DATA_LEN-1))
   end
@@ -168,16 +173,16 @@ class CMapData
     #グランドデータvalueパース
     @table[IDX_GROUND_L].perse_ground_val(column,@enc_prob[IDX_GROUND_L],"通常1")
     @table[IDX_GROUND_H].perse_ground_val(column,@enc_prob[IDX_GROUND_H],"通常2")
-    @enc_prob[IDX_GROUND_SP] = column[0] == nil ? 0 : 1
+    @enc_prob[IDX_GROUND_SP] = column[0] == "" ? 0 : 1
     @table[IDX_GROUND_SP].perse_ground_val(column,@enc_prob[IDX_GROUND_SP],"特殊")
 
     #水上・釣りデータvalueパース
     @table[IDX_WATER].perse_water_val(column,@enc_prob[IDX_WATER],"水上")
-    @enc_prob[IDX_WATER_SP] = column[0] == nil ? 0 : 1
+    @enc_prob[IDX_WATER_SP] = column[0] == "" ? 0 : 1
     @table[IDX_WATER_SP].perse_water_val(column,@enc_prob[IDX_WATER_SP],"特殊水上")
 
     @table[IDX_FISHING].perse_water_val(column,@enc_prob[IDX_FISHING],"釣り")
-    @enc_prob[IDX_FISHING_SP] = column[0] == nil ? 0 : 1
+    @enc_prob[IDX_FISHING_SP] = column[0] == "" ? 0 : 1
     @table[IDX_FISHING_SP].perse_water_val(column,@enc_prob[IDX_FISHING_SP],"特殊釣り")
     
     #モンスター名パース
@@ -285,7 +290,7 @@ class CEncountData
   def output_arclist f_path,bin_path
     File.open(f_path,"w"){ |file|
       for n in @zone_list do
-       buf = "\"%s/%s.bin\"" % [bin_path,n.get_zone_name()]
+       buf = "\"%s/%s.bin\"\n" % [bin_path,n.get_zone_name()]
        file.print buf
       end
     }

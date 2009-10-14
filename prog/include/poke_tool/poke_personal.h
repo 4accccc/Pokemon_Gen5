@@ -92,12 +92,18 @@ typedef enum {
  * ポケモンパーソナルデータの関連定数
  */
 //--------------------------------------------------------------
-enum {
+typedef enum {
   //  性別ベクトル（パーソナル上のオスメス比率）(1～253でオスメスの比率が変わる）
   POKEPER_SEX_MALE = 0,     ///<オスのみ
   POKEPER_SEX_FEMALE = 254,   ///<メスのみ
   POKEPER_SEX_UNKNOWN = 255,    ///<性別なし
-};
+}POKEPER_SEX;
+
+typedef enum{
+  //性別ベクトルのタイプ(オスメスランダムor固定)
+  POKEPER_SEXTYPE_RND,
+  POKEPER_SEXTYPE_FIX,
+}POKEPER_SEX_TYPE;
 
 enum{
   // こづくりグループ
@@ -159,7 +165,6 @@ extern void POKE_PERSONAL_LoadWazaOboeTable( u16 mons_no, u16 form_no, POKEPER_W
 
 // 性別取得
 extern  u8    PokePersonal_SexGet( POKEMON_PERSONAL_DATA* personalData, u16 monsno, u32 rnd );
-
-
+extern POKEPER_SEX_TYPE PokePersonal_SexVecTypeGet( POKEPER_SEX sex_vec );
 
 #endif

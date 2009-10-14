@@ -21,6 +21,7 @@ extern void EVENTDATA_SYS_Delete(EVENTDATA_SYSTEM * evdata);
 extern void EVENTDATA_SYS_Clear(EVENTDATA_SYSTEM * evdata);
 extern void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 mapid);
 extern void * EVENTDATA_GetSpecialScriptData( EVENTDATA_SYSTEM * evdata );
+extern void * EVENTDATA_GetEncountDataTable( EVENTDATA_SYSTEM * evdata );
 
 #include "field/eventwork.h"
 #include "field/rail_location.h"

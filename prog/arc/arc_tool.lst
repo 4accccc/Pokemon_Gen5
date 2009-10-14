@@ -210,3 +210,5 @@
   ARCID_KOWAZA "kowaza.narc"  # 子技データ
   ARCID_WAZAOSHIE_GRA	"waza_oshie_gra.narc"		# 技教え/思い出し画面グラフィック
 	ARCID_FLD_EVENTDATA		"fieldmap\eventdata.narc"	#フィールドイベントデータ
+	$VERSION_WHITE	ARCID_ENCOUNT	"encount_data_w.narc"	#ホワイト版エンカウントデータ
+	$VERSION_BLACK	ARCID_ENCOUNT	"encount_data_b.narc"	#ブラック版エンカウントデータ

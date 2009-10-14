@@ -17,14 +17,8 @@
 //======================================================================
 
 //======================================================================
-//  struct
-//======================================================================
-
-//======================================================================
 //  proto
 //======================================================================
-///ENCOUNT_DATA
-typedef struct _TAG_ENCOUNT_DATA ENCOUNT_DATA;
 ///FIELD_ENCOUNT
 typedef struct _TAG_FIELD_ENCOUNT FIELD_ENCOUNT;
 
@@ -36,9 +30,8 @@ extern FIELD_ENCOUNT * FIELD_ENCOUNT_Create( FIELDMAP_WORK *fwork );
 extern void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc );
 
 //チェック
-extern BOOL FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc );
+extern GMEVENT* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc );
+//extern BATTLE_SETUP_PARAM* FIELD_ENCOUNT_GetBattleParamPointer( FIELD_ENCOUNT *enc );
 
-extern void FIELD_ENCOUNT_GetBattleSetupParam(
-    FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup );
-extern void FIELD_ENCOUNT_SetTrainerBattleSetupParam(
+extern void FIELD_ENCOUNT_SetTrainerBattleParam(
     FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int tr_id, HEAPID heapID );

@@ -284,6 +284,25 @@ u32 POKE_PERSONAL_GetParam( POKEMON_PERSONAL_DATA *ppd, PokePersonalParamID para
 	return ret;
 }
 
+//==============================================================================
+/**
+ * パーソナルデータの性別ベクトル値から、性別ベクトルのタイプを返す
+ *
+ * @param   sex_vec   パーソナルの性別ベクトル値
+ *
+ * @retval  POKEPER_SEX_TYPE_RND  ランダム
+ * @retval  POKEPER_SEX_TYPE_FIX  固定(オス・メス固定 or 性別不明)
+ */
+//==============================================================================
+POKEPER_SEX_TYPE PokePersonal_SexVecTypeGet( POKEPER_SEX sex_vec )
+{
+  if( sex_vec == POKEPER_SEX_MALE ||
+      sex_vec == POKEPER_SEX_FEMALE ||
+      sex_vec == POKEPER_SEX_UNKNOWN){
+    return POKEPER_SEXTYPE_FIX;
+  }
+  return POKEPER_SEXTYPE_RND;
+}
 
 
 

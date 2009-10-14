@@ -1,7 +1,77 @@
+/*
+ *  @file   btl_setup.c
+ *  @brief  バトルパラメータセットアップ
+ *  @author Taya & Iwasawa
+ *  @date   09.10.07
+ */
 
 #include "sound/wb_sound_data.sadl" //サウンドラベルファイル
 #include "gamesystem/btl_setup.h"
 
+///プロトタイプ
+void BATTLE_PARAM_Init( BATTLE_SETUP_PARAM* bp );
+void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp );
+
+/*
+ *  @brief  戦闘パラメータワーク生成
+ *  @param  heapID  ワークメモリを確保するheapID
+ *
+ *  ＊BATTLE_SETUP_PARAM構造体領域をアロケートし、初期化します
+ *  ＊デフォルトのパラメータで構造体を初期化します。バトルタイプに応じて、必要な初期化を追加で行ってください
+ *  ＊必ず BATTLE_PARAM_Delete()で解放してください
+ */
+BATTLE_SETUP_PARAM* BATTLE_PARAM_Create( int heapID )
+{
+  BATTLE_SETUP_PARAM* bp;
+
+  bp = GFL_HEAP_AllocMemory( heapID, sizeof(BATTLE_SETUP_PARAM) ); 
+  BATTLE_PARAM_Init( bp );
+  return bp;
+}
+
+/*
+ *  @brief  戦闘パラメータワーク解放
+ *  @param  bp  BATTLE_PARAM_Create()で生成されたBATTLE_SETUP_PARAM構造体型ワークへのポインタ
+ */
+void BATTLE_PARAM_Delete( BATTLE_SETUP_PARAM* bp )
+{
+  BATTLE_PARAM_Release( bp );
+  GFL_HEAP_FreeMemory( bp );
+  bp = NULL;
+}
+
+/**
+ *  @brief  戦闘パラメータワークの内部初期化処理
+ *  @param  bp  確保済みのBATTLE_SETUP_PARAM構造体型ワークへのポインタ
+ *
+ *  ＊デフォルトのパラメータで構造体を初期化します。バトルタイプに応じて、必要な初期化を追加で行ってください
+ *  ＊使い終わったら必ずBATTLE_PARAM_Release()関数で解放処理をしてください
+ */
+void BATTLE_PARAM_Init( BATTLE_SETUP_PARAM* bp )
+{
+  MI_CpuClear8( bp, sizeof(BATTLE_SETUP_PARAM) );
+}
+
+/*
+ *  @brief  戦闘パラメータワークの内部アロケーションメモリ解放とクリア
+ *  @param  bp  確保済みのBATTLE_SETUP_PARAM構造体型ワークへのポインタ
+ */
+void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp )
+{
+  if(bp->partyPlayer){
+    GFL_HEAP_FreeMemory(bp->partyPlayer);
+  }
+  if(bp->partyPartner){
+    GFL_HEAP_FreeMemory(bp->partyPartner);
+  }
+  if(bp->partyEnemy1){
+    GFL_HEAP_FreeMemory(bp->partyEnemy1);
+  }
+  if(bp->partyEnemy2){
+    GFL_HEAP_FreeMemory(bp->partyEnemy2);
+  }
+  MI_CpuClear8(bp,sizeof(BATTLE_SETUP_PARAM));
+}
 
 static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BtlLandForm landForm, BtlWeather weather )
 {
@@ -13,7 +83,7 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BtlLandFo
   dst->landForm = landForm;
   dst->weather  = weather;
 
-  dst->partyPlayer = GAMEDATA_GetMyPokemon( gameData );
+  dst->partyPlayer = NULL;  //GAMEDATA_GetMyPokemon( gameData );
   dst->partyEnemy1 = NULL;
   dst->partyPartner = NULL;
   dst->partyEnemy2 = NULL;
@@ -28,10 +98,9 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BtlLandFo
   dst->result = BTL_RESULT_WIN;
 }
 
-
 //=============================================================================================
 /**
- * シングル 野生戦
+ * @brief 野生戦コモンパラメータセット
  *
  * @param   dst
  * @param   gameData
@@ -40,41 +109,21 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BtlLandFo
  * @param   weather
  */
 //=============================================================================================
-void BTL_SETUP_Single_Wild( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather )
+void BP_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gdata, int heapID, const BtlRule rule, 
+  const POKEPARTY* partyEnemy, const BtlLandForm landForm, const BtlWeather weather )
 {
-  setup_common( dst, gameData, landForm, weather );
+  setup_common( bp, gdata, landForm, weather );
+  
+  bp->partyPlayer = PokeParty_AllocPartyWork( heapID );
+  PokeParty_Copy( GAMEDATA_GetMyPokemon(gdata), bp->partyPlayer );
 
-  dst->engine = BTL_ENGINE_ALONE;
-  dst->competitor = BTL_COMPETITOR_WILD;
-  dst->rule = BTL_RULE_SINGLE;
+  bp->partyEnemy1 = (POKEPARTY*)partyEnemy;
+  
+  bp->engine = BTL_ENGINE_ALONE;
+  bp->competitor = BTL_COMPETITOR_WILD;
+  bp->rule = rule;
 
-  dst->partyEnemy1 = partyEnemy;
-  dst->trID = TRID_NULL;
-}
-
-//=============================================================================================
-/**
- * ダブル 野生戦
- *
- * @param   dst
- * @param   gameData
- * @param   partyEnemy
- * @param   landForm
- * @param   weather
- */
-//=============================================================================================
-void BTL_SETUP_Double_Wild( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather )
-{
-  setup_common( dst, gameData, landForm, weather );
-
-  dst->engine = BTL_ENGINE_ALONE;
-  dst->competitor = BTL_COMPETITOR_WILD;
-  dst->rule = BTL_RULE_DOUBLE;
-
-  dst->partyEnemy1 = partyEnemy;
-  dst->trID = TRID_NULL;
+  bp->trID = TRID_NULL;
 }
 
 
@@ -117,7 +166,7 @@ void BTL_SETUP_Single_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode )
 {
   setup_common( dst, gameData, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
-
+  
   dst->engine = BTL_ENGINE_ALONE;
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_SINGLE;
@@ -169,7 +218,7 @@ void BTL_SETUP_Double_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode )
 {
   setup_common( dst, gameData, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
-
+  
   dst->engine = BTL_ENGINE_ALONE;
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_DOUBLE;
@@ -197,7 +246,7 @@ void BTL_SETUP_Multi_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode, u8 commPos )
 {
   setup_common( dst, gameData, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
-
+  
   dst->engine = BTL_ENGINE_ALONE;
   dst->competitor = BTL_COMPETITOR_COMM;
   dst->rule = BTL_RULE_DOUBLE;
@@ -226,7 +275,7 @@ void BTL_SETUP_Triple_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID )
 {
   setup_common( dst, gameData, landForm, weather );
-
+  
   dst->engine = BTL_ENGINE_ALONE;
   dst->competitor = BTL_COMPETITOR_TRAINER;
   dst->rule = BTL_RULE_TRIPLE;

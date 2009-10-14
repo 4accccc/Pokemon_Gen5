@@ -23,8 +23,8 @@
 //======================================================================
 //  extern
 //======================================================================
-extern GMEVENT * EVENT_Battle(
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
+extern GMEVENT * EVENT_WildPokeBattle(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp );
 extern GMEVENT * EVENT_TrainerBattle(
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, int tr_id );
 //debug

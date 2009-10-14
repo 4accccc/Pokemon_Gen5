@@ -12,17 +12,45 @@
 #include "battle/battle.h"
 #include "gamesystem/game_data.h"
 
-extern void BTL_SETUP_Single_Wild( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather );
+/*
+ *  @brief  戦闘パラメータワーク生成
+ *  @param  heapID  ワークメモリを確保するheapID
+ *
+ *  ＊BATTLE_SETUP_PARAM構造体領域をアロケートし、初期化します
+ *  ＊デフォルトのパラメータで構造体を初期化します。バトルタイプに応じて、必要な初期化を追加で行ってください
+ *  ＊必ず BATTLE_PARAM_Delete()で解放してください
+ */
+extern BATTLE_SETUP_PARAM* BATTLE_PARAM_Create( int heapID );
+
+/*
+ *  @brief  戦闘パラメータワーク解放
+ *  @param  bp  BATTLE_PARAM_Create()で生成されたBATTLE_SETUP_PARAM構造体型ワークへのポインタ
+ */
+extern void BATTLE_PARAM_Delete( BATTLE_SETUP_PARAM* bp );
+
+/**
+ *  @brief  戦闘パラメータワークの内部初期化処理
+ *  @param  bp  確保済みのBATTLE_SETUP_PARAM構造体型ワークへのポインタ
+ *
+ *  ＊デフォルトのパラメータで構造体を初期化します。バトルタイプに応じて、必要な初期化を追加で行ってください
+ *  ＊使い終わったら必ずBATTLE_PARAM_Release()関数で解放処理をしてください
+ */
+extern void BATTLE_PARAM_Init( BATTLE_SETUP_PARAM* bp );
+
+/*
+ *  @brief  戦闘パラメータワークの内部アロケーションメモリ解放とクリア
+ *  @param  bp  確保済みのBATTLE_SETUP_PARAM構造体型ワークへのポインタ
+ */
+extern void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp );
+
+extern void BP_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData, int heapID, const BtlRule rule, 
+  const POKEPARTY* partyEnemy, const BtlLandForm landForm, const BtlWeather weather );
 
 extern void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID );
 
 extern void BTL_SETUP_Single_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   GFL_NETHANDLE* netHandle, BtlCommMode commMode );
-
-extern void BTL_SETUP_Double_Wild( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
-  POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather );
 
 extern void BTL_SETUP_Double_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID );

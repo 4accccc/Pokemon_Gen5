@@ -28,6 +28,8 @@
 #include "fieldmap/zone_id.h"
 
 #include "field/zonedata.h"
+#include "field/encount_data.h"
+
 //============================================================================================
 //============================================================================================
 #ifdef PM_DEBUG
@@ -64,7 +66,7 @@ struct _EVDATA_SYS {
 	const CONNECT_DATA * connect_data;
 	const POS_EVENT_DATA * pos_data;
 
-	//ENCOUNT_DATA encount_work;
+	ENCOUNT_DATA encount_work;
 	u32 load_buffer[EVDATA_SIZE / sizeof(u32)];
 	u32 spscr_buffer[SPSCR_DATA_SIZE / sizeof(u32)];
 };
@@ -152,6 +154,7 @@ static void debugPrint_PosData( const POS_EVENT_DATA* cp_data );
 //============================================================================================
 static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id);
 static void loadSpecialScriptData( EVENTDATA_SYSTEM * evdata, u16 zone_id );
+static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id);
 
 
 //============================================================================================
@@ -230,6 +233,8 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 
   loadSpecialScriptData( evdata, zone_id );
   loadEventDataTable(evdata, zone_id);
+  loadEncountDataTable(evdata, zone_id);
+
 	/* テスト的に接続データを設定 */
 	switch (zone_id) {
 #if 0
@@ -341,6 +346,38 @@ static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 #endif // DEBUG_EVENTDATA_PRINT
 }
 
+//------------------------------------------------------------------
+/*
+ *  @brief  ゾーンエンカウントデータロード
+ *
+ *  @retval true  エンカウントデータ取得に成功
+ *  @retval false 指定ゾーンにはエンカウントデータがない
+ */
+//------------------------------------------------------------------
+static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id)
+{
+  u16 id;
+  MI_CpuClear8(&evdata->encount_work,sizeof(ENCOUNT_DATA));
+
+  id = ZONEDATA_GetEncountDataID(zone_id);
+  if(id == ENC_DATA_INVALID_ID){
+    return;
+  }
+  //ロード
+  GFL_ARC_LoadData(&evdata->encount_work,ARCID_ENCOUNT,id);
+  evdata->encount_work.enable_f = TRUE;
+}
+
+//------------------------------------------------------------------
+/*
+ *  @brief  現ゾーンエンカウントデータ取得
+ *  @return 現在のゾーンに読み込まれているエンカウントデータテーブルへのポインタ
+ */
+//------------------------------------------------------------------
+void* EVENTDATA_GetEncountDataTable(EVENTDATA_SYSTEM* evdata)
+{
+  return &evdata->encount_work;
+}
 
 
 //============================================================================================

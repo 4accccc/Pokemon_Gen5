@@ -12,6 +12,7 @@
 #include "gamesystem/game_init.h"
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
+#include "gamesystem/btl_setup.h"
 
 #include "field/fieldmap.h"
 
@@ -54,7 +55,7 @@ FS_EXTERN_OVERLAY(battle);
 typedef struct {
   GAMESYS_WORK * gsys;
   FIELDMAP_WORK * fieldmap;
-  BATTLE_SETUP_PARAM para;
+  BATTLE_SETUP_PARAM* battle_param;
   u16 timeWait;
   u16 bgmpush_off;
 }BATTLE_EVENT_WORK;
@@ -62,8 +63,6 @@ typedef struct {
 //======================================================================
 //  proto
 //======================================================================
-//BATTLE_SETUP_PARAMの解放処理
-static void BATTLE_SETUP_PARAM_Destructor(BATTLE_SETUP_PARAM * para);
 //BATTLE_SETUP_PARAMのデバッグ生成処理
 static void BATTLE_SETUP_PARAM_DebugConstructer(BATTLE_SETUP_PARAM * para, GAMESYS_WORK * gsys);
 //POKEPARTYにポケモンを加える
@@ -73,8 +72,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     GMEVENT * event, int *  seq, void * work );
 
 //debug
-static GMEVENT_RESULT DebugBattleEvent(
-    GMEVENT * event, int *  seq, void * work );
+static GMEVENT_RESULT DebugBattleEvent( GMEVENT * event, int *  seq, void * work );
 
 const u32 data_EncountPoke200905[];
 const u32 data_EncountPoke200905Max;
@@ -82,36 +80,29 @@ const u32 data_EncountPoke200905Max;
 
 static BOOL BEW_IsLoseResult(BATTLE_EVENT_WORK * bew);
 static void BEW_reflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata);
-static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap);
+static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, BATTLE_SETUP_PARAM* bp);
 static void BEW_Destructor(BATTLE_EVENT_WORK * bew);
 //======================================================================
 //  フィールド　バトルイベント
 //======================================================================
 //--------------------------------------------------------------
 /**
- * フィールドバトルイベント作成
+ * フィールド野生ポケモンバトルイベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldmap FIELDMAP_WORK
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT * EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
+GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp )
 {
   GMEVENT * event;
-  BATTLE_SETUP_PARAM * para;
-  BATTLE_EVENT_WORK * dbw;
+  BATTLE_EVENT_WORK * bew;
   
   event = GMEVENT_Create(
       gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
   
-  dbw = GMEVENT_GetEventWork(event);
-  BEW_Initialize( dbw, gsys, fieldmap );
-
-  para = &dbw->para;
-  {
-    FIELD_ENCOUNT *enc = FIELDMAP_GetEncount( fieldmap );
-    FIELD_ENCOUNT_GetBattleSetupParam( enc, para );
-  }
+  bew = GMEVENT_GetEventWork(event);
+  BEW_Initialize( bew, gsys, fieldmap, bp );
 
   return event;
 }
@@ -128,22 +119,23 @@ GMEVENT * EVENT_TrainerBattle(
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, int tr_id )
 {
   GMEVENT * event;
-  BATTLE_SETUP_PARAM * para;
-  BATTLE_EVENT_WORK * dbw;
+  BATTLE_EVENT_WORK * bew;
+  BATTLE_SETUP_PARAM* bp;
 
   event = GMEVENT_Create(
       gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
 
-  dbw = GMEVENT_GetEventWork(event);
-  BEW_Initialize( dbw, gsys, fieldmap );
-  dbw->bgmpush_off = TRUE; //視線イベントBGM時に退避済み
-  
-  para = &dbw->para;
+  bew = GMEVENT_GetEventWork(event);
+
   {
-    FIELD_ENCOUNT *enc = FIELDMAP_GetEncount( fieldmap );
-    FIELD_ENCOUNT_SetTrainerBattleSetupParam(
-        enc, para, tr_id, HEAPID_PROC );
+    FIELD_ENCOUNT* enc = FIELDMAP_GetEncount(fieldmap);
+    
+    bp = BATTLE_PARAM_Create(HEAPID_PROC);
+    FIELD_ENCOUNT_SetTrainerBattleParam( enc, bp, tr_id, HEAPID_PROC );
   }
+
+  BEW_Initialize( bew, gsys, fieldmap, bp );
+  bew->bgmpush_off = TRUE; //視線イベントBGM時に退避済み
   
   return event;
 }
@@ -173,23 +165,26 @@ static GMEVENT_RESULT fieldBattleEvent(
       FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
       FIELD_SOUND_PushBGM( fsnd );
     }
-    PMSND_PlayBGM( bew->para.musicDefault );
-    
+    PMSND_PlayBGM( bew->battle_param->musicDefault );
+    IWASAWA_Printf("mineParty %08x\n",bew->battle_param->partyPlayer); 
     //エンカウントエフェクト
     GMEVENT_CallEvent( event,
         EVENT_FieldEncountEffect(gsys,bew->fieldmap) );
     (*seq)++;
     break;
   case 1:
+    IWASAWA_Printf("mineParty%d %08x\n",*seq,bew->battle_param->partyPlayer); 
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, bew->fieldmap));
     (*seq)++;
     break;
   case 2:
+    IWASAWA_Printf("mineParty%d %08x\n",*seq,bew->battle_param->partyPlayer); 
     //バトルプロセス呼び出し：プロセスが終了したらこのイベントに復帰する
-    GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, &bew->para );
+    GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, bew->battle_param );
     (*seq)++;
     break;
   case 3:
+    IWASAWA_Printf("mineParty%d %08x\n",*seq,bew->battle_param->partyPlayer); 
     bew->timeWait = 60; // 戦闘ＢＧＭフェードアウト
     PMSND_FadeOutBGM( 60 );
     (*seq) ++;
@@ -202,6 +197,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     }
     break;
   case 5:
+    IWASAWA_Printf("mineParty%d %08x\n",*seq,bew->battle_param->partyPlayer); 
     //戦闘結果反映処理
     BEW_reflectBattleResult( bew, gamedata );
     {
@@ -224,13 +220,16 @@ static GMEVENT_RESULT fieldBattleEvent(
       PMSND_FadeInBGM(60);
       GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     }
+    IWASAWA_Printf("mineParty%d %08x\n",*seq,bew->battle_param->partyPlayer); 
     (*seq) ++;
     break;
   case 6:
+    IWASAWA_Printf("mineParty%d %08x\n",*seq,bew->battle_param->partyPlayer); 
     GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, bew->fieldmap, 0));
     (*seq) ++;
     break;
   case 7:
+    IWASAWA_Printf("mineParty%d %08x\n",*seq,bew->battle_param->partyPlayer); 
     BEW_Destructor( bew );
     return GMEVENT_RES_FINISH;
   }
@@ -252,18 +251,19 @@ static GMEVENT_RESULT fieldBattleEvent(
 GMEVENT * DEBUG_EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
 {
   GMEVENT * event;
-  BATTLE_SETUP_PARAM * para;
-  BATTLE_EVENT_WORK * dbw;
+  BATTLE_SETUP_PARAM * bp;
+  BATTLE_EVENT_WORK * bew;
 
   event = GMEVENT_Create(
       gsys, NULL, DebugBattleEvent, sizeof(BATTLE_EVENT_WORK) );
 
-  dbw = GMEVENT_GetEventWork(event);
-  BEW_Initialize( dbw, gsys, fieldmap );
-  para = &dbw->para;
-  BATTLE_SETUP_PARAM_DebugConstructer( para, gsys );
+  bew = GMEVENT_GetEventWork(event);
+  bp = BATTLE_PARAM_Create(HEAPID_PROC);
+  BATTLE_SETUP_PARAM_DebugConstructer( bp, gsys );
 
-  dbw->timeWait = 0;
+  BEW_Initialize( bew, gsys, fieldmap , bp );
+
+  bew->timeWait = 0;
 
   return event;
 }
@@ -277,17 +277,16 @@ GMEVENT * DEBUG_EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
  * @retval GMEVENT_RESULT
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT DebugBattleEvent(
-    GMEVENT * event, int *  seq, void * work )
+static GMEVENT_RESULT DebugBattleEvent( GMEVENT * event, int *  seq, void * work )
 {
-  BATTLE_EVENT_WORK * dbw = work;
-  GAMESYS_WORK * gsys = dbw->gsys;
+  BATTLE_EVENT_WORK * bew = work;
+  GAMESYS_WORK * gsys = bew->gsys;
 #if 0
   switch (*seq) {
   case 0:
     GMEVENT_CallEvent(event,
-        EVENT_FieldSubProc(dbw->gsys, dbw->fieldmap,
-          FS_OVERLAY_ID(battle), &BtlProcData, &(dbw->para))
+        EVENT_FieldSubProc(bew->gsys, bew->fieldmap,
+          FS_OVERLAY_ID(battle), &BtlProcData, &(bew->para))
         );
     (*seq) ++;
     break;
@@ -297,29 +296,29 @@ static GMEVENT_RESULT DebugBattleEvent(
 #endif
   switch (*seq) {
   case 0:
-    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
+    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, bew->fieldmap));
     // 戦闘用ＢＧＭセット
     {
       GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
       FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PushPlayEventBGM( fsnd, dbw->para.musicDefault );
+      FIELD_SOUND_PushPlayEventBGM( fsnd, bew->battle_param->musicDefault );
     }
     (*seq)++;
     break;
   case 1:
     //バトルプロセス呼び出し：プロセスが終了したらこのイベントに復帰する
-    GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, &dbw->para );
+    GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, bew->battle_param );
     (*seq)++;
     break;
   case 2:
     // 戦闘ＢＧＭフェードアウト
-    dbw->timeWait = 60;
+    bew->timeWait = 60;
     PMSND_FadeOutBGM(60);
     (*seq) ++;
     break;
   case 3:
-    if(dbw->timeWait){
-      dbw->timeWait--;
+    if(bew->timeWait){
+      bew->timeWait--;
     } else {
       (*seq) ++;
     }
@@ -336,11 +335,11 @@ static GMEVENT_RESULT DebugBattleEvent(
     (*seq) ++;
     break;
   case 5:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
+    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, bew->fieldmap, 0));
     (*seq) ++;
     break;
   case 6:
-    BEW_Destructor( dbw );
+    BEW_Destructor( bew );
     return GMEVENT_RES_FINISH;
   }
 
@@ -360,6 +359,8 @@ static const void addPartyPokemon(POKEPARTY * party, u16 monsno, u8 level, u16 i
 //--------------------------------------------------------------
 static void BATTLE_SETUP_PARAM_DebugConstructer(BATTLE_SETUP_PARAM * para, GAMESYS_WORK * gsys)
 {
+  BATTLE_PARAM_Init(para);
+
   para->engine = BTL_ENGINE_ALONE;
   para->rule = BTL_RULE_SINGLE;
   para->competitor = BTL_COMPETITOR_WILD;
@@ -395,25 +396,6 @@ static void BATTLE_SETUP_PARAM_DebugConstructer(BATTLE_SETUP_PARAM * para, GAMES
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static void BATTLE_SETUP_PARAM_Destructor(BATTLE_SETUP_PARAM * para)
-{
-  if (para->partyPlayer)
-  {
-    GFL_HEAP_FreeMemory(para->partyPlayer);
-  }
-  if (para->partyPartner)
-  {
-    GFL_HEAP_FreeMemory(para->partyPartner);
-  }
-  if (para->partyEnemy1)
-  {
-    GFL_HEAP_FreeMemory(para->partyEnemy1);
-  }
-  if (para->partyEnemy2)
-  {
-    GFL_HEAP_FreeMemory(para->partyEnemy2);
-  }
-}
 //--------------------------------------------------------------
 /**
  * @brief 勝ち負け結果チェック
@@ -423,12 +405,12 @@ static void BATTLE_SETUP_PARAM_Destructor(BATTLE_SETUP_PARAM * para)
 //--------------------------------------------------------------
 static BOOL BEW_IsLoseResult(BATTLE_EVENT_WORK * bew)
 {
-  switch ((BtlResult)bew->para.result)
+  switch ((BtlResult)bew->battle_param->result)
   {
   case BTL_RESULT_LOSE:        ///< 負けた
     return TRUE;
   default:
-    GF_ASSERT_MSG(0, "想定外のBtlResult %d\n", bew->para.result );
+    GF_ASSERT_MSG(0, "想定外のBtlResult %d\n", bew->battle_param->result );
     /* FALL THROUGH */
   case BTL_RESULT_WIN:         ///< 勝った
   case BTL_RESULT_DRAW:        ///< ひきわけ
@@ -453,11 +435,12 @@ static void BEW_reflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
+static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, BATTLE_SETUP_PARAM* bp)
 {
   MI_CpuClear8( bew, sizeof(BATTLE_EVENT_WORK) );
   bew->gsys = gsys;
   bew->fieldmap = fieldmap;
+  bew->battle_param = bp;
   bew->bgmpush_off = FALSE;
   bew->timeWait = 0;
 }
@@ -465,7 +448,7 @@ static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, FIELDMA
 //--------------------------------------------------------------
 static void BEW_Destructor(BATTLE_EVENT_WORK * bew)
 {
-  BATTLE_SETUP_PARAM_Destructor(&bew->para);
+  BATTLE_PARAM_Delete( bew->battle_param );
 }
 
 //======================================================================
