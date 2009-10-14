@@ -7,8 +7,7 @@
  */
 //=============================================================================================
 
-#ifndef	__GFL_USE_H__
-#define	__GFL_USE_H__
+#pragma once
 
 //gsまでのポケモンで使っていたgf_randはu16で返していたので、
 //移植用に定義nagihashi
@@ -47,10 +46,15 @@ extern	GFL_TCBSYS * GFUser_VIntr_GetTCBSYS( void );
 extern void GFUser_VIntr_ResetVblankCounter( void );
 extern int GFUser_VIntr_GetVblankCounter( void );
 
+//汎用乱数初期化関数で初期化する
+extern void GFUser_SetStartRandContext(GFL_STD_RandContext *context);
+
 // 汎用乱数を得る
-extern u32 GFUser_GetPublicRand(u32 max);
+extern u32 GFUser_GetPublicRand(u32 range);
+extern u32 GFUser_GetPublicRand0(u32 range);
+
 
 //	アーカイブIDでファイル名を取得
 extern const char * GFUser_GetFileNameByArcID(ARCID arcID);
 
-#endif	__GFL_USE_H__
+

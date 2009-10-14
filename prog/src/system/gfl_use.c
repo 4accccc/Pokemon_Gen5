@@ -324,22 +324,52 @@ GFL_TCBSYS * GFUser_VIntr_GetTCBSYS( void )
 
 //------------------------------------------------------------------
 /**
+ * @brief コンテキストを生成する
+ * @param context GFL_STD_RandContextポインタ
+ */
+//------------------------------------------------------------------
+void GFUser_SetStartRandContext(GFL_STD_RandContext *context)
+{
+  //@todo キーの作成方法が定まったら作り変える
+  //今の所セーブデータの一部を使用する事が考えられている
+  GFL_STD_RandGeneralInit(context);
+}
+
+//------------------------------------------------------------------
+/**
  * @brief GFUser 汎用乱数作成
  */
 //------------------------------------------------------------------
 static void GFUser_PublicRandInit(void)
 {
-	GFL_STD_RandGeneralInit( &gfl_work->publicRandContext );
+	GFUser_SetStartRandContext( &gfl_work->publicRandContext );
 }
 
 //------------------------------------------------------------------
 /**
- * @brief GFUser 汎用乱数を得る
+ * @brief  汎用乱数を得る
+ * @param  range   取得数値の範囲を指定 0 ～ range の範囲の値が取得できます。
+ *                 GFL_STD_RAND_MAX = 0 を指定した場合にはすべての範囲の32bit値となります。
+ *                 % や / を使用せずにここのrange値を変更してください
+ * @return 32bitのランダム値
  */
 //------------------------------------------------------------------
 u32 GFUser_GetPublicRand(u32 range)
 {
 	return GFL_STD_Rand( &gfl_work->publicRandContext, range );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief  汎用乱数を得る
+ * @param  range   取得数値の範囲を指定 0 ～ range-1 の範囲の値が取得できます。
+ *                  % や / を使用せずにここのrange値を変更してください
+ * @return 32bitのランダム値
+ */
+//------------------------------------------------------------------
+u32 GFUser_GetPublicRand0(u32 range)
+{
+	return GFL_STD_Rand0( &gfl_work->publicRandContext, range );
 }
 
 //------------------------------------------------------------------
