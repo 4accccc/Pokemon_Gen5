@@ -372,7 +372,7 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
         //アニメを有効
         FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0, TRUE);
         anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0);
-        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+///        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
         //1回再生設定
         FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
         //最終フレームにする
@@ -519,7 +519,7 @@ static GMEVENT_RESULT PushSwEvt( GMEVENT* event, int* seq, void* work )
         fx32 frm;
         FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0, TRUE);
         anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0);
-        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+///        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
         if (tmp->IsOn){
           frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
           //押したスイッチインデックスを記憶
