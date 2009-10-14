@@ -37,7 +37,7 @@ OBJ_FILE = $(FOGFILE:.fog=.dat)
 FOGIDX_TABLE = zonefog_table.xls
 FOGIDX_CSV = zonefog_table.csv
 
-ZONE_HADER = $(PROJECT_ARCDIR)/fieldmap/zone_id.h
+ZONE_HADER = ../zonetable/zone_id.h
 
 LIST_FILE 	= list.txt
 

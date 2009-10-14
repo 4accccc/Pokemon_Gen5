@@ -362,7 +362,7 @@ class DoorEvent < AllEvent
   def getIncludeHeader header
 
     #zone_id.h
-    header.push( "../../../../prog/arc/fieldmap/zone_id.h " )
+    header.push( "../../zonetable/zone_id.h " )
 
     #door_idæ‚Ìƒwƒbƒ_
     if @next_door_id =~ /DOOR_ID_([^_]+)_/

@@ -46,7 +46,7 @@ XLSFILE = $(wildcard zone_*.xls)
 LISTXLSFILE = light_list.xls
 LISTCSVFILE = light_list.csv
 
-ZONE_HADER = $(PROJECT_ARCDIR)/fieldmap/zone_id.h
+ZONE_HADER = ../zonetable/zone_id.h
 
 ##########################################
 #ターゲットファイル
