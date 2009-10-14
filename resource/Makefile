@@ -22,6 +22,7 @@ SUBDIRS	=	wmi \
 			field_light \
 			message\
 			fldmmdl \
+			encount \
 			fldmapdata\
 			pokegra\
 			battle\
