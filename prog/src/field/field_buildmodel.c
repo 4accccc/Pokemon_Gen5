@@ -93,10 +93,11 @@ typedef struct _FIELD_BMANIME_DATA
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
-  BMODEL_ID bm_id;
-  FIELD_BMANIME_DATA animeData;
-  u16 prog_id;
-  BMODEL_ID sub_bm_id;
+  BMODEL_ID bm_id;              ///<配置モデルID
+  FIELD_BMANIME_DATA animeData; ///<アニメ指定データ
+  u16 prog_id;                  ///<プログラム指定ID
+  BMODEL_ID sub_bm_id;          ///<従属モデル指定ID
+  s16 sx, sy, sz;               ///<従属モデルの相対位置
 }BMINFO;
 
 //------------------------------------------------------------------
@@ -495,15 +496,7 @@ BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man,
     return FALSE;
   }
   *entryNo = BMIDtoEntryNo(man, submodel_id);
-  switch (submodel_id) {
-  default:
-  case NARC_output_buildmodel_outdoor_door01_nsbmd:
-    VEC_Set(ofs, 0, 0, (FIELD_CONST_GRID_SIZE * 2 - 6) << FX32_SHIFT );
-    break;
-  case NARC_output_buildmodel_outdoor_door_pc_nsbmd:
-    VEC_Set(ofs, 0, 0, (FIELD_CONST_GRID_SIZE) << FX32_SHIFT );
-    break;
-  }
+  VEC_Set( ofs, bmInfo->sx << FX32_SHIFT, bmInfo->sy << FX32_SHIFT, bmInfo->sz << FX32_SHIFT );
   return TRUE;
 }
 
@@ -799,6 +792,9 @@ static void BMINFO_Load(FIELD_BMODEL_MAN * man, u16 file_id)
     GFL_ARC_LoadDataOfsByHandle(handle, file_id, bmInfo->bm_id * BM_INFO_SIZE, BM_INFO_SIZE, infobin);
     bmInfo->prog_id = infobin->prog_id;
     bmInfo->sub_bm_id = infobin->submodel_id;
+    bmInfo->sx = infobin->submodel_x;
+    bmInfo->sy = infobin->submodel_y;
+    bmInfo->sz = infobin->submodel_z;
     anm_id = infobin->anime_id;
     if (anm_id == 0xffff) continue;
     GFL_ARC_LoadDataOfsByHandle(handle, FILEID_BMODEL_ANIMEDATA,
@@ -818,6 +814,9 @@ static void BMINFO_init(BMINFO * bmInfo)
   BMANIME_init(&bmInfo->animeData);
   bmInfo->prog_id = 0;
   bmInfo->sub_bm_id = BM_SUBMODEL_NULL_ID;
+  bmInfo->sx = 0;
+  bmInfo->sy = 0;
+  bmInfo->sz = 0;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
