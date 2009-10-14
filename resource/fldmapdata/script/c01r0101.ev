@@ -15,10 +15,11 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c01r0101_inventor_01
-_EVENT_DATA    ev_c01r0101_bigman_01
-_EVENT_DATA    ev_c01r0101_woman1_01
-_EVENT_DATA    ev_c01r0101_boy3_01
+_EVENT_DATA		ev_c01r0101_inventor_01
+_EVENT_DATA		ev_c01r0101_bigman_01
+_EVENT_DATA		ev_c01r0101_woman1_01
+_EVENT_DATA		ev_c01r0101_boy3_01
+_EVENT_DATA		ev_c01r0101_scene_change_01
 _EVENT_DATA_END
 
 
@@ -50,15 +51,11 @@ _EVENT_DATA_END
 
 
 EVENT_START   ev_c01r0101_inventor_01
-	_TALK_OBJ_START()
 
 	//【仮】Cギア入手イベント
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0101_inventor_01 )
-	_AB_KEYWAIT()
 
 	//【仮】ここでCギア取得してから、以下のメッセージを表示する。
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0101_inventor_02 )
-	_BALLOONWIN_CLOSE()
+
 EVENT_END
 
 	//【仮】ジムバッジ取得後のメッセージ未作成
@@ -97,3 +94,107 @@ EVENT_START   ev_c01r0101_boy3_01
 
 EVENT_END
 
+/**************************************************************/
+/*  C01R0101 ＰＤＷ誘導イベント								  */
+/**************************************************************/
+EVENT_START   ev_c01r0101_scene_change_01
+
+	//自機、マコモ：部屋中央まで移動
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo1 )
+	_OBJ_ANIME( C01R0101_INVENTOR_01, anm_inventor_yudo1 )
+	_OBJ_ANIME_WAIT()
+	
+	//マコモ：自機の方を向く、その場歩き
+	_OBJ_ANIME( C01R0101_INVENTOR_01, anm_inventor_dir )
+	_OBJ_ANIME_WAIT()
+	
+	//マコモ『アナタたち　イッシュちほうの　すべての　ポケモンと』
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0101_inventor_01 , C01R0101_INVENTOR_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//自機、マコモ：階段の方へ歩く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo2 )
+	_OBJ_ANIME( C01R0101_INVENTOR_01, anm_inventor_yudo2 )
+	_OBJ_ANIME_WAIT()
+	
+	//マコモ：自機の方を向く、その場歩き
+	_OBJ_ANIME( C01R0101_INVENTOR_01, anm_inventor_dir )
+	_OBJ_ANIME_WAIT()
+	
+	//マコモ『アタシの　へや　この　うえなんだ』
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0101_inventor_02 , C01R0101_INVENTOR_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//階段へ移動
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo3 )
+	_OBJ_ANIME( C01R0101_INVENTOR_01, anm_inventor_yudo3 )
+	_OBJ_ANIME_WAIT()	
+	
+	//発明家マコモの動作モデルを削除する
+	_OBJ_DEL( C01R0101_INVENTOR_01 )
+	
+	//mapchangeする
+	_MAP_CHANGE( ZONE_ID_C01R0102, 3, 11, DIR_RIGHT )
+
+	//=========フラグワーク操作==========//
+
+	//発明家マコモのバニッシュフラグセット
+
+	//ＰＤＷ誘導イベント終了
+	$WK_SCENE_C01R0101 = 2
+	
+	//===================================//
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	自機・発明家マコモ　部屋中央まで移動
+//--------------------------------------------------------------
+_ANIME_LABEL anm_player_yudo1
+	_ANIME_DATA		AC_WALK_R_16F,4
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_inventor_yudo1
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_WALK_R_16F,3
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+	
+//--------------------------------------------------------------
+//	発明家マコモ　自機の方へ向く、その場歩き
+//--------------------------------------------------------------
+_ANIME_LABEL anm_inventor_dir
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		AC_STAY_WALK_L_16F,1
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------
+//	自機・発明家マコモ　階段前まで移動
+//--------------------------------------------------------------
+_ANIME_LABEL anm_player_yudo2
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_WALK_R_16F,1
+	_ANIME_DATA		AC_WALK_D_16F,3
+	_ANIME_DATA		AC_WALK_R_16F,2
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_inventor_yudo2
+	_ANIME_DATA		AC_WALK_D_16F,3
+	_ANIME_DATA		AC_WALK_R_16F,3
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------
+//	自機・発明家マコモ　階段前まで移動
+//--------------------------------------------------------------
+_ANIME_LABEL anm_player_yudo3
+	_ANIME_DATA		AC_WALK_R_16F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_inventor_yudo3
+	_ANIME_DATA		AC_WALK_R_16F,1
+	_ANIME_DATA		AC_DIR_R,1
+	_ANIME_DATA		ACMD_END,0

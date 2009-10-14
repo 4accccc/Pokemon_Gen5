@@ -56,9 +56,26 @@ _EVENT_DATA		ev_c01gym0101_curtain_03d
 _EVENT_DATA		ev_c01gym0101_curtain_03e
 _EVENT_DATA		ev_c01gym0101_curtain_03f
 _EVENT_DATA		ev_c01gym0101_curtain_03g
+_EVENT_DATA		ev_pos_c01gym0101_button_kusa1_off
+_EVENT_DATA		ev_pos_c01gym0101_button_kusa2_off
+_EVENT_DATA		ev_pos_c01gym0101_button_kusa3_off
+_EVENT_DATA		ev_pos_c01gym0101_button_honoo1_off
+_EVENT_DATA		ev_pos_c01gym0101_button_honoo2_off
+_EVENT_DATA		ev_pos_c01gym0101_button_honoo3_off
+_EVENT_DATA		ev_pos_c01gym0101_button_mizu1_off
+_EVENT_DATA		ev_pos_c01gym0101_button_mizu2_off
+_EVENT_DATA		ev_pos_c01gym0101_button_mizu3_off
 _EVENT_DATA_END
 
-//LOCALWORK10～13まで使用しました。同マップ内の使用を禁止します。
+//------------------------------注意--------------------------------//
+//																	//
+//	LOCALWORK10～13まで使用しました。同マップ内の使用を禁止します。	//
+//				LOCALWORK10⇒ハズレスイッチ汎用						//
+//				LOCALWORK11⇒炎カーテン								//
+//				LOCALWORK12⇒水カーテン								//
+//				LOCALWORK13⇒草カーテン								//
+//																	//
+//------------------------------------------------------------------//
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -110,7 +127,7 @@ EVENT_START		ev_c01gym0101_pokezou_01
 	//ジムバッジを取得している場合
 	ELSE
 
-		//分岐処理・C02到着していないなら
+		//【仮】分岐処理・C02到着していないなら　到着フラグが動いていない！
 		IF FLAG_OFF( SYS_FLAG_ARRIVE_C02 ) THEN
 			_EASY_MSG( msg_c01gym0101_statue_02 )
 		//C02到着している場合
@@ -138,7 +155,7 @@ EVENT_START		ev_c01gym0101_pokezou_02
 	//ジムバッジを取得している場合
 	ELSE
 
-		//分岐処理・C02到着していないなら
+		//【仮】分岐処理・C02到着していないなら　到着フラグが動いていない！
 		IF FLAG_OFF( SYS_FLAG_ARRIVE_C02 ) THEN
 			_EASY_MSG( msg_c01gym0101_statue_02 )
 		//C02到着している場合
@@ -168,14 +185,17 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	//X軸が11グリッドの場合
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_11 )
 		_OBJ_ANIME_WAIT()
+		
 	ELSIF $HERO_X == 12 THEN
 	//X軸が12グリッドの場合
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_12 )
 		_OBJ_ANIME_WAIT()
+		
 	ELSE
 	//X軸が13グリッドの場合
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tikaduku_13 )
 		_OBJ_ANIME_WAIT()
+		
 	ENDIF
 	_OBJ_ANIME_WAIT()
 	
@@ -185,7 +205,6 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 	//ようこそ！！　サンヨウシティ　ポケモンジムへ！
 	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_01 , C01GYM0101_LEADER1_01 )
-	
 	_BALLOONWIN_CLOSE()
 	
 	//ポッドとデントのバニッシュフラグをreset、オブジェクトを出現させる。
@@ -220,7 +239,6 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 	//みずタイプの　ポケモンが　すきな
 	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_03b , C01GYM0101_LEADER1_01 )
-	
 	_BALLOONWIN_CLOSE()	
 	
 	//デント：くるっとその場で回る
@@ -229,7 +247,6 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 	//そして　オレが　くさタイプの
 	_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_03c , C01GYM0101_LEADER1_03 )
-	
 	_BALLOONWIN_CLOSE()	
 
 	//三人一斉に１マス下がる
@@ -333,11 +350,16 @@ _ANIME_LABEL	anm_leader_walk
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_leader_turn
 	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WAIT_2F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_JUMP_D_1G_8F,1
 	_ANIME_DATA	AC_WAIT_2F,1
@@ -430,7 +452,9 @@ EVENT_START		ev_c01gym0101_leader1_01
 	
 	//分岐：ジムバッジ取得しているか、いないか
 
-	//ジムバッジを取得していない場合
+	//【仮】ジムバッジを取得していない場合　FH01で代用
+	
+	IF FLAG_OFF(FH_01) THEN
 			
 		//分岐：炎タイプを選択しているか、いないか
 
@@ -466,9 +490,7 @@ EVENT_START		ev_c01gym0101_leader1_01
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
 			_BALLOONWIN_CLOSE()
 		
-			//ジムバッジ入手フラグをＯＮにする
-
-
+			//【仮】ジムバッジ入手フラグをＯＮにする
 
 		//炎タイプ選択じゃない場合
 		ELSE
@@ -478,9 +500,13 @@ EVENT_START		ev_c01gym0101_leader1_01
 			
 		ENDIF
 	//ジムバッジ入手後の場合
-		
+	ELSE	
 		//ぼくたち　イッシュちほう　では　まだ　かけだしの　ジムリーダーです
-		
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_10 , C01GYM0101_LEADER1_01 )
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+	
 EVENT_END
 		
 /**************************************************************/
@@ -494,7 +520,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 	//分岐：ジムバッジ取得しているか、いないか
 
 	//ジムバッジを取得していない場合
-			
+	IF FLAG_OFF(FH_01) THEN
 		//分岐：草タイプを選択しているか、いないか
 
 			//草タイプを選択している場合
@@ -550,8 +576,13 @@ EVENT_START		ev_c01gym0101_leader1_02
 		ENDIF
 
 	//ジムバッジ入手後の場合
+	ELSE
 		
 		//わざマシンは　なんどだって　つかえると　いうことは
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_11 , C01GYM0101_LEADER1_02 )
+			_BALLOONWIN_CLOSE()
+	
+	ENDIF
 		
 EVENT_END
 
@@ -582,7 +613,8 @@ EVENT_START		ev_c01gym0101_leader1_03
 	//分岐：ジムバッジ取得しているか、いないか
 
 	//ジムバッジを取得していない場合
-			
+	IF FLAG_OFF(FH_01) THEN
+	
 		//分岐：水タイプを選択しているか、いないか
 
 		//水タイプを選択している場合
@@ -639,9 +671,13 @@ EVENT_START		ev_c01gym0101_leader1_03
 		ENDIF
 	
 	//ジムバッジ入手後の場合
-		
+	ELSE	
 		//オレたちが　もし　１７人　きょうだい　だったら
-		
+			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_12 , C01GYM0101_LEADER1_03 )
+			_BALLOONWIN_CLOSE()
+	
+	ENDIF
+	
 EVENT_END
 
 //--------------------------------------------------------------
@@ -682,6 +718,13 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_01
 		
 		ENDIF
 
+	//===========フラグワーク操作===========//
+	
+	//スイッチを踏んだ
+	$LOCALWORK10 = 1
+	
+	//======================================//
+
 EVENT_END
 
 /**************************************************************/
@@ -704,6 +747,13 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_01
 		
 		ENDIF
 
+	//===========フラグワーク操作===========//
+	
+	//スイッチを踏んだ
+	$LOCALWORK10 = 1
+	
+	//======================================//
+
 EVENT_END
 
 /**************************************************************/
@@ -712,7 +762,7 @@ EVENT_END
 EVENT_START	ev_pos_c01gym0101_button_mizu_01
 
 	//水ボタン１踏んだアニメーション
-	//_GYM_ANTI_SW_ON(1)
+	_GYM_ANTI_SW_ON(1)
 
 	//分岐：炎カーテンが開いている？
 	
@@ -745,6 +795,13 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_01
 
 		ENDIF
 
+	//===========フラグワーク操作===========//
+	
+	//スイッチを踏んだ
+	$LOCALWORK10 = 1
+	
+	//======================================//
+
 EVENT_END
 
 //--------------------------------------------------------------
@@ -767,7 +824,7 @@ _ANIME_LABEL	anm_curtain_open_b
 EVENT_START	ev_pos_c01gym0101_button_kusa_02
 
 	//草ボタン２踏んだアニメーション
-	//_GYM_ANTI_SW_ON(2)
+	_GYM_ANTI_SW_ON(2)
 
 	//分岐：水カーテンが開いている？
 	
@@ -802,6 +859,13 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_02
 		
 		ENDIF
 
+	//===========フラグワーク操作===========//
+	
+	//スイッチを踏んだ
+	$LOCALWORK10 = 1
+	
+	//======================================//
+
 EVENT_END
 
 /**************************************************************/
@@ -823,6 +887,13 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_02
 		ELSE
 		
 		ENDIF
+
+	//===========フラグワーク操作===========//
+	
+	//スイッチを踏んだ
+	$LOCALWORK10 = 1
+	
+	//======================================//
 
 EVENT_END
 
@@ -846,6 +917,13 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_02
 		
 		ENDIF
 
+	//===========フラグワーク操作===========//
+	
+	//スイッチを踏んだ
+	$LOCALWORK10 = 1
+	
+	//======================================//
+
 EVENT_END
 
 /**************************************************************/
@@ -867,6 +945,13 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_03
 		ELSE
 		
 		ENDIF
+
+	//===========フラグワーク操作===========//
+	
+	//スイッチを踏んだ
+	$LOCALWORK10 = 1
+	
+	//======================================//
 
 EVENT_END
 
@@ -911,6 +996,13 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_03
 		
 		ENDIF
 
+	//===========フラグワーク操作===========//
+	
+	//スイッチを踏んだ
+	$LOCALWORK10 = 1
+	
+	//======================================//
+
 EVENT_END
 
 /**************************************************************/
@@ -932,6 +1024,13 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_03
 		ELSE
 		
 		ENDIF
+
+	//===========フラグワーク操作===========//
+	
+	//スイッチを踏んだ
+	$LOCALWORK10 = 1
+	
+	//======================================//
 
 EVENT_END
 
@@ -1028,4 +1127,137 @@ EVENT_START	ev_c01gym0101_curtain_03g
 
 EVENT_END
 
+/**************************************************************/
+/*     草ボタン１　ハズレ　スイッチオフ　ＰＯＳ発動		      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_kusa1_off
 
+	_GYM_ANTI_SW_OFF(5)
+
+	//===========フラグワーク操作===========//
+	
+	$LOCALWORK10 = 0
+	
+	//======================================//	
+
+EVENT_END
+
+/**************************************************************/
+/*     草ボタン２　アタリ　スイッチオフ　ＰＯＳ発動		      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_kusa2_off
+
+	_GYM_ANTI_SW_OFF(2)
+
+	//===========フラグワーク操作===========//
+	
+	$LOCALWORK10 = 0
+	
+	//======================================//	
+
+EVENT_END
+
+/**************************************************************/
+/*     草ボタン３　ハズレ　スイッチオフ　ＰＯＳ発動		      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_kusa3_off
+
+	_GYM_ANTI_SW_OFF(8)
+
+	//===========フラグワーク操作===========//
+	
+	$LOCALWORK10 = 0
+	
+	//======================================//	
+
+EVENT_END
+
+/**************************************************************/
+/*     炎ボタン１　ハズレ　スイッチオフ　ＰＯＳ発動		      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_honoo1_off
+
+	_GYM_ANTI_SW_OFF(3)
+
+	//===========フラグワーク操作===========//
+	
+	$LOCALWORK10 = 0
+	
+	//======================================//	
+
+EVENT_END
+
+/**************************************************************/
+/*     炎ボタン２　ハズレ　スイッチオフ　ＰＯＳ発動		      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_honoo2_off
+
+	_GYM_ANTI_SW_OFF(6)
+
+	//===========フラグワーク操作===========//
+	
+	$LOCALWORK10 = 0
+	
+	//======================================//	
+
+EVENT_END
+
+/**************************************************************/
+/*     炎ボタン３　アタリ　スイッチオフ　ＰＯＳ発動		      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_honoo3_off
+
+	_GYM_ANTI_SW_OFF(0)
+
+	//===========フラグワーク操作===========//
+	
+	$LOCALWORK10 = 0
+	
+	//======================================//	
+
+EVENT_END
+
+/**************************************************************/
+/*     水ボタン１　アタリ　スイッチオフ　ＰＯＳ発動		      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_mizu1_off
+
+	_GYM_ANTI_SW_OFF(1)
+
+	//===========フラグワーク操作===========//
+	
+	$LOCALWORK10 = 0
+	
+	//======================================//	
+
+EVENT_END
+
+/**************************************************************/
+/*     水ボタン２　ハズレ　スイッチオフ　ＰＯＳ発動		      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_mizu2_off
+
+	_GYM_ANTI_SW_OFF(4)
+
+	//===========フラグワーク操作===========//
+	
+	$LOCALWORK10 = 0
+	
+	//======================================//	
+
+EVENT_END
+
+/**************************************************************/
+/*     水ボタン３　アタリ　スイッチオフ　ＰＯＳ発動		      */
+/**************************************************************/
+EVENT_START	ev_pos_c01gym0101_button_mizu3_off
+
+	_GYM_ANTI_SW_OFF(7)
+
+	//===========フラグワーク操作===========//
+	
+	$LOCALWORK10 = 0
+	
+	//======================================//	
+
+EVENT_END

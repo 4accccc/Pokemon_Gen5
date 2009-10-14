@@ -15,7 +15,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_pos_c01r0102_inventor_pdw
+_EVENT_DATA		ev_c01r0102_scene_change_01
 _EVENT_DATA		ev_c01r0102_inventor_01
 _EVENT_DATA		ev_c01r0102_girl3_01
 _EVENT_DATA		ev_c01r0102_books_01
@@ -41,9 +41,9 @@ _EVENT_DATA_END
 //【仮】大幅に修正。作り直し。
 
 /**************************************************************/
-/*  C01R0102 マコモの会話用イベントスクリプト*/
+/*  C01R0102 ＰＤＷ誘導イベント								  */
 /**************************************************************/
-EVENT_START   ev_pos_c01r0102_inventor_pdw
+EVENT_START   ev_c01r0102_scene_change_01
 
 	//自機：発明家の前に移動
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk )
@@ -88,15 +88,22 @@ EVENT_START   ev_pos_c01r0102_inventor_pdw
 		_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_06 , C01R0102_INVENTOR_01 )
 		_BALLOONWIN_CLOSE()
 
+	//===========フラグワーク操作===========//
+	
+	//【仮】発明家イベント終了
+	$WK_SCENE_C01R0102 = 1
+	
+	//======================================//
+
 EVENT_END
 
 //--------------------------------------------------------------
 //	自機　マコモに近づく
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_player_walk
-	_ANIME_DATA	AC_WALK_D_8F,5
-	_ANIME_DATA	AC_WALK_L_8F,4
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------
@@ -104,23 +111,26 @@ _ANIME_LABEL	anm_player_walk
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_inventor_kiduku
 	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	マコモ　Ｃギアの機能追加にパソコン前へ移動、帰ってくる
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_inventor_kaizou
-	_ANIME_DATA	AC_STAY_WALK_R_32F,1
+	_ANIME_DATA	AC_STAY_WALK_L_32F,1
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA	AC_STAY_WALK_U_32F,1
 	_ANIME_DATA AC_STAY_JUMP_U_16F,1
 	_ANIME_DATA	AC_STAY_WALK_U_32F,1
+	_ANIME_DATA	AC_WALK_D_8F,5
 	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA	AC_STAY_WALK_R_32F,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA	AC_STAY_WALK_L_32F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -131,13 +141,39 @@ _ANIME_LABEL	anm_inventor_dance
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_JUMP_U_2G_16F,1
-	_ANIME_DATA AC_JUMP_D_2G_16F,2
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_DIR_R,1
 	_ANIME_DATA AC_JUMP_U_2G_16F,1
 	_ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_JUMP_D_2G_16F,2
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_JUMP_U_2G_16F,1
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_STAY_JUMP_U_16F,2
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/

@@ -15,9 +15,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c01r0202_talkobj_gentleman
-_EVENT_DATA    ev_c01r0202_talkobj_dancer
-_EVENT_DATA    ev_c01r0202_talkobj_woman3
+_EVENT_DATA    ev_c01r0202_gentleman_01
+_EVENT_DATA    ev_c01r0202_dancer_01
+_EVENT_DATA    ev_c01r0202_woman3_01
 _EVENT_DATA_END
 
 
@@ -40,21 +40,21 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C01R0202 GENTLEMANの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c01r0202_talkobj_gentleman
-_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0202_gentleman_01 )
+EVENT_START   ev_c01r0202_gentleman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0202_gentleman_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C01R0202 DANCERの会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c01r0202_talkobj_dancer
-_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0202_dancer_01 )
+EVENT_START   ev_c01r0202_dancer_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0202_dancer_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C01R0202 WOMAN3の会話用イベントスクリプト*/
 /**************************************************************/
-EVENT_START   ev_c01r0202_talkobj_woman3
-_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0202_woman3_01 )
+EVENT_START   ev_c01r0202_woman3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0202_woman3_01 )
 EVENT_END
 
