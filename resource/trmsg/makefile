@@ -66,7 +66,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ÉãÅ[Éã
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)/$(NARCNAME1)	$(TARGETDIR)/$(NARCNAME2)
+do-build:	$(TARGETDIR)/$(NARCNAME1)	$(TARGETDIR)/$(NARCNAME2) $(GMMDIR)$(GMMFILE)
 
 $(TARGETDIR)/$(NARCNAME1):	$(NARCNAME1)
 	$(COPY)	$(NARCNAME1) $(TARGETDIR)
