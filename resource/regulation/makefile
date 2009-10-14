@@ -59,7 +59,7 @@ $(targetname).narc: $(CONVERTDATA)
 	$(NAIXCUT) $(targetname).naix
 
 regulation.txt: regulation.xls
-	ruby $(PROJECT_ROOT)tools/exceltool/xls2xml/tab_out.rb regulation.xls > regulation.txt
+	ruby $(PROJECT_ROOT)tools/exceltool/xls2xml/tab_out_sheet.rb -t -n 0 regulation.xls > regulation.txt
 
 $(CONVERTDATA): regulation.txt regulation.rb makefile
 	ruby regulation.rb regulation.txt regulation.bin regulation_def.h ../message/src/monsname.gmm ../message/src/itemname.gmm

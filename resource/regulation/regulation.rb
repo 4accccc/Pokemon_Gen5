@@ -32,6 +32,7 @@ COL_NICKNAME = 18    #ニックネーム表示
 COL_AGE_LO = 19    #年齢制限以上
 COL_AGE_HI = 20    #年齢制限以下
 COL_SHOW_POKE = 21    #ポケモン見せ合い
+COL_TIME_SHOW_POKE = 22 #ポケモン見せ合い時間
 
 POKENUM_MAX_BYTE = (656/8)  ##このくらいに増えるかも ８２バイト
 ITEMNUM_MAX_BYTE = (608/8)  ##このくらいにふえるかも
@@ -199,6 +200,10 @@ class RegulationBin
     when COL_SHOW_POKE    #ポケモン見せ合い
       num = @HashOKNG[value]
       outFH.write([num].pack("c"))
+    when COL_TIME_SHOW_POKE    #ポケモン見せ合い時間
+      num = value.to_i
+      outFH.write([num].pack("c"))
+      outFH.write([num].pack("c"))  ##アライメント
     else
     end
     
