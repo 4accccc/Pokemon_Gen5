@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-05-29T17:54:19"/>
+	<create user="taya" host="W00146" date="2009-10-14T18:43:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -233,6 +233,13 @@
 ウィンドウ内で右寄せします。</comment>
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
+			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
 			</tag>
 		</group>
 
