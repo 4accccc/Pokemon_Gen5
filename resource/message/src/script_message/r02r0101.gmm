@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-08T20:20:01"/>
+	<create user="matsumiya" host="W00207" date="2009-10-14T18:36:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,16 +292,18 @@
 	</lock>
 
 
-	<row id="msg_r02r0101_woman1_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_r02r0101_woman1_01">
 		<comment>♀
-・仮</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">女性１</attribute>
-		<language name="JPN" width="256">でんこう　けいじばんは　みたかしら？[BE:01:ページ切り替え（クリア）]
-たびに　やくだつ　じょうほうが
-たくさん　あるから　ようチェックよ！</language>
-		<language name="JPN_KANJI" width="256">電光掲示板は　見たかしら？[BE:01:ページ切り替え（クリア）]
-旅に　役立つ　情報が
-たくさん　あるから　要チェックよ！</language>
+		<language name="JPN" width="256">アタシ
+電光掲示板　大好きレディ！[BE:01:ページ切り替え（クリア）]
+いろんな情報が　流れるのを
+見ていると　シアワセなの！！</language>
+		<language name="JPN_KANJI" width="256">アタシ
+電光掲示板　大好きレディ！[BE:01:ページ切り替え（クリア）]
+いろんな情報が　流れるのを
+見ていると　シアワセなの！！</language>
 	</row>
 
 	<flowchart-group-list>
