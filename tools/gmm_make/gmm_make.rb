@@ -18,10 +18,11 @@ class GMM
   #===========================================================================
   # 初期化
   #===========================================================================
-  def initialize
+  def initialize( width = 216 )
     @fp_gmm_r
     @fp_gmm_w
     @file_open_flag = 0
+    @width_value = width
   end
 
   #===========================================================================
@@ -77,7 +78,23 @@ class GMM
   #===========================================================================
   def make_row( label, str )
     @fp_gmm_w.printf( "\t<row id=\"%s\">\r\n", label )
-    @fp_gmm_w.printf( "\t\t<language name=\"JPN\">%s</language>\r\n", str.toutf8 )
+    @fp_gmm_w.printf( "\t\t<language name=\"JPN\" width=\"%d\">%s</language>\r\n", @width_value, str.toutf8 )
+    @fp_gmm_w.print "\t</row>\r\n\r\n"
+  end
+
+  #===========================================================================
+  #
+  # rowデータを作成
+  #
+  # @param[in]  label ラベル名
+  # @param[in]  str_jpn   rowデータとなる文字列
+  # @param[in]  str_kanji rowデータとなる文字列（漢字文字列）
+  #
+  #===========================================================================
+  def make_row_kanji( label, str_jpn, str_kanji )
+    @fp_gmm_w.printf( "\t<row id=\"%s\">\r\n", label )
+    @fp_gmm_w.printf( "\t\t<language name=\"JPN\" width=\"%d\">%s</language>\r\n", @width_value, str_jpn.toutf8 )
+    @fp_gmm_w.printf( "\t\t<language name=\"JPN_KANJI\" width=\"%d\">%s</language>\r\n", @width_value, str_kanji.toutf8 )
     @fp_gmm_w.print "\t</row>\r\n\r\n"
   end
 
