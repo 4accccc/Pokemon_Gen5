@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2009-10-09T20:40:33
+	Update:2009-10-14T19:51:36
  *****************************************************************************/
 
 #ifndef NARC_GYM_FLY_NAIX_
@@ -14,7 +14,26 @@ enum {
 	NARC_gym_fly_cannon_01_00_nsbmd = 0,
 	NARC_gym_fly_cannon_01_00_nsbca = 1,
 	NARC_gym_fly_cannon_01_00_nsbma = 2,
-	NARC_gym_fly_null_01_00_bin = 3
+	NARC_gym_fly_cannon_02_00_nsbca = 3,
+	NARC_gym_fly_cannon_02_00_nsbma = 4,
+	NARC_gym_fly_cannon_03_00_nsbca = 5,
+	NARC_gym_fly_cannon_03_00_nsbma = 6,
+	NARC_gym_fly_cannon_04_00_nsbca = 7,
+	NARC_gym_fly_cannon_04_00_nsbma = 8,
+	NARC_gym_fly_null_01_00_bin = 9,
+	NARC_gym_fly_null_01_01_bin = 10,
+	NARC_gym_fly_null_02_00_bin = 11,
+	NARC_gym_fly_null_02_01_bin = 12,
+	NARC_gym_fly_null_03_00_bin = 13,
+	NARC_gym_fly_null_04_00_bin = 14,
+	NARC_gym_fly_null_04_01_bin = 15,
+	NARC_gym_fly_null_05_00_bin = 16,
+	NARC_gym_fly_null_05_01_bin = 17,
+	NARC_gym_fly_null_06_00_bin = 18,
+	NARC_gym_fly_null_07_00_bin = 19,
+	NARC_gym_fly_null_08_00_bin = 20,
+	NARC_gym_fly_null_09_00_bin = 21,
+	NARC_gym_fly_null_10_00_bin = 22
 };
 
 /* NARC_GYM_FLY_NAIX_ */

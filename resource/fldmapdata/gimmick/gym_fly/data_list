@@ -2,5 +2,25 @@ DATA_LIST = \
      cannon_01_00.nsbmd \
 		 cannon_01_00.nsbca \
      cannon_01_00.nsbma \
-     null_01_00.bin
+     cannon_02_00.nsbca \
+     cannon_02_00.nsbma \
+     cannon_03_00.nsbca \
+     cannon_03_00.nsbma \
+     cannon_04_00.nsbca \
+     cannon_04_00.nsbma \
+     null_01_00.bin \
+     null_01_01.bin \
+     null_02_00.bin \
+     null_02_01.bin \
+     null_03_00.bin \
+     null_04_00.bin \
+     null_04_01.bin \
+     null_05_00.bin \
+     null_05_01.bin \
+     null_06_00.bin \
+     null_07_00.bin \
+     null_08_00.bin \
+     null_09_00.bin \
+     null_10_00.bin
+     
 
