@@ -16,14 +16,15 @@
 //	SYSTEM
 #include "gamesystem/gamesystem.h"
 #include "print/str_tool.h"
+#include "system/bmp_winframe.h"
 
 //	module
 #include "app/app_menu_common.h"
-#include "system/bmp_winframe.h"
 
 //	archive
 #include "arc_def.h"
 #include "namein_gra.naix"
+#include "font/font.naix"
 
 //	print
 #include "font/font.naix"
@@ -107,7 +108,9 @@ enum
 	PLT_OBJ_PC_M				=	1,	//PC
 
 	//サブBG
-	PLT_BG_S						= 0,
+	PLT_BG_FRAME_S			= 0,	//WINDOWフレーム
+	PLT_BG_FONT_S				= 15,	//フォント色
+
 	//サブOBJ
 	PLT_OBJ_S						= 0,
 } ;
@@ -244,8 +247,8 @@ static const u8 sc_keymove_default[KEYMAP_KEYMOVE_BUFF_MAX]	=
 #define KEYBOARD_BMPWIN_H		(15)
 //モード切替移動
 #define KYEBOARD_CHANGEMOVE_START_Y			(0)
-#define KYEBOARD_CHANGEMOVE_END_Y				(-88)
-#define KYEBOARD_CHANGEMOVE_SYNC				(30)
+#define KYEBOARD_CHANGEMOVE_END_Y				(-48)
+#define KYEBOARD_CHANGEMOVE_SYNC				(20)
 #define KYEBOARD_CHANGEMOVE_START_ALPHA	(0)
 #define KYEBOARD_CHANGEMOVE_END_ALPHA		(16)
 //状態
@@ -267,6 +270,7 @@ typedef enum
 	KEYBOARD_INPUT_CHAGETYPE,		//入力タイプ変更
 	KEYBOARD_INPUT_EXIT,				//終了	
 	KEYBOARD_INPUT_SHIFT,				//シフト
+	KEYBOARD_INPUT_SPACE,				//スペース
 }KEYBOARD_INPUT;
 
 //-------------------------------------
@@ -281,6 +285,17 @@ typedef enum
 	KEYANM_TYPE_MOVE,
 	KEYANM_TYPE_DECIDE
 } KEYANM_TYPE;
+
+//-------------------------------------
+///	MSGWND
+//=====================================
+//フレームを読み込んだキャラ位置
+#define MSGWND_FRAME_CHR	(1)
+//BMPWINの幅
+#define MSGWND_BMPWIN_X	(1)
+#define MSGWND_BMPWIN_Y	(19)
+#define MSGWND_BMPWIN_W	(30)
+#define MSGWND_BMPWIN_H	(4)
 
 
 //=============================================================================
@@ -380,6 +395,20 @@ typedef struct
 	u16								h;	//配列最大HEIGHT
 } KEYMAP_WORK;
 //-------------------------------------
+///	メッセージウィンドウ
+//=====================================
+typedef struct 
+{
+	GFL_MSGDATA				*p_msg;			//メッセージデータ
+	GFL_FONT					*p_font;		//フォント
+	PRINT_UTIL				util;				//文字描画
+	PRINT_QUE					*p_que;			//文字キュー
+	GFL_BMPWIN*				p_bmpwin;		//BMPWIN
+	STRBUF*						p_strbuf;		//文字バッファ
+	u16								clear_chr;	//クリアキャラ
+	u16								dummy;
+} MSGWND_WORK;
+//-------------------------------------
 ///	キーボード
 //=====================================
 typedef struct 
@@ -424,6 +453,9 @@ typedef struct
 	//キーボード
 	KEYBOARD_WORK	keyboard;
 
+	//上画面ウィンドウ
+	MSGWND_WORK		msgwnd;
+
 	//シーケンス
 	SEQ_WORK			seq;
 
@@ -433,8 +465,8 @@ typedef struct
 	//共通で使うキュー
 	PRINT_QUE			*p_que;
 
-	//共通で使うタスクシステム
-	GFL_TCBLSYS		*p_tcbl;
+	//共通で使うメッセージ
+	GFL_MSGDATA		*p_msg;
 
 	//引数
 	NAMEIN_PARAM	*p_param;
@@ -485,6 +517,8 @@ static BOOL STRINPUT_SetChangeStr( STRINPUT_WORK *p_wk, STRCODE code, BOOL is_sh
 static BOOL STRINPUT_SetChangeSP( STRINPUT_WORK *p_wk, STRINPUT_SP_CHANGE type );
 static BOOL STRINPUT_PrintMain( STRINPUT_WORK *p_wk );
 static void STRINPUT_CopyStr( const STRINPUT_WORK *cp_wk, STRBUF *p_strbuf );
+static void STRINPUT_DeleteChangeStr( STRINPUT_WORK *p_wk );
+static void STRINPUT_DecideChangeStr( STRINPUT_WORK *p_wk );
 static BOOL StrInput_ChangeStrToStr( STRINPUT_WORK *p_wk, BOOL is_shift );
 //-------------------------------------
 ///	KEYMAP
@@ -497,6 +531,7 @@ static void KEYMAP_MoveCursor( KEYMAP_WORK *p_wk, GFL_POINT *p_now, const GFL_PO
 static void KEYMAP_Print( const KEYMAP_WORK *cp_wk, PRINT_UTIL *p_util, PRINT_QUE *p_que, GFL_FONT *p_font, HEAPID heapID );
 static BOOL KEYMAP_GetRange( const KEYMAP_WORK *cp_wk, const GFL_POINT *cp_cursor, GFL_RECT *p_rect );
 
+static void KEYMAP_TOOL_ChangeCursorPos( GFL_POINT *p_cursor, NAMEIN_INPUTTYPE pre, NAMEIN_INPUTTYPE next );
 static BOOL KeyMap_KANA_GetRect( const GFL_POINT *cp_cursor, GFL_RECT *p_rect );
 static BOOL KeyMap_QWERTY_GetRect( const GFL_POINT *cp_cursor, GFL_RECT *p_rect );
 static void KeyMap_KANA_GetMoveCursor( GFL_POINT *p_now, const GFL_POINT *cp_add, KEYMOVE_BUFF *p_buff );
@@ -517,6 +552,13 @@ static BOOL KEYBOARD_PrintMain( KEYBOARD_WORK *p_wk );
 static BOOL Keyboard_StartMove( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode );
 static BOOL Keyboard_MainMove( KEYBOARD_WORK *p_wk );
 static void Keyboard_ChangeMode( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode );
+//-------------------------------------
+///	MSGWND
+//=====================================
+static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_FONT *p_font, GFL_MSGDATA *p_msg, PRINT_QUE *p_que, HEAPID heapID );
+static void MSGWND_Exit( MSGWND_WORK* p_wk );
+static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait );
+static BOOL MSGWND_PrintMain( MSGWND_WORK* p_wk );
 //-------------------------------------
 ///	その他
 //=====================================
@@ -608,7 +650,8 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 	p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NAME_INPUT );
 	p_wk->p_que			= PRINTSYS_QUE_Create( HEAPID_NAME_INPUT );
-	p_wk->p_tcbl		= GFL_TCBL_Init( HEAPID_NAME_INPUT, HEAPID_NAME_INPUT, 32, 32 );
+	p_wk->p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+												NARC_message_config_dat, HEAPID_NAME_INPUT );
 
 	//グラフィック設定
 	p_wk->p_graphic	= NAMEIN_GRAPHIC_Init( 0, HEAPID_NAME_INPUT );
@@ -624,6 +667,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_WaitPrint );
 	STRINPUT_Init( &p_wk->strinput, STRINPUT_DEFAULT_NONE, NAMEIN_POKEMON_LENGTH, p_wk->p_font, p_wk->p_que, &p_wk->obj, HEAPID_NAME_INPUT );
 	KEYBOARD_Init( &p_wk->keyboard, NAMEIN_INPUTTYPE_KANA, p_wk->p_font, p_wk->p_que, HEAPID_NAME_INPUT );
+	MSGWND_Init( &p_wk->msgwnd, p_wk->p_font, p_wk->p_msg, p_wk->p_que, HEAPID_NAME_INPUT );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -643,8 +687,8 @@ static GFL_PROC_RESULT NAMEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
 {	
 	NAMEIN_WORK	*p_wk	= p_wk_adrs;
 
-
 	//モジュール破棄
+	MSGWND_Exit( &p_wk->msgwnd );
 	KEYBOARD_Exit( &p_wk->keyboard );
 	STRINPUT_Exit( &p_wk->strinput );
 	SEQ_Exit( &p_wk->seq );
@@ -655,7 +699,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
 	NAMEIN_GRAPHIC_Exit( p_wk->p_graphic );
 
 	//共通モジュールの破棄
-	GFL_TCBL_Exit( p_wk->p_tcbl );
+	GFL_MSG_Delete( p_wk->p_msg );
 	PRINTSYS_QUE_Delete( p_wk->p_que );
 	GFL_FONT_Delete( p_wk->p_font );
 
@@ -692,9 +736,6 @@ static GFL_PROC_RESULT NAMEIN_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_p
 	//プリント
 	PRINTSYS_QUE_Main( p_wk->p_que );
 
-	//タスク
-	GFL_TCBL_Main( p_wk->p_tcbl );	
-
 	//終了
 	if( SEQ_IsEnd( &p_wk->seq ) )
 	{	
@@ -720,34 +761,52 @@ static GFL_PROC_RESULT NAMEIN_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_p
 //-----------------------------------------------------------------------------
 static void BG_Init( BG_WORK *p_wk, HEAPID heapID )
 {	
-	ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_NAMEIN_GRA, heapID );
+	{	
+		ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_NAMEIN_GRA, heapID );
 
-	//PLT
-	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_namein_gra_name_bg_NCLR,
-			PALTYPE_MAIN_BG, PLT_BG_STR_M*0x20, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramPaletteEx( p_handle, NARC_namein_gra_name_bg_NCLR,
-			PALTYPE_MAIN_BG, PLT_BG_KEY_MOVE_M*0x20, PLT_BG_KEY_DECIDE_M*0x20, 0x20, heapID );
+		//PLT
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_namein_gra_name_bg_NCLR,
+				PALTYPE_MAIN_BG, PLT_BG_STR_M*0x20, 0, heapID );
+		GFL_ARCHDL_UTIL_TransVramPaletteEx( p_handle, NARC_namein_gra_name_bg_NCLR,
+				PALTYPE_MAIN_BG, PLT_BG_KEY_MOVE_M*0x20, PLT_BG_KEY_DECIDE_M*0x20, 0x20, heapID );
 
-	//CHR
-	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_namein_gra_name_bg_NCGR, 
-			BG_FRAME_STR_M, 0, 0, FALSE, heapID );	
+		//CHR
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_namein_gra_name_bg_NCGR, 
+				BG_FRAME_STR_M, 0, 0, FALSE, heapID );	
 
-	//SCR
-	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_namein_gra_name_base_NSCR,
-			BG_FRAME_STR_M, 0, 0, FALSE, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_namein_gra_name_kana_NSCR,
-			BG_FRAME_KEY_M, 0, 0, FALSE, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_namein_gra_name_btn_NSCR,
-			BG_FRAME_BTN_M, 0, 0, FALSE, heapID );
+		//SCR
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_namein_gra_name_base_NSCR,
+				BG_FRAME_STR_M, 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_namein_gra_name_kana_NSCR,
+				BG_FRAME_KEY_M, 0, 0, FALSE, heapID );
+		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_namein_gra_name_btn_NSCR,
+				BG_FRAME_BTN_M, 0, 0, FALSE, heapID );
 	
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
 
-	GFL_ARC_CloseDataHandle( p_handle );
+	{	
+		ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_FONT, heapID );
 
-	//フォントパレット
-	p_handle	= GFL_ARC_OpenDataHandle( ARCID_FLDMAP_WINFRAME, heapID );
-	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, BmpWinFrame_WinPalArcGet(),
-			PALTYPE_MAIN_BG, PLT_BG_FONT_M*0x20, 0, heapID );
-	GFL_ARC_CloseDataHandle( p_handle );
+
+		//フォントパレット
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_systemwin_nclr,
+				PALTYPE_MAIN_BG, PLT_BG_FONT_M*0x20, 0x20, heapID );
+
+		//上画面フォントパレット
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_systemwin_nclr,
+				PALTYPE_SUB_BG, PLT_BG_FONT_S*0x20, 0x20, heapID );
+
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
+
+	{	
+		GFL_BG_FillCharacter( BG_FRAME_TEXT_S, 0, 1,  0 );
+		BmpWinFrame_GraphicSet(
+				BG_FRAME_TEXT_S, MSGWND_FRAME_CHR, PLT_BG_FRAME_S, MENU_TYPE_SYSTEM, heapID );
+	}
+
+	GFL_BG_SetBackGroundColor( BG_FRAME_TEXT_S, 0 );
 }
 //----------------------------------------------------------------------------
 /**
@@ -758,7 +817,7 @@ static void BG_Init( BG_WORK *p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void BG_Exit( BG_WORK *p_wk )
 {	
-
+	GFL_BG_FillCharacterRelease( BG_FRAME_TEXT_S, 1, 0 );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1258,12 +1317,21 @@ static void STRINPUT_Main( STRINPUT_WORK *p_wk )
 				code[0]	= buff[i];
 				code[1]	= GFL_STR_GetEOMCode();
 
+
 				GFL_STR_SetStringCodeOrderLength( p_wk->p_strbuf, code, 2 );
 				x	= STRINPUT_BMPWIN_W * 8 / 2 - (p_wk->strlen * STRINPUT_STR_OFFSET_X) /2;	//開始
 				x	+= i * STRINPUT_STR_OFFSET_X + STRINPUT_BAR_OFFSET_X/2;								//幅
 				x -= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_wk->p_font, 0 )/2;
 
-				PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, x, STRINPUT_STR_Y, p_wk->p_strbuf, p_wk->p_font );
+				//変換文字入力中はフォントの色を変える
+				if( i >= p_wk->input_idx )
+				{	
+					PRINT_UTIL_PrintColor( &p_wk->util, p_wk->p_que, x, STRINPUT_STR_Y, p_wk->p_strbuf, p_wk->p_font, PRINTSYS_LSB_Make(2,0xF,0) );
+				}
+				else
+				{	
+					PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, x, STRINPUT_STR_Y, p_wk->p_strbuf, p_wk->p_font );
+				}
 			}
 		}
 		else
@@ -1471,6 +1539,36 @@ static BOOL STRINPUT_PrintMain( STRINPUT_WORK *p_wk )
 static void STRINPUT_CopyStr( const STRINPUT_WORK *cp_wk, STRBUF *p_strbuf )
 {	
 	GFL_STR_SetStringCodeOrderLength( p_strbuf, cp_wk->input_str, cp_wk->input_idx + 1 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	入力文字欄	変換文字列を消去
+ *
+ *	@param	STRINPUT_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void STRINPUT_DeleteChangeStr( STRINPUT_WORK *p_wk )
+{	
+	p_wk->change_idx	= 0;
+	p_wk->change_str[ p_wk->change_idx ] = GFL_STR_GetEOMCode();
+	p_wk->is_update	= TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	入力文字欄	変換文字列を確定
+ *
+ *	@param	STRINPUT_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void STRINPUT_DecideChangeStr( STRINPUT_WORK *p_wk )
+{
+	int i;
+	for( i = 0; i < p_wk->change_idx; i++ )
+	{	
+		STRINPUT_SetStr( p_wk, p_wk->change_str[ i ] );
+	}
+	p_wk->change_idx	= 0;
+	p_wk->change_str[ p_wk->change_idx ] = GFL_STR_GetEOMCode();
 }
 //----------------------------------------------------------------------------
 /**
@@ -1803,6 +1901,61 @@ static void KEYMAP_Print( const KEYMAP_WORK *cp_wk, PRINT_UTIL *p_util, PRINT_QU
 static BOOL KEYMAP_GetRange( const KEYMAP_WORK *cp_wk, const GFL_POINT *cp_cursor, GFL_RECT *p_rect )
 {	
 	return cp_wk->get_keyrect( cp_cursor, p_rect );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	キー配列	カーソル位置切り替え
+ *
+ *	@param	GFL_POINT *p_cursor	カーソル
+ *	@param	pre									前のモード
+ *	@param	next								次のモード
+ */
+//-----------------------------------------------------------------------------
+static void KEYMAP_TOOL_ChangeCursorPos( GFL_POINT *p_cursor, NAMEIN_INPUTTYPE pre, NAMEIN_INPUTTYPE next )
+{	
+
+	s16 w, h;
+	GET_KEYTYPE_FUNC	prev_get_keytype;
+	GET_KEYTYPE_FUNC	next_get_keytype;
+
+	//モードで使う関数が違う
+	if( pre == NAMEIN_INPUTTYPE_QWERTY )
+	{	
+		prev_get_keytype	= KeyMap_QWERTY_GetKeyType;
+		next_get_keytype	= KeyMap_KANA_GetKeyType;
+		w	= KEYMAP_KANA_WIDTH;
+		h	= KEYMAP_KANA_HEIGHT;
+	}
+	else if( next == NAMEIN_INPUTTYPE_QWERTY )
+	{	
+		prev_get_keytype	= KeyMap_KANA_GetKeyType;
+		next_get_keytype	= KeyMap_QWERTY_GetKeyType;
+		w	= KEYMAP_QWERTY_WIDTH;
+		h	= KEYMAP_QWERTY_HEIGHT;
+	}
+
+	//キーの種類と同じ場所を探す
+	{	
+		KEYMAP_KEYTYPE	key;
+		GFL_POINT				pos;
+		
+		//現在のキーの種類
+		key	= prev_get_keytype( p_cursor, NULL );
+
+		//次のキーの種類を探索してあったらカーソル位置変更
+		for( pos.y = 0; pos.y <= h; pos.y++ )
+		{	
+			for( pos.x = 0; pos.x <= w; pos.x++ )
+			{	
+				if( key == next_get_keytype( &pos, NULL ) )
+				{	
+					*p_cursor	= pos;
+					return;
+				}
+			}
+		}
+
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -2648,13 +2801,15 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk )
 				switch( type )
 				{	
 				case KEYMAP_KEYTYPE_STR:			//文字入力
-					/* fallthrough */
-				case KEYMAP_KEYTYPE_SPACE:		//スペース
 					//QWERTYのときは変換入力
 					//他のときは通常入力
 					p_wk->input	= p_wk->mode == NAMEIN_INPUTTYPE_QWERTY ?
 						KEYBOARD_INPUT_CHANGESTR: KEYBOARD_INPUT_STR;
 					break;
+				case KEYMAP_KEYTYPE_SPACE:		//スペース入力
+					p_wk->input	= KEYBOARD_INPUT_SPACE;
+					break;
+		
 
 				case KEYMAP_KEYTYPE_KANA:		//かなモード
 					/* fallthrough */
@@ -2665,10 +2820,10 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk )
 				case KEYMAP_KEYTYPE_KIGOU:		//記号モード
 					/* fallthrough */
 				case KEYMAP_KEYTYPE_QWERTY:	//ローマ字モード
-					p_wk->input = KEYBOARD_INPUT_CHAGETYPE;
 					if( Keyboard_StartMove( p_wk, type - KEYMAP_KEYTYPE_KANA ) )
 					{	
 						p_wk->state	= KEYBOARD_STATE_MOVE;
+						p_wk->input = KEYBOARD_INPUT_CHAGETYPE;
 					}
 					break;
 
@@ -2749,7 +2904,8 @@ static KEYBOARD_INPUT KEYBOARD_GetInput( const KEYBOARD_WORK *cp_wk, STRCODE *p_
 
 	//入力したときは文字列を返す
 	if( cp_wk->input == KEYBOARD_INPUT_STR ||
-			cp_wk->input == KEYBOARD_INPUT_CHANGESTR 
+			cp_wk->input == KEYBOARD_INPUT_CHANGESTR ||
+			cp_wk->input == KEYBOARD_INPUT_SPACE
 			)
 	{	
 		if( p_str )
@@ -2948,9 +3104,6 @@ static void Keyboard_ChangeMode( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode )
 					BG_FRAME_KEY_M, 0, 0, FALSE, p_wk->heapID );
 			GFL_BG_SetVisible( BG_FRAME_BTN_M, FALSE );
 
-			//@todoカーソル位置変更 qwertになったとき、もどるとき
-			
-
 			//@todo変換バッファを消す処理
 		}
 		else
@@ -2960,10 +3113,108 @@ static void Keyboard_ChangeMode( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode )
 			GFL_BG_SetVisible( BG_FRAME_BTN_M, TRUE );
 		}
 
+		//前か後がQWERTYだった場合、カーソル位置変更
+		if( mode == NAMEIN_INPUTTYPE_QWERTY || p_wk->mode == NAMEIN_INPUTTYPE_QWERTY )
+		{	
+			KEYMAP_TOOL_ChangeCursorPos( &p_wk->cursor, p_wk->mode, mode );
+		}
+
 		//変更したのでモード代入
 		p_wk->mode	= mode;
 	}
 }
+//=============================================================================
+/**
+ *					MSGWND
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージウィンドウ	初期化
+ *	@param	MSGWND_WORK* p_wk	ワーク
+ *	@param	*p_font						フォント
+ *	@param	*p_msg						メッセージデータ
+ *	@param	*p_que						キュー
+ *	@param	heapID						ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_FONT *p_font, GFL_MSGDATA *p_msg, PRINT_QUE *p_que, HEAPID heapID )
+{	
+	//クリア
+	GFL_STD_MemClear( p_wk, sizeof(MSGWND_WORK) );
+	//初期化
+	p_wk->clear_chr	= 0x1;
+	p_wk->p_font		= p_font;
+	p_wk->p_msg			= p_msg;
+	p_wk->p_que			= p_que;
+
+	//バッファ作成
+	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 255, heapID );
+
+	//BMPWIN作成
+	p_wk->p_bmpwin	= GFL_BMPWIN_Create( BG_FRAME_TEXT_S, MSGWND_BMPWIN_X, MSGWND_BMPWIN_Y, MSGWND_BMPWIN_W, MSGWND_BMPWIN_H, PLT_BG_FONT_S, GFL_BMP_CHRAREA_GET_B );
+
+	//フレーム書き込み
+	BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_OFF, MSGWND_FRAME_CHR, PLT_BG_FRAME_S );
+
+	//プリントキュー設定
+	PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
+
+	//転送
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
+	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージウィンドウ	破棄
+ *
+ *	@param	MSGWND_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_Exit( MSGWND_WORK* p_wk )
+{	
+	//BMPWIN破棄
+	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
+
+	//バッファ破棄
+	GFL_STR_DeleteBuffer( p_wk->p_strbuf );
+
+	//クリア
+	GFL_STD_MemClear( p_wk, sizeof(MSGWND_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージウィンドウ	プリント開始
+ *
+ *	@param	MSGWND_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait )
+{	
+	//一端消去
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
+
+	//文字列作成
+	GFL_MSG_GetString( p_wk->p_msg, strID, p_wk->p_strbuf );
+
+	//文字列描画
+	PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージウィンドウ	QUEの描画待ち
+ *
+ *	@param	const MSGWND_WORK* cp_wk	ワーク
+ *
+ *	@return	TRUEでストリーム終了	FALSEは処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL MSGWND_PrintMain( MSGWND_WORK* p_wk )
+{	
+	return PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
+}
+
 //=============================================================================
 /**
  *		その他
@@ -3098,6 +3349,7 @@ static void SEQFUNC_WaitPrint( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
 	ret	= KEYBOARD_PrintMain( &p_wk->keyboard );
 	ret	|= STRINPUT_PrintMain( &p_wk->strinput );
+	ret |= MSGWND_PrintMain( &p_wk->msgwnd );
 
 	if( ret )
 	{	
@@ -3228,7 +3480,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 			STRINPUT_BackSpace( &p_wk->strinput );
 			break;
 		case KEYBOARD_INPUT_CHAGETYPE:	//入力タイプ変更
-			//@todo
+			STRINPUT_DeleteChangeStr( &p_wk->strinput );
 			break;
 		case KEYBOARD_INPUT_EXIT:				//終了	
 			SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
@@ -3238,6 +3490,10 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 			break;
 		case KEYBOARD_INPUT_SHIFT:			//シフト
 			/*  何もしない */
+			break;
+		case KEYBOARD_INPUT_SPACE:			//スペース入力
+			STRINPUT_DecideChangeStr( &p_wk->strinput );
+			STRINPUT_SetStr( &p_wk->strinput, code );
 			break;
 		default:
 			GF_ASSERT(0);
