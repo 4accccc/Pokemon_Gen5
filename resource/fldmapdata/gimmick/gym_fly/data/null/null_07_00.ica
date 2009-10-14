@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ica version="1.6.0">
+
+<head>
+	<create user="ohkubo_tomohiko" host="W00195" date="2009-10-14T15:14:03" source="null_07_00.mb"/>
+	<title>Character Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<node_anm_info
+	frame_size="70"
+	scaling_rule="standard"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tool_end_frame="70"
+	interpolation="frame"
+	compress_node="merge" node_size="2 1"
+	frame_step_mode="1"
+	tolerance_scale="0.100000"
+	tolerance_rotate="0.100000"
+	tolerance_translate="0.100000"
+/>
+
+<node_scale_data size="1">
+	1.000000
+</node_scale_data>
+
+<node_rotate_data size="1">
+	0.000000
+</node_rotate_data>
+
+<node_translate_data size="140">
+	0.000000 1.399902 2.800049 4.199951 5.600098 7.000000 8.399902 9.800049 11.199951 12.600098
+	14.000000 15.399902 16.800049 18.199951 19.600098 21.000000 22.399902 23.800049 25.199951 26.600098
+	28.000000 29.399902 30.800049 32.199951 33.600098 35.000000 36.399902 37.800049 39.199951 40.600098
+	42.000000 43.399902 44.800049 46.199951 47.600098 49.000000 50.399902 51.800049 53.199951 54.600098
+	56.000000 66.762695 77.697754 88.776855 99.971191 111.251709 122.589844 133.956543 145.323486 156.661621
+	167.942139 179.136230 190.215332 201.150635 211.913086 222.474365 232.805176 242.877197 252.661621 262.129150
+	271.251709 280.000000 282.622314 285.445068 288.422119 291.506836 294.653320 297.814941 300.946045 304.000000
+	0.000000 1.589844 3.160400 4.713379 6.250244 7.772461 9.281738 10.779541 12.267578 13.747070
+	15.219971 16.687744 18.151611 19.613525 21.074951 22.537354 24.002441 25.471680 26.946777 28.428955
+	29.919922 31.421387 32.934814 34.461670 36.003906 37.562500 39.139404 40.735840 42.353760 43.994629
+	45.659912 47.351318 49.070068 50.817871 52.596680 54.407471 56.252197 58.132080 60.049072 62.004639
+	64.000000 75.717285 84.968750 91.996582 97.041992 100.346680 102.152344 102.700684 101.919678 99.656006
+	96.028076 91.154297 85.153809 78.144775 70.245850 61.575684 52.252930 42.395996 32.123779 21.554443
+	10.807129 0.000000 6.600586 11.771484 15.144043 16.350098 15.291260 12.164307 7.042725 0.000000
+</node_translate_data>
+
+<node_anm_array size="1">
+	<node_anm index="0">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="70" data_head="0"/>
+		<translate_y frame_step="1" data_size="70" data_head="70"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+</node_anm_array>
+
+</body>
+
+</ica>
