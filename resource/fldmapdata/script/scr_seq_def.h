@@ -2191,7 +2191,7 @@
 
 //--------------------------------------------------------------
 /**
- *  @def  _WHITE_IN
+ *  @def  _BLACK_IN
  *  @brief  ブラックイン
  *  @param  speed フェードスピード 0～
  */
@@ -2397,7 +2397,7 @@
 
 
 //======================================================================
-//  その他
+//  プログラム管理データの取得・セット
 //======================================================================
 //--------------------------------------------------------------
 /**
@@ -2456,7 +2456,8 @@
 
 //--------------------------------------------------------------
 /**
- * 時間帯の取得
+ * @def _GET_TIMEZONE
+ * @brief 時間帯の取得
  * @param ret_wk    チェック結果を受け取るワーク
  *
  * 戻り値はprog/include/system/timezone.hを参照
@@ -2472,8 +2473,8 @@
 
 //--------------------------------------------------------------
 /**
- * トレーナーカードランクの取得
- *
+ * @def _GET_TRAINER_CARD_RANK
+ * @brief トレーナーカードランクの取得
  * @param ret_wk    結果を受け取るワーク
  */
 //--------------------------------------------------------------
@@ -2484,6 +2485,69 @@
   .short  EV_SEQ_GET_TRAINER_CARD_RANK
   .short  \ret_wk
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_WEEK
+ * @brief 曜日の取得
+ * @param ret_wk    結果を受け取るワーク
+ */
+//--------------------------------------------------------------
+#define _GET_WEEK( ret_wk ) \
+    _ASM_GET_WEEK ret_wk
+
+  .macro  _ASM_GET_WEEK ret_wk
+  .short  EV_SEQ_GET_WEEK
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_BADGE_FLAG
+ * @brief バッジフラグの取得
+ * @param ret_wk    結果を受けるワーク
+ * @param badge_id  取得するバッジのID
+ */
+//--------------------------------------------------------------
+#define _GET_BADGE_FLAG( ret_wk, badge_id ) \
+    _ASM_GET_BADGE_FLAG ret_wk, badge_id
+
+    .macro  _ASM_GET_BADGE_FLAG ret_wk, badge_id
+    .short  EV_SEQ_GET_BADGE_FLAG
+    .short  \ret_wk
+    .short  \badge_id
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SET_BADGE_FLAG
+ * @brief バッジフラグのセット
+ * @param badge_id  セットするバッジのID
+ */
+//--------------------------------------------------------------
+#define _SET_BADGE_FLAG( badge_id ) \
+    _ASM_SET_BADGE_FLAG badge_id
+
+    .macro  _ASM_SET_BADGE_FLAG badge_id
+    .short  EV_SEQ_SET_BADGE_FLAG
+    .short  \badge_id
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_BADGE_COUNT
+ * @brief バッジ数の取得
+ * @param ret_wk    結果を受けるワーク
+ */
+//--------------------------------------------------------------
+#define _GET_BADGE_COUNT( ret_wk ) \
+    _ASM_GET_BADGE_COUNT ret_wk
+
+    .macro  _ASM_GET_BADGE_COUNT ret_wk
+    .short  EV_SEQ_GET_BADGE_COUNT
+    .short  \ret_wk
+    .endm
+
 
 //======================================================================
 //
