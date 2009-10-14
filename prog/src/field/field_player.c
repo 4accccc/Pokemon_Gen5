@@ -326,7 +326,7 @@ u16 FIELD_PLAYER_GetDir( const FIELD_PLAYER *fld_player )
 #if 0
 	return( fld_player->dir );
 #else //表示するアクターから直に取得
-  MMDL_GetDirDisp( fld_player->fldmmdl );
+  return( MMDL_GetDirDisp(fld_player->fldmmdl) );
 #endif
 }
 
