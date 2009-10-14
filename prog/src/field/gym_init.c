@@ -103,9 +103,10 @@ void GYM_INIT_Anti(GAMESYS_WORK *gsys)
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
   }
 
-  for (i=0;i<ANTI_SW_NUM_MAX;i++){
-    gmk_sv_work->Sw[i] = 0;
+  for (i=0;i<ANTI_DOOR_NUM_MAX;i++){
+    gmk_sv_work->Door[i] = 0;
   }
+  gmk_sv_work->PushSwIdx = ANTI_SW_NUM_MAX;
 }
 
 //--------------------------------------------------------------

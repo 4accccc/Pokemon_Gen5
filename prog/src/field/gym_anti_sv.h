@@ -14,8 +14,8 @@
 //アンチジムセーブワーク
 typedef struct GYM_ANTI_SV_WORK_tag
 {
-  u8 Sw[ANTI_DOOR_NUM_MAX];
-  u8 dummy;
+  u8 Door[ANTI_DOOR_NUM_MAX];
+  u8 PushSwIdx;
 }GYM_ANTI_SV_WORK;
 
 #endif  //__GYM_ANTI_SV_H__

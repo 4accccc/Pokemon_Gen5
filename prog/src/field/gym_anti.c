@@ -60,7 +60,8 @@ typedef struct GYM_ANTI_TMP_tag
 {
   u8 SwIdx;
   u8 DoorIdx;
-  u8 dummy[2];
+  u8 IsOn;
+  u8 dummy;
 }GYM_ANTI_TMP;
 
 //リソースの並び順番
@@ -338,9 +339,10 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
 
   //セーブ状況による初期アニメをセット
   {
+    //ドア
     u8 i;
     for (i=0;i<ANTI_DOOR_NUM_MAX;i++){
-      if ( gmk_sv_work->Sw[i] ){
+      if ( gmk_sv_work->Door[i] ){
         //アニメセット
         EXP_OBJ_ANM_CNT_PTR anm;
         u8 door_obj_idx;
@@ -357,6 +359,25 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
           last_frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
           FLD_EXP_OBJ_SetObjAnmFrm(ptr,GYM_ANTI_UNIT_IDX, door_obj_idx, 0, last_frm);
         }
+      }
+    }
+    //スイッチ
+    if (gmk_sv_work->PushSwIdx != ANTI_SW_NUM_MAX){
+      //アニメセット
+      EXP_OBJ_ANM_CNT_PTR anm;
+      u8 sw_obj_idx;
+      sw_obj_idx = OBJ_SW_1 + gmk_sv_work->PushSwIdx;
+      {
+        fx32 last_frm;
+        //アニメを有効
+        FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0, TRUE);
+        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0);
+        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+        //1回再生設定
+        FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+        //最終フレームにする
+        last_frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
+        FLD_EXP_OBJ_SetObjAnmFrm(ptr,GYM_ANTI_UNIT_IDX, sw_obj_idx, 0, last_frm);
       }
     }
   }
@@ -390,18 +411,6 @@ void GYM_ANTI_Move(FIELDMAP_WORK *fieldWork)
   int i;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
 
-  {
-    GAMESYS_WORK *gsys  = FIELDMAP_GetGameSysWork( fieldWork );
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-      test_GYM_ANTI_SwOn(gsys, 0);
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-      test_GYM_ANTI_OpenDoor(gsys, 0);
-    }
-  }
-
-
-
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
 
@@ -410,11 +419,13 @@ void GYM_ANTI_Move(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 /**
  * スイッチアニメイベント起動
- * @param	
- * @return
+ * @param	  gsys      ゲームシステムポインタ
+ * @param   inSwIdx   スイッチインデックス0～8
+ * @param   inSwState スイッチ状態 0:オフ　1:オン
+ * @return  event     イベントポインタ
  */
 //--------------------------------------------------------------
-GMEVENT *GYM_ANTI_SwOn(GAMESYS_WORK *gsys, const u8 inSwIdx)
+GMEVENT *GYM_ANTI_SwOnOff(GAMESYS_WORK *gsys, const u8 inSwIdx, const u8 inSwState)
 {
   GMEVENT * event;
   GYM_ANTI_SV_WORK *gmk_sv_work;
@@ -426,15 +437,18 @@ GMEVENT *GYM_ANTI_SwOn(GAMESYS_WORK *gsys, const u8 inSwIdx)
 
   gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_ANTI );
 
-  if (inSwIdx > ANTI_SW_NUM_MAX){
+  if (inSwIdx >= ANTI_SW_NUM_MAX){
     return NULL;
   }
 
   //イベントコール
   event = GMEVENT_Create( gsys, NULL, PushSwEvt, 0 );
-    
-  //スイッチインデックスをセット
-  tmp->SwIdx = inSwIdx;
+  if (event != NULL){
+    //スイッチインデックスをセット
+    tmp->SwIdx = inSwIdx;
+    //スイッチ状態セット
+    tmp->IsOn = inSwState;
+  }
 
   return event;
 }
@@ -499,13 +513,24 @@ static GMEVENT_RESULT PushSwEvt( GMEVENT* event, int* seq, void* work )
       EXP_OBJ_ANM_CNT_PTR anm;
       u8 sw_obj_idx;
       sw_obj_idx = OBJ_SW_1 + tmp->SwIdx;
+
       {
         //アニメを開始
+        fx32 frm;
         FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0, TRUE);
         anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0);
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
-        //頭出し
-        FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0, 0 );
+        if (tmp->IsOn){
+          frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
+          //押したスイッチインデックスを記憶
+          gmk_sv_work->PushSwIdx = tmp->SwIdx;
+        }else{
+          frm = 0;
+          //押したスイッチインデックスをクリア
+          gmk_sv_work->PushSwIdx = ANTI_SW_NUM_MAX;
+        }
+        //フレームセット
+        FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0, frm );
         //1回再生設定
         FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
       }
@@ -514,7 +539,6 @@ static GMEVENT_RESULT PushSwEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 1: //アニメ待ち 
     {
-      
       u8 sw_obj_idx;
       EXP_OBJ_ANM_CNT_PTR sw_anm;
       sw_obj_idx = OBJ_SW_1 + tmp->SwIdx;
@@ -578,7 +602,7 @@ static GMEVENT_RESULT OpenDoorEvt( GMEVENT* event, int* seq, void* work )
       if ( FLD_EXP_OBJ_ChkAnmEnd(door_anm) ){
         OS_Printf("アニメ終了\n");
         //スイッチ押下フラグオン
-        gmk_sv_work->Sw[tmp->DoorIdx] = 1;
+        gmk_sv_work->Door[tmp->DoorIdx] = 1;
         return GMEVENT_RES_FINISH;
       }
     }

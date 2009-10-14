@@ -155,7 +155,36 @@ VMCMD_RESULT EvCmdGymAnti_SwOn( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
   sw_idx = VMGetU16( core );
-  call_event = GYM_ANTI_SwOn(gsys, sw_idx);
+  call_event = GYM_ANTI_SwOnOff(gsys, sw_idx, 1);
+  
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  SCRIPT_CallEvent( sc, call_event );  
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+
+}
+
+//--------------------------------------------------------------
+/**
+ * アンチジムギミック　床スイッチオフ
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymAnti_SwOff( VMHANDLE *core, void *wk )
+{
+  u8 sw_idx;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  sw_idx = VMGetU16( core );
+  call_event = GYM_ANTI_SwOnOff(gsys, sw_idx, 0);
   
   if (call_event == NULL){
     GF_ASSERT(0);
