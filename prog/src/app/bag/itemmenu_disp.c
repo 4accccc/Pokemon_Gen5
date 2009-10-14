@@ -453,15 +453,13 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
     //下画面アイコン
     pWork->cellRes[_PLT_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
-      archandle , NARC_app_menu_common_bar_button_NCLR , CLSYS_DRAW_MAIN , 7*32 , 0 , APP_COMMON_BARICON_PLT_NUM , pWork->heapID  );
+      archandle , NARC_app_menu_common_bar_button_NCLR , CLSYS_DRAW_MAIN , _PAL_COMMON_CELL*32 , 0 , _PAL_COMMON_CELL_NUM , pWork->heapID  );
 
     pWork->cellRes[_NCG_COMMON] = GFL_CLGRP_CGR_Register(
       archandle , NARC_app_menu_common_bar_button_128k_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
 
     pWork->cellRes[_ANM_COMMON] = GFL_CLGRP_CELLANIM_Register(
       archandle, NARC_app_menu_common_bar_button_128k_NCER, NARC_app_menu_common_bar_button_128k_NANR , pWork->heapID);
-
-
 
     GFL_ARC_CloseDataHandle(archandle);
   }
@@ -522,6 +520,49 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind , FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType , FALSE );
+  }
+  
+  // ソートボタン リソースロード
+  {
+    ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_BAG , pWork->heapID );
+    
+    pWork->cellRes[_PLT_SORT] = GFL_CLGRP_PLTT_RegisterEx(
+      archandle , NARC_bag_bag_win06_d_NCLR , CLSYS_DRAW_MAIN , _PAL_SORT_CELL*32 , 0 , _PAL_SORT_CELL_NUM , pWork->heapID  );
+    pWork->cellRes[_NCG_SORT] = GFL_CLGRP_CGR_Register(
+      archandle , NARC_bag_bag_win06_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID);
+    pWork->cellRes[_ANM_SORT] = GFL_CLGRP_CELLANIM_Register(
+      archandle, NARC_bag_bag_win06_d_NCER, NARC_bag_bag_win06_d_NANR , pWork->heapID);
+  
+    GFL_ARC_CloseDataHandle(archandle);
+  }
+
+  // ソートボタン
+  {
+    GFL_CLWK_DATA cellInitData;
+
+    cellInitData.softpri = 10;
+    cellInitData.bgpri = 1;
+    cellInitData.pos_x = 18 * 8 + 2;
+    cellInitData.pos_y = 22 * 8;
+    cellInitData.anmseq = 0;
+
+    pWork->clwkSort = GFL_CLACT_WK_Create(
+      pWork->cellUnit,
+      pWork->cellRes[_NCG_SORT],
+      pWork->cellRes[_PLT_SORT],
+      pWork->cellRes[_ANM_SORT],
+      &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
+
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkSort, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->clwkSort, TRUE );
+    
+#if 0
+    // 売る画面のときは非表示
+    if( pWork->mode == BAG_MODE_SELL )
+    {
+      GFL_CLACT_WK_SetDrawEnable( pWork->clwkSort, FALSE );
+    }
+#endif
   }
 
 }
@@ -810,7 +851,7 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
   int i;
   ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_BAG , pWork->heapID );
 
-  //下画面メニューのチェックマーク
+  //リスト用チェックマーク
   pWork->cellRes[_PTL_CHECK] = GFL_CLGRP_PLTT_RegisterEx(
     archandle , NARC_bag_bag_win04_d_NCLR , CLSYS_DRAW_MAIN , _PAL_MENU_CHECKBOX_CELL*32 , 0 , 1 , pWork->heapID  );
   pWork->cellRes[_NCG_CHECK] = GFL_CLGRP_CGR_Register(
@@ -818,11 +859,10 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
   pWork->cellRes[_ANM_CHECK] = GFL_CLGRP_CELLANIM_Register(
     archandle, NARC_bag_bag_win04_d_NCER, NARC_bag_bag_win04_d_NANR , pWork->heapID);
 
-  //下画面メニューリスト
-
+  // スライドバーつまみ・リストカーソル
   pWork->cellRes[_PLT_CUR] = GFL_CLGRP_PLTT_RegisterEx( archandle ,
                                                         NARC_bag_bag_win03_d_NCLR , CLSYS_DRAW_MAIN ,
-                                                        0 , 0 , 2 , pWork->heapID  );
+                                                        _PAL_CUR_CELL , 0 , _PAL_CUR_CELL_NUM , pWork->heapID  );
 
   pWork->cellRes[_NCG_CUR] = GFL_CLGRP_CGR_Register(
     archandle , NARC_bag_bag_win03_d_NCGR ,
@@ -839,16 +879,12 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
       archandle , NARC_bag_bag_win01_d_NCGR ,
       FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
     pWork->listBmp[i] = GFL_BMP_Create( 12, 2, GFL_BMP_16_COLOR, pWork->heapID );
-
   }
 
   pWork->cellRes[_ANM_LIST] = GFL_CLGRP_CELLANIM_Register(
     archandle , NARC_bag_bag_win01_d_NCER, NARC_bag_bag_win01_d_NANR ,
     pWork->heapID  );
-
-
-
-
+  
   GFL_ARC_CloseDataHandle(archandle);
 }
 
@@ -881,7 +917,6 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 
     GFL_CLACT_WK_SetDrawEnable( pWork->scrollCur , TRUE );
   }
-
 
   //選択カーソル
   {
@@ -930,6 +965,7 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 
     }
   }
+
 }
 
 
@@ -1002,7 +1038,7 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
 
-  u32 dest = GFL_CLGRP_CGR_GetAddr( pWork->listRes[0], CLSYS_DRAW_MAIN);
+//  u32 dest = GFL_CLGRP_CGR_GetAddr( pWork->listRes[0], CLSYS_DRAW_MAIN);
 
   {
     GFL_CLACTPOS pos;
@@ -1198,8 +1234,6 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
 //------------------------------------------------------------------------------
 void ITEMDISP_InitPocketCell( FIELD_ITEMMENU_WORK* pWork )
 {
-
-  //バーのボタン
   {
 
     u8 i;

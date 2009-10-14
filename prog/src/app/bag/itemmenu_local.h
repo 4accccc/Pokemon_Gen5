@@ -65,6 +65,9 @@ enum _ITEMLISTCELL_RESOURCE
   _PTL_CHECK,
   _NCG_CHECK,
   _ANM_CHECK,
+  _PLT_SORT,
+  _NCG_SORT,
+  _ANM_SORT,
   _PLT_BAGPOCKET,  
   _NCG_BAGPOCKET,  
   _ANM_BAGPOCKET,  
@@ -163,6 +166,7 @@ struct _FIELD_ITEMMENU_PARAM {
   GFL_CLWK  *clwkWazaKind;
   GFL_CLWK  *clwkWazaType;
   GFL_CLWK  *clwkBarIcon[ BAR_ICON_MAX ];
+  GFL_CLWK  *clwkSort;
 	GFL_TCBLSYS *pMsgTcblSys;
   PRINT_STREAM* pStream;
   TOUCH_SW_SYS* pTouchSWSys;
@@ -209,6 +213,7 @@ struct _FIELD_ITEMMENU_PARAM {
   int ret_code2;
   int ret_item;  //選んだアイテム
   
+  BOOL sort_mode; ///< ソートモード
 };
 
 #define _OBJPLT_SUB_POKE_TYPE (4) //サブ画面技タイプアイコンパレット位置
@@ -224,8 +229,15 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _BUTTON_MSG_PAL   (12)  // メッセージフォント
 #define _BUTTON_WIN_PAL   (13)  // ウインドウ
 
-#define _PAL_BAG_PARTS_CELL (10)  // バッグのパーツCELLのパレット展開位置
-#define _PAL_MENU_CHECKBOX_CELL (12)  // チェックボックスのパレット展開位置
+#
+#define _PAL_CUR_CELL (0)       // スライドバーつまみ カーソル用パレット転送位置
+#define _PAL_CUR_CELL_NUM (2)
+#define _PAL_SORT_CELL (3)      // ソートボタンのパレット展開位置
+#define _PAL_SORT_CELL_NUM (6)  // ソートボタンのパレット本数
+#define _PAL_COMMON_CELL (9)          // 共通パレット展開位置
+#define _PAL_COMMON_CELL_NUM ( APP_COMMON_BARICON_PLT_NUM )
+#define _PAL_BAG_PARTS_CELL (12)      // バッグのパーツCELLのパレット展開位置
+#define _PAL_MENU_CHECKBOX_CELL (14)  // チェックボックスのパレット展開位置
 
 // ポケット名の文字色
 #define _POCKETNAME_FONT_PAL_L (0xF)
@@ -243,13 +255,13 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _ITEMUSE_DISP_SIZEY (10)
 
 // 「おこづかい」
-#define _GOLD_CAP_DISP_INITX (2)
+#define _GOLD_CAP_DISP_INITX (1)
 #define _GOLD_CAP_DISP_INITY (21)
 #define _GOLD_CAP_DISP_SIZEX (8)
 #define _GOLD_CAP_DISP_SIZEY (3)
 
 // おこづかい XXXXXX円
-#define _GOLD_DISP_INITX (11)
+#define _GOLD_DISP_INITX (9)
 #define _GOLD_DISP_INITY (21)
 #define _GOLD_DISP_SIZEX (9)
 #define _GOLD_DISP_SIZEY (3)
@@ -275,15 +287,20 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _WINNUM_SCR_INITX (16)
 #define _WINNUM_SCR_INITY (12)
 
-
-
-#define BUTTONID_LEFT    (5)
-#define BUTTONID_RIGHT   (6)
-#define BUTTONID_EXIT   (7)
-#define BUTTONID_RETURN   (8)
-#define BUTTONID_ITEM_AREA (9)
-#define BUTTONID_CHECK_AREA (15)
-
+enum
+{ 
+  BUTTONID_ITEM_AREA_NUM = 6,   ///< アイテムエリアの項目数
+  BUTTONID_CHECK_AREA_NUM = 6,  ///< チェックエリアの項目数
+  // 0-4 : バッグ
+  BUTTONID_LEFT = 5,
+  BUTTONID_RIGHT,
+  BUTTONID_SORT,
+  BUTTONID_EXIT,
+  BUTTONID_RETURN,
+  BUTTONID_ITEM_AREA,
+  BUTTONID_CHECK_AREA = BUTTONID_ITEM_AREA + BUTTONID_ITEM_AREA_NUM,
+  BUTTONID_MAX = BUTTONID_CHECK_AREA + BUTTONID_CHECK_AREA_NUM,
+};
 
 #define FLD_SUBSCR_FADE_DIV (1)
 #define FLD_SUBSCR_FADE_SYNC (1)
