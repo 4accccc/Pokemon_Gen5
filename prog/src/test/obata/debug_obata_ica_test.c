@@ -54,7 +54,7 @@ typedef enum
   ANIME_MODE_NUM
 } ANIME_MODE;
 
-ARCDATID anime_dat_id[] = 
+static ARCDATID anime_dat_id[] = 
 {
   NARC_debug_obata_dice_anime_srt_bin,
   NARC_debug_obata_dice_anime_sr_bin,

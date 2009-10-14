@@ -11,6 +11,7 @@ FS_EXTERN_OVERLAY(obata_debug);
 extern const GFL_PROC_DATA DebugObataDemoTestMainProcData;
 extern const GFL_PROC_DATA DebugObata3DSoundMainProcData;
 extern const GFL_PROC_DATA DebugObataIcaTestMainProcData;
+extern const GFL_PROC_DATA DebugObataElboardMainProcData;
 
 
 //============================================================================================
@@ -32,6 +33,7 @@ typedef enum
   MENU_ITEM_DEMO_TEST,
   MENU_ITEM_3D_SOUND,
   MENU_ITEM_ICA_TEST,
+  MENU_ITEM_ELBOARD,
   MENU_ITEM_DAMMY,
   MENU_ITEM_NUM
 } MENU_ITEM;
@@ -42,6 +44,7 @@ static const STRCODE* str_menu[] =
   L"デモテスト",
   L"3Dサウンド",
   L"ICA再生テスト",
+  L"電光掲示板",
   L"戻る",
 };
 
@@ -317,6 +320,9 @@ static void SetNextProc( PROC_WORK* work )
       break;
   case MENU_ITEM_ICA_TEST:
       GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(obata_debug), &DebugObataIcaTestMainProcData, NULL );
+      break;
+  case MENU_ITEM_ELBOARD:
+      GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(obata_debug), &DebugObataElboardMainProcData, NULL );
       break;
   }
 }
