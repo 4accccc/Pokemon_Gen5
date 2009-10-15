@@ -146,6 +146,10 @@ extern const u32 APP_COMMON_GetNull4x4CellArcIdx( const APP_COMMON_MAPPING mappi
 extern const u32 APP_COMMON_GetNull4x4AnimeArcIdx( const APP_COMMON_MAPPING mapping );
 
 // 状態異常アイコン
+extern const u32 APP_COMMON_GetStatusIconPltArcIdx( void );
+extern const u32 APP_COMMON_GetStatusIconCharArcIdx( void );
+extern const u32 APP_COMMON_GetStatusIconCellArcIdx( const APP_COMMON_MAPPING mapping );
+extern const u32 APP_COMMON_GetStatusIconAnimeArcIdx( const APP_COMMON_MAPPING mapping );
 extern u32 APP_COMMON_GetStatusIconAnime( POKEMON_PARAM * pp );
 
 //ポケモン絵OBJのためのダミーセル取得
@@ -164,3 +168,9 @@ extern u32 APP_COMMON_GetPokeMarkPltArcIdx( void );
 extern u32 APP_COMMON_GetPokeMarkCharArcIdx( const APP_COMMON_MAPPING mapping );
 extern u32 APP_COMMON_GetPokeMarkCellArcIdx( const APP_COMMON_MAPPING mapping );
 extern u32 APP_COMMON_GetPokeMarkAnimeArcIdx( const APP_COMMON_MAPPING mapping );
+
+//HPバー土台
+const u32 APP_COMMON_GetHPBarBasePltArcIdx( void );
+const u32 APP_COMMON_GetHPBarBaseCharArcIdx( const APP_COMMON_MAPPING mapping );
+const u32 APP_COMMON_GetHPBarBaseCellArcIdx( const APP_COMMON_MAPPING mapping );
+const u32 APP_COMMON_GetHPBarBaseAnimeArcIdx( const APP_COMMON_MAPPING mapping );

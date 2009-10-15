@@ -401,3 +401,23 @@ u32 APP_COMMON_GetPokeMarkAnimeArcIdx( const APP_COMMON_MAPPING mapping )
 {	
 	return NARC_app_menu_common_poke_mark_32k_NANR + mapping;
 }
+
+//--------------------------------------------------------------
+//HPバーデータ取得
+//--------------------------------------------------------------
+const u32 APP_COMMON_GetHPBarBasePltArcIdx( void )
+{
+  return NARC_app_menu_common_hp_bar_NCLR;
+}
+const u32 APP_COMMON_GetHPBarBaseCharArcIdx( const APP_COMMON_MAPPING mapping )
+{
+  return NARC_app_menu_common_hp_dodai_32k_NCGR + mapping;
+}
+const u32 APP_COMMON_GetHPBarBaseCellArcIdx( const APP_COMMON_MAPPING mapping )
+{
+  return NARC_app_menu_common_hp_dodai_32k_NCER + mapping;
+}
+const u32 APP_COMMON_GetHPBarBaseAnimeArcIdx( const APP_COMMON_MAPPING mapping )
+{
+  return NARC_app_menu_common_hp_dodai_32k_NANR + mapping;
+}
