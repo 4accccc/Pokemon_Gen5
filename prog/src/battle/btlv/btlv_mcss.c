@@ -118,10 +118,10 @@ static  const VecFx32 poke_pos_single_table[]={
 };
 
 static  const VecFx32 poke_pos_double_table[]={
-  { 0x00000000, 0x00000666, 0x00007000 }, //POS_A
-  { 0x00001ccd, 0x00000666, 0xffff6000 }, //POS_B  
-  { 0x00003000, 0x00000666, 0x00007000 }, //POS_C
-  { 0xffffdccd, 0x00000666, 0xffff6000 }, //POS_D
+  { 0xffffe500, 0x00000666, 0x00007000 }, //POS_A
+  { 0x000026cd, 0x00000666, 0xffff5a00 }, //POS_B  
+  { 0x00002800, 0x00000666, 0x00007000 }, //POS_C
+  { 0xffffdccd, 0x00000666, 0xffff4700 }, //POS_D
 };
 
 static  const VecFx32 poke_pos_triple_table[]={
@@ -153,10 +153,10 @@ static  const fx32 poke_scale_single_table[]={
 };
 
 static  const fx32 poke_scale_double_table[]={
-  0x0f00,   //POS_A
-  0x10e0,   //POS_B
-  0x0d00,   //POS_C
-  0x1320,   //POS_D
+  0x000010f0, //POS_A
+  0x00001205, //POS_B
+  0x00000f00, //POS_C
+  0x00001320, //POS_D
 };
 
 static  const fx32 poke_scale_triple_table[]={
