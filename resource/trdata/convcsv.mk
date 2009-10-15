@@ -9,7 +9,7 @@
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
 
-USERS	=	nishino
+USERS	=	sogabe nishino
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -21,12 +21,14 @@ GENDER_HEADER = trtype_sex.h
 NAME_GMMFILE = trname.gmm
 TYPE_GMMFILE = trtype.gmm
 SCRFILE = trfgra_wb.scr
+LSTFILE = trfgra_wb.lst
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR	= ../../prog/include/tr_tool/
 GMMDIR	= ../../resource/message/src/
+GRADIR	= ../../resource/trgra/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -64,7 +66,7 @@ out_end: trainer_wb.csv
 	ruby ../../tools/trdata_conv/trdata_conv.rb $< ../message/template.gmm
 endif
 
-do-build: $(TARGETDIR)$(NO_HEADER) $(TARGETDIR)$(TYPE_HEADER) $(TARGETDIR)$(GENDER_HEADER) $(GMMDIR)$(NAME_GMMFILE) $(GMMDIR)$(TYPE_GMMFILE)
+do-build: $(TARGETDIR)$(NO_HEADER) $(TARGETDIR)$(TYPE_HEADER) $(TARGETDIR)$(GENDER_HEADER) $(GMMDIR)$(NAME_GMMFILE) $(GMMDIR)$(TYPE_GMMFILE) $(GRADIR)$(SCRFILE) $(GRADIR)$(LSTFILE)
 
 $(TARGETDIR)$(NO_HEADER):	$(NO_HEADER)
 	$(COPY)	$(NO_HEADER) $(TARGETDIR)
@@ -80,4 +82,10 @@ $(GMMDIR)$(NAME_GMMFILE):	$(NAME_GMMFILE)
 
 $(GMMDIR)$(TYPE_GMMFILE):	$(TYPE_GMMFILE)
 	$(COPY)	$(TYPE_GMMFILE) $(GMMDIR)
+
+$(GRADIR)$(SCRFILE):	$(SCRFILE)
+	$(COPY)	$(SCRFILE) $(GRADIR)
+
+$(GRADIR)$(LSTFILE):	$(LSTFILE)
+	$(COPY)	$(LSTFILE) $(GRADIR)
 
