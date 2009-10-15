@@ -50,7 +50,7 @@ typedef struct _MYITEM * MYITEM_PTR;
 //	セーブデータシステムが依存する関数
 //----------------------------------------------------------
 extern int MYITEM_GetWorkSize(void);
-extern MYITEM_PTR MYITEM_AllocWork(int heapID);
+extern MYITEM_PTR MYITEM_AllocWork(HEAPID heapID);
 extern void MYITEM_Copy(const MYITEM_PTR from, MYITEM_PTR to);
 extern void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, int bMyGet);
 
@@ -58,19 +58,19 @@ extern void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, i
 //	MYITEM操作のための関数
 //----------------------------------------------------------
 extern void MYITEM_Init(MYITEM_PTR item);
-extern BOOL MYITEM_AddCheck( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap );
-extern BOOL MYITEM_AddItem(MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap);
-extern BOOL MYITEM_SubItem( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap );
-extern BOOL MYITEM_SubItemDirect( ITEM_ST * myitem, u32 max, u16 item_no, u16 num, u32 heap );
-extern BOOL MYITEM_CheckItem( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap );
-extern u16 MYITEM_GetItemNum( MYITEM_PTR myitem, u16 item_no, u32 heap );
-extern u16 MYITEM_GetItemNumDirect( ITEM_ST * myitem, u32 max, u16 item_no, u32 heap );
+extern BOOL MYITEM_AddCheck( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap );
+extern BOOL MYITEM_AddItem(MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap);
+extern BOOL MYITEM_SubItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap );
+extern BOOL MYITEM_SubItemDirect( ITEM_ST * myitem, u32 max, u16 item_no, u16 num, HEAPID heap );
+extern BOOL MYITEM_CheckItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap );
+extern u16 MYITEM_GetItemNum( MYITEM_PTR myitem, u16 item_no, HEAPID heap );
+extern u16 MYITEM_GetItemNumDirect( ITEM_ST * myitem, u32 max, u16 item_no, HEAPID heap );
 extern void MYITEM_SortSpace( ITEM_ST * item, const u32 max );
 extern void MYITEM_SortNumber( ITEM_ST * item, const u32 max );
 extern BOOL MYITEM_CheckItemPocket( MYITEM_PTR myitem, u32 pocket );
 extern u32 MYITEM_GetItemPocketNumber( MYITEM_PTR myitem, u32 pocket );
 extern ITEM_ST * MYITEM_PosItemGet( MYITEM_PTR myitem, u16 pocket, u16 pos );
-extern void MYITEM_BattlePocketItemMake( MYITEM_PTR myitem, ITEM_ST * make[], u32 heap );
+extern void MYITEM_BattlePocketItemMake( MYITEM_PTR myitem, ITEM_ST * make[], HEAPID heap );
 extern u32 MYITEM_CnvButtonItemGet( const MYITEM_PTR myitem, int index );
 extern void MYITEM_CnvButtonItemSet( MYITEM_PTR myitem, int index, u32 item );
 
@@ -84,13 +84,13 @@ extern u32 MYITEM_GetItemThisPocketNumber( ITEM_ST * item,int max );
 //	バッグ作成関数
 //----------------------------------------------------------
 #if 0
-extern void * MYITEM_MakeBagData( MYITEM_PTR myitem, const u8 * list, u32 heap );
+extern void * MYITEM_MakeBagData( MYITEM_PTR myitem, const u8 * list, HEAPID heap );
 #endif
 
 //------------------------------------------------------------------
 //	バッグのカーソル位置データ
 //------------------------------------------------------------------
-extern BAG_CURSOR * MYITEM_BagCursorAlloc( u32 heapID );
+extern BAG_CURSOR * MYITEM_BagCursorAlloc( HEAPID heapID );
 
 extern void MYITEM_FieldBagCursorGet( BAG_CURSOR * wk, u16 pocket, s16 * pos, s16 * scr );
 extern u16 MYITEM_FieldBagPocketGet( BAG_CURSOR * wk );

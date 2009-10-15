@@ -60,7 +60,7 @@ struct _BAG_CURSOR {
 #define	ITEM_MAX_NORMAL			( 999 )		// 通常のアイテム所持数最大
 #define	ITEM_MAX_WAZAMACHINE	( 99 )		// 技マシンの所持数最大
 
-static u32 MyItemDataGet( MYITEM_PTR myitem, u16 id, ITEM_ST ** item, u32 * max, u32 heap );
+static u32 MyItemDataGet( MYITEM_PTR myitem, u16 id, ITEM_ST ** item, u32 * max, HEAPID heap );
 static u32 MyPocketDataGet( MYITEM_PTR myitem, s32 pocket, ITEM_ST ** item, u32 * max);
 static void bottomInsert( ITEM_ST * item, const u32 max );
 
@@ -89,7 +89,7 @@ int MYITEM_GetWorkSize(void)
  * @return	MYITEMへのポインタ
  */
 //------------------------------------------------------------------
-MYITEM_PTR MYITEM_AllocWork(int heapID)
+MYITEM_PTR MYITEM_AllocWork(HEAPID heapID)
 {
 	MYITEM_PTR item;
 	item = GFL_HEAP_AllocMemory(heapID, sizeof(MYITEM));
@@ -225,7 +225,7 @@ static u32 MyPocketDataGet( MYITEM_PTR myitem, s32 pocket, ITEM_ST ** item, u32 
  * @return	ポケット番号
  */
 //------------------------------------------------------------------
-static u32 MyItemDataGet( MYITEM_PTR myitem, u16 id, ITEM_ST ** item, u32 * max, u32 heap )
+static u32 MyItemDataGet( MYITEM_PTR myitem, u16 id, ITEM_ST ** item, u32 * max, HEAPID heap )
 {
 	s32 pocket = ITEM_GetParam( id, ITEM_PRM_POCKET, heap );
 
@@ -282,7 +282,7 @@ static ITEM_ST * AddItemSearch( ITEM_ST * item, u32 siz, u16 id, u16 num, u16 ma
  * @retval	失敗 = NULL
  */
 //------------------------------------------------------------------
-static ITEM_ST * AddItemPosGet( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap )
+static ITEM_ST * AddItemPosGet( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 {
 	ITEM_ST * add;
 	u32	max;
@@ -306,7 +306,7 @@ static ITEM_ST * AddItemPosGet( MYITEM_PTR myitem, u16 item_no, u16 num, u32 hea
  * @retval	FALSE	失敗
  */
 //------------------------------------------------------------------
-BOOL MYITEM_AddCheck( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap )
+BOOL MYITEM_AddCheck( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 {
 	if( AddItemPosGet( myitem, item_no, num, heap ) == NULL ){
 		return FALSE;
@@ -325,7 +325,7 @@ BOOL MYITEM_AddCheck( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap )
  * @retval	FALSE	失敗
  */
 //------------------------------------------------------------------
-BOOL MYITEM_AddItem( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap )
+BOOL MYITEM_AddItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 {
   int before = 0;
 	ITEM_ST * add = AddItemPosGet( myitem, item_no, num, heap );
@@ -391,7 +391,7 @@ static ITEM_ST * SubItemSearch( ITEM_ST * item, u32 siz, u16 id, u16 num )
  * @retval	失敗 = NULL
  */
 //------------------------------------------------------------------
-static ITEM_ST * SubItemPosGet( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap )
+static ITEM_ST * SubItemPosGet( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 {
 	ITEM_ST * sub;
 	u32	max;
@@ -411,7 +411,7 @@ static ITEM_ST * SubItemPosGet( MYITEM_PTR myitem, u16 item_no, u16 num, u32 hea
  * @retval	FALSE	失敗
  */
 //------------------------------------------------------------------
-BOOL MYITEM_SubItem( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap )
+BOOL MYITEM_SubItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 {
 	ITEM_ST * sub = SubItemPosGet( myitem, item_no, num, heap );
 
@@ -444,7 +444,7 @@ BOOL MYITEM_SubItem( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap )
  * @retval	FALSE	失敗
  */
 //------------------------------------------------------------------
-BOOL MYITEM_SubItemDirect( ITEM_ST * myitem, u32 max, u16 item_no, u16 num, u32 heap )
+BOOL MYITEM_SubItemDirect( ITEM_ST * myitem, u32 max, u16 item_no, u16 num, HEAPID heap )
 {
 	ITEM_ST * sub = SubItemSearch( myitem, max, item_no, num );
 
@@ -471,7 +471,7 @@ BOOL MYITEM_SubItemDirect( ITEM_ST * myitem, u32 max, u16 item_no, u16 num, u32 
  * @retval	FALSE	存在しない
  */
 //------------------------------------------------------------------
-BOOL MYITEM_CheckItem( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap )
+BOOL MYITEM_CheckItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 {
 	if( SubItemPosGet( myitem, item_no, num, heap ) == NULL ){
 		return FALSE;
@@ -562,7 +562,7 @@ u32 MYITEM_GetItemPocketNumber( MYITEM_PTR myitem, u32 pocket )
  * @return	手持ち数
  */
 //------------------------------------------------------------------
-u16 MYITEM_GetItemNum( MYITEM_PTR myitem, u16 item_no, u32 heap )
+u16 MYITEM_GetItemNum( MYITEM_PTR myitem, u16 item_no, HEAPID heap )
 {
 	ITEM_ST * sub = SubItemPosGet( myitem, item_no, 1, heap );
 
@@ -584,7 +584,7 @@ u16 MYITEM_GetItemNum( MYITEM_PTR myitem, u16 item_no, u32 heap )
  * @retval	FALSE	失敗
  */
 //------------------------------------------------------------------
-u16 MYITEM_GetItemNumDirect( ITEM_ST * myitem, u32 max, u16 item_no, u32 heap )
+u16 MYITEM_GetItemNumDirect( ITEM_ST * myitem, u32 max, u16 item_no, HEAPID heap )
 {
 	ITEM_ST * sub = SubItemSearch( myitem, max, item_no, 1 );
 
@@ -691,7 +691,7 @@ void MYITEM_SortNumber( ITEM_ST * item, const u32 max )
  */
 //------------------------------------------------------------------
 #if 0	//まだバッグ画面はないのでとりあえず消す 2008.12.05(金) matsuda
-void * MYITEM_MakeBagData( MYITEM_PTR myitem, const u8 * list, u32 heap )
+void * MYITEM_MakeBagData( MYITEM_PTR myitem, const u8 * list, HEAPID heap )
 {
 	BAG_DATA * bag;
 	int i;
@@ -770,7 +770,7 @@ ITEM_ST * MYITEM_PosItemGet( MYITEM_PTR myitem, u16 pocket, u16 pos )
  * @return	カーソル位置データ
  */
 //------------------------------------------------------------------
-BAG_CURSOR * MYITEM_BagCursorAlloc( u32 heapID )
+BAG_CURSOR * MYITEM_BagCursorAlloc( HEAPID heapID )
 {
 	return GFL_HEAP_AllocClearMemory( heapID, sizeof(BAG_CURSOR) );
 }
