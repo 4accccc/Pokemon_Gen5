@@ -33,10 +33,10 @@
 //íÖínç¿ïW
 #define STAND1_GX (15)
 #define STAND1_GY (4)
-#define STAND1_GZ (13)
+#define STAND1_GZ (19)
 #define STAND2_GX (15)
 #define STAND2_GY (0)
-#define STAND2_GZ (1)
+#define STAND2_GZ (35)
 #define STAND3_GX (21)
 #define STAND3_GY (2)
 #define STAND3_GZ (19)
