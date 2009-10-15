@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2009-10-15T19:11:28"/>
+	<create user="matsumiya" host="W00207" date="2009-10-15T20:15:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -519,40 +519,68 @@
 
 	<row id="msg_pc_union_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>ユニオン受付時、最初のメッセージ
-
 ・はい/いいえ/せつめいをきく の選択
 　はい　　　　　→msg_union_03
 　いいえ　　　　→msg_union_07
 　せつめいをきく→msg_union_02</comment>
 		<attribute name="キャラ指定">ユニオン受付</attribute>
-		<language name="JPN" width="256">へやに はいりますか？</language>
-		<language name="JPN_KANJI" width="256">部屋に入りますか？</language>
+		<language name="JPN" width="256">ポケモン　ワイヤレス　クラブ
+ユニオンルームに　ようこそ！▼
+こちらでは　おおくの　ともだちと
+やりとり　できます▼
+へやに　はいりますか？</language>
+		<language name="JPN_KANJI" width="256">ポケモン　ワイヤレス　クラブ
+ユニオンルームに　ようこそ！▼
+こちらでは　多くの　友達と
+やりとり　できます▼
+部屋に　入りますか？</language>
 	</row>
 
-	<row id="msg_pc_union_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_pc_union_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>ユニオンルームの説明
-
 ・はい/いいえの選択
 　はい　→msg_union_03
-　いいえ→msg_union_07</comment>
+　いいえ→msg_union_07
+※仮メッセージ</comment>
 		<attribute name="キャラ指定">ユニオン受付</attribute>
-		<language name="JPN" width="256">ユニオンルームは・・・
-・・・(略)・・・・・・
-へやに はいりますか？</language>
-		<language name="JPN_KANJI" width="256">ユニオンルームは・・・
-・・・(略)・・・・・・
-部屋に入りますか？</language>
+		<language name="JPN" width="256">ユニオンルーム　は　あなたの
+ちかくで　ユニオンルームに▽
+はいっている　ひとが　あらわれます▼
+レベル３０までの　ポケモン２ひきで
+１たい１の　たいせん▼
+もっている　ポケモンの　こうかん▼
+みんなで　レコードを　まぜたり▼
+おえかき　をして
+たのしむことが　できます▼
+また　チャットで　へやにいる
+みんなと　おはなしが　できますし▼
+おはなしした　ことばを　タッチすれば
+ともだちを　さがすことも　できます▼
+へやに　はいりますか？</language>
+		<language name="JPN_KANJI" width="256">ユニオンルーム　は　あなたの
+近くで　ユニオンルームに▽
+入っている　人が　現れます▼
+レベル３０までの　ポケモン２匹で
+１対１の　対戦▼
+もっている　ポケモンの　交換▼
+みんなで　レコードを　まぜたり▼
+おえかき　をして
+楽しむことが　できます▼
+また　チャットで　部屋にいる
+みんなと　お話が　できますし▼
+お話した　言葉を　タッチすれば
+友達を　探すことも　できます▼
+部屋に　入りますか？</language>
 	</row>
 
 	<row id="msg_pc_union_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>ワイヤレス通信開始の確認
-
 ・はい/いいえの選択
 　はい　→msg_union_03
 　いいえ→msg_union_07</comment>
 		<attribute name="キャラ指定">ユニオン受付</attribute>
 		<language name="JPN" width="256">ＤＳワイヤレスつうしんを
-かいし します</language>
+かいし　します</language>
 		<language name="JPN_KANJI" width="256">ＤＳワイヤレス通信を
 開始します</language>
 	</row>
@@ -560,10 +588,10 @@
 	<row id="msg_pc_union_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>ユニオンルームに入る場合のメッセージ</comment>
 		<attribute name="キャラ指定">ユニオン受付</attribute>
-		<language name="JPN" width="256">それでは ユニオン ルームで
-おたのしみ ください</language>
-		<language name="JPN_KANJI" width="256">それでは ユニオン ルームで
-お楽しみください</language>
+		<language name="JPN" width="256">それでは　ユニオンルームで
+おたのしみ　ください▼</language>
+		<language name="JPN_KANJI" width="256">それでは　ユニオンルームで
+お楽しみください▼</language>
 	</row>
 
 	<row id="msg_pc_union_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
