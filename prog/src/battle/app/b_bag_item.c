@@ -52,6 +52,15 @@ static const SHOOTER_ITEM ShooterItemTable[] =
 
 	{ ITEM_PIIPIIEIDO, 3 },				// 38: ピーピーエイド
 
+	{ ITEM_AITEMUKOORU, 3 },			// 559: アイテムコール
+
+	{ ITEM_SUPIIDAA2, 3 },				// 539: スピーダー２
+	{ ITEM_SUPESYARUu2, 3 },			// 540: スペシャルＵ２
+	{ ITEM_SUPESYARUg2, 3 },			// 541: スペシャルＧ２
+	{ ITEM_DHIFENDAA2, 3 },				// 542: ディフェンダー２
+	{ ITEM_PURASUPAWAA2, 3 },			// 543: プラスパワー２
+	{ ITEM_YOKUATAARU2, 3 },			// 544: ヨクアタール２
+
 	{ ITEM_IIKIZUGUSURI, 4 },			// 26: いいキズぐすり
 	{ ITEM_KOORINAOSI, 4 },				// 20: こおりなおし
 	{ ITEM_DOKUKESI, 4 },					// 18: どくけし
@@ -59,17 +68,36 @@ static const SHOOTER_ITEM ShooterItemTable[] =
 	{ ITEM_MAHINAOSI, 4 },				// 22: まひなおし
 	{ ITEM_YAKEDONAOSI, 4 },			// 19: やけどなおし
 
+	{ ITEM_SUKIRUKOORU, 5 },			// 557: スキルコール
+
+	{ ITEM_SUPIIDAA3, 5 },				// 545: スピーダー３
+	{ ITEM_SUPESYARUu3, 5 },			// 546: スペシャルＵ３
+	{ ITEM_SUPESYARUg3, 5 },			// 547: スペシャルＧ３
+	{ ITEM_DHIFENDAA3, 5 },				// 548: ディフェンダー３
+	{ ITEM_PURASUPAWAA3, 5 },			// 549: プラスパワー３
+	{ ITEM_YOKUATAARU3, 5 },			// 550: ヨクアタール３
+
 	{ ITEM_SUGOIKIZUGUSURI, 6 },	// 25: すごいキズぐすり
 	{ ITEM_NANDEMONAOSI, 6 },			// 27: なんでもなおし
 	{ ITEM_PIIPIIEIDAA, 6 },			// 40: ピーピーエイダー
 
 	{ ITEM_PIIPIIRIKABAA, 7 },		// 39: ピーピーリカバー
+	{ ITEM_AITEMUDOROPPU, 7 },		// 558: アイテムドロップ
 
 	{ ITEM_MANTANNOKUSURI, 8 },		// 24: まんたんのくすり
+
+	{ ITEM_HURATTOKOORU, 9 },			// 560: フラットコール
 
 	{ ITEM_PIIPIIMAKKUSU, 10 },		// 41: ピーピーマックス
 
 	{ ITEM_GENKINOKAKERA, 11 },		// 28: げんきのかけら
+
+	{ ITEM_SUPIIDAA6, 12 },				// 551: スピーダー６
+	{ ITEM_SUPESYARUu6, 12 },			// 552: スペシャルＵ６
+	{ ITEM_SUPESYARUg6, 12 },			// 553: スペシャルＧ６
+	{ ITEM_DHIFENDAA6, 12 },			// 554: ディフェンダー６
+	{ ITEM_PURASUPAWAA6, 12 },		// 555: プラスパワー６
+	{ ITEM_YOKUATAARU6, 12 },			// 556: ヨクアタール６
 
 	{ ITEM_KAIHUKUNOKUSURI, 13 },	// 23: かいふくのくすり
 	{ ITEM_GENKINOKATAMARI, 14 },	// 29: げんきのかたまり
