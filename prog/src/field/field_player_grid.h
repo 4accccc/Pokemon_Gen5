@@ -77,4 +77,7 @@ extern GFL_TCB * FIELD_PLAYER_GRID_SetEventNaminoriStart(
     FIELD_PLAYER *fld_player, u16 dir, MAPATTR attr, HEAPID heapID );
 extern BOOL FIELD_PLAYER_GRID_CheckEventNaminoriStart( GFL_TCB *tcb );
 extern void FIELD_PLAYER_GRID_DeleteEventNaminoriStart( GFL_TCB *tcb );
-
+extern GFL_TCB * FIELD_PLAYER_GRID_SetEventTakinobori(
+    FIELD_PLAYER *fld_player, u16 dir, u16 no, HEAPID heapID );
+extern BOOL FIELD_PLAYER_GRID_CheckEventTakinobori( GFL_TCB *tcb );
+extern void FIELD_PLAYER_GRID_DeleteEventTakinobori( GFL_TCB *tcb );

@@ -1774,6 +1774,7 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
     { MAPATTR_VALUE_CheckShopShelf1,  0,  SCRID_BG_MSG_SHOPRACK1_01 },
     { MAPATTR_VALUE_CheckShopShelf2,  0,  SCRID_BG_MSG_SHOPRACK2_01 },
     { MAPATTR_VALUE_CheckShopShelf3,  0,  SCRID_BG_MSG_SHOPRACK2_01 },
+    { MAPATTR_VALUE_CheckWaterFall,   0,  SCRID_HIDEN_TAKINOBORI },
   };
   int i;
 
@@ -1800,6 +1801,7 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
   }
   
   //波乗りアトリビュート話し掛けチェック
+
   if( FIELD_PLAYER_GetMoveForm(req->field_player) != PLAYER_MOVE_FORM_SWIM )
   {
     MAPATTR_FLAG attr_flag = MAPATTR_GetAttrFlag( attr );

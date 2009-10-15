@@ -23,7 +23,7 @@
 #include "field_player_grid.h"
 
 //======================================================================
-//  秘伝技
+//  秘伝技波乗り
 //======================================================================
 //--------------------------------------------------------------
 /**
@@ -76,3 +76,49 @@ VMCMD_RESULT EvCmdNaminori( VMHANDLE *core, void *wk )
   
   return( VMCMD_RESULT_SUSPEND );
 }
+
+//======================================================================
+//  秘伝技滝登り
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 秘伝技滝上り　ウェイト部分
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitTakinobori( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GFL_TCB *tcb = SCRCMD_WORK_GetCallProcTCB( work ); 
+  
+  if( FIELD_PLAYER_GRID_CheckEventTakinobori(tcb) == TRUE ){
+    FIELD_PLAYER_GRID_DeleteEventTakinobori( tcb );
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 秘伝技滝登り開始
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTakinobori( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+  u16 dir = FIELD_PLAYER_GetDir( fld_player );
+  GFL_TCB *tcb = FIELD_PLAYER_GRID_SetEventTakinobori( fld_player,
+      dir, SCRCMD_GetVMWorkValue(core,work), heapID );
+  SCRCMD_WORK_SetCallProcTCB( work, tcb );
+  VMCMD_SetWait( core, EvWaitTakinobori );
+  return( VMCMD_RESULT_SUSPEND );
+}
+

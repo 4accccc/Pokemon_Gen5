@@ -371,7 +371,7 @@
 
   //‚Ð‚Å‚ñ‚í‚´ŠÖ˜A
   DEF_CMD( EvCmdNaminori, EV_SEQ_NAMINORI )
-  NO_CMD()
+  DEF_CMD( EvCmdTakinobori, EV_SEQ_TAKINOBORI )
   NO_CMD()
   NO_CMD()
 

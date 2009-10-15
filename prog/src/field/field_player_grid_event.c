@@ -556,6 +556,186 @@ static void evtcb_NaminoriStart( GFL_TCB *tcb, void *wk )
 }
 
 //======================================================================
+//  滝登りイベント
+//======================================================================
+#define TAKI_MOVE_FRAME (64)
+#define TAKI_MOVE_FRAME_Z_START (32)
+
+//--------------------------------------------------------------
+/// EVENT_TAKINOBORI_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+  s16 seq_no;
+  u16 dir;
+  u16 end_flag;
+  u16 frame;
+  VecFx32 target_pos;
+  VecFx32 add_val;
+  FIELD_PLAYER *fld_player;
+  FIELDMAP_WORK *fieldmap;
+  FIELD_PLAYER_GRID *gjiki;
+}TAKINOBORI_WORK;
+
+static void evtcb_Takinobori( GFL_TCB *tcb, void *wk );
+
+//--------------------------------------------------------------
+/**
+ * 滝登りイベントセット
+ * @param fld_player FIELD_PLAYER
+ * @param dir 移動方向 DIR_UP=滝登り DIR_DOWN=滝下り
+ * @param no 技を使用する手持ちポケモン位置番号
+ * @param heapID イベント実行用HEAPID
+ * @retval
+ */
+//--------------------------------------------------------------
+GFL_TCB * FIELD_PLAYER_GRID_SetEventTakinobori(
+    FIELD_PLAYER *fld_player, u16 dir, u16 no, HEAPID heapID )
+{
+  TAKINOBORI_WORK *work;
+  
+  work = GFL_HEAP_AllocClearMemoryLo( heapID, sizeof(TAKINOBORI_WORK) );
+  
+  work->dir = dir;
+  work->fld_player = fld_player;
+  work->fieldmap = FIELD_PLAYER_GetFieldMapWork( fld_player );
+  
+  {
+    FIELDMAP_CTRL_GRID *gridMap = FIELDMAP_GetMapCtrlWork( work->fieldmap );
+    work->gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+  }
+  
+  {
+    GFL_TCBSYS *tcbsys = FIELDMAP_GetFieldmapTCBSys( work->fieldmap );
+    GFL_TCB *tcb = GFL_TCB_AddTask( tcbsys, evtcb_Takinobori, work, 0 );
+    return( tcb );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 滝登りイベント　チェック
+ * @param tcb FIELD_PLAYER_GRID_SetEventTakinobori()戻り値
+ * @retval BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_GRID_CheckEventTakinobori( GFL_TCB *tcb )
+{
+  TAKINOBORI_WORK *work;
+  work = GFL_TCB_GetWork( tcb );
+  return( work->end_flag );
+}
+
+//--------------------------------------------------------------
+/**
+ * 滝登りイベント　削除
+ * @param tcb FIELD_PLAYER_GRID_SetEventTakinobori()戻り値
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_GRID_DeleteEventTakinobori( GFL_TCB *tcb )
+{
+  TAKINOBORI_WORK *work;
+  work = GFL_TCB_GetWork( tcb );
+  GFL_HEAP_FreeMemory( work );
+  GFL_TCB_DeleteTask( tcb );
+}
+
+//--------------------------------------------------------------
+/**
+ * 滝登りイベント
+ * @param tcb GFL_TCB*
+ * @param wk tcb work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void evtcb_Takinobori( GFL_TCB *tcb, void *wk )
+{
+  VecFx32 pos;
+  TAKINOBORI_WORK *work = wk;
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( work->fld_player );
+
+  switch( work->seq_no ){
+  case 0:
+    {
+      VecFx32 n_pos;
+      
+      MMDL_GetVectorPos( mmdl, &n_pos );
+      pos = n_pos;
+      MMDL_TOOL_AddDirVector( work->dir, &pos, GRID_FX32*2 );
+      MMDL_GetMapPosHeight( mmdl, &pos, &work->target_pos.y );
+      work->target_pos.x = pos.x;
+      work->target_pos.z = pos.z;
+      
+      work->add_val.x = 0;
+      work->add_val.y = work->target_pos.y - n_pos.y;
+      work->add_val.z = work->target_pos.z - n_pos.z;
+      work->add_val.y /= TAKI_MOVE_FRAME;
+      work->add_val.z /= TAKI_MOVE_FRAME;
+      
+      MMDL_SetStatusBitHeightGetOFF( mmdl, TRUE );
+      work->seq_no++;
+    }
+  case 1: //上り、下り開始
+    MMDL_GetVectorPos( mmdl, &pos );
+    
+    if( work->dir == DIR_UP ){
+      pos.y += work->add_val.y;
+      
+      if( pos.y > work->target_pos.y ){
+        pos.y = work->target_pos.y;
+      }
+    }else{
+      pos.z += work->add_val.z;
+
+      if( pos.z > work->target_pos.z ){
+        pos.z = work->target_pos.z;
+      }
+    }
+    
+    MMDL_SetVectorPos( mmdl, &pos );
+    
+    work->frame++;
+    if( work->frame >= TAKI_MOVE_FRAME_Z_START ){
+      work->frame = 0;
+      work->seq_no++;
+    }
+    break;
+  case 2: //移動
+    MMDL_GetVectorPos( mmdl, &pos );
+    pos.y += work->add_val.y;
+    pos.z += work->add_val.z;
+
+    if( work->dir == DIR_UP ){
+      if( pos.y > work->target_pos.y ){
+        pos.y = work->target_pos.y;
+      }
+      if( pos.z < work->target_pos.z ){
+        pos.z = work->target_pos.z;
+      }
+    }else{
+      if( pos.y < work->target_pos.y ){
+        pos.y = work->target_pos.y;
+      }
+      if( pos.z > work->target_pos.z ){
+        pos.z = work->target_pos.z;
+      }
+    }
+    
+    MMDL_SetVectorPos( mmdl, &pos );
+    
+    work->frame++;
+    if( work->frame >= TAKI_MOVE_FRAME ){
+      MMDL_InitPosition( mmdl, &work->target_pos, work->dir );
+      MMDL_SetStatusBitHeightGetOFF( mmdl, FALSE );
+      work->end_flag = TRUE;
+      work->seq_no++;
+    }
+    break;
+  }
+}
+
+//======================================================================
 //  parts
 //======================================================================
 //--------------------------------------------------------------

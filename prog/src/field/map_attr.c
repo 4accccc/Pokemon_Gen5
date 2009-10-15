@@ -481,3 +481,15 @@ BOOL MAPATTR_VALUE_CheckShoal( const MAPATTR_VALUE val )
 {
   return( val == 0x17 );
 }
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　滝
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckWaterFall( const MAPATTR_VALUE val )
+{
+  return( val == 0x40 );
+}
