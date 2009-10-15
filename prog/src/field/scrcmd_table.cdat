@@ -412,7 +412,7 @@
   DEF_CMD( EvCmdGetBadgeCount, EV_SEQ_GET_BADGE_COUNT )
   NO_CMD()
 
-  NO_CMD()
+  DEF_CMD( EvCmdAddPokemonToParty, EV_SEQ_ADD_POKEMON_TO_PARTY )
   NO_CMD()
   NO_CMD()
   NO_CMD()

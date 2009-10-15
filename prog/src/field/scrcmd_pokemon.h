@@ -31,3 +31,5 @@ extern VMCMD_RESULT EvCmdGetPartyPokeFormNo( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdChkPokeWaza( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdChkPokeWazaGroup( VMHANDLE *core, void *wk );
 
+extern VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk );
+

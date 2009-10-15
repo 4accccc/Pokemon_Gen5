@@ -2681,6 +2681,33 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _ADD_POKEMON_TO_PARTY
+ * @brief ポケモンを手持ちに追加する
+ * @param ret_wk 結果を受け取るワーク
+ * @param monsno  モンスターナンバー
+ * @param formno  フォームナンバー
+ * @param tokusei 特性
+ * @param level   レベル
+ * @param itemno  所持アイテム
+ * @param 
+ * @retval BOOL 追加できたらTRUE
+ */
+//--------------------------------------------------------------
+#define _ADD_POKEMON_TO_PARTY( ret_wk, monsno, formno, tokusei, level, itemno ) \
+    _ASM_ADD_POKEMON_TO_PARTY ret_wk, monsno, formno, tokusei, level, itemno
+
+  .macro _ASM_ADD_POKEMON_TO_PARTY ret_wk, monsno, formno, tokusei, level, itemno
+  .short EV_SEQ_ADD_POKEMON_TO_PARTY
+  .short \ret_wk
+  .short \monsno
+  .short \formno
+  .short \tokusei
+  .short \level
+  .short \itemno
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @def _CHECK_POKE_WAZA
  * @brief 指定された技を覚えているか調べる
  * @param ret_wk チェック結果を格納するワーク 0=覚えていない 1=覚えている

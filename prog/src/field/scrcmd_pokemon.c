@@ -546,3 +546,34 @@ VMCMD_RESULT EvCmdChkPokeWazaGroup( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * ポケモンを手持ちに追加
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk )
+{
+  GAMEDATA*  gdata = SCRCMD_WORK_GetGameData( wk );
+  POKEPARTY* party = GAMEDATA_GetMyPokemon( gdata );
+  u16*      ret_wk = SCRCMD_GetVMWork( core, wk );          // コマンド第1引数
+  u16       monsno = SCRCMD_GetVMWorkValue( core, wk );     // コマンド第2引数
+  u16       formno = SCRCMD_GetVMWorkValue( core, wk );     // コマンド第3引数
+  u16      tokusei = SCRCMD_GetVMWorkValue( core, wk );     // コマンド第4引数
+  u16        level = SCRCMD_GetVMWorkValue( core, wk );     // コマンド第5引数
+  u16       itemno = SCRCMD_GetVMWorkValue( core, wk );     // コマンド第6引数
+
+  // 手持ちがいっぱいなら追加しない
+  if( PokeParty_GetPokeCountMax(party) <= PokeParty_GetPokeCount(party) )
+  {
+    *ret_wk = FALSE;
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  // 追加するポケモンを作成
+  // 手持ちに追加
+  *ret_wk = TRUE;
+  return VMCMD_RESULT_CONTINUE;
+}
