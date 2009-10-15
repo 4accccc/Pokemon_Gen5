@@ -2,15 +2,15 @@
 #ifndef ZONE_C01_EVD_H
 #define ZONE_C01_EVD_H
 
-#define DOOR_ID_C01_EXIT10                0
+#define DOOR_ID_C01_C01PC0101_EXIT01      0
 #define DOOR_ID_C01_C01R0101_EXIT01       1
 #define DOOR_ID_C01_C01R0201_EXIT01       2
-#define DOOR_ID_C01_EXIT05                3
+#define DOOR_ID_C01_C01R0301_EXIT01       3
 #define DOOR_ID_C01_EXIT12                4
 #define DOOR_ID_C01_EXIT14                5
 #define DOOR_ID_C01_EXIT13                6
 #define DOOR_ID_C01_EXIT15                7
-#define DOOR_ID_C01_EXIT11                8
+#define DOOR_ID_C01_C01R0501_EXIT01       8
 #define DOOR_ID_C01_C01GYM0101_EXIT01     9
 #define DOOR_ID_C01_D01R0101_EXIT01      10
 #define DOOR_ID_C01_D01R0101_EXIT02      11
