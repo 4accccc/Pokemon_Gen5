@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-05-29T17:54:19"/>
+	<create user="taya" host="W00146" date="2009-10-14T18:43:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -234,6 +234,13 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
 		</group>
 
 		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
@@ -334,359 +341,359 @@
 
 
 	<row id="TR_NONE">
-		<language name="JPN">ー</language>
+		<language name="JPN" width="216">ー</language>
 	</row>
 
 	<row id="tanpan_01">
-		<language name="JPN">ケンタ</language>
+		<language name="JPN" width="216">ケンタ</language>
 	</row>
 
 	<row id="mini_01">
-		<language name="JPN">ミカ</language>
+		<language name="JPN" width="216">ミカ</language>
 	</row>
 
 	<row id="schoolb_01">
-		<language name="JPN">シンジ</language>
+		<language name="JPN" width="216">シンジ</language>
 	</row>
 
 	<row id="schoolg_01">
-		<language name="JPN">ヒロコ</language>
+		<language name="JPN" width="216">ヒロコ</language>
 	</row>
 
 	<row id="tennis_01">
-		<language name="JPN">エレナ</language>
+		<language name="JPN" width="216">エレナ</language>
 	</row>
 
 	<row id="football_01">
-		<language name="JPN">ダン</language>
+		<language name="JPN" width="216">ダン</language>
 	</row>
 
 	<row id="tanpan_02">
-		<language name="JPN">ゴロウ</language>
+		<language name="JPN" width="216">ゴロウ</language>
 	</row>
 
 	<row id="mini_02">
-		<language name="JPN">エリ</language>
+		<language name="JPN" width="216">エリ</language>
 	</row>
 
 	<row id="waiter_01">
-		<language name="JPN">マサシ</language>
+		<language name="JPN" width="216">マサシ</language>
 	</row>
 
 	<row id="waitress_01">
-		<language name="JPN">エリコ</language>
+		<language name="JPN" width="216">エリコ</language>
 	</row>
 
 	<row id="leader1a_01">
-		<language name="JPN">ポッド</language>
+		<language name="JPN" width="216">ポッド</language>
 	</row>
 
 	<row id="leader1b_02">
-		<language name="JPN">デント</language>
+		<language name="JPN" width="216">デント</language>
 	</row>
 
 	<row id="leader1c_01">
-		<language name="JPN">コーン</language>
+		<language name="JPN" width="216">コーン</language>
 	</row>
 
 	<row id="childcare_01">
-		<language name="JPN">ナナコ</language>
+		<language name="JPN" width="216">ナナコ</language>
 	</row>
 
 	<row id="kindergartenw_01">
-		<language name="JPN">マヒロ</language>
+		<language name="JPN" width="216">マヒロ</language>
 	</row>
 
 	<row id="kindergartenm_01">
-		<language name="JPN">ユウタ</language>
+		<language name="JPN" width="216">ユウタ</language>
 	</row>
 
 	<row id="kindergartenm_02">
-		<language name="JPN">タカシ</language>
+		<language name="JPN" width="216">タカシ</language>
 	</row>
 
 	<row id="futago_01">
-		<language name="JPN">クミとルミ</language>
+		<language name="JPN" width="216">クミとルミ</language>
 	</row>
 
 	<row id="breederm_01">
-		<language name="JPN">オサム</language>
+		<language name="JPN" width="216">オサム</language>
 	</row>
 
 	<row id="breederw_01">
-		<language name="JPN">ユウコ</language>
+		<language name="JPN" width="216">ユウコ</language>
 	</row>
 
 	<row id="leader2_01">
-		<language name="JPN">アロエ</language>
+		<language name="JPN" width="216">アロエ</language>
 	</row>
 
 	<row id="leader3_01">
-		<language name="JPN">アーティ</language>
+		<language name="JPN" width="216">アーティ</language>
 	</row>
 
 	<row id="leader4_01">
-		<language name="JPN">カミツレ</language>
+		<language name="JPN" width="216">カミツレ</language>
 	</row>
 
 	<row id="leader5_01">
-		<language name="JPN">ヤーコン</language>
+		<language name="JPN" width="216">ヤーコン</language>
 	</row>
 
 	<row id="leader6_01">
-		<language name="JPN">フウロ</language>
+		<language name="JPN" width="216">フウロ</language>
 	</row>
 
 	<row id="rangerm_01">
-		<language name="JPN">ユウキ</language>
+		<language name="JPN" width="216">ユウキ</language>
 	</row>
 
 	<row id="rangerw_01">
-		<language name="JPN">ミハル</language>
+		<language name="JPN" width="216">ミハル</language>
 	</row>
 
 	<row id="rangerm_02">
-		<language name="JPN">マモル</language>
+		<language name="JPN" width="216">マモル</language>
 	</row>
 
 	<row id="rangerw_02">
-		<language name="JPN">ノゾミ</language>
+		<language name="JPN" width="216">ノゾミ</language>
 	</row>
 
 	<row id="schoolb_02">
-		<language name="JPN">マナブ</language>
+		<language name="JPN" width="216">マナブ</language>
 	</row>
 
 	<row id="schoolg_02">
-		<language name="JPN">エミコ</language>
+		<language name="JPN" width="216">エミコ</language>
 	</row>
 
 	<row id="futago_02">
-		<language name="JPN">ミキとマキ</language>
+		<language name="JPN" width="216">ミキとマキ</language>
 	</row>
 
 	<row id="tanpan_03">
-		<language name="JPN">コウタ</language>
+		<language name="JPN" width="216">コウタ</language>
 	</row>
 
 	<row id="mini_03">
-		<language name="JPN">カナ</language>
+		<language name="JPN" width="216">カナ</language>
 	</row>
 
 	<row id="worker2_01">
-		<language name="JPN">ミツオ</language>
+		<language name="JPN" width="216">ミツオ</language>
 	</row>
 
 	<row id="worker2_02">
-		<language name="JPN">グンジ</language>
+		<language name="JPN" width="216">グンジ</language>
 	</row>
 
 	<row id="worker2_03">
-		<language name="JPN">ゴロウ</language>
+		<language name="JPN" width="216">ゴロウ</language>
 	</row>
 
 	<row id="worker2_04">
-		<language name="JPN">ツネオ</language>
+		<language name="JPN" width="216">ツネオ</language>
 	</row>
 
 	<row id="backpackerm_01">
-		<language name="JPN">ヒロム</language>
+		<language name="JPN" width="216">ヒロム</language>
 	</row>
 
 	<row id="backpackerw_01">
-		<language name="JPN">アユミ</language>
+		<language name="JPN" width="216">アユミ</language>
 	</row>
 
 	<row id="fishing_01">
-		<language name="JPN">カツノリ</language>
+		<language name="JPN" width="216">カツノリ</language>
 	</row>
 
 	<row id="fishing_02">
-		<language name="JPN">マサヨシ</language>
+		<language name="JPN" width="216">マサヨシ</language>
 	</row>
 
 	<row id="tennis_02">
-		<language name="JPN">アンナ</language>
+		<language name="JPN" width="216">アンナ</language>
 	</row>
 
 	<row id="backpackerm_02">
-		<language name="JPN">ユウト</language>
+		<language name="JPN" width="216">ユウト</language>
 	</row>
 
 	<row id="backpackerw_02">
-		<language name="JPN">チヒロ</language>
+		<language name="JPN" width="216">チヒロ</language>
 	</row>
 
 	<row id="musician_01">
-		<language name="JPN">ジョージ</language>
+		<language name="JPN" width="216">ジョージ</language>
 	</row>
 
 	<row id="dancer_01">
-		<language name="JPN">ハリー</language>
+		<language name="JPN" width="216">ハリー</language>
 	</row>
 
 	<row id="juggling_01">
-		<language name="JPN">ポール</language>
+		<language name="JPN" width="216">ポール</language>
 	</row>
 
 	<row id="artist_01">
-		<language name="JPN">モーガン</language>
+		<language name="JPN" width="216">モーガン</language>
 	</row>
 
 	<row id="baker_01">
-		<language name="JPN">ハツネ</language>
+		<language name="JPN" width="216">ハツネ</language>
 	</row>
 
 	<row id="espm_01">
-		<language name="JPN">ショウ</language>
+		<language name="JPN" width="216">ショウ</language>
 	</row>
 
 	<row id="espw_01">
-		<language name="JPN">シズク</language>
+		<language name="JPN" width="216">シズク</language>
 	</row>
 
 	<row id="rival_01">
-		<language name="JPN">ライバル</language>
+		<language name="JPN" width="216">ライバル</language>
 	</row>
 
 	<row id="rival_02">
-		<language name="JPN">ライバル</language>
+		<language name="JPN" width="216">ライバル</language>
 	</row>
 
 	<row id="rival_03">
-		<language name="JPN">ライバル</language>
+		<language name="JPN" width="216">ライバル</language>
 	</row>
 
 	<row id="rival_04">
-		<language name="JPN">ライバル</language>
+		<language name="JPN" width="216">ライバル</language>
 	</row>
 
 	<row id="rival_05">
-		<language name="JPN">ライバル</language>
+		<language name="JPN" width="216">ライバル</language>
 	</row>
 
 	<row id="rival_06">
-		<language name="JPN">ライバル</language>
+		<language name="JPN" width="216">ライバル</language>
 	</row>
 
 	<row id="support_01">
-		<language name="JPN">サポート</language>
+		<language name="JPN" width="216">サポート</language>
 	</row>
 
 	<row id="support_02">
-		<language name="JPN">サポート</language>
+		<language name="JPN" width="216">サポート</language>
 	</row>
 
 	<row id="support_03">
-		<language name="JPN">サポート</language>
+		<language name="JPN" width="216">サポート</language>
 	</row>
 
 	<row id="hakaim1_01">
-		<language name="JPN">したっぱ</language>
+		<language name="JPN" width="216">したっぱ</language>
 	</row>
 
 	<row id="hakaim1_02">
-		<language name="JPN">したっぱ</language>
+		<language name="JPN" width="216">したっぱ</language>
 	</row>
 
 	<row id="boss_01">
-		<language name="JPN">Ｎ</language>
+		<language name="JPN" width="216">Ｎ</language>
 	</row>
 
 	<row id="boss_02">
-		<language name="JPN">Ｎ</language>
+		<language name="JPN" width="216">Ｎ</language>
 	</row>
 
 	<row id="prince_01">
-		<language name="JPN">ヨシヒコ</language>
+		<language name="JPN" width="216">ヨシヒコ</language>
 	</row>
 
 	<row id="prince_02">
-		<language name="JPN">カオル</language>
+		<language name="JPN" width="216">カオル</language>
 	</row>
 
 	<row id="princess_01">
-		<language name="JPN">キミコ</language>
+		<language name="JPN" width="216">キミコ</language>
 	</row>
 
 	<row id="princess_02">
-		<language name="JPN">サヤカ</language>
+		<language name="JPN" width="216">サヤカ</language>
 	</row>
 
 	<row id="pilot_01">
-		<language name="JPN">ヒデオ</language>
+		<language name="JPN" width="216">ヒデオ</language>
 	</row>
 
 	<row id="pilot_02">
-		<language name="JPN">セイジ</language>
+		<language name="JPN" width="216">セイジ</language>
 	</row>
 
 	<row id="worker1_01">
-		<language name="JPN">カツジ</language>
+		<language name="JPN" width="216">カツジ</language>
 	</row>
 
 	<row id="worker1_02">
-		<language name="JPN">ゲンタ</language>
+		<language name="JPN" width="216">ゲンタ</language>
 	</row>
 
 	<row id="worker1_03">
-		<language name="JPN">マサシ</language>
+		<language name="JPN" width="216">マサシ</language>
 	</row>
 
 	<row id="worker1_04">
-		<language name="JPN">ジロウ</language>
+		<language name="JPN" width="216">ジロウ</language>
 	</row>
 
 	<row id="worker1_05">
-		<language name="JPN">ミノル</language>
+		<language name="JPN" width="216">ミノル</language>
 	</row>
 
 	<row id="worker1_06">
-		<language name="JPN">ヤスオ</language>
+		<language name="JPN" width="216">ヤスオ</language>
 	</row>
 
 	<row id="worker1_07">
-		<language name="JPN">タモツ</language>
+		<language name="JPN" width="216">タモツ</language>
 	</row>
 
 	<row id="worker1_08">
-		<language name="JPN">トクジ</language>
+		<language name="JPN" width="216">トクジ</language>
 	</row>
 
 	<row id="hakaim1_03">
-		<language name="JPN">したっぱ</language>
+		<language name="JPN" width="216">したっぱ</language>
 	</row>
 
 	<row id="hakaim1_04">
-		<language name="JPN">したっぱ</language>
+		<language name="JPN" width="216">したっぱ</language>
 	</row>
 
 	<row id="basket_01">
-		<language name="JPN">マーク</language>
+		<language name="JPN" width="216">マーク</language>
 	</row>
 
 	<row id="basket_02">
-		<language name="JPN">トニー</language>
+		<language name="JPN" width="216">トニー</language>
 	</row>
 
 	<row id="schoolb_03">
-		<language name="JPN">ツトム</language>
+		<language name="JPN" width="216">ツトム</language>
 	</row>
 
 	<row id="tanpan_04">
-		<language name="JPN">カズキ</language>
+		<language name="JPN" width="216">カズキ</language>
 	</row>
 
 	<row id="schoolb_04">
-		<language name="JPN">フミオ</language>
+		<language name="JPN" width="216">フミオ</language>
 	</row>
 
 	<row id="schoolg_03">
-		<language name="JPN">チエコ</language>
+		<language name="JPN" width="216">チエコ</language>
 	</row>
 
 	<row id="scientistw_01">
-		<language name="JPN">サトミ</language>
+		<language name="JPN" width="216">サトミ</language>
 	</row>
 
 	<flowchart-group-list>
