@@ -10,10 +10,10 @@
 "p_st_ijou.NCLR"
 "p_st_ijou.NCGR"
 "p_st_ijou_32k.NCER"
-"p_st_ijou_32k.NANR"
 "p_st_ijou_64k.NCER"
-"p_st_ijou_64k.NANR"
 "p_st_ijou_128k.NCER"
+"p_st_ijou_32k.NANR"
+"p_st_ijou_64k.NANR"
 "p_st_ijou_128k.NANR"
 
 "bar_button.NCLR"

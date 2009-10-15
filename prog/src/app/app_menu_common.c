@@ -192,6 +192,26 @@ const u32 APP_COMMON_GetNull4x4AnimeArcIdx( const APP_COMMON_MAPPING mapping )
   return NARC_app_menu_common_null_4x4_32k_NANR + mapping;
 }
 
+//--------------------------------------------------------------
+//状態異常アイコンデータ取得
+//--------------------------------------------------------------
+const u32 APP_COMMON_GetStatusIconPltArcIdx( void )
+{
+  return NARC_app_menu_common_p_st_ijou_NCLR;
+}
+const u32 APP_COMMON_GetStatusIconCharArcIdx( void )
+{
+  return NARC_app_menu_common_p_st_ijou_NCGR;
+}
+const u32 APP_COMMON_GetStatusIconCellArcIdx( const APP_COMMON_MAPPING mapping )
+{
+  return NARC_app_menu_common_p_st_ijou_32k_NCER + mapping;
+}
+const u32 APP_COMMON_GetStatusIconAnimeArcIdx( const APP_COMMON_MAPPING mapping )
+{
+  return NARC_app_menu_common_p_st_ijou_32k_NANR + mapping;
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * @brief		状態異常アイコンのアニメ番号を取得
