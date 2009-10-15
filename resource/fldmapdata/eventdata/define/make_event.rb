@@ -791,6 +791,22 @@ end
 
 #============================================================================
 #
+# uniq　script list set
+#
+#============================================================================
+def set_uniq_script_list_header( depend_header, filename )
+  File.open(filename){|file|
+    file.each{|line|
+      if line =~/\w+\.ev/ then
+        column = line.split
+        depend_header.push( "../../script/#{column[0].sub(/\.ev/,"")}_def.h " )
+      end
+    }
+  }
+end
+
+#============================================================================
+#
 # コンバート本体
 #
 #============================================================================
@@ -817,14 +833,7 @@ begin
     #依存関係
     depend_header = Array.new
 
-    depend_header.push( "../../script/common_scr_def.h " )
-    depend_header.push( "../../script/c99_def.h " )
-    depend_header.push( "../../script/bg_attr_def.h " )
-    depend_header.push( "../../script/trainer_def.h " )
-    depend_header.push( "../../script/init_scr_def.h " )
-    depend_header.push( "../../script/sodateya_scr_def.h " )
-    depend_header.push( "../../script/pokecen_scr_def.h " )
-    depend_header.push( "../../script/hiden_def.h " )
+    set_uniq_script_list_header( depend_header, "../../script/uniq_script.list" );
 
     zonename = door_events.zonename.downcase
     depend_header.push( "../tmp/#{zonename}.h " )
