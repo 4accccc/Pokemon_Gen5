@@ -81,7 +81,6 @@ do-build:	sub_dir ncg nce nmc ncl $(notdir $(OBJNCEFILE:.nce=.NCER))
 %.NCER: $(RES_DIR)%.nce
 	ruby $(RUBY_DIR)clact_conv.rb $(RES_DIR)$*.nce $(RES_DIR)$*.ncg $(RES_DIR)$*.ncl $(G2D_DIR) $(CNV_DIR)
 
-
 sub_dir:
 	@$(MAKE_SUBDIR)
 
@@ -119,10 +118,10 @@ $(TARGETDIR)/$(NARCNAME_B):	$(NARCNAME_B) $(NAIXNAME_B)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
-#do-build:	$(SCRFILE) $(NARCNAME)
 do-build:	$(NARCNAME_F) $(NARCNAME_B)
 
 $(NARCNAME_F): $(notdir $(MCSSNCGFILE:.ncg=.NCBR)) $(notdir $(MCSSNCEFILE:.nce=.NCER)) $(notdir $(MCSSNCLFILE:.ncl=.NCLR)) $(SCRFILE_F)
+	ruby $(SCRIPT_DIR)file_exist.rb trfgra_wb.lst
 	nnsarc -c -l -n -i $(NARCNAME_F) -S $(SCRFILE_F)
 	$(NAIXCUT) $(NAIXNAME_F)
 
@@ -139,6 +138,7 @@ endif
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f *.N*R
+	-rm -f *.N*C
 	-rm -f $(NARCNAME_F)
 	-rm -f $(NAIXNAME_F)
 	-rm -f $(NARCNAME_B)
