@@ -157,6 +157,9 @@ end
     end
   }
 
+	#トレーナーグラフィックlstファイル生成
+	fp_trgra = open( "trfgra_wb.lst", "w" )
+
 	#トレーナーグラフィックscrファイル生成
 	fp_trfgra = open( "trfgra_wb.scr", "w" )
   fp_trfgra.print "\"trwb_hero.NCBR\"\n"
@@ -413,7 +416,7 @@ end
       cnt += 1
     }
 		if flag == 0
-      trainer[ cnt ] = [ str, split_data[ PARA::TR_TYPE ], gender[ split_data[ PARA::GENDER ] ], split_data[ PARA::TR_ID ][ 0..split_data[ PARA::TR_ID ].size - 3 ] ]
+      trainer[ cnt ] = [ str, split_data[ PARA::TR_TYPE ], gender[ split_data[ PARA::GENDER ] ], split_data[ PARA::TR_ID ][ 0..split_data[ PARA::TR_ID ].size - 4 ] ]
     end
 
 		fp_trdata.printf( "	.byte	%s\n", str );
@@ -463,6 +466,7 @@ end
   #トレーナータイプ名
   no = 2
   trainer.size.times { |i|
+    fp_trgra.printf( "trwb_%s,%s\n", trainer[ i ][ 3 ], trainer[ i ][ 2 ] )
     fp_trfgra.printf( "\"trwb_%s.NCBR\"\n", trainer[ i ][ 3 ] )
     fp_trfgra.printf( "\"trwb_%s.NCER\"\n", trainer[ i ][ 3 ] )
     fp_trfgra.printf( "\"trwb_%s.NANR\"\n", trainer[ i ][ 3 ] )
@@ -482,6 +486,7 @@ end
   gmm_name.close_gmm
   gmm_type.close_gmm
 
+	fp_trgra.close
 	fp_trfgra.close
 	fp_trtype.close
 
