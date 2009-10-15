@@ -12,6 +12,8 @@
 #ifndef ZONE_T01R0101_EVC_H
 #define ZONE_T01R0101_EVC_H
 
-#define T01R0101_MAMA                      0
+#define T01R0101_MAMA_01                   0
+#define T01R0101_SUPPORT_01                1
+#define T01R0101_RIVAL_01                  2
 
 #endif //ZONE_T01R0101_EVC_H

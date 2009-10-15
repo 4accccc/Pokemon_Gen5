@@ -8,12 +8,6 @@
   .include  "../../../prog/include/msg/script/msg_t01r0101.h"
   .include  "t01r0101.h"
 
-//--------------------------------------------------------------
-//	T01R0101で使う定数
-//--------------------------------------------------------------
-#define CHECK_X01a (3)
-#define CHECK_X01b (4)
-#define CHECK_Z01a (3)
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -22,105 +16,192 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t01r0101_mama_first
+_EVENT_DATA    ev_scene_t01r0101_first_01		//ゲーム開始後、初めて１階に下りてきた時のイベント
+_EVENT_DATA    ev_t01r0101_mother_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/*
- * 注意！(06.02.09現在)
- * EV_SCRIPT_WORKを確保していないので、
- * SCWK_ANSWERなどのワークは使用することが出来ない！
- * LOCALWORK0などを使用するようにする！
- *
- * 共通スクリプトについては現状使用不可！
- * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
- * あまりつかわないかも？
- */
-/**************************************************************/
-//ev_t01r0101_flag_change:
-//  _END
+//	！！！	イベントで　LOCALWORK15　を使用しています	！！！
+//	！！！	同マップ内での使用を禁止します				！！！
 
-/**************************************************************/	
-/*    MAMA                                            */
-/**************************************************************/
-EVENT_START ev_t01r0101_mama_first
 
-  IF $WK_SCENE_0907ROM07 == 0 THEN
-    _CALL mama_first
-    $WK_SCENE_0907ROM07 = 1
-  ENDIF
+/************************************************************/	
+/*				自宅１階：初めて下りたとき					*/
+/************************************************************/
+EVENT_START ev_scene_t01r0101_first_01
+	//ライバル：その場歩き
+	_OBJ_ANIME( T01R0101_RIVAL_01, anm_home_rival_walk_01 )
+	_OBJ_ANIME_WAIT()
 
-	_TURN_HERO_SITE()
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_mama_04, T01R0101_MAMA )
-	_AB_KEYWAIT()
+	//ライバルＭＳＧ：おばさん　それでは失礼します
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_black_01 , T01R0101_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
+
+	//ライバル：去る
+	_OBJ_ANIME( T01R0101_RIVAL_01, anm_home_rival_goaway_01 )
+	//サポート：ママの前へ
+	_OBJ_ANIME( T01R0101_SUPPORT_01, anm_home_support_move_01 )
+
+	//サポート：おじゃましました！
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_white_01 , T01R0101_SUPPORT_01 )
+	_BALLOONWIN_CLOSE()
+
+	_OBJ_ANIME_WAIT()
+
+	//サポート：去る
+	_OBJ_ANIME( T01R0101_SUPPORT_01, anm_home_support_goaway_01 )
+	_OBJ_ANIME_WAIT()
+
+	//サポート＆ライバル削除（ライバルは先のアニメで見た目は消してある）
+	_OBJ_DEL( T01R0101_RIVAL_01 )
+	_OBJ_DEL( T01R0101_SUPPORT_01 )
+	//階段ＳＥ再生
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
+	//主人公：ママの前へ
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_home_player_move_01 )
+	_OBJ_ANIME_WAIT()
+
+	//ママ：その場歩き（視線誘導）
+	_OBJ_ANIME( T01R0101_MAMA_01, anm_home_mama_walk_01 )
+	_OBJ_ANIME_WAIT()
+
+	//ママ：何があったの？
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_mama_01, T01R0101_MAMA_01 )
+	_BALLOONWIN_CLOSE()
+
+	//ちょっとウェイト
+	_TIME_WAIT( 15 )
+
+	//ママ：ポケモンをもらって勝負してたのね
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_mama_02, T01R0101_MAMA_01 )
+	_BALLOONWIN_CLOSE()
+
+	//ママ：ポケモンを休ませないと
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_mama_03, T01R0101_MAMA_01 )
+	_BALLOONWIN_CLOSE()
+
+	//暗転して手持ちポケモンを回復
+	_BLACK_OUT( DISP_FADE_SPEED )
+	_DISP_FADE_END_CHECK()
+	_TEMOTI_POKEMON_KAIFUKU()		//回復処理
+	_ME_PLAY( SEQ_ME_ASA )
+	_ME_WAIT()
+	_BLACK_IN( DISP_FADE_SPEED )
+	_DISP_FADE_END_CHECK()
+
+	//【仮】ママ再会話時に回復処理にならないように回復済みチェックワークに値を代入
+	$LOCALWORK15 = 999
+
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_mama_04, T01R0101_MAMA_01 )
+	_BALLOONWIN_CLOSE()
+
+//===============フラグワーク操作====================//
+
+	//サポート＆ライバルのバニッシュフラグをセット
+	_FLAG_SET( FV_T01R0101_FRIENDS )
+
+	//シーンチェンジスクリプト無効
+	$WK_SCENE_T01R0101 = 1
+
+//===================================================//
 
 EVENT_END
 
+//--------------------------------------------------------------------
+//ライバル：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_home_rival_walk_01
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
 
-mama_first:
-{
-  DEFINE_LOCAL  POSX    /* ローカル変数POSXを定義 */
-  DEFINE_LOCAL  POSZ    /* ローカル変数POSZを定義 */
-	_PLAYER_POS_GET( POSX, POSZ ) //自機座標取得
-  IF $POSX == 3 THEN
-    _OBJ_ANIME( T01R0101_MAMA,mama_first_3 ) //主人公に隣接
-    _OBJ_ANIME_WAIT()
-  ELSIF $POSX == 4 THEN
-    _OBJ_ANIME( T01R0101_MAMA,mama_first_4 )//主人公に隣接
-    _OBJ_ANIME_WAIT()
-  ENDIF
-	_OBJ_ANIME( MMDL_ID_PLAYER,anime_t01r0101_mama )
-	_OBJ_ANIME_WAIT()
+//--------------------------------------------------------------------
+//ライバル：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_home_rival_goaway_01
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
 
-	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_mama_01, T01R0101_MAMA )
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+//--------------------------------------------------------------------
+//サポート：ママの前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_home_support_move_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
 
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0101_mama_02, T01R0101_MAMA )
-	_AB_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+//--------------------------------------------------------------------
+//サポート：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_home_support_goaway_01
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
-  _RET
-}
+//--------------------------------------------------------------------
+//主人公：ママの前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_home_player_move_01
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ママ：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_home_mama_walk_01
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 
 
-/**************************************************************/
-/*  T01R0101 主人公、ママを見る */
-/**************************************************************/
-_ANIME_LABEL anime_t01r0101_mama
-	_ANIME_DATA AC_DIR_R,1
-	_ANIME_DATA AC_WAIT_8F,1
-	_ANIME_DATA ACMD_END,0
+/************************************************************/	
+/*						主人公ママ							*/
+/************************************************************/
+EVENT_START ev_t01r0101_mother_01
+	_TALK_OBJ_START()
 
-/**************************************************************/
-/*  T01R0101 MAMA_FIRST1_X3 */
-/**************************************************************/
-_ANIME_LABEL mama_first_3
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_MARK_GYOE,1
-	_ANIME_DATA AC_WALK_L_8F,2
-	_ANIME_DATA AC_WALK_U_8F,4
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_WAIT_8F,1
-	_ANIME_DATA ACMD_END,0
+	//回復済みチェック　ローカルワーク15を使用
+	IF $LOCALWORK15 == 999 THEN
+		//回復終了後なのでメッセージ表示のみ
+		_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0101_mama_07 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 
-/**************************************************************/
-/*  T01R0101 MAMA_FIRST1_X4                    */
-/**************************************************************/
-_ANIME_LABEL mama_first_4
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_DIR_U,1
-	_ANIME_DATA AC_MARK_GYOE,1
-	_ANIME_DATA AC_WALK_L_8F,1
-	_ANIME_DATA AC_WALK_U_8F,4
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA AC_WAIT_8F,1
-	_ANIME_DATA ACMD_END,0
+	ELSE
+
+		//【仮】図鑑入手前後で分岐　システムフラグが未実装
+
+
+		//～～のポケモンは元気？
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0101_mama_05 )
+		_BALLOONWIN_CLOSE()
+
+		//暗転して手持ちポケモンを回復
+		_BLACK_OUT( DISP_FADE_SPEED )
+		_DISP_FADE_END_CHECK()
+		_TEMOTI_POKEMON_KAIFUKU()		//回復処理
+		_ME_PLAY( SEQ_ME_ASA )
+		_ME_WAIT()
+		_BLACK_IN( DISP_FADE_SPEED )
+		_DISP_FADE_END_CHECK()
+
+		//回復済みチェック用にローカルワークに値を代入
+		$LOCALWORK15 = 999
+
+		_BALLOONWIN_TALKOBJ_OPEN( msg_t01r0101_mama_06 )
+		_BALLOONWIN_CLOSE()
+
+	ENDIF
+
+
+EVENT_END
+
 
 
