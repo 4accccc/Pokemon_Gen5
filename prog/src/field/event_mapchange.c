@@ -729,7 +729,7 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
     TAMADA_Printf("MAPCHG_updateGameData:%s\n", buf);
   }
 	//イベント起動データの読み込み
-	EVENTDATA_SYS_Load(evdata, loc_req->zone_id);
+	EVENTDATA_SYS_Load(evdata, loc_req->zone_id, GAMEDATA_GetSeasonID(gamedata) );
 	
 	//開始位置セット
 	MakeNewLocation(evdata, loc_req, &loc);

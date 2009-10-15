@@ -19,7 +19,7 @@ typedef struct _EVDATA_SYS EVENTDATA_SYSTEM;
 extern EVENTDATA_SYSTEM * EVENTDATA_SYS_Create(HEAPID heapID);
 extern void EVENTDATA_SYS_Delete(EVENTDATA_SYSTEM * evdata);
 extern void EVENTDATA_SYS_Clear(EVENTDATA_SYSTEM * evdata);
-extern void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 mapid);
+extern void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 mapid, u8 season_id );
 extern void * EVENTDATA_GetSpecialScriptData( EVENTDATA_SYSTEM * evdata );
 extern void * EVENTDATA_GetEncountDataTable( EVENTDATA_SYSTEM * evdata );
 

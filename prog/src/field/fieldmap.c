@@ -2050,7 +2050,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	MMDLSYS_DeleteZoneUpdateMMdl( fmmdlsys );
 	
 	//次のイベントデータをロード
-	EVENTDATA_SYS_Load( evdata, new_zone_id );
+	EVENTDATA_SYS_Load( evdata, new_zone_id, GAMEDATA_GetSeasonID(gdata) );
 	
 	//新規ゾーンに配置する動作モデルセット
 	zoneChange_SetMMdl( gdata, fmmdlsys, evdata, new_zone_id );

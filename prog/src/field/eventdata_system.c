@@ -155,7 +155,7 @@ static void debugPrint_PosData( const POS_EVENT_DATA* cp_data );
 //============================================================================================
 static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id);
 static void loadSpecialScriptData( EVENTDATA_SYSTEM * evdata, u16 zone_id );
-static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id);
+static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id, u8 season_id );
 
 
 //============================================================================================
@@ -227,14 +227,14 @@ void EVENTDATA_SYS_Clear(EVENTDATA_SYSTEM * evdata)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
+void EVENTDATA_SYS_Load( EVENTDATA_SYSTEM * evdata, u16 zone_id, u8 season_id )
 {
 	EVENTDATA_SYS_Clear(evdata);
 	evdata->now_zone_id = zone_id;
 
   loadSpecialScriptData( evdata, zone_id );
   loadEventDataTable(evdata, zone_id);
-  loadEncountDataTable(evdata, zone_id);
+  loadEncountDataTable( evdata, zone_id, season_id );
 
 	/* テスト的に接続データを設定 */
 	switch (zone_id) {
@@ -355,7 +355,7 @@ static void loadEventDataTable(EVENTDATA_SYSTEM * evdata, u16 zone_id)
  *  @retval false 指定ゾーンにはエンカウントデータがない
  */
 //------------------------------------------------------------------
-static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id)
+static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id, u8 season_id )
 {
   u32 size;
   u16 id,season;
@@ -380,7 +380,7 @@ static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id)
   if(size == 1){
     season = 0;
   }else{
-    season = 1;
+    season = season_id; //GAMEDATA_GetSeasonID();
   }
   MI_CpuCopy8(&tbl->enc_tbl[season],&evdata->encount_work,sizeof(ENCOUNT_DATA));
   evdata->encount_work.enable_f = TRUE;
