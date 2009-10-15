@@ -5853,9 +5853,9 @@ static NAMEIN_PARAM* CodeIn_NameInParamMake( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p
 {
 	NAMEIN_PARAM* p_param;
 
-	p_param = NameIn_ParamAllocMake( heapID, NAMEIN_FRIENDNAME, 0, 
+	p_param = NameIn_ParamAllocMake( heapID, NAMEIN_FRIENDNAME, 0, 0,
 							NAMEIN_PERSON_LENGTH, 
-							SaveData_GetConfig(p_data->p_save) );
+							NULL );
 
 	// 名前入力画面初期化dataチェック
 	if( p_data->namein_init.init == TRUE ){

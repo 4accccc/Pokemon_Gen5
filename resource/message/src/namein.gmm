@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-10-15T11:19:27"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-10-15T16:08:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,18 +362,6 @@
 		<comment>友達手帳で、名前を入力するとき</comment>
 		<language name="JPN" width="256">ともだちの　なまえは？</language>
 		<language name="JPN_KANJI" width="256">友達の　名前は？</language>
-	</row>
-
-	<row id="NAMEIN_MSG_BTN_000">
-		<comment>友達手帳で、名前を入力するとき</comment>
-		<language name="JPN" width="256">けす</language>
-		<language name="JPN_KANJI" width="256">けす</language>
-	</row>
-
-	<row id="NAMEIN_MSG_BTN_001">
-		<comment>友達手帳で、名前を入力するとき</comment>
-		<language name="JPN" width="256">おわり</language>
-		<language name="JPN_KANJI" width="256">おわり</language>
 	</row>
 
 	<flowchart-group-list>

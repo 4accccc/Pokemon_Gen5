@@ -169,7 +169,7 @@ typedef struct
 	TOWNMAP_PARAM					townmap_param;
 	WORLDTRADE_PARAM			gts_param;
 	TEMPLATE_PARAM				template_param;
-	NAMEIN_PARAM					namein_param;
+	NAMEIN_PARAM					*p_namein_param;
 } DEBUG_NAGI_MAIN_WORK;
 
 //-------------------------------------
@@ -438,7 +438,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void 
 	GFL_STD_MemClear( p_wk, sizeof(DEBUG_NAGI_MAIN_WORK) );
 
 	CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
-	p_wk->namein_param.strbuf	= GFL_STR_CreateBuffer( 32, HEAPID_NAGI_DEBUG );
+	p_wk->p_namein_param	= NameIn_ParamAllocMake( HEAPID_NAGI_DEBUG, NAMEIN_MYNAME, 0, 0, NAMEIN_PERSON_LENGTH, NULL );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -468,7 +468,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Exit( GFL_PROC *p_proc, int *p_seq, void 
 				p_wk->overlay_Id, p_wk->p_procdata, p_wk->p_proc_work );
 	}
 
-	GFL_STR_DeleteBuffer( p_wk->namein_param.strbuf );
+	NameIn_ParamDelete( p_wk->p_namein_param );
 
 	DeleteTemporaryModules( p_wk );
 
@@ -928,7 +928,7 @@ static void LISTDATA_CallProcPoke2DCheck( DEBUG_NAGI_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void LISTDATA_CallProcNamin( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &NameInputProcData, &p_wk->namein_param );
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &NameInputProcData, p_wk->p_namein_param );
 }
 //----------------------------------------------------------------------------
 /**

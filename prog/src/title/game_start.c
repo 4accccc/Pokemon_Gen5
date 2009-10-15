@@ -185,7 +185,7 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
 	GAMESTART_FIRST_WORK *work = GFL_PROC_AllocWork( proc , sizeof(GAMESTART_FIRST_WORK) , GFL_HEAPID_APP );
 	SaveControl_ClearData(SaveControl_GetPointer());	//セーブデータクリア
 	//FIXME 正しい値に
-	work->nameInParam = NameIn_ParamAllocMake( GFL_HEAPID_APP , NAMEIN_MYNAME , 0 , NAMEIN_PERSON_LENGTH , NULL );
+	work->nameInParam = NameIn_ParamAllocMake( GFL_HEAPID_APP , NAMEIN_MYNAME , 0 , 0, NAMEIN_PERSON_LENGTH , NULL );
 	work->selModeParam.type = SMT_START_GAME;
 	work->selModeParam.configSave = SaveData_GetConfig( SaveControl_GetPointer() );
 	work->selModeParam.mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
