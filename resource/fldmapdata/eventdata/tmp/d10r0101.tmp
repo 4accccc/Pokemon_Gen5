@@ -1,4 +1,5 @@
 #../data/d10r0101.mev
 ../tmp/d10r0101.bin:../data/d10r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d10r0101.h ../../script/d10r0101_def.h 
-	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d10r0101.h ../../script/d10r0101_def.h 
+	echo ../data/d10r0101.mev
+	@ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d10r0101.h ../../script/d10r0101_def.h 
 

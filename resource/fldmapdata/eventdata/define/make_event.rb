@@ -841,7 +841,8 @@ begin
     File.open( "#{ofilename}.tmp", "w" ){|file|
       file.puts "##{ARGV[0]}"
       file.puts "#{ofilename}.bin:#{ARGV[0]} #{depend_header}"
-      file.puts "\truby make_binary.rb $< #{depend_header}"
+      file.puts "\techo #{ARGV[0]}"
+      file.puts "\t@ruby make_binary.rb $< #{depend_header}"
 
       file.puts ""
     }

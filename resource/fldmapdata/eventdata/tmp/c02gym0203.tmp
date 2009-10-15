@@ -1,4 +1,5 @@
 #../data/c02gym0203.mev
 ../tmp/c02gym0203.bin:../data/c02gym0203.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02gym0203.h ../../script/c02gym0203_def.h 
-	ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02gym0203.h ../../script/c02gym0203_def.h 
+	echo ../data/c02gym0203.mev
+	@ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c02gym0203.h ../../script/c02gym0203_def.h 
 
