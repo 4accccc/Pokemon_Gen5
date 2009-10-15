@@ -870,6 +870,12 @@ FS_EXTERN_OVERLAY(battle);
 #include "test\performance.h"
 #include "savedata\config.h"
 
+static void set_test_playername( MYSTATUS* status )
+{
+  static const STRCODE name[] = { 0x307e, 0x3055, 0x304a, 0xffff };
+  MyStatus_SetMyName( status, name );
+}
+
 //----------------------------------
 // スタンドアロン
 //----------------------------------
@@ -898,8 +904,20 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       wk->partyEnemy  = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ
 
       #ifdef DEBUG_ONLY_FOR_taya
-        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_NOZUPASU,   MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA, 0 );
+        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_NOZUPASU,   MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA,
+                  MONSNO_RAITYUU, MONSNO_KEKKINGU, 0 );
         setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_MANYUURA,  MONSNO_AABOKKU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
+        {
+          POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->partyPlayer, 0 );
+          PP_Put( pp, ID_PARA_exp, 50 );
+          PP_Renew( pp );
+
+          pp = PokeParty_GetMemberPointer( wk->partyEnemy, 0 );
+          PP_SetWazaPos( pp, WAZANO_HANERU, 0 );
+          PP_SetWazaPos( pp, 0, 1 );
+          PP_SetWazaPos( pp, 0, 2 );
+          PP_SetWazaPos( pp, 0, 3 );
+        }
       #else
         setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_ARUSEUSU+2, MONSNO_ARUSEUSU+1, MONSNO_PERIPPAA, 0 );
         setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_ARUSEUSU+1, MONSNO_ARUSEUSU+2, MONSNO_IWAAKU,   0 );
@@ -912,19 +930,13 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
         }else if( key & PAD_BUTTON_R ){
           BTL_SETUP_Double_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
         }else{
-          BTL_SETUP_Triple_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
-//          BTL_SETUP_Double_Wild( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
+//          BTL_SETUP_Triple_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
+          setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_MANYUURA, 0 );
+//          BTL_SETUP_Single_Wild( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
+          BP_SETUP_Wild( para, wk->gameData, HEAPID_CORE, BTL_RULE_SINGLE, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
         }
         para->partyPlayer = wk->partyPlayer;
-
-        {
-          static const STRCODE name[] = { 0x307e, 0x3055, 0x304a, 0xffff };
-          STRBUF* hoge = GFL_STR_CreateBuffer( 32, HEAPID_CORE );
-          OS_TPrintf("いまから\n");
-//          MyStatus_CopyNameString( para->statusPlayer, hoge );
-          MyStatus_SetMyName( (MYSTATUS*)(para->statusPlayer), name );
-          GFL_STR_DeleteBuffer( hoge );
-        }
+        set_test_playername( (MYSTATUS*)(para->statusPlayer) );
       }
 
       if( wk->testPokeEditFlag )
@@ -1133,15 +1145,20 @@ static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk 
       BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
       GFL_NETHANDLE* netHandle = GFL_NET_HANDLE_GetCurrentHandle();
 
+
       wk->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );
       if( GFL_NET_GetNetID(netHandle) == 0 ){
-        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_PORIGON, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
+//        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_PORIGON, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
+        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_NOZUPASU,   MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA,
+                  MONSNO_RAITYUU, MONSNO_KEKKINGU, 0 );
       }else{
-        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_YADOKINGU, MONSNO_METAGUROSU, MONSNO_SUTAAMII, 0 );
+        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_YADOKINGU, MONSNO_METAGUROSU, MONSNO_SUTAAMII,
+                  MONSNO_ENEKO, MONSNO_NYAASU, 0 );
       }
 
-      BTL_SETUP_Double_Comm( para, wk->gameData, netHandle,  BTL_COMM_DS );
+      BTL_SETUP_Single_Comm( para, wk->gameData, netHandle,  BTL_COMM_DS );
       para->partyPlayer = wk->partyPlayer;
+      set_test_playername( (MYSTATUS*)(para->statusPlayer) );
 
       DEBUG_PerformanceSetActive( FALSE );
       GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
@@ -1336,6 +1353,8 @@ static void setup_party( HEAPID heapID, POKEPARTY* party, ... )
   va_list  list;
   int monsno;
   POKEMON_PARAM* pp;
+
+  PokeParty_InitWork( party );
 
   va_start( list, party );
   while( 1 )
