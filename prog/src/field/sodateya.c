@@ -712,7 +712,7 @@ static BOOL LayEggCheck( SODATEYA* sodateya )
     if( 2 <= SODATEYA_WORK_GetPokemonNum( sodateya->work ) )
     { 
       // 乱数 < 相性 ==> 産卵
-      if( GFL_STD_MtRand(100) < SODATEYA_GetLoveLevel(sodateya) ) 
+      if( GFUser_GetPublicRand0(100) < SODATEYA_GetLoveLevel(sodateya) ) 
       {
         return TRUE; 
       }
@@ -863,9 +863,9 @@ static void EggCordinate_personality(
   if( kawarazu_f && kawarazu_m ) // 両親とも持っている
   {
     // 1/2で継承する
-    if( GFL_STD_MtRand(100)%2 == 0 )
+    if( GFUser_GetPublicRand0(100)%2 == 0 )
     {
-      if( GFL_STD_MtRand(100)%2 == 0 )  // 1/2で父親から継承
+      if( GFUser_GetPublicRand0(100)%2 == 0 )  // 1/2で父親から継承
       {
         PP_Put( egg, ID_PARA_personal_rnd, personal_f );
       }
@@ -877,14 +877,14 @@ static void EggCordinate_personality(
   }
   else if( kawarazu_f ) // 父親のみ持っている ==> 1/2で継承
   {
-    if( GFL_STD_MtRand(100)%2 == 0 )
+    if( GFUser_GetPublicRand0(100)%2 == 0 )
     {
       PP_Put( egg, ID_PARA_personal_rnd, personal_f );
     }
   }
   else if( kawarazu_m ) // 母親のみ持っている ==> 1/2で継承
   {
-    if( GFL_STD_MtRand(100)%2 == 0 ) 
+    if( GFUser_GetPublicRand0(100)%2 == 0 ) 
     {
       PP_Put( egg, ID_PARA_personal_rnd, personal_m );
     }
@@ -938,7 +938,7 @@ static void EggCordinate_special_ability(
   }
 
   // 継承する特性を決定
-  rnd = GFL_STD_MtRand(100);  // 乱数取得[0, 99]
+  rnd = GFUser_GetPublicRand0(100);  // 乱数取得[0, 99]
   switch( speabi_index )
   {
   case 0: //---------------------------------------------- 母が特性1
@@ -990,7 +990,7 @@ static void EggCordinate_ability_rand(
 
   // 母親が『パワーXXXX』を持っている場合
   if( ( i == 0 ) ||
-      ( GFL_STD_MtRand(100)%2 == 0 ) )    // 父親も持っていた場合, 1/2で上書きする
+      ( GFUser_GetPublicRand0(100)%2 == 0 ) )    // 父親も持っていた場合, 1/2で上書きする
   {
     i = 0;
     itemno = PP_Get( father, ID_PARA_item, NULL );
@@ -1009,7 +1009,7 @@ static void EggCordinate_ability_rand(
   for( ; i<3; i++ )
   {
     // ランダムに選ぶ
-    ability[i++] = GFL_STD_MtRand(PTL_ABILITY_MAX);
+    ability[i++] = GFUser_GetPublicRand0(PTL_ABILITY_MAX);
 
     // すでに選ばれていたら, 選び直す
     for( j=0; j<i; j++ )
@@ -1026,7 +1026,7 @@ static void EggCordinate_ability_rand(
     u32 arg;
 
     // 父・母のどちらから受け継ぐのかを決定
-    if( GFL_STD_MtRand(100)%2 == 0 ) pp = father;
+    if( GFUser_GetPublicRand0(100)%2 == 0 ) pp = father;
     else                             pp = mother;
 
     // 継承
@@ -1072,7 +1072,7 @@ static void EggCordinate_rare(
   // 最大RARE_EGG_CHANCE回の抽選を行う
   for( i=0; i<RARE_EGG_CHANCE; i++ )
   {
-    rnd = GFL_STD_MtRand( 0xffffffff );
+    rnd = GFUser_GetPublicRand0( 0xffffffff );
     if( POKETOOL_CheckRare( id, rnd ) ) break;  // レアが出たら抽選終了
   }
 
