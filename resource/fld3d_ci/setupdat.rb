@@ -61,22 +61,30 @@ while line = csv_file.gets
 
   p bin_name
 
+  #↓プログラムで使用する構造体に合わせます
   ary << GetIdxByStr(vec, column[1])  #SPA
   ary << column[2].to_i               #SPAWAIT
   ary << GetIdxByStr(vec, column[3])  #MDL_1
+  ary << GetIdxByStr(vec, column[8])  #MDL_2
+
+  ary << column[7].to_i               #MDL_1ANMWAIT
+  ary << column[12].to_i              #MDL_2ANMWAIT
+  
   ary << GetIdxByStr(vec, column[4])  #MDL_1ANM_1
   ary << GetIdxByStr(vec, column[5])  #MDL_1ANM_2
-  ary << column[6].to_i               #MDL_1ANMWAIT
-  ary << GetIdxByStr(vec, column[7])  #MDL_2
-  ary << GetIdxByStr(vec, column[8])  #MDL_2ANM_1
-  ary << GetIdxByStr(vec, column[9])  #MDL_2ANM_2
-  ary << column[10].to_i              #MDL_2ANMWAIT
-
+  ary << GetIdxByStr(vec, column[6])  #MDL_1ANM_3
+  ary << 0xffff  #NONE
+  
+  ary << GetIdxByStr(vec, column[9])   #MDL_2ANM_1
+  ary << GetIdxByStr(vec, column[10])  #MDL_2ANM_2
+  ary << GetIdxByStr(vec, column[11])  #MDL_2ANM_3
+  ary << 0xffff  #NONE
+  
   p ary
 
   #バイナリ作成
   dst_file = open("bin/#{bin_name}.bin","wb")
-  pack_str = ary.pack("S10")
+  pack_str = ary.pack("S14")
   dst_file.write(pack_str)
 
   list_file.write("\"bin/#{bin_name}.bin\"\n")
