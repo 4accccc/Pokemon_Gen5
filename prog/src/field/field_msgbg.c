@@ -1081,6 +1081,7 @@ u32 FLDMENUFUNC_GetListMenuWidth(
     const FLDMENUFUNC_LISTDATA *listData, u32 font_size )
 {
   u32 c,len = FLDMENUFUNC_GetListLengthMax( listData );
+  len++; //ÉJÅ[É\Éãï™
   len *= font_size;
   c = len / 8;
   if( (len & 0x07) ){ c++; }

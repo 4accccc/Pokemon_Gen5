@@ -466,7 +466,7 @@ static const FLDMENUFUNC_HEADER data_MenuHeader =
 //--------------------------------------------------------------
 void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
 {
-  u32 sx,sy;
+  u32 sx,sy,count;
   SCRCMD_MENU_WORK *menuWork = &work->menuWork;
   FLDMENUFUNC_HEADER menuH = data_MenuHeader;
 
@@ -474,8 +474,9 @@ void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
       menuWork->listData, menuH.font_size_x );
   sy = FLDMENUFUNC_GetListMenuHeight(
       menuWork->listData, menuH.font_size_y );
+  count = FLDMENUFUNC_GetListMax( menuWork->listData );
   FLDMENUFUNC_InputHeaderListSize(
-      &menuH, sy, menuWork->x, menuWork->y, sx, sy );
+      &menuH, count, menuWork->x, menuWork->y, sx, sy );
 	menuWork->menuFunc = FLDMENUFUNC_AddMenu(
       work->head.fldMsgBG, &menuH, menuWork->listData );
 }
