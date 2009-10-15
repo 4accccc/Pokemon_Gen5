@@ -33,3 +33,4 @@ typedef struct
 
 //デバッグ用
 extern void BATTLE_CHAMPIONSHIP_SetDebugData( BATTLE_CHAMPIONSHIP_DATA *csData , const HEAPID heapId ); 
+extern void BATTLE_CHAMPIONSHIP_TermDebugData( BATTLE_CHAMPIONSHIP_DATA *csData ); 

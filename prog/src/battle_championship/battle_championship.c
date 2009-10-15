@@ -649,4 +649,13 @@ void BATTLE_CHAMPIONSHIP_SetDebugData( BATTLE_CHAMPIONSHIP_DATA *csData , const 
       }
     }
   }
- }
+}
+
+void BATTLE_CHAMPIONSHIP_TermDebugData( BATTLE_CHAMPIONSHIP_DATA *csData )
+{
+  u8 i;
+  for( i=0;i<6;i++ )
+  {
+    GFL_HEAP_FreeMemory( csData->ppp[i] );
+  }
+}

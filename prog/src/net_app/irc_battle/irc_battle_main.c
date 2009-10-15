@@ -63,6 +63,8 @@ FS_EXTERN_OVERLAY(battle);
 //ステート
 typedef enum
 {
+  IBS_FADEIN,
+  IBS_FADEIN_WAIT,
   IBS_INIT_NET,
   IBS_INIT_NET_WAIT,
   
@@ -97,6 +99,11 @@ typedef enum
   IBS_BATTLE_FADEIN_WAIT,
   IBS_BATTLE_TIMMING,  //同期待ち
 
+  IBS_DRAW_RESULT,       //結果発表
+  IBS_DRAW_RESULT_WAIT,  
+
+  IBS_FADEOUT,
+  IBS_FADEOUT_WAIT,
   IBS_EXIT_NET,
   IBS_EXIT_NET_WAIT,
   
@@ -243,7 +250,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcInit( GFL_PROC * proc, int * seq , void *p
 {
   u8 i;
   IRC_BATTLE_WORK *work;
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRC_BATTLE, 0x10000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRC_BATTLE, 0x18000 );
 
   work = GFL_PROC_AllocWork( proc, sizeof(IRC_BATTLE_WORK), HEAPID_IRC_BATTLE );
   work->heapId = HEAPID_IRC_BATTLE;
@@ -283,6 +290,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcTerm( GFL_PROC * proc, int * seq , void *p
   if( pwk == NULL )
   {
     GAMEDATA_Delete( work->initWork->gameData );
+    BATTLE_CHAMPIONSHIP_TermDebugData( work->initWork->csData );
     GFL_HEAP_FreeMemory( work->initWork->csData );
     GFL_HEAP_FreeMemory( work->initWork );
   }
@@ -296,6 +304,19 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
   IRC_BATTLE_WORK *work = mywk;
   switch( work->state )
   {
+  case IBS_FADEIN:
+    WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->state = IBS_FADEIN_WAIT;
+    break;
+
+  case IBS_FADEIN_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      work->state = IBS_INIT_NET;
+    }
+    break;
+
   case IBS_INIT_NET:
     IRC_BATTLE_InitNet( work );
     work->state = IBS_INIT_NET_WAIT;
@@ -499,12 +520,53 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
   case IBS_BATTLE_TIMMING:  //同期待ち
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      const BOOL ret = GFL_NET_IsTimingSync( selfHandle , IBT_POKELIST_END );
+      const BOOL ret = GFL_NET_IsTimingSync( selfHandle , IBT_BATTLE_END );
       if( ret == TRUE )
       {
-        OS_TPrintf("BattleEnd!!\n");
-        //work->state = IBS_BATTLE_FADEOUT;
+        work->state = IBS_DRAW_RESULT;
       }
+    }
+    break;
+
+  //結果発表
+  case IBS_DRAW_RESULT:
+    switch( work->battleParam.result )
+    {
+    case BTL_RESULT_WIN:
+      IRC_BATTLE_ShowMessage( work , IRC_BATTLE_MSG_05 );
+      break;
+    case BTL_RESULT_LOSE:
+      IRC_BATTLE_ShowMessage( work , IRC_BATTLE_MSG_06 );
+      break;
+    case BTL_RESULT_DRAW:
+      IRC_BATTLE_ShowMessage( work , IRC_BATTLE_MSG_07 );
+      break;
+    default:
+      //GF_ASSERT_MSG( NULL , "Battle result is unknown[%d]\n",work->battleParam.result );
+      IRC_BATTLE_ShowMessage( work , IRC_BATTLE_MSG_07 );
+      break;
+    }
+    work->state = IBS_DRAW_RESULT_WAIT;
+    break;
+
+  case IBS_DRAW_RESULT_WAIT:
+    if( IRC_BATTLE_IsFinishMessage( work ) == TRUE )
+    {
+      work->state = IBS_FADEOUT;
+    }
+    break;
+    
+  //終了
+  case IBS_FADEOUT:
+    WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->state = IBS_FADEOUT_WAIT;
+    break;
+
+  case IBS_FADEOUT_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      work->state = IBS_EXIT_NET;
     }
     break;
 
@@ -597,6 +659,8 @@ static void IRC_BATTLE_InitBattleProc( IRC_BATTLE_WORK *work )
   IRC_BATTLE_ReleaseResource( work );
   IRC_BATTLE_TermGraphic( work );
 
+  OS_TPrintf("BattleStart least heap[%x]\n",GFL_HEAP_GetHeapFreeSize( HEAPID_IRC_BATTLE ) );
+
   //呼び出し
   IRC_BATTLE_InitBattleSetupParam( work );
 
@@ -655,6 +719,9 @@ static void IRC_BATTLE_ExitBattleProc( IRC_BATTLE_WORK *work )
 {
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
   GFL_NET_DelCommandTable( GFL_NET_CMD_BATTLE );
+
+  OS_TPrintf("BattleEnd least heap[%x]\n",GFL_HEAP_GetHeapFreeSize( HEAPID_IRC_BATTLE ) );
+
   IRC_BATTLE_InitGraphic( work );
   IRC_BATTLE_LoadResource( work );
   IRC_BATTLE_InitMessage( work );

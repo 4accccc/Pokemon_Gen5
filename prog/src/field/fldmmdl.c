@@ -331,7 +331,7 @@ MMDLSYS * MMDLSYS_CreateSystem(
 void MMDLSYS_FreeSystem( MMDLSYS *fos )
 {
 	GFL_HEAP_FreeMemory( fos->pMMdlBuf );
-	GFL_HEAP_FreeMemory( fos->pMMdlBuf );
+	GFL_HEAP_FreeMemory( fos );
 }
 
 //======================================================================
