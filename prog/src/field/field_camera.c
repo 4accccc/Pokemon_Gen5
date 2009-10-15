@@ -323,16 +323,16 @@ static void loadCameraParameters(FIELD_CAMERA * camera)
   }
   GFL_ARC_LoadDataOfsByHandle(handle, FILE_ID,
       camera->type * sizeof(FLD_CAMERA_PARAM), sizeof(FLD_CAMERA_PARAM), &param);
-#if 0
-  TAMADA_Printf("FIELD CAMERA INIT INFO\n");
-  TAMADA_Printf("FIELD CAMERA TYPE =%d\n",camera->type);
-  TAMADA_Printf("dist = %08x\n", param.Distance);
-  TAMADA_Printf("angle = %08x,%08x,%08x\n", param.Angle.x, param.Angle.y, param.Angle.z );
-  TAMADA_Printf("viewtype = %d, persp = %08x\n", param.View, param.PerspWay);
-  TAMADA_Printf("near=%8x, far =%08x\n", param.Near, param.Far);
-  TAMADA_Printf("shift = %08x,%08x,%08x\n", param.Shift.x, param.Shift.y, param.Shift.z );
-  TAMADA_Printf("now near = %d\n", FX_Whole( FIELD_CAMERA_GetNear(camera) ) );
-  TAMADA_Printf("now far = %d\n", FX_Whole( FIELD_CAMERA_GetFar(camera) ) );
+#if 1
+  TOMOYA_Printf("FIELD CAMERA INIT INFO\n");
+  TOMOYA_Printf("FIELD CAMERA TYPE =%d\n",camera->type);
+  TOMOYA_Printf("dist = %08x\n", param.Distance);
+  TOMOYA_Printf("angle = %08x,%08x,%08x\n", param.Angle.x, param.Angle.y, param.Angle.z );
+  TOMOYA_Printf("viewtype = %d, persp = %08x\n", param.View, param.PerspWay);
+  TOMOYA_Printf("near=%8x, far =%08x\n", param.Near, param.Far);
+  TOMOYA_Printf("shift = %08x,%08x,%08x\n", param.Shift.x, param.Shift.y, param.Shift.z );
+  TOMOYA_Printf("now near = %d\n", FX_Whole( FIELD_CAMERA_GetNear(camera) ) );
+  TOMOYA_Printf("now far = %d\n", FX_Whole( FIELD_CAMERA_GetFar(camera) ) );
 #endif
 
   camera->angle_len = param.Distance * FX32_ONE;
@@ -989,7 +989,7 @@ void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD
   if( type == FIELD_CAMERA_DEBUG_BIND_CAMERA_POS )
   {
     camera->debug_save_camera_mode = camera->mode;
-	  FIELD_CAMERA_SetMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+	  FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     GFL_CAMADJUST_SetCameraParam(	gflCamAdjust,
 																	&camera->angle_yaw, 
 																	&camera->angle_pitch, 
@@ -1001,9 +1001,9 @@ void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD
   else if( type == FIELD_CAMERA_DEBUG_BIND_TARGET_POS )
   {
     camera->debug_save_camera_mode = camera->mode;
-	  FIELD_CAMERA_SetMode( camera, FIELD_CAMERA_MODE_CALC_TARGET_POS );
-    camera->debug_target_yaw    = camera->angle_yaw - 0x8000;
-    camera->debug_target_pitch  = 0x10000 - camera->angle_pitch;
+	  FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_TARGET_POS );
+    camera->debug_target_yaw    = camera->angle_yaw;
+    camera->debug_target_pitch  = camera->angle_pitch;
     camera->debug_target_len    = camera->angle_len;
     GFL_CAMADJUST_SetCameraParam(	gflCamAdjust,
 																	&camera->debug_target_yaw, 
@@ -1029,7 +1029,7 @@ void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera)
 
   camera->debug_subscreen_type = FIELD_CAMERA_DEBUG_BIND_NONE;
 
-  FIELD_CAMERA_SetMode( camera, camera->debug_save_camera_mode );
+  FIELD_CAMERA_ChangeMode( camera, camera->debug_save_camera_mode );
 }
 
 //----------------------------------------------------------------------------
