@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-01T14:07:43"/>
+	<create user="suginaka_katsunori" host="W00161" date="2009-10-15T12:23:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="169" right="707" bottom="788" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="172" right="704" bottom="788" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="526"/>
+		<band id="0" index="1" style="0000" width="523"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="539"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="693"/>
+		<band id="3" index="4" style="0000" width="149"/>
+		<band id="4" index="0" style="0000" width="690"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -591,6 +591,36 @@
 こおったまま　戦闘が　終わると[BE:00:ページ切り替え（行送り）]
 こおりついた　ままです[BE:01:ページ切り替え（クリア）]
 こおりなおしで　溶かしましょう[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c01r0501_board_win_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">どく</language>
+		<language name="JPN_KANJI" width="256">どく</language>
+	</row>
+
+	<row id="msg_c01r0501_board_win_02" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">まひ</language>
+		<language name="JPN_KANJI" width="256">まひ</language>
+	</row>
+
+	<row id="msg_c01r0501_board_win_03" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ねむり</language>
+		<language name="JPN_KANJI" width="256">ねむり</language>
+	</row>
+
+	<row id="msg_c01r0501_board_win_04" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">やけど</language>
+		<language name="JPN_KANJI" width="256">やけど</language>
+	</row>
+
+	<row id="msg_c01r0501_board_win_05" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">こおり</language>
+		<language name="JPN_KANJI" width="256">こおり</language>
+	</row>
+
+	<row id="msg_c01r0501_board_win_06" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<flowchart-group-list>
