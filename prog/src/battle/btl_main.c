@@ -43,7 +43,7 @@ enum {
 /* Typedefs                                                                 */
 /*--------------------------------------------------------------------------*/
 typedef BOOL (*pMainLoop)(BTL_MAIN_MODULE*);
-
+typedef BOOL (*pSetupSeq)(BTL_MAIN_MODULE*, int*);
 
 /*--------------------------------------------------------------------------*/
 /* Tables                                                                   */
@@ -100,7 +100,7 @@ struct _BTL_MAIN_MODULE {
   u32       bonusMoney;
 
   BTL_PROC    subProc;
-  BTL_PROC    subsubProc;
+  int         subSeq;
   pMainLoop   mainLoop;
 
 
@@ -121,11 +121,17 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
 static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static BOOL setup_alone_single( int* seq, void* work );
 static BOOL cleanup_common( int* seq, void* work );
-static BOOL setup_comm_single( int* seq, void* work );
-static BOOL setup_comm_double( int* seq, void* work );
 static BOOL setup_alone_double( int* seq, void* work );
 static BOOL cleanup_alone_double( int* seq, void* work );
 static BOOL setup_alone_triple( int* seq, void* work );
+static BOOL setup_comm_single( int* seq, void* work );
+static BOOL setup_comm_double( int* seq, void* work );
+static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq );
+static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq );
+static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq );
+static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int* seq );
+static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int* seq );
+static BOOL setupseq_comm_start_server( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk );
 static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk );
 static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk );
@@ -206,6 +212,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       BTL_ADAPTERSYS_Init( wk->setupParam->commMode );
       BTL_FIELD_Init( BTL_WEATHER_NONE );
       setSubProcForSetup( &wk->subProc, wk, wk->setupParam );
+      wk->subSeq = 0;
       trainerParam_Init( wk );
       srcParty_Init( wk );
       (*seq)++;
@@ -217,6 +224,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       BTL_MAIN_MODULE* wk = mywk;
       if( BTL_UTIL_CallProc(&wk->subProc) )
       {
+        BTL_Printf("セットアップ終了\n");
         return GFL_PROC_RES_FINISH;
       }
    }
@@ -436,6 +444,16 @@ static BOOL setup_alone_single( int* seq, void* work )
 
   return TRUE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * 上記セットアップ処理で生成したモジュールを全て解放する共通クリーンアップ処理
+ *
+ * @param   seq
+ * @param   work
+ *
+ * @retval  BOOL    TRUEで終了
+ */
+//----------------------------------------------------------------------------------
 static BOOL cleanup_common( int* seq, void* work )
 {
   BTL_MAIN_MODULE* wk = work;
@@ -469,402 +487,6 @@ static BOOL cleanup_common( int* seq, void* work )
 
   return TRUE;
 }
-//--------------------------------------------------------------------------
-/**
- * 通信／シングルバトル
- */
-//--------------------------------------------------------------------------
-static BOOL setup_comm_single( int* seq, void* work )
-{
-  enum {
-    BAG_MODE = BBAG_MODE_SHOOTER,
-  };
-
-  BTL_MAIN_MODULE* wk = work;
-  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
-
-  switch( *seq ){
-  case 0:
-    if( BTL_NET_IsServerDetermained() )
-    {
-      BTL_Printf("サーバ決定しました\n");
-      wk->numClients = 2;
-      wk->sendClientID = 0;
-
-      if( BTL_NET_IsServer() )
-      {
-        BTL_UTIL_SetPrintType( BTL_PRINTTYPE_SERVER );
-        BTL_Printf("ワシ、サーバーです。\n");
-        (*seq) = 1;
-      }
-      else
-      {
-        BTL_UTIL_SetPrintType( BTL_PRINTTYPE_CLIENT );
-        BTL_Printf("ワシ、サーバーではない。\n");
-        (*seq) = 2;
-      }
-    }
-    break;
-    // サーバマシンは各クライアントに各々のクライアントIDと責任領域数を通知する
-  case 1:
-    if( BTL_NET_NotifyClientID( wk->sendClientID, &wk->sendClientID, 1) ){
-      wk->sendClientID++;
-      if( wk->sendClientID >= wk->numClients ){
-        ++(*seq);
-      }
-    }
-    break;
-
-  case 2:
-    // 自分のクライアントIDが確定
-    if( BTL_NET_IsClientIdDetermined() )
-    {
-      wk->myClientID = GFL_NET_GetNetID( sp->netHandle );
-      BTL_Printf("クライアントIDが確定した→タイミングシンクロ\n");
-      BTL_NET_TimingSyncStart( BTL_NET_TIMING_CLIENTID_DETERMINE );
-      (*seq)++;
-    }
-    break;
-  case 3:
-    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_CLIENTID_DETERMINE) )
-    {
-      BTL_Printf("タイミングシンクロしました。\n");
-      (*seq)++;
-    }
-    break;
-  case 4:
-    if( BTL_NET_StartNotifyPartyData(sp->partyPlayer) ){
-      (*seq)++;
-    }
-    break;
-  case 5:
-    // パーティデータ相互受信を完了
-    if( BTL_NET_IsCompleteNotifyPartyData() )
-    {
-      u32 i;
-
-      BTL_Printf("パーティデータ相互受信できました。\n");
-
-      PokeCon_Init( &wk->pokeconForClient, wk );
-      for(i=0; i<wk->numClients; ++i)
-      {
-        srcParty_Set( wk, i, BTL_NET_GetPartyData(i) );
-        PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, i), i );
-      }
-      PokeCon_SetSrcParty( &wk->pokeconForClient, srcParty_Get(wk, wk->myClientID), wk->myClientID );
-      (*seq)++;
-    }
-    break;
-  case 6:
-    if( BTL_NET_IsServer() )
-    {
-      PokeCon_Init( &wk->pokeconForServer, wk );
-      PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 0), 0 );
-      PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, 1), 1 );
-    }
-    (*seq)++;
-    break;
-  case 7:
-    BTL_NET_EndNotifyPartyData();
-    BTL_NET_TimingSyncStart( BTL_NET_TIMING_POKEDATA_SEND );
-    (*seq)++;
-    break;
-  case 8:
-    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_POKEDATA_SEND) ){
-      (*seq)++;
-    }
-    break;
-  case 9:
-    if( BTL_NET_StartNotifyPlayerData(sp->statusPlayer) ){
-      (*seq)++;
-    }
-    break;
-  case 10:
-    if( BTL_NET_IsCompleteNotifyPlayerData() )
-    {
-      u32 i;
-      for(i=0; i<wk->numClients; ++i){
-        trainerParam_StorePlayer( &wk->trainerParam[i], wk->heapID, BTL_NET_GetPlayerData(i) );
-      }
-      BTL_Printf("プレイヤーデータ相互受信できました。\n");
-      (*seq)++;
-    }
-    break;
-  case 11:
-    BTL_NET_EndNotifyPlayerData();
-    (*seq)++;
-    break;
-  case 12:
-    wk->posCoverClientID[BTL_POS_1ST_0] = 0;
-    wk->posCoverClientID[BTL_POS_2ND_0] = 1;
-    wk->myOrgPos = (wk->myClientID == 0)? BTL_POS_1ST_0 : BTL_POS_2ND_0;
-
-    // 自分がサーバ
-    if( BTL_NET_IsServer() )
-    {
-      u8 netID = GFL_NET_GetNetID( sp->netHandle );
-
-      BTL_Printf("サーバ用のパーティデータセット\n");
-
-      wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
-      wk->ImServer = TRUE;
-      wk->client[netID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-          netID, 1, BTL_THINKER_UI, BAG_MODE, wk->heapID );
-      BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), netID, 1 );
-      BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, !netID, 1 );
-
-      // 描画エンジン生成
-      wk->viewCore = BTLV_Create( wk, wk->client[netID], &wk->pokeconForClient, HEAPID_BTL_VIEW );
-      BTL_CLIENT_AttachViewCore( wk->client[netID], wk->viewCore );
-
-      // Server 始動
-      BTL_SERVER_Startup( wk->server );
-
-      wk->mainLoop = MainLoop_Comm_Server;
-    }
-    // 自分がサーバではない
-    else
-    {
-      u8 netID = GFL_NET_GetNetID( sp->netHandle );
-
-      BTL_Printf("サーバではない用のパーティデータセット\n");
-      wk->ImServer = FALSE;
-
-      wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, netID, 1,
-      BTL_THINKER_UI, BAG_MODE, wk->heapID  );
-
-      // 描画エンジン生成
-      wk->viewCore = BTLV_Create( wk, wk->client[netID], &wk->pokeconForClient, HEAPID_BTL_VIEW );
-      BTL_CLIENT_AttachViewCore( wk->client[netID], wk->viewCore );
-
-      wk->mainLoop = MainLoop_Comm_NotServer;
-    }
-
-    (*seq)++;
-    break;
-  case 13:
-    BTL_Printf("セットアップ完了\n");
-    return TRUE;
-  }
-  return FALSE;
-}
-//--------------------------------------------------------------------------
-/**
- * 通信／ダブルバトル：セットアップ
- */
-//--------------------------------------------------------------------------
-static BOOL setup_comm_double( int* seq, void* work )
-{
-  enum {
-    BAG_MODE = BBAG_MODE_SHOOTER,
-  };
-
-  BTL_MAIN_MODULE* wk = work;
-  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
-
-  switch( *seq ){
-  case 0:
-    if( BTL_NET_IsServerDetermained() )
-    {
-      wk->numClients = (sp->multiMode==0)? 2 : 4;
-      wk->sendClientID = 0;
-
-      BTL_Printf("サーバ決定しましたよ。クライアント数は%d\n", wk->numClients);
-
-      if( BTL_NET_IsServer() )
-      {
-        // サーバーマシンが、各参加者にクライアントIDを割り振る
-        BTL_UTIL_SetPrintType( BTL_PRINTTYPE_SERVER );
-        BTL_Printf("ワシ、サーバーです。\n");
-        (*seq)++;
-      }
-      else
-      {
-        BTL_UTIL_SetPrintType( BTL_PRINTTYPE_CLIENT );
-        BTL_Printf("ワシ、サーバーではない。\n");
-        (*seq)+=2;
-      }
-    }
-    break;
-  case 1:
-    if( BTL_NET_NotifyClientID(wk->sendClientID, &wk->sendClientID, 1) ){
-      BTL_Printf("クライアントID通知 - %d/%d\n", wk->sendClientID, wk->numClients);
-      wk->sendClientID++;
-      if( wk->sendClientID >= wk->numClients ){
-        BTL_Printf("クライアントID通知 - Done\n", wk->numClients);
-        ++(*seq);
-      }
-    }
-    break;
-  case 2:
-    #ifdef PM_DEBUG
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      BTL_Printf("クライアントIDの確定待ちでーす\n");
-    }
-    #endif
-    // 自分のクライアントIDが確定
-    if( BTL_NET_IsClientIdDetermined() )
-    {
-      wk->myClientID = GFL_NET_GetNetID( sp->netHandle );
-      BTL_Printf("クライアントIDが%dに確定→タイミングシンクロ\n", wk->myClientID);
-      BTL_NET_TimingSyncStart( BTL_NET_TIMING_CLIENTID_DETERMINE );
-      (*seq)++;
-    }
-    break;
-  case 3:
-    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_CLIENTID_DETERMINE) ){
-      (*seq)++;
-    }
-    break;
-  case 4:
-    if( BTL_NET_StartNotifyPartyData(sp->partyPlayer) ){
-      (*seq)++;
-    }
-    break;
-  case 5:
-    // パーティデータ相互受信を完了
-    if( BTL_NET_IsCompleteNotifyPartyData() )
-    {
-      u8 i;
-      PokeCon_Init( &wk->pokeconForClient, wk );
-      // @@@ 例えばnumCliens=3だったら、ClientID割り振りは0～2でいいのか？たぶんダメ。
-      for(i=0; i<wk->numClients; ++i)
-      {
-        srcParty_Set( wk, i, BTL_NET_GetPartyData(i) );
-        PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, i), i );
-      }
-      PokeCon_SetSrcParty( &wk->pokeconForClient, srcParty_Get(wk, i), wk->myClientID );
-      (*seq)++;
-    }
-    break;
-  case 6:
-    if( BTL_NET_IsServer() )
-    {
-      u8 i;
-      PokeCon_Init( &wk->pokeconForServer, wk );
-      // @@@ 例えばnumCliens=3だったら、ClientID割り振りは0～2でいいのか？たぶんダメ。
-      for(i=0; i<wk->numClients; ++i){
-        PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, i), i );
-      }
-    }
-    (*seq)++;
-    break;
-  case 7:
-    BTL_NET_EndNotifyPartyData();
-    BTL_NET_TimingSyncStart( BTL_NET_TIMING_POKEDATA_SEND );
-    (*seq)++;
-  case 8:
-    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_POKEDATA_SEND) ){
-      (*seq)++;
-    }
-    break;
-  case 9:
-    if( BTL_NET_StartNotifyPlayerData(sp->statusPlayer) ){
-      (*seq)++;
-    }
-    break;
-  case 10:
-    if( BTL_NET_IsCompleteNotifyPlayerData() )
-    {
-      u32 i;
-      for(i=0; i<wk->numClients; ++i){
-        trainerParam_StorePlayer( &wk->trainerParam[i], wk->heapID, BTL_NET_GetPlayerData(i) );
-      }
-      BTL_Printf("プレイヤーデータ相互受信できました。\n");
-      (*seq)++;
-    }
-    break;
-  case 11:
-    BTL_NET_EndNotifyPlayerData();
-    (*seq)++;
-    break;
-  case 12:
-    if( sp->multiMode == 0 )
-    {
-      wk->posCoverClientID[BTL_POS_1ST_0] = 0;
-      wk->posCoverClientID[BTL_POS_2ND_0] = 1;
-      wk->posCoverClientID[BTL_POS_1ST_1] = 0;
-      wk->posCoverClientID[BTL_POS_2ND_1] = 1;
-    }
-    else
-    {
-      wk->posCoverClientID[BTL_POS_1ST_0] = 0;
-      wk->posCoverClientID[BTL_POS_2ND_0] = 1;
-      wk->posCoverClientID[BTL_POS_1ST_1] = 2;
-      wk->posCoverClientID[BTL_POS_2ND_1] = 3;
-    }
-    {
-      u8 i;
-
-      wk->myOrgPos = 0;
-      for(i=0; i<NELEMS(wk->posCoverClientID); ++i)
-      {
-        if( wk->posCoverClientID[i] == wk->myClientID )
-        {
-          wk->myOrgPos = i;
-          break;
-        }
-      }
-    }
-
-    // 自分がサーバ
-    if( BTL_NET_IsServer() )
-    {
-      u8 netID, numCoverPos, i;
-
-      netID = GFL_NET_GetNetID( sp->netHandle );
-      numCoverPos = (sp->multiMode==0)? 2 : 1;
-
-      BTL_Printf("サーバ用のパーティデータセット\n");
-
-      wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
-      wk->client[netID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-          netID, numCoverPos, BTL_THINKER_UI, BAG_MODE, wk->heapID );
-      BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), netID, numCoverPos );
-
-      for(i=0; i<wk->numClients; ++i)
-      {
-        if(i==netID){ continue; }
-        BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, i, numCoverPos );
-      }
-
-      // 描画エンジン生成
-      wk->viewCore = BTLV_Create( wk, wk->client[netID], &wk->pokeconForClient, HEAPID_BTL_VIEW );
-      BTL_CLIENT_AttachViewCore( wk->client[netID], wk->viewCore );
-
-      // Server 始動
-      BTL_SERVER_Startup( wk->server );
-      wk->mainLoop = MainLoop_Comm_Server;
-    }
-    // 自分がサーバではない
-    else
-    {
-      u8 netID, numCoverPos;
-
-      netID = GFL_NET_GetNetID( sp->netHandle );
-      numCoverPos = (sp->multiMode==0)? 2 : 1;
-
-      BTL_Printf("サーバではない用のパーティデータセット\n");
-
-      wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-          netID, numCoverPos, BTL_THINKER_UI, BAG_MODE, wk->heapID  );
-
-      // 描画エンジン生成
-      wk->viewCore = BTLV_Create( wk, wk->client[netID], &wk->pokeconForClient, HEAPID_BTL_VIEW );
-      BTL_CLIENT_AttachViewCore( wk->client[netID], wk->viewCore );
-
-      wk->mainLoop = MainLoop_Comm_NotServer;
-    }
-    (*seq)++;
-    break;
-  case 13:
-    BTL_Printf("セットアップ完了\n");
-    return TRUE;
-  }
-  return FALSE;
-}
-
 //--------------------------------------------------------------------------
 /**
  * スタンドアローン／ダブルバトル：セットアップ
@@ -1010,6 +632,407 @@ static BOOL setup_alone_triple( int* seq, void* work )
   wk->mainLoop = MainLoop_StandAlone;
 
   return TRUE;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * 通信／シングルバトル
+ */
+//--------------------------------------------------------------------------
+static BOOL setup_comm_single( int* seq, void* work )
+{
+  static const pSetupSeq funcs[] = {
+    NULL,
+    setupseq_comm_determine_server,
+    setupseq_comm_notify_party_data,
+    setupseq_comm_notify_player_data,
+    setupseq_comm_create_server_client_single,
+    setupseq_comm_start_server,
+  };
+
+  BTL_MAIN_MODULE* wk = work;
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
+  if( (*seq) == 0 )
+  {
+    wk->numClients = 2;
+    wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+    wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+    (*seq)++;
+    return FALSE;
+  }
+  else if( (*seq) < NELEMS(funcs) ){
+    if( funcs[ *seq ]( wk, &wk->subSeq ) ){
+      wk->subSeq = 0;
+      ++(*seq);
+    }
+    return FALSE;
+  }
+
+  return TRUE;
+}
+//--------------------------------------------------------------------------
+/**
+ * 通信／ダブルバトル：セットアップ
+ */
+//--------------------------------------------------------------------------
+static BOOL setup_comm_double( int* seq, void* work )
+{
+  static const pSetupSeq funcs[] = {
+    NULL,
+    setupseq_comm_determine_server,
+    setupseq_comm_notify_party_data,
+    setupseq_comm_notify_player_data,
+    setupseq_comm_create_server_client_double,
+    setupseq_comm_start_server,
+  };
+
+  BTL_MAIN_MODULE* wk = work;
+
+  if( (*seq) == 0 )
+  {
+    const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+    if( sp->multiMode == 0 )
+    {
+      wk->numClients = 2;
+      wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+      wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+      wk->posCoverClientID[BTL_POS_1ST_1] = 0;
+      wk->posCoverClientID[BTL_POS_2ND_1] = 1;
+    }
+    else
+    {
+      wk->numClients = 4;
+      wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+      wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+      wk->posCoverClientID[BTL_POS_1ST_1] = 2;
+      wk->posCoverClientID[BTL_POS_2ND_1] = 3;
+    }
+    (*seq)++;
+    return FALSE;
+  }
+  else if( (*seq) < NELEMS(funcs) ){
+    if( funcs[ *seq ]( wk, &wk->subSeq ) ){
+      wk->subSeq = 0;
+      ++(*seq);
+      BTL_Printf(" setupSeq ... %d\n", (*seq) );
+    }
+    return FALSE;
+  }
+  BTL_Printf(" setupSeq ... Done\n", (*seq) );
+  return TRUE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 通信対戦セットアップシーケンス：サーバ＆クライアントIDの確定
+ *
+ * @param   wk
+ * @param   seq
+ *
+ * @retval  BOOL    終了時にTRUEを返す
+ */
+//----------------------------------------------------------------------------------
+static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    if( BTL_NET_IsServerDetermained() )
+    {
+      wk->sendClientID = 0;
+
+      if( BTL_NET_IsServer() )
+      {
+        BTL_UTIL_SetPrintType( BTL_PRINTTYPE_SERVER );
+        (*seq) = 1;
+      }
+      else
+      {
+        BTL_UTIL_SetPrintType( BTL_PRINTTYPE_CLIENT );
+        (*seq) = 2;
+      }
+    }
+    break;
+
+  case 1:
+    // サーバマシンは各クライアントに各々のクライアントIDと責任領域数を通知する
+    if( BTL_NET_NotifyClientID( wk->sendClientID, &wk->sendClientID, 1) ){
+      wk->sendClientID++;
+      if( wk->sendClientID >= wk->numClients ){
+        ++(*seq);
+      }
+    }
+    break;
+
+  case 2:
+    // 自分のクライアントIDが確定
+    if( BTL_NET_IsClientIdDetermined() )
+    {
+      const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+      u32 i;
+
+      wk->myClientID = GFL_NET_GetNetID( sp->netHandle );
+      wk->myOrgPos = 0;
+      for(i=0; i<NELEMS(wk->posCoverClientID); ++i)
+      {
+        if( wk->posCoverClientID[i] == wk->myClientID )
+        {
+          wk->myOrgPos = i;
+          break;
+        }
+      }
+      return TRUE;
+    }
+    break;
+
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 通信対戦セットアップシーケンス：各クライアントのパーティデータを相互に送受信
+ *
+ * @param   wk
+ * @param   seq
+ *
+ * @retval  BOOL    終了時にTRUEを返す
+ */
+//----------------------------------------------------------------------------------
+static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
+{
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
+  switch( *seq ){
+  case 0:
+    BTL_NET_TimingSyncStart( BTL_NET_TIMING_NOTIFY_PARTY_DATA );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_NOTIFY_PARTY_DATA) ){
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if( BTL_NET_StartNotifyPartyData(sp->partyPlayer) ){
+      (*seq)++;
+    }
+    break;
+  case 3:
+    // パーティデータ相互受信を完了
+    if( BTL_NET_IsCompleteNotifyPartyData() )
+    {
+      u32 i;
+
+      BTL_Printf("パーティデータ相互受信できました。\n");
+
+      PokeCon_Init( &wk->pokeconForClient, wk );
+
+      // @@@ 例えばnumCliens=3だったら、ClientID割り振りは0～2という想定でいいのか？たぶんダメ。
+      for(i=0; i<wk->numClients; ++i)
+      {
+        srcParty_Set( wk, i, BTL_NET_GetPartyData(i) );
+        PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, i), i );
+      }
+      PokeCon_SetSrcParty( &wk->pokeconForClient, srcParty_Get(wk, wk->myClientID), wk->myClientID );
+      (*seq)++;
+    }
+    break;
+  case 4:
+    if( BTL_NET_IsServer() )
+    {
+      u32 i;
+      PokeCon_Init( &wk->pokeconForServer, wk );
+      // @@@ 例えばnumCliens=3だったら、ClientID割り振りは0～2という想定でいいのか？たぶんダメ。
+      for(i=0; i<wk->numClients; ++i){
+        PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, i), i );
+      }
+    }
+    (*seq)++;
+    break;
+  case 5:
+    BTL_NET_EndNotifyPartyData();
+    (*seq)++;
+    break;
+  default:
+    return TRUE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 通信対戦セットアップシーケンス：各クライアントのプレイヤーデータを相互に送受信
+ *
+ * @param   wk
+ * @param   seq
+ *
+ * @retval  BOOL    終了時にTRUEを返す
+ */
+//----------------------------------------------------------------------------------
+static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
+{
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
+  switch( *seq ){
+  case 0:
+    BTL_NET_TimingSyncStart( BTL_NET_TIMING_NOTIFY_PLAYER_DATA );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_NOTIFY_PLAYER_DATA) ){
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if( BTL_NET_StartNotifyPlayerData(sp->statusPlayer) ){
+      (*seq)++;
+    }
+    break;
+  case 3:
+    if( BTL_NET_IsCompleteNotifyPlayerData() )
+    {
+      u32 i;
+      for(i=0; i<wk->numClients; ++i){
+        trainerParam_StorePlayer( &wk->trainerParam[i], wk->heapID, BTL_NET_GetPlayerData(i) );
+      }
+      BTL_Printf("プレイヤーデータ相互受信できました。\n");
+      (*seq)++;
+    }
+    break;
+  case 4:
+    BTL_NET_EndNotifyPlayerData();
+    (*seq)++;
+    break;
+  default:
+    return TRUE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 通信対戦セットアップシーケンス：サーバ・クライアントモジュール構築（シングル用）
+ *
+ * @param   wk
+ * @param   seq
+ *
+ * @retval  BOOL    終了時にTRUEを返す
+ */
+//----------------------------------------------------------------------------------
+static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int* seq )
+{
+  enum {
+    BAG_MODE = BBAG_MODE_SHOOTER,
+  };
+
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+  u8 netID = GFL_NET_GetNetID( sp->netHandle );
+
+  wk->ImServer = BTL_NET_IsServer();
+  // 自分がサーバ
+  if( wk->ImServer )
+  {
+    wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
+
+    wk->client[netID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
+        netID, 1, BTL_THINKER_UI, BAG_MODE, wk->heapID );
+    BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), netID, 1 );
+    BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, !netID, 1 );
+  }
+  // 自分がサーバではない
+  else
+  {
+    wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, netID, 1,
+    BTL_THINKER_UI, BAG_MODE, wk->heapID  );
+  }
+
+  return TRUE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 通信対戦セットアップシーケンス：サーバ・クライアントモジュール構築（ダブル用）
+ *
+ * @param   wk
+ * @param   seq
+ *
+ * @retval  BOOL    終了時にTRUEを返す
+ */
+//----------------------------------------------------------------------------------
+static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int* seq )
+{
+  enum {
+    BAG_MODE = BBAG_MODE_SHOOTER,
+  };
+
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+  u8 netID = GFL_NET_GetNetID( sp->netHandle );
+
+  wk->ImServer = BTL_NET_IsServer();
+  // 自分がサーバ
+  if( wk->ImServer )
+  {
+    u8 numCoverPos, i;
+
+    numCoverPos = (sp->multiMode==0)? 2 : 1;
+
+    wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
+    wk->client[netID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
+        netID, numCoverPos, BTL_THINKER_UI, BAG_MODE, wk->heapID );
+    BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), netID, numCoverPos );
+
+    for(i=0; i<wk->numClients; ++i)
+    {
+      if(i==netID){ continue; }
+      BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, i, numCoverPos );
+    }
+  }
+  // 自分がサーバではない
+  else
+  {
+    u8 netID, numCoverPos;
+
+    netID = GFL_NET_GetNetID( sp->netHandle );
+    numCoverPos = (sp->multiMode==0)? 2 : 1;
+
+    wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
+        netID, numCoverPos, BTL_THINKER_UI, BAG_MODE, wk->heapID  );
+
+  }
+  return TRUE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 通信対戦セットアップシーケンス：描画エンジン生成、メインループ始動
+ *
+ * @param   wk
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL setupseq_comm_start_server( BTL_MAIN_MODULE* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    {
+      const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+      u32 netID = GFL_NET_GetNetID( sp->netHandle );
+
+      // 描画エンジン生成
+      wk->viewCore = BTLV_Create( wk, wk->client[netID], &wk->pokeconForClient, HEAPID_BTL_VIEW );
+      BTL_CLIENT_AttachViewCore( wk->client[netID], wk->viewCore );
+
+      if( wk->ImServer ){
+        // Server 始動
+        wk->mainLoop = MainLoop_Comm_Server;
+        BTL_SERVER_Startup( wk->server );
+      }else{
+        wk->mainLoop = MainLoop_Comm_NotServer;
+      }
+      (*seq)++;
+    }
+    break;
+  default:
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //======================================================================================================
