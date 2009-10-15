@@ -174,17 +174,17 @@ enum{
 };
 
 //大砲ごとの基準からの回転
-static u8 CannoneRot[CANNON_NUM_MAX] = {
-  0,    //回転なし      上向き
-  0,    //回転なし      上向き
-  1,    //半時計90度    左向き
-  3,    //反時計270度   右向き
-  1,    //反時計90度    左向き
-  2,    //反時計180度   下向き
-  3,    //反時計270度   右向き
-  0,    //回転なし      上向き
-  1,    //反時計90度    左向き
-  2,    //反時計180度   下向き
+static u8 CannonRot[CANNON_NUM_MAX] = {
+  CAN1_ROT,
+  CAN2_ROT,
+  CAN3_ROT,
+  CAN4_ROT,
+  CAN5_ROT,
+  CAN6_ROT,
+  CAN7_ROT,
+  CAN8_ROT,
+  CAN9_ROT,
+  CAN10_ROT,
 };
 
 //大砲位置
@@ -427,9 +427,11 @@ static u8 GetCanIdx(const int inX, const int inZ);
 
 static u8 GetCannonAnmOfs(u16 inDir);
 static u8 GetDirIdxFromDir(u16 inDir);
+static u8 ChgDirIdxByRot(const u8 inDirIdx, const u8 inRotIdx);
+static u8 GetDirIdx(const u16 inDir, const u8 inShotIdx);
 
 #ifdef PM_DEBUG
-BOOL test_GYM_FLY_Shot(GAMESYS_WORK *gsys, const u8 inShotIdx, const u8 inShotDir);
+BOOL test_GYM_FLY_Shot(GAMESYS_WORK *gsys);
 #endif
 
 //--------------------------------------------------------------
@@ -453,16 +455,19 @@ void GYM_FLY_Setup(FIELDMAP_WORK *fieldWork)
 
   for (i=0;i<CANNON_NUM_MAX;i++){
     //座標セット　大砲
-    {
-      VecFx32 pos[CANNON_NUM_MAX] = {
+    VecFx32 pos[CANNON_NUM_MAX] = {
         {CAN1_X, CAN1_Y, CAN1_Z},{CAN2_X, CAN2_Y, CAN2_Z},{CAN3_X, CAN3_Y, CAN3_Z},{CAN4_X, CAN4_Y, CAN4_Z},
         {CAN5_X, CAN5_Y, CAN5_Z},{CAN6_X, CAN6_Y, CAN6_Z},{CAN7_X, CAN7_Y, CAN7_Z},{CAN8_X, CAN8_Y, CAN8_Z},
         {CAN9_X, CAN9_Y, CAN9_Z},{CAN10_X, CAN10_Y, CAN10_Z},
-      };
-      GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_FLY_UNIT_IDX, OBJ_CAN_1+i);
-      status->trans = pos[i];
-      //回転セット
-      ;
+    };
+      
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_FLY_UNIT_IDX, OBJ_CAN_1+i);
+    status->trans = pos[i];
+    //回転セット
+    {
+      int rad = 0;
+      rad = 0x4000 * CannonRot[i];
+      MTX_RotY33(&status->rotate, FX_SinIdx(rad), FX_CosIdx(rad));
     }
     //1回再生設定
     {
@@ -470,7 +475,7 @@ void GYM_FLY_Setup(FIELDMAP_WORK *fieldWork)
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_FLY_UNIT_IDX, OBJ_CAN_1+i, 0);
       FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_FLY_UNIT_IDX, OBJ_CAN_1+i, 1);
-      FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+     FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
     }
   }
 }
@@ -506,11 +511,8 @@ void GYM_FLY_Move(FIELDMAP_WORK *fieldWork)
   //テスト
   {
     GAMESYS_WORK *gsys  = FIELDMAP_GetGameSysWork( fieldWork );
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-      //自機の向きを取得
-      FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
-      u16 dir = FIELD_PLAYER_GetDir( fld_player );
-      test_GYM_FLY_Shot(gsys, 0, dir);
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+      test_GYM_FLY_Shot(gsys);
     }
   } 
 #endif
@@ -592,10 +594,10 @@ GMEVENT *GYM_FLY_CreateShotEvt(GAMESYS_WORK *gsys)
  * @return
  */
 //--------------------------------------------------------------
-BOOL test_GYM_FLY_Shot(GAMESYS_WORK *gsys, const u8 inShotIdx, const u8 inShotDir)
+BOOL test_GYM_FLY_Shot(GAMESYS_WORK *gsys)
 {
   u8 shot_idx;
-  
+  u16 dir; 
   GYM_FLY_SV_WORK *gmk_sv_work;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
@@ -613,7 +615,10 @@ BOOL test_GYM_FLY_Shot(GAMESYS_WORK *gsys, const u8 inShotIdx, const u8 inShotDi
     FIELD_PLAYER_GetPos( fld_player, &pos );
     x = pos.x / FIELD_CONST_GRID_FX32_SIZE;
     z = pos.z / FIELD_CONST_GRID_FX32_SIZE;
-    switch( inShotDir ){
+    //自機の向きを取得
+    dir = FIELD_PLAYER_GetDir( fld_player );
+
+    switch( dir ){
     case DIR_UP:
       z-=2;
       break;
@@ -641,9 +646,9 @@ BOOL test_GYM_FLY_Shot(GAMESYS_WORK *gsys, const u8 inShotIdx, const u8 inShotDi
     GMEVENT * event = GMEVENT_Create( gsys, NULL, ShotEvt, 0/*sizeof(ENCEFF_WORK)*/ );
     GAMESYSTEM_SetEvent(gsys, event);
     //打ち出しインデックスをセット
-    tmp->ShotIdx = inShotIdx;
+    tmp->ShotIdx = shot_idx;
     //打ち出し方向をセット
-    tmp->ShotDir = inShotDir;
+    tmp->ShotDir = dir;
   }
   return TRUE;
   
@@ -675,6 +680,8 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
   case 0:
     {
       int arc_idx;
+
+      OS_Printf("Shot_Idx = %d Shot_Dir = %d\n",tmp->ShotIdx, GetDirIdxFromDir(tmp->ShotDir));
       {
         u8 dir_idx;
         dir_idx = GetDirIdxFromDir(tmp->ShotDir);
@@ -685,6 +692,7 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
         }
       }
 
+      //移動データロード
       tmp->IcaAnmPtr = ICA_ANIME_Create( 
           GFL_HEAP_LOWID(HEAPID_FIELDMAP), ARCID_GYM_FLY, arc_idx,
           tmp->FramePosDat, FRAME_POS_SIZE );
@@ -692,11 +700,6 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       tmp->MaxIcaAnmFrm = ICA_ANIME_GetMaxFrame(tmp->IcaAnmPtr);
     }
 
-    //移動データロード
-    ;
-    //自機の向きにより分岐
-    //大砲ドアオープンフレームまで再生開始
-    ;
     {
       u8 anm_ofs;
       u8 obj_idx;
@@ -714,14 +717,16 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 1:
     {
+      u8 anm_ofs;
       u8 obj_idx;
-      u8 dir_idx;
+      u8 can_dir_idx;
       fx32 frm;
       obj_idx = tmp->ShotIdx;
-      frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_FLY_UNIT_IDX, obj_idx, 0);
-      dir_idx = GetDirIdxFromDir(tmp->ShotDir);
+      anm_ofs = GetCannonAnmOfs(tmp->ShotDir);
+      frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs);
+      can_dir_idx = GetDirIdx(tmp->ShotDir, tmp->ShotIdx);
       //オープンフレーム到達監視
-      if (frm >= CanOpenFrame[dir_idx]*FX32_ONE){
+      if (frm >= CanOpenFrame[can_dir_idx]*FX32_ONE){
         //大砲アニメ停止
         {
           EXP_OBJ_ANM_CNT_PTR anm;
@@ -766,14 +771,16 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
     break;
   case 3:
     {
+      u8 anm_ofs;
       u8 obj_idx;
-      u8 dir_idx;
+      u8 can_dir_idx;
       fx32 frm;
       obj_idx = tmp->ShotIdx;
-      frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_FLY_UNIT_IDX, obj_idx, 0);
-      dir_idx = GetDirIdxFromDir(tmp->ShotDir);
+      anm_ofs = GetCannonAnmOfs(tmp->ShotDir);
+      frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs);
+      can_dir_idx = GetDirIdx(tmp->ShotDir, tmp->ShotIdx);
       //発射フレーム到達チェック
-      if (frm >= CanClosedFrame[dir_idx]*FX32_ONE){
+      if (frm >= CanClosedFrame[can_dir_idx]*FX32_ONE){
         //フレーム読み取り開始
         tmp->FrameSetStart = 1;
         tmp->NowIcaAnmFrmIdx = 0;
@@ -876,6 +883,7 @@ static u8 GetCanIdx(const int inX, const int inZ)
 {
   u8 i;
 
+  OS_Printf("check_pos = %d,%d\n",inX, inZ);
   for(i=0;i<CANNON_NUM_MAX;i++){
     if ( (CanPos[i][0] == inX)&&(CanPos[i][2] == inZ) ){
       return i;
@@ -894,10 +902,10 @@ static u8 GetCannonAnmOfs(u16 inDir)
   case DIR_DOWN:
     anm_ofs = 1*CANNON_ANM_NUM;
     break;
-  case DIR_LEFT:
+  case DIR_RIGHT:
     anm_ofs = 2*CANNON_ANM_NUM;
     break;
-  case DIR_RIGHT:
+  case DIR_LEFT:
     anm_ofs = 3*CANNON_ANM_NUM;
     break;
   default:
@@ -923,4 +931,29 @@ static u8 GetDirIdxFromDir(u16 inDir)
     return 0;
   }
 }
+
+static u8 ChgDirIdxByRot(const u8 inDirIdx, const u8 inRotIdx)
+{
+  const u8 base_dir_idx[4] = {0,3,1,2}; //UP LEFT DOWN RIGHT 時計回り
+  u8 start_idx, dst_idx;
+  u8 i;
+  for (i=0;i<4;i++){
+    if (base_dir_idx[i] == inDirIdx){
+      start_idx = i;
+      dst_idx = (start_idx + inRotIdx)%4;
+      return base_dir_idx[dst_idx];
+    }
+  }
+  GF_ASSERT(0);
+  return inDirIdx;
+}
+
+static u8 GetDirIdx(const u16 inDir, const u8 inShotIdx)
+{
+  u8 dir_idx;
+  dir_idx = GetDirIdxFromDir(inDir);
+  dir_idx = ChgDirIdxByRot(dir_idx, CannonRot[inShotIdx]);
+  return dir_idx;
+}
+
 
