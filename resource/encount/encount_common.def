@@ -52,29 +52,30 @@ ARCB_LIST_FILENAME	= "arc_list_b"
 #------------------------------------------------------------------------------
 COL_ZONE_NAME_JP	= 0		#ゾーン名日本語
 COL_ZONE_NAME		= 1		#ゾーン名
-COL_V1_START		= 2		#データ開始位置
-COL_V2_ENABLE		= 194	#Version2の有効無効フラグ位置
-COL_V2_START		= 195	#Version2のデータ開始位置
+COL_SEASON			= 2		#季節指定
+COL_V2_ENABLE		= 3		#Version2の有効無効フラグ位置
+COL_V1_START		= 4		#データ開始位置
 
-COL_OFS_HEADER		= COL_ZONE_NAME	#ヘッダ部の最後のカラム位置
-COL_LEN_ZONE		= 191	#1ゾーンデータのカラムの最終index
+COL_OFS_HEADER		= COL_V2_ENABLE	#ヘッダ部の最後のカラム位置
 
 ########################################
 #ゾーンカラム内オフセット
 
-COL_ZONE_OFS_PROB_GROUND_L	 = 0	#地面ローレベルエンカウント率
-COL_ZONE_OFS_PROB_GROUND_H	 = 25	#地面ハイレベルエンカウント率
-COL_ZONE_OFS_PROB_WATER		 = 74	#水上エンカウント率
-COL_ZONE_OFS_PROB_FISHING	 = 105	#釣りエンカウント率
-
-COL_LEN_GROUND_VAL	= 24
-COL_LEN_WATER_VAL	= 0
+COL_ZONE_OFS_ITEM_TABLE		 = 0	#アイテムテーブルリストindex
+COL_ZONE_OFS_PROB_GROUND_L	 = 1	#地面ローレベルエンカウント率
+COL_ZONE_OFS_PROB_GROUND_H	 = 2	#地面ハイレベルエンカウント率
+COL_ZONE_OFS_PROB_WATER		 = 3	#水上エンカウント率
+COL_ZONE_OFS_PROB_FISHING	 = 4	#釣りエンカウント率
+COL_ZONE_HEADER_NUM        = 5
 
 #データ列長
 GROUND_MONS_NUM = 12	#地面エンカウントモンスターテーブル長
 GROUND_MONS_DATA_LEN = GROUND_MONS_NUM*2
 WATER_MONS_NUM = 5		#水上・釣りエンカウントモンスターテーブル長
 WATER_MONS_DATA_LEN = WATER_MONS_NUM*3
+
+#1ゾーンデータのカラムの最終index
+COL_LEN_ZONE		= 192 #(GROUND_MONS_NUM*3*3)+(WATER_MONS_NUM*4*4)+COL_ZONE_HEADER_NUM-1
 
 #データテーブルindex
 IDX_GROUND_L = 0

@@ -16,14 +16,27 @@ $_enc_poke = Struct.new("EncPoke", :monsno, :form, :lv_min, :lv_max)
 #エンカウトモンスターデータ構造体長
 ENC_MONS_DATA_SIZ = 4
 
+SEASON_NONE = 0
+SEASON_SPRING = 1
+SEASON_SUMMER = 2
+SEASON_AUTUMN = 3
+SEASON_WINTER = 4
+
 ##############################################
 #グローバル変数定義
 
 #出力パス
 $output_path = [WFBIN_DIR,BFBIN_DIR]
+#出力サフィックス文字列
+$output_suffix = [".bin","_sp.dat","_su.dat","_au.dat","_wi.dat"]
+
 #各種データテーブル長
 $table_num = [GROUND_MONS_NUM,GROUND_MONS_NUM,GROUND_MONS_NUM,WATER_MONS_NUM,WATER_MONS_NUM,WATER_MONS_NUM,WATER_MONS_NUM]
 
+#季節名リスト
+$season_list = ["春","夏","秋","冬"]
+#アイテムテーブル名リスト
+$item_tbl_list = ["なし","洞窟","橋"]
 
 #エンカウントテーブル
 class CEncTable
@@ -138,13 +151,14 @@ end
 #1マップのエンカウントデータ
 class CMapData
   @zone_name  #ゾーン名
+  @item_idx   #アイテムテーブル指定
   @enc_prob #エンカウント率テーブル
   @table  #データテーブル
 
   #初期化
   def initialize zone_name
     @zone_name = zone_name
-
+    @item_idx = 0
     @enc_prob = Array.new
     @enc_prob.fill(0,0,IDX_MAX+1)
 
@@ -156,6 +170,12 @@ class CMapData
 
   #1マップのデータパース
   def perse column
+    print(column.join(",")) 
+    #アイテムテーブルindex取得
+    @item_idx = $item_tbl_list.index(column[COL_ZONE_OFS_ITEM_TABLE])
+    if @item_idx == nil then
+      @item_idx = 0
+    end
     #エンカウント率取得
     @enc_prob[IDX_GROUND_L] = column[COL_ZONE_OFS_PROB_GROUND_L] == "" ? 0 : column[COL_ZONE_OFS_PROB_GROUND_L].to_i
     @enc_prob[IDX_GROUND_H] = column[COL_ZONE_OFS_PROB_GROUND_H] == "" ? 0 : column[COL_ZONE_OFS_PROB_GROUND_H].to_i
@@ -163,13 +183,16 @@ class CMapData
     @enc_prob[IDX_FISHING] = column[COL_ZONE_OFS_PROB_FISHING] == "" ? 0 : column[COL_ZONE_OFS_PROB_FISHING].to_i
     
     #配列の要素削除
+    column.slice!(0..(COL_ZONE_HEADER_NUM-1))
+=begin
+    column.delete_at(COL_ZONE_OFS_ITEM_TABLE)
     column.delete_at(COL_ZONE_OFS_PROB_GROUND_L)
     column.delete_at(COL_ZONE_OFS_PROB_GROUND_H)
     column.delete_at(COL_ZONE_OFS_PROB_WATER)
     column.delete_at(COL_ZONE_OFS_PROB_FISHING)
-
-    print("\n"+@enc_prob.join(",")+"\n")
-    
+=end
+    print("\n->"+@zone_name+" データサーチ開始 確率 "+@enc_prob.join(",")+"\n")
+    print(column.join(",")) 
     #グランドデータvalueパース
     @table[IDX_GROUND_L].perse_ground_val(column,@enc_prob[IDX_GROUND_L],"通常1")
     @table[IDX_GROUND_H].perse_ground_val(column,@enc_prob[IDX_GROUND_H],"通常2")
@@ -193,6 +216,7 @@ class CMapData
 
   #エンカウント率出力 8byte
   def output_enc_prob fp
+    @enc_prob[IDX_MAX] = @item_idx
     fp.write(@enc_prob.pack("C8")) 
   end
 
@@ -203,7 +227,7 @@ class CMapData
 
     IDX_MAX.times{ |i|
       if @enc_prob[i] == 0 then
-        tmp  = "C" + $table_num[i].to_s
+        tmp  = "C" + ($table_num[i]*4).to_s
         fp.write(dmy_buf.pack(tmp))
         next
       end
@@ -212,8 +236,8 @@ class CMapData
   end
 
   #1マップデータ出力
-  def output version
-    path = $output_path[version] + "/" + @zone_name + ".bin" 
+  def output version,season_code
+    path = $output_path[version] + "/" + @zone_name + $output_suffix[season_code]
     fp = File.open(path,"wb")
     #エンカウント率出力
     output_enc_prob(fp)
@@ -229,19 +253,49 @@ class CZoneData
   @white      #ホワイトVerのデータ
   @black      #ブラックVerのデータ
   @v2_enable  #ブラックデータが有効かどうか
-
+  @season     #季節ID
+  
   #初期化
   def initialize
     @zone_name = ""
     @v2_enable = FALSE
+    @season = nil
   end #eof initialize
 
   #データ配列の走査
-  def perse column
+  def perse column,season_code,old_zone
     @zone_name = column[COL_ZONE_NAME].downcase
-    @v2_enable = column[COL_V2_ENABLE]  == "●" ? true : false
+    printf("\n#%s コンバート開始\n",@zone_name)
+
+    if /[^0-9A-Za-z]/ =~ @zone_name then
+      printf("%s エラー ゾーン名が全角で記述されています-> %s\n半角英数字に直してください\n",@zone_name,@zone_name.scan(/[^0-9A-Za-z]/).join(","))
+      exit 1
+    end
     
-    column.slice!(COL_V2_ENABLE)  #フラグ部を取り除く
+    season_name = column[COL_SEASON]
+    @v2_enable = column[COL_V2_ENABLE]  == "●" ? true : false
+
+    #季節コードチェック
+    if season_name == "" then
+      @season = SEASON_NONE
+      if season_code != 0 then
+        printf("%s 季節指定が不正 春夏秋冬が揃っていません\n",old_zone)
+        exit 1
+      end
+    else
+      @season = $season_list.index(season_name)
+      if @season == nil then
+        printf("%s 季節名が正しくありません %s\n",@zone_name,season_name)
+        exit 1
+      end
+      @season += 1
+    end
+    if @season != season_code && @season != SEASON_SPRING then
+      printf("%s 季節指定が不正 春夏秋冬が揃っていません\n",@zone_name)
+      exit 1
+    end
+
+#    column.slice!(COL_V2_ENABLE)  #フラグ部を取り除く
     column.slice!(0..COL_OFS_HEADER)  #ヘッダ部を取り除く
 
     white = column.slice!(0..COL_LEN_ZONE)
@@ -260,11 +314,11 @@ class CZoneData
 
   #データ列の出力
   def output
-    @white.output(VER_WHITE)
+    @white.output(VER_WHITE,@season)
     if @v2_enable == true then
-      @black.output(VER_BLACK)
+      @black.output(VER_BLACK,@season)
     else
-      @white.output(VER_BLACK)  #ホワイトのコピーを出力
+      @white.output(VER_BLACK,@season)  #ホワイトのコピーを出力
     end
   end
 
@@ -272,7 +326,10 @@ class CZoneData
   def get_zone_name
     return @zone_name
   end
-
+  #季節コード取得
+  def get_season_code
+    return @season
+  end
 end #End of Class CMapData
 
 #ポケモン
@@ -286,18 +343,47 @@ class CEncountData
     @zone_list = Array.new
   end
 
+  #四季ファイルの連結
+  def season_bin_link f_path,bin_path,zone_name
+    printf("%s 四季データ連結開始 -> %s\n",zone_name,f_path)
+    File.open(f_path,"wb"){ |file|
+      for i in SEASON_SPRING..SEASON_WINTER do
+        src = bin_path+"/"+zone_name+$output_suffix[i]
+        printf(" %s,",src)
+        if FileTest.exist?(src)
+          baseHandle = File::open(src)
+          file.write(baseHandle.read)
+          baseHandle.close
+        else
+          printf("%s が必要です。ゾーン%sのデータを見直してください\n",src,zone_name)
+          exit 1
+        end
+      end
+      print("\n")
+    }
+  end
+
   #アーカイブリスト出力
   def output_arclist f_path,bin_path
     File.open(f_path,"w"){ |file|
       for n in @zone_list do
-       buf = "\"%s/%s.bin\"\n" % [bin_path,n.get_zone_name()]
-       file.print buf
+        season = n.get_season_code()
+        zone_name = n.get_zone_name()
+        buf = "%s/%s.bin" % [bin_path,zone_name]
+        if season > SEASON_SPRING then
+          next
+        elsif season == SEASON_SPRING then
+          season_bin_link(buf,bin_path,zone_name)
+        end
+        file.print("\""+buf+"\"\n")
       end
     }
   end
 
   #ファイルロード
   def src_load f_path
+    season_code = 0
+    old_zone = "zone"
     File.open(f_path){ |file|
      while line = file.gets
        line = line.chomp #行末改行を取り除く
@@ -307,9 +393,23 @@ class CEncountData
        @zone_list << CZoneData.new
        cp = @zone_list.last()
        #マップデータのパース
-       cp.perse(work)
+       cp.perse(work,season_code,old_zone)
+       #季節コードチェック
+       s_code = cp.get_season_code()
+       if s_code == SEASON_NONE || (s_code+1)>SEASON_WINTER then
+         season_code = SEASON_NONE  #コード0クリア
+       else
+         season_code = s_code+1
+       end
+       old_zone = cp.get_zone_name()
+
        #マップデータの出力
        cp.output()
+     end
+
+     if season_code != SEASON_NONE then
+      printf("%s 季節指定が不正 春夏秋冬が揃っていません\n",old_zone)
+      exit 1
      end
     }
   end

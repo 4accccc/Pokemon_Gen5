@@ -67,7 +67,8 @@ typedef struct _ENCOUNT_DATA{
       u8  probWaterSp;   ///<水上特殊エンカウント率(0or1)
       u8  probFishing;   ///<釣りエンカウント率
       u8  probFishingSp; ///<釣り特殊エンカウント率(0or1)
-      u8  enable_f;     ///<有効無効フラグ
+      u8  itemTblIdx:7;   ///<フィールドエフェクトアイテムテーブル参照idx
+      u8  enable_f:1;     ///<有効無効フラグ
     };
     u8 prob[ENC_LOCATION_MAX+1];
   };
@@ -81,5 +82,9 @@ typedef struct _ENCOUNT_DATA{
   ENC_COMMON_DATA  fishingMons[ENC_MONS_NUM_FISHING];
   ENC_COMMON_DATA  fishingSpMons[ENC_MONS_NUM_FISHING_SP];
 }ENCOUNT_DATA;
+
+typedef struct _ENCOUNT_TABLE{
+  ENCOUNT_DATA  enc_tbl[4];
+}ENCOUNT_TABLE;
 
 #endif  //__H_ENCOUNT_DATA_H__

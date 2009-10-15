@@ -577,12 +577,11 @@ static u32 eps_EncPokeCalcPersonalRand(
 
   do{
     if(poke->rare){
-      p_rnd = __GFL_STD_MtRand(); //@todo
+      p_rnd = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
     }else{
-      p_rnd = __GFL_STD_MtRand();
+      p_rnd = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
     }
-//   OS_Printf("PP_Rnd = %08x\n",p_rnd);
-    p_rnd = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
+    IWASAWA_Printf("PP_Rnd = %08x\n",p_rnd);
 //    OS_Printf("PP_Rnd = %08x\n",p_rnd);
 
     if( efp->spa_chr_fix )

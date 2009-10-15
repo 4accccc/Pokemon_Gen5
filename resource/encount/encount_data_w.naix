@@ -69,7 +69,7 @@ enum {
 	NARC_encount_data_w_r07_bin = 55,
 	NARC_encount_data_w_r08_bin = 56,
 	NARC_encount_data_w_r09_bin = 57,
-	NARC_encount_data_w_r_P_O_bin = 58
+	NARC_encount_data_w_r10_bin = 58
 };
 
 /* NARC_ENCOUNT_DATA_W_NAIX_ */

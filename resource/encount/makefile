@@ -42,15 +42,18 @@ ARCB_LIST_FILE = $(subst $(DQ),,$(ARCB_LIST_FILENAME))
 #リソース
 SRC_TEXT = $(subst $(DQ),,$(SRC_TXT_FILENAME))
 
+SRC_DAT = $(BIN_DIR_W)/r10.bin
+
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
 SUBDIRS		=
 
-#Makeで生成される*.binはmake cleanの削除対象にする
-CLEANFILES	= $(BIN_DIR_W)/*.bin $(BIN_DIR_B)/*.bin
+#Makeで生成される*.bin,*.datはmake cleanの削除対象にする
+CLEANFILES	= $(BIN_DIR_W)/*.* $(BIN_DIR_B)/*.*
 
 vpath %bin $(BIN_DIR_W) $(BIN_DIR_B)
+vpath %dat $(BIN_DIR_W) $(BIN_DIR_B)
 
 .PHONY: do-build clean
 
@@ -73,7 +76,7 @@ $(ARCW_LIST_FILE):$(SRC_TEXT) encount_common.def
 $(ARCB_LIST_FILE):$(SRC_TEXT) encount_common.def
 	ruby encount_conv.rb
 
-$(NARCNAME_W): $(ARCW_LIST_FILE)
+$(NARCNAME_W): $(ARCW_LIST_FILE) 
 	nnsarc -i -c -l -n $(NARCNAME_W) -S $(ARCW_LIST_FILE)  > arc_result_w.txt
 	$(NAIXCUT) $(NAIXNAME_W)
 
