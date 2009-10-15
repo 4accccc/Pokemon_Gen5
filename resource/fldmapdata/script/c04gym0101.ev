@@ -85,7 +85,7 @@ ev_leader4_btl:
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
-//	_TRAINER_BTL_SET(  )
+//	_TRAINER_BTL_SET( TRID_LEADER4_01, 0 )
 //	敗戦処理
 
 	//リーダー：戦闘後メッセージ→続けてバッジ入手へ
@@ -301,6 +301,9 @@ ev_trainer_btl_01:
 	_OBJ_ANIME( C04GYM0101_TRAINER_01, anm_trainer_move_03 )
 	_OBJ_ANIME_WAIT()
 
+	//コースター（１台目）のトレーナー戦終了
+	_FLAG_SET( SYS_FLAG_C04GYM_TRBTL1 )
+
 	_RET
 
 
@@ -327,6 +330,9 @@ ev_trainer_btl_02:
 	//トレーナー：退く
 	_OBJ_ANIME( C04GYM0101_TRAINER_02, anm_trainer_move_03 )
 	_OBJ_ANIME_WAIT()
+
+	//コースター（２台目）のトレーナー戦終了
+	_FLAG_SET( SYS_FLAG_C04GYM_TRBTL2 )
 
 	_RET
 
