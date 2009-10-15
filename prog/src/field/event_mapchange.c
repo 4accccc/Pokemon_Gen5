@@ -104,18 +104,20 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
       { 
         FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
       }
+      //新しいマップモードなど機能指定を行う
+      MAPCHG_setupMapTools( gsys, &fmw->loc_req );
+      //新しいマップID、初期位置をセット
+      MAPCHG_updateGameData( gsys, &fmw->loc_req );
 			break;
-		}
 
-    //新しいマップモードなど機能指定を行う
-    MAPCHG_setupMapTools( gsys, &fmw->loc_req );
-		//新しいマップID、初期位置をセット
-		MAPCHG_updateGameData( gsys, &fmw->loc_req );
-		//新規ゾーンに配置する動作モデルを追加（新規ゲーム時のみ）
-	  if(	game_init_work->mode == GAMEINIT_MODE_FIRST
-        || game_init_work->mode == GAMEINIT_MODE_DEBUG ){
-		  MAPCHG_loadMMdl( gamedata, &fmw->loc_req );
-    }
+    case GAMEINIT_MODE_CONTINUE:
+      //新しいマップモードなど機能指定を行う
+      MAPCHG_setupMapTools( gsys, &fmw->loc_req );
+      break;
+
+    default:
+      GF_ASSERT(0);
+		}
 		
 		setFirstBGM(fmw->gamedata, fmw->loc_req.zone_id);
 		
@@ -271,9 +273,6 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
 		(*seq)++;
 		break;
 	case 1:
-		//配置していた動作モデルを削除
-    MAPCHG_releaseMMdl( gamedata );
-
     //マップモードなど機能指定を解除する
     MAPCHG_releaseMapTools( gsys );
 
@@ -286,8 +285,6 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     
 		//新しいマップID、初期位置をセット
 		MAPCHG_updateGameData( gsys, &mcw->loc_req );
-		//新規ゾーンに配置する動作モデルを追加
-		MAPCHG_loadMMdl( gamedata, &mcw->loc_req );
 
 		(*seq)++;
 		break;
@@ -598,9 +595,6 @@ void MAPCHG_GameOver( GAMESYS_WORK * gsys )
     GAMEDATA_SetEscapeLocation( gamedata, &esc );
   }
 
-  //配置していた動作モデルを削除
-  MAPCHG_releaseMMdl( gamedata );
-
   //マップモードなど機能指定を解除する
   MAPCHG_releaseMapTools( gsys );
 
@@ -612,8 +606,6 @@ void MAPCHG_GameOver( GAMESYS_WORK * gsys )
   
   //新しいマップID、初期位置をセット
   MAPCHG_updateGameData( gsys, &loc_req );
-  //新規ゾーンに配置する動作モデルを追加
-  MAPCHG_loadMMdl( gamedata, &loc_req );
 
   //ゲームオーバー時のフラグのクリア
   //FldFlgInit_GameOver(fsys);
@@ -728,8 +720,7 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
     ZONEDATA_DEBUG_GetZoneName(buf, loc_req->zone_id);
     TAMADA_Printf("MAPCHG_updateGameData:%s\n", buf);
   }
-	//イベント起動データの読み込み
-	EVENTDATA_SYS_Load(evdata, loc_req->zone_id, GAMEDATA_GetSeasonID(gamedata) );
+
 	
 	//開始位置セット
 	MakeNewLocation(evdata, loc_req, &loc);
@@ -750,12 +741,6 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 		PLAYERWORK_setDirection(mywork, direction);
 	}
 
-  //マトリックスデータの更新
-  {
-    MAP_MATRIX * matrix = GAMEDATA_GetMapMatrix( gamedata );
-		u16 matID = ZONEDATA_GetMatrixID( loc.zone_id );
-		MAP_MATRIX_Init( matrix, matID, loc.zone_id );
-  }
 	// ISSにゾーン切り替えを通知
 	{
 		ISS_SYS* iss = GAMESYSTEM_GetIssSystem( gsys );
@@ -778,6 +763,9 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 
   //特殊スクリプト呼び出し：ゾーン切り替え
   SCRIPT_CallZoneChangeScript( gsys, HEAPID_PROC );
+
+  //新規ゾーンに配置する動作モデルを追加
+  MAPCHG_loadMMdl( gamedata, loc_req );
 }
 
 //--------------------------------------------------------------
@@ -814,6 +802,7 @@ static void MAPCHG_releaseMMdl( GAMEDATA * gamedata )
 static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req )
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
   //MAPCHGモジュール群はFieldMapが存在しないときに呼ばれる
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
   GF_ASSERT( fieldmap == NULL );
@@ -835,15 +824,30 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NORMAL);
     break;
   } 
+
+	//イベント起動データの読み込み
+	EVENTDATA_SYS_Load(evdata, loc_req->zone_id, GAMEDATA_GetSeasonID(gamedata) );
+
+  //マトリックスデータの更新
+  {
+    MAP_MATRIX * matrix = GAMEDATA_GetMapMatrix( gamedata );
+		u16 matID = ZONEDATA_GetMatrixID( loc_req->zone_id );
+		MAP_MATRIX_Init( matrix, matID, loc_req->zone_id );
+  }
+
 }
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void MAPCHG_releaseMapTools( GAMESYS_WORK * gsys )
 {
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
   //MAPCHGモジュール群はFieldMapが存在しないときに呼ばれる
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
   GF_ASSERT( fieldmap == NULL );
+
+  //配置していた動作モデルを削除
+  MAPCHG_releaseMMdl( gamedata );
 
 }
 
