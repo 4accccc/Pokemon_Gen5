@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2009-10-15T16:08:38"/>
+	<create user="toru_nagihashi" host="W00160" date="2009-10-15T22:25:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="287" top="207" right="992" bottom="825" maximized="no" rayout="Vertical2">
+	<dialog left="-947" top="334" right="-242" bottom="952" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -362,6 +362,18 @@
 		<comment>友達手帳で、名前を入力するとき</comment>
 		<language name="JPN" width="256">ともだちの　なまえは？</language>
 		<language name="JPN_KANJI" width="256">友達の　名前は？</language>
+	</row>
+
+	<row id="NAMEIN_DEF_NAME_000">
+		<comment>主人公デフォルト名</comment>
+		<language name="JPN" width="256">ホワイト</language>
+		<language name="JPN_KANJI" width="256">ホワイト</language>
+	</row>
+
+	<row id="NAMEIN_DEF_NAME_001">
+		<comment>主人公デフォルト名</comment>
+		<language name="JPN" width="256">ブラック</language>
+		<language name="JPN_KANJI" width="256">ブラック</language>
 	</row>
 
 	<flowchart-group-list>

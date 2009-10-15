@@ -17,6 +17,7 @@
 #include "gamesystem/gamesystem.h"
 #include "system/bmp_winframe.h"
 #include "system/nsbtx_to_clwk.h"
+#include "sound/pm_sndsys.h"
 
 //	module
 #include "app/app_menu_common.h"
@@ -39,6 +40,7 @@
 #include "savedata/misc.h"
 
 //	mine
+#include "namein_snd.h"			//サウンド定義
 #include "namein_graphic.h"	//グラフィック設定
 #include "namein_data.h"		//名前入力データ（キー配列と変換）
 #include "app/name_input.h"	//外部参照
@@ -311,6 +313,11 @@ typedef enum
 	ICON_TYPE_BOX			= NAMEIN_BOX,
 } ICON_TYPE;
 
+//-------------------------------------
+///	その他
+//=====================================
+#define NAMEIN_DEFAULT_NAME_MAX	(2)
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -549,6 +556,7 @@ static BOOL STRINPUT_PrintMain( STRINPUT_WORK *p_wk );
 static void STRINPUT_CopyStr( const STRINPUT_WORK *cp_wk, STRBUF *p_strbuf );
 static void STRINPUT_DeleteChangeStr( STRINPUT_WORK *p_wk );
 static void STRINPUT_DecideChangeStr( STRINPUT_WORK *p_wk );
+static BOOL STRINPUT_IsInputEnd( const STRINPUT_WORK *cp_wk );
 static BOOL StrInput_ChangeStrToStr( STRINPUT_WORK *p_wk, BOOL is_shift );
 //-------------------------------------
 ///	KEYMAP
@@ -575,7 +583,7 @@ static KEYMAP_KEYTYPE KeyMap_QWERTY_GetKeyType( const GFL_POINT *cp_cursor, GFL_
 //=====================================
 static void KEYBOARD_Init( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode, GFL_FONT *p_font, PRINT_QUE *p_que, HEAPID heapID );
 static void KEYBOARD_Exit( KEYBOARD_WORK *p_wk );
-static void KEYBOARD_Main( KEYBOARD_WORK *p_wk );
+static void KEYBOARD_Main( KEYBOARD_WORK *p_wk, const STRINPUT_WORK *cp_strinput );
 static KEYBOARD_STATE KEYBOARD_GetState( const KEYBOARD_WORK *cp_wk );
 static KEYBOARD_INPUT KEYBOARD_GetInput( const KEYBOARD_WORK *cp_wk, STRCODE *p_str );
 static BOOL KEYBOARD_IsShift( const KEYBOARD_WORK *cp_wk );
@@ -1565,6 +1573,8 @@ static void STRINPUT_BackSpace( STRINPUT_WORK *p_wk )
 		p_wk->change_idx--;
 		p_wk->change_str[ p_wk->change_idx ] = GFL_STR_GetEOMCode();
 		p_wk->is_update	= TRUE;
+
+		PMSND_PlaySE( NAMEIN_SE_DELETE_STR );
 	}
 	else
 	{	
@@ -1573,6 +1583,8 @@ static void STRINPUT_BackSpace( STRINPUT_WORK *p_wk )
 			p_wk->input_idx--;
 			p_wk->input_str[ p_wk->input_idx ] = GFL_STR_GetEOMCode();
 			p_wk->is_update	= TRUE;
+
+			PMSND_PlaySE( NAMEIN_SE_DELETE_STR );
 		}
 	}
 }
@@ -1598,6 +1610,8 @@ static BOOL STRINPUT_SetStr( STRINPUT_WORK *p_wk, STRCODE code )
 		OS_Printf( "\nSetStr\n " );
 		DEBUG_NAMEIN_Print(p_wk->input_str,p_wk->input_idx);
 
+		PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
+
 		p_wk->is_update	= TRUE;
 
 		return TRUE;
@@ -1619,7 +1633,8 @@ static BOOL STRINPUT_SetStr( STRINPUT_WORK *p_wk, STRCODE code )
 static BOOL STRINPUT_SetChangeStr( STRINPUT_WORK *p_wk, STRCODE code, BOOL is_shift )
 {	
 	//入力できるか
-	if( p_wk->change_idx < STRINPUT_CHANGE_LEN )
+	if( p_wk->input_idx < p_wk->strlen
+			&& p_wk->change_idx < STRINPUT_CHANGE_LEN )
 	{	
 		p_wk->change_str[ p_wk->change_idx ] = code;
 		p_wk->change_idx++;
@@ -1627,6 +1642,8 @@ static BOOL STRINPUT_SetChangeStr( STRINPUT_WORK *p_wk, STRCODE code, BOOL is_sh
 
 		//変換バッファから確定バッファへの変換処理
 		StrInput_ChangeStrToStr( p_wk, is_shift );
+
+		PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
 		
 		p_wk->is_update	= TRUE;
 		return TRUE;
@@ -1690,6 +1707,8 @@ static BOOL STRINPUT_SetChangeSP( STRINPUT_WORK *p_wk, STRINPUT_SP_CHANGE type )
 				{	
 					STRINPUT_SetStr( p_wk, code[i] );
 				}
+
+				PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
 				return TRUE;
 			}
 		}
@@ -1754,6 +1773,19 @@ static void STRINPUT_DecideChangeStr( STRINPUT_WORK *p_wk )
 	}
 	p_wk->change_idx	= 0;
 	p_wk->change_str[ p_wk->change_idx ] = GFL_STR_GetEOMCode();
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	入力文字欄	入力数が限界かどうか
+ *
+ *	@param	const STRINPUT_WORK *cp_wk	ワーク
+ *
+ *	@return	TRUEならば入力最大	FALSEならばまだ
+ */
+//-----------------------------------------------------------------------------
+static BOOL STRINPUT_IsInputEnd( const STRINPUT_WORK *cp_wk )
+{	
+	return cp_wk->input_idx == cp_wk->strlen;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2954,12 +2986,16 @@ static void KEYBOARD_Exit( KEYBOARD_WORK *p_wk )
  *	@brief	キーボード	メイン処理
  *
  *	@param	KEYBOARD_WORK *p_wk		ワーク
+ *	@param	STRINPUT_WORK	*cp_strinput	文字入力欄
  *
  */
 //-----------------------------------------------------------------------------
-static void KEYBOARD_Main( KEYBOARD_WORK *p_wk )
+static void KEYBOARD_Main( KEYBOARD_WORK *p_wk, const STRINPUT_WORK *cp_strinput )
 {	
+	//入力を初期化
+	p_wk->input	= KEYBOARD_INPUT_NONE;
 
+	//状態ごとの処理
 	switch( p_wk->state )
 	{	
 	case KEYBOARD_STATE_WAIT:		//処理待ち中
@@ -2969,8 +3005,6 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk )
 			BOOL	is_push	= FALSE;
 			GFL_POINT	anm_pos;
 
-			//入力を初期化
-			p_wk->input	= KEYBOARD_INPUT_NONE;
 			//タッチ
 			if( is_decide == FALSE )
 			{	
@@ -3025,6 +3059,7 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk )
 					//移動アニメ
 					if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
 					{	
+						PMSND_PlaySE( NAMEIN_SE_MOVE_CURSOR );
 						KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );
 					}
 				}
@@ -3075,9 +3110,11 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk )
 					//他のときは通常入力
 					p_wk->input	= p_wk->mode == NAMEIN_INPUTTYPE_QWERTY ?
 						KEYBOARD_INPUT_CHANGESTR: KEYBOARD_INPUT_STR;
+					p_wk->state	= KEYBOARD_STATE_INPUT;
 					break;
 				case KEYMAP_KEYTYPE_SPACE:		//スペース入力
 					p_wk->input	= KEYBOARD_INPUT_SPACE;
+					p_wk->state	= KEYBOARD_STATE_INPUT;
 					break;
 
 				case KEYMAP_KEYTYPE_KANA:		//かなモード
@@ -3091,6 +3128,8 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk )
 				case KEYMAP_KEYTYPE_QWERTY:	//ローマ字モード
 					if( Keyboard_StartMove( p_wk, type - KEYMAP_KEYTYPE_KANA ) )
 					{	
+						PMSND_PlaySE( NAMEIN_SE_CHANGE_MODE );
+
 						p_wk->state	= KEYBOARD_STATE_MOVE;
 						p_wk->input = KEYBOARD_INPUT_CHAGETYPE;
 					}
@@ -3101,6 +3140,8 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk )
 					break;
 
 				case KEYMAP_KEYTYPE_DECIDE:	//やめる
+
+					PMSND_PlaySE( NAMEIN_SE_DECIDE );
 					p_wk->input = KEYBOARD_INPUT_EXIT;
 					break;
 
@@ -3128,6 +3169,11 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk )
 		break;
 
 	case KEYBOARD_STATE_INPUT:	//入力
+		if( STRINPUT_IsInputEnd( cp_strinput ) )
+		{	
+			KEYMAP_GetCursorByKeyType( &p_wk->keymap, KEYMAP_KEYTYPE_DECIDE, &p_wk->cursor );
+		}
+		p_wk->state	= KEYBOARD_STATE_WAIT;
 		break;
 
 	case KEYBOARD_STATE_MOVE:		//移動中
@@ -3923,7 +3969,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	}
 
 	//メイン処理
-	KEYBOARD_Main( &p_wk->keyboard );
+	KEYBOARD_Main( &p_wk->keyboard, &p_wk->strinput );
 	STRINPUT_Main( &p_wk->strinput );
 }
 
@@ -3952,5 +3998,22 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
 	GFL_STR_DeleteBuffer( p_src_str );
 
+	//もし主人公入力で、入力数が0ならばデフォルト名を入れる
+	if( GFL_STR_GetBufferLength( p_wk->p_param->strbuf ) == 0
+			&& p_wk->p_param->mode == NAMEIN_MYNAME )
+	{	
+		STRBUF *p_msg_str;
+		p_msg_str	= GFL_MSG_CreateString( p_wk->p_msg, 
+									NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
+
+		GFL_STR_CopyBuffer( p_wk->p_param->strbuf, p_msg_str );
+		GFL_STR_DeleteBuffer( p_msg_str );
+
+/*		GFL_MSG_GetString( p_wk->p_msg, 
+				NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ),
+				p_wk->p_param->strbuf );
+*/	}
+
+	//終了
 	SEQ_End( p_seqwk );
 }

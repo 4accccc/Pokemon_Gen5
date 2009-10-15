@@ -21,7 +21,8 @@
 //-------------------------------------
 ///	名前入力モード
 //=====================================
-typedef enum {
+typedef enum 
+{
 	NAMEIN_MYNAME = 0,	// 自分の名前	param1自分の性別
 	NAMEIN_POKEMON,		// ポケモンの名前 param1モンスター番号 param2フォルム番号
 	NAMEIN_BOX,			// ボックスの名前
