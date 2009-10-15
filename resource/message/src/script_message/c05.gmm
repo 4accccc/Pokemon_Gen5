@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-11T19:26:35"/>
+	<create user="matsumiya" host="W00207" date="2009-10-15T18:03:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -413,7 +413,8 @@
 		<comment>♂
 ・コンテナ内でプラズマ団に勝利すると
 　ジム前にゲーチスたちを配置
-・七賢人たちも同様に配置
+・七賢人×１
+　プラズマ団したっぱ♂×２も配置
 ・続けてleader_04</comment>
 		<attribute name="キャラクター">七賢者ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『ヤーコンさん
@@ -489,32 +490,52 @@
 		<attribute name="キャラクター">LEADER5
 ヤーコン</attribute>
 		<language name="JPN" width="256">ヤーコン『フン！　わかった
-こいつらを　つれて　かえりな！[BE:01:ページ切り替え（クリア）]
-</language>
+こいつらを　つれて　かえりな！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ヤーコン『フン！　わかった
-こいつらを　連れて　帰りな！[BE:01:ページ切り替え（クリア）]
-</language>
+こいつらを　連れて　帰りな！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c05_sage1_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、七賢人のOBJ
-　ヤーコンのほうに移動
-・その後、画面暗転し
-　プラズマ団のOBJ削除</comment>
+　ヤーコンのほうに移動</comment>
 		<attribute name="キャラクター">七賢者ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『さすが
 こうざんおうと　よばれる[BE:00:ページ切り替え（行送り）]
 すぐれた　しょうばいにん……[BE:01:ページ切り替え（クリア）]
 では……　そちらの　しちけんじんを
-ひきとらせて　いただきます……[BE:01:ページ切り替え（クリア）]
-また　いつのひか
-お会いすることも　あるでしょう[BE:01:ページ切り替え（クリア）]</language>
+ひきとらせて　いただきます……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『さすが　鉱山王と呼ばれる
 優れた　商売人……[BE:01:ページ切り替え（クリア）]
 では……　そちらの　七賢人を
-引き取らせて　いただきます……[BE:01:ページ切り替え（クリア）]
-また　いつの日か
+引き取らせて　いただきます……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c05_sage2_01">
+		<comment>♂
+･七賢人、ゲーチスのそばで
+　このメッセージ表示
+・続けてmsg_c05_sage1_05</comment>
+		<language name="JPN" width="256">？？？『ゲーチスさま……
+ありがとう　ございます……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">？？？『ゲーチスさま……
+ありがとう　ございます……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c05_sage1_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・その後、画面暗転し
+　プラズマ団のOBJ削除</comment>
+		<attribute name="キャラクター">七賢者ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『よいのです
+ともに　おうのため　はたらく　なかま……[BE:01:ページ切り替え（クリア）]
+それでは　みなさん
+また　いつのひか[BE:00:ページ切り替え（行送り）]
+おあいすることも　あるでしょう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『よいのです
+共に　王のため　働く仲間……[BE:01:ページ切り替え（クリア）]
+それでは　みなさん
+また　いつの日か[BE:00:ページ切り替え（行送り）]
 お会いすることも　あるでしょう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
