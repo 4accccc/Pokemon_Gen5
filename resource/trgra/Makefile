@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	ohmura
+USERS	=	sogabe nishino ohmura
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -121,11 +121,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 #do-build:	$(SCRFILE) $(NARCNAME)
 do-build:	$(NARCNAME_F) $(NARCNAME_B)
-
-#本来、scrファイルはトレーナーデータから生成されるがそれまでの暫定処置
-#$(SCRFILE): $(RUBY_DIR)mkscr.rb
-#	ls -1 tbwb*.NCER > ncer.lst
-#	ruby $(RUBY_DIR)mkscr.rb ncer.lst $(SCRFILE)
 
 $(NARCNAME_F): $(notdir $(MCSSNCGFILE:.ncg=.NCBR)) $(notdir $(MCSSNCEFILE:.nce=.NCER)) $(notdir $(MCSSNCLFILE:.ncl=.NCLR)) $(SCRFILE_F)
 	nnsarc -c -l -n -i $(NARCNAME_F) -S $(SCRFILE_F)
