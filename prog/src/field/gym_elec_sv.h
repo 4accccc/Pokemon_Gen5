@@ -15,7 +15,7 @@
 
 typedef struct CAPSULE_DAT_tag
 {
-  int RaleIdx;      //現在走行中のレールインデックス
+///  int RaleIdx;      //現在走行中のレールインデックス
   fx32 AnmFrame;    //レールの現在アニメフレーム
 }CAPSULE_DAT;
 
