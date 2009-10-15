@@ -556,14 +556,19 @@ VMCMD_RESULT EvCmdChkPokeWazaGroup( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 extern VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk )
 {
-  GAMEDATA*  gdata = SCRCMD_WORK_GetGameData( wk );
-  POKEPARTY* party = GAMEDATA_GetMyPokemon( gdata );
-  u16*      ret_wk = SCRCMD_GetVMWork( core, wk );          // コマンド第1引数
-  u16       monsno = SCRCMD_GetVMWorkValue( core, wk );     // コマンド第2引数
-  u16       formno = SCRCMD_GetVMWorkValue( core, wk );     // コマンド第3引数
-  u16      tokusei = SCRCMD_GetVMWorkValue( core, wk );     // コマンド第4引数
-  u16        level = SCRCMD_GetVMWorkValue( core, wk );     // コマンド第5引数
-  u16       itemno = SCRCMD_GetVMWorkValue( core, wk );     // コマンド第6引数
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*    gdata = SCRCMD_WORK_GetGameData( work );
+  HEAPID     heap_id = SCRCMD_WORK_GetHeapID( work );
+  POKEPARTY*   party = GAMEDATA_GetMyPokemon( gdata );
+  MYSTATUS*   status = GAMEDATA_GetMyStatus( gdata );
+  u16*        ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  u16         monsno = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+  u16         formno = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数
+  u16        tokusei = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数
+  u16          level = SCRCMD_GetVMWorkValue( core, work );  // コマンド第5引数
+  u16         itemno = SCRCMD_GetVMWorkValue( core, work );  // コマンド第6引数
+  POKEMON_PARAM*  pp = NULL;
 
   // 手持ちがいっぱいなら追加しない
   if( PokeParty_GetPokeCountMax(party) <= PokeParty_GetPokeCount(party) )
@@ -573,7 +578,20 @@ extern VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk )
   }
 
   // 追加するポケモンを作成
+  pp = PP_Create( monsno, level, PTL_SETUP_ID_AUTO, heap_id );
+  PP_Put( pp, ID_PARA_form_no, formno );    // フォーム
+  PP_Put( pp, ID_PARA_speabino, tokusei );  // 特性
+  PP_Put( pp, ID_PARA_item, itemno );       // 所持アイテム
+  { // 親の名前
+    STRBUF* buf = MyStatus_CreateNameString( status, heap_id );
+    PP_Put( pp, ID_PARA_oyaname, (u32)buf );
+    GFL_STR_DeleteBuffer( buf );
+  }
+
   // 手持ちに追加
+  PokeParty_Add( party, pp );
+
+  GFL_HEAP_FreeMemory( pp );
   *ret_wk = TRUE;
   return VMCMD_RESULT_CONTINUE;
 }
