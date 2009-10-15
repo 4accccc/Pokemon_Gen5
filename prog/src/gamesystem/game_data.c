@@ -871,6 +871,39 @@ SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata)
 
 //--------------------------------------------------------------
 /**
+ * @brief   ゲームデータが持つ情報を元に分割セーブを開始
+ *
+ * @param   gamedata		ゲームデータへのポインタ
+ *
+ * @retval  none
+ */
+//--------------------------------------------------------------
+void GAMEDATA_SaveAsyncStart(GAMEDATA *gamedata)
+{
+  //セーブワークの情報を更新
+  GAMEDATA_SaveDataUpdate(gamedata);
+
+  //セーブ開始
+  SaveControl_SaveAsyncInit(gamedata->sv_control_ptr);
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   ゲームデータが持つ情報を元に分割セーブを実行
+ *
+ * @param   gamedata		ゲームデータへのポインタ
+ *
+ * @retval  セーブ結果
+ */
+//--------------------------------------------------------------
+SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata)
+{
+  return SaveControl_SaveAsyncMain(gamedata->sv_control_ptr);
+}
+
+//--------------------------------------------------------------
+/**
  * @brief	  セーブコントロールワークを取得する
  * @param	  gamedata			GAMEDATAへのポインタ
  * @return	SAVE_CONTROL_WORK	のポインタ
