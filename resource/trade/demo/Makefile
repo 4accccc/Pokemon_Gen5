@@ -150,6 +150,7 @@ $(targetname).narc:  $(OBJ_FILE) Makefile
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t ball_001.ica ball_001.bin
 	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -t ball_002.ica ball_002.bin
 	../../../tools/SPRArchiver.exe -o spahead.h ./ ./ demo_tex001.spa
+	cp spahead.h ../../../prog/src/net_app/poke_trade/
 	-ls -f *.N*R > $(LIST_FILE)
 	-ls -f *.nsb* >> $(LIST_FILE)
 	-ls -f *.spa >> $(LIST_FILE)
@@ -173,6 +174,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -rf *.N*R
 	rm -rf *.nsb*
 	rm -rf *.h
+	rm -rf *.spa
 	rm -rf $(targetname).narc
 	rm -rf $(targetname).naix
 endif
