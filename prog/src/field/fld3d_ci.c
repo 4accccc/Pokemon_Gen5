@@ -38,22 +38,6 @@ typedef struct FLD3D_CI_tag
 }FLD3D_CI;
 
 //バイナリデータフォーマット
-/*
-typedef struct {
-  u16 SpaIdx;
-  u16 SpaWait;
-  u16 MdlAObjIdx;
-  u16 MdlAAnm1Idx;
-  u16 MdlAAnm2Idx;
-  u16 MdlAAnm3Idx;
-  u16 MdlAAnmWait;
-  u16 MdlBObjIdx;
-  u16 MdlBAnm1Idx;
-  u16 MdlBAnm2Idx;
-  u16 MdlBAnm3Idx;
-  u16 MdlBAnmWait;
-}RES_DEF_DAT;
-*/
 typedef struct {
   u16 SpaIdx;
   u16 SpaWait;
@@ -468,41 +452,7 @@ static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID 
 
   //アーカイブからリソース定義をロード
   GFL_ARC_LoadData(&def_dat, ARCID_FLD3D_CI_SETUP, inResArcIdx);
-#if 0  
-  //OBJ数を調べる
-  {
-    obj_num = 0;
-    if (def_dat.MdlAObjIdx != NONDATA){
-      obj_num++;
-    }
-    if (def_dat.MdlBObjIdx != NONDATA){
-      obj_num++;
-    }
-  }
-  //アニメ数を調べる
-  {
-    anm1_num = 0;
-    anm2_num = 0;
-    if (def_dat.MdlAAnm1Idx != NONDATA){
-      anm1_num++;
-    }
-    if (def_dat.MdlAAnm2Idx != NONDATA){
-      anm1_num++;
-    }
-    if (def_dat.MdlAAnm3Idx != NONDATA){
-      anm1_num++;
-    }
-    if (def_dat.MdlBAnm1Idx != NONDATA){
-      anm2_num++;
-    }
-    if (def_dat.MdlBAnm2Idx != NONDATA){
-      anm2_num++;
-    }
-    if (def_dat.MdlBAnm3Idx != NONDATA){
-      anm2_num++;
-    }
-  }
-#endif
+
   //OBJ数を調べる
   obj_num = 0;
   for (i=0;i<OBJCOUNT_MAX;i++){
@@ -530,7 +480,7 @@ static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID 
 
   //リソース数を調べる
   res_num = obj_num+anm1_num+anm2_num;
-#if 1
+#if 0
   OS_Printf("obj_anm_res = %d %d %d %d\n",obj_num, anm1_num, anm2_num, res_num);
   OS_Printf("res_start = %d %d %d \n",obj_res_start,anm1_res_start,anm2_res_start );
 #endif
