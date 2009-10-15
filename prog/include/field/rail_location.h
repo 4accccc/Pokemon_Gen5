@@ -15,10 +15,8 @@ typedef struct {
   u16 rail_index; //index of point or line
   u8 type;        // FIELD_RAIL_TYPE
   u8 key;         // RAIL_KEY
-  s8 width_grid;   // RAILグリッド
-  s8 line_grid;    // RAILグリッド
-
-  u8 pad[2];
+  s16 width_grid;   // RAILグリッド
+  u16 line_grid;    // RAILグリッド
 } RAIL_LOCATION;
 
 //------------------------------------------------------------------

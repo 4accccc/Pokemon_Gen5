@@ -378,3 +378,7 @@ extern BOOL FIELD_RAIL_WORK_IsActive( const FIELD_RAIL_WORK * work );
 extern BOOL FIELD_RAIL_TOOL_HitCheckSphere( const VecFx32* person, const VecFx32* check, fx32 r );
 
  
+#ifdef PM_DEBUG
+// レールグリッドデバック出力
+extern void FIELD_RAIL_WORK_DEBUG_PrintRailGrid( const FIELD_RAIL_WORK * work );
+#endif

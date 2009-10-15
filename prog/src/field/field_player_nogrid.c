@@ -300,6 +300,15 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int k
   default:
     GF_ASSERT( 0 );
   }
+
+
+
+#ifdef PM_DEBUG
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+  {
+    FIELD_RAIL_WORK_DEBUG_PrintRailGrid( p_player->p_railwork );
+  }
+#endif
 }
 
 

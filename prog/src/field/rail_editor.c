@@ -65,14 +65,14 @@ enum {
 } ;
 
 // 汎用受信バッファ
-#define RE_TMP_BUFF_SIZE	( 0x3000 )
+#define RE_TMP_BUFF_SIZE	( 0x8000 )
 
 //-------------------------------------
 ///	レール、エリア受信バッファサイズ
 //=====================================
-#define RE_MCS_BUFF_RAIL_SIZE	( 0x3000 )
+#define RE_MCS_BUFF_RAIL_SIZE	( 0x8000 )
 #define RE_MCS_BUFF_AREA_SIZE	( 0x400 )
-#define RE_MCS_BUFF_ATTR_SIZE	( 0x3000 )
+#define RE_MCS_BUFF_ATTR_SIZE	( 0x8000 )
 
 
 //-------------------------------------
@@ -88,7 +88,7 @@ enum {
 ///	レール描画リソース
 //=====================================
 #define RM_DRAW_OBJ_RES_MAX	( FIELD_RAIL_TYPE_MAX )
-#define RM_DRAW_OBJ_MAX	( 256 )
+#define RM_DRAW_OBJ_MAX	( 312 )
 
 // positionリソース
 enum
@@ -180,6 +180,7 @@ typedef struct {
 
 //-------------------------------------
 ///	リソース
+//  60byte
 //=====================================
 typedef struct {
 	u8  use;
@@ -622,7 +623,7 @@ static void RE_DRAW_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK * p_fieldmap
 {
 	RE_RAIL_DRAW_WORK* p_wk = p_work;
 
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
     if( p_wk->rail_draw_flag )
     {
@@ -758,7 +759,8 @@ static RE_RAIL_DRAW_OBJ* RE_DRAW_GetClearWork( RE_RAIL_DRAW_WORK* p_wk )
 			return &p_wk->draw_obj[i];
 		}
 	}
-	GF_ASSERT( 0 );
+
+  OS_TPrintf( "RailEditor DrawOBJ Over!!!" );
 			
 	return &p_wk->draw_obj[0];
 }
@@ -910,7 +912,7 @@ static void RE_DRAW_SetUpLine( RE_RAIL_DRAW_WORK* p_wk, const FLDNOGRID_MAPPER* 
     FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &location, &pos1 );
     VEC_Set( &pos2, pos1.x, pos1.y, pos1.z );
 
-    for( i=1; i<line_ofs_max; i++ )
+    for( i=1; i<line_ofs_max; i+=3 )
     {
       location.line_grid = i;
       FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &location, &pos2 );
@@ -1902,11 +1904,13 @@ static void RE_InitInputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
 	VecFx32 pos;
 
-	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
 	FIELD_CAMERA_BindDefaultTarget( p_camera );
 
 	FLDNOGRID_MAPPER_DEBUG_SetActive(p_mapper, FALSE);
+  FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive(p_mapper, FALSE);
+
+	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
 	// プレイヤー座標をハーフグリッド単位にする
 	FIELD_PLAYER_GetPos( p_player, &pos );
@@ -1940,6 +1944,7 @@ static void RE_InitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 	u32 linepos_set;
 
 	FLDNOGRID_MAPPER_DEBUG_SetActive(p_mapper, FALSE);
+  FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive(p_mapper, FALSE);
 
 	FIELD_CAMERA_FreeTarget( p_camera );
 	
@@ -2000,6 +2005,7 @@ static void RE_InitInputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk )
 
 	// レール移動
   FLDNOGRID_MAPPER_DEBUG_SetActive( p_mapper, TRUE );
+  FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive(p_mapper, TRUE);
 
 	FIELD_CAMERA_FreeTarget( p_camera );
 }
@@ -2011,7 +2017,11 @@ static void RE_InitInputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk )
 static void RE_InitInputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk )
 {
 	FIELD_SUBSCREEN_WORK * subscreen;
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
 	
+	// レール移動
+  FLDNOGRID_MAPPER_DEBUG_SetActive( p_mapper, FALSE );
+  FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive(p_mapper, FALSE);
 
 	// カメラ操作は下画面で行う
 	subscreen = FIELDMAP_GetFieldSubscreenWork(p_wk->p_fieldmap);
@@ -2035,7 +2045,12 @@ static void RE_InitInputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk )
 static void RE_InitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk )
 {
 	FIELD_SUBSCREEN_WORK * subscreen;
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
 	
+
+	// レール移動
+  FLDNOGRID_MAPPER_DEBUG_SetActive( p_mapper, FALSE );
+  FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive(p_mapper, FALSE);
 
 	// カメラ操作は下画面で行う
 	subscreen = FIELDMAP_GetFieldSubscreenWork(p_wk->p_fieldmap);

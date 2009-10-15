@@ -149,7 +149,8 @@ struct _FIELD_RAIL_WORK{
 struct _FIELD_RAIL_MAN{
   HEAPID heapID;
 
-  BOOL active_flag;
+  u16 active_flag;
+  u16 user_active_flag;
 
   FIELD_RAIL_WORK * rail_work;
   int work_num;
@@ -251,6 +252,7 @@ FIELD_RAIL_MAN * FIELD_RAIL_MAN_Create(HEAPID heapID, u32 work_num, FIELD_CAMERA
 
   man->heapID = heapID;
   man->active_flag = FALSE;
+  man->user_active_flag = TRUE;
   man->field_camera = camera;
   man->camera_bind_work = NULL;
 
@@ -457,7 +459,7 @@ void FIELD_RAIL_MAN_DEBUG_ChangeData(FIELD_RAIL_MAN * man, const RAIL_SETTING * 
 //------------------------------------------------------------------
 void FIELD_RAIL_MAN_SetActiveFlag(FIELD_RAIL_MAN * man, BOOL flag)
 {
-  man->active_flag = flag;
+  man->user_active_flag = flag;
 }
 
 //------------------------------------------------------------------
@@ -466,7 +468,7 @@ void FIELD_RAIL_MAN_SetActiveFlag(FIELD_RAIL_MAN * man, BOOL flag)
 //------------------------------------------------------------------
 BOOL FIELD_RAIL_MAN_GetActiveFlag(const FIELD_RAIL_MAN *man)
 {
-  return man->active_flag;
+  return man->user_active_flag;
 }
 
 //------------------------------------------------------------------
@@ -478,6 +480,11 @@ void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man)
 
 
   if( !man->active_flag )
+  {
+    return ;
+  }
+
+  if( !man->user_active_flag )
   {
     return ;
   }
@@ -1115,7 +1122,7 @@ void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
 			DEBUG_RAIL_Printf("RAIL:%s :line_ofs=%d line_ofs_max=%d width_ofs=%d width_ofs_max=%d\n",
 					debugGetRailKeyName(set_key), 
           RAIL_OFS_TO_GRID(work->line_ofs), RAIL_OFS_TO_GRID(work->line_ofs_max), 
-          RAIL_OFS_TO_GRID(work->width_ofs) + RAIL_OFS_TO_GRID(work->width_ofs_max), 
+          RAIL_OFS_TO_GRID(work->width_ofs), 
           (RAIL_OFS_TO_GRID(work->width_ofs_max)*2) );
 
       work->last_key    = set_key;
@@ -1344,6 +1351,38 @@ BOOL FIELD_RAIL_TOOL_HitCheckSphere( const VecFx32* person, const VecFx32* check
 
 
 
+#ifdef PM_DEBUG
+// レールグリッドデバック出力
+void FIELD_RAIL_WORK_DEBUG_PrintRailGrid( const FIELD_RAIL_WORK * work )
+{
+  GF_ASSERT( work );
+
+  if( work->type == FIELD_RAIL_TYPE_LINE )
+  {
+    s32 width_ofs_max_s, width_ofs_max_e;
+    s32 width_ofs_max;
+
+    width_ofs_max_s = getLineWidthOfsMax( &work->line[ work->dat_index ], 0, work->line_ofs_max, work->rail_dat );
+    width_ofs_max_e = getLineWidthOfsMax( &work->line[ work->dat_index ], work->line_ofs_max, work->line_ofs_max, work->rail_dat );
+    
+    if( width_ofs_max_s >= width_ofs_max_e )
+    {
+      width_ofs_max = width_ofs_max_s;
+    }
+    else
+    {
+      width_ofs_max = width_ofs_max_e;
+    }
+    
+    OS_TPrintf("RAIL:%s :front_grid=%d side_grid=%d \n",
+        work->line[ work->dat_index ].name, 
+        RAIL_OFS_TO_GRID(work->line_ofs), 
+        RAIL_OFS_TO_GRID(work->width_ofs) + RAIL_OFS_TO_GRID(width_ofs_max) );
+  }
+
+}
+
+#endif
 
 
 
@@ -2485,6 +2524,7 @@ static BOOL debugCheckPointData(const RAIL_POINT * point, const RAIL_SETTING* ra
       return FALSE;
     }
 
+#if 0 // line情報が、常に一定方向のキーで生成されている必要はない？
     if (point->keys[i] != RAIL_KEY_NULL)
     {
       for (j = i+1; j < RAIL_CONNECT_LINE_MAX; j++)
@@ -2501,6 +2541,7 @@ static BOOL debugCheckPointData(const RAIL_POINT * point, const RAIL_SETTING* ra
         }
       }
     }
+#endif
   }
   return TRUE;
 }
@@ -2633,4 +2674,5 @@ static u32 getLineIndex( const RAIL_SETTING * raildat, const RAIL_LINE* line )
   GF_ASSERT_MSG( i<raildat->line_count, "不明なlineです。" );
   return 0; // フリーズ回避
 }
+
 

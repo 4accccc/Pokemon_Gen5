@@ -44,6 +44,7 @@ struct _FLD_SCENEAREA {
 	// 動作フラグ
 	u32 active_flag;
 
+
 	// コール関数ID
 	u32 call_funcID;
 };
@@ -79,6 +80,8 @@ FLD_SCENEAREA* FLD_SCENEAREA_Create( u32 heapID, FIELD_CAMERA * p_camera )
 
   // アクティブ領域なし
   p_sys->active_area = FLD_SCENEAREA_ACTIVE_NONE;
+
+  p_sys->active_flag = TRUE;
 
   return p_sys;
 }
@@ -118,9 +121,6 @@ void FLD_SCENEAREA_Load( FLD_SCENEAREA* p_sys, const FLD_SCENEAREA_DATA* cp_data
 
   // アクティブ領域なし
   p_sys->active_area = FLD_SCENEAREA_ACTIVE_NONE;
-
-  // アクティブ
-  p_sys->active_flag = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -154,6 +154,11 @@ u32 FLD_SCENEAREA_Update( FLD_SCENEAREA* p_sys, const VecFx32* cp_pos )
   int i;
   u32 now_active;
 	BOOL result;
+
+  if( !p_sys->active_flag )
+  {
+    return FLD_SCENEAREA_UPDATE_NONE;
+  }
 
 	p_sys->call_funcID = FLD_SCENEAREA_FUNC_NULL;
   

@@ -107,6 +107,11 @@
 
 #endif
 
+// フィールドマップ描画にかかる処理時間を求める
+#ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
+#define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY ( PAD_BUTTON_L )
+#endif //DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
+
 
 //======================================================================
 //	define
@@ -832,7 +837,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
   debug_fieldmap_end_tick = OS_GetTick();
   debug_fieldmap_end_tick -= debug_fieldmap_start_tick;
 
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  if( GFL_UI_KEY_GetCont() & DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY )
   {
     OS_TPrintf( "draw_tick %d micro second\n", OS_TicksToMicroSeconds( debug_fieldmap_end_tick ) );
   }

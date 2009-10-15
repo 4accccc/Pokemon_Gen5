@@ -57,50 +57,6 @@ static const RAIL_LOCATION locationStart = {
 };
 
 
-//======================================================================
-//	ダミーNPC
-//======================================================================
-//#define DEBUG_TEST_NPC
-
-#ifdef DEBUG_TEST_NPC
-static const MMDL_HEADER dummyNpc = 
-{
-  128,
-  BOY1,
-  MV_RAIL_DMY,
-  EV_TYPE_TRAINER, 0, 0,
-  DIR_DOWN,
-  0,0,0,
-  0,0,
-  0,0,
-  0
-};
-static const RAIL_LOCATION sc_initLocation[] = 
-{
-  {
-    13,
-    FIELD_RAIL_TYPE_LINE,
-    RAIL_KEY_DOWN,
-    4,
-    3,
-  },
-  {
-    6,
-    FIELD_RAIL_TYPE_LINE,
-    RAIL_KEY_DOWN,
-    2,
-    15,
-  },
-  {
-    6,
-    FIELD_RAIL_TYPE_LINE,
-    RAIL_KEY_DOWN,
-    -2,
-    15,
-  },
-};
-static MMDL* s_DUMMY_MDL[NELEMS(sc_initLocation)] = {NULL};
-#endif // DEBUG_TEST_NPC
 
 //======================================================================
 //	proto
@@ -168,22 +124,6 @@ static void mapCtrlNoGrid_Create(
 	FIELD_PLAYER_SetPos( fld_player, pos );
 	FIELD_PLAYER_SetDir( fld_player, dir );
 
-
-#ifdef DEBUG_TEST_NPC
-  // NPC表示実験
-  {
-    MMDLSYS* fos = FIELDMAP_GetMMdlSys( fieldWork );
-    int i;
-    
-    for( i=0; i<NELEMS(sc_initLocation); i++ )
-    {
-      s_DUMMY_MDL[i] = MMDLSYS_AddMMdl(
-      	fos, &dummyNpc, ZONE_ID_H01 );
-      MMDL_OnStatusBit( s_DUMMY_MDL[i], MMDL_STABIT_RAIL_MOVE );
-      MMDL_SetRailLocation( s_DUMMY_MDL[i], &sc_initLocation[i] );
-    }
-  }
-#endif
 
 
   //  カメラ範囲
