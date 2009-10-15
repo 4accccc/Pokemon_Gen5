@@ -170,7 +170,7 @@
 			</tag>
 		</group>
 
-		<group entry="189" japanese="汎用コントロール" english="汎用コントロール">
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
 			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
 				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
 				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>

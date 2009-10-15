@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-10-13T20:15:20"/>
+	<create user="taya" host="W00146" date="2009-10-14T18:39:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -215,24 +215,25 @@
 			</tag>
 		</group>
 
-		<group entry="189" japanese="汎用コントロール" english="汎用コントロール">
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
 			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
 				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
 				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
 				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
-				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版です。
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
 ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
-				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版です。
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
 ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
 			</tag>
 			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
-			<tag entry="02" japanese="描画Ｘ座標変更" english="描画Ｘ座標変更" view="EP" length="0" line="1">
-				<parameter number="0" japanese="Ｘ座標" english="Ｘ座標" type="int16"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
 			</tag>
-			<tag entry="03" japanese="描画Ｙ座標変更" english="描画Ｙ座標変更" view="EP" length="0" line="1">
-				<parameter number="0" japanese="Ｙ座標" english="Ｙ座標" type="int8"/>
-			</tag>
-			<tag entry="04" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
 		</group>
 
 		<group entry="190" japanese="動的コントロール" english="Word">
@@ -322,7 +323,7 @@
 
 	<dialog left="240" top="137" right="921" bottom="651" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="198" top="443" right="629" bottom="841" visible="yes"/>
+		<tag-palette left="198" top="443" right="629" bottom="841" visible="no"/>
 		<band id="0" index="0" style="0001" width="506"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
