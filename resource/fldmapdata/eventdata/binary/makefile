@@ -79,7 +79,7 @@ $(targetname).narc: $(BINDAT)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
 
 #binary化の依存関係ファイルを取得
-include ../define/binary_depend_file
+-include ../define/binary_depend_file
 
 endif
 
