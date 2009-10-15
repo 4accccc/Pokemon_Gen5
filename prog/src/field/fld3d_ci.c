@@ -11,7 +11,8 @@
 #include "gamesystem/game_event.h"
 
 #define OBJCOUNT_MAX  (2)
-#define RESCOUNT_MAX  (6)
+#define ANM_TYPE_MAX  (4)
+#define RESCOUNT_MAX  (8)
 
 #define UNIT_NONE   (0xffffffff)
 
@@ -37,17 +38,30 @@ typedef struct FLD3D_CI_tag
 }FLD3D_CI;
 
 //バイナリデータフォーマット
+/*
 typedef struct {
   u16 SpaIdx;
   u16 SpaWait;
   u16 MdlAObjIdx;
   u16 MdlAAnm1Idx;
   u16 MdlAAnm2Idx;
+  u16 MdlAAnm3Idx;
   u16 MdlAAnmWait;
   u16 MdlBObjIdx;
   u16 MdlBAnm1Idx;
   u16 MdlBAnm2Idx;
+  u16 MdlBAnm3Idx;
   u16 MdlBAnmWait;
+}RES_DEF_DAT;
+*/
+typedef struct {
+  u16 SpaIdx;
+  u16 SpaWait;
+  u16 MdlObjIdx[OBJCOUNT_MAX]; //0：Ａ　1：Ｂ
+  u16 MdlAAnmWait;
+  u16 MdlBAnmWait;
+  u16 MdlAAnmIdx[ANM_TYPE_MAX];  //4つ目はデータなし
+  u16 MdlBAnmIdx[ANM_TYPE_MAX];  //4つ目はデータなし
 }RES_DEF_DAT;
 
 typedef struct {
@@ -80,7 +94,7 @@ static BOOL PlayMdlAnm1(FLD3D_CI_PTR ptr);
 static BOOL PlayMdlAnm2(FLD3D_CI_PTR ptr);
 static BOOL CheckAnmEnd(FLD3D_CI_PTR ptr);
 
-static GMEVENT_RESULT CatInEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work );
 
 
 static void ParticleCallBack(GFL_EMIT_PTR emit);    //@todo
@@ -89,33 +103,17 @@ static void Generate(FLD3D_CI_PTR ptr);    //@todo
 static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID inHeapID);
 static void DeleteRes(RES_SETUP_DAT *outDat);
 
-//@todo
-//--リソース関連--
-//読み込む3Dリソース
-static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
-	{ ARCID_FLD3D_CI, 1, GFL_G3D_UTIL_RESARC }, //IMD　カプセル本体
-};
 
-//3Dオブジェクト設定テーブル
-static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
-  //カプセル1
-	{
-		0, 	//モデルリソースID
-		0, 							  //モデルデータID(リソース内部INDEX)
-		0, 	//テクスチャリソースID
-		NULL,//g3Dutil_anmTbl_cap,			//アニメテーブル(複数指定のため)
-		0,//NELEMS(g3Dutil_anmTbl_cap),	//アニメリソース数
-	},
-};
-
-static const GFL_G3D_UTIL_SETUP Setup = {
-  g3Dutil_resTbl,				//リソーステーブル
-	NELEMS(g3Dutil_resTbl),		//リソース数
-	g3Dutil_objTbl,				//オブジェクト設定テーブル
-	NELEMS(g3Dutil_objTbl),		//オブジェクト数
-};
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * モジュール初期化
+ *
+ * @param   inHeapID      ヒープＩＤ
+ * @param   inPrtclSysptr パーティクルシステムポインタ
+ *
+ * @return	ptr         モジュールポインタ
+ */
+//--------------------------------------------------------------------------------------------
 FLD3D_CI_PTR FLD3D_CI_Init(const HEAPID inHeapID, FLD_PRTCL_SYS_PTR inPrtclSysPtr)
 {
   FLD3D_CI_PTR ptr;
@@ -229,7 +227,7 @@ void FLD3D_CI_CallCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInN
   ptr->CutInNo = inCutInNo;
   //イベント作成
   {
-    GMEVENT * event = GMEVENT_Create( gsys, NULL, CatInEvt, size );
+    GMEVENT * event = GMEVENT_Create( gsys, NULL, CutInEvt, size );
 
     work = GMEVENT_GetEventWork(event);
     MI_CpuClear8( work, size );
@@ -241,7 +239,7 @@ void FLD3D_CI_CallCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInN
 }
 
 //カットインイベント
-static GMEVENT_RESULT CatInEvt( GMEVENT* event, int* seq, void* work )
+static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 {
   FLD3D_CI_PTR ptr;
   FLD3D_CI_EVENT_WORK *evt_work = work;
@@ -368,7 +366,7 @@ static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCu
   CreateRes(outDat, inCutInNo, ptr->HeapID);
   
   //3Ｄモデルリソースをセットアップ
-  SetupResourceCore(ptr, /*&Setup*/&outDat->Setup);
+  SetupResourceCore(ptr, &outDat->Setup);
   //パーティクルリソースセットアップ
   {
     void *resource;
@@ -394,9 +392,9 @@ static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCu
     }
   }
   //ウェイト設定
-  ptr->PrtclWait = 0;
-  ptr->MdlAnm1Wait = 0;
-  ptr->MdlAnm2Wait = 0;
+  ptr->PrtclWait = outDat->SpaIdx;
+  ptr->MdlAnm1Wait = outDat->MdlAAnmWait;
+  ptr->MdlAnm2Wait = outDat->MdlBAnmWait;
 }
 
 static void DeleteResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat)
@@ -463,28 +461,14 @@ static void ParticleCallBack(GFL_EMIT_PTR emit)
 //--------------------------------------------------------------
 static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID inHeapID)
 {
+  u8 i;
   RES_DEF_DAT def_dat;
   u8 res_num,obj_num,anm1_num,anm2_num;
   u8 obj_res_start,anm1_res_start,anm2_res_start;
 
   //アーカイブからリソース定義をロード
   GFL_ARC_LoadData(&def_dat, ARCID_FLD3D_CI_SETUP, inResArcIdx);
-#if 0
-#ifdef PM_DEBUG
-  //アーカイブ内容をダンプ
-  OS_Printf("%d %d %d %d %d %d %d %d %d %d\n",
-      def_dat.SpaIdx,
-      def_dat.SpaWait,
-      def_dat.MdlAObjIdx,
-      def_dat.MdlAAnm1Idx,
-      def_dat.MdlAAnm2Idx,
-      def_dat.MdlAAnmWait,
-      def_dat.MdlBObjIdx,
-      def_dat.MdlBAnm1Idx,
-      def_dat.MdlBAnm2Idx,
-      def_dat.MdlBAnmWait);
-#endif
-#endif  
+#if 0  
   //OBJ数を調べる
   {
     obj_num = 0;
@@ -505,10 +489,37 @@ static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID 
     if (def_dat.MdlAAnm2Idx != NONDATA){
       anm1_num++;
     }
+    if (def_dat.MdlAAnm3Idx != NONDATA){
+      anm1_num++;
+    }
     if (def_dat.MdlBAnm1Idx != NONDATA){
       anm2_num++;
     }
     if (def_dat.MdlBAnm2Idx != NONDATA){
+      anm2_num++;
+    }
+    if (def_dat.MdlBAnm3Idx != NONDATA){
+      anm2_num++;
+    }
+  }
+#endif
+  //OBJ数を調べる
+  obj_num = 0;
+  for (i=0;i<OBJCOUNT_MAX;i++){
+    if (def_dat.MdlObjIdx[i] != NONDATA){
+      obj_num++;
+    }
+  }
+  //アニメ数を調べる
+  anm1_num = 0;
+  anm2_num = 0;
+  for(i=0;i<ANM_TYPE_MAX;i++){
+    if (def_dat.MdlAAnmIdx[i] != NONDATA){
+      anm1_num++;
+    }
+  }
+  for(i=0;i<ANM_TYPE_MAX;i++){
+    if (def_dat.MdlBAnmIdx[i] != NONDATA){
       anm2_num++;
     }
   }
@@ -519,8 +530,9 @@ static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID 
 
   //リソース数を調べる
   res_num = obj_num+anm1_num+anm2_num;
-#if 0
+#if 1
   OS_Printf("obj_anm_res = %d %d %d %d\n",obj_num, anm1_num, anm2_num, res_num);
+  OS_Printf("res_start = %d %d %d \n",obj_res_start,anm1_res_start,anm2_res_start );
 #endif
   //リソーステーブルアロケート
   if (res_num){
@@ -551,19 +563,22 @@ static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID 
   {
     u8 i;
     u8 count = 0;
-    u16 arc_id[6];
-    arc_id[0] = def_dat.MdlAObjIdx;
-    arc_id[1] = def_dat.MdlBObjIdx;
-    arc_id[2] = def_dat.MdlAAnm1Idx;
-    arc_id[3] = def_dat.MdlAAnm2Idx;
-    arc_id[4] = def_dat.MdlBAnm1Idx;
-    arc_id[5] = def_dat.MdlBAnm2Idx;
+    u16 arc_id[RESCOUNT_MAX];
+    arc_id[0] = def_dat.MdlObjIdx[0];
+    arc_id[1] = def_dat.MdlObjIdx[1];
+    arc_id[2] = def_dat.MdlAAnmIdx[0];
+    arc_id[3] = def_dat.MdlAAnmIdx[1];
+    arc_id[4] = def_dat.MdlAAnmIdx[2];
+    arc_id[5] = def_dat.MdlBAnmIdx[0];
+    arc_id[6] = def_dat.MdlBAnmIdx[1];
+    arc_id[7] = def_dat.MdlBAnmIdx[2];
 
-    for (i=0;i<res_num;i++){
+
+    for (i=0;i<RESCOUNT_MAX;i++){
       if ( arc_id[i] != NONDATA ){
-        outDat->Res[i].arcive = ARCID_FLD3D_CI;
-        outDat->Res[i].datID = arc_id[count];
-        outDat->Res[i].arcType = GFL_G3D_UTIL_RESARC;
+        outDat->Res[count].arcive = ARCID_FLD3D_CI;
+        outDat->Res[count].datID = arc_id[i];
+        outDat->Res[count].arcType = GFL_G3D_UTIL_RESARC;
         count++;
       }
     }
