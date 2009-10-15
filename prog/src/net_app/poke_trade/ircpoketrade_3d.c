@@ -163,7 +163,7 @@ static const GFL_G3D_UTIL_OBJ obj_table_trade1[] =
     0,                         // テクスチャリソースID
     anm_table_trade1,           // アニメテーブル(複数指定のため)
     NELEMS(anm_table_trade1),   // アニメリソース数
-  },
+  }
 };
 
 

@@ -191,15 +191,26 @@ void IRC_POKETRADE_GraphicInitSubDisp(IRC_POKEMON_TRADE* pWork)
 void IRC_POKETRADE_GraphicFreeVram(IRC_POKEMON_TRADE* pWork)
 {
 
-  GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_M,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar),
-                           GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subchar ));
-  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1),
-                           GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subchar1 ));
-  GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar2),
-                           GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subchar2 ));
+  if(pWork->subchar){
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_M,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar),
+                             GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subchar ));
+  }
+  if(pWork->subchar1){
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1),
+                             GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subchar1 ));
+  }
+  if(pWork->subchar2){
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar2),
+                             GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subchar2 ));
+  }
+  if(pWork->bgchar){
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME3_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
+                             GFL_ARCUTIL_TRANSINFO_GetSize( pWork->bgchar ));
+  }
   pWork->subchar = 0;
   pWork->subchar1 = 0;
   pWork->subchar2 = 0;
+  pWork->bgchar = 0;
   
 }
 

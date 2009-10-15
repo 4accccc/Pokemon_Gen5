@@ -52,7 +52,6 @@
 
 #include "ircpokemontrade_local.h"
 
-#include "poke_tool/status_rcv.h"
 
 
 
@@ -1280,15 +1279,6 @@ static void _dispSubState(IRC_POKEMON_TRADE* pWork)
   _CHANGE_STATE(pWork,_dispSubStateWait);
 }
 
-
-static void _messageWaitState(IRC_POKEMON_TRADE* pWork)
-{
-  if(GFL_UI_TP_GetTrg()){
-    _messageDelete(pWork);
-    _CHANGE_STATE(pWork, _touchState);
-  }
-}
-
 // 交換の返事を待つ
 static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 {
@@ -1310,21 +1300,7 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 void IRC_POKMEONTRADE_ChangeFinish(IRC_POKEMON_TRADE* pWork)
 {
   int id = 1-GFL_NET_SystemGetCurrentID();
-  //交換する
-  // 相手のポケを自分の選んでいた場所に入れる
-  if(pWork->selectBoxno == BOX_MAX_TRAY){ //もちものの交換の場合
-    POKEPARTY* party = pWork->pMyParty;
 
-    PokeParam_RecoverAll(pWork->recvPoke[id]);
-
-    PokeParty_SetMemberData(party, pWork->selectIndex, pWork->recvPoke[id]);
-  }
-  else{
-    // @todo  メールがあったらボックスに
-    // @todo  メールボックスが満タンなら削除処理に
-    
-    BOXDAT_PutPokemonPos(pWork->pBox, pWork->selectBoxno, pWork->selectIndex, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pWork->recvPoke[id]));
-  }
   pWork->selectBoxno = 0;
   pWork->selectIndex = -1;
   pWork->pCatchCLWK = NULL;
@@ -1343,12 +1319,11 @@ void IRC_POKMEONTRADE_ChangeFinish(IRC_POKEMON_TRADE* pWork)
   _InitBoxName(pWork->pBox,pWork->nowBoxno,pWork);  //再描画
 
   IRC_POKETRADE_MessageWindowClear(pWork);
-  _msgWindowCreate(pWork, POKETRADE_STR_23);
 
   pWork->bPokemonSet[0]=FALSE;
   pWork->bPokemonSet[1]=FALSE;
 
-  _CHANGE_STATE(pWork, _messageWaitState);
+  _CHANGE_STATE(pWork, _touchState);
 }
 
 
@@ -1684,6 +1659,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
 
     if(pParentWork){
       GAMEDATA* pGameData = GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pParentWork));
+      pWork->pGameData=pGameData;
       pWork->pBox = GAMEDATA_GetBoxManager(pGameData);
       pWork->pMy = GAMEDATA_GetMyStatus( pGameData );
       pWork->pMyParty = GAMEDATA_GetMyPokemon(pGameData);

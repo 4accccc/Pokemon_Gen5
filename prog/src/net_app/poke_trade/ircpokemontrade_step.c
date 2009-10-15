@@ -42,6 +42,8 @@
 #include "poke_tool/poke_tool_def.h"
 #include "box_m_obj_NANR_LBLDEFS.h"
 #include "p_st_obj_d_NANR_LBLDEFS.h"
+#include "poke_tool/pokeparty.h"
+#include "poke_tool/status_rcv.h"
 
 #include "ircpokemontrade_local.h"
 #include "spahead.h"
@@ -53,7 +55,10 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork);
 static void _changeDemo_ModelTrade20(IRC_POKEMON_TRADE* pWork);
 static void _changeDemo_ModelTrade21(IRC_POKEMON_TRADE* pWork);
 static void _changeDemo_ModelTrade22(IRC_POKEMON_TRADE* pWork);
+static void _changeDemo_ModelTrade23(IRC_POKEMON_TRADE* pWork);
 static void _changeDemo_ModelTrade24(IRC_POKEMON_TRADE* pWork);
+static void _changeDemo_ModelTrade25(IRC_POKEMON_TRADE* pWork);
+static void _changeDemo_ModelTrade30(IRC_POKEMON_TRADE* pWork);
 static void _setFadeMask(_D2_PAL_FADE_WORK* pD2Fade);
 static void	_FIELD_StartPaletteFade( _EFFTOOL_PAL_FADE_WORK* epfw, u8 start_evy, u8 end_evy, u8 wait, u16 rgb );
 static _EFFTOOL_PAL_FADE_WORK* _createPaletteFade(GFL_G3D_RES* g3DRES,HEAPID heapID);
@@ -153,6 +158,7 @@ void _changeDemo_ModelTrade0(IRC_POKEMON_TRADE* pWork)
   MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
 
   MCSS_SetPaletteFade( pWork->pokeMcss[1], 0, 16, _POKEMON_CENTER_TIME/16, 0 );
+  IRC_POKETRADE_MessageWindowClose(pWork);
 
   GFL_BG_SetBackGroundColor(GFL_BG_FRAME1_M ,0);
   GFL_BG_SetBackGroundColor(GFL_BG_FRAME1_S ,0);
@@ -268,7 +274,7 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
     GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX006, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO7_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX007, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX007, _balloutEmitFunc, pWork);
   }
   
   if(pWork->anmCount == _POKEUP_WHITEOUT_START){
@@ -359,12 +365,12 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
                       _POKEMON_FRIEND_LEAVE_POSX, _POKEMON_FRIEND_LEAVE_POSY, pWork->heapID);
   }
   if(_POKEMON_CREATE_TIME == pWork->anmCount){
-
-//    IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );
+    IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
+    IRCPOKETRADE_PokeCreateMcss(pWork, 1, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );
     {
       VecFx32 apos;
       apos.x = _MCSS_POS_X(120);
-      apos.y = _MCSS_POS_Y(120);
+      apos.y = _MCSS_POS_Y(140);
       MCSS_SetPosition( pWork->pokeMcss[1] ,&apos );
       MCSS_SetAnmStopFlag(pWork->pokeMcss[1]);
     }
@@ -393,6 +399,7 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
     pWork->pMoveMcss[0]=NULL;
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
     pWork->pMoveMcss[1]=NULL;
+    IRC_POKETRADEDEMO_RemoveModel( pWork);
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade20);
   }
 }
@@ -400,6 +407,8 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
 
 static void _changeDemo_ModelTrade20(IRC_POKEMON_TRADE* pWork)
 {
+
+
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_49, pWork->pMessageStrBufEx );
 
   {
@@ -409,6 +418,7 @@ static void _changeDemo_ModelTrade20(IRC_POKEMON_TRADE* pWork)
   WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx  );
 
 
+  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME3_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
   IRC_POKETRADE_MessageWindowOpen(pWork,  POKETRADE_STR_49);
   _setNextAnim(pWork, 0);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade21);
@@ -426,33 +436,102 @@ static void _changeDemo_ModelTrade21(IRC_POKEMON_TRADE* pWork)
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_50, pWork->pMessageStrBuf );
   IRC_POKETRADE_MessageWindowOpen(pWork,  POKETRADE_STR_50);
   _setNextAnim(pWork, 0);
-  _CHANGE_STATE(pWork,_changeDemo_ModelTrade24);
+  _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);
+
+}
+
+static void _changeDemo_ModelTrade22(IRC_POKEMON_TRADE* pWork)
+{
+  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+    return;
+  }
+  if(pWork->anmCount < 100){
+    return;
+  }
+  _setNextAnim(pWork, 0);
+  _CHANGE_STATE(pWork,_changeDemo_ModelTrade23);
+}
+
+
+static void _changeDemo_ModelTrade23(IRC_POKEMON_TRADE* pWork)
+{
+  IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
+  IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
+
+
+  {
+    int id = 1-GFL_NET_SystemGetCurrentID();
+    //交換する
+    // 相手のポケを自分の選んでいた場所に入れる
+    if(pWork->selectBoxno == BOX_MAX_TRAY){ //もちものの交換の場合
+      POKEPARTY* party = pWork->pMyParty;
+      
+      PokeParam_RecoverAll(pWork->recvPoke[id]);
+      
+      PokeParty_SetMemberData(party, pWork->selectIndex, pWork->recvPoke[id]);
+    }
+    else{
+      // @todo  メールがあったらボックスに
+      // @todo  メールボックスが満タンなら削除処理に
+      BOXDAT_PutPokemonPos(pWork->pBox, pWork->selectBoxno, pWork->selectIndex, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pWork->recvPoke[id]));
+      //_CHANGE_STATE(pWork,_mailBox);
+    }
+  }
+
+  if(!pWork->pGameData){
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade30); //ゲームデータの引渡しが無い場合セーブに行かない
+    return;
+  }
+  else{
+    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_51, pWork->pMessageStrBuf );
+    IRC_POKETRADE_MessageWindowOpen(pWork,  POKETRADE_STR_51);
+    GAMEDATA_SaveAsyncStart(pWork->pGameData);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade24);
+  }
+
 
 }
 
 
 static void _changeDemo_ModelTrade24(IRC_POKEMON_TRADE* pWork)
 {
-  
-  IRC_POKETRADEDEMO_RemoveModel( pWork);
+  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+    return;
+  }
+  if(GAMEDATA_SaveAsyncMain(pWork->pGameData) == SAVE_RESULT_LAST){
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade25);
+  }
+}
 
-  IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE_NORMAL);
+static void _changeDemo_ModelTrade25(IRC_POKEMON_TRADE* pWork)
+{
+  if(GAMEDATA_SaveAsyncMain(pWork->pGameData) == SAVE_RESULT_OK){
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade30);
+  }
+}
+
+static void _changeDemo_ModelTrade30(IRC_POKEMON_TRADE* pWork)
+{
+  GFL_DISP_GX_SetVisibleControlDirect( 0 );
+  GFL_DISP_GXS_SetVisibleControlDirect( 0 );
+  
+  IRC_POKETRADE_MessageWindowClose(pWork);
+  IRC_POKETRADE_GraphicFreeVram(pWork);
+  
   GFL_BG_FreeBGControl(GFL_BG_FRAME3_S);
 
+  IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE_NORMAL);
+
+  IRC_POKETRADE_SetSubDispGraphic(pWork);
 
   IRC_POKETRADE_InitBoxCursor(pWork);  // タスクバー
   IRC_POKETRADE_CreatePokeIconResource(pWork);  // ポケモンアイコンCLACT+リソース常駐化
-  
-  IRC_POKETRADE_SetSubDispGraphic(pWork);
 
   IRC_POKETRADE_GraphicInitMainDisp(pWork);
   IRC_POKETRADE_GraphicInitSubDisp(pWork);
 
   IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
-    
-  IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
-  IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
-    
+
   GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3 );
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
   _CHANGE_STATE(pWork,IRC_POKMEONTRADE_ChangeFinish);

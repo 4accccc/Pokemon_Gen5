@@ -310,6 +310,7 @@ struct _IRC_POKEMON_TRADE{
   GFL_EMIT_PTR pBallOutPer;
 
   BOX_MANAGER* pBox;
+  GAMEDATA* pGameData;
   MYSTATUS* pMy;
   MYSTATUS* pFriend;
   POKEPARTY* pMyParty;
