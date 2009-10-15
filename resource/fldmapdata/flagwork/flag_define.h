@@ -127,7 +127,7 @@
 #define FE_C01R0201_ITEM_GET               111 /* 0x006f サンヨウシティビルＢ １Ｆ：アイテム入手イベント（ピントレンズ） */
 #define FE_SODATEYA_FIRSTTALK              112 /* 0x0070 育て屋受付：初回会話フラグ */
 #define FE_C01R0501_RIVALTALK              113 /* 0x0071 C01トレーナーズスクールのライバルと会話した */
-		/* not used   114(0x0072) */
+#define FE_D01R0101_EVCLEAR                114 /* 0x0072 C01ジム前のガイドのMSG分岐に使用。現状はD01R0101到着時にセットしています。 */
 		/* not used   115(0x0073) */
 		/* not used   116(0x0074) */
 		/* not used   117(0x0075) */
