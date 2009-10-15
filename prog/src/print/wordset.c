@@ -260,10 +260,10 @@ void WORDSET_RegisterWord( WORDSET* wordset, u32 bufID, const STRBUF* word, u32 
 
 //------------------------------------------------------------------
 /**
- * 指定バッファにポケモン種族名を登録
+ * 指定バッファにポケモン種族名を登録 (POKEMON_MARAM)
  *
  * @param   bufID   バッファID
- * @param   ppp     ポケモンパラメータ
+ * @param   pp      ポケモンパラメータ
  *
  */
 //------------------------------------------------------------------
@@ -278,10 +278,28 @@ void WORDSET_RegisterPokeMonsName( WORDSET* wordset, u32 bufID, const POKEMON_PA
 }
 //------------------------------------------------------------------
 /**
- * 指定バッファにポケモンのニックネームを登録
+ * 指定バッファにポケモン種族名を登録 (POKEMON_PASO_PARAM)
  *
  * @param   bufID   バッファID
  * @param   ppp     ポケモンパラメータ
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterPokeMonsNamePPP( WORDSET* wordset, u32 bufID, const POKEMON_PASO_PARAM* ppp )
+{
+  u32 monsno;
+
+  // [[[ここでポケモンの性別等をチェックできる]]]
+  monsno = PPP_Get( ppp, ID_PARA_monsno, NULL );
+  GFL_MSG_GetString( GlobalMsg_PokeName, monsno, wordset->tmpBuf );
+  RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
+}
+//------------------------------------------------------------------
+/**
+ * 指定バッファにポケモンのニックネームを登録 (POKEMON_PARAM)
+ *
+ * @param   bufID   バッファID
+ * @param   pp      ポケモンパラメータ
  *
  */
 //------------------------------------------------------------------
@@ -289,6 +307,21 @@ void WORDSET_RegisterPokeNickName( WORDSET* wordset, u32 bufID, const POKEMON_PA
 {
   // [[[ここでポケモンの性別等をチェックできる]]]
   PP_Get( pp, ID_PARA_nickname, wordset->tmpBuf );
+  RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
+}
+//------------------------------------------------------------------
+/**
+ * 指定バッファにポケモンのニックネームを登録 (POKEMON_PASO_PARAM)
+ *
+ * @param   bufID   バッファID
+ * @param   ppp     ポケモンパラメータ
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterPokeNickNamePPP( WORDSET* wordset, u32 bufID, const POKEMON_PASO_PARAM* ppp )
+{
+  // [[[ここでポケモンの性別等をチェックできる]]]
+  PPP_Get( ppp, ID_PARA_nickname, wordset->tmpBuf );
   RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
 }
 //------------------------------------------------------------------
