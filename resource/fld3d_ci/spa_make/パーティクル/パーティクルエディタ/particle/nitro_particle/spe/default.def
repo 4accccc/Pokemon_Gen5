@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<nitro_particle_def>
+    <head
+    />
+    <base
+        tex_directory="C:\home\NSaito\NDS\DP_NEW\pow_c\tex\particl\技エフェクト用パーティクルデータ"
+        play_frame="100"
+        framerate="2"
+        camera_speed="2"
+        camera_default_pos_x="0"
+        camera_default_pos_y="15"
+        camera_default_pos_z="0"
+        backcolor_r="0"
+        backcolor_g="0"
+        backcolor_b="15"
+        disp_bg="1"
+        fov="15"
+        axis_length="2"
+        model_pos_min="-20"
+        model_pos_max="20"
+        emitter_pos_min="-20"
+        emitter_pos_max="20"
+        emitter_size_min="0"
+        emitter_size_max="20"
+        emitter_init_vel_all_min="0"
+        emitter_init_vel_all_max="5"
+        emitter_init_vel_axis_min="0"
+        emitter_init_vel_axis_max="5"
+        field_magnet_pos_min="-50"
+        field_magnet_pos_max="50"
+        field_convergence_pos_min="-50"
+        field_convergence_pos_max="50"
+    />
+</nitro_particle_def>

@@ -1,0 +1,120 @@
+<html>
+<head>
+  <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=Shift_Jis">
+  <meta name="Generator" content="メモ帳">
+  <title>NITROパーティクルライブラリ 関数マニュアル- </title>
+</head>
+
+<basefont size=2>
+
+<body text="#606060" link="#6666FF" vlink="#800080" bgcolor=white>
+
+
+
+<center>
+<TABLE width=100% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>SPL_Init</b></font></center></TD></TR></TABLE><BR>
+</center>
+<p style="margin-left:20%;margin-right:10%;text-align:left">
+<font size=+2>SPL_Init</font>
+</p>
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>構文</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+
+#include &lt;spl/spl.h &gt;
+<br>
+<br>
+SPLManager* SPL_Init(SPLAlloc alloc, u16 max_emtr_num, u16 max_ptcl_num, u16 fix_polygonID, u16 min_polygonID, u16 max_polygonID );
+<br>
+
+</p>
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>引数</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+
+<table>
+<tr>
+<td bgcolor=#F0F0FF width=50%>alloc</td>
+<td bgcolor=#F0F0FF width=50%>メモリ割り当て関数のポインタ</td>
+</tr>
+<tr>
+<td bgcolor=#F0F0FF width=50%>max_emtr_num</td>
+<td bgcolor=#F0F0FF width=50%>最大エミッタ数</td>
+</tr>
+<tr>
+<td bgcolor=#F0F0FF width=50%>max_ptcl_num</td>
+<td bgcolor=#F0F0FF width=50%>最大パーティクル数</td>
+</tr>
+<tr>
+<td bgcolor=#F0F0FF width=50%>fix_polygonID</td>
+<td bgcolor=#F0F0FF width=50%>固定ポリゴンID</td>
+</tr>
+<tr>
+<td bgcolor=#F0F0FF width=50%>min_polygonID</td>
+<td bgcolor=#F0F0FF width=50%>最小ポリゴンID</td>
+</tr>
+<tr>
+<td bgcolor=#F0F0FF width=50%>max_polygonID</td>
+<td bgcolor=#F0F0FF width=50%>最大ポリゴンID</td>
+</tr>
+
+</table>
+
+
+</p>
+
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>返り値</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+作成されたマネージャへのポインタ
+</p>
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>説明</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+初期化してマネージャを作成します。SPLではマネージャがパーティクルの管理をおこなうので、
+この関数は一番最初に呼び出される必要があります。
+SPLAllocは<br><br>
+typedef void* (*SPLAlloc)(u32);
+<br><br>
+となっており、確保するメモリサイズを引数にする関数のポインタです。
+<br><br>
+min_polygonIDとmax_polygonIDの範囲外にfix_polygonIDを割り振るようにしてください。
+
+</p>
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>履歴</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+
+ver.2004/12/02<br>
+ver.2004/07/05<br>
+ver.2004/06/15<br>
+</p>
+
+
+
+
+
+
+
+<TABLE width=100% border=0><TR><TD bgcolor=#CCCCCC><font size=-2><center>　</center></font></TD></TR></TABLE><BR>
+
+<center>
+<A HREF="index.html">ホームへ</A>
+</CENTER>
+
+
+</body>
+</html>

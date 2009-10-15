@@ -1,0 +1,17 @@
+IS-AGBデバッガーが繋がっていると動作しないので、全てはずす。
+
+\particle\nitro_particle\spe\default.def
+をCドライブのトップに置く。(C:\default.def の状態)
+default.defを開いて、tex_directoryで指定するパスを
+\particle\spl_sampledata\spt
+と指定する。
+
+
+Loader.exeで読み込むのは
+\particle\nitro_particle\spe\spe.bin
+(DSの実機上に表示するためのプログラム。常にこれを読み込む)
+
+
+サンプルエミッタ
+\particle\spl_sampledata\spr\*.spr
+

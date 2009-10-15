@@ -1,0 +1,159 @@
+<html>
+<head>
+  <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=Shift_Jis">
+  <meta name="Generator" content="メモ帳">
+  <title>NITROパーティクルライブラリ 関数マニュアル- </title>
+</head>
+
+<basefont size=2>
+
+<body text="#606060" link="#6666FF" vlink="#800080" bgcolor=white>
+
+<center>
+<img src="title.png">
+</center>
+
+<TABLE width=100% border=0><TR><TD bgcolor=#CCCCCC><font size=><center>関数一覧表</center></font></TD></TR></TABLE><BR>
+<p>
+<A name="Init">
+<TABLE width=100% border=0><TR><TD bgcolor=#E6E6E6><font size=+1><center><b>初期化</b></center></font></TD></TR></TABLE>
+
+<table width=100%>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_Init.html" target="_self">SPL_Init</a></td><td bgcolor=#F0F0FF>初期化してマネージャを作成します。</td></tr>
+</table>
+
+</p>
+
+
+<p>
+<A name="Manager">
+<TABLE width=100% border=0><TR><TD bgcolor=#E6E6E6><font size=+1><center><b>マネージャ</b></center></font></TD></TR></TABLE>
+
+<table width=100%>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_Load.html" target="_self">SPL_Load</a></td><td bgcolor=#F0F0FF>パーティクルリソース(spa)を読み込みます。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_LoadTexByCallbackFunction.html">SPL_LoadTexByCallbackFunction</a></td><td bgcolor=#F0F0FF>ユーザ定義のコールバック関数を用いてリソースに必要なテクスチャを読み込みます。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_LoadTexPlttByCallbackFunction.html">SPL_LoadTexPlttByCallbackFunction</a></td><td bgcolor=#F0F0FF>ユーザ定義のコールバック関数を用いてリソースに必要なテクスチャパレットを読み込みます。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_LoadTexByVRAMManager.html">SPL_LoadTexByVRAMManager</a></td><td bgcolor=#F0F0FF>VRAMマネージャを用いてリソースに必要なテクスチャを読み込みます。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_LoadTexPlttByVRAMManager.html">SPL_LoadTexPlttByVRAMManager</a></td><td bgcolor=#F0F0FF>VRAMマネージャを用いてリソースに必要なテクスチャパレットを読み込みます。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_Calc.html">SPL_Calc</a></td><td bgcolor=#F0F0FF>1フレーム分の計算をおこないます。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_Draw.html">SPL_Draw</a></td><td bgcolor=#F0F0FF>1フレーム分の描画をおこないます。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_Create.html">SPL_Create</a></td><td bgcolor=#F0F0FF>エミッタを作成します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_CreateWithInitialize.html">SPL_CreateWithInitialize</a></td><td bgcolor=#F0F0FF>初期化つきでエミッタを作成します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_Delete.html">SPL_Delete</a></td><td bgcolor=#F0F0FF>指定したエミッタを削除します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_DeleteAll.html">SPL_DeleteAll</a></td><td bgcolor=#F0F0FF>すべてのエミッタを削除します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_Emit.html">SPL_Emit</a></td><td bgcolor=#F0F0FF>パーティクルを生成します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_EmitAt.html">SPL_EmitAt</a></td><td bgcolor=#F0F0FF>エミッタの位置を指定してパーティクルを生成します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetPolygonAttrMiscFlag.html">SPL_SetPolygonAttrMiscFlag</a></td><td bgcolor=#F0F0FF>パーティクルのポリゴン属性のmiscフラグを変更します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetEmitterNum.html">SPL_GetEmitterNum</a></td><td bgcolor=#F0F0FF>アクティブなエミッタの数を取得します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetWholeParticleNum.html">SPL_GetWholeParticleNum</a></td><td bgcolor=#F0F0FF>アクティブなパーティクルの数を取得します。。</td></tr>
+
+
+</table>
+
+</p>
+
+<p>
+<A name="Emitter">
+<TABLE width=100% border=0><TR><TD bgcolor=#E6E6E6><font size=+1><center><b>エミッタ</b></center></font></TD></TR></TABLE>
+
+<table width=100%>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_Terminate.html">SPL_Terminate</a></td><td bgcolor=#F0F0FF>終了します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_StopCalc.html">SPL_StopCalc</a></td><td bgcolor=#F0F0FF>計算を停止します。。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_RestartCalc.html">SPL_RestartCalc</a></td><td bgcolor=#F0F0FF>計算を再開します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetCalc.html">SPL_SetCalc</a></td><td bgcolor=#F0F0FF>計算をおこなうかどうかを設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_StopDraw.html">SPL_StopDraw</a></td><td bgcolor=#F0F0FF>描画を停止します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_RestartDraw.html">SPL_RestartDraw</a></td><td bgcolor=#F0F0FF>描画を再開します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetDraw.html">SPL_SetDraw</a></td><td bgcolor=#F0F0FF>描画をおこなうかどうかを設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_StopEmission.html">SPL_StopEmission</a></td><td bgcolor=#F0F0FF>パーティクルの生成を停止します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_RestartEmission.html">SPL_RestartEmission</a></td><td bgcolor=#F0F0FF>パーティクルの生成を再開します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmission.html">SPL_SetEmission</a></td><td bgcolor=#F0F0FF>パーティクルを生成するかどうかを設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterPosition.html">SPL_SetEmitterPosition</a></td><td bgcolor=#F0F0FF>位置を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterPositionX.html">SPL_SetEmitterPositionX</a></td><td bgcolor=#F0F0FF>X位置を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterPositionY.html">SPL_SetEmitterPositionY</a></td><td bgcolor=#F0F0FF>Y位置を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterPositionZ.html">SPL_SetEmitterPositionZ</a></td><td bgcolor=#F0F0FF>Z位置を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterVelocity.html">SPL_SetEmitterVelocity</a></td><td bgcolor=#F0F0FF>速度を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterVelocityX.html">SPL_SetEmitterVelocityX</a></td><td bgcolor=#F0F0FF>X方向の速度を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterVelocityY.html">SPL_SetEmitterVelocityY</a></td><td bgcolor=#F0F0FF>Y方向の速度を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterVelocityZ.html">SPL_SetEmitterVelocityZ</a></td><td bgcolor=#F0F0FF>Z方向の速度を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterAxis.html">SPL_SetEmitterAxis</a></td><td bgcolor=#F0F0FF>エミッタの方向を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterGlobalColor.html">SPL_SetEmitterGlobalColor</a></td><td bgcolor=#F0F0FF>エミッタのグローバルカラーを設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterRadius.html">SPL_SetEmitterRadius</a></td><td bgcolor=#F0F0FF>エミッタの大きさを設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterInitVelocityPos.html">SPL_SetEmitterInitVelocityPos</a></td><td bgcolor=#F0F0FF>エミッタの全方向初速度を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterInitVelocityAxis.html">SPL_SetEmitterInitVelocityAxis</a></td><td bgcolor=#F0F0FF>エミッタの軸方向初速度を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterBaseScale.html">SPL_SetEmitterBaseScale</a></td><td bgcolor=#F0F0FF>エミッタの基本スケールを設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterParticleLife.html">SPL_SetEmitterParticleLife</a></td><td bgcolor=#F0F0FF>エミッタのパーティクル寿命を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterEmissionInterval.html">SPL_SetEmitterEmissionInterval</a></td><td bgcolor=#F0F0FF>エミッタのパーティクル放出間隔を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterBaseAlpha.html">SPL_SetEmitterBaseAlpha</a></td><td bgcolor=#F0F0FF>エミッタの基本αを設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterGenerationRatio.html">SPL_SetEmitterGenerationRatio</a></td><td bgcolor=#F0F0FF>エミッタの放出レートを設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterInitialRotationAngle.html">SPL_SetEmitterInitialRotationAngle</a></td><td bgcolor=#F0F0FF>エミッタから放出されるパーティクルの初期回転角度を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetCallbackFunc.html">SPL_SetCallbackFunc</a></td><td bgcolor=#F0F0FF>コールバック関数を登録します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetParticleNum.html">SPL_GetParticleNum</a></td><td bgcolor=#F0F0FF>パーティクルの数を取得します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetChildParticleNum.html">SPL_GetChildParticleNum</a></td><td bgcolor=#F0F0FF>子パーティクルの数を取得します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetAllParticleNum.html">SPL_GetAllParticleNum</a></td><td bgcolor=#F0F0FF>パーティクルと子パーティクルの合計数を取得します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetUserData.html">SPL_SetUserData</a></td><td bgcolor=#F0F0FF>ユーザデータを設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetUserData.html">SPL_GetUserData</a></td><td bgcolor=#F0F0FF>ユーザデータを取得します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetUserWork.html">SPL_SetUserWork</a></td><td bgcolor=#F0F0FF>ユーザワーク領域に値を設定します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetUserWork.html">SPL_GetUserWork</a></td><td bgcolor=#F0F0FF>ユーザワーク領域から値を取得します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetHeadParticle.html">SPL_GetHeadParticle</a></td><td bgcolor=#F0F0FF>先頭のパーティクルを取得します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetChildHeadParticle.html">SPL_GetChildHeadParticle</a></td><td bgcolor=#F0F0FF>先頭の子パーティクルを取得します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetCurrentPolygonID.html">SPL_SetCurrentPolygonID</a></td><td bgcolor=#F0F0FF>現在のポリゴンIDを変更します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetUserFlag.html">SPL_GetUserFlag</a></td><td bgcolor=#F0F0FF>ユーザーフラグを取得します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterSimpleCollisionHeight.html">SPL_SetEmitterSimpleCollisionHeight</a></td><td bgcolor=#F0F0FF>エミッタのシンプルコリジョン高さを変更します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_SetEmitterSPL_SetEmitterCalcCycle.html">SPL_SetEmitterSPL_SetEmitterCalcCycle</a></td><td bgcolor=#F0F0FF>エミッタの計算サイクルを変更します</td></tr>
+
+
+
+</table>
+</p>
+
+
+
+<p>
+<A name="Particle">
+<TABLE width=100% border=0><TR><TD bgcolor=#E6E6E6><font size=+1><center><b>パーティクル</b></center></font></TD></TR></TABLE>
+
+<table width=100%>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetNextParticle.html">SPL_GetNextParticle</a></td><td bgcolor=#F0F0FF>次のパーティクルを取得します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetPrevParticle.html">SPL_GetPrevParticle</a></td><td bgcolor=#F0F0FF>前のパーティクルを取得します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetParticlePos.html">SPL_GetParticlePos</a></td><td bgcolor=#F0F0FF>位置を取得します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_TerminateParticleLife.html">SPL_TerminateParticleLife</a></td><td bgcolor=#F0F0FF>寿命を終了させます。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetParticleAge.html">SPL_GetParticleAge</a></td><td bgcolor=#F0F0FF>年齢を取得します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetParticleLife.html">SPL_GetParticleLife</a></td><td bgcolor=#F0F0FF>寿命を取得します。</td></tr>
+
+</table>
+
+</p>
+
+
+
+<p>
+<A name="Resource">
+<TABLE width=100% border=0><TR><TD bgcolor=#E6E6E6><font size=+1><center><b>リソース</b></center></font></TD></TR></TABLE>
+<table width=100%>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetTexOffsetOnResource.html">SPL_GetTexOffsetOnResource</a></td><td bgcolor=#F0F0FF>リソースにおけるテクスチャ位置のオフセットを取得します。</td></tr>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_GetTexSizeOnResource.html">SPL_GetTexSizeOnResource</a></td><td bgcolor=#F0F0FF>リソースにおけるテクスチャのサイズを取得します。</td></tr>
+</table>
+
+</p>
+
+<p>
+<A name="Resource">
+<TABLE width=100% border=0><TR><TD bgcolor=#E6E6E6><font size=+1><center><b>ユーティリティ</b></center></font></TD></TR></TABLE>
+<table width=100%>
+<tr><td bgcolor=#F0F0FF width=50%><a href="SPL_Util_SetCylinderEmiterDirection.html">SPL_Util_SetCylinderEmiterDirection</a></td><td bgcolor=#F0F0FF>円柱型エミッタの方向と長さを変更します。</td></tr>
+</table>
+
+</p>
+
+
+
+
+<TABLE width=100% border=0><TR><TD bgcolor=#CCCCCC><font size=-2><center>　</center></font></TD></TR></TABLE><BR>
+
+<center>
+<A HREF="index.html">ホームへ</A>
+</CENTER>
+
+
+</body>
+</html>

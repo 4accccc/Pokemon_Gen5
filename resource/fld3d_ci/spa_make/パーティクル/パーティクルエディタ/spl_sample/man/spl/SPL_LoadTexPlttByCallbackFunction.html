@@ -1,0 +1,104 @@
+<html>
+<head>
+  <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=Shift_Jis">
+  <meta name="Generator" content="メモ帳">
+  <title>NITROパーティクルライブラリ 関数マニュアル- </title>
+</head>
+
+<basefont size=2>
+
+<body text="#606060" link="#6666FF" vlink="#800080" bgcolor=white>
+
+
+
+<center>
+<TABLE width=100% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>SPL_LoadTexPlttByCallbackFunction</b></font></center></TD></TR></TABLE><BR>
+</center>
+<p style="margin-left:20%;margin-right:10%;text-align:left">
+<font size=+2>SPL_LoadTexPlttByCallbackFunction</font>
+</p>
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>構文</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+
+#include &lt;spl/spl.h &gt;
+<br>
+<br>
+BOOL SPL_LoadTexPlttByCallbackFunction( SPLManager* p_mgr, u32 (*callbackfunc)( u32 size, BOOL is4pltt ) ) ;
+<br>
+
+</p>
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>引数</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+
+<table>
+<tr>
+<td bgcolor=#F0F0FF width=50%>p_mgr</td>
+<td bgcolor=#F0F0FF width=50%>マネージャへのポインタ</td>
+</tr>
+<tr>
+<td bgcolor=#F0F0FF width=50%>callbackfunc</td>
+<td bgcolor=#F0F0FF width=50%>コールバック関数へのポインタ</td>
+</tr>
+</table>
+
+
+</p>
+
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>返り値</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+成功した際はTRUE、そうでないときはFALSE。
+</p>
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>説明</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+ユーザが定義したコールバック関数を用いてテクスチャをVRAMに読み込みます。
+コールバック関数は読み込むテクスチャのサイズと4色パレットであるかどうかのフラグを受け取り、
+読み込みを開始するVRAMのアドレスを返します。
+SPLはこの戻り値によってエラー判断等をおこなわないので、
+VRAMに読み込むことができない場合はアサート等でエラー処理をおこなうように定義してください。
+<br><br>
+この関数は途中でテクスチャパレットをVRAMに読み込みできなくなったら、その時点でFALSEを返します。
+たとえばエミッタに４枚テクスチャパレットがあり、３枚目が読み込みできないとなった場合、
+２枚目までのテクスチャパレットはVRAMに残ります。これは各ゲーム側で処理をおこなってください。
+<br><br>
+direct形式のテクスチャの場合、SPL_LoadTexPlttByCallbackFunctionはコールバック関数を呼び出しません。
+</p>
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>履歴</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+ver.2004/08/18<br>
+ver.2004/08/10<br>
+ver.2004/08/9
+</p>
+
+
+
+
+
+
+
+<TABLE width=100% border=0><TR><TD bgcolor=#CCCCCC><font size=-2><center>　</center></font></TD></TR></TABLE><BR>
+
+<center>
+<A HREF="index.html">ホームへ</A>
+</CENTER>
+
+
+</body>
+</html>

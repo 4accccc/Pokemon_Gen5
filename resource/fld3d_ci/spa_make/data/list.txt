@@ -1,0 +1,7 @@
+NNSARC_LIST = "fld_particle.lst"
+
+get1.spa
+	cut_get1_kira.spr
+
+get2.spa
+	cut_get2_kira2.spr

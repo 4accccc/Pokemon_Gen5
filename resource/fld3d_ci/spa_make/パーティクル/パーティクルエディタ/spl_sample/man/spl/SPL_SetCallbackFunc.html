@@ -1,0 +1,105 @@
+<html>
+<head>
+  <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=Shift_Jis">
+  <meta name="Generator" content="メモ帳">
+  <title>NITROパーティクルライブラリ 関数マニュアル- </title>
+</head>
+
+<basefont size=2>
+
+<body text="#606060" link="#6666FF" vlink="#800080" bgcolor=white>
+
+
+
+<center>
+<TABLE width=100% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>SPL_SetCallbackFunc</b></font></center></TD></TR></TABLE><BR>
+</center>
+<p style="margin-left:20%;margin-right:10%;text-align:left">
+<font size=+2>SPL_SetCallbackFunc</font>
+</p>
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>構文</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+
+#include &lt;spl/spl_emitter.h &gt;
+<br>
+<br>
+void SPL_SetCallbackFunc(SPLEmitter* p_emtr, (*callbackfunc)(SPLEmitter*,unsigned int));
+<br>
+
+</p>
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>引数</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+
+<table>
+<tr>
+<td bgcolor=#F0F0FF width=50%>p_emtr</td>
+<td bgcolor=#F0F0FF width=50%>エミッタへのポインタ</td>
+</tr>
+<tr>
+<td bgcolor=#F0F0FF width=50%>callbackfunc</td>
+<td bgcolor=#F0F0FF width=50%>設定コールバック関数</td>
+</tr>
+</table>
+
+
+</p>
+
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>返り値</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+なし
+</p>
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>説明</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+指定したエミッタにコールバック関数を登録します。
+登録されたコールバック関数はエミッタのCalc()の最後で呼び出されます。
+<br><br>
+コールバック関数は<br>
+void callbackfunc( SPLEmitter* pEmitter,unsigned int uFlag )<br>
+の引数をもつ必要があります。pEmitterはエミッタのポインタ、uFlagはコールバックが呼び出されたタイミングを記述します。
+コールバック関数が呼び出されるタイミングは次のように2箇所あり、uFlagでそれを判定します。<br>
+SPL_EMITTER_CALLBACK_FRONT : エミッタ計算をおこなう直前<br>
+SPL_EMITTER_CALLBACK_BACK : エミッタ計算をおこなったあと<br>
+
+
+</p>
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>履歴</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+
+ver.2005/02/09<br>
+ver.2004/08/17<br>
+ver.2004/06/16
+</p>
+
+
+
+
+
+
+
+<TABLE width=100% border=0><TR><TD bgcolor=#CCCCCC><font size=-2><center>　</center></font></TD></TR></TABLE><BR>
+
+<center>
+<A HREF="index.html">ホームへ</A>
+</CENTER>
+
+
+</body>
+</html>

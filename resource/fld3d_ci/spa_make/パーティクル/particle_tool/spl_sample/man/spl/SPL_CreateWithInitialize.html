@@ -1,0 +1,106 @@
+<html>
+<head>
+  <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=Shift_Jis">
+  <meta name="Generator" content="メモ帳">
+  <title>NITROパーティクルライブラリ 関数マニュアル- </title>
+</head>
+
+<basefont size=2>
+
+<body text="#606060" link="#6666FF" vlink="#800080" bgcolor=white>
+
+
+
+<center>
+<TABLE width=100% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>SPL_CreateWithInitialize</b></font></center></TD></TR></TABLE><BR>
+</center>
+<p style="margin-left:20%;margin-right:10%;text-align:left">
+<font size=+2>SPL_CreateWithInitialize</font>
+</p>
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>構文</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+
+#include &lt;spl/spl.h &gt;
+<br>
+<br>
+SPLEmitter* SPL_CreateWithInitialize(SPLManager* p_mgr, int res_no, void ( *fp_callback )( struct SPLEmitter* ) ) ;
+<br>
+
+</p>
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>引数</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+
+<table>
+<tr>
+<td bgcolor=#F0F0FF width=50%>p_mgr</td>
+<td bgcolor=#F0F0FF width=50%>マネージャへのポインタ</td>
+</tr>
+<tr>
+<td bgcolor=#F0F0FF width=50%>res_no</td>
+<td bgcolor=#F0F0FF width=50%>リソース番号</td>
+</tr>
+<tr>
+<td bgcolor=#F0F0FF width=50%>fp_callback</td>
+<td bgcolor=#F0F0FF width=50%>呼び出されるコールバック関数</td>
+</tr>
+</table>
+
+
+</p>
+
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>返り値</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+生成されたエミッタへのポインタ。自滅エミッタの場合はNULLがかえります。
+</p>
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>説明</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+リソース番号に基づいたリソースをもとにエミッタを生成します。
+<br><br>
+自滅エミッタをSPL_Createで作成した場合、NULLがかえってくるので
+エミッタの設定をプログラムから変更することはできません。
+この関数をもちいてSPLEmitter*を引数とするコールバックを登録することで、
+自滅前の自滅エミッタへのポインタを引数としてコールバック関数が呼び出されます。
+このコールバック関数中でエミッタの設定を変更することが可能です。
+
+
+
+</p>
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>履歴</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+
+ver.2004/12/02<br>
+</p>
+
+
+
+
+
+
+
+<TABLE width=100% border=0><TR><TD bgcolor=#CCCCCC><font size=-2><center>　</center></font></TD></TR></TABLE><BR>
+
+<center>
+<A HREF="index.html">ホームへ</A>
+</CENTER>
+
+
+</body>
+</html>

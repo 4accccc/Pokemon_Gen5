@@ -1,0 +1,105 @@
+<html>
+<head>
+  <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=Shift_Jis">
+  <meta name="Generator" content="メモ帳">
+  <title>NITROパーティクルライブラリ 関数マニュアル- </title>
+</head>
+
+<basefont size=2>
+
+<body text="#606060" link="#6666FF" vlink="#800080" bgcolor=white>
+
+
+
+<center>
+<TABLE width=100% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>SPL_SetCurrentPolygonID</b></font></center></TD></TR></TABLE><BR>
+</center>
+<p style="margin-left:20%;margin-right:10%;text-align:left">
+<font size=+2>SPL_SetCurrentPolygonID</font>
+</p>
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>構文</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+
+#include &lt;spl/spl_emitter.h &gt;
+<br>
+<br>
+BOOL SPL_SetCurrentPolygonID( SPLEmitter* p_emtr, u16 polygonID );
+<br>
+
+</p>
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>引数</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+
+<table>
+<tr>
+<td bgcolor=#F0F0FF width=50%>p_emtr</td>
+<td bgcolor=#F0F0FF width=50%>エミッタへのポインタ</td>
+</tr>
+<tr>
+<td bgcolor=#F0F0FF width=50%>polygonID</td>
+<td bgcolor=#F0F0FF width=50%>設定するポリゴンID</td>
+</tr>
+</table>
+
+
+</p>
+
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>返り値</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+成功したときはTRUE。それ以外のときはFALSE。
+エミッタに設定されたポリゴンIDの仕様範囲外の値を設定しようとすると失敗します。
+</p>
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>説明</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+指定したエミッタのカレントポリゴンIDを変更します。
+SPLではエミッタごとに使用できるポリゴンIDの範囲が設定されています。
+この範囲内で、エミッタから放出されるパーティクルのポリゴンIDは決定されます。
+内部的にはパーティクルを1つ描画することにエミッタのカレントポリゴンIDが一つ加算され、
+次回のパーティクル描画時にこのカレントポリゴンIDが使用されます。
+SPL_Createでエミッタを生成した場合、マネージャに設定されたポリゴンID範囲が
+そのままエミッタに適用されます。
+カレントポリゴンIDはエミッタに設定されたポリゴンID範囲の最小値
+から始まるため、異なるエミッタを同じ位置に設定すると
+同じポリゴンIDをもったパーティクルが重なる可能性があります。
+これが問題となる場合、この関数を用いることでエミッタごとのカレントポリゴンIDをずらし、
+同じポリゴンIDを持ったパーティクルが重ならないようにすることができます。
+</p>
+
+
+<center>
+<TABLE width=60% border=0><TR><TD bgcolor=#CCCCCC><center><font size=-1><b>履歴</b></font></center></TD></TR></TABLE>
+</center>
+<p style="margin-left:20%;margin-right:20%;text-align:left">
+
+ver.2004/08/09
+</p>
+
+
+
+
+
+
+
+<TABLE width=100% border=0><TR><TD bgcolor=#CCCCCC><font size=-2><center>　</center></font></TD></TR></TABLE><BR>
+
+<center>
+<A HREF="index.html">ホームへ</A>
+</CENTER>
+
+
+</body>
+</html>
