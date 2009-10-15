@@ -20,7 +20,7 @@ _EVENT_DATA ev_fld_item2
 _EVENT_DATA_END
 
 //--------------------------------------------------------------
-// MAP=r01 X=162 Y=806 ITEM=キズぐすり FLAG=0
+// MAP=r05 X=408 Y=120 ITEM=キズぐすり FLAG=0
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_0
   _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
