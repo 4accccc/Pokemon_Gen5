@@ -22,6 +22,7 @@ _EVENT_DATA   ev_item_event_nowait
 _EVENT_DATA   ev_gameover_recover_home
 _EVENT_DATA   ev_gameover_recover_pokecen
 _EVENT_DATA   ev_report_event_call
+_EVENT_DATA   ev_pocket_me_set
 _EVENT_DATA_END //èIóπ
 
 //--------------------------------------------------------------------
@@ -272,6 +273,11 @@ pocket_me_set:
   ENDSWITCH
 
   _RET
+
+ev_pocket_me_set:
+  _CALL pocket_me_set
+  _CHG_LOCAL_SCR
+  _END
 
 //********************************************************************
 //********************************************************************
