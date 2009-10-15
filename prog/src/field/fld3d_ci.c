@@ -219,7 +219,7 @@ void FLD3D_CI_Draw( FLD3D_CI_PTR ptr )
 
 
 //カットイン呼び出し
-void FLD3D_CI_CallCatIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo )
+void FLD3D_CI_CallCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo )
 {
   FLD3D_CI_EVENT_WORK *work;
   int size;
