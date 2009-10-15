@@ -21,6 +21,8 @@ _EVENT_DATA ev_hiden_naminori
 _EVENT_DATA ev_hiden_naminori_menu
 _EVENT_DATA ev_hiden_iaigiri
 _EVENT_DATA ev_hiden_iaigiri_menu
+_EVENT_DATA ev_hiden_takinobori
+_EVENT_DATA ev_hiden_takinobori_menu
 _EVENT_DATA_END
 
 
@@ -169,7 +171,7 @@ ev_hiden_naminori_ng:
   _TALKMSG( msg_naminori_03 )
   _LAST_KEYWAIT()
   _TALKWIN_CLOSE()
-  _END
+  _RET
 
 /*
 ev_hiden_naminori_pair_ng:
@@ -196,7 +198,7 @@ ev_hiden_naminori_02:
   //冒険ノート
 //_GET_NOW_ZONE_ID  SCWK_TEMP0
 //_FNOTE_DATA_MAKE  FNOTE_ID_NAMINORI,SCWK_TEMP0,0,0,0
-  _END
+  _RET
 
 //めにゅーから「なみのり」発動
 //SCWK_PARAM0に使用したポケモンの位置番号
@@ -247,7 +249,8 @@ ev_hiden_iaigiri_ng:
 	_TALKMSG( msg_iai_03 )
 	_LAST_KEYWAIT()
 	_TALKWIN_CLOSE()
-	_END
+	_RET
+  //
 
 //居合い切り実行
 ev_hiden_iaigiri_02:
@@ -277,7 +280,7 @@ ev_hiden_iaigiri_02_eff_end_loop:
   _TIME_WAIT( 1 )
   // エフェクト終了待ち
 //  _IFVAL_JUMP    SCWK_TEMP1,EQ,0, ev_hiden_iaigiri_02_eff_end_loop
-  _END
+  _RET
 
 //居合い切り　メニューから
 EVENT_START ev_hiden_iaigiri_menu
@@ -304,4 +307,71 @@ EVENT_START ev_hiden_iaigiri_menu
 ev_hiden_iaigiri_menu_eff_end_loop: // エフェクトが終わるまで待つ
 //	_TIME_WAIT		1,SCWK_ANSWER
 //	_IFVAL_JUMP		SCWK_TEMP1,EQ,0, ev_hiden_iaigiri_menu_eff_end_loop
+EVENT_END
+
+/**************************************************************/
+/*							たきのぼり								*/
+/**************************************************************/
+EVENT_START ev_hiden_takinobori
+	_TALK_OBJ_START()
+  _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_TAKINOBORI )
+  
+  IF $SCWK_ANSWER == 6 THEN
+    _CALL ev_hiden_takinobori_ng
+  ELSE
+    //バッジチェック
+//  _SYS_FLAG_BADGE_GET		BADGE_ID_C08, SCWK_ANSWER
+//  _IFVAL_JUMP		SCWK_ANSWER,EQ,0, ev_hiden_takinobori_ng
+    
+    _TALKWIN_OPEN()
+    _TALKMSG( msg_taki_01 )
+	  _YES_NO_WIN( SCWK_ANSWER )
+    _TALKWIN_CLOSE()
+    
+    IF $SCWK_ANSWER == 0 THEN
+	    _CALL ev_hiden_takinobori_02
+    ENDIF
+  ENDIF
+EVENT_END
+
+//秘伝わざもっていない場合
+ev_hiden_takinobori_ng:
+  _TALKWIN_OPEN()
+	_TALKMSG( msg_taki_03 )
+	_LAST_KEYWAIT()
+	_TALKWIN_CLOSE()
+	_RET
+
+//滝登り発動
+ev_hiden_takinobori_02:
+  _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_TAKINOBORI )
+	_LDWK( SCWK_TEMP0,SCWK_ANSWER )
+	_NICK_NAME( 0,SCWK_ANSWER )
+  
+  _TALKWIN_OPEN()
+	_TALKMSG( msg_taki_02 )
+	_TALKWIN_CLOSE()
+
+	//_CUTIN			SCWK_TEMP0
+	_TAKINOBORI( SCWK_TEMP0 )
+  
+  //冒険ノート
+//	_GET_NOW_ZONE_ID( SCWK_TEMP0 )
+//	_FNOTE_DATA_MAKE FNOTE_ID_TAKINOBORI,SCWK_TEMP0,0,0,0
+	_RET
+
+//メニューから「たきのぼり」発動
+EVENT_START ev_hiden_takinobori_menu
+	_NICK_NAME( 0,SCWK_PARAM0 )
+  _TALKWIN_OPEN()
+	_TALKMSG( msg_taki_02 )
+	_TALKWIN_CLOSE()
+  
+//	_OBJ_PAUSE_CLEAR	FLDOBJ_ID_PLAYER
+	//_CUTIN			SCWK_PARAM0
+	_TAKINOBORI( SCWK_PARAM0 )
+  
+  //冒険ノート
+//	_GET_NOW_ZONE_ID	SCWK_TEMP0
+//	_FNOTE_DATA_MAKE	FNOTE_ID_TAKINOBORI,SCWK_TEMP0,0,0,0
 EVENT_END
