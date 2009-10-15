@@ -128,7 +128,7 @@
 #define FE_SODATEYA_FIRSTTALK              112 /* 0x0070 育て屋受付：初回会話フラグ */
 #define FE_C01R0501_RIVALTALK              113 /* 0x0071 C01トレーナーズスクールのライバルと会話した */
 #define FE_D01R0101_EVCLEAR                114 /* 0x0072 C01ジム前のガイドのMSG分岐に使用。現状はD01R0101到着時にセットしています。 */
-		/* not used   115(0x0073) */
+#define FE_CGEAR_GET                       115 /* 0x0073 Cギア入手フラグ */
 		/* not used   116(0x0074) */
 		/* not used   117(0x0075) */
 		/* not used   118(0x0076) */
@@ -2369,12 +2369,12 @@
 #define SYS_FLAG_PAIR                     2401 /* 0x0961 連れ歩きフラグ */
 #define SYS_FLAG_KAIRIKI                  2402 /* 0x0962 かいりき状態フラグ */
 #define SYS_FLAG_FNOTE_GET                2403 /* 0x0963 冒険ノート入手 */
-#define SYS_FLAG_GAME_CLEAR               2404 /* 0x0964 ゲームクリア */
+#define SYS_FLAG_GAME_CLEAR               2404 /* 0x0964 ゲームクリアフラグ（殿堂入り時にセット） */
 #define SYS_FLAG_ONE_STEP                 2405 /* 0x0965 一歩動いたかフラグ */
 #define SYS_FLAG_COMM_COUNTER             2406 /* 0x0966 通信カウンター通過フラグ */
 #define SYS_FLAG_SAFARI_MODE              2407 /* 0x0967 サファリモードフラグ */
 #define SYS_FLAG_SAFARI_LTMODE            2408 /* 0x0968 サファリレイアウトモードフラグ */
-#define SYS_FLAG_DISGUISE                 2409 /* 0x0969 ロケット団変装中 */
+		/* not used  2409(0x0969) */
 #define SYS_FLAG_ASAGI_TOUDAI_CLEAR       2410 /* 0x096a アサギ灯台イベントクリア */
 #define SYS_FLAG_D35R0103_AJITO_MECH01    2411 /* 0x096b アジトB2 電波発生装置奥 */
 #define SYS_FLAG_D35R0103_AJITO_MECH02    2412 /* 0x096c アジトB2 電波発生装置真ん中 */
