@@ -13,6 +13,8 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+//テクスチャをOAMに転送
+#include "system/nsbtx_to_clwk.h"
 
 //FONT
 #include "print/gf_font.h"
@@ -28,9 +30,6 @@
 
 //描画設定
 #include "ui_template_graphic.h"
-
-//テクスチャをOAMに転送
-#include "ui/nsbtx_to_clwk.h"
 
 //簡易CLWK読み込み＆開放ユーティリティー
 #include "ui/ui_easy_clwk.h"
@@ -1225,8 +1224,8 @@ static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 t
   // テクスチャを転送
   {
     // 人物は基本 4 x 4
-    int sx = 4;
-    int sy = 4;
+    int sx = NSBTX_DEF_SX;
+    int sy = NSBTX_DEF_SY;
 
     CLWK_TransNSBTX( wk->clwk_oam_mmdl, ARCID_MMDL_RES, tex_idx, ptn_ofs, sx, sy, 0, prm.draw_type, heapID );
   }

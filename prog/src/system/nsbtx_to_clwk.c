@@ -11,7 +11,7 @@
 #include <gflib.h>
 #include "system/gra_tool.h"
 
-#include "ui/nsbtx_to_clwk.h"
+#include "system/nsbtx_to_clwk.h"
 
 #include "arc_def.h"
 
@@ -41,22 +41,21 @@
  */
 //=============================================================================
 
-
 //-----------------------------------------------------------------------------
 /**
  *	@brief  nsbtxをニトロキャラクタ、ニトロパレットに変換してCLWKに転送
  *
- *	@param	GFL_CLWK* act ユニット
+ *	@param	GFL_CLWK* act アクターへのポインタ
  *	@param  arc_idx   アーカイブＩＤ
  *	@param	tex_idx   テクスチャのARC内インデックス
  *	@param  ptn_ofs   テクスチャオフセット（アニメパターンのオフセット）
- *	@param	sx        サイズＸ（キャラ単位）
- *	@param	sy        サイズＹ（キャラ単位）
- *	@param	VramOfs   転送先オフ（登録済みCGRが転送されているアドレスからのオフセット）
- * @param   vramType  転送先VramType  
+ *	@param	sx        転送元データのサイズＸ（キャラ単位）
+ *	@param	sy        転送元データのサイズＹ（キャラ単位）
+ *	@param	VramOfs   転送先オフセット（Byte) (登録済みCGRが転送されているアドレスからのオフセット）
+ *  @param  vramType  転送先VramType  
  *	@param	HeapID    ヒープＩＤ
  *
- *	@retval
+ *	@retval none
  */
 //-----------------------------------------------------------------------------
 void CLWK_TransNSBTX( GFL_CLWK* act, u32 arc_idx, u32 tex_idx, u8 ptn_ofs, u16 sx, u16 sy, u32 VramOfs, CLSYS_DRAW_TYPE vram_type, HEAPID HeapID )
