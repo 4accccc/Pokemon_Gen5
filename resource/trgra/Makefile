@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------
 #
-#	ポケモングラフィックコンバート用Makefile
+#	トレーナーグラフィックコンバート用Makefile
 #
 #	2008.08.19	tamada@gamefreak
 #------------------------------------------------------------------------------
@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	nishino ohmura
+USERS	=	ohmura
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -121,7 +121,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 do-build:	$(NARCNAME_F) $(NARCNAME_B)
 
 $(NARCNAME_F): $(notdir $(MCSSNCGFILE:.ncg=.NCBR)) $(notdir $(MCSSNCEFILE:.nce=.NCER)) $(notdir $(MCSSNCLFILE:.ncl=.NCLR)) $(SCRFILE_F)
-	ruby $(SCRIPT_DIR)file_exist.rb trfgra_wb.lst
 	nnsarc -c -l -n -i $(NARCNAME_F) -S $(SCRFILE_F)
 	$(NAIXCUT) $(NAIXNAME_F)
 
