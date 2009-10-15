@@ -2146,10 +2146,12 @@ void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
 
     BTL_Printf("パーティメンバー入れ替え %d <-> %d\n", idx1, idx2);
 
+    #if 0
     if( party->srcParty ){
       BTL_Printf("オリジナルパーティも入れ替え %d <-> %d\n", idx1, idx2);
       PokeParty_ExchangePosition( party->srcParty, idx1, idx2, HEAPID_BTL_SYSTEM );
     }
+    #endif
   }
 }
 
