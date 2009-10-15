@@ -150,11 +150,20 @@ void	TT_TrainerMessageGet( TrainerID tr_id, int kindID, STRBUF* str, HEAPID heap
 {
 	ARCHANDLE*    handle;
 	int           size;
+	int           ofs_size;
 	u16           ofs;
 	u16           data[ 2 ];
   GFL_MSGDATA*  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trmsg_dat, heapID );
 
 	size = GFL_ARC_GetDataSize( ARCID_TRMSGTBL, 0 );
+#ifdef PM_DEBUG
+	ofs_size = GFL_ARC_GetDataSize( ARCID_TRMSGTBL_OFS, 0 );
+  if( ofs_size < tr_id * 2 )
+  { 
+		GFL_STR_ClearBuffer( str );
+    return;
+  }
+#endif
 	GFL_ARC_LoadDataOfs( &ofs, ARCID_TRMSGTBL_OFS, 0, tr_id * 2, 2 );
 	handle = GFL_ARC_OpenDataHandle( ARCID_TRMSGTBL, heapID );
 
