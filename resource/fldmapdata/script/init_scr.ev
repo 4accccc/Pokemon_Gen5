@@ -43,4 +43,9 @@ SP_EVENT_START  ev_init_script
 	//D01廃墟：サポート・ジムリーダーに勝つまで非表示
 	_FLAG_SET( FV_D01R0101_SUPPORT_01 )
 
+	//C04電気ジム：コースターのトレーナー・プレイヤーが乗ろうとするまで非表示
+	_FLAG_SET( FV_C04GYM0101_TR_01 )
+	_FLAG_SET( FV_C04GYM0101_TR_02 )
+
+
 SP_EVENT_END
