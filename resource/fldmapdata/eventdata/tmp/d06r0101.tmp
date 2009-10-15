@@ -1,5 +1,5 @@
 #../data/d06r0101.mev
 ../tmp/d06r0101.bin:../data/d06r0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d06r0101.h ../../script/d06r0101_def.h ../../zonetable/zone_id.h ../tmp/d06.h ../../../../prog/include/field/eventdata_type.h ../tmp/c06.h ../tmp/d06r0201.h 
-	echo ../data/d06r0101.mev
+	@echo ../data/d06r0101.mev
 	@ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d06r0101.h ../../script/d06r0101_def.h ../../zonetable/zone_id.h ../tmp/d06.h ../../../../prog/include/field/eventdata_type.h ../tmp/c06.h ../tmp/d06r0201.h 
 

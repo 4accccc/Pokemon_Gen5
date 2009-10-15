@@ -1,5 +1,5 @@
 #../data/d04r0401.mev
 ../tmp/d04r0401.bin:../data/d04r0401.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d04r0401.h ../../script/d04r0401_def.h ../../zonetable/zone_id.h ../tmp/d04r0301.h ../../../../prog/include/field/eventdata_type.h ../tmp/d04r0501.h ../../flagwork/work_define.h 
-	echo ../data/d04r0401.mev
+	@echo ../data/d04r0401.mev
 	@ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d04r0401.h ../../script/d04r0401_def.h ../../zonetable/zone_id.h ../tmp/d04r0301.h ../../../../prog/include/field/eventdata_type.h ../tmp/d04r0501.h ../../flagwork/work_define.h 
 

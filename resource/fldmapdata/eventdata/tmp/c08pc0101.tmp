@@ -1,5 +1,5 @@
 #../data/c08pc0101.mev
 ../tmp/c08pc0101.bin:../data/c08pc0101.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08pc0101.h ../../script/c08pc0101_def.h 
-	echo ../data/c08pc0101.mev
+	@echo ../data/c08pc0101.mev
 	@ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/c08pc0101.h ../../script/c08pc0101_def.h 
 

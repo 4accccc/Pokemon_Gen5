@@ -1,5 +1,5 @@
 #../data/d12.mev
 ../tmp/d12.bin:../data/d12.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d12.h ../../script/d12_def.h 
-	echo ../data/d12.mev
+	@echo ../data/d12.mev
 	@ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../tmp/d12.h ../../script/d12_def.h 
 
