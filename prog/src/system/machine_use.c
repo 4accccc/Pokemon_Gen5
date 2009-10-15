@@ -48,6 +48,7 @@ void MachineSystem_Init(void)
 		u32 file_table_size;
 		void* p_table;
 
+		OS_EnableIrq();
 		FS_Init(FS_DMA_NUMBER);
 
 		// ファイル管理テーブルをRAMへ載せる→ファイルへの高速アクセスが可能
@@ -56,7 +57,6 @@ void MachineSystem_Init(void)
 
 		SDK_ASSERT(p_table != NULL);
 
-		OS_EnableIrq();
 		
 		(void)FS_LoadTable(p_table, file_table_size);
 
