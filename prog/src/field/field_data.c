@@ -329,6 +329,48 @@ const SCENE_DATA resistMapTbl[] = {
 		&FieldMapCtrl_GridFunctions,
 		TRUE,
 	},
+
+  //RSC_NOGRID_D09 = 12,
+	{	//チャンピオンロード　外側
+		{
+			FLDMAPPER_FILETYPE_NORMAL,
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      3,3,
+      FLDMAPPER_MODE_SCROLL_XZ, 
+			ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			{0,2},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE/4,	// 
+		},
+		&FieldMapCtrl_NoGridFunctions,
+		TRUE,
+	},
+
+  //RSC_GRID_BRIDGE_H03 = 13,
+	{	//H03 縦長　常駐マップ
+		{
+			FLDMAPPER_FILETYPE_NORMAL,
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      1,6,
+      FLDMAPPER_MODE_SCROLL_NONE, 
+			ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			{0,2},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE,	// 
+		},
+		&FieldMapCtrl_GridFunctions,
+		TRUE,
+	},
 };
 
 const unsigned int resistMapTblCount = NELEMS(resistMapTbl);

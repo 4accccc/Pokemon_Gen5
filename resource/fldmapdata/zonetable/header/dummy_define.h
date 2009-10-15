@@ -62,6 +62,8 @@ enum {
   RSC_GRID_MUSICAL = 9,
   RSC_GRID_GYM_ELEC = 10,
   RSC_GRID_WIDE = 11,     // 3x2
+  RSC_NOGRID_D09 = 12,     // 3x3
+  RSC_GRID_BRIDGE_H03 = 13,     // 1x6
 
 	//NO_GRID_SAMPLE = 2,
 	//GRID_GS_SAMPLE = 3,
