@@ -126,7 +126,7 @@
 #define FE_C01R0102_ITEM_GET               110 /* 0x006e サンヨウシティビルＡ ２Ｆ：アイテム入手イベント（アイテム未定） */
 #define FE_C01R0201_ITEM_GET               111 /* 0x006f サンヨウシティビルＢ １Ｆ：アイテム入手イベント（ピントレンズ） */
 #define FE_SODATEYA_FIRSTTALK              112 /* 0x0070 育て屋受付：初回会話フラグ */
-		/* not used   113(0x0071) */
+#define FE_C01R0501_RIVALTALK              113 /* 0x0071 C01トレーナーズスクールのライバルと会話した */
 		/* not used   114(0x0072) */
 		/* not used   115(0x0073) */
 		/* not used   116(0x0074) */
@@ -551,19 +551,19 @@
 #define FV_D01_GYM_LEADER                  527 /* 0x020f 廃墟入り口：ジムリーダー */
 #define FV_T02_RIVAL_02                    528 /* 0x0210 カラクサタウン：イベント誘導 */
 #define FV_R02_MOTHER                      529 /* 0x0211 ２番道路：ランニングシューズ入手イベントのママ */
-#define FV_C01GYM0101_LEADERS              530 /* 0x0212 C01ジム：３兄弟リーダーのうち後から出てくる二人 */
+#define FV_C01GYM0101_LEADERS              530 /* 0x0212 C01三つ巴ジム：３兄弟リーダーのうち後から出てくる二人 */
 #define FV_D01R0101_GIRL_01                531 /* 0x0213 D01R0101：ジムリーダー対策ポケモンをくれる女の子 */
 #define FV_D01R0101_SUPPORT_01             532 /* 0x0214 D01R0101：夢ポケモンについて教えてくれるサポート */
 #define FV_D01R0101_POKE_01                533 /* 0x0215 D01R0101：夢ポケモン */
 #define FV_D01R0101_ITEM_01                534 /* 0x0216 D01R0101：夢アイテム */
 #define FV_T01R0101_FRIENDS                535 /* 0x0217 主人公自宅１階の友達 */
-		/* not used   536(0x0218) */
-		/* not used   537(0x0219) */
-		/* not used   538(0x021a) */
-		/* not used   539(0x021b) */
-		/* not used   540(0x021c) */
-		/* not used   541(0x021d) */
-		/* not used   542(0x021e) */
+#define FV_C04GYM0101_TR_01                536 /* 0x0218 C04電気ジム：コースターに乗っているトレーナー１人目 */
+#define FV_C04GYM0101_TR_02                537 /* 0x0219 C04電気ジム：コースターに乗っているトレーナー２人目 */
+#define FV_C01_GUIDE_01                    538 /* 0x021a C01フィールド：ジム前のジムガイド（ストッパー） */
+#define FV_C01_LEADER1_01                  539 /* 0x021b C01フィールド：ジム前のジムリーダー（コーン） */
+#define FV_C01_INVENTOR_01                 540 /* 0x021c C01フィールド：バッジ入手後に話しかけてくる発明家（マコモ） */
+#define FV_C01R0101_INVENTOR_01            541 /* 0x021d 発明家自宅の１階：発明家（マコモ） （最終的には２階に常駐） */
+#define FV_C01R0501_RIVAL_01               542 /* 0x021e C01トレーナーズスクール：ライバル */
 		/* not used   543(0x021f) */
 		/* not used   544(0x0220) */
 		/* not used   545(0x0221) */
