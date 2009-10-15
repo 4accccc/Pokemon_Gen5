@@ -45,7 +45,15 @@ include	$(COMMONDEFS_CCTYPE_CW)
 #Moduleルール
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
-.PHONY:	do-build clean
+#------------------------------------------------------------------------------
+#	ファイル削除ルール
+#------------------------------------------------------------------------------
+LDIRT_CLEAN = $(TARGETDIR)$(PERSONAL) $(TARGETDIR)$(WOTBL) $(TARGETDIR)$(EVOTBL) $(TARGETDIR)$(PMSTBL)
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+LDIRT_CLEAN += $(PERSONAL) $(WOTBL) $(EVOTBL) $(PMSTBL) *.bin
+endif
+
+.PHONY:	do-build
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES: .s .bin
@@ -108,20 +116,4 @@ $(TARGETDIR)$(PMSTBL):	$(PMSTBL)
 
 $(TARGETDIR)$(GROWTBL):	$(GROWTBL)
 	$(COPY)	$(GROWTBL) $(TARGETDIR)
-
-#------------------------------------------------------------------------------
-#	make cleanルール
-#------------------------------------------------------------------------------
-clean:
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-	-rm -f $(PERSONAL)
-	-rm -f $(WOTBL)
-	-rm -f $(EVOTBL)
-	-rm -f $(PMSTBL)
-	-rm -f *.bin
-endif
-	-rm -f $(TARGETDIR)$(PERSONAL)
-	-rm -f $(TARGETDIR)$(WOTBL)
-	-rm -f $(TARGETDIR)$(EVOTBL)
-	-rm -f $(TARGETDIR)$(PMSTBL)
 

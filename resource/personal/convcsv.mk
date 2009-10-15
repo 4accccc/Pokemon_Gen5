@@ -46,7 +46,15 @@ include	$(COMMONDEFS_CCTYPE_CW)
 #Moduleルール
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
-.PHONY:	do-build clean
+.PHONY:	do-build
+
+#------------------------------------------------------------------------------
+#	ファイル削除ルール
+#------------------------------------------------------------------------------
+LDIRT_CLEAN = $(TARGETDIR)$(HEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(LSTDIR)$(LSTFILE) $(SCRDIR)*.scr
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+LDIRT_CLEAN += *.s $(HEADER) $(GMMFILE) $(MONSNOHASHFILE) $(WOTHASHFILE) $(LSTFILE) *.scr out_end
+endif
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
@@ -86,25 +94,4 @@ $(SCRDIR)$(OTHERFORMFILE):	$(OTHERFORMFILE)
 
 $(SCRDIR)$(OTHERPLTTFILE):	$(OTHERPLTTFILE)
 	$(COPY)	$(OTHERPLTTFILE) $(SCRDIR)
-
-#------------------------------------------------------------------------------
-#	make cleanルール
-#------------------------------------------------------------------------------
-clean:
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-	-rm -f *.s
-	-rm -f $(HEADER)
-	-rm -f $(GMMFILE)
-	-rm -f $(MONSNOHASHFILE)
-	-rm -f $(WOTHASHFILE)
-	-rm -f $(LSTFILE)
-	-rm -f *.scr
-	-rm -f out_end
-endif
-	-rm -f $(TARGETDIR)$(HEADER)
-	-rm -f $(GMMDIR)$(GMMFILE)
-	-rm -f $(HASHDIR)$(MONSNOHASHFILE)
-	-rm -f $(HASHDIR)$(WOTHASHFILE)
-	-rm -f $(LSTDIR)$(LSTFILE)
-	-rm -f $(SCRDIR)*.scr
 

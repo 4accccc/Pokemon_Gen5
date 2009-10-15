@@ -39,7 +39,15 @@ include	$(COMMONDEFS_CCTYPE_CW)
 #Moduleルール
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
-.PHONY:	do-build clean
+#------------------------------------------------------------------------------
+#	ファイル削除ルール
+#------------------------------------------------------------------------------
+LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME1) $(TARGETDIR)/$(NARCNAME2) $(GMMDIR)$(GMMFILE)
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+LDIRT_CLEAN += out_end *.o *.elf *.bin $(NARCNAME1) $(NARCNAME2) $(GMMFILE)
+endif
+
+.PHONY:	do-build
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
@@ -76,21 +84,4 @@ $(TARGETDIR)/$(NARCNAME2):	$(NARCNAME2)
 
 $(GMMDIR)$(GMMFILE):	$(GMMFILE)
 	$(COPY)	$(GMMFILE) $(GMMDIR)
-
-#------------------------------------------------------------------------------
-#	make cleanルール
-#------------------------------------------------------------------------------
-clean:
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-	-rm -f out_end
-	-rm -f *.o
-	-rm -f *.elf
-	-rm -f *.bin
-	-rm -f $(NARCNAME1)
-	-rm -f $(NARCNAME2)
-	-rm -f $(GMMFILE)
-endif
-	-rm -f $(TARGETDIR)/$(NARCNAME1)
-	-rm -f $(TARGETDIR)/$(NARCNAME2)
-	-rm -f $(GMMDIR)$(GMMFILE)
 

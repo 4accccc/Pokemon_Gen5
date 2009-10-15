@@ -36,12 +36,20 @@ include	$(COMMONDEFS_CCTYPE_CW)
 #Moduleルール
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
+#------------------------------------------------------------------------------
+#	ファイル削除ルール
+#------------------------------------------------------------------------------
+LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME1) $(TARGETDIR)/$(NARCNAME2)
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+LDIRT_CLEAN += *.o *.elf *.bin $(NARCNAME1) $(NARCNAME2)
+endif
+
 #コンバート対象のファイルツリーを生成
 DATAFILES:=$(wildcard trdata_*.s)
 POKEFILES:=$(wildcard trpoke_*.s)
 ELF2BINDIR = ../../tools/
 
-.PHONY:	do-build clean
+.PHONY:	do-build
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
@@ -83,19 +91,4 @@ $(TARGETDIR)/$(NARCNAME1):	$(NARCNAME1)
 
 $(TARGETDIR)/$(NARCNAME2):	$(NARCNAME2)
 	$(COPY)	$(NARCNAME2) $(TARGETDIR)
-
-#------------------------------------------------------------------------------
-#	make cleanルール
-#------------------------------------------------------------------------------
-clean:
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-	-rm -f *.o
-	-rm -f *.elf
-	-rm -f *.bin
-	-rm -f $(NARCNAME1)
-	-rm -f $(NARCNAME2)
-endif
-	-rm -f $(TARGETDIR)/$(NARCNAME1)
-	-rm -f $(TARGETDIR)/$(NARCNAME2)
-
 

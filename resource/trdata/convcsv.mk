@@ -41,7 +41,15 @@ include	$(COMMONDEFS_CCTYPE_CW)
 #Moduleルール
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
-.PHONY:	do-build clean
+#------------------------------------------------------------------------------
+#	ファイル削除ルール
+#------------------------------------------------------------------------------
+LDIRT_CLEAN = $(TARGETDIR)$(NO_HEADER) $(TARGETDIR)$(TYPE_HEADER) $(TARGETDIR)$(GENDER_HEADER) $(GMMDIR)$(NAME_GMMFILE) $(GMMDIR)$(TYPE_GMMFILE)
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+LDIRT_CLEAN += *.s $(NO_HEADER) $(TYPE_HEADER) $(GENDER_HEADER) $(NAME_GMMFILE) $(TYPE_GMMFILE) *.scr out_end
+endif
+
+.PHONY:	do-build
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
@@ -72,24 +80,4 @@ $(GMMDIR)$(NAME_GMMFILE):	$(NAME_GMMFILE)
 
 $(GMMDIR)$(TYPE_GMMFILE):	$(TYPE_GMMFILE)
 	$(COPY)	$(TYPE_GMMFILE) $(GMMDIR)
-
-#------------------------------------------------------------------------------
-#	make cleanルール
-#------------------------------------------------------------------------------
-clean:
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-	-rm -f *.s
-	-rm -f $(NO_HEADER)
-	-rm -f $(TYPE_HEADER)
-	-rm -f $(GENDER_HEADER)
-	-rm -f $(NAME_GMMFILE)
-	-rm -f $(TYPE_GMMFILE)
-	-rm -f *.scr
-	-rm -f out_end
-endif
-	-rm -f $(TARGETDIR)$(NO_HEADER)
-	-rm -f $(TARGETDIR)$(TYPE_HEADER)
-	-rm -f $(TARGETDIR)$(GENDER_HEADER)
-	-rm -f $(GMMDIR)$(NAME_GMMFILE)
-	-rm -f $(GMMDIR)$(TYPE_GMMFILE)
 
