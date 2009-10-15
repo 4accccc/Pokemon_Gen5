@@ -389,8 +389,10 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
   {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BAG, pWork->heapID );
 
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_basebg_u_NCLR,
-                                      PALTYPE_SUB_BG, 0, 4*0x20,  pWork->heapID);
+    // 上画面パレット一括転送
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_bg_u_NCLR,
+                                      PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
+
     pWork->subbg = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_bag_bag_basebg_u_NCGR,
                                                                 GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
     GFL_ARCHDL_UTIL_TransVramScreenCharOfs( p_handle, NARC_bag_bag_basebg_u_NSCR,
@@ -400,9 +402,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     // 下画面BG（男女で切替)
     _load_basebg_d( pWork, p_handle );
 
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win01_u_NCLR,
-                                      PALTYPE_SUB_BG, 4*0x20, 4*0x20,  pWork->heapID);
-    pWork->subbg2 = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_bag_bag_win01_u_NCGR,
+    pWork->subbg2 = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_bag_bag_win01_02_u_NCGR,
                                                                  GFL_BG_FRAME1_S, 0, 0, pWork->heapID);
     GFL_ARCHDL_UTIL_TransVramScreenCharOfs( p_handle, NARC_bag_bag_win01_u_NSCR,
                                             GFL_BG_FRAME1_S, 0,
@@ -414,8 +414,6 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     //下画面アイコン
     _load_parts( pWork, p_handle );
 
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win01_d_NCLR,
-                                      PALTYPE_MAIN_BG, 1*0x20, 2*0x20,  pWork->heapID);
     //数字のフレーム
     pWork->numFrameBg =
       GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
@@ -424,6 +422,10 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     //数字フレーム用パレット
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win05_d_NCLR,
                                       PALTYPE_MAIN_BG, PALOFS_NUM_FRAME*0x20, 1*0x20,  pWork->heapID);
+    
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win01_d_NCLR,
+                                      PALTYPE_MAIN_BG, 1*0x20, 2*0x20,  pWork->heapID);
+    
 
     GFL_ARC_CloseDataHandle(p_handle);
   }
@@ -862,7 +864,7 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
   // スライドバーつまみ・リストカーソル
   pWork->cellRes[_PLT_CUR] = GFL_CLGRP_PLTT_RegisterEx( archandle ,
                                                         NARC_bag_bag_win03_d_NCLR , CLSYS_DRAW_MAIN ,
-                                                        _PAL_CUR_CELL , 0 , _PAL_CUR_CELL_NUM , pWork->heapID  );
+                                                        _PAL_CUR_CELL*0x20 , 0 , _PAL_CUR_CELL_NUM , pWork->heapID  );
 
   pWork->cellRes[_NCG_CUR] = GFL_CLGRP_CGR_Register(
     archandle , NARC_bag_bag_win03_d_NCGR ,
@@ -880,6 +882,10 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
       FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
     pWork->listBmp[i] = GFL_BMP_Create( 12, 2, GFL_BMP_16_COLOR, pWork->heapID );
   }
+
+  pWork->cellRes[_PLT_LIST] = GFL_CLGRP_PLTT_RegisterEx( 
+      archandle, NARC_bag_bag_win01_d_NCLR, CLSYS_DRAW_MAIN, 
+      _PAL_WIN01_CELL, 0, 1, pWork->heapID );
 
   pWork->cellRes[_ANM_LIST] = GFL_CLGRP_CELLANIM_Register(
     archandle , NARC_bag_bag_win01_d_NCER, NARC_bag_bag_win01_d_NANR ,
@@ -949,7 +955,7 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 
       pWork->listCell[i] = GFL_CLACT_WK_Create(
         pWork->cellUnit ,
-        pWork->listRes[ i ],pWork->cellRes[_PLT_CUR],  pWork->cellRes[_ANM_LIST],
+        pWork->listRes[ i ],pWork->cellRes[_PLT_LIST],  pWork->cellRes[_ANM_LIST],
         &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
       cellInitData.pos_x -= 3 * 8;
@@ -997,10 +1003,12 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
     }
     {
       void * itemdata;
+      u8 backColor = 0xa;
+
       itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
 
-      GFL_BMP_Clear(pWork->listBmp[i],3);
-      GFL_FONTSYS_SetColor( 0xf, 0xe, 3 );
+      GFL_BMP_Clear(pWork->listBmp[i], backColor );
+      GFL_FONTSYS_SetColor( 0xf, 0xe, backColor );
       GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
       WORDSET_RegisterItemName(pWork->WordSet, 0, item->id);
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );

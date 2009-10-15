@@ -67,6 +67,8 @@ enum _ITEMLISTCELL_RESOURCE
   _ANM_CHECK,
   _PLT_SORT,
   _NCG_SORT,
+  _PLT_LIST,
+  // _NCG_LIST >> listResでリストの項目分用意されている
   _ANM_SORT,
   _PLT_BAGPOCKET,  
   _NCG_BAGPOCKET,  
@@ -229,15 +231,15 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _BUTTON_MSG_PAL   (12)  // メッセージフォント
 #define _BUTTON_WIN_PAL   (13)  // ウインドウ
 
-#
-#define _PAL_CUR_CELL (0)       // スライドバーつまみ カーソル用パレット転送位置
+#define _PAL_WIN01_CELL (0)     // リストウィンドウ用パレット転送位置
+#define _PAL_CUR_CELL (1)       // スライドバーつまみ カーソル用パレット転送位置
 #define _PAL_CUR_CELL_NUM (2)
-#define _PAL_SORT_CELL (3)      // ソートボタンのパレット展開位置
-#define _PAL_SORT_CELL_NUM (6)  // ソートボタンのパレット本数
-#define _PAL_COMMON_CELL (9)          // 共通パレット展開位置
-#define _PAL_COMMON_CELL_NUM ( APP_COMMON_BARICON_PLT_NUM )
-#define _PAL_BAG_PARTS_CELL (12)      // バッグのパーツCELLのパレット展開位置
 #define _PAL_MENU_CHECKBOX_CELL (14)  // チェックボックスのパレット展開位置
+#define _PAL_SORT_CELL (3)      // ソートボタンのパレット展開位置
+#define _PAL_SORT_CELL_NUM (2)  // ソートボタンのパレット本数
+#define _PAL_BAG_PARTS_CELL (10)      // バッグのパーツCELLのパレット展開位置
+#define _PAL_COMMON_CELL (12)          // 共通パレット展開位置
+#define _PAL_COMMON_CELL_NUM ( APP_COMMON_BARICON_PLT_NUM )
 
 // ポケット名の文字色
 #define _POCKETNAME_FONT_PAL_L (0xF)
