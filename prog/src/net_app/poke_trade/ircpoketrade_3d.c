@@ -130,36 +130,9 @@ static const GFL_G3D_UTIL_RES res_table_reel[] =
 
 static const GFL_G3D_UTIL_RES res_table_trade1[] =
 {
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome3_nsbmd,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome3_nsbca,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome3_nsbta,    GFL_G3D_UTIL_RESARC },
-};
-
-static const GFL_G3D_UTIL_RES res_table_trade_trade[] =
-{
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade2_2_nsbmd,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade2_2_nsbca,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade2_2_nsbta,    GFL_G3D_UTIL_RESARC },
-};
-
-static const GFL_G3D_UTIL_RES res_table_trade_return[] =
-{
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade4_nsbmd,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade4_nsbca,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade4_nsbta,    GFL_G3D_UTIL_RESARC },
-};
-
-static const GFL_G3D_UTIL_RES res_table_trade_splash[] =
-{
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade5_nsbmd,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade5_nsbca,    GFL_G3D_UTIL_RESARC },
-};
-
-static const GFL_G3D_UTIL_RES res_table_trade_end[] =
-{
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade3_nsbmd,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade3_nsbca,    GFL_G3D_UTIL_RESARC },
-  { ARCID_POKETRADEDEMO,    NARC_tradedemo_trade3_nsbta,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome_test_nsbmd,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome_test_nsbca,    GFL_G3D_UTIL_RESARC },
+  { ARCID_POKETRADEDEMO,    NARC_tradedemo_matome_test_nsbta,    GFL_G3D_UTIL_RESARC },
 };
 
 
@@ -167,23 +140,6 @@ static const GFL_G3D_UTIL_ANM anm_table_trade1[] =
 {
   { 1, 0 },
   { 2, 0 },
-};
-
-static const GFL_G3D_UTIL_ANM anm_table_trade_nomal[] =
-{
-  { 1, 0 },
-  { 2, 0 },
-};
-
-static const GFL_G3D_UTIL_ANM anm_table_trade_splash[] =
-{
-  { 1, 0 },
-};
-
-static const GFL_G3D_UTIL_ANM anm_table_trade2[] =
-{
-  { 4, 0 },
-  { 5, 0 },
 };
 
 
@@ -214,28 +170,6 @@ static const GFL_G3D_UTIL_OBJ obj_table_trade1[] =
     0,                         // テクスチャリソースID
     NULL,           // アニメテーブル(複数指定のため)
     0,   // アニメリソース数
-  },
-};
-
-static const GFL_G3D_UTIL_OBJ obj_table_trade_normal[] =
-{
-  {
-    0,                         // モデルリソースID
-    0,                         // モデルデータID(リソース内部INDEX)
-    0,                         // テクスチャリソースID
-    anm_table_trade_nomal,           // アニメテーブル(複数指定のため)
-    NELEMS(anm_table_trade_nomal),   // アニメリソース数
-  },
-};
-
-static const GFL_G3D_UTIL_OBJ obj_table_trade_splash[] =
-{
-  {
-    0,                         // モデルリソースID
-    0,                         // モデルデータID(リソース内部INDEX)
-    0,                         // テクスチャリソースID
-    anm_table_trade_splash,           // アニメテーブル(複数指定のため)
-    NELEMS(anm_table_trade_splash),   // アニメリソース数
   },
 };
 
@@ -682,7 +616,7 @@ void IRC_POKETRADEDEMO_RemoveModel( IRC_POKEMON_TRADE* pWork)
 
 //--------------------------------------------------------------------------------------------
 /**
- * @breif 初期化
+ * @brief 初期化
  */
 //--------------------------------------------------------------------------------------------
 static void Initialize( IRC_POKEMON_TRADE* pWork, int modelno )
@@ -720,7 +654,7 @@ static void Initialize( IRC_POKEMON_TRADE* pWork, int modelno )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @breif 終了
+ * @brief 終了
  */
 //--------------------------------------------------------------------------------------------
 static void Finalize( IRC_POKEMON_TRADE* pWork )
@@ -742,7 +676,7 @@ static void Finalize( IRC_POKEMON_TRADE* pWork )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @breif 描画
+ * @brief 描画
  */
 //--------------------------------------------------------------------------------------------
 

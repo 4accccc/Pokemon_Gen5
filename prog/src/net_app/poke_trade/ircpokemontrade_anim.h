@@ -45,6 +45,7 @@
 #define _POKE_SIDEIN_TIME    (240)   //ポケモン登場移動時間
 #define _POKE_LEAVE_START   (800)  //ポケモン退場
 #define _POKE_LEAVE_TIME    (30)  //ポケモン退場移動時間
+#define _POKEMON_CREATE_TIME   (1540)  ///交換終了してポケモン登場 
 
 
 ///パーティクルのタイミング

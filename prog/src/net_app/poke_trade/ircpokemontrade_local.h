@@ -311,6 +311,7 @@ struct _IRC_POKEMON_TRADE{
 
   BOX_MANAGER* pBox;
   MYSTATUS* pMy;
+  MYSTATUS* pFriend;
   POKEPARTY* pMyParty;
   GFL_G3D_CAMERA    *camera;
 

@@ -44,11 +44,15 @@
 #include "p_st_obj_d_NANR_LBLDEFS.h"
 
 #include "ircpokemontrade_local.h"
+#include "spahead.h"
 
 
 static void _changeDemo_ModelTrade0(IRC_POKEMON_TRADE* pWork);
 static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork);
 static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork);
+static void _changeDemo_ModelTrade20(IRC_POKEMON_TRADE* pWork);
+static void _changeDemo_ModelTrade21(IRC_POKEMON_TRADE* pWork);
+static void _changeDemo_ModelTrade22(IRC_POKEMON_TRADE* pWork);
 static void _changeDemo_ModelTrade24(IRC_POKEMON_TRADE* pWork);
 static void _setFadeMask(_D2_PAL_FADE_WORK* pD2Fade);
 static void	_FIELD_StartPaletteFade( _EFFTOOL_PAL_FADE_WORK* epfw, u8 start_evy, u8 end_evy, u8 wait, u16 rgb );
@@ -240,31 +244,31 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
 
   
   if(pWork->anmCount == _BALL_PARTICLE_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, 0, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, DERMO_TEX001, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO2_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, 1, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX002, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO3_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, 2, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX003, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO3_START2){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, 2, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX003, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO4_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, 3, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX004, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO4_START2){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, 3, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX004, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO5_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, 4, _ballinEmitFunc, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX005, _ballinEmitFunc, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO6_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, 5, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX006, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO7_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, 6, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX007, NULL, pWork);
   }
   
   if(pWork->anmCount == _POKEUP_WHITEOUT_START){
@@ -354,7 +358,18 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
       _pokeMoveCreate(pWork->pokeMcss[1], _POKE_LEAVE_TIME,
                       _POKEMON_FRIEND_LEAVE_POSX, _POKEMON_FRIEND_LEAVE_POSY, pWork->heapID);
   }
-  
+  if(_POKEMON_CREATE_TIME == pWork->anmCount){
+
+//    IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );
+    {
+      VecFx32 apos;
+      apos.x = _MCSS_POS_X(120);
+      apos.y = _MCSS_POS_Y(120);
+      MCSS_SetPosition( pWork->pokeMcss[1] ,&apos );
+      MCSS_SetAnmStopFlag(pWork->pokeMcss[1]);
+    }
+
+  }
   if(pWork->anmCount == _POKECHANGE_WHITEOUT_START){
     _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
                    _POKECHANGE_WHITEOUT_TIMER, 1, pWork->heapID );
@@ -378,10 +393,43 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
     pWork->pMoveMcss[0]=NULL;
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
     pWork->pMoveMcss[1]=NULL;
-    _CHANGE_STATE(pWork,_changeDemo_ModelTrade24);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade20);
   }
 }
-  
+
+
+static void _changeDemo_ModelTrade20(IRC_POKEMON_TRADE* pWork)
+{
+  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_49, pWork->pMessageStrBufEx );
+
+  {
+    POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+    WORDSET_RegisterPokeNickName( pWork->pWordSet, 1,  pp );
+  }
+  WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx  );
+
+
+  IRC_POKETRADE_MessageWindowOpen(pWork,  POKETRADE_STR_49);
+  _setNextAnim(pWork, 0);
+  _CHANGE_STATE(pWork,_changeDemo_ModelTrade21);
+
+}
+
+static void _changeDemo_ModelTrade21(IRC_POKEMON_TRADE* pWork)
+{
+  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+    return;
+  }
+  if(pWork->anmCount < 100){
+    return;
+  }
+  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_50, pWork->pMessageStrBuf );
+  IRC_POKETRADE_MessageWindowOpen(pWork,  POKETRADE_STR_50);
+  _setNextAnim(pWork, 0);
+  _CHANGE_STATE(pWork,_changeDemo_ModelTrade24);
+
+}
+
 
 static void _changeDemo_ModelTrade24(IRC_POKEMON_TRADE* pWork)
 {
@@ -434,8 +482,6 @@ static void _setFadeMask(_D2_PAL_FADE_WORK* pD2Fade)
   }
 
 }
-
-
 
 //--------------------------------------------------
 /**
