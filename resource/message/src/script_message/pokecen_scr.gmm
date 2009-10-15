@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-25T14:59:46"/>
+	<create user="obata_toshihiro" host="W00209" date="2009-10-15T19:11:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -281,7 +281,7 @@
 		<number position="-1" width="100"/>
 		<comment position="4" width="279"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="134">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -515,6 +515,83 @@
 小さな　生命体　だそうです[BE:01:ページ切り替え（クリア）]
 これが　ついている　あいだ
 ポケモンが　よく　育つみたいです</language>
+	</row>
+
+	<row id="msg_pc_union_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ユニオン受付時、最初のメッセージ
+
+・はい/いいえ/せつめいをきく の選択
+　はい　　　　　→msg_union_03
+　いいえ　　　　→msg_union_07
+　せつめいをきく→msg_union_02</comment>
+		<attribute name="キャラ指定">ユニオン受付</attribute>
+		<language name="JPN" width="256">へやに はいりますか？</language>
+		<language name="JPN_KANJI" width="256">部屋に入りますか？</language>
+	</row>
+
+	<row id="msg_pc_union_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ユニオンルームの説明
+
+・はい/いいえの選択
+　はい　→msg_union_03
+　いいえ→msg_union_07</comment>
+		<attribute name="キャラ指定">ユニオン受付</attribute>
+		<language name="JPN" width="256">ユニオンルームは・・・
+・・・(略)・・・・・・
+へやに はいりますか？</language>
+		<language name="JPN_KANJI" width="256">ユニオンルームは・・・
+・・・(略)・・・・・・
+部屋に入りますか？</language>
+	</row>
+
+	<row id="msg_pc_union_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ワイヤレス通信開始の確認
+
+・はい/いいえの選択
+　はい　→msg_union_03
+　いいえ→msg_union_07</comment>
+		<attribute name="キャラ指定">ユニオン受付</attribute>
+		<language name="JPN" width="256">ＤＳワイヤレスつうしんを
+かいし します</language>
+		<language name="JPN_KANJI" width="256">ＤＳワイヤレス通信を
+開始します</language>
+	</row>
+
+	<row id="msg_pc_union_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ユニオンルームに入る場合のメッセージ</comment>
+		<attribute name="キャラ指定">ユニオン受付</attribute>
+		<language name="JPN" width="256">それでは ユニオン ルームで
+おたのしみ ください</language>
+		<language name="JPN_KANJI" width="256">それでは ユニオン ルームで
+お楽しみください</language>
+	</row>
+
+	<row id="msg_pc_union_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>キャンセル時のメッセージ</comment>
+		<attribute name="キャラ指定">ユニオン受付</attribute>
+		<language name="JPN" width="256">それでは また おこしください</language>
+		<language name="JPN_KANJI" width="256">それでは また お越しください</language>
+	</row>
+
+	<row id="msg_pc_union_menu_yes" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>メニュー用</comment>
+		<attribute name="キャラ指定">ユニオン受付</attribute>
+		<language name="JPN" width="256">はい</language>
+		<language name="JPN_KANJI" width="256">はい</language>
+	</row>
+
+	<row id="msg_pc_union_menu_no" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>メニュー用</comment>
+		<attribute name="キャラ指定">ユニオン受付</attribute>
+		<language name="JPN" width="256">いいえ</language>
+		<language name="JPN_KANJI" width="256">いいえ</language>
+	</row>
+
+	<row id="msg_pc_union_menu_explain" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>メニュー用</comment>
+		<attribute name="キャラ指定">ユニオン受付</attribute>
+		<language name="JPN" width="256">せつめいをきく</language>
+		<language name="JPN_KANJI" width="256">説明を聞く</language>
 	</row>
 
 	<flowchart-group-list>
