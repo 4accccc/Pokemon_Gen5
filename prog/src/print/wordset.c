@@ -402,6 +402,26 @@ void WORDSET_RegisterTokuseiName( WORDSET* wordset, u32 bufID, u32 tokuseiID )
 }
 //------------------------------------------------------------------
 /**
+ * 指定バッファにポケモンのせいかくを登録
+ *
+ * @param   bufID     バッファID
+ * @param   seikakuID   せいかくID
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterSeikaku( WORDSET* wordset, u32 bufID, u32 seikakuID )
+{
+  GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+          NARC_message_chr_dat, GetHeapLowID(wordset->heapID) );
+  if( man )
+  {
+    GFL_MSG_GetString( man, seikakuID, wordset->tmpBuf );
+    RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
+    GFL_MSG_Delete( man );
+  }
+}
+//------------------------------------------------------------------
+/**
  * 指定バッファに数字を登録
  *
  * @param   bufID   バッファID
