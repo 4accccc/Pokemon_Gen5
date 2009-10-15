@@ -146,7 +146,7 @@ static void InputNum_Proc( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_Type( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork );
 static u16 SORT_GetABCPrio( u16 item_no );
-static void SORT_ModeChange( FIELD_ITEMMENU_WORK* pWork );
+static void SORT_Button( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork );
 //static void BAG_ItemUseErrorMsgSet( MYSTATUS * myst, STRBUF * buf, u16 item, u32 err, FIELD_ITEMMENU_WORK * pWork );
@@ -814,8 +814,6 @@ static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
 //カーソルの位置
 //OAMLIST の 先頭位置 -1は表示しない
 
-#define CHECK_KEY_CONT( key ) ( ( GFL_UI_KEY_GetCont() & (key) ) == (key) )
-#define CHECK_KEY_TRG( key ) ( ( GFL_UI_KEY_GetTrg() & (key) ) == (key) )
 static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 {
   u32	ret=0;
@@ -827,21 +825,6 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   if(pWork->state == NULL){
     return;
   }
-
-#ifdef PM_DEBUG
-  if( CHECK_KEY_CONT( PAD_BUTTON_DEBUG ) &&  CHECK_KEY_TRG( PAD_BUTTON_X ) )
-  {
-    // 種類順に並び替え
-    SORT_Type( pWork );
-    _windowRewrite( pWork );
-  }
-  else if( CHECK_KEY_CONT( PAD_BUTTON_DEBUG ) &&  CHECK_KEY_TRG( PAD_BUTTON_Y ) )
-  {
-    // 50音並び替え
-    SORT_ABC( pWork );
-    _windowRewrite( pWork );
-  }
-#endif
 
   // 決定
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE)
@@ -1721,19 +1704,6 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
         sizeof(ITEM_ST) );
   }
 
-#ifdef PM_DEBUG
-  {
-    OS_TPrintf("=============================\n");
-    OS_TPrintf(" COPYED \n");
-    OS_TPrintf("=============================\n");
-
-    for( i=0; i<length; i++ )
-    {
-      OS_TPrintf("[%d] id=%d \n",i, item[i].id );
-    }
-  }
-#endif
-
   // 保存
   MYITEM_ITEM_STCopy(pWork->pMyItem, item, pWork->pocketno, FALSE);
 
@@ -1814,37 +1784,48 @@ static u16 SORT_GetABCPrio( u16 item_no )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ソートモードチェンジ
+ *	@brief  ソートボタン処理
  *
  *	@param	FIELD_ITEMMENU_WORK* pWork 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void SORT_ModeChange( FIELD_ITEMMENU_WORK* pWork )
+static void SORT_Button( FIELD_ITEMMENU_WORK* pWork )
 {
-    if( pWork->sort_mode == 0 )
-    {
-      SORT_Type( pWork );
-      GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 2 );
-    }
-    else if( pWork->sort_mode == 1 )
-    {
-      SORT_ABC( pWork );
-      GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 3 );
-    }
-    
+  // ワザマシンは処理なし
+  if( pWork->pocketno == BAG_POKE_WAZA )
+  {
+    return;
+  }
+
+  if( pWork->sort_mode == 0 )
+  {
+    SORT_ABC( pWork );
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 2 );
+  }
+  else if( pWork->sort_mode == 1 )
+  {
+    SORT_Type( pWork );
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 3 );
+  }
+
+  // 大切なものはABCソートのみ
+  if( pWork->pocketno != BAG_POKE_EVENT )
+  {
+    // モードチェンジ
     pWork->sort_mode ^= 1;
+  } 
 
-    // 再描画
-    _windowRewrite( pWork );
+  // 再描画
+  _windowRewrite( pWork );
 
-    GFL_SOUND_PlaySE( SE_BAG_DECIDE );
+  GFL_SOUND_PlaySE( SE_BAG_DECIDE );
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  ソート モードを初期化
+ *	@brief  ソート モードをリセット（ポケット変更時など）
  *
  *	@param	FIELD_ITEMMENU_WORK* pWork 
  *
@@ -1854,7 +1835,16 @@ static void SORT_ModeChange( FIELD_ITEMMENU_WORK* pWork )
 static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork )
 {
   pWork->sort_mode = 0;
-  GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 0 );
+
+  // ワザマシンはソート不可能
+  if( pWork->pocketno == BAG_POKE_WAZA )
+  {
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 4 );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 0 );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1870,13 +1860,13 @@ static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork )
 {
   if( GFL_CLACT_WK_CheckAnmActive( pWork->clwkSort ) == FALSE )
   {
-    // green -> yellow
-    if( GFL_CLACT_WK_GetAnmSeq( pWork->clwkSort ) == 2 )
+    // yellow
+    if( pWork->sort_mode == 1 )
     {
         GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 1 );
     }
-    // yellow -> green
-    else if( GFL_CLACT_WK_GetAnmSeq( pWork->clwkSort ) == 3 )
+    // green
+    else
     {
         GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 0 );
     }
@@ -2255,7 +2245,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     }
   }
   else if(BUTTONID_SORT == bttnid){
-    SORT_ModeChange( pWork );
+    SORT_Button( pWork );
   }
   else if(BUTTONID_EXIT == bttnid){
     pWork->ret_code = BAG_NEXTPROC_EXIT;
@@ -2383,6 +2373,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 #endif
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ITEMMENU, 0x28000 );
+
   pWork->heapID = HEAPID_ITEMMENU;
   pWork->pBagCursor = GAMEDATA_GetBagCursor(GAMESYSTEM_GetGameData(pWork->gsys));
 
@@ -2434,7 +2425,6 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
 	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME3_M, _SUBLIST_NORMAL_PAL,pWork->fontHandle, pWork->SysMsgQue, pWork->heapID  );
 
-  pWork->count=2;
 
   GFL_NET_ChangeIconPosition(256-16, 0);
   GFL_NET_ReloadIcon();
@@ -2462,6 +2452,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
   if( WIPE_SYS_EndCheck() != TRUE ){
     return GFL_PROC_RES_CONTINUE;
   }
+
   state(pWork);
   _dispMain(pWork);
   SORT_Draw(pWork);

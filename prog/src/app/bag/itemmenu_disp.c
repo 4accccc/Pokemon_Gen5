@@ -616,7 +616,6 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   }
   wazano = ITEM_GetWazaNo( item->id );
 
-
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemName), 0 );
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemNum), 0 );
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemReport), 0 );
@@ -939,6 +938,12 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
       &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur , TRUE );
+  
+    // タッチ起動 > カーソルをOFF
+    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+    {
+      GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, FALSE );
+    }
   }
 
   //セルの作成

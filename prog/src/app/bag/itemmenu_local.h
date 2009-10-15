@@ -209,7 +209,6 @@ struct _FIELD_ITEMMENU_PARAM {
   u32 FrontAttr;
 	u32 bgchar;
   BOOL bChange;
-  int count;
 
   int ret_code;  //バッグメニューを終わる際の次の動作
   int ret_code2;
