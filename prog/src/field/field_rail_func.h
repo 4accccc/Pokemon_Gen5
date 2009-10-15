@@ -157,6 +157,19 @@ typedef struct
 extern void FIELD_RAIL_CAMERAFUNC_TargetChangeCircleCamera( const FIELD_RAIL_MAN * man );
 
 
+//------------------------------------------------------------------
+//  Ｐｌａｙｅｒターゲット 円動作カメラ
+//------------------------------------------------------------------
+typedef struct
+{
+	u32		pitch;
+	fx32	len;
+  
+	fx32 center_x;
+	fx32 center_z;
+} RAIL_CAMERAFUNC_PLAYERTARGET_CIRCLE_WORK;
+extern void FIELD_RAIL_CAMERAFUNC_PlayerTargetCircleCamera( const FIELD_RAIL_MAN * man );
+
 
 #ifdef _cplusplus
 }	// extern "C"{

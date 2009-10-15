@@ -762,3 +762,54 @@ void FIELD_RAIL_CAMERAFUNC_TargetChangeCircleCamera( const FIELD_RAIL_MAN * man 
 }
 
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Ｐｌａｙｅｒターゲット 円動作カメラ
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_PlayerTargetCircleCamera( const FIELD_RAIL_MAN * man )
+{
+	const FIELD_RAIL_WORK* work = FIELD_RAIL_MAN_GetBindWork( man );
+  const RAIL_CAMERA_SET * cline;
+  u16 pitch;
+  u16 yaw;
+  fx32 len;
+  VecFx32 center, pos;
+  FIELD_CAMERA* p_camera;
+	const RAIL_CAMERAFUNC_PLAYERTARGET_CIRCLE_WORK* cp_work;
+
+//	TOMOYA_Printf( "target x[0x%x] y[0x%x] z[0x%x]\n", cp_target->x, cp_target->y, cp_target->z );
+
+	cline = FIELD_RAIL_GetCameraSet( work );
+
+	cp_work = (const RAIL_CAMERAFUNC_PLAYERTARGET_CIRCLE_WORK*)cline->work;
+
+  p_camera = FIELD_RAIL_MAN_GetCamera( man );
+
+	// 座標直指定モード
+	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+	// デフォルトターゲットを参照
+	FIELD_CAMERA_BindDefaultTarget( FIELD_RAIL_MAN_GetCamera(man) );
+  
+	
+  FIELD_RAIL_MAN_GetBindWorkPos( man, &pos );
+  pos.y = 0;
+  center.x = cp_work->center_x;
+  center.y = 0;
+  center.z = cp_work->center_z;
+
+  VEC_Subtract( &pos, &center, &pos );
+  VEC_Normalize( &pos, &pos );
+
+  // 角度（Ｙａｗ）
+  yaw = FX_Atan2Idx( pos.x, pos.z );
+  
+  FIELD_CAMERA_SetAnglePitch( p_camera, cp_work->pitch );
+  FIELD_CAMERA_SetAngleLen( p_camera, cp_work->len );
+	FIELD_CAMERA_SetAngleYaw( p_camera, yaw );
+}
+
+
+
