@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-13T13:17:35"/>
+	<create user="matsumiya" host="W00207" date="2009-10-15T20:24:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="217"/>
 		<band id="3" index="4" style="0000" width="478"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -532,7 +532,7 @@
 お買い物ですね？</language>
 	</row>
 
-	<row id="msg_event_item_get_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_event_item_get_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>イベントでのアイテム入手時
 
 0＝アイテム名</comment>
@@ -540,7 +540,7 @@
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　てにいれた！</language>
 	</row>
 
-	<row id="msg_event_item_get_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_event_item_get_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>イベントでのアイテム入手時</comment>
 		<language name="JPN" width="256">ざんねん！
 バッグが　いっぱい　だ！</language>
@@ -548,7 +548,7 @@
 バッグが　いっぱい　だ！</language>
 	</row>
 
-	<row id="msg_event_item_get_04" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_event_item_get_04" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>アイテムゲット時……たいせつなもの
 
 0＝主人公名
@@ -559,7 +559,7 @@
 [FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　てにいれた！</language>
 	</row>
 
-	<row id="msg_event_item_get_05" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_event_item_get_05" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>アイテムゲット時……フィールドメニューに関係する物
 
 0＝主人公名
@@ -570,7 +570,7 @@
 [1:09:どうぐ名:1]を　てにいれた！</language>
 	</row>
 
-	<row id="msg_event_item_get_06" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_event_item_get_06" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>0＝主人公名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を[FF:00:色:2]
 [1:12:バッグのポケット名:2][FF:00:色:0]ポケット　に　しまった</language>
@@ -578,7 +578,7 @@
 [1:12:バッグのポケット名:2][FF:00:色:0]ポケット　に　しまった</language>
 	</row>
 
-	<row id="msg_event_item_get_07" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_event_item_get_07" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>入手した道具をしまう
 
 0＝主人公名
@@ -593,6 +593,128 @@
 	<row id="msg_yen_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN">[2:05:６桁:2]円</language>
 		<language name="JPN_KANJI">[2:05:６桁:2]円</language>
+	</row>
+
+	<row id="msg_common_report_01">
+		<comment>レポート実行時
+・はい／いいえの選択
+・はい選択
+・セーブデータチェック
+１：セーブデータに
+　・何も書かれていない
+　・破壊されている→msg_common_report_03
+２：それ以外で
+　「さいしょからはじめる」選択
+　→msg_common_report_05
+３：それ以外
+　→msg_common_report_02</comment>
+		<language name="JPN">ここまでの　かつやくを
+ポケモンレポートに　かきこみますか？</language>
+		<language name="JPN_KANJI">ここまでの　活躍を
+ポケモンレポートに　書き込みますか？</language>
+	</row>
+
+	<row id="msg_common_report_02">
+		<comment>レポート実行時
+・はい／いいえの選択
+　はい→msg_common_report_03
+　いいえ→終了</comment>
+		<language name="JPN">まえに　かかれた　レポートに
+うえから　かいても　いいですか？</language>
+		<language name="JPN_KANJI">前に　書かれた　レポートに
+上から　書いても　いいですか？</language>
+	</row>
+
+	<row id="msg_common_report_03">
+		<comment>レポート実行時
+・セーブ処理が終了するとmsg_common_report_04
+・このときメッセージ送りは待機記号を表示</comment>
+		<language name="JPN">ポケモンレポートに　かきこんでいます
+でんげんを　きらないでください</language>
+		<language name="JPN_KANJI">ポケモンレポートに　書きこんでいます
+電源を　切らないでください</language>
+	</row>
+
+	<row id="msg_common_report_04">
+		<comment>レポート実行時
+・１秒間自動表示
+　セーブ効果音
+・全てのウインドウ消去（メニューに復帰しない）
+
+0＝主人公名</comment>
+		<language name="JPN">[1:03:ポケモンタイプ:0]は
+レポートに　しっかり　かきのこした！</language>
+		<language name="JPN_KANJI">[1:03:ポケモンタイプ:0]は
+レポートに　しっかり　書き残した！</language>
+	</row>
+
+	<row id="msg_common_report_05">
+		<comment>レポート実行時
+・はい／いいえの選択肢
+　・デフォルトのカーソル位置は「いいえ」
+　はい→msg_common_report_03
+　いいえ→終了</comment>
+		<language name="JPN">ちゅうい！！▼
+『つづきから　はじめる』で
+ぼうけん　していた▽
+レポートが　かかれています！▼
+そちらで　プレイしていた　ぼうけんや
+すべての　ポケモン　どうぐ　などが▽
+きえてしまいます……▼
+ほんとうに
+うえから　かいても　いいですか？</language>
+		<language name="JPN_KANJI">注意！！▼
+『つづきから　はじめる』で
+ぼうけん　していた▽
+レポートが　書かれています！▼
+そちらで　プレイしていた　ぼうけんや
+すべての　ポケモン　どうぐ　などが▽
+消えてしまいます……▼
+本当に
+上から　書いても　いいですか？</language>
+	</row>
+
+	<row id="msg_common_report_06">
+		<comment>レポート実行時に失敗
+・いずれ任天堂の
+　ガイドラインにあわしたテキストに修正</comment>
+		<language name="JPN">レポートが　かけませんでした</language>
+		<language name="JPN_KANJI">レポートが　書けませんでした</language>
+	</row>
+
+	<row id="msg_common_report_07">
+		<comment>レポート実行時</comment>
+		<language name="JPN">ポケモンレポートに　かきこんでいます
+でんげんを　きらないで　ください</language>
+		<language name="JPN_KANJI">ポケモンレポートに　書きこんでいます
+電源を　切らないでください</language>
+	</row>
+
+	<row id="msg_common_report_08" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>レポート実行時に失敗
+・いずれ任天堂の
+　ガイドラインにあわしたテキストに修正</comment>
+		<language name="JPN">すでに　べつの　ポケモンレポートが
+かかれていますので▽
+レポートが　かけません！▼
+くわしくは
+とりあつかいせつめいしょを▽
+ごらんください</language>
+		<language name="JPN_KANJI">すでに　別の　ポケモンレポートが
+書かれていますので▽
+レポートが　書けません！▼
+詳しくは
+取り扱い説明書を▽
+ごらんください</language>
+	</row>
+
+	<row id="msg_common_report_09">
+		<comment>ＢＯＸデータの変化チェックで変化あり
+・文字数例外</comment>
+		<language name="JPN">レポートに　たくさん　かきこんでいます
+でんげんを　きらないでください</language>
+		<language name="JPN_KANJI">レポートに　たくさん　書きこんでいます
+電源を　切らないでください</language>
 	</row>
 
 	<flowchart-group-list>
