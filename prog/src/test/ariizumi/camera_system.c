@@ -125,6 +125,10 @@ CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId )
     {
         OS_TPrintf("CAMERA_I2CEffect was failed. (%d)\n", result);
     }
+    
+    //ホワイトバランスと露出の自動化
+    CAMERA_I2CAutoExposure( work->currentCamera, TRUE );
+    CAMERA_I2CAutoWhiteBalance( work->currentCamera, TRUE );
 
     result = CAMERA_I2CActivate(work->currentCamera);
     if (result == CAMERA_RESULT_FATAL_ERROR)

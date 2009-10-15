@@ -31,7 +31,6 @@
 
 
 //======================================================================
-#include "battle/battle.h"
 #include "poke_tool/monsno_def.h"
 
 #include "poke_tool/pokeparty.h"
@@ -44,17 +43,18 @@
 //======================================================================
 #pragma mark [> define
 
-#define CAM_TEST_CAP_SIZE_X (72)
-#define CAM_TEST_CAP_SIZE_Y (96)
+#define CAM_TEST_CAP_SIZE_X (128)
+#define CAM_TEST_CAP_SIZE_Y (192)
 #define CAM_TEST_CAP_PIXEL (CAM_TEST_CAP_SIZE_X*CAM_TEST_CAP_SIZE_Y)
 
 //JPG変換係
 #define JPG_OUT_TYPE (SSP_JPEG_OUTPUT_YUV444)
 #define JPG_OUT_OPT  (SSP_JPEG_RGB555)
 
-FS_EXTERN_OVERLAY(battle);
+//#define CAMERA_COMM_Print(...) (void)((OS_TPrintf(__VA_ARGS__)))
+#define CAMERA_COMM_Print(...)  ((void)0)
 
-
+#define CAMERA_TEST_AVE_COUNT (10)
 //======================================================================
 //  enum
 //======================================================================
@@ -110,7 +110,8 @@ typedef struct
   HEAPID heapId;
   CAMERA_SYSTEM_WORK *camSys;
   
-  u32 wramAdr;
+  u32 wramAdrB;
+  u32 wramAdrC;
   u32 picBuffAdr;
   u32 jpgConvBuffAdr;
   
@@ -130,19 +131,25 @@ typedef struct
   BOOL  isPost;
   u16   sendSize;
   u16   postSize;
-
-  u8 battleState;
-
-  //バトル用
-  BATTLE_SETUP_PARAM bPara;
-
-  
   
   //デバグ用
   u8    jpgQuality;
   GFL_FONT *fontHandle;
   u16       trimSizeX;
   u16       trimSizeY;
+  
+  BOOL      isDouble;
+  
+  u32       sizeAve[CAMERA_TEST_AVE_COUNT];
+  u32       sendSecAve[CAMERA_TEST_AVE_COUNT];
+  u32       encTimeAve[CAMERA_TEST_AVE_COUNT];
+  u8        sizeCntIdx;
+  u8        sendSecCntIdx;
+  u8        encTimeCntIdx;
+  u32       sizeMax;
+  u32       sendSecMax;
+  u32       encTimeMax;  
+
 }CAM_TEST_WORK;
 
 
@@ -179,6 +186,8 @@ static BOOL CAM_TEST_BeacomCompare(GameServiceID GameServiceID1, GameServiceID G
 static void CAM_TEST_ConnectCallBack(void* pWork);
 
 #pragma mark [> debug prot
+
+static u32 CAM_TEST_CalcAve( u32 *dataArr , u8 *nowIdx , u32 newVal );
 
 static void CAM_TEST_InitDebugMenu( CAM_TEST_WORK *work );
 static void CAM_TEST_ExitDebugMenu( CAM_TEST_WORK *work );
@@ -230,8 +239,11 @@ static GFL_PROC_RESULT CAM_TEST_InitProc(GFL_PROC * proc, int * seq, void * pwk,
   work->heapId = HEAPID_ARIIZUMI_DEBUG;
 	(void)MI_FreeWram_B( MI_WRAM_ARM9 );
 	(void)MI_CancelWram_B( MI_WRAM_ARM9 );
-  work->wramAdr = MI_AllocWram( MI_WRAM_B , MI_WRAM_SIZE_256KB , MI_WRAM_ARM9 );
-  GF_ASSERT( work->wramAdr != 0 );
+  work->wramAdrB = MI_AllocWram( MI_WRAM_B , MI_WRAM_SIZE_256KB , MI_WRAM_ARM9 );
+	(void)MI_FreeWram_C( MI_WRAM_ARM9 );
+	(void)MI_CancelWram_C( MI_WRAM_ARM9 );
+  work->wramAdrC = MI_AllocWram( MI_WRAM_C , MI_WRAM_SIZE_256KB , MI_WRAM_ARM9 );
+  GF_ASSERT( work->wramAdrC != 0 );
    
   GFL_BG_Init( work->heapId );
   CAM_TEST_InitGraphic( work );
@@ -241,8 +253,8 @@ static GFL_PROC_RESULT CAM_TEST_InitProc(GFL_PROC * proc, int * seq, void * pwk,
   CAMERA_SYS_CreateReadBuffer( work->camSys , 2 , (HEAPID_ARIIZUMI_DEBUG | HEAPDIR_MASK) );
   {
     const u32 bufSize = CAMERA_SYS_GetBufferSize( work->camSys , 2 );
-//    CAMERA_SYS_SetReadBuffer( work->camSys , (void*)work->wramAdr , 2 );
-    work->picBuffAdr = work->wramAdr+bufSize;
+//    CAMERA_SYS_SetReadBuffer( work->camSys , (void*)work->wramAdrB , 2 );
+    work->picBuffAdr = work->wramAdrB+bufSize;
   }
   CAMERA_SYS_SetCaptureCallBack( work->camSys , CAM_TEST_CapCallBack , work );
   
@@ -252,12 +264,15 @@ static GFL_PROC_RESULT CAM_TEST_InitProc(GFL_PROC * proc, int * seq, void * pwk,
   work->capReq = 0;
   work->capBuff[0] = (void*)(work->picBuffAdr);
   work->capBuff[1] = (void*)(work->picBuffAdr + CAM_TEST_CAP_PIXEL*sizeof(u16));
-  work->sendBuff   = (void*)(work->picBuffAdr + CAM_TEST_CAP_PIXEL*sizeof(u16)*2);
-  work->postBuff   = (void*)(work->picBuffAdr + CAM_TEST_CAP_PIXEL*sizeof(u16)*3);
-  work->encBuff    = (void*)(work->picBuffAdr + CAM_TEST_CAP_PIXEL*sizeof(u16)*4);
-  work->jpgConvBuffAdr = work->picBuffAdr + CAM_TEST_CAP_PIXEL*sizeof(u16)*5;
-  GFL_STD_MemClear( (void*)work->wramAdr , 0x20000 );
-  OS_TPrintf("[%x][%x]\n",work->wramAdr,work->picBuffAdr);
+  work->encBuff    = (void*)(work->picBuffAdr + CAM_TEST_CAP_PIXEL*sizeof(u16)*2);
+  work->sendBuff   = (void*)(work->picBuffAdr + CAM_TEST_CAP_PIXEL*sizeof(u16)*3);
+  work->postBuff   = (void*)(work->wramAdrC );
+  work->jpgConvBuffAdr = work->wramAdrC + CAM_TEST_CAP_PIXEL*sizeof(u16)*1;
+  GFL_STD_MemClear( (void*)work->wramAdrB , 0x20000 );
+  GFL_STD_MemClear( (void*)work->wramAdrC , 0x20000 );
+  OS_TPrintf("[%x][leastSize:%x]\n",work->wramAdrB,((u32)work->sendBuff+CAM_TEST_CAP_PIXEL*sizeof(u16))-(u32)work->wramAdrB );
+  OS_TPrintf("[%x][leastSize:%x]\n",work->wramAdrC,((u32)work->jpgConvBuffAdr+CAM_TEST_CAP_PIXEL*sizeof(u16))-(u32)work->wramAdrC );
+  OS_TPrintf("[%x]\n",work->wramAdrC);
 /*
   work->capBuff[0] = GFL_HEAP_AllocMemory( work->heapId , CAM_TEST_CAP_PIXEL*sizeof(u16) );
   work->capBuff[1] = GFL_HEAP_AllocMemory( work->heapId , CAM_TEST_CAP_PIXEL*sizeof(u16) );
@@ -275,7 +290,26 @@ static GFL_PROC_RESULT CAM_TEST_InitProc(GFL_PROC * proc, int * seq, void * pwk,
   
   CAM_TEST_InitDebugMenu( work );
   
+  CAMERA_SYS_StartCapture( work->camSys );
+  work->capReq = 1;
+  work->isDouble = FALSE;
   OS_TPrintf("[%x]\n",GFL_HEAP_GetHeapFreeSize( HEAPID_ARIIZUMI_DEBUG ));
+  
+  {
+    u8 i;
+    for( i=0;i<CAMERA_TEST_AVE_COUNT;i++ )
+    {
+      work->sizeAve[i] = 0;
+      work->sendSecAve[i] = 0;
+      work->encTimeAve[i] = 0;
+    }
+    work->sizeMax = 0;
+    work->sendSecMax = 0;
+    work->encTimeMax = 0;
+    work->sizeCntIdx = 0;
+    work->sendSecCntIdx = 0;
+    work->encTimeCntIdx = 0;
+  }
   return GFL_PROC_RES_FINISH;
 }
 
@@ -333,7 +367,7 @@ static GFL_PROC_RESULT CAM_TEST_MainProc(GFL_PROC * proc, int * seq, void * pwk,
   }
   
   CAM_TEST_UpdateComm( work );
-
+/*
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {
     CAMERA_SYS_StartCapture( work->camSys );
@@ -362,16 +396,26 @@ static GFL_PROC_RESULT CAM_TEST_MainProc(GFL_PROC * proc, int * seq, void * pwk,
       work->commState = CTCS_CHILD;
     }
   }
-
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
-  {
-    work->capReq = 1;
-  }
-
-/*
+  
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
   {
-    work->capReq = 2;
+    MtxFx22 mtx;
+    work->isDouble = !work->isDouble;
+    GFL_STD_MemClear( G2_GetBG3ScrPtr() , 256*192*2 );
+    
+    if( work->isDouble == TRUE )
+    {
+      mtx._00 = FX_Inv(FX32_ONE*2);
+      mtx._11 = FX_Inv(FX32_ONE*2);
+    }
+    else
+    {
+      mtx._00 = FX_Inv(FX32_ONE);
+      mtx._11 = FX_Inv(FX32_ONE);
+    }
+    mtx._01 = 0;
+    mtx._10 = 0;
+    G2_SetBG3Affine(&mtx,0,0,0,0);
   }
 */
   
@@ -379,14 +423,19 @@ static GFL_PROC_RESULT CAM_TEST_MainProc(GFL_PROC * proc, int * seq, void * pwk,
   if( work->isUpdateUpper[0] == TRUE )
   {
     u8 i;
-    const u32 topAdr = (192-CAM_TEST_CAP_SIZE_Y)/2*256*sizeof(u16);
-    const u32 leftAdr1 = (128-CAM_TEST_CAP_SIZE_X)/2*sizeof(u16);
-    const u32 leftAdr2 = (128+(128-CAM_TEST_CAP_SIZE_X)/2)*sizeof(u16);
-    for( i=0;i<CAM_TEST_CAP_SIZE_Y;i++ )
+    const u32 sizeX = (work->isDouble?CAM_TEST_CAP_SIZE_X/2:CAM_TEST_CAP_SIZE_X);
+    const u32 sizeY = (work->isDouble?CAM_TEST_CAP_SIZE_Y/2:CAM_TEST_CAP_SIZE_Y);
+    const u32 scrHeight = (work->isDouble?192/2:192);
+    const u32 scrWidth  = (work->isDouble?128/2:128);
+    
+    const u32 topAdr = (scrHeight-sizeY)/2*256*sizeof(u16);
+    const u32 leftAdr1 = (scrWidth-sizeX)/2*sizeof(u16);
+    const u32 leftAdr2 = (scrWidth+(scrWidth-sizeX)/2)*sizeof(u16);
+    for( i=0;i<sizeY;i++ )
     {
-      GX_LoadBG3Bmp( (void*)((u32)work->capBuff[0] + (i*CAM_TEST_CAP_SIZE_X*sizeof(u16))) ,
+      GX_LoadBG3Bmp( (void*)((u32)work->capBuff[0] + (i*sizeX*sizeof(u16))) ,
                      leftAdr1 + topAdr + i*256*sizeof(u16) ,
-                     CAM_TEST_CAP_SIZE_X*sizeof(u16) );
+                     sizeX*sizeof(u16) );
     }
     work->isUpdateUpper[0] = FALSE;
     work->capReq = 1;
@@ -394,9 +443,11 @@ static GFL_PROC_RESULT CAM_TEST_MainProc(GFL_PROC * proc, int * seq, void * pwk,
 
   if( work->isUpdateUpper[1] == TRUE )
   {
+    const u32 sizeX = (work->isDouble?CAM_TEST_CAP_SIZE_X/2:CAM_TEST_CAP_SIZE_X);
+    const u32 sizeY = (work->isDouble?CAM_TEST_CAP_SIZE_Y/2:CAM_TEST_CAP_SIZE_Y);
     {
-      s16 convWidth = CAM_TEST_CAP_SIZE_X;
-      s16 convHeight= CAM_TEST_CAP_SIZE_Y;
+      s16 convWidth = sizeX;
+      s16 convHeight= sizeY;
       SSP_StartJpegDecoder( work->postBuff ,
                             work->postSize ,
                             work->capBuff[1] ,
@@ -406,14 +457,16 @@ static GFL_PROC_RESULT CAM_TEST_MainProc(GFL_PROC * proc, int * seq, void * pwk,
     }
     {
       u8 i;
-      const u32 topAdr = (192-CAM_TEST_CAP_SIZE_Y)/2*256*sizeof(u16);
-      const u32 leftAdr1 = (128-CAM_TEST_CAP_SIZE_X)/2*sizeof(u16);
-      const u32 leftAdr2 = (128+(128-CAM_TEST_CAP_SIZE_X)/2)*sizeof(u16);
-      for( i=0;i<CAM_TEST_CAP_SIZE_Y;i++ )
+      const u32 scrHeight = (work->isDouble?192/2:192);
+      const u32 scrWidth  = (work->isDouble?128/2:128);
+      const u32 topAdr = (scrHeight-sizeY)/2*256*sizeof(u16);
+      const u32 leftAdr1 = (scrWidth-sizeX)/2*sizeof(u16);
+      const u32 leftAdr2 = (scrWidth+(scrWidth-sizeX)/2)*sizeof(u16);
+      for( i=0;i<sizeY;i++ )
       {
-        GX_LoadBG3Bmp( (void*)((u32)work->capBuff[1] + (i*CAM_TEST_CAP_SIZE_X*sizeof(u16))) ,
+        GX_LoadBG3Bmp( (void*)((u32)work->capBuff[1] + (i*sizeX*sizeof(u16))) ,
                        leftAdr2 + topAdr + i*256*sizeof(u16) ,
-                       CAM_TEST_CAP_SIZE_X*sizeof(u16) );
+                       sizeX*sizeof(u16) );
       }
       work->isUpdateUpper[1] = FALSE;
       CAM_TEST_SendFlg( work , CTCF_POST_DATA , 0 );
@@ -498,16 +551,18 @@ static void CAM_TEST_CapCallBack( void *captureArea , void *userWork )
   
   if( work->capReq != 0 )
   {
+    const u32 sizeX = (work->isDouble?CAM_TEST_CAP_SIZE_X/2:CAM_TEST_CAP_SIZE_X);
+    const u32 sizeY = (work->isDouble?CAM_TEST_CAP_SIZE_Y/2:CAM_TEST_CAP_SIZE_Y);
     const u8 trgBuf = work->capReq-1;
-    const u16 top = (height-CAM_TEST_CAP_SIZE_Y)/2;
-    const u32 leftAdr = ((width-CAM_TEST_CAP_SIZE_X)/2)*sizeof(u16);
+    const u16 top = (height-sizeY)/2;
+    const u32 leftAdr = ((width-sizeX)/2)*sizeof(u16);
     
-    for( i=0;i<CAM_TEST_CAP_SIZE_Y;i++ )
+    for( i=0;i<sizeY;i++ )
     {
       const u32 lineAdr = (top+i)*width*sizeof(u16);
       GFL_STD_MemCopy16( (void*)((u32)captureArea + leftAdr + lineAdr),
-                         (void*)((u32)work->capBuff[trgBuf] + (i*CAM_TEST_CAP_SIZE_X*sizeof(u16))),
-                         CAM_TEST_CAP_SIZE_X*sizeof(u16) );
+                         (void*)((u32)work->capBuff[trgBuf] + (i*sizeX*sizeof(u16))),
+                         sizeX*sizeof(u16) );
     }
     work->isUpdateUpper[0] = TRUE;
     work->capReq = 0;
@@ -569,7 +624,7 @@ static void CAM_TEST_InitComm( CAM_TEST_WORK *work )
     HEAPID_NETWORK,         //
     GFL_WICON_POSX,GFL_WICON_POSY,  // 通信アイコンXY位置
     2,                      //_MAXNUM,  //最大接続人数
-    48,                     //_MAXSIZE, //最大送信バイト数
+    220,                     //_MAXSIZE, //最大送信バイト数
     4,                      //_BCON_GET_NUM,  // 最大ビーコン収集数
     TRUE,                   // CRC計算
     FALSE,                  // MP通信＝親子型通信モードかどうか
@@ -579,6 +634,8 @@ static void CAM_TEST_InitComm( CAM_TEST_WORK *work )
 #if GFL_NET_IRC
     IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
+    0,    ///< MP通信時に親の送信量を増やしたい場合サイズ指定 そうしない場合０
+    0,    ///< dummy
   };
   work->commState = CTCS_NONE;
   work->isInitComm = FALSE;
@@ -626,7 +683,7 @@ static void CAM_TEST_UpdateComm( CAM_TEST_WORK *work )
       {
         u8 *macAdd = GFL_NET_GetBeaconMacAddress( i-1 );
         GFL_NET_ConnectToParent( macAdd );
-        OS_TPrintf("Connect!!\n");
+        CAMERA_COMM_Print("Connect!!\n");
         work->commState = CTCS_CONNECT;
       }
     }
@@ -642,8 +699,6 @@ static void CAM_TEST_UpdateComm( CAM_TEST_WORK *work )
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
       if( GFL_NET_HANDLE_IsNegotiation( selfHandle ) == TRUE )
       {
-        GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
-        GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, 5, NULL);
         GFL_NET_TimingSyncStart( selfHandle , 0x123 );
         work->commState = CTCS_WAIT_TIMMING;
       }
@@ -655,8 +710,8 @@ static void CAM_TEST_UpdateComm( CAM_TEST_WORK *work )
       if( GFL_NET_IsTimingSync( selfHandle , 0x123 ) == TRUE )
       {
         work->selfId = GFL_NET_SystemGetCurrentID();
-        OS_TPrintf("Sync[%d]\n",work->selfId);
-        work->commState = CTCS_WAIT_BATTLE;
+        CAMERA_COMM_Print("Sync[%d]\n",work->selfId);
+        work->commState = CTCS_ENCODE_DATA;
       }
     }
     break; 
@@ -672,14 +727,16 @@ static void CAM_TEST_UpdateComm( CAM_TEST_WORK *work )
   case CTCS_WAIT_ENCODE_DATA:
     {
       u32 dataSize;
-      const u32 convBufSize = SSP_GetJpegEncoderBufferSize( CAM_TEST_CAP_SIZE_X , CAM_TEST_CAP_SIZE_Y , JPG_OUT_TYPE , JPG_OUT_OPT );
+      const u32 sizeX = (work->isDouble?CAM_TEST_CAP_SIZE_X/2:CAM_TEST_CAP_SIZE_X);
+      const u32 sizeY = (work->isDouble?CAM_TEST_CAP_SIZE_Y/2:CAM_TEST_CAP_SIZE_Y);
+      const u32 convBufSize = SSP_GetJpegEncoderBufferSize( sizeX , sizeY , JPG_OUT_TYPE , JPG_OUT_OPT );
       OSTick startTime = OS_GetTick();
       dataSize = SSP_StartJpegEncoder(  work->encBuff , 
                                         work->sendBuff , 
                                         CAM_TEST_CAP_PIXEL*sizeof(u16) ,
                                         (void*)work->jpgConvBuffAdr , //WRAMから諸々のバッファ取った余り
-                                        CAM_TEST_CAP_SIZE_X ,
-                                        CAM_TEST_CAP_SIZE_Y ,
+                                        sizeX ,
+                                        sizeY ,
                                         work->jpgQuality ,
                                         JPG_OUT_TYPE ,
                                         JPG_OUT_OPT );
@@ -690,7 +747,19 @@ static void CAM_TEST_UpdateComm( CAM_TEST_WORK *work )
       else
       {
         OSTick endTime = OS_GetTick();
-        OS_TPrintf("Returu Post[%dms]\n",OS_TicksToMilliSeconds(endTime-startTime));
+        const OSTick time = OS_TicksToMilliSeconds(endTime-startTime);
+        OS_TPrintf("Returu Post[%x][%dms]\n",dataSize,time);
+        CAM_TEST_CalcAve( work->sizeAve , &work->sizeCntIdx , dataSize );
+        CAM_TEST_CalcAve( work->encTimeAve , &work->encTimeCntIdx , time );
+        if( work->sizeMax < convBufSize )
+        {
+          work->sizeMax = convBufSize;
+        }
+        if( work->encTimeMax < time )
+        {
+          work->encTimeMax = time;
+        }
+        
         work->sendSize = dataSize;
         work->commState = CTCS_SEND_DATA;
       }
@@ -709,7 +778,13 @@ static void CAM_TEST_UpdateComm( CAM_TEST_WORK *work )
     if( work->isPost == TRUE )
     {
       OSTick postTime = OS_GetTick();
-      OS_TPrintf("Returu Post[%dms]\n",OS_TicksToMilliSeconds(postTime-sendTime));
+      const OSTick time = OS_TicksToMilliSeconds(postTime-sendTime);
+      OS_TPrintf("Returu Post[%dms]\n",time);
+      CAM_TEST_CalcAve( work->sendSecAve , &work->sendSecCntIdx , time );
+      if( work->sendSecMax < time )
+      {
+        work->sendSecMax = time;
+      }
       work->isPost = FALSE;
       work->commState = CTCS_ENCODE_DATA;
     }
@@ -741,7 +816,7 @@ static const BOOL CAM_TEST_Send_PhotoData( CAM_TEST_WORK *work )
   {
     const BOOL ret = GFL_NET_SendDataEx( selfHandle , (work->selfId==0?1:0) , 
         CTSM_SEND_PHOTO , work->sendSize , work->sendBuff , FALSE , FALSE , TRUE );
-    OS_TPrintf("Send PhotoData[0x%x]->[0x%x].\n",CAM_TEST_CAP_PIXEL*sizeof(u16),work->sendSize);
+    CAMERA_COMM_Print("Send PhotoData[0x%x]->[0x%x].\n",CAM_TEST_CAP_PIXEL*sizeof(u16),work->sendSize);
     if( ret == FALSE ){
       OS_TPrintf("SendPhoto is failue!\n");
     }
@@ -751,7 +826,7 @@ static const BOOL CAM_TEST_Send_PhotoData( CAM_TEST_WORK *work )
 static void CAM_TEST_Post_PhotoData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
 {
   CAM_TEST_WORK *work = (CAM_TEST_WORK*)pWork;
-  OS_TPrintf("Post PhotoData.\n");
+  CAMERA_COMM_Print("Post PhotoData.\n");
 
   work->isUpdateUpper[1] = TRUE;
   work->postSize = size;
@@ -774,7 +849,7 @@ static void CAM_TEST_SendFlg( CAM_TEST_WORK *work , const u8 flg , const u8 valu
   CAMERA_TEST_FLG_PACKET pkt;
   pkt.flg = flg;
   pkt.value = value;
-  OS_TPrintf("Send Flg[%d:%d].\n",pkt.flg,pkt.value);
+  CAMERA_COMM_Print("Send Flg[%d:%d].\n",pkt.flg,pkt.value);
 
   GFL_NET_SendDataEx( selfHandle , (work->selfId==0?1:0) , 
     CTSM_SEND_FLG , sizeof( CAMERA_TEST_FLG_PACKET ) , 
@@ -786,7 +861,7 @@ static void CAM_TEST_PostFlg( const int netID, const int size , const void* pDat
   CAM_TEST_WORK *work = (CAM_TEST_WORK*)pWork;
   CAMERA_TEST_FLG_PACKET *pkt = (CAMERA_TEST_FLG_PACKET*)pData;
 
-  OS_TPrintf("Post Flg[%d:%d].\n",pkt->flg,pkt->value);
+  CAMERA_COMM_Print("Post Flg[%d:%d].\n",pkt->flg,pkt->value);
   switch( pkt->flg )
   {
   case CTCF_POST_DATA:
@@ -825,230 +900,8 @@ static BOOL CAM_TEST_BeacomCompare(GameServiceID GameServiceID1, GameServiceID G
 static void CAM_TEST_ConnectCallBack(void* pWork)
 {
   CAM_TEST_WORK *work = (CAM_TEST_WORK*)pWork;
-  OS_TPrintf("Connect!!!");
+  CAMERA_COMM_Print("Connect!!!");
   work->isConnect = TRUE;
-}
-
-
-#pragma mark [>battle func
-
-static void CAM_TEST_CapCallBackBattle( void *captureArea , void *userWork );
-
-
-void CAM_TEST_InitBattle( void )
-{
-  CAM_TEST_WORK *work = camWork;
-  
-  //ダイレクトBMPにGFLが対応してないのでべた書き
-  G2_SetBG3ControlDCBmp(GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x00000);
-
-  G2_SetBG3Priority(0);
-
-  GX_SetVisiblePlane(GX_PLANEMASK_BG0|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ);
-  GFL_STD_MemClear( G2_GetBG3ScrPtr() , 256*192*sizeof(u16) );
-
-  CAMERA_SYS_SetCaptureCallBack( work->camSys , CAM_TEST_CapCallBackBattle , work );
-  CAMERA_SYS_DeleteReadBuffer( work->camSys );
-  CAMERA_SYS_SetResolution( work->camSys,CAMERA_SIZE_160x120 );
-  {
-    const u16 width = CAMERA_SYS_ResolutionSizeToWidth( work->camSys );
-    const u16 height= CAMERA_SYS_ResolutionSizeToHeight( work->camSys );
-    CAMERA_SYS_SetTrimming( work->camSys , 
-                            (width/2) -(CAM_TEST_CAP_SIZE_X/2) , 
-                            (height/2)-(CAM_TEST_CAP_SIZE_Y/2) , 
-                            (width/2) +(CAM_TEST_CAP_SIZE_X/2) , 
-                            (height/2)+(CAM_TEST_CAP_SIZE_Y/2) );
-    CAMERA_SYS_CreateReadBuffer( work->camSys , 2 , (HEAPID_ARIIZUMI_DEBUG | HEAPDIR_MASK) );
-  }
-
-  CAMERA_SYS_StartCapture( work->camSys );
-  work->battleState = CTCS_WAIT_BATTLE;
-}
-
-
-void CAM_TEST_ExitBattle( void )
-{
-  CAM_TEST_WORK *work = camWork;
-  
-  CAMERA_SYS_StopCapture( work->camSys );
-  
-}
-
-void CAM_TEST_UpdateBattle( void )
-{
-  static OSTick sendTime;
-  CAM_TEST_WORK *work = camWork;
-  if( work == NULL )
-  {
-    return;
-  }
-
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-  {
-    GX_SetVisiblePlane(GX_PLANEMASK_BG0|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ);
-
-  }
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-  {
-    GX_SetVisiblePlane(GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ);
-
-  }
-
-  if( work->isUpdateUpper[0] == TRUE )
-  {
-    u8 i;
-    const u32 topAdr = (48)*256*sizeof(u16);
-    const u32 leftAdr= (28)*sizeof(u16);
-    for( i=0;i<CAM_TEST_CAP_SIZE_Y;i++ )
-    {
-      GX_LoadBG3Bmp( (void*)((u32)work->capBuff[0] + (i*CAM_TEST_CAP_SIZE_X*sizeof(u16))) ,
-                     leftAdr + topAdr + i*256*sizeof(u16) ,
-                     CAM_TEST_CAP_SIZE_X*sizeof(u16) );
-    }
-    work->isUpdateUpper[0] = FALSE;
-    if( work->battleState == CTCS_WAIT_BATTLE )
-    {
-      work->battleState = CTCS_ENCODE_DATA;
-      GFL_STD_MemClear( G2_GetBG3ScrPtr() , 256*192*sizeof(u16) );
-    }
-  }
-
-  if( work->isUpdateUpper[1] == TRUE )
-  {
-    {
-      s16 convWidth = CAM_TEST_CAP_SIZE_X;
-      s16 convHeight= CAM_TEST_CAP_SIZE_Y;
-      OSTick startTime = OS_GetTick();
-      OSTick endTime;
-      SSP_StartJpegDecoder( work->postBuff ,
-                            work->postSize ,
-                            work->capBuff[1] ,
-                            &convWidth ,
-                            &convHeight ,
-                            0 );
-      endTime = OS_GetTick();
-      OS_TPrintf("Decode Time[%dms]\n",OS_TicksToMilliSeconds(endTime-startTime));
-    }
-    {
-      u8 i;
-      const u32 topAdr = ( 48)*256*sizeof(u16);
-      const u32 leftAdr= (156)*sizeof(u16);
-      for( i=0;i<CAM_TEST_CAP_SIZE_Y;i++ )
-      {
-        GX_LoadBG3Bmp( (void*)((u32)work->capBuff[1] + (i*CAM_TEST_CAP_SIZE_X*sizeof(u16))) ,
-                       leftAdr + topAdr + i*256*sizeof(u16) ,
-                       CAM_TEST_CAP_SIZE_X*sizeof(u16) );
-      }
-    }
-    CAM_TEST_SendFlg( work , CTCF_POST_DATA , 0 );
-    work->isUpdateUpper[1] = FALSE;
-  }
-  
-  switch( work->battleState )
-  {
-  case CTCS_ENCODE_DATA:
-    GFL_STD_MemCopy16( work->capBuff[0],work->encBuff,CAM_TEST_CAP_PIXEL*sizeof(u16) );
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A )
-    {
-      PaletteGrayScale( work->encBuff , CAM_TEST_CAP_PIXEL*sizeof(u16) );
-    }
-    work->battleState = CTCS_WAIT_ENCODE_DATA;
-    break;
-
-  case CTCS_WAIT_ENCODE_DATA:
-   {
-      u32 dataSize;
-      const u32 convBufSize = SSP_GetJpegEncoderBufferSize( CAM_TEST_CAP_SIZE_X , CAM_TEST_CAP_SIZE_Y , JPG_OUT_TYPE , JPG_OUT_OPT );
-      OSTick startTime = OS_GetTick();
-      dataSize = SSP_StartJpegEncoder(  work->encBuff , 
-                                        work->sendBuff , 
-                                        CAM_TEST_CAP_PIXEL*sizeof(u16) ,
-                                        (void*)work->jpgConvBuffAdr , //WRAMから諸々のバッファ取った余り
-                                        CAM_TEST_CAP_SIZE_X ,
-                                        CAM_TEST_CAP_SIZE_Y ,
-                                        work->jpgQuality ,
-                                        JPG_OUT_TYPE ,
-                                        JPG_OUT_OPT );
-      if( dataSize == 0 )
-      {
-        OS_TPrintf("JpgConvError!!\n");
-      }
-      else
-      {
-        OSTick endTime = OS_GetTick();
-        OS_TPrintf("Encode Time[%dms]\n",OS_TicksToMilliSeconds(endTime-startTime));
-        work->sendSize = dataSize;
-        work->battleState = CTCS_SEND_DATA;
-      }
-    }
-    break;
-    
-  case CTCS_SEND_DATA:
-    sendTime = OS_GetTick();
-    if( CAM_TEST_Send_PhotoData( work ) == TRUE )
-    {
-      work->battleState = CTCS_WAIT_POST;
-    }
-    break;
-
-  case CTCS_WAIT_POST:
-    if( work->isPost == TRUE )
-    {
-      OSTick postTime = OS_GetTick();
-      OS_TPrintf("Returu Post[%dms]\n",OS_TicksToMilliSeconds(postTime-sendTime));
-      work->isPost = FALSE;
-      work->battleState = CTCS_ENCODE_DATA;
-    }
-    break;
-  }
-
-  
-}
-
-const BOOL CAM_TEST_isActive( void )
-{
-  CAM_TEST_WORK *work = camWork;
-  if( work == NULL )
-  {
-    return FALSE;
-  }
-  return TRUE;
-  
-}
-
-static void CAM_TEST_CapCallBackBattle( void *captureArea , void *userWork )
-{
-  CAM_TEST_WORK *work = userWork;
-  u16 i;
-  const u16 width = CAMERA_SYS_CaptureSizeToWidth( work->camSys );
-  const u16 height= CAMERA_SYS_CaptureSizeToHeight( work->camSys );
-/*  
-  for( i=0 ;i<height;i++ )
-  {
-    const u8 line = i+(96-(height/2));
-    GXS_LoadBG3Bmp( (void*)((u32)captureArea + (i*width*sizeof(u16))), 
-                    line*256*sizeof(u16) + sizeof(u16)*(128-(width/2)), 
-                    width*sizeof(u16));
-  }
-  {
-    const u32 topAdr = (192-CAM_TEST_CAP_SIZE_Y)/2*256*sizeof(u16);
-    const u32 leftAdr1 = (128-CAM_TEST_CAP_SIZE_X)/2*sizeof(u16);
-    const u32 leftAdr2 = (128+(128-CAM_TEST_CAP_SIZE_X)/2)*sizeof(u16);
-    for( i=0;i<CAM_TEST_CAP_SIZE_Y;i++ )
-    {
-      GX_LoadBG3Bmp( (void*)((u32)captureArea + (i*CAM_TEST_CAP_SIZE_X*sizeof(u16))) ,
-                     leftAdr1 + topAdr + i*256*sizeof(u16) ,
-                     CAM_TEST_CAP_SIZE_X*sizeof(u16) );
-    }
-  }
-*/
-
-  {
-    GFL_STD_MemCopy16( captureArea,
-                       work->capBuff[0],
-                       CAM_TEST_CAP_PIXEL*sizeof(u16) );
-    work->isUpdateUpper[0] = TRUE;
-  }
 }
 
 
@@ -1058,6 +911,14 @@ static void CAM_TEST_DebFunc_StartChild( void* userWork , DEBUGWIN_ITEM* item );
 
 static void CAM_TEST_DebFunc_JpgQua( void* userWork , DEBUGWIN_ITEM* item );
 static void CAM_TEST_DebDraw_JpgQua( void* userWork , DEBUGWIN_ITEM* item );
+static void CAM_TEST_DebFunc_DoubleMode( void* userWork , DEBUGWIN_ITEM* item );
+static void CAM_TEST_DebDraw_DoubleMode( void* userWork , DEBUGWIN_ITEM* item );
+static void CAM_TEST_DebFunc_SendTime( void* userWork , DEBUGWIN_ITEM* item );
+static void CAM_TEST_DebDraw_SendTime( void* userWork , DEBUGWIN_ITEM* item );
+static void CAM_TEST_DebFunc_SendSize( void* userWork , DEBUGWIN_ITEM* item );
+static void CAM_TEST_DebDraw_SendSize( void* userWork , DEBUGWIN_ITEM* item );
+static void CAM_TEST_DebFunc_EncTime( void* userWork , DEBUGWIN_ITEM* item );
+static void CAM_TEST_DebDraw_EncTime( void* userWork , DEBUGWIN_ITEM* item );
 
 static void CAM_TEST_DebFunc_CameraActive( void* userWork , DEBUGWIN_ITEM* item );
 static void CAM_TEST_DebDraw_CameraActive( void* userWork , DEBUGWIN_ITEM* item );
@@ -1094,6 +955,14 @@ static void CAM_TEST_InitDebugMenu( CAM_TEST_WORK *work )
                              (void*)work , DEB_GROUP_NO , work->heapId );
   DEBUGWIN_AddItemToGroupEx( CAM_TEST_DebFunc_JpgQua , CAM_TEST_DebDraw_JpgQua ,
                              (void*)work , DEB_GROUP_NO , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( CAM_TEST_DebFunc_DoubleMode , CAM_TEST_DebDraw_DoubleMode ,
+                             (void*)work , DEB_GROUP_NO , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( CAM_TEST_DebFunc_SendTime , CAM_TEST_DebDraw_SendTime ,
+                             (void*)work , DEB_GROUP_NO , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( CAM_TEST_DebFunc_SendSize , CAM_TEST_DebDraw_SendSize ,
+                             (void*)work , DEB_GROUP_NO , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( CAM_TEST_DebFunc_EncTime , CAM_TEST_DebDraw_EncTime ,
+                             (void*)work , DEB_GROUP_NO , work->heapId );
 
   DEBUGWIN_AddItemToGroupEx( CAM_TEST_DebFunc_CameraActive , CAM_TEST_DebDraw_CameraActive ,
                              (void*)work , DEB_GROUP_CAMERA , work->heapId );
@@ -1121,6 +990,27 @@ static void CAM_TEST_ExitDebugMenu( CAM_TEST_WORK *work )
   DEBUGWIN_ExitProc();
   GFL_FONT_Delete( work->fontHandle );
 }
+
+static u32 CAM_TEST_CalcAve( u32 *dataArr , u8 *nowIdx , u32 newVal )
+{
+  u8 i;
+  u32 sum = 0;
+  if( nowIdx != NULL )
+  {
+    dataArr[*nowIdx] = newVal;
+    *nowIdx = *nowIdx+1;
+    if( *nowIdx >= CAMERA_TEST_AVE_COUNT )
+    {
+      *nowIdx = 0;
+    }
+  }
+  for( i=0;i<CAMERA_TEST_AVE_COUNT;i++ )
+  {
+    sum += dataArr[i];
+  }
+  return sum/CAMERA_TEST_AVE_COUNT;
+}
+
 
 #pragma mark [>debugMenu Comm
 static void CAM_TEST_DebFunc_StartParent( void* userWork , DEBUGWIN_ITEM* item )
@@ -1177,6 +1067,89 @@ static void CAM_TEST_DebDraw_JpgQua( void* userWork , DEBUGWIN_ITEM* item )
 {
   CAM_TEST_WORK *work = userWork;
   DEBUGWIN_ITEM_SetNameV( item , "JPG画質：[%d]",work->jpgQuality );  
+}
+static void CAM_TEST_DebFunc_DoubleMode( void* userWork , DEBUGWIN_ITEM* item )
+{
+  CAM_TEST_WORK *work = userWork;
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    MtxFx22 mtx;
+    work->isDouble = !work->isDouble;
+    GFL_STD_MemClear( G2_GetBG3ScrPtr() , 256*192*2 );
+    
+    if( work->isDouble == TRUE )
+    {
+      mtx._00 = FX_Inv(FX32_ONE*2);
+      mtx._11 = FX_Inv(FX32_ONE*2);
+    }
+    else
+    {
+      mtx._00 = FX_Inv(FX32_ONE);
+      mtx._11 = FX_Inv(FX32_ONE);
+    }
+    mtx._01 = 0;
+    mtx._10 = 0;
+    G2_SetBG3Affine(&mtx,0,0,0,0);
+
+    work->sizeMax = 0;
+    work->sendSecMax = 0;
+    work->encTimeMax = 0;
+
+    DEBUGWIN_RefreshScreen();
+  }  
+}
+
+static void CAM_TEST_DebDraw_DoubleMode( void* userWork , DEBUGWIN_ITEM* item )
+{
+  CAM_TEST_WORK *work = userWork;
+  if( work->isDouble == TRUE )
+  {
+    DEBUGWIN_ITEM_SetNameV( item , "倍モード：[ON]" );  
+  }
+  else
+  {
+    DEBUGWIN_ITEM_SetNameV( item , "倍モード：[OFF]" );  
+  }
+  
+}
+
+static void CAM_TEST_DebFunc_SendTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  //NoFunc
+}
+
+static void CAM_TEST_DebDraw_SendTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  CAM_TEST_WORK *work = userWork;
+  const u32 ave = CAM_TEST_CalcAve( work->sendSecAve , NULL , 0 );
+
+  DEBUGWIN_ITEM_SetNameV( item , "SendTime：[%d][%d]",work->sendSecMax , ave );  
+}
+
+static void CAM_TEST_DebFunc_SendSize( void* userWork , DEBUGWIN_ITEM* item )
+{
+  //NoFunc
+}
+
+static void CAM_TEST_DebDraw_SendSize( void* userWork , DEBUGWIN_ITEM* item )
+{
+  CAM_TEST_WORK *work = userWork;
+  const u32 ave = CAM_TEST_CalcAve( work->sizeAve , NULL , 0 )/1024;
+
+  DEBUGWIN_ITEM_SetNameV( item , "SendSize：[%d][%d]",work->sizeMax/1024 , ave );  
+}
+
+static void CAM_TEST_DebFunc_EncTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  //NoFunc
+}
+
+static void CAM_TEST_DebDraw_EncTime( void* userWork , DEBUGWIN_ITEM* item )
+{
+  CAM_TEST_WORK *work = userWork;
+  const u32 ave = CAM_TEST_CalcAve( work->encTimeAve , NULL , 0 );
+
+  DEBUGWIN_ITEM_SetNameV( item , "EncodeTime：[%d][%d]",work->encTimeMax , ave );  
 }
 
 
@@ -1261,7 +1234,6 @@ static void CAM_TEST_DebFunc_CameraResolution( void* userWork , DEBUGWIN_ITEM* i
       }
       GFL_STD_MemClear( G2S_GetBG3ScrPtr() , 256*192*sizeof(u16) );
       CAMERA_SYS_DeleteReadBuffer( work->camSys );
-      //CAMERA_SYS_SetReadBuffer( work->camSys , (void*)work->wramAdr , 2 );
       CAMERA_SYS_CreateReadBuffer( work->camSys , 2 , (HEAPID_ARIIZUMI_DEBUG | HEAPDIR_MASK) );
 
       DEBUGWIN_RefreshScreen();
@@ -1376,7 +1348,6 @@ static void CAM_TEST_DebFunc_CameraTrimFlag( void* userWork , DEBUGWIN_ITEM* ite
                                 (width/2) +(work->trimSizeX/2) , 
                                 (height/2)+(work->trimSizeY/2) );
       }
-      //CAMERA_SYS_SetReadBuffer( work->camSys , (void*)work->wramAdr , 2 );
       CAMERA_SYS_CreateReadBuffer( work->camSys , 2 , (HEAPID_ARIIZUMI_DEBUG | HEAPDIR_MASK) );
       DEBUGWIN_RefreshScreen();
     }
@@ -1414,7 +1385,6 @@ static void CAM_TEST_DebFunc_CameraTrimSet( void* userWork , DEBUGWIN_ITEM* item
                               (height/2)-(work->trimSizeY/2) , 
                               (width/2) +(work->trimSizeX/2) , 
                               (height/2)+(work->trimSizeY/2) );
-      //CAMERA_SYS_SetReadBuffer( work->camSys , (void*)work->wramAdr , 2 );
       CAMERA_SYS_CreateReadBuffer( work->camSys , 2 , (HEAPID_ARIIZUMI_DEBUG | HEAPDIR_MASK) );
       DEBUGWIN_RefreshScreen();
     }

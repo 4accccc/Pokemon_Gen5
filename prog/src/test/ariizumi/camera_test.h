@@ -36,11 +36,6 @@
 
 extern const GFL_PROC_DATA CameraTastMainProcData;
 
-extern void CAM_TEST_InitBattle( void );
-extern void CAM_TEST_UpdateBattle( void );
-extern void CAM_TEST_ExitBattle( void );
-extern const BOOL CAM_TEST_isActive( void );
-
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
