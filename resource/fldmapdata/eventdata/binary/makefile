@@ -41,8 +41,6 @@ FLAGWORKDIR = ../../flagwork/
 TOTALHEADER = ../define/total_header.h
 
 
-DEPEND_FILE = ../define/binary_depend_file
-
 TMPDIR	= ../tmp
 DATADIR	= ../data
 SRCDATA = $(wildcard $(DATADIR)/*.mev)
@@ -81,7 +79,7 @@ $(targetname).narc: $(BINDAT)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
 
 #binary化の依存関係ファイルを取得
-include $(DEPEND_FILE)
+include ../define/binary_depend_file
 
 endif
 
