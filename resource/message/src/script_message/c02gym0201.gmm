@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-13T20:44:36"/>
+	<create user="matsumiya" host="W00207" date="2009-10-14T12:42:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -409,8 +409,8 @@
 ともだち♀</language>
 	</row>
 
-	<row id="msg_c02gym0101_assitantm1_01">
-		<comment>♀：トレーナー
+	<row id="msg_c02gym0101_girl3_01">
+		<comment>♀：トレーナー「じゅくがえり」
 ・フラグ成立前（本棚を向いている）</comment>
 		<attribute name="キャラ指定">本棚ストッパー１</attribute>
 		<language name="JPN" width="256">はなしかけたが　どくしょに
@@ -421,7 +421,7 @@
 あとで　話しかけよう</language>
 	</row>
 
-	<row id="msg_c02gym0101_assitantm1_02">
+	<row id="msg_c02gym0101_girl3_02">
 		<comment>♀：トレーナー
 ・フラグ成立後＝戦闘前（画面下を向いている）</comment>
 		<language name="JPN" width="256">このほんだなを　しらべたいの？
@@ -432,7 +432,7 @@
 私に勝てたら　読ませてあげる[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c02gym0101_assitantm1_03">
+	<row id="msg_c02gym0101_girl3_03">
 		<comment>♀：トレーナー
 ・戦闘後</comment>
 		<language name="JPN" width="256">ジムリーダーが　いる　へやに
@@ -443,8 +443,8 @@
 がんばって　探してみて！</language>
 	</row>
 
-	<row id="msg_c02gym0101_assitantm2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：トレーナー
+	<row id="msg_c02gym0101_assitantw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀：トレーナー「けんきゅういん♀」
 ・フラグ成立前（本棚を向いている）</comment>
 		<attribute name="キャラ指定">本棚ストッパー２</attribute>
 		<language name="JPN" width="256">はなしかけたが　どくしょに
@@ -455,26 +455,26 @@
 あとで　話しかけよう</language>
 	</row>
 
-	<row id="msg_c02gym0101_assitantm2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：トレーナー
+	<row id="msg_c02gym0101_assitantw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀：トレーナー
 ・フラグ成立後＝戦闘前（画面下を向いている）</comment>
-		<language name="JPN" width="256">ここの　ほんを　よみたいのか？
-オーケイ！　わかった！[BE:01:ページ切り替え（クリア）]
-ただ　そのまえに　ポケモンしょうぶを
-してもらえると　ありがたいな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ここの本を　読みたいのか？
-オーケイ！　わかった！[BE:01:ページ切り替え（クリア）]
-ただ　その前に　ポケモン勝負を
-してもらえると　ありがたいな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ここの　ほんを　よみたいの？[BE:01:ページ切り替え（クリア）]
+いいわよ！　ただ　そのまえに……[BE:01:ページ切り替え（クリア）]
+ポケモンしょうぶを　してもらえると
+けんきゅうできて　ありがたいな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ここの本を　読みたいの？[BE:01:ページ切り替え（クリア）]
+いいわよ！　ただ　その前に……[BE:01:ページ切り替え（クリア）]
+ポケモン勝負を　してもらえると
+いろいろ研究できて　ありがたいな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c02gym0101_assitantm2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：トレーナー
+	<row id="msg_c02gym0101_assitantw_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀：トレーナー
 ・戦闘後</comment>
 		<language name="JPN" width="256">ジムリーダーに　あいたいなら
-なぞなぞを　とくことだな！</language>
+なぞなぞを　とくことです！</language>
 		<language name="JPN_KANJI" width="256">ジムリーダーに　会いたいなら
-なぞなぞを　解くことだな！</language>
+なぞなぞを　解くことです！</language>
 	</row>
 
 	<row id="msg_c02gym0101_category_01">
