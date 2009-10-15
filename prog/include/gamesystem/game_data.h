@@ -360,6 +360,28 @@ extern SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata);
 
 //--------------------------------------------------------------
 /**
+ * @brief   ゲームデータが持つ情報を元に分割セーブを開始
+ *
+ * @param   gamedata		ゲームデータへのポインタ
+ *
+ * @retval  none
+ */
+//--------------------------------------------------------------
+extern void GAMEDATA_SaveAsyncStart(GAMEDATA *gamedata);
+
+//--------------------------------------------------------------
+/**
+ * @brief   ゲームデータが持つ情報を元に分割セーブを実行
+ *
+ * @param   gamedata		ゲームデータへのポインタ
+ *
+ * @retval  セーブ結果
+ */
+//--------------------------------------------------------------
+extern SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata);
+
+//--------------------------------------------------------------
+/**
  * @brief	EVENTWORKへのポインタ取得
  * @param	gamedata	GAMEDATAへのポインタ
  * @retval	EVENTWORKへのポインタ
