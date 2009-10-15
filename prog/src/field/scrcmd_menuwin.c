@@ -199,6 +199,31 @@ VMCMD_RESULT EvCmdBmpMenuStart( VMHANDLE *core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * 会話ウィンドウ表示追加
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void talkMsgWin_AddWindow( SCRCMD_WORK *work )
+{
+  SCRIPT_WORK *sc;
+  SCRIPT_FLDPARAM *fparam;
+  GFL_MSGDATA *msgData;
+  FLDMSGWIN_STREAM *msgWin;
+  u8 *win_open_flag;
+  
+  sc = SCRCMD_WORK_GetScriptWork( work );
+  fparam = SCRIPT_GetFieldParam( sc );
+  msgData = SCRCMD_WORK_GetMsgData( work );
+  msgWin = FLDMSGWIN_STREAM_AddTalkWin( fparam->msgBG, msgData );
+  SCRCMD_WORK_SetFldMsgWinStream( work, msgWin );
+  
+  win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
+  *win_open_flag = TRUE;  //ON;
+}
+
+//--------------------------------------------------------------
+/**
  * 会話ウィンドウメッセージ表示　ウェイト部分
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval BOOL TRUE=終了
@@ -231,15 +256,14 @@ VMCMD_RESULT EvCmdTalkMsg( VMHANDLE *core, void *wk )
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
-
-#if 0 
+  
   {
     u8 *win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
     
     if( (*win_open_flag) == 0 ){
+      talkMsgWin_AddWindow( work );
     }
   }
-#endif
   
   {
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
@@ -426,14 +450,13 @@ VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   STRBUF **msgbuf = SCRIPT_GetMemberWork( sc, ID_EVSCR_MSGBUF );
   
-#if 0 
   {
     u8 *win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
     
     if( (*win_open_flag) == 0 ){
+      talkMsgWin_AddWindow( work );
     }
   }
-#endif
   
   {
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
@@ -459,20 +482,7 @@ VMCMD_RESULT EvCmdTalkMsgAllPut( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdTalkWinOpen( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc;
-  SCRIPT_FLDPARAM *fparam;
-  GFL_MSGDATA *msgData;
-  FLDMSGWIN_STREAM *msgWin;
-  u8 *win_open_flag;
-  
-  sc = SCRCMD_WORK_GetScriptWork( work );
-  fparam = SCRIPT_GetFieldParam( sc );
-  msgData = SCRCMD_WORK_GetMsgData( work );
-  msgWin = FLDMSGWIN_STREAM_AddTalkWin( fparam->msgBG, msgData );
-  SCRCMD_WORK_SetFldMsgWinStream( work, msgWin );
-  
-  win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
-  *win_open_flag = TRUE;  //ON;
+  talkMsgWin_AddWindow( work );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -490,11 +500,14 @@ VMCMD_RESULT EvCmdTalkWinClose( VMHANDLE *core, void *wk )
   FLDMSGWIN_STREAM *msgWin;
   u8 *win_open_flag;
   
-  msgWin = SCRCMD_WORK_GetFldMsgWinStream( work );
-  FLDMSGWIN_STREAM_Delete( msgWin );
-  
   sc = SCRCMD_WORK_GetScriptWork( work );
   win_open_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_OPEN_FLAG );
+  
+  if( (*win_open_flag) == TRUE ){
+    msgWin = SCRCMD_WORK_GetFldMsgWinStream( work );
+    FLDMSGWIN_STREAM_Delete( msgWin );
+  }
+  
   *win_open_flag = FALSE;  //OFF;
   return VMCMD_RESULT_CONTINUE;
 }
