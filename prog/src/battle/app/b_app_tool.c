@@ -536,6 +536,7 @@ void BAPPTOOL_PrintUtilTrans( PRINT_UTIL * util, PRINT_QUE * que, u32 max )
 {
 	u32	i;
 
+	PRINTSYS_QUE_Main( que );
 	for( i=0; i<max; i++ ){
 		PRINT_UTIL_Trans( &util[i], que );
 	}
