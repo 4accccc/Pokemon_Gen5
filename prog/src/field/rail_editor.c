@@ -65,14 +65,14 @@ enum {
 } ;
 
 // 汎用受信バッファ
-#define RE_TMP_BUFF_SIZE	( 0x8000 )
+#define RE_TMP_BUFF_SIZE	( 0xC000 )
 
 //-------------------------------------
 ///	レール、エリア受信バッファサイズ
 //=====================================
-#define RE_MCS_BUFF_RAIL_SIZE	( 0x8000 )
+#define RE_MCS_BUFF_RAIL_SIZE	( 0xC000 )
 #define RE_MCS_BUFF_AREA_SIZE	( 0x400 )
-#define RE_MCS_BUFF_ATTR_SIZE	( 0x8000 )
+#define RE_MCS_BUFF_ATTR_SIZE	( 0xC000 )
 
 
 //-------------------------------------
