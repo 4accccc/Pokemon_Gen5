@@ -408,7 +408,6 @@ void WORDSET_RegisterPMSWord( WORDSET* wordset, u32 bufID, PMS_WORD word )
   PMSW_GetStr( word, wordset->tmpBuf , wordset->heapID );
   RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
 }
-extern void WORDSET_RegisterPMSDeco( WORDSET* wordset, u32 bufID, PMS_DECO_ID decoID );
 //------------------------------------------------------------------
 /**
  * 指定バッファに簡易会話デコ文字を登録
