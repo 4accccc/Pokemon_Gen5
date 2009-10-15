@@ -2374,8 +2374,8 @@
 #define SYS_FLAG_COMM_COUNTER             2406 /* 0x0966 通信カウンター通過フラグ */
 #define SYS_FLAG_SAFARI_MODE              2407 /* 0x0967 サファリモードフラグ */
 #define SYS_FLAG_SAFARI_LTMODE            2408 /* 0x0968 サファリレイアウトモードフラグ */
-		/* not used  2409(0x0969) */
-#define SYS_FLAG_ASAGI_TOUDAI_CLEAR       2410 /* 0x096a アサギ灯台イベントクリア */
+#define SYS_FLAG_C04GYM_TRBTL1            2409 /* 0x0969 C04電気ジムのコースタートレーナーの対戦済みチェックフラグ（１台目） */
+#define SYS_FLAG_C04GYM_TRBTL2            2410 /* 0x096a C04電気ジムのコースタートレーナーの対戦済みチェックフラグ（２台目） */
 #define SYS_FLAG_D35R0103_AJITO_MECH01    2411 /* 0x096b アジトB2 電波発生装置奥 */
 #define SYS_FLAG_D35R0103_AJITO_MECH02    2412 /* 0x096c アジトB2 電波発生装置真ん中 */
 #define SYS_FLAG_D35R0103_AJITO_MECH03    2413 /* 0x096d アジトB2 電波発生装置手前 */
