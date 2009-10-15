@@ -482,6 +482,12 @@
   NO_CMD()
   NO_CMD()
 
+  //レポート関連
+  DEF_CMD( EvCmdReportCall,   EV_SEQ_REPORT_CALL )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 
