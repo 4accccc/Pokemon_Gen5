@@ -107,6 +107,8 @@ struct _FIELD_CAMERA {
   VecFx32     debug_target;
 
   fx32        debug_far;
+
+  u32 debug_save_camera_mode;
 #endif
 
   CAMERA_TRACE * Trace;
@@ -986,6 +988,7 @@ void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD
   camera->debug_subscreen_type = type;
   if( type == FIELD_CAMERA_DEBUG_BIND_CAMERA_POS )
   {
+    camera->debug_save_camera_mode = camera->mode;
 	  FIELD_CAMERA_SetMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     GFL_CAMADJUST_SetCameraParam(	gflCamAdjust,
 																	&camera->angle_yaw, 
@@ -997,6 +1000,7 @@ void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD
   }
   else if( type == FIELD_CAMERA_DEBUG_BIND_TARGET_POS )
   {
+    camera->debug_save_camera_mode = camera->mode;
 	  FIELD_CAMERA_SetMode( camera, FIELD_CAMERA_MODE_CALC_TARGET_POS );
     camera->debug_target_yaw    = camera->angle_yaw - 0x8000;
     camera->debug_target_pitch  = 0x10000 - camera->angle_pitch;
@@ -1024,6 +1028,8 @@ void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera)
   }
 
   camera->debug_subscreen_type = FIELD_CAMERA_DEBUG_BIND_NONE;
+
+  FIELD_CAMERA_SetMode( camera, camera->debug_save_camera_mode );
 }
 
 //----------------------------------------------------------------------------
