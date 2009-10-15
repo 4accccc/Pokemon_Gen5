@@ -165,7 +165,9 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs );
 static BOOL btlin_trainer_double( int* seq, void* wk_adrs );
 static BOOL btlin_comm_double( int* seq, void* wk_adrs );
 static BOOL  btlinEff_OpponentTrainerIn( BTLV_SCU* wk, int* seq );
+static BOOL btlinEff_OpponentPokeInSingle( BTLV_SCU* wk, int* seq );
 static BOOL btlinEff_OpponentPokeInDouble( BTLV_SCU* wk, int* seq );
+static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq );
 static BOOL btlinEff_MyPokeInDouble( BTLV_SCU* wk, int* seq );
 static BOOL btlin_comm_double_multi( int* seq, void* wk_adrs );
 static BOOL btlin_trainer_triple( int* seq, void* wk_adrs );
@@ -384,7 +386,7 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
 
     case BTL_COMPETITOR_COMM:
       if( !BTL_MAIN_IsMultiMode(wk->mainModule) ){
-        BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_double );
+        BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_double );
       }else{
         BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_double_multi );
       }
@@ -674,231 +676,38 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
 //--------------------------------------------------------------------------
 static BOOL btlin_comm_single( int* seq, void* wk_adrs )
 {
-  enum {
-    SEQ_ENC1,
-    SEQ_ENC2,
-    SEQ_ENC3,
-    SEQ_ENC4,
-    SEQ_ENC5,
-    SEQ_PUT_ENEMY1,
-    SEQ_PUT_ENEMY2,
-    SEQ_PUT_ENEMY3,
-    SEQ_PUT_MINE1,
-    SEQ_PUT_MINE2,
-    SEQ_PUT_MINE3,
-    SEQ_PUT_MINE4,
-    SEQ_QUIT,
+  static const BtlinEffectSeq funcs_A[] = {
+    btlinEff_OpponentTrainerIn,
+    btlinEff_OpponentPokeInSingle,
+    btlinEff_MyPokeInSingle,
+  };
+  static const BtlinEffectSeq funcs_B[] = {
+    btlinEff_OpponentTrainerIn,
+    btlinEff_MyPokeInSingle,
+    btlinEff_OpponentPokeInSingle,
   };
 
-  typedef struct {
-    const BTL_POKEPARAM* pp;
-    BtlPokePos  pokePos;
-    u8          viewPos;
-    u8  pokeID;
-    u8  clientID;
-    u8  putCnt;
-  }ProcWork;
-
   BTLV_SCU* wk = wk_adrs;
-  ProcWork* subwk = Scu_GetProcWork( wk, sizeof(ProcWork) );
 
-  switch( *seq ){
-  case SEQ_ENC1:
+  if( wk->btlinSeq < NELEMS(funcs_A) )
+  {
+    const BtlinEffectSeq* funcs;
+    if( BTL_MAIN_GetPlayerClientID(wk->mainModule) == 0 )
     {
-      enum {
-        VPOS = BTLV_MCSS_POS_BB,
-      };
-
-      u8 btlPos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, VPOS );
-      u8 clientID = BTL_MAIN_BtlPosToClientID( wk->mainModule, btlPos );
-      u16 trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
-      BTLV_EFFECT_SetTrainer( trType, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
-
-      BTL_Printf("step1 client=%d, pos=%d, trType=%d\n", clientID, btlPos, trType );
-
-      subwk->viewPos = VPOS;
-      subwk->clientID = clientID;
-      subwk->pokePos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, VPOS );
-      subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
-      subwk->pokeID = BPP_GetID( subwk->pp );
-      subwk->putCnt = 0;
-      msgWinVisible_Hide( &wk->msgwinVisibleWork );
-      (*seq)++;
+      funcs = funcs_A;
     }
-    break;
-  case SEQ_ENC2:
-    if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
-    {
-      BTL_Printf("step2 vpos=%d\n", subwk->viewPos);
-      BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_TRAINER_ENCOUNT_1 );
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 );
-      (*seq)++;
+    else{
+      funcs = funcs_B;
     }
-    break;
-  case SEQ_ENC3:
-    if( !BTLV_EFFECT_CheckExecute() )
-    {
-      BTL_Printf("step3\n");
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_Encount_Player1, 1, subwk->clientID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
-      (*seq)++;
+    if( funcs[wk->btlinSeq](wk, seq) ){
+      wk->btlinSeq++;
+      (*seq) = 0;
     }
-    break;
-  case SEQ_ENC4:
-    if( BTLV_SCU_WaitMsg(wk) )
-    {
-      BTL_Printf("step4 vpos=%d\n", subwk->viewPos);
-      BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_TRAINER_ENCOUNT_2 );
-      msgWinVisible_Hide( &wk->msgwinVisibleWork );
-      (*seq)++;
-    }
-    break;
-  case SEQ_ENC5:
-    if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
-        ( !BTLV_EFFECT_CheckExecute() ) )
-    {
-      u8 playerClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
-      subwk->clientID = BTL_MAIN_BtlPosToClientID( wk->mainModule, BTL_POS_2ND_0 );
-
-      BTL_Printf("step 5 targetClientID=%d, myClientID=%d\n", subwk->clientID, playerClientID);
-
-      if( subwk->clientID == playerClientID )
-      {
-        (*seq) = SEQ_PUT_MINE1;
-      }
-      else
-      {
-        (*seq) = SEQ_PUT_ENEMY1;
-      }
-    }
-    break;
-
-  case SEQ_PUT_ENEMY1:
-    if( !BTLV_EFFECT_CheckExecute() )
-    {
-      enum {
-        POS  = BTL_POS_2ND_0,
-        VPOS = BTLV_MCSS_POS_BB,
-      };
-
-      BTLV_BALL_GAUGE_PARAM bbgp;
-
-      subwk->viewPos = VPOS;
-      subwk->pokePos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, subwk->viewPos );
-      subwk->clientID = BTL_MAIN_BtlPosToClientID( wk->mainModule, subwk->pokePos );
-      subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
-      subwk->pokeID = BPP_GetID( subwk->pp );
-
-      BTL_Printf("step 6 client=%d, vpos=%d, pokeID=%d\n", subwk->clientID, subwk->viewPos, subwk->pokeID);
-      bbgp_make( wk, &bbgp, subwk->clientID, BTLV_BALL_GAUGE_TYPE_ENEMY );
-
-      BTLV_EFFECT_SetBallGauge( &bbgp );
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_Player, 2, subwk->clientID, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
-      (*seq)++;
-    }
-    break;
-  case SEQ_PUT_ENEMY2:
-    if( BTLV_SCU_WaitMsg(wk) )
-    {
-      BTL_Printf("step 7 vpos=%d\n", subwk->viewPos);
-      BTLV_EFFECT_SetPokemon( BPP_GetSrcData(subwk->pp), subwk->viewPos );
-      BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_TRAINER_ENCOUNT_3 );
-      msgWinVisible_Hide( &wk->msgwinVisibleWork );
-      (*seq)++;
-    }
-    break;
-  case SEQ_PUT_ENEMY3:
-    if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
-        ( !BTLV_EFFECT_CheckExecute() ) )
-    {
-      BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_ENEMY );
-      statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
-
-      BTL_Printf("step 8\n");
-
-      subwk->putCnt++;
-      if( subwk->putCnt < 2 ){
-        (*seq) = SEQ_PUT_MINE1;
-      }else{
-        (*seq) = SEQ_QUIT;
-      }
-    }
-    break;
-
-  case SEQ_PUT_MINE1:
-//    if( !BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE_MINE ) )
-    {
-      enum {
-        POS  = BTL_POS_1ST_0,
-        VPOS = BTLV_MCSS_POS_AA,
-      };
-
-      BTLV_BALL_GAUGE_PARAM bbgp;
-      const MYSTATUS* status;
-
-      subwk->viewPos = VPOS;
-      subwk->pokePos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, subwk->viewPos );
-      subwk->clientID = BTL_MAIN_BtlPosToClientID( wk->mainModule, subwk->pokePos );
-      subwk->pp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pokePos );
-      subwk->pokeID = BPP_GetID( subwk->pp );
-
-      BTL_Printf("step 9 client=%d, vpos=%d, pokeID=%d\n", subwk->clientID, subwk->viewPos, subwk->pokeID);
-
-      bbgp_make( wk, &bbgp, subwk->clientID, BTLV_BALL_GAUGE_TYPE_MINE );
-      BTLV_EFFECT_SetBallGauge( &bbgp );
-
-      status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
-
-      if( MyStatus_GetMySex(status) == PM_MALE ){
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_MALE );
-      }else{
-        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_FEMALE );
-      }
-      (*seq)++;
-    }
-    break;
-  case SEQ_PUT_MINE2:
-    if( !BTLV_EFFECT_CheckExecute() )
-    {
-      BTL_Printf("step 10\n");
-      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
-      (*seq)++;
-    }
-    break;
-  case SEQ_PUT_MINE3:
-    if( BTLV_SCU_WaitMsg(wk) )
-    {
-      BTLV_EFFECT_SetPokemon( BPP_GetSrcData(subwk->pp), subwk->viewPos );
-      BTL_Printf("step 11 vpos=%d\n", subwk->viewPos);
-      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
-      msgWinVisible_Hide( &wk->msgwinVisibleWork );
-      statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
-      (*seq)++;
-    }
-    break;
-  case SEQ_PUT_MINE4:
-    if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
-    {
-      subwk->putCnt++;
-      if( subwk->putCnt < 2 ){
-        (*seq) = SEQ_PUT_ENEMY1;
-      }else{
-        (*seq) = SEQ_QUIT;
-      }
-    }
-    break;
-  case SEQ_QUIT:
-    if( !BTLV_EFFECT_CheckExecute() )
-    {
-      BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_MINE );
-      BTL_Printf("step 13 ... おわり\n");
-      return TRUE;
-    }
-    break;
+    return FALSE;
   }
-  return FALSE;
+  else{
+    return TRUE;
+  }
 }
 //--------------------------------------------------------------------------
 /**
@@ -1145,6 +954,76 @@ static BOOL  btlinEff_OpponentTrainerIn( BTLV_SCU* wk, int* seq )
 }
 //---------------------------------------------------------------------------
 /*
+ *  開始エフェクト：相手ポケモン登場（シングル）
+ */
+//---------------------------------------------------------------------------
+static BOOL btlinEff_OpponentPokeInSingle( BTLV_SCU* wk, int* seq )
+{
+  typedef struct {
+    const BTL_POKEPARAM* bpp;
+    u8    pos;
+    u8    vpos;
+    u8    pokeID;
+    u8    aliveCnt;
+    u8    clientID;
+  }ProcWork;
+
+  ProcWork* subwk = Scu_GetProcWork( wk, sizeof(ProcWork) );
+
+  switch( *seq ){
+  case 0:
+    {
+      u32 i;
+      u16 strID;
+
+      subwk->vpos = BTLV_MCSS_POS_BB;
+      {
+        u8 myClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+        subwk->clientID = BTL_MAIN_GetOpponentClientID( wk->mainModule, myClientID, 0 );
+      }
+      subwk->pos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, subwk->vpos );
+      subwk->bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pos );
+      subwk->pokeID = BPP_GetID( subwk->bpp );
+
+      if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER ){
+        strID = BTL_STRID_STD_PutSingle_NPC;
+      }else{
+        strID = BTL_STRID_STD_PutSingle_Player;
+      }
+      BTL_STR_MakeStringStd( wk->strBuf, strID, 2, subwk->clientID, subwk->pokeID );
+      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      (*seq)++;
+    }
+    break;
+
+  case 1:
+    if( BTLV_SCU_WaitMsg(wk) ){
+      msgWinVisible_Hide( &wk->msgwinVisibleWork );
+      (*seq)++;
+    }
+    break;
+
+  case 2:
+    BTLV_EFFECT_SetPokemon( BPP_GetSrcData(subwk->bpp), subwk->vpos );
+    BTLV_EFFECT_AddByPos( subwk->vpos, BTLEFF_SINGLE_TRAINER_ENCOUNT_3 );
+    BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_ENEMY );
+    (*seq)++;
+    break;
+
+  case 3:
+    if( !BTLV_EFFECT_CheckExecute() ){
+      statwin_disp_start( &wk->statusWin[ subwk->pos ] );
+      (*seq)++;
+    }
+    break;
+
+  case 4:
+    return TRUE;
+  }
+  return FALSE;
+}
+//---------------------------------------------------------------------------
+/*
  *  開始エフェクト：相手ポケモン登場（ダブル）
  */
 //---------------------------------------------------------------------------
@@ -1223,6 +1102,88 @@ static BOOL btlinEff_OpponentPokeInDouble( BTLV_SCU* wk, int* seq )
     break;
 
   case 4:
+    return TRUE;
+  }
+  return FALSE;
+}
+//---------------------------------------------------------------------------
+/*
+ *  開始エフェクト：自分ポケモン登場（シングル）
+ */
+//---------------------------------------------------------------------------
+static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq )
+{
+  typedef struct {
+    const BTL_POKEPARAM* bpp;
+    u8    pos;
+    u8    vpos;
+    u8    pokeID;
+    u8    clientID;
+  }ProcWork;
+
+  ProcWork* subwk = Scu_GetProcWork( wk, sizeof(ProcWork) );
+
+  switch( *seq ){
+  case 0:// 自分ボールゲージ出現
+    {
+      BTLV_BALL_GAUGE_PARAM bbgp;
+
+      subwk->clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+      bbgp_make( wk, &bbgp, subwk->clientID, BTLV_BALL_GAUGE_TYPE_MINE );
+//      BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_ENEMY );
+      BTLV_EFFECT_SetBallGauge( &bbgp );
+      (*seq)++;
+    }
+    break;
+
+  case 1:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
+
+      if( MyStatus_GetMySex(status) == PM_MALE ){
+        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_MALE );
+      }else{
+        BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_FEMALE );
+      }
+      (*seq)++;
+    }
+    break;
+
+  case 2:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      subwk->vpos = BTLV_MCSS_POS_AA;
+      subwk->clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+      subwk->pos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, subwk->vpos );
+      subwk->bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, subwk->pos );
+      subwk->pokeID = BPP_GetID( subwk->bpp );
+
+      BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
+      BTLV_SCU_StartMsg( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+      (*seq)++;
+    }
+    break;
+
+  case 3:
+    if( BTLV_SCU_WaitMsg(wk) )
+    {
+      BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_MINE );
+      msgWinVisible_Hide( &wk->msgwinVisibleWork );
+      BTLV_EFFECT_SetPokemon( BPP_GetSrcData(subwk->bpp), subwk->vpos );
+      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
+      (*seq)++;
+    }
+    break;
+
+  case 4:
+    if( !BTLV_EFFECT_CheckExecute() ){
+      statwin_disp_start( &wk->statusWin[ subwk->pos ] );
+      (*seq)++;
+    }
+    break;
+
+  case 5:
     return TRUE;
   }
   return FALSE;
