@@ -1159,6 +1159,9 @@ void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num)
     pos.y = y;
     GFL_CLACT_WK_SetPos( pWork->scrollCur ,  &pos, CLWK_SETSF_NONE );
   }
+
+  // カーソルを表示
+  GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, TRUE );
 }
 
 //------------------------------------------------------------------------------

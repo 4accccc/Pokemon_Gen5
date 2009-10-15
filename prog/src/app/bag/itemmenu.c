@@ -149,6 +149,7 @@ static u16 SORT_GetABCPrio( u16 item_no );
 static void SORT_Button( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork );
+static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
 //static void BAG_ItemUseErrorMsgSet( MYSTATUS * myst, STRBUF * buf, u16 item, u32 err, FIELD_ITEMMENU_WORK * pWork );
 //u8 Bag_TalkMsgPrint( BAG_WORK * pWork, int type );
 //static int Bag_MenuUse( FIELD_ITEMMENU_WORK * pWork );
@@ -269,7 +270,6 @@ static void _windowCreate(FIELD_ITEMMENU_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
-
   ITEMDISP_upMessageRewrite(pWork);
   ITEMDISP_WazaInfoWindowChange(pWork);
   ITEMDISP_CellMessagePrint(pWork);
@@ -528,6 +528,7 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
         _posplus(pWork, length);
       }
     }
+    KTST_SetDraw( pWork, FALSE );
     return TRUE;
   }
   return FALSE;
@@ -642,6 +643,7 @@ static BOOL _itemMovePositionTouchItem(FIELD_ITEMMENU_WORK* pWork)
       int newno = ITEMMENU_GetItemIndex(pWork);
       _ItemChange(pWork, nowno, newno);
     }
+    KTST_SetDraw( pWork, FALSE );
     return TRUE;
   }
   return FALSE;
@@ -672,6 +674,7 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
   }
 
   if( _itemScrollCheck(pWork) ){   // スクロールバーの操作
+    KTST_SetDraw( pWork, FALSE );
     ITEMDISP_scrollCursorMove(pWork);
     bChange = TRUE;
   }
@@ -822,8 +825,21 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
  	GFL_UI_KEY_SetRepeatSpeed(1, 6);
 
   GFL_BMN_Main( pWork->pButton );
+
   if(pWork->state == NULL){
+    // 終了時はキー無効
     return;
+  }
+  
+  // カーソルなしの状態から入力があった場合、カーソルを表示して抜ける
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+  {
+    if( GFL_UI_KEY_GetTrg() )
+    {
+      GFL_SOUND_PlaySE( SE_BAG_CURSOR_MOVE );
+      KTST_SetDraw( pWork, TRUE );
+      return;
+    }
   }
 
   // 決定
@@ -845,6 +861,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // 並び替え
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT)
   {
+
     GFL_STD_MemClear(pWork->ScrollItem, sizeof(pWork->ScrollItem));
     MYITEM_ITEM_STCopy(pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE);  //取得
     pWork->moveMode = TRUE;
@@ -857,6 +874,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // スクロール
   if( _itemScrollCheck(pWork) )
   {
+    KTST_SetDraw( pWork, FALSE );
     ITEMDISP_scrollCursorMove(pWork);
     bChange = TRUE;
   }
@@ -994,6 +1012,8 @@ static void _itemTrashEndWait(FIELD_ITEMMENU_WORK* pWork)
   // @TODO タッチ
   if(PAD_BUTTON_DECIDE == GFL_UI_KEY_GetTrg()){
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+    // ソートボタン復帰
+    SORT_ModeReset( pWork );
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
 }
@@ -1125,6 +1145,9 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
 static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
 {
   pWork->InputNum = 1;  //初期化
+  
+  // ソートボタンを押せない表現に
+  GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 4 );
 
   // 数値入力開始
   InputNum_Start( pWork, BAG_INPUT_MODE_TRASH );
@@ -1159,6 +1182,9 @@ static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
 {
+  // ソートボタンを押せない表現に
+  GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 4 );
+  
   // 買えないもの判定
   {
     s32 val;
@@ -1388,6 +1414,9 @@ static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
   
   // おこづかい表示終了
   ITEMDISP_GoldDispOut( pWork );
+  
+  // ソートボタン復帰
+  SORT_ModeReset( pWork );
 
   _CHANGE_STATE( pWork, _itemKindSelectMenu );
 }
@@ -1873,6 +1902,38 @@ static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork )
   }
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  キーステータスによる表示切替
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork
+ *	@param	on_off TRUE:表示
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
+{ 
+  if( on_off )
+  {
+    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+  }
+  else
+  {
+    GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+  }
+
+  // カーソルを消す
+  GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, on_off );
+
+  // 上画面を消す
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , on_off );
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 , on_off );
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2 , on_off );
+}
+
+
+
 #if 0
 //--------------------------------------------------------------------------------------------
 /**
@@ -2224,11 +2285,15 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   int length = ITEMMENU_GetItemPocketNumber(pWork);
 
   if(event!=GFL_BMN_EVENT_TOUCH){
+    // タッチした瞬間でなければ抜ける
     return;
   }
+
+  
   if(BAG_POKE_MAX > bttnid){
     int id2no[]={1,2,3,4,0};
     pocketno = id2no[bttnid];  //どうぐのあたりが広い為、順番を最後にしている
+    KTST_SetDraw( pWork, FALSE );
   }
   else if(BUTTONID_LEFT == bttnid){
     pocketno = pWork->pocketno;
@@ -2245,6 +2310,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     }
   }
   else if(BUTTONID_SORT == bttnid){
+    // ソートボタン
     SORT_Button( pWork );
   }
   else if(BUTTONID_EXIT == bttnid){
@@ -2267,6 +2333,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
           return;
         }
       }
+      
       _ItemChange(pWork, nowno, ITEMMENU_GetItemIndex(pWork));
       //      ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
       _windowRewrite(pWork);
@@ -2292,22 +2359,23 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
         }
       }
 
-
-
       if(ITEMMENU_GetPosCnvButtonItem(pWork,item->id)!=-1){//チェックつき
         ITEMMENU_RemoveCnvButtonItem(pWork,item->id);
       }
       else{
         ITEMMENU_AddCnvButtonItem(pWork,item->id);
       }
+
       _windowRewrite(pWork);
     }
   }
-
+  
   if(pocketno != -1){
     _pocketCursorChange(pWork, pWork->pocketno, pocketno);
     pWork->pocketno = pocketno;
     _windowRewrite(pWork);
+    // ポケット切替
+    KTST_SetDraw( pWork, FALSE );
   }
 
 
