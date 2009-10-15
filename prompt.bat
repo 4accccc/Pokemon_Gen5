@@ -6,6 +6,8 @@ SET PROJECT_ROOT=%HOME_TMP:\=/%
 SET PROJECT_PROGDIR=%PROJECT_ROOT%prog/
 SET PROJECT_ARCDIR=%PROJECT_PROGDIR%arc/
 SET PROJECT_RSCDIR=%PROJECT_ROOT%resource/
+SET WBLIBDIR=C:\home\pokemon_wb\lib
+SET TAGFILE=c:\home\pokemon_wb\tags
 
 REM SET PATH=%CYGNUSDIR%/native-99r1/H-i686-cygwin32/bin;%AGBDIR%/bin;%PATH%;.
 REM SET PATH=%CYGNUSDIR%/thumbelf-000512/H-i686-cygwin32/bin;%PATH%
@@ -60,7 +62,7 @@ SET SVN_EDITOR=c:\tools\vim\gvim
 REM ##################################################
 REM		パスの追加
 REM ##################################################
-PATH=%PROJECT_ROOT%;%PROJECT_ROOT%\tools;c:\tools\subversion\bin;c:\cygwin\bin;c:\tools\vim;C:\tools;%NITROSDK_ROOT%\tools\bin;%NITROSYSTEM_ROOT%\tools\bin;%PATH%;
+PATH=c:\tools;%PROJECT_ROOT%;%PROJECT_ROOT%\tools;c:\tools\subversion\bin;c:\cygwin\bin;c:\tools\vim;C:\tools;%NITROSDK_ROOT%\tools\bin;%NITROSYSTEM_ROOT%\tools\bin;%PATH%;
 
 REM ##################################################
 REM		マクロ定義
@@ -79,4 +81,12 @@ REM		ユーザー個別設定の呼び出し
 REM ##################################################
 if exist "tools\personal\%USERNAME%_prompt.bat" call tools\personal\%USERNAME%_prompt.bat
 
+REM 別のバッチファイルから呼び出して
+REM 環境変数やパス指定だけを有効にして
+REM 元のバッチファイルに戻れるようにcmd /F:ONをスルーできるようにしてます
+if %1.==. GOTO START
+if %1==no_cmd GOTO END
+:START
 cmd /F:ON
+:END
+
