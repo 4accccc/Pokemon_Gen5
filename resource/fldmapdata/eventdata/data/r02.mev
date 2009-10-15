@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/09 18:12:39
+#save date:2009/10/14 20:52:45
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r02.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/09 18:12:39
+#save date:2009/10/14 20:52:45
 2
 #hold event type:
 1
@@ -159,7 +159,7 @@ DIR_DOWN
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/09 18:12:39
+#save date:2009/10/14 20:52:45
 2
 #hold event type:
 1
@@ -175,7 +175,7 @@ BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_BG_R02_BOARD1_01
 #position
-56 0 -360
+24 0 -360
 #event number: 1
 #Bg Event Label
 BG_R02_BOARD2_01
@@ -197,12 +197,12 @@ BG_TALK_DIR_ALL
 #Bg Script Name
 SCRID_BG_R02_BOARD3_01
 #position
-312 0 -136
+232 0 -136
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/09 18:12:39
+#save date:2009/10/14 20:52:45
 2
 #hold event type:
 1
@@ -242,7 +242,7 @@ WK_SCENE_R02
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/09 18:12:39
+#save date:2009/10/14 20:52:45
 2
 #hold event type:
 1
