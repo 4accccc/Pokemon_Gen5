@@ -57,8 +57,9 @@
 #include "../../../resource/fldmapdata/script/hiden_def.h"
 
 #include "field_gimmick.h"   //for FLDGMK_GimmickCodeCheck
-#include "field_gimmick_def.h"  //for FLD_GIMMICK_GYM_ELEC
+#include "field_gimmick_def.h"  //for FLD_GIMMICK_GYM_～
 #include "gym_elec.h"     //for GYM_ELEC_CreateMoveEvt
+#include "gym_fly.h"     //for GYM_FLY_CreateShotEvt
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
@@ -1147,6 +1148,9 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
     if ( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_GYM_ELEC) ){  
       //電気ジム
       return GYM_ELEC_CreateMoveEvt(gsys);
+    }else if( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_GYM_FLY) ){
+      //飛行ジム
+      return GYM_FLY_CreateShotEvt(gsys);
     }
     return NULL;
   }
