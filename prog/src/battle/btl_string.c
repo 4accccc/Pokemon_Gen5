@@ -53,7 +53,7 @@ typedef enum {
 typedef enum {
 
   SETTYPE_MINE = 0, ///< 自分のポケ
-  SETTYPE_WILD,   ///< 野生のポケ
+  SETTYPE_WILD,     ///< 野生のポケ
   SETTYPE_ENEMY,    ///< 相手のポケ
 
   SETTYPE_MAX,
@@ -608,7 +608,7 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
             clientID = BTL_CLIENT_MAX;
             break;
           case TAGIDX_POKE_NICKNAME:
-            BTL_Printf("[TAG] Set PokeNickName ... pokeIdx=%d\n", args[argIdx]);
+            BTL_Printf("[TAG] Set PokeNickName ... pokeID=%d\n", args[argIdx]);
             register_PokeNickname( args[argIdx], bufIdx );
             break;
           case TAGIDX_POKE_NAME:

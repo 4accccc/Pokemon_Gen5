@@ -1562,7 +1562,6 @@ static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args )
       return TRUE;
     }
     break;
-
   }
   return FALSE;
 }
@@ -2408,6 +2407,7 @@ static BOOL scProc_OP_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 
     BTL_POKEPARAM* bpp;
     if( posIdx != memberIdx ){
+      BTL_Printf("クライアント側：%d <-> %d ポケ入れ替え\n", posIdx, memberIdx);
       BTL_PARTY_SwapMembers( party, posIdx, memberIdx );
     }
     BTL_Printf("メンバーイン 位置 %d <- %d にいたポケ\n", posIdx, memberIdx);

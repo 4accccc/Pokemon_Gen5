@@ -2025,8 +2025,8 @@ void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, BtlPokePos pos, u8 clientID, u8 memberI
     {
       u8 vpos =  BTL_MAIN_BtlPosToViewPos(wk->mainModule, pos);
       const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
-      BTL_Printf("入るポケモン  memIdx=%d, pokeID=%d, monsno=%d, adrs=%p\n",
-            memberIdx, BPP_GetID(bpp), BPP_GetMonsNo(bpp), pp );
+      BTL_Printf("入るポケモン  memIdx=%d, pokeID=%d, monsno=%d, monsno_src=%d\n",
+            memberIdx, BPP_GetID(bpp), BPP_GetMonsNo(bpp), PP_Get(pp, ID_PARA_monsno, NULL) );
       BTLV_EFFECT_SetPokemon( pp, vpos );
     }
   }

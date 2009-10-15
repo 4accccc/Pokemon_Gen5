@@ -389,7 +389,7 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
 static BOOL setup_alone_single( int* seq, void* work )
 {
   enum {
-    BAG_MODE = BBAG_MODE_SHOOTER,
+    BAG_MODE = BBAG_MODE_NORMAL,
   };
 
   // server*1, client*2
@@ -402,16 +402,15 @@ static BOOL setup_alone_single( int* seq, void* work )
   wk->posCoverClientID[BTL_POS_1ST_0] = 0;
   wk->posCoverClientID[BTL_POS_2ND_0] = 1;
 
-
   // バトル用ポケモンパラメータ＆パーティデータを生成
   PokeCon_Init( &wk->pokeconForClient, wk );
   PokeCon_AddParty( &wk->pokeconForClient, sp->partyPlayer, BTL_STANDALONE_PLAYER_CLIENT_ID );
   PokeCon_AddParty( &wk->pokeconForClient, sp->partyEnemy1, 1 );
-  PokeCon_SetSrcParty( &wk->pokeconForClient, sp->partyPlayer, BTL_STANDALONE_PLAYER_CLIENT_ID );
 
   PokeCon_Init( &wk->pokeconForServer, wk );
   PokeCon_AddParty( &wk->pokeconForServer, sp->partyPlayer, BTL_STANDALONE_PLAYER_CLIENT_ID );
   PokeCon_AddParty( &wk->pokeconForServer, sp->partyEnemy1, 1 );
+  PokeCon_SetSrcParty( &wk->pokeconForServer, sp->partyPlayer, BTL_STANDALONE_PLAYER_CLIENT_ID );
 
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
@@ -515,11 +514,11 @@ static BOOL setup_alone_double( int* seq, void* work )
   PokeCon_Init( &wk->pokeconForClient, wk );
   PokeCon_AddParty( &wk->pokeconForClient, sp->partyPlayer, 0 );
   PokeCon_AddParty( &wk->pokeconForClient, sp->partyEnemy1, 1 );
-  PokeCon_SetSrcParty( &wk->pokeconForClient, sp->partyPlayer, 0 );
 
   PokeCon_Init( &wk->pokeconForServer, wk );
   PokeCon_AddParty( &wk->pokeconForServer, sp->partyPlayer, 0 );
   PokeCon_AddParty( &wk->pokeconForServer, sp->partyEnemy1, 1 );
+  PokeCon_SetSrcParty( &wk->pokeconForServer, sp->partyPlayer, 0 );
 
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
@@ -598,11 +597,11 @@ static BOOL setup_alone_triple( int* seq, void* work )
   PokeCon_Init( &wk->pokeconForClient, wk );
   PokeCon_AddParty( &wk->pokeconForClient, sp->partyPlayer, 0 );
   PokeCon_AddParty( &wk->pokeconForClient, sp->partyEnemy1, 1 );
-  PokeCon_SetSrcParty( &wk->pokeconForClient, sp->partyPlayer, 0 );
 
   PokeCon_Init( &wk->pokeconForServer, wk );
   PokeCon_AddParty( &wk->pokeconForServer, sp->partyPlayer, 0 );
   PokeCon_AddParty( &wk->pokeconForServer, sp->partyEnemy1, 1 );
+  PokeCon_SetSrcParty( &wk->pokeconForServer, sp->partyPlayer, 0 );
 
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
@@ -832,12 +831,15 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
         srcParty_Set( wk, i, BTL_NET_GetPartyData(i) );
         PokeCon_AddParty( &wk->pokeconForClient, srcParty_Get(wk, i), i );
       }
-      PokeCon_SetSrcParty( &wk->pokeconForClient, srcParty_Get(wk, wk->myClientID), wk->myClientID );
+
+      if( !wk->ImServer ){
+        PokeCon_SetSrcParty( &wk->pokeconForClient, srcParty_Get(wk, wk->myClientID), wk->myClientID );
+      }
       (*seq)++;
     }
     break;
   case 4:
-    if( BTL_NET_IsServer() )
+    if( wk->ImServer )
     {
       u32 i;
       PokeCon_Init( &wk->pokeconForServer, wk );
@@ -845,6 +847,7 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
       for(i=0; i<wk->numClients; ++i){
         PokeCon_AddParty( &wk->pokeconForServer, srcParty_Get(wk, i), i );
       }
+      PokeCon_SetSrcParty( &wk->pokeconForServer, srcParty_Get(wk, wk->myClientID), wk->myClientID );
     }
     (*seq)++;
     break;
@@ -2141,7 +2144,10 @@ void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
     party->member[ idx1 ] = party->member[ idx2 ];
     party->member[ idx2 ] = tmp;
 
+    BTL_Printf("パーティメンバー入れ替え %d <-> %d\n", idx1, idx2);
+
     if( party->srcParty ){
+      BTL_Printf("オリジナルパーティも入れ替え %d <-> %d\n", idx1, idx2);
       PokeParty_ExchangePosition( party->srcParty, idx1, idx2, HEAPID_BTL_SYSTEM );
     }
   }

@@ -695,6 +695,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
 
     // 死亡・生き返りなどでポケ交換の必要があるかチェック
     if( reqChangePokeForServer(wk) ){
+      BTL_Printf("誰か死んだで\n");
       return SVFLOW_RESULT_POKE_CHANGE;
     }
     return SVFLOW_RESULT_DEFAULT;
@@ -714,7 +715,7 @@ SvflowResult BTL_SVFLOW_Start( BTL_SVFLOW_WORK* wk )
  *
  * @param   wk
  *
- * @retval  BOOL  交換する必要あり、かつ交換要員がいる場合はTRUE
+ * @retval  BOOL  誰かが死んで交換する必要ある場合はTRUE
  */
 //----------------------------------------------------------------------------------
 static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
@@ -762,7 +763,8 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
       // もう戦えるポケがいない場合も通知
       else{
         BTL_Printf("Client[%d]にはもう戦えるポケがいないことを通知\n", clientID);
-        BTL_SERVER_NotifyGiveupClientID( wk->server, i );
+        BTL_SERVER_NotifyGiveupClientID( wk->server, clientID );
+        result = TRUE;
       }
     }
   }
@@ -1603,6 +1605,7 @@ static void scproc_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nex
   GF_ASSERT(posIdx < clwk->numCoverPos);
 
   if( posIdx != next_poke_idx ){
+    BTL_Printf("サーバ側：%d <-> %d ポケ入れ替え\n", posIdx, next_poke_idx);
     BTL_PARTY_SwapMembers( party, posIdx, next_poke_idx );
   }
   bpp = BTL_PARTY_GetMemberData( party, posIdx );
@@ -4851,6 +4854,7 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
         for(j=0; j<confrontCnt; ++j)
         {
           if( BPP_CONFRONT_REC_GetPokeID(deadPoke, j) == pokeID ){
+            u32 addExp = (baseExp / aliveCnt );
             BTL_Printf("メンバーIdx[%d]のポケに経験値%dを分配\n", i, (baseExp/aliveCnt));
             result[i].exp += (baseExp / aliveCnt);
           }

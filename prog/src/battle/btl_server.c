@@ -301,7 +301,7 @@ void BTL_SERVER_Main( BTL_SERVER* sv )
     if( sv->mainProc( sv, &sv->seq ) )
     {
       sv->escapeClientID = BTL_SVFLOW_GetEscapeClientID( sv->flowWork );
-      BTL_Printf("逃げクライアントID=%d\n", sv->escapeClientID);
+      BTL_Printf( "逃げクライアントID=%d\n", sv->escapeClientID );
       SetAdapterCmdEx( sv, BTL_ACMD_QUIT_BTL, &sv->escapeClientID, sizeof(sv->escapeClientID) );
       sv->quitStep = QUITSTEP_CORE;
     }
@@ -378,7 +378,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       BTL_Printf("アクション受け付け完了\n");
       ResetAdapterCmd( server );
       server->flowResult = BTL_SVFLOW_Start( server->flowWork );
-      BTL_Printf("サーバコマンド生成完了,送信します\n");
+      BTL_Printf("サーバコマンド生成完了,送信します ... result=%d\n", server->flowResult);
       SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;
     }
@@ -387,7 +387,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
   case 2:
     if( WaitAdapterCmd(server) )
     {
-      BTL_Printf("全クライアントのコマンド再生おわりました\n");
+      BTL_Printf("全クライアントのコマンド再生おわりました...result=%d\n", server->flowResult);
       BTL_MAIN_SyncServerCalcData( server->mainModule );
       ResetAdapterCmd( server );
 
@@ -396,11 +396,14 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         (*seq)=0;
         break;
       case SVFLOW_RESULT_POKE_CHANGE:
+        BTL_Printf("入れ替えリクエストで終わった\n");
         if( server->giveupClientCnt ){
+          BTL_Printf("どちらか負け確定\n");
           (*seq) = 3;
         }else{
           // 空き位置があり、入場可能なポケモンがいる場合
           GF_ASSERT( server->changePokeCnt );
+          BTL_Printf("死んだポケ入れ替え\n");
           setMainProc( server, ServerMain_SelectPokemon );
         }
         break;

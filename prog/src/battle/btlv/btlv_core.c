@@ -527,6 +527,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->plistData.heap = wk->heapID;
     wk->plistData.mode = BPL_MODE_ITEMUSE;
     wk->plistData.end_flg = FALSE;
+    wk->plistData.sel_poke = 0;
 
     wk->selectItemSeq = 1;
   }
@@ -557,7 +558,9 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
     break;
 
  case 3:
-    if( wk->bagData.ret_item != ITEM_DUMMY_DATA ){
+    if( (wk->bagData.ret_item != ITEM_DUMMY_DATA)
+    &&  (wk->bagData.ret_page != BBAG_POKE_BALL)
+    ){
       wk->plistData.item = wk->bagData.ret_item;
       BattlePokeList_TaskAdd( &wk->plistData );
       wk->selectItemSeq++;
@@ -851,7 +854,6 @@ static BOOL subprocDamageDoubleEffect( int* seq, void* wk_adrs )
       return TRUE;
     }
     break;
-
   }
   return FALSE;
 }
@@ -1007,6 +1009,7 @@ void BTLV_StartMemberChangeAct( BTLV_CORE* wk, BtlPokePos pos, u8 clientID, u8 m
   subwk->memberIdx = memberIdx;
   subwk->pokePos = pos;
   subwk->pokeID = BPP_GetID( bpp );
+  BTL_Printf("メンバー入れ替え : pos=%d, Idx=%d, pokeID=%d\n", pos, memberIdx, subwk->pokeID );
 
   BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocMemberIn );
 }
@@ -1026,13 +1029,14 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
     {
       if( !BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myClientID, subwk->clientID) ){
         // 自分が入れ替え
+        BTL_Printf("入れ替えメッセージ：pokeID=%d\n", subwk->pokeID);
         BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
       }else{
         // 相手が入れ替え
         if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER ){
           BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_NPC, 2, subwk->clientID, subwk->pokeID );
         }else{
-          BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_Player, 2, subwk->clientID, subwk->pokeID );
+          BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle_Player, 1, subwk->clientID, subwk->pokeID );
         }
       }
       BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf, BTLV_MSGWAIT_NONE );
