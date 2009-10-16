@@ -249,11 +249,11 @@ static const u8 sc_keymove_default[KEYMAP_KEYMOVE_BUFF_MAX]	=
 #define KEYBOARD_BMPWIN_W		(26)
 #define KEYBOARD_BMPWIN_H		(15)
 //モード切替移動
-#define KYEBOARD_CHANGEMOVE_START_Y			(0)
-#define KYEBOARD_CHANGEMOVE_END_Y				(-48)
-#define KYEBOARD_CHANGEMOVE_SYNC				(10)
-#define KYEBOARD_CHANGEMOVE_START_ALPHA	(0)
-#define KYEBOARD_CHANGEMOVE_END_ALPHA		(16)
+#define KEYBOARD_CHANGEMOVE_START_Y			(0)
+#define KEYBOARD_CHANGEMOVE_END_Y				(-48)
+#define KEYBOARD_CHANGEMOVE_SYNC				(10)
+#define KEYBOARD_CHANGEMOVE_START_ALPHA	(16)
+#define KEYBOARD_CHANGEMOVE_END_ALPHA		(0)
 //状態
 typedef enum
 {	
@@ -1771,11 +1771,7 @@ static BOOL STRINPUT_SetChangeSP( STRINPUT_WORK *p_wk, STRINPUT_SP_CHANGE type )
 //-----------------------------------------------------------------------------
 static BOOL STRINPUT_PrintMain( STRINPUT_WORK *p_wk )
 {	
-	if( PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que ) )
-	{	
-		return TRUE;
-	}
-	return FALSE;
+	return PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2609,15 +2605,18 @@ static void KeyMap_QWERTY_GetMoveCursor( GFL_POINT *p_now, const GFL_POINT *cp_a
 			case 9:
 				p_buff->data[KEYMAP_KEYMOVE_BUFF_L_U]	= p_now->x;
 				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_D]	= p_now->x;
-				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= MATH_CLAMP( p_now->x, 4,9 );
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= 8;
 				break;
 			case 4:
 			case 5:
 			case 6:
 			case 7:
-			case 10:
 				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_D]	= p_now->x;
-				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= MATH_CLAMP( p_now->x, 4,9 );
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= p_now->x;
+				break;
+			case 10:
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_D]	= 10;
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= 9;
 				break;
 			}
 
@@ -2687,6 +2686,8 @@ static void KeyMap_QWERTY_GetMoveCursor( GFL_POINT *p_now, const GFL_POINT *cp_a
 			//バッファ
 			switch( p_now->x )
 			{	
+			case 7:
+				/* fallthrough  */
 			case 8:
 				p_buff->data[KEYMAP_KEYMOVE_BUFF_BOU_U]	= p_now->x;
 				break;
@@ -2711,6 +2712,8 @@ static void KeyMap_QWERTY_GetMoveCursor( GFL_POINT *p_now, const GFL_POINT *cp_a
 			//バッファ
 			switch( p_now->x )
 			{	
+			case 7:
+				/* fallthrough  */
 			case 8:
 				p_buff->data[KEYMAP_KEYMOVE_BUFF_BOU_U]	= p_now->x;
 				break;
@@ -2755,7 +2758,8 @@ static void KeyMap_QWERTY_GetMoveCursor( GFL_POINT *p_now, const GFL_POINT *cp_a
 			case 5:
 			case 6:
 			case 7:
-			case 8:	//4～8
+			case 8:	//4
+			case 9:
 				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= p_now->x;
 				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_D]	= p_now->x;
 				break;
@@ -2794,9 +2798,13 @@ static void KeyMap_QWERTY_GetMoveCursor( GFL_POINT *p_now, const GFL_POINT *cp_a
 			case 5:
 			case 6:
 			case 7:
-			case 8:	//4～8
+			case 8:	//4～9
 				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= p_now->x;
 				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_D]	= p_now->x;
+				break;
+			case 9:	
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= 9;
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_D]	= 10;
 				break;
 			}
 
@@ -3441,12 +3449,7 @@ static BOOL Keyboard_StartMove( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode )
 		p_wk->change_move_cnt	= 0;
 		p_wk->change_move_seq	= 0;
 		p_wk->is_change_anm		= TRUE;
-/*
-		G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG3,
-			GX_BLEND_PLANEMASK_BG0 |GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BD,
-			KYEBOARD_CHANGEMOVE_START_ALPHA, 16 );
-*/
-	
+
 		p_wk->is_btn_move	 = p_wk->change_mode == NAMEIN_INPUTTYPE_QWERTY
 												|| p_wk->mode == NAMEIN_INPUTTYPE_QWERTY;
 
@@ -3454,14 +3457,24 @@ static BOOL Keyboard_StartMove( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode )
 		if( p_wk->is_btn_move )
 		{	
 			//フォントとフレームとボタンが動く
-			G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 |
-					GX_BLEND_PLANEMASK_BG3, KYEBOARD_CHANGEMOVE_START_ALPHA );
+//			G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 |
+//					GX_BLEND_PLANEMASK_BG3, KEYBOARD_CHANGEMOVE_START_ALPHA );
+	
+			G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3,
+					GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 |
+					GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BD,
+					KEYBOARD_CHANGEMOVE_START_ALPHA, 16 );
 		}
 		else
 		{
 			//フォントとフレームだけ動く
-			G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG3,
-					KYEBOARD_CHANGEMOVE_START_ALPHA );
+//			G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG3,
+//					KEYBOARD_CHANGEMOVE_START_ALPHA );
+//
+			G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG3,
+					GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 |
+					GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BD,
+					KEYBOARD_CHANGEMOVE_START_ALPHA, 16 );
 		}
 		return TRUE;
 	}
@@ -3494,24 +3507,35 @@ static BOOL Keyboard_MainMove( KEYBOARD_WORK *p_wk )
 		switch( p_wk->change_move_seq )
 		{	
 		case SEQ_DOWN_MAIN:
-			scroll_y	= KYEBOARD_CHANGEMOVE_START_Y
-				+ (KYEBOARD_CHANGEMOVE_END_Y-KYEBOARD_CHANGEMOVE_START_Y)
-				* p_wk->change_move_cnt / KYEBOARD_CHANGEMOVE_SYNC;
+			scroll_y	= KEYBOARD_CHANGEMOVE_START_Y
+				+ (KEYBOARD_CHANGEMOVE_END_Y-KEYBOARD_CHANGEMOVE_START_Y)
+				* p_wk->change_move_cnt / KEYBOARD_CHANGEMOVE_SYNC;
 
-			alpha			= KYEBOARD_CHANGEMOVE_START_ALPHA
-				- (KYEBOARD_CHANGEMOVE_END_ALPHA-KYEBOARD_CHANGEMOVE_START_ALPHA)
-				* p_wk->change_move_cnt / KYEBOARD_CHANGEMOVE_SYNC;
+			alpha			= KEYBOARD_CHANGEMOVE_START_ALPHA
+				+ (KEYBOARD_CHANGEMOVE_END_ALPHA-KEYBOARD_CHANGEMOVE_START_ALPHA)
+				* p_wk->change_move_cnt / KEYBOARD_CHANGEMOVE_SYNC;
 
-			//G2_ChangeBlendAlpha( alpha, 16 );
-			G2_ChangeBlendBrightness( alpha );
+			G2_ChangeBlendAlpha( alpha, 16 );
+			//G2_ChangeBlendBrightness( alpha );
 			GFL_BG_SetScroll( BG_FRAME_KEY_M, GFL_BG_SCROLL_Y_SET, scroll_y );
 			GFL_BG_SetScroll( BG_FRAME_FONT_M, GFL_BG_SCROLL_Y_SET, scroll_y );
 			if( p_wk->is_btn_move )
 			{	
 				GFL_BG_SetScroll( BG_FRAME_BTN_M, GFL_BG_SCROLL_Y_SET, scroll_y );
 			}
-			if( p_wk->change_move_cnt++ > KYEBOARD_CHANGEMOVE_SYNC )
+			if( p_wk->change_move_cnt++ > KEYBOARD_CHANGEMOVE_SYNC )
 			{	
+				if( p_wk->is_btn_move )
+				{	
+					GFL_BG_SetVisible( BG_FRAME_KEY_M, FALSE );
+					GFL_BG_SetVisible( BG_FRAME_BTN_M, FALSE );
+					GFL_BG_SetVisible( BG_FRAME_FONT_M, FALSE );
+				}
+				else
+				{	
+					GFL_BG_SetVisible( BG_FRAME_KEY_M, FALSE );
+					GFL_BG_SetVisible( BG_FRAME_FONT_M, FALSE );
+				}
 				p_wk->change_move_cnt	= 0;
 				p_wk->change_move_seq			= SEQ_CHANGE_MODE;
 			}
@@ -3523,21 +3547,28 @@ static BOOL Keyboard_MainMove( KEYBOARD_WORK *p_wk )
 			break;
 
 		case SEQ_UP_INIT:
-			p_wk->change_move_cnt	= KYEBOARD_CHANGEMOVE_SYNC;
+			p_wk->change_move_cnt	= KEYBOARD_CHANGEMOVE_SYNC;
 			p_wk->change_move_seq	= SEQ_UP_MAIN;
+			GFL_BG_SetVisible( BG_FRAME_KEY_M, TRUE );
+			GFL_BG_SetVisible( BG_FRAME_FONT_M, TRUE );
+			if( p_wk->mode != NAMEIN_INPUTTYPE_QWERTY )
+			{	
+				GFL_BG_SetVisible( BG_FRAME_BTN_M, TRUE );
+			}
+			G2_ChangeBlendAlpha( 0, 16 );
 			break;
 
 		case SEQ_UP_MAIN:
-			scroll_y	= KYEBOARD_CHANGEMOVE_START_Y
-				+ (KYEBOARD_CHANGEMOVE_END_Y-KYEBOARD_CHANGEMOVE_START_Y)
-				* p_wk->change_move_cnt / KYEBOARD_CHANGEMOVE_SYNC;
+			scroll_y	= KEYBOARD_CHANGEMOVE_START_Y
+				+ (KEYBOARD_CHANGEMOVE_END_Y-KEYBOARD_CHANGEMOVE_START_Y)
+				* p_wk->change_move_cnt / KEYBOARD_CHANGEMOVE_SYNC;
 
-			alpha			= KYEBOARD_CHANGEMOVE_START_ALPHA
-				- (KYEBOARD_CHANGEMOVE_END_ALPHA-KYEBOARD_CHANGEMOVE_START_ALPHA)
-				* p_wk->change_move_cnt / KYEBOARD_CHANGEMOVE_SYNC;
+			alpha			= KEYBOARD_CHANGEMOVE_START_ALPHA
+				+ (KEYBOARD_CHANGEMOVE_END_ALPHA-KEYBOARD_CHANGEMOVE_START_ALPHA)
+				* p_wk->change_move_cnt / KEYBOARD_CHANGEMOVE_SYNC;
 
-			//G2_ChangeBlendAlpha( alpha, 16 );
-			G2_ChangeBlendBrightness( alpha );
+			G2_ChangeBlendAlpha( alpha, 16 );
+			//G2_ChangeBlendBrightness( alpha );
 			GFL_BG_SetScroll( BG_FRAME_KEY_M, GFL_BG_SCROLL_Y_SET, scroll_y );
 			GFL_BG_SetScroll( BG_FRAME_FONT_M, GFL_BG_SCROLL_Y_SET, scroll_y );
 			if( p_wk->is_btn_move )		
@@ -3590,7 +3621,6 @@ static void Keyboard_ChangeMode( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode )
 		{	
 			GFL_ARC_UTIL_TransVramScreen( ARCID_NAMEIN_GRA, NARC_namein_gra_name_kana_NSCR,
 					BG_FRAME_KEY_M, 0, 0, FALSE, p_wk->heapID );
-			GFL_BG_SetVisible( BG_FRAME_BTN_M, TRUE );
 		}
 
 		//前か後がQWERTYだった場合、カーソル位置変更
