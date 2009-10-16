@@ -35,6 +35,7 @@
 #include "print/str_tool.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
+#include "print/wordset.h"
 
 //	savedata
 #include "savedata/misc.h"
@@ -223,19 +224,20 @@ enum
 	KEYMAP_KEYMOVE_BUFF_DICEDE,	//おわりから出るとき（上下共通）
 
 	//qwerty
-	KEYMAP_KEYMOVE_BUFF_Q_U,			//Qから上にでるとき
-	KEYMAP_KEYMOVE_BUFF_A_U,			//Aから上にでるとき
-	KEYMAP_KEYMOVE_BUFF_A_D,			//Aから下にでるとき
-	KEYMAP_KEYMOVE_BUFF_LSHIFT_D,	//左シフトから下にでるとき
-	KEYMAP_KEYMOVE_BUFF_BOU_U,		//ーから上にでるとき
-	KEYMAP_KEYMOVE_BUFF_SPACE_U,	//スペースから上にでるとき
-	KEYMAP_KEYMOVE_BUFF_SPACE_D,	//スペースから下にでるとき
+	KEYMAP_KEYMOVE_BUFF_Q_U,	//Qから上にいくとき
+	KEYMAP_KEYMOVE_BUFF_A_D,	//Aから下にいくとき
+	KEYMAP_KEYMOVE_BUFF_L_U,	//Lから上にいくとき
+	KEYMAP_KEYMOVE_BUFF_BOU_U,//ーから上にいくとき
+	KEYMAP_KEYMOVE_BUFF_LSHIFT_D,	//左シフトから下にいくとき
+	KEYMAP_KEYMOVE_BUFF_SPACE_U,	//スペースから上にいくとき
+	KEYMAP_KEYMOVE_BUFF_SPACE_D,	//スペースから下にいくとき
+
 	KEYMAP_KEYMOVE_BUFF_MAX,
 };
 //キー移動デフォルト値
 static const u8 sc_keymove_default[KEYMAP_KEYMOVE_BUFF_MAX]	=
 {	
-	5,9,  0,0,1,0,7,4,4
+	5,9,  0,1,9,8,0,4,4
 };
 
 //-------------------------------------
@@ -308,6 +310,7 @@ typedef enum
 typedef enum
 {
 	ICON_TYPE_HERO		= NAMEIN_MYNAME,
+	ICON_TYPE_RIVAL		= NAMEIN_RIVALNAME,
 	ICON_TYPE_PERSON	= NAMEIN_FRIENDNAME,
 	ICON_TYPE_POKE		= NAMEIN_POKEMON,
 	ICON_TYPE_BOX			= NAMEIN_BOX,
@@ -426,6 +429,7 @@ typedef struct
 	PRINT_UTIL				util;				//文字描画
 	PRINT_QUE					*p_que;			//文字キュー
 	GFL_BMPWIN*				p_bmpwin;		//BMPWIN
+	WORDSET						*p_word;		//単語
 	STRBUF*						p_strbuf;		//文字バッファ
 	u16								clear_chr;	//クリアキャラ
 	u16								dummy;
@@ -460,11 +464,11 @@ typedef struct
 //=====================================
 typedef struct 
 {
-	GFL_CLWK	*p_clwk;
-	ICON_TYPE	type;
-	u32				plt;
-	u32				ncg;
-	u32				cel;
+	GFL_CLWK	*p_clwk;	//アイコンのCLWK
+	ICON_TYPE	type;			//アイコンの種類
+	u32				plt;			//パレット登録ID
+	u32				ncg;			//キャラ登録ID
+	u32				cel;			//セル登録ID
 } ICON_WORK;
 
 //-------------------------------------
@@ -504,6 +508,9 @@ typedef struct
 
 	//共通で使うメッセージ
 	GFL_MSGDATA		*p_msg;
+
+	//共通で使う単語
+	WORDSET				*p_word;
 
 	//引数
 	NAMEIN_PARAM	*p_param;
@@ -594,9 +601,10 @@ static void Keyboard_ChangeMode( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode );
 //-------------------------------------
 ///	MSGWND
 //=====================================
-static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_FONT *p_font, GFL_MSGDATA *p_msg, PRINT_QUE *p_que, HEAPID heapID );
+static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_FONT *p_font, GFL_MSGDATA *p_msg, PRINT_QUE *p_que, WORDSET *p_word, HEAPID heapID );
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
 static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID );
+static void MSGWND_ExpandPrintPoke( MSGWND_WORK *p_wk, u32 strID, u16 mons_no, u16 form, HEAPID heapID );
 static BOOL MSGWND_PrintMain( MSGWND_WORK* p_wk );
 //-------------------------------------
 ///	ICON
@@ -781,6 +789,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 	p_wk->p_que			= PRINTSYS_QUE_Create( HEAPID_NAME_INPUT );
 	p_wk->p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
 												NARC_message_namein_dat, HEAPID_NAME_INPUT );
+	p_wk->p_word	= WORDSET_Create( HEAPID_NAME_INPUT );
 
 	//グラフィック設定
 	p_wk->p_graphic	= NAMEIN_GRAPHIC_Init( 0, HEAPID_NAME_INPUT );
@@ -797,8 +806,18 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_WaitPrint );
 	STRINPUT_Init( &p_wk->strinput, p_param->strbuf, p_param->wordmax, p_wk->p_font, p_wk->p_que, &p_wk->obj, HEAPID_NAME_INPUT );
 	KEYBOARD_Init( &p_wk->keyboard, mode, p_wk->p_font, p_wk->p_que, HEAPID_NAME_INPUT );
-	MSGWND_Init( &p_wk->msgwnd, p_wk->p_font, p_wk->p_msg, p_wk->p_que, HEAPID_NAME_INPUT );
-	MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_000 + p_param->mode );
+	MSGWND_Init( &p_wk->msgwnd, p_wk->p_font, p_wk->p_msg, p_wk->p_que, p_wk->p_word, HEAPID_NAME_INPUT );
+	//文字描画
+	if( p_param->mode == NAMEIN_POKEMON )
+	{	
+		//ポケモンの場合は、種族名を単語登録
+		MSGWND_ExpandPrintPoke( &p_wk->msgwnd, NAMEIN_MSG_INFO_000 + p_param->mode, p_param->param1, p_param->param2, HEAPID_NAME_INPUT );
+	}
+	else
+	{	
+		//他は通常
+		MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_000 + p_param->mode );
+	}
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -818,11 +837,6 @@ static GFL_PROC_RESULT NAMEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
 {	
 	NAMEIN_WORK	*p_wk	= p_wk_adrs;
 
-	//受け取り
-	{	
-		;
-	}
-
 	//モジュール破棄
 	MSGWND_Exit( &p_wk->msgwnd );
 	KEYBOARD_Exit( &p_wk->keyboard );
@@ -836,6 +850,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
 	NAMEIN_GRAPHIC_Exit( p_wk->p_graphic );
 
 	//共通モジュールの破棄
+	WORDSET_Delete( p_wk->p_word );
 	GFL_MSG_Delete( p_wk->p_msg );
 	PRINTSYS_QUE_Delete( p_wk->p_que );
 	GFL_FONT_Delete( p_wk->p_font );
@@ -911,7 +926,7 @@ static void BG_Init( BG_WORK *p_wk, HEAPID heapID )
 
 		//CHR
 		GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_namein_gra_name_bg_NCGR, 
-				BG_FRAME_STR_M, 0, 0, FALSE, heapID );	
+				BG_FRAME_STR_M, 0, 0, FALSE, heapID );
 
 		//SCR
 		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_namein_gra_name_base_NSCR,
@@ -1142,8 +1157,18 @@ static void KEYANM_Init( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, HEAPID heapID
 	//パレット破棄
 	GFL_HEAP_FreeMemory( p_buff );
 
-	//モードボタン押下のため
-	KEYANM_Start( p_wk, KEYANM_TYPE_NONE, &p_wk->range, FALSE, mode );	
+
+	//キーモードがキーならばカーソル位置を押す
+	if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY )
+	{	
+		//モードボタン+カーソル位置押下のため
+		KEYANM_Start( p_wk, KEYANM_TYPE_MOVE, &p_wk->range, FALSE, mode );	
+	}
+	else
+	{	
+		//モードボタン押下のため
+		KEYANM_Start( p_wk, KEYANM_TYPE_NONE, &p_wk->range, FALSE, mode );	
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -1179,19 +1204,6 @@ static void KEYANM_Start( KEYANM_WORK *p_wk, KEYANM_TYPE type, const GFL_RECT *c
 	GFL_BG_ChangeScreenPalette( BG_FRAME_BTN_M, 0, 0, 32, 24, PLT_BG_KEY_NORMAL_M );
 	GFL_BG_ChangeScreenPalette( BG_FRAME_KEY_M, 0, 0, 32, 24, PLT_BG_KEY_NORMAL_M );
 
-	//キーの色を張替え
-	if( cp_rect )
-	{	
-		p_wk->range	= *cp_rect;
-		
-		GFL_BG_ChangeScreenPalette( BG_FRAME_BTN_M, cp_rect->left, cp_rect->top,
-				cp_rect->right - cp_rect->left, cp_rect->bottom - cp_rect->top,
-				PLT_BG_KEY_NORMAL_M + type );
-		GFL_BG_ChangeScreenPalette( BG_FRAME_KEY_M, cp_rect->left, cp_rect->top,
-				cp_rect->right - cp_rect->left, cp_rect->bottom - cp_rect->top,
-				PLT_BG_KEY_NORMAL_M + type );
-	}
-
 	//SHIFT押していれば、そこを色変え
 	if( is_shift && mode == NAMEIN_INPUTTYPE_QWERTY )
 	{	
@@ -1207,6 +1219,21 @@ static void KEYANM_Start( KEYANM_WORK *p_wk, KEYANM_TYPE type, const GFL_RECT *c
 			2, 3, PLT_BG_KEY_PRESS_M );
 		GFL_BG_ChangeScreenPalette( BG_FRAME_BTN_M, 3 + mode * 2, 20,
 			2, 3, PLT_BG_KEY_PRESS_M );
+	}
+
+	//キーの色を張替え
+	//押している上にいたときわからないので、
+	//現在のキーの色変えを優先し後に
+	if( cp_rect && type != KEYANM_TYPE_NONE )
+	{	
+		p_wk->range	= *cp_rect;
+		
+		GFL_BG_ChangeScreenPalette( BG_FRAME_BTN_M, cp_rect->left, cp_rect->top,
+				cp_rect->right - cp_rect->left, cp_rect->bottom - cp_rect->top,
+				PLT_BG_KEY_NORMAL_M + type );
+		GFL_BG_ChangeScreenPalette( BG_FRAME_KEY_M, cp_rect->left, cp_rect->top,
+				cp_rect->right - cp_rect->left, cp_rect->bottom - cp_rect->top,
+				PLT_BG_KEY_NORMAL_M + type );
 	}
 
 	//スクリーンリクエスト
@@ -1257,7 +1284,17 @@ static void KEYANM_Main( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, const GFL_REC
 			//終了したら自分でモード切替
 			if( p_wk->decide_cnt++ > KEYANM_DECIDE_CNT )
 			{	
-				KEYANM_Start( p_wk, KEYANM_TYPE_MOVE, cp_rect, p_wk->is_shift, mode );
+				//キーモードがキーならばカーソル位置を押す
+				if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY )
+				{	
+					//モードボタン+カーソル位置押下のため
+					KEYANM_Start( p_wk, KEYANM_TYPE_MOVE, cp_rect, p_wk->is_shift, mode );
+				}
+				else
+				{	
+					//モードボタン押下のため
+					KEYANM_Start( p_wk, KEYANM_TYPE_NONE, cp_rect, p_wk->is_shift, mode );
+				}
 			}
 			break;
 		case KEYANM_TYPE_NONE:
@@ -1275,7 +1312,17 @@ static void KEYANM_Main( KEYANM_WORK *p_wk, NAMEIN_INPUTTYPE mode, const GFL_REC
 	//モード切替時のリフレッシュ
 	if( p_wk->mode != mode )
 	{	
-		KEYANM_Start( p_wk, KEYANM_TYPE_NONE, &p_wk->range, p_wk->is_shift, mode );
+		//キーモードがキーならばカーソル位置を押す
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY )
+		{	
+			//モードボタン+カーソル位置押下のため
+			KEYANM_Start( p_wk, KEYANM_TYPE_MOVE, &p_wk->range, p_wk->is_shift, mode );
+		}
+		else
+		{	
+			//モードボタンのため
+			KEYANM_Start( p_wk, KEYANM_TYPE_NONE, &p_wk->range, p_wk->is_shift, mode );
+		}
 	}
 }
 //----------------------------------------------------------------------------
@@ -1474,7 +1521,6 @@ static void STRINPUT_Exit( STRINPUT_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void STRINPUT_Main( STRINPUT_WORK *p_wk )
 {	
-	int j;
 	if( p_wk->is_update )
 	{	
 		STRCODE	buff[	STRINPUT_STR_LEN + STRINPUT_CHANGE_LEN + 1 ];
@@ -1598,8 +1644,6 @@ static void STRINPUT_BackSpace( STRINPUT_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static BOOL STRINPUT_SetStr( STRINPUT_WORK *p_wk, STRCODE code )
 {	
-	int j;
-
 	//入力できるか
 	if( p_wk->input_idx < p_wk->strlen )
 	{	
@@ -1727,7 +1771,11 @@ static BOOL STRINPUT_SetChangeSP( STRINPUT_WORK *p_wk, STRINPUT_SP_CHANGE type )
 //-----------------------------------------------------------------------------
 static BOOL STRINPUT_PrintMain( STRINPUT_WORK *p_wk )
 {	
-	return PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
+	if( PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que ) )
+	{	
+		return TRUE;
+	}
+	return FALSE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2531,11 +2579,11 @@ static void KeyMap_QWERTY_GetMoveCursor( GFL_POINT *p_now, const GFL_POINT *cp_a
 	enum
 	{	
 		ROW_START		= 0,
-		ROW_LINE1		= ROW_START,
+		ROW_LINE0		= ROW_START,
+		ROW_LINE1,
 		ROW_LINE2,
 		ROW_LINE3,
-		ROW_LINE4,
-		ROW_END			= ROW_LINE4,
+		ROW_END			= ROW_LINE3,
 
 		COL_START			= 0,
 		COL_LINE1_END	= 10,
@@ -2546,14 +2594,34 @@ static void KeyMap_QWERTY_GetMoveCursor( GFL_POINT *p_now, const GFL_POINT *cp_a
 
 	switch( p_now->y )
 	{	
-	case ROW_LINE1:
+	case ROW_LINE0:
 		p_now->x	+= cp_add->x;
 		p_now->x	= MATH_ROUND( p_now->x, COL_START, COL_LINE1_END );
 		p_now->y	+= cp_add->y;
 		p_now->y	= MATH_ROUND( p_now->y, ROW_START, ROW_END );
-		if( p_now->y == ROW_LINE4 )
+
+		if( p_now->y == ROW_LINE3 )
 		{	
-			//ROW_LINE4へ移動
+			//バッファ
+			switch( p_now->x )
+			{	
+			case 8:
+			case 9:
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_L_U]	= p_now->x;
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_D]	= p_now->x;
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= MATH_CLAMP( p_now->x, 4,9 );
+				break;
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 10:
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_D]	= p_now->x;
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= MATH_CLAMP( p_now->x, 4,9 );
+				break;
+			}
+
+			//ROW_LINE3へ移動
 			switch( p_now->x )
 			{	
 			case 0:	//Q
@@ -2566,51 +2634,89 @@ static void KeyMap_QWERTY_GetMoveCursor( GFL_POINT *p_now, const GFL_POINT *cp_a
 			case 3:
 				p_now->x	+= 1;
 				break;
-			default:
+			default:	//4～10
+				p_now->x	= 5;
+				break;
+			}
+		}
+		else if( p_now->y == ROW_LINE1 )
+		{	
+			//バッファ
+			switch( p_now->x )
+			{	
+			case 8:
+			case 9:
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_L_U]	= p_now->x;
 				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_D]	= p_now->x;
 				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= MATH_CLAMP( p_now->x, 4,9 );
-				p_now->x	= 5;
+				break;
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 10:
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_D]	= p_now->x;
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= MATH_CLAMP( p_now->x, 4,9 );
+				break;
+			}
+
+			//ROW_LINE1へ移動
+			switch( p_now->x )
+			{	
+			case 8:		//O
+				/* fallthrough */
+			case 9:		//P
+				p_now->x	= 8;
+				break;
+			case 10:	//×
+				p_now->x	= 9;
+				break;
+			default:	//0～7まではそのまま
+				p_now->x	= p_now->x;
+				break;
+			}
+		}
+		break;
+	case ROW_LINE1:
+		p_now->x	+= cp_add->x;
+		p_now->x	= MATH_ROUND( p_now->x, COL_START, COL_LINE2_END );
+		p_now->y	+= cp_add->y;
+		p_now->y	= MATH_ROUND( p_now->y, ROW_START, ROW_END );
+		if( p_now->y == ROW_LINE0 )
+		{	
+			//バッファ
+			switch( p_now->x )
+			{	
+			case 8:
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_BOU_U]	= p_now->x;
+				break;
+			}
+
+			//ROW_LINE0へ移動
+			switch( p_now->x )
+			{	
+			case 8:	//L	
+				p_now->x	= p_buff->data[KEYMAP_KEYMOVE_BUFF_L_U];
+				break;
+			case 9:	//ENTER
+				p_now->x	= 10;
+				break;
+			default:	//0～７
+				p_now->x	= p_now->x;
 				break;
 			}
 		}
 		else if( p_now->y == ROW_LINE2 )
 		{	
+			//バッファ
+			switch( p_now->x )
+			{	
+			case 8:
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_BOU_U]	= p_now->x;
+				break;
+			}
+
 			//ROW_LINE2へ移動
-			switch( p_now->x )
-			{	
-			case 0:	//Q
-				/* fallthrough */
-			case 1:	//W
-				p_buff->data[KEYMAP_KEYMOVE_BUFF_A_U]	= p_now->x;
-				p_now->x	= 0;
-				break;
-			default:
-				p_now->x	-= 1;
-				break;
-			}
-		}
-		break;
-	case ROW_LINE2:
-		p_now->x	+= cp_add->x;
-		p_now->x	= MATH_ROUND( p_now->x, COL_START, COL_LINE2_END );
-		p_now->y	+= cp_add->y;
-		p_now->y	= MATH_ROUND( p_now->y, ROW_START, ROW_END );
-		if( p_now->y == ROW_LINE1 )
-		{	
-			//ROW_LINE1へ移動
-			switch( p_now->x )
-			{	
-			case 0:	//A
-				p_now->x	= p_buff->data[KEYMAP_KEYMOVE_BUFF_A_U];
-				break;
-			default:
-				p_now->x	+= 1;
-				break;
-			}
-		}
-		else if( p_now->y == ROW_LINE3 )
-		{	
-			//ROW_LINE3へ移動
 			switch( p_now->x )
 			{	
 			case 0:	//a
@@ -2619,32 +2725,48 @@ static void KeyMap_QWERTY_GetMoveCursor( GFL_POINT *p_now, const GFL_POINT *cp_a
 			case 7:
 				/* fallthrough */
 			case 8:
-				p_buff->data[KEYMAP_KEYMOVE_BUFF_BOU_U]	= p_now->x;
 				p_now->x	= 8;
 				break;
 			case 9:
 				p_now->x	= 9;
 				break;
-			default:
+			default:	//1～6
 				p_now->x	+= 1;
 				break;
 			}
 		}
 		break;
-	case ROW_LINE3:
+	case ROW_LINE2:
 		p_now->x	+= cp_add->x;
 		p_now->x	= MATH_ROUND( p_now->x, COL_START, COL_LINE3_END );
 		p_now->y	+= cp_add->y;
 		p_now->y	= MATH_ROUND( p_now->y, ROW_START, ROW_END );
-		if( p_now->y == ROW_LINE2 )
+		if( p_now->y == ROW_LINE1 )
 		{	
-			//ROW_LINE2へ移動
+			//バッファ
+			switch( p_now->x )
+			{	
+			case 0://SHIFT
+			case 1://Z
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_A_D]	= p_now->x;
+				break;
+
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:	//4～8
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= p_now->x;
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_D]	= p_now->x;
+				break;
+			}
+
+			//ROW_LINE1へ移動
 			switch( p_now->x )
 			{	
 			case 0:	//SHIFT	L
 				/* fallthrough */
 			case 1:	//Z
-				p_buff->data[KEYMAP_KEYMOVE_BUFF_A_D]	= p_now->x;
 				p_now->x	= 0;
 				break;
 			case 8:	//-
@@ -2653,13 +2775,32 @@ static void KeyMap_QWERTY_GetMoveCursor( GFL_POINT *p_now, const GFL_POINT *cp_a
 			case 9:	//SHIFT R
 				p_now->x	= 9;
 				break;
-			default:
+			default:	//2~7
 				p_now->x	-= 1;
 			}
+
 		}
-		else if( p_now->y == ROW_LINE4 )
+		else if( p_now->y == ROW_LINE3 )
 		{	
-			//ROW_LINE4へ移動
+			//バッファ
+			switch( p_now->x )
+			{	
+			case 0://SHIFT
+			case 1://Z
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_A_D]	= p_now->x;
+				break;
+
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:	//4～8
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= p_now->x;
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_D]	= p_now->x;
+				break;
+			}
+
+			//ROW_LINE3へ移動
 			switch( p_now->x )
 			{	
 			case 0:	//SHIFT L
@@ -2672,27 +2813,34 @@ static void KeyMap_QWERTY_GetMoveCursor( GFL_POINT *p_now, const GFL_POINT *cp_a
 			case 3:	//C
 				p_now->x	+= 1;
 				break;
-			default:
-				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_U]	= p_now->x;
-				p_buff->data[KEYMAP_KEYMOVE_BUFF_SPACE_D]	= p_now->x;
+			default: //4～8
 				p_now->x	= 5;
 			}
 		}
 		break;
-	case ROW_LINE4:
+	case ROW_LINE3:
 		p_now->x	+= cp_add->x;
 		p_now->x	= MATH_ROUND( p_now->x, COL_START, COL_LINE4_END );
 		p_now->y	+= cp_add->y;
 		p_now->y	= MATH_ROUND( p_now->y, ROW_START, ROW_END );
-		if( p_now->y == ROW_LINE3 )
+		if( p_now->y == ROW_LINE2 )
 		{	
-			//ROW_LINE3へ移動
+			//バッファ処理
+			switch( p_now->x )
+			{	
+			case 0:
+			case 1:
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_LSHIFT_D]	= p_now->x;
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_Q_U]	= p_now->x;
+				break;
+			}
+
+			//ROW_LINE2へ移動
 			switch( p_now->x )
 			{	
 			case 0:	//かな
 				/* fallthrough */
 			case 1:	//カナ
-				p_buff->data[KEYMAP_KEYMOVE_BUFF_LSHIFT_D]	= p_now->x;
 				p_now->x	= 0;
 				break;
 			case 2:	//ABC
@@ -2707,15 +2855,24 @@ static void KeyMap_QWERTY_GetMoveCursor( GFL_POINT *p_now, const GFL_POINT *cp_a
 				break;
 			}
 		}
-		else if( p_now->y == ROW_LINE1 )
+		else if( p_now->y == ROW_LINE0 )
 		{	
-			//ROW_LINE1へ移動
+			//バッファ処理
+			switch( p_now->x )
+			{	
+			case 0:
+			case 1:
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_LSHIFT_D]	= p_now->x;
+				p_buff->data[KEYMAP_KEYMOVE_BUFF_Q_U]	= p_now->x;
+				break;
+			}
+
+			//ROW_LINE0へ移動
 			switch( p_now->x )
 			{	
 			case 0:	//かな
 				/* fallthrough */
 			case 1:	//カナ
-				p_buff->data[KEYMAP_KEYMOVE_BUFF_Q_U]	= p_now->x;
 				p_now->x	= 0;
 				break;
 			case 2:	//ABC
@@ -3019,6 +3176,7 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk, const STRINPUT_WORK *cp_strinput
 						anm_pos		= p_wk->cursor;
 						is_decide	= TRUE;
 						is_push		= TRUE;
+						GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 					}
 				}
 			}
@@ -3059,6 +3217,7 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk, const STRINPUT_WORK *cp_strinput
 					//移動アニメ
 					if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
 					{	
+						GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 						PMSND_PlaySE( NAMEIN_SE_MOVE_CURSOR );
 						KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );
 					}
@@ -3068,6 +3227,7 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk, const STRINPUT_WORK *cp_strinput
 					anm_pos	= p_wk->cursor;
 					is_decide	= TRUE;
 					is_push		= TRUE;
+					GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 				}
 				if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
 				{	
@@ -3077,6 +3237,7 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk, const STRINPUT_WORK *cp_strinput
 					//バックスペースになる
 					type	= KEYMAP_KEYTYPE_DELETE;
 					is_decide	= TRUE;
+					GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 				}
 				if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
 				{	
@@ -3089,9 +3250,11 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk, const STRINPUT_WORK *cp_strinput
 						type = KEYMAP_KEYTYPE_KANA;
 					}
 					//アニメ
-					KEYMAP_GetCursorByKeyType( &p_wk->keymap, type, &anm_pos );
+					KEYMAP_GetCursorByKeyType( &p_wk->keymap, type, &p_wk->cursor );
+					anm_pos	= p_wk->cursor;
 					//キー入力を決定
 					is_decide	= TRUE;
+					GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 				}
 			}
 			//決定
@@ -3452,11 +3615,12 @@ static void Keyboard_ChangeMode( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode )
  *	@param	*p_font						フォント
  *	@param	*p_msg						メッセージデータ
  *	@param	*p_que						キュー
+ *	@param	*p_word						単語
  *	@param	heapID						ヒープID
  *
  */
 //-----------------------------------------------------------------------------
-static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_FONT *p_font, GFL_MSGDATA *p_msg, PRINT_QUE *p_que, HEAPID heapID )
+static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_FONT *p_font, GFL_MSGDATA *p_msg, PRINT_QUE *p_que, WORDSET *p_word, HEAPID heapID )
 {	
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(MSGWND_WORK) );
@@ -3465,6 +3629,7 @@ static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_FONT *p_font, GFL_MSGDATA *p_msg
 	p_wk->p_font		= p_font;
 	p_wk->p_msg			= p_msg;
 	p_wk->p_que			= p_que;
+	p_wk->p_word		= p_word;
 
 	//バッファ作成
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 255, heapID );
@@ -3505,6 +3670,7 @@ static void MSGWND_Exit( MSGWND_WORK* p_wk )
  *	@brief	メッセージウィンドウ	プリント開始
  *
  *	@param	MSGWND_WORK* p_wk ワーク
+ *	@param	strID							文字ID
  */
 //-----------------------------------------------------------------------------
 static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID )
@@ -3518,6 +3684,55 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID )
 	//文字列描画
 	PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージウィンドウ	単語登録してプリント開始
+ *
+ *	@param	MSGWND_WORK *p_wk	ワーク
+ *	@param	strID				文字ID
+ *	@param	mons_no			モンスター番号
+ *	@param	form				フォルム
+ *	@param	heapID			バッファ作成用ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_ExpandPrintPoke( MSGWND_WORK *p_wk, u32 strID, u16 mons_no, u16 form, HEAPID heapID )
+{	
+	//登録
+	{	
+		POKEMON_PARAM	*p_pp;
+
+		//PP作成
+		p_pp	= PP_Create( mons_no, 1, 0, heapID );
+		PP_Put( p_pp, ID_PARA_form_no, form );
+
+		//単語登録
+		WORDSET_RegisterPokeMonsName( p_wk->p_word, 0, p_pp );
+
+		//バッファクリア
+		GFL_HEAP_FreeMemory( p_pp );
+	}
+
+	//プリント
+	{	
+		STRBUF	*p_strbuf;
+
+		//一端消去
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
+
+		//文字列作成
+		p_strbuf	= GFL_MSG_CreateString( p_wk->p_msg, strID );
+
+		//単語展開
+		WORDSET_ExpandStr( p_wk->p_word, p_wk->p_strbuf, p_strbuf );	
+
+		//文字列描画
+		PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
+
+		//バッファクリア
+		GFL_STR_DeleteBuffer( p_strbuf );
+	}
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	メッセージウィンドウ	QUEの描画待ち
@@ -3578,6 +3793,9 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
 		switch( type )
 		{	
 		case ICON_TYPE_HERO:
+			/* fallthrough */
+		case ICON_TYPE_RIVAL:
+			/* fallthrough */
 		case ICON_TYPE_PERSON:
 			arcID	= APP_COMMON_GetArcId();
 			plt		= APP_COMMON_GetNull4x4PltArcIdx();
@@ -3644,8 +3862,14 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
 		switch( type )
 		{	
 		case ICON_TYPE_HERO:
+			//@todo主人公の性別
+			CLWK_TransNSBTX( p_wk->p_clwk, ARCID_MMDL_RES, NARC_fldmmdl_mdlres_hero_nsbtx, 3, NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DEFREND_MAIN, heapID );
+			break;
+		case ICON_TYPE_RIVAL:
+			//@todoライバルのリソースとの下向き番号　主人公は３だが…。
+			CLWK_TransNSBTX( p_wk->p_clwk, ARCID_MMDL_RES, NARC_fldmmdl_mdlres_hero_nsbtx, 3, NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DEFREND_MAIN, heapID );
 		case ICON_TYPE_PERSON:
-			//@todo主人公以外のリソースと、NPCの下向き番号　主人公は３だが…。
+			//@todoトレーナーのリソースとの下向き番号　主人公は３だが…。
 			CLWK_TransNSBTX( p_wk->p_clwk, ARCID_MMDL_RES, NARC_fldmmdl_mdlres_hero_nsbtx, 3, NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DEFREND_MAIN, heapID );
 			break;
 		case ICON_TYPE_POKE:
@@ -3951,6 +4175,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 			STRINPUT_DeleteChangeStr( &p_wk->strinput );
 			break;
 		case KEYBOARD_INPUT_EXIT:				//終了	
+			STRINPUT_DeleteChangeStr( &p_wk->strinput );
 			SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 			break;
 		case KEYBOARD_INPUT_NONE:				//何もしていない
