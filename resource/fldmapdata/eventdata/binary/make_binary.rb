@@ -156,7 +156,7 @@ class HeaderDataArray
   end
 
   #全体SEARCH
-  def sarch name
+  def sarch name, error_comment
 
     #数値クラスならそのまま返す
     if name.instance_of?( String ) == false
@@ -179,7 +179,7 @@ class HeaderDataArray
       end
     end
 
-    puts "#{name}がみつかりません" 
+    puts "#{error_comment}内の[#{name}]がみつかりません" 
     raise
   end
 end
@@ -507,28 +507,28 @@ class DoorEvent < AllEvent
     #output.puts "\t\t//#{@x}, #{@z} -- GRID(#{@header.blockSizeX},#{@header.blockSizeY})"
     #output.puts "\t\t//{#{gx/GRID_SIZE}, #{@y/GRID_SIZE}, #{gz/GRID_SIZE}},"
     #output.puts "\t\t{#{@x}, #{@y}, #{@z}},"
-    output.write [headerArray.sarch( @next_zone_id )].pack( "S" )
-    output.write [headerArray.sarch( @next_door_id )].pack( "S" )
-    output.write [headerArray.sarch( @door_dir )].pack( "C" )
-    output.write [headerArray.sarch( @door_type )].pack( "C" )
-    output.write [headerArray.sarch( @pos_type )].pack( "S" ) #ポジションタイプ
+    output.write [headerArray.sarch( @next_zone_id, @door_id )].pack( "S" )
+    output.write [headerArray.sarch( @next_door_id, @door_id )].pack( "S" )
+    output.write [headerArray.sarch( @door_dir, @door_id )].pack( "C" )
+    output.write [headerArray.sarch( @door_type, @door_id )].pack( "C" )
+    output.write [headerArray.sarch( @pos_type, @door_id )].pack( "S" ) #ポジションタイプ
 
     if @pos_type == EVENTDATA_POS_TYPE_GRID
       gx,gz = calc_ofs @x, @z
       #ポジションタイプグリッド
-      output.write [headerArray.sarch( gx )].pack("s")
-      output.write [headerArray.sarch( @y )].pack("s")
-      output.write [headerArray.sarch( gz )].pack("s")
-      output.write [headerArray.sarch( @sizex )].pack("S")   #サイズX
-      output.write [headerArray.sarch( @sizez )].pack("S")   #サイズZ
+      output.write [headerArray.sarch( gx, @door_id )].pack("s")
+      output.write [headerArray.sarch( @y, @door_id )].pack("s")
+      output.write [headerArray.sarch( gz, @door_id )].pack("s")
+      output.write [headerArray.sarch( @sizex, @door_id )].pack("S")   #サイズX
+      output.write [headerArray.sarch( @sizez, @door_id )].pack("S")   #サイズZ
       output.write [0].pack("S")   #パディング
     else
       #ポジションタイプレール
-      output.write [headerArray.sarch( @rail_index )].pack("S")     #index
-      output.write [headerArray.sarch( @rail_front )].pack("S")     #front grid
-      output.write [headerArray.sarch( @rail_side )].pack("s")     #side grid
-      output.write [headerArray.sarch( @rail_front_size )].pack("S")     #front_siz
-      output.write [headerArray.sarch( @rail_side_size )].pack("S")     #side_siz
+      output.write [headerArray.sarch( @rail_index, @door_id )].pack("S")     #index
+      output.write [headerArray.sarch( @rail_front, @door_id )].pack("S")     #front grid
+      output.write [headerArray.sarch( @rail_side, @door_id )].pack("s")     #side grid
+      output.write [headerArray.sarch( @rail_front_size, @door_id )].pack("S")     #front_siz
+      output.write [headerArray.sarch( @rail_side_size, @door_id )].pack("S")     #side_siz
       output.write [0].pack("S")
     end
   end
@@ -599,30 +599,30 @@ class ObjEvent < AllEvent
  
   def dump output,headerArray
 
-    output.write [headerArray.sarch( @id )].pack("S")
-    output.write [headerArray.sarch( @obj_code )].pack("S")
-    output.write [headerArray.sarch( @move_code )].pack("S")
-    output.write [headerArray.sarch( @event_type )].pack("S")
-    output.write [headerArray.sarch( @event_flag )].pack("S")
-    output.write [headerArray.sarch( @event_id )].pack("S")
-    output.write [headerArray.sarch( @dir )].pack("s")
-    output.write [headerArray.sarch( @param0 )].pack("S")
-    output.write [headerArray.sarch( @param1 )].pack("S")
-    output.write [headerArray.sarch( @param2 )].pack("S")
-    output.write [headerArray.sarch( @move_limit_x )].pack("s")
-    output.write [headerArray.sarch( @move_limit_z )].pack("s")
-    output.write [headerArray.sarch( @pos_type )].pack("I")
+    output.write [headerArray.sarch( @id, @id )].pack("S")
+    output.write [headerArray.sarch( @obj_code, @id )].pack("S")
+    output.write [headerArray.sarch( @move_code, @id )].pack("S")
+    output.write [headerArray.sarch( @event_type, @id )].pack("S")
+    output.write [headerArray.sarch( @event_flag, @id )].pack("S")
+    output.write [headerArray.sarch( @event_id, @id )].pack("S")
+    output.write [headerArray.sarch( @dir, @id )].pack("s")
+    output.write [headerArray.sarch( @param0, @id )].pack("S")
+    output.write [headerArray.sarch( @param1, @id )].pack("S")
+    output.write [headerArray.sarch( @param2, @id )].pack("S")
+    output.write [headerArray.sarch( @move_limit_x, @id )].pack("s")
+    output.write [headerArray.sarch( @move_limit_z, @id )].pack("s")
+    output.write [headerArray.sarch( @pos_type, @id )].pack("I")
 
     if @pos_type == MMDL_POS_TYPE_GRID
       gx,gz = calc_grid_ofs @gx, @gz
-      output.write [headerArray.sarch( gx )].pack("S")
-      output.write [headerArray.sarch( gz )].pack("S")
+      output.write [headerArray.sarch( gx, @id )].pack("S")
+      output.write [headerArray.sarch( gz, @id )].pack("S")
       fx32_y = @y << 12;
-      output.write [headerArray.sarch( fx32_y )].pack("i")
+      output.write [headerArray.sarch( fx32_y, @id )].pack("i")
     else
-      output.write [headerArray.sarch( @rail_index )].pack("S")  #index
-      output.write [headerArray.sarch( @rail_front )].pack("S")  #front
-      output.write [headerArray.sarch( @rail_side )].pack("s")   #side
+      output.write [headerArray.sarch( @rail_index, @id )].pack("S")  #index
+      output.write [headerArray.sarch( @rail_front, @id )].pack("S")  #front
+      output.write [headerArray.sarch( @rail_side, @id )].pack("s")   #side
       output.write [0].pack("S")
     end
   end
@@ -686,26 +686,26 @@ class PosEvent < AllEvent
 
   def dump output,headerArray
 
-    output.write [headerArray.sarch( @event_id )].pack("S")
-    output.write [headerArray.sarch( @workvalue )].pack("S")
-    output.write [headerArray.sarch( @workname )].pack("S")
-    output.write [headerArray.sarch( @pos_type )].pack("S")
+    output.write [headerArray.sarch( @event_id, @pos_id )].pack("S")
+    output.write [headerArray.sarch( @workvalue, @pos_id )].pack("S")
+    output.write [headerArray.sarch( @workname, @pos_id )].pack("S")
+    output.write [headerArray.sarch( @pos_type, @pos_id )].pack("S")
 
     if @pos_type == EVENTDATA_POS_TYPE_GRID
       gx,gz = calc_grid_ofs @x, @z
-      output.write [headerArray.sarch( gx )].pack("S")
-      output.write [headerArray.sarch( gz )].pack("S")
-      output.write [headerArray.sarch( @sizex )].pack("S")
-      output.write [headerArray.sarch( @sizez )].pack("S")
-      output.write [headerArray.sarch( @y )].pack("s")
+      output.write [headerArray.sarch( gx, @pos_id )].pack("S")
+      output.write [headerArray.sarch( gz, @pos_id )].pack("S")
+      output.write [headerArray.sarch( @sizex, @pos_id )].pack("S")
+      output.write [headerArray.sarch( @sizez, @pos_id )].pack("S")
+      output.write [headerArray.sarch( @y, @pos_id )].pack("s")
       output.write [0].pack("S")
     else
 
-      output.write [headerArray.sarch( @rail_index )].pack("S")     #index
-      output.write [headerArray.sarch( @rail_front )].pack("S")     #front grid
-      output.write [headerArray.sarch( @rail_side )].pack("s")     #side grid
-      output.write [headerArray.sarch( @rail_front_size )].pack("S")     #front_siz
-      output.write [headerArray.sarch( @rail_side_size )].pack("S")     #side_siz
+      output.write [headerArray.sarch( @rail_index, @pos_id )].pack("S")     #index
+      output.write [headerArray.sarch( @rail_front, @pos_id )].pack("S")     #front grid
+      output.write [headerArray.sarch( @rail_side, @pos_id )].pack("s")     #side grid
+      output.write [headerArray.sarch( @rail_front_size, @pos_id )].pack("S")     #front_siz
+      output.write [headerArray.sarch( @rail_side_size, @pos_id )].pack("S")     #side_siz
       output.write [0].pack("S")
     end
 
@@ -765,20 +765,20 @@ class BgEvent < AllEvent
   def dump output,headerArray
 
 
-    output.write [headerArray.sarch( @event_id )].pack("S")
-    output.write [headerArray.sarch( @bg_type )].pack("S")
-    output.write [headerArray.sarch( @bg_dir )].pack("S")
-    output.write [headerArray.sarch( @pos_type )].pack( "S" ) #ポジションタイプ
+    output.write [headerArray.sarch( @event_id, @bg_id )].pack("S")
+    output.write [headerArray.sarch( @bg_type, @bg_id )].pack("S")
+    output.write [headerArray.sarch( @bg_dir, @bg_id )].pack("S")
+    output.write [headerArray.sarch( @pos_type, @bg_id )].pack( "S" ) #ポジションタイプ
 
     if @pos_type == EVENTDATA_POS_TYPE_GRID
       gx,gz = calc_grid_ofs @x, @z
-      output.write [headerArray.sarch( gx )].pack("i")
-      output.write [headerArray.sarch( gz )].pack("i")
-      output.write [headerArray.sarch( @y )].pack("i")
+      output.write [headerArray.sarch( gx, @bg_id )].pack("i")
+      output.write [headerArray.sarch( gz, @bg_id )].pack("i")
+      output.write [headerArray.sarch( @y, @bg_id )].pack("i")
     else
-      output.write [headerArray.sarch( @rail_index )].pack("S")     #index
-      output.write [headerArray.sarch( @rail_front )].pack("S")     #front grid
-      output.write [headerArray.sarch( @rail_side )].pack("s")     #side grid
+      output.write [headerArray.sarch( @rail_index, @bg_id )].pack("S")     #index
+      output.write [headerArray.sarch( @rail_front, @bg_id )].pack("S")     #front grid
+      output.write [headerArray.sarch( @rail_side, @bg_id )].pack("s")     #side grid
       output.write [0].pack("S")
       output.write [0].pack("S")
       output.write [0].pack("S")
@@ -905,6 +905,8 @@ begin
   
   headerArray = HeaderDataArray.new();
   allHeader = ARGV[1,64] #とりあえず64個まで
+
+  ofilename = "";
   
   #必要ヘッダーの読み込み
   allHeader.each{|headername|
@@ -938,6 +940,14 @@ begin
       pos_events.dump(file, headerArray)
     }
   }
+
+rescue
+  #例外時
+  if File.exist?( "#{ofilename}.bin" )
+    File.delete( "#{ofilename}.bin" );
+  end
+  exit(1)
+else
 end
 
 
