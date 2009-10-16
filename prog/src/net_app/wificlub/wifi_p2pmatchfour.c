@@ -1525,6 +1525,7 @@ static void WFP2PMF_GraphicMsgDelete( WFP2PMF_DRAW* p_draw )
 //-----------------------------------------------------------------------------
 static void WFP2PMF_GraphicBmpMsgInit( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT* cp_init, u32 heapID )
 {
+#if 0 //WiFi広場関連は削除
 	// タイトル
 	switch( cp_init->type ){
 	case WFP2PMF_TYPE_BUCKET:			// たまいれ
@@ -1539,6 +1540,7 @@ static void WFP2PMF_GraphicBmpMsgInit( WFP2PMF_DRAW* p_draw, const WFP2PMF_INIT*
 		WORDSET_RegisterWiFiLobbyGameName( p_draw->p_wordset, 0, WFLBY_GAME_BALLOON );
 		break;
 	}
+#endif
 	//MSGMAN_GetString(  p_draw->p_msgman, WFP2PMF_TITLE[ cp_init->type ], p_draw->p_msgtmp );
 	GFL_MSG_GetString(  p_draw->p_msgman, WFP2PMF_TITLE[ cp_init->type ], p_draw->p_msgtmp );
 

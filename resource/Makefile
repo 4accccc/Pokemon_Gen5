@@ -33,7 +33,6 @@ SUBDIRS	=	wmi \
 			itemicon\
 			title\
 			snd_strm\
-			wifi_lobby_minigame\
 			mystery\
 			startmenu \
 			palace \
@@ -43,7 +42,6 @@ SUBDIRS	=	wmi \
 			wifi_2dchar \
 			trainer_case \
 			yn_touch \
-			balloon \
 			mysign \
 			pms \
 			pms_gra \
@@ -52,11 +50,6 @@ SUBDIRS	=	wmi \
 			infowin \
 			c_gear \
 			bmpoam \
-			wifi_lobby_other \
-			wifi_lobby \
-			wifi_lobby_map_conv \
-			wifi_lobby_front_unionobj \
-			wifi_lobby_news \
 			shop \
 			code_input \
 			wazatype_icon \
@@ -67,26 +60,19 @@ SUBDIRS	=	wmi \
 			others \
 			wazaeffect \
 			field_menu \
-			worldtimer \
-			worldtimer \
 			pokelist \
 			wifi_earth \
-			ballslow \
-			bucket \
 			p_status \
 			app_menu_common \
 			irc_ranking \
 			iss \
 			townmap \
 			unionroom \
-			unionroom \
 			winframe \
 			trgra \
 			irc_compatible \
 			worldtrade \
-			balance_ball \
 			calender \
-			footprint_board \
 			pokefoot \
 			debug \
 			config \

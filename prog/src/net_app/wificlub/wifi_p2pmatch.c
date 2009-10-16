@@ -5989,11 +5989,15 @@ static int _battleSubMenuInit( WIFIP2PMATCH_WORK *wk, int ret )
     if( pMenu[i].str_id != msg_wifilobby_mg02 ){
       BmpMenuWork_ListAddArchiveString( wk->submenulist, wk->MsgManager, pMenu[i].str_id, pMenu[i].param,HEAPID_WIFIP2PMATCH );
     }else{
+    #if 0 //※check　WiFi広場削除
       // ミニゲームはタグで表示する（ちょっとむりやりすぎ・・・）
       WORDSET_RegisterWiFiLobbyGameName( wk->WordSet, 0, i );
       GFL_MSG_GetString(  wk->MsgManager, pMenu[i].str_id, wk->pExpStrBuf );
       WORDSET_ExpandStr( wk->WordSet, wk->TitleString, wk->pExpStrBuf );
       BmpMenuWork_ListAddString( wk->submenulist, wk->TitleString, pMenu[i].param,HEAPID_WIFIP2PMATCH );
+    #else
+      GF_ASSERT(0); //WiFi広場関連の処理は削除
+    #endif
     }
   }
   wk->SubListWin = _BmpWinDel(wk->SubListWin);
@@ -9324,6 +9328,7 @@ static void MCVSys_UserDispDrawType05( WIFIP2PMATCH_WORK *wk, u32 heapID )
 // ミニゲーム
 static void MCVSys_UserDispDrawType06( WIFIP2PMATCH_WORK *wk, u32 heapID )
 {
+#if 0 //WiFi広場関連は削除
   int friendNo;
   WIFI_LIST* p_list;
 
@@ -9380,6 +9385,9 @@ static void MCVSys_UserDispDrawType06( WIFIP2PMATCH_WORK *wk, u32 heapID )
                             WifiList_GetFriendInfo( p_list, friendNo, WIFILIST_FRIEND_BALLOON_NUM ),
                             MCV_USERD_MINI_BLNUM_X, MCV_USERD_MINI_BLNUM_Y );
   }
+#else
+  GF_ASSERT(0);
+#endif
 }
 
 //----------------------------------------------------------------------------

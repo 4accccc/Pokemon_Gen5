@@ -25,7 +25,6 @@
 #include "savedata/record.h"
 #include "system/pms_word.h"
 #include "field/fldmmdl.h"
-#include "savedata/wifi_hiroba_save.h"
 #include "savedata/musical_save.h"
 #include "savedata/randommap_save.h"
 #include "savedata/irc_compatible_savedata.h"
@@ -278,11 +277,6 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_MMDL,
 		(FUNC_GET_SIZE)MMDL_SAVEDATA_GetWorkSize,
 		(FUNC_INIT_WORK)MMDL_SAVEDATA_Init,
-	},
-	{	//Wi－Fiひろば
-		GMDATA_ID_WFHIROBA,
-		(FUNC_GET_SIZE)SAVEDATA_WFLBY_GetWorkSize,
-		(FUNC_INIT_WORK)SAVEDATA_WFLBY_InitWork,
 	},
 	{	//ミュージカル
 		GMDATA_ID_MUSICAL,

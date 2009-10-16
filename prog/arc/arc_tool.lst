@@ -96,9 +96,6 @@
 	ARCID_PALACE		"palace.narc"			#パレス
 	ARCID_FLDMMLD		"debug/mmodel.narc"
 	ARCID_YN_TOUCH		"yn_touch.narc"			#YesNoボタン
-	ARCID_WLMNGM_TOOL_GRA	"wlmngm_tool.narc"	#WiFiロビーミニゲームツールグラフィック
-	ARCID_BALLOON_GRA	"balloon_gra.narc"		#風船割りミニゲーム
-	ARCID_BALLOON_PARTICLE	"balloon_particle.narc"		#風船割りミニゲーム：パーティクル
 	ARCID_MYSIGN		"mysign.narc"			#サイン(トレーナーカード)
 	ARCID_TRAINERCARD	"trainer_case.narc"		#トレーナーカード
 	ARCID_TRC_UNION		"trc_union.narc"		#ユニオンルーム トレーナーカード キャラ絵
@@ -115,12 +112,7 @@
 	ARCID_INFOWIN		"infowin.narc"		#情報ウィンドウ
 	ARCID_BMPOAM		"bmpoam.narc"			#BMPOAM
 	ARCID_POKEGRA_MUS	"pokegra_mus.narc"	#ミュージカル用ポケグラ
-	ARCID_WIFILOBBY_OTHER_GRA	"wifi_lobby_other.narc"	#Wi-Fiロビー３Dフィールド以外のグラフィック
-	ARCID_WFLBY_GRA		"wifi_lobby.narc"	#WiFiロビーグラフィック
-	ARCID_2DUNIONOBJ_FRONT	"unionobj2d_onlyfront.narc"	#２Dのユニオン人物　表向きグラフィックのみ
-	ARCID_LOBBY_NEWS		"lobby_news.narc"		#WiFiロビーニュースグラフィック
 	ARCID_WIFI_EARTH_PLACE	"wifi_earth_place.narc"	#WI-FI地球画面の地域データ
-	ARCID_WFLBY_MAP		"wflby_map.narc"	#WiFiロビーマップデータ
 	ARCID_SHOP_GRA		"shop_gra.narc"		#ショップ画面グラフィック
 	ARCID_WAZATYPE_ICON		"wazatype_icon.narc"		#技タイプアイコン
 	ARCID_LOBBY_TRGRA		"debug/lobby_trfgra.narc"			#Wi-Fi広場用トレーナーグラフィック(PLのtrgra)
@@ -153,9 +145,6 @@
 	ARCID_SHADOW_TEST "shadow_test.narc" #影描画（テスト）
   ARCID_FLDEFF "fieldmap/fldeff.narc" #フィールドエフェクト
 	ARCID_POKELIST "pokelist_gra.narc" #ポケモンリスト
-  ARCID_WORLDTIMER "worldtimer.narc" #世界時計
-  ARCID_BUCKET_DATA       "ballslow_data.narc"  #タマ投げデータ
-	ARCID_BUCKET_GRAPHIC		"bucket.narc"         #WiFiバケットミニゲームグラフィック
 	ARCID_IRCRANKING_GRAPHIC	"ircranking_gra.narc"	#赤外線相性チェックランキング画面
 	ARCID_P_STATUS		"p_status_gra.narc"         #WiFiバケットミニゲームグラフィック
 	ARCID_RAIL_DATA		"fieldmap/field_rail_data.narc"   #フィールドレールデータ
@@ -177,9 +166,6 @@
 	ARCID_IRCCOMPATIBLE	"irccompatible_gra.narc"	#相性ゲーム共通グラフィックデータ
 	ARCID_WAZAEFF_GRA	"wazaeffect/waza_eff_gra.narc"	#技エフェクト用グラフィックデータ
 	ARCID_WORLDTRADE_GRA "worldtrade.narc"	#GTS用グラフィックデータ
-  ARCID_BALANCE_BALL_GRA "balance_ball.narc"    #ころころマネネ
-  ARCID_FOOTPRINT_GRA     "footprint_board.narc"  #足跡ボードグラフィック
-	ARCID_POKEFOOT_GRA      "pokefoot.narc"			# ポケモン足跡グラフィックデータ
   ARCID_CALENDER "calender.narc"  # カレンダー情報
 	ARCID_ZUKAN_DATA "zukan_data.narc"	#図鑑データ（金銀のを持ってきただけ）
     ARCID_B_BAG_GRA "b_bag_gra.narc"    #戦闘バッグ画面グラフィック

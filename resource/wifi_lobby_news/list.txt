@@ -1,7 +1,0 @@
-"lobby_news_bg.NCLR"
-"lobby_news_bg.NCGR"
-"wifi_mark_bg.NCGR"
-"lobby_news_bg1.NSCR"
-"lobby_news_bg2.NSCR"
-"lobby_news_chara.NSCR"
-"wifi_mark_bg.NSCR"

@@ -38,7 +38,6 @@
 #include "app/name_input.h"
 #include "net_app/wifi2dmap/wf2dmap_common.h"
 #include "net_app/wifi2dmap/wifi_2dchar.h"
-#include "net_app/wifi_lobby/wflby_def.h"
 #include "net_app/union/union_beacon_tool.h"
 #include "net_app/union/union_gra_tool.h"
 #include "net/dwc_rapfriend.h"
@@ -2972,7 +2971,9 @@ static void Draw_NumberSetWordset( WFNOTE_DRAW* p_draw, u32 num )
 //-----------------------------------------------------------------------------
 static void Draw_WflbyGameSetWordSet( WFNOTE_DRAW* p_draw, u32 num )
 {
+#if 0 //WiFiLêŠÖ˜A‚Ííœ
 	WORDSET_RegisterWiFiLobbyGameName( p_draw->p_wordset, 0, num );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -8108,7 +8109,7 @@ static void FInfoDraw_Page06( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
 			WFNOTE_COL_BLACK, p_str, p_tmp );
 
 	// ‚½‚Ü‚¢‚ê
-	Draw_WflbyGameSetWordSet( p_draw, WFLBY_GAME_BALLSLOW );
+//	Draw_WflbyGameSetWordSet( p_draw, WFLBY_GAME_BALLSLOW );
 	FInfoDraw_Bmp( p_wk, 1, FINFO_PAGE06_BA,
 			p_data, p_draw, msg_wifi_note_53, 
 			FINFO_PAGE06_BC_X, FINFO_PAGE06_BC_Y,
@@ -8122,7 +8123,7 @@ static void FInfoDraw_Page06( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
 			WFNOTE_COL_BLACK, p_str, p_tmp );
 
 	// ‚½‚Ü‚Ì‚è
-	Draw_WflbyGameSetWordSet( p_draw, WFLBY_GAME_BALANCEBALL );
+//	Draw_WflbyGameSetWordSet( p_draw, WFLBY_GAME_BALANCEBALL );
 	FInfoDraw_Bmp( p_wk, 1, FINFO_PAGE06_BA,
 			p_data, p_draw, msg_wifi_note_53, 
 			FINFO_PAGE06_BB_X, FINFO_PAGE06_BB_Y,
@@ -8136,7 +8137,7 @@ static void FInfoDraw_Page06( WFNOTE_FINFO_DRAWAREA* p_wk, WFNOTE_DATA* p_data, 
 			WFNOTE_COL_BLACK, p_str, p_tmp );
 
 	// ‚Ó‚¤‚¹‚ñ
-	Draw_WflbyGameSetWordSet( p_draw, WFLBY_GAME_BALLOON );
+//	Draw_WflbyGameSetWordSet( p_draw, WFLBY_GAME_BALLOON );
 	FInfoDraw_Bmp( p_wk, 1, FINFO_PAGE06_BA,
 			p_data, p_draw, msg_wifi_note_53, 
 			FINFO_PAGE06_BL_X, FINFO_PAGE06_BL_Y,

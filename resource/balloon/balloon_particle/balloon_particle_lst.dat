@@ -1,7 +1,0 @@
-//---- コンバータ：SPAConv.exe  Version 1.13
-
-const char * const balloon_particle_lst_tbl[] = {
-	"balloon.spa"	//0,
-	"opening_demo.spa"	//1,
-};
-

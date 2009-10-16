@@ -69,7 +69,6 @@ enum{
 	GMDATA_ID_RECORD,  		//レコード(スコア
 	GMDATA_ID_PMS,  		//簡易文
 	GMDATA_ID_MMDL,		//動作モデル
-	GMDATA_ID_WFHIROBA,		//Wi-Fi広場
 	GMDATA_ID_MUSICAL,		//ミュージカル
   GMDATA_ID_RANDOMMAP,  //ランダム生成マップ
 	GMDATA_ID_IRCCOMPATIBLE,	//相性チェック
