@@ -1532,6 +1532,16 @@ static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
       FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS);
     }
   }
+  // ƒŒ[ƒ‹ƒJƒƒ‰”½‰f‚Ì’âŽ~
+  {
+    FLDNOGRID_MAPPER* mapper;
+    
+    if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
+    {
+      mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
+      FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( mapper, FALSE );
+    }
+  }
 	return( TRUE );
 }
 
@@ -1572,6 +1582,17 @@ static BOOL debugMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk )
       FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_TARGET_POS);
     }
   }
+
+  // ƒŒ[ƒ‹ƒJƒƒ‰”½‰f‚Ì’âŽ~
+  {
+    FLDNOGRID_MAPPER* mapper;
+    
+    if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
+    {
+      mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
+      FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( mapper, FALSE );
+    }
+  }
 	return( TRUE );
 }
 
@@ -1593,6 +1614,17 @@ static GMEVENT_RESULT debugMenuControlCamera(
 
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
     FIELD_CAMERA_DEBUG_ReleaseSubScreen( cam );
+
+    // ƒŒ[ƒ‹ƒJƒƒ‰”½‰f‚ÌÄŠJ
+    {
+      FLDNOGRID_MAPPER* mapper;
+      
+      if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
+      {
+        mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
+        FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( mapper, TRUE );
+      }
+    }
 	  return( GMEVENT_RES_FINISH );
   }
 
