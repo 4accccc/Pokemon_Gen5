@@ -100,6 +100,10 @@ _EVENT_DATA ev_TRID_HAKAIM1_04
 _EVENT_DATA ev_TRID_BASKET_01
 _EVENT_DATA ev_TRID_BASKET_02
 _EVENT_DATA ev_TRID_SCHOOLB_03
+_EVENT_DATA ev_TRID_TANPAN_04
+_EVENT_DATA ev_TRID_SCHOOLB_04
+_EVENT_DATA ev_TRID_SCHOOLG_03
+_EVENT_DATA ev_TRID_SCIENTISTW_01
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
 _EVENT_DATA_END
@@ -189,6 +193,10 @@ ev_TRID_HAKAIM1_04:
 ev_TRID_BASKET_01:
 ev_TRID_BASKET_02:
 ev_TRID_SCHOOLB_03:
+ev_TRID_TANPAN_04:
+ev_TRID_SCHOOLB_04:
+ev_TRID_SCHOOLG_03:
+ev_TRID_SCIENTISTW_01:
 
 //----------------------------------------------------------------------
 // scr_trainer/trainer_base.ev
@@ -202,7 +210,7 @@ EVENT_START   ev_trainer_talk_battle
   _TALK_OBJ_START()
   
   //トレーナーID取得
-  _TRAINER_ID_GET    SCWK_TEMP0
+  _TRAINER_ID_GET( SCWK_TEMP0 )
 
   /*
   //かくれみのアニメチェック
@@ -218,7 +226,7 @@ EVENT_START   ev_trainer_talk_battle
   _IF_TR_FLAGON_JUMP SCWK_TEMP0,ev_trainer_talk_after
   
   //トレーナータイプ取得(シングル、ダブル、タッグ)
-  _TRAINER_TYPE_GET SCWK_ANSWER
+  _TRAINER_TYPE_GET( SCWK_ANSWER )
   //ダブルでない時
   _IFVAL_JUMP SCWK_ANSWER,NE,SCR_EYE_TR_TYPE_DOUBLE,ev_trainer_common_10
   
@@ -232,10 +240,10 @@ EVENT_START   ev_trainer_talk_battle
 EVENT_END
 
 ev_trainer_common_10:
-  _TRAINER_BGM_SET SCWK_TEMP0                //視線曲セット
+  _TRAINER_BGM_SET( SCWK_TEMP0 )                //視線曲セット
   
-  _TRAINER_TALK_TYPE_GET SCWK_PARAM0,SCWK_PARAM1,SCWK_PARAM2 //メッセージ取得
-  _TRAINER_MSG_SET SCWK_TEMP0,SCWK_PARAM0
+  _TRAINER_TALK_TYPE_GET( SCWK_PARAM0,SCWK_PARAM1,SCWK_PARAM2 )//メッセージ取得
+  _TRAINER_MSG_SET( SCWK_TEMP0,SCWK_PARAM0 )
 
   _JUMP ev_trainer_common_11
 EVENT_END
@@ -266,7 +274,7 @@ ev_trainer_common_11:
   //_TRAINER_ID_GET  SCWK_TEMP0
   
   //トレーナーフラグセット
-  _TRAINER_FLAG_SET  SCWK_TEMP0
+  _TRAINER_FLAG_SET(  SCWK_TEMP0 )
   
 EVENT_END
 
@@ -286,8 +294,8 @@ EVENT_START   ev_trainer_talk_after_normal
   _TALK_START_SE_PLAY()
   
   //メッセージを取得
-  _TRAINER_TALK_TYPE_GET  SCWK_PARAM0,SCWK_PARAM1,SCWK_PARAM2
-  _TRAINER_MSG_SET  SCWK_TEMP0,SCWK_PARAM1
+  _TRAINER_TALK_TYPE_GET(  SCWK_PARAM0,SCWK_PARAM1,SCWK_PARAM2 )
+  _TRAINER_MSG_SET(  SCWK_TEMP0,SCWK_PARAM1 )
   _AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
   
@@ -407,7 +415,7 @@ EVENT_START   ev_trainer_move_battle
   //_PROGRAM      TR_BGM_SET
   
   //トレーナータイプ取得(シングル、ダブル、タッグ)
-  _EYE_TRAINER_TYPE_GET SCWK_ANSWER
+  _EYE_TRAINER_TYPE_GET( SCWK_ANSWER )
   _IFVAL_JUMP    SCWK_ANSWER,EQ,SCR_EYE_TR_TYPE_SINGLE,ev_trainer_type_single
   _IFVAL_JUMP    SCWK_ANSWER,EQ,SCR_EYE_TR_TYPE_DOUBLE,ev_trainer_type_double
   _IFVAL_JUMP    SCWK_ANSWER,EQ,SCR_EYE_TR_TYPE_TAG,ev_trainer_type_tag
@@ -420,7 +428,7 @@ ev_trainer_type_single:
   //視線曲セット
   _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER
   $SCWK_TEMP0 = $SCWK_ANSWER
-  _TRAINER_BGM_SET  SCWK_TEMP0
+  _TRAINER_BGM_SET(  SCWK_TEMP0 )
 
   _EYE_TRAINER_MOVE_SET  SCR_EYE_TR_0        //トレーナー移動処理呼び出し
   _CALL ev_trainer_type_single_move_end_check
@@ -428,7 +436,7 @@ ev_trainer_type_single:
   //移動終了後、会話へ
   _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER
   $SCWK_TEMP0 = $SCWK_ANSWER
-  _TRAINER_MSG_SET  SCWK_TEMP0,TRMSG_FIGHT_START
+  _TRAINER_MSG_SET(  SCWK_TEMP0,TRMSG_FIGHT_START )
 #if 0
 //_AB_KEYWAIT()
 #else
@@ -443,7 +451,7 @@ ev_trainer_type_single:
   //トレーナーフラグセット
   _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER
   $SCWK_TEMP0 = $SCWK_ANSWER
-  _TRAINER_FLAG_SET  SCWK_TEMP0
+  _TRAINER_FLAG_SET(  SCWK_TEMP0 )
 
 EVENT_END
 

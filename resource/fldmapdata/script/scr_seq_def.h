@@ -1533,7 +1533,10 @@
  *  @param wk ID格納先ワーク
  */
 //--------------------------------------------------------------
-  .macro  _TRAINER_ID_GET  wk
+#define _TRAINER_ID_GET( wk ) \
+  _ASM_TRAINER_ID_GET wk
+
+  .macro  _ASM_TRAINER_ID_GET  wk
   .short  EV_SEQ_TRAINER_ID_GET
   .short  \wk
   .endm
@@ -1562,7 +1565,10 @@
  *  @param tr_id_1 トレーナーID1
  */
 //--------------------------------------------------------------
-  .macro  _TRAINER_MULTI_BTL_SET  partner_id, tr_id_0, tr_id_1
+#define _TRAINER_MULTI_BTL_SET( partner_id, tr_id_0, tr_id_1 ) \
+  _ASM_TRAINER_MULTI_BTL_SET  partner_id, tr_id_0, tr_id_1
+
+  .macro  _ASM_TRAINER_MULTI_BTL_SET  partner_id, tr_id_0, tr_id_1
   .short  EV_SEQ_TRAINER_MULTI_BTL_SET
   .short  \partner_id
   .short  \tr_id_0
@@ -1576,7 +1582,10 @@
  *  @param kind_id 会話種類
  */
 //--------------------------------------------------------------
-  .macro  _TRAINER_MSG_SET  tr_id,kind_id
+#define _TRAINER_MSG_SET( tr_id,kind_id ) \
+  _ASM_TRAINER_MSG_SET  tr_id,kind_id
+
+  .macro  _ASM_TRAINER_MSG_SET  tr_id,kind_id
   .short  EV_SEQ_TRAINER_MSG_SET
   .short  \tr_id
   .short  \kind_id
@@ -1590,7 +1599,10 @@
  *  @param wk2 会話種類格納先ワーク ポケモン１体
  */
 //--------------------------------------------------------------
-  .macro  _TRAINER_TALK_TYPE_GET  wk1,wk2,wk3
+#define _TRAINER_TALK_TYPE_GET(  wk1,wk2,wk3 ) \
+  _ASM_TRAINER_TALK_TYPE_GET  wk1,wk2,wk3
+
+  .macro  _ASM_TRAINER_TALK_TYPE_GET  wk1,wk2,wk3
   .short  EV_SEQ_TRAINER_TALK_TYPE_GET
   .short  \wk1
   .short  \wk2
@@ -1605,7 +1617,10 @@
  *  @param wk2 会話種類格納先ワーク ポケモン１体
  */
 //--------------------------------------------------------------
-  .macro  _REVENGE_TRAINER_TALK_TYPE_GET  wk1,wk2,wk3
+#define _REVENGE_TRAINER_TALK_TYPE_GET(  wk1,wk2,wk3 ) \
+  _ASM_REVENGE_TRAINER_TALK_TYPE_GET  wk1,wk2,wk3
+
+  .macro  _ASM_REVENGE_TRAINER_TALK_TYPE_GET  wk1,wk2,wk3
   .short  EV_SEQ_REVENGE_TRAINER_TALK_TYPE_GET
   .short  \wk1
   .short  \wk2
@@ -1618,7 +1633,10 @@
  *  @param ret_wk タイプ格納先ワーク
  */
 //--------------------------------------------------------------
-  .macro  _TRAINER_TYPE_GET  ret_wk
+#define _TRAINER_TYPE_GET( ret_wk ) \
+  _ASM_TRAINER_TYPE_GET  ret_wk
+
+  .macro  _ASM_TRAINER_TYPE_GET  ret_wk
   .short  EV_SEQ_TRAINER_TYPE_GET
   .short  \ret_wk
   .endm
@@ -1629,7 +1647,10 @@
  *  @param tr_id トレーナーID
  */
 //--------------------------------------------------------------
-  .macro  _TRAINER_BGM_SET  tr_id
+#define _TRAINER_BGM_SET(  tr_id ) \
+  _ASM_TRAINER_BGM_SET  tr_id
+
+  .macro  _ASM_TRAINER_BGM_SET  tr_id
   .short  EV_SEQ_TRAINER_BGM_SET
   .short  \tr_id
   .endm
@@ -1640,7 +1661,10 @@
  *  @param none
  */
 //--------------------------------------------------------------
-  .macro  _TRAINER_LOSE
+#define _TRAINER_LOSE() \
+  _ASM_TRAINER_LOSE
+
+  .macro  _ASM_TRAINER_LOSE
   .short  EV_SEQ_LOSE
   .endm
 
@@ -1663,7 +1687,10 @@
  * @param none
  */
 //--------------------------------------------------------------
-  .macro  _NORMAL_LOSE
+#define _NORMAL_LOSE() \
+  _ASM_NORMAL_LOSE
+
+  .macro  _ASMNORMAL_LOSE
   .short  EV_SEQ_LOSE
   .endm
 
@@ -1673,7 +1700,10 @@
  *  @param ret_wk 結果格納先 0=敗北 1=勝利
  */
 //--------------------------------------------------------------
-  .macro  _LOSE_CHECK  ret_wk
+#define  _LOSE_CHECK(  ret_wk ) \
+  _ASM_LOSE_CHECK  ret_wk
+
+  .macro  _ASM_LOSE_CHECK  ret_wk
   .short  EV_SEQ_LOSE_CHECK
   .short  \ret_wk
   .endm
