@@ -1297,11 +1297,15 @@ void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFu
 
         if( bpp->wazaSickCounter[sick] >= turnMax )
         {
-          bpp->wazaSickCounter[sick] = 0;
+          BTL_Printf("経過ターンが最大ターンを越えた\n");
           // 眠り自体のオフは行動チェック時に行う
           if( sick != WAZASICK_NEMURI ){
-            bpp->sickCont[sick].type = WAZASICK_CONT_NONE;
+            bpp->sickCont[sick] = BPP_SICKCONT_MakeNull();;
+            bpp->wazaSickCounter[sick] = 0;
             fCure = TRUE;
+          }
+          else{
+            BTL_Printf("しかし眠りなのでまだ起きない\n");
           }
         }
       }
@@ -1404,11 +1408,14 @@ BOOL BPP_Nemuri_CheckWake( BTL_POKEPARAM* pp )
   if( BPP_CheckSick(pp, WAZASICK_NEMURI) )
   {
     u8 turnMax = BPP_SICCONT_GetTurnMax( pp->sickCont[POKESICK_NEMURI] );
+    BTL_Printf("ねむりターンチェック：turnMax=%d, turnCount=%d\n", turnMax, pp->wazaSickCounter[POKESICK_NEMURI]);
     if( (turnMax != 0 ) && (pp->wazaSickCounter[POKESICK_NEMURI] >= turnMax) )
     {
       pp->sickCont[ POKESICK_NEMURI ] = BPP_SICKCONT_MakeNull();
       pp->sickCont[ WAZASICK_AKUMU ] = BPP_SICKCONT_MakeNull();
-     return TRUE;
+      pp->wazaSickCounter[ POKESICK_NEMURI ] = 0;
+      pp->wazaSickCounter[ WAZASICK_AKUMU ] = 0;
+      return TRUE;
     }
   }else{
     GF_ASSERT(0);
