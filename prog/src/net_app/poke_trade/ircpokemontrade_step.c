@@ -296,9 +296,6 @@ static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
     pWork->pMoveMcss[0]=NULL;
     _setNextAnim(pWork, 0);
 
-    //自分を白くする
-    MCSS_SetPaletteFade( pWork->pokeMcss[0], 16, 16, 0, 0xffff );
-
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade2);
   }
 }
@@ -311,8 +308,6 @@ static void _changeDemo_ModelTrade2(IRC_POKEMON_TRADE* pWork)
 
   //ボール変更アニメ
   G2_BlendNone();
-  _pokemonCreateCLACTInit(pWork);
-  _pokemonCreateCLACTAdd(pWork);
   //  return;
 //  }
   
@@ -340,7 +335,22 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
   _pokeMoveFunc(pWork->pMoveMcss[0]);
   _pokeMoveFunc(pWork->pMoveMcss[1]);
 
-  if(pWork->anmCount == 2){
+
+  if(pWork->anmCount == (_POKEMON_DELETE_TIME-5)){
+    //自分を白くする
+    MCSS_SetPaletteFade( pWork->pokeMcss[0], 8, 8, 0, 0xffff );
+  }
+  if(pWork->anmCount == (_POKEMON_DELETE_TIME-4)){
+    //自分を白くする
+    MCSS_SetPaletteFade( pWork->pokeMcss[0], 16, 16, 0, 0xffff );
+  }
+
+  if(pWork->anmCount == (_POKEMON_DELETE_TIME-3)){
+    _pokemonCreateCLACTInit(pWork);
+    _pokemonCreateCLACTAdd(pWork);
+  }
+  
+  if(pWork->anmCount == _POKEMON_DELETE_TIME){
     GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
     GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
   }
