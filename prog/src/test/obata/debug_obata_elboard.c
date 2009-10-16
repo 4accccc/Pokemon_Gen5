@@ -10,68 +10,81 @@
 // ■リソース
 //============================================================================================
 
-static const GFL_G3D_UTIL_RES res_table_dice[] = 
+// リソースインデックス
+enum
 {
-  { ARCID_OBATA_DEBUG, NARC_debug_obata_dice_nsbmd, GFL_G3D_UTIL_RESARC },
+  RES_ELBOARD_NSBMD,
+  RES_ELBOARD_NSBTX,
+  RES_ELBOARD_NSBTA,
+  RES_ELBOARD_NSBCA,
+  RES_NUM
+}; 
+static const GFL_G3D_UTIL_RES res_table[] = 
+{
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_elboard_test_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_elboard_test_nsbtx, GFL_G3D_UTIL_RESARC },
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_elboard_test_nsbta, GFL_G3D_UTIL_RESARC },
+  { ARCID_OBATA_DEBUG, NARC_debug_obata_elboard_test_nsbca, GFL_G3D_UTIL_RESARC },
 };
 
-static const GFL_G3D_UTIL_OBJ obj_table_dice[] = 
+// アニメインデックス
+enum
 {
-  {
-    0,     // モデルリソースID
-    0,     // モデルデータID(リソース内部INDEX)
-    0,     // テクスチャリソースID
-    NULL,  // アニメテーブル(複数指定のため)
-    0,     // アニメリソース数
-  },
+  ANM_ELBOARD_NSBTA,
+  ANM_ELBOARD_NSBCA,
+  ANM_NUM
+}; 
+static const GFL_G3D_UTIL_ANM anm_table[] = 
+{
+  // アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ELBOARD_NSBTA, 0, },
+  { RES_ELBOARD_NSBCA, 0, },
+};
+
+// オブジェクトインデックス
+enum
+{
+  OBJ_ELBOARD,
+  OBJ_NUM
+};
+static const GFL_G3D_UTIL_OBJ obj_table[] = 
+{
+  // モデルリソースID, モデルデータID(リソース内部INDEX), テクスチャリソースID, アニメテーブル, アニメリソース数
+  { RES_ELBOARD_NSBMD, 0, RES_ELBOARD_NSBTX, anm_table, NELEMS(anm_table) },
 }; 
 
 // セットアップ番号
 enum
 {
-  SETUP_INDEX_DICE,
+  SETUP_INDEX_ELBOARD,
   SETUP_INDEX_MAX
-};
-
-// セットアップデータ
+}; 
 static const GFL_G3D_UTIL_SETUP setup[] =
 {
-  { res_table_dice, NELEMS(res_table_dice), obj_table_dice, NELEMS(obj_table_dice) },
-};
-
-// アニメーションデータ
-static ARCDATID anime_dat_id[] = 
-{
-  NARC_debug_obata_dice_anime_srt_bin,
-  NARC_debug_obata_dice_anime_sr_bin,
-  NARC_debug_obata_dice_anime_st_bin,
-  NARC_debug_obata_dice_anime_rt_bin,
-  NARC_debug_obata_dice_anime_s_bin,
-  NARC_debug_obata_dice_anime_r_bin,
-  NARC_debug_obata_dice_anime_t_bin,
+  { res_table, NELEMS(res_table), obj_table, NELEMS(obj_table) },
 };
 
 
 //============================================================================================
-/**
- * @breif ワーク
- */
+// ■ワーク
 //============================================================================================
 typedef struct
 {
-  u32 frame;
+  // フレームカウンタ
+  u32 frame;  
+
+  // G3D_xxxx
   GFL_G3D_UTIL* g3dUtil;
   u16 unitIndex[ SETUP_INDEX_MAX ];
 
+  // カメラ
   GFL_G3D_CAMERA* camera;
 }
 PROC_WORK;
 
 
 //============================================================================================
-/**
- * @brief プロトタイプ宣言
- */
+// ■プロトタイプ宣言
 //============================================================================================
 static void Initialize( PROC_WORK* work );
 static void Finalize( PROC_WORK* work );
@@ -208,10 +221,17 @@ static void Initialize( PROC_WORK* work )
     }
   }
 
+  // 文字列書き込み
+  {
+    u16 obj_index_head = GFL_G3D_UTIL_GetUnitObjIdx( work->g3dUtil, SETUP_INDEX_ELBOARD );
+    u16 obj_index_elboard = obj_index_head + OBJ_ELBOARD;
+    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->g3dUtil, obj_index_elboard );
+  }
+
   // カメラ作成
   {
-    VecFx32    pos = { 0, 0, 5*FX32_ONE };
-    VecFx32 target = { 0, 0, 0 };
+    VecFx32    pos = { 0*FX32_ONE, 0*FX32_ONE, 100*FX32_ONE };
+    VecFx32 target = { 0*FX32_ONE, 0*FX32_ONE, 0*FX32_ONE };
     VecFx32     up = { 0, FX32_ONE, 0 };
     fx32       far = FX32_ONE * 4096;
     work->camera   = GFL_G3D_CAMERA_CreateDefault( &pos, &target, HEAPID_OBATA_DEBUG );
@@ -282,7 +302,7 @@ static void Draw( PROC_WORK* work )
   GFL_G3D_DRAW_Start();
   GFL_G3D_DRAW_SetLookAt();
   {
-    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->g3dUtil, work->unitIndex[SETUP_INDEX_DICE] );
+    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->g3dUtil, work->unitIndex[SETUP_INDEX_ELBOARD] );
     GFL_G3D_DRAW_DrawObject( obj, &status );
   }
   GFL_G3D_DRAW_End();
