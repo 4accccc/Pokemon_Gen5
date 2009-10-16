@@ -61,4 +61,9 @@ extern void PLIST_MENU_UpdateMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork 
 
 extern const PLIST_MENU_ITEM_TYPE PLIST_MENU_IsFinish( PLIST_WORK *work , PLIST_MENU_WORK *menuWork );
 //バトル参加決定時下に出るやつ
-extern GFL_BMPWIN* PLIST_MENU_CreateMenuWin_BattleMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , u32 strId , u8 charX , u8 charY , const BOOL isReturn );
+extern APP_TASKMENU_WIN_WORK* PLIST_MENU_CreateMenuWin_BattleMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , u32 strId , u8 charX , u8 charY , const BOOL isReturn );
+//以下NULL対応を入れたラッパー
+extern void PLIST_MENU_DeleteMenuWin_BattleMenu( APP_TASKMENU_WIN_WORK *work );
+extern void PLIST_MENU_UpdateMenuWin_BattleMenu( APP_TASKMENU_WIN_WORK *work );
+extern void PLIST_MENU_SetActiveMenuWin_BattleMenu( APP_TASKMENU_WIN_WORK *work , const BOOL flg );
+extern void PLIST_MENU_SetDecideMenuWin_BattleMenu( APP_TASKMENU_WIN_WORK *work , const BOOL flg );

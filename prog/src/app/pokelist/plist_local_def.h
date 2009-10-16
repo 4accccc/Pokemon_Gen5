@@ -225,7 +225,8 @@ struct _PLIST_WORK
 
   //バトルメニュー用
   u8  btlJoinNum;   //バトル参加人数
-  GFL_BMPWIN *btlMenuWin[2];  //バトル用決定・戻る
+//  GFL_BMPWIN *btlMenuWin[2];  //バトル用決定・戻る
+  APP_TASKMENU_WIN_WORK *btlMenuWin[2]; //バトル用決定・戻る
   u16 btlMenuAnmCnt;       //↑のアニメ用
   u16 btlMenuTransBuf;
   u8  btlTermAnmCnt;

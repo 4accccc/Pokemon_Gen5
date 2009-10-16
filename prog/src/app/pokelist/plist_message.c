@@ -33,6 +33,11 @@
 #define PLIST_MSG_BARWIN_WIDTH  (21)
 #define PLIST_MSG_BARWIN_HEIGHT ( 2)
 
+#define PLIST_MSG_BARWIN_BATTLE_TOP    (21)
+#define PLIST_MSG_BARWIN_BATTLE_LEFT   ( 1)
+#define PLIST_MSG_BARWIN_BATTLE_WIDTH  (20)
+#define PLIST_MSG_BARWIN_BATTLE_HEIGHT ( 2)
+
 #define PLIST_MSG_MENUWIN_TOP    (19)
 #define PLIST_MSG_MENUWIN_LEFT   ( 2)
 #define PLIST_MSG_MENUWIN_WIDTH  (14)
@@ -163,6 +168,13 @@ void PLIST_MSG_OpenWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , const PL
     msgWork->bmpWin = GFL_BMPWIN_Create( PLIST_BG_MENU , 
               PLIST_MSG_BARWIN_LEFT , PLIST_MSG_BARWIN_TOP , 
               PLIST_MSG_BARWIN_WIDTH , PLIST_MSG_BARWIN_HEIGHT ,
+              PLIST_BG_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+    break;
+
+  case PMT_BAR_BATTLE:      //バーの1行メッセージ
+    msgWork->bmpWin = GFL_BMPWIN_Create( PLIST_BG_MENU , 
+              PLIST_MSG_BARWIN_BATTLE_LEFT , PLIST_MSG_BARWIN_BATTLE_TOP , 
+              PLIST_MSG_BARWIN_BATTLE_WIDTH , PLIST_MSG_BARWIN_BATTLE_HEIGHT ,
               PLIST_BG_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
     break;
 
@@ -332,6 +344,13 @@ void PLIST_MSG_AddWordSet_Value( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , u8
   GF_ASSERT( msgWork->wordSet != NULL );
 
   WORDSET_RegisterNumber( msgWork->wordSet , wordSetIdx , value , keta , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+}  
+
+void PLIST_MSG_AddWordSet_Word( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , u8 wordSetIdx , STRBUF *str , u32 sex )
+{
+  GF_ASSERT( msgWork->wordSet != NULL );
+
+  WORDSET_RegisterWord( msgWork->wordSet , wordSetIdx , str , sex , TRUE , PM_LANG );
 }  
 
 #pragma mark [> util

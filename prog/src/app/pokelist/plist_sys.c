@@ -53,9 +53,9 @@
 #define PLIST_CHANGE_ANM_VALUE (1)    //移動量(キャラ単位
 
 //バトルメニュー用ボタン座標
-#define PLIST_BATTLE_BUTTON_DECIDE_X (6)
+#define PLIST_BATTLE_BUTTON_DECIDE_X (12)
 #define PLIST_BATTLE_BUTTON_DECIDE_Y (21)
-#define PLIST_BATTLE_BUTTON_CANCEL_X (19)
+#define PLIST_BATTLE_BUTTON_CANCEL_X (22)
 #define PLIST_BATTLE_BUTTON_CANCEL_Y (21)
 
 #define PLIST_PLATE_ACTIVE_ANM_CNT (12)
@@ -223,6 +223,8 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->btlTermAnmCnt = 0;
   work->hpAnimeCallBack = NULL;
   work->clwkExitButton = NULL;
+  work->btlMenuWin[0] = NULL;
+  work->btlMenuWin[1] = NULL; 
 
   for( i=0;i<PCR_MAX;i++ )
   {
@@ -308,8 +310,8 @@ const BOOL PLIST_TermPokeList( PLIST_WORK *work )
   
   if( PLIST_UTIL_IsBattleMenu(work) == TRUE )
   {
-    GFL_BMPWIN_Delete( work->btlMenuWin[0] );
-    GFL_BMPWIN_Delete( work->btlMenuWin[1] );
+    PLIST_MENU_DeleteMenuWin_BattleMenu( work->btlMenuWin[0] );
+    PLIST_MENU_DeleteMenuWin_BattleMenu( work->btlMenuWin[1] );
   }
   
   PLIST_MENU_DeleteSystem( work , work->menuWork );
@@ -404,21 +406,6 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
   case PSMS_BATTLE_ANM_WAIT:
     {
       //決定時アニメ
-      const u8 isBlink = (work->btlTermAnmCnt/APP_TASKMENU_ANM_INTERVAL)%2;
-      if( isBlink == 0 )
-      {
-        const u8 idx = work->pokeCursor - PL_SEL_POS_ENTER;
-        GFL_BMPWIN_SetPalette( work->btlMenuWin[idx] , PLIST_BG_PLT_MENU_NORMAL );
-        GFL_BMPWIN_MakeScreen( work->btlMenuWin[idx] );
-        GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->btlMenuWin[idx]) );
-      }
-      else
-      {
-        const u8 idx = work->pokeCursor - PL_SEL_POS_ENTER;
-        GFL_BMPWIN_SetPalette( work->btlMenuWin[idx] , PLIST_BG_PLT_MENU_ACTIVE );
-        GFL_BMPWIN_MakeScreen( work->btlMenuWin[idx] );
-        GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->btlMenuWin[idx]) );
-      }
       work->btlTermAnmCnt++;
       if( work->btlTermAnmCnt > APP_TASKMENU_ANM_CNT )
       {
@@ -458,6 +445,9 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
   if( PLIST_UTIL_IsBattleMenu(work) == TRUE )
   {
     PLIST_BATTLE_UpdateBattle( work );
+    
+    PLIST_MENU_UpdateMenuWin_BattleMenu( work->btlMenuWin[0] );
+    PLIST_MENU_UpdateMenuWin_BattleMenu( work->btlMenuWin[1] );
   }
 
   //メッセージ
@@ -980,11 +970,17 @@ static void PLIST_InitMode( PLIST_WORK *work )
   switch( work->plData->mode )
   {
   case PL_MODE_BATTLE:
+  /*
     work->btlMenuWin[0] = PLIST_MENU_CreateMenuWin_BattleMenu( work , work->menuWork ,
                               mes_pokelist_01_01 , PLIST_BATTLE_BUTTON_DECIDE_X , PLIST_BATTLE_BUTTON_DECIDE_Y , FALSE );
     work->btlMenuWin[1] = PLIST_MENU_CreateMenuWin_BattleMenu( work , work->menuWork ,
                               mes_pokelist_01_02 , PLIST_BATTLE_BUTTON_CANCEL_X , PLIST_BATTLE_BUTTON_CANCEL_Y , TRUE );
-
+  */
+    //決定のみ作成
+    work->btlMenuWin[0] = PLIST_MENU_CreateMenuWin_BattleMenu( work , work->menuWork ,
+                              mes_pokelist_01_01 , PLIST_BATTLE_BUTTON_DECIDE_X+10 , PLIST_BATTLE_BUTTON_DECIDE_Y , FALSE );
+  
+  
     //選択画面へ
     PLIST_InitMode_Select( work );
     work->nextMainSeq = PSMS_SELECT_POKE;
@@ -1120,8 +1116,7 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
     break;
     
   case PL_MODE_BATTLE:
-//    PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
-//    PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_06 );
+    PLIST_BATTLE_OpenWaitingMessage( work );
     GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , FALSE );
     work->canExit = FALSE;
     break;
@@ -1332,10 +1327,19 @@ static void PLIST_InitMode_Menu( PLIST_WORK *work )
 
     break;
   case PL_MODE_BATTLE:
-    itemArr[0] = PMIT_SET_JOIN;
-    itemArr[1] = PMIT_STATSU;
-    itemArr[2] = PMIT_CLOSE;
-    itemArr[3] = PMIT_END_LIST;
+    if( PLIST_PLATE_IsEgg( work , work->plateWork[work->pokeCursor] ) == TRUE )
+    {
+      itemArr[0] = PMIT_STATSU;
+      itemArr[1] = PMIT_CLOSE;
+      itemArr[2] = PMIT_END_LIST;
+    }
+    else
+    {
+      itemArr[0] = PMIT_SET_JOIN;
+      itemArr[1] = PMIT_STATSU;
+      itemArr[2] = PMIT_CLOSE;
+      itemArr[3] = PMIT_END_LIST;
+    }
     
     PLIST_MSG_CreateWordSet( work , work->msgWork );
     PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
@@ -1444,8 +1448,8 @@ static void PLIST_SelectPokeInit( PLIST_WORK *work )
   //バトル処理
   if( PLIST_UTIL_IsBattleMenu(work) == TRUE )
   {
-    GFL_BMPWIN_SetPalette( work->btlMenuWin[0] , PLIST_BG_PLT_MENU_NORMAL );
-    GFL_BMPWIN_SetPalette( work->btlMenuWin[1] , PLIST_BG_PLT_MENU_NORMAL );
+    PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[0] , FALSE );
+    PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[1] , FALSE );
   }
   
 //  if( work->ktst == GFL_APP_KTST_KEY || 
@@ -1462,7 +1466,7 @@ static void PLIST_SelectPokeInit( PLIST_WORK *work )
     {
       //バトル時決定・戻る
       const u8 idx = work->pokeCursor - PL_SEL_POS_ENTER;
-      GFL_BMPWIN_SetPalette( work->btlMenuWin[idx] , PLIST_BG_PLT_MENU_ACTIVE );
+      PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[idx] , TRUE );
     }
   }
   else
@@ -1484,7 +1488,7 @@ static void PLIST_SelectPokeInit( PLIST_WORK *work )
     {
       //バトル時決定・戻る
       const u8 idx = work->pokeCursor - PL_SEL_POS_ENTER;
-      GFL_BMPWIN_SetPalette( work->btlMenuWin[idx] , PLIST_BG_PLT_MENU_NORMAL );
+      PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[idx] , FALSE );
     }
   }
   
@@ -1494,11 +1498,6 @@ static void PLIST_SelectPokeInit( PLIST_WORK *work )
   if( PLIST_UTIL_IsBattleMenu(work) == TRUE )
   {
     GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[PBT_RETURN] , FALSE );
-    GFL_BMPWIN_MakeScreen( work->btlMenuWin[0] );
-    GFL_BMPWIN_MakeScreen( work->btlMenuWin[1] );
-    GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->btlMenuWin[1]) );
-    GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->btlMenuWin[0]) );
-
   }
   else
   {
@@ -1574,14 +1573,10 @@ static void PLIST_SelectPokeTerm( PLIST_WORK *work )
     if(  PLIST_UTIL_IsBattleMenu(work) == TRUE )
     {
       //決定再表示
-      GFL_BMPWIN_SetPalette( work->btlMenuWin[0] , PLIST_BG_PLT_MENU_NORMAL );
-      GFL_BMPWIN_MakeScreen( work->btlMenuWin[0] );
-      GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->btlMenuWin[0]) );
+      PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[0] , FALSE );
       
       //戻るを点灯
-      GFL_BMPWIN_SetPalette( work->btlMenuWin[1] , PLIST_BG_PLT_MENU_ACTIVE );
-      GFL_BMPWIN_MakeScreen( work->btlMenuWin[1] );
-      GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->btlMenuWin[1]) );
+      PLIST_MENU_SetDecideMenuWin_BattleMenu( work->btlMenuWin[0] , TRUE );
       work->mainSeq = PSMS_BATTLE_ANM_WAIT;
       work->pokeCursor = PL_SEL_POS_EXIT;
     }
@@ -1688,14 +1683,10 @@ static void PLIST_SelectPokeTerm_BattleDecide( PLIST_WORK *work )
   else
   {
     //戻るボタン再表示
-    GFL_BMPWIN_SetPalette( work->btlMenuWin[1] , PLIST_BG_PLT_MENU_NORMAL );
-    GFL_BMPWIN_MakeScreen( work->btlMenuWin[1] );
-    GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->btlMenuWin[1]) );
+    PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[1] , FALSE );
     
     //決定を点灯
-    GFL_BMPWIN_SetPalette( work->btlMenuWin[0] , PLIST_BG_PLT_MENU_ACTIVE );
-    GFL_BMPWIN_MakeScreen( work->btlMenuWin[0] );
-    GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->btlMenuWin[0]) );
+    PLIST_MENU_SetDecideMenuWin_BattleMenu( work->btlMenuWin[0] , TRUE );
     
     work->mainSeq = PSMS_BATTLE_ANM_WAIT;
     work->plData->ret_sel = PL_SEL_POS_ENTER;
@@ -1797,9 +1788,13 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
     }
     else if( trg & PAD_BUTTON_B )
     {
-      work->selectState = PSSEL_RETURN;
-      work->clwkExitButton = work->clwkBarIcon[PBT_RETURN];
-      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
+      if( PLIST_UTIL_IsBattleMenu( work ) == FALSE ||
+          PLIST_UTIL_IsBattleMenu_CanReturn( work ) == TRUE )
+      {
+        work->selectState = PSSEL_RETURN;
+        work->clwkExitButton = work->clwkBarIcon[PBT_RETURN];
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
+      }
     }
     else if( trg & PAD_BUTTON_X )
     {
@@ -1821,7 +1816,14 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
       //バトルのときだけ決定・戻るにカーソルが行く
       if( PLIST_UTIL_IsBattleMenu( work ) == TRUE )
       {
-        maxValue = PL_SEL_POS_EXIT;
+        if( PLIST_UTIL_IsBattleMenu_CanReturn( work ) == TRUE )
+        {
+          maxValue = PL_SEL_POS_EXIT;
+        }
+        else
+        {
+          maxValue = PL_SEL_POS_ENTER;
+        }
       }
       else
       {
@@ -1864,9 +1866,7 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
         {
           //バトル時決定・戻る
           const u8 idx = work->pokeCursor - PL_SEL_POS_ENTER;
-          GFL_BMPWIN_SetPalette( work->btlMenuWin[idx] , PLIST_BG_PLT_MENU_ACTIVE );
-          GFL_BMPWIN_MakeScreen( work->btlMenuWin[idx] );
-          GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->btlMenuWin[idx]) );
+          PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[idx] , TRUE );
           
           GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
         }
@@ -1880,9 +1880,7 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
         {
           //バトル時決定・戻る
           const u8 idx = befPos - PL_SEL_POS_ENTER;
-          GFL_BMPWIN_SetPalette( work->btlMenuWin[idx] , PLIST_BG_PLT_MENU_NORMAL );
-          GFL_BMPWIN_MakeScreen( work->btlMenuWin[idx] );
-          GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->btlMenuWin[idx]) );
+          PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[idx] , FALSE );
         }
         work->platePalAnmCnt = PLIST_PLATE_ACTIVE_ANM_CNT;
 
@@ -1937,9 +1935,7 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
       {
         //バトル時決定・戻る
         const u8 idx = befPos - PL_SEL_POS_ENTER;
-        GFL_BMPWIN_SetPalette( work->btlMenuWin[idx] , PLIST_BG_PLT_MENU_NORMAL );
-        GFL_BMPWIN_MakeScreen( work->btlMenuWin[idx] );
-        GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->btlMenuWin[idx]) );
+        PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[idx] , FALSE );
       }
 
       if( work->pokeCursor <= PL_SEL_POS_POKE6 )
@@ -1950,9 +1946,7 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
       {
         //バトル時決定・戻る
         const u8 idx = work->pokeCursor - PL_SEL_POS_ENTER;
-        GFL_BMPWIN_SetPalette( work->btlMenuWin[idx] , PLIST_BG_PLT_MENU_ACTIVE );
-        GFL_BMPWIN_MakeScreen( work->btlMenuWin[idx] );
-        GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(work->btlMenuWin[idx]) );
+        PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[idx] , TRUE );
         
         GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
       }
@@ -1977,15 +1971,25 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
     //バトル用
     if( PLIST_UTIL_IsBattleMenu( work ) == TRUE )
     {
-      hitTbl[PSSEL_RETURN].rect.top    = PLIST_BATTLE_BUTTON_CANCEL_Y*8;    
-      hitTbl[PSSEL_RETURN].rect.bottom = (PLIST_BATTLE_BUTTON_CANCEL_Y+3)*8;
-      hitTbl[PSSEL_RETURN].rect.left   = PLIST_BATTLE_BUTTON_CANCEL_X*8;
-      hitTbl[PSSEL_RETURN].rect.right  = 255;//(PLIST_BATTLE_BUTTON_CANCEL_X+13)*8;
+      if( PLIST_UTIL_IsBattleMenu_CanReturn( work ) == TRUE )
+      {
+        hitTbl[PSSEL_RETURN].rect.top    = PLIST_BATTLE_BUTTON_CANCEL_Y*8;    
+        hitTbl[PSSEL_RETURN].rect.bottom = (PLIST_BATTLE_BUTTON_CANCEL_Y+3)*8;
+        hitTbl[PSSEL_RETURN].rect.left   = PLIST_BATTLE_BUTTON_CANCEL_X*8;
+        hitTbl[PSSEL_RETURN].rect.right  = 255;//(PLIST_BATTLE_BUTTON_CANCEL_X+10)*8;
 
-      hitTbl[PSSEL_DECIDE].rect.top    = PLIST_BATTLE_BUTTON_DECIDE_Y*8;
-      hitTbl[PSSEL_DECIDE].rect.bottom = (PLIST_BATTLE_BUTTON_DECIDE_Y+3)*8;
-      hitTbl[PSSEL_DECIDE].rect.left   = PLIST_BATTLE_BUTTON_DECIDE_X*8;     
-      hitTbl[PSSEL_DECIDE].rect.right  = (PLIST_BATTLE_BUTTON_DECIDE_X+13)*8;
+        hitTbl[PSSEL_DECIDE].rect.top    = PLIST_BATTLE_BUTTON_DECIDE_Y*8;
+        hitTbl[PSSEL_DECIDE].rect.bottom = (PLIST_BATTLE_BUTTON_DECIDE_Y+3)*8;
+        hitTbl[PSSEL_DECIDE].rect.left   = PLIST_BATTLE_BUTTON_DECIDE_X*8;     
+        hitTbl[PSSEL_DECIDE].rect.right  = (PLIST_BATTLE_BUTTON_DECIDE_X+10)*8;
+      }
+      else
+      {
+        hitTbl[PSSEL_DECIDE].rect.top    = PLIST_BATTLE_BUTTON_DECIDE_Y*8;
+        hitTbl[PSSEL_DECIDE].rect.bottom = (PLIST_BATTLE_BUTTON_DECIDE_Y+3)*8;
+        hitTbl[PSSEL_DECIDE].rect.left   = (PLIST_BATTLE_BUTTON_DECIDE_X+10)*8;
+        hitTbl[PSSEL_DECIDE].rect.right  = 255;//(PLIST_BATTLE_BUTTON_DECIDE_X+10+10)*8;
+      }
     }
     else
     {
@@ -2585,6 +2589,17 @@ const BOOL PLIST_UTIL_IsBattleMenu( const PLIST_WORK *work )
   }
   return FALSE;
 }
+//--------------------------------------------------------------
+//	バトルの参加選択で戻ることができるか？
+//--------------------------------------------------------------
+const BOOL PLIST_UTIL_IsBattleMenu_CanReturn( const PLIST_WORK *work )
+{
+  if( work->plData->mode == PL_MODE_BATTLE )
+  {
+    return FALSE;
+  }
+  return TRUE;
+}
 
 //--------------------------------------------------------------
 //	今渡されている技が覚えられるか？
@@ -2858,6 +2873,8 @@ static void PLIST_DEB_Update_Alpha2( void* userWork , DEBUGWIN_ITEM* item );
 static void PLIST_DEB_Draw_Alpha2( void* userWork , DEBUGWIN_ITEM* item );
 static void PLIST_DEB_Update_Blend1( void* userWork , DEBUGWIN_ITEM* item );
 static void PLIST_DEB_Draw_Blend1( void* userWork , DEBUGWIN_ITEM* item );
+static void PLIST_DEB_Update_WaitMember( void* userWork , DEBUGWIN_ITEM* item );
+static void PLIST_DEB_Draw_WaitMember( void* userWork , DEBUGWIN_ITEM* item );
 
 
 static void PLIST_InitDebug( PLIST_WORK *work )
@@ -2874,6 +2891,7 @@ static void PLIST_InitDebug( PLIST_WORK *work )
   DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_Alpha1   ,PLIST_DEB_Draw_Alpha1   , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_Alpha2   ,PLIST_DEB_Draw_Alpha2   , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_Blend1   ,PLIST_DEB_Draw_Blend1   , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_WaitMember   ,PLIST_DEB_Draw_WaitMember   , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
   
 }
 
@@ -2975,4 +2993,32 @@ static void PLIST_DEB_Draw_Blend1( void* userWork , DEBUGWIN_ITEM* item )
   {
     DEBUGWIN_ITEM_SetNameV( item , "ブレンド[BG2]");
   }
+}
+
+static void PLIST_DEB_Update_WaitMember( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PLIST_WORK *work = (PLIST_WORK*)userWork;
+
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+  {
+    if( work->plData->comm_selected_num > 0 )
+    {
+      work->plData->comm_selected_num--;
+      DEBUGWIN_RefreshScreen();
+    }
+  }
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  {
+    if( work->plData->comm_selected_num < 3 )
+    {
+      work->plData->comm_selected_num++;
+      DEBUGWIN_RefreshScreen();
+    }
+  }
+}
+
+static void PLIST_DEB_Draw_WaitMember( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PLIST_WORK *work = (PLIST_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "待機人数[%d]",work->plData->comm_selected_num);
 }

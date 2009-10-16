@@ -15,9 +15,10 @@
 //メッセージウィンドウの種類
 typedef enum
 {
-  PMT_BAR,      //バーの1行メッセージ
-  PMT_MENU,     //メニューの小さめ2行
-  PMT_MESSAGE,  //フルサイズ
+  PMT_BAR,        //バーの1行メッセージ
+  PMT_BAR_BATTLE, //バーの1行メッセージ(決定が出てる時
+  PMT_MENU,       //メニューの小さめ2行
+  PMT_MESSAGE,    //フルサイズ
   
   PMT_NONE,     //ウィンドウ閉じてる
   PMT_MAX,
@@ -42,4 +43,5 @@ extern void PLIST_MSG_AddWordSet_ItemName( PLIST_WORK *work , PLIST_MSG_WORK *ms
 extern void PLIST_MSG_AddWordSet_SkillName( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , u8 wordSetIdx , u16 skillNo );
 extern void PLIST_MSG_AddWordSet_StatusName( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , u8 wordSetIdx , u16 statusId );
 extern void PLIST_MSG_AddWordSet_Value( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , u8 wordSetIdx , u16 value , u8 keta );
+extern void PLIST_MSG_AddWordSet_Word( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , u8 wordSetIdx , STRBUF *str , u32 sex );
 

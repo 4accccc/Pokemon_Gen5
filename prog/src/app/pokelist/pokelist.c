@@ -154,8 +154,12 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
           }
           plData->comm_battle[p].sex = GFUser_GetPublicRand0(2);
         }
-        //plData->party_disp_type = PL_COMM_DISP_PARTY_MULTI;
-        plData->party_disp_type = PL_COMM_DISP_PARTY_SINGLE;
+        //plData->comm_type = PL_COMM_MULTI;
+        plData->comm_type = PL_COMM_SINGLE;
+        plData->is_disp_party = TRUE;
+        plData->use_tile_limit = FALSE;
+        plData->time_limit = 0;
+        plData->comm_selected_num = 1;
       }
       else
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )

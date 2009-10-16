@@ -20,6 +20,7 @@
 #include "msg/msg_pokelist.h"
 
 #include "plist_sys.h"
+#include "plist_message.h"
 #include "plist_battle.h"
 
 //======================================================================
@@ -85,26 +86,25 @@ void PLIST_BATTLE_InitBattle( PLIST_WORK *work )
   PLIST_BATTLE_InitCell( work );
   PLIST_BATTLE_InitResource( work );
 
-  switch( work->plData->party_disp_type )
+  if( work->plData->is_disp_party == TRUE )
   {
-  case PL_COMM_DISP_PARTY_NONE:    //”ñ•\Ž¦
-    break;
+    switch( work->plData->comm_type )
+    {
+    case PL_COMM_SINGLE:  //“GA‚Ì‚Ý
+      work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] = PLIST_BATTLE_CreateBattleParam( work , 
+                  &work->plData->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_A] , 10 , 0 , 2 );
+      break;
 
-  case PL_COMM_DISP_PARTY_SINGLE:  //“GA‚Ì‚Ý
-    work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] = PLIST_BATTLE_CreateBattleParam( work , 
-                &work->plData->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_A] , 10 , 0 , 2 );
-    break;
-
-  case PL_COMM_DISP_PARTY_MULTI:   //–¡•ûE“GAE“GB
-    work->battleParty[PL_COMM_PLAYER_TYPE_ALLY] = PLIST_BATTLE_CreateBattleParam( work , 
-                &work->plData->comm_battle[PL_COMM_PLAYER_TYPE_ALLY] , 0 , 0 , 0 );
-    work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] = PLIST_BATTLE_CreateBattleParam( work , 
-                &work->plData->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_A] , 11 , 0 , 0 );
-    work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_B] = PLIST_BATTLE_CreateBattleParam( work , 
-                &work->plData->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_B] , 22 , 0 , 0 );
-    break;
+    case PL_COMM_MULTI:   //–¡•ûE“GAE“GB
+      work->battleParty[PL_COMM_PLAYER_TYPE_ALLY] = PLIST_BATTLE_CreateBattleParam( work , 
+                  &work->plData->comm_battle[PL_COMM_PLAYER_TYPE_ALLY] , 0 , 0 , 0 );
+      work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] = PLIST_BATTLE_CreateBattleParam( work , 
+                  &work->plData->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_A] , 11 , 0 , 0 );
+      work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_B] = PLIST_BATTLE_CreateBattleParam( work , 
+                  &work->plData->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_B] , 22 , 0 , 0 );
+      break;
+    }
   }
-
 }
 
 //--------------------------------------------------------------
@@ -112,20 +112,20 @@ void PLIST_BATTLE_InitBattle( PLIST_WORK *work )
 //--------------------------------------------------------------
 void PLIST_BATTLE_TermBattle( PLIST_WORK *work )
 {
-  switch( work->plData->party_disp_type )
+  if( work->plData->is_disp_party == TRUE )
   {
-  case PL_COMM_DISP_PARTY_NONE:    //”ñ•\Ž¦
-    break;
+    switch( work->plData->comm_type )
+    {
+    case PL_COMM_SINGLE:  //“GA‚Ì‚Ý
+      PLIST_BATTLE_DeleteBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] );
+      break;
 
-  case PL_COMM_DISP_PARTY_SINGLE:  //“GA‚Ì‚Ý
-    PLIST_BATTLE_DeleteBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] );
-    break;
-
-  case PL_COMM_DISP_PARTY_MULTI:   //–¡•ûE“GAE“GB
-    PLIST_BATTLE_DeleteBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ALLY] );
-    PLIST_BATTLE_DeleteBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] );
-    PLIST_BATTLE_DeleteBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_B] );
-    break;
+    case PL_COMM_MULTI:   //–¡•ûE“GAE“GB
+      PLIST_BATTLE_DeleteBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ALLY] );
+      PLIST_BATTLE_DeleteBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] );
+      PLIST_BATTLE_DeleteBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_B] );
+      break;
+    }
   }
 
   PLIST_BATTLE_TermResource( work );
@@ -137,20 +137,20 @@ void PLIST_BATTLE_TermBattle( PLIST_WORK *work )
 //--------------------------------------------------------------
 void PLIST_BATTLE_UpdateBattle( PLIST_WORK *work )
 {
-  switch( work->plData->party_disp_type )
+  if( work->plData->is_disp_party == TRUE )
   {
-  case PL_COMM_DISP_PARTY_NONE:    //”ñ•\Ž¦
-    break;
+    switch( work->plData->comm_type )
+    {
+    case PL_COMM_SINGLE:  //“GA‚Ì‚Ý
+      PLIST_BATTLE_UpdateBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] );
+      break;
 
-  case PL_COMM_DISP_PARTY_SINGLE:  //“GA‚Ì‚Ý
-    PLIST_BATTLE_UpdateBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] );
-    break;
-
-  case PL_COMM_DISP_PARTY_MULTI:   //–¡•ûE“GAE“GB
-    PLIST_BATTLE_UpdateBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ALLY] );
-    PLIST_BATTLE_UpdateBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] );
-    PLIST_BATTLE_UpdateBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_B] );
-    break;
+    case PL_COMM_MULTI:   //–¡•ûE“GAE“GB
+      PLIST_BATTLE_UpdateBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ALLY] );
+      PLIST_BATTLE_UpdateBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] );
+      PLIST_BATTLE_UpdateBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_B] );
+      break;
+    }
   }
 }
 
@@ -186,18 +186,19 @@ static void PLIST_BATTLE_InitResource( PLIST_WORK *work )
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_pokelist_gra_list_battle_sub_NCGR ,
                     PLIST_BG_SUB_BATTLE_WIN , 0 , 0, FALSE , work->heapId );
 
-  switch( work->plData->party_disp_type )
+  if( work->plData->is_disp_party == TRUE )
   {
-  case PL_COMM_DISP_PARTY_NONE:    //”ñ•\Ž¦
-    break;
-  case PL_COMM_DISP_PARTY_SINGLE:  //“GA‚Ì‚Ý
-    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_pokelist_gra_list_battle_sub_s_NSCR , 
-                      PLIST_BG_SUB_BATTLE_WIN ,  0 , 0, FALSE , work->heapId );
-    break;
-  case PL_COMM_DISP_PARTY_MULTI:   //–¡•ûE“GAE“GB
-    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_pokelist_gra_list_battle_sub_m_NSCR , 
-                      PLIST_BG_SUB_BATTLE_WIN ,  0 , 0, FALSE , work->heapId );
-    break;
+    switch( work->plData->comm_type )
+    {
+    case PL_COMM_SINGLE:  //“GA‚Ì‚Ý
+      GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_pokelist_gra_list_battle_sub_s_NSCR , 
+                        PLIST_BG_SUB_BATTLE_WIN ,  0 , 0, FALSE , work->heapId );
+      break;
+    case PL_COMM_MULTI:   //–¡•ûE“GAE“GB
+      GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_pokelist_gra_list_battle_sub_m_NSCR , 
+                        PLIST_BG_SUB_BATTLE_WIN ,  0 , 0, FALSE , work->heapId );
+      break;
+    }
   }
 
   GFL_ARC_CloseDataHandle(arcHandle);
@@ -444,6 +445,43 @@ static void PLIST_BATTLE_UpdateBattleParamIcon( PLIST_WORK *work , PLIST_BATTLE_
       GFL_BMPWIN_MakeTransWindow_VBlank( iconWork->sexStrWin );
       GFL_BMPWIN_MakeTransWindow_VBlank( iconWork->lvStrWin );
     }
-    
   }
 }
+
+#pragma mark waiting message
+//--------------------------------------------------------------
+//	‘Ò‹@ƒƒbƒZ[ƒW‚Ì•\Ž¦
+//--------------------------------------------------------------
+void PLIST_BATTLE_OpenWaitingMessage( PLIST_WORK *work )
+{
+  PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR_BATTLE );
+  if( work->plData->comm_selected_num == 0 )
+  {
+    //’N‚àŒˆ‚ß‚Ä‚È‚¢
+    PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_06 );
+  }
+  else
+  {
+    if( work->plData->comm_type == PL_COMM_SINGLE )
+    {
+      //››‚Í‘Ò‹@’†
+      STRBUF *srcStr;
+      srcStr = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME , work->heapId ); 
+      GFL_STR_SetStringCode( srcStr , work->plData->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_A].name );
+      PLIST_MSG_CreateWordSet( work , work->msgWork );
+      PLIST_MSG_AddWordSet_Word( work , work->msgWork , 0 , srcStr , 
+                  work->plData->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_A].sex );
+
+      PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_13_01 );
+
+      PLIST_MSG_DeleteWordSet( work , work->msgWork );
+      GFL_STR_DeleteBuffer( srcStr );
+    }
+    else
+    {
+      //~~‚É‚ñ@‚½‚¢‚«‚¿‚ã‚¤(ƒAƒ‰ƒrƒA”Žš‚Å‚Í‚È‚¢‚Ì‚ÅƒƒbƒZ[ƒW‚ª•Ê
+      PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_13_02+(work->plData->comm_selected_num-1) );
+    }
+  }
+}
+

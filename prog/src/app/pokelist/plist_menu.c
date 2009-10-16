@@ -40,6 +40,7 @@
 
 #define PLIST_MENU_PLATE_LEFT (19)
 #define PLIST_MENU_PLATE_WIDTH (13)
+#define PLIST_MENU_PLATE_WIDTH_BATTLE (10)
 #define PLIST_MENU_PLATE_HEIGHT (3)
 
 //決定時点滅アニメ
@@ -395,41 +396,54 @@ static STRBUF* PLIST_MENU_CreateMenuStr( PLIST_WORK *work , PLIST_MENU_WORK *men
 //--------------------------------------------------------------
 //	バトル選択用に座標指定で出せるように
 //--------------------------------------------------------------
-GFL_BMPWIN* PLIST_MENU_CreateMenuWin_BattleMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , u32 strId , u8 charX , u8 charY , const BOOL isReturn )
+APP_TASKMENU_WIN_WORK* PLIST_MENU_CreateMenuWin_BattleMenu( PLIST_WORK *work , PLIST_MENU_WORK *menuWork , u32 strId , u8 charX , u8 charY , const BOOL isReturn )
 {
-  
-  //FIXME これのprintQueのUpdateが無いので後で足すこと
-  GFL_BMPWIN* bmpWin;
-  
-  PRINTSYS_LSB col;
-  STRBUF *str = GFL_MSG_CreateString( work->msgHandle , strId );
-
-  bmpWin = GFL_BMPWIN_Create( PLIST_BG_MENU ,
-                  charX , charY , 
-                  PLIST_MENU_PLATE_WIDTH , PLIST_MENU_PLATE_HEIGHT , 
-                  PLIST_BG_PLT_MENU_NORMAL , GFL_BMP_CHRAREA_GET_B );
-  //プレートの絵を送る
+  APP_TASKMENU_ITEMWORK itemWork;
+  APP_TASKMENU_WIN_WORK *winWork;
+  itemWork.str = GFL_MSG_CreateString( work->msgHandle , strId );
+  itemWork.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   if( isReturn == FALSE )
   {
-    GFL_STD_MemCopy32( menuWork->ncgData->pRawData , GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( bmpWin )) ,
-                    0x20*PLIST_MENU_PLATE_WIDTH*PLIST_MENU_PLATE_HEIGHT );
+    itemWork.type = APP_TASKMENU_WIN_TYPE_NORMAL;
   }
   else
   {
-    GFL_STD_MemCopy32( (void*)((u32)menuWork->ncgData->pRawData + 0x20*PLIST_MENU_PLATE_WIDTH*PLIST_MENU_PLATE_HEIGHT) , 
-                    GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( bmpWin )) ,
-                    0x20*PLIST_MENU_PLATE_WIDTH*PLIST_MENU_PLATE_HEIGHT );
+    itemWork.type = APP_TASKMENU_WIN_TYPE_RETURN;
   }
-  col = PRINTSYS_LSB_Make( PLIST_FONT_MENU_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
-//  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ), 
-//                      8+PLIST_MSG_STR_OFS_X , 4+PLIST_MSG_STR_OFS_Y , str , work->fontHandle , col );
-  GFL_FONTSYS_SetColor(PLIST_FONT_MENU_LETTER,PLIST_FONT_MENU_SHADOW,PLIST_FONT_MENU_BACK);
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp( bmpWin ),8+PLIST_MSG_STR_OFS_X , 4+PLIST_MSG_STR_OFS_Y ,
-                  str , work->fontHandle );
-  GFL_FONTSYS_SetDefaultColor();
-  GFL_STR_DeleteBuffer( str );
-  GFL_BMPWIN_MakeTransWindow_VBlank( bmpWin );
+  winWork = APP_TASKMENU_WIN_Create( work->taskres , &itemWork , charX , charY , 
+                  PLIST_MENU_PLATE_WIDTH_BATTLE , work->heapId );
+  
+  GFL_STR_DeleteBuffer( itemWork.str );
+  return winWork;
+}
 
-  return bmpWin;
+//以下NULL例外を入れたラッパー
+void PLIST_MENU_DeleteMenuWin_BattleMenu( APP_TASKMENU_WIN_WORK *work )
+{
+  if( work != NULL )
+  {
+    APP_TASKMENU_WIN_Delete( work );
+  }
+}
+void PLIST_MENU_UpdateMenuWin_BattleMenu( APP_TASKMENU_WIN_WORK *work )
+{
+  if( work != NULL )
+  {
+    APP_TASKMENU_WIN_Update( work );
+  }
+}
+void PLIST_MENU_SetActiveMenuWin_BattleMenu( APP_TASKMENU_WIN_WORK *work , const BOOL flg )
+{
+  if( work != NULL )
+  {
+    APP_TASKMENU_WIN_SetActive( work , flg );
+  }
+}
+void PLIST_MENU_SetDecideMenuWin_BattleMenu( APP_TASKMENU_WIN_WORK *work , const BOOL flg )
+{
+  if( work != NULL )
+  {
+    APP_TASKMENU_WIN_SetDecide( work , flg );
+  }
 }
 

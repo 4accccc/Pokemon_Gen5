@@ -40,3 +40,5 @@ extern void PLIST_BATTLE_InitBattle( PLIST_WORK *work );
 extern void PLIST_BATTLE_TermBattle( PLIST_WORK *work );
 extern void PLIST_BATTLE_UpdateBattle( PLIST_WORK *work );
 
+//待機メッセージの表示
+void PLIST_BATTLE_OpenWaitingMessage( PLIST_WORK *work );
