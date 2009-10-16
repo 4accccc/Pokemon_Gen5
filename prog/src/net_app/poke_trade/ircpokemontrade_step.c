@@ -496,7 +496,7 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
     MCSS_SetPaletteFade( pWork->pokeMcss[1], 8, 8, 0, 0x7fff );
   }
   if((_POKEMON_CREATE_TIME+2) == pWork->anmCount){
-    MCSS_SetPaletteFade( pWork->pokeMcss[1], 0, 0, 0, 0x7fff );
+    MCSS_SetPaletteFade( pWork->pokeMcss[1], 0, 0, 0, 0x7fff  );
   }
 #endif
 
