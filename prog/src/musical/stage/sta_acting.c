@@ -736,7 +736,7 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
     //エッジマーキングカラーセット
     G3X_SetEdgeColorTable( &stage_edge_color_table[0] );
     G3X_EdgeMarking( TRUE );
-    G3X_AntiAlias( FALSE );
+    G3X_AntiAlias( TRUE );
     G3X_AlphaBlend( TRUE );
     
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );
