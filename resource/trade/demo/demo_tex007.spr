@@ -45,7 +45,7 @@
 		pos_z="0"
 		init_vel_pos="305"
 		init_vel_axis="1066"
-		base_scl="2048"
+		base_scl="1024"
 		aspect="4096"
 		start_offset="0"
 		rtt_min="0"
@@ -71,7 +71,7 @@
 		offset_pos="0"
 		dpol_center="0"
 		usr_flag="0"
-		tex_name="demo_tex004.spt"
+		tex_name="demo_tex005.spt"
 	/>
 	<clr_anm
 		clr_s_r="31"
