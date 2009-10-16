@@ -36,6 +36,20 @@
 
 extern const GFL_PROC_DATA ItemMenuProcData;
 
+// SE再定義
+enum
+{ 
+  SE_BAG_DECIDE       = SEQ_SE_DECIDE1, ///< 決定音
+  SE_BAG_CANCEL       = SEQ_SE_CANCEL1, ///< キャンセル音
+  SE_BAG_REGIST_Y     = SEQ_SE_SYS_07,  ///< バッグYボタン登録音
+  SE_BAG_SELL         = SEQ_SE_SYS_22,  ///< 売却音
+  SE_BAG_TRASH        = SEQ_SE_SYS_08,  ///< 捨てる音
+  SE_BAG_CURSOR_MOVE  = SEQ_SE_SELECT1, ///< バッグカーソル移動(上下キー)
+  SE_BAG_POCKET_MOVE  = SEQ_SE_SELECT4, ///< バッグポケット選択(左右キー)
+  SE_BAG_SRIDE        = SEQ_SE_SELECT1, ///< スライドバー
+  SE_BAG_WAZA         = SEQ_SE_PC_LOGIN,  ///< ワザマシン起動音
+};
+
 
 #define ITEM_LIST_NUM (8)
 #define _CELLUNIT_NUM (30)

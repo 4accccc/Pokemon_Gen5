@@ -65,7 +65,6 @@ enum
 #define _UP_ITEMNAME_SIZEX (14)
 #define _UP_ITEMNAME_SIZEY (3)
 
-
 #define _UP_ITEMNUM_INITX (23)
 #define _UP_ITEMNUM_INITY (6)
 #define _UP_ITEMNUM_SIZEX (6)
@@ -1146,14 +1145,16 @@ void ITEMDISP_scrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num)
     int ymax = _SCROLL_BOTTOM_Y - _SCROLL_TOP_Y;
     int y = ((num * ymax)/length) + _SCROLL_TOP_Y;
 
-
     if(y < _SCROLL_TOP_Y){
       y=_SCROLL_TOP_Y;
     }
     if(y > _SCROLL_BOTTOM_Y){
       y=_SCROLL_BOTTOM_Y;
     }
-
+    else
+    {
+      GFL_SOUND_PlaySE( SE_BAG_SRIDE );
+    }
 
     GFL_CLACT_WK_GetPos( pWork->scrollCur , &pos, CLWK_SETSF_NONE );
     pos.y = y;
@@ -1185,7 +1186,7 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
     {
       8,
       8*15,
-      172,
+      8*22-3,
       _BAR_CELL_CURSOR_EXIT,
       _BAR_CELL_CURSOR_RETURN,
     };
@@ -1197,6 +1198,9 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
       cellInitData.pos_x = posXArr[i];
       cellInitData.pos_y = 21*8;
       cellInitData.anmseq = anmIdxArr[i];
+
+      if( i == BAR_ICON_CHECK_BOX ){ cellInitData.pos_y += 4; }
+
       pWork->clwkBarIcon[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                    pWork->cellRes[_NCG_COMMON],
                                                    pWork->cellRes[_PLT_COMMON],

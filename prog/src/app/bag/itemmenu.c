@@ -45,19 +45,6 @@
 
 #define _1CHAR (8)
 
-// SE再定義
-enum
-{ 
-  SE_BAG_DECIDE       = SEQ_SE_DECIDE1, ///< 決定音
-  SE_BAG_CANCEL       = SEQ_SE_CANCEL1, ///< キャンセル音
-  SE_BAG_REGIST_Y     = SEQ_SE_SYS_07,  ///< バッグYボタン登録音
-  SE_BAG_SELL         = SEQ_SE_SYS_22,  ///< 売却音
-  SE_BAG_TRASH        = SEQ_SE_SYS_08,  ///< 捨てる音
-  SE_BAG_CURSOR_MOVE  = SEQ_SE_SELECT1, ///< バッグカーソル移動(上下キー)
-  SE_BAG_POCKET_MOVE  = SEQ_SE_SELECT4, ///< バッグポケット選択(左右キー)
-  SE_BAG_MACHINE      = SEQ_SE_PC_LOGIN,  ///< ワザマシン起動音
-};
-
 //=============================================================================
 // 目次
 //=============================================================================
@@ -150,6 +137,7 @@ static void SORT_Button( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork );
 static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
+static void BTN_StateChange( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
 //static void BAG_ItemUseErrorMsgSet( MYSTATUS * myst, STRBUF * buf, u16 item, u32 err, FIELD_ITEMMENU_WORK * pWork );
 //u8 Bag_TalkMsgPrint( BAG_WORK * pWork, int type );
 //static int Bag_MenuUse( FIELD_ITEMMENU_WORK * pWork );
@@ -458,8 +446,6 @@ static BOOL _posplus(FIELD_ITEMMENU_WORK* pWork, int length)
     bChange = TRUE;
   }
 
-  GFL_SOUND_PlaySE( SE_BAG_CURSOR_MOVE );
-
   return bChange;
 }
 
@@ -492,8 +478,6 @@ static BOOL _posminus(FIELD_ITEMMENU_WORK* pWork, int length)
     pWork->curpos--;
     bChange = TRUE;
   }
-
-  GFL_SOUND_PlaySE( SE_BAG_CURSOR_MOVE );
   
   return bChange;
 }
@@ -512,32 +496,45 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
   int ymax = _SCROLL_BOTTOM_Y - _SCROLL_TOP_Y;
 
   if(GFL_UI_TP_GetPointCont(&x, &y) == TRUE){
+    // 範囲判定
     if((y <= _SCROLL_TOP_Y) || (y >= _SCROLL_BOTTOM_Y)){
       return FALSE;
     }
     if((x >= (32*8)) || (x <= (28*8)) ){
       return FALSE;
     }
+
     {
       int length = ITEMMENU_GetItemPocketNumber( pWork);
       int num = (length * (y-_SCROLL_TOP_Y)) / ymax;
+      int prelistpos = pWork->oamlistpos;
 
       pWork->curpos = 0;
       pWork->oamlistpos = -1;
-      for(i = 0 ; i < num ; i++){
+      for(i = 0 ; i < num ; i++)
+      {
         _posplus(pWork, length);
       }
+
+      // リストが移動した時のみSE
+      if( prelistpos != pWork->oamlistpos )
+      {
+        GFL_SOUND_PlaySE( SE_BAG_SRIDE );
+      }
+
     }
+
     KTST_SetDraw( pWork, FALSE );
     return TRUE;
   }
+
   return FALSE;
 }
 
 
 //------------------------------------------------------------------------------
 /**
- * @brief   キーの動きの処理
+ * @brief   キーの動きの処理(アイテム移動モード)
  * @retval  none
  */
 //------------------------------------------------------------------------------
@@ -559,6 +556,7 @@ static BOOL _keyChangeItemCheck(FIELD_ITEMMENU_WORK* pWork)
   }
   if(bChange){
     int newno = ITEMMENU_GetItemIndex(pWork);
+     GFL_SOUND_PlaySE( SE_BAG_CURSOR_MOVE );
     _ItemChange(pWork, nowno, newno);
   }
   return bChange;
@@ -741,7 +739,13 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       _CHANGE_STATE(pWork,NULL);
     }
     else if(BAG_MENU_YAMERU==pWork->ret_code2){  //やめる
-      _CHANGE_STATE(pWork,_itemKindSelectMenu);
+      KTST_SetDraw( pWork, FALSE ); // タッチ遷移なので非表示に
+      _CHANGE_STATE(pWork, _itemKindSelectMenu);
+    }
+    else if(BAG_MENU_TSUKAU==pWork->ret_code2){  //とうろく
+      GFL_SOUND_PlaySE( SE_BAG_REGIST_Y );
+        // @TODO 登録処理
+      _CHANGE_STATE(pWork, _itemKindSelectMenu);
     }
     else if(BAG_MENU_TSUKAU==pWork->ret_code2){
       pWork->ret_code = BAG_NEXTPROC_ITEMUSE;  //つかう
@@ -752,6 +756,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       _CHANGE_STATE(pWork,NULL);
     }
     else{
+      //@TODO アサーションかけるべき
       pWork->ret_code = BAG_NEXTPROC_HAVE;
       _CHANGE_STATE(pWork,NULL);
     }
@@ -788,6 +793,10 @@ static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
       pWork->ret_item = item->id;
     }
   }
+
+  // 決定音
+  GFL_SOUND_PlaySE( SE_BAG_DECIDE );
+
   if(pWork->mode == BAG_MODE_POKELIST)
   {
     pWork->ret_code = BAG_NEXTPROC_ITEMEQUIP;
@@ -984,6 +993,7 @@ static void _itemTecniqueUseWait(FIELD_ITEMMENU_WORK* pWork)
 
 static void _itemTecniqueUseInit(FIELD_ITEMMENU_WORK* pWork)
 {
+  GFL_SOUND_PlaySE( SE_BAG_WAZA );
 
   GFL_MSG_GetString( pWork->MsgManager, msg_bag_065, pWork->pStrBuf );
   WORDSET_RegisterWazaName(pWork->WordSet, 0, ITEM_GetWazaNo( pWork->ret_item ));
@@ -1012,8 +1022,7 @@ static void _itemTrashEndWait(FIELD_ITEMMENU_WORK* pWork)
   // @TODO タッチ
   if(PAD_BUTTON_DECIDE == GFL_UI_KEY_GetTrg()){
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
-    // ソートボタン復帰
-    SORT_ModeReset( pWork );
+    BTN_StateChange( pWork, TRUE );
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
 }
@@ -1074,6 +1083,7 @@ static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork)
       _CHANGE_STATE(pWork,_itemTrashYesWait);
     }
     else{
+      BTN_StateChange( pWork, TRUE );
       _CHANGE_STATE(pWork,_itemKindSelectMenu);
     }
   }
@@ -1114,6 +1124,8 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
 
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE)
   {
+    GFL_SOUND_PlaySE( SE_BAG_DECIDE );
+
     InputNum_Exit( pWork );
 
     GFL_MSG_GetString( pWork->MsgManager, msg_bag_056, pWork->pStrBuf );
@@ -1127,6 +1139,8 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
   }
   else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL)
   {
+    GFL_SOUND_PlaySE( SE_BAG_CANCEL );
+
     InputNum_Exit( pWork );
     //@TODO ここでパッシブ解除していいのか？
     G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
@@ -1261,6 +1275,8 @@ static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
    // 決定
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
   {
+    GFL_SOUND_PlaySE( SE_BAG_DECIDE );
+
     // 数値入力終了
     InputNum_Exit( pWork );
 
@@ -1269,6 +1285,8 @@ static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
   // キャンセル
   else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
   {
+    GFL_SOUND_PlaySE( SE_BAG_CANCEL );
+
     // 数値入力終了
     InputNum_Exit( pWork );
 
@@ -1907,9 +1925,9 @@ static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork )
  *	@brief  キーステータスによる表示切替
  *
  *	@param	FIELD_ITEMMENU_WORK* pWork
- *	@param	on_off TRUE:表示
+ *	@param	on_off TRUE:表示(キー操作) FALSE:非表示（タッチ操作）
  *
- *	@retval
+ *	@retval none
  */
 //-----------------------------------------------------------------------------
 static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
@@ -1930,6 +1948,30 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , on_off );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 , on_off );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2 , on_off );
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork
+ *	@param	on_off 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void BTN_StateChange( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
+{
+  if( on_off )
+  {
+    // ソートボタン復帰
+    SORT_ModeReset( pWork );
+  }
+  else
+  {
+  
+  }
 }
 
 
@@ -2337,6 +2379,13 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       _ItemChange(pWork, nowno, ITEMMENU_GetItemIndex(pWork));
       //      ITEMDISP_scrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
       _windowRewrite(pWork);
+
+      KTST_SetDraw( pWork, FALSE );
+      // 上画面だけは表示
+      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 , TRUE );
+      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2 , TRUE );
+
       _CHANGE_STATE(pWork,_itemSelectState);
     }
     return;
