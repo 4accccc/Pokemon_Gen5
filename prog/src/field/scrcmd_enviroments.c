@@ -25,6 +25,8 @@
 #include "field/zonedata.h"   //ZONEDATA_GetMessageArcID
 #include "savedata/mystatus.h"  //MyStatus_～
 
+#include "savedata/save_control.h"
+
 //======================================================================
 //======================================================================
 
@@ -207,4 +209,31 @@ VMCMD_RESULT EvCmdGetBadgeCount( VMHANDLE * core, void *wk )
 }
 
 
+//--------------------------------------------------------------
+/**
+ * セーブデータの状態を取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetSaveDataStatus( VMHANDLE * core, void *wk )
+{
+  GAMEDATA*        gdata = SCRCMD_WORK_GetGameData( wk );
+  SAVE_CONTROL_WORK* scw = GAMEDATA_GetSaveControlWork( gdata );
+  u16*         ret_exist = SCRCMD_GetVMWork( core, wk );  // コマンド第1引数
+  u16*           ret_new = SCRCMD_GetVMWork( core, wk );  // コマンド第2引数
+  u16*        ret_volume = SCRCMD_GetVMWork( core, wk );  // コマンド第3引数
 
+  // セーブデータが存在するかどうか
+  *ret_exist = SaveData_GetExistFlag( scw );
+
+  // プレイ中のデータが新規データかどうか
+  *ret_new   = SaveControl_NewDataFlagGet( scw );
+
+  // @todo 書き込むデータサイズに応じて, その段階を返す
+  *ret_volume = 0;
+
+  return VMCMD_RESULT_CONTINUE;
+}

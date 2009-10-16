@@ -2374,6 +2374,25 @@
   .short  \ret_wk
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _REPORT_CHECK
+ * @brief セーブ状況の確認
+ * @param ret_exist  [out]セーブデータが存在するかどうか
+ * @param ret_new    [out]現在のプレイデータが新規データかどうか
+ * @param ret_volume [out]セーブするデータ量
+ */
+//--------------------------------------------------------------
+#define _REPORT_CHECK( ret_exist, ret_new, ret_volume )  \
+    _ASM_REPORT_CHECK  ret_exist, ret_new, ret_volume 
+
+  .macro  _ASM_REPORT_CHECK ret_exist, ret_new, ret_volume 
+  .short  EV_SEQ_REPORT_CHECK
+  .short  \ret_exist
+  .short  \ret_new
+  .short  \ret_volume 
+  .endm
+
 //======================================================================
 //  プログラム管理データの取得・セット
 //======================================================================

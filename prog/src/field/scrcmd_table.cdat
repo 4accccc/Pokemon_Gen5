@@ -484,7 +484,7 @@
 
   //レポート関連
   DEF_CMD( EvCmdReportCall,   EV_SEQ_REPORT_CALL )
-  NO_CMD()
+  DEF_CMD( EvCmdGetSaveDataStatus,  EV_SEQ_REPORT_CHECK )
   NO_CMD()
   NO_CMD()
 
