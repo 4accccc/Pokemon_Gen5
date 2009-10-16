@@ -25,7 +25,11 @@ enum {
 	NARC_debug_obata_dice_anime_rt_bin = 11,
 	NARC_debug_obata_dice_anime_s_bin = 12,
 	NARC_debug_obata_dice_anime_r_bin = 13,
-	NARC_debug_obata_dice_anime_t_bin = 14
+	NARC_debug_obata_dice_anime_t_bin = 14,
+	NARC_debug_obata_elboard_test_nsbmd = 15,
+	NARC_debug_obata_elboard_test_nsbtx = 16,
+	NARC_debug_obata_elboard_test_nsbta = 17,
+	NARC_debug_obata_elboard_test_nsbca = 18
 };
 
 /* NARC_DEBUG_OBATA_NAIX_ */

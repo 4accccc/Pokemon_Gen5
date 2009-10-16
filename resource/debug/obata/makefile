@@ -41,7 +41,11 @@ CONVERTDATA = ica_test_data2.bin \
 							dice_anime_rt.bin \
 							dice_anime_s.bin \
 							dice_anime_r.bin \
-							dice_anime_t.bin
+							dice_anime_t.bin \
+							elboard_test.nsbmd \
+							elboard_test.nsbtx \
+							elboard_test.nsbta \
+							elboard_test.nsbca
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -75,6 +79,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g3dcvtr t1_house_01.imd
 	g3dcvtr h01_ship.imd
 	g3dcvtr dice.imd
+	g3dcvtr elboard_test.imd -emdl
+	g3dcvtr elboard_test.imd -etex
+	g3dcvtr elboard_test.ica
+	g3dcvtr elboard_test.ita
 endif
 
 
