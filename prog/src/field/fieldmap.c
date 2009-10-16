@@ -1751,6 +1751,14 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
   //ƒtƒB[ƒ‹ƒhŠg’£3‚c‚n‚a‚i•`‰æ
   FLD_EXP_OBJ_Draw( fieldWork->ExpObjCntPtr );
 
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
+    if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
+      FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 0);
+    }else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
+      FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 1);
+    }
+  }
+
   FLD_PRTCL_Main();
   FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
   
