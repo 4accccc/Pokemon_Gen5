@@ -707,6 +707,36 @@ void FIELD_FOG_DEBUG_Control( FIELD_FOG_WORK* p_wk )
 			FIELD_FOG_SetOffset( p_wk, offset );
 		}
 	}
+	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+	{
+		if( (offset+1000) <= 0x7fff )
+		{
+			offset += 1000;
+		}
+		else
+		{
+			offset = 0x7fff;
+		}
+		if( FIELD_FOG_FADE_IsFade( p_wk ) == FALSE )
+		{
+			FIELD_FOG_SetOffset( p_wk, offset );
+		}
+	}
+	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+	{
+		if( (offset-1000) >= 0 )
+		{
+			offset -= 1000;
+		}
+		else
+		{
+			offset = 0;
+		}
+		if( FIELD_FOG_FADE_IsFade( p_wk ) == FALSE )
+		{
+			FIELD_FOG_SetOffset( p_wk, offset );
+		}
+	}
 
 	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_X) )
 	{
