@@ -547,8 +547,9 @@
 #define ITEM_AITEMUDOROPPU		( 558 )		// アイテムドロップ
 #define ITEM_AITEMUKOORU		( 559 )		// アイテムコール
 #define ITEM_HURATTOKOORU		( 560 )		// フラットコール
+#define ITEM_KURITHIc3		( 561 )		// クリティＣ３
 
-#define ITEM_DATA_MAX		( 560 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 561 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数

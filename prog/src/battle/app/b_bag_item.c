@@ -39,68 +39,68 @@ static const u8 PocketNum[] = {
 // シューター用アイテムテーブル
 static const SHOOTER_ITEM ShooterItemTable[] =
 {
-	{ ITEM_KURITHIKATTAA, 1 },		// 56: クリティカッター
-	{ ITEM_SUPIIDAA, 1 },					// 59: スピーダー
-	{ ITEM_SUPESYARUAPPU, 1 },		// 61: スペシャルアップ
-	{ ITEM_SUPESYARUGAADO, 1 },		// 62: スペシャルガード
-	{ ITEM_DHIFENDAA, 1 },				// 58: ディフェンダー
-	{ ITEM_PURASUPAWAA, 1 },			// 57: プラスパワー
-	{ ITEM_YOKUATAARU, 1 },				// 60: ヨクアタール
-	{ ITEM_EFEKUTOGAADO, 1 },			// 55: エフェクトガード
+	{ ITEM_KURITHIKATTAA, 1 },		// クリティカッター
+	{ ITEM_SUPIIDAA, 1 },					// スピーダー
+	{ ITEM_SUPESYARUAPPU, 1 },		// スペシャルアップ
+	{ ITEM_SUPESYARUGAADO, 1 },		// スペシャルガード
+	{ ITEM_DHIFENDAA, 1 },				// ディフェンダー
+	{ ITEM_PURASUPAWAA, 1 },			// プラスパワー
+	{ ITEM_YOKUATAARU, 1 },				// ヨクアタール
+	{ ITEM_EFEKUTOGAADO, 1 },			// エフェクトガード
 
-	{ ITEM_KIZUGUSURI, 2 },				// 17: キズぐすり
+	{ ITEM_KIZUGUSURI, 2 },				// キズぐすり
 
-	{ ITEM_PIIPIIEIDO, 3 },				// 38: ピーピーエイド
+	{ ITEM_PIIPIIEIDO, 3 },				// ピーピーエイド
+	{ ITEM_AITEMUKOORU, 3 },			// アイテムコール
+	{ ITEM_KURITHIc2, 3 },				// クリティＣ２
+	{ ITEM_SUPIIDAA2, 3 },				// スピーダー２
+	{ ITEM_SUPESYARUu2, 3 },			// スペシャルＵ２
+	{ ITEM_SUPESYARUg2, 3 },			// スペシャルＧ２
+	{ ITEM_DHIFENDAA2, 3 },				// ディフェンダー２
+	{ ITEM_PURASUPAWAA2, 3 },			// プラスパワー２
+	{ ITEM_YOKUATAARU2, 3 },			// ヨクアタール２
 
-	{ ITEM_AITEMUKOORU, 3 },			// 559: アイテムコール
+	{ ITEM_IIKIZUGUSURI, 4 },			// いいキズぐすり
+	{ ITEM_KOORINAOSI, 4 },				// こおりなおし
+	{ ITEM_DOKUKESI, 4 },					// どくけし
+	{ ITEM_NEMUKEZAMASI, 4 },			// ねむけざまし
+	{ ITEM_MAHINAOSI, 4 },				// まひなおし
+	{ ITEM_YAKEDONAOSI, 4 },			// やけどなおし
 
-	{ ITEM_SUPIIDAA2, 3 },				// 539: スピーダー２
-	{ ITEM_SUPESYARUu2, 3 },			// 540: スペシャルＵ２
-	{ ITEM_SUPESYARUg2, 3 },			// 541: スペシャルＧ２
-	{ ITEM_DHIFENDAA2, 3 },				// 542: ディフェンダー２
-	{ ITEM_PURASUPAWAA2, 3 },			// 543: プラスパワー２
-	{ ITEM_YOKUATAARU2, 3 },			// 544: ヨクアタール２
+	{ ITEM_SUKIRUKOORU, 5 },			// スキルコール
+	{ ITEM_KURITHIc3, 5 },				// クリティＣ３
+	{ ITEM_SUPIIDAA3, 5 },				// スピーダー３
+	{ ITEM_SUPESYARUu3, 5 },			// スペシャルＵ３
+	{ ITEM_SUPESYARUg3, 5 },			// スペシャルＧ３
+	{ ITEM_DHIFENDAA3, 5 },				// ディフェンダー３
+	{ ITEM_PURASUPAWAA3, 5 },			// プラスパワー３
+	{ ITEM_YOKUATAARU3, 5 },			// ヨクアタール３
 
-	{ ITEM_IIKIZUGUSURI, 4 },			// 26: いいキズぐすり
-	{ ITEM_KOORINAOSI, 4 },				// 20: こおりなおし
-	{ ITEM_DOKUKESI, 4 },					// 18: どくけし
-	{ ITEM_NEMUKEZAMASI, 4 },			// 21: ねむけざまし
-	{ ITEM_MAHINAOSI, 4 },				// 22: まひなおし
-	{ ITEM_YAKEDONAOSI, 4 },			// 19: やけどなおし
+	{ ITEM_SUGOIKIZUGUSURI, 6 },	// すごいキズぐすり
+	{ ITEM_NANDEMONAOSI, 6 },			// なんでもなおし
+	{ ITEM_PIIPIIEIDAA, 6 },			// ピーピーエイダー
 
-	{ ITEM_SUKIRUKOORU, 5 },			// 557: スキルコール
+	{ ITEM_PIIPIIRIKABAA, 7 },		// ピーピーリカバー
+	{ ITEM_AITEMUDOROPPU, 7 },		// アイテムドロップ
 
-	{ ITEM_SUPIIDAA3, 5 },				// 545: スピーダー３
-	{ ITEM_SUPESYARUu3, 5 },			// 546: スペシャルＵ３
-	{ ITEM_SUPESYARUg3, 5 },			// 547: スペシャルＧ３
-	{ ITEM_DHIFENDAA3, 5 },				// 548: ディフェンダー３
-	{ ITEM_PURASUPAWAA3, 5 },			// 549: プラスパワー３
-	{ ITEM_YOKUATAARU3, 5 },			// 550: ヨクアタール３
+	{ ITEM_MANTANNOKUSURI, 8 },		// まんたんのくすり
 
-	{ ITEM_SUGOIKIZUGUSURI, 6 },	// 25: すごいキズぐすり
-	{ ITEM_NANDEMONAOSI, 6 },			// 27: なんでもなおし
-	{ ITEM_PIIPIIEIDAA, 6 },			// 40: ピーピーエイダー
+	{ ITEM_HURATTOKOORU, 9 },			// フラットコール
 
-	{ ITEM_PIIPIIRIKABAA, 7 },		// 39: ピーピーリカバー
-	{ ITEM_AITEMUDOROPPU, 7 },		// 558: アイテムドロップ
+	{ ITEM_PIIPIIMAKKUSU, 10 },		// ピーピーマックス
 
-	{ ITEM_MANTANNOKUSURI, 8 },		// 24: まんたんのくすり
+	{ ITEM_GENKINOKAKERA, 11 },		// げんきのかけら
 
-	{ ITEM_HURATTOKOORU, 9 },			// 560: フラットコール
+	{ ITEM_SUPIIDAA6, 12 },				// スピーダー６
+	{ ITEM_SUPESYARUu6, 12 },			// スペシャルＵ６
+	{ ITEM_SUPESYARUg6, 12 },			// スペシャルＧ６
+	{ ITEM_DHIFENDAA6, 12 },			// ディフェンダー６
+	{ ITEM_PURASUPAWAA6, 12 },		// プラスパワー６
+	{ ITEM_YOKUATAARU6, 12 },			// ヨクアタール６
 
-	{ ITEM_PIIPIIMAKKUSU, 10 },		// 41: ピーピーマックス
+	{ ITEM_KAIHUKUNOKUSURI, 13 },	// かいふくのくすり
 
-	{ ITEM_GENKINOKAKERA, 11 },		// 28: げんきのかけら
-
-	{ ITEM_SUPIIDAA6, 12 },				// 551: スピーダー６
-	{ ITEM_SUPESYARUu6, 12 },			// 552: スペシャルＵ６
-	{ ITEM_SUPESYARUg6, 12 },			// 553: スペシャルＧ６
-	{ ITEM_DHIFENDAA6, 12 },			// 554: ディフェンダー６
-	{ ITEM_PURASUPAWAA6, 12 },		// 555: プラスパワー６
-	{ ITEM_YOKUATAARU6, 12 },			// 556: ヨクアタール６
-
-	{ ITEM_KAIHUKUNOKUSURI, 13 },	// 23: かいふくのくすり
-	{ ITEM_GENKINOKATAMARI, 14 },	// 29: げんきのかたまり
+	{ ITEM_GENKINOKATAMARI, 14 },	// げんきのかたまり
 
 	{ ITEM_DUMMY_DATA, 0 },				// 終了
 };
