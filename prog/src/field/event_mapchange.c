@@ -764,6 +764,9 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
   //特殊スクリプト呼び出し：ゾーン切り替え
   SCRIPT_CallZoneChangeScript( gsys, HEAPID_PROC );
 
+  //マップ到着フラグセット
+  ARRIVEDATA_SetArriveFlag( gamedata, loc.zone_id );
+
   //新規ゾーンに配置する動作モデルを追加
   MAPCHG_loadMMdl( gamedata, loc_req );
 }

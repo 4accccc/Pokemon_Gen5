@@ -39,6 +39,7 @@
 #include "gamesystem/game_event.h"
 #include "field/zonedata.h"
 #include "field/areadata.h"
+#include "warpdata.h"   //ARRIVEDATA_SetArriveFlag
 
 #include "field_comm_actor.h"
 #include "field_comm/field_comm_main.h"
@@ -2078,6 +2079,9 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	//ゾーンID更新
 	lc->zone_id = new_zone_id;
 	
+  //マップ到着フラグセット
+  ARRIVEDATA_SetArriveFlag( gdata, new_zone_id );
+
   //特殊スクリプト呼び出し：ゾーン切り替え
   SCRIPT_CallZoneChangeScript( fieldWork->gsys, HEAPID_PROC );
 
