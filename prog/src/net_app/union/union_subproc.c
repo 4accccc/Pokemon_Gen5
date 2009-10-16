@@ -23,7 +23,6 @@
 #include "field/event_mapchange.h"
 #include "fieldmap/zone_id.h"
 #include "field/event_colosseum_battle.h"
-#include "savedata/sp_ribbon_save.h"
 #include "colosseum.h"
 #include "colosseum_tool.h"
 #include "app\pms_input.h"
@@ -604,7 +603,6 @@ static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
     OS_TPrintf("ポケモンステータス呼び出し\n");
     pstatus->ppd = (void*)plist->pp;
     pstatus->cfg = plist->cfg;
-    pstatus->ribbon = (u8*)SP_RIBBON_SAVE_GetSaveData(GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gsys)));
 
     pstatus->ppt = PST_PP_TYPE_POKEPARTY;
     pstatus->max = PokeParty_GetPokeCount( plist->pp );

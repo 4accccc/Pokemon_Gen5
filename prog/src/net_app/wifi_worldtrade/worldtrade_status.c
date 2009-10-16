@@ -19,7 +19,6 @@
 #include "sound/pm_sndsys.h"
 #include "savedata/wifilist.h"
 #include "savedata/worldtrade_data.h"
-#include "savedata/sp_ribbon_save.h"
 #include "poke_tool/pokeparty.h"
 #include "savedata/box_savedata.h"
 #include "item/itemsym.h"
@@ -98,7 +97,6 @@ int WorldTrade_Status_Init(WORLDTRADE_WORK *wk, int seq)
 	wk->statusParam.ev_contest = FALSE;
 	//TODO
 	wk->statusParam.zukan_mode = wk->param->zukanmode;
-	wk->statusParam.ribbon     = SP_RIBBON_SAVE_GetSaveData(wk->param->savedata);
 //	wk->statusParam.pokethlon  = PokeStatus_PerformanceFlagGet(wk->param->savedata);
 	wk->statusParam.pokethlon  = FALSE;
 	//TODO

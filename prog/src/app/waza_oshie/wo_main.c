@@ -2996,7 +2996,6 @@ static int WO_SeqPstCall( WO_WORK * wk )
 	wk->psd.player_sex	=  MyStatus_GetMySex( wk->dat->myst );
 
 	wk->psd.zukan_mode = 0;
-	wk->psd.ribbon     = NULL;
 	wk->psd.pokethlon  = FALSE;
 
 

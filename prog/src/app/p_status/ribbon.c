@@ -64,9 +64,9 @@ static const RIBBON_TABLE RibbonTable[] =
   { ID_PARA_bromide_ribbon,       NARC_p_status_gra_ribbon07_NCGR, 1, mes_ribbon_name_023,  mes_ribbon_text_023 },  //ブロマイドリボン
 
   { ID_PARA_ganba_ribbon,         NARC_p_status_gra_ribbon08_NCGR, 2, mes_ribbon_name_024,  mes_ribbon_text_024 },  //がんばリボン
-  { ID_PARA_marine_ribbon,        NARC_p_status_gra_ribbon09_NCGR, 1, mes_ribbon_name_025,  MSG_SP_RIBBON+0 },    //マリンリボン
-  { ID_PARA_land_ribbon,          NARC_p_status_gra_ribbon09_NCGR, 3, mes_ribbon_name_026,  MSG_SP_RIBBON+1 },    //ランドリボン
-  { ID_PARA_sky_ribbon,         NARC_p_status_gra_ribbon09_NCGR, 4, mes_ribbon_name_027,  MSG_SP_RIBBON+2 },    //スカイリボン
+  { ID_PARA_marine_ribbon,        NARC_p_status_gra_ribbon09_NCGR, 1, mes_ribbon_name_025,  mes_ribbon_name_025 },    //マリンリボン  //@todo 配布リボン
+  { ID_PARA_land_ribbon,          NARC_p_status_gra_ribbon09_NCGR, 3, mes_ribbon_name_026,  mes_ribbon_name_026 },    //ランドリボン  //@todo 配布リボン
+  { ID_PARA_sky_ribbon,         NARC_p_status_gra_ribbon09_NCGR, 4, mes_ribbon_name_027,  mes_ribbon_name_027 },    //スカイリボン    //@todo 配布リボン
 
   { ID_PARA_country_ribbon,       NARC_p_status_gra_ribbon10_NCGR, 3, mes_ribbon_name_028,  mes_ribbon_haihu_text_032 },  //MSG_SP_RIBBON+3 },  //カントリーリボン
   { ID_PARA_national_ribbon,        NARC_p_status_gra_ribbon10_NCGR, 4, mes_ribbon_name_029,  mes_ribbon_haihu_text_044 },  //MSG_SP_RIBBON+4 },  //ナショナルリボン
@@ -121,13 +121,13 @@ static const RIBBON_TABLE RibbonTable[] =
   { ID_PARA_sinou_record_ribbon,      NARC_p_status_gra_ribbon70_NCGR, 1, mes_ribbon_name_070,  mes_ribbon_text_070 },  //シンオウレコードリボン
   { ID_PARA_sinou_history_ribbon,     NARC_p_status_gra_ribbon71_NCGR, 3, mes_ribbon_name_071,  mes_ribbon_text_071 },  //シンオウヒストリーリボン
   { ID_PARA_sinou_legend_ribbon,      NARC_p_status_gra_ribbon72_NCGR, 0, mes_ribbon_name_072,  mes_ribbon_text_072 },  //シンオウレジェンドリボン
-  { ID_PARA_sinou_red_ribbon,       NARC_p_status_gra_ribbon73_NCGR, 0, mes_ribbon_name_073,  MSG_SP_RIBBON+7 },    //シンオウレッドリボン
-  { ID_PARA_sinou_green_ribbon,     NARC_p_status_gra_ribbon74_NCGR, 3, mes_ribbon_name_074,  MSG_SP_RIBBON+8 },    //シンオウグリーンリボン
-  { ID_PARA_sinou_blue_ribbon,      NARC_p_status_gra_ribbon75_NCGR, 1, mes_ribbon_name_075,  MSG_SP_RIBBON+9 },    //シンオウブルーリボン
-  { ID_PARA_sinou_festival_ribbon,    NARC_p_status_gra_ribbon76_NCGR, 1, mes_ribbon_name_076,  MSG_SP_RIBBON+10 },   //シンオウフェスティバルリボン
-  { ID_PARA_sinou_carnival_ribbon,    NARC_p_status_gra_ribbon77_NCGR, 0, mes_ribbon_name_077,  MSG_SP_RIBBON+11 },   //シンオウカーニバルリボン
-  { ID_PARA_sinou_classic_ribbon,     NARC_p_status_gra_ribbon78_NCGR, 1, mes_ribbon_name_078,  MSG_SP_RIBBON+12 },   //シンオウクラシックリボン
-  { ID_PARA_sinou_premiere_ribbon,    NARC_p_status_gra_ribbon79_NCGR, 0, mes_ribbon_name_079,  MSG_SP_RIBBON+13 },   //シンオウプレミアリボン
+  { ID_PARA_sinou_red_ribbon,       NARC_p_status_gra_ribbon73_NCGR, 0, mes_ribbon_name_073,  mes_ribbon_name_073 },    //シンオウレッドリボン    //@todo 以下配布リボン
+  { ID_PARA_sinou_green_ribbon,     NARC_p_status_gra_ribbon74_NCGR, 3, mes_ribbon_name_074,  mes_ribbon_name_074 },    //シンオウグリーンリボン
+  { ID_PARA_sinou_blue_ribbon,      NARC_p_status_gra_ribbon75_NCGR, 1, mes_ribbon_name_075,  mes_ribbon_name_075 },    //シンオウブルーリボン
+  { ID_PARA_sinou_festival_ribbon,    NARC_p_status_gra_ribbon76_NCGR, 1, mes_ribbon_name_076,  mes_ribbon_name_076 },   //シンオウフェスティバルリボン
+  { ID_PARA_sinou_carnival_ribbon,    NARC_p_status_gra_ribbon77_NCGR, 0, mes_ribbon_name_077,  mes_ribbon_name_077 },   //シンオウカーニバルリボン
+  { ID_PARA_sinou_classic_ribbon,     NARC_p_status_gra_ribbon78_NCGR, 1, mes_ribbon_name_078,  mes_ribbon_name_078 },   //シンオウクラシックリボン
+  { ID_PARA_sinou_premiere_ribbon,    NARC_p_status_gra_ribbon79_NCGR, 0, mes_ribbon_name_079,  mes_ribbon_name_079 },   //シンオウプレミアリボン
 };
 
 
@@ -176,9 +176,11 @@ u32 RIBBON_DataGet( u8 dat_id, u8 prm_id )
 //--------------------------------------------------------------------------------------------
 u32 RIBBON_InfoGet( u8 dat_id , u8 * sv )
 {
+  /*
   if( RibbonTable[dat_id].info & MSG_SP_RIBBON ){
     return ( mes_ribbon_haihu_text_000 + sv[ RibbonTable[dat_id].info & 0xff ] );
   }
+  */
   return RibbonTable[dat_id].info;
 }
 

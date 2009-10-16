@@ -15,8 +15,6 @@
 #include "p_sta_local_def.h"
 #include "p_sta_sys.h"
 
-//仮データ作成用
-#include "savedata/sp_ribbon_save.h"
 //デバッグポケパーティ作成用
 #include  "poke_tool/pokeparty.h"
 #include  "poke_tool/poke_tool.h"
@@ -125,19 +123,6 @@ static GFL_PROC_RESULT PokeStatusProc_Init( GFL_PROC * proc, int * seq , void *p
       psData->mode = PST_MODE_NORMAL;
       psData->pos = 0;
       
-      psData->ribbon = GFL_HEAP_AllocMemory( HEAPID_POKE_STATUS , SP_RIBBON_SAVE_MAX );
-      {
-        u8 *ribbonArr = psData->ribbon;
-        for( i=0;i<SP_RIBBON_SAVE_MAX;i++ )
-        {
-          ribbonArr[i] = 0;
-        }
-        ribbonArr[0] = 66; //マリン：ポケセン横浜記念
-        ribbonArr[1] = 64; //ランド：ポケモンが大好きなこと～
-        ribbonArr[2] = 93; //スカイ：2010優勝
-        ribbonArr[3] = 55; //カントリー：夏休み
-      }
-      
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
       {
         psData->mode = PST_MODE_WAZAADD;
@@ -176,7 +161,6 @@ static GFL_PROC_RESULT PokeStatusProc_Term( GFL_PROC * proc, int * seq , void *p
   //デバグ
   if( pwk == NULL )
   {
-    GFL_HEAP_FreeMemory( psWork->psData->ribbon );
     GFL_HEAP_FreeMemory( psWork->psData->ppd );
     GFL_HEAP_FreeMemory( psWork->psData );
   }

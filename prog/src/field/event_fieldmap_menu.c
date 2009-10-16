@@ -29,8 +29,6 @@
 #include "field/itemuse_event.h"
 #include "field/zonedata.h"
 
-#include "savedata/sp_ribbon_save.h"
-
 #include "event_fieldmap_control.h" //EVENT_FieldSubProc
 #include "app/config_panel.h"   //ConfigPanelProcData
 #include "app/trainer_card.h"   //TrainerCardSysProcData
@@ -794,7 +792,6 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
       
       psData->ppd = (void*)plData->pp;
       psData->cfg = plData->cfg;
-      psData->ribbon = (u8*)SP_RIBBON_SAVE_GetSaveData(svWork);
 
       psData->ppt = PST_PP_TYPE_POKEPARTY;
       psData->max = PokeParty_GetPokeCount( plData->pp );
@@ -869,7 +866,6 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
       
       psData->ppd = (void*)plData->pp;
       psData->cfg = plData->cfg;
-      psData->ribbon = (u8*)SP_RIBBON_SAVE_GetSaveData(svWork);
 
       psData->ppt = PST_PP_TYPE_POKEPARTY;
       psData->max = PokeParty_GetPokeCount( plData->pp );

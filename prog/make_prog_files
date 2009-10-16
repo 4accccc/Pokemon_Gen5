@@ -32,7 +32,6 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/musical_save.c \
         savedata/randommap_save.c \
 				savedata/irc_compatible_savedata.c \
-        savedata/sp_ribbon_save.c \
 				savedata/worldtrade_data.c \
 				savedata/regulation.c \
         savedata/gimmickwork.c \
