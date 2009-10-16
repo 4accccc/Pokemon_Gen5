@@ -8,7 +8,7 @@
 //==============================================================================
 #include <gflib.h>
 #include "system/main.h"
-#include "savedata/contest_savedata.h"
+//#include "savedata/contest_savedata.h"
 #include "savedata/save_tbl.h"
 #include "savedata/save_control.h"
 

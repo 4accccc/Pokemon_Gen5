@@ -11,7 +11,7 @@
 #include <tcbl.h>
 #include "system\main.h"
 #include <backup_system.h>
-#include "savedata/contest_savedata.h"
+//#include "savedata/contest_savedata.h"
 #include "savedata/save_tbl.h"
 #include "savedata/save_control.h"
 

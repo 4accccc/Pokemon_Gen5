@@ -11,7 +11,7 @@
 #include <tcbl.h>
 #include "system\main.h"
 #include <backup_system.h>
-#include "savedata/contest_savedata.h"
+//#include "savedata/contest_savedata.h"
 #include "savedata/save_tbl.h"
 #include "savedata/save_control.h"
 
@@ -188,6 +188,7 @@ static GFL_PROC_RESULT DebugMatsudaMainProcEnd( GFL_PROC * proc, int * seq, void
 //--------------------------------------------------------------
 static BOOL DebugMatsuda_SaveSystemTest(D_MATSU_WORK *wk)
 {
+#if 0
 	LOAD_RESULT load_ret;
 	SAVE_RESULT save_ret;
 	
@@ -273,7 +274,7 @@ static BOOL DebugMatsuda_SaveSystemTest(D_MATSU_WORK *wk)
 		
 		return TRUE;
 	}
-	
+#endif
 	return FALSE;
 }
 
@@ -288,6 +289,7 @@ static BOOL DebugMatsuda_SaveSystemTest(D_MATSU_WORK *wk)
 //--------------------------------------------------------------
 static BOOL DebugMatsuda_SaveTest(D_MATSU_WORK *wk)
 {
+#if 0
 	LOAD_RESULT load_ret;
 	SAVE_RESULT save_ret;
 	
@@ -340,7 +342,7 @@ static BOOL DebugMatsuda_SaveTest(D_MATSU_WORK *wk)
 	default:
 		return TRUE;
 	}
-	
+#endif
 	return FALSE;
 }
 

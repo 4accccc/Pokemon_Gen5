@@ -29,7 +29,6 @@
 
 ///セーブデータ識別ID
 enum{
-	GMDATA_ID_CONTEST,
 	GMDATA_ID_BOXDATA,	//ボックスデータグループ
 	GMDATA_ID_BOXTRAY_01,	//ボックストレーデータ
 	GMDATA_ID_BOXTRAY_02,

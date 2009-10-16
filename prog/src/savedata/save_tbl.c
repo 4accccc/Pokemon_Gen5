@@ -10,7 +10,6 @@
 #include <backup_system.h>
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
-#include "savedata/contest_savedata.h"
 #include "savedata/box_savedata.h"
 #include "savedata/myitem_savedata.h"
 #include "poke_tool/pokeparty.h"
@@ -81,11 +80,6 @@ enum{
 //  通常セーブデータのテーブル
 //--------------------------------------------------------------
 static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
-	{	//コンテスト
-		GMDATA_ID_CONTEST,
-		(FUNC_GET_SIZE)CONDATA_GetWorkSize,
-		(FUNC_INIT_WORK)CONDATA_Init,
-	},
 	{	//BOXデータ
 		GMDATA_ID_BOXDATA,
 		(FUNC_GET_SIZE)BOXDAT_GetTotalSize,

@@ -12,7 +12,6 @@ SOUNDSRC =    sound/snd_strm.c \
 #セーブデータ関連
 SAVEDATASRC =   savedata/save_tbl.c \
         savedata/save_control.c \
-        savedata/contest_savedata.c \
         savedata/box_savedata.c \
         savedata/perapvoice.c \
         savedata/myitem_savedata.c \
