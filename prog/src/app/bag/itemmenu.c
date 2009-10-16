@@ -726,6 +726,15 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     else if(BAG_MENU_SUTERU==pWork->ret_code2){  //すてる
       _CHANGE_STATE(pWork,_itemTrash);
     }
+    else if(BAG_MENU_YAMERU==pWork->ret_code2){  //やめる
+      KTST_SetDraw( pWork, FALSE ); // タッチ遷移なので非表示に
+      _CHANGE_STATE(pWork, _itemKindSelectMenu);
+    }
+    else if(BAG_MENU_TOUROKU==pWork->ret_code2){  //とうろく
+      GFL_SOUND_PlaySE( SE_BAG_REGIST_Y );
+        // @TODO 登録処理
+      _CHANGE_STATE(pWork, _itemKindSelectMenu);
+    }
     else if(pWork->ret_item == ITEM_TAUNMAPPU){
       pWork->ret_code = BAG_NEXTPROC_TOWNMAP;  //タウンマップ
       _CHANGE_STATE(pWork,NULL);
@@ -737,15 +746,6 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     else if(pWork->ret_item == ITEM_PARESUHEGOO){
       pWork->ret_code = BAG_NEXTPROC_PALACEJUMP;  //@TODO 仮 パレスへゴー
       _CHANGE_STATE(pWork,NULL);
-    }
-    else if(BAG_MENU_YAMERU==pWork->ret_code2){  //やめる
-      KTST_SetDraw( pWork, FALSE ); // タッチ遷移なので非表示に
-      _CHANGE_STATE(pWork, _itemKindSelectMenu);
-    }
-    else if(BAG_MENU_TSUKAU==pWork->ret_code2){  //とうろく
-      GFL_SOUND_PlaySE( SE_BAG_REGIST_Y );
-        // @TODO 登録処理
-      _CHANGE_STATE(pWork, _itemKindSelectMenu);
     }
     else if(BAG_MENU_TSUKAU==pWork->ret_code2){
       pWork->ret_code = BAG_NEXTPROC_ITEMUSE;  //つかう
