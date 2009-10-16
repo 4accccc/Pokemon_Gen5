@@ -84,8 +84,10 @@ if exist "tools\personal\%USERNAME%_prompt.bat" call tools\personal\%USERNAME%_p
 REM 別のバッチファイルから呼び出して
 REM 環境変数やパス指定だけを有効にして
 REM 元のバッチファイルに戻れるようにcmd /F:ONをスルーできるようにしてます
+REM prompt.bat cmd hoge.batとすると環境変数とパス指定をWB環境にした上で、
+REM hoge.batを実行します
 if %1.==. GOTO START
-if %1==no_cmd GOTO END
+if %1==cmd ( call %2 & GOTO END )
 :START
 cmd /F:ON
 :END
