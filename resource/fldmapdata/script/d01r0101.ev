@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d01r0101.h"
-  //.include  "d01r0101.h"
+  .include  "d01r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,12 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d01r0101
+_EVENT_DATA    ev_d01r0101_girl_01
+_EVENT_DATA    ev_pos_d01r0101_support_01
+_EVENT_DATA    ev_d01r0101_support_02
+_EVENT_DATA    ev_pos_d01r0101_support_03
+_EVENT_DATA    ev_pos_d01r0101_support_04
+_EVENT_DATA    ev_d01r0101_item_01
 _EVENT_DATA_END
 
 
@@ -30,9 +35,301 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*   D01R0101　ジムリーダー対策ポケモンくれるガール            */
 /**************************************************************/
-ev_d01r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_d01r0101_girl_01
+_TALK_OBJ_START()
 
+//状態により会話を分岐
+
+IF $WK_SCENE_D01R0101 == 0 THEN
+	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_01,D01R0101_GIRL_01)
+	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_02,D01R0101_GIRL_01)
+	//ポケモン必要か質問
+	DEFINE_LOCAL SCWK_ANSWER01
+	_YES_NO_WIN( SCWK_ANSWER01 )
+	//回答により分岐
+	IF $SCWK_ANSWER01 == 0 THEN
+		//手持ちポケモンをカウントして回答を分岐する
+		{
+		DEFINE_LOCAL POKE_COUNT
+		_GET_PARTY_POKE_COUNT (POKE_COUNT,POKECOUNT_MODE_TOTAL)
+		
+		//手持ちがいっぱいなら
+		IF $POKE_COUNT == 6 THEN
+			_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_03,D01R0101_GIRL_01)
+			_BALLOONWIN_CLOSE()
+			//1回目の会話は繰り返さない用フラグ
+			$WK_SCENE_D01R0101 = 1
+			
+		ELSE
+		//【仮処理】手持ちに空きがあれば（本来は持ちタイプで結果を分岐）
+			_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_05,D01R0101_GIRL_01)
+			_BALLOONWIN_CLOSE()
+			_TALKWIN_OPEN()
+			_TALKMSG(msg_d01r0101_girl_08)
+			_TALKMSG(msg_d01r0101_girl_09)
+			DEFINE_LOCAL NAME_YESNO01
+			_YES_NO_WIN( NAME_YESNO01 )
+			_TALKWIN_CLOSE()
+			
+			//【仮処理】名づけるか分岐
+			IF $NAME_YESNO01 == 0 THEN
+				//はい
+				_WHITE_OUT( 8 )
+				_DISP_FADE_END_CHECK()
+				_WHITE_IN( 8 )
+				_DISP_FADE_END_CHECK()
+			ELSE
+				//いいえの場合はスキップ
+			ENDIF
+			
+			//会話終了
+			_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_10,D01R0101_GIRL_01)
+			_BALLOONWIN_CLOSE()
+			//対策ポケモン受け取り済フラグ
+			$WK_SCENE_D01R0101 = 2
+		ENDIF
+		}
+	
+	//いらない場合
+	ELSE
+	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_04,D01R0101_GIRL_01)
+	_BALLOONWIN_CLOSE()
+	//1回目の会話は繰り返さない用フラグ
+	$WK_SCENE_D01R0101 = 1
+	
+	ENDIF
+	
+//2回目会話時
+ELSIF $WK_SCENE_D01R0101 == 1 THEN
+	//ポケモン必要か質問
+	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_02,D01R0101_GIRL_01)
+	DEFINE_LOCAL SCWK_ANSWER02
+	_YES_NO_WIN( SCWK_ANSWER02 )
+	
+	//回答により分岐
+	IF $SCWK_ANSWER02 == 0 THEN
+		//手持ちポケモンをカウントして回答を分岐する
+		{
+		DEFINE_LOCAL POKE_COUNT
+		_GET_PARTY_POKE_COUNT (POKE_COUNT,POKECOUNT_MODE_TOTAL)
+		
+		//手持ちがいっぱいなら
+		IF $POKE_COUNT == 6 THEN
+			_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_03,D01R0101_GIRL_01)
+			_BALLOONWIN_CLOSE()
+			//1回目の会話は繰り返さない用フラグ
+			$WK_SCENE_D01R0101 = 1
+			
+		ELSE
+		//【仮処理】手持ちに空きがあれば（本来は持ちタイプで結果を分岐）
+			_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_05,D01R0101_GIRL_01)
+			_BALLOONWIN_CLOSE()
+			_TALKWIN_OPEN()
+			_TALKMSG(msg_d01r0101_girl_08)
+			_TALKMSG(msg_d01r0101_girl_09)
+			DEFINE_LOCAL NAME_YESNO02
+			_YES_NO_WIN( NAME_YESNO02 )
+			_TALKWIN_CLOSE()
+			
+			//【仮処理】名づけるか分岐
+			IF $NAME_YESNO02 == 0 THEN
+				//はい
+				_WHITE_OUT( 8 )
+				_DISP_FADE_END_CHECK()
+				_WHITE_IN( 8 )
+				_DISP_FADE_END_CHECK()
+			ELSE
+				//いいえの場合はスキップ
+			ENDIF
+			
+			//会話終了
+			_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_10,D01R0101_GIRL_01)
+			_BALLOONWIN_CLOSE()
+			//対策ポケモン受け取り済フラグ
+			$WK_SCENE_D01R0101 = 2
+		ENDIF
+		}
+	
+	//いらない場合
+	ELSE
+	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_04,D01R0101_GIRL_01)
+	_BALLOONWIN_CLOSE()
+	
+	ENDIF
+ELSE
+  //ポケモン受け取り済
+	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_10,D01R0101_GIRL_01)
+	_BALLOONWIN_CLOSE()
+ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*   D01R0101　サポート登場                                   */
+/**************************************************************/
+EVENT_START   ev_pos_d01r0101_support_01
+	
+	//サポート登場
+	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_01)
+	_OBJ_ANIME_WAIT()
+	//ひとこと声をかける
+	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_white_01,D01R0101_SUPPORT)
+	_BALLOONWIN_CLOSE()
+	//サポート廃墟内へ
+	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_02)
+	_OBJ_ANIME_WAIT()
+	
+	//ポケモンの鳴き声に気づくPOS起動
+	$WK_SCENE_D01R0101 = 3
+
+EVENT_END
+
+/**************************************************************/
+/*   D01R0101　サポートに話しかけ時                          */
+/**************************************************************/
+EVENT_START   ev_d01r0101_support_02
+
+	//状況ごとに話すことを変える
+
+	//イベント進行前
+	IF $WK_SCENE_D01R0101 == 3 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_02)
+
+	//物音に気づいた後
+	ELSIF $WK_SCENE_D01R0101 == 4 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_03)
+
+	//夢アイテム取得前
+	ELSIF $WK_SCENE_D01R0101 == 5 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_04)
+
+	//夢アイテム取得後
+	ELSIF $WK_SCENE_D01R0101 == 6 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_05)
+
+	//例外処理では夢の話をする
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d01r0101_white_02)
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*   D01R0101　POSを踏んでサポート反応する                    */
+/**************************************************************/
+EVENT_START   ev_pos_d01r0101_support_03
+
+	//サポート追って来る
+	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_03)
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_white_03,D01R0101_SUPPORT)
+	_BALLOONWIN_CLOSE()
+	
+	//ポケモンの鳴き声を聞くPOS起動
+	$WK_SCENE_D01R0101 = 4
+
+EVENT_END
+
+/**************************************************************/
+/*   D01R0101　POSを踏んで夢ポケモン鳴いて退場                */
+/**************************************************************/
+EVENT_START   ev_pos_d01r0101_support_04
+
+	//夢ポケモン鳴いて退場
+	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_poke_01,D01R0101_POKE_01)
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME(D01R0101_POKE_01,anm_d01r0101_pokemon_01)
+	_OBJ_ANIME_WAIT()
+	
+	//だいじなもの出現
+	_FLAG_RESET(D01R0101_ITEM_01)
+	_OBJ_ADD(D01R0101_ITEM_01)
+	
+	//夢ポケモン非表示
+	_OBJ_DEL(D01R0101_POKE_01)
+	_FLAG_SET(FV_D01R0101_POKE_01)
+	
+	//サポートアイテムについて話す
+	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_04)
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_white_04,D01R0101_SUPPORT)
+	_BALLOONWIN_CLOSE()
+	
+	//アイテム拾う前フラグ起動
+	$WK_SCENE_D01R0101 = 5
+
+EVENT_END
+
+/**************************************************************/
+/*   D01R0101　だいじなもの入手                               */
+/**************************************************************/
+EVENT_START   ev_d01r0101_item_01
+
+	//【仮】アイテム入手処理仮：だいじなもの非表示
+	_OBJ_DEL(D01R0101_ITEM_01)
+	_FLAG_RESET(D01R0101_ITEM_01)
+
+	//サポート駆け寄って来る
+	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_05)
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_white_05,D01R0101_SUPPORT)
+	_BALLOONWIN_CLOSE()
+
+	//夢イベント終了フラグ起動
+	$WK_SCENE_D01R0101 = 6
+EVENT_END
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：いあい切り後にサポート来る  
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_support_01
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：廃墟の中に入っていくサポート 
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_support_02
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：POS踏むとサポートが気づいて駆け寄って来る  
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_support_03
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：夢ポケモン去っていく  
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_pokemon_01
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_R_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：アイテムを取得後サポートが隣接 
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_support_04
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：アイテムを取得後サポートが隣接 
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_support_05
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0

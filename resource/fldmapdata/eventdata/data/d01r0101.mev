@@ -1,20 +1,136 @@
 #event data
-#save date:2009/10/09 19:11:37
+#save date:2009/10/16 17:38:10
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d01r0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/09 19:11:37
+#save date:2009/10/16 17:38:10
 2
 #hold event type:
 1
 #hold event number:
+4
+#event number: 0
+#type
+1
+#ID name
+D01R0101_GIRL_01
+#OBJ CODE Number
+GIRL1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_D01R0101_GIRL_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#position
+56 0 -184
+#event number: 1
+#type
+1
+#ID name
+D01R0101_SUPPORT
+#OBJ CODE Number
+HEROINE
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_D01R0101_SUPPORT_02
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+24 0 -168
+#event number: 2
+#type
+1
+#ID name
+D01R0101_POKE_01
+#OBJ CODE Number
+POKE2
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+344 0 -88
+#event number: 3
+#type
+1
+#ID name
+D01R0101_ITEM_01
+#OBJ CODE Number
+BABYGIRL1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_D01R0101_ITEM_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+360 0 -88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/09 19:11:37
+#save date:2009/10/16 17:38:10
 2
 #hold event type:
 1
@@ -24,75 +140,68 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d01r0101.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/09 19:11:37
+#save date:2009/10/16 17:38:10
 2
 #hold event type:
 1
 #hold event number:
-0
+3
+#event number: 0
+#Pos Event Label
+POSID_D01R0101_SUPPORT_01
+#Pos Script Name
+SCRID_POS_D01R0101_SUPPORT_01
+#Event Trigger Work Name
+WK_SCENE_D01R0101
+#Event Trigger Work Value
+2
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+120 0 -152
+#event number: 1
+#Pos Event Label
+POSID_D01R0101_SUPPORT_03
+#Pos Script Name
+SCRID_POS_D01R0101_SUPPORT_03
+#Event Trigger Work Name
+WK_SCENE_D01R0101
+#Event Trigger Work Value
+3
+#Pos Event Size X
+1
+#Pos Event Size Z
+3
+#position
+216 0 -88
+#event number: 2
+#Pos Event Label
+POSID_D01R0101_SUPPORT_04
+#Pos Script Name
+SCRID_POS_D01R0101_SUPPORT_04
+#Event Trigger Work Name
+WK_SCENE_D01R0101
+#Event Trigger Work Value
+4
+#Pos Event Size X
+1
+#Pos Event Size Z
+4
+#position
+296 0 -72
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/09 19:11:37
+#save date:2009/10/16 17:38:10
 2
 #hold event type:
 1
 #hold event number:
 10
 #event number: 0
-#Door Event Label
-DOOR_ID_D01R0101_C01_EXIT04
-#Next Zone ID Name
-ZONE_ID_C01
-#Next Door ID Name
-DOOR_ID_C01_D01R0101_EXIT04
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--104 0 -216
-#event number: 1
-#Door Event Label
-DOOR_ID_D01R0101_C01_EXIT03
-#Next Zone ID Name
-ZONE_ID_C01
-#Next Door ID Name
-DOOR_ID_C01_D01R0101_EXIT03
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--104 0 -200
-#event number: 2
-#Door Event Label
-DOOR_ID_D01R0101_C01_EXIT01
-#Next Zone ID Name
-ZONE_ID_C01
-#Next Door ID Name
-DOOR_ID_C01_D01R0101_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--104 0 -168
-#event number: 3
-#Door Event Label
-DOOR_ID_D01R0101_C01_EXIT02
-#Next Zone ID Name
-ZONE_ID_C01
-#Next Door ID Name
-DOOR_ID_C01_D01R0101_EXIT02
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_MAT
-#position
--104 0 -184
-#event number: 4
 #Door Event Label
 DOOR_ID_D01R0101_D01R0201_EXIT01
 #Next Zone ID Name
@@ -105,7 +214,7 @@ EXIT_DIR_RIGHT
 EXIT_TYPE_STAIRS
 #position
 472 0 40
-#event number: 5
+#event number: 1
 #Door Event Label
 DOOR_ID_D01R0101_D01R0201_EXIT02
 #Next Zone ID Name
@@ -118,7 +227,7 @@ EXIT_DIR_RIGHT
 EXIT_TYPE_STAIRS
 #position
 472 0 24
-#event number: 6
+#event number: 2
 #Door Event Label
 DOOR_ID_D01R0101_D01R0201_EXIT03
 #Next Zone ID Name
@@ -131,7 +240,7 @@ EXIT_DIR_RIGHT
 EXIT_TYPE_STAIRS
 #position
 472 0 8
-#event number: 7
+#event number: 3
 #Door Event Label
 DOOR_ID_D01R0101_D01R0201_EXIT06
 #Next Zone ID Name
@@ -144,7 +253,7 @@ EXIT_DIR_RIGHT
 EXIT_TYPE_STAIRS
 #position
 184 0 -488
-#event number: 8
+#event number: 4
 #Door Event Label
 DOOR_ID_D01R0101_D01R0201_EXIT05
 #Next Zone ID Name
@@ -157,7 +266,7 @@ EXIT_DIR_RIGHT
 EXIT_TYPE_STAIRS
 #position
 184 0 -472
-#event number: 9
+#event number: 5
 #Door Event Label
 DOOR_ID_D01R0101_D01R0201_EXIT04
 #Next Zone ID Name
@@ -170,5 +279,57 @@ EXIT_DIR_RIGHT
 EXIT_TYPE_STAIRS
 #position
 184 0 -456
+#event number: 6
+#Door Event Label
+DOOR_ID_D01R0101_C01_EXIT01
+#Next Zone ID Name
+ZONE_ID_C01
+#Next Door ID Name
+DOOR_ID_C01_D01R0101_EXIT01
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_MAT
+#position
+-120 0 -168
+#event number: 7
+#Door Event Label
+DOOR_ID_D01R0101_C01_EXIT04
+#Next Zone ID Name
+ZONE_ID_C01
+#Next Door ID Name
+DOOR_ID_C01_D01R0101_EXIT04
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_MAT
+#position
+-120 0 -216
+#event number: 8
+#Door Event Label
+DOOR_ID_D01R0101_C01_EXIT03
+#Next Zone ID Name
+ZONE_ID_C01
+#Next Door ID Name
+DOOR_ID_C01_D01R0101_EXIT03
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_MAT
+#position
+-120 0 -200
+#event number: 9
+#Door Event Label
+DOOR_ID_D01R0101_C01_EXIT02
+#Next Zone ID Name
+ZONE_ID_C01
+#Next Door ID Name
+DOOR_ID_C01_D01R0101_EXIT02
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_MAT
+#position
+-120 0 -184
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

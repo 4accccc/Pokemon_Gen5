@@ -34,10 +34,7 @@ _EVENT_DATA_END
 /*  C05R0401 WORKMANの会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c05r0401_talkobj_workman
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05r0401_workman_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0401_workman_01 )
 EVENT_END
 
 /**************************************************************/
