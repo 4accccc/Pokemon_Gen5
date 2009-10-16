@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c02gym0201.h"
-  //.include  "c02gym0201.h"
+  .include  "c02gym0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,6 +21,40 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c02gym0201
 _EVENT_DATA    ev_zone_c02gym0201
+
+_EVENT_DATA    ev_c02gym0201_glasses_01
+
+_EVENT_DATA    ev_c02gym0201_assitantm1_01
+_EVENT_DATA    ev_c02gym0201_assitantm2_01
+
+_EVENT_DATA    ev_bg_c02gym0201_statue_01
+_EVENT_DATA    ev_bg_c02gym0201_statue_02
+
+_EVENT_DATA    ev_bg_c02gym0201_category_01
+_EVENT_DATA    ev_bg_c02gym0201_category_02
+_EVENT_DATA    ev_bg_c02gym0201_category_03
+_EVENT_DATA    ev_bg_c02gym0201_category_04
+_EVENT_DATA    ev_bg_c02gym0201_category_05
+_EVENT_DATA    ev_bg_c02gym0201_category_06
+_EVENT_DATA    ev_bg_c02gym0201_category_07
+_EVENT_DATA    ev_bg_c02gym0201_category_08
+_EVENT_DATA    ev_bg_c02gym0201_category_09
+_EVENT_DATA    ev_bg_c02gym0201_category_10
+_EVENT_DATA    ev_bg_c02gym0201_category_11
+_EVENT_DATA    ev_bg_c02gym0201_category_12
+_EVENT_DATA    ev_bg_c02gym0201_category_13
+_EVENT_DATA    ev_bg_c02gym0201_category_14
+_EVENT_DATA    ev_bg_c02gym0201_category_15
+_EVENT_DATA    ev_bg_c02gym0201_category_16
+_EVENT_DATA    ev_bg_c02gym0201_category_17
+_EVENT_DATA    ev_bg_c02gym0201_category_18
+_EVENT_DATA    ev_bg_c02gym0201_category_19
+_EVENT_DATA    ev_bg_c02gym0201_category_20
+_EVENT_DATA    ev_bg_c02gym0201_category_21
+_EVENT_DATA    ev_bg_c02gym0201_category_22
+_EVENT_DATA    ev_bg_c02gym0201_category_23
+_EVENT_DATA    ev_bg_c02gym0201_category_24
+
 _EVENT_DATA_END
 
 
@@ -38,3 +72,902 @@ ev_c02gym0201:
   //とりあえず最初のラベルだけ生成している
   _END
 
+/**************************************************************/
+/*     サングラス               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		ev_c02gym0201_glasses_01
+    
+    $LOCALWORK15 =0
+    
+	//分岐処理・ジムバッジがあるか？
+	IF FLAG_OFF(FH_01) THEN
+	//ジムバッジがない
+		_EASY_TALK_ITEM_EVENT(ITEM_OISIIMIZU, 1, FH_01, msg_c02gym0101_glasses_01, msg_c02gym0101_glasses_02, msg_c02gym0101_glasses_02 )	
+	
+	//ジムバッジがある
+	ELSE
+	//きいたっすか？　へんな　やつらが　はくぶつかんに　どかどか　きて……
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0101_glasses_04 )
+	ENDIF
+
+EVENT_END
+	
+/**************************************************************/
+/*     ポケモン像1               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_statue_01
+
+	IF FLAG_OFF(FH_01) THEN
+	//ジムバッジを取得していない場合
+		_EASY_MSG ( msg_c02gym0101_statue_01 )
+	
+	ELSE
+	//ジムバッジを取得している場合
+		_EASY_MSG( msg_c02gym0101_statue_02 )
+		
+	ENDIF
+EVENT_END
+/**************************************************************/
+/*     ポケモン像2               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		ev_bg_c02gym0201_statue_02
+
+	IF FLAG_OFF(FH_01) THEN
+	//ジムバッジを取得していない場合
+		_TALKMSG ( msg_c02gym0101_statue_01 )
+	
+	ELSE
+	//ジムバッジを取得している場合
+		_EASY_MSG( msg_c02gym0101_statue_02 )
+		
+	ENDIF
+EVENT_END
+
+/**************************************************************/
+/*     ジムトレーナー（本棚ストッパー）1               　　　　*/
+/**************************************************************/
+EVENT_START		ev_c02gym0201_assitantm1_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_assitantw_01)
+		
+EVENT_END
+/**************************************************************/
+/*     ジムトレーナー（本棚ストッパー）2               　　　*/
+/**************************************************************/
+EVENT_START		ev_c02gym0201_assitantm2_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_01)
+
+EVENT_END
+
+/**************************************************************/
+/*     本棚ジャンル1               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_01
+	
+	//本棚のジャンルを表示
+	_TALKWIN_OPEN()
+	_TALKMSG   ( msg_c02gym0101_category_01)
+	
+	DEFINE_LOCAL	BOOK_SELECT1
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT1 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_01, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_02, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_03, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT1
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_01)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_02)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_03)
+	CASE 3THEN	
+		
+	ENDSWITCH
+    
+    _TALKWIN_CLOSE()
+    
+EVENT_END
+
+
+/**************************************************************/
+/*     本棚ジャンル2               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_02
+
+	_TALKMSG   ( msg_c02gym0101_category_01)
+	
+	DEFINE_LOCAL	BOOK_SELECT2
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT2 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_01, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_02, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_03, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT2
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_01)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_02)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_03)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+
+
+/**************************************************************/
+/*     本棚ジャンル3               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_03
+
+	_TALKMSG   ( msg_c02gym0101_category_01)
+	
+	DEFINE_LOCAL	BOOK_SELECT3
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT3 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_04, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_05, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_06, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT3
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_04)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_05)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_06)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル4              　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_04
+
+	_TALKMSG   ( msg_c02gym0101_category_01)
+	
+	DEFINE_LOCAL	BOOK_SELECT4
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT4 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_04, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_05, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_06, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT4
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_04)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_05)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_06)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル5               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_05
+
+	_TALKMSG   ( msg_c02gym0101_category_02)
+	
+	DEFINE_LOCAL	BOOK_SELECT5
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT5 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_07, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_08, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_09, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT5
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_07)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_08)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_09)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル6              　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_06
+
+	_TALKMSG   ( msg_c02gym0101_category_02)
+	
+	DEFINE_LOCAL	BOOK_SELECT6
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT6 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_07, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_08, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_09, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT6
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_07)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_08)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_09)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル7               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_07
+
+	DEFINE_LOCAL	BOOK_SELECT7
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT7 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_10, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_11, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_12, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT7
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_10)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_11)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_12)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル8               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_08
+
+	_TALKMSG   ( msg_c02gym0101_category_02)
+	
+	DEFINE_LOCAL	BOOK_SELECT8
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT8 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_10, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_11, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_12, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT8
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_10)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_11)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_12)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル9               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_09
+
+	_TALKMSG   ( msg_c02gym0101_category_03)
+	
+	DEFINE_LOCAL	BOOK_SELECT9
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT9 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_13, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_14, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT9
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_13)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_14)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_15)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル10               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_10
+
+	_TALKMSG   ( msg_c02gym0101_category_03)
+	
+	DEFINE_LOCAL	BOOK_SELECT10
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT10 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_13, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_14, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_15, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT10
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_13)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_14)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_15)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル11               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_11
+
+	_TALKMSG   ( msg_c02gym0101_category_03)
+	
+	DEFINE_LOCAL	BOOK_SELECT11
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT11 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_16, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_17, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_18, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT11
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_16)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_17)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_18)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル12               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_12
+
+	_TALKMSG   ( msg_c02gym0101_category_03)
+	
+	DEFINE_LOCAL	BOOK_SELECT12
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT12 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_16, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_17, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_18, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT12
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_16)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_17)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_18)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル 13              　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_13
+
+	_TALKMSG   ( msg_c02gym0101_category_04)
+	
+	DEFINE_LOCAL	BOOK_SELECT13
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT13 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_19, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_20, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_21, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT13
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_19)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_20)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_21)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル14               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_14
+
+	_TALKMSG   ( msg_c02gym0101_category_04)
+	
+	DEFINE_LOCAL	BOOK_SELECT14
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT14 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_19, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_20, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_21, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT14
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_19)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_20)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_21)
+	CASE 3THEN	
+		
+	ENDSWITCH
+	
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル15               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_15
+
+	_TALKMSG   ( msg_c02gym0101_category_04)
+	
+	DEFINE_LOCAL	BOOK_SELECT15
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT15 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_22, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_23, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_24, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT15
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_22)
+	CASE 1 THEN	
+	
+		_TALKMSG   ( msg_c02gym0101_switch_01)
+		
+		_GYM_NORMAL_MOVE_WALL(0)
+		
+		_TALKMSG   ( msg_c02gym0101_switch_02)
+		
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_24)
+	CASE 3THEN	
+		
+	ENDSWITCH
+	
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル16               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_16
+
+	_TALKMSG   ( msg_c02gym0101_category_04)
+	
+	DEFINE_LOCAL	BOOK_SELECT16
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT16 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_22, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_23, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_24, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT16
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_22)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_23)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_24)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル17               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_17
+
+	_TALKMSG   ( msg_c02gym0101_category_05)
+	
+	DEFINE_LOCAL	BOOK_SELECT17
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT17 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_25, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_26, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_27, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT17
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_25)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_26)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_27)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル18               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_18
+
+	_TALKMSG   ( msg_c02gym0101_category_05)
+	
+	DEFINE_LOCAL	BOOK_SELECT18
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT18 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_25, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_26, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_27, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT18
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_25)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_26)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_27)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル 19             　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_19
+
+	_TALKMSG   ( msg_c02gym0101_category_05)
+	
+	DEFINE_LOCAL	BOOK_SELECT19
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT19 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_28, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_29, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_30, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT19
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_28)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_29)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_30)
+	CASE 3THEN	
+		
+	ENDSWITCH
+	
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル20               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_20
+
+	_TALKMSG   ( msg_c02gym0101_category_05)
+	
+	DEFINE_LOCAL	BOOK_SELECT20
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT20 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_28, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_29, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_30, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT20
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_28)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_29)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_30)
+	CASE 3THEN	
+		
+	ENDSWITCH
+	
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル21              　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_21
+
+	_TALKMSG   ( msg_c02gym0101_category_06)
+	
+	DEFINE_LOCAL	BOOK_SELECT21
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT21 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_31, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_32, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_33, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT21
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_31)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_32)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_33)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル22               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_22
+
+	_TALKMSG   ( msg_c02gym0101_category_06)
+	
+	DEFINE_LOCAL	BOOK_SELECT22
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT22 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_31, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_32, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_33, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT22
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_31)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_32)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_33)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル23              　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_23
+
+	_TALKMSG   ( msg_c02gym0101_category_06)
+	
+	DEFINE_LOCAL	BOOK_SELECT23
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT23 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_34, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_35, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_36, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT23
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_34)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_35)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_36)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
+/**************************************************************/
+/*     本棚ジャンル24               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		 ev_bg_c02gym0201_category_24
+
+	_TALKMSG   ( msg_c02gym0101_category_06)
+	
+	DEFINE_LOCAL	BOOK_SELECT24
+	
+	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
+	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT24 )
+	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_34, 0 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_35, 1 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_36, 2 )	
+    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
+	
+	
+	//三択のウィンドウを表示！　
+	_BMPMENU_START()
+	
+	//プレイヤーが選んだ本の内容を表示
+	SWITCH $BOOK_SELECT24
+	CASE 0 THEN		
+		_TALKMSG   ( msg_c02gym0101_book_34)
+	CASE 1 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_35)
+	CASE 2 THEN	
+		_TALKMSG   ( msg_c02gym0101_book_36)
+	CASE 3THEN	
+		
+	ENDSWITCH
+
+EVENT_END
