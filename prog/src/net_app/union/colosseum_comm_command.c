@@ -430,8 +430,7 @@ static void _ColosseumRecv_Pokeparty(const int netID, const int size, const void
 BOOL ColosseumSend_Pokeparty(POKEPARTY *pokeparty)
 {
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
-    COLOSSEUM_CMD_POKEPARTY, sizeof(PokeParty_GetWorkSize()), 
-    pokeparty, TRUE, FALSE, TRUE);
+    COLOSSEUM_CMD_POKEPARTY, PokeParty_GetWorkSize(), pokeparty, TRUE, FALSE, TRUE);
 }
 
 //==============================================================================
