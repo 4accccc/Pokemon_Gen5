@@ -102,13 +102,16 @@ VMCMD_RESULT EvCmdGetNowMsgArcID( VMHANDLE * core, void *wk )
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  *
- * @todo  トレーナーカードの企画ができたらそれにあわせて戻り値をかえす
+ * @todo  とりあえずバッジの数を返している。
+ * トレーナーカードの企画ができたらそれにあわせて戻り値をかえす
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetTrainerCardRank( VMHANDLE *core, void *wk )
 {
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
   u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
-  *ret_wk = 4;
+
+  *ret_wk = MyStatus_GetBadgeCount( GAMEDATA_GetMyStatus(gdata) );
   return VMCMD_RESULT_CONTINUE;
 }
 
