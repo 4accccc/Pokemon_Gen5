@@ -28,6 +28,7 @@
 #include "plist_plate.h"
 #include "plist_message.h"
 #include "plist_menu.h"
+#include "plist_battle.h"
 #include "plist_item.h"
 #include "plist_snd_def.h"
 #include "poke_tool/status_rcv.h"
@@ -120,20 +121,6 @@ enum PLIST_CURCOR_ANIME
 //======================================================================
 #pragma mark [> proto
 
-static const GFL_DISP_VRAM vramBank = {
-  GX_VRAM_BG_128_A,       // メイン2DエンジンのBG
-  GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-  GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
-  GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
-  GX_VRAM_OBJ_128_B,       // メイン2DエンジンのOBJ
-  GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
-  GX_VRAM_SUB_OBJ_NONE,     // サブ2DエンジンのOBJ
-  GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
-  GX_VRAM_TEX_0_D,        // テクスチャイメージスロット
-  GX_VRAM_TEXPLTT_0_F,     // テクスチャパレットスロット
-  GX_OBJVRAMMODE_CHAR_1D_128K,
-  GX_OBJVRAMMODE_CHAR_1D_128K
-};
 
 FS_EXTERN_OVERLAY(poke_status);
 
@@ -237,6 +224,11 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->hpAnimeCallBack = NULL;
   work->clwkExitButton = NULL;
 
+  for( i=0;i<PCR_MAX;i++ )
+  {
+    work->cellRes[i] = PCR_NONE;
+  }
+
   if( work->plData->mode == PL_MODE_WAZASET )
   {
     if( work->plData->waza == 0 )
@@ -273,6 +265,10 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
 
   //描画順の関係上ここで
   PLIST_InitCell( work );
+  if( PLIST_UTIL_IsBattleMenu(work) == TRUE )
+  {
+    PLIST_BATTLE_InitBattle( work );
+  }
   
 //  PLIST_PLATE_ChangeColor( work , work->plateWork[0] , PPC_NORMAL_SELECT );
   work->vBlankTcb = GFUser_VIntr_CreateTCB( PLIST_VBlankFunc , work , 8 );
@@ -327,6 +323,10 @@ const BOOL PLIST_TermPokeList( PLIST_WORK *work )
 	APP_TASKMENU_RES_Delete( work->taskres );
 
   PLIST_TermMessage( work );
+  if( PLIST_UTIL_IsBattleMenu(work) == TRUE )
+  {
+    PLIST_BATTLE_TermBattle( work );
+  }
   PLIST_TermCell( work );
   PLIST_ReleaseResource( work );
   PLIST_TermGraphic( work );
@@ -455,19 +455,16 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
   
   PLIST_UpdatePlatePalletAnime( work );
 
+  if( PLIST_UTIL_IsBattleMenu(work) == TRUE )
+  {
+    PLIST_BATTLE_UpdateBattle( work );
+  }
+
   //メッセージ
   PRINTSYS_QUE_Main( work->printQue );
 
   //OBJの更新
   GFL_CLACT_SYS_Main();
-
-#if DEBUG_ONLY_FOR_ariizumi_nobuhiko
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
-  {
-    POKEMON_PARAM *pp = PokeParty_GetMemberPointer(work->plData->pp, 1);
-    PP_Put( pp , ID_PARA_tamago_flag , 1 );
-  }
-#endif
 
   return FALSE;
 }
@@ -538,6 +535,28 @@ static void PLIST_VBlankFunc(GFL_TCB *tcb, void *wk )
 //--------------------------------------------------------------
 static void PLIST_InitGraphic( PLIST_WORK *work )
 {
+  GFL_DISP_VRAM vramBank = {
+    GX_VRAM_BG_128_A,       // メイン2DエンジンのBG
+    GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
+    GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
+    GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
+    GX_VRAM_OBJ_128_B,       // メイン2DエンジンのOBJ
+    GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
+    GX_VRAM_SUB_OBJ_NONE,     // サブ2DエンジンのOBJ
+    GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
+    GX_VRAM_TEX_0_D,        // テクスチャイメージスロット
+    GX_VRAM_TEXPLTT_0_F,     // テクスチャパレットスロット
+    GX_OBJVRAMMODE_CHAR_1D_128K,
+    GX_OBJVRAMMODE_CHAR_1D_128K
+  };
+
+  //バトル選択で3D(持ち物フォルムチェンジ)は使わず、上画面にポケアイコン出す
+  if( PLIST_UTIL_IsBattleMenu(work) == TRUE )
+  {
+    vramBank.sub_obj = GX_VRAM_SUB_OBJ_128_D;
+    vramBank.teximage = GX_VRAM_TEX_NONE;
+  }
+
   GFL_DISP_GX_InitVisibleControl();
   GFL_DISP_GXS_InitVisibleControl();
   GX_SetVisiblePlane( 0 );
@@ -581,6 +600,20 @@ static void PLIST_InitGraphic( PLIST_WORK *work )
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
+    // BG1 SUB (文字
+    static const GFL_BG_BGCNT_HEADER header_sub1 = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x10000,0x08000,
+      GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    // BG2 SUB (プレート
+    static const GFL_BG_BGCNT_HEADER header_sub2 = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000,0x08000,
+      GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
     // BG3 SUB (背景
     static const GFL_BG_BGCNT_HEADER header_sub3 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
@@ -595,11 +628,16 @@ static void PLIST_InitGraphic( PLIST_WORK *work )
     PLIST_SetupBgFunc( &header_main1 , PLIST_BG_PARAM , GFL_BG_MODE_TEXT );
 
     PLIST_SetupBgFunc( &header_sub3 , PLIST_BG_SUB_BG , GFL_BG_MODE_TEXT );
+    PLIST_SetupBgFunc( &header_sub2 , PLIST_BG_SUB_BATTLE_WIN , GFL_BG_MODE_TEXT );
+    PLIST_SetupBgFunc( &header_sub1 , PLIST_BG_SUB_BATTLE_STR , GFL_BG_MODE_TEXT );
     
     //とりあえず2Dで初期化
     PLIST_InitBG0_2DMenu( work );
     
     G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , 
+                      GX_BLEND_PLANEMASK_BG3 ,
+                      16 , 10 );
+    G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2 , 
                       GX_BLEND_PLANEMASK_BG3 ,
                       16 , 10 );
 
@@ -614,6 +652,7 @@ static void PLIST_InitGraphic( PLIST_WORK *work )
     GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId );
     
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
   }
   
   //Vram転送アニメ
@@ -656,6 +695,8 @@ static void PLIST_TermGraphic( PLIST_WORK *work )
   GFL_BG_FreeBGControl( PLIST_BG_PARAM );
   GFL_BG_FreeBGControl( PLIST_BG_MENU );
   GFL_BG_FreeBGControl( PLIST_BG_SUB_BG );
+  GFL_BG_FreeBGControl( PLIST_BG_SUB_BATTLE_WIN );
+  GFL_BG_FreeBGControl( PLIST_BG_SUB_BATTLE_STR );
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
 
@@ -758,6 +799,7 @@ static void PLIST_InitMessage( PLIST_WORK *work )
   work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_pokelist_dat , work->heapId );
 
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , PLIST_BG_PLT_FONT*16*2, 16*2, work->heapId );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , PLIST_BG_SUB_PLT_FONT*16*2, 16*2, work->heapId );
   
   //キューが足りなかったので追加(デフォルト1024
   work->printQue = PRINTSYS_QUE_CreateEx( 2048 , work->heapId );
@@ -819,42 +861,21 @@ static void PLIST_LoadResource( PLIST_WORK *work )
 
   ////OBJリソース
   //パレット
-  work->cellRes[PCR_PLT_OBJ_COMMON] = GFL_CLGRP_PLTT_Register( arcHandle , 
+  work->cellRes[PCR_PLT_OBJ_COMMON] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , 
         NARC_pokelist_gra_list_obj_NCLR , CLSYS_DRAW_MAIN , 
-        PLIST_OBJPLT_COMMON*32 , work->heapId  );
-  work->cellRes[PCR_PLT_ITEM_ICON] = GFL_CLGRP_PLTT_Register( arcHandle , 
-        NARC_pokelist_gra_item_icon_NCLR , CLSYS_DRAW_MAIN , 
-        PLIST_OBJPLT_ITEM_ICON*32 , work->heapId  );
-  work->cellRes[PCR_PLT_CONDITION] = GFL_CLGRP_PLTT_Register( arcHandle , 
-        NARC_pokelist_gra_p_st_ijou_NCLR , CLSYS_DRAW_MAIN , 
-        PLIST_OBJPLT_CONDITION*32 , work->heapId  );
-  work->cellRes[PCR_PLT_HP_BASE] = GFL_CLGRP_PLTT_Register( arcHandle , 
-        NARC_pokelist_gra_hp_dodai_NCLR , CLSYS_DRAW_MAIN , 
-        PLIST_OBJPLT_HP_BASE*32 , work->heapId  );
+        PLIST_OBJPLT_COMMON*32 , 0 , 3 , work->heapId  );
         
   //キャラクタ
   work->cellRes[PCR_NCG_CURSOR] = GFL_CLGRP_CGR_Register( arcHandle , 
         NARC_pokelist_gra_list_cursor_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   work->cellRes[PCR_NCG_BALL] = GFL_CLGRP_CGR_Register( arcHandle , 
         NARC_pokelist_gra_list_ball_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
-  work->cellRes[PCR_NCG_ITEM_ICON] = GFL_CLGRP_CGR_Register( arcHandle , 
-        NARC_pokelist_gra_item_icon_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
-  work->cellRes[PCR_NCG_CONDITION] = GFL_CLGRP_CGR_Register( arcHandle , 
-        NARC_pokelist_gra_p_st_ijou_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
-  work->cellRes[PCR_NCG_HP_BASE] = GFL_CLGRP_CGR_Register( arcHandle , 
-        NARC_pokelist_gra_hp_dodai_NCGR , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
   
   //セル・アニメ
   work->cellRes[PCR_ANM_CURSOR] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
         NARC_pokelist_gra_list_cursor_NCER , NARC_pokelist_gra_list_cursor_NANR, work->heapId  );
   work->cellRes[PCR_ANM_BALL] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
         NARC_pokelist_gra_list_ball_NCER , NARC_pokelist_gra_list_ball_NANR, work->heapId  );
-  work->cellRes[PCR_ANM_ITEM_ICON] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
-        NARC_pokelist_gra_item_icon_NCER , NARC_pokelist_gra_item_icon_NANR, work->heapId  );
-  work->cellRes[PCR_ANM_CONDITION] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
-        NARC_pokelist_gra_p_st_ijou_NCER , NARC_pokelist_gra_p_st_ijou_NANR, work->heapId  );
-  work->cellRes[PCR_ANM_HP_BASE] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
-        NARC_pokelist_gra_hp_dodai_NCER , NARC_pokelist_gra_hp_dodai_NANR, work->heapId  );
 
   GFL_ARC_CloseDataHandle(arcHandle);
   
@@ -873,16 +894,43 @@ static void PLIST_LoadResource( PLIST_WORK *work )
   //共通素材
   {
     ARCHANDLE *arcHandleCommon = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , work->heapId );
-
-    work->cellRes[PCR_PLT_BAR_ICON] = GFL_CLGRP_PLTT_Register( arcHandle , 
+    //HPバー土台
+    work->cellRes[PCR_PLT_HP_BASE] = GFL_CLGRP_PLTT_RegisterEx( arcHandleCommon , 
+          APP_COMMON_GetHPBarBasePltArcIdx() , CLSYS_DRAW_MAIN , 
+          PLIST_OBJPLT_HP_BASE*32 , 0 , 1 , work->heapId  );
+    work->cellRes[PCR_NCG_HP_BASE] = GFL_CLGRP_CGR_Register( arcHandleCommon , 
+          APP_COMMON_GetHPBarBaseCharArcIdx(APP_COMMON_MAPPING_128K) , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+    work->cellRes[PCR_ANM_HP_BASE] = GFL_CLGRP_CELLANIM_Register( arcHandleCommon , 
+          APP_COMMON_GetHPBarBaseCellArcIdx(APP_COMMON_MAPPING_128K) , 
+          APP_COMMON_GetHPBarBaseAnimeArcIdx(APP_COMMON_MAPPING_128K), work->heapId  );
+    //バー
+    work->cellRes[PCR_PLT_BAR_ICON] = GFL_CLGRP_PLTT_RegisterEx( arcHandleCommon , 
           APP_COMMON_GetBarIconPltArcIdx() , CLSYS_DRAW_MAIN , 
-          PLIST_OBJPLT_BAR_ICON*32 , work->heapId  );
-    work->cellRes[PCR_NCG_BAR_ICON] = GFL_CLGRP_CGR_Register( arcHandle , 
+          PLIST_OBJPLT_BAR_ICON*32 , 0 , APP_COMMON_BARICON_PLT_NUM , work->heapId  );
+    work->cellRes[PCR_NCG_BAR_ICON] = GFL_CLGRP_CGR_Register( arcHandleCommon , 
           APP_COMMON_GetBarIconCharArcIdx() , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
-    work->cellRes[PCR_ANM_BAR_ICON] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
+    work->cellRes[PCR_ANM_BAR_ICON] = GFL_CLGRP_CELLANIM_Register( arcHandleCommon , 
           APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_128K) , 
           APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_128K), 
           work->heapId  );
+    //アイコン用アイテム
+    work->cellRes[PCR_PLT_ITEM_ICON] = GFL_CLGRP_PLTT_RegisterEx( arcHandleCommon , 
+          APP_COMMON_GetPokeItemIconPltArcIdx() , CLSYS_DRAW_MAIN , 
+          PLIST_OBJPLT_ITEM_ICON*32 , 0 , APP_COMMON_BALL_PLT_NUM , work->heapId  );
+    work->cellRes[PCR_NCG_ITEM_ICON] = GFL_CLGRP_CGR_Register( arcHandleCommon , 
+          APP_COMMON_GetPokeItemIconCharArcIdx() , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+    work->cellRes[PCR_ANM_ITEM_ICON] = GFL_CLGRP_CELLANIM_Register( arcHandleCommon , 
+          APP_COMMON_GetPokeItemIconCellArcIdx(APP_COMMON_MAPPING_128K) , 
+          APP_COMMON_GetPokeItemIconAnimeArcIdx(APP_COMMON_MAPPING_128K), work->heapId  );
+    //状態異常アイコン
+    work->cellRes[PCR_PLT_CONDITION] = GFL_CLGRP_PLTT_RegisterEx( arcHandleCommon , 
+          APP_COMMON_GetStatusIconPltArcIdx() , CLSYS_DRAW_MAIN , 
+          PLIST_OBJPLT_CONDITION*32 , 0 , 1 , work->heapId  );
+    work->cellRes[PCR_NCG_CONDITION] = GFL_CLGRP_CGR_Register( arcHandleCommon , 
+          APP_COMMON_GetStatusIconCharArcIdx() , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+    work->cellRes[PCR_ANM_CONDITION] = GFL_CLGRP_CELLANIM_Register( arcHandleCommon , 
+          APP_COMMON_GetStatusIconCellArcIdx(APP_COMMON_MAPPING_128K) , 
+          APP_COMMON_GetStatusIconAnimeArcIdx(APP_COMMON_MAPPING_128K), work->heapId  );
     
     GFL_ARC_CloseDataHandle(arcHandleCommon);
   }
@@ -899,17 +947,26 @@ static void PLIST_ReleaseResource( PLIST_WORK *work )
   GFL_HEAP_FreeMemory( work->plateScrRes );
   
   //OBJ
-  for( i=PCR_PLT_START ; i<=PCR_PLT_END ; i++ )
+  for( i=PCR_PLT_START ; i<PCR_NCG_START ; i++ )
   {
-    GFL_CLGRP_PLTT_Release( work->cellRes[i] );
+    if( work->cellRes[i] != PCR_NONE )
+    {
+      GFL_CLGRP_PLTT_Release( work->cellRes[i] );
+    }
   }
-  for( i=PCR_NCG_START ; i<=PCR_NCG_END ; i++ )
+  for( i=PCR_NCG_START ; i<PCR_ANM_START ; i++ )
   {
-    GFL_CLGRP_CGR_Release( work->cellRes[i] );
+    if( work->cellRes[i] != PCR_NONE )
+    {
+      GFL_CLGRP_CGR_Release( work->cellRes[i] );
+    }
   }
-  for( i=PCR_ANM_START ; i<=PCR_ANM_END ; i++ )
+  for( i=PCR_ANM_START ; i<PCR_MAX ; i++ )
   {
-    GFL_CLGRP_CELLANIM_Release( work->cellRes[i] );
+    if( work->cellRes[i] != PCR_NONE )
+    {
+      GFL_CLGRP_CELLANIM_Release( work->cellRes[i] );
+    }
   }
 }
 

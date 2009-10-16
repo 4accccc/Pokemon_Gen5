@@ -555,7 +555,8 @@ SRCS_OVERLAY_POKELIST = app/pokelist/pokelist.c \
 		app/pokelist/plist_plate.c \
 		app/pokelist/plist_message.c \
 		app/pokelist/plist_menu.c \
-		app/pokelist/plist_item.c
+		app/pokelist/plist_item.c \
+		app/pokelist/plist_battle.c
 
 
 # ŒðŠ·‰æ–Ê

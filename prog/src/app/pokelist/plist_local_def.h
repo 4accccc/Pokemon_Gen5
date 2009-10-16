@@ -27,6 +27,9 @@
 #define PLIST_BG_MENU    (GFL_BG_FRAME0_M)
 
 #define PLIST_BG_SUB_BG (GFL_BG_FRAME3_S)
+//バトル上用
+#define PLIST_BG_SUB_BATTLE_WIN (GFL_BG_FRAME2_S)
+#define PLIST_BG_SUB_BATTLE_STR (GFL_BG_FRAME1_S)
 
 //土台とパラメータのスクロール分(キャラ単位
 #define PLIST_BG_SCROLL_X_CHAR (16)
@@ -37,6 +40,10 @@
 #define PLIST_BG_PLT_BMPWIN (0x0c)
 #define PLIST_BG_PLT_HP_BAR (0x0d)
 #define PLIST_BG_PLT_FONT (0x0e)
+
+#define PLIST_BG_SUB_PLT_BACK (0x00)  //1本
+#define PLIST_BG_SUB_PLT_PLATE (0x01) //1本
+#define PLIST_BG_SUB_PLT_FONT (0x0e)      //1本
 
 
 //BGキャラ(BmpWin
@@ -62,6 +69,11 @@
 #define PLIST_FONT_MENU_WAZA_LETTER (0xd)
 #define PLIST_FONT_MENU_SHADOW (0xf)
 
+//バトル用のアイコンは普通のフォント
+#define PLIST_FONT_BATTLE_PARAM PRINTSYS_LSB_Make( 0xF , 2 , 0 )
+#define PLIST_FONT_BATTLE_BLUE PRINTSYS_LSB_Make( 5 , 6 , 0 )
+#define PLIST_FONT_BATTLE_RED  PRINTSYS_LSB_Make( 3 , 0xE , 0 )
+
 //文字表示位置
 #define PLIST_MSG_STR_OFS_X (1)
 #define PLIST_MSG_STR_OFS_Y (1)
@@ -85,22 +97,26 @@ typedef enum
   PCR_PLT_OBJ_COMMON,
   PCR_PLT_BAR_ICON,
   PCR_PLT_ITEM_ICON,
+  PCR_PLT_ITEM_ICON_SUB,
   PCR_PLT_CONDITION,
   PCR_PLT_HP_BASE,
   PCR_PLT_POKEICON,
+  PCR_PLT_POKEICON_SUB,
   
   PCR_NCG_CURSOR,
   PCR_NCG_BALL,
   PCR_NCG_BAR_ICON,
   PCR_NCG_ITEM_ICON,
+  PCR_NCG_ITEM_ICON_SUB,
   PCR_NCG_CONDITION,
   PCR_NCG_HP_BASE,
-  //ポケアイコンのNCGは各プレートで持つ
+  //ポケアイコンのNCGは各箇所で持つ
   
   PCR_ANM_CURSOR,
   PCR_ANM_BALL,
   PCR_ANM_BAR_ICON,
   PCR_ANM_ITEM_ICON,
+  PCR_ANM_ITEM_ICON_SUB,
   PCR_ANM_CONDITION,
   PCR_ANM_HP_BASE,
   PCR_ANM_POKEICON,
@@ -108,11 +124,10 @@ typedef enum
   PCR_MAX,
   
   PCR_PLT_START = PCR_PLT_OBJ_COMMON,
-  PCR_PLT_END = PCR_PLT_POKEICON,
   PCR_NCG_START = PCR_NCG_CURSOR,
-  PCR_NCG_END = PCR_NCG_HP_BASE,
   PCR_ANM_START = PCR_ANM_CURSOR,
-  PCR_ANM_END = PCR_ANM_POKEICON,
+  
+  PCR_NONE = 0xFFFFFFFF,  //空
   
 }PLIST_CEL_RESOURCE;
 
@@ -177,6 +192,7 @@ typedef struct _PLIST_WORK PLIST_WORK;
 typedef struct _PLIST_PLATE_WORK PLIST_PLATE_WORK;
 typedef struct _PLIST_MSG_WORK   PLIST_MSG_WORK;
 typedef struct _PLIST_MENU_WORK  PLIST_MENU_WORK;
+typedef struct _PLIST_BATTLE_PARAM_WORK PLIST_BATTLE_PARAM_WORK;
 typedef struct _PLIST_DEBUG_WORK PLIST_DEBUG_WORK;
 
 typedef void (*PSTATUS_CallbackFunc)(PLIST_WORK *work);
@@ -247,6 +263,9 @@ struct _PLIST_WORK
   GFL_CLWK    *clwkBarIcon[PBT_MAX];
   GFL_CLWK    *clwkExitButton;    //終了時アニメ待ちをするときにポインタを入れておく
 
+  //バトル上画面用
+  GFL_CLUNIT  *cellUnitBattle;
+  PLIST_BATTLE_PARAM_WORK *battleParty[PL_COMM_PLAYER_TYPE_MAX];
 
 	//taskmenuリソース
 	APP_TASKMENU_RES *taskres;

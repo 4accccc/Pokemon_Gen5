@@ -120,7 +120,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       plData->mode = PL_MODE_FIELD;
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
       {
-        u8 i;
+        u8 i,p;
         for( i=0;i<6;i++ )
         {
           plData->in_num[i] = 0;
@@ -129,6 +129,33 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         plData->in_min = 2;
         plData->in_max = 4;
         plData->in_lv = 100;
+        for( p=0;p<3;p++ )
+        {
+          plData->comm_battle[p].pp = PokeParty_AllocPartyWork(HEAPID_POKELIST);
+          for( i=0;i<6;i++ )
+          {
+            POKEMON_PARAM *pPara = PP_Create( GFUser_GetPublicRand0(250) , 10 , PTL_SETUP_POW_AUTO , HEAPID_POKELIST );
+            u16 oyaName[5] = {L'ƒu',L'ƒ‰',L'ƒb',L'ƒN',0xFFFF};
+            PP_Put( pPara , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+            PP_Put( pPara , ID_PARA_oyasex , PTL_SEX_MALE );
+            PP_Put( pPara , ID_PARA_item , GFUser_GetPublicRand0(2) );
+            PokeParty_Add( plData->comm_battle[p].pp , pPara );
+            GFL_HEAP_FreeMemory( pPara );
+          }
+          {
+            u16 *name = GFL_HEAP_AllocMemory( HEAPID_POKELIST , 12 );
+            name[0] = L'‚Õ';
+            name[1] = L'‚ê';
+            name[2] = L'‚¢';
+            name[3] = L'‚â';
+            name[4] = L'‚P'+p;
+            name[5] = 0xFFFF;
+            plData->comm_battle[p].name = name;
+          }
+          plData->comm_battle[p].sex = GFUser_GetPublicRand0(2);
+        }
+        //plData->party_disp_type = PL_COMM_DISP_PARTY_MULTI;
+        plData->party_disp_type = PL_COMM_DISP_PARTY_SINGLE;
       }
       else
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
@@ -192,6 +219,17 @@ static GFL_PROC_RESULT PokeListProc_Term( GFL_PROC * proc, int * seq , void *pwk
     for( i=0;i<6;i++ )
     {
       ARI_TPrintf("%d[%d]\n",i,plWork->plData->in_num[i]);
+    }
+    for( i=0;i<3;i++ )
+    {
+      if( plWork->plData->comm_battle[i].pp )
+      {
+        GFL_HEAP_FreeMemory( plWork->plData->comm_battle[i].pp );
+      }
+      if( plWork->plData->comm_battle[i].name )
+      {
+        GFL_HEAP_FreeMemory( (void*)plWork->plData->comm_battle[i].name );
+      }
     }
     GFL_HEAP_FreeMemory( plWork->plData->pp );
     GFL_HEAP_FreeMemory( plWork->plData );

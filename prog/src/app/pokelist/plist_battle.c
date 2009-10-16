@@ -1,0 +1,449 @@
+//======================================================================
+/**
+ * @file	plist_battle.c
+ * @brief	ポケモンリスト バトル表示系処理(相手パーティー・制限時間
+ * @author	ariizumi
+ * @data	09/10/15
+ *
+ * モジュール名：PLIST_BATTLE
+ */
+//======================================================================
+#include <gflib.h>
+#include "buflen.h"
+#include "app/app_menu_common.h"
+#include "pokeicon/pokeicon.h"
+#include "system/main.h"
+#include "system/gfl_use.h"
+
+#include "arc_def.h"
+#include "pokelist_gra.naix"
+#include "msg/msg_pokelist.h"
+
+#include "plist_sys.h"
+#include "plist_battle.h"
+
+//======================================================================
+//	define
+//======================================================================
+#pragma mark [> define
+#define PLIST_BATTLE_ICON_LEFT  (0)
+#define PLIST_BATTLE_ICON_TOP   (4)
+#define PLIST_BATTLE_ICON_WIDTH  (5)
+#define PLIST_BATTLE_ICON_HEIGHT (6)  //スペース込み
+
+//======================================================================
+//	enum
+//======================================================================
+#pragma mark [> enum
+
+
+//======================================================================
+//	typedef struct
+//======================================================================
+#pragma mark [> struct
+typedef struct 
+{
+  BOOL isUpdateStr;
+  GFL_BMPWIN  *sexStrWin;
+  GFL_BMPWIN  *lvStrWin;
+  u32       pokeIconRes;
+  GFL_CLWK *pokeIcon;
+  GFL_CLWK *itemIcon;
+}PLIST_BATTLE_POKE_ICON;
+
+struct _PLIST_BATTLE_PARAM_WORK
+{
+  
+  BOOL isUpdateStr;
+  GFL_BMPWIN  *nameStr;
+  
+  PLIST_BATTLE_POKE_ICON *icon[PLIST_LIST_MAX];
+};
+
+//======================================================================
+//	proto
+//======================================================================
+#pragma mark [> proto
+static void PLIST_BATTLE_InitCell( PLIST_WORK *work );
+static void PLIST_BATTLE_TermCell( PLIST_WORK *work );
+static void PLIST_BATTLE_InitResource( PLIST_WORK *work );
+static void PLIST_BATTLE_TermResource( PLIST_WORK *work );
+
+static PLIST_BATTLE_PARAM_WORK* PLIST_BATTLE_CreateBattleParam( PLIST_WORK *work , 
+                        PL_COMM_BATTLE_PARAM *initParam , u8 charX, u8 charY , u8 space );
+static void PLIST_BATTLE_DeleteBattleParam( PLIST_WORK *work , PLIST_BATTLE_PARAM_WORK *param );
+static void PLIST_BATTLE_UpdateBattleParam( PLIST_WORK *work , PLIST_BATTLE_PARAM_WORK *param );
+
+static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *work , POKEMON_PARAM *pp , const u8 charX , const u8 charY );
+static void PLIST_BATTLE_DeleteBattleParamIcon( PLIST_WORK *work , PLIST_BATTLE_POKE_ICON *iconWork );
+static void PLIST_BATTLE_UpdateBattleParamIcon( PLIST_WORK *work , PLIST_BATTLE_POKE_ICON *iconWork );
+//--------------------------------------------------------------
+//	初期化
+//--------------------------------------------------------------
+void PLIST_BATTLE_InitBattle( PLIST_WORK *work )
+{
+  PLIST_BATTLE_InitCell( work );
+  PLIST_BATTLE_InitResource( work );
+
+  switch( work->plData->party_disp_type )
+  {
+  case PL_COMM_DISP_PARTY_NONE:    //非表示
+    break;
+
+  case PL_COMM_DISP_PARTY_SINGLE:  //敵Aのみ
+    work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] = PLIST_BATTLE_CreateBattleParam( work , 
+                &work->plData->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_A] , 10 , 0 , 2 );
+    break;
+
+  case PL_COMM_DISP_PARTY_MULTI:   //味方・敵A・敵B
+    work->battleParty[PL_COMM_PLAYER_TYPE_ALLY] = PLIST_BATTLE_CreateBattleParam( work , 
+                &work->plData->comm_battle[PL_COMM_PLAYER_TYPE_ALLY] , 0 , 0 , 0 );
+    work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] = PLIST_BATTLE_CreateBattleParam( work , 
+                &work->plData->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_A] , 11 , 0 , 0 );
+    work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_B] = PLIST_BATTLE_CreateBattleParam( work , 
+                &work->plData->comm_battle[PL_COMM_PLAYER_TYPE_ENEMY_B] , 22 , 0 , 0 );
+    break;
+  }
+
+}
+
+//--------------------------------------------------------------
+//	開放
+//--------------------------------------------------------------
+void PLIST_BATTLE_TermBattle( PLIST_WORK *work )
+{
+  switch( work->plData->party_disp_type )
+  {
+  case PL_COMM_DISP_PARTY_NONE:    //非表示
+    break;
+
+  case PL_COMM_DISP_PARTY_SINGLE:  //敵Aのみ
+    PLIST_BATTLE_DeleteBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] );
+    break;
+
+  case PL_COMM_DISP_PARTY_MULTI:   //味方・敵A・敵B
+    PLIST_BATTLE_DeleteBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ALLY] );
+    PLIST_BATTLE_DeleteBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] );
+    PLIST_BATTLE_DeleteBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_B] );
+    break;
+  }
+
+  PLIST_BATTLE_TermResource( work );
+  PLIST_BATTLE_TermCell( work );
+}
+
+//--------------------------------------------------------------
+//	更新
+//--------------------------------------------------------------
+void PLIST_BATTLE_UpdateBattle( PLIST_WORK *work )
+{
+  switch( work->plData->party_disp_type )
+  {
+  case PL_COMM_DISP_PARTY_NONE:    //非表示
+    break;
+
+  case PL_COMM_DISP_PARTY_SINGLE:  //敵Aのみ
+    PLIST_BATTLE_UpdateBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] );
+    break;
+
+  case PL_COMM_DISP_PARTY_MULTI:   //味方・敵A・敵B
+    PLIST_BATTLE_UpdateBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ALLY] );
+    PLIST_BATTLE_UpdateBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_A] );
+    PLIST_BATTLE_UpdateBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_B] );
+    break;
+  }
+}
+
+#pragma mark graphic
+//--------------------------------------------------------------
+//	cellの設定
+//--------------------------------------------------------------
+static void PLIST_BATTLE_InitCell( PLIST_WORK *work )
+{
+  const u32 cellNum = PL_COMM_PLAYER_TYPE_MAX * PLIST_LIST_MAX * 2;
+  work->cellUnitBattle = GFL_CLACT_UNIT_Create( cellNum , PLIST_CELLUNIT_PRI_MAIN, work->heapId );
+  
+}
+
+//--------------------------------------------------------------
+//	cell開放
+//--------------------------------------------------------------
+static void PLIST_BATTLE_TermCell( PLIST_WORK *work )
+{
+  GFL_CLACT_UNIT_Delete( work->cellUnitBattle );
+}
+
+//--------------------------------------------------------------
+//	リソース読み込み
+//--------------------------------------------------------------
+static void PLIST_BATTLE_InitResource( PLIST_WORK *work )
+{
+  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_POKELIST , work->heapId );
+
+  GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle , NARC_pokelist_gra_list_battle_sub_NCLR , 
+                    PALTYPE_SUB_BG , PLIST_BG_SUB_PLT_PLATE*16*2 , PLIST_BG_SUB_PLT_PLATE*16*2 , 
+                    16*2 , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_pokelist_gra_list_battle_sub_NCGR ,
+                    PLIST_BG_SUB_BATTLE_WIN , 0 , 0, FALSE , work->heapId );
+
+  switch( work->plData->party_disp_type )
+  {
+  case PL_COMM_DISP_PARTY_NONE:    //非表示
+    break;
+  case PL_COMM_DISP_PARTY_SINGLE:  //敵Aのみ
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_pokelist_gra_list_battle_sub_s_NSCR , 
+                      PLIST_BG_SUB_BATTLE_WIN ,  0 , 0, FALSE , work->heapId );
+    break;
+  case PL_COMM_DISP_PARTY_MULTI:   //味方・敵A・敵B
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_pokelist_gra_list_battle_sub_m_NSCR , 
+                      PLIST_BG_SUB_BATTLE_WIN ,  0 , 0, FALSE , work->heapId );
+    break;
+  }
+
+  GFL_ARC_CloseDataHandle(arcHandle);
+  
+  //共通素材
+  {
+    ARCHANDLE *arcHandleCommon = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , work->heapId );
+
+    //アイコン用アイテム
+    work->cellRes[PCR_PLT_ITEM_ICON_SUB] = GFL_CLGRP_PLTT_Register( arcHandle , 
+          APP_COMMON_GetPokeItemIconPltArcIdx() , CLSYS_DRAW_SUB , 
+          PLIST_OBJPLT_ITEM_ICON*32 , work->heapId  );
+    work->cellRes[PCR_NCG_ITEM_ICON_SUB] = GFL_CLGRP_CGR_Register( arcHandle , 
+          APP_COMMON_GetPokeItemIconCharArcIdx() , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+    work->cellRes[PCR_ANM_ITEM_ICON_SUB] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
+          APP_COMMON_GetPokeItemIconCellArcIdx(APP_COMMON_MAPPING_128K) , 
+          APP_COMMON_GetPokeItemIconAnimeArcIdx(APP_COMMON_MAPPING_128K), work->heapId  );
+    
+    GFL_ARC_CloseDataHandle(arcHandleCommon);
+  }
+  //ポケアイコン用リソース
+  //キャラクタは各自で
+  {
+    ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , work->heapId );
+    work->cellRes[PCR_PLT_POKEICON_SUB] = GFL_CLGRP_PLTT_RegisterComp( arcHandlePoke , 
+          POKEICON_GetPalArcIndex() , CLSYS_DRAW_SUB , 
+          PLIST_OBJPLT_POKEICON*32 , work->heapId  );
+    
+    GFL_ARC_CloseDataHandle(arcHandlePoke);
+  }
+}
+
+//--------------------------------------------------------------
+//	リソース開放
+//--------------------------------------------------------------
+static void PLIST_BATTLE_TermResource( PLIST_WORK *work )
+{
+  //Cell系リソースは外でまとめて開放
+}
+
+#pragma mark [>battle param
+//--------------------------------------------------------------
+//	バトル用表示物(1パーティー分)
+//--------------------------------------------------------------
+static PLIST_BATTLE_PARAM_WORK* PLIST_BATTLE_CreateBattleParam( PLIST_WORK *work , 
+                        PL_COMM_BATTLE_PARAM *initParam , u8 charX, u8 charY , u8 space )
+{
+  PLIST_BATTLE_PARAM_WORK* param = GFL_HEAP_AllocMemory( work->heapId , sizeof(PLIST_BATTLE_PARAM_WORK) );
+
+  {
+    u8 i;
+    const u8 partyNum = PokeParty_GetPokeCount( initParam->pp );
+    for( i=0;i<PLIST_LIST_MAX;i++ )
+    {
+      if( i<partyNum )
+      {
+        const iconX = charX + (i%2) * (PLIST_BATTLE_ICON_WIDTH + space) + PLIST_BATTLE_ICON_LEFT;
+        const iconY = charY + (i/2) * PLIST_BATTLE_ICON_HEIGHT + PLIST_BATTLE_ICON_TOP;
+        POKEMON_PARAM *pp = PokeParty_GetMemberPointer( initParam->pp , i );
+        param->icon[i] = PLIST_BATTLE_CreateBattleParamIcon( work , pp , iconX , iconY );
+      }
+      else
+      {
+        param->icon[i] = NULL;
+      }
+    }
+  }
+  //トレーナー名
+  {
+    STRBUF *srcStr;
+    param->nameStr = GFL_BMPWIN_Create( PLIST_BG_SUB_BATTLE_STR , charX+1+(space/2) , charY + 1 , 
+          10 , 2 , PLIST_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+    
+    srcStr = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME , work->heapId ); 
+    GFL_STR_SetStringCode( srcStr , initParam->name );
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( param->nameStr ) , 
+            0 , 0 , srcStr , work->fontHandle , PLIST_FONT_BATTLE_PARAM );
+    GFL_STR_DeleteBuffer( srcStr );
+    param->isUpdateStr = TRUE;
+  }
+  return param;
+}
+
+//--------------------------------------------------------------
+//	バトル用表示物(1パーティー分)
+//--------------------------------------------------------------
+static void PLIST_BATTLE_DeleteBattleParam( PLIST_WORK *work , PLIST_BATTLE_PARAM_WORK *param )
+{
+  u8 i;
+  for( i=0;i<PLIST_LIST_MAX;i++ )
+  {
+    if( param->icon[i] != NULL )
+    {
+      PLIST_BATTLE_DeleteBattleParamIcon( work , param->icon[i] );
+    }
+  }
+  GFL_BMPWIN_Delete( param->nameStr );
+  GFL_HEAP_FreeMemory( param );
+}
+
+
+//--------------------------------------------------------------
+//	バトル用表示物(1パーティー分)
+//--------------------------------------------------------------
+static void PLIST_BATTLE_UpdateBattleParam( PLIST_WORK *work , PLIST_BATTLE_PARAM_WORK *param )
+{
+  u8 i;
+  for( i=0;i<PLIST_LIST_MAX;i++ )
+  {
+    if( param->icon[i] != NULL )
+    {
+      PLIST_BATTLE_UpdateBattleParamIcon( work , param->icon[i] );
+    }
+  }
+  
+  if( param->isUpdateStr == TRUE )
+  {
+    if( PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( param->nameStr )) == FALSE )
+    {
+      param->isUpdateStr = FALSE;
+      GFL_BMPWIN_MakeTransWindow_VBlank( param->nameStr );
+    }
+    
+  }
+}
+
+//--------------------------------------------------------------
+//	アイコンの作成
+//--------------------------------------------------------------
+static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *work , POKEMON_PARAM *pp , const u8 charX , const u8 charY )
+{
+  PLIST_BATTLE_POKE_ICON *iconWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PLIST_BATTLE_POKE_ICON) );
+  //ポケアイコン
+  {
+    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_POKEICON , work->heapId );
+    const POKEMON_PASO_PARAM *ppp = PP_GetPPPPointerConst( pp );
+    GFL_CLWK_DATA cellInitData;
+    u8 pltNum;
+
+    iconWork->pokeIconRes = GFL_CLGRP_CGR_Register( arcHandle , 
+        POKEICON_GetCgxArcIndex(ppp) , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+    
+    GFL_ARC_CloseDataHandle(arcHandle);
+
+    pltNum = POKEICON_GetPalNumGetByPPP( ppp );
+    cellInitData.pos_x = charX*8+16;
+    cellInitData.pos_y = charY*8+8;
+    cellInitData.anmseq = POKEICON_ANM_HPMAX;
+    cellInitData.softpri = 16;
+    cellInitData.bgpri = 2;
+    iconWork->pokeIcon = GFL_CLACT_WK_Create( work->cellUnitBattle ,
+              iconWork->pokeIconRes,
+              work->cellRes[PCR_PLT_POKEICON_SUB],
+              work->cellRes[PCR_ANM_POKEICON],
+              &cellInitData ,CLSYS_DEFREND_SUB , work->heapId );
+    GFL_CLACT_WK_SetPlttOffs( iconWork->pokeIcon , pltNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
+    GFL_CLACT_WK_SetAutoAnmFlag( iconWork->pokeIcon , TRUE );
+  }
+  //アイテムアイコン
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = charX*8+32;
+    cellInitData.pos_y = charY*8+16;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = 8;
+    cellInitData.bgpri = 2;
+    iconWork->itemIcon = GFL_CLACT_WK_Create( work->cellUnitBattle ,
+              work->cellRes[PCR_NCG_ITEM_ICON_SUB],
+              work->cellRes[PCR_PLT_ITEM_ICON_SUB],
+              work->cellRes[PCR_ANM_ITEM_ICON_SUB],
+              &cellInitData ,CLSYS_DEFREND_SUB , work->heapId );
+    if( PP_Get( pp , ID_PARA_item , NULL ) != 0 )
+    {
+      GFL_CLACT_WK_SetDrawEnable( iconWork->itemIcon , TRUE );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetDrawEnable( iconWork->itemIcon , FALSE );
+    }
+  }
+  //性別マーク
+  {
+    const u32 sex = PP_Get( pp , ID_PARA_sex , NULL );
+
+    iconWork->sexStrWin = GFL_BMPWIN_Create( PLIST_BG_SUB_BATTLE_STR , charX + 4 , charY, 
+          1 , 2 , PLIST_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+    if( sex == PTL_SEX_MALE )
+    {
+      PLIST_UTIL_DrawStrFunc( work , iconWork->sexStrWin , mes_pokelist_01_28 ,
+                      0 , 0 , PLIST_FONT_BATTLE_BLUE );
+    }
+    else if( sex == PTL_SEX_FEMALE )
+    {
+      PLIST_UTIL_DrawStrFunc( work , iconWork->sexStrWin , mes_pokelist_01_29 ,
+                      0 , 0 , PLIST_FONT_BATTLE_RED );
+    }
+  }
+  //レベル
+  {
+    const u32 lv = PP_CalcLevel( pp );
+    WORDSET *wordSet = WORDSET_Create( work->heapId );
+
+    iconWork->lvStrWin = GFL_BMPWIN_Create( PLIST_BG_SUB_BATTLE_STR , charX , charY + 3 , 
+          5 , 1 , PLIST_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+
+    WORDSET_RegisterNumber( wordSet , 0 , lv , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+
+    PLIST_UTIL_DrawValueStrFuncSys( work , iconWork->lvStrWin , 
+                      wordSet , mes_pokelist_01_03 , 
+                      0 , 0 , PLIST_FONT_BATTLE_PARAM );
+
+    WORDSET_Delete( wordSet );
+  }
+  iconWork->isUpdateStr = TRUE;
+  
+  return iconWork;
+}
+
+//--------------------------------------------------------------
+//	アイコンの開放
+//--------------------------------------------------------------
+static void PLIST_BATTLE_DeleteBattleParamIcon( PLIST_WORK *work , PLIST_BATTLE_POKE_ICON *iconWork )
+{
+  GFL_BMPWIN_Delete( iconWork->sexStrWin );
+  GFL_BMPWIN_Delete( iconWork->lvStrWin );
+  GFL_CLACT_WK_Remove( iconWork->itemIcon );
+  GFL_CLACT_WK_Remove( iconWork->pokeIcon );
+  GFL_CLGRP_CGR_Release( iconWork->pokeIconRes );
+  GFL_HEAP_FreeMemory( iconWork );
+  
+}
+
+//--------------------------------------------------------------
+//	アイコンの更新
+//--------------------------------------------------------------
+static void PLIST_BATTLE_UpdateBattleParamIcon( PLIST_WORK *work , PLIST_BATTLE_POKE_ICON *iconWork )
+{
+  if( iconWork->isUpdateStr == TRUE )
+  {
+    if( PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( iconWork->sexStrWin )) == FALSE &&
+        PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( iconWork->lvStrWin )) == FALSE )
+    {
+      iconWork->isUpdateStr = FALSE;
+      GFL_BMPWIN_MakeTransWindow_VBlank( iconWork->sexStrWin );
+      GFL_BMPWIN_MakeTransWindow_VBlank( iconWork->lvStrWin );
+    }
+    
+  }
+}

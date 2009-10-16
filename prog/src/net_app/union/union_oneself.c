@@ -2709,6 +2709,14 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
         }
       }
     }
+    if( situ->mycomm.mainmenu_select == UNION_PLAY_CATEGORY_COLOSSEUM_MULTI )
+    {
+      plist->party_disp_type = PL_COMM_DISP_PARTY_MULTI;
+    }
+    else
+    {
+      plist->party_disp_type = PL_COMM_DISP_PARTY_SINGLE;
+    }
     
     unisys->parent_work = parent_list;
     UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_POKELIST, parent_list);

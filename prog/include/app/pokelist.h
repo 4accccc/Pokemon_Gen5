@@ -113,6 +113,15 @@ typedef enum
   PL_RET_TAMAGOUMI,   // メニュー 技：タマゴうみ
 }PL_RETURN_TYPE;
 
+//バトル選択時、相手表示設定
+typedef enum{
+  PL_COMM_DISP_PARTY_NONE,    //非表示
+  PL_COMM_DISP_PARTY_SINGLE,  //敵Aのみ
+  PL_COMM_DISP_PARTY_MULTI,   //味方・敵A・敵B
+
+  PL_COMM_DISP_PARTY_MAX,
+}PL_COMM_DISP_PARTY_TYPE;
+
 //comm_battleの添え字
 typedef enum{
   PL_COMM_PLAYER_TYPE_ALLY,       ///<味方
@@ -139,7 +148,7 @@ typedef struct
   void * myitem;    // アイテムデータ
   void * mailblock; // メールデータ
   CONFIG * cfg;   // コンフィグデータ
-  void * tvwk;    // テレビワーク
+  void * tvwk;    // テレビワーク //存在しない？
   void * reg;     // レギュレーションデータ
 
   void * scwk;    // 技使用チェックワーク
@@ -172,9 +181,13 @@ typedef struct
   u16 after_mons;   // 進化後のポケモン
   int shinka_cond;  // 進化条件ワーク
   
+  //WBより追加
+  PL_COMM_DISP_PARTY_TYPE party_disp_type;
   PL_COMM_BATTLE_PARAM comm_battle[PL_COMM_PLAYER_TYPE_MAX];  //通信相手のパラメータ
   u8 comm_selected_num;                 // 通信時：既に選択が終わった人数(外側から操作)
-  u8 padding[3];
+  u8 padding;
+  u16 time_limit;   //制限時間(外側から操作)
+  BOOL use_tile_limit;  //制限時間を使うか？
 }PLIST_DATA;
 
 //-----------------------------------------------
