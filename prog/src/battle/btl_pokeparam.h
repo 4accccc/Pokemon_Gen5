@@ -365,6 +365,8 @@ extern void BPP_SetItem( BTL_POKEPARAM* pp, u16 itemID );
 extern void BPP_WAZA_SetUsedFlag( BTL_POKEPARAM* pp, u8 wazaIdx );
 extern void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BOOL fPermenent );
 extern void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* user );
+extern void BPP_ReflectPP( BTL_POKEPARAM* bpp );
+extern void BPP_SetSrcPP( BTL_POKEPARAM* bpp, POKEMON_PARAM* pp );
 
 extern BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target );
 extern void BPP_HENSIN_Reset( BTL_POKEPARAM* bpp );

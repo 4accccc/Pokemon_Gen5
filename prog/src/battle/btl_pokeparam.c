@@ -2099,7 +2099,43 @@ void BPP_ReflectExp( BTL_POKEPARAM* bpp )
   bpp->baseParam.agility = PP_Get( bpp->coreParam.ppSrc, ID_PARA_agi, 0 );
 }
 
+//=============================================================================================
+/**
+ * Srcポケモンデータに現在のパラメータを反映
+ *
+ * @param   bpp
+ */
+//=============================================================================================
+void BPP_ReflectPP( BTL_POKEPARAM* bpp )
+{
+  POKEMON_PARAM* pp = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
 
+  PP_Put( pp, ID_PARA_exp, bpp->exp );
+  PP_Put( pp, ID_PARA_hp, bpp->coreParam.hp );
+  if( bpp->coreParam.hp )
+  {
+    PokeSick  sick = BPP_GetPokeSick( bpp );
+    if( sick != POKESICK_NULL ){
+      PP_SetSick( pp, sick );
+    }
+  }
+}
+//=============================================================================================
+/**
+ * Srcポケモンデータポインタを差し替える
+ *
+ * @param   bpp
+ * @param   pp
+ */
+//=============================================================================================
+void BPP_SetSrcPP( BTL_POKEPARAM* bpp, POKEMON_PARAM* pp )
+{
+  {
+    u16 monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+    GF_ASSERT_MSG( (monsno == bpp->baseParam.monsno), "bppMonsNo=%d, ppMonsNo=%d", bpp->baseParam.monsno, monsno );
+  }
+  bpp->coreParam.ppSrc = pp;
+}
 
 //---------------------------------------------------------------------------------------------
 // bitフラグバッファ処理
