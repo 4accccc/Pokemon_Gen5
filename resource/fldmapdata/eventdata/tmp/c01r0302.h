@@ -9,9 +9,9 @@
 #ifndef ZONE_C01R0302_EVC_H
 #define ZONE_C01R0302_EVC_H
 
-#define C01R0302_BREEDERW                  0
-#define C01R0302_POKE1                     1
-#define C01R0302_POKE2                     2
-#define C01R0302_MAN1                      3
+#define C01R0302_BREEDERW_01               0
+#define C01R0302_POKE1_01                  1
+#define C01R0302_POKE2_01                  2
+#define C01R0302_MAN1_01                   3
 
 #endif //ZONE_C01R0302_EVC_H

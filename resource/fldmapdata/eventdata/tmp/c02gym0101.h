@@ -5,6 +5,7 @@
 #define DOOR_ID_C02GYM0101_C02_EXIT01     0
 #define DOOR_ID_C02GYM0101_C02_EXIT03     1
 #define DOOR_ID_C02GYM0101_C02_EXIT02     2
+#define DOOR_ID_C02GYM0101_C02GYM0201_EXIT01  3
 
 #endif //ZONE_C02GYM0101_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

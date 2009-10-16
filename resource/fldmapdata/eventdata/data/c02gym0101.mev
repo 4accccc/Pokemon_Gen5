@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/12 19:03:00
+#save date:2009/10/15 21:16:37
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02gym0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/12 19:03:00
+#save date:2009/10/15 21:16:37
 2
 #hold event type:
 1
@@ -188,7 +188,7 @@ DIR_UP
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/12 19:03:00
+#save date:2009/10/15 21:16:37
 2
 #hold event type:
 1
@@ -275,7 +275,7 @@ SCRID_BG_C02GYM0101_PLATE_06
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/12 19:03:00
+#save date:2009/10/15 21:16:37
 2
 #hold event type:
 1
@@ -300,12 +300,12 @@ WK_SCENE_C02GYM0101
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/12 19:03:00
+#save date:2009/10/15 21:16:37
 2
 #hold event type:
 1
 #hold event number:
-3
+4
 #event number: 0
 #Door Event Label
 DOOR_ID_C02GYM0101_C02_EXIT01
@@ -345,5 +345,18 @@ EXIT_DIR_UP
 EXIT_TYPE_MAT
 #position
 -56 0 -184
+#event number: 3
+#Door Event Label
+DOOR_ID_C02GYM0101_C02GYM0201_EXIT01
+#Next Zone ID Name
+ZONE_ID_C02GYM0201
+#Next Door ID Name
+DOOR_ID_C02GYM0201_C02GYM0101_EXIT02
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_MAT
+#position
+-56 48 216
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
