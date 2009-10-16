@@ -2335,7 +2335,7 @@
 #define _TALK_START_SE_PLAY() _ASM_TALK_START_SE_PLAY
 
   .macro  _ASM_TALK_START_SE_PLAY
-  _ASM_SE_PLAY( SEQ_SE_DP_SELECT )
+  _ASM_SE_PLAY( SEQ_SE_MESSAGE )
   .endm
 
 //--------------------------------------------------------------
