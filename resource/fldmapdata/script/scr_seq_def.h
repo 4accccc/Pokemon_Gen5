@@ -2927,11 +2927,13 @@
  * ジムコマンド　電気ジム初期化
  */
 //--------------------------------------------------------------
-#define _GYM_ELEC_INIT() \
-    _ASM_GYM_ELEC_INIT 
+#define _GYM_ELEC_INIT( evt1, evt2 ) \
+    _ASM_GYM_ELEC_INIT evt1, evt2
 
-  .macro  _ASM_GYM_ELEC_INIT
+  .macro  _ASM_GYM_ELEC_INIT evt1, evt2
   .short  EV_SEQ_GYM_ELEC_INIT
+  .short  \evt1
+  .short  \evt2
   .endm
 
 //--------------------------------------------------------------

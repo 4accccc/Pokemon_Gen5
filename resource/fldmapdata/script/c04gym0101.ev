@@ -31,6 +31,8 @@ _EVENT_DATA		ev_c04gym0101_trainer_01
 _EVENT_DATA		ev_c04gym0101_trainer_02
 _EVENT_DATA		ev_c04gym0101_guide_01
 _EVENT_DATA		ev_bg_c04gym0101_statue_01
+_EVENT_DATA   ev_prg_c04gym0101_capsule_in
+_EVENT_DATA   ev_prg_c04gym0101_capsule_out
 _EVENT_DATA_END
 
 
@@ -130,7 +132,7 @@ ev_leader4_btl:
 /*					ジムギミック初期化						*/
 /************************************************************/
 ev_zone_c04gym0101:
-  _GYM_ELEC_INIT()
+  _GYM_ELEC_INIT(1,1)
 _END
 
 
@@ -335,6 +337,19 @@ ev_trainer_btl_02:
 	_FLAG_SET( SYS_FLAG_C04GYM_TRBTL2 )
 
 	_RET
+
+/************************************************************/
+/*				ジムギミック　プレーヤーがカプセル乗る					*/
+/************************************************************/
+EVENT_START	ev_prg_c04gym0101_capsule_in
+  _END
+
+/************************************************************/
+/*				ジムギミック　プレーヤーがカプセル降りる					*/
+/************************************************************/
+EVENT_START	ev_prg_c04gym0101_capsule_out
+  _END  
+
 
 //--------------------------------------------------------------------
 //！マーク

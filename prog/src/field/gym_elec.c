@@ -1242,9 +1242,6 @@ GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys)
       }
     }
 
-    //乗ったフラグオン
-    gmk_sv_work->RideFlg[cap_idx] = 1;
-
     return event;
   }
   return NULL;
@@ -1252,15 +1249,19 @@ GMEVENT *GYM_ELEC_CreateMoveEvt(GAMESYS_WORK *gsys)
 
 static BOOL CheckCapTrEnc(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
 {
-  u8 check = 0;
+  u8 check = 0;   //チェックフラグ 1でチェック処理する
+  u8 evt_idx;
+  //第2、第3カプセル（インデックス　1,2のカプセル）のときチェックする
   if (inCapIdx == 1){
     check = 1;
+    evt_idx = 0;
   }else if(inCapIdx == 2){
     check =1;
+    evt_idx = 1;
   }
 
   if (check){
-    if ( !gmk_sv_work->RideFlg[inCapIdx] ){
+    if ( !gmk_sv_work->EvtFlg[evt_idx] ){
       return TRUE;
     }
   }
@@ -1326,17 +1327,29 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       if (frame >= CAP_OPEN_FRAME){
         //カプセル開くアニメ止める
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+#if 0        
         //主人公カプセルに入るアニメ(上に移動)
         {
           MMDL * mmdl;
           mmdl = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( fieldWork ) );
           tmp->AnmTcb = MMDL_SetAcmdList( mmdl, anime_up_table);
         }
+#endif
+        //自機がカプセルに乗るスクリプトをコール
+        OS_Printf("スクリプトコール\n");
+        SCRIPT_CallScript( event, SCRID_PRG_C04GYM0101_CAPSULE_IN,
+          NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
         (*seq)++;
       }
     }
     break;
   case 2:
+    //カプセル閉まるアニメスタート
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    //SE再生
+    PMSND_PlaySE(GYM_ELEC_SE_CAP_OC);
+    (*seq)++;
+#if 0    
     {
       //主人公アニメ終了待ち
       if( MMDL_CheckEndAcmdList(tmp->AnmTcb) ){
@@ -1347,6 +1360,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
         (*seq)++;
       }
     }
+#endif    
     break;
   case 3:
     //カプセル閉まるアニメ待ち
@@ -1453,6 +1467,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
     }
     break;
   case 7:
+#if 0    
     {
       MMDL * mmdl;
       FIELD_PLAYER *fld_player;
@@ -1463,9 +1478,20 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
       //主人公カプセルからでるアニメ
       tmp->AnmTcb = MMDL_SetAcmdList( mmdl, anime_down_table);
     }
+#endif
+    //自機がカプセルを降りるスクリプトをコール
+    OS_Printf("スクリプトコール\n");
+    SCRIPT_CallScript( event, SCRID_PRG_C04GYM0101_CAPSULE_OUT,
+        NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
     (*seq)++;
     break;
   case 8:
+    //カプセル閉まるアニメスタート
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    //SE再生
+    PMSND_PlaySE(GYM_ELEC_SE_CAP_OC);
+    (*seq)++;
+#if 0    
     {
       //主人公アニメ終了待ち
       if( MMDL_CheckEndAcmdList(tmp->AnmTcb) ){
@@ -1476,6 +1502,7 @@ static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
         (*seq)++;
       }
     }
+#endif
     break;
   case 9:
     //カプセル閉まるアニメ待ち

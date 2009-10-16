@@ -19,11 +19,14 @@
 //--------------------------------------------------------------
 /**
  * 電気ジム初期化
- * @param	
- * @return
+ * @param   gsys            ゲームシステムポインタ
+ * @param   inEvtFlgBtl1    イベントフラグ状況　トレーナー戦1を終えたか？　1で終了
+ * @param   inEvtFlgBtl2    イベントフラグ状況　トレーナー戦2を終えたか？　1で終了
+ *
+ * @return  none
  */
 //--------------------------------------------------------------
-void GYM_INIT_Elec(GAMESYS_WORK *gsys)
+void GYM_INIT_Elec(GAMESYS_WORK *gsys, const u16 inEvtFlgBtl1, const u16 inEvtFlgBtl2)
 {
   GYM_ELEC_SV_WORK *gmk_sv_work;
   {
@@ -40,6 +43,14 @@ void GYM_INIT_Elec(GAMESYS_WORK *gsys)
   gmk_sv_work->StopPlatformIdx[1] = PLATFORM_NO_STOP;
   gmk_sv_work->StopPlatformIdx[2] = PLATFORM_NO_STOP;
   gmk_sv_work->StopPlatformIdx[3] = PLATFORM_NO_STOP;
+
+  //トレーナー戦進捗状況をセット
+  if (inEvtFlgBtl1){
+    gmk_sv_work->EvtFlg[0] = 1;
+  }
+  if (inEvtFlgBtl2){
+    gmk_sv_work->EvtFlg[1] = 1;
+  }
 }
 
 //--------------------------------------------------------------
