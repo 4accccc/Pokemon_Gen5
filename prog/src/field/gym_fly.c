@@ -222,13 +222,13 @@ static u16 CanClosedFrame[4] = {
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {  
 	{ ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD　大砲本体
   
-  { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　大砲アニメ1
+  { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　大砲アニメ1　基準のまま
   { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbma, GFL_G3D_UTIL_RESARC }, //IMA　大砲アニメ1
-  { ARCID_GYM_FLY, NARC_gym_fly_cannon_02_00_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　大砲アニメ2
+  { ARCID_GYM_FLY, NARC_gym_fly_cannon_02_00_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　大砲アニメ2　基準の正反対
   { ARCID_GYM_FLY, NARC_gym_fly_cannon_02_00_nsbma, GFL_G3D_UTIL_RESARC }, //IMA　大砲アニメ2
-  { ARCID_GYM_FLY, NARC_gym_fly_cannon_03_00_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　大砲アニメ3
+  { ARCID_GYM_FLY, NARC_gym_fly_cannon_03_00_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　大砲アニメ3　基準から時計まわり90°
   { ARCID_GYM_FLY, NARC_gym_fly_cannon_03_00_nsbma, GFL_G3D_UTIL_RESARC }, //IMA　大砲アニメ3
-  { ARCID_GYM_FLY, NARC_gym_fly_cannon_04_00_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　大砲アニメ4
+  { ARCID_GYM_FLY, NARC_gym_fly_cannon_04_00_nsbca, GFL_G3D_UTIL_RESARC }, //ICA　大砲アニメ4　基準から反時計まわり90°
   { ARCID_GYM_FLY, NARC_gym_fly_cannon_04_00_nsbma, GFL_G3D_UTIL_RESARC }, //IMA　大砲アニメ4
 };
 
@@ -425,7 +425,7 @@ static const SHOT_DATA ShotData[CANNON_NUM_MAX][4] = {
 static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work );
 static u8 GetCanIdx(const int inX, const int inZ);
 
-static u8 GetCannonAnmOfs(u16 inDir);
+static u8 GetCannonAnmOfs(u8 inDirIdx);
 static u8 GetDirIdxFromDir(u16 inDir);
 static u8 ChgDirIdxByRot(const u8 inDirIdx, const u8 inRotIdx);
 static u8 GetDirIdx(const u16 inDir, const u8 inShotIdx);
@@ -703,9 +703,11 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
     {
       u8 anm_ofs;
       u8 obj_idx;
+      u8 can_dir_idx;
       obj_idx = tmp->ShotIdx;
+      can_dir_idx = GetDirIdx(tmp->ShotDir, tmp->ShotIdx);
       //大砲アニメを自機の向きから決定する
-      anm_ofs = GetCannonAnmOfs(tmp->ShotDir);
+      anm_ofs = GetCannonAnmOfs(can_dir_idx);
       //アニメを開始
       FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs, TRUE);
       FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs+1, TRUE);
@@ -722,9 +724,9 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       u8 can_dir_idx;
       fx32 frm;
       obj_idx = tmp->ShotIdx;
-      anm_ofs = GetCannonAnmOfs(tmp->ShotDir);
-      frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs);
       can_dir_idx = GetDirIdx(tmp->ShotDir, tmp->ShotIdx);
+      anm_ofs = GetCannonAnmOfs(can_dir_idx);
+      frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs);
       //オープンフレーム到達監視
       if (frm >= CanOpenFrame[can_dir_idx]*FX32_ONE){
         //大砲アニメ停止
@@ -776,9 +778,9 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       u8 can_dir_idx;
       fx32 frm;
       obj_idx = tmp->ShotIdx;
-      anm_ofs = GetCannonAnmOfs(tmp->ShotDir);
-      frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs);
       can_dir_idx = GetDirIdx(tmp->ShotDir, tmp->ShotIdx);
+      anm_ofs = GetCannonAnmOfs(can_dir_idx);
+      frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs);
       //発射フレーム到達チェック
       if (frm >= CanClosedFrame[can_dir_idx]*FX32_ONE){
         //フレーム読み取り開始
@@ -830,9 +832,11 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
     {
       u8 anm_ofs;
       u8 obj_idx;
+      u8 can_dir_idx;
       obj_idx = tmp->ShotIdx;
+      can_dir_idx = GetDirIdx(tmp->ShotDir, tmp->ShotIdx);
       //大砲アニメを自機の向きから決定する
-      anm_ofs = GetCannonAnmOfs(tmp->ShotDir);
+      anm_ofs = GetCannonAnmOfs(can_dir_idx);
       FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs, FALSE);
       FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs+1, FALSE);
     }
@@ -892,20 +896,20 @@ static u8 GetCanIdx(const int inX, const int inZ)
   return i;
 }
 
-static u8 GetCannonAnmOfs(u16 inDir)
+static u8 GetCannonAnmOfs(u8 inDirIdx)
 {
   u8 anm_ofs;
-  switch(inDir){
-  case DIR_UP:
+  switch(inDirIdx){
+  case 0:    //基準（上）
     anm_ofs = 0;
     break;
-  case DIR_DOWN:
+  case 1:  //　基準の正反対（下）
     anm_ofs = 1*CANNON_ANM_NUM;
     break;
-  case DIR_RIGHT:
+  case 2:   //基準から時計回り90°右撃ち
     anm_ofs = 2*CANNON_ANM_NUM;
     break;
-  case DIR_LEFT:
+  case 3:    //基準から反時計まわり90°左撃ち
     anm_ofs = 3*CANNON_ANM_NUM;
     break;
   default:
@@ -915,17 +919,18 @@ static u8 GetCannonAnmOfs(u16 inDir)
   return anm_ofs;
 }
 
+//自機の向きコードを向きインデックスに変更
 static u8 GetDirIdxFromDir(u16 inDir)
 {
   switch(inDir){
   case DIR_UP:
-    return 0;
+    return 0;   //上
   case DIR_DOWN:
-    return 1;
+    return 1;   //下
   case DIR_RIGHT:
-    return 2;
+    return 2;   //右
   case DIR_LEFT:  
-    return 3;
+    return 3;   //左
   default:
     GF_ASSERT(0);
     return 0;
@@ -934,9 +939,10 @@ static u8 GetDirIdxFromDir(u16 inDir)
 
 static u8 ChgDirIdxByRot(const u8 inDirIdx, const u8 inRotIdx)
 {
-  const u8 base_dir_idx[4] = {0,3,1,2}; //UP LEFT DOWN RIGHT 時計回り
+  const u8 base_dir_idx[4] = {0,2,1,3}; //UP RIGHT DOWN LEFT 時計回り
   u8 start_idx, dst_idx;
   u8 i;
+
   for (i=0;i<4;i++){
     if (base_dir_idx[i] == inDirIdx){
       start_idx = i;
