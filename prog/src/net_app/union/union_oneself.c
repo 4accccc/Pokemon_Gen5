@@ -2696,7 +2696,7 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
       
       for(net_id = 0; net_id < GFL_NET_GetConnectNum(); net_id++){
         if(net_id != my_net_id){
-          if(my_net_id == (clsys->recvbuf.stand_position[net_id] & 1)){
+          if((my_net_id & 1) == (clsys->recvbuf.stand_position[net_id] & 1)){
             comm_player = PL_COMM_PLAYER_TYPE_ALLY;
           }
           else{
@@ -2706,6 +2706,7 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
           plist->comm_battle[comm_player].pp = clsys->recvbuf.pokeparty[net_id];
           plist->comm_battle[comm_player].name = clsys->basic_status[net_id].name;
           plist->comm_battle[comm_player].sex = clsys->basic_status[net_id].sex;
+          OS_TPrintf("plist set net_id = %d, comm_player=%d, pp=%x\n", net_id, comm_player, clsys->recvbuf.pokeparty[net_id]);
         }
       }
     }
