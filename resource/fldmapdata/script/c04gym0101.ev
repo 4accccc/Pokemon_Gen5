@@ -304,7 +304,7 @@ ev_trainer_btl_01:
 	_OBJ_ANIME_WAIT()
 
 	//コースター（１台目）のトレーナー戦終了
-	_FLAG_SET( SYS_FLAG_C04GYM_TRBTL1 )
+	_FLAG_SET( FE_C04GYM0101_TRBTL1 )
 
 	_RET
 
@@ -334,7 +334,7 @@ ev_trainer_btl_02:
 	_OBJ_ANIME_WAIT()
 
 	//コースター（２台目）のトレーナー戦終了
-	_FLAG_SET( SYS_FLAG_C04GYM_TRBTL2 )
+	_FLAG_SET( FE_C04GYM0101_TRBTL2 )
 
 	_RET
 
@@ -342,13 +342,35 @@ ev_trainer_btl_02:
 /*				ジムギミック　プレーヤーがカプセル乗る					*/
 /************************************************************/
 EVENT_START	ev_prg_c04gym0101_capsule_in
-  _END
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ride_01 )
+	_OBJ_ANIME_WAIT()
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：乗車
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_ride_01
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_JUMP_U_1G_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /************************************************************/
 /*				ジムギミック　プレーヤーがカプセル降りる					*/
 /************************************************************/
 EVENT_START	ev_prg_c04gym0101_capsule_out
-  _END  
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_getoff_01 )
+	_OBJ_ANIME_WAIT()
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：降車
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_getoff_01
+	_ANIME_DATA	AC_JUMP_D_1G_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 
 //--------------------------------------------------------------------

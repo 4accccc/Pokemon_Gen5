@@ -129,8 +129,8 @@
 #define FE_C01R0501_RIVALTALK              113 /* 0x0071 C01トレーナーズスクールのライバルと会話した */
 #define FE_D01R0101_EVCLEAR                114 /* 0x0072 C01ジム前のガイドのMSG分岐に使用。現状はD01R0101到着時にセットしています。 */
 #define FE_CGEAR_GET                       115 /* 0x0073 Cギア入手フラグ */
-		/* not used   116(0x0074) */
-		/* not used   117(0x0075) */
+#define FE_C04GYM0101_TRBTL1               116 /* 0x0074 C04電気ジムのコースタートレーナーの対戦済みチェックフラグ（１台目） */
+#define FE_C04GYM0101_TRBTL2               117 /* 0x0075 C04電気ジムのコースタートレーナーの対戦済みチェックフラグ（２台目） */
 		/* not used   118(0x0076) */
 		/* not used   119(0x0077) */
 		/* not used   120(0x0078) */
@@ -2374,8 +2374,8 @@
 #define SYS_FLAG_COMM_COUNTER             2406 /* 0x0966 通信カウンター通過フラグ */
 #define SYS_FLAG_SAFARI_MODE              2407 /* 0x0967 サファリモードフラグ */
 #define SYS_FLAG_SAFARI_LTMODE            2408 /* 0x0968 サファリレイアウトモードフラグ */
-#define SYS_FLAG_C04GYM_TRBTL1            2409 /* 0x0969 C04電気ジムのコースタートレーナーの対戦済みチェックフラグ（１台目） */
-#define SYS_FLAG_C04GYM_TRBTL2            2410 /* 0x096a C04電気ジムのコースタートレーナーの対戦済みチェックフラグ（２台目） */
+		/* not used  2409(0x0969) */
+		/* not used  2410(0x096a) */
 #define SYS_FLAG_D35R0103_AJITO_MECH01    2411 /* 0x096b アジトB2 電波発生装置奥 */
 #define SYS_FLAG_D35R0103_AJITO_MECH02    2412 /* 0x096c アジトB2 電波発生装置真ん中 */
 #define SYS_FLAG_D35R0103_AJITO_MECH03    2413 /* 0x096d アジトB2 電波発生装置手前 */
