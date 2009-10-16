@@ -183,7 +183,7 @@ LOAD_RESULT SaveControl_Load(SAVE_CONTROL_WORK *ctrl)
 SAVE_RESULT SaveControl_Save(SAVE_CONTROL_WORK *ctrl)
 {
 	SAVE_RESULT result;
-	
+
 	result = GFL_BACKUP_Save(ctrl->sv_normal);
 	if(result == SAVE_RESULT_OK){
 		ctrl->new_data_flag = FALSE;
@@ -301,6 +301,22 @@ void SaveControl_ClearData(SAVE_CONTROL_WORK * ctrl)
 void SaveControl_Erase(SAVE_CONTROL_WORK *ctrl)
 {
 	GFL_BACKUP_Erase(ctrl->sv_normal, HEAPID_SAVE_TEMP);
+}
+
+//--------------------------------------------------------------
+/**
+ * セーブを実行した場合のセーブサイズを取得する
+ *
+ * @param   sv		        セーブデータ構造へのポインタ
+ * @param   actual_size		セーブされる実サイズ(CRCテーブルなどのシステム系のデータは除きます)
+ * @param   total_size		セーブ全体のサイズ(CRCテーブルなどのシステム系のデータは除きます)
+ *
+ * 差分比較の為、フラッシュアクセスします。
+ */
+//--------------------------------------------------------------
+void SaveControl_GetActualSize(SAVE_CONTROL_WORK *ctrl, u32 *actual_size, u32 *total_size)
+{
+  GFL_SAVEDATA_GetActualSize(ctrl->sv_normal, actual_size, total_size);
 }
 
 //==================================================================

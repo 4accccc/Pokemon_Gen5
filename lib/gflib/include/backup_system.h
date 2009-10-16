@@ -142,7 +142,6 @@ extern SAVE_RESULT GFL_BACKUP_SAVEASYNC_Main(GFL_SAVEDATA * sv);
 //---------------------------------------------------------------------------
 extern void GFL_BACKUP_SAVEASYNC_Cancel(GFL_SAVEDATA * sv);
 
-
 //============================================================================================
 //
 //				セーブデータアクセス用関数
@@ -218,6 +217,19 @@ extern const void * GFL_SAVEDATA_GetReadOnly(const GFL_SAVEDATA * sv, GFL_SVDT_I
 
 //--------------------------------------------------------------
 /**
+ * セーブを実行した場合のセーブサイズを取得する
+ *
+ * @param   sv		        セーブデータ構造へのポインタ
+ * @param   actual_size		セーブされる実サイズ(CRCテーブルなどのシステム系のデータは除きます)
+ * @param   total_size		セーブ全体のサイズ(CRCテーブルなどのシステム系のデータは除きます)
+ *
+ * 差分比較の為、フラッシュアクセスします。
+ */
+//--------------------------------------------------------------
+extern void GFL_SAVEDATA_GetActualSize(GFL_SAVEDATA *sv, u32 *actual_size, u32 *total_size);
+
+//--------------------------------------------------------------
+/**
  * @brief   ブロックのCRCを現在のデータで更新する
  *
  * @param   sv				セーブデータ構造へのポインタ
@@ -227,7 +239,6 @@ extern const void * GFL_SAVEDATA_GetReadOnly(const GFL_SAVEDATA * sv, GFL_SVDT_I
  */
 //--------------------------------------------------------------
 extern u16 GFL_BACKUP_BlockCRC_Set(GFL_SAVEDATA *sv, GFL_SVDT_ID gmdataid);
-
 
 //==============================================================================
 //	デバッグ用関数

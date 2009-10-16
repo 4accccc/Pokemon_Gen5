@@ -177,6 +177,16 @@ extern void GFL_UI_SleepEnable(const u8 sleepTypeBit);
 
 //------------------------------------------------------------------
 /**
+ * @brief   スリープ管理BITに禁止フラグが立っているか調べる
+ * @param   sleepTypeBit スリープ管理BIT
+ * @return  TRUE:禁止フラグが立っている
+ * @return  TRUE:禁止フラグは立っていない
+ */
+//------------------------------------------------------------------
+extern BOOL GFL_UI_CheckSleepDisable(const u8 sleepTypeBit);
+
+//------------------------------------------------------------------
+/**
  * @brief   スリープ解除時に呼ばれる関数をセットする
  * @param   pFunc   スリープ解除時に呼ばれる関数
  * @param   pWork   呼ばれる際に渡すワーク
