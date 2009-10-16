@@ -160,11 +160,11 @@ void IRCPOKETRADE_PokeCreateMcss( IRC_POKEMON_TRADE *pWork ,int no, int bFront, 
 
   if(bFront){
     MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_FRONT );
-    z=1000;
+    z=0;
   }
   else{
     MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_BACK );
-    z=999;
+    z=1000;
   }
   pWork->pokeMcss[no] = MCSS_Add( pWork->mcssSys , xpos[no] , PSTATUS_MCSS_POS_Y , z , &addWork );
   MCSS_SetScale( pWork->pokeMcss[no] , &scale );
@@ -933,13 +933,13 @@ static void _changePokemonStatusDisp(IRC_POKEMON_TRADE* pWork)
     VecFx32 apos;
     apos.x = _MCSS_POS_X(200);
     apos.y = _MCSS_POS_Y(110);
-    apos.z = 1000;
+    apos.z = PSTATUS_MCSS_POS_MYZ;
     MCSS_SetPosition( pWork->pokeMcss[pWork->pokemonselectno] ,&apos );
 
     //ëäéËÇÃÇÕâÊñ äO
     apos.x = -100*FX32_ONE;
     apos.y = -100*FX32_ONE;
-    apos.z = -100*FX32_ONE;
+    apos.z = PSTATUS_MCSS_POS_YOUZ;
     MCSS_SetPosition( pWork->pokeMcss[1-pWork->pokemonselectno] ,&apos );
 
   }
@@ -1279,6 +1279,14 @@ static void _dispSubState(IRC_POKEMON_TRADE* pWork)
   _CHANGE_STATE(pWork,_dispSubStateWait);
 }
 
+//í êMìØä˙ÇéÊÇÈ
+static void _changeTimingDemoStart(IRC_POKEMON_TRADE* pWork)
+{
+  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START)){
+    _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
+  }
+}
+
 // åä∑ÇÃï‘éñÇë“Ç¬
 static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 {
@@ -1294,7 +1302,13 @@ static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
       }
     }
   }
-  _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
+  if(GFL_NET_IsInit()){
+    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START);
+    _CHANGE_STATE(pWork, _changeTimingDemoStart);
+  }
+  else{
+    _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
+  }
 }
 
 void IRC_POKMEONTRADE_ChangeFinish(IRC_POKEMON_TRADE* pWork)

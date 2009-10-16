@@ -433,8 +433,25 @@ static const MODEL3D_SET_FUNCS modelset[] =
   { _cameraSetTrade01,_moveSetTrade01 },
 };
 
-
-
+static void _icaCameraDelete(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->icaCamera){
+    ICA_ANIME_Delete(pWork->icaCamera);
+    pWork->icaCamera=NULL;
+  }
+  if(pWork->icaTarget){
+    ICA_ANIME_Delete(pWork->icaTarget);
+    pWork->icaTarget=NULL;
+  }
+  if(pWork->icaBallin){
+    ICA_ANIME_Delete(pWork->icaBallin);
+    pWork->icaBallin=NULL;
+  }
+  if(pWork->icaBallout){
+    ICA_ANIME_Delete(pWork->icaBallout);
+    pWork->icaBallout=NULL;
+  }
+}
 
 
 //============================================================================================
@@ -528,23 +545,7 @@ void IRC_POKETRADEDEMO_End( IRC_POKEMON_TRADE* pWork )
   {
     GFL_G3D_CAMERA_Delete( pWork->camera );
   }
-
-  if(pWork->icaCamera){
-    ICA_ANIME_Delete(pWork->icaCamera);
-    pWork->icaCamera=NULL;
-  }
-  if(pWork->icaTarget){
-    ICA_ANIME_Delete(pWork->icaTarget);
-    pWork->icaTarget=NULL;
-  }
-  if(pWork->icaBallin){
-    ICA_ANIME_Delete(pWork->icaBallin);
-    pWork->icaBallin=NULL;
-  }
-  if(pWork->icaBallout){
-    ICA_ANIME_Delete(pWork->icaBallout);
-    pWork->icaBallout=NULL;
-  }
+  _icaCameraDelete(pWork);
   
 
   Finalize( pWork );
@@ -597,6 +598,8 @@ void IRC_POKETRADEDEMO_SetModel( IRC_POKEMON_TRADE* pWork, int modelno)
 void IRC_POKETRADEDEMO_RemoveModel( IRC_POKEMON_TRADE* pWork)
 {
   Finalize(pWork);
+  _icaCameraDelete(pWork);
+  pWork->modelno = -1;
 }
 
 
@@ -679,7 +682,10 @@ static void Draw( IRC_POKEMON_TRADE* pWork )
   static fx32 anime_speed = FX32_ONE;  // 1/60‚Å‚Ì“®ì‚Ìˆ×
   GFL_G3D_OBJSTATUS status;
 
-
+  if(pWork->modelno==-1){
+    return;
+  }
+  
   modelset[pWork->modelno].setMove(pWork, &status);
 
   // TEMP: ƒJƒƒ‰İ’è

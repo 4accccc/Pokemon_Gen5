@@ -36,7 +36,7 @@
 
 //ポケモンの動きに関する時間
 #define _POKEMON_CENTER_TIME   (60)  ///ポケモンが真ん中による時間
-#define _POKEMON_DELETE_TIME   (2)  ///ポケモンを消す
+#define _POKEMON_DELETE_TIME   (1)  ///ポケモンを消す
 #define _POKE_APPEAR_START   (410)  //ポケモン登場 自分のは裏
 #define _POKE_APPEAR_TIME    (30)  //ポケモン登場移動時間
 #define _POKE_SIDEOUT_START   (450)  //ポケモン左右に移動していく
@@ -45,7 +45,7 @@
 #define _POKE_SIDEIN_TIME    (240)   //ポケモン登場移動時間
 #define _POKE_LEAVE_START   (800)  //ポケモン退場
 #define _POKE_LEAVE_TIME    (30)  //ポケモン退場移動時間
-#define _POKEMON_CREATE_TIME   (1540)  ///交換終了してポケモン登場 
+#define _POKEMON_CREATE_TIME   (1601)  ///交換終了してポケモン登場 
 
 
 ///パーティクルのタイミング
@@ -53,11 +53,13 @@
 #define _PARTICLE_DEMO2_START   (100)  ///demo_tex002パーティクル開始
 #define _PARTICLE_DEMO3_START   (160)  ///demo_tex003パーティクル開始
 #define _PARTICLE_DEMO3_START2  (1200)  ///パーティクル開始
-#define _PARTICLE_DEMO4_START   (_POKEMON_DELETE_TIME)  ///ポケモン＞ボールパーティクル開始は消すのと同時
-#define _PARTICLE_DEMO4_START2   (-1)  ///ボール＞ポケモンパーティクル開始
 #define _PARTICLE_DEMO5_START   (100)  ///モンスターボールが打ちあがるパーティクル開始
 #define _PARTICLE_DEMO6_START   (400)  ///パーティクル開始
 #define _PARTICLE_DEMO7_START   (940)  ///パーティクル開始
+
+///OAM登場のタイミング
+#define _OAM_POKECREATE_START   (0)  ///ポケモン＞ボールエフェクト
+#define _OAM_POKECREATE_START2  (1600)  ///ボール＞ポケモンエフェクト
 
 
 

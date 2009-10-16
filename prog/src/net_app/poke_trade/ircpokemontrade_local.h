@@ -51,7 +51,16 @@ typedef enum
 } SETUP_TRADE_BG_MODE;
 
 
-#define _TIMING_ENDNO (12)
+
+
+typedef enum
+{
+  _CHANGERAND = 43,    ///< ポケモン交換タイミング揺らぎ数
+  _TIMING_ENDNO=12,
+  _TIMING_TRADEDEMO_START,
+  _TIMING_SAVEST,
+  _TIMING_SAVELAST,
+ } NET_TIMING_ENUM;
 
 #define BOX_VERTICAL_NUM (5)
 #define BOX_HORIZONTAL_NUM (6)
@@ -102,6 +111,8 @@ typedef enum
 #define PSTATUS_MCSS_POS_X1 _MCSS_POS_X(60)
 #define PSTATUS_MCSS_POS_X2 _MCSS_POS_X(190)
 #define PSTATUS_MCSS_POS_Y  _MCSS_POS_Y(140)
+#define PSTATUS_MCSS_POS_MYZ   (0)
+#define PSTATUS_MCSS_POS_YOUZ  (1000)
 
 
 
@@ -149,17 +160,20 @@ typedef enum
   PLT_POKEICON,   //ARCID_POKEICON
   PAL_SCROLLBAR, //ARCID_POKETRADE
   PLT_COMMON,
+  PLT_POKECREATE,
   PLT_RESOURCE_MAX,
 
   CHAR_SCROLLBAR = PLT_RESOURCE_MAX,    //ARCID_POKETRADE
   CHAR_SELECT_POKEICON1, //選択中ポケモンアイコン１
   CHAR_SELECT_POKEICON2, //選択中ポケモンアイコン１
   CHAR_COMMON,
+  CHAR_POKECREATE,
   CHAR_RESOURCE_MAX,
 
   ANM_POKEICON = CHAR_RESOURCE_MAX,  //ARCID_POKEICON
   ANM_SCROLLBAR, //ARCID_POKETRADE
   ANM_COMMON,
+  ANM_POKECREATE,
   ANM_RESOURCE_MAX,
 
   CEL_RESOURCE_MAX=ANM_RESOURCE_MAX,
@@ -308,6 +322,8 @@ struct _IRC_POKEMON_TRADE{
   GFL_EMIT_PTR pBallInPer;
   ICA_ANIME* icaBallout;
   GFL_EMIT_PTR pBallOutPer;
+  GFL_CLWK* pPokeCreateCLWK;   //ポケモン登場エフェクトCLACT
+
 
   BOX_MANAGER* pBox;
   GAMEDATA* pGameData;
@@ -343,7 +359,7 @@ struct _IRC_POKEMON_TRADE{
 
   int windowNum;
   int anmCount;
-  int anmStep;
+  int saveStep;
   BOOL IsIrc;
   u32 connect_bit;
   BOOL connect_ok;

@@ -931,8 +931,6 @@ void IRC_POKETRADE_SetSubdispGraphicDemo(IRC_POKEMON_TRADE* pWork)
     GFL_BG_SetScroll(frame,GFL_BG_SCROLL_X_SET, 0);
     GFL_ARC_CloseDataHandle( p_handle );
     
-    G2S_BlendNone();
-    G2_BlendNone();
   }
 }
 
