@@ -20,8 +20,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c01gym0101
 _EVENT_DATA		ev_c01gym0101_sunglasses_01
-_EVENT_DATA		ev_c01gym0101_pokezou_01
-_EVENT_DATA		ev_c01gym0101_pokezou_02
+_EVENT_DATA		ev_bg_c01gym0101_pokezou
 _EVENT_DATA		ev_c01gym0101_leader1_01
 _EVENT_DATA		ev_c01gym0101_leader1_02
 _EVENT_DATA		ev_c01gym0101_leader1_03
@@ -69,11 +68,13 @@ _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
 //																	//
-//	LOCALWORK10～13まで使用しました。同マップ内の使用を禁止します。	//
-//				LOCALWORK10⇒ハズレスイッチ汎用						//
+//	LOCALWORK10～15まで使用しました。同マップ内の使用を禁止します。	//
+//				LOCALWORK10⇒１個目のスイッチ						//
 //				LOCALWORK11⇒炎カーテン								//
 //				LOCALWORK12⇒水カーテン								//
 //				LOCALWORK13⇒草カーテン								//
+//				LOCALWORK14⇒２個目のスイッチ						//
+//				LOCALWORK15⇒３個目のスイッチ						//
 //																	//
 //------------------------------------------------------------------//
 
@@ -94,7 +95,6 @@ ev_c01gym0101:
 /*     ジム前のサングラス男  ジムバッジ入手前                 */
 /**************************************************************/
 EVENT_START		ev_c01gym0101_sunglasses_01
-	_TALK_OBJ_START()
 	
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
@@ -102,7 +102,7 @@ EVENT_START		ev_c01gym0101_sunglasses_01
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 	
-	//ジムバッジフラグが０の場合
+	//【仮】ジムバッジフラグが０の場合
 		_EASY_TALK_ITEM_EVENT(ITEM_OISIIMIZU, 1, FH_01, msg_c01gym0101_glasses_01, msg_c01gym0101_glasses_02, msg_c01gym0101_glasses_02 )	
 	
 	//ジムバッジフラグがそれ以外の場合
@@ -116,63 +116,39 @@ EVENT_START		ev_c01gym0101_sunglasses_01
 EVENT_END
 
 /**************************************************************/
-/*     ポケモン像１  	      					              */
+/*     ポケモン像		      					              */
 /**************************************************************/
-EVENT_START		ev_c01gym0101_pokezou_01
-
+EVENT_START		ev_bg_c01gym0101_pokezou
+	_TALK_OBJ_START()
+	
+	_TALKWIN_OPEN()
+	
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
-	
+
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
-	
-	//ジムバッジを取得していない場合
-		_EASY_MSG( msg_c01gym0101_statue_02 )
-	
+		_PLAYER_NAME( 0 )
+		_TALKMSG( msg_c01gym0101_statue_01 )
+		
 	//ジムバッジを取得している場合
 	ELSE
+	
 		//【仮】分岐処理・C02到着していないなら　到着フラグが動いていない！
 		IF FLAG_OFF( SYS_FLAG_ARRIVE_C02 ) THEN
-			_EASY_MSG( msg_c01gym0101_statue_02 )
+			_TALKMSG( msg_c01gym0101_statue_02 )
 		
 		//C02到着している場合
 		ELSE
-			_EASY_MSG( msg_c01gym0101_statue_03 )
-		
+			_TALKMSG( msg_c01gym0101_statue_03 )
+			
 		ENDIF
 	
 	ENDIF
-		
-EVENT_END
+	
+	_LAST_KEYWAIT()	
+	_TALKWIN_CLOSE()
 
-/**************************************************************/
-/*     ポケモン像２  						                  */
-/**************************************************************/
-EVENT_START		ev_c01gym0101_pokezou_02
-
-	//分岐：ジムバッジ取得しているか、いないか
-	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
-	
-	//ジムバッジを取得していない場合
-	IF $SCWK_TEMP0 == 0 THEN
-	
-	//ジムバッジを取得していない場合
-		_EASY_MSG( msg_c01gym0101_statue_02 )
-	
-	//ジムバッジを取得している場合
-	ELSE
-		//【仮】分岐処理・C02到着していないなら　到着フラグが動いていない！
-		IF FLAG_OFF( SYS_FLAG_ARRIVE_C02 ) THEN
-			_EASY_MSG( msg_c01gym0101_statue_02 )
-		
-		//C02到着している場合
-		ELSE
-			_EASY_MSG( msg_c01gym0101_statue_03 )
-		
-		ENDIF
-	
-	ENDIF
-		
 EVENT_END
 
 /**************************************************************/
@@ -313,8 +289,8 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 		//ということで　くさタイプを
 		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_05c , C01GYM0101_LEADER1_03 )
-		
 		_BALLOONWIN_CLOSE()
+		
 	ENDIF
 	
 	//===========フラグワーク操作===========//
@@ -456,7 +432,7 @@ EVENT_START		ev_c01gym0101_leader1_01
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
 	
-	//【仮】ジムバッジを取得していない場合
+	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 			
 		//分岐：炎タイプを選択しているか、いないか
@@ -484,6 +460,7 @@ EVENT_START		ev_c01gym0101_leader1_01
 			_SET_BADGE_FLAG( BADGE_ID_01 )
 			_TALKWIN_OPEN()
 			_PLAYER_NAME( 0 )
+			
 			//～～は　コーンから　トライバッジを　もらった
 			_TALKMSG_ALLPUT( msg_c01gym0101_leader1_07b )
 			_ME_PLAY( SEQ_ME_BADGE )
@@ -500,6 +477,16 @@ EVENT_START		ev_c01gym0101_leader1_01
 			//その　わざマシンの　なかみは　～～！！
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
 			_BALLOONWIN_CLOSE()
+			
+			//============フラグワーク操作=============//
+
+			//発明家マコモのバニッシュフラグリセット
+			_FLAG_RESET( FV_C01_INVENTOR_01 )
+	
+			//C01のＰＤＷ誘導イベント終了
+			$WK_SCENE_C01 = 1
+
+			//========================================//
 
 		//炎タイプ選択じゃない場合
 		ELSE
@@ -575,6 +562,17 @@ EVENT_START		ev_c01gym0101_leader1_02
 			//その　わざマシンの　なかみは　～～！！
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
 			_BALLOONWIN_CLOSE()
+			
+			//============フラグワーク操作=============//
+
+			//発明家マコモのバニッシュフラグリセット
+			_FLAG_RESET( FV_C01_INVENTOR_01 )
+	
+			//C01のＰＤＷ誘導イベント終了
+			$WK_SCENE_C01 = 1
+
+			//========================================//
+			
 
 		//草タイプ選択じゃない場合
 		ELSE
@@ -626,13 +624,10 @@ EVENT_START		ev_c01gym0101_leader1_03
 	//【仮】ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 	
-	
 		//分岐：水タイプを選択しているか、いないか
 
 		//水タイプを選択している場合
-		//IF $WK_SYS_FIRST_POKE_NO == MONSNO_ZENIGAME THEN
-		//【仮】
-		IF $LOCALWORK13 == 1 THEN
+		IF $WK_SYS_FIRST_POKE_NO == MONSNO_ZENIGAME THEN
 		
 			//さんにんの　なかで　いちばん　つよい　オレが
 			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20c )
@@ -675,25 +670,25 @@ EVENT_START		ev_c01gym0101_leader1_03
 			//その　わざマシンの　なかみは　～～！！
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
 			_BALLOONWIN_CLOSE()
+			
+			//============フラグワーク操作=============//
+
+			//発明家マコモのバニッシュフラグリセット
+			_FLAG_RESET( FV_C01_INVENTOR_01 )
+	
+			//C01のＰＤＷ誘導イベント終了
+			$WK_SCENE_C01 = 1
+
+			//========================================//
 
 		//水タイプ選択じゃない場合
-		ELSE		
+		ELSE
 			//オレが　いちばん　つよいのに！　どうして　みずタイプ　なんだよ！
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_21c , C01GYM0101_LEADER1_03 )
 			_BALLOONWIN_CLOSE()
 
 		ENDIF
-	
-		//============フラグワーク操作=============//
 
-		//発明家マコモのバニッシュフラグリセット
-		_FLAG_RESET( 	FV_C01_INVENTOR_01 )
-	
-		//C01のＰＤＷ誘導イベント終了
-		$WK_SCENE_C01 = 1
-
-		//========================================//
-	
 	//ジムバッジ入手後の場合
 	ELSE	
 		//オレたちが　もし　１７人　きょうだい　だったら
@@ -727,56 +722,60 @@ _ANIME_LABEL	anm_corn_dentoback
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_kusa_01
 
-	//草ボタン１踏んだアニメーション
-	_GYM_ANTI_SW_ON(5)
 	
+
 	//分岐：炎カーテンが開いている？
-	
-		//開いていない場合
-		IF $LOCALWORK11 == 0 THEN
+	//開いていない場合
+	IF $LOCALWORK11 == 0 THEN
 		
-			//ＳＥ：ブッブー
-			
-		//開いている場合
-		ELSE
+		//草ボタン１踏んだアニメーション
+		_GYM_ANTI_SW_ON(5)
+	
+		//【仮】ＳＥ：ブッブー
+		_SE_PLAY( SEQ_SE_PC_LOGOFF )
+		_SE_WAIT()
 		
-		ENDIF
-
-	//===========フラグワーク操作===========//
+		//===========フラグワーク操作===========//
+		
+		//スイッチを踏んだ
+		$LOCALWORK10 = 1
 	
-	//スイッチを踏んだ
-	$LOCALWORK10 = 1
+		//======================================//
+		
+	//開いている場合
+	ELSE
+		
+	ENDIF
 	
-	//======================================//
-
 EVENT_END
 
 /**************************************************************/
 /*     炎ボタン１　ハズレ　ＰＯＳ発動					      */
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_honoo_01
-
-	//炎ボタン１踏んだアニメーション
-	_GYM_ANTI_SW_ON(3)
-
+	
 	//分岐：炎カーテンが開いている？
-	
-		//開いていない場合
-		IF $LOCALWORK11 == 0 THEN
+	//開いていない場合
+	IF $LOCALWORK11 == 0 THEN
 		
-			//ＳＥ：ブッブー
-			
-		//開いている場合
-		ELSE
+		//炎ボタン１踏んだアニメーション
+		_GYM_ANTI_SW_ON(3)
+	
+		//【仮】ＳＥ：ブッブー
+		_SE_PLAY( SEQ_SE_PC_LOGOFF )
+		_SE_WAIT()
 		
-		ENDIF
-
-	//===========フラグワーク操作===========//
+		//===========フラグワーク操作===========//
+		
+		//スイッチを踏んだ
+		$LOCALWORK10 = 1
 	
-	//スイッチを踏んだ
-	$LOCALWORK10 = 1
-	
-	//======================================//
+		//======================================//
+		
+	//開いている場合
+	ELSE
+		
+	ENDIF
 
 EVENT_END
 
@@ -785,46 +784,43 @@ EVENT_END
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_mizu_01
 
-	//水ボタン１踏んだアニメーション
-	_GYM_ANTI_SW_ON(1)
-
 	//分岐：炎カーテンが開いている？
-	
-		//開いていない場合
-		IF $LOCALWORK11 == 0 THEN
-			//透明OBJの移動
-			_OBJ_ANIME( C01GYM0101_CURTAIN_01A, anm_curtain_open_a )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_01B, anm_curtain_open_a )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_01C, anm_curtain_open_a )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_01D, anm_curtain_open_a )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_01E, anm_curtain_open_b )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_01F, anm_curtain_open_b )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_01G, anm_curtain_open_b )
+	//開いていない場合
+	IF $LOCALWORK11 == 0 THEN
+		//水ボタン１踏んだアニメーション
+		_GYM_ANTI_SW_ON(1)
+		
+		//透明OBJの移動
+		_OBJ_ANIME( C01GYM0101_CURTAIN_01A, anm_curtain_open_a )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_01B, anm_curtain_open_a )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_01C, anm_curtain_open_a )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_01D, anm_curtain_open_a )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_01E, anm_curtain_open_b )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_01F, anm_curtain_open_b )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_01G, anm_curtain_open_b )
+		
+		//炎カーテン開くアニメーション
+		_GYM_ANTI_OPEN_DOOR(0)
+		_OBJ_ANIME_WAIT()
 			
-			//炎カーテン開くアニメーション
-			_GYM_ANTI_OPEN_DOOR(0)
-			_OBJ_ANIME_WAIT()
-			
-			//ＳＥ：ピンポーンピンポーン
-			
-			//===========フラグワーク操作===========//
-	
-			//炎カーテン開く
-			$LOCALWORK11 = 1
-	
-			//======================================//			
-			
-		//開いている場合
-		ELSE
+		//【仮】ＳＥ：ピンポーンピンポーン
+		_SE_PLAY( SEQ_SE_PC_LOGIN )
+		_SE_WAIT()
+		
+		//===========フラグワーク操作===========//
 
-		ENDIF
+		//炎カーテン開く
+		$LOCALWORK11 = 1
+		
+		//スイッチを踏んだ
+		$LOCALWORK10 = 1
+	
+		//======================================//			
+			
+	//開いている場合
+	ELSE
 
-	//===========フラグワーク操作===========//
-	
-	//スイッチを踏んだ
-	$LOCALWORK10 = 1
-	
-	//======================================//
+	ENDIF
 
 EVENT_END
 
@@ -847,48 +843,46 @@ _ANIME_LABEL	anm_curtain_open_b
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_kusa_02
 
-	//草ボタン２踏んだアニメーション
-	_GYM_ANTI_SW_ON(2)
-
 	//分岐：水カーテンが開いている？
 	
-		//開いていない場合
-		IF $LOCALWORK12 == 0 THEN
+	//開いていない場合
+	IF $LOCALWORK12 == 0 THEN
+	
+		//草ボタン２踏んだアニメーション
+		_GYM_ANTI_SW_ON(2)		
 		
-			//透明OBJの移動
-			_OBJ_ANIME( C01GYM0101_CURTAIN_02A, anm_curtain_open_a )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_02B, anm_curtain_open_a )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_02C, anm_curtain_open_a )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_02D, anm_curtain_open_a )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_02E, anm_curtain_open_b )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_02F, anm_curtain_open_b )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_02G, anm_curtain_open_b )
+		//透明OBJの移動
+		_OBJ_ANIME( C01GYM0101_CURTAIN_02A, anm_curtain_open_a )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_02B, anm_curtain_open_a )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_02C, anm_curtain_open_a )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_02D, anm_curtain_open_a )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_02E, anm_curtain_open_b )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_02F, anm_curtain_open_b )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_02G, anm_curtain_open_b )
 			
 			
-			//水カーテン開くアニメーション
-			_GYM_ANTI_OPEN_DOOR(1)
-			_OBJ_ANIME_WAIT()
+		//水カーテン開くアニメーション
+		_GYM_ANTI_OPEN_DOOR(1)
+		_OBJ_ANIME_WAIT()
 			
-			//ＳＥ：ピンポーンピンポーン
+		//【仮】ＳＥ：ピンポーンピンポーン
+		_SE_PLAY( SEQ_SE_PC_LOGIN )
+		_SE_WAIT()
 
-			//===========フラグワーク操作===========//
+		//===========フラグワーク操作===========//
 	
-			//水カーテン開く
-			$LOCALWORK12 = 1
-	
-			//======================================//
-
-		//開いている場合
-		ELSE
+		//水カーテン開く
+		$LOCALWORK12 = 1
 		
-		ENDIF
+		//スイッチを踏んだ
+		$LOCALWORK14 = 1	
+		
+		//======================================//
 
-	//===========フラグワーク操作===========//
-	
-	//スイッチを踏んだ
-	$LOCALWORK10 = 1
-	
-	//======================================//
+	//開いている場合
+	ELSE
+		
+	ENDIF
 
 EVENT_END
 
@@ -897,27 +891,29 @@ EVENT_END
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_honoo_02
 
-	//炎ボタン２踏んだアニメーション
-	_GYM_ANTI_SW_ON(6)
-
 	//分岐：水カーテンが開いている？
 	
-		//開いていない場合
-		IF $LOCALWORK12 == 0 THEN
-		
-			//ＳＥ：ブッブー
-			
-		//開いている場合
-		ELSE
-		
-		ENDIF
+	//開いていない場合
+	IF $LOCALWORK12 == 0 THEN
 
-	//===========フラグワーク操作===========//
+		//炎ボタン２踏んだアニメーション
+		_GYM_ANTI_SW_ON(6)
+		
+		//【仮】ＳＥ：ブッブー
+		_SE_PLAY( SEQ_SE_PC_LOGOFF )
+		_SE_WAIT()
+		
+		//===========フラグワーク操作===========//
 	
-	//スイッチを踏んだ
-	$LOCALWORK10 = 1
+		//スイッチを踏んだ
+		$LOCALWORK14 = 1
 	
-	//======================================//
+		//======================================//
+	
+	//開いている場合
+	ELSE
+		
+	ENDIF
 
 EVENT_END
 
@@ -926,28 +922,30 @@ EVENT_END
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_mizu_02
 
-	//水ボタン２踏んだアニメーション
-	_GYM_ANTI_SW_ON(4)
-
 	//分岐：水カーテンが開いている？
 	
-		//開いていない場合
-		IF $LOCALWORK12 == 0 THEN
+	//開いていない場合
+	IF $LOCALWORK12 == 0 THEN
 		
-			//ＳＥ：ブッブー
-			
-		//開いている場合
-		ELSE
+		//水ボタン２踏んだアニメーション
+		_GYM_ANTI_SW_ON(4)
 		
-		ENDIF
-
-	//===========フラグワーク操作===========//
+		//【仮】ＳＥ：ブッブー
+		_SE_PLAY( SEQ_SE_PC_LOGOFF )
+		_SE_WAIT()
+		
+		//===========フラグワーク操作===========//
 	
-	//スイッチを踏んだ
-	$LOCALWORK10 = 1
+		//スイッチを踏んだ
+		$LOCALWORK14 = 1
 	
-	//======================================//
+		//======================================//			
 
+	//開いている場合
+	ELSE
+		
+	ENDIF
+		
 EVENT_END
 
 /**************************************************************/
@@ -955,27 +953,29 @@ EVENT_END
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_kusa_03
 
-	//草ボタン３踏んだアニメーション
-	_GYM_ANTI_SW_ON(8)
-
 	//分岐：草カーテンが開いている？
 	
-		//開いていない場合
-		IF $LOCALWORK13 == 0 THEN
+	//開いていない場合
+	IF $LOCALWORK13 == 0 THEN
 		
-			//ＳＥ：ブッブー
-			
-		//開いている場合
-		ELSE
+		//草ボタン３踏んだアニメーション
+		_GYM_ANTI_SW_ON(8)
 		
-		ENDIF
+		//【仮】ＳＥ：ブッブー
+		_SE_PLAY( SEQ_SE_PC_LOGOFF )
+		_SE_WAIT()
+		
+		//===========フラグワーク操作===========//
+	
+		//スイッチを踏んだ
+		$LOCALWORK15 = 1
+	
+		//======================================//
 
-	//===========フラグワーク操作===========//
-	
-	//スイッチを踏んだ
-	$LOCALWORK10 = 1
-	
-	//======================================//
+	//開いている場合
+	ELSE
+		
+	ENDIF
 
 EVENT_END
 
@@ -984,48 +984,45 @@ EVENT_END
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_honoo_03
 
-	//炎ボタン３踏んだアニメーション
-	_GYM_ANTI_SW_ON(0)
-
 	//分岐：草カーテンが開いている？
 	
-		//開いていない場合
-		IF $LOCALWORK13 == 0 THEN
-		
-			//透明OBJの移動
-			_OBJ_ANIME( C01GYM0101_CURTAIN_03A, anm_curtain_open_a )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_03B, anm_curtain_open_a )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_03C, anm_curtain_open_a )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_03D, anm_curtain_open_a )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_03E, anm_curtain_open_b )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_03F, anm_curtain_open_b )
-			_OBJ_ANIME( C01GYM0101_CURTAIN_03G, anm_curtain_open_b )
-			_OBJ_ANIME_WAIT()
-			
-			//草カーテン開くアニメーション
-			_GYM_ANTI_OPEN_DOOR(2)
+	//開いていない場合
+	IF $LOCALWORK13 == 0 THEN
+	
+		//炎ボタン３踏んだアニメーション
+		_GYM_ANTI_SW_ON(0)
 
+		//透明OBJの移動
+		_OBJ_ANIME( C01GYM0101_CURTAIN_03A, anm_curtain_open_a )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_03B, anm_curtain_open_a )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_03C, anm_curtain_open_a )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_03D, anm_curtain_open_a )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_03E, anm_curtain_open_b )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_03F, anm_curtain_open_b )
+		_OBJ_ANIME( C01GYM0101_CURTAIN_03G, anm_curtain_open_b )
+		_OBJ_ANIME_WAIT()
 			
-			//ＳＥ：ピンポーンピンポーン
+		//草カーテン開くアニメーション
+		_GYM_ANTI_OPEN_DOOR(2)
 			
-			//===========フラグワーク操作===========//
-	
-			//水カーテン開く
-			$LOCALWORK13 = 1
-	
-			//======================================//
-			
-		//開いている場合
-		ELSE
+		//【仮】ＳＥ：ピンポーンピンポーン
+		_SE_PLAY( SEQ_SE_PC_LOGIN )
+		_SE_WAIT()
 		
-		ENDIF
-
-	//===========フラグワーク操作===========//
+		//===========フラグワーク操作===========//
 	
-	//スイッチを踏んだ
-	$LOCALWORK10 = 1
+		//水カーテン開く
+		$LOCALWORK13 = 1
+		
+		//スイッチを踏んだ
+		$LOCALWORK15 = 1
 	
-	//======================================//
+		//======================================//
+			
+	//開いている場合
+	ELSE
+		
+	ENDIF
 
 EVENT_END
 
@@ -1034,27 +1031,29 @@ EVENT_END
 /**************************************************************/
 EVENT_START	ev_pos_c01gym0101_button_mizu_03
 
-	//水ボタン３踏んだアニメーション
-	_GYM_ANTI_SW_ON(7)
-
 	//分岐：草カーテンが開いている？
 	
-		//開いていない場合
-		IF $LOCALWORK13 == 0 THEN
+	//開いていない場合
+	IF $LOCALWORK13 == 0 THEN
 		
-			//ＳＥ：ブッブー
-			
+		//水ボタン３踏んだアニメーション
+		_GYM_ANTI_SW_ON(7)
+		
+		//【仮】ＳＥ：ブッブー
+		_SE_PLAY( SEQ_SE_PC_LOGOFF )
+		_SE_WAIT()
+		
+		//===========フラグワーク操作===========//
+	
+		//スイッチを踏んだ
+		$LOCALWORK15 = 1
+	
+		//======================================//
+		
 		//開いている場合
 		ELSE
 		
 		ENDIF
-
-	//===========フラグワーク操作===========//
-	
-	//スイッチを踏んだ
-	$LOCALWORK10 = 1
-	
-	//======================================//
 
 EVENT_END
 
@@ -1175,7 +1174,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa2_off
 
 	//===========フラグワーク操作===========//
 	
-	$LOCALWORK10 = 0
+	$LOCALWORK14 = 0
 	
 	//======================================//	
 
@@ -1190,7 +1189,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa3_off
 
 	//===========フラグワーク操作===========//
 	
-	$LOCALWORK10 = 0
+	$LOCALWORK15 = 0
 	
 	//======================================//	
 
@@ -1220,7 +1219,7 @@ EVENT_START	ev_pos_c01gym0101_button_honoo2_off
 
 	//===========フラグワーク操作===========//
 	
-	$LOCALWORK10 = 0
+	$LOCALWORK14 = 0
 	
 	//======================================//	
 
@@ -1235,7 +1234,7 @@ EVENT_START	ev_pos_c01gym0101_button_honoo3_off
 
 	//===========フラグワーク操作===========//
 	
-	$LOCALWORK10 = 0
+	$LOCALWORK15 = 2
 	
 	//======================================//	
 
@@ -1250,7 +1249,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu1_off
 
 	//===========フラグワーク操作===========//
 	
-	$LOCALWORK10 = 0
+	$LOCALWORK10 = 2
 	
 	//======================================//	
 
@@ -1265,7 +1264,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu2_off
 
 	//===========フラグワーク操作===========//
 	
-	$LOCALWORK10 = 0
+	$LOCALWORK14 = 0
 	
 	//======================================//	
 
@@ -1280,7 +1279,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu3_off
 
 	//===========フラグワーク操作===========//
 	
-	$LOCALWORK10 = 0
+	$LOCALWORK15 = 0
 	
 	//======================================//	
 

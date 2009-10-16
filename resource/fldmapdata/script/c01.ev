@@ -31,7 +31,7 @@ _EVENT_DATA		ev_c01_oldman1_01
 _EVENT_DATA		ev_pos_c01_stop
 _EVENT_DATA		ev_c01_glasses_01
 _EVENT_DATA		ev_c01_leader_01
-_EVENT_DATA		ev_pos_c01_inventor
+_EVENT_DATA		ev_c01_scene_change_01
 _EVENT_DATA		ev_c01_inventor_01
 _EVENT_DATA_END
 
@@ -111,7 +111,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c01_babygirl1_01
 	_TALK_OBJ_START()
-  
+ 
+ 	//乱数取得
 	_GET_RND( SCWK_ANSWER, 3 )
 
 	IF $SCWK_ANSWER == 0 THEN
@@ -143,7 +144,7 @@ EVENT_START   ev_c01_sign2_01
 	_EASY_MSG( msg_c01_sign2_01 )
 	
 	//【仮】動作確認
-	//_FLAG_SET( FE_D01R0101_EVCLEAR )
+	_FLAG_SET( FE_D01R0101_EVCLEAR )
 	
 EVENT_END
 
@@ -336,7 +337,7 @@ EVENT_END
 /**************************************************************/
 /*  C01 発明家　ＰＤＷ誘導イベント						      */
 /**************************************************************/
-EVENT_START   ev_pos_c01_inventor
+EVENT_START   ev_c01_scene_change_01
 
 	//発明家マコモ：自機に気付いて近づく
 	_OBJ_ANIME( C01_INVENTOR_01, anm_inventor_tikaduku )
@@ -361,7 +362,7 @@ EVENT_START   ev_pos_c01_inventor
 	//============フラグワーク操作=============//
 
 	//発明家マコモのバニッシュフラグセット
-	_FLAG_SET( 	FV_C01_INVENTOR_01 )
+	_FLAG_SET( FV_C01_INVENTOR_01 )
 
 	//C01のＰＤＷ誘導イベント終了
 	$WK_SCENE_C01 = 2
@@ -388,14 +389,14 @@ _ANIME_LABEL	anm_inventor_tikaduku
 //	発明家マコモ　自機：自宅誘導
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_inventor_yudo
-	_ANIME_DATA	AC_WALK_U_16F,6
+	_ANIME_DATA	AC_WALK_D_16F,6
 	_ANIME_DATA	AC_WALK_R_16F,1	
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_yudo
 	_ANIME_DATA	AC_WAIT_8F,1
-	_ANIME_DATA	AC_WALK_U_16F,7
+	_ANIME_DATA	AC_WALK_D_16F,7
 	_ANIME_DATA	AC_WALK_R_16F,1	
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0

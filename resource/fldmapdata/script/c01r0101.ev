@@ -69,15 +69,20 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c01r0101_boy3_01
 
-
-//【仮】ジムバッジフラグ未実装のため、仮フラグ
-	IF FLAG_ON( FH_01 ) THEN
-
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0101_boy3_02 )
-
-	ELSE
+	//分岐：ジムバッジ取得しているか、いないか
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
 	
+	//ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
+		
+		//うえは　ダメダメ！！　いま　じっけんちゅう
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0101_boy3_01 )
+
+	//ジムバッジを取得している場合
+	ELSE
+		
+		//うえに　すんでる　ねえちゃん
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0101_boy3_02 )
 	
 	ENDIF	
 
@@ -89,8 +94,8 @@ EVENT_END
 EVENT_START   ev_c01r0101_scene_change_01
 
 	//自機、マコモ：部屋中央まで移動
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo1 )
 	_OBJ_ANIME( C01R0101_INVENTOR_01, anm_inventor_yudo1 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo1 )	
 	_OBJ_ANIME_WAIT()
 	
 	//マコモ：自機の方を向く、その場歩き

@@ -46,51 +46,51 @@ _EVENT_DATA_END
 EVENT_START   ev_c01r0102_scene_change_01
 
 	//自機：発明家の前に移動
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk )
-		_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk )
+	_OBJ_ANIME_WAIT()
 	
 	//マコモ：！マーク
-		_OBJ_ANIME( C01R0102_INVENTOR_01, anm_inventor_kiduku )
-		_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( C01R0102_INVENTOR_01, anm_inventor_kiduku )
+	_OBJ_ANIME_WAIT()
 	
 	//あらためて　じこしょうかい　するね　アタシは　マコモ
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_01 , C01R0102_INVENTOR_01 )
-		_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_01 , C01R0102_INVENTOR_01 )
+	_BALLOONWIN_CLOSE()
 	
 	//あっ！　そのCギア　つかえるように　とうろくしてあげる
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_02 , C01R0102_INVENTOR_01 )
-		_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_02 , C01R0102_INVENTOR_01 )
+	_BALLOONWIN_CLOSE()
 	
 	//マコモ：パソコンの前に移動、何かゴソゴソして、自機の前に戻ってくる
-		_OBJ_ANIME( C01R0102_INVENTOR_01, anm_inventor_kaizou )
-		_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( C01R0102_INVENTOR_01, anm_inventor_kaizou )
+	_OBJ_ANIME_WAIT()
 	
 	//で　アタシからの　バックアップです　この　わざマシンを　どうぞ！
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_03 , C01R0102_INVENTOR_01 )
-		_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_03 , C01R0102_INVENTOR_01 )
+	_BALLOONWIN_CLOSE()
 	
 	//わざマシン入手
-		_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
 	
 	//ポケモンが　おぼえる　わざには　たたかっていない　ときでも
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_04 , C01R0102_INVENTOR_01 )
-		_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_04 , C01R0102_INVENTOR_01 )
+	_BALLOONWIN_CLOSE()
 	
 	//……で　てだすけ　じゃなくて　おねがいしても　いいかな？
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_05 , C01R0102_INVENTOR_01 )
-		_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_05 , C01R0102_INVENTOR_01 )
+	_BALLOONWIN_CLOSE()
 	
 	//マコモ：踊る
-		_OBJ_ANIME( C01R0102_INVENTOR_01, anm_inventor_dance )
-		_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( C01R0102_INVENTOR_01, anm_inventor_dance )
+	_OBJ_ANIME_WAIT()
 	
 	//……ごめんなさい　つい　おどっちゃうのよね
-		_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_06 , C01R0102_INVENTOR_01 )
-		_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01r0102_inventor_06 , C01R0102_INVENTOR_01 )
+	_BALLOONWIN_CLOSE()
 
 	//===========フラグワーク操作===========//
 	
-	//【仮】発明家イベント終了
+	//発明家イベント終了
 	$WK_SCENE_C01R0102 = 1
 	
 	//======================================//
@@ -184,18 +184,21 @@ _TALK_OBJ_START()
 
 	//重要アイテム「？？？」を所持しているか、いないかの分岐
 	
-	//重要アイテム「？？？」を持っていない場合
+		//重要アイテム「？？？」を持っていない場合
 		IF FLAG_OFF( FH_01 ) THEN
 		
 			//マコモ『ゆめのあとちに　いる　ふしぎなポケモン』
 			_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0102_inventor_07 )
 			_BALLOONWIN_CLOSE()
 		
+		//重要アイテム「？？？」を持っている場合
 		ELSE
 		
 			//マコモ『それって！　ムシャーナの「？？？？？」！？』
 			_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0102_inventor_08 )
 			_BALLOONWIN_CLOSE()
+		
+			_FLAG_SET( FE_CGEAR_GET )
 		
 		ENDIF
 
@@ -210,7 +213,7 @@ _TALK_OBJ_START()
 	//【仮】PDWイベントフラグがないので、仮フラグです。
 	
 	//PDWイベントが終わっていない場合
-	IF FLAG_OFF( FH_01 ) THEN
+	IF FLAG_OFF( FE_CGEAR_GET ) THEN
 		
 		//あなた　トレーナー？　じゃあ　ポケモンセンターの
 		_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0102_girl3_01 )
