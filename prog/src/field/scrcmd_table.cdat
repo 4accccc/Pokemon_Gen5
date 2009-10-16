@@ -175,7 +175,7 @@
 
   DEF_CMD( EvCmdObjDelEvent, EV_SEQ_OBJ_DEL_EV )
 	DEF_CMD( EvCmdObjPosChange, EV_SEQ_OBJ_POS_CHANGE )
-  NO_CMD()
+  DEF_CMD( EvCmdPlayerDirGet, EV_SEQ_PLAYER_DIR_GET )
   NO_CMD()
 
   NO_CMD()

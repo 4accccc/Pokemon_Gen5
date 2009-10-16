@@ -20,6 +20,7 @@ extern VMCMD_RESULT EvCmdObjAnimeWait( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdMoveCodeGet( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdObjPosGet( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdPlayerPosGet( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdPlayerDirGet( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdObjAdd( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdObjDel( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdObjAddEvent( VMHANDLE *core, void *wk );

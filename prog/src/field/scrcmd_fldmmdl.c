@@ -233,6 +233,25 @@ VMCMD_RESULT EvCmdPlayerPosGet( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * @brief 自機の向き取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPlayerDirGet( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  MMDL *player = scmd_GetMMdlPlayer( work );
+
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  
+  *ret_wk = MMDL_TOOL_FlipDir( MMDL_GetDirDisp( player ) );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * OBJを追加
  * @param  core    仮想マシン制御構造体へのポインタ
  * @return  VMCMD_RESULT
