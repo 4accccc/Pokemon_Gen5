@@ -197,7 +197,8 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_status.c \
 				system/pokegra.c \
 				system/poke2dgra.c \
-        system/nsbtx_to_clwk.c
+        system/nsbtx_to_clwk.c \
+        system/pms_draw.c
 
 
 #================================================
