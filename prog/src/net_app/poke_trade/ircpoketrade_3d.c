@@ -247,7 +247,7 @@ static void _moveSetReel(IRC_POKEMON_TRADE* pWork,GFL_G3D_OBJSTATUS* pStatus)
   {
     // 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
     G3X_SetShading( GX_SHADING_TOON); //GX_SHADING_HIGHLIGHT );
-    G3X_AntiAlias( FALSE );
+    G3X_AntiAlias( TRUE );
     G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
     G3X_AlphaBlend( FALSE );		// アルファブレンド　オン
     G3X_EdgeMarking( FALSE );
@@ -343,7 +343,7 @@ static void _moveSetTrade01(IRC_POKEMON_TRADE* pWork,GFL_G3D_OBJSTATUS* pStatus)
   {
     // 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
     G3X_SetShading( GX_SHADING_TOON); //GX_SHADING_HIGHLIGHT );
-    G3X_AntiAlias( FALSE );
+    G3X_AntiAlias( TRUE );
     G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
     G3X_AlphaBlend( FALSE );		// アルファブレンド　オン
     G3X_EdgeMarking( FALSE );
@@ -488,6 +488,24 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
     void* heap;
     heap = GFL_HEAP_AllocMemory(pWork->heapID, PARTICLE_LIB_HEAP_SIZE);
     pWork->ptc = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, TRUE, pWork->heapID);
+    heap = GFL_HEAP_AllocMemory(pWork->heapID, PARTICLE_LIB_HEAP_SIZE);
+    pWork->ptcOrthogonal = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, FALSE, pWork->heapID);
+
+  }
+  if(1){
+    GFL_G3D_PROJECTION proj = {GFL_G3D_PRJORTH,
+      FX32_ONE*12.0f,
+      0,
+      0,
+      FX32_ONE*16.0f,
+      (FX32_ONE),
+      (FX32_ONE*300),
+      0,
+    };
+    VecFx32    pos = { -FX32_ONE*8, -FX32_ONE*6, 4*FX32_ONE };
+    VecFx32    target = { -FX32_ONE*8, -FX32_ONE*6, 0 };
+    GFL_PTC_PersonalCameraCreate(pWork->ptcOrthogonal,&proj,DEFAULT_PERSP_WAY,&pos,NULL,&target,pWork->heapID );
+
   }
   // カメラ作成
   if(pWork->camera==NULL)
@@ -505,10 +523,11 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
 
 	//リソース読み込み＆登録
   {
-  	void *resource;
+    void *resource;
     resource = GFL_PTC_LoadArcResource(
       ARCID_POKETRADEDEMO, NARC_tradedemo_demo_tex001_spa, pWork->heapID);
     GFL_PTC_SetResource(pWork->ptc, resource, TRUE, NULL);
+    GFL_PTC_SetResource(pWork->ptcOrthogonal, resource, TRUE, NULL);
   }
   
 }
@@ -533,10 +552,13 @@ void IRC_POKETRADEDEMO_Main( IRC_POKEMON_TRADE* pWork )
 void IRC_POKETRADEDEMO_End( IRC_POKEMON_TRADE* pWork )
 {
   {
-  	void *heap;
-	
+  	void *heap2 ,*heap;
+
+    GFL_PTC_PersonalCameraDelete(pWork->ptcOrthogonal);
+    heap2 = GFL_PTC_GetHeapPtr(pWork->ptcOrthogonal);
     heap = GFL_PTC_GetHeapPtr(pWork->ptc);
     GFL_PTC_Exit();
+    GFL_HEAP_FreeMemory(heap2);
     GFL_HEAP_FreeMemory(heap);
   }
 

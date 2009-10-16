@@ -283,6 +283,7 @@ struct _IRC_POKEMON_TRADE{
 
   TOUCH_SW_SYS			*TouchSubWindowSys;
   GFL_PTC_PTR ptc;
+  GFL_PTC_PTR ptcOrthogonal;
 
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];

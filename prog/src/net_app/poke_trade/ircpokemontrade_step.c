@@ -206,6 +206,8 @@ void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(IRC_POKEMON_TRADE* pWork)
   VecFx32 apos;
   int i;
 
+ //   MCSS_SetPaletteFade( pWork->pokeMcss[0], 0, 16, 0, 0xff );
+  
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade0);
 
 }
@@ -295,6 +297,9 @@ static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
     pWork->pMoveMcss[0]=NULL;
     _setNextAnim(pWork, 0);
 
+    //自分を白くする
+    MCSS_SetPaletteFade( pWork->pokeMcss[0], 0, 16, 0, 0xff );
+
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade2);
   }
 }
@@ -304,8 +309,6 @@ static void _changeDemo_ModelTrade2(IRC_POKEMON_TRADE* pWork)
   int i;
   
 //  if(pWork->anmCount == 1){
-  //自分を白くする
-  MCSS_SetPaletteFade( pWork->pokeMcss[0], 0, 16, 0, 0xff );
 
   //ボール変更アニメ
   G2_BlendNone();
@@ -361,7 +364,7 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
     GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX003, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO3_START2){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX003, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptcOrthogonal, DEMO_TEX003, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO5_START){
     GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX005, _ballinEmitFunc, pWork);

@@ -1036,7 +1036,7 @@ static void Graphic_3d_SetUp( void )
   G3X_SetShading( GX_SHADING_TOON); //GX_SHADING_HIGHLIGHT );
   G3X_AntiAlias( FALSE );
   G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
-  G3X_AlphaBlend( FALSE );		// アルファブレンド　オン
+  G3X_AlphaBlend( FALSE );		// アルファブレンド　オフ
   G3X_EdgeMarking( FALSE );
   G3X_SetFog( TRUE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
 
