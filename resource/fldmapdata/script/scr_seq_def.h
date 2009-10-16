@@ -1139,7 +1139,8 @@
 
 //--------------------------------------------------------------
 /**
- * _OBJ_POS_GET OBJの位置取得
+ * @def _OBJ_POS_GET
+ * @brief OBJの位置取得
  * @param obj_id 取得するOBJ ID
  * @param x X座標格納先
  * @param z Z座標格納先
@@ -1156,7 +1157,8 @@
 
 //--------------------------------------------------------------
 /**
- * _PLAYER_POS_GET 主人公の位置取得
+ * @def _PLAYER_POS_GET
+ * @brief 主人公の位置取得
  * @param x X座標格納先
  * @param z Z座標格納先
  */
@@ -1169,7 +1171,24 @@
   .short  \z
   .endm
 
- 
+//--------------------------------------------------------------
+/**
+ * @def _PLAYER_DIR_GET
+ * @brief プレイヤーの方向取得
+ * @param ret_wk    方向を受け取るワーク
+ *
+ * @note  方向についてはprog/include/field/field_dir.hを参照
+ * @todo  グリッドマップのみでレールマップのことは考慮されていない
+ */
+//--------------------------------------------------------------
+#define _PLAYER_DIR_GET( ret_wk ) \
+    _ASM_PLAYER_DIR_GET ret_wk
+
+    .macro  _ASM_PLAYER_DIR_GET ret_wk
+    .short  EV_SEQ_PLAYER_DIR_GET
+    .short  \ret_wk
+    .endm
+
 //--------------------------------------------------------------
 /**
  * _OBJ_ADD_EX OBJを追加
