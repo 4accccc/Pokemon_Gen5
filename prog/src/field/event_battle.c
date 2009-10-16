@@ -34,6 +34,8 @@
 #include "field_sound.h"
 
 #include "event_gameover.h" //EVENT_NormalLose
+#include "field/field_comm/intrude_work.h"
+#include "field/field_comm/bingo_system.h"
 
 
 //======================================================================
@@ -69,6 +71,8 @@ static void BATTLE_SETUP_PARAM_DebugConstructer(BATTLE_SETUP_PARAM * para, GAMES
 static const void addPartyPokemon(POKEPARTY * party, u16 monsno, u8 level, u16 id);
 
 static GMEVENT_RESULT fieldBattleEvent(
+    GMEVENT * event, int *  seq, void * work );
+static GMEVENT_RESULT bingoBattleEvent(
     GMEVENT * event, int *  seq, void * work );
 
 //debug
@@ -140,6 +144,31 @@ GMEVENT * EVENT_TrainerBattle(
   return event;
 }
 
+//--------------------------------------------------------------
+/**
+ * ビンゴバトルイベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldmap FIELDMAP_WORK
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT * EVENT_BingoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp )
+{
+  GMEVENT * event;
+  BATTLE_EVENT_WORK * bew;
+  
+  event = GMEVENT_Create(
+      gsys, NULL, bingoBattleEvent, sizeof(BATTLE_EVENT_WORK) );
+  
+  bew = GMEVENT_GetEventWork(event);
+  BEW_Initialize( bew, gsys, fieldmap, bp );
+
+  //侵入システムに現在の状態を通知
+  IntrudeWork_SetActionStatus(GAMESYSTEM_GetGameCommSysPtr(gsys), INTRUDE_ACTION_BINGO_BATTLE);
+  Bingo_Clear_BingoIntrusionBeforeBuffer(Bingo_GetBingoSystemWork(GameCommSys_GetAppWork(GAMESYSTEM_GetGameCommSysPtr(gsys))));
+
+  return event;
+}
 
 //--------------------------------------------------------------
 /**
@@ -235,6 +264,31 @@ static GMEVENT_RESULT fieldBattleEvent(
   }
 
   return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ビンゴバトルイベント
+ * @param event GMEVENT
+ * @param seq イベントシーケンス
+ * @param wk イベントワーク
+ * @retval GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+#include "field/field_comm/bingo_system.h"
+static GMEVENT_RESULT bingoBattleEvent(
+    GMEVENT * event, int *  seq, void * work )
+{
+  GMEVENT_RESULT result;
+  BATTLE_EVENT_WORK * bew = work;
+  GAMESYS_WORK * gsys = bew->gsys;
+  
+  result = fieldBattleEvent(event, seq, work);
+  if(result == GMEVENT_RES_FINISH){
+    //侵入システムに現在の状態を通知
+    IntrudeWork_SetActionStatus(GAMESYSTEM_GetGameCommSysPtr(gsys), INTRUDE_ACTION_FIELD);
+  }
+  return result;
 }
 
 //======================================================================

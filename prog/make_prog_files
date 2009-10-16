@@ -96,6 +96,8 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_comm/intrude_comm.c \
         field/field_comm/intrude_comm_command.c \
         field/field_comm/intrude_main.c \
+        field/field_comm/intrude_work.c \
+        field/field_comm/bingo_system.c \
         net_app/union/comm_player.c \
 				field/field_comm/palace_sys.c \
         system/mcss.c \
@@ -322,6 +324,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/field_easytp.c \
 				field/field_comm_actor.c \
 				field/field_comm/intrude_field.c \
+				field/event_comm_talk.c \
+				field/event_comm_talked.c \
 				net_app/irc_match/ircbattlemenu.c \
 				field/c_gear/c_gear.c \
 				field/fldmmdl_draw.c \

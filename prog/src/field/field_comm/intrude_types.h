@@ -10,13 +10,12 @@
 
 #include "field\game_beacon_search.h"
 #include "net_app/union/comm_player.h"
+#include "field/field_comm/intrude_common.h"
+#include "field/field_comm/bingo_types.h"
 
 //==============================================================================
 //  定数定義
 //==============================================================================
-///侵入：通信最大接続人数
-#define FIELD_COMM_MEMBER_MAX (4)
-
 ///通信ステータス
 enum{
   INTRUDE_COMM_STATUS_NULL,         ///<何も動作していない
@@ -32,6 +31,22 @@ enum{
   INTRUDE_COMM_STATUS_ERROR,        ///<エラー
 };
 
+///アクションステータス(プレイヤーが現在何を行っているか)
+typedef enum{
+  INTRUDE_ACTION_FIELD,                   ///<フィールド
+  INTRUDE_ACTION_TALK,                    ///<話中
+  INTRUDE_ACTION_BINGO_BATTLE,            ///<ビンゴバトル中
+  INTRUDE_ACTION_BINGO_BATTLE_INTRUSION,  ///<ビンゴバトル乱入参加
+}INTRUDE_ACTION;
+
+///会話ステータス
+typedef enum{
+  INTRUDE_TALK_STATUS_NULL,         ///<初期値(何もしていない状態)
+  INTRUDE_TALK_STATUS_OK,           ///<会話OK
+  INTRUDE_TALK_STATUS_NG,           ///<会話NG
+  INTRUDE_TALK_STATUS_CARD,         ///<トレーナーカード見せて
+}INTRUDE_TALK_STATUS;
+
 ///同期取り番号
 enum{
     INTRUDE_TIMING_EXIT = 20,
@@ -40,9 +55,6 @@ enum{
 //==============================================================================
 //  型定義
 //==============================================================================
-///_INTRUDE_COMM_SYS構造体の不定形ポインタ型
-typedef struct _INTRUDE_COMM_SYS * INTRUDE_COMM_SYS_PTR;
-
 ///パレスシステムワーク構造体への不定形ポインタ
 typedef struct _PALACE_SYS_WORK * PALACE_SYS_PTR;
 
@@ -55,7 +67,19 @@ typedef struct{
   u16 zone_id;      ///<ゾーンID
   u8 palace_area;   ///<パレスエリア
   u8 mission_no;    ///<ミッション番号
+  
+  u8 action_status; ///<実行中のアクション(INTRUDE_ACTION_???)
+  u8 padding[3];
 }INTRUDE_STATUS;
+
+///会話用ワーク
+typedef struct{
+  u8 talk_netid;              ///<話しかけた相手のNetID
+  u8 answer_talk_netid;       ///<話しかけられている相手のNetID
+  u8 talk_status;             ///<INTRUDE_TALK_STATUS_???
+  u8 answer_talk_status;      ///<話しかけられている相手のINTRUDE_TALK_STATUS_???
+  u8 padding;
+}INTRUDE_TALK;
 
 ///侵入システムワーク
 typedef struct _INTRUDE_COMM_SYS{
@@ -65,6 +89,9 @@ typedef struct _INTRUDE_COMM_SYS{
   GBS_BEACON send_beacon;
   INTRUDE_STATUS intrude_status_mine;               ///<自分の現在情報
   INTRUDE_STATUS intrude_status[FIELD_COMM_MEMBER_MAX]; ///<全員の現在情報
+  INTRUDE_TALK   talk;
+  
+  BINGO_SYSTEM bingo;         ///<ビンゴシステムワーク
   
 //  BOOL comm_act_vanish[FIELD_COMM_MEMBER_MAX];   ///<TRUE:非表示
   u8 invalid_netid;           ///<侵入先ROMのnet_id
@@ -80,6 +107,7 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 send_status;             ///<TRUE:自分の現在情報送信リクエスト
   
   u8 recv_status;             ///<一度でも受信した事がある侵入ステータスを把握(bit管理)
-  u8 padding[3];
+  u8 answer_talk_ng_bit;      ///<話しかけられたが、対応できない場合のNG返事を返す(bit管理)
+  u8 padding[2];
 }INTRUDE_COMM_SYS;
 

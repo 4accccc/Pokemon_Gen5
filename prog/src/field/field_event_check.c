@@ -36,6 +36,8 @@
 #include "rail_editor.h"
 #include "script.h"     //SCRIPT_SetEventScript
 #include "net_app/union/union_event_check.h"
+#include "event_comm_talk.h"      //EVENT_CommTalk
+#include "event_comm_talked.h"      //EVENT_CommWasTalkedTo
 
 #include "system/main.h"    //HEAPID_FIELDMAP
 #include "isdbglib.h"
@@ -300,6 +302,29 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
       //話しかけられる側(中で一緒に話せる状態かのチェックもしてしまう
       if( FIELD_COMM_MAIN_CheckReserveTalk( commSys ) == TRUE ){
         return FIELD_COMM_EVENT_StartTalkPartner( gsys , fieldWork , commSys );
+      }
+    }
+  }
+#else
+  {
+    GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+    INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
+    MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
+    u32 talk_netid;
+    
+    if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION && intcomm != NULL){
+      //話しかけられていないかチェック
+      if(IntrudeField_CheckTalkedTo(intcomm, &talk_netid) == TRUE){
+        FIELD_PLAYER_GRID_ForceStop( req.field_player );
+        return EVENT_CommWasTalkedTo(gsys, fieldWork, intcomm, fmmdl_player, talk_netid, req.heapID);
+      }
+      
+      //話しかける
+      if( req.talkRequest ){
+        if(IntrudeField_CheckTalk(intcomm, req.field_player, &talk_netid) == TRUE){
+          FIELD_PLAYER_GRID_ForceStop( req.field_player );
+          return EVENT_CommTalk(gsys, fieldWork, intcomm, fmmdl_player, talk_netid, req.heapID);
+        }
       }
     }
   }
@@ -1245,6 +1270,8 @@ static GMEVENT * checkSubScreenEvent(
 static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
   FIELD_ENCOUNT * encount = FIELDMAP_GetEncount(fieldWork);
+  ENCOUNT_TYPE enc_type;
+  
 #ifdef PM_DEBUG
   if( req->debugRequest ){
     return NULL;
@@ -1258,7 +1285,9 @@ static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *
     return NULL;
   }
 #endif
-  return FIELD_ENCOUNT_CheckEncount(encount);
+
+  enc_type = (ZONEDATA_IsBingo( req->map_id ) == TRUE) ? ENC_TYPE_BINGO : ENC_TYPE_NORMAL;
+  return FIELD_ENCOUNT_CheckEncount(encount, enc_type);
 }
 
 //--------------------------------------------------------------

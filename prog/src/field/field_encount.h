@@ -12,6 +12,8 @@
 #include "battle/battle.h"
 #include "fieldmap.h"
 
+#include "field/encount_data.h"   //ENCOUNT_TYPE
+
 //======================================================================
 //  define
 //======================================================================
@@ -30,7 +32,7 @@ extern FIELD_ENCOUNT * FIELD_ENCOUNT_Create( FIELDMAP_WORK *fwork );
 extern void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc );
 
 //チェック
-extern GMEVENT* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc );
+extern GMEVENT* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
 //extern BATTLE_SETUP_PARAM* FIELD_ENCOUNT_GetBattleParamPointer( FIELD_ENCOUNT *enc );
 
 extern void FIELD_ENCOUNT_SetTrainerBattleParam(

@@ -148,10 +148,11 @@ BATTLE_SETUP_PARAM* FIELD_ENCOUNT_GetBattleParamPointer( FIELD_ENCOUNT *enc )
 /**
  * エンカウントチェック
  * @param enc FIELD_ENCOUNT
+ * @param enc_mode  ENCOUNT_MODE_???
  * @retval BOOL TRUE=エンカウントした
  */
 //--------------------------------------------------------------
-GMEVENT* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc )
+GMEVENT* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
 {
   u32 per,enc_num;
   BOOL ret = FALSE;
@@ -197,6 +198,9 @@ GMEVENT* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc )
   enc_ClearWalkCount( enc );
 
   //エンカウントイベント生成
+  if(enc_type == ENC_TYPE_BINGO){
+    return EVENT_BingoBattle( enc->gsys, enc->fwork, bp );
+  }
   return EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp );
 }
 

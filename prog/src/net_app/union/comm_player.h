@@ -9,6 +9,7 @@
 #pragma once
 
 #include "gamesystem/gamesystem.h"
+#include "field/fldmmdl.h"
 
 //==============================================================================
 //  Œ^’è‹`
@@ -34,6 +35,7 @@ typedef struct{
 //==============================================================================
 extern COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, GAMESYS_WORK *gsys, HEAPID heap_id);
 extern void CommPlayer_Exit(COMM_PLAYER_SYS_PTR cps);
+extern void CommPlayer_Update(COMM_PLAYER_SYS_PTR cps);
 void CommPlayer_Add(COMM_PLAYER_SYS_PTR cps, int index, int sex, const COMM_PLAYER_PACKAGE *pack);
 extern void CommPlayer_Del(COMM_PLAYER_SYS_PTR cps, int index);
 extern void CommPlayer_Push(COMM_PLAYER_SYS_PTR cps);
@@ -43,3 +45,5 @@ extern BOOL CommPlayer_CheckOcc(COMM_PLAYER_SYS_PTR cps, int index);
 extern void CommPlayer_SetParam(COMM_PLAYER_SYS_PTR cps, int index, const COMM_PLAYER_PACKAGE *pack);
 extern BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pack);
 extern BOOL CommPlayer_SearchGridPos(COMM_PLAYER_SYS_PTR cps, s16 gx, s16 gz, u32 *out_index);
+extern BOOL CommPlayer_SetGyoeTask(COMM_PLAYER_SYS_PTR cps, int index);
+extern MMDL * CommPlayer_GetMmdl(COMM_PLAYER_SYS_PTR cps, int index);

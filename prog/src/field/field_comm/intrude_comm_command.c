@@ -13,6 +13,8 @@
 #include "intrude_types.h"
 #include "intrude_comm_command.h"
 #include "field/zonedata.h"
+#include "bingo_system.h"
+#include "intrude_main.h"
 
 
 //==============================================================================
@@ -23,6 +25,12 @@ static void _IntrudeRecv_Shutdown(const int netID, const int size, const void* p
 static void _IntrudeRecv_ProfileReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_Profile(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_PlayerStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_Talk(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_TalkAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_BingoIntrusion(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_BingoIntrusionAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_ReqBingoIntrusionParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_BingoIntrusionParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -34,6 +42,12 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_ProfileReq, NULL},             //INTRUDE_CMD_PROFILE_REQ
   {_IntrudeRecv_Profile, NULL},                //INTRUDE_CMD_PROFILE
   {_IntrudeRecv_PlayerStatus, NULL},           //INTRUDE_CMD_PLAYER_STATUS
+  {_IntrudeRecv_Talk, NULL},                   //INTRUDE_CMD_TALK
+  {_IntrudeRecv_TalkAnswer, NULL},             //INTRUDE_CMD_TALK_ANSWER
+  {_IntrudeRecv_BingoIntrusion, NULL},         //INTRUDE_CMD_BINGO_INTRUSION
+  {_IntrudeRecv_BingoIntrusionAnswer, NULL},   //INTRUDE_CMD_BINGO_INTRUSION_ANSWER
+  {_IntrudeRecv_ReqBingoIntrusionParam, NULL}, //INTRUDE_CMD_REQ_BINGO_INTRUSION_PARAM
+  {_IntrudeRecv_BingoIntrusionParam, NULL},    //INTRUDE_CMD_BINGO_INTRUSION_PARAM
 };
 SDK_COMPILER_ASSERT(NELEMS(Intrude_CommPacketTbl) == INTRUDE_CMD_NUM);
 
@@ -180,6 +194,10 @@ BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm)
     INTRUDE_CMD_PROFILE, MyStatus_GetWorkSize(), myst);
   if(ret == TRUE){
     intcomm->profile_req = FALSE;
+    OS_TPrintf("自分プロフィール送信\n");
+  }
+  else{
+    OS_TPrintf("自分プロフィール送信失敗\n");
   }
   return ret;
 }
@@ -273,5 +291,227 @@ BOOL IntrudeSend_PlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, GAMEDATA *gamedata, 
     intcomm->send_status = FALSE;
   }
   return ret;
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：話しかける
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_Talk(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  
+  OS_TPrintf("話しかけられた受信　net_id=%d\n", netID);
+  Intrude_SetTalkReq(intcomm, netID);
+}
+
+//==================================================================
+/**
+ * データ送信：話しかける
+ * @param   send_net_id		話しかけ先のNetID
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_Talk(int send_net_id)
+{
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
+    INTRUDE_CMD_TALK, 0, NULL, FALSE, FALSE, NULL);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：話しかけられたので自分の状況を返事として返す
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_TalkAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const INTRUDE_TALK_STATUS *answer = pData;
+  
+  OS_TPrintf("話しかけの返事受信　net_id=%d, answer=%d\n", netID, *answer);
+  Intrude_SetTalkAnswer(intcomm, netID, *answer);
+}
+
+//==================================================================
+/**
+ * データ送信：話しかけられたので自分の状況を返事として返す
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRUDE_TALK_STATUS answer)
+{
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
+    INTRUDE_CMD_TALK_ANSWER, sizeof(INTRUDE_TALK_STATUS), &answer, FALSE, FALSE, NULL);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ビンゴバトル乱入許可要求
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_BingoIntrusion(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  BINGO_SYSTEM *bingo = Bingo_GetBingoSystemWork(intcomm);
+  
+  OS_TPrintf("乱入許可要求コマンド受信 net_id=%d\n", netID);
+  Bingo_Req_IntrusionPlayer(intcomm, bingo, netID);
+}
+
+//==================================================================
+/**
+ * データ送信：ビンゴバトル乱入許可要求
+ * @param   send_net_id		送信先のネットID
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_BingoIntrusion(int send_net_id)
+{
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
+    INTRUDE_CMD_BINGO_INTRUSION, 0, NULL, FALSE, FALSE, NULL);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ビンゴバトル乱入許可要求の返事
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_BingoIntrusionAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  BINGO_SYSTEM *bingo = Bingo_GetBingoSystemWork(intcomm);
+  const BINGO_INTRUSION_ANSWER *answer = pData;
+  
+  bingo->intrusion_recv_answer = *answer;
+  OS_TPrintf("乱入の返事受信 answer=%d\n", *answer);
+}
+
+//==================================================================
+/**
+ * データ送信：ビンゴバトル乱入許可要求の返事
+ *
+ * @param   send_net_id		送信先のネットID
+ * @param   answer		    返事
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_BingoIntrusionAnswer(int send_net_id, BINGO_INTRUSION_ANSWER answer)
+{
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
+    INTRUDE_CMD_BINGO_INTRUSION_ANSWER, sizeof(BINGO_INTRUSION_ANSWER), 
+    &answer, FALSE, FALSE, NULL);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ビンゴバトル乱入用のパラメータ要求
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_ReqBingoIntrusionParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  BINGO_SYSTEM *bingo = Bingo_GetBingoSystemWork(intcomm);
+  
+  bingo->param_req_bit |= 1 << netID;
+  OS_TPrintf("ビンゴバトル乱入パラメータ要求受信 net_id = %d\n", netID);
+}
+
+//==================================================================
+/**
+ * データ送信：ビンゴバトル乱入用のパラメータ要求
+ * @param   send_net_id		送信先のネットID
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_ReqBingoBattleIntrusionParam(int send_net_id)
+{
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
+    INTRUDE_CMD_REQ_BINGO_INTRUSION_PARAM, 0, NULL, FALSE, FALSE, NULL);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ビンゴバトル乱入用パラメータ
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_BingoIntrusionParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  BINGO_SYSTEM *bingo = Bingo_GetBingoSystemWork(intcomm);
+  const BINGO_INTRUSION_PARAM *inpara = pData;
+  
+  GFL_STD_MemCopy(inpara, &bingo->intrusion_param, size);
+  OS_TPrintf("ビンゴバトル乱入パラメータ受信 net_id = %d\n", netID);
+}
+
+//==================================================================
+/**
+ * データ送信：ビンゴバトル乱入用のパラメータ送信
+ * @param   send_net_id		送信先のネットID
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_BingoBattleIntrusionParam(BINGO_SYSTEM *bingo, int send_net_id)
+{
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
+    INTRUDE_CMD_BINGO_INTRUSION_PARAM, sizeof(BINGO_INTRUSION_PARAM), &bingo->intrusion_param, 
+    FALSE, FALSE, NULL);
 }
 

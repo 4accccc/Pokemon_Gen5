@@ -10,6 +10,7 @@
 #include "field/field_comm_actor.h"
 #include "net_app/union/comm_player.h"
 #include "field/fieldmap.h"
+#include "field/fldeff_gyoe.h"
 
 
 //==============================================================================
@@ -34,6 +35,8 @@ typedef struct{
   u8 push_flag:1;
   u8 :5;
   u8 padding;
+  
+  FLDEFF_TASK *fldeff_gyoe_task;  ///<「！」エフェクト動作タスク
 }COMM_PLAYER;
 
 ///自分自身の座標データなど
@@ -126,6 +129,29 @@ void CommPlayer_Exit(COMM_PLAYER_SYS_PTR cps)
 
 //==================================================================
 /**
+ * 通信プレイヤー制御システム更新処理
+ *
+ * @param   cps		
+ */
+//==================================================================
+void CommPlayer_Update(COMM_PLAYER_SYS_PTR cps)
+{
+  int index;
+  
+  //フィールドエフェクトを実行しているものがあれば、終了状態を監視し、ワークの初期化等を行う
+  if(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE){
+    for(index = 0; index < COMM_PLAYER_MAX; index++){
+      if(cps->act[index].occ == TRUE && cps->act[index].fldeff_gyoe_task != NULL){
+        if(FLDEFF_GYOE_CheckEnd(cps->act[index].fldeff_gyoe_task) == TRUE){
+          cps->act[index].fldeff_gyoe_task = NULL;
+        }
+      }
+    }
+  }
+}
+
+//==================================================================
+/**
  * 通信プレイヤーアクター登録
  *
  * @param   cps		
@@ -169,6 +195,7 @@ void CommPlayer_Add(COMM_PLAYER_SYS_PTR cps, int index, int sex, const COMM_PLAY
   cps->act[index].sex = sex;
   cps->act[index].push_flag = FALSE;
   cps->act[index].occ = TRUE;
+  cps->act[index].fldeff_gyoe_task = NULL;
   
   FIELD_COMM_ACTOR_CTRL_AddActor(cps->act_ctrl, index, objcode, &cps->act[index].dir, 
     &cps->act[index].pos, &cps->act[index].vanish);
@@ -189,6 +216,7 @@ void CommPlayer_Del(COMM_PLAYER_SYS_PTR cps, int index)
   }
   
   OS_TPrintf("通信プレイヤーDel index=%d\n", index);
+  cps->act[index].fldeff_gyoe_task = NULL;
   FIELD_COMM_ACTOR_CTRL_DeleteActro(cps->act_ctrl, index);
   cps->act[index].occ = FALSE;
 }
@@ -355,4 +383,49 @@ BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pa
 BOOL CommPlayer_SearchGridPos(COMM_PLAYER_SYS_PTR cps, s16 gx, s16 gz, u32 *out_index)
 {
   return FIELD_COMM_ACTOR_CTRL_SearchGridPos(cps->act_ctrl, gx, gz, out_index);
+}
+
+//==================================================================
+/**
+ * 「！」エフェクトタスクをセット
+ *
+ * @param   cps		
+ * @param   index		管理Index
+ *
+ * @retval  BOOL		TRUE:セット成功。　FALSE:セット失敗(既に起動中なども含む)
+ */
+//==================================================================
+BOOL CommPlayer_SetGyoeTask(COMM_PLAYER_SYS_PTR cps, int index)
+{
+  COMM_PLAYER *act = &cps->act[index];
+  MMDL *mmdl;
+  FIELDMAP_WORK *fieldWork;
+  FLDEFF_CTRL *fectrl;
+  
+  if(act->occ == FALSE || act->fldeff_gyoe_task != NULL){
+    return FALSE;
+  }
+  
+  fieldWork = GAMESYSTEM_GetFieldMapWork(cps->gsys);
+  fectrl = FIELDMAP_GetFldEffCtrl(fieldWork);
+  mmdl = FIELD_COMM_ACTOR_CTRL_GetMMdl(cps->act_ctrl, index);
+  
+  act->fldeff_gyoe_task = FLDEFF_GYOE_SetMMdlNonDepend(fectrl, mmdl, FLDEFF_GYOETYPE_GYOE, FALSE);
+  return TRUE;
+}
+
+//==================================================================
+/**
+ * 対象プレイヤーのMMDLポインタを取得
+ *
+ * @param   cps		
+ * @param   index		管理Index
+ *
+ * @retval  MMDL *		
+ */
+//==================================================================
+MMDL * CommPlayer_GetMmdl(COMM_PLAYER_SYS_PTR cps, int index)
+{
+  GF_ASSERT(cps->act[index].occ == TRUE);
+  return FIELD_COMM_ACTOR_CTRL_GetMMdl(cps->act_ctrl, index);
 }

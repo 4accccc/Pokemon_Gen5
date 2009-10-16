@@ -120,6 +120,7 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
       PALACE_SYS_GetMissionNo(intcomm->palace));
   }
 
+  CommPlayer_Update(intcomm->cps);
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
     if(intcomm->recv_status & (1 << i)){
       if(CommPlayer_CheckOcc(intcomm->cps, i) == FALSE){
@@ -129,12 +130,76 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
       }
       else{
         CommPlayer_SetParam(intcomm->cps, i, &intcomm->intrude_status[i].player_pack);
+        //ビンゴバトル中なら「！」を表示
+        if(intcomm->intrude_status[i].action_status == INTRUDE_ACTION_BINGO_BATTLE){
+          CommPlayer_SetGyoeTask(intcomm->cps, i);
+        }
       }
     }
   }
   
   PALACE_SYS_Update(intcomm->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), 
     pcActor, intcomm, fieldWork, game_comm);
+}
+
+//==================================================================
+/**
+ * 自分の正面座標に対しての通信プレイヤー話しかけチェック
+ *
+ * @param   intcomm		
+ * @param   fld_player		
+ * @param   hit_netid		  ヒットした場合、対象プレイヤーのNetIDが代入される
+ *
+ * @retval  BOOL		TRUE:通信プレイヤーヒット。　FALSE:相手が居ない
+ */
+//==================================================================
+BOOL IntrudeField_CheckTalk(INTRUDE_COMM_SYS_PTR intcomm, const FIELD_PLAYER *fld_player, u32 *hit_netid)
+{
+  s16 check_gx, check_gy, check_gz;
+  u32 out_index;
+  
+  if(intcomm == NULL || intcomm->cps == NULL){
+    return FALSE;
+  }
+  
+  FIELD_PLAYER_GetFrontGridPos(fld_player, &check_gx, &check_gy, &check_gz);
+  if(CommPlayer_SearchGridPos(intcomm->cps, check_gx, check_gz, &out_index) == TRUE){
+    OS_TPrintf("Talkターゲット発見! net_id = %d, gx=%d, gz=%d\n", 
+      out_index, check_gx, check_gz);
+    *hit_netid = out_index;
+    return TRUE;
+  }
+  
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * 通信プレイヤーから話しかけられていないかチェック
+ *
+ * @param   intcomm		
+ * @param   fld_player		
+ * @param   hit_netid		  話しかけられている場合、対象プレイヤーのNetIDが代入される
+ *
+ * @retval  BOOL		TRUE:通信プレイヤーから話しかけられている　FALSE:話しかけられていない
+ */
+//==================================================================
+BOOL IntrudeField_CheckTalkedTo(INTRUDE_COMM_SYS_PTR intcomm, u32 *hit_netid)
+{
+  s16 check_gx, check_gy, check_gz;
+  u32 out_index;
+  
+  if(intcomm == NULL || intcomm->cps == NULL){
+    return FALSE;
+  }
+  
+  //自分から話しかけていないのに値がNULL以外なのは話しかけられたから
+  if(intcomm->talk.talk_netid != INTRUDE_NETID_NULL){
+    *hit_netid = intcomm->talk.talk_netid;
+    return TRUE;
+  }
+  
+  return FALSE;
 }
 
 //==================================================================
@@ -170,6 +235,7 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   }
   
   FIELD_PLAYER_GetPos( pcActor, &pos );
+  //T01へワープ
   if(pos.x >= FX32_CONST(1496) && pos.x <= FX32_CONST(1528) 
       && pos.z >= FX32_CONST(504) && pos.z <= FX32_CONST(504)){
     pos.x = 12536 << FX32_SHIFT;
@@ -185,6 +251,14 @@ GMEVENT * DEBUG_IntrudeTreeMapWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
       return DEBUG_EVENT_ChangeMapPosCommEnd(gameSys, fieldWork, ZONE_ID_T01, &pos, intcomm);
     }
     return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_T01, &pos, 0);
+  }
+  //ビンゴマップへワープ
+  if(pos.x >= FX32_CONST(1480) && pos.x <= FX32_CONST(1528) 
+      && pos.z >= FX32_CONST(248) && pos.z <= FX32_CONST(264)){
+    pos.x = 472 << FX32_SHIFT;
+    pos.y = 0;
+    pos.z = 504 << FX32_SHIFT;
+    return DEBUG_EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACE02, &pos, 0);
   }
   
   {//自機の座標を監視し、誰とも通信していないのにパレスの橋の一定位置まで来たら

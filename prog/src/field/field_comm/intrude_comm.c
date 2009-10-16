@@ -21,6 +21,7 @@
 #include "palace_sys.h"
 #include "intrude_main.h"
 #include "savedata/mystatus.h"
+#include "bingo_system.h"
 
 
 //--------------------------------------------------------------
@@ -115,7 +116,9 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
 	intcomm->comm_status = INTRUDE_COMM_STATUS_INIT_START;
   intcomm->palace = PALACE_SYS_Alloc(HEAPID_APP_CONTROL, intcomm->game_comm);
   intcomm->cps = CommPlayer_Init(FIELD_COMM_MEMBER_MAX, invalid_parent->gsys, HEAPID_APP_CONTROL);
-  
+  Intrude_InitTalkWork(intcomm, INTRUDE_NETID_NULL);
+  Bingo_InitBingoSystem(Bingo_GetBingoSystemWork(intcomm));
+
   GFL_NET_Init( &aGFLNetInit, IntrudeComm_FinishInitCallback, intcomm );
   return intcomm;
 }
