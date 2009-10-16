@@ -83,7 +83,6 @@ EVENT_START   ev_c01r0501_board_01
 		
 		//どれについて　みますか？
 		_TALKMSG( msg_c01r0501_board_02 )
-		_TALKWIN_CLOSE()
 		
 		//ローカル変数を定義
 		DEFINE_LOCAL	STATE_SELECT
@@ -235,11 +234,58 @@ _ANIME_LABEL	anm_glasses_hanareru
 /**************************************************************/
 EVENT_START   ev_c01r0501_rival_01
 	_TALK_OBJ_START()
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0501_black_01 )
-		_BALLOONWIN_CLOSE()
+	
+	//ゆめのあとちに行っていない場合
+	IF FLAG_OFF( FE_D01R0101_EVCLEAR ) THEN
+	
+		//ライバルと既に話している場合
+		IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
+			_CALL rival_word
+
+		//ライバルとまだ話していない場合
+		ELSE
+			_CALL rival_word
+			
+			_FLAG_SET( FE_C01R0501_RIVALTALK )
+	
+		ENDIF
+
+	//ゆめのあとちに行っている場合
+	ELSE
+		//ライバルと既に話している場合
+		IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
+			_CALL rival_word
+
+		//ライバルとまだ話していない場合
+		ELSE
+			_CALL rival_word
+			
+			_FLAG_SET( FE_C01R0501_RIVALTALK )
+	
+		ENDIF
 		
-		_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0501_black_02 )
-		_BALLOONWIN_CLOSE()
+	//=========フラグワーク操作==========//
+	
+	//ジム前サングラスの消去
+	_FLAG_SET( FV_C01_GUIDE_01 )
+
+	//ジム前リーダーの開始
+	_FLAG_RESET( FV_C01_LEADER1_01 )
+
+	//===================================//
+		
+	ENDIF
 
 EVENT_END
+
+rival_word:
+{
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0501_black_01 )
+	_BALLOONWIN_CLOSE()
+		
+	_BALLOONWIN_TALKOBJ_OPEN( msg_c01r0501_black_02 )
+	_BALLOONWIN_CLOSE()
+
+_RET
+}
 

@@ -93,19 +93,24 @@ ev_c01gym0101:
 /**************************************************************/
 /*     ジム前のサングラス男  ジムバッジ入手前                 */
 /**************************************************************/
-
-//【仮】	ジムバッジフラグがない
-
 EVENT_START		ev_c01gym0101_sunglasses_01
 	_TALK_OBJ_START()
-	//分岐処理・ジムバッジのフラグが０か１か
-	IF FLAG_OFF(FH_01) THEN
+	
+	//分岐：ジムバッジ取得しているか、いないか
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+	
+	//ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
+	
 	//ジムバッジフラグが０の場合
 		_EASY_TALK_ITEM_EVENT(ITEM_OISIIMIZU, 1, FH_01, msg_c01gym0101_glasses_01, msg_c01gym0101_glasses_02, msg_c01gym0101_glasses_02 )	
+	
 	//ジムバッジフラグがそれ以外の場合
 	ELSE
+	
 	//ジムバッジを　てにいれた　きょう　という　すばらしい　ひを
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_glasses_03 )
+	
 	ENDIF
 
 EVENT_END
@@ -113,27 +118,29 @@ EVENT_END
 /**************************************************************/
 /*     ポケモン像１  	      					              */
 /**************************************************************/
-
-//【仮】	ジムバッジフラグがない　到着フラグが動いていない？
-
 EVENT_START		ev_c01gym0101_pokezou_01
 
-	//分岐処理・ジムバッジを入手しているかいないか
-	IF FLAG_OFF(FH_01) THEN
+	//分岐：ジムバッジ取得しているか、いないか
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+	
+	//ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
 	
 	//ジムバッジを取得していない場合
 		_EASY_MSG( msg_c01gym0101_statue_02 )
 	
 	//ジムバッジを取得している場合
 	ELSE
-
 		//【仮】分岐処理・C02到着していないなら　到着フラグが動いていない！
 		IF FLAG_OFF( SYS_FLAG_ARRIVE_C02 ) THEN
 			_EASY_MSG( msg_c01gym0101_statue_02 )
+		
 		//C02到着している場合
 		ELSE
 			_EASY_MSG( msg_c01gym0101_statue_03 )
+		
 		ENDIF
+	
 	ENDIF
 		
 EVENT_END
@@ -141,27 +148,29 @@ EVENT_END
 /**************************************************************/
 /*     ポケモン像２  						                  */
 /**************************************************************/
-
-//【仮】	ジムバッジフラグがない　到着フラグが動いていない？
-
 EVENT_START		ev_c01gym0101_pokezou_02
 
-	//分岐処理・ジムバッジを入手しているかいないか
-	IF FLAG_OFF(FH_01) THEN
+	//分岐：ジムバッジ取得しているか、いないか
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+	
+	//ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
 	
 	//ジムバッジを取得していない場合
 		_EASY_MSG( msg_c01gym0101_statue_02 )
 	
 	//ジムバッジを取得している場合
 	ELSE
-
 		//【仮】分岐処理・C02到着していないなら　到着フラグが動いていない！
 		IF FLAG_OFF( SYS_FLAG_ARRIVE_C02 ) THEN
 			_EASY_MSG( msg_c01gym0101_statue_02 )
+		
 		//C02到着している場合
 		ELSE
 			_EASY_MSG( msg_c01gym0101_statue_03 )
+		
 		ENDIF
+	
 	ENDIF
 		
 EVENT_END
@@ -169,9 +178,6 @@ EVENT_END
 /**************************************************************/
 /*     コーン・ポッド・デント	ジムバトル　ＰＯＳ発動        */
 /**************************************************************/
-
-//【仮】	ジムバッジフラグがない　最初に選んだポケモン処理がない
-
 EVENT_START	ev_pos_c01gym0101_leader_battle
 	
 	//ローカル変数を定義
@@ -444,17 +450,14 @@ _ANIME_LABEL	anm_corn_dentochange
 /**************************************************************/
 /*         ジムリーダーコーン（画面中央）  戦闘前             */
 /**************************************************************/
-
-//【仮】	ジムバッジフラグがない
-
 EVENT_START		ev_c01gym0101_leader1_01
 	_TALK_OBJ_START()
 	
 	//分岐：ジムバッジ取得しているか、いないか
-
-	//【仮】ジムバッジを取得していない場合　FH01で代用
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
 	
-	IF FLAG_OFF(FH_01) THEN
+	//【仮】ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
 			
 		//分岐：炎タイプを選択しているか、いないか
 
@@ -468,16 +471,24 @@ EVENT_START		ev_c01gym0101_leader1_01
 		
 			//【仮】戦闘処理	画面フェードを仮で入れています。
 			/*_TRAINER_BTL_SET LEADER1C_01,0*/
+			_WHITE_OUT( 4 )
+			_DISP_FADE_END_CHECK()
+			_WHITE_IN( 4 )
+			_DISP_FADE_END_CHECK()
 		
 			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06b , C01GYM0101_LEADER1_01 )
 			_BALLOONWIN_CLOSE()
-
-			//～～は　コーンから　トライバッジを　もらった
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07b , C01GYM0101_LEADER1_01 )
-			_BALLOONWIN_CLOSE()
-
+			
 			//トライバッジ入手処理
+			_SET_BADGE_FLAG( BADGE_ID_01 )
+			_TALKWIN_OPEN()
+			_PLAYER_NAME( 0 )
+			//～～は　コーンから　トライバッジを　もらった
+			_TALKMSG_ALLPUT( msg_c01gym0101_leader1_07b )
+			_ME_PLAY( SEQ_ME_BADGE )
+			_ME_WAIT()
+			_TALKWIN_CLOSE()
 		
 			//ジムバッジは　トレーナーの　つよさの　あかし！
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_08 , C01GYM0101_LEADER1_01 )
@@ -489,8 +500,6 @@ EVENT_START		ev_c01gym0101_leader1_01
 			//その　わざマシンの　なかみは　～～！！
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
 			_BALLOONWIN_CLOSE()
-		
-			//【仮】ジムバッジ入手フラグをＯＮにする
 
 		//炎タイプ選択じゃない場合
 		ELSE
@@ -512,15 +521,14 @@ EVENT_END
 /**************************************************************/
 /*         ジムリーダーポッド（画面左）  戦闘前	              */
 /**************************************************************/
-
-//【仮】	ジムバッジフラグがない
-
 EVENT_START		ev_c01gym0101_leader1_02
 	_TALK_OBJ_START()
+	
 	//分岐：ジムバッジ取得しているか、いないか
-
-	//ジムバッジを取得していない場合
-	IF FLAG_OFF(FH_01) THEN
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+	
+	//【仮】ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
 		//分岐：草タイプを選択しているか、いないか
 
 			//草タイプを選択している場合
@@ -540,11 +548,15 @@ EVENT_START		ev_c01gym0101_leader1_02
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06a , C01GYM0101_LEADER1_02 )
 			_BALLOONWIN_CLOSE()
 			
-			//～～は　ポッドから　トライバッジを　もらった
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07a , C01GYM0101_LEADER1_02 )
-			_BALLOONWIN_CLOSE()
-
 			//トライバッジ入手処理
+			_SET_BADGE_FLAG( BADGE_ID_01 )
+			_TALKWIN_OPEN()
+			_PLAYER_NAME( 0 )
+			//～～は　ポッドから　トライバッジを　もらった
+			_TALKMSG_ALLPUT( msg_c01gym0101_leader1_07a )
+			_ME_PLAY( SEQ_ME_BADGE )
+			_ME_WAIT()
+			_TALKWIN_CLOSE()
 		
 			//ポッド：コーンの場所へ移動
 			_OBJ_ANIME( C01GYM0101_LEADER1_02, anm_pod_return )
@@ -563,8 +575,6 @@ EVENT_START		ev_c01gym0101_leader1_02
 			//その　わざマシンの　なかみは　～～！！
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
 			_BALLOONWIN_CLOSE()
-
-			//ジムバッジ入手フラグをＯＮにする
 
 		//草タイプ選択じゃない場合
 		ELSE
@@ -611,15 +621,19 @@ EVENT_START		ev_c01gym0101_leader1_03
 	_TALK_OBJ_START()
 
 	//分岐：ジムバッジ取得しているか、いないか
-
-	//ジムバッジを取得していない場合
-	IF FLAG_OFF(FH_01) THEN
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+	
+	//【仮】ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
+	
 	
 		//分岐：水タイプを選択しているか、いないか
 
 		//水タイプを選択している場合
-		IF $WK_SYS_FIRST_POKE_NO == MONSNO_ZENIGAME THEN
-
+		//IF $WK_SYS_FIRST_POKE_NO == MONSNO_ZENIGAME THEN
+		//【仮】
+		IF $LOCALWORK13 == 1 THEN
+		
 			//さんにんの　なかで　いちばん　つよい　オレが
 			_BALLOONWIN_TALKOBJ_OPEN( msg_c01gym0101_leader1_20c )
 			_BALLOONWIN_CLOSE()
@@ -634,11 +648,15 @@ EVENT_START		ev_c01gym0101_leader1_03
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_06c , C01GYM0101_LEADER1_03 )
 			_BALLOONWIN_CLOSE()
 				
-			//～～は　デントから　トライバッジを　もらった
-			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_07c , C01GYM0101_LEADER1_03 )
-			_BALLOONWIN_CLOSE()
-
 			//トライバッジ入手処理
+			_SET_BADGE_FLAG( BADGE_ID_01 )
+			_TALKWIN_OPEN()
+			_PLAYER_NAME( 0 )
+			//～～は　デントから　トライバッジを　もらった
+			_TALKMSG_ALLPUT( msg_c01gym0101_leader1_07c )
+			_ME_PLAY( SEQ_ME_BADGE )
+			_ME_WAIT()
+			_TALKWIN_CLOSE()
 		
 			//デント：コーンの場所へ移動
 			_OBJ_ANIME( C01GYM0101_LEADER1_03, anm_dento_return )
@@ -658,10 +676,6 @@ EVENT_START		ev_c01gym0101_leader1_03
 			_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_09 , C01GYM0101_LEADER1_01 )
 			_BALLOONWIN_CLOSE()
 
-			//ジムバッジ入手フラグをＯＮにする
-
-
-
 		//水タイプ選択じゃない場合
 		ELSE		
 			//オレが　いちばん　つよいのに！　どうして　みずタイプ　なんだよ！
@@ -669,6 +683,16 @@ EVENT_START		ev_c01gym0101_leader1_03
 			_BALLOONWIN_CLOSE()
 
 		ENDIF
+	
+		//============フラグワーク操作=============//
+
+		//発明家マコモのバニッシュフラグリセット
+		_FLAG_RESET( 	FV_C01_INVENTOR_01 )
+	
+		//C01のＰＤＷ誘導イベント終了
+		$WK_SCENE_C01 = 1
+
+		//========================================//
 	
 	//ジムバッジ入手後の場合
 	ELSE	

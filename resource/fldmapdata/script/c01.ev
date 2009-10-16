@@ -8,7 +8,7 @@
   .text
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c01.h"
-  //.include  "c01.h"
+  .include  "c01.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -17,16 +17,22 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c01_musical
-_EVENT_DATA    ev_c01_talkobj_badman
-_EVENT_DATA    ev_c01_talkobj_boy2
-_EVENT_DATA    ev_c01_talkobj_cleaningm
-_EVENT_DATA    ev_c01_talkobj_breederw
-_EVENT_DATA    ev_c01_talkobj_woman2
-_EVENT_DATA    ev_c01_talkobj_babygirl
-_EVENT_DATA    ev_c01_sign1
-_EVENT_DATA    ev_c01_sign2
-_EVENT_DATA    ev_c01_sign3
+//_EVENT_DATA		ev_c01_musical_01
+_EVENT_DATA		ev_c01_badman_01
+_EVENT_DATA		ev_c01_boy2_01
+_EVENT_DATA		ev_c01_cleaningm_01
+_EVENT_DATA		ev_c01_breederw_01
+_EVENT_DATA		ev_c01_woman2_01
+_EVENT_DATA		ev_c01_babygirl1_01
+_EVENT_DATA		ev_c01_sign1_01
+_EVENT_DATA		ev_c01_sign2_01
+_EVENT_DATA		ev_c01_sign3_01
+_EVENT_DATA		ev_c01_oldman1_01
+_EVENT_DATA		ev_pos_c01_stop
+_EVENT_DATA		ev_c01_glasses_01
+_EVENT_DATA		ev_c01_leader_01
+_EVENT_DATA		ev_pos_c01_inventor
+_EVENT_DATA		ev_c01_inventor_01
 _EVENT_DATA_END
 
 
@@ -39,7 +45,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  C01 ミュージカル用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c01_musical
+/*EVENT_START   ev_c01_musical_01
 
   _TALK_OBJ_START()
 
@@ -64,103 +70,332 @@ EVENT_START   ev_c01_musical
   ENDIF
 
 EVENT_END
-
+*/
 /**************************************************************/
 /*  C01 BADMANの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c01_talkobj_badman
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01_badman_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c01_badman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_badman_01 )
 EVENT_END
 
 /**************************************************************/
-/*  C01 BOY2の会話用イベントスクリプト                      */
+/*  C01 BOY2の会話用イベントスクリプト     		              */
 /**************************************************************/
-EVENT_START   ev_c01_talkobj_boy2
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01_boy2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c01_boy2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_boy2_01 )
 EVENT_END
 
 /**************************************************************/
-/*  C01 CLEANINGMの会話用イベントスクリプト                      */
+/*  C01 CLEANINGMの会話用イベントスクリプト                   */
 /**************************************************************/
-EVENT_START   ev_c01_talkobj_cleaningm
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01_cleaningm_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c01_cleaningm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_cleaningm_01 )
 EVENT_END
 
 /**************************************************************/
-/*  C01 BREEDERWの会話用イベントスクリプト                      */
+/*  C01 BREEDERWの会話用イベントスクリプト                    */
 /**************************************************************/
-EVENT_START   ev_c01_talkobj_breederw
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01_breederw_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c01_breederw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_breederw_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C01 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c01_talkobj_woman2
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01_woman2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c01_woman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_woman2_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C01 BABYGIRLのランダム会話用イベントスクリプト            */
 /**************************************************************/
-EVENT_START   ev_c01_talkobj_babygirl
-  _TALK_OBJ_START()
+EVENT_START   ev_c01_babygirl1_01
+	_TALK_OBJ_START()
   
-  _GET_RND( SCWK_ANSWER,3 )
+	_GET_RND( SCWK_ANSWER, 3 )
 
-  IF $SCWK_ANSWER == 0 THEN
-	  _BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_01 )
-  ELSIF $SCWK_ANSWER == 1 THEN
-	  _BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_02 )
-  ELSE
-	  _BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_03 )
-  ENDIF
+	IF $SCWK_ANSWER == 0 THEN
+		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_01 )
+		
+	ELSIF $SCWK_ANSWER == 1 THEN
+		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_02 )
+		
+	ELSE
+		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_babygirl1_03 )
+		
+	ENDIF
 
-	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
+
 EVENT_END
   
 /**************************************************************/
-/*  C01 SIGN1用イベントスクリプト                      */
+/*  C01 SIGN1用イベントスクリプト    		                  */
 /**************************************************************/
-EVENT_START   ev_c01_sign1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01_sign1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c01_sign1_01
+	_EASY_MSG( msg_c01_sign1_01 )
 EVENT_END
 
 /**************************************************************/
-/*  C01 SIGN2用イベントスクリプト                      */
+/*  C01 SIGN2用イベントスクリプト  		                      */
 /**************************************************************/
-EVENT_START   ev_c01_sign2
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01_sign2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c01_sign2_01
+	_EASY_MSG( msg_c01_sign2_01 )
+	
+	//【仮】動作確認
+	_FLAG_SET( FE_D01R0101_EVCLEAR )
+	
 EVENT_END
 
 /**************************************************************/
-/*  C01 SIGN3用イベントスクリプト                      */
+/*  C01 SIGN3用イベントスクリプト		                      */
 /**************************************************************/
-EVENT_START   ev_c01_sign3
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c01_sign3_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START   ev_c01_sign3_01
+	_EASY_MSG( msg_c01_sign3_01 )
 EVENT_END
+
+/**************************************************************/
+/*  C01 OLDMAN1の会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_c01_oldman1_01
+_TALK_OBJ_START()
+	
+	//分岐：ジムバッジ取得しているか、いないか
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+	
+	//ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
+		
+		//おぬし　ジムバッジの　１つも　もっておらぬ　ようじゃが
+		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_stop_01 )
+		_BALLOONWIN_CLOSE()
+
+	//ジムクリア後
+	ELSE
+	
+		//おおう！　ひかりかがやく　ジムバッジ！
+		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_stop_03 )
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  C01 OLDMAN1のストッパー		ＰＯＳ発動                    */
+/**************************************************************/
+EVENT_START   ev_pos_c01_stop
+	
+	//ローカル変数を定義
+	DEFINE_LOCAL	HERO_X
+	DEFINE_LOCAL	HERO_Z
+
+	//自機の位置取得
+	_PLAYER_POS_GET( HERO_X,HERO_Z )
+	
+	//X軸が13の場合
+	IF $HERO_X == 13 THEN
+		
+		//お爺さん：自機に近づく
+		//自機：お爺さんのほうを見る
+		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_tikaduku13 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_miru )
+		_OBJ_ANIME_WAIT()
+		
+		//おぬし　ジムバッジの　１つも　もっておらぬ　ようじゃが
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01_stop_01 , C01_OLDMAN1_01 )
+		_BALLOONWIN_CLOSE()
+		
+		//自機：１歩下がる
+		//お爺さん：持ち場に戻る
+		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_modoru13 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+		_OBJ_ANIME_WAIT()
+	
+	//X軸が14の場合
+	ELSE
+		//お爺さん：自機に近づく
+		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_tikaduku14 )
+		_OBJ_ANIME_WAIT()
+		
+		//おぬし　ジムバッジの　１つも　もっておらぬ　ようじゃが
+		_BALLOONWIN_OBJMSG_OPEN( msg_c01_stop_01 , C01_OLDMAN1_01 )
+		_BALLOONWIN_CLOSE()
+		
+		//自機：１歩下がる
+		//お爺さん：持ち場に戻る
+		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_modoru14 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+		_OBJ_ANIME_WAIT()
+		
+	ENDIF
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	おじいさん　近づく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_oldman_tikaduku13
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_32F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_oldman_tikaduku14
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_L_16F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	おじいさん　戻る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_oldman_modoru13
+	_ANIME_DATA	AC_WALK_R_32F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_oldman_modoru14
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	自機　見る・一歩後ろへ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_player_miru
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_back
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*  C01 GLASSESのジムストッパー			                      */
+/**************************************************************/
+EVENT_START   ev_c01_glasses_01
+	_TALK_OBJ_START()
+	
+		//ライバルと話していない
+		IF FLAG_OFF( FE_C01R0501_RIVALTALK ) THEN
+			
+			//夢の跡地に行っていない
+			IF FLAG_OFF( FE_D01R0101_EVCLEAR ) THEN
+				_BALLOONWIN_TALKOBJ_OPEN( msg_c01_glasses_01 )
+				_BALLOONWIN_CLOSE()
+			
+			ELSE
+				_BALLOONWIN_TALKOBJ_OPEN( msg_c01_glasses_02 )
+				_BALLOONWIN_CLOSE()			
+			
+			ENDIF
+		//ライバルと話している
+		ELSE
+			_BALLOONWIN_TALKOBJ_OPEN( msg_c01_glasses_02 )
+			_BALLOONWIN_CLOSE()
+			
+		ENDIF
+		
+EVENT_END
+
+/**************************************************************/
+/*  C01 ジムリーダーのジムストッパー			              */
+/**************************************************************/
+EVENT_START   ev_c01_leader_01
+	_TALK_OBJ_START()
+		_BALLOONWIN_TALKOBJ_OPEN( msg_c01_leader1_01 )
+		_BALLOONWIN_CLOSE()
+		
+		_OBJ_ANIME( C01_LEADER_01, anm_leader_saru )
+		_OBJ_ANIME_WAIT()
+		
+		_FLAG_SET( FV_C01_LEADER1_01 )
+		
+		_OBJ_DEL( C01_LEADER_01 )
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	リーダー　ジム内へ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_leader_saru
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*  C01 発明家											      */
+/**************************************************************/
+EVENT_START   ev_c01_inventor_01
+
+EVENT_END
+
+/**************************************************************/
+/*  C01 発明家　ＰＤＷ誘導イベント						      */
+/**************************************************************/
+EVENT_START   ev_pos_c01_inventor
+
+	//発明家マコモ：自機に気付いて近づく
+	_OBJ_ANIME( C01_INVENTOR_01, anm_inventor_tikaduku )
+	_OBJ_ANIME_WAIT()
+	
+	//ヤッホー！　アタシは　マコモ　アララギはかせに　たのまれて
+	_BALLOONWIN_OBJMSG_OPEN( msg_c01_inventor_01 , C01_INVENTOR_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//発明家マコモ：自宅へ向かう
+	//自機：8F遅れて、付いていく
+	_OBJ_ANIME( C01_INVENTOR_01, anm_inventor_yudo )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo )
+	_OBJ_ANIME_WAIT()
+	
+	//マップチェンジ
+	_MAP_CHANGE( ZONE_ID_C01R0101, 2, 7, DIR_RIGHT )
+	
+	//発明家ＯＢＪを消す
+	_OBJ_DEL( C01_INVENTOR_01 )
+
+	//============フラグワーク操作=============//
+
+	//発明家マコモのバニッシュフラグセット
+	_FLAG_SET( 	FV_C01_INVENTOR_01 )
+
+	//C01のＰＤＷ誘導イベント終了
+	$WK_SCENE_C01 = 2
+
+	//C01R0101のＰＤＷ誘導イベント開始
+	$WK_SCENE_C01R0101 = 1
+
+	//========================================//
+
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	発明家マコモ　自機前に
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_inventor_tikaduku
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_WALK_U_16F,2
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	発明家マコモ　自機：自宅誘導
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_inventor_yudo
+	_ANIME_DATA	AC_WALK_U_16F,6
+	_ANIME_DATA	AC_WALK_R_16F,1	
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_yudo
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_WALK_U_16F,7
+	_ANIME_DATA	AC_WALK_R_16F,1	
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
