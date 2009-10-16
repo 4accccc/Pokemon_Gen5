@@ -193,8 +193,8 @@ void WORDSET_Delete( WORDSET* wordset )
 //------------------------------------------------------------------
 static void InitParam(WORDSET_PARAM* param)
 {
-  // 現状はただのゼロクリア
-  GFL_STD_MemClear( param, sizeof(param) );
+  GFL_STD_MemClear( param, sizeof(*param) );
+  param->deco_id = PMS_DECOID_NULL;
 }
 
 
@@ -226,7 +226,7 @@ static void RegisterWord( WORDSET* wordset, u32 bufID, const STRBUF* str, const 
     }
     else
     {
-      GFL_STD_MemClear( &wordset->word[bufID].param, sizeof(wordset->word[bufID].param) );
+      InitParam( &wordset->word[bufID].param );
     }
     GFL_STR_CopyBuffer( wordset->word[bufID].str, str );
   }
@@ -241,7 +241,7 @@ static void RegisterWord( WORDSET* wordset, u32 bufID, const STRBUF* str, const 
  * @param   bufID     バッファID
  * @param   word      文字列
  * @param   sex       性別コード
- * @param singular_flag 単／複（TRUEで単数）
+ * @param   singular_flag 単／複（TRUEで単数）
  * @param   lang      言語コード
  *
  */
