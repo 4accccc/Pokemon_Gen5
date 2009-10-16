@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-10-14T16:43:38" source="camera02.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-10-16T20:17:52" source="camera_tyushiten.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,11 +11,11 @@
 <body>
 
 <node_anm_info
-	frame_size="1680"
+	frame_size="1740"
 	scaling_rule="standard"
 	magnify="1.000000"
 	tool_start_frame="1"
-	tool_end_frame="1680"
+	tool_end_frame="1740"
 	interpolation="frame"
 	compress_node="merge" node_size="1 1"
 	frame_step_mode="1"
@@ -32,7 +32,13 @@
 	0.000000
 </node_rotate_data>
 
-<node_translate_data size="1681">
+<node_translate_data size="1741">
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
 	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
 	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
 	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
@@ -213,7 +219,7 @@
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
 		<translate_x frame_step="1" data_size="1" data_head="0"/>
-		<translate_y frame_step="1" data_size="1680" data_head="1"/>
+		<translate_y frame_step="1" data_size="1740" data_head="1"/>
 		<translate_z frame_step="1" data_size="1" data_head="0"/>
 	</node_anm>
 </node_anm_array>

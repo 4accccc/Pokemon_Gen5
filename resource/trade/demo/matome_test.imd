@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-10-16T15:54:27" source="matome3.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-10-16T20:14:48" source="matome3.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-10-16T15:54:27" source="matome3.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2009-10-16T20:14:48" source="matome3.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -14767,9 +14767,9 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.000000 0.000000 0.000000"
+		scale="0.292236 0.292236 0.292236"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.185303 1.102539 0.000000"
+		translate="0.185303 0.564209 0.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="318" polygon_size="145"
@@ -14992,7 +14992,7 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 24.754395 0.000000"
+		rotate="0.000000 14.145264 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
@@ -15252,7 +15252,7 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="0.160645 0.160645 0.928955"
-		rotate="90.000000 130.491211 0.000000"
+		rotate="90.000000 151.709229 0.000000"
 		translate="0.000000 464.000000 0.000000"
 		visibility="on"
 		display_size="1"
