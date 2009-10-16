@@ -293,7 +293,7 @@ static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
     pWork->pModelFade = NULL;
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
     pWork->pMoveMcss[0]=NULL;
-      _setNextAnim(pWork, 0);
+    _setNextAnim(pWork, 0);
 
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade2);
   }
@@ -303,19 +303,23 @@ static void _changeDemo_ModelTrade2(IRC_POKEMON_TRADE* pWork)
 {
   int i;
   
-  if(pWork->anmCount == 1){
-    G2_BlendNone();
-    _pokemonCreateCLACTInit(pWork);
-    _pokemonCreateCLACTAdd(pWork);
-    return;
-  }
+//  if(pWork->anmCount == 1){
+  //自分を白くする
+  MCSS_SetPaletteFade( pWork->pokeMcss[0], 0, 16, 0, 0xff );
+
+  //ボール変更アニメ
+  G2_BlendNone();
+  _pokemonCreateCLACTInit(pWork);
+  _pokemonCreateCLACTAdd(pWork);
+  //  return;
+//  }
   
 
 
   IRC_POKETRADEDEMO_SetModel( pWork, TRADE01_OBJECT);
 
   IRC_POKETRADE_SetSubdispGraphicDemo(pWork);
-    G2S_BlendNone();
+  G2S_BlendNone();
 
 
   _setNextAnim(pWork, 0);
