@@ -21,6 +21,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_heal_p01
+_EVENT_DATA    ev_union
 _EVENT_DATA_END
 
 
@@ -193,3 +194,110 @@ _ANIME_LABEL	anm_heal_p01_turn_down
 
 
 
+
+
+
+
+/**************************************************************/
+/*                                                            */
+/*                                                            */
+/*        ポケモンセンター　ユニオン受付                      */
+/*                                                            */
+/*                                                            */
+/**************************************************************/
+EVENT_START ev_union
+{
+  DEFINE_LOCAL have_cgear // C-gearを持っているかどうか
+  DEFINE_LOCAL room_in // ユニオンルームに入るかどうか
+  DEFINE_LOCAL explain // 説明を受けるかどうか
+  DEFINE_LOCAL ret
+
+  $have_cgear = TRUE //【仮】@temp イベントフラグを参照すること！
+  $room_in    = FALSE
+  $explain    = FALSE
+
+  // C-gear持ってる場合
+  IF $have_cgear == TRUE THEN 
+    //「ユニオンルームにようこそ」
+    _TALK_OBJ_START()
+    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_01 ) 
+    // メニュー表示
+    _BMPMENU_INIT_EX( 1, 5, 0, 1, ret )
+    _BMPMENU_MAKE_LIST( msg_pc_union_menu_yes, msg_pc_union_menu_yes )
+    _BMPMENU_MAKE_LIST( msg_pc_union_menu_no, msg_pc_union_menu_no )
+    _BMPMENU_MAKE_LIST( msg_pc_union_menu_explain, msg_pc_union_menu_explain )
+    _BMPMENU_START() 
+    // 選択したら吹出しを閉じる
+    _BALLOONWIN_CLOSE() 
+    // 選択結果で分岐
+    SWITCH $ret 
+    CASE msg_pc_union_menu_yes THEN //-------『はい』
+     $room_in = TRUE
+    CASE msg_pc_union_menu_no THEN //--------『いいえ』
+      $room_in = FALSE
+    CASE msg_pc_union_menu_explain THEN //---『せつめいをきく』
+      $explain = TRUE 
+    ENDSWITCH
+  ENDIF
+
+  // C-gear持ってない場合
+  IF $have_cgear != TRUE THEN 
+    //「ただいま じゅんびちゅう です！」
+    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_06 ) 
+    _AB_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF 
+
+  // 説明を聞く場合
+  IF $explain == TRUE THEN
+    //「へやにはいりますか？」
+    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_02 )
+    _YES_NO_WIN( ret )
+    _BALLOONWIN_CLOSE()
+    //『はい』
+    IF $ret == 0 THEN
+      $room_in = TRUE
+    ENDIF
+  ENDIF
+
+  // ユニオンルームに入る場合
+  IF $room_in == TRUE THEN
+    //「ワイヤレスつうしんをかいしします」
+    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_03 )
+    _YES_NO_WIN( ret )
+    _BALLOONWIN_CLOSE()
+    //『いいえ』
+    IF $ret == 1 THEN
+      $room_in = FALSE
+    ENDIF
+  ENDIF
+
+  // レポート処理
+  IF $room_in == TRUE THEN
+    // レポートを書く
+    _REPORT_EVENT_CALL( ret )
+    // 書き込みに失敗
+    IF $ret != SCR_REPORT_OK THEN
+      $room_in = FALSE
+    ENDIF
+  ENDIF
+
+  // 入場
+  IF $room_in == TRUE THEN
+    //「おたのしみ ください」
+    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_04 )
+    _AB_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+    // @todo 移動アニメ
+    // @todo マップチェンジ
+  ENDIF
+
+  // キャンセルした場合
+  IF $room_in != TRUE THEN
+    //「また おこしください」
+    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_05 )
+    _AB_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
+}
+EVENT_END

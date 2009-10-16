@@ -312,10 +312,65 @@ EVENT_END
 //  SCWK_PARAM0   セーブ結果を返すscript_def.h参照
 //--------------------------------------------------------------
 ev_report_event_call:
-  _REPORT_CALL( SCWK_PARAM0 )
+{
+  DEFINE_LOCAL exe
+  DEFINE_LOCAL ret 
+  $exe = TRUE
+
+  //「かいても いいですか？」
+  _TALKWIN_OPEN()
+  _TALKMSG( msg_common_report_01 )
+  _YES_NO_WIN( ret )
+  _TALKWIN_CLOSE()
+  IF $ret == 1 THEN //『いいえ』
+    $exe = FALSE
+  ENDIF
+
+  //「うえから かいても いいですか？」
+  IF $exe == TRUE THEN
+    _TALKWIN_OPEN()
+    _TALKMSG( msg_common_report_02 )
+    _YES_NO_WIN( ret )
+    _TALKWIN_CLOSE()
+    IF $ret == 1 THEN //『いいえ』
+     $exe = FALSE
+    ENDIF
+  ENDIF
+
+  // セーブ
+  IF $exe == TRUE THEN
+    //「かきこんでいます」
+    _TALKWIN_OPEN()
+    _TALKMSG( msg_common_report_03 )
+    _REPORT_CALL( ret )
+    _TALKWIN_CLOSE()
+    // 書き込みに成功
+    IF $ret == TRUE THEN
+      //「しっかり かきのこした！」
+      _TALKWIN_OPEN()
+      _TALKMSG( msg_common_report_04 )
+      _AB_KEYWAIT()
+      _TALKWIN_CLOSE()
+      $SCWK_PARAM0 = SCR_REPORT_OK      // 結果を返す
+    // 書き込みに失敗
+    ELSE
+      //「かけませんでした」
+      _TALKWIN_OPEN()
+      _TALKMSG( msg_common_report_06 )
+      _AB_KEYWAIT()
+      _TALKWIN_CLOSE() 
+      $SCWK_PARAM0 = SCR_REPORT_CANCEL  // 結果を返す
+    ENDIF
+  ENDIF
+
+  // セーブしなかった場合
+  IF $exe != TRUE THEN
+    $SCWK_PARAM0 = SCR_REPORT_CANCEL  // 結果を返す
+  ENDIF
 
 	_CHG_LOCAL_SCR													//ローカルスクリプトに切り替え
 	_END
+}
 
 
 
