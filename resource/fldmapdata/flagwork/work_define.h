@@ -130,8 +130,8 @@
 #define WK_SCENE_C01R0102                16518 /* 0x4086 C01発明家の家２階：イベント用ワーク */
 #define WK_SCENE_C01R0101                16519 /* 0x4087 C01発明家の家１階：イベント用ワーク */
 #define WK_SCENE_C01                     16520 /* 0x4088 C01フィールド：イベント用ワーク */
-		/* not used 16521(0x4089) */
-		/* not used 16522(0x408a) */
+#define WK_SCENE_C04                     16521 /* 0x4089 C04フィールド：イベント用ワーク */
+#define WK_SCENE_C02GYM0201              16522 /* 0x408a C02ノーマルジム：イベント用ワーク */
 		/* not used 16523(0x408b) */
 		/* not used 16524(0x408c) */
 		/* not used 16525(0x408d) */

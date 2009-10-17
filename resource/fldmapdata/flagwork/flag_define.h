@@ -564,7 +564,7 @@
 #define FV_C01_INVENTOR_01                 540 /* 0x021c C01フィールド：バッジ入手後に話しかけてくる発明家（マコモ） */
 #define FV_C01R0101_INVENTOR_01            541 /* 0x021d 発明家自宅の１階：発明家（マコモ） （最終的には２階に常駐） */
 #define FV_C01R0501_RIVAL_01               542 /* 0x021e C01トレーナーズスクール：ライバル */
-		/* not used   543(0x021f) */
+#define FV_C04_SUPPORT_01                  543 /* 0x021f ライモンシティ：サポート */
 		/* not used   544(0x0220) */
 		/* not used   545(0x0221) */
 		/* not used   546(0x0222) */
