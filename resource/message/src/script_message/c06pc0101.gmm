@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-06T17:33:56"/>
+	<create user="matsumiya" host="W00207" date="2009-10-17T15:29:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="100"/>
+		<comment position="4" width="180"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,20 +292,107 @@
 	</lock>
 
 
-	<row id="msg_c06pc0101_man1_01">
-		<comment>♂</comment>
+	<row id="msg_c06pc0101_man1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・初回
+・はい／いいえの選択肢
+　はい　→ポケモンリスト画面
+　いいえ→
+
+※仮メッセージ</comment>
 		<attribute name="キャラ指定">MAN1
 青年１</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">オイラ　めざめちゃったぜ！▼
+なにに　めざめたか？▼
+それは　ポケモンが
+めざめるパワーを　おぼえたとき▼
+どの　タイプの　わざに　なるのか
+わかるように　なったのです！　すげー▼
+どうだ？　おまえの　ポケモンが
+どの　タイプの　めざめるパワーを▽
+おぼえるか　オイラが　みてやるぜ！</language>
+		<language name="JPN_KANJI" width="256">オイラ　めざめちゃったぜ！▼
+なにに　めざめたか？▼
+それは　ポケモンが
+めざめるパワーを　おぼえたとき▼
+どの　タイプの　わざに　なるのか
+わかるように　なったのです！　すげー▼
+どうだ？　おまえの　ポケモンが
+どの　タイプの　めざめるパワーを▽
+おぼえるか　オイラが　みてやるぜ！</language>
+	</row>
+
+	<row id="msg_c06pc0101_man1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・2回目以降</comment>
+		<language name="JPN" width="256">おまえの　ポケモンが　どの　タイプの
+めざめるパワーを　おぼえるか▽
+めざめた　オイラが　みてやるぜ！</language>
+		<language name="JPN_KANJI" width="256">おまえの　ポケモンが　どの　タイプの
+めざめるパワーを　おぼえるか▽
+めざめた　オイラが　みてやるぜ！</language>
+	</row>
+
+	<row id="msg_c06pc0101_man1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・選んだポケモンが
+　「めざめるパワー」を覚えていない</comment>
+		<language name="JPN" width="256">この　ポケモンが
+めざめるパワーを　おぼえたら▽
+タイプは　「[1:03:ポケモンタイプ:0]」！</language>
+		<language name="JPN_KANJI" width="256">この　ポケモンが
+めざめるパワーを　おぼえたら▽
+タイプは　「[1:03:ポケモンタイプ:0]」！</language>
+	</row>
+
+	<row id="msg_c06pc0101_man1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・選んだポケモンが
+　「めざめるパワー」を覚えている</comment>
+		<language name="JPN" width="256">この　ポケモンが　つかえる
+めざめるパワーは　「[1:03:ポケモンタイプ:0]」！</language>
+		<language name="JPN_KANJI" width="256">この　ポケモンが　つかえる
+めざめるパワーは　「[1:03:ポケモンタイプ:0]」！</language>
+	</row>
+
+	<row id="msg_c06pc0101_man1_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・いいえ選択
+・リスト画面で「やめる」選択</comment>
+		<language name="JPN" width="256">しりたくなったら
+めざめた　オイラに　きいてくれよ！</language>
+		<language name="JPN_KANJI" width="256">しりたくなったら
+めざめた　オイラに　きいてくれよ！</language>
+	</row>
+
+	<row id="msg_c06pc0101_man1_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・リスト画面で「タマゴ」選択</comment>
+		<language name="JPN" width="256">タマゴが　おぼえる　わざ！？
+そりゃ　さすがに　ムリだって！</language>
+		<language name="JPN_KANJI" width="256">タマゴが　おぼえる　わざ！？
+そりゃ　さすがに　ムリだって！</language>
+	</row>
+
+	<row id="msg_c06pc0101_man1_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・リスト画面で「タマゴ」選択</comment>
+		<language name="JPN" width="256">うーん！　この　ポケモンは
+めざめるパワーを　おぼえられない！</language>
+		<language name="JPN_KANJI" width="256">うーん！　この　ポケモンは
+めざめるパワーを　おぼえられない！</language>
 	</row>
 
 	<row id="msg_c06pc0101_pilot_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">PILOT
 パイロット</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">フィールドわざ　そらをとぶ　は
+いままでに　いったことのある[BE:00:ページ切り替え（行送り）]
+まちに　ひとっとびでいける　わざだよ</language>
+		<language name="JPN_KANJI" width="256">フィールドわざ　そらをとぶ　は
+いままでに　いったことのある[BE:00:ページ切り替え（行送り）]
+まちに　ひとっとびでいける　わざだよ</language>
 	</row>
 
 	<flowchart-group-list>
