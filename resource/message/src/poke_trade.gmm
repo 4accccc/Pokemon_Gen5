@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-10-15T15:11:48"/>
+	<create user="ohno" host="W00141" date="2009-10-17T16:43:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -608,6 +608,233 @@
 しばらくおまちください</language>
 		<language name="JPN_KANJI" width="256">セーブしています
 しばらくおまちください</language>
+	</row>
+
+	<row id="POKETRADE_STR_52">
+		<language name="JPN" width="256">みつけたい　ポケモンの　かしらもじを
+えらんでください</language>
+		<language name="JPN_KANJI" width="256">みつけたい　ポケモンの　かしらもじを
+えらんでください</language>
+	</row>
+
+	<row id="POKETRADE_STR_53">
+		<language name="JPN" width="256">ア</language>
+		<language name="JPN_KANJI" width="256">ア</language>
+	</row>
+
+	<row id="POKETRADE_STR_54">
+		<language name="JPN" width="256">イ</language>
+		<language name="JPN_KANJI" width="256">イ</language>
+	</row>
+
+	<row id="POKETRADE_STR_55">
+		<language name="JPN" width="256">ウ</language>
+		<language name="JPN_KANJI" width="256">ウ</language>
+	</row>
+
+	<row id="POKETRADE_STR_56">
+		<language name="JPN" width="256">エ</language>
+		<language name="JPN_KANJI" width="256">エ</language>
+	</row>
+
+	<row id="POKETRADE_STR_57">
+		<language name="JPN" width="256">オ</language>
+		<language name="JPN_KANJI" width="256">オ</language>
+	</row>
+
+	<row id="POKETRADE_STR_58">
+		<language name="JPN" width="256">カ</language>
+		<language name="JPN_KANJI" width="256">カ</language>
+	</row>
+
+	<row id="POKETRADE_STR_59">
+		<language name="JPN" width="256">キ</language>
+		<language name="JPN_KANJI" width="256">キ</language>
+	</row>
+
+	<row id="POKETRADE_STR_60">
+		<language name="JPN" width="256">ク</language>
+		<language name="JPN_KANJI" width="256">ク</language>
+	</row>
+
+	<row id="POKETRADE_STR_61">
+		<language name="JPN" width="256">ケ</language>
+		<language name="JPN_KANJI" width="256">ケ</language>
+	</row>
+
+	<row id="POKETRADE_STR_62">
+		<language name="JPN" width="256">コ</language>
+		<language name="JPN_KANJI" width="256">コ</language>
+	</row>
+
+	<row id="POKETRADE_STR_63">
+		<language name="JPN" width="256">サ</language>
+		<language name="JPN_KANJI" width="256">サ</language>
+	</row>
+
+	<row id="POKETRADE_STR_64">
+		<language name="JPN" width="256">シ</language>
+		<language name="JPN_KANJI" width="256">シ</language>
+	</row>
+
+	<row id="POKETRADE_STR_65">
+		<language name="JPN" width="256">ス</language>
+		<language name="JPN_KANJI" width="256">ス</language>
+	</row>
+
+	<row id="POKETRADE_STR_66">
+		<language name="JPN" width="256">セ</language>
+		<language name="JPN_KANJI" width="256">セ</language>
+	</row>
+
+	<row id="POKETRADE_STR_67">
+		<language name="JPN" width="256">ソ</language>
+		<language name="JPN_KANJI" width="256">ソ</language>
+	</row>
+
+	<row id="POKETRADE_STR_68">
+		<language name="JPN" width="256">タ</language>
+		<language name="JPN_KANJI" width="256">タ</language>
+	</row>
+
+	<row id="POKETRADE_STR_69">
+		<language name="JPN" width="256">チ</language>
+		<language name="JPN_KANJI" width="256">チ</language>
+	</row>
+
+	<row id="POKETRADE_STR_70">
+		<language name="JPN" width="256">ツ</language>
+		<language name="JPN_KANJI" width="256">ツ</language>
+	</row>
+
+	<row id="POKETRADE_STR_71">
+		<language name="JPN" width="256">テ</language>
+		<language name="JPN_KANJI" width="256">テ</language>
+	</row>
+
+	<row id="POKETRADE_STR_72">
+		<language name="JPN" width="256">ト</language>
+		<language name="JPN_KANJI" width="256">ト</language>
+	</row>
+
+	<row id="POKETRADE_STR_73">
+		<language name="JPN" width="256">ナ</language>
+		<language name="JPN_KANJI" width="256">ナ</language>
+	</row>
+
+	<row id="POKETRADE_STR_74">
+		<language name="JPN" width="256">ニ</language>
+		<language name="JPN_KANJI" width="256">ニ</language>
+	</row>
+
+	<row id="POKETRADE_STR_75">
+		<language name="JPN" width="256">ヌ</language>
+		<language name="JPN_KANJI" width="256">ヌ</language>
+	</row>
+
+	<row id="POKETRADE_STR_76">
+		<language name="JPN" width="256">ネ</language>
+		<language name="JPN_KANJI" width="256">ネ</language>
+	</row>
+
+	<row id="POKETRADE_STR_77">
+		<language name="JPN" width="256">ノ</language>
+		<language name="JPN_KANJI" width="256">ノ</language>
+	</row>
+
+	<row id="POKETRADE_STR_78">
+		<language name="JPN" width="256">ハ</language>
+		<language name="JPN_KANJI" width="256">ハ</language>
+	</row>
+
+	<row id="POKETRADE_STR_79">
+		<language name="JPN" width="256">ヒ</language>
+		<language name="JPN_KANJI" width="256">ヒ</language>
+	</row>
+
+	<row id="POKETRADE_STR_80">
+		<language name="JPN" width="256">フ</language>
+		<language name="JPN_KANJI" width="256">フ</language>
+	</row>
+
+	<row id="POKETRADE_STR_81">
+		<language name="JPN" width="256">へ</language>
+		<language name="JPN_KANJI" width="256">へ</language>
+	</row>
+
+	<row id="POKETRADE_STR_82">
+		<language name="JPN" width="256">ホ</language>
+		<language name="JPN_KANJI" width="256">ホ</language>
+	</row>
+
+	<row id="POKETRADE_STR_83">
+		<language name="JPN" width="256">マ</language>
+		<language name="JPN_KANJI" width="256">マ</language>
+	</row>
+
+	<row id="POKETRADE_STR_84">
+		<language name="JPN" width="256">ミ</language>
+		<language name="JPN_KANJI" width="256">ミ</language>
+	</row>
+
+	<row id="POKETRADE_STR_85">
+		<language name="JPN" width="256">ム</language>
+		<language name="JPN_KANJI" width="256">ム</language>
+	</row>
+
+	<row id="POKETRADE_STR_86">
+		<language name="JPN" width="256">メ</language>
+		<language name="JPN_KANJI" width="256">メ</language>
+	</row>
+
+	<row id="POKETRADE_STR_87">
+		<language name="JPN" width="256">モ</language>
+		<language name="JPN_KANJI" width="256">モ</language>
+	</row>
+
+	<row id="POKETRADE_STR_88">
+		<language name="JPN" width="256">ヤ</language>
+		<language name="JPN_KANJI" width="256">ヤ</language>
+	</row>
+
+	<row id="POKETRADE_STR_89">
+		<language name="JPN" width="256">ユ</language>
+		<language name="JPN_KANJI" width="256">ユ</language>
+	</row>
+
+	<row id="POKETRADE_STR_90">
+		<language name="JPN" width="256">ヨ</language>
+		<language name="JPN_KANJI" width="256">ヨ</language>
+	</row>
+
+	<row id="POKETRADE_STR_91">
+		<language name="JPN" width="256">ラ</language>
+		<language name="JPN_KANJI" width="256">ラ</language>
+	</row>
+
+	<row id="POKETRADE_STR_92">
+		<language name="JPN" width="256">リ</language>
+		<language name="JPN_KANJI" width="256">リ</language>
+	</row>
+
+	<row id="POKETRADE_STR_93">
+		<language name="JPN" width="256">ル</language>
+		<language name="JPN_KANJI" width="256">ル</language>
+	</row>
+
+	<row id="POKETRADE_STR_94">
+		<language name="JPN" width="256">レ</language>
+		<language name="JPN_KANJI" width="256">レ</language>
+	</row>
+
+	<row id="POKETRADE_STR_95">
+		<language name="JPN" width="256">ロ</language>
+		<language name="JPN_KANJI" width="256">ロ</language>
+	</row>
+
+	<row id="POKETRADE_STR_96">
+		<language name="JPN" width="256">ワ</language>
+		<language name="JPN_KANJI" width="256">ワ</language>
 	</row>
 
 	<flowchart-group-list>

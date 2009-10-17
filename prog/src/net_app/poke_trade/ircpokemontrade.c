@@ -53,7 +53,8 @@
 #include "ircpokemontrade_local.h"
 
 
-
+#define _ENDTABLE  {192-32, 192, 256-32, 256}     //終了
+#define _SEARCHTABLE  {192-32, 192, 0, 32}        //検索ボタン
 
 
 ///通信コマンド
@@ -1447,6 +1448,115 @@ static void _endRequestState(IRC_POKEMON_TRADE* pWork)
   }
 }
 
+
+#define _MOJITOP   (44)
+#define _MOJILEFT  (4)
+
+
+static GFL_UI_TP_HITTBL tp_mojidata[]={
+  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT , _MOJILEFT+24},  //あ
+  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT , _MOJILEFT+24},
+  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT , _MOJILEFT+24},
+  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT , _MOJILEFT+24},
+  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT , _MOJILEFT+24},
+
+  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24 , _MOJILEFT+24*2},  //か
+  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT+24 , _MOJILEFT+24*2},
+  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24 , _MOJILEFT+24*2},
+  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT+24 , _MOJILEFT+24*2},
+  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24 , _MOJILEFT+24*2},
+
+  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*2 , _MOJILEFT+24*3},  //さ
+  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT+24*2 , _MOJILEFT+24*3},
+  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24*2 , _MOJILEFT+24*3},
+  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT+24*2 , _MOJILEFT+24*3},
+  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24*2 , _MOJILEFT+24*3},
+
+  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*3 , _MOJILEFT+24*4},  //た
+  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT+24*3 , _MOJILEFT+24*4},
+  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24*3 , _MOJILEFT+24*4},
+  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT+24*3 , _MOJILEFT+24*4},
+  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24*3 , _MOJILEFT+24*4},
+  
+  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*4 , _MOJILEFT+24*5},  //な
+  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT+24*4 , _MOJILEFT+24*5},
+  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24*4 , _MOJILEFT+24*5},
+  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT+24*4 , _MOJILEFT+24*5},
+  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24*4 , _MOJILEFT+24*5},
+
+  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*5 , _MOJILEFT+24*6},  //は
+  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT+24*5 , _MOJILEFT+24*6},
+  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24*5 , _MOJILEFT+24*6},
+  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT+24*5 , _MOJILEFT+24*6},
+  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24*5 , _MOJILEFT+24*6},
+
+  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*6 , _MOJILEFT+24*7},  //ま
+  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT+24*6 , _MOJILEFT+24*7},
+  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24*6 , _MOJILEFT+24*7},
+  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT+24*6 , _MOJILEFT+24*7},
+  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24*6 , _MOJILEFT+24*7},
+
+  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*7 , _MOJILEFT+24*8},  //や
+  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24*7 , _MOJILEFT+24*8},
+  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24*7 , _MOJILEFT+24*8},
+
+  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*8 , _MOJILEFT+24*9},  //ら
+  { _MOJITOP+24  , _MOJITOP+24*2 , _MOJILEFT+24*8 , _MOJILEFT+24*9},
+  { _MOJITOP+24*2, _MOJITOP+24*3 , _MOJILEFT+24*8 , _MOJILEFT+24*9},
+  { _MOJITOP+24*3, _MOJITOP+24*4 , _MOJILEFT+24*8 , _MOJILEFT+24*9},
+  { _MOJITOP+24*4, _MOJITOP+24*5 , _MOJILEFT+24*8 , _MOJILEFT+24*9},
+
+  { _MOJITOP     , _MOJITOP+24   , _MOJILEFT+24*9 , _MOJILEFT+24*10},  //わ
+
+  _ENDTABLE,
+  
+  {GFL_UI_TP_HIT_END,0,0,0},
+};
+
+
+// 検索文字パネル表示中
+static void _loopSearchMojiState(IRC_POKEMON_TRADE* pWork)
+{
+  BOOL endflg=FALSE;
+  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+    return;
+  }
+  {
+    int ans = GFL_UI_TP_HitTrg(tp_mojidata);
+    if(ans != GFL_UI_TP_HIT_NONE){
+      pWork->selectMoji = ans + 1;
+      endflg = TRUE;
+    }
+  }
+  if(GFL_UI_KEY_GetTrg()==PAD_BUTTON_CANCEL ){
+    pWork->selectMoji = 0;
+    endflg = TRUE;
+  }
+
+  if(endflg){
+    OS_TPrintf("SELECTMOJI %d\n", pWork->selectMoji);
+    IRC_POKETRADE_EndSubMojiBG(pWork);
+    IRC_POKETRADE_MessageWindowClear(pWork);
+    _CHANGE_STATE(pWork,_touchState);
+  }
+
+}
+
+
+
+// 検索文字パネル開始
+static void _startSearchMojiState(IRC_POKEMON_TRADE* pWork)
+{
+  IRC_POKETRADE_InitSubMojiBG(pWork);
+
+  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_52, pWork->pMessageStrBuf );
+  IRC_POKETRADE_MessageWindowOpen(pWork,  POKETRADE_STR_52);
+
+  _CHANGE_STATE(pWork,_loopSearchMojiState);
+}
+
+
+/// 基本ステート。タッチ操作で他のアクションに飛ぶ
 static void _touchState(IRC_POKEMON_TRADE* pWork)
 {
   u32 x,y,i;
@@ -1459,7 +1569,6 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
   for(i=0;i<2;i++){
     pWork->bChangeOK[i]=FALSE;
   }
-
 
   if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視
     // 上向き判定
@@ -1496,14 +1605,31 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
   }
 
 
+  {
+    GFL_UI_TP_HITTBL tp_data[]={
+      _ENDTABLE,
+//      {192-32, 192, 256-32, 256},     //終了
+//      {192-32, 192, 0, 32},     //検索
+      _SEARCHTABLE,
+      {GFL_UI_TP_HIT_END,0,0,0},
+    };
+
+    switch(GFL_UI_TP_HitTrg(tp_data)){
+    case 0:
+        _CHANGE_STATE(pWork,_endRequestState);
+      return;
+    case 1:
+        _CHANGE_STATE(pWork,_startSearchMojiState);
+      return;
+      break;
+    default:
+      break;
+    }
+  }
+
+  
 #if 1  //  画面タッチトリガ中の処理
   if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
-    if((x >=(256-24)) && (256 > x)){  //終了ボタンがある場合
-      if((y >= (192-24)) && (192 > y)){
-        _CHANGE_STATE(pWork,_endRequestState);
-        return;
-      }
-    }
 
     //		if(backBoxNo !=  pWork->nowBoxno){
     //		IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);

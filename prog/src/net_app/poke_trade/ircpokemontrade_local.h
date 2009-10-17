@@ -211,7 +211,8 @@ enum
 #define _POKEMON_SELECT2_CELLX  (128+32)
 #define _POKEMON_SELECT2_CELLY  (12)
 
-
+// 日本語検索文字MAX
+#define JAPANESE_SEARCH_INDEX_MAX (44)
 
 
 /// @brief 3Dモデルカラーフェード
@@ -302,6 +303,9 @@ struct _IRC_POKEMON_TRADE{
   PRINT_QUE*            SysMsgQue;
   GFL_TCBLSYS *pMsgTcblSys;
 
+  GFL_BMPWIN* SerchMojiWin[JAPANESE_SEARCH_INDEX_MAX];
+  int selectMoji;
+  
   GFL_G3D_RES* pG3dRes;
   GFL_G3D_OBJ* pG3dObj;
   GFL_G3D_OBJSTATUS*	pStatus;
@@ -463,6 +467,8 @@ extern void IRC_POKETRADE_ResetMainStatusBG(IRC_POKEMON_TRADE* pWork);
 extern void IRCPOKEMONTRADE_ResetPokemonStatusMessage(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_LeftPageMarkRemove(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_LeftPageMarkDisp(IRC_POKEMON_TRADE* pWork,int no);
+extern void IRC_POKETRADE_InitSubMojiBG(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_EndSubMojiBG(IRC_POKEMON_TRADE* pWork);
 
 
 #if _TRADE_DEBUG

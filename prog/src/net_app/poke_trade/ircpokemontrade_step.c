@@ -362,7 +362,6 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
   }
 
 
-
   if(pWork->anmCount == _BALL_PARTICLE_START){
     GFL_PTC_CreateEmitterCallback(pWork->ptc, DERMO_TEX001, NULL, pWork);
   }
@@ -506,9 +505,9 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
     IRCPOKETRADE_PokeCreateMcss(pWork, 1, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );
     {
       VecFx32 apos;
-      apos.x = _MCSS_POS_X(120);
-      apos.y = _MCSS_POS_Y(140);
-      apos.z = PSTATUS_MCSS_POS_YOUZ;
+      apos.x = _POKEMON_PLAYER_CENTER_POSX;
+      apos.y = _POKEMON_PLAYER_CENTER_POSY;
+      apos.z = _POKEMON_PLAYER_CENTER_POSZ;
       MCSS_SetPosition( pWork->pokeMcss[1] ,&apos );
       MCSS_SetAnmStopFlag(pWork->pokeMcss[1]);
       MCSS_SetVanishFlag(pWork->pokeMcss[1]);

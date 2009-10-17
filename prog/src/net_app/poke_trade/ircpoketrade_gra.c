@@ -1147,7 +1147,7 @@ void IRC_POKETRADE_SetSubDispGraphic(IRC_POKEMON_TRADE* pWork)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-      3, 0, 0, FALSE
+      1, 0, 0, FALSE
       };
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -1161,7 +1161,7 @@ void IRC_POKETRADE_SetSubDispGraphic(IRC_POKEMON_TRADE* pWork)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-      1, 0, 0, FALSE
+      2, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -1177,7 +1177,7 @@ void IRC_POKETRADE_SetSubDispGraphic(IRC_POKEMON_TRADE* pWork)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x10000,GX_BG_EXTPLTT_01,
-      2, 0, 0, FALSE
+      3, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -1459,3 +1459,145 @@ void IRC_POKETRADE_LeftPageMarkRemove(IRC_POKEMON_TRADE* pWork)
     pWork->curIcon[CHAR_LEFTPAGE_MARK]=NULL;
   }
 }
+
+typedef struct{
+  int x;
+  int y;
+} MojiTableStruct;
+
+static MojiTableStruct mojitbl[]={
+  1 , 6,
+  1 , 9,
+  1 ,12,
+  1 ,15,
+  1 ,18,
+  4 , 6,
+  4 , 9,
+  4 ,12,
+  4 ,15,
+  4 ,18,
+  7 , 6,
+  7 , 9,
+  7 ,12,
+  7 ,15,
+  7 ,18,
+ 10 , 6,
+ 10 , 9,
+ 10 ,12,
+ 10 ,15,
+ 10 ,18,
+ 13 , 6,
+ 13 , 9,
+ 13 ,12,
+ 13 ,15,
+ 13 ,18,
+
+ 16 , 6,
+ 16 , 9,
+ 16 ,12,
+ 16 ,15,
+ 16 ,18,
+
+ 19 , 6,
+ 19 , 9,
+ 19 ,12,
+ 19 ,15,
+ 19 ,18,
+
+ 22 , 6,
+ 22 ,12,
+ 22 ,18,
+  
+ 25 , 6,
+ 25 , 9,
+ 25 ,12,
+ 25 ,15,
+ 25 ,18,
+  
+ 28 , 6,
+  
+};
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ‰º‰æ–Ê‚É•¶Žš“ü—Í”Â•\Ž¦
+ * @param   IRC_POKEMON_TRADE work
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_InitSubMojiBG(IRC_POKEMON_TRADE* pWork)
+{
+int i;
+	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
+	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+																				 NARC_trade_wb_trade_bg04_NSCR,
+																				 GFL_BG_FRAME0_S, 0,
+																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
+																				 pWork->heapID);
+  GFL_BG_SetVisible( GFL_BG_FRAME0_S , TRUE );
+	GFL_ARC_CloseDataHandle( p_handle );
+
+
+
+
+  GFL_FONTSYS_SetColor( 1, 2, 15 );
+  for(i=0;i<elementof(mojitbl);i++){
+    pWork->SerchMojiWin[i] =
+      GFL_BMPWIN_Create(GFL_BG_FRAME3_S, mojitbl[i].x, mojitbl[i].y, 2, 2, _BUTTON_MSG_PAL,  GFL_BMP_CHRAREA_GET_B );
+    GF_ASSERT(pWork->SerchMojiWin[i]);
+    GFL_MSG_GetString(  pWork->pMsgData, POKETRADE_STR_53+i, pWork->pStrBuf );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->SerchMojiWin[i]), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
+    GFL_BMPWIN_MakeScreen(pWork->SerchMojiWin[i]);
+    GFL_BMPWIN_TransVramCharacter(pWork->SerchMojiWin[i]);
+  }
+  
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
+
+  
+  if(pWork->curIcon[CELL_CUR_SCROLLBAR]){
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
+  }
+  if(pWork->curIcon[CHAR_LEFTPAGE_MARK]){
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CHAR_LEFTPAGE_MARK], FALSE );
+  }
+
+
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ‰º‰æ–Ê‚É•¶Žš“ü—Í”Â•\Ž¦I—¹
+ * @param   IRC_POKEMON_TRADE work
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_EndSubMojiBG(IRC_POKEMON_TRADE* pWork)
+{
+  int i;
+  
+  GFL_BG_SetVisible( GFL_BG_FRAME0_S , FALSE );
+
+  if(pWork->curIcon[CELL_CUR_SCROLLBAR]){
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
+  }
+  if(pWork->curIcon[CHAR_LEFTPAGE_MARK]){
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CHAR_LEFTPAGE_MARK], TRUE );
+  }
+
+  for(i=0;i<elementof(mojitbl);i++){
+    if(pWork->SerchMojiWin[i]){
+      GFL_BMPWIN_ClearScreen(pWork->SerchMojiWin[i]);
+      GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
+      BmpWinFrame_Clear(pWork->SerchMojiWin[i], WINDOW_TRANS_OFF);
+      GFL_BMPWIN_Delete(pWork->SerchMojiWin[i]);
+      pWork->SerchMojiWin[i]=NULL;
+    }
+	}
+
+  
+}
+
