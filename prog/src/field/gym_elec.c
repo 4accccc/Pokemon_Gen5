@@ -1641,8 +1641,11 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
       OS_Printf("スクリプトコール\n");
       SCRIPT_CallScript( event, SCRID_PRG_C04GYM0101_SCR02,
           NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
-      return GMEVENT_RES_FINISH;
+      (*seq)++;
     }
+    break;
+  case 4:
+    return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
 }
