@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-17T15:20:30"/>
+	<create user="matsumiya" host="W00207" date="2009-10-17T15:50:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,9 +357,16 @@
 	<row id="msg_c06gym0101_leader_06" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>仮：d07イベント終了まで</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN" width="256">……そういえばなんだけど
+セッカシティを　とんだとき[BE:00:ページ切り替え（行送り）]
+プラズマだん　だっけ？[BE:01:ページ切り替え（クリア）]
+あの　ひとたちが　まちに
+むかってたけど　あれって　なあに？</language>
 		<language name="JPN_KANJI" width="256">……そういえばなんだけど
-セッカシティで　プラズマだん？</language>
+セッカシティを　とんだとき[BE:00:ページ切り替え（行送り）]
+プラズマだん　だっけ？[BE:01:ページ切り替え（クリア）]
+あの　ひとたちが　まちに
+むかってたけど　あれって　なあに？</language>
 	</row>
 
 	<row id="msg_c06gym0101_leader_07" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
