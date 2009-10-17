@@ -136,7 +136,29 @@ ev_leader4_btl:
 /*					ジムギミック初期化						*/
 /************************************************************/
 ev_zone_c04gym0101:
-  _GYM_ELEC_INIT( 0, 0 )
+	//イベントフラグの値を格納するワークを定義
+	DEFINE_LOCAL	TR_SW1
+	DEFINE_LOCAL	TR_SW2
+
+	//コースタートレーナーとの対戦フラグをワークに格納
+
+	//１人目のチェック
+	IF FLAG_ON( FE_C04GYM0101_TRBTL1 ) THEN
+		$TR_SW1 = 1		//対戦済みなら1を代入
+	ELSE
+		$TR_SW1 = 0		//対戦前なら0を代入
+	ENDIF
+
+	//２人目のチェック
+	IF FLAG_ON( FE_C04GYM0101_TRBTL2 ) THEN
+		$TR_SW2 = 1		//対戦済みなら1を代入
+	ELSE
+		$TR_SW2 = 0		//対戦前なら0を代入
+	ENDIF
+
+	//ジムギミック初期化コマンド　引数(0)ならトレーナー対戦前(1)なら対戦後
+	_GYM_ELEC_INIT( TR_SW1, TR_SW2 )
+
 _END
 
 
@@ -328,15 +350,15 @@ ev_trainer_btl_01:
 	_OBJ_ANIME_WAIT()
 
 	//トレーナー：戦闘前メッセージ
-	_BALLOONWIN_OBJMSG_OPEN( msg_c04gym0101_princess1_02 , C04GYM0101_TRAINER_01 )
+	_BALLOONWIN_OBJMSG_OPEN( msg_c04gym0101_prince1_02 , C04GYM0101_TRAINER_01 )
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
-//	_TRAINER_BTL_SET( TRID_PRINCESS_01, 0 )
+//	_TRAINER_BTL_SET( TRID_PRINCE_01, 0 )
 //	【仮】敗戦処理
 
 	//トレーナー：戦闘後メッセージ
-	_BALLOONWIN_OBJMSG_OPEN( msg_c04gym0101_princess1_03 , C04GYM0101_TRAINER_01 )
+	_BALLOONWIN_OBJMSG_OPEN( msg_c04gym0101_prince1_03 , C04GYM0101_TRAINER_01 )
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー：退く
@@ -358,15 +380,15 @@ ev_trainer_btl_02:
 	_OBJ_ANIME_WAIT()
 
 	//トレーナー：戦闘前メッセージ
-	_BALLOONWIN_OBJMSG_OPEN( msg_c04gym0101_prince1_02 , C04GYM0101_TRAINER_02 )
+	_BALLOONWIN_OBJMSG_OPEN( msg_c04gym0101_princess1_02 , C04GYM0101_TRAINER_02 )
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
-//	_TRAINER_BTL_SET( TRID_PRINCE_01, 0 )
+//	_TRAINER_BTL_SET( TRID_PRINCESS_01, 0 )
 //	【仮】敗戦処理
 
 	//トレーナー：戦闘後メッセージ
-	_BALLOONWIN_OBJMSG_OPEN( msg_c04gym0101_prince1_03 , C04GYM0101_TRAINER_02 )
+	_BALLOONWIN_OBJMSG_OPEN( msg_c04gym0101_princess1_03 , C04GYM0101_TRAINER_02 )
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー：退く
