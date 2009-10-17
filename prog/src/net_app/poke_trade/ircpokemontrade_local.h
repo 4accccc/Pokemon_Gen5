@@ -104,15 +104,18 @@ typedef enum
 #define _POKE_PRJORTH_TOP   (FX32_ONE*_POKE_PRJORTH_Y_COEFFICIENT)    ///< PRJORTH	→top	  :nearクリップ面上辺のY座標
 #define _POKE_PRJORTH_RIGHT (FX32_ONE*_POKE_PRJORTH_X_COEFFICIENT)  ///< PRJORTH	→right	  :nearクリップ面右辺のX座標
 
-#define _MCSS_POS_X(x) ((x*FX32_ONE)/_POKE_PRJORTH_X_COEFFICIENT)
-#define _MCSS_POS_Y(y) (((192-y)*FX32_ONE)/_POKE_PRJORTH_Y_COEFFICIENT)
+#define _MCSS_POS_X(x) (x * FX32_ONE)
+#define _MCSS_POS_Y(y) (y * FX32_ONE)
+#define _MCSS_POS_Z(z) (z * FX32_ONE)
+
+#define PSTATUS_MCSS_POS_X1 _MCSS_POS_X(-60)            //自分最初の位置X
+#define PSTATUS_MCSS_POS_X2 _MCSS_POS_X(60)             //相手最初の位置X
+#define PSTATUS_MCSS_POS_Y  _MCSS_POS_Y(-28)            //最初の位置Yは共通
 
 
-#define PSTATUS_MCSS_POS_X1 _MCSS_POS_X(60)
-#define PSTATUS_MCSS_POS_X2 _MCSS_POS_X(190)
-#define PSTATUS_MCSS_POS_Y  _MCSS_POS_Y(140)
+
 #define PSTATUS_MCSS_POS_MYZ   (0)
-#define PSTATUS_MCSS_POS_YOUZ  (1000)
+#define PSTATUS_MCSS_POS_YOUZ  (0)
 
 
 
@@ -241,10 +244,8 @@ typedef struct
   MCSS_WORK* pMcss;  ///< 動かす物体
   int   time;			   ///< トータル時間
   int   nowcount;	   ///<  現在の進行時間
-  fx32   xstart;      ///< 開始位置
-  fx32   xend;        ///< 終わり位置
-  fx32   zstart;      ///< 開始位置
-  fx32   zend;        ///< 終わり位置
+  VecFx32  start;      ///< 開始位置
+  VecFx32  end;        ///< 終わり位置
 }_POKEMCSS_MOVE_WORK;
 
 

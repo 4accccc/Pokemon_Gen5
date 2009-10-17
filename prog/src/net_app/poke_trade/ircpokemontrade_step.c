@@ -71,7 +71,7 @@ static void	_FIELD_StartPaletteFade( _EFFTOOL_PAL_FADE_WORK* epfw, u8 start_evy,
 static _EFFTOOL_PAL_FADE_WORK* _createPaletteFade(GFL_G3D_RES* g3DRES,HEAPID heapID);
 static void	_freePaletteFade( _EFFTOOL_PAL_FADE_WORK* pwk );
 static void  _EFFTOOL_CalcPaletteFade( _EFFTOOL_PAL_FADE_WORK *epfw );
-static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, fx32 xend, fx32 zend, HEAPID heapID);
+static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, HEAPID heapID);
 static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove);
 
 
@@ -190,14 +190,12 @@ static void _ballinEmitFunc(GFL_EMIT_PTR pEmiter)
   IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetTempPtr();
 
   pWork->pBallInPer = pEmiter;
-  OS_TPrintf("PAR IN %x\n",pWork->pBallInPer);
 }
 
 static void _balloutEmitFunc(GFL_EMIT_PTR pEmiter)
 {
   IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetTempPtr();
   pWork->pBallOutPer = GFL_PTC_CreateEmitterCallback(pWork->ptc, 6, NULL, pWork);
-  OS_TPrintf("PAR OUT %x\n",pWork->pBallOutPer);
 }
 
 
@@ -236,9 +234,10 @@ void _changeDemo_ModelTrade0(IRC_POKEMON_TRADE* pWork)
   _FIELD_StartPaletteFade( pWork->pModelFade, 0, 16, _POKEMON_CENTER_TIME/16, 0 );
 
 
-  pWork->pMoveMcss[0] =
-    _pokeMoveCreate(pWork->pokeMcss[0], _POKEMON_CENTER_TIME,
-                    _POKE_PRJORTH_RIGHT/2, FX32_ONE*4.5f, pWork->heapID);
+  {
+    VecFx32 pos={_POKEMON_PLAYER_CENTER_POSX,_POKEMON_PLAYER_CENTER_POSY, _POKEMON_PLAYER_CENTER_POSZ};
+    pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], _POKEMON_CENTER_TIME, &pos, pWork->heapID);
+  }
 
   MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
 
@@ -266,6 +265,7 @@ static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
     _EFFTOOL_CalcPaletteFade(pWork->pModelFade);
     _pokeMoveFunc(pWork->pMoveMcss[0]);
   }
+
   if(pWork->mcssStop[0]!=TRUE){  //アニメ終了待ち
     return;
   }
@@ -406,22 +406,27 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
     IRCPOKETRADE_PokeCreateMcss(pWork, 1, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );
     {  //初期位置設定
       VecFx32 apos;
-      apos.x = PSTATUS_MCSS_POS_X1;
-      apos.y = _MCSS_POS_Y(240);
-      apos.z = PSTATUS_MCSS_POS_MYZ;
+      apos.x = _POKEMON_PLAYER_APPEAR_POSX;
+      apos.y = _POKEMON_PLAYER_APPEAR_POSY;
+      apos.z = _POKEMON_PLAYER_APPEAR_POSZ;
       MCSS_SetPosition( pWork->pokeMcss[0] ,&apos );
-      apos.x = PSTATUS_MCSS_POS_X2;
-      apos.y = _MCSS_POS_Y(-50);
-      apos.z = PSTATUS_MCSS_POS_YOUZ;
+      apos.x = _POKEMON_PLAYER_UP_POSX;
+      apos.y = _POKEMON_PLAYER_UP_POSY;
+      apos.z = _POKEMON_PLAYER_UP_POSZ;
+      pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], _POKE_APPEAR_TIME, &apos, pWork->heapID);
+
+      apos.x = _POKEMON_FRIEND_APPEAR_POSX;
+      apos.y = _POKEMON_FRIEND_APPEAR_POSY;
+      apos.z = _POKEMON_FRIEND_APPEAR_POSZ;
       MCSS_SetPosition( pWork->pokeMcss[1] ,&apos );
+
+      apos.x = _POKEMON_FRIEND_DOWN_POSX;
+      apos.y = _POKEMON_FRIEND_DOWN_POSY;
+      apos.z = _POKEMON_FRIEND_DOWN_POSZ;
+      pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[1], _POKE_APPEAR_TIME, &apos , pWork->heapID);
+
     }
     //移動設定
-    pWork->pMoveMcss[0] =
-      _pokeMoveCreate(pWork->pokeMcss[0], _POKE_APPEAR_TIME,
-                      _MCSS_POS_X(60), _MCSS_POS_Y(140), pWork->heapID);
-    pWork->pMoveMcss[1] =
-      _pokeMoveCreate(pWork->pokeMcss[1], _POKE_APPEAR_TIME,
-                      _MCSS_POS_X(190), _MCSS_POS_Y(120), pWork->heapID);
   }
 
 
@@ -430,12 +435,18 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
     pWork->pMoveMcss[0]=NULL;
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
     pWork->pMoveMcss[1]=NULL;
-    pWork->pMoveMcss[0] =
-      _pokeMoveCreate(pWork->pokeMcss[0], _POKE_SIDEOUT_TIME,
-                      _POKEMON_PLAYER_SIDEOUT_POSX, _POKEMON_PLAYER_SIDEOUT_POSY, pWork->heapID);
-    pWork->pMoveMcss[1] =
-      _pokeMoveCreate(pWork->pokeMcss[1], _POKE_SIDEOUT_TIME,
-                      _POKEMON_FRIEND_SIDEOUT_POSX, _POKEMON_FRIEND_SIDEOUT_POSY, pWork->heapID);
+
+    {  //初期位置設定
+      VecFx32 apos;
+      apos.x = _POKEMON_PLAYER_SIDEOUT_POSX;
+      apos.y = _POKEMON_PLAYER_SIDEOUT_POSY;
+      apos.z = _POKEMON_PLAYER_SIDEOUT_POSZ;
+      pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], _POKE_SIDEOUT_TIME, &apos, pWork->heapID);
+      apos.x = _POKEMON_FRIEND_SIDEOUT_POSX;
+      apos.y = _POKEMON_FRIEND_SIDEOUT_POSY;
+      apos.z = _POKEMON_FRIEND_SIDEOUT_POSZ;
+      pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[1], _POKE_SIDEOUT_TIME, &apos , pWork->heapID);
+    }
   }
 
   if(_POKE_SIDEIN_START == pWork->anmCount){
@@ -452,35 +463,43 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
 
     {  //初期位置設定
       VecFx32 apos;
-      apos.x = _POKEMON_PLAYER_SIDEOUT_POSX;
-      apos.y = _POKEMON_PLAYER_SIDEIN_POSY;
-      apos.z = PSTATUS_MCSS_POS_MYZ;
+      apos.x = _POKEMON_PLAYER_SIDEST_POSX;
+      apos.y = _POKEMON_PLAYER_SIDEST_POSY;
+      apos.z = _POKEMON_PLAYER_SIDEST_POSZ;
       MCSS_SetPosition( pWork->pokeMcss[0] ,&apos );
-      apos.x = _POKEMON_FRIEND_SIDEOUT_POSX;
-      apos.y = _POKEMON_FRIEND_SIDEIN_POSY;
-      apos.z = PSTATUS_MCSS_POS_YOUZ;
+      apos.x = _POKEMON_PLAYER_SIDEIN_POSX;
+      apos.y = _POKEMON_PLAYER_SIDEIN_POSY;
+      apos.z = _POKEMON_PLAYER_SIDEIN_POSZ;
+      pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], _POKE_SIDEIN_TIME, &apos, pWork->heapID);
+      apos.x = _POKEMON_FRIEND_SIDEST_POSX;
+      apos.y = _POKEMON_FRIEND_SIDEST_POSY;
+      apos.z = _POKEMON_FRIEND_SIDEST_POSZ;
       MCSS_SetPosition( pWork->pokeMcss[1] ,&apos );
+      apos.x = _POKEMON_FRIEND_SIDEIN_POSX;
+      apos.y = _POKEMON_FRIEND_SIDEIN_POSY;
+      apos.z = _POKEMON_FRIEND_SIDEIN_POSZ;
+      pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[1], _POKE_SIDEIN_TIME, &apos , pWork->heapID);
 
     }
-
-    pWork->pMoveMcss[0] =
-      _pokeMoveCreate(pWork->pokeMcss[0], _POKE_SIDEIN_TIME,
-                      _POKEMON_PLAYER_SIDEIN_POSX, _POKEMON_PLAYER_SIDEIN_POSY, pWork->heapID);
-    pWork->pMoveMcss[1] =
-      _pokeMoveCreate(pWork->pokeMcss[1], _POKE_SIDEIN_TIME,
-                      _POKEMON_FRIEND_SIDEIN_POSX, _POKEMON_FRIEND_SIDEIN_POSY, pWork->heapID);
   }
   if(_POKE_LEAVE_START == pWork->anmCount){
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
     pWork->pMoveMcss[0]=NULL;
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
     pWork->pMoveMcss[1]=NULL;
-    pWork->pMoveMcss[0] =
-      _pokeMoveCreate(pWork->pokeMcss[0], _POKE_LEAVE_TIME,
-                      _POKEMON_PLAYER_LEAVE_POSX, _POKEMON_PLAYER_LEAVE_POSY, pWork->heapID);
-    pWork->pMoveMcss[1] =
-      _pokeMoveCreate(pWork->pokeMcss[1], _POKE_LEAVE_TIME,
-                      _POKEMON_FRIEND_LEAVE_POSX, _POKEMON_FRIEND_LEAVE_POSY, pWork->heapID);
+
+
+    {  //初期位置設定
+      VecFx32 apos;
+      apos.x = _POKEMON_PLAYER_LEAVE_POSX;
+      apos.y = _POKEMON_PLAYER_LEAVE_POSY;
+      apos.z = _POKEMON_PLAYER_LEAVE_POSZ;
+      pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], _POKE_LEAVE_TIME, &apos, pWork->heapID);
+      apos.x = _POKEMON_FRIEND_LEAVE_POSX;
+      apos.y = _POKEMON_FRIEND_LEAVE_POSY;
+      apos.z = _POKEMON_FRIEND_LEAVE_POSZ;
+      pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[1], _POKE_LEAVE_TIME, &apos , pWork->heapID);
+    }
   }
   if((_POKEMON_CREATE_TIME-3) == pWork->anmCount){
     IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
@@ -858,27 +877,22 @@ static void  _EFFTOOL_CalcPaletteFade( _EFFTOOL_PAL_FADE_WORK *epfw )
  *	@brief      MCSS移動命令作成
  *	@param[in]	pokeMcss   対象MCSS
  *	@param[in]	time   移動時間
- *	@param[in]	xend    Xの移動先
- *	@param[in]	zend    Zの移動先
+ *	@param[in]	pPos    最終移動先
  *	@param[in]	HEAPID  HEAPID
  */
 //-------------------------------------------------
 
-static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, fx32 xend, fx32 zend, HEAPID heapID)
+static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, HEAPID heapID)
 {
   _POKEMCSS_MOVE_WORK* pPoke = GFL_HEAP_AllocClearMemory(heapID, sizeof(_POKEMCSS_MOVE_WORK));
 
   pPoke->pMcss = pokeMcss;
-
   {
     VecFx32 apos;
     MCSS_GetPosition(pPoke->pMcss, &apos);
-
     pPoke->time = time;
-    pPoke->xend = xend;
-    pPoke->zend = zend;
-    pPoke->xstart =apos.x;
-    pPoke->zstart =apos.y;
+    GFL_STD_MemCopy(pPos, &pPoke->end, sizeof(VecFx32));
+    GFL_STD_MemCopy(&apos, &pPoke->start, sizeof(VecFx32));
   }
   return pPoke;
 
@@ -894,6 +908,16 @@ static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, fx32 
  */
 //-------------------------------------------------
 
+static fx32 _movemath(fx32 st,fx32 en,_POKEMCSS_MOVE_WORK* pMove)
+{
+  fx32 re;
+  re = en - st;
+  re = re / pMove->time;
+  re = st + re * pMove->nowcount;
+  return re;
+}
+
+
 static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
 {
   if(!pMove){
@@ -906,22 +930,15 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
   if(pMove->time != pMove->nowcount)
   {
     VecFx32 apos;
-    MCSS_GetPosition(pMove->pMcss, &apos);
 
-    apos.x = pMove->xend - pMove->xstart;
-    apos.x = apos.x / pMove->time;
-    apos.x = pMove->xstart + apos.x * pMove->nowcount;
-    apos.y = pMove->zend - pMove->zstart;
-    apos.y = apos.y / pMove->time;
-    apos.y = pMove->zstart + apos.y * pMove->nowcount;
+    apos.x = _movemath(pMove->start.x, pMove->end.x ,pMove);
+    apos.y = _movemath(pMove->start.y, pMove->end.y ,pMove);
+    apos.z = _movemath(pMove->start.z, pMove->end.z ,pMove);
+    
     MCSS_SetPosition( pMove->pMcss ,&apos );
   }
   else{
-    VecFx32 apos;
-    MCSS_GetPosition(pMove->pMcss, &apos);
-    apos.x = pMove->xend;
-    apos.y = pMove->zend;
-    MCSS_SetPosition( pMove->pMcss ,&apos );
+    MCSS_SetPosition( pMove->pMcss ,&pMove->end );
   }
 }
 

@@ -160,11 +160,11 @@ void IRCPOKETRADE_PokeCreateMcss( IRC_POKEMON_TRADE *pWork ,int no, int bFront, 
 
   if(bFront){
     MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_FRONT );
-    z=0;
+    z=PSTATUS_MCSS_POS_MYZ;
   }
   else{
     MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_BACK );
-    z=1000;
+    z=PSTATUS_MCSS_POS_YOUZ;
   }
   pWork->pokeMcss[no] = MCSS_Add( pWork->mcssSys , xpos[no] , PSTATUS_MCSS_POS_Y , z , &addWork );
   MCSS_SetScale( pWork->pokeMcss[no] , &scale );

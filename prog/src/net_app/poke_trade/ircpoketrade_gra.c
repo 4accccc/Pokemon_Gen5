@@ -1074,7 +1074,7 @@ static void Graphic_3d_SetUp( void )
   }
 
   //レンダリングスワップバッファ
-  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
+//  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
   G2_SetBG0Priority(2);
 }
 
@@ -1089,8 +1089,8 @@ void IRC_POKETRADE_3DGraphicSetUp( IRC_POKEMON_TRADE* pWork )
 {
   //3D系の初期化
   { //3D系の設定
-    static const VecFx32 cam_pos = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(1010.0f)};
-    static const VecFx32 cam_target = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(900.0f)};
+    static const VecFx32 cam_pos = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(200.0f)};
+    static const VecFx32 cam_target = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(0.0f)};
     static const VecFx32 cam_up = {0,FX32_ONE,0};
     //エッジマーキングカラー
     static  const GXRgb edge_color_table[8]=
@@ -1098,15 +1098,17 @@ void IRC_POKETRADE_3DGraphicSetUp( IRC_POKEMON_TRADE* pWork )
     GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
                   0, pWork->heapID, Graphic_3d_SetUp );
 
- //   GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
+    //GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
     
 #if 1
 
-    //正射影カメラ
+    pWork->pCamera   = GFL_G3D_CAMERA_CreateDefault( &cam_pos, &cam_target, pWork->heapID );
+#else    
+    //透視射影
     pWork->pCamera =  GFL_G3D_CAMERA_Create( GFL_G3D_PRJORTH,
                                              FX32_ONE*12.0f,
-                                             0,
-                                             0,
+                                             FX32_ONE*-12.0f,
+                                             FX32_ONE*-16.0f,
                                              FX32_ONE*16.0f,
                                              (FX32_ONE),
                                              (FX32_ONE*300),
@@ -1115,6 +1117,7 @@ void IRC_POKETRADE_3DGraphicSetUp( IRC_POKEMON_TRADE* pWork )
                                              &cam_up,
                                              &cam_target,
                                              pWork->heapID );
+#endif
 
     GFL_G3D_CAMERA_Switching( pWork->pCamera );
     //エッジマーキングカラーセット
@@ -1122,7 +1125,6 @@ void IRC_POKETRADE_3DGraphicSetUp( IRC_POKEMON_TRADE* pWork )
     G3X_EdgeMarking( TRUE );
 
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );
-#endif
 
   }
 }
