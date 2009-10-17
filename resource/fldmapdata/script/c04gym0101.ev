@@ -132,7 +132,7 @@ ev_leader4_btl:
 /*					ジムギミック初期化						*/
 /************************************************************/
 ev_zone_c04gym0101:
-  _GYM_ELEC_INIT(1,1)
+  _GYM_ELEC_INIT( FE_C04GYM0101_TRBTL1, FE_C04GYM0101_TRBTL2)
 _END
 
 
