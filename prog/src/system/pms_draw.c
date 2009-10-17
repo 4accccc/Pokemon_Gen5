@@ -29,7 +29,8 @@
 ///	要素ごとの管理データ
 //==============================================================
 typedef struct {
-  PRINT_UTIL   print_util;
+  BOOL          b_useflag;
+  PRINT_UTIL    print_util;
   GFL_BMPWIN*   win;
   GFL_CLWK*     clwk[2];
 } PMS_DRAW_UNIT;
@@ -58,6 +59,8 @@ struct _PMS_DRAW_WORK {
 static void _unit_init( PMS_DRAW_UNIT* unit );
 static void _unit_exit( PMS_DRAW_UNIT* unit );
 static BOOL _unit_proc( PMS_DRAW_UNIT* unit, PRINT_QUE* que );
+static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* font, GFL_BMPWIN* win, PMS_DATA* pms, HEAPID heap_id );
+static void _unit_clear( PMS_DRAW_UNIT* unit );
 
 //=============================================================================
 /**
@@ -147,13 +150,14 @@ void PMS_DRAW_Exit( PMS_DRAW_WORK* wk )
 {
   int i;
 
-  // @TODO OBJの強制終了に注意
-
+  // 表示ユニットワーク終了処理
   for( i=0; i<wk->unit_num; i++ )
   {
     _unit_exit( &wk->unit[i] );
-    GFL_HEAP_FreeMemory( wk->unit );
   }
+    
+  // 表示ユニットワークを一括フリー
+  GFL_HEAP_FreeMemory( wk->unit );
 
   // ヒープ開放
   GFL_HEAP_FreeMemory( wk );
@@ -165,7 +169,7 @@ void PMS_DRAW_Exit( PMS_DRAW_WORK* wk )
  *
  *	@param	PMS_DRAW_WORK* wk
  *	@param	win
- *	@param	data
+ *	@param	pms
  *	@param	id 
  *
  *	@retval
@@ -174,25 +178,12 @@ void PMS_DRAW_Exit( PMS_DRAW_WORK* wk )
 // @TODO 先勝ちで動作させる
 void PMS_DRAW_Print( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8 id )
 { 
-  STRBUF* buf;
   PMS_DRAW_UNIT* unit;
 
-  GF_ASSERT( wk && pms && win );
+  GF_ASSERT( wk && win && pms );
   GF_ASSERT( id < wk->unit_num );
 
-  unit = &wk->unit[id];
-
-  // プリント設定初期化
-  PRINT_UTIL_Setup( &unit->print_util, win );
-
-  // プリントリクエスト
-  buf = PMSDAT_ToString( pms, wk->heap_id );
-  PRINT_UTIL_Print( &unit->print_util, wk->print_que, 0, 0, buf, wk->font );
-  GFL_STR_DeleteBuffer( buf );
-      
-  // 転送
-	GFL_BMPWIN_MakeScreen( unit->print_util.win );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( unit->print_util.win) );
+  _unit_print( &wk->unit[id], wk->print_que, wk->font, win, pms, wk->heap_id );
     
   // PROCを通るまでは転送されない
   wk->b_print_end = FALSE;
@@ -226,6 +217,12 @@ BOOL PMS_DRAW_IsPrintEnd( PMS_DRAW_WORK* wk, u8 id )
 //-----------------------------------------------------------------------------
 void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id )
 { 
+  PMS_DRAW_UNIT* unit;
+
+  GF_ASSERT( wk );
+  GF_ASSERT( id < wk->unit_num );
+  
+  _unit_clear( &wk->unit[id] );
 }
 
 
@@ -246,7 +243,7 @@ void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id )
 //-----------------------------------------------------------------------------
 static void _unit_init( PMS_DRAW_UNIT* unit )
 {
-//  PRINT_UTIL_Setup( &unit->print_util, unit->win );
+  unit->b_useflag = FALSE;
   // @TODO アクター初期化
 }
 
@@ -269,7 +266,9 @@ static void _unit_exit( PMS_DRAW_UNIT* unit )
   GFL_BMPWIN_Delete( win );
 
   // @TODO アクター解放
-  GFL_HEAP_FreeMemory( unit );
+  
+  // @TODO OBJの強制終了に注意
+
 }
 
 //-----------------------------------------------------------------------------
@@ -279,7 +278,7 @@ static void _unit_exit( PMS_DRAW_UNIT* unit )
  *	@param	PMS_DRAW_UNIT* unit
  *	@param	que 
  *
- *	@retval
+ *  @retval BOOL	まだ転送が終わっていない場合はTRUE／それ以外FALSE
  */
 //-----------------------------------------------------------------------------
 static BOOL _unit_proc( PMS_DRAW_UNIT* unit, PRINT_QUE* que )
@@ -296,5 +295,60 @@ static BOOL _unit_proc( PMS_DRAW_UNIT* unit, PRINT_QUE* que )
   return doing;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  表示ユニット プリント
+ *
+ *	@param	PMS_DRAW_UNIT* unit
+ *	@param	print_que
+ *	@param	font
+ *	@param	win
+ *	@param	pms
+ *	@param	heap_id 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* font, GFL_BMPWIN* win, PMS_DATA* pms, HEAPID heap_id )
+{
+  STRBUF* buf;
 
+  GF_ASSERT( unit->b_useflag == FALSE );
 
+  // プリント設定初期化
+  PRINT_UTIL_Setup( &unit->print_util, win );
+
+  // プリントリクエスト
+  buf = PMSDAT_ToString( pms, heap_id );
+  PRINT_UTIL_Print( &unit->print_util, print_que, 0, 0, buf, font );
+  GFL_STR_DeleteBuffer( buf );
+ 
+  unit->b_useflag = TRUE;
+      
+  // 転送
+	GFL_BMPWIN_MakeScreen( unit->print_util.win );
+	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( unit->print_util.win) );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  表示ユニット クリア
+ *
+ *	@param	PMS_DRAW_UNIT* unit 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void _unit_clear( PMS_DRAW_UNIT* unit )
+{
+  GF_ASSERT( unit->b_useflag == FALSE );
+
+  // スクリーンをクリアして転送
+	GFL_BMPWIN_ClearScreen( unit->print_util.win );
+	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( unit->print_util.win) );
+
+  // @TODO 画像非表示
+
+  unit->b_useflag = FALSE;
+
+}

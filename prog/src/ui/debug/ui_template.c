@@ -1564,15 +1564,21 @@ static void PrintTool_PrintHP( UI_TEMPLATE_MAIN_WORK * wk )
 //-----------------------------------------------------------------------------
 static void UITemplate_PMSDRAW_Init( UI_TEMPLATE_MAIN_WORK* wk )
 {
+  enum 
+  { 
+    PMS_DRAW_NUM = 2, 
+  };
+
 	GFL_CLUNIT	*clunit;
   
   clunit        = UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
-  wk->pms_draw  = PMS_DRAW_Init( clunit, wk->print_que, wk->font, PLTID_OBJ_PMS_DRAW, 1 ,wk->heapID );
+  wk->pms_draw  = PMS_DRAW_Init( clunit, wk->print_que, wk->font, PLTID_OBJ_PMS_DRAW, PMS_DRAW_NUM ,wk->heapID );
   
   {
     GFL_BMPWIN* win;
     PMS_DATA pms;
     
+    // 1個目
     win = GFL_BMPWIN_Create(
         BG_FRAME_TEXT_S,					// ＢＧフレーム
         2, 0,									  	// 表示座標(キャラ単位)
@@ -1583,6 +1589,18 @@ static void UITemplate_PMSDRAW_Init( UI_TEMPLATE_MAIN_WORK* wk )
     PMSDAT_SetDebug( &pms );
 
     PMS_DRAW_Print( wk->pms_draw, win, &pms ,0 );
+
+    // 2個目
+    win = GFL_BMPWIN_Create(
+        BG_FRAME_TEXT_S,					// ＢＧフレーム
+        2, 6,									  	// 表示座標(キャラ単位)
+        28, 4,    							  // 表示サイズ
+        15,												// パレット
+        GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
+    
+    PMSDAT_SetDebugRandom( &pms );
+
+    PMS_DRAW_Print( wk->pms_draw, win, &pms ,1 );
   }
 }
 
