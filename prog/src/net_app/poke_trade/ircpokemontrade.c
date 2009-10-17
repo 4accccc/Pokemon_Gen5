@@ -86,6 +86,7 @@ static BOOL _PokemonsetAndSendData(IRC_POKEMON_TRADE* pWork);
 static void _recvFriendScrollBar(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _changeFinish(IRC_POKEMON_TRADE* pWork);
 static void _networkFriendsStandbyWait2(IRC_POKEMON_TRADE* pWork);
+static void _touchStateCommon(IRC_POKEMON_TRADE* pWork);
 
 
 
@@ -1558,6 +1559,16 @@ static void _startSearchMojiState(IRC_POKEMON_TRADE* pWork)
 
 /// 基本ステート。タッチ操作で他のアクションに飛ぶ
 static void _touchState(IRC_POKEMON_TRADE* pWork)
+{
+
+  IRC_POKETRADE_ReturnPageMarkDisp(pWork,APP_COMMON_BARICON_RETURN);
+  IRC_POKETRADE_LeftPageMarkDisp(pWork,APP_COMMON_BARICON_CURSOR_UP);
+  _CHANGE_STATE(pWork,_touchStateCommon);
+
+}
+
+
+static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
 {
   u32 x,y,i;
   GFL_CLACTPOS pos;

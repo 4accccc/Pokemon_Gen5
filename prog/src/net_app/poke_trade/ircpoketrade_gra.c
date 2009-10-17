@@ -249,7 +249,8 @@ void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork,int pokeposx, int bgty
   }
 	G2S_SetBlendAlpha( GFL_BG_FRAME2_S, GFL_BG_FRAME1_S , 16, 3 );
   //G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , -8 );
-  
+  GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
+
 	GFL_ARC_CloseDataHandle( p_handle );
 
 }
@@ -261,6 +262,7 @@ void IRC_POKETRADE_SubStatusEnd(IRC_POKEMON_TRADE* pWork)
   G2S_BlendNone();
   GFL_BG_ClearScreen(GFL_BG_FRAME1_S);  //自分ステータス
   GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
+  GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
 
 }
 
@@ -1418,6 +1420,48 @@ void IRC_POKETRADE_ResetMainStatusBG(IRC_POKEMON_TRADE* pWork)
   pWork->cellRes[CHAR_SELECT_POKEICON1]=0;
   pWork->cellRes[CHAR_SELECT_POKEICON2]=0;
 }
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   リターンページマーク表示
+ * @param   IRC_POKEMON_TRADE work
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_ReturnPageMarkDisp(IRC_POKEMON_TRADE* pWork,int no)
+{
+
+  IRC_POKETRADE_ReturnPageMarkRemove( pWork);
+
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 256-8-16;
+    cellInitData.pos_y = 8*20-4;
+    cellInitData.anmseq = no;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+    pWork->curIcon[CHAR_RETURNPAGE_MARK] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                             pWork->cellRes[CHAR_COMMON],
+                                             pWork->cellRes[PLT_COMMON],
+                                             pWork->cellRes[ANM_COMMON],
+                                             &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CHAR_RETURNPAGE_MARK] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CHAR_RETURNPAGE_MARK], TRUE );
+  }
+
+}
+
+
+void IRC_POKETRADE_ReturnPageMarkRemove(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->curIcon[CHAR_RETURNPAGE_MARK]){
+    GFL_CLACT_WK_Remove(pWork->curIcon[CHAR_RETURNPAGE_MARK]);
+    pWork->curIcon[CHAR_RETURNPAGE_MARK]=NULL;
+  }
+}
+
 
 
 //------------------------------------------------------------------------------

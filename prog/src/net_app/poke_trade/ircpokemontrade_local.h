@@ -191,6 +191,7 @@ typedef enum
   CELL_CUR_POKE_PLAYER,
   CELL_CUR_POKE_FRIEND,
   CHAR_LEFTPAGE_MARK,
+  CHAR_RETURNPAGE_MARK,
   
   CELL_DISP_NUM
 } _CELL_DISP_TYPE;
@@ -469,6 +470,8 @@ extern void IRC_POKETRADE_LeftPageMarkRemove(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_LeftPageMarkDisp(IRC_POKEMON_TRADE* pWork,int no);
 extern void IRC_POKETRADE_InitSubMojiBG(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_EndSubMojiBG(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_ReturnPageMarkDisp(IRC_POKEMON_TRADE* pWork,int no);
+extern void IRC_POKETRADE_ReturnPageMarkRemove(IRC_POKEMON_TRADE* pWork);
 
 
 #if _TRADE_DEBUG

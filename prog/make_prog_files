@@ -27,6 +27,7 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/wifihistory.c \
         savedata/wifi_status.c \
         savedata/wifilist.c \
+        savedata/wifi_negotiation.c \
         savedata/mystery_data.c \
         savedata/musical_save.c \
         savedata/randommap_save.c \
