@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-17T17:57:48"/>
+	<create user="matsumiya" host="W00207" date="2009-10-17T19:29:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="226"/>
+		<comment position="4" width="279"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,80 +292,125 @@
 	</lock>
 
 
-	<row id="msg_c07r0401_woman2_01">
-		<comment>♀：なつき度チェック
-・なつき度をチェックして対応したメッセージに続く
-0＝先頭のポケモン
-
-※仮メッセージ</comment>
-		<attribute name="キャラ指定">お洒落姉さん</attribute>
-		<language name="JPN" width="256">だいすきクラブへ　ようこそ！
-あら　あなたの　[1:01:ポケモン種族名:0]……▼</language>
-		<language name="JPN_KANJI" width="256">だいすきクラブへ　ようこそ！
-あら　あなたの　[1:01:ポケモン種族名:0]……▼</language>
+	<row id="msg_c07r0401_gentleman_01">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">GENTLEMAN
+紳士</attribute>
+		<language name="JPN" width="256">ウォッホン！[BE:01:ページ切り替え（クリア）]
+わたくし　せかいかっこくに　ある
+ポケモンだいすきクラブの　なかでも[BE:00:ページ切り替え（行送り）]
+いちばん　ポケモンが　すきな[BE:00:ページ切り替え（行送り）]
+かいちょう　なのであります！</language>
+		<language name="JPN_KANJI" width="256">ウォッホン！[BE:01:ページ切り替え（クリア）]
+わたくし　せかいかっこくに　ある
+ポケモンだいすきクラブの　なかでも[BE:00:ページ切り替え（行送り）]
+いちばん　ポケモンが　すきな[BE:00:ページ切り替え（行送り）]
+かいちょう　なのであります！</language>
 	</row>
 
-	<row id="msg_c07r0401_woman2_02">
+	<row id="msg_c07r0401_woman2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：なつき度チェック
-・なつき度255</comment>
+・はい/いいえの選択肢
+・はい→ポケモンリスト画面へ
+　いいえ→終了
+
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">WOMAN2
+お洒落姉さん</attribute>
+		<language name="JPN" width="256">だいすきクラブへ　ようこそ！
+あら　あなたの　[1:01:ポケモン種族名:0]……▼</language>
+		<language name="JPN_KANJI" width="256">だいすきクラブへ　ようこそ！▼
+ポケモンと　あなたが
+どれだけ　なかよしか　みましょうか？</language>
+	</row>
+
+	<row id="msg_c07r0401_woman2_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>・はい/いいえの選択肢
+・はい→ポケモンリスト画面へ
+　いいえ→終了</comment>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256">ほかの　ポケモンとも
+なかよしか　どうか　みましょうか？</language>
+	</row>
+
+	<row id="msg_c07r0401_woman2_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀：なつき度チェック
+・タマゴ選択時</comment>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256">タマゴと　なかよしか　どうかは
+あたしにも　ちょっと　わからないわ</language>
+	</row>
+
+	<row id="msg_c07r0401_woman2_04" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>・はい選択時
+・なつき度をチェックして対応したメッセージに続く
+0＝選んだポケモン</comment>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256">あら　あなたの　[1:01:ポケモン種族名:0]……▼</language>
+	</row>
+
+	<row id="msg_c07r0401_woman2_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・なつき度255
+・続けてmsg_c07r0401_woman2_02</comment>
 		<language name="JPN" width="256">ものすごく　なついてるわね！
 みてて　こっちが　てれちゃう！！</language>
 		<language name="JPN_KANJI" width="256">ものすごく　なついてるわね！
-みてて　こっちが　てれちゃう！！</language>
+みてて　こっちが　てれちゃう！！▼</language>
 	</row>
 
-	<row id="msg_c07r0401_woman2_03">
-		<comment>♀：なつき度チェック
-・なつき度200～254</comment>
+	<row id="msg_c07r0401_woman2_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・なつき度200～254
+・続けてmsg_c07r0401_woman2_02</comment>
 		<language name="JPN" width="256">すごく　なついてるわね！
 あなたが　やさしいのが　わかるわ</language>
 		<language name="JPN_KANJI" width="256">すごく　なついてるわね！
-あなたが　やさしいのが　わかるわ</language>
+あなたが　やさしいのが　わかるわ▼</language>
 	</row>
 
-	<row id="msg_c07r0401_woman2_04">
-		<comment>♀：なつき度チェック
-・なつき度150～199</comment>
+	<row id="msg_c07r0401_woman2_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・なつき度150～199
+・続けてmsg_c07r0401_woman2_02</comment>
 		<language name="JPN" width="256">なついてるわね
 あなたと　いると　しあわせ　なのね</language>
 		<language name="JPN_KANJI" width="256">なついてるわね
-あなたと　いると　しあわせ　なのね</language>
+あなたと　いると　しあわせ　なのね▼</language>
 	</row>
 
-	<row id="msg_c07r0401_woman2_05">
-		<comment>♀：なつき度チェック
-・なつき度100～149</comment>
+	<row id="msg_c07r0401_woman2_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・なつき度100～149
+・続けてmsg_c07r0401_woman2_02</comment>
 		<language name="JPN" width="256">うん　すこし　なついてる
 そんな　かんじかしら</language>
 		<language name="JPN_KANJI" width="256">うん　すこし　なついてる
-そんな　かんじかしら</language>
+そんな　かんじかしら▼</language>
 	</row>
 
-	<row id="msg_c07r0401_woman2_06">
-		<comment>♀：なつき度チェック
-・なつき度50～99</comment>
+	<row id="msg_c07r0401_woman2_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・なつき度50～99
+・続けてmsg_c07r0401_woman2_02</comment>
 		<language name="JPN" width="256">ふつうの　かんけい　って　かんじね
 これから　どうなるかは　あなたしだい</language>
 		<language name="JPN_KANJI" width="256">ふつうの　かんけい　って　かんじね
-これから　どうなるかは　あなたしだい</language>
+これから　どうなるかは　あなたしだい▼</language>
 	</row>
 
-	<row id="msg_c07r0401_woman2_07">
-		<comment>♀：なつき度チェック
-・なつき度1～49</comment>
+	<row id="msg_c07r0401_woman2_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・なつき度1～49
+・続けてmsg_c07r0401_woman2_02</comment>
 		<language name="JPN" width="256">うーん……
 ちょっと　きらわれているかも</language>
 		<language name="JPN_KANJI" width="256">うーん……
-ちょっと　きらわれているかも</language>
+ちょっと　きらわれているかも▼</language>
 	</row>
 
-	<row id="msg_c07r0401_woman2_08">
-		<comment>♀：なつき度チェック
-・なつき度0</comment>
+	<row id="msg_c07r0401_woman2_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・なつき度0
+・続けてmsg_c07r0401_woman2_02</comment>
 		<language name="JPN" width="256">あらら……　ひょっとして
 すごく　きらわれているかも？</language>
 		<language name="JPN_KANJI" width="256">あらら……　ひょっとして
-すごく　きらわれているかも？</language>
+ものすごく　きらわれているかも？▼</language>
 	</row>
 
 	<flowchart-group-list>
