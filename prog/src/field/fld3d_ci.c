@@ -253,7 +253,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       //3Ｄモデル1アニメ再生
       rc2 = PlayMdlAnm1(ptr);
       //3Ｄモデル2アニメ再生
-      rc3 = PlayMdlAnm1(ptr);
+      rc3 = PlayMdlAnm2(ptr);
 
       if (rc1&&rc2&&rc3){
         (*seq)++;
