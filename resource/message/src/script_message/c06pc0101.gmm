@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-17T15:29:14"/>
+	<create user="matsumiya" host="W00207" date="2009-10-17T17:55:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -302,35 +302,31 @@
 ※仮メッセージ</comment>
 		<attribute name="キャラ指定">MAN1
 青年１</attribute>
-		<language name="JPN" width="256">オイラ　めざめちゃったぜ！▼
-なにに　めざめたか？▼
-それは　ポケモンが
+		<language name="JPN" width="256">わたくし　ポケモンが
 めざめるパワーを　おぼえたとき▼
-どの　タイプの　わざに　なるのか
-わかるように　なったのです！　すげー▼
-どうだ？　おまえの　ポケモンが
-どの　タイプの　めざめるパワーを▽
-おぼえるか　オイラが　みてやるぜ！</language>
-		<language name="JPN_KANJI" width="256">オイラ　めざめちゃったぜ！▼
-なにに　めざめたか？▼
-それは　ポケモンが
+どのタイプの　わざに　なるのか
+わかるのです▼
+そなたの　ポケモンが
+どのタイプの　めざめるパワーを▽
+おぼえるか　みてしんぜよう！</language>
+		<language name="JPN_KANJI" width="256">わたくし　ポケモンが
 めざめるパワーを　おぼえたとき▼
-どの　タイプの　わざに　なるのか
-わかるように　なったのです！　すげー▼
-どうだ？　おまえの　ポケモンが
-どの　タイプの　めざめるパワーを▽
-おぼえるか　オイラが　みてやるぜ！</language>
+どのタイプの　わざに　なるのか
+わかるのです▼
+そなたの　ポケモンが
+どのタイプの　めざめるパワーを▽
+おぼえるか　みてしんぜよう！</language>
 	</row>
 
 	<row id="msg_c06pc0101_man1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・2回目以降</comment>
-		<language name="JPN" width="256">おまえの　ポケモンが　どの　タイプの
+		<language name="JPN" width="256">そなたの　ポケモンが　どのタイプの
 めざめるパワーを　おぼえるか▽
-めざめた　オイラが　みてやるぜ！</language>
-		<language name="JPN_KANJI" width="256">おまえの　ポケモンが　どの　タイプの
+めざめた　わたくしが　みてしんぜよう</language>
+		<language name="JPN_KANJI" width="256">そなたの　ポケモンが　どのタイプの
 めざめるパワーを　おぼえるか▽
-めざめた　オイラが　みてやるぜ！</language>
+めざめた　わたくしが　みてしんぜよう</language>
 	</row>
 
 	<row id="msg_c06pc0101_man1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -349,10 +345,12 @@
 		<comment>♂
 ・選んだポケモンが
 　「めざめるパワー」を覚えている</comment>
-		<language name="JPN" width="256">この　ポケモンが　つかえる
-めざめるパワーは　「[1:03:ポケモンタイプ:0]」！</language>
-		<language name="JPN_KANJI" width="256">この　ポケモンが　つかえる
-めざめるパワーは　「[1:03:ポケモンタイプ:0]」！</language>
+		<language name="JPN" width="256">この　ポケモンが
+つかう　めざめるパワーの▽
+タイプは　「[1:03:ポケモンタイプ:0]」！</language>
+		<language name="JPN_KANJI" width="256">この　ポケモンが
+つかう　めざめるパワーの▽
+タイプは　「[1:03:ポケモンタイプ:0]」！</language>
 	</row>
 
 	<row id="msg_c06pc0101_man1_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -360,26 +358,27 @@
 ・いいえ選択
 ・リスト画面で「やめる」選択</comment>
 		<language name="JPN" width="256">しりたくなったら
-めざめた　オイラに　きいてくれよ！</language>
+めざめた　わたくしに　きいてください</language>
 		<language name="JPN_KANJI" width="256">しりたくなったら
-めざめた　オイラに　きいてくれよ！</language>
+めざめた　わたくしに　きいてください</language>
 	</row>
 
 	<row id="msg_c06pc0101_man1_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・リスト画面で「タマゴ」選択</comment>
-		<language name="JPN" width="256">タマゴが　おぼえる　わざ！？
-そりゃ　さすがに　ムリだって！</language>
-		<language name="JPN_KANJI" width="256">タマゴが　おぼえる　わざ！？
-そりゃ　さすがに　ムリだって！</language>
+		<language name="JPN" width="256">タマゴが　めざめるパワーを
+つかうのは　むり　ですな！</language>
+		<language name="JPN_KANJI" width="256">タマゴが　めざめるパワーを
+つかうのは　むり　ですな！</language>
 	</row>
 
 	<row id="msg_c06pc0101_man1_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・リスト画面で「タマゴ」選択</comment>
-		<language name="JPN" width="256">うーん！　この　ポケモンは
+・選んだポケモンが
+　「めざめるパワー」を覚えられない</comment>
+		<language name="JPN" width="256">ざんねんだが　この　ポケモンは
 めざめるパワーを　おぼえられない！</language>
-		<language name="JPN_KANJI" width="256">うーん！　この　ポケモンは
+		<language name="JPN_KANJI" width="256">ざんねんだが　この　ポケモンは
 めざめるパワーを　おぼえられない！</language>
 	</row>
 
@@ -389,10 +388,10 @@
 パイロット</attribute>
 		<language name="JPN" width="256">フィールドわざ　そらをとぶ　は
 いままでに　いったことのある[BE:00:ページ切り替え（行送り）]
-まちに　ひとっとびでいける　わざだよ</language>
+まちに　ひとっとびできる　わざだよ</language>
 		<language name="JPN_KANJI" width="256">フィールドわざ　そらをとぶ　は
-いままでに　いったことのある[BE:00:ページ切り替え（行送り）]
-まちに　ひとっとびでいける　わざだよ</language>
+今までに　行ったことのある[BE:00:ページ切り替え（行送り）]
+街に　ひとっとびできる　わざだよ</language>
 	</row>
 
 	<flowchart-group-list>
