@@ -414,8 +414,6 @@ static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int ne
   ITEMDISP_PocketMessage(pWork, newpocket);
   ITEMDISP_ChangePocketCell( pWork,newpocket );
   ITEMDISP_ItemInfoWindowChange(pWork,newpocket);
-
-  SORT_ModeReset( pWork );
 }
 //-----------------------------------------------------------------------------
 /**
@@ -915,7 +913,10 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     }
     if(oldpocket != pWork->pocketno)
     {
+      // ポケットカーソル移動
       _pocketCursorChange(pWork, oldpocket, pWork->pocketno);
+      // ソートボタン表示切替
+      SORT_ModeReset( pWork );
       bChange = TRUE;
     }
   }
@@ -1159,9 +1160,8 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
 static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
 {
   pWork->InputNum = 1;  //初期化
-  
-  // ソートボタンを押せない表現に
-  GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 4 );
+
+  BTN_StateChange( pWork, FALSE );
 
   // 数値入力開始
   InputNum_Start( pWork, BAG_INPUT_MODE_TRASH );
@@ -1196,8 +1196,7 @@ static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
 {
-  // ソートボタンを押せない表現に
-  GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 4 );
+  BTN_StateChange( pWork, FALSE );
   
   // 買えないもの判定
   {
@@ -1432,9 +1431,8 @@ static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
   
   // おこづかい表示終了
   ITEMDISP_GoldDispOut( pWork );
-  
-  // ソートボタン復帰
-  SORT_ModeReset( pWork );
+
+  BTN_StateChange( pWork, TRUE );
 
   _CHANGE_STATE( pWork, _itemKindSelectMenu );
 }
@@ -1883,6 +1881,8 @@ static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork )
 {
   pWork->sort_mode = 0;
 
+  HOSAKA_Printf("pocketno:%d\n", pWork->pocketno);
+
   // ワザマシンはソート不可能
   if( pWork->pocketno == BAG_POKE_WAZA )
   {
@@ -1953,7 +1953,7 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief
+ *	@brief  ボタンの状態変化
  *
  *	@param	FIELD_ITEMMENU_WORK* pWork
  *	@param	on_off 
@@ -1970,7 +1970,8 @@ static void BTN_StateChange( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
   }
   else
   {
-  
+    // ソートボタンを押せない表現に
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 4 );
   }
 }
 
@@ -2420,8 +2421,11 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   }
   
   if(pocketno != -1){
+    // ポケットカーソル移動
     _pocketCursorChange(pWork, pWork->pocketno, pocketno);
     pWork->pocketno = pocketno;
+    // ソートボタン表示切替
+    SORT_ModeReset( pWork );
     _windowRewrite(pWork);
     // ポケット切替
     KTST_SetDraw( pWork, FALSE );

@@ -13,6 +13,9 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+// 簡易会話表示システム
+#include "system/pms_draw.h"
+
 //テクスチャをOAMに転送
 #include "system/nsbtx_to_clwk.h"
 
@@ -89,6 +92,7 @@
 #define UI_TEMPLATE_OAM_MAPMODEL  // マップモデルをOAMで表示
 #define UI_TEMPLATE_POKE2D				// ポケモンBG,OBJ読みこみ
 #define UI_TEMPLATE_BALL					// ボールアイコン読みこみ
+#define UI_TEMPLATE_PMSDRAW       // 簡易会話表示
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -99,7 +103,7 @@ FS_EXTERN_OVERLAY(ui_common);
 //=============================================================================
 enum
 { 
-  UI_TEMPLATE_HEAP_SIZE = 0x24000,  ///< ヒープサイズ
+  UI_TEMPLATE_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
 };
 
 
@@ -112,6 +116,7 @@ enum
 	BG_FRAME_POKE_M	= GFL_BG_FRAME2_M,
 	BG_FRAME_BACK_M	= GFL_BG_FRAME3_M,
 	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
+  BG_FRAME_TEXT_S = GFL_BG_FRAME0_S, 
 };
 //-------------------------------------
 ///	パレット
@@ -137,6 +142,7 @@ enum
   PLTID_OBJ_POKE_M = 12,
   PLTID_OBJ_BALLICON_M = 13, // 1本使用
 	//サブOBJ
+  PLTID_OBJ_PMS_DRAW = 0, // 2-5本使用 // @TODO 未定
 };
 
 //=============================================================================
@@ -229,12 +235,15 @@ typedef struct
   GFL_CLWK                  *clwk_ball;
 #endif //UI_TEMPLATE_BALL
 
-
 #ifdef	UI_TEMPLATE_PRINT_TOOL
 	//プリントユーティリティ
 	PRINT_UTIL								print_util;
 	u32												seq;
 #endif	//UI_TEMPLATE_PRINT_TOOL
+
+#ifdef UI_TEMPLATE_PMSDRAW
+  PMS_DRAW_WORK*            pms_draw;
+#endif //UI_TEMPLATE_PMSDRAW
 
 } UI_TEMPLATE_MAIN_WORK;
 
@@ -351,6 +360,17 @@ static void UITemplate_POKE2D_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk );
 static void UITemplate_BALLICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, BALL_ID ballID, GFL_CLUNIT *unit, HEAPID heapID );
 static void UITemplate_BALLICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk );
 #endif //UI_TEMPLATE_BALL
+
+
+#ifdef UI_TEMPLATE_PMSDRAW
+//-------------------------------------
+///	簡易会話表示
+//=====================================
+static void UITemplate_PMSDRAW_Init( UI_TEMPLATE_MAIN_WORK* wk );
+static void UITemplate_PMSDRAW_Exit( UI_TEMPLATE_MAIN_WORK* wk );
+static void UITemplate_PMSDRAW_Proc( UI_TEMPLATE_MAIN_WORK* wk );
+#endif // UI_TEMPLATE_PMSDRAW
+
 
 //=============================================================================
 /**
@@ -502,6 +522,10 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
   }
 #endif //UI_TEMPLATE_BALL
 
+#ifdef UI_TEMPLATE_PMSDRAW  
+  UITemplate_PMSDRAW_Init( wk );
+#endif //UI_TEMPLATE_PMSDRAW
+
 	//@todo	フェードシーケンスがないので
 	GX_SetMasterBrightness(0);
 	GXS_SetMasterBrightness(0);
@@ -579,6 +603,10 @@ static GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk,
 	UITemplate_INFOWIN_Exit();
 #endif //UI_TEMPLATE_INFOWIN
 
+#ifdef UI_TEMPLATE_PMSDRAW
+  UITemplate_PMSDRAW_Exit( wk );
+#endif //UI_TEMPLATE_PMSDRAW
+
 	//メッセージ破棄
 	GFL_MSG_Delete( wk->msg );
 
@@ -640,16 +668,20 @@ static GFL_PROC_RESULT UITemplateProc_Main( GFL_PROC *proc, int *seq, void *pwk,
 	//PRINT_QUE
 	PRINTSYS_QUE_Main( wk->print_que );
 
+#ifdef UI_TEMPLATE_PMSDRAW
+  UITemplate_PMSDRAW_Proc( wk );
+#endif //UI_TEMPLATE_PMSDRAW
+
 	//2D描画
 	UI_TEMPLATE_GRAPHIC_2D_Draw( wk->graphic );
 
 	//3D描画
 	UI_TEMPLATE_GRAPHIC_3D_StartDraw( wk->graphic );
+
 #ifdef UI_TEMPLATE_MCSS
 	UITemplate_MCSS_Draw( wk->mcss_sys );
 #endif //UI_TEMPLATE_MCSS
 	UI_TEMPLATE_GRAPHIC_3D_EndDraw( wk->graphic );
-
 
   return GFL_PROC_RES_CONTINUE;
 }
@@ -1519,4 +1551,68 @@ static void PrintTool_PrintHP( UI_TEMPLATE_MAIN_WORK * wk )
 }
 #endif	//UI_TEMPLATE_PRINT_TOOL
 
+#ifdef UI_TEMPLATE_PMSDRAW
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  簡易会話表示 主処理
+ *
+ *	@param	UI_TEMPLATE_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_PMSDRAW_Init( UI_TEMPLATE_MAIN_WORK* wk )
+{
+	GFL_CLUNIT	*clunit;
+  
+  clunit        = UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
+  wk->pms_draw  = PMS_DRAW_Init( clunit, wk->print_que, wk->font, PLTID_OBJ_PMS_DRAW, 1 ,wk->heapID );
+  
+  {
+    GFL_BMPWIN* win;
+    PMS_DATA pms;
+    
+    win = GFL_BMPWIN_Create(
+        BG_FRAME_TEXT_S,					// ＢＧフレーム
+        2, 0,									  	// 表示座標(キャラ単位)
+        28, 4,    							  // 表示サイズ
+        15,												// パレット
+        GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
+
+    PMSDAT_SetDebug( &pms );
+
+    PMS_DRAW_Print( wk->pms_draw, win, &pms ,0 );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  簡易会話表示 後処理
+ *
+ *	@param	UI_TEMPLATE_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_PMSDRAW_Exit( UI_TEMPLATE_MAIN_WORK* wk )
+{
+  PMS_DRAW_Exit( wk->pms_draw );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  簡易会話表示 主処理
+ *
+ *	@param	UI_TEMPLATE_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_PMSDRAW_Proc( UI_TEMPLATE_MAIN_WORK* wk )
+{
+  PMS_DRAW_Proc( wk->pms_draw );
+}
+
+#endif // UI_TEMPLATE_PMSDRAW
 
