@@ -137,6 +137,41 @@ _END
 
 
 /************************************************************/
+/*			ジムギミック　プレーヤーがカプセルに乗る		*/
+/************************************************************/
+EVENT_START	ev_prg_c04gym0101_capsule_in
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ride_01 )
+	_OBJ_ANIME_WAIT()
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：乗車
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_ride_01
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_JUMP_U_1G_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*			ジムギミック　プレーヤーがカプセルに降りる		*/
+/************************************************************/
+EVENT_START	ev_prg_c04gym0101_capsule_out
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_getoff_01 )
+	_OBJ_ANIME_WAIT()
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：降車
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_getoff_01
+	_ANIME_DATA	AC_JUMP_D_1G_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
 /*				ジムギミック　スイッチ						*/
 /************************************************************/
 //ジムギミックposイベント：スタート地点（逆Ｌ字）
@@ -181,6 +216,7 @@ ev_swich_message:
 	_LAST_KEYWAIT()
 	_TALKWIN_CLOSE()
 	_RET
+
 
 /************************************************************/
 /*				ジムギミック　トレーナー登場				*/
@@ -338,41 +374,6 @@ ev_trainer_btl_02:
 
 	_RET
 
-/************************************************************/
-/*				ジムギミック　プレーヤーがカプセル乗る					*/
-/************************************************************/
-EVENT_START	ev_prg_c04gym0101_capsule_in
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ride_01 )
-	_OBJ_ANIME_WAIT()
-EVENT_END
-
-//--------------------------------------------------------------------
-//主人公：乗車
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_ride_01
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_JUMP_U_1G_8F,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-
-/************************************************************/
-/*				ジムギミック　プレーヤーがカプセル降りる					*/
-/************************************************************/
-EVENT_START	ev_prg_c04gym0101_capsule_out
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_getoff_01 )
-	_OBJ_ANIME_WAIT()
-EVENT_END
-
-//--------------------------------------------------------------------
-//主人公：降車
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_getoff_01
-	_ANIME_DATA	AC_JUMP_D_1G_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-
 //--------------------------------------------------------------------
 //！マーク
 //--------------------------------------------------------------------
@@ -414,8 +415,6 @@ _ANIME_LABEL	anm_trainer_move_03
 	_ANIME_DATA	ACMD_END,0
 
 
-
-
 /************************************************************/
 /*					トレーナー♀（再会話）					*/
 /************************************************************/
@@ -440,8 +439,41 @@ EVENT_END
 EVENT_START	ev_c04gym0101_guide_01
 	_TALK_OBJ_START()
 
-	//【仮】初回話しかけなら
+	//バッジフラグ取得
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_04 )
 
+	//バッジフラグで分岐
+	IF $SCWK_TEMP0 == 0 THEN
+		//バッジ入手前の処理
+
+		//アイテム入手フラグで分岐
+		IF FLAG_OFF( FE_C04GYM_ITEM ) THEN
+			//アイテム未入手なら、おいしいみず入手イベント
+			_BALLOONWIN_TALKOBJ_OPEN( msg_c04gym0101_glasses_01 )
+			_BALLOONWIN_CLOSE()
+			_ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
+			_BALLOONWIN_TALKOBJ_OPEN( msg_c04gym0101_glasses_02 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+
+			_FLAG_SET( FE_C04GYM_ITEM )			//アイテム入手フラグをセット
+
+		ELSE
+			//入手済みならメッセージのみ
+			_BALLOONWIN_TALKOBJ_OPEN( msg_c04gym0101_glasses_02 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		ENDIF
+
+	ELSE
+		//バッジ入手後の処理
+
+		//さすがっすよ！
+		_BALLOONWIN_TALKOBJ_OPEN( msg_c04gym0101_glasses_03 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+
+	ENDIF
 
 EVENT_END
 

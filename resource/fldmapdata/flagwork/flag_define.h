@@ -131,14 +131,14 @@
 #define FE_CGEAR_GET                       115 /* 0x0073 Cギア入手フラグ */
 #define FE_C04GYM0101_TRBTL1               116 /* 0x0074 C04電気ジムのコースタートレーナーの対戦済みチェックフラグ（１台目） */
 #define FE_C04GYM0101_TRBTL2               117 /* 0x0075 C04電気ジムのコースタートレーナーの対戦済みチェックフラグ（２台目） */
-		/* not used   118(0x0076) */
-		/* not used   119(0x0077) */
-		/* not used   120(0x0078) */
-		/* not used   121(0x0079) */
-		/* not used   122(0x007a) */
-		/* not used   123(0x007b) */
-		/* not used   124(0x007c) */
-		/* not used   125(0x007d) */
+#define FE_C01GYM_ITEM                     118 /* 0x0076 Ｃ01三つ巴ジム：ジムガイドがくれるアイテム入手フラグ */
+#define FE_C02GYM_ITEM                     119 /* 0x0077 Ｃ02ノーマルジム：ジムガイドがくれるアイテム入手フラグ */
+#define FE_C03GYM_ITEM                     120 /* 0x0078 Ｃ03虫ジム：ジムガイドがくれるアイテム入手フラグ */
+#define FE_C04GYM_ITEM                     121 /* 0x0079 Ｃ04電気ジム：ジムガイドがくれるアイテム入手フラグ */
+#define FE_C05GYM_ITEM                     122 /* 0x007a Ｃ05地面ジム：ジムガイドがくれるアイテム入手フラグ */
+#define FE_C06GYM_ITEM                     123 /* 0x007b Ｃ06飛行ジム：ジムガイドがくれるアイテム入手フラグ */
+#define FE_C07GYM_ITEM                     124 /* 0x007c Ｃ07氷ジム：ジムガイドがくれるアイテム入手フラグ */
+#define FE_C08GYM_ITEM                     125 /* 0x007d Ｃ08ドラゴンジム：ジムガイドがくれるアイテム入手フラグ */
 		/* not used   126(0x007e) */
 		/* not used   127(0x007f) */
 		/* not used   128(0x0080) */
