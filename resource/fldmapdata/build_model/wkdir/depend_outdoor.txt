@@ -162,4 +162,7 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/palpark_01.nsbmd \
 	$(RESDIR)/badgegate_01.nsbmd \
 	$(RESDIR)/badgegate_02.nsbmd \
+	$(RESDIR)/sign05.nsbmd \
+	$(RESDIR)/door_t1_01.nsbmd \
+	$(RESDIR)/door_t1_02.nsbmd \
 

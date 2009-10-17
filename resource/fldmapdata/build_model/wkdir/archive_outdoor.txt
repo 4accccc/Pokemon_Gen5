@@ -161,3 +161,6 @@
 "nsbmdfiles/palpark_01.nsbmd"
 "nsbmdfiles/badgegate_01.nsbmd"
 "nsbmdfiles/badgegate_02.nsbmd"
+"nsbmdfiles/sign05.nsbmd"
+"nsbmdfiles/door_t1_01.nsbmd"
+"nsbmdfiles/door_t1_02.nsbmd"
