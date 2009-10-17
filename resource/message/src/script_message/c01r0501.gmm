@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00161" date="2009-10-15T12:23:15"/>
+	<create user="matsumiya" host="W00207" date="2009-10-17T14:06:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -268,8 +268,8 @@
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="523"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="539"/>
-		<band id="3" index="4" style="0000" width="149"/>
+		<band id="2" index="3" style="0000" width="536"/>
+		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="690"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
@@ -292,85 +292,32 @@
 	</lock>
 
 
-	<row id="msg_c01r0501_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・フィールド技の説明（必須）
-・posを踏むと主人公に隣接して
-　メッセージ表示
-・はい/いいえの選択肢表示
-　はい→msg_c01r0501_glasses_03
-　いいえ→msg_c01r0501_glasses_02</comment>
+	<row id="msg_c01r0501_glasses_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>no data</comment>
 		<attribute name="キャラ指定">GLASSES</attribute>
-		<language name="JPN" width="256">わかき　トレーナーよ！[BE:01:ページ切り替え（クリア）]
-ポケモンの　わざについて
-いいことを　おしえて　あげましょうか</language>
-		<language name="JPN_KANJI" width="256">若き　トレーナーよ！[BE:01:ページ切り替え（クリア）]
-ポケモンの　技について
-いいことを　教えてあげましょうか</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c01r0501_glasses_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・いいえ選択時
-・再度話しかけると
-　msg_c01r0501_glasses_01から</comment>
-		<language name="JPN" width="256">きいてくれたら
-いいものを　あげるのに……</language>
-		<language name="JPN_KANJI" width="256">聞いてくれたら
-いいものを　あげるのに……</language>
+		<comment>no data</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c01r0501_glasses_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・はい選択時
-・アイテム入手処理へ</comment>
-		<language name="JPN" width="256">なんと！　なんとですよ[BE:01:ページ切り替え（クリア）]
-ポケモンが　おぼえる　わざには
-たたかっていない　ときでも[BE:00:ページ切り替え（行送り）]
-つかえる　わざが　あるのです[BE:01:ページ切り替え（クリア）]
-これを　フィールドわざと
-わたしは　よんでおります[BE:00:ページ切り替え（行送り）]
-たとえば
-「あまいかおり」という　わざ[BE:01:ページ切り替え（クリア）]
-たたかっているときに　つかえば
-あいてに　わざが　あたりやすくなり[BE:01:ページ切り替え（クリア）]
-くさむらで　つかえば
-やせいポケモンが　ちかよってきます[BE:01:ページ切り替え（クリア）]
-ということで　はなしを　きいてくれた
-おれいに　この　わざマシンを[BE:00:ページ切り替え（行送り）]
-プレゼント　しましょう！</language>
-		<language name="JPN_KANJI" width="256">なんと！　なんとですよ[BE:01:ページ切り替え（クリア）]
-ポケモンが　おぼえる　技には
-たたかっていない　ときでも[BE:00:ページ切り替え（行送り）]
-使える　技が　あるのです[BE:01:ページ切り替え（クリア）]
-これを　フィールド技と
-わたしは　呼んでおります[BE:00:ページ切り替え（行送り）]
-たとえば
-「あまいかおり」という　技[BE:01:ページ切り替え（クリア）]
-たたかっているときに　使えば
-相手に　技が　当たりやすくなり[BE:01:ページ切り替え（クリア）]
-くさむらで　使えば
-野生のポケモンが　近寄ってきます[BE:01:ページ切り替え（クリア）]
-ということで　話を　聞いてくれた
-お礼に　この　わざマシンを[BE:00:ページ切り替え（行送り）]
-プレゼント　しましょう！</language>
+		<comment>no data</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c01r0501_glasses_04" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>♂
-・アイテム入手後
-　以降、繰り返し</comment>
-		<language name="JPN" width="256">ちなみに　わざマシンは
-なんどだって　つかえます！[BE:01:ページ切り替え（クリア）]
-ですから　きになる　わざマシンは
-まず　おぼえさせるのも　ひとつですね</language>
-		<language name="JPN_KANJI" width="256">ちなみに　わざマシンは
-何度だって　使えます！[BE:01:ページ切り替え（クリア）]
-ですから　気になる　わざマシンは
-まず　覚えさせるのも　ひとつですね</language>
+		<comment>no data</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c01r0501_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0501_black_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・0＝主人公名
 ・ジム挑戦可能フラグ</comment>
@@ -389,7 +336,7 @@
 タイプのこと　教えてもらったよ</language>
 	</row>
 
-	<row id="msg_c01r0501_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0501_black_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・msg_c01r0501_black_01表示後
 ・c01ジムバッジ取得でここから削除</comment>
@@ -593,32 +540,38 @@
 こおりなおしで　溶かしましょう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01r0501_board_win_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0501_board_win_01" back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+		<comment>選択肢</comment>
 		<language name="JPN" width="256">どく</language>
 		<language name="JPN_KANJI" width="256">どく</language>
 	</row>
 
-	<row id="msg_c01r0501_board_win_02" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0501_board_win_02" back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+		<comment>選択肢</comment>
 		<language name="JPN" width="256">まひ</language>
 		<language name="JPN_KANJI" width="256">まひ</language>
 	</row>
 
-	<row id="msg_c01r0501_board_win_03" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0501_board_win_03" back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+		<comment>選択肢</comment>
 		<language name="JPN" width="256">ねむり</language>
 		<language name="JPN_KANJI" width="256">ねむり</language>
 	</row>
 
-	<row id="msg_c01r0501_board_win_04" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0501_board_win_04" back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+		<comment>選択肢</comment>
 		<language name="JPN" width="256">やけど</language>
 		<language name="JPN_KANJI" width="256">やけど</language>
 	</row>
 
-	<row id="msg_c01r0501_board_win_05" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0501_board_win_05" back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+		<comment>選択肢</comment>
 		<language name="JPN" width="256">こおり</language>
 		<language name="JPN_KANJI" width="256">こおり</language>
 	</row>
 
-	<row id="msg_c01r0501_board_win_06" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0501_board_win_06" back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+		<comment>選択肢</comment>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
