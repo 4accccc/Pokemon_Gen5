@@ -35,6 +35,7 @@
 #include "savedata/battle_rec.h"
 #include "savedata/battle_box_save.h"
 #include "savedata/sodateya_work.h"
+#include "savedata/wifi_negotiation.h"
 #include "savedata/misc.h"
 
 //==============================================================================
@@ -237,6 +238,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_WIFILIST,
 		(FUNC_GET_SIZE)WifiList_GetWorkSize,
 		(FUNC_INIT_WORK)WifiList_Init,
+	},
+	{	//WiFiネゴシエーション
+		GMDATA_ID_WIFI_NEGOTIATION,
+		(FUNC_GET_SIZE)WIFI_NEGOTIATION_SV_GetWorkSize,
+		(FUNC_INIT_WORK)WIFI_NEGOTIATION_SV_Init,
 	},
 	{	// C-GEAR
 		GMDATA_ID_CGEAR,
