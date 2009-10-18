@@ -8,11 +8,14 @@
 //==============================================================================
 #pragma once
 
+#include "field/field_subscreen.h"
+
 
 //==============================================================================
 //  外部関数宣言
 //==============================================================================
 extern void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm);
+extern FIELD_SUBSCREEN_MODE Intrude_SUBSCREEN_Watch(GAME_COMM_SYS_PTR game_comm, FIELD_SUBSCREEN_WORK *subscreen);
 
 //--------------------------------------------------------------
 //  ワークアクセス関数

@@ -17,7 +17,14 @@ enum {
 	NARC_palace_debug_areano_NCER = 3,
 	NARC_palace_debug_areano_NANR = 4,
 	NARC_palace_debug_areano_NCGR = 5,
-	NARC_palace_debug_areano_NCLR = 6
+	NARC_palace_debug_areano_NCLR = 6,
+	NARC_palace_palace_obj_lz_NCGR = 7,
+	NARC_palace_palace_obj_NCER = 8,
+	NARC_palace_palace_obj_NANR = 9,
+	NARC_palace_palace_obj_NCLR = 10,
+	NARC_palace_palace_bg_lz_NCGR = 11,
+	NARC_palace_palace_bg_lz_NSCR = 12,
+	NARC_palace_palace_bg_NCLR = 13
 };
 
 /* NARC_PALACE_NAIX_ */

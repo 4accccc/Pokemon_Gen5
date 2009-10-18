@@ -298,6 +298,8 @@ GMEVENT * EVENT_FieldMapMenu(
 {
   FMENU_EVENT_WORK *mwk;
   GMEVENT * event;
+  FIELD_SUBSCREEN_WORK *subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
+  
   event = GMEVENT_Create(
     gsys, NULL, FldMapMenuEvent, sizeof(FMENU_EVENT_WORK));
   
@@ -310,7 +312,12 @@ GMEVENT * EVENT_FieldMapMenu(
   mwk->heapID = heapID;
   mwk->state = FMENUSTATE_INIT;
   mwk->subProcWork = NULL;
-  mwk->return_subscreen_mode = FIELD_SUBSCREEN_NORMAL;
+  if(FIELD_SUBSCREEN_GetMode(subscreen) == FIELD_SUBSCREEN_INTRUDE){
+    mwk->return_subscreen_mode = FIELD_SUBSCREEN_INTRUDE;
+  }
+  else{
+    mwk->return_subscreen_mode = FIELD_SUBSCREEN_NORMAL;
+  }
   FMenuTakeFieldInfo(mwk);
   
   return event;
@@ -535,9 +542,9 @@ static void FieldMap_SetExitSequence(FMENU_EVENT_WORK *mwk)
     {
        GAMEDATA_SetSubScreenMode(gmData,FIELD_SUBSCREEN_UNION);
     }
-    else if(mwk->return_subscreen_mode == FIELD_SUBSCREEN_PALACE)
+    else if(mwk->return_subscreen_mode == FIELD_SUBSCREEN_INTRUDE)
     {
-      GAMEDATA_SetSubScreenMode(gmData,FIELD_SUBSCREEN_NORMAL);
+      GAMEDATA_SetSubScreenMode(gmData,FIELD_SUBSCREEN_INTRUDE);
     }
     else
     {

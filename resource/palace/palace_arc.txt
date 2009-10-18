@@ -5,3 +5,11 @@
 "debug_areano.NANR"
 "debug_areano.NCGR"
 "debug_areano.NCLR"
+"palace_obj_lz.NCGR"
+"palace_obj.NCER"
+"palace_obj.NANR"
+"palace_obj.NCLR"
+"palace_bg_lz.NCGR"
+"palace_bg_lz.NSCR"
+"palace_bg.NCLR"
+

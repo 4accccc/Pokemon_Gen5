@@ -38,6 +38,7 @@
 #include "net_app/union/union_event_check.h"
 #include "event_comm_talk.h"      //EVENT_CommTalk
 #include "event_comm_talked.h"      //EVENT_CommWasTalkedTo
+#include "event_intrude_subscreen.h"      //EVENT_ChangeIntrudeSubScreen
 
 #include "system/main.h"    //HEAPID_FIELDMAP
 #include "isdbglib.h"
@@ -66,6 +67,7 @@
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 #include "waza_tool/wazano_def.h"
+#include "field/field_comm/intrude_main.h"
 
 //======================================================================
 //======================================================================
@@ -120,6 +122,7 @@ static GMEVENT * checkExit(EV_REQUEST * req,
 static GMEVENT * checkPushExit(EV_REQUEST * req,
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
+static GMEVENT * checkIntrudeSubScreenEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
 static GMEVENT * checkSubScreenEvent(
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
@@ -444,7 +447,15 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
   			return EVENT_FieldMapMenu( gsys, fieldWork, req.heapID );
 		}
 	}
-
+	
+	//侵入によるサブスクリーン切り替えイベント起動チェック
+	if(WIPE_SYS_EndCheck()){
+    event = checkIntrudeSubScreenEvent(gsys, fieldWork);
+    if(event != NULL){
+      return event;
+    }
+  }
+	
 	//サブスクリーンからのイベント起動チェック
 	event = checkSubScreenEvent(gsys, fieldWork);
 	if( event != NULL )
@@ -842,6 +853,14 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 		}
 	}
 
+	//侵入によるサブスクリーン切り替えイベント起動チェック
+	if(WIPE_SYS_EndCheck()){
+    event = checkIntrudeSubScreenEvent(gsys, fieldWork);
+    if(event != NULL){
+      return event;
+    }
+  }
+
 	//サブスクリーンからのイベント起動チェック
 	event = checkSubScreenEvent(gsys, fieldWork);
 	if( event != NULL )
@@ -1214,6 +1233,27 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
 
 //======================================================================
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * 侵入によるサブスクリーン切り替えイベント起動チェック
+ * @param   gsys		
+ * @param   fieldWork		
+ * @retval  GMEVENT *		NULL=イベントなし
+ */
+//--------------------------------------------------------------
+static GMEVENT * checkIntrudeSubScreenEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  FIELD_SUBSCREEN_WORK * subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
+  FIELD_SUBSCREEN_MODE subscreen_mode = Intrude_SUBSCREEN_Watch(game_comm, subscreen);
+  GMEVENT* event = NULL;
+  
+  if(subscreen_mode != FIELD_SUBSCREEN_MODE_MAX){
+    event = EVENT_ChangeIntrudeSubScreen(gsys, fieldWork, subscreen_mode);
+  }
+  return event;
+}
+
 //--------------------------------------------------------------
 /**
  * サブスクリーンからのイベント起動チェック

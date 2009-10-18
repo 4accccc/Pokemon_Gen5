@@ -214,3 +214,54 @@ INTRUDE_TALK_STATUS Intrude_GetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm)
   return INTRUDE_TALK_STATUS_NULL;
 }
 
+
+
+//==============================================================================
+//  
+//==============================================================================
+//==================================================================
+/**
+ * 侵入状態を監視し、サブ画面をノーマルと侵入、それぞれに変更する必要があるか監視する
+ *
+ * @param   game_comm		
+ * @param   subscreen		
+ *
+ * @retval  FIELD_SUBSCREEN_MODE_MAX  現状のまま変更する必要なし
+ * @retval  上記以外                  戻り値のモードに変更する必要がある
+ */
+//==================================================================
+FIELD_SUBSCREEN_MODE Intrude_SUBSCREEN_Watch(GAME_COMM_SYS_PTR game_comm, FIELD_SUBSCREEN_WORK *subscreen)
+{
+  FIELD_SUBSCREEN_MODE subscreen_mode = FIELD_SUBSCREEN_GetMode(subscreen);
+  
+#if 0
+  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
+    if(subscreen_mode == FIELD_SUBSCREEN_NORMAL){
+      return FIELD_SUBSCREEN_INTRUDE;
+    }
+    else if(subscreen_mode == FIELD_SUBSCREEN_INTRUDE){
+      return FIELD_SUBSCREEN_NORMAL;
+    }
+  }
+#else
+
+  if(subscreen_mode == FIELD_SUBSCREEN_NORMAL){
+    if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION
+        && GameCommSys_CheckSystemWaiting(game_comm) == FALSE && GFL_NET_GetConnectNum() > 1){
+      return FIELD_SUBSCREEN_INTRUDE;
+    }
+  }
+  else if(subscreen_mode == FIELD_SUBSCREEN_INTRUDE){
+    if(NetErr_App_CheckError() == TRUE){
+      //エラー発生中はまだ戻さない (エラー画面が出てから戻るようにしている)
+      return FIELD_SUBSCREEN_MODE_MAX;
+    }
+    if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){
+      return FIELD_SUBSCREEN_NORMAL;
+    }
+  }
+#endif
+
+  return FIELD_SUBSCREEN_MODE_MAX;
+}
+

@@ -325,6 +325,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/field_comm/intrude_field.c \
 				field/event_comm_talk.c \
 				field/event_comm_talked.c \
+				field/event_intrude_subscreen.c \
 				net_app/irc_match/ircbattlemenu.c \
 				field/c_gear/c_gear.c \
 				field/fldmmdl_draw.c \
@@ -389,6 +390,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_gyoe.c \
         field/fieldmap_func.c \
         net_app/union/union_subdisp.c \
+        field/field_comm/intrude_subdisp.c \
         field/fldeff_footmark.c \
         field/fldeff_reflect.c \
         field/field_place_name.c \

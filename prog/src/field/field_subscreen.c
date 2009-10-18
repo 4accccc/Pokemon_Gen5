@@ -23,6 +23,7 @@
 
 #include "test/camera_adjust_view.h"
 #include "net_app/union/union_subdisp.h"
+#include "field/intrude_subdisp.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -62,6 +63,7 @@ struct _FIELD_SUBSCREEN_WORK {
 	  FIELD_MENU_WORK *fieldMenuWork;
     C_GEAR_WORK* cgearWork;
     UNION_SUBDISP_PTR unisubWork;
+    INTRUDE_SUBDISP_PTR intsubWork;
 		GFL_CAMADJUST * gflCamAdjust;
 		GFL_SNDVIEWER * gflSndViewer;
 		void * checker;
@@ -109,6 +111,11 @@ static void exit_union_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void update_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 static void draw_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 
+static void init_intrude_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
+static void exit_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void update_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
+static void draw_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
+
 static void init_light_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_light_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_light_subscreen( FIELD_SUBSCREEN_WORK* pWork );
@@ -147,6 +154,14 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
 		update_union_subscreen,
 		draw_union_subscreen ,
 		exit_union_subscreen,
+		NULL ,
+	},
+	{	
+		FIELD_SUBSCREEN_INTRUDE,
+		init_intrude_subscreen,
+		update_intrude_subscreen,
+		draw_intrude_subscreen ,
+		exit_intrude_subscreen,
 		NULL ,
 	},
 	{	
@@ -719,6 +734,51 @@ static void update_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 static void draw_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
 	UNION_SUBDISP_Draw(pWork->unisubWork);
+}
+
+
+//=============================================================================
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー画面の初期化
+ *	@param	heapID	ヒープＩＤ
+ */
+//-----------------------------------------------------------------------------
+static void init_intrude_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
+{
+  pWork->intsubWork = INTRUDE_SUBDISP_Init(FIELDMAP_GetGameSysWork(pWork->fieldmap));
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー画面の破棄
+ */
+//-----------------------------------------------------------------------------
+static void exit_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+  INTRUDE_SUBDISP_Exit(pWork->intsubWork);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー画面の更新
+ */
+//-----------------------------------------------------------------------------
+static void update_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
+{
+  INTRUDE_SUBDISP_Update(pWork->intsubWork);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メニュー画面の描画
+ */
+//-----------------------------------------------------------------------------
+static void draw_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
+{
+	INTRUDE_SUBDISP_Draw(pWork->intsubWork);
 }
 
 
