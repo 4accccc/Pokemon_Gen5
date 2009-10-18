@@ -271,15 +271,14 @@ typedef struct
 
 struct _IRC_POKEMON_TRADE{
   u8 FriendPokemonCol[732];         ///< 相手のポケモンBOXにあるポケモン色
-  GFL_BMPWIN* StatusWin[2];
+  GFL_BMPWIN* StatusWin[2];     ///< ステータス表示
   POKEMON_PARAM* recvPoke[2];  ///< 受け取ったポケモンを格納する場所
   BOOL bPokemonSet[2];              ///<
-  //	EVENT_IRCBATTLE_WORK* pParentWork;
   StateFunc* state;      ///< ハンドルのプログラム状態
   HEAPID heapID;
 
-  //メッセージ系
-  GFL_BMPWIN* MessageWin;
+  
+  GFL_BMPWIN* MessageWin;  ///< メッセージ系表示
 
   GFL_ARCUTIL_TRANSINFO bgchar;
 
@@ -291,8 +290,9 @@ struct _IRC_POKEMON_TRADE{
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
   APP_TASKMENU_RES* pAppTaskRes;
-  GFL_BMPWIN* MyInfoWin;
-  GFL_BMPWIN* mesWin;
+  GFL_BMPWIN* MyInfoWin;            // ステータス表示
+  GFL_BMPWIN* BoxNameWin[BOX_MAX_TRAY+1];            // ボックス名表示
+  GFL_BMPWIN* mesWin;               // 会話ウインドウ用
   GFL_MSGDATA *pMsgData;  //
   WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
   GFL_FONT* pFontHandle;
@@ -304,8 +304,8 @@ struct _IRC_POKEMON_TRADE{
   PRINT_QUE*            SysMsgQue;
   GFL_TCBLSYS *pMsgTcblSys;
 
-  GFL_BMPWIN* SerchMojiWin[JAPANESE_SEARCH_INDEX_MAX];
-  int selectMoji;
+  GFL_BMPWIN* SerchMojiWin[JAPANESE_SEARCH_INDEX_MAX];  //頭文字検索のウインドウ用
+  int selectMoji;                  //頭文字検索で選んだ文字
   
   GFL_G3D_RES* pG3dRes;
   GFL_G3D_OBJ* pG3dObj;
@@ -472,6 +472,9 @@ extern void IRC_POKETRADE_InitSubMojiBG(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_EndSubMojiBG(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_ReturnPageMarkDisp(IRC_POKEMON_TRADE* pWork,int no);
 extern void IRC_POKETRADE_ReturnPageMarkRemove(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_SendVramBoxNameChar(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_SendScreenBoxNameChar(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_ResetBoxNameWindow(IRC_POKEMON_TRADE* pWork);
 
 
 #if _TRADE_DEBUG

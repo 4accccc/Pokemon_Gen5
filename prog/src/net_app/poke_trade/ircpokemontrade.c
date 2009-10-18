@@ -258,44 +258,6 @@ POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_MANAGER* boxData , in
   return NULL;
 }
 
-
-
-//------------------------------------------------------------------------------
-/**
- * @brief   下画面ポケモン表示
- * @param   state  変えるステートの関数
- * @param   time   ステート保持時間
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _InitBoxName( BOX_MANAGER* boxData , u8 trayNo ,IRC_POKEMON_TRADE* pWork )
-{
-
-
-  {//ボックス名表示
-    if(pWork->MyInfoWin){
-      GFL_BMPWIN_Delete(pWork->MyInfoWin);
-    }
-
-    pWork->MyInfoWin = GFL_BMPWIN_Create(GFL_BG_FRAME1_S, 0x07, 0x01, 10, 2, _BUTTON_MSG_PAL,  GFL_BMP_CHRAREA_GET_B );
-
-    if(trayNo == BOX_MAX_TRAY){
-      GFL_MSG_GetString(  pWork->pMsgData, POKETRADE_STR_19, pWork->pStrBuf );
-    }
-    else{
-      BOXDAT_GetBoxName(boxData, trayNo, pWork->pStrBuf);
-    }
-    GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
-    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0 );
-    GFL_BMPWIN_MakeScreen(pWork->MyInfoWin);
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 1, 0, pWork->pStrBuf, pWork->pFontHandle);
-    GFL_BMPWIN_TransVramCharacter(pWork->MyInfoWin);
-    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
-
-  }
-
-}
 #endif
 
 //------------------------------------------------------------------------------
@@ -1332,7 +1294,6 @@ void IRC_POKMEONTRADE_ChangeFinish(IRC_POKEMON_TRADE* pWork)
     }
   }
   
-  _InitBoxName(pWork->pBox,pWork->nowBoxno,pWork);  //再描画
 
   IRC_POKETRADE_MessageWindowClear(pWork);
 
@@ -1561,8 +1522,10 @@ static void _startSearchMojiState(IRC_POKEMON_TRADE* pWork)
 static void _touchState(IRC_POKEMON_TRADE* pWork)
 {
 
-  IRC_POKETRADE_ReturnPageMarkDisp(pWork,APP_COMMON_BARICON_RETURN);
-  IRC_POKETRADE_LeftPageMarkDisp(pWork,APP_COMMON_BARICON_CURSOR_UP);
+  IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
+  
+  IRC_POKETRADE_ReturnPageMarkDisp(pWork,APP_COMMON_BARICON_RETURN); //マーク表示
+  IRC_POKETRADE_LeftPageMarkDisp(pWork,APP_COMMON_BARICON_CURSOR_UP); //マーク表示
   _CHANGE_STATE(pWork,_touchStateCommon);
 
 }
@@ -1598,7 +1561,9 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
           if(TOTAL_DOT_MAX <= pWork->BoxScrollNum){
             pWork->BoxScrollNum-=TOTAL_DOT_MAX;
           }
+          
           IRC_POKETRADE_TrayDisp(pWork);
+          IRC_POKETRADE_SendScreenBoxNameChar(pWork);
           IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
           if(GFL_NET_IsInit()){
             // 特に失敗してもかまわない通信 相手に位置を知らせているだけ
@@ -1618,19 +1583,17 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
 
   {
     GFL_UI_TP_HITTBL tp_data[]={
-      _ENDTABLE,
-//      {192-32, 192, 256-32, 256},     //終了
-//      {192-32, 192, 0, 32},     //検索
-      _SEARCHTABLE,
+      _ENDTABLE,      //  終了
+      _SEARCHTABLE,   //  検索
       {GFL_UI_TP_HIT_END,0,0,0},
     };
 
     switch(GFL_UI_TP_HitTrg(tp_data)){
     case 0:
-        _CHANGE_STATE(pWork,_endRequestState);
+      _CHANGE_STATE(pWork,_endRequestState);
       return;
     case 1:
-        _CHANGE_STATE(pWork,_startSearchMojiState);
+      _CHANGE_STATE(pWork,_startSearchMojiState);
       return;
       break;
     default:
@@ -1642,10 +1605,6 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
 #if 1  //  画面タッチトリガ中の処理
   if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
 
-    //		if(backBoxNo !=  pWork->nowBoxno){
-    //		IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
-    //	_InitBoxName(pWork->pBox,pWork->nowBoxno,pWork);
-    //		}
     pWork->workBoxno=-1;
     pWork->workPokeIndex=-1;
     pWork->pCatchCLWK = IRC_POKETRADE_GetCLACT(pWork,x,y, &pWork->workBoxno, &pWork->workPokeIndex);
@@ -1740,7 +1699,6 @@ static void _dispInit(IRC_POKEMON_TRADE* pWork)
 
   IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);  //ポケモンの表示
 
-  _InitBoxName(pWork->pBox, 0, pWork);
   IRC_POKETRADE_GraphicInitSubDisp(pWork);  //BGを
   IRC_POKETRADE_GraphicInitMainDisp(pWork);
 
@@ -1780,6 +1738,7 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
   if(pWork->bgscrollRenew){
 
     GFL_BG_SetScroll(GFL_BG_FRAME2_S,GFL_BG_SCROLL_X_SET, pWork->bgscroll);
+    GFL_BG_SetScroll(GFL_BG_FRAME1_S,GFL_BG_SCROLL_X_SET, pWork->bgscroll);
     pWork->bgscrollRenew=FALSE;
   }
 }
@@ -2030,7 +1989,9 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
     }
   }
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
+  IRC_POKETRADE_ResetBoxNameWindow(pWork);
 
+  
   //GFL_NET_Exit(NULL);  //@@OO 本来はここで呼ばない
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);

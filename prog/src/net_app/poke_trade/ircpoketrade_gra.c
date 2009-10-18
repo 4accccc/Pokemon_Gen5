@@ -481,9 +481,121 @@ static void IRC_POKETRADE_TrayExit(IRC_POKEMON_TRADE* pWork)
   GFL_HEAP_FreeMemory( pWork->scrTemoti);
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   ボックス名をまとめてVRAMに送る
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_SendVramBoxNameChar(IRC_POKEMON_TRADE* pWork)
+{
+  int i;
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
+
+  for(i=0;i<BOX_MAX_TRAY+1;i++){
+    if(pWork->BoxNameWin[i]==NULL){
+      pWork->BoxNameWin[i] = GFL_BMPWIN_Create(GFL_BG_FRAME1_S, (i % 3) * 10 , (i / 3) * 2, 10, 2, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_B);
+    }
+    if(i == BOX_MAX_TRAY){
+      GFL_MSG_GetString(  pWork->pMsgData, POKETRADE_STR_19, pWork->pStrBuf );
+    }
+    else{
+      BOXDAT_GetBoxName(pWork->pBox, i, pWork->pStrBuf);
+    }
+    GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->BoxNameWin[i]), 0 );
+//   GFL_BMPWIN_MakeScreen(pWork->BoxNameWin[i]);
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->BoxNameWin[i]), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
+    GFL_BMPWIN_TransVramCharacter(pWork->BoxNameWin[i]);
+
+    GFL_BMPWIN_SetPosY( pWork->BoxNameWin[i], 0 );  //０に補正
+  }
+//  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ボックス名のウインドウメモリ開放
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_ResetBoxNameWindow(IRC_POKEMON_TRADE* pWork)
+{
+  int i;
+
+  for(i=0;i<BOX_MAX_TRAY+1;i++){
+    if(pWork->BoxNameWin[i]){
+      GFL_BMPWIN_Delete(pWork->BoxNameWin[i] );
+      pWork->BoxNameWin[i]=NULL;
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ボックス名をスクリーンに転送
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_SendScreenBoxNameChar(IRC_POKEMON_TRADE* pWork)
+{
+  int bgscr,i,disp,x,y;
+  int spos,pos = pWork->BoxScrollNum / 8;
 
 
+  for(y=0;y<2;y++){
+    for(x=0;x<64;x++){
+      GFL_BG_ScrSetDirect(GFL_BG_FRAME1_S, x, y, 0);
+    }
+  }
 
+
+  
+  if(pWork->BoxScrollNum < _TEMOTITRAY_MAX){  //手持ち状態である
+    bgscr = BOX_MAX_TRAY;
+  }
+  else{
+    bgscr = (pWork->BoxScrollNum - _TEMOTITRAY_MAX) / _BOXTRAY_MAX;
+  }
+  for(disp = 0; disp < 3; disp++){ //三つのBOXを表示
+    i = bgscr+disp;
+    if(i > BOX_MAX_TRAY){
+      i = i-BOX_MAX_TRAY-1;
+    }
+    else if(i < 0){
+      i = i + BOX_MAX_TRAY + 1;
+    }
+    {
+      //自分の基準値
+      if(i==BOX_MAX_TRAY){
+        if(pos > (_SRCMAX - pos)){
+          spos = _SRCMAX - pos;
+        }
+        else{
+          spos = 0 - pos;
+        }
+      }
+      else{
+        spos = (_TEMOTITRAY_SCR_MAX + _BOXTRAY_SCR_MAX*i) - pos;  //
+      }
+      if(spos < -10){
+        continue;
+      }
+      if(spos > 33){
+        continue;
+      }
+      GFL_BMPWIN_SetPosX( pWork->BoxNameWin[i], spos );
+      GFL_BMPWIN_MakeScreen(pWork->BoxNameWin[i]);
+    }
+  }
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
+}
+
+//------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 /**
@@ -811,10 +923,7 @@ static int _Line2RingLineIconGet(IRC_POKEMON_TRADE* pWork,int line)
 {
   int ret;
 
-//  ret = pWork->ringLineNo + line;
   ret = line % _LING_LINENO_MAX;
-
-  OS_TPrintf("_Line2RingLineIconGet %d\n",ret);
   return ret;
 }
 
@@ -1161,8 +1270,8 @@ void IRC_POKETRADE_SetSubDispGraphic(IRC_POKEMON_TRADE* pWork)
   {
     int frame = GFL_BG_FRAME1_S;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
       2, 0, 0, FALSE
       };
 
@@ -1192,7 +1301,7 @@ void IRC_POKETRADE_SetSubDispGraphic(IRC_POKEMON_TRADE* pWork)
     int frame = GFL_BG_FRAME3_S;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xc800, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
       0, 0, 0, FALSE
       };
 
@@ -1447,7 +1556,7 @@ void IRC_POKETRADE_ReturnPageMarkDisp(IRC_POKEMON_TRADE* pWork,int no)
                                              pWork->cellRes[PLT_COMMON],
                                              pWork->cellRes[ANM_COMMON],
                                              &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CHAR_RETURNPAGE_MARK] , TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CHAR_RETURNPAGE_MARK] , FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CHAR_RETURNPAGE_MARK], TRUE );
   }
 
