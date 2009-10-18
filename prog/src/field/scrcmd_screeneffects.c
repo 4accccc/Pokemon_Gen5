@@ -90,7 +90,7 @@ VMCMD_RESULT EvCmdDispFadeCheck( VMHANDLE *core, void *wk )
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  *
- * @todo  どんな表現をするとか、何も決まってないよ～ということで空コマンドです
+ * @todo  配置モデルを検索し、その位置にアニメを適用したい。
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk )
@@ -112,5 +112,89 @@ VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk )
   call_event = EVENT_PcRecoveryAnime( gsys, parent, &pos, pokecount );
   SCRIPT_CallEvent( sc, call_event );
   return VMCMD_RESULT_SUSPEND;
+}
+
+//======================================================================
+//
+//
+//    ドアアニメ
+//
+//
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdDoorAnimeCreate( VMHANDLE * core, void *wk )
+{
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  u16 gx = SCRCMD_GetVMWorkValue( core, wk );
+  u16 gz = SCRCMD_GetVMWorkValue( core, wk );
+  /*
+   * 生成：
+   */
+  *ret_wk = 0;
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdDoorAnimeDelete( VMHANDLE * core, void *wk )
+{
+  u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
+  /*
+   * 削除：
+   */
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdDoorAnimeSet( VMHANDLE * core, void *wk )
+{
+  u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 anime_type = SCRCMD_GetVMWorkValue( core, wk );
+  /*
+   * アニメセット：
+   */
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdDoorAnimeWait( VMHANDLE * core, void *wk )
+{
+  u16 anime_id = SCRCMD_GetVMWorkValue( core, wk );
+  /*
+   * アニメウェイト呼び出し
+   */
+  return VMCMD_RESULT_CONTINUE;
 }
 

@@ -482,6 +482,21 @@
   NO_CMD()
   NO_CMD()
 
+  DEF_CMD( EvCmdDoorAnimeCreate, EV_SEQ_DOOR_ANIME_CREATE )
+  DEF_CMD( EvCmdDoorAnimeDelete, EV_SEQ_DOOR_ANIME_DELETE )
+  DEF_CMD( EvCmdDoorAnimeSet, EV_SEQ_DOOR_ANIME_SET )
+  DEF_CMD( EvCmdDoorAnimeWait, EV_SEQ_DOOR_ANIME_WAIT )
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   //レポート関連
   DEF_CMD( EvCmdReportCall,   EV_SEQ_REPORT_CALL )
   DEF_CMD( EvCmdGetSaveDataStatus,  EV_SEQ_REPORT_CHECK )

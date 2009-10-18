@@ -3126,10 +3126,15 @@
   .short  \door_idx
   .endm
 
+//======================================================================
+//
+//  モデルアニメ関連
+//
+//======================================================================
 //--------------------------------------------------------------
 /**
- * ポケセン回復アニメ
- *
+ * @def _POKECEN_RECOVER_ANIME
+ * @brief ポケセン回復アニメ
  * @param poke_count    手持ちのポケモンの数
  */
 //--------------------------------------------------------------
@@ -3140,6 +3145,76 @@
   .short  EV_SEQ_POKECEN_RECOVER_ANIME
   .short  \poke_count
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _DOOR_ANIME_CREATE
+ * @brief ドアアニメコントローラーの生成
+ * @param ret_wk  anm_idをうけとるためのワーク
+ * @param gx      アニメ生成する配置モデルのX位置（グリッド単位）
+ * @param gz      アニメ生成する配置モデルのZ位置（グリッド単位）
+ *
+ * ret_wkで受け取ったアニメ指定IDを使ってドアアニメ各コマンド
+ * （_DOOR_ANIME_DELETE/_DOOR_ANIME_SET/_DOOR_ANIME_WAIT）を
+ * 呼び出す。
+ */
+//--------------------------------------------------------------
+#define _DOOR_ANIME_CREATE( ret_wk, gx, gz ) \
+    _ASM_DOOR_ANIME_CREATE ret_wk, gx, gz
+
+    .macro _ASM_DOOR_ANIME_CREATE ret_wk, gx, gz
+    .short  EV_SEQ_DOOR_ANIME_CREATE
+    .short  \ret_wk
+    .short  \gx
+    .short  \gz
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _DOOR_ANIME_DELETE
+ * @brief ドアアニメコントローラーの削除
+ * @param anm_id  配置モデルを指定するためのID
+ */
+//--------------------------------------------------------------
+#define _DOOR_ANIME_DELETE( anm_id ) \
+     _ASM_DOOR_ANIME_DELETE anm_id
+
+     .macro _ASM_DOOR_ANIME_DELETE anm_id
+     .short EV_SEQ_DOOR_ANIME_DELETE
+     .short \anm_id
+     .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _DOOR_ANIME_SET
+ * @brief ドアアニメのセット
+ * @param anm_id    配置モデルを指定するためのID
+ * @param anm_type  アニメーションの種類指定
+ */
+//--------------------------------------------------------------
+#define _DOOR_ANIME_SET( anm_id, anm_type ) \
+    _ASM_DOOR_ANIME_SET anm_id, anm_type
+
+    .macro _ASM_DOOR_ANIME_SET anm_id, anm_type
+    .short  EV_SEQ_DOOR_ANIME_SET
+    .short  \anm_id
+    .short  \anm_type
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _DOOR_ANIME_WAIT
+ * @brief ドアアニメの終了待ち
+ * @param anm_id  配置モデルを指定するためのID
+ */
+//--------------------------------------------------------------
+#define _DOOR_ANIME_WAIT( anm_id ) \
+    _ASM_DOOR_ANIME_WAIT anm_id
+
+    .macro _ASM_DOOR_ANIME_WAIT anm_id
+    .short  EV_SEQ_DOOR_ANIME_WAIT
+    .short  \anm_id
+    .endm
 
 
 //======================================================================
