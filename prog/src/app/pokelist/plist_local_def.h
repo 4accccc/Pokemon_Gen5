@@ -29,7 +29,8 @@
 #define PLIST_BG_SUB_BG (GFL_BG_FRAME3_S)
 //バトル上用
 #define PLIST_BG_SUB_BATTLE_WIN (GFL_BG_FRAME2_S)
-#define PLIST_BG_SUB_BATTLE_STR (GFL_BG_FRAME1_S)
+#define PLIST_BG_SUB_BATTLE_BAR (GFL_BG_FRAME1_S)
+#define PLIST_BG_SUB_BATTLE_STR (GFL_BG_FRAME0_S)
 
 //土台とパラメータのスクロール分(キャラ単位
 #define PLIST_BG_SCROLL_X_CHAR (16)
@@ -37,12 +38,14 @@
 //BGパレット
 #define PLIST_BG_PLT_MENU_ACTIVE (0x01)
 #define PLIST_BG_PLT_MENU_NORMAL (0x02)
+#define PLIST_BG_PLT_BAR (0x0b)
 #define PLIST_BG_PLT_BMPWIN (0x0c)
 #define PLIST_BG_PLT_HP_BAR (0x0d)
 #define PLIST_BG_PLT_FONT (0x0e)
 
 #define PLIST_BG_SUB_PLT_BACK (0x00)  //1本
 #define PLIST_BG_SUB_PLT_PLATE (0x01) //1本
+#define PLIST_BG_SUB_PLT_BAR (0x02) //1本
 #define PLIST_BG_SUB_PLT_FONT (0x0e)      //1本
 
 
@@ -267,6 +270,15 @@ struct _PLIST_WORK
   //バトル上画面用
   GFL_CLUNIT  *cellUnitBattle;
   PLIST_BATTLE_PARAM_WORK *battleParty[PL_COMM_PLAYER_TYPE_MAX];
+  GFL_BMPWIN   *timeLimitStr;
+  GFL_BMPWIN   *timeLimitNumStr;
+  BOOL  isUpdateLimitStr;
+  BOOL  isUpdateLimitNum;
+  u8    befSelectedNum;
+  u8    befTimeLimit;
+  u16   barPalletAnm[16];
+  u16   barPalletTrans[16];
+  u16   barPalletAnmCnt;
 
 	//taskmenuリソース
 	APP_TASKMENU_RES *taskres;

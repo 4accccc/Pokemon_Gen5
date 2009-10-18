@@ -646,7 +646,7 @@ void APP_TASKMENU_WIN_Update( APP_TASKMENU_WIN_WORK *wk )
   //•¶Žš‚ÌXV
   if( wk->isUpdateMsg )
   {
- 		if( PRINTSYS_QUE_IsExistTarget( wk->res->printQue , GFL_BMPWIN_GetBmp( wk->bmpwin ) ) == TRUE )
+ 		if( PRINTSYS_QUE_IsExistTarget( wk->res->printQue , GFL_BMPWIN_GetBmp( wk->bmpwin ) ) == FALSE )
 		{
 			GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmpwin );
 			wk->isUpdateMsg = FALSE;

@@ -157,8 +157,8 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         //plData->comm_type = PL_COMM_MULTI;
         plData->comm_type = PL_COMM_SINGLE;
         plData->is_disp_party = TRUE;
-        plData->use_tile_limit = FALSE;
-        plData->time_limit = 0;
+        plData->use_tile_limit = TRUE;
+        plData->time_limit = 30;
         plData->comm_selected_num = 1;
       }
       else
@@ -250,6 +250,20 @@ static GFL_PROC_RESULT PokeListProc_Term( GFL_PROC * proc, int * seq , void *pwk
 static GFL_PROC_RESULT PokeListProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   PLIST_WORK *plWork = mywk;
+  
+  if( pwk == NULL && 
+      plWork->plData->time_limit > 0 &&
+      plWork->plData->use_tile_limit == TRUE )
+  {
+    static u8 cnt = 0;
+    cnt++;
+    if( cnt > 60 )
+    {
+      cnt = 0;
+      OS_TPrintf("[%d]\n",plWork->plData->time_limit);
+      plWork->plData->time_limit--;
+    }
+  }
   
   if( PLIST_UpdatePokeList( plWork ) == TRUE )
   {

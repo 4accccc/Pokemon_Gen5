@@ -132,6 +132,7 @@ extern const u32 APP_COMMON_GetBarIconAnimeArcIdx( const APP_COMMON_MAPPING mapp
 extern const u32 APP_COMMON_GetBarPltArcIdx( void );
 extern const u32 APP_COMMON_GetBarCharArcIdx( void );
 extern const u32 APP_COMMON_GetBarScrnArcIdx( void );
+extern const u32 APP_COMMON_GetBarScrn_512x256ArcIdx( void );
 
 // アイテムアイコン取得（ポケアイコン用）
 extern const u32 APP_COMMON_GetPokeItemIconPltArcIdx( void );

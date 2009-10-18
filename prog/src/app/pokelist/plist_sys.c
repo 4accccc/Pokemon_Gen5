@@ -590,7 +590,14 @@ static void PLIST_InitGraphic( PLIST_WORK *work )
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
-    // BG1 SUB (文字
+    // BG0 SUB (文字
+    static const GFL_BG_BGCNT_HEADER header_sub0 = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x18000,0x08000,
+      GX_BG_EXTPLTT_23, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    // BG1 SUB (バー
     static const GFL_BG_BGCNT_HEADER header_sub1 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -619,7 +626,8 @@ static void PLIST_InitGraphic( PLIST_WORK *work )
 
     PLIST_SetupBgFunc( &header_sub3 , PLIST_BG_SUB_BG , GFL_BG_MODE_TEXT );
     PLIST_SetupBgFunc( &header_sub2 , PLIST_BG_SUB_BATTLE_WIN , GFL_BG_MODE_TEXT );
-    PLIST_SetupBgFunc( &header_sub1 , PLIST_BG_SUB_BATTLE_STR , GFL_BG_MODE_TEXT );
+    PLIST_SetupBgFunc( &header_sub1 , PLIST_BG_SUB_BATTLE_BAR , GFL_BG_MODE_TEXT );
+    PLIST_SetupBgFunc( &header_sub0 , PLIST_BG_SUB_BATTLE_STR , GFL_BG_MODE_TEXT );
     
     //とりあえず2Dで初期化
     PLIST_InitBG0_2DMenu( work );
@@ -686,6 +694,7 @@ static void PLIST_TermGraphic( PLIST_WORK *work )
   GFL_BG_FreeBGControl( PLIST_BG_MENU );
   GFL_BG_FreeBGControl( PLIST_BG_SUB_BG );
   GFL_BG_FreeBGControl( PLIST_BG_SUB_BATTLE_WIN );
+  GFL_BG_FreeBGControl( PLIST_BG_SUB_BATTLE_BAR );
   GFL_BG_FreeBGControl( PLIST_BG_SUB_BATTLE_STR );
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
@@ -835,11 +844,6 @@ static void PLIST_LoadResource( PLIST_WORK *work )
   work->plateScrRes = GFL_ARCHDL_UTIL_LoadScreen( arcHandle , NARC_pokelist_gra_list_plate_NSCR ,
                     FALSE , &work->plateScrData , work->heapId );
 
-  //下画面バー  
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_pokelist_gra_list_bar_NCGR ,
-                    PLIST_BG_PARAM , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_pokelist_gra_list_bar_NSCR , 
-                    PLIST_BG_PARAM ,  0 , 0, FALSE , work->heapId );
 
   //上画面背景
   GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_pokelist_gra_list_sub_NCLR , 
@@ -884,6 +888,17 @@ static void PLIST_LoadResource( PLIST_WORK *work )
   //共通素材
   {
     ARCHANDLE *arcHandleCommon = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , work->heapId );
+    
+    //下画面バー
+    //スクリーンはstate素材から(512*256のため
+    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , APP_COMMON_GetBarPltArcIdx() , 
+                      PALTYPE_MAIN_BG , PLIST_BG_PLT_BAR*32 , 32 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , APP_COMMON_GetBarCharArcIdx() ,
+                  PLIST_BG_PARAM , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , APP_COMMON_GetBarScrn_512x256ArcIdx() , 
+                      PLIST_BG_PARAM ,  0 , 0, FALSE , work->heapId );
+    GFL_BG_ChangeScreenPalette( PLIST_BG_PARAM , 0,0,64,32,PLIST_BG_PLT_BAR );
+
     //HPバー土台
     work->cellRes[PCR_PLT_HP_BASE] = GFL_CLGRP_PLTT_RegisterEx( arcHandleCommon , 
           APP_COMMON_GetHPBarBasePltArcIdx() , CLSYS_DRAW_MAIN , 
@@ -926,7 +941,7 @@ static void PLIST_LoadResource( PLIST_WORK *work )
   }
   
   //アニメ用に、プレートの選択色のパレットを退避
-  GFL_STD_MemCopy16( (void*)(0x05000000+PPC_NORMAL_SELECT*32) , work->platePalAnm , 16*2 );
+  GFL_STD_MemCopy16( (void*)(HW_BG_PLTT+PPC_NORMAL_SELECT*32) , work->platePalAnm , 16*2 );
 }
 
 
@@ -2875,6 +2890,8 @@ static void PLIST_DEB_Update_Blend1( void* userWork , DEBUGWIN_ITEM* item );
 static void PLIST_DEB_Draw_Blend1( void* userWork , DEBUGWIN_ITEM* item );
 static void PLIST_DEB_Update_WaitMember( void* userWork , DEBUGWIN_ITEM* item );
 static void PLIST_DEB_Draw_WaitMember( void* userWork , DEBUGWIN_ITEM* item );
+static void PLIST_DEB_Update_TimeLimit( void* userWork , DEBUGWIN_ITEM* item );
+static void PLIST_DEB_Draw_TimeLimit( void* userWork , DEBUGWIN_ITEM* item );
 
 
 static void PLIST_InitDebug( PLIST_WORK *work )
@@ -2892,6 +2909,7 @@ static void PLIST_InitDebug( PLIST_WORK *work )
   DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_Alpha2   ,PLIST_DEB_Draw_Alpha2   , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_Blend1   ,PLIST_DEB_Draw_Blend1   , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_WaitMember   ,PLIST_DEB_Draw_WaitMember   , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PLIST_DEB_Update_TimeLimit    ,PLIST_DEB_Draw_TimeLimit    , (void*)work , PLIST_DEBUG_GROUP_NUMBER , work->heapId );
   
 }
 
@@ -3021,4 +3039,32 @@ static void PLIST_DEB_Draw_WaitMember( void* userWork , DEBUGWIN_ITEM* item )
 {
   PLIST_WORK *work = (PLIST_WORK*)userWork;
   DEBUGWIN_ITEM_SetNameV( item , "待機人数[%d]",work->plData->comm_selected_num);
+}
+
+static void PLIST_DEB_Update_TimeLimit( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PLIST_WORK *work = (PLIST_WORK*)userWork;
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    if( work->plData->time_limit > 0 )
+    {
+      work->plData->time_limit--;
+      DEBUGWIN_RefreshScreen();
+    }
+  }
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    if( work->plData->time_limit < 600 )
+    {
+      work->plData->time_limit++;
+      DEBUGWIN_RefreshScreen();
+    }
+  }
+}
+
+static void PLIST_DEB_Draw_TimeLimit( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PLIST_WORK *work = (PLIST_WORK*)userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "残り時間[%d]",work->plData->time_limit);
 }

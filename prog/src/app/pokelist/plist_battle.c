@@ -32,6 +32,17 @@
 #define PLIST_BATTLE_ICON_WIDTH  (5)
 #define PLIST_BATTLE_ICON_HEIGHT (6)  //スペース込み
 
+#define PLIST_BATTLE_TIME_STR_LEFT   ( 7)
+#define PLIST_BATTLE_TIME_STR_TOP    (21)
+#define PLIST_BATTLE_TIME_STR_WIDTH  (10)
+#define PLIST_BATTLE_TIME_STR_HEIGHT ( 3)
+#define PLIST_BATTLE_TIME_NUM_LEFT   (20)
+#define PLIST_BATTLE_TIME_NUM_TOP    (21)
+#define PLIST_BATTLE_TIME_NUM_WIDTH  ( 5)
+#define PLIST_BATTLE_TIME_NUM_HEIGHT ( 3)
+
+#define PLIST_BATTLE_PAL_ANM_MAX (60)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -78,6 +89,13 @@ static void PLIST_BATTLE_UpdateBattleParam( PLIST_WORK *work , PLIST_BATTLE_PARA
 static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *work , POKEMON_PARAM *pp , const u8 charX , const u8 charY );
 static void PLIST_BATTLE_DeleteBattleParamIcon( PLIST_WORK *work , PLIST_BATTLE_POKE_ICON *iconWork );
 static void PLIST_BATTLE_UpdateBattleParamIcon( PLIST_WORK *work , PLIST_BATTLE_POKE_ICON *iconWork );
+
+static void PLIST_BATTLE_DispWaitingMessage( PLIST_WORK *work );
+
+static void PLIST_BATTLE_InitTimeLimit( PLIST_WORK *work );
+static void PLIST_BATTLE_TermTimeLimit( PLIST_WORK *work );
+static void PLIST_BATTLE_UpdateTimeLimit( PLIST_WORK *work );
+
 //--------------------------------------------------------------
 //	初期化
 //--------------------------------------------------------------
@@ -105,6 +123,16 @@ void PLIST_BATTLE_InitBattle( PLIST_WORK *work )
       break;
     }
   }
+  work->befSelectedNum = work->plData->comm_selected_num;
+  //初回強制更新のため0xFFFFにしておく
+  work->befTimeLimit = 0xFFFF;
+  
+  if(  work->plData->use_tile_limit == TRUE  )
+  {
+    PLIST_BATTLE_InitTimeLimit( work );
+  }
+  
+  work->barPalletAnmCnt = 0;
 }
 
 //--------------------------------------------------------------
@@ -112,6 +140,10 @@ void PLIST_BATTLE_InitBattle( PLIST_WORK *work )
 //--------------------------------------------------------------
 void PLIST_BATTLE_TermBattle( PLIST_WORK *work )
 {
+  if(  work->plData->use_tile_limit == TRUE  )
+  {
+    PLIST_BATTLE_TermTimeLimit( work );
+  }
   if( work->plData->is_disp_party == TRUE )
   {
     switch( work->plData->comm_type )
@@ -151,6 +183,17 @@ void PLIST_BATTLE_UpdateBattle( PLIST_WORK *work )
       PLIST_BATTLE_UpdateBattleParam( work , work->battleParty[PL_COMM_PLAYER_TYPE_ENEMY_B] );
       break;
     }
+  }
+  
+  //待機人数メッセージの更新
+  if( work->befSelectedNum != work->plData->comm_selected_num )
+  {
+    PLIST_BATTLE_DispWaitingMessage( work );
+    work->befSelectedNum = work->plData->comm_selected_num;
+  }
+  if( work->plData->use_tile_limit == TRUE )
+  {
+    PLIST_BATTLE_UpdateTimeLimit( work );
   }
 }
 
@@ -217,6 +260,20 @@ static void PLIST_BATTLE_InitResource( PLIST_WORK *work )
           APP_COMMON_GetPokeItemIconCellArcIdx(APP_COMMON_MAPPING_128K) , 
           APP_COMMON_GetPokeItemIconAnimeArcIdx(APP_COMMON_MAPPING_128K), work->heapId  );
     
+    //制限時間バー
+    if( work->plData->use_tile_limit == TRUE )
+    {
+      //上画面バー  
+      GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , APP_COMMON_GetBarPltArcIdx() , 
+                        PALTYPE_SUB_BG , PLIST_BG_SUB_PLT_BAR*32 , 32 , work->heapId );
+      GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , APP_COMMON_GetBarCharArcIdx() ,
+                    PLIST_BG_SUB_BATTLE_BAR , 0 , 0, FALSE , work->heapId );
+      GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , APP_COMMON_GetBarScrnArcIdx() , 
+                        PLIST_BG_SUB_BATTLE_BAR ,  0 , 0, FALSE , work->heapId );
+      GFL_BG_ChangeScreenPalette( PLIST_BG_SUB_BATTLE_BAR , 0,0,32,32,PLIST_BG_SUB_PLT_BAR );
+      GFL_BG_LoadScreenV_Req( PLIST_BG_SUB_BATTLE_BAR );
+    }
+    
     GFL_ARC_CloseDataHandle(arcHandleCommon);
   }
   //ポケアイコン用リソース
@@ -229,6 +286,8 @@ static void PLIST_BATTLE_InitResource( PLIST_WORK *work )
     
     GFL_ARC_CloseDataHandle(arcHandlePoke);
   }
+  //アニメ用に、プレートの選択色のパレットを退避
+  GFL_STD_MemCopy16( (void*)(HW_BG_PLTT+0x400+PLIST_BG_SUB_PLT_BAR*32) , work->barPalletAnm , 16*2 );
 }
 
 //--------------------------------------------------------------
@@ -448,13 +507,20 @@ static void PLIST_BATTLE_UpdateBattleParamIcon( PLIST_WORK *work , PLIST_BATTLE_
   }
 }
 
-#pragma mark waiting message
+#pragma mark [>waiting message
 //--------------------------------------------------------------
 //	待機メッセージの表示
 //--------------------------------------------------------------
 void PLIST_BATTLE_OpenWaitingMessage( PLIST_WORK *work )
 {
   PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR_BATTLE );
+  PLIST_BATTLE_DispWaitingMessage( work );
+
+  work->befSelectedNum = work->plData->comm_selected_num;
+}
+
+static void PLIST_BATTLE_DispWaitingMessage( PLIST_WORK *work )
+{
   if( work->plData->comm_selected_num == 0 )
   {
     //誰も決めてない
@@ -482,6 +548,119 @@ void PLIST_BATTLE_OpenWaitingMessage( PLIST_WORK *work )
       //××にん　たいきちゅう(アラビア数字ではないのでメッセージが別
       PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_13_02+(work->plData->comm_selected_num-1) );
     }
+  }
+}
+
+#pragma mark [>time limit
+//--------------------------------------------------------------
+//	制限時間初期化
+//--------------------------------------------------------------
+static void PLIST_BATTLE_InitTimeLimit( PLIST_WORK *work )
+{
+  work->timeLimitStr = GFL_BMPWIN_Create( PLIST_BG_SUB_BATTLE_STR , 
+              PLIST_BATTLE_TIME_STR_LEFT , PLIST_BATTLE_TIME_STR_TOP , 
+              PLIST_BATTLE_TIME_STR_WIDTH , PLIST_BATTLE_TIME_STR_HEIGHT ,
+              PLIST_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+  work->timeLimitNumStr = GFL_BMPWIN_Create( PLIST_BG_SUB_BATTLE_STR , 
+              PLIST_BATTLE_TIME_NUM_LEFT , PLIST_BATTLE_TIME_NUM_TOP , 
+              PLIST_BATTLE_TIME_NUM_WIDTH , PLIST_BATTLE_TIME_NUM_HEIGHT ,
+              PLIST_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+
+  {
+    STRBUF *str = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_13_05 ); 
+
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( work->timeLimitStr ) , 
+            0 , 4 , str , work->fontHandle , PLIST_FONT_BATTLE_PARAM );
+
+    GFL_STR_DeleteBuffer( str );
+    work->isUpdateLimitStr = TRUE;
+  }
+
+}
+
+//--------------------------------------------------------------
+//	制限時間開放
+//--------------------------------------------------------------
+static void PLIST_BATTLE_TermTimeLimit( PLIST_WORK *work )
+{
+  GFL_BMPWIN_Delete( work->timeLimitStr );
+  GFL_BMPWIN_Delete( work->timeLimitNumStr );
+}
+
+//--------------------------------------------------------------
+//	制限時間更新
+//--------------------------------------------------------------
+static void PLIST_BATTLE_UpdateTimeLimit( PLIST_WORK *work )
+{
+  if( work->befTimeLimit != work->plData->time_limit )
+  {
+    const u8 min = work->plData->time_limit/60;
+    const u8 sec = work->plData->time_limit%60;
+    STRBUF *str = GFL_MSG_CreateString( work->msgHandle , mes_pokelist_13_06 ); 
+    STRBUF *workStr = GFL_STR_CreateBuffer( 32 , work->heapId );
+    WORDSET *wordSet = WORDSET_Create( work->heapId );
+
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->timeLimitNumStr ) , 0 );
+
+    WORDSET_RegisterNumber( wordSet , 0 , min , 2 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 1 , sec , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+    WORDSET_ExpandStr( wordSet , workStr , str );
+
+    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( work->timeLimitNumStr ) , 
+            0 , 4 , workStr , work->fontHandle , PLIST_FONT_BATTLE_PARAM );
+
+    WORDSET_Delete( wordSet );
+    GFL_STR_DeleteBuffer( workStr );
+    GFL_STR_DeleteBuffer( str );
+    work->isUpdateLimitNum = TRUE;
+
+    work->befTimeLimit = work->plData->time_limit;
+  }
+  
+  if( work->isUpdateLimitNum == TRUE )
+  {
+    if( PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( work->timeLimitNumStr )) == FALSE )
+    {
+      work->isUpdateLimitNum = FALSE;
+      GFL_BMPWIN_MakeTransWindow_VBlank( work->timeLimitNumStr );
+    }
+  }
+
+  if( work->isUpdateLimitStr == TRUE )
+  {
+    if( PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( work->timeLimitStr )) == FALSE )
+    {
+      work->isUpdateLimitStr = FALSE;
+      GFL_BMPWIN_MakeTransWindow_VBlank( work->timeLimitStr );
+    }
+  }
+  
+  if( work->plData->time_limit <= 10 )
+  {
+    //パレットアニメ
+    u8 i;
+    const fx32 cos = FX_CosIdx( work->barPalletAnmCnt*0x10000/PLIST_BATTLE_PAL_ANM_MAX );
+    const u8 addVal = (cos+FX32_ONE) * 32 / (FX32_ONE*2);
+    
+    for( i=0;i<16;i++ )
+    {
+      u8 r = (work->barPalletAnm[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+      u8 g = (work->barPalletAnm[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+      u8 b = (work->barPalletAnm[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+      r = (r+addVal > 31?31:r+addVal);
+      work->barPalletTrans[i] = GX_RGB(r,g,b);
+    }
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                        PLIST_BG_SUB_PLT_BAR * 32 ,
+                                        work->barPalletTrans , 2*16 );
+    
+
+    work->barPalletAnmCnt++;
+    if( work->barPalletAnmCnt >= PLIST_BATTLE_PAL_ANM_MAX )
+    {
+      work->barPalletAnmCnt = 0;
+    }
+
   }
 }
 

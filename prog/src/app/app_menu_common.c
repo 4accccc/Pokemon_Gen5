@@ -150,6 +150,10 @@ const u32 APP_COMMON_GetBarScrnArcIdx( void )
 {	
 	return NARC_app_menu_common_menu_bar_NSCR;
 }
+const u32 APP_COMMON_GetBarScrn_512x256ArcIdx( void )
+{	
+	return NARC_app_menu_common_menu_bar_512x256_NSCR;
+}
 
 //--------------------------------------------------------------
 // アイテムアイコン(ポケアイコン用)
