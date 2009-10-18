@@ -176,6 +176,7 @@ typedef enum
   PSMS_HPANIME,     //HPバー処理中
   PSMS_BATTLE_ANM_WAIT, //バトルメニュー時終了アニメ待ち
   PSMS_FADEOUT,
+  PSMS_FADEOUT_FORCE, //強制終了
   PSMS_FADEOUT_WAIT,
 
   PSMS_MAX,
@@ -279,6 +280,7 @@ struct _PLIST_WORK
   u16   barPalletAnm[16];
   u16   barPalletTrans[16];
   u16   barPalletAnmCnt;
+  BOOL  isCallForceExit;
 
 	//taskmenuリソース
 	APP_TASKMENU_RES *taskres;

@@ -616,6 +616,10 @@ static void PLIST_BATTLE_UpdateTimeLimit( PLIST_WORK *work )
 
     work->befTimeLimit = work->plData->time_limit;
   }
+  if( work->plData->time_limit == 0 )
+  {
+    PLIST_ForceExit_Timeup( work );
+  }
   
   if( work->isUpdateLimitNum == TRUE )
   {
@@ -660,7 +664,6 @@ static void PLIST_BATTLE_UpdateTimeLimit( PLIST_WORK *work )
     {
       work->barPalletAnmCnt = 0;
     }
-
   }
 }
 

@@ -225,6 +225,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->clwkExitButton = NULL;
   work->btlMenuWin[0] = NULL;
   work->btlMenuWin[1] = NULL; 
+  work->isCallForceExit = FALSE;
 
   for( i=0;i<PCR_MAX;i++ )
   {
@@ -412,6 +413,12 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
         work->mainSeq = PSMS_FADEOUT;
       }
     }
+    break;
+
+  case PSMS_FADEOUT_FORCE:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    work->mainSeq = PSMS_FADEOUT_WAIT;
     break;
 
   case PSMS_FADEOUT:
@@ -2250,6 +2257,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
     {
       PLIST_MENU_ITEM_TYPE itemArr[4] = {PMIT_GIVE,PMIT_TAKE,PMIT_CLOSE,PMIT_END_LIST};
       PLIST_SelectMenuInit( work );
+      //先にメニューを開くと、bmpの確保順がずれてゴミが見える・・・
       PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
       PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_03_02 );
       PLIST_MENU_OpenMenu( work , work->menuWork , itemArr );
@@ -2263,13 +2271,30 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
     break;
     
   case PMIT_RET_JOIN:
-    PLIST_PLATE_SetBattleOrder( work , work->plateWork[work->pokeCursor] , work->btlJoinNum );
-    work->btlJoinNum++;
-    
-    PLIST_SelectPokeSetCursor( work , work->pokeCursor );
-    work->selectPokePara = NULL;
-    work->mainSeq = PSMS_SELECT_POKE;
-    PLIST_InitMode_Select( work );
+    {
+      const PLIST_PLATE_CAN_BATTLE ret = PLIST_PLATE_CanJoinBattle( work , work->plateWork[work->pokeCursor] );
+      if( ret == PPCB_OK )
+      {
+        PLIST_PLATE_SetBattleOrder( work , work->plateWork[work->pokeCursor] , work->btlJoinNum );
+        work->btlJoinNum++;
+        PLIST_InitMode_Select( work );
+        work->mainSeq = PSMS_SELECT_POKE;
+      }
+      else
+      if( ret == PPCB_NG_SAME_MONSNO )
+      {
+        PLIST_MessageWaitInit( work , mes_pokelist_07_01 , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
+      }
+      else
+      if( ret == PPCB_NG_SAME_ITEM )
+      {
+        PLIST_MessageWaitInit( work , mes_pokelist_07_02 , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
+      }
+      
+      
+      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+      work->selectPokePara = NULL;
+    }
     break;
     
   case PMIT_JOIN_CANCEL:
@@ -2843,9 +2868,76 @@ static void PSTATUS_MSGCB_ItemSet_CheckChangeItemCB( PLIST_WORK *work , const in
       work->mainSeq = PSMS_FADEOUT;
     }
   }
-  
 }
 
+#pragma mark [>force exit
+void PLIST_ForceExit_Timeup( PLIST_WORK *work )
+{
+  if( work->isCallForceExit == FALSE )
+  {
+    work->isCallForceExit = TRUE;
+    work->mainSeq = PSMS_FADEOUT_FORCE;
+    
+
+    //強制選択
+    {
+      u8 i;
+      u8 ofs = 0;
+      u8 num;
+      BOOL isFinish = FALSE;
+      
+      OS_TPrintf("AutoSelect Start!!\n");
+      while( isFinish == FALSE )
+      {
+        num = 0;
+        //現在の選択を初期化
+        for( i=0;i<PLIST_LIST_MAX;i++ )
+        {
+          work->plData->in_num[i] = 0;
+          if( PLIST_PLATE_CanSelect( work , work->plateWork[i] ) == TRUE )
+          {
+            PLIST_PLATE_SetBattleOrder( work , work->plateWork[i] , PPBO_JOIN_OK );
+          }
+        }
+        //探す
+        for( i=0;i<PLIST_LIST_MAX;i++ )
+        {
+          const u8 idx = (i+ofs < PLIST_LIST_MAX ? i+ofs:i+ofs-PLIST_LIST_MAX );
+          if( PLIST_PLATE_CanSelect( work , work->plateWork[idx] ) == TRUE )
+          {
+            const PLIST_PLATE_CAN_BATTLE ret = PLIST_PLATE_CanJoinBattle( work , work->plateWork[idx] );
+            if( ret == PPCB_OK )
+            {
+              OS_TPrintf("[%d]",idx);
+              work->plData->in_num[num] = idx+1;
+              num++;
+            }
+            if( num == work->plData->in_max )
+            {
+              break;
+            }
+          }
+        }
+        if( num >= work->plData->in_min )
+        {
+          isFinish = TRUE;
+          OS_TPrintf("[OK!]\n");
+        }
+        else
+        {
+          //開始位置をずらして探す
+          ofs++;
+          OS_TPrintf("[NG!]\n");
+          if( ofs >= PLIST_LIST_MAX )
+          {
+            GF_ASSERT_MSG( ofs < PLIST_LIST_MAX ,"PLIST can't select battle order!!\n" );
+            isFinish = TRUE;
+          }
+        }
+      }
+    }
+  }
+}
 
 #pragma mark [>outer value
 //外の数値をいじる
@@ -3060,6 +3152,10 @@ static void PLIST_DEB_Update_TimeLimit( void* userWork , DEBUGWIN_ITEM* item )
       work->plData->time_limit++;
       DEBUGWIN_RefreshScreen();
     }
+  }
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+      work->plData->time_limit = 3;
   }
 }
 

@@ -1042,7 +1042,14 @@ void PLIST_PLATE_SetBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
 {
   if( plateWork->btlOrder != order )
   {
-    plateWork->btlOrder = order;
+    if( order < PPBO_JOIN_OK )
+    {
+      plateWork->btlOrder = order;
+    }
+    else
+    {
+      PLIST_PLATE_CheckBattleOrder( work , plateWork );
+    }
     PLIST_PLATE_ReDrawParam( work , plateWork );
   }
 }
@@ -1091,6 +1098,10 @@ static void PLIST_PLATE_CheckBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *p
   //FIXME 現在はレベルのみ
   //モードでin_lvが上限値か下限値かが変わる
   //タマゴ未対応
+  //レギュレーションもチェック
+  //持ち物の被りなども下でチェック
+  
+  //PokeRegulationCheckPokePara( work->plData->reg , pp );
   
   if( PP_CalcLevel( plateWork->pp ) > work->plData->in_lv )
   {
@@ -1102,6 +1113,42 @@ static void PLIST_PLATE_CheckBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *p
   }
 }
 
+
+const PLIST_PLATE_CAN_BATTLE PLIST_PLATE_CanJoinBattle( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+{
+
+  if( plateWork->btlOrder != PPBO_JOIN_OK )
+  {
+    return PPCB_NG;
+  }
+  {
+    u8 i;
+    const u32 monsno = PP_Get( plateWork->pp , ID_PARA_monsno , NULL );
+    const u32 item = PP_Get( plateWork->pp , ID_PARA_item , NULL );
+    //すでに同じポケがいるか？
+    //すでに同じアイテムがあるかチェック
+    for( i=0;i<6;i++ )
+    {
+      if( work->plData->in_num[i] >= 1 )
+      {
+        const POKEMON_PARAM *pp = work->plateWork[ work->plData->in_num[i]-1 ]->pp;
+        const u32 monsno2 = PP_Get( pp , ID_PARA_monsno , NULL );
+        const u32 item2 = PP_Get( pp , ID_PARA_item , NULL );
+        
+        if( monsno == monsno2 )
+        {
+          return PPCB_NG_SAME_MONSNO;
+        }
+        if( item == item2 &&
+            item != 0 )
+        {
+          return PPCB_NG_SAME_ITEM;
+        }
+      }
+    }
+  }
+  return PPCB_OK;
+}
 
 #pragma mark [>util
 //--------------------------------------------------------------

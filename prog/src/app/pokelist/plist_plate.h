@@ -42,6 +42,13 @@ typedef enum
 
 }PLIST_PLATE_BATTLE_ORDER;
 
+typedef enum
+{
+  PPCB_OK,
+  PPCB_NG,
+  PPCB_NG_SAME_MONSNO,
+  PPCB_NG_SAME_ITEM,
+}PLIST_PLATE_CAN_BATTLE;
 
 extern PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POKEMON_PARAM *pp );
 extern PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate_Blank( PLIST_WORK *work , const u8 idx );
@@ -72,6 +79,9 @@ extern void PLIST_PLATE_GetPlateRect( PLIST_WORK *work , PLIST_PLATE_WORK *plate
 //バトル参加用状態取得・設定
 extern const PLIST_PLATE_BATTLE_ORDER PLIST_PLATE_GetBattleOrder( const PLIST_PLATE_WORK *plateWork );
 extern void PLIST_PLATE_SetBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , const PLIST_PLATE_BATTLE_ORDER order );
+//選択時、参加可能か？(同じ道具・ポケチェック)
+extern const PLIST_PLATE_CAN_BATTLE PLIST_PLATE_CanJoinBattle( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
+
 //表示HPの取得
 extern u16 PLIST_PLATE_GetDispHp( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 //タマゴチェック

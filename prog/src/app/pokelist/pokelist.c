@@ -84,6 +84,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       PokeParty_Init( plData->pp , 6 );
       for( i=0;i<5;i++ )
       {
+        /*
         POKEMON_PARAM *pPara = PP_Create( i+1 , 10 , PTL_SETUP_POW_AUTO , HEAPID_POKELIST );
   #if DEB_ARI
         switch( i )
@@ -107,7 +108,20 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
           PP_Put( pPara , ID_PARA_tamago_flag , 1 );
           break;
         }
-  #endif      
+  #endif
+        /*/
+        //バトル用テスト
+        u8 noArr[6] = {1,1,2,3,4,5};
+        POKEMON_PARAM *pPara = PP_Create( noArr[i] , 10 , PTL_SETUP_POW_AUTO , HEAPID_POKELIST );
+        switch( i )
+        {
+        case 0:
+        case 2:
+          PP_Put( pPara , ID_PARA_item , 1 );
+          break;
+        }
+        
+        //*/
         {
           u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
           PP_Put( pPara , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
@@ -126,8 +140,8 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
           plData->in_num[i] = 0;
         }
         plData->mode = PL_MODE_BATTLE;
-        plData->in_min = 2;
-        plData->in_max = 4;
+        plData->in_min = 4;
+        plData->in_max = 6;
         plData->in_lv = 100;
         for( p=0;p<3;p++ )
         {
@@ -251,23 +265,24 @@ static GFL_PROC_RESULT PokeListProc_Main( GFL_PROC * proc, int * seq , void *pwk
 {
   PLIST_WORK *plWork = mywk;
   
-  if( pwk == NULL && 
-      plWork->plData->time_limit > 0 &&
-      plWork->plData->use_tile_limit == TRUE )
+  if( pwk == NULL &&
+      plWork->plData->use_tile_limit == TRUE)
   {
-    static u8 cnt = 0;
-    cnt++;
-    if( cnt > 60 )
+    if( plWork->plData->time_limit > 0 )
     {
-      cnt = 0;
-      OS_TPrintf("[%d]\n",plWork->plData->time_limit);
-      plWork->plData->time_limit--;
+      static u8 cnt = 0;
+      cnt++;
+      if( cnt > 60 )
+      {
+        cnt = 0;
+        OS_TPrintf("[%d]\n",plWork->plData->time_limit);
+        plWork->plData->time_limit--;
+      }
     }
   }
-  
   if( PLIST_UpdatePokeList( plWork ) == TRUE )
   {
-      return GFL_PROC_RES_FINISH;
+    return GFL_PROC_RES_FINISH;
   }
 
   return GFL_PROC_RES_CONTINUE;

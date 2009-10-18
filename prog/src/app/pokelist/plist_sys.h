@@ -48,3 +48,6 @@ extern void PLIST_UTIL_DrawValueStrFuncSys( PLIST_WORK *work , GFL_BMPWIN *bmpWi
 //アイテムに渡す用
 extern void PLIST_MessageWaitInit( PLIST_WORK *work , u32 msgId , const BOOL isWaitKey , PSTATUS_CallbackFunc msgCallBack );
 extern void PSTATUS_MSGCB_ExitCommon( PLIST_WORK *work );
+
+//時間切れ強制終了
+extern void PLIST_ForceExit_Timeup( PLIST_WORK *work );
