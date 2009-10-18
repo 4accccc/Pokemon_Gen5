@@ -195,7 +195,6 @@ static const u16 FIELD_MENU_ITEM_MSG_ARR[FMIT_MAX] =
   FLDMAPMENU_STR_ITEM04,
   FLDMAPMENU_STR_ITEM05,
   FLDMAPMENU_STR_ITEM06,
-  FLDMAPMENU_STR_ITEM08,
 };
 static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX][3] =
 {
@@ -222,9 +221,6 @@ static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX][3] =
   { NARC_field_menu_menu_icon_confing_NCGR,
     NARC_field_menu_menu_icon_confing_NCER,
     NARC_field_menu_menu_icon_confing_NANR},
-  { NARC_field_menu_menu_icon_chat_NCGR,
-    NARC_field_menu_menu_icon_chat_NCER,
-    NARC_field_menu_menu_icon_chat_NANR},
 };
 
 //--------------------------------------------------------------
@@ -576,10 +572,10 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
       FMIT_EXIT,
     },
     { //ƒ†ƒjƒIƒ“
-      FMIT_CHAT,
       FMIT_POKEMON,
       FMIT_ZUKAN,
       FMIT_ITEMMENU,
+      FMIT_TRAINERCARD,
       FMIT_REPORT,
       FMIT_CONFING,
       FMIT_EXIT,
