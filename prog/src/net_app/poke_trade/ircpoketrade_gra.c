@@ -77,15 +77,15 @@ static const GFL_CLSYS_INIT fldmapdata_CLSYS_Init =
 
 static int LINE2TRAY(int lineno)
 {
-  if(lineno > HAND_HORIZONTAL_NUM){
+  if(lineno >= HAND_HORIZONTAL_NUM){
     return (lineno - HAND_HORIZONTAL_NUM) / BOX_HORIZONTAL_NUM;
   }
-  return -1;
+  return BOX_MAX_TRAY;
 }
     
 static int LINE2POKEINDEX(int lineno,int verticalindex)
 {
-  if(lineno > HAND_HORIZONTAL_NUM){
+  if(lineno >= HAND_HORIZONTAL_NUM){
     return ((lineno - HAND_HORIZONTAL_NUM) % BOX_HORIZONTAL_NUM) + (BOX_HORIZONTAL_NUM * verticalindex);
   }
   return lineno*3+verticalindex;
@@ -574,13 +574,14 @@ void IRC_POKETRADE_SendScreenBoxNameChar(IRC_POKEMON_TRADE* pWork)
       if(i==BOX_MAX_TRAY){
         if(pos > (_SRCMAX - pos)){
           spos = _SRCMAX - pos;
+          pos = pos - _SRCMAX;
         }
         else{
           spos = 0 - pos;
         }
       }
       else{
-        spos = (_TEMOTITRAY_SCR_MAX + _BOXTRAY_SCR_MAX*i) - pos;  //
+        spos = (_TEMOTITRAY_SCR_MAX + _BOXTRAY_SCR_MAX * i) - pos;  //
       }
       if(spos < -10){
         continue;
@@ -703,7 +704,7 @@ static void _calcPokeIconPos(int line,int index, GFL_CLACTPOS* pos)
 
 static POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_MANAGER* boxData , int lineno, int verticalindex , IRC_POKEMON_TRADE* pWork)
 {
-  if(lineno > HAND_HORIZONTAL_NUM){
+  if(lineno >= HAND_HORIZONTAL_NUM){
     int tray = LINE2TRAY(lineno);
     int index = LINE2POKEINDEX(lineno, verticalindex);
     return IRCPOKEMONTRADE_GetPokeDataAddress(boxData, tray, index, pWork);
@@ -719,14 +720,13 @@ static POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_MANAGER* boxData , int lineno
 
 
 //ラインにあわせたポケモン表示
-static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_MANAGER* boxData ,int line)
+static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_MANAGER* boxData ,int line, int k)
 {
-  int i,k;
+  int i;
   POKEMON_PASO_PARAM* ppp;
 	void *obj_vram = G2S_GetOBJCharPtr();
 	ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
 
-  k =  _Line2RingLineIconGet(pWork, line);
 
 	for( i = 0 ; i < BOX_VERTICAL_NUM ; i++ )
 	{
@@ -803,7 +803,7 @@ static int _boxScrollNum2Line(IRC_POKEMON_TRADE* pWork)
 
 void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,IRC_POKEMON_TRADE* pWork )
 {
-  int i,line = _boxScrollNum2Line(pWork);
+  int k,i,line = _boxScrollNum2Line(pWork);
 
   if( pWork->oldLine != line ){
     pWork->oldLine = line;
@@ -812,8 +812,10 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,IRC_POKEMON_TRADE* pWork )
     _iconAllDrawDisable(pWork);  // アイコン表示を一旦消す
   
     for(i=0;i < _LING_LINENO_MAX;i++){
-      //OS_TPrintf("create %d\n", line);
-      _createPokeIconResource(pWork, boxData,line );  //アイコン表示
+      k =  _Line2RingLineIconGet(pWork, pWork->oldLine+i);
+
+      
+      _createPokeIconResource(pWork, boxData,line, k );  //アイコン表示
       line++;
       if(line >= _LINEMAX){
         line=0;
@@ -828,14 +830,19 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,IRC_POKEMON_TRADE* pWork )
 
 void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork)
 {
-  int line, i, no, m;
+  int line, i, no, m, subnum=0;
   int x,y;
   //int bgscr = pWork->BoxScrollNum;
+  
+  OHNO_Printf("-------------\n");
+  line = pWork->oldLine;
+  for(m = 0; m < _LING_LINENO_MAX; m++,line++){
+    no = _Line2RingLineIconGet(pWork, pWork->oldLine + m);
 
-  for(m = 0; m < _LING_LINENO_MAX; m++){
-    line = pWork->oldLine + m;
-    
-    no = _Line2RingLineIconGet(pWork, line);
+    if(line >= _LINEMAX){
+      line = line - _LINEMAX;
+      subnum = _DOTMAX;
+    }
 
     for(i=0;i<BOX_VERTICAL_NUM;i++){
       GFL_CLACTPOS apos;
@@ -851,9 +858,12 @@ void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork)
         x += ((line - 2) % 6) * 24 + 16 + 4;
         x += _TEMOTITRAY_MAX;
       }
-      x = x - pWork->BoxScrollNum;
+      x = x - pWork->BoxScrollNum + subnum;
       apos.x = x;
       apos.y = y;
+
+
+      OHNO_Printf("pos %d %d\n",apos.x, apos.y);
       
       GFL_CLACT_WK_SetPos(pWork->pokeIcon[no][i], &apos, CLSYS_DRAW_SUB);
     }
