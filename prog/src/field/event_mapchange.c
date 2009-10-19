@@ -49,6 +49,8 @@
 
 #include "savedata/gimmickwork.h"   //for GIMMICKWORK
 
+#include "net_app/union/union_main.h" // for UNION_CommBoot
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -428,6 +430,35 @@ static GMEVENT_RESULT EVENT_MapChangeBySandStream(GMEVENT * event, int *seq, voi
 	return GMEVENT_RES_CONTINUE;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeToUnion(GMEVENT * event, int *seq, void*work)
+{
+	MAPCHANGE_WORK*     mcw = work;
+	GAMESYS_WORK*      gsys = mcw->gsys;
+	FIELDMAP_WORK* fieldmap = mcw->fieldmap;
+	GAMEDATA*      gamedata = mcw->gamedata;
+
+	switch (*seq)
+  {
+  case 0:
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
+    (*seq) ++;
+    break;
+  case 1: // マップチェンジ・コア・イベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
+		(*seq)++;
+    break;
+	case 2: // ユニオン通信起動
+    UNION_CommBoot( gsys );
+		(*seq) ++;
+		break;
+  case 3:
+		return GMEVENT_RES_FINISH; 
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -513,6 +544,21 @@ GMEVENT * EVENT_ChangeMapBySandStream(
       &mcw->loc_req, zone_id, DIR_DOWN, appear_pos->x, appear_pos->y, appear_pos->z);
   mcw->exit_type = EXIT_TYPE_NONE;
   VEC_Set( &mcw->stream_pos, disappear_pos->x, disappear_pos->y, disappear_pos->z );
+	return event;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * EVENT_ChangeMapToUnion( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
+{
+	MAPCHANGE_WORK * mcw;
+	GMEVENT * event;
+
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeToUnion, sizeof(MAPCHANGE_WORK));
+	mcw = GMEVENT_GetEventWork(event);
+  MAPCHANGE_WORK_init( mcw, gsys ); 
+	LOCATION_DEBUG_SetDefaultPos( &mcw->loc_req, ZONE_ID_UNION );
+  mcw->exit_type = EXIT_TYPE_NONE;
 	return event;
 }
 

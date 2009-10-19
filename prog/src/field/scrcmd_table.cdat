@@ -366,7 +366,7 @@
   //マップ遷移関連
   DEF_CMD( EvCmdMapChangeBySandStream, EV_SEQ_MAP_CHANGE_SAND_STREAM )
   DEF_CMD( EvCmdMapChange, EV_SEQ_MAP_CHANGE )
-  NO_CMD()
+  DEF_CMD( EvCmdMapChangeToUnion, EV_SEQ_MAP_CHANGE_TO_UNION )
   NO_CMD()
 
   //ひでんわざ関連

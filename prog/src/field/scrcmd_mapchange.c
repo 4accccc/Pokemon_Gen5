@@ -148,3 +148,30 @@ VMCMD_RESULT EvCmdMapChangeBySandStream( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+
+//--------------------------------------------------------------
+/**
+ * マップ遷移（ユニオンルーム）
+ * @param	 core		仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMapChangeToUnion( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = wk;
+  SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRIPT_GetGameSysWork( sc );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys ); 
+  
+  // イベント呼び出し
+  {
+    GMEVENT* mapchange_event;
+    GMEVENT* parent_event;
+
+    parent_event    = GAMESYSTEM_GetEvent( gsys ); //現在のイベント
+    mapchange_event = EVENT_ChangeMapToUnion( gsys, fieldmap );
+    GMEVENT_CallEvent( parent_event, mapchange_event );
+  }
+
+  return VMCMD_RESULT_SUSPEND;
+}

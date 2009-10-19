@@ -98,6 +98,16 @@ extern GMEVENT * EVENT_ChangeMapBySandStream(
 
 //------------------------------------------------------------------
 /**
+ * @brief	ユニオンへのマップ遷移イベント生成
+ * @param	 gsys		   ゲームシステムへのポインタ
+ * @param	 fieldmap	 フィールドシステムへのポインタ
+ * @return GMEVENT	 生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+extern GMEVENT * EVENT_ChangeMapToUnion( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
+
+//------------------------------------------------------------------
+/**
  */
 //------------------------------------------------------------------
 extern GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELDMAP_WORK *fieldmap);
