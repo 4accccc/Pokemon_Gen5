@@ -160,7 +160,7 @@ typedef enum
 //BMPWINサイズ
 #define STRINPUT_BMPWIN_X			(8)
 #define STRINPUT_BMPWIN_Y			(2)
-#define STRINPUT_BMPWIN_W			(14)
+#define STRINPUT_BMPWIN_W			(16)
 #define STRINPUT_BMPWIN_H			(2)
 //文字描画位置
 #define STRINPUT_STR_START_X	(0)
