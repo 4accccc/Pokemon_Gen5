@@ -18,7 +18,11 @@ enum {
 	NARC_field_light_light00_00_dat = 4,
 	NARC_field_light_light00_01_dat = 5,
 	NARC_field_light_light00_02_dat = 6,
-	NARC_field_light_light00_03_dat = 7
+	NARC_field_light_light00_03_dat = 7,
+	NARC_field_light_lightC03_00_dat = 8,
+	NARC_field_light_lightC03_01_dat = 9,
+	NARC_field_light_lightC03_02_dat = 10,
+	NARC_field_light_lightC03_03_dat = 11
 };
 
 /* NARC_FIELD_LIGHT_NAIX_ */
