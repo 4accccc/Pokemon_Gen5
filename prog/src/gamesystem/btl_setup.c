@@ -109,7 +109,7 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BtlLandFo
  * @param   weather
  */
 //=============================================================================================
-void BP_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gdata, int heapID, const BtlRule rule, 
+void BP_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gdata, HEAPID heapID, const BtlRule rule, 
   const POKEPARTY* partyEnemy, const BtlLandForm landForm, const BtlWeather weather )
 {
   setup_common( bp, gdata, landForm, weather );
