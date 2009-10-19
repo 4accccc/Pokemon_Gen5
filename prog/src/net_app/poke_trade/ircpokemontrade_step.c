@@ -192,10 +192,40 @@ static void _ballinEmitFunc(GFL_EMIT_PTR pEmiter)
   pWork->pBallInPer = pEmiter;
 }
 
+
+static void _pEmitCBOutFunc( GFL_EMIT_PTR pEmiter, unsigned int flag)
+{
+  if( flag == SPL_EMITTER_CALLBACK_FRONT  ){
+    return;
+  }
+  if(pEmiter){
+    IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetUserData( pEmiter );
+    {
+      VecFx32 pos={0,0,0};
+      ICA_ANIME_GetTranslate( pWork->icaBallout, &pos );
+      GFL_PTC_SetEmitterPosition(pEmiter, &pos);
+//      GFL_PTC_SetEmitterMagnetPos(pEmiter, &pos);
+    }
+  }
+}
+
+
 static void _balloutEmitFunc(GFL_EMIT_PTR pEmiter)
 {
   IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetTempPtr();
-  pWork->pBallOutPer = GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO7], 6, NULL, pWork);
+
+
+  {
+    VecFx32 pos={0,0,0};
+    ICA_ANIME_GetTranslate( pWork->icaBallout, &pos );
+    GFL_PTC_SetEmitterPosition(pEmiter, &pos);
+  }
+  
+  
+//  GFL_PTC_SetUserData( pEmiter, pWork );
+//  GFL_PTC_SetCallbackFunc(pEmiter, &_pEmitCBOutFunc);
+  
+ // pWork->pBallOutPer = pEmiter;//GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO7], 6, NULL, pWork);
 }
 
 
@@ -377,7 +407,7 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
     GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO4], DEMO_TEX004,  NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO4_START2){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO4], DEMO_TEX004,  NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO8], DEMO_TEX004,  NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO5_START){
     GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO5], DEMO_TEX005, _ballinEmitFunc, pWork);
@@ -385,8 +415,10 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
   if(pWork->anmCount == _PARTICLE_DEMO6_START){
     GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO6], DEMO_TEX006, NULL, pWork);
   }
-  if(pWork->anmCount == _PARTICLE_DEMO7_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO7], DEMO_TEX007, _balloutEmitFunc, pWork);
+  if(pWork->anmCount > _PARTICLE_DEMO7_START  && (pWork->anmCount < (_PARTICLE_DEMO7_START+50))){
+//    if(pWork->anmCount%3==0){
+      GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO7], DEMO_TEX007,_balloutEmitFunc, pWork);
+  //  }
   }
 
   /*  if(pWork->anmCount == _OAM_POKECREATE_START){
@@ -456,13 +488,9 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
   if(_POKE_SIDEIN_START == pWork->anmCount){
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
     pWork->pMoveMcss[0]=NULL;
-    GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
-    pWork->pMoveMcss[1]=NULL;
 
     IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
-    IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
     IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,0) );
-    IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );
 
 
     {  //èâä˙à íuê›íË
@@ -475,6 +503,18 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
       apos.y = _POKEMON_PLAYER_SIDEIN_POSY;
       apos.z = _POKEMON_PLAYER_SIDEIN_POSZ;
       pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], _POKE_SIDEIN_TIME, &apos, pWork->heapID);
+    }
+  }
+  if(_POKE_SIDEIN_START+1 == pWork->anmCount){
+    GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
+    pWork->pMoveMcss[1]=NULL;
+
+    IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
+    IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );
+
+
+    {  //èâä˙à íuê›íË
+      VecFx32 apos;
       apos.x = _POKEMON_FRIEND_SIDEST_POSX;
       apos.y = _POKEMON_FRIEND_SIDEST_POSY;
       apos.z = _POKEMON_FRIEND_SIDEST_POSZ;

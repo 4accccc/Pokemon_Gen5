@@ -851,7 +851,7 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,IRC_POKEMON_TRADE* pWork )
  * @retval  none
  */
 //------------------------------------------------------------------------------
-
+#if 0
 static void _pokeIcomPosCalc(int line,int m , int vertical, int boxscrollnum,GFL_CLACTPOS* pPos)
 {
   int line2, i, no, subnum=0;
@@ -883,7 +883,7 @@ static void _pokeIcomPosCalc(int line,int m , int vertical, int boxscrollnum,GFL
   pPos->x = x;
   pPos->y = y;
 }
-
+#endif
 
 
 static void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork)
@@ -1826,23 +1826,23 @@ void IRC_POKETRADE_EndSubMojiBG(IRC_POKEMON_TRADE* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-
+#if 0
 void IRC_POKETRADE_MainObjCursorDisp(IRC_POKEMON_TRADE* pWork)
 {
-  if(!pWork->curIcon[CELL_CUR_POKE_SELECT]){
+  if(!pWork->curIcon[CELL_CUR_POKE_KEY]){
     GFL_CLWK_DATA cellInitData;
     cellInitData.pos_x = 0;
     cellInitData.pos_y = 0;
     cellInitData.anmseq = 0;
     cellInitData.softpri = _CLACT_SOFTPRI_POKESEL;
     cellInitData.bgpri = 1;
-    pWork->curIcon[CELL_CUR_POKE_SELECT] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+    pWork->curIcon[CELL_CUR_POKE_KEY] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                                 pWork->cellRes[CHAR_SCROLLBAR],
                                                                 pWork->cellRes[PAL_SCROLLBAR],
                                                                 pWork->cellRes[ANM_SCROLLBAR],
                                                                 &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_SELECT] , TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_KEY] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_KEY], TRUE );
   }
   {
     GFL_CLACTPOS apos;
@@ -1851,10 +1851,10 @@ void IRC_POKETRADE_MainObjCursorDisp(IRC_POKEMON_TRADE* pWork)
     _pokeIcomPosCalc(pWork->MainObjCursorLine,
                      pWork->oldLine-pWork->MainObjCursorLine , pWork->MainObjCursorIndex,
                      pWork->BoxScrollNum,&apos);
-
-    GFL_CLACT_WK_SetPos(pWork->curIcon[CELL_CUR_POKE_SELECT], &apos, CLSYS_DRAW_SUB);
+    apos.y+=4;
+    GFL_CLACT_WK_SetPos(pWork->curIcon[CELL_CUR_POKE_KEY], &apos, CLSYS_DRAW_SUB);
   }
 
   
 }
-
+#endif

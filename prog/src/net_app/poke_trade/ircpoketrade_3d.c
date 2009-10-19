@@ -487,9 +487,16 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
   {
     void* heap;
     int i;
+    BOOL bCamera;
     for(i=0;i<PTC_KIND_NUM_MAX;i++){
       heap = GFL_HEAP_AllocMemory(pWork->heapID, PARTICLE_LIB_HEAP_SIZE);
-      pWork->ptc[i] = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, TRUE, pWork->heapID);
+      if(i==0 || i== 5 ){
+        bCamera=FALSE;
+      }
+      else{
+        bCamera=TRUE;
+      }
+      pWork->ptc[i] = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, bCamera, pWork->heapID);
     }
     heap = GFL_HEAP_AllocMemory(pWork->heapID, PARTICLE_LIB_HEAP_SIZE);
     pWork->ptcOrthogonal = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, FALSE, pWork->heapID);
@@ -745,6 +752,7 @@ static void Draw( IRC_POKEMON_TRADE* pWork )
 
   // 描画
   GFL_G3D_DRAW_Start();
+  GFL_G3D_CAMERA_Switching( pWork->camera );
   GFL_G3D_DRAW_SetLookAt();
 
   GFL_PTC_DrawAll();	//パーティクル描画

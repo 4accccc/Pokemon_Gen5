@@ -214,7 +214,6 @@ static void _msgWindowCreate(IRC_POKEMON_TRADE* pWork,int strno)
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MessageWin), 4, 4, pWork->pStrBuf, pWork->pFontHandle);
   GFL_BMPWIN_TransVramCharacter(pWork->MessageWin);
   GFL_BG_LoadScreenV_Req( frame );
-  //OS_TPrintf("メッセージ\n");
 
 }
 
@@ -1576,28 +1575,28 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
     if(pWork->MainObjCursorIndex<0){
       pWork->MainObjCursorIndex=0;
     }
-    IRC_POKETRADE_MainObjCursorDisp(pWork);
+//    IRC_POKETRADE_MainObjCursorDisp(pWork);
   }
   if(GFL_UI_KEY_GetTrg()==PAD_KEY_DOWN ){   //ベクトルを監視
     pWork->MainObjCursorIndex++;
     if(pWork->MainObjCursorIndex >= BOX_VERTICAL_NUM){
       pWork->MainObjCursorIndex = BOX_VERTICAL_NUM-1;
     }
-    IRC_POKETRADE_MainObjCursorDisp(pWork);
+//    IRC_POKETRADE_MainObjCursorDisp(pWork);
   }
   if(GFL_UI_KEY_GetTrg()==PAD_KEY_RIGHT ){   //ベクトルを監視
     pWork->MainObjCursorLine++;
     if(pWork->MainObjCursorLine >= TRADEBOX_LINEMAX){
       pWork->MainObjCursorLine = 0;
     }
-    IRC_POKETRADE_MainObjCursorDisp(pWork);
+//    IRC_POKETRADE_MainObjCursorDisp(pWork);
   }
   if(GFL_UI_KEY_GetTrg()==PAD_KEY_LEFT ){   //ベクトルを監視
     pWork->MainObjCursorLine--;
     if(pWork->MainObjCursorLine < 0){
       pWork->MainObjCursorLine = TRADEBOX_LINEMAX-1;
     }
-    IRC_POKETRADE_MainObjCursorDisp(pWork);
+//    IRC_POKETRADE_MainObjCursorDisp(pWork);
   }
 
 
@@ -1757,6 +1756,7 @@ static void _dispInit(IRC_POKEMON_TRADE* pWork)
   IRC_POKETRADE_CreatePokeIconResource(pWork);
 
   IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);  //ポケモンの表示
+  IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
 
   IRC_POKETRADE_GraphicInitSubDisp(pWork);  //BGを
   IRC_POKETRADE_GraphicInitMainDisp(pWork);
