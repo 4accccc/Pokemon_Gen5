@@ -12,11 +12,12 @@
 #ifndef ZONE_T02PC0101_EVC_H
 #define ZONE_T02PC0101_EVC_H
 
-#define T02PC0101_SHOPM                    0
+#define T02PC0101_SHOPM1_02                0
 #define T02PC0101_PCWOMAN                  1
 #define T02PC0101_DOCTOR                   2
 #define T02PC0101_WOMAN1                   3
 #define T02PC0101_SUPPORT_01               4
 #define T02PC0101_RIVAL_01                 5
+#define T02PC0101_SHOPM1_01                6
 
 #endif //ZONE_T02PC0101_EVC_H
