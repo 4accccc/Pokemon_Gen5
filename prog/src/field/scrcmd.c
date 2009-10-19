@@ -48,6 +48,7 @@
 #include "scrcmd_sodateya.h"
 #include "scrcmd_hiden.h"
 #include "scrcmd_player.h"
+#include "scrcmd_network.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
