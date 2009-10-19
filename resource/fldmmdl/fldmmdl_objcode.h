@@ -160,6 +160,9 @@
 #define REPORTHEROINE (0x9b) //155 主人公女レポート
 #define PCHERO (0x9c) //156 主人公男差し出し
 #define PCHEROINE (0x9d) //157 主人公女差し出し
-#define OBJCODEMAX (0x9e) //158 最大
+#define BONE (0x9e) //158 骨の標本
+#define BLACKSTONE (0x9f) //159 石（黒）
+#define WHITESTONE (0xa0) //160 石（白）
+#define OBJCODEMAX (0xa1) //161 最大
 
 #endif

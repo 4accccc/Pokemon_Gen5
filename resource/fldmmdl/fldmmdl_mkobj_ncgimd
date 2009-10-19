@@ -98,3 +98,18 @@
 	@echo convert ncg_imd pcheroine
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pcheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
 
+#bone.imd
+./mmdl_res/bone.imd: ./mmdl_nchara/bone.ncg ./mmdl_nchara/bone.ncl
+	@echo convert ncg_imd bone
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/bone.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#blackstone.imd
+./mmdl_res/blackstone.imd: ./mmdl_nchara/blackstone.ncg ./mmdl_nchara/blackstone.ncl
+	@echo convert ncg_imd blackstone
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/blackstone.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+
+#whitestone.imd
+./mmdl_res/whitestone.imd: ./mmdl_nchara/whitestone.ncg ./mmdl_nchara/whitestone.ncl
+	@echo convert ncg_imd whitestone
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/whitestone.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+

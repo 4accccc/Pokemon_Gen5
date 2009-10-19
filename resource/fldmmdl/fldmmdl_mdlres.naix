@@ -30,7 +30,10 @@ enum {
 	NARC_fldmmdl_mdlres_reporthero_nsbtx = 16,
 	NARC_fldmmdl_mdlres_reportheroine_nsbtx = 17,
 	NARC_fldmmdl_mdlres_pchero_nsbtx = 18,
-	NARC_fldmmdl_mdlres_pcheroine_nsbtx = 19
+	NARC_fldmmdl_mdlres_pcheroine_nsbtx = 19,
+	NARC_fldmmdl_mdlres_bone_nsbtx = 20,
+	NARC_fldmmdl_mdlres_blackstone_nsbtx = 21,
+	NARC_fldmmdl_mdlres_whitestone_nsbtx = 22
 };
 
 /* NARC_FLDMMDL_MDLRES_NAIX_ */

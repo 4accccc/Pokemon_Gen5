@@ -18,4 +18,7 @@ FMMDL_RESLIST_NCGIMD = \
 	reporthero.imd \
 	reportheroine.imd \
 	pchero.imd \
-	pcheroine.imd
+	pcheroine.imd \
+	bone.imd \
+	blackstone.imd \
+	whitestone.imd
