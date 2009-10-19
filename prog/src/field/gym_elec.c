@@ -107,7 +107,7 @@ typedef struct GYM_ELEC_TMP_tag
   u8 RadeRaleIdx;          //自機が走行しているレールインデックス
   u8 LeverIdx;              //操作しようとしているレバーインデックス
   u8 ChgingSw;
-  u8 RideEvt;            //乗降イベント中カプセル番号
+  s8 RideEvt;            //乗降イベント中カプセル番号
   ELEC_GYM_TASK_WK  TaskWk[CAPSULE_NUM_MAX];
   ICA_ANIME* IcaAnmPtr;
   u8 FramePosDat[FRAME_POS_SIZE+HEADER_SIZE];
@@ -1654,9 +1654,6 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
       tmp->TaskWk[cap_idx].Timer = 0;
       gmk_sv_work->StopPlatformIdx[cap_idx] = PLATFORM_NO_STOP;
 
-      //乗降終了
-      tmp->RideEvt = -1;
-      tmp->RadeRaleIdx = RIDE_NONE;
       //スクリプトコール
       OS_Printf("スクリプトコール\n");
       SCRIPT_CallScript( event, SCRID_PRG_C04GYM0101_SCR02,
@@ -1665,6 +1662,9 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
     }
     break;
   case 4:
+    //乗降終了
+    tmp->RideEvt = -1;
+    tmp->RadeRaleIdx = RIDE_NONE;
     SetCapTrEncFlg(gmk_sv_work, cap_idx);
     return GMEVENT_RES_FINISH;
   }
