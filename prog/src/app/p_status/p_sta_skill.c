@@ -24,6 +24,7 @@
 #include "p_sta_sys.h"
 #include "p_sta_oam.h"
 #include "p_sta_skill.h"
+#include "p_sta_snd_def.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -1222,6 +1223,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
       PSTATUS_SetActiveBarButton( work , FALSE );
       PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
       PSTATUS_SKILL_DispSkillInfoPage( work , skillWork );
+      PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
       return TRUE;
     }
   }
@@ -1237,6 +1239,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
     GFL_CLACT_WK_SetDrawEnable( skillWork->clwkCur , FALSE );
     PSTATUS_SKILL_DispStatusPage( work , skillWork );
     work->ktst = GFL_APP_END_KEY;
+    PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
     return TRUE;
   }
   else 
@@ -1266,6 +1269,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
       PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
       GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
       GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
+      PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
     }
     else
     {
@@ -1274,12 +1278,14 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
       {
         //“ü‚ê‘Ö‚¦Šm’è
         PSTATUS_SKILL_SwapSkill( work , skillWork , skillWork->changeTarget , skillWork->cursorPos );
+        PMSND_PlaySystemSE(PSTATUS_SND_WAZA_SWAP);
       }
       else
       {
         skillWork->isChangeMode = FALSE;
         PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
         GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
+        PMSND_PlaySystemSE(PSTATUS_SND_WAZA_SELECT);
       }
       //PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
       //skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
@@ -1296,6 +1302,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
     GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
     skillWork->isChangeMode = FALSE;
     skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
+    PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
     return TRUE;
   }
   else 
@@ -1325,6 +1332,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
     GFL_CLACT_WK_SetDrawEnable( skillWork->clwkCur , FALSE );
     PSTATUS_SKILL_DispStatusPage( work , skillWork );
     work->ktst = GFL_APP_END_TOUCH;
+    PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
   }
   else
   {
@@ -1386,6 +1394,8 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
           PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
           skillWork->holdTpx = work->tpx;
           skillWork->holdTpy = work->tpy;
+          PMSND_PlaySystemSE(PSTATUS_SND_WAZA_SELECT);
+
         }
       }
     }
@@ -1461,6 +1471,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
           {
             //“ü‚ê‘Ö‚¦Šm’è
             PSTATUS_SKILL_SwapSkill( work , skillWork , skillWork->changeTarget , skillWork->cursorPos );
+            PMSND_PlaySystemSE(PSTATUS_SND_WAZA_SWAP);
           }
           else
           {
@@ -1490,6 +1501,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
       work->mainSeq = SMS_FADEOUT;
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
       work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
+      PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
       return TRUE;
     }
     else
@@ -1505,6 +1517,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
       PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
 
       PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , FALSE );
+      PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
     }
   }
   else 
@@ -1532,6 +1545,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
       work->psData->ret_mode = PST_RET_DECIDE;
       work->mainSeq = SMS_FADEOUT;
       work->clwkExitButton = NULL;
+      PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
     }
   }
   else 
@@ -1553,6 +1567,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
       GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
       
       PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
+      PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
     }
     else
     {
@@ -1561,6 +1576,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
       work->psData->ret_mode = PST_RET_CANCEL;
       work->mainSeq = SMS_FADEOUT;
       work->clwkExitButton = NULL;
+      PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
     }
     return TRUE;
   }
@@ -1590,6 +1606,7 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
       work->mainSeq = SMS_FADEOUT;
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
       work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
+      PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
     }
     else
     {
@@ -1605,6 +1622,7 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
       PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
 
       PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , FALSE );
+      PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
       
     }
   }
@@ -1648,6 +1666,7 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
             GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
             
             PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
+            PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
           }
         }
         else
@@ -1658,6 +1677,7 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
           work->psData->ret_mode = PST_RET_CANCEL;
           work->mainSeq = SMS_FADEOUT;
           work->clwkExitButton = NULL;
+          PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
         }
       }
       else
@@ -1671,6 +1691,7 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
           work->psData->ret_mode = PST_RET_DECIDE;
           work->mainSeq = SMS_FADEOUT;
           work->clwkExitButton = NULL;
+          PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
         }
       }
     }
@@ -1697,6 +1718,7 @@ static void PSTATUS_SKILL_UpdateKey_CursorMove( PSTATUS_WORK *work , PSTATUS_SKI
   {
     moveVal = 1;
   }
+  PMSND_PlaySystemSE(PSTATUS_SND_CURSOR);
   
   do
   {

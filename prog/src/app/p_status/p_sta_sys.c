@@ -26,6 +26,7 @@
 #include "p_sta_info.h"
 #include "p_sta_skill.h"
 #include "p_sta_ribbon.h"
+#include "p_sta_snd_def.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -91,6 +92,7 @@ static void PSTATUS_RefreshDisp( PSTATUS_WORK *work );
 static void PSTATUS_WaitDisp( PSTATUS_WORK *work );
 
 static void PSTATUS_PALANIM_UpdatePalletAnime( PSTATUS_WORK *work );
+static const BOOL PSTATUS_UTIL_CanUseExitButton( PSTATUS_WORK *work );
 
 #if PM_DEBUG
 void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work );
@@ -106,6 +108,7 @@ static void PSTATUS_TermDebug( PSTATUS_WORK *work );
 //--------------------------------------------------------------
 const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
 {
+  u8 i;
   work->dataPos = work->psData->pos;
   work->befDataPos = 0xFF;
   work->scrollCnt = 0;
@@ -123,6 +126,11 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
 #if PM_DEBUG
   work->calcPP = NULL;
 #endif
+  //@todo ショートカットを取得
+  for( i=0;i<PPT_MAX;i++ )
+  {
+    work->shortCutCheck[i] = FALSE;
+  }
 
   PSTATUS_InitGraphic( work );
 
@@ -157,7 +165,7 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   }
   else
   {
-  work->page = PPT_INFO;
+    work->page = PPT_INFO;
     PSTATUS_SUB_DispPage( work , work->subWork );
     PSTATUS_INFO_DispPage( work , work->infoWork );
     PSTATUS_RIBBON_CreateRibbonBar( work , work->ribbonWork );
@@ -176,6 +184,7 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
 //--------------------------------------------------------------
 const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work )
 {
+  u8 i;
   GFL_TCB_DeleteTask( work->vBlankTcb );
   
   work->psData->pos = work->dataPos;
@@ -196,6 +205,12 @@ const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work )
   PSTATUS_SUB_Term( work , work->subWork );
 
   PSTATUS_TermGraphic( work );
+
+  //@todo ショートカットを反映
+  for( i=0;i<PPT_MAX;i++ )
+  {
+    //work->shortCutCheck[i];
+  }
 
   if( work->calcPP != NULL )
   {
@@ -237,7 +252,8 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
     
   case SMS_FADEOUT:
     if( work->clwkExitButton == NULL ||
-        GFL_CLACT_WK_CheckAnmActive( work->clwkExitButton ) == FALSE )
+        GFL_CLACT_WK_CheckAnmActive( work->clwkExitButton ) == FALSE ||
+        work->psData->isExitRequest == TRUE )
     {
       WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                       WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
@@ -263,6 +279,12 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
     }
     else
     {
+      if( work->psData->isExitRequest == TRUE )
+      {
+        work->retVal = SRT_RETURN;
+        work->mainSeq = SMS_FADEOUT;
+      }
+      
       PSTATUS_UpdateUI( work );
 
       if( work->isWaitDisp == FALSE )
@@ -832,6 +854,10 @@ static void PSTATUS_InitCell( PSTATUS_WORK *work )
       }
     }
   }
+  if( PSTATUS_UTIL_CanUseExitButton(work) == FALSE )
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_EXIT] , FALSE );
+  }
   
   PSTATUS_SUB_InitCell( work , work->subWork );
   PSTATUS_RIBBON_InitCell( work , work->ribbonWork );
@@ -939,6 +965,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     {
       PSTATUS_RefreshDisp( work );
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_ON );
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
       return TRUE;
     }
   }
@@ -950,6 +977,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     {
       PSTATUS_RefreshDisp( work );
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_ON );
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
       return TRUE;
     }
   }
@@ -961,6 +989,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     {
       work->page++;
       PSTATUS_RefreshDisp( work );
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
       return TRUE;
     }
   }
@@ -972,6 +1001,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     {
       work->page--;
       PSTATUS_RefreshDisp( work );
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
       return TRUE;
     }
   }
@@ -983,16 +1013,38 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     work->mainSeq = SMS_FADEOUT;
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
     work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
+    PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
     return TRUE;
   }
   else
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X &&
+      PSTATUS_UTIL_CanUseExitButton(work) == TRUE )
   {
     work->retVal = SRT_EXIT;
     work->psData->ret_mode = PST_RET_EXIT;
     work->mainSeq = SMS_FADEOUT;
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
     work->clwkExitButton = work->clwkBarIcon[SBT_EXIT];
+    PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
+    return TRUE;
+  }
+  else
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+  {
+    if( work->page < PPT_SKILL_ADD )
+    {
+      if( work->shortCutCheck[work->page] == TRUE )
+      {
+        work->shortCutCheck[work->page] = FALSE;
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_OFF );
+      }
+      else
+      {
+        work->shortCutCheck[work->page] = TRUE;
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_ON );
+      }
+      PMSND_PlaySystemSE(PSTATUS_SND_SHORTCUT);
+    }
     return TRUE;
   }
   return FALSE;
@@ -1011,6 +1063,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     {
       work->page = PPT_INFO;
       PSTATUS_RefreshDisp( work );
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
     }
     break;
   case SBT_PAGE2:
@@ -1019,6 +1072,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     {
       work->page = PPT_SKILL;
       PSTATUS_RefreshDisp( work );
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
     }
     break;
   case SBT_PAGE3:
@@ -1027,9 +1081,24 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     {
       work->page = PPT_RIBBON;
       PSTATUS_RefreshDisp( work );
+      PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
     }
     break;
   case SBT_CHECK:
+    if( work->page < PPT_SKILL_ADD )
+    {
+      if( work->shortCutCheck[work->page] == TRUE )
+      {
+        work->shortCutCheck[work->page] = FALSE;
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_OFF );
+      }
+      else
+      {
+        work->shortCutCheck[work->page] = TRUE;
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_ON );
+      }
+      PMSND_PlaySystemSE(PSTATUS_SND_SHORTCUT);
+    }    
     break;
   case SBT_CURSOR_UP:
     {
@@ -1038,6 +1107,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
       {
         PSTATUS_RefreshDisp( work );
         GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_ON );
+        PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
       }
     }
     break;
@@ -1048,15 +1118,20 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
       {
         PSTATUS_RefreshDisp( work );
         GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_ON );
+        PMSND_PlaySystemSE(PSTATUS_SND_PAGE);
       }
     }
     break;
   case SBT_EXIT:
-    work->retVal = SRT_EXIT;
-    work->psData->ret_mode = PST_RET_EXIT;
-    work->mainSeq = SMS_FADEOUT;
-    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
-    work->clwkExitButton = work->clwkBarIcon[SBT_EXIT];
+    if( PSTATUS_UTIL_CanUseExitButton(work) == TRUE )
+    {
+      work->retVal = SRT_EXIT;
+      work->psData->ret_mode = PST_RET_EXIT;
+      work->mainSeq = SMS_FADEOUT;
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
+      work->clwkExitButton = work->clwkBarIcon[SBT_EXIT];
+      PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
+    }
     break;
   case SBT_RETURN:
     work->retVal = SRT_RETURN;
@@ -1064,6 +1139,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     work->mainSeq = SMS_FADEOUT;
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
     work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
+    PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
     break;
     
   }
@@ -1178,7 +1254,10 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
     }
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_OFF );
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_OFF );
-    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT_OFF );
+    if( PSTATUS_UTIL_CanUseExitButton(work) == TRUE )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT_OFF );
+    }
     //技モードではリターン暗くならない
     if( work->psData->mode != PST_MODE_WAZAADD )
     {
@@ -1201,7 +1280,10 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
     }
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP );
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN );
-    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT );
+    if( PSTATUS_UTIL_CanUseExitButton(work) == TRUE )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT );
+    }
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN );
   }
 }
@@ -1440,6 +1522,19 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
       GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE3] , FALSE );
     }
     
+    if( work->page < PPT_SKILL_ADD )
+    {
+      if( work->shortCutCheck[work->page] == TRUE )
+      {
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_ON );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_OFF );
+      }
+    }
+    
+    
     if( work->mosaicEffSeq == SMES_WAIT )
     {
       work->mosaicEffSeq = SMES_FADEIN;
@@ -1669,6 +1764,17 @@ void PSTATUS_UTIL_DrawValueStrFuncRight( PSTATUS_WORK *work , GFL_BMPWIN *bmpWin
                                          strId , posX , posY , col );
 }
 
+//--------------------------------------------------------------
+//	X戻るボタンが使えるか？
+//--------------------------------------------------------------
+static const BOOL PSTATUS_UTIL_CanUseExitButton( PSTATUS_WORK *work )
+{
+  if( work->psData->canExitButton == TRUE )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
 
 #if PM_DEBUG
 void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work )
@@ -1735,6 +1841,7 @@ static void PSTATUS_DEB_Update_OfsY( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTATUS_DEB_Draw_OfsY( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTATUS_DEB_Update_OfsZ( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTATUS_DEB_Draw_OfsZ( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTATUS_DEB_Update_ExitFlg( void* userWork , DEBUGWIN_ITEM* item );
 
 static void PSTATUS_InitDebug( PSTATUS_WORK *work )
 {
@@ -1754,6 +1861,7 @@ static void PSTATUS_InitDebug( PSTATUS_WORK *work )
   DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_OfsX   ,PSTATUS_DEB_Draw_OfsX   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_OfsY   ,PSTATUS_DEB_Draw_OfsY   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PSTATUS_DEB_Update_OfsZ   ,PSTATUS_DEB_Draw_OfsZ   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroup( "強制終了" , PSTATUS_DEB_Update_ExitFlg , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
 }
 
 static void PSTATUS_TermDebug( PSTATUS_WORK *work )
@@ -1983,3 +2091,11 @@ static void PSTATUS_DEB_Draw_OfsZ( void* userWork , DEBUGWIN_ITEM* item )
   DEBUGWIN_ITEM_SetNameV( item , "Offset_Z[%d.%d]",val1,val2 );  
 }
 
+static void PSTATUS_DEB_Update_ExitFlg( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    work->psData->isExitRequest = TRUE;
+  }
+}

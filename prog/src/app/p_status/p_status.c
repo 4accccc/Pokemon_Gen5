@@ -122,11 +122,18 @@ static GFL_PROC_RESULT PokeStatusProc_Init( GFL_PROC * proc, int * seq , void *p
 #endif
       psData->mode = PST_MODE_NORMAL;
       psData->pos = 0;
+      psData->canExitButton = TRUE;
       
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
       {
         psData->mode = PST_MODE_WAZAADD;
+        psData->canExitButton = FALSE;
         psData->waza = 10;
+      }
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+      {
+        psData->mode = PST_MODE_NO_WAZACHG;
+        psData->canExitButton = FALSE;
       }
       
       GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );

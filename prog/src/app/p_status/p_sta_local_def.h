@@ -13,7 +13,6 @@
 #include "app/p_status.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
-#include "sound/pm_sndsys.h"
 #include "debug/debugwin_sys.h"
 #include "poke_tool/poketype.h"
 #include "system/mcss.h"
@@ -250,6 +249,7 @@ typedef struct
     
   PSTATUS_PAGE_TYPE page;
   PSTATUS_PAGE_TYPE befPage;
+  BOOL              shortCutCheck[PPT_MAX];
 
   //3D
   GFL_G3D_CAMERA    *camera;

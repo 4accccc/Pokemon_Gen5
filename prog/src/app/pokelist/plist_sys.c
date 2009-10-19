@@ -2873,8 +2873,15 @@ static void PSTATUS_MSGCB_ItemSet_CheckChangeItemCB( PLIST_WORK *work , const in
 #pragma mark [>force exit
 void PLIST_ForceExit_Timeup( PLIST_WORK *work )
 {
-  if( work->isCallForceExit == FALSE )
+  if( work->isCallForceExit == FALSE &&
+      work->mainSeq != PSMS_FADEOUT &&
+      work->mainSeq != PSMS_FADEOUT_WAIT )
   {
+    if( work->mainSeq == PSMS_MENU )
+    {
+      PLIST_SelectMenuTerm( work );
+    }
+    
     work->isCallForceExit = TRUE;
     work->mainSeq = PSMS_FADEOUT_FORCE;
     

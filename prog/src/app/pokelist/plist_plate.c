@@ -152,6 +152,7 @@ static void PLIST_PLATE_CheckBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *p
 //--------------------------------------------------------------
 PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POKEMON_PARAM *pp )
 {
+  u8 i;
   const u8 baseX = PLIST_PLATE_POS_ARR[idx][0];
   const u8 baseY = PLIST_PLATE_POS_ARR[idx][1];
   PLIST_PLATE_WORK *plateWork;
@@ -204,7 +205,16 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POK
   
   //バトルチェック
   PLIST_PLATE_CheckBattleOrder( work , plateWork );
-  
+      
+  //参加番号のチェック
+  for( i=0;i<6;i++ )
+  {
+    if( work->plData->in_num[i] == plateWork->idx +1 )
+    {
+      plateWork->btlOrder = i;
+    }
+  }
+
   PLIST_PLATE_DrawParamMain( work , plateWork );
   return plateWork;
 }
@@ -1082,16 +1092,6 @@ static void PLIST_PLATE_CheckBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *p
     //バトルじゃない！
     plateWork->btlOrder = PPBO_INVALLID;
     return;
-  }
-    
-  //参加番号のチェック
-  for( i=0;i<6;i++ )
-  {
-    if( work->plData->in_num[i] == plateWork->idx +1 )
-    {
-      plateWork->btlOrder = i;
-      return;
-    }
   }
   
   //参加条件のチェック

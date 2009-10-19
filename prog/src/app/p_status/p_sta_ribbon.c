@@ -26,6 +26,7 @@
 #include "p_sta_sys.h"
 #include "p_sta_ribbon.h"
 #include "p_sta_oam.h"
+#include "p_sta_snd_def.h"
 #include "ribbon.h"
 
 #include "test/ariizumi/ari_debug.h"
@@ -126,6 +127,7 @@ struct _PSTATUS_RIBBON_WORK
   u8       selectType;
   u8       befSelectIdx;
   s32      speed;
+  u8       sndCnt;
   
   BOOL     isTouchBar;
   BOOL     isUpdateIdx;
@@ -160,6 +162,7 @@ PSTATUS_RIBBON_WORK* PSTATUS_RIBBON_Init( PSTATUS_WORK *work )
   
   ribbonWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PSTATUS_RIBBON_WORK) );
   ribbonWork->isDisp = FALSE;
+  ribbonWork->sndCnt = 0;
   return ribbonWork;
 }
 
@@ -189,6 +192,10 @@ void PSTATUS_RIBBON_Main( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork )
   else
   {
     PSTATUS_RIBBON_UpdatRibbon( work , ribbonWork );
+  }
+  if( ribbonWork->sndCnt > 0 )
+  {
+    ribbonWork->sndCnt--;
   }
 }
 
@@ -328,8 +335,9 @@ static void PSTATUS_RIBBON_UpdateUI( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
       if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
       {
         PSTATUS_RIBBON_SetCursorTopBar( work , ribbonWork );
-        GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , TRUE );
+        //GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , TRUE );
         work->ktst = GFL_APP_END_KEY;
+        PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
       }
       else
       {
@@ -339,6 +347,7 @@ static void PSTATUS_RIBBON_UpdateUI( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
         ribbonWork->selectType = PSTATUS_RIBBON_GetRibbonType( ribbonWork , touchBar );
         PSTATUS_SetActiveBarButton( work , FALSE );
         work->ktst = GFL_APP_END_TOUCH;
+        PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
       }
       PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
       PSTATUS_RIBBON_DispInfo( work , ribbonWork );
@@ -369,6 +378,7 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
     PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
     PSTATUS_RIBBON_ClearInfo_Trans( work , ribbonWork );
     work->ktst = GFL_APP_END_KEY;
+    PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
     return TRUE;
   }
   else
@@ -381,7 +391,7 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
       ribbonWork->speed = 0;
       ribbonWork->isTouchBar = FALSE;
       PSTATUS_RIBBON_SetCursorTopBar( work , ribbonWork );
-      GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , TRUE );
+      //GFL_CLACT_WK_SetDrawEnable( ribbonWork->clwkCur , TRUE );
       work->ktst = GFL_APP_END_KEY;
       return TRUE;
     }
@@ -411,6 +421,7 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
         PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
         PSTATUS_RIBBON_DispInfo( work , ribbonWork );
       }
+      PMSND_PlaySystemSE(PSTATUS_SND_CURSOR);
       return TRUE;
     }
     else
@@ -440,6 +451,7 @@ static const BOOL PSTATUS_RIBBON_UpdateKey( PSTATUS_WORK *work , PSTATUS_RIBBON_
         PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
         PSTATUS_RIBBON_DispInfo( work , ribbonWork );
       }
+      PMSND_PlaySystemSE(PSTATUS_SND_CURSOR);
       return TRUE;
     }
   }
@@ -462,6 +474,7 @@ static void PSTATUS_RIBBON_UpdateTP( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
 
     PSTATUS_RIBBON_ClearInfo( work , ribbonWork );
     PSTATUS_RIBBON_ClearInfo_Trans( work , ribbonWork );
+    PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
   }
   else
   if( GFL_UI_TP_GetTrg() == TRUE &&
@@ -511,16 +524,29 @@ static void PSTATUS_RIBBON_UpdateTP( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *r
   }
   else
   {
+    const u32 befPos = ribbonWork->pagePos;
     ribbonWork->isTouchBar = FALSE;
     if( ribbonWork->speed < 0 )
     {
       ribbonWork->speed++;
       PSTATUS_RIBBON_MoveBar( work , ribbonWork , ribbonWork->speed/PSTATUS_RIBBON_BAR_SPEED_RATE );
+      if( ribbonWork->sndCnt == 0 &&
+          befPos != ribbonWork->pagePos )
+      {
+        PMSND_PlaySystemSE(PSTATUS_SND_SLIDE);
+        ribbonWork->sndCnt = 4;
+      }
     }
     if( ribbonWork->speed > 0 )
     {
       ribbonWork->speed--;
       PSTATUS_RIBBON_MoveBar( work , ribbonWork , ribbonWork->speed/PSTATUS_RIBBON_BAR_SPEED_RATE );
+      if( ribbonWork->sndCnt == 0 &&
+          befPos != ribbonWork->pagePos )
+      {
+        PMSND_PlaySystemSE(PSTATUS_SND_SLIDE);
+        ribbonWork->sndCnt = 4;
+      }
     }
   }
 }

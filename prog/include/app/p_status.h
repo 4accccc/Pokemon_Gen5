@@ -46,6 +46,8 @@ typedef struct {
   BOOL      pokethlon;  // ポケスロンパフォーマンス画面表示かどうか
   BOOL      waza_chg; // 技を入れ替えたかどうか TRUE = 入れ替えた, FALSE = それ以外
 
+  BOOL      canExitButton;  //X戻りが使えるか？
+  BOOL      isExitRequest;  //時間切れ時、終了リクエストを出す
 }PSTATUS_DATA;
 
 // モード
@@ -95,4 +97,3 @@ enum {
 //-----------------------------------------------
 
 extern GFL_PROC_DATA PokeStatus_ProcData;
-
