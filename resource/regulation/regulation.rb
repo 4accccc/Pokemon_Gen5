@@ -33,6 +33,7 @@ COL_AGE_LO = 19    #年齢制限以上
 COL_AGE_HI = 20    #年齢制限以下
 COL_SHOW_POKE = 21    #ポケモン見せ合い
 COL_TIME_SHOW_POKE = 22 #ポケモン見せ合い時間
+COL_BTL_TYPE = 23 #バトルタイプ
 
 POKENUM_MAX_BYTE = (656/8)  ##このくらいに増えるかも ８２バイト
 ITEMNUM_MAX_BYTE = (608/8)  ##このくらいにふえるかも
@@ -46,6 +47,7 @@ class RegulationBin
     @HashLevelRange = {"なし"=>0 ,"以上"=>1 ,"以下"=>2, "以上補正"=>3, "全補正"=>4, "以下補正"=>5}
     @HashOKNG = {"NG"=>0,"OK"=>1, "MANUAL"=>2}
     @HashONOFF = {"OFF"=>0,"ON"=>1, "MANUAL"=>2}
+    @HashBATTLE = {"SINGLE"=>0,"DOUBLE"=>1, "TRIPLE"=>2, "ROTATION"=>3, "MULTI"=>4}
     @TempNum = "0"
     @HashPokeGmm = Hash.new
     @HashItemGmm = Hash.new
@@ -203,7 +205,10 @@ class RegulationBin
     when COL_TIME_SHOW_POKE    #ポケモン見せ合い時間
       num = value.to_i
       outFH.write([num].pack("c"))
-      outFH.write([num].pack("c"))  ##アライメント
+    when COL_BTL_TYPE  #バトルタイプ
+      p value
+      num = @HashBATTLE[value]
+      outFH.write([num].pack("c"))
     else
     end
     
