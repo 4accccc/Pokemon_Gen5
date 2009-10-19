@@ -73,6 +73,7 @@ extern void UnionChat_SetMyPmsData(UNION_SYSTEM_PTR unisys, const PMS_DATA *pmsd
 //--------------------------------------------------------------
 //  union_main.c
 //--------------------------------------------------------------
+extern void UNION_CommBoot(GAMESYS_WORK *gsys);
 extern void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELDMAP_WORK *fieldmap);
 extern BOOL Union_FieldCheck(UNION_SYSTEM_PTR unisys);
 extern void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork);

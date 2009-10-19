@@ -40,6 +40,12 @@
 //======================================================================
 //	define
 //======================================================================
+///FIELDCOMM_ExitWait関数の戻り値
+typedef enum{
+  FIELDCOMM_EXIT_CONTINUE,    ///<通信終了待ち
+  FIELDCOMM_EXIT_END,         ///<通信終了
+  FIELDCOMM_EXIT_ERROR,       ///<エラー発生
+}FIELDCOMM_EXIT;
 
 //======================================================================
 //	struct
@@ -98,3 +104,4 @@ extern void FIELDMAP_SetNowPosTarget( FIELDMAP_WORK *fieldWork, const VecFx32 *p
 extern FLDMSGWIN * FIELDMAP_GetGoldMsgWin( FIELDMAP_WORK *fieldWork );
 extern void FIELDMAP_SetGoldMsgWin( FIELDMAP_WORK *fieldWork, FLDMSGWIN *msgWin );
 extern SODATEYA* FIELDMAP_GetSodateya( FIELDMAP_WORK* fieldWork );
+extern FIELDCOMM_EXIT FIELDCOMM_ExitWait(GAME_COMM_SYS_PTR game_comm);

@@ -22,6 +22,43 @@
 #include "colosseum.h"
 
 
+//==================================================================
+/**
+ * ユニオン通信を起動する
+ *
+ * @param   gsys		
+ */
+//==================================================================
+void UNION_CommBoot(GAMESYS_WORK *gsys)
+{
+  GAME_COMM_SYS_PTR game_comm;
+  GAMEDATA *gdata;
+  
+  game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  gdata = GAMESYSTEM_GetGameData( gsys );
+  
+  GF_ASSERT(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL);
+
+  {
+    UNION_PARENT_WORK *upw;
+    
+    upw = GFL_HEAP_AllocClearMemory(GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(UNION_PARENT_WORK));
+    upw->mystatus = GAMEDATA_GetMyStatus(gdata);
+    upw->game_comm = game_comm;
+    upw->game_data = gdata;
+    upw->gsys = gsys;
+    GameCommSys_Boot(game_comm, GAME_COMM_NO_UNION, upw);
+	}
+}
+
+//==================================================================
+/**
+ * ユニオン更新処理
+ *
+ * @param   game_comm		
+ * @param   fieldmap		
+ */
+//==================================================================
 void Union_Main(GAME_COMM_SYS_PTR game_comm, FIELDMAP_WORK *fieldmap)
 {
   UNION_SYSTEM_PTR unisys;

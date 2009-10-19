@@ -98,6 +98,7 @@
 
 #include "savedata/sodateya_work.h"
 #include "sodateya.h"
+#include "system/net_err.h"
 
 //======================================================================
 //	DEBUG定義
@@ -2237,6 +2238,34 @@ static void FIELDMAP_CommBoot(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAP
   	}
     break;
   }
+}
+
+//==================================================================
+/**
+ * フィールド通信終了処理
+ *
+ * @param   game_comm		
+ *
+ * @retval  FIELDCOMM_EXIT		通信終了状態
+ *
+ * FIELDCOMM_EXIT_END     ：通信が正常に終了
+ * FIELDCOMM_EXIT_CONTINUE：通信終了待ちです。先のシーケンスへは進まずにENDになるまで待ってください
+ * FIELDCOMM_EXIT_ERROR   ：エラーが発生しています。エラー画面を表示してください。
+ *                          エラー画面表示後はこの関数を呼ぶ必要はありません
+ */
+//==================================================================
+FIELDCOMM_EXIT FIELDCOMM_ExitWait(GAME_COMM_SYS_PTR game_comm)
+{
+  if(NetErr_App_CheckError() == TRUE){
+    return FIELDCOMM_EXIT_ERROR;
+  }
+  if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL){
+    return FIELDCOMM_EXIT_END;
+  }
+  else if(GameCommSys_CheckSystemWaiting(game_comm) == TRUE){
+    GameCommSys_ExitReq(game_comm);
+  }
+  return FIELDCOMM_EXIT_CONTINUE;
 }
 
 //======================================================================
