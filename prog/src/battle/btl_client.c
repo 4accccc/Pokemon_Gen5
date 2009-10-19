@@ -9,6 +9,7 @@
 //=============================================================================================
 #include <gflib.h>
 
+#include "sound\pm_sndsys.h"
 #include "poke_tool\pokeparty.h"
 
 #include "battle\battle.h"
@@ -168,6 +169,7 @@ static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_TraceTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
@@ -1479,6 +1481,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_MOVE,              scProc_ACT_Move           },
     { SC_ACT_EXP,               scProc_ACT_Exp            },
     { SC_ACT_EXP_LVUP,          scProc_ACT_ExpLvup        },
+    { SC_ACT_BALL_THROW,        scProc_ACT_BallThrow      },
   };
 
 restart:
@@ -2240,8 +2243,70 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
   }
   return FALSE;
 }
+//---------------------------------------------------------------------------------------
+/**
+ *  モンスターボール投げつけ
+ *  args .. [0]:対象ポケ位置  [1]:ゆれ回数  [2]:捕獲成功フラグ
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    {
+      u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
+      BTLV_EFFECT_BallThrow( vpos, args[1], args[2] );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      u16 strID;
 
+      // 捕獲成功メッセージ
+      if( args[2] )
+      {
+        const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, args[0] );
+        wk->strParam.args[0] = BPP_GetID( bpp );
+        strID = BTL_STRID_STD_BallThrowS;
+      }
+      // 捕獲失敗メッセージ
+      else
+      {
+        static const u16 strTbl[] = {
+          BTL_STRID_STD_BallThrow0, BTL_STRID_STD_BallThrow1, BTL_STRID_STD_BallThrow2, BTL_STRID_STD_BallThrow3,
+        };
 
+        if( args[1] < NELEMS(strTbl) ){
+          strID = strTbl[ args[1] ];
+        }else{
+          strID = strTbl[ 0 ];
+        }
+      }
+      BTLV_StartMsgStd( wk->viewCore, strID, wk->strParam.args );
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      if( args[2] ){
+        PMSND_PlaySE( SEQ_ME_POKEGET );
+      }
+      (*seq)++;
+    }
+    break;
+  case 3:
+    if( !PMSND_CheckPlaySE() ){
+      (*seq)++;
+    }
+    break;
+  default:
+      return TRUE;
+  }
+  return FALSE;
+}
 //---------------------------------------------------------------------------------------
 /**
  *  とくせい「トレース」の発動処理

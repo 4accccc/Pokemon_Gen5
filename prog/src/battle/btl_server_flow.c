@@ -12,6 +12,7 @@
 #include "waza_tool\wazadata.h"
 #include "waza_tool\wazano_def.h"
 #include "item\item.h"
+#include "item\itemtype_def.h"
 
 #include "btl_event.h"
 #include "btl_server_cmd.h"
@@ -256,6 +257,7 @@ static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_MemberOut( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_MemberIn( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nextPokeIdx );
 static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, u8 actParam, u8 targetIdx );
+static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
 static u8 ItemEff_SleevRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ItemEff_PoisonRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ItemEff_YakedoRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
@@ -1712,22 +1714,29 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
     { ITEM_PRM_HP_RCV,        ItemEff_HP_Rcv        },   // HP回復
   };
 
-  // @@@ targetIdx = 自パーティの何番目のポケモンに使うか？という意味だが、マルチでも有効だと話が違ってきます
   u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
   BTL_POKEPARAM* target = NULL;
   int i, itemParam;
   u32 hem_state;
 
-  if( targetIdx != BTL_PARTY_MEMBER_MAX ){
-    BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
-    target = BTL_PARTY_GetMemberData( party, targetIdx );
-  }
-
+  // ○○は××を使った！
   {
     int arg[2];
     arg[0] = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
     arg[1] = itemID;
     scPut_Message_SetEx( wk, BTL_STRID_STD_UseItem_Self, 2, arg );
+  }
+
+  if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_TYPE) == ITEMTYPE_BALL )
+  {
+    scproc_TrainerItem_BallRoot( wk, bpp, itemID );
+    return;
+  }
+
+  // @@@ targetIdx = 自パーティの何番目のポケモンに使うか？という意味だが、マルチでも有効だと話が違ってきます
+  if( targetIdx != BTL_PARTY_MEMBER_MAX ){
+    BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+    target = BTL_PARTY_GetMemberData( party, targetIdx );
   }
 
   hem_state = Hem_PushState( &wk->HEManager );
@@ -1744,6 +1753,58 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
   scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   Hem_PopState( &wk->HEManager, hem_state );
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * ボール使用ルート
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   itemID
+ */
+//----------------------------------------------------------------------------------
+static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID )
+{
+  if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD )
+  {
+    BTL_POKEPARAM* targetPoke;
+    BtlPokePos  targetPos = BTL_POS_NULL;
+
+    {
+      BtlExPos exPos;
+      u8 posAry[ BTL_POSIDX_MAX ];
+      u8 basePos;
+      u8 posCnt, i;
+
+      basePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(bpp) );
+
+      exPos = EXPOS_MAKE( BTL_EXPOS_ENEMY_ALL, basePos );
+      posCnt = BTL_MAIN_ExpandBtlPos( wk->mainModule, exPos, posAry );
+
+      for(i=0; i<posCnt; ++i)
+      {
+        targetPoke = BTL_POKECON_GetFrontPokeData( wk->pokeCon, posAry[i] );
+        if( !BPP_IsDead(targetPoke) )
+        {
+          targetPos = posAry[i];
+          break;
+        }
+      }
+    }
+
+    if( targetPos != BTL_POS_NULL )
+    {
+      u8 yure_cnt, fSuccess;
+
+      // @todo ここで捕獲成否＆失敗なら揺れ数を計算する。今は適当。
+      yure_cnt = 3;
+      fSuccess = TRUE;
+
+      SCQUE_PUT_ACT_BallThrow( wk->que, targetPos, yure_cnt, fSuccess );
+    }
+  }
+}
+
 // アイテム効果：ねむり回復
 static u8 ItemEff_SleevRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
