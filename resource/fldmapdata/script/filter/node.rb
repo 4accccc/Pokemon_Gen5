@@ -356,6 +356,7 @@ module PmScript
       #Šo‚¦‚Ä‚¨‚¢‚½’è‹`ˆÊ’u‚Ü‚Å‚·‚×‚ÄUndef‚·‚é
       undefs = intp.undef_all_var_alias( count )
       undefs.each{|name|
+        if name == "" then next end 
         puts "\t_ASM_LDVAL  #{name}, 0"
         puts "#undef #{name}"
       }
