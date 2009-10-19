@@ -666,7 +666,7 @@ const GFL_PROC_DATA NameInputProcData =
  *	@retura	NAMEIN_PARAM
  */
 //-----------------------------------------------------------------------------
-NAMEIN_PARAM *NameIn_ParamAllocMake( HEAPID heapId, NAMEIN_MODE mode, int param1, int param2, int wordmax, const STRBUF *default_str )
+NAMEIN_PARAM *NAMEIN_ParamAllocMake( HEAPID heapId, NAMEIN_MODE mode, int param1, int param2, int wordmax, const STRBUF *default_str )
 {	
 	NAMEIN_PARAM *p_param;
 	p_param	= GFL_HEAP_AllocMemory( heapId, sizeof(NAMEIN_PARAM) );
@@ -694,7 +694,7 @@ NAMEIN_PARAM *NameIn_ParamAllocMake( HEAPID heapId, NAMEIN_MODE mode, int param1
  *	@param	*param	ワーク
  */
 //-----------------------------------------------------------------------------
-void NameIn_ParamDelete(NAMEIN_PARAM *param)
+void NAMEIN_ParamDelete(NAMEIN_PARAM *param)
 {	
 	GFL_STR_DeleteBuffer( param->strbuf );
 	GFL_HEAP_FreeMemory( param );
@@ -707,7 +707,7 @@ void NameIn_ParamDelete(NAMEIN_PARAM *param)
  *	@param	*strbuf		コピー受け取りバッファ
  */
 //-----------------------------------------------------------------------------
-void NameIn_CopyStr( const NAMEIN_PARAM *param, STRBUF *strbuf )
+void NAMEIN_CopyStr( const NAMEIN_PARAM *param, STRBUF *strbuf )
 {	
 	GFL_STR_CopyBuffer( strbuf, param->strbuf );
 }
@@ -721,7 +721,7 @@ void NameIn_CopyStr( const NAMEIN_PARAM *param, STRBUF *strbuf )
  *	@return	コピーされた文字列
  */
 //-----------------------------------------------------------------------------
-STRBUF* NameIn_CreateCopyStr( const NAMEIN_PARAM *param, HEAPID heapID )
+STRBUF* NAMEIN_CreateCopyStr( const NAMEIN_PARAM *param, HEAPID heapID )
 {	
 	return GFL_STR_CreateCopyBuffer( param->strbuf, heapID );
 }
@@ -735,7 +735,7 @@ STRBUF* NameIn_CreateCopyStr( const NAMEIN_PARAM *param, HEAPID heapID )
  *	@retval FALSEならばキャンセルされていない
  */
 //-----------------------------------------------------------------------------
-BOOL NameIn_IsCancel( const NAMEIN_PARAM *param )
+BOOL NAMEIN_IsCancel( const NAMEIN_PARAM *param )
 {	
 	return param->cancel;
 }

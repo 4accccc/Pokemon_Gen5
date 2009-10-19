@@ -5750,7 +5750,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
 		
 	case SEQ_CODEIN_END:
 		// 名前入力、コード入力画面の破棄
-		NameIn_ParamDelete( p_wk->p_namein );
+		NAMEIN_ParamDelete( p_wk->p_namein );
 		CodeInput_ParamDelete( p_wk->p_codein );
 
 		WFNOTE_DrawInit( p_sys, heapID );	// 画面復帰
@@ -5791,7 +5791,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
 		
 	case SEQ_CODEIN_NAMEINONLY_END:	// 名前入力のみ
 		// 名前入力、コード入力画面の破棄
-		NameIn_ParamDelete( p_wk->p_namein );
+		NAMEIN_ParamDelete( p_wk->p_namein );
 
 		WFNOTE_DrawInit( p_sys, heapID );	// 画面復帰
 		return WFNOTE_STRET_FINISH; 
@@ -5854,13 +5854,13 @@ static NAMEIN_PARAM* CodeIn_NameInParamMake( WFNOTE_CODEIN* p_wk, WFNOTE_DATA* p
 {
 	NAMEIN_PARAM* p_param;
 
-	p_param = NameIn_ParamAllocMake( heapID, NAMEIN_FRIENDNAME, 0, 0,
+	p_param = NAMEIN_ParamAllocMake( heapID, NAMEIN_FRIENDNAME, 0, 0,
 							NAMEIN_PERSON_LENGTH, 
 							NULL );
 
 	// 名前入力画面初期化dataチェック
 	if( p_data->namein_init.init == TRUE ){
-//FIXME	言語対応
+//@todo	言語対応
 		#if( PM_LANG == LANG_JAPAN )
 		{
 			//if( IsJapaneseCode( *p_data->namein_init.cp_str ) ){

@@ -132,7 +132,7 @@ extern const GFL_PROC_DATA NameInputProcData;
  *	@return	NAMEIN_PARAM
  */
 //-----------------------------------------------------------------------------
-extern NAMEIN_PARAM *NameIn_ParamAllocMake( HEAPID heapId, NAMEIN_MODE mode, int param1, int param2, int wordmax, const STRBUF *default_str );
+extern NAMEIN_PARAM *NAMEIN_ParamAllocMake( HEAPID heapId, NAMEIN_MODE mode, int param1, int param2, int wordmax, const STRBUF *default_str );
 //----------------------------------------------------------------------------
 /**
  *	@brief	NAMEIN_PARAM‰ð•ú
@@ -140,11 +140,11 @@ extern NAMEIN_PARAM *NameIn_ParamAllocMake( HEAPID heapId, NAMEIN_MODE mode, int
  *	@param		NAMEIN_PARAM
  */
 //-----------------------------------------------------------------------------
-extern void NameIn_ParamDelete( NAMEIN_PARAM *param );
+extern void NAMEIN_ParamDelete( NAMEIN_PARAM *param );
 //-------------------------------------
 ///	PARAM‚©‚ç‚ÌŽæ“¾
 //=====================================
-extern void NameIn_CopyStr( const NAMEIN_PARAM *param, STRBUF *strbuf );
-extern STRBUF* NameIn_CreateCopyStr( const NAMEIN_PARAM *param, HEAPID heapID );
-extern BOOL NameIn_IsCancel( const NAMEIN_PARAM *param );
+extern void NAMEIN_CopyStr( const NAMEIN_PARAM *param, STRBUF *strbuf );
+extern STRBUF* NAMEIN_CreateCopyStr( const NAMEIN_PARAM *param, HEAPID heapID );
+extern BOOL NAMEIN_IsCancel( const NAMEIN_PARAM *param );
 #endif	//NAME_INPUT_H__

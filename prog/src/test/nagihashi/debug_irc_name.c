@@ -333,7 +333,7 @@ static GFL_PROC_RESULT DEBUG_IRC_NAME_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 	switch( *p_seq )
 	{	
 	case SEQ_PLAYER1_NAME_START:
-		p_wk->p_param_adrs	= NameIn_ParamAllocMake(
+		p_wk->p_param_adrs	= NAMEIN_ParamAllocMake(
 				HEAPID_NAGI_DEBUG_SUB, NAMEIN_MYNAME, 0, 0, NAMEIN_PERSON_LENGTH, NULL );
 		*p_seq	= SEQ_PLAYER1_NAME_INPUT;
 		break;
@@ -347,13 +347,13 @@ static GFL_PROC_RESULT DEBUG_IRC_NAME_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 		{	
 			NAMEIN_PARAM	*p_param	= p_wk->p_param_adrs;
 			GFL_STR_CopyBuffer( p_wk->p_player1_name, p_param->strbuf );
-			NameIn_ParamDelete( p_wk->p_param_adrs );
+			NAMEIN_ParamDelete( p_wk->p_param_adrs );
 		}
 		*p_seq	= SEQ_PLAYER2_NAME_START;
 		break;
 
 	case SEQ_PLAYER2_NAME_START:
-		p_wk->p_param_adrs	= NameIn_ParamAllocMake(
+		p_wk->p_param_adrs	= NAMEIN_ParamAllocMake(
 				HEAPID_NAGI_DEBUG_SUB, NAMEIN_MYNAME, 0, 0, NAMEIN_PERSON_LENGTH, NULL );
 		*p_seq	= SEQ_PLAYER2_NAME_INPUT;
 		break;
@@ -367,7 +367,7 @@ static GFL_PROC_RESULT DEBUG_IRC_NAME_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 		{	
 			NAMEIN_PARAM	*p_param	= p_wk->p_param_adrs;
 			GFL_STR_CopyBuffer( p_wk->p_player2_name, p_param->strbuf );
-			NameIn_ParamDelete( p_wk->p_param_adrs );
+			NAMEIN_ParamDelete( p_wk->p_param_adrs );
 		}
 		*p_seq	= SEQ_FADEOUT_START;
 		break;

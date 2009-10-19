@@ -438,7 +438,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void 
 	GFL_STD_MemClear( p_wk, sizeof(DEBUG_NAGI_MAIN_WORK) );
 
 	CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
-	p_wk->p_namein_param	= NameIn_ParamAllocMake( HEAPID_NAGI_DEBUG, NAMEIN_POKEMON, 1, 0, NAMEIN_POKEMON_LENGTH, NULL );
+	p_wk->p_namein_param	= NAMEIN_ParamAllocMake( HEAPID_NAGI_DEBUG, NAMEIN_POKEMON, 1, 0, NAMEIN_POKEMON_LENGTH, NULL );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -468,7 +468,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Exit( GFL_PROC *p_proc, int *p_seq, void 
 				p_wk->overlay_Id, p_wk->p_procdata, p_wk->p_proc_work );
 	}
 
-	NameIn_ParamDelete( p_wk->p_namein_param );
+	NAMEIN_ParamDelete( p_wk->p_namein_param );
 
 	DeleteTemporaryModules( p_wk );
 
