@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-10-14T18:39:35"/>
+	<create user="taya" host="W00146" date="2009-10-19T13:17:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -323,12 +323,12 @@
 
 	<dialog left="240" top="137" right="921" bottom="651" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="198" top="443" right="629" bottom="841" visible="no"/>
+		<tag-palette left="198" top="443" right="629" bottom="841" visible="yes"/>
 		<band id="0" index="0" style="0001" width="506"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -456,8 +456,10 @@
 
 	<row id="BTL_STRID_STD_UseItem_Self" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>どうぐを使う　自分</comment>
-		<language name="JPN" width="216">[1:09:どうぐ名:1]を　つかった！</language>
-		<language name="JPN_KANJI" width="216">[1:09:どうぐ名:1]を　使った！</language>
+		<language name="JPN" width="216">[1:00:トレーナー名:0]は
+[1:09:どうぐ名:1]を　つかった！</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]は
+[1:09:どうぐ名:1]を　使った！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_UseItem_Player" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
@@ -498,6 +500,46 @@
 レベル[2:02:３桁:1]　に　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 レベル[2:02:３桁:1]　に　あがった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_BallThrow0" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>ポケモン捕獲失敗（ゆれ回数０）</comment>
+		<language name="JPN" width="216">だめだ！　ポケモンが
+ボールから　でてしまった！</language>
+		<language name="JPN_KANJI" width="216">だめだ！　ポケモンが
+ボールから　出てしまった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_BallThrow1" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>ポケモン捕獲失敗（ゆれ回数１）</comment>
+		<language name="JPN" width="216">ああ！
+つかまえたと　おもったのに！</language>
+		<language name="JPN_KANJI" width="216">ああ！
+捕まえたと　思ったのに！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_BallThrow2" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>ポケモン捕獲失敗（ゆれ回数２）</comment>
+		<language name="JPN" width="216">ざんねん！
+もうすこしで　つかまえられたのに！</language>
+		<language name="JPN_KANJI" width="216">残念！
+もう少しで　捕まえられたのに！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_BallThrow3" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>ポケモン捕獲失敗（ゆれ回数３）</comment>
+		<language name="JPN" width="216">おしい！
+あとちょっとの　ところだったのに！</language>
+		<language name="JPN_KANJI" width="216">惜しい！
+あとちょっとの　ところだったのに！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_BallThrowS" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>ポケモン捕獲成功</comment>
+		<language name="JPN" width="216">やったー！
+[1:01:ポケモン種族名:0]を　つかまえたぞ！</language>
+		<language name="JPN_KANJI" width="216">やったー！
+[1:01:ポケモン種族名:0]を　捕まえたぞ！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_UseItem_NoEffect" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
