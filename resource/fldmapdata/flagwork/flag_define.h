@@ -565,9 +565,9 @@
 #define FV_C01R0101_INVENTOR_01            541 /* 0x021d 発明家自宅の１階：発明家（マコモ） （最終的には２階に常駐） */
 #define FV_C01R0501_RIVAL_01               542 /* 0x021e C01トレーナーズスクール：ライバル */
 #define FV_C04_SUPPORT_01                  543 /* 0x021f ライモンシティ：サポート */
-		/* not used   544(0x0220) */
-		/* not used   545(0x0221) */
-		/* not used   546(0x0222) */
+#define FV_D05R0101_RIVAL_01               544 /* 0x0220 D05R0101：初回入室時イベントライバル01 */
+#define FV_D05R0101_RIVAL_02               545 /* 0x0221 D05R0101：ライバル02 */
+#define FV_D05R0101_WORKMAN_01             546 /* 0x0222 D05R0101：戦闘後表示WORKMAN */
 		/* not used   547(0x0223) */
 		/* not used   548(0x0224) */
 		/* not used   549(0x0225) */

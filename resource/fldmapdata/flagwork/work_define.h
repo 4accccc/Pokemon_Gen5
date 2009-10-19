@@ -132,7 +132,7 @@
 #define WK_SCENE_C01                     16520 /* 0x4088 C01フィールド：イベント用ワーク */
 #define WK_SCENE_C04                     16521 /* 0x4089 C04フィールド：イベント用ワーク */
 #define WK_SCENE_C02GYM0201              16522 /* 0x408a C02ノーマルジム：イベント用ワーク */
-		/* not used 16523(0x408b) */
+#define WK_SCENE_D05R0101                16523 /* 0x408b R05：イベント用ワーク */
 		/* not used 16524(0x408c) */
 		/* not used 16525(0x408d) */
 		/* not used 16526(0x408e) */
