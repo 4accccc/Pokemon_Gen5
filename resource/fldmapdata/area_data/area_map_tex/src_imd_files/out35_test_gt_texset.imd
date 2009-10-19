@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-10-10T19:41:29"/>
+	<create user="fuchino" host="W00152" date="2009-10-19T16:38:55"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -2599,28 +2599,43 @@
 	</tex_image>
 	<tex_image index="84" name="t01wd1"
 		width="16" height="32" original_width="16" original_height="32"
-		format="palette16"
-		color0_mode="color"
+		format="a3i5"
 		palette_name="t01wd1_pl"
 		path="C:/home/wb_data3d/field/out01/chip/tex/t01wd1.tga"
 	>
-		<bitmap size="128">
-			1114 1111 1111 1141 1476 1111 4141 3674
-			4786 4114 7476 3677 7886 3677 7776 3687
-			8886 3688 8776 3688 8886 3688 8886 3688
-			8886 3688 8886 3688 8876 3688 8886 3688
-			8876 3678 8886 3688 8876 3677 8886 3688
-			7776 3677 8786 3687 7776 3676 7776 3687
-			6676 3676 6676 3677 6676 3676 6676 3676
-			6776 3676 6676 3676 6776 3676 6776 3676
-			6776 3676 7776 3676 7776 3677 7776 3677
-			7786 3677 7776 3677 8886 3688 8886 3688
-			aaa8 68aa aaa8 68aa 5552 0255 5552 0255
-			5552 0255 5552 0255 0000 0000 0000 0000
-			9999 9999 9999 9999 bbbb bbbb bbbb bbbb
-			dddd cccc ddcc dddd bcdd bbbb cbbb dddd
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+		<bitmap size="256">
+			0402 0707 0707 0707 0707 0707 0707 0204
+			0402 0707 0707 0707 0707 0707 0727 0204
+			0402 2707 0707 2707 0707 2707 2747 0204
+			0402 4727 0727 4727 0727 4727 47a7 0224
+			2402 a747 2747 a747 0747 a747 a7e7 2244
+			4422 e7a7 47a7 e7a7 27a7 e7a7 e7e7 42a4
+			a442 e7e7 a5e7 e5e7 47e5 e7e7 e7e7 a2e4
+			e4a2 e7e7 e5e7 e5e7 a7e5 e7e7 e7e7 e2e4
+			e4e2 e7e7 e5e7 e5e5 e7e5 e7e7 e7e7 e2e4
+			e4e2 e7e7 e5e5 e5e5 e7e5 e7e7 e7e7 e2e4
+			e4e2 e5e5 e5e5 e5e5 e7e5 e7e5 e7e5 e2e4
+			e4e2 e5e5 e5e5 e5e5 e5e5 e5e5 e7e5 e2e4
+			e4e2 e5e4 e5e5 e5e5 e5e5 e5e4 e5e5 e2e4
+			e4e2 e5e4 e5e5 e5e5 e5e5 e5e4 e5e5 e2e4
+			e4e2 e4e4 e5e5 e5e5 e5e5 e5e5 e5e4 e2e4
+			e4e2 e4e4 e5e5 e5e5 e5e5 e5e5 e5e4 e2e4
+			e4e2 e4e4 e5e5 e5e5 e5e5 e4e5 e4e4 e2e4
+			e4e2 e4e4 e5e5 e5e5 e5e5 e4e5 e4e4 e2e4
+			e4e2 e4e4 e5e5 e5e5 e5e5 e4e5 e4e4 e2e4
+			e4e2 e2e4 e5e2 e5e5 e5e5 e2e4 e4e2 e2e4
+			e4e2 e2e4 e5e2 e5e5 e4e5 e2e4 e4e2 e2e4
+			e4e2 e4e4 e5e4 e5e5 e4e5 e4e4 e4e4 e2e4
+			e4e2 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e2e4
+			e5e2 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e2e5
+			e7e4 e8e8 e8e8 e8e8 e8e8 e8e8 e8e8 e4e7
+			e3e1 e6e6 e6e6 e6e6 e6e6 e6e6 e6e6 e1e3
+			e1e0 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e0e1
+			e1e0 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e0e1
+			e1e0 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e0e1
+			e1e0 e3e3 e3e3 e3e3 e3e3 e3e3 e3e3 e0e1
+			e1e0 e1e1 e1e1 e1e1 e1e1 e1e1 e1e1 e0e1
+			e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
 		</bitmap>
 	</tex_image>
 	<tex_image index="85" name="t01wd2"
@@ -3304,8 +3319,8 @@
 		3687 32a6 3287 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="84" name="t01wd1_pl" color_size="16">
-		2549 26a7 2dac 31d2 3251 35ee 3a15 3a16
-		3e37 460f 4a9a 4e51 5272 5693 7fff 7fff
+		2549 2dac 31d2 35ee 3a15 3a16 3e30 3e37
+		4a9a 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="85" name="t01wd2_pl" color_size="8">
 		7c1f 35ee 31d2 7fff 6b5a 5ad6 5294 4a52
@@ -7428,7 +7443,7 @@
 		<ex_tex_image index="69" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="70" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="71" disp_pos="1500.000000 300.000000"/>
-		<ex_tex_image index="72" disp_pos="1620.000000 300.000000"/>
+		<ex_tex_image index="72" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="73" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="74" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="75" disp_pos="0.000000 0.000000"/>
@@ -7440,7 +7455,7 @@
 		<ex_tex_image index="81" disp_pos="2700.000000 300.000000"/>
 		<ex_tex_image index="82" disp_pos="2820.000000 300.000000"/>
 		<ex_tex_image index="83" disp_pos="2940.000000 300.000000"/>
-		<ex_tex_image index="84" disp_pos="3060.000000 300.000000"/>
+		<ex_tex_image index="84" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="85" disp_pos="3180.000000 300.000000"/>
 		<ex_tex_image index="86" disp_pos="3300.000000 300.000000"/>
 		<ex_tex_image index="87" disp_pos="3420.000000 300.000000"/>
@@ -7532,7 +7547,7 @@
 		<ex_tex_palette index="69" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="70" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="71" disp_pos="1500.000000 360.000000"/>
-		<ex_tex_palette index="72" disp_pos="1620.000000 360.000000"/>
+		<ex_tex_palette index="72" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="73" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="74" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="75" disp_pos="0.000000 0.000000"/>
@@ -7544,7 +7559,7 @@
 		<ex_tex_palette index="81" disp_pos="2700.000000 360.000000"/>
 		<ex_tex_palette index="82" disp_pos="2820.000000 360.000000"/>
 		<ex_tex_palette index="83" disp_pos="2940.000000 360.000000"/>
-		<ex_tex_palette index="84" disp_pos="3060.000000 360.000000"/>
+		<ex_tex_palette index="84" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="85" disp_pos="3180.000000 360.000000"/>
 		<ex_tex_palette index="86" disp_pos="3300.000000 360.000000"/>
 		<ex_tex_palette index="87" disp_pos="3420.000000 360.000000"/>
