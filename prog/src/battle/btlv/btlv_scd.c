@@ -158,10 +158,6 @@ static void printCommWait( BTLV_SCD* wk );
 static  inline  void  SePlayDecide( void );
 static  inline  void  SePlayCancel( void );
 
-static  inline  void  SePlayDecide( void );
-static  inline  void  SePlayCancel( void );
-
-
 BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule,
         const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, u8 playerClientID, HEAPID heapID )
 {
@@ -341,16 +337,52 @@ static const GFL_UI_TP_HITTBL BattleMenuTouchData[] = {
   {0x13*8, 0x18*8, 0xb*8, 0x15*8},  //‚É‚°‚é
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
+static const BTLV_INPUT_KEYTBL  BattleMenuKeyData[] = { 
+  //UP                  DOWN                LEFT                RIGHT               B_BUTTON
+  { BTLV_INPUT_NOMOVE,  -1,                 1,                  2,                  BTLV_INPUT_NOMOVE },  //‚½‚½‚©‚¤
+  { 0,                  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3                ,  BTLV_INPUT_NOMOVE },  //ƒoƒbƒO
+  { 0,                  BTLV_INPUT_NOMOVE,  3,                  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE },  //ƒ|ƒPƒ‚ƒ“
+  { BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,                  2                ,  BTLV_INPUT_NOMOVE },  //‚É‚°‚é
+};
+
 ///‹Z‘I‘ðƒ^ƒbƒ`ƒpƒlƒ‹—ÌˆæÝ’è
-static const GFL_UI_TP_HITTBL SkillMenuTouchData[] = {
-  //UP    DOWN    LEFT    RIGHT
-  {0x03*8, 0x0a*8, 0x00*8, 0x10*8},   //‹Z1
-  {0x03*8, 0x0a*8, 0x10*8, 255},      //‹Z2
-  {0x0b*8, 0x12*8, 0x00*8, 0x10*8},   //‹Z3
-  {0x0b*8, 0x12*8, 0x10*8, 255},      //‹Z4
-  {0x12*8, 0x18*8, 0x16*8, 255},      //ƒLƒƒƒ“ƒZƒ‹
-  {0x12*8, 0x18*8, 0x00*8, 0x0a*8},   //ˆÚ“®i3vs3Žž‚Ì‚Ýj
+static const GFL_UI_TP_HITTBL SkillMenuTouchDataNormal[] = {
+  //UP      DOWN    LEFT    RIGHT
+  { 0x04*8, 0x0a*8, 0x00*8, 0x10*8},   //‹Z1
+  { 0x04*8, 0x0a*8, 0x10*8, 255},      //‹Z2
+  { 0x0a*8, 0x10*8, 0x00*8, 0x10*8},   //‹Z3
+  { 0x0a*8, 0x10*8, 0x10*8, 255},      //‹Z4
+  { 0x12*8, 0x18*8, 0x16*8, 255},      //ƒLƒƒƒ“ƒZƒ‹
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+static const BTLV_INPUT_KEYTBL  SkillMenuKeyDataNormal[] = { 
+  //UP                  DOWN                LEFT                RIGHT               B_BUTTON
+  { BTLV_INPUT_NOMOVE,  2,                  BTLV_INPUT_NOMOVE,  1                ,  4 },  //‹Z1
+  { BTLV_INPUT_NOMOVE,  3,                  0,                  BTLV_INPUT_NOMOVE,  4 },  //‹Z2
+  { 0,                  4,                  BTLV_INPUT_NOMOVE,  3                ,  4 },  //‹Z3
+  { 1,                  4,                  2,                  BTLV_INPUT_NOMOVE,  4 },  //‹Z4
+  { -2,                 BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4 },  //ƒLƒƒƒ“ƒZƒ‹
+};
+
+///‹Z‘I‘ðƒ^ƒbƒ`ƒpƒlƒ‹—ÌˆæÝ’è
+static const GFL_UI_TP_HITTBL SkillMenuTouchData3vs3[] = {
+  //UP    DOWN    LEFT    RIGHT
+  { 0x04*8, 0x0a*8, 0x00*8, 0x10*8},   //‹Z1
+  { 0x04*8, 0x0a*8, 0x10*8, 255},      //‹Z2
+  { 0x0a*8, 0x10*8, 0x00*8, 0x10*8},   //‹Z3
+  { 0x0a*8, 0x10*8, 0x10*8, 255},      //‹Z4
+  {0x12*8, 0x18*8, 0x16*8, 255},      //ƒLƒƒƒ“ƒZƒ‹
+  {0x12*8, 0x18*8, 0x00*8, 0x0a*8},   //ˆÚ“®
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+static const BTLV_INPUT_KEYTBL  SkillMenuKeyData3vs3[] = { 
+  //UP                  DOWN                LEFT                RIGHT               B_BUTTON
+  { BTLV_INPUT_NOMOVE,  2,                  BTLV_INPUT_NOMOVE,  1                ,  4 },  //‹Z1
+  { BTLV_INPUT_NOMOVE,  3,                  0,                  BTLV_INPUT_NOMOVE,  4 },  //‹Z2
+  { 0,                  5,                  BTLV_INPUT_NOMOVE,  3                ,  4 },  //‹Z3
+  { 1,                  4,                  2,                  BTLV_INPUT_NOMOVE,  4 },  //‹Z4
+  { 3,                  BTLV_INPUT_NOMOVE,  5,                  BTLV_INPUT_NOMOVE,  4 },  //ƒLƒƒƒ“ƒZƒ‹
+  { 2,                  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4                ,  4 },  //ˆÚ“®
 };
 
 static const struct {
@@ -454,7 +486,7 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
   }
 
 //  hit = GFL_UI_TP_HitTrg( BattleMenuTouchData );
-  hit = BTLV_INPUT_CheckInput( wk->biw, BattleMenuTouchData );
+  hit = BTLV_INPUT_CheckInput( wk->biw, BattleMenuTouchData, BattleMenuKeyData );
   if( hit != GFL_UI_TP_HIT_NONE )
   {
     static const u8 action[] = {
@@ -518,14 +550,19 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;
   int hit;
-
+  const GFL_UI_TP_HITTBL* SkillMenuTouchData = ( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ) ?
+                                                SkillMenuTouchData3vs3 :
+                                                SkillMenuTouchDataNormal;
+  const BTLV_INPUT_KEYTBL* SkillMenuKeyData = ( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ) ?
+                                                SkillMenuKeyData3vs3 :
+                                                SkillMenuKeyDataNormal;
   //ƒJƒƒ‰ƒ[ƒNƒGƒtƒFƒNƒg
   if( !BTLV_EFFECT_CheckExecute() ){
     BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
   }
 
 //  hit = GFL_UI_TP_HitTrg( SkillMenuTouchData );
-  hit = BTLV_INPUT_CheckInput( wk->biw, SkillMenuTouchData );
+  hit = BTLV_INPUT_CheckInput( wk->biw, SkillMenuTouchData, SkillMenuKeyData );
   if( hit != GFL_UI_TP_HIT_NONE )
   {
     //ƒLƒƒƒ“ƒZƒ‹‚ª‰Ÿ‚³‚ê‚½
@@ -892,7 +929,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
         touch_max = 6;
       }
 
-      hit = BTLV_INPUT_CheckInput( wk->biw, touch_data );
+      hit = BTLV_INPUT_CheckInput( wk->biw, touch_data, NULL );
       if( hit != GFL_UI_TP_HIT_NONE )
       {
         BTL_Printf("hitBtn = %d\n", hit );

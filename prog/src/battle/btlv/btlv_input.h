@@ -83,6 +83,17 @@ enum
   BTLV_INPUT_STATUS_NG,       ///<ポケモンがいる（ステータス異常）
 };
 
+typedef struct
+{ 
+  int up;
+  int down;
+  int left;
+  int right;
+  int b_button;
+}BTLV_INPUT_KEYTBL;
+
+#define BTLV_INPUT_NOMOVE ( 0x80000000 )
+
 extern  BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, HEAPID heapID );
 extern	void			        BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw );
 extern	void			        BTLV_INPUT_Main( BTLV_INPUT_WORK* biw );
@@ -91,5 +102,6 @@ extern	void			        BTLV_INPUT_ExitBG( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_SetFrame( void );
 extern  void              BTLV_INPUT_FreeFrame( void );
 extern  void              BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, void* param );
-extern  int               BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl );
+extern  int               BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl,
+                                                 const BTLV_INPUT_KEYTBL* key_tbl );
 
