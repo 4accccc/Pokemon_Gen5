@@ -18,7 +18,8 @@
 #define __PMS_WORD_RES__
 #include "pms_word.res"
 
-#define    WORDNUM_MASK		(0x0fff)	// 上位4bitはローカライズ用／下位12bitが単語ナンバー
+//#define    WORDNUM_MASK		(0x0fff)	// 上位4bitはローカライズ用／下位12bitが単語ナンバー
+#define    WORDNUM_MASK		( PMS_WORD_NUM_MASK )	// 0x7FF 上位5bitはローカライズ用+デコメ判定ビット／下位11bitが単語ナンバー
 
 struct _PMSW_MAN {
 	u32 heapID;

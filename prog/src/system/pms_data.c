@@ -210,7 +210,19 @@ STRBUF* PMSDAT_ToString( const PMS_DATA* pms, u32 heapID )
 	{
 		if( pms->word[i] != PMS_WORD_NULL )
 		{
-			WORDSET_RegisterPMSWord( wordset, i, pms->word[i] );
+      // デコメ判定 add by genya hosaka
+      if( (pms->word[i] >> PMS_WORD_DECO_BITSHIFT) & PMS_WORD_DECO_MASK )
+      {
+        PMS_DECO_ID deco_id;
+
+        deco_id = pms->word[i] & PMS_WORD_NUM_MASK;
+
+			  WORDSET_RegisterPMSDeco( wordset, i, deco_id );
+      }
+      else
+      {
+			  WORDSET_RegisterPMSWord( wordset, i, pms->word[i] );
+      }
 		}
 		else
 		{
@@ -254,7 +266,6 @@ STRBUF*  PMSDAT_GetSourceString( const PMS_DATA* pms, u32 heapID )
 
 	return baseStr;
 }
-
 
 //------------------------------------------------------------------
 /**
@@ -344,7 +355,7 @@ static u32 get_include_word_max( u32 sentence_type, u32 sentence_id , const HEAP
 
 //------------------------------------------------------------------
 /**
- * 単語ナンバーを返す
+ * @brief   単語ナンバーを返す
  *
  * @param   pms		
  * @param   pos		
@@ -354,8 +365,32 @@ static u32 get_include_word_max( u32 sentence_type, u32 sentence_id , const HEAP
 //------------------------------------------------------------------
 PMS_WORD  PMSDAT_GetWordNumber( const PMS_DATA* pms, int pos )
 {
-	return pms->word[ pos ];
+	return pms->word[ pos ] & PMS_WORD_NUM_MASK;
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  デコメ判定
+ *
+ *	@param	pms
+ *	@param	pos 
+ *	
+ *	@note   add by genya hosaka
+ *
+ *	@retval TRUE:デコメ FALSE:デコメでない（通常の単語）
+ */
+//-----------------------------------------------------------------------------
+BOOL PMSDAT_IsDecoID( const PMS_DATA* pms, int pos )
+{
+  // NULL CHECK
+  if( pms->word[ pos ] == PMS_WORD_NULL )
+  {
+    return FALSE;
+  }
+
+  return (pms->word[ pos ] >> PMS_WORD_DECO_BITSHIFT) & PMS_WORD_DECO_MASK;
+}
+
 //------------------------------------------------------------------
 /**
  * 設定されている文章タイプを取得
@@ -448,10 +483,42 @@ void PMSDAT_SetSentence( PMS_DATA* pms, u32 sentence_type, u32 sentence_id )
 	pms->sentence_id = sentence_id;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  単語ナンバーセット
+ *
+ *	@param	pms       文章型へのポインタ
+ *	@param	pos       文章内にセットする位置
+ *	@param	word      単語ナンバー
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 void PMSDAT_SetWord( PMS_DATA* pms, u32 pos, PMS_WORD word )
 {
 	GF_ASSERT( pos < PMS_WORD_MAX );
 	pms->word[pos] = word;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  デコメナンバーセット
+ *
+ *	@param	pms       文章型へのポインタ
+ *	@param	pos       文章内にセットする位置
+ *	@param	deco_id   デコメナンバー
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void PMSDAT_SetDeco( PMS_DATA* pms, u32 pos, PMS_DECO_ID deco_id )
+{
+	GF_ASSERT( pos < PMS_WORD_MAX );
+
+  // デコメIDをセット
+	pms->word[pos] = deco_id;
+  // デコメフラグON
+  pms->word[pos] += 1 << PMS_WORD_DECO_BITSHIFT;
 }
 
 

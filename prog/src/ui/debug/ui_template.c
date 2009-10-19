@@ -159,6 +159,10 @@ typedef struct
 } UI_TEMPLATE_BG_WORK;
 
 
+#ifdef UI_TEMPLATE_PMSDRAW
+#define UI_TEMPLATE_PMSDRAW_NUM (3) ///< 簡易会話の個数
+#endif // UI_TEMPLATE_PMSDRAW 
+
 //--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
@@ -242,6 +246,7 @@ typedef struct
 #endif	//UI_TEMPLATE_PRINT_TOOL
 
 #ifdef UI_TEMPLATE_PMSDRAW
+  GFL_BMPWIN*               pms_win[ UI_TEMPLATE_PMSDRAW_NUM ];
   PMS_DRAW_WORK*            pms_draw;
 #endif //UI_TEMPLATE_PMSDRAW
 
@@ -1566,43 +1571,40 @@ static void PrintTool_PrintHP( UI_TEMPLATE_MAIN_WORK * wk )
 //-----------------------------------------------------------------------------
 static void UITemplate_PMSDRAW_Init( UI_TEMPLATE_MAIN_WORK* wk )
 {
-  enum 
-  { 
-    PMS_DRAW_NUM = 2, 
-  };
-
 	GFL_CLUNIT	*clunit;
   
-  clunit        = UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
-  wk->pms_draw  = PMS_DRAW_Init( clunit, wk->print_que, wk->font, PLTID_OBJ_PMS_DRAW, PMS_DRAW_NUM ,wk->heapID );
+  clunit = UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
+
+  wk->pms_draw  = PMS_DRAW_Init( clunit, CLSYS_DRAW_SUB, wk->print_que, wk->font, 
+      PLTID_OBJ_PMS_DRAW, UI_TEMPLATE_PMSDRAW_NUM ,wk->heapID );
   
   {
-    GFL_BMPWIN* win;
+    int i;
     PMS_DATA pms;
+
+    // PMS表示用BMPWIN生成
+    for( i=0; i<UI_TEMPLATE_PMSDRAW_NUM; i++ )
+    {
+      wk->pms_win[i] = GFL_BMPWIN_Create(
+          BG_FRAME_TEXT_S,					// ＢＧフレーム
+          2, 0 + 6 * i,					  	// 表示座標(キャラ単位)
+          28, 4,    							  // 表示サイズ
+          15,												// パレット
+          GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
+    }
     
     // 1個目
-    win = GFL_BMPWIN_Create(
-        BG_FRAME_TEXT_S,					// ＢＧフレーム
-        2, 0,									  	// 表示座標(キャラ単位)
-        28, 4,    							  // 表示サイズ
-        15,												// パレット
-        GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
-
     PMSDAT_SetDebug( &pms );
+    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[0], &pms ,0 );
 
-    PMS_DRAW_Print( wk->pms_draw, win, &pms ,0 );
-
-    // 2個目
-    win = GFL_BMPWIN_Create(
-        BG_FRAME_TEXT_S,					// ＢＧフレーム
-        2, 6,									  	// 表示座標(キャラ単位)
-        28, 4,    							  // 表示サイズ
-        15,												// パレット
-        GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
+    // 2個目 デコメ表示
+    PMSDAT_SetDeco( &pms, 0, PMS_DECOID_HERO );
+    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[1], &pms ,1 );
     
-    PMSDAT_SetDebugRandom( &pms );
-
-    PMS_DRAW_Print( wk->pms_draw, win, &pms ,1 );
+    // 3個目 デコメ二個表示
+    PMSDAT_SetDeco( &pms, 0, PMS_DECOID_HERO );
+    PMSDAT_SetDeco( &pms, 1, PMS_DECOID_HERO );
+    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[2], &pms ,2 );
   }
 }
 
@@ -1618,6 +1620,13 @@ static void UITemplate_PMSDRAW_Init( UI_TEMPLATE_MAIN_WORK* wk )
 static void UITemplate_PMSDRAW_Exit( UI_TEMPLATE_MAIN_WORK* wk )
 {
   PMS_DRAW_Exit( wk->pms_draw );
+  {
+    int i;
+    for( i=0; i<UI_TEMPLATE_PMSDRAW_NUM; i++ )
+    {
+      GFL_BMPWIN_Delete( wk->pms_win[i] );
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1631,6 +1640,30 @@ static void UITemplate_PMSDRAW_Exit( UI_TEMPLATE_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void UITemplate_PMSDRAW_Proc( UI_TEMPLATE_MAIN_WORK* wk )
 {
+#if 0
+  // SELECTでクリア
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+  {
+    int i;
+    for( i=0; i<UI_TEMPLATE_PMSDRAW_NUM; i++ )
+    {
+      PMS_DRAW_Clear( wk->pms_draw, i );
+    }
+  }
+  // STARTでランダム挿入（二重登録するとアサート）
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+  {
+    int i;
+    for( i=0; i<UI_TEMPLATE_PMSDRAW_NUM; i++ )
+    {
+      PMS_DATA pms;
+      PMSDAT_SetDebugRandom( &pms );
+      PMSDAT_SetDeco( &pms, GFUser_GetPublicRand(2), PMS_DECOID_HERO );
+      PMS_DRAW_Print( wk->pms_draw, wk->pms_win[i], &pms ,i );
+    }
+  }
+#endif
+
   PMS_DRAW_Proc( wk->pms_draw );
 }
 

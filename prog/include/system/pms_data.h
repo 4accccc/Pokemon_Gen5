@@ -14,12 +14,14 @@
  *  関連定数
  */
 //------------------------------------------------------
-#define  PMS_WORD_MAX     (2)     ///< 文中に含まれる単語の最大数
+#define  PMS_WORD_MAX     (2)       ///< 文中に含まれる単語の最大数
 #define  PMS_WORD_NULL    (0xffff)  ///< 単語として無効な値
-#define  PMS_DECO_WIDTH   (84)    ///< デコ文字の最大幅（ドット）
+#define  PMS_DECO_WIDTH   ( 84 )  ///< デコ文字の最大幅（ドット）
 
 //全開放デバッグ
-#define   PMS_ALLOPEN (1)
+#ifdef PM_DEBUG
+#define  PMS_ALLOPEN (1) 
+#endif
 
 
 //------------------------------------------------------
@@ -47,8 +49,16 @@ typedef enum {
   PMS_DECOID_NULL,
   PMS_DECOID_ORG,
 
-  PMS_DECOID_1 = PMS_DECOID_ORG,
-  PMS_DECOID_2,
+  PMS_DECOID_HERO = PMS_DECOID_ORG, ///< はじめまして
+  PMS_DECOID_HERO2, ///< こんにちは
+  PMS_DECOID_LOVE,  ///< だいすき
+  PMS_DECOID_YELL,  ///< がんばれ！ 
+  PMS_DECOID_FUN,   ///< たのしい
+  PMS_DECOID_HAPPY, ///< うれしい
+  PMS_DECOID_TANKS, ///< ありがとう
+  PMS_DECOID_HIGHEST, ///< さいこう
+  PMS_DECOID_SORRY,   ///< ごめんね
+  PMS_DECOID_BYEBYE,  ///< バイバイ
 
   PMS_DECOID_MAX,
 }PMS_DECO_ID;
@@ -58,8 +68,15 @@ typedef enum {
  *  単語型定義
  */
 //------------------------------------------------------
-typedef u16   PMS_WORD;
+typedef u16   PMS_WORD; 
+// 上位から 
+//   4 bit -> ローカライズ用
+//   1 bit -> 単語／デコメフラグ (1ならデコメ)
+//  11 bit -> 単語／デコメナンバー
 
+#define PMS_WORD_DECO_MASK ( 0x1 )    ///< デコメ判定用ビットマスク
+#define PMS_WORD_DECO_BITSHIFT ( 11 )  ///< デコメ判定用ビット オフセット
+#define PMS_WORD_NUM_MASK ( 0x7FF )    ///< 単語・デコメナンバー ビットマスク
 
 //------------------------------------------------------
 /**
@@ -77,7 +94,7 @@ typedef u16   PMS_WORD;
 typedef struct {
   u16       sentence_type;      ///< 文章タイプ
   u16       sentence_id;      ///< タイプ内ID
-  PMS_WORD    word[PMS_WORD_MAX];   ///< 単語ID
+  PMS_WORD  word[PMS_WORD_MAX];   ///< 単語ID
 }PMS_DATA;
 
 
@@ -108,7 +125,6 @@ extern void PMSDAT_Clear( PMS_DATA* pms );
  */
 //------------------------------------------------------------------
 extern void PMSDAT_Init( PMS_DATA* pms, u32 sentence_type );
-
 
 //------------------------------------------------------------------
 /**
@@ -215,6 +231,8 @@ extern u32 PMSDAT_GetSentenceID( const PMS_DATA* pms );
 //------------------------------------------------------------------
 extern PMS_WORD  PMSDAT_GetWordNumber( const PMS_DATA* pms, int pos );
 
+extern BOOL PMSDAT_IsDecoID( const PMS_DATA* pms, int pos );
+
 //------------------------------------------------------------------
 /**
  * 内容比較
@@ -262,18 +280,31 @@ extern u32  PMSDAT_GetSentenceIdMax( u32 sentence_type );
 //------------------------------------------------------------------
 extern void PMSDAT_SetSentence( PMS_DATA* pms, u32 sentence_type, u32 sentence_id );
 
-//------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 /**
+ *	@brief  単語ナンバーセット
  *
+ *	@param	pms       文章型へのポインタ
+ *	@param	pos       文章内にセットする位置
+ *	@param	word      単語ナンバー
  *
- * @param   pms
- * @param   pos
- * @param   word
- *
+ *	@retval
  */
-//------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 extern void PMSDAT_SetWord( PMS_DATA* pms, u32 pos, PMS_WORD word );
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  デコメナンバーセット
+ *
+ *	@param	pms       文章型へのポインタ
+ *	@param	pos       文章内にセットする位置
+ *	@param	deco_id   デコメナンバー
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern void PMSDAT_SetDeco( PMS_DATA* pms, u32 pos, PMS_DECO_ID deco_id );
 
 //------------------------------------------------------------------
 /**

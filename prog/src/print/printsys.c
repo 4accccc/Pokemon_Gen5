@@ -1447,6 +1447,105 @@ u16 PRINTSYS_GetTagCount( const STRBUF* str )
   return cnt;
 }
 
+//=============================================================================================
+/**
+ * 指定したタグ（展開前）が文字列中何行目にあるかを返す
+ *
+ * @param   str     文字列
+ * @param   tag_id  タグインデックス（バッファ番号）
+ *
+ * @retval  u8      行数
+ * 
+ * @note  add by genya hosaka
+ */
+//=============================================================================================
+u8 PRINTSYS_GetTagLine( const STRBUF* str, u8 tag_id )
+{
+  const STRCODE* sp;
+  u16 line = 0;
+
+  sp = GFL_STR_GetStringCodePointer( str );
+  
+  while( *sp != EOM_CODE )
+  {
+    // 改行カウント
+    if( *sp == CR_CODE )
+    {
+      line++;
+    }
+    // タグ検出
+    else if( *sp == SPCODE_TAG_START_ )
+    {
+      if( PRINTSYS_IsWordSetTagGroup(sp) )
+      {
+        if( STR_TOOL_GetTagParam(sp, 0) == tag_id )
+        {
+          return line;
+        }
+      }
+      sp = PRINTSYS_SkipTag( sp );
+    }
+    sp++;
+  }
+
+  GF_ASSERT( 0 ); ///< 指定タグは見つからなかった
+
+  return 0;
+}
+
+//=============================================================================================
+/**
+ * 指定したタグ（展開前）が何ドット目にあるかを返す
+ *
+ * @param   str     文字列
+ * @param   tag_id  タグインデックス（バッファ番号）
+ * @param   font    フォントタイプ
+ * @param   margin  字間スペース（ドット）
+ *
+ * @retval  u8      X座標（ドット）
+ * 
+ * @note  add by genya hosaka
+ */
+//=============================================================================================
+u8 PRINTSYS_GetTagWidth( const STRBUF* str, u8 tag_id, GFL_FONT* font, u16 margin )
+{
+  const STRCODE* sp;
+  u32 width = 0;
+
+  sp = GFL_STR_GetStringCodePointer( str );
+
+  while( *sp != EOM_CODE )
+  {
+    // 改行コードがきたら一端リセット
+    if( *sp == CR_CODE )
+    {
+      width = 0;
+      sp++;
+    }
+    // タグ以外ならドット数計上
+    else if( *sp != SPCODE_TAG_START_ )
+    {
+      width += ( GFL_FONT_GetWidth( font, *sp ) + margin );
+//    HOSAKA_Printf("[%d] sp=%x width=%d \n",tag_id, *sp, width );
+      sp++;
+    }
+    else
+    {
+      if( PRINTSYS_IsWordSetTagGroup(sp) )
+      {
+        if( STR_TOOL_GetTagParam(sp, 0) == tag_id )
+        {
+          return width;
+        }
+        sp = STR_TOOL_SkipTag( sp );
+      }
+    }
+  }
+
+  GF_ASSERT(0);
+
+  return 0;
+}
 
 //=============================================================================================
 /**
@@ -1643,6 +1742,7 @@ static inline u16 STR_TOOL_GetTagParam( const STRCODE* sp, u16 paramIndex )
   }
   return 0;
 }
+
 //============================================================================================
 /**
  * 文字列ポインタのタグコード・パラメータ部分をスキップしたポインタを返す
