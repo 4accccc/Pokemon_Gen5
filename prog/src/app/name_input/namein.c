@@ -605,6 +605,7 @@ static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_FONT *p_font, GFL_MSGDATA *p_msg
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
 static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID );
 static void MSGWND_ExpandPrintPoke( MSGWND_WORK *p_wk, u32 strID, u16 mons_no, u16 form, HEAPID heapID );
+static void MSGWND_ExpandPrintPP( MSGWND_WORK *p_wk, u32 strID, const POKEMON_PARAM *cp_pp );
 static BOOL MSGWND_PrintMain( MSGWND_WORK* p_wk );
 //-------------------------------------
 ///	ICON
@@ -666,7 +667,7 @@ const GFL_PROC_DATA NameInputProcData =
  *	@retura	NAMEIN_PARAM
  */
 //-----------------------------------------------------------------------------
-NAMEIN_PARAM *NAMEIN_ParamAllocMake( HEAPID heapId, NAMEIN_MODE mode, int param1, int param2, int wordmax, const STRBUF *default_str )
+NAMEIN_PARAM *NAMEIN_AllocParam( HEAPID heapId, NAMEIN_MODE mode, int param1, int param2, int wordmax, const STRBUF *default_str )
 {	
 	NAMEIN_PARAM *p_param;
 	p_param	= GFL_HEAP_AllocMemory( heapId, sizeof(NAMEIN_PARAM) );
@@ -689,12 +690,44 @@ NAMEIN_PARAM *NAMEIN_ParamAllocMake( HEAPID heapId, NAMEIN_MODE mode, int param1
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief	NAMEINに渡すPARAM構造体作成	ポケモンモード固定＆PP指定版
+ *
+ *	@param	HEAPID heapId					ヒープID
+ *	@param	POKEMON_PARAM *pp			ポケモンパラム
+ *	@param	wordmax								入力文字最大数
+ *	@param	STRBUF *default_str		デフォルトで入力されている文字列
+ *
+ *	@return	NAMEIN_PARAM
+ */
+//-----------------------------------------------------------------------------
+NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_PARAM *pp, int wordmax, const STRBUF *default_str )
+{	
+	NAMEIN_PARAM *p_param;
+	p_param	= GFL_HEAP_AllocMemory( heapId, sizeof(NAMEIN_PARAM) );
+	GFL_STD_MemClear( p_param, sizeof(NAMEIN_PARAM) );
+	p_param->mode			= NAMEIN_POKEMON;
+	p_param->wordmax	= wordmax;
+	p_param->pp				= pp;
+
+	//バッファ作成
+	p_param->strbuf	= GFL_STR_CreateBuffer( wordmax + 1, heapId );
+
+	//デフォルト入力文字コピー
+	if( default_str )
+	{	
+		GFL_STR_CopyBuffer( p_param->strbuf, default_str );
+	}
+
+	return p_param;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief	NAMEIN_PARAMを破棄
  *
  *	@param	*param	ワーク
  */
 //-----------------------------------------------------------------------------
-void NAMEIN_ParamDelete(NAMEIN_PARAM *param)
+void NAMEIN_FreeParam(NAMEIN_PARAM *param)
 {	
 	GFL_STR_DeleteBuffer( param->strbuf );
 	GFL_HEAP_FreeMemory( param );
@@ -811,7 +844,14 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 	if( p_param->mode == NAMEIN_POKEMON )
 	{	
 		//ポケモンの場合は、種族名を単語登録
-		MSGWND_ExpandPrintPoke( &p_wk->msgwnd, NAMEIN_MSG_INFO_000 + p_param->mode, p_param->param1, p_param->param2, HEAPID_NAME_INPUT );
+		if( p_param->pp == NULL )
+		{	
+			MSGWND_ExpandPrintPoke( &p_wk->msgwnd, NAMEIN_MSG_INFO_000 + p_param->mode, p_param->param1, p_param->param2, HEAPID_NAME_INPUT );
+		}
+		else
+		{	
+			MSGWND_ExpandPrintPP( &p_wk->msgwnd, NAMEIN_MSG_INFO_000 + p_param->mode, p_param->pp );
+		}
 	}
 	else
 	{	
@@ -3735,12 +3775,26 @@ static void MSGWND_ExpandPrintPoke( MSGWND_WORK *p_wk, u32 strID, u16 mons_no, u
 		p_pp	= PP_Create( mons_no, 1, 0, heapID );
 		PP_Put( p_pp, ID_PARA_form_no, form );
 
-		//単語登録
-		WORDSET_RegisterPokeMonsName( p_wk->p_word, 0, p_pp );
+		//プリント
+		MSGWND_ExpandPrintPP( p_wk, strID, p_pp );
 
 		//バッファクリア
 		GFL_HEAP_FreeMemory( p_pp );
 	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	メッセージウィンドウ	PPの単語登録してプリント開始
+ *
+ *	@param	MSGWND_WORK *p_wk			ワーク
+ *	@param	strID									文字ID
+ *	@param	POKEMON_PARAM *cp_pp	ポケモンパラム
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_ExpandPrintPP( MSGWND_WORK *p_wk, u32 strID, const POKEMON_PARAM *cp_pp )
+{	
+	//単語登録
+	WORDSET_RegisterPokeMonsName( p_wk->p_word, 0, cp_pp );
 
 	//プリント
 	{	
@@ -3761,6 +3815,7 @@ static void MSGWND_ExpandPrintPoke( MSGWND_WORK *p_wk, u32 strID, u16 mons_no, u
 		//バッファクリア
 		GFL_STR_DeleteBuffer( p_strbuf );
 	}
+
 }
 
 //----------------------------------------------------------------------------

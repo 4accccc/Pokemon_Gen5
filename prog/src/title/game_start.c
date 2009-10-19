@@ -185,7 +185,7 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
 	GAMESTART_FIRST_WORK *work = GFL_PROC_AllocWork( proc , sizeof(GAMESTART_FIRST_WORK) , GFL_HEAPID_APP );
 	SaveControl_ClearData(SaveControl_GetPointer());	//セーブデータクリア
 	//@todo 正しい値に
-	work->nameInParam = NAMEIN_ParamAllocMake( GFL_HEAPID_APP , NAMEIN_MYNAME , 0 , 0, NAMEIN_PERSON_LENGTH , NULL );
+	work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0 , 0, NAMEIN_PERSON_LENGTH , NULL );
 	work->selModeParam.type = SMT_START_GAME;
 	work->selModeParam.configSave = SaveData_GetConfig( SaveControl_GetPointer() );
 	work->selModeParam.mystatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
@@ -239,7 +239,7 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
 	  UnionView_GetTrainerTypeIndex(MyStatus_GetID(myStatus), MyStatus_GetMySex(myStatus), 0));
 	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
 
-	NAMEIN_ParamDelete(work->nameInParam);
+	NAMEIN_FreeParam(work->nameInParam);
 	GFL_PROC_FreeWork( proc );
 	
 	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);

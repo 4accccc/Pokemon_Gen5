@@ -69,9 +69,9 @@ typedef enum
 //=====================================
 typedef struct
 {
-	NAMEIN_MODE mode;		// 入力モード(enum参照）
+	NAMEIN_MODE mode;		//[in]入力モード(enum参照）
 
-	union								//種類ごとに違う引数１
+	union								//[in]種類ごとに違う引数１
 	{	
 		u16 param1;				//各モードにて必要
 		u16 hero_sex;			//NAMEIN_MYNAME			…主人公の性別
@@ -79,17 +79,19 @@ typedef struct
 		u16 fld_person_id;//NAMEIN_FRIENDNAME	…友達の姿（フィールド３DOBJ）
 	};
 
-	union								//種類ごとに違う引数２
+	union								//[in]種類ごとに違う引数２
 	{	
 		u16 param2;				//NAMEIN_POKEMON以外は必要なし
 		u16 form;					//NAMEIN_POKEMON	…フォルム番号
 	};
+	const POKEMON_PARAM *pp;	//[in]ニックネーム登録をPPから作成する場合
 
-	BOOL cancel;		// 名前入力が終了した時に反映されるフラグ。
+	u32 wordmax;		// [in]入力文字最大数
+
+	BOOL cancel;		// [out]名前入力が終了した時に反映されるフラグ。
 									// 入力文字が０文字だった。もしくは最初と同じだった場合はこのフラグがTRUE
 
-	u32 wordmax;		// 入力文字最大数
-	STRBUF *strbuf; // このSTRBUFには２つの意味が存在する。
+	STRBUF *strbuf; // [in/out]このSTRBUFには２つの意味が存在する。
 									// １つは名前入力画面からデータを受け取るワークであること。
 									// 名前入力が終わったらここからコピーする
 									// もう１つは、名前入力に行くときにここに文字列を格納しておくと,
@@ -120,7 +122,7 @@ extern const GFL_PROC_DATA NameInputProcData;
 //----------------------------------------------------------------------------
 /**
  *	@brief	NAMEIN_PARAMを作成
- *					解放は下記、NameIn_ParamDeleteで行ってください
+ *					解放は下記、NameIn_FreeParamで行ってください
  *
  *	@param	HEAPID		ヒープID
  *	@param	mode			入力の種類
@@ -132,7 +134,7 @@ extern const GFL_PROC_DATA NameInputProcData;
  *	@return	NAMEIN_PARAM
  */
 //-----------------------------------------------------------------------------
-extern NAMEIN_PARAM *NAMEIN_ParamAllocMake( HEAPID heapId, NAMEIN_MODE mode, int param1, int param2, int wordmax, const STRBUF *default_str );
+extern NAMEIN_PARAM *NAMEIN_AllocParam( HEAPID heapId, NAMEIN_MODE mode, int param1, int param2, int wordmax, const STRBUF *default_str );
 //----------------------------------------------------------------------------
 /**
  *	@brief	NAMEIN_PARAM解放
@@ -140,7 +142,23 @@ extern NAMEIN_PARAM *NAMEIN_ParamAllocMake( HEAPID heapId, NAMEIN_MODE mode, int
  *	@param		NAMEIN_PARAM
  */
 //-----------------------------------------------------------------------------
-extern void NAMEIN_ParamDelete( NAMEIN_PARAM *param );
+extern void NAMEIN_FreeParam( NAMEIN_PARAM *param );
+//-------------------------------------
+///	ポケモンニックネーム専用パラメータ作成、破棄
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモンニックネーム登録をPPから行う場合のNAMEIN_PARAM作成
+ *					解放はNAMEIN_FreeParamで行ってください
+ *
+ *	@param	HEAPID		ヒープID
+ *	@param	wordmax		文字入力数
+ *	@param	default_str	初期に入力されている文字。いらない場合はNULL
+ *
+ *	@return	NAMEIN_PARAM
+ */
+//-----------------------------------------------------------------------------
+extern NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_PARAM *pp, int wordmax, const STRBUF *default_str );
 //-------------------------------------
 ///	PARAMからの取得
 //=====================================
