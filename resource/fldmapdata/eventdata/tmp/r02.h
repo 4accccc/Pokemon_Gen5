@@ -17,5 +17,12 @@
 #define R02_RIVAL_01                       2
 #define R02_ROCK_01                        3
 #define R02_MAMA_01                        4
+#define TR_TANPAN_01                       5
+#define TR_MINI_01                         6
+#define TR_TANPAN_04                       7
+#define R02_FLD_ITEM_04                    8
+#define R02_FLD_ITEM_01                    9
+#define R02_FLD_ITEM_03                   10
+#define R02_FLD_ITEM_02                   11
 
 #endif //ZONE_R02_EVC_H

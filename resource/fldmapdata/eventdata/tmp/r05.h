@@ -19,6 +19,5 @@
 #define R05_TREE_02                        1
 #define R05_TREE_03                        2
 #define DUMMY_OBJ                          3
-#define DUMMY_FLD_ITEM_01                  4
 
 #endif //ZONE_R05_EVC_H
