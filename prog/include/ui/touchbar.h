@@ -82,7 +82,7 @@ typedef enum
 #define TOUCHBAR_OBJ_PLT_NUM				(APP_COMMON_BARICON_PLT_NUM)
 
 //アイコンの最大登録個数
-#define APBAR_ICON_REGISTER_MAX		(8)
+#define APBAR_ICON_REGISTER_MAX			(8)
 
 //=============================================================================
 /**
@@ -109,12 +109,16 @@ typedef struct
 
 	//タッチバーで使用するモジュール
 	GFL_CLUNIT* p_unit;
+
 	
 	//リソース読み込み情報
-	u8 bar_frm;									//BGキャラ読み込みフレーム	AreaManでTOUCHBAR_BG_CHARAAREA_SIZE読みます
-	u8 bg_plt;									//BG使用パレット0～0xFTOUCHBAR_BG_PLT_NUM本読みます
-	u8 obj_plt;									//OBJパレット0～0xF		TOUCHBAR_OBJ_PLT_NUM本読みます
+	u32 bar_frm;								//BGキャラ読み込みフレーム	AreaManでTOUCHBAR_BG_CHARAAREA_SIZE読みます
+	u32 bg_plt;									//BG使用パレット0～0xFTOUCHBAR_BG_PLT_NUM本読みます
+	u32 obj_plt;								//OBJパレット0～0xF		TOUCHBAR_OBJ_PLT_NUM本読みます
 	APP_COMMON_MAPPING mapping;	//OBJマッピングモード
+
+	//BG読みこまない
+	BOOL is_notload_bg;					//TRUEを指定するとBGとBG用パレットを読み込みません
 } TOUCHBAR_SETUP;
 
 //-------------------------------------
@@ -144,8 +148,20 @@ extern void TOUCHBAR_Main( TOUCHBAR_WORK *p_wk );
 //=====================================
 extern TOUCHBAR_ICON TOUCHBAR_GetTrg( const TOUCHBAR_WORK *cp_wk );
 //-------------------------------------
-///	アイコン押し続け情報	何もをしてない場合TOUCHBAR_SELECT_NONE
+///	アイコンアクティブ設定
+//		アクティブ、ノンアクティブでアニメが変わります
+//		また、ノンアクティブ状態ではアイコンが押せません
 //=====================================
-extern TOUCHBAR_ICON TOUCHBAR_GetCont( const TOUCHBAR_WORK *cp_wk );
+extern void TOUCHBAR_SetActive( TOUCHBAR_WORK *p_wk,  TOUCHBAR_ICON icon, BOOL is_active );
+extern BOOL TOUCHBAR_GetActive( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );
+//-------------------------------------
+///	アイコン非表示設定
+//=====================================
+extern void TOUCHBAR_SetVisible( TOUCHBAR_WORK *p_wk,  TOUCHBAR_ICON icon, BOOL is_visible );
+extern BOOL TOUCHBAR_GetVisible( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );
+//-------------------------------------
+///	チェックボックス用に現在のチェック取得
+//=====================================
+extern BOOL TOUCHBAR_GetCheck( const TOUCHBAR_WORK *cp_wk );
 
 

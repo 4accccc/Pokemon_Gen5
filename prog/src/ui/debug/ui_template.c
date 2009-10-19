@@ -813,6 +813,8 @@ static TOUCHBAR_WORK * UITemplate_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heap
 	//設定構造体
 	//さきほどの窓情報＋リソース情報をいれる
 	TOUCHBAR_SETUP	touchbar_setup;
+	GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
+
 	touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
 	touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
 	touchbar_setup.p_unit		= clunit;										//OBJ読み込みのためのCLUNIT
