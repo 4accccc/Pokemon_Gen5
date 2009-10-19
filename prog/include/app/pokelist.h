@@ -21,9 +21,11 @@
 // リストタイプ
 typedef enum
 {
-  PL_TYPE_SINGLE = 0,   // シングル
+  PL_TYPE_SINGLE = 0, // シングル
   PL_TYPE_DOUBLE,     // ダブル
   PL_TYPE_MULTI,      // マルチ
+  PL_TYPE_TRIPLE,     // マルチ  //追加
+  PL_TYPE_ROTATION,   // ローテーション
 }PL_LIST_TYPE;
 
 // リストモード
@@ -167,15 +169,18 @@ typedef struct
   u8  waza_pos;   // 技位置
 
 // TODO ミュージカルに置き換え？
+/*
   u8  con_mode;   // コンテストモード（コンテスト/コンクール/トライアル）
   u8  con_type;   // コンテストタイプ（美しさとか賢さとか）
   u8  con_rank;   // コンテストランク
+*/
 
   u8  in_num[6];    // 参加番号 0:無し 1～:1番目～
+/*  レギュレーションから取る
   u8  in_min:4;   // 参加最小数
   u8  in_max:4;   // 参加最大数
   u8  in_lv;      // 参加レベル
-
+*/
   int lv_cnt;     // レベルアップカウンタ
 
   u16 after_mons;   // 進化後のポケモン

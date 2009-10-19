@@ -16,7 +16,7 @@
 
 
 // PokeRegulationMatchPartialPokePartyとPokeRegulationMatchFullPokeParty の戻り値
-enum{
+typedef enum{
     POKE_REG_OK,               // 正常
     POKE_REG_TOTAL_LV_FAILED,  // トータルのLVがオーバーしている
     POKE_REG_BOTH_POKE,        // 同じポケモンがいる

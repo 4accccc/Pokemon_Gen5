@@ -24,7 +24,7 @@ typedef struct
   u8      number; //大会管理番号
   u8      league; //○○リーグ(ジュニア・シニア)
   
-  REGULATION regulation;
+  REGULATION *regulation;
   
   POKEMON_PASO_PARAM *ppp[CHAMPIONSHIP_POKE_NUM];
   

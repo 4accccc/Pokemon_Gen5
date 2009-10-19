@@ -9,6 +9,7 @@
  */
 //======================================================================
 #include <gflib.h>
+#include "buflen.h"
 #include "system/main.h"
 #include "system/gfl_use.h"
 
@@ -16,6 +17,7 @@
 #include "msg/msg_pokelist.h"
 
 #include "poke_tool/monsno_def.h"
+#include "poke_tool/poke_regulation.h"
 #include "pokeicon/pokeicon.h"
 #include "print/global_msg.h"
 
@@ -1095,21 +1097,15 @@ static void PLIST_PLATE_CheckBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *p
   }
   
   //参加条件のチェック
-  //FIXME 現在はレベルのみ
-  //モードでin_lvが上限値か下限値かが変わる
-  //タマゴ未対応
   //レギュレーションもチェック
-  //持ち物の被りなども下でチェック
-  
-  //PokeRegulationCheckPokePara( work->plData->reg , pp );
-  
-  if( PP_CalcLevel( plateWork->pp ) > work->plData->in_lv )
+  //持ち物の被りは下でチェック
+  if( PokeRegulationCheckPokePara( work->plData->reg , plateWork->pp ) == TRUE )
   {
-    plateWork->btlOrder = PPBO_JOIN_NG;
+    plateWork->btlOrder = PPBO_JOIN_OK;
   }
   else
   {
-    plateWork->btlOrder = PPBO_JOIN_OK;
+    plateWork->btlOrder = PPBO_JOIN_NG;
   }
 }
 
@@ -1125,6 +1121,7 @@ const PLIST_PLATE_CAN_BATTLE PLIST_PLATE_CanJoinBattle( PLIST_WORK *work , PLIST
     u8 i;
     const u32 monsno = PP_Get( plateWork->pp , ID_PARA_monsno , NULL );
     const u32 item = PP_Get( plateWork->pp , ID_PARA_item , NULL );
+    REGULATION *reg = (REGULATION*)work->plData->reg;
     //すでに同じポケがいるか？
     //すでに同じアイテムがあるかチェック
     for( i=0;i<6;i++ )
@@ -1135,12 +1132,14 @@ const PLIST_PLATE_CAN_BATTLE PLIST_PLATE_CanJoinBattle( PLIST_WORK *work , PLIST
         const u32 monsno2 = PP_Get( pp , ID_PARA_monsno , NULL );
         const u32 item2 = PP_Get( pp , ID_PARA_item , NULL );
         
-        if( monsno == monsno2 )
+        if( monsno == monsno2 &&
+            reg->BOTH_POKE == 1 )
         {
           return PPCB_NG_SAME_MONSNO;
         }
         if( item == item2 &&
-            item != 0 )
+            item != 0 &&
+            reg->BOTH_ITEM == 1 )
         {
           return PPCB_NG_SAME_ITEM;
         }

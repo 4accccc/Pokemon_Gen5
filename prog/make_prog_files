@@ -634,13 +634,6 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
     		battle/app/b_plist_ui.c
 #			battle/btlv/finger_cursor.c \
 
-# バトル大会
-#===> SRCS_OVERLAY_DEV_IRC
-#===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_WIFI
-SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = battle_championship/battle_championship.c \
-				net_app/irc_battle/irc_battle_main.c
-
 # WIFICLUB
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
@@ -956,6 +949,12 @@ SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
 		app/p_status/p_sta_skill.c \
 		app/p_status/p_sta_oam.c \
 		app/p_status/ribbon.c
+
+# バトル大会
+#===> SRCS_OVERLAY_BATTLE
+SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = battle_championship/battle_championship.c \
+				net_app/irc_battle/irc_battle_main.c \
+				net_app/irc_battle/irc_battle_subproc.c
 
 # 小幡デバッグ
 #===> main

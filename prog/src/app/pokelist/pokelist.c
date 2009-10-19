@@ -18,6 +18,7 @@
 //デバッグポケパーティ作成用
 #include  "poke_tool/pokeparty.h"
 #include  "poke_tool/poke_tool.h"
+#include  "poke_tool/poke_regulation.h"
 
 //デバッグメータ消し
 #include "test/performance.h"
@@ -84,7 +85,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       PokeParty_Init( plData->pp , 6 );
       for( i=0;i<5;i++ )
       {
-        /*
+        //*
         POKEMON_PARAM *pPara = PP_Create( i+1 , 10 , PTL_SETUP_POW_AUTO , HEAPID_POKELIST );
   #if DEB_ARI
         switch( i )
@@ -132,17 +133,17 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
       }
       
       plData->mode = PL_MODE_FIELD;
+
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
       {
         u8 i,p;
+        //レギュレーション作成
+        plData->reg = (void*)PokeRegulation_LoadDataAlloc( REG_LV50_SINGLE , HEAPID_POKELIST );
         for( i=0;i<6;i++ )
         {
           plData->in_num[i] = 0;
         }
         plData->mode = PL_MODE_BATTLE;
-        plData->in_min = 4;
-        plData->in_max = 6;
-        plData->in_lv = 100;
         for( p=0;p<3;p++ )
         {
           plData->comm_battle[p].pp = PokeParty_AllocPartyWork(HEAPID_POKELIST);
@@ -248,6 +249,10 @@ static GFL_PROC_RESULT PokeListProc_Term( GFL_PROC * proc, int * seq , void *pwk
       {
         GFL_HEAP_FreeMemory( (void*)plWork->plData->comm_battle[i].name );
       }
+    }
+    if( plWork->plData->reg )
+    {
+      GFL_HEAP_FreeMemory( plWork->plData->reg );
     }
     GFL_HEAP_FreeMemory( plWork->plData->pp );
     GFL_HEAP_FreeMemory( plWork->plData );

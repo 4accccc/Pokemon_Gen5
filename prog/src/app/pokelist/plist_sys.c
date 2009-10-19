@@ -9,6 +9,7 @@
  */
 //======================================================================
 #include <gflib.h>
+#include "buflen.h"
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/wipe.h"
@@ -21,6 +22,7 @@
 
 #include "pokeicon/pokeicon.h"
 #include "savedata/myitem_savedata.h"
+#include "savedata/regulation.h"
 #include "waza_tool/wazano_def.h"
 #include "item/item.h"
 
@@ -1676,6 +1678,7 @@ static void PLIST_SelectPokeTerm_Change( PLIST_WORK *work )
 //--------------------------------------------------------------------------
 static void PLIST_SelectPokeTerm_BattleDecide( PLIST_WORK *work )
 {
+  REGULATION *reg = (REGULATION*)work->plData->reg;
   if( work->pokeCursor != PL_SEL_POS_ENTER )
   {
     //アクティブだったところを戻す
@@ -1691,15 +1694,15 @@ static void PLIST_SelectPokeTerm_BattleDecide( PLIST_WORK *work )
 
   work->plData->ret_sel = PL_SEL_POS_ENTER;
 
-  if( work->plData->in_min > work->btlJoinNum )
+  if( reg->NUM_LO > work->btlJoinNum )
   {
-    PLIST_MessageWaitInit( work , mes_pokelist_04_60_1 + (work->plData->in_min-1) , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_60_1 + (reg->NUM_LO-1) , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
     PMSND_PlaySystemSE( PLIST_SND_ERROR );
   }
   else
-  if( work->plData->in_max < work->btlJoinNum )
+  if( reg->NUM_HI < work->btlJoinNum )
   {
-    PLIST_MessageWaitInit( work , mes_pokelist_04_62_1 + (work->plData->in_max-1) , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_62_1 + (reg->NUM_HI-1) , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
     PMSND_PlaySystemSE( PLIST_SND_ERROR );
   }
   else
@@ -2875,7 +2878,9 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
 {
   if( work->isCallForceExit == FALSE &&
       work->mainSeq != PSMS_FADEOUT &&
-      work->mainSeq != PSMS_FADEOUT_WAIT )
+      work->mainSeq != PSMS_FADEOUT_WAIT &&
+      work->mainSeq != PSMS_FADEIN &&
+      work->mainSeq != PSMS_FADEIN_WAIT )
   {
     if( work->mainSeq == PSMS_MENU )
     {
@@ -2892,6 +2897,7 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
       u8 ofs = 0;
       u8 num;
       BOOL isFinish = FALSE;
+      REGULATION *reg = (REGULATION*)work->plData->reg;
       
       OS_TPrintf("AutoSelect Start!!\n");
       while( isFinish == FALSE )
@@ -2919,13 +2925,13 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
               work->plData->in_num[num] = idx+1;
               num++;
             }
-            if( num == work->plData->in_max )
+            if( num == reg->NUM_HI )
             {
               break;
             }
           }
         }
-        if( num >= work->plData->in_min )
+        if( num >= reg->NUM_LO )
         {
           isFinish = TRUE;
           OS_TPrintf("[OK!]\n");

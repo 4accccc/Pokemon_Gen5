@@ -2674,21 +2674,6 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
     plist->myitem = GAMEDATA_GetMyItem(unisys->uniparent->game_data);
     plist->cfg = SaveData_GetConfig(GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data));
     plist->mode = PL_MODE_BATTLE;
-    if(situ->mycomm.mainmenu_select >= UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50_SHOOTER 
-        && situ->mycomm.mainmenu_select <= UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD){
-      plist->in_min = 2;
-    }
-    else{
-      plist->in_min = 1;
-    }
-    if(situ->mycomm.mainmenu_select == UNION_PLAY_CATEGORY_COLOSSEUM_MULTI){
-      plist->in_max = 3;
-    }
-    else{
-      plist->in_max = 6;
-    }
-    plist->in_lv = 100;
-    OS_TPrintf("in_min = %d, in_max = %d\n", plist->in_min, plist->in_max);
     
     {//通信相手の情報をセット
       int net_id, enemy_player = 0;

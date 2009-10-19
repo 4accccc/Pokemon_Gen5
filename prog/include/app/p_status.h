@@ -38,7 +38,7 @@ typedef struct {
 
   u32       zukan_mode; // 図鑑ナンバー表示モード
 
-  void      *poruto;  // 与えるポルトのデータ ( _PURUTO_DATA )
+  //void      *poruto;  // 与えるポルトのデータ ( _PURUTO_DATA )
 
   //PERAPVOICE    *perap;   // ぺラップの鳴き声データ
 

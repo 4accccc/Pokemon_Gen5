@@ -9,11 +9,13 @@
  */
 //======================================================================
 #include <gflib.h>
+#include "buflen.h"
 
 #include "app/app_taskmenu.h"
 #include "gamesystem/msgspeed.h"
 #include "print/printsys.h"
 #include "poke_tool/poke_tool.h"
+#include "poke_tool/poke_regulation.h"
 #include "system/bmp_winframe.h"
 #include "system/main.h"
 #include "system/gfl_use.h"
@@ -634,6 +636,7 @@ void BATTLE_CHAMPIONSHIP_SetDebugData( BATTLE_CHAMPIONSHIP_DATA *csData , const 
   csData->name[7] = 0xFFFF;
   csData->number = 10;
   csData->league = 8;
+  csData->regulation = (REGULATION*)PokeRegulation_LoadDataAlloc( REG_DEBUG_BATTLE , heapId );
   
   for( i=0;i<6;i++ )
   {
