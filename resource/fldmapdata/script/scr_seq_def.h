@@ -1281,8 +1281,8 @@
  * @param dir •ûŒü DIR_UP“™
  */
 //--------------------------------------------------------------
-#define _OBJ_POS_CHANGE( id, gx, gy, gz )  \
-    _ASM_OBJ_POS_CHANGE id, gx, gy, gz
+#define _OBJ_POS_CHANGE( id, gx, gy, gz, dir )  \
+    _ASM_OBJ_POS_CHANGE id, gx, gy, gz, dir
 
 	.macro	_ASM_OBJ_POS_CHANGE	id,gx,gy,gz,dir
 	.short	EV_SEQ_OBJ_POS_CHANGE
