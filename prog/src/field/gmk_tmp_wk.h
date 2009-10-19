@@ -9,8 +9,7 @@
  *
  */
 //======================================================================
-#ifndef __GMK_TMP_WK_H__
-#define __GMK_TMP_WK_H__
+#pragma once
 
 #include "field/fieldmap_proc.h"    //for FIELDMAP_WORK
 
@@ -20,6 +19,5 @@ extern void GMK_TMP_WK_FreeWork
       (FIELDMAP_WORK *fieldWork, const u32 inAssignID);
 extern void *GMK_TMP_WK_GetWork(FIELDMAP_WORK *fieldWork, const u32 inAssignID);
 
-#endif  //__GMK_TMP_WK_H__
 
 

@@ -6,8 +6,7 @@
  *
  */
 //======================================================================
-#ifndef __FLD_PARTICLE_H__
-#define __FLD_PARTICLE_H__
+#pragma once
 
 typedef struct FLD_PRTCL_SYS_tag * FLD_PRTCL_SYS_PTR;
 
@@ -20,4 +19,3 @@ extern void *FLD_PRTCL_LoadResource(FLD_PRTCL_SYS_PTR sys, int inArcID, int inAr
 extern void FLD_PRTCL_SetResource(FLD_PRTCL_SYS_PTR sys, void *resource, int inTexAtOnce, GFL_TCBSYS *tcbsys);
 extern BOOL FLD_PRTCL_CheckEmitEnd(FLD_PRTCL_SYS_PTR sys);
 
-#endif    //__FLD_PARTICLE_H__

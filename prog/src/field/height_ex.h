@@ -7,8 +7,7 @@
  */
 //============================================================================================
 
-#ifndef __HEIGHT_EX_H__
-#define __HEIGHT_EX_H__
+#pragma once
 
 typedef struct EX_HEIGHT_LIST_tag * EHL_PTR;
 typedef struct EX_HEIGHT_LIST_tag const * EHL_CONST_PTR;
@@ -37,5 +36,4 @@ extern void EXH_SetHeight(	const u8 inIndex, const fx32 inHeight, EHL_PTR outExH
 
 extern void EXH_SetHeightValid(	const u8 inIndex, const BOOL inValid, EHL_PTR outExHeightList );
 
-#endif  //__HEIGHT_EX_H__
 

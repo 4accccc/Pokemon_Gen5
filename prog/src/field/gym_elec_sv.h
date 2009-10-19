@@ -5,9 +5,7 @@
  * @author  Saito
  */
 //======================================================================
-#ifndef __GYM_ELEC_SV_H__
-
-#define __GYM_ELEC_SV_H__
+#pragma once
 
 #define CAPSULE_NUM_MAX (4)
 #define LEVER_NUM_MAX (CAPSULE_NUM_MAX)
@@ -30,4 +28,3 @@ typedef struct GYM_ELEC_SV_WORK_tag
   u16 EvtFlg[2];    //イベント進行フラグ  0：イベントトレーナー1人目　1：イベントトレーナー2人目
 }GYM_ELEC_SV_WORK;
 
-#endif  //__GYM_ELEC_SV_H__

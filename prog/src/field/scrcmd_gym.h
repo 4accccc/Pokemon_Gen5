@@ -5,8 +5,7 @@
  * @author  Saito
  */
 //======================================================================
-#ifndef __SCRCMD_GYM_H__
-#define __SCRCMD_GYM_H__
+#pragma once
 
 //======================================================================
 //  extern 
@@ -27,5 +26,4 @@ extern VMCMD_RESULT EvCmdGymAnti_OpenDoor( VMHANDLE *core, void *wk );
 
 #endif	//__ASM_NO_DEF_
 
-#endif    //__SCRCMD_GYM_H__
 

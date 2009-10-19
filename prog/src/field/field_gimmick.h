@@ -7,8 +7,7 @@
  *
  */
 //============================================================================================
-#ifndef __FIELD_GIMMICK_H__
-#define __FIELD_GIMMICK_H__
+#pragma once
 
 #include "field/fieldmap_proc.h"
 
@@ -28,5 +27,4 @@ extern BOOL FLDGMK_FieldGimmickHitCheck(FIELDSYS_WORK *fsys,
 #endif
 
 extern BOOL FLDGMK_GimmickCodeCheck(FIELDMAP_WORK *fieldWork, int gimmick_id);
-#endif	//__FIELD_GIMMICK_H__
 

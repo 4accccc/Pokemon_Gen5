@@ -7,8 +7,7 @@
  *
  */
 //============================================================================================
-#ifndef __FIELD_GIMMICK_DEF_H__
-#define __FIELD_GIMMICK_DEF_H__
+#pragma once
 
 typedef enum{
 	FLD_GIMMICK_NONE,			//0:‚È‚µ
@@ -23,5 +22,4 @@ typedef enum{
 
 }FLD_GYMMICK_ID;
 
-#endif	//__FIELD_GIMMICK_DEF_H__
 

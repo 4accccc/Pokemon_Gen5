@@ -7,8 +7,7 @@
  *
  */
 //======================================================================
-#ifndef __FLD_EXP_OBJ_H__
-#define __FLD_EXP_OBJ_H__
+#pragma once
 
 #include <gflib.h>
 
@@ -56,4 +55,3 @@ extern void FLD_EXP_OBJ_ValidCntAnm(
 
 extern fx32 FLD_EXP_OBJ_GetAnimeLastFrame(EXP_OBJ_ANM_CNT_PTR ptr );
 
-#endif  //__FLD_EXP_OBJ_H__
