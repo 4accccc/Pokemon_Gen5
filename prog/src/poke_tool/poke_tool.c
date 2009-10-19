@@ -1414,6 +1414,18 @@ void  PP_Renew( POKEMON_PARAM *pp )
  * @param[in] pp  ポケモンパラメータ構造体のポインタ
  */
 //=============================================================================================
+POKEMON_PASO_PARAM  *PP_GetPPPPointer( POKEMON_PARAM *pp )
+{
+  return &pp->ppp;
+}
+
+//=============================================================================================
+/**
+ * POKEMON_PASO_PARAMのポインタを取得
+ *
+ * @param[in] pp  ポケモンパラメータ構造体のポインタ
+ */
+//=============================================================================================
 const POKEMON_PASO_PARAM  *PP_GetPPPPointerConst( const POKEMON_PARAM *pp )
 {
   return &pp->ppp;
