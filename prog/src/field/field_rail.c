@@ -20,7 +20,7 @@
 
 #ifdef PM_DEBUG
 
-#define DEBUG_RAIL_PRINT  // レールのデバック出力　（大量）
+//#define DEBUG_RAIL_PRINT  // レールのデバック出力　（大量）
 
 #endif // PM_DEBUG
 
@@ -674,11 +674,11 @@ BOOL FIELD_RAIL_MAN_Calc3DVecRailLocation( const FIELD_RAIL_MAN * cp_man, const 
 
     DEBUG_RAIL_Printf( "\nlinename %s\n", cp_line->name );
 
-    VEC_Subtract( &cp_point_e->pos, &cp_point_s->pos, &plane_vec1 );
+    VEC_Subtract( &cp_point_s->pos, &cp_point_e->pos, &plane_vec1 );
     VEC_CrossProduct( &plane_vec1, &default_vec, &plane_vec2 );
 
     // 平面とベクトルの交点から、ヒット判定を行う。
-    result = calcHitPlaneVec( &plane_vec1, &plane_vec2, &cp_point_s->pos, &startpos, &endpos, &cross_pos ); 
+    result = calcHitPlaneVec( &plane_vec1, &plane_vec2, &cp_point_e->pos, &startpos, &endpos, &cross_pos ); 
 
     if( result == FALSE )
     {

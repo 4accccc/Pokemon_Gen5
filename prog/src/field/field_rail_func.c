@@ -21,7 +21,7 @@
 
 #ifdef PM_DEBUG
 
-#define DEBUG_PRINT_ON  // 大量デバック表示
+//#define DEBUG_PRINT_ON  // 大量デバック表示
 
 #endif
 
@@ -40,6 +40,14 @@
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
+
+//-------------------------------------
+///	ロケーションあたり判定　Ｗｉｄｔｈ誤差値
+// @TODO  現状はレールがちゃんと配置されていないので、大きめにとっています。
+//=====================================
+#define HIT_LOCATION_WIDHT_AREA ( RAIL_WALK_OFS*4 ) // 4グリッド分
+
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -491,6 +499,7 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_StraitLine( u32 rail_index, const FIELD_R
 
   // 交点のオフセット
   front_ofs = FX_Div( front_dist, unit_size ) >> FX32_SHIFT;
+  front_ofs = total_ofs - front_ofs;
 
   // 交点の幅
   for( i=0; i<RAIL_CONNECT_LINE_MAX; i++ )
@@ -511,7 +520,7 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_StraitLine( u32 rail_index, const FIELD_R
   DEBUG_RAIL_Printf( "line_ofs of width [%d]\n", front_ofs_width );
   
   // 幅チェック
-  if( width_dist < front_ofs_width )
+  if( width_dist <= (front_ofs_width + HIT_LOCATION_WIDHT_AREA) )
   {
     // 降り立つ場所があった！
     p_location->rail_index = rail_index;
@@ -561,7 +570,7 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_CircleLine( u32 rail_index, const FIELD_R
   int i;
   BOOL result;
 
-  DEBUG_RAIL_Printf( "\ncheck circleLine\n" );
+  //DEBUG_RAIL_Printf( "\ncheck circleLine\n" );
 
   cp_line = FIELD_RAIL_MAN_GetRailDatLine( cp_man, rail_index );
   cp_point_s = FIELD_RAIL_MAN_GetRailDatPoint( cp_man, cp_line->point_s );
@@ -656,6 +665,7 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_CircleLine( u32 rail_index, const FIELD_R
         // 1/|A|をもとに戻す
         bcos = FX_Mul( bcos, div_num );
       }
+      //DEBUG_RAIL_Printf( "real bcos [%d]\n", FX_Whole(bcos) );
       
       // 交点を求める
       VEC_Set( &cross_pos, FX_Mul( way_a.x, bcos ), 
@@ -674,17 +684,21 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_CircleLine( u32 rail_index, const FIELD_R
 
       //DEBUG_RAIL_Printf( "gaiseki.y [%d]\n", gaiseki.y );
 
-      if( width_ofs_max >= cross_dist )
+      if( (width_ofs_max + HIT_LOCATION_WIDHT_AREA) >= cross_dist )
       {
         // 合格！
         if( gaiseki.y >= 0 )
         {
           p_location->width_grid = RAIL_OFS_TO_GRID(cross_dist);
-          FIELD_RAIL_MAN_GetLocationPosition( cp_man, p_location, p_pos );
-
-          //DEBUG_RAIL_Printf( "OK width_grid[%d]\n", p_location->width_grid );
-          return TRUE;
         }
+        else
+        {
+          p_location->width_grid = -RAIL_OFS_TO_GRID(cross_dist);
+        }
+        FIELD_RAIL_MAN_GetLocationPosition( cp_man, p_location, p_pos );
+
+        //DEBUG_RAIL_Printf( "OK width_grid[%d]\n", p_location->width_grid );
+        return TRUE;
       }
     }
     
@@ -1106,6 +1120,9 @@ void FIELD_RAIL_CAMERAFUNC_PlayerTargetCircleCamera( const FIELD_RAIL_MAN * man 
  *
  *	@retval TRUE    あたる
  *	@retval FALSE   あたらない
+ *
+ *  cp_pos - endpos
+ *	startpos - endpos   endposを基準にすべてを計算しています。
  */
 //-----------------------------------------------------------------------------
 static BOOL is_Hit3DPosPlane( const RAIL_POINT * cp_point_s, const RAIL_POINT * cp_point_e, const VecFx32* cp_pos, VecFx32* p_cross, fx32* dis_bcos, VecFx32* gaiseki )
