@@ -288,7 +288,7 @@ ev_trainer_appear_01:
 	_OBJ_ANIME_WAIT()
 
 	//トレーナー：登場メッセージ　メッセージ無し
-	_BALLOONWIN_OBJMSG_OPEN( msg_c04gym0101_princess1_01 , C04GYM0101_TRAINER_01 )
+	_BALLOONWIN_OBJMSG_OPEN( msg_c04gym0101_prince1_01 , C04GYM0101_TRAINER_01 )
 	_BALLOONWIN_CLOSE()
 
 	_RET
@@ -307,7 +307,7 @@ ev_trainer_appear_02:
 	_OBJ_ANIME_WAIT()
 
 	//トレーナー：登場メッセージ　メッセージ無し
-	_BALLOONWIN_OBJMSG_OPEN( msg_c04gym0101_prince1_01 , C04GYM0101_TRAINER_02 )
+	_BALLOONWIN_OBJMSG_OPEN( msg_c04gym0101_princess1_01 , C04GYM0101_TRAINER_02 )
 	_BALLOONWIN_CLOSE()
 
 	_RET
