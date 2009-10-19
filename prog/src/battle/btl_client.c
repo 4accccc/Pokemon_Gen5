@@ -2292,13 +2292,13 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
     if( BTLV_WaitMsg(wk->viewCore) )
     {
       if( args[2] ){
-        PMSND_PlaySE( SEQ_ME_POKEGET );
+        PMSND_PlayBGM( SEQ_ME_POKEGET );
       }
       (*seq)++;
     }
     break;
   case 3:
-    if( !PMSND_CheckPlaySE() ){
+    if( !PMSND_CheckPlayBGM() ){
       (*seq)++;
     }
     break;

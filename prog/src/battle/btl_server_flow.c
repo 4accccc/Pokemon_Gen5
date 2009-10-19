@@ -1801,6 +1801,9 @@ static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
       fSuccess = TRUE;
 
       SCQUE_PUT_ACT_BallThrow( wk->que, targetPos, yure_cnt, fSuccess );
+      if( fSuccess ){
+        wk->flowResult = SVFLOW_RESULT_POKE_GET;
+      }
     }
   }
 }

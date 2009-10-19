@@ -407,6 +407,9 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
           setMainProc( server, ServerMain_SelectPokemon );
         }
         break;
+      case SVFLOW_RESULT_POKE_GET:
+
+        return TRUE;
       default:
         GF_ASSERT(0);
         /* fallthru */
