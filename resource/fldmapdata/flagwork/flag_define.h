@@ -139,7 +139,7 @@
 #define FE_C06GYM_ITEM                     123 /* 0x007b Ｃ06飛行ジム：ジムガイドがくれるアイテム入手フラグ */
 #define FE_C07GYM_ITEM                     124 /* 0x007c Ｃ07氷ジム：ジムガイドがくれるアイテム入手フラグ */
 #define FE_C08GYM_ITEM                     125 /* 0x007d Ｃ08ドラゴンジム：ジムガイドがくれるアイテム入手フラグ */
-		/* not used   126(0x007e) */
+#define FE_MUSEUM_TOUNAN                   126 /* 0x007e 博物館盗難イベントフラグ。盗難イベント中にON */
 		/* not used   127(0x007f) */
 		/* not used   128(0x0080) */
 		/* not used   129(0x0081) */
@@ -568,7 +568,7 @@
 #define FV_D05R0101_RIVAL_01               544 /* 0x0220 D05R0101：初回入室時イベントライバル01 */
 #define FV_D05R0101_RIVAL_02               545 /* 0x0221 D05R0101：ライバル02 */
 #define FV_D05R0101_WORKMAN_01             546 /* 0x0222 D05R0101：戦闘後表示WORKMAN */
-		/* not used   547(0x0223) */
+#define FV_C02GYM0101_FRIENDS              547 /* 0x0223 C02博物館：サポート＆ライバル */
 		/* not used   548(0x0224) */
 		/* not used   549(0x0225) */
 		/* not used   550(0x0226) */
