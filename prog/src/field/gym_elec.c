@@ -504,6 +504,7 @@ static void CapStopTcbFunc(GFL_TCB* tcb, void* work);
 
 
 static BOOL CheckCapTrEnc(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx);
+static void SetCapTrEncFlg(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx);
 
 #ifdef PM_DEBUG
 BOOL test_GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx);
@@ -1268,6 +1269,25 @@ static BOOL CheckCapTrEnc(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
   return FALSE;
 }
 
+static void SetCapTrEncFlg(GYM_ELEC_SV_WORK *gmk_sv_work, const u8 inCapIdx)
+{
+  u8 set = 0;   //チェックフラグ 1でセット処理する
+  u8 evt_idx;
+  //第2、第3カプセル（インデックス　1,2のカプセル）のときセットする
+  if (inCapIdx == 1){
+    set = 1;
+    evt_idx = 0;
+  }else if(inCapIdx == 2){
+    set =1;
+    evt_idx = 1;
+  }
+
+  if (set){
+    gmk_sv_work->EvtFlg[evt_idx] = 1;
+  }
+}
+
+
 static GMEVENT_RESULT CapMoveEvt(GMEVENT* event, int* seq, void* work)
 {
   GYM_ELEC_SV_WORK *gmk_sv_work;
@@ -1645,6 +1665,7 @@ static GMEVENT_RESULT TrEncEvt(GMEVENT* event, int* seq, void* work)
     }
     break;
   case 4:
+    SetCapTrEncFlg(gmk_sv_work, cap_idx);
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
