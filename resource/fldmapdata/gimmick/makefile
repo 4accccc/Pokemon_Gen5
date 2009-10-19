@@ -8,7 +8,8 @@ include $(PROJECT_RSCDIR)\macro_define
 SUBDIRS	=	gym_denki \
 					gym_normal \
 					gym_fly \
-					gym_anti
+					gym_anti \
+					h03
 
 .PHONY:	do-build clean
 
