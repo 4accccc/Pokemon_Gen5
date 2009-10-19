@@ -32,7 +32,7 @@
 		polygonID_fixed="0"
 		child_polygonID_fixed="0"
 		gen_num="12288"
-		radius="2436"
+		radius="5786"
 		length="0"
 		axis_x="0"
 		axis_y="4096"
@@ -43,16 +43,16 @@
 		pos_x="0"
 		pos_y="0"
 		pos_z="0"
-		init_vel_pos="228"
-		init_vel_axis="761"
-		base_scl="1462"
+		init_vel_pos="1218"
+		init_vel_axis="6167"
+		base_scl="6144"
 		aspect="4096"
 		start_offset="0"
 		rtt_min="0"
 		rtt_max="0"
 		init_rtt="0"
 		emtr_life="60"
-		ptcl_life="95"
+		ptcl_life="50"
 		ptcl_life_r="60"
 		offset_x="0"
 		offset_y="0"
@@ -75,11 +75,11 @@
 	/>
 	<scl_anm
 		scl_s="0"
-		scl_n="4629"
+		scl_n="5603"
 		scl_e="0"
 		loop="0"
 		in="0"
-		out="13"
+		out="17"
 	/>
 	<clr_anm
 		clr_s_r="21"
@@ -134,7 +134,7 @@
 	/>
 	<grvt
 		mag_x="0"
-		mag_y="-20"
+		mag_y="-548"
 		mag_z="0"
 	/>
 </spr>
