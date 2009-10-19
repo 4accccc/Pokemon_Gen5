@@ -162,7 +162,35 @@ extern NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_
 //-------------------------------------
 ///	PARAMからの取得
 //=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief		NAMEIN_PARAMからの文字列取得
+ *
+ *	@param		param		NAMEIN_PARAM
+ *	@param		strbuf	受け取り文字列バッファ
+ */
+//-----------------------------------------------------------------------------
 extern void NAMEIN_CopyStr( const NAMEIN_PARAM *param, STRBUF *strbuf );
+//----------------------------------------------------------------------------
+/**
+ *	@brief		NAMEIN_PARAMからの文字列コピー作成
+ *
+ *	@param		param		NAMEIN_PARAM
+ *	@param		HEAPID	文字列作成ヒープID
+ *
+ *	@return		コピーして作成したSTRBUF
+ */
+//-----------------------------------------------------------------------------
 extern STRBUF* NAMEIN_CreateCopyStr( const NAMEIN_PARAM *param, HEAPID heapID );
+//----------------------------------------------------------------------------
+/**
+ *	@brief	NAMEIN_PROCの終了取得
+ *
+ *	@param	param	NAMEIN_PARAM
+ *
+ *	@retval	TRUEでデフォルト文字と同じ文字列or何も入力せず終了
+ *	@retval	FALSEで通常入力で終了
+ */
+//-----------------------------------------------------------------------------
 extern BOOL NAMEIN_IsCancel( const NAMEIN_PARAM *param );
 #endif	//NAME_INPUT_H__
