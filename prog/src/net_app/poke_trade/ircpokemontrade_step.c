@@ -185,13 +185,29 @@ static void _McssAnmStop( u32 data, fx32 currentFrame )
 }
 
 
+static void _pEmitCBInFunc( GFL_EMIT_PTR pEmiter, unsigned int flag)
+{
+  if( flag == SPL_EMITTER_CALLBACK_FRONT  ){
+    return;
+  }
+  if(pEmiter){
+    IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetUserData( pEmiter );
+    {
+      VecFx32 pos={0,0,0};
+      ICA_ANIME_GetTranslate( pWork->icaBallin, &pos );
+      GFL_PTC_SetEmitterPosition(pEmiter, &pos);
+    }
+  }
+}
+
 static void _ballinEmitFunc(GFL_EMIT_PTR pEmiter)
 {
   IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetTempPtr();
 
-  pWork->pBallInPer = pEmiter;
-}
+  GFL_PTC_SetUserData( pEmiter, pWork );
+  GFL_PTC_SetCallbackFunc(pEmiter, &_pEmitCBInFunc);
 
+}
 
 static void _pEmitCBOutFunc( GFL_EMIT_PTR pEmiter, unsigned int flag)
 {
@@ -204,7 +220,6 @@ static void _pEmitCBOutFunc( GFL_EMIT_PTR pEmiter, unsigned int flag)
       VecFx32 pos={0,0,0};
       ICA_ANIME_GetTranslate( pWork->icaBallout, &pos );
       GFL_PTC_SetEmitterPosition(pEmiter, &pos);
-//      GFL_PTC_SetEmitterMagnetPos(pEmiter, &pos);
     }
   }
 }
@@ -214,18 +229,8 @@ static void _balloutEmitFunc(GFL_EMIT_PTR pEmiter)
 {
   IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetTempPtr();
 
-
-  {
-    VecFx32 pos={0,0,0};
-    ICA_ANIME_GetTranslate( pWork->icaBallout, &pos );
-    GFL_PTC_SetEmitterPosition(pEmiter, &pos);
-  }
-  
-  
-//  GFL_PTC_SetUserData( pEmiter, pWork );
-//  GFL_PTC_SetCallbackFunc(pEmiter, &_pEmitCBOutFunc);
-  
- // pWork->pBallOutPer = pEmiter;//GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO7], 6, NULL, pWork);
+  GFL_PTC_SetUserData( pEmiter, pWork );
+  GFL_PTC_SetCallbackFunc(pEmiter, &_pEmitCBOutFunc);
 }
 
 
@@ -415,10 +420,8 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
   if(pWork->anmCount == _PARTICLE_DEMO6_START){
     GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO6], DEMO_TEX006, NULL, pWork);
   }
-  if(pWork->anmCount > _PARTICLE_DEMO7_START  && (pWork->anmCount < (_PARTICLE_DEMO7_START+50))){
-//    if(pWork->anmCount%3==0){
-      GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO7], DEMO_TEX007,_balloutEmitFunc, pWork);
-  //  }
+  if(pWork->anmCount == _PARTICLE_DEMO7_START){
+    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO7], DEMO_TEX007,_balloutEmitFunc, pWork);
   }
 
   /*  if(pWork->anmCount == _OAM_POKECREATE_START){

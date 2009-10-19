@@ -325,6 +325,33 @@ static void _moveSetTrade01(IRC_POKEMON_TRADE* pWork,GFL_G3D_OBJSTATUS* pStatus)
   ICA_CAMERA_SetCameraPos( pWork->camera ,pWork->icaCamera );
   ICA_CAMERA_SetTargetPos( pWork->camera ,pWork->icaTarget );
 
+  
+  if(0){
+    VecFx32 campos;
+    VecFx32 tarpos;
+    fx32 far= 8000*FX32_ONE;
+    fx32 near= FX32_ONE;
+    
+    campos.x = 0;
+    campos.y = 3*FX32_ONE;
+    campos.z = 15*FX32_ONE;
+    tarpos.x = 0;
+    tarpos.y = 0;
+    tarpos.z = 0;
+    
+    GFL_G3D_CAMERA_SetPos( pWork->camera, &campos );
+    GFL_G3D_CAMERA_SetTarget( pWork->camera, &tarpos );
+    GFL_G3D_CAMERA_SetNear( pWork->camera, &near );
+    GFL_G3D_CAMERA_SetFar( pWork->camera, &far );
+    tarpos.x = 0;
+    tarpos.y = FX32_ONE;
+    tarpos.z = 0;
+    
+    GFL_G3D_CAMERA_SetCamUp( pWork->camera, &tarpos );
+  }
+
+
+  
   GFL_G3D_CAMERA_Switching(pWork->camera );
 
   if(0){
