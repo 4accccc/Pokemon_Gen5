@@ -124,9 +124,6 @@ EVENT_START   ev_c01r0101_scene_change_01
 	_OBJ_ANIME( C01R0101_INVENTOR_01, anm_inventor_yudo3 )
 	_OBJ_ANIME_WAIT()	
 	
-	//発明家マコモの動作モデルを削除する
-	_OBJ_DEL( C01R0101_INVENTOR_01 )
-	
 	//mapchangeする
 	_MAP_CHANGE( ZONE_ID_C01R0102, 3, 11, DIR_RIGHT )
 
@@ -146,13 +143,13 @@ EVENT_END
 //	自機・発明家マコモ　部屋中央まで移動
 //--------------------------------------------------------------
 _ANIME_LABEL anm_player_yudo1
-	_ANIME_DATA		AC_WALK_R_16F,4
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_WALK_R_8F,4
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_inventor_yudo1
-	_ANIME_DATA		AC_WAIT_8F,1
-	_ANIME_DATA		AC_WALK_R_16F,3
+	_ANIME_DATA		AC_WALK_R_8F,4
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 	
@@ -161,7 +158,7 @@ _ANIME_LABEL anm_inventor_yudo1
 //--------------------------------------------------------------
 _ANIME_LABEL anm_inventor_dir
 	_ANIME_DATA		AC_DIR_L,1
-	_ANIME_DATA		AC_STAY_WALK_L_16F,1
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
@@ -169,15 +166,15 @@ _ANIME_LABEL anm_inventor_dir
 //--------------------------------------------------------------
 _ANIME_LABEL anm_player_yudo2
 	_ANIME_DATA		AC_WAIT_8F,1
-	_ANIME_DATA		AC_WALK_R_16F,1
-	_ANIME_DATA		AC_WALK_D_16F,3
-	_ANIME_DATA		AC_WALK_R_16F,2
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_WALK_D_8F,3
+	_ANIME_DATA		AC_WALK_R_8F,1
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_inventor_yudo2
-	_ANIME_DATA		AC_WALK_D_16F,3
-	_ANIME_DATA		AC_WALK_R_16F,3
+	_ANIME_DATA		AC_WALK_D_8F,3
+	_ANIME_DATA		AC_WALK_R_8F,2
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 
@@ -185,11 +182,11 @@ _ANIME_LABEL anm_inventor_yudo2
 //	自機・発明家マコモ　階段前まで移動
 //--------------------------------------------------------------
 _ANIME_LABEL anm_player_yudo3
-	_ANIME_DATA		AC_WALK_R_16F,1
+	_ANIME_DATA		AC_WALK_R_8F,2
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_inventor_yudo3
-	_ANIME_DATA		AC_WALK_R_16F,1
+	_ANIME_DATA		AC_WALK_R_8F,2
 	_ANIME_DATA		AC_DIR_R,1
 	_ANIME_DATA		ACMD_END,0

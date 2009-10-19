@@ -236,22 +236,8 @@ EVENT_START   ev_c01r0501_rival_01
 	_TALK_OBJ_START()
 	
 	//ゆめのあとちに行っていない場合
-	IF FLAG_OFF( FE_D01R0101_EVCLEAR ) THEN
-	
-		//ライバルと既に話している場合
-		IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
-			_CALL rival_word
+	IF $WK_SCENE_D01R0101 == 2 THEN
 
-		//ライバルとまだ話していない場合
-		ELSE
-			_CALL rival_word
-			
-			_FLAG_SET( FE_C01R0501_RIVALTALK )
-	
-		ENDIF
-
-	//ゆめのあとちに行っている場合
-	ELSE
 		//ライバルと既に話している場合
 		IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
 			_CALL rival_word
@@ -264,15 +250,30 @@ EVENT_START   ev_c01r0501_rival_01
 	
 		ENDIF
 		
-	//=========フラグワーク操作==========//
+		//=========フラグワーク操作==========//
 	
-	//ジム前サングラスの消去
-	_FLAG_SET( FV_C01_GUIDE_01 )
+		//ジム前サングラスの消去
+		_FLAG_SET( FV_C01_GUIDE_01 )
 
-	//ジム前リーダーの開始
-	_FLAG_RESET( FV_C01_LEADER1_01 )
+		//ジム前リーダーの開始
+		_FLAG_RESET( FV_C01_LEADER1_01 )
 
-	//===================================//
+		//===================================//
+
+	//ゆめのあとちに行っている場合
+	ELSE
+
+		//ライバルと既に話している場合
+		IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
+			_CALL rival_word
+
+		//ライバルとまだ話していない場合
+		ELSE
+			_CALL rival_word
+			
+			_FLAG_SET( FE_C01R0501_RIVALTALK )
+	
+		ENDIF
 		
 	ENDIF
 

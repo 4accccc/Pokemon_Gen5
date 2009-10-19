@@ -217,6 +217,7 @@ EVENT_START   ev_pos_c01_stop
 	ELSE
 		//お爺さん：自機に近づく
 		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_tikaduku14 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_miru )
 		_OBJ_ANIME_WAIT()
 		
 		//おぬし　ジムバッジの　１つも　もっておらぬ　ようじゃが
@@ -238,8 +239,7 @@ EVENT_END
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_oldman_tikaduku13
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_L_32F,1
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_L_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_oldman_tikaduku14
@@ -252,7 +252,7 @@ _ANIME_LABEL	anm_oldman_tikaduku14
 //	おじいさん　戻る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_oldman_modoru13
-	_ANIME_DATA	AC_WALK_R_32F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -356,8 +356,6 @@ EVENT_START   ev_c01_scene_change_01
 	//マップチェンジ
 	_MAP_CHANGE( ZONE_ID_C01R0101, 2, 7, DIR_RIGHT )
 	
-	//発明家ＯＢＪを消す
-	_OBJ_DEL( C01_INVENTOR_01 )
 
 	//============フラグワーク操作=============//
 
@@ -380,8 +378,8 @@ EVENT_END
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_inventor_tikaduku
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_R_16F,1
-	_ANIME_DATA	AC_WALK_U_16F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 	
@@ -389,14 +387,14 @@ _ANIME_LABEL	anm_inventor_tikaduku
 //	発明家マコモ　自機：自宅誘導
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_inventor_yudo
-	_ANIME_DATA	AC_WALK_D_16F,6
-	_ANIME_DATA	AC_WALK_R_16F,1	
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_yudo
 	_ANIME_DATA	AC_WAIT_8F,1
-	_ANIME_DATA	AC_WALK_D_16F,7
-	_ANIME_DATA	AC_WALK_R_16F,1	
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	AC_WALK_R_8F,1	
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
