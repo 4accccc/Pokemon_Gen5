@@ -368,8 +368,6 @@ static const u32 fldmapdata_fogColorTable[8];
 
 static const u16 fldmapdata_bgColorTable[16];
 
-static void FIELDMAP_CommBoot(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAPID heapID);
-
 static void InitGmkTmpWork(GMK_TMP_WORK *tmpWork);
 
 //======================================================================
@@ -406,9 +404,6 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 	//マップコントロール
 	fieldWork->func_tbl = FIELDDATA_GetFieldFunctions( fieldWork->map_id );
 
-	//通信用処理 
-  FIELDMAP_CommBoot(gsys, fieldWork, heapID);
-	
 	return fieldWork;
 }
 
@@ -844,7 +839,6 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
     OS_TPrintf( "draw_tick %d micro second\n", OS_TicksToMicroSeconds( debug_fieldmap_end_tick ) );
   }
 #endif
-
 
   return MAINSEQ_RESULT_CONTINUE;
 }
@@ -2197,48 +2191,6 @@ static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork )
 	fieldWork->mapCtrlWork = NULL;
 }
 
-//==================================================================
-/**
- * フィールドマップ作成と同時に起動する通信プログラム
- *
- * @param   gsys		
- * @param   fieldWork		
- */
-//==================================================================
-static void FIELDMAP_CommBoot(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, HEAPID heapID)
-{
-  GAME_COMM_SYS_PTR game_comm;
-  GAME_COMM_NO comm_no;
-  GAMEDATA *gdata;
-  
-  game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-  comm_no = GameCommSys_BootCheck(game_comm);
-  gdata = GAMESYSTEM_GetGameData( gsys );
-  
-	switch(fieldWork->map_id){    //※check　どこかのタイミングで一度整理
-	case ZONE_ID_UNION:
-	case ZONE_ID_CLOSSEUM:
-	case ZONE_ID_CLOSSEUM02:
-	  {
-      UNION_PARENT_WORK *upw;
-      
-      if(comm_no != GAME_COMM_NO_UNION){
-        upw = GFL_HEAP_AllocClearMemory(GFL_HEAP_LOWID(GFL_HEAPID_APP), sizeof(UNION_PARENT_WORK));
-        upw->mystatus = GAMEDATA_GetMyStatus(gdata);
-        upw->game_comm = game_comm;
-        upw->game_data = gdata;
-        upw->gsys = gsys;
-        if(comm_no == GAME_COMM_NO_NULL){
-    	    GameCommSys_Boot(game_comm, GAME_COMM_NO_UNION, upw);
-    	  }
-    	  else{
-          GameCommSys_ChangeReq(game_comm, GAME_COMM_NO_UNION, upw);
-        }
-      }
-  	}
-    break;
-  }
-}
 
 //==================================================================
 /**

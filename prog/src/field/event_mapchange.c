@@ -445,15 +445,27 @@ static GMEVENT_RESULT EVENT_MapChangeToUnion(GMEVENT * event, int *seq, void*wor
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, fieldmap) );
     (*seq) ++;
     break;
-  case 1: // マップチェンジ・コア・イベント
+	case 1:
+    // 入口進入イベント
+    GMEVENT_CallEvent( event, 
+        EVENT_EntranceIn( event, gsys, gamedata, fieldmap, mcw->loc_req, mcw->exit_type ) );
+		(*seq)++;
+		break;
+  case 2: // マップチェンジ・コア・イベント
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( mcw ) );
 		(*seq)++;
     break;
-	case 2: // ユニオン通信起動
+	case 3: // ユニオン通信起動
     UNION_CommBoot( gsys );
 		(*seq) ++;
 		break;
-  case 3:
+	case 4:
+    // 入口退出イベント
+    GMEVENT_CallEvent( event, EVENT_EntranceOut( event, gsys, gamedata, fieldmap, mcw->loc_req ) );
+		(*seq) ++;
+		break;
+  case 5:
+    OBATA_Printf( "===================================EVENT_MapChangeToUnion: finish\n" );
 		return GMEVENT_RES_FINISH; 
 	}
 	return GMEVENT_RES_CONTINUE;

@@ -291,7 +291,8 @@ EVENT_START ev_union
     _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
     // @todo 移動アニメ
-    // @todo マップチェンジ
+    // マップチェンジ
+    _MAP_CHANGE_TO_UNION()
   ENDIF
 
   // キャンセルした場合
