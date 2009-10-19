@@ -190,9 +190,9 @@ static void _pEmitCBInFunc( GFL_EMIT_PTR pEmiter, unsigned int flag)
   if( flag == SPL_EMITTER_CALLBACK_FRONT  ){
     return;
   }
-  if(pEmiter){
+  if(pEmiter ){
     IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetUserData( pEmiter );
-    {
+    if( pWork->icaBallin){
       VecFx32 pos={0,0,0};
       ICA_ANIME_GetTranslate( pWork->icaBallin, &pos );
       GFL_PTC_SetEmitterPosition(pEmiter, &pos);
@@ -214,11 +214,13 @@ static void _pEmitCBOutFunc( GFL_EMIT_PTR pEmiter, unsigned int flag)
   if( flag == SPL_EMITTER_CALLBACK_FRONT  ){
     return;
   }
-  if(pEmiter){
+  if(pEmiter  ){
     IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetUserData( pEmiter );
-    {
+    if(pWork->icaBallout){
       VecFx32 pos={0,0,0};
       ICA_ANIME_GetTranslate( pWork->icaBallout, &pos );
+      OS_TPrintf("---%d %d %d \n",pos.x / FX32_ONE,pos.y / FX32_ONE,pos.z / FX32_ONE );
+      
       GFL_PTC_SetEmitterPosition(pEmiter, &pos);
     }
   }
