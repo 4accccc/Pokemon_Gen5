@@ -677,6 +677,7 @@ extern void PPP_ChangeMonsNo( POKEMON_PASO_PARAM* ppp, u16 monsno );
 extern  void  PP_Renew( POKEMON_PARAM *pp );
 
 // PPPポインタを取得
+extern  POKEMON_PASO_PARAM  *PP_GetPPPPointer( POKEMON_PARAM *pp );
 extern  const POKEMON_PASO_PARAM *PP_GetPPPPointerConst( const POKEMON_PARAM *pp );
 
 // 低レベル関数群
