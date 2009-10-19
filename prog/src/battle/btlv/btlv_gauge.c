@@ -291,6 +291,7 @@ void  BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw )
   }
   if( bgw->now_bgm_no != PMSND_GetBGMsoundNo() )
   { 
+    OS_TPrintf("PopBGM\n");
     PMSND_PopBGM();
   }
   GFL_CLGRP_PLTT_Release( bgw->plttID );
@@ -1349,8 +1350,63 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
     if( PMSND_CheckFadeOnBGM() == FALSE )
     { 
       bgw->bgm_fade_flag = 0;
+      if( PMSND_GetBGMsoundNo() == SEQ_BGM_BATTLEPINCH )
+      { 
+        OS_TPrintf("PopBGM\n");
+        PMSND_PopBGM();
+        PMSND_FadeInBGM( 24 );
+      }
+      else
+      { 
+        PMSND_PushBGM();
+        PMSND_PlayBGM( SEQ_BGM_BATTLEPINCH );
+        PMSND_FadeInBGM( 8 );
+      }
+    }
+  }
+  else
+  { 
+    BOOL  pinch_flag = FALSE;
+
+    for( i = 0 ; i < BTLV_GAUGE_NUM_MAX ; i++ )
+    { 
+      if( ( bgw->bgcl[ i ].gauge_dir == 0 ) &&
+          ( bgw->bgcl[ i ].gauge_enable ) &&
+          ( bgw->bgcl[ i ].gauge_type != BTLV_GAUGE_TYPE_SAFARI ) )
+      { 
+        u8  color = GAUGETOOL_GetHPGaugeDottoColor( bgw->bgcl[ i ].hp, bgw->bgcl[ i ].hpmax, BTLV_GAUGE_HP_DOTTOMAX );
+
+        if( color == GAUGETOOL_HP_DOTTO_RED )
+        { 
+          pinch_flag = TRUE;
+        }
+      }
+    }
+    //勝利ジングルとかに変化していたら、ピンチBGMチェックはしないようにする
+    if( ( PMSND_GetBGMsoundNo() == SEQ_BGM_BATTLEPINCH ) || ( PMSND_GetBGMsoundNo() == bgw->now_bgm_no ) )
+    { 
+      if( ( ( PMSND_GetBGMsoundNo() == SEQ_BGM_BATTLEPINCH ) && ( pinch_flag == FALSE ) ) ||
+          ( ( PMSND_GetBGMsoundNo() != SEQ_BGM_BATTLEPINCH ) && ( pinch_flag == TRUE ) ) )
+      { 
+        bgw->bgm_fade_flag = 1;
+        PMSND_FadeOutBGM( 8 );
+      }
+    }
+  }
+}
+#if 0
+static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
+{ 
+  int i;
+
+  if( bgw->bgm_fade_flag )
+  { 
+    if( PMSND_CheckFadeOnBGM() == FALSE )
+    { 
+      bgw->bgm_fade_flag = 0;
       if( bgw->now_bgm_no != PMSND_GetBGMsoundNo() )
       { 
+        OS_TPrintf("PopBGM\n");
         PMSND_PopBGM();
         PMSND_FadeInBGM( 24 );
       }
@@ -1388,4 +1444,4 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
     }
   }
 }
-
+#endif
