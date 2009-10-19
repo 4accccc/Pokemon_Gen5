@@ -773,7 +773,7 @@ static void _setPokemonStatusMessage(IRC_POKEMON_TRADE *pWork, int side,POKEMON_
   _pokeSexMsgDisp(pp, pWork->StatusWin[side], 10*8, 0, pWork);
   _pokePocketItemMsgDisp(pp, pWork->StatusWin[side], 16, 16*8, pWork);
 
-  UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+1], pp, pWork->cellUnit,
+  UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS], pp, pWork->cellUnit,
                                   xdotpos[side]+16, 16, CLSYS_DRAW_MAIN, pWork->heapID );
 
   GFL_BMPWIN_TransVramCharacter(pWork->StatusWin[side]);
@@ -786,17 +786,16 @@ static void _setPokemonStatusMessage(IRC_POKEMON_TRADE *pWork, int side,POKEMON_
 //	ポケモン状態文章消去
 //--------------------------------------------------------------
 
-void IRCPOKEMONTRADE_ResetPokemonStatusMessage(IRC_POKEMON_TRADE *pWork)
+void IRCPOKEMONTRADE_ResetPokemonStatusMessage(IRC_POKEMON_TRADE *pWork, int side)
 {
-  int i;
   
-  for(i=0;i<2;i++){
-    if(pWork->StatusWin[i]){
-      GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->StatusWin[i]), 0);
-      GFL_BMPWIN_Delete(pWork->StatusWin[i]);
-      pWork->StatusWin[i] = NULL;
-      UITemplate_BALLICON_DeleteCLWK( &pWork->aBallIcon[i+1]);
-    }
+  if(pWork->StatusWin[side]){
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->StatusWin[side]), 0);
+    GFL_BMPWIN_ClearScreen(pWork->StatusWin[side]);
+    GFL_BMPWIN_Delete(pWork->StatusWin[side]);
+    GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+    pWork->StatusWin[side] = NULL;
+    UITemplate_BALLICON_DeleteCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS]);
   }
 }
 
@@ -816,6 +815,21 @@ static void _Pokemonset(IRC_POKEMON_TRADE *pWork, int side, POKEMON_PARAM* pp )
 }
 
 
+//--------------------------------------------------------------
+//	ポケモン表示リセット
+//--------------------------------------------------------------
+static void _PokemonReset(IRC_POKEMON_TRADE *pWork, int side )
+{
+  IRCPOKETRADE_PokeDeleteMcss(pWork, side);
+  pWork->bPokemonSet[side]=FALSE;
+
+  IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork, side);
+}
+
+
+
+
+
 // 情報表示の変更 １まいめか２まいめがある
 static void _changePokemonMyStDisp(IRC_POKEMON_TRADE* pWork,int pageno,int leftright,POKEMON_PARAM* pp)
 {
@@ -825,18 +839,18 @@ static void _changePokemonMyStDisp(IRC_POKEMON_TRADE* pWork,int pageno,int leftr
   {
     GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
-    GFL_FONTSYS_SetColor( 0xe, 0xf, 0x0 );
+    GFL_FONTSYS_SetColor( 0xf, 0xe, 0x0 );
     if(pWork->MyInfoWin){
       GFL_BMPWIN_Delete(pWork->MyInfoWin);
     }
     pWork->MyInfoWin =
       GFL_BMPWIN_Create(GFL_BG_FRAME3_S,
-                        xwinpos[leftright], 0, 16 , 24, _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+                        xwinpos[leftright], 0, 16 , 18, _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
   }
 
   if(pageno == 0){  //こうげきとか
 
-    UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[0], pp, pWork->cellUnit,
+    UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
                                     xdotpos[leftright]+16, 16, CLSYS_DRAW_SUB, pWork->heapID );
 
     _pokeNickNameMsgDisp(pp,pWork->MyInfoWin, 32, 0,pWork);
@@ -851,7 +865,7 @@ static void _changePokemonMyStDisp(IRC_POKEMON_TRADE* pWork,int pageno,int leftr
     
   }
   else{
-    UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[0]);
+    UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
     _pokeTechniqueMsgDisp(pp, pWork->MyInfoWin, 2*8,0, pWork);
     _pokeTechniqueListMsgDisp(pp, pWork->MyInfoWin, 2*8,2*8, pWork);
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_37, pWork->pStrBuf );
@@ -871,6 +885,21 @@ static void _changePokemonMyStDisp(IRC_POKEMON_TRADE* pWork,int pageno,int leftr
   GFL_BMPWIN_TransVramCharacter(pWork->MyInfoWin);
   GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
 }
+
+static void _resetPokemonMyStDisp(IRC_POKEMON_TRADE* pWork)
+{
+  UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
+  if(pWork->MyInfoWin){
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0 );
+    GFL_BMPWIN_ClearScreen(pWork->MyInfoWin);
+    GFL_BMPWIN_TransVramCharacter(pWork->MyInfoWin);
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
+    GFL_BMPWIN_Delete(pWork->MyInfoWin);
+    pWork->MyInfoWin = NULL;
+  }
+}
+
+
 
 
 //交換選択通信送信
@@ -936,7 +965,7 @@ static void _changePokemonStatusDisp(IRC_POKEMON_TRADE* pWork)
   _pokeTechniqueMsgDisp(pp, pWork->MyInfoWin, 20*8, 13*8, pWork);  //わざ
   _pokeTechniqueListMsgDisp(pp, pWork->MyInfoWin, 20*8,15*8, pWork); //わざリスト
 
-  UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[0], pp, pWork->cellUnit,
+  UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
                                   16, 16, CLSYS_DRAW_MAIN, pWork->heapID );
 
   UITemplate_TYPEICON_CreateCLWK(&pWork->aTypeIcon[0], pp, 0, pWork->cellUnit,
@@ -991,7 +1020,7 @@ static void _pokemonStatusWait(IRC_POKEMON_TRADE* pWork)
 
     IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
     GXS_SetVisibleWnd( GX_WNDMASK_NONE );
-    UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[0]);
+    UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
     UITemplate_TYPEICON_DeleteCLWK(&pWork->aTypeIcon[0]);
     UITemplate_TYPEICON_DeleteCLWK(&pWork->aTypeIcon[1]);
     
@@ -1019,7 +1048,8 @@ static void _pokemonStatusStart(IRC_POKEMON_TRADE* pWork)
   IRC_POKETRADEDEMO_RemoveModel( pWork);  //リールを消す
   IRC_POKETRADE_MessageWindowClear(pWork);  //下のメッセージを消す
 
-  IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork); //上のステータス文章+OAMを消す
+  IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,0); //上のステータス文章+OAMを消す
+  IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,1); //上のステータス文章+OAMを消す
 
   pWork->pokemonselectno = 0;//自分から表示
   _changePokemonStatusDisp(pWork);
@@ -1055,7 +1085,7 @@ static void _changePokemonSendData(IRC_POKEMON_TRADE* pWork)
 {
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    IRC_POKETRADE_AppMenuClose(pWork);
     pWork->pAppTask=NULL;
     switch(selectno){
     case 0:  //こうかん
@@ -1124,10 +1154,10 @@ static void _changeMenuWait(IRC_POKEMON_TRADE* pWork)
 {
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    IRC_POKETRADE_AppMenuClose(pWork);
     pWork->pAppTask=NULL;
 
-    if(selectno==0){
+    if(selectno==0){  //交換に出す
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
 
       IRC_POKETRADE_MessageWindowOpen(pWork,  POKETRADE_STR_09);
@@ -1135,7 +1165,9 @@ static void _changeMenuWait(IRC_POKEMON_TRADE* pWork)
       _CHANGE_STATE(pWork, _pokeSendDataState);
 
     }
-    else{
+    else{  //キャンセル
+      _PokemonReset(pWork,0);
+
       _CHANGE_STATE(pWork, _touchState);
     }
   }
@@ -1202,17 +1234,12 @@ static void _dispSubStateWait(IRC_POKEMON_TRADE* pWork)
       _CHANGE_STATE(pWork, _touchState);
       GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
     }
-    UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[0]);
+    _resetPokemonMyStDisp(pWork);
 
-    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0 );
-    GFL_BMPWIN_MakeScreen(pWork->MyInfoWin);
-    GFL_BMPWIN_TransVramCharacter(pWork->MyInfoWin);
-    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
-    GFL_BMPWIN_Delete(pWork->MyInfoWin);
-    pWork->MyInfoWin = NULL;
-    
     IRC_POKETRADE_SubStatusEnd(pWork);
-    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+
+
+    IRC_POKETRADE_AppMenuClose(pWork);
     pWork->pAppTask=NULL;
   }
 
@@ -1544,10 +1571,42 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
     pWork->bChangeOK[i]=FALSE;
   }
 
+  if(GFL_UI_KEY_GetTrg()==PAD_KEY_UP ){   //ベクトルを監視
+    pWork->MainObjCursorIndex--;
+    if(pWork->MainObjCursorIndex<0){
+      pWork->MainObjCursorIndex=0;
+    }
+    IRC_POKETRADE_MainObjCursorDisp(pWork);
+  }
+  if(GFL_UI_KEY_GetTrg()==PAD_KEY_DOWN ){   //ベクトルを監視
+    pWork->MainObjCursorIndex++;
+    if(pWork->MainObjCursorIndex >= BOX_VERTICAL_NUM){
+      pWork->MainObjCursorIndex = BOX_VERTICAL_NUM-1;
+    }
+    IRC_POKETRADE_MainObjCursorDisp(pWork);
+  }
+  if(GFL_UI_KEY_GetTrg()==PAD_KEY_RIGHT ){   //ベクトルを監視
+    pWork->MainObjCursorLine++;
+    if(pWork->MainObjCursorLine >= TRADEBOX_LINEMAX){
+      pWork->MainObjCursorLine = 0;
+    }
+    IRC_POKETRADE_MainObjCursorDisp(pWork);
+  }
+  if(GFL_UI_KEY_GetTrg()==PAD_KEY_LEFT ){   //ベクトルを監視
+    pWork->MainObjCursorLine--;
+    if(pWork->MainObjCursorLine < 0){
+      pWork->MainObjCursorLine = TRADEBOX_LINEMAX-1;
+    }
+    IRC_POKETRADE_MainObjCursorDisp(pWork);
+  }
+
+
+
+  
   if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視
     // 上向き判定
     pWork->bUpVec = FALSE;
-    if(pWork->y > y){
+    if(pWork->y > (y + 20)){   //20ドット上に移動した場合跳ね上げる処理
       pWork->bUpVec = TRUE;
     }
     // パネルスクロール
@@ -1561,7 +1620,6 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
           if(TOTAL_DOT_MAX <= pWork->BoxScrollNum){
             pWork->BoxScrollNum-=TOTAL_DOT_MAX;
           }
-          
           IRC_POKETRADE_TrayDisp(pWork);
           IRC_POKETRADE_SendScreenBoxNameChar(pWork);
           IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
@@ -1632,6 +1690,7 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
     else if(pWork->pCatchCLWK){  //キャッチしてるが上ベクトルは働かなかった場合 自分の画面にステータスを表示する
       pWork->underSelectBoxno  = pWork->workBoxno;
       pWork->underSelectIndex = pWork->workPokeIndex;
+      IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);  //アイコン表示を元に戻す
       _CHANGE_STATE(pWork,_dispSubState);
     }
     pWork->workPokeIndex = 0;

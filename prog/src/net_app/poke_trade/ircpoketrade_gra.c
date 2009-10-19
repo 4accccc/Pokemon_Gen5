@@ -47,9 +47,10 @@ static void IRC_POKETRADE_TrayInit(IRC_POKEMON_TRADE* pWork,int subchar);
 static void IRC_POKETRADE_TrayExit(IRC_POKEMON_TRADE* pWork);
 static int _DotToLine(int pos);
 static void PokeIconCgxLoad(IRC_POKEMON_TRADE* pWork );
+static void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork);
 
 
-static int _Line2RingLineIconGet(IRC_POKEMON_TRADE* pWork,int line);
+static int _Line2RingLineIconGet(int line);
 static void _Line2RingLineSet(IRC_POKEMON_TRADE* pWork,int add);
 static void _iconAllDrawDisable(IRC_POKEMON_TRADE* pWork);
 
@@ -235,37 +236,51 @@ void IRC_POKETRADE_GraphicExit(IRC_POKEMON_TRADE* pWork)
 void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork,int pokeposx, int bgtype)
 {
   int nscr[]={NARC_trade_wb_trade_stbg01_NSCR,NARC_trade_wb_trade_stbg02_NSCR};
-
+  int frame = GFL_BG_FRAME0_S;
+  
   
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
 	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
 																				 nscr[bgtype],
-																				 GFL_BG_FRAME1_S, 0,
+																				 frame, 0,
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
 																				 pWork->heapID);
 
   if(pokeposx < 128){
-    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, 128 );
+    GFL_BG_SetScroll( frame, GFL_BG_SCROLL_X_SET, 128 );
   }
-	G2S_SetBlendAlpha( GFL_BG_FRAME2_S, GFL_BG_FRAME1_S , 16, 3 );
+  else{
+    GFL_BG_SetScroll( frame, GFL_BG_SCROLL_X_SET, 0 );
+  }
+	G2S_SetBlendAlpha( GFL_BG_FRAME2_S|GX_BLEND_PLANEMASK_OBJ, frame , 16, 3 );
   //G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , -8 );
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
 
 	GFL_ARC_CloseDataHandle( p_handle );
+  GFL_BG_SetVisible( frame , TRUE );
 
 }
 
 
 void IRC_POKETRADE_SubStatusEnd(IRC_POKEMON_TRADE* pWork)
 {
-	GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, 0 );
+  int frame = GFL_BG_FRAME0_S;
+
+  GFL_BG_SetVisible( frame , FALSE );
+
+	GFL_BG_SetScroll( frame, GFL_BG_SCROLL_X_SET, 0 );
   G2S_BlendNone();
-  GFL_BG_ClearScreen(GFL_BG_FRAME1_S);  //自分ステータス
-  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
+  GFL_BG_ClearScreen(frame);  //自分ステータス
+  GFL_BG_LoadScreenV_Req( frame );
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
 
 }
 
+void IRC_POKETRADE_AppMenuClose(IRC_POKEMON_TRADE* pWork)
+{
+  G2_BlendNone();
+  APP_TASKMENU_CloseMenu(pWork->pAppTask);
+}
 
 void IRC_POKETRADE_AppMenuOpen(IRC_POKEMON_TRADE* pWork, int *menustr,int num)
 {
@@ -406,7 +421,6 @@ BOOL IRC_POKETRADE_MessageEndCheck(IRC_POKEMON_TRADE* pWork)
 #define _DOTMAX ((BOX_MAX_TRAY*_BOXTRAY_MAX)+_TEMOTITRAY_MAX)
 
 
-#define _LINEMAX (BOX_MAX_TRAY * 6 + 2)
 
 //------------------------------------------------------------------------------
 /**
@@ -634,7 +648,7 @@ void IRC_POKETRADE_CreatePokeIconResource(IRC_POKEMON_TRADE* pWork)
         cellInitData.pos_y = 0;
         cellInitData.anmseq = POKEICON_ANM_HPMAX;
         cellInitData.softpri = _CLACT_SOFTPRI_POKELIST;
-        cellInitData.bgpri = 2;
+        cellInitData.bgpri = 3;
 
         pWork->pokeIconNcgRes[line][i] = GFL_CLGRP_CGR_Register( arcHandlePoke ,NARC_poke_icon_poke_icon_tam_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
         pWork->pokeIcon[line][i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
@@ -812,12 +826,12 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,IRC_POKEMON_TRADE* pWork )
     _iconAllDrawDisable(pWork);  // アイコン表示を一旦消す
   
     for(i=0;i < _LING_LINENO_MAX;i++){
-      k =  _Line2RingLineIconGet(pWork, pWork->oldLine+i);
+      k =  _Line2RingLineIconGet(pWork->oldLine+i);
 
       
       _createPokeIconResource(pWork, boxData,line, k );  //アイコン表示
       line++;
-      if(line >= _LINEMAX){
+      if(line >= TRADEBOX_LINEMAX){
         line=0;
       }
     }
@@ -826,21 +840,64 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,IRC_POKEMON_TRADE* pWork )
   
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンアイコン場所計算
+ * @param   line           横
+ * @param   m              表示ラインとの差分
+ * @param   vertical       縦
+ * @param   boxscrollnum   スクロールドット
+ * @param   GFL_CLACTPOS   計算した位置
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _pokeIcomPosCalc(int line,int m , int vertical, int boxscrollnum,GFL_CLACTPOS* pPos)
+{
+  int line2, i, no, subnum=0;
+  int x,y;
+
+  line2 = line;
+
+  no = _Line2RingLineIconGet(line + m);
+  
+  if(line2 >= TRADEBOX_LINEMAX){
+    line2 = line2 - TRADEBOX_LINEMAX;
+    subnum = _DOTMAX;
+  }
+
+  y = 32+vertical*24;
+
+  if(line2 == 0){
+    x = 16;
+  }
+  else if(line2 == 1){
+    x = 56;
+  }
+  else{
+    x = ((line2 - 2) / 6) * _BOXTRAY_MAX;
+    x += ((line2 - 2) % 6) * 24 + 16 + 4;
+    x += _TEMOTITRAY_MAX;
+  }
+  x = x - boxscrollnum + subnum;
+  pPos->x = x;
+  pPos->y = y;
+}
 
 
-void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork)
+
+static void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork)
 {
   int line, i, no, m, subnum=0;
   int x,y;
   //int bgscr = pWork->BoxScrollNum;
   
-  OHNO_Printf("-------------\n");
   line = pWork->oldLine;
   for(m = 0; m < _LING_LINENO_MAX; m++,line++){
-    no = _Line2RingLineIconGet(pWork, pWork->oldLine + m);
+    no = _Line2RingLineIconGet(pWork->oldLine + m);
 
-    if(line >= _LINEMAX){
-      line = line - _LINEMAX;
+    if(line >= TRADEBOX_LINEMAX){
+      line = line - TRADEBOX_LINEMAX;
       subnum = _DOTMAX;
     }
 
@@ -863,8 +920,6 @@ void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork)
       apos.y = y;
 
 
-      OHNO_Printf("pos %d %d\n",apos.x, apos.y);
-      
       GFL_CLACT_WK_SetPos(pWork->pokeIcon[no][i], &apos, CLSYS_DRAW_SUB);
     }
   }
@@ -929,7 +984,7 @@ static void  PokeIconCgxLoad(IRC_POKEMON_TRADE* pWork )
  */
 //--------------------------------------------------------------------------------------------
 
-static int _Line2RingLineIconGet(IRC_POKEMON_TRADE* pWork,int line)
+static int _Line2RingLineIconGet(int line)
 {
   int ret;
 
@@ -1760,6 +1815,45 @@ void IRC_POKETRADE_EndSubMojiBG(IRC_POKEMON_TRADE* pWork)
       pWork->SerchMojiWin[i]=NULL;
     }
 	}
+
+  
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   選択中のポケモンにカーソルをあてる
+ * @param   IRC_POKEMON_TRADE work
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_MainObjCursorDisp(IRC_POKEMON_TRADE* pWork)
+{
+  if(!pWork->curIcon[CELL_CUR_POKE_SELECT]){
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 0;
+    cellInitData.pos_y = 0;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = _CLACT_SOFTPRI_POKESEL;
+    cellInitData.bgpri = 1;
+    pWork->curIcon[CELL_CUR_POKE_SELECT] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                                pWork->cellRes[CHAR_SCROLLBAR],
+                                                                pWork->cellRes[PAL_SCROLLBAR],
+                                                                pWork->cellRes[ANM_SCROLLBAR],
+                                                                &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_SELECT] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_SELECT], TRUE );
+  }
+  {
+    GFL_CLACTPOS apos;
+
+    OHNO_Printf("m= %d\n",pWork->oldLine-pWork->MainObjCursorLine);
+    _pokeIcomPosCalc(pWork->MainObjCursorLine,
+                     pWork->oldLine-pWork->MainObjCursorLine , pWork->MainObjCursorIndex,
+                     pWork->BoxScrollNum,&apos);
+
+    GFL_CLACT_WK_SetPos(pWork->curIcon[CELL_CUR_POKE_SELECT], &apos, CLSYS_DRAW_SUB);
+  }
 
   
 }

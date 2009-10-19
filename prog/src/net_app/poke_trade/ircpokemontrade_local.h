@@ -68,6 +68,8 @@ typedef enum
 #define HAND_VERTICAL_NUM (3)
 #define HAND_HORIZONTAL_NUM (2)
 
+#define TRADEBOX_LINEMAX (BOX_MAX_TRAY * 6 + 2)
+
 //#define BOX_MONS_NUM (30)
 
 
@@ -251,6 +253,16 @@ typedef struct
 }_POKEMCSS_MOVE_WORK;
 
 
+typedef enum
+{  // ボールアイコンタイプ
+  UI_BALL_SUBSTATUS,     ///< サブステータス用
+  UI_BALL_MYSTATUS,      ///< メイン画面自分の
+  UI_BALL_FRIENDSTATUS,  ///< メイン画面相手の
+  
+  UI_BALL_NUM
+} _UI_BALLICON_TYPE;
+
+
 typedef struct
 {
   // ボールアイコン
@@ -265,6 +277,19 @@ typedef struct
   UI_EASY_CLWK_RES      clres_type_icon;
   GFL_CLWK                  *clwk_type_icon;
 } _TYPE_ICON_WORK;
+
+typedef enum
+{
+  PTC_KIND_DEMO1,
+  PTC_KIND_DEMO2,
+  PTC_KIND_DEMO3,
+  PTC_KIND_DEMO4,
+  PTC_KIND_DEMO5,
+  PTC_KIND_DEMO6,
+  PTC_KIND_DEMO7,
+  PTC_KIND_NUM_MAX,
+} _TYPE_PTC_KIND;
+
 
 
 
@@ -284,7 +309,7 @@ struct _IRC_POKEMON_TRADE{
 
 
   TOUCH_SW_SYS			*TouchSubWindowSys;
-  GFL_PTC_PTR ptc;
+  GFL_PTC_PTR ptc[PTC_KIND_NUM_MAX];
   GFL_PTC_PTR ptcOrthogonal;
 
   APP_TASKMENU_WORK* pAppTask;
@@ -350,7 +375,7 @@ struct _IRC_POKEMON_TRADE{
   u32 cellRes[CEL_RESOURCE_MAX];
 
   //	GAMESYS_WORK* pGameSys;
-  _BALL_ICON_WORK aBallIcon[3];
+  _BALL_ICON_WORK aBallIcon[UI_BALL_NUM];
   _TYPE_ICON_WORK aTypeIcon[2];
   
   GFL_CLUNIT	*cellUnit;
@@ -380,6 +405,9 @@ struct _IRC_POKEMON_TRADE{
   BOOL bUpVec;
   GFL_CLWK* pCatchCLWK;   //つかんでるポケモンCLACT
 
+
+  int MainObjCursorLine;   //OBJカーソルライン
+  int MainObjCursorIndex;  //OBJカーソルインデックス
 
   int workPokeIndex;  // マウス操作でにぎったポケモン
   int workBoxno;  //マウス操作でにぎったポケモン
@@ -429,7 +457,10 @@ extern void IRC_POKETRADE_GraphicInitSubDisp(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_GraphicExit(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork,int pokeposx, int type);
 extern void IRC_POKETRADE_SubStatusEnd(IRC_POKEMON_TRADE* pWork);
+
 extern void IRC_POKETRADE_AppMenuOpen(IRC_POKEMON_TRADE* pWork, int *menustr,int num);
+extern void IRC_POKETRADE_AppMenuClose(IRC_POKEMON_TRADE* pWork);
+
 extern void IRC_POKETRADE_MessageOpen(IRC_POKEMON_TRADE* pWork, int msgno);
 extern void IRC_POKETRADE_MessageWindowOpen(IRC_POKEMON_TRADE* pWork, int msgno);
 extern void IRC_POKETRADE_MessageWindowClose(IRC_POKEMON_TRADE* pWork);
@@ -438,7 +469,6 @@ extern BOOL IRC_POKETRADE_MessageEndCheck(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_TrayDisp(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,IRC_POKEMON_TRADE* pWork );
 extern void IRC_POKETRADE_AllDeletePokeIconResource(IRC_POKEMON_TRADE* pWork);
-extern void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_G3dDraw(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SetSubdispGraphicDemo(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_GraphicFreeVram(IRC_POKEMON_TRADE* pWork);
@@ -450,6 +480,8 @@ extern void IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE type);
 extern void IRC_POKETRADE_CreatePokeIconResource(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_InitBoxCursor(IRC_POKEMON_TRADE* pWork);
 extern POKEMON_PARAM* IRC_POKEMONTRADE_GetRecvPP(IRC_POKEMON_TRADE *pWork, int index);
+
+extern void IRC_POKETRADE_MainObjCursorDisp(IRC_POKEMON_TRADE* pWork);
 
 extern void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork );
 extern void IRC_POKETRADEDEMO_Main( IRC_POKEMON_TRADE* pWork );
@@ -465,7 +497,7 @@ extern void IRCPOKETRADE_PokeCreateMcss( IRC_POKEMON_TRADE *pWork ,int no, int b
 extern POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_MANAGER* boxData , int trayNo, int index,IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SetMainStatusBG(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_ResetMainStatusBG(IRC_POKEMON_TRADE* pWork);
-extern void IRCPOKEMONTRADE_ResetPokemonStatusMessage(IRC_POKEMON_TRADE* pWork);
+extern void IRCPOKEMONTRADE_ResetPokemonStatusMessage(IRC_POKEMON_TRADE* pWork, int side);
 extern void IRC_POKETRADE_LeftPageMarkRemove(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_LeftPageMarkDisp(IRC_POKEMON_TRADE* pWork,int no);
 extern void IRC_POKETRADE_InitSubMojiBG(IRC_POKEMON_TRADE* pWork);

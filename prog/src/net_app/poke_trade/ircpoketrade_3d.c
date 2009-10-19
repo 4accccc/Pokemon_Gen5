@@ -486,8 +486,11 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
 
   {
     void* heap;
-    heap = GFL_HEAP_AllocMemory(pWork->heapID, PARTICLE_LIB_HEAP_SIZE);
-    pWork->ptc = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, TRUE, pWork->heapID);
+    int i;
+    for(i=0;i<PTC_KIND_NUM_MAX;i++){
+      heap = GFL_HEAP_AllocMemory(pWork->heapID, PARTICLE_LIB_HEAP_SIZE);
+      pWork->ptc[i] = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, TRUE, pWork->heapID);
+    }
     heap = GFL_HEAP_AllocMemory(pWork->heapID, PARTICLE_LIB_HEAP_SIZE);
     pWork->ptcOrthogonal = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, FALSE, pWork->heapID);
 
@@ -524,9 +527,12 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
 	//ƒŠƒ\[ƒX“Ç‚Ýž‚Ý•“o˜^
   {
     void *resource;
+    int i;
     resource = GFL_PTC_LoadArcResource(
       ARCID_POKETRADEDEMO, NARC_tradedemo_demo_tex001_spa, pWork->heapID);
-    GFL_PTC_SetResource(pWork->ptc, resource, TRUE, NULL);
+    for(i=0;i<PTC_KIND_NUM_MAX;i++){
+      GFL_PTC_SetResource(pWork->ptc[i], resource, TRUE, NULL);
+    }
     GFL_PTC_SetResource(pWork->ptcOrthogonal, resource, TRUE, NULL);
   }
   
@@ -552,14 +558,18 @@ void IRC_POKETRADEDEMO_Main( IRC_POKEMON_TRADE* pWork )
 void IRC_POKETRADEDEMO_End( IRC_POKEMON_TRADE* pWork )
 {
   {
-  	void *heap2 ,*heap;
-
+  	void *heap2 ,*heap[PTC_KIND_NUM_MAX];
+    int i;
     GFL_PTC_PersonalCameraDelete(pWork->ptcOrthogonal);
     heap2 = GFL_PTC_GetHeapPtr(pWork->ptcOrthogonal);
-    heap = GFL_PTC_GetHeapPtr(pWork->ptc);
+    for(i=0;i<PTC_KIND_NUM_MAX;i++){
+      heap[i] = GFL_PTC_GetHeapPtr(pWork->ptc[i]);
+    }
     GFL_PTC_Exit();
     GFL_HEAP_FreeMemory(heap2);
-    GFL_HEAP_FreeMemory(heap);
+    for(i=0;i<PTC_KIND_NUM_MAX;i++){
+      GFL_HEAP_FreeMemory(heap[i]);
+    }
   }
 
   // ƒJƒƒ‰”jŠü

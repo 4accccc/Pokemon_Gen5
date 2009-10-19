@@ -55,6 +55,8 @@
 #define _PARTICLE_DEMO2_START   (145)  ///demo_tex002パーティクル開始
 #define _PARTICLE_DEMO3_START   (220)  ///demo_tex003パーティクル開始
 #define _PARTICLE_DEMO3_START2  (1260)  ///パーティクル開始
+#define _PARTICLE_DEMO4_START   (10)     ///ポケモン＞ボールエフェクト
+#define _PARTICLE_DEMO4_START2   (1660)  ///ボール＞ポケモンエフェクト
 #define _PARTICLE_DEMO5_START   (220)  ///モンスターボールが打ちあがるパーティクル開始
 #define _PARTICLE_DEMO6_START   (490)  ///パーティクル開始
 #define _PARTICLE_DEMO7_START   (1000)  ///パーティクル開始
@@ -62,6 +64,7 @@
 ///OAM登場のタイミング
 #define _OAM_POKECREATE_START   (10)  ///ポケモン＞ボールエフェクト
 #define _OAM_POKECREATE_START2  (1660)  ///ボール＞ポケモンエフェクト
+
 
 
 

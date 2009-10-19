@@ -195,7 +195,7 @@ static void _ballinEmitFunc(GFL_EMIT_PTR pEmiter)
 static void _balloutEmitFunc(GFL_EMIT_PTR pEmiter)
 {
   IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetTempPtr();
-  pWork->pBallOutPer = GFL_PTC_CreateEmitterCallback(pWork->ptc, 6, NULL, pWork);
+  pWork->pBallOutPer = GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO7], 6, NULL, pWork);
 }
 
 
@@ -274,20 +274,19 @@ static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
     GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
     GFL_DISP_GXS_SetVisibleControlDirect( 0 );
     IRC_POKETRADEDEMO_RemoveModel( pWork);
+    IRC_POKETRADE_LeftPageMarkRemove(pWork);
+    IRC_POKETRADE_ReturnPageMarkRemove(pWork);
     for(i = 0;i< CELL_DISP_NUM;i++){
       if(pWork->curIcon[i]){
         GFL_CLACT_WK_Remove(pWork->curIcon[i]);
       }
     }
-    for(i=1;i<2;i++){
-      if( pWork->pokeMcss[i] ){
-        IRCPOKETRADE_PokeDeleteMcss(pWork,i);
-      }
-    }
+    IRCPOKETRADE_PokeDeleteMcss(pWork,1);
     IRC_POKETRADE_AllDeletePokeIconResource(pWork);
     IRC_POKETRADE_GraphicFreeVram(pWork);
     IRC_POKETRADE_ResetSubDispGraphic(pWork);
-    IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork);
+    IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,0);
+    IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,1);
     GFL_HEAP_FreeMemory(pWork->pD2Fade);
     pWork->pD2Fade=NULL;
     _freePaletteFade(pWork->pModelFade);
@@ -363,25 +362,31 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
 
 
   if(pWork->anmCount == _BALL_PARTICLE_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, DERMO_TEX001, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO1], DERMO_TEX001, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO2_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX002, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO2], DEMO_TEX002, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO3_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX003, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO3], DEMO_TEX003, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO3_START2){
     GFL_PTC_CreateEmitterCallback(pWork->ptcOrthogonal, DEMO_TEX003, NULL, pWork);
   }
+  if(pWork->anmCount == _PARTICLE_DEMO4_START){
+    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO4], DEMO_TEX004,  NULL, pWork);
+  }
+  if(pWork->anmCount == _PARTICLE_DEMO4_START2){
+    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO4], DEMO_TEX004,  NULL, pWork);
+  }
   if(pWork->anmCount == _PARTICLE_DEMO5_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX005, _ballinEmitFunc, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO5], DEMO_TEX005, _ballinEmitFunc, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO6_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX006, NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO6], DEMO_TEX006, NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO7_START){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc, DEMO_TEX007, _balloutEmitFunc, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO7], DEMO_TEX007, _balloutEmitFunc, pWork);
   }
 
   /*  if(pWork->anmCount == _OAM_POKECREATE_START){
