@@ -275,6 +275,9 @@ int Regulation_GetParam(const REGULATION* pReg, REGULATION_PARAM_TYPE type)
   case REGULATION_SHOW_POKE_TIME:  //    #ポケモン見せ合い制限時間
     ret = pReg->SHOW_POKE_TIME;
     break;
+  case REGULATION_BATTLETYPE:  //   バトルタイプ
+    ret = pReg->BATTLE_TYPE;
+    break;
   }
   return ret;
 }
@@ -392,12 +395,19 @@ void Regulation_SetParam(REGULATION* pReg, REGULATION_PARAM_TYPE type, int param
     }
     pReg->SHOW_POKE = param;
     break;
-  case REGULATION_SHOW_POKE_TIME:  //    #ポケモン見せ合い
+  case REGULATION_SHOW_POKE_TIME:  //    #ポケモン見せ合い時間
     if(param > REGULATION_SHOW_POKE_TIME_MAX){
       GF_ASSERT(0);
       return;
     }
     pReg->SHOW_POKE_TIME = param;
+    break;
+  case REGULATION_BATTLETYPE:  //  バトルタイプ
+    if(param >= REGULATION_BATTLE_MAX){
+      GF_ASSERT(0);
+      return;
+    }
+    pReg->BATTLE_TYPE = param;
     break;
   }
 }
