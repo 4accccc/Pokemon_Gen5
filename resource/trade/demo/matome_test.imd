@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-10-17T22:02:37" source="matome3_and_camera.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-10-19T13:08:08" source="matome3_and_camera.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-10-17T22:02:37" source="matome3_and_camera.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2009-10-19T13:08:08" source="matome3_and_camera.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -14769,7 +14769,7 @@
 		billboard="off"
 		scale="0.000000 0.000000 0.000000"
 		rotate="-3.202393 0.000000 0.000000"
-		translate="0.185303 -0.028076 0.000000"
+		translate="0.185303 -0.101807 0.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="318" polygon_size="145"
