@@ -23,7 +23,7 @@
 		self_dest="1"
 		follow_emtr="0"
 		use_chld="1"
-		use_fld_grvt="0"
+		use_fld_grvt="1"
 		use_fld_rndm="0"
 		use_fld_mgnt="0"
 		use_fld_spin="0"
@@ -131,5 +131,10 @@
 		reverse_tex_t="0"
 		dpol_center="0"
 		tex_name="demo_tex004.spt"
+	/>
+	<grvt
+		mag_x="0"
+		mag_y="-20"
+		mag_z="0"
 	/>
 </spr>
