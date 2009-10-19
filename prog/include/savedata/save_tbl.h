@@ -19,12 +19,8 @@
 
 #define	SAVE_SECTOR_SIZE	(0x1000)
 
-//以下はデバッグツール用のセーブ領域です by soga
-#define EDIT_ANM_SAVE_2		( 45 * SAVE_SECTOR_SIZE )	//ポケモンanimeデータ
-#define CB_EDIT_SAVE		( 55 * SAVE_SECTOR_SIZE )	//カプセルボールセーブデータ
-#define EDIT_ANM_SAVE		( 58 * SAVE_SECTOR_SIZE )	//ポケモンエディットデータ
-#define	POKE_ANM_SAVE		(60*SAVE_SECTOR_SIZE)		//ポケモンアニメツール用セーブ領域（未使用のはず）
-#define	DEBUG_FIGHT_SAVE	(62*SAVE_SECTOR_SIZE)		//デバッグファイト用セーブ領域
+//以下はデバッグツール用のセーブ領域です
+#define	DEBUG_FIGHT_SAVE	(126*SAVE_SECTOR_SIZE)		//デバッグファイト用セーブ領域
 
 
 ///セーブデータ識別ID
@@ -109,6 +105,11 @@ enum{
 ///外部セーブデータ識別ID：ストリーミング
 enum{
   EXGMDATA_ID_STREAMING,
+};
+
+///外部セーブデータ識別ID：デバッグバトル
+enum{
+  EXGMDATA_ID_DEBUG_BATTLE,
 };
 
 
