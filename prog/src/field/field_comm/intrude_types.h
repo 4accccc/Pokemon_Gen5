@@ -10,8 +10,9 @@
 
 #include "field\game_beacon_search.h"
 #include "net_app/union/comm_player.h"
-#include "field/field_comm/intrude_common.h"
+#include "field/intrude_common.h"
 #include "field/field_comm/bingo_types.h"
+#include "savedata/intrude_save.h"  //OCCUPY_INFO
 
 //==============================================================================
 //  定数定義
@@ -61,6 +62,12 @@ typedef struct _PALACE_SYS_WORK * PALACE_SYS_PTR;
 //==============================================================================
 //  構造体定義
 //==============================================================================
+///プロフィールデータ
+typedef struct{
+  MYSTATUS mystatus;
+  OCCUPY_INFO occupy;
+}INTRUDE_PROFILE;
+
 ///侵入ステータス(自分の現在情報)
 typedef struct{
   COMM_PLAYER_PACKAGE player_pack;    ///<プレイヤー座標データパッケージ
@@ -90,6 +97,7 @@ typedef struct _INTRUDE_COMM_SYS{
   INTRUDE_STATUS intrude_status_mine;               ///<自分の現在情報
   INTRUDE_STATUS intrude_status[FIELD_COMM_MEMBER_MAX]; ///<全員の現在情報
   INTRUDE_TALK   talk;
+  INTRUDE_PROFILE send_profile;   ///<自分プロフィール送信バッファ(受信はgamedata内なので不要)
   
   BINGO_SYSTEM bingo;         ///<ビンゴシステムワーク
   

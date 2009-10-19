@@ -167,11 +167,17 @@ BOOL IntrudeSend_ProfileReq(void)
 static void _IntrudeRecv_Profile(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const INTRUDE_PROFILE *recv_profile = pData;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   MYSTATUS *myst;
+  OCCUPY_INFO *occupy;
   
-  myst = GAMEDATA_GetMyStatusPlayer(GameCommSys_GetGameData(intcomm->game_comm), netID);
-  MyStatus_Copy(pData, myst);
+  myst = GAMEDATA_GetMyStatusPlayer(gamedata, netID);
+  MyStatus_Copy(&recv_profile->mystatus, myst);
 
+  occupy = GAMEDATA_GetOccupyInfo(gamedata, netID);
+  GFL_STD_MemCopy(&recv_profile->occupy, occupy, sizeof(OCCUPY_INFO));
+  
   intcomm->recv_profile |= 1 << netID;
   OS_TPrintf("プロフィール受信　net_id=%d, recv_bit=%d\n", netID, intcomm->recv_profile);
 }
@@ -186,12 +192,12 @@ static void _IntrudeRecv_Profile(const int netID, const int size, const void* pD
 BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm)
 {
   BOOL ret;
-  MYSTATUS *myst;
   
-  myst = GAMEDATA_GetMyStatus(GameCommSys_GetGameData(intcomm->game_comm));
-  
+  //送信バッファにデータセット
+  Intrude_SetSendProfileBuffer(intcomm);
+
   ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-    INTRUDE_CMD_PROFILE, MyStatus_GetWorkSize(), myst);
+    INTRUDE_CMD_PROFILE, sizeof(INTRUDE_PROFILE), &intcomm->send_profile);
   if(ret == TRUE){
     intcomm->profile_req = FALSE;
     OS_TPrintf("自分プロフィール送信\n");

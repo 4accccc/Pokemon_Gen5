@@ -80,6 +80,8 @@ struct _GAMEDATA{
 
   u8 intrude_num;         ///<侵入している時の接続人数
   u8 intrude_my_id;       ///<侵入している自分のNetID
+  OCCUPY_INFO occupy[OCCUPY_ID_MAX];    ///<占拠情報
+  
   FIELD_BEACON_MSG_DATA *fbmData; //フィールドビーコンメッセージデータ
 };
 
@@ -170,6 +172,11 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	gd->config	= SaveData_GetConfig( gd->sv_control_ptr );
   gd->boxMng	= BOX_DAT_InitManager( heapID , gd->sv_control_ptr );
 
+  //占拠情報
+  for(i = 0; i < OCCUPY_ID_MAX; i++){
+    OccupyInfo_WorkInit(&gd->occupy[i]);
+  }
+  
   //歩数カウント
   gd->fieldmap_walk_count = 0;
 
@@ -213,6 +220,32 @@ PLAYER_WORK * GAMEDATA_GetPlayerWork(GAMEDATA * gamedata, u32 player_id)
 PLAYER_WORK * GAMEDATA_GetMyPlayerWork(GAMEDATA * gamedata)
 {
   return &gamedata->playerWork[PLAYER_ID_MINE];
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   OCCUPY_INFOへのポインタ取得(プレイヤーID指定)
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @param   player_id   プレイヤーID
+ * @retval  OCCUPY_INFOへのポインタ
+ */
+//--------------------------------------------------------------
+OCCUPY_INFO * GAMEDATA_GetOccupyInfo(GAMEDATA * gamedata, u32 player_id)
+{
+  GF_ASSERT(player_id < OCCUPY_ID_MAX);
+  return &gamedata->occupy[player_id];
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   OCCUPY_INFOへのポインタ取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @retval  OCCUPY_INFOへのポインタ
+ */
+//--------------------------------------------------------------
+OCCUPY_INFO * GAMEDATA_GetMyOccupyInfo(GAMEDATA * gamedata)
+{
+  return GAMEDATA_GetOccupyInfo(gamedata, OCCUPY_ID_MINE);
 }
 
 //============================================================================================
@@ -825,6 +858,11 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
     MMDL_SAVEDATA *pw = SaveControl_DataPtrGet(gamedata->sv_control_ptr,GMDATA_ID_MMDL);
     MMDL_SAVEDATA_Load( mmdlsys, pw );
   }
+  
+  { //OCCUPY_INFO
+    OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+    SaveData_OccupyInfoLoad(gamedata->sv_control_ptr, occupy);
+  }
 }
 
 //--------------------------------------------------------------
@@ -848,6 +886,11 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
     MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys(gamedata);
     MMDL_SAVEDATA *pw = SaveControl_DataPtrGet(gamedata->sv_control_ptr,GMDATA_ID_MMDL);
     MMDL_SAVEDATA_Save( mmdlsys, pw );
+  }
+  
+  { //OCCUPY_INFO
+    OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+    SaveData_OccupyInfoUpdate(gamedata->sv_control_ptr, occupy);
   }
 }
 

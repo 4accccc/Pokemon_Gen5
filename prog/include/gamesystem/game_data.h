@@ -31,6 +31,7 @@
 #include "field/field_status.h"
 #include "field/field_beacon_message.h" //FIELD_BEACON_MSG_DATA
 #include "savedata/box_savedata.h"      //BOX_MANAGER
+#include "savedata/intrude_save.h"      //OCCUPY_INFO
 
 //============================================================================================
 //============================================================================================
@@ -38,6 +39,12 @@ enum {
 	PLAYER_MAX = 5,
 	
 	PLAYER_ID_MINE = PLAYER_MAX - 1,    ///<自分自身のプレイヤーID
+};
+
+enum {
+  OCCUPY_ID_MAX = FIELD_COMM_MEMBER_MAX + 1,
+
+  OCCUPY_ID_MINE = OCCUPY_ID_MAX - 1,   ///<自分自身の占拠情報ID
 };
 
 //============================================================================================
@@ -90,6 +97,24 @@ extern PLAYER_WORK * GAMEDATA_GetPlayerWork(GAMEDATA * gamedata, u32 player_id);
  */
 //------------------------------------------------------------------
 extern PLAYER_WORK * GAMEDATA_GetMyPlayerWork(GAMEDATA * gamedata);
+
+//--------------------------------------------------------------
+/**
+ * @brief   OCCUPY_INFOへのポインタ取得(プレイヤーID指定)
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @param   player_id   プレイヤーID
+ * @retval  OCCUPY_INFOへのポインタ
+ */
+//--------------------------------------------------------------
+extern OCCUPY_INFO * GAMEDATA_GetOccupyInfo(GAMEDATA * gamedata, u32 player_id);
+//--------------------------------------------------------------
+/**
+ * @brief   OCCUPY_INFOへのポインタ取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @retval  OCCUPY_INFOへのポインタ
+ */
+//--------------------------------------------------------------
+extern OCCUPY_INFO * GAMEDATA_GetMyOccupyInfo(GAMEDATA * gamedata);
 
 //============================================================================================
 //	EVENTDATA_SYSTEMへのアクセス

@@ -13,7 +13,7 @@
 #include "app_menu_common.naix"
 #include "field/fieldmap.h"
 #include "field/intrude_subdisp.h"
-#include "field/field_comm/intrude_common.h"
+#include "field/intrude_common.h"
 #include "palace.naix"
 
 
@@ -472,6 +472,7 @@ static void _IntSub_ActorCreate_Town(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
   };
   
   GF_ASSERT(NELEMS(TownPos) == (INTSUB_ACTOR_TOWN_MAX - INTSUB_ACTOR_TOWN_0 + 1));
+  GF_ASSERT(NELEMS(TownPos) == INTRUDE_TOWN_MAX);
   for(i = INTSUB_ACTOR_TOWN_0; i <= INTSUB_ACTOR_TOWN_MAX; i++){
     head.pos_x = TownPos[i].x;
     head.pos_y = TownPos[i].y;

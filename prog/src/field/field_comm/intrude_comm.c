@@ -109,7 +109,8 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
 {
   INTRUDE_COMM_SYS_PTR intcomm;
   FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
-  MYSTATUS *myst = GAMEDATA_GetMyStatus(GameCommSys_GetGameData(invalid_parent->game_comm));
+  GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
+  MYSTATUS *myst = GAMEDATA_GetMyStatus(gamedata);
   
   intcomm = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(INTRUDE_COMM_SYS));
   intcomm->game_comm = invalid_parent->game_comm;

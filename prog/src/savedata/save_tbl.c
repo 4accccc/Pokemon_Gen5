@@ -37,6 +37,7 @@
 #include "savedata/sodateya_work.h"
 #include "savedata/wifi_negotiation.h"
 #include "savedata/misc.h"
+#include "savedata/intrude_save.h"
 
 //==============================================================================
 //	定数定義
@@ -334,11 +335,15 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		(FUNC_GET_SIZE)MMDL_ROCKPOS_GetWorkSize,
 		(FUNC_INIT_WORK)MMDL_ROCKPOS_Init,
 	},
-	{	
-		//未分類ワーク
+	{	//未分類ワーク
 		GMDATA_ID_MISC,
 		(FUNC_GET_SIZE)MISC_GetWorkSize,
 		(FUNC_INIT_WORK)MISC_Init,
+	},
+	{	//侵入セーブデータ
+		GMDATA_ID_INTRUDE,
+		(FUNC_GET_SIZE)IntrudeSave_GetWorkSize,
+		(FUNC_INIT_WORK)IntrudeSave_WorkInit,
 	},
 };
 

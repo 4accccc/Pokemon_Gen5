@@ -135,6 +135,26 @@ void Intrude_SetActionStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_ACTION action
 
 //==================================================================
 /**
+ * プロフィール送信バッファに現在のデータをセット
+ *
+ * @param   intcomm		
+ */
+//==================================================================
+void Intrude_SetSendProfileBuffer(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  MYSTATUS *myst;
+  OCCUPY_INFO *occupy;
+  
+  myst = GAMEDATA_GetMyStatus(gamedata);
+  GFL_STD_MemCopy(&intcomm->send_profile, myst, MyStatus_GetWorkSize());
+  
+  occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  GFL_STD_MemCopy(&intcomm->send_profile, myst, sizeof(OCCUPY_INFO));
+}
+
+//==================================================================
+/**
  * 会話構造体初期化
  *
  * @param   intcomm		
