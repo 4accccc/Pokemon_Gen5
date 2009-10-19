@@ -246,6 +246,8 @@ extern u16 GFL_BACKUP_BlockCRC_Set(GFL_SAVEDATA *sv, GFL_SVDT_ID gmdataid);
 #ifdef PM_DEBUG
 extern void DEBUG_GFL_BACKUP_BlockSaveFlagGet(const GFL_SAVEDATA *sv, GFL_SVDT_ID gmdataid, BOOL crctable, BOOL footer, BOOL *ret_a, BOOL *ret_b);
 extern void DEBUG_BACKUP_DataWrite(GFL_SAVEDATA *sv, GFL_SVDT_ID gmdataid, void *data, int write_offset, int size, int save_a, int save_b, int save_crc, int save_footer);
+extern BOOL DEBUG_BACKUP_FlashSave(u32 src, void * dst, u32 len);
+extern BOOL DEBUG_BACKUP_FlashLoad(u32 src, void * dst, u32 len);
 #endif
 
 
