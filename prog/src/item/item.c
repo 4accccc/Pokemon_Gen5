@@ -490,7 +490,8 @@ const u16 ITEM_GetWazaNo( u16 item )
  * @retval  "FALSE = 秘伝技以外"
  */
 //--------------------------------------------------------------------------------------------
-u8 ITEM_CheckHidenWaza( u16 waza )
+/*
+BOOL ITEM_CheckHidenWaza( u16 waza )
 {
   u8  i;
 
@@ -501,6 +502,7 @@ u8 ITEM_CheckHidenWaza( u16 waza )
   }
   return FALSE;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -534,7 +536,7 @@ u8 ITEM_GetWazaMashineNo( u16 item )
  * @retval  "FALSE = メール以外"
  */
 //--------------------------------------------------------------------------------------------
-u8 ITEM_CheckMail( u16 item )
+BOOL ITEM_CheckMail( u16 item )
 {
   u32 i;
 
@@ -599,7 +601,7 @@ u16 ITEM_MailNumGet( u8 design )
  * @retval  "FALSE = 木の実以外"
  */
 //--------------------------------------------------------------------------------------------
-u8 ITEM_CheckNuts( u16 item )
+BOOL ITEM_CheckNuts( u16 item )
 {
   u32 i;
 
@@ -661,7 +663,7 @@ u16 ITEM_GetNutsID( u8 id )
  * @retval  "FALSE = 漢方薬"
  */
 //--------------------------------------------------------------------------------------------
-u8 ITEM_CheckKanpouyaku( u16 item )
+BOOL ITEM_CheckKanpouyaku( u16 item )
 {
   u32 i;
 
