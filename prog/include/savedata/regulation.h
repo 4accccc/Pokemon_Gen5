@@ -28,6 +28,7 @@ typedef enum {
   REGULATION_VS_TIME = 99,        ///< 対戦時間MAX 99分
   REGULATION_COMMAND_TIME = 99,   ///< コマンド入力時間 99秒
   REGULATION_SHOW_POKE_TIME_MAX = 99,   ///< 見せ合い時間 99秒
+  REGULATION_SHOW_POKE_TIME_NONE = 0,   ///< 見せ合い無制限
   REGULATION_AGE_NONE = 0,   ///< 年齢無制限
 
 } REGULATION_ETC_PARAM_TYPE;
@@ -50,8 +51,8 @@ typedef enum  {
   REGULATION_NICKNAME, //    #ニックネーム表示
   REGULATION_AGE_LO,  //    #年齢制限以上
   REGULATION_AGE_HI,  //    #年齢制限以下
-  REGULATION_SHOW_POKE,  //    #ポケモン見せ合い
-  REGULATION_SHOW_POKE_TIME,  //    #ポケモン見せ合い制限時間
+  REGULATION_SHOW_POKE,  //    #ポケモン見せ合いONOFF
+  REGULATION_SHOW_POKE_TIME,  //    #ポケモン見せ合い制限時間 0は無制限
 } REGULATION_PARAM_TYPE;
 
 typedef enum  {
