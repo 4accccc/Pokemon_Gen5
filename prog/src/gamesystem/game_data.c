@@ -36,6 +36,7 @@
 #include "sound/bgm_info.h"
 #include "field/map_matrix.h"     //MAP_MATRIX
 #include "field/field_status.h"   //FIELD_STATUS
+#include "field/field_encount.h"
 
 //============================================================================================
 //============================================================================================
@@ -83,6 +84,8 @@ struct _GAMEDATA{
   OCCUPY_INFO occupy[OCCUPY_ID_MAX];    ///<占拠情報
   
   FIELD_BEACON_MSG_DATA *fbmData; //フィールドビーコンメッセージデータ
+
+  ENCOUNT_WORK* enc_work; ///<エンカウント関連データワーク
 };
 
 //==============================================================================
@@ -185,6 +188,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   if(SaveControl_NewDataFlagGet(gd->sv_control_ptr) == FALSE){
   }
+  
+  //エンカウントワーク初期化
+  gd->enc_work = ENCOUNT_WORK_Create( heapID );
 
   GAMEDATA_SaveDataLoad(gd);	//セーブデータから必要なものをロードしてくる
   return gd;
@@ -194,6 +200,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 //------------------------------------------------------------------
 void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
+  ENCOUNT_WORK_Delete( gamedata->enc_work );
   FIELD_BEACON_MSG_DeleteData( gamedata->fbmData );
 	BGM_INFO_DeleteSystem(gamedata->bgm_info_sys);
   BOX_DAT_ExitManager( gamedata->boxMng );
@@ -651,6 +658,19 @@ FIELD_SOUND * GAMEDATA_GetFieldSound( GAMEDATA *gamedata )
 {
   return( gamedata->field_sound );
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief   ENCOUNT_WORK取得
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @return  ENCOUNT_WORK*
+ */
+//--------------------------------------------------------------
+ENCOUNT_WORK* GAMEDATA_GetEncountWork( GAMEDATA *gamedata )
+{
+  return( gamedata->enc_work );
+}
+
 
 //============================================================================================
 //

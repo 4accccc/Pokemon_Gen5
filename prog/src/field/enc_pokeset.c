@@ -55,7 +55,7 @@ static u8 DATA_ItemRangeTable[][PPD_ITEM_SLOT_NUM] = {
 static u32 eps_GetPercentRand( void );
 static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* efp );
 
-static u32 eps_GetEncountTable( FIELD_ENCOUNT *enc, ENCPOKE_FLD_PARAM* ioEfp,ENC_COMMON_DATA* outTable);
+static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* ioEfp,ENC_COMMON_DATA* outTable);
 
 static void eps_SetPokeParam(const ENC_COMMON_DATA* data,ENC_POKE_PARAM* outPoke);
 static u8 eps_LotFixTypeEncount(const ENCPOKE_FLD_PARAM* efp,const ENC_COMMON_DATA* enc_data,const u8 type );
@@ -86,7 +86,7 @@ static const ENC_PROB_CALC_FUNC DATA_EncProbCalcFuncTable[ENCPROB_CALCTYPE_MAX] 
  *  @brief  ポケモンエンカウント時フィールドパラメータ構造体デフォルトセット
  */
 //---------------------------------------------------------------------------
-void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const FIELD_ENCOUNT* enc,
+void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
     const ENCOUNT_LOCATION location, const ENCOUNT_TYPE enc_type,const BOOL fishing_f)
 {
   MI_CpuClear8(outEfp,sizeof(ENCPOKE_FLD_PARAM));
@@ -111,7 +111,7 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const FIELD_ENCOUNT* enc,
 
   //先頭ポケモンのパラメータチェック
   {
-    POKEMON_PARAM* pp = PokeParty_GetMemberPointer( GAMEDATA_GetMyPokemon( enc->gdata ), 0 );
+    POKEMON_PARAM* pp = PokeParty_GetMemberPointer( GAMEDATA_GetMyPokemon( gdata ), 0 );
 	  
     outEfp->mons_egg_f = PP_Get( pp, ID_PARA_tamago_flag, NULL );
     if(!outEfp->mons_egg_f)
@@ -144,7 +144,7 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const FIELD_ENCOUNT* enc,
  * @return  変動後の確率	
  */
 //--------------------------------------------------------------
-u32 ENCPOKE_EncProbManipulation( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* efp, const u32 inProb)
+u32 ENCPOKE_EncProbManipulation( const ENCPOKE_FLD_PARAM* efp, const GAMEDATA* gdata, const u32 inProb)
 {
   u32 new_prob = inProb;
   
@@ -203,13 +203,13 @@ u32 ENCPOKE_GetEncountPoke( const ENCPOKE_FLD_PARAM *efp, const ENC_COMMON_DATA 
  * @return  変動後の確率	
  */
 //--------------------------------------------------------------
-int ENCPOKE_GetNormalEncountPokeData( FIELD_ENCOUNT *enc, ENCPOKE_FLD_PARAM* efp, ENC_POKE_PARAM* outPokeTbl)
+int ENCPOKE_GetNormalEncountPokeData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* efp, ENC_POKE_PARAM* outPokeTbl)
 {
   u32 num = 0;
   ENC_COMMON_DATA enc_tbl[ENC_MONS_NUM_MAX];
 
   //ROMからエンカウントデータテーブルを取得
-  eps_GetEncountTable( enc, efp, enc_tbl);
+  eps_GetEncountTable( inData, efp, enc_tbl);
 
   //エンカウント抽選
   num = ENCPOKE_GetEncountPoke( efp, enc_tbl, outPokeTbl );
@@ -351,17 +351,17 @@ static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp )
 //--------------------------------------------------------------
 /**
  * フィールドエンカウントデータテーブルをロケーションとタイプから取得
- * @param enc FIELD_ENCOUNT*
+ * @param inData    エンカウントデータ
  * @param location  取得するロケーション
  * @param type      エンカウントタイプ
  * @param outTable  取得したモンスターデータテーブルを格納するバッファポインタ
  * @retuen  テーブル長
  */
 //--------------------------------------------------------------
-static u32 eps_GetEncountTable( FIELD_ENCOUNT *enc, ENCPOKE_FLD_PARAM* ioEfp,ENC_COMMON_DATA* outTable)
+static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* ioEfp,ENC_COMMON_DATA* outTable)
 {
   u32 num = 0,calctype = ENCPROB_CALCTYPE_NORMAL;
-  ENC_COMMON_DATA* src;
+  const ENC_COMMON_DATA* src;
 
   if(ioEfp->enc_type == ENC_TYPE_BINGO)
   {
@@ -375,35 +375,35 @@ static u32 eps_GetEncountTable( FIELD_ENCOUNT *enc, ENCPOKE_FLD_PARAM* ioEfp,ENC
   {
   case ENC_LOCATION_GROUND_L:
     num = ENC_MONS_NUM_GROUND_L;
-    src = enc->encdata->groundLmons;
+    src = inData->groundLmons;
     break;
   case ENC_LOCATION_GROUND_H:
     num = ENC_MONS_NUM_GROUND_H;
-    src = enc->encdata->groundHmons;
+    src = inData->groundHmons;
     break;
   case ENC_LOCATION_GROUND_SP:
     num = ENC_MONS_NUM_GROUND_SP;
-    src = enc->encdata->groundSmons;
+    src = inData->groundSmons;
     break;
   case ENC_LOCATION_WATER:
     calctype = ENCPROB_CALCTYPE_WATER;
     num = ENC_MONS_NUM_WATER;
-    src = enc->encdata->waterMons;
+    src = inData->waterMons;
     break;
   case ENC_LOCATION_WATER_SP:
     calctype = ENCPROB_CALCTYPE_WATER;
     num = ENC_MONS_NUM_WATER_SP;
-    src = enc->encdata->waterSpMons;
+    src = inData->waterSpMons;
     break;
   case ENC_LOCATION_FISHING:
     calctype = ENCPROB_CALCTYPE_FISHING;
     num = ENC_MONS_NUM_FISHING;
-    src = enc->encdata->fishingMons;
+    src = inData->fishingMons;
     break;
   case ENC_LOCATION_FISHING_SP:
     calctype = ENCPROB_CALCTYPE_FISHING;
     num = ENC_MONS_NUM_FISHING_SP;
-    src = enc->encdata->fishingSpMons;
+    src = inData->fishingSpMons;
     break;
   }
   ioEfp->prob_calctype = calctype;

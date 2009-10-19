@@ -8,9 +8,8 @@
 #pragma once
 #include <gflib.h>
 #include "system/gfl_use.h"
-
 #include "battle/battle.h"
-#include "fieldmap.h"
+#include "field/fieldmap_proc.h"
 
 #include "field/encount_data.h"   //ENCOUNT_TYPE
 
@@ -23,6 +22,7 @@
 //======================================================================
 ///FIELD_ENCOUNT
 typedef struct _TAG_FIELD_ENCOUNT FIELD_ENCOUNT;
+typedef struct _TAG_ENCOUNT_WORK ENCOUNT_WORK;
 
 //======================================================================
 //  extern
@@ -30,10 +30,11 @@ typedef struct _TAG_FIELD_ENCOUNT FIELD_ENCOUNT;
 //生成、削除
 extern FIELD_ENCOUNT * FIELD_ENCOUNT_Create( FIELDMAP_WORK *fwork );
 extern void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc );
+extern ENCOUNT_WORK * ENCOUNT_WORK_Create( HEAPID heapID );
+extern void ENCOUNT_WORK_Delete( ENCOUNT_WORK* wp );
 
 //チェック
-extern GMEVENT* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
-//extern BATTLE_SETUP_PARAM* FIELD_ENCOUNT_GetBattleParamPointer( FIELD_ENCOUNT *enc );
+extern void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
 
 extern void FIELD_ENCOUNT_SetTrainerBattleParam(
     FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int tr_id, HEAPID heapID );

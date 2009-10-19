@@ -28,6 +28,7 @@
 
 #include "enc_pokeset.h"
 #include "event_battle.h"
+#include "field_encount_local.h"
 
 #include "sound/wb_sound_data.sadl"
 
@@ -49,17 +50,6 @@
 
 #define HEAPID_BTLPARAM (HEAPID_PROC) ///<バトルパラメタ用HEAPID
 
-#if 0
-///ランダムポケモン抽選タイプ
-typedef enum{
-  ENCPROB_CALCTYPE_NORMAL,  ///<ノーマル
-  ENCPROB_CALCTYPE_WATER,   ///<水上
-  ENCPROB_CALCTYPE_FISHING, ///<釣り
-  ENCPROB_CALCTYPE_EQUAL,  ///<1/指定数
-  ENCPROB_CALCTYPE_MAX,  ///<1/指定数
-}ENCPROB_CALCTYPE;
-#endif
-
 //--------------------------------------------------------------
 /// エンカウントデータ要素
 //--------------------------------------------------------------
@@ -70,19 +60,25 @@ typedef enum{
 //======================================================================
 //  struct
 //======================================================================
+struct _TAG_FIELD_ENCOUNT
+{
+  FIELDMAP_WORK *fwork;
+  GAMESYS_WORK *gsys;
+  GAMEDATA *gdata;
+  ENCOUNT_DATA* encdata;
+};
+
 
 //======================================================================
 //  proto
 //======================================================================
 static ENCOUNT_LOCATION enc_GetAttrLocation( FIELD_ENCOUNT *enc );
 static u32 enc_GetLocationPercent( FIELD_ENCOUNT *enc,ENCOUNT_LOCATION location );
-static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, const u32 per );
+static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, const u32 per );
 static BOOL enc_CheckEncountWalk( FIELD_ENCOUNT *enc, u32 per );
 
 static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* spa,
     BATTLE_SETUP_PARAM *bsp, HEAPID heapID, const ENC_POKE_PARAM* inPokeTbl );
-static void enc_AddPartyPokemon(
-    POKEPARTY *party, u32 monsno, u32 level, u32 id, HEAPID heapID );
 
 static u32 enc_GetPercentRand( void );
 
@@ -90,6 +86,9 @@ static int enc_GetWalkCount( FIELD_ENCOUNT *enc );
 static void enc_AddWalkCount( FIELD_ENCOUNT *enc );
 static void enc_ClearWalkCount( FIELD_ENCOUNT *enc );
 
+static void encwork_SetPlayerPos( ENCOUNT_WORK* ewk, const FIELD_PLAYER* player);
+static void encwork_AddPlayerWalkCount( ENCOUNT_WORK* ewk, const FIELD_PLAYER* player);
+static u32 encwork_GetPlayerWalkCount( ENCOUNT_WORK* ewk );
 
 //======================================================================
 //  フィールドエンカウント
@@ -127,19 +126,6 @@ void FIELD_ENCOUNT_Delete( FIELD_ENCOUNT *enc )
 {
   GFL_HEAP_FreeMemory( enc );
 }
-#if 0
-//--------------------------------------------------------------
-/**
- * フィールドエンカウント　BATTLE_SETUP_PARAMポインタ取得
- * @param enc FIELD_ENCOUNT*
- * @return  FIELD_ENCOUNTが保持するBATTLE_SETUP_PARAM構造体の参照ポインタ
- */
-//--------------------------------------------------------------
-BATTLE_SETUP_PARAM* FIELD_ENCOUNT_GetBattleParamPointer( FIELD_ENCOUNT *enc )
-{
-  return &enc->battle_param;
-}
-#endif
 
 //======================================================================
 //  フィールドエンカウント　チェック
@@ -152,18 +138,23 @@ BATTLE_SETUP_PARAM* FIELD_ENCOUNT_GetBattleParamPointer( FIELD_ENCOUNT *enc )
  * @retval BOOL TRUE=エンカウントした
  */
 //--------------------------------------------------------------
-GMEVENT* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
+void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
 {
   u32 per,enc_num;
   BOOL ret = FALSE;
   BATTLE_SETUP_PARAM* bp;
-
+  ENCOUNT_WORK* ewk;
   ENCOUNT_LOCATION enc_loc;
   ENC_POKE_PARAM poke_tbl[FLD_ENCPOKE_NUM_MAX];
   
   FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
 	ENCPOKE_FLD_PARAM fld_spa;
    
+  //最後のエンカウントからのプレイヤーの歩数を加算
+  ewk = GAMEDATA_GetEncountWork(enc->gdata);
+  encwork_AddPlayerWalkCount( ewk, fplayer);
+  
+  //ロケーションチェック
   enc_loc = enc_GetAttrLocation( enc );
   per = enc_GetLocationPercent( enc, enc_loc );
   if( per <= 0 ){
@@ -171,11 +162,11 @@ GMEVENT* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   }
   
   //ENCPOKE_FLD_PARAM作成
-  ENCPOKE_SetEFPStruct( &fld_spa, enc, enc_loc, ENC_TYPE_NORMAL, FALSE );
+  ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, ENC_TYPE_NORMAL, FALSE );
   //道具＆特性によるエンカウント率変動
-  per = ENCPOKE_EncProbManipulation( enc, &fld_spa, per);
+  per = ENCPOKE_EncProbManipulation( &fld_spa, enc->gdata, per);
  
-  if( enc_CheckEncount(enc,per) == FALSE ){ //エンカウントチェック
+  if( enc_CheckEncount(enc,ewk,per) == FALSE ){ //エンカウントチェック
     return NULL;
   }
   
@@ -184,7 +175,7 @@ GMEVENT* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   }
 
   //エンカウントデータ生成
-  enc_num = ENCPOKE_GetNormalEncountPokeData( enc, &fld_spa, poke_tbl );
+  enc_num = ENCPOKE_GetNormalEncountPokeData( enc->encdata, &fld_spa, poke_tbl );
  
   if( enc_num == 0 ){ //エンカウント失敗
     return NULL;
@@ -194,14 +185,14 @@ GMEVENT* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   bp = BATTLE_PARAM_Create( HEAPID_BTLPARAM );
   enc_CreateBattleParam( enc, &fld_spa, bp, HEAPID_BTLPARAM, poke_tbl );
   
-  // 歩数カウントクリア
-  enc_ClearWalkCount( enc );
+  // プレイヤー座標更新＆歩数カウントクリア
+  encwork_SetPlayerPos( ewk, fplayer);
 
   //エンカウントイベント生成
   if(enc_type == ENC_TYPE_BINGO){
-    return EVENT_BingoBattle( enc->gsys, enc->fwork, bp );
+    return (void*)EVENT_BingoBattle( enc->gsys, enc->fwork, bp );
   }
-  return EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp );
+  return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp );
 }
 
 //======================================================================
@@ -291,14 +282,22 @@ static u32 enc_GetLocationPercent( FIELD_ENCOUNT *enc,ENCOUNT_LOCATION location 
  * @retval BOOL TRUE=エンカウントした
  */
 //--------------------------------------------------------------
-static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, u32 per )
+static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, u32 per )
 {
   u32 calc_per,next_per;
   
   if( per > 100 ){ //100%
     per = 100;
   }
-  //エンカウント直後のグリッド移動補正
+  //移動歩数によるエンカウント率補正
+  {
+    u32 walk_ct = encwork_GetPlayerWalkCount( ewk );
+    if(walk_ct == 0){
+      return FALSE;
+    }else if(walk_ct == 1){
+      per = 2;  //最初の一歩目は強制で2%
+    }
+  }
 
   if( enc_GetPercentRand() < per ){
     return( TRUE );
@@ -332,6 +331,7 @@ static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, u32 per )
   return( FALSE );
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * エンカウントチェック　歩数チェック
@@ -356,6 +356,7 @@ static BOOL enc_CheckEncountWalk( FIELD_ENCOUNT *enc, u32 per )
    
   return( FALSE );
 }
+#endif
 
 //======================================================================
 //  バトルパラム
@@ -480,28 +481,6 @@ void FIELD_ENCOUNT_SetTrainerBattleParam(
   enc_CreateTrainerBattleParam( enc, setup, heapID, tr_id );
 }
 
-//--------------------------------------------------------------
-/**
- * PP追加
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-static void enc_AddPartyPokemon(
-    POKEPARTY *party, u32 monsNo, u32 lv, u32 id, HEAPID heapID ) 
-{
-  {
-    //monsNo
-    KAGAYA_Printf( "PP追加 %d\n", monsNo );
-  }
-
-  {
-    POKEMON_PARAM *pp = PP_Create( monsNo, lv, id, heapID );
-    PokeParty_Add( party, pp );
-    GFL_HEAP_FreeMemory( pp );
-  }
-}
-
 //======================================================================
 //  パーツ
 //======================================================================
@@ -518,6 +497,7 @@ static u32 enc_GetPercentRand( void )
   return( val );
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * 歩数カウント取得
@@ -555,4 +535,57 @@ static void enc_ClearWalkCount( FIELD_ENCOUNT *enc )
 {
   GAMEDATA_SetFieldMapWalkCount( enc->gdata, 0 );
 }
+#endif
 
+/**
+ *  @brief  プレイヤーポジション保存
+ */
+static void encwork_SetPlayerPos( ENCOUNT_WORK* ewk, const FIELD_PLAYER* player)
+{
+  MMDL* mmdl = FIELD_PLAYER_GetMMdl( player );
+	
+  MI_CpuClear8( &ewk->player, sizeof(EWK_PLAYER) );
+
+  ewk->player.pos_x = MMDL_GetGridPosX( mmdl );
+  ewk->player.pos_y = MMDL_GetGridPosY( mmdl );
+  ewk->player.pos_z = MMDL_GetGridPosZ( mmdl );
+}
+
+/*
+ *  @brief  最後のエンカウントからのプレイヤーの歩数を加算
+ *  ※最後にエンカウントしたグリッドでの方向転換は歩数に数えない
+ */
+static void encwork_AddPlayerWalkCount( ENCOUNT_WORK* ewk, const FIELD_PLAYER* player)
+{
+  MMDL* mmdl = FIELD_PLAYER_GetMMdl( player );
+
+  if(ewk->player.move_f){
+    ++ewk->player.walk_ct;
+    return;
+  }
+  if( MMDL_GetGridPosX( mmdl ) == ewk->player.pos_x &&
+      MMDL_GetGridPosY( mmdl ) == ewk->player.pos_y &&
+      MMDL_GetGridPosZ( mmdl ) == ewk->player.pos_z ){
+    return;
+  }
+  ewk->player.move_f = TRUE;
+  ++ewk->player.walk_ct;
+}
+
+/*
+ *  @brief  プレイヤーが最後のエンカウント後に何歩歩いたか？
+ *
+ *  ※最後にエンカウントしたグリッドでの方向転換は歩数に数えない
+ */
+static u32 encwork_GetPlayerWalkCount( ENCOUNT_WORK* ewk )
+{
+  return ewk->player.walk_ct;
+}
+
+/**
+ *  @brief  プレイヤーステータスクリア
+ */
+static void encwork_PlayerStatusClear( ENCOUNT_WORK* ewk )
+{
+  MI_CpuClear8( &ewk->player, sizeof(EWK_PLAYER) );
+}

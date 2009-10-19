@@ -30,6 +30,7 @@
 #include "sound/bgm_info.h"
 #include "field/field_status.h"
 #include "field/field_beacon_message.h" //FIELD_BEACON_MSG_DATA
+#include "field/field_encount.h" //ENCOUNT_WORK
 #include "savedata/box_savedata.h"      //BOX_MANAGER
 #include "savedata/intrude_save.h"      //OCCUPY_INFO
 
@@ -450,6 +451,15 @@ extern void GAMEDATA_SetFieldMapWalkCount(GAMEDATA *gamedata,int count);
  */
 //--------------------------------------------------------------
 extern FIELD_SOUND * GAMEDATA_GetFieldSound( GAMEDATA *gamedata );
+
+//--------------------------------------------------------------
+/**
+ * @brief   ENCOUNT_WORKŽæ“¾
+ * @param   gamedata	GAMEDATA‚Ö‚Ìƒ|ƒCƒ“ƒ^
+ * @return  ENCOUNT_WORK*
+ */
+//--------------------------------------------------------------
+extern ENCOUNT_WORK* GAMEDATA_GetEncountWork( GAMEDATA *gamedata );
 
 //==================================================================
 /**

@@ -20,15 +20,6 @@ typedef enum{
 //======================================================================
 //  struct
 //======================================================================
-struct _TAG_FIELD_ENCOUNT
-{
-  FIELDMAP_WORK *fwork;
-  GAMESYS_WORK *gsys;
-  GAMEDATA *gdata;
-  ENCOUNT_DATA* encdata;
-//  BATTLE_SETUP_PARAM battle_param;
-};
-
 typedef struct _ENC_POKE_PARAM
 {
   u16 monsNo;
@@ -86,12 +77,12 @@ typedef struct _ENCPOKE_FLD_PARAM
   u32 dmy:18;
 }ENCPOKE_FLD_PARAM;
 
-extern void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const FIELD_ENCOUNT* enc,
+extern void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
     const ENCOUNT_LOCATION location, const ENCOUNT_TYPE enc_type,const BOOL fishing_f);
 
-extern u32 ENCPOKE_EncProbManipulation( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* efp, const u32 inProb);
+extern u32 ENCPOKE_EncProbManipulation(const ENCPOKE_FLD_PARAM* efp, const GAMEDATA* gdata, const u32 inProb);
 extern u32 ENCPOKE_GetEncountPoke( const ENCPOKE_FLD_PARAM *efp, const ENC_COMMON_DATA *enc_tbl, ENC_POKE_PARAM* outPokeTbl );
-extern int ENCPOKE_GetNormalEncountPokeData( FIELD_ENCOUNT *enc, ENCPOKE_FLD_PARAM* efp, ENC_POKE_PARAM* outPokeTbl);
+extern int ENCPOKE_GetNormalEncountPokeData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* efp, ENC_POKE_PARAM* outPokeTbl);
 
 extern POKEMON_PARAM* ENCPOKE_PPCreate(const ENCPOKE_FLD_PARAM* efp, const ENC_POKE_PARAM* poke, int heapID);
 extern void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_POKE_PARAM* poke );

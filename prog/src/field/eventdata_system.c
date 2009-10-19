@@ -380,7 +380,7 @@ static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id, u8 seaso
   if(size == 1){
     season = 0;
   }else{
-    season = season_id; //GAMEDATA_GetSeasonID();
+    season = season_id;
   }
   MI_CpuCopy8(&tbl->enc_tbl[season],&evdata->encount_work,sizeof(ENCOUNT_DATA));
   evdata->encount_work.enable_f = TRUE;
