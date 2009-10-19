@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-19T10:49:20"/>
+	<create user="matsumiya" host="W00207" date="2009-10-19T11:08:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_ｒ06ｒ0101_assistantm1_01">
+	<row id="msg_r06r0101_assistantm1_01">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
@@ -305,7 +305,7 @@
 季節によって　雪が積もりますよ</language>
 	</row>
 
-	<row id="msg_ｒ06ｒ0101_assistantm2_01">
+	<row id="msg_r06r0101_assistantm2_01">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
