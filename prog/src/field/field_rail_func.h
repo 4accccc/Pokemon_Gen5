@@ -56,6 +56,21 @@ extern fx32 FIELD_RAIL_LINE_DIST_FUNC_StraitLine( const RAIL_POINT * point_s, co
 //------------------------------------------------------------------
 extern fx32 FIELD_RAIL_LINE_DIST_FUNC_CircleLine( const RAIL_POINT * point_s, const RAIL_POINT * point_e, const RAIL_LINEPOS_SET * line_pos_set );
 
+//-----------------------------------------------------------------------------
+/**
+ *					ロケーションあたり判定
+*/
+//-----------------------------------------------------------------------------
+//------------------------------------------------------------------
+//  直線
+//------------------------------------------------------------------
+extern BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_StraitLine( u32 rail_index, const FIELD_RAIL_MAN * cp_man, const VecFx32* cp_check_pos, RAIL_LOCATION* p_location, VecFx32* p_pos );
+
+//------------------------------------------------------------------
+//  カーブ
+//	FIELD_RAIL_POSFUNC_CurveLine専用
+//------------------------------------------------------------------
+extern BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_CircleLine( u32 rail_index, const FIELD_RAIL_MAN * cp_man, const VecFx32* cp_check_pos, RAIL_LOCATION* p_location, VecFx32* p_pos );
 
 //-----------------------------------------------------------------------------
 /**

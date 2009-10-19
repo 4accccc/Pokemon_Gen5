@@ -21,6 +21,17 @@
 
 #ifdef PM_DEBUG
 
+#define DEBUG_PRINT_ON  // 大量デバック表示
+
+#endif
+
+#ifdef DEBUG_PRINT_ON
+
+#define DEBUG_RAIL_Printf( ... )  OS_TPrintf( __VA_ARGS__ )
+
+#else
+
+#define DEBUG_RAIL_Printf( ... )  ((void)0)
 
 #endif
 
@@ -44,6 +55,8 @@
 
 static void updateCircleCamera( const FIELD_RAIL_MAN * man, u16 pitch, fx32 len, const VecFx32* cp_target );
 
+// 平面とチェックポジションの判定
+static BOOL is_Hit3DPosPlane( const RAIL_POINT * cp_point_s, const RAIL_POINT * cp_point_e, const VecFx32* cp_pos, VecFx32* p_cross, fx32* dis_bcos, VecFx32* gaiseki );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -411,6 +424,279 @@ fx32 FIELD_RAIL_LINE_DIST_FUNC_CircleLine( const RAIL_POINT * point_s, const RAI
 
 	return dist;
 }
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *					ロケーションあたり判定
+*/
+//-----------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  直線運動  ロケーションあたり判定
+ *
+ *	@retval TRUE  ＨＩＴ
+ *	@retval FALSE ＭＩＳＳ
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_StraitLine( u32 rail_index, const FIELD_RAIL_MAN * cp_man, const VecFx32* cp_check_pos, RAIL_LOCATION* p_location, VecFx32* p_pos )
+{
+  const RAIL_LINE* cp_line;
+  const RAIL_POINT* cp_point_s;
+  const RAIL_POINT* cp_point_e;
+  const RAIL_LINEPOS_SET* cp_linepos;
+  VecFx32 cross_pos, gaiseki;
+  VecFx32 posa, posb;
+  fx32 width_dist, front_dist;
+  u32 front_ofs_width, start_width, end_width;
+  fx32 b_cos;
+  fx32 total_dist;
+  u32 total_ofs, front_ofs;
+  int i;
+  BOOL result;
+  fx32 unit_size;
+
+  cp_line = FIELD_RAIL_MAN_GetRailDatLine( cp_man, rail_index );
+  cp_point_s = FIELD_RAIL_MAN_GetRailDatPoint( cp_man, cp_line->point_s );
+  cp_point_e = FIELD_RAIL_MAN_GetRailDatPoint( cp_man, cp_line->point_e );
+  unit_size = FIELD_RAIL_MAN_GetRailDatUnitSize( cp_man );
+
+  DEBUG_RAIL_Printf( "\ncheck straitLine\n" );
+  
+  // 幅の確認をして
+  // グリッド座標を求める。
+  result = is_Hit3DPosPlane( cp_point_s, cp_point_e, cp_check_pos, &cross_pos, &front_dist, &gaiseki );
+  if( result == FALSE )
+  {
+    return FALSE;
+  }
+
+  DEBUG_RAIL_Printf( "\n" );
+
+  // 幅のチェック 
+  // ＸＺ平面で考えるので、Ｙを抜きにして、交点とcehck_posの距離を求める。
+  VEC_Set( &posa, cp_check_pos->x, 0, cp_check_pos->z );
+  VEC_Set( &posb, cross_pos.x, 0, cross_pos.z );
+  width_dist = VEC_Distance( &posa, &posb );
+  width_dist = FX_Div( width_dist, unit_size ) >> FX32_SHIFT;
+
+  DEBUG_RAIL_Printf( "width_ofs [%d]\n", width_dist );
+  
+  // トータルサイズの取得
+  cp_linepos = FIELD_RAIL_MAN_GetRailDatLinePos( cp_man, cp_line->line_pos_set );
+  total_dist = FIELD_RAIL_LINE_DIST_FUNC_StraitLine( cp_point_s, cp_point_e, cp_linepos );
+  total_ofs = FX_Div( total_dist, unit_size ) >> FX32_SHIFT;
+
+  // 交点のオフセット
+  front_ofs = FX_Div( front_dist, unit_size ) >> FX32_SHIFT;
+
+  // 交点の幅
+  for( i=0; i<RAIL_CONNECT_LINE_MAX; i++ )
+  {
+    if( cp_point_s->lines[i] == rail_index )
+    {
+      start_width = cp_point_s->width_ofs_max[i];
+    }
+    
+    if( cp_point_e->lines[i] == rail_index )
+    {
+      end_width = cp_point_e->width_ofs_max[i];
+    }
+  }
+  front_ofs_width = start_width + ( ((end_width - start_width)*front_ofs) / total_ofs );
+
+
+  DEBUG_RAIL_Printf( "line_ofs of width [%d]\n", front_ofs_width );
+  
+  // 幅チェック
+  if( width_dist < front_ofs_width )
+  {
+    // 降り立つ場所があった！
+    p_location->rail_index = rail_index;
+    p_location->type = FIELD_RAIL_TYPE_LINE;
+    p_location->key  = RAIL_KEY_DOWN;
+    if( gaiseki.y>=0 )
+    {
+      p_location->width_grid = RAIL_OFS_TO_GRID(width_dist);
+    }
+    else
+    {
+      p_location->width_grid = -RAIL_OFS_TO_GRID(width_dist);
+    }
+    p_location->line_grid = RAIL_OFS_TO_GRID(front_ofs);
+
+    DEBUG_RAIL_Printf( "location width_grid [%d] line_grid [%d]\n", p_location->width_grid, p_location->line_grid );
+
+    FIELD_RAIL_MAN_GetLocationPosition( cp_man, p_location, p_pos );
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カーブ運動  ロケーションあたり判定
+ *
+ *	@retval TRUE  ＨＩＴ
+ *	@retval FALSE ＭＩＳＳ
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_CircleLine( u32 rail_index, const FIELD_RAIL_MAN * cp_man, const VecFx32* cp_check_pos, RAIL_LOCATION* p_location, VecFx32* p_pos )
+{
+  const RAIL_LINE* cp_line;
+  const RAIL_POINT* cp_point_s;
+  const RAIL_POINT* cp_point_e;
+  FIELD_RAIL_WORK* p_calcwork;
+  VecFx32 pos, last_pos;
+  u32 width_ofs_max;
+  u32 line_ofs_max, line_grid_max;
+  VecFx32 vec_a, vec_b, way_a, cross_pos, gaiseki;
+  VecFx32 plane_dista, plane_distb;
+  VecFx32 vecn_a, vecn_b;
+  fx32 dist_a, bcos, cross_dist, div_num;
+  fx32 unit_size, front_dist;
+  int i;
+  BOOL result;
+
+  DEBUG_RAIL_Printf( "\ncheck circleLine\n" );
+
+  cp_line = FIELD_RAIL_MAN_GetRailDatLine( cp_man, rail_index );
+  cp_point_s = FIELD_RAIL_MAN_GetRailDatPoint( cp_man, cp_line->point_s );
+  cp_point_e = FIELD_RAIL_MAN_GetRailDatPoint( cp_man, cp_line->point_e );
+  
+  // 幅の確認をして
+  // グリッド座標を求める。
+  result = is_Hit3DPosPlane( cp_point_s, cp_point_e, cp_check_pos, &cross_pos, &front_dist, &gaiseki );
+  if( result == FALSE )
+  {
+    return FALSE;
+  }
+
+  //DEBUG_RAIL_Printf( "\n" );
+
+  // 全部なめる
+  // 各グリッドでの、範囲から、求める
+  // 計算用レールワークを使用し、
+  // １グリッドずつ、当たり判定
+  p_location->rail_index = rail_index;
+  p_location->type = FIELD_RAIL_TYPE_LINE;
+  p_location->key = RAIL_KEY_DOWN;
+  p_location->width_grid = 0;
+  p_location->line_grid = 0;
+
+  p_calcwork = FIELD_RAIL_MAN_GetCalcRailWork( cp_man );
+  FIELD_RAIL_WORK_SetLocation( p_calcwork, p_location );
+
+  line_ofs_max = FIELD_RAIL_GetLineOfsMax( p_calcwork );
+  line_grid_max = RAIL_OFS_TO_GRID( line_ofs_max );
+
+  // 初期座標を求める
+  FIELD_RAIL_WORK_GetPos( p_calcwork, &pos );
+  VEC_Set( &last_pos, pos.x, pos.y, pos.z );
+
+  // ユニットサイズ取得
+  unit_size = FIELD_RAIL_MAN_GetRailDatUnitSize( cp_man );
+  //DEBUG_RAIL_Printf( "unit_size[%d]\n", FX_Whole( unit_size ) );
+
+  for( i=1; i<line_grid_max; i++ )
+  {
+    //　グリッド分チェックする
+    p_location->line_grid = i;
+    FIELD_RAIL_WORK_SetLocation( p_calcwork, p_location );
+    FIELD_RAIL_WORK_GetPos( p_calcwork, &pos );
+    width_ofs_max = FIELD_RAIL_GetWidthOfsMax( p_calcwork );
+
+    //DEBUG_RAIL_Printf( "line_grid [%d] width_ofs_max [%d]\n", i, width_ofs_max );
+    //DEBUG_RAIL_Printf( "pos x[%d] y[%d] z[%d]\n", FX_Whole(pos.x), FX_Whole(pos.y), FX_Whole(pos.z) );
+    //DEBUG_RAIL_Printf( "last_pos x[%d] y[%d] z[%d]\n", FX_Whole(last_pos.x), FX_Whole(last_pos.y), FX_Whole(last_pos.z) );
+    //DEBUG_RAIL_Printf( "check_pos x[%d] y[%d] z[%d]\n", FX_Whole(cp_check_pos->x), FX_Whole(cp_check_pos->y), FX_Whole(cp_check_pos->z) );
+
+    // check_posがベクトル範囲内にあるかチェック
+    // ここでも、ベクトルＡlast_pos - pos
+    // ベクトルＢ　check_pos - pos
+    // から、ベクトルＡへベクトルＢを投影し
+    // ベクトルＡより大きくなったり、
+    // cosが９０度を超えたらＮＧ
+    VEC_Subtract( &last_pos, &pos, &vec_a );
+    VEC_Subtract( cp_check_pos, &pos, &vec_b );
+    VEC_Normalize( &vec_a, &way_a );
+    dist_a = VEC_Mag( &vec_a );
+
+    VEC_Normalize( &vec_a, &vecn_a );
+    VEC_Normalize( &vec_b, &vecn_b );
+    VEC_CrossProduct( &vecn_a, &vecn_b, &gaiseki );
+
+    // 値がでかすぎるときがあるので、
+    // 1/|A|の大きさにする
+    vec_a = way_a;
+    {
+      fx32 dist_b = VEC_Mag( &vec_b );
+      
+      VEC_Normalize( &vec_b, &vec_b );
+      div_num= dist_a;
+      dist_b = FX_Div( dist_b, div_num );
+      dist_a = FX32_ONE;
+      vec_b.x = FX_Mul( vec_b.x, dist_b );
+      vec_b.y = FX_Mul( vec_b.y, dist_b );
+      vec_b.z = FX_Mul( vec_b.z, dist_b );
+    }
+    
+    bcos = VEC_DotProduct( &vec_a, &vec_b );
+    //bcos = FX_Div( bcos, dist_a ); // dist_a==FX32_ONEなので必要なくなる
+
+    //DEBUG_RAIL_Printf( "bcos [%d] dist_a [%d]\n", FX_Whole(bcos), FX_Whole(dist_a) );
+
+    if( (bcos <= dist_a) && (bcos >= 0) )
+    {
+      // 範囲内なので、平面で見て、距離がwidth_ofs_max内かチェックする
+      {
+        // 1/|A|をもとに戻す
+        bcos = FX_Mul( bcos, div_num );
+      }
+      
+      // 交点を求める
+      VEC_Set( &cross_pos, FX_Mul( way_a.x, bcos ), 
+          FX_Mul( way_a.y, bcos ), FX_Mul( way_a.z, bcos ) );
+      VEC_Add( &pos, &cross_pos, &cross_pos );
+
+      //DEBUG_RAIL_Printf( "cross pos x[%d] y[%d] z[%d]\n", FX_Whole(cross_pos.x), FX_Whole(cross_pos.y), FX_Whole(cross_pos.z) );
+
+      VEC_Set( &plane_dista, cp_check_pos->x, 0, cp_check_pos->z );
+      VEC_Set( &plane_distb, cross_pos.x, 0, cross_pos.z );
+
+      cross_dist = VEC_Distance( &plane_dista, &plane_distb ); 
+      cross_dist = FX_Div( cross_dist, unit_size ) >> FX32_SHIFT;
+
+      //DEBUG_RAIL_Printf( "cross_ofs [%d]\n", cross_dist );
+
+      //DEBUG_RAIL_Printf( "gaiseki.y [%d]\n", gaiseki.y );
+
+      if( width_ofs_max >= cross_dist )
+      {
+        // 合格！
+        if( gaiseki.y >= 0 )
+        {
+          p_location->width_grid = RAIL_OFS_TO_GRID(cross_dist);
+          FIELD_RAIL_MAN_GetLocationPosition( cp_man, p_location, p_pos );
+
+          //DEBUG_RAIL_Printf( "OK width_grid[%d]\n", p_location->width_grid );
+          return TRUE;
+        }
+      }
+    }
+    
+    VEC_Set( &last_pos, pos.x, pos.y, pos.z );
+  }
+
+  return FALSE;
+  
+}
+
+
+
 
 
 
@@ -813,3 +1099,108 @@ void FIELD_RAIL_CAMERAFUNC_PlayerTargetCircleCamera( const FIELD_RAIL_MAN * man 
 
 
 
+// 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  平面とチェックポジションの判定
+ *
+ *	@retval TRUE    あたる
+ *	@retval FALSE   あたらない
+ */
+//-----------------------------------------------------------------------------
+static BOOL is_Hit3DPosPlane( const RAIL_POINT * cp_point_s, const RAIL_POINT * cp_point_e, const VecFx32* cp_pos, VecFx32* p_cross, fx32* dis_bcos, VecFx32* gaiseki )
+{
+  enum 
+  { 
+    HIT_HEIGHT  = FX32_ONE * 8,   // 吸い付く範囲
+    CULLING_SIZE  = FX32_ONE * 256, // 確認しない、交点との距離
+  };
+  VecFx32 vec_a, vec_b, way_a;
+  fx32 dis_a, cross_pos;
+  fx32 div_num;
+  VecFx32 vecn_a, vecn_b;
+
+
+  DEBUG_RAIL_Printf( "\nis_Hit3DPosPlane\n" );
+
+  DEBUG_RAIL_Printf( "pos a x[%d] y[%d] z[%d]\n", FX_Whole( cp_point_s->pos.x ), FX_Whole( cp_point_s->pos.y ), FX_Whole( cp_point_s->pos.z ) );
+  DEBUG_RAIL_Printf( "pos b x[%d] y[%d] z[%d]\n", FX_Whole( cp_point_e->pos.x ), FX_Whole( cp_point_e->pos.y ), FX_Whole( cp_point_e->pos.z ) );
+
+  DEBUG_RAIL_Printf( "check pos x[%d] y[%d] z[%d]\n", FX_Whole( cp_pos->x ), FX_Whole( cp_pos->y ), FX_Whole( cp_pos->z ) );
+
+  // ラインの中に点はいるか？
+  // A=point_s - point_e
+  // B=point_s -> cp_pos
+  // |A||B|cos / |A| = |B|cos(BベクトルのＡへの正射影)
+  // |B|cosが|A|より大きくなったとき、cosが90を超えたとき中にはいない
+  VEC_Subtract( &cp_point_s->pos, &cp_point_e->pos, &vec_a );
+  VEC_Subtract( cp_pos, &cp_point_e->pos, &vec_b );
+
+
+  VEC_Normalize( &vec_a, &way_a );
+  dis_a = VEC_Mag( &vec_a );
+
+  // 値がでかすぎるときがあるので値を1/|A|にする
+  vec_a = way_a;
+  {
+    fx32 dist_b = VEC_Mag( &vec_b );
+    
+    VEC_Normalize( &vec_b, &vec_b );
+    div_num = dis_a;
+    dist_b = FX_Div( dist_b, dis_a );
+    dis_a = FX32_ONE;
+    vec_b.x = FX_Mul( vec_b.x, dist_b );
+    vec_b.y = FX_Mul( vec_b.y, dist_b );
+    vec_b.z = FX_Mul( vec_b.z, dist_b );
+  }
+
+  *dis_bcos = VEC_DotProduct( &vec_a, &vec_b );
+
+  //*dis_bcos = FX_Div( *dis_bcos, dis_a ); dis_aはFX32_ONEなので必要なし
+  DEBUG_RAIL_Printf( "dis_bsoc[%d] , dis_a[%d]\n", FX_Whole(*dis_bcos), FX_Whole(dis_a) );
+
+  if( *dis_bcos > dis_a )
+  {
+    DEBUG_RAIL_Printf( "dis_bsoc[%d] > dis_a[%d]\n", FX_Whole(*dis_bcos), FX_Whole(dis_a) );
+    return FALSE;
+  }
+  if( *dis_bcos < 0 )
+  {
+    DEBUG_RAIL_Printf( "dis_bsoc[%d] < 0\n", FX_Whole(*dis_bcos) );
+    return FALSE;
+  }
+
+  {
+    // 1/|A|をもとに戻す
+    *dis_bcos = FX_Mul( *dis_bcos, div_num );
+  }
+
+  // 外積も求めておく
+  VEC_Normalize( &vec_a, &vecn_a );
+  VEC_Normalize( &vec_b, &vecn_b );
+  VEC_CrossProduct( &vecn_a, &vecn_b, gaiseki );
+
+  // 交点を求める。
+  // Y座標が、誤差以上離れていたら確認しない
+  // １ブロック分の距離が離れていたら、確認しない。
+  VEC_Set( p_cross, 
+      FX_Mul( way_a.x, *dis_bcos ),
+      FX_Mul( way_a.y, *dis_bcos ),
+      FX_Mul( way_a.z, *dis_bcos ) );
+  VEC_Add( &cp_point_e->pos, p_cross, p_cross );
+
+  DEBUG_RAIL_Printf( "cross pos x[%d] y[%d] z[%d]\n", FX_Whole( p_cross->x ), FX_Whole( p_cross->y ), FX_Whole( p_cross->z ) );
+
+  if( VEC_Distance( cp_pos, p_cross ) >= CULLING_SIZE )
+  {
+    DEBUG_RAIL_Printf( "CULLING dist[%d]\n", FX_Whole( VEC_Distance( cp_pos, p_cross ) ) );
+    return FALSE;
+  }
+  if( MATH_ABS( cp_pos->y - p_cross->y ) > HIT_HEIGHT )
+  {
+    DEBUG_RAIL_Printf( "HIT_HEIGHT height[%d]\n", FX_Whole( MATH_ABS( cp_pos->y - p_cross->y ) ) );
+    return FALSE;
+  }
+
+  return TRUE;
+}

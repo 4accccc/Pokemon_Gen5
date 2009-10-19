@@ -148,6 +148,68 @@ static const DIR_TBL DATA_MoveDirTbl[DIRID_MAX] =
 //=====================================
 #define MMDL_GET_RAILGRID_R(grid_size)    ( FX_Div( (grid_size), 4<<FX32_SHIFT ) )
 
+
+
+//--------------------------------------------------------------
+///	レールキーが前方の場合の、ＤＩＲの変換テーブル
+//--------------------------------------------------------------
+static const u8 sc_RAILLINE_DIR_CHANGE_TBL[ RAIL_KEY_MAX ][ DIR_MAX4 ] = 
+{
+  // NULLは関係なし
+  {
+    0
+  },
+  // RAIL_KEY_UP
+  {
+    DIR_UP,
+    DIR_DOWN,
+    DIR_LEFT,
+    DIR_RIGHT,
+  },
+  // RAIL_KEY_RIGHT
+  {
+    DIR_RIGHT,
+    DIR_LEFT,
+    DIR_DOWN,
+    DIR_UP,
+  },
+  // RAIL_KEY_DOWN
+  {
+    DIR_DOWN,
+    DIR_UP,
+    DIR_RIGHT,
+    DIR_LEFT,
+  },
+  // RAIL_KEY_LEFT
+  {
+    DIR_LEFT,
+    DIR_RIGHT,
+    DIR_UP,
+    DIR_DOWN,
+  },
+}; 
+
+//--------------------------------------------------------------
+///	各ＤＩＲの回転情報　フィール度３Ｄ座標系での回転情報
+// -z
+//      上
+//   左　　右   
+//      下
+// +z
+//--------------------------------------------------------------
+static const u16 sc_RAILLINE_DIR_ROT_Y[ DIR_MAX4 ] =
+{
+  // DIR_UP
+  0,
+  // DIR_DOWN
+  0x8000,
+  // DIR_LEFT
+  0x4000,
+  // DIR_RIGHT
+  0xC000,
+};
+
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -647,6 +709,72 @@ void MMDL_Rail_UpdateGridPosDir( MMDL *mmdl, u16 dir )
 	MMDL_SetGridPosY( mmdl, SIZE_GRID_FX32(pos.y) );
 	MMDL_SetGridPosZ( mmdl, SIZE_GRID_FX32(pos.z) );
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレイヤーが向いている方向を取得する
+ *	        
+ *
+ *	@param  mmdl    モデルワーク
+ *	@param	way     方向
+ */
+//-----------------------------------------------------------------------------
+void MMDL_Rail_GetFrontWay( const MMDL *mmdl, VecFx16* way )
+{
+  FIELD_RAIL_WORK* p_railwk;
+  int dir;
+  
+  GF_ASSERT( mmdl );
+  GF_ASSERT( way );
+
+  p_railwk = MMDL_GetRailWork( mmdl );
+  FIELD_RAIL_WORK_GetFrontWay( p_railwk, way );
+
+  dir = MMDL_GetDirDisp( mmdl );
+  MMDL_Rail_GetDirLineWay( mmdl, dir, way );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ラインのdir方向の取得
+ *
+ *	@param	mmdl    モデルワーク
+ *	@param	dir     モデルの向き情報
+ *	@param	way     方向
+ */
+//-----------------------------------------------------------------------------
+void MMDL_Rail_GetDirLineWay( const MMDL *mmdl, u16 dir, VecFx16* way )
+{
+  FIELD_RAIL_WORK* p_railwk;
+  int rail_key;
+  u16 rail_dir;
+  u16 rot;
+  MtxFx33 mtx; 
+  VecFx32 calc_vec;
+  
+  GF_ASSERT( mmdl );
+  GF_ASSERT( way );
+  GF_ASSERT( dir < DIR_MAX4 );
+
+  p_railwk = MMDL_GetRailWork( mmdl );
+  FIELD_RAIL_WORK_GetFrontWay( p_railwk, way );
+
+  // プレイヤーの方向とライン前方方向を使い、角度を変換する
+  rail_key = FIELD_RAIL_WORK_GetFrontKey( p_railwk );
+  GF_ASSERT( rail_key != RAIL_KEY_NULL );
+
+  // レール前方方向の情報から、wayの回転角度を求める
+  rail_dir  = sc_RAILLINE_DIR_CHANGE_TBL[ rail_key ][ dir ];
+  rot       = sc_RAILLINE_DIR_ROT_Y[ rail_dir ];
+
+  // XZのパラメータだけ回転させる
+  VEC_Set( &calc_vec, way->x, way->y, way->z );
+  MTX_RotY33( &mtx, FX_SinIdx( rot ), FX_CosIdx( rot ) );
+  MTX_MultVec33( &calc_vec, &mtx, &calc_vec );
+  VEC_Fx16Set( way, calc_vec.x, calc_vec.y, calc_vec.z );
+}
+
 
 
 //----------------------------------------------------------------------------

@@ -112,6 +112,7 @@ typedef struct _RAIL_LINEPOS_SET{
 typedef void (RAIL_POS_FUNC)(const FIELD_RAIL_WORK * work, VecFx32 * pos);
 typedef void (RAIL_CAMERA_FUNC)(const FIELD_RAIL_MAN * man);
 typedef fx32 (RAIL_LINE_DIST_FUNC)(const RAIL_POINT * point_s, const RAIL_POINT * point_e, const RAIL_LINEPOS_SET * line_pos_set );
+typedef BOOL (RAIL_LINE_HIT_LOCATION_FUNC)( u32 rail_index, const FIELD_RAIL_MAN * man, const VecFx32* check_pos, RAIL_LOCATION* location, VecFx32* pos );
 
 //------------------------------------------------------------------
 /**
@@ -239,7 +240,7 @@ struct _RAIL_SETTING{
   u16 camera_func_count;
   u16 linepos_func_count;
   u16 line_dist_func_count;
-	u16 dummy00;
+	u16 line_hit_location_count;
   const RAIL_POINT* point_table;
   const RAIL_LINE*	line_table;
 	const RAIL_CAMERA_SET*	camera_table;
@@ -247,6 +248,7 @@ struct _RAIL_SETTING{
 	RAIL_CAMERA_FUNC*const*	camera_func;
 	RAIL_POS_FUNC*const*		line_pos_func;
 	RAIL_LINE_DIST_FUNC*const* line_dist_func;
+  RAIL_LINE_HIT_LOCATION_FUNC*const* line_hit_location_func;
 
   fx32  ofs_unit;     // 幅の移動単位
 } ;
@@ -284,6 +286,17 @@ extern void FIELD_RAIL_MAN_Update(FIELD_RAIL_MAN * man);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern BOOL FIELD_RAIL_MAN_UpdateCamera(FIELD_RAIL_MAN * man);
+
+//------------------------------------------------------------------
+// ３Ｄポジションから、レールロケーションの取得
+//------------------------------------------------------------------
+extern BOOL FIELD_RAIL_MAN_Calc3DPosRailLocation( const FIELD_RAIL_MAN * cp_man, const VecFx32* cp_pos, RAIL_LOCATION* p_location, VecFx32* p_locpos );
+
+//------------------------------------------------------------------
+// ３Ｄ移動ベクトルから、レールロケーションの取得
+//------------------------------------------------------------------
+extern BOOL FIELD_RAIL_MAN_Calc3DVecRailLocation( const FIELD_RAIL_MAN * cp_man, const VecFx32* cp_startpos, const VecFx32* cp_endpos, RAIL_LOCATION* p_location, VecFx32* p_locpos );
+
 
 
 //------------------------------------------------------------------
@@ -366,6 +379,13 @@ extern RAIL_KEY FIELD_RAIL_WORK_GetActionKey( const FIELD_RAIL_WORK * work );
 extern BOOL FIELD_RAIL_WORK_IsAction( const FIELD_RAIL_WORK * work );
 extern BOOL FIELD_RAIL_WORK_IsLastAction( const FIELD_RAIL_WORK * work );
 
+
+//------------------------------------------------------------------
+// 道前方の方向
+// 前方方向のキー配置
+//------------------------------------------------------------------
+extern void FIELD_RAIL_WORK_GetFrontWay( const FIELD_RAIL_WORK * work, VecFx16* way );
+extern RAIL_KEY FIELD_RAIL_WORK_GetFrontKey( const FIELD_RAIL_WORK * work );
 
 //------------------------------------------------------------------
 // ワーク単位の動作設定

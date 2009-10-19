@@ -1104,5 +1104,7 @@ extern MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATIO
 extern BOOL MMDL_GetRailFrontLocation( const MMDL *mmdl, RAIL_LOCATION* location );
 extern BOOL MMDL_GetRailDirLocation( const MMDL *mmdl, u16 dir, RAIL_LOCATION* location );
 extern void MMDL_Rail_UpdateGridPosDir( MMDL *mmdl, u16 dir );
+extern void MMDL_Rail_GetFrontWay( const MMDL *mmdl, VecFx16* way );
+extern void MMDL_Rail_GetDirLineWay( const MMDL *mmdl, u16 dir, VecFx16* way );
 
 #endif //MMDL_H_FILE

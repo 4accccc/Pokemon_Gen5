@@ -37,6 +37,15 @@
 extern FIELD_CAMERA* FIELD_RAIL_MAN_GetCamera( const FIELD_RAIL_MAN * man );
 extern const FIELD_RAIL_WORK* FIELD_RAIL_MAN_GetBindWork( const FIELD_RAIL_MAN * man );
 
+extern const RAIL_POINT* FIELD_RAIL_MAN_GetRailDatPoint( const FIELD_RAIL_MAN * man, u32 index );
+extern const RAIL_LINE* FIELD_RAIL_MAN_GetRailDatLine( const FIELD_RAIL_MAN * man, u32 index );
+extern const RAIL_CAMERA_SET* FIELD_RAIL_MAN_GetRailDatCamera( const FIELD_RAIL_MAN * man, u32 index );
+extern const RAIL_LINEPOS_SET* FIELD_RAIL_MAN_GetRailDatLinePos( const FIELD_RAIL_MAN * man, u32 index );
+extern fx32 FIELD_RAIL_MAN_GetRailDatUnitSize( const FIELD_RAIL_MAN * man );
+
+// テンポラリレールワークの取得
+extern FIELD_RAIL_WORK* FIELD_RAIL_MAN_GetCalcRailWork( const FIELD_RAIL_MAN * man );
+
 //------------------------------------------------------------------
 //  FIELD_RAIL_WORKアクセス関数
 //------------------------------------------------------------------

@@ -20,7 +20,7 @@
 
 #ifdef PM_DEBUG
 
-//#define DEBUG_RAIL_PRINT  // レールのデバック出力　（大量）
+#define DEBUG_RAIL_PRINT  // レールのデバック出力　（大量）
 
 #endif // PM_DEBUG
 
@@ -136,7 +136,10 @@ struct _FIELD_RAIL_WORK{
   
   VecFx32 pos;  // 現在座標
   RAIL_LOCATION now_location;
+
+  // 過去の情報
   RAIL_LOCATION last_location;
+
 
   const FIELD_RAIL_MAN* cp_man;
 };
@@ -209,6 +212,7 @@ static const RAIL_LINEPOS_SET* getRailDatLinePos( const RAIL_SETTING * raildat, 
 static RAIL_CAMERA_FUNC*const getRailDatCameraFunc( const RAIL_SETTING * raildat, u32 index );
 static RAIL_POS_FUNC*const getRailDatLinePosFunc( const RAIL_SETTING * raildat, u32 index );
 static RAIL_LINE_DIST_FUNC*const getRailDatLineDistFunc( const RAIL_SETTING * raildat, u32 index );
+static RAIL_LINE_HIT_LOCATION_FUNC*const getRailDatLineHitLocationFunc( const RAIL_SETTING * raildat, u32 index );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -226,6 +230,9 @@ static RAIL_KEY updatePointMove(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 count_
 
 static u32 getPointIndex( const RAIL_SETTING * raildat, const RAIL_POINT* point );
 static u32 getLineIndex( const RAIL_SETTING * raildat, const RAIL_LINE* line );
+
+
+static BOOL calcHitPlaneVec( const VecFx32* plane_vec1, const VecFx32* plane_vec2, const VecFx32* plane_pos, const VecFx32* vec_s, const VecFx32* vec_e, VecFx32* cross );
 
 
 
@@ -562,6 +569,166 @@ BOOL FIELD_RAIL_MAN_UpdateCamera(FIELD_RAIL_MAN * man)
 
   return TRUE;
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ３Ｄ座標からヒットするレールロケーションを取得
+ *
+ *	@param	cp_man          レールマネージャ
+ *	@param	cp_pos          座標
+ *	@param	p_location      レールロケーション
+ *	@param  p_locpos        ロケーションの座標
+ *
+ *	@retval TRUE    対応するレールロケーションがある
+ *	@retval FALSE   対応するレールロケーションがない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_RAIL_MAN_Calc3DPosRailLocation( const FIELD_RAIL_MAN * cp_man, const VecFx32* cp_pos, RAIL_LOCATION* p_location, VecFx32* p_locpos )
+{
+  int i;
+  const RAIL_LINE* cp_line;
+  const RAIL_POINT* cp_point_s;
+  const RAIL_POINT* cp_point_e;
+  BOOL result;
+  VecFx32 pos;
+  
+  GF_ASSERT( cp_man );
+  GF_ASSERT( cp_pos );
+  GF_ASSERT( p_location );
+
+  pos = *cp_pos;
+
+  // Ｙ座標が誤差以内で、その点につながるライン上にいるのか（内積を使用する）。
+  for( i=0; i<cp_man->rail_dat.line_count; i++ )
+  {
+    cp_line = getRailDatLine( &cp_man->rail_dat, i );
+    cp_point_s = getRailDatPoint( &cp_man->rail_dat, cp_line->point_s );
+    cp_point_e = getRailDatPoint( &cp_man->rail_dat, cp_line->point_e );
+    
+    // 求める
+    {
+	    RAIL_LINE_HIT_LOCATION_FUNC* func;
+      func = getRailDatLineHitLocationFunc( &cp_man->rail_dat, cp_line->line_pos_set );
+      if( func )
+      {
+        result = func( i, cp_man, &pos, p_location, p_locpos );
+        // ヒット
+        if( result )
+        {
+          return result;
+        }
+      }
+    }
+  }
+
+  return FALSE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ３Ｄベクトルからヒットするレールロケーションを取得
+ *  
+ *	@param	cp_man        レールマネージャ
+ *	@param	cp_startpos   開始座標
+ *	@param	cp_endpos     終了座標
+ *	@param	p_location    レールロケーション
+ *
+ *	@retval TRUE    対応するレールロケーションがある
+ *	@retval FALSE   対応するレールロケーションがない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_RAIL_MAN_Calc3DVecRailLocation( const FIELD_RAIL_MAN * cp_man, const VecFx32* cp_startpos, const VecFx32* cp_endpos, RAIL_LOCATION* p_location, VecFx32* p_locpos )
+{
+  int i;
+  const RAIL_LINE* cp_line;
+  const RAIL_POINT* cp_point_s;
+  const RAIL_POINT* cp_point_e;
+  const RAIL_LINEPOS_SET* cp_linepos;
+  VecFx32 cross_pos, plane_vec1, plane_vec2;
+  VecFx32 default_vec = {0, FX32_ONE, 0};
+  RAIL_LOCATION min_location;
+  VecFx32 min_pos;
+  fx32 min_dist, dist;
+  BOOL result;
+  BOOL data_in;
+  VecFx32 startpos, endpos;
+  GF_ASSERT( cp_man );
+  GF_ASSERT( cp_startpos );
+  GF_ASSERT( cp_endpos );
+  GF_ASSERT( p_location );
+
+  startpos = *cp_startpos;
+  endpos = *cp_endpos;
+
+  // Ｙ座標が誤差以内で、その点につながるライン上にいるのか（内積を使用する）。
+  data_in = FALSE;
+  for( i=0; i<cp_man->rail_dat.line_count; i++ )
+  {
+    cp_line = getRailDatLine( &cp_man->rail_dat, i );
+    cp_point_s = getRailDatPoint( &cp_man->rail_dat, cp_line->point_s );
+    cp_point_e = getRailDatPoint( &cp_man->rail_dat, cp_line->point_e );
+    cp_linepos = getRailDatLinePos( &cp_man->rail_dat, cp_line->line_pos_set );
+
+    DEBUG_RAIL_Printf( "\nlinename %s\n", cp_line->name );
+
+    VEC_Subtract( &cp_point_e->pos, &cp_point_s->pos, &plane_vec1 );
+    VEC_CrossProduct( &plane_vec1, &default_vec, &plane_vec2 );
+
+    // 平面とベクトルの交点から、ヒット判定を行う。
+    result = calcHitPlaneVec( &plane_vec1, &plane_vec2, &cp_point_s->pos, &startpos, &endpos, &cross_pos ); 
+
+    if( result == FALSE )
+    {
+      continue;
+    }
+
+    // 求める
+    {
+	    RAIL_LINE_HIT_LOCATION_FUNC* func;
+      func = getRailDatLineHitLocationFunc( &cp_man->rail_dat, cp_linepos->func_index );
+      if( func )
+      {
+        result = func( i, cp_man, &cross_pos, p_location, p_locpos );
+        // ヒット
+        if( result )
+        {
+          // 一番近いポジションの情報を使う
+          if( data_in == FALSE )
+          {
+            min_location = *p_location;
+            min_pos = *p_locpos;
+            min_dist = VEC_Distance( &startpos, p_locpos );
+
+            data_in = TRUE;
+          }
+          else
+          {
+            // どっちがちかい？
+            dist = VEC_Distance( &startpos, p_locpos );
+            if( dist < min_dist )
+            {
+              min_location = *p_location;
+              min_pos = *p_locpos;
+              min_dist = dist;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  if( data_in )
+  {
+    *p_location = min_location;
+    *p_locpos = min_pos;
+  }
+
+  return data_in;
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -1013,6 +1180,66 @@ BOOL FIELD_RAIL_WORK_IsLastAction( const FIELD_RAIL_WORK * work )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  前方方向を取得する
+ *
+ *	@param	work    ワーク
+ *	@param	way     方向格納先
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_WORK_GetFrontWay( const FIELD_RAIL_WORK * work, VecFx16* way )
+{
+  FIELD_RAIL_WORK* local_work;
+  GF_ASSERT( work );
+  
+
+  // 値変更後元に戻すので、constでＯＫとする
+  local_work = (FIELD_RAIL_WORK*)work;
+
+  // 前の方向を求める
+  {
+    VecFx32 pos;
+    s32 line_ofs_tmp = local_work->line_ofs;
+    if( local_work->line_ofs == 0 )
+    {
+      local_work->line_ofs += RAIL_WALK_OFS;
+    }
+    else
+    {
+      local_work->line_ofs -= RAIL_WALK_OFS;
+    }
+
+    // 座標を求める
+    getRailPosition(local_work, &pos);
+
+    // 元に戻す
+    local_work->line_ofs = line_ofs_tmp;
+
+    VEC_Subtract( &pos, &local_work->pos, &pos );
+    VEC_Normalize( &pos, &pos );
+    VEC_Fx16Set( way, pos.x, pos.y, pos.z );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現状のラインの前方方向へ向かうキーを取得
+ *
+ *	@param	work  ワーク
+ *
+ *	@return キー
+ */
+//-----------------------------------------------------------------------------
+RAIL_KEY FIELD_RAIL_WORK_GetFrontKey( const FIELD_RAIL_WORK * work )
+{
+  GF_ASSERT( work );
+  GF_ASSERT( work->type == FIELD_RAIL_TYPE_LINE );
+  GF_ASSERT( work->line );
+  return work->line->key;
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  ワーク単位の動作設定
  *
  *	@param	work
@@ -1118,7 +1345,7 @@ void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
 		}
 
 		if (set_key != RAIL_KEY_NULL)
-		{
+    {
 			DEBUG_RAIL_Printf("RAIL:%s :line_ofs=%d line_ofs_max=%d width_ofs=%d width_ofs_max=%d\n",
 					debugGetRailKeyName(set_key), 
           RAIL_OFS_TO_GRID(work->line_ofs), RAIL_OFS_TO_GRID(work->line_ofs_max), 
@@ -1128,6 +1355,9 @@ void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
       work->last_key    = set_key;
       work->last_frame  = work->save_move_frame;
       work->last_move   = TRUE;
+
+      // 座標の取得
+      getRailPosition(work, &work->pos);
 		}
 
 		if (type != work->type)
@@ -1146,9 +1376,6 @@ void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
       work->last_location = work->now_location;
       getRailLocation( work, &work->now_location );
 		}
-
-    // 座標を設定
-    getRailPosition(work, &work->pos);
 	}
 
 }
@@ -1179,6 +1406,78 @@ const FIELD_RAIL_WORK* FIELD_RAIL_MAN_GetBindWork( const FIELD_RAIL_MAN * man )
 	GF_ASSERT( man );
 	return man->camera_bind_work;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポイント情報の取得
+ */
+//-----------------------------------------------------------------------------
+const RAIL_POINT* FIELD_RAIL_MAN_GetRailDatPoint( const FIELD_RAIL_MAN * man, u32 index )
+{
+  GF_ASSERT( man );
+  return getRailDatPoint( &man->rail_dat, index );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライン情報を取得
+ */
+//-----------------------------------------------------------------------------
+const RAIL_LINE* FIELD_RAIL_MAN_GetRailDatLine( const FIELD_RAIL_MAN * man, u32 index )
+{
+  GF_ASSERT( man );
+  return getRailDatLine( &man->rail_dat, index );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ情報の取得
+ */
+//-----------------------------------------------------------------------------
+const RAIL_CAMERA_SET* FIELD_RAIL_MAN_GetRailDatCamera( const FIELD_RAIL_MAN * man, u32 index )
+{
+  GF_ASSERT( man );
+  return getRailDatCamera( &man->rail_dat, index );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポジション計算情報の取得
+ */
+//-----------------------------------------------------------------------------
+const RAIL_LINEPOS_SET* FIELD_RAIL_MAN_GetRailDatLinePos( const FIELD_RAIL_MAN * man, u32 index )
+{
+  GF_ASSERT( man );
+  return getRailDatLinePos( &man->rail_dat, index );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ユニットサイズの取得
+ */
+//-----------------------------------------------------------------------------
+fx32 FIELD_RAIL_MAN_GetRailDatUnitSize( const FIELD_RAIL_MAN * man )
+{
+  GF_ASSERT( man );
+  return man->rail_dat.ofs_unit;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  計算用　レールワークを取得する
+ *
+ *	@param	man   マネージャ
+ *
+ *	@return レールワーク
+ */
+//-----------------------------------------------------------------------------
+FIELD_RAIL_WORK* FIELD_RAIL_MAN_GetCalcRailWork( const FIELD_RAIL_MAN * man )
+{
+  GF_ASSERT( man );
+  return man->calc_work;
+}
+
 
 
 //------------------------------------------------------------------
@@ -1548,6 +1847,16 @@ static RAIL_LINE_DIST_FUNC*const getRailDatLineDistFunc( const RAIL_SETTING * ra
 	if( raildat->line_dist_func_count > index )
 	{	
 		return raildat->line_dist_func[ index ];
+	}
+	GF_ASSERT( index == RAIL_TBL_NULL );
+	return NULL;
+}
+// ラインと座標の当たり判定
+static RAIL_LINE_HIT_LOCATION_FUNC*const getRailDatLineHitLocationFunc( const RAIL_SETTING * raildat, u32 index )
+{
+	if( raildat->line_hit_location_count > index )
+	{	
+		return raildat->line_hit_location_func[ index ];
 	}
 	GF_ASSERT( index == RAIL_TBL_NULL );
 	return NULL;
@@ -2674,5 +2983,92 @@ static u32 getLineIndex( const RAIL_SETTING * raildat, const RAIL_LINE* line )
   GF_ASSERT_MSG( i<raildat->line_count, "不明なlineです。" );
   return 0; // フリーズ回避
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  平面と直線の交点を求める
+ *
+ *	@param	plane_vec1    平面ベクトル１
+ *	@param	plane_vec2    平面ベクトル２
+ *	@param  plane_pos     平面の一点
+ *	@param	vec_s         直線始点
+ *	@param	vec_e         直線終点
+ *	@param	cross         交点格納先
+ *
+ *	@retval TRUE  交点がある
+ *	@retval FALSE 交点はない
+ */
+//-----------------------------------------------------------------------------
+static BOOL calcHitPlaneVec( const VecFx32* plane_vec1, const VecFx32* plane_vec2, const VecFx32* plane_pos, const VecFx32* vec_s, const VecFx32* vec_e, VecFx32* cross )
+{
+  VecFx32 normal;
+  VecFx32 vector;
+  VecFx32 plane_nvec1, plane_nvec2;
+  fx32 d;
+  fx32 cross_dist;
+  fx32 de;
+  fx32 vector_dist;
+
+
+  DEBUG_RAIL_Printf( "\ncalcHitPlaneVec\n" );
+
+  // ベクトルを求める
+  VEC_Subtract( vec_e, vec_s, &vector );
+  vector_dist = VEC_Mag( &vector );
+  VEC_Normalize( &vector, &vector );
+  
+  // 平面の方程式を求める。
+  // 法線を求め、Ｄの値を求める
+  VEC_Normalize( plane_vec1, &plane_nvec1);  // 大きさはいらない
+  VEC_Normalize( plane_vec2, &plane_nvec2);  // 大きさはいらない
+  VEC_CrossProduct( &plane_nvec1, &plane_nvec2, &normal );
+  VEC_Normalize( &normal, &normal);  // 大きさはいらない
+  d = FX_Mul( normal.x, plane_pos->x ) + FX_Mul( normal.y, plane_pos->y ) + FX_Mul( normal.z, plane_pos->z );
+  
+  DEBUG_RAIL_Printf( "normal x[%d] y[%d] z[%d]\n", FX_Whole( normal.x ), FX_Whole( normal.y ), FX_Whole( normal.z ) );
+
+  // 交点を求める。
+  // P(交点) = A(始点) + (dist * Vec)
+  // dist = {d - (n_a*Ax + n_b*Ay + n_c*Az)} / (n_a*Vecx + n_b*Vecy + n_c*Vecz)
+  cross_dist = d - (FX_Mul( normal.x, vec_s->x ) + FX_Mul( normal.y, vec_s->y ) + FX_Mul( normal.z, vec_s->z ));
+  de = (FX_Mul( normal.x, vector.x ) + FX_Mul( normal.y, vector.y ) + FX_Mul( normal.z, vector.z ));
+
+  if( de == 0 )
+  {
+    DEBUG_RAIL_Printf( "de == 0\n" );
+    return FALSE; // 交点なし
+  }
+
+  DEBUG_RAIL_Printf( "cross_dist[0x%x] de[0x%x]\n", cross_dist, de );
+
+  cross_dist = FX_Div( cross_dist, de );
+  
+
+   
+  // 交点はベクトルの先
+  if( cross_dist > vector_dist )
+  {
+    DEBUG_RAIL_Printf( "cross_dist > vector_dist\n" );
+    return FALSE;
+  }
+
+  // 交点はベクトルの先
+  // cross_dist == 0今いるラインの平面上！
+  if( cross_dist <= 0 )
+  {
+    DEBUG_RAIL_Printf( "cross_dist <= 0\n" );
+    return FALSE;
+  }
+
+  DEBUG_RAIL_Printf( "cross_dist [%d]\n", FX_Whole( cross_dist ) );
+  VEC_Set( cross, 
+      vec_s->x + FX_Mul( vector.x, cross_dist ),
+      vec_s->y + FX_Mul( vector.y, cross_dist ),
+      vec_s->z + FX_Mul( vector.z, cross_dist ) );
+  
+  return TRUE;
+}
+
 
 

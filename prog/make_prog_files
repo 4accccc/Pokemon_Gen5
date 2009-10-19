@@ -425,6 +425,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/gym_fly.c \
         field/sodateya.c \
         field/scrcmd_hiden.c \
+        field/event_rail_slipdown.c \
         field/fldeff_ripple.c \
         field/fldeff_splash.c
 
