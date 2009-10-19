@@ -50,5 +50,8 @@ SP_EVENT_START  ev_init_script
 	//サンヨウシティ・トレーナーズスクール、夢の跡地に行くまで非表示、バッジ取得まで非表示
 	_FLAG_SET( FV_C01_LEADER1_01 )
 	_FLAG_SET( FV_C01_INVENTOR_01 )
+	
+	//D05R011:コンテナworkmanを戦闘後まで非表示に設定
+	_FLAG_SET( FV_D05R0101_WORKMAN_01 )
 
 SP_EVENT_END
