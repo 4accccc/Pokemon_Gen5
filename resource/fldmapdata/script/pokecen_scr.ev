@@ -207,13 +207,16 @@ _ANIME_LABEL	anm_heal_p01_turn_down
 EVENT_START ev_union
 {
   DEFINE_LOCAL have_cgear // C-gearを持っているかどうか
-  DEFINE_LOCAL room_in // ユニオンルームに入るかどうか
-  DEFINE_LOCAL explain // 説明を受けるかどうか
+  DEFINE_LOCAL room_in    // ユニオンルームに入るかどうか
+  DEFINE_LOCAL explain    // 説明を受けるかどうか
   DEFINE_LOCAL ret
 
-  $have_cgear = TRUE //【仮】@temp イベントフラグを参照すること！
+  // ローカル変数の初期化
+  _FLAG_SET( FE_CGEAR_GET )
+  _FLAG_CHECK( FE_CGEAR_GET, have_cgear )
   $room_in    = FALSE
   $explain    = FALSE
+
 
   // C-gear持ってる場合
   IF $have_cgear == TRUE THEN 
@@ -221,7 +224,7 @@ EVENT_START ev_union
     _TALK_OBJ_START()
     _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_01 ) 
     // メニュー表示
-    _BMPMENU_INIT_EX( 1, 5, 0, 1, ret )
+    _BMPMENU_INIT_EX( 1, 8, 0, 1, ret )
     _BMPMENU_MAKE_LIST( msg_pc_union_menu_yes, msg_pc_union_menu_yes )
     _BMPMENU_MAKE_LIST( msg_pc_union_menu_no, msg_pc_union_menu_no )
     _BMPMENU_MAKE_LIST( msg_pc_union_menu_explain, msg_pc_union_menu_explain )

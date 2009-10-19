@@ -228,6 +228,8 @@ VMCMD_RESULT EvCmdGetSaveDataStatus( VMHANDLE * core, void *wk )
   u16*         ret_exist = SCRCMD_GetVMWork( core, wk );  // コマンド第1引数
   u16*           ret_new = SCRCMD_GetVMWork( core, wk );  // コマンド第2引数
   u16*        ret_volume = SCRCMD_GetVMWork( core, wk );  // コマンド第3引数
+  u32         total_size = 0; // セーブ全体のサイズ
+  u32        actual_size = 0; // セーブされる実サイズ
 
   // セーブデータが存在するかどうか
   *ret_exist = SaveData_GetExistFlag( scw );
@@ -236,7 +238,8 @@ VMCMD_RESULT EvCmdGetSaveDataStatus( VMHANDLE * core, void *wk )
   *ret_new   = SaveControl_NewDataFlagGet( scw );
 
   // @todo 書き込むデータサイズに応じて, その段階を返す
+  SaveControl_GetActualSize( scw, &actual_size, &total_size );
   *ret_volume = 0;
 
   return VMCMD_RESULT_CONTINUE;
-}
+} 

@@ -191,6 +191,24 @@ static VMCMD_RESULT EvCmdDebugWatch(VMHANDLE * core, void *wk )
 }
 #endif
 
+//--------------------------------------------------------------
+/**
+ * ワークの値を出力する
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdDebugPrintWk( VMHANDLE * core, void *wk )
+{
+  GAMEDATA* gdata = SCRCMD_WORK_GetGameData( wk );
+  u16         val = SCRCMD_GetVMWorkValue( core, wk );  // コマンド第1引数
+
+  OS_Printf( "EvCmdDebugPrintWk: %d\n", val );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //======================================================================
 //  データロード・ストア関連
 //======================================================================

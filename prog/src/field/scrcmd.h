@@ -39,4 +39,6 @@ extern BOOL EvCmdWaitSubProcEnd( VM_MACHINE * core );
 extern BOOL EvWaitSubProcAndFree( VM_MACHINE * core );
 #endif
 
+extern VMCMD_RESULT EvCmdDebugPrintWk( VMHANDLE * core, void *wk );
+
 #endif	/* SCRCMD_H */

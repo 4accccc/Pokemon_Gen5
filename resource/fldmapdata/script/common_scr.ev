@@ -312,46 +312,73 @@ EVENT_END
 //  SCWK_PARAM0   セーブ結果を返すscript_def.h参照
 //--------------------------------------------------------------
 ev_report_event_call:
-{
-  DEFINE_LOCAL exe
-  DEFINE_LOCAL ret 
-  $exe = TRUE
+{ 
+	// 変数を初期化
+  $SCWK_PARAM1 = FALSE    // セーブするかどうか
+  $SCWK_PARAM2 = FALSE    // セーブデータが存在するかどうか
+  $SCWK_PARAM3 = FALSE    // プレイ中のデータが新規データかどうか
+  $SCWK_PARAM4 = FALSE    // セーブデータ量
+  $SCWK_PARAM5 = 0        // temp
+
+	// セーブデータの状態を取得
+	_REPORT_CHECK( SCWK_PARAM2, SCWK_PARAM3, SCWK_PARAM4 )
+	// test
+	$SCWK_PARAM2 = TRUE
+	$SCWK_PARAM3 = FALSE
+	$SCWK_PARAM4 = 1	
 
   //「かいても いいですか？」
   _TALKWIN_OPEN()
   _TALKMSG( msg_common_report_01 )
-  _YES_NO_WIN( ret )
+  _YES_NO_WIN( SCWK_PARAM5 )
   _TALKWIN_CLOSE()
-  IF $ret == 1 THEN //『いいえ』
-    $exe = FALSE
+  IF $SCWK_PARAM5 == 0 THEN //『はい』
+    $SCWK_PARAM1 = TRUE
   ENDIF
 
+	//「すでに べつの レポートが…」
+	IF ($SCWK_PARAM1 == TRUE) && ($SCWK_PARAM2 == TRUE) && ($SCWK_PARAM3 == TRUE) THEN
+    _TALKWIN_OPEN()
+    _TALKMSG( msg_common_report_08 )
+    _AB_KEYWAIT()
+    _TALKWIN_CLOSE()
+		$SCWK_PARAM1 = FALSE
+	ENDIF
+
   //「うえから かいても いいですか？」
-  IF $exe == TRUE THEN
+  IF ($SCWK_PARAM1 == TRUE) && ($SCWK_PARAM2 == TRUE) && ($SCWK_PARAM3 != TRUE) THEN
     _TALKWIN_OPEN()
     _TALKMSG( msg_common_report_02 )
-    _YES_NO_WIN( ret )
+    _YES_NO_WIN( SCWK_PARAM5 )
     _TALKWIN_CLOSE()
-    IF $ret == 1 THEN //『いいえ』
-     $exe = FALSE
+    IF $SCWK_PARAM5 == 1 THEN //『いいえ』
+     $SCWK_PARAM1 = FALSE
     ENDIF
   ENDIF
 
   // セーブ
-  IF $exe == TRUE THEN
+  IF $SCWK_PARAM1 == TRUE THEN
     //「かきこんでいます」
     _TALKWIN_OPEN()
-    _TALKMSG( msg_common_report_03 )
-    _REPORT_CALL( ret )
+		SWITCH $SCWK_PARAM4	
+    CASE 0 THEN 
+			_TALKMSG( msg_common_report_10 )
+		CASE 1 THEN
+			_TALKMSG( msg_common_report_11 )
+		CASE 2 THEN
+			_TALKMSG( msg_common_report_12 )
+		ENDSWITCH
+    _REPORT_CALL( SCWK_PARAM5 )	// 実セーブ処理
     _TALKWIN_CLOSE()
     // 書き込みに成功
-    IF $ret == TRUE THEN
+    IF $SCWK_PARAM5 == TRUE THEN
       //「しっかり かきのこした！」
+			_PLAYER_NAME(0)
       _TALKWIN_OPEN()
       _TALKMSG( msg_common_report_04 )
       _AB_KEYWAIT()
       _TALKWIN_CLOSE()
-      $SCWK_PARAM0 = SCR_REPORT_OK      // 結果を返す
+			$SCWK_PARAM0 = SCR_REPORT_OK
     // 書き込みに失敗
     ELSE
       //「かけませんでした」
@@ -364,7 +391,7 @@ ev_report_event_call:
   ENDIF
 
   // セーブしなかった場合
-  IF $exe != TRUE THEN
+  IF $SCWK_PARAM1 != TRUE THEN
     $SCWK_PARAM0 = SCR_REPORT_CANCEL  // 結果を返す
   ENDIF
 

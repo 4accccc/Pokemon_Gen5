@@ -20,11 +20,24 @@
 //--------------------------------------------------------------
   .macro _ASM_REPORT_EVENT_CALL ret_wk
   _PUSH_WORK  SCWK_PARAM0
+  _PUSH_WORK  SCWK_PARAM1
+  _PUSH_WORK  SCWK_PARAM2
+  _PUSH_WORK  SCWK_PARAM3
+  _PUSH_WORK  SCWK_PARAM4
+  _PUSH_WORK  SCWK_PARAM5
+
 
   _CHG_COMMON_SCR SCRID_REPORT_EVENT_CALL
-  _ASM_LDVAL  \ret_wk, SCWK_PARAM0
+  _ASM_LDWKVAL  \ret_wk, SCWK_PARAM0
 
+
+  _POP_WORK   SCWK_PARAM5
+  _POP_WORK   SCWK_PARAM4
+  _POP_WORK   SCWK_PARAM3
+  _POP_WORK   SCWK_PARAM2
+  _POP_WORK   SCWK_PARAM1
   _POP_WORK   SCWK_PARAM0
+
   .endm
 
 //--------------------------------------------------------------
