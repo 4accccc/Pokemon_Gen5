@@ -272,6 +272,9 @@ int Regulation_GetParam(const REGULATION* pReg, REGULATION_PARAM_TYPE type)
   case REGULATION_SHOW_POKE:  //    #ポケモン見せ合い
     ret = pReg->SHOW_POKE;
     break;
+  case REGULATION_SHOW_POKE_TIME:  //    #ポケモン見せ合い制限時間
+    ret = pReg->SHOW_POKE_TIME;
+    break;
   }
   return ret;
 }
@@ -290,56 +293,56 @@ void Regulation_SetParam(REGULATION* pReg, REGULATION_PARAM_TYPE type, int param
 
   switch(type){
   case REGULATION_NUM_LO: //    #参加数下限
-    if(pReg->NUM_LO > 6){
+    if(param >= 6){
       GF_ASSERT(0);
       return;
     }
     pReg->NUM_LO = param;
     break;
   case REGULATION_NUM_HI:         //参加数上限
-    if(pReg->NUM_LO > 6){
+    if(param >= 6){
       GF_ASSERT(0);
       return;
     }
     pReg->NUM_HI = param;
     break;
   case REGULATION_LEVEL:  //    #参加レベル
-    if(pReg->NUM_LO > 100){
+    if(param > 100){
       GF_ASSERT(0);
       return;
     }
     pReg->LEVEL = param;
     break;
   case REGULATION_LEVEL_RANGE: //    #レベル範囲
-    if(pReg->LEVEL_RANGE > REGULATION_LEVEL_RANGE_MAX){
+    if(param > REGULATION_LEVEL_RANGE_MAX){
       GF_ASSERT(0);
       return;
     }
     pReg->LEVEL_RANGE = param;
     break;
   case REGULATION_LEVEL_TOTAL: //    #レベル合計
-    if(pReg->LEVEL_RANGE > 600){
+    if(param > 600){
       GF_ASSERT(0);
       return;
     }
     pReg->LEVEL_TOTAL = param;
     break;
   case REGULATION_BOTH_POKE: //    #同じポケモン
-    if(pReg->BOTH_POKE > 2){
+    if(param >= 2){
       GF_ASSERT(0);
       return;
     }
     pReg->BOTH_POKE = param;
     break;
   case REGULATION_BOTH_ITEM:  //    #同じどうぐ
-    if(pReg->BOTH_ITEM > 2){
+    if(param >= 2){
       GF_ASSERT(0);
       return;
     }
     pReg->BOTH_ITEM = param;
     break;
   case REGULATION_MUST_POKE:   //    #必須ポケモン
-    if(pReg->MUST_POKE > MONSNO_MAX){ 
+    if(param >= MONSNO_MAX){ 
       GF_ASSERT(0);
       return;
     }
@@ -349,28 +352,28 @@ void Regulation_SetParam(REGULATION* pReg, REGULATION_PARAM_TYPE type, int param
     pReg->MUST_POKE_FORM = param;
     break;
   case REGULATION_SHOOTER:    //    #シューター
-    if(pReg->SHOOTER > 2){
+    if(param >= 2){
       GF_ASSERT(0);
       return;
     }
     pReg->SHOOTER = param;
     break;
   case REGULATION_TIME_VS:     //    #対戦時間
-    if(pReg->TIME_VS > REGULATION_VS_TIME){
+    if(param > REGULATION_VS_TIME){
       GF_ASSERT(0);
       return;
     }
     pReg->TIME_VS = param;
     break;
   case REGULATION_TIME_COMMAND: //    #入力時間
-    if(pReg->TIME_COMMAND > REGULATION_COMMAND_TIME){
+    if(param > REGULATION_COMMAND_TIME){
       GF_ASSERT(0);
       return;
     }
     pReg->TIME_COMMAND = param;
     break;
   case REGULATION_NICKNAME: //    #ニックネーム表示
-    if(pReg->NICKNAME > 2){
+    if(param >= 2){
       GF_ASSERT(0);
       return;
     }
@@ -383,11 +386,18 @@ void Regulation_SetParam(REGULATION* pReg, REGULATION_PARAM_TYPE type, int param
     pReg->AGE_HI = param;
     break;
   case REGULATION_SHOW_POKE:  //    #ポケモン見せ合い
-    if(pReg->SHOW_POKE > 2){
+    if(param >= 2){
       GF_ASSERT(0);
       return;
     }
     pReg->SHOW_POKE = param;
+    break;
+  case REGULATION_SHOW_POKE_TIME:  //    #ポケモン見せ合い
+    if(param > REGULATION_SHOW_POKE_TIME_MAX){
+      GF_ASSERT(0);
+      return;
+    }
+    pReg->SHOW_POKE_TIME = param;
     break;
   }
 }
