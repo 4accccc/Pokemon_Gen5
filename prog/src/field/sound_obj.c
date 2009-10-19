@@ -1,0 +1,137 @@
+#include <gflib.h>
+#include "fieldmap.h"
+#include "gamesystem/iss_3ds_sys.h"
+#include "sound_obj.h"
+
+#include "gamesystem/iss_3ds_unit.h"
+#include "system/ica_anime.h"
+#include "h03.naix"
+
+
+//========================================================================================
+/**
+ * @brief 音源オブジェクト
+ */
+//========================================================================================
+struct _SOUNDOBJ
+{
+  HEAPID             heapID;  // 使用するヒープID
+  FIELDMAP_WORK*   fieldmap;  // フィールドマップ
+  ISS_3DS_SYS*    iss3dsSys;  // 登録先3Dサウンドシステム
+  u8          iss3dsUnitIdx;  // 自身の3Dサウンドユニットの管理インデックス
+  ICA_ANIME*       icaAnime;  // アニメーションデータ
+  GFL_G3D_OBJSTATUS* status;  // 操作対象ステータス
+};
+
+
+//=========================================================================================
+// ■作成・破棄
+//=========================================================================================
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 音源オブジェクトを作成する
+ *
+ * @param fieldmap 表示先フィールドマップ
+ * @param iss_sys  登録先3Dサウンドシステム
+ * @param status   操作対象ステータス
+ */
+//-----------------------------------------------------------------------------------------
+SOUNDOBJ* SOUNDOBJ_Create( 
+    FIELDMAP_WORK* fieldmap, ISS_3DS_SYS* iss_sys, GFL_G3D_OBJSTATUS* status )
+{
+  SOUNDOBJ* sobj;
+  HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
+
+  // インスタンス生成
+  sobj = (SOUNDOBJ*)GFL_HEAP_AllocMemory( heap_id, sizeof(SOUNDOBJ) );
+
+  // インスタンス初期化
+  sobj->heapID        = heap_id;
+  sobj->fieldmap      = fieldmap;
+  sobj->iss3dsSys     = iss_sys;
+  sobj->iss3dsUnitIdx = ISS_3DS_SYS_AddUnit( iss_sys );
+  sobj->icaAnime      = NULL;
+  sobj->status        = status;
+  return sobj;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 音源オブジェクトを破棄する
+ *
+ * @param sobj 破棄するオブジェクト
+ */
+//-----------------------------------------------------------------------------------------
+void SOUNDOBJ_Delete( SOUNDOBJ* sobj )
+{
+  // 3Dサウンドユニットを破棄
+  ISS_3DS_SYS_DeleteUnit( sobj->iss3dsSys, sobj->iss3dsUnitIdx );
+
+  // アニメーションデータを破棄
+  if( sobj->icaAnime )
+  {
+    ICA_ANIME_Delete( sobj->icaAnime );
+  }
+
+  // インスタンスを破棄
+  GFL_HEAP_FreeMemory( sobj );
+}
+
+
+//=========================================================================================
+// ■動作管理
+//=========================================================================================
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief アニメーションを登録する
+ *
+ * @param arc_id       設定するアニメーションデータのアーカイブID
+ * @param dat_id       設定するアニメーションデータのアーカイブ内データID
+ * @param buf_interval ストリーミング間隔
+ */
+//-----------------------------------------------------------------------------------------
+void SOUNDOBJ_SetAnime( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID dat_id, int buf_interval )
+{
+  // 登録済みデータを破棄
+  if( sobj->icaAnime )
+  {
+    ICA_ANIME_Delete( sobj->icaAnime );
+  }
+
+  // アニメーション作成
+  sobj->icaAnime = ICA_ANIME_CreateStreamingAlloc( 
+                             sobj->heapID, arc_id, dat_id, buf_interval );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief アニメーションを進める
+ *
+ * @param sobj  更新対象オブジェクト
+ * @param frame 進めるフレーム数
+ */
+//-----------------------------------------------------------------------------------------
+void SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* sobj, fx32 frame )
+{
+  VecFx32 pos;
+  ISS_3DS_UNIT* unit;
+
+  // アニメーション未登録なら, 何もしない
+  if( sobj->icaAnime == NULL )
+  {
+    return;
+  }
+
+  // アニメーションを更新
+  ICA_ANIME_IncAnimeFrame( sobj->icaAnime, frame );
+  ICA_ANIME_GetTranslate( sobj->icaAnime, &pos );
+
+  // 3Dステータスを設定
+  VEC_Set( &sobj->status->trans, pos.x, pos.y, pos.z );
+
+  // 音源位置を合わせる
+  unit = ISS_3DS_SYS_GetUnit( sobj->iss3dsSys, sobj->iss3dsUnitIdx );
+  ISS_3DS_UNIT_SetPos( unit, &pos );
+}

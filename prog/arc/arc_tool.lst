@@ -198,3 +198,4 @@
 	ARCID_FLD_EVENTDATA		"fieldmap\eventdata.narc"	#フィールドイベントデータ
 	$VERSION_WHITE	ARCID_ENCOUNT	"encount_data_w.narc"	#ホワイト版エンカウントデータ
 	$VERSION_BLACK	ARCID_ENCOUNT	"encount_data_b.narc"	#ブラック版エンカウントデータ
+  ARCID_H03_GIMMICK "h03.narc" # H03ギミック

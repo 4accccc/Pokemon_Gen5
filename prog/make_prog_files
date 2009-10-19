@@ -428,7 +428,9 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_hiden.c \
         field/event_rail_slipdown.c \
         field/fldeff_ripple.c \
-        field/fldeff_splash.c
+        field/fldeff_splash.c \
+        field/field_gimmick_h03.c \
+        field/sound_obj.c
 
 
 # フィールド天気

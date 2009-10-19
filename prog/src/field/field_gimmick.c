@@ -13,6 +13,7 @@
 #include "field_gimmick.h"
 #include "fieldmap.h"
 #include "field_gimmick_h01.h"
+#include "field_gimmick_h03.h"
 #include "gym_elec.h"
 #include "gym_normal.h"
 #include "gym_anti.h"
@@ -31,6 +32,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   GYM_NORMAL_Setup,
   GYM_ANTI_Setup,
   GYM_FLY_Setup,
+  H03_GIMMICK_Setup,
 
 };
 
@@ -42,6 +44,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   GYM_NORMAL_End,
   GYM_ANTI_End,
   GYM_FLY_End,
+  H03_GIMMICK_End,
 
 };
 
@@ -53,6 +56,7 @@ const static FLD_GMK_END_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   GYM_NORMAL_Move,
   GYM_ANTI_Move,
   GYM_FLY_Move,
+  H03_GIMMICK_Move,
 
 };
 
