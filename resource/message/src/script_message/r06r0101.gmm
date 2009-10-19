@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-14T18:50:10"/>
+	<create user="matsumiya" host="W00207" date="2009-10-19T10:49:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="248" top="176" right="949" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="526"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="539"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="693"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -297,10 +297,27 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 助手♂</attribute>
-		<language name="JPN" width="256">こちら　きせつけんきゅうじょ　です
-けんきゅうないようは　ヒミツ　です</language>
-		<language name="JPN_KANJI" width="256">こちら　きせつけんきゅうじょ　です
-けんきゅうないようは　ヒミツ　です</language>
+		<language name="JPN" width="256">こちら　きせつけんきゅうじょ　です[BE:01:ページ切り替え（クリア）]
+このさき　ネジやま　では
+きせつによって　ゆきがつもりますよ</language>
+		<language name="JPN_KANJI" width="256">こちら　季節研究所　です[BE:01:ページ切り替え（クリア）]
+このさき　ネジ山　では
+季節によって　雪が積もりますよ</language>
+	</row>
+
+	<row id="msg_ｒ06ｒ0101_assistantm2_01">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手♂</attribute>
+		<language name="JPN" width="256">きせつの　えいきょうで
+がいけんが　かわる　ポケモン……[BE:01:ページ切り替え（クリア）]
+これも　しんかの　いっしゅと
+いえるのでしょうか？</language>
+		<language name="JPN_KANJI" width="256">季節の　影響で
+外見が　変わる　ポケモン……[BE:01:ページ切り替え（クリア）]
+これも　進化の　一種と
+いえるのでしょうか？</language>
 	</row>
 
 	<flowchart-group-list>
