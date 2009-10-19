@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00178" date="2009-08-26T22:30:08"/>
+	<create user="matsumiya" host="W00207" date="2009-10-19T18:44:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="207"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,7 +292,18 @@
 	</lock>
 
 
-	<row id="msg_c06r0301_boy_01">
+	<row id="msg_c06r0301_boy1_01">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BOY1
+少年</attribute>
+		<language name="JPN" width="256">・ハートのウロコの
+　にゅうしゅほうほうに　ついて</language>
+		<language name="JPN_KANJI" width="256">・ハートのウロコの
+　入手方法に　ついて</language>
+	</row>
+
+	<row id="msg_c06r0301_boy_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>スクリプト講習会用</comment>
 		<language name="JPN" width="256">ナシが　おいしい
 きせつ　です</language>
@@ -300,7 +311,7 @@
 季節です</language>
 	</row>
 
-	<row id="msg_c06r0301_boy_01_01">
+	<row id="msg_c06r0301_boy_01_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>スクリプト講習会用</comment>
 		<language name="JPN" width="256">いいえ　ナシが　おいしい
 きせつ　です！</language>
@@ -308,7 +319,7 @@
 美味しい　季節です！</language>
 	</row>
 
-	<row id="msg_c06r0301_boy_02">
+	<row id="msg_c06r0301_boy_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>スクリプト講習会用</comment>
 		<language name="JPN" width="256">サンマが　おいしい
 きせつ　です</language>
@@ -316,7 +327,7 @@
 季節です</language>
 	</row>
 
-	<row id="msg_c06r0301_boy_02_01">
+	<row id="msg_c06r0301_boy_02_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>スクリプト講習会用</comment>
 		<language name="JPN" width="256">サンマが　おいしい
 きせつ　です▼</language>
@@ -324,35 +335,31 @@
 季節です▼</language>
 	</row>
 
-	<row id="msg_c06r0301_boy_03">
+	<row id="msg_c06r0301_boy_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>スクリプト講習会用
-
 →はい・いいえ分岐</comment>
 		<language name="JPN" width="256">サンマ　たべたい？</language>
 		<language name="JPN_KANJI" width="256">サンマ　食べたい？</language>
 	</row>
 
-	<row id="msg_c06r0301_boy_04">
+	<row id="msg_c06r0301_boy_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>スクリプト講習会用
 はいを選択
-
 →サンマ持ってくるアニメへ</comment>
 		<language name="JPN" width="256">よしきた！▼</language>
 		<language name="JPN_KANJI" width="256">よしきた！▼</language>
 	</row>
 
-	<row id="msg_c06r0301_boy_05">
+	<row id="msg_c06r0301_boy_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>スクリプト講習会用
 いいえを選択
-
 →終了</comment>
 		<language name="JPN" width="256">なん　だと</language>
 		<language name="JPN_KANJI" width="256">なん　だと</language>
 	</row>
 
-	<row id="msg_c06r0301_boy_06">
+	<row id="msg_c06r0301_boy_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>スクリプト講習会用
-
 サンマもってくるアニメ後</comment>
 		<language name="JPN" width="256">へい　おまち！</language>
 		<language name="JPN_KANJI" width="256">へい　お待ち！</language>
