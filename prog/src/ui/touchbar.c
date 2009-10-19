@@ -10,6 +10,9 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #include <gflib.h>
 
+//sound
+#include "sound/pm_sndsys.h"
+
 //mine
 #include "ui/touchbar.h"
 //=============================================================================
@@ -40,6 +43,11 @@ enum
 	TOUCHBAR_SEQ_TRG,		//トリガ
 } ;
 
+//-------------------------------------
+///	サウンド定義
+//=====================================
+#define TOUCHBAR_SE_DECIDE	(SEQ_SE_DECIDE1)
+#define TOUCHBAR_SE_Y_REG		(SEQ_SE_SYS_07)
 
 //=============================================================================
 /**
@@ -239,10 +247,10 @@ void TOUCHBAR_Main( TOUCHBAR_WORK *p_wk )
 	switch( p_wk->seq )
 	{	
 	case TOUCHBAR_SEQ_MAIN:
+		//タッチ検出
 		{	
 			int i;
 			u32 x, y;
-
 			p_wk->trg		= TOUCHBAR_SELECT_NONE;
 			for( i = 0; i < p_wk->tbl_len; i++ )
 			{	
@@ -274,10 +282,12 @@ void TOUCHBAR_Main( TOUCHBAR_WORK *p_wk )
 								{	
 									GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[ cp_setup->icon ], APP_COMMON_BARICON_CHECK_ON );
 								}
+								PMSND_PlaySE( TOUCHBAR_SE_Y_REG );
 							}
 							else
 							{	
 								GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[ cp_setup->icon ], sc_anmseq_on_tbl[ cp_setup->icon ] );
+								PMSND_PlaySE( TOUCHBAR_SE_DECIDE );
 							}
 							p_wk->trg	= cp_setup->icon;
 							p_wk->seq	 = TOUCHBAR_SEQ_ANM;
@@ -285,6 +295,24 @@ void TOUCHBAR_Main( TOUCHBAR_WORK *p_wk )
 						}
 					}
 				}
+			}
+		}
+		//Yボタンでチェックが切り替る
+		if( p_wk->p_clwk[ TOUCHBAR_ICON_CHECK ] != NULL )
+		{	
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+			{	
+				if( GFL_CLACT_WK_GetAnmSeq( p_wk->p_clwk[ TOUCHBAR_ICON_CHECK ] ) == APP_COMMON_BARICON_CHECK_ON )
+				{	
+					GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[ TOUCHBAR_ICON_CHECK ], APP_COMMON_BARICON_CHECK_OFF );
+				}
+				else
+				{	
+					GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[ TOUCHBAR_ICON_CHECK ], APP_COMMON_BARICON_CHECK_ON );
+				}
+				PMSND_PlaySE( TOUCHBAR_SE_Y_REG );
+				p_wk->trg	= TOUCHBAR_ICON_CHECK;
+				p_wk->seq	 = TOUCHBAR_SEQ_ANM;
 			}
 		}
 		break;

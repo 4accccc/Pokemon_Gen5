@@ -52,10 +52,11 @@ typedef enum
 //アイコン
 #define TOUCHBAR_ICON_Y						(168)
 #define TOUCHBAR_ICON_Y_CHECK			(172)
-#define TOUCHBAR_ICON_X_01				(16)
-#define TOUCHBAR_ICON_X_02				(38)
-#define TOUCHBAR_ICON_X_03				(16)
-#define TOUCHBAR_ICON_X_04				(38)
+#define TOUCHBAR_ICON_X_00				(16)
+#define TOUCHBAR_ICON_X_01				(48)
+#define TOUCHBAR_ICON_X_02				(80)
+#define TOUCHBAR_ICON_X_03				(112)
+#define TOUCHBAR_ICON_X_04				(144)
 #define TOUCHBAR_ICON_X_05				(168)
 #define TOUCHBAR_ICON_X_06				(200)
 #define TOUCHBAR_ICON_X_07				(232)
@@ -83,6 +84,7 @@ typedef enum
 
 //アイコンの最大登録個数
 #define APBAR_ICON_REGISTER_MAX			(8)
+
 
 //=============================================================================
 /**

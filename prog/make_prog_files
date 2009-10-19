@@ -489,9 +489,7 @@ SRCS_OVERLAY_UI_COMMON = ui/ui_scene.c \
                          ui/print_tool.c
 
 # コンフィグ画面
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_CONFIG_PANEL = app/config_panel/config_panel2.c
 
 
