@@ -14,6 +14,7 @@
 #include "field/fieldmap_proc.h"
 #include "fldmmdl.h"
 #include "field_g3d_mapper.h"
+#include "map_attr.h"
 
 //======================================================================
 //	define
@@ -139,5 +140,6 @@ extern void FIELD_PLAYER_GetFrontGridPos(
 extern BOOL FIELD_PLAYER_CheckLiveMMdl( const FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_ChangeMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form );
-
+extern BOOL FIELD_PLAYER_CheckAttrNaminori(
+    FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr );
 

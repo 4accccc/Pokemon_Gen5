@@ -70,11 +70,11 @@ extern void SCRIPT_CallScript( GMEVENT *event,
  * @param	event		GMEVENT_CONTROL型のポインタ
  * @param	scr_id		スクリプトID
  * @param	obj			話しかけ対象OBJのポインタ(ない時はNULL)
- * @retval	none
+ * @retval	SCRIPT_WORK
  * 他のイベントからスクリプトへの切替を行う
  */
 //--------------------------------------------------------------
-extern void SCRIPT_ChangeScript( GMEVENT *event,
+extern SCRIPT_WORK * SCRIPT_ChangeScript( GMEVENT *event,
 		u16 scr_id, MMDL *obj, HEAPID temp_heapID );
 
 
@@ -279,7 +279,17 @@ extern void SCRIPT_ResetEventFlagTrainer( EVENTWORK *ev, u16 tr_id );
 extern void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
     s16 range, u16 dir, u16 scr_id, u16 tr_id, int tr_type, int tr_no );
 
+//--------------------------------------------------------------
+/**
+ * プログラムからスクリプトへの引数となるパラメータをセット
+ * @param	sc SCRIPT_WORK
+ * @param	prm0	パラメータ０（SCWK_PARAM0）
+ * @param	prm1	パラメータ１（SCWK_PARAM1）
+ * @param	prm2	パラメータ２（SCWK_PARAM2）
+ * @param	prm3	パラメータ３（SCWK_PARAM3）
+ * @retval none
+ */
+//--------------------------------------------------------------
+extern void SCRIPT_SetScriptWorkParam( SCRIPT_WORK *sc, u16 prm0, u16 prm1, u16 prm2, u16 prm3 );
 
 #endif	/* SCRIPT_H */
-
-

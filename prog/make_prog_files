@@ -198,7 +198,8 @@ SRCS  +=    $(SOUNDSRC) \
 				system/poke2dgra.c \
         system/nsbtx_to_clwk.c \
         system/pms_draw.c \
-        field/field_encount_st.c
+        field/field_encount_st.c \
+        field/field_skill.c
 
 
 #================================================

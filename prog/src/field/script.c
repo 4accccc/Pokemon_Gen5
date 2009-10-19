@@ -287,7 +287,7 @@ void SCRIPT_CallScript( GMEVENT *event,
  * 他のイベントからスクリプトへの切替を行う
  */
 //--------------------------------------------------------------
-void SCRIPT_ChangeScript( GMEVENT *event,
+SCRIPT_WORK * SCRIPT_ChangeScript( GMEVENT *event,
 		u16 scr_id, MMDL *obj, HEAPID temp_heapID )
 {
 	GMEVENT *sc_event;
@@ -297,6 +297,7 @@ void SCRIPT_ChangeScript( GMEVENT *event,
       GMEVENT_GetGameSysWork(event), scr_id, obj, NULL);
   sc_event = FldScript_CreateControlEvent( sc );
   GMEVENT_ChangeEvent( event, sc_event );
+  return sc;
 }
 
 //========================================================================
@@ -959,6 +960,25 @@ BOOL SetEvDefineObjCode( FLDCOMMON_WORK* fsys, u16 no, u16 obj_code )
 	return SetEventWorkValue( fsys, (OBJCHR_WORK_START+no), obj_code );
 }
 #endif
+
+//--------------------------------------------------------------
+/**
+ * プログラムからスクリプトへの引数となるパラメータをセット
+ * @param	sc SCRIPT_WORK
+ * @param	prm0	パラメータ０（SCWK_PARAM0）
+ * @param	prm1	パラメータ１（SCWK_PARAM1）
+ * @param	prm2	パラメータ２（SCWK_PARAM2）
+ * @param	prm3	パラメータ３（SCWK_PARAM3）
+ * @retval none
+ */
+//--------------------------------------------------------------
+void SCRIPT_SetScriptWorkParam( SCRIPT_WORK *sc, u16 prm0, u16 prm1, u16 prm2, u16 prm3 )
+{
+  SCRIPT_SetEventWorkValue( sc, SCWK_PARAM0, prm0 );
+  SCRIPT_SetEventWorkValue( sc, SCWK_PARAM1, prm1 );
+  SCRIPT_SetEventWorkValue( sc, SCWK_PARAM2, prm2 );
+  SCRIPT_SetEventWorkValue( sc, SCWK_PARAM3, prm3 );
+}
 
 //======================================================================
 //	フラグ関連

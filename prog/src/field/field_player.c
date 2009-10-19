@@ -747,6 +747,30 @@ void FIELD_PLAYER_ChangeMoveForm(
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * 自機波乗りアトリビュートチェック
+ * @param fld_player
+ * @param nattr
+ * @param fattr
+ * @retval BOOL TRUE=波乗り可能アトリビュートである。
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_CheckAttrNaminori(
+    FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr )
+{
+  MAPATTR_FLAG attr_flag = MAPATTR_GetAttrFlag( fattr );
+  MAPATTR_VALUE f_val = MAPATTR_GetAttrValue( fattr );
+  
+  if( ((attr_flag&MAPATTR_FLAGBIT_WATER) &&
+      MAPATTR_GetHitchFlag(fattr) == FALSE) ||
+    MAPATTR_VALUE_CheckShore(f_val) == TRUE ){
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
 //======================================================================
 //	data
 //======================================================================
