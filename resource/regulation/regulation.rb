@@ -154,7 +154,7 @@ class RegulationBin
     when COL_VETO_POKE    #éQâ¡ã÷é~É|ÉPÉÇÉì
       if value =~ /Ç»Çµ/
         num = 0
-        for i in 0..POKENUM_MAX_BYTE
+        for i in 1..POKENUM_MAX_BYTE
           outFH.write([num].pack("c"))
         end
       else
@@ -163,7 +163,7 @@ class RegulationBin
     when COL_VETO_ITEM    #éùÇøçûÇ›ã÷é~ìπãÔ
       if value =~ /Ç»Çµ/
         num = 0
-        for i in 0..ITEMNUM_MAX_BYTE 
+        for i in 1..ITEMNUM_MAX_BYTE 
           outFH.write([num].pack("c"))
         end
       else
