@@ -274,6 +274,11 @@ EVENT_START ev_union
     ENDIF
   ENDIF
 
+  // フィールドマップ通信終了処理
+  IF $room_in == TRUE THEN
+    _FIELD_COMM_EXIT()
+  ENDIF
+
   // レポート処理
   IF $room_in == TRUE THEN
     // レポートを書く

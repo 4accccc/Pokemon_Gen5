@@ -465,7 +465,6 @@ static GMEVENT_RESULT EVENT_MapChangeToUnion(GMEVENT * event, int *seq, void*wor
 		(*seq) ++;
 		break;
   case 5:
-    OBATA_Printf( "===================================EVENT_MapChangeToUnion: finish\n" );
 		return GMEVENT_RES_FINISH; 
 	}
 	return GMEVENT_RES_CONTINUE;
