@@ -71,32 +71,32 @@
 #gethero.imd
 ./mmdl_res/gethero.imd: ./mmdl_nchara/gethero.ncg ./mmdl_nchara/gethero.ncl
 	@echo convert ncg_imd gethero
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/gethero.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/gethero.ncg ./mmdl_res ./mmdl_res/ncg4x4gethero.imd 4 4 2
 
 #getheroine.imd
 ./mmdl_res/getheroine.imd: ./mmdl_nchara/getheroine.ncg ./mmdl_nchara/getheroine.ncl
 	@echo convert ncg_imd getheroine
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/getheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/getheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4gethero.imd 4 4 2
 
 #reporthero.imd
 ./mmdl_res/reporthero.imd: ./mmdl_nchara/reporthero.ncg ./mmdl_nchara/reporthero.ncl
 	@echo convert ncg_imd reporthero
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/reporthero.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/reporthero.ncg ./mmdl_res ./mmdl_res/ncg4x4reporthero.imd 4 4 2
 
 #reportheroine.imd
 ./mmdl_res/reportheroine.imd: ./mmdl_nchara/reportheroine.ncg ./mmdl_nchara/reportheroine.ncl
 	@echo convert ncg_imd reportheroine
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/reportheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/reportheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4reporthero.imd 4 4 2
 
 #pchero.imd
 ./mmdl_res/pchero.imd: ./mmdl_nchara/pchero.ncg ./mmdl_nchara/pchero.ncl
 	@echo convert ncg_imd pchero
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pchero.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pchero.ncg ./mmdl_res ./mmdl_res/ncg4x4pchero.imd 4 4 5
 
 #pcheroine.imd
 ./mmdl_res/pcheroine.imd: ./mmdl_nchara/pcheroine.ncg ./mmdl_nchara/pcheroine.ncl
 	@echo convert ncg_imd pcheroine
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pcheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pcheroine.ncg ./mmdl_res ./mmdl_res/ncg4x4pchero.imd 4 4 5
 
 #bone.imd
 ./mmdl_res/bone.imd: ./mmdl_nchara/bone.ncg ./mmdl_nchara/bone.ncl

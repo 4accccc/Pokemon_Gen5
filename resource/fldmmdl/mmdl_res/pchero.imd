@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2009-08-07T20:01:31' host='W00154A' user='lee_hyunjung' source='woman1.mb'/>
+	<create date='2009-10-20T17:50:56' host='W00154A' user='lee_hyunjung' source='bigman.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2009-08-07T20:01:31' host='W00154A' user='lee_hyunjung' source='woman1.mb'/>
+<original_create date='2009-10-20T17:50:56' host='W00154A' user='lee_hyunjung' source='bigman.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
 <model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
 
 <box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='3'/>
 
-<tex_image_array size='7'>
-	<tex_image name='woman1.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.1.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+<tex_image_array size='5'>
+	<tex_image name='bignman.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/bigman/bignman.1.tga' palette_name='bignman' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -52,7 +52,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.2.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='bignman.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/bigman/bignman.2.tga' palette_name='bignman' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -88,7 +88,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.3.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='bignman.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/bigman/bignman.3.tga' palette_name='bignman' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -124,7 +124,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.4.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='bignman.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/bigman/bignman.4.tga' palette_name='bignman' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -160,7 +160,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.5.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='bignman.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/bigman/bignman.5.tga' palette_name='bignman' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -196,82 +196,10 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.6.tga' palette_name='woman1' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 fff0 0fff 0000 0000 0000 
-			0000 0000 f000 556f f355 000f 0000 0000 
-			0000 0000 5f00 3556 5553 00f3 0000 0000 
-			0000 0000 65f0 3356 5533 0f75 0000 0000 
-			0000 0000 653f 3556 5553 0f35 0000 0000 
-			0000 0000 533f 5566 5555 f733 0000 0000 
-			0000 f000 3344 5665 3556 f733 0000 0000 
-			0000 f000 4444 5553 3355 f743 0000 0000 
-			0000 f000 4b44 3344 4333 f744 0000 0000 
-			0000 0000 7b47 4474 4444 f774 0000 0000 
-			0000 0000 bc47 4777 4774 0f77 0000 0000 
-			0000 0000 cc80 4be7 7c44 0f77 0000 0000 
-			0000 0000 cc80 bcc4 7cb4 00f7 0000 0000 
-			0000 0000 ccb0 ddcc 7bbb 000f 0000 0000 
-			0000 0000 b800 bbbc f74b 0000 0000 0000 
-			0000 0000 f000 b88f 0f74 0000 0000 0000 
-			0000 0000 0000 bf00 00fa 0000 0000 0000 
-			0000 0000 0000 aa70 00fa 0000 0000 0000 
-			0000 0000 0000 79a7 00fa 0000 0000 0000 
-			0000 0000 0000 7a97 0ffa 0000 0000 0000 
-			0000 0000 ff00 afbb f8fa 0000 0000 0000 
-			0000 0000 ccf0 aa8b f8fa 0000 0000 0000 
-			0000 0000 ccf0 aaa8 0faa 0000 0000 0000 
-			0000 0000 f700 aaa8 0f1a 0000 0000 0000 
-			0000 0000 f000 2111 f122 0000 0000 0000 
-			0000 0000 4f00 1f44 f422 0000 0000 0000 
-			0000 0000 ff00 f0ff f541 0000 0000 0000 
-			0000 0000 0000 0000 0f5f 0000 0000 0000 
-			0000 0000 0000 0000 00ff 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-		</bitmap>
-	</tex_image>
-	<tex_image name='woman1.7' format='palette16' original_width='32' original_height='32' index='6' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.7.tga' palette_name='woman1' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 fff0 0fff 0000 0000 0000 
-			0000 0000 f000 556f f355 000f 0000 0000 
-			0000 0000 5f00 3556 5553 00f3 0000 0000 
-			0000 0000 65f0 3356 5533 0f75 0000 0000 
-			0000 0000 653f 3556 5553 0f35 0000 0000 
-			0000 0000 533f 5566 5555 f733 0000 0000 
-			0000 f000 3344 5665 3556 f733 0000 0000 
-			0000 f000 4444 5553 3355 f743 0000 0000 
-			0000 f000 4b44 3344 4333 f744 0000 0000 
-			0000 0000 7b47 4474 4444 f774 0000 0000 
-			0000 0000 bc47 4777 4774 0f77 0000 0000 
-			0000 0000 cc80 4be7 7c44 0f77 0000 0000 
-			0000 0000 cc80 dcc4 7cb4 00f7 0000 0000 
-			0000 0000 ccb0 ddcc 7bbb 000f 0000 0000 
-			0000 0000 b800 bbbc f74b 0000 0000 0000 
-			0000 0000 f000 b88f 0f74 0000 0000 0000 
-			0000 0000 0000 bf00 00fa 0000 0000 0000 
-			0000 0000 0000 aaf0 007a 0000 0000 0000 
-			0000 0000 0000 79f0 07a9 0000 0000 0000 
-			0000 0000 0000 79ff 079a 0000 0000 0000 
-			0000 0000 f000 a9ab 7b97 0000 0000 0000 
-			0000 0000 f000 99ab 7cb8 0000 0000 0000 
-			0000 0000 0000 99af bc8a 000f 0000 0000 
-			0000 0000 0000 991f bb8a 000f 0000 0000 
-			0000 0000 f000 2221 8811 000f 0000 0000 
-			0000 0000 f000 1222 44f1 000f 0000 0000 
-			0000 0000 5f00 f145 f44f 0000 0000 0000 
-			0000 0000 7f00 0f55 0ff0 0000 0000 0000 
-			0000 0000 f000 00ff 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-		</bitmap>
-	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size='1'>
-	<tex_palette name='woman1' color_size='16' index='0'>
+	<tex_palette name='bignman' color_size='16' index='0'>
 		2e47 454e 5dd3 3126 20c4 45a9 45e9 1463 
 		1953 3cf8 34d1 363b 4afc 2e1b 7fff 0000 
 	</tex_palette>
