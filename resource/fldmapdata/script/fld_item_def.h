@@ -9,6 +9,11 @@
 #define SCRID_FLD_ITEM_1 (7001)
 #define SCRID_FLD_ITEM_2 (7002)
 #define SCRID_FLD_ITEM_3 (7003)
-#define SCRID_FLD_ITEM2 (7004)
+#define SCRID_FLD_ITEM_4 (7004)
+#define SCRID_FLD_ITEM_5 (7005)
+#define SCRID_FLD_ITEM_6 (7006)
+#define SCRID_FLD_ITEM_7 (7007)
+#define SCRID_FLD_ITEM_8 (7008)
+#define SCRID_FLD_ITEM2 (7009)
 
 #endif //_FLD_ITEM_DEF_H_
