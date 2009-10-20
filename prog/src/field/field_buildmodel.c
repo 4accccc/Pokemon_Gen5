@@ -98,6 +98,7 @@ typedef struct {
   u16 prog_id;                  ///<プログラム指定ID
   BMODEL_ID sub_bm_id;          ///<従属モデル指定ID
   s16 sx, sy, sz;               ///<従属モデルの相対位置
+  u16 anm_id;
 }BMINFO;
 
 //------------------------------------------------------------------
@@ -795,10 +796,10 @@ static void BMINFO_Load(FIELD_BMODEL_MAN * man, u16 file_id)
     bmInfo->sx = infobin->submodel_x;
     bmInfo->sy = infobin->submodel_y;
     bmInfo->sz = infobin->submodel_z;
-    anm_id = infobin->anime_id;
-    if (anm_id == 0xffff) continue;
+    bmInfo->anm_id = infobin->anime_id;
+    if (bmInfo->anm_id == 0xffff) continue;
     GFL_ARC_LoadDataOfsByHandle(handle, FILEID_BMODEL_ANIMEDATA,
-        anm_id * BM_ANMDATA_SIZE, BM_ANMDATA_SIZE,
+        bmInfo->anm_id * BM_ANMDATA_SIZE, BM_ANMDATA_SIZE,
         &bmInfo->animeData);
     //DEBUG_BMANIME_dump(&man->animeData[entryNo]);
   }
@@ -817,6 +818,7 @@ static void BMINFO_init(BMINFO * bmInfo)
   bmInfo->sx = 0;
   bmInfo->sy = 0;
   bmInfo->sz = 0;
+  bmInfo->anm_id = 0xffff;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
