@@ -37,7 +37,7 @@
 #define MMDL_ID_PAIR   	(0xfe)	///<連れ歩き専用ID
 #define MMDL_ID_GIMMICK	(0xfd)	///<ジム等の仕掛け専用ID
 #define MMDL_ID_COMMACTOR (0xfc) ///<通信アクター専用ID
-#define MMDL_ID_EVENTOBJ (0xfb) ///<スクリプトイベント内で追加されるOBJID
+#define MMDL_ID_EVENTOBJ_00 (0xfb) ///<スクリプトイベント内で追加されるOBJID
 
 //--------------------------------------------------------------
 //	エイリアスID 元:PL script_def.h
@@ -212,6 +212,21 @@
 #define DRAW_STA_PCWOMAN_MAX (DRAW_STA_PC_BOW+1)
 
 #define DRAW_STA_SWIMHERO_MAX (4)
+
+///アイテムゲット用描画ステータス
+#define DRAW_STA_ITEMGET_STOP 0x00 ///<停止
+#define DRAW_STA_ITEMGET_ANM 0x01 ///<アニメ
+#define DRAW_STA_ITEMGET_MAX 0x02 ///<最大
+
+///PC預けアニメ用描画ステータス
+#define DRAW_STA_PCAZUKE_STOP 0x00 ///<停止
+#define DRAW_STA_PCAZUKE_ANM0 0x01 ///<預けアニメ
+#define DRAW_STA_PCAZUKE_ANM1 0x02 ///<受け取りアニメ
+#define DRAW_STA_PCAZUKE_MAX 0x03 ///<最大
+
+///自機レポート用描画ステータス
+#define DRAW_STA_SAVEHERO 0x00
+#define DRAW_STA_SAVEHERO_MAX 0x01
 
 //--------------------------------------------------------------
 ///	フィールド動作モデル 自機専用描画ステータス
