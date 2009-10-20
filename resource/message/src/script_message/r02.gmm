@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-09T11:44:09"/>
+	<create user="matsumiya" host="W00207" date="2009-10-20T18:56:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -430,6 +430,49 @@
 それに　ママだって　いつも
 あなたのことを　想っているから[BE:01:ページ切り替え（クリア）]
 じゃあね　がんばってね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r02_boy2a_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・はい／いいえ</comment>
+		<attribute name="キャラ指定">少年</attribute>
+		<language name="JPN" width="256">ねーねー[BE:01:ページ切り替え（クリア）]
+いまから　すごいことするから
+みててくれない？</language>
+		<language name="JPN_KANJI" width="256">ねーねー[BE:01:ページ切り替え（クリア）]
+いまから　すごいことするから
+みててくれない？</language>
+	</row>
+
+	<row id="msg_r02_boy2a_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・はい選択時アニメ前</comment>
+		<attribute name="キャラ指定">少年</attribute>
+		<language name="JPN" width="256">よし！　まってて！！[BE:01:ページ切り替え（クリア）]
+よぉっ！！</language>
+		<language name="JPN_KANJI" width="256">よし！　まってて！！[BE:01:ページ切り替え（クリア）]
+よぉっ！！</language>
+	</row>
+
+	<row id="msg_r02_boy2a_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・はい選択時アニメ後
+・以降、このメッセージ繰り返し</comment>
+		<attribute name="キャラ指定">少年</attribute>
+		<language name="JPN" width="256">ねっ！　みてくれた！？[BE:01:ページ切り替え（クリア）]
+だんさを　とびおりると
+ちかみち　できて　すごいでしょ！</language>
+		<language name="JPN_KANJI" width="256">ねっ！　みてくれた！？[BE:01:ページ切り替え（クリア）]
+だんさを　とびおりると
+ちかみち　できて　すごいでしょ！</language>
+	</row>
+
+	<row id="msg_r02_boy2a_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">少年</attribute>
+		<language name="JPN" width="256">えんりょ　しなくて　いいのにさ！</language>
+		<language name="JPN_KANJI" width="256">えんりょ　しなくて　いいのにさ！</language>
 	</row>
 
 	<row id="msg_r02_boy2_01">
