@@ -82,7 +82,7 @@ static void _obj_set_deco( GFL_CLWK* act, GFL_BMPWIN* win, u8 width, u8 line, PM
 static void _unit_init( PMS_DRAW_UNIT* unit, PMS_DRAW_OBJ* obj, HEAPID heap_id );
 static void _unit_exit( PMS_DRAW_UNIT* unit );
 static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que );
-static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* font, GFL_BMPWIN* win, PMS_DATA* pms, HEAPID heap_id );
+static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* font, GFL_BMPWIN* win, PMS_DATA* pms, GFL_POINT* offset, HEAPID heap_id );
 static void _unit_clear( PMS_DRAW_UNIT* unit );
 static CLSYS_DRAW_TYPE BGFrameToVramType( u8 frame );
 
@@ -213,12 +213,31 @@ void PMS_DRAW_Exit( PMS_DRAW_WORK* wk )
 //-----------------------------------------------------------------------------
 void PMS_DRAW_Print( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8 id )
 { 
+  GFL_POINT offset = {0};
+  PMS_DRAW_PrintOffset( wk, win, pms, id, &offset );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  指定IDに簡易会話を表示(表示オフセット指定版)
+ *
+ *	@param	PMS_DRAW_WORK* wk ワーク
+ *	@param	win 表示するBMPWIN
+ *	@param	pms 表示する簡易会話データ
+ *	@param	id 表示ユニット管理ID
+ *	@param  offset 表示オフセット（ドット単位）
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void PMS_DRAW_PrintOffset( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8 id, GFL_POINT* offset )
+{ 
   PMS_DRAW_UNIT* unit;
 
   GF_ASSERT( wk && win && pms );
   GF_ASSERT( id < wk->unit_num );
 
-  _unit_print( &wk->unit[id], wk->print_que, wk->font, win, pms, wk->heap_id );
+  _unit_print( &wk->unit[id], wk->print_que, wk->font, win, pms, offset, wk->heap_id );
     
   // Mainを通るまでは転送されない
   wk->b_print_end = FALSE;
@@ -526,12 +545,13 @@ static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que )
  *	@param	font
  *	@param	win
  *	@param	pms
+ *	@param  offset
  *	@param	heap_id 
  *
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* font, GFL_BMPWIN* win, PMS_DATA* pms, HEAPID heap_id )
+static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* font, GFL_BMPWIN* win, PMS_DATA* pms, GFL_POINT* offset, HEAPID heap_id )
 {
   STRBUF* buf;
 
@@ -576,7 +596,7 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
   
   // プリントリクエスト
   buf = PMSDAT_ToString( pms, heap_id );
-  PRINT_UTIL_Print( &unit->print_util, print_que, 0, 0, buf, font );
+  PRINT_UTIL_Print( &unit->print_util, print_que, offset->x, offset->y, buf, font );
   GFL_STR_DeleteBuffer( buf );
       
   // 転送

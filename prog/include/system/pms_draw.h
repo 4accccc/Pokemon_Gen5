@@ -88,6 +88,20 @@ extern void PMS_DRAW_Exit( PMS_DRAW_WORK* wk );
 extern void PMS_DRAW_Print( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8 id );
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  指定IDに簡易会話を表示
+ *
+ *	@param	PMS_DRAW_WORK* wk ワーク
+ *	@param	win 表示するBMPWIN
+ *	@param	pms 表示する簡易会話データ
+ *	@param	id 表示ユニット管理ID
+ *	@param  offset 表示オフセット（ドット単位）
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+extern void PMS_DRAW_PrintOffset( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8 id, GFL_POINT* offset );
+//-----------------------------------------------------------------------------
+/**
  *	@brief  指定IDの表示終了チェック
  *
  *	@param	PMS_DRAW_WORK* wk ワーク
