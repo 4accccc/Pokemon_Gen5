@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-10-14T12:58:43" source="ball_002.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-10-20T22:04:51" source="ball_002.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-10-14T12:58:43" source="ball_002.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2009-10-20T22:04:51" source="ball_002.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="6" xyz="-0.015381 5.990723 -0.015869" whd="0.031006 0.031006 0.031250"/>
+<box_test pos_scale="7" xyz="-7.812500 0.000000 -7.812500" whd="0.000000 0.000000 0.000000"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="op_mb"
@@ -210,7 +210,7 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="25 25 25"
 		shininess_table_flag="off"
 		tex_image_idx="1" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
@@ -234,7 +234,7 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="25 25 25"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="1"
 		tex_tiling="repeat repeat"
@@ -1279,9 +1279,9 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
+		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.185303 384.415039 0.000000"
+		translate="-1000.000000 0.000000 -1000.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="318" polygon_size="145"
