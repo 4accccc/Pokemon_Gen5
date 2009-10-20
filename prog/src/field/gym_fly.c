@@ -507,15 +507,7 @@ void GYM_FLY_Move(FIELDMAP_WORK *fieldWork)
 {
   int i;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
-#ifdef PM_DEBUG
-  //テスト
-  {
-    GAMESYS_WORK *gsys  = FIELDMAP_GetGameSysWork( fieldWork );
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-      test_GYM_FLY_Shot(gsys);
-    }
-  } 
-#endif
+
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
 
@@ -670,6 +662,8 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_FLY_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_FLY_TMP_ASSIGN_ID);
 
+  FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
+
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
     GIMMICKWORK *gmkwork = SaveData_GetGimmickWork( GAMEDATA_GetSaveControlWork( gamedata ) );
@@ -679,7 +673,20 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
   switch(*seq){
   case 0:
     {
+      //カメラトレースを切る
+      FIELD_CAMERA_StopTraceRequest(camera);
+    }
+    (*seq)++;
+    break;
+  case 1:
+    {
       int arc_idx;
+      {
+        //カメラとレースが生きている間は処理を進めない
+        if ( FIELD_CAMERA_CheckTrace(camera) ){
+          break;;
+        }
+      }
 
       OS_Printf("Shot_Idx = %d Shot_Dir = %d\n",tmp->ShotIdx, GetDirIdxFromDir(tmp->ShotDir));
       {
@@ -715,9 +722,13 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs, 0 );
       FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs+1, 0 );  
     }
+    //カメラ情報保存
+    {
+      FIELD_CAMERA_SetRecvCamParam(camera);
+    }
     (*seq)++;
     break;
-  case 1:
+  case 2:
     {
       u8 anm_ofs;
       u8 obj_idx;
@@ -741,13 +752,29 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
         OS_Printf("スクリプトコール\n");
         SCRIPT_CallScript( event, SCRID_PRG_C06GYM0101_PLAYER_IN,
           NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
+
+        //カメラ倒す
+        {
+          FLD_CAM_MV_PARAM param;
+          param.Core.AnglePitch = 1368;
+          param.Core.AngleYaw = 0;
+          param.Chk.Shift = FALSE;
+          param.Chk.Angle = TRUE;
+          param.Chk.Dist = FALSE;
+          param.Chk.Fovy = FALSE;
+          FIELD_CAMERA_SetLinerParam(camera, &param, 4);
+        }
         (*seq)++;
       }
     }
     break;
-  case 2:
-    //自機アニメ終了待ち
-    if(1){
+  case 3:
+    //カメラ移動終了待ち
+    if(!FIELD_CAMERA_CheckMvFunc(camera)){
+      //カメラモード変更
+      {
+        FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_DIRECT_POS );
+      }
       {
         MMDL * mmdl;
         FIELD_PLAYER *fld_player;
@@ -771,7 +798,7 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       (*seq)++;
     }
     break;
-  case 3:
+  case 4:
     {
       u8 anm_ofs;
       u8 obj_idx;
@@ -790,7 +817,7 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       }
     }
     break;
-  case 4:
+  case 5:
     //大砲アニメ終了チェック＆フレーム読み取り終了チェック
     if (!tmp->FrameSetStart){
       //主人公最終位置セット
@@ -816,7 +843,7 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       (*seq)++;
     }
     break;
-  case 5:
+  case 6:
     {
       MMDL * mmdl;
       FIELD_PLAYER *fld_player;
@@ -840,6 +867,13 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs, FALSE);
       FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs+1, FALSE);
     }
+
+    {
+      //トレース再開
+      FIELD_CAMERA_RestartTrace(camera);
+      //カメラ復帰情報をクリア
+      FIELD_CAMERA_ClearRecvCamParam(camera);
+    }
     return GMEVENT_RES_FINISH;
   }
 
@@ -850,6 +884,17 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
     VecFx32 dst_vec = {0,0,0};
 
     obj_idx = tmp->ShotIdx;
+
+    //カメラ処理
+    {
+      if(tmp->NowIcaAnmFrmIdx == 45)
+      {
+        //カメラモード変更
+        FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_DIRECT_POS );
+        FIELD_CAMERA_RecvLinerParam(camera, 8);
+        
+      }
+    }
 
     if (tmp->NowIcaAnmFrmIdx == SHOT_APP_FRM){
       //自機表示
@@ -961,5 +1006,4 @@ static u8 GetDirIdx(const u16 inDir, const u8 inShotIdx)
   dir_idx = ChgDirIdxByRot(dir_idx, CannonRot[inShotIdx]);
   return dir_idx;
 }
-
 
