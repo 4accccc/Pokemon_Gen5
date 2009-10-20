@@ -99,6 +99,8 @@ static const BOOL IRC_BATTLE_IsFinishMessage( IRC_BATTLE_WORK *work );
 
 static void IRC_BATTLE_InitNet( IRC_BATTLE_WORK *work );
 static void IRC_BATTLE_ExitNet( IRC_BATTLE_WORK *work );
+static const BOOL IRC_BATTLE_Send_Flag( IRC_BATTLE_WORK* work , u8 flagType , u8 value );
+static void IRC_BATTLE_Post_Flag( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 static const BOOL IRC_BATTLE_Send_CompareMatchData( IRC_BATTLE_WORK* work );
 static void IRC_BATTLE_Post_CompareMatchData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 static u8* IRC_BATTLE_Post_CompareMatchDataBuff( int netID, void* pWork , int size );
@@ -117,6 +119,7 @@ GFL_PROC_DATA IRC_BATTLE_ProcData =
 
 static const NetRecvFuncTable IRC_BATTLE_CommRecvTable[] = 
 {
+  { IRC_BATTLE_Post_Flag , NULL },
   { IRC_BATTLE_Post_CompareMatchData , IRC_BATTLE_Post_CompareMatchDataBuff },
   { IRC_BATTLE_Post_BattleData , IRC_BATTLE_Post_BattleDataBuff },
 };
@@ -149,6 +152,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcInit( GFL_PROC * proc, int * seq , void *p
   
   work->state = IBS_INIT_NET;
   work->subProcWork = NULL;
+  work->battleParty = NULL;
 
   IRC_BATTLE_InitGraphic( work );
   IRC_BATTLE_LoadResource( work );
@@ -167,6 +171,12 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcTerm( GFL_PROC * proc, int * seq , void *p
   IRC_BATTLE_TermMessage( work );
   IRC_BATTLE_ReleaseResource( work );
   IRC_BATTLE_TermGraphic( work );
+  
+  if( work->battleParty != NULL )
+  {
+    GFL_HEAP_FreeMemory( work->battleParty );
+  }
+  
   if( pwk == NULL )
   {
     GAMEDATA_Delete( work->initWork->gameData );
@@ -261,6 +271,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
   case IBS_MATCHDATA_IS_SAME_WAIT:
     if( IRC_BATTLE_IsFinishMessage( work ) == TRUE )
     {
+      IRC_BATTLE_ShowMessage( work , IRC_BATTLE_MSG_WAIT_COMM );
       work->state = IBS_SEND_BATTLE_DATA;
     }
     break;
@@ -314,18 +325,26 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
       if( ret == TRUE )
       {
         IRC_BATTLE_SUBPROC_TermSubProc( work , work->subProcWork );
+        work->subProcWork = NULL;
         work->state = IBS_SELECT_POKE_FADEIN;
       }
     }
     break;
 
   case IBS_SELECT_POKE_FADEIN:
-    IRC_BATTLE_InitGraphic( work );
-    IRC_BATTLE_LoadResource( work );
-    IRC_BATTLE_InitMessage( work );
-    WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
-    work->state = IBS_SELECT_POKE_FADEIN_WAIT;
+    {
+      const BOOL ret = IRC_BATTLE_Send_Flag( work , IBFT_FINISH_POKELIST , 0 );
+      if( ret == TRUE )
+      {
+        IRC_BATTLE_InitGraphic( work );
+        IRC_BATTLE_LoadResource( work );
+        IRC_BATTLE_InitMessage( work );
+        IRC_BATTLE_ShowMessage( work , IRC_BATTLE_MSG_WAIT_COMM );
+        WIPE_SYS_Start( WIPE_PATTERN_FSAM , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+                        WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+        work->state = IBS_SELECT_POKE_FADEIN_WAIT;
+      }
+    }
     break;
     
   case IBS_SELECT_POKE_FADEIN_WAIT:
@@ -359,6 +378,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
     {
       GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
       GFL_NET_TimingSyncStart( selfHandle , IBT_BATTLE_START );
+      IRC_BATTLE_ShowMessage( work , IRC_BATTLE_MSG_WAIT_COMM );
       //IRC_BATTLE_ShowMessage( work , IRC_BATTLE_MSG_04 );
       work->state = IBS_START_BATTLE_TIMMING;
     }
@@ -426,6 +446,7 @@ static GFL_PROC_RESULT IRC_BATTLE_ProcMain( GFL_PROC * proc, int * seq , void *p
 
   //結果発表
   case IBS_DRAW_RESULT:
+    OS_TPrintf("result[%d]\n",work->battleParam.result);
     switch( work->battleParam.result )
     {
     case BTL_RESULT_WIN:
@@ -617,7 +638,7 @@ static void IRC_BATTLE_InitBattleSetupParam( IRC_BATTLE_WORK *work )
   BTL_SETUP_Single_Comm( &work->battleParam , work->initWork->gameData , 
                          GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS );
 
-  work->battleParam.partyPlayer = IRC_BATTLE_BattleData_GetPokeParty( work->sendBattleData );  ///< プレイヤーのパーティ
+  work->battleParam.partyPlayer = work->battleParty;
   OS_TPrintf("[[%d]]\n",PokeParty_GetPokeCount(work->battleParam.partyPlayer));
 }
 
@@ -779,7 +800,6 @@ static void IRC_BATTLE_InitMessage( IRC_BATTLE_WORK *work )
 
 static void IRC_BATTLE_TermMessage( IRC_BATTLE_WORK *work )
 {
-  GFL_TCBL_Exit( work->tcblSys );
   if( work->msgStr != NULL )
   {
     GFL_STR_DeleteBuffer( work->msgStr );
@@ -788,6 +808,7 @@ static void IRC_BATTLE_TermMessage( IRC_BATTLE_WORK *work )
   {
     PRINTSYS_PrintStreamDelete( work->printHandle );
   }
+  GFL_TCBL_Exit( work->tcblSys );
   GFL_BMPWIN_Delete( work->msgWin );
   GFL_MSG_Delete( work->msgHandle );
   GFL_FONT_Delete( work->fontHandle );
@@ -942,6 +963,52 @@ static void IRC_BATTLE_ExitNet( IRC_BATTLE_WORK *work )
 }
 
 #pragma mark [> send/post func
+
+//フラグ送受信
+typedef struct
+{
+  u8 flg;
+  u8 value;
+}IRC_BATTLE_FLAG_PACKET;
+
+static const BOOL IRC_BATTLE_Send_Flag( IRC_BATTLE_WORK* work , u8 flagType , u8 value )
+{
+  IRC_BATTLE_FLAG_PACKET pkt;
+  ARI_TPrintf("Send FlagData[%d:%d]\n",flagType,value );
+  pkt.flg = flagType;
+  pkt.value = value;
+  //データ作成
+  {
+    GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+    BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
+                              IBST_FLAG , sizeof(IRC_BATTLE_FLAG_PACKET) , 
+                              &pkt , TRUE , FALSE , FALSE );
+    if( ret == FALSE )
+    {
+      ARI_TPrintf("Send FlagData is failued!!\n");
+    }
+    return ret;
+  }
+}
+
+static void IRC_BATTLE_Post_Flag( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+  const IRC_BATTLE_FLAG_PACKET *pkt = (IRC_BATTLE_FLAG_PACKET*)pData;
+  IRC_BATTLE_WORK *work = (IRC_BATTLE_WORK*)pWork;
+  ARI_TPrintf("Finish Post FlagData[%d:%d]\n",pkt->flg,pkt->value);
+
+  switch(pkt->flg)
+  {
+  case IBFT_FINISH_POKELIST:
+    if( work->subProcWork != NULL )
+    {
+      IRC_BATTLE_SUBPROC_PostFinishPokelist( work->subProcWork );
+    }
+    break;
+  }
+}
+
+
 //マッチング比較データ送信
 static const BOOL IRC_BATTLE_Send_CompareMatchData( IRC_BATTLE_WORK* work )
 {

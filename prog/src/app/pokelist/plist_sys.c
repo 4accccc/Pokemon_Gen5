@@ -2889,6 +2889,8 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
     
     work->isCallForceExit = TRUE;
     work->mainSeq = PSMS_FADEOUT_FORCE;
+    work->plData->ret_sel = PL_SEL_POS_ENTER;
+    work->plData->ret_mode = PL_RET_NORMAL;
     
 
     //‹­§‘I‘ð

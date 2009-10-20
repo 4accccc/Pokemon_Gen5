@@ -52,6 +52,9 @@ struct _IRC_BATTLE_SUBPROC_WORK
   PLIST_DATA plData;
   PSTATUS_DATA psData;
   
+  u8 timeCnt;
+  u32 befVCount;
+  
   GFL_PROCSYS *procSys;
 };
 
@@ -89,7 +92,9 @@ IRC_BATTLE_SUBPROC_WORK* IRC_BATTLE_SUBPROC_InitSubProc( IRC_BATTLE_WORK *work )
   IRC_BATTLE_SUBPROC_InitListData( work , procWork , &procWork->plData );
   IRC_BATTLE_SUBPROC_InitStatusData( work , procWork , &procWork->psData );
   
-  work->state = IBSS_INIT_POKELIST;
+  procWork->timeCnt = 0;
+  procWork->befVCount = OS_GetVBlankCount();
+  procWork->state = IBSS_INIT_POKELIST;
   return procWork;
 }
 
@@ -98,6 +103,21 @@ IRC_BATTLE_SUBPROC_WORK* IRC_BATTLE_SUBPROC_InitSubProc( IRC_BATTLE_WORK *work )
 //--------------------------------------------------------------
 void IRC_BATTLE_SUBPROC_TermSubProc( IRC_BATTLE_WORK *work , IRC_BATTLE_SUBPROC_WORK *procWork )
 {
+  u8 i;
+  //パーティーのセット
+  work->battleParty = PokeParty_AllocPartyWork( work->heapId );
+  for( i=0;i<CHAMPIONSHIP_POKE_NUM;i++ )
+  {
+    const u8 num = procWork->plData.in_num[i];
+    if( num > 0 )
+    {
+      POKEMON_PARAM *pp = PP_CreateByPPP( work->initWork->csData->ppp[num-1] , work->heapId );
+      PokeParty_Add( work->battleParty , pp );
+      GFL_HEAP_FreeMemory( pp );
+    }
+  }
+  
+
 
   GFL_HEAP_FreeMemory( procWork->pokeParty );
 
@@ -110,6 +130,21 @@ void IRC_BATTLE_SUBPROC_TermSubProc( IRC_BATTLE_WORK *work , IRC_BATTLE_SUBPROC_
 //--------------------------------------------------------------
 const BOOL IRC_BATTLE_SUBPROC_UpdateSubProc( IRC_BATTLE_WORK *work , IRC_BATTLE_SUBPROC_WORK *procWork )
 {
+  //制限時間処理
+  if( procWork->plData.use_tile_limit == TRUE &&
+      procWork->plData.time_limit > 0 )
+  {
+    const u32 vCount = OS_GetVBlankCount();
+    procWork->timeCnt += vCount - procWork->befVCount;
+    procWork->befVCount = vCount;
+    if( procWork->timeCnt > 60 )
+    {
+      procWork->plData.time_limit--;
+      procWork->timeCnt -= 60;
+    }
+  }
+  
+  
   switch( procWork->state )
   {
   case IBSS_INIT_POKELIST:
@@ -147,6 +182,12 @@ const BOOL IRC_BATTLE_SUBPROC_UpdateSubProc( IRC_BATTLE_WORK *work , IRC_BATTLE_
     break;
 
   case IBSS_MAIN_POKESTATUS:
+    if( procWork->plData.use_tile_limit == TRUE &&
+        procWork->plData.time_limit == 0 )
+    {
+      procWork->psData.isExitRequest = TRUE;
+    }
+
     if( GFL_PROC_LOCAL_Main( procWork->procSys ) == GFL_PROC_MAIN_NULL )
     {
       procWork->state = IBSS_EXIT_POKESTATUS;
@@ -269,3 +310,10 @@ static void IRC_BATTLE_SUBPROC_InitStatusData( IRC_BATTLE_WORK *work , IRC_BATTL
   psData->isExitRequest = FALSE;
 }
 
+//--------------------------------------------------------------
+//	相手が終了したフラグ受信
+//--------------------------------------------------------------
+void IRC_BATTLE_SUBPROC_PostFinishPokelist( IRC_BATTLE_SUBPROC_WORK *procWork )
+{
+  procWork->plData.comm_selected_num++;
+}

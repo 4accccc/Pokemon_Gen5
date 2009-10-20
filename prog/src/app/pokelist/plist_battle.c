@@ -186,7 +186,8 @@ void PLIST_BATTLE_UpdateBattle( PLIST_WORK *work )
   }
   
   //待機人数メッセージの更新
-  if( work->befSelectedNum != work->plData->comm_selected_num )
+  if( work->befSelectedNum != work->plData->comm_selected_num &&
+      work->mainSeq == PSMS_SELECT_POKE )
   {
     PLIST_BATTLE_DispWaitingMessage( work );
     work->befSelectedNum = work->plData->comm_selected_num;

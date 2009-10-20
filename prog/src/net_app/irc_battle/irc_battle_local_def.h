@@ -80,7 +80,8 @@ typedef enum
 //送信種類
 typedef enum
 {
-  IBST_MATCH_DATA = GFL_NET_CMD_IRC_BATTLE,  //マッチング比較データ
+  IBST_FLAG = GFL_NET_CMD_IRC_BATTLE,
+  IBST_MATCH_DATA,  //マッチング比較データ
   IBST_BATTLE_DATA,
   
   IBST_MAX,
@@ -88,10 +89,17 @@ typedef enum
 
 typedef enum
 {
-  IBT_POKELIST_END,
+  IBT_POKELIST_END = 3,
   IBT_BATTLE_START,
   IBT_BATTLE_END,
 }IRC_BATTLE_TIMMING;
+
+typedef enum
+{
+  IBFT_FINISH_POKELIST,
+  
+  IBFT_MAX
+}IRC_BATTLE_FLAG_TYPE;
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -132,6 +140,7 @@ typedef struct
   void *postBattleData[IRC_BATTLE_MEMBER_NUM];
   BOOL isPostBattleData[IRC_BATTLE_MEMBER_NUM];
   BATTLE_SETUP_PARAM battleParam;
+  POKEPARTY *battleParty;
   
   //メッセージ用
   GFL_TCBLSYS     *tcblSys;
