@@ -1722,9 +1722,10 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
   // ○○は××を使った！
   {
     int arg[2];
+    u16 strID;
     arg[0] = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
     arg[1] = itemID;
-    scPut_Message_SetEx( wk, BTL_STRID_STD_UseItem_Self, 2, arg );
+    strID = ( wk->bagMode != BBAG_MODE_SHOOTER )? BTL_STRID_STD_UseItem_Self : BTL_STRID_STD_UseItem_Shooter;
   }
 
   if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_TYPE) == ITEMTYPE_BALL )
@@ -1796,7 +1797,7 @@ static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
     {
       u8 yure_cnt, fSuccess;
 
-      // @todo ここで捕獲成否＆失敗なら揺れ数を計算する。今は適当。
+      // @todo ここで捕獲成否チェック＆失敗なら揺れ数を計算する。今は適当。
       yure_cnt = 3;
       fSuccess = TRUE;
 
@@ -4651,12 +4652,36 @@ static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk )
     u32 i;
     for(i=0; i<wk->numClient; ++i)
     {
-      // @@@ 今は全クライアントに同じだけ増加させているがトリプルはルールが違う
       if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_TRIPLE ){
         SCQUE_PUT_OP_ShooterCharge( wk->que, i, 1 );
       }else{
+        u8 myClientID, opponentClientID, emptyCnt, fEnable, p;
+        u8 emptyPos[ BTL_POSIDX_MAX ];
 
-        SCQUE_PUT_OP_ShooterCharge( wk->que, i, 1 );
+        myClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+        opponentClientID = BTL_MAIN_GetOpponentClientID( wk->mainModule, myClientID, 0 );
+
+        fEnable = TRUE;
+        emptyCnt = BTL_POSPOKE_GetClientEmptyPos( &wk->pospokeWork, myClientID, emptyPos );
+        for(p=0; p<emptyCnt; ++p)
+        {
+          if( BTL_MAINUTIL_IsTripleCenterPos(emptyPos[p]) ){
+            fEnable = FALSE;  // 自分の中央が空いていたらチャージされない
+            break;
+          }
+        }
+        if( fEnable )
+        {
+          u8 value = 1 + emptyCnt;  // 基本は自分の空き位置 + 1
+          emptyCnt = BTL_POSPOKE_GetClientEmptyPos( &wk->pospokeWork, opponentClientID, emptyPos );
+          for(p=0; p<emptyCnt; ++p){
+            if( BTL_MAINUTIL_IsTripleCenterPos(emptyPos[p]) ){
+              value *= 2;   // 相手の中央が空いていたら２倍
+              break;
+            }
+          }
+          SCQUE_PUT_OP_ShooterCharge( wk->que, i, value );
+        }
       }
     }
   }
