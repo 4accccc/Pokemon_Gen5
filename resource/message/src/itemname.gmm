@@ -2822,7 +2822,7 @@
 
 	<row id="ITEMNAME_538">
 		<language name="JPN" width="256">クリティＣ２</language>
-		<language name="JPN_KANJI" width="256">パレスへゴー</language>
+		<language name="JPN_KANJI" width="256">クリティＣ２</language>
 	</row>
 
 	<row id="ITEMNAME_539">
@@ -2933,6 +2933,11 @@
 	<row id="ITEMNAME_560">
 		<language name="JPN" width="256">フラットコール</language>
 		<language name="JPN_KANJI" width="256">フラットコール</language>
+	</row>
+
+	<row id="ITEMNAME_561">
+		<language name="JPN" width="256">クリティＣ３</language>
+		<language name="JPN_KANJI" width="256">クリティＣ３</language>
 	</row>
 
 
