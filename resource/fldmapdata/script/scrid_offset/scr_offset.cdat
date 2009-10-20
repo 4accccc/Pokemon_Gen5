@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2009 10/13 (Tue) 20:28
+ * @date  2009 10/20 (Tue) 12:34
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -12,6 +12,12 @@
 //※スクリプトIDが大きい順に定義されているため、元データと並びが逆です
 static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
 
+    {//WI-FIクラブ受付用スクリプト
+      ID_WIFI_CLUB_SCR_OFFSET,        //(10100),
+      ID_WIFI_CLUB_SCR_OFFSET_END,    //(10199),
+      NARC_script_seq_wifi_club_scr_bin,
+      NARC_script_message_wifi_club_scr_dat
+    },
     {//秘伝技スクリプト
       ID_HIDEN_OFFSET,                //(10000),
       ID_HIDEN_OFFSET_END,            //(10099),
