@@ -376,7 +376,7 @@ static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCu
     }
   }
   //ウェイト設定
-  ptr->PrtclWait = outDat->SpaIdx;
+  ptr->PrtclWait = outDat->SpaWait;
   ptr->MdlAnm1Wait = outDat->MdlAAnmWait;
   ptr->MdlAnm2Wait = outDat->MdlBAnmWait;
 }
