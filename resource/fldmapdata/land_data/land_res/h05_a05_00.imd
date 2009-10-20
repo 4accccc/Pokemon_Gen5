@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2009-10-13T22:35:53" source="h05_a05_00.mb"/>
+	<create user="ibe_mana" host="W00191" date="2009-10-20T18:40:56" source="h05_a05_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-10-13T22:35:53" source="h05_a05_00.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2009-10-20T18:40:56" source="h05_a05_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -736,8 +736,8 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="4" name="polygon4"
-		vertex_size="182" polygon_size="71"
-		triangle_size="0" quad_size="71"
+		vertex_size="178" polygon_size="70"
+		triangle_size="0" quad_size="70"
 		volume_min="-4.443604 -4.367188 0.472168"
 		volume_max="4.000000 2.835693 4.125977"
 		volume_r="5.833496"
@@ -1182,7 +1182,7 @@
 					<nrm xyz="0.814453 -0.177734 0.552734"/>
 					<pos_xyz xyz="3.322021 -1.772461 1.961182"/>
 				</primitive>
-				<primitive index="10" type="quads" vertex_size="40">
+				<primitive index="10" type="quads" vertex_size="36">
 					<tex st="31.625000 0.125000"/>
 					<nrm xyz="-0.701172 0.240234 -0.669922"/>
 					<pos_xyz xyz="3.172119 -2.875000 1.146484"/>
@@ -1269,12 +1269,6 @@
 					<pos_xy xy="4.000000 0.187500"/>
 					<tex st="25.000000 0.375000"/>
 					<pos_xy xy="4.000000 -0.125000"/>
-					<tex st="30.500000 0.125000"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_yz yz="-0.375000 4.000000"/>
-					<pos_xy xy="4.000000 -0.250000"/>
-					<pos_xy xy="-4.000000 -0.250000"/>
-					<pos_xy xy="-4.000000 -0.375000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -1536,8 +1530,8 @@
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="9"
-		vertex_size="292" polygon_size="104"
-		triangle_size="0" quad_size="104"
+		vertex_size="288" polygon_size="103"
+		triangle_size="0" quad_size="103"
 		volume_min="-4.443604 -4.367188 -4.000000"
 		volume_max="4.000000 2.835693 4.125977"
 		volume_r="6.786865"
@@ -1554,8 +1548,8 @@
 	</node>
 </node_array>
 
-<output_info vertex_size="292" polygon_size="104"
-	triangle_size="0" quad_size="104"/>
+<output_info vertex_size="288" polygon_size="103"
+	triangle_size="0" quad_size="103"/>
 
 </body>
 
