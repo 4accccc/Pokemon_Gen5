@@ -38,3 +38,4 @@ extern int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY
 
 // regulation.narcÇ…Ç†ÇÈÉfÅ[É^Çì«Ç›çûÇﬁ
 extern const REGULATION* PokeRegulation_LoadDataAlloc(int regulation_data_no, HEAPID heapid);
+extern void PokeRegulation_LoadData(int regulation_data_no, REGULATION *reg);

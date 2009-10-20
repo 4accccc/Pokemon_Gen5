@@ -298,3 +298,16 @@ const REGULATION* PokeRegulation_LoadDataAlloc(int regulation_data_no, HEAPID he
   return pRegData;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief   ROMからレギュレーションデータを得る(外側から代入ワークを渡す)
+ * @param   regulation_data_no   regulation_def.hの定義で呼び出してください
+ * @param   heap  読み込み用領域
+ * @return  レギュレーションデータポインタ  GFL_HEAP_FreeMemoryでメモリ開放をしてください
+ */
+//------------------------------------------------------------------
+void PokeRegulation_LoadData(int regulation_data_no, REGULATION *reg)
+{
+  GFL_ARC_LoadData(reg, ARCID_REGULATION, regulation_data_no);
+}
+
