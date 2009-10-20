@@ -1860,12 +1860,31 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
       {
         if( work->pokeCursor + moveVal > maxValue )
         {
-          work->pokeCursor = work->pokeCursor+moveVal-(maxValue+1);
+          //EXITが無い時動きが変になるので調整
+          if( maxValue == PL_SEL_POS_ENTER &&
+              moveVal > 1 &&
+              befPos != PL_SEL_POS_ENTER )
+          {
+            work->pokeCursor = maxValue;
+          }
+          else
+          {
+            work->pokeCursor = work->pokeCursor+moveVal-(maxValue+1);
+          }
         }
         else
         if( work->pokeCursor + moveVal < PL_SEL_POS_POKE1 )
         {
-          work->pokeCursor = work->pokeCursor+(maxValue+1)+moveVal;
+          //EXITが無い時動きが変になるので調整
+          if( maxValue == PL_SEL_POS_ENTER &&
+              moveVal < 1 )
+          {
+            work->pokeCursor = maxValue;
+          }
+          else
+          {
+            work->pokeCursor = work->pokeCursor+(maxValue+1)+moveVal;
+          }
         }
         else
         {
@@ -2385,11 +2404,28 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
     else
     {
       //フィールド秘伝技
-      OS_TPrintf("まだ作ってない！\n");
-      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
-      work->selectPokePara = NULL;
-      work->mainSeq = PSMS_SELECT_POKE;
-      PLIST_InitMode_Select( work );
+      const u32 selSkill = PLIST_UTIL_CheckFieldWaza( work->selectPokePara , work->menuRet-PMIT_WAZA_1 );
+      const FLDSKILL_RET ret = FLDSKILL_CheckUseSkill( selSkill-PL_RET_IAIGIRI , &work->plData->scwk );
+      switch( ret )
+      {
+      case FLDSKILL_RET_USE_OK:  // 使用可能
+        work->mainSeq = PSMS_FADEOUT;
+        work->plData->ret_sel = work->pokeCursor;
+        work->plData->ret_mode = selSkill;
+        break;
+      case FLDSKILL_RET_USE_NG:    // 使用不可（ここでは使えません）
+        PLIST_MessageWaitInit( work , mes_pokelist_04_44 , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
+        break;
+      case FLDSKILL_RET_NO_BADGE:    // 使用不可・バッジなし
+        PLIST_MessageWaitInit( work , mes_pokelist_04_26 , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
+        break;
+      case FLDSKILL_RET_COMPANION:    // 使用不可・連れ歩き
+        PLIST_MessageWaitInit( work , mes_pokelist_09_01 , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
+        break;
+      case FLDSKILL_RET_PLAYER_SWIM:    // 使用不可・なみのり中
+        PLIST_MessageWaitInit( work , mes_pokelist_04_42 , TRUE , PSTATUS_MSGCB_ReturnSelectCommon );
+        break;
+      }
     }
     break;
 

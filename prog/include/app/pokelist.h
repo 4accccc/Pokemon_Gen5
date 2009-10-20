@@ -10,6 +10,7 @@
 //======================================================================
 #pragma once
 
+#include "field/field_skill.h"
 #include "poke_tool/pokeparty.h"
 #include "savedata/config.h"
 
@@ -98,19 +99,19 @@ typedef enum
   
 /** ↓↓↓ field_skillや冒険ノートと同じ並びで！ ↓↓↓ **/
   PL_RET_IAIGIRI,     // メニュー 技：いあいぎり
-  PL_RET_SORAWOTOBU,  // メニュー 技：そらをとぶ
   PL_RET_NAMINORI,    // メニュー 技：なみのり
+  PL_RET_TAKINOBORI,  // メニュー 技：たきのぼり
   PL_RET_KAIRIKI,     // メニュー 技：かいりき
+  PL_RET_SORAWOTOBU,  // メニュー 技：そらをとぶ
   PL_RET_KIRIBARAI,   // メニュー 技：きりばらい
   PL_RET_IWAKUDAKI,   // メニュー 技：いわくだき
-  PL_RET_TAKINOBORI,  // メニュー 技：たきのぼり
   PL_RET_ROCKCLIMB,   // メニュー 技：ロッククライム
 
   PL_RET_FLASH,       // メニュー 技：フラッシュ
   PL_RET_TELEPORT,    // メニュー 技：テレポート
   PL_RET_ANAWOHORU,   // メニュー 技：あなをほる
   PL_RET_AMAIKAORI,   // メニュー 技：あまいかおり
-  PL_RET_OSYABERI,    // メニュー 技：おしゃべり
+  PL_RET_OSYABERI,    // メニュー 技：おしゃべり  //field_skillココまで
   PL_RET_MILKNOMI,    // メニュー 技：ミルクのみ
   PL_RET_TAMAGOUMI,   // メニュー 技：タマゴうみ
 }PL_RETURN_TYPE;
@@ -153,7 +154,7 @@ typedef struct
   void * tvwk;    // テレビワーク //存在しない？
   void * reg;     // レギュレーションデータ
 
-  void * scwk;    // 技使用チェックワーク
+  FLDSKILL_CHECK_WORK scwk;    // 技使用チェックワーク
 
 //  今回フィールドから取れないので必要なものを個別で持つ
 //  void * fsys;    // フィールドワーク

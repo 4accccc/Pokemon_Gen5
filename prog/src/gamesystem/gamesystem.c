@@ -25,6 +25,7 @@
 #include "poke_tool/monsno_def.h"
 #ifdef PM_DEBUG
 #include "item/item.h"  //デバッグアイテム生成用
+#include "waza_tool/wazano_def.h"  //デバッグポケ生成用
 #endif
 
 
@@ -547,6 +548,15 @@ static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys)
 	PP_Setup(pp, MONSNO_KABITTI, 100, 123456);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
+	PokeParty_Add(party, pp);
+
+  PP_Setup(pp, MONSNO_KABITTI, 100, 123456);
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
+  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
+  PP_SetWazaPos( pp , WAZANO_NAMINORI , 0 );
+  PP_SetWazaPos( pp , WAZANO_TAKINOBORI , 1 );
+  PP_SetWazaPos( pp , WAZANO_KAIRIKI , 2 );
+  PP_SetWazaPos( pp , WAZANO_IAIGIRI , 3 );
 	PokeParty_Add(party, pp);
 #endif
 

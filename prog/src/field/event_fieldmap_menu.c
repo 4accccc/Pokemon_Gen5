@@ -74,6 +74,7 @@ typedef enum
   FMENUSTATE_RETURN_MENU,
   FMENUSTATE_EXIT_MENU,
   FMENUSTATE_EXIT_SUB,
+  FMENUSTATE_USE_SKILL,
   
   //フィールド出入り系
   FMENUSTATE_FIELD_FADEOUT,
@@ -104,6 +105,13 @@ typedef enum
   FMENU_APP_MAX,
 }FMENU_APP_TYPE;
 
+typedef enum
+{
+  FMENU_EXIT_RETURN_MENU,  //メニューに戻り
+  FMENU_EXIT_RETURN_FIELD,  //移動に戻る(アイテム使用
+  
+  FMENU_EXIT_USE_SKILL, //秘伝使用
+}FMENU_EXIT_TYPE;
 
 typedef enum
 {
@@ -147,13 +155,14 @@ struct _TAG_FMENU_EVENT_WORK
   void *subProcWork;
   
   FIELD_SUBSCREEN_MODE return_subscreen_mode;
-  BOOL bForceExit;
+  FMENU_EXIT_TYPE exitType;
 	GFL_PROC_DATA *endProcData;
   FMENU_ITEMUSE_TYPE itemuseEventType;
   
-  //アプリ間で引継ぎが必要な数値
-  u8  selPoke;
+  //アプリ間で引継ぎが必要な数値(秘伝使用でも使う
   u16 selItem;
+  u16 selSkill;
+  u8  selPoke;
 };
 
 
@@ -459,7 +468,18 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
     GFL_OVERLAY_Unload( FldMapMenu_ItemUseData[mwk->itemuseEventType].ovId );
     return( GMEVENT_RES_FINISH );
     break;
-    
+  
+  case FMENUSTATE_USE_SKILL:
+    {
+      FLDSKILL_CHECK_WORK skillCheckWork;
+      FLDSKILL_USE_HEADER skillUseWork;
+      GMEVENT *event;
+      FLDSKILL_InitCheckWork( GAMESYSTEM_GetFieldMapWork(mwk->gmSys), &skillCheckWork ); //再初期化
+      FLDSKILL_InitUseHeader( &skillUseWork , mwk->selPoke , mwk->selSkill );
+      event = FLDSKILL_UseSkill( mwk->selSkill , &skillUseWork , &skillCheckWork );
+      GMEVENT_ChangeEvent(mwk->gmEvent , event);
+    }
+    break;
   //以下サブプロック呼び出しのためのフィールド抜け
   
   case FMENUSTATE_FIELD_FADEOUT:
@@ -480,13 +500,18 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
   case FMENUSTATE_FIELD_FADEIN:
     mwk->fieldWork = GAMESYSTEM_GetFieldMapWork(mwk->gmSys);
 		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(mwk->gmSys, mwk->fieldWork, 0));
-    if(mwk->bForceExit)
-    {
-      mwk->state = FMENUSTATE_EXIT_MENU;
-    }
-    else
-    {
+		switch( mwk->exitType )
+		{
+    case FMENU_EXIT_RETURN_MENU:
       mwk->state = FMENUSTATE_RETURN_MENU;
+      break;
+    case FMENU_EXIT_RETURN_FIELD:
+      mwk->state = FMENUSTATE_EXIT_MENU;
+      break;
+    case FMENU_EXIT_USE_SKILL:
+      mwk->state = FMENUSTATE_USE_SKILL;
+      break;
+    
     }
     break;
 
@@ -551,7 +576,7 @@ static void FieldMap_SetExitSequence(FMENU_EVENT_WORK *mwk)
        GAMEDATA_SetSubScreenMode(gmData,FIELD_SUBSCREEN_NORMAL);
     }
   } 
-  mwk->bForceExit = TRUE;
+  mwk->exitType = FMENU_EXIT_RETURN_FIELD;
 }
 
 
@@ -595,6 +620,7 @@ static BOOL FMenuCallProc_PokeStatus( FMENU_EVENT_WORK *mwk )
   GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
   plistData = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(PLIST_DATA));
   plistData->pp = GAMEDATA_GetMyPokemon(gmData);
+  FLDSKILL_InitCheckWork( mwk->fieldWork, &plistData->scwk );
   plistData->myitem = GAMEDATA_GetMyItem(gmData);    // アイテムデータ
   plistData->mode = PL_MODE_FIELD;
   plistData->ret_sel = PL_SEL_POS_POKE1;
@@ -841,7 +867,29 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
     }
     return TRUE;
     break;
-  
+
+  case PL_RET_IAIGIRI:     // メニュー 技：いあいぎり
+  case PL_RET_NAMINORI:    // メニュー 技：なみのり
+  case PL_RET_TAKINOBORI:  // メニュー 技：たきのぼり
+  case PL_RET_KIRIBARAI:   // メニュー 技：きりばらい
+  case PL_RET_SORAWOTOBU:  // メニュー 技：そらをとぶ
+  case PL_RET_KAIRIKI:     // メニュー 技：かいりき
+  case PL_RET_IWAKUDAKI:   // メニュー 技：いわくだき
+  case PL_RET_ROCKCLIMB:   // メニュー 技：ロッククライム
+  case PL_RET_FLASH:       // メニュー 技：フラッシュ
+  case PL_RET_TELEPORT:    // メニュー 技：テレポート
+  case PL_RET_ANAWOHORU:   // メニュー 技：あなをほる
+  case PL_RET_AMAIKAORI:   // メニュー 技：あまいかおり
+  case PL_RET_OSYABERI:    // メニュー 技：おしゃべり
+    //ココで処理は無い
+    //@todo 空を飛ぶはマップへ
+    mwk->selPoke = plData->ret_sel;
+    mwk->selSkill = plData->ret_mode-PL_RET_IAIGIRI;
+    FieldMap_SetExitSequence(mwk);
+    mwk->exitType = FMENU_EXIT_USE_SKILL;
+    return FALSE;
+    break;
+
   default:
     return FALSE;
     break;
