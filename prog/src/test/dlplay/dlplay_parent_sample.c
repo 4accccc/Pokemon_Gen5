@@ -135,7 +135,7 @@ static const GFL_DISP_VRAM vramBank = {
 static GFL_PROC_RESULT DebugDLPlayMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	static const HEAPID heapID = HEAPID_ARIIZUMI_DEBUG;
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ARIIZUMI_DEBUG, 0x100000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ARIIZUMI_DEBUG, 0x150000 );
 
 	parentData = GFL_HEAP_AllocClearMemory( HEAPID_ARIIZUMI_DEBUG, sizeof( DLPLAY_PARENT_DATA ) );
 	parentData->heapID_ = HEAPID_ARIIZUMI_DEBUG;
