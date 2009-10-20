@@ -31,7 +31,7 @@ SOUNDOBJ* SOUNDOBJ_Create(
 void SOUNDOBJ_Delete( SOUNDOBJ* sobj );
 void SOUNDOBJ_SetAnime( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID dat_id, int buf_interval );
 void SOUNDOBJ_Set3DSUnitStatus( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID dat_id );
-void SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* sobj, fx32 frame );
+BOOL SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* sobj, fx32 frame );
 void SOUNDOBJ_SetAnimeFrame( SOUNDOBJ* sobj, fx32 frame );
 */
 
@@ -98,9 +98,11 @@ void SOUNDOBJ_Set3DSUnitStatus( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID dat_id );
  *
  * @param sobj  更新対象オブジェクト
  * @param frame 進めるフレーム数
+ *
+ * @return ループしたら TRUE
  */
 //-----------------------------------------------------------------------------------------
-void SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* sobj, fx32 frame );
+BOOL SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* sobj, fx32 frame );
 
 //-----------------------------------------------------------------------------------------
 /**

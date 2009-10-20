@@ -136,21 +136,28 @@ void SOUNDOBJ_Set3DSUnitStatus( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID dat_id )
  *
  * @param sobj  更新対象オブジェクト
  * @param frame 進めるフレーム数
+ *
+ * @return ループしたら TRUE
  */
 //-----------------------------------------------------------------------------------------
-void SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* sobj, fx32 frame )
+BOOL SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* sobj, fx32 frame )
 {
+  BOOL loop = FALSE;
+
   // アニメーション未登録なら, 何もしない
   if( sobj->icaAnime == NULL )
   {
-    return;
+    return FALSE;
   }
 
   // アニメーションを更新
-  ICA_ANIME_IncAnimeFrame( sobj->icaAnime, frame );
+  loop = ICA_ANIME_IncAnimeFrame( sobj->icaAnime, frame );
 
   // 位置を更新
   AdjustPosition( sobj );
+
+  // ループしたかどうかを返す
+  return loop;
 }
 
 //-----------------------------------------------------------------------------------------
