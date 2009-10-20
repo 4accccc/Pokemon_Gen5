@@ -461,7 +461,7 @@
   DEF_CMD( EvCmdGetPartyPokeCount, EV_SEQ_GET_PARTY_POKE_COUNT )
 
   DEF_CMD( EvCmdPokemonRecover, EV_SEQ_POKEMON_RECOVER )
-  NO_CMD()
+  DEF_CMD( EvCmdPartyPokeNameInput, EV_SEQ_PARTY_POKE_NAME_INPUT )
   NO_CMD()
   NO_CMD()
 

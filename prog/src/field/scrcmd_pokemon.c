@@ -619,3 +619,17 @@ extern VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk )
   *ret_wk = TRUE;
   return VMCMD_RESULT_CONTINUE;
 }
+
+
+//--------------------------------------------------------------
+/**
+ * 手持ちポケモンの名前入力画面を呼び出す
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdPartyPokeNameInput( VMHANDLE *core, void *wk )
+{
+  return VMCMD_RESULT_CONTINUE;
+}

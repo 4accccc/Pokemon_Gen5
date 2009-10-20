@@ -2644,6 +2644,25 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _PARTY_POKE_NAME_INPUT
+ * @brief 手持ちポケモンの名前入力画面を呼び出す
+ * @param ret_wk 入力結果を受け取るワーク
+ * @param index  名前を設定する手持ちポケモンのインデックスを指定
+ * @retval  TRUEのとき、入力した名前を確定した場合
+ * @retval  FALSEのとき、入力をキャンセルした場合
+ */
+//--------------------------------------------------------------
+#define _PARTY_POKE_NAME_INPUT( ret_wk, index ) \
+    _ASM_PARTY_POKE_NAME_INPUT ret_wk, index
+
+  .macro  _ASM_PARTY_POKE_NAME_INPUT ret_wk, index
+  .short  EV_SEQ_PARTY_POKE_NAME_INPUT
+  .short  \ret_wk
+  .short  \index
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @def _CHECK_TEMOTI_POKERUS
  * @brief 手持ちにポケルスがいるかどうかのチェック
  * @param ret_wk    チェック結果を受け取るワーク
