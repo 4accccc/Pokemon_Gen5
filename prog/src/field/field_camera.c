@@ -18,8 +18,6 @@
 #define FIELD_CAMERA_DELAY	(6)
 #define FIELD_CAMERA_TRACE_BUFF	(FIELD_CAMERA_DELAY+1)
 
-
-
 /*---------------------------------------------------------------------------*
 	カメラトレース構造体
  *---------------------------------------------------------------------------*/
@@ -36,6 +34,9 @@ typedef struct
 
   VecFx32 * targetBuffer;
   VecFx32 * camPosBuffer;
+
+  BOOL Valid;
+  BOOL StopReq;
 
 }CAMERA_TRACE;
 
@@ -63,6 +64,34 @@ typedef enum {
  *			カメラ可動範囲
  */
 //-----------------------------------------------------------------------------
+
+//------------------------------------------------------------------
+/**
+ * @brief	カメラ線形移動管理構造体
+ */
+//------------------------------------------------------------------
+
+//カメラの復帰情報
+typedef struct FLD_CAM_PUSH_PARAM_tag
+{
+  FIELD_CAMERA_MODE Mode;
+  FLD_CAM_MV_PARAM_CORE RecvParam;  //復帰情報
+}FLD_CAM_PUSH_PARAM;
+
+typedef struct FLD_MOVE_CAM_DATA_tag
+{
+  FLD_CAM_PUSH_PARAM PushParam;
+
+  FLD_CAM_MV_PARAM_CORE SrcParam;   //移動前カメラ情報
+  FLD_CAM_MV_PARAM_CORE DstParam;   //移動後カメラ情報
+  u16 CostFrm;              //移動にかかるフレーム数
+  u16 NowFrm;               //現在のフレーム
+  BOOL PushFlg;
+  BOOL Valid;   //線形補間中か？
+  FLD_CAM_MV_PARAM_CHK Chk;
+  BOOL Bind;
+  void *CallBackWorkPtr;
+}FLD_MOVE_CAM_DATA;
 
 //------------------------------------------------------------------
 /**
@@ -112,6 +141,9 @@ struct _FIELD_CAMERA {
 #endif
 
   CAMERA_TRACE * Trace;
+
+  FLD_MOVE_CAM_DATA MoveData;
+  CAMERA_CALL_BACK CallBack;
 };
 
 
@@ -165,6 +197,24 @@ static BOOL (*pIsAreaFunc[])( const FIELD_CAMERA_AREA* cp_area, const VecFx32* c
   cameraArea_IsAreaCircle,
 };
 
+//------------------------------------------------------------------
+// 線形カメラ移動関連処理
+//------------------------------------------------------------------
+static void SetNowCameraParam(const FIELD_CAMERA * inCamera, FLD_CAM_MV_PARAM_CORE *outParam);
+#if 0
+static void RecvModeCamera(FIELD_CAMERA * camera);
+static void RecvModeTarget(FIELD_CAMERA * camera);
+static void RecvModeDirect(FIELD_CAMERA * camera);
+#endif
+static void LinerMoveFunc(FIELD_CAMERA * camera, void *work);
+
+
+static void VecSubFunc(
+    const VecFx32 *inSrc, const VecFx32 *inDst, const u16 inCostFrm, const u16 inNowFrm, VecFx32 *outVec);
+static fx32 SubFuncFx(const fx32 *inSrc, const fx32 *inDst, const u16 inCostFrm, const u16 inNowFrm);
+static u16 SubFuncU16(const u16 *inSrc, const u16 *inDst, const u16 inCostFrm, const u16 inNowFrm);
+
+
 
 //============================================================================================
 //============================================================================================
@@ -214,6 +264,9 @@ FIELD_CAMERA* FIELD_CAMERA_Create(
 	createTraceData(	FIELD_CAMERA_TRACE_BUFF, FIELD_CAMERA_DELAY,
 							CAM_TRACE_MASK_Y, heapID, camera);
 
+  //コールバック関数クリア
+  camera->CallBack = NULL;
+
 	return camera;
 }
 //------------------------------------------------------------------
@@ -234,6 +287,9 @@ void	FIELD_CAMERA_Delete( FIELD_CAMERA* camera )
 //------------------------------------------------------------------
 void FIELD_CAMERA_Main( FIELD_CAMERA* camera, u16 key_cont)
 {
+  if (camera->CallBack != NULL){
+    camera->CallBack(camera, camera->MoveData.CallBackWorkPtr);
+  }
   ControlParameter(camera, key_cont);
 }
 
@@ -1106,6 +1162,12 @@ static void updateTraceData(CAMERA_TRACE * trace,
 		*outCamPos = *inCamPos;
     return;
   }
+  if (!trace->Valid)
+  {
+    *outTarget = *inTarget;
+		*outCamPos = *inCamPos;
+    return;
+  }
 
   cam_ofs = trace->CamPoint;
   tgt_ofs = trace->TargetPoint;
@@ -1124,14 +1186,31 @@ static void updateTraceData(CAMERA_TRACE * trace,
     }
   }
 
-  //参照位置更新
-  cam_ofs = (cam_ofs+1) % trace->bufsize;
-  //履歴に積む
-  trace->targetBuffer[tgt_ofs] = *inTarget;
-  trace->camPosBuffer[tgt_ofs] = *inCamPos;
-  //書き換え位置更新
-  tgt_ofs = (tgt_ofs+1) % trace->bufsize;
-  
+  //ストップリクエストが出ている場合
+  if (trace->StopReq)
+  {
+    //ターゲットに追いつくまで参照位置更新
+    if (cam_ofs!=tgt_ofs){
+      cam_ofs = (cam_ofs+1) % trace->bufsize;
+    }
+    else    //追いついた
+    {
+      //トレースをストップする
+      trace->StopReq = FALSE;
+      trace->Valid = FALSE;
+    }
+  }
+  else
+  {
+    //参照位置更新
+    cam_ofs = (cam_ofs+1) % trace->bufsize;
+    //履歴に積む
+    trace->targetBuffer[tgt_ofs] = *inTarget;
+    trace->camPosBuffer[tgt_ofs] = *inCamPos;
+    //書き換え位置更新
+    tgt_ofs = (tgt_ofs+1) % trace->bufsize;
+  }
+
   trace->CamPoint = cam_ofs;
   trace->TargetPoint = tgt_ofs;
 
@@ -1208,7 +1287,10 @@ void createTraceData(const int inHistNum, const int inDelay,
 	if (inTraceMask & CAM_TRACE_MASK_Z){
 		trace->ValidZ = TRUE;
 	}
-	
+
+  trace->Valid = TRUE;
+  trace->StopReq = FALSE;
+
 	ioCamera->Trace = trace;
 }
 
@@ -1256,9 +1338,79 @@ static void traceUpdate(FIELD_CAMERA * camera)
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  トレース処理の再開
+ *
+ *	@param	camera_ptr  カメラポインタ
+ *	@return none
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_RestartTrace(FIELD_CAMERA * camera_ptr)
+{
+  CAMERA_TRACE *trace;
 
+  trace = camera_ptr->Trace;
+  if (trace == NULL){
+    GF_ASSERT(0);
+    return;
+  }
+  //バッファの初期位置の設定
+  {
+    int i;
+    //トレース配列クリア
+	  for(i=0;i<trace->bufsize;i++){
+      VEC_Set(&trace->targetBuffer[i], 0, 0, 0);
+      VEC_Set(&trace->camPosBuffer[i], 0, 0, 0);
+	  }
+    //０番目にカメラ参照位置をセット
+    trace->CamPoint = 0;
+    //対象物参照位置セット
+    trace->TargetPoint = 0+trace->Delay;
+  }
 
+  trace->UpdateFlg = FALSE;
+  //メイン有効フラグをＯＮ
+  trace->Valid = TRUE;
+}
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  トレース処理の停止リクエスト
+ *
+ *	@param	camera_ptr  カメラポインタ
+ *	@return none
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_StopTraceRequest(FIELD_CAMERA * camera_ptr)
+{
+  CAMERA_TRACE *trace;
+  trace = camera_ptr->Trace;
+  if (trace == NULL){
+    GF_ASSERT(0);
+    return;
+  }
+  trace->StopReq = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  トレース処理が動いているかのチェック
+ *
+ *	@param	camera_ptr  カメラポインタ
+ *	@return BOOL        TRUEで稼働中
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_CAMERA_CheckTrace(FIELD_CAMERA * camera_ptr)
+{
+  CAMERA_TRACE *trace;
+  trace = camera_ptr->Trace;
+  if (trace == NULL){
+    GF_ASSERT(0);
+    return FALSE;
+  }
+  return trace->Valid;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -1537,6 +1689,407 @@ static BOOL cameraArea_IsAreaCircle( const FIELD_CAMERA_AREA* cp_area, const Vec
 
   return ret;
 }
+
+
+/**
+ *
+ * 線形補間が型カメラ移動関連処理
+ *
+*/
+
+//カメラ線形移動補間開始のための初期化処理
+//・いくつまでプッシュできるようにするか
+
+//カメラデータプッシュ処理
+//・保存するもの
+//　モード、ターゲット座標、アングル、カメラ座標
+//・モード変更
+//・移動
+//・保存しているモードに戻す
+//・復帰モード別に、保存しているデータをセット
+//・終了
+//
+//カメラ移動処理
+//・現在のカメラ座標、アングル、視野角をｓｒｃにセット
+//・目的のカメラ座標、アングル、視野角をｄｓｔにセット
+//・移動処理
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラパラメータセット
+ *
+ *	@param	inCamera      カメラポインタ
+ *	@param	outParam      パラメータ格納バッファ
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void SetNowCameraParam(const FIELD_CAMERA * inCamera, FLD_CAM_MV_PARAM_CORE *outParam)
+{
+  outParam->CamPos = inCamera->camPos;
+  outParam->TrgtPos = inCamera->target;
+  outParam->AnglePitch = inCamera->angle_pitch;
+  outParam->AngleYaw = inCamera->angle_yaw;
+  outParam->Distance = inCamera->angle_len;
+  outParam->Fovy = inCamera->fovy;
+}
+
+#if 0
+static void RecvModeCamera(FIELD_CAMERA * camera)
+{
+  FLD_MOVE_CAM_DATA *data;
+  FLD_CAM_PUSH_PARAM *push_param;
+  data = &camera->MoveData;
+  push_param = &data->PushParam;
+  //ターゲット位置
+  ;
+  //アングル
+  ;
+  //距離
+  ;
+  //視野角
+  ;
+}
+static void RecvModeTarget(FIELD_CAMERA * camera)
+{
+  GF_ASSERT(0);
+  //カメラ位置
+  ;
+  //アングル
+  ;
+  //距離
+  ;
+  //視野角
+  ;
+}
+static void RecvModeDirect(FIELD_CAMERA * camera)
+{
+  //ターゲット位置
+  ;
+  //カメラ位置
+  ;
+}
+#endif
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief　復帰情報の保存
+ *
+ *	@param	camera      カメラポインタ
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetRecvCamParam(FIELD_CAMERA * camera)
+{
+  FLD_MOVE_CAM_DATA *data;
+  FLD_CAM_PUSH_PARAM *push_param;
+  if (camera == NULL){
+    GF_ASSERT( 0 );
+    return;
+  }
+
+  data = &camera->MoveData;
+  push_param = &data->PushParam;
+
+  if (data->PushFlg){
+    GF_ASSERT_MSG(0,"Already Exist PushData");
+    return;
+  }
+
+  //情報をプッシュ
+  push_param->Mode = camera->mode;
+  SetNowCameraParam(camera, &push_param->RecvParam);
+
+  //プッシュしたフラグ
+  data->PushFlg = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  復帰情報のクリア
+ *
+ *	@param	camera      カメラポインタ
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_ClearRecvCamParam(FIELD_CAMERA * camera)
+{
+  FLD_MOVE_CAM_DATA *data;
+  FLD_CAM_PUSH_PARAM *push_param;
+#if 0 
+  static void (*const recv_func[FIELD_CAMERA_MODE_MAX])( FIELD_CAMERA * camera ) = 
+	{
+		RecvModeCamera,
+		RecvModeTarget,
+		RecvModeDirect,
+	};
+#endif
+  if (camera == NULL){
+    GF_ASSERT( 0 );
+    return;
+  }
+
+  data = &camera->MoveData;
+  if (!data->PushFlg){
+    GF_ASSERT_MSG(0,"No PushData");
+    return;
+  }
+  
+  push_param = &data->PushParam;
+  //モードを復帰
+  FIELD_CAMERA_ChangeMode( camera, push_param->Mode );
+#if 0  
+  //復帰するモード別にパラメータを復帰
+  recv_func[push_param->Mode](camera);
+#endif
+  //プッシュフラグを落す
+  data->PushFlg = FALSE;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  線形移動パラメータをセットして動作開始
+ *
+ *	@param	camera      カメラポインタ
+ *	@param	param       パラメータ格納バッファ
+ *	@param  inFrame     フレーム
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *param, const u16 inFrame)
+{
+  FLD_MOVE_CAM_DATA *data;
+  if (camera == NULL){
+    GF_ASSERT( 0 );
+    return;
+  }
+  //補間移動はカメラ位置不定型のみのサポート
+  FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+  data = &camera->MoveData;
+  SetNowCameraParam(camera, &data->SrcParam);
+  data->DstParam = param->Core;
+  data->NowFrm = 0;
+  data->CostFrm = inFrame;
+  data->Chk = param->Chk;
+
+  //コールバックをセット
+  camera->CallBack = LinerMoveFunc;
+  //線形補間移動を開始
+  data->Valid = TRUE;
+
+  //カメラバインドをきる
+///  FIELD_CAMERA_FreeTarget(camera);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リカバリー関数
+ *
+ *	@param	camera      カメラポインタ
+ *	@param  inFrame     フレーム
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_RecvLinerParam(FIELD_CAMERA * camera, const u16 inFrame)
+{
+  FLD_MOVE_CAM_DATA *data;
+  if (camera == NULL){
+    GF_ASSERT( 0 );
+    return;
+  }
+
+  data = &camera->MoveData;
+  if (!data->PushFlg){
+    GF_ASSERT_MSG(0,"NO RECOVER PARAM\n");
+    return;
+  }
+  //補間移動はカメラ位置不定型のみのサポート
+  FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+  SetNowCameraParam(camera, &data->SrcParam);
+  data->DstParam = data->PushParam.RecvParam;
+  //現在のデフォルトターゲットの座標に復帰するようにする
+  if (camera->default_target != NULL){
+    data->DstParam.TrgtPos = *camera->default_target;
+  }else{
+    GF_ASSERT(0);
+  }
+  data->NowFrm = 0;
+  data->CostFrm = inFrame;
+  data->Chk.Shift = TRUE;
+  data->Chk.Angle = TRUE;
+  data->Chk.Dist = TRUE;
+  data->Chk.Fovy = TRUE;
+
+  //補間移動はカメラ位置不定型のみのサポート
+  FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+  //コールバックをセット
+  camera->CallBack = LinerMoveFunc;
+  //線形補間移動を開始
+  data->Valid = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  線形訪韓移動関数
+ *
+ *	@param	camera      カメラポインタ
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void LinerMoveFunc(FIELD_CAMERA * camera, void *work)
+{
+  FLD_MOVE_CAM_DATA *data;
+  FLD_CAM_MV_PARAM_CORE *src;
+  FLD_CAM_MV_PARAM_CORE *dst;
+  data = &camera->MoveData;
+  
+  //リクエストがなければ処理はスルーする
+  if (!data->Valid){
+    return;
+  }
+  //フレーム消化
+  data->NowFrm++;
+
+  src = &data->SrcParam;
+  dst = &data->DstParam;
+  //アングル
+  if (data->Chk.Angle)
+  {
+    camera->angle_pitch = SubFuncU16(&src->AnglePitch, &dst->AnglePitch, data->CostFrm, data->NowFrm);
+    camera->angle_yaw = SubFuncU16(&src->AngleYaw, &dst->AngleYaw, data->CostFrm, data->NowFrm);
+  }
+  //座標
+  if (data->Chk.Shift)
+  {
+    VecSubFunc(&src->TrgtPos, &dst->TrgtPos, data->CostFrm, data->NowFrm, &camera->target);
+  }
+  //視野角
+  if (data->Chk.Fovy)
+  {
+    camera->fovy = SubFuncU16(&src->Fovy, &dst->Fovy, data->CostFrm, data->NowFrm);
+  }
+  //距離
+  if (data->Chk.Dist)
+  {
+    camera->angle_len = SubFuncFx(&src->Distance, &dst->Distance, data->CostFrm, data->NowFrm);
+  }
+  //フレームが消費フレームに到達したか？
+  if(data->NowFrm >= data->CostFrm){
+    //移動実行中フラグオフ
+    data->Valid = FALSE;
+    //コールバッククリア
+    FIELD_CAMERA_ClearMvFuncCallBack(camera);
+  }
+}
+
+//差分計算関数
+static void VecSubFunc(
+    const VecFx32 *inSrc, const VecFx32 *inDst, const u16 inCostFrm, const u16 inNowFrm, VecFx32 *outVec)
+{
+  outVec->x = SubFuncFx(&inSrc->x, &inDst->x, inCostFrm, inNowFrm);
+  outVec->y = SubFuncFx(&inSrc->y, &inDst->y, inCostFrm, inNowFrm);
+  outVec->z = SubFuncFx(&inSrc->z, &inDst->z, inCostFrm, inNowFrm);
+}
+
+//差分計算関数
+static fx32 SubFuncFx(const fx32 *inSrc, const fx32 *inDst, const u16 inCostFrm, const u16 inNowFrm)
+{
+  fx32 dif, val, ans;
+  dif = (*inDst) - (*inSrc);
+  val = (dif*inNowFrm)/inCostFrm;
+  ans = (*inSrc)+val;
+  return ans;
+}
+
+//差分計算関数
+static u16 SubFuncU16(const u16 *inSrc, const u16 *inDst, const u16 inCostFrm, const u16 inNowFrm)
+{
+  u16 dif, val;
+  u16 ans;
+  u16 samp_a, samp_b;
+  samp_a = (*inDst) - (*inSrc);
+  samp_b = 0x10000-samp_a;
+
+  if (samp_a<= samp_b){
+    dif = samp_a;
+    val = (dif*inNowFrm)/inCostFrm;
+    ans = (*inSrc)+val;
+  }else{
+    dif = samp_b;
+    val = (dif*inNowFrm)/inCostFrm;
+    ans = (*inSrc)-val;
+  }  
+  return ans;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ移動コールバック関数登録
+ *
+ *	@param	camera      カメラポインタ
+ *	@param	param       パラメータ格納バッファ
+ *	@param  inFrame     フレーム
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetMvFuncCallBack(FIELD_CAMERA * camera, CAMERA_CALL_BACK func, void *work)
+{
+  GF_ASSERT(camera->CallBack == NULL);
+  camera->CallBack = func;
+  camera->MoveData.CallBackWorkPtr = work;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ移動コールバック関数クリア
+ *
+ *	@param	camera      カメラポインタ
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_ClearMvFuncCallBack(FIELD_CAMERA * camera)
+{
+  camera->CallBack = NULL;
+  camera->MoveData.CallBackWorkPtr = NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ移動コールバック中かをチェックする
+ *
+ *	@param	camera      カメラポインタ
+ *
+ *	@retval BOOL      TRUEでコールバック関数起動中
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_CAMERA_CheckMvFunc(FIELD_CAMERA * camera)
+{
+  FLD_MOVE_CAM_DATA *data;
+  data = &camera->MoveData;
+  if (camera->CallBack != NULL)
+  {
+    if (data->Valid){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
+
+
 
 
 

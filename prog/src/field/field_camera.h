@@ -7,6 +7,7 @@
 #pragma once
 
 #include "../../../resource/fldmapdata/camera_data/fieldcameraformat.h"
+#include "field_camera_mv_param.h"
 
 
 //------------------------------------------------------------------
@@ -16,6 +17,12 @@
 //------------------------------------------------------------------
 typedef struct _FIELD_CAMERA	FIELD_CAMERA;
 
+//------------------------------------------------------------------
+/**
+ * @brief	フィールドカメラ移動コールバック関数
+ */
+//------------------------------------------------------------------
+typedef void (*CAMERA_CALL_BACK)( FIELD_CAMERA* camera, void *work );
 
 //カメラトレースマスク定義
 #define CAM_TRACE_MASK_X	(1)
@@ -274,6 +281,30 @@ extern void FIELD_CAMERA_SetCameraArea( FIELD_CAMERA * camera, const FIELD_CAMER
 extern void FIELD_CAMERA_ClearCameraArea( FIELD_CAMERA * camera );
 extern FIELD_CAMERA_AREA_TYPE FIELD_CAMERA_GetCameraAreaType( const FIELD_CAMERA * camera );
 extern FIELD_CAMERA_AREA_CONT FIELD_CAMERA_GetCameraAreaCont( const FIELD_CAMERA * camera );
+
+
+//-----------------------------------------------------------------------------
+/**
+ *      線形カメラ関連
+ */
+//-----------------------------------------------------------------------------
+extern void FIELD_CAMERA_SetRecvCamParam(FIELD_CAMERA * camera);
+extern void FIELD_CAMERA_ClearRecvCamParam(FIELD_CAMERA * camera);
+extern void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *param, const u16 inFrame);
+extern void FIELD_CAMERA_RecvLinerParam(FIELD_CAMERA * camera, const u16 inFrame);
+extern void FIELD_CAMERA_SetMvFuncCallBack(FIELD_CAMERA * camera, CAMERA_CALL_BACK func, void *work);
+extern void FIELD_CAMERA_ClearMvFuncCallBack(FIELD_CAMERA * camera);
+extern BOOL FIELD_CAMERA_CheckMvFunc(FIELD_CAMERA * camera);
+
+//-----------------------------------------------------------------------------
+/**
+ *      カメラトレース関連
+ */
+//-----------------------------------------------------------------------------
+extern void FIELD_CAMERA_RestartTrace(FIELD_CAMERA * camera_ptr);
+extern void FIELD_CAMERA_StopTraceRequest(FIELD_CAMERA * camera_ptr);
+extern BOOL FIELD_CAMERA_CheckTrace(FIELD_CAMERA * camera_ptr);
+
 
 #ifdef  PM_DEBUG
 typedef enum{
