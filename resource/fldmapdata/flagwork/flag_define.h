@@ -575,12 +575,12 @@
 #define FV_D02_LEADER2                     551 /* 0x0227 ヤグルマの森：盗難イベントのジムリーダー（アーティ） */
 #define FV_D02_LEADER3                     552 /* 0x0228 ヤグルマの森：盗難イベントのジムリーダー（アロエ） */
 #define FV_C04R0302_BOSS                   553 /* 0x0229 Ｃ04野球場の観客席：Ｎ（エヌ） */
-		/* not used   554(0x022a) */
-		/* not used   555(0x022b) */
-		/* not used   556(0x022c) */
-		/* not used   557(0x022d) */
-		/* not used   558(0x022e) */
-		/* not used   559(0x022f) */
+#define FV_C05_GYMLEADER_01                554 /* 0x022a C05：ジムリーダー達 */
+#define FV_C05_GYMLEADER_02                555 /* 0x022b C05：ジムリーダー達 */
+#define FV_C05_WORKMAN_02                  556 /* 0x022c C05：ストッパー */
+#define FV_C05_SAGE_01                     557 /* 0x022d C05：プラズマ団達 */
+#define FV_D05_RIVAL_01                    558 /* 0x022e D05：ライバル */
+#define FV_D05_WORKMAN_01                  559 /* 0x022f D05：workman */
 		/* not used   560(0x0230) */
 		/* not used   561(0x0231) */
 		/* not used   562(0x0232) */
