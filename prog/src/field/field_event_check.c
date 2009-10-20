@@ -40,6 +40,7 @@
 #include "event_comm_talked.h"      //EVENT_CommWasTalkedTo
 #include "event_rail_slipdown.h"    //EVENT_RailSlipDown
 #include "event_intrude_subscreen.h"      //EVENT_ChangeIntrudeSubScreen
+#include "event_shortcut_menu.h"	//EVENT_ShortCutMenu
 
 #include "system/main.h"    //HEAPID_FIELDMAP
 #include "isdbglib.h"
@@ -426,13 +427,12 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 //☆☆☆自機位置に関係ないキー入力イベントチェック
   //便利ボタンチェック
   if( req.convRequest ){
-    if( req.isGridMap ){
-      event = checkEvent_ConvenienceButton( &req, gsys, fieldWork );
-    
-      if( event != NULL ){
-        return event;
-      }
-    }
+		if(WIPE_SYS_EndCheck()){
+			event = EVENT_ShortCutMenu( gsys, fieldWork, req.heapID );
+			if( event != NULL ){
+				return event;
+			}
+		}
   }
   
   //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
@@ -841,10 +841,12 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 //☆☆☆自機位置に関係ないキー入力イベントチェック
   //便利ボタンチェック
   if( req.convRequest ){
-    event = checkEvent_ConvenienceButton( &req, gsys, fieldWork );
-    if( event != NULL ){
-      return event;
-    }
+		if(WIPE_SYS_EndCheck()){
+			event = EVENT_ShortCutMenu( gsys, fieldWork, req.heapID );
+			if( event != NULL ){
+				return event;
+			}
+		}
   }
   
   //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
@@ -942,6 +944,11 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   req->talkRequest = ((req->key_trg & PAD_BUTTON_A) != 0);
 
   req->menuRequest = ((req->key_trg & PAD_BUTTON_X) != 0);
+
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+	//作成中だと止まったりするので、一時的に入力不可にします
+ 	req->convRequest = ((req->key_trg & PAD_BUTTON_Y) != 0);
+#endif//DEBUG_ONLY_FOR_toru_nagihashi
   
   req->moveRequest = 0;
 
@@ -964,11 +971,6 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
     req->pushRequest = FALSE;
   }
 
-  if( req->key_trg & PAD_BUTTON_Y ){
-    req->convRequest = TRUE;
-  }else{
-    req->convRequest = FALSE;
-  }
 
   req->debugRequest = ( (req->key_cont & PAD_BUTTON_R) != 0);
   if (req->debugRequest)
@@ -1404,6 +1406,7 @@ static BOOL event_CheckEventPushKey( FIELDMAP_WORK *fieldWork,
 //======================================================================
 //  便利ボタンイベント
 //======================================================================
+#if 0 //Yボタンを便利メニューに置き換えたため不要。後で消しますnagihashi
 typedef struct
 {
   GAMESYS_WORK *gsys;
@@ -1472,7 +1475,7 @@ static GMEVENT * checkEvent_ConvenienceButton( const EV_REQUEST *req,
     return( event );
   }
 }
-
+#endif
 //======================================================================
 //  波乗りイベント
 //======================================================================

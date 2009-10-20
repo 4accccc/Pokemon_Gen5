@@ -105,5 +105,5 @@ GMEVENT * EVENT_ShortCutMenu( GAMESYS_WORK *p_gamesys, FIELDMAP_WORK *p_fieldmap
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
 {	
-  return GMEVENT_RES_CONTINUE;
+  return GMEVENT_RES_FINISH;
 }
