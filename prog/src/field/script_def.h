@@ -66,6 +66,13 @@
 #define SCR_REPORT_OK				(0)			//セーブした
 #define SCR_REPORT_CANCEL			(1)			//セーブしていない
 
+///YES_NO_WINの戻り値
+#define SCR_YES   (0) //YES_NO_WINの戻り値 「はい」を返した
+#define SCR_NO    (1) //YES_NO_WINの戻り値 「いいえ」を返した
+
+///TRAINER_LOSE_CHECK,NORMAL_LOSE_CHECK
+#define SCR_BATTLE_LOSE (0) //負け
+#define SCR_BATTLE_WIN  (1) //勝ち
 
 //-----------------------------------------------------------------------------
 //曜日取得関数の戻り値
