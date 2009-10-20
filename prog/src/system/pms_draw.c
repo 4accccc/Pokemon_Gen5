@@ -81,11 +81,10 @@ static GFL_CLWK* _obj_create( PMS_DRAW_OBJ* obj, HEAPID heap_id );
 static void _obj_set_deco( GFL_CLWK* act, GFL_BMPWIN* win, u8 width, u8 line, PMS_DECO_ID deco_id );
 static void _unit_init( PMS_DRAW_UNIT* unit, PMS_DRAW_OBJ* obj, HEAPID heap_id );
 static void _unit_exit( PMS_DRAW_UNIT* unit );
-static BOOL _unit_proc( PMS_DRAW_UNIT* unit, PRINT_QUE* que );
+static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que );
 static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* font, GFL_BMPWIN* win, PMS_DATA* pms, HEAPID heap_id );
 static void _unit_clear( PMS_DRAW_UNIT* unit );
 static CLSYS_DRAW_TYPE BGFrameToVramType( u8 frame );
-static u8 BGFrameToBGPrio( u8 frame );
 
 //=============================================================================
 /**
@@ -163,7 +162,7 @@ void PMS_DRAW_Main( PMS_DRAW_WORK* wk )
   
   for( i=0; i<wk->unit_num; i++ )
   {
-    if( _unit_proc( &wk->unit[i], wk->print_que ) )
+    if( _unit_main( &wk->unit[i], wk->print_que ) )
     {
       // 一個でも転送が終わってないものがあったら転送終了フラグをOFF
       wk->b_print_end = FALSE;
@@ -221,7 +220,7 @@ void PMS_DRAW_Print( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8 id )
 
   _unit_print( &wk->unit[id], wk->print_que, wk->font, win, pms, wk->heap_id );
     
-  // PROCを通るまでは転送されない
+  // Mainを通るまでは転送されない
   wk->b_print_end = FALSE;
 }
 
@@ -424,17 +423,17 @@ static void _obj_set_deco( GFL_CLWK* act, GFL_BMPWIN* win, u8 width, u8 line, PM
 {
   u8 frame;
   GFL_CLACTPOS pos;
-  CLSYS_DRAW_TYPE vram_type;
 
   GF_ASSERT( deco_id > PMS_DECOID_NULL && deco_id < PMS_DECOID_MAX );
   
   frame = GFL_BMPWIN_GetFrame( win );
   pos.x = GFL_BMPWIN_GetPosX( win ) * 8 + width;
   pos.y = GFL_BMPWIN_GetPosY( win ) * 8 + line * 16;
+
   HOSAKA_Printf("pos=%d,%d line=%d width=%d \n",pos.x, pos.y, line, width);
 
   GFL_CLACT_WK_SetPos( act, &pos, BGFrameToVramType( frame ) );
-  GFL_CLACT_WK_SetBgPri( act, BGFrameToBGPrio( frame ) );
+  GFL_CLACT_WK_SetBgPri( act, GFL_BG_GetPriority( frame ) );
   GFL_CLACT_WK_SetAnmSeq( act, deco_id-1 ); // アニメは0オリジン
   GFL_CLACT_WK_SetAutoAnmFlag( act, TRUE );
 }
@@ -496,7 +495,7 @@ static void _unit_exit( PMS_DRAW_UNIT* unit )
  *  @retval BOOL	まだ転送が終わっていない場合はTRUE／それ以外FALSE
  */
 //-----------------------------------------------------------------------------
-static BOOL _unit_proc( PMS_DRAW_UNIT* unit, PRINT_QUE* que )
+static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que )
 {
   BOOL doing;
 
@@ -549,6 +548,7 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
 
     for( i=0; i<PMS_WORD_MAX; i++ )
     {
+      // デコメ判定
       if( PMSDAT_IsDecoID( pms, i ) )
       {
         PMS_DECO_ID deco_id;
@@ -638,25 +638,5 @@ static CLSYS_DRAW_TYPE BGFrameToVramType( u8 frame )
   return CLSYS_DRAW_MAIN;
 }
 
-//-----------------------------------------------------------------------------
-/**
- *	@brief  BGフレームからOBJ用BGプライオリティを取得
- *
- *	@param	u8 frame 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static u8 BGFrameToBGPrio( u8 frame )
-{
-  GF_ASSERT( frame <= GFL_BG_FRAME3_S );
-
-  if( frame >= GFL_BG_FRAME0_S )
-  {
-    frame -= 4;
-  }
-
-  return frame;
-}
 
 
