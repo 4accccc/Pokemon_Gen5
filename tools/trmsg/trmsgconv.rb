@@ -80,6 +80,7 @@ end
     end
     if msg_kind[ row[ PARA::MSG_KIND ] ] == nil
       p "定義されていないメッセージタイプです"
+      p row[ PARA::TR_ID ]
       p row[ PARA::MSG_KIND ]
       exit( 1 )
     end
