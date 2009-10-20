@@ -1883,8 +1883,6 @@ void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *p
   //線形補間移動を開始
   data->Valid = TRUE;
 
-  //カメラバインドをきる
-///  FIELD_CAMERA_FreeTarget(camera);
 }
 
 //----------------------------------------------------------------------------
@@ -1910,6 +1908,13 @@ void FIELD_CAMERA_RecvLinerParam(FIELD_CAMERA * camera, const u16 inFrame)
     GF_ASSERT_MSG(0,"NO RECOVER PARAM\n");
     return;
   }
+
+  //フレーム指定が0のときは不正とみなし、処理しない
+  if (inFrame == 0){
+    GF_ASSERT(0);
+    return;
+  }
+
   //補間移動はカメラ位置不定型のみのサポート
   FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 

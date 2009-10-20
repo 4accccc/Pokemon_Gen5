@@ -513,6 +513,18 @@
   NO_CMD()
   NO_CMD()
   NO_CMD()
+  
+  //カメラ操作
+  DEF_CMD( EvCmdCamera_Start,   EV_SEQ_CAMERA_SATRT )
+  DEF_CMD( EvCmdCamera_End,   EV_SEQ_CAMERA_END )
+  DEF_CMD( EvCmdCamera_Purge,   EV_SEQ_CAMERA_PURGE )
+  DEF_CMD( EvCmdCamera_Bind,   EV_SEQ_CAMERA_BIND )
+
+  DEF_CMD( EvCmdCamera_Move,   EV_SEQ_CAMERA_MOVE )
+  DEF_CMD( EvCmdCamera_RecoverMove,   EV_SEQ_CAMERA_RECV_MOVE )
+  DEF_CMD( EvCmdCamera_WaitMove,   EV_SEQ_CAMERA_WAIT_MOVE )
+  NO_CMD()
+
 
   END_CMD
   //スクリプトコマンドテーブル終了

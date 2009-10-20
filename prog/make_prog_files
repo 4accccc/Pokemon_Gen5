@@ -203,7 +203,8 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_encount_st.c \
         field/field_skill.c \
         field/scrcmd_network.c \
-				system/shortcut_data.c
+				system/shortcut_data.c \
+        field/scrcmd_camera.c
 
 
 #================================================

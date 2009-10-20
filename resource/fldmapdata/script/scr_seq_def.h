@@ -3620,4 +3620,98 @@
     _ASM_REPORT_EVENT_CALL  ret_wk
 
 
+//--------------------------------------------------------------
+/**
+ * カメラ操作開始
+ */
+//--------------------------------------------------------------
+#define _CAMERA_START() _ASM_CAMERA_START
+  
+  .macro _ASM_CAMERA_START
+  .short EV_SEQ_CAMERA_START
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * カメラ操作終了
+ */
+//--------------------------------------------------------------
+#define _CAMERA_END() _ASM_CAMERA_END
+  
+  .macro _ASM_CAMERA_END
+  .short EV_SEQ_CAMERA_END
+  .endm  
+
+//--------------------------------------------------------------
+/**
+ * カメラパージ
+ */
+//--------------------------------------------------------------
+#define _CAMERA_PURGE() _ASM_CAMERA_PURGE
+  
+  .macro _ASM_CAMERA_PURGE
+  .short EV_SEQ_CAMERA_PURGE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * カメラバインド
+ */
+//--------------------------------------------------------------
+#define _CAMERA_BIND() _ASM_CAMERA_BIND
+  
+  .macro _ASM_CAMERA_BIND
+  .short EV_SEQ_CAMERA_BIND
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * カメラ移動
+ * @param pitch     ピッチ
+ * @param yaw       ヨー
+ * @param dist      距離
+ * @param x         注視点Ｘ
+ * @param y         注視点Ｙ
+ * @param z         注視点Ｚ
+ * @param frame     移動フレーム
+ */
+//--------------------------------------------------------------
+#define _CAMERA_MOVE(pitch, yaw, dist, x, y, z, frame) \
+    _ASM_CAMERA_MOVE pitch, yaw, dist, x, y, z, frame
+  
+  .macro _ASM_CAMERA_MOVE pitch, yaw, dist, x, y, z, fream
+  .short EV_SEQ_CAMERA_MOVE
+  .short \pitch
+  .short \yaw
+  .short \dist
+  .long \x
+  .long \y
+  .long \z
+  .short \frame
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * カメラ復帰移動
+ * @param frame   移動フレーム
+ */
+//--------------------------------------------------------------
+#define _CAMERA_RECV_MOVE(frame) _ASM_CAMERA_RECV_MOVE frame
+  
+  .macro _ASM_CAMERA_RECV_MOVE frame
+  .short EV_SEQ_CAMERA_RECV_MOVE
+  .short \frame
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * カメラ移動待ち
+ */
+//--------------------------------------------------------------
+#define _CAMERA_WAIT_MOVE() _ASM_CAMERA_WAIT_MOVE
+  
+  .macro _ASM_CAMERA_WAIT_MOVE
+  .short EV_SEQ_CAMERA_WAIT_MOVE
+  .endm
+
 

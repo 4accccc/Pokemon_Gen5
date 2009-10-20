@@ -49,6 +49,7 @@
 #include "scrcmd_hiden.h"
 #include "scrcmd_player.h"
 #include "scrcmd_network.h"
+#include "scrcmd_camera.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
