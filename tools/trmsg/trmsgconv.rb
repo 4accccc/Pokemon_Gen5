@@ -55,12 +55,11 @@ end
 
   read_data = []
   cnt = 0
-  skip = 3 + 1    #最初の3行は無効データなのでスキップする
+
   CSV.open( ARGV[ ARGV_READ_FILE ], 'r' ) {|row|
-    if skip > 0
-      skip -= 1
-    end
-    next if skip != 0
+    next if row[ 0 ] == nil
+    next if row[ 0 ].index("#") == 0
+    next if row[ 0 ].index("＃") == 0
     read_data[ cnt ] = row
     cnt += 1
   }
