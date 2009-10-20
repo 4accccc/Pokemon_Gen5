@@ -292,11 +292,12 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target )
  * @brief 捕獲時ボール投げエフェクト起動
  *
  * @param   vpos        対象ポケモンの描画位置
+ * @param   itemNum     投げたボールのアイテムナンバー
  * @param   yure_cnt    ボール揺れ回数（0～3）
  * @param   f_success   捕獲成功フラグ
  */
 //=============================================================================================
-void BTLV_EFFECT_BallThrow( int vpos, u8 yure_cnt, BOOL f_success )
+void BTLV_EFFECT_BallThrow( int vpos, u16 item_no, u8 yure_cnt, BOOL f_success )
 {
   // @todo 未実装
 }

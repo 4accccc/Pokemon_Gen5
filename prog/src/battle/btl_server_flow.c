@@ -4651,8 +4651,13 @@ static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk )
     u32 i;
     for(i=0; i<wk->numClient; ++i)
     {
-       // @@@ 今は全クライアントに同じだけ増加させているがトリプルはルールが違う
-       SCQUE_PUT_OP_ShooterCharge( wk->que, i, 1 );
+      // @@@ 今は全クライアントに同じだけ増加させているがトリプルはルールが違う
+      if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_TRIPLE ){
+        SCQUE_PUT_OP_ShooterCharge( wk->que, i, 1 );
+      }else{
+
+        SCQUE_PUT_OP_ShooterCharge( wk->que, i, 1 );
+      }
     }
   }
 }

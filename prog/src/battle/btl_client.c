@@ -2246,7 +2246,7 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
 //---------------------------------------------------------------------------------------
 /**
  *  モンスターボール投げつけ
- *  args .. [0]:対象ポケ位置  [1]:ゆれ回数  [2]:捕獲成功フラグ
+ *  args .. [0]:対象ポケ位置  [1]:ゆれ回数  [2]:捕獲成功フラグ [3]:ボールのアイテムナンバー
  */
 //---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
@@ -2255,7 +2255,7 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
-      BTLV_EFFECT_BallThrow( vpos, args[1], args[2] );
+      BTLV_EFFECT_BallThrow( vpos, args[3], args[1], args[2] );
       (*seq)++;
     }
     break;
