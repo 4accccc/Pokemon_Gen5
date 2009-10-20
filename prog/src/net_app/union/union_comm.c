@@ -134,6 +134,7 @@ static UNION_SYSTEM_PTR Union_InitSystem(UNION_PARENT_WORK *uniparent)
   UnionMySituation_Clear(unisys);
   unisys->my_situation.chat_upload = TRUE;
   UnionChat_InitLog(&unisys->chat_log);
+  unisys->alloc.regulation = Regulation_AllocWork(HEAPID_UNION);
   
   GFL_OVERLAY_Load( FS_OVERLAY_ID( union_room ) );
   
@@ -149,6 +150,9 @@ static UNION_SYSTEM_PTR Union_InitSystem(UNION_PARENT_WORK *uniparent)
 //==================================================================
 static void Union_ExitSystem(UNION_SYSTEM_PTR unisys)
 {
+  if(unisys->alloc.regulation != NULL){
+    GFL_HEAP_FreeMemory(unisys->alloc.regulation);
+  }
   GFL_HEAP_FreeMemory(unisys);
   GFL_HEAP_DeleteHeap(HEAPID_UNION);
   

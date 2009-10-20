@@ -30,6 +30,8 @@
 #include "field\event_colosseum_battle.h"
 #include "union_tool.h"
 #include "app\pms_input.h"
+#include "poke_tool/regulation_def.h"
+#include "poke_tool/poke_regulation.h"
 
 #include "field/event_ircbattle.h"
 #include "net_app\irc_compatible.h"
@@ -468,50 +470,84 @@ BOOL UnionOneself_ReqStatus(UNION_SYSTEM_PTR unisys, int req_status)
 
 //--------------------------------------------------------------
 /**
+ * メニューIndexからバトルレギュレーション番号を取得する
+ * @param   menu_index		
+ * @retval  int		レギュレーションNo
+ */
+//--------------------------------------------------------------
+static int Union_GetMenuIndex_to_RegulationNo(u32 menu_index)
+{
+  switch(menu_index){
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50_SHOOTER:        //対戦:1VS1:シングル:LV50
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:        //対戦:1VS1:シングル:LV50
+    return REG_LV50_SINGLE;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE_SHOOTER:      //対戦:1VS1:シングル:制限なし
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:      //対戦:1VS1:シングル:制限なし
+    return REG_FREE_SINGLE;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD_SHOOTER://対戦:1VS1:シングル:スタンダード
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:  //対戦:1VS1:シングル:スタンダード
+    return REG_STANDARD_SINGLE;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50_SHOOTER:        //対戦:1VS1:ダブル:LV50
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:        //対戦:1VS1:ダブル:LV50
+    return REG_LV50_DOUBLE;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE_SHOOTER:      //対戦:1VS1:ダブル:制限なし
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:      //対戦:1VS1:ダブル:制限なし
+    return REG_FREE_DOUBLE;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD_SHOOTER:  //対戦:1VS1:ダブル:スタンダード
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:  //対戦:1VS1:ダブル:スタンダード
+    return REG_STANDARD_DOUBLE;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50:
+    return REG_LV50_TRIPLE;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE:
+    return REG_FREE_TRIPLE;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD:
+    return REG_STANDARD_TRIPLE;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50:
+    return REG_LV50_ROTATION;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE:
+    return REG_FREE_ROTATION;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD_SHOOTER:
+  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD:
+    return REG_STANDARD_ROTATION;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:                 //対戦:マルチ
+    return REG_STANDARD_MALTI;
+  default:
+    GF_ASSERT(0);
+    return REG_FREE_SINGLE;
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * 選択メニューが戦闘だった場合、参加出来るかレギュレーションチェック
  *
+ * @param   unisys		
  * @param   menu_index		
  *
  * @retval  BOOL		TRUE:参加OK　FALSE:参加NG
  */
 //--------------------------------------------------------------
-static BOOL Union_CheckEntryBattleRegulation(u32 menu_index)
+static BOOL Union_CheckEntryBattleRegulation(UNION_SYSTEM_PTR unisys, u32 menu_index)
 {
-  if(menu_index < UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50 
-      || menu_index > UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD){
+  int reg_no;
+  
+  if(menu_index < UNION_PLAY_CATEGORY_COLOSSEUM_START 
+      || menu_index > UNION_PLAY_CATEGORY_COLOSSEUM_END){
     return TRUE;  //戦闘ではないのでTRUE
   }
   
-  switch(menu_index){
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50_SHOOTER:        //対戦:1VS1:シングル:LV50
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_50:        //対戦:1VS1:シングル:LV50
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE_SHOOTER:      //対戦:1VS1:シングル:制限なし
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:      //対戦:1VS1:シングル:制限なし
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD_SHOOTER://対戦:1VS1:シングル:スタンダード
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_STANDARD:  //対戦:1VS1:シングル:スタンダード
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50_SHOOTER:        //対戦:1VS1:ダブル:LV50
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_50:        //対戦:1VS1:ダブル:LV50
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE_SHOOTER:      //対戦:1VS1:ダブル:制限なし
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:      //対戦:1VS1:ダブル:制限なし
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD_SHOOTER:  //対戦:1VS1:ダブル:スタンダード
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_STANDARD:  //対戦:1VS1:ダブル:スタンダード
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50_SHOOTER:
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_50:
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE_SHOOTER:
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE:
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD_SHOOTER:
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_STANDARD:
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50_SHOOTER:
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_50:
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE_SHOOTER:
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE:
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD_SHOOTER:
-  case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_STANDARD:
-  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI:                 //対戦:マルチ
-    return TRUE;  //今はレギュレーションチェックなし。項目さえあっていればOK
-  default:
-    return FALSE;
+  reg_no = Union_GetMenuIndex_to_RegulationNo(menu_index);
+  PokeRegulation_LoadData(reg_no, unisys->alloc.regulation);
+  //※check　現状手持ちだけチェック。　バトルボックスが出来ればそちらも行う
+  if(PokeRegulationMatchPartialPokeParty(unisys->alloc.regulation, GAMEDATA_GetMyPokemon(unisys->uniparent->game_data)) == POKE_REG_OK){
+    return TRUE;
   }
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -1148,7 +1184,7 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
       if(UnionMsg_YesNo_SelectLoop(unisys, &result) == TRUE){
         UnionMsg_YesNo_Del(unisys);
         //戦闘の時はレギュレーションを見て参加可能かチェック
-        if(Union_CheckEntryBattleRegulation(situ->mycomm.mainmenu_select) == FALSE){
+        if(Union_CheckEntryBattleRegulation(unisys, situ->mycomm.mainmenu_select) == FALSE){
           UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_010);
           result = FALSE; //強制で「いいえ」を返す
         }
@@ -1249,7 +1285,7 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
     }
     else if(select_ret != FLDMENUFUNC_NULL){
       UnionMsg_Menu_BattleMenuDel(unisys);
-      if(Union_CheckEntryBattleRegulation(select_ret) == FALSE){
+      if(Union_CheckEntryBattleRegulation(unisys, select_ret) == FALSE){
         UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_010);
         (*seq) = LOCALSEQ_INIT;
         break;
@@ -1373,7 +1409,7 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
         }
         else{
           //レギュレーションを見て参加可能かチェック
-          if(Union_CheckEntryBattleRegulation(situ->mycomm.mainmenu_select) == FALSE){
+          if(Union_CheckEntryBattleRegulation(unisys, situ->mycomm.mainmenu_select) == FALSE){
             UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_010);
             UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
             (*seq) = LOCALSEQ_END;
@@ -2668,12 +2704,13 @@ static BOOL OneselfSeq_ColosseumPokelist(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
   
   case 2: //ポケモンリスト画面呼び出し
     parent_list = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(UNION_SUBPROC_PARENT_POKELIST));
-    
+
     plist = &parent_list->plist;
     plist->pp = clsys->recvbuf.pokeparty[my_net_id];
     plist->myitem = GAMEDATA_GetMyItem(unisys->uniparent->game_data);
     plist->cfg = SaveData_GetConfig(GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data));
     plist->mode = PL_MODE_BATTLE;
+    plist->reg = unisys->alloc.regulation;
     
     {//通信相手の情報をセット
       int net_id, enemy_player = 0;

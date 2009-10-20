@@ -11,6 +11,7 @@
 #include "buflen.h"
 #include "app/trainer_card.h"
 #include "system\pms_data.h"
+#include "savedata/regulation.h"
 
 
 //==============================================================================
@@ -405,6 +406,11 @@ typedef struct{
   u8 seq;
   u8 padding[3];
 }UNION_SUB_PROC;
+
+///ユニオンルーム内で別途Allocされるワーク管理
+typedef struct{
+  REGULATION *regulation;    ///<バトルレギュレーション
+}UNION_ALLOC;
 
 //--------------------------------------------------------------
 //  チャット
