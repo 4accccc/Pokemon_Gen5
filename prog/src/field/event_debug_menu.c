@@ -792,7 +792,12 @@ static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk )
 			
       {
         GMEVENT * mapchange_event;
-        mapchange_event = DEBUG_EVENT_ChangeMapDefaultPos( work->gmSys, work->fieldWork, ret );
+        if(ret == ZONE_ID_UNION){
+          mapchange_event = EVENT_ChangeMapToUnion(work->gmSys, work->fieldWork);
+        }
+        else{
+          mapchange_event = DEBUG_EVENT_ChangeMapDefaultPos( work->gmSys, work->fieldWork, ret );
+        }
         GMEVENT_ChangeEvent( work->gmEvent, mapchange_event );
       }
 		}
