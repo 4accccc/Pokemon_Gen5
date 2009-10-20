@@ -49,8 +49,7 @@ extern const NetRecvFuncTable Intrude_CommPacketTbl[];
 extern BOOL IntrudeSend_Shutdown(void);
 extern BOOL IntrudeSend_ProfileReq(void);
 extern BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm);
-extern BOOL IntrudeSend_PlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, 
-  GAMEDATA *gamedata, INTRUDE_STATUS *send_status, int palace_area, int mission_no);
+extern BOOL IntrudeSend_PlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_STATUS *send_status);
 extern BOOL IntrudeSend_Talk(int send_net_id);
 extern BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRUDE_TALK_STATUS answer);
 extern BOOL IntrudeSend_BingoIntrusion(int send_net_id);

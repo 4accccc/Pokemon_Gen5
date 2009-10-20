@@ -27,6 +27,7 @@
 #include "system/net_err.h"
 #include "field/zonedata.h"
 #include "field/field_g3d_mapper.h"
+#include "intrude_main.h"
 
 #include "message.naix"
 #include "msg/msg_d_field.h"
@@ -110,19 +111,17 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
       || intcomm->comm_status != INTRUDE_COMM_STATUS_UPDATE){
     return;
   }
-
-  if(CommPlayer_Mine_DataUpdate(intcomm->cps, &intcomm->intrude_status_mine.player_pack) == TRUE){
+  
+  if(Intrude_SetSendStatus(intcomm) == TRUE){
     intcomm->send_status = TRUE;
   }
   if(intcomm->send_status == TRUE){
-    IntrudeSend_PlayerStatus(intcomm, GAMESYSTEM_GetGameData(gameSys), 
-      &intcomm->intrude_status_mine, PALACE_SYS_GetArea(intcomm->palace), 
-      PALACE_SYS_GetMissionNo(intcomm->palace));
+    IntrudeSend_PlayerStatus(intcomm, &intcomm->intrude_status_mine);
   }
 
   CommPlayer_Update(intcomm->cps);
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
-    if(intcomm->recv_status & (1 << i)){
+    if(intcomm->recv_profile & (1 << i)){
       if(CommPlayer_CheckOcc(intcomm->cps, i) == FALSE){
         MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(GAMESYSTEM_GetGameData(gameSys), i);
         CommPlayer_Add(intcomm->cps, i, MyStatus_GetMySex(myst), 

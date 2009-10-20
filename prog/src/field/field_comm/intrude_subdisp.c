@@ -15,6 +15,9 @@
 #include "field/intrude_subdisp.h"
 #include "field/intrude_common.h"
 #include "palace.naix"
+#include "fieldmap/zone_id.h"
+#include "intrude_types.h"
+#include "infowin\infowin.h"
 
 
 //==============================================================================
@@ -178,24 +181,60 @@ static void _IntSub_ActorCreate_Mark(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
 static void _IntSub_ActorCreate_Power(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_LvNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_PointNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
+static void _IntSub_ActorUpdate_Town(
+  INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
+static void _IntSub_ActorUpdate_SenkyoEff(
+  INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
+static void _IntSub_ActorUpdate_Area(
+  INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
+static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
+static void _IntSub_ActorUpdate_CursorL(
+  INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
+static void _IntSub_ActorUpdate_Mark(
+  INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
+static void _IntSub_ActorUpdate_Power(
+  INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
+static void _IntSub_ActorUpdate_LvNum(
+  INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
+static void _IntSub_ActorUpdate_PointNum(
+  INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
+static u8 _IntSub_GetProfileRecvNum(INTRUDE_COMM_SYS_PTR intcomm);
+static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos);
 
 
 //==============================================================================
 //  データ
 //==============================================================================
-///街の座標
+///街の座標データ
 static const struct{
+  u16 zone_id;
   u16 x;
   u16 y;
-}TownPos[] = {
-  {7*8, 3*8},
-  {0x10*8, 3*8},
-  {0x19*8, 3*8},
-  {2*8, 0xa*8},
-  {0x1e*8, 0xa*8},
-  {7*8, 0x11*8},
-  {0x10*8, 0x11*8},
-  {0x19*8, 0x11*8},
+  u16 padding;
+}TownPosData[] = {
+  {ZONE_ID_C01, 7*8, 5*8,},
+  {ZONE_ID_C02, 0x10*8, 5*8},
+  {ZONE_ID_C03, 0x19*8, 5*8},
+  {ZONE_ID_C04, 2*8, 0xc*8},
+  {ZONE_ID_C05, 0x1e*8, 0xc*8},
+  {ZONE_ID_C06, 7*8, 0x13*8},
+  {ZONE_ID_C07, 0x10*8, 0x13*8},
+  {ZONE_ID_C08, 0x19*8, 0x13*8},
+};
+
+///パレスをカーソルが指す場合の座標
+enum{
+  PALACE_CURSOR_POS_X = 128,
+  PALACE_CURSOR_POS_Y = 96,
+};
+
+///エリアアイコン配置座標
+enum{
+  AREA_POST_LEFT = 0xd * 8,                           ///<配置座標範囲の左端X
+  AREA_POST_RIGHT = 0x13 * 8,                         ///<配置座標範囲の右端X
+  AREA_POST_WIDTH = AREA_POST_RIGHT - AREA_POST_LEFT, ///<配置座標範囲の幅
+  
+  AREA_POST_Y = 24,                                    ///<配置座標Y
 };
 
 
@@ -234,6 +273,7 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   _IntSub_BGLoad(intsub, handle);
   _IntSub_ActorResouceLoad(intsub, handle);
   _IntSub_ActorCreate(intsub, handle);
+  INFOWIN_Init(INTRUDE_FRAME_S_BACKGROUND, 0xf, game_comm, HEAPID_FIELDMAP);
   
   GFL_ARC_CloseDataHandle(handle);
 
@@ -249,6 +289,7 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
 //==================================================================
 void INTRUDE_SUBDISP_Exit(INTRUDE_SUBDISP_PTR intsub)
 {
+  INFOWIN_Exit();
   _IntSub_ActorDelete(intsub);
   _IntSub_ActorResourceUnload(intsub);
   _IntSub_BGUnload(intsub);
@@ -267,9 +308,31 @@ void INTRUDE_SUBDISP_Exit(INTRUDE_SUBDISP_PTR intsub)
 void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
+  OCCUPY_INFO *area_occupy;
   
+  if(intcomm == NULL){
+    return;
+  }
   
+  if(intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)
+      || intcomm->intrude_status_mine.palace_area == PALACE_AREA_NO_NULL){
+    area_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  }
+  else{
+    area_occupy = GAMEDATA_GetOccupyInfo(gamedata, intcomm->intrude_status_mine.palace_area);
+  }
+  
+  _IntSub_ActorUpdate_Town(intsub, intcomm, area_occupy);
+  _IntSub_ActorUpdate_SenkyoEff(intsub, intcomm, area_occupy);
+  _IntSub_ActorUpdate_Area(intsub, intcomm, area_occupy);
+  _IntSub_ActorUpdate_CursorS(intsub, intcomm, area_occupy);
+  _IntSub_ActorUpdate_CursorL(intsub, intcomm, area_occupy);
+  _IntSub_ActorUpdate_Mark(intsub, intcomm, area_occupy);
+  _IntSub_ActorUpdate_Power(intsub, intcomm, area_occupy);
+  _IntSub_ActorUpdate_LvNum(intsub, intcomm, area_occupy);
+  _IntSub_ActorUpdate_PointNum(intsub, intcomm, area_occupy);
 }
 
 //==================================================================
@@ -281,6 +344,7 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
 //==================================================================
 void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub)
 {
+  INFOWIN_Update();
 }
 
 
@@ -321,6 +385,7 @@ static void _IntSub_SystemExit(INTRUDE_SUBDISP_PTR intsub)
 //--------------------------------------------------------------
 static void _IntSub_BGLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
 {
+  u32 start_char_area;
 	static const GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
   	{//INTRUDE_FRAME_S_BAR
   		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -344,8 +409,11 @@ static void _IntSub_BGLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
 	G2S_BlendNone();
 	
   //キャラ転送
+  start_char_area = GFL_BG_AllocCharacterArea(
+    INTRUDE_FRAME_S_BACKGROUND, 0x6000, GFL_BG_CHRAREA_GET_F);  //INFOWINと共存の為Allocする
+  GF_ASSERT(start_char_area == 0);
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
-    handle, NARC_palace_palace_bg_lz_NCGR, INTRUDE_FRAME_S_BACKGROUND, 0, 
+    handle, NARC_palace_palace_bg_lz_NCGR, INTRUDE_FRAME_S_BACKGROUND, start_char_area, 
     0, TRUE, HEAPID_FIELDMAP);
   
   //スクリーン転送
@@ -375,6 +443,7 @@ static void _IntSub_BGUnload(INTRUDE_SUBDISP_PTR intsub)
 {
 	GFL_BG_SetVisible( INTRUDE_FRAME_S_BAR, VISIBLE_OFF );
 	GFL_BG_SetVisible( INTRUDE_FRAME_S_BACKGROUND, VISIBLE_OFF );
+	GFL_BG_FreeCharacterArea(INTRUDE_FRAME_S_BACKGROUND, 0, 0x6000);
 	GFL_BG_FreeBGControl(INTRUDE_FRAME_S_BAR);
 	GFL_BG_FreeBGControl(INTRUDE_FRAME_S_BACKGROUND);
 }
@@ -471,11 +540,11 @@ static void _IntSub_ActorCreate_Town(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
   	BGPRI_ACTOR_COMMON,         //BGプライオリティ
   };
   
-  GF_ASSERT(NELEMS(TownPos) == (INTSUB_ACTOR_TOWN_MAX - INTSUB_ACTOR_TOWN_0 + 1));
-  GF_ASSERT(NELEMS(TownPos) == INTRUDE_TOWN_MAX);
+  GF_ASSERT(NELEMS(TownPosData) == (INTSUB_ACTOR_TOWN_MAX - INTSUB_ACTOR_TOWN_0 + 1));
+  GF_ASSERT(NELEMS(TownPosData) == INTRUDE_TOWN_MAX);
   for(i = INTSUB_ACTOR_TOWN_0; i <= INTSUB_ACTOR_TOWN_MAX; i++){
-    head.pos_x = TownPos[i].x;
-    head.pos_y = TownPos[i].y;
+    head.pos_x = TownPosData[i].x;
+    head.pos_y = TownPosData[i].y;
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
       &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
@@ -501,10 +570,10 @@ static void _IntSub_ActorCreate_SenkyoEff(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE 
   	BGPRI_ACTOR_COMMON,         //BGプライオリティ
   };
   
-  GF_ASSERT(NELEMS(TownPos) == (INTSUB_ACTOR_SENKYO_EFF_MAX - INTSUB_ACTOR_SENKYO_EFF_0 + 1));
+  GF_ASSERT(NELEMS(TownPosData) == (INTSUB_ACTOR_SENKYO_EFF_MAX - INTSUB_ACTOR_SENKYO_EFF_0 + 1));
   for(i = INTSUB_ACTOR_SENKYO_EFF_0; i <= INTSUB_ACTOR_SENKYO_EFF_MAX; i++){
-    head.pos_x = TownPos[i].x;
-    head.pos_y = TownPos[i].y;
+    head.pos_x = TownPosData[i].x;
+    head.pos_y = TownPosData[i].y;
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
       &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
@@ -537,7 +606,6 @@ static void _IntSub_ActorCreate_Area(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
     GFL_CLACT_WK_SetPlttOffs(intsub->act[i], 
       INTSUB_ACTOR_PAL_BASE_START + i-INTSUB_ACTOR_AREA_0, CLWK_PLTTOFFS_MODE_PLTT_TOP);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
-    head.anmseq++;
   }
 }
 
@@ -566,6 +634,7 @@ static void _IntSub_ActorCreate_CursorS(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *h
     GFL_CLACT_WK_SetPlttOffs(intsub->act[i], 
       INTSUB_ACTOR_PAL_BASE_START + i-INTSUB_ACTOR_CUR_S_0, CLWK_PLTTOFFS_MODE_PLTT_TOP);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
+    GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[i], TRUE);  //オートアニメON
   }
 }
 
@@ -592,6 +661,7 @@ static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *h
   GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_CUR_L], 
     INTSUB_ACTOR_PAL_BASE_START + intsub->my_net_id, CLWK_PLTTOFFS_MODE_PLTT_TOP);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_CUR_L], FALSE);  //表示OFF
+  GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[INTSUB_ACTOR_CUR_L], TRUE);  //オートアニメON
 }
 
 //--------------------------------------------------------------
@@ -678,19 +748,19 @@ static void _IntSub_ActorCreate_LvNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *han
     u16 x;
     u16 y;
   }LvNumPos[] = {
-    {0x1a*8, 0x16*8},         //百の位
-    {0x1a*8 + 2*8, 0x16*8},   //十の位
     {0x1a*8 + 4*8, 0x16*8},   //一の位
+    {0x1a*8 + 2*8, 0x16*8},   //十の位
+    {0x1a*8, 0x16*8},         //百の位
   };
   
   GF_ASSERT(NELEMS(LvNumPos) == (INTSUB_ACTOR_LV_NUM_KETA_MAX - INTSUB_ACTOR_LV_NUM_KETA_0 + 1));
   for(i = INTSUB_ACTOR_LV_NUM_KETA_0; i <= INTSUB_ACTOR_LV_NUM_KETA_MAX; i++){
-    head.pos_x = LvNumPos[i].x;
-    head.pos_y = LvNumPos[i].y;
+    head.pos_x = LvNumPos[i - INTSUB_ACTOR_LV_NUM_KETA_0].x;
+    head.pos_y = LvNumPos[i - INTSUB_ACTOR_LV_NUM_KETA_0].y;
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
       &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[i], TRUE);
   }
 }
 
@@ -713,12 +783,351 @@ static void _IntSub_ActorCreate_PointNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *
   };
   u16 width = 8;
   
+  head.pos_x += width * (INTSUB_ACTOR_POINT_NUM_KETA_MAX - INTSUB_ACTOR_POINT_NUM_KETA_0);
   for(i = INTSUB_ACTOR_POINT_NUM_KETA_0; i <= INTSUB_ACTOR_POINT_NUM_KETA_MAX; i++){
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
       &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
-    head.pos_x += width;
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[i], TRUE);
+    head.pos_x -= width;
   }
 }
 
+//==============================================================================
+//  更新
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * 更新処理：街アクター
+ *
+ * @param   intsub		
+ * @param   intcomm		
+ * @param   area_occupy		
+ */
+//--------------------------------------------------------------
+static void _IntSub_ActorUpdate_Town(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+{
+  int i;
+  GFL_CLWK *act;
+  
+  for(i = 0; i < INTRUDE_TOWN_MAX; i++){
+    act = intsub->act[INTSUB_ACTOR_TOWN_0 + i];
+    if(area_occupy->town.town_occupy[i] == OCCUPY_TOWN_WHITE){
+      GFL_CLACT_WK_SetAnmSeqDiff(act, PALACE_ACT_ANMSEQ_TOWN_W);
+      GFL_CLACT_WK_SetDrawEnable(act, TRUE);
+    }
+    else if(area_occupy->town.town_occupy[i] == OCCUPY_TOWN_BLACK){
+      GFL_CLACT_WK_SetAnmSeqDiff(act, PALACE_ACT_ANMSEQ_TOWN_B);
+      GFL_CLACT_WK_SetDrawEnable(act, TRUE);
+    }
+    else{
+      GFL_CLACT_WK_SetDrawEnable(act, FALSE);
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 更新処理：占拠エフェクト
+ *
+ * @param   intsub		
+ * @param   intcomm		
+ * @param   area_occupy		
+ */
+//--------------------------------------------------------------
+static void _IntSub_ActorUpdate_SenkyoEff(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+{
+  return;
+}
+
+//--------------------------------------------------------------
+/**
+ * 更新処理：エリアアイコン
+ *
+ * @param   intsub		
+ * @param   intcomm		
+ * @param   area_occupy		
+ */
+//--------------------------------------------------------------
+static void _IntSub_ActorUpdate_Area(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+  int net_id, profile_num, area_width;
+  GFL_CLWK *act;
+  GFL_CLACTPOS pos;
+  
+  profile_num = _IntSub_GetProfileRecvNum(intcomm);
+  area_width = AREA_POST_WIDTH / (profile_num + 1);
+  pos.x = AREA_POST_LEFT + area_width;
+  pos.y = AREA_POST_Y;
+  
+  for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+    act = intsub->act[INTSUB_ACTOR_AREA_0 + net_id];
+    if(net_id == GAMEDATA_GetIntrudeMyID(gamedata) 
+        || (intcomm->recv_profile & (1 << net_id))){
+      GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
+      GFL_CLACT_WK_SetDrawEnable(act, TRUE);
+      pos.x += area_width;
+    }
+    else{ //自分ではないし、プロフィールも受信していない
+      GFL_CLACT_WK_SetDrawEnable(act, FALSE);
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 更新処理：通信相手カーソル
+ *
+ * @param   intsub		
+ * @param   intcomm		
+ * @param   area_occupy		
+ */
+//--------------------------------------------------------------
+static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+  int my_area, net_id, profile_num, pos_count, s, area_width;
+  GFL_CLWK *act;
+  GFL_CLACTPOS pos;
+  INTRUDE_STATUS *ist;
+  s16 base_x;
+  u8 palace_num[FIELD_COMM_MEMBER_MAX];
+  u8 town_num[NELEMS(TownPosData)];
+  static const s8 TownWearOffset[] = {3, -3, 6, 0};   //最後の0は4BYTEアライメント
+  static const s8 PalaceWearOffset[] = {0, 3, -3, 0}; //最後の0は4BYTEアライメント
+  int town_no;
+  
+  profile_num = _IntSub_GetProfileRecvNum(intcomm);
+  area_width = AREA_POST_WIDTH / (profile_num + 1);
+  base_x = AREA_POST_LEFT + area_width;
+
+  my_area = intcomm->intrude_status_mine.palace_area;
+  pos_count = -1;
+  
+  GFL_STD_MemClear(town_num, sizeof(town_num[0]) * NELEMS(TownPosData));
+  GFL_STD_MemClear(palace_num, sizeof(palace_num[0]) * FIELD_COMM_MEMBER_MAX);
+  GF_ASSERT(NELEMS(PalaceWearOffset) == FIELD_COMM_MEMBER_MAX);
+  
+  for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+    act = intsub->act[INTSUB_ACTOR_CUR_S_0 + net_id];
+    if(net_id == GAMEDATA_GetIntrudeMyID(gamedata)){
+      GFL_CLACT_WK_SetDrawEnable(act, FALSE);
+      continue;
+    }
+    else if(intcomm->recv_profile & (1 << net_id)){
+      ist = &intcomm->intrude_status[net_id];
+    }
+    else{
+      GFL_CLACT_WK_SetDrawEnable(act, FALSE);
+      continue;
+    }
+    
+    if(ist->palace_area == my_area){  //このプレイヤーがいる街を指す
+      town_no = _IntSub_TownPosGet(ist->zone_id, &pos);
+      GF_ASSERT(town_no != 0xff);
+      if(town_no == 0xff){
+        town_no = 0;
+      }
+      pos.x += TownWearOffset[town_num[town_no]];
+      GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
+      town_num[town_no]++;
+    }
+    else{ //このプレイヤーがいるパレスエリアを指す
+      if(intcomm->recv_profile & (1 << ist->palace_area)){
+        pos_count = 0;
+        for(s = 0; s < ist->palace_area; s++){
+          if(intcomm->recv_profile & (1 << s)){
+            pos_count++;
+          }
+        }
+        pos.x = base_x + area_width * pos_count + PalaceWearOffset[palace_num[pos_count]];
+        pos.y = AREA_POST_Y;
+        GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
+        palace_num[pos_count]++;
+      }
+      else{
+        //このプレイヤーが居るエリアが、こちらはまだプロフィールを受信していないエリアの場合は無視
+        GFL_CLACT_WK_SetDrawEnable(act, FALSE);
+        continue;
+      }
+    }
+    GFL_CLACT_WK_SetDrawEnable(act, TRUE);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 更新処理：自分カーソル
+ *
+ * @param   intsub		
+ * @param   intcomm		
+ * @param   area_occupy		
+ */
+//--------------------------------------------------------------
+static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+{
+  GFL_CLWK *act;
+  GFL_CLACTPOS pos;
+  
+  _IntSub_TownPosGet(intcomm->intrude_status_mine.zone_id, &pos);
+  act = intsub->act[INTSUB_ACTOR_CUR_L];
+  GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
+  GFL_CLACT_WK_SetDrawEnable(act, TRUE);
+}
+
+//--------------------------------------------------------------
+/**
+ * 更新処理：自分侵入エリアマーク
+ *
+ * @param   intsub		
+ * @param   intcomm		
+ * @param   area_occupy		
+ */
+//--------------------------------------------------------------
+static void _IntSub_ActorUpdate_Mark(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+  int net_id, profile_num;
+  GFL_CLWK *act;
+  u32 recv_profile;
+  int area_width, s, my_area, pos_count;
+  GFL_CLACTPOS pos;
+  
+  profile_num = _IntSub_GetProfileRecvNum(intcomm);
+  area_width = AREA_POST_WIDTH / (profile_num + 1);
+  pos.x = AREA_POST_LEFT + area_width;
+  pos.y = AREA_POST_Y;
+
+  my_area = intcomm->intrude_status_mine.palace_area;
+  if(my_area == PALACE_AREA_NO_NULL){
+    my_area = 0;
+  }
+  pos_count = 0;
+  for(s = 0; s < my_area; s++){
+    if(intcomm->recv_profile & (1 << s)){
+      pos_count++;
+    }
+  }
+  pos.x += area_width * pos_count;
+  act = intsub->act[INTSUB_ACTOR_MARK];
+  GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
+  GFL_CLACT_WK_SetDrawEnable(act, TRUE);
+}
+
+//--------------------------------------------------------------
+/**
+ * 更新処理：POWER
+ *
+ * @param   intsub		
+ * @param   intcomm		
+ * @param   area_occupy		
+ */
+//--------------------------------------------------------------
+static void _IntSub_ActorUpdate_Power(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+{
+  return;
+}
+
+//--------------------------------------------------------------
+/**
+ * 更新処理：レベル数値
+ *
+ * @param   intsub		
+ * @param   intcomm		
+ * @param   area_occupy		
+ */
+//--------------------------------------------------------------
+static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+  int i, level;
+  OCCUPY_INFO *my_occupy;
+  GFL_CLWK *act;
+  
+  my_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  level = my_occupy->intrude_level;
+  
+  for(i = 0; i <= INTSUB_ACTOR_LV_NUM_KETA_MAX - INTSUB_ACTOR_LV_NUM_KETA_0; i++){
+    act = intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0 + i];
+    GFL_CLACT_WK_SetAnmIndex(act, level % 10);
+    level /= 10;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 更新処理：ポイント数値
+ *
+ * @param   intsub		
+ * @param   intcomm		
+ * @param   area_occupy		
+ */
+//--------------------------------------------------------------
+static void _IntSub_ActorUpdate_PointNum(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+  int i, point;
+  OCCUPY_INFO *my_occupy;
+  GFL_CLWK *act;
+  
+  my_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  point = my_occupy->intrude_point;
+  
+  for(i = 0; i <= INTSUB_ACTOR_POINT_NUM_KETA_MAX - INTSUB_ACTOR_POINT_NUM_KETA_0; i++){
+    act = intsub->act[INTSUB_ACTOR_POINT_NUM_KETA_0 + i];
+    GFL_CLACT_WK_SetAnmIndex(act, point % 10);
+    point /= 10;
+  }
+}
+
+
+//==============================================================================
+//  ツール
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * プロフィール受信人数を取得
+ * @param   intcomm		
+ * @retval  u8		プロフィール受信人数
+ */
+//--------------------------------------------------------------
+static u8 _IntSub_GetProfileRecvNum(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  u32 recv_profile;
+  u8 profile_num;
+  
+  recv_profile = intcomm->recv_profile; //MATH_CountPopulationを使用するためu32に代入
+  profile_num = MATH_CountPopulation(recv_profile);
+  if(profile_num > FIELD_COMM_MEMBER_MAX){
+    GF_ASSERT_MSG(0, "profile_num = %d\n", profile_num);
+    profile_num = 1;
+  }
+  return profile_num;
+}
+
+//--------------------------------------------------------------
+/**
+ * 街アイコン配置座標を取得する
+ *
+ * @param   zone_id		
+ * @param   dest_pos		
+ * 
+ * @retval  街No(パレスエリアの場合は0xff)
+ */
+//--------------------------------------------------------------
+static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos)
+{
+  int i;
+  
+  for(i = 0; i < NELEMS(TownPosData); i++){
+    if(TownPosData[i].zone_id == zone_id){
+      dest_pos->x = TownPosData[i].x;
+      dest_pos->y = TownPosData[i].y;
+      return i;
+    }
+  }
+  dest_pos->x = PALACE_CURSOR_POS_X;
+  dest_pos->y = PALACE_CURSOR_POS_Y;
+  return 0xff;
+}

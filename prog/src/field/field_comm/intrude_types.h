@@ -62,12 +62,6 @@ typedef struct _PALACE_SYS_WORK * PALACE_SYS_PTR;
 //==============================================================================
 //  構造体定義
 //==============================================================================
-///プロフィールデータ
-typedef struct{
-  MYSTATUS mystatus;
-  OCCUPY_INFO occupy;
-}INTRUDE_PROFILE;
-
 ///侵入ステータス(自分の現在情報)
 typedef struct{
   COMM_PLAYER_PACKAGE player_pack;    ///<プレイヤー座標データパッケージ
@@ -79,13 +73,19 @@ typedef struct{
   u8 padding[3];
 }INTRUDE_STATUS;
 
+///プロフィールデータ(送信のみに使用。受信は各々のバッファに分かれる)
+typedef struct{
+  MYSTATUS mystatus;
+  OCCUPY_INFO occupy;
+  INTRUDE_STATUS status;
+}INTRUDE_PROFILE;
+
 ///会話用ワーク
 typedef struct{
   u8 talk_netid;              ///<話しかけた相手のNetID
   u8 answer_talk_netid;       ///<話しかけられている相手のNetID
   u8 talk_status;             ///<INTRUDE_TALK_STATUS_???
   u8 answer_talk_status;      ///<話しかけられている相手のINTRUDE_TALK_STATUS_???
-  u8 padding;
 }INTRUDE_TALK;
 
 ///侵入システムワーク
@@ -114,8 +114,7 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 profile_req_wait;        ///<プロフィール再要求するまでのウェイト
   u8 send_status;             ///<TRUE:自分の現在情報送信リクエスト
   
-  u8 recv_status;             ///<一度でも受信した事がある侵入ステータスを把握(bit管理)
   u8 answer_talk_ng_bit;      ///<話しかけられたが、対応できない場合のNG返事を返す(bit管理)
-  u8 padding[2];
+  u8 padding[3];
 }INTRUDE_COMM_SYS;
 

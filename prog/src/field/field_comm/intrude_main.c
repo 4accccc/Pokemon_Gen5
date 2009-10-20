@@ -54,7 +54,8 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
 {
   //プロフィール要求リクエストを受けているなら送信
   if(intcomm->profile_req == TRUE){
-    IntrudeSend_Profile(intcomm);
+    Intrude_SetSendProfileBuffer(intcomm);  //送信バッファに現在のデータをセット
+    IntrudeSend_Profile(intcomm);           //送信
   }
   //通信が確立されているメンバーでプロフィールを持っていないメンバーがいるならリクエストをかける
   Intrude_CheckProfileReq(intcomm);
@@ -147,10 +148,58 @@ void Intrude_SetSendProfileBuffer(INTRUDE_COMM_SYS_PTR intcomm)
   OCCUPY_INFO *occupy;
   
   myst = GAMEDATA_GetMyStatus(gamedata);
-  GFL_STD_MemCopy(&intcomm->send_profile, myst, MyStatus_GetWorkSize());
+  GFL_STD_MemCopy(myst, &intcomm->send_profile.mystatus, MyStatus_GetWorkSize());
   
   occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
-  GFL_STD_MemCopy(&intcomm->send_profile, myst, sizeof(OCCUPY_INFO));
+  GFL_STD_MemCopy(myst, &intcomm->send_profile.occupy, sizeof(OCCUPY_INFO));
+  
+  //侵入ステータスをセット
+  Intrude_SetSendStatus(intcomm);
+  //プロフィール送信時でも自分のパレス番号が入っていない場合はセット
+  if(intcomm->intrude_status_mine.palace_area == PALACE_AREA_NO_NULL){
+    intcomm->intrude_status_mine.palace_area = GFL_NET_SystemGetCurrentID();
+  }
+  intcomm->send_profile.status = intcomm->intrude_status_mine;
+  
+}
+
+//==================================================================
+/**
+ * 侵入ステータス送信バッファを更新
+ *
+ * @param   intcomm		
+ *
+ * @retval  BOOL		TRUE:変更あり　FALSE:変更なし
+ */
+//==================================================================
+BOOL Intrude_SetSendStatus(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  BOOL send_req = FALSE;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  PLAYER_WORK *plWork = GAMEDATA_GetMyPlayerWork( gamedata );
+  ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
+  INTRUDE_STATUS *ist = &intcomm->intrude_status_mine;
+  int palace_area, mission_no;
+  
+  send_req = CommPlayer_Mine_DataUpdate(intcomm->cps, &ist->player_pack);
+  if(ist->zone_id != zone_id){
+    ist->zone_id = zone_id;
+    send_req = TRUE;
+  }
+  
+  palace_area = PALACE_SYS_GetArea(intcomm->palace);
+  if(ist->palace_area != palace_area){
+    ist->palace_area = palace_area;
+    send_req = TRUE;
+  }
+  
+  mission_no = PALACE_SYS_GetMissionNo(intcomm->palace);
+  if(ist->mission_no != mission_no){
+    ist->mission_no = mission_no;
+    send_req = TRUE;
+  }
+  
+  return send_req;
 }
 
 //==================================================================

@@ -29,12 +29,6 @@
 
 
 //==============================================================================
-//  定数定義
-//==============================================================================
-///パレスエリア番号初期値(まだ通信が接続されていなくて、自分が何番目か分からない状態)
-#define PALACE_AREA_NO_NULL     (128)
-
-//==============================================================================
 //  構造体定義
 //==============================================================================
 ///デバッグ：パレスエリア番号表示管理構造体
@@ -544,6 +538,7 @@ static void _DEBUG_NameDraw(PALACE_SYS_PTR palace, FIELDMAP_WORK *fieldWork, INT
   GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   MYSTATUS *myst;
   
+  OS_TPrintf("area_no = %d\n", area_no);
   myst = GAMEDATA_GetMyStatusPlayer(gamedata, area_no);
   namebuf = MyStatus_CreateNameString(myst, HEAPID_APP_CONTROL);
 

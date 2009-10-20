@@ -493,6 +493,17 @@ extern int GAMEDATA_GetIntrudeNum(const GAMEDATA *gamedata);
 //==================================================================
 extern int GAMEDATA_GetIntrudeMyID(const GAMEDATA *gamedata);
 
+//==================================================================
+/**
+ * 侵入時の自分のNetIDをセット
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ *
+ * @retval  int		自分のNetID
+ */
+//==================================================================
+extern void GAMEDATA_SetIntrudeMyID(GAMEDATA *gamedata, int intrude_my_id);
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	常時通信モードフラグ取得

@@ -178,6 +178,8 @@ static void _IntrudeRecv_Profile(const int netID, const int size, const void* pD
   occupy = GAMEDATA_GetOccupyInfo(gamedata, netID);
   GFL_STD_MemCopy(&recv_profile->occupy, occupy, sizeof(OCCUPY_INFO));
   
+  _IntrudeRecv_PlayerStatus(netID, size, &recv_profile->status, pWork, pNetHandle);
+  
   intcomm->recv_profile |= 1 << netID;
   OS_TPrintf("プロフィール受信　net_id=%d, recv_bit=%d\n", netID, intcomm->recv_profile);
 }
@@ -193,9 +195,6 @@ BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm)
 {
   BOOL ret;
   
-  //送信バッファにデータセット
-  Intrude_SetSendProfileBuffer(intcomm);
-
   ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
     INTRUDE_CMD_PROFILE, sizeof(INTRUDE_PROFILE), &intcomm->send_profile);
   if(ret == TRUE){
@@ -232,7 +231,6 @@ static void _IntrudeRecv_PlayerStatus(const int netID, const int size, const voi
 	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return;   //自分のデータは受け取らない
   }
-  intcomm->recv_status |= 1 << netID;
   target_status = &intcomm->intrude_status[netID];
   GFL_STD_MemCopy(recv_data, target_status, sizeof(INTRUDE_STATUS));
 
@@ -272,24 +270,13 @@ static void _IntrudeRecv_PlayerStatus(const int netID, const int size, const voi
  * @param   intcomm		
  * @param   gamedata		
  * @param   send_status		送信データへのポインタ
- * @param   palace_area		パレスエリア
- * @param   mission_no		ミッション番号
  *
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL IntrudeSend_PlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, GAMEDATA *gamedata, INTRUDE_STATUS *send_status, int palace_area, int mission_no)
+BOOL IntrudeSend_PlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_STATUS *send_status)
 {
   BOOL ret;
-  PLAYER_WORK *plWork = NULL;
-  ZONEID zone_id;
-  
-  plWork = GAMEDATA_GetMyPlayerWork( gamedata );
-  zone_id = PLAYERWORK_getZoneID( plWork );
-  
-  send_status->zone_id = zone_id;
-  send_status->palace_area = palace_area;
-  send_status->mission_no = mission_no;
   
   ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
     INTRUDE_CMD_PLAYER_STATUS, sizeof(INTRUDE_STATUS), send_status);

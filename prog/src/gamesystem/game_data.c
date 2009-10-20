@@ -240,7 +240,7 @@ PLAYER_WORK * GAMEDATA_GetMyPlayerWork(GAMEDATA * gamedata)
 //--------------------------------------------------------------
 OCCUPY_INFO * GAMEDATA_GetOccupyInfo(GAMEDATA * gamedata, u32 player_id)
 {
-  GF_ASSERT(player_id < OCCUPY_ID_MAX);
+  GF_ASSERT_MSG(player_id < OCCUPY_ID_MAX, "player_id = %d\n", player_id);
   return &gamedata->occupy[player_id];
 }
 
@@ -808,6 +808,21 @@ int GAMEDATA_GetIntrudeNum(const GAMEDATA *gamedata)
 int GAMEDATA_GetIntrudeMyID(const GAMEDATA *gamedata)
 {
   return gamedata->intrude_my_id;
+}
+
+//==================================================================
+/**
+ * 侵入時の自分のNetIDをセット
+ *
+ * @param   gamedata		GAMEDATAへのポインタ
+ *
+ * @retval  int		自分のNetID
+ */
+//==================================================================
+void GAMEDATA_SetIntrudeMyID(GAMEDATA *gamedata, int intrude_my_id)
+{
+  gamedata->intrude_my_id = intrude_my_id;
+  OS_TPrintf("自分の侵入MyNetID=%d\n", intrude_my_id);
 }
 
 //----------------------------------------------------------------------------

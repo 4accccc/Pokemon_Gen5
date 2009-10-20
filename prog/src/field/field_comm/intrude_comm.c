@@ -120,6 +120,8 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   Intrude_InitTalkWork(intcomm, INTRUDE_NETID_NULL);
   Bingo_InitBingoSystem(Bingo_GetBingoSystemWork(intcomm));
 
+  GAMEDATA_SetIntrudeMyID(gamedata, 0);
+
   GFL_NET_Init( &aGFLNetInit, IntrudeComm_FinishInitCallback, intcomm );
   return intcomm;
 }
@@ -168,6 +170,8 @@ BOOL  IntrudeComm_InitCommSystemWait( int *seq, void *pwk, void *pWork )
 void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
 
   //通信エラーチェック
   if(NetErr_App_CheckError() == TRUE){
@@ -180,6 +184,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
   case 0:
     if(intcomm->comm_status == INTRUDE_COMM_STATUS_HARD_CONNECT){
       if( GFL_NET_HANDLE_RequestNegotiation() == TRUE ){
+        GAMEDATA_SetIntrudeMyID(gamedata, GFL_NET_SystemGetCurrentID());
         OS_TPrintf("ネゴシエーション送信\n");
         (*seq)++;
       }
