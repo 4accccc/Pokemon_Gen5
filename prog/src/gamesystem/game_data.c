@@ -37,6 +37,7 @@
 #include "field/map_matrix.h"     //MAP_MATRIX
 #include "field/field_status.h"   //FIELD_STATUS
 #include "field/field_encount.h"
+#include "savedata/shortcut.h"		//SHORTCUT_SetRegister
 
 //============================================================================================
 //============================================================================================

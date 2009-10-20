@@ -33,7 +33,7 @@
 #include "field/field_encount.h" //ENCOUNT_WORK
 #include "savedata/box_savedata.h"      //BOX_MANAGER
 #include "savedata/intrude_save.h"      //OCCUPY_INFO
-#include "savedata/shortcut.h"					//YBTN_REG
+#include "system/shortcut_data.h"			//SHORTCUT_ID
 
 //============================================================================================
 //============================================================================================

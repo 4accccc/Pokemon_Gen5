@@ -201,7 +201,8 @@ SRCS  +=    $(SOUNDSRC) \
         system/pms_draw.c \
         field/field_encount_st.c \
         field/field_skill.c \
-        field/scrcmd_network.c 
+        field/scrcmd_network.c \
+				system/shortcut_data.c
 
 
 #================================================
