@@ -27,5 +27,15 @@
 #define C05_BABYGIRL1                      3
 #define C05_TRAINERM                       4
 #define C05_DRIVER                         5
+#define C05_SAGE_01                        6
+#define C05_HAKAI_01                       7
+#define C05_HAKAI_02                       8
+#define C05_GYMLEADER_02                   9
+#define C05_SAGE_02                       10
+#define C05_RIVAL_02                      11
+#define C05_WORKMAN_02                    12
+#define C05_GYMLEADER_01                  13
+#define C05_WORKMAN_01                    14
+#define C05_RIVAL_01                      15
 
 #endif //ZONE_C05_EVC_H

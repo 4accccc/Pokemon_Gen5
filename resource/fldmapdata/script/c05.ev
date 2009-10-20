@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c05.h"
-  //.include  "c05.h"
+  .include  "c05.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -26,6 +26,10 @@ _EVENT_DATA    ev_c05_talkobj_trainerm
 _EVENT_DATA    ev_c05_talkobj_driver
 _EVENT_DATA    ev_c05_talkobj_badman
 _EVENT_DATA    ev_c05_talkobj_workman
+_EVENT_DATA    ev_pos_c05_gymleader_01
+_EVENT_DATA    ev_c05_workman_02
+_EVENT_DATA    ev_pos_c05_gymleader_02
+_EVENT_DATA    ev_pos_c05_workman_03
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -33,73 +37,222 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_c05_flag_change:
 
+/**************************************************************/
+/*POSイベント：ジムリーダーと会話                             */
+/**************************************************************/
+EVENT_START   ev_pos_c05_gymleader_01
+
+	//ジムリーダーと会話
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_leader_01,C05_GYMLEADER_01)
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_black_01,C05_RIVAL_01)
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_leader_02,C05_GYMLEADER_01)
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_leader_03,C05_GYMLEADER_01)
+	_BALLOONWIN_CLOSE()
+	
+	//作業員ライバルの前に
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_workman1_01,C05_WORKMAN_01)
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME(C05_WORKMAN_01,anm_c05_workman_01)
+	_OBJ_ANIME_WAIT()
+
+	//===========フラグワーク操作===========//
+	
+	//***フラグ操作：ジムリーダーとの出会いイベント終了***
+	$WK_SCENE_C05 = 1
+	
+	//======================================//
+	
+	//C05イベント（１）のキャラクターを非表示にする
+	_FLAG_SET(FV_C05_GYMLEADER_01)
+	
+	//暗転・マップ移動
+	_MAP_CHANGE( ZONE_ID_D05, 164, 474, DIR_DOWN )
+
+EVENT_END
+
+/**************************************************************/
+/*ストッパー：ストッパー：ジムバッジ取得まで表示（話しかけ用） */
+/**************************************************************/
+EVENT_START   ev_c05_workman_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_workman2_01)
+EVENT_END
+
+/**************************************************************/
+/*POSストッパー：ジムバッジ取得まで表示                     */
+/**************************************************************/
+EVENT_START   ev_pos_c05_workman_03
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_workman2_01,C05_WORKMAN_02)
+EVENT_END
+
+/**************************************************************/
+/*POSイベント：ゲーヂスとジムリーダー会話                     */
+/**************************************************************/
+EVENT_START   ev_pos_c05_gymleader_02
+
+	//ゲーヂスとジムリーダー会話
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_sage1_01,C05_SAGE_01)
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_leader_04,C05_GYMLEADER_02)
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_sage1_02,C05_SAGE_01)
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_leader_05,C05_GYMLEADER_02)
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_sage1_03,C05_SAGE_01)
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_leader_06,C05_GYMLEADER_02)
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル、七賢人の側をどく
+	_OBJ_ANIME(C05_SAGE_02,anm_c05_rival_01)
+	_OBJ_ANIME_WAIT()
+	
+	//七賢人ゲーヂスの側に行って礼を言う
+	_OBJ_ANIME(C05_SAGE_02,anm_c05_sage_01)
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_sage2_01,C05_SAGE_02)
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_sage1_05,C05_SAGE_01)
+	_BALLOONWIN_CLOSE()
+	
+	//画面暗転・プラズマ団OB削除
+	_BLACK_OUT(2)
+	
+	_OBJ_DEL(C05_HAKAI_01)
+	_OBJ_DEL(C05_HAKAI_02)
+	_OBJ_DEL(C05_SAGE_01)
+	_OBJ_DEL(C05_SAGE_02)
+
+	_FLAG_SET(FV_C05_SAGE_01)
+	
+	//OBJの配置を変更して画面復帰
+	_OBJ_POS_CHANGE(C05_GYMLEADER_02,190,0,414,DIR_LEFT)
+	_OBJ_POS_CHANGE(C05_RIVAL_02,184,0,414,DIR_RIGHT)
+	_OBJ_POS_CHANGE(MMDL_ID_PLAYER,184,0,415,DIR_RIGHT)
+	_BLACK_IN(2)
+	
+	//ジムリーダー一言残してジムの中へ
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_leader_07,C05_GYMLEADER_02)
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME(C05_GYMLEADER_02,anm_c05_gymleader_01)
+	_OBJ_ANIME_WAIT()
+	_OBJ_DEL(C05_GYMLEADER_02)
+	
+	//ライバル町の見学に出かける
+	_BALLOONWIN_OBJMSG_OPEN(msg_c05_black_02,C05_RIVAL_02)
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME(C05_RIVAL_02,anm_c05_rival_02)
+	_OBJ_ANIME_WAIT()
+	
+	//ジムリーダーとライバルのOBJを削除
+	_OBJ_DEL(C05_RIVAL_02)
+	_FLAG_SET(FV_C05_GYMLEADER_02)
+
+	//===========フラグワーク操作===========//
+	
+	//***フラグ操作：C05の全てのイベントを起動しなくする***
+	$WK_SCENE_C05 = 3
+	
+	//======================================//
+
+EVENT_END
+
 
 /**************************************************************/
 /*  C05 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_c05_talkobj_woman2
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05_woman2_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_woman2_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05 BABYGIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_c05_talkobj_babygirl1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05_babygirl1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_babygirl1_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05 BACKPACKERWの会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_c05_talkobj_backpackerw
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05_backpackerw_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_backpackerw_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05 TRAINERMの会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_c05_talkobj_trainerm
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05_trainerm_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_trainerm_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05 DRIVERの会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_c05_talkobj_driver
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05_driver_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_driver_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05 BADMANの会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_c05_talkobj_badman
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05_badman_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_badman_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05 WORKMANの会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_c05_talkobj_workman
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_c05_workman_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_workman_01)
 EVENT_END
+
+//--------------------------------------------------------------
+//	C05ジムリーダーとの出会い：作業員前に一歩出る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_workman_01
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05ゲーヂスとジムリーダー：ライバル一歩どく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_rival_01
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05ゲーヂスとジムリーダー：七賢人ゲーヂスのもとへ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_sage_01
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05ゲーヂスとジムリーダー：ジムリーダー、ジムの中へ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_gymleader_01
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05ゲーヂスとジムリーダー：ライバル町の見学へ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_rival_02
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	ACMD_END,0

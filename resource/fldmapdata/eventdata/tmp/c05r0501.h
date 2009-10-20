@@ -18,5 +18,6 @@
 #define C05R0501_WOMAN2                    4
 #define C05R0501_MAN1                      5
 #define C05R0501_GENTLEMAN                 6
+#define C05R0501_VETERANW                  7
 
 #endif //ZONE_C05R0501_EVC_H

@@ -53,5 +53,13 @@ SP_EVENT_START  ev_init_script
 	
 	//D05R011:コンテナworkmanを戦闘後まで非表示に設定
 	_FLAG_SET( FV_D05R0101_WORKMAN_01 )
+	
+	//D05:コンテナworkmanを戦闘後まで非表示に設定
+	//_FLAG_SET( FV_D05R0101_WORKMAN_01 )
+	
+	//C05：
+	_FLAG_SET( FV_C05_GYMLEADER_02 )
+	_FLAG_SET( FV_C05_SAGE_01 )
+	
 
 SP_EVENT_END

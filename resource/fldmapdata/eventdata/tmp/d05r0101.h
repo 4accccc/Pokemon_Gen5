@@ -12,5 +12,11 @@
 #ifndef ZONE_D05R0101_EVC_H
 #define ZONE_D05R0101_EVC_H
 
+#define D05R0101_RIVAL_01                  0
+#define D05R0101_RIVAL_02                  1
+#define D05R0101_HAKAI_01                  2
+#define D05R0101_SAGE_01                   3
+#define D05R0101_HAKAI_02                  4
+#define D05R0101_WORKMAN_01                5
 
 #endif //ZONE_D05R0101_EVC_H

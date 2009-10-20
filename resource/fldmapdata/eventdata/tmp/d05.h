@@ -9,5 +9,7 @@
 #ifndef ZONE_D05_EVC_H
 #define ZONE_D05_EVC_H
 
+#define D05_RIVAL_01                       0
+#define D05_WORKMAN_01                     1
 
 #endif //ZONE_D05_EVC_H

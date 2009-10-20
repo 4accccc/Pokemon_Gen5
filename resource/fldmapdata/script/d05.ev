@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d05.h"
-  //.include  "d05.h"
+  .include  "d05.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d05
+_EVENT_DATA    ev_d05_scene_change_01
+_EVENT_DATA    ev_d05_workman_01
+_EVENT_DATA    ev_d05_scene_change_02
 _EVENT_DATA_END
 
 
@@ -30,9 +32,101 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*$WK_SCENE_D05=0 時発動イベント：コンテナにいるよう言われる   */
 /**************************************************************/
-ev_d05:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_d05_scene_change_01
 
+	//workmanコンテナにいるよう諭す
+	_BALLOONWIN_OBJMSG_OPEN(msg_d05_workman_01,D05_WORKMAN_01)
+	_BALLOONWIN_CLOSE()
+	
+	//ライバルめんどくさがりつつコンテナ内へ
+	_OBJ_ANIME(D05_RIVAL_01,anm_d05_rival_02)
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN(msg_d05_black_01,D05_RIVAL_01)
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME(D05_RIVAL_01,anm_d05_rival_01)
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル一時的に消去
+	_OBJ_DEL(D05_RIVAL_01)
+	_FLAG_SET(FV_D05_RIVAL_01)
+
+	//===========フラグワーク操作===========//
+	
+	//***フラグ操作・D05／コンテナクリアまで1***
+	$WK_SCENE_D05 = 1
+	
+	//======================================//
+
+EVENT_END
+
+/**************************************************************/
+/*workman一言メッセージ：コンテナイベント終了まで表示          */
+/**************************************************************/
+EVENT_START   ev_d05_workman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d05_workman_02)
+EVENT_END
+
+/**************************************************************/
+/*$WK_SCENE_D05=2 時発動イベント：ライバルD05へ向かう         */
+/**************************************************************/
+EVENT_START   ev_d05_scene_change_02
+
+	//ライバル喋った後C05へ
+	_OBJ_ANIME(D05_RIVAL_01,anm_d05_rival_02)
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_OPEN(msg_d05_black_02,D05_RIVAL_01)
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME(D05_RIVAL_01,anm_d05_rival_01)
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル消去
+	_OBJ_DEL(D05_RIVAL_01)
+	_FLAG_SET(FV_D05_RIVAL_01)
+
+	//===========フラグワーク操作===========//
+	
+	//***フラグ操作：D05の全てのイベントをオフに***
+	$WK_SCENE_D05 = 3
+	
+	//***ワーク操作：C05のPOSを起動***
+	$WK_SCENE_C05 = 2
+	
+	//***C05のジム前イベントのキャラを表示する***
+	_FLAG_RESET(FV_C05_SAGE_01)
+	_FLAG_RESET(FV_C05_GYMLEADER_02)
+	
+	//======================================//
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	D05：ライバルコンテナ内へ入ってゆく
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05_rival_01
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05：ライバル主人公のほうを見る
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05_rival_02
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05：ライバルC05へ去ってゆく
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05_rival_03
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
