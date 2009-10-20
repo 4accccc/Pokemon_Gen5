@@ -78,7 +78,7 @@ enum{
   GMDATA_ID_ROCKPOS, //かいりき岩
 	GMDATA_ID_MISC,			//未分類
 	GMDATA_ID_INTRUDE,  //侵入
-	GMDATA_ID_YBTN_REG,	//Yボタン登録
+	GMDATA_ID_SHORTCUT,	//Yボタン登録
   
 	GMDATA_ID_MAX,
 };

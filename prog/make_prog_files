@@ -40,7 +40,7 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/sodateya_work.c \
         savedata/intrude_save.c \
 				savedata/misc.c \
-				savedata/ybtn_reg.c
+				savedata/shortcut.c
 
 
 #’ÊM‚Ìí’“

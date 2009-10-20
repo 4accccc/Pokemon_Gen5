@@ -33,6 +33,7 @@
 #include "field/field_encount.h" //ENCOUNT_WORK
 #include "savedata/box_savedata.h"      //BOX_MANAGER
 #include "savedata/intrude_save.h"      //OCCUPY_INFO
+#include "savedata/shortcut.h"					//YBTN_REG
 
 //============================================================================================
 //============================================================================================
@@ -522,7 +523,29 @@ extern void GAMEDATA_SetAlwaysNetFlag( GAMEDATA *gamedata, BOOL is_on );
  *  @retval  FIELD_BEACON_MSG_DATA* fbmData
  */
 //----------------------------------------------------------------------------
-FIELD_BEACON_MSG_DATA* GAMEDATA_GetFieldBeaconMessageData( GAMEDATA *gamedata );
+extern FIELD_BEACON_MSG_DATA* GAMEDATA_GetFieldBeaconMessageData( GAMEDATA *gamedata );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Yボタン登録設定
+ *
+ *  @param  gamedata		GAMEDATAへのポインタ
+ *  @param	shortcutID	Yボタン登録するID
+ *  @param	is_on				TRUEならばYボタン登録	FALSEならば解除
+ */
+//----------------------------------------------------------------------------
+extern void GAMEDATA_SetShortCut( GAMEDATA *gamedata, SHORTCUT_ID shortcutID, BOOL is_on );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Yボタン登録設定
+ *
+ *  @param  gamedata		GAMEDATAへのポインタ
+ *  @param	shortcutID	Yボタン登録するID
+ *  @retval	TRUEならばYBTNに登録してある	FALSEならば登録していない
+ */
+//----------------------------------------------------------------------------
+extern BOOL GAMEDATA_GetShortCut( const GAMEDATA *gamedata, SHORTCUT_ID shortcutID );
 
 //============================================================================================
 //	SAVE_CONTROL_WORKへのアクセス
@@ -536,5 +559,11 @@ FIELD_BEACON_MSG_DATA* GAMEDATA_GetFieldBeaconMessageData( GAMEDATA *gamedata );
 //------------------------------------------------------------------
 extern SAVE_CONTROL_WORK * GAMEDATA_GetSaveControlWork(GAMEDATA * gamedata);
 
-
-
+//------------------------------------------------------------------
+/**
+ * @brief	  セーブコントロールワークを取得する	CONST版
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	SAVE_CONTROL_WORK	のポインタ
+ */
+//------------------------------------------------------------------
+extern const SAVE_CONTROL_WORK* GAMEDATA_GetSaveControlWorkConst(const GAMEDATA * gamedata);

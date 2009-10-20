@@ -850,6 +850,42 @@ FIELD_BEACON_MSG_DATA* GAMEDATA_GetFieldBeaconMessageData( GAMEDATA *gamedata )
   return gamedata->fbmData;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Yボタン登録設定
+ *
+ *  @param  gamedata		GAMEDATAへのポインタ
+ *  @param	shortcutID	Yボタン登録するID
+ *  @param	is_on				TRUEならばYボタン登録	FALSEならば解除
+ */
+//----------------------------------------------------------------------------
+void GAMEDATA_SetShortCut( GAMEDATA *gamedata, SHORTCUT_ID shortcutID, BOOL is_on )
+{	
+	SAVE_CONTROL_WORK*	p_sv	= GAMEDATA_GetSaveControlWork(gamedata);
+
+	SHORTCUT *p_shortcut	=  SaveData_GetShortCut( p_sv );
+
+	SHORTCUT_SetRegister( p_shortcut, shortcutID, is_on );	
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Yボタン登録設定
+ *
+ *  @param  gamedata		GAMEDATAへのポインタ
+ *  @param	shortcutID	Yボタン登録するID
+ *  @retval	TRUEならばYBTNに登録してある	FALSEならば登録していない
+ */
+//----------------------------------------------------------------------------
+extern BOOL GAMEDATA_GetShortCut( const GAMEDATA *gamedata, SHORTCUT_ID shortcutID )
+{	
+	const SAVE_CONTROL_WORK*	cp_sv	= GAMEDATA_GetSaveControlWorkConst(gamedata);
+
+	const SHORTCUT *cp_shortcut	=  SaveData_GetShortCutConst( cp_sv );
+
+	return SHORTCUT_GetRegister( cp_shortcut, shortcutID );	
+}
+
 //==============================================================================
 //	ゲームデータが持つ情報を元にセーブ
 //==============================================================================
@@ -978,3 +1014,14 @@ SAVE_CONTROL_WORK* GAMEDATA_GetSaveControlWork(GAMEDATA * gamedata)
   return gamedata->sv_control_ptr;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief	  セーブコントロールワークを取得する
+ * @param	  gamedata			GAMEDATAへのポインタ
+ * @return	SAVE_CONTROL_WORK	のポインタ
+ */
+//--------------------------------------------------------------
+const SAVE_CONTROL_WORK* GAMEDATA_GetSaveControlWorkConst(const GAMEDATA * gamedata)
+{
+  return gamedata->sv_control_ptr;
+}

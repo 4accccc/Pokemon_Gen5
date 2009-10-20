@@ -38,7 +38,7 @@
 #include "savedata/wifi_negotiation.h"
 #include "savedata/misc.h"
 #include "savedata/intrude_save.h"
-#include "savedata/ybtn_reg.h"
+#include "savedata/shortcut.h"
 
 //==============================================================================
 //	定数定義
@@ -348,9 +348,9 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 	},
 	{	
 		//Yボタン登録セーブデータ
-		GMDATA_ID_YBTN_REG,
-		(FUNC_GET_SIZE)YBTN_REG_GetWorkSize,
-		(FUNC_INIT_WORK)YBTN_REG_Init,
+		GMDATA_ID_SHORTCUT,
+		(FUNC_GET_SIZE)SHORTCUT_GetWorkSize,
+		(FUNC_INIT_WORK)SHORTCUT_Init,
 	}
 };
 

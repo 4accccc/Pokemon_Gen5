@@ -1,7 +1,7 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		ybtn_reg.c
+ *	@file		shortcut.c
  *	@brief	Yボタン登録セーブデータ
  *	@author	Toru=Nagihashi
  *	@data		2009.10.20
@@ -9,7 +9,7 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #include <gflib.h>
-#include "savedata/ybtn_reg.h"
+#include "savedata/shortcut.h"
 #include "savedata/save_tbl.h"
 //=============================================================================
 /**
@@ -25,9 +25,9 @@
 //-------------------------------------
 ///	Yボタン登録用セーブデータ
 //=====================================
-struct _YBTN_REG
+struct _SHORTCUT
 {	
-	u8	data[YBTN_REG_MAX];
+	u8	data[SHORTCUT_ID_MAX];
 };
 
 //=============================================================================
@@ -35,7 +35,7 @@ struct _YBTN_REG
  *					プロトタイプ
 */
 //=============================================================================
-static void YBtnReg_SortNull( YBTN_REG *p_wk );
+static void ShortCut_SortNull( SHORTCUT *p_wk );
 
 //=============================================================================
 /**
@@ -44,25 +44,25 @@ static void YBtnReg_SortNull( YBTN_REG *p_wk );
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	YBTN_REG構造体のサイズ取得
+ *	@brief	SHORTCUT構造体のサイズ取得
  *
- *	@return	YBTN_REG構造体のサイズ
+ *	@return	SHORTCUT構造体のサイズ
  */
 //-----------------------------------------------------------------------------
-int YBTN_REG_GetWorkSize( void )
+int SHORTCUT_GetWorkSize( void )
 {	
-	return sizeof(YBTN_REG);
+	return sizeof(SHORTCUT);
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	YBTN_REG構造体初期化
+ *	@brief	SHORTCUT構造体初期化
  *
- *	@param	YBTN_REG *p_msc ワーク
+ *	@param	SHORTCUT *p_msc ワーク
  */
 //-----------------------------------------------------------------------------
-void YBTN_REG_Init( YBTN_REG *p_wk )
+void SHORTCUT_Init( SHORTCUT *p_wk )
 {	
-	GFL_STD_MemFill( p_wk->data, YBTN_REG_NULL, sizeof(u8) * YBTN_REG_MAX );
+	GFL_STD_MemFill( p_wk->data, SHORTCUT_ID_NULL, sizeof(u8) * SHORTCUT_ID_MAX );
 }
 
 //=============================================================================
@@ -76,12 +76,12 @@ void YBTN_REG_Init( YBTN_REG *p_wk )
  *
  *	@param	SAVE_CONTROL_WORK * cp_sv	セーブデータ保持ワークへのポインタ
  *
- *	@return	YBTN_REG
+ *	@return	SHORTCUT
  */
 //-----------------------------------------------------------------------------
-const YBTN_REG * SaveData_GetYBtnRegConst( const SAVE_CONTROL_WORK * cp_sv)
+const SHORTCUT * SaveData_GetShortCutConst( const SAVE_CONTROL_WORK * cp_sv)
 {	
-	return (const YBTN_REG *)SaveData_GetYBtnReg( (SAVE_CONTROL_WORK *)cp_sv);
+	return (const SHORTCUT *)SaveData_GetShortCut( (SAVE_CONTROL_WORK *)cp_sv);
 }
 //----------------------------------------------------------------------------
 /**
@@ -89,13 +89,13 @@ const YBTN_REG * SaveData_GetYBtnRegConst( const SAVE_CONTROL_WORK * cp_sv)
  *
  *	@param	SAVE_CONTROL_WORK * p_sv	セーブデータ保持ワークへのポインタ
  *
- *	@return	YBTN_REG
+ *	@return	SHORTCUT
  */
 //-----------------------------------------------------------------------------
-YBTN_REG * SaveData_GetYBtnReg( SAVE_CONTROL_WORK * p_sv)
+SHORTCUT * SaveData_GetShortCut( SAVE_CONTROL_WORK * p_sv)
 {	
-	YBTN_REG	*p_msc;
-	p_msc = SaveControl_DataPtrGet(p_sv, GMDATA_ID_YBTN_REG);
+	SHORTCUT	*p_msc;
+	p_msc = SaveControl_DataPtrGet(p_sv, GMDATA_ID_SHORTCUT);
 	return p_msc;
 }
 
@@ -108,69 +108,69 @@ YBTN_REG * SaveData_GetYBtnReg( SAVE_CONTROL_WORK * p_sv)
 /**
  *	@brief	Yボタン登録設定
  *
- *	@param	YBTN_REG *p_wk	ワーク
- *	@param	type		登録タイプ
+ *	@param	SHORTCUT *p_wk	ワーク
+ *	@param	shortcutID		登録タイプ
  *	@param	is_on		TRUEでYボタン登録	FALSEでYボタン登録解除
  */
 //-----------------------------------------------------------------------------
-void YBTN_REG_SetRegister( YBTN_REG *p_wk, YBTN_REG_TYPE type, BOOL is_on )
+void SHORTCUT_SetRegister( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, BOOL is_on )
 {	
 	int i;
 	if( is_on )
 	{	
 		//登録する処理
 		//ソート済みと考え、NULLが来るまで後尾を検索
-		for( i = 0; i < YBTN_REG_MAX; i++ )
+		for( i = 0; i < SHORTCUT_ID_MAX; i++ )
 		{
 			//すでにあったら何もしない
-			if( p_wk->data[ i ] == type )
+			if( p_wk->data[ i ] == shortcutID )
 			{
 				return;
 			}
 
 			//後尾発見
-			if( p_wk->data[ i ] == YBTN_REG_NULL )
+			if( p_wk->data[ i ] == SHORTCUT_ID_NULL )
 			{	
 				break;
 			}
 		}
-		GF_ASSERT_MSG( i == YBTN_REG_MAX, "YBTN_REG_TYPEへの登録が不十分\n" );
+		GF_ASSERT_MSG( i == SHORTCUT_ID_MAX, "SHORTCUT_IDへの登録が不十分\n" );
 
-		p_wk->data[ i ] = type;
+		p_wk->data[ i ] = shortcutID;
 	}
 	else
 	{	
 		//消す処理
-		for( i = 0; i < YBTN_REG_MAX; i++ )
+		for( i = 0; i < SHORTCUT_ID_MAX; i++ )
 		{	
-			if( p_wk->data[ i ] == type )
+			if( p_wk->data[ i ] == shortcutID )
 			{	
-				p_wk->data[ i ] = YBTN_REG_NULL;
+				p_wk->data[ i ] = SHORTCUT_ID_NULL;
 			}
 		}
 	}
 
 
 	//NULLをソート
-	YBtnReg_SortNull( p_wk );
+	ShortCut_SortNull( p_wk );
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief	Yボタン登録状態取得
  *	
- *	@param	const YBTN_REG *cp_wk	ワーク
- *	@param	type									登録タイプ
+ *	@param	const SHORTCUT *cp_wk	ワーク
+ *	@param	shortcutID									登録タイプ
  *
  *	@return	TRUEならば登録されている	FALSEならば登録されていない
  */
 //-----------------------------------------------------------------------------
-BOOL YBTN_REG_GetRegister( const YBTN_REG *cp_wk, YBTN_REG_TYPE type )
+BOOL SHORTCUT_GetRegister( const SHORTCUT *cp_wk, SHORTCUT_ID shortcutID )
 {	
 	int i;
 	//消す処理
-	for( i = 0; i < YBTN_REG_MAX; i++ )
+	for( i = 0; i < SHORTCUT_ID_MAX; i++ )
 	{	
-		if( cp_wk->data[ i ] == type )
+		if( cp_wk->data[ i ] == shortcutID )
 		{
 			return TRUE;
 		}
@@ -188,15 +188,15 @@ BOOL YBTN_REG_GetRegister( const YBTN_REG *cp_wk, YBTN_REG_TYPE type )
 /**
  *	@brief	インデックスから登録されているものを取得
  *
- *	@param	const YBTN_REG *cp_wk		ワーク
+ *	@param	const SHORTCUT *cp_wk		ワーク
  *	@param	idx											インデックス	
  *
- *	@return	登録されているタイプ	or YBTN_REG_NULLならば登録されていない
+ *	@return	登録されているタイプ	or SHORTCUT_ID_NULLならば登録されていない
  */
 //-----------------------------------------------------------------------------
-YBTN_REG_TYPE YBTN_REG_GetType( const YBTN_REG *cp_wk, u8 idx )
+SHORTCUT_ID SHORTCUT_GetType( const SHORTCUT *cp_wk, u8 idx )
 {	
-	GF_ASSERT_MSG( idx < YBTN_REG_MAX, "インデックスが最大を超えています\n" );
+	GF_ASSERT_MSG( idx < SHORTCUT_ID_MAX, "インデックスが最大を超えています\n" );
 	return cp_wk->data[ idx ];
 }
 //----------------------------------------------------------------------------
@@ -204,30 +204,30 @@ YBTN_REG_TYPE YBTN_REG_GetType( const YBTN_REG *cp_wk, u8 idx )
  *	@brief	入れ替え挿入
  *					指定されたタイプを指定したインデックスに移す処理
  *
- *	@param	const YBTN_REG *cp_wk		ワーク
- *	@param	type										
+ *	@param	const SHORTCUT *cp_wk		ワーク
+ *	@param	shortcutID										
  *	@param	insert_idx							挿入されるインデックス
  *
  */
 //-----------------------------------------------------------------------------
-void YBTN_REG_Insert( YBTN_REG *p_wk, YBTN_REG_TYPE type, u8 insert_idx )
+void SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx )
 {	
 	u16 i;
 	u16 next;
 
-	GF_ASSERT_MSG( insert_idx < YBTN_REG_MAX, "インデックスが最大を超えています\n" );
+	GF_ASSERT_MSG( insert_idx < SHORTCUT_ID_MAX, "インデックスが最大を超えています\n" );
 	
 	//タイプを消す
-	YBTN_REG_SetRegister( p_wk, type, FALSE );
+	SHORTCUT_SetRegister( p_wk, shortcutID, FALSE );
 
 	//挿入の以下を１つずつずらす
-	for( i = YBTN_REG_MAX-1; i == insert_idx ; i-- )
+	for( i = SHORTCUT_ID_MAX-1; i == insert_idx ; i-- )
 	{	
 		p_wk->data[ i ] = p_wk->data[ i - 1 ];
 	}
 
 	//挿入
-	p_wk->data[ insert_idx ] = type;
+	p_wk->data[ insert_idx ] = shortcutID;
 
 
 }
@@ -238,20 +238,20 @@ void YBTN_REG_Insert( YBTN_REG *p_wk, YBTN_REG_TYPE type, u8 insert_idx )
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	YBTN_REG_NULLがあればデータを詰める
+ *	@brief	SHORTCUT_ID_NULLがあればデータを詰める
  *
- *	@param	YBTN_REG *p_wk ワーク
+ *	@param	SHORTCUT *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void YBtnReg_SortNull( YBTN_REG *p_wk )
+static void ShortCut_SortNull( SHORTCUT *p_wk )
 {	
 	u16 i;
 	u16 next;
 	u8 tmp;
-	for( i = 0; i < YBTN_REG_MAX; i++ )
+	for( i = 0; i < SHORTCUT_ID_MAX; i++ )
 	{
-		next	= MATH_CLAMP( i, 0, YBTN_REG_MAX-1 );
-		if( p_wk->data[ i ] == YBTN_REG_NULL )
+		next	= MATH_CLAMP( i, 0, SHORTCUT_ID_MAX-1 );
+		if( p_wk->data[ i ] == SHORTCUT_ID_NULL )
 		{	
 			tmp	= p_wk->data[ i ];
 			p_wk->data[ i ] = p_wk->data[ next ];

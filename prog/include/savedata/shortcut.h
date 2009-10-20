@@ -1,7 +1,7 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		ybtn_reg.h
+ *	@file		shortcut.h
  *	@brief	Yボタン登録セーブデータ
  *	@author	Toru=Nagihashi
  *	@date		2009.10.20
@@ -22,15 +22,15 @@
 //=====================================
 typedef enum
 {
-	YBTN_REG_JITENSYA,
-	YBTN_REG_TSURIZAO,
-	YBTN_REG_TOWNMAP,
-	YBTN_REG_BAG_WAZAMACHINE,
-	YBTN_REG_PSTATUS_WAZA,
+	SHORTCUT_ID_JITENSYA,
+	SHORTCUT_ID_TSURIZAO,
+	SHORTCUT_ID_TOWNMAP,
+	SHORTCUT_ID_BAG_WAZAMACHINE,
+	SHORTCUT_ID_PSTATUS_WAZA,
 
-	YBTN_REG_MAX,
-	YBTN_REG_NULL	= YBTN_REG_MAX,	//データなし
-} YBTN_REG_TYPE;
+	SHORTCUT_ID_MAX,
+	SHORTCUT_ID_NULL	= SHORTCUT_ID_MAX,	//データなし
+} SHORTCUT_ID;
 
 //=============================================================================
 /**
@@ -40,7 +40,7 @@ typedef enum
 //-------------------------------------
 ///	未分類セーブデータ不完全型
 //=====================================
-typedef struct _YBTN_REG YBTN_REG;
+typedef struct _SHORTCUT SHORTCUT;
 
 //=============================================================================
 /**
@@ -50,23 +50,23 @@ typedef struct _YBTN_REG YBTN_REG;
 //----------------------------------------------------------
 //セーブデータシステムに依存する関数
 //----------------------------------------------------------
-extern int YBTN_REG_GetWorkSize( void );
-extern void YBTN_REG_Init( YBTN_REG *p_msc );
+extern int SHORTCUT_GetWorkSize( void );
+extern void SHORTCUT_Init( SHORTCUT *p_msc );
 
 //----------------------------------------------------------
 //セーブデータ取得のための関数
 //----------------------------------------------------------
-extern const YBTN_REG * SaveData_GetYBtnRegConst( const SAVE_CONTROL_WORK * cp_sv );
-extern YBTN_REG * SaveData_GetYBtnReg( SAVE_CONTROL_WORK * p_sv );
+extern const SHORTCUT * SaveData_GetShortCutConst( const SAVE_CONTROL_WORK * cp_sv );
+extern SHORTCUT * SaveData_GetShortCut( SAVE_CONTROL_WORK * p_sv );
 
 //----------------------------------------------------------
 //各アプリ内での、Yボタン登録関数
 //----------------------------------------------------------
-extern void YBTN_REG_SetRegister( YBTN_REG *p_misc, YBTN_REG_TYPE type, BOOL is_on );
-extern BOOL YBTN_REG_GetRegister( const YBTN_REG *cp_misc, YBTN_REG_TYPE type );
+extern void SHORTCUT_SetRegister( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, BOOL is_on );
+extern BOOL SHORTCUT_GetRegister( const SHORTCUT *cp_wk, SHORTCUT_ID shortcutID );
 
 //----------------------------------------------------------
 //Yボタンメニューで取得、操作する関数
 //----------------------------------------------------------
-extern YBTN_REG_TYPE YBTN_REG_GetType( const YBTN_REG *cp_misc, u8 idx );
-extern void YBTN_REG_Insert( YBTN_REG *p_misc, YBTN_REG_TYPE type, u8 insert_idx );
+extern SHORTCUT_ID SHORTCUT_GetType( const SHORTCUT *cp_wk, u8 idx );
+extern void SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx );
