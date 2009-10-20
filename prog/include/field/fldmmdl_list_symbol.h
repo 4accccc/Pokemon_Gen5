@@ -100,6 +100,9 @@
 #define ANMID_BLACT_NONFLIP 6 //人物汎用 反転未使用
 #define ANMID_CYCLEHERO 7 //自転車自機専用
 #define ANMID_ONECELL 8 //一パターン絵専用
+#define ANMID_ITEMGET 9 //自機アイテムゲット
+#define ANMID_PCAZUKE 10 //自機ポケセン預け
+#define ANMID_SAVE 11 //自機レポート
 
 //SEX 性別で指定するシンボルです。
 #define SEX_MALE 0
