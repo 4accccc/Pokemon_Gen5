@@ -45,83 +45,8 @@ DEFINE_LOCAL  LWK_ID_STATE
 EVENT_START   ev_wifi_club_counter
 {
   _TALK_OBJ_START()
-    
-  _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_01 ) //Wi-Fiクラブへようこそ
-  _BALLOONWIN_CLOSE()
-/*
-
-  $i_seq = SEQ_CONNECT
-
-  WHILE $i_loop == TRUE
-    SWITCH  $i_seq
-
-    CASE SEQ_CGEAR_CHECK  //C-Gearチェック
-      $i_seq = SEQ_DAMETAMA_CHECK
-    
-    CASE SEQ_DAMETAMA_CHECK //ダメタマゴチェック
-      $i_seq = SEQ_MENU
-
-    CASE SEQ_MENU   //メニュー表示
-      _CALL sub_club_counter_menu
-      $i_seq = $lwk_return
-
-    CASE SEQ_CLUB_EXP
-      _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_07 ) //Wi-Fiクラブでは…
-      $i_seq = SEQ_MENU
-
-    CASE SEQ_CONNECT
-
-    CASE SEQ_CANCEL
-      _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_02 ) //それではまたお越しください
-      $i_loop = FALSE
-    ENDSWITCH
-  ENDWHILE
-
-  //登録人数チェック
-  _LDVAL( LWK_FRIEND_NUM, 1 )
-
-  IF $LWK_FRIEND_NUM == 0 THEN
-    _LDVAL( LWK_ID_STATE, 0 ) 
-    IF $LWK_ID_STATE == 0 THEN
-      //仮ID
-    ELSE
-      //本ID
-    ENDIF
-  ENDIF
-
-  _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_01 ) //Wi-Fiクラブへようこそ
-
-  _YES_NO_WIN( LWK_RECOVER_YESNO )
-  _BALLOONWIN_CLOSE()
-
-  IF $LWK_RECOVER_YESNO == 0 THEN
-    //預ける場合
-
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_heal_04 ) //それでは　おあずかりします
-    
-    _CALL sub_heal_kaifuku_anime                      //回復アニメ呼び出し
-    _TEMOTI_POKEMON_KAIFUKU()                         //手持ちポケモン回復処理
-
-    _BALLOONWIN_CLOSE()
-
-    _CHECK_TEMOTI_POKERUS( LWK_POKERUS_STATUS )
-    IF $LWK_POKERUS_STATUS == TRUE && FLAG_OFF( FE_PC_POKERUS )  THEN
-    //ポケルス状態ポケモンがいて、その状態で初めての来店だったら
-      _FLAG_SET( FE_PC_POKERUS )
-      _BALLOONWIN_TALKOBJ_OPEN( msg_pc_heal_10 )
-      _LAST_KEYWAIT()
-      _BALLOONWIN_CLOSE()
-    ELSE
-      _CALL sub_club_counter_goodbye    //またのご利用を
-    ENDIF
-
-  ELSE
-    //預けるのを断った場合
-
-    _CALL sub_club_counter_goodbye    //またのご利用を
-  ENDIF
-*/
-  }
+  _CALL sub_club_counter_main
+}
 EVENT_END
 
 
@@ -135,53 +60,51 @@ sub_club_counter_main:
   DEFINE_LOCAL  i_loop
 
   //C-Gear取得チェック
-  $i_ret = TRUE
-
-  IF $i_ret != TRUE THEN
+  IF FLAG_ON( FE_CGEAR_GET ) THEN
     _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_err01 ) //また後でお越しください
+    _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
     _RET
   ENDIF
  
   //ダメタマチェック
-  $i_ret = TRUE
-  IF $i_ret != TRUE THEN
+  _GET_PARTY_POKE_COUNT( i_ret, POKECOUNT_MODE_ONLY_DAME_EGG)
+  IF $i_ret != 0 THEN
     _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_err02 ) //手持ちに連れて行けないポケモンがいます
+    _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
     _RET
   ENDIF
- 
-  $i_seq = SEQ_MENU
-  $i_loop = TRUE
 
+  _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_01 ) //Wi-Fiクラブへようこそ
+  $i_seq = SEQ_MENU
+
+  $i_loop = TRUE
   WHILE $i_loop == TRUE
     SWITCH  $i_seq
     CASE SEQ_MENU THEN //メニュー表示
       _CALL sub_club_counter_menu
-      $i_seq = $lwk_return
+      $i_seq = $reg_return
 
     CASE SEQ_CLUB_EXP THEN
       _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_07 ) //Wi-Fiクラブでは…
       $i_seq = SEQ_MENU
 
-    CASE SEQ_CONNECT THEN
+    CASE SEQ_CHECK_CONNECT THEN
+      _CALL sub_club_counter_check_connect
+      $i_seq = $reg_return
 
-    CASE SEQ_CANCEL THEN
+    CASE SEQ_CONNECT THEN
+      _CALL sub_club_counter_connect
+      $i_seq = $reg_return
+
+    CASE SEQ_GOODBYE THEN
       _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_02 ) //それではまたお越しください
+      _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
       $i_loop = FALSE
     ENDSWITCH
   ENDWHILE
-
-  //分岐・Wi-Fiクラブへいく・せつめいをきく・やめる
-	_BMPMENU_INIT_EX( 1, 1, 0, 1, lwk_return )
-		
-	_BMPMENU_MAKE_LIST( msg_wifi_club_01_win01, SEQ_CONNECT )	//Wi-Fiクラブへ行く
-	_BMPMENU_MAKE_LIST( msg_wifi_club_01_win02, SEQ_CLUB_EXP )	//説明を聞く
-	_BMPMENU_MAKE_LIST( msg_wifi_club_01_win03, SEQ_CANCEL )	//やめる
-		
-	//メニュー表示
-	_BMPMENU_START()
 }
 _RET
 
@@ -190,15 +113,96 @@ _RET
 //==============================================================
 sub_club_counter_menu:
 {
+  DEFINE_LOCAL  i_ret
+
   //分岐・Wi-Fiクラブへいく・せつめいをきく・やめる
-	_BMPMENU_INIT_EX( 1, 1, 0, 1, lwk_return )
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
 		
-	_BMPMENU_MAKE_LIST( msg_wifi_club_01_win01, SEQ_CONNECT )	//Wi-Fiクラブへ行く
+	_BMPMENU_MAKE_LIST( msg_wifi_club_01_win01, SEQ_CHECK_CONNECT )	//Wi-Fiクラブへ行く
 	_BMPMENU_MAKE_LIST( msg_wifi_club_01_win02, SEQ_CLUB_EXP )	//説明を聞く
-	_BMPMENU_MAKE_LIST( msg_wifi_club_01_win03, SEQ_CANCEL )	//やめる
+	_BMPMENU_MAKE_LIST( msg_wifi_club_01_win03, SEQ_GOODBYE )	//やめる
 		
 	//メニュー表示
 	_BMPMENU_START()
+  _BALLOONWIN_CLOSE()
+
+  $reg_return = $i_ret
+}
+_RET
+
+//==============================================================
+//サブルーチン：Wi-Fiコネクトチェック
+//==============================================================
+sub_club_counter_check_connect:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_friend_num
+  DEFINE_LOCAL  i_id_state
+
+  //IDの状態チェック
+  $i_id_state = 0
+
+  //登録人数チェック
+  $i_friend_num = 0
+
+  IF $i_id_state == TRUE THEN
+    IF $i_friend_num == 0 THEN
+      _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_06 ) //友だちを登録していないと利用できません
+      _BALLOONWIN_CLOSE()
+      $reg_return = SEQ_GOODBYE
+    ELSE
+      $reg_return = SEQ_CONNECT
+    ENDIF
+    _RET
+  ENDIF
+
+  //仮IDを取得しますか？
+  _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_05 ) //自分のコードだけでも受け取りますか？
+  _YES_NO_WIN( i_ret )
+  _BALLOONWIN_CLOSE()
+  
+  //『はい』
+  IF $i_ret == 0 THEN
+    $reg_return = SEQ_CONNECT
+  ELSE
+    $reg_return = SEQ_GOODBYE
+  ENDIF
+}
+_RET
+
+//==============================================================
+//サブルーチン：Wi-Fiコネクト
+//==============================================================
+sub_club_counter_connect:
+{
+  DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  i_friend_num
+  DEFINE_LOCAL  i_id_state
+
+  //Wi-Fi接続を開始しますか？
+  _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_03 )
+  _YES_NO_WIN( i_ret )
+  _BALLOONWIN_CLOSE()
+
+  IF $i_ret == 1 THEN
+    $reg_return = SEQ_GOODBYE
+    _RET
+  ENDIF
+
+  // レポートを書く
+  _REPORT_EVENT_CALL( i_ret )
+  // 書き込みに失敗
+  IF $i_ret != SCR_REPORT_OK THEN
+    $reg_return = SEQ_GOODBYE
+    _RET
+  ENDIF
+  
+  //接続　それではご案内します
+  _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_04 )
+  _AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+
+  $reg_return = SEQ_GOODBYE
 }
 _RET
 

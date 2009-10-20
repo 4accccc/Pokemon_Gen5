@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-10-20T11:11:47"/>
+	<create user="iwasawa" host="W00157" date="2009-10-20T15:57:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -316,7 +316,7 @@
 		<language name="JPN_KANJI" width="256">ポケモン　ＷｉーＦｉ　クラブ　へ
 ようこそ！▼
 ＷｉーＦｉコネクションを
-ごりよう　ですか？[2:00:１桁:0]</language>
+ごりよう　ですか？</language>
 	</row>
 
 	<row id="msg_wifi_club_01_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -338,9 +338,9 @@
 →msg_wifi_club_01_02</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">ＷｉーＦｉ　せつぞくを
-かいし　しますか？[2:00:１桁:0]</language>
+かいし　しますか？</language>
 		<language name="JPN_KANJI" width="256">ＷｉーＦｉ　せつぞくを
-かいし　しますか？[2:00:１桁:0]</language>
+かいし　しますか？</language>
 	</row>
 
 	<row id="msg_wifi_club_01_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -429,7 +429,7 @@ Wi-Fi P2P接続画面へ</comment>
 さんかした　ポケモン　すべてが▽
 そのレベルに　そろえられます▼
 ＷｉーＦｉコネクションを
-ごりよう　ですか？[2:00:１桁:0]</language>
+ごりよう　ですか？</language>
 		<language name="JPN_KANJI" width="256">ＷｉーＦｉクラブ　では
 ともだちてちょうに　とうろくした▽
 ひと　どうしで　ポケモンこうかんや▽
@@ -442,7 +442,7 @@ Wi-Fi P2P接続画面へ</comment>
 さんかした　ポケモン　すべてが▽
 そのレベルに　そろえられます▼
 ＷｉーＦｉコネクションを
-ごりよう　ですか？[2:00:１桁:0]</language>
+ごりよう　ですか？</language>
 	</row>
 
 	<row id="msg_wifi_club_01_err01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
