@@ -246,6 +246,30 @@ void ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame )
   }
 }
 
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 現在フレームを指定する
+ *
+ * @param anime 設定するアニメーション
+ * @param frame フレーム数指定
+ */
+//-----------------------------------------------------------------------------------
+void ICA_ANIME_SetAnimeFrame( ICA_ANIME* anime, fx32 frame )
+{
+  int now;
+
+  // フレーム数を指定
+  anime->nowFrame = frame % anime->frameSize;
+  now = anime->nowFrame >> FX32_SHIFT;
+
+  // 現在フレームがバッファリング範囲をはずれたら, バッファを更新する
+  if( ( now < anime->bufStartFrame ) ||
+      ( (anime->bufStartFrame + anime->bufSize) <= now ) )
+  {
+    UpdateBuf( anime, anime->nowFrame );
+  }
+}
+
 
 //===================================================================================
 // ■データ取得

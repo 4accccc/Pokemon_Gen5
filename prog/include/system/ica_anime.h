@@ -18,6 +18,31 @@ typedef struct _ICA_ANIME ICA_ANIME;
 
 
 //===================================================================================
+// ■関数一覧
+//===================================================================================
+/*
+ICA_ANIME* ICA_ANIME_Create( 
+    HEAPID heap_id, ARCID arc_id, ARCDATID dat_id, void* work, int worksize ); 
+ICA_ANIME* ICA_ANIME_CreateStreaming( 
+    HEAPID heap_id, ARCID arc_id, ARCDATID dat_id, int buf_interval, 
+    void* work, int worksize ); 
+ICA_ANIME* ICA_ANIME_CreateAlloc( HEAPID heap_id, ARCID arc_id, ARCDATID dat_id ); 
+ICA_ANIME* ICA_ANIME_CreateStreamingAlloc( 
+    HEAPID heap_id, ARCID arc_id, ARCDATID dat_id, int buf_interval ); 
+void ICA_ANIME_Delete( ICA_ANIME* anime );
+void ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame );
+void ICA_ANIME_SetAnimeFrame( ICA_ANIME* anime, fx32 frame );
+u32 ICA_ANIME_GetMaxFrame( ICA_ANIME* anime );
+u32 ICA_ANIME_GetNowFrame( ICA_ANIME* anime );
+BOOL ICA_ANIME_GetTranslate( const ICA_ANIME* anime, VecFx32* vec_dst );
+BOOL ICA_ANIME_GetRotate( const ICA_ANIME* anime, VecFx32* vec_dst );
+BOOL ICA_ANIME_GetScale( const ICA_ANIME* anime, VecFx32* vec_dst );
+BOOL ICA_ANIME_GetTranslateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame );
+BOOL ICA_ANIME_GetRotateAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame );
+BOOL ICA_ANIME_GetScaleAt( const ICA_ANIME* anime, VecFx32* vec_dst, int frame );
+*/
+
+//===================================================================================
 // ■作成・破棄
 //===================================================================================
 
@@ -54,7 +79,8 @@ ICA_ANIME* ICA_ANIME_Create(
  */
 //-----------------------------------------------------------------------------------
 ICA_ANIME* ICA_ANIME_CreateStreaming( 
-    HEAPID heap_id, ARCID arc_id, ARCDATID dat_id, int buf_interval, void* work, int worksize );
+    HEAPID heap_id, ARCID arc_id, ARCDATID dat_id, int buf_interval, 
+    void* work, int worksize );
 
 //-----------------------------------------------------------------------------------
 /**
@@ -109,6 +135,16 @@ void ICA_ANIME_Delete( ICA_ANIME* anime );
  */
 //-----------------------------------------------------------------------------------
 void ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame );
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 現在フレームを指定する
+ *
+ * @param anime 設定するアニメーション
+ * @param frame フレーム数指定
+ */
+//-----------------------------------------------------------------------------------
+void ICA_ANIME_SetAnimeFrame( ICA_ANIME* anime, fx32 frame );
 
 
 //===================================================================================
