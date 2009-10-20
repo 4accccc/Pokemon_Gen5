@@ -105,6 +105,7 @@
 
 //動作モデル表示コード
 #include "../../../prog/src/field/fldmmdl_code.h"
+#include "../../../prog/arc/fieldmap/fldmmdl_objcode.h"
 
 //方向
 #include "../../../prog/include/field/field_dir.h"
