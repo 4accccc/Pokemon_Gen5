@@ -1,5 +1,5 @@
 #../data/c09p01.mev
-../tmp/c09p01.bin:../data/c09p01.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../../script/fld_item_def.h ../tmp/c09p01.h ../../script/c09p01_def.h 
+../tmp/c09p01.bin:../data/c09p01.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../../script/fld_item_def.h ../../script/wifi_club_scr_def.h ../tmp/c09p01.h ../../script/c09p01_def.h 
 	@echo ../data/c09p01.mev
-	@ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../../script/fld_item_def.h ../tmp/c09p01.h ../../script/c09p01_def.h 
+	@ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../../script/fld_item_def.h ../../script/wifi_club_scr_def.h ../tmp/c09p01.h ../../script/c09p01_def.h 
 

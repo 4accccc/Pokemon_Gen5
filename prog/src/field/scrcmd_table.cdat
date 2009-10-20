@@ -500,7 +500,18 @@
   //レポート関連
   DEF_CMD( EvCmdReportCall,   EV_SEQ_REPORT_CALL )
   DEF_CMD( EvCmdGetSaveDataStatus,  EV_SEQ_REPORT_CHECK )
+  NO_CMD()
+  NO_CMD()
+
+  // 通信関連
   DEF_CMD( EvCmdFieldCommExitWait,  EV_SEQ_FIELD_COMM_EXIT )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
   NO_CMD()
 
   END_CMD
