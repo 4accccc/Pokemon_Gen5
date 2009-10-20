@@ -30,6 +30,8 @@
 #include "ircpokemontrade_anim.h"
 #include "system/ica_anime.h"
 #include "ui/ui_easy_clwk.h"
+//タッチバー
+#include "ui/touchbar.h"
 
 
 typedef enum
@@ -85,6 +87,7 @@ typedef enum
 
 #define PLTID_OBJ_TYPEICON_M (10) // //3本
 #define PLTID_OBJ_BALLICON_M (13)  // 1本使用
+#define PLTID_OBJ_POKEITEM_M (14) 
 
 //#define CUR_NUM (3)
 #define _BUTTON_WIN_PAL   (15)  // ウインドウ
@@ -129,7 +132,7 @@ typedef enum
 #define _BUTTON_WIN_HEIGHT (5)    // ウインドウ高さ
 
 
-#define CONTROL_PANEL_Y (120+48)
+#define CONTROL_PANEL_Y (TOUCHBAR_ICON_Y+12)
 
 
 #define CHANGEBUTTON_X (72)
@@ -263,6 +266,15 @@ typedef enum
 } _UI_BALLICON_TYPE;
 
 
+
+typedef struct
+{
+  // ポケアイコン用アイテムアイコン
+  UI_EASY_CLWK_RES      clres_poke_item;
+  GFL_CLWK                  *clwk_poke_item;
+} _ITEMMARK_ICON_WORK;
+
+
 typedef struct
 {
   // ボールアイコン
@@ -378,7 +390,10 @@ struct _IRC_POKEMON_TRADE{
   //	GAMESYS_WORK* pGameSys;
   _BALL_ICON_WORK aBallIcon[UI_BALL_NUM];
   _TYPE_ICON_WORK aTypeIcon[2];
-  
+  _ITEMMARK_ICON_WORK aItemMark;
+
+  TOUCHBAR_WORK* pTouchWork;
+    
   GFL_CLUNIT	*cellUnit;
   GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
 
@@ -464,7 +479,7 @@ extern void IRC_POKETRADE_AppMenuOpen(IRC_POKEMON_TRADE* pWork, int *menustr,int
 extern void IRC_POKETRADE_AppMenuClose(IRC_POKEMON_TRADE* pWork);
 
 extern void IRC_POKETRADE_MessageOpen(IRC_POKEMON_TRADE* pWork, int msgno);
-extern void IRC_POKETRADE_MessageWindowOpen(IRC_POKEMON_TRADE* pWork, int msgno);
+extern void IRC_POKETRADE_MessageWindowOpen(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_MessageWindowClose(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_MessageWindowClear(IRC_POKEMON_TRADE* pWork);
 extern BOOL IRC_POKETRADE_MessageEndCheck(IRC_POKEMON_TRADE* pWork);
@@ -509,6 +524,7 @@ extern void IRC_POKETRADE_ReturnPageMarkRemove(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SendVramBoxNameChar(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SendScreenBoxNameChar(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_ResetBoxNameWindow(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_ItemIconDisp(IRC_POKEMON_TRADE* pWork,int side, POKEMON_PARAM* pp);
 
 
 #if _TRADE_DEBUG

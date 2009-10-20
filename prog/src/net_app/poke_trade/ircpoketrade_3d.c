@@ -517,11 +517,17 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
     BOOL bCamera;
     for(i=0;i<PTC_KIND_NUM_MAX;i++){
       heap = GFL_HEAP_AllocMemory(pWork->heapID, PARTICLE_LIB_HEAP_SIZE);
-      if(i==0 || i== 5 ){
+      switch(i){
+      case PTC_KIND_DEMO1:
+      case PTC_KIND_DEMO2:
+      case PTC_KIND_DEMO3:
+      case PTC_KIND_DEMO6:
+      case PTC_KIND_DEMO7:
         bCamera=FALSE;
-      }
-      else{
+        break;
+      default:
         bCamera=TRUE;
+        break;
       }
       pWork->ptc[i] = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, bCamera, pWork->heapID);
     }
@@ -529,7 +535,7 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
     pWork->ptcOrthogonal = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, FALSE, pWork->heapID);
 
   }
-  if(1){
+  if(0){
     GFL_G3D_PROJECTION proj = {GFL_G3D_PRJORTH,
       FX32_ONE*12.0f,
       0,
@@ -594,7 +600,7 @@ void IRC_POKETRADEDEMO_End( IRC_POKEMON_TRADE* pWork )
   {
   	void *heap2 ,*heap[PTC_KIND_NUM_MAX];
     int i;
-    GFL_PTC_PersonalCameraDelete(pWork->ptcOrthogonal);
+//    GFL_PTC_PersonalCameraDelete(pWork->ptcOrthogonal);
     heap2 = GFL_PTC_GetHeapPtr(pWork->ptcOrthogonal);
     for(i=0;i<PTC_KIND_NUM_MAX;i++){
       heap[i] = GFL_PTC_GetHeapPtr(pWork->ptc[i]);

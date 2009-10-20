@@ -320,13 +320,11 @@ void IRC_POKETRADE_MessageOpen(IRC_POKEMON_TRADE* pWork, int msgno)
 
 }
 
-void IRC_POKETRADE_MessageWindowOpen(IRC_POKEMON_TRADE* pWork, int msgno)
+void IRC_POKETRADE_MessageWindowOpen(IRC_POKEMON_TRADE* pWork)
 {
   GFL_BMPWIN* pwin;
 
   IRC_POKETRADE_MessageWindowClose(pWork);
-
-  //IRC_POKETRADE_MessageOpen(pWork,msgno);
 
 
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
@@ -1606,7 +1604,7 @@ void IRC_POKETRADE_ResetMainStatusBG(IRC_POKEMON_TRADE* pWork)
 
 void IRC_POKETRADE_ReturnPageMarkDisp(IRC_POKEMON_TRADE* pWork,int no)
 {
-
+#if 0
   IRC_POKETRADE_ReturnPageMarkRemove( pWork);
 
   {
@@ -1624,16 +1622,18 @@ void IRC_POKETRADE_ReturnPageMarkDisp(IRC_POKEMON_TRADE* pWork,int no)
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CHAR_RETURNPAGE_MARK] , FALSE );
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CHAR_RETURNPAGE_MARK], TRUE );
   }
-
+#endif
 }
 
 
 void IRC_POKETRADE_ReturnPageMarkRemove(IRC_POKEMON_TRADE* pWork)
 {
+#if 0
   if(pWork->curIcon[CHAR_RETURNPAGE_MARK]){
     GFL_CLACT_WK_Remove(pWork->curIcon[CHAR_RETURNPAGE_MARK]);
     pWork->curIcon[CHAR_RETURNPAGE_MARK]=NULL;
   }
+#endif
 }
 
 
@@ -1648,6 +1648,7 @@ void IRC_POKETRADE_ReturnPageMarkRemove(IRC_POKEMON_TRADE* pWork)
 
 void IRC_POKETRADE_LeftPageMarkDisp(IRC_POKEMON_TRADE* pWork,int no)
 {
+#if 0
 
   IRC_POKETRADE_LeftPageMarkRemove( pWork);
 
@@ -1666,16 +1667,18 @@ void IRC_POKETRADE_LeftPageMarkDisp(IRC_POKEMON_TRADE* pWork,int no)
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CHAR_LEFTPAGE_MARK] , TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CHAR_LEFTPAGE_MARK], TRUE );
   }
-
+#endif
 }
 
 
 void IRC_POKETRADE_LeftPageMarkRemove(IRC_POKEMON_TRADE* pWork)
 {
+#if 0
   if(pWork->curIcon[CHAR_LEFTPAGE_MARK]){
     GFL_CLACT_WK_Remove(pWork->curIcon[CHAR_LEFTPAGE_MARK]);
     pWork->curIcon[CHAR_LEFTPAGE_MARK]=NULL;
   }
+#endif
 }
 
 typedef struct{
@@ -1858,3 +1861,73 @@ void IRC_POKETRADE_MainObjCursorDisp(IRC_POKEMON_TRADE* pWork)
   
 }
 #endif
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンステータスにアイコン表示
+ * @param   IRC_POKEMON_TRADE work
+ * @param   side  画面表示  右なら１左なら０
+ * @param   POKEMON_PARAM 
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_ItemIconDisp(IRC_POKEMON_TRADE* pWork,int side, POKEMON_PARAM* pp)
+{
+  // ポケアイコン用アイテムアイコン
+  {
+    _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
+    UI_EAYSY_CLWK_RES_PARAM prm;
+    int item = PP_Get( pp , ID_PARA_item ,NULL);
+    int type = 0;
+
+    if(item == ITEM_DUMMY_ID){
+      return;
+    }
+    
+    if(ITEM_CheckMail(item)){
+      type = 1;
+    }
+
+    
+    prm.draw_type = CLSYS_DRAW_SUB;
+    prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NONE;
+    prm.arc_id    = APP_COMMON_GetArcId();
+    prm.pltt_id   = APP_COMMON_GetPokeItemIconPltArcIdx();
+    prm.ncg_id    = APP_COMMON_GetPokeItemIconCharArcIdx();
+    prm.cell_id   = APP_COMMON_GetPokeItemIconCellArcIdx( APP_COMMON_MAPPING_128K );
+    prm.anm_id    = APP_COMMON_GetPokeItemIconAnimeArcIdx( APP_COMMON_MAPPING_128K );
+    prm.pltt_line = PLTID_OBJ_POKEITEM_M;
+    
+    UI_EASY_CLWK_LoadResource( &pIM->clres_poke_item, &prm, pWork->cellUnit, pWork->heapID );
+
+    // アニメシーケンスで指定( 0=どうぐ, 1=メール, 2=ボール )
+    // ※位置調整はとりあえずの値です。
+    pIM->clwk_poke_item =
+      UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit,
+                               2 * 8 + side * 16 * 8 + 4, 17*8, type, pWork->heapID );
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンステータスアイコン表示開放
+ * @param   IRC_POKEMON_TRADE work
+ * @param   side  画面表示  右なら１左なら０
+ * @param   POKEMON_PARAM 
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_ItemIconReset(IRC_POKEMON_TRADE* pWork,int side, POKEMON_PARAM* pp)
+{
+  _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
+  //CLWK破棄
+	GFL_CLACT_WK_Remove( pIM->clwk_poke_item );
+  //リソース開放
+  UI_EASY_CLWK_UnLoadResource( &pIM->clres_poke_item );
+  pIM->clwk_poke_item = NULL;
+}
+
