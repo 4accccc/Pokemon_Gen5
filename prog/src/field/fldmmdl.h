@@ -288,6 +288,9 @@ typedef enum
   MMDL_BLACT_ANMTBLNO_NONFLIP, ///<人物汎用 フリップ未使用
   MMDL_BLACT_ANMTBLNO_CYCLEHERO, ///<自転車自機専用
   MMDL_BLACT_ANMTBLNO_ONECELL, ///<一パターンのみ
+  MMDL_BLACT_ANMTBLNO_ITEMGET, ///<自機アイテムゲット
+  MMDL_BLACT_ANMTBLNO_PCAZUKE, ///<自機ポケセン預け
+  MMDL_BLACT_ANMTBLNO_SAVE, ///<自機レポート
 	MMDL_BLACT_ANMTBLNO_MAX,		///<最大
 }MMDL_BLACT_ANMTBLNO;
 
@@ -312,6 +315,9 @@ typedef enum
   MMDL_DRAWPROCNO_CYCLEHERO, ///<自転車自機専用
   MMDL_DRAWPROCNO_SWIMHERO, ///<波乗り自機専用
   MMDL_DRAWPROCNO_BLACTALWAYSANIME, //ビルボード汎用＋常にアニメ
+  MMDL_DRAWPROCNO_ITEMGET, //自機アイテムゲット
+  MMDL_DRAWPROCNO_PCAZUKE, //自機PC預け
+  MMDL_DRAWPROCNO_ONEANMLOOP, //１アニメループ
 	MMDL_DRAWPROCNO_MAX,		///<最大
 }MMDL_DRAWPROCNO;
 
@@ -351,7 +357,6 @@ typedef enum
   MMDL_OBJCODESEX_MAX, ///<最大
 }MMDL_OBJCODESEX;
 
-
 //--------------------------------------------------------------
 /// MMDL_HEADER ポジションタイプ 
 //--------------------------------------------------------------
@@ -363,12 +368,10 @@ typedef enum
   MMDL_HEADER_POSTYPE_MAX, ///<最大
 }MMDL_HEADER_POSTYPE;
 
-
 //--------------------------------------------------------------
 /// MMDL_HEADER ポジションバッファサイズ 
 //--------------------------------------------------------------
 #define MMDL_HEADER_POSBUF_SIZE ( 8 )
-
 
 //======================================================================
 //	struct

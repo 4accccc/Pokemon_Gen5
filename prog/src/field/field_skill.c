@@ -118,7 +118,7 @@ void FLDSKILL_InitCheckWork(
     case TREE:
       scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_IAIGIRI );
       break;
-#if 0
+#if 0 //wb null
     case BREAKROCK:
       scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_IWAKUDAKI );
       break;
@@ -142,7 +142,7 @@ void FLDSKILL_InitCheckWork(
     scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_NAMINORI );
   }
 
-#if 0 //wb
+#if 0 //wb null
   if (Player_EventAttrCheck_KabeNobori(fattr, Player_DirGet(fsys->player))) {
     scwk->enable_skill |= (1 << FLD_SKILL_ROCKCLIMB);
   }
@@ -156,7 +156,7 @@ void FLDSKILL_InitCheckWork(
     }
   }
 
-#if 0
+#if 0 //wb null
   switch (Situation_GetWeatherID(SaveData_GetSituation(fsys->savedata))) {
   case WEATHER_SYS_MIST1:
     scwk->enable_skill |= (1 << FLD_SKILL_KIRIBARAI);
@@ -594,7 +594,7 @@ static void InitHSW( HIDEN_SCR_WORK *hsw,
  * @retval none
  */
 //--------------------------------------------------------------
-#if 0
+#if 0 //wb null
 static void HSW_Delete(HIDEN_SCR_WORK * hsw)
 {
   GF_ASSERT( hsw->magic == HSW_MAGIC_NUMBER );
@@ -631,11 +631,9 @@ static BOOL IsEnableSkill(
 static BOOL CheckBadge(
     const FLDSKILL_CHECK_WORK *scwk, int badge_id )
 {
-#if 0 //wb
-  return MyStatus_GetBadgeFlag( SaveData_GetMyStatus(scwk->fsys->savedata), badge );
-#else
-  return TRUE;
-#endif
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( scwk->gsys );
+  MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
+  return MyStatus_GetBadgeFlag( mystatus, badge_id );
 }
 
 //--------------------------------------------------------------
@@ -647,7 +645,7 @@ static BOOL CheckBadge(
 //--------------------------------------------------------------
 static BOOL CheckCompanion( const FLDSKILL_CHECK_WORK *scwk )
 {
-#if 0 //wb
+#if 0 //wb null
   return SysFlag_PairCheck( SaveData_GetEventWork(scwk->fsys->savedata) );
 #else
   return FALSE;
@@ -663,7 +661,7 @@ static BOOL CheckCompanion( const FLDSKILL_CHECK_WORK *scwk )
 //--------------------------------------------------------------
 static BOOL CheckPark( const FLDSKILL_CHECK_WORK *scwk )
 {
-#if 0 //wb
+#if 0 //wb null
   if( SysFlag_SafariCheck(
         SaveData_GetEventWork(scwk->fsys->savedata) ) == TRUE ||
     SysFlag_PokeParkCheck(
@@ -685,7 +683,7 @@ static BOOL CheckPark( const FLDSKILL_CHECK_WORK *scwk )
 //--------------------------------------------------------------
 static BOOL CheckPokePark( const FLDSKILL_CHECK_WORK * scwk )
 {
-#if 0 //wb
+#if 0 //wb null
   if( SysFlag_PokeParkCheck(
         SaveData_GetEventWork(scwk->fsys->savedata)) == TRUE ){
     return TRUE;
@@ -705,7 +703,7 @@ static BOOL CheckPokePark( const FLDSKILL_CHECK_WORK * scwk )
 //--------------------------------------------------------------
 static BOOL CheckMapModeUse( const FLDSKILL_CHECK_WORK * scwk )
 {
-#if 0 //wb
+#if 0 //wb null
   if( scwk->fsys->MapMode == MAP_MODE_COLOSSEUM || scwk->fsys->MapMode == MAP_MODE_UNION ){
     return FALSE;
   }

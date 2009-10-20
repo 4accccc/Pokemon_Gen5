@@ -27,6 +27,9 @@ const MMDL_DRAW_PROC_LIST * const
 	&DATA_MMDL_DRAWPROCLIST_CycleHero,	//自機自転車
 	&DATA_MMDL_DRAWPROCLIST_SwimHero,	//自機波乗り
   &DATA_MMDL_DRAWPROCLIST_BlActAlwaysAnime, //通常ビルボード＋常にアニメ
+  &DATA_MMDL_DRAWPROCLIST_ItemGetHero, //自機アイテムゲット
+  &DATA_MMDL_DRAWPROCLIST_PCAzukeHero, //自機PC預け
+  &DATA_MMDL_DRAWPROCLIST_BlActOnePatternLoop, //ビルボード1パターンアニメ
 };
 
 //======================================================================
@@ -2199,6 +2202,94 @@ static const GFL_BBDACT_ANM * const DATA_BlActOneCellAnmTbl[DRAW_STA_MAXDIR4] =
 };
 
 //======================================================================
+//  自機アイテムゲット
+//======================================================================
+enum
+{
+  TEXIDX_ITEMGET_0,
+  TEXIDX_ITEMGET_1,
+};
+
+static const GFL_BBDACT_ANM DATA_BlActItemGet_Stop[] = {
+	{TEXIDX_ITEMGET_0,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM DATA_BlActItemGet_Anm[] = {
+	{TEXIDX_ITEMGET_0,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{TEXIDX_ITEMGET_1,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActItemGet[DRAW_STA_ITEMGET_MAX] =
+{
+  DATA_BlActItemGet_Stop,
+  DATA_BlActItemGet_Anm,
+};
+
+//======================================================================
+//  自機ポケセン預け
+//======================================================================
+enum
+{
+  TEXIDX_PCAZUKE_0,
+  TEXIDX_PCAZUKE_1,
+  TEXIDX_PCAZUKE_2,
+  TEXIDX_PCAZUKE_3,
+  TEXIDX_PCAZUKE_4,
+};
+
+static const GFL_BBDACT_ANM DATA_BlActPCAzuke_Stop[] = {
+	{TEXIDX_PCAZUKE_0,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM DATA_BlActPCAzuke_Anm0[] = {
+	{TEXIDX_PCAZUKE_0,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{TEXIDX_PCAZUKE_1,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{TEXIDX_PCAZUKE_2,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{TEXIDX_PCAZUKE_3,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{TEXIDX_PCAZUKE_4,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM DATA_BlActPCAzuke_Anm1[] = {
+	{TEXIDX_PCAZUKE_4,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{TEXIDX_PCAZUKE_3,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{TEXIDX_PCAZUKE_2,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{TEXIDX_PCAZUKE_1,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{TEXIDX_PCAZUKE_0,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActPCAzuke[DRAW_STA_PCAZUKE_MAX] =
+{
+  DATA_BlActPCAzuke_Stop,
+  DATA_BlActPCAzuke_Anm0,
+  DATA_BlActPCAzuke_Anm1,
+};
+
+//======================================================================
+//  自機レポート
+//======================================================================
+enum
+{
+  TEXIDX_SAVEHERO_0,
+  TEXIDX_SAVEHERO_1,
+};
+
+static const GFL_BBDACT_ANM DATA_BlActSaveHero00[] = {
+	{TEXIDX_SAVEHERO_0,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{TEXIDX_SAVEHERO_1,ANMFLIP_OFF,ANMFLIP_OFF,1},
+	{GFL_BBDACT_ANMCOM_LOOP,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActSaveHero[DRAW_STA_SAVEHERO_MAX] =
+{
+  DATA_BlActSaveHero00,
+};
+
+//======================================================================
 //	ビルボードアクター　アニメーション　リストテーブル
 //======================================================================
 const MMDL_BBDACT_ANMTBL
@@ -2222,6 +2313,12 @@ const MMDL_BBDACT_ANMTBL
   {DATA_BlActAnmHeroCycleTbl,DRAW_STA_MAXDIR4},
   //MMDL_BLACT_ANMTBLNO_ONECELL
   {DATA_BlActOneCellAnmTbl,DRAW_STA_MAXDIR4},
+  //MMDL_BLACT_ANMTBLNO_ITEMGET
+  {DATA_BlActItemGet,DRAW_STA_ITEMGET_MAX},
+  //MMDL_BLACT_ANMTBLNO_PCAZUKE
+  {DATA_BlActPCAzuke,DRAW_STA_PCAZUKE_MAX},
+  //MMDL_BLACT_ANMTBLNO_SAVE
+  {DATA_BlActSaveHero,DRAW_STA_SAVEHERO_MAX},
 };
 
 //======================================================================
