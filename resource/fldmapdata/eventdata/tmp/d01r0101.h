@@ -22,5 +22,11 @@
 #define D01R0101_SUPPORT                   1
 #define D01R0101_POKE_01                   2
 #define D01R0101_ITEM_01                   3
+#define D01_FLD_ITEM_03                    4
+#define D01_FLD_ITEM_04                    5
+#define D01_FLD_ITEM_02                    6
+#define D01_FLD_ITEM_01                    7
+#define D01_DUMMY_01                       8
+#define D01_TREE_01                        9
 
 #endif //ZONE_D01R0101_EVC_H
