@@ -24,7 +24,7 @@ CSVNO_NUM = 5
 CSVNO_ITEMSYM = 6
 CSVNO_MAX = 7
 
-STR_FLAGNO_MAX = "328"
+FLAGNO_MAX = 328
 
 STR_COMMENT0 = "//======================================================================"
 STR_COMMENT1 = "//--------------------------------------------------------------"
@@ -148,8 +148,9 @@ while line = file_csv.gets
   end
 
   #フラグマックスを超えていたらエラー
-  if( get_csvdata(csvdata,count,CSVNO_NUM) >= STR_FLAGNO_MAX )
-    printf( "ERROR フラグの最大数を超えています\n" )
+  strnum = get_csvdata( csvdata, count, CSVNO_NUM )
+  if( strnum.to_i >= FLAGNO_MAX )
+    printf( "ERROR フラグの最大数を超えています No=%s\n", strnum )
     error_end( file_csv, file_sc, file_id, file_ev, fpath_ev )
     exit 1
   end
