@@ -206,9 +206,10 @@ _ANIME_LABEL	anm_heal_p01_turn_down
 /**************************************************************/
 EVENT_START ev_union
 {
-  DEFINE_LOCAL have_cgear // C-gearを持っているかどうか
-  DEFINE_LOCAL room_in    // ユニオンルームに入るかどうか
-  DEFINE_LOCAL explain    // 説明を受けるかどうか
+  DEFINE_LOCAL have_cgear      // C-gearを持っているかどうか
+  DEFINE_LOCAL room_in         // ユニオンルームに入るかどうか
+  DEFINE_LOCAL explain         // 説明を受けるかどうか
+  DEFINE_LOCAL dame_egg_count  // 駄目タマゴの数
   DEFINE_LOCAL ret
 
   // ローカル変数の初期化
@@ -216,10 +217,26 @@ EVENT_START ev_union
   _FLAG_CHECK( FE_CGEAR_GET, have_cgear )
   $room_in    = FALSE
   $explain    = FALSE
+  _GET_PARTY_POKE_COUNT( dame_egg_count, POKECOUNT_MODE_ONLY_DAME_EGG )
 
+  // C-gear持ってない場合
+  IF $have_cgear != TRUE THEN 
+    //「ただいま じゅんびちゅう です！」
+    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_06 ) 
+    _AB_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF 
 
-  // C-gear持ってる場合
-  IF $have_cgear == TRUE THEN 
+  // 駄目タマゴを持っている場合
+  IF $dame_egg_count > 0 THEN
+    //「つれていけない ポケモンがいます」
+    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_07 ) 
+    _AB_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
+
+  // C-gear持っいて, 駄目タマゴを持っていない場合
+  IF ($have_cgear == TRUE) && ($dame_egg_count == 0) THEN 
     //「ユニオンルームにようこそ」
     _TALK_OBJ_START()
     _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_01 ) 
@@ -241,14 +258,6 @@ EVENT_START ev_union
       $explain = TRUE 
     ENDSWITCH
   ENDIF
-
-  // C-gear持ってない場合
-  IF $have_cgear != TRUE THEN 
-    //「ただいま じゅんびちゅう です！」
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_06 ) 
-    _AB_KEYWAIT()
-    _BALLOONWIN_CLOSE()
-  ENDIF 
 
   // 説明を聞く場合
   IF $explain == TRUE THEN

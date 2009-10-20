@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-15T21:59:24"/>
+	<create user="obata_toshihiro" host="W00209" date="2009-10-19T22:43:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -632,6 +632,12 @@
 		<language name="JPN_KANJI" width="256">申し訳ございませんが
 おきゃくさまは　まだ▽
 ユニオンルームに　入れません</language>
+	</row>
+
+	<row id="msg_pc_union_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffff80,,,#ffff80,,#80ff80,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">ユニオン受付</attribute>
+		<language name="JPN" width="256">てもちに　つれてけない　ぽけもんが　います。</language>
+		<language name="JPN_KANJI" width="256">手持ちに連れて行けないポケモンがいます。</language>
 	</row>
 
 	<flowchart-group-list>
