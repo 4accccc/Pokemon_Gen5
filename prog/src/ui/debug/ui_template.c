@@ -1602,8 +1602,8 @@ static void UITemplate_PMSDRAW_Init( UI_TEMPLATE_MAIN_WORK* wk )
     PMS_DRAW_Print( wk->pms_draw, wk->pms_win[1], &pms ,1 );
     
     // 3ŒÂ–Ú ƒfƒRƒ“ñŒÂ•\¦
-    PMSDAT_SetDeco( &pms, 0, PMS_DECOID_HERO );
-    PMSDAT_SetDeco( &pms, 1, PMS_DECOID_HERO );
+    PMSDAT_SetDeco( &pms, 0, PMS_DECOID_TANKS );
+    PMSDAT_SetDeco( &pms, 1, PMS_DECOID_LOVE );
     PMS_DRAW_Print( wk->pms_draw, wk->pms_win[2], &pms ,2 );
   }
 }
@@ -1658,7 +1658,7 @@ static void UITemplate_PMSDRAW_Proc( UI_TEMPLATE_MAIN_WORK* wk )
     {
       PMS_DATA pms;
       PMSDAT_SetDebugRandom( &pms );
-      PMSDAT_SetDeco( &pms, GFUser_GetPublicRand(2), PMS_DECOID_HERO );
+      PMSDAT_SetDeco( &pms, 0, GFUser_GetPublicRand(10)+1 );
       PMS_DRAW_Print( wk->pms_draw, wk->pms_win[i], &pms ,i );
     }
   }

@@ -81,7 +81,7 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 	GX_VRAM_TEX_0_D,						// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_0_F,				// テクスチャパレットスロット
 	GX_OBJVRAMMODE_CHAR_1D_128K,// メイン画面OBJマッピングモード		
-	GX_OBJVRAMMODE_CHAR_1D_128K,// サブ画面OBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,// サブ画面OBJマッピングモード
 };
 
 //=============================================================================

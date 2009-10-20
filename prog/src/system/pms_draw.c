@@ -73,6 +73,8 @@ struct _PMS_DRAW_WORK {
  *							プロトタイプ宣言
  */
 //=============================================================================
+static u32 _obj_get_ncer( CLSYS_DRAW_TYPE vram_type );
+static u32 _obj_get_nanr( CLSYS_DRAW_TYPE vram_type );
 static void _obj_loadres( PMS_DRAW_OBJ* obj, u8 pltt_ofs, HEAPID heap_id );
 static void _obj_unloadres( PMS_DRAW_OBJ* obj );
 static GFL_CLWK* _obj_create( PMS_DRAW_OBJ* obj, HEAPID heap_id );
@@ -223,7 +225,6 @@ void PMS_DRAW_Print( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8 id )
   wk->b_print_end = FALSE;
 }
 
-
 //-----------------------------------------------------------------------------
 /**
  *	@brief  指定IDの表示終了チェック
@@ -231,7 +232,7 @@ void PMS_DRAW_Print( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8 id )
  *	@param	PMS_DRAW_WORK* wk ワーク
  *	@param	id 表示ユニット管理ID
  *
- *	@retval
+ *	@retval	TRUE:プリント終了
  */
 //-----------------------------------------------------------------------------
 BOOL PMS_DRAW_IsPrintEnd( PMS_DRAW_WORK* wk, u8 id )
@@ -268,6 +269,78 @@ void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  VRAMモードからセルの取得リソースを判定
+ *
+ *	@param	CLSYS_DRAW_TYPE vram_type 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u32 _obj_get_ncer( CLSYS_DRAW_TYPE vram_type )
+{
+	GXOBJVRamModeChar vrammode;
+  
+  if( vram_type == CLSYS_DRAW_MAIN )
+  {
+    vrammode = GX_GetOBJVRamModeChar();
+  }
+  else
+  {
+    vrammode = GXS_GetOBJVRamModeChar();
+  }
+
+  switch(vrammode){
+	case GX_OBJVRAMMODE_CHAR_1D_32K:
+		return NARC_pmsi_pms2_obj_dekome_32k_NCER;
+	case GX_OBJVRAMMODE_CHAR_1D_64K:
+		return NARC_pmsi_pms2_obj_dekome_64k_NCER;
+	case GX_OBJVRAMMODE_CHAR_1D_128K:
+		return NARC_pmsi_pms2_obj_dekome_128k_NCER;
+	default:
+		GF_ASSERT(0);	//非対応のマッピングモード
+	}
+  
+  return NARC_pmsi_pms2_obj_dekome_128k_NCER;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  VRAMモードからセルアニメの取得リソースを判定
+ *
+ *	@param	CLSYS_DRAW_TYPE vram_type 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u32 _obj_get_nanr( CLSYS_DRAW_TYPE vram_type )
+{
+	GXOBJVRamModeChar vrammode;
+  
+  if( vram_type == CLSYS_DRAW_MAIN )
+  {
+    vrammode = GX_GetOBJVRamModeChar();
+  }
+  else
+  {
+    vrammode = GXS_GetOBJVRamModeChar();
+  }
+	
+  switch(vrammode){
+	case GX_OBJVRAMMODE_CHAR_1D_32K:
+		return NARC_pmsi_pms2_obj_dekome_32k_NANR;
+	case GX_OBJVRAMMODE_CHAR_1D_64K:
+		return NARC_pmsi_pms2_obj_dekome_64k_NANR;
+	case GX_OBJVRAMMODE_CHAR_1D_128K:
+		return NARC_pmsi_pms2_obj_dekome_128k_NANR;
+	default:
+		GF_ASSERT(0);	//非対応のマッピングモード
+	}
+  
+  return NARC_pmsi_pms2_obj_dekome_128k_NANR;
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  OBJ リソース初期化
  *
  *	@param	PMS_DRAW_OBJ* obj 
@@ -278,6 +351,8 @@ void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id )
 static void _obj_loadres( PMS_DRAW_OBJ* obj, u8 pltt_ofs, HEAPID heap_id )
 {
   ARCHANDLE* handle;
+  u32 res_ncer = _obj_get_ncer( obj->vram_type );
+  u32 res_nanr = _obj_get_nanr( obj->vram_type );
 
   // ハンドルオープン
   handle	= GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, heap_id );
@@ -285,7 +360,7 @@ static void _obj_loadres( PMS_DRAW_OBJ* obj, u8 pltt_ofs, HEAPID heap_id )
 	//リソース読みこみ
 	obj->obj_ncl	= GFL_CLGRP_PLTT_Register( handle, NARC_pmsi_pms2_obj_dekome_NCLR, obj->vram_type, 0x20*pltt_ofs, heap_id );
   obj->obj_ncg = GFL_CLGRP_CGR_Register( handle, NARC_pmsi_pms2_obj_dekome_NCGR, FALSE, obj->vram_type, heap_id );
-  obj->obj_nce = GFL_CLGRP_CELLANIM_Register( handle, NARC_pmsi_pms2_obj_dekome_NCER, NARC_pmsi_pms2_obj_dekome_NANR, heap_id );
+  obj->obj_nce = GFL_CLGRP_CELLANIM_Register( handle, res_ncer, res_nanr, heap_id );
 
   GFL_ARC_CloseDataHandle( handle );
 }
