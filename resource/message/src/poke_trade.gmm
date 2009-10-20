@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-10-17T16:43:27"/>
+	<create user="ohno" host="W00141" date="2009-10-20T10:36:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="137"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -835,6 +835,60 @@
 	<row id="POKETRADE_STR_96">
 		<language name="JPN" width="256">ワ</language>
 		<language name="JPN_KANJI" width="256">ワ</language>
+	</row>
+
+	<row id="POKETRADE_STR_97">
+		<language name="JPN" width="256">こうかんは
+キャンセル　されました</language>
+		<language name="JPN_KANJI" width="256">こうかんは
+キャンセル　されました</language>
+	</row>
+
+	<row id="POKETRADE_STR_98">
+		<language name="JPN" width="256">そのポケモンを　こうかんすると
+ぼうけん　できなくなっちゃうよ！</language>
+		<language name="JPN_KANJI" width="256">そのポケモンを　こうかんすると
+ぼうけん　できなくなっちゃうよ！</language>
+	</row>
+
+	<row id="POKETRADE_STR2_01">
+		<language name="JPN" width="256">あいてが　こうかんできない
+ポケモンを　だしています</language>
+		<language name="JPN_KANJI" width="256">あいてが　こうかんできない
+ポケモンを　だしています</language>
+	</row>
+
+	<row id="POKETRADE_STR2_02">
+		<language name="JPN" width="256">じぶんが こうかんできない
+ポケモンを　だして　います</language>
+		<language name="JPN_KANJI" width="256">じぶんが こうかんできない
+ポケモンを　だして　います</language>
+	</row>
+
+	<row id="POKETRADE_STR2_03">
+		<language name="JPN" width="256">ひでんわざを　おぼえているので
+てもちから　はずせません</language>
+		<language name="JPN_KANJI" width="256">ひでんわざを　おぼえているので
+てもちから　はずせません</language>
+	</row>
+
+	<row id="POKETRADE_STR2_04">
+		<language name="JPN" width="256">ともだちは　ポケモンの
+こうかんを　したいようです！</language>
+		<language name="JPN_KANJI" width="256">ともだちは　ポケモンの
+こうかんを　したいようです</language>
+	</row>
+
+	<row id="POKETRADE_STR2_05">
+		<language name="JPN" width="256">こうかんを　やめますか？</language>
+		<language name="JPN_KANJI" width="256">こうかんを　やめますか？</language>
+	</row>
+
+	<row id="POKETRADE_STR2_06">
+		<language name="JPN" width="256">ともだちの　しゅうりょうを
+まっています……</language>
+		<language name="JPN_KANJI" width="256">ともだちの　しゅうりょうを
+まっています……</language>
 	</row>
 
 	<flowchart-group-list>
