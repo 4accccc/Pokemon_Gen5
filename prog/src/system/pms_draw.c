@@ -450,10 +450,15 @@ static void _obj_set_deco( GFL_CLWK* act, GFL_BMPWIN* win, u8 width, u8 line, PM
 //-----------------------------------------------------------------------------
 static void _unit_init( PMS_DRAW_UNIT* unit, PMS_DRAW_OBJ* obj, HEAPID heap_id )
 {
-  unit->b_useflag = FALSE;
+  int i;
 
-  unit->clwk[0] = _obj_create( obj, heap_id );
-  unit->clwk[1] = _obj_create( obj, heap_id );
+  for( i=0; i<PMS_WORD_MAX; i++ )
+  {
+    // アクター生成
+    unit->clwk[i] = _obj_create( obj, heap_id );
+  }
+  
+  unit->b_useflag = FALSE;
 }
 
 //-----------------------------------------------------------------------------
@@ -467,15 +472,18 @@ static void _unit_init( PMS_DRAW_UNIT* unit, PMS_DRAW_OBJ* obj, HEAPID heap_id )
 //-----------------------------------------------------------------------------
 static void _unit_exit( PMS_DRAW_UNIT* unit )
 {
+  int i;
   GFL_BMPWIN* win;
 
   win = unit->print_util.win;
 
   GF_ASSERT( win );
-
-  // アクター解放
-  GFL_CLACT_WK_Remove( unit->clwk[0] );
-  GFL_CLACT_WK_Remove( unit->clwk[1] );
+  
+  for( i=0; i<PMS_WORD_MAX; i++ )
+  {
+    // アクター解放
+    GFL_CLACT_WK_Remove( unit->clwk[i] );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -563,7 +571,7 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
   
   // @TODO 一度開放しているのであまり効率が良くない。
   // 負荷がかかるようであれば、PMSDAT_ToStringの中でしていることをこちらに持ってくる。
-  // もしくは後からレジストする関数を作る。
+  // もしくはPMSDATの方で後からレジストする関数を作る。
   GFL_STR_DeleteBuffer( buf );
   
   // プリントリクエスト

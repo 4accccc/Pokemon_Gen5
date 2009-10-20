@@ -7,7 +7,7 @@
  *	@data		2009.10.14
  *
  *	@note   BMPWINに対して、デコメを含んだ簡易会話を表示します。
- *	@note   OBJのキャラVRAMを約16 k。パレットを5本消費します。 @TODO 変動の可能性あり
+ *	@note   OBJのキャラVRAMを約16 k。パレットを5本消費します。 
  *
  */
 //============================================================================
@@ -27,7 +27,7 @@ typedef struct _PMS_DRAW_WORK PMS_DRAW_WORK;
 enum
 { 
   // 簡易会話表示システムで使用するパレット数
-  PMS_DRAW_OBJ_PLTT_NUM = 5, //@TODO 変動する可能性あり
+  PMS_DRAW_OBJ_PLTT_NUM = 5,
 };
 
 
