@@ -32,7 +32,7 @@
 #define CAN10_GZ (3)
 //íÖínç¿ïW
 #define STAND1_GX (15)
-#define STAND1_GY (4)
+#define STAND1_GY (2)
 #define STAND1_GZ (19)
 #define STAND2_GX (15)
 #define STAND2_GY (0)
