@@ -221,11 +221,14 @@ void ICA_ANIME_Delete( ICA_ANIME* anime )
  *
  * @param anime 更新するアニメーション
  * @param frame 進めるフレーム数
+ *
+ * @return ループしたら TRUE
  */
 //-----------------------------------------------------------------------------------
-void ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame )
+BOOL ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame )
 {
   int now;
+  BOOL loop = FALSE;
 
   // 現在フレームを更新
   anime->nowFrame += frame;
@@ -236,6 +239,7 @@ void ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame )
   {
     anime->nowFrame = 0;
     now = 0;
+    loop = TRUE;
   }
 
   // 現在フレームがバッファリング範囲をはずれたら, バッファを更新する
@@ -244,6 +248,9 @@ void ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame )
   {
     UpdateBuf( anime, anime->nowFrame );
   }
+
+  // ループしたかどうかを返す
+  return loop;
 }
 
 //-----------------------------------------------------------------------------------

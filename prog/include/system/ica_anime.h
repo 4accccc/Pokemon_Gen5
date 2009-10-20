@@ -30,7 +30,7 @@ ICA_ANIME* ICA_ANIME_CreateAlloc( HEAPID heap_id, ARCID arc_id, ARCDATID dat_id 
 ICA_ANIME* ICA_ANIME_CreateStreamingAlloc( 
     HEAPID heap_id, ARCID arc_id, ARCDATID dat_id, int buf_interval ); 
 void ICA_ANIME_Delete( ICA_ANIME* anime );
-void ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame );
+BOOL ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame );
 void ICA_ANIME_SetAnimeFrame( ICA_ANIME* anime, fx32 frame );
 u32 ICA_ANIME_GetMaxFrame( ICA_ANIME* anime );
 u32 ICA_ANIME_GetNowFrame( ICA_ANIME* anime );
@@ -132,9 +132,11 @@ void ICA_ANIME_Delete( ICA_ANIME* anime );
  *
  * @param anime 更新するアニメーション
  * @param frame 進めるフレーム数
+ *
+ * @return ループしたら TRUE
  */
 //-----------------------------------------------------------------------------------
-void ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame );
+BOOL ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame );
 
 //-----------------------------------------------------------------------------------
 /**
