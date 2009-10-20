@@ -39,7 +39,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/battle_box_save.c \
         savedata/sodateya_work.c \
         savedata/intrude_save.c \
-				savedata/misc.c
+				savedata/misc.c \
+				savedata/ybtn_reg.c
 
 
 #’ÊM‚Ìí’“

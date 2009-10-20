@@ -78,6 +78,7 @@ enum{
   GMDATA_ID_ROCKPOS, //‚©‚¢‚è‚«Šâ
 	GMDATA_ID_MISC,			//–¢•ª—Þ
 	GMDATA_ID_INTRUDE,  //N“ü
+	GMDATA_ID_YBTN_REG,	//Yƒ{ƒ^ƒ““o˜^
   
 	GMDATA_ID_MAX,
 };
