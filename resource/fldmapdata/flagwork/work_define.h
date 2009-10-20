@@ -133,9 +133,9 @@
 #define WK_SCENE_C04                     16521 /* 0x4089 C04フィールド：イベント用ワーク */
 #define WK_SCENE_C02GYM0201              16522 /* 0x408a C02ノーマルジム：イベント用ワーク */
 #define WK_SCENE_D05R0101                16523 /* 0x408b R05：イベント用ワーク */
-		/* not used 16524(0x408c) */
-		/* not used 16525(0x408d) */
-		/* not used 16526(0x408e) */
+#define WK_SCENE_D02                     16524 /* 0x408c ヤグルマの森（フィールド）：イベント用ワーク */
+#define WK_SCENE_D02R0101                16525 /* 0x408d ヤグルマの森：イベント用ワーク */
+#define WK_SCENE_C04R0302                16526 /* 0x408e Ｃ04野球場の観客席：イベント用ワーク */
 		/* not used 16527(0x408f) */
 		/* not used 16528(0x4090) */
 		/* not used 16529(0x4091) */

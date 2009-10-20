@@ -569,12 +569,12 @@
 #define FV_D05R0101_RIVAL_02               545 /* 0x0221 D05R0101：ライバル02 */
 #define FV_D05R0101_WORKMAN_01             546 /* 0x0222 D05R0101：戦闘後表示WORKMAN */
 #define FV_C02GYM0101_FRIENDS              547 /* 0x0223 C02博物館：サポート＆ライバル */
-		/* not used   548(0x0224) */
-		/* not used   549(0x0225) */
-		/* not used   550(0x0226) */
-		/* not used   551(0x0227) */
-		/* not used   552(0x0228) */
-		/* not used   553(0x0229) */
+#define FV_D02R0101_LEADER2                548 /* 0x0224 Ｄ02（フィールド）：誘導イベントのジムリーダー（アーティ） */
+#define FV_D02R0101_HAKAI                  549 /* 0x0225 Ｄ02（フィールド）：ストッパーイベントのプラズマ団 */
+#define FV_D02_HAKAI                       550 /* 0x0226 ヤグルマの森：盗難イベントのプラズマ団 */
+#define FV_D02_LEADER2                     551 /* 0x0227 ヤグルマの森：盗難イベントのジムリーダー（アーティ） */
+#define FV_D02_LEADER3                     552 /* 0x0228 ヤグルマの森：盗難イベントのジムリーダー（アロエ） */
+#define FV_C04R0302_BOSS                   553 /* 0x0229 Ｃ04野球場の観客席：Ｎ（エヌ） */
 		/* not used   554(0x022a) */
 		/* not used   555(0x022b) */
 		/* not used   556(0x022c) */
