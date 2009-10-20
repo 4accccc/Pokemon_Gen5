@@ -154,7 +154,7 @@ PMS_DRAW_WORK* PMS_DRAW_Init( GFL_CLUNIT* clunit, CLSYS_DRAW_TYPE vram_type, PRI
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-void PMS_DRAW_Proc( PMS_DRAW_WORK* wk )
+void PMS_DRAW_Main( PMS_DRAW_WORK* wk )
 {
   int i;
 
@@ -230,12 +230,11 @@ void PMS_DRAW_Print( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8 id )
  *	@brief  指定IDの表示終了チェック
  *
  *	@param	PMS_DRAW_WORK* wk ワーク
- *	@param	id 表示ユニット管理ID
  *
  *	@retval	TRUE:プリント終了
  */
 //-----------------------------------------------------------------------------
-BOOL PMS_DRAW_IsPrintEnd( PMS_DRAW_WORK* wk, u8 id )
+BOOL PMS_DRAW_IsPrintEnd( PMS_DRAW_WORK* wk )
 {
   return wk->b_print_end;
 }

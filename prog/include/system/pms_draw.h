@@ -62,7 +62,7 @@ extern PMS_DRAW_WORK* PMS_DRAW_Init( GFL_CLUNIT* clunit, CLSYS_DRAW_TYPE vram_ty
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-extern void PMS_DRAW_Proc( PMS_DRAW_WORK* wk );
+extern void PMS_DRAW_Main( PMS_DRAW_WORK* wk );
 //-----------------------------------------------------------------------------
 /**
  *	@brief  簡易会話表示システム 開放処理
@@ -91,12 +91,11 @@ extern void PMS_DRAW_Print( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u
  *	@brief  指定IDの表示終了チェック
  *
  *	@param	PMS_DRAW_WORK* wk ワーク
- *	@param	id 表示ユニット管理ID
  *
- *	@retval
+ *	@retval	TRUE:プリント終了
  */
 //-----------------------------------------------------------------------------
-extern BOOL PMS_DRAW_IsPrintEnd( PMS_DRAW_WORK* wk, u8 id );
+extern BOOL PMS_DRAW_IsPrintEnd( PMS_DRAW_WORK* wk );
 //-----------------------------------------------------------------------------
 /**
  *	@brief  指定IDの表示クリア

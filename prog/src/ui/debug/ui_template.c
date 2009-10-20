@@ -1664,7 +1664,7 @@ static void UITemplate_PMSDRAW_Proc( UI_TEMPLATE_MAIN_WORK* wk )
   }
 #endif
 
-  PMS_DRAW_Proc( wk->pms_draw );
+  PMS_DRAW_Main( wk->pms_draw );
 }
 
 #endif // UI_TEMPLATE_PMSDRAW
