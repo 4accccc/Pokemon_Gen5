@@ -398,6 +398,7 @@ static void scproc_turncheck_weather( BTL_SVFLOW_WORK* wk );
 static void scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke );
 static void scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke );
 static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_POKEPARAM* deadPoke, CALC_EXP_WORK* result );
+static u32 getexp_calc_adjust_level( u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv );
 static void getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_EXP_WORK* calcExp );
 static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* poke );
 static inline int roundValue( int val, int min, int max );
@@ -4884,6 +4885,7 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
   u32 baseExp = BTL_CALC_CalcBaseExp( deadPoke );
   u16 memberCount  = BTL_PARTY_GetMemberCount( party );
   u16 gakusyuCount = 0;
+
   const BTL_POKEPARAM* bpp;
   u16 i;
 
@@ -4898,6 +4900,7 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
     // 生きていてがくしゅうそうちを装備しているポケモンが対象
     bpp = BTL_PARTY_GetMemberDataConst( party, i );
     if( !BPP_IsDead(bpp)
+    &&  (BPP_GetValue(bpp, BPP_LEVEL) < PTL_LEVEL_MAX)
     &&  (BPP_GetItem(bpp) == ITEM_GAKUSYUUSOUTI)
     ){
       ++gakusyuCount;
@@ -4912,6 +4915,7 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
     {
       bpp = BTL_PARTY_GetMemberDataConst( party, i );
       if( !BPP_IsDead(bpp)
+      &&  (BPP_GetValue(bpp, BPP_LEVEL) < PTL_LEVEL_MAX)
       &&  (BPP_GetItem(bpp) == ITEM_GAKUSYUUSOUTI)
       ){
         result[i].exp = gakusyuExp / gakusyuCount;
@@ -4941,7 +4945,7 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
     for(i=0; i<memberCount; ++i)
     {
       bpp = BTL_PARTY_GetMemberDataConst( party, i );
-      if( !BPP_IsDead(bpp) )
+      if( !BPP_IsDead(bpp) && (BPP_GetValue(bpp, BPP_LEVEL) < PTL_LEVEL_MAX) )
       {
         u8 j;
         pokeID = BPP_GetID( bpp );
@@ -4964,8 +4968,14 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
     {
       const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
       const POKEMON_PARAM* pp;
+      u16 myLv, enemyLv;
       bpp = BTL_PARTY_GetMemberDataConst( party, i );
       pp = BPP_GetSrcData( bpp );
+
+      // 倒したポケとのレベル差によって経験値が増減する（WBから追加された仕様）
+      myLv = BPP_GetValue( bpp, BPP_LEVEL );
+      enemyLv = BPP_GetValue( deadPoke, BPP_LEVEL );
+      result[i].exp = getexp_calc_adjust_level( result[i].exp, myLv, enemyLv );
 
       // 他人が親ならボーナス
       if( !PP_IsMatchOya(pp, status) )
@@ -4987,6 +4997,44 @@ static void getexp_calc( BTL_SVFLOW_WORK* wk, const BTL_PARTY* party, const BTL_
       BTL_Printf("メンバーIdx[%d]のポケに対し、最終経験値=%d\n", i, result[i].exp);
     }
   }
+}
+//----------------------------------------------------------------------------------
+/**
+ * 倒されたポケモンと経験値を取得するポケモンのレベル差に応じて経験値を補正する（ＷＢより）
+ *
+ * @param   base_exp      基本経験値（GSまでの仕様による計算結果）
+ * @param   getpoke_lv    経験値を取得するポケモンのレベル
+ * @param   deadpoke_lv   倒されたポケモンのレベル
+ *
+ * @retval  u32
+ */
+//----------------------------------------------------------------------------------
+static u32 getexp_calc_adjust_level( u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv )
+{
+  fx32 denom, numer, ratio;
+  u32  denom_int, numer_int, result;
+
+  numer_int = deadpoke_lv * 2 + 10;
+  denom_int = deadpoke_lv + getpoke_lv + 10;
+
+  numer  = ( (numer_int * numer_int) * FX_Sqrt(FX32_CONST(numer_int)) );
+  denom  = ( (denom_int * denom_int) * FX_Sqrt(FX32_CONST(denom_int)) );
+  ratio = FX_Div( numer, denom );
+
+  result = ((base_exp * ratio) >> FX32_SHIFT) + 1;
+
+  BTL_Printf( "自分Lv=%d, 敵Lv=%d, 基本経験値=%d -> 補正後経験値=%d\n",
+      getpoke_lv, deadpoke_lv, base_exp, result );
+
+  return result;
+
+#if 0
+■もらえる経験値 ＝もらえる経験値×（相手レベル×2＋10）の2.5乗÷（相手レベル＋自分レベル＋10）の2.5乗+1
+　※2.0乗→2.5乗にしてより差がでるようにしました。
+　　+10はレベルが低い時に差が出ない補正
+　　+1は値が0にならないための補正
+#endif
+
 }
 
 //----------------------------------------------------------------------------------
