@@ -305,6 +305,14 @@
 #define ZONE_ID_H05              (301)
 #define ZONE_ID_C02GYM0102       (302)
 #define ZONE_ID_D09              (303)
-#define ZONE_ID_MAX	(304)
+#define ZONE_ID_PLC04            (304)
+#define ZONE_ID_PLC05            (305)
+#define ZONE_ID_PLC06            (306)
+#define ZONE_ID_PLC07            (307)
+#define ZONE_ID_PLC08            (308)
+#define ZONE_ID_PLT03            (309)
+#define ZONE_ID_PLT04            (310)
+#define ZONE_ID_PLC10            (311)
+#define ZONE_ID_MAX	(312)
 #endif // __ZONE_ID_H__
 
