@@ -610,8 +610,8 @@ static	void	INFOWIN_InitBg( u8 bgplane , u8 pltNo, HEAPID heapId )
 	//‰Šúó‘ÔBG‚ÌÝ’è
 	
 	GFL_BG_FillScreen( bgplane,INFOWIN_BLANK_CHR_UP+infoWk->ncgPos,0,0,INFOWIN_WIDTH,1,pltNo);
-	GFL_BG_FillScreen( bgplane,INFOWIN_BLANK_CHR_DOWN+infoWk->ncgPos,0,1,INFOWIN_WIDTH,2,pltNo);
-	GFL_BG_FillScreen( bgplane,INFOWIN_CLEAR_CHR+infoWk->ncgPos,0,INFOWIN_HEIGHT,INFOWIN_WIDTH,32,pltNo);
+	GFL_BG_FillScreen( bgplane,INFOWIN_BLANK_CHR_DOWN+infoWk->ncgPos,0,1,INFOWIN_WIDTH,1,pltNo);
+	//GFL_BG_FillScreen( bgplane,INFOWIN_CLEAR_CHR+infoWk->ncgPos,0,INFOWIN_HEIGHT,INFOWIN_WIDTH,32-INFOWIN_HEIGHT,pltNo);
 	GFL_BG_LoadScreenReq( bgplane );
 }
 
