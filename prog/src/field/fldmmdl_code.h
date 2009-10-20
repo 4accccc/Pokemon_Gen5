@@ -37,6 +37,7 @@
 #define MMDL_ID_PAIR   	(0xfe)	///<連れ歩き専用ID
 #define MMDL_ID_GIMMICK	(0xfd)	///<ジム等の仕掛け専用ID
 #define MMDL_ID_COMMACTOR (0xfc) ///<通信アクター専用ID
+#define MMDL_ID_EVENTOBJ (0xfb) ///<スクリプトイベント内で追加されるOBJID
 
 //--------------------------------------------------------------
 //	エイリアスID 元:PL script_def.h
