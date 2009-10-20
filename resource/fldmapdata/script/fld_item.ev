@@ -16,13 +16,37 @@
 // スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA ev_fld_item_0
+_EVENT_DATA ev_fld_item_1
+_EVENT_DATA ev_fld_item_2
+_EVENT_DATA ev_fld_item_3
 _EVENT_DATA ev_fld_item2
 _EVENT_DATA_END
 
 //--------------------------------------------------------------
-// MAP=r05 X=408 Y=120 ITEM=キズぐすり FLAG=0
+// MAP=r02 X=408 Y=120 ITEM=キズぐすり FLAG=0
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_0
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r02 X=408 Y=120 ITEM=キズぐすり FLAG=1
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_1
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r02 X=408 Y=120 ITEM=キズぐすり FLAG=2
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_2
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r02 X=408 Y=120 ITEM=キズぐすり FLAG=3
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_3
   _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
 EVENT_END
 
