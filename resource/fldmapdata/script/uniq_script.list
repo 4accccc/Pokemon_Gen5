@@ -9,4 +9,5 @@ UNIQ_SCRIPTFILES	= \
   pokecen_scr.ev \
   hiden.ev \
   fld_item.ev \
-  wifi_club_scr.ev
+  wifi_club_scr.ev \
+  shop_scr.ev
