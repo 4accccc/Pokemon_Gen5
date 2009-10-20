@@ -199,10 +199,43 @@ BOOL GetWordSorceID( PMS_WORD pms_word, u32* fileID, u32* wordID )
 
 struct _PMSW_SAVEDATA{
 
-	u32  aisatsuBit;
-	u32  nankaiBit;
-
+	u32  aisatsuBit;    ///< あいさつ
+	u32  nankaiBit;     ///< 難解ことば
+  PMS_DATA entry[ PMS_DATA_ENTRY_MAX ];  ///< 登録データ
 };
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  登録済み簡易会話データを取得
+ *
+ *	@param	const PMSW_SAVEDATA* saveData セーブデータへのポインタ
+ *	@param	id  登録ID
+ *
+ *	@retval const PMS_DATA 保存されている簡易会話データへのconstポインタ
+ */
+//-----------------------------------------------------------------------------
+const PMS_DATA* PMSW_GetDataEntry( const PMSW_SAVEDATA* saveData, int id )
+{
+  GF_ASSERT( id < PMS_DATA_ENTRY_MAX );
+  return &saveData->entry[id];
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  簡易会話データ登録
+ *
+ *	@param	const PMSW_SAVEDATA* saveData セーブデータへのポインタ
+ *	@param	id  登録ID
+ *	@param	PMS_DATA* data 簡易会話データ
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void PMSW_SetDataEntry( PMSW_SAVEDATA* saveData, int id, PMS_DATA* data )
+{
+  GF_ASSERT( id < PMS_DATA_ENTRY_MAX );
+  GFL_STD_MemCopy( data, &saveData->entry[id], sizeof(PMS_DATA) );
+}
 
 //------------------------------------------------------------------
 /**
@@ -215,6 +248,7 @@ u32 PMSW_GetSaveDataSize(void)
 {
 	return sizeof(PMSW_SAVEDATA);
 }
+
 //------------------------------------------------------------------
 /**
  * 【セーブデータシステム】領域初期化

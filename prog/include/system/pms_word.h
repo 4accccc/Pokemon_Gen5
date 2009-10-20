@@ -33,6 +33,7 @@ extern BOOL GetWordSorceID( PMS_WORD pms_word, u32* fileID, u32* wordID );
 //===================================================================================
 #include "savedata\save_control.h"
 
+#define PMS_DATA_ENTRY_MAX (20) ///< 20件保存可能
 typedef struct _PMSW_SAVEDATA	PMSW_SAVEDATA;
 
 //--------------------------------------------------
@@ -78,7 +79,36 @@ extern void PMSW_SetAisatsuFlag( PMSW_SAVEDATA* saveData, PMSW_AISATSU_ID id );
 extern u32 PMSW_GetSaveDataSize(void);
 extern void PMSW_InitSaveData( void* work );
 
+//-----------------------------------------------------------------------------
+/**
+ * 登録データ
+ */
+//-----------------------------------------------------------------------------
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  登録済み簡易会話データを取得
+ *
+ *	@param	const PMSW_SAVEDATA* saveData セーブデータへのポインタ
+ *	@param	id  登録ID
+ *
+ *	@retval const PMS_DATA 保存されている簡易会話データへのconstポインタ
+ */
+//-----------------------------------------------------------------------------
+extern const PMS_DATA* PMSW_GetDataEntry( const PMSW_SAVEDATA* saveData, int id );
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  簡易会話データ登録
+ *
+ *	@param	const PMSW_SAVEDATA* saveData セーブデータへのポインタ
+ *	@param	id  登録ID
+ *	@param	PMS_DATA* data 簡易会話データ
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+extern void PMSW_SetDataEntry( PMSW_SAVEDATA* saveData, int id, PMS_DATA* data );
 
 //-----------------------------------------------------------------------------
 /**
