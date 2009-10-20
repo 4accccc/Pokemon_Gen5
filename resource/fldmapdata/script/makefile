@@ -13,7 +13,9 @@ include $(PROJECT_RSCDIR)/macro_define
 SUBDIRS =
 
 #対象ヘッダーファイル
-DEPENDHEADERS = usescript.h scr_seq_def.h $(PROJECT_PROGDIR)src/field/scrcmd_table.cdat easy_event_def.h
+DEPENDHEADERS = usescript.h scr_seq_def.h easy_event_def.h \
+								$(PROJECT_PROGDIR)src/field/scrcmd_table.cdat \
+								../flagwork/flag_define.h ../flagwork/work_define.h
 
 #マップ依存のスクリプト：定義ファイルは自動生成
 SCRIPTFILES	=
