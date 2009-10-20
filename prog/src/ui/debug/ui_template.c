@@ -1562,7 +1562,7 @@ static void PrintTool_PrintHP( UI_TEMPLATE_MAIN_WORK * wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  簡易会話表示 主処理
+ *	@brief  簡易会話表示 初期化処理
  *
  *	@param	UI_TEMPLATE_MAIN_WORK* wk 
  *
