@@ -15,7 +15,9 @@ enum {
 	NARC_h03_train1_3ds_unit_data_bin = 1,
 	NARC_h03_train2_3ds_unit_data_bin = 2,
 	NARC_h03_train1_ica_data_bin = 3,
-	NARC_h03_train2_ica_data_bin = 4
+	NARC_h03_train2_ica_data_bin = 4,
+	NARC_h03_train1_wait_data_bin = 5,
+	NARC_h03_train2_wait_data_bin = 6
 };
 
 /* NARC_H03_NAIX_ */

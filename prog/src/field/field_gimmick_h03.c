@@ -8,6 +8,7 @@
 #include "sound_obj.h" 
 #include "savedata/gimmickwork.h"
 #include "field_gimmick_def.h"
+#include "system/gfl_use.h"
 
 
 //==========================================================================================
@@ -64,16 +65,22 @@ static GFL_G3D_UTIL_SETUP setup = { res_table, RES_NUM, obj_table, OBJ_NUM };
 //==========================================================================================
 typedef struct
 { 
-  HEAPID          heapID; // 使用するヒープID
-  ISS_3DS_SYS* iss3dsSys; // 3Dサウンドシステム
-  SOUNDOBJ*         sobj[SOBJ_NUM]; // 音源オブジェクト
+  HEAPID            heapID; // 使用するヒープID
+  ISS_3DS_SYS*   iss3dsSys; // 3Dサウンドシステム
+  SOUNDOBJ* sobj[SOBJ_NUM]; // 音源オブジェクト
+  int       wait[SOBJ_NUM]; // 音源オブジェクトの動作待機カウンタ
+  int    minWait[SOBJ_NUM]; // 最短待ち時間
+  int    maxWait[SOBJ_NUM]; // 最長待ち時間
 } H03WORK;
 
 
 //==========================================================================================
 // ■非公開関数のプロトタイプ宣言
 //==========================================================================================
-void InitWork( H03WORK* work, FIELDMAP_WORK* fieldmap );
+static void InitWork( H03WORK* work, FIELDMAP_WORK* fieldmap );
+static void LoadWaitTime( H03WORK* work );
+static void SetStandBy( H03WORK* work, SOBJ_INDEX index );
+static void MoveStart( H03WORK* work, SOBJ_INDEX index );
 
 
 //==========================================================================================
@@ -170,10 +177,27 @@ void H03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
   H03WORK*         work = (H03WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
 
-  // 音源オブジェクトを動かす
+  // すべての音源オブジェクトを動かす
   for( i=0; i<SOBJ_NUM; i++ )
   { 
-    SOUNDOBJ_IncAnimeFrame( work->sobj[i], FX32_ONE );
+    // 待機状態 ==> 発車カウントダウン
+    if( 0 < work->wait[i] )
+    {
+      // カウントダウン終了 ==> 発車
+      if( --work->wait[i] <= 0 )
+      {
+        MoveStart( work, i );
+      }
+    }
+    // 動作中 ==> アニメーションを更新
+    else
+    {
+      // アニメーション再生が終了 ==> 待機状態へ
+      if( SOUNDOBJ_IncAnimeFrame( work->sobj[i], FX32_ONE ) )
+      {
+        SetStandBy( work, i );
+      }
+    }
   }
 
   // 3Dサウンドシステム動作
@@ -193,8 +217,9 @@ void H03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
  * @param fieldmap 依存するフィールドマップ
  */
 //------------------------------------------------------------------------------------------
-void InitWork( H03WORK* work, FIELDMAP_WORK* fieldmap )
+static void InitWork( H03WORK* work, FIELDMAP_WORK* fieldmap )
 {
+  int i;
   HEAPID                heap_id = FIELDMAP_GetHeapID( fieldmap );
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
 
@@ -224,4 +249,66 @@ void InitWork( H03WORK* work, FIELDMAP_WORK* fieldmap )
     SOUNDOBJ_Set3DSUnitStatus( sobj, ARCID, NARC_h03_train2_3ds_unit_data_bin );
     work->sobj[SOBJ_TRAIN_2] = sobj;
   } 
+
+  // 動作待機カウンタ
+  for( i=0; i<SOBJ_NUM; i++ ) work->wait[i] = 0;
+
+  // 待機時間
+  LoadWaitTime( work );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 各音源オブジェクトの待ち時間を読み込む
+ *
+ * @param work 設定対象ワーク
+ */
+//------------------------------------------------------------------------------------------
+static void LoadWaitTime( H03WORK* work )
+{
+  int i;
+  ARCDATID dat_id[SOBJ_NUM] = 
+  {
+    NARC_h03_train1_wait_data_bin,
+    NARC_h03_train2_wait_data_bin,
+  };
+
+  for( i=0; i<SOBJ_NUM; i++ )
+  {
+    u32* data = GFL_ARC_LoadDataAlloc( ARCID, dat_id[i], work->heapID );
+    work->minWait[i] = data[0];
+    work->maxWait[i] = data[1];
+    GFL_HEAP_FreeMemory( data );
+    // DEBUG:
+    //OBATA_Printf( "minWait[%d] = %d\n", i, work->minWait[i] );
+    //OBATA_Printf( "maxWait[%d] = %d\n", i, work->maxWait[i] );
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 音源オブジェクトを待機状態にする
+ *
+ * @param work  操作対象ワーク
+ * @param index 待機状態にするオブジェクトを指定
+ */
+//------------------------------------------------------------------------------------------
+static void SetStandBy( H03WORK* work, SOBJ_INDEX index )
+{
+  u32 range = work->maxWait[index] - work->minWait[index] + 1;      // 幅 = 最長 - 最短
+  u32 time  = work->minWait[index] + GFUser_GetPublicRand0(range);  // 待ち時間 = 最短 + 幅
+  work->wait[index] = time;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 音源オブジェクトを動作状態にする
+ *
+ * @param work  操作対象ワーク
+ * @param index 待機状態にするオブジェクトを指定
+ */
+//------------------------------------------------------------------------------------------
+static void MoveStart( H03WORK* work, SOBJ_INDEX index )
+{ 
+  SOUNDOBJ_SetAnimeFrame( work->sobj[index], 0 );
 }

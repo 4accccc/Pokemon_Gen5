@@ -36,7 +36,9 @@ CONVERTDATA = h03_train1.nsbmd \
 							train1_3ds_unit_data.bin \
 							train2_3ds_unit_data.bin \
 							train1_ica_data.bin \
-							train2_ica_data.bin
+							train2_ica_data.bin \
+							train1_wait_data.bin \
+							train2_wait_data.bin
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -80,6 +82,12 @@ train1_3ds_unit_data.bin: h03.txt
 	ruby h03_conv.rb
 
 train2_3ds_unit_data.bin: h03.txt
+	ruby h03_conv.rb
+
+train1_wait_data.bin: h03.txt
+	ruby h03_conv.rb
+
+train2_wait_data.bin: h03.txt
 	ruby h03_conv.rb
 
 h03.txt: h03.xls
