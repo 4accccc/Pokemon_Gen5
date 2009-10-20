@@ -17,18 +17,19 @@
 
 
 //フェードに関する時間
-#define _POKEUP_WHITEOUT_START (360)       //絵コンテ６番モンスターボールが打ちあがった際のホワイトアウト
+#define _POKEUP_WHITEOUT_START (380)       //絵コンテ６番モンスターボールが打ちあがった際のホワイトアウト
 #define _POKEUP_WHITEOUT_TIMER (29)       //絵コンテ６番モンスターボールが打ちあがった際のホワイトアウト時間 1/
 #define _POKEUP_WHITEIN_START  (430)      //絵コンテ７番ポケモン交換シーン前のフェードイン
 #define _POKEUP_WHITEIN_TIMER (30)        //絵コンテ７番ポケモン交換シーン前のフェードイン時間
 
 #define _POKECHANGE_WHITEOUT_START (930)  //絵コンテ１４番ポケモン交換シーンのホワイトアウト
 #define _POKECHANGE_WHITEOUT_TIMER (29)      //絵コンテ１４番ポケモン交換シーンのホワイトアウト時間
-#define _POKECHANGE_WHITEIN_START  (970)  //絵コンテ１５番ボールおち前のフェードイン
-#define _POKECHANGE_WHITEIN_TIMER (29)        //絵コンテ１５番ボールおち前のフェードイン時間
+#define _POKECHANGE_WHITEIN_START  (990)  //絵コンテ１５番ボールおち前のフェードイン
+#define _POKECHANGE_WHITEIN_TIMER (60)        //絵コンテ１５番ボールおち前のフェードイン時間
 
 #define _POKESPLASH_WHITEOUT_START (1280)  //絵コンテ２０番ボールおちシーンのホワイトアウト
 #define _POKESPLASH_WHITEOUT_TIMER (29)       //絵コンテ２０番ボールおちシーンのホワイトアウト時間
+
 #define _POKESPLASH_WHITEIN_START  (1390)  //絵コンテ２１番もう一回ボール落ちのフェードイン
 #define _POKESPLASH_WHITEIN_TIMER (60)        //絵コンテ２１番もう一回ボール落ちのフェードイン時間
 
@@ -56,7 +57,7 @@
 #define _PARTICLE_DEMO3_START   (220)  ///demo_tex003パーティクル開始
 #define _PARTICLE_DEMO3_START2  (1240)  ///パーティクル開始
 #define _PARTICLE_DEMO4_START   (20)     ///ポケモン＞ボールエフェクト
-#define _PARTICLE_DEMO4_START2   (1650)  ///ボール＞ポケモンエフェクト
+#define _PARTICLE_DEMO4_START2   (1660)  ///ボール＞ポケモンエフェクト
 #define _PARTICLE_DEMO5_START   (220)  ///モンスターボールが打ちあがるパーティクル開始
 #define _PARTICLE_DEMO6_START   (490)  ///パーティクル開始
 #define _PARTICLE_DEMO7_START   (1000)  ///パーティクル開始
