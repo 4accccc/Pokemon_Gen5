@@ -67,6 +67,9 @@
 #define D_MENU_CHARSIZE_X (12)		//メニュー横幅
 #define D_MENU_CHARSIZE_Y (16)		//メニュー縦幅
 
+#define LINER_CAM_KEY_WAIT    (30)
+#define LINER_CAM_KEY_COUNT    (15)
+
 //--------------------------------------------------------------
 ///	DMENURET
 //--------------------------------------------------------------
@@ -174,7 +177,7 @@ static BOOL debugMenuCallProc_UITemplate( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk );
-
+static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk );
 //======================================================================
 //  デバッグメニューリスト
 //======================================================================
@@ -212,6 +215,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 	{	DEBUG_FIELD_STR42, debugMenuCallProc_WifiGts },
 	{	DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },
   { DEBUG_FIELD_STR45, debugMenuCallProc_Kairiki },
+  { DEBUG_FIELD_STR46, debugMenuCallProc_ControlLinerCamera },
 };
 
 //--------------------------------------------------------------
@@ -1488,10 +1492,31 @@ typedef struct
 }DEBUG_CTLCAMERA_WORK;
 
 //--------------------------------------------------------------
+///	DEBUG_CTL_LINERCAMERA_WORK 線形カメラ操作ワーク1
+//--------------------------------------------------------------
+typedef struct
+{
+	int vanish;
+	GAMESYS_WORK *gsys;
+	GMEVENT *event;
+	HEAPID heapID;
+	FIELDMAP_WORK *fieldWork;
+	FLDMSGBG *pMsgBG;
+	FLDMSGWIN *pMsgWin;
+	STRBUF *pStrBuf;
+  u16 Wait;
+  u16 Count;
+}DEBUG_CTL_LINERCAMERA_WORK;
+
+//--------------------------------------------------------------
 ///	proto
 //--------------------------------------------------------------
 static GMEVENT_RESULT debugMenuControlCamera(
 		GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT debugMenuControlLinerCamera(
+		GMEVENT *event, int *seq, void *wk );
+static void DampCameraInfo(FIELD_CAMERA * cam);
+static BOOL LinerCamKeyContCtl(DEBUG_CTL_LINERCAMERA_WORK *work, const fx32 inAddVal, fx32 *outVal);
 
 //--------------------------------------------------------------
 /**
@@ -3303,3 +3328,174 @@ static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk )
   EVENTWORK_SetEventFlag( evwork, SYS_FLAG_KAIRIKI );
   return( FALSE );
 }
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　線形カメラ操作
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk )
+{
+	DEBUG_CTL_LINERCAMERA_WORK *work;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELDMAP_WORK *fieldWork = wk->fieldWork;
+	
+	GMEVENT_Change( event, debugMenuControlLinerCamera, sizeof(DEBUG_CTL_LINERCAMERA_WORK) );
+	work = GMEVENT_GetEventWork( event );
+	MI_CpuClear8( work, sizeof(DEBUG_CTL_LINERCAMERA_WORK) );
+	
+	work->gsys = gsys;
+	work->event = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+
+  {
+
+    FIELD_SUBSCREEN_WORK * subscreen;
+    
+
+    // カメラ操作は下画面で行う
+    subscreen = FIELDMAP_GetFieldSubscreenWork(work->fieldWork);
+    FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA);
+    { 
+      void * inner_work;
+      FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
+      inner_work = FIELD_SUBSCREEN_DEBUG_GetControl(subscreen);
+      FIELD_CAMERA_DEBUG_BindSubScreen(cam, inner_work, FIELD_CAMERA_DEBUG_BIND_CAMERA_POS);
+
+      //カメラのバインドを切る
+      FIELD_CAMERA_FreeTarget(cam);
+    }
+  }
+  // レールカメラ反映の停止
+  {
+    FLDNOGRID_MAPPER* mapper;
+    
+    if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
+    {
+      mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
+      FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( mapper, FALSE );
+    }
+  }
+
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：線形カメラ操作
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event work
+ * @retval	GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuControlLinerCamera(
+		GMEVENT *event, int *seq, void *wk )
+{
+  VecFx32 add = {0,0,0};
+  BOOL shift = FALSE;
+
+	DEBUG_CTL_LINERCAMERA_WORK *work = wk;
+  FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
+
+
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+    FIELD_CAMERA_DEBUG_ReleaseSubScreen( cam );
+
+    // レールカメラ反映の再開
+    {
+      FLDNOGRID_MAPPER* mapper;
+      
+      if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
+      {
+        mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
+        FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( mapper, TRUE );
+      }
+    }
+    //バインド復帰
+    FIELD_CAMERA_BindDefaultTarget(cam);
+	  return( GMEVENT_RES_FINISH );
+  }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG ){
+    DampCameraInfo(cam);
+  }else if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){             //奥
+    shift = LinerCamKeyContCtl(work, -FX32_ONE, &add.z);
+  }else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){             //手前
+    shift = LinerCamKeyContCtl(work, FX32_ONE, &add.z);
+  }else if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){             //左
+    shift = LinerCamKeyContCtl(work, -FX32_ONE, &add.x);
+  }else if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){             //右
+    shift = LinerCamKeyContCtl(work, FX32_ONE, &add.x);
+  }else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){             //上
+    shift = LinerCamKeyContCtl(work, FX32_ONE, &add.y);
+  }else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){             //下
+    shift = LinerCamKeyContCtl(work, -FX32_ONE, &add.y);
+  }else{
+    work->Wait = 0;
+    work->Count = 0;
+  }
+  if(shift){
+    VecFx32 pos;
+    FIELD_CAMERA_GetTargetPos( cam, &pos );
+    VEC_Add( &pos, &add, &pos );
+    FIELD_CAMERA_SetTargetPos( cam, &pos );
+  }
+
+  return( GMEVENT_RES_CONTINUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：線形カメラ操作キー入力
+ * @param	work      カメラワーク
+ * @param	inAddval  気入力結果の際の加算値
+ * @param	outVal    格納バッファ
+ * @retval	BOOL    加算したらTRUE
+ */
+//--------------------------------------------------------------
+static BOOL LinerCamKeyContCtl(DEBUG_CTL_LINERCAMERA_WORK *work, const fx32 inAddVal, fx32 *outVal)
+{
+  if (work->Wait >= LINER_CAM_KEY_WAIT){
+    *outVal = inAddVal;
+    return TRUE;
+  }else{
+    work->Wait++;
+    if (work->Count>0){
+      work->Count--;
+    }else{
+      *outVal = inAddVal;
+      work->Count = LINER_CAM_KEY_COUNT;
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：線形カメラ操作 情報ダンプ
+ * @param	cam   フィールドカメラポインタ
+ * @retval	none
+ */
+//--------------------------------------------------------------
+static void DampCameraInfo(FIELD_CAMERA * cam)
+{
+  u16 pitch;
+  u16 yaw;
+  fx32 len;
+  VecFx32 target;
+
+  OS_Printf("--DAMP_FIELD_CAMERA_PARAM--\n");
+
+  pitch = FIELD_CAMERA_GetAnglePitch(cam);
+  yaw = FIELD_CAMERA_GetAngleYaw(cam);
+  len = FIELD_CAMERA_GetAngleLen(cam);
+  FIELD_CAMERA_GetTargetPos( cam, &target );
+
+  OS_Printf("%d,%d,%d,%d,%d,%d\n", pitch, yaw, len, target.x, target.y, target.z );
+}
+
