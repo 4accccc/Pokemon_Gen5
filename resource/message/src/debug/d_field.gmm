@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2009-10-07T15:21:09"/>
+	<create user="saitou" host="W00158" date="2009-10-19T13:13:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="11" top="225" right="716" bottom="853" maximized="no" rayout="Vertical2">
+	<dialog left="35" top="235" right="740" bottom="863" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="647" top="229" right="1175" bottom="751" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -744,6 +744,11 @@
 	<row id="DEBUG_FIELD_STR45">
 		<language name="JPN" width="160">怪力</language>
 		<language name="JPN_KANJI" width="160">怪力</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR46">
+		<language name="JPN" width="160">線形カメラ操作</language>
+		<language name="JPN_KANJI" width="160">線形カメラ操作</language>
 	</row>
 
 	<flowchart-group-list>
