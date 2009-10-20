@@ -172,6 +172,7 @@ void ISS_3DS_SYS_DeleteUnit( ISS_3DS_SYS* system, u8 index )
 
     // íœ
     ISS_3DS_UNIT_Delete( system->unit[index] );
+    system->unit[index] = NULL;
     system->unitNum--;
   }
 }
