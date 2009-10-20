@@ -655,8 +655,7 @@ void IRC_POKETRADEDEMO_SetModel( IRC_POKEMON_TRADE* pWork, int modelno)
     pWork->icaBallout = ICA_ANIME_CreateStreamingAlloc(
       pWork->heapID, ARCID_POKETRADEDEMO, NARC_tradedemo_ball_002_bin, 10 );
 
-
-    
+//    ICA_ANIME_IncAnimeFrame( pWork->icaBallout, FX32_ONE );
   }
 
   
@@ -747,6 +746,7 @@ static void Finalize( IRC_POKEMON_TRADE* pWork )
  * @brief •`‰æ
  */
 //--------------------------------------------------------------------------------------------
+
 
 static void Draw( IRC_POKEMON_TRADE* pWork )
 {

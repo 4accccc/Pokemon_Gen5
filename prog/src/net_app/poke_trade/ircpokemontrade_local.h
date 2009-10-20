@@ -83,21 +83,24 @@ typedef enum
 #define _FONT_PARAM_SHADOW_BLUE (0x6)
 #define _FONT_PARAM_LETTER_RED (0x3)
 #define _FONT_PARAM_SHADOW_RED (0x4)
+#define	FBMP_COL_WHITE		(15)
 
 
 #define PLTID_OBJ_TYPEICON_M (10) // //3本
 #define PLTID_OBJ_BALLICON_M (13)  // 1本使用
-#define PLTID_OBJ_POKEITEM_M (14) 
-
-//#define CUR_NUM (3)
-#define _BUTTON_WIN_PAL   (15)  // ウインドウ
-#define _BUTTON_MSG_PAL   (14)  // メッセージフォント
-#define	FBMP_COL_WHITE		(15)
+#define PLTID_OBJ_POKESTATE_M (14) //
+#define PLTID_OBJ_POKERUS_M (15) //
 
 #define _OBJPLT_BOX  (0)  //3本
 #define _OBJPLT_BAR  (3)  //3本
 #define _OBJPLT_POKEICON  (6)  //3本
 #define _OBJPLT_COMMON  (9)  //?本
+#define PLTID_OBJ_POKEITEM_S (10)
+
+//メッセージ系は上下共通 BG
+#define _BUTTON_MSG_PAL   (14)  // メッセージフォント
+#define _BUTTON_WIN_PAL   (15)  // ウインドウ
+
 
 #define PLIST_RENDER_MAIN (1)
 
@@ -303,6 +306,7 @@ typedef enum
   PTC_KIND_NUM_MAX,
 } _TYPE_PTC_KIND;
 
+#define _POKEMARK_MAX  (8)
 
 
 
@@ -391,6 +395,8 @@ struct _IRC_POKEMON_TRADE{
   _BALL_ICON_WORK aBallIcon[UI_BALL_NUM];
   _TYPE_ICON_WORK aTypeIcon[2];
   _ITEMMARK_ICON_WORK aItemMark;
+  _ITEMMARK_ICON_WORK aPokerusMark;
+  _ITEMMARK_ICON_WORK aPokeMark[_POKEMARK_MAX];
 
   TOUCHBAR_WORK* pTouchWork;
     
@@ -525,7 +531,12 @@ extern void IRC_POKETRADE_SendVramBoxNameChar(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SendScreenBoxNameChar(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_ResetBoxNameWindow(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_ItemIconDisp(IRC_POKEMON_TRADE* pWork,int side, POKEMON_PARAM* pp);
-extern void IRC_POKETRADE_ItemIconReset(IRC_POKEMON_TRADE* pWork);
+
+extern void IRC_POKETRADE_ItemIconReset(_ITEMMARK_ICON_WORK* pIM);
+
+extern void IRC_POKETRADE_PokerusIconDisp(IRC_POKEMON_TRADE* pWork,int side,int bMain, POKEMON_PARAM* pp);
+extern void IRC_POKETRADE_PokeStatusIconDisp(IRC_POKEMON_TRADE* pWork, POKEMON_PARAM* pp);
+extern void IRC_POKETRADE_PokeStatusIconReset(IRC_POKEMON_TRADE* pWork);
 
 
 #if _TRADE_DEBUG

@@ -884,12 +884,13 @@ static void _changePokemonMyStDisp(IRC_POKEMON_TRADE* pWork,int pageno,int leftr
     _pokeSexMsgDisp(pp, pWork->MyInfoWin, 12*8, 0, pWork);
 
     IRC_POKETRADE_ItemIconDisp(pWork, leftright, pp);
-
+    IRC_POKETRADE_PokerusIconDisp(pWork, leftright,FALSE, pp);
     IRC_POKETRADE_LeftPageMarkDisp(pWork,APP_COMMON_BARICON_CURSOR_RIGHT);
     
   }
   else{
-    IRC_POKETRADE_ItemIconReset(pWork);
+    IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
+    IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
     TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE);
     TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, TRUE);
 
@@ -952,16 +953,14 @@ static void _changePokemonStatusDisp(IRC_POKEMON_TRADE* pWork)
 
   {//自分の位置調整
     VecFx32 apos;
-    apos.x = _MCSS_POS_X(200);
-    apos.y = _MCSS_POS_Y(110);
-    apos.z = PSTATUS_MCSS_POS_MYZ;
+    apos.x = _MCSS_POS_X(50);
+    apos.y = _MCSS_POS_Y(8);
+    apos.z = _MCSS_POS_Z(0);
     MCSS_SetPosition( pWork->pokeMcss[pWork->pokemonselectno] ,&apos );
+    MCSS_ResetVanishFlag(pWork->pokeMcss[pWork->pokemonselectno]);
 
-    //相手のは画面外
-    apos.x = -100*FX32_ONE;
-    apos.y = -100*FX32_ONE;
-    apos.z = PSTATUS_MCSS_POS_YOUZ;
-    MCSS_SetPosition( pWork->pokeMcss[1-pWork->pokemonselectno] ,&apos );
+    //相手のはOFF
+    MCSS_SetVanishFlag(pWork->pokeMcss[1-pWork->pokemonselectno]);
 
   }
   if(pWork->MyInfoWin){
@@ -1003,6 +1002,9 @@ static void _changePokemonStatusDisp(IRC_POKEMON_TRADE* pWork)
     UITemplate_TYPEICON_CreateCLWK(&pWork->aTypeIcon[1], pp, 1, pWork->cellUnit,
                                    29*8, 12*8, CLSYS_DRAW_MAIN, pWork->heapID );
   }
+  IRC_POKETRADE_PokeStatusIconDisp(pWork,pp);
+  IRC_POKETRADE_PokerusIconDisp(pWork, 0,TRUE, pp);
+
   
   GFL_BMPWIN_MakeScreen(pWork->MyInfoWin);
   GFL_BMPWIN_TransVramCharacter(pWork->MyInfoWin);
@@ -1058,6 +1060,8 @@ static void _pokemonStatusWait(IRC_POKEMON_TRADE* pWork)
   }
 
   if(bReturn){
+    IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
+    IRC_POKETRADE_PokeStatusIconReset(pWork);
     IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
     GXS_SetVisibleWnd( GX_WNDMASK_NONE );
     UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
@@ -1074,6 +1078,7 @@ static void _pokemonStatusWait(IRC_POKEMON_TRADE* pWork)
     _Pokemonset(pWork, 1, IRC_POKEMONTRADE_GetRecvPP(pWork, 1));
     IRC_POKETRADE_GraphicInitMainDisp(pWork);
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
+    G2_BlendNone();
     _CHANGE_STATE(pWork, _networkFriendsStandbyWait2);
   }
 }
@@ -1286,7 +1291,8 @@ static void _dispSubStateWait(IRC_POKEMON_TRADE* pWork)
       _CHANGE_STATE(pWork, _touchState);
       GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
     }
-    IRC_POKETRADE_ItemIconReset(pWork);
+    IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
+    IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
     _resetPokemonMyStDisp(pWork);
 
     IRC_POKETRADE_SubStatusEnd(pWork);
@@ -1732,7 +1738,7 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
     }
     // パネルスクロール
     if((x >=  64) && ((192) > x)){
-      if((y >=  152) && ((176) > y)){
+      if((y >=  152+12) && ((176+12) > y)){
         if(pWork->touckON){
           pWork->BoxScrollNum -= (x - pWork->x)*2;
           if(0 > pWork->BoxScrollNum){
@@ -1841,15 +1847,15 @@ static void _ToolBarInit(IRC_POKEMON_TRADE* pWork)
 		},
 		{
 			TOUCHBAR_ICON_CUR_L,
-			{	TOUCHBAR_ICON_X_01, TOUCHBAR_ICON_Y },
+			{	TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
 		},
 		{
 			TOUCHBAR_ICON_CUR_R,
-			{	TOUCHBAR_ICON_X_01, TOUCHBAR_ICON_Y },
+			{	TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
 		},
 		{	//@todo 交換予定
 			TOUCHBAR_ICON_CUR_U,
-			{	TOUCHBAR_ICON_X_01, TOUCHBAR_ICON_Y },
+			{	TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
 		},
 	};
 
@@ -1908,7 +1914,7 @@ static void _dispInit(IRC_POKEMON_TRADE* pWork)
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
   //セル系システムの作成
-  pWork->cellUnit = GFL_CLACT_UNIT_Create( 120 , 0 , pWork->heapID );
+  pWork->cellUnit = GFL_CLACT_UNIT_Create( 240 , 0 , pWork->heapID );
 
 
   IRC_POKETRADE_InitBoxCursor(pWork);
@@ -2015,7 +2021,8 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
             PP_SetupEx(pp, MONSNO_RIZAADON, i+j, 123456,PTL_SETUP_POW_AUTO, ret);
             PP_Put( pp , ID_PARA_oyaname_raw , (u32)oyaName );
             PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex(  pWork->pMy ) );
-            PP_Put( pp , ID_PARA_item , 12 );
+            PP_Put( pp , ID_PARA_item , 18 );
+            PP_Put( pp , ID_PARA_pokerus , 1 );
             
             BOXDAT_PutPokemonBox(pBox, i, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));
             
@@ -2140,6 +2147,8 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
   EVENT_IRCBATTLE_WORK* pParentWork = pwk;
 
   DEBUGWIN_ExitProc();
+  IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
+  IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
   TOUCHBAR_Exit(pWork->pTouchWork);
 
   if(GFL_NET_IsInit()){

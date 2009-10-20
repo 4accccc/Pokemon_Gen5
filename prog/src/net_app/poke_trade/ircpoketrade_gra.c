@@ -654,13 +654,18 @@ void IRC_POKETRADE_CreatePokeIconResource(IRC_POKEMON_TRADE* pWork)
                                                         pWork->cellRes[PLT_POKEICON],
                                                         pWork->cellRes[ANM_POKEICON],
                                                         &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+
+        pWork->markIcon[line][i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                                        pWork->cellRes[CHAR_SCROLLBAR],
+                                                        pWork->cellRes[PAL_SCROLLBAR],
+                                                        pWork->cellRes[ANM_SCROLLBAR],
+                                                        &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+
         GFL_CLACT_WK_SetAutoAnmFlag( pWork->pokeIcon[line][i] , FALSE );
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[line][i], FALSE );
+        GFL_CLACT_WK_SetDrawEnable( pWork->markIcon[line][i], FALSE );
       }
-
-
     }
-
     GFL_ARC_CloseDataHandle(arcHandlePoke);
   }
 #endif
@@ -734,11 +739,22 @@ static POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_MANAGER* boxData , int lineno
 //ラインにあわせたポケモン表示
 static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_MANAGER* boxData ,int line, int k)
 {
-  int i;
+  int i,j;
+  
   POKEMON_PASO_PARAM* ppp;
 	void *obj_vram = G2S_GetOBJCharPtr();
 	ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
 
+
+  if(line == pWork->MainObjCursorLine){
+    for(j=0;j<_LING_LINENO_MAX;j++){
+      for(i=0;i<BOX_VERTICAL_NUM;i++){
+        GFL_CLACT_WK_SetDrawEnable(pWork->pokeIcon[j][i],FALSE);
+      }
+    }
+    GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][pWork->MainObjCursorIndex], TRUE );
+  }
+  
 
 	for( i = 0 ; i < BOX_VERTICAL_NUM ; i++ )
 	{
@@ -1579,11 +1595,11 @@ void IRC_POKETRADE_SetMainStatusBG(IRC_POKEMON_TRADE* pWork)
 void IRC_POKETRADE_ResetMainStatusBG(IRC_POKEMON_TRADE* pWork)
 {
   
-  GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_SCROLLBAR]);
+//  GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_SCROLLBAR]);
   GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_SELECT]);
   GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_PLAYER]);
   GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_FRIEND]);
-  pWork->curIcon[CELL_CUR_SCROLLBAR]=NULL;
+//  pWork->curIcon[CELL_CUR_SCROLLBAR]=NULL;
   pWork->curIcon[CELL_CUR_POKE_SELECT]=NULL;
   pWork->curIcon[CELL_CUR_POKE_PLAYER]=NULL;
   pWork->curIcon[CELL_CUR_POKE_FRIEND]=NULL;
@@ -1899,7 +1915,7 @@ void IRC_POKETRADE_ItemIconDisp(IRC_POKEMON_TRADE* pWork,int side, POKEMON_PARAM
     prm.ncg_id    = APP_COMMON_GetPokeItemIconCharArcIdx();
     prm.cell_id   = APP_COMMON_GetPokeItemIconCellArcIdx( APP_COMMON_MAPPING_128K );
     prm.anm_id    = APP_COMMON_GetPokeItemIconAnimeArcIdx( APP_COMMON_MAPPING_128K );
-    prm.pltt_line = PLTID_OBJ_POKEITEM_M;
+    prm.pltt_line = PLTID_OBJ_POKEITEM_S;
     
     UI_EASY_CLWK_LoadResource( &pIM->clres_poke_item, &prm, pWork->cellUnit, pWork->heapID );
 
@@ -1913,7 +1929,28 @@ void IRC_POKETRADE_ItemIconDisp(IRC_POKEMON_TRADE* pWork,int side, POKEMON_PARAM
 
 //------------------------------------------------------------------------------
 /**
- * @brief   ポケモンステータスアイコン表示開放
+ * @brief   アイコン表示開放
+ * @param   _ITEMMARK_ICON_WORK  アイテムマーク
+ * @param   side                 画面表示  右なら１左なら０
+ * @param   POKEMON_PARAM 
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_ItemIconReset(_ITEMMARK_ICON_WORK* pIM)
+{
+  if(pIM->clwk_poke_item){
+    GFL_CLACT_WK_Remove( pIM->clwk_poke_item );
+    UI_EASY_CLWK_UnLoadResource( &pIM->clres_poke_item );
+    pIM->clwk_poke_item = NULL;
+  }
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンステータスにアイコン表示
  * @param   IRC_POKEMON_TRADE work
  * @param   side  画面表示  右なら１左なら０
  * @param   POKEMON_PARAM 
@@ -1921,13 +1958,128 @@ void IRC_POKETRADE_ItemIconDisp(IRC_POKEMON_TRADE* pWork,int side, POKEMON_PARAM
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_ItemIconReset(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_PokerusIconDisp(IRC_POKEMON_TRADE* pWork,int side,int bMain, POKEMON_PARAM* pp)
 {
-  _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
-  //CLWK破棄
-	GFL_CLACT_WK_Remove( pIM->clwk_poke_item );
-  //リソース開放
-  UI_EASY_CLWK_UnLoadResource( &pIM->clres_poke_item );
-  pIM->clwk_poke_item = NULL;
+  // ポケアイコン用アイテムアイコン
+  IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
+  
+  {
+    _ITEMMARK_ICON_WORK* pIM = &pWork->aPokerusMark;
+    UI_EAYSY_CLWK_RES_PARAM prm;
+    int rus = PP_Get( pp , ID_PARA_pokerus ,NULL);
+    int type = 0;
+
+    if(rus == 0){
+      return;
+    }
+    
+    if(bMain){
+      prm.draw_type = CLSYS_DRAW_MAIN;
+    }
+    else{
+      prm.draw_type = CLSYS_DRAW_SUB;
+    }
+    prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NONE;
+    prm.arc_id    = APP_COMMON_GetArcId();
+    prm.pltt_id   = APP_COMMON_GetStatusIconPltArcIdx();
+    prm.ncg_id    = APP_COMMON_GetStatusIconCharArcIdx();
+    prm.cell_id   = APP_COMMON_GetStatusIconCellArcIdx( APP_COMMON_MAPPING_128K );
+    prm.anm_id    = APP_COMMON_GetStatusIconAnimeArcIdx( APP_COMMON_MAPPING_128K );
+    prm.pltt_line = PLTID_OBJ_POKEITEM_S;
+    
+    UI_EASY_CLWK_LoadResource( &pIM->clres_poke_item, &prm, pWork->cellUnit, pWork->heapID );
+
+    if(bMain){
+      pIM->clwk_poke_item =
+        UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit,22 * 8,13 * 8,type,pWork->heapID );
+    }
+    else{
+      pIM->clwk_poke_item =
+        UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit,
+                                 13 * 8 + side * 16 * 8 + 4, 3 * 8, type, pWork->heapID );
+    }
+  }
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンステータスにアイコン表示
+ * @param   IRC_POKEMON_TRADE work
+ * @param   POKEMON_PARAM  表示するポケモン
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_PokeStatusIconDisp(IRC_POKEMON_TRADE* pWork, POKEMON_PARAM* pp)
+{
+  int i,type;
+  UI_EAYSY_CLWK_RES_PARAM prm;
+  int mark = PP_Get( pp , ID_PARA_mark ,NULL);
+  const int markpos[]= { 25, 26, 27, 28, 29, 30, 20, 21};
+  const int marktbl[]= {
+    APP_COMMON_POKE_MARK_CIRCLE_WHITE,    //○
+    APP_COMMON_POKE_MARK_CIRCLE_BLACK,    //●
+    APP_COMMON_POKE_MARK_TRIANGLE_WHITE,  //△
+    APP_COMMON_POKE_MARK_TRIANGLE_BLACK,  //▲ 
+    APP_COMMON_POKE_MARK_SQUARE_WHITE,    //□
+    APP_COMMON_POKE_MARK_SQUARE_BLACK,    //■
+    APP_COMMON_POKE_MARK_HEART_WHITE,     //ハート(白)
+    APP_COMMON_POKE_MARK_HEART_BLACK,     //ハート(黒)
+    APP_COMMON_POKE_MARK_STAR_WHITE,      //☆
+    APP_COMMON_POKE_MARK_STAR_BLACK,      //★
+    APP_COMMON_POKE_MARK_DIAMOND_WHITE,   //◇
+    APP_COMMON_POKE_MARK_DIAMOND_BLACK,   //◆
+    APP_COMMON_POKE_MARK_STAR_RED,        //★(赤・レア用)
+    -1,
+    APP_COMMON_POKE_MARK_POKERUSU,        //顔(ポケルス完治マーク)
+    -1,
+  };
+  IRC_POKETRADE_PokeStatusIconReset(pWork);
+
+  prm.draw_type = CLSYS_DRAW_MAIN;
+  prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NONE;
+  prm.arc_id    = APP_COMMON_GetArcId();
+  prm.pltt_id   = APP_COMMON_GetPokeMarkPltArcIdx();
+  prm.ncg_id    = APP_COMMON_GetPokeMarkCharArcIdx(APP_COMMON_MAPPING_128K);
+  prm.cell_id   = APP_COMMON_GetPokeMarkCellArcIdx( APP_COMMON_MAPPING_128K );
+  prm.anm_id    = APP_COMMON_GetPokeMarkAnimeArcIdx( APP_COMMON_MAPPING_128K );
+  prm.pltt_line = PLTID_OBJ_POKESTATE_M;
+
+  for(i = 0;i < _POKEMARK_MAX ; i++){
+    _ITEMMARK_ICON_WORK* pIM = &pWork->aPokeMark[i];
+
+    if(mark & (1 << i)){
+      type = marktbl[i*2];
+    }
+    else{
+      type = marktbl[i*2+1];
+    }
+    if(type==-1){
+      continue;
+    }
+
+    UI_EASY_CLWK_LoadResource( &pIM->clres_poke_item, &prm, pWork->cellUnit, pWork->heapID );
+
+    pIM->clwk_poke_item =
+      UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit, markpos[i]*8 , 13 * 8, type, pWork->heapID );
+  }
+
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンステータスにアイコンの全部消去
+ * @param   IRC_POKEMON_TRADE work
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_PokeStatusIconReset(IRC_POKEMON_TRADE* pWork)
+{
+  int i;
+  for(i = 0;i < _POKEMARK_MAX ; i++){
+    _ITEMMARK_ICON_WORK* pIM = &pWork->aPokeMark[i];
+    IRC_POKETRADE_ItemIconReset(pIM);
+  }
+}
