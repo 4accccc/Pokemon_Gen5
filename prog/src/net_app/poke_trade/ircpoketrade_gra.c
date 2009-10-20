@@ -1921,7 +1921,7 @@ void IRC_POKETRADE_ItemIconDisp(IRC_POKEMON_TRADE* pWork,int side, POKEMON_PARAM
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_ItemIconReset(IRC_POKEMON_TRADE* pWork,int side, POKEMON_PARAM* pp)
+void IRC_POKETRADE_ItemIconReset(IRC_POKEMON_TRADE* pWork)
 {
   _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
   //CLWK”jŠü

@@ -444,7 +444,6 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
 
   if(pWork->anmCount == _POKE_APPEAR_START){
     IRCPOKETRADE_PokeCreateMcss(pWork, 0, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0) );
-    IRCPOKETRADE_PokeCreateMcss(pWork, 1, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );
     {  //‰ŠúˆÊ’uÝ’è
       VecFx32 apos;
       apos.x = _POKEMON_PLAYER_APPEAR_POSX;
@@ -457,6 +456,17 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
       pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], _POKE_APPEAR_TIME, &apos, pWork->heapID);
       MCSS_SetAnmStopFlag(pWork->pokeMcss[0]);
 
+      MCSS_GetScale( pWork->pokeMcss[0], &apos );
+      apos.x *= _POKMEON_SCALE_SIZE;
+      apos.y *= _POKMEON_SCALE_SIZE;
+      MCSS_SetScale( pWork->pokeMcss[0], &apos );
+    }
+  }
+
+  if(pWork->anmCount == _POKE_APPEAR_START+1){
+    IRCPOKETRADE_PokeCreateMcss(pWork, 1, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );
+    {
+      VecFx32 apos;
       apos.x = _POKEMON_FRIEND_APPEAR_POSX;
       apos.y = _POKEMON_FRIEND_APPEAR_POSY;
       apos.z = _POKEMON_FRIEND_APPEAR_POSZ;
@@ -467,7 +477,6 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
       apos.z = _POKEMON_FRIEND_DOWN_POSZ;
       pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[1], _POKE_APPEAR_TIME, &apos , pWork->heapID);
       MCSS_SetAnmStopFlag(pWork->pokeMcss[1]);
-
     }
     //ˆÚ“®Ý’è
   }
@@ -532,10 +541,10 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
       apos.z = _POKEMON_FRIEND_SIDEIN_POSZ;
       pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[1], _POKE_SIDEIN_TIME, &apos , pWork->heapID);
 
-//      apos.x = FX32_ONE + FX32_ONE/5;
-//      apos.y = apos.x;
-//      apos.z = apos.x;
-//      MCSS_SetScale( pWork->pokeMcss[1], &apos );
+      MCSS_GetScale( pWork->pokeMcss[1], &apos );
+      apos.x *= _POKMEON_SCALE_SIZE;
+      apos.y *= _POKMEON_SCALE_SIZE;
+      MCSS_SetScale( pWork->pokeMcss[1], &apos );
       MCSS_SetAnmStopFlag(pWork->pokeMcss[1]);
 
     }

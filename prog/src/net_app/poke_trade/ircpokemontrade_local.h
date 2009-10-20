@@ -525,6 +525,7 @@ extern void IRC_POKETRADE_SendVramBoxNameChar(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SendScreenBoxNameChar(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_ResetBoxNameWindow(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_ItemIconDisp(IRC_POKEMON_TRADE* pWork,int side, POKEMON_PARAM* pp);
+extern void IRC_POKETRADE_ItemIconReset(IRC_POKEMON_TRADE* pWork);
 
 
 #if _TRADE_DEBUG

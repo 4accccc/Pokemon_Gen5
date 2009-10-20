@@ -889,6 +889,7 @@ static void _changePokemonMyStDisp(IRC_POKEMON_TRADE* pWork,int pageno,int leftr
     
   }
   else{
+    IRC_POKETRADE_ItemIconReset(pWork);
     TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE);
     TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, TRUE);
 
@@ -1285,6 +1286,7 @@ static void _dispSubStateWait(IRC_POKEMON_TRADE* pWork)
       _CHANGE_STATE(pWork, _touchState);
       GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
     }
+    IRC_POKETRADE_ItemIconReset(pWork);
     _resetPokemonMyStDisp(pWork);
 
     IRC_POKETRADE_SubStatusEnd(pWork);

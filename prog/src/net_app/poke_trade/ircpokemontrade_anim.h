@@ -122,3 +122,6 @@
 #define _POKEMON_FRIEND_LEAVE_POSY _MCSS_POS_Y(-160)  // 相手のポケモンが下に退場する場合のY
 #define _POKEMON_FRIEND_LEAVE_POSZ _POKEMON_FRIEND_SIDEIN_POSZ  // 相手のポケモンが下に退場する場合のY
 
+
+//手前のポケモンのサイズ
+#define _POKMEON_SCALE_SIZE   (1.2)
