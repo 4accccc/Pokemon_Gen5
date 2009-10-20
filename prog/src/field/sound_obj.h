@@ -33,6 +33,7 @@ void SOUNDOBJ_SetAnime( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID dat_id, int buf_i
 void SOUNDOBJ_Set3DSUnitStatus( SOUNDOBJ* sobj, ARCID arc_id, ARCDATID dat_id );
 BOOL SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* sobj, fx32 frame );
 void SOUNDOBJ_SetAnimeFrame( SOUNDOBJ* sobj, fx32 frame );
+u32 SOUNDOBJ_SetAnimeFrame( SOUNDOBJ* sobj );
 */
 
 
@@ -113,3 +114,14 @@ BOOL SOUNDOBJ_IncAnimeFrame( SOUNDOBJ* sobj, fx32 frame );
  */
 //-----------------------------------------------------------------------------------------
 void SOUNDOBJ_SetAnimeFrame( SOUNDOBJ* sobj, fx32 frame );
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief アニメーションフレーム数を取得する
+ *
+ * @param sobj 取得対象オブジェクト
+ *
+ * @return 現在のアニメーションフレーム数
+ */
+//-----------------------------------------------------------------------------------------
+u32 SOUNDOBJ_GetAnimeFrame( SOUNDOBJ* sobj );

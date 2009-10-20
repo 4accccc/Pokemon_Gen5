@@ -266,7 +266,7 @@ void ICA_ANIME_SetAnimeFrame( ICA_ANIME* anime, fx32 frame )
   int now;
 
   // フレーム数を指定
-  anime->nowFrame = frame % anime->frameSize;
+  anime->nowFrame = frame;
   now = anime->nowFrame >> FX32_SHIFT;
 
   // 現在フレームがバッファリング範囲をはずれたら, バッファを更新する

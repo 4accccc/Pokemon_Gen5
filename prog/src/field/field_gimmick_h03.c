@@ -79,6 +79,8 @@ typedef struct
 //==========================================================================================
 static void InitWork( H03WORK* work, FIELDMAP_WORK* fieldmap );
 static void LoadWaitTime( H03WORK* work );
+static void SaveGimmick( H03WORK* work, FIELDMAP_WORK* fieldmap );
+static void LoadGimmick( H03WORK* work, FIELDMAP_WORK* fieldmap );
 static void SetStandBy( H03WORK* work, SOBJ_INDEX index );
 static void MoveStart( H03WORK* work, SOBJ_INDEX index );
 
@@ -114,17 +116,11 @@ void H03_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   // ギミック管理ワークを初期化 
   InitWork( work, fieldmap );
 
-  // セーブデータをチェック
-  if( GIMMICKWORK_GetAssignID( gmkwork ) == FLD_GIMMICK_H03 )
-  { // 有効なデータが存在する場合 ==> 取得
-    gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
-  }
-  else  
-  { // 初回セットアップ時 ==> 初期化
-    gmk_save = (u32*)GIMMICKWORK_Assign( gmkwork, FLD_GIMMICK_H03 );
-  }
+  // ロード
+  LoadGimmick( work, fieldmap );
 
-  // ギミック管理ワークのアドレスを保存
+  // ギミック管理ワークのアドレスを保存(セーブデータをクリア)
+  gmk_save    = (u32*)GIMMICKWORK_Assign( gmkwork, FLD_GIMMICK_H03 );
   gmk_save[0] = (int)work;
 }
 
@@ -146,6 +142,7 @@ void H03_GIMMICK_End( FIELDMAP_WORK* fieldmap )
   H03WORK*         work = (H03WORK*)gmk_save[0]; // gmk_save[0]はギミック管理ワークのアドレス
 
   // セーブ
+  SaveGimmick( work, fieldmap );
 
   // 音源オブジェクトを破棄
   for( i=0; i<SOBJ_NUM; i++ )
@@ -282,6 +279,63 @@ static void LoadWaitTime( H03WORK* work )
     // DEBUG:
     //OBATA_Printf( "minWait[%d] = %d\n", i, work->minWait[i] );
     //OBATA_Printf( "maxWait[%d] = %d\n", i, work->maxWait[i] );
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief ギミックの状態を保存する
+ *
+ * @param work     保存対象ギミックの管理ワーク
+ * @param fieldmap 依存するフィールドマップ
+ */
+//------------------------------------------------------------------------------------------
+static void SaveGimmick( H03WORK* work, FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
+  GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
+  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
+
+  // セーブ(各音源オブジェクトのアニメーションフレーム数)
+  for( i=0; i<SOBJ_NUM; i++ )
+  {
+    fx32 frame  = SOUNDOBJ_GetAnimeFrame( work->sobj[i] );
+    gmk_save[i] = (frame >> FX32_SHIFT);
+    OBATA_Printf( "SaveGimmick: gmk_save[%d] = %d\n", i, gmk_save[i] );
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief ギミックの状態を復帰する
+ *
+ * @param work     復帰対象ギミックの管理ワーク
+ * @param fieldmap 依存するフィールドマップ
+ */
+//------------------------------------------------------------------------------------------
+static void LoadGimmick( H03WORK* work, FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
+  GIMMICKWORK*  gmkwork = SaveData_GetGimmickWork( sv );
+  u32*         gmk_save = (u32*)GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_H03 );
+
+  // 有効なセーブデータが存在する場合にのみ復帰処理を行う
+  if( GIMMICKWORK_GetAssignID( gmkwork ) == FLD_GIMMICK_H03 )
+  {
+    // 各音源オブジェクトのアニメーションフレーム数を復帰
+    for( i=0; i<SOBJ_NUM; i++ )
+    {
+      fx32 frame = gmk_save[i] << FX32_SHIFT;
+      SOUNDOBJ_SetAnimeFrame( work->sobj[i], frame );
+      OBATA_Printf( "LoadGimmick: gmk_save[%d] = %d\n", i, gmk_save[i] );
+      OBATA_Printf( "LoadGimmick: frame = %x\n", i, frame );
+    }
   }
 }
 
