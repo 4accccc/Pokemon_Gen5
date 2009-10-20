@@ -94,9 +94,9 @@ typedef struct {
 //------------------------------------------------------------------
 
 #include "arc/fieldmap/zone_id.h"
-#include "eventwork_def.h"
+//#include "eventwork_def.h"
 
-#define WORKID_DUMMY    LOCAL_WORK_START
+//#define WORKID_DUMMY    LOCAL_WORK_START
 //生成したイベントデータを全部インクルード
 //binaryを読み込む形に変更  prog/arc/fieldmap/eventdata.narc
 //#include "../../../resource/fldmapdata/eventdata/eventdata_table.cdat"
