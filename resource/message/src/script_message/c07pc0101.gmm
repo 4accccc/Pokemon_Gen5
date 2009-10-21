@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-21T12:12:22"/>
+	<create user="matsumiya" host="W00207" date="2009-10-21T17:23:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="187"/>
+		<id position="0" width="180"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="100"/>
+		<comment position="4" width="164"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -297,15 +297,25 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">OLDWOMAN1
 おばあさん</attribute>
-		<language name="JPN" width="256">アイテムにゅうしゅまえ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アイテム入手前[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">たびの　りゆうは　人それぞれ
+プレゼントする　りゆうも　おなじ[BE:01:ページ切り替え（クリア）]
+あたしゃあ　あんたと　であえたことを
+きねんして　これを　あげようかね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">旅の理由は　人それぞれ
+プレゼントする理由も　同じ[BE:01:ページ切り替え（クリア）]
+あたしゃあ　あんたと　出会えたことを
+記念して　これを　あげようかね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c07pc0101_oldwoman1_02">
 		<comment>♀
 ・仮メッセージ</comment>
-		<language name="JPN" width="256">アイテムにゅうしゅご</language>
-		<language name="JPN_KANJI" width="256">アイテム入手後</language>
+		<language name="JPN" width="256">プレゼントが　うれしいのは
+プレゼントそのもの　よりも[BE:00:ページ切り替え（行送り）]
+くれたひとの　おもいでが　あるからさ</language>
+		<language name="JPN_KANJI" width="256">プレゼントが　うれしいのは
+プレゼントそのもの　よりも[BE:00:ページ切り替え（行送り）]
+くれた人の　思い出が　あるからさ</language>
 	</row>
 
 	<flowchart-group-list>
