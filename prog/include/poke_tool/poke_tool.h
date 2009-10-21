@@ -266,38 +266,38 @@ typedef struct pokemon_param POKEMON_PARAM;
 ///<ポケモンパラメータデータ取得のためのインデックス
 enum{
   ID_PARA_personal_rnd = 0,         //個性乱数
-  ID_PARA_pp_fast_mode,           //
+  ID_PARA_pp_fast_mode,             //
   ID_PARA_ppp_fast_mode,            //
-  ID_PARA_fusei_tamago_flag,          //ダメタマゴフラグ
-  ID_PARA_checksum,             //チェックサム
+  ID_PARA_fusei_tamago_flag,        //ダメタマゴフラグ
+  ID_PARA_checksum,                 //チェックサム
 
-  ID_PARA_monsno,               //モンスターナンバー
-  ID_PARA_item,               //所持アイテムナンバー
-  ID_PARA_id_no,                //IDNo
-  ID_PARA_exp,                //経験値
-  ID_PARA_friend,               //なつき度
-  ID_PARA_speabino,             //特殊能力
-  ID_PARA_mark,               //ポケモンにつけるマーク（ボックス）
-  ID_PARA_country_code,           //国コード
-  ID_PARA_hp_exp,               //HP努力値
-  ID_PARA_pow_exp,              //攻撃力努力値
-  ID_PARA_def_exp,              //防御力努力値
-  ID_PARA_agi_exp,              //素早さ努力値
-  ID_PARA_spepow_exp,             //特攻努力値
-  ID_PARA_spedef_exp,             //特防努力値
-  ID_PARA_style,                //かっこよさ
-  ID_PARA_beautiful,              //うつくしさ
-  ID_PARA_cute,               //かわいさ
-  ID_PARA_clever,               //かしこさ
-  ID_PARA_strong,               //たくましさ
-  ID_PARA_fur,                //毛艶
-  ID_PARA_sinou_champ_ribbon,         //シンオウチャンプリボン
-  ID_PARA_sinou_battle_tower_ttwin_first,   //シンオウバトルタワータワータイクーン勝利1回目
-  ID_PARA_sinou_battle_tower_ttwin_second,  //シンオウバトルタワータワータイクーン勝利2回目
-  ID_PARA_sinou_battle_tower_2vs2_win50,    //シンオウバトルタワータワーダブル50連勝
-  ID_PARA_sinou_battle_tower_aimulti_win50, //シンオウバトルタワータワーAIマルチ50連勝
+  ID_PARA_monsno,                   //モンスターナンバー
+  ID_PARA_item,                     //所持アイテムナンバー
+  ID_PARA_id_no,                    //IDNo
+  ID_PARA_exp,                      //経験値
+  ID_PARA_friend,                   //なつき度
+  ID_PARA_speabino,                 //とくせい
+  ID_PARA_mark,                     //ポケモンにつけるマーク（ボックス）
+  ID_PARA_country_code,             //国コード
+  ID_PARA_hp_exp,                   //HP努力値
+  ID_PARA_pow_exp,                  //攻撃力努力値
+  ID_PARA_def_exp,                  //防御力努力値
+  ID_PARA_agi_exp,                  //素早さ努力値
+  ID_PARA_spepow_exp,               //特攻努力値
+  ID_PARA_spedef_exp,               //特防努力値
+  ID_PARA_style,                    //かっこよさ
+  ID_PARA_beautiful,                //うつくしさ
+  ID_PARA_cute,                     //かわいさ
+  ID_PARA_clever,                   //かしこさ
+  ID_PARA_strong,                   //たくましさ
+  ID_PARA_fur,                      //毛艶
+  ID_PARA_sinou_champ_ribbon,       //シンオウチャンプリボン
+  ID_PARA_sinou_battle_tower_ttwin_first,     //シンオウバトルタワータワータイクーン勝利1回目
+  ID_PARA_sinou_battle_tower_ttwin_second,    //シンオウバトルタワータワータイクーン勝利2回目
+  ID_PARA_sinou_battle_tower_2vs2_win50,      //シンオウバトルタワータワーダブル50連勝
+  ID_PARA_sinou_battle_tower_aimulti_win50,   //シンオウバトルタワータワーAIマルチ50連勝
   ID_PARA_sinou_battle_tower_siomulti_win50,  //シンオウバトルタワータワー通信マルチ50連勝
-  ID_PARA_sinou_battle_tower_wifi_rank5,    //シンオウバトルタワーWifiランク５入り
+  ID_PARA_sinou_battle_tower_wifi_rank5,      //シンオウバトルタワーWifiランク５入り
   ID_PARA_sinou_syakki_ribbon,        //シンオウしゃっきリボン
   ID_PARA_sinou_dokki_ribbon,         //シンオウどっきリボン
   ID_PARA_sinou_syonbo_ribbon,        //シンオウしょんぼリボン
@@ -305,20 +305,20 @@ enum{
   ID_PARA_sinou_sukki_ribbon,         //シンオウすっきリボン
   ID_PARA_sinou_gussu_ribbon,         //シンオウぐっすリボン
   ID_PARA_sinou_nikko_ribbon,         //シンオウにっこリボン
-  ID_PARA_sinou_gorgeous_ribbon,        //シンオウゴージャスリボン
+  ID_PARA_sinou_gorgeous_ribbon,      //シンオウゴージャスリボン
   ID_PARA_sinou_royal_ribbon,         //シンオウロイヤルリボン
-  ID_PARA_sinou_gorgeousroyal_ribbon,     //シンオウゴージャスロイヤルリボン
+  ID_PARA_sinou_gorgeousroyal_ribbon, //シンオウゴージャスロイヤルリボン
   ID_PARA_sinou_ashiato_ribbon,       //シンオウあしあとリボン
   ID_PARA_sinou_record_ribbon,        //シンオウレコードリボン
   ID_PARA_sinou_history_ribbon,       //シンオウヒストリーリボン
   ID_PARA_sinou_legend_ribbon,        //シンオウレジェンドリボン
-  ID_PARA_sinou_red_ribbon,         //シンオウレッドリボン
+  ID_PARA_sinou_red_ribbon,           //シンオウレッドリボン
   ID_PARA_sinou_green_ribbon,         //シンオウグリーンリボン
   ID_PARA_sinou_blue_ribbon,          //シンオウブルーリボン
-  ID_PARA_sinou_festival_ribbon,        //シンオウフェスティバルリボン
-  ID_PARA_sinou_carnival_ribbon,        //シンオウカーニバルリボン
+  ID_PARA_sinou_festival_ribbon,      //シンオウフェスティバルリボン
+  ID_PARA_sinou_carnival_ribbon,      //シンオウカーニバルリボン
   ID_PARA_sinou_classic_ribbon,       //シンオウクラシックリボン
-  ID_PARA_sinou_premiere_ribbon,        //シンオウプレミアリボン
+  ID_PARA_sinou_premiere_ribbon,      //シンオウプレミアリボン
   ID_PARA_sinou_amari_ribbon,         //あまり
 
   ID_PARA_waza1,                //所持技1
