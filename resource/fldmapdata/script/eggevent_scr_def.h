@@ -5,6 +5,6 @@
 #define _EGGEVENT_SCR_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_EGGEVENT_SCR (2250)
+#define SCRID_EGG_BIRTH (2250)
 
 #endif //_EGGEVENT_SCR_DEF_H_

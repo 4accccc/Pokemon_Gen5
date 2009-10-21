@@ -10,6 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_egg_event.h"
+  .include  "../../message/dst/script/msg_egg_event.h"
   //.include  "eggevent_scr.h"
 
 //--------------------------------------------------------------
@@ -19,7 +20,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_eggevent_scr
+_EVENT_DATA    ev_egg_birth   // タマゴ孵化
 _EVENT_DATA_END
 
 
@@ -30,9 +31,17 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*                     タマゴの孵化                           */
 /**************************************************************/
-ev_eggevent_scr:
-  //とりあえず最初のラベルだけ生成している
-  _END
+ev_egg_birth:
+
+  //「おや？……」
+  _TALKWIN_OPEN()
+  _TALKMSG( egg_evemt_01 )
+  _AB_KEYWAIT()
+  _TALKWIN_CLOSE()
+
+  // @todo 孵化デモ画面呼び出し
+
+_END
 
