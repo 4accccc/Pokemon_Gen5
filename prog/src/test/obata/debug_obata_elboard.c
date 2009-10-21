@@ -4,6 +4,7 @@
 #include "system/main.h"
 #include "arc/arc_def.h"
 #include "arc/debug_obata.naix"
+#include "system/el_scoreboard.h"
 
 
 //============================================================================================
@@ -49,7 +50,11 @@ enum
 };
 static const GFL_G3D_UTIL_OBJ obj_table[] = 
 {
-  // モデルリソースID, モデルデータID(リソース内部INDEX), テクスチャリソースID, アニメテーブル, アニメリソース数
+  // モデルリソースID, 
+  // モデルデータID(リソース内部INDEX), 
+  // テクスチャリソースID,
+  // アニメテーブル, 
+  // アニメリソース数
   { RES_ELBOARD_NSBMD, 0, RES_ELBOARD_NSBTX, anm_table, NELEMS(anm_table) },
 }; 
 
@@ -77,6 +82,9 @@ typedef struct
   GFL_G3D_UTIL* g3dUtil;
   u16 unitIndex[ SETUP_INDEX_MAX ];
 
+  // 電光掲示板のテクスチャ
+  EL_SCOREBOARD_TEX* elboardTex;
+
   // カメラ
   GFL_G3D_CAMERA* camera;
 }
@@ -98,7 +106,8 @@ static void UpdateCamera( PROC_WORK* work );
  * @brief 初期化関数
  */
 //============================================================================================
-static GFL_PROC_RESULT DEBUG_OBATA_ELBOARD_MainProcFunc_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+static GFL_PROC_RESULT DEBUG_OBATA_ELBOARD_MainProcFunc_Init( 
+    GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
 	PROC_WORK* work = NULL;
 
@@ -121,7 +130,8 @@ static GFL_PROC_RESULT DEBUG_OBATA_ELBOARD_MainProcFunc_Init( GFL_PROC* proc, in
  * @brief メイン関数
  */
 //============================================================================================
-static GFL_PROC_RESULT DEBUG_OBATA_ELBOARD_MainProcFunc_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+static GFL_PROC_RESULT DEBUG_OBATA_ELBOARD_MainProcFunc_Main( 
+    GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
 	PROC_WORK* work = mywk;
   BOOL end = FALSE;
@@ -149,7 +159,8 @@ static GFL_PROC_RESULT DEBUG_OBATA_ELBOARD_MainProcFunc_Main( GFL_PROC* proc, in
  * @brief 終了関数
  */
 //============================================================================================
-static GFL_PROC_RESULT DEBUG_OBATA_ELBOARD_MainProcFunc_End( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+static GFL_PROC_RESULT DEBUG_OBATA_ELBOARD_MainProcFunc_End( 
+    GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
 	PROC_WORK* work = mywk;
 
@@ -226,11 +237,16 @@ static void Initialize( PROC_WORK* work )
     u16 obj_index_head = GFL_G3D_UTIL_GetUnitObjIdx( work->g3dUtil, SETUP_INDEX_ELBOARD );
     u16 obj_index_elboard = obj_index_head + OBJ_ELBOARD;
     GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->g3dUtil, obj_index_elboard );
+    GFL_G3D_RND* rnd = GFL_G3D_OBJECT_GetG3Drnd( obj );
+    GFL_G3D_RES* res = GFL_G3D_RENDER_GetG3DresTex( rnd );
+    STRBUF* strbuf = GFL_STR_CreateBuffer( 128, HEAPID_OBATA_DEBUG );
+    GFL_STR_SetStringCode( strbuf, L"test" );
+    work->elboardTex = ELBOARD_TEX_Add( res, strbuf, HEAPID_OBATA_DEBUG );
+    GFL_HEAP_FreeMemory( strbuf );
   }
 
   // カメラ作成
-  {
-    VecFx32    pos = { 0*FX32_ONE, 0*FX32_ONE, 100*FX32_ONE };
+  { VecFx32    pos = { 0*FX32_ONE, 0*FX32_ONE, 200*FX32_ONE };
     VecFx32 target = { 0*FX32_ONE, 0*FX32_ONE, 0*FX32_ONE };
     VecFx32     up = { 0, FX32_ONE, 0 };
     fx32       far = FX32_ONE * 4096;
@@ -252,6 +268,9 @@ static void Finalize( PROC_WORK* work )
 { 
   // カメラ破棄
   GFL_G3D_CAMERA_Delete( work->camera );
+
+  // 電光掲示板のテクスチャを破棄
+  ELBOARD_TEX_Delete( work->elboardTex );
 
   // ユニット破棄
   {
@@ -279,6 +298,21 @@ static BOOL Main( PROC_WORK* work )
 
   // フレームカウンタ更新
   work->frame++;
+
+  // 電光掲示板のテクスチャの動作
+  ELBOARD_TEX_Main( work->elboardTex );
+
+  // 電光掲示板のアニメーション更新
+  {
+    int i;
+    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->g3dUtil, work->unitIndex[SETUP_INDEX_ELBOARD] );
+    int anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+    for( i=0; i<anime_count; i++ )
+    {
+      GFL_G3D_OBJECT_LoopAnimeFrame( obj, i, FX32_ONE );
+    }
+  }
+
   return FALSE;
 }
 
@@ -302,7 +336,8 @@ static void Draw( PROC_WORK* work )
   GFL_G3D_DRAW_Start();
   GFL_G3D_DRAW_SetLookAt();
   {
-    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->g3dUtil, work->unitIndex[SETUP_INDEX_ELBOARD] );
+    GFL_G3D_OBJ* obj = 
+      GFL_G3D_UTIL_GetObjHandle( work->g3dUtil, work->unitIndex[SETUP_INDEX_ELBOARD] );
     GFL_G3D_DRAW_DrawObject( obj, &status );
   }
   GFL_G3D_DRAW_End();
