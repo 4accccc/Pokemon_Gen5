@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2009-10-19T22:43:35"/>
+	<create user="matsumiya" host="W00207" date="2009-10-21T11:49:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -630,14 +630,17 @@
 おきゃくさまは　まだ▽
 ユニオンルームに　はいれません</language>
 		<language name="JPN_KANJI" width="256">申し訳ございませんが
-おきゃくさまは　まだ▽
+お客様は　まだ▽
 ユニオンルームに　入れません</language>
 	</row>
 
 	<row id="msg_pc_union_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffff80,,,#ffff80,,#80ff80,#ffff80,,,#ffff80,,">
+		<comment>･ダメタマゴ所有時</comment>
 		<attribute name="キャラ指定">ユニオン受付</attribute>
-		<language name="JPN" width="256">てもちに　つれてけない　ぽけもんが　います。</language>
-		<language name="JPN_KANJI" width="256">手持ちに連れて行けないポケモンがいます。</language>
+		<language name="JPN" width="256">てもちに　つれてけない
+ポケモンが　います</language>
+		<language name="JPN_KANJI" width="256">手持ちに　連れて行けない
+ポケモンが　います</language>
 	</row>
 
 	<flowchart-group-list>
