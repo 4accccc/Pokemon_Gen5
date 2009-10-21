@@ -22,6 +22,7 @@
 #include "intrude_main.h"
 #include "savedata/mystatus.h"
 #include "bingo_system.h"
+#include "intrude_field.h"
 
 
 //--------------------------------------------------------------
@@ -318,7 +319,9 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
 void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork)
 {
   INTRUDE_COMM_SYS_PTR intcomm = app_work;
+  FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
   
+  IntrudeField_ConnectMap(fieldWork, invalid_parent->gsys, intcomm);
   CommPlayer_Pop(intcomm->cps);
   PALACE_SYS_SetArea(intcomm->palace, intcomm->invalid_netid);
 }
@@ -336,6 +339,7 @@ void IntrudeComm_FieldDelete(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
 {
   INTRUDE_COMM_SYS_PTR intcomm = app_work;
   
+  intcomm->connect_map_count = 0;
   CommPlayer_Push(intcomm->cps);
   PALACE_DEBUG_DeleteNumberAct(intcomm->palace);
 }

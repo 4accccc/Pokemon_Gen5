@@ -21,6 +21,7 @@
 #include "infowin/infowin.h"
 #include "app_menu_common.naix"
 #include "field/fieldmap.h"
+#include "system/pms_draw.h"
 
 
 //==============================================================================
@@ -111,6 +112,14 @@ enum{
   UNION_SUBBG_PAL_FONT = 0xf,       ///<フォント
 };
 
+///OBJのパレット構成
+enum{
+  UNION_SUBOBJ_PAL_COMMON = 0,
+  
+  UNION_SUBOBJ_PAL_PMSWORD_START = 11,
+  UNION_SUBOBJ_PAL_PMSWORD_END = 15,
+};
+
 ///一度に画面に表示できるログ件数
 #define UNION_CHAT_VIEW_LOG_NUM   (3)
 
@@ -175,7 +184,7 @@ typedef struct _UNION_SUBDISP{
   PRINT_QUE *printQue;
   GFL_FONT *font_handle;
   GFL_BMPWIN *bmpwin_chat[UNION_CHAT_VIEW_LOG_NUM];
-  PRINT_UTIL print_util[UNION_CHAT_VIEW_LOG_NUM];
+  PMS_DRAW_WORK *pmsdraw;   ///<簡易会話表示システム
 }UNION_SUBDISP;
 
 
@@ -264,6 +273,10 @@ UNION_SUBDISP_PTR UNION_SUBDISP_Init(GAMESYS_WORK *gsys)
   _UniSub_MenuBarLoad(unisub);
   GFL_ARC_CloseDataHandle(handle);
 
+  unisub->pmsdraw = PMS_DRAW_Init(unisub->clunit, CLSYS_DRAW_SUB, 
+    unisub->printQue, unisub->font_handle, UNION_SUBOBJ_PAL_PMSWORD_START, 
+    UNION_CHAT_VIEW_LOG_NUM, HEAPID_FIELDMAP);
+  
   {//メニューから画面復帰の場合用に全体描画
     UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
     if(unisys != NULL){
@@ -283,6 +296,7 @@ UNION_SUBDISP_PTR UNION_SUBDISP_Init(GAMESYS_WORK *gsys)
 //==================================================================
 void UNION_SUBDISP_Exit(UNION_SUBDISP_PTR unisub)
 {
+  PMS_DRAW_Exit(unisub->pmsdraw);
   _UniSub_MenuBarFree(unisub);
   INFOWIN_Exit();
   _UniSub_ActorDelete(unisub);
@@ -309,9 +323,7 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub)
   
   INFOWIN_Update();
 	PRINTSYS_QUE_Main(unisub->printQue);
-	for(i = 0; i < UNION_CHAT_VIEW_LOG_NUM; i++){
-		PRINT_UTIL_Trans(&unisub->print_util[i], unisub->printQue);
-  }
+  PMS_DRAW_Main(unisub->pmsdraw);
   
   //チャット処理
   if(unisys != NULL){
@@ -557,7 +569,6 @@ static void _UniSub_BmpWinCreate(UNION_SUBDISP_PTR unisub)
       UNION_BMPWIN_START_X / 8, (UNION_BMPWIN_START_Y + UNION_BMPWIN_SIZE_Y * i) / 8, 
       UNION_BMPWIN_SIZE_X / 8, UNION_BMPWIN_SIZE_Y / 8, 
       UNION_SUBBG_PAL_FONT, GFL_BMP_CHRAREA_GET_B);
-    PRINT_UTIL_Setup(&unisub->print_util[i], unisub->bmpwin_chat[i]);
   }
 
 }
@@ -763,10 +774,8 @@ static void _UniSub_PrintChatUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *lo
   }
   
   //PrintQueにまだ残っているのがあるならば更新はしない
-  for(i = 0; i < UNION_CHAT_VIEW_LOG_NUM; i++){
-    if(PRINTSYS_QUE_IsExistTarget(unisub->printQue, GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[i])) == TRUE){
-      return;
-    }
+  if(PMS_DRAW_IsPrintEnd(unisub->pmsdraw) == FALSE){
+    return;
   }
   
   if(log->chat_log_count < UNION_CHAT_VIEW_LOG_NUM){ //まだスクロールが発生しない状態
@@ -823,24 +832,23 @@ void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 
   //文字面描画
   {
     STRBUF *buf_name, *buf_pms;
+    GFL_POINT point = {0, 16};
     
-    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[write_pos]), 0);
-    GFL_BMPWIN_MakeScreen(unisub->bmpwin_chat[write_pos]);
-    GFL_BG_LoadScreenV_Req(UNION_FRAME_S_MESSAGE);
+    PMS_DRAW_Clear(unisub->pmsdraw, write_pos);
     
     //名前
     buf_name = GFL_STR_CreateBuffer(PERSON_NAME_SIZE + EOM_SIZE, HEAPID_FIELDMAP);
     GFL_STR_SetStringCode(buf_name, chat->name);
-    PRINT_UTIL_Print(
-      &unisub->print_util[write_pos], unisub->printQue, 0, 0, buf_name, unisub->font_handle);
+    PRINTSYS_PrintQue( unisub->printQue, GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[write_pos]), 
+      0, 0, buf_name, unisub->font_handle);
     GFL_STR_DeleteBuffer(buf_name);
     
     //友達手帳の名前  ※check　まだ未作成 2009.08.24(月)
     
     //簡易会話
     buf_pms = PMSDAT_ToString(&chat->pmsdata, HEAPID_FIELDMAP);
-    PRINT_UTIL_Print(
-      &unisub->print_util[write_pos], unisub->printQue, 0, 16, buf_pms, unisub->font_handle);
+    PMS_DRAW_PrintOffset(unisub->pmsdraw, unisub->bmpwin_chat[write_pos], 
+      &chat->pmsdata, write_pos, &point);
     GFL_STR_DeleteBuffer(buf_pms);
   }
 }

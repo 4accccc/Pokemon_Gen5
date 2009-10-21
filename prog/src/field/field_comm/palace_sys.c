@@ -192,7 +192,7 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
 #endif
 
   //自機の位置確認し、ワープ処理
-  PALACE_SYS_PosUpdate(palace, plwork, fldply, intcomm, fieldWork);
+//  PALACE_SYS_PosUpdate(palace, plwork, fldply, intcomm, fieldWork);
 
   PALACE_DEBUG_UpdateNumber(palace, fieldWork, intcomm);
   

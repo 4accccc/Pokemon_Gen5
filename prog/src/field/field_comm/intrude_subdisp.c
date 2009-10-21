@@ -925,7 +925,7 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
     
     if(ist->palace_area == my_area){  //このプレイヤーがいる街を指す
       town_no = _IntSub_TownPosGet(ist->zone_id, &pos);
-      GF_ASSERT(town_no != 0xff);
+//※check      GF_ASSERT(town_no != 0xff);
       if(town_no == 0xff){
         town_no = 0;
       }

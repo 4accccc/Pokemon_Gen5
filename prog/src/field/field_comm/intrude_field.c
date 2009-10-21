@@ -32,6 +32,7 @@
 #include "message.naix"
 #include "msg/msg_d_field.h"
 #include "msg/msg_invasion.h"
+#include "fieldmap/map_matrix.naix"  //MATRIX_ID
 
 
 //==============================================================================
@@ -93,8 +94,6 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   int i;
   BOOL update_ret;
 
-  _PalaceFieldConnect(fieldWork, gameSys, pcActor, intcomm);
-  
   //パレスマップに来たかチェック
   DEBUG_PalaceMapInCheck(fieldWork, gameSys, game_comm, pcActor);
 
@@ -137,6 +136,8 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
     }
   }
   
+  IntrudeField_ConnectMap(fieldWork, gameSys, intcomm);
+  _PalaceFieldConnect(fieldWork, gameSys, pcActor, intcomm);
   PALACE_SYS_Update(intcomm->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), 
     pcActor, intcomm, fieldWork, game_comm);
 }
@@ -573,15 +574,18 @@ GMEVENT * DEBUG_PalaceJamp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIEL
  * @param   intcomm		
  */
 //--------------------------------------------------------------
-static int debug_flag = 0;
 static void _PalaceFieldConnect(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm)
 {
   PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
-  VecFx32 pos;
+  VecFx32 pos, new_pos;
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSys);
+  int i, now_area, new_area, check_area;
+  u32 calc_bit, profile_num;
+  BOOL warp;
+  s32 left_end, right_end;
   
-#if 0
+#if 1
   if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION || intcomm == NULL){
     return;
   }
@@ -592,45 +596,91 @@ static void _PalaceFieldConnect(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys,
   }
   
   FIELD_PLAYER_GetPos( pcActor, &pos );
-  pos.x >>= FX32_SHIFT;
-  pos.z >>= FX32_SHIFT;
+  new_pos = pos;
+  pos.x = FX_Whole(pos.x);
+  pos.z = FX_Whole(pos.z);
   
-  if(/*debug_flag == 0 &&*/ ((pos.x < PALACE_MAP_RANGE_LEFT_X) || (pos.x > PALACE_MAP_RANGE_RIGHT_X))){
-//  if(debug_flag == 0 && (pos.x == 200) || (pos.x == 2888)){
-    MAP_MATRIX *mmatrix;
-		u16 matrix_id;
-    
-    mmatrix = MAP_MATRIX_Create( HEAPID_WORLD );
-    matrix_id = ZONEDATA_GetMatrixID( ZONE_ID_PALACE01 );
-    MAP_MATRIX_Init(mmatrix, matrix_id, ZONE_ID_PALACE01);
-
-    FLDMAPPER_Connect( FIELDMAP_GetFieldG3Dmapper( fieldWork ), mmatrix );
-
-    MAP_MATRIX_Delete( mmatrix );
-    debug_flag++;
-
-    {
-      VecFx32 pos, new_pos;
-      s32 offs_left, offs_right;
-
-      FIELD_PLAYER_GetPos( pcActor, &pos );
-      new_pos = pos;
-      
-      offs_left = FX_Whole(pos.x) - PALACE_MAP_RANGE_LEFT_X;
-      if(offs_left <= 0){
-        new_pos.x = (PALACE_MAP_RANGE_RIGHT_X + offs_left) << FX32_SHIFT;
+  now_area = intcomm->intrude_status_mine.palace_area;
+  new_area = now_area;
+  check_area = now_area;
+  
+  calc_bit = intcomm->recv_profile;
+  profile_num = MATH_CountPopulation(calc_bit);
+  profile_num = profile_num == 0 ? 1 : profile_num;
+  
+  left_end = PALACE_MAP_RANGE_LEFT_X;
+  right_end = PALACE_MAP_RIGHT * profile_num - PALACE_MAP_RANGE_LEFT_X;
+  
+  //マップループチェック
+  if(pos.x < PALACE_MAP_RANGE_LEFT_X){
+    for(i = FIELD_COMM_MEMBER_MAX - 1; i > -1; i--){
+      if(intcomm->recv_profile & (1 << i)){
+        new_area = i;
+        warp = TRUE;
+        break;
       }
-      else{
-        offs_right = FX_Whole(pos.x) - PALACE_MAP_RANGE_RIGHT_X;
-        if(offs_right >= 0){
-          new_pos.x = (PALACE_MAP_RANGE_LEFT_X + offs_right) << FX32_SHIFT;
-        }
-      }
-      FIELD_PLAYER_SetPos( pcActor, &new_pos );
     }
   }
+  else if(pos.x > right_end){
+    for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+      if(intcomm->recv_profile & (1 << i)){
+        new_area = i;
+        warp = TRUE;
+        break;
+      }
+    }
+  }
+
+  if(warp == TRUE){
+    s32 offs_left, offs_right;
+
+    offs_left = pos.x - left_end;
+    if(offs_left <= 0){
+      new_pos.x = (right_end + offs_left) << FX32_SHIFT;
+    }
+    else{
+      offs_right = pos.x - right_end;
+      if(offs_right >= 0){
+        new_pos.x = (left_end + offs_right) << FX32_SHIFT;
+      }
+    }
+    FIELD_PLAYER_SetPos( pcActor, &new_pos );
+  }
+}
+
+//==================================================================
+/**
+ * プロフィール受信人数分マップを連結
+ *
+ * @param   fieldWork		
+ * @param   gameSys		
+ * @param   intcomm		
+ */
+//==================================================================
+void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, INTRUDE_COMM_SYS_PTR intcomm)
+{
+  MAP_MATRIX *mmatrix;
+  u32 calc_bit;
+  s32 profile_num;
   
-  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
-    debug_flag = 0;
+  if(fieldWork == NULL || intcomm == NULL){
+    return;
+  }
+
+  calc_bit = intcomm->recv_profile;
+  profile_num = MATH_CountPopulation(calc_bit);
+  profile_num--;  //自分の分は引く
+  
+  if(intcomm->connect_map_count < profile_num){
+    mmatrix = MAP_MATRIX_Create( HEAPID_WORLD );
+    MAP_MATRIX_Init(mmatrix, NARC_map_matrix_palace02_mat_bin, ZONE_ID_PALACE01);
+
+    do{
+      OS_TPrintf("--- Map連結 %d ----\n", intcomm->connect_map_count + 1);
+      FLDMAPPER_Connect( FIELDMAP_GetFieldG3Dmapper( fieldWork ), mmatrix );
+      intcomm->connect_map_count++;
+    }while(intcomm->connect_map_count < profile_num);
+
+    MAP_MATRIX_Delete( mmatrix );
   }
 }
