@@ -15,8 +15,9 @@
 #include "system/palanm.h"
 #include "battle/battgra_wb.naix"
 
-//#define	USE_RENDER		//有効にすることでNNSのレンダラを使用して描画する
-#include "system/mcss.h"	//内部でUSE_RENDERを参照しているのでここより上に移動は不可
+//#define	USE_RENDER		      //有効にすることでNNSのレンダラを使用して描画する
+#include "system/mcss.h"	    //内部でUSE_RENDERを参照しているのでここより上に移動は不可
+#include "system/mcss_tool.h"	//内部でUSE_RENDERを参照しているのでここより上に移動は不可
 #include "mcss_def.h"
 
 #define	MCSS_DEFAULT_SHIFT		( FX32_SHIFT - 4 )		//ポリゴン１辺の基準の長さにするシフト値
@@ -88,11 +89,12 @@ static	void	MCSS_CalcPaletteFade( MCSS_WORK *mcss );
 static	void	TCB_LoadResource( GFL_TCB *tcb, void *work );
 static	void	TCB_LoadPalette( GFL_TCB *tcb, void *work );
 
+static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w );
+
 #ifdef USE_RENDER
 static	void	MCSS_InitRenderer( MCSS_SYS_WORK *mcss_sys );
 #endif //USE_RENDER
 
-static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w );
 
 #ifdef PM_DEBUG
 MCSS_WORK*		MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_DEBUG_WORK *madw );
@@ -301,35 +303,17 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				anim_pos.y = MCSS_CONST( -anim_SRT_mc.py );
 			}
 			else{
-				MtxFx44	mtx,vp;
-				fx32	w;
+      	MtxFx44	mtx;
+	      fx32	w;
 
-				vp._00 = FX32_CONST( 128 );
-				vp._01 = 0;
-				vp._02 = 0;
-				vp._03 = FX32_CONST( 128 );
-				vp._10 = 0;
-				vp._11 = FX32_CONST( 96 );
-				vp._12 = 0;
-				vp._13 = -FX32_CONST( 96 );
-				vp._20 = 0;
-				vp._21 = 0;
-				vp._22 = -FX32_CONST( 1 );
-				vp._23 = FX32_CONST( 1 );
-				vp._30 = 0;
-				vp._31 = 0;
-				vp._32 = 0;
-				vp._33 = -FX32_CONST( 1 );
+	      MTX_Copy43To44( NNS_G3dGlbGetCameraMtx(), &mtx );
+	      MTX_Concat44( &mtx, NNS_G3dGlbGetProjectionMtx(), &mtx );
 
-				MTX_Copy43To44( NNS_G3dGlbGetCameraMtx(), &mtx );
-				MTX_Concat44( &mtx, NNS_G3dGlbGetProjectionMtx(), &mtx );
+	      MTX_MultVec44( &pos, &mtx, &pos, &w );
 
-				MTX_MultVec44( &pos, &mtx, &pos, &w );
-
-				pos.x = FX_Div( pos.x, w );
-				pos.y = FX_Div( pos.y, w );
-
-				MTX_MultVec44( &pos, &vp, &pos, &w );
+	      pos.x = FX_Mul( FX_Div( pos.x, w ), 128 * FX32_ONE );
+	      pos.y = FX_Mul( FX_Div( pos.y, w ),  96 * FX32_ONE );
+        pos.z = 0;
 
 				anim_pos.x = FX32_CONST( anim_SRT_mc.px );
 				anim_pos.y = FX32_CONST( -anim_SRT_mc.py );
@@ -1407,7 +1391,7 @@ static	void	MCSS_MaterialSetup(void)
 //--------------------------------------------------------------------------
 static	void	MCSS_CalcPaletteFade( MCSS_WORK *mcss )
 {	
-	if( mcss->pal_fade_wait == 0 )
+	if( ( mcss->pal_fade_wait == 0 ) && ( mcss->is_load_resource ) )
 	{	
 		TCB_LOADRESOURCE_WORK*	tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
 
@@ -1449,6 +1433,45 @@ static	void	MCSS_CalcPaletteFade( MCSS_WORK *mcss )
 	}
 }
 
+//神王蟲からいただき
+//----------------------------------------------------------------------------
+/**
+ *	@brief	4x4行列に座標を掛け合わせる
+ *			Vecをx,y,z,1として計算し、計算後のVecとwを返します。
+ *
+ *	@param	*cp_src	Vector座標
+ *	@param	*cp_m   4*4行列
+ *	@param	*p_dst	Vecror計算結果
+ *	@param	*p_w    4つ目の要素の値
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w )
+{
+	fx32 x = cp_src->x;
+  fx32 y = cp_src->y;
+  fx32 z = cp_src->z;
+	fx32 w = FX32_ONE;
+
+	GF_ASSERT( cp_src );
+	GF_ASSERT( cp_m );
+	GF_ASSERT( p_dst );
+	GF_ASSERT( p_w );
+
+  p_dst->x = (fx32)(((fx64)x * cp_m->_00 + (fx64)y * cp_m->_10 + (fx64)z * cp_m->_20) >> FX32_SHIFT);
+  p_dst->x += cp_m->_30;	//	W=1なので足すだけ
+
+  p_dst->y = (fx32)(((fx64)x * cp_m->_01 + (fx64)y * cp_m->_11 + (fx64)z * cp_m->_21) >> FX32_SHIFT);
+  p_dst->y += cp_m->_31;//	W=1なので足すだけ
+
+  p_dst->z = (fx32)(((fx64)x * cp_m->_02 + (fx64)y * cp_m->_12 + (fx64)z * cp_m->_22) >> FX32_SHIFT);
+  p_dst->z += cp_m->_32;//	W=1なので足すだけ
+
+	*p_w	= (fx32)(((fx64)x * cp_m->_03 + (fx64)y * cp_m->_13 + (fx64)z * cp_m->_23) >> FX32_SHIFT);
+  *p_w	+= cp_m->_33;//	W=1なので足すだけ
+}
+
 #ifdef USE_RENDER
 /*---------------------------------------------------------------------------*
   Name:         MCSS_InitRenderer
@@ -1482,46 +1505,6 @@ static	void	MCSS_InitRenderer( MCSS_SYS_WORK *mcss_sys )
 	mcss_sys->mcss_surface.type = NNS_G2D_SURFACETYPE_MAIN3D;
 }
 #endif //USE_RENDER
-
-//神王蟲からいただき
-//----------------------------------------------------------------------------
-/**
- *	@brief	4x4行列に座標を掛け合わせる
- *			Vecをx,y,z,1として計算し、計算後のVecとwを返します。
- *
- *	@param	*cp_src	Vector座標
- *	@param	*cp_m	4*4行列
- *	@param	*p_dst	Vecror計算結果
- *	@param	*p_w	4つ目の要素の値
- *
- *	@return
- */
-//-----------------------------------------------------------------------------
-static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w )
-{
-
-	fx32 x = cp_src->x;
-    fx32 y = cp_src->y;
-    fx32 z = cp_src->z;
-	fx32 w = FX32_ONE;
-
-	GF_ASSERT( cp_src );
-	GF_ASSERT( cp_m );
-	GF_ASSERT( p_dst );
-	GF_ASSERT( p_w );
-
-    p_dst->x = (fx32)(((fx64)x * cp_m->_00 + (fx64)y * cp_m->_10 + (fx64)z * cp_m->_20) >> FX32_SHIFT);
-    p_dst->x += cp_m->_30;	//	W=1なので足すだけ
-
-    p_dst->y = (fx32)(((fx64)x * cp_m->_01 + (fx64)y * cp_m->_11 + (fx64)z * cp_m->_21) >> FX32_SHIFT);
-    p_dst->y += cp_m->_31;//	W=1なので足すだけ
-
-    p_dst->z = (fx32)(((fx64)x * cp_m->_02 + (fx64)y * cp_m->_12 + (fx64)z * cp_m->_22) >> FX32_SHIFT);
-    p_dst->z += cp_m->_32;//	W=1なので足すだけ
-
-	*p_w	= (fx32)(((fx64)x * cp_m->_03 + (fx64)y * cp_m->_13 + (fx64)z * cp_m->_23) >> FX32_SHIFT);
-    *p_w	+= cp_m->_33;//	W=1なので足すだけ
-}
 
 #ifdef PM_DEBUG
 //--------------------------------------------------------------------------
