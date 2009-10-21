@@ -145,6 +145,7 @@ struct _BTL_POKEPARAM {
 
   u8  wazaCnt;
   u8  formNo;
+  u8  criticalRank;
   u8  confrontRecCount;
   u8  confrontRec[ BTL_POKEID_MAX ];
 
@@ -1044,6 +1045,67 @@ void BPP_RankReset( BTL_POKEPARAM* pp )
 {
   Effrank_Reset( &pp->varyParam );
 }
+
+//=============================================================================================
+/**
+ * クリティカルランク取得
+ *
+ * @param   bpp
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BPP_GetCriticalRank( const BTL_POKEPARAM* bpp )
+{
+  u8 result = bpp->criticalRank;
+  if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_KIAIDAME) ){
+    result += 2;
+    if( result > RANK_CRITICAL_MAX ){
+      result = RANK_CRITICAL_MAX;
+    }
+  }
+  return result;
+}
+//=============================================================================================
+/**
+ * クリティカルランク変動
+ *
+ * @param   bpp
+ * @param   value
+ *
+ * @retval  BOOL    変動した場合TRUE／既に上限（下限）で変動できない場合FALSE
+ */
+//=============================================================================================
+BOOL BPP_AddCriticalRank( BTL_POKEPARAM* bpp, int value )
+{
+  if( value > 0 )
+  {
+    if( bpp->criticalRank < RANK_CRITICAL_MAX )
+    {
+      bpp->criticalRank += value;
+      if( bpp->criticalRank > RANK_CRITICAL_MAX ){
+        bpp->criticalRank = RANK_CRITICAL_MAX;
+      }
+      return TRUE;
+    }
+  }
+  else
+  {
+    value *= -1;
+    if( bpp->criticalRank )
+    {
+      if( bpp->criticalRank > value ){
+        bpp->criticalRank -= value;
+      }else{
+        bpp->criticalRank = 0;
+      }
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
 
 //=============================================================================================
 /**

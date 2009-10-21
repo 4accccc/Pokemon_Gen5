@@ -25,7 +25,7 @@ typedef struct _BTLV_SCU  BTLV_SCU;
 enum {
 
   BTLV_MSGWAIT_NONE = 0,
-  BTLV_MSGWAIT_STD = 120,
+  BTLV_MSGWAIT_STD = 80,
 
 };
 

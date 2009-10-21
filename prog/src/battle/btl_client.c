@@ -182,6 +182,7 @@ static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankUp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankSet5( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_AddCritical( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_CurePokeSick( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_CureWazaSick( BTL_CLIENT* wk, int* seq, const int* args );
@@ -1449,6 +1450,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_RANK_UP,            scProc_OP_RankUp          },
     { SC_OP_RANK_DOWN,          scProc_OP_RankDown        },
     { SC_OP_RANK_SET5,          scProc_OP_RankSet5        },
+    { SC_OP_ADD_CRITICAL,       scProc_OP_AddCritical     },
     { SC_OP_SICK_SET,           scProc_OP_SickSet         },
     { SC_OP_CURE_POKESICK,      scProc_OP_CurePokeSick    },
     { SC_OP_CURE_WAZASICK,      scProc_OP_CureWazaSick    },
@@ -2460,6 +2462,12 @@ static BOOL scProc_OP_RankSet5( BTL_CLIENT* wk, int* seq, const int* args )
   BPP_RankSet( pp, BPP_SP_ATTACK,   args[3] );
   BPP_RankSet( pp, BPP_SP_DEFENCE,  args[4] );
   BPP_RankSet( pp, BPP_AGILITY,     args[5] );
+  return TRUE;
+}
+static BOOL scProc_OP_AddCritical( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BPP_AddCriticalRank( pp, args[1] );
   return TRUE;
 }
 static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args )

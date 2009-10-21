@@ -1646,7 +1646,7 @@ static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos )
   return pos / 2;
 }
 // ポケモンID -> クライアントID変換
-static u8 PokeID_to_ClientID( u8 pokeID )
+static inline u8 PokeID_to_ClientID( u8 pokeID )
 {
   u8 i, min, max;
   for(i=0; i<NELEMS(ClientBasePokeID); ++i)
@@ -1658,10 +1658,7 @@ static u8 PokeID_to_ClientID( u8 pokeID )
       return i;
     }
   }
-//  GF_ASSERT_MSG(0, "Illegal PokeID[%d]", pokeID);
-  {
-    BTL_Printf("hogeragera pokeID=%d\n", pokeID);
-  }
+  GF_ASSERT_MSG(0, "Illegal PokeID[%d]", pokeID);
   return 0;
 }
 //=============================================================================================

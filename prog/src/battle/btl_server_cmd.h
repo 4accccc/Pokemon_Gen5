@@ -36,6 +36,7 @@ typedef enum {
   SC_OP_RANK_UP,            ///< yŒvŽZzƒXƒe[ƒ^ƒXƒ‰ƒ“ƒNƒAƒbƒv  [ClientID, StatusType, ƒvƒ‰ƒX—Ê]
   SC_OP_RANK_DOWN,          ///< yŒvŽZzƒXƒe[ƒ^ƒXƒ‰ƒ“ƒNƒ_ƒEƒ“  [ClientID, StatusType, ƒ}ƒCƒiƒX—Ê]
   SC_OP_RANK_SET5,          ///< yŒvŽZzƒXƒe[ƒ^ƒXƒ‰ƒ“ƒNŽå—v‚TŽíƒZƒbƒg[ pokeID, atk, def, sp_atk, sp_def, agi ]
+  SC_OP_ADD_CRITICAL,       ///< yŒvŽZzƒNƒŠƒeƒBƒJƒ‹ƒ‰ƒ“ƒN‰ÁŽZ[ pokeID, (int)value ]
   SC_OP_SICK_SET,           ///< yŒvŽZzó‘ÔˆÙí [PokeID, Sick, contParam]
   SC_OP_CURE_POKESICK,      ///< yŒvŽZzƒ|ƒPƒ‚ƒ“Œnó‘ÔˆÙí‚ð‰ñ•œ [PokeID ]
   SC_OP_CURE_WAZASICK,      ///< yŒvŽZzƒƒUŒnó‘ÔˆÙí‚ð‰ñ•œ [PokeID, SickID ]
@@ -241,6 +242,10 @@ static inline void SCQUE_PUT_OP_RankDown( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8
 static inline void SCQUE_PUT_OP_RankSet5( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 atk, u8 def, u8 sp_atk, u8 sp_def, u8 agi )
 {
   SCQUE_PUT_Common( que, SC_OP_RANK_SET5, pokeID, atk, def, sp_atk, sp_def, agi );
+}
+static inline void SCQUE_PUT_OP_AddCritical( BTL_SERVER_CMD_QUE* que, u8 pokeID, int value )
+{
+  SCQUE_PUT_Common( que, SC_OP_ADD_CRITICAL, pokeID, value );
 }
 
 
