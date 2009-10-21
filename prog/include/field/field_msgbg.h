@@ -115,6 +115,8 @@ typedef struct
 //メッセージBG
 extern FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera );
 extern void FLDMSGBG_Delete( FLDMSGBG *fmb );
+extern void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb );
+extern void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb );
 extern void FLDMSGBG_PrintMain( FLDMSGBG *fmb );
 extern void FLDMSGBG_PrintG3D( FLDMSGBG *fmb );
 extern void FLDMSGBG_ClearPrintQue( FLDMSGBG *fmb );

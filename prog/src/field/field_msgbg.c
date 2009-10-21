@@ -91,6 +91,7 @@ struct _TAG_FLDMSGBG
   TALKMSGWIN_SYS *talkMsgWinSys;
   
   GFL_TCBLSYS *printTCBLSys;
+  GFL_G3D_CAMERA *g3Dcamera;
 };
 
 //--------------------------------------------------------------
@@ -177,7 +178,8 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 	fmb = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDMSGBG) );
 	fmb->heapID = heapID;
 	fmb->bgFrame = FLDMSGBG_BGFRAME;
-	
+	fmb->g3Dcamera = g3Dcamera;
+
   KAGAYA_Printf( "FLDMAPBG 初期HEAPID = %d\n", fmb->heapID );
   
 	{	//BG初期化
@@ -233,7 +235,7 @@ FLDMSGBG * FLDMSGBG_Setup( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
   }
   
   { //TALKMSGWIN
-    if( g3Dcamera != NULL ){
+    if( fmb->g3Dcamera != NULL ){
       TALKMSGWIN_SYS_SETUP setup;
       setup.heapID = fmb->heapID;
       setup.g3Dcamera = g3Dcamera;
@@ -290,6 +292,85 @@ void FLDMSGBG_Delete( FLDMSGBG *fmb )
 	PRINTSYS_QUE_Delete( fmb->printQue );
 	GFL_FONT_Delete( fmb->fontHandle );
 	GFL_HEAP_FreeMemory( fmb );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGBG BGリソースのみ破棄
+ * @param fmb FLDMSGBG
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb )
+{
+  if( fmb->talkMsgWinSys != NULL ){
+    TALKMSGWIN_SystemDelete( fmb->talkMsgWinSys );
+    fmb->talkMsgWinSys = NULL;
+  }
+  
+	GFL_BG_FillCharacterRelease( fmb->bgFrame, 0x00, 0x20 );
+  GFL_BG_FreeBGControl( fmb->bgFrame );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGBG BGリソースをリセット
+ * @param *fmb FLDMSGBG
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb )
+{
+	{	//BG初期化
+		GFL_BG_BGCNT_HEADER bgcntText = {
+			0, 0, 0x800, 0,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x10000, 0x8000,
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+		};
+		
+		GFL_BG_SetBGControl( fmb->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
+		
+		GFL_BG_SetPriority( fmb->bgFrame, 0 );
+		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 3 );
+		
+		GFL_BG_FillCharacter( fmb->bgFrame, 0x00, 1, 0 );
+		GFL_BG_FillScreen( fmb->bgFrame,
+			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+		
+		GFL_BG_LoadScreenReq( fmb->bgFrame );
+	}
+	
+  {	//フォントパレット
+		GFL_ARC_UTIL_TransVramPalette(
+			ARCID_FONT, NARC_font_default_nclr, //黒
+			PALTYPE_MAIN_BG, FLDMSGBG_PANO_FONT_TALKMSGWIN*32, 32, fmb->heapID );
+		GFL_ARC_UTIL_TransVramPalette(
+			ARCID_FONT, NARC_font_systemwin_nclr, //白
+			PALTYPE_MAIN_BG, FLDMSGBG_PANO_FONT*32, 32, fmb->heapID );
+	}
+	
+  {	//window frame
+		BmpWinFrame_GraphicSet( fmb->bgFrame, 1,
+			FLDMSGBG_PANO_MENU, MENU_TYPE_SYSTEM, fmb->heapID );
+	}
+  
+  { //TALKMSGWIN
+    if( fmb->g3Dcamera != NULL ){
+      TALKMSGWIN_SYS_SETUP setup;
+      setup.heapID = fmb->heapID;
+      setup.g3Dcamera = fmb->g3Dcamera;
+      setup.fontHandle = fmb->fontHandle;
+      setup.chrNumOffs = FLDMSGBG_CHAROFFS_TALKMSGWIN;
+      setup.ini.frameID = FLDMSGBG_BGFRAME;
+      setup.ini.winPltID = FLDMSGBG_PANO_TALKMSGWIN;
+      setup.ini.fontPltID = FLDMSGBG_PANO_FONT_TALKMSGWIN;
+      fmb->talkMsgWinSys = TALKMSGWIN_SystemCreate( &setup );
+    }
+  }
+
+  FLDMSGBG_SetBlendAlpha();
 }
 
 //--------------------------------------------------------------
