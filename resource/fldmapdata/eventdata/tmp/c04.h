@@ -19,5 +19,13 @@
 #ifndef ZONE_C04_EVC_H
 #define ZONE_C04_EVC_H
 
+#define C04_FOOTBALLM_01                   0
+#define C04_CLOWN_01                       1
+#define C04_BADMAN_01                      2
+#define C04_MIDDLEMAN2_01                  3
+#define C04_BACKPACKERW_01                 4
+#define C04_MIDDLEWOMAN1_01                5
+#define C04_GIRL3_01                       6
+#define C04_BABYGIRL1_01                   7
 
 #endif //ZONE_C04_EVC_H

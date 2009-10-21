@@ -1,40 +1,357 @@
 #event data
-#save date:2009/07/24 20:40:28
+#save date:2009/10/21 15:22:07
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/24 20:40:28
+#save date:2009/10/21 15:22:07
 2
 #hold event type:
 1
 #hold event number:
+8
+#event number: 0
+#type
+1
+#ID name
+C04_FOOTBALLM_01
+#OBJ CODE Number
+FOOTBALLM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_C04_FOOTBALLM_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+3
+#position
+536 16 -88
+#event number: 1
+#type
+1
+#ID name
+C04_CLOWN_01
+#OBJ CODE Number
+CLOWN
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C04_CLOWN_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+424 16 -504
+#event number: 2
+#type
+1
+#ID name
+C04_BADMAN_01
+#OBJ CODE Number
+BADMAN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C04_BADMAN_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+216 16 -536
+#event number: 3
+#type
+1
+#ID name
+C04_MIDDLEMAN2_01
+#OBJ CODE Number
+MIDDLEMAN2
+#MOVE CODE Number
+MV_DIR_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C04_MIDDLEMAN2_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+280 16 -72
+#event number: 4
+#type
+1
+#ID name
+C04_BACKPACKERW_01
+#OBJ CODE Number
+BACKPACKERW
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C04_BACKPACKERW_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#position
+-8 16 -40
+#event number: 5
+#type
+1
+#ID name
+C04_MIDDLEWOMAN1_01
+#OBJ CODE Number
+MIDDLEWOMAN1
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C04_MIDDLEWOMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+568 16 -344
+#event number: 6
+#type
+1
+#ID name
+C04_GIRL3_01
+#OBJ CODE Number
+GIRL3
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C04_GIRL3_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+600 16 -328
+#event number: 7
+#type
+1
+#ID name
+C04_BABYGIRL1_01
+#OBJ CODE Number
+BABYGIRL1
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C04_BABYGIRL1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+600 16 -360
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/24 20:40:28
+#save date:2009/10/21 15:22:07
 2
 #hold event type:
 1
 #hold event number:
-0
+5
+#event number: 0
+#Bg Event Label
+BGID_C04_BOARD_03
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_C04_BOARD_03
+#position
+-72 16 -56
+#event number: 1
+#Bg Event Label
+BGID_C04_BOARD_02
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_C04_BOARD_02
+#position
+168 16 -56
+#event number: 2
+#Bg Event Label
+BGID_C04_BOARD_05
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_C04_BOARD_05
+#position
+312 16 -56
+#event number: 3
+#Bg Event Label
+BGID_C04_BOARD_04
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_C04_BOARD_04
+#position
+584 16 -56
+#event number: 4
+#Bg Event Label
+BGID_C04_BOARD_01
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_C04_BOARD_01
+#position
+408 16 -472
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/24 20:40:28
+#save date:2009/10/21 15:22:07
 2
 #hold event type:
 1
 #hold event number:
-0
+2
+#event number: 0
+#Pos Event Label
+POSID_C04_SUPPORT_01
+#Pos Script Name
+SCRID_POS_C04_SUPPORT_01
+#Event Trigger Work Name
+WK_SCENE_C04
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+5
+#position
+-152 16 -72
+#event number: 1
+#Pos Event Label
+POSID_C04_LEADER4_01
+#Pos Script Name
+SCRID_POS_C04_LEADER4_01
+#Event Trigger Work Name
+WK_SCENE_C04
+#Event Trigger Work Value
+2
+#Pos Event Size X
+1
+#Pos Event Size Z
+5
+#position
+-168 16 -72
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/24 20:40:28
+#save date:2009/10/21 15:22:07
 2
 #hold event type:
 1
