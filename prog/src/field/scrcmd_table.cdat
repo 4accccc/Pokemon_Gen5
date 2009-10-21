@@ -206,8 +206,8 @@
   DEF_CMD( EvCmdPartyPokeNickName, EV_SEQ_TEMOTI_NICK_NAME )
   DEF_CMD( EvCmdSodateyaPokeMonsName, EV_SEQ_SODATEYA_MONS_NAME )
 
-  DEF_CMD( EvCmdNickName, EV_SEQ_NICK_NAME )
-  NO_CMD()
+  DEF_CMD( EvCmdPokeTypeName, EV_SEQ_POKETYPE_NAME )
+  DEF_CMD( EvCmdMonsName, EV_SEQ_MONS_NAME )
   NO_CMD()
 
   DEF_CMD( EvCmdSodateyaPokeNickName, EV_SEQ_SODATEYA_NICK_NAME )

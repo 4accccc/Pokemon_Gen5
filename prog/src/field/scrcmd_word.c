@@ -27,6 +27,7 @@
 
 #include "msgdata.h"
 #include "print/wordset.h"
+#include "print/global_msg.h" //GlobalMsg_PokeName
 
 #include "savedata/sodateya_work.h"
 #include "sodateya.h"
@@ -125,6 +126,51 @@ VMCMD_RESULT EvCmdWazaName( VMHANDLE *core, void *wk )
 	u16 wazano = SCRCMD_GetVMWorkValue( core, work );
   
   WORDSET_RegisterWazaName( *wordset, idx, wazano );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * タイプ名を指定バッファに登録
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPokeTypeName( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET **wordset    = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+	u8 idx = VMGetU8(core);
+	u16 type_no = SCRCMD_GetVMWorkValue( core, work );
+  
+  WORDSET_RegisterPokeTypeName( *wordset, idx, type_no );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * タイプ名を指定バッファに登録
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMonsName( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET **wordset    = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+	u8 idx = VMGetU8(core);
+	u16 monsno = SCRCMD_GetVMWorkValue( core, work );
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+  STRBUF * tmpBuf;
+
+  tmpBuf = GFL_STR_CreateBuffer( WORDSET_DEFAULT_BUFLEN, heapID );
+  GFL_MSG_GetString( GlobalMsg_PokeName, monsno, tmpBuf );
+  //WORDSET, タグ位置、バッファ、性別、単複、言語コード
+  WORDSET_RegisterWord( *wordset, idx, tmpBuf, 0, TRUE, PM_LANG );
+  
+  GFL_STR_DeleteBuffer( tmpBuf );
   return VMCMD_RESULT_CONTINUE;
 }
 

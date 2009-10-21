@@ -185,7 +185,7 @@
 /**
  */
 //--------------------------------------------------------------
-  .macro  SP_EVENT_START  label
+  .macro  INIT_EVENT_START  label
 \label:
   .endm
 
@@ -193,7 +193,7 @@
 /**
  */
 //--------------------------------------------------------------
-  .macro  SP_EVENT_END
+  .macro  INIT_EVENT_END
   .short  EV_SEQ_END
   .endm
 
@@ -1389,6 +1389,40 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _POKETYPE_NAME
+ * @brief ポケモン・わざのタイプ名を指定タグにセット
+ *  @param idx セットするタグナンバー
+ *  @param poketype 名前を取得するタイプ指定ID
+ */
+//--------------------------------------------------------------
+#define _POKETYPE_NAME( idx, poketype ) \
+    _ASM_POKETYPE_NAME idx, poketype
+
+    .macro  _ASM_POKETYPE_NAME idx, poketype
+    .short  EV_SEQ_POKETYPE_NAME
+    .byte   \idx
+    .short  \poketype
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _MONS_NAME
+ * @brief ずかんナンバーからポケモン名を指定タグにセット
+ *  @param idx セットするタグナンバー
+ *  @param monsno 名前を取得するポケモンのずかんナンバー
+ */
+//--------------------------------------------------------------
+#define _MONS_NAME( idx, monsno ) \
+    _ASM_MONS_NAME idx, monsno
+
+    .macro  _ASM_MONS_NAME idx, monsno
+    .short  EV_SEQ_MONS_NAME
+    .byte   \idx
+    .short  \monsno
+    .endm
+
+//--------------------------------------------------------------
+/**
  *  ポケット名を指定タグにセット
  * @param idx セットするタグナンバー
  * @param pocket_id   バッグのポケット名を指すID
@@ -1483,23 +1517,6 @@
   .short \num
   .short \keta
   .endm
-
-//--------------------------------------------------------------
-/**
- * 手持ちポケモンのニックネームを指定タグにセット
- * @param idx セットするタグナンバー
- * @param pos ニックネームを取得する手持ちポケモン順番
- * @param pocket_id   バッグのポケット名を指すID
- */
-//--------------------------------------------------------------
-#define _NICK_NAME( idx, pos ) _ASM_NICK_NAME idx, pos
-
-  .macro  _ASM_NICK_NAME idx, pos
-  .short  EV_SEQ_NICK_NAME
-  .byte   \idx
-  .short  \pos
-  .endm
-
 
 //======================================================================
 //  視線トレーナー関連

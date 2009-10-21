@@ -443,11 +443,11 @@ rule
           {
             result = [ val[0], nil ]
           }
-        | SP_EVENT_START IDENT
+        | INIT_EVENT_START IDENT
           {
             result = [ val[0], val[1] ]
           }
-        | SP_EVENT_END
+        | INIT_EVENT_END
           {
             result = [ val[0], nil ]
           }
@@ -559,8 +559,8 @@ RESERVED = {
 	'FLAG_OFF'	=> :FLAG_OFF,
   'EVENT_START' => :EVENT_START,
   'EVENT_END' => :EVENT_END,
-  'SP_EVENT_START' => :SP_EVENT_START,
-  'SP_EVENT_END' => :SP_EVENT_END,
+  'INIT_EVENT_START' => :INIT_EVENT_START,
+  'INIT_EVENT_END' => :INIT_EVENT_END,
   'SWITCH' => :SWITCH,
   'CASE' => :CASE,
   'ENDSWITCH' => :ENDSWITCH,

@@ -16,7 +16,7 @@ module PmScript
 
   class Parser < Racc::Parser
 
-module_eval <<'..end sp4.y modeval..ide4e208a6a5', 'sp4.y', 546
+module_eval <<'..end sp4.y modeval..idbc7b48b72b', 'sp4.y', 546
 
 def initialize
 end
@@ -33,8 +33,8 @@ RESERVED = {
 	'FLAG_OFF'	=> :FLAG_OFF,
   'EVENT_START' => :EVENT_START,
   'EVENT_END' => :EVENT_END,
-  'SP_EVENT_START' => :SP_EVENT_START,
-  'SP_EVENT_END' => :SP_EVENT_END,
+  'INIT_EVENT_START' => :INIT_EVENT_START,
+  'INIT_EVENT_END' => :INIT_EVENT_END,
   'SWITCH' => :SWITCH,
   'CASE' => :CASE,
   'ENDSWITCH' => :ENDSWITCH,
@@ -167,7 +167,7 @@ def on_error( t, v, values )
   end
 
 
-..end sp4.y modeval..ide4e208a6a5
+..end sp4.y modeval..idbc7b48b72b
 
 ##### racc 1.4.5 generates ###
 
@@ -478,8 +478,8 @@ racc_token_table = {
  :funcall => 41,
  :EVENT_START => 42,
  :EVENT_END => 43,
- :SP_EVENT_START => 44,
- :SP_EVENT_END => 45,
+ :INIT_EVENT_START => 44,
+ :INIT_EVENT_END => 45,
  :DEFINE_LOCAL => 46,
  :NUMBER => 47,
  :MACPARAM => 48 }
@@ -549,8 +549,8 @@ Racc_token_to_s_table = [
 'funcall',
 'EVENT_START',
 'EVENT_END',
-'SP_EVENT_START',
-'SP_EVENT_END',
+'INIT_EVENT_START',
+'INIT_EVENT_END',
 'DEFINE_LOCAL',
 'NUMBER',
 'MACPARAM',

@@ -1,15 +1,13 @@
 //======================================================================
 /**
- * @file	evwkdef.c
- * @brief	フラグ、ワーク領域定義
+ * @file	eventwork_def.h
+ * @brief	フラグ、ワーク領域定義のプログラムへのマッピング
  * @author	Satoshi Nohara
  * @date	2005.11.07
  *
- * 2007.06.04	プラチナ用にオフセットを変更
  */
 //======================================================================
-#ifndef __EVWKDEF_H__
-#define __EVWKDEF_H__
+#pragma once
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 #include "../../../resource/fldmapdata/flagwork/work_define.h"
@@ -121,4 +119,4 @@ enum {
 1242-1359
 #endif
 
-#endif //__EVWKDEF_H__
+

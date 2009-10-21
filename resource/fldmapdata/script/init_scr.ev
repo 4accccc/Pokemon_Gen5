@@ -16,9 +16,9 @@ _EVENT_DATA_END
 //  ゲーム開始スクリプト
 //  ※非常駐プログラム類の呼び出しは禁止
 //=====================================================================
-SP_EVENT_START  ev_init_script
+INIT_EVENT_START  ev_init_script
 	_CALL	init_flags
-SP_EVENT_END
+INIT_EVENT_END
 
 
 init_flags:
@@ -87,12 +87,12 @@ init_flags:
 //  ゲーム開始スクリプト（デバッグ）
 //  ※非常駐プログラム類の呼び出しは禁止なのは一緒
 //=====================================================================
-SP_EVENT_START  ev_init_debug_script
+INIT_EVENT_START  ev_init_debug_script
   //初期化時のイベントフラグ設定は共通
 	_CALL	init_flags
   _FLAG_SET( SYS_FLAG_FIRST_POKE_GET )
   _FLAG_SET( SYS_FLAG_ZUKAN_GET )
-SP_EVENT_END
+INIT_EVENT_END
 
 
 
