@@ -220,7 +220,7 @@ struct _FIELD_ITEMMENU_PARAM {
 	u32 bgchar;
   BOOL bChange;
 
-  int ret_code;  //バッグメニューを終わる際の次の動作
+  enum BAG_NEXTPROC_ENUM ret_code;  //バッグメニューを終わる際の次の動作
   int ret_code2;
   int ret_item;  //選んだアイテム
   
