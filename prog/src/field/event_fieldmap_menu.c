@@ -1379,9 +1379,13 @@ static void FMenuTakeFieldInfo( FMENU_EVENT_WORK *mwk )
 /**
  *	@brief  バッグパラメータ生成
  *
- *	@param	mode 
+ *	@param	GAMEDATA* gmData  ゲームデータ
+ *	@param	gmEvent イベントデータ
+ *	@param	fieldmap フィールドマップへのポインタ
+ *	@param	ITEMCHECK_WORK* icwk アイテムチェックワーク
+ *	@param	mode バッグ起動モード
  *
- *	@retval
+ *	@retval BAG_PARAM* バッグパラメータ(ALLOC済み)
  */
 //-----------------------------------------------------------------------------
 static BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, GMEVENT* gmEvent, FIELDMAP_WORK* fieldmap, const ITEMCHECK_WORK* icwk, BAG_MODE mode )
