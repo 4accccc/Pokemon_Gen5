@@ -245,7 +245,7 @@ VMCMD_RESULT EvCmdPlayerDirGet( VMHANDLE * core, void *wk )
 
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   
-  *ret_wk = MMDL_TOOL_FlipDir( MMDL_GetDirDisp( player ) );
+  *ret_wk = MMDL_GetDirDisp( player );
 
   return VMCMD_RESULT_CONTINUE;
 }
