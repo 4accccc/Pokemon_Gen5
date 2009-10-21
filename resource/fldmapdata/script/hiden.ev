@@ -92,7 +92,7 @@ ev_hiden_kairiki_02:
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_KAIRIKI )
   _LDWK( SCWK_TEMP0, SCWK_ANSWER )
   
-  _NICK_NAME( 0, SCWK_ANSWER )
+  _TEMOTI_NICK_NAME( 0, SCWK_ANSWER )
   _TALKWIN_OPEN()
   _TALKMSG( msg_kairiki_05 )
   _AB_KEYWAIT()
@@ -120,7 +120,7 @@ EVENT_START ev_hiden_kairiki_menu
     _CALL ev_hiden_kairiki_already
   ELSE
     _FLAG_SET( SYS_FLAG_KAIRIKI )      //かいりきフラグセット
-    _NICK_NAME( 0, SCWK_PARAM0 )
+    _TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
     _TALKMSG( msg_kairiki_05 )
     _TALKWIN_CLOSE()
 
@@ -185,7 +185,7 @@ ev_hiden_naminori_pair_ng:
 ev_hiden_naminori_02:
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_NAMINORI )
   _LDWK( SCWK_TEMP0, SCWK_ANSWER )
-  _NICK_NAME( 0, SCWK_ANSWER )
+  _TEMOTI_NICK_NAME( 0, SCWK_ANSWER )
   
   _TALKWIN_OPEN()
   _TALKMSG( msg_naminori_02 )
@@ -203,7 +203,7 @@ ev_hiden_naminori_02:
 //めにゅーから「なみのり」発動
 //SCWK_PARAM0に使用したポケモンの位置番号
 EVENT_START ev_hiden_naminori_menu
-  _NICK_NAME( 0, SCWK_PARAM0 )
+  _TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
   _TALKWIN_OPEN()
   _TALKMSG( msg_naminori_02 )
   _TALKWIN_CLOSE()
@@ -257,7 +257,7 @@ ev_hiden_iaigiri_02:
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_IAIGIRI )
   _LDWK( SCWK_TEMP0,SCWK_ANSWER )
   
-  _NICK_NAME( 0, SCWK_ANSWER )
+  _TEMOTI_NICK_NAME( 0, SCWK_ANSWER )
   _TALKMSG( msg_iai_02 )
   _AB_KEYWAIT()
   _TALKWIN_CLOSE()
@@ -286,7 +286,7 @@ ev_hiden_iaigiri_02_eff_end_loop:
 EVENT_START ev_hiden_iaigiri_menu
   _TALK_OBJ_START()
   
-	_NICK_NAME( 0, SCWK_PARAM0 )
+	_TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
   _TALKWIN_OPEN()
 	_TALKMSG( msg_iai_02 )
 	_TALKWIN_CLOSE()
@@ -346,7 +346,7 @@ ev_hiden_takinobori_ng:
 ev_hiden_takinobori_02:
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_TAKINOBORI )
 	_LDWK( SCWK_TEMP0,SCWK_ANSWER )
-	_NICK_NAME( 0,SCWK_ANSWER )
+	_TEMOTI_NICK_NAME( 0,SCWK_ANSWER )
   
   _TALKWIN_OPEN()
 	_TALKMSG( msg_taki_02 )
@@ -362,7 +362,7 @@ ev_hiden_takinobori_02:
 
 //メニューから「たきのぼり」発動
 EVENT_START ev_hiden_takinobori_menu
-	_NICK_NAME( 0,SCWK_PARAM0 )
+	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
   _TALKWIN_OPEN()
 	_TALKMSG( msg_taki_02 )
 	_TALKWIN_CLOSE()

@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_INIT_SCRIPT (9600)
+#define SCRID_INIT_DEBUG_SCRIPT (9601)
 
 #endif //_INIT_SCR_DEF_H_
