@@ -2923,6 +2923,7 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
 				ppp	= (POKEMON_PASO_PARAM  *)PP_GetPPPPointerConst( pp );
 				PPP_Put( ppp , ID_PARA_oyaname_raw , (u32)name );
 				PPP_Put( ppp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
+        PPP_Put( ppp , ID_PARA_item , 13 );
 
 				BOXDAT_PutPokemonBox(pBox, i, ppp);
 			}

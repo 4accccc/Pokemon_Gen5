@@ -1666,8 +1666,129 @@ static void _startSearchMojiState(IRC_POKEMON_TRADE* pWork)
   _CHANGE_STATE(pWork,_loopSearchMojiState);
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   Lineの値からドットピッチを得る
+ * @param   line
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
 
-/// 基本ステート。タッチ操作で他のアクションに飛ぶ
+static int _boxScrollLine2Num(int line)
+{
+  int num=0, pos, page;
+  
+  if(line==0){
+    num = 0;
+  }
+  else if(line==1){
+    num = _TEMOTITRAY_MAX/2;
+  }
+  else{
+    pos = line - 2;
+    page = pos / 6;
+    pos = pos % 6;
+    num = _TEMOTITRAY_MAX + _BOXTRAY_MAX*page + (_BOXTRAY_MAX/6)*pos;
+  }
+  return num;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   画面の外にカーソルがあるかどうか
+ * @param   line
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static BOOL _isCursorInScreen(IRC_POKEMON_TRADE* pWork, int line)
+{
+  int i=_boxScrollLine2Num(line);
+
+
+  if((pWork->BoxScrollNum < i) && ((pWork->BoxScrollNum + 224) > i)){
+    return TRUE;  //範囲内
+  }
+  i += _DOTMAX;
+  if((pWork->BoxScrollNum < i) && ((pWork->BoxScrollNum + 224) > i)){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief 基本の十字キー操作
+ * @param IRC_POKEMON_TRADE* ワーク 
+ */
+//--------------------------------------------------------------------------------------------
+static void _padUDLRFunc(IRC_POKEMON_TRADE* pWork)
+{
+  BOOL bChange=FALSE;
+  int num;
+  
+  if(GFL_UI_KEY_GetRepeat()==PAD_KEY_UP ){   //ベクトルを監視
+    pWork->MainObjCursorIndex--;
+    if(pWork->MainObjCursorIndex<0){
+      pWork->MainObjCursorIndex=0;
+    }
+    pWork->oldLine--;
+    bChange=TRUE;
+  }
+  if(GFL_UI_KEY_GetRepeat()==PAD_KEY_DOWN ){   //ベクトルを監視
+    pWork->MainObjCursorIndex++;
+    if(pWork->MainObjCursorIndex >= BOX_VERTICAL_NUM){
+      pWork->MainObjCursorIndex = BOX_VERTICAL_NUM-1;
+    }
+    pWork->oldLine--;
+    bChange=TRUE;
+  }
+  if(GFL_UI_KEY_GetRepeat()==PAD_KEY_RIGHT ){   //ベクトルを監視
+    pWork->MainObjCursorLine++;
+    if(FALSE == _isCursorInScreen(pWork,pWork->MainObjCursorLine)){
+      pWork->BoxScrollNum = _boxScrollLine2Num(pWork->MainObjCursorLine+1)-256;
+    }
+    if(pWork->MainObjCursorLine >= TRADEBOX_LINEMAX){
+      pWork->MainObjCursorLine = 0;
+    }
+    pWork->oldLine--;
+    bChange=TRUE;
+  }
+  if(GFL_UI_KEY_GetRepeat()==PAD_KEY_LEFT ){   //ベクトルを監視
+    pWork->MainObjCursorLine--;
+    if(FALSE == _isCursorInScreen(pWork,pWork->MainObjCursorLine)){
+      pWork->BoxScrollNum = _boxScrollLine2Num(pWork->MainObjCursorLine);
+    }
+    if(pWork->MainObjCursorLine < 0){
+      pWork->MainObjCursorLine = TRADEBOX_LINEMAX-1;
+    }
+    pWork->oldLine++;
+    bChange=TRUE;
+  }
+
+  if(bChange){
+    pWork->bgscrollRenew = TRUE;
+
+    IRC_POKETRADE_TrayDisp(pWork);
+    IRC_POKETRADE_SendScreenBoxNameChar(pWork);
+    IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
+
+    
+    //IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
+  }
+
+  
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief 基本ステート初期化
+ * @param IRC_POKEMON_TRADE* ワーク 
+ */
+//--------------------------------------------------------------------------------------------
 static void _touchState(IRC_POKEMON_TRADE* pWork)
 {
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_U, TRUE );
@@ -1685,7 +1806,12 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
 
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief タッチ操作で他のアクションに飛ぶ基本ステート
+ * @param IRC_POKEMON_TRADE* ワーク
+ */
+//--------------------------------------------------------------------------------------------
 static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
 {
   u32 x,y,i;
@@ -1698,36 +1824,15 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
     pWork->bChangeOK[i]=FALSE;
   }
 
-  if(GFL_UI_KEY_GetTrg()==PAD_KEY_UP ){   //ベクトルを監視
-    pWork->MainObjCursorIndex--;
-    if(pWork->MainObjCursorIndex<0){
-      pWork->MainObjCursorIndex=0;
-    }
-//    IRC_POKETRADE_MainObjCursorDisp(pWork);
+  //キー処理
+  _padUDLRFunc(pWork);
+  if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_DECIDE){
+    pWork->underSelectBoxno = LINE2TRAY(pWork->MainObjCursorLine);
+    pWork->underSelectIndex = LINE2POKEINDEX(pWork->MainObjCursorLine,pWork->MainObjCursorIndex);
+    IRC_POKETRADE_SetCursorXY(pWork);
+    _CHANGE_STATE(pWork,_dispSubState);
+    return;
   }
-  if(GFL_UI_KEY_GetTrg()==PAD_KEY_DOWN ){   //ベクトルを監視
-    pWork->MainObjCursorIndex++;
-    if(pWork->MainObjCursorIndex >= BOX_VERTICAL_NUM){
-      pWork->MainObjCursorIndex = BOX_VERTICAL_NUM-1;
-    }
-//    IRC_POKETRADE_MainObjCursorDisp(pWork);
-  }
-  if(GFL_UI_KEY_GetTrg()==PAD_KEY_RIGHT ){   //ベクトルを監視
-    pWork->MainObjCursorLine++;
-    if(pWork->MainObjCursorLine >= TRADEBOX_LINEMAX){
-      pWork->MainObjCursorLine = 0;
-    }
-//    IRC_POKETRADE_MainObjCursorDisp(pWork);
-  }
-  if(GFL_UI_KEY_GetTrg()==PAD_KEY_LEFT ){   //ベクトルを監視
-    pWork->MainObjCursorLine--;
-    if(pWork->MainObjCursorLine < 0){
-      pWork->MainObjCursorLine = TRADEBOX_LINEMAX-1;
-    }
-//    IRC_POKETRADE_MainObjCursorDisp(pWork);
-  }
-
-
 
   
   if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視

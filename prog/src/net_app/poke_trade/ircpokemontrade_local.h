@@ -537,6 +537,7 @@ extern void IRC_POKETRADE_ItemIconReset(_ITEMMARK_ICON_WORK* pIM);
 extern void IRC_POKETRADE_PokerusIconDisp(IRC_POKEMON_TRADE* pWork,int side,int bMain, POKEMON_PARAM* pp);
 extern void IRC_POKETRADE_PokeStatusIconDisp(IRC_POKEMON_TRADE* pWork, POKEMON_PARAM* pp);
 extern void IRC_POKETRADE_PokeStatusIconReset(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_SetCursorXY(IRC_POKEMON_TRADE* pWork);
 
 
 #if _TRADE_DEBUG
@@ -552,3 +553,33 @@ extern void IRC_POKMEONTRADE_changeState(IRC_POKEMON_TRADE* pWork,StateFunc* sta
 #define   _CHANGE_STATE(pWork, state)  IRC_POKMEONTRADE_changeState(pWork ,state)
 
 #endif //_NET_DEBUG
+
+
+#define _TEMOTITRAY_SCR_MAX (12)
+#define _BOXTRAY_SCR_MAX (20)
+#define _SRCMAX ((BOX_MAX_TRAY*_BOXTRAY_SCR_MAX)+_TEMOTITRAY_SCR_MAX)
+
+#define _TEMOTITRAY_MAX (8*_TEMOTITRAY_SCR_MAX)
+#define _BOXTRAY_MAX (8*_BOXTRAY_SCR_MAX)
+
+#define _DOTMAX ((BOX_MAX_TRAY*_BOXTRAY_MAX)+_TEMOTITRAY_MAX)
+
+
+
+inline int LINE2TRAY(int lineno)
+{
+  if(lineno >= HAND_HORIZONTAL_NUM){
+    return (lineno - HAND_HORIZONTAL_NUM) / BOX_HORIZONTAL_NUM;
+  }
+  return BOX_MAX_TRAY;
+}
+    
+inline int LINE2POKEINDEX(int lineno,int verticalindex)
+{
+  if(lineno >= HAND_HORIZONTAL_NUM){
+    return ((lineno - HAND_HORIZONTAL_NUM) % BOX_HORIZONTAL_NUM) + (BOX_HORIZONTAL_NUM * verticalindex);
+  }
+  return lineno*3+verticalindex;
+}
+
+
