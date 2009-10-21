@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2009-10-21T10:53:03" source="cut_get2.mb"/>
+	<create user="unno" host="W00199" date="2009-10-21T12:03:37" source="cut_get2.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2009-10-21T10:53:03" source="cut_get2.mb"/>
+<original_create user="unno" host="W00199" date="2009-10-21T12:03:37" source="cut_get2.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="5" xyz="-3.471436 0.000000 -0.125000" whd="6.942383 0.000000 0.000000"/>
+<box_test pos_scale="6" xyz="-1.735840 -8.000000 -0.062500" whd="3.471191 0.000000 0.000000"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="cut_get1_back2"
@@ -602,7 +602,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="on"
+		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -625,8 +625,8 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="on"
+		polygon_id="63"
+		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -724,7 +724,7 @@
 		billboard="on"
 		scale="1.000000 0.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 -4.000000"
+		translate="0.000000 -512.000000 -4.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="12" polygon_size="3"
