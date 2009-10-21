@@ -23,9 +23,11 @@
 //============================================================================================
 
 enum{
-  EFFVM_PTCNO_NONE = 0xffff,    //ptc_noの未格納のときの値
+  EFFVM_PTCNO_NONE = 0xffffffff,    //ptc_noの未格納のときの値
+  EFFVM_OBJNO_NONE = 0xffffffff,    //obj_noの未格納のときの値
   TEMP_WORK_SIZE = 16,          //テンポラリワークのサイズ
   BTLV_EFFVM_BG_PAL = 8,        //エフェクトBGのパレット開始位置
+  EFFVM_OBJ_MAX = 4,            //エフェクト中に使用できるOBJMAX
 };
 
 #ifdef PM_DEBUG
@@ -50,7 +52,8 @@ typedef struct{
   u32                                 :26;
   GFL_TCBSYS*   tcbsys;
   GFL_PTC_PTR   ptc[ PARTICLE_GLOBAL_MAX ];
-  u16           ptc_no[ PARTICLE_GLOBAL_MAX ];
+  int           ptc_no[ PARTICLE_GLOBAL_MAX ];
+  int           obj[ EFFVM_OBJ_MAX ];
   BtlvMcssPos   attack_pos;
   BtlvMcssPos   defence_pos;
   int           wait;
@@ -193,6 +196,11 @@ static VMCMD_RESULT VMEC_BG_PRIORITY( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_BG_ALPHA( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_BG_PAL_FADE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_BG_VANISH( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_OBJ_SET( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_OBJ_MOVE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_OBJ_SCALE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_OBJ_ANIME_SET( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_OBJ_DEL( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_STOP( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_PAN( VMHANDLE *vmh, void *context_work );
@@ -310,6 +318,11 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_BG_ALPHA,
   VMEC_BG_PAL_FADE,
   VMEC_BG_VANISH,
+  VMEC_OBJ_SET,
+  VMEC_OBJ_MOVE,
+  VMEC_OBJ_SCALE,
+  VMEC_OBJ_ANIME_SET,
+  VMEC_OBJ_DEL,
   VMEC_SE_PLAY,
   VMEC_SE_STOP,
   VMEC_SE_PAN,
@@ -355,9 +368,16 @@ VMHANDLE  *BTLV_EFFVM_Init( GFL_TCBSYS *tcbsys, HEAPID heapID )
   bevw->control_mode = BTLEFF_CONTROL_MODE_SUSPEND;
   bevw->camera_projection = BTLEFF_CAMERA_PROJECTION_PERSPECTIVE;
 
+  //パーティクルインデックスワーク初期化
   for( i = 0 ; i < PARTICLE_GLOBAL_MAX ; i++ )
   {
     bevw->ptc_no[ i ] = EFFVM_PTCNO_NONE;
+  }
+
+  //OBJインデックスワーク初期化
+  for( i = 0 ; i < EFFVM_OBJ_MAX ; i++ )
+  {
+    bevw->obj[ i ] = EFFVM_OBJNO_NONE;
   }
 
   vmh = VM_Create( heapID, &vm_init );
@@ -1418,8 +1438,8 @@ static VMCMD_RESULT VMEC_TRAINER_MOVE( VMHANDLE *vmh, void *context_work )
 
   index = BTLV_EFFECT_GetTrainerIndex( ( int )VMGetU32( vmh ) );
   type     = ( int )VMGetU32( vmh );
-  move_pos.x = ( fx32 )VMGetU32( vmh );
-  move_pos.y = ( fx32 )VMGetU32( vmh );
+  move_pos.x = ( int )VMGetU32( vmh );
+  move_pos.y = ( int )VMGetU32( vmh );
   frame    = ( int )VMGetU32( vmh );
   wait     = ( int )VMGetU32( vmh );
   count    = ( int )VMGetU32( vmh );
@@ -1505,33 +1525,34 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
 
     ofs_p = (u32*)&bevw->dpd->adrs[ 0 ];
 
-    ofs = ofs_p[ dpd_no ];
+    ofs = ofs_p[ dpd_no + 0 ];
     resource = (void *)&bevw->dpd->adrs[ ofs ];
 
-    if( bevw->unpack_info[ dpd_no ] == NULL )
+    if( bevw->unpack_info[ dpd_no + 0 ] == NULL )
     { 
-	    NNS_G2dGetUnpackedBGCharacterData( resource, &charData );
-      bevw->unpack_info[ dpd_no ] = charData;
+      NNS_G2dGetUnpackedScreenData( resource, &scrnData );
+      bevw->unpack_info[ dpd_no + 0 ] = scrnData;
     }
     else
     { 
-      charData = (NNSG2dCharacterData*)bevw->unpack_info[ dpd_no ];
+      scrnData = (NNSG2dScreenData*)bevw->unpack_info[ dpd_no + 0 ];
     }
-    GFL_BG_LoadCharacter( GFL_BG_FRAME3_M, charData->pRawData, 0x8000, 0 );
+    GFL_BG_LoadScreen( GFL_BG_FRAME3_M, scrnData->rawData, 0x2000, 0 );
 
     ofs = ofs_p[ dpd_no + 1 ];
     resource = (void *)&bevw->dpd->adrs[ ofs ];
 
     if( bevw->unpack_info[ dpd_no + 1 ] == NULL )
     { 
-      NNS_G2dGetUnpackedScreenData( resource, &scrnData );
-      bevw->unpack_info[ dpd_no + 1 ] = scrnData;
+	    NNS_G2dGetUnpackedBGCharacterData( resource, &charData );
+      bevw->unpack_info[ dpd_no + 1 ] = charData;
     }
     else
     { 
-      scrnData = (NNSG2dScreenData*)bevw->unpack_info[ dpd_no + 1 ];
+      charData = (NNSG2dCharacterData*)bevw->unpack_info[ dpd_no + 1 ];
     }
-    GFL_BG_LoadScreen( GFL_BG_FRAME3_M, scrnData->rawData, 0x2000, 0 );
+    GFL_BG_LoadCharacter( GFL_BG_FRAME3_M, charData->pRawData, 0x8000, 0 );
+
 
     ofs = ofs_p[ dpd_no + 2 ];
     resource = (void *)&bevw->dpd->adrs[ ofs ];
@@ -1550,8 +1571,8 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
   }
 #endif
 
-  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WAZAEFF_GRA, datID, GFL_BG_FRAME3_M, 0, 0, 0, bevw->heapID );
-  GFL_ARC_UTIL_TransVramScreen( ARCID_WAZAEFF_GRA, datID + 1, GFL_BG_FRAME3_M, 0, 0, 0, bevw->heapID );
+  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WAZAEFF_GRA, datID + 1, GFL_BG_FRAME3_M, 0, 0, 0, bevw->heapID );
+  GFL_ARC_UTIL_TransVramScreen( ARCID_WAZAEFF_GRA, datID, GFL_BG_FRAME3_M, 0, 0, 0, bevw->heapID );
   PaletteWorkSetEx_Arc( BTLV_EFFECT_GetPfd(), ARCID_WAZAEFF_GRA, datID + 2, bevw->heapID, FADE_MAIN_BG, 0,
                         BTLV_EFFVM_BG_PAL * 16, 0 );
 
@@ -1741,6 +1762,173 @@ static VMCMD_RESULT VMEC_BG_VANISH( VMHANDLE *vmh, void *context_work )
 #endif DEBUG_OS_PRINT
 
   BTLV_EFFECT_SetVanishFlag( model, flag );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief OBJのセット
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_OBJ_SET( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int index     = ( int )VMGetU32( vmh );
+  int datID     = ( int )VMGetU32( vmh );
+  int position  = EFFVM_GetPosition( vmh, ( int )VMGetU32( vmh ) );
+  int ofs_x     = ( int )VMGetU32( vmh );
+  int ofs_y     = ( int )VMGetU32( vmh );
+  fx32 scalex   = ( fx32 )VMGetU32( vmh );
+  fx32 scaley   = ( fx32 )VMGetU32( vmh );
+  VecFx32 pos;
+  int pos_x,pos_y;
+
+  GF_ASSERT( index < EFFVM_OBJ_MAX );
+  GF_ASSERT( bevw->obj[ index ] == EFFVM_OBJNO_NONE );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_OBJ_SET\n");
+#endif DEBUG_OS_PRINT
+
+  BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &pos, position );
+  pos.x += ofs_x;
+  pos.y += ofs_y;
+  NNS_G3dWorldPosToScrPos( &pos, &pos_x, &pos_y );
+
+  bevw->obj[ index ] = BTLV_CLACT_AddAffine( BTLV_EFFECT_GetCLWK(), ARCID_WAZAEFF_GRA, datID, pos_x, pos_y, scalex, scaley );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief OBJ移動
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_OBJ_MOVE( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int           index;
+  int           type;
+  GFL_CLACTPOS  move_pos;
+  int           frame;
+  int           wait;
+  int           count;
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_OBJ_MOVE\n");
+#endif DEBUG_OS_PRINT
+
+  index       = ( int )VMGetU32( vmh );
+  type        = ( int )VMGetU32( vmh );
+  move_pos.x  = ( int )VMGetU32( vmh );
+  move_pos.y  = ( int )VMGetU32( vmh );
+  frame       = ( int )VMGetU32( vmh );
+  wait        = ( int )VMGetU32( vmh );
+  count       = ( int )VMGetU32( vmh );
+
+  GF_ASSERT( index < EFFVM_OBJ_MAX );
+  GF_ASSERT( bevw->obj[ index ] != EFFVM_OBJNO_NONE );
+
+  BTLV_CLACT_MovePosition( BTLV_EFFECT_GetCLWK(), bevw->obj[ index ], type, &move_pos, frame, wait, count );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief OBJ拡縮
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_OBJ_SCALE( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int   index;
+  int   type;
+  VecFx32 scale;
+  int   frame;
+  int   wait;
+  int   count;
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_OBJ_SCALE\n");
+#endif DEBUG_OS_PRINT
+
+  index   = ( int )VMGetU32( vmh );
+  type    = ( int )VMGetU32( vmh );
+  scale.x = ( fx32 )VMGetU32( vmh );
+  scale.y = ( fx32 )VMGetU32( vmh );
+  scale.z = FX32_ONE;
+  frame   = ( int )VMGetU32( vmh );
+  wait    = ( int )VMGetU32( vmh );
+  count   = ( int )VMGetU32( vmh );
+
+  GF_ASSERT( index < EFFVM_OBJ_MAX );
+  GF_ASSERT( bevw->obj[ index ] != EFFVM_OBJNO_NONE );
+
+  BTLV_CLACT_MoveScale( BTLV_EFFECT_GetCLWK(), bevw->obj[ index ], type, &scale, frame, wait, count );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief OBJアニメセット
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_OBJ_ANIME_SET( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int index   = ( int )VMGetU32( vmh );
+  int anm_no  = ( int )VMGetU32( vmh );
+
+  GF_ASSERT( index < EFFVM_OBJ_MAX );
+  GF_ASSERT( bevw->obj[ index ] != EFFVM_OBJNO_NONE );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_OBJ_ANIME_SET\n");
+#endif DEBUG_OS_PRINT
+
+  BTLV_CLACT_SetAnime( BTLV_EFFECT_GetCLWK(), bevw->obj[ index ], anm_no );
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief OBJ削除
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_OBJ_DEL( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int index = ( int )VMGetU32( vmh );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_TRAINER_DEL\n");
+#endif DEBUG_OS_PRINT
+
+  GF_ASSERT( index < EFFVM_OBJ_MAX );
+  GF_ASSERT( bevw->obj[ index ] != EFFVM_OBJNO_NONE );
+
+  BTLV_CLACT_Delete( BTLV_EFFECT_GetCLWK(), bevw->obj[ index ] );
+  bevw->obj[ index ] = EFFVM_OBJNO_NONE;
 
   return bevw->control_mode;
 }
@@ -2044,6 +2232,16 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
       bevw->ptc[ i ] = NULL;
     }
     bevw->ptc_no[ i ] = EFFVM_PTCNO_NONE;
+  }
+
+  //解放されていないOBJがあったら解放しておく
+  for( i = 0 ; i < EFFVM_OBJ_MAX ; i++ )
+  {
+    if( bevw->obj[ i ] != EFFVM_OBJNO_NONE )
+    { 
+      BTLV_CLACT_Delete( BTLV_EFFECT_GetCLWK(), bevw->obj[ i ] );
+      bevw->obj[ i ] = EFFVM_OBJNO_NONE;
+    }
   }
 
   //解放していないテンポラリワークを解放

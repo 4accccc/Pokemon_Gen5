@@ -41,13 +41,14 @@ struct _BTLV_CLACT_WORK
   GFL_CLUNIT*     clunit;
   BTLV_CLACT_CLWK bccl[ BTLV_CLACT_CLWK_MAX ];
   u32             clact_tcb_move_execute;
+  u32             clact_tcb_scale_execute;
   HEAPID          heapID;
 };
 
 typedef struct
 {
   BTLV_CLACT_WORK*  bclw;
-  VecFx32           now_pos;
+  VecFx32           now_value;
   int               index;
   EFFTOOL_MOVE_WORK emw;
 }BTLV_CLACT_TCB_WORK;
@@ -59,6 +60,7 @@ typedef struct
 //============================================================================================
 static  void  BTLV_CLACT_TCBInitialize( BTLV_CLACT_WORK *bclw, int index, int type, VecFx32 *start, VecFx32 *end, int frame, int wait, int count, GFL_TCB_FUNC *func );
 static  void  TCB_BTLV_CLACT_Move( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_CLACT_Scale( GFL_TCB *tcb, void *work );
 
 //============================================================================================
 /**
@@ -133,7 +135,29 @@ void  BTLV_CLACT_Main( BTLV_CLACT_WORK *bclw )
 //============================================================================================
 int BTLV_CLACT_Add( BTLV_CLACT_WORK *bclw, ARCID arcID, ARCDATID ncgrID, s16 posx, s16 posy )
 {
-  return BTLV_CLACT_AddEx( bclw, arcID, ncgrID, ncgrID + 1, ncgrID + 2, ncgrID + 3, posx, posy );
+  return BTLV_CLACT_AddEx( bclw, arcID, ncgrID, ncgrID + 1, ncgrID + 2, ncgrID + 3, posx, posy, 0, 0 );
+}
+
+//============================================================================================
+/**
+ *  CLWK生成（Affine値も設定可）
+ *
+ *  ARCDATIDは、naixの並びが、NCGR、NCLR、NCER、NANRであることを期待しています
+ *
+ * @param[in] bclw    BTLV_CLACT_WORK管理構造体へのポインタ
+ * @param[in] arcID   グラフィックリソースのARCID
+ * @param[in] ncgrID  グラフィックリソース（ncgr）のARCDATID
+ * @param[in] posx    初期X座標
+ * @param[in] posy    初期Y座標
+ * @param[in] scalex  初期ScaleX値
+ * @param[in] scaley  初期ScaleY値
+ *
+ * @retval  登録したINDEXナンバー
+ */
+//============================================================================================
+int BTLV_CLACT_AddAffine( BTLV_CLACT_WORK *bclw, ARCID arcID, ARCDATID ncgrID, s16 posx, s16 posy, fx32 scalex, fx32 scaley )
+{
+  return BTLV_CLACT_AddEx( bclw, arcID, ncgrID, ncgrID + 1, ncgrID + 2, ncgrID + 3, posx, posy, scalex, scaley );
 }
 
 //============================================================================================
@@ -148,18 +172,29 @@ int BTLV_CLACT_Add( BTLV_CLACT_WORK *bclw, ARCID arcID, ARCDATID ncgrID, s16 pos
  * @param[in] nanrID  グラフィックリソース（nanr）のARCDATID
  * @param[in] posx    初期X座標
  * @param[in] posy    初期Y座標
+ * @param[in] scalex  初期X座標
+ * @param[in] scaley  初期Y座標
  *
  * @retval  index 登録したINDEXナンバー
  */
 //============================================================================================
 int BTLV_CLACT_AddEx( BTLV_CLACT_WORK *bclw, ARCID arcID,
-                      ARCDATID ncgrID, ARCDATID nclrID, ARCDATID ncerID, ARCDATID nanrID, s16 posx, s16 posy )
+                      ARCDATID ncgrID, ARCDATID nclrID, ARCDATID ncerID, ARCDATID nanrID,
+                      s16 posx, s16 posy, fx32 scalex, fx32 scaley )
 {
   ARCHANDLE     *hdl;
   int           index;
-  static GFL_CLWK_DATA CLWKParam = {
-    0, 0,       //x, y
-    0, 0, 1,    //アニメ番号、優先順位、BGプライオリティ
+  GFL_CLWK_AFFINEDATA CLWKAffineParam = { 
+    {
+      0, 0,                   //x, y
+      0, 0, 1,                //アニメ番号、優先順位、BGプライオリティ
+    },
+		0,		                    // アフィンｘ座標
+	  0,		                    // アフィンｙ座標
+	  FX32_ONE,			            // 拡大ｘ値
+	  FX32_ONE,			            // 拡大ｙ値
+	  0,                        // 回転角度(0～0xffff 0xffffが360度)
+	  CLSYS_AFFINETYPE_NORMAL,  // 上書きアフィンタイプ（CLSYS_AFFINETYPE）
   };
 
   hdl = GFL_ARC_OpenDataHandle( arcID, bclw->heapID );
@@ -175,21 +210,34 @@ int BTLV_CLACT_AddEx( BTLV_CLACT_WORK *bclw, ARCID arcID,
   GF_ASSERT( index < BTLV_CLACT_CLWK_MAX );
 
   bclw->bccl[ index ].charID = GFL_CLGRP_CGR_Register( hdl, ncgrID, FALSE, CLSYS_DRAW_MAIN, bclw->heapID );
-  bclw->bccl[ index ].plttID = GFL_CLGRP_PLTT_Register( hdl, nclrID, CLSYS_DRAW_MAIN, 0, bclw->heapID );
+  bclw->bccl[ index ].plttID = GFL_CLGRP_PLTT_RegisterComp( hdl, nclrID, CLSYS_DRAW_MAIN, 0, bclw->heapID );
   bclw->bccl[ index ].cellID = GFL_CLGRP_CELLANIM_Register( hdl, ncerID, nanrID, bclw->heapID );
 
   //パレットをPaletteWorkにロード
   PaletteWorkSet_Arc( BTLV_EFFECT_GetPfd(), arcID, nclrID, bclw->heapID, FADE_MAIN_OBJ, 0x20,
     ( GFL_CLGRP_PLTT_GetAddr( bclw->bccl[ index ].plttID, CLSYS_DRAW_MAIN ) & 0x3ff ) / 0x20 );
 
-  CLWKParam.pos_x = posx;
-  CLWKParam.pos_y = posy;
+  CLWKAffineParam.clwkdata.pos_x = posx;
+  CLWKAffineParam.clwkdata.pos_y = posy;
 
-  bclw->bccl[ index ].clwk = GFL_CLACT_WK_Create( bclw->clunit,
-                         bclw->bccl[ index ].charID,
-                         bclw->bccl[ index ].plttID,
-                         bclw->bccl[ index ].cellID,
-                         &CLWKParam, CLSYS_DEFREND_MAIN, bclw->heapID );
+  if( ( scalex == 0 ) && ( scaley == 0 ) )
+  { 
+    bclw->bccl[ index ].clwk = GFL_CLACT_WK_Create( bclw->clunit,
+                                                    bclw->bccl[ index ].charID,
+                                                    bclw->bccl[ index ].plttID,
+                                                    bclw->bccl[ index ].cellID,
+                                                    &CLWKAffineParam.clwkdata, CLSYS_DEFREND_MAIN, bclw->heapID );
+  }
+  else
+  { 
+    CLWKAffineParam.scale_x = scalex;
+    CLWKAffineParam.scale_y = scaley;
+    bclw->bccl[ index ].clwk = GFL_CLACT_WK_CreateAffine( bclw->clunit,
+                                                          bclw->bccl[ index ].charID,
+                                                          bclw->bccl[ index ].plttID,
+                                                          bclw->bccl[ index ].cellID,
+                                                          &CLWKAffineParam, CLSYS_DEFREND_MAIN, bclw->heapID );
+  }
 
   GFL_CLACT_WK_SetAutoAnmFlag( bclw->bccl[ index ].clwk, TRUE );
 
@@ -249,9 +297,46 @@ void  BTLV_CLACT_MovePosition( BTLV_CLACT_WORK *bclw, int index, int type, GFL_C
   start_fx32.x = start.x << FX32_SHIFT;
   start_fx32.y = start.y << FX32_SHIFT;
   start_fx32.z = 0;
+
+  //移動の補間は相対指定とする
+  if( type == EFFTOOL_CALCTYPE_INTERPOLATION )
+  { 
+    pos_fx32.x += start_fx32.x;
+    pos_fx32.y += start_fx32.y;
+    pos_fx32.z += start_fx32.z;
+  }
+
   BTLV_CLACT_TCBInitialize( bclw, index, type, &start_fx32, &pos_fx32, frame, wait, count, TCB_BTLV_CLACT_Move );
   bclw->clact_tcb_move_execute |= BTLV_EFFTOOL_No2Bit( index );
 }
+
+//============================================================================================
+/**
+ * @brief OBJ拡縮
+ *
+ * @param[in] bclw    BTLV_CLACT管理ワークへのポインタ
+ * @param[in] index   拡縮するCLWKのインデックス
+ * @param[in] type    拡縮タイプ
+ * @param[in] scale   拡縮タイプにより意味が変化
+ *                    EFFTOOL_CALCTYPE_DIRECT EFFTOOL_CALCTYPE_INTERPOLATION  最終的なスケール値
+ *                    EFFTOOL_CALCTYPE_ROUNDTRIP　往復の長さ
+ * @param[in] frame   拡縮フレーム数（設定した拡縮値まで何フレームで到達するか）
+ * @param[in] wait    拡縮ウエイト
+ * @param[in] count   往復カウント（EFFTOOL_CALCTYPE_ROUNDTRIPでしか意味のないパラメータ）
+ */
+//============================================================================================
+void  BTLV_CLACT_MoveScale( BTLV_CLACT_WORK *bclw, int index, int type, VecFx32 *scale, int frame, int wait, int count )
+{
+  VecFx32 start;
+
+  start.x = FX32_ONE;
+  start.y = FX32_ONE;
+  start.z = FX32_ONE;
+
+  BTLV_CLACT_TCBInitialize( bclw, index, type, &start, scale, frame, wait, count, TCB_BTLV_CLACT_Scale );
+  bclw->clact_tcb_scale_execute |= BTLV_EFFTOOL_No2Bit( index );
+}
+
 
 //============================================================================================
 /**
@@ -297,11 +382,13 @@ static  void  BTLV_CLACT_TCBInitialize( BTLV_CLACT_WORK *bclw, int index, int ty
 {
   BTLV_CLACT_TCB_WORK *bctw = GFL_HEAP_AllocMemory( bclw->heapID, sizeof( BTLV_CLACT_TCB_WORK ) );
 
+  GF_ASSERT( index < BTLV_CLACT_CLWK_MAX );
+
   bctw->bclw              = bclw;
   bctw->index             = index;
-  bctw->now_pos.x         = start->x;
-  bctw->now_pos.y         = start->y;
-  bctw->now_pos.z         = start->z;
+  bctw->now_value.x       = start->x;
+  bctw->now_value.y       = start->y;
+  bctw->now_value.z       = start->z;
   bctw->emw.move_type     = type;
   bctw->emw.vec_time      = frame;
   bctw->emw.vec_time_tmp  = frame;
@@ -346,13 +433,37 @@ static  void  TCB_BTLV_CLACT_Move( GFL_TCB *tcb, void *work )
   GFL_CLACTPOS  now_pos;
   BOOL          ret;
 
-  ret = BTLV_EFFTOOL_CalcParam( &bctw->emw, &bctw->now_pos );
-  now_pos.x = bctw->now_pos.x >> FX32_SHIFT;
-  now_pos.y = bctw->now_pos.y >> FX32_SHIFT;
+  ret = BTLV_EFFTOOL_CalcParam( &bctw->emw, &bctw->now_value );
+  now_pos.x = bctw->now_value.x >> FX32_SHIFT;
+  now_pos.y = bctw->now_value.y >> FX32_SHIFT;
   GFL_CLACT_WK_SetPos( bclw->bccl[ bctw->index ].clwk, &now_pos, CLSYS_DEFREND_MAIN );
   if( ret == TRUE )
   {
     bclw->clact_tcb_move_execute &= ( BTLV_EFFTOOL_No2Bit( bctw->index ) ^ 0xffffffff );
+    GFL_HEAP_FreeMemory( work );
+    GFL_TCB_DeleteTask( tcb );
+  }
+}
+
+//============================================================================================
+/**
+ * @brief CLWK拡縮タスク
+ */
+//============================================================================================
+static  void  TCB_BTLV_CLACT_Scale( GFL_TCB *tcb, void *work )
+{
+  BTLV_CLACT_TCB_WORK *bctw = ( BTLV_CLACT_TCB_WORK * )work;
+  BTLV_CLACT_WORK *bclw = bctw->bclw;
+  GFL_CLSCALE now_scale;
+  BOOL  ret;
+
+  ret = BTLV_EFFTOOL_CalcParam( &bctw->emw, &bctw->now_value );
+  now_scale.x = bctw->now_value.x;
+  now_scale.y = bctw->now_value.y;
+  GFL_CLACT_WK_SetAffineParam( bclw->bccl[ bctw->index ].clwk, CLSYS_AFFINETYPE_NORMAL );
+  GFL_CLACT_WK_SetScale( bclw->bccl[ bctw->index ].clwk, &now_scale );
+  if( ret == TRUE ){
+    bclw->clact_tcb_scale_execute &= ( BTLV_EFFTOOL_No2Bit( bctw->index ) ^ 0xffffffff );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
   }

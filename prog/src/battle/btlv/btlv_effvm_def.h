@@ -247,6 +247,17 @@
 #define	BTLEFF_VANISH_OFF	( 0 )
 #define	BTLEFF_VANISH_ON	( 1 )
 
+//OBJ操作
+#define	BTLEFF_OBJ_MOVE_DIRECT						    ( EFFTOOL_CALCTYPE_DIRECT )
+#define	BTLEFF_OBJ_MOVE_INTERPOLATION			    ( EFFTOOL_CALCTYPE_INTERPOLATION )
+#define	BTLEFF_OBJ_MOVE_ROUNDTRIP					    ( EFFTOOL_CALCTYPE_ROUNDTRIP )
+#define	BTLEFF_OBJ_MOVE_ROUNDTRIP_LONG		    ( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
+
+#define	BTLEFF_OBJ_SCALE_DIRECT						    ( EFFTOOL_CALCTYPE_DIRECT )
+#define	BTLEFF_OBJ_SCALE_INTERPOLATION			    ( EFFTOOL_CALCTYPE_INTERPOLATION )
+#define	BTLEFF_OBJ_SCALE_ROUNDTRIP					    ( EFFTOOL_CALCTYPE_ROUNDTRIP )
+#define	BTLEFF_OBJ_SCALE_ROUNDTRIP_LONG		    ( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
+
 #endif //__BTLV_EFFVM_DEF_H_
 
 //====================================================================================
@@ -350,7 +361,12 @@ ex)
 #define	EC_BG_ALPHA		   				    ( EC_BG_PRIORITY              + 1 )
 #define	EC_BG_PAL_FADE		   				( EC_BG_ALPHA                 + 1 )
 #define	EC_BG_VANISH								( EC_BG_PAL_FADE              + 1 )
-#define	EC_SE_PLAY									( EC_BG_VANISH                + 1 )
+#define	EC_OBJ_SET	   				      ( EC_BG_VANISH                + 1 )
+#define	EC_OBJ_MOVE	   				      ( EC_OBJ_SET                  + 1 )
+#define	EC_OBJ_SCALE	   				    ( EC_OBJ_MOVE                 + 1 )
+#define	EC_OBJ_ANIME_SET	   				( EC_OBJ_SCALE                + 1 )
+#define	EC_OBJ_DEL	   				      ( EC_OBJ_ANIME_SET            + 1 )
+#define	EC_SE_PLAY									( EC_OBJ_DEL                  + 1 )
 #define	EC_SE_STOP									( EC_SE_PLAY                  + 1 )
 #define	EC_SE_PAN								    ( EC_SE_STOP                  + 1 )
 #define	EC_SE_EFFECT								( EC_SE_PAN                   + 1 )
@@ -1035,7 +1051,8 @@ ex)
  * @param	wait				移動ウエイト
  * @param	count				往復カウント（移動タイプが往復のときだけ有効）
  *
- * #param	VALUE_INT		トレーナーの立ち位置
+ * #param	COMBOBOX_TEXT POS_AA  POS_BB  POS_A POS_B POS_C POS_D
+ * #param	COMBOBOX_VALUE  BTLEFF_TRAINER_POS_AA BTLEFF_TRAINER_POS_BB BTLEFF_TRAINER_POS_A  BTLEFF_TRAINER_POS_B  BTLEFF_TRAINER_POS_C  BTLEFF_TRAINER_POS_D
  * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
  * #param	COMBOBOX_VALUE	BTLEFF_TRAINER_MOVE_DIRECT	BTLEFF_TRAINER_MOVE_INTERPOLATION	BTLEFF_TRAINER_MOVE_ROUNDTRIP	BTLEFF_TRAINER_MOVE_ROUNDTRIP_LONG
  * #param	VALUE_INT		移動先X座標
@@ -1064,7 +1081,8 @@ ex)
  * @param	pos			アニメセットするトレーナーの立ち位置
  * @param	anm_no	セットするアニメナンバー
  *
- * #param	VALUE_INT		トレーナーの立ち位置
+ * #param	COMBOBOX_TEXT POS_AA  POS_BB  POS_A POS_B POS_C POS_D
+ * #param	COMBOBOX_VALUE  BTLEFF_TRAINER_POS_AA BTLEFF_TRAINER_POS_BB BTLEFF_TRAINER_POS_A  BTLEFF_TRAINER_POS_B  BTLEFF_TRAINER_POS_C  BTLEFF_TRAINER_POS_D
  * #param	VALUE_INT		アニメナンバー
  */
 //======================================================================
@@ -1081,7 +1099,8 @@ ex)
  * #param_num	1
  * @param	index		削除するトレーナーの立ち位置
  *
- * #param	VALUE_INT		トレーナーの立ち位置
+ * #param	COMBOBOX_TEXT POS_AA  POS_BB  POS_A POS_B POS_C POS_D
+ * #param	COMBOBOX_VALUE  BTLEFF_TRAINER_POS_AA BTLEFF_TRAINER_POS_BB BTLEFF_TRAINER_POS_A  BTLEFF_TRAINER_POS_B  BTLEFF_TRAINER_POS_C  BTLEFF_TRAINER_POS_D
  */
 //======================================================================
 	.macro	TRAINER_DEL	pos
@@ -1096,7 +1115,7 @@ ex)
  * #param_num	1
  * @param	datID	アーカイブデータのdatID
  *
- * #param	FILE_DIALOG	.NCGR
+ * #param	FILE_DIALOG	.NSCR
  */
 //======================================================================
 	.macro	BG_LOAD	datID
@@ -1281,6 +1300,141 @@ ex)
 	.short	EC_BG_VANISH
 	.long		\bg_num
 	.long		\sw
+	.endm
+
+//======================================================================
+/**
+ * @brief	OBJのセット
+ *
+ * #param_num	7
+ * @param	index   管理用インデックス（0-3）
+ * @param	datID   アーカイブデータのdatID
+ * @param pos     表示する座標
+ * @param ofs_x   オフセットX座標
+ * @param ofs_y   オフセットY座標
+ * @param scale_x オフセットX座標
+ * @param scale_y オフセットY座標
+ *
+ * #param	VALUE_INT インデックス
+ * #param	FILE_DIALOG .NCGR
+ * #param	COMBOBOX_TEXT	攻撃側	防御側	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D POS_E POS_F POS_TR_AA POS_TR_BB POS_TR_A  POS_TR_B  POS_TR_C  POS_TR_D 
+ * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK  BTLEFF_POKEMON_SIDE_DEFENCE BTLEFF_POKEMON_POS_AA	BTLEFF_POKEMON_POS_BB	BTLEFF_POKEMON_POS_A	BTLEFF_POKEMON_POS_B	BTLEFF_POKEMON_POS_C	BTLEFF_POKEMON_POS_D  BTLEFF_POKEMON_POS_E  BTLEFF_POKEMON_POS_F  BTLEFF_TRAINER_POS_AA BTLEFF_TRAINER_POS_BB BTLEFF_TRAINER_POS_A BTLEFF_TRAINER_POS_B BTLEFF_TRAINER_POS_C BTLEFF_TRAINER_POS_D
+ * #param VALUE_FX32  オフセットX座標
+ * #param VALUE_FX32  オフセットY座標
+ * #param VALUE_FX32  スケールX値
+ * #param VALUE_FX32  スケールY値
+ */
+//======================================================================
+  .macro  OBJ_SET index, datID, pos, ofs_x, ofs_y, scale_x, scale_y
+  .short  EC_OBJ_SET
+  .long   \index
+  .long   \datID
+  .long   \pos
+  .long   \ofs_x
+  .long   \ofs_y
+  .long   \scale_x
+  .long   \scale_y
+  .endm
+
+//======================================================================
+/**
+ * @brief	OBJ移動
+ *
+ * #param_num	7
+ * @param	index				移動させるOBJの管理インデックス
+ * @param	type				移動タイプ
+ * @param	move_pos_x	移動先X座標
+ * @param	move_pos_y	移動先Y座標
+ * @param	frame				移動フレーム数（目的地まで何フレームで到達するか）
+ * @param	wait				移動ウエイト
+ * @param	count				往復カウント（移動タイプが往復のときだけ有効）
+ *
+ * #param	VALUE_INT		OBJの管理インデックス
+ * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
+ * #param	COMBOBOX_VALUE	BTLEFF_OBJ_MOVE_DIRECT	BTLEFF_OBJ_MOVE_INTERPOLATION	BTLEFF_OBJ_MOVE_ROUNDTRIP	BTLEFF_OBJ_MOVE_ROUNDTRIP_LONG
+ * #param	VALUE_INT   移動先X座標
+ * #param	VALUE_INT   移動先Y座標
+ * #param	VALUE_INT		移動フレーム数
+ * #param	VALUE_INT		移動ウエイト
+ * #param	VALUE_INT		往復カウント（往復時有効）
+ */
+//======================================================================
+	.macro	OBJ_MOVE	index, type, move_pos_x, move_pos_y, frame, wait, count
+	.short	EC_OBJ_MOVE
+	.long		\index
+	.long		\type
+	.long		\move_pos_x
+	.long		\move_pos_y
+	.long		\frame
+	.long		\wait
+	.long		\count
+	.endm
+
+//======================================================================
+/**
+ * @brief	OBJ拡縮
+ *
+ * #param_num	7
+ * @param	index		拡縮させるOBJの管理インデックス
+ * @param	type		拡縮タイプ
+ * @param	scale_x	X方向拡縮率
+ * @param	scale_y	Y方向拡縮率
+ * @param	frame		拡縮フレーム数（設定した拡縮値まで何フレームで到達するか）
+ * @param	wait		拡縮ウエイト
+ * @param	count		往復カウント（拡縮タイプが往復のときだけ有効）
+ *
+ * #param	VALUE_INT		OBJの管理インデックス
+ * #param	COMBOBOX_TEXT	ダイレクト	追従	往復	往復ロング
+ * #param	COMBOBOX_VALUE	BTLEFF_OBJ_SCALE_DIRECT	BTLEFF_OBJ_SCALE_INTERPOLATION	BTLEFF_OBJ_SCALE_ROUNDTRIP	BTLEFF_OBJ_SCALE_ROUNDTRIP_LONG
+ * #param	VALUE_FX32	X方向拡縮率
+ * #param	VALUE_FX32	Y方向拡縮率
+ * #param	VALUE_INT		拡縮フレーム数
+ * #param	VALUE_INT		拡縮ウエイト
+ * #param	VALUE_INT		往復カウント（往復時有効）
+ */
+//======================================================================
+	.macro	OBJ_SCALE	index, type, scale_x, scale_y, frame, wait, count
+	.short	EC_OBJ_SCALE
+	.long		\index
+	.long		\type
+	.long		\scale_x
+	.long		\scale_y
+	.long		\frame
+	.long		\wait
+	.long		\count
+	.endm
+
+//======================================================================
+/**
+ * @brief	OBJアニメセット
+ *
+ * #param_num	2
+ * @param	index		アニメセットするOBJの管理インデックス
+ * @param	anm_no	セットするアニメナンバー
+ *
+ * #param	VALUE_INT		OBJの管理インデックス
+ * #param	VALUE_INT		アニメナンバー
+ */
+//======================================================================
+	.macro	OBJ_ANIME_SET	pos, anm_no
+	.short	EC_OBJ_ANIME_SET
+	.long		\pos
+	.long		\anm_no
+	.endm
+
+//======================================================================
+/**
+ * @brief	OBJ削除
+ *
+ * #param_num	1
+ * @param	index		削除するOBJの管理インデックス
+ *
+ * #param	VALUE_INT		OBJの管理インデックス
+ */
+//======================================================================
+	.macro	OBJ_DEL	pos
+	.short	EC_OBJ_DEL
+	.long		\pos
 	.endm
 
 //======================================================================
