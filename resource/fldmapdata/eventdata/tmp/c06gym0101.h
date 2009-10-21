@@ -11,5 +11,7 @@
 #ifndef ZONE_C06GYM0101_EVC_H
 #define ZONE_C06GYM0101_EVC_H
 
+#define C06GYM0101_SUNGLASSES_01           0
+#define C06GYM0101_LEADER6_01              1
 
 #endif //ZONE_C06GYM0101_EVC_H
