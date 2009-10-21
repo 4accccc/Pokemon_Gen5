@@ -1047,6 +1047,7 @@ static void _pokemonStatusWait(IRC_POKEMON_TRADE* pWork)
     break;
   }
 
+  
   TOUCHBAR_Main(pWork->pTouchWork);
   switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
   case TOUCHBAR_ICON_RETURN:
@@ -1131,6 +1132,7 @@ static void _changePokemonSendData(IRC_POKEMON_TRADE* pWork)
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
     IRC_POKETRADE_AppMenuClose(pWork);
+    IRC_POKETRADE_MessageWindowClear(pWork);  //下のメッセージを消す
     pWork->pAppTask=NULL;
     switch(selectno){
     case 0:  //こうかん
@@ -1212,7 +1214,6 @@ static void _changeMenuWait(IRC_POKEMON_TRADE* pWork)
     }
     else{  //キャンセル
       _PokemonReset(pWork,0);
-
       _CHANGE_STATE(pWork, _touchState);
     }
   }
@@ -1240,51 +1241,125 @@ static void _changeMenuOpen(IRC_POKEMON_TRADE* pWork)
   }
 }
 
+static BOOL IsTouchCLACTPosition(IRC_POKEMON_TRADE* pWork)
+{
+  BOOL bChange=FALSE;;
+  {
+    u32 x,y;
+    int line,index;
+    if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
+      GFL_CLWK* pCL = IRC_POKETRADE_GetCLACT(pWork,x+12,y+12, &pWork->workBoxno, &pWork->workPokeIndex, &line, &index);
+      if(pCL){
+        if(pWork->pCatchCLWK){
+          //今のつかんでる物を元の位置に戻す
+          GFL_CLACT_WK_SetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
+        }
+        pWork->pCatchCLWK = pCL;
+        GFL_CLACT_WK_GetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
+        IRC_POKETRADE_CursorEnable(pWork,line, index);  //OAMカーソル移動
+        OS_TPrintf("GET %d %d\n",pWork->workBoxno,pWork->workPokeIndex);
+        pWork->underSelectBoxno  = pWork->workBoxno;
+        pWork->underSelectIndex = pWork->workPokeIndex;
+        pWork->x = x;
+        pWork->y = y;
+        pWork->workPokeIndex = 0;
+        pWork->workBoxno = 0;
+        bChange = TRUE;
+      }
+    }
+  }
+  return bChange;
+}
+
 
 
 //自分画面にステータス表示 相手に見せるかどうか待ち
 static void _dispSubStateWait(IRC_POKEMON_TRADE* pWork)
 {
   BOOL bExit=FALSE;
+  BOOL bChange=FALSE;
+  int selectno=0;
 
   TOUCHBAR_Main(pWork->pTouchWork);
   switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
-//  case TOUCHBAR_ICON_RETURN:
-//    bExit=TRUE;
-//    break;
   case TOUCHBAR_ICON_CUR_L:
   case TOUCHBAR_ICON_CUR_R:
     {
-      POKEMON_PASO_PARAM* ppp =
-        IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox,
-                                           pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
-      POKEMON_PARAM* pp = PP_CreateByPPP(ppp,pWork->heapID);
       pWork->pokemonselectno = 1 - pWork->pokemonselectno;
-
-
-      GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0 );
-//      GFL_BMPWIN_MakeScreen(pWork->MyInfoWin);
-//      GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
-
-      
-      _changePokemonMyStDisp(pWork, pWork->pokemonselectno , (pWork->x < 128), pp);
-      GFL_HEAP_FreeMemory(pp);
+      bChange=TRUE;
     }
     break;
   default:
+    if(GFL_UI_KEY_GetTrg()==PAD_KEY_LEFT){
+      if(pWork->pokemonselectno == 1){
+        pWork->pokemonselectno = 0;
+        bChange=TRUE;
+      }
+    }
+    else if(GFL_UI_KEY_GetTrg()==PAD_KEY_RIGHT){
+      if(pWork->pokemonselectno == 0){
+        pWork->pokemonselectno = 1;
+        bChange=TRUE;
+      }
+    }
     break;
   }
+
+  if(IsTouchCLACTPosition(pWork)){
+    bChange = TRUE;
+  }
+
+  if(bChange){
+    POKEMON_PASO_PARAM* ppp =
+      IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox,
+                                         pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
+    POKEMON_PARAM* pp = PP_CreateByPPP(ppp,pWork->heapID);
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0 );
+    _resetPokemonMyStDisp(pWork);
+    _changePokemonMyStDisp(pWork, pWork->pokemonselectno , (pWork->x < 128), pp);
+    GFL_HEAP_FreeMemory(pp);
+    return;
+  }
+
+  // ついてくる
+  if(pWork->pCatchCLWK != NULL){  //タッチパネル操作中のアイコン移動
+    u32 x,y;
+    GFL_CLACTPOS pos;
+    if(GFL_UI_TP_GetPointCont(&x,&y)){
+      pos.x = x;
+      pos.y = y;
+      GFL_CLACT_WK_SetPos( pWork->pCatchCLWK, &pos, CLSYS_DRAW_SUB);
+    }
+  }
+  {
+    u32 x,y;
+
+    if(GFL_UI_TP_GetCont()==FALSE){ //タッチパネルを離した
+      if((pWork->pCatchCLWK != NULL) && pWork->bUpVec){ //ポケモンを上に登録
+        selectno = 0;  //決定と同じ
+        bExit=TRUE;  
+      }
+    }
+    pWork->bUpVec = FALSE;
+    if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視  // 上向き判定
+      if(pWork->y > (y + 10)){   // 上に移動した場合跳ね上げる処理
+        pWork->bUpVec = TRUE;
+      }
+      pWork->x = x;
+      pWork->y = y;
+    }
+  }
+
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
     bExit=TRUE;
   }
   if(bExit){
-    
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-
     if(selectno==0){
       //相手に見せる
       pWork->selectIndex = pWork->underSelectIndex;
       pWork->selectBoxno = pWork->underSelectBoxno;
+      GFL_CLACT_WK_SetDrawEnable( pWork->pCatchCLWK, FALSE);
       _CHANGE_STATE(pWork, _changeMenuOpen);
     }
     else{
@@ -1294,15 +1369,10 @@ static void _dispSubStateWait(IRC_POKEMON_TRADE* pWork)
     IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
     IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
     _resetPokemonMyStDisp(pWork);
-
     IRC_POKETRADE_SubStatusEnd(pWork);
-
-
     IRC_POKETRADE_AppMenuClose(pWork);
     pWork->pAppTask=NULL;
   }
-
-
 }
 
 
@@ -1791,6 +1861,16 @@ static void _padUDLRFunc(IRC_POKEMON_TRADE* pWork)
 //--------------------------------------------------------------------------------------------
 static void _touchState(IRC_POKEMON_TRADE* pWork)
 {
+  int i;
+
+
+  if(pWork->pCatchCLWK){
+    GFL_CLACT_WK_SetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
+    GFL_CLACT_WK_SetDrawEnable( pWork->pCatchCLWK, TRUE);
+    pWork->pCatchCLWK=NULL;
+  }
+
+  
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_U, TRUE );
   TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUR_U, TRUE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
@@ -1802,6 +1882,9 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
   IRC_POKETRADE_ReturnPageMarkDisp(pWork,APP_COMMON_BARICON_RETURN); //マーク表示
   IRC_POKETRADE_LeftPageMarkDisp(pWork,APP_COMMON_BARICON_CURSOR_UP); //マーク表示
   G2S_BlendNone();
+  for(i=0;i<2;i++){
+    pWork->bChangeOK[i]=FALSE;
+  }
   _CHANGE_STATE(pWork,_touchStateCommon);
 
 }
@@ -1819,11 +1902,6 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
 
   int backBoxNo = pWork->nowBoxno;
 
-  
-  for(i=0;i<2;i++){
-    pWork->bChangeOK[i]=FALSE;
-  }
-
   //キー処理
   _padUDLRFunc(pWork);
   if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_DECIDE){
@@ -1835,12 +1913,7 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
   }
 
   
-  if(GFL_UI_TP_GetPointCont(&x,&y)){   //ベクトルを監視
-    // 上向き判定
-    pWork->bUpVec = FALSE;
-    if(pWork->y > (y + 20)){   //20ドット上に移動した場合跳ね上げる処理
-      pWork->bUpVec = TRUE;
-    }
+  if(GFL_UI_TP_GetPointCont(&x,&y)){ 
     // パネルスクロール
     if((x >=  64) && ((192) > x)){
       if((y >=  152+12) && ((176+12) > y)){
@@ -1870,7 +1943,6 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
     pWork->touckON = FALSE;
   }
 
-
   TOUCHBAR_Main(pWork->pTouchWork);
   switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
   case TOUCHBAR_ICON_RETURN:
@@ -1884,52 +1956,10 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
     break;
   }
 
-  
-#if 1  //  画面タッチトリガ中の処理
-  if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
-
-    pWork->workBoxno=-1;
-    pWork->workPokeIndex=-1;
-    pWork->pCatchCLWK = IRC_POKETRADE_GetCLACT(pWork,x,y, &pWork->workBoxno, &pWork->workPokeIndex);
-    if(pWork->pCatchCLWK){
-      OS_TPrintf("GET %d %d\n",pWork->workBoxno,pWork->workPokeIndex);
-    }
-  }
-#endif
-
-
-  if(GFL_UI_TP_GetCont()==FALSE){ //タッチパネルを離した
-
-    if((pWork->pCatchCLWK != NULL) && pWork->bUpVec){ //ポケモンを上に登録
-      GFL_CLACT_WK_SetDrawEnable( pWork->pCatchCLWK, FALSE);
-
-      pWork->selectIndex = pWork->workPokeIndex;
-      pWork->selectBoxno = pWork->workBoxno;
-      pWork->workPokeIndex = 0;
-      pWork->workBoxno = 0;
-
-      _CHANGE_STATE(pWork,_changeMenuOpen);
-
-      
-    }
-    else if(pWork->pCatchCLWK){  //キャッチしてるが上ベクトルは働かなかった場合 自分の画面にステータスを表示する
-      pWork->underSelectBoxno  = pWork->workBoxno;
-      pWork->underSelectIndex = pWork->workPokeIndex;
-      IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);  //アイコン表示を元に戻す
-      _CHANGE_STATE(pWork,_dispSubState);
-    }
-    pWork->workPokeIndex = 0;
-    pWork->workBoxno = 0;
-    pWork->pCatchCLWK = NULL;
+  if(IsTouchCLACTPosition(pWork)){
+    _CHANGE_STATE(pWork,_dispSubState);
   }
 
-  if(pWork->pCatchCLWK != NULL){  //タッチパネル操作中のアイコン移動
-    if(GFL_UI_TP_GetPointCont(&x,&y)){
-      pos.x = x;
-      pos.y = y;
-      GFL_CLACT_WK_SetPos( pWork->pCatchCLWK, &pos, CLSYS_DRAW_SUB);
-    }
-  }
 }
 
 //----------------------------------------------------------------------------

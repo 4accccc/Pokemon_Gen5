@@ -725,6 +725,26 @@ void IRC_POKETRADE_SetCursorXY(IRC_POKEMON_TRADE* pWork)
   pWork->y = apos.y;
 }
 
+//ラインインデックスの位置にカーソル表示
+void IRC_POKETRADE_CursorEnable(IRC_POKEMON_TRADE* pWork,int line,int index)
+{
+  int i,j;
+
+  for(j=0;j<_LING_LINENO_MAX;j++){
+    for(i=0;i<BOX_VERTICAL_NUM;i++){
+      GFL_CLACT_WK_SetDrawEnable(pWork->markIcon[j][i],FALSE);
+    }
+  }
+  if(_LING_LINENO_MAX <= line){
+    return;
+  }
+  if(BOX_VERTICAL_NUM <= index){
+    return;
+  }
+  
+  GFL_CLACT_WK_SetDrawEnable( pWork->markIcon[line ][index], TRUE );
+}
+
 
 //ラインにあわせたポケモン表示
 static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_MANAGER* boxData ,int line, int k)
@@ -1045,7 +1065,7 @@ static void _iconAllDrawDisable(IRC_POKEMON_TRADE* pWork)
 
 
 
-GFL_CLWK* IRC_POKETRADE_GetCLACT( IRC_POKEMON_TRADE* pWork , int x, int y, int* trayno, int* pokeindex)
+GFL_CLWK* IRC_POKETRADE_GetCLACT( IRC_POKEMON_TRADE* pWork , int x, int y, int* trayno, int* pokeindex, int* outline, int* outindex)
 {
   GFL_CLACTPOS apos;
   int line,i,line2;
@@ -1063,6 +1083,10 @@ GFL_CLWK* IRC_POKETRADE_GetCLACT( IRC_POKEMON_TRADE* pWork , int x, int y, int* 
             line2 = pWork->pokeIconLine[line][i];
             *trayno = LINE2TRAY(line2);
             *pokeindex = LINE2POKEINDEX(line2, i);
+          }
+          if(outline != NULL){
+            *outline =line2;
+            *outindex = i;
           }
           return pWork->pokeIcon[line][i];
           //          line += BoxScrollNum(pWork);

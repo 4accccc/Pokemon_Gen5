@@ -427,7 +427,8 @@ struct _IRC_POKEMON_TRADE{
   u32 y;
   BOOL bUpVec;
   GFL_CLWK* pCatchCLWK;   //つかんでるポケモンCLACT
-
+  GFL_CLACTPOS aCatchOldPos;  //つかんでるポケモンの前の位置
+  
 
   int MainObjCursorLine;   //OBJカーソルライン
   int MainObjCursorIndex;  //OBJカーソルインデックス
@@ -509,7 +510,9 @@ extern void IRC_POKETRADE_MainObjCursorDisp(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork );
 extern void IRC_POKETRADEDEMO_Main( IRC_POKEMON_TRADE* pWork );
 extern void IRC_POKETRADEDEMO_End( IRC_POKEMON_TRADE* pWork );
-extern GFL_CLWK* IRC_POKETRADE_GetCLACT( IRC_POKEMON_TRADE* pWork , int x, int y, int* trayno, int* pokeindex);
+//extern GFL_CLWK* IRC_POKETRADE_GetCLACT( IRC_POKEMON_TRADE* pWork , int x, int y, int* trayno, int* pokeindex);
+extern GFL_CLWK* IRC_POKETRADE_GetCLACT( IRC_POKEMON_TRADE* pWork , int x, int y, int* trayno, int* pokeindex, int* outline, int* outindex);
+
 extern void IRC_POKETRADEDEMO_SetModel( IRC_POKEMON_TRADE* pWork, int modelno);
 extern void IRC_POKETRADEDEMO_RemoveModel( IRC_POKEMON_TRADE* pWork);
 
@@ -538,6 +541,7 @@ extern void IRC_POKETRADE_PokerusIconDisp(IRC_POKEMON_TRADE* pWork,int side,int 
 extern void IRC_POKETRADE_PokeStatusIconDisp(IRC_POKEMON_TRADE* pWork, POKEMON_PARAM* pp);
 extern void IRC_POKETRADE_PokeStatusIconReset(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SetCursorXY(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_CursorEnable(IRC_POKEMON_TRADE* pWork,int line,int index);
 
 
 #if _TRADE_DEBUG
