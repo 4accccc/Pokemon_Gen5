@@ -129,14 +129,14 @@ typedef int (MenuFunc)(FIELD_ITEMMENU_WORK* wk);
 struct _FIELD_ITEMMENU_PARAM {
   // [IN] 初期化時に外部から受け渡されるメンバ
   CONFIG              * config;              
-  GMEVENT             * event;
-  FIELDMAP_WORK       * fieldmap;
   MYSTATUS            * mystatus;
   ITEMCHECK_WORK      * icwk;           ///< アイテムチェックワーク FMENU_EVENT_WORKからコピー
   BAG_MODE            mode;             ///< バッグ呼び出しモード
+  BAG_CURSOR*         pBagCursor;
+  MYITEM_PTR          pMyItem;
   BOOL                cycle_flg;        ///< 自転車かどうか？
-  BAG_CURSOR* pBagCursor;
-  MYITEM_PTR  pMyItem;
+//  GMEVENT             * event;
+//  FIELDMAP_WORK       * fieldmap;
 
   // [PRIVATE]
 	ITEM_ST ScrollItem[ BAG_MYITEM_MAX ];	///< スクロールする為のアイテムリスト

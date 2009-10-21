@@ -208,7 +208,7 @@ static const BOOL FMenuReturnProc_TownMap(FMENU_EVENT_WORK* mwk);
 
 static void FMenuTakeFieldInfo(FMENU_EVENT_WORK* mwk);
 
-static BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, GMEVENT* gmEvent, FIELDMAP_WORK* fieldmap, const ITEMCHECK_WORK* icwk, BAG_MODE mode );
+static BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MODE mode );
 
 //--------------------------------------------------------------
 /// フィールドマップメニューリスト
@@ -653,7 +653,7 @@ static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 {
   GAMEDATA* gmData = GAMESYSTEM_GetGameData( mwk->gmSys );
 
-  mwk->subProcWork = BAG_CreateParam( gmData, mwk->gmEvent, mwk->fieldWork, &mwk->icwk, BAG_MODE_FIELD );
+  mwk->subProcWork = BAG_CreateParam( gmData, &mwk->icwk, BAG_MODE_FIELD );
 
   mwk->subProcType = FMENU_APP_BAG;
   mwk->state = FMENUSTATE_FIELD_FADEOUT;
@@ -779,7 +779,7 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
       BAG_PARAM* bag;
       GAMEDATA* gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
 
-      bag = BAG_CreateParam( gmData, mwk->gmEvent, mwk->fieldWork, &mwk->icwk, BAG_MODE_POKELIST );
+      bag = BAG_CreateParam( gmData, &mwk->icwk, BAG_MODE_POKELIST );
       
       //データ退避
       mwk->selPoke = plData->ret_sel;
@@ -795,7 +795,7 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
       GAMEDATA* gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
 
       //フィールドから呼ばれる
-      bag = BAG_CreateParam( gmData, mwk->gmEvent, mwk->fieldWork, &mwk->icwk, BAG_MODE_FIELD );
+      bag = BAG_CreateParam( gmData, &mwk->icwk, BAG_MODE_FIELD );
 
       FMenu_SetNextSubProc( mwk ,FMENU_APP_BAG , bag );
       return TRUE;
@@ -1077,7 +1077,7 @@ static const BOOL FMenuReturnProc_TownMap(FMENU_EVENT_WORK* mwk)
   GAMEDATA* gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
 
   // フィールドから呼ばれる
-  bag = BAG_CreateParam( gmData, mwk->gmEvent, mwk->fieldWork, &mwk->icwk, BAG_MODE_FIELD );
+  bag = BAG_CreateParam( gmData, &mwk->icwk, BAG_MODE_FIELD );
       
   FMenu_SetNextSubProc( mwk ,FMENU_APP_BAG , bag );
 
@@ -1380,15 +1380,13 @@ static void FMenuTakeFieldInfo( FMENU_EVENT_WORK *mwk )
  *	@brief  バッグパラメータ生成
  *
  *	@param	GAMEDATA* gmData  ゲームデータ
- *	@param	gmEvent イベントデータ
- *	@param	fieldmap フィールドマップへのポインタ
  *	@param	ITEMCHECK_WORK* icwk アイテムチェックワーク
  *	@param	mode バッグ起動モード
  *
  *	@retval BAG_PARAM* バッグパラメータ(ALLOC済み)
  */
 //-----------------------------------------------------------------------------
-static BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, GMEVENT* gmEvent, FIELDMAP_WORK* fieldmap, const ITEMCHECK_WORK* icwk, BAG_MODE mode )
+static BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MODE mode )
 {
   SAVE_CONTROL_WORK* saveControl;
   BAG_PARAM * bag;
@@ -1397,8 +1395,6 @@ static BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, GMEVENT* gmEvent, FIELDMAP_
 
   bag = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(BAG_PARAM));
 
-  bag->p_event      = gmEvent;
-  bag->p_fieldmap   = fieldmap;
   bag->p_config     = SaveData_GetConfig( saveControl );
   bag->p_mystatus   = GAMEDATA_GetMyStatus( gmData );
   bag->p_bagcursor  = GAMEDATA_GetBagCursor( gmData );

@@ -26,7 +26,6 @@
 #include "msg/msg_bag.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
-#include "field/fieldmap.h"
 #include "font/font.naix" //NARC_font_large_nftr
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
@@ -2504,8 +2503,6 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->heapID = HEAPID_ITEMMENU;
 
   // ƒpƒ‰ƒ[ƒ^‚©‚çŽæ“¾
-  pWork->fieldmap   = pParam->p_fieldmap;
-  pWork->event      = pParam->p_event;
   pWork->mystatus   = pParam->p_mystatus;
   pWork->config     = pParam->p_config;
   pWork->pBagCursor = pParam->p_bagcursor;
