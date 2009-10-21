@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	ohmura megumi_mizutani
+USERS	=	sogabe ohmura megumi_mizutani
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -77,9 +77,7 @@ MCSSNCLFILE	:= $(wildcard $(RES_DIR)trwb_*.ncl)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES:	.ncg.nce.ncl
 
-do-build:	sub_dir ncg nce nmc ncl $(notdir $(OBJNCEFILE:.nce=.NCER))
-%.NCER: $(RES_DIR)%.nce
-	ruby $(RUBY_DIR)clact_conv.rb $(RES_DIR)$*.nce $(RES_DIR)$*.ncg $(RES_DIR)$*.ncl $(G2D_DIR) $(CNV_DIR)
+do-build:	sub_dir ncg nce nmc ncl obj	$(NARCNAME_F) $(NARCNAME_B)
 
 sub_dir:
 	@$(MAKE_SUBDIR)
@@ -101,6 +99,17 @@ ncl: $(notdir $(MCSSNCLFILE:.ncl=.NCLR))
 %.NCLR: $(RES_DIR)%.ncl
 	perl $(SCRIPT_DIR)tr_ncl.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
 
+obj: $(notdir $(OBJNCEFILE:.nce=.NCER))
+%.NCER: $(RES_DIR)%.nce
+	ruby $(RUBY_DIR)clact_conv.rb $(RES_DIR)$*.nce $(RES_DIR)$*.ncg $(RES_DIR)$*.ncl $(G2D_DIR) $(CNV_DIR)
+
+$(NARCNAME_F): $(notdir $(MCSSNCGFILE:.ncg=.NCBR)) $(notdir $(MCSSNCEFILE:.nce=.NCER)) $(notdir $(MCSSNCLFILE:.ncl=.NCLR)) $(SCRFILE_F)
+	nnsarc -c -l -n -i $(NARCNAME_F) -S $(SCRFILE_F)
+	$(NAIXCUT) $(NAIXNAME_F)
+
+$(NARCNAME_B): $(notdir $(OBJNCGFILE:.ncg=.NCGR)) $(notdir $(OBJNCEFILE:.nce=.NCER)) $(notdir $(OBJNCLFILE:.ncl=.NCLR)) $(SCRFILE_B)
+	nnsarc -c -l -n -i $(NARCNAME_B) -S $(SCRFILE_B)
+	$(NAIXCUT) $(NAIXNAME_B)
 endif
 
 #------------------------------------------------------------------------------
@@ -115,21 +124,6 @@ $(TARGETDIR)/$(NARCNAME_F):	$(NARCNAME_F) $(NAIXNAME_F)
 $(TARGETDIR)/$(NARCNAME_B):	$(NARCNAME_B) $(NAIXNAME_B)
 	$(COPY)	$(NARCNAME_B) $(TARGETDIR)
 	$(COPY) $(NAIXNAME_B) $(TARGETDIR)
-
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-
-do-build:	$(NARCNAME_F) $(NARCNAME_B)
-
-$(NARCNAME_F): $(notdir $(MCSSNCGFILE:.ncg=.NCBR)) $(notdir $(MCSSNCEFILE:.nce=.NCER)) $(notdir $(MCSSNCLFILE:.ncl=.NCLR)) $(SCRFILE_F)
-	nnsarc -c -l -n -i $(NARCNAME_F) -S $(SCRFILE_F)
-	$(NAIXCUT) $(NAIXNAME_F)
-
-$(NARCNAME_B): $(notdir $(OBJNCGFILE:.ncg=.NCBR)) $(notdir $(OBJNCEFILE:.nce=.NCER)) $(notdir $(OBJNCLFILE:.ncl=.NCLR)) $(SCRFILE_B)
-	nnsarc -c -l -n -i $(NARCNAME_B) -S $(SCRFILE_B)
-	$(NAIXCUT) $(NAIXNAME_B)
-
-
-endif
 
 #------------------------------------------------------------------------------
 #	make cleanルール
