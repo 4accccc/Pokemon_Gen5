@@ -49,13 +49,13 @@ typedef enum {
 //==============================================================
 typedef struct {
   // [IN] 初期化時に外部から受け渡されるメンバ
-  GMEVENT           * p_event;
-  FIELDMAP_WORK     * p_fieldmap;
+//  GMEVENT           * p_event;
+//  FIELDMAP_WORK     * p_fieldmap;
   CONFIG            * p_config;    
   MYSTATUS          * p_mystatus;
   BAG_CURSOR        * p_bagcursor;
   MYITEM_PTR          p_myitem;
-  ITEMCHECK_WORK      icwk;         ///< アイテムチェックワーク FMENU_EVENT_WORKからコピー
+  ITEMCHECK_WORK      icwk;         ///< アイテムチェックワーク FMENU_EVENT_WORKからコピー。「つかう」が出ない状態であれば不必要
   BAG_MODE            mode;         ///< バッグ呼び出しモード
   BOOL                cycle_flg;    ///< 自転車かどうか？
   // [OUT] 外部に返すメンバ
