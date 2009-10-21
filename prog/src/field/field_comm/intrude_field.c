@@ -96,6 +96,7 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
 
   //パレスマップに来たかチェック
   DEBUG_PalaceMapInCheck(fieldWork, gameSys, game_comm, pcActor);
+  _PalaceFieldPlayerWarp(fieldWork, gameSys, pcActor, intcomm);
 
 #if 0
   if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){
@@ -137,7 +138,6 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   }
   
   IntrudeField_ConnectMap(fieldWork, gameSys, intcomm);
-  _PalaceFieldPlayerWarp(fieldWork, gameSys, pcActor, intcomm);
   PALACE_SYS_Update(intcomm->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), 
     pcActor, intcomm, fieldWork, game_comm);
 }
@@ -585,7 +585,7 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   BOOL warp;
   s32 left_end, right_end;
   
-#if 1
+#if 0
   if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION || intcomm == NULL){
     return;
   }
@@ -600,21 +600,25 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   pos.x = FX_Whole(pos.x);
   pos.z = FX_Whole(pos.z);
   
-  now_area = intcomm->intrude_status_mine.palace_area;
+  now_area = 0;//intcomm->intrude_status_mine.palace_area;
   new_area = now_area;
   check_area = now_area;
   
+#if 0
   calc_bit = intcomm->recv_profile;
   profile_num = MATH_CountPopulation(calc_bit);
   profile_num = profile_num == 0 ? 1 : profile_num;
-  
+#else
+  profile_num = 3;
+#endif
+
   left_end = PALACE_MAP_RANGE_LEFT_X;
   right_end = PALACE_MAP_RIGHT * profile_num - PALACE_MAP_RANGE_LEFT_X;
   
   //マップループチェック
   if(pos.x < PALACE_MAP_RANGE_LEFT_X){
     for(i = FIELD_COMM_MEMBER_MAX - 1; i > -1; i--){
-      if(intcomm->recv_profile & (1 << i)){
+      if(7 & (1 << i)){
         new_area = i;
         warp = TRUE;
         break;
@@ -623,7 +627,7 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   }
   else if(pos.x > right_end){
     for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
-      if(intcomm->recv_profile & (1 << i)){
+      if(7 & (1 << i)){
         new_area = i;
         warp = TRUE;
         break;
@@ -671,7 +675,11 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
   profile_num = MATH_CountPopulation(calc_bit);
   profile_num--;  //自分の分は引く
   
+#if 0
   if(intcomm->connect_map_count < profile_num){
+#else
+  if(intcomm->connect_map_count < 3){
+#endif
     mmatrix = MAP_MATRIX_Create( HEAPID_WORLD );
     MAP_MATRIX_Init(mmatrix, NARC_map_matrix_palace02_mat_bin, ZONE_ID_PALACE01);
 
@@ -679,7 +687,7 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
       OS_TPrintf("--- Map連結 %d ----\n", intcomm->connect_map_count + 1);
       FLDMAPPER_Connect( FIELDMAP_GetFieldG3Dmapper( fieldWork ), mmatrix );
       intcomm->connect_map_count++;
-    }while(intcomm->connect_map_count < profile_num);
+    }while(intcomm->connect_map_count < 3);
 
     MAP_MATRIX_Delete( mmatrix );
   }
