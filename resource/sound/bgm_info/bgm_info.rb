@@ -138,7 +138,7 @@ src_file.each do | line |
 	iss_type = items[5];
 
 	# ISSタイプが設定されている場合, シーケンス番号とISSタイプをテーブルに登録
-	if( IsEmpty( iss_type ) != true ) then
+	if iss_type!=nil && ( IsEmpty( iss_type ) != true ) then
 		table[ data_num ] = [ GetSeqIndex( items[2], def_seq_file ), GetISSType( iss_type, def_type_file ) ];
 		data_num          = data_num + 1;
 	end
