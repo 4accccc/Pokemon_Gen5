@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-15T18:03:39"/>
+	<create user="matsumiya" host="W00207" date="2009-10-21T11:33:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -614,6 +614,19 @@
 ヤーコンさんに　そういわれているんだ</language>
 		<language name="JPN_KANJI" width="256">悪いが　今は　だれも通せないよ
 ヤーコンさんに　そういわれているんだ</language>
+	</row>
+
+	<row id="msg_c05_businessman_01" back-color="#ff8080,,,#ff8080,,,,,,,,,,,,,,,">
+		<comment>♂
+・c05ジムストッパー
+・d05r0101イベントクリアで削除</comment>
+		<attribute name="キャラクター">BUSINESSMAN</attribute>
+		<language name="JPN" width="256">ジムリーダーの　ヤーコンさまですが
+ただいま　とりこみちゅう　でして[BE:00:ページ切り替え（行送り）]
+また　のちほど　いらしてください</language>
+		<language name="JPN_KANJI" width="256">ジムリーダーの　ヤーコン様ですが
+ただいま　取り込み中　でして[BE:00:ページ切り替え（行送り）]
+また　のちほど　いらしてください</language>
 	</row>
 
 	<row id="msg_c05_woman2_01">
