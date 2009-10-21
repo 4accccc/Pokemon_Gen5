@@ -109,7 +109,8 @@ typedef struct
 	GAMESYS_WORK*        gsys;  // ゲームシステム 
 	FIELDMAP_WORK*   fieldmap;  // フィールドマップ
   NAMEIN_PARAM* nameInParam;  // 名前入力画面のパラメータ
-  u16*              retWork; // 結果の格納先ワークへのポインタ
+  POKEMON_PARAM*  pokeParam;  // 名前入力対象ポケモン
+  u16*              retWork;  // 結果の格納先ワークへのポインタ
 } PARTY_NAMEIN_WORK; 
 
 //-------------------------------------------------------------------------------------
@@ -139,9 +140,9 @@ GMEVENT * EVENT_NameInput_PartyPoke(
 
   // イベントワークを初期化
   work = GMEVENT_GetEventWork( event );
-  work->gsys        = gsys;
-  work->fieldmap    = GAMESYSTEM_GetFieldMapWork( gsys );
-  work->retWork     = ret_wk;
+  work->gsys     = gsys;
+  work->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  work->retWork  = ret_wk;
 
   // ポケモン名入力画面を作成
   {
@@ -152,6 +153,7 @@ GMEVENT * EVENT_NameInput_PartyPoke(
     u32        formno = PP_Get( pp, ID_PARA_form_no, NULL );
     work->nameInParam = NAMEIN_AllocParam( 
         HEAPID_APP_CONTROL, NAMEIN_POKEMON, monsno, formno, NAMEIN_POKEMON_LENGTH, NULL );
+    work->pokeParam   = pp;
   }
 
   // 作成したイベントを返す
@@ -170,12 +172,19 @@ static GMEVENT_RESULT EVENT_FUNC_NameInput_PartyPoke(
 
   switch( *seq )
   {
-  case 0: // 共通イベント呼び出し
-    GMEVENT_CallEvent( event, EVENT_NameInput(pniw->gsys, pniw->fieldmap, pniw->nameInParam) );
+  case 0: //----------------------------------------------- 共通イベント呼び出し
+    GMEVENT_CallEvent( 
+        event, EVENT_NameInput(pniw->gsys, pniw->fieldmap, pniw->nameInParam) );
     ++(*seq);
     break;
-  case 1: // イベント終了
-    *(pniw->retWork) = TRUE;
+  case 1: //----------------------------------------------- イベント終了
+    // 入力された名前を反映させる
+    if( pniw->nameInParam->cancel != TRUE ) 
+    { 
+      PP_Put( pniw->pokeParam, ID_PARA_nickname, (u32)pniw->nameInParam->strbuf );
+    }
+    // 入力結果をワークに返す
+    *(pniw->retWork) = (pniw->nameInParam->cancel != TRUE);
     NAMEIN_FreeParam( pniw->nameInParam );
     return GMEVENT_RES_FINISH;
   }
