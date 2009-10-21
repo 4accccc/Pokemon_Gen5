@@ -34,10 +34,11 @@
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
-	u16	arrive_id:8;	//到着フラグ
+	u16	arrive_flag;	//到着フラグ
+
 	u16	IsTeleportPos:1;
 	u16	AutoSetArriveFlag:1;
-	u16	:6;
+	u16	:14;
 
 	u16	room_id;	//全滅時の戻り先ZoneID
 	u16	room_gx:8;	//全滅時の戻り先X
@@ -52,7 +53,7 @@ typedef struct {
 	u16	escape_gz;	//出口座標Z
 }WARPDATA;
 
-SDK_COMPILER_ASSERT(sizeof(WARPDATA) == 18);
+SDK_COMPILER_ASSERT(sizeof(WARPDATA) == 20);
 
 //自動生成されるはずのデータ定義
 #include "../../../resource/fldmapdata/warpdata/warpdata.cdat"
@@ -205,7 +206,8 @@ void ARRIVEDATA_SetArriveFlag( GAMEDATA * gamedata, int zone_id)
 	for (i = 0; i < NELEMS(WarpData); i++) {
 		//OS_Printf("zone = %d, WarpZone = %d\n",zone_id,WarpData[i].fld_id);
 		if (WarpData[i].fld_id == zone_id && WarpData[i].AutoSetArriveFlag) {
-			EVENTWORK_SetEventFlag(GAMEDATA_GetEventWork( gamedata ), WarpData[i].arrive_id);
+			EVENTWORK_SetEventFlag(GAMEDATA_GetEventWork( gamedata ), WarpData[i].arrive_flag);
+      TAMADA_Printf("Arrive Flag Set: %x\n", WarpData[i].arrive_flag );
 			return;
 		}
 	}
@@ -226,7 +228,7 @@ void ARRIVEDATA_SetArriveFlag( GAMEDATA * gamedata, int zone_id)
 BOOL ARRIVEDATA_GetArriveFlag(GAMEDATA * gamedata, int warp_id)
 {
 	int reg_id = regulate_warp_id(warp_id);
-	return EVENTWORK_CheckEventFlag(GAMEDATA_GetEventWork( gamedata ), WarpData[reg_id].arrive_id);
+	return EVENTWORK_CheckEventFlag(GAMEDATA_GetEventWork( gamedata ), WarpData[reg_id].arrive_flag);
 }
 
 
