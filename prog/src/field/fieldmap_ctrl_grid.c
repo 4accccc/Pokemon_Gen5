@@ -329,6 +329,7 @@ static BOOL gym_check( u16 zone_id )
   case ZONE_ID_C02GYM0201:
   case ZONE_ID_C02GYM0202:   
   case ZONE_ID_C02GYM0203:   
+  case ZONE_ID_PALACE01:   
     return TRUE;
   }
 
