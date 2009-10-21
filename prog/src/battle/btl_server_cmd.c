@@ -67,8 +67,9 @@ typedef enum {
   SC_ARGFMT_1x8byte = SC_ARGFMT(8,0),
 
   // メッセージ型（可変引数）
-  SC_ARGFMT_MSG   = SC_ARGFMT(0,0),
-  SC_ARGFMT_POINT = SC_ARGFMT(0,1),
+  SC_ARGFMT_MSG    = SC_ARGFMT(0,0),
+  SC_ARGFMT_MSG_SE = SC_ARGFMT(0,1),
+  SC_ARGFMT_POINT  = SC_ARGFMT(0,2),
 
 }ScArgFormat;
 
@@ -148,6 +149,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_12byte, // SC_MSG_WAZA
   SC_ARGFMT_MSG,    // SC_MSG_STD
   SC_ARGFMT_MSG,    // SC_MSG_SET
+  SC_ARGFMT_MSG_SE, // SC_MSG_STD_SE
 };
 
 //------------------------------------------------------------------------
@@ -165,7 +167,7 @@ static inline u32 pack_3args( int bytes, int arg1, int arg2, int arg3, int bits1
 static inline void unpack_3args( int bytes, u32 pack, int bits1, int bits2, int bits3, int* args, int idx_start );
 static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, const int* args );
 static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args );
-static void read_core_msg( BTL_SERVER_CMD_QUE* que, int* args );
+static void read_core_msg( BTL_SERVER_CMD_QUE* que, u8 scType, int* args );
 
 
 
@@ -644,7 +646,7 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
   {
     u8 fmt = ServerCmdToFmtTbl[ cmd ];
 
-    if( fmt != SC_ARGFMT_MSG )
+    if( (fmt != SC_ARGFMT_MSG) && (fmt != SC_ARGFMT_MSG_SE) )
     {
       read_core( que, fmt, args );
 
@@ -663,10 +665,9 @@ ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
     }
     else
     {
-      read_core_msg( que, args );
+      read_core_msg( que, fmt, args );
     }
   }
-
   return cmd;
 }
 
@@ -683,6 +684,7 @@ void SCQUE_PUT_ArgOnly( BTL_SERVER_CMD_QUE* que, u8 arg )
 {
   scque_put1byte( que, arg );
 }
+
 //=============================================================================================
 /**
  * １バイト単位で渡された引数を読み出す
@@ -708,10 +710,17 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
     va_start( list, scType );
     strID = va_arg( list, int );
 
+    BTL_Printf( " PUT MSG SC=%d, StrID=%d", scType, strID );
+
     scque_put2byte( que, scType );
     scque_put2byte( que, strID );
+    if( scType == SC_ARGFMT_MSG_SE ){
+      u16 seID = va_arg( list, int );
+      scque_put2byte( que, seID );
+      BTL_PrintfSimple( "SE_ID=%d", seID);
+    }
+    BTL_PrintfSimple( "\n  args=");
 
-    BTL_Printf(" PUT MSG SC=%d, StrID=%d\n arg= ", scType, strID);
     do {
       arg = va_arg( list, int );
       BTL_PrintfSimple("%d ", arg);
@@ -719,33 +728,35 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
     }while( arg != MSGARG_TERMINATOR );
     BTL_PrintfSimple("\n");
 
-
     va_end( list );
   }
 }
 
-static void read_core_msg( BTL_SERVER_CMD_QUE* que, int* args )
+static void read_core_msg( BTL_SERVER_CMD_QUE* que, u8 scType, int* args )
 {
-  args[0] = scque_read2byte( que );
+  int idx_begin = 1;
 
+  args[0] = scque_read2byte( que );
   BTL_Printf("READ MSG strID=%d\n", args[0]);
 
-  {
-    int i = 0;
+  if( scType == SC_ARGFMT_MSG_SE ){
+    args[1] = scque_read2byte( que );
+    ++idx_begin;
+    BTL_Printf(" setSE=%d\n", args[1]);
+  }
 
-    do {
-      ++i;
-      if( i < BTL_SERVERCMD_ARG_MAX )
-      {
-        args[i] = scque_read2byte( que );
-        BTL_Printf(" msg arg[%d] = %d\n", i-1, args[i]);
-      }
-      else
-      {
-        GF_ASSERT(0);
+  {
+    int i = idx_begin;
+    for(i=idx_begin; i<BTL_SERVERCMD_ARG_MAX; ++i){
+      args[i] = scque_read2byte( que );
+      BTL_Printf(" msg arg[%d] = %d\n", i-idx_begin, args[i]);
+      if( args[i] == MSGARG_TERMINATOR ){
         break;
       }
-    }while( args[i] != MSGARG_TERMINATOR );
+    }
+    if( i == BTL_SERVERCMD_ARG_MAX ){
+      GF_ASSERT(0); // 引数使いすぎ
+    }
   }
 }
 

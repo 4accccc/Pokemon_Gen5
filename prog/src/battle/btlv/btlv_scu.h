@@ -93,5 +93,6 @@ extern void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 waitFrames )
 //=============================================================================================
 extern BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk );
 
+extern BOOL BTLV_SCU_IsJustDoneMsg( BTLV_SCU* wk );
 
 #endif

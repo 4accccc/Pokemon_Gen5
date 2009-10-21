@@ -1102,6 +1102,10 @@ BOOL BTLV_WaitMsg( BTLV_CORE* wk )
 {
   return BTLV_SCU_WaitMsg( wk->scrnU );
 }
+BOOL BTLV_IsJustDoneMsg( BTLV_CORE* wk )
+{
+  return BTLV_SCU_IsJustDoneMsg( wk->scrnU );
+}
 
 
 

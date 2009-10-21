@@ -145,6 +145,7 @@ struct _BTLV_SCU {
   HEAPID        heapID;
   u8            printSeq;
   u8            playerClientID;
+  u8            printJustDoneFlag;
   PRINTSTREAM_STATE  printState;
   u16           printWait;
   u16           printWaitOrg;
@@ -1644,8 +1645,25 @@ void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait )
   wk->printSeq = 0;
   wk->printWait = wait;
   wk->printWaitOrg = wait;
+  wk->printJustDoneFlag = FALSE;
 }
-
+//=============================================================================================
+/**
+ * メッセージ終端までの表示を終えたタイミングかどうか判定
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTLV_SCU_IsJustDoneMsg( BTLV_SCU* wk )
+{
+  if( wk->printJustDoneFlag ){
+    wk->printJustDoneFlag = FALSE;
+    return TRUE;
+  }
+  return FALSE;
+}
 //=============================================================================================
 /**
  * メッセージ表示終了待ち
@@ -1694,6 +1712,9 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
         } else {
           wk->printSeq = SEQ_WAIT_USERCTRL_COMM;
         }
+        if( wk->printState == PRINTSTREAM_STATE_DONE ){
+          wk->printJustDoneFlag = TRUE;
+        }
       }
     }
     else
@@ -1702,7 +1723,7 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
     }
     break;
 
-  case SEQ_WAIT_USERCTRL_NOT_COMM: // 待ち指定あり（通常時）
+  case SEQ_WAIT_USERCTRL_NOT_COMM: // 待ち指定あり（非通信時）
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
       wk->printWait = 0;

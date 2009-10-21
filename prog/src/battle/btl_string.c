@@ -647,6 +647,7 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
 //--------------------------------------------------------------
 static void ms_set_std( STRBUF* dst, u16 strID, const int* args )
 {
+  BTL_Printf("ms set std strID=%d, args[0]=%d, args[1]=%d\n", strID, args[0], args[1]);
   strID = get_setStrID( args[0], strID );
 
   GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );

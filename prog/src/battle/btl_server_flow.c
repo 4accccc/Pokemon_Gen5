@@ -1722,11 +1722,15 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
 
   // ○○は××を使った！
   {
-    int arg[2];
-    u16 strID;
-    arg[0] = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
-    arg[1] = itemID;
-    strID = ( wk->bagMode != BBAG_MODE_SHOOTER )? BTL_STRID_STD_UseItem_Self : BTL_STRID_STD_UseItem_Shooter;
+    int args[2];
+    args[0] = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
+    args[1] = itemID;
+    if( wk->bagMode != BBAG_MODE_SHOOTER ){
+      scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem_Self, 2, args );
+    }else{
+//      scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem_Shooter, 2, args );
+      SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_UseItem_Shooter, SEQ_SE_SHOOTER, args[0], args[1] );
+    }
   }
 
   if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_TYPE) == ITEMTYPE_BALL )
@@ -5027,14 +5031,6 @@ static u32 getexp_calc_adjust_level( u32 base_exp, u16 getpoke_lv, u16 deadpoke_
       getpoke_lv, deadpoke_lv, base_exp, result );
 
   return result;
-
-#if 0
-■もらえる経験値 ＝もらえる経験値×（相手レベル×2＋10）の2.5乗÷（相手レベル＋自分レベル＋10）の2.5乗+1
-　※2.0乗→2.5乗にしてより差がでるようにしました。
-　　+10はレベルが低い時に差が出ない補正
-　　+1は値が0にならないための補正
-#endif
-
 }
 
 //----------------------------------------------------------------------------------

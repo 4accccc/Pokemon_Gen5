@@ -144,7 +144,7 @@ static inline BtlPokePos getTripleFrontPos( BtlPokePos pos );
 static inline u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos );
 static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos, u8* clientID, u8* posIdx );
 static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos );
-static inline u8 PokeID_to_ClientID( u8 pokeID );
+static u8 PokeID_to_ClientID( u8 pokeID );
 static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModule );
 static BOOL PokeCon_IsExistClient( const BTL_POKE_CONTAINER* wk, u32 clientID );
 static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* party_src, u8 clientID );
@@ -391,7 +391,7 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
 static BOOL setup_alone_single( int* seq, void* work )
 {
   enum {
-    BAG_MODE = BBAG_MODE_NORMAL,
+    BAG_MODE = BBAG_MODE_SHOOTER,
   };
 
   // server*1, client*2
@@ -1646,7 +1646,7 @@ static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos )
   return pos / 2;
 }
 // ポケモンID -> クライアントID変換
-static inline u8 PokeID_to_ClientID( u8 pokeID )
+static u8 PokeID_to_ClientID( u8 pokeID )
 {
   u8 i, min, max;
   for(i=0; i<NELEMS(ClientBasePokeID); ++i)
@@ -1658,7 +1658,10 @@ static inline u8 PokeID_to_ClientID( u8 pokeID )
       return i;
     }
   }
-  GF_ASSERT_MSG(0, "Illegal PokeID[%d]", pokeID);
+//  GF_ASSERT_MSG(0, "Illegal PokeID[%d]", pokeID);
+  {
+    BTL_Printf("hogeragera pokeID=%d\n", pokeID);
+  }
   return 0;
 }
 //=============================================================================================

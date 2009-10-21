@@ -173,6 +173,8 @@ extern void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args );
 extern void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args );
 extern void BTLV_StartMsgWaza( BTLV_CORE* wk, u8 pokeID, u16 waza );
 extern BOOL BTLV_WaitMsg( BTLV_CORE* wk );
+extern BOOL BTLV_IsJustDoneMsg( BTLV_CORE* wk );
+
 
 extern void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokePos, WazaID waza,
   BtlvWazaEffect_TurnType turnType, u8 continueCount );
