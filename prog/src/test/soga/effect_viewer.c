@@ -508,10 +508,28 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     if( ( evw->sequence_data != NULL ) && ( evw->resource_data != NULL ) )
     {
       if( cont == PAD_BUTTON_A ){
-        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->sequence_data, evw->resource_data );
+        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->sequence_data, evw->resource_data, NULL );
       }
       else if( cont == PAD_BUTTON_B ){
-        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data );
+        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, NULL );
+      }
+      else if( cont == PAD_BUTTON_Y ){
+        BTLV_EFFVM_PARAM param;
+
+        param.item_no = 0;
+        param.yure_cnt = GFUser_GetPublicRand( 4 );
+        param.get_success = FALSE;
+
+        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, &param );
+      }
+      else if( cont == PAD_BUTTON_X ){
+        BTLV_EFFVM_PARAM param;
+
+        param.item_no = 0;
+        param.yure_cnt = 3;
+        param.get_success = TRUE;
+
+        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, &param );
       }
     }
     evw->seq_no++;
@@ -531,12 +549,12 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     break;
   case SEQ_EFFECT_VIEW:
     if( cont == PAD_BUTTON_A ){
-      BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->waza_no );
+      BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->waza_no, NULL );
       evw->ret_seq_no = evw->seq_no;
       evw->seq_no = SEQ_EFFECT_WAIT;
     }
     else if( cont == PAD_BUTTON_B ){
-      BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->waza_no );
+      BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->waza_no, NULL );
       evw->ret_seq_no = evw->seq_no;
       evw->seq_no = SEQ_EFFECT_WAIT;
     }
