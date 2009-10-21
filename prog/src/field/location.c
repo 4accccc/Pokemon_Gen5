@@ -14,11 +14,14 @@
 #include <gflib.h>
 
 #include "field/zonedata.h"
+#include "field/rail_location.h"
 #include "field/location.h"
 
 #include "field/field_const.h"
 
 #include "field/eventdata_type.h"
+
+#include "field_rail.h"
 
 //#include "mapdefine.h"		//ZONE_ID_～
 //#include "fieldobj_code.h"	//DIR_DOWN
@@ -50,9 +53,10 @@ void LOCATION_Init(LOCATION * loc)
 	loc->zone_id = 0;
 	loc->exit_id = 0;
 	loc->dir_id = 0;
-	loc->pos.x = 0;
-	loc->pos.y = 0;
-	loc->pos.z = 0;
+	loc->location_pos.type = LOCATION_POS_TYPE_3D;
+	loc->location_pos.pos.x = 0;
+	loc->location_pos.pos.y = 0;
+	loc->location_pos.pos.z = 0;
 }
 
 //--------------------------------------------------------------
@@ -66,10 +70,31 @@ void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, fx32 x, fx32 y, f
 	loc->zone_id = zone;
 	loc->exit_id = door;
 	loc->dir_id = dir;
-	loc->pos.x = x;
-	loc->pos.y = y;
-	loc->pos.z = z;
+	loc->location_pos.type = LOCATION_POS_TYPE_3D;
+	loc->location_pos.pos.x = x;
+	loc->location_pos.pos.y = y;
+	loc->location_pos.pos.z = z;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ロケーションセット　レールロケーション
+ */
+//-----------------------------------------------------------------------------
+void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, u16 rail_index, u16 line_grid, s16 width_grid)
+{
+	loc->type = LOCATION_TYPE_INIT;
+	loc->zone_id = zone;
+	loc->exit_id = door;
+	loc->dir_id = dir;
+	loc->location_pos.type = LOCATION_POS_TYPE_RAIL;
+  loc->location_pos.railpos.type        = FIELD_RAIL_TYPE_LINE;
+	loc->location_pos.railpos.rail_index  = rail_index;
+	loc->location_pos.railpos.line_grid   = line_grid;
+	loc->location_pos.railpos.width_grid  = width_grid;
+  loc->location_pos.railpos.key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( dir );
+}
+
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 void LOCATION_SetID(LOCATION * loc, u16 zone_id, u16 exit_id)
@@ -89,21 +114,115 @@ void LOCATION_SetDirect(LOCATION * loc, int zone, s16 dir, fx32 x, fx32 y, fx32 
 	loc->zone_id = zone;
 	loc->exit_id = DOOR_ID_JUMP_CODE;
 	loc->dir_id = dir;
-	loc->pos.x = x;
-	loc->pos.y = y;
-	loc->pos.z = z;
+  loc->location_pos.type  = LOCATION_POS_TYPE_3D;
+	loc->location_pos.pos.x = x;
+	loc->location_pos.pos.y = y;
+	loc->location_pos.pos.z = z;
 }
+
+//----------------------------------------------------------------------------
+/**
+ * @brief	LOCATIONにレールロケーションをセット（直接位置指定）
+ */
+//-----------------------------------------------------------------------------
+void LOCATION_SetDirectRail(LOCATION * loc, int zone, s16 dir, u16 rail_index, u16 line_grid, s16 width_grid)
+{
+	loc->type = LOCATION_TYPE_DIRECT;
+	loc->zone_id = zone;
+	loc->exit_id = DOOR_ID_JUMP_CODE;
+	loc->dir_id = dir;
+  loc->location_pos.type        = LOCATION_POS_TYPE_RAIL;
+  loc->location_pos.railpos.type        = FIELD_RAIL_TYPE_LINE;
+	loc->location_pos.railpos.rail_index  = rail_index;
+	loc->location_pos.railpos.line_grid   = line_grid;
+	loc->location_pos.railpos.width_grid  = width_grid;
+  loc->location_pos.railpos.key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( dir );
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief	LOCATION内の座標タイプを取得
+ */
+//-----------------------------------------------------------------------------
+LOCATION_POS_TYPE LOCATION_GetPosType( const LOCATION * loc )
+{
+  return loc->location_pos.type;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief	LOCATIONから、３D座標の取得
+ */
+//--------------------------------------------------------------
+void LOCATION_Get3DPos( const LOCATION * loc, VecFx32 * pos )
+{
+  GF_ASSERT( loc->location_pos.type == LOCATION_POS_TYPE_3D );
+  VEC_Set( pos, 
+      loc->location_pos.pos.x, loc->location_pos.pos.y, loc->location_pos.pos.z );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ３D座標の設定
+ */
+//-----------------------------------------------------------------------------
+void LOCATION_Set3DPos( LOCATION * loc, const VecFx32 * pos )
+{
+  loc->location_pos.type  = LOCATION_POS_TYPE_3D;
+  loc->location_pos.pos   = *pos;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	LOCATIONから、レールロケーションの取得
+ */
+//--------------------------------------------------------------
+void LOCATION_GetRailLocation( const LOCATION * loc, RAIL_LOCATION * location )
+{
+  GF_ASSERT( loc->location_pos.type == LOCATION_POS_TYPE_RAIL );
+  *location = loc->location_pos.railpos;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	LOCATIONに、レールロケーションの設定
+ */
+//--------------------------------------------------------------
+void LOCATION_SetRailLocation( LOCATION * loc, const RAIL_LOCATION * location )
+{
+  loc->location_pos.type = LOCATION_POS_TYPE_RAIL;
+  loc->location_pos.railpos = *location;
+}
+
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
 {
+  VecFx32 pos;
+  
 	LOCATION_Init(loc);
 	loc->type = LOCATION_TYPE_DIRECT;
 	loc->zone_id = zone_id;
 	loc->exit_id = DOOR_ID_JUMP_CODE;
 	loc->dir_id = 0;
-	ZONEDATA_DEBUG_GetStartPos(zone_id, &loc->pos);
+  if( ZONEDATA_IsRailMap(zone_id) )
+  {
+    ZONEDATA_DEBUG_GetStartRailPos(zone_id, &pos);
+    loc->location_pos.type = LOCATION_POS_TYPE_RAIL;
+    loc->location_pos.railpos.type        = FIELD_RAIL_TYPE_LINE;
+    loc->location_pos.railpos.rail_index  = pos.x;
+    loc->location_pos.railpos.line_grid   = pos.y;
+    loc->location_pos.railpos.width_grid  = pos.z;
+  }
+  else
+  {
+    ZONEDATA_DEBUG_GetStartPos(zone_id, &pos);
+    loc->location_pos.type = LOCATION_POS_TYPE_3D;
+    loc->location_pos.pos = pos;
+  }
 }
 
 //------------------------------------------------------------------
@@ -116,9 +235,10 @@ void LOCATION_SetGameStart(LOCATION * loc)
   loc->zone_id = ZONE_ID_GAMESTART;
   loc->exit_id = DOOR_ID_JUMP_CODE;
   loc->dir_id = EXIT_DIR_DOWN;
-  loc->pos.x = 72 * FX32_ONE;
-  loc->pos.y =  0 * FX32_ONE;
-  loc->pos.z = 88 * FX32_ONE;
+  loc->location_pos.type = LOCATION_POS_TYPE_3D;
+  loc->location_pos.pos.x = 72 * FX32_ONE;
+  loc->location_pos.pos.y =  0 * FX32_ONE;
+  loc->location_pos.pos.z = 88 * FX32_ONE;
 #endif
 }
 

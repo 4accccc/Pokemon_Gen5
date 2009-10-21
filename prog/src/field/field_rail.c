@@ -107,7 +107,7 @@ struct _FIELD_RAIL_WORK{
     const RAIL_LINE * line;
   };
   u16 active;
-	u16 dat_index;	// POINT or LINEのインデックス
+	u16 pad;	
   /// LINEにいる間の、LINE上でのオフセット位置
   s32 line_ofs;
   s32 line_ofs_max;
@@ -1052,7 +1052,6 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
   width_ofs_max = getLineWidthOfsMax( line, line_ofs, line_ofs_max, work->rail_dat );
   setLineData( work, line, key, line_ofs, width_ofs, line_ofs_max, width_ofs_max );
 
-  TOMOYA_Printf( "key %d\n", key );
 
 #ifdef PM_DEBUG
   
@@ -1660,9 +1659,11 @@ void FIELD_RAIL_WORK_DEBUG_PrintRailGrid( const FIELD_RAIL_WORK * work )
   {
     s32 width_ofs_max_s, width_ofs_max_e;
     s32 width_ofs_max;
+    int index;
+    int i;
 
-    width_ofs_max_s = getLineWidthOfsMax( &work->line[ work->dat_index ], 0, work->line_ofs_max, work->rail_dat );
-    width_ofs_max_e = getLineWidthOfsMax( &work->line[ work->dat_index ], work->line_ofs_max, work->line_ofs_max, work->rail_dat );
+    width_ofs_max_s = getLineWidthOfsMax( work->line, 0, work->line_ofs_max, work->rail_dat );
+    width_ofs_max_e = getLineWidthOfsMax( work->line, work->line_ofs_max, work->line_ofs_max, work->rail_dat );
     
     if( width_ofs_max_s >= width_ofs_max_e )
     {
@@ -1672,11 +1673,28 @@ void FIELD_RAIL_WORK_DEBUG_PrintRailGrid( const FIELD_RAIL_WORK * work )
     {
       width_ofs_max = width_ofs_max_e;
     }
+
+    // ラインインデックスを求める
+    index = 0;
+    for( i=0; i<work->rail_dat->line_count; i++ )
+    {
+      if( (u32)&work->rail_dat->line_table[i] == (u32)work->line )
+      {
+        index = i;
+      }
+    }
     
+    OS_TPrintf("レールエディタ　アトリビュート設定用のデータ\n" );
     OS_TPrintf("RAIL:%s :front_grid=%d side_grid=%d \n",
-        work->line[ work->dat_index ].name, 
+        work->line->name, 
         RAIL_OFS_TO_GRID(work->line_ofs), 
         RAIL_OFS_TO_GRID(work->width_ofs) + RAIL_OFS_TO_GRID(width_ofs_max) );
+
+    OS_TPrintf("イベント用のデータ\n" );
+    OS_TPrintf("RAIL:%s Index:%d front_grid=%d side_grid=%d \n",
+        work->line->name, index,
+        RAIL_OFS_TO_GRID(work->line_ofs), 
+        RAIL_OFS_TO_GRID(work->width_ofs) );
   }
 
 }
@@ -2541,7 +2559,7 @@ static s32 getLineOfsMax( const RAIL_LINE * line, fx32 unit, const RAIL_SETTING*
   if(amari)
   {
     div -= amari;
-    TOMOYA_Printf( "ラインオフセット　あまり　があります。 amari=%d\n", amari );
+    DEBUG_RAIL_Printf( "ラインオフセット　あまり　があります。 amari=%d\n", amari );
   }
 
 #endif
@@ -3054,10 +3072,10 @@ static BOOL calcHitPlaneVec( const VecFx32* plane_vec1, const VecFx32* plane_vec
   }
 
   // 交点はベクトルの先
-  // cross_dist == 0今いるラインの平面上！
-  if( cross_dist <= 0 )
+  // cross_dist == FX32_ONE今いるラインの平面上！
+  if( cross_dist <= FX32_ONE )
   {
-    DEBUG_RAIL_Printf( "cross_dist <= 0\n" );
+    DEBUG_RAIL_Printf( "cross_dist <= FX32_ONE\n" );
     return FALSE;
   }
 

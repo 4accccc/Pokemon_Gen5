@@ -123,11 +123,11 @@ static GMEVENT * checkExit(EV_REQUEST * req,
     FIELDMAP_WORK *fieldWork, const VecFx32 *now_pos );
 static GMEVENT * checkPushExit(EV_REQUEST * req,
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
-static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
 static GMEVENT * checkIntrudeSubScreenEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork);
 static GMEVENT * checkSubScreenEvent(
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
+
 
 static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork);
 
@@ -154,6 +154,16 @@ static MMDL * getRailFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap );
 static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap);
 
 static int checkPokeWazaGroup( GAMEDATA *gdata, u32 waza_no );
+
+
+
+//-----------------------------------------------------------------------------
+//レール用
+//-----------------------------------------------------------------------------
+static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
+static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
+static void rememberExitRailInfo(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const RAIL_LOCATION* loc);
+
 
 //======================================================================
 //
@@ -227,14 +237,6 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 
 
 	
-  //レールの場合のマップ遷移チェック
-  if (FIELDMAP_GetMapControlType(fieldWork) == FLDMAP_CTRLTYPE_NOGRID)
-  {
-    event = checkRailExit(&req, gsys, fieldWork);
-    if( event != NULL ){
-      return event;
-    }
-  }
 //☆☆☆ステップチェック（一歩移動or振り向き）がここから
   //戦闘移行チェック
   if( req.isGridMap ){
@@ -645,13 +647,6 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
   }
 #endif //debug
 
-  // ずり落ち
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-  {
-    // ずり落ち開始
-    return EVENT_RailSlipDown( gsys, fieldWork );
-  }
-	
 //☆☆☆特殊スクリプト起動チェックがここに入る
     /* 今はない */
 
@@ -836,6 +831,11 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
     if( event != NULL ){
       return event;
     }
+
+    event = checkRailSlipDown(&req, gsys, fieldWork);
+    if( event != NULL ){
+      return event;
+    }
   }
   
 //☆☆☆自機位置に関係ないキー入力イベントチェック
@@ -937,10 +937,9 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   }
 #endif
   
-  {
-		FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(fieldWork);
-    req->mapattr = MAPATTR_GetAttribute(g3Dmapper, req->now_pos);
-  }
+  // アトリビュート取得
+  req->mapattr = FIELD_PLAYER_GetMapAttr( req->field_player );
+
   req->talkRequest = ((req->key_trg & PAD_BUTTON_A) != 0);
 
   req->menuRequest = ((req->key_trg & PAD_BUTTON_X) != 0);
@@ -1224,14 +1223,24 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
 static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork)
 {
   int idx;
-  VecFx32 pos;
+  RAIL_LOCATION pos;
   int * firstID = FIELDMAP_GetFirstConnectID(fieldWork);
   FLDNOGRID_MAPPER* nogridMapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
   FIELDMAP_CTRL_NOGRID_WORK* p_mapctrl_work = FIELDMAP_GetMapCtrlWork( fieldWork );
   FIELD_PLAYER_NOGRID* p_nogrid_player = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( p_mapctrl_work );
 
-  FIELD_PLAYER_NOGRID_GetPos( p_nogrid_player , &pos );
-  idx = EVENTDATA_SearchConnectIDBySphere(req->evdata, &pos);
+  // @TODO ３D座標のイベントとレール座標のイベントを併用しているため複雑
+  {
+    VecFx32 pos_3d;
+    FIELD_PLAYER_NOGRID_GetPos( p_nogrid_player , &pos_3d );
+    idx = EVENTDATA_SearchConnectIDBySphere(req->evdata, &pos_3d);
+  }
+  if( idx == EXIT_ID_NONE )
+  {
+    FIELD_PLAYER_NOGRID_GetLocation( p_nogrid_player , &pos );
+    idx = EVENTDATA_SearchConnectIDByRailLocation(req->evdata, &pos);
+  }
+
   if (*firstID == idx) return NULL;
   if (idx == EXIT_ID_NONE)
   {
@@ -1239,6 +1248,7 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
     return NULL;
   }
 
+  rememberExitRailInfo( req, fieldWork, idx, &pos );
   return getChangeMapEvent(req, fieldWork, idx);
 }
 
@@ -1339,6 +1349,43 @@ static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *
 #endif
   enc_type = (ZONEDATA_IsBingo( req->map_id ) == TRUE) ? ENC_TYPE_BINGO : ENC_TYPE_NORMAL;
   return (GMEVENT*)FIELD_ENCOUNT_CheckEncount(encount, enc_type);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールずり落ちチェック
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork)
+{
+  
+  
+  // ずり落ち処理
+  if( RAIL_ATTR_VALUE_CheckSlipDown( MAPATTR_GetAttrValue(req->mapattr) ) )
+  {
+    // プレイヤーは下をみているか？
+    if( req->player_dir == DIR_DOWN )
+    {
+      // ずり落ち開始
+      return EVENT_RailSlipDown( gsys, fieldWork );
+    }
+  }
+
+  return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールマップの出入り口情報を保存
+ */
+//-----------------------------------------------------------------------------
+static void rememberExitRailInfo(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const RAIL_LOCATION* loc)
+{
+	//マップ遷移発生の場合、出入口を記憶しておく
+  LOCATION ent_loc;
+  LOCATION_SetRail( &ent_loc, FIELDMAP_GetZoneID(fieldWork), idx, 0,
+      loc->rail_index, loc->line_grid, loc->width_grid);
+  GAMEDATA_SetEntranceLocation(req->gamedata, &ent_loc);
 }
 
 //--------------------------------------------------------------

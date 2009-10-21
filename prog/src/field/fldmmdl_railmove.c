@@ -337,6 +337,7 @@ static BOOL MMdl_UpdateCurrentRailAttr( MMDL * mmdl )
 
     old_attr = FLDNOGRID_MAPPER_GetAttr( pNOGRIDMapper, &old );
     now_attr = FLDNOGRID_MAPPER_GetAttr( pNOGRIDMapper, &now );
+
   }
   
 	MMDL_SetMapAttrOld( mmdl, old_attr );

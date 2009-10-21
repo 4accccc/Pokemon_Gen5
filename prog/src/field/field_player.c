@@ -173,6 +173,14 @@ void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player )
   VecFx32 pos;
   FIELD_PLAYER_GetPos( fld_player, &pos );
 	PLAYERWORK_setPosition( fld_player->playerWork, &pos );
+
+  // ƒŒ[ƒ‹“ÆŽ©‚ÌXVˆ—
+  if( fld_player->map_type == FLDMAP_CTRLTYPE_NOGRID )
+  {
+    RAIL_LOCATION location;
+    MMDL_GetRailLocation( fld_player->fldmmdl, &location );
+	  PLAYERWORK_setRailPosition( fld_player->playerWork, &location );
+  }
 }
 
 //--------------------------------------------------------------

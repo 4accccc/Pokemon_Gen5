@@ -59,6 +59,20 @@ extern GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELDMAP_WORK * f
 
 //------------------------------------------------------------------
 /**
+ * @brief	マップ遷移イベント生成（レール座標指定）
+ * @param	gsys		ゲームシステムへのポインタ
+ * @param	fieldmap	フィールドシステムへのポインタ
+ * @param	zone_id		遷移するマップのZONE指定
+ * @param	rail_loc	遷移するマップでのレール座標指定
+ * @param	dir			遷移するマップでの方向指定
+ * @return	GMEVENT		生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+extern GMEVENT * DEBUG_EVENT_ChangeMapRailLocation(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+		u16 zone_id, const RAIL_LOCATION * rail_loc, u16 dir );
+
+//------------------------------------------------------------------
+/**
  * @brief	マップ遷移イベント生成（デフォルト座標）
  * @param	gsys		ゲームシステムへのポインタ
  * @param	fieldmap	フィールドシステムへのポインタ

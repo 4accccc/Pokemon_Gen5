@@ -39,6 +39,210 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d09.wms
 #hold event type:
 1
 #hold event number:
-0
+12
+#event number: 0
+#Door Event Label
+DOOR_ID_D09_EXIT02
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT03
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+1 103 3
+#size
+1 1
+#event number: 1
+#Door Event Label
+DOOR_ID_D09_EXIT03
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT02
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+1 74 3
+#size
+1 1
+#event number: 2
+#Door Event Label
+DOOR_ID_D09_EXIT04
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT06
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+1 21 3
+#size
+1 1
+#event number: 3
+#Door Event Label
+DOOR_ID_D09_EXIT05
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT07
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+5 63 2
+#size
+1 1
+#event number: 4
+#Door Event Label
+DOOR_ID_D09_EXIT06
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT04
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+5 17 2
+#size
+1 1
+#event number: 5
+#Door Event Label
+DOOR_ID_D09_EXIT07
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT05
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+20 54 2
+#size
+1 1
+#event number: 6
+#Door Event Label
+DOOR_ID_D09_EXIT08
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT10
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+21 1 2
+#size
+1 1
+#event number: 7
+#Door Event Label
+DOOR_ID_D09_EXIT09
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT12
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+68 9 5
+#size
+1 1
+#event number: 8
+#Door Event Label
+DOOR_ID_D09_EXIT10
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT08
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+45 8 2
+#size
+1 1
+#event number: 9
+#Door Event Label
+DOOR_ID_D09_EXIT11
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT13
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+25 0 2
+#size
+1 1
+#event number: 10
+#Door Event Label
+DOOR_ID_D09_EXIT12
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT09
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+50 0 2
+#size
+1 1
+#event number: 11
+#Door Event Label
+DOOR_ID_D09_EXIT13
+#Next Zone ID Name
+ZONE_ID_D09
+#Next Door ID Name
+DOOR_ID_D09_EXIT11
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+58 4 5
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

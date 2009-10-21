@@ -158,6 +158,7 @@ void SaveData_SituationDataUpdate(SAVE_CONTROL_WORK *sv, const PLAYER_WORK *pw)
 	
 	st->plsv.zoneID = pw->zoneID;
 	st->plsv.position = pw->position;
+	st->plsv.railposition = pw->railposition;
 	st->plsv.direction = pw->direction;
 }
 
@@ -175,6 +176,7 @@ void SaveData_SituationDataLoad(SAVE_CONTROL_WORK *sv, PLAYER_WORK *pw)
 	
 	pw->zoneID = st->plsv.zoneID;
 	pw->position = st->plsv.position;
+	pw->railposition = st->plsv.railposition;
 	pw->direction = st->plsv.direction;
 }
 

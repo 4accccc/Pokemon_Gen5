@@ -13,6 +13,7 @@ extern "C" {
 
 #include "savedata/mystatus.h"
 #include "savedata/mystatus_local.h"
+#include "field/rail_location.h"
 
 //======================================================================
 //  define
@@ -43,6 +44,7 @@ typedef enum
 typedef struct {
 	ZONEID zoneID;
 	VecFx32 position;
+  RAIL_LOCATION railposition;
 	u16 direction;
   u8 palace_area;       ///<※check　パレステストの為、一時的にここに配置
   u8 padding;
@@ -78,6 +80,24 @@ extern void PLAYERWORK_setPosition(PLAYER_WORK * player, const VecFx32 * pos);
  */
 //--------------------------------------------------------------
 extern const VecFx32 * PLAYERWORK_getPosition(const PLAYER_WORK * player);
+
+//--------------------------------------------------------------
+/**
+ * @brief	レール座標をセットする
+ * @param	player	PLAYER_WORKへのポインタ
+ * @param	railpos		レール座標を指定する値
+ */
+//--------------------------------------------------------------
+extern void PLAYERWORK_setRailPosition(PLAYER_WORK * player, const RAIL_LOCATION * railpos);
+
+//--------------------------------------------------------------
+/**
+ * @brief	レール座標を取得する
+ * @param	player	PLAYER_WORKへのポインタ
+ * @return	LOCATION_RAILPOS レール座標を指定するポインタ
+ */
+//--------------------------------------------------------------
+extern const RAIL_LOCATION * PLAYERWORK_getRailPosition(const PLAYER_WORK * player);
 
 //--------------------------------------------------------------
 /**

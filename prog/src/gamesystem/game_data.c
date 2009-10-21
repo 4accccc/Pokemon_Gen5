@@ -54,7 +54,6 @@ struct _GAMEDATA{
   LOCATION *entrance_loc;
   LOCATION *special_loc;    ///<特殊接続先位置
   LOCATION *escape_loc;     ///<脱出先位置
-  RAIL_LOCATION railLoc;    ///<レール構造時の自分位置
 
   BAG_CURSOR* bagcursor;  ///< バッグカーソルの管理構造体ポインタ
   MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
@@ -135,9 +134,6 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   // BGM情報取得システムを作成(BGM情報を読み込む)
   gd->bgm_info_sys = BGM_INFO_CreateSystem( heapID );
-
-  //レール状況データのクリア
-  RAIL_LOCATION_Init(&gd->railLoc);
 
   //プレイヤーワーク
   for (i = 0; i < PLAYER_MAX; i++) {
@@ -318,20 +314,6 @@ const LOCATION * GAMEDATA_GetEscapeLocation(const GAMEDATA * gamedata)
 void GAMEDATA_SetEscapeLocation(GAMEDATA * gamedata, const LOCATION * loc)
 {
   *(gamedata->escape_loc) = *loc;
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-const RAIL_LOCATION * GAMEDATA_GetRailLocation(const GAMEDATA * gamedata)
-{
-  return &gamedata->railLoc;
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-void GAMEDATA_SetRailLocation(GAMEDATA * gamedata, const RAIL_LOCATION * railLoc)
-{
-  gamedata->railLoc = * railLoc;
 }
 
 //--------------------------------------------------------------
@@ -696,6 +678,11 @@ void PLAYERWORK_init(PLAYER_WORK * player)
   player->mystatus.id = 0;
   player->mystatus.sex = 0;
   player->mystatus.region_code = 0;
+  player->railposition.type       = 0;
+  player->railposition.key        = 0;
+  player->railposition.rail_index = 0;
+  player->railposition.line_grid  = 0;
+  player->railposition.width_grid = 0;
 }
 
 //------------------------------------------------------------------
@@ -710,6 +697,20 @@ void PLAYERWORK_setPosition(PLAYER_WORK * player, const VecFx32 * pos)
 const VecFx32 * PLAYERWORK_getPosition(const PLAYER_WORK * player)
 {
   return &player->position;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void PLAYERWORK_setRailPosition(PLAYER_WORK * player, const RAIL_LOCATION * railpos)
+{
+  player->railposition = *railpos;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+const RAIL_LOCATION * PLAYERWORK_getRailPosition(const PLAYER_WORK * player)
+{
+  return &player->railposition;
 }
 
 //------------------------------------------------------------------

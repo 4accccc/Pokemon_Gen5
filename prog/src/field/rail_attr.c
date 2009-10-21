@@ -236,6 +236,20 @@ MAPATTR RAIL_ATTR_GetAttribute( const RAIL_ATTR_DATA* cp_work, const RAIL_LOCATI
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  滑り降りチェック
+ *
+ *	@param	val   
+ *
+ *	@retval TRUE  
+ *	@retval FALSE  
+ */
+//-----------------------------------------------------------------------------
+BOOL RAIL_ATTR_VALUE_CheckSlipDown( const MAPATTR_VALUE val )
+{
+  return (val == 0xa0);
+}
 
 
 

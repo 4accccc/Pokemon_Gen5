@@ -11,6 +11,34 @@
 
 #pragma once
 
+#include "field/rail_location.h"
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+typedef enum {
+	LOCATION_POS_TYPE_3D = 0,
+	LOCATION_POS_TYPE_RAIL,
+
+	LOCATION_POS_TYPE_MAX,
+}LOCATION_POS_TYPE;
+
+//--------------------------------------------------------------
+// ロケーションポジション
+// ３D座標とレールロケーションの情報を扱います。
+//--------------------------------------------------------------
+typedef struct 
+{
+  LOCATION_POS_TYPE type;
+  union{
+    //  3Dデータ
+    VecFx32 pos;
+    // レールデータ
+    RAIL_LOCATION railpos;
+  };
+} LOCATION_POS;
+
+
+
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 typedef enum {
@@ -27,7 +55,7 @@ typedef struct {
 	s16 zone_id;
 	s16 exit_id;
 	s16 dir_id;
-	VecFx32 pos;
+	LOCATION_POS location_pos;
 }LOCATION;
 
 //=============================================================================
@@ -56,6 +84,7 @@ extern void LOCATION_Init(LOCATION * loc);
  */
 //--------------------------------------------------------------
 extern void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, fx32 x, fx32 y, fx32 z);
+extern void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, u16 rail_index, u16 line_grid, s16 width_grid);
 
 //--------------------------------------------------------------
 /**
@@ -69,4 +98,30 @@ extern void LOCATION_SetID(LOCATION * loc, u16 zone_id, u16 exit_id);
  */
 //--------------------------------------------------------------
 extern void LOCATION_SetDirect(LOCATION * loc, int zone, s16 dir, fx32 x, fx32 y, fx32 z);
+extern void LOCATION_SetDirectRail(LOCATION * loc, int zone, s16 dir, u16 rail_index, u16 line_grid, s16 width_grid);
+
+//--------------------------------------------------------------
+/**
+ * @brief	LOCATION内の座標タイプを取得
+ */
+//--------------------------------------------------------------
+extern LOCATION_POS_TYPE LOCATION_GetPosType( const LOCATION * loc );
+
+//--------------------------------------------------------------
+/**
+ * @brief	LOCATIONから、３D座標の設定・取得
+ */
+//--------------------------------------------------------------
+extern void LOCATION_Set3DPos( LOCATION * loc, const VecFx32 * pos );
+extern void LOCATION_Get3DPos( const LOCATION * loc, VecFx32 * pos );
+
+//--------------------------------------------------------------
+/**
+ * @brief	LOCATIONから、レールロケーションの設定・取得
+ */
+//--------------------------------------------------------------
+extern void LOCATION_SetRailLocation( LOCATION * loc, const RAIL_LOCATION * location );
+extern void LOCATION_GetRailLocation( const LOCATION * loc, RAIL_LOCATION * location );
+
+
 

@@ -654,7 +654,7 @@ BOOL MMDL_GetRailFrontLocation( const MMDL *mmdl, RAIL_LOCATION* location )
 
 
   MMDL_GetRailLocation( mmdl, location );
-  TOMOYA_Printf( "dir %d  line_grid %d\n", dir, location->line_grid );
+//  TOMOYA_Printf( "dir %d  line_grid %d\n", dir, location->line_grid );
   return FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), location ); 
 }
 
@@ -677,7 +677,7 @@ BOOL MMDL_GetRailDirLocation( const MMDL *mmdl, u16 dir, RAIL_LOCATION* location
   const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
 
   MMDL_GetRailLocation( mmdl, location );
-  TOMOYA_Printf( "dir %d  line_grid %d\n", dir, location->line_grid );
+//  TOMOYA_Printf( "dir %d  line_grid %d\n", dir, location->line_grid );
   return FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), location ); 
 }
 

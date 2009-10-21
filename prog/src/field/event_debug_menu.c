@@ -910,6 +910,7 @@ static GMEVENT_RESULT debugMenuSeasonSelectEvent(
 				GAMEDATA *gdata = GAMESYSTEM_GetGameData( work->gmSys );
 				PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
 				const VecFx32 *pos = PLAYERWORK_getPosition( player );
+				const RAIL_LOCATION *location = PLAYERWORK_getRailPosition( player );
 				u16 dir = PLAYERWORK_getDirection( player );
 				ZONEID zone_id = PLAYERWORK_getZoneID(player);
 				
@@ -924,8 +925,16 @@ static GMEVENT_RESULT debugMenuSeasonSelectEvent(
 				}
 
 				GAMEDATA_SetSeasonID(gdata, ret);
-				event = DEBUG_EVENT_ChangeMapPos(
-					work->gmSys, work->fieldWork, zone_id, pos, dir );
+        if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_GRID )
+        {
+          event = DEBUG_EVENT_ChangeMapPos(
+            work->gmSys, work->fieldWork, zone_id, pos, dir );
+        }
+        else
+        {
+          event = DEBUG_EVENT_ChangeMapRailLocation(
+            work->gmSys, work->fieldWork, zone_id, location, dir );
+        }
 				GMEVENT_ChangeEvent( work->gmEvent, event );
 				OS_Printf( "x = %xH, z = %xH\n", pos->x, pos->z );
 			}

@@ -187,6 +187,23 @@ void ZONEDATA_DEBUG_GetStartPos(u16 zone_id, VecFx32 * pos)
 	TAMADA_Printf("%s x,y,z=%d,%d,%d\n",__FILE__,pos->x, pos->y, pos->z);
 }
 
+//----------------------------------------------------------------------------
+/**
+ * @brief	マップ開始レール位置の取得（デバッグ用）
+ *
+ *	@param	zone_id
+ *	@param	pos
+ */
+//-----------------------------------------------------------------------------
+void ZONEDATA_DEBUG_GetStartRailPos(u16 zone_id, VecFx32 * pos)
+{
+	ZONEDATA zdbuf;
+	getZoneData(&zdbuf, zone_id);
+	pos->x = zdbuf.sx;
+	pos->y = zdbuf.sy;
+	pos->z = zdbuf.sz;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief	カメラ指定IDの取得

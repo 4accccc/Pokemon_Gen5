@@ -54,6 +54,11 @@ extern BOOL RAIL_ATTR_IsLoadData( const RAIL_ATTR_DATA* cp_work );
 // レールのアトリビュート取得
 extern MAPATTR RAIL_ATTR_GetAttribute( const RAIL_ATTR_DATA* cp_work, const RAIL_LOCATION* cp_location );
 
+
+// レールマップ用アトリビュートVALUEチェック
+extern BOOL RAIL_ATTR_VALUE_CheckSlipDown( const MAPATTR_VALUE val );
+
+
 #ifdef PM_DEBUG
 extern void RAIL_ATTR_DEBUG_LoadBynary( RAIL_ATTR_DATA* p_work, void* p_data, u32 datasize, u32 heapID );
 extern const void* RAIL_ATTR_DEBUG_GetData( const RAIL_ATTR_DATA* cp_work );

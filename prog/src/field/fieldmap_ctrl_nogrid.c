@@ -263,7 +263,7 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
 
   
   MMDL_GetVectorPos( mmdl, pos );
-  PLAYERWORK_setPosition( player, pos );
+//  PLAYERWORK_setPosition( player, pos );
 }
 
 //--------------------------------------------------------------

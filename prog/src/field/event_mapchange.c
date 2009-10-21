@@ -500,6 +500,25 @@ GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
 	return event;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * DEBUG_EVENT_ChangeMapRailLocation(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+		u16 zone_id, const RAIL_LOCATION * rail_loc, u16 dir )
+{
+	MAPCHANGE_WORK * mcw;
+	GMEVENT * event;
+
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
+	mcw = GMEVENT_GetEventWork(event);
+  MAPCHANGE_WORK_init( mcw, gsys );
+	
+	LOCATION_SetDirectRail(&mcw->loc_req, zone_id, dir, rail_loc->rail_index, rail_loc->line_grid, rail_loc->width_grid);
+  mcw->exit_type = EXIT_TYPE_NONE;
+	
+	return event;
+}
+
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -725,38 +744,51 @@ static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * lo
 		LOCATION_DEBUG_SetDefaultPos(loc_tmp, loc_req->zone_id);
 	}
 }
+#if 0
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void MakeNewRailLocation(GAMEDATA * gamedata, EVENTDATA_SYSTEM * evdata, const LOCATION * loc_req)
+static void MakeNewRailLocation(GAMEDATA * gamedata, EVENTDATA_SYSTEM * evdata, const LOCATION * loc_req, RAIL_LOCATION* railLoc)
 {
   FIELD_RAIL_LOADER * railLoader = GAMEDATA_GetFieldRailLoader(gamedata);
-  RAIL_LOCATION railLoc;
-  RAIL_LOCATION_Init(&railLoc);
 
-  if (ZONEDATA_IsRailMap(loc_req->zone_id) == TRUE
-      && loc_req->type != LOCATION_TYPE_DIRECT)
+  RAIL_LOCATION_Init(railLoc);
+
+  if ( (ZONEDATA_IsRailMap(loc_req->zone_id) == TRUE)
+      && (loc_req->type != LOCATION_TYPE_DIRECT) &&
+     (loc_req->location_pos.type == LOCATION_POS_TYPE_3D) )
   {
     LOCATION loc_tmp;
     BOOL result;
     u32 exit_id = 0;
 
     FIELD_RAIL_LOADER_Load( railLoader, ZONEDATA_GetRailDataID(loc_req->zone_id), GFL_HEAPID_APP );
+
+    railLoc->type = FIELD_RAIL_TYPE_POINT;
+    railLoc->rail_index = exit_id;
+    railLoc->line_grid = 0;
+    railLoc->width_grid = 0;
+    railLoc->key = RAIL_KEY_NULL;
+
     result = EVENTDATA_SetLocationByExitID(evdata, &loc_tmp, loc_req->exit_id);
     if (result)
     {
+      VecFx32 pos;
+      LOCATION_Get3DPos( &loc_tmp, &pos );
       OS_Printf("No Grid Exit:(%d,%d,%d)\n",
-          FX_Whole(loc_tmp.pos.x), FX_Whole(loc_tmp.pos.y), FX_Whole(loc_tmp.pos.z) );
-      exit_id = FIELD_RAIL_LOADER_GetNearestPoint(railLoader, &loc_tmp.pos);
+          FX_Whole(pos.x), FX_Whole(pos.y), FX_Whole(pos.z) );
+      exit_id = FIELD_RAIL_LOADER_GetNearestPoint(railLoader, &pos);
+
+      railLoc->rail_index = exit_id;
     }
-    railLoc.type = FIELD_RAIL_TYPE_POINT;
-    railLoc.rail_index = exit_id;
-    railLoc.line_grid = 0;
-    railLoc.width_grid = 0;
-    railLoc.key = RAIL_KEY_NULL;
     FIELD_RAIL_LOADER_Clear( railLoader );
   }
-  GAMEDATA_SetRailLocation(gamedata, &railLoc);
+  else if( loc_req->location_pos.type == LOCATION_POS_TYPE_RAIL )
+  {
+    //@TODO レールイベントOnlyになれば、この処理だけでOK
+    LOCATION_GetRailLocation( loc_req, railLoc );
+  }
 }
+#endif
 
 //------------------------------------------------------------------
 /**
@@ -781,7 +813,7 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 	
 	//開始位置セット
 	MakeNewLocation(evdata, loc_req, &loc);
-  MakeNewRailLocation(gamedata, evdata, loc_req);
+//  MakeNewRailLocation(gamedata, evdata, loc_req, &railLoc); // MakeNewLocation DefaultPosでレール位置が設定されるように変更
 
 	//特殊接続出入口に出た場合は、前のマップの出入口位置を記憶しておく
 	if (loc.type == LOCATION_TYPE_SPID) {
@@ -793,9 +825,15 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 	{
 		u16 direction;
 		PLAYERWORK_setZoneID(mywork, loc.zone_id);
-		PLAYERWORK_setPosition(mywork, &loc.pos);
 		direction = GetDirValueByDirID(loc.dir_id);
 		PLAYERWORK_setDirection(mywork, direction);
+
+    if( LOCATION_GetPosType( &loc ) == LOCATION_POS_TYPE_3D ){
+  		PLAYERWORK_setPosition(mywork, &loc.location_pos.pos);
+    }else{
+
+	  	PLAYERWORK_setRailPosition(mywork, &loc.location_pos.railpos);
+    }
 	}
 
 	// ISSにゾーン切り替えを通知

@@ -27,6 +27,7 @@ typedef struct _SITUATION SITUATION;
 typedef struct{
 	ZONEID zoneID;
 	VecFx32 position;
+  RAIL_LOCATION railposition;
 	s16 direction;
 }PLAYERWORK_SAVE;
 

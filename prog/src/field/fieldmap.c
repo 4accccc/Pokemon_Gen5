@@ -539,8 +539,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   }
   
   //フィールドマップ用ロケーション作成
-  fieldWork->location.zone_id = fieldWork->map_id;
-  fieldWork->location.pos = fieldWork->now_pos;
+
+  LOCATION_Set( &fieldWork->location, fieldWork->map_id, 0, 0, 
+      fieldWork->now_pos.x, fieldWork->now_pos.y, fieldWork->now_pos.z );
   
   //マップデータ登録
   FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res );
@@ -589,7 +590,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     { 
       FIELDMAP_CTRL_NOGRID_WORK* p_mapctrl_work = FIELDMAP_GetMapCtrlWork( fieldWork );
       FIELD_PLAYER_NOGRID* p_nogrid_player = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( p_mapctrl_work );
-      const RAIL_LOCATION * railLoc = GAMEDATA_GetRailLocation( gdata );
+      const RAIL_LOCATION * railLoc = PLAYERWORK_getRailPosition( pw );
 
       FIELD_PLAYER_NOGRID_SetLocation( p_nogrid_player, railLoc );
       FIELD_PLAYER_NOGRID_GetPos( p_nogrid_player, &fieldWork->now_pos );
@@ -721,6 +722,8 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   {
     GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
     EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
+    // @TODO 現状は、レールマップ上に３DPOSのイベントとRAILのイベントが
+    // 混合しているので。
     fieldWork->firstConnectEventID = 
       EVENTDATA_SearchConnectIDBySphere(evdata, &fieldWork->now_pos);
   }
@@ -863,14 +866,14 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   }
   if (FIELDMAP_GetMapControlType(fieldWork) == FLDMAP_CTRLTYPE_NOGRID)
   {
-		GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+    PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
     FIELDMAP_CTRL_NOGRID_WORK* p_mapctrl_work = FIELDMAP_GetMapCtrlWork( fieldWork );
     FIELD_PLAYER_NOGRID* p_nogrid_player = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( p_mapctrl_work );
     RAIL_LOCATION railLoc;
 
 
     FIELD_PLAYER_NOGRID_GetLocation( p_nogrid_player, &railLoc );
-    GAMEDATA_SetRailLocation(gamedata, &railLoc);
+    PLAYERWORK_setRailPosition(pw, &railLoc);
   }
 
 	// フィールドマップ用制御タスクシステム
@@ -1998,9 +2001,12 @@ static BOOL fldmap_CheckPlayerPosUpdate( FIELDMAP_WORK *fieldWork )
 	GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
 	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
 	const VecFx32 *pos = PLAYERWORK_getPosition( player );
+  VecFx32 loc_pos;
+
+  LOCATION_Get3DPos( lc, &loc_pos ); 
 	
-	if( pos->x != lc->pos.x || pos->z != lc->pos.z ){
-		lc->pos = *pos;
+	if( pos->x != loc_pos.x || pos->z != loc_pos.z ){
+    LOCATION_Set3DPos( lc, pos );
 		return( TRUE );
 	}
 	
@@ -2017,11 +2023,14 @@ static BOOL fldmap_CheckPlayerPosUpdate( FIELDMAP_WORK *fieldWork )
 static BOOL fldmap_CheckMoveZoneChange( FIELDMAP_WORK *fieldWork )
 {
 	LOCATION *lc = &fieldWork->location;
+  VecFx32 pos;
 	MAP_MATRIX *mat = GAMEDATA_GetMapMatrix(fieldWork->gamedata);
+
+  LOCATION_Get3DPos( lc, &pos );
 	
-	if( MAP_MATRIX_CheckVectorPosRange(mat,lc->pos.x,lc->pos.z) == TRUE ){
+	if( MAP_MATRIX_CheckVectorPosRange(mat,pos.x,pos.z) == TRUE ){
 		u32 zone_id =
-			MAP_MATRIX_GetVectorPosZoneID( mat, lc->pos.x, lc->pos.z );
+			MAP_MATRIX_GetVectorPosZoneID( mat, pos.x, pos.z );
 		
 		//現状 IDが無い場合は更新しない
 		if( zone_id != MAP_MATRIX_ZONE_ID_NON ){
@@ -2044,14 +2053,19 @@ static BOOL fldmap_CheckMoveZoneChange( FIELDMAP_WORK *fieldWork )
 static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 {
 	LOCATION *lc = &fieldWork->location;
+  VecFx32 lc_pos;
 	GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
 	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
 	MMDLSYS *fmmdlsys = fieldWork->fldMMdlSys;
 	
 	MAP_MATRIX *mat = GAMEDATA_GetMapMatrix(fieldWork->gamedata);
-	u32 new_zone_id = MAP_MATRIX_GetVectorPosZoneID(
-			mat, lc->pos.x, lc->pos.z );
+	u32 new_zone_id;
 	u32 old_zone_id = lc->zone_id;
+
+  LOCATION_Get3DPos( lc, &lc_pos );
+
+  new_zone_id = MAP_MATRIX_GetVectorPosZoneID(
+			mat, lc_pos.x, lc_pos.z );
 	
 	GF_ASSERT( new_zone_id != MAP_MATRIX_ZONE_ID_NON );
 	

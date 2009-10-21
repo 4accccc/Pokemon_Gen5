@@ -439,12 +439,15 @@ int EVENTDATA_SearchConnectIDByRailLocation(const EVENTDATA_SYSTEM * evdata, con
 	int i;
 	const CONNECT_DATA * cnct = evdata->connect_data;
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
-    if( ConnectData_RPOS_IsHit( cnct, rail_location ) )
+    if( cnct->pos_type == EVENTDATA_POSTYPE_RAIL )
     {
-  		TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
-      
-	  	//TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,pos->x, y,pos->y, z,pos->z);
-		  return i;
+      if( ConnectData_RPOS_IsHit( cnct, rail_location ) )
+      {
+        TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
+        
+        //TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,pos->x, y,pos->y, z,pos->z);
+        return i;
+      }
     }
 	}
 	return EXIT_ID_NONE;
@@ -491,14 +494,21 @@ BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * l
 	} else {
 		loc->type = LOCATION_TYPE_EXITID;
 	}
-	//loc->zone_id = connect->link_zone_id;
-	//loc->exit_id = connect->link_exit_id;
-	loc->dir_id = connect->exit_dir;
-	loc->zone_id = evdata->now_zone_id;
-	loc->exit_id = exit_id;
 
 	//loc->pos = connect->pos;
-	ConnectData_GPOS_GetPos( connect, &loc->pos );
+  //グリッドマップORレールマップのロケーションを作成
+  if( connect->pos_type == EVENTDATA_POSTYPE_GRID )
+  {
+    VecFx32 pos;
+  	ConnectData_GPOS_GetPos( connect, &pos );
+    LOCATION_Set( loc, evdata->now_zone_id, exit_id, connect->exit_dir, pos.x, pos.y, pos.z );
+  }
+  else
+  {
+    RAIL_LOCATION pos;
+  	ConnectData_RPOS_GetLocation( connect, &pos );
+    LOCATION_SetRail( loc, evdata->now_zone_id, exit_id, connect->exit_dir, pos.rail_index, pos.line_grid, pos.width_grid );
+  }
 
 	return TRUE;
 }
@@ -528,22 +538,25 @@ int EVENTDATA_SearchConnectIDBySphere(const EVENTDATA_SYSTEM * evdata, const Vec
   }
 
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
-    ConnectData_GPOS_GetPos(cnct, &check );
-    len = VEC_Distance(&check, sphere); 
-    
-    if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_R)
+    if( cnct->pos_type == EVENTDATA_POSTYPE_GRID )
     {
-      TAMADA_Printf("CNCT:ID%02d (%08x, %08x, %08x)", i, FX_Whole(check.x), FX_Whole(check.y), FX_Whole(check.z));
-      TAMADA_Printf(" (%3d, %3d, %3d)",
-          FX_Whole(check.x) / FIELD_CONST_GRID_SIZE,
-          FX_Whole(check.y) / FIELD_CONST_GRID_SIZE,
-          FX_Whole(check.z) / FIELD_CONST_GRID_SIZE);
-      TAMADA_Printf("\tlen = %d\n", FX_Whole(len) );
+      ConnectData_GPOS_GetPos(cnct, &check );
+      len = VEC_Distance(&check, sphere); 
+      
+      if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_R)
+      {
+        TAMADA_Printf("CNCT:ID%02d (%08x, %08x, %08x)", i, FX_Whole(check.x), FX_Whole(check.y), FX_Whole(check.z));
+        TAMADA_Printf(" (%3d, %3d, %3d)",
+            FX_Whole(check.x) / FIELD_CONST_GRID_SIZE,
+            FX_Whole(check.y) / FIELD_CONST_GRID_SIZE,
+            FX_Whole(check.z) / FIELD_CONST_GRID_SIZE);
+        TAMADA_Printf("\tlen = %d\n", FX_Whole(len) );
+      }
+      if ( len > HIT_RANGE) continue;
+      TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
+      //TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,sphere->x, y,sphere->y, z,sphere->z);
+      return i;
     }
-    if ( len > HIT_RANGE) continue;
-		TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
-		//TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,sphere->x, y,sphere->y, z,sphere->z);
-		return i;
 	}
 	return EXIT_ID_NONE;
 }
