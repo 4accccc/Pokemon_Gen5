@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2009-10-14T15:24:30
+	Update:2009-10-21T10:53:23
  *****************************************************************************/
 
 #ifndef NARC_FLD3D_CI_NAIX_
@@ -17,14 +17,16 @@ enum {
 	NARC_fld3d_ci_cut_get1_item_nsbmd = 3,
 	NARC_fld3d_ci_cut_get1_item_nsbca = 4,
 	NARC_fld3d_ci_cut_get1_item_nsbta = 5,
-	NARC_fld3d_ci_cut_get2_bg_nsbmd = 6,
-	NARC_fld3d_ci_cut_get2_bg_nsbca = 7,
-	NARC_fld3d_ci_cut_get2_bg_nsbta = 8,
-	NARC_fld3d_ci_cut_get2_item_nsbmd = 9,
-	NARC_fld3d_ci_cut_get2_item_nsbma = 10,
-	NARC_fld3d_ci_cut_get2_item_nsbta = 11,
-	NARC_fld3d_ci_get1_spa = 12,
-	NARC_fld3d_ci_get2_spa = 13
+	NARC_fld3d_ci_cut_get1_item_nsbma = 6,
+	NARC_fld3d_ci_cut_get2_bg_nsbmd = 7,
+	NARC_fld3d_ci_cut_get2_bg_nsbca = 8,
+	NARC_fld3d_ci_cut_get2_bg_nsbta = 9,
+	NARC_fld3d_ci_cut_get2_item_nsbmd = 10,
+	NARC_fld3d_ci_cut_get2_item_nsbma = 11,
+	NARC_fld3d_ci_cut_get2_item_nsbta = 12,
+	NARC_fld3d_ci_cut_get2_item_nsbca = 13,
+	NARC_fld3d_ci_get1_spa = 14,
+	NARC_fld3d_ci_get2_spa = 15
 };
 
 /* NARC_FLD3D_CI_NAIX_ */
