@@ -75,53 +75,88 @@ static GFL_PROC_RESULT PokeStatusProc_Init( GFL_PROC * proc, int * seq , void *p
     //デバグ
     if( pwk == NULL )
     {
-      u8 i;
-      POKEPARTY *pokeParty;
       psData = GFL_HEAP_AllocMemory( HEAPID_POKE_STATUS , sizeof(PSTATUS_DATA) );
-      pokeParty = PokeParty_AllocPartyWork(HEAPID_POKE_STATUS);
-      PokeParty_Init( pokeParty , 6 );
-      for( i=0;i<5;i++ )
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
       {
-        POKEMON_PARAM *pPara = PP_Create( i+3 , 10 , PTL_SETUP_POW_AUTO , HEAPID_POKE_STATUS );
-#if DEB_ARI
-        switch( i )
+        u8 i;
+        POKEPARTY *pokeParty;
+        pokeParty = PokeParty_AllocPartyWork(HEAPID_POKE_STATUS);
+        PokeParty_Init( pokeParty , 6 );
+        for( i=0;i<5;i++ )
         {
-        case 1:
-          PP_Put( pPara , ID_PARA_hp , 20 );
-          break;
-        case 2:
-          PP_Put( pPara , ID_PARA_hp , 10 );
-          PP_SetSick( pPara , POKESICK_DOKU );
-          break;
-        case 3:
-          PP_Put( pPara , ID_PARA_hp , 0 );
-          PP_Put( pPara , ID_PARA_item , 1 );
-          break;
-        case 4:
-          PP_Put( pPara , ID_PARA_hp , 1 );
-          PP_Put( pPara , ID_PARA_item , 1 );
-          break;
+          POKEMON_PARAM *pPara = PP_Create( i+3 , 10 , PTL_SETUP_POW_AUTO , HEAPID_POKE_STATUS );
+  #if DEB_ARI
+          switch( i )
+          {
+          case 1:
+            PP_Put( pPara , ID_PARA_hp , 20 );
+            break;
+          case 2:
+            PP_Put( pPara , ID_PARA_hp , 10 );
+            PP_SetSick( pPara , POKESICK_DOKU );
+            break;
+          case 3:
+            PP_Put( pPara , ID_PARA_hp , 0 );
+            PP_Put( pPara , ID_PARA_item , 1 );
+            break;
+          case 4:
+            PP_Put( pPara , ID_PARA_hp , 1 );
+            PP_Put( pPara , ID_PARA_item , 1 );
+            break;
+          }
+  #endif
+          {
+            u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
+            PP_Put( pPara , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+            PP_Put( pPara , ID_PARA_oyasex , PTL_SEX_MALE );
+          }
+          PokeParty_Add( pokeParty , pPara );
+          GFL_HEAP_FreeMemory( pPara );
         }
-#endif
-        {
-          u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
-          PP_Put( pPara , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
-          PP_Put( pPara , ID_PARA_oyasex , PTL_SEX_MALE );
-        }
-        PokeParty_Add( pokeParty , pPara );
-        GFL_HEAP_FreeMemory( pPara );
+        
+        psData->pos = 0;
+        psData->ppd = pokeParty;
+  #if PM_DEBUG
+        psData->ppt = PST_PP_TYPE_DEBUG;
+        psData->max = 255;  //u8なので255が最大
+  #else
+        psData->ppt = PST_PP_TYPE_POKEPARTY;
+        psData->max = 5;
+  #endif
       }
-      
-      psData->ppd = pokeParty;
-#if PM_DEBUG
-      psData->ppt = PST_PP_TYPE_DEBUG;
-      psData->max = 255;  //u8なので255が最大
-#else
-      psData->ppt = PST_PP_TYPE_POKEPARTY;
-      psData->max = 5;
-#endif
+      else
+      {
+        u8 i;
+        psData->ppd = GFL_HEAP_AllocClearMemory( HEAPID_POKE_STATUS , POKETOOL_GetPPPWorkSize()*30 );
+        psData->ppt = PST_PP_TYPE_POKEPASO;
+        psData->max = 30;
+        psData->pos = 0xFF;
+        for( i=0;i<psData->max;i++ )
+        {
+          POKEMON_PASO_PARAM *ppp = (POKEMON_PASO_PARAM*)((u32)psData->ppd + POKETOOL_GetPPPWorkSize()*i);
+          PPP_Clear( ppp );
+          if( GFUser_GetPublicRand0(3) > 0 )
+          {
+            PPP_Setup( ppp , i+1 , 50 , PTL_SETUP_ID_AUTO );
+            {
+              u16 oyaName[5] = {L'ブ',L'ラ',L'ッ',L'ク',0xFFFF};
+              PPP_Put( ppp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+              PPP_Put( ppp , ID_PARA_oyasex , PTL_SEX_MALE );
+            }
+            if( psData->pos == 0xFF )
+            {
+              psData->pos = i;
+            }
+            OS_TPrintf("[%2d]\n",i+1);
+          }
+          else
+          {
+            OS_TPrintf("[--]\n");
+          }
+        }
+        
+      }
       psData->mode = PST_MODE_NORMAL;
-      psData->pos = 0;
       psData->canExitButton = TRUE;
       
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
@@ -135,7 +170,6 @@ static GFL_PROC_RESULT PokeStatusProc_Init( GFL_PROC * proc, int * seq , void *p
         psData->mode = PST_MODE_NO_WAZACHG;
         psData->canExitButton = FALSE;
       }
-      
       GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
     }
     

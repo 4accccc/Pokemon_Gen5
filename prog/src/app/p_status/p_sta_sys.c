@@ -122,10 +122,17 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   work->mainSeq = SMS_FADEIN;
   work->clwkExitButton = NULL;
   work->ktst = GFL_UI_CheckTouchOrKey();
-  
-#if PM_DEBUG
-  work->calcPP = NULL;
-#endif
+
+  if( work->psData->ppt == PST_PP_TYPE_POKEPASO )
+  {
+    const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP(work);
+    work->calcPP = PP_CreateByPPP( ppp , work->heapId );
+  }
+  else
+  {
+    work->calcPP = NULL;
+  }
+
   //@todo ショートカットを取得
   for( i=0;i<PPT_MAX;i++ )
   {
@@ -1314,7 +1321,6 @@ static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder )
     }
     else
     {
-      POKEMON_PARAM *pp;
       if( isUpOder == TRUE )
       {
         work->dataPos++;
@@ -1323,17 +1329,25 @@ static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder )
       {
         work->dataPos--;
       }
-      pp = PSTATUS_UTIL_GetCurrentPP(work);
       
-      if( PP_Get( pp , ID_PARA_tamago_flag , NULL ) == 1 &&
-          work->page != PPT_INFO )
       {
-        //タマゴの時はInfo以外見れない
-      }
-      else
-      {
-        isFinish = TRUE;
-        isChange = TRUE;
+        const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP(work);
+        
+        if( PPP_Get( ppp , ID_PARA_poke_exist , NULL ) == 0 )
+        {
+          //データが無い(ボックス時
+        }
+        else
+        if( PPP_Get( ppp , ID_PARA_tamago_flag , NULL ) == 1 &&
+            work->page != PPT_INFO )
+        {
+          //タマゴの時はInfo以外見れない
+        }
+        else
+        {
+          isFinish = TRUE;
+          isChange = TRUE;
+        }
       }
     }
     
@@ -1344,6 +1358,18 @@ static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder )
   }
   else
   {
+    if( work->psData->ppt == PST_PP_TYPE_POKEPASO )
+    {
+      if( work->calcPP != NULL )
+      {
+        PP_Clear( work->calcPP );
+        GFL_HEAP_FreeMemory( work->calcPP );
+      }
+      {
+        const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP(work);
+        work->calcPP = PP_CreateByPPP( ppp , work->heapId );
+      }
+    }
     PSTATUS_RefreshData( work );
   }
   return isChange;
@@ -1571,7 +1597,10 @@ const POKEMON_PASO_PARAM* PSTATUS_UTIL_GetCurrentPPP( PSTATUS_WORK *work )
     break;
 
   case PST_PP_TYPE_POKEPASO:
-
+    {
+      u32 pppAdr = (u32)work->psData->ppd + POKETOOL_GetPPPWorkSize()*work->dataPos;
+      return (POKEMON_PASO_PARAM*)pppAdr;
+    }
     break;
 
 #if PM_DEBUG
@@ -1602,7 +1631,7 @@ POKEMON_PARAM* PSTATUS_UTIL_GetCurrentPP( PSTATUS_WORK *work )
     break;
 
   case PST_PP_TYPE_POKEPASO:
-
+    return work->calcPP;
     break;
 
 #if PM_DEBUG
@@ -1651,6 +1680,19 @@ void PSTATUS_UTIL_SetCurrentPPPFast( PSTATUS_WORK *work , const BOOL isFast )
     break;
 
   case PST_PP_TYPE_POKEPASO:
+    {
+      POKEMON_PASO_PARAM *ppp = (POKEMON_PASO_PARAM*)PSTATUS_UTIL_GetCurrentPPP( work );
+      if( isFast == TRUE )
+      {
+        PP_FastModeOn( work->calcPP );
+        PPP_FastModeOn( ppp );
+      }
+      else
+      {
+        PP_FastModeOff( work->calcPP , TRUE );
+        PPP_FastModeOff( ppp , TRUE );
+      }
+    }
 
     break;
 
@@ -1670,6 +1712,8 @@ void PSTATUS_UTIL_SetCurrentPPPFast( PSTATUS_WORK *work , const BOOL isFast )
 #endif
   }
 }
+
+
 //--------------------------------------------------------------
 //	文字の描画(bmp
 //--------------------------------------------------------------
@@ -1813,10 +1857,8 @@ void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work )
     {
       PP_Put( work->calcPP , ID_PARA_tamago_flag , 1 );
     }
-
   }  
 }
-
 #endif
 
 
