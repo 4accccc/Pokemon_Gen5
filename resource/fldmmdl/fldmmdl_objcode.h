@@ -163,6 +163,8 @@
 #define BONE (0x9e) //158 骨の標本
 #define BLACKSTONE (0x9f) //159 石（黒）
 #define WHITESTONE (0xa0) //160 石（白）
-#define OBJCODEMAX (0xa1) //161 最大
+#define BLACKMONOLITH (0xa1) //161 モノリス（白）
+#define WHITEMONOLITH (0xa2) //162 モノリス（黒）
+#define OBJCODEMAX (0xa3) //163 最大
 
 #endif

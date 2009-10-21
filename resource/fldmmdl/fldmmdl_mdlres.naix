@@ -33,7 +33,9 @@ enum {
 	NARC_fldmmdl_mdlres_pcheroine_nsbtx = 19,
 	NARC_fldmmdl_mdlres_bone_nsbtx = 20,
 	NARC_fldmmdl_mdlres_blackstone_nsbtx = 21,
-	NARC_fldmmdl_mdlres_whitestone_nsbtx = 22
+	NARC_fldmmdl_mdlres_whitestone_nsbtx = 22,
+	NARC_fldmmdl_mdlres_blackmonolith_nsbtx = 23,
+	NARC_fldmmdl_mdlres_whitemonolith_nsbtx = 24
 };
 
 /* NARC_FLDMMDL_MDLRES_NAIX_ */

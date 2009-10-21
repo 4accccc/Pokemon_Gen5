@@ -21,4 +21,6 @@ FMMDL_RESLIST_NCGIMD = \
 	pcheroine.imd \
 	bone.imd \
 	blackstone.imd \
-	whitestone.imd
+	whitestone.imd \
+	blackmonolith.imd \
+	whitemonolith.imd
