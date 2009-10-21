@@ -70,7 +70,7 @@ static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, voi
 static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm);
 static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*work);
 static void DEBUG_PalaceMapInCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor);
-static void _PalaceFieldConnect(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm);
+static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm);
 
 
 //==============================================================================
@@ -137,7 +137,7 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   }
   
   IntrudeField_ConnectMap(fieldWork, gameSys, intcomm);
-  _PalaceFieldConnect(fieldWork, gameSys, pcActor, intcomm);
+  _PalaceFieldPlayerWarp(fieldWork, gameSys, pcActor, intcomm);
   PALACE_SYS_Update(intcomm->palace, GAMESYSTEM_GetMyPlayerWork( gameSys ), 
     pcActor, intcomm, fieldWork, game_comm);
 }
@@ -574,7 +574,7 @@ GMEVENT * DEBUG_PalaceJamp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIEL
  * @param   intcomm		
  */
 //--------------------------------------------------------------
-static void _PalaceFieldConnect(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm)
+static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm)
 {
   PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
