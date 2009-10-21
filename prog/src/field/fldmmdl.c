@@ -412,6 +412,7 @@ void MMDLSYS_UpdateProc( MMDLSYS *fos )
 	GFL_TCBSYS *tcbsys = fos->pTCBSys;
 	GF_ASSERT( tcbsys != NULL );
 	GFL_TCB_Main( tcbsys );
+  MMDL_BLACTCONT_Update( fos );
 }
 
 //--------------------------------------------------------------
@@ -488,6 +489,14 @@ MMDL * MMDLSYS_AddMMdl(
 	}
 	
 	MMdlSys_IncrementOBJCount( (MMDLSYS*)MMDL_GetMMdlSys(mmdl) );
+
+#ifdef DEBUG_ONLY_FOR_kagaya
+  if( MMDL_GetOBJID(mmdl) == 1 && MMDL_GetOBJCode(mmdl) == WOMAN2 &&
+      MMDL_GetMoveCode(mmdl) == MV_DMY ){
+    KAGAYA_Printf( "追加されました\n" );
+  }
+#endif
+
 	MMdl_SetHeaderAfter( mmdl, head, NULL );
 	return( mmdl );
 }
@@ -697,6 +706,7 @@ static void MMdl_SetHeaderBefore(
 	MMDL_SetEventFlag( mmdl, head->event_flag );
 	MMDL_SetEventID( mmdl, head->event_id );
 	mmdl->dir_head = head->dir;
+  mmdl->dir_move = head->dir;
 	MMDL_SetParam( mmdl, head->param0, MMDL_PARAM_0 );
 	MMDL_SetParam( mmdl, head->param1, MMDL_PARAM_1 );
 	MMDL_SetParam( mmdl, head->param2, MMDL_PARAM_2 );
@@ -727,10 +737,7 @@ static void MMdl_SetHeaderAfter(
 	MMDL * mmdl, const MMDL_HEADER *head, void *sys )
 {
   // 座標タイプにより、位置の初期化方法を変更
-  if( head->pos_type == MMDL_HEADER_POSTYPE_GRID )
-  {
-  }
-  else
+  if( head->pos_type == MMDL_HEADER_POSTYPE_RAIL )
   {
     MMDL_SetRailHeaderAfter( mmdl, head );
   }
@@ -4865,6 +4872,8 @@ void MMDL_ROCKPOS_SavePos( const MMDL *mmdl )
     rockpos->pos = pos;
     return;
   }
+  
+  GF_ASSERT( 0 && "ERROR NOT ROCK OF SAVE" );
 }
 
 //--------------------------------------------------------------

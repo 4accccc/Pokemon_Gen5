@@ -1044,6 +1044,7 @@ extern BOOL MMDL_ActionLocalAcmd( MMDL * mmdl );
 extern void MMDL_BLACTCONT_Setup( MMDLSYS *mmdlsys,
 	GFL_BBDACT_SYS *pBbdActSys, int res_max );
 extern void MMDL_BLACTCONT_Release( MMDLSYS *mmdlsys );
+extern void MMDL_BLACTCONT_Update( MMDLSYS *mmdlsys );
 extern void MMDL_BLACTCONT_ProcVBlank( MMDLSYS *mmdlsys );
 extern void MMDL_BLACTCONT_SetGlobalScaleOne( MMDLSYS *mmdlsys );
 

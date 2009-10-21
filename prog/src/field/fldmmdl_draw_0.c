@@ -697,10 +697,12 @@ static void DrawBlAct_Draw( MMDL *mmdl )
     return;
   }
   
+#ifdef DEBUG_ONLY_FOR_kagaya  
   if( MMDL_GetOBJID(mmdl) == 1 && MMDL_GetOBJCode(mmdl) == WOMAN2 ){
     KAGAYA_Printf( "‚«‚Ü‚µ‚½\n" );
   }
-
+#endif
+  
 	actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
 	blactAnmControl_Update( &work->anmcnt_work, mmdl, actSys, work->actID );
   

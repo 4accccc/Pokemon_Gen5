@@ -61,6 +61,15 @@ typedef struct
 }IDCODEIDX;
 
 //--------------------------------------------------------------
+/// ADDRES_RESERVE_PARAM
+//--------------------------------------------------------------
+typedef struct
+{
+  u16 code;
+  BBDRESBIT flag;
+}ADDRES_RESERVE_PARAM;
+
+//--------------------------------------------------------------
 /// ADDRES_RESERVE
 //--------------------------------------------------------------
 typedef struct
@@ -99,9 +108,11 @@ typedef struct
 typedef struct
 {
   BOOL funcFlag; //TRUE=予約処理を実行する
-
   u16 resMax;
+  u16 resDigestFrameMax;
   u16 actMax;
+  u16 dmy;
+  ADDRES_RESERVE_PARAM *pReserveResParam;
   ADDRES_RESERVE *pReserveRes;
   ADDACT_RESERVE *pReserveAct;
 }BLACT_RESERVE;
@@ -151,7 +162,10 @@ static BOOL BBDResUnitIndex_SearchResID(
 
 static void BlActAddReserve_Init( MMDL_BLACTCONT *pBlActCont );
 static void BlActAddReserve_Delete( MMDL_BLACTCONT *pBlActCont );
-static void BlActAddReserve_Digest( MMDL_BLACTCONT *pBlActCont );
+static void BlActAddReserve_RegistResourceParam(
+    MMDL_BLACTCONT *pBlActCont, u16 code, BBDRESBIT flag );
+static void BlActAddReserve_DigestResourceParam(
+    MMDL_BLACTCONT *pBlActCont );
 static void BlActAddReserve_RegistResource(
     MMDL_BLACTCONT *pBlActCont, u16 code, BBDRESBIT flag );
 static void BlActAddReserve_DigestResource( MMDL_BLACTCONT *pBlActCont );
@@ -163,6 +177,8 @@ static void BlActAddReserve_RegistActor(
     MMDL_BLACTCONT *pBlActCont, MMDL *mmdl, u16 code, u16 *outID,
     MMDL_BLACTCONT_ADDACT_USERPROC init_proc,
     void *init_work, const VecFx32 *user_pos );
+static void BlActAddReserve_DigestActorCore(
+    MMDL_BLACTCONT *pBlActCont, ADDACT_RESERVE *pRes );
 static void BlActAddReserve_DigestActor( MMDL_BLACTCONT *pBlActCont );
 static BOOL BlActAddReserve_SearchActorOBJCode(
     MMDL_BLACTCONT *pBlActCont, u16 code, MMDL *mmdl );
@@ -244,6 +260,25 @@ void MMDL_BLACTCONT_Release( MMDLSYS *mmdlsys )
 
 //--------------------------------------------------------------
 /**
+ * MMDL_BLACTCONT 更新処理
+ * @param mmdlsys MMDLSYS
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+void MMDL_BLACTCONT_Update( MMDLSYS *mmdlsys )
+{
+	MMDL_BLACTCONT *pBlActCont = MMDLSYS_GetBlActCont( mmdlsys );
+  
+  if( pBlActCont != NULL ){
+    //アクター予約消化
+    BlActAddReserve_DigestActor( pBlActCont );
+    //リソースパラメタ予約消化
+    BlActAddReserve_DigestResourceParam( pBlActCont );
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * MMDL_BLACTCONT Vブランク処理
  * @param	mmdlsys	MMDLSYS
  * @retval	nothing
@@ -251,8 +286,8 @@ void MMDL_BLACTCONT_Release( MMDLSYS *mmdlsys )
 //--------------------------------------------------------------
 void MMDL_BLACTCONT_ProcVBlank( MMDLSYS *mmdlsys )
 {
-	MMDL_BLACTCONT *pBlActCont = MMDLSYS_GetBlActCont( mmdlsys );
-  BlActAddReserve_Digest( pBlActCont );
+  MMDL_BLACTCONT *pBlActCont = MMDLSYS_GetBlActCont( mmdlsys );
+  BlActAddReserve_DigestResource( pBlActCont );
 }
 
 #if 0
@@ -1102,9 +1137,20 @@ static void BlActAddReserve_Init( MMDL_BLACTCONT *pBlActCont )
   
   pReserve->resMax = pBlActCont->resourceMax;
   pReserve->actMax = MMDLSYS_GetMMdlMax( pBlActCont->mmdlsys );
+  pReserve->resDigestFrameMax = 4; //kari
+  
+  pReserve->pReserveResParam = GFL_HEAP_AllocClearMemory(
+      heapID, sizeof(ADDRES_RESERVE_PARAM)*pReserve->resMax );
+  {
+    int i = 0;
+    ADDRES_RESERVE_PARAM *pResParam = pReserve->pReserveResParam;
+    for( ; i < pReserve->resMax; i++, pResParam++ ){
+      pResParam->code = REGIDCODE_MAX;
+    }
+  }
   
   pReserve->pReserveRes = GFL_HEAP_AllocClearMemory(
-      heapID, sizeof(ADDRES_RESERVE)*pReserve->resMax );
+      heapID, sizeof(ADDRES_RESERVE)*pReserve->resDigestFrameMax );
   pReserve->pReserveAct = GFL_HEAP_AllocClearMemory(
       heapID, sizeof(ADDACT_RESERVE)*pReserve->actMax );
   
@@ -1127,16 +1173,20 @@ static void BlActAddReserve_Delete( MMDL_BLACTCONT *pBlActCont )
     u32 i;
     pReserve->funcFlag = FALSE;
     
+    { //リソース予約パラメタ
+      GFL_HEAP_FreeMemory( pReserve->pReserveResParam );
+    }
+
     { //リソース
       ADDRES_RESERVE *pRes = pReserve->pReserveRes;
-      for( i = 0; i < pReserve->resMax; i++, pRes++ ){
+      for( i = 0; i < pReserve->resDigestFrameMax; i++, pRes++ ){
         if( pRes->pG3dRes != NULL ){
           GFL_G3D_DeleteResource( pRes->pG3dRes );
         }
       }
       GFL_HEAP_FreeMemory( pReserve->pReserveRes );
     }
-
+    
     { //アクター
       ADDACT_RESERVE *pRes = pReserve->pReserveAct;
       for( i = 0; i < pReserve->actMax; i++, pRes++ ){
@@ -1147,30 +1197,66 @@ static void BlActAddReserve_Delete( MMDL_BLACTCONT *pBlActCont )
       GFL_HEAP_FreeMemory( pReserve->pReserveAct );
     }
     
-    pBlActCont->pReserve = NULL;
     GFL_HEAP_FreeMemory( pReserve );
+    pBlActCont->pReserve = NULL;
   }
 }
 
 //--------------------------------------------------------------
 /**
- * アクター追加予約処理　予約消化
- * @param MMDLSYS *mmdlsys
+ * リソース追加予約処理　パラメタ登録
+ * @param pBlActCont MMDL_BLACTCONT
+ * @param code 表示コード
+ * @param flag BBDRESBIT
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void BlActAddReserve_Digest( MMDL_BLACTCONT *pBlActCont )
+static void BlActAddReserve_RegistResourceParam(
+    MMDL_BLACTCONT *pBlActCont, u16 code, BBDRESBIT flag )
 {
+  u32 i = 0;
   BLACT_RESERVE *pReserve = pBlActCont->pReserve;
+  ADDRES_RESERVE_PARAM *pResParam = pReserve->pReserveResParam;
   
-  if( pReserve != NULL )
-  {
-    if( pReserve->funcFlag == TRUE )
-    {
-      BlActAddReserve_DigestResource( pBlActCont );
-      BlActAddReserve_DigestActor( pBlActCont );
+  for( ; i < pReserve->resMax; i++, pResParam++ ){
+    if( pResParam->code == REGIDCODE_MAX ){
+      pResParam->code = code;
+      pResParam->flag = flag;
+      return;
     }
   }
+  
+  GF_ASSERT( 0 );
+}
+
+//--------------------------------------------------------------
+/**
+ * リソース追加予約処理　パラメタ予約消化
+ * @param pBlActCont MMDL_BLACTCONT
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void BlActAddReserve_DigestResourceParam(
+    MMDL_BLACTCONT *pBlActCont )
+{
+  u32 i = 0,count = 0;
+  BLACT_RESERVE *pReserve = pBlActCont->pReserve;
+  ADDRES_RESERVE_PARAM *pResParam = pReserve->pReserveResParam;
+  
+  for( ; i < pReserve->resMax; i++, pResParam++ ){
+    if( pResParam->code != REGIDCODE_MAX ){
+      BlActAddReserve_RegistResource(
+        pBlActCont, pResParam->code, pResParam->flag );
+      pResParam->code = REGIDCODE_MAX;
+      
+      count++;
+      if( count >= pReserve->resDigestFrameMax ){
+        break;
+      }
+    }
+  }
+  
+  //予約登録後のパラメタ昇順
 }
 
 //--------------------------------------------------------------
@@ -1189,7 +1275,7 @@ static void BlActAddReserve_RegistResource(
   BLACT_RESERVE *pReserve = pBlActCont->pReserve;
   ADDRES_RESERVE *pRes = pReserve->pReserveRes;
   
-  for( ; i < pReserve->resMax; i++, pRes++ ){
+  for( ; i < pReserve->resDigestFrameMax; i++, pRes++ ){
     if( pRes->pG3dRes == NULL ){
 	    const OBJCODE_PARAM *prm;
       prm = MMDLSYS_GetOBJCodeParam( pBlActCont->mmdlsys, code );
@@ -1198,7 +1284,7 @@ static void BlActAddReserve_RegistResource(
       pRes->code = code;
       pRes->flag = flag;
       pRes->pG3dRes = GFL_G3D_CreateResourceHandle(
-              pBlActCont->arcH_res, prm->res_idx );
+      pBlActCont->arcH_res, prm->res_idx );
       pRes->compFlag = TRUE;
       
       KAGAYA_Printf(
@@ -1213,11 +1299,53 @@ static void BlActAddReserve_RegistResource(
 
 //--------------------------------------------------------------
 /**
+ * アクター追加予約処理　リソース予約消化
+ * @param MMDLSYS *mmdlsys
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void BlActAddReserve_DigestResource( MMDL_BLACTCONT *pBlActCont )
+{
+  BLACT_RESERVE *pReserve = pBlActCont->pReserve;
+  
+  if( pReserve != NULL )
+  {
+    if( pReserve->funcFlag == TRUE )
+    {
+      u32 i = 0;
+      BLACT_RESERVE *pReserve = pBlActCont->pReserve;
+      ADDRES_RESERVE *pRes = pReserve->pReserveRes;
+      
+      for( ; i < pReserve->resDigestFrameMax; i++, pRes++ ){
+        if( pRes->pG3dRes != NULL && pRes->compFlag == TRUE ){
+          pRes->compFlag = FALSE;
+          BBDResUnitIndex_AddResource(
+              pBlActCont, pRes->pG3dRes, pRes->code, pRes->flag );
+          pRes->pG3dRes = NULL;
+        
+          #ifdef DEBUG_MMDL_DEVELOP
+          {
+            u16 id,flag;
+            BBDResUnitIndex_SearchResID( pBlActCont, pRes->code, &id, &flag );
+            KAGAYA_Printf(
+                "MMDL BLACT RESERVE DIG RESOURCE CODE=%d, RESID=%d\n",
+                pRes->code, id );
+          }
+          #endif
+        }
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * リソース追加予約処理　予約消化
  * @param pBlActCont MMDL_BLACTCONT
  * @retval nothing
  */
 //--------------------------------------------------------------
+#if 0
 static void BlActAddReserve_DigestResource( MMDL_BLACTCONT *pBlActCont )
 {
   u32 i = 0;
@@ -1235,15 +1363,15 @@ static void BlActAddReserve_DigestResource( MMDL_BLACTCONT *pBlActCont )
       {
         u16 id,flag;
         BBDResUnitIndex_SearchResID( pBlActCont, pRes->code, &id, &flag );
-        
         KAGAYA_Printf(
-          "MMDL BLACT RESERVE DIG RESOURCE CODE=%d, RESID=%d\n",
-          pRes->code, id );
+            "MMDL BLACT RESERVE DIG RESOURCE CODE=%d, RESID=%d\n",
+            pRes->code, id );
       }
 #endif
     }
   }
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1257,16 +1385,32 @@ static void BlActAddReserve_DigestResource( MMDL_BLACTCONT *pBlActCont )
 static BOOL BlActAddReserve_SearchResource(
     MMDL_BLACTCONT *pBlActCont, u16 code, u16 *outFlag )
 {
-  u32 i = 0;
-  BLACT_RESERVE *pReserve = pBlActCont->pReserve;
-  ADDRES_RESERVE *pRes = pReserve->pReserveRes;
-  
-  for( ; i < pReserve->resMax; i++, pRes++ ){
-    if( pRes->code == code && pRes->pG3dRes != NULL ){
-      *outFlag = pRes->flag;
-      return( TRUE );
+  { //パラメタ予約
+    u32 i = 0;
+    BLACT_RESERVE *pReserve = pBlActCont->pReserve;
+    ADDRES_RESERVE_PARAM *pResParam = pReserve->pReserveResParam;
+    
+    for( ; i < pReserve->resMax; i++, pResParam++ ){
+      if( pResParam->code == code ){
+        *outFlag = pResParam->flag;
+        return( TRUE );
+      }
     }
   }
+  
+  { //リソース予約
+    u32 i = 0;
+    BLACT_RESERVE *pReserve = pBlActCont->pReserve;
+    ADDRES_RESERVE *pRes = pReserve->pReserveRes;
+  
+    for( ; i < pReserve->resDigestFrameMax; i++, pRes++ ){
+      if( pRes->code == code && pRes->pG3dRes != NULL ){
+        *outFlag = pRes->flag;
+        return( TRUE );
+      }
+    }
+  }
+
   return( FALSE );
 }
 
@@ -1281,17 +1425,32 @@ static BOOL BlActAddReserve_SearchResource(
 static BOOL BlActAddReserve_CancelResource(
     MMDL_BLACTCONT *pBlActCont, u16 code )
 {
-  u32 i = 0;
-  BLACT_RESERVE *pReserve = pBlActCont->pReserve;
-  ADDRES_RESERVE *pRes = pReserve->pReserveRes;
+  { //パラメタ予約
+    u32 i = 0;
+    BLACT_RESERVE *pReserve = pBlActCont->pReserve;
+    ADDRES_RESERVE_PARAM *pResParam = pReserve->pReserveResParam;
+    
+    for( ; i < pReserve->resMax; i++, pResParam++ ){
+      if( pResParam->code == code ){
+        pResParam->code = REGIDCODE_MAX;
+        return( TRUE );
+      }
+    }
+  }
   
-  for( ; i < pReserve->resMax; i++, pRes++ ){
-    if( pRes->pG3dRes != NULL && pRes->code == code ){
-      pRes->compFlag = FALSE;
-      GFL_G3D_DeleteResource( pRes->pG3dRes );
-      pRes->pG3dRes = NULL;
-      KAGAYA_Printf( "MMDL BLACT RESERVE CANCEL CODE=%d\n", pRes->code );
-      return( TRUE );
+  { //リソース予約
+    u32 i = 0;
+    BLACT_RESERVE *pReserve = pBlActCont->pReserve;
+    ADDRES_RESERVE *pRes = pReserve->pReserveRes;
+  
+    for( ; i < pReserve->resDigestFrameMax; i++, pRes++ ){
+      if( pRes->pG3dRes != NULL && pRes->code == code ){
+        pRes->compFlag = FALSE;
+        GFL_G3D_DeleteResource( pRes->pG3dRes );
+        pRes->pG3dRes = NULL;
+        KAGAYA_Printf( "MMDL BLACT RESERVE CANCEL CODE=%d\n", pRes->code );
+        return( TRUE );
+      }
     }
   }
   return( FALSE );
@@ -1337,7 +1496,7 @@ static void BlActAddReserve_RegistActor(
               pBlActCont,code,&flag) == FALSE )
         {
           flag = BBDRES_VRAM_GUEST; //基本VRAM常駐ゲスト型で登録
-          BlActAddReserve_RegistResource( pBlActCont, code, flag );
+          BlActAddReserve_RegistResourceParam( pBlActCont, code, flag );
         }
       }
       
@@ -1378,6 +1537,77 @@ static void BlActAddReserve_RegistActor(
 
 //--------------------------------------------------------------
 /**
+ * アクター追加予約処理　予約消化コア部分
+ * @param MMDLSYS *mmdlsys
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void BlActAddReserve_DigestActorCore(
+    MMDL_BLACTCONT *pBlActCont, ADDACT_RESERVE *pRes )
+{
+  BOOL ret;
+  u16 resID,flag;
+  u16 transID = BLACT_RESID_NULL;
+  
+  pRes->compFlag = FALSE;
+   
+  if( pRes->pTransActRes != NULL ) //VRAM転送型
+  {
+    resID = BlActRes_AddRes( pBlActCont, pRes->code,
+        pRes->pTransActRes, GFL_BBDACT_RESTYPE_DATACUT );
+    pRes->pTransActRes = NULL;
+        
+    ret = BBDResUnitIndex_SearchResID(
+          pBlActCont, pRes->code, &transID, &flag );
+        
+    GF_ASSERT( ret == TRUE &&
+        "BLACT ADD RESERVE RESOURCE NONE" ); //転送用リソース無し
+    GF_ASSERT( (flag&BBDRESBIT_TRANS) &&
+        "BLACT ADD RESERVE RESOURCE ERROR" ); //転送用リソースでは無い
+  }
+  else //VRAM常駐型
+  {
+    ret = BBDResUnitIndex_SearchResID(
+          pBlActCont, pRes->code, &resID, &flag );
+        
+    if( ret != TRUE ){
+      OS_Printf( "BLACT ADD RESOURCE ERROR CODE=%xH\n", pRes->code );
+    }
+        
+    //リソース無し
+    GF_ASSERT( ret == TRUE && "BLACT ADD RESERVE RESOURCE NONE" );
+  }
+      
+  if( pRes->mmdl != NULL ){ //アクター追加 動作モデル
+    *(pRes->outID) = blact_SetResActor( //アクター追加
+          pRes->mmdl, pRes->code, resID, transID );
+  }else{ //アクター追加 ユーザー指定
+    *(pRes->outID) = blact_SetResActorCore( pBlActCont->mmdlsys,
+          &pRes->user_add_pos, pRes->code, resID, transID );
+  }
+      
+  if( pRes->user_init_proc != NULL ){ //ユーザー指定初期化処理呼び出し
+    pRes->user_init_proc( *pRes->outID, pRes->user_init_work );
+  }
+      
+  if( pRes->mmdl != NULL ){
+    MMDL_CallDrawProc( pRes->mmdl ); //描画処理呼び出し
+  }
+      
+  #ifdef DEBUG_ONLY_FOR_kagaya
+  KAGAYA_Printf( "MMDL BLACT RESERVE DIG ACTOR " );
+  if( pRes->mmdl != NULL ){
+    KAGAYA_Printf( "OBJID=%d, CODE=%d, RESID=%d,TRANSID=%d\n",
+      MMDL_GetOBJID(pRes->mmdl), pRes->code, resID, transID );
+  }else{
+    KAGAYA_Printf( "OBJID=NONE, CODE=%d, RESID=%d,TRANSID=%d\n",
+      MMDL_GetOBJID(pRes->mmdl), pRes->code, resID, transID );
+  }
+  #endif
+}
+
+//--------------------------------------------------------------
+/**
  * アクター追加予約処理　予約消化
  * @param MMDLSYS *mmdlsys
  * @retval nothing
@@ -1385,6 +1615,8 @@ static void BlActAddReserve_RegistActor(
 //--------------------------------------------------------------
 static void BlActAddReserve_DigestActor( MMDL_BLACTCONT *pBlActCont )
 {
+  BOOL ret;
+  u16 flag,transID;
   u32 i = 0;
   u32 max = MMDLSYS_GetMMdlMax( pBlActCont->mmdlsys );
   ADDACT_RESERVE *pRes = pBlActCont->pReserve->pReserveAct;
@@ -1393,69 +1625,13 @@ static void BlActAddReserve_DigestActor( MMDL_BLACTCONT *pBlActCont )
   {
     if( pRes->outID != NULL && pRes->compFlag == TRUE )
     {
-      BOOL ret;
-      u16 resID,flag;
-      u16 transID = BLACT_RESID_NULL;
+      ret = BBDResUnitIndex_SearchResID(
+          pBlActCont, pRes->code, &transID, &flag );
       
-      pRes->compFlag = FALSE;
-      
-      if( pRes->pTransActRes != NULL ) //VRAM転送型
-      {
-        resID = BlActRes_AddRes( pBlActCont, pRes->code,
-            pRes->pTransActRes, GFL_BBDACT_RESTYPE_DATACUT );
-        pRes->pTransActRes = NULL;
-        
-        ret = BBDResUnitIndex_SearchResID(
-            pBlActCont, pRes->code, &transID, &flag );
-        
-        GF_ASSERT( ret == TRUE &&
-          "BLACT ADD RESERVE RESOURCE NONE" ); //転送用リソース無し
-        GF_ASSERT( (flag&BBDRESBIT_TRANS) &&
-          "BLACT ADD RESERVE RESOURCE ERROR" ); //転送用リソースでは無い
+      if( ret == TRUE ){ //リソースが登録された
+        BlActAddReserve_DigestActorCore( pBlActCont, pRes );
+        BlActAddReserve_ClearWork( pRes );
       }
-      else //VRAM常駐型
-      {
-        ret = BBDResUnitIndex_SearchResID(
-            pBlActCont, pRes->code, &resID, &flag );
-
-        #ifdef DEBUG_MMDL_DEVELOP
-        if( ret != TRUE ){
-          OS_Printf( "BLACT ADD RESOURCE ERROR CODE=%xH\n", pRes->code );
-        }
-        #endif
-        
-        GF_ASSERT( ret == TRUE &&
-          "BLACT ADD RESERVE RESOURCE NONE" ); //リソース無し
-      }
-      
-      if( pRes->mmdl != NULL ){ //アクター追加 動作モデル
-        *(pRes->outID) = blact_SetResActor( //アクター追加
-            pRes->mmdl, pRes->code, resID, transID );
-      }else{ //アクター追加 ユーザー指定
-        *(pRes->outID) = blact_SetResActorCore( pBlActCont->mmdlsys,
-            &pRes->user_add_pos, pRes->code, resID, transID );
-      }
-      
-      if( pRes->user_init_proc != NULL ){ //ユーザー指定初期化処理呼び出し
-        pRes->user_init_proc( *pRes->outID, pRes->user_init_work );
-      }
-      
-      if( pRes->mmdl != NULL ){
-        MMDL_CallDrawProc( pRes->mmdl ); //描画処理呼び出し
-      }
-      
-      #ifdef DEBUG_ONLY_FOR_kagaya
-      KAGAYA_Printf( "MMDL BLACT RESERVE DIG ACTOR " );
-      if( pRes->mmdl != NULL ){
-        KAGAYA_Printf( "OBJID=%d, CODE=%d, RESID=%d,TRANSID=%d\n",
-            MMDL_GetOBJID(pRes->mmdl), pRes->code, resID, transID );
-      }else{
-        KAGAYA_Printf( "OBJID=NONE, CODE=%d, RESID=%d,TRANSID=%d\n",
-            MMDL_GetOBJID(pRes->mmdl), pRes->code, resID, transID );
-      }
-      #endif
-      
-      BlActAddReserve_ClearWork( pRes );
     }
   }
 }
@@ -1483,6 +1659,7 @@ static BOOL BlActAddReserve_SearchActorOBJCode(
       }
     }
   }
+  
   return( FALSE );
 }
 
