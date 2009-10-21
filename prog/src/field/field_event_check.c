@@ -71,6 +71,8 @@
 #include "waza_tool/wazano_def.h"
 #include "field/field_comm/intrude_main.h"
 
+#include "../../../resource/fldmapdata/script/eggevent_scr_def.h"   // for SCRID_EGG_BIRTH
+
 //======================================================================
 //======================================================================
 
@@ -120,6 +122,8 @@ typedef struct {
 //======================================================================
 //event
 static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork);
+static void updatePartyEgg( POKEPARTY* party );
+static BOOL checkPartyEgg( POKEPARTY* party );
 
 static GMEVENT * checkExit(EV_REQUEST * req,
     FIELDMAP_WORK *fieldWork, const VecFx32 *now_pos );
@@ -228,8 +232,12 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     id = EVENTDATA_CheckPosEvent( req.evdata, evwork, &pos );
     
     if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
-      return event;
+      FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldWork );
+      PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( player );
+      if( form != PLAYER_MOVE_FORM_NORMAL ){
+        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
+        return event;
+      }
     }
 
    //座標接続チェック
@@ -1002,7 +1010,78 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 //--------------------------------------------------------------
 static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork)
 {
-  return NULL;
+  HEAPID     heap_id = FIELDMAP_GetHeapID( fieldWork );
+  GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( fieldWork ); 
+  GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
+  POKEPARTY*   party = GAMEDATA_GetMyPokemon( gdata );
+  SODATEYA* sodateya = FIELDMAP_GetSodateya( fieldWork );
+  GMEVENT*     event = NULL;
+
+  // 育て屋: 経験値加算, 子作り判定など1歩分の処理
+  SODATEYA_BreedPokemon( sodateya ); 
+
+  // 手持ちタマゴ: 孵化カウンタ更新
+  updatePartyEgg( party );
+
+  // 手持ちタマゴ: 孵化チェック
+  if( checkPartyEgg( party ) )
+  {
+    event = SCRIPT_SetEventScript( gsys, SCRID_EGG_BIRTH, NULL, heap_id );
+  }
+
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちタマゴの孵化カウント更新
+ * @param party 更新対象のポケパーティー
+ */
+//--------------------------------------------------------------
+static void updatePartyEgg( POKEPARTY* party )
+{
+  int i;
+  int poke_count = PokeParty_GetPokeCount( party );
+
+  for( i=0; i<poke_count; i++ )
+  {
+    POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, i );
+    u32      tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
+    u32           friend = PP_Get( param, ID_PARA_friend, NULL ); // なつき度(タマゴの場合は孵化までの残り歩数)
+
+    if( tamago_flag == TRUE ) // タマゴなら
+    { 
+      // 残り歩数をデクリメント
+      if( 0 < friend ) PP_Put( param, ID_PARA_friend, --friend );
+    }
+  }
+}
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちタマゴの孵化チェック
+ * @param party チェック対象のポケパーティー
+ * @return 孵化する卵がある場合TRUE
+ *
+ * ※タマゴの間は, なつき度を孵化歩数カウンタとして利用する.
+ */
+//--------------------------------------------------------------
+static BOOL checkPartyEgg( POKEPARTY* party )
+{
+  int i;
+  int poke_count = PokeParty_GetPokeCount( party );
+
+  for( i=0; i<poke_count; i++ )
+  {
+    POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, i );
+    u32      tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
+    u32           friend = PP_Get( param, ID_PARA_friend, NULL ); 
+
+    if( (tamago_flag == TRUE) && (friend == 0) ) 
+    { // カウンタ0のタマゴを発見
+      return TRUE;
+    }
+  } 
+  return FALSE;
 }
 
 //======================================================================
