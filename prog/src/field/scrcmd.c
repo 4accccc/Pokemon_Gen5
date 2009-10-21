@@ -23,7 +23,7 @@
 #include "print/wordset.h"
 
 #include "sound/pm_sndsys.h"
-#include "sound/wb_sound_data.sadl"
+//#include "sound/wb_sound_data.sadl"
 
 #include "fieldmap.h"
 #include "field_sound.h"
