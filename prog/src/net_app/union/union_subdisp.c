@@ -36,6 +36,8 @@ enum{
   UNISUB_ACTOR_APPEAL_SCROLL,
   
   UNISUB_ACTOR_MAX,
+  
+  UNISUB_DECOME_NUM = 6,
 };
 
 ///アクターソフトプライオリティ
@@ -385,7 +387,7 @@ void UNION_SUBDISP_Draw(UNION_SUBDISP_PTR unisub)
 //--------------------------------------------------------------
 static void _UniSub_SystemSetup(UNION_SUBDISP_PTR unisub)
 {
-  unisub->clunit = GFL_CLACT_UNIT_Create(UNISUB_ACTOR_MAX, 5, HEAPID_FIELDMAP);
+  unisub->clunit = GFL_CLACT_UNIT_Create(UNISUB_ACTOR_MAX + UNISUB_DECOME_NUM, 5, HEAPID_FIELDMAP);
   unisub->printQue = PRINTSYS_QUE_Create(HEAPID_FIELDMAP);
   unisub->font_handle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
     GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_FIELDMAP );
@@ -834,7 +836,9 @@ void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 
     STRBUF *buf_name, *buf_pms;
     GFL_POINT point = {0, 16};
     
-    PMS_DRAW_Clear(unisub->pmsdraw, write_pos);
+    if(PMS_DRAW_IsPrinting(unisub->pmsdraw, write_pos) == TRUE){
+      PMS_DRAW_Clear(unisub->pmsdraw, write_pos);
+    }
     
     //名前
     buf_name = GFL_STR_CreateBuffer(PERSON_NAME_SIZE + EOM_SIZE, HEAPID_FIELDMAP);
