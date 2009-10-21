@@ -10,4 +10,5 @@ UNIQ_SCRIPTFILES	= \
   hiden.ev \
   fld_item.ev \
   wifi_club_scr.ev \
-  shop_scr.ev
+  shop_scr.ev \
+  eggevent_scr.ev
