@@ -114,6 +114,7 @@
 #define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY ( PAD_BUTTON_L )
 #endif //DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
 
+#define FLD3DCUTIN_SIZE   (0x8000)   //フィールド3Ｄカットインのヒープサイズ
 
 //======================================================================
 //	define
@@ -503,6 +504,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 {
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
 
+  //フィールド3Ｄカットインヒープ確保
+  GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_FLD3DCUTIN, FLD3DCUTIN_SIZE );
+
   fieldWork->fldMsgBG = FLDMSGBG_Setup(
       fieldWork->heapID, fieldWork->g3Dcamera );
 
@@ -668,9 +672,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 #endif  //USE_DEBUGWIN_SYSTEM
 
   //フィールドパーティクル
-  fieldWork->FldPrtclSys = FLD_PRTCL_Init(fieldWork->heapID);
+  fieldWork->FldPrtclSys = FLD_PRTCL_Init(HEAPID_FLD3DCUTIN);
   //フィールド3Dカットイン
-  fieldWork->Fld3dCiPtr = FLD3D_CI_Init(fieldWork->heapID, fieldWork->FldPrtclSys);
+  fieldWork->Fld3dCiPtr = FLD3D_CI_Init(HEAPID_FLD3DCUTIN, fieldWork->FldPrtclSys);
 
   // 育て屋
   {
@@ -956,6 +960,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   FIELD_FUNC_RANDOM_GENERATE_TermDebug( );
   DEBUGWIN_ExitProc();
 #endif  //USE_DEBUGWIN_SYSTEM
+
+  //フィールド3Ｄカットインヒープ解放
+  GFL_HEAP_DeleteHeap( HEAPID_FLD3DCUTIN );
 
   return MAINSEQ_RESULT_NEXTSEQ;
 }

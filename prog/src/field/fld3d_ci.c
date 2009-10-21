@@ -237,6 +237,10 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
   case 1:
     //リソースロード
     SetupResource(ptr, &evt_work->SetupDat, ptr->CutInNo);
+    {
+      int size = GFL_HEAP_GetHeapFreeSize(ptr->HeapID);
+      OS_Printf("START::FLD3DCUTIN_HEAP_REST %x\n",size);
+    }
     (*seq)++;
     break;
   case 2:
@@ -266,6 +270,10 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     (*seq)++;
     break;
   case 5:
+    {
+      int size = GFL_HEAP_GetHeapFreeSize(ptr->HeapID);
+      OS_Printf("END::FLD3DCUTIN_HEAP_REST %x\n",size);
+    }
     //終了
     return GMEVENT_RES_FINISH;
   }
