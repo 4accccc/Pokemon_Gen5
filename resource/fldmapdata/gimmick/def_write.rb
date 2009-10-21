@@ -1,9 +1,21 @@
 $KCODE = "SJIS"
 
 csv_file = open(ARGV.shift,"r")
-cdat_file = open(ARGV.shift,"w")
 
-cdat_file.printf("//このファイルはコンバーターから出力されます\n");
+cdat_file_name = ARGV.shift
+cdat_file = open(cdat_file_name,"w")
+
+
+cdat_file.printf("//======================================================================\n")
+cdat_file.printf("/**\n")
+cdat_file.printf(" * @file	%s\n",cdat_file_name)
+cdat_file.printf(" * @brief	数値定義ファイル\n")
+cdat_file.printf(" * @note	このファイルはコンバーターから出力されます\n")
+cdat_file.printf(" *\n")
+cdat_file.printf(" */\n")
+cdat_file.printf("//======================================================================\n")
+cdat_file.printf("\n")
+
 while line = csv_file.gets
   #END検出
   if line =~/^#END/ then
