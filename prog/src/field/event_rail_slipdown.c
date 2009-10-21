@@ -22,6 +22,8 @@
 #include "field_nogrid_mapper.h"
 #include "fieldmap_ctrl_nogrid_work.h"
 
+#include "fldeff_kemuri.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					’è”éŒ¾
@@ -67,6 +69,7 @@ typedef struct
   FIELD_PLAYER_NOGRID* p_nogrid_player;
   FIELD_RAIL_WORK* p_player_rail;
   FIELD_PLAYER* p_player;
+  FLDEFF_CTRL*  p_effctrl;
 
   VecFx32 start_pos;
   VecFx32 end_pos;
@@ -121,6 +124,7 @@ GMEVENT* EVENT_RailSlipDown(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
   p_slipdown->p_nogrid_player   = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( p_slipdown->p_nogrid_work );
   p_slipdown->p_player_rail     = FIELD_PLAYER_NOGRID_GetRailWork( p_slipdown->p_nogrid_player );
   p_slipdown->p_player          = FIELDMAP_GetFieldPlayer( fieldmap );
+  p_slipdown->p_effctrl         = FIELDMAP_GetFldEffCtrl( fieldmap );
 
   // Ž©‹@‚Ì‹­§’âŽ~
   FIELD_PLAYER_NOGRID_ForceStop( p_slipdown->p_nogrid_player );
@@ -267,10 +271,18 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
             p_slipdown->start_pos.x + FX_Mul( p_slipdown->way.x, dist ),
             p_slipdown->start_pos.y + FX_Mul( p_slipdown->way.y, dist ),
             p_slipdown->start_pos.z + FX_Mul( p_slipdown->way.z, dist ) );
+
+
+        // “y‰Œ‚ðo‚·
+        if( (p_slipdown->count % 2) == 0 )
+        {
+          FLDEFF_KEMURI_SetMMdl( FIELD_PLAYER_GetMMdl( p_slipdown->p_player ), p_slipdown->p_effctrl );
+        }
       }
 
       // À•WÝ’è
       FIELD_PLAYER_SetPos( p_slipdown->p_player, &pos );    
+
     }
     break;
     

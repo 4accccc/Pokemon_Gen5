@@ -171,6 +171,7 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
 static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
 static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
 static void rememberExitRailInfo(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const RAIL_LOCATION* loc);
+static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player );
 
 
 //======================================================================
@@ -1384,7 +1385,7 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
   result = MMDL_GetRailFrontLocation( cp_mmdl, &front_pos );
 
   // 目の前が交通不可能出ない場合にはチェックしない
-  if( result )
+  if( checkRailFrontMove( cp_player ) )
   {
     return NULL;
   }
@@ -1531,8 +1532,14 @@ static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *
 //-----------------------------------------------------------------------------
 static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork)
 {
-  
-  
+  const FIELD_PLAYER* cp_player = FIELDMAP_GetFieldPlayer( fieldWork );
+
+  // 目の前が交通不可能出ない場合にはチェックしない
+  if( checkRailFrontMove( cp_player ) )
+  {
+    return NULL;
+  }
+
   // ずり落ち処理
   if( RAIL_ATTR_VALUE_CheckSlipDown( MAPATTR_GetAttrValue(req->mapattr) ) )
   {
@@ -1559,6 +1566,31 @@ static void rememberExitRailInfo(const EV_REQUEST * req, FIELDMAP_WORK * fieldWo
   LOCATION_SetRail( &ent_loc, FIELDMAP_GetZoneID(fieldWork), idx, 0,
       loc->rail_index, loc->line_grid, loc->width_grid);
   GAMEDATA_SetEntranceLocation(req->gamedata, &ent_loc);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールマップ目の前に移動してるかチェック
+ *
+ *	@retval TRUE    している
+ *	@retval FALSE   していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player )
+{
+  RAIL_LOCATION now;
+  RAIL_LOCATION old;
+  const MMDL* cp_mmdl = FIELD_PLAYER_GetMMdl( cp_player );
+
+  
+  MMDL_GetRailLocation( cp_mmdl, &now );
+  MMDL_GetOldRailLocation( cp_mmdl, &old );
+
+  if( GFL_STD_MemComp( &now, &old, sizeof(RAIL_LOCATION) ) == 0 )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------
