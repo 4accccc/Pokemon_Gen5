@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-09-30T12:14:13"/>
+	<create user="taya" host="W00146" date="2009-10-21T16:13:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1399,6 +1399,45 @@
 [1:09:どうぐ名:1]が　よわめた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]への　ダメージを
 [1:09:どうぐ名:1]が　弱めた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Shooter_ItemDrop">
+		<comment>シューター専用アイテムメッセージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　おとした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　落とした！</language>
+	</row>
+	<row id="BTL_STRID_SET_Shooter_ItemDrop_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　おとした！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　落とした！</language>
+	</row>
+	<row id="BTL_STRID_SET_Shooter_ItemDrop_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　おとした！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+[1:09:どうぐ名:1]を　落とした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Shooter_FlatCall">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
+ステータスが　もとに　もどった！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
+ステータスが　元に戻った！</language>
+	</row>
+	<row id="BTL_STRID_SET_Shooter_FlatCall_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
+ステータスが　もとに　もどった！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
+ステータスが　元に戻った！</language>
+	</row>
+	<row id="BTL_STRID_SET_Shooter_FlatCall_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
+ステータスが　もとに　もどった！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
+ステータスが　元に戻った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_DokuGet" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
