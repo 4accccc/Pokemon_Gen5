@@ -391,7 +391,11 @@ static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE
 static BOOL setup_alone_single( int* seq, void* work )
 {
   enum {
+    #ifdef DEBUG_ONLY_FOR_taya
     BAG_MODE = BBAG_MODE_SHOOTER,
+    #else
+     BAG_MODE = BBAG_MODE_NORMAL,
+   #endif
   };
 
   // server*1, client*2
