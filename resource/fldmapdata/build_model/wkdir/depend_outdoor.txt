@@ -165,4 +165,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/sign05.nsbmd \
 	$(RESDIR)/door_t1_01.nsbmd \
 	$(RESDIR)/door_t1_02.nsbmd \
+	$(RESDIR)/monolith_01.nsbmd \
 

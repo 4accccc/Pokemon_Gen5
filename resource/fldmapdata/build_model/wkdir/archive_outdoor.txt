@@ -164,3 +164,4 @@
 "nsbmdfiles/sign05.nsbmd"
 "nsbmdfiles/door_t1_01.nsbmd"
 "nsbmdfiles/door_t1_02.nsbmd"
+"nsbmdfiles/monolith_01.nsbmd"
