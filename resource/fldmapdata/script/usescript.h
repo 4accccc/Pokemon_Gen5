@@ -131,11 +131,7 @@
 #include "../../../prog/include/tr_tool/trno_def.h"
 
 //ポケモンのタイプ指定ID
-//#include "../../../prog/include/poke_tool/poketype.h"
-//enumからdefineに変更されるまで、とりあえず
-#define POKETYPE_HONOO  (12)
-#define POKETYPE_MIZU   (13)
-#define POKETYPE_KUSA   (14)
+#include "../../../prog/include/poke_tool/poketype_def.h"
 
 #if 0 //wb null
 
