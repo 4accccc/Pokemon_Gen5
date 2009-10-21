@@ -61,7 +61,7 @@ init_flags:
 	//D05:コンテナworkmanを戦闘後まで非表示に設定
 	//_FLAG_SET( FV_D05R0101_WORKMAN_01 )
 	
-	//C05：
+	//C05：ゲーヂスとジムリーダー会話イベント、コンテナクリア後に表示
 	_FLAG_SET( FV_C05_GYMLEADER_02 )
 	_FLAG_SET( FV_C05_SAGE_01 )
 	
@@ -72,7 +72,12 @@ init_flags:
 	_FLAG_SET( FV_C04R0302_SUPPORT )
 	_FLAG_SET( FV_C04R0302_BOSS )
 
-
+	//D05R0101：夢アイテム、夢ポケモンと遭遇イベント後に表示
+	_FLAG_SET( FV_D01R0101_ITEM_01 )
+	
+	//D05R0101：サポート、C01ジムクリア後に表示
+	_FLAG_SET( FV_D01R0101_SUPPORT_01 )
+	_FLAG_SET( FV_D01R0101_POKE_01 )
 
 
 	_RET
