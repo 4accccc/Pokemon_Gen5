@@ -25,14 +25,24 @@ typedef struct
 }DEBUG_PARTICLE_DATA;
 #endif
 
+typedef struct
+{ 
+  u8    waza_range;       ///<技の効果範囲
+  u8    turn_count;       ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
+  u8    continue_count;   ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
+  u8    yure_cnt;         ///<ボールゆれるカウント
+  BOOL  get_success;      ///<捕獲成功かどうか
+  u16   item_no;          ///<ボールのアイテムナンバー
+}BTLV_EFFVM_PARAM;
+
 extern	VMHANDLE	*BTLV_EFFVM_Init( GFL_TCBSYS *tcbsys, HEAPID heapID );
 extern	BOOL  		BTLV_EFFVM_Main( VMHANDLE *vmh );
 extern	void  		BTLV_EFFVM_Exit( VMHANDLE *core );
-extern	void  		BTLV_EFFVM_Start( VMHANDLE *core, BtlvMcssPos from, BtlvMcssPos to, WazaID waza );
+extern	void  		BTLV_EFFVM_Start( VMHANDLE *core, BtlvMcssPos from, BtlvMcssPos to, WazaID waza, BTLV_EFFVM_PARAM* param );
 extern  void			BTLV_EFFVM_Stop( VMHANDLE *vmh );
 
 #ifdef PM_DEBUG
-extern	void		BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, const VM_CODE *start, const DEBUG_PARTICLE_DATA *dpd );
+extern	void		BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, const VM_CODE *start, const DEBUG_PARTICLE_DATA *dpd, BTLV_EFFVM_PARAM* param );
 extern	void		BTLV_EFFVM_DebugParticlePlay( VMHANDLE *vmh, GFL_PTC_PTR ptc, int index, int src, int dst, fx32 ofs_y, fx32 angle );
 extern  void    BTLV_EFFVM_DebugSeEffect( VMHANDLE *vmh, int player, int type, int param, int start, int end, 
                                           int start_wait, int frame, int wait, int count );

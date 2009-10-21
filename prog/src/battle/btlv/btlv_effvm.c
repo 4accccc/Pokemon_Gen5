@@ -43,27 +43,28 @@ enum{
 //============================================================================================
 
 typedef struct{
-  u32           position_reverse_flag :1;     //立ち位置反転フラグ
-  u32           camera_ortho_on_flag  :1;     //カメラ移動後、正射影に戻すフラグ
-  u32           se_play_wait_flag     :1;     //SE再生ウエイト中
-  u32           se_effect_enable_flag :1;     //SEEFFECTフラグ
-  u32           set_priority_flag     :1;     //PRIORITY操作されたか？
-  u32           set_alpha_flag        :1;     //ALPHA操作されたか？
+  u32               position_reverse_flag :1;     //立ち位置反転フラグ
+  u32               camera_ortho_on_flag  :1;     //カメラ移動後、正射影に戻すフラグ
+  u32               se_play_wait_flag     :1;     //SE再生ウエイト中
+  u32               se_effect_enable_flag :1;     //SEEFFECTフラグ
+  u32               set_priority_flag     :1;     //PRIORITY操作されたか？
+  u32               set_alpha_flag        :1;     //ALPHA操作されたか？
   u32                                 :26;
-  GFL_TCBSYS*   tcbsys;
-  GFL_PTC_PTR   ptc[ PARTICLE_GLOBAL_MAX ];
-  int           ptc_no[ PARTICLE_GLOBAL_MAX ];
-  int           obj[ EFFVM_OBJ_MAX ];
-  BtlvMcssPos   attack_pos;
-  BtlvMcssPos   defence_pos;
-  int           wait;
-  VM_CODE*      sequence;
-  void*         temp_work[ TEMP_WORK_SIZE ];
-  int           temp_work_count;
-  HEAPID        heapID;
-  VMCMD_RESULT  control_mode;
-  int           effect_end_wait_kind;
-  int           camera_projection;
+  GFL_TCBSYS*       tcbsys;
+  GFL_PTC_PTR       ptc[ PARTICLE_GLOBAL_MAX ];
+  int               ptc_no[ PARTICLE_GLOBAL_MAX ];
+  int               obj[ EFFVM_OBJ_MAX ];
+  BtlvMcssPos       attack_pos;
+  BtlvMcssPos       defence_pos;
+  int               wait;
+  VM_CODE*          sequence;
+  void*             temp_work[ TEMP_WORK_SIZE ];
+  int               temp_work_count;
+  HEAPID            heapID;
+  VMCMD_RESULT      control_mode;
+  int               effect_end_wait_kind;
+  int               camera_projection;
+  BTLV_EFFVM_PARAM  param;
 #ifdef PM_DEBUG
   const DEBUG_PARTICLE_DATA*  dpd;
   BOOL                        debug_flag;
@@ -158,7 +159,7 @@ typedef struct
 VMHANDLE* BTLV_EFFVM_Init( GFL_TCBSYS *tcbsys, HEAPID heapID );
 BOOL      BTLV_EFFVM_Main( VMHANDLE *vmh );
 void      BTLV_EFFVM_Exit( VMHANDLE *vmh );
-void      BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID waza );
+void      BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID waza, BTLV_EFFVM_PARAM* param );
 void      BTLV_EFFVM_Stop( VMHANDLE *vmh );
 
 //エフェクトコマンド
@@ -208,6 +209,7 @@ static VMCMD_RESULT VMEC_SE_EFFECT( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_EFFECT_END_WAIT( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_WAIT( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_CONTROL_MODE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_IF( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_MCSS_POS_CHECK( VMHANDLE *vmh, void *context_work );
 
 static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work );
@@ -228,6 +230,7 @@ static  void  EFFVM_CircleMoveEmitter( GFL_EMIT_PTR emit, unsigned int flag );
 static  void  EFFVM_DeleteEmitter( GFL_PTC_PTR ptc );
 static  void  EFFVM_ChangeCameraProjection( BTLV_EFFVM_WORK *bevw );
 static  void  EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_depth, int mod_speed );
+static  int   EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param );
 
 //TCB関数
 static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work );
@@ -241,9 +244,6 @@ typedef enum
 }DPD_TYPE;
 
 //デバッグ用関数
-void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, const VM_CODE *start, const DEBUG_PARTICLE_DATA *dpd );
-void  BTLV_EFFVM_DebugParticlePlay( VMHANDLE *vmh, GFL_PTC_PTR ptc, int index, int src, int dst, fx32 ofs_y, fx32 angle );
-
 static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, DPD_TYPE type );
 #endif
 
@@ -330,6 +330,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_EFFECT_END_WAIT,
   VMEC_WAIT,
   VMEC_CONTROL_MODE,
+  VMEC_IF,
   VMEC_MCSS_POS_CHECK,
 
   VMEC_SEQ_END,
@@ -432,13 +433,18 @@ void  BTLV_EFFVM_Exit( VMHANDLE *vmh )
  * @param[in] vmh 仮想マシン制御構造体へのポインタ
  */
 //============================================================================================
-void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID waza )
+void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID waza, BTLV_EFFVM_PARAM* param )
 {
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
   int *start_ofs;
   int table_ofs;
 
-    bevw->sequence = NULL;
+  bevw->sequence = NULL;
+
+  if( param != NULL )
+  { 
+    bevw->param = *param;
+  }
 
   bevw->attack_pos = from;
   bevw->defence_pos = to;
@@ -2182,6 +2188,74 @@ static VMCMD_RESULT VMEC_CONTROL_MODE( VMHANDLE *vmh, void *context_work )
 
 //============================================================================================
 /**
+ * @brief	指定されたワークを見て条件分岐
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_IF( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int work  = EFFVM_GetWork( bevw, ( int )VMGetU32( vmh ) );
+  int cond  = ( int )VMGetU32( vmh );
+  int value = ( int )VMGetU32( vmh );
+  int adrs  = ( int )VMGetU32( vmh );
+  BOOL  flag = FALSE;
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_IF\n");
+#endif DEBUG_OS_PRINT
+
+  switch( cond ){ 
+  case BTLEFF_COND_EQUAL:       // ==
+    if( work == value )
+    { 
+      flag = TRUE;
+    }
+    break;
+  case BTLEFF_COND_NOT_EQUAL:   // !=
+    if( work != value )
+    { 
+      flag = TRUE;
+    }
+    break;
+  case BTLEFF_COND_MIMAN:       // <
+    if( work < value )
+    { 
+      flag = TRUE;
+    }
+    break;
+  case BTLEFF_COND_KOERU:       // >
+    if( work > value )
+    { 
+      flag = TRUE;
+    }
+    break;
+  case BTLEFF_COND_IKA:         // <=
+    if( work <= value )
+    { 
+      flag = TRUE;
+    }
+    break;
+  case BTLEFF_COND_IJOU:        // >=
+    if( work >= value )
+    { 
+      flag = TRUE;
+    }
+    break;
+  }
+
+  if( flag == TRUE )
+  { 
+    VMCMD_Jump( vmh, vmh->adrs + adrs );
+  }
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
  * @brief 立ち位置チェック
  *
  * @param[in] vmh       仮想マシン制御構造体へのポインタ
@@ -3044,6 +3118,41 @@ static  void  EFFVM_SePlay( int se_no, int player, int pitch, int vol, int mod_d
   NNS_SndPlayerSetTrackModSpeed( PMSND_GetSE_SndHandle( player ), 0xffff, mod_speed );
 }
 
+//============================================================================================
+/**
+ * @brief 指定されたパラメータのワークを返す
+ *
+ * @param[in] bevw  エフェクト仮想マシンのワーク構造体へのポインタ
+ * @param[in] param 取得したいパラメータ
+ */
+//============================================================================================
+static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
+{ 
+  int ret;
+
+  switch( param ){ 
+  case BTLEFF_WORK_WAZA_RANGE:    ///<技の効果範囲
+    ret = bevw->param.waza_range;
+    break;
+  case BTLEFF_WORK_TURN_COUNT:    ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
+    ret = bevw->param.turn_count;
+    break;
+  case BTLEFF_WORK_CONTINUE_COUNT:   ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
+    ret = bevw->param.continue_count;
+    break;
+  case BTLEFF_WORK_YURE_CNT:   ///<ボールゆれるカウント
+    ret = bevw->param.yure_cnt;
+    break;
+  case BTLEFF_WORK_GET_SUCCESS:   ///<捕獲成功かどうか
+    ret = bevw->param.get_success;
+    break;
+  case BTLEFF_WORK_ITEM_NO:   ///<ボールのアイテムナンバー
+    ret = bevw->param.item_no;
+    break;
+  }
+  return ret;
+}
+
 //TCB関数
 //============================================================================================
 /**
@@ -3182,11 +3291,16 @@ static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work )
  * @param[in] vmh 仮想マシン制御構造体へのポインタ
  */
 //============================================================================================
-void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, const VM_CODE *start, const DEBUG_PARTICLE_DATA *dpd )
+void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, const VM_CODE *start, const DEBUG_PARTICLE_DATA *dpd, BTLV_EFFVM_PARAM *param )
 {
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
   int *start_ofs = (int *)&start[ script_table[ from ][ to ] ] ;
   int i;
+
+  if( param != NULL )
+  { 
+    bevw->param = *param;
+  }
 
   bevw->dat_id_cnt = 0;
   for( i = 0 ; i < PARTICLE_GLOBAL_MAX ; i++ )

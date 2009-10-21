@@ -258,6 +258,22 @@
 #define	BTLEFF_OBJ_SCALE_ROUNDTRIP					    ( EFFTOOL_CALCTYPE_ROUNDTRIP )
 #define	BTLEFF_OBJ_SCALE_ROUNDTRIP_LONG		    ( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
 
+//指定ワーク定義
+#define BTLEFF_WORK_WAZA_RANGE      ( 0 )   ///<技の効果範囲
+#define BTLEFF_WORK_TURN_COUNT      ( 1 )   ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
+#define BTLEFF_WORK_CONTINUE_COUNT  ( 2 )   ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
+#define BTLEFF_WORK_YURE_CNT        ( 3 )   ///<ボールゆれるカウント
+#define BTLEFF_WORK_GET_SUCCESS     ( 4 )   ///<捕獲成功かどうか
+#define BTLEFF_WORK_ITEM_NO         ( 5 )   ///<ボールのアイテムナンバー
+
+//条件式
+#define BTLEFF_COND_EQUAL       ( 0 )   // ==
+#define BTLEFF_COND_NOT_EQUAL   ( 1 )   // !=
+#define BTLEFF_COND_MIMAN       ( 2 )   // <
+#define BTLEFF_COND_KOERU       ( 3 )   // >
+#define BTLEFF_COND_IKA         ( 4 )   // <=
+#define BTLEFF_COND_IJOU        ( 5 )   // >=
+
 #endif //__BTLV_EFFVM_DEF_H_
 
 //====================================================================================
@@ -373,7 +389,8 @@ ex)
 #define	EC_EFFECT_END_WAIT					( EC_SE_EFFECT                + 1 )
 #define	EC_WAIT											( EC_EFFECT_END_WAIT          + 1 )
 #define	EC_CONTROL_MODE							( EC_WAIT                     + 1 )
-#define	EC_MCSS_POS_CHECK						( EC_CONTROL_MODE             + 1 )
+#define	EC_IF						            ( EC_CONTROL_MODE             + 1 )
+#define	EC_MCSS_POS_CHECK						( EC_IF                       + 1 )
 
 //終了コマンドは必ず一番下になるようにする
 #define	EC_SEQ_END									( EC_MCSS_POS_CHECK + 1 )
@@ -1609,6 +1626,32 @@ ex)
 	.macro	CONTROL_MODE	mode
 	.short	EC_CONTROL_MODE
 	.long		\mode
+	.endm
+
+//======================================================================
+/**
+ * @brief	指定されたワークを見て条件分岐
+ *
+ * #param_num	4
+ * @param		work  条件分岐に使うワーク
+ * @param		cond  条件式
+ * @param		value 比較する値
+ * @param		adrs  飛び先
+ *
+ * #param COMBOBOX_TEXT WAZA_RANGE TURN_COUNT CONTINUE_COUNT YURE_CNT GET_SUCCESS ITEM_NO
+ * #param COMBOBOX_VALUE BTLEFF_WORK_WAZA_RANGE BTLEFF_WORK_TURN_COUNT BTLEFF_WORK_CONTINUE_COUNT BTLEFF_WORK_YURE_CNT BTLEFF_WORK_GET_SUCCESS BTLEFF_WORK_ITEM_NO
+ * #param COMBOBOX_TEXT ==  !=  <  >  <=  >=
+ * #param COMBOBOX_VALUE  BTLEFF_COND_EQUAL BTLEFF_COND_NOT_EQUAL BTLEFF_COND_MIMAN BTLEFF_COND_KOERU  BTLEFF_COND_IKA BTLEFF_COND_IJOU
+ * #param VALUE_INT 比較する値
+ * #param VALUE_INT 飛び先ラベル
+ */
+//======================================================================
+	.macro	IF  work, cond, value, adrs
+	.short  EC_IF
+	.long   \work
+	.long   \cond
+	.long   \value
+	.long		( \adrs - . ) - 4
 	.endm
 
 //======================================================================

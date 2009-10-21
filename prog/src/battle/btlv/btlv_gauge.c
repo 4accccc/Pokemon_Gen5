@@ -321,7 +321,12 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
     }
     if( bgw->bgcl[ i ].exp_calc_req )
     { 
+      PMSND_PlaySE( SEQ_SE_EXP );
       Gauge_CalcEXP( bgw, &bgw->bgcl[ i ] );
+      if( bgw->bgcl[ i ].exp_calc_req == 0 )
+      { 
+        PMSND_StopSE();
+      }
     }
     if( bgw->bgcl[ i ].level_up_req )
     { 
@@ -1312,6 +1317,7 @@ static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
   }
   switch( bgcl->seq_no ){ 
   case 0:
+    PMSND_PlaySE( SEQ_SE_EXPMAX );
     /** @TODO レベルアップエフェクトを入れたい */
     bgcl->seq_no++;
     break;

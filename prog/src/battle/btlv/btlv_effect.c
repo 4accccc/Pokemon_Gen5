@@ -228,7 +228,7 @@ void  BTLV_EFFECT_Main( void )
 //============================================================================================
 void  BTLV_EFFECT_Add( int eff_no )
 {
-  BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_ERROR, BTLV_MCSS_POS_ERROR, eff_no );
+  BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_ERROR, BTLV_MCSS_POS_ERROR, eff_no, NULL );
 }
 //=============================================================================================
 /**
@@ -241,7 +241,7 @@ void  BTLV_EFFECT_Add( int eff_no )
 //=============================================================================================
 void BTLV_EFFECT_AddByPos( BtlvMcssPos pos, int eff_no )
 {
-  BTLV_EFFVM_Start( bew->vm_core, pos, BTLV_MCSS_POS_ERROR, eff_no );
+  BTLV_EFFVM_Start( bew->vm_core, pos, BTLV_MCSS_POS_ERROR, eff_no, NULL );
 }
 //=============================================================================================
 /**
@@ -252,8 +252,13 @@ void BTLV_EFFECT_AddByPos( BtlvMcssPos pos, int eff_no )
 //=============================================================================================
 void BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param )
 {
-  // @@@ ¡‚ÍŠî–{î•ñ‚µ‚©ˆø‚«“n‚µ‚Ä‚¢‚È‚¢
-  BTLV_EFFVM_Start( bew->vm_core, param->from, param->to, param->waza );
+  BTLV_EFFVM_PARAM  effvm_param;
+
+  effvm_param.waza_range = WAZADATA_GetTarget( param->waza );
+  effvm_param.turn_count = param->turn_count;
+  effvm_param.continue_count = param->continue_count;
+
+  BTLV_EFFVM_Start( bew->vm_core, param->from, param->to, param->waza, &effvm_param );
 }
 
 //=============================================================================================
@@ -299,7 +304,13 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target )
 //=============================================================================================
 void BTLV_EFFECT_BallThrow( int vpos, u16 item_no, u8 yure_cnt, BOOL f_success )
 {
-  // @todo –¢ŽÀ‘•
+  BTLV_EFFVM_PARAM  effvm_param;
+
+  effvm_param.yure_cnt    = yure_cnt;
+  effvm_param.get_success = f_success;
+  effvm_param.item_no     = item_no;
+
+  BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_AA, vpos, BTLEFF_BALL_THROW, &effvm_param );
 }
 //============================================================================================
 /**
@@ -649,9 +660,11 @@ void  BTLV_EFFECT_SetVanishFlag( int model, int flag )
 //============================================================================================
 int BTLV_EFFECT_GetTrainerIndex( int position )
 {
-  GF_ASSERT( position < BTLV_MCSS_POS_MAX );
+  GF_ASSERT_MSG( ( position - BTLV_MCSS_POS_MAX ) >= 0, "position:%d\n", position );
+  GF_ASSERT( ( position - BTLV_MCSS_POS_MAX ) < BTLV_MCSS_POS_MAX );
+  GF_ASSERT( bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] != BTLV_EFFECT_TRAINER_INDEX_NONE );
 
-  return bew->trainer_index[ position ];
+  return bew->trainer_index[ position - BTLV_MCSS_POS_MAX ];
 }
 
 //============================================================================================
