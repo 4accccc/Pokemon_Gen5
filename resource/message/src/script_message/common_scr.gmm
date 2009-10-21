@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-20T14:42:59"/>
+	<create user="iwasawa" host="W00157" date="2009-10-21T10:27:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -520,16 +520,6 @@
 小さな　生命体　だそうです[BE:01:ページ切り替え（クリア）]
 これが　ついている　あいだ
 ポケモンが　よく　育つみたいです</language>
-	</row>
-
-	<row id="msg_shop_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・最初の会話</comment>
-		<attribute name="キャラ指定">ショップ店員</attribute>
-		<language name="JPN" width="256">ようこそ！
-おかいもの　ですね？</language>
-		<language name="JPN_KANJI" width="256">ようこそ！
-お買い物ですね？</language>
 	</row>
 
 	<row id="msg_event_item_get_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">

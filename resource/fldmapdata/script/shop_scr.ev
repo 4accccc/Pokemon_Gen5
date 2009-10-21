@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_shop_scr.h"
-  .include  "wifi_club_scr_local.h"
+  .include  "shop_scr_local.h"
   //.include  "wifi_club_scr.h"
 
 //  .include  "../../../prog/include/system/timezone.h" //時間帯定義
@@ -52,6 +52,25 @@ sub_shop_main:
   DEFINE_LOCAL  i_seq
   DEFINE_LOCAL  i_loop
 
+  $i_loop = TRUE
+  WHILE $i_loop == TRUE
+    SWITCH $i_seq
+    CASE SEQ_MENU THEN
+      _CALL sub_shop_menu
+      $i_seq = $reg_return
+    
+    CASE SEQ_BUY THEN
+      _CALL sub_shop_menu
+      $i_seq = $reg_return
+    
+    CASE SEQ_SELL THEN
+      _CALL sub_shop_menu
+      $i_seq = $reg_return
+
+    CASE SEQ_EXIT THEN
+      $i_loop = FALSE
+    ENDSWITCH
+  ENDWHILE
 /*
   //C-Gear取得チェック
   IF FLAG_ON( FE_CGEAR_GET ) THEN
@@ -106,25 +125,28 @@ _RET
 //==============================================================
 //サブルーチン：メニュー表示
 //==============================================================
-sub_club_counter_menu:
+sub_shop_menu:
 {
   DEFINE_LOCAL  i_ret
 
+  //ようこそ
+  
   //分岐・Wi-Fiクラブへいく・せつめいをきく・やめる
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
 		
-	_BMPMENU_MAKE_LIST( msg_wifi_club_01_win01, SEQ_CHECK_CONNECT )	//Wi-Fiクラブへ行く
-	_BMPMENU_MAKE_LIST( msg_wifi_club_01_win02, SEQ_CLUB_EXP )	//説明を聞く
-	_BMPMENU_MAKE_LIST( msg_wifi_club_01_win03, SEQ_GOODBYE )	//やめる
+	_BMPMENU_MAKE_LIST( msg_shop_menu01_01, SEQ_BUY )	//かう
+	_BMPMENU_MAKE_LIST( msg_shop_menu01_02, SEQ_SELL )	//うる
+	_BMPMENU_MAKE_LIST( msg_shop_menu01_03, SEQ_EXIT )	//やめる
 		
 	//メニュー表示
 	_BMPMENU_START()
-  _BALLOONWIN_CLOSE()
+//  _BALLOONWIN_CLOSE()
 
   $reg_return = $i_ret
 }
 _RET
 
+/*
 //==============================================================
 //サブルーチン：Wi-Fiコネクトチェック
 //==============================================================
@@ -200,6 +222,6 @@ sub_club_counter_connect:
   $reg_return = SEQ_GOODBYE
 }
 _RET
+*/
 
 } //SHOP_MAIN_END
-
