@@ -3120,7 +3120,7 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tyosui( u16 pri, u16 tokID, u8 pokeID )
 // ダメージワザ回復化チェックハンドラ
 static void handler_Tikuden_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_DmgToRecover_Check( flowWk, pokeID, work, POKETYPE_ELECTRIC );
+  common_DmgToRecover_Check( flowWk, pokeID, work, POKETYPE_DENKI );
 }
 // ダメージワザ回復化決定ハンドラ
 static void handler_Tikuden_Fix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -3144,7 +3144,7 @@ static BTL_EVENT_FACTOR*  HAND_TOK_ADD_Tikuden( u16 pri, u16 tokID, u8 pokeID )
 // ダメージワザ回復化チェックハンドラ
 static void handler_DenkiEngine_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_DmgToRecover_Check( flowWk, pokeID, work, POKETYPE_ELECTRIC );
+  common_DmgToRecover_Check( flowWk, pokeID, work, POKETYPE_DENKI );
 }
 // ダメージワザ回復化決定ハンドラ
 static void handler_DenkiEngine_Fix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
