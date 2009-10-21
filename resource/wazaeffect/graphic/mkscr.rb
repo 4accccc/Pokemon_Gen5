@@ -9,11 +9,21 @@
 
 	fp_w = open( ARGV[ARGV_WRITE_FILE], "w" )
 
-  Dir::glob("./*.ncg").each {|f|
+  #BGファイルリスト生成
+  Dir::glob("./*.nsc").each {|f|
+    name = File::basename( f, '.*' )
+    fp_w.print( "\"" + name + ".NSCR\"\n" )
+    fp_w.print( "\"" + name + ".NCGR\"\n" )
+    fp_w.print( "\"" + name + ".NCLR\"\n" )
+  }
+
+  #OBJファイルリスト生成
+  Dir::glob("./*.nce").each {|f|
     name = File::basename( f, '.*' )
     fp_w.print( "\"" + name + ".NCGR\"\n" )
-    fp_w.print( "\"" + name + ".NSCR\"\n" )
     fp_w.print( "\"" + name + ".NCLR\"\n" )
+    fp_w.print( "\"" + name + ".NCER\"\n" )
+    fp_w.print( "\"" + name + ".NANR\"\n" )
   }
 
   fp_w.close

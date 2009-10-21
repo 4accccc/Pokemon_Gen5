@@ -519,9 +519,9 @@ end
 		}
 		if bin_list.size == count
 			bin_list << bin_list_tmp[ tmp_num ]
-      if( File::extname( bin_list_tmp[ tmp_num ] ) == ".NCGR" )
-			  bin_list << File::dirname( bin_list_tmp[ tmp_num ] ) + "\\" + File::basename( bin_list_tmp[ tmp_num ], ".NCGR" ) + ".NSCR"
-			  bin_list << File::dirname( bin_list_tmp[ tmp_num ] ) + "\\" + File::basename( bin_list_tmp[ tmp_num ], ".NCGR" ) + ".NCLR"
+      if( File::extname( bin_list_tmp[ tmp_num ] ) == ".NSCR" )
+			  bin_list << File::dirname( bin_list_tmp[ tmp_num ] ) + "\\" + File::basename( bin_list_tmp[ tmp_num ], ".NSCR" ) + ".NCGR"
+			  bin_list << File::dirname( bin_list_tmp[ tmp_num ] ) + "\\" + File::basename( bin_list_tmp[ tmp_num ], ".NSCR" ) + ".NCLR"
       end
 		end
 	}

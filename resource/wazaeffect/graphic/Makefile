@@ -38,6 +38,7 @@ RES_DIR = ./
 CNV_DIR = ./
 
 #コンバート対象のファイルツリーを生成
+WAZAEFFNCE	:= $(wildcard $(RES_DIR)*.nce)
 WAZAEFFNCG	:= $(wildcard $(RES_DIR)*.ncg)
 WAZAEFFNSC	:= $(wildcard $(RES_DIR)*.nsc)
 WAZAEFFNCL	:= $(wildcard $(RES_DIR)*.ncl)
@@ -48,7 +49,7 @@ WAZAEFFNCL	:= $(wildcard $(RES_DIR)*.ncl)
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-do-build:	waza_eff_gra.scr ncgr nscr nclr $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
+do-build:	waza_eff_gra.scr ncer ncgr nscr nclr $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
 else
 do-build:	$(TARGETDIR)/$(NARCNAME)
 endif
@@ -57,6 +58,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 waza_eff_gra.scr:
 	ruby mkscr.rb waza_eff_gra.scr
+
+ncer: $(notdir $(WAZAEFFNCE:.nce=.NCER))
+%.NCER: %.nce
+	g2dcvtr $< -pcm -o/./
 
 ncgr: $(notdir $(WAZAEFFNCG:.ncg=.NCGR))
 %.NCGR: %.ncg
@@ -70,7 +75,7 @@ nclr: $(notdir $(WAZAEFFNCL:.ncl=.NCLR))
 %.NCLR: %.ncl
 	g2dcvtr $< -pcm -o/./
 
-$(NARCNAME): $(notdir $(WAZAEFFNCG:.ncg=.NCGR)) $(notdir $(WAZAEFFNSC:.nsc=.NSCR)) $(notdir $(WAZAEFFNCL:.ncl=.NCLR))
+$(NARCNAME): $(notdir $(WAZAEFFNCE:.nce=.NCER)) $(notdir $(WAZAEFFNCG:.ncg=.NCGR)) $(notdir $(WAZAEFFNSC:.nsc=.NSCR)) $(notdir $(WAZAEFFNCL:.ncl=.NCLR))
 	nnsarc -c -l -n -i $(NARCNAME) -S waza_eff_gra.scr
 	$(NAIXCUT) $(NAIXNAME)
 	../../../tools/etd.exe $(NAIXNAME)

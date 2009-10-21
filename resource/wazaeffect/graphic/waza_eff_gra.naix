@@ -2,7 +2,7 @@
 	Archive file index definition.
 	File: waza_eff_gra.naix
 
-	This file was created by NINTENDO NITRO-System Archiver.
+	This file was created by NINTENDO TWL-System Archiver.
 
 
  *****************************************************************************/
@@ -11,9 +11,13 @@
 #define NARC_WAZA_EFF_GRA_NAIX_
 
 enum {
-	NARC_waza_eff_gra_test_NCGR = 0,
-	NARC_waza_eff_gra_test_NSCR = 1,
-	NARC_waza_eff_gra_test_NCLR = 2
+	NARC_waza_eff_gra_test_NSCR = 0,
+	NARC_waza_eff_gra_test_NCGR = 1,
+	NARC_waza_eff_gra_test_NCLR = 2,
+	NARC_waza_eff_gra_ball_anim_NCGR = 3,
+	NARC_waza_eff_gra_ball_anim_NCLR = 4,
+	NARC_waza_eff_gra_ball_anim_NCER = 5,
+	NARC_waza_eff_gra_ball_anim_NANR = 6
 };
 
 /* NARC_WAZA_EFF_GRA_NAIX_ */
