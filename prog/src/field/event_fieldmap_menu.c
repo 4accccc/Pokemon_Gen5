@@ -32,7 +32,7 @@
 #include "event_fieldmap_control.h" //EVENT_FieldSubProc
 #include "app/config_panel.h"   //ConfigPanelProcData
 #include "app/trainer_card.h"   //TrainerCardSysProcData
-#include "app/bag/itemmenu_local.h" //ItemMenuProcData
+#include "app/bag.h" // BAG_PARAM
 #include "app/pokelist.h"   //PokeList_ProcData・PLIST_DATA
 #include "app/p_status.h"   //PokeList_ProcData・PLIST_DATA
 #include "app/townmap.h" //TOWNMAP_PARAM
@@ -207,6 +207,8 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk);
 static const BOOL FMenuReturnProc_TownMap(FMENU_EVENT_WORK* mwk);
 
 static void FMenuTakeFieldInfo(FMENU_EVENT_WORK* mwk);
+
+static BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, GMEVENT* gmEvent, FIELDMAP_WORK* fieldmap, const ITEMCHECK_WORK* icwk, BAG_MODE mode );
 
 //--------------------------------------------------------------
 /// フィールドマップメニューリスト
@@ -638,6 +640,7 @@ static BOOL FMenuCallProc_PokeStatus( FMENU_EVENT_WORK *mwk )
   return( TRUE );
 }
 
+
 //--------------------------------------------------------------
 /**
  * メニュー呼び出し バッグ
@@ -648,39 +651,18 @@ static BOOL FMenuCallProc_PokeStatus( FMENU_EVENT_WORK *mwk )
 
 static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 {
-  GMEVENT * newEvent;
-  FIELD_ITEMMENU_WORK *epp;
-	GAMEDATA* pGameData = GAMESYSTEM_GetGameData(mwk->gmSys);
-  
-  epp = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(FIELD_ITEMMENU_WORK));
-//  epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(FIELD_ITEMMENU_WORK));
-  epp->ctrl = SaveControl_GetPointer();
-  epp->gsys = mwk->gmSys;
-  epp->fieldmap = mwk->fieldWork;
-	epp->heapID = GFL_HEAPID_APP;
-	epp->mode = BAG_MODE_FIELD;   //フィールドから呼ばれる
+  GAMEDATA* gmData = GAMESYSTEM_GetGameData( mwk->gmSys );
 
-  GFL_STD_MemCopy(&mwk->icwk , &epp->icwk, sizeof(ITEMCHECK_WORK));
+  mwk->subProcWork = BAG_CreateParam( gmData, mwk->gmEvent, mwk->fieldWork, &mwk->icwk, BAG_MODE_FIELD );
 
-	epp->mystatus = GAMEDATA_GetMyStatus(pGameData);
-
-  if ( PLAYERWORK_GetMoveForm(GAMEDATA_GetMyPlayerWork(pGameData)) == PLAYER_MOVE_FORM_CYCLE ){
-    epp->cycle_flg = TRUE;
-  }
-  
-  mwk->subProcWork = epp;
+  mwk->subProcType = FMENU_APP_BAG;
+  mwk->state = FMENUSTATE_FIELD_FADEOUT;
 
 //	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork, FS_OVERLAY_ID(bag), &ItemMenuProcData, epp);
 //  epp->event = newEvent;
 
 //	GMEVENT_CallEvent(mwk->gmEvent, newEvent);
 ////  mwk->state = FMENUSTATE_WAIT_RETURN;
-
-
-  mwk->subProcType = FMENU_APP_BAG;
-  mwk->state = FMENUSTATE_FIELD_FADEOUT;
-
-
   
 	return( TRUE );
 }
@@ -794,53 +776,28 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
   //もたせる　でアイテム画面へ
   case PL_RET_ITEMSET:
     {
-      FIELD_ITEMMENU_WORK *epp;
-      GAMEDATA *gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
-      epp = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(FIELD_ITEMMENU_WORK));
-    //  epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(FIELD_ITEMMENU_WORK));
-      epp->ctrl = SaveControl_GetPointer();
-      epp->gsys = mwk->gmSys;
-      epp->fieldmap = mwk->fieldWork;
-    	epp->heapID = GFL_HEAPID_APP;
-    	epp->mode = BAG_MODE_POKELIST;   //リストから呼ばれる
+      BAG_PARAM* bag;
+      GAMEDATA* gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
 
-      GFL_STD_MemCopy(&mwk->icwk , &epp->icwk, sizeof(ITEMCHECK_WORK));
-
-    	epp->mystatus = GAMEDATA_GetMyStatus(gmData);
-
-      if ( PLAYERWORK_GetMoveForm(GAMEDATA_GetMyPlayerWork(gmData)) == PLAYER_MOVE_FORM_CYCLE ){
-        epp->cycle_flg = TRUE;
-      }
+      bag = BAG_CreateParam( gmData, mwk->gmEvent, mwk->fieldWork, &mwk->icwk, BAG_MODE_POKELIST );
       
       //データ退避
       mwk->selPoke = plData->ret_sel;
       
-      FMenu_SetNextSubProc( mwk ,FMENU_APP_BAG , epp );
+      FMenu_SetNextSubProc( mwk ,FMENU_APP_BAG , bag );
     }
     return TRUE;
     break;
     
   case PL_RET_BAG:      // アイテム→リスト→アイテム
     {
-      FIELD_ITEMMENU_WORK *epp;
-      GAMEDATA* pGameData = GAMESYSTEM_GetGameData(mwk->gmSys);
-      
-      epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(FIELD_ITEMMENU_WORK));
-      epp->ctrl = SaveControl_GetPointer();
-      epp->gsys = mwk->gmSys;
-      epp->fieldmap = mwk->fieldWork;
-      epp->heapID = GFL_HEAPID_APP;
-      epp->mode = BAG_MODE_FIELD;   //フィールドから呼ばれる
+      BAG_PARAM* bag;
+      GAMEDATA* gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
 
-      GFL_STD_MemCopy(&mwk->icwk , &epp->icwk, sizeof(ITEMCHECK_WORK));
+      //フィールドから呼ばれる
+      bag = BAG_CreateParam( gmData, mwk->gmEvent, mwk->fieldWork, &mwk->icwk, BAG_MODE_FIELD );
 
-      epp->mystatus = GAMEDATA_GetMyStatus(pGameData);
-
-      if ( PLAYERWORK_GetMoveForm(GAMEDATA_GetMyPlayerWork(pGameData)) == PLAYER_MOVE_FORM_CYCLE ){
-        epp->cycle_flg = TRUE;
-      }
-      
-      FMenu_SetNextSubProc( mwk ,FMENU_APP_BAG , epp );
+      FMenu_SetNextSubProc( mwk ,FMENU_APP_BAG , bag );
       return TRUE;
     }
     break;
@@ -1014,10 +971,10 @@ static const BOOL FMenuReturnProc_ReturnField(FMENU_EVENT_WORK* mwk)
 //--------------------------------------------------------------
 static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
 {
-  FIELD_ITEMMENU_WORK *pBag = mwk->subProcWork;
+  BAG_PARAM *pBag = mwk->subProcWork;
   BOOL bPokeList = FALSE;
   
-  switch( pBag->ret_code )
+  switch( pBag->next_proc )
   {
   case BAG_NEXTPROC_EXIT:      //CGEARもどり
   case BAG_NEXTPROC_SELL:     //ショップもどり
@@ -1071,7 +1028,7 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
     plData->pp = GAMEDATA_GetMyPokemon(gmData);
     plData->ret_sel = 0;
 
-    switch(pBag->ret_code){
+    switch(pBag->next_proc){
     case BAG_NEXTPROC_WAZASET:
       plData->mode = PL_MODE_WAZASET;
       break;
@@ -1116,30 +1073,15 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
 //--------------------------------------------------------------
 static const BOOL FMenuReturnProc_TownMap(FMENU_EVENT_WORK* mwk)
 {
-  {
-      FIELD_ITEMMENU_WORK *epp;
-      GAMEDATA* pGameData = GAMESYSTEM_GetGameData(mwk->gmSys);
+  BAG_PARAM* bag;
+  GAMEDATA* gmData = GAMESYSTEM_GetGameData(mwk->gmSys);
+
+  // フィールドから呼ばれる
+  bag = BAG_CreateParam( gmData, mwk->gmEvent, mwk->fieldWork, &mwk->icwk, BAG_MODE_FIELD );
       
-      epp = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(FIELD_ITEMMENU_WORK));
-      epp->ctrl = GAMEDATA_GetSaveControlWork( pGameData );
-      epp->gsys = mwk->gmSys;
-      epp->fieldmap = mwk->fieldWork;
-      epp->heapID = GFL_HEAPID_APP;
-      epp->mode = BAG_MODE_FIELD;   //フィールドから呼ばれる
+  FMenu_SetNextSubProc( mwk ,FMENU_APP_BAG , bag );
 
-      GFL_STD_MemCopy(&mwk->icwk , &epp->icwk, sizeof(ITEMCHECK_WORK));
-
-      epp->mystatus = GAMEDATA_GetMyStatus(pGameData);
-
-      if ( PLAYERWORK_GetMoveForm(GAMEDATA_GetMyPlayerWork(pGameData)) == PLAYER_MOVE_FORM_CYCLE ){
-        epp->cycle_flg = TRUE;
-      }
-      
-      FMenu_SetNextSubProc( mwk ,FMENU_APP_BAG , epp );
-      return TRUE;
-    }
-
-  
+  return TRUE;
 }
 
 
@@ -1433,4 +1375,36 @@ static void FMenuTakeFieldInfo( FMENU_EVENT_WORK *mwk )
 	mwk->icwk.SeedInfo=0;	//使用可能なアイテム情報（きのみ関連）
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  バッグパラメータ生成
+ *
+ *	@param	mode 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, GMEVENT* gmEvent, FIELDMAP_WORK* fieldmap, const ITEMCHECK_WORK* icwk, BAG_MODE mode )
+{
+  SAVE_CONTROL_WORK* saveControl;
+  BAG_PARAM * bag;
+
+  saveControl = GAMEDATA_GetSaveControlWork( gmData );
+
+  bag = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(BAG_PARAM));
+
+  bag->p_event      = gmEvent;
+  bag->p_fieldmap   = fieldmap;
+  bag->p_config     = SaveData_GetConfig( saveControl );
+  bag->p_mystatus   = GAMEDATA_GetMyStatus( gmData );
+  bag->p_bagcursor  = GAMEDATA_GetBagCursor( gmData );
+  bag->p_myitem     = GAMEDATA_GetMyItem( gmData );
+  
+  GFL_STD_MemCopy(icwk , &bag->icwk, sizeof(ITEMCHECK_WORK));
+
+  bag->mode       = mode;
+  bag->cycle_flg  = ( PLAYERWORK_GetMoveForm( GAMEDATA_GetMyPlayerWork(gmData) ) == PLAYER_MOVE_FORM_CYCLE );
+  
+  return bag;
+}
 

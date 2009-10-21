@@ -33,11 +33,10 @@
 
 #include "itemmenu.h"
 #include "itemmenu_local.h"
+
 #include "app/itemuse.h"
 #include "savedata/mystatus.h"
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 #include "system/main.h"			//GFL_HEAPID_APP参照
 
 //============================================================================================
@@ -2480,7 +2479,8 @@ static void _startState(FIELD_ITEMMENU_WORK* pWork)
 
 static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void * ppWork, void * mypWork )
 {
-  FIELD_ITEMMENU_WORK* pWork = ppWork;
+  BAG_PARAM* pParam = ppWork;
+  FIELD_ITEMMENU_WORK* pWork;
 
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0);
 
@@ -2493,21 +2493,44 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   }
 #endif
 
+  // ヒープ生成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ITEMMENU, 0x28000 );
-
+  pWork = GFL_PROC_AllocWork( proc, sizeof(FIELD_ITEMMENU_WORK), HEAPID_ITEMMENU );
+  GFL_STD_MemClear( pWork, sizeof(FIELD_ITEMMENU_WORK) );
+  
+  //-------------------------------------
+  // メンバ初期化
+  //-------------------------------------
   pWork->heapID = HEAPID_ITEMMENU;
-  pWork->pBagCursor = GAMEDATA_GetBagCursor(GAMESYSTEM_GetGameData(pWork->gsys));
 
+  // パラメータから取得
+  pWork->fieldmap   = pParam->p_fieldmap;
+  pWork->event      = pParam->p_event;
+  pWork->mystatus   = pParam->p_mystatus;
+  pWork->config     = pParam->p_config;
+  pWork->pBagCursor = pParam->p_bagcursor;
+  pWork->pMyItem    = pParam->p_myitem;
+  pWork->icwk       = &pParam->icwk;
+  pWork->mode       = pParam->mode;
+  pWork->cycle_flg  = pParam->cycle_flg;
+
+//  pWork->pBagCursor = GAMEDATA_GetBagCursor(GAMESYSTEM_GetGameData(pWork->gsys));
+//  pWork->pMyItem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(pWork->gsys));
+
+  // その他
   pWork->pocketno = MYITEM_FieldBagPocketGet(pWork->pBagCursor);
+
   {
     s16 cur,scr;
     MYITEM_FieldBagCursorGet(pWork->pBagCursor, pWork->pocketno, &cur, &scr );
     pWork->curpos = cur;
     pWork->oamlistpos = scr - 1;
   }
+
+  // グラフィック初期化
   ITEMDISP_graphicInit(pWork);
 
-  pWork->pMyItem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(pWork->gsys));
+  // 文字列初期化
   pWork->MsgManager = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
                                       NARC_message_bag_dat, pWork->heapID );
 
@@ -2541,12 +2564,11 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   //  pWork->pTouchSWSys = TOUCH_SW_AllocWork(pWork->heapID);
 
-
   ITEMDISP_BarMessageCreate( pWork );
 
 	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME3_M, _SUBLIST_NORMAL_PAL,pWork->fontHandle, pWork->SysMsgQue, pWork->heapID  );
 
-
+  // ネットワーク初期化
   GFL_NET_ChangeIconPosition(256-16, 0);
   GFL_NET_ReloadIcon();
 
@@ -2563,7 +2585,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
 static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void * ppWork, void * mypWork )
 {
-  FIELD_ITEMMENU_WORK* pWork = ppWork;
+  FIELD_ITEMMENU_WORK* pWork = mypWork;
   StateFunc* state = pWork->state;
 
   if(state == NULL){
@@ -2595,7 +2617,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
 
 static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void * ppWork, void * mypWork )
 {
-  FIELD_ITEMMENU_WORK* pWork = ppWork;
+  FIELD_ITEMMENU_WORK* pWork = mypWork;
 
   if (GFL_FADE_CheckFade() == TRUE) {
     return GFL_PROC_RES_CONTINUE;
@@ -2647,6 +2669,15 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
 
+  // 出力パラメータを設定
+  {
+    BAG_PARAM* pParam = ppWork;
+
+    pParam->next_proc = pWork->ret_code;
+    pParam->ret_item  = pWork->ret_item;
+  }
+
+  GFL_PROC_FreeWork( proc );
 
   GFL_HEAP_DeleteHeap(  HEAPID_ITEMMENU );
 

@@ -34,8 +34,6 @@
 #include "app/itemuse.h"
 #include "app/app_taskmenu.h"
 
-extern const GFL_PROC_DATA ItemMenuProcData;
-
 // SE再定義
 enum
 { 
@@ -130,20 +128,19 @@ typedef int (MenuFunc)(FIELD_ITEMMENU_WORK* wk);
 
 struct _FIELD_ITEMMENU_PARAM {
   // [IN] 初期化時に外部から受け渡されるメンバ
-  // @TODO コンフィグ
+  CONFIG              * config;              
+  GMEVENT             * event;
   FIELDMAP_WORK       * fieldmap;
-  GAMESYS_WORK        * gsys;
-  SAVE_CONTROL_WORK   * ctrl;
   MYSTATUS            * mystatus;
-  ITEMCHECK_WORK      icwk;             ///< アイテムチェックワーク FMENU_EVENT_WORKからコピー
+  ITEMCHECK_WORK      * icwk;           ///< アイテムチェックワーク FMENU_EVENT_WORKからコピー
   BAG_MODE            mode;             ///< バッグ呼び出しモード
   BOOL                cycle_flg;        ///< 自転車かどうか？
-//  GMEVENT * event;
+  BAG_CURSOR* pBagCursor;
+  MYITEM_PTR  pMyItem;
 
   // [PRIVATE]
 	ITEM_ST ScrollItem[ BAG_MYITEM_MAX ];	///< スクロールする為のアイテムリスト
   StateFunc * state;                    ///< ハンドルのプログラム状態
-  MYITEM_PTR  pMyItem;
 	GFL_BMPWIN* win;
   GFL_BMPWIN* itemInfoDispWin;
   GFL_BMPWIN* pocketNameWin;
@@ -156,7 +153,6 @@ struct _FIELD_ITEMMENU_PARAM {
   STRBUF*     pStrBuf;
 	STRBUF*     pExpStrBuf;
   GFL_FONT*   fontHandle;
-  BAG_CURSOR* pBagCursor;
   MenuFunc*   menu_func[BAG_MENUTBL_MAX];
 	HEAPID      heapID;
 

@@ -10,18 +10,7 @@
 #pragma once
 
 #include <gflib.h>
-
-extern const GFL_PROC_DATA ItemMenuProcData;
-
-//バッグをどういう風に呼ぶかを定義
-typedef enum {
-  BAG_MODE_FIELD,
-  BAG_MODE_UNION,
-  BAG_MODE_POKELIST,
-  BAG_MODE_COLOSSEUM,
-  BAG_MODE_N_PLANTER,
-  BAG_MODE_SELL,  // 「うる」シーケンス
-} BAG_MODE;
+#include "app/bag.h"
 
 
 // メニュー項目
