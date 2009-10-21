@@ -235,7 +235,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     if( event != NULL ){
       return event;
     }
+    //汎用一歩移動イベントチェック群
     event = checkMoveEvent(&req, fieldWork);
+    if ( event != NULL) {
+      return event;
+    }
   }
 
 
@@ -996,6 +1000,7 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 //--------------------------------------------------------------
 static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork)
 {
+  return NULL;
 }
 
 //======================================================================
