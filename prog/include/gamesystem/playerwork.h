@@ -45,7 +45,7 @@ typedef struct {
 	ZONEID zoneID;
 	VecFx32 position;
   RAIL_LOCATION railposition;
-	u16 direction;
+	u16 direction;        ///<回転角度のRadian値　（0～0xffff）
   u8 palace_area;       ///<※check　パレステストの為、一時的にここに配置
   u8 padding;
 	MYSTATUS mystatus;
@@ -119,21 +119,39 @@ extern ZONEID PLAYERWORK_getZoneID(const PLAYER_WORK * player);
 
 //--------------------------------------------------------------
 /**
- * @brief	位置を取得する
+ * @brief	方向（角度）を設定する
  * @param	player		PLAYER_WORKへのポインタ
- * @param	direction	方向を指定する値
+ * @param	direction	方向を指定する値(ラジアン角度0～0xffff)
  */
 //--------------------------------------------------------------
 extern void PLAYERWORK_setDirection(PLAYER_WORK * player, u16 direction);
 
 //--------------------------------------------------------------
 /**
- * @brief	方向を取得する
+ * @brief	方向（角度）を取得する
  * @param	player	PLAYER_WORKへのポインタ
- * @return	方向を指定する値
+ * @return	方向を指定する値(ラジアン角度0～0xffff)
  */
 //--------------------------------------------------------------
 extern u16 PLAYERWORK_getDirection(const PLAYER_WORK * player);
+
+//--------------------------------------------------------------
+/**
+ * @brief	方向タイプで方向角度を設定する
+ * @param	player		PLAYER_WORKへのポインタ
+ * @param	dir_type	4方向を指定する値(DIR_UP DIR_DOWN DIR_LEFT DIR_RIGHT)
+ */
+//--------------------------------------------------------------
+extern void PLAYERWORK_setDirection_Type(PLAYER_WORK * player, u16 dir_type);
+
+//--------------------------------------------------------------
+/**
+ * @brief	方向角度の方向タイプを取得する
+ * @param	player	PLAYER_WORKへのポインタ
+ * @return	方向を指定する値(DIR_UP DIR_DOWN DIR_LEFT DIR_RIGHT)
+ */
+//--------------------------------------------------------------
+extern u16 PLAYERWORK_getDirection_Type(const PLAYER_WORK * player);
 
 //--------------------------------------------------------------
 /**

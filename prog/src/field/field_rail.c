@@ -181,6 +181,10 @@ static RAIL_KEY getReverseKey(RAIL_KEY key);
 static RAIL_KEY getClockwiseKey(RAIL_KEY key);
 static RAIL_KEY getAntiClockwiseKey(RAIL_KEY key);
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void calcKeyLocation( const FIELD_RAIL_WORK * work, RAIL_KEY key, RAIL_LOCATION* ans );
+
 
 
 
@@ -776,7 +780,7 @@ BOOL FIELD_RAIL_MAN_CalcRailKeyPos(const FIELD_RAIL_MAN * man, const RAIL_LOCATI
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ロケーションをキーの方向に１グリッド分進めたロケーションを取得
+ *	@brief  ロケーションをキーの方向に１グリッド分進めたロケーションを取得    
  *
  *	@param	man             マネージャ
  *	@param	now_location    今のロケーション
@@ -784,11 +788,13 @@ BOOL FIELD_RAIL_MAN_CalcRailKeyPos(const FIELD_RAIL_MAN * man, const RAIL_LOCATI
  *	@param	next_location   次のロケーション格納先
  *
  *	@retval TRUE  １グリッド進める
- *	@retval FALSE １グリッドすすめない
+ *	@retval FALSE １グリッドすすめない  FALSEの場合でも、next_locationには進んだ先のロケーションが入っています。　しかし実際には、設定できないロケーションです。
  */
 //-----------------------------------------------------------------------------
 BOOL FIELD_RAIL_MAN_CalcRailKeyLocation(const FIELD_RAIL_MAN * man, const RAIL_LOCATION * now_location, RAIL_KEY key, RAIL_LOCATION * next_location)
 {
+  BOOL move;
+  
   GF_ASSERT( man );
   GF_ASSERT( now_location );
   GF_ASSERT( next_location );
@@ -798,7 +804,14 @@ BOOL FIELD_RAIL_MAN_CalcRailKeyLocation(const FIELD_RAIL_MAN * man, const RAIL_L
   FIELD_RAIL_WORK_Update( man->calc_work );
   FIELD_RAIL_WORK_GetLocation( man->calc_work, next_location );
 
-  return FIELD_RAIL_WORK_IsLastAction( man->calc_work );
+  move = FIELD_RAIL_WORK_IsLastAction( man->calc_work );
+
+  // その先には進めない
+  if( !move ){
+    // ロケーションを計算で求める
+    calcKeyLocation( man->calc_work, key, next_location );
+  }
+  return move;
 }
 
 
@@ -2744,6 +2757,54 @@ static RAIL_KEY getAntiClockwiseKey(RAIL_KEY key)
   }
   return RAIL_KEY_NULL;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  keyに進んだ先のロケーションを取得する 移動できるかどうか判断しない
+ *
+ *	@param	work  ワーク
+ *	@param	key   キー
+ *	@param	ans   アンサー
+ */
+//-----------------------------------------------------------------------------
+static void calcKeyLocation( const FIELD_RAIL_WORK * work, RAIL_KEY key, RAIL_LOCATION* ans )
+{
+  GF_ASSERT( work->type == FIELD_RAIL_TYPE_LINE );
+
+
+  // ロケーション保存
+  *ans = work->now_location;
+
+  // Front
+  if( work->line->key == key )
+  {
+    ans->line_grid ++;
+  }
+  // back
+  else if( getReverseKey(work->line->key) == key )
+  {
+    if( ans->line_grid > 0 )
+    {
+      ans->line_grid --;
+    }
+    else
+    {
+      GF_ASSERT_MSG( 0, "calcKeyLocation back not answer\n" );
+    }
+  }
+  // left
+  else if( getAntiClockwiseKey(work->line->key) == key )
+  {
+    ans->width_grid --;
+  }
+  // right
+  else
+  {
+    ans->width_grid ++;
+  }
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static const char * getRailName(const FIELD_RAIL_WORK * work)

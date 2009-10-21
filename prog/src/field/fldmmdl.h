@@ -1092,9 +1092,18 @@ extern BOOL MMdl_CheckSetUpLocation( const MMDL* mmdl );
 extern BOOL MMdl_GetSetUpLocation( const MMDL* mmdl, RAIL_LOCATION* location );
 //-----------------------------------------------
 
+// レールロケーションの取得
 extern void MMDL_SetRailLocation( MMDL * fmmdl, const RAIL_LOCATION* location );
 extern void MMDL_GetRailLocation( const MMDL * fmmdl, RAIL_LOCATION* location );
 extern void MMDL_GetOldRailLocation( const MMDL * fmmdl, RAIL_LOCATION* location );
+// DIR方向のロケーションの取得　BOOLで移動できるかチェックを行う。
+// FALSEが帰ってきても、locationには、移動先のロケーションが入っている。
+// その値は、イベントチェックなどで使用している。
+// FALSEが帰ってきた値をSetLocationすると、動作不明になる。注意！！
+extern BOOL MMDL_GetRailFrontLocation( const MMDL *mmdl, RAIL_LOCATION* location );
+extern BOOL MMDL_GetRailDirLocation( const MMDL *mmdl, u16 dir, RAIL_LOCATION* location );
+extern void MMDL_Rail_UpdateGridPosDir( MMDL *mmdl, u16 dir );
+
 extern FIELD_RAIL_WORK* MMDL_GetRailWork( const MMDL * fmmdl );
 extern BOOL MMDL_ReqRailMove( MMDL * fmmdl, u16 dir, s16 wait );
 extern u32 MMDL_HitCheckRailMove( const MMDL *mmdl,
@@ -1104,9 +1113,8 @@ extern u32 MMDL_HitCheckRailMoveDir( const MMDL *mmdl, u16 dir );
 extern BOOL MMDL_HitCheckRailMoveFellow(
 	const MMDL * mmdl, const RAIL_LOCATION* location );
 extern MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATION* location, BOOL old_hit );
-extern BOOL MMDL_GetRailFrontLocation( const MMDL *mmdl, RAIL_LOCATION* location );
-extern BOOL MMDL_GetRailDirLocation( const MMDL *mmdl, u16 dir, RAIL_LOCATION* location );
-extern void MMDL_Rail_UpdateGridPosDir( MMDL *mmdl, u16 dir );
+
+// レール移動　今の前方方向
 extern void MMDL_Rail_GetFrontWay( const MMDL *mmdl, VecFx16* way );
 extern void MMDL_Rail_GetDirLineWay( const MMDL *mmdl, u16 dir, VecFx16* way );
 

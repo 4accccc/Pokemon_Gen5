@@ -134,6 +134,7 @@ static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *
 static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork);
 
 static void setFrontPos(const EV_REQUEST * req, VecFx32 * pos);
+static BOOL checkConnectExitDir(const CONNECT_DATA* cnct, u16 player_dir);
 static BOOL checkDirection(u16 player_dir, u16 exit_dir);
 static int getConnectID(const EV_REQUEST * req, const VecFx32 * now_pos);
 static void rememberExitInfo(EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const VecFx32 * pos);
@@ -163,6 +164,7 @@ static int checkPokeWazaGroup( GAMEDATA *gdata, u32 waza_no );
 //レール用
 //-----------------------------------------------------------------------------
 static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
+static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
 static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
 static void rememberExitRailInfo(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const RAIL_LOCATION* loc);
 
@@ -834,7 +836,7 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 //☆☆☆押し込み操作チェック（マットでのマップ遷移など）
 	//キー入力接続チェック
   if (req.pushRequest) {
-    event = checkRailExit(&req, gsys, fieldWork);
+    event = checkRailPushExit(&req, gsys, fieldWork);
     if( event != NULL ){
       return event;
     }
@@ -1131,8 +1133,7 @@ static int getConnectID(const EV_REQUEST * req, const VecFx32 * now_pos)
 	cnct = EVENTDATA_GetConnectByID(req->evdata, idx);
   if (CONNECTDATA_GetExitType(cnct) != EXIT_TYPE_NONE)
   {
-    EXIT_DIR dir = CONNECTDATA_GetExitDir(cnct);
-    if (checkDirection(req->player_dir, dir) == FALSE)
+    if( checkConnectExitDir( cnct, req->player_dir ) == FALSE )
     {
       return EXIT_ID_NONE;
     }
@@ -1154,6 +1155,16 @@ static void setFrontPos(const EV_REQUEST * req, VecFx32 * pos)
 	default:
                   GF_ASSERT(0);
 	}
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL checkConnectExitDir(const CONNECT_DATA* cnct, u16 player_dir)
+{
+  EXIT_DIR dir;
+
+  dir = CONNECTDATA_GetExitDir( cnct );
+  return checkDirection( player_dir, dir );
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -1245,6 +1256,7 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
   FLDNOGRID_MAPPER* nogridMapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
   FIELDMAP_CTRL_NOGRID_WORK* p_mapctrl_work = FIELDMAP_GetMapCtrlWork( fieldWork );
   FIELD_PLAYER_NOGRID* p_nogrid_player = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( p_mapctrl_work );
+  const CONNECT_DATA* cnct;
 
   // @TODO ３D座標のイベントとレール座標のイベントを併用しているため複雑
   {
@@ -1259,14 +1271,79 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
   }
 
   if (*firstID == idx) return NULL;
-  if (idx == EXIT_ID_NONE)
-  {
+  if (idx == EXIT_ID_NONE){
     *firstID = idx;
     return NULL;
   }
 
+  // 乗っただけで起動するのかチェック
+  cnct = EVENTDATA_GetConnectByID( req->evdata, idx );
+  if( CONNECTDATA_GetExitType( cnct ) != EXIT_TYPE_NONE )
+  {
+    return NULL;
+  }
+  
   rememberExitRailInfo( req, fieldWork, idx, &pos );
   return getChangeMapEvent(req, fieldWork, idx);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ノーグリッドマップ　レールシステム上での押し込み出入り口判定
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork)
+{
+  int idx;
+  RAIL_LOCATION pos, front_pos;
+  BOOL result;
+  const FIELD_PLAYER* cp_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  const MMDL* cp_mmdl = FIELD_PLAYER_GetMMdl( cp_player );
+  const CONNECT_DATA* cnct;
+
+  MMDL_GetRailLocation( cp_mmdl, &pos );
+  result = MMDL_GetRailFrontLocation( cp_mmdl, &front_pos );
+
+  // 目の前が交通不可能出ない場合にはチェックしない
+  if( result )
+  {
+    return NULL;
+  }
+   
+  // その場チェック　＝　マット
+  idx = EVENTDATA_SearchConnectIDByRailLocation(req->evdata, &pos);
+
+  if (idx != EXIT_ID_NONE){
+    cnct = EVENTDATA_GetConnectByID( req->evdata, idx );
+
+    if( checkConnectExitDir( cnct, req->player_dir ) )
+    {
+      if( CONNECTDATA_GetExitType( cnct ) == EXIT_TYPE_MAT)
+      {
+        // GO
+        rememberExitRailInfo( req, fieldWork, idx, &pos );
+        return getChangeMapEvent(req, fieldWork, idx);
+      }
+    }
+  }
+
+  // 目の前チェック = 階段、壁、ドア
+  idx = EVENTDATA_SearchConnectIDByRailLocation(req->evdata, &front_pos);
+  if(idx == EXIT_ID_NONE)
+  {
+    return NULL;
+  }
+
+  
+  cnct = EVENTDATA_GetConnectByID( req->evdata, idx );
+
+  if( checkConnectExitDir( cnct, req->player_dir ) )
+  {
+    rememberExitRailInfo( req, fieldWork, idx, &pos );  // front_posは移動負荷なので、posにする
+    return getChangeMapEvent(req, fieldWork, idx);
+  }
+
+  return NULL;
 }
 
 

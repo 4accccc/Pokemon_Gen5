@@ -187,8 +187,11 @@ FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER* p_player, HEAPID 
   p_wk->p_fieldwork   = FIELD_PLAYER_GetFieldMapWork( p_player );
 
   // 動作コードをレール動作に変更
-  MMDL_OnStatusBit( p_mmdl, MMDL_STABIT_RAIL_MOVE );
-  MMDL_ChangeMoveCode( p_mmdl, MV_RAIL_DMY );
+  if( MMDL_GetMoveCode( p_mmdl ) != MV_RAIL_DMY )
+  {
+    MMDL_OnStatusBit( p_mmdl, MMDL_STABIT_RAIL_MOVE );
+    MMDL_ChangeMoveCode( p_mmdl, MV_RAIL_DMY );
+  }
 
   // レールワークの取得
   p_wk->p_railwork = MMDL_GetRailWork( p_mmdl );

@@ -37,6 +37,7 @@
 #include "field/map_matrix.h"     //MAP_MATRIX
 #include "field/field_status.h"   //FIELD_STATUS
 #include "field/field_encount.h"
+#include "field/field_dir.h"
 #include "savedata/shortcut.h"		//SHORTCUT_SetRegister
 
 //============================================================================================
@@ -739,6 +740,49 @@ void PLAYERWORK_setDirection(PLAYER_WORK * player, u16 direction)
 u16 PLAYERWORK_getDirection(const PLAYER_WORK * player)
 {
   return player->direction;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	方向タイプで方向角度を設定する
+ * @param	player		PLAYER_WORKへのポインタ
+ * @param	dir_type	方向を指定する値(DIR_～)
+ */
+//--------------------------------------------------------------
+void PLAYERWORK_setDirection_Type(PLAYER_WORK * player, u16 dir_type)
+{
+  static const u16 DIR_ROT[DIR_MAX4] = 
+  {
+    0,
+    0x8000,
+    0x4000,
+    0xC000,
+  };
+  
+  GF_ASSERT( dir_type < DIR_MAX4 );
+
+  player->direction = DIR_ROT[ dir_type ];
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	方向角度の方向タイプを取得する
+ * @param	player	PLAYER_WORKへのポインタ
+ * @return	方向を指定する値(DIR_～)
+ */
+//--------------------------------------------------------------
+u16 PLAYERWORK_getDirection_Type(const PLAYER_WORK * player)
+{
+  u16 dir = DIR_UP;
+  
+	if( (player->direction>0x2000) && (player->direction<0x6000) ){
+		dir = DIR_LEFT;
+	}else if( (player->direction >= 0x6000) && (player->direction <= 0xa000) ){
+		dir = DIR_DOWN;
+	}else if( (player->direction > 0xa000)&&(player->direction < 0xe000) ){
+		dir = DIR_RIGHT;
+	}
+	return( dir );
 }
 
 //--------------------------------------------------------------
