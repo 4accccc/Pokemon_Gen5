@@ -17,8 +17,16 @@
 
 #define R05_TREE_01                        0
 #define R05_TREE_02                        1
-#define R05_TREE_03                        2
-#define DUMMY_OBJ                          3
-#define DUMMY_FLD_ITEM                     4
+#define R05_TREE_04                        2
+#define TR_JUGGLING_01                     3
+#define R05_FLD_ITEM_03                    4
+#define R05_TREE_03                        5
+#define R05_FLD_ITEM_01                    6
+#define R05_FLD_ITEM_02                    7
+#define TR_BAKER_01                        8
+#define TR_BACKPACKERM_02                  9
+#define TR_ARTIST_01                      10
+#define TR_MUSICIAN_01                    11
+#define TR_BACKPACKERW_02                 12
 
 #endif //ZONE_R05_EVC_H

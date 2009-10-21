@@ -28,5 +28,7 @@
 #define D01_FLD_ITEM_01                    7
 #define D01_DUMMY_01                       8
 #define D01_TREE_01                        9
+#define TR_TANPAN_02                      10
+#define TR_MINI_02                        11
 
 #endif //ZONE_D01R0101_EVC_H
