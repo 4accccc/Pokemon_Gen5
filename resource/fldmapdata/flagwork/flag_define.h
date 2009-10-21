@@ -140,7 +140,7 @@
 #define FE_C07GYM_ITEM                     124 /* 0x007c Ｃ07氷ジム：ジムガイドがくれるアイテム入手フラグ */
 #define FE_C08GYM_ITEM                     125 /* 0x007d Ｃ08ドラゴンジム：ジムガイドがくれるアイテム入手フラグ */
 #define FE_MUSEUM_TOUNAN                   126 /* 0x007e 博物館盗難イベントフラグ。盗難イベント中にON */
-		/* not used   127(0x007f) */
+#define FE_C04_SUPPORT_GUIDE               127 /* 0x007f Ｃ04ライモンシティのサポート誘導イベントフラグ */
 		/* not used   128(0x0080) */
 		/* not used   129(0x0081) */
 		/* not used   130(0x0082) */
@@ -582,7 +582,7 @@
 #define FV_D05_RIVAL_01                    558 /* 0x022e D05：ライバル */
 #define FV_D05_WORKMAN_01                  559 /* 0x022f D05：workman */
 #define FV_C05_BUSINESSMAN_01              560 /* 0x0230 C05：ジム前ストッパー */
-		/* not used   561(0x0231) */
+#define FV_C04R0302_SUPPORT                561 /* 0x0231 Ｃ04野球場の観客席：サポート */
 		/* not used   562(0x0232) */
 		/* not used   563(0x0233) */
 		/* not used   564(0x0234) */
