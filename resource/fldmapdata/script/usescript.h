@@ -102,6 +102,7 @@
 //======================================================================
 //共通スクリプトデータID
 #include "common_scr_def.h"
+#include "shop_scr_def.h"
 
 //動作モデル表示コード
 #include "../../../prog/src/field/fldmmdl_code.h"
@@ -211,6 +212,7 @@
 //	共通メッセージ関連
 //
 //======================================================================
+#include "../../message/dst/script/msg_common_scr.h"
 #include "../../message/dst/script/msg_common_scr.h"
 //#include "../../../prog/include/msg/script/msg_common_scr.h"
 #if 0 //wb null
