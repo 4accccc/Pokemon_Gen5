@@ -90,7 +90,7 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
     const ENCOUNT_LOCATION location, const ENCOUNT_TYPE enc_type,const BOOL fishing_f)
 {
   MI_CpuClear8(outEfp,sizeof(ENCPOKE_FLD_PARAM));
-  
+
   //エンカウトロケーションとタイプチェック
   if(location >= ENC_LOCATION_MAX)
   {
@@ -112,24 +112,24 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
   //先頭ポケモンのパラメータチェック
   {
     POKEMON_PARAM* pp = PokeParty_GetMemberPointer( GAMEDATA_GetMyPokemon( gdata ), 0 );
-	  
+
     outEfp->mons_egg_f = PP_Get( pp, ID_PARA_tamago_flag, NULL );
     if(!outEfp->mons_egg_f)
-    { //モンスターNo他取得 
+    { //モンスターNo他取得
       outEfp->mons_no = PP_Get( pp, ID_PARA_monsno, NULL);
       outEfp->mons_item = PP_Get( pp, ID_PARA_item, NULL);
       outEfp->mons_spa = PP_Get( pp, ID_PARA_speabino, NULL);
       outEfp->mons_lv = PP_Get( pp, ID_PARA_level, NULL);
       outEfp->mons_sex = PP_Get( pp, ID_PARA_sex, NULL);
       outEfp->mons_chr = PP_GetSeikaku( pp );
-  
+
       //特性効果発生チェック
       efp_MonsSpaCheck( outEfp );
     }
   }
   //フラグチェック
-	outEfp->spray_f = FALSE;
-	outEfp->enc_force_f = FALSE;
+  outEfp->spray_f = FALSE;
+  outEfp->enc_force_f = FALSE;
   outEfp->companion_f = FALSE;
   outEfp->enc_double_f = FALSE;
 }
@@ -138,18 +138,18 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
 /**
  * 特性、道具使用による確率変動
  *
- * @param	enc			  エンカウントシステムポインタ
- * @param	efp		    エンカウント情報構造体ポインタ
+ * @param enc       エンカウントシステムポインタ
+ * @param efp       エンカウント情報構造体ポインタ
  * @param inProb    計算元の確率
- * @return  変動後の確率	
+ * @return  変動後の確率
  */
 //--------------------------------------------------------------
 u32 ENCPOKE_EncProbManipulation( const ENCPOKE_FLD_PARAM* efp, const GAMEDATA* gdata, const u32 inProb)
 {
   u32 new_prob = inProb;
-  
+
   //特性による確率変更
-  if( efp->spa_rate_up ){ 
+  if( efp->spa_rate_up ){
     new_prob *= 2;
   }else if(efp->spa_rate_down){
     new_prob /= 2;
@@ -197,10 +197,10 @@ u32 ENCPOKE_GetEncountPoke( const ENCPOKE_FLD_PARAM *efp, const ENC_COMMON_DATA 
 /**
  * ROMのエンカウントデータテーブルからポケモンを抽選
  *
- * @param	enc			  エンカウントシステムポインタ
- * @param	efp		    エンカウント情報構造体ポインタ
+ * @param enc       エンカウントシステムポインタ
+ * @param efp       エンカウント情報構造体ポインタ
  * @param inProb    計算元の確率
- * @return  変動後の確率	
+ * @return  変動後の確率
  */
 //--------------------------------------------------------------
 int ENCPOKE_GetNormalEncountPokeData( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* efp, ENC_POKE_PARAM* outPokeTbl)
@@ -225,7 +225,7 @@ POKEMON_PARAM* ENCPOKE_PPCreate(const ENCPOKE_FLD_PARAM* efp, const ENC_POKE_PAR
   POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( heapID, POKETOOL_GetWorkSize() );
 
   ENCPOKE_PPSetup( pp, efp, poke );
-  
+
   return pp;
 }
 
@@ -236,7 +236,7 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
 {
   u8 chr,sex;
   POKEMON_PERSONAL_DATA*  personal;
- 
+
   PP_Setup( pp,poke->monsNo,poke->level,efp->myID );
 
   //エンカウントポケモンのパーソナルを取得
@@ -253,7 +253,7 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
   }else{
     eps_EncPokeItemSet(pp,personal,efp->spa_item_rate_up,FALSE,0);
   }
-  
+
   { //個体乱数セット
     u32 p_rnd = eps_EncPokeCalcPersonalRand( efp, personal, poke );
 
@@ -418,7 +418,7 @@ static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* i
 static void eps_SetPokeParam(const ENC_COMMON_DATA* data,ENC_POKE_PARAM* outPoke)
 {
   s16 lv_diff = data->maxLevel - data->minLevel;
- 
+
   MI_CpuClear8(outPoke,sizeof(ENC_POKE_PARAM));
 
   if(lv_diff < 0){
@@ -464,7 +464,7 @@ static void eps_CheckSpaEncountLevel(const ENCPOKE_FLD_PARAM* efp,const ENC_COMM
   int i;
   u8  max = ioPoke->level,lv_diff = FALSE;
 
-  if( !efp->spa_high_lv_hit ){ 
+  if( !efp->spa_high_lv_hit ){
     return; //補整無し
   }
   for(i = 0;i < efp->tbl_num;i++){
@@ -497,18 +497,18 @@ static void eps_CheckSpaEncountLevel(const ENCPOKE_FLD_PARAM* efp,const ENC_COMM
 static void eps_PokeLottery( const ENCPOKE_FLD_PARAM* efp, const ENC_COMMON_DATA* enc_tbl, ENC_POKE_PARAM* outPoke )
 {
   u8 idx = 0xFF;
- 
+
   if(efp->spa_hagane_up){ //ハガネタイプ優先エンカウト
-    idx = eps_LotFixTypeEncount( efp, enc_tbl, POKETYPE_METAL );
+    idx = eps_LotFixTypeEncount( efp, enc_tbl, POKETYPE_HAGANE );
   }else if(efp->spa_denki_up){  //でんきタイプ優先エンカウント
-    idx = eps_LotFixTypeEncount( efp, enc_tbl, POKETYPE_ELECTRIC );
+    idx = eps_LotFixTypeEncount( efp, enc_tbl, POKETYPE_DENKI );
   }
   if(idx == 0xFF){  //タイプ優先エンカウントに失敗したら指定の確率計算
     idx = (DATA_EncProbCalcFuncTable[efp->prob_calctype])(efp->tbl_num);
   }
   //エンカウントモンスターパラメータセット
   eps_SetPokeParam(&enc_tbl[idx],outPoke);
-  
+
   //隠し特性によるエンカウントレベル補正
   eps_CheckSpaEncountLevel(efp, enc_tbl, outPoke );
 }
@@ -596,7 +596,7 @@ static u32 eps_EncPokeCalcPersonalRand(
       }
     }else
     {
-      break;  //指定無し  
+      break;  //指定無し
     }
   }while(1);
 
@@ -628,21 +628,21 @@ static u32 eps_GetPercentRand( void )
 //--------------------------------------------------------------
 static u32 eps_GetPercentRandGroundPokeTblNo( u32 max )
 {
-	u32	i;
-  
-	i = eps_GetPercentRand();
-	if( i < 20 )			return	0;		// 20%
-	if( i >= 20 && i < 40 )	return	1;		// 20%
-	if( i >= 40 && i < 50 )	return	2;		// 10%
-	if( i >= 50 && i < 60 )	return	3;		// 10%
-	if( i >= 60 && i < 70 )	return	4;		// 10%
-	if( i >= 70 && i < 80 )	return	5;		// 10%
-	if( i >= 80 && i < 85 )	return	6;		//  5%
-	if( i >= 85 && i < 90 )	return	7;		//  5%
-	if( i >= 90 && i < 94 )	return	8;		//  4%
-	if( i >= 94 && i < 98 )	return	9;		//  4%
-	if( i == 98 )			return	10;		//  1%
-	return	11;								//  1%
+  u32 i;
+
+  i = eps_GetPercentRand();
+  if( i < 20 )      return  0;    // 20%
+  if( i >= 20 && i < 40 ) return  1;    // 20%
+  if( i >= 40 && i < 50 ) return  2;    // 10%
+  if( i >= 50 && i < 60 ) return  3;    // 10%
+  if( i >= 60 && i < 70 ) return  4;    // 10%
+  if( i >= 70 && i < 80 ) return  5;    // 10%
+  if( i >= 80 && i < 85 ) return  6;    //  5%
+  if( i >= 85 && i < 90 ) return  7;    //  5%
+  if( i >= 90 && i < 94 ) return  8;    //  4%
+  if( i >= 94 && i < 98 ) return  9;    //  4%
+  if( i == 98 )     return  10;   //  1%
+  return  11;               //  1%
 }
 
 //--------------------------------------------------------------
@@ -654,45 +654,45 @@ static u32 eps_GetPercentRandGroundPokeTblNo( u32 max )
 //--------------------------------------------------------------
 static u32 eps_GetPercentRandWaterPokeTblNo( u32 max )
 {
-	u32	i;
-  
-	i = eps_GetPercentRand();
+  u32 i;
 
-	if( i < 60 )			return	0;		// 60%
-	if( i >= 60 && i < 90 )	return	1;		// 30%
-	if( i >= 90 && i < 95 )	return	2;		//  5%
-	if( i >= 95 && i < 99 )	return	3;		//  4%
-	return	4;								//  1%
+  i = eps_GetPercentRand();
+
+  if( i < 60 )      return  0;    // 60%
+  if( i >= 60 && i < 90 ) return  1;    // 30%
+  if( i >= 90 && i < 95 ) return  2;    //  5%
+  if( i >= 95 && i < 99 ) return  3;    //  4%
+  return  4;                //  1%
 }
 
 //--------------------------------------------------------------
 /**
  * ランダムポケモンセット（釣り）
- * @param	inFishingRod		釣竿
- * @return u8 エンカウントデータのテーブル番号		
+ * @param inFishingRod    釣竿
+ * @return u8 エンカウントデータのテーブル番号
  */
 //--------------------------------------------------------------
 static u32 eps_GetPercentRandFishingPokeTblNo( u32 max )
 {
-	u32	i;
+  u32 i;
 
-	i = eps_GetPercentRand();
-   
-	if		( i < 40 )	  return 0;	// 40%
-	else if ( i < 80 )	return 1;	// 40%
-	else if ( i < 95 )	return 2;	// 15%
-	else if ( i < 99 )	return 3;	// 4%
-	return 4;	// 1%
+  i = eps_GetPercentRand();
+
+  if    ( i < 40 )    return 0; // 40%
+  else if ( i < 80 )  return 1; // 40%
+  else if ( i < 95 )  return 2; // 15%
+  else if ( i < 99 )  return 3; // 4%
+  return 4; // 1%
 }
 
 //--------------------------------------------------------------
 /**
  * ランダムポケモンセット（1/指定数）
- * @return u32 エンカウントデータのテーブル番号		
+ * @return u32 エンカウントデータのテーブル番号
  */
 //--------------------------------------------------------------
 static u32 eps_GetPercentRandNumPokeTblNo( u32 max )
 {
-	return eps_GetPercentRand() % max;
+  return eps_GetPercentRand() % max;
 }
 
