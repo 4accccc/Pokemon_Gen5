@@ -1,20 +1,20 @@
 #event data
-#save date:2009/07/29 16:31:55
+#save date:2009/10/20 21:19:51
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02r0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/29 16:31:55
+#save date:2009/10/20 21:19:51
 2
 #hold event type:
 1
 #hold event number:
-3
+6
 #event number: 0
 #type
 1
 #ID name
-D02R0101_SPORTSM
+D02R0101_SPORTSM_01
 #OBJ CODE Number
 SPORTSM
 #MOVE CODE Number
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_D02R0101_TALKOBJ_SPORTSM
+SCRID_D02R0101_SPORTSM_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -38,12 +38,12 @@ DIR_DOWN
 #Move Limit Z Number
 16
 #position
-920 0 -248
+920 0 -328
 #event number: 1
 #type
 1
 #ID name
-D02R0101_MOUNTAIN
+D02R0101_MOUNTMAN_01
 #OBJ CODE Number
 MOUNTMAN
 #MOVE CODE Number
@@ -53,7 +53,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_D02R0101_TALKOBJ_MOUNTAIN
+SCRID_D02R0101_MOUNTMAN_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -72,7 +72,7 @@ DIR_DOWN
 #type
 1
 #ID name
-D02R0101_ASSISTANTW
+D02R0101_ASSISTANTW_01
 #OBJ CODE Number
 ASSISTANTW
 #MOVE CODE Number
@@ -82,7 +82,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_D02R0101_TALKOBJ_ASSISTANTW
+SCRID_D02R0101_ASSISTANTW_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -97,11 +97,98 @@ DIR_DOWN
 1
 #position
 952 0 -488
+#event number: 3
+#type
+1
+#ID name
+D02R0101_LEADER3_01
+#OBJ CODE Number
+LEADER3
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D02R0101_LEADER3
+#Event Script Name
+SCRID_D02R0101_LEADER3_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+2
+#position
+1064 0 -952
+#event number: 4
+#type
+1
+#ID name
+D02R0101_LEADER2_01
+#OBJ CODE Number
+LEADER2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D02_LEADER2
+#Event Script Name
+SCRID_D02R0101_LEADER2_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+2
+#position
+328 0 -1048
+#event number: 5
+#type
+1
+#ID name
+D02R0101_HAKAIM_01
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D02_HAKAI
+#Event Script Name
+SCRID_D02R0101_HAKAIM_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+328 0 -888
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/29 16:31:55
+#save date:2009/10/20 21:19:51
 2
 #hold event type:
 1
@@ -111,17 +198,32 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/29 16:31:55
+#save date:2009/10/20 21:19:51
 2
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Pos Event Label
+POSID_D02R0101_LEADER_STOP
+#Pos Script Name
+SCRID_POS_D02R0101_STOP
+#Event Trigger Work Name
+WK_SCENE_D02R0101
+#Event Trigger Work Value
+1
+#Pos Event Size X
+6
+#Pos Event Size Z
+1
+#position
+888 0 -184
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/29 16:31:55
+#save date:2009/10/20 21:19:51
 2
 #hold event type:
 1
@@ -139,7 +241,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-1096 0 -984
+1112 0 -968
 #event number: 1
 #Door Event Label
 DOOR_ID_D02R0101_D02_EXIT02
@@ -152,7 +254,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-1096 0 -952
+1112 0 -936
 #event number: 2
 #Door Event Label
 DOOR_ID_D02R0101_D02_EXIT05
@@ -165,7 +267,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-1096 0 -1000
+1112 0 -984
 #event number: 3
 #Door Event Label
 DOOR_ID_D02R0101_D02_EXIT01
@@ -178,7 +280,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-1096 0 -936
+1112 0 -920
 #event number: 4
 #Door Event Label
 DOOR_ID_D02R0101_D02_EXIT03
@@ -191,7 +293,7 @@ EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_MAT
 #position
-1096 0 -968
+1112 0 -952
 #event number: 5
 #Door Event Label
 DOOR_ID_D02R0101_H01P01_EXIT02

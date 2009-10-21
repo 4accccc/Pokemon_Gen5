@@ -18,8 +18,11 @@
 #ifndef ZONE_D02R0101_EVC_H
 #define ZONE_D02R0101_EVC_H
 
-#define D02R0101_SPORTSM                   0
-#define D02R0101_MOUNTAIN                  1
-#define D02R0101_ASSISTANTW                2
+#define D02R0101_SPORTSM_01                0
+#define D02R0101_MOUNTMAN_01               1
+#define D02R0101_ASSISTANTW_01             2
+#define D02R0101_LEADER3_01                3
+#define D02R0101_LEADER2_01                4
+#define D02R0101_HAKAIM_01                 5
 
 #endif //ZONE_D02R0101_EVC_H

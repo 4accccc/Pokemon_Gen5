@@ -15,5 +15,6 @@
 #define C01PC0101_SHOPM                    1
 #define C01PC0101_MAN2_01                  2
 #define C01PC0101_MIDDLEMAN2_01            3
+#define CONNECT_COUNTER_02                 4
 
 #endif //ZONE_C01PC0101_EVC_H
