@@ -585,7 +585,7 @@
 #define FV_C04R0302_SUPPORT                561 /* 0x0231 C04野球場の観客席：サポート */
 #define FV_C02_LEADER2                     562 /* 0x0232 C02フィールド：ジムリーダー（アロエ） */
 #define FV_C02_POSEVENT_01                 563 /* 0x0233 C02フィールド：友達とジムリーダー（アーティ）のバニッシュフラグ */
-		/* not used   564(0x0234) */
+#define FV_C02GYM0202_LEADER2              564 /* 0x0234 C02ジム：ジムリーダー（アロエ） */
 		/* not used   565(0x0235) */
 		/* not used   566(0x0236) */
 		/* not used   567(0x0237) */
