@@ -15,7 +15,7 @@
 #include "event_name_input.h"
 #include "app/name_input.h"
 #include "event_fieldmap_control.h" // for EVENT_FieldSubProc
-#include "system/main.h" // for HEAPID_APP_CONTROL
+#include "system/main.h" // for HEAPID_PROC
 
 
 //=====================================================================================
@@ -152,7 +152,7 @@ GMEVENT * EVENT_NameInput_PartyPoke(
     u32        monsno = PP_Get( pp, ID_PARA_monsno, NULL );
     u32        formno = PP_Get( pp, ID_PARA_form_no, NULL );
     work->nameInParam = NAMEIN_AllocParam( 
-        HEAPID_APP_CONTROL, NAMEIN_POKEMON, monsno, formno, NAMEIN_POKEMON_LENGTH, NULL );
+        HEAPID_PROC, NAMEIN_POKEMON, monsno, formno, NAMEIN_POKEMON_LENGTH, NULL );
     work->pokeParam   = pp;
   }
 
