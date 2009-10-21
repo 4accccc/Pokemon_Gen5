@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-10T16:53:45"/>
+	<create user="masafumi_saitou" host="W00178" date="2009-10-17T19:27:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="38" top="314" right="741" bottom="935" maximized="no" rayout="Vertical2">
+	<dialog left="234" top="249" right="937" bottom="870" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="528"/>
@@ -301,8 +301,8 @@
 　サポートが出現（出現場所未定）</comment>
 		<attribute name="キャラ指定">友達♀
 サポート</attribute>
-		<language name="JPN" width="256">ともだち♀『おーい　[1:00:トレーナー名:0]！</language>
-		<language name="JPN_KANJI" width="256">ともだち♀『おーい　[1:00:トレーナー名:0]！</language>
+		<language name="JPN" width="256">ともだち♀『おーい　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ともだち♀『おーい　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c04_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -393,7 +393,7 @@
 足を　運んでみてくれ！</language>
 	</row>
 
-	<row id="msg_c04_cｌown_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_clown_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">CLOWN
