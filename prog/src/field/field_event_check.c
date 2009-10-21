@@ -103,7 +103,7 @@ typedef struct {
   u16 player_dir;                   ///<自機の向き
   int key_trg;                ///<キー情報（トリガー）
   int key_cont;               ///<キー情報（）
-  const VecFx32 * now_pos;        ///<現在のマップ位置
+  const VecFx32 * now_pos;        ///<現在のプレイヤー位置
   u32 mapattr;                  ///<足元のアトリビュート情報
 
   BOOL talkRequest; ///<話しかけキー操作があったかどうか
@@ -119,6 +119,8 @@ typedef struct {
 //======================================================================
 //======================================================================
 //event
+static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork);
+
 static GMEVENT * checkExit(EV_REQUEST * req,
     FIELDMAP_WORK *fieldWork, const VecFx32 *now_pos );
 static GMEVENT * checkPushExit(EV_REQUEST * req,
@@ -233,6 +235,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     if( event != NULL ){
       return event;
     }
+    event = checkMoveEvent(&req, fieldWork);
   }
 
 
@@ -928,14 +931,10 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
     req->player_dir = MMDL_GetDirDisp( fmmdl );
   }
 
-#if 0
-  req->now_pos = FIELDMAP_GetNowPos( fieldWork );
-#else
   {
     MMDL *mmdl = FIELD_PLAYER_GetMMdl( req->field_player );
     req->now_pos = MMDL_GetVectorPosAddress( mmdl );
   }
-#endif
   
   // アトリビュート取得
   req->mapattr = FIELD_PLAYER_GetMapAttr( req->field_player );
@@ -984,6 +983,19 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
     req->convRequest = FALSE;
   }
     
+}
+
+//======================================================================
+//
+//
+//    イベント起動チェック：一歩移動関連
+//
+//
+//======================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork)
+{
 }
 
 //======================================================================
