@@ -54,7 +54,7 @@ struct _FIELDMAP_CTRL_NOGRID_WORK
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-FIELDMAP_CTRL_NOGRID_WORK* FIELDMAP_CTRL_NOGRID_WORK_Create( FIELDMAP_WORK* p_fieldwork, u32 heapID )
+FIELDMAP_CTRL_NOGRID_WORK* FIELDMAP_CTRL_NOGRID_WORK_Create( FIELDMAP_WORK* p_fieldwork, HEAPID heapID )
 {
   FIELDMAP_CTRL_NOGRID_WORK* p_wk;
   FIELD_PLAYER* p_player;
@@ -118,7 +118,7 @@ void FIELDMAP_CTRL_NOGRID_WORK_Main( FIELDMAP_CTRL_NOGRID_WORK* p_wk )
  *	@return ローカルワーク確保
  */
 //-----------------------------------------------------------------------------
-void* FIELDMAP_CTRL_NOGRID_WORK_AllocLocalWork( FIELDMAP_CTRL_NOGRID_WORK* p_wk, u32 heapID, u32 size )
+void* FIELDMAP_CTRL_NOGRID_WORK_AllocLocalWork( FIELDMAP_CTRL_NOGRID_WORK* p_wk, HEAPID heapID, u32 size )
 {
   GF_ASSERT( p_wk );
   GF_ASSERT( p_wk->p_localwork == NULL );
