@@ -1307,6 +1307,21 @@ static void EggCordinate_finish( POKEMON_PARAM* egg, SODATEYA* sodateya )
     GFL_STR_DeleteBuffer( name );
   } 
 
+  // 孵化歩数
+  {
+    u32 monsno, formno, birth;
+    POKEMON_PERSONAL_DATA* personal;
+
+    monsno   = PP_Get( egg, ID_PARA_monsno, NULL );
+    formno   = PP_Get( egg, ID_PARA_form_no, NULL );
+    personal = POKE_PERSONAL_OpenHandle( monsno, formno, sodateya->heapID );
+    birth    = POKE_PERSONAL_GetParam( personal, POKEPER_ID_egg_birth );
+    POKE_PERSONAL_CloseHandle( personal );
+
+    // タマゴの間は, なつき度を孵化カウンタとして利用する
+    PP_Put( egg, ID_PARA_friend, birth );
+  }
+
   // タマゴフラグ
   PP_Put( egg, ID_PARA_tamago_flag, TRUE );
 }

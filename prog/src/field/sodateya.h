@@ -12,6 +12,27 @@
 
 
 //========================================================================================
+// Å°ä÷êîàÍóó
+//========================================================================================
+/*
+SODATEYA* SODATEYA_Create( HEAPID heap_id, FIELDMAP_WORK* fieldmap, SODATEYA_WORK* work ); 
+void SODATEYA_Delete( SODATEYA* sodateya );
+void SODATEYA_TakePokemon( SODATEYA* sodateya, POKEPARTY* party, int pos );
+void SODATEYA_TakeBackPokemon( SODATEYA* sodateya, int index, POKEPARTY* party );
+void SODATEYA_TakeBackEgg( SODATEYA* sodateya, POKEPARTY* party );
+void SODATEYA_DeleteEgg( SODATEYA* sodateya );
+void SODATEYA_BreedPokemon( SODATEYA* sodateya );
+BOOL SODATEYA_HaveEgg( const SODATEYA* sodateya );
+u8 SODATEYA_GetPokemonNum( const SODATEYA* sodateya );
+u32 SODATEYA_GetPokeLv_Current( const SODATEYA* sodateya, int index );
+u32 SODATEYA_GetPokeLv_GrowUp( const SODATEYA* sodateya, int index );
+u32 SODATEYA_GetCharge( const SODATEYA* sodateya, int index );
+u8 SODATEYA_GetLoveLevel( const SODATEYA* sodateya );
+const POKEMON_PARAM* SODATEYA_GetPokemonParam( const SODATEYA* sodateya, int index );
+*/
+
+
+//========================================================================================
 // Å°ïsäÆëSå^êÈåæ
 //========================================================================================
 typedef struct _SODATEYA SODATEYA;
