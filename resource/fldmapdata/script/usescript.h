@@ -119,7 +119,7 @@
 #include "../flagwork/work_define.h"  //イベントワーク
 
 //サウンドラベル
-#include "../../sound/wb_sound_data.sadl"
+#include "../../../prog/include/sound/wb_sound_data.sadl"
 
 #include "../../personal/monsno_def.h"		//ポケモンナンバー
 #include "../../itemconv/itempocket_def.h"  //どうぐポケットナンバー指定
