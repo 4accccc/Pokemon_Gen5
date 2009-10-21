@@ -253,7 +253,7 @@ EVENT_END
 /*  D02R0101 プラズマ団員♂会話								  */
 /**************************************************************/
 EVENT_START    ev_d02r0101_hakaim_01
-
+_TALK_OBJ_START()
 	//団員：気付く
 	_OBJ_ANIME( D02R0101_HAKAIM_01, anm_hakai_kiduku )
 	_OBJ_ANIME_WAIT()
@@ -272,11 +272,19 @@ EVENT_START    ev_d02r0101_hakaim_01
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 	
+	//自機：団員の方を向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_all_uemiru )
+	_OBJ_ANIME_WAIT()
+	
+	//団員：一歩下がる
+	_OBJ_ANIME( D02R0101_HAKAIM_01, anm_hakai_back )
+	_OBJ_ANIME_WAIT()
+	
 	//まけた　わかった！　これはかえす！
 	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_hakaim1_02 , D02R0101_HAKAIM_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//アーティ：画面左から現れる
+	//【仮】アーティ：画面左から現れる　演出仮
 	_OBJ_POS_CHANGE( D02R0101_LEADER3_01, 28, 0, 71, DIR_DOWN )
 	_OBJ_ANIME( D02R0101_LEADER3_01, anm_leader3_deru )
 	_OBJ_ANIME_WAIT()
@@ -284,6 +292,8 @@ EVENT_START    ev_d02r0101_hakaim_01
 	//ああ　よかった！　なんだか　むしポケモンが　さわぐから
 	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader3_04 , D02R0101_LEADER3_01 )
 	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_all_uemiru )
+	_OBJ_ANIME_WAIT()
 	
 	//自機名！アーティ！　おつかれさん！！
 	_PLAYER_NAME( 0 )
@@ -308,7 +318,7 @@ EVENT_START    ev_d02r0101_hakaim_01
 	_BALLOONWIN_CLOSE()
 	
 	//アーティ：その場歩き
-	_OBJ_ANIME( D02R0101_HAKAIM_01, anm_all_staywalk )
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_all_staywalk )
 	_OBJ_ANIME_WAIT()
 	
 	//ジャマも　なにも……　ひとの　ものを
@@ -319,28 +329,36 @@ EVENT_START    ev_d02r0101_hakaim_01
 	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_hakaim1_04 , D02R0101_HAKAIM_01 )
 	_BALLOONWIN_CLOSE()
 
-	//【仮】団員：画面下に逃げさる
+	//【仮】団員：画面下に逃げさる　演出仮、適当に下に移動するだけです
 	_OBJ_ANIME( D02R0101_HAKAIM_01, anm_hakai_nigeru )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tobu )
+	_OBJ_ANIME( D02R0101_LEADER2_01, anm_leader2_tobu )
 	_OBJ_ANIME_WAIT()
 	
 	//あっ！！
 	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader2_03 , D02R0101_LEADER2_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//アーティ：その場歩き
-	_OBJ_ANIME( D02R0101_HAKAIM_01, anm_all_staywalk )
+	//アーティ：その場歩き、アロエの方を見て
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_all_shitamiru )
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_all_staywalk )
+	_OBJ_ANIME( D02R0101_LEADER2_01, anm_all_uemiru )
 	_OBJ_ANIME_WAIT()
 	
 	//おいかけなくても　いいでしょ　ぬすまれた　ものは　とりかえしたし
 	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader3_06 , D02R0101_LEADER3_01 )
 	_BALLOONWIN_CLOSE()
 
+	//アーティ：自機を見る
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_all_migimiru )
+	_OBJ_ANIME_WAIT()
+
 	//自機名だっけ　ポケモンジムで　キミの　ちょうせんを
 	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader3_07 , D02R0101_LEADER3_01 )
 	_BALLOONWIN_CLOSE()
 
-	//【仮】アーティ：画面外へ
+	//【仮】アーティ：画面外へ　演出仮、適当に下に移動するだけです
 	_OBJ_ANIME( D02R0101_LEADER3_01, anm_all_saru )
 	_OBJ_ANIME_WAIT()
 	
@@ -349,8 +367,8 @@ EVENT_START    ev_d02r0101_hakaim_01
 	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader2_04 , D02R0101_LEADER2_01 )
 	_BALLOONWIN_CLOSE()
 
-	//【仮】アロエ：画面外へ
-	_OBJ_ANIME( D02R0101_LEADER3_01, anm_all_saru )
+	//【仮】アロエ：画面外へ　演出仮、適当に下に移動するだけです
+	_OBJ_ANIME( D02R0101_LEADER2_01, anm_all_saru )
 	_OBJ_ANIME_WAIT()
 
 	//アロエ・アーティのオブジェを消す
@@ -383,6 +401,13 @@ _ANIME_LABEL	anm_hakai_nigeru
 	_ANIME_DATA	AC_WALK_D_4F,10
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_hakai_back
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
 //--------------------------------------------------------------
 //	アーティ・アロエ　画面外からやってくる
 //--------------------------------------------------------------
@@ -398,6 +423,18 @@ _ANIME_LABEL	anm_all_saru
 	_ANIME_DATA	AC_WALK_D_8F,8
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_leader2_tobu
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_JUMP_L_1G_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
 //--------------------------------------------------------------
 //	全員　その場歩き
 //--------------------------------------------------------------
@@ -405,4 +442,34 @@ _ANIME_LABEL	anm_all_staywalk
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_all_uemiru
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_all_shitamiru
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_all_migimiru
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_all_hidarimiru
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	自機　見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_player_tobu
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_JUMP_R_1G_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0

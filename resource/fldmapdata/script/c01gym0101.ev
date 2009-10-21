@@ -136,10 +136,12 @@ EVENT_START		ev_bg_c01gym0101_pokezou
 	
 		//【仮】分岐処理・C02到着していないなら　到着フラグが動いていない！
 		IF FLAG_OFF( SYS_FLAG_ARRIVE_C02 ) THEN
+			_PLAYER_NAME( 0 )
 			_TALKMSG( msg_c01gym0101_statue_02 )
 		
 		//C02到着している場合
 		ELSE
+			_PLAYER_NAME( 0 )
 			_TALKMSG( msg_c01gym0101_statue_03 )
 			
 		ENDIF
