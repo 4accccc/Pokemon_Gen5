@@ -1210,7 +1210,7 @@ static void MMdl_SaveData_LoadMMdl(
 			MMDL_STABIT_EFFSET_SHOAL	 |
 			MMDL_STABIT_REFLECT_SET );
 		
-		if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVEPROC_INIT) == 0 ){
+		if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVEPROC_INIT) ){
 			MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
 		}
 	}
