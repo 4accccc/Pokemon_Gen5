@@ -653,7 +653,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 
   case SEQ_WAIT_ITEM:
     if( BTLV_ITEMSELECT_Wait(wk->viewCore) ){
-      u8 itemID, targetIdx;
+      u16 itemID, targetIdx;
       itemID = BTLV_ITEMSELECT_GetItemID( wk->viewCore );
       targetIdx = BTLV_ITEMSELECT_GetTargetIdx( wk->viewCore );
       if( (itemID != ITEM_DUMMY_DATA) && (targetIdx != BPL_SEL_EXIT) )

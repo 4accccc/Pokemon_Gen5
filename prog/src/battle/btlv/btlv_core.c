@@ -563,6 +563,7 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
     ){
       wk->plistData.item = wk->bagData.ret_item;
       BattlePokeList_TaskAdd( &wk->plistData );
+      BTL_Printf("アイテム選択:%d\n", wk->plistData.item);
       wk->selectItemSeq++;
     }else{
       wk->selectItemSeq = 10;
