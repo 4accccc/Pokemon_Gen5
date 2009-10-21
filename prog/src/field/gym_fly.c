@@ -35,45 +35,10 @@
 
 #define CANNON_ANM_NUM  (2) //大砲1つのアニメの種類（データ依存）
 
-/**
-//砲台グリッド座標
-#define CAN1_GX (15)
-#define CAN1_GY (0)
-#define CAN1_GZ (28)
-#define CAN2_GX (15)
-#define CAN2_GY (0)
-#define CAN2_GZ (9)
-#define CAN3_GX (23)
-#define CAN3_GY (0)
-#define CAN3_GZ (17)
-#define CAN4_GX (20)
-#define CAN4_GY (0)
-#define CAN4_GZ (9)
-#define CAN5_GX (11)
-#define CAN5_GY (0)
-#define CAN5_GZ (13)
-#define CAN6_GX (8)
-#define CAN6_GY (0)
-#define CAN6_GZ (4)
-#define CAN7_GX (28)
-#define CAN7_GY (0)
-#define CAN7_GZ (4)
-#define CAN8_GX (26)
-#define CAN8_GY (0)
-#define CAN8_GZ (22)
-#define CAN9_GX (6)
-#define CAN9_GY (0)
-#define CAN9_GZ (20)
-#define CAN10_GX (2)
-#define CAN10_GY (0)
-#define CAN10_GZ (13)
+#define SHOT_ANM_NUM  (14)
 
-//扉開くフレーム
-#define   CAN_UP_OP_FRM     (15)
-#define   CAN_DOWN_OP_FRM   (15)
-#define   CAN_LEFT_OP_FRM   (30)
-#define   CAN_RIGHT_OP_FRM  (30)
-*/
+#define CAM_SHAKE_VAL   (FX32_ONE*CAM_SHAKE_WIDTH)
+
 //砲台座標
 #define CAN1_X  (CAN1_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
 #define CAN1_Y  (CAN1_GY*FIELD_CONST_GRID_FX32_SIZE)
@@ -115,14 +80,27 @@
 #define CAN10_Y  (CAN10_GY*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
 #define CAN10_Z  (CAN10_GZ*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
 
-/**
-//着地座標
-#define STAND1_GX (15)
-#define STAND1_GY (2)
-#define STAND1_GZ (19)
-*/
 
 #define ANM_BIN_DATA_NONE (0xffffffff)
+
+typedef struct CAM_SHAKE_tag
+{
+  BOOL Valid;
+  u8 Wait;
+  u8 Count;
+  u8 Num;
+  u8 dummy;
+}CAM_SHAKE;
+
+typedef struct CAM_EFF_DAT_tag
+{
+  u16 Pitch;
+  u16 Yaw;
+  u8 RotCostFrame;
+  u8 TraceStartFrame;
+  u8 TraceCostFrame;
+  u8 dummy;
+}CAM_EFF_DAT;
 
 //ジム内部中の一時ワーク
 typedef struct GYM_FLY_TMP_tag
@@ -130,12 +108,16 @@ typedef struct GYM_FLY_TMP_tag
   u8 ShotIdx;
   u8 ShotDir;
   u8 FrameSetStart;
-  u8 dummy;
+  u8 TraceMode;
 
   u8 FramePosDat[FRAME_POS_SIZE+HEADER_SIZE];
   ICA_ANIME* IcaAnmPtr;
   u16 NowIcaAnmFrmIdx;
   u16 MaxIcaAnmFrm;
+  u16 TraceStart;
+  u16 TraceCost;
+
+  CAM_SHAKE CamShake;
 }GYM_FLY_TMP;
 
 //リソースの並び順番
@@ -347,79 +329,98 @@ typedef struct SHOT_DATA_tag
 {
   int ArcID;
   POINT Point;
+  int CamEffIdx;
 }SHOT_DATA;
 
 static const SHOT_DATA ShotData[CANNON_NUM_MAX][4] = {
   //1
   {
-    { NARC_gym_fly_null_01_00_bin, {STAND1_GX,STAND1_GY,STAND1_GZ} },   //上
-    { NARC_gym_fly_null_01_01_bin, {STAND2_GX,STAND2_GY,STAND2_GZ} },   //下
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //右
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //左
+    { NARC_gym_fly_null_01_00_bin, {STAND1_GX,STAND1_GY,STAND1_GZ},0 },   //上
+    { NARC_gym_fly_null_01_01_bin, {STAND2_GX,STAND2_GY,STAND2_GZ},1 },   //下
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //右
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //左
   },
   //2
   {
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //上
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //下
-    { NARC_gym_fly_null_02_00_bin, {STAND3_GX,STAND3_GY,STAND3_GZ} },   //右
-    { NARC_gym_fly_null_02_01_bin, {STAND4_GX,STAND4_GY,STAND4_GZ} },   //左
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //上
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //下
+    { NARC_gym_fly_null_02_00_bin, {STAND3_GX,STAND3_GY,STAND3_GZ},2 },   //右
+    { NARC_gym_fly_null_02_01_bin, {STAND4_GX,STAND4_GY,STAND4_GZ},3 },   //左
   },
   //3
   {
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //上
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //下
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //右
-    { NARC_gym_fly_null_03_00_bin, {STAND5_GX,STAND5_GY,STAND5_GZ} },   //左
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //上
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //下
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //右
+    { NARC_gym_fly_null_03_00_bin, {STAND5_GX,STAND5_GY,STAND5_GZ},4 },   //左
   },
   //4
   {
-    { NARC_gym_fly_null_04_00_bin, {STAND6_GX,STAND6_GY,STAND6_GZ} },   //上
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //下
-    { NARC_gym_fly_null_04_01_bin, {STAND7_GX,STAND7_GY,STAND7_GZ} },   //右
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //左
+    { NARC_gym_fly_null_04_00_bin, {STAND6_GX,STAND6_GY,STAND6_GZ},5 },   //上
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //下
+    { NARC_gym_fly_null_04_01_bin, {STAND7_GX,STAND7_GY,STAND7_GZ},6 },   //右
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //左
   },
   //5
   {
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //上
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //下
-    { NARC_gym_fly_null_05_00_bin, {STAND8_GX,STAND8_GY,STAND8_GZ} },   //右
-    { NARC_gym_fly_null_05_01_bin, {STAND9_GX,STAND9_GY,STAND9_GZ} },   //左
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //上
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //下
+    { NARC_gym_fly_null_05_00_bin, {STAND8_GX,STAND8_GY,STAND8_GZ},7 },   //右
+    { NARC_gym_fly_null_05_01_bin, {STAND9_GX,STAND9_GY,STAND9_GZ},8 },   //左
   },
   //6
   {
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //上
-    { NARC_gym_fly_null_06_00_bin, {STAND10_GX,STAND10_GY,STAND10_GZ} },   //下
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //右
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //左
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //上
+    { NARC_gym_fly_null_06_00_bin, {STAND10_GX,STAND10_GY,STAND10_GZ},9 },   //下
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //右
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //左
   },
   //7
   {
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //上
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //下
-    { NARC_gym_fly_null_07_00_bin, {STAND11_GX,STAND11_GY,STAND11_GZ} },   //右
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //左
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //上
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //下
+    { NARC_gym_fly_null_07_00_bin, {STAND11_GX,STAND11_GY,STAND11_GZ},10 },   //右
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //左
   },
   //8
   {
-    { NARC_gym_fly_null_08_00_bin, {STAND12_GX,STAND12_GY,STAND12_GZ} },   //上
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //下
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //右
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //左
+    { NARC_gym_fly_null_08_00_bin, {STAND12_GX,STAND12_GY,STAND12_GZ},11 },   //上
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //下
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //右
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //左
   },
   //9
   {
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //上
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //下
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //右
-    { NARC_gym_fly_null_09_00_bin, {STAND13_GX,STAND13_GY,STAND13_GZ} },   //左
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //上
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //下
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //右
+    { NARC_gym_fly_null_09_00_bin, {STAND13_GX,STAND13_GY,STAND13_GZ},12 },   //左
   },
   //10
   {
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //上
-    { NARC_gym_fly_null_10_00_bin, {STAND14_GX,STAND14_GY,STAND14_GZ} },   //下
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //右
-    { ANM_BIN_DATA_NONE, {0,0,0} },   //左
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //上
+    { NARC_gym_fly_null_10_00_bin, {STAND14_GX,STAND14_GY,STAND14_GZ},13 },   //下
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //右
+    { ANM_BIN_DATA_NONE, {0,0,0},0 },   //左
   },
+};
+
+//カメラ演出用データ
+static const CAM_EFF_DAT CamEffData[SHOT_ANM_NUM] = {
+  { CAN1_PITCH, CAN1_YAW, CAN1_ROT_COST_FRM, CAM1_TRACE_START_FRM, CAM1_TRACE_COST_FRM, 0 },
+  { CAN2_PITCH, CAN2_YAW, CAN2_ROT_COST_FRM, CAM2_TRACE_START_FRM, CAM2_TRACE_COST_FRM, 0 },
+  { CAN3_PITCH, CAN3_YAW, CAN3_ROT_COST_FRM, CAM3_TRACE_START_FRM, CAM3_TRACE_COST_FRM, 0 },
+  { CAN4_PITCH, CAN4_YAW, CAN4_ROT_COST_FRM, CAM4_TRACE_START_FRM, CAM4_TRACE_COST_FRM, 0 },
+  { CAN5_PITCH, CAN5_YAW, CAN5_ROT_COST_FRM, CAM5_TRACE_START_FRM, CAM5_TRACE_COST_FRM, 0 },
+  { CAN6_PITCH, CAN6_YAW, CAN6_ROT_COST_FRM, CAM5_TRACE_START_FRM, CAM6_TRACE_COST_FRM, 0 },
+  { CAN7_PITCH, CAN7_YAW, CAN7_ROT_COST_FRM, CAM7_TRACE_START_FRM, CAM7_TRACE_COST_FRM, 0 },
+  { CAN8_PITCH, CAN8_YAW, CAN8_ROT_COST_FRM, CAM8_TRACE_START_FRM, CAM8_TRACE_COST_FRM, 0 },
+  { CAN9_PITCH, CAN9_YAW, CAN9_ROT_COST_FRM, CAM9_TRACE_START_FRM, CAM9_TRACE_COST_FRM, 0 },
+  { CAN10_PITCH, CAN10_YAW, CAN10_ROT_COST_FRM, CAM10_TRACE_START_FRM, CAM10_TRACE_COST_FRM, 0 },
+  { CAN11_PITCH, CAN11_YAW, CAN11_ROT_COST_FRM, CAM11_TRACE_START_FRM, CAM11_TRACE_COST_FRM, 0 },
+  { CAN12_PITCH, CAN12_YAW, CAN12_ROT_COST_FRM, CAM12_TRACE_START_FRM, CAM12_TRACE_COST_FRM, 0 },
+  { CAN13_PITCH, CAN13_YAW, CAN13_ROT_COST_FRM, CAM13_TRACE_START_FRM, CAM13_TRACE_COST_FRM, 0 },
+  { CAN14_PITCH, CAN14_YAW, CAN14_ROT_COST_FRM, CAM14_TRACE_START_FRM, CAM14_TRACE_COST_FRM, 0 },
 };
 
 static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work );
@@ -429,6 +430,10 @@ static u8 GetCannonAnmOfs(u8 inDirIdx);
 static u8 GetDirIdxFromDir(u16 inDir);
 static u8 ChgDirIdxByRot(const u8 inDirIdx, const u8 inRotIdx);
 static u8 GetDirIdx(const u16 inDir, const u8 inShotIdx);
+
+static void ShakeCameraRequest(GYM_FLY_TMP *tmp);
+static void ShakeCameraFunc(CAM_SHAKE *shake, FIELD_CAMERA * camera);
+
 
 #ifdef PM_DEBUG
 BOOL test_GYM_FLY_Shot(GAMESYS_WORK *gsys);
@@ -681,18 +686,21 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
   case 1:
     {
       int arc_idx;
+      int shot_idx;
+      int shot_dir_idx;
       {
         //カメラとレースが生きている間は処理を進めない
         if ( FIELD_CAMERA_CheckTrace(camera) ){
-          break;;
+          break;
         }
       }
 
-      OS_Printf("Shot_Idx = %d Shot_Dir = %d\n",tmp->ShotIdx, GetDirIdxFromDir(tmp->ShotDir));
+      shot_idx = tmp->ShotIdx;
+      shot_dir_idx = GetDirIdxFromDir(tmp->ShotDir);
+
+      OS_Printf("Shot_Idx = %d Shot_Dir_Idx = %d\n",shot_idx, shot_dir_idx);
       {
-        u8 dir_idx;
-        dir_idx = GetDirIdxFromDir(tmp->ShotDir);
-        arc_idx = ShotData[tmp->ShotIdx][dir_idx].ArcID;
+        arc_idx = ShotData[tmp->ShotIdx][shot_dir_idx].ArcID;
         if (arc_idx == ANM_BIN_DATA_NONE){
           GF_ASSERT(0);
           return GMEVENT_RES_FINISH;
@@ -705,6 +713,26 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
           tmp->FramePosDat, FRAME_POS_SIZE );
       GF_ASSERT(tmp->IcaAnmPtr != NULL);
       tmp->MaxIcaAnmFrm = ICA_ANIME_GetMaxFrame(tmp->IcaAnmPtr);
+      {
+        u16 cam_eff_idx = ShotData[shot_idx][shot_dir_idx].CamEffIdx;
+        u16 start_frame = CamEffData[ cam_eff_idx ].TraceStartFrame;
+        u16 cost_frame = CamEffData[ cam_eff_idx ].TraceCostFrame;
+        //カメラ演出系の整合性をチェック
+        if ( start_frame+cost_frame >= tmp->MaxIcaAnmFrm)
+        {
+          GF_ASSERT_MSG(0,"カメラ演出の結果、アニメフレームをオーバーします");
+          tmp->TraceStart = tmp->MaxIcaAnmFrm - (cost_frame+1);
+          tmp->TraceCost = cost_frame;
+        }
+        else
+        {
+          tmp->TraceStart = start_frame;
+          tmp->TraceCost = cost_frame;
+        }
+
+        //トレースモード初期化
+        tmp->TraceMode = 0;
+      }
     }
 
     {
@@ -756,13 +784,15 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
         //カメラ倒す
         {
           FLD_CAM_MV_PARAM param;
-          param.Core.AnglePitch = 1368;
-          param.Core.AngleYaw = 0;
+          u8 shot_dir_idx = GetDirIdxFromDir(tmp->ShotDir);
+          u16 cam_eff_idx = ShotData[tmp->ShotIdx][shot_dir_idx].CamEffIdx;
+          param.Core.AnglePitch = CamEffData[cam_eff_idx].Pitch;
+          param.Core.AngleYaw = CamEffData[cam_eff_idx].Yaw;
           param.Chk.Shift = FALSE;
           param.Chk.Angle = TRUE;
           param.Chk.Dist = FALSE;
           param.Chk.Fovy = FALSE;
-          FIELD_CAMERA_SetLinerParam(camera, &param, 4);
+          FIELD_CAMERA_SetLinerParam(camera, &param, CamEffData[cam_eff_idx].RotCostFrame);
         }
         (*seq)++;
       }
@@ -885,18 +915,38 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
 
     obj_idx = tmp->ShotIdx;
 
-    //カメラ処理
+    if(tmp->NowIcaAnmFrmIdx == tmp->TraceStart)
     {
-      if(tmp->NowIcaAnmFrmIdx == 45)
+      if (tmp->NowIcaAnmFrmIdx <= CAN_FIRE_FRM){
+        GF_ASSERT_MSG(0,"大砲がまだ火を吹いていないのに、自機に追いつこうとしている");
+      }
+      if (tmp->NowIcaAnmFrmIdx <= SHOT_APP_FRM){
+        GF_ASSERT_MSG(0,"自機まだ表示されてないのに、自機に追いつこうとしている");
+      }
+      if (tmp->CamShake.Valid){
+        GF_ASSERT_MSG(0,"カメラ振動中に、自機に追いつこうとしている");
+        tmp->CamShake.Valid = FALSE;
+      }
+      //カメラモード変更
+      FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_DIRECT_POS );
+      FIELD_CAMERA_RecvLinerParam(camera, tmp->TraceCost);
+
+      //トレースモード突入
+      tmp->TraceMode = 1;
+    }
+    else if (tmp->NowIcaAnmFrmIdx == CAN_FIRE_FRM)        //大砲が火を吹くフレームの処理
+    {
+      if (!tmp->TraceMode)    //フレーム設定の間違いで、既に自機トレースに突入している場合、処理しない
       {
+        //カメラ振動リクエスト
+        ShakeCameraRequest(tmp);
         //カメラモード変更
-        FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_DIRECT_POS );
-        FIELD_CAMERA_RecvLinerParam(camera, 8);
-        
+        FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_TARGET_POS );
       }
     }
-
-    if (tmp->NowIcaAnmFrmIdx == SHOT_APP_FRM){
+    
+    if (tmp->NowIcaAnmFrmIdx == SHOT_APP_FRM)      //自機を表示するフレームの処理
+    {
       //自機表示
       MMDL * mmdl;
       FIELD_PLAYER *fld_player;
@@ -922,7 +972,10 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
     if ( tmp->NowIcaAnmFrmIdx >= tmp->MaxIcaAnmFrm ){
       tmp->FrameSetStart = 0;
     }
-  }
+
+    //カメラ振動関数
+    ShakeCameraFunc(&tmp->CamShake, camera);
+  }//end if(tmp->FrameSetStart)
 
   return GMEVENT_RES_CONTINUE;
 }
@@ -1005,5 +1058,58 @@ static u8 GetDirIdx(const u16 inDir, const u8 inShotIdx)
   dir_idx = GetDirIdxFromDir(inDir);
   dir_idx = ChgDirIdxByRot(dir_idx, CannonRot[inShotIdx]);
   return dir_idx;
+}
+
+//カメラ振動開始リクエスト
+static void ShakeCameraRequest(GYM_FLY_TMP *tmp)
+{
+  CAM_SHAKE *shake;
+  shake = &tmp->CamShake;
+  shake->Valid = TRUE;
+  shake->Count = 0;
+  shake->Wait = 0;
+  shake->Num = 0;
+  shake->dummy = 0;
+}
+
+//カメラ振動関数
+static void ShakeCameraFunc(CAM_SHAKE *shake, FIELD_CAMERA * camera)
+{
+  if (!shake->Valid){
+    return;
+  }
+  shake->dummy++;
+
+  if (shake->Wait == 0){
+    fx32 ofs;
+    //カメラの位置をオフセット座標分ずらす
+    if(shake->Count%2==0){
+      //すらす
+      ofs = CAM_SHAKE_VAL;
+    }else{
+      //もとの位置
+      ofs = -CAM_SHAKE_VAL;
+      shake->Num++;
+    }
+    shake->Count = (shake->Count+1)%2;
+
+    //カメラ移動
+    {
+      VecFx32 camPos;
+      FIELD_CAMERA_GetCameraPos( camera, &camPos);
+      camPos.y += ofs;
+      FIELD_CAMERA_SetCameraPos( camera, &camPos);
+    }
+    shake->Wait = CAM_SHAKE_WAIT;
+  }else{
+    shake->Wait--;
+  }
+
+  //回数終了
+  if(shake->Num >= CAM_SHAKE_NUM){
+    //振動フラグを落す
+    shake->Valid = FALSE;
+    OS_Printf("shake_time = %d\n",shake->dummy);
+  }
 }
 

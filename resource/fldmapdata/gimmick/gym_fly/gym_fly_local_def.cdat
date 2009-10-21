@@ -1,4 +1,12 @@
-//このファイルはコンバーターから出力されます
+//======================================================================
+/**
+ * @file	gym_fly_local_def.cdat
+ * @brief	数値定義ファイル
+ * @note	このファイルはコンバーターから出力されます
+ *
+ */
+//======================================================================
+
 //大砲のグリッド位置座標
 #define CAN1_GX (15)
 #define CAN1_GY (0)
@@ -94,5 +102,88 @@
 #define CAN_DOWN_CL_FRM (30)	//基準大砲下向きのとき
 #define CAN_LEFT_CL_FRM (45)	//基準大砲左向きのとき
 #define CAN_RIGHT_CL_FRM (45)	//基準大砲右向きのとき
+//大砲が火を吹く
+#define CAN_FIRE_FRM (40)
 //打ち出し時自機表示フレーム(アニメデータ依存)
 #define SHOT_APP_FRM (41)
+//大砲のを見るカメラのピッチ
+#define CAN1_PITCH (1368)
+#define CAN2_PITCH (1368)
+#define CAN3_PITCH (1368)
+#define CAN4_PITCH (1368)
+#define CAN5_PITCH (1368)
+#define CAN6_PITCH (1368)
+#define CAN7_PITCH (1368)
+#define CAN8_PITCH (1368)
+#define CAN9_PITCH (1368)
+#define CAN10_PITCH (1368)
+#define CAN11_PITCH (1368)
+#define CAN12_PITCH (1368)
+#define CAN13_PITCH (1368)
+#define CAN14_PITCH (1368)
+//大砲を見るカメラのヨー
+#define CAN1_YAW (0)
+#define CAN2_YAW (0)
+#define CAN3_YAW (0)
+#define CAN4_YAW (0)
+#define CAN5_YAW (0)
+#define CAN6_YAW (0)
+#define CAN7_YAW (0)
+#define CAN8_YAW (0)
+#define CAN9_YAW (0)
+#define CAN10_YAW (0)
+#define CAN11_YAW (0)
+#define CAN12_YAW (0)
+#define CAN13_YAW (0)
+#define CAN14_YAW (0)
+//カメラ回転にかかるフレーム
+#define CAN1_ROT_COST_FRM (4)
+#define CAN2_ROT_COST_FRM (4)
+#define CAN3_ROT_COST_FRM (4)
+#define CAN4_ROT_COST_FRM (4)
+#define CAN5_ROT_COST_FRM (4)
+#define CAN6_ROT_COST_FRM (4)
+#define CAN7_ROT_COST_FRM (4)
+#define CAN8_ROT_COST_FRM (4)
+#define CAN9_ROT_COST_FRM (4)
+#define CAN10_ROT_COST_FRM (4)
+#define CAN11_ROT_COST_FRM (4)
+#define CAN12_ROT_COST_FRM (4)
+#define CAN13_ROT_COST_FRM (4)
+#define CAN14_ROT_COST_FRM (4)
+//自機飛行アニメに追いつきを開始するフレーム
+#define CAM1_TRACE_START_FRM (50)
+#define CAM2_TRACE_START_FRM (50)
+#define CAM3_TRACE_START_FRM (50)
+#define CAM4_TRACE_START_FRM (50)
+#define CAM5_TRACE_START_FRM (50)
+#define CAM6_TRACE_START_FRM (50)
+#define CAM7_TRACE_START_FRM (50)
+#define CAM8_TRACE_START_FRM (50)
+#define CAM9_TRACE_START_FRM (50)
+#define CAM10_TRACE_START_FRM (50)
+#define CAM11_TRACE_START_FRM (50)
+#define CAM12_TRACE_START_FRM (50)
+#define CAM13_TRACE_START_FRM (50)
+#define CAM14_TRACE_START_FRM (50)
+//カメラが自機に追いつくフレーム数
+#define CAM1_TRACE_COST_FRM (6)
+#define CAM2_TRACE_COST_FRM (6)
+#define CAM3_TRACE_COST_FRM (6)
+#define CAM4_TRACE_COST_FRM (6)
+#define CAM5_TRACE_COST_FRM (6)
+#define CAM6_TRACE_COST_FRM (6)
+#define CAM7_TRACE_COST_FRM (6)
+#define CAM8_TRACE_COST_FRM (6)
+#define CAM9_TRACE_COST_FRM (6)
+#define CAM10_TRACE_COST_FRM (6)
+#define CAM11_TRACE_COST_FRM (6)
+#define CAM12_TRACE_COST_FRM (6)
+#define CAM13_TRACE_COST_FRM (6)
+#define CAM14_TRACE_COST_FRM (6)
+//カメラ振動数
+#define CAM_SHAKE_NUM (2)
+//カメラ振幅
+#define CAM_SHAKE_WIDTH (8)
+//カメラ振動間隔
+#define CAM_SHAKE_WAIT (1)
