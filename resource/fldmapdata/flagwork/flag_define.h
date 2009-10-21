@@ -582,9 +582,9 @@
 #define FV_D05_RIVAL_01                    558 /* 0x022e D05：ライバル */
 #define FV_D05_WORKMAN_01                  559 /* 0x022f D05：workman */
 #define FV_C05_BUSINESSMAN_01              560 /* 0x0230 C05：ジム前ストッパー */
-#define FV_C04R0302_SUPPORT                561 /* 0x0231 Ｃ04野球場の観客席：サポート */
-		/* not used   562(0x0232) */
-		/* not used   563(0x0233) */
+#define FV_C04R0302_SUPPORT                561 /* 0x0231 C04野球場の観客席：サポート */
+#define FV_C02_LEADER2                     562 /* 0x0232 C02フィールド：ジムリーダー（アロエ） */
+#define FV_C02_POSEVENT_01                 563 /* 0x0233 C02フィールド：友達とジムリーダー（アーティ）のバニッシュフラグ */
 		/* not used   564(0x0234) */
 		/* not used   565(0x0235) */
 		/* not used   566(0x0236) */
