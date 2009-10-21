@@ -42,7 +42,7 @@
 		clr_b="8"
 		pos_x="0"
 		pos_y="-3350"
-		pos_z="0"
+		pos_z="-914"
 		init_vel_pos="1218"
 		init_vel_axis="327"
 		base_scl="5324"
@@ -57,7 +57,7 @@
 		offset_x="0"
 		offset_y="0"
 		gen_intvl="1"
-		init_vel_r="51"
+		init_vel_r="0"
 		air_resist="120"
 		base_scl_r="51"
 		base_alp="31"
@@ -101,8 +101,8 @@
 		alp_e="0"
 		flick="0"
 		loop="0"
-		in="36"
-		out="115"
+		in="0"
+		out="128"
 	/>
 	<grvt
 		mag_x="0"
