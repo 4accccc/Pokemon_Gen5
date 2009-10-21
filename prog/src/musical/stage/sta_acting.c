@@ -202,8 +202,8 @@ static void STA_ACT_TermItemUseEffect( ACTING_WORK *work );
 
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_D,       // メイン2DエンジンのBG
-  GX_VRAM_BGEXTPLTT_23_G,     // メイン2DエンジンのBG拡張パレット
-  GX_VRAM_SUB_BG_32_H,     // サブ2DエンジンのBG
+  GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
+  GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
   GX_VRAM_OBJ_16_F,       // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
@@ -216,13 +216,14 @@ static const GFL_DISP_VRAM vramBank = {
 };
 //  A テクスチャ
 //  B テクスチャ
-//  C MainBg
-//  D SubObj
+//  C SubBg
+//  D MainBgj
 //  E テクスチャパレット
 //  F MainObj
-//  G MainBgExPlt
-//  H SubBG
-//  I SubBG
+//  G None
+//  H None
+//  I SubObj
+extern BOOL	GFL_MCS_Resident_SendHeapStatus(void);
 
 //--------------------------------------------------------------
 //  
@@ -311,7 +312,8 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   GX_SetMasterBrightness(-16);  
   GXS_SetMasterBrightness(-16);
   G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE , GX_BLEND_PLANEMASK_NONE , 31 , 31 );
-  
+  GX_SetVisibleWnd( GX_WNDMASK_NONE ); 
+
   INFOWIN_Exit();
 
   STA_ACT_TermTransEffect( work );
@@ -636,16 +638,16 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
     };
     // BG2 MAIN (幕
     static const GFL_BG_BGCNT_HEADER header_main2 = {
-      0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
-      GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x5000, GX_BG_CHARBASE_0x00000,0x4000,
+      0, 0, 0x2000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x5000, GX_BG_CHARBASE_0x18000,0x8000,
       GX_BG_EXTPLTT_01, 1, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG3 MAIN (背景 256*16色
     static const GFL_BG_BGCNT_HEADER header_main3 = {
       0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x10000,0x08000,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x10000,0x08000,
       GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     
@@ -653,30 +655,30 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
     //SUB bg 32K
     // BG1 SUB (背景
     static const GFL_BG_BGCNT_HEADER header_sub1 = {
-      0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
-      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,0x4000,
+      0, 0, 0x1000, 0, // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x08000,0x8000,
       GX_BG_EXTPLTT_01, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 SUB (観客の首
     static const GFL_BG_BGCNT_HEADER header_sub2 = {
-      0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
-      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000,0x0000,
+      0, 0, 0x1000, 0, // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x10000,0x8000,
       GX_BG_EXTPLTT_01, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG0 SUB (観客の顔
     static const GFL_BG_BGCNT_HEADER header_sub0 = {
-      0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
-      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000,0x0000,
+      0, 0, 0x1000, 0, // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x5000, GX_BG_CHARBASE_0x18000,0x8000,
       GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG3 SUB (Info
     static const GFL_BG_BGCNT_HEADER header_sub3 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x04000,0x1000,
+      GX_BG_SCRBASE_0x4800, GX_BG_CHARBASE_0x00000,0x1000,
       GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
@@ -767,7 +769,7 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
   }
   //ライト用のアルファ設定
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3 , GX_BLEND_PLANEMASK_BG0 , 0 , 12 );
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3 , GX_BLEND_PLANEMASK_BG0 , 0 , 10 );
 
   GX_SetVisibleWnd( GX_WNDMASK_OW );
   G2_SetWndOBJInsidePlane( GX_WND_PLANEMASK_BG0 | 
@@ -802,14 +804,22 @@ static void STA_ACT_SetupBg( ACTING_WORK *work )
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_maku_NSCR , 
                     ACT_FRAME_MAIN_CURTAIN ,  0 , 0, FALSE , work->heapId );
 
+  //下画面
   GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_stage_gra_sub_bg_NCLR , 
                     PALTYPE_SUB_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_sub_bg_NCGR ,
+  //背景
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_sub_back_NCGR ,
                     ACT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_sub_back_NSCR , 
                     ACT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_bg_audience_NSCR , 
+  //首
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_sub_audi_neck_NCGR ,
+                    ACT_FRAME_SUB_AUDI_NECK , 0 , 0, FALSE , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_sub_audi_neck_NSCR , 
                     ACT_FRAME_SUB_AUDI_NECK ,  0 , 0, FALSE , work->heapId );
+  //顔
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_sub_audi_face_NCGR ,
+                    ACT_FRAME_SUB_AUDI_FACE , 0 , 0, FALSE , work->heapId );
 
   GFL_ARC_CloseDataHandle(arcHandle);
 
@@ -1041,6 +1051,7 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
     STA_BG_SetScrollOffset( work->bgSys , work->scrollOffset );
     STA_POKE_System_SetScrollOffset( work->pokeSys , work->scrollOffset ); 
     STA_OBJ_System_SetScrollOffset( work->objSys , work->scrollOffset ); 
+    STA_SUDI_SetScrollOffset( work->audiSys , work->scrollOffset ); 
     /*
     //GFL_BG_SetScroll( ACT_FRAME_MAIN_MASK , GFL_BG_SCROLL_X_SET , work->scrollOffset );
     */

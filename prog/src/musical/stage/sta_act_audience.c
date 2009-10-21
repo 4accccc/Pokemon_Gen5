@@ -27,7 +27,7 @@
 //======================================================================
 #pragma mark [> define
 
-#define STA_AUDI_NUM_X (8)
+#define STA_AUDI_NUM_X (12)
 #define STA_AUDI_NUM_Y (5)
 #define STA_AUDI_NUM   (STA_AUDI_NUM_X*STA_AUDI_NUM_Y)
 
@@ -275,7 +275,7 @@ static void STA_AUDI_InitCell( STA_AUDI_SYS *work , STAGE_INIT_WORK *initWork )
       BOOL isFlip = FALSE;
       const u8 i = x + y*STA_AUDI_NUM_X;
 
-      work->audience[i].posX = x;
+      work->audience[i].posX = x  + 2;
       work->audience[i].posY = y;
       work->audience[i].type = audiType[i];
       work->audience[i].delay = STA_AUDI_LOOK_DELAY;
@@ -358,8 +358,10 @@ static void STA_AUDI_UpdateAudienceFunc( STA_AUDI_SYS *work , STA_AUDI_WORK *aud
       const u16 stgOfs = STA_ACT_GetStageScroll( work->actWork );
       VecFx32 pokePos;
       s16 posOffset;
+      //位置を384から512へ変換
+      const u16 audiPos = (audiWork->posX*32 - 64)*4/3;
       STA_POKE_GetPosition( pokeSys , pokeWork , &pokePos );
-      posOffset = (FX_FX32_TO_F32( pokePos.x )-stgOfs) - (audiWork->posX*32+16);
+      posOffset = (FX_FX32_TO_F32( pokePos.x )) - (audiPos);
       
       if( posOffset < -STA_AUDI_BIG_ANGLE_OFFSET )
       {
@@ -431,9 +433,16 @@ static void STA_AUDI_SetAudienceDir( STA_AUDI_SYS *work , STA_AUDI_WORK *audiWor
                          audiWork->posY*4+iy + STA_AUDI_TOP ,
                          1 , 1 , 0 );
       
+      GFL_BG_FillScreen( ACT_FRAME_SUB_AUDI_NECK , 
+                         topCharNo+ix+(0x20*iy) , 
+                         scrX ,
+                         audiWork->posY*4+iy + STA_AUDI_TOP + 3,
+                         1 , 1 , 0 );
+      
     }
   }
   GFL_BG_LoadScreenV_Req( ACT_FRAME_SUB_AUDI_FACE );
+  GFL_BG_LoadScreenV_Req( ACT_FRAME_SUB_AUDI_NECK );
 }
 
 //観客状態をチェック
@@ -484,3 +493,14 @@ void	STA_AUDI_SetAttentionPoke( STA_AUDI_SYS *work , const u8 trgPoke , const BO
   work->isUpdateAttention = TRUE;
 }
 
+//スクロールの設定
+void	STA_SUDI_SetScrollOffset( STA_AUDI_SYS *work , const u16 scrOfs )
+{
+  //下画面は3/4しか使わないので
+  //0～256の値を64～192に変換する
+  const u16 subBgOfs = scrOfs*128/256 + 64;
+  GFL_BG_SetScroll( ACT_FRAME_SUB_AUDI_FACE , GFL_BG_SCROLL_X_SET , subBgOfs );
+  GFL_BG_SetScroll( ACT_FRAME_SUB_AUDI_NECK , GFL_BG_SCROLL_X_SET , subBgOfs );
+  GFL_BG_SetScroll( ACT_FRAME_SUB_BG , GFL_BG_SCROLL_X_SET , subBgOfs );
+  
+}

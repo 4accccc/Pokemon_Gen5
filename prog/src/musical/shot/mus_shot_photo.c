@@ -302,8 +302,8 @@ static void MUS_SHOT_PHOTO_InitGraphic( MUS_SHOT_PHOTO_WORK *work )
     };
     // BG2 MAIN (–‹
     static const GFL_BG_BGCNT_HEADER header_main2 = {
-      0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
-      GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+      0, 0, 0x2000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x5000, GX_BG_CHARBASE_0x00000,0x4000,
       GX_BG_EXTPLTT_01, 1, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
