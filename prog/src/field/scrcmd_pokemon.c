@@ -19,6 +19,7 @@
 
 #include "script.h"
 #include "script_def.h"
+#include "script_local.h"
 #include "scrcmd.h"
 #include "scrcmd_work.h"
 
@@ -30,6 +31,8 @@
 #include "poke_tool/status_rcv.h" //PokeParty_RecoverAll
 
 #include "savedata/box_savedata.h"
+
+#include "event_name_input.h" // EVENT_PartyPokeNameInput
 
 //======================================================================
 //  define
@@ -631,5 +634,13 @@ extern VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 extern VMCMD_RESULT EvCmdPartyPokeNameInput( VMHANDLE *core, void *wk )
 {
-  return VMCMD_RESULT_CONTINUE;
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  u16*        ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  u16          index = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+
+  // イベントを呼び出す
+  SCRIPT_CallEvent( scw, EVENT_NameInput_PartyPoke(gsys, ret_wk, index) );
+  return VMCMD_RESULT_SUSPEND;
 }

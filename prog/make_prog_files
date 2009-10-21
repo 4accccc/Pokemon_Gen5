@@ -204,7 +204,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_skill.c \
         field/scrcmd_network.c \
 				system/shortcut_data.c \
-        field/scrcmd_camera.c
+        field/scrcmd_camera.c 
 
 
 #================================================
@@ -436,7 +436,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_ripple.c \
         field/fldeff_splash.c \
         field/field_gimmick_h03.c \
-        field/sound_obj.c
+        field/sound_obj.c \
+        field/event_name_input.c
 
 
 # フィールド天気
