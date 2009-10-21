@@ -24,6 +24,9 @@ _EVENT_DATA ev_fld_item_5
 _EVENT_DATA ev_fld_item_6
 _EVENT_DATA ev_fld_item_7
 _EVENT_DATA ev_fld_item_8
+_EVENT_DATA ev_fld_item_9
+_EVENT_DATA ev_fld_item_10
+_EVENT_DATA ev_fld_item_11
 _EVENT_DATA ev_fld_item2
 _EVENT_DATA_END
 
@@ -87,6 +90,27 @@ EVENT_END
 // MAP=d01 X=408 Y=120 ITEM=キズぐすり FLAG=8
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_8
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r05 X=408 Y=120 ITEM=キズぐすり FLAG=9
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_9
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r05 X=408 Y=120 ITEM=キズぐすり FLAG=10
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_10
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r05 X=408 Y=120 ITEM=キズぐすり FLAG=11
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_11
   _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
 EVENT_END
 
