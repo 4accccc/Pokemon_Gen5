@@ -5,6 +5,6 @@
 #define _C05GYM0101_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C05GYM0101 (1)
+#define SCRID_C05GYM0101_LEADER (1)
 
 #endif //_C05GYM0101_DEF_H_

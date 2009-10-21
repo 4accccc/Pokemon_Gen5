@@ -30,6 +30,7 @@ _EVENT_DATA    ev_pos_c05_gymleader_01
 _EVENT_DATA    ev_c05_workman_02
 _EVENT_DATA    ev_pos_c05_gymleader_02
 _EVENT_DATA    ev_pos_c05_workman_03
+_EVENT_DATA    ev_c05_businessman_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -74,7 +75,14 @@ EVENT_START   ev_pos_c05_gymleader_01
 EVENT_END
 
 /**************************************************************/
-/*ストッパー：ストッパー：ジムバッジ取得まで表示（話しかけ用） */
+/*ストッパー：ゲーヂスイベント終了まで表示                     */
+/**************************************************************/
+EVENT_START   ev_c05_businessman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_businessman_01)
+EVENT_END
+
+/**************************************************************/
+/*ストッパー：ジムバッジ取得まで表示（話しかけ用） */
 /**************************************************************/
 EVENT_START   ev_c05_workman_02
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_workman2_01)
@@ -86,10 +94,13 @@ EVENT_END
 EVENT_START   ev_pos_c05_workman_03
 	_TALK_OBJ_START()
 	_BALLOONWIN_OBJMSG_OPEN(msg_c05_workman2_01,C05_WORKMAN_02)
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_c05_player_01)
+	_OBJ_ANIME_WAIT()
 EVENT_END
 
 /**************************************************************/
-/*POSイベント：ゲーヂスとジムリーダー会話                     */
+/*【位置仮】POSイベント：ゲーヂスとジムリーダー会話            */
 /**************************************************************/
 EVENT_START   ev_pos_c05_gymleader_02
 
@@ -156,6 +167,10 @@ EVENT_START   ev_pos_c05_gymleader_02
 	
 	//***フラグ操作：C05の全てのイベントを起動しなくする***
 	$WK_SCENE_C05 = 3
+	
+	//ジム前ストッパー削除
+	_OBJ_DEL(C05_BUSINESSMAN_01)
+	_FLAG_SET(FV_C05_BUSINESSMAN_01)
 	
 	//======================================//
 
@@ -224,7 +239,7 @@ _ANIME_LABEL	anm_c05_workman_01
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c05_rival_01
 	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -255,4 +270,12 @@ _ANIME_LABEL	anm_c05_gymleader_01
 _ANIME_LABEL	anm_c05_rival_02
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C05：ジムバッジ取得まで主人公戻される
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c05_player_01
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0

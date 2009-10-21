@@ -1,15 +1,15 @@
 #event data
-#save date:2009/10/20 15:52:14
+#save date:2009/10/21 12:53:25
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c05.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/20 15:52:14
+#save date:2009/10/21 12:53:25
 2
 #hold event type:
 1
 #hold event number:
-16
+17
 #event number: 0
 #type
 1
@@ -386,7 +386,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-184 0 -200
+-184 0 -88
 #event number: 13
 #type
 1
@@ -474,11 +474,40 @@ DIR_LEFT
 0
 #position
 392 0 -520
+#event number: 16
+#type
+1
+#ID name
+C05_BUSINESSMAN_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C05_BUSINESSMAN_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+360 32 -152
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/20 15:52:14
+#save date:2009/10/21 12:53:25
 2
 #hold event type:
 1
@@ -488,12 +517,12 @@ DIR_LEFT
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/20 15:52:14
+#save date:2009/10/21 12:53:25
 2
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #Pos Event Label
 POSID_C05_GYMLEADER_02
@@ -524,11 +553,26 @@ WK_SCENE_C05
 3
 #position
 408 0 -504
+#event number: 2
+#Pos Event Label
+POSID_C05_WORKMAN_03
+#Pos Script Name
+SCRID_POS_C05_WORKMAN_03
+#Event Trigger Work Name
+WK_SCENE_C05_TOBRIDGE
+#Event Trigger Work Value
+0
+#Pos Event Size X
+1
+#Pos Event Size Z
+5
+#position
+-200 0 -72
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/20 15:52:14
+#save date:2009/10/21 12:53:25
 2
 #hold event type:
 1
