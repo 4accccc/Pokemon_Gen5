@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d02.h"
-  //.include  "d02.h"
+  .include  "d02.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,12 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d02_talkobj_girl1
+_EVENT_DATA		ev_d02_girl2_01
+_EVENT_DATA		ev_d02_hakaim1_01
+_EVENT_DATA		ev_d02_hakaim2_01
+_EVENT_DATA		ev_d02_hakaiw_01
+_EVENT_DATA		ev_d02_leader3_01
+_EVENT_DATA		ev_pos_d02_stop
 _EVENT_DATA_END
 
 
@@ -32,10 +37,84 @@ _EVENT_DATA_END
 /**************************************************************/
 /*  D02 GIRL1の会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START    ev_d02_talkobj_girl1
-  _TALK_OBJ_START()
-	_BALLOONWIN_TALKOBJ_OPEN( msg_d02_girl1_01 )
-	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+EVENT_START    ev_d02_girl2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02_girl1_01 )
 EVENT_END
 
+/**************************************************************/
+/*  D02 HAKAIM1の会話用イベントスクリプト                     */
+/**************************************************************/
+EVENT_START    ev_d02_hakaim1_01
+
+	//【仮】ベーシックバッジゲット時にオブジェ消えます。
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02_hakaim1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  D02 HAKAIM1の会話用イベントスクリプト                     */
+/**************************************************************/
+EVENT_START    ev_d02_hakaim2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02_hakaim2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  D02 HAKAIM1の会話用イベントスクリプト                     */
+/**************************************************************/
+EVENT_START    ev_d02_hakaiw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02_hakaiw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  D02 LEADER3の会話用イベントスクリプト                     */
+/**************************************************************/
+EVENT_START    ev_d02_leader3_01
+
+EVENT_END
+
+/**************************************************************/
+/*  D02 LEADER3の会話用イベントスクリプト                     */
+/**************************************************************/
+EVENT_START    ev_pos_d02_stop
+
+	//アーティ：自機を見る
+	_OBJ_ANIME( D02_LEADER3_01, anm_leader3_miru )
+	_OBJ_ANIME_WAIT()
+
+	//このさきが　ヤグルマのもり　だよ
+	_BALLOONWIN_OBJMSG_OPEN( msg_d02_leader3_01 , D02_LEADER3_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//アーティ：森のほうへ行く
+	_OBJ_ANIME( D02_LEADER3_01, anm_leader3_saru )
+	_OBJ_ANIME_WAIT()
+	
+	//オブジェクト消す
+	_OBJ_DEL( D02_LEADER3_01 )
+
+	//============フラグワーク操作=============//
+
+	//アーティ、バニッシュフラグセット
+	_FLAG_SET( FV_D02R0101_LEADER2 )
+
+	//アーティストッパーイベント終了
+	$WK_SCENE_D02 = 1
+
+	//========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	ジムリーダーアーティ　自機の方を見る・去る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_leader3_miru
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader3_saru
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	ACMD_END,0
+	
