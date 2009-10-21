@@ -3,18 +3,18 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2009-10-13T15:08:03" source="cut_get1.mb"/>
+	<create user="unno" host="W00199" date="2009-10-20T10:48:05" source="cut_get1.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2009-10-13T15:08:03" source="cut_get1.mb"/>
+<original_create user="unno" host="W00199" date="2009-10-20T10:48:05" source="cut_get1.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
-	pos_scale="3"
+	pos_scale="1"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="1" xyz="-3.199951 -3.199951 0.000000" whd="6.399902 6.399902 0.000000"/>
+<box_test pos_scale="1" xyz="-1.487061 -1.487061 -6.000000" whd="2.973877 2.973877 0.000000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="cut_get1_item"
@@ -307,10 +307,10 @@
 	<material index="0" name="lambert3"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="31"
+		alpha="0"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="37"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -338,9 +338,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		volume_min="-7.434814 -7.434814 0.000000"
+		volume_max="7.434814 7.434814 0.000000"
+		volume_r="10.514404"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -351,13 +351,13 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 64.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_s xyz="-4.000000 -4.000000 0.000000"/>
+					<pos_xyz xyz="-7.434814 -7.434814 0.000000"/>
 					<tex st="64.000000 64.000000"/>
-					<pos_xy xy="4.000000 -4.000000"/>
+					<pos_xy xy="7.434814 -7.434814"/>
 					<tex st="64.000000 0.000000"/>
-					<pos_xy xy="4.000000 4.000000"/>
+					<pos_xy xy="7.434814 7.434814"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-4.000000 4.000000"/>
+					<pos_xy xy="-7.434814 7.434814"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -374,14 +374,14 @@
 		billboard="on"
 		scale="0.199951 0.199951 0.199951"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 -12.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		volume_min="-7.434814 -7.434814 0.000000"
+		volume_max="7.434814 7.434814 0.000000"
+		volume_r="10.514404"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
