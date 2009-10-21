@@ -209,7 +209,7 @@ static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
   GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
-  GX_VRAM_TEX_012_ABC,        // テクスチャイメージスロット
+  GX_VRAM_TEX_01_AB,        // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_0123_E,     // テクスチャパレットスロット
   GX_OBJVRAMMODE_CHAR_1D_32K,
   GX_OBJVRAMMODE_CHAR_1D_32K
@@ -353,7 +353,7 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   GFL_BG_FreeBGControl( ACT_FRAME_MAIN_3D );
   GFL_BG_FreeBGControl( ACT_FRAME_MAIN_FONT );
   GFL_BG_FreeBGControl( ACT_FRAME_MAIN_CURTAIN );
-  GFL_BG_FreeBGControl( ACT_FRAME_MAIN_BG );
+  GFL_BG_FreeBGControl( ACT_FRAME_MAIN_MASK );
   GFL_BG_FreeBGControl( ACT_FRAME_SUB_BG );
   GFL_BG_FreeBGControl( ACT_FRAME_SUB_INFO );
   GFL_BMPWIN_Exit();
@@ -624,7 +624,7 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
   //Vram割り当ての設定
   {
     static const GFL_BG_SYS_HEADER sys_data = {
-        GX_DISPMODE_GRAPHICS, GX_BGMODE_3, GX_BGMODE_0, GX_BG0_AS_3D,
+        GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
     };
     
     // BG1 MAIN (文字
@@ -643,10 +643,10 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
     };
     // BG3 MAIN (背景 256*16色
     static const GFL_BG_BGCNT_HEADER header_main3 = {
-      0, 0, 0x2000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
-      GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_256,
-      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x10000,0x10000,
-      GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x10000,0x08000,
+      GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     
     
@@ -683,7 +683,7 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
     GFL_BG_SetBGMode( &sys_data );
     STA_ACT_SetupBgFunc( &header_main1, ACT_FRAME_MAIN_FONT , GFL_BG_MODE_TEXT);
     STA_ACT_SetupBgFunc( &header_main2, ACT_FRAME_MAIN_CURTAIN , GFL_BG_MODE_TEXT);
-    STA_ACT_SetupBgFunc( &header_main3, ACT_FRAME_MAIN_BG , GFL_BG_MODE_256X16);
+    STA_ACT_SetupBgFunc( &header_main3, ACT_FRAME_MAIN_MASK , GFL_BG_MODE_TEXT);
     STA_ACT_SetupBgFunc( &header_sub1 , ACT_FRAME_SUB_BG , GFL_BG_MODE_TEXT);
     STA_ACT_SetupBgFunc( &header_sub2 , ACT_FRAME_SUB_AUDI_NECK , GFL_BG_MODE_TEXT);
     STA_ACT_SetupBgFunc( &header_sub0 , ACT_FRAME_SUB_AUDI_FACE , GFL_BG_MODE_TEXT);
@@ -701,7 +701,7 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
       { GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
     GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT80K,
             0, work->heapId, NULL );
-    GFL_BG_SetBGControl3D( 2 ); //NNS_g3dInitの中で表示優先順位変わる・・・
+    GFL_BG_SetBGControl3D( 3 ); //NNS_g3dInitの中で表示優先順位変わる・・・
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
 #if 0 //透視射影カメラ
     work->camera =  GFL_G3D_CAMERA_Create( GFL_G3D_PRJPERS, 
@@ -767,7 +767,18 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
   }
   //ライト用のアルファ設定
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_OBJ , GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG3 , 4 , 31 );
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3 , GX_BLEND_PLANEMASK_BG0 , 0 , 12 );
+
+  GX_SetVisibleWnd( GX_WNDMASK_OW );
+  G2_SetWndOBJInsidePlane( GX_WND_PLANEMASK_BG0 | 
+                           GX_WND_PLANEMASK_BG1 | 
+                           GX_WND_PLANEMASK_BG2 | 
+                           GX_WND_PLANEMASK_OBJ , TRUE );
+  G2_SetWndOutsidePlane(   GX_WND_PLANEMASK_BG0 | 
+                           GX_WND_PLANEMASK_BG1 | 
+                           GX_WND_PLANEMASK_BG2 | 
+                           GX_WND_PLANEMASK_BG3 | 
+                           GX_WND_PLANEMASK_OBJ , TRUE );
 }
 
 //--------------------------------------------------------------
@@ -776,16 +787,16 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
 static void STA_ACT_SetupBg( ACTING_WORK *work )
 {
   ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_STAGE_GRA , work->heapId );
-/*
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_stage_gra_stage_bg01_NCLR , 
-                    PALTYPE_MAIN_BG_EX , 0x6000 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_stage_bg01_NCGR ,
-                    ACT_FRAME_MAIN_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_stage_bg01_NSCR , 
-                    ACT_FRAME_MAIN_BG ,  0 , 0, FALSE , work->heapId );
-*/
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_stage_gra_maku_NCLR , 
-                    PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
+
+  GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle , NARC_stage_gra_dark_mask_NCLR , 
+                    PALTYPE_MAIN_BG , ACT_PLT_BG_MAIN_MASK*32 , ACT_PLT_BG_MAIN_MASK*32 , 32 , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_dark_mask_NCGR ,
+                    ACT_FRAME_MAIN_MASK , 0 , 0, FALSE , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_dark_mask_NSCR , 
+                    ACT_FRAME_MAIN_MASK ,  0 , 0, FALSE , work->heapId );
+
+  GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle , NARC_stage_gra_maku_NCLR , 
+                    PALTYPE_MAIN_BG , ACT_PLT_BG_MAIN_MAKU*32 , ACT_PLT_BG_MAIN_MAKU*32 , 32 , work->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_maku_NCGR ,
                     ACT_FRAME_MAIN_CURTAIN , 0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_maku_NSCR , 
@@ -802,7 +813,7 @@ static void STA_ACT_SetupBg( ACTING_WORK *work )
 
   GFL_ARC_CloseDataHandle(arcHandle);
 
-  GFL_BG_LoadScreenReq(ACT_FRAME_MAIN_BG);
+  GFL_BG_LoadScreenReq(ACT_FRAME_MAIN_MASK);
   GFL_BG_LoadScreenReq(ACT_FRAME_SUB_BG);
   
   work->bgSys = STA_BG_InitSystem( work->heapId , work );
@@ -816,11 +827,11 @@ void  STA_ACT_LoadBg( ACTING_WORK *work , const u8 bgNo )
   GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_stage_gra_stage_bg00_NCLR + bgNo, 
                     PALTYPE_MAIN_BG_EX , 0x6000 , 0 , work->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_stage_bg00_NCGR  + bgNo,
-                    ACT_FRAME_MAIN_BG , 0 , 0, FALSE , work->heapId );
+                    ACT_FRAME_MAIN_MASK , 0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_stage_bg00_NSCR  + bgNo, 
-                    ACT_FRAME_MAIN_BG ,  0 , 0, FALSE , work->heapId );
+                    ACT_FRAME_MAIN_MASK ,  0 , 0, FALSE , work->heapId );
   GFL_ARC_CloseDataHandle(arcHandle);
-  GFL_BG_LoadScreenReq(ACT_FRAME_MAIN_BG);
+  GFL_BG_LoadScreenReq(ACT_FRAME_MAIN_MASK);
 */
 
   STA_BG_CreateBg( work->bgSys , bgNo );
@@ -848,7 +859,7 @@ static void STA_ACT_SetupPokemon( ACTING_WORK *work )
   const fx32 XBase = FX32_CONST(512.0f/(MUSICAL_POKE_MAX+1));
   
   work->drawSys = MUS_POKE_DRAW_InitSystem( work->heapId );
-  MUS_POKE_DRAW_SetTexAddres( work->drawSys , 0x40000 );
+  MUS_POKE_DRAW_SetTexAddres( work->drawSys , 0x20000 );
   work->itemDrawSys = MUS_ITEM_DRAW_InitSystem( work->bbdSys , MUSICAL_POKE_MAX*MUS_POKE_EQUIP_MAX, work->heapId );
   
   work->pokeSys = STA_POKE_InitSystem( work->heapId , work , work->drawSys , work->itemDrawSys , work->bbdSys );
@@ -1031,7 +1042,7 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
     STA_POKE_System_SetScrollOffset( work->pokeSys , work->scrollOffset ); 
     STA_OBJ_System_SetScrollOffset( work->objSys , work->scrollOffset ); 
     /*
-    //GFL_BG_SetScroll( ACT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , work->scrollOffset );
+    //GFL_BG_SetScroll( ACT_FRAME_MAIN_MASK , GFL_BG_SCROLL_X_SET , work->scrollOffset );
     */
   }
   
