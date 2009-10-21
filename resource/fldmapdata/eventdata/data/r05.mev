@@ -1,15 +1,15 @@
 #event data
-#save date:2009/10/19 23:48:21
+#save date:2009/10/20 21:34:23
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r05.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/19 23:48:21
+#save date:2009/10/20 21:34:23
 2
 #hold event type:
 1
 #hold event number:
-5
+13
 #event number: 0
 #type
 1
@@ -72,6 +72,93 @@ DIR_DOWN
 #type
 1
 #ID name
+R05_TREE_04
+#OBJ CODE Number
+TREE
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_HIDEN_IAIGIRI
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-24 0 -88
+#event number: 3
+#type
+1
+#ID name
+TR_JUGGLING_01
+#OBJ CODE Number
+JUGGLING
+#MOVE CODE Number
+MV_SPIN_L
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_JUGGLING_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+0
+#position
+8 0 24
+#event number: 4
+#type
+1
+#ID name
+R05_FLD_ITEM_03
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_11
+#Event Script Name
+SCRID_FLD_ITEM_11
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+24 0 -120
+#event number: 5
+#type
+1
+#ID name
 R05_TREE_03
 #OBJ CODE Number
 TREE
@@ -97,40 +184,11 @@ DIR_DOWN
 0
 #position
 152 0 -88
-#event number: 3
+#event number: 6
 #type
 1
 #ID name
-DUMMY_OBJ
-#OBJ CODE Number
-BOY1
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#position
-120 0 120
-#event number: 4
-#type
-1
-#ID name
-DUMMY_FLD_ITEM
+R05_FLD_ITEM_01
 #OBJ CODE Number
 MONSTERBALL
 #MOVE CODE Number
@@ -138,9 +196,9 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_FLD_ITEM_9
 #Event Script Name
-SCRID_FLD_ITEM_0
+SCRID_FLD_ITEM_9
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -154,12 +212,186 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-408 0 104
+200 0 -56
+#event number: 7
+#type
+1
+#ID name
+R05_FLD_ITEM_02
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_10
+#Event Script Name
+SCRID_FLD_ITEM_10
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+88 0 -152
+#event number: 8
+#type
+1
+#ID name
+TR_BAKER_01
+#OBJ CODE Number
+BAKER
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BAKER_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+280 0 56
+#event number: 9
+#type
+1
+#ID name
+TR_BACKPACKERM_02
+#OBJ CODE Number
+BACKPACKERM
+#MOVE CODE Number
+MV_RND_UL
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BACKPACKERM_02
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+520 0 -24
+#event number: 10
+#type
+1
+#ID name
+TR_ARTIST_01
+#OBJ CODE Number
+MIDDLEMAN1
+#MOVE CODE Number
+MV_RND_V
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ARTIST_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+376 0 72
+#event number: 11
+#type
+1
+#ID name
+TR_MUSICIAN_01
+#OBJ CODE Number
+MUSICIAN
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_MUSICIAN_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+5
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+0
+#position
+72 0 168
+#event number: 12
+#type
+1
+#ID name
+TR_BACKPACKERW_02
+#OBJ CODE Number
+BACKPACKERW
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BACKPACKERW_02
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+0
+#position
+168 0 88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/19 23:48:21
+#save date:2009/10/20 21:34:23
 2
 #hold event type:
 1
@@ -169,7 +401,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/19 23:48:21
+#save date:2009/10/20 21:34:23
 2
 #hold event type:
 1
@@ -179,7 +411,7 @@ DIR_DOWN
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/19 23:48:21
+#save date:2009/10/20 21:34:23
 2
 #hold event type:
 1
