@@ -2790,7 +2790,7 @@ static void calcKeyLocation( const FIELD_RAIL_WORK * work, RAIL_KEY key, RAIL_LO
     }
     else
     {
-      GF_ASSERT_MSG( 0, "calcKeyLocation back not answer\n" );
+      OS_TPrintf( "calcKeyLocation back not answer\n" );
     }
   }
   // left
