@@ -527,7 +527,6 @@
 
   //ショップ関連
   DEF_CMD( EvCmdCallShopProcBuy, EV_SEQ_CALL_SHOP_PROC_BUY )
-  DEF_CMD( EvCmdCallFixShopProcBuy, EV_SEQ_CALL_FIX_SHOP_PROC_BUY )
   DEF_CMD( EvCmdCallShopProcSell, EV_SEQ_CALL_SHOP_PROC_SELL )
   NO_CMD()
   NO_CMD()

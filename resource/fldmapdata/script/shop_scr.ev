@@ -28,6 +28,8 @@ DEFINE_LOCAL  reg_return
 
 { //SHOP_MAIN
 
+DEFINE_LOCAL  lwk_shop_id
+
 //==============================================================
 /// 
 ///
@@ -37,6 +39,7 @@ DEFINE_LOCAL  reg_return
 //==============================================================
 ev_shop_counter:
 {
+  $lwk_shop_id = 0  //$SCWK_PARAM0
   _CALL sub_shop_main
 }
 _CHG_LOCAL_SCR
@@ -50,25 +53,38 @@ sub_shop_main:
   DEFINE_LOCAL  i_seq
   DEFINE_LOCAL  i_loop
 
+  _TALKWIN_OPEN()
+  //ようこそ
+  _TALKMSG( msg_shop_01)
+
+  $i_seq = SEQ_MENU
   $i_loop = TRUE
   WHILE $i_loop == TRUE
     SWITCH $i_seq
+    CASE SEQ_MENU_CONTINUE THEN
+      _TALKMSG( msg_shop_02 ) //そのほかにお手伝いできることは？
+      $i_seq = SEQ_MENU
+
     CASE SEQ_MENU THEN
       _CALL sub_shop_menu
       $i_seq = $reg_return
     
     CASE SEQ_BUY THEN
-      _CALL sub_shop_menu
-      $i_seq = $reg_return
+      _CALL sub_shop_buy
+      $i_seq = SEQ_MENU_CONTINUE 
     
     CASE SEQ_SELL THEN
-      _CALL sub_shop_menu
-      $i_seq = $reg_return
+      _CALL sub_shop_sell
+      $i_seq = SEQ_MENU_CONTINUE 
 
     CASE SEQ_EXIT THEN
       $i_loop = FALSE
     ENDSWITCH
   ENDWHILE
+  
+  _TALKMSG( msg_shop_03 ) //またどうぞ
+  _LAST_KEYWAIT()
+  _TALKWIN_CLOSE()
 /*
   //C-Gear取得チェック
   IF FLAG_ON( FE_CGEAR_GET ) THEN
@@ -127,8 +143,6 @@ sub_shop_menu:
 {
   DEFINE_LOCAL  i_ret
 
-  //ようこそ
-  
   //分岐・Wi-Fiクラブへいく・せつめいをきく・やめる
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
 		
@@ -138,9 +152,36 @@ sub_shop_menu:
 		
 	//メニュー表示
 	_BMPMENU_START()
-//  _BALLOONWIN_CLOSE()
+  
+  SWITCH $i_ret
+  CASE SEQ_BUY THEN
+    $reg_return = SEQ_BUY
+    _RET 
+  CASE SEQ_SELL THEN
+    $reg_return = SEQ_SELL
+    _RET
+  ENDSWITCH
+  $reg_return = SEQ_EXIT 
+}
+_RET
 
-  $reg_return = $i_ret
+//==============================================================
+//サブルーチン：ショップ購入呼び出し
+//==============================================================
+sub_shop_buy:
+{
+//  _CAMERA_MOVE(0,0,0, (16*5),0,0, 30)
+  _CALL_SHOP_PROC_BUY(lwk_shop_id)
+//  _CAMERA_RECV_MOVE(30)
+}
+_RET
+
+//==============================================================
+//サブルーチン：ショップ売却呼び出し
+//==============================================================
+sub_shop_sell:
+{
+  _CALL_SHOP_PROC_SELL()
 }
 _RET
 

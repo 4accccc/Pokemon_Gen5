@@ -74,6 +74,9 @@
 #define SCR_BATTLE_LOSE (0) //負け
 #define SCR_BATTLE_WIN  (1) //勝ち
 
+//ショップのID定義
+#define SCR_SHOPID_NULL ( 0xFF )  //変動ショップ呼び出しID
+
 //-----------------------------------------------------------------------------
 //曜日取得関数の戻り値
 //  _GET_WEEK

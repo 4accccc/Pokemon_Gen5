@@ -6,8 +6,9 @@
 //
 //======================================================================
 
-#define SEQ_MENU  (0)
-#define SEQ_BUY   (1)
-#define SEQ_SELL  (2)
+#define SEQ_MENU_CONTINUE  (0)
+#define SEQ_MENU  (1)
+#define SEQ_BUY   (2)
+#define SEQ_SELL  (3)
 #define SEQ_EXIT  (0xFF)
 

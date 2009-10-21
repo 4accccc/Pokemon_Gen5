@@ -3522,11 +3522,11 @@
  * @param shop_id
  */
 //--------------------------------------------------------------
-#define _SHOP_CALL( ) _ASM_SHOP_CALL 0xFFFF
+#define _SHOP_CALL( ) _ASM_SHOP_CALL  SCR_SHOPID_NULL 
 
 //--------------------------------------------------------------
 /**
- * @def _FIX_SHOP_CALL
+ * @def _SHOP_CALL
  * @brief 簡易イベントコマンド：固定ショップイベント呼び出し
  * @param shop_id
  */
@@ -3543,26 +3543,11 @@
  * shop_scr.ev専用　ゾーンスクリプトから直接呼び出さないこと！
  */
 //--------------------------------------------------------------
-#define _CALL_SHOP_PROC_BUY( )  _ASM_CALL_SHOP_PROC_BUY
+#define _CALL_SHOP_PROC_BUY( shop_id )  _ASM_CALL_SHOP_PROC_BUY shop_id
 
-  .macro  _ASM_CALL_SHOP_PROC_BUY
+  .macro  _ASM_CALL_SHOP_PROC_BUY shop_id
   .short  EV_SEQ_CALL_SHOP_PROC_BUY
-  .endm
-
-//--------------------------------------------------------------
-/**
- * @def _CALL_FIX_SHOP_PROC_BUY
- * @brief 変動ショップイベント呼び出し
- * @param shop_id
- *
- * shop_scr.ev専用　ゾーンスクリプトから直接呼び出さないこと！
- */
-//--------------------------------------------------------------
-#define _CALL_FIX_SHOP_PROC_BUY( shop_id )  _ASM_CALL_FIX_SHOP_PROC_BUY shop_id
-
-  .macro  _ASM_CALL_FIX_SHOP_PROC_BUY
-  .short  EV_SEQ_CALL_FIX_SHOP_PROC_BUY
-  .short  shop_id
+  .short  \shop_id
   .endm
 
 //--------------------------------------------------------------
@@ -3746,7 +3731,7 @@
 #define _CAMERA_MOVE(pitch, yaw, dist, x, y, z, frame) \
     _ASM_CAMERA_MOVE pitch, yaw, dist, x, y, z, frame
   
-  .macro _ASM_CAMERA_MOVE pitch, yaw, dist, x, y, z, fream
+  .macro _ASM_CAMERA_MOVE pitch, yaw, dist, x, y, z, frame
   .short EV_SEQ_CAMERA_MOVE
   .short \pitch
   .short \yaw
