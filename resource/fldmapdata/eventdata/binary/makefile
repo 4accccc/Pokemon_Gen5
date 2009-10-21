@@ -43,10 +43,15 @@ TOTALHEADER = ../define/total_header.h
 
 TMPDIR	= ../tmp
 DATADIR	= ../data
+SCRIPTDIR	= ../../script
 SRCDATA = $(wildcard $(DATADIR)/*.mev)
 TGTDATA = $(basename $(notdir $(SRCDATA)))
 BINDAT = $(addprefix $(TMPDIR)/,$(addsuffix .bin,$(TGTDATA)))
 
+#UNIQ_SCRIPT
+include  ../../script/uniq_script.list
+SCRBASE = $(basename $(notdir $(UNIQ_SCRIPTFILES)))
+UNIQ_SCRIPTHEADER = $(addprefix $(SCRIPTDIR)/,$(addsuffix _def.h,$(SCRBASE)))
 
 LIST_FILE 	= list.txt
 

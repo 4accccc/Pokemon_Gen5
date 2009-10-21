@@ -1,5 +1,5 @@
 #../data/r16.mev
-../tmp/r16.bin:../data/r16.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../../script/fld_item_def.h ../../script/wifi_club_scr_def.h ../../script/shop_scr_def.h ../tmp/r16.h ../../script/r16_def.h ../../zonetable/zone_id.h ../tmp/r15.h ../../../../prog/include/field/eventdata_type.h ../tmp/c04.h 
+../tmp/r16.bin:../data/r16.mev $(UNIQ_SCRIPTHEADER) ../tmp/r16.h ../../script/r16_def.h ../../zonetable/zone_id.h ../tmp/r15.h ../../../../prog/include/field/eventdata_type.h ../tmp/c04.h 
 	@echo ../data/r16.mev
-	@ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../../script/fld_item_def.h ../../script/wifi_club_scr_def.h ../../script/shop_scr_def.h ../tmp/r16.h ../../script/r16_def.h ../../zonetable/zone_id.h ../tmp/r15.h ../../../../prog/include/field/eventdata_type.h ../tmp/c04.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/r16.h ../../script/r16_def.h ../../zonetable/zone_id.h ../tmp/r15.h ../../../../prog/include/field/eventdata_type.h ../tmp/c04.h 
 

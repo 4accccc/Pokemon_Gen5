@@ -833,7 +833,8 @@ begin
     #ˆË‘¶ŠÖŒW
     depend_header = Array.new
 
-    set_uniq_script_list_header( depend_header, "../../script/uniq_script.list" );
+    #set_uniq_script_list_header( depend_header, "../../script/uniq_script.list" )
+    depend_header.push( "$(UNIQ_SCRIPTHEADER) " )
 
     zonename = door_events.zonename.downcase
     depend_header.push( "../tmp/#{zonename}.h " )

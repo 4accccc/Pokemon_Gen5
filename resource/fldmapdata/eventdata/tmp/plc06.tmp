@@ -1,5 +1,5 @@
 #../data/plc06.mev
-../tmp/plc06.bin:../data/plc06.mev ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../../script/fld_item_def.h ../../script/wifi_club_scr_def.h ../../script/shop_scr_def.h ../tmp/plc06.h ../../script/plc06_def.h 
+../tmp/plc06.bin:../data/plc06.mev $(UNIQ_SCRIPTHEADER) ../tmp/plc06.h ../../script/plc06_def.h 
 	@echo ../data/plc06.mev
-	@ruby make_binary.rb $< ../../script/common_scr_def.h ../../script/c99_def.h ../../script/bg_attr_def.h ../../script/trainer_def.h ../../script/init_scr_def.h ../../script/sodateya_scr_def.h ../../script/pokecen_scr_def.h ../../script/hiden_def.h ../../script/fld_item_def.h ../../script/wifi_club_scr_def.h ../../script/shop_scr_def.h ../tmp/plc06.h ../../script/plc06_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plc06.h ../../script/plc06_def.h 
 
