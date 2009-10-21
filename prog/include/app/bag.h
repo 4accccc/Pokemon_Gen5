@@ -15,7 +15,6 @@
 #include "field/fieldmap_proc.h"
 
 #include "system/main.h"
-#include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
 #include "savedata/config.h"
 #include "app/itemuse.h"
@@ -72,6 +71,19 @@ typedef struct {
 
 // PROC定義
 extern const GFL_PROC_DATA ItemMenuProcData;
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  バッグパラメータ生成
+ *
+ *	@param	GAMEDATA* gmData  ゲームデータ
+ *	@param	ITEMCHECK_WORK* icwk アイテムチェックワーク
+ *	@param	mode バッグ起動モード
+ *
+ *	@retval BAG_PARAM* バッグパラメータ(ALLOC済み)
+ */
+//-----------------------------------------------------------------------------
+extern BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MODE mode );
 
 
 

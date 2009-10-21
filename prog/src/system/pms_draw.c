@@ -277,6 +277,24 @@ void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id )
   _unit_clear( &wk->unit[id] );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  指定表示ユニットが表示中かどうかを返す
+ *
+ *	@param	PMS_DRAW_WORK* wk ワーク
+ *	@param	id 表示ユニット管理ID
+ *
+ *	@retval TRUE:表示中 FALSE:クリアされている
+ */
+//-----------------------------------------------------------------------------
+BOOL PMS_DRAW_IsPrinting( PMS_DRAW_WORK* wk, u8 id )
+{
+  GF_ASSERT( wk );
+  GF_ASSERT( id < wk->unit_num );
+
+  return wk->unit[id].b_useflag;
+}
+
 
 //=============================================================================
 /**

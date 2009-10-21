@@ -208,8 +208,6 @@ static const BOOL FMenuReturnProc_TownMap(FMENU_EVENT_WORK* mwk);
 
 static void FMenuTakeFieldInfo(FMENU_EVENT_WORK* mwk);
 
-static BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MODE mode );
-
 //--------------------------------------------------------------
 /// フィールドマップメニューリスト
 //--------------------------------------------------------------
@@ -1373,38 +1371,5 @@ static void FMenuTakeFieldInfo( FMENU_EVENT_WORK *mwk )
 
 	mwk->icwk.PlayerForm=0;	//　自機の形状（自転車に乗っているかとか）
 	mwk->icwk.SeedInfo=0;	//使用可能なアイテム情報（きのみ関連）
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  バッグパラメータ生成
- *
- *	@param	GAMEDATA* gmData  ゲームデータ
- *	@param	ITEMCHECK_WORK* icwk アイテムチェックワーク
- *	@param	mode バッグ起動モード
- *
- *	@retval BAG_PARAM* バッグパラメータ(ALLOC済み)
- */
-//-----------------------------------------------------------------------------
-static BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MODE mode )
-{
-  SAVE_CONTROL_WORK* saveControl;
-  BAG_PARAM * bag;
-
-  saveControl = GAMEDATA_GetSaveControlWork( gmData );
-
-  bag = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(BAG_PARAM));
-
-  bag->p_config     = SaveData_GetConfig( saveControl );
-  bag->p_mystatus   = GAMEDATA_GetMyStatus( gmData );
-  bag->p_bagcursor  = GAMEDATA_GetBagCursor( gmData );
-  bag->p_myitem     = GAMEDATA_GetMyItem( gmData );
-  
-  GFL_STD_MemCopy(icwk , &bag->icwk, sizeof(ITEMCHECK_WORK));
-
-  bag->mode       = mode;
-  bag->cycle_flg  = ( PLAYERWORK_GetMoveForm( GAMEDATA_GetMyPlayerWork(gmData) ) == PLAYER_MOVE_FORM_CYCLE );
-  
-  return bag;
 }
 

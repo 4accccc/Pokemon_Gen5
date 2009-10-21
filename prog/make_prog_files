@@ -204,7 +204,8 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_skill.c \
         field/scrcmd_network.c \
 				system/shortcut_data.c \
-        field/scrcmd_camera.c 
+        field/scrcmd_camera.c \
+        app/bag/bag_param.c
 
 
 #================================================
@@ -522,8 +523,6 @@ SRCS_OVERLAY_SOUND_DEBUG  = sound/snd_test2.c
 #===> main
 SRCS_OVERLAY_ARIIZUMI_DEBUG = test/ariizumi/debug_ariizumi.c
 
-
-
 # 田谷デバッグ
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
@@ -766,7 +765,10 @@ SRCS_OVERLAY_PMSINPUT = app/pms_input/pms_input_data.c \
         app/pms_input/pmsiv_sub.c \
         app/pms_input/pmsiv_tool.c \
         app/pms_input/pms_input.c \
-        app/pms_input/pmsiv_wordwin.c
+        app/pms_input/pmsiv_wordwin.c \
+        app/pms_select/pms_select.c \
+        app/pms_select/pms_select_graphic.c \
+        app/pms_select/pms_ui_listbar.c
 
 
 # ミュージカル

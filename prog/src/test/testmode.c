@@ -1021,12 +1021,10 @@ static BOOL TESTMODE_ITEM_SelectFuncNakamura( TESTMODE_WORK *work , const int id
   return TRUE;
 }
 
-// マイクテスト
-FS_EXTERN_OVERLAY(mictest);
-extern const GFL_PROC_DATA TitleMicTestProcData;
+#include "hosaka/debug_hosaka_menu.c"
 static BOOL TESTMODE_ITEM_SelectFuncHosaka( TESTMODE_WORK *work , const int idx )
 {
-  TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(mictest), &TitleMicTestProcData, NULL );
+  TESTMODE_COMMAND_ChangeMenu( work , menuHosaka , NELEMS(menuHosaka) );
   return TRUE;
 }
 static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx )
