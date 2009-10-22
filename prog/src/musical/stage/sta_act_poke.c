@@ -150,7 +150,7 @@ STA_POKE_SYS* STA_POKE_InitSystem( HEAPID heapId , ACTING_WORK *actWork , MUS_PO
   
   //‰eƒ|ƒŠ‚Ì“Ç‚Ýž‚Ý
   work->shadowResIdx = GFL_BBD_AddResourceArc( work->bbdSys , ARCID_STAGE_GRA , 
-                      NARC_stage_gra_shadow_tex_nsbtx , GFL_BBD_TEXFMT_PAL4 ,
+                      NARC_stage_gra_shadow_tex_nsbtx , GFL_BBD_TEXFMT_A3I5 ,
                       GFL_BBD_TEXSIZ_64x64 , 64 , 64 );
   
   return work;
@@ -471,10 +471,12 @@ STA_POKE_WORK* STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *mus
   {
     fx16 sizX = FX16_CONST(1.0f)/4;
     fx16 sizY = FX16_CONST(0.75f)/4;
-  
+//    pokeWork->shadowBbdIdx = GFL_BBD_AddObject( work->bbdSys , work->shadowResIdx 
+//                                                , sizX ,  sizY, 
+//                                                &pokeWork->pokePos , 12 , GFL_BBD_LIGHT_NONE );
     pokeWork->shadowBbdIdx = GFL_BBD_AddObject( work->bbdSys , work->shadowResIdx 
                                                 , sizX ,  sizY, 
-                                                &pokeWork->pokePos , 12 , GFL_BBD_LIGHT_NONE );
+                                                &pokeWork->pokePos , 30 , GFL_BBD_LIGHT_NONE );
   }
   {
     BOOL flg = TRUE;

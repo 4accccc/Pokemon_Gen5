@@ -24,6 +24,8 @@ typedef enum {
 	GFL_BBD_TEXFMT_PAL16 = 0,	//16色パレット
 	GFL_BBD_TEXFMT_PAL256,		//256色パレット
 	GFL_BBD_TEXFMT_PAL4,		//4色パレット
+	GFL_BBD_TEXFMT_A3I5,		//半透明テクスチャ(α3bit
+	GFL_BBD_TEXFMT_A5I3,		//半透明テクスチャ(α5bit
 	GFL_BBD_TEXFMT_ERROR,
 }GFL_BBD_TEXFMT;
 
