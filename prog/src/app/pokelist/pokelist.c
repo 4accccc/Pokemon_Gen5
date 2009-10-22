@@ -149,7 +149,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
           plData->comm_battle[p].pp = PokeParty_AllocPartyWork(HEAPID_POKELIST);
           for( i=0;i<6;i++ )
           {
-            POKEMON_PARAM *pPara = PP_Create( GFUser_GetPublicRand0(250) , 10 , PTL_SETUP_POW_AUTO , HEAPID_POKELIST );
+            POKEMON_PARAM *pPara = PP_Create( GFUser_GetPublicRand0(250) , 100 , PTL_SETUP_POW_AUTO , HEAPID_POKELIST );
             u16 oyaName[5] = {L'ƒu',L'ƒ‰',L'ƒb',L'ƒN',0xFFFF};
             PP_Put( pPara , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
             PP_Put( pPara , ID_PARA_oyasex , PTL_SEX_MALE );

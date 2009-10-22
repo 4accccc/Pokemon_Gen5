@@ -86,7 +86,7 @@ static PLIST_BATTLE_PARAM_WORK* PLIST_BATTLE_CreateBattleParam( PLIST_WORK *work
 static void PLIST_BATTLE_DeleteBattleParam( PLIST_WORK *work , PLIST_BATTLE_PARAM_WORK *param );
 static void PLIST_BATTLE_UpdateBattleParam( PLIST_WORK *work , PLIST_BATTLE_PARAM_WORK *param );
 
-static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *work , POKEMON_PARAM *pp , const u8 charX , const u8 charY );
+static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *work , POKEMON_PARAM *pp , const u8 posX , const u8 posY );
 static void PLIST_BATTLE_DeleteBattleParamIcon( PLIST_WORK *work , PLIST_BATTLE_POKE_ICON *iconWork );
 static void PLIST_BATTLE_UpdateBattleParamIcon( PLIST_WORK *work , PLIST_BATTLE_POKE_ICON *iconWork );
 
@@ -315,10 +315,12 @@ static PLIST_BATTLE_PARAM_WORK* PLIST_BATTLE_CreateBattleParam( PLIST_WORK *work
     {
       if( i<partyNum )
       {
-        const iconX = charX + (i%2) * (PLIST_BATTLE_ICON_WIDTH + space) + PLIST_BATTLE_ICON_LEFT;
-        const iconY = charY + (i/2) * PLIST_BATTLE_ICON_HEIGHT + PLIST_BATTLE_ICON_TOP;
+        const u8 iconX = charX + (i%2) * (PLIST_BATTLE_ICON_WIDTH + space ) + PLIST_BATTLE_ICON_LEFT;
+        const u8 iconY = charY + (i/2) * PLIST_BATTLE_ICON_HEIGHT + PLIST_BATTLE_ICON_TOP;
+        //4ピクセルつめる
+        const u8 ofsX = ( (i%2) == 0 ? 4 : 0 );
         POKEMON_PARAM *pp = PokeParty_GetMemberPointer( initParam->pp , i );
-        param->icon[i] = PLIST_BATTLE_CreateBattleParamIcon( work , pp , iconX , iconY );
+        param->icon[i] = PLIST_BATTLE_CreateBattleParamIcon( work , pp , iconX*8+ofsX , iconY*8 );
       }
       else
       {
@@ -388,7 +390,7 @@ static void PLIST_BATTLE_UpdateBattleParam( PLIST_WORK *work , PLIST_BATTLE_PARA
 //--------------------------------------------------------------
 //	アイコンの作成
 //--------------------------------------------------------------
-static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *work , POKEMON_PARAM *pp , const u8 charX , const u8 charY )
+static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *work , POKEMON_PARAM *pp , const u8 posX , const u8 posY )
 {
   PLIST_BATTLE_POKE_ICON *iconWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PLIST_BATTLE_POKE_ICON) );
   //ポケアイコン
@@ -404,8 +406,8 @@ static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *w
     GFL_ARC_CloseDataHandle(arcHandle);
 
     pltNum = POKEICON_GetPalNumGetByPPP( ppp );
-    cellInitData.pos_x = charX*8+16;
-    cellInitData.pos_y = charY*8+8;
+    cellInitData.pos_x = posX+16;
+    cellInitData.pos_y = posY+8;
     cellInitData.anmseq = POKEICON_ANM_HPMAX;
     cellInitData.softpri = 16;
     cellInitData.bgpri = 2;
@@ -420,8 +422,8 @@ static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *w
   //アイテムアイコン
   {
     GFL_CLWK_DATA cellInitData;
-    cellInitData.pos_x = charX*8+32;
-    cellInitData.pos_y = charY*8+16;
+    cellInitData.pos_x = posX+32;
+    cellInitData.pos_y = posY+16;
     cellInitData.anmseq = 0;
     cellInitData.softpri = 8;
     cellInitData.bgpri = 2;
@@ -442,23 +444,29 @@ static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *w
   //性別マーク
   {
     const u32 sex = PP_Get( pp , ID_PARA_sex , NULL );
+    const u8 charX = posX/8;
+    const u8 charY = posY/8;
+    const u8 modX = posX%8;
 
-    iconWork->sexStrWin = GFL_BMPWIN_Create( PLIST_BG_SUB_BATTLE_STR , charX + 4 , charY, 
-          1 , 2 , PLIST_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+    iconWork->sexStrWin = GFL_BMPWIN_Create( PLIST_BG_SUB_BATTLE_STR , charX + 3 , charY, 
+          3 , 2 , PLIST_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
     if( sex == PTL_SEX_MALE )
     {
       PLIST_UTIL_DrawStrFunc( work , iconWork->sexStrWin , mes_pokelist_01_28 ,
-                      0 , 0 , PLIST_FONT_BATTLE_BLUE );
+                      modX+4 , 0 , PLIST_FONT_BATTLE_BLUE );
     }
     else if( sex == PTL_SEX_FEMALE )
     {
       PLIST_UTIL_DrawStrFunc( work , iconWork->sexStrWin , mes_pokelist_01_29 ,
-                      0 , 0 , PLIST_FONT_BATTLE_RED );
+                      modX+4 , 0 , PLIST_FONT_BATTLE_RED );
     }
   }
   //レベル
   {
     const u32 lv = PP_CalcLevel( pp );
+    const u8 charX = posX/8;
+    const u8 charY = posY/8;
+    const u8 modX = posX%8;
     WORDSET *wordSet = WORDSET_Create( work->heapId );
 
     iconWork->lvStrWin = GFL_BMPWIN_Create( PLIST_BG_SUB_BATTLE_STR , charX , charY + 3 , 
@@ -468,7 +476,7 @@ static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *w
 
     PLIST_UTIL_DrawValueStrFuncSys( work , iconWork->lvStrWin , 
                       wordSet , mes_pokelist_01_03 , 
-                      0 , 0 , PLIST_FONT_BATTLE_PARAM );
+                      modX , 0 , PLIST_FONT_BATTLE_PARAM );
 
     WORDSET_Delete( wordSet );
   }
