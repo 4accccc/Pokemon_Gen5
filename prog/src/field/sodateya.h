@@ -214,7 +214,8 @@ const POKEMON_PARAM* SODATEYA_GetPokemonParam( const SODATEYA* sodateya, int ind
  * @brief タマゴを孵化させる
  *
  * @param egg     孵化させるタマゴ
+ * @param owner   タマゴの所持者
  * @param heap_id 使用するヒープID
  */
 //---------------------------------------------------------------------------------------- 
-void POKEMON_EGG_Birth( POKEMON_PARAM* egg, HEAPID heap_id );
+void POKEMON_EGG_Birth( POKEMON_PARAM* egg, const MYSTATUS* owner, HEAPID heap_id );

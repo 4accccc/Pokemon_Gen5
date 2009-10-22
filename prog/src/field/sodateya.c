@@ -1435,11 +1435,15 @@ static u16 GetSeedMonsNo( u16 monsno )
  * @brief タマゴを孵化させる
  *
  * @param egg     孵化させるタマゴ
+ * @param owner   タマゴの所持者
  * @param heap_id 使用するヒープID
  */
 //---------------------------------------------------------------------------------------- 
-void POKEMON_EGG_Birth( POKEMON_PARAM* egg, HEAPID heap_id )
+void POKEMON_EGG_Birth( POKEMON_PARAM* egg, const MYSTATUS* owner, HEAPID heap_id )
 { 
+  // タマゴフラグ
+  PP_Put( egg, ID_PARA_tamago_flag, FALSE );
+
   // なつき度 ==> パーソナルの初期値を設定
   {
     u32 monsno, formno, friend;
@@ -1452,6 +1456,11 @@ void POKEMON_EGG_Birth( POKEMON_PARAM* egg, HEAPID heap_id )
     POKE_PERSONAL_CloseHandle( personal );
   }
 
-  // タマゴフラグ
-  PP_Put( egg, ID_PARA_tamago_flag, FALSE );
+  // ID ==> タマゴ所持者のIDを設定
+  {
+    u32 id = MyStatus_GetID( owner );
+    PP_Put( egg, ID_PARA_id_no, id );
+    OBATA_Printf( "id = %d\n", id );
+    OBATA_Printf( "id = %d\n", PP_Get(egg,ID_PARA_id_no,NULL) );
+  } 
 }

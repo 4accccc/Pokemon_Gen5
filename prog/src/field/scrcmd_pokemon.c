@@ -670,6 +670,7 @@ extern VMCMD_RESULT EvCmdPartyPokeEggBirth( VMHANDLE *core, void *wk )
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
   GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  MYSTATUS*            my = GAMEDATA_GetMyStatus( gdata );
   POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
   int          poke_count = PokeParty_GetPokeCount( party );
 
@@ -679,7 +680,7 @@ extern VMCMD_RESULT EvCmdPartyPokeEggBirth( VMHANDLE *core, void *wk )
     u32      tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
     if( tamago_flag == TRUE )
     {
-      POKEMON_EGG_Birth( param, heap_id );
+      POKEMON_EGG_Birth( param, my, heap_id );
       *ret_wk = i;
       break;
     }

@@ -2694,6 +2694,21 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _PARTY_POKE_EGG_BIRTH
+ * @brief 手持ちのタマゴを孵化させる
+ * @param ret_wk 生まれたポケモンの手持ちインデックスを受け取るワーク
+ */
+//--------------------------------------------------------------
+#define _PARTY_POKE_EGG_BIRTH( ret_wk ) \
+    _ASM_PARTY_POKE_EGG_BIRTH ret_wk
+
+  .macro  _ASM_PARTY_POKE_EGG_BIRTH ret_wk
+  .short  EV_SEQ_PARTY_POKE_EGG_BIRTH
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @def _CHECK_TEMOTI_POKERUS
  * @brief 手持ちにポケルスがいるかどうかのチェック
  * @param ret_wk    チェック結果を受け取るワーク
