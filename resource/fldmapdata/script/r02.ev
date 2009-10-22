@@ -223,6 +223,8 @@ _ANIME_LABEL	anm_rival_saru
 /**************************************************************/
 EVENT_START   ev_pos_r02_mama_01
 
+	_FLAG_RESET  ( FV_R02_MOTHER  )
+	
 	//ママが主人公を呼ぶ
 	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_01, R02_MAMA_01)
 	_BALLOONWIN_CLOSE()
@@ -332,7 +334,7 @@ _ANIME_LABEL	anm_player_migi_muku
 /*  R02 BOY2の会話イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_r02_boy2_01
-
+//test
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r02_boy2_01) 
 	
 EVENT_END
