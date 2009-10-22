@@ -76,7 +76,6 @@ end
   tr_id = ""
 
   read_data.each {|row|
-    p row
     if row[ PARA::TR_ID ] != nil
       tr_id = row[ PARA::TR_ID ]
     end
