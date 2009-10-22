@@ -866,7 +866,6 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // 並び替え
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT)
   {
-
     GFL_STD_MemClear(pWork->ScrollItem, sizeof(pWork->ScrollItem));
     MYITEM_ITEM_STCopy(pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE);  //取得
     pWork->moveMode = TRUE;
@@ -2483,15 +2482,6 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0);
 
-// @TODO 保坂のみデバッグ押しながら起動でショップから起動したことにする
-#ifdef DEBUG_ONLY_FOR_genya_hosaka
-  if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) )
-  {
-    pWork->mode = BAG_MODE_SELL;
-    HOSAKA_Printf("hook sell\n");
-  }
-#endif
-
   // ヒープ生成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ITEMMENU, 0x28000 );
   pWork = GFL_PROC_AllocWork( proc, sizeof(FIELD_ITEMMENU_WORK), HEAPID_ITEMMENU );
@@ -2510,6 +2500,15 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->icwk       = &pParam->icwk;
   pWork->mode       = pParam->mode;
   pWork->cycle_flg  = pParam->cycle_flg;
+
+// @TODO 保坂のみデバッグ押しながら起動でショップから起動したことにする
+#ifdef DEBUG_ONLY_FOR_genya_hosaka
+  if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) )
+  {
+    pWork->mode = BAG_MODE_SELL;
+    HOSAKA_Printf("hook sell\n");
+  }
+#endif
 
 //  pWork->pBagCursor = GAMEDATA_GetBagCursor(GAMESYSTEM_GetGameData(pWork->gsys));
 //  pWork->pMyItem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(pWork->gsys));

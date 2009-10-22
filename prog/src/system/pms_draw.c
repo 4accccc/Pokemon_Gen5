@@ -35,7 +35,6 @@
 typedef struct {
   BOOL          b_useflag;
   PRINT_UTIL    print_util;
-  GFL_BMPWIN*   win;
   GFL_CLWK*     clwk[PMS_WORD_MAX];
   BOOL          b_clwk_deco[PMS_WORD_MAX]; ///< CLWKデコメ判定フラグ
 } PMS_DRAW_UNIT;
@@ -297,27 +296,69 @@ BOOL PMS_DRAW_IsPrinting( PMS_DRAW_WORK* wk, u8 id )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  表示ユニットを入れ替える
+ *	@brief  表示ユニットを上書き(双方プリント済みのものに限る)
  *
  *	@param	PMS_DRAW_WORK* wk ワーク
- *	@param	id1 入れ替え元
- *	@param	id2 入れ替え先
+ *	@param	id_src 入れ替え元
+ *	@param	id_dst 入れ替え先
  *
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-void PMS_DRAW_Swap( PMS_DRAW_WORK* wk, u8 id1, u8 id2 )
+void PMS_DRAW_Copy( PMS_DRAW_WORK* wk, u8 id_src, u8 id_dst )
 {
-  PMS_DRAW_UNIT unit_temp;
+  int i;
+  PMS_DRAW_UNIT* src;
+  PMS_DRAW_UNIT* dst;
+  GFL_POINT pos_ofs;
   
   GF_ASSERT( wk );
-  GF_ASSERT( id1 < wk->unit_num );
-  GF_ASSERT( id2 < wk->unit_num );
+  GF_ASSERT( id_src < wk->unit_num );
+  GF_ASSERT( id_dst < wk->unit_num );
 
-  // メモリスワップ
-  GFL_STD_MemCopy( &wk->unit[id2], &unit_temp, sizeof( PMS_DRAW_UNIT ) );
-  GFL_STD_MemCopy( &wk->unit[id1], &wk->unit[id2], sizeof( PMS_DRAW_UNIT ) );
-  GFL_STD_MemCopy( &unit_temp, &wk->unit[id1], sizeof( PMS_DRAW_UNIT ) );
+  src = &wk->unit[id_src];
+  dst = &wk->unit[id_dst];
+
+  // OBJ追随のため、BMPWINの移動量を測定しておく
+  pos_ofs.x = GFL_BMPWIN_GetPosX( dst->print_util.win ) - GFL_BMPWIN_GetPosX( src->print_util.win );
+  pos_ofs.y = GFL_BMPWIN_GetPosY( dst->print_util.win ) - GFL_BMPWIN_GetPosY( src->print_util.win );
+
+  // BMPWINの表示を上書き転送
+  GFL_BMP_Copy( GFL_BMPWIN_GetBmp(src->print_util.win), GFL_BMPWIN_GetBmp(dst->print_util.win) );
+  GFL_BMPWIN_MakeTransWindow_VBlank( dst->print_util.win );
+
+  // OBJ上書き
+  for( i=0; i<PMS_WORD_MAX; i++ )
+  {
+    u8 srcf;
+    CLSYS_DRAW_TYPE draw_type;
+    GFL_CLACTPOS pos;
+
+    srcf = GFL_BMPWIN_GetFrame( src->print_util.win );
+    draw_type = BGFrameToVramType( srcf );
+
+    // 元のOBJ座標を取得し、移動量を足しこむ
+    GFL_CLACT_WK_GetPos( src->clwk[i], &pos, draw_type );
+    HOSAKA_Printf("newpos=%d %d diff=%d %d \n",pos.x, pos.y, pos_ofs.x, pos_ofs.y);
+    pos.x += pos_ofs.x * 8;
+    pos.y += pos_ofs.y * 8;
+  
+    // 座標
+    GFL_CLACT_WK_SetPos( dst->clwk[i], &pos, draw_type );
+    // アニメ
+    GFL_CLACT_WK_SetAnmSeq( dst->clwk[i], GFL_CLACT_WK_GetAnmSeq( src->clwk[i] ) );
+    // 表示フラグ
+    GFL_CLACT_WK_SetDrawEnable( dst->clwk[i], src->b_clwk_deco[i] );
+  }
+
+  // メンバコピー
+  dst->print_util.transReq = src->print_util.transReq;
+  dst->b_useflag = src->b_useflag;
+  for( i=0; i<PMS_WORD_MAX; i++ )
+  {
+    dst->b_clwk_deco[i] = src->b_clwk_deco[i];
+  }
+
 }
 
 

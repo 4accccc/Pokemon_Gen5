@@ -121,7 +121,6 @@ extern BOOL PMS_DRAW_IsPrintEnd( PMS_DRAW_WORK* wk );
  */
 //-----------------------------------------------------------------------------
 extern void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id );
-
 //-----------------------------------------------------------------------------
 /**
  *	@brief  指定表示ユニットが表示中かどうかを返す
@@ -133,17 +132,16 @@ extern void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id );
  */
 //-----------------------------------------------------------------------------
 extern BOOL PMS_DRAW_IsPrinting( PMS_DRAW_WORK* wk, u8 id );
-
 //-----------------------------------------------------------------------------
 /**
- *	@brief  表示ユニットを入れ替える
+ *	@brief  表示ユニットを上書き(双方プリント済みのものに限る)
  *
  *	@param	PMS_DRAW_WORK* wk ワーク
- *	@param	id1 入れ替え元
- *	@param	id2 入れ替え先
+ *	@param	id_src 入れ替え元
+ *	@param	id_dst 入れ替え先
  *
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-extern void PMS_DRAW_Swap( PMS_DRAW_WORK* wk, u8 id1, u8 id2 );
+extern void PMS_DRAW_Copy( PMS_DRAW_WORK* wk, u8 id_src, u8 id_dst );
 
