@@ -29,6 +29,7 @@ u32 SODATEYA_GetPokeLv_GrowUp( const SODATEYA* sodateya, int index );
 u32 SODATEYA_GetCharge( const SODATEYA* sodateya, int index );
 u8 SODATEYA_GetLoveLevel( const SODATEYA* sodateya );
 const POKEMON_PARAM* SODATEYA_GetPokemonParam( const SODATEYA* sodateya, int index );
+void POKEMON_EGG_Birth( POKEMON_PARAM* egg, HEAPID heap_id );
 */
 
 
@@ -203,14 +204,17 @@ u8 SODATEYA_GetLoveLevel( const SODATEYA* sodateya );
 const POKEMON_PARAM* SODATEYA_GetPokemonParam( const SODATEYA* sodateya, int index );
 
 
-#if 0
-//----------------------------------------------------------------------------------------
+
+//========================================================================================
+// ■タマゴの孵化
+//========================================================================================
+
+//---------------------------------------------------------------------------------------- 
 /**
- * @brief ワーク取得
+ * @brief タマゴを孵化させる
  *
- * @param sodateya 育て屋さん
- * @return 育て屋ワーク
+ * @param egg     孵化させるタマゴ
+ * @param heap_id 使用するヒープID
  */
 //---------------------------------------------------------------------------------------- 
-SODATEYA_WORK* SODATEYA_GetSodateyaWork( const SODATEYA* sodateya );
-#endif
+void POKEMON_EGG_Birth( POKEMON_PARAM* egg, HEAPID heap_id );

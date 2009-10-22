@@ -462,7 +462,7 @@
 
   DEF_CMD( EvCmdPokemonRecover, EV_SEQ_POKEMON_RECOVER )
   DEF_CMD( EvCmdPartyPokeNameInput, EV_SEQ_PARTY_POKE_NAME_INPUT )
-  NO_CMD()
+  DEF_CMD( EvCmdPartyPokeEggBirth, EV_SEQ_PARTY_POKE_EGG_BIRTH )
   NO_CMD()
 
   NO_CMD()

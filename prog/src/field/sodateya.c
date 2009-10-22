@@ -12,6 +12,7 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/monsno_def.h"
+#include "poke_tool/poke_personal.h"
 #include "item/itemsym.h"
 #include "item/item.h"
 #include "waza_tool/wazano_def.h"
@@ -19,7 +20,7 @@
 #include "fieldmap.h"
 #include "sodateya.h" 
 
-#include "arc/arc_def.h"  // ARCID_PMSTBL
+#include "arc/arc_def.h"  // for ARCID_PMSTBL
 #include "arc/kowaza.naix"
 #include "gamesystem/game_data.h"
 #include "savedata/mystatus.h"
@@ -1422,3 +1423,35 @@ static u16 GetSeedMonsNo( u16 monsno )
   GFL_ARC_LoadDataOfs( &seed_monsno, ARCID_PMSTBL, monsno, 0, sizeof(u16) );
   return seed_monsno;
 } 
+
+
+
+//========================================================================================
+// ■タマゴの孵化
+//========================================================================================
+
+//---------------------------------------------------------------------------------------- 
+/**
+ * @brief タマゴを孵化させる
+ *
+ * @param egg     孵化させるタマゴ
+ * @param heap_id 使用するヒープID
+ */
+//---------------------------------------------------------------------------------------- 
+void POKEMON_EGG_Birth( POKEMON_PARAM* egg, HEAPID heap_id )
+{ 
+  // なつき度 ==> パーソナルの初期値を設定
+  {
+    u32 monsno, formno, friend;
+    POKEMON_PERSONAL_DATA* personal;
+    monsno   = PP_Get( egg, ID_PARA_monsno, NULL );
+    formno   = PP_Get( egg, ID_PARA_form_no, NULL );
+    personal = POKE_PERSONAL_OpenHandle( monsno, formno, heap_id );
+    friend   = POKE_PERSONAL_GetParam( personal, POKEPER_ID_friend );
+    PP_Put( egg, ID_PARA_friend, friend );
+    POKE_PERSONAL_CloseHandle( personal );
+  }
+
+  // タマゴフラグ
+  PP_Put( egg, ID_PARA_tamago_flag, FALSE );
+}

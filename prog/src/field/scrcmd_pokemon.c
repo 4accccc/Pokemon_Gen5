@@ -34,6 +34,12 @@
 
 #include "event_name_input.h" // EVENT_PartyPokeNameInput
 
+#include "savedata/sodateya_work.h"
+#include "sodateya.h" // for POKEMON_EGG_Birth
+
+#include "fieldmap.h" 
+
+
 //======================================================================
 //  define
 //======================================================================
@@ -643,4 +649,40 @@ extern VMCMD_RESULT EvCmdPartyPokeNameInput( VMHANDLE *core, void *wk )
   // イベントを呼び出す
   SCRIPT_CallEvent( scw, EVENT_NameInput_PartyPoke(gsys, ret_wk, index) );
   return VMCMD_RESULT_SUSPEND;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * 手持ちのタマゴを孵化させる
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdPartyPokeEggBirth( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
+  int          poke_count = PokeParty_GetPokeCount( party );
+
+  for( i=0; i<poke_count; i++ )
+  {
+    POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, i );
+    u32      tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
+    if( tamago_flag == TRUE )
+    {
+      POKEMON_EGG_Birth( param, heap_id );
+      *ret_wk = i;
+      break;
+    }
+  } 
+  return VMCMD_RESULT_CONTINUE;
 }
