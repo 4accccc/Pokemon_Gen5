@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2009-10-13T18:23:01" source="cannon_03_00.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2009-10-22T17:12:12" source="cannon_03_00.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,16 +11,16 @@
 <body>
 
 <mat_color_info
-	frame_size="143"
-	tool_start_frame="1"
+	frame_size="144"
+	tool_start_frame="0"
 	tool_end_frame="143"
 	interpolation="frame"
-	compress_material="on" material_size="3 3"
+	compress_material="on" material_size="4 4"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
-<mat_color_data size="288">
+<mat_color_data size="290">
 	25 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
@@ -29,9 +29,9 @@
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 4 8 13
-	17 21 25 28 30 31 30 29 26 23
-	19 15 11 7 3 0 0 0 0 0
+	0 0 0 0 0 0 0 0 7 13
+	18 22 25 28 30 31 31 31 30 28
+	25 22 16 9 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
@@ -44,16 +44,16 @@
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 0 0 4 8 13 17 21 25 28
-	30 31 30 29 26 23 19 15 11 7
-	3 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 7 13 19 23
+	27 29 30 31 31 30 29 26 23 19
+	14 8 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
 </mat_color_data>
 
 <mat_color_anm_array size="2">
-	<mat_color_anm index="0" material_name="cannon002_lm1">
+	<mat_color_anm index="0" material_name="lambert4">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
@@ -66,9 +66,9 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="143" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="144" data_head="2"/>
 	</mat_color_anm>
-	<mat_color_anm index="1" material_name="cannon002_lm2">
+	<mat_color_anm index="1" material_name="lambert5">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
@@ -81,7 +81,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="143" data_head="145"/>
+		<polygon_alpha frame_step="1" data_size="144" data_head="146"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
