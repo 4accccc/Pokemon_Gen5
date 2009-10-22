@@ -102,6 +102,15 @@ extern void SCRIPT_CallSpecialScript( GAMESYS_WORK *gsys, HEAPID heapID, u16 scr
 //------------------------------------------------------------------
 extern void SCRIPT_CallGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heapID );
 
+#ifdef  PM_DEBUG
+//------------------------------------------------------------------
+/**
+ * @brief	ゲーム開始 スクリプト初期設定の実行（デバッグスタート）
+ */
+//------------------------------------------------------------------
+extern void SCRIPT_CallDebugGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heapID );
+#endif  //PM_DEBUG
+
 //------------------------------------------------------------------
 /**
  * @brief 特殊スクリプト呼び出し：フィールド復帰（初回のみ）

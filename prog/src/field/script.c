@@ -1185,6 +1185,7 @@ void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
 /**
  * @brief	ゲーム開始 スクリプト初期設定の実行
  * @param	gsys      GAMESYS_WORK型のポインタ
+ * @param heapID    テンポラリに使用するヒープ指定
  * @return	none
  */
 //------------------------------------------------------------------
@@ -1192,6 +1193,21 @@ void SCRIPT_CallGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heapID )
 {
   SCRIPT_CallSpecialScript( gsys, heapID, SCRID_INIT_SCRIPT );
 }
+
+#ifdef  PM_DEBUG
+//------------------------------------------------------------------
+/**
+ * @brief	ゲーム開始 スクリプト初期設定の実行
+ * @param	gsys      GAMESYS_WORK型のポインタ
+ * @param heapID    テンポラリに使用するヒープ指定
+ * @return	none
+ */
+//------------------------------------------------------------------
+void SCRIPT_CallDebugGameStartInitScript( GAMESYS_WORK *gsys, HEAPID heapID )
+{
+  SCRIPT_CallSpecialScript( gsys, heapID, SCRID_INIT_DEBUG_SCRIPT );
+}
+#endif  //PM_DEBUG
 
 //------------------------------------------------------------------
 /**
