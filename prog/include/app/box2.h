@@ -11,8 +11,11 @@
 #pragma	once
 
 #include "savedata/box_savedata.h"
+#include "savedata/myitem_savedata.h"
 #include "poke_tool/pokeparty.h"
+#include "savedata/config.h"
 #include "box_mode.h"
+#include "gamesystem/gamesystem.h"	  // GAMESYS_WORK
 /*
 #include "savedata/savedata_def.h"
 //#include "system/procsys.h"
@@ -30,7 +33,15 @@ typedef struct {
 	// [in]
 	BOX_MANAGER * sv_box;				// ボックスセーブデータ
 	POKEPARTY * pokeparty;			// 手持ちモケモン
-	BOX_MODE	mode;							// 呼び出しモード
+	MYITEM_PTR	myitem;					// 所持アイテム（バッグで使用）
+	MYSTATUS * mystatus;				// プレイヤーデータ（バッグで使用）
+
+  CONFIG * cfg;								// コンフィグデータ
+  u32	zknMode;								// 図鑑ナンバー表示モード
+
+	BOX_MODE	callMode;					// 呼び出しモード
+
+	GAMESYS_WORK * gsyswk;			// 仮
 
 /*
 	// [in] 

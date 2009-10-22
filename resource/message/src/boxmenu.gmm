@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-05-29T17:54:19"/>
+	<create user="hiro_nakamura" host="W00144" date="2009-10-22T12:46:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -335,594 +335,592 @@
 
 	<row id="mes_boxmenu_01_01">
 		<comment>メイン画面で、対象のポケモン名をあらわします</comment>
-		<language name="JPN" font=" 1:font_system">[1:01:ポケモン種族名:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system">[1:01:ポケモン種族名:0]</language>
+		<language name="JPN" font=" 1:small">[1:01:ポケモン種族名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small">[1:01:ポケモン種族名:0]</language>
 	</row>
 
 	<row id="mes_boxmenu_01_03">
 		<comment>メイン画面で、対象のポケモンのニックネームをあらわします</comment>
-		<language name="JPN" font=" 1:font_system">[1:02:ポケモンニックネーム:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN" font=" 1:small">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN_KANJI" font=" 1:small">[1:02:ポケモンニックネーム:0]</language>
 	</row>
 
 	<row id="mes_boxmenu_01_05">
 		<comment>メイン画面で、対象のポケモンのもちものをあらわします</comment>
-		<language name="JPN" font=" 1:font_system">もちもの</language>
-		<language name="JPN_KANJI" font=" 1:font_system">もちもの</language>
+		<language name="JPN" font=" 1:small">もちもの</language>
+		<language name="JPN_KANJI" font=" 1:small">もちもの</language>
 	</row>
 
 	<row id="mes_boxmenu_01_06">
 		<comment>メイン画面で、対象のポケモンのせいかくをあらわします</comment>
-		<language name="JPN" font=" 1:font_system">せいかく</language>
-		<language name="JPN_KANJI" font=" 1:font_system">せいかく</language>
+		<language name="JPN" font=" 1:small">せいかく</language>
+		<language name="JPN_KANJI" font=" 1:small">せいかく</language>
 	</row>
 
 	<row id="mes_boxmenu_01_07">
 		<comment>メイン画面で、対象のポケモンのとくせいをあらわします</comment>
-		<language name="JPN" font=" 1:font_system">とくせい</language>
-		<language name="JPN_KANJI" font=" 1:font_system">とくせい</language>
+		<language name="JPN" font=" 1:small">とくせい</language>
+		<language name="JPN_KANJI" font=" 1:small">とくせい</language>
 	</row>
 
 	<row id="mes_boxmenu_02_01">
 		<comment>メイン画面で、ボックス名を表示します</comment>
-		<language name="JPN" font=" 1:font_system" width="96">[1:0B:ボックス名:0]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">[1:0B:ボックス名:0]</language>
+		<language name="JPN" font=" 1:small" width="96">[1:0B:ボックス名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">[1:0B:ボックス名:0]</language>
 	</row>
 
 	<row id="mes_boxmenu_02_02">
 		<comment>名称：ボックスのデフォルト名１</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス１</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス１</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス１</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス１</language>
 	</row>
 
 	<row id="mes_boxmenu_02_03">
 		<comment>名称：ボックスのデフォルト名２</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス２</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス２</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス２</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス２</language>
 	</row>
 
 	<row id="mes_boxmenu_02_04">
 		<comment>名称：ボックスのデフォルト名３</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス３</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス３</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス３</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス３</language>
 	</row>
 
 	<row id="mes_boxmenu_02_05">
 		<comment>名称：ボックスのデフォルト名４</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス４</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス４</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス４</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス４</language>
 	</row>
 
 	<row id="mes_boxmenu_02_06">
 		<comment>名称：ボックスのデフォルト名５</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス５</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス５</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス５</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス５</language>
 	</row>
 
 	<row id="mes_boxmenu_02_07">
 		<comment>名称：ボックスのデフォルト名６</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス６</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス６</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス６</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス６</language>
 	</row>
 
 	<row id="mes_boxmenu_02_08">
 		<comment>名称：ボックスのデフォルト名７</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス７</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス７</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス７</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス７</language>
 	</row>
 
 	<row id="mes_boxmenu_02_09">
 		<comment>名称：ボックスのデフォルト名８</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス８</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス８</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス８</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス８</language>
 	</row>
 
 	<row id="mes_boxmenu_02_10">
 		<comment>名称：ボックスのデフォルト名９</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス９</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス９</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス９</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス９</language>
 	</row>
 
 	<row id="mes_boxmenu_02_11">
 		<comment>名称：ボックスのデフォルト名１０</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス１０</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス１０</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス１０</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス１０</language>
 	</row>
 
 	<row id="mes_boxmenu_02_12">
 		<comment>名称：ボックスのデフォルト名１１</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス１１</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス１１</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス１１</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス１１</language>
 	</row>
 
 	<row id="mes_boxmenu_02_13">
 		<comment>名称：ボックスのデフォルト名１２</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス１２</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス１２</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス１２</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス１２</language>
 	</row>
 
 	<row id="mes_boxmenu_02_14">
 		<comment>名称：ボックスのデフォルト名１３</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス１３</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス１３</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス１３</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス１３</language>
 	</row>
 
 	<row id="mes_boxmenu_02_15">
 		<comment>名称：ボックスのデフォルト名１４</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス１４</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス１４</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス１４</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス１４</language>
 	</row>
 
 	<row id="mes_boxmenu_02_16">
 		<comment>名称：ボックスのデフォルト名１５</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス１５</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス１５</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス１５</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス１５</language>
 	</row>
 
 	<row id="mes_boxmenu_02_17">
 		<comment>名称：ボックスのデフォルト名１６</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス１６</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス１６</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス１６</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス１６</language>
 	</row>
 
 	<row id="mes_boxmenu_02_18">
 		<comment>名称：ボックスのデフォルト名１７</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス１７</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス１７</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス１７</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス１７</language>
 	</row>
 
 	<row id="mes_boxmenu_02_19">
 		<comment>名称：ボックスのデフォルト名１８</comment>
-		<language name="JPN" font=" 1:font_system" width="96">ボックス１８</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">ボックス１８</language>
+		<language name="JPN" font=" 1:small" width="96">ボックス１８</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ボックス１８</language>
 	</row>
 
-	<row id="mes_boxmenu_02_20" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxmenu_02_20" text-color="#000000,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>ボックス内のポケモン数</comment>
-		<language name="JPN" font=" 1:font_system" width="96">[2:01:２桁:0]／[2:01:２桁:1]</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="96">[2:01:２桁:0]／[2:01:２桁:1]</language>
+		<language name="JPN" font=" 1:small" width="96">[2:01:２桁:0]／[2:01:２桁:1]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">[2:01:２桁:0]／[2:01:２桁:1]</language>
 	</row>
 
 	<row id="mes_boxmenu_03_01">
 		<comment>選択項目：ボックスの変更</comment>
-		<language name="JPN" font=" 1:font_system" width="60">ジャンプ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">ジャンプ</language>
+		<language name="JPN" font=" 1:small" width="60">ジャンプ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">ジャンプ</language>
 	</row>
 
-	<row id="mes_boxmenu_03_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxmenu_03_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>選択項目：ボックスの壁紙変更</comment>
-		<language name="JPN" font=" 1:font_system" width="60">かべがみ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">かべがみ</language>
+		<language name="JPN" font=" 1:small" width="60">かべがみ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">かべがみ</language>
 	</row>
 
-	<row id="mes_boxmenu_03_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxmenu_03_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>選択項目：ボックスの名前変更</comment>
-		<language name="JPN" font=" 1:font_system" width="60">なまえ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">なまえ</language>
+		<language name="JPN" font=" 1:small" width="60">なまえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">なまえ</language>
 	</row>
 
 	<row id="mes_boxmenu_03_04">
 		<comment>選択項目：ボックスのメニューウインドウをとじる</comment>
-		<language name="JPN" font=" 1:font_system" width="60">やめる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">やめる</language>
+		<language name="JPN" font=" 1:small" width="60">やめる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">やめる</language>
 	</row>
 
 	<row id="mes_boxmenu_04_01">
 		<comment>選択項目：かべがみのカテゴリ名</comment>
-		<language name="JPN" font=" 1:font_system" width="60">ふうけい１</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">ふうけい１</language>
+		<language name="JPN" font=" 1:small" width="60">ふうけい１</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">ふうけい１</language>
 	</row>
 
 	<row id="mes_boxmenu_04_02">
 		<comment>選択項目：かべがみのカテゴリ名</comment>
-		<language name="JPN" font=" 1:font_system" width="60">ふうけい２</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">ふうけい２</language>
+		<language name="JPN" font=" 1:small" width="60">ふうけい２</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">ふうけい２</language>
 	</row>
 
 	<row id="mes_boxmenu_04_03">
 		<comment>選択項目：かべがみのカテゴリ名</comment>
-		<language name="JPN" font=" 1:font_system" width="60">ふうけい３</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">ふうけい３</language>
+		<language name="JPN" font=" 1:small" width="60">ふうけい３</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">ふうけい３</language>
 	</row>
 
 	<row id="mes_boxmenu_04_04">
 		<comment>選択項目：かべがみのカテゴリ名</comment>
-		<language name="JPN" font=" 1:font_system" width="60">エトセトラ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">エトセトラ</language>
+		<language name="JPN" font=" 1:small" width="60">エトセトラ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">エトセトラ</language>
 	</row>
 
 	<row id="mes_boxmenu_04_05">
 		<comment>選択項目：かべがみのカテゴリ名（追加かべがみ用）</comment>
-		<language name="JPN" font=" 1:font_system" width="60">だいすき１</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">だいすき１</language>
+		<language name="JPN" font=" 1:small" width="60">だいすき１</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">だいすき１</language>
 	</row>
 
 	<row id="mes_boxmenu_04_06">
 		<comment>選択項目：かべがみのカテゴリ名（追加かべがみ用）</comment>
-		<language name="JPN" font=" 1:font_system" width="60">だいすき２</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">だいすき２</language>
+		<language name="JPN" font=" 1:small" width="60">だいすき２</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">だいすき２</language>
 	</row>
 
 	<row id="mes_boxmenu_04_07">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">もり</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">もり</language>
+		<language name="JPN" font=" 1:small" width="60">もり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">もり</language>
 	</row>
 
 	<row id="mes_boxmenu_04_08">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">シティ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">シティ</language>
+		<language name="JPN" font=" 1:small" width="60">シティ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">シティ</language>
 	</row>
 
 	<row id="mes_boxmenu_04_09">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">さばく</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">さばく</language>
+		<language name="JPN" font=" 1:small" width="60">さばく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">さばく</language>
 	</row>
 
 	<row id="mes_boxmenu_04_10">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">サバンナ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">サバンナ</language>
+		<language name="JPN" font=" 1:small" width="60">サバンナ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">サバンナ</language>
 	</row>
 
 	<row id="mes_boxmenu_04_11">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">いわやま</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">いわやま</language>
+		<language name="JPN" font=" 1:small" width="60">いわやま</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">いわやま</language>
 	</row>
 
 	<row id="mes_boxmenu_04_12">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">かざん</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">かざん</language>
+		<language name="JPN" font=" 1:small" width="60">かざん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">かざん</language>
 	</row>
 
 	<row id="mes_boxmenu_04_13">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">ゆきやま</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">ゆきやま</language>
+		<language name="JPN" font=" 1:small" width="60">ゆきやま</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">ゆきやま</language>
 	</row>
 
 	<row id="mes_boxmenu_04_14">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">どうくつ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">どうくつ</language>
+		<language name="JPN" font=" 1:small" width="60">どうくつ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">どうくつ</language>
 	</row>
 
 	<row id="mes_boxmenu_04_15">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">うみべ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">うみべ</language>
+		<language name="JPN" font=" 1:small" width="60">うみべ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">うみべ</language>
 	</row>
 
 	<row id="mes_boxmenu_04_16">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">かいてい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">かいてい</language>
+		<language name="JPN" font=" 1:small" width="60">かいてい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">かいてい</language>
 	</row>
 
 	<row id="mes_boxmenu_04_17">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">かわ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">かわ</language>
+		<language name="JPN" font=" 1:small" width="60">かわ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">かわ</language>
 	</row>
 
 	<row id="mes_boxmenu_04_18">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">そら</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">そら</language>
+		<language name="JPN" font=" 1:small" width="60">そら</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">そら</language>
 	</row>
 
 	<row id="mes_boxmenu_04_19">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">ポケセン</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">ポケセン</language>
+		<language name="JPN" font=" 1:small" width="60">ポケセン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">ポケセン</language>
 	</row>
 
 	<row id="mes_boxmenu_04_20">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">きんぞく</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">きんぞく</language>
+		<language name="JPN" font=" 1:small" width="60">きんぞく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">きんぞく</language>
 	</row>
 
 	<row id="mes_boxmenu_04_21">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">チェック</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">チェック</language>
+		<language name="JPN" font=" 1:small" width="60">チェック</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">チェック</language>
 	</row>
 
 	<row id="mes_boxmenu_04_22">
 		<comment>選択項目：かべがみの名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">シンプル</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">シンプル</language>
+		<language name="JPN" font=" 1:small" width="60">シンプル</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">シンプル</language>
 	</row>
 
-	<row id="mes_boxmenu_04_23">
+	<row id="mes_boxmenu_04_23" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">うちゅう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">うちゅう</language>
+		<language name="JPN" font=" 1:small" width="60">こころ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">こころ</language>
 	</row>
 
-	<row id="mes_boxmenu_04_24">
+	<row id="mes_boxmenu_04_24" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">うらにわ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">うらにわ</language>
+		<language name="JPN" font=" 1:small" width="60">たましい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">たましい</language>
 	</row>
 
-	<row id="mes_boxmenu_04_25">
+	<row id="mes_boxmenu_04_25" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">なつかしい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">なつかしい</language>
+		<language name="JPN" font=" 1:small" width="60">おにいさん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">おにいさん</language>
 	</row>
 
-	<row id="mes_boxmenu_04_26">
+	<row id="mes_boxmenu_04_26" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">アチャモ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">アチャモ</language>
+		<language name="JPN" font=" 1:small" width="60">ポケスロン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">ポケスロン</language>
 	</row>
 
-	<row id="mes_boxmenu_04_27">
+	<row id="mes_boxmenu_04_27" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">さんびき</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">さんびき</language>
+		<language name="JPN" font=" 1:small" width="60">さんびき</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">さんびき</language>
 	</row>
 
-	<row id="mes_boxmenu_04_28">
+	<row id="mes_boxmenu_04_28" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">ピカピカ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">ピカピカ</language>
+		<language name="JPN" font=" 1:small" width="60">ギザぴか</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">ギザぴか</language>
 	</row>
 
-	<row id="mes_boxmenu_04_29">
+	<row id="mes_boxmenu_04_29" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">でんせつ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">でんせつ</language>
+		<language name="JPN" font=" 1:small" width="60">まいこはん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">まいこはん</language>
 	</row>
 
-	<row id="mes_boxmenu_04_30">
+	<row id="mes_boxmenu_04_30" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>選択項目：だいすきクラブでもらえる壁紙の名前</comment>
-		<language name="JPN" font=" 1:font_system" width="60">ギンガだん</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="60">ギンガだん</language>
+		<language name="JPN" font=" 1:small" width="60">ふっかつ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">ふっかつ</language>
 	</row>
 
-	<row id="mes_boxmenu_05_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：ポケモンをつかむ</comment>
-		<language name="JPN" font=" 1:font_system" width="72">つかむ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">つかむ</language>
+	<row id="mes_boxmenu_04_31">
+		<comment>だいすきクラブでもらえる壁紙のフラグが立ってないときの名前</comment>
+		<language name="JPN" font=" 1:small" width="60">ー</language>
+		<language name="JPN_KANJI" font=" 1:small" width="60">ー</language>
 	</row>
 
-	<row id="mes_boxmenu_05_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：つかんでいるポケモンをおく</comment>
-		<language name="JPN" font=" 1:font_system" width="72">ここにおく</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">ここにおく</language>
-	</row>
-
-	<row id="mes_boxmenu_05_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：つかんでいるポケモンと下のポケモンを入れ替える</comment>
-		<language name="JPN" font=" 1:font_system" width="72">いれかえる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">いれかえる</language>
-	</row>
-
-	<row id="mes_boxmenu_05_04" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：ポケモンステータスをみる</comment>
-		<language name="JPN" font=" 1:font_system" width="72">ようすをみる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">ようすをみる</language>
-	</row>
-
-	<row id="mes_boxmenu_05_05" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：ポケモンを手持ちに加える</comment>
-		<language name="JPN" font=" 1:font_system" width="72">つれていく</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">つれていく</language>
-	</row>
-
-	<row id="mes_boxmenu_05_06" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：ポケモンをボックスに送る</comment>
-		<language name="JPN" font=" 1:font_system" width="72">あずける</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">あずける</language>
-	</row>
-
-	<row id="mes_boxmenu_05_07" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：ポケモンのもちものに関するメニューを開く</comment>
-		<language name="JPN" font=" 1:font_system" width="72">もちもの</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">もちもの</language>
-	</row>
-
-	<row id="mes_boxmenu_05_08" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：マーキングをする</comment>
-		<language name="JPN" font=" 1:font_system" width="72">マーキング</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">マーキング</language>
-	</row>
-
-	<row id="mes_boxmenu_05_09" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：ポケモンを逃がす</comment>
-		<language name="JPN" font=" 1:font_system" width="72">にがす</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">にがす</language>
-	</row>
-
-	<row id="mes_boxmenu_05_10" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：ウインドウをとじる（ポケモン選択する状態に戻る）</comment>
-		<language name="JPN" font=" 1:font_system" width="72">やめる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">やめる</language>
-	</row>
-
-	<row id="mes_boxmenu_07_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：マーキングの決定</comment>
-		<language name="JPN" font=" 1:font_system" width="72">けってい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">けってい</language>
-	</row>
-
-	<row id="mes_boxmenu_07_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：マーキングのキャンセル</comment>
-		<language name="JPN" font=" 1:font_system" width="72">やめる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">やめる</language>
-	</row>
-
-	<row id="mes_boxmenu_08_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：ポケモンにもちものをもたせる</comment>
-		<language name="JPN" font=" 1:font_system" width="72">もたせる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">もたせる</language>
-	</row>
-
-	<row id="mes_boxmenu_08_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：ポケモンのもちものをあずかる</comment>
-		<language name="JPN" font=" 1:font_system" width="72">あずかる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">あずかる</language>
-	</row>
-
-	<row id="mes_boxmenu_08_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：ポケモンが持っているもちものの情報をみる</comment>
-		<language name="JPN" font=" 1:font_system" width="72">せつめい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">せつめい</language>
-	</row>
-
-	<row id="mes_boxmenu_08_04" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：ポケモンのもちものをいれかえる</comment>
-		<language name="JPN" font=" 1:font_system" width="72">とりかえる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">とりかえる</language>
-	</row>
-
-	<row id="mes_boxmenu_08_05" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：ポケモンのもちものをバッグへ移す</comment>
-		<language name="JPN" font=" 1:font_system" width="72">バッグへ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">バッグへ</language>
-	</row>
-
-	<row id="mes_boxmenu_08_06" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：もちもの処理項目ウインドウをとじる</comment>
-		<language name="JPN" font=" 1:font_system" width="72">やめる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">やめる</language>
-	</row>
-
-	<row id="mes_boxmenu_09_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：つよさくらべで左に固定</comment>
-		<language name="JPN" font=" 1:font_system" width="72">ひだりにこてい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">ひだりにこてい</language>
-	</row>
-
-	<row id="mes_boxmenu_09_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：つよさくらべで右に固定</comment>
-		<language name="JPN" font=" 1:font_system" width="72">みぎにこてい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">みぎにこてい</language>
-	</row>
-
-	<row id="mes_boxmenu_10_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：項目決定時の確認</comment>
-		<language name="JPN" font=" 1:font_system" width="72">はい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">はい</language>
-	</row>
-
-	<row id="mes_boxmenu_10_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>選択項目：項目決定時の確認</comment>
-		<language name="JPN" font=" 1:font_system" width="72">いいえ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">いいえ</language>
-	</row>
-
-	<row id="mes_boxbutton_01_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_01_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>手持ちポケモン表示ボタン</comment>
-		<language name="JPN" font=" 1:font_system" width="72">てもちポケモン</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">てもちポケモン</language>
+		<language name="JPN" font=" 1:small" width="72">てもちポケモン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">てもちポケモン</language>
 	</row>
 
-	<row id="mes_boxbutton_01_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_01_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>ボックス移動ボタン</comment>
-		<language name="JPN" font=" 1:font_system" width="72">ポケモンいどう</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">ポケモンいどう</language>
+		<language name="JPN" font=" 1:small" width="72">ポケモンいどう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンいどう</language>
 	</row>
 
-	<row id="mes_boxbutton_01_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_01_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>ボックス画面終了ボタン</comment>
-		<language name="JPN" font=" 1:font_system" width="72">もどる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">もどる</language>
+		<language name="JPN" font=" 1:small" width="72">もどる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">もどる</language>
 	</row>
 
-	<row id="mes_boxbutton_02_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_01_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
+		<language name="JPN" font=" 1:small" width="72">ボックスをきりかえる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ボックスをきりかえる</language>
+	</row>
+
+	<row id="mes_boxbutton_01_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
+		<language name="JPN" font=" 1:small" width="72">もちものせいり</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">もちものせいり</language>
+	</row>
+
+	<row id="mes_boxbutton_02_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>メニュー</comment>
-		<language name="JPN" font=" 1:font_system" width="72">ようすをみる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">ようすをみる</language>
+		<language name="JPN" font=" 1:small" width="72">ようすをみる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ようすをみる</language>
 	</row>
 
-	<row id="mes_boxbutton_02_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_02_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>メニュー</comment>
-		<language name="JPN" font=" 1:font_system" width="72">もちもの</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">もちもの</language>
+		<language name="JPN" font=" 1:small" width="72">もちもの</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">もちもの</language>
 	</row>
 
-	<row id="mes_boxbutton_02_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_02_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>メニュー</comment>
-		<language name="JPN" font=" 1:font_system" width="72">マーキング</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">マーキング</language>
+		<language name="JPN" font=" 1:small" width="72">マーキング</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">マーキング</language>
 	</row>
 
-	<row id="mes_boxbutton_02_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_02_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>メニュー</comment>
-		<language name="JPN" font=" 1:font_system" width="72">にがす</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">にがす</language>
+		<language name="JPN" font=" 1:small" width="72">にがす</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">にがす</language>
 	</row>
 
-	<row id="mes_boxbutton_02_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_02_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>メニュー</comment>
-		<language name="JPN" font=" 1:font_system" width="72">つれていく</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">つれていく</language>
+		<language name="JPN" font=" 1:small" width="72">つれていく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">つれていく</language>
 	</row>
 
-	<row id="mes_boxbutton_02_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_02_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>メニュー</comment>
-		<language name="JPN" font=" 1:font_system" width="72">あずける</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">あずける</language>
+		<language name="JPN" font=" 1:small" width="72">あずける</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">あずける</language>
 	</row>
 
-	<row id="mes_boxbutton_03_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_02_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
+		<comment>メニューを閉じる</comment>
+		<language name="JPN" font=" 1:small" width="72">とじる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">とじる</language>
+	</row>
+
+	<row id="mes_boxbutton_03_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>マーキングメニュー</comment>
-		<language name="JPN" font=" 1:font_system" width="72">けってい</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">けってい</language>
+		<language name="JPN" font=" 1:small" width="72">けってい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">けってい</language>
 	</row>
 
-	<row id="mes_boxbutton_03_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_03_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>マーキングメニュー</comment>
-		<language name="JPN" font=" 1:font_system" width="72">やめる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">やめる</language>
+		<language name="JPN" font=" 1:small" width="72">やめる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">やめる</language>
 	</row>
 
-	<row id="mes_boxbutton_04_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_04_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>手持ちポケモンボタン１</comment>
-		<language name="JPN" font=" 1:font_system" width="72">いれかえ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">いれかえ</language>
+		<language name="JPN" font=" 1:small" width="72">いれかえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">いれかえ</language>
 	</row>
 
-	<row id="mes_boxbutton_04_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_04_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>手持ちポケモンボタン２</comment>
-		<language name="JPN" font=" 1:font_system" width="72">やめる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">やめる</language>
+		<language name="JPN" font=" 1:small" width="72">やめる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">やめる</language>
 	</row>
 
-	<row id="mes_boxbutton_04_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_04_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>手持ちポケモン非表示</comment>
-		<language name="JPN" font=" 1:font_system" width="72">やめる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">やめる</language>
+		<language name="JPN" font=" 1:small" width="72">やめる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">やめる</language>
 	</row>
 
-	<row id="mes_boxbutton_05_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_05_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>ボックス移動メニュー</comment>
-		<language name="JPN" font=" 1:font_system" width="72">ボックスをきりかえる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">ボックスをきりかえる</language>
+		<language name="JPN" font=" 1:small" width="72">ボックスを
+きりかえる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ボックスを
+きりかえる</language>
 	</row>
 
-	<row id="mes_boxbutton_06_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_06_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>壁紙変更メニュー</comment>
-		<language name="JPN" font=" 1:font_system" width="72">かべがみを
+		<language name="JPN" font=" 1:small" width="72">かべがみを
 はりかえる</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">かべがみを
+		<language name="JPN_KANJI" font=" 1:small" width="72">かべがみを
 はりかえる</language>
 	</row>
 
-	<row id="mes_boxbutton_07_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,">
+	<row id="mes_boxbutton_07_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>ポケモンを預けるメニュー</comment>
-		<language name="JPN" font=" 1:font_system" width="72">ポケモンを
+		<language name="JPN" font=" 1:small" width="72">ポケモンを
 あずける</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="72">ポケモンを
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンを
 あずける</language>
+	</row>
+
+	<row id="mes_boxbutton_08_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
+		<comment>道具整理メニュー</comment>
+		<language name="JPN" font=" 1:small" width="72">バッグへ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">バッグへ</language>
+	</row>
+
+	<row id="mes_boxbutton_08_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
+		<comment>道具整理メニュー</comment>
+		<language name="JPN" font=" 1:small" width="72">もたせる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">もたせる</language>
+	</row>
+
+	<row id="mes_box_subst_01_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<comment>上画面性別</comment>
+		<language name="JPN" font=" 1:small" width="72">♂</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">♂</language>
+	</row>
+
+	<row id="mes_box_subst_01_02" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<comment>上画面性別</comment>
+		<language name="JPN" font=" 1:small" width="72">♀</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">♀</language>
+	</row>
+
+	<row id="mes_box_subst_01_03" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<comment>上画面特性</comment>
+		<language name="JPN" font=" 1:small" width="72">[1:06:とくせい名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">[1:06:とくせい名:0]</language>
+	</row>
+
+	<row id="mes_box_subst_01_04" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<comment>上画面性格</comment>
+		<language name="JPN" font=" 1:small" width="72">[1:08:せいかく:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">[1:08:せいかく:0]</language>
+	</row>
+
+	<row id="mes_box_subst_01_05" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<comment>上画面持ち物</comment>
+		<language name="JPN" font=" 1:small" width="72">[1:09:どうぐ名:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">[1:09:どうぐ名:0]</language>
+	</row>
+
+	<row id="mes_box_subst_01_06" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<comment>上画面</comment>
+		<language name="JPN" font=" 1:small" width="72">せいかく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">せいかく</language>
+	</row>
+
+	<row id="mes_box_subst_01_07" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<comment>上画面</comment>
+		<language name="JPN" font=" 1:small" width="72">とくせい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">とくせい</language>
+	</row>
+
+	<row id="mes_box_subst_01_08" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<comment>上画面</comment>
+		<language name="JPN" font=" 1:small" width="72">もちもの</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">もちもの</language>
+	</row>
+
+	<row id="mes_box_subst_01_09" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<comment>上画面レベル</comment>
+		<language name="JPN" font=" 1:small" width="72">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="mes_box_subst_01_10" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<comment>上画面図鑑番号</comment>
+		<language name="JPN" font=" 1:small" width="72">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="mes_box_subst_01_11" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<comment>持ち物がない場合</comment>
+		<language name="JPN" font=" 1:small" width="72">なし</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">なし</language>
+	</row>
+
+	<row id="mes_box_subst_01_12" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<comment>タマゴのパラメータ</comment>
+		<language name="JPN" font=" 1:small" width="72">？？？</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">？？？</language>
+	</row>
+
+	<row id="mes_box_subst_01_13" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<comment>上画面レベル</comment>
+		<language name="JPN" font=" 1:small" width="72">Lv</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">Lv</language>
+	</row>
+
+	<row id="mes_box_subst_01_14" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<comment>上画面図鑑番号</comment>
+		<language name="JPN" font=" 1:small" width="72">No</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">No</language>
+	</row>
+
+	<row id="mes_box_yes" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<language name="JPN" font=" 1:small" width="72">はい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">はい</language>
+	</row>
+
+	<row id="mes_box_no" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,,,,,,,">
+		<language name="JPN" font=" 1:small" width="72">いいえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">いいえ</language>
 	</row>
 
 	<flowchart-group-list>

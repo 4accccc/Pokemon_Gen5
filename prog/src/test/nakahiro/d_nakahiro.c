@@ -15,6 +15,9 @@
 #include "poke_tool/monsno_def.h"
 #include "app/box2.h"
 
+#include "message.naix"
+#include "msg/msg_d_nakahiro.h"
+
 
 //============================================================================================
 //	定数定義
@@ -128,7 +131,12 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 	case MAIN_SEQ_BOX_CALL:
 		wk->box_data.sv_box    = GAMEDATA_GetBoxManager( wk->gamedata );
 		wk->box_data.pokeparty = GAMEDATA_GetMyPokemon( wk->gamedata );
-		wk->box_data.mode      = BOX_MODE_SEIRI;
+		wk->box_data.myitem    = GAMEDATA_GetMyItem( wk->gamedata );
+		wk->box_data.mystatus  = GAMEDATA_GetMyStatus( wk->gamedata );
+		wk->box_data.callMode  = BOX_MODE_SEIRI;
+
+		wk->box_data.gsyswk    = DEBUG_GameSysWorkPtrGet();
+
 		SetBoxPoke( wk );
 		SetPartyPoke( wk );
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(box), &BOX2_ProcData, &wk->box_data );
@@ -182,11 +190,19 @@ static void SetBoxPoke( NAKAHIRO_MAIN_WORK * wk )
 {
 	const POKEMON_PASO_PARAM * ppp;
 	POKEMON_PARAM * pp;
+	GFL_MSGDATA * man;
+	STRBUF * str;
 	u32	i;
+
+	man = GFL_MSG_Create(
+						GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_nakahiro_dat, wk->heapID );
+	str = GFL_MSG_CreateString( man, pokename );
 
 //	for( i=MONSNO_HUSIGIDANE; i<=MONSNO_END; i++ ){
 	for( i=MONSNO_HUSIGIDANE; i<=40; i++ ){
 		pp  = PP_Create( i, 50, 0, wk->heapID );
+    PP_Put( pp, ID_PARA_oyaname, (u32)str );
+    PP_Put( pp, ID_PARA_oyasex, PTL_SEX_MALE );
 		ppp = PP_GetPPPPointerConst( pp );
 		if( BOXDAT_PutPokemon( wk->box_data.sv_box, ppp ) == FALSE ){
 			GFL_HEAP_FreeMemory( pp );
@@ -194,6 +210,27 @@ static void SetBoxPoke( NAKAHIRO_MAIN_WORK * wk )
 		}
 		GFL_HEAP_FreeMemory( pp );
 	}
+
+  GFL_STR_DeleteBuffer( str );
+	GFL_MSG_Delete( man );
+
+/*
+  ID_PARA_oyaname,              //親の名前（STRBUF使用）
+  ID_PARA_oyaname_raw,            //親の名前（STRCODE配列使用 ※許可制）
+  ID_PARA_get_year,             //捕まえた年
+  ID_PARA_get_month,              //捕まえた月
+  ID_PARA_get_day,              //捕まえた日
+  ID_PARA_birth_year,             //生まれた年
+  ID_PARA_birth_month,            //生まれた月
+  ID_PARA_birth_day,              //生まれた日
+  ID_PARA_get_place,              //捕まえた場所
+  ID_PARA_birth_place,            //生まれた場所
+  ID_PARA_pokerus,              //ポケルス
+  ID_PARA_get_ball,             //捕まえたボール
+  ID_PARA_get_level,              //捕まえたレベル
+  ID_PARA_oyasex,               //親の性別
+*/
+
 }
 
 static void SetPartyPoke( NAKAHIRO_MAIN_WORK * wk )
@@ -204,13 +241,24 @@ static void SetPartyPoke( NAKAHIRO_MAIN_WORK * wk )
 		MONSNO_ZENIGAME,
 	};
 	POKEMON_PARAM * pp;
+	GFL_MSGDATA * man;
+	STRBUF * str;
 	u32	i;
+
+	man = GFL_MSG_Create(
+						GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_nakahiro_dat, wk->heapID );
+	str = GFL_MSG_CreateString( man, pokename );
 
 	for( i=0; i<3; i++ ){
 		pp = PP_Create( mons[i], 50, 0, wk->heapID );
+    PP_Put( pp, ID_PARA_oyaname, (u32)str );
+    PP_Put( pp, ID_PARA_oyasex, PTL_SEX_MALE );
 		PokeParty_Add( wk->box_data.pokeparty, pp );
 		GFL_HEAP_FreeMemory( pp );
 	}
+
+  GFL_STR_DeleteBuffer( str );
+	GFL_MSG_Delete( man );
 }
 
 

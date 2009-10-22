@@ -10,12 +10,14 @@
 //============================================================================================
 #pragma	once
 
+#include "pm_define.h"
 #include "savedata/box_savedata.h"
 #include "system/palanm.h"
 #include "system/bgwinfrm.h"
 #include "system/cursor_move.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "app/app_taskmenu.h"
 #include "app/box2.h"
 
 /*
@@ -30,20 +32,6 @@
 #include "poketool/pokeparty.h"
 #include "poketool/boxdata.h"
 #include "itemtool/myitem.h"
-
-// 日本版修正済みバグ定義
-#define	BTS_5462_FIX	( 1 )		// ボックス名のタッチ範囲バグ
-#define	BTS_5470_FIX	( 1 )		// ギラティナのフォルムチェンジの上画面バグ
-#define	BTS_5491_FIX	( 1 )		// ギラティナ以外が「はっきんだま」を持てるバグ
-
-// 日本版未修正バグ定義
-#define	BTS_5461_FIX	( GS_BTS5461_20090707_FIX )	//「Ｙようすをみる」から戻ってきたときの上画面技表示バグ
-#define	BTS_5463_FIX	( GS_BTS5463_20090707_FIX )	//「あずける」でポケモンアイコンのマスクが解除されるバグ
-#define	BTS_5465_FIX	( GS_BTS5465_20090707_FIX )	//「もちものせいり」アイテムアイコンの優先度が低いバグ
-#define	BTS_5473_FIX	( GS_BTS5473_20090707_FIX )	// 手カーソルの表示位置バグ
-#define	BTS_5475_FIX	( GS_BTS5475_20090707_FIX )	// 手カーソルの表示アニメバグ
-#define	BTS_5482_FIX	( GS_BTS5482_20090707_FIX )	// ボックス切り替え矢印表示バグ
-#define	BTS_5487_FIX	( GS_BTS5487_20090707_FIX )	// トレイ選択中に「Ｙようすをみる」が表示されるバグ
 */
 
 //============================================================================================
@@ -52,7 +40,7 @@
 
 // BGパレット
 //#define	BOX2MAIN_BG_PAL_YNWIN	( 8 )		// はい・いいえウィンド（２本）
-//#define	BOX2MAIN_BG_PAL_TALKWIN	( 10 )
+#define	BOX2MAIN_BG_PAL_TALKWIN	( 10 )
 #define	BOX2MAIN_BG_PAL_TALKFNT	( 11 )
 #define	BOX2MAIN_BG_PAL_SELWIN	( 12 )		// 選択ボタン（２本）
 #define	BOX2MAIN_BG_PAL_WALL1		( 14 )		// 壁紙１
@@ -63,14 +51,14 @@
 // 選択ウィンドウ定義
 #define	BOX2MAIN_SELWIN_CGX_SIZ	( 3 * 4 )
 #define	BOX2MAIN_SELWIN_CGX_POS	( 1024 - BOX2MAIN_SELWIN_CGX_SIZ * 2 )
-//#define	BOX2MAIN_SELWIN_CGX_OFF	( BOX2MAIN_SELWIN_CGX_POS )
+#define	BOX2MAIN_SELWIN_CGX_OFF	( BOX2MAIN_SELWIN_CGX_POS )
 //#define	BOX2MAIN_SELWIN_CGX_ON	( BOX2MAIN_SELWIN_CGX_OFF + BOX2MAIN_SELWIN_CGX_SIZ )
 // はい・いいえウィンドウ定義
-//#define	BOX2MAIN_YNWIN_CGX_SIZ	( TOUCH_SW_USE_CHAR_NUM )
-//#define	BOX2MAIN_YNWIN_CGX_POS	( BOX2MAIN_SELWIN_CGX_POS - BOX2MAIN_YNWIN_CGX_SIZ )
+#define	BOX2MAIN_YNWIN_CGX_SIZ	( 9 )//( TOUCH_SW_USE_CHAR_NUM )
+#define	BOX2MAIN_YNWIN_CGX_POS	( BOX2MAIN_SELWIN_CGX_POS - BOX2MAIN_YNWIN_CGX_SIZ )
 // システムウィンドウ定義
 //#define	BOX2MAIN_SYSWIN_CGX_SIZ	( TALK_WIN_CGX_SIZ )
-//#define	BOX2MAIN_SYSWIN_CGX_POS	( BOX2MAIN_YNWIN_CGX_POS - TALK_WIN_CGX_SIZ )
+#define	BOX2MAIN_SYSWIN_CGX_POS	( BOX2MAIN_YNWIN_CGX_POS - TALK_WIN_CGX_SIZ )
 
 
 /*
@@ -96,8 +84,7 @@
 #define	BOX2OBJ_POKEICON_V_MAX		( BOX_MAX_RAW )
 #define	BOX2OBJ_POKEICON_TRAY_MAX	( BOX_MAX_POS )
 
-//#define	BOX2OBJ_POKEICON_MINE_MAX	( TEMOTI_POKEMAX )
-#define	BOX2OBJ_POKEICON_MINE_MAX	( 6 )
+#define	BOX2OBJ_POKEICON_MINE_MAX	( TEMOTI_POKEMAX )
 
 #define	BOX2OBJ_POKEICON_MAX		( BOX2OBJ_POKEICON_TRAY_MAX + BOX2OBJ_POKEICON_MINE_MAX )
 
@@ -112,16 +99,8 @@
 #define	BOX2MAIN_GETPOS_NONE		( 0xff )	// ポケモン未取得
 
 #define	BOX2MAIN_PPP_GET_MINE		( 0xff )	// BOX2MAIN_PPPGet()で手持ちを取得するときのトレイ定義
-/*
-#define	BOX2MAIN_BOXMOVE_FLG		( 0x80 )	// 他のトレイに投げるときのフラグ
 
-// ※未使用定義
-enum {
-	BOX2MAIN_BLEND_NONE = 0,
-	BOX2MAIN_BLEND_TRAY,
-	BOX2MAIN_BLEND_POKE,
-};
-*/
+#define	BOX2MAIN_BOXMOVE_FLG		( 0x80 )	// 他のトレイに投げるときのフラグ
 
 // キャラリソースID
 enum {
@@ -251,6 +230,8 @@ enum {
 	BOX2BMPWIN_ID_BOXMV_BTN,	//「ボックスをきりかえる」
 	BOX2BMPWIN_ID_Y_STATUS,		// Ｙボタンステータス
 
+	BOX2BMPWIN_ID_TRAY_NAME,	// トレイ名
+
 	BOX2BMPWIN_ID_MAX
 };
 
@@ -285,6 +266,7 @@ enum {
 	BOX2MAIN_FNTOAM_TRAY_NUM,
 	BOX2MAIN_FNTOAM_MAX
 };
+*/
 
 // VBLANK関数ワーク
 typedef struct {
@@ -296,11 +278,13 @@ typedef struct {
 //	BOOL flg;		// 稼動フラグ
 }BOX2_IRQWK;
 
+/*
 // ＯＡＭフォントワーク
 typedef struct {
 	FONTOAM_OBJ_PTR oam;
 	CHAR_MANAGER_ALLOCDATA	cma;
 }BOX2_FONTOAM;
+*/
 
 // ボタンアニメモード
 enum {
@@ -322,14 +306,10 @@ typedef struct {
 	u8	btn_sx;
 	u8	btn_sy;
 }BUTTON_ANM_WORK;
-*/
 
 // ボックス画面アプリワーク
 typedef struct {
 /*
-	BOX2_IRQWK	vfunk;			// VBLANK関数ワーク
-
-
 	// ＯＡＭフォント
 	FONTOAM_SYS_PTR	fntoam;
 	BOX2_FONTOAM	fobj[BOX2MAIN_FNTOAM_MAX];
@@ -338,45 +318,14 @@ typedef struct {
 	TOUCH_SW_SYS * tsw;		// タッチウィンドウ
 	u16	ynID;				// はい・いいえＩＤ
 
-	u32	old_cur_pos;		// 前回のカーソル位置（外部で必要なため）
-
-
-
-	u8	party_frm;			// 手持ちポケモンフレーム制御
-
-	u8	poke_get_key;		// キーでの取得位置
-	u8	poke_put_key;		// キーでの配置位置
-
-	u8	wallpaper_pos;		// 壁紙選択位置
-
-	u8	subdisp_win_swap:4;		// サブ画面BMPWINのスワップフラグ
-	u8	subdisp_waza_put:3;		// サブ画面技BMPWINのスワップフラグ
-	u8	poke_free_err:1;		// 逃がすが実行できないとき１
-
-
-	u32	tpx;				// タッチＸ座標
-	u32	tpy;				// タッチＹ座標
-
-	u32	pokeMark;			// マーキング変更ワーク
-
-	BOOL poke_mv_cur_flg;	// ポケモンアイコン移動後にアウトラインを表示するか
-
-	u8	trayicon_cgx[BOX_MAX_TRAY][0x40*4*4];	// タイプアイコンのキャラデータ
-
-	u16	get_item;			// 取得アイテム
-	u16	get_item_init_pos;	// アイテム取得位置
-
-	BOOL cancel_flg;		// ポケモン取得キャンセルフラグ
-
 	u16	pokegra_swap;		// 上画面ポケモングラフィック切替フラグ
 	u16	obj_trans_stop;		// VBLANKでのOBJ描画を停止するフラグ ( 1 = stop )
 
-	BUTTON_ANM_WORK	bawk;	// ボタンアニメワーク
 
-	void * seqwk;			// シーケンスワーク
 */
-
 	GFL_TCB * vtask;					// TCB ( VBLANK )
+
+	BOX2_IRQWK	vfunk;			// VBLANK関数ワーク
 
 	PALETTE_FADE_PTR	pfd;		// パレットフェードデータ
 
@@ -393,15 +342,27 @@ typedef struct {
 
 	PRINT_UTIL	win[BOX2BMPWIN_ID_MAX];		// BMPWIN
 
-	ARCHANDLE * ppd_ah;				// パーソナルデータのアークハンドル
+	// はい・いいえ関連
+//	TOUCH_SW_SYS * tsw;		// タッチウィンドウ
+	APP_TASKMENU_ITEMWORK	ynList[2];
+	APP_TASKMENU_RES * ynRes;
+	APP_TASKMENU_WORK * ynWork;
+	u16	ynID;				// はい・いいえＩＤ
+
+	BUTTON_ANM_WORK	bawk;				// ボタンアニメワーク
+
+//	ARCHANDLE * ppd_ah;				// パーソナルデータのアークハンドル
 
 	// ポケモンアイコン
 	ARCHANDLE * pokeicon_ah;
 
 	u8	pokeicon_cgx[BOX2OBJ_POKEICON_TRAY_MAX][BOX2OBJ_POKEICON_CGX_SIZE];
-	u8	pokeicon_exist[BOX2OBJ_POKEICON_TRAY_MAX];
 	u8	pokeicon_pal[BOX2OBJ_POKEICON_TRAY_MAX];
 	u8	pokeicon_id[BOX2OBJ_POKEICON_MAX];
+	BOOL	pokeicon_exist[BOX2OBJ_POKEICON_TRAY_MAX];
+
+	// トレイアイコンのキャラデータ
+	u8	trayicon_cgx[BOX_MAX_TRAY][0x40*4*4];
 
 	// OBJ
 	GFL_CLUNIT * clunit;
@@ -410,12 +371,39 @@ typedef struct {
 	u32	palRes[BOX2MAIN_PALRES_MAX];
 	u32	celRes[BOX2MAIN_CELRES_MAX];
 
+	BOOL cancel_flg;		// ポケモン取得キャンセルフラグ
+
+	u32	old_cur_pos;		// 前回のカーソル位置（外部で必要なため）
+
+	u16	get_item;						// 取得アイテム
+	u16	get_item_init_pos;	// アイテム取得位置
+
+	u8	subdisp_win_swap:4;		// サブ画面BMPWINのスワップフラグ
+	u8	subdisp_waza_put:3;		// サブ画面技BMPWINのスワップフラグ
+	u8	poke_free_err:1;			// 逃がすが実行できないとき１
+
+	u8	party_frm;			// 手持ちポケモンフレーム制御
+
+	BOOL poke_mv_cur_flg;	// ポケモンアイコン移動後にアウトラインを表示するか
+
+	u32	pokeMark;			// マーキング変更ワーク
+
 	// ボックス切り替え関連
 	s8	wall_px;
 	u8	wall_area;
 
+	u8	wallpaper_pos;				// 壁紙選択位置
+
+	u8	poke_get_key;		// キーでの取得位置
+	u8	poke_put_key;		// キーでの配置位置
+
+	u32	tpx;				// タッチＸ座標
+	u32	tpy;				// タッチＹ座標
+
 	int	wipe_seq;							// ワイプ後のシーケンス
-//	int	wait;									// ウェイト
+	int	wait;									// ウェイト
+
+	void * seqwk;			// シーケンスワーク
 
 }BOX2_APP_WORK;
 
@@ -428,21 +416,29 @@ typedef struct {
 	MYITEM * item;			// アイテムデータ
 	CONFIG * config;		// コンフィグデータ
 
-	GFL_PROC * subProcFunc;		// サブプロセス
-//↑[GS_CONVERT_TAG]
+
+	u8	pos;				// 現在のカーソル位置
+*/
+
+
+	BOX2_GFL_PROC_PARAM * dat;	// 外部データ
+
+//	GFL_PROC * subProcFunc;		// サブプロセス
 	void * subProcWork;		// サブプロセスで使用するワーク
 	u16	subRet;				// サブプロセスの戻り値などを保存する場所
 	u8	subProcType;		// サブプロセスの種類
 
-	u8	pos;				// 現在のカーソル位置
 
-	u8	get_pos;			// 取得位置
+	u8	tray;										// 現在のトレイ
+
+	u8	get_pos;								// 取得位置
+
+	u8	box_mv_pos;							// ボックス移動選択位置
 
 	u8	move_mode;			// ポケモン移動モード
 
-	u8	party_sel_flg;		// 手持ち選択フラグ
-	u8	box_mv_flg;			// ボックス移動フラグ
-	u8	box_mv_pos;			// ボックス移動選択位置
+	u8	quick_mode;			//「ポケモンいどう」のモード ( 0 = 通常, 1 = トレイポケモン, 2 = 手持ちポケモン )
+	u8	quick_get;			//「ポケモンいどう」メニューでの取得位置
 
 	u8	y_status_flg;		// Ｙボタンでステータスを開いたかどうか
 	u8	y_status_hand;		// Ｙステータス時に掴んでいるか
@@ -450,17 +446,11 @@ typedef struct {
 
 	u8	pokechg_mode;		// 入れ替えモード
 
-	u8	quick_mode;			//「ポケモンいどう」のモード ( 0 = 通常, 1 = トレイポケモン, 2 = 手持ちポケモン )
-	u8	quick_get;			//「ポケモンいどう」メニューでの取得位置
+	u8	party_sel_flg;		// 手持ち選択フラグ
+	u8	box_mv_flg;			// ボックス移動フラグ
+//	u8	box_mv_pos;			// ボックス移動選択位置
 
 	u32	cur_rcv_pos;		// カーソル表示復帰位置
-
-
-*/
-	BOX2_GFL_PROC_PARAM * dat;	// 外部データ
-
-	u8	tray;										// 現在のトレイ
-
 
 	int	next_seq;								// 次のシーケンス
 
@@ -496,10 +486,9 @@ enum {
 	BOX2MAIN_TRAY_SCROLL_NONE,
 };
 
-/*
 // ポケモンを逃がす処理のワーク
 typedef struct {
-	CATS_ACT_PTR	cap;	// アイコンセルアクター
+	GFL_CLWK * clwk;		// アイコンセルアクター
 	u16	check_cnt;			// 技チェックカウント
 	u8	check_flg;			// 技チェックフラグ ( 0xff = def, 0 = none, 1 = hit )
 	u8	scale_cnt;			// 拡縮カウント
@@ -513,7 +502,6 @@ typedef struct {
 #define	BOX2MAIN_PARTYPOKE_FRM_H_SPD	( 8 )	// 手持ちポケモンフレーム横スクロール速度
 #define	BOX2MAIN_PARTYPOKE_FRM_H_CNT	( 19 )	// 手持ちポケモンフレーム横スクロールカウント
 
-
 // ポケモン移動モード
 enum {
 	BOX2MAIN_POKEMOVE_MODE_TRAY = 0,
@@ -523,7 +511,7 @@ enum {
 
 // 取得ポケモン移動
 typedef struct {
-	POKEMON_PARAM * pp;
+//	POKEMON_PARAM * pp;
 	u32	df_pos;
 	u32	mv_pos;
 	u32	flg;
@@ -558,10 +546,8 @@ typedef struct {
 	u32	cnt:30;
 }BOX2MAIN_ITEMMOVE_WORK;
 
-
 // 表示されているトレイアイコンのトレイ番号の基準値を取得
 #define	BOX2MAIN_MV_TRAY_DEF(a)	( a / BOX2OBJ_TRAYICON_MAX * BOX2OBJ_TRAYICON_MAX )
-
 
 // カーソル移動
 typedef struct {
@@ -573,7 +559,6 @@ typedef struct {
 	u32	my:1;		// Ｙ移動方向
 	u32	cnt:30;		// カウンタ
 }BOX2MAIN_CURSORMOVE_WORK;
-*/
 
 // 上画面表示用データ
 typedef struct {
@@ -753,7 +738,7 @@ extern u32 BOX2MAIN_PokeParaGet( BOX2_SYS_WORK * syswk, u32 pos, int prm, void *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PokeParaPut( BOX2_SYS_WORK * syswk, u32 pos, int prm, void * buf );
+extern void BOX2MAIN_PokeParaPut( BOX2_SYS_WORK * syswk, u32 pos, int prm, u32 buf );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -766,7 +751,7 @@ extern void BOX2MAIN_PokeParaPut( BOX2_SYS_WORK * syswk, u32 pos, int prm, void 
  * @return	POKEMON_PASO_PARAM
  */
 //--------------------------------------------------------------------------------------------
-extern const POKEMON_PASO_PARAM * BOX2MAIN_PPPGet( BOX2_SYS_WORK * syswk, u32 tray, u32 pos );
+extern POKEMON_PASO_PARAM * BOX2MAIN_PPPGet( BOX2_SYS_WORK * syswk, u32 tray, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -808,7 +793,7 @@ extern u32 BOX2MAIN_GetWallPaperNumber( BOX2_SYS_WORK * syswk, u32 num );
 
 
 
-#if 0
+#if 1
 //============================================================================================
 //	システム関連
 //============================================================================================
@@ -1050,33 +1035,6 @@ extern void BOX2MAIN_KeyTouchStatusSet( BOX2_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern u32 BOX2MAIN_PokeParaGet( BOX2_SYS_WORK * syswk, u32 pos, int prm, void * buf );
-
-//--------------------------------------------------------------------------------------------
-/**
- * ポケモンデータ設定
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	pos		位置
- * @param	prm		設定パラメータ
- * @param	buf		設定データ
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PokeParaPut( BOX2_SYS_WORK * syswk, u32 pos, int prm, void * buf );
-
-//--------------------------------------------------------------------------------------------
-/**
- * POKEMON_PASO_PARAM取得
- *
- * @param	syswk	ボックス画面システムワーク
- * @param	tray	トレイ番号
- * @param	pos		位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern POKEMON_PASO_PARAM * BOX2MAIN_PPPGet( BOX2_SYS_WORK * syswk, u32 tray, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1331,7 +1289,7 @@ extern void BOX2MAIN_BgFrameWorkExit( BOX2_APP_WORK * appwk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_MarkingFramePut( BOX2_SYS_WORK * syswk );
+//extern void BOX2MAIN_MarkingFramePut( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1343,7 +1301,7 @@ extern void BOX2MAIN_MarkingFramePut( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_MarkingSwitch( BOX2_SYS_WORK * syswk, u32 pos );
+//extern void BOX2MAIN_MarkingSwitch( BOX2_SYS_WORK * syswk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1354,7 +1312,7 @@ extern void BOX2MAIN_MarkingSwitch( BOX2_SYS_WORK * syswk, u32 pos );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_MarkingFrameInSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_MarkingFrameInSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1365,7 +1323,7 @@ extern void BOX2MAIN_MarkingFrameInSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_MarkingFrameOutSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_MarkingFrameOutSet( BGWINFRM_WORK * wk );
 
 
 //============================================================================================
@@ -1381,7 +1339,7 @@ extern void BOX2MAIN_MarkingFrameOutSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PartyPokeFramePut( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_PartyPokeFramePut( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1392,7 +1350,7 @@ extern void BOX2MAIN_PartyPokeFramePut( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PartyPokeFramePutRight( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_PartyPokeFramePutRight( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1403,7 +1361,7 @@ extern void BOX2MAIN_PartyPokeFramePutRight( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PartyPokeFrameOff( BOX2_SYS_WORK * syswk );
+//extern void BOX2MAIN_PartyPokeFrameOff( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1414,7 +1372,7 @@ extern void BOX2MAIN_PartyPokeFrameOff( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PartyPokeFrameInitPutLeft( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_PartyPokeFrameInitPutLeft( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1425,7 +1383,7 @@ extern void BOX2MAIN_PartyPokeFrameInitPutLeft( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PartyPokeFrameInitPutRight( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_PartyPokeFrameInitPutRight( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1436,7 +1394,7 @@ extern void BOX2MAIN_PartyPokeFrameInitPutRight( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PartyPokeFrameInSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_PartyPokeFrameInSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1447,7 +1405,7 @@ extern void BOX2MAIN_PartyPokeFrameInSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PartyPokeFrameOutSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_PartyPokeFrameOutSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1458,7 +1416,7 @@ extern void BOX2MAIN_PartyPokeFrameOutSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PartyPokeFrameRightMoveSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_PartyPokeFrameRightMoveSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1469,7 +1427,7 @@ extern void BOX2MAIN_PartyPokeFrameRightMoveSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_AzukeruPartyPokeFrameRightMoveSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_AzukeruPartyPokeFrameRightMoveSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1480,7 +1438,7 @@ extern void BOX2MAIN_AzukeruPartyPokeFrameRightMoveSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PartyPokeFrameLeftMoveSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_PartyPokeFrameLeftMoveSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1491,7 +1449,7 @@ extern void BOX2MAIN_PartyPokeFrameLeftMoveSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_AzukeruPartyPokeFrameLeftMoveSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_AzukeruPartyPokeFrameLeftMoveSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1503,7 +1461,7 @@ extern void BOX2MAIN_AzukeruPartyPokeFrameLeftMoveSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PartyPokeFrameLoadArrange2( BGWINFRM_WORK * wk, u32 index );
+//extern void BOX2MAIN_PartyPokeFrameLoadArrange2( BGWINFRM_WORK * wk, u32 index );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1525,7 +1483,7 @@ extern void BOX2MAIN_ButtonPutTemochi( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_ButtonOutPutTemochi( BOX2_SYS_WORK * syswk );
+//extern void BOX2MAIN_ButtonOutPutTemochi( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1536,7 +1494,7 @@ extern void BOX2MAIN_ButtonOutPutTemochi( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_TemochiButtonOutSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_TemochiButtonOutSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1547,7 +1505,7 @@ extern void BOX2MAIN_TemochiButtonOutSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_TemochiButtonInSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_TemochiButtonInSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1569,7 +1527,7 @@ extern void BOX2MAIN_ButtonPutIdou( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_ButtonOutPutIdou( BOX2_SYS_WORK * syswk );
+//extern void BOX2MAIN_ButtonOutPutIdou( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1580,7 +1538,7 @@ extern void BOX2MAIN_ButtonOutPutIdou( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_IdouButtonOutSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_IdouButtonOutSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1591,7 +1549,7 @@ extern void BOX2MAIN_IdouButtonOutSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_IdouButtonInSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_IdouButtonInSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1613,7 +1571,7 @@ extern void BOX2MAIN_ButtonPutModoru( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_ButtonPutYameru( BOX2_SYS_WORK * syswk );
+//extern void BOX2MAIN_ButtonPutYameru( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1624,7 +1582,7 @@ extern void BOX2MAIN_ButtonPutYameru( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_RetButtonOutPut( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_RetButtonOutPut( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1635,7 +1593,7 @@ extern void BOX2MAIN_RetButtonOutPut( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_RetButtonOutSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_RetButtonOutSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1646,7 +1604,7 @@ extern void BOX2MAIN_RetButtonOutSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_RetButtonInSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_RetButtonInSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1658,7 +1616,7 @@ extern void BOX2MAIN_RetButtonInSet( BGWINFRM_WORK * wk );
  * @retval	"FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern BOOL BOX2MAIN_CloseButtonPutCheck( BGWINFRM_WORK * wk );
+//extern BOOL BOX2MAIN_CloseButtonPutCheck( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1669,7 +1627,7 @@ extern BOOL BOX2MAIN_CloseButtonPutCheck( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_BoxPartyButtonVanish( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_BoxPartyButtonVanish( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1680,7 +1638,7 @@ extern void BOX2MAIN_BoxPartyButtonVanish( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PokeMenuOpenPosSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_PokeMenuOpenPosSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1691,7 +1649,7 @@ extern void BOX2MAIN_PokeMenuOpenPosSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PokeMenuOff( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_PokeMenuOff( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1702,7 +1660,7 @@ extern void BOX2MAIN_PokeMenuOff( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PokeMenuInSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_PokeMenuInSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1713,7 +1671,7 @@ extern void BOX2MAIN_PokeMenuInSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_PokeMenuOutSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_PokeMenuOutSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1725,7 +1683,7 @@ extern void BOX2MAIN_PokeMenuOutSet( BGWINFRM_WORK * wk );
  * @retval	"FLASE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern BOOL BOX2MAIN_PokeMenuPutCheck( BGWINFRM_WORK * wk );
+//extern BOOL BOX2MAIN_PokeMenuPutCheck( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1736,7 +1694,7 @@ extern BOOL BOX2MAIN_PokeMenuPutCheck( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_BoxThemaMenuInSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_BoxThemaMenuInSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1747,7 +1705,7 @@ extern void BOX2MAIN_BoxThemaMenuInSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_BoxThemaMenuOutSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_BoxThemaMenuOutSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1758,7 +1716,7 @@ extern void BOX2MAIN_BoxThemaMenuOutSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_BoxMoveButtonInSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_BoxMoveButtonInSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1769,7 +1727,7 @@ extern void BOX2MAIN_BoxMoveButtonInSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_BoxMoveButtonOutSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_BoxMoveButtonOutSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1781,7 +1739,7 @@ extern void BOX2MAIN_BoxMoveButtonOutSet( BGWINFRM_WORK * wk );
  * @retval	"FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern BOOL BOX2MAIN_BoxMoveButtonCheck( BGWINFRM_WORK * wk );
+//extern BOOL BOX2MAIN_BoxMoveButtonCheck( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1792,7 +1750,7 @@ extern BOOL BOX2MAIN_BoxMoveButtonCheck( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_YStatusButtonInSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_YStatusButtonInSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1803,7 +1761,7 @@ extern void BOX2MAIN_YStatusButtonInSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_YStatusButtonPut( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_YStatusButtonPut( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1814,7 +1772,7 @@ extern void BOX2MAIN_YStatusButtonPut( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_YStatusButtonOutSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_YStatusButtonOutSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1826,7 +1784,7 @@ extern void BOX2MAIN_YStatusButtonOutSet( BGWINFRM_WORK * wk );
  * @retval	"FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-extern BOOL BOX2MAIN_YStatusButtonCheck( BGWINFRM_WORK * wk );
+//extern BOOL BOX2MAIN_YStatusButtonCheck( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1839,7 +1797,7 @@ extern BOOL BOX2MAIN_YStatusButtonCheck( BGWINFRM_WORK * wk );
  *	他画面から復帰時にボックス移動フレームを表示
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_BoxMoveFrmPut( BOX2_SYS_WORK * syswk );
+//extern void BOX2MAIN_BoxMoveFrmPut( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1850,7 +1808,7 @@ extern void BOX2MAIN_BoxMoveFrmPut( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_BoxMoveFrmInSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_BoxMoveFrmInSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1861,7 +1819,7 @@ extern void BOX2MAIN_BoxMoveFrmInSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_BoxMoveFrmOutSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_BoxMoveFrmOutSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1872,7 +1830,7 @@ extern void BOX2MAIN_BoxMoveFrmOutSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_WallPaperFrameInSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_WallPaperFrameInSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1883,7 +1841,7 @@ extern void BOX2MAIN_WallPaperFrameInSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_WallPaperFrameOutSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_WallPaperFrameOutSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1896,7 +1854,7 @@ extern void BOX2MAIN_WallPaperFrameOutSet( BGWINFRM_WORK * wk );
  * @li	壁紙変更、預けるボックス選択で使用してます
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_BoxMoveMenuInSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_BoxMoveMenuInSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1909,7 +1867,7 @@ extern void BOX2MAIN_BoxMoveMenuInSet( BGWINFRM_WORK * wk );
  * @li	壁紙変更、預けるボックス選択で使用してます
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_BoxMoveMenuOutSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_BoxMoveMenuOutSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1922,7 +1880,7 @@ extern void BOX2MAIN_BoxMoveMenuOutSet( BGWINFRM_WORK * wk );
  *	他画面から復帰時にボックステーマ変更関連フレームを表示
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_BoxThemaFrmPut( BOX2_SYS_WORK * syswk );
+//extern void BOX2MAIN_BoxThemaFrmPut( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1933,7 +1891,7 @@ extern void BOX2MAIN_BoxThemaFrmPut( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_ArrangeUnderButtonDel( BOX2_SYS_WORK * syswk );
+//extern void BOX2MAIN_ArrangeUnderButtonDel( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1944,7 +1902,7 @@ extern void BOX2MAIN_ArrangeUnderButtonDel( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_SubDispWazaFrmInSet( BOX2_APP_WORK * appwk );
+//extern void BOX2MAIN_SubDispWazaFrmInSet( BOX2_APP_WORK * appwk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1955,7 +1913,7 @@ extern void BOX2MAIN_SubDispWazaFrmInSet( BOX2_APP_WORK * appwk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_SubDispWazaFrmOutSet( BOX2_APP_WORK * appwk );
+//extern void BOX2MAIN_SubDispWazaFrmOutSet( BOX2_APP_WORK * appwk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1966,7 +1924,7 @@ extern void BOX2MAIN_SubDispWazaFrmOutSet( BOX2_APP_WORK * appwk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_SubDispWazaFrmInPosSet( BOX2_APP_WORK * appwk );
+//extern void BOX2MAIN_SubDispWazaFrmInPosSet( BOX2_APP_WORK * appwk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1988,7 +1946,7 @@ extern void BOX2MAIN_SubDispWazaFrmOutPosSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_SubDispItemFrmInSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_SubDispItemFrmInSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1999,7 +1957,7 @@ extern void BOX2MAIN_SubDispItemFrmInSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_SubDispItemFrmOutSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_SubDispItemFrmOutSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2010,7 +1968,7 @@ extern void BOX2MAIN_SubDispItemFrmOutSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_SubDispItemFrmInPosSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_SubDispItemFrmInPosSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2021,7 +1979,7 @@ extern void BOX2MAIN_SubDispItemFrmInPosSet( BGWINFRM_WORK * wk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2MAIN_SubDispItemFrmOutPosSet( BGWINFRM_WORK * wk );
+//extern void BOX2MAIN_SubDispItemFrmOutPosSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**

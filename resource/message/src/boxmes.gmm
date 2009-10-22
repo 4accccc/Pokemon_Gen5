@@ -399,13 +399,13 @@
 		<language name="JPN_KANJI" width="216">どの　かべがみに　する？</language>
 	</row>
 
-	<row id="msg_boxmes_01_12">
+	<row id="msg_boxmes_01_12" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
 		<comment>「ボックスをとじる」のボタンを押したときの確認メッセージ</comment>
 		<language name="JPN" width="216">ボックスを　しゅうりょうしますか？</language>
 		<language name="JPN_KANJI" width="216">ボックスを　しゅうりょうしますか？</language>
 	</row>
 
-	<row id="msg_boxmes_01_13">
+	<row id="msg_boxmes_01_13" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
 		<comment>Bボタンでボックスを終了させようとしたときの確認メッセージ</comment>
 		<language name="JPN" width="216">ボックスそうさを　つづけますか？</language>
 		<language name="JPN_KANJI" width="216">ボックスそうさを　つづけますか？</language>
@@ -413,11 +413,11 @@
 
 	<row id="msg_boxmes_01_14">
 		<comment>ボックスにポケモンをいれようとしたけど、ボックスがいっぱいだったメッセージ</comment>
-		<language name="JPN" width="216">このボックスは　いっぱいだ！</language>
-		<language name="JPN_KANJI" width="216">このボックスは　いっぱいだ！</language>
+		<language name="JPN" width="216">このボックスは　いっぱいです！</language>
+		<language name="JPN_KANJI" width="216">このボックスは　いっぱいです！</language>
 	</row>
 
-	<row id="msg_boxmes_01_15">
+	<row id="msg_boxmes_01_15" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
 		<comment>ポケモンのもちものをあずかろうとしたけど、バッグがいっぱいだったメッセージ</comment>
 		<language name="JPN" width="216">バッグが　いっぱいです！</language>
 		<language name="JPN_KANJI" width="216">バッグが　いっぱいです！</language>
@@ -475,31 +475,31 @@
 		<language name="JPN_KANJI" width="216">[1:09:どうぐ名:0]を　あずかりますか？</language>
 	</row>
 
-	<row id="msg_boxmes_01_25">
+	<row id="msg_boxmes_01_25" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
 		<comment>ボックスで、手持ちポケモンからメールを預かろうとしたときの警告メッセージ</comment>
-		<language name="JPN" width="216">メールをあずかることは　できません！</language>
-		<language name="JPN_KANJI" width="216">メールをあずかることは　できません！</language>
+		<language name="JPN" width="216">メールをしまうことは　できません！</language>
+		<language name="JPN_KANJI" width="216">メールをしまうことは　できません！</language>
 	</row>
 
-	<row id="msg_boxmes_01_26">
+	<row id="msg_boxmes_01_26" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
 		<comment>どうぐせいりモード：どうぐを選択したときのメッセージ</comment>
 		<language name="JPN" width="216">[1:09:どうぐ名:0]を　どうしますか？</language>
 		<language name="JPN_KANJI" width="216">[1:09:どうぐ名:0]を　どうしますか？</language>
 	</row>
 
-	<row id="msg_boxmes_01_28">
+	<row id="msg_boxmes_01_28" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
 		<language name="JPN" width="216">[1:09:どうぐ名:0]を　しまいますか？</language>
 		<language name="JPN_KANJI" width="216">[1:09:どうぐ名:0]を　しまいますか？</language>
 	</row>
 
-	<row id="msg_boxmes_01_29">
+	<row id="msg_boxmes_01_29" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
 		<language name="JPN" width="216">[1:09:どうぐ名:0]を　バッグに　いれた！</language>
 		<language name="JPN_KANJI" width="216">[1:09:どうぐ名:0]を　バッグに　いれた！</language>
 	</row>
 
-	<row id="msg_boxmes_01_30">
-		<language name="JPN" width="216">どうぐを　もたせますか？</language>
-		<language name="JPN_KANJI" width="216">どうぐを　もたせますか？</language>
+	<row id="msg_boxmes_01_30" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
+		<language name="JPN" width="216">どうぐを　もたせます</language>
+		<language name="JPN_KANJI" width="216">どうぐを　もたせます</language>
 	</row>
 
 	<row id="msg_boxmes_01_31">
@@ -532,7 +532,7 @@
 		<language name="JPN_KANJI" width="216">しんぱい　だったのかな……</language>
 	</row>
 
-	<row id="msg_boxmes_01_36">
+	<row id="msg_boxmes_01_36" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
 		<language name="JPN" width="216">タマゴは　どうぐを　もてません！</language>
 		<language name="JPN_KANJI" width="216">タマゴは　どうぐを　もてません！</language>
 	</row>
@@ -540,6 +540,32 @@
 	<row id="msg_boxmes_01_37" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
 		<language name="JPN" width="216">マークを　タッチしよう！</language>
 		<language name="JPN_KANJI" width="216">マークを　タッチしよう！</language>
+	</row>
+
+	<row id="msg_boxmes_01_38" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
+		<comment>「ポケモンをあずける」でトレイにドロップするとき</comment>
+		<language name="JPN" width="216">ボックスに　おけます！</language>
+		<language name="JPN_KANJI" width="216">ボックスに　おけます！</language>
+	</row>
+
+	<row id="msg_boxmes_01_39" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
+		<comment>「ポケモンをつれていく」で手持ちにドロップするとき</comment>
+		<language name="JPN" width="216">てもちに　くわえることが　できます！</language>
+		<language name="JPN_KANJI" width="216">てもちに　くわえることが　できます！</language>
+	</row>
+
+	<row id="msg_boxmes_01_40" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
+		<comment>「ポケモンをあずける」でトレイにドロップするとき
+カレントがいっぱいのとき</comment>
+		<language name="JPN" width="216">このボックスは　いっぱいです！</language>
+		<language name="JPN_KANJI" width="216">このボックスは　いっぱいです！</language>
+	</row>
+
+	<row id="msg_boxmes_01_41" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
+		<comment>「ポケモンをつれていく」で手持ちにドロップするとき
+手持ちがいっぱいのとき</comment>
+		<language name="JPN" width="216">てもちが　いっぱいです！</language>
+		<language name="JPN_KANJI" width="216">てもちが　いっぱいです！</language>
 	</row>
 
 	<row id="msg_boxmes_02_01">
@@ -611,16 +637,52 @@
 		<language name="JPN_KANJI" font=" 1:font_system" width="48">ボックスを　せいりする</language>
 	</row>
 
-	<row id="msg_boxmes_03_04" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>上画面タイトル　※実装予定なし</comment>
-		<language name="JPN" font=" 1:font_system" width="48">？どうぐせいり</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="48">？どうぐせいり</language>
+	<row id="msg_boxmes_03_04" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
+		<comment>上画面タイトル</comment>
+		<language name="JPN" font=" 1:font_system" width="48">もちものを　せいりする</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="48">もちものを　せいりする</language>
 	</row>
 
-	<row id="msg_boxmes_03_05" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,">
-		<comment>上画面タイトル　※実装予定なし</comment>
-		<language name="JPN" font=" 1:font_system" width="48">？つよさくらべ</language>
-		<language name="JPN_KANJI" font=" 1:font_system" width="48">？つよさくらべ</language>
+	<row id="msg_boxmes_04_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,#ff0000,#ff0000,">
+		<comment>メールを他に移動しようとしたとき</comment>
+		<language name="JPN" font=" 1:font_system" width="48">メールは　いどうできません！</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="48">メールは　いどうできません！</language>
+	</row>
+
+	<row id="msg_boxmes_05_01" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,">
+		<comment>ギラティナ以外に「はっきんだま」を持たせようとしたとき</comment>
+		<language name="JPN" font=" 1:font_system" width="48">[1:09:どうぐ名:0]を　もてない！</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="48">[1:09:どうぐ名:0]を　もてない！</language>
+	</row>
+
+	<row id="msg_boxmes_06_01" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,">
+		<comment>ドロップしようとしたポケモンがメールを持ってるとき</comment>
+		<language name="JPN" font=" 1:font_system" width="48">メールを　もっています！</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="48">メールを　もっています！</language>
+	</row>
+
+	<row id="msg_boxmes_06_02" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,">
+		<comment>ドロップしようとしたポケモンがカプセルを持ってるとき</comment>
+		<language name="JPN" font=" 1:font_system" width="48">ボールカプセルを　もっています！</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="48">ボールカプセルを　もっています！</language>
+	</row>
+
+	<row id="msg_boxmes_06_03" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,">
+		<comment>ドロップしようとしたポケモンが最後の１匹だったとき</comment>
+		<language name="JPN" font=" 1:font_system" width="48">たたかうポケモンが　いなくなります！</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="48">たたかうポケモンが　いなくなります！</language>
+	</row>
+
+	<row id="msg_boxmes_06_04" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,">
+		<comment>「もちものせいり」でメールを移動しようとしたとき</comment>
+		<language name="JPN" font=" 1:font_system" width="216">メールは　いどうできません！</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">メールは　いどうできません！</language>
+	</row>
+
+	<row id="msg_boxmes_06_05" back-color="#ff0000,,,,,,#ff0000,#ff0000,,#ff0000,#ff0000,">
+		<comment>「もちものせいり」でアイテムを移動しようとしたとき</comment>
+		<language name="JPN" font=" 1:font_system" width="216">ポケモンに　もたせることが　できます</language>
+		<language name="JPN_KANJI" font=" 1:font_system" width="216">ポケモンに　もたせることが　できます</language>
 	</row>
 
 	<flowchart-group-list>

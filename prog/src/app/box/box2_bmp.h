@@ -36,6 +36,73 @@
 #define	BOX2BMP_BOXMVBTN_SY		( 3 )
 */
 
+// メニューボタンデータ
+typedef struct {
+	u16	strID;		// 文字列ＩＤ
+	u16	type;		// ボタンタイプ
+}BOX2BMP_BUTTON_LIST;
+
+// ボタンタイプ
+enum {
+	BOX2BMP_BUTTON_TYPE_WHITE = 0,	// 白
+	BOX2BMP_BUTTON_TYPE_RED,		// 赤
+};
+
+// 逃がすメッセージ表示ID
+enum {
+	BOX2BMP_MSGID_POKEFREE_CHECK = 0,	// ほんとうに　にがしますか？
+	BOX2BMP_MSGID_POKEFREE_ENTER,		// @0を　そとに　にがしてあげた
+	BOX2BMP_MSGID_POKEFREE_BY,			// ばいばい　@0！
+	BOX2BMP_MSGID_POKEFREE_EGG,			// タマゴを　にがすことは　できません！
+	BOX2BMP_MSGID_POKEFREE_RETURN,		// @0が　もどってきちゃった！
+	BOX2BMP_MSGID_POKEFREE_FEAR,		// しんぱい　だったのかな……
+	BOX2BMP_MSGID_POKEFREE_ONE,			// たたかうポケモンが　いなくなります！
+};
+
+// ボックステーマ変更メッセージ表示ID
+enum {
+	BOX2BMP_MSGID_THEMA_INIT = 0,		// ボックスを　どうする？
+	BOX2BMP_MSGID_THEMA_WALL,			// どの　かべがみに　する？
+};
+
+// ポケモンをつれていくメッセージ表示ID
+enum {
+	BOX2BMP_MSGID_PARTYIN_INIT = 0,		// ポケモンを　タッチ！
+	BOX2BMP_MSGID_PARTYIN_MENU,			// @01を　どうする？
+	BOX2BMP_MSGID_PARTYIN_ERR,			// てもちが　いっぱいです！
+	BOX2BMP_MSGID_PARTYOUT_INIT,		// どこへ　あずける？
+	BOX2BMP_MSGID_PARTYOUT_BOXMAX,		// このボックスは　いっぱいだ！
+	BOX2BMP_MSGID_PARTYOUT_CAPSULE,		// ボールカプセルを　はずしてください！
+	BOX2BMP_MSGID_PARTYOUT_MAIL,		// メールを　はずしてください！
+};
+
+// 道具整理メッセージ表示ＩＤ
+enum {
+	BOX2BMP_MSGID_ITEM_A_SET = 0,		// どうぐを　もたせます
+	BOX2BMP_MSGID_ITEM_A_INIT,			// @0を　どうしますか？
+	BOX2BMP_MSGID_ITEM_A_RET_CHECK,		// @0を　しまいますか？
+	BOX2BMP_MSGID_ITEM_A_RET,			// @0を　バッグに　いれた！
+	BOX2BMP_MSGID_ITEM_A_MAIL,			// メールをしまうことは　できません！
+	BOX2BMP_MSGID_ITEM_A_EGG,			// タマゴは　どうぐを　もてません！
+	BOX2BMP_MSGID_ITEM_A_MAX,			// バッグが　いっぱいです！
+	BOX2BMP_MSGID_ITEM_A_MAIL_MOVE,		// メールは　いどうできません！
+};
+
+// VBLANKで表示するメッセージID
+enum {
+	BOX2BMP_MSGID_VBLANK_AZUKERU = 0,		// ボックスに　おけます！
+	BOX2BMP_MSGID_VBLANK_TSURETEIKU,		// てもちに　くわえることが　できます！
+	BOX2BMP_MSGID_VBLANK_AZUKERU_ERR,		// このボックスは　いっぱいです！
+	BOX2BMP_MSGID_VBLANK_TSURETEIKU_ERR,	// てもちは　いっぱいです！
+	BOX2BMP_MSGID_VBLANK_ITEM_SET,			// どうぐを　もたせます
+	BOX2BMP_MSGID_VBLANK_ITEM_INIT,			// @0を　どうしますか？
+	BOX2BMP_MSGID_VBLANK_MAIL_ERR,			// メールを　もっています！
+	BOX2BMP_MSGID_VBLANK_CAPSULE_ERR,		// ボールカプセルを　もっています！
+	BOX2BMP_MSGID_VBLANK_BATTLE_POKE_ERR,	// たたかうポケモンが　いなくなります！
+	BOX2BMP_MSGID_VBLANK_MAIL_MOVE,			// メールは　いどうできません！
+	BOX2BMP_MSGID_VBLANK_ITEM_MOVE,			// ポケモンに　セット！
+};
+
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -63,6 +130,16 @@ extern void BOX2BMP_Init( BOX2_SYS_WORK * syswk );
 //--------------------------------------------------------------------------------------------
 extern void BOX2BMP_Exit( BOX2_SYS_WORK * syswk );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		プリントメイン
+ *
+ * @param		appwk		ボックス画面アプリワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2BMP_PrintUtilTrans( BOX2_APP_WORK * appwk );
 
 
 
@@ -124,6 +201,97 @@ extern void BOX2BMP_ModoruButtonBgFrmWkMake( BOX2_APP_WORK * appwk );
 //--------------------------------------------------------------------------------------------
 extern void BOX2BMP_ToziruButtonBgFrmWkMake( BOX2_SYS_WORK * syswk );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		手持ちポケモンフレームにBMPWINをセット
+ *
+ * @param		appwk		ボックス画面アプリワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2BMP_PartyCngButtonFrmPut( BOX2_APP_WORK * appwk );
+
+
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイトル表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2BMP_TitlePut( BOX2_SYS_WORK * syswk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		デフォルト文字列表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2BMP_DefStrPut( BOX2_SYS_WORK * syswk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		トレイ名表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		cgx			背景キャラデータ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+//extern void BOX2BMP_TrayNamePut( BOX2_SYS_WORK * syswk, u8 * cgx );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		「てもちポケモン」ボタン作成
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2BMP_ButtonPutTemochi( BOX2_SYS_WORK * syswk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		「ポケモンいどう」ボタン作成（持ち物整理モードの場合は「もちものせいり」）
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2BMP_ButtonPutIdou( BOX2_SYS_WORK * syswk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		「もどる」ボタン作成
+ *
+ * @param		syswk		ボックス画面システムワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2BMP_ButtonPutModoru( BOX2_SYS_WORK * syswk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		マーキングフレームににBMPWINをセット
+ *
+ * @param		appwk		ボックス画面アプリワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2BMP_MarkingButtonFrmPut( BOX2_APP_WORK * appwk );
 
 
 
@@ -138,75 +306,8 @@ extern void BOX2BMP_ToziruButtonBgFrmWkMake( BOX2_SYS_WORK * syswk );
 
 
 
-#if 0
 
 
-// 逃がすメッセージ表示ID
-enum {
-	BOX2BMP_MSGID_POKEFREE_CHECK = 0,	// ほんとうに　にがしますか？
-	BOX2BMP_MSGID_POKEFREE_ENTER,		// @0を　そとに　にがしてあげた
-	BOX2BMP_MSGID_POKEFREE_BY,			// ばいばい　@0！
-	BOX2BMP_MSGID_POKEFREE_EGG,			// タマゴを　にがすことは　できません！
-	BOX2BMP_MSGID_POKEFREE_RETURN,		// @0が　もどってきちゃった！
-	BOX2BMP_MSGID_POKEFREE_FEAR,		// しんぱい　だったのかな……
-	BOX2BMP_MSGID_POKEFREE_ONE,			// たたかうポケモンが　いなくなります！
-};
-
-// ボックステーマ変更メッセージ表示ID
-enum {
-	BOX2BMP_MSGID_THEMA_INIT = 0,		// ボックスを　どうする？
-	BOX2BMP_MSGID_THEMA_WALL,			// どの　かべがみに　する？
-};
-
-// ポケモンをつれていくメッセージ表示ID
-enum {
-	BOX2BMP_MSGID_PARTYIN_INIT = 0,		// ポケモンを　タッチ！
-	BOX2BMP_MSGID_PARTYIN_MENU,			// @01を　どうする？
-	BOX2BMP_MSGID_PARTYIN_ERR,			// てもちが　いっぱいです！
-	BOX2BMP_MSGID_PARTYOUT_INIT,		// どこへ　あずける？
-	BOX2BMP_MSGID_PARTYOUT_BOXMAX,		// このボックスは　いっぱいだ！
-	BOX2BMP_MSGID_PARTYOUT_CAPSULE,		// ボールカプセルを　はずしてください！
-	BOX2BMP_MSGID_PARTYOUT_MAIL,		// メールを　はずしてください！
-};
-
-// 道具整理メッセージ表示ＩＤ
-enum {
-	BOX2BMP_MSGID_ITEM_A_SET = 0,		// どうぐを　もたせます
-	BOX2BMP_MSGID_ITEM_A_INIT,			// @0を　どうしますか？
-	BOX2BMP_MSGID_ITEM_A_RET_CHECK,		// @0を　しまいますか？
-	BOX2BMP_MSGID_ITEM_A_RET,			// @0を　バッグに　いれた！
-	BOX2BMP_MSGID_ITEM_A_MAIL,			// メールをしまうことは　できません！
-	BOX2BMP_MSGID_ITEM_A_EGG,			// タマゴは　どうぐを　もてません！
-	BOX2BMP_MSGID_ITEM_A_MAX,			// バッグが　いっぱいです！
-	BOX2BMP_MSGID_ITEM_A_MAIL_MOVE,		// メールは　いどうできません！
-};
-
-// VBLANKで表示するメッセージID
-enum {
-	BOX2BMP_MSGID_VBLANK_AZUKERU = 0,		// ボックスに　おけます！
-	BOX2BMP_MSGID_VBLANK_TSURETEIKU,		// てもちに　くわえることが　できます！
-	BOX2BMP_MSGID_VBLANK_AZUKERU_ERR,		// このボックスは　いっぱいです！
-	BOX2BMP_MSGID_VBLANK_TSURETEIKU_ERR,	// てもちは　いっぱいです！
-	BOX2BMP_MSGID_VBLANK_ITEM_SET,			// どうぐを　もたせます
-	BOX2BMP_MSGID_VBLANK_ITEM_INIT,			// @0を　どうしますか？
-	BOX2BMP_MSGID_VBLANK_MAIL_ERR,			// メールを　もっています！
-	BOX2BMP_MSGID_VBLANK_CAPSULE_ERR,		// ボールカプセルを　もっています！
-	BOX2BMP_MSGID_VBLANK_BATTLE_POKE_ERR,	// たたかうポケモンが　いなくなります！
-	BOX2BMP_MSGID_VBLANK_MAIL_MOVE,			// メールは　いどうできません！
-	BOX2BMP_MSGID_VBLANK_ITEM_MOVE,			// ポケモンに　セット！
-};
-
-// メニューボタンデータ
-typedef struct {
-	u16	strID;		// 文字列ＩＤ
-	u16	type;		// ボタンタイプ
-}BOX2BMP_BUTTON_LIST;
-
-// ボタンタイプ
-enum {
-	BOX2BMP_BUTTON_TYPE_WHITE = 0,	// 白
-	BOX2BMP_BUTTON_TYPE_RED,		// 赤
-};
 
 
 
@@ -321,60 +422,55 @@ extern void BOX2BMP_WallPaperNameWrite( BOX2_SYS_WORK * syswk );
  * 「てもちポケモン」ボタン作成
  *
  * @param	syswk	ボックス画面システムワーク
- * @param	sw		選択フラグ
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_ButtonPutTemochi( BOX2_SYS_WORK * syswk, BOOL sw );
+extern void BOX2BMP_ButtonPutTemochi( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
  * 「ボックスいどう」ボタン作成
  *
  * @param	syswk	ボックス画面システムワーク
- * @param	sw		選択フラグ
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_ButtonPutIdou( BOX2_SYS_WORK * syswk, BOOL sw );
+extern void BOX2BMP_ButtonPutIdou( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
  * 「もどる」ボタン作成
  *
  * @param	syswk	ボックス画面システムワーク
- * @param	sw		選択フラグ
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_ButtonPutModoru( BOX2_SYS_WORK * syswk, BOOL sw );
+extern void BOX2BMP_ButtonPutModoru( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
  * 「やめる」ボタン作成
  *
  * @param	syswk	ボックス画面システムワーク
- * @param	sw		選択フラグ
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_ButtonPutYameru( BOX2_SYS_WORK * syswk, BOOL sw );
+extern void BOX2BMP_ButtonPutYameru( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
  * 「とじる」ボタン作成
  *
  * @param	syswk	ボックス画面システムワーク
- * @param	sw		選択フラグ
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_ButtonPutToziru( BOX2_SYS_WORK * syswk, BOOL sw );
+extern void BOX2BMP_ButtonPutToziru( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -583,12 +679,11 @@ extern void BOX2BMP_PartyCngButtonFrmPut( BOX2_APP_WORK * appwk );
  * Ｙステータスボタン作成
  *
  * @param	appwk	ボックス画面アプリワーク
- * @param	sw		選択フラグ
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_ButtonPutYStatus( BOX2_SYS_WORK * syswk, BOOL sw );
+extern void BOX2BMP_ButtonPutYStatus( BOX2_SYS_WORK * syswk );
 
 
 //============================================================================================
@@ -810,5 +905,3 @@ extern void BOX2BMP_VBlankMsgSet( BOX2_SYS_WORK * syswk, u32 winID, u32 msgID );
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2BMP_VBlankMsgPut( BOX2_SYS_WORK * syswk, u32 winID );
-
-#endif
