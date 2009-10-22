@@ -45,6 +45,7 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
 {
   SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
   u16               shop_id = SCRCMD_GetVMWorkValue( core, work );
+  u16*              ret_work = SCRCMD_GetVMWork( core, work );
   GAMESYS_WORK*     gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 
@@ -53,6 +54,12 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   }else{
     //固定ショップ呼び出し
   }
+
+  /*
+    イベント終了時に ret_work に終了モードを返してください
+    SCR_PROC_RETMODE_EXIT 一発終了
+    SCR_PROC_RETMODE_NORMAL 継続
+  */
   return VMCMD_RESULT_SUSPEND;
 }
 

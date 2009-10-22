@@ -3664,17 +3664,18 @@
 //--------------------------------------------------------------
 /**
  * @def _CALL_SHOP_PROC_BUY
- * @brief 変動ショップイベント呼び出し
- * @param shop_id
+ * @brief ショップイベント呼び出し
+ * @param shop_id SCR_SHOPID_NULL を指定すると変動ショップ、それ以外なら固定ショップ
  *
  * shop_scr.ev専用　ゾーンスクリプトから直接呼び出さないこと！
  */
 //--------------------------------------------------------------
-#define _CALL_SHOP_PROC_BUY( shop_id )  _ASM_CALL_SHOP_PROC_BUY shop_id
+#define _CALL_SHOP_PROC_BUY( shop_id, ret_mode )  _ASM_CALL_SHOP_PROC_BUY shop_id,ret_mode
 
-  .macro  _ASM_CALL_SHOP_PROC_BUY shop_id
+  .macro  _ASM_CALL_SHOP_PROC_BUY shop_id, ret_mode
   .short  EV_SEQ_CALL_SHOP_PROC_BUY
   .short  \shop_id
+  .short  \ret_mode
   .endm
 
 //======================================================================

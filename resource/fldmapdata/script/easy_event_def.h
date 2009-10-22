@@ -168,12 +168,10 @@
 //--------------------------------------------------------------
   .macro _ASM_SHOP_CALL shop_id
   _PUSH_WORK  SCWK_PARAM0
-  _PUSH_WORK  SCWK_PARAM1
 
   _ASM_LDWKVAL  SCWK_PARAM0, \shop_id
   _CHG_COMMON_SCR SCRID_SHOP_COUNTER
 
-  _POP_WORK   SCWK_PARAM1
   _POP_WORK   SCWK_PARAM0
   .endm
 

@@ -122,10 +122,19 @@ _RET
 //==============================================================
 sub_shop_buy:
 {
+  DEFINE_LOCAL  ret_mode
+
+  $ret_mode = SCR_PROC_RETMODE_NORMAL
+
 //  _CAMERA_MOVE(0,0,0, (16*5),0,0, 30)
-  _CALL_SHOP_PROC_BUY(lwk_shop_id)
+  _CALL_SHOP_PROC_BUY( lwk_shop_id, ret_mode )
 //  _CAMERA_RECV_MOVE(30)
-  $reg_return = SEQ_MENU_CONTINUE
+  
+  IF $ret_mode == SCR_PROC_RETMODE_EXIT THEN
+    $reg_return = SEQ_EXIT
+  ELSE
+    $reg_return = SEQ_MENU_CONTINUE
+  ENDIF
 }
 _RET
 
