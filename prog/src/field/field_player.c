@@ -64,6 +64,9 @@ struct _FIELD_PLAYER
 //======================================================================
 //	proto
 //======================================================================
+static void fldplayer_ChangeMoveForm(
+    FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form );
+
 static const MMDL_HEADER data_MMdlHeader;
 static const OBJCODE_FORM dataOBJCodeForm[2][PLAYER_DRAW_FORM_MAX];
 
@@ -129,6 +132,9 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 		MMDL_SetGridPosY( fmmdl, gy );
 		MMDL_SetGridPosZ( fmmdl, gz );
 		MMDL_SetVectorPos( fmmdl, pos );
+    
+    //レポート等のイベント用OBJの場合、動作フォームに合わせて復帰
+    FIELD_PLAYER_ResetMoveForm( fld_player );
 	}
 	
   { //OBJコードから動作フォームを設定
@@ -645,6 +651,25 @@ PLAYER_DRAW_FORM FIELD_PLAYER_GetOBJCodeToDrawForm( int sex, u16 code )
   return( PLAYER_DRAW_FORM_NORMAL );
 }
 
+//--------------------------------------------------------------
+/**
+ * 自機をレポートやアイテムゲットなどイベント用表示に変えても問題ないか
+ * @param fld_player FIELD_PLAYER
+ * @retval  BOOL TRUE=OK
+ */
+//--------------------------------------------------------------
+BOOL FIELD_PLAYER_CheckChangeEventDrawForm( FIELD_PLAYER *fld_player )
+{
+  PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( fld_player );
+  
+  switch( form ){
+  case PLAYER_MOVE_FORM_SWIM:
+    return( FALSE );
+  }
+  
+  return( TRUE );
+}
+
 //======================================================================
 //	FILED_PLAYER　ツール
 //======================================================================
@@ -739,7 +764,7 @@ BOOL FIELD_PLAYER_CheckLiveMMdl( const FIELD_PLAYER *fld_player )
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FIELD_PLAYER_ChangeMoveForm(
+static void fldplayer_ChangeMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form )
 {
   int sex = FIELD_PLAYER_GetSex( fld_player );
@@ -751,6 +776,20 @@ void FIELD_PLAYER_ChangeMoveForm(
   }
   
   FIELD_PLAYER_SetMoveForm( fld_player, form );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機の動作形態を変更 BGM変更あり
+ * @param fld_player FIELD_PLAYER
+ * @param form PLAYER_MOVE_FORM
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_ChangeMoveForm(
+    FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form )
+{
+  fldplayer_ChangeMoveForm( fld_player, form );
   
   {
     FIELDMAP_WORK *fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
@@ -771,7 +810,7 @@ void FIELD_PLAYER_ChangeMoveForm(
 void FIELD_PLAYER_ResetMoveForm( FIELD_PLAYER *fld_player )
 {
   PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( fld_player );
-  FIELD_PLAYER_ChangeMoveForm( fld_player, form );
+  fldplayer_ChangeMoveForm( fld_player, form );
 }
 
 //--------------------------------------------------------------

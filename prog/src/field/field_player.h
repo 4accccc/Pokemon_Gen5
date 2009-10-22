@@ -136,6 +136,7 @@ extern u16 FIELD_PLAYER_GetMoveFormToOBJCode(
     int sex, PLAYER_MOVE_FORM form );
 extern PLAYER_DRAW_FORM FIELD_PLAYER_GetOBJCodeToDrawForm(
     int sex, u16 code );
+extern BOOL FIELD_PLAYER_CheckChangeEventDrawForm( FIELD_PLAYER *fld_player );
 
 //ÉcÅ[Éã
 extern void FIELD_PLAYER_GetDirGridPos(

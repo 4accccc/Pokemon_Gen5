@@ -38,6 +38,9 @@
 #include "app/townmap.h" //TOWNMAP_PARAM
 #include "app/wifi_note.h" //
 
+#include "fieldmap_ctrl_grid.h"
+#include "field_player_grid.h"
+
 extern const GFL_PROC_DATA TownMap_ProcData;
 extern const GFL_PROC_DATA TrainerCardProcData;
 FS_EXTERN_OVERLAY(poke_status);
@@ -1277,6 +1280,25 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
       }
       else
       {
+        { //自機レポートに
+          FIELD_PLAYER *fld_player =
+            FIELDMAP_GetFieldPlayer( work->fieldWork );
+          
+          if( FIELD_PLAYER_CheckChangeEventDrawForm(fld_player) == TRUE ){
+            MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+            FIELDMAP_CTRL_GRID *gridmap =
+              FIELDMAP_GetMapCtrlWork( work->fieldWork );
+            FIELD_PLAYER_GRID *gjiki =
+              FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridmap );
+            FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_REQBIT_REPORT );
+            FIELD_PLAYER_GRID_UpdateRequest( gjiki );
+  
+            //ポーズを解除しアニメするように
+            MMDL_OffStatusBitMoveProcPause( mmdl );
+  	        MMDL_OffStatusBit( mmdl, MMDL_STABIT_PAUSE_ANM );
+          }
+        }
+
         FLDMSGWIN_Print( work->msgWin, 0, 0, FLDMAPMENU_STR14 );
         //本来ならレポート用への切り替え？
         //FIELD_SUBSCREEN_Change(FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_TOPMENU);
@@ -1309,6 +1331,21 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
   case 3:
     FLDMSGWIN_Delete( work->msgWin );
     
+    { //自機元に戻す
+      FIELD_PLAYER *fld_player =
+        FIELDMAP_GetFieldPlayer( work->fieldWork );
+
+      if( FIELD_PLAYER_CheckChangeEventDrawForm(fld_player) == TRUE ){
+        FIELDMAP_CTRL_GRID *gridmap =
+          FIELDMAP_GetMapCtrlWork( work->fieldWork );
+        FIELD_PLAYER_GRID *gjiki =
+          FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridmap );
+        FIELD_PLAYER_GRID_SetRequest(
+            gjiki, FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM );
+        FIELD_PLAYER_GRID_UpdateRequest( gjiki );
+      }
+    }
+
     work->msgWin = FLDMSGWIN_AddTalkWin( work->msgBG, work->msgData );
     FLDMSGWIN_Print( work->msgWin, 0, 0, FLDMAPMENU_STR15 );
     (*seq)++;
