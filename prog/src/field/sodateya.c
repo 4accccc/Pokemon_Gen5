@@ -1074,11 +1074,15 @@ static void EggCordinate_rare(
   for( i=0; i<RARE_EGG_CHANCE; i++ )
   {
     rnd = GFUser_GetPublicRand0( 0xffffffff );
-    if( POKETOOL_CheckRare( id, rnd ) ) break;  // レアが出たら抽選終了
+    if( POKETOOL_CheckRare( id, rnd ) ) {
+      // レアが出たら抽選終了とし、個性乱数を書き換える
+      PP_Put( egg, ID_PARA_personal_rnd, rnd );
+      return;
+    }
   }
 
-  // 個性乱数を書き換える
-  PP_Put( egg, ID_PARA_personal_rnd, rnd );
+  // レアが出なかったのであれば個性乱数は書き換えない（かわらずのいし対応）
+  
 }
 
 //---------------------------------------------------------------------------------------- 
