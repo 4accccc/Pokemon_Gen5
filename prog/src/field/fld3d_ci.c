@@ -18,6 +18,8 @@
 
 #define NONDATA  (0xffff)
 
+#define	PRO_MAT_Z_OFS	(8*FX32_ONE)   //プロジェクションマトリックスによるデプスバッファ操作値
+
 
 typedef struct FLD3D_CI_tag
 {
@@ -112,7 +114,7 @@ FLD3D_CI_PTR FLD3D_CI_Init(const HEAPID inHeapID, FLD_PRTCL_SYS_PTR inPrtclSysPt
   ptr->UnitIdx = UNIT_NONE;
 
   {
-    VecFx32 pos = {0, 0, FX32_ONE*128};
+    VecFx32 pos = {0, 0, FX32_ONE*(128)};
     VecFx32 target = {0,0,0};
     //カメラ作成
     ptr->g3Dcamera = GFL_G3D_CAMERA_CreateDefault(
@@ -185,17 +187,45 @@ static void SetupResourceCore(FLD3D_CI_PTR ptr, const GFL_G3D_UTIL_SETUP *inSetu
 void FLD3D_CI_Draw( FLD3D_CI_PTR ptr )
 {
   u8 i,j;
-  //カメラ設定
-  GFL_G3D_CAMERA_Switching( ptr->g3Dcamera );
-  //ユニット数分ループ
-  if (ptr->UnitIdx != UNIT_NONE){
-    u16 obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( ptr->Util, ptr->UnitIdx );
-    u16 obj_count = GFL_G3D_UTIL_GetUnitObjCount( ptr->Util, ptr->UnitIdx );
-    for (j=0;j<obj_count;j++){
-      GFL_G3D_OBJ* pObj;
-      pObj = GFL_G3D_UTIL_GetObjHandle(ptr->Util, obj_idx+j);
-      GFL_G3D_DRAW_DrawObject( pObj, &ptr->Status );
+  
+#if 0
+#ifdef PM_DEBUG
+  static int test_ofs = 8;
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+      test_ofs++;
+    }else if(GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN){
+      test_ofs--;
     }
+      OS_Printf("ofs=%d\n",test_ofs);
+  }
+#endif  //PM_DEBUG  
+#endif
+  GFL_G3D_CAMERA_Switching( ptr->g3Dcamera );
+  {
+    fx32 ofs;
+	  MtxFx44 org_pm,pm;
+		const MtxFx44 *m;
+		m = NNS_G3dGlbGetProjectionMtx();
+		org_pm = *m;
+		pm = org_pm;
+		pm._32 += FX_Mul( pm._22, PRO_MAT_Z_OFS );
+		NNS_G3dGlbSetProjectionMtx(&pm);
+		NNS_G3dGlbFlush();		  //　ジオメトリコマンドを転送
+    NNS_G3dGeFlushBuffer(); // 転送まち
+
+    //ユニット数分ループ
+    if (ptr->UnitIdx != UNIT_NONE){
+      u16 obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( ptr->Util, ptr->UnitIdx );
+      u16 obj_count = GFL_G3D_UTIL_GetUnitObjCount( ptr->Util, ptr->UnitIdx );
+      for (j=0;j<obj_count;j++){
+        GFL_G3D_OBJ* pObj;
+        pObj = GFL_G3D_UTIL_GetObjHandle(ptr->Util, obj_idx+j);
+        GFL_G3D_DRAW_DrawObject( pObj, &ptr->Status );
+      }
+    }
+    NNS_G3dGlbSetProjectionMtx(&org_pm);
+		NNS_G3dGlbFlush();		//　ジオメトリコマンドを転送
   }
 }
 
