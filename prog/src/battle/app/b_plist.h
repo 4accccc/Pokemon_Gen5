@@ -10,6 +10,7 @@
 #define B_PLIST_H
 
 
+#include "pm_define.h"
 #include "print/printsys.h"
 #include "poke_tool/pokeparty.h"
 
@@ -19,8 +20,6 @@
 //============================================================================================
 #define	BPL_SEL_EXIT			( 6 )	// キャンセル
 #define	BPL_SEL_WP_CANCEL	( 4 )	// 技忘れキャンセル（新しく覚える技位置）
-
-#define	POKEMON_TEMOTI_MAX	( 6 )
 
 // リスト処理定義
 enum {
@@ -53,7 +52,7 @@ typedef struct {
 
 	GFL_FONT * font;
 
-	u32	heap;			// ヒープID
+	HEAPID	heap;			// ヒープID
 
 //	u8	fight_type;		// シングル／ダブル／マルチ
 	u8	multi_pos;		// マルチの立位置
@@ -72,7 +71,7 @@ typedef struct {
 	u16	chg_waza;		// いれかえ禁止技・新しく覚える技
 
 	s32 client_no;						// クライアントNo
-	u8	list_row[POKEMON_TEMOTI_MAX];	// リストロウ
+	u8	list_row[TEMOTI_POKEMAX];	// リストロウ
 
 	u8	cursor_flg;		// カーソル表示フラグ
 

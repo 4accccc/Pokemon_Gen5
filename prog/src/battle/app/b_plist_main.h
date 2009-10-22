@@ -363,7 +363,7 @@ typedef struct {
 typedef struct {
 	BPLIST_DATA * dat;	// 外部参照データ
 
-	BPL_POKEDATA	poke[6];	// ポケモンデータ
+	BPL_POKEDATA	poke[TEMOTI_POKEMAX];	// ポケモンデータ
 
 	GFL_TCBLSYS * tcbl;		// TCBL
 

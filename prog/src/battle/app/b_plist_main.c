@@ -2504,7 +2504,7 @@ static void BPL_PokePlateSet( BPLIST_WORK * wk )
 
 	if( wk->dat->mode == BPL_MODE_WAZASET ){ return; }
 
-	for( i=0; i<6; i++ ){
+	for( i=0; i<TEMOTI_POKEMAX; i++ ){
 		j = BattlePokeList_PokeSetCheck( wk, i );
 		if( j == 1 ){
 			GFL_BG_WriteScreen(

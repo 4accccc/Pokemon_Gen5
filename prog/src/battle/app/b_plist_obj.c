@@ -371,7 +371,7 @@ static void BPL_ClactPokeLoad( BPLIST_WORK * wk )
 
 	// キャラ
 	res = &wk->chrRes[BPLIST_CHRRES_POKE1];
-	for( i=0; i<6; i++ ){
+	for( i=0; i<TEMOTI_POKEMAX; i++ ){
 		if( wk->poke[i].mons != 0 ){
 		  res[i] = GFL_CLGRP_CGR_Register(
 								ah,
@@ -726,7 +726,7 @@ static void BPL_PokeIconPaletteChg( BPLIST_WORK * wk )
 {
 	s32	i;
 
-	for( i=0; i<6; i++ ){
+	for( i=0; i<TEMOTI_POKEMAX; i++ ){
 		if( wk->poke[i].mons == 0 ){ continue; }
 /*
 		CATS_ObjectPaletteSetCap(
@@ -991,7 +991,7 @@ static void BPL_Page1ObjSet( BPLIST_WORK * wk )
 {
 	s32	i;
 
-	for( i=0; i<6; i++ ){
+	for( i=0; i<TEMOTI_POKEMAX; i++ ){
 		if( wk->poke[i].mons == 0 ){ continue; }
 		// ポケモンアイコン
 		BPL_ClactOn( wk->clwk[BPL_CA_POKE1+i], &P1_PokePos[i] );
@@ -1011,7 +1011,7 @@ static void BPL_Page1ObjSet( BPLIST_WORK * wk )
 /*
 	s32	i;
 
-	for( i=0; i<6; i++ ){
+	for( i=0; i<TEMOTI_POKEMAX; i++ ){
 		if( wk->poke[i].mons == 0 ){ continue; }
 		// ポケモンアイコン
 		BPL_ClactOn( wk->cap[BPL_CA_POKE1+i], P1_PokePos[i][0], P1_PokePos[i][1] );

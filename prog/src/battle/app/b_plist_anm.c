@@ -936,7 +936,7 @@ void BattlePokeList_ButtonPageScreenInit( BPLIST_WORK * wk, u8 page )
 
 	switch( page ){
 	case BPLIST_PAGE_SELECT:		// ポケモン選択ページ
-		for( i=0; i<6; i++ ){
+		for( i=0; i<TEMOTI_POKEMAX; i++ ){
 			j = BattlePokeList_PokeSetCheck( wk, i );
 			if( j == 0 ){
 				BPL_ButtonScreenWrite( wk, BPL_BUTTON_POKE1+i, BPL_BANM_NONE, 1 );
@@ -1078,7 +1078,7 @@ static u8 BPL_PokeChangeButtonCheck( BPLIST_WORK * wk )
 	u16	i, j;
 
 	j = 0;
-	for( i=0; i<6; i++ ){
+	for( i=0; i<TEMOTI_POKEMAX; i++ ){
 		if( wk->poke[i].mons != 0 && wk->poke[i].egg == 0 ){
 			j++;
 		}
