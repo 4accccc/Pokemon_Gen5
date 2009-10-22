@@ -336,7 +336,8 @@ void UNION_SUBDISP_Update(UNION_SUBDISP_PTR unisub)
     }
   #if PM_DEBUG
     else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
-      PMSDAT_SetDebugRandom(&situ->chat_pmsdata);
+//      PMSDAT_SetDebugRandom(&situ->chat_pmsdata);
+      PMSDAT_SetDebugRandomDeco( &situ->chat_pmsdata, HEAPID_FIELDMAP );
       UnionChat_AddChat(unisys, NULL, &situ->chat_pmsdata);
     }
   #endif

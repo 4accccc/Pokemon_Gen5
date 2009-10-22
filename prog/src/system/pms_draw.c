@@ -364,7 +364,6 @@ void PMS_DRAW_Copy( PMS_DRAW_WORK* wk, u8 id_src, u8 id_dst )
 
 }
 
-
 //=============================================================================
 /**
  *								staticä÷êî
@@ -511,6 +510,12 @@ static GFL_CLWK* _obj_create( PMS_DRAW_OBJ* obj, HEAPID heap_id )
 
   GFL_CLACT_WK_SetDrawEnable( act, FALSE );
   GFL_CLACT_WK_SetAutoAnmFlag( act, TRUE );
+  
+  // 30FPSÇ≈ìÆçÏÇµÇƒÇ¢ÇΩèÍçáÇÕÉZÉãÉAÉjÉÅî{ë¨
+  if( GFL_UI_GetFrameRate() == GFL_UI_FRAMERATE_30 )
+  {
+    GFL_CLACT_WK_SetAutoAnmSpeed( act, FX32_ONE * 2 );
+  }
 
   return act;
 }

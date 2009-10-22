@@ -564,11 +564,15 @@ void PMSDAT_SetDebugRandomDeco( PMS_DATA* pms, HEAPID heapID )
 	// ランダムにデコメ簡易会話データをつっこむ
   int i;
   u32 max;
+	
+  pms->sentence_type = GFL_STD_MtRand(4);
+	pms->sentence_id = GFL_STD_MtRand(5);
 
   max = get_include_word_max( pms->sentence_type, pms->sentence_id, heapID );
 
-	pms->sentence_type = GFL_STD_MtRand(4);
-	pms->sentence_id = GFL_STD_MtRand(5);
+  HOSAKA_Printf("deco max=%d *** \n",max);
+
+	pms->word[1] = PMS_WORD_NULL; // クリアしておく
   for( i=0; i<max; i++ )
   {
     PMSDAT_SetDeco( pms, i, GFL_STD_MtRand(10) + 1 );
