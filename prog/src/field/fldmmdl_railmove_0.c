@@ -446,6 +446,7 @@ u32 MMDL_HitCheckRailMove( const MMDL *mmdl, const RAIL_LOCATION* now_location, 
 
     if( attr_flag & MAPATTR_FLAGBIT_HITCH )
     {
+      TOMOYA_Printf( "HIT ATTR\n" );
 		  ret |= MMDL_MOVEHITBIT_ATTR;
     }
   }

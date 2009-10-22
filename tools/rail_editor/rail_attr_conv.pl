@@ -72,7 +72,7 @@ sub output
       {
         $linenum = $1;
 
-        print( "linenum = $linenum\n" );
+        #print( "linenum = $linenum\n" );
         print( FILEOUT pack( "I", $linenum ) );
 
         #LINEÉfÅ[É^SEARCH
@@ -84,7 +84,7 @@ sub output
       if( $one =~ /--NAME::(.*)/ )
       {
         $read_line++;
-        print( "out linename = $1\n" );
+        #print( "out linename = $1\n" );
         $seq = $DEF_RAIL_ATTR_SEQ_LINEX;
       }
     }
@@ -92,7 +92,7 @@ sub output
     {
       if( $one =~ /--X::([0-9]*)/ )
       {
-        print( "x=$1\n" );
+        #print( "x=$1\n" );
         print( FILEOUT pack( "S", $1 ) );
         $seq = $DEF_RAIL_ATTR_SEQ_LINEZ;
       }
@@ -101,7 +101,7 @@ sub output
     {
       if( $one =~ /--Z::([0-9]*)/ )
       {
-        print( "z=$1\n" );
+        #print( "z=$1\n" );
         print( FILEOUT pack( "S", $1 ) );
         $seq = $DEF_RAIL_ATTR_SEQ_ATTR;
       }
@@ -116,7 +116,7 @@ sub output
       elsif( $one =~ /--LINEATTR::(.*)/ )
       {
         @attr = split( /\s/, $1 );
-        print( "flag = ".$attr[1]." data = ".$attr[2]."\n" );
+        #print( "flag = ".$attr[1]." data = ".$attr[2]."\n" );
         print( FILEOUT pack( "I", ($attr[1]<<16) | $attr[2] ) );
       }
     }

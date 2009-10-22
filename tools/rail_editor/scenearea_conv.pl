@@ -183,14 +183,14 @@ sub loadSaSysData
 		if( $one =~ /FLD_SCENEAREA_SCENEPARAM_SIZE\(([0-9]*)\)/ )
 		{
 			$SA_WORK_SIZ = $1;
-			print( "SA_WORK_SIZ load = $SA_WORK_SIZ\n" );
+      #	print( "SA_WORK_SIZ load = $SA_WORK_SIZ\n" );
 			$input_count ++;
 		}
 
 		if( $one =~ /FLD_SCENEAREA_FUNC_NULL\(([^)]*)\)/ )
 		{
 			$SA_FUNCID_NULL = $1;
-			print( "SA_FUNCID_NULL load = $SA_FUNCID_NULL\n" );
+      #		print( "SA_FUNCID_NULL load = $SA_FUNCID_NULL\n" );
 			$input_count ++;
 		}
 	}
@@ -269,7 +269,7 @@ sub convData
 
 	for( $i=0; $i<@SA_NAME; $i++ )
 	{
-		print( $SA_NAME[$i]."\n" );
+    #print( $SA_NAME[$i]."\n" );
 		#ƒf[ƒ^
 		{
 			my( $work_index, $work_number, $one_datasiz, $datasiz );

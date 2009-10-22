@@ -58,11 +58,11 @@ ifeq	($(CONVERTUSER),true)
 
 #コンバート環境
 .rail.dat:
-	perl $(script) $< $(HEADERDIR)field_rail_loader_func.h $(HEADERDIR)field_rail.h
-	ruby $(PROJECT_ROOT)\tools\binlinker.rb $*.ofs $*.point $*.line $*.camera $*.linepos $@ RL
+	@perl $(script) $< $(HEADERDIR)field_rail_loader_func.h $(HEADERDIR)field_rail.h
+	@ruby $(PROJECT_ROOT)\tools\binlinker.rb $*.ofs $*.point $*.line $*.camera $*.linepos $@ RL
 
 .attr.atdat:
-	perl $(attrscript) $<
+	@perl $(attrscript) $<
 	
 
 endif

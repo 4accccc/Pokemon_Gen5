@@ -226,28 +226,28 @@ sub loadRailSysData
 		if( $one =~ /RAIL_CAMERA_SET_WORK_SIZ\(([0-9]*)\)/ )
 		{
 			$RAIL_CAMERA_SET_WORK_SIZ = $1;
-			print( "RAIL_CAMERA_SET_WORK_SIZ load = $RAIL_CAMERA_SET_WORK_SIZ\n" );
+      #print( "RAIL_CAMERA_SET_WORK_SIZ load = $RAIL_CAMERA_SET_WORK_SIZ\n" );
 			$input_count ++;
 		}
 
 		if( $one =~ /RAIL_LINEPOS_SET_WORK_SIZ\(([0-9]*)\)/ )
 		{
 			$RAIL_LINEPOS_SET_WORK_SIZ = $1;
-			print( "RAIL_LINEPOS_SET_WORK_SIZ load = $RAIL_LINEPOS_SET_WORK_SIZ\n" );
+      #print( "RAIL_LINEPOS_SET_WORK_SIZ load = $RAIL_LINEPOS_SET_WORK_SIZ\n" );
 			$input_count ++;
 		}
 
 		if( $one =~ /RAIL_TBL_NULL\(([^\)]*)\)/ )
 		{
 			$RAIL_TBL_NULL = $1;
-			print( "RAIL_TBL_NULL load = $RAIL_TBL_NULL\n" );
+      #print( "RAIL_TBL_NULL load = $RAIL_TBL_NULL\n" );
 			$input_count ++;
 		}
 
 		if( $one =~ /RAIL_NAME_BUF_SIZ\(([0-9]*)\)/ )
 		{
 			$RAIL_NAMEBUF_SIZ = $1;
-			print( "RAIL_NAME_BUF_SIZ load = $RAIL_NAMEBUF_SIZ\n" );
+      #print( "RAIL_NAME_BUF_SIZ load = $RAIL_NAMEBUF_SIZ\n" );
 			$input_count ++;
 		}
 
@@ -262,7 +262,7 @@ sub loadRailSysData
 				#’è”‚ðŠi”[
 				$one =~ /(RAIL_KEY_[^,=]*)[,=]/;
 				$RAIL_KEY[ $key_index ] = $1;
-				print( $RAIL_KEY[ $key_index ]." load\n" );
+        #print( $RAIL_KEY[ $key_index ]." load\n" );
 				$key_index++;
 				$input_count ++;
 			}
@@ -380,7 +380,6 @@ sub convData
 	open( FILEOUT_OFS, ">$outfile.ofs" );
 	binmode( FILEOUT_OFS );
 
-#	print( FILEOUT_OFS pack( "i", &get10Number(&getPeaceParamForTag( \@filedata, "ALLDATA", "OFSMAX") )) );
 	print( FILEOUT_OFS pack( "i", &get10Number(&getPeaceParamForTag( \@filedata, "ALLDATA", "OFSUNIT")) ) );
 	
 	close( FILEOUT_OFS );
@@ -439,7 +438,7 @@ sub convData
 
 			#NAME
 			$len = length($POINT_NAME[$i]);
-			print( $POINT_NAME[$i]."len = $len\n" );
+      #print( $POINT_NAME[$i]."len = $len\n" );
 			if( $len >= $RAIL_NAMEBUF_SIZ )
 			{
 				print( "point_name size over ".$POINT_NAME[$i]." limit=$RAIL_NAMEBUF_SIZ\n" );

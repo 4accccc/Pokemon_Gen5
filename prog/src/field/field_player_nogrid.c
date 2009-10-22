@@ -67,6 +67,7 @@ struct _FIELD_PLAYER_NOGRID
   
   FIELD_PLAYER* p_player;
 	FIELDMAP_WORK* p_fieldwork;
+  MMDL* p_mmdl;
   
   FIELD_RAIL_WORK* p_railwork;
 
@@ -178,28 +179,29 @@ static void playerCycle_SetMove_Hitch(
 FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER* p_player, HEAPID heapID )
 {
   FIELD_PLAYER_NOGRID* p_wk;
-  MMDL* p_mmdl = FIELD_PLAYER_GetMMdl( p_player );
 
   p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_PLAYER_NOGRID) );
 
   // ワークに保存
   p_wk->p_player      = p_player;
   p_wk->p_fieldwork   = FIELD_PLAYER_GetFieldMapWork( p_player );
+  p_wk->p_mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
 
   // 動作コードをレール動作に変更
-  if( MMDL_GetMoveCode( p_mmdl ) != MV_RAIL_DMY )
+  if( MMDL_GetMoveCode( p_wk->p_mmdl ) != MV_RAIL_DMY )
   {
-    MMDL_OnStatusBit( p_mmdl, MMDL_STABIT_RAIL_MOVE );
-    MMDL_ChangeMoveCode( p_mmdl, MV_RAIL_DMY );
+    MMDL_OnStatusBit( p_wk->p_mmdl, MMDL_STABIT_RAIL_MOVE );
+    MMDL_ChangeMoveCode( p_wk->p_mmdl, MV_RAIL_DMY );
   }
 
+
   // レールワークの取得
-  p_wk->p_railwork = MMDL_GetRailWork( p_mmdl );
+  p_wk->p_railwork = MMDL_GetRailWork( p_wk->p_mmdl );
 
   // 位置を初期か
   {
     RAIL_LOCATION location = {0};
-    FIELD_RAIL_WORK_SetLocation( p_wk->p_railwork, &location );
+    MMDL_SetRailLocation( p_wk->p_mmdl, &location );
   }
 
 
@@ -231,8 +233,6 @@ FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER* p_player, HEAPID 
 //-----------------------------------------------------------------------------
 void FIELD_PLAYER_NOGRID_Delete( FIELD_PLAYER_NOGRID* p_player )
 {
-  MMDL* p_mmdl = FIELD_PLAYER_GetMMdl( p_player->p_player );
-
   GFL_HEAP_FreeMemory( p_player );
 }
 
@@ -326,7 +326,7 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int k
 //-----------------------------------------------------------------------------
 void FIELD_PLAYER_NOGRID_SetLocation( FIELD_PLAYER_NOGRID* p_player, const RAIL_LOCATION* cp_location )
 {
-  FIELD_RAIL_WORK_SetLocation( p_player->p_railwork, cp_location );
+  MMDL_SetRailLocation( p_player->p_mmdl, cp_location );
 }
 
 //----------------------------------------------------------------------------
@@ -339,7 +339,7 @@ void FIELD_PLAYER_NOGRID_SetLocation( FIELD_PLAYER_NOGRID* p_player, const RAIL_
 //-----------------------------------------------------------------------------
 void FIELD_PLAYER_NOGRID_GetLocation( const FIELD_PLAYER_NOGRID* cp_player, RAIL_LOCATION* p_location )
 {
-  FIELD_RAIL_WORK_GetLocation( cp_player->p_railwork, p_location );
+  MMDL_GetRailLocation( cp_player->p_mmdl, p_location );
 }
 
 //----------------------------------------------------------------------------
@@ -819,6 +819,7 @@ static PLAYER_SET player_CheckMoveStart_Walk(
     {
 			return( PLAYER_SET_WALK );
 		}
+
     
 /*
     if( (hit & MMDL_MOVEHITBIT_ATTR) )

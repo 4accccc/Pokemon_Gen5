@@ -210,7 +210,13 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
           &p_slipdown->start_pos, &p_slipdown->end_pos,
           &p_slipdown->target_location, &p_slipdown->end_pos );
 
-      GF_ASSERT( result );
+      // 下がないのであれば、何もしない
+      if( !result )
+      {
+        OS_TPrintf( "slipdown 下のレールが見つかりません。\n" );
+        GF_ASSERT( result );
+        return GMEVENT_RES_FINISH;
+      }
 
      
       // 移動カウントを求める
@@ -291,8 +297,19 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
     break;
     
   case EV_RAILSLIPDOWN_END:            // 終了
-    // レールロケーションを設定
-    FIELD_PLAYER_NOGRID_SetLocation( p_slipdown->p_nogrid_player, &p_slipdown->target_location );
+    {
+      VecFx32 pos;
+
+      TOMOYA_Printf( "rail index %d\n", p_slipdown->target_location.rail_index );
+      TOMOYA_Printf( "line_grid %d\n", p_slipdown->target_location.line_grid );
+      TOMOYA_Printf( "width_grid %d\n", p_slipdown->target_location.width_grid );
+      
+      // レールロケーションを設定
+      FIELD_PLAYER_NOGRID_SetLocation( p_slipdown->p_nogrid_player, &p_slipdown->target_location );
+      FIELD_PLAYER_NOGRID_GetPos( p_slipdown->p_nogrid_player, &pos );
+      // 座標をプレイヤーに設定
+      FIELD_PLAYER_SetPos( p_slipdown->p_player, &pos );    
+    }
     return GMEVENT_RES_FINISH;
 
   default:
