@@ -75,7 +75,7 @@ extern  void              BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM
 extern  void              BTLV_EFFECT_Stop( void );
 
 //暫定でTCBで作成したエフェクト
-extern  void              BTLV_EFFECT_Damage( BtlvMcssPos target );
+extern  void              BTLV_EFFECT_Damage( BtlvMcssPos target, WazaID waza );
 
 extern  BOOL              BTLV_EFFECT_CheckExecute( void );
 extern  void              BTLV_EFFECT_SetPokemon( const POKEMON_PARAM *pp, int position );

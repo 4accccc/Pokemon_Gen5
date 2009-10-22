@@ -1425,7 +1425,6 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_WAZA_EFFECT,       scProc_ACT_WazaEffect     },
     { SC_ACT_WAZA_EFFECT_EX,    scProc_ACT_WazaEffectEx   },
     { SC_ACT_WAZA_DMG,          scProc_ACT_WazaDmg        },
-    { SC_ACT_WAZA_DMG_DBL,      scProc_ACT_WazaDmg_Dbl    },
     { SC_ACT_WAZA_DMG_PLURAL,   scProc_ACT_WazaDmg_Plural },
     { SC_ACT_WAZA_ICHIGEKI,     scProc_ACT_WazaIchigeki   },
     { SC_ACT_CONF_DMG,          scProc_ACT_ConfDamage     },
@@ -1746,46 +1745,15 @@ static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args )
     defPokePos  = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
     affinity  = args[1];
     damage    = args[2];
+    waza      = args[3];
 
-    BTLV_ACT_DamageEffectSingle_Start( wk->viewCore, defPokePos, damage, affinity );
+    BTLV_ACT_DamageEffectSingle_Start( wk->viewCore, waza, defPokePos, damage, affinity );
     (*seq)++;
   }
   break;
 
   case 1:
     if( BTLV_ACT_DamageEffectSingle_Wait(wk->viewCore) )
-    {
-      return TRUE;
-    }
-    break;
-  }
-  return FALSE;
-}
-/**
- * yƒAƒNƒVƒ‡ƒ“z‚Q‘Ì“¯Žžƒ_ƒ[ƒWˆ—
- */
-static BOOL scProc_ACT_WazaDmg_Dbl( BTL_CLIENT* wk, int* seq, const int* args )
-{
-  switch( *seq ) {
-  case 0:
-  {
-    WazaID waza;
-    u8  defPokePos1, defPokePos2, aff;
-    u16 damage1, damage2;
-
-    defPokePos1 = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-    defPokePos2 = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[1] );
-    aff       = args[2];
-    damage1   = args[3];
-    damage2   = args[4];
-
-    BTLV_ACT_DamageEffectDouble_Start( wk->viewCore, defPokePos1, defPokePos2, aff );
-    (*seq)++;
-  }
-  break;
-
-  case 1:
-    if( BTLV_ACT_DamageEffectDouble_Wait(wk->viewCore) )
     {
       return TRUE;
     }
@@ -1801,14 +1769,16 @@ static BOOL scProc_ACT_WazaDmg_Plural( BTL_CLIENT* wk, int* seq, const int* args
   switch( *seq ) {
   case 0:
   {
-    u16 poke_cnt = args[0];
-    BtlTypeAffAbout aff_about = BTL_CALC_TypeAffAbout( args[1] );
+    u16               poke_cnt  = args[0];
+    BtlTypeAffAbout   aff_about = args[1];
+    WazaID            waza      = args[2];
+
     u8 pokeID[ BTL_POS_MAX ];
     u8 i;
     for(i=0; i<poke_cnt; ++i){
       pokeID[i] = SCQUE_READ_ArgOnly( wk->cmdQue );
     }
-    BTLV_ACT_DamageEffectPlural_Start( wk->viewCore, poke_cnt, aff_about, pokeID );
+    BTLV_ACT_DamageEffectPlural_Start( wk->viewCore, poke_cnt, aff_about, pokeID, waza );
     (*seq)++;
   }
   break;

@@ -43,7 +43,7 @@ extern void BTLV_SCU_Delete( BTLV_SCU* wk );
 extern void BTLV_SCU_Setup( BTLV_SCU* wk );
 extern void BTLV_SCU_StartBtlIn( BTLV_SCU* wk );
 extern BOOL BTLV_SCU_WaitBtlIn( BTLV_SCU* wk );
-extern void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos );
+extern void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos, WazaID wazaID );
 extern BOOL BTLV_SCU_WaitWazaDamageAct( BTLV_SCU* wk );
 extern void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos );
 extern BOOL BTLV_SCU_WaitDeadAct( BTLV_SCU* wk );

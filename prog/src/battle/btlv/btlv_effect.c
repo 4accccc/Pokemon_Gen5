@@ -276,12 +276,12 @@ void BTLV_EFFECT_Stop( void )
  * @brief ダメージエフェクト起動
  *
  * @param   target    発動位置
- *
+ * @param   wazaID    ワザナンバー
  */
 //=============================================================================================
-void BTLV_EFFECT_Damage( BtlvMcssPos target )
+void BTLV_EFFECT_Damage( BtlvMcssPos target, WazaID waza )
 {
-  BTLV_EFFECT_TCB *bet = GFL_HEAP_AllocMemory( bew->heapID, sizeof( BTLV_EFFECT_TCB ) );
+  BTLV_EFFECT_TCB *bet = GFL_HEAP_AllocMemory( bew->heapID, sizeof(BTLV_EFFECT_TCB) );
 
   bet->seq_no = 0;
   bet->target = target;

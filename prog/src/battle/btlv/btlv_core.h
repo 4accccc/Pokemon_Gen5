@@ -181,12 +181,9 @@ extern void BTLV_ACT_WazaEffect_Start( BTLV_CORE* wk, BtlPokePos atPokePos, BtlP
 
 extern BOOL BTLV_ACT_WazaEffect_Wait( BTLV_CORE* wk );
 
-extern void BTLV_ACT_DamageEffectSingle_Start( BTLV_CORE* wk, BtlPokePos defPokePos, u16 damage, BtlTypeAff aff );
+extern void BTLV_ACT_DamageEffectSingle_Start( BTLV_CORE* wk, WazaID waza, BtlPokePos defPokePos, u16 damage, BtlTypeAff aff );
 extern BOOL BTLV_ACT_DamageEffectSingle_Wait( BTLV_CORE* wk );
 
-extern void BTLV_ACT_DamageEffectDouble_Start( BTLV_CORE* wk,
-  BtlPokePos defPokePos1, BtlPokePos defPokePos2, BtlTypeAff aff );
-extern BOOL BTLV_ACT_DamageEffectDouble_Wait( BTLV_CORE* wk );
 
 //=============================================================================================
 /**
@@ -198,7 +195,7 @@ extern BOOL BTLV_ACT_DamageEffectDouble_Wait( BTLV_CORE* wk );
  * @param   pokeID    ëŒè€Ç∆Ç»ÇÈÉ|ÉPÉÇÉìIDîzóÒ
  */
 //=============================================================================================
-extern void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAffAbout affAbout, const u8* pokeID );
+extern void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAffAbout affAbout, const u8* pokeID, WazaID waza );
 extern BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk );
 
 

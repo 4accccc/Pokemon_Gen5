@@ -70,7 +70,6 @@ typedef enum {
   SC_ACT_WAZA_EFFECT,
   SC_ACT_WAZA_EFFECT_EX,    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
   SC_ACT_WAZA_DMG,          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
-  SC_ACT_WAZA_DMG_DBL,      ///< 【アクション】２体同時ダメージ処理 [ pokeID ]
   SC_ACT_WAZA_DMG_PLURAL,   ///< 【アクション】複数体同時ダメージ処理 [ pokeCnt, affAbout, ... ]
   SC_ACT_WAZA_ICHIGEKI,     ///< 【アクション】一撃ワザ処理
   SC_ACT_CONF_DMG,          ///< 【アクション】こんらん自爆ダメージ [ pokeID ]
@@ -393,19 +392,14 @@ static inline void SCQUE_PUT_ACT_WazaEffectEx( BTL_SERVER_CMD_QUE* que, u8 atPok
 }
 
 // 【アクション】単体ダメージ処理
-static inline void SCQUE_PUT_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, u8 defPokeID, u8 affinity, u16 damage )
+static inline void SCQUE_PUT_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, u8 defPokeID, u8 affinity, u16 damage, u16 wazaID )
 {
-  SCQUE_PUT_Common( que, SC_ACT_WAZA_DMG, defPokeID, affinity, damage );
-}
-// 【アクション】２体同時ダメージ処理
-static inline void SCQUE_PUT_ACT_WazaDamageDbl( BTL_SERVER_CMD_QUE* que, u8 defPokeID1, u8 defPokeID2, u16 damage1, u16 damage2, u8 aff  )
-{
-  SCQUE_PUT_Common( que, SC_ACT_WAZA_DMG_DBL, defPokeID1, defPokeID2, aff, damage1, damage2 );
+  SCQUE_PUT_Common( que, SC_ACT_WAZA_DMG, defPokeID, affinity, damage, wazaID );
 }
 // 【アクション】複数体同時ダメージ処理
-static inline void SCQUE_PUT_ACT_WazaDamagePlural( BTL_SERVER_CMD_QUE* que, u8 pokeCnt, u8 affAbout )
+static inline void SCQUE_PUT_ACT_WazaDamagePlural( BTL_SERVER_CMD_QUE* que, u8 pokeCnt, u8 affAbout, u16 wazaID )
 {
-  SCQUE_PUT_Common( que, SC_ACT_WAZA_DMG_PLURAL, pokeCnt, affAbout );
+  SCQUE_PUT_Common( que, SC_ACT_WAZA_DMG_PLURAL, pokeCnt, affAbout, wazaID );
 }
 
 // 【アクション】一撃必殺ワザ処理

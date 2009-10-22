@@ -427,12 +427,11 @@ static void scPut_WazaAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender,
 static void scput_WazaNoEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender );
 static void scput_DmgToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BTL_EVWK_DMG_TO_RECOVER* evwk );
 static void scPut_WazaEffectOn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaID waza );
-static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* defender, BtlTypeAff aff, u32 damage,
-  BOOL critical_flag, BOOL plural_hit_flag );
-static void scPut_WazaDamagePlural( BTL_SVFLOW_WORK* wk, u32 poke_cnt, BtlTypeAff aff,
-  BTL_POKEPARAM** bpp, const u16* damage, const u8* critical_flag );
+static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  BTL_POKEPARAM* defender, BtlTypeAff aff, u32 damage, BOOL critical_flag, BOOL plural_hit_flag );
+static void scPut_WazaDamagePlural( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  u32 poke_cnt, BtlTypeAff aff, BTL_POKEPARAM** bpp, const u16* damage, const u8* critical_flag );
 static void scPut_Koraeru( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BppKoraeruCause cause );
-static void scPut_WazaDamageAffMsg( BTL_SVFLOW_WORK* wk, BtlTypeAff aff );
 static void scPut_TokWin_In( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scPut_TokWin_Out( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scPut_RankEffectLimit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaRankEffect effect, int volume );
@@ -3438,7 +3437,7 @@ static void svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
       scproc_Migawari_Damage( wk, defender, damage );
     }else{
       u8 koraeru_cause = scEvent_CheckKoraeru( wk, attacker, defender, &damage );
-      scPut_WazaDamageSingle( wk, defender, affinity, damage, critical_flag, plural_flag );
+      scPut_WazaDamageSingle( wk, wazaParam, defender, affinity, damage, critical_flag, plural_flag );
       if( koraeru_cause != BPP_KORAE_NONE ){
         scPut_Koraeru( wk, defender, koraeru_cause );
       }
@@ -3501,7 +3500,7 @@ static void scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
     }
   }
 
-  scPut_WazaDamagePlural( wk, poke_cnt, affAry[0], bpp, dmg, critical_flg );
+  scPut_WazaDamagePlural( wk, wazaParam, poke_cnt, affAry[0], bpp, dmg, critical_flg );
   for(i=0; i<poke_cnt; ++i)
   {
     if( koraeru_cause[i] != BPP_KORAE_NONE ){
@@ -5587,8 +5586,8 @@ static void scPut_WazaEffectOn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attack
  * [Put] ワザによるダメージ（単体）
  */
 //--------------------------------------------------------------------------
-static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* defender, BtlTypeAff aff, u32 damage,
-  BOOL critical_flag, BOOL plural_hit_flag )
+static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  BTL_POKEPARAM* defender, BtlTypeAff aff, u32 damage, BOOL critical_flag, BOOL plural_hit_flag )
 {
   u8 pokeID = BPP_GetID( defender );
 
@@ -5599,7 +5598,7 @@ static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* defender
 
   BPP_HpMinus( defender, damage );
   SCQUE_PUT_OP_HpMinus( wk->que, pokeID, damage );
-  SCQUE_PUT_ACT_WazaDamage( wk->que, pokeID, aff, damage );
+  SCQUE_PUT_ACT_WazaDamage( wk->que, pokeID, aff, damage, wazaParam->wazaID );
   if( critical_flag )
   {
     SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_CriticalHit );
@@ -5610,8 +5609,8 @@ static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* defender
  * [Put] ワザによるダメージ（複数体）
  */
 //--------------------------------------------------------------------------
-static void scPut_WazaDamagePlural( BTL_SVFLOW_WORK* wk, u32 poke_cnt, BtlTypeAff aff,
-  BTL_POKEPARAM** bpp, const u16* damage, const u8* critical_flag )
+static void scPut_WazaDamagePlural( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  u32 poke_cnt, BtlTypeAff aff, BTL_POKEPARAM** bpp, const u16* damage, const u8* critical_flag )
 {
   u32 i;
 
@@ -5621,7 +5620,7 @@ static void scPut_WazaDamagePlural( BTL_SVFLOW_WORK* wk, u32 poke_cnt, BtlTypeAf
     SCQUE_PUT_OP_HpMinus( wk->que, BPP_GetID(bpp[i]), damage[i] );
   }
 
-  SCQUE_PUT_ACT_WazaDamagePlural( wk->que, poke_cnt, aff );
+  SCQUE_PUT_ACT_WazaDamagePlural( wk->que, poke_cnt, aff, wazaParam->wazaID );
   for(i=0; i<poke_cnt; ++i)
   {
     SCQUE_PUT_ArgOnly( wk->que, BPP_GetID(bpp[i]) );
@@ -5658,10 +5657,6 @@ static void scPut_Koraeru( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BppKor
       }
     }
   }
-}
-static void scPut_WazaDamageAffMsg( BTL_SVFLOW_WORK* wk, BtlTypeAff aff )
-{
-//  scPut_WazaDamageSingle( wk, defender, aff, damage, critical_flag );
 }
 //--------------------------------------------------------------------------
 /**
