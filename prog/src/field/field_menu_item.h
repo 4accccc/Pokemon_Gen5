@@ -19,6 +19,7 @@ typedef enum
   FMIT_TRAINERCARD,
   FMIT_REPORT,
   FMIT_CONFING,
+  FMIT_NONE,
   
   FMIT_MAX,
   

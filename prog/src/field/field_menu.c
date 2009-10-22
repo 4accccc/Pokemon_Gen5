@@ -20,13 +20,15 @@
 #include "savedata/mystatus.h"
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+
 
 #include "field/field_msgbg.h"
 #include "field/fieldmap.h"
 #include "field_subscreen.h"
 #include "field_menu.h"
 #include "field/zonedata.h" //ZONEDATA_IsUnionRoom
-
+#include "eventwork.h"
 
 //======================================================================
 //	define
@@ -145,11 +147,13 @@ struct _FIELD_MENU_WORK
   FIELDMAP_WORK *fieldWork;
   FIELD_SUBSCREEN_WORK *subScrWork;
   FIELD_MENU_STATE state;
+  EVENTWORK *ev;
   u16 zoneId;
 
   u8  cursorPosX; //0か1
   u8  cursorPosY; //0～3(3は戻る)
   u8  waitCnt;
+  u8  menuType;
   BOOL isUpdateCursor;
   BOOL isCancel;
   BOOL isDispCursor;
@@ -172,8 +176,8 @@ struct _FIELD_MENU_WORK
 //	proto
 //======================================================================
 #pragma mark [> proto
-static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle );
-static void FIELD_MENU_InitIcon( FIELD_MENU_WORK* work , ARCHANDLE *arcHandle );
+static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, int menuType );
+static void FIELD_MENU_InitIcon( FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, int menuType );
 
 static void FIELD_MENU_InitScrollIn( FIELD_MENU_WORK* work );
 static void FIELD_MENU_VBlankTCB( GFL_TCB *tcb , void *userWork );
@@ -186,6 +190,10 @@ static void FIELD_MENU_Icon_CreateIcon( FIELD_MENU_WORK* work , FIELD_MENU_ICON 
 static void FIELD_MENU_Icon_DeleteIcon( FIELD_MENU_WORK* work , FIELD_MENU_ICON *icon ); 
 static void FIELD_MENU_Icon_TransBmp( FIELD_MENU_WORK* work , FIELD_MENU_ICON *icon );
 
+static int  _get_menuType( EVENTWORK *ev, int zoneId );
+
+
+
 static const u16 FIELD_MENU_ITEM_MSG_ARR[FMIT_MAX] =
 {
   FLDMAPMENU_STR_ITEM07,
@@ -195,6 +203,7 @@ static const u16 FIELD_MENU_ITEM_MSG_ARR[FMIT_MAX] =
   FLDMAPMENU_STR_ITEM04,
   FLDMAPMENU_STR_ITEM05,
   FLDMAPMENU_STR_ITEM06,
+  FLDMAPMENU_STR_ITEM09,
 };
 static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX][3] =
 {
@@ -221,6 +230,12 @@ static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX][3] =
   { NARC_field_menu_menu_icon_confing_NCGR,
     NARC_field_menu_menu_icon_confing_NCER,
     NARC_field_menu_menu_icon_confing_NANR},
+  //ダミー
+  { NARC_field_menu_menu_obj_common_NCGR, 
+    NARC_field_menu_menu_obj_common_NCER,
+    NARC_field_menu_menu_obj_common_NANR},
+
+
 };
 
 //--------------------------------------------------------------
@@ -228,6 +243,7 @@ static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX][3] =
 //--------------------------------------------------------------
 FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK* subScreenWork , FIELDMAP_WORK *fieldWork , const BOOL isScrollIn )
 {
+  int menuType;
   FIELD_MENU_WORK *work = GFL_HEAP_AllocMemory( heapId , sizeof( FIELD_MENU_WORK ) );
   ARCHANDLE *arcHandle;
   GAMESYS_WORK *gameSys = FIELDMAP_GetGameSysWork( fieldWork );
@@ -237,6 +253,8 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK
   work->subScrWork = subScreenWork;
   work->state = FMS_WAIT_INIT;
   work->zoneId = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gameSys) );
+  work->ev = GAMEDATA_GetEventWork( gameData );
+
   
   work->cursorPosX = 0;
   work->cursorPosY = 0;
@@ -250,8 +268,12 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , FIELD_SUBSCREEN_WORK
   work->scrollOffset = 0;
   
   arcHandle = GFL_ARC_OpenDataHandle( ARCID_FIELD_MENU , work->heapId );
-  FIELD_MENU_InitGraphic( work , arcHandle);
-  FIELD_MENU_InitIcon( work , arcHandle);
+  //メニューの種類取得
+  menuType = _get_menuType( work->ev, work->zoneId );
+  work->menuType = menuType;
+
+  FIELD_MENU_InitGraphic( work , arcHandle, menuType);
+  FIELD_MENU_InitIcon( work , arcHandle, menuType);
   GFL_ARC_CloseDataHandle(arcHandle);
 
   G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_NONE , 
@@ -421,7 +443,7 @@ void FIELD_MENU_DrawMenu( FIELD_MENU_WORK* work )
     //アイコンの処理
     for( i=0;i<FIELD_MENU_ITEM_NUM;i++ )
     {
-      if( work->icon[i].cellIcon != NULL )
+      if( work->icon[i].cellIcon != NULL && work->icon[i].type!=FMIT_NONE)
       {
         GFL_CLACTPOS cellPos;
         GFL_CLACT_WK_GetPos( work->icon[i].cellIcon , &cellPos , FIELD_MENU_RENDER_SURFACE );
@@ -454,10 +476,20 @@ void FIELD_MENU_DrawMenu( FIELD_MENU_WORK* work )
   }
 }
 
+
+// メニューの項目数に対応してスクリーンを書き換える
+static const u32 menu_screen_table[] = {
+ NARC_field_menu_menu_bg_NSCR,
+ NARC_field_menu_menu_bg_NSCR,
+ NARC_field_menu_menu_bg_4_NSCR,
+ NARC_field_menu_menu_bg_5_NSCR,
+};
+
+
 //--------------------------------------------------------------
 //  グラフィック系初期化
 //--------------------------------------------------------------
-static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
+static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, int menuType )
 {
   static const GFL_BG_BGCNT_HEADER bgCont_BackGround = {
   0, 0, 0x1000, 0,
@@ -488,9 +520,9 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
                     PALTYPE_SUB_BG , 0 , 0 , work->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_field_menu_menu_bg_NCGR ,
                     FIELD_MENU_BG_BACK , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_field_menu_menu_bg_NSCR , 
-                    FIELD_MENU_BG_BACK ,  0 , 0, FALSE , work->heapId );
 
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , menu_screen_table[menuType] , 
+                      FIELD_MENU_BG_BACK ,  0 , 0, FALSE , work->heapId );
   work->objRes[FMO_COM_PLT] = GFL_CLGRP_PLTT_Register( arcHandle , 
                                   NARC_field_menu_menu_obj_common_NCLR ,
                                   CLSYS_DRAW_SUB , 0 , work->heapId );
@@ -543,11 +575,51 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   }
 }
 
-static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
+//----------------------------------------------------------------------------------
+/**
+ * @brief	現在のメニュータイプを取得する
+ *
+ * @param   ev		
+ *
+ * @retval  int		
+ */
+//----------------------------------------------------------------------------------
+static int _get_menuType( EVENTWORK *ev, int zoneId )
+{
+  int type=0;   // 通常
+
+  // ユニオンルームか？
+  if (ZONEDATA_IsUnionRoom(zoneId) || ZONEDATA_IsColosseum(zoneId) ){
+    type = 1; // ユニオンルーム
+  }
+
+
+  // ゲーム開始時チェック
+  if(EVENTWORK_CheckEventFlag(ev,SYS_FLAG_ZUKAN_GET) == FALSE ){
+    type  = 3; // 図鑑無し
+  }
+  if( EVENTWORK_CheckEventFlag(ev,SYS_FLAG_FIRST_POKE_GET) == FALSE ){
+    type = 2; // 図鑑無し・ポケモン無し
+  }
+
+#if 0
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
+    type = 3;
+  }
+
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_DEBUG){
+    type = 2;
+  }
+
+#endif
+  return type;
+}
+
+
+static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, int menuType )
 {
   //TODO 場所により個数などが変動することを想定
   u8 i;
-  u8 menuType;
   //BmpWinの位置(下に半キャラずらして使う
   static const u8 bmpState[7][2] =
   {
@@ -560,7 +632,7 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
     { 13,21 },
   };
 
-  static const FIELD_MENU_ITEM_TYPE typeArr[2][7] =
+  static const FIELD_MENU_ITEM_TYPE typeArr[][7] =
   {
     { //通常
       FMIT_POKEMON,
@@ -579,24 +651,31 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
       FMIT_REPORT,
       FMIT_CONFING,
       FMIT_EXIT,
-    }
+    },
+    { //ポケモン無し・図鑑無し
+      FMIT_ITEMMENU,
+      FMIT_TRAINERCARD,
+      FMIT_REPORT,
+      FMIT_CONFING,
+      FMIT_NONE,
+      FMIT_NONE,
+      FMIT_EXIT,
+    },
+    { //図鑑無し
+      FMIT_POKEMON,
+      FMIT_ITEMMENU,
+      FMIT_TRAINERCARD,
+      FMIT_REPORT,
+      FMIT_CONFING,
+      FMIT_NONE,
+      FMIT_EXIT,
+    },
+
+
   };
 
   GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , 
                                            NARC_message_fldmapmenu_dat , work->heapId );
-  //メニューの種類のチェック
-  {
-    if (ZONEDATA_IsUnionRoom(work->zoneId) || 
-        ZONEDATA_IsColosseum(work->zoneId) )
-    {
-      menuType = 1;
-    }
-    else
-    {
-      menuType = 0;
-    }
-  }
-  
   //文字列の作成
   for( i=0;i<FIELD_MENU_ITEM_NUM;i++ )
   {
@@ -606,6 +685,7 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
   {
     const FIELD_MENU_ITEM_TYPE itemType = typeArr[menuType][i];
     FIELD_MENU_ICON_INIT initWork;
+
     //表示名
     if( itemType == FMIT_TRAINERCARD )
     {
@@ -628,7 +708,7 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
     {
       initWork.str = GFL_MSG_CreateString( msgHandle , FIELD_MENU_ITEM_MSG_ARR[itemType] );
     }
-    
+
     initWork.type = itemType;
     if( i != 6 )
     {
@@ -656,9 +736,11 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle )
     }
     initWork.strBmpPosX = bmpState[i][0];
     initWork.strBmpPosY = bmpState[i][1];
+
     
     FIELD_MENU_Icon_CreateIcon( work , &work->icon[i] , &initWork );
     GFL_STR_DeleteBuffer( initWork.str );
+
   }
   
   GFL_MSG_Delete( msgHandle );
@@ -741,15 +823,112 @@ void FIELD_MENU_SetMenuItemNo( FIELD_MENU_WORK* work , const FIELD_MENU_ITEM_TYP
   }
 }
 
+
+static int  _get_nowcursor_pos( int x, int y );
+static BOOL _move_cursor( FIELD_MENU_WORK* work, int move );
+
+enum{
+  MOVE_UP=0,
+  MOVE_DOWN,
+  MOVE_LEFT,
+  MOVE_RIGHT,
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	XYからカーソル位置を算出
+ *
+ * @param   x		cursorPosX
+ * @param   y		cursorPosY
+ *
+ * @retval  int		メニュー番号(下のコメント参照）
+ */
+//----------------------------------------------------------------------------------
+static int _get_nowcursor_pos( int x, int y )
+{
+  return y*2+x;
+}
+
+// 0     1
+// 2     3
+// 4     5
+//   6(7)
+
+// 上下左右の順
+static const u8 move_table[][8][4]={
+ {{0,2,0,1,},{1,3,0,1,},{0,4,2,3,},{1,5,2,3,},{2,6,4,5,},{3,6,4,5},{0xff,6,6,6,},{0xff,6,6,6,},},  // 6個
+ {{0,2,0,1,},{1,3,0,1,},{0,4,2,3,},{1,5,2,3,},{2,6,4,5,},{3,6,4,5},{0xff,6,6,6,},{0xff,6,6,6,},},  // 6個
+ {{0,2,0,1,},{1,3,0,1,},{0,6,2,3,},{1,6,2,3,},{6,6,6,6,},{6,6,6,6},{0xfe,6,6,6,},{0xfe,6,6,6,},},  // 4個
+ {{0,2,0,1,},{1,3,0,1,},{0,4,2,3,},{1,6,2,3,},{2,6,4,4,},{6,6,6,6},{   4,6,6,6,},{   4,6,6,6,},},  // 5個
+};
+
+// カーソル位置をXYに振り分けるテーブル
+static const u8 pos2xy_table[][2]={
+  {0,0},{1,0},
+  {0,1},{1,1},
+  {0,2},{1,2},
+  {0,3},
+};
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	移動方向を渡すと実際に移動できるメニューの場所にカーソル位置を変更する
+ *
+ * @param   work	FIELD_MENU_WORK
+ * @param   mx		移動方向X
+ * @param   my		移動方向Y
+ *
+ * @retval  BOOL	移動した:TRUE  してない:FALSE
+ */
+//----------------------------------------------------------------------------------
+static BOOL _move_cursor( FIELD_MENU_WORK* work, int move )
+{
+  int now = _get_nowcursor_pos(work->cursorPosX, work->cursorPosY);
+  int ret;
+  int i;
+
+  if(now<0 || now>7){
+    GF_ASSERT_MSG(0,"カーソルが範囲外 (%d,%d)", work->cursorPosX, work->cursorPosY);
+  }
+
+  ret = move_table[work->menuType][now][move];
+
+  
+  if(now!=ret){     // 特殊移動1(0xffの場合はY座標的に1段上に移動する）
+    if(ret==0xff){
+      work->cursorPosY = 2;
+      return TRUE;
+    }
+    else 
+    if(ret==0xfe){  // 特殊移動2(0xfeの場合はY座標的に2段上に移動する）
+      work->cursorPosY = 1;
+      return TRUE;
+    }
+    // 「閉じる」はX座標を指定しない（戻り位置を保存するため）
+    if(ret!=6){
+      work->cursorPosX = pos2xy_table[ret][0];
+    }
+    work->cursorPosY = pos2xy_table[ret][1];
+    return TRUE;
+  }
+
+  // 移動してない
+  return FALSE;
+}
+
+
 #pragma mark [> UI Func
 static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
 {
-  const int trg = GFL_UI_KEY_GetTrg();
+  const int trg    = GFL_UI_KEY_GetTrg();
   const int repeat = GFL_UI_KEY_GetRepeat();
 
+  // カーソル非表示モードの場合はキーを入れると表示ONになる
   if( work->isDispCursor == FALSE &&
       trg != 0 )
   {
+    // メニュー終了
     if( trg & PAD_BUTTON_B || 
         trg & PAD_BUTTON_X )
     {
@@ -757,7 +936,7 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
       work->state = FMS_EXIT_INIT;
     }
     else
-    {
+    { // カーソル表示
       work->isDispCursor = TRUE;
       work->isUpdateCursor = TRUE;
       GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
@@ -766,11 +945,11 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
     return;
   }
   
+  // 上下左右移動
   if( repeat & PAD_KEY_UP )
   {
-    if( work->cursorPosY > 0 )
+    if(_move_cursor(work, MOVE_UP))
     {
-      work->cursorPosY--;
       work->isUpdateCursor = TRUE;
       PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
     }
@@ -778,9 +957,8 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
   else
   if( repeat & PAD_KEY_DOWN )
   {
-    if( work->cursorPosY < 3 )
+    if(_move_cursor(work, MOVE_DOWN))
     {
-      work->cursorPosY++;
       work->isUpdateCursor = TRUE;
       PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
     }
@@ -788,10 +966,8 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
   else
   if( repeat & PAD_KEY_LEFT )
   {
-    if( work->cursorPosX > 0 && 
-        work->cursorPosY < 3)
+    if(_move_cursor(work, MOVE_LEFT))
     {
-      work->cursorPosX--;
       work->isUpdateCursor = TRUE;
       PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
     }
@@ -799,10 +975,8 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
   else
   if( repeat & PAD_KEY_RIGHT )
   {
-    if( work->cursorPosX < 1 && 
-        work->cursorPosY < 3 )
+    if(_move_cursor(work, MOVE_RIGHT))
     {
-      work->cursorPosX++;
       work->isUpdateCursor = TRUE;
       PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
     }
@@ -838,7 +1012,7 @@ static void  FIELD_MENU_UpdateTP( FIELD_MENU_WORK* work )
   
   const int ret = GFL_UI_TP_HitTrg( hitTbl );
   
-  if( ret != GFL_UI_TP_HIT_NONE )
+  if( ret != GFL_UI_TP_HIT_NONE && work->icon[ret].type!=FMIT_NONE)
   {
     work->cursorPosX = ret%2;
     work->cursorPosY = ret/2;
@@ -942,8 +1116,11 @@ static void FIELD_MENU_Icon_CreateIcon( FIELD_MENU_WORK* work ,
     GFL_CLACT_WK_SetAnmSeq( icon->cellIcon , 0 );
 //    GFL_CLACT_WK_SetAffineParam( icon->cellIcon , CLSYS_AFFINETYPE_NORMAL );
 
-    GFL_CLACT_WK_SetDrawEnable( icon->cellIcon, TRUE );
-    
+    if(icon->type==FMIT_NONE){
+      GFL_CLACT_WK_SetDrawEnable( icon->cellIcon, FALSE );
+    }else{
+      GFL_CLACT_WK_SetDrawEnable( icon->cellIcon, TRUE );
+    }
   }
   else
   {
