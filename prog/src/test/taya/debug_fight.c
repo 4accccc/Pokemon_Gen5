@@ -27,29 +27,250 @@
 #include "item\itemsym.h"
 #include "net\network_define.h"
 #include "battle\battle.h"
-#include "sound/pm_sndsys.h"
+#include "gamesystem\btl_setup.h"
+#include "sound\pm_sndsys.h"
 #include "gamesystem\game_data.h"
 #include "gamesystem\btl_setup.h"
+#include "savedata\save_tbl.h"
+#include "debug\debug_makepoke.h"
+#include "poke_tool\monsno_def.h"
+
 
 // local includes ---------------------
-#include "msg\msg_d_taya.h"
+#include "msg\msg_debug_fight.h"
 
 // archive includes -------------------
 #include "arc_def.h"
 #include "message.naix"
 #include "font/font.naix"
 
+
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
 enum {
-  HEAPID_SYS  = HEAPID_BTL_DEBUG_SYS,
-  HEAPID_VIEW = HEAPID_BTL_DEBUG_VIEW,
+  POKEPARA_MAX = 24,    // 最大４パーティ×６体で24体を保存
+  POKEPARA_SIZE = 228,  // ポケモンパラメータ想定サイズ
+  POKEPARA_SAVEAREA_SIZE = POKEPARA_SIZE * POKEPARA_MAX,
+
+  SAVEAREA_SIZE = 0x2000,
+
+};
+
+
+
+/*--------------------------------------------------------------------------*/
+/* Enums                                                                    */
+/*--------------------------------------------------------------------------*/
+typedef enum {
+  BTLTYPE_SINGLE_WILD,
+  BTLTYPE_SINGLE_TRAINER,
+  BTLTYPE_SINGLE_COMM,
+  BTLTYPE_DOUBLE_WILD,
+  BTLTYPE_DOUBLE_TRAINER1,
+  BTLTYPE_DOUBLE_TRAINER2,
+  BTLTYPE_DOUBLE_COMM,
+  BTLTYPE_DOUBLE_COMM_MULTI,
+  BTLTYPE_TRIPLE_TRAINER,
+  BTLTYPE_TRIPLE_COMM,
+
+  BTLTYPE_MAX,
+}BtlType;
+
+typedef enum {
+  POKEIDX_SELF_1,
+  POKEIDX_SELF_2,
+  POKEIDX_SELF_3,
+  POKEIDX_SELF_4,
+  POKEIDX_SELF_5,
+  POKEIDX_SELF_6,
+  POKEIDX_ENEMY1_1,
+  POKEIDX_ENEMY1_2,
+  POKEIDX_ENEMY1_3,
+  POKEIDX_ENEMY1_4,
+  POKEIDX_ENEMY1_5,
+  POKEIDX_ENEMY1_6,
+  POKEIDX_FRIEND_1,
+  POKEIDX_FRIEND_2,
+  POKEIDX_FRIEND_3,
+  POKEIDX_FRIEND_4,
+  POKEIDX_FRIEND_5,
+  POKEIDX_FRIEND_6,
+  POKEIDX_ENEMY2_1,
+  POKEIDX_ENEMY2_2,
+  POKEIDX_ENEMY2_3,
+  POKEIDX_ENEMY2_4,
+  POKEIDX_ENEMY2_5,
+  POKEIDX_ENEMY2_6,
+}PokeIdx;
+
+typedef enum {
+  SELITEM_POKE_SELF_1,
+  SELITEM_POKE_SELF_2,
+  SELITEM_POKE_SELF_3,
+  SELITEM_POKE_SELF_4,
+  SELITEM_POKE_SELF_5,
+  SELITEM_POKE_SELF_6,
+  SELITEM_POKE_ENEMY1_1,
+  SELITEM_POKE_ENEMY1_2,
+  SELITEM_POKE_ENEMY1_3,
+  SELITEM_POKE_ENEMY1_4,
+  SELITEM_POKE_ENEMY1_5,
+  SELITEM_POKE_ENEMY1_6,
+  SELITEM_POKE_FRIEND_1,
+  SELITEM_POKE_FRIEND_2,
+  SELITEM_POKE_FRIEND_3,
+  SELITEM_POKE_FRIEND_4,
+  SELITEM_POKE_FRIEND_5,
+  SELITEM_POKE_FRIEND_6,
+  SELITEM_POKE_ENEMY2_1,
+  SELITEM_POKE_ENEMY2_2,
+  SELITEM_POKE_ENEMY2_3,
+  SELITEM_POKE_ENEMY2_4,
+  SELITEM_POKE_ENEMY2_5,
+  SELITEM_POKE_ENEMY2_6,
+
+  SELITEM_BTL_TYPE,
+  SELITEM_SAVE,
+  SELITEM_LOAD,
+
+  SELITEM_MAX,
+  SELITEM_NULL = SELITEM_MAX,
+
+}SelectItem;
+
+/*--------------------------------------------------------------------------*/
+/* Layout                                                                   */
+/*--------------------------------------------------------------------------*/
+enum {
+  LAYOUT_PARTY_LABEL_LINE_Y = 8,
+  LAYOUT_PARTY_DATA_LINE_Y  = 28,
+  LAYOUT_PARTY_DATA_LINE_HEIGHT = 15,
+  LAYOUT_PARTY_LINE_OX = 10,
+  LAYOUT_PARTY_LINE_WIDTH = 60,
+
+  LAYOUT_PARTY_LINE1_X = LAYOUT_PARTY_LINE_OX,
+  LAYOUT_PARTY_LINE2_X = LAYOUT_PARTY_LINE_OX+LAYOUT_PARTY_LINE_WIDTH,
+  LAYOUT_PARTY_LINE3_X = LAYOUT_PARTY_LINE_OX+LAYOUT_PARTY_LINE_WIDTH*2,
+  LAYOUT_PARTY_LINE4_X = LAYOUT_PARTY_LINE_OX+LAYOUT_PARTY_LINE_WIDTH*3,
+
+  LAYOUT_PARTY_LINE_Y1 = LAYOUT_PARTY_DATA_LINE_Y,
+  LAYOUT_PARTY_LINE_Y2 = LAYOUT_PARTY_DATA_LINE_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT,
+  LAYOUT_PARTY_LINE_Y3 = LAYOUT_PARTY_DATA_LINE_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*2,
+  LAYOUT_PARTY_LINE_Y4 = LAYOUT_PARTY_DATA_LINE_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*3,
+  LAYOUT_PARTY_LINE_Y5 = LAYOUT_PARTY_DATA_LINE_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*4,
+  LAYOUT_PARTY_LINE_Y6 = LAYOUT_PARTY_DATA_LINE_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*5,
+
+  LAYOUT_PARAM_LINE_HEIGHT = 16,
+  LAYOUT_PARAM_LINE_Y1 = 128,
+  LAYOUT_PARAM_LINE_Y2 = 128 + LAYOUT_PARAM_LINE_HEIGHT,
+  LAYOUT_PARAM_LINE_Y3 = 128 + LAYOUT_PARAM_LINE_HEIGHT*2,
+  LAYOUT_PARAM_LINE_Y4 = 128 + LAYOUT_PARAM_LINE_HEIGHT*3,
+
+
+};
+/*
+ *  ラベルレイアウト
+ */
+static const struct {
+  u16 strID;
+  u8  x;
+  u8  y;
+}LabelLayout[] = {
+  { DBGF_LABEL_FRIEND1, LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LABEL_LINE_Y },
+  { DBGF_LABEL_ENEMY1,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LABEL_LINE_Y },
+  { DBGF_LABEL_FRIEND2, LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LABEL_LINE_Y },
+  { DBGF_LABEL_ENEMY2,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LABEL_LINE_Y },
+  { DBGF_LABEL_TYPE,    8, LAYOUT_PARAM_LINE_Y1 },
+  { DBGF_LABEL_WEATHER, 8, LAYOUT_PARAM_LINE_Y2 },
+  { DBGF_LABEL_LAND,    8, LAYOUT_PARAM_LINE_Y3 },
+};
+/*
+ *  アイテムレイアウト
+ */
+static const struct {
+  u16  itemID;
+  u8   x;
+  u8   y;
+}ItemLayout[] = {
+  { SELITEM_POKE_SELF_1,  LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y1 },
+  { SELITEM_POKE_SELF_2,  LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y2 },
+  { SELITEM_POKE_SELF_3,  LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y3 },
+  { SELITEM_POKE_SELF_4,  LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y4 },
+  { SELITEM_POKE_SELF_5,  LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y5 },
+  { SELITEM_POKE_SELF_6,  LAYOUT_PARTY_LINE1_X, LAYOUT_PARTY_LINE_Y6 },
+
+  { SELITEM_POKE_ENEMY1_1,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y1 },
+  { SELITEM_POKE_ENEMY1_2,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y2 },
+  { SELITEM_POKE_ENEMY1_3,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y3 },
+  { SELITEM_POKE_ENEMY1_4,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y4 },
+  { SELITEM_POKE_ENEMY1_5,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y5 },
+  { SELITEM_POKE_ENEMY1_6,  LAYOUT_PARTY_LINE2_X, LAYOUT_PARTY_LINE_Y6 },
+
+  { SELITEM_POKE_FRIEND_1,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y1 },
+  { SELITEM_POKE_FRIEND_2,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y2 },
+  { SELITEM_POKE_FRIEND_3,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y3 },
+  { SELITEM_POKE_FRIEND_4,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y4 },
+  { SELITEM_POKE_FRIEND_5,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y5 },
+  { SELITEM_POKE_FRIEND_6,  LAYOUT_PARTY_LINE3_X, LAYOUT_PARTY_LINE_Y6 },
+
+  { SELITEM_POKE_ENEMY2_1,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y1 },
+  { SELITEM_POKE_ENEMY2_2,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y2 },
+  { SELITEM_POKE_ENEMY2_3,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y3 },
+  { SELITEM_POKE_ENEMY2_4,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y4 },
+  { SELITEM_POKE_ENEMY2_5,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y5 },
+  { SELITEM_POKE_ENEMY2_6,  LAYOUT_PARTY_LINE4_X, LAYOUT_PARTY_LINE_Y6 },
+
+  { SELITEM_BTL_TYPE,   38, LAYOUT_PARAM_LINE_Y1 },
+
+  { SELITEM_LOAD,        8, LAYOUT_PARAM_LINE_Y4 },
+  { SELITEM_SAVE,       38, LAYOUT_PARAM_LINE_Y4 },
 };
 
 /*--------------------------------------------------------------------------*/
 /* Typedefs                                                                 */
 /*--------------------------------------------------------------------------*/
+typedef struct _DEBUG_BTL_WORK  DEBUG_BTL_WORK;
+typedef BOOL (*pMainProc)( DEBUG_BTL_WORK*, int* );
+
+/*--------------------------------------------------------------------------*/
+/* Structures                                                               */
+/*--------------------------------------------------------------------------*/
+
+/**
+ *  SaveData
+ */
+typedef struct {
+  u8  btlType;
+  u8  weather;
+  u16 dmy;
+
+  u8  pokeParaArea[ POKEPARA_SAVEAREA_SIZE ];
+
+}DEBUG_BTL_SAVEDATA;
+
+/**
+ *  Main Work
+ */
+struct _DEBUG_BTL_WORK {
+  GFL_BMPWIN*     win;
+  GFL_BMP_DATA*   bmp;
+  GFL_MSGDATA*    mm;
+  GFL_MSGDATA*    mmMonsName;
+  STRBUF*         strbuf;
+  GFL_FONT*       fontHandle;
+  PRINT_QUE*      printQue;
+  PRINT_UTIL      printUtil[1];
+  pMainProc       mainProc;
+  int             mainSeq;
+  SelectItem      selectItem;
+  u8              fNetConnect;
+  u8              prevItemStrWidth[ SELITEM_MAX ];
+  PROCPARAM_DEBUG_MAKEPOKE  makePokeParam;
+  BATTLE_SETUP_PARAM  setupParam;
+
+  DEBUG_BTL_SAVEDATA  saveData;
+};
 
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
@@ -57,6 +278,32 @@ enum {
 static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT DebugFightProcQuit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT DebugFightProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static void initGraphicSystems( HEAPID heapID );
+static void quitGraphicSystems( void );
+static void createTemporaryModules( DEBUG_BTL_WORK* wk, HEAPID heapID );
+static void deleteTemporaryModules( DEBUG_BTL_WORK* wk );
+static void changeScene_start( DEBUG_BTL_WORK* wk );
+static void changeScene_recover( DEBUG_BTL_WORK* wk );
+static void savework_Init( DEBUG_BTL_SAVEDATA* saveData );
+static POKEMON_PARAM* savework_GetPokeParaArea( DEBUG_BTL_SAVEDATA* saveData, u32 pokeIdx );
+static void setMainProc( DEBUG_BTL_WORK* wk, pMainProc nextProc );
+static inline BOOL selItem_IsPoke( u16 itemID );
+static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue );
+static BOOL btltype_IsComm( BtlType type );
+static BOOL btltype_IsMulti( BtlType type );
+static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect );
+static void printItem_Poke( DEBUG_BTL_WORK* wk, u16 itemID, STRBUF* buf );
+static void printItem_BtlType( DEBUG_BTL_WORK* wk, STRBUF* buf );
+static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf );
+static BOOL mainProc_Setup( DEBUG_BTL_WORK* wk, int* seq );
+static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq );
+static BOOL mainProc_MakePokePara( DEBUG_BTL_WORK* wk, int* seq );
+static BOOL mainProc_Save( DEBUG_BTL_WORK* wk, int* seq );
+static BOOL mainProc_Load( DEBUG_BTL_WORK* wk, int* seq );
+static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq );
+static void comm_dummy_callback(void* pWork);
+static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
+static void btlAutoConnectCallback( void* pWork );
 
 /*--------------------------------------------------------------------------*/
 /* Menu Table                                                               */
@@ -79,10 +326,31 @@ const GFL_PROC_DATA   DebugFightProcData = {
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,    0x8000 );
+  DEBUG_BTL_WORK* wk;
+
+  // ポケパラ、セーブ領域サイズが想定を越えたらASSERTで止める
+  GF_ASSERT_MSG( sizeof(DEBUG_BTL_SAVEDATA) <= SAVEAREA_SIZE, "SaveAreaSize=%d bytes", sizeof(DEBUG_BTL_SAVEDATA) );
+  {
+    u32 pp_size = POKETOOL_GetWorkSize();
+    GF_ASSERT_MSG( pp_size <= POKEPARA_SIZE, "PPSize=%d bytes", pp_size );
+  }
+
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,     0x6000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_VIEW,   0xb0000 );
+
+  wk = GFL_PROC_AllocWork( proc, sizeof(DEBUG_BTL_WORK), HEAPID_BTL_DEBUG_SYS );
+  GFL_STD_MemClear( wk, sizeof(DEBUG_BTL_WORK) );
+
+  initGraphicSystems( HEAPID_BTL_DEBUG_VIEW );
+  createTemporaryModules( wk, HEAPID_BTL_DEBUG_VIEW );
+
+  savework_Init( &wk->saveData );
+  wk->selectItem = SELITEM_POKE_SELF_1;
+
+  setMainProc( wk, mainProc_Setup );
+
   return GFL_PROC_RES_FINISH;
 }
-
 //--------------------------------------------------------------------------
 /**
  * PROC Quit
@@ -90,7 +358,14 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT DebugFightProcQuit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+  DEBUG_BTL_WORK* wk = mywk;
+
+  deleteTemporaryModules( wk );
+  quitGraphicSystems();
+
+  GFL_HEAP_DeleteHeap( HEAPID_BTL_DEBUG_VIEW );
   GFL_HEAP_DeleteHeap( HEAPID_BTL_DEBUG_SYS );
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -101,17 +376,24 @@ static GFL_PROC_RESULT DebugFightProcQuit( GFL_PROC * proc, int * seq, void * pw
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT DebugFightProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+  DEBUG_BTL_WORK* wk = mywk;
+
+  if( wk->mainProc(wk, &wk->mainSeq) ){
+    return GFL_PROC_RES_FINISH;
+  }
+
   return GFL_PROC_RES_CONTINUE;
 }
 
 
-#if 0
-//--------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 /**
- * PROC Main
+ * 画面描画用システム初期化
+ *
+ * @param   wk
  */
-//--------------------------------------------------------------------------
-static void initGraphicSystems( MAIN_WORK* wk )
+//----------------------------------------------------------------------------------
+static void initGraphicSystems( HEAPID heapID )
 {
   static const GFL_DISP_VRAM vramBank = {
     GX_VRAM_BG_128_A,           // メイン2DエンジンのBG
@@ -137,8 +419,8 @@ static void initGraphicSystems( MAIN_WORK* wk )
   // 上下画面設定
   GX_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
 
-  GFL_BG_Init( wk->heapID );
-  GFL_BMPWIN_Init( wk->heapID );
+  GFL_BG_Init( heapID );
+  GFL_BMPWIN_Init( heapID );
   GFL_FONTSYS_Init();
 
   //ＢＧモード設定
@@ -157,17 +439,19 @@ static void initGraphicSystems( MAIN_WORK* wk )
       GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x10000, 0x8000,
       GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
     };
+    /*
     static const GFL_BG_BGCNT_HEADER bgcntText2 = {
       0, 0, 0x800, 0,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
       GX_BG_SCRBASE_0x4000, GX_BG_CHARBASE_0x18000, 0x8000,
       GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
     };
+    */
 
     GFL_BG_SetBGControl( GFL_BG_FRAME0_M,   &bgcntText,   GFL_BG_MODE_TEXT );
     GFL_BG_SetBGControl( GFL_BG_FRAME0_S,   &bgcntText,   GFL_BG_MODE_TEXT );
 
-    GFL_BG_SetBGControl( GFL_BG_FRAME1_M,   &bgcntText2,   GFL_BG_MODE_TEXT );
+//    GFL_BG_SetBGControl( GFL_BG_FRAME1_M,   &bgcntText2,   GFL_BG_MODE_TEXT );
 
     GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
@@ -180,20 +464,24 @@ static void initGraphicSystems( MAIN_WORK* wk )
     GFL_BG_SetVisible( GFL_BG_FRAME3_S,   VISIBLE_OFF );
 
 //    GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 0x20, 0x22, wk->heapID );
-    GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0, 0, wk->heapID );
+    GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0, 0, heapID );
 //    void GFL_BG_FillScreen( u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 mode )
     GFL_BG_FillCharacter( GFL_BG_FRAME0_M, 0xff, 1, 0 );
     GFL_BG_FillScreen( GFL_BG_FRAME0_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 
-    GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 0, 0, wk->heapID );
+    GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 0, 0, heapID );
     GFL_BG_FillCharacter( GFL_BG_FRAME0_S, 0xff, 1, 0 );
     GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
   }
 }
-
-static void quitGraphicSystems( MAIN_WORK* wk )
+//----------------------------------------------------------------------------------
+/**
+ * 画面描画用システム破棄
+ */
+//----------------------------------------------------------------------------------
+static void quitGraphicSystems( void )
 {
   GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
   GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
@@ -201,283 +489,524 @@ static void quitGraphicSystems( MAIN_WORK* wk )
   GFL_BMPWIN_Exit();
   GFL_BG_Exit();
 }
-
-static void startView( MAIN_WORK* wk )
-{
-  GFL_BMP_Clear( wk->bmp, 0xff );
-  GFL_BMPWIN_MakeScreen( wk->win );
-
-  GFL_BMPWIN_TransVramCharacter( wk->win );
-  GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
-}
-
-static void createTemporaryModules( MAIN_WORK* wk )
+//----------------------------------------------------------------------------------
+/**
+ *
+ *
+ * @param   wk
+ * @param   heapID
+ */
+//----------------------------------------------------------------------------------
+static void createTemporaryModules( DEBUG_BTL_WORK* wk, HEAPID heapID )
 {
   wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME0_S, 0, 0, 32, 24, 0, GFL_BMP_CHRAREA_GET_F );
-  wk->bmp = GFL_BMPWIN_GetBmp(wk->win);
+  wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
+  wk->mm  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debug_fight_dat, heapID );
+  wk->mmMonsName  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monsname_dat, heapID );
+  wk->strbuf = GFL_STR_CreateBuffer( 1024, heapID );
 
-  #if 0
-  {
-    void* mmdat = GFL_ARC_LoadDataAlloc( ARCID_MESSAGE, NARC_message_d_taya_dat, wk->heapID );
-    wk->mm = GFL_MSG_Construct( mmdat, wk->heapID );
-  }
-  #else
-  wk->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_taya_dat, wk->heapID );
-  #endif
-  wk->strbuf = GFL_STR_CreateBuffer( 1024, wk->heapID );
-  wk->tcbl = GFL_TCBL_Init( wk->heapID, wk->heapID, 4, 32 );
+  GFL_BMP_Clear( wk->bmp, 0xff );
 
-  GFL_HEAP_CheckHeapSafe( wk->heapID );
+  GFL_HEAP_CheckHeapSafe( heapID );
   wk->fontHandle = GFL_FONT_Create( ARCID_FONT,
     NARC_font_small_gftr,
-    GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+    GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 
-  wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
+  wk->printQue = PRINTSYS_QUE_Create( heapID );
   PRINT_UTIL_Setup( wk->printUtil, wk->win );
-
-  wk->tmpModuleExistFlag = TRUE;
 }
-
-static void deleteTemporaryModules( MAIN_WORK* wk )
+//----------------------------------------------------------------------------------
+/**
+ *
+ *
+ * @param   wk
+ */
+//----------------------------------------------------------------------------------
+static void deleteTemporaryModules( DEBUG_BTL_WORK* wk )
 {
   PRINTSYS_QUE_Delete( wk->printQue );
   GFL_FONT_Delete( wk->fontHandle );
 
-  GFL_TCBL_Exit( wk->tcbl );
   GFL_STR_DeleteBuffer( wk->strbuf );
+  GFL_MSG_Delete( wk->mmMonsName );
   GFL_MSG_Delete( wk->mm );
-
   GFL_BMPWIN_Delete( wk->win );
-
-  wk->tmpModuleExistFlag = FALSE;
 }
-
-static void changeScene_start( MAIN_WORK* wk )
-{
-  deleteTemporaryModules( wk );
-  quitGraphicSystems( wk );
-  GFL_HEAP_DeleteHeap( HEAPID_TEMP );
-}
-static void changeScene_recover( MAIN_WORK* wk )
-{
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TEMP,  0xb0000 );
-  initGraphicSystems( wk );
-  createTemporaryModules( wk );
-  startView( wk );
-}
-
-
-//-------------------------------------------------------------------------------------------------------
-// メニューコントローラ
-//-------------------------------------------------------------------------------------------------------
-
-//--------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 /**
- * 縦メニューコントローラ初期化
- *
- * @param   ctrl      コントローラ
- * @param   maxLines    表示可能な行数
- * @param   maxElems    選択可能な項目数
- *
- */
-//--------------------------------------------------------------------------
-static void VMENU_Init( V_MENU_CTRL* ctrl, u8 maxLines, u8 maxElems )
-{
-  ctrl->selPos = 0;
-  ctrl->writePos = 0;
-  ctrl->maxElems = maxElems;
-  ctrl->maxLines = maxLines;
-}
-//--------------------------------------------------------------------------
-/**
- * 縦メニューコントローラ　キーチェック
- *
- * @param   ctrl    コントローラ
- *
- * @retval  BOOL    選択項目の変更があればTRUE
- */
-//--------------------------------------------------------------------------
-static BOOL VMENU_Ctrl( V_MENU_CTRL* ctrl )
-{
-  u16 key = GFL_UI_KEY_GetRepeat();
-
-  do {
-
-    if( key & PAD_KEY_DOWN )
-    {
-      if( ctrl->selPos < (ctrl->maxElems-1) )
-      {
-        if( ++(ctrl->selPos) >= (ctrl->writePos + ctrl->maxLines) )
-        {
-          ctrl->writePos++;
-        }
-        break;
-      }
-    }
-
-    if( key & PAD_KEY_UP )
-    {
-      if( ctrl->selPos )
-      {
-        if( --(ctrl->selPos) < ctrl->writePos )
-        {
-          --(ctrl->writePos);
-        }
-        break;
-      }
-    }
-
-    return FALSE;
-
-  }while(0);
-
-  return TRUE;
-}
-
-static u8 VMENU_GetSelPos( const V_MENU_CTRL* ctrl )
-{
-  return ctrl->selPos;
-}
-static u8 VMENU_GetWritePos( const V_MENU_CTRL* ctrl )
-{
-  return ctrl->writePos;
-}
-
-
-//--------------------------------------------------------------------------
-/**
- * メニュー項目描画
+ * シーン遷移前の処理（描画用リソース・メモリ等を解放）
  *
  * @param   wk
- *
  */
-//--------------------------------------------------------------------------
-static void print_menu( MAIN_WORK* wk, const V_MENU_CTRL* menuCtrl )
+//----------------------------------------------------------------------------------
+static void changeScene_start( DEBUG_BTL_WORK* wk )
 {
-  u16 selPos, writePos;
-  u16 ypos;
+  deleteTemporaryModules( wk );
+  quitGraphicSystems();
+  GFL_HEAP_DeleteHeap( HEAPID_BTL_DEBUG_VIEW );
+}
+//----------------------------------------------------------------------------------
+/**
+ * シーン復帰後の処理（描画用リソース・メモリ等を再確保）
+ *
+ * @param   wk
+ */
+//----------------------------------------------------------------------------------
+static void changeScene_recover( DEBUG_BTL_WORK* wk )
+{
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_VIEW,  0xb0000 );
+  initGraphicSystems( HEAPID_BTL_DEBUG_VIEW );
+  createTemporaryModules( wk, HEAPID_BTL_DEBUG_VIEW );
+}
 
-  u8 fontCol;
+//----------------------------------------------------------------------------------
+/**
+ * セーブデータ初期化
+ *
+ * @param   saveData
+ */
+//----------------------------------------------------------------------------------
+static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
+{
+  u32 ppSize = POKETOOL_GetWorkSize();
+  u32 i;
 
-  selPos = VMENU_GetSelPos( menuCtrl );
-  writePos = VMENU_GetWritePos( menuCtrl );
+  POKEMON_PARAM* pp;
 
-  GFL_BMP_Clear( wk->bmp, 0xff );
+  saveData->btlType = BTLTYPE_SINGLE_WILD;
+  saveData->weather = BTL_WEATHER_NONE;
 
-  ypos = MAINMENU_PRINT_OY;
+  for(i=0; i<POKEPARA_MAX; ++i){
+    pp = savework_GetPokeParaArea( saveData, i );
+    PP_Clear( pp );
+  }
 
-  while( writePos < NELEMS(MainMenuTbl) )
+  pp = savework_GetPokeParaArea( saveData, POKEIDX_SELF_1 );
+  PP_Setup( pp, MONSNO_GORIDARUMA, 5, 0 );
+
+  TAYA_Printf("btlType C=%d, Work=%p, pp=%p\n",saveData->btlType, saveData, pp);
+
+  pp = savework_GetPokeParaArea( saveData, POKEIDX_ENEMY1_1 );
+  PP_Setup( pp, MONSNO_GORIDARUMA, 5, 0 );
+}
+
+static POKEMON_PARAM* savework_GetPokeParaArea( DEBUG_BTL_SAVEDATA* saveData, u32 pokeIdx )
+{
+  GF_ASSERT(pokeIdx < POKEPARA_MAX);
   {
-    GFL_MSG_GetString( wk->mm, MainMenuTbl[writePos].strID, wk->strbuf );
+    u32 ppSize = POKETOOL_GetWorkSize();
+    return (POKEMON_PARAM*)&saveData->pokeParaArea[ pokeIdx*ppSize ];
+  }
+}
 
-    if( writePos == selPos )
-    {
-      fontCol = 0x03;
+//----------------------------------------------------------------------------------
+/**
+ * メイン関数差し替え
+ *
+ * @param   wk
+ * @param   nextProc
+ */
+//----------------------------------------------------------------------------------
+static void setMainProc( DEBUG_BTL_WORK* wk, pMainProc nextProc )
+{
+  wk->mainProc = nextProc;
+  wk->mainSeq  = 0;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * 選択アイテムIDがポケモンパラメータ部かチェック
+ *
+ * @param   itemID
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static inline BOOL selItem_IsPoke( u16 itemID )
+{
+  return ((itemID >= SELITEM_POKE_SELF_1) && (itemID <= SELITEM_POKE_ENEMY2_6) );
+}
+//----------------------------------------------------------------------------------
+/**
+ * 選択アイテム要素をインクリメント
+ *
+ * @param   wk
+ * @param   itemID
+ */
+//----------------------------------------------------------------------------------
+static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
+{
+  DEBUG_BTL_SAVEDATA* save = &wk->saveData;
+  int val;
+
+  switch( itemID ){
+  case SELITEM_BTL_TYPE:
+    val = save->btlType + incValue;
+    if( val >= BTLTYPE_MAX ){
+      val = 0;
     }
-    else
+    else if( val < 0 ){
+      val = BTLTYPE_MAX - 1;
+    }
+    save->btlType = val;
+    break;
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * 通信を行う必要のあるバトルタイプか判定
+ *
+ * @param   type
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL btltype_IsComm( BtlType type )
+{
+  if( (type == BTLTYPE_SINGLE_COMM)
+  ||  (type == BTLTYPE_DOUBLE_COMM)
+  ||  (type == BTLTYPE_DOUBLE_COMM_MULTI)
+  ||  (type == BTLTYPE_TRIPLE_COMM)
+  ){
+    return TRUE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * マルチモードか判定
+ *
+ * @param   type
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL btltype_IsMulti( BtlType type )
+{
+  return ( type == BTLTYPE_DOUBLE_COMM_MULTI );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * 選択アイテム描画
+ *
+ * @param   wk
+ * @param   itemID
+ * @param   fSelect   選択中フラグ
+ */
+//----------------------------------------------------------------------------------
+static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
+{
+  u32 i;
+  for(i=0; i<NELEMS(ItemLayout); ++i)
+  {
+    if( ItemLayout[i].itemID == itemID )
     {
-      switch( MainMenuTbl[writePos].quickKey ){
-      case PAD_BUTTON_X: fontCol = 0x05; break;
-      case PAD_BUTTON_Y: fontCol = 0x09; break;
-      case PAD_BUTTON_B: fontCol = 0x0b; break;
-      default: fontCol = 0x01; break;
+      u16 x = ItemLayout[i].x;
+      u16 y = ItemLayout[i].y;
+
+      if( fSelect ){
+        GFL_FONTSYS_SetColor( 3, 4, 0x0f );
+      }else{
+        GFL_FONTSYS_SetColor( 1, 2, 0x0f );
+      }
+
+      if( wk->prevItemStrWidth[itemID] ){
+        GFL_BMP_Fill( wk->bmp, x, y, wk->prevItemStrWidth[itemID], GFL_FONT_GetLineHeight(wk->fontHandle), 0xff );
+      }
+
+      if( selItem_IsPoke(itemID) ){
+        printItem_Poke( wk, itemID, wk->strbuf );
+      }else{
+        switch( itemID ){
+        case SELITEM_BTL_TYPE:  printItem_BtlType( wk, wk->strbuf ); break;
+        case SELITEM_SAVE:      printItem_DirectStr( wk, DBGF_ITEM_SAVE, wk->strbuf ); break;
+        case SELITEM_LOAD:      printItem_DirectStr( wk, DBGF_ITEM_LOAD, wk->strbuf ); break;
+        default:
+          GFL_STR_ClearBuffer( wk->strbuf );
+          break;
+        }
+      }
+      PRINTSYS_Print( wk->bmp, x, y, wk->strbuf, wk->fontHandle );
+      wk->prevItemStrWidth[ itemID ] = PRINTSYS_GetStrWidth( wk->strbuf, wk->fontHandle, 0 );
+      break;
+    }
+  }
+}
+static void printItem_Poke( DEBUG_BTL_WORK* wk, u16 itemID, STRBUF* buf )
+{
+  POKEMON_PARAM* pp;
+  u16 monsno;
+  u16 pokeIdx = itemID - SELITEM_POKE_SELF_1;
+
+  pp = savework_GetPokeParaArea( &wk->saveData, pokeIdx );
+  monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+  GFL_MSG_GetString( wk->mmMonsName, monsno, buf );
+}
+static void printItem_BtlType( DEBUG_BTL_WORK* wk, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, DBGF_ITEM_TYPE01+wk->saveData.btlType, buf );
+}
+static void printItem_DirectStr( DEBUG_BTL_WORK* wk, u16 strID, STRBUF* buf )
+{
+  GFL_MSG_GetString( wk->mm, strID, buf );
+}
+
+
+
+
+
+
+//----------------------------------------------------------------------------------
+/**
+ * メインプロセス：画面初期構築
+ */
+//----------------------------------------------------------------------------------
+static BOOL mainProc_Setup( DEBUG_BTL_WORK* wk, int* seq )
+{
+  u32 i;
+
+  GFL_FONTSYS_SetColor( 1, 2, 0x0f );
+
+  for(i=0; i<NELEMS(LabelLayout); ++i)
+  {
+    GFL_MSG_GetString( wk->mm, LabelLayout[i].strID, wk->strbuf );
+    PRINTSYS_Print( wk->bmp, LabelLayout[i].x, LabelLayout[i].y, wk->strbuf, wk->fontHandle );
+  }
+
+  for(i=0; i<NELEMS(ItemLayout); ++i)
+  {
+    PrintItem( wk, ItemLayout[i].itemID, (wk->selectItem == ItemLayout[i].itemID));
+  }
+
+  GFL_BMPWIN_MakeScreen( wk->win );
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->win) );
+  GFL_BMPWIN_TransVramCharacter( wk->win );
+
+  setMainProc( wk, mainProc_Root );
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * メインプロセス：ルート
+ */
+//----------------------------------------------------------------------------------
+static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
+{
+  u16 key = GFL_UI_KEY_GetTrg();
+  if( key & PAD_PLUS_KEY_MASK )
+  {
+    static const struct {
+      u8  currentItem;
+      u8  itemU;
+      u8  itemD;
+      u8  itemR;
+      u8  itemL;
+    }nextItemTbl[] = {
+      { SELITEM_POKE_SELF_1,   SELITEM_LOAD,        SELITEM_POKE_SELF_2, SELITEM_POKE_ENEMY1_1, SELITEM_POKE_ENEMY2_1 },
+      { SELITEM_POKE_SELF_2,   SELITEM_POKE_SELF_1, SELITEM_POKE_SELF_3, SELITEM_POKE_ENEMY1_2, SELITEM_POKE_ENEMY2_2 },
+      { SELITEM_POKE_SELF_3,   SELITEM_POKE_SELF_2, SELITEM_POKE_SELF_4, SELITEM_POKE_ENEMY1_3, SELITEM_POKE_ENEMY2_3 },
+      { SELITEM_POKE_SELF_4,   SELITEM_POKE_SELF_3, SELITEM_POKE_SELF_5, SELITEM_POKE_ENEMY1_4, SELITEM_POKE_ENEMY2_4 },
+      { SELITEM_POKE_SELF_5,   SELITEM_POKE_SELF_4, SELITEM_POKE_SELF_6, SELITEM_POKE_ENEMY1_5, SELITEM_POKE_ENEMY2_5 },
+      { SELITEM_POKE_SELF_6,   SELITEM_POKE_SELF_5, SELITEM_BTL_TYPE,    SELITEM_POKE_ENEMY1_6, SELITEM_POKE_ENEMY2_6 },
+      { SELITEM_POKE_ENEMY1_1, SELITEM_SAVE,          SELITEM_POKE_ENEMY1_2, SELITEM_POKE_FRIEND_1, SELITEM_POKE_SELF_1 },
+      { SELITEM_POKE_ENEMY1_2, SELITEM_POKE_ENEMY1_1, SELITEM_POKE_ENEMY1_3, SELITEM_POKE_FRIEND_2, SELITEM_POKE_SELF_2 },
+      { SELITEM_POKE_ENEMY1_3, SELITEM_POKE_ENEMY1_2, SELITEM_POKE_ENEMY1_4, SELITEM_POKE_FRIEND_3, SELITEM_POKE_SELF_3 },
+      { SELITEM_POKE_ENEMY1_4, SELITEM_POKE_ENEMY1_3, SELITEM_POKE_ENEMY1_5, SELITEM_POKE_FRIEND_4, SELITEM_POKE_SELF_4 },
+      { SELITEM_POKE_ENEMY1_5, SELITEM_POKE_ENEMY1_4, SELITEM_POKE_ENEMY1_6, SELITEM_POKE_FRIEND_5, SELITEM_POKE_SELF_5 },
+      { SELITEM_POKE_ENEMY1_6, SELITEM_POKE_ENEMY1_5, SELITEM_BTL_TYPE,      SELITEM_POKE_FRIEND_6, SELITEM_POKE_SELF_6 },
+      { SELITEM_POKE_FRIEND_1, SELITEM_SAVE,          SELITEM_POKE_FRIEND_2, SELITEM_POKE_ENEMY2_1, SELITEM_POKE_ENEMY1_1 },
+      { SELITEM_POKE_FRIEND_2, SELITEM_POKE_FRIEND_1, SELITEM_POKE_FRIEND_3, SELITEM_POKE_ENEMY2_2, SELITEM_POKE_ENEMY1_2 },
+      { SELITEM_POKE_FRIEND_3, SELITEM_POKE_FRIEND_2, SELITEM_POKE_FRIEND_4, SELITEM_POKE_ENEMY2_3, SELITEM_POKE_ENEMY1_3 },
+      { SELITEM_POKE_FRIEND_4, SELITEM_POKE_FRIEND_3, SELITEM_POKE_FRIEND_5, SELITEM_POKE_ENEMY2_4, SELITEM_POKE_ENEMY1_4 },
+      { SELITEM_POKE_FRIEND_5, SELITEM_POKE_FRIEND_4, SELITEM_POKE_FRIEND_6, SELITEM_POKE_ENEMY2_5, SELITEM_POKE_ENEMY1_5 },
+      { SELITEM_POKE_FRIEND_6, SELITEM_POKE_FRIEND_5, SELITEM_BTL_TYPE,      SELITEM_POKE_ENEMY2_6, SELITEM_POKE_ENEMY1_6 },
+      { SELITEM_POKE_ENEMY2_1, SELITEM_SAVE,          SELITEM_POKE_ENEMY2_2, SELITEM_POKE_SELF_1, SELITEM_POKE_FRIEND_1 },
+      { SELITEM_POKE_ENEMY2_2, SELITEM_POKE_ENEMY2_1, SELITEM_POKE_ENEMY2_3, SELITEM_POKE_SELF_2, SELITEM_POKE_FRIEND_2 },
+      { SELITEM_POKE_ENEMY2_3, SELITEM_POKE_ENEMY2_2, SELITEM_POKE_ENEMY2_4, SELITEM_POKE_SELF_3, SELITEM_POKE_FRIEND_3 },
+      { SELITEM_POKE_ENEMY2_4, SELITEM_POKE_ENEMY2_3, SELITEM_POKE_ENEMY2_5, SELITEM_POKE_SELF_4, SELITEM_POKE_FRIEND_4 },
+      { SELITEM_POKE_ENEMY2_5, SELITEM_POKE_ENEMY2_4, SELITEM_POKE_ENEMY2_6, SELITEM_POKE_SELF_5, SELITEM_POKE_FRIEND_5 },
+      { SELITEM_POKE_ENEMY2_6, SELITEM_POKE_ENEMY2_5, SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_6, SELITEM_POKE_FRIEND_6 },
+      { SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_6,   SELITEM_LOAD,          SELITEM_NULL,        SELITEM_NULL, },
+      { SELITEM_SAVE,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_LOAD,        SELITEM_LOAD },
+      { SELITEM_LOAD,          SELITEM_BTL_TYPE,      SELITEM_POKE_SELF_1,   SELITEM_SAVE,        SELITEM_SAVE },
+    };
+
+    u32 nextItem = SELITEM_NULL, i;
+    for(i=0; i<NELEMS(nextItemTbl); ++i)
+    {
+      if( nextItemTbl[i].currentItem == wk->selectItem )
+      {
+        if( key & PAD_KEY_UP    ){ nextItem = nextItemTbl[i].itemU; break; }
+        if( key & PAD_KEY_DOWN  ){ nextItem = nextItemTbl[i].itemD; break; }
+        if( key & PAD_KEY_RIGHT ){ nextItem = nextItemTbl[i].itemR; break; }
+        if( key & PAD_KEY_LEFT  ){ nextItem = nextItemTbl[i].itemL; break; }
+        break;
       }
     }
-
-    GFL_FONTSYS_SetColor( fontCol, 2, 0x0f );
-
-    PRINTSYS_Print( wk->bmp, MAINMENU_PRINT_OX, ypos, wk->strbuf, wk->fontHandle );
-    GFL_FONTSYS_SetDefaultColor();
-
-    ypos += (GFL_FONT_GetLineHeight(wk->fontHandle)+2);
-    writePos++;
+    if( nextItem != SELITEM_NULL )
+    {
+      PrintItem( wk, wk->selectItem, FALSE );
+      PrintItem( wk, nextItem, TRUE );
+      GFL_BMPWIN_TransVramCharacter( wk->win );
+      wk->selectItem = nextItem;
+    }
+    return FALSE;
   }
-  GFL_FONTSYS_SetDefaultColor();
 
-  GFL_BMPWIN_TransVramCharacter( wk->win );
-}
-
-//------------------------------------------------------------------------------------------------------
-// メインワーク関数
-//------------------------------------------------------------------------------------------------------
-static void* getGenericWork( MAIN_WORK* mainWork, u32 size )
-{
-  GF_ASSERT(size<GENERIC_WORK_SIZE);
-//  GFL_STD_MemClear( mainWork->genericWork, size );
+  if( key & PAD_BUTTON_A )
   {
-    u32 adrs = (u32)(&mainWork->genericWork[0]);
-    GF_ASSERT(adrs%4==0);
+    if( selItem_IsPoke(wk->selectItem) ){
+      setMainProc( wk, mainProc_MakePokePara );
+    }
+    else if( wk->selectItem == SELITEM_SAVE ){
+      setMainProc( wk, mainProc_Save );
+    }
+    else if( wk->selectItem == SELITEM_LOAD ){
+      setMainProc( wk, mainProc_Load );
+    }
+    else{
+      selItem_Increment( wk, wk->selectItem, 1 );
+      PrintItem( wk, wk->selectItem, TRUE );
+      GFL_BMPWIN_TransVramCharacter( wk->win );
+    }
   }
-  return mainWork->genericWork;
+  else if( key & PAD_BUTTON_B )
+  {
+    if( !selItem_IsPoke(wk->selectItem) ){
+      selItem_Increment( wk, wk->selectItem, -1 );
+      PrintItem( wk, wk->selectItem, TRUE );
+      GFL_BMPWIN_TransVramCharacter( wk->win );
+    }
+  }
+  else if( key & PAD_BUTTON_START ){
+
+    setMainProc( wk, mainProc_StartBattle );
+  }
+
+  return FALSE;
 }
 
-//------------------------------------------------------------------------------------------------------
-// スタンドアロン状態での漢字PrintTest
-//------------------------------------------------------------------------------------------------------
-static BOOL SUBPROC_PrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+//----------------------------------------------------------------------------------
+/**
+ * メインプロセス：ポケパラ作成
+ */
+//----------------------------------------------------------------------------------
+static BOOL mainProc_MakePokePara( DEBUG_BTL_WORK* wk, int* seq )
 {
-  static const u16 strID[] = {
-    DEBUG_TAYA_STR01,
-    DEBUG_TAYA_STR02,
-    DEBUG_TAYA_STR03,
-    DEBUG_TAYA_STR04,
-    DEBUG_TAYA_STR05,
-    DEBUG_TAYA_STR06,
-    DEBUG_TAYA_STR07,
-    DEBUG_TAYA_STR08,
-    DEBUG_TAYA_STR09,
-  };
-
-
-  enum {
-    RAND_MAX_NUM = 100,
-    RAND_TEST_UNIT = 10000,
-    RAND_TEST_COUNT = RAND_MAX_NUM * RAND_TEST_UNIT,
-    RAND_TEST_DOWN_VAL = RAND_MAX_NUM/10,
-    RAND_TEST_UP_VAL = RAND_MAX_NUM - RAND_TEST_DOWN_VAL,
-  };
-
-  MAIN_WORK* wk = mywk;
-
-  static const u8 letterCol[3] = {
-    0x05, 0x09, 0x0d
-  };
+FS_EXTERN_OVERLAY(debug_makepoke);
 
   switch( *seq ){
   case 0:
-    {
-      int i;
-      PRINTSYS_LSB  color;
-
-      GFL_BMP_Clear( wk->bmp, 0x0f );
-
-      for(i=0; i<NELEMS(strID); ++i)
-      {
-        GFL_MSG_GetString( wk->mm, strID[i], wk->strbuf );
-        color = PRINTSYS_LSB_Make( letterCol[i%3], 0x0f, 0x0f );
-        PRINTSYS_PrintQueColor( wk->printQue, wk->bmp, 4, 4+i*12+((i/8)*16), wk->strbuf, wk->fontHandle, color );
-      }
-      (*seq)++;
-    }
+    changeScene_start( wk );
+    (*seq)++;
     break;
   case 1:
-    if( PRINTSYS_QUE_Main( wk->printQue ) )
-    {
-      TAYA_Printf("QUE処理しおわったからVRAM転送します\n");
-      GFL_BMPWIN_TransVramCharacter( wk->win );
-      (*seq)++;
+    wk->makePokeParam.dst = savework_GetPokeParaArea( &wk->saveData, wk->selectItem-SELITEM_POKE_SELF_1 );
+    GFL_PROC_SysCallProc( FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, &wk->makePokeParam );
+    (*seq)++;
+    break;
+  case 2:
+    changeScene_recover( wk );
+    setMainProc( wk, mainProc_Setup );
+    break;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * メインプロセス：セーブ
+ */
+//----------------------------------------------------------------------------------
+static BOOL mainProc_Save( DEBUG_BTL_WORK* wk, int* seq )
+{
+  DEBUG_BACKUP_FlashSave(DEBUG_FIGHT_SAVE, &wk->saveData, sizeof(wk->saveData));
+  setMainProc( wk, mainProc_Root );
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * メインプロセス：ロード
+ */
+//----------------------------------------------------------------------------------
+static BOOL mainProc_Load( DEBUG_BTL_WORK* wk, int* seq )
+{
+  DEBUG_BACKUP_FlashLoad(DEBUG_FIGHT_SAVE, &wk->saveData, sizeof(wk->saveData));
+  setMainProc( wk, mainProc_Setup );
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * メインプロセス：バトルへ
+ */
+//----------------------------------------------------------------------------------
+static const GFLNetInitializeStruct NetInitParamNormal;
+static const GFLNetInitializeStruct NetInitParamMulti;
+
+static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq )
+{
+  enum {
+    SEQ_INIT = 0,
+    SEQ_COMM_START_1,
+    SEQ_COMM_START_2,
+    SEQ_COMM_START_3,
+    SEQ_COMM_START_4,
+    SEQ_SETUP_START,
+  };
+
+  enum {
+    SYNC_ID = 2929, // てきと
+  };
+
+  switch( *seq ){
+  case SEQ_INIT:
+    BATTLE_PARAM_Init( &wk->setupParam );
+    changeScene_start( wk );
+    if( btltype_IsComm(wk->saveData.btlType) ){
+      (*seq) = SEQ_COMM_START_1;
+    }else{
+      (*seq) = SEQ_SETUP_START;
     }
+    break;
+
+  // 通信開始
+  case SEQ_COMM_START_1:
+    {
+      const GFLNetInitializeStruct* initParam;
+      initParam = (btltype_IsMulti(wk->saveData.btlType))? &NetInitParamMulti : &NetInitParamNormal;
+      GFL_NET_Init( initParam, comm_dummy_callback, (void*)wk );
+      (*seq) = SEQ_COMM_START_2;
+    }
+    break;
+
+  case SEQ_COMM_START_2:
+    if( GFL_NET_IsInit() )
+    {
+      wk->fNetConnect = FALSE;
+      GFL_NET_ChangeoverConnect( btlAutoConnectCallback ); // 自動接続
+      (*seq) = SEQ_COMM_START_3;
+    }
+    break;
+
+  case SEQ_COMM_START_3:
+    if( wk->fNetConnect )
+    {
+      GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), SYNC_ID );
+      (*seq) = SEQ_COMM_START_4;
+    }
+    break;
+
+  case SEQ_COMM_START_4:
     break;
   }
   return FALSE;
 }
 
 
-
-
-//-----------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------
-
+/*----------------------------------------------------------------------------------------------------*/
+/*  通信設定                                                                                          */
+/*----------------------------------------------------------------------------------------------------*/
 enum {
   TEST_GGID       = 0x3594,
   TEST_COMM_MEMBER_MAX  = 2,
@@ -489,11 +1018,12 @@ enum {
 
   TEST_TIMINGID_INIT    = 11,
   TEST_TIMINGID_PRINT,
-
 };
 
+// バトル用受信関数テーブル
+extern const NetRecvFuncTable BtlRecvFuncTable[];
+
 static const NetRecvFuncTable  testPacketTbl[] = {
-//    { testPacketFunc, GFL_NET_COMMAND_SIZE(sizeof(TEST_PACKET)), NULL },
     { testPacketFunc, NULL },
 };
 
@@ -501,11 +1031,33 @@ typedef struct{
     int gameNo;   ///< ゲーム種類
 }TEST_BCON;
 
-static TEST_BCON testBcon = { WB_NET_SERVICEID_DEBUG_TAYA };
+static TEST_BCON testBcon = { WB_NET_SERVICEID_DEBUG_BATTLE };
+
+///< ビーコンデータ取得関数
+static void* testBeaconGetFunc( void* pWork )
+{
+  return &testBcon;
+}
+///< ビーコンデータサイズ取得関数
+static int testBeaconGetSizeFunc( void* pWork )
+{
+  return sizeof(testBcon);
+}
+
+///< ビーコンデータ比較関数
+static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo )
+{
+    if(myNo != beaconNo ){
+        return FALSE;
+    }
+    return TRUE;
+}
 
 
-
-static const GFLNetInitializeStruct testNetInitParam = {
+/**
+ *  通信初期化パラメータ
+ */
+static const GFLNetInitializeStruct NetInitParamNormal = {
   testPacketTbl,        // 受信関数テーブル
   NELEMS(testPacketTbl),    // 受信テーブル要素数
   NULL,    ///< ハードで接続した時に呼ばれる
@@ -542,302 +1094,26 @@ static const GFLNetInitializeStruct testNetInitParam = {
   FALSE,            // MP通信＝親子型通信モードかどうか
   FALSE,            // wifi通信を行うかどうか
   TRUE,           // 親が再度初期化した場合、つながらないようにする場合TRUE
-  WB_NET_SERVICEID_DEBUG_TAYA,//GameServiceID
+  WB_NET_SERVICEID_DEBUG_BATTLE,//GameServiceID
 #if GFL_NET_IRC
   IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
   0,//MP親最大サイズ 512まで
   0,//dummy
 };
-
-static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
-{
-  MAIN_WORK* wk = pWork;
-  const TEST_PACKET* packet = pData;
-
-  wk->netTestSeq = 1;
-  wk->packet = *packet;
-
-  /*
-  SAMPLE_WORK* psw = sampleWork;
-
-  if(GetSampleNetID() != netID){
-      GFL_STD_MemCopy(pData, &psw->recvWork, sizeof(VecFx32));
-  }
-  */
-}
-
-///< ビーコンデータ取得関数
-static void* testBeaconGetFunc( void* pWork )
-{
-  return &testBcon;
-}
-///< ビーコンデータサイズ取得関数
-static int testBeaconGetSizeFunc( void* pWork )
-{
-  return sizeof(testBcon);
-}
-
-///< ビーコンデータ比較関数
-static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo )
-{
-    if(myNo != beaconNo ){
-        return FALSE;
-    }
-    return TRUE;
-}
-
-
-static void testCallBack(void* pWork)
-{
-}
-
-static void autoConnectCallBack( void* pWork )
-{
-  MAIN_WORK* wk = pWork;
-  wk->netTestSeq = 1;
-}
-
-//------------------------------------------------------------------------------------------------------
-// ポケモン作成画面へ
-//------------------------------------------------------------------------------------------------------
-#include "debug\debug_makepoke.h"
-#include "poke_tool\monsno_def.h"
-
-static BOOL SUBPROC_MakePokeTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
-{
-FS_EXTERN_OVERLAY(debug_makepoke);
-
-  MAIN_WORK* wk = mywk;
-
-  switch( *seq ){
-  case 0:
-    changeScene_start( wk );
-    (*seq)++;
-    break;
-  case 1:
-    {
-      PROCPARAM_DEBUG_MAKEPOKE* para = getGenericWork( wk, sizeof(PROCPARAM_DEBUG_MAKEPOKE) );
-      para->dst = wk->testPoke;
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, para );
-      (*seq)++;
-    }
-    break;
-  case 2:
-    wk->testPokeEditFlag = TRUE;
-    changeScene_recover( wk );
-    return TRUE;
-  }
-  return FALSE;
-}
-//------------------------------------------------------------------------------------------------------
-// バトル画面へ
-//------------------------------------------------------------------------------------------------------
-
-FS_EXTERN_OVERLAY(battle);
-
-#include "battle\battle.h"
-#include "poke_tool\monsno_def.h"
-#include "waza_tool\wazano_def.h"
-#include "test\performance.h"
-#include "savedata\config.h"
-
-static void set_test_playername( MYSTATUS* status )
-{
-  static const STRCODE name[] = { 0x307e, 0x3055, 0x304a, 0xffff };
-  MyStatus_SetMyName( status, name );
-}
-
-//----------------------------------
-// スタンドアロン
-//----------------------------------
-static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
-{
-  MAIN_WORK* wk = mywk;
-
-  switch( *seq ){
-  case 0:
-
-    GFL_STD_MtRandInit(0);
-    {
-      // メッセージ速度を最速に
-      CONFIG* cfg = SaveData_GetConfig( SaveControl_GetPointer() );
-      CONFIG_SetMsgSpeed( cfg, MSGSPEED_FAST );
-    }
-
-    changeScene_start( wk );
-    (*seq)++;
-    break;
-  case 1:
-    {
-      BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
-
-      wk->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ
-      wk->partyEnemy  = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ
-
-      #ifdef DEBUG_ONLY_FOR_taya
-        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_NOZUPASU,   MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA,
-                  MONSNO_RAITYUU, MONSNO_KEKKINGU, 0 );
-        setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_MANYUURA,  MONSNO_AABOKKU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
-        {
-          POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->partyPlayer, 0 );
-          PP_Put( pp, ID_PARA_exp, 50 );
-          PP_Renew( pp );
-
-          pp = PokeParty_GetMemberPointer( wk->partyEnemy, 0 );
-          PP_SetWazaPos( pp, WAZANO_KINOKONOHOUSI, 0 );
-          PP_SetWazaPos( pp, WAZANO_DOKUNOKONA, 1 );
-          PP_SetWazaPos( pp, 0, 2 );
-          PP_SetWazaPos( pp, 0, 3 );
-        }
-      #else
-        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_ARUSEUSU+2, MONSNO_ARUSEUSU+1, MONSNO_PERIPPAA, 0 );
-        setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_ARUSEUSU+1, MONSNO_ARUSEUSU+2, MONSNO_IWAAKU,   0 );
-      #endif
-
-      {
-        u16 key = GFL_UI_KEY_GetCont();
-        if( key & PAD_BUTTON_L ){
-          BTL_SETUP_Single_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
-        }else if( key & PAD_BUTTON_R ){
-          BTL_SETUP_Double_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
-        }else{
-//          BTL_SETUP_Triple_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
-//          setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_MANYUURA, 0 );
-//          BTL_SETUP_Single_Wild( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
-          BP_SETUP_Wild( para, wk->gameData, HEAPID_CORE, BTL_RULE_SINGLE, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
-        }
-        para->partyPlayer = wk->partyPlayer;
-
-        MYITEM_AddItem( para->itemData, ITEM_MASUTAABOORU, 1, HEAPID_CORE );
-        MYITEM_AddItem( para->itemData, ITEM_HAIPAABOORU, 4, HEAPID_CORE );
-        MYITEM_AddItem( para->itemData, ITEM_KIZUGUSURI, 4, HEAPID_CORE );
-
-        set_test_playername( (MYSTATUS*)(para->statusPlayer) );
-      }
-
-      if( wk->testPokeEditFlag )
-      {
-        PokeParty_SetMemberData( para->partyPlayer, 0, wk->testPoke );
-      }
-      PMSND_PlayBGM( para->musicDefault );
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
-      (*seq)++;
-    }
-    break;
-  case 2:
-    {
-      BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
-      TAYA_Printf( "free adrs=%p & %p\n", para->partyPlayer, para->partyEnemy1);
-      GFL_HEAP_FreeMemory( para->partyPlayer );
-      GFL_HEAP_FreeMemory( para->partyEnemy1 );
-      {
-        BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
-        switch( para->result ){
-        case BTL_RESULT_WIN:   TAYA_Printf("勝ったよ\n"); break;
-        case BTL_RESULT_LOSE:  TAYA_Printf("負けたよ\n"); break;
-        case BTL_RESULT_RUN:   TAYA_Printf("逃げたよ\n"); break;
-        default:
-          TAYA_Printf("不明な終了コード %d\n", para->result);
-        }
-      }
-    }
-    (*seq)++;
-    break;
-  case 3:
-    changeScene_recover( wk );
-    return TRUE;
-  }
-
-  return FALSE;
-
-}
-
-// バトル用受信関数テーブル
-extern const NetRecvFuncTable BtlRecvFuncTable[];
-
-typedef struct{
-    int gameNo;   ///< ゲーム種類
-}BTL_BCON;
-
-static BTL_BCON btlBcon = { WB_NET_BATTLE_SERVICEID };
-static BTL_BCON MultiBcon = { WB_NET_BATTLE_SERVICEID };
-
-///< ビーコンデータ取得関数
-static void* btlBeaconGetFunc( void* pWork )
-{
-  return &btlBcon;
-}
-///< ビーコンデータサイズ取得関数
-static int btlBeaconGetSizeFunc( void* pWork )
-{
-  return sizeof(btlBcon);
-}
-
-///< ビーコンデータ比較関数
-static BOOL btlBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo )
-{
-    if( myNo != beaconNo ){
-        return FALSE;
-    }
-    return TRUE;
-}
-
-static const GFLNetInitializeStruct btlNetInitParam = {
-  BtlRecvFuncTable,     // 受信関数テーブル
-  BTL_NETFUNCTBL_ELEMS, // 受信テーブル要素数
-  NULL,                 // ハードで接続した時に呼ばれる
-  NULL,                 // ネゴシエーション完了時にコール
-  NULL,                 // ユーザー同士が交換するデータのポインタ取得関数
-  NULL,                 // ユーザー同士が交換するデータのサイズ取得関数
-  btlBeaconGetFunc,     // ビーコンデータ取得関数
-  btlBeaconGetSizeFunc, // ビーコンデータサイズ取得関数
-  btlBeaconCompFunc,    // ビーコンのサービスを比較して繋いで良いかどうか判断する
-  NULL,                 // 普通のエラーが起こった場合 通信終了
-  FatalError_Disp,      // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
-  NULL,                 // 通信切断時に呼ばれる関数
-  NULL,                 // オート接続で親になった場合
-#if GFL_NET_WIFI
-  NULL, ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
-  NULL, ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
-  NULL, ///< wifiフレンドリスト削除コールバック
-  NULL, ///< DWC形式の友達リスト
-  NULL, ///< DWCのユーザデータ（自分のデータ）
-  0,    ///< DWCへのHEAPサイズ
-  TRUE, ///< デバック用サーバにつなぐかどうか
-#endif
-  TEST_GGID,            // ggid  DP=0x333,RANGER=0x178,WII=0x346
-  GFL_HEAPID_APP,       //元になるheapid
-  HEAPID_NETWORK,       //通信用にcreateされるHEAPID
-  HEAPID_WIFI,          //wifi用にcreateされるHEAPID
-  HEAPID_NETWORK,       //IRC用にcreateされるHEAPID
-  GFL_WICON_POSX,       // 通信アイコンXY位置
-  GFL_WICON_POSY,
-  TEST_COMM_MEMBER_MAX,   // 最大接続人数
-  TEST_COMM_SEND_SIZE_MAX,// 最大送信バイト数
-  TEST_COMM_BCON_MAX,     // 最大ビーコン収集数
-  TRUE,                   // CRC計算
-  FALSE,                  // MP通信＝親子型通信モードかどうか
-  GFL_NET_TYPE_WIRELESS,  /// 使用する通信を指定
-  TRUE,                   // 親が再度初期化した場合、つながらないようにする場合TRUE
-  WB_NET_BATTLE_SERVICEID,//GameServiceID
-#if GFL_NET_IRC
-  IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
-#endif
-  0,//MP親最大サイズ 512まで
-  0,//dummy
-};
-
-static const GFLNetInitializeStruct btlMultiNetInitParam = {
+/**
+ *  通信初期化パラメータ（マルチ）
+ */
+static const GFLNetInitializeStruct NetInitParamMulti = {
   BtlRecvFuncTable,     ///< 受信関数テーブル
   BTL_NETFUNCTBL_ELEMS, ///< 受信テーブル要素数
   NULL,                 ///< ハードで接続した時に呼ばれる
   NULL,                 ///< ネゴシエーション完了時にコール
   NULL,                 // ユーザー同士が交換するデータのポインタ取得関数
   NULL,                 // ユーザー同士が交換するデータのサイズ取得関数
-  btlBeaconGetFunc,     // ビーコンデータ取得関数
-  btlBeaconGetSizeFunc, // ビーコンデータサイズ取得関数
-  btlBeaconCompFunc,    // ビーコンのサービスを比較して繋いで良いかどうか判断する
+  testBeaconGetFunc,     // ビーコンデータ取得関数
+  testBeaconGetSizeFunc, // ビーコンデータサイズ取得関数
+  testBeaconCompFunc,    // ビーコンのサービスを比較して繋いで良いかどうか判断する
   NULL,                 // 普通のエラーが起こった場合 通信終了
   FatalError_Disp,      // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
   NULL,           // 通信切断時に呼ばれる関数
@@ -873,527 +1149,22 @@ static const GFLNetInitializeStruct btlMultiNetInitParam = {
   0,//dummy
 };
 
+
+
+static void comm_dummy_callback(void* pWork)
+{
+}
+
+
+static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
+{
+  DEBUG_BTL_WORK* wk = pWork;
+//  wk->netTestSeq = 1;
+}
+
 static void btlAutoConnectCallback( void* pWork )
 {
-  MAIN_WORK* wk = pWork;
-
-  wk->netTestSeq = 1;
-  TAYA_Printf("GFL_NET AutoConnCallBack\n");
+  DEBUG_BTL_WORK* wk = pWork;
+  wk->fNetConnect = TRUE;
 }
 
-
-//----------------------------------
-// 通信（通常）
-//----------------------------------
-static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
-{
-  MAIN_WORK* wk = mywk;
-
-  switch( *seq ){
-  case 0:
-    changeScene_start( wk );
-    (*seq)++;
-    break;
-  case 1:
-    GFL_NET_Init( &btlNetInitParam, testCallBack, (void*)wk );
-    (*seq)++;
-    break;
-  case 2:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      TAYA_Printf("GFL_NET Initi wait ...\n");
-    }
-    if( GFL_NET_IsInit() )
-    {
-      GFL_NET_ChangeoverConnect( btlAutoConnectCallback ); // 自動接続
-      (*seq)++;
-    }
-    break;
-  case 3:
-    if( wk->netTestSeq )
-    {
-      GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), 0 );
-      (*seq)++;
-    }
-    break;
-  case 4:
-    if( GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), 0) )
-    {
-      BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
-      GFL_NETHANDLE* netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-
-
-      wk->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );
-      if( GFL_NET_GetNetID(netHandle) == 0 ){
-//        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_PORIGON, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
-        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_NOZUPASU,   MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA,
-                  MONSNO_RAITYUU, MONSNO_KEKKINGU, 0 );
-      }else{
-        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_YADOKINGU, MONSNO_METAGUROSU, MONSNO_SUTAAMII,
-                  MONSNO_ENEKO, MONSNO_NYAASU, 0 );
-      }
-
-      BTL_SETUP_Single_Comm( para, wk->gameData, netHandle,  BTL_COMM_DS );
-      para->partyPlayer = wk->partyPlayer;
-      set_test_playername( (MYSTATUS*)(para->statusPlayer) );
-
-      DEBUG_PerformanceSetActive( FALSE );
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
-      (*seq)++;
-    }
-    break;
-  case 5:
-    changeScene_recover( wk );
-    return TRUE;
-  }
-
-  return FALSE;
-}
-//----------------------------------
-// 通信（マルチ）
-//----------------------------------
-static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
-{
-  enum {
-    MULTI_TIMING_NUMBER = 24,
-  };
-  MAIN_WORK* wk = mywk;
-
-  switch( *seq ){
-  case 0:
-    changeScene_start( wk );
-    (*seq)++;
-    break;
-  case 1:
-    GFL_NET_Init( &btlMultiNetInitParam, testCallBack, (void*)wk );
-    (*seq)++;
-    break;
-  case 2:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      TAYA_Printf("GFL_NET Initi wait ...\n");
-    }
-    if( GFL_NET_IsInit() )
-    {
-      (*seq)++;
-    }
-    break;
-  case 3:
-    // subArg!=0 -> 親機に
-    if( wk->subArg )
-    {
-      TAYA_Printf("[D_TAYA] マルチ親機になります\n");
-      GFL_NET_InitServer();
-      (*seq)++;
-    }
-    // 子機ならビーコンをひろいまくる
-    else
-    {
-      GFL_NET_StartBeaconScan();
-      (*seq)++;
-    }
-    break;
-  case 4:
-    if( wk->subArg )
-    {
-      (*seq)++;
-    }
-    else
-    {
-      int i;
-      BTL_BCON* bcon;
-
-      TAYA_Printf("[D_TAYA] 子機なのでビーコンひろいます\n");
-      for(i=0; i<TEST_MULTI_BCON_MAX; ++i)
-      {
-        bcon = GFL_NET_GetBeaconData(i);
-        if( bcon )
-        {
-          if( bcon->gameNo == MultiBcon.gameNo )
-          {
-            break;
-          }
-        }
-      }
-      if( i != TEST_MULTI_BCON_MAX )
-      {
-        u8* macAdrs = GFL_NET_GetBeaconMacAddress( i );
-        if( macAdrs != NULL )
-        {
-          TAYA_Printf("[D_TAYA] 子機がマルチ親機を見つけた! macAdrs=");
-          {
-            u8 x;
-            for(x=0; x<8; ++x)
-            {
-              TAYA_Printf("%02x.", macAdrs[0]);
-            }
-            TAYA_Printf("\n");
-          }
-          GFL_NET_ConnectToParent( macAdrs );
-          (*seq)++;
-        }
-      }
-    }
-    break;
-
-  case 5:
-    if( GFL_NET_HANDLE_RequestNegotiation() )
-    {
-      TAYA_Printf("[D_TAYA] ネゴシエーション成功\n");
-    }
-    if( GFL_NET_GetConnectNum() == TEST_MULTI_MEMBER_MAX )
-    {
-      TAYA_Printf("[D_TAYA] %d台そろったので次へ \n", TEST_MULTI_MEMBER_MAX);
-      (*seq)++;
-    }
-    break;
-
-  // ４台つながったらシンクロ開始
-  case 6:
-    if( GFL_NET_GetConnectNum() == TEST_MULTI_MEMBER_MAX )
-    {
-      GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), MULTI_TIMING_NUMBER );
-      TAYA_Printf("[D_TAYA] マルチシンクロ開始します ... \n");
-      (*seq)++;
-    }
-    else
-    {
-      if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
-      {
-        u8 n = GFL_NET_GetConnectNum();
-        NetID netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
-        TAYA_Printf("SubArg=%d, conNum=%d, myNetID=%d : ", wk->subArg, n, netID);
-        for(netID=0; netID<TEST_MULTI_MEMBER_MAX; ++netID)
-        {
-          if( GFL_NET_IsConnectMember(netID) )
-          {
-            TAYA_Printf("%d,", netID);
-          }
-        }
-        TAYA_Printf("\n");
-      }
-    }
-    break;
-
-  case 7:
-    if( GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), MULTI_TIMING_NUMBER) )
-    {
-      BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
-
-      para->engine = BTL_ENGINE_ALONE;
-      para->rule = BTL_RULE_DOUBLE;
-      para->competitor = BTL_COMPETITOR_COMM;
-
-      para->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      TAYA_Printf("[DTAYA] Multi Timing Sync Finish! NetHandle=%p\n", para->netHandle);
-      para->netID = GFL_NET_GetNetID( para->netHandle );
-      para->commMode = BTL_COMM_DS;
-      para->multiMode = 1;
-
-      para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ
-      para->partyEnemy1 = NULL;   ///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
-      para->partyPartner = NULL;  ///< 2vs2時の味方AI（不要ならnull）
-      para->partyEnemy2 = NULL;   ///< 2vs2時の２番目敵AI用（不要ならnull）
-
-      switch( para->netID ){
-      case 0:
-        setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_GYARADOSU, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
-        break;
-      case 1:
-        setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_YADOKINGU, MONSNO_METAGUROSU, MONSNO_SUTAAMII, 0 );
-        break;
-      case 2:
-        setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_BAKUUDA, MONSNO_DONKARASU, MONSNO_SANDAASU, 0 );
-        break;
-      case 3:
-        setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_HERAKUROSU, MONSNO_GENGAA, MONSNO_EAAMUDO, 0 );
-        break;
-      }
-
-      DEBUG_PerformanceSetActive( FALSE );
-      GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
-      (*seq)++;
-    }
-    break;
-
-  case 8:
-    changeScene_recover( wk );
-    return TRUE;
-  }
-
-  return FALSE;
-}
-
-
-static void setup_party( HEAPID heapID, POKEPARTY* party, ... )
-{
-  va_list  list;
-  int monsno;
-  POKEMON_PARAM* pp;
-
-  PokeParty_InitWork( party );
-
-  va_start( list, party );
-  while( 1 )
-  {
-    monsno = va_arg( list, int );
-    if( monsno )
-    {
-      TAYA_Printf("Create MonsNo=%d\n", monsno);
-      pp = PP_Create( monsno, 50, 3594, GFL_HEAP_LOWID(heapID) );
-      if( monsno == MONSNO_PORIGON )
-      {
-        PP_SetWazaPush( pp, WAZANO_TEKUSUTYAA );
-        PP_SetWazaPush( pp, WAZANO_NAMINORI );
-        PP_SetWazaPush( pp, WAZANO_KAMINARI );
-        PP_SetWazaPush( pp, WAZANO_HUNKA );
-      }
-      PokeParty_Add( party, pp );
-      GFL_HEAP_FreeMemory( pp );
-    }
-    else
-    {
-      break;
-    }
-  }
-  va_end( list );
-}
-
-//------------------------------------------------------------------------------------------------------
-// 漢字モード切り替え
-//------------------------------------------------------------------------------------------------------
-static BOOL SUBPROC_KanjiMode( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
-{
-  MAIN_WORK* wk = mywk;
-
-  GFL_MSGSYS_SetLangID( !GFL_MSGSYS_GetLangID() );
-  print_menu( wk, &wk->menuCtrl );
-  return TRUE;
-}
-
-//------------------------------------------------------------------------------------------------------
-// 通信状態での漢字PrintTest
-//------------------------------------------------------------------------------------------------------
-static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
-{
-  static const u16 strID[] = {
-    DEBUG_TAYA_STR01,
-    DEBUG_TAYA_STR02,
-    DEBUG_TAYA_STR03,
-    DEBUG_TAYA_STR04,
-    DEBUG_TAYA_STR05,
-    DEBUG_TAYA_STR06,
-    DEBUG_TAYA_STR07,
-    DEBUG_TAYA_STR08,
-    DEBUG_TAYA_STR09,
-  };
-
-  MAIN_WORK* wk = mywk;
-
-  GFL_TCBL_Main( wk->tcbl );
-
-  if( !PRINT_UTIL_Trans(wk->printUtil, wk->printQue) )
-  {
-    return FALSE;
-  }
-
-  switch( *seq ){
-  case 0:
-    GFL_MSG_GetString( wk->mm, DEBUG_TAYA_WAIT, wk->strbuf );
-    GFL_BMP_Clear( wk->bmp, 0xff );
-    PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 0, wk->strbuf, wk->fontHandle );
-    wk->netInitWork = testNetInitParam;
-    wk->netTestSeq = 0;
-    wk->kanjiMode = 0;
-    wk->packet.kanjiMode = 0;
-    GFL_NET_Init(&(wk->netInitWork), testCallBack, (void*)wk);
-    (*seq)++;
-    break;
-
-  case 1:
-    if( GFL_NET_IsInit() )
-    {
-      GFL_NET_ChangeoverConnect( autoConnectCallBack ); // 自動接続
-      (*seq)++;
-    }
-    break;
-
-  case 2:
-    if( wk->netTestSeq )
-    {
-      wk->netTestSeq = 0;
-      wk->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      GFL_NET_TimingSyncStart( wk->netHandle, TEST_TIMINGID_INIT );
-      (*seq)++;
-    }
-    break;
-
-  case 3:
-    if( GFL_NET_IsTimingSync(wk->netHandle, TEST_TIMINGID_INIT) )
-    {
-      wk->ImParent = GFL_NET_IsParentMachine();
-      (*seq)++;
-    }
-    break;
-
-  case 4:
-    GFL_BMP_Clear( wk->bmp, 0xff );
-    GFL_MSG_GetString(  wk->mm, (wk->ImParent)? DEBUG_TAYA_STR_PARENT : DEBUG_TAYA_STR_CHILD, wk->strbuf );
-    PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 0, wk->strbuf, wk->fontHandle );
-//    GFL_BMPWIN_TransVramCharacter( wk->win );
-    wk->packet.strNum = 0;
-    wk->packet.yofs = 30;
-    (*seq)++;
-    break;
-
-  case 5:
-    if( wk->ImParent )
-    {
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-      {
-        GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_DEBUG_TAYA, sizeof(TEST_PACKET), &(wk->packet) );
-        (*seq)++;
-        break;
-      }
-      else
-      {
-        GFL_BMP_Fill( wk->bmp, 0, 0, 256, 16, 0xff );
-        PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 0, wk->strbuf, wk->fontHandle );
-        PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 16, wk->strbuf, wk->fontHandle );
-      }
-      #if 0
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
-      {
-        wk->netTestSeq = 0;
-        GFL_NET_Exit( autoConnectCallBack );
-        (*seq) = 100;
-        break;
-      }
-      #endif
-    }
-    else
-    {
-      (*seq)++;
-    }
-    break;
-
-  case 6:
-    if( wk->netTestSeq )
-    {
-      wk->netTestSeq = 0;
-      GFL_NET_TimingSyncStart( wk->netHandle, TEST_TIMINGID_PRINT );
-      (*seq)++;
-    }
-    else
-    {
-      GFL_BMP_Fill( wk->bmp, 0, 0, 256, 16, 0xff );
-      PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 0, wk->strbuf, wk->fontHandle );
-      PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 16, wk->strbuf, wk->fontHandle );
-    }
-    break;
-
-  case 7:
-    if( GFL_NET_IsTimingSync(wk->netHandle, TEST_TIMINGID_PRINT) )
-    {
-      GFL_MSG_GetString( wk->mm, strID[wk->packet.strNum], wk->strbuf );
-      wk->printStream = PRINTSYS_PrintStream( wk->win, 0, wk->packet.yofs,
-              wk->strbuf, wk->fontHandle, 0, wk->tcbl, 0, wk->heapID, 0xff );
-      (*seq)++;
-    }
-    break;
-
-  case 8:
-    if( PRINTSYS_PrintStreamGetState(wk->printStream) == PRINTSTREAM_STATE_DONE )
-    {
-      PRINTSYS_PrintStreamDelete( wk->printStream );
-      (*seq)++;
-    }
-    break;
-
-  case 9:
-    if( wk->ImParent )
-    {
-      if( ++(wk->packet.strNum) <= NELEMS(strID) )
-      {
-        wk->packet.yofs += 16;
-        if( strID[wk->packet.strNum] == DEBUG_TAYA_STR09 )
-        {
-          wk->packet.yofs += 16;
-        }
-      }
-      else
-      {
-        wk->packet.kanjiMode = !(wk->packet.kanjiMode);
-      }
-      GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_DEBUG_TAYA,sizeof(TEST_PACKET), &(wk->packet) );
-    }
-    (*seq)++;
-    break;
-
-  case 10:
-    if( wk->netTestSeq )
-    {
-      wk->netTestSeq = 0;
-
-      if( wk->kanjiMode != wk->packet.kanjiMode )
-      {
-        wk->kanjiMode = wk->packet.kanjiMode;
-        GFL_MSGSYS_SetLangID( wk->kanjiMode );
-
-        GFL_BMP_Clear( wk->bmp, 0xff );
-        GFL_BMPWIN_TransVramCharacter( wk->win );
-
-        (*seq)++;
-      }
-      else
-      {
-        (*seq) = 5;
-      }
-    }
-    break;
-
-  case 11:
-    GFL_MSG_GetString( wk->mm, DEBUG_TAYA_STR10, wk->strbuf );
-    PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 0, wk->strbuf, wk->fontHandle );
-    (*seq)++;
-    break;
-
-  case 12:
-    if( wk->ImParent )
-    {
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-      {
-        GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_DEBUG_TAYA, sizeof(TEST_PACKET), &(wk->packet) );
-        (*seq)++;
-      }
-      break;
-    }
-    (*seq)++;
-    break;
-
-  case 13:
-    if( wk->netTestSeq )
-    {
-      wk->netTestSeq = 0;
-      GFL_BMP_Clear( wk->bmp, 0xff );
-      (*seq)=4;
-    }
-    break;
-
-  case 100:
-    if( wk->netTestSeq )
-    {
-      wk->netTestSeq = 0;
-      (*seq)++;
-    }
-    break;
-
-  case 101:
-    return TRUE;
-
-  }
-
-    return FALSE;
-}
-
-#endif

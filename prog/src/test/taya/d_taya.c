@@ -225,7 +225,7 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 static GFL_PROC_RESULT DebugTayaMainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   MAIN_WORK* wk = mywk;
-  GFL_HEAP_FreeMemoryblock( wk->testPoke );
+  GFL_HEAP_FreeMemory( wk->testPoke );
   GFL_HEAP_DeleteHeap( HEAPID_TEMP );
   GFL_HEAP_DeleteHeap( HEAPID_CORE );
   return GFL_PROC_RES_FINISH;
@@ -729,7 +729,7 @@ typedef struct{
     int gameNo;   ///< ゲーム種類
 }TEST_BCON;
 
-static TEST_BCON testBcon = { WB_NET_SERVICEID_DEBUG_TAYA };
+static TEST_BCON testBcon = { WB_NET_SERVICEID_DEBUG_BATTLE };
 
 
 
@@ -770,7 +770,7 @@ static const GFLNetInitializeStruct testNetInitParam = {
   FALSE,            // MP通信＝親子型通信モードかどうか
   FALSE,            // wifi通信を行うかどうか
   TRUE,           // 親が再度初期化した場合、つながらないようにする場合TRUE
-  WB_NET_SERVICEID_DEBUG_TAYA,//GameServiceID
+  WB_NET_SERVICEID_DEBUG_BATTLE,//GameServiceID
 #if GFL_NET_IRC
   IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
@@ -904,17 +904,18 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
       wk->partyEnemy  = PokeParty_AllocPartyWork( HEAPID_CORE );  ///< プレイヤーのパーティ
 
       #ifdef DEBUG_ONLY_FOR_taya
-        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_NOZUPASU,   MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA,
+        setup_party( HEAPID_CORE, wk->partyPlayer, MONSNO_GYARADOSU,   MONSNO_PIKATYUU, MONSNO_GURAADON, MONSNO_KAIOOGA,
                   MONSNO_RAITYUU, MONSNO_KEKKINGU, 0 );
         setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_MANYUURA,  MONSNO_AABOKKU, MONSNO_YADOKINGU, MONSNO_REKKUUZA, 0 );
         {
           POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->partyPlayer, 0 );
-          PP_Put( pp, ID_PARA_exp, 50 );
+          PP_Put( pp, ID_PARA_exp, 150 );
+          PP_Put( pp, ID_PARA_item, ITEM_TABENOKOSI );
           PP_Renew( pp );
 
           pp = PokeParty_GetMemberPointer( wk->partyEnemy, 0 );
-          PP_SetWazaPos( pp, WAZANO_HANERU, 0 );
-          PP_SetWazaPos( pp, 0, 1 );
+          PP_SetWazaPos( pp, WAZANO_KINOKONOHOUSI, 0 );
+          PP_SetWazaPos( pp, WAZANO_DOKUNOKONA, 1 );
           PP_SetWazaPos( pp, 0, 2 );
           PP_SetWazaPos( pp, 0, 3 );
         }
@@ -931,11 +932,16 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
           BTL_SETUP_Double_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
         }else{
 //          BTL_SETUP_Triple_Trainer( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE, 2 );
-          setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_MANYUURA, 0 );
+//          setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_MANYUURA, 0 );
 //          BTL_SETUP_Single_Wild( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
           BP_SETUP_Wild( para, wk->gameData, HEAPID_CORE, BTL_RULE_SINGLE, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
         }
         para->partyPlayer = wk->partyPlayer;
+
+        MYITEM_AddItem( para->itemData, ITEM_MASUTAABOORU, 1, HEAPID_CORE );
+        MYITEM_AddItem( para->itemData, ITEM_HAIPAABOORU, 4, HEAPID_CORE );
+        MYITEM_AddItem( para->itemData, ITEM_KIZUGUSURI, 4, HEAPID_CORE );
+
         set_test_playername( (MYSTATUS*)(para->statusPlayer) );
       }
 
@@ -1474,7 +1480,7 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
     {
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
       {
-        GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_DEBUG_TAYA, sizeof(TEST_PACKET), &(wk->packet) );
+        GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_DEBUG_BATTLE, sizeof(TEST_PACKET), &(wk->packet) );
         (*seq)++;
         break;
       }
@@ -1548,7 +1554,7 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
       {
         wk->packet.kanjiMode = !(wk->packet.kanjiMode);
       }
-      GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_DEBUG_TAYA,sizeof(TEST_PACKET), &(wk->packet) );
+      GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_DEBUG_BATTLE,sizeof(TEST_PACKET), &(wk->packet) );
     }
     (*seq)++;
     break;
@@ -1586,7 +1592,7 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
     {
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
       {
-        GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_DEBUG_TAYA, sizeof(TEST_PACKET), &(wk->packet) );
+        GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_DEBUG_BATTLE, sizeof(TEST_PACKET), &(wk->packet) );
         (*seq)++;
       }
       break;

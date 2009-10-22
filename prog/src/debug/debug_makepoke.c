@@ -11,6 +11,7 @@
 #include "system/main.h"
 #include "print/printsys.h"
 #include "print/str_tool.h"
+#include "poke_tool\monsno_def.h"
 
 #include "font/font.naix"
 #include "arc_def.h"
@@ -636,6 +637,9 @@ static GFL_PROC_RESULT PROC_MAKEPOKE_Init( GFL_PROC* proc, int* seq, void* pwk, 
 
       wk->heapID = HEAPID_DEBUG_MAKEPOKE;
       wk->dst = proc_param->dst;
+      if( PP_Get(wk->dst, ID_PARA_monsno, NULL) == 0 ){
+        PP_Setup( wk->dst, MONSNO_GORIDARUMA, 5, 0x1000 );
+      }
       wk->pokeID = PP_Get( wk->dst, ID_PARA_id_no, NULL );
       wk->seq = 0;
     }
