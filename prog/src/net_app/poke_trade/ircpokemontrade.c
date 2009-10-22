@@ -886,7 +886,6 @@ static void _changePokemonMyStDisp(IRC_POKEMON_TRADE* pWork,int pageno,int leftr
 
     IRC_POKETRADE_ItemIconDisp(pWork, leftright, pp);
     IRC_POKETRADE_PokerusIconDisp(pWork, leftright,FALSE, pp);
-    IRC_POKETRADE_LeftPageMarkDisp(pWork,APP_COMMON_BARICON_CURSOR_RIGHT);
     
   }
   else{
@@ -905,7 +904,6 @@ static void _changePokemonMyStDisp(IRC_POKEMON_TRADE* pWork,int pageno,int leftr
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 2*8, 14*8, pWork->pStrBuf, pWork->pFontHandle);
     _pokeAttributeMsgDisp(pp, pWork->MyInfoWin, 2*8, 16*8, pWork);
 
-   IRC_POKETRADE_LeftPageMarkDisp(pWork,APP_COMMON_BARICON_CURSOR_LEFT);
 
   }
 
@@ -1224,7 +1222,7 @@ static void _changeMenuWait(IRC_POKEMON_TRADE* pWork)
 //こうかんにだす、メニュー表示
 static void _changeMenuOpen(IRC_POKEMON_TRADE* pWork)
 {
-  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_U, FALSE );
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,FALSE );
@@ -1337,6 +1335,7 @@ static void _dispSubStateWait(IRC_POKEMON_TRADE* pWork)
 
     if(GFL_UI_TP_GetCont()==FALSE){ //タッチパネルを離した
       if((pWork->pCatchCLWK != NULL) && pWork->bUpVec){ //ポケモンを上に登録
+        PMSND_PlaySystemSE(POKETRADESE_UPPOKE);
         selectno = 0;  //決定と同じ
         bExit=TRUE;  
       }
@@ -1383,7 +1382,7 @@ static void _dispSubState(IRC_POKEMON_TRADE* pWork)
 {
 
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
-  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_U, FALSE);
+  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
 
   {
     int msg[]={POKETRADE_STR_03,POKETRADE_STR_02};
@@ -1606,7 +1605,7 @@ static BOOL _PokemonsetAndSendData(IRC_POKEMON_TRADE* pWork)
 static void _endRequestState(IRC_POKEMON_TRADE* pWork)
 {
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
-  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUR_U, FALSE );
+  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE );
 
   if(GFL_NET_IsInit()){
     if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_END_REQ, 0, NULL)){
@@ -1694,6 +1693,7 @@ static void _loopSearchMojiState(IRC_POKEMON_TRADE* pWork)
   {
     int ans = GFL_UI_TP_HitTrg(tp_mojidata);
     if(ans != GFL_UI_TP_HIT_NONE){
+      PMSND_PlaySystemSE(POKETRADESE_LANG_SEARCH);
       pWork->selectMoji = ans + 1;
       endflg = TRUE;
     }
@@ -1709,6 +1709,7 @@ static void _loopSearchMojiState(IRC_POKEMON_TRADE* pWork)
     break;
   }
   if(GFL_UI_KEY_GetTrg()==PAD_BUTTON_CANCEL ){
+    PMSND_PlaySystemSE(POKETRADESE_LANG_CANCEL);
     pWork->selectMoji = 0;
     endflg = TRUE;
   }
@@ -1732,7 +1733,7 @@ static void _startSearchMojiState(IRC_POKEMON_TRADE* pWork)
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_52, pWork->pMessageStrBuf );
   IRC_POKETRADE_MessageWindowOpen(pWork);
 
-  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUR_U, FALSE );
+  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE );
 
   _CHANGE_STATE(pWork,_loopSearchMojiState);
 }
@@ -1788,6 +1789,67 @@ static BOOL _isCursorInScreen(IRC_POKEMON_TRADE* pWork, int line)
 }
 
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief 基本のRLキー操作
+ * @param IRC_POKEMON_TRADE* ワーク 
+ */
+//--------------------------------------------------------------------------------------------
+#define _NEXTPOS (_DOT_START_POS+(_BOXTRAY_MAX/2)+(_TEMOTITRAY_MAX/2)-_DOTMAX)
+
+static int centerPOS[BOX_MAX_TRAY+1]={
+    _DOT_START_POS,
+    _NEXTPOS,
+    _NEXTPOS+(_BOXTRAY_MAX/2),
+    _NEXTPOS+(_BOXTRAY_MAX/2)*2,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*3,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*4,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*5,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*6,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*7,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*8,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*9,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*10,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*11,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*12,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*13,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*14,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*15,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*16,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*17,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*18,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*19,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*20,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*21,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*22,
+    _NEXTPOS+(_BOXTRAY_MAX/2)*23,
+ };
+
+ 
+
+static void _padLRFunc(IRC_POKEMON_TRADE* pWork)
+{
+  int i;
+  
+  if(GFL_UI_KEY_GetRepeat()==PAD_BUTTON_R ){   //ベクトルを監視
+    for(i=0;i < (BOX_MAX_TRAY+1) ; i++){
+      if(centerPOS[i] > pWork->BoxScrollNum){
+        pWork->BoxScrollNum = centerPOS[i];
+        PMSND_PlaySystemSE(POKETRADESE_CUR);
+        return;
+      }
+    }
+  }
+  if(GFL_UI_KEY_GetRepeat()==PAD_BUTTON_L ){   //ベクトルを監視
+    for(i = BOX_MAX_TRAY;i >= 0 ; i--){
+      if(centerPOS[i] < pWork->BoxScrollNum){
+        pWork->BoxScrollNum = centerPOS[i];
+        PMSND_PlaySystemSE(POKETRADESE_CUR);
+        return;
+      }
+    }
+  }
+}
 
 
 //--------------------------------------------------------------------------------------------
@@ -1842,6 +1904,7 @@ static void _padUDLRFunc(IRC_POKEMON_TRADE* pWork)
 
   if(bChange){
     pWork->bgscrollRenew = TRUE;
+    PMSND_PlaySystemSE(POKETRADESE_CUR);
 
     IRC_POKETRADE_TrayDisp(pWork);
     IRC_POKETRADE_SendScreenBoxNameChar(pWork);
@@ -1872,16 +1935,14 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
   }
 
   
-  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_U, TRUE );
-  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUR_U, TRUE );
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
+  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
 
   IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
-  IRC_POKETRADE_ReturnPageMarkDisp(pWork,APP_COMMON_BARICON_RETURN); //マーク表示
-  IRC_POKETRADE_LeftPageMarkDisp(pWork,APP_COMMON_BARICON_CURSOR_UP); //マーク表示
   G2S_BlendNone();
   for(i=0;i<2;i++){
     pWork->bChangeOK[i]=FALSE;
@@ -1912,7 +1973,11 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
 
   //キー処理
   _padUDLRFunc(pWork);
+
+  _padLRFunc(pWork);
+  
   if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_DECIDE){
+    PMSND_PlaySystemSE(POKETRADESE_MARKON);
     pWork->underSelectBoxno = LINE2TRAY(pWork->MainObjCursorLine);
     pWork->underSelectIndex = LINE2POKEINDEX(pWork->MainObjCursorLine,pWork->MainObjCursorIndex);
     IRC_POKETRADE_SetCursorXY(pWork);
@@ -1936,6 +2001,11 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
           IRC_POKETRADE_TrayDisp(pWork);
           IRC_POKETRADE_SendScreenBoxNameChar(pWork);
           IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
+
+          if(!PMSND_CheckPlaySE()){
+            PMSND_PlaySystemSE(POKETRADESE_RIBBON);
+          }
+          
           if(GFL_NET_IsInit()){
             // 特に失敗してもかまわない通信 相手に位置を知らせているだけ
             GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SCROLLBAR,4,&pWork->BoxScrollNum);
@@ -1957,7 +2027,7 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
 
     _CHANGE_STATE(pWork,_endRequestState);
     return;
-  case TOUCHBAR_ICON_CUR_U:  //@todo 交換予定
+  case TOUCHBAR_ICON_CUTSOM1:
     _CHANGE_STATE(pWork,_startSearchMojiState);
     return;
   default:
@@ -1965,6 +2035,7 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
   }
 
   if(IsTouchCLACTPosition(pWork)){
+    PMSND_PlaySystemSE(POKETRADESE_MARKON);
     _CHANGE_STATE(pWork,_dispSubState);
   }
 
@@ -1996,8 +2067,8 @@ static void _ToolBarInit(IRC_POKEMON_TRADE* pWork)
 			TOUCHBAR_ICON_CUR_R,
 			{	TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
 		},
-		{	//@todo 交換予定
-			TOUCHBAR_ICON_CUR_U,
+		{
+			TOUCHBAR_ICON_CUTSOM1,
 			{	TOUCHBAR_ICON_X_00, TOUCHBAR_ICON_Y },
 		},
 	};
@@ -2011,10 +2082,19 @@ static void _ToolBarInit(IRC_POKEMON_TRADE* pWork)
   touchbar_setup.is_notload_bg =TRUE;  //BGはなし
   touchbar_setup.bar_frm	= GFL_BG_FRAME0_S;						//BG読み込みのためのBG面上下画面判定にも必要
 	touchbar_setup.bg_plt		= 0;			//BGﾊﾟﾚｯﾄ
-	touchbar_setup.obj_plt	= _OBJPLT_COMMON;			//OBJﾊﾟﾚｯﾄ
+	touchbar_setup.obj_plt	= 0;			//OBJﾊﾟﾚｯﾄ
 	touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
 
+  touchbar_icon_tbl[3].cg_idx = pWork->cellRes[CHAR_SCROLLBAR];
+  touchbar_icon_tbl[3].plt_idx = pWork->cellRes[PAL_SCROLLBAR];
+  touchbar_icon_tbl[3].cell_idx = pWork->cellRes[ANM_SCROLLBAR];
+	touchbar_icon_tbl[3].active_anmseq	=	6;						//アクティブのときのアニメ
+	touchbar_icon_tbl[3].noactive_anmseq	=		5;						//ノンアクティブのときのアニメ
+	touchbar_icon_tbl[3].push_anmseq	=		4;						//押したときのアニメ（STOPになっていること）
+	touchbar_icon_tbl[3].key	=		0;		//キーで押したときに動作させたいならば、ボタン番号
+	touchbar_icon_tbl[3].se	=		POKETRADESE_DECIDE;									//押したときにSEならしたいならば、SEの番号
   
+
   pWork->pTouchWork = TOUCHBAR_Init(&touchbar_setup, pWork->heapID);
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE);
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE);

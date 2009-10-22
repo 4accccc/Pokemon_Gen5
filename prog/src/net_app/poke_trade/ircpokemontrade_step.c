@@ -108,9 +108,9 @@ static void _pokemonCreateCLACTInit(IRC_POKEMON_TRADE* pWork)
     GFL_CLGRP_CGR_Register( p_handle , NARC_tradedemo_trade_obj01_NCGR ,
                             FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
   pWork->cellRes[PLT_POKECREATE] =
-    GFL_CLGRP_PLTT_Register(
+    GFL_CLGRP_PLTT_RegisterEx(
       p_handle ,NARC_tradedemo_trade_obj01_NCLR , CLSYS_DRAW_MAIN ,
-      _OBJPLT_COMMON * 32 , pWork->heapID  );
+      PLTID_OBJ_DEMO_M * 32 , 0, 1, pWork->heapID  );
   pWork->cellRes[ANM_POKECREATE] =
     GFL_CLGRP_CELLANIM_Register(
       p_handle , NARC_tradedemo_trade01_NCER,
@@ -312,8 +312,6 @@ static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
     GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
     GFL_DISP_GXS_SetVisibleControlDirect( 0 );
     IRC_POKETRADEDEMO_RemoveModel( pWork);
-    IRC_POKETRADE_LeftPageMarkRemove(pWork);
-    IRC_POKETRADE_ReturnPageMarkRemove(pWork);
     for(i = 0;i< CELL_DISP_NUM;i++){
       if(pWork->curIcon[i]){
         GFL_CLACT_WK_Remove(pWork->curIcon[i]);

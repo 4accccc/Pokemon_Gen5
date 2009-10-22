@@ -19,6 +19,8 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/poke_tool_def.h"
 #include "system/touch_subwindow.h"
+#include "pokemontrade_snd.h"
+#include "sound/pm_sndsys.h"
 
 #include "print/wordset.h"
 
@@ -86,23 +88,31 @@ typedef enum
 #define	FBMP_COL_WHITE		(15)
 
 
-#define PLTID_OBJ_TYPEICON_M (10) // //3本
-#define PLTID_OBJ_BALLICON_M (13)  // 1本使用
-#define PLTID_OBJ_POKESTATE_M (14) //
-#define PLTID_OBJ_POKERUS_M (15) //
+#define PLTID_OBJ_TYPEICON_M (8) // //3本
+#define PLTID_OBJ_BALLICON_M (12)  // 1本使用
+#define PLTID_OBJ_POKESTATE_M (13) //
+#define PLTID_OBJ_POKERUS_M (14) //
+#define PLTID_OBJ_DEMO_M (7)
 
-#define _OBJPLT_BOX  (0)  //3本
-#define _OBJPLT_BAR  (3)  //3本
-#define _OBJPLT_POKEICON  (6)  //3本
-#define _OBJPLT_COMMON  (9)  //?本
-#define PLTID_OBJ_POKEITEM_S (10)
+
+#define _OBJPLT_POKEICON_GRAY_OFFSET (0) ///< グレー用ポケモンアイコンパレット
+#define _OBJPLT_POKEICON_GRAY  (3)  //ポケモンアイコングレイ 3本
+#define _OBJPLT_POKEICON_OFFSET (_OBJPLT_POKEICON_GRAY*32)
+#define _OBJPLT_POKEICON  (3)  //ポケモンアイコン 3本
+#define _OBJPLT_COMMON_OFFSET (_OBJPLT_POKEICON_OFFSET + _OBJPLT_POKEICON*32)
+#define _OBJPLT_COMMON  (2)  //サブ画面OBJパレット下画面バー 2本
+#define _OBJPLT_BOX_OFFSET (_OBJPLT_COMMON_OFFSET+_OBJPLT_COMMON*32)
+#define _OBJPLT_BOX  (6)  //サブ画面OBJパレット基本  5本
+
+#define PLTID_OBJ_POKEITEM_S (_OBJPLT_POKEICON_GRAY+_OBJPLT_COMMON+_OBJPLT_BOX+_OBJPLT_POKEICON+1) //15本目
+
 
 //メッセージ系は上下共通 BG
 #define _BUTTON_MSG_PAL   (14)  // メッセージフォント
 #define _BUTTON_WIN_PAL   (15)  // ウインドウ
 
 
-#define PLIST_RENDER_MAIN (1)
+//#define PLIST_RENDER_MAIN (1)
 
 
 #define _POKE_PRJORTH_Y_COEFFICIENT (12)
@@ -172,6 +182,7 @@ typedef enum
   PAL_SCROLLBAR, //ARCID_POKETRADE
   PLT_COMMON,
   PLT_POKECREATE,
+  PLT_POKEICON_GRAY,
   PLT_RESOURCE_MAX,
 
   CHAR_SCROLLBAR = PLT_RESOURCE_MAX,    //ARCID_POKETRADE
@@ -524,12 +535,8 @@ extern POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_MANAGER* boxDa
 extern void IRC_POKETRADE_SetMainStatusBG(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_ResetMainStatusBG(IRC_POKEMON_TRADE* pWork);
 extern void IRCPOKEMONTRADE_ResetPokemonStatusMessage(IRC_POKEMON_TRADE* pWork, int side);
-extern void IRC_POKETRADE_LeftPageMarkRemove(IRC_POKEMON_TRADE* pWork);
-extern void IRC_POKETRADE_LeftPageMarkDisp(IRC_POKEMON_TRADE* pWork,int no);
 extern void IRC_POKETRADE_InitSubMojiBG(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_EndSubMojiBG(IRC_POKEMON_TRADE* pWork);
-extern void IRC_POKETRADE_ReturnPageMarkDisp(IRC_POKEMON_TRADE* pWork,int no);
-extern void IRC_POKETRADE_ReturnPageMarkRemove(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SendVramBoxNameChar(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SendScreenBoxNameChar(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_ResetBoxNameWindow(IRC_POKEMON_TRADE* pWork);
@@ -568,6 +575,7 @@ extern void IRC_POKMEONTRADE_changeState(IRC_POKEMON_TRADE* pWork,StateFunc* sta
 
 #define _DOTMAX ((BOX_MAX_TRAY*_BOXTRAY_MAX)+_TEMOTITRAY_MAX)
 
+#define _DOT_START_POS (_DOTMAX - 80)
 
 
 inline int LINE2TRAY(int lineno)
