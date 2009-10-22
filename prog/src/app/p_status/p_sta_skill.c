@@ -305,7 +305,8 @@ PSTATUS_SKILL_WORK* PSTATUS_SKILL_Init( PSTATUS_WORK *work )
   skillWork->isForgetConfirm = FALSE;
   skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
   
-  if( work->psData->mode == PST_MODE_WAZAADD )
+  if( work->psData->mode == PST_MODE_WAZAADD &&
+      work->psData->waza != 0 )
   {
     skillWork->wazaPlateNum = 5;
   }
@@ -966,6 +967,13 @@ static void PSTATUS_SKILL_DrawStrSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK 
     wazaNo = PPP_Get( ppp , ID_PARA_waza1+skillWork->cursorPos , NULL );
   }
   else
+  if( skillWork->cursorPos == 0xFF )
+  {
+    //初回処理なので
+    //手持ち技
+    wazaNo = PPP_Get( ppp , ID_PARA_waza1 , NULL );
+  }
+  else
   {
     //取得技
     wazaNo = work->psData->waza;
@@ -1049,34 +1057,37 @@ void PSTATUS_SKILL_DispPage_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
   }
   
   //「忘れる」bmpOam作成
+  if( skillWork->wazaPlateNum == 5 )
   {
-    skillWork->bmpDataForget = GFL_BMP_Create( PSTATUS_SKILL_PLATE_WIN_WIDTH , PSTATUS_SKILL_PLATE_WIN_HEIGHT ,
-                                         GFL_BMP_16_COLOR , work->heapId );
-    PSTATUS_UTIL_DrawStrFuncBmp( work , skillWork->bmpDataForget , mes_status_13 ,
-                              PSTATUS_SKILL_PLATE_FORGET_X , PSTATUS_SKILL_PLATE_FORGET_Y , PSTATUS_STR_COL_BLACK );
-    /*
-    STRBUF *srcStr;
-    u32 width;
-    srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_13 ); 
-    width = PRINTSYS_GetStrWidth( srcStr , work->fontHandle , 0 )/2;
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) , 
-            posX-width , posY , srcStr , work->fontHandle , col );
-    GFL_STR_DeleteBuffer( srcStr );
-    */
-  }
-  {
-    PSTA_OAM_ACT_DATA oamData;
-    oamData.x = (platePos[4][0]+PSTATUS_SKILL_PLATE_FORGET_WIN_LEFT)*8;
-    oamData.y = (platePos[4][1]+PSTATUS_SKILL_PLATE_WIN_TOP)*8;
-    oamData.pltt_index = work->cellRes[SCR_PLT_RIBBON_BAR]; //文字はリボンと同じパレットで
-    oamData.pal_offset = 0;
-    oamData.soft_pri = 0;
-    oamData.bg_pri = 0;
-    oamData.setSerface = CLSYS_DEFREND_MAIN;
-    oamData.draw_type = CLSYS_DRAW_MAIN;
-    oamData.bmp = skillWork->bmpDataForget;
-    skillWork->bmpOamForget = PSTA_OAM_ActorAdd( skillWork->bmpOamSys , &oamData );
-    PSTA_OAM_ActorSetDrawEnable( skillWork->bmpOamForget , FALSE );
+    {
+      skillWork->bmpDataForget = GFL_BMP_Create( PSTATUS_SKILL_PLATE_WIN_WIDTH , PSTATUS_SKILL_PLATE_WIN_HEIGHT ,
+                                           GFL_BMP_16_COLOR , work->heapId );
+      PSTATUS_UTIL_DrawStrFuncBmp( work , skillWork->bmpDataForget , mes_status_13 ,
+                                PSTATUS_SKILL_PLATE_FORGET_X , PSTATUS_SKILL_PLATE_FORGET_Y , PSTATUS_STR_COL_BLACK );
+      /*
+      STRBUF *srcStr;
+      u32 width;
+      srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_13 ); 
+      width = PRINTSYS_GetStrWidth( srcStr , work->fontHandle , 0 )/2;
+      PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( bmpWin ) , 
+              posX-width , posY , srcStr , work->fontHandle , col );
+      GFL_STR_DeleteBuffer( srcStr );
+      */
+    }
+    {
+      PSTA_OAM_ACT_DATA oamData;
+      oamData.x = (platePos[4][0]+PSTATUS_SKILL_PLATE_FORGET_WIN_LEFT)*8;
+      oamData.y = (platePos[4][1]+PSTATUS_SKILL_PLATE_WIN_TOP)*8;
+      oamData.pltt_index = work->cellRes[SCR_PLT_RIBBON_BAR]; //文字はリボンと同じパレットで
+      oamData.pal_offset = 0;
+      oamData.soft_pri = 0;
+      oamData.bg_pri = 0;
+      oamData.setSerface = CLSYS_DEFREND_MAIN;
+      oamData.draw_type = CLSYS_DRAW_MAIN;
+      oamData.bmp = skillWork->bmpDataForget;
+      skillWork->bmpOamForget = PSTA_OAM_ActorAdd( skillWork->bmpOamSys , &oamData );
+      PSTA_OAM_ActorSetDrawEnable( skillWork->bmpOamForget , FALSE );
+    }
   }
   
   skillWork->cursorPos = 0xFF;
@@ -1130,8 +1141,11 @@ void PSTATUS_SKILL_DispPage_Trans_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WO
 void PSTATUS_SKILL_ClearPage_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
 {
   u8 i;
-  GFL_BMP_Delete( skillWork->bmpDataForget );
-  PSTA_OAM_ActorDel( skillWork->bmpOamForget );
+  if( skillWork->wazaPlateNum == 5 )
+  {
+    GFL_BMP_Delete( skillWork->bmpDataForget );
+    PSTA_OAM_ActorDel( skillWork->bmpOamForget );
+  }
   for( i=0;i<skillWork->wazaPlateNum;i++ )
   {
     PSTATUS_SKILL_ClearPlate( work , skillWork , &skillWork->plateWork[i] );
@@ -1554,20 +1568,33 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
     work->ktst = GFL_APP_END_KEY;
     if( skillWork->cursorPos < 4 )
     {
-      //確認モードへ
-      GFL_CLACTPOS cellPos;
-      skillWork->isForgetConfirm = TRUE;
-      skillWork->changeTarget = skillWork->cursorPos;
-      PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 2 );
-      skillWork->cursorPos = 4;
-      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+      if( work->psData->waza == 0 )
+      {
+        //選んで終了
+        work->retVal = SRT_RETURN;
+        work->psData->ret_mode = PST_RET_DECIDE;
+        work->psData->ret_sel = skillWork->cursorPos;
+        work->mainSeq = SMS_FADEOUT;
+        work->clwkExitButton = NULL;
+        PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+      }
+      else
+      {
+        //確認モードへ
+        GFL_CLACTPOS cellPos;
+        skillWork->isForgetConfirm = TRUE;
+        skillWork->changeTarget = skillWork->cursorPos;
+        PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 2 );
+        skillWork->cursorPos = 4;
+        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
 
-      PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
-      GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
-      GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
-      
-      PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
-      PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+        PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
+        GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
+        GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
+        
+        PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
+        PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+      }
     }
     else
     {
@@ -1649,24 +1676,39 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
           const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
           if( PPP_Get( ppp , ID_PARA_waza1+ret , NULL ) != 0 )
           {
-            //確認モードへ
-            GFL_CLACTPOS cellPos;
-            work->ktst = GFL_APP_END_TOUCH;
-            skillWork->isForgetConfirm = TRUE;
-            //一回カーソル位置を変えてから
-            PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
-            skillWork->changeTarget = ret;
-            PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[ret] , 2 );
-            skillWork->cursorPos = 4;
-            //ここでもう一回変える
-            PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+            if( work->psData->waza == 0 )
+            {
+              //選んで終了
+              work->retVal = SRT_RETURN;
+              work->psData->ret_mode = PST_RET_DECIDE;
+              work->psData->ret_sel = ret;
+              work->mainSeq = SMS_FADEOUT;
+              work->clwkExitButton = NULL;
+              PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+              PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
+              PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[ret] , 2 );
+            }
+            else
+            {
+              //確認モードへ
+              GFL_CLACTPOS cellPos;
+              work->ktst = GFL_APP_END_TOUCH;
+              skillWork->isForgetConfirm = TRUE;
+              //一回カーソル位置を変えてから
+              PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
+              skillWork->changeTarget = ret;
+              PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[ret] , 2 );
+              skillWork->cursorPos = 4;
+              //ここでもう一回変える
+              PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
 
-            PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
-            GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
-            GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
-            
-            PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
-            PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+              PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
+              GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
+              GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
+              
+              PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
+              PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+            }
           }
         }
         else

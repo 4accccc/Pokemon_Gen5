@@ -34,7 +34,7 @@ typedef struct {
   u8  page_flg; // ページフラグ
   u8  ret_sel;  // 選択された技位置
   u8  ret_mode;
-  u16 waza;
+  u16 waza;     //技追加時は技番号。0で選択モード
 
   u32       zukan_mode; // 図鑑ナンバー表示モード
 

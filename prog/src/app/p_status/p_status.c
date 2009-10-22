@@ -163,7 +163,7 @@ static GFL_PROC_RESULT PokeStatusProc_Init( GFL_PROC * proc, int * seq , void *p
       {
         psData->mode = PST_MODE_WAZAADD;
         psData->canExitButton = FALSE;
-        psData->waza = 10;
+        psData->waza = 0;
       }
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
       {

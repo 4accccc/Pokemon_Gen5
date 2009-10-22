@@ -18,19 +18,101 @@
 //----------------------------------------------------------------------
 //               スクリプトテーブル
 //----------------------------------------------------------------------
-_EVENT_DATA   ev_wasure_oyaji
+_EVENT_DATA   ev_waza_wasure_oyaji
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/* 育て屋じいさん                                             */
+/* 技忘れじいさん                                             */
 /**************************************************************/
-EVENT_START ev_wasure_oyaji
+EVENT_START ev_waza_wasure_oyaji
 { 
+	DEFINE_LOCAL select_pos	// 選択ポケモン
+	DEFINE_LOCAL waza_pos	// 選択技
+	DEFINE_LOCAL yn_ret	// はい・いいえ戻り値
+	DEFINE_LOCAL tf_ret	// チェック戻り値
+	DEFINE_LOCAL waza_num	// 技個数
+	DEFINE_LOCAL waza_id	// 技番号
+	DEFINE_LOCAL is_loop	// メイン処理監視
+	$is_loop = TRUE
+
+	_TALK_OBJ_START()
+
+	//えーと……わしは　だれ　じゃったっけっか？
 	_BALLOONWIN_TALKOBJ_OPEN( msg_wasure_01 )
-	_AB_KEYWAIT()     //キー待ち
+	_BALLOONWIN_CLOSE()
+	//おぬし　ポケモンの　わざをわすれさせに　きたのじゃな
+	_BALLOONWIN_TALKOBJ_OPEN( msg_wasure_02 )
+	_YES_NO_WIN( yn_ret )
 	_BALLOONWIN_CLOSE()
 
+	IF $yn_ret == 0 THEN //はい
+		
+		WHILE $is_loop == TRUE
+			//どの　ポケモンに　するのじゃ？
+			_BALLOONWIN_TALKOBJ_OPEN( msg_wasure_03 )
+			_BALLOONWIN_CLOSE()
+			
+			_SELECT_TEMOTI_POKE( tf_ret , select_pos , 0 )
+
+			IF $tf_ret == FALSE THEN
+				//わざを　わすれさせたく　なったら わしのことを　おもいだすのじゃぞ！
+				_BALLOONWIN_TALKOBJ_OPEN( msg_wasure_04 )
+				_AB_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+				$is_loop = FALSE
+			ELSE
+				_CHECK_TEMOTI_EGG( tf_ret , select_pos )
+				IF $tf_ret == TRUE THEN
+					//"なぬ？　それは　タマゴ　じゃからな なにも　わざを　おぼえておらんよ……▼"
+					_BALLOONWIN_TALKOBJ_OPEN( msg_wasure_06 )
+					_BALLOONWIN_CLOSE()
+				ELSE
+					_GET_TEMOTI_WAZA_NUM( waza_num , select_pos )
+					IF $waza_num < 2 THEN
+						//"なぬ？　そのポケモンは　ひとつしか わざを　おぼえておらんよ？▼"
+						_BALLOONWIN_TALKOBJ_OPEN( msg_wasure_05 )
+						_BALLOONWIN_CLOSE()
+					ELSE
+						//"ふむ……　そして どの　わざを　わすれさせるのじゃ？▼"
+						_BALLOONWIN_TALKOBJ_OPEN( msg_wasure_07 )
+						_BALLOONWIN_CLOSE()
+						
+						_SELECT_WAZA_TEMOTI_POKE( tf_ret , waza_pos , select_pos , 0 )
+						IF $tf_ret == TRUE THEN
+							_GET_TEMOTI_WAZA_ID( waza_id , select_pos , waza_pos )
+							_WAZA_NAME( 0 , waza_id )
+							//"[1:07:わざ名:0]をわすれさせて　よいのじゃな？"
+							_BALLOONWIN_TALKOBJ_OPEN( msg_wasure_08 )
+							_YES_NO_WIN( yn_ret )
+							_BALLOONWIN_CLOSE()
+							
+							IF $yn_ret == 0 THEN //はい
+								_GET_TEMOTI_WAZA_ID( waza_id , select_pos , waza_pos )
+								_WAZA_NAME( 0 , waza_id )
+								//"だいせいこう　じゃ！▼おぬしの　ポケモンは[1:07:わざ名:0]を　わすれおったぞ！"
+								_BALLOONWIN_TALKOBJ_OPEN( msg_wasure_09 )
+								_BALLOONWIN_CLOSE()
+								
+								_SET_TEMOTI_WAZA( select_pos , waza_pos , 0 )
+								$is_loop = FALSE
+							ENDIF
+						ENDIF
+						
+					ENDIF
+				ENDIF
+			ENDIF
+			
+		ENDWHILE
+	ELSE
+		//わざを　わすれさせたく　なったら わしのことを　おもいだすのじゃぞ！
+		_BALLOONWIN_TALKOBJ_OPEN( msg_wasure_04 )
+		_AB_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+
+	
 } 
 EVENT_END
 

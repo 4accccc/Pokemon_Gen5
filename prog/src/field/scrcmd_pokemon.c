@@ -37,6 +37,8 @@
 #include "savedata/sodateya_work.h"
 #include "sodateya.h" // for POKEMON_EGG_Birth
 
+#include "event_poke_status.h" // for EvCmdPartyPokeSelect
+
 #include "fieldmap.h" 
 
 
@@ -55,6 +57,8 @@ static int GetPokeCount_NOT_EGG( const POKEPARTY* party );
 static int GetPokeCount_BATTLE_ENABLE( const POKEPARTY* party );
 static int GetPokeCount_ONLY_EGG( const POKEPARTY* party );
 static int GetPokeCount_ONLY_DAME_EGG( const POKEPARTY* party );
+
+static GMEVENT_RESULT EVENT_FUNC_PokeSelect(GMEVENT * event, int * seq, void * work);
 
 //======================================================================
 //  ポケモン関連
@@ -687,3 +691,196 @@ extern VMCMD_RESULT EvCmdPartyPokeEggBirth( VMHANDLE *core, void *wk )
   } 
   return VMCMD_RESULT_CONTINUE;
 }
+
+
+//--------------------------------------------------------------
+/**
+ * ポケモンを選択する
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPartyPokeSelect( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16*         ret_decide = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第2引数
+  u16               value = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数(予備値)
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  
+  {
+    GMEVENT *event = EVENT_CreatePokeSelect( gsys , fieldmap , ret_decide , ret_wk );
+    SCRIPT_CallEvent( scw, event );
+  }
+  
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * 手持ちポケモンの技個数取得
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetPokemonWazaNum( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  u16                 pos = SCRCMD_GetVMWorkValue( core, work );       // コマンド第2引数
+
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
+  int          waza_count = 0;
+  
+  POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , pos );
+  for( i=0; i<PTL_WAZA_MAX; i++ )
+  {
+    const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+i , NULL );
+    if( wazaNo != 0 )
+    {
+      waza_count++;
+    }
+  }
+  *ret_wk = waza_count;
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 技を選択する
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPartyPokeWazaSelect( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16*         ret_decide = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第2引数
+  u16             pokePos = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数
+  u16               value = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数(予備値)
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  
+  {
+    GMEVENT *event = EVENT_CreateWazaSelect( gsys , fieldmap , pokePos , ret_decide , ret_wk );
+    SCRIPT_CallEvent( scw, event );
+  }
+  
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * 技IDの取得
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetPokemonWazaID( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  u16            poke_pos = SCRCMD_GetVMWorkValue( core, work );       // コマンド第2引数
+  u16            waza_pos = SCRCMD_GetVMWorkValue( core, work );       // コマンド第3引数
+
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
+  
+  const POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , poke_pos );
+  const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+waza_pos , NULL );
+  *ret_wk = wazaNo;
+  return VMCMD_RESULT_CONTINUE;
+  
+}
+
+
+//--------------------------------------------------------------
+/**
+ * 技の追加
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetPokemonWaza( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16            poke_pos = SCRCMD_GetVMWorkValue( core, work );       // コマンド第2引数
+  u16            waza_pos = SCRCMD_GetVMWorkValue( core, work );       // コマンド第3引数
+  u16             waza_id = SCRCMD_GetVMWorkValue( core, work );       // コマンド第3引数
+
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
+  
+  POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , poke_pos );
+  BOOL fastMode = PP_FastModeOn( pp );
+  if( waza_pos > PTL_WAZA_MAX )
+  {
+    //押し出しモード
+    PP_SetWazaPush( pp , waza_id );
+  }
+  else
+  if( waza_id == 0 )
+  {
+    //忘れモード
+    u8 i;
+    u8 forgetPos = waza_pos;
+    if( waza_pos < PTL_WAZA_MAX-1 )
+    {
+      //詰める
+      for( i=waza_pos ; i<PTL_WAZA_MAX-1 ; i++ )
+      {
+        const u32 temp_waza_no = PP_Get( pp , ID_PARA_waza1+i+1 , NULL );
+        forgetPos = i+1;
+        if( temp_waza_no != 0 )
+        {
+          const u32 temp_waza_cnt = PP_Get( pp , ID_PARA_pp_count1+i+1 , NULL );
+          const u32 temp_waza_pp = PP_Get( pp , ID_PARA_pp1+i+1 , NULL );
+          PP_Put( pp , ID_PARA_waza1+i , temp_waza_no );
+          PP_Put( pp , ID_PARA_pp_count1+i , temp_waza_cnt );
+          PP_Put( pp , ID_PARA_pp1+i , temp_waza_pp );
+        }
+        else
+        {
+          break;
+        }
+      }
+    }
+    PP_Put( pp , ID_PARA_waza1+forgetPos , 0 );
+  }
+  else
+  {
+    //置き換えモード
+    PP_SetWazaPos( pp , waza_id , waza_pos );
+    
+  }
+  PP_FastModeOff( pp , fastMode );
+  return VMCMD_RESULT_CONTINUE;
+  
+}
+
+

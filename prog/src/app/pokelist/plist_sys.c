@@ -1021,6 +1021,13 @@ static void PLIST_InitMode( PLIST_WORK *work )
     work->nextMainSeq = PSMS_SELECT_POKE;
     break;
 
+  case PL_MODE_SET:
+    work->canExit = FALSE;
+    //‘I‘ð‰æ–Ê‚Ö
+    PLIST_InitMode_Select( work );
+    work->nextMainSeq = PSMS_SELECT_POKE;
+    break;
+
   case PL_MODE_ITEMUSE:
     if( PLIST_ITEM_IsDeathRecoverAllItem( work , work->plData->item ) == TRUE )
     {
@@ -1170,6 +1177,12 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
     PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_07 );
     work->canExit = FALSE;
     break;
+  
+  case PL_MODE_SET:
+    PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
+    PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_01 );
+    work->canExit = FALSE;
+    break;
 
   default:
     GF_ASSERT_MSG( NULL , "PLIST mode ‚Ü‚¾ì‚Á‚Ä‚È‚¢I[%d]\n" , work->plData->mode );
@@ -1314,6 +1327,11 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
       break;
 
     }
+    break;
+  case PL_MODE_SET:
+    work->mainSeq = PSMS_FADEOUT;
+    work->plData->ret_sel = work->pokeCursor;
+    work->plData->ret_mode = PL_RET_NORMAL;
     break;
   
   default:

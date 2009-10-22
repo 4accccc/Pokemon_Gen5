@@ -463,12 +463,12 @@
   DEF_CMD( EvCmdPokemonRecover, EV_SEQ_POKEMON_RECOVER )
   DEF_CMD( EvCmdPartyPokeNameInput, EV_SEQ_PARTY_POKE_NAME_INPUT )
   DEF_CMD( EvCmdPartyPokeEggBirth, EV_SEQ_PARTY_POKE_EGG_BIRTH )
-  NO_CMD()
+  DEF_CMD( EvCmdPartyPokeSelect, EV_SEQ_PARTY_POKE_SELECT )
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdGetPokemonWazaNum, EV_SEQ_GET_TEMOTI_WAZA_NUM )
+  DEF_CMD( EvCmdPartyPokeWazaSelect, EV_SEQ_PARTY_POKE_WAZA_SELECT )
+  DEF_CMD( EvCmdGetPokemonWazaID, EV_SEQ_GET_TEMOTI_WAZA_ID )
+  DEF_CMD( EvCmdSetPokemonWaza, EV_SEQ_SET_TEMOTI_WAZA )
 
   // ボックス関連
   DEF_CMD( EvCmdGetBoxPokeCount, EV_SEQ_GET_BOX_POKE_COUNT )

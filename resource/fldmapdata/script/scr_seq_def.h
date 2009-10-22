@@ -2976,7 +2976,108 @@
   .byte   2
   .endm
 
-  //======================================================================
+//--------------------------------------------------------------
+/**
+ * @def _SELECT_TEMOTI_POKE
+ * @brief 汎用手持ちポケモン選択
+ * @param decide 選択結果の格納先 (TRUE：FALSE 選択したか)
+ * @param ret_wk 選択結果の格納先 (０～５ 選択位置)
+ * @param value  予備ワーク (０を入れておいてください
+ * @retval u16   選択結果
+ */
+//--------------------------------------------------------------
+#define _SELECT_TEMOTI_POKE( decide , ret_wk , value ) \
+    _ASM_SELECT_TEMOTI_POKE decide, ret_wk, value
+
+  .macro  _ASM_SELECT_TEMOTI_POKE decide, ret_wk, value
+  .short  EV_SEQ_PARTY_POKE_SELECT
+  .short  \decide
+  .short  \ret_wk
+  .short  \value
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_TEMOTI_WAZA_NUM
+ * @brief 手持ちポケモンの技個数取得
+ * @param ret_wk 選択結果の格納先 
+ * @param pos    対象の位置
+ * @retval u16   選択結果
+ */
+//--------------------------------------------------------------
+#define _GET_TEMOTI_WAZA_NUM( ret_wk, pos ) \
+    _ASM_GET_TEMOTI_WAZA_NUM ret_wk, pos
+
+  .macro  _ASM_GET_TEMOTI_WAZA_NUM ret_wk, pos
+  .short  EV_SEQ_GET_TEMOTI_WAZA_NUM
+  .short  \ret_wk
+  .short  \pos
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ * @def _SELECT_WAZA_TEMOTI_POKE
+ * @brief 汎用手持ちポケモンの技選択
+ * @param decide 選択結果の格納先 (TRUE：FALSE 選択したか)
+ * @param ret_wk 選択結果の格納先 (０～３ 選択位置)
+ * @param poke_pos ポケモンの位置
+ * @param value  予備ワーク (０を入れておいてください
+ * @retval u16   選択結果
+ */
+//--------------------------------------------------------------
+#define _SELECT_WAZA_TEMOTI_POKE( decide , ret_wk , poke_pos , value ) \
+    _ASM_SELECT_WAZA_TEMOTI_POKE decide, ret_wk, poke_pos, value
+
+  .macro  _ASM_SELECT_WAZA_TEMOTI_POKE decide, ret_wk, poke_pos, value
+  .short  EV_SEQ_PARTY_POKE_WAZA_SELECT
+  .short  \decide
+  .short  \ret_wk
+  .short  \poke_pos
+  .short  \value
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_TEMOTI_WAZA_ID
+ * @brief 汎用手持ちポケモンの技番号取得
+ * @param ret_wk 選択結果の格納先 (技ID)
+ * @param poke_pos ポケモンの位置
+ * @param waza_pos 技の位置
+ * @retval u16   選択結果
+ */
+//--------------------------------------------------------------
+#define _GET_TEMOTI_WAZA_ID( ret_wk , poke_pos , waza_pos ) \
+    _ASM_GET_TEMOTI_WAZA_ID ret_wk, poke_pos, waza_pos
+
+  .macro  _ASM_GET_TEMOTI_WAZA_ID ret_wk, poke_pos, waza_pos
+  .short  EV_SEQ_GET_TEMOTI_WAZA_ID
+  .short  \ret_wk
+  .short  \poke_pos
+  .short  \waza_pos
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _ADD_TEMOTI_WAZA
+ * @brief 手持ちポケモンの技セット(追加・置き換え・忘れ対応
+ * @param poke_pos ポケモンの位置
+ * @param waza_pos 技の位置(5で技を押し出し式で追加
+ * @param waza_id  技の番号(0で技を忘れる
+ * @retval u16   選択結果
+ */
+//--------------------------------------------------------------
+#define _SET_TEMOTI_WAZA( poke_pos , waza_pos , waza_id ) \
+    _ASM_SET_TEMOTI_WAZA poke_pos, waza_pos, waza_id 
+
+  .macro  _ASM_SET_TEMOTI_WAZA poke_pos, waza_pos, waza_id 
+  .short  EV_SEQ_SET_TEMOTI_WAZA
+  .short  \poke_pos
+  .short  \waza_pos
+  .short  \waza_id
+  .endm
+
+//======================================================================
 // お金
 //======================================================================
 //--------------------------------------------------------------
