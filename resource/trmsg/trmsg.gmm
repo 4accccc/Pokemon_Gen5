@@ -349,6 +349,24 @@
 ポケモン勝負の　始まりさ！▼</language>
 	</row>
 
+	<row id="TRID_TANPAN_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">なんだ！？
+きみ　つよすぎるぞ！？</language>
+		<language name="JPN_KANJI" width="216">なんだ！？
+きみ　強すぎるぞ！？</language>
+	</row>
+
+	<row id="TRID_TANPAN_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">くさむらに　はいって
+やせいポケモンと　しょうぶ！▼
+と　そのまえに　ポケモンセンターで
+ポケモンを　げんきに　しなきゃ</language>
+		<language name="JPN_KANJI" width="216">くさむらに　はいって
+やせいポケモンと　勝負！▼
+と　そのまえに　ポケモンセンターで
+ポケモンを　元気に　しなきゃ</language>
+	</row>
+
 	<row id="TRID_MINI_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">わたし　ポケモンしょうぶが
 だいすき　なの！▼
@@ -359,6 +377,22 @@
 さらに　かわいく　たたかうんだもん！</language>
 	</row>
 
+	<row id="TRID_MINI_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">まけても　わたしの　ポケモン
+かわいいんだもん……！</language>
+		<language name="JPN_KANJI" width="216">負けても　わたしの　ポケモン
+かわいいんだもん……！</language>
+	</row>
+
+	<row id="TRID_MINI_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">わたしね　いろんな　トレーナーと
+ポケモンしょうぶ　して▽
+ポケモンを　つよくするんだ！</language>
+		<language name="JPN_KANJI" width="216">わたしね　いろんな　トレーナーと
+ポケモン勝負　して▽
+ポケモンを　強くするんだ！</language>
+	</row>
+
 	<row id="TRID_TANPAN_04_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">おまえ！　どんな　ポケモンを
 もっているのか　みせてくれよ！▼</language>
@@ -366,14 +400,50 @@
 もっているのか　みせてくれよ！▼</language>
 	</row>
 
+	<row id="TRID_TANPAN_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">おまえの　ポケモン
+そんな　わざを　つかうんだ！？</language>
+		<language name="JPN_KANJI" width="216">おまえの　ポケモン
+そんな　わざを　つかうんだ！？</language>
+	</row>
+
+	<row id="TRID_TANPAN_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">いろんな　トレーナーが
+いろんな　ポケモンを　つかってくる▽
+それを　みるのも　おもしろいぜ！</language>
+		<language name="JPN_KANJI" width="216">いろんな　トレーナーが
+いろんな　ポケモンを　つかってくる▽
+それを　みるのも　おもしろいぜ！</language>
+	</row>
+
 	<row id="TRID_BREEDERM_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ　かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
 	</row>
 
+	<row id="TRID_BREEDERM_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_BREEDERM_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
+	</row>
+
 	<row id="TRID_BREEDERW_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ　かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BREEDERW_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_BREEDERW_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
 	</row>
 
 	<row id="TRID_CHILDCARE_01_TRMSG_FIGHT_START">
@@ -383,11 +453,62 @@
 みることなら　バッチリ　なの！▼</language>
 	</row>
 
+	<row id="TRID_CHILDCARE_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">あたしが　めんどう
+みられちゃいましたね</language>
+		<language name="JPN_KANJI" width="216">あたしが　めんどう
+みられちゃいましたね</language>
+	</row>
+
+	<row id="TRID_CHILDCARE_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">あいての　めを　みて　はなす
+そうして　きもちを　つたえあう……▽
+ひとも　ポケモンも　おなじですよ</language>
+		<language name="JPN_KANJI" width="216">あいての　めを　みて　はなす
+そうして　きもちを　つたえあう……▽
+ひとも　ポケモンも　おなじですよ</language>
+	</row>
+
 	<row id="TRID_FUTAGO_01_TRMSG_FIGHT_START_1">
 		<language name="JPN" width="216">あたしたち　ちからを　あわせて
 たたかうから　みててください！▼</language>
 		<language name="JPN_KANJI" width="216">あたしたち　ちからを　あわせて
 たたかうから　みててください！▼</language>
+	</row>
+
+	<row id="TRID_FUTAGO_01_TRMSG_FIGHT_LOSE_1">
+		<language name="JPN" width="216">わーん！　ポケモンさん
+もっと　がんばって！</language>
+		<language name="JPN_KANJI" width="216">わーん！　ポケモンさん
+もっと　がんばって！</language>
+	</row>
+
+	<row id="TRID_FUTAGO_01_TRMSG_FIGHT_AFTER_1">
+		<language name="JPN" width="216">とちゅうで　キズぐすり　とか
+つかえば　かててたのかな？</language>
+		<language name="JPN_KANJI" width="216">とちゅうで　キズぐすり　とか
+つかえば　かててたのかな？</language>
+	</row>
+
+	<row id="TRID_FUTAGO_01_TRMSG_FIGHT_START_2">
+		<language name="JPN" width="216">えーっとね……
+１たす　１は　２　だよね！▼</language>
+		<language name="JPN_KANJI" width="216">えーっとね……
+１たす　１は　２　だよね！▼</language>
+	</row>
+
+	<row id="TRID_FUTAGO_01_TRMSG_FIGHT_LOSE_2">
+		<language name="JPN" width="216">あれれ？　ポケモンさん
+げんき　なくなっちゃった……</language>
+		<language name="JPN_KANJI" width="216">あれれ？　ポケモンさん
+げんき　なくなっちゃった……</language>
+	</row>
+
+	<row id="TRID_FUTAGO_01_TRMSG_FIGHT_AFTER_2">
+		<language name="JPN" width="216">ダブルバトルは　１ひきが　たおれると
+かつの　むずかしいんだね</language>
+		<language name="JPN_KANJI" width="216">ダブルバトルは　１ひきが　たおれると
+かつの　むずかしいんだね</language>
 	</row>
 
 	<row id="TRID_KINDERGARTENM_01_TRMSG_FIGHT_START">
@@ -397,11 +518,43 @@
 ボクと　しょうぶしろ！！▼</language>
 	</row>
 
+	<row id="TRID_KINDERGARTENM_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">うわ！　たたかえる　げんきな
+ポケモン　いなくなった……</language>
+		<language name="JPN_KANJI" width="216">うわ！　たたかえる　げんきな
+ポケモン　いなくなった……</language>
+	</row>
+
+	<row id="TRID_KINDERGARTENM_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">くそー！　こどもあいてに
+ほんき　だしやがって！▽
+きらいじゃないぞ！　そーゆーの！</language>
+		<language name="JPN_KANJI" width="216">くそー！　こどもあいてに
+ほんき　だしやがって！▽
+きらいじゃないぞ！　そーゆーの！</language>
+	</row>
+
 	<row id="TRID_KINDERGARTENM_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">くらえっ！
 はかいこうせん！▼</language>
 		<language name="JPN_KANJI" width="216">くらえっ！
 はかいこうせん！▼</language>
+	</row>
+
+	<row id="TRID_KINDERGARTENM_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">あわわわ……！</language>
+		<language name="JPN_KANJI" width="216">あわわわ……！</language>
+	</row>
+
+	<row id="TRID_KINDERGARTENM_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">はかいこうせん？
+そんなの　まだ　つかえないよ▼
+ポケモンのこと　よくわからないから
+とにかく　つよい　わざ　つかいたい</language>
+		<language name="JPN_KANJI" width="216">はかいこうせん？
+そんなの　まだ　つかえないよ▼
+ポケモンのこと　よくわからないから
+とにかく　つよい　わざ　つかいたい</language>
 	</row>
 
 	<row id="TRID_KINDERGARTENW_01_TRMSG_FIGHT_START">
@@ -411,6 +564,22 @@
 あたしが　あいてを　してあげましゅね▼</language>
 	</row>
 
+	<row id="TRID_KINDERGARTENW_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ちょっと　トレーナーさん
+つよしゅぎましゅ！</language>
+		<language name="JPN_KANJI" width="216">ちょっと　トレーナーさん
+つよしゅぎましゅ！</language>
+	</row>
+
+	<row id="TRID_KINDERGARTENW_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">あたしね！　おおきくなったら
+トレーナーさんの　ように　つよくて▽
+しゅてきな　ひとに　なりたい</language>
+		<language name="JPN_KANJI" width="216">あたしね！　おおきくなったら
+トレーナーさんの　ように　つよくて▽
+しゅてきな　ひとに　なりたい</language>
+	</row>
+
 	<row id="TRID_SCHOOLB_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">トレーナーズスクールで
 まなんだ　ちしきを　つかうとき！▼</language>
@@ -418,11 +587,37 @@
 学んだ　知識を　つかうとき！▼</language>
 	</row>
 
+	<row id="TRID_SCHOOLB_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">むぎゅ！</language>
+		<language name="JPN_KANJI" width="216">むぎゅ！</language>
+	</row>
+
+	<row id="TRID_SCHOOLB_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">きみの　すごさに　あっとうされて
+まなんだ　ちしきを　わすれていたよ</language>
+		<language name="JPN_KANJI" width="216">君の　すごさに　圧倒されて
+学んだ　知識を　忘れていたよ</language>
+	</row>
+
 	<row id="TRID_SCHOOLB_03_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">いま　あたらしい　たたかいかたを
 かんがえていた　ところ　なんだ！▼</language>
 		<language name="JPN_KANJI" width="216">今　新しい　闘い方を
 考えていた　ところ　なんだ！▼</language>
+	</row>
+
+	<row id="TRID_SCHOOLB_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">どう　たたかうか
+まよっちゃった……</language>
+		<language name="JPN_KANJI" width="216">どう　闘うか
+まよっちゃった……</language>
+	</row>
+
+	<row id="TRID_SCHOOLB_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">いろんな　ちしきを　もっているけど
+しょうぶのとき　かえって　まようんだ</language>
+		<language name="JPN_KANJI" width="216">いろんな　知識を　持っているけど
+勝負のとき　かえって　迷うんだ</language>
 	</row>
 
 	<row id="TRID_SCHOOLG_01_TRMSG_FIGHT_START">
@@ -434,9 +629,33 @@
 力を　発揮できますわ▼</language>
 	</row>
 
+	<row id="TRID_SCHOOLG_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">まあ　くやしい！
+わたし　まけましたわ</language>
+		<language name="JPN_KANJI" width="216">まあ　くやしい！
+私　負けましたわ</language>
+	</row>
+
+	<row id="TRID_SCHOOLG_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">トレーナーの　ちからぶそくで
+まけると　ポケモンが　かわいそうね</language>
+		<language name="JPN_KANJI" width="216">トレーナーの　力不足で
+負けると　ポケモンが　かわいそうね</language>
+	</row>
+
 	<row id="TRID_BACKPACKERM_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ　かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_BACKPACKERM_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_BACKPACKERM_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_01_TRMSG_FIGHT_START">
@@ -450,6 +669,24 @@
 おしえて　あげる！▼</language>
 	</row>
 
+	<row id="TRID_BACKPACKERW_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">はじめての　しょうぶ……
+まけちゃった……</language>
+		<language name="JPN_KANJI" width="216">はじめての　しょうぶ……
+まけちゃった……</language>
+	</row>
+
+	<row id="TRID_BACKPACKERW_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">きみ　つよいね！▼
+わたし　じつは　きのう
+ヒウンシティから　たびだったばかり▽
+ポケモンも　はじめたばかりなの</language>
+		<language name="JPN_KANJI" width="216">きみ　つよいね！▼
+わたし　じつは　きのう
+ヒウンシティから　たびだったばかり▽
+ポケモンも　はじめたばかりなの</language>
+	</row>
+
 	<row id="TRID_BASKET_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ヘイ！　トレーナー！▼
 おれたちの　たかさのある　こうげき
@@ -459,6 +696,22 @@
 その体で　あじわいな！▼</language>
 	</row>
 
+	<row id="TRID_BASKET_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">そうだった……
+たたかうのは　ポケモンだった……</language>
+		<language name="JPN_KANJI" width="216">そうだった……
+闘うのは　ポケモンだった……</language>
+	</row>
+
+	<row id="TRID_BASKET_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">おれたちは　いつも　ここで
+ポケモンたちを　まじえて▽
+バスケットボールを　たのしんでるぜ！</language>
+		<language name="JPN_KANJI" width="216">おれたちは　いつも　ここで
+ポケモンたちを　交えて▽
+バスケットボールを　楽しんでるぜ！</language>
+	</row>
+
 	<row id="TRID_BASKET_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">わかものよ！　せいしゅんとは
 あせを　ながすことだろ！？▼</language>
@@ -466,14 +719,52 @@
 汗を　流すことだろ！？▼</language>
 	</row>
 
+	<row id="TRID_BASKET_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">さわやかな　あせ……
+ああ　スポーツマンで　よかった！</language>
+		<language name="JPN_KANJI" width="216">さわやかな　汗……
+ああ　スポーツマンで　よかった！</language>
+	</row>
+
+	<row id="TRID_BASKET_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">できれば　バスケットボール　サイズの
+モンスターボールを　もちあるきたいな▽
+だって　でかいほうが　なかの
+ポケモンも　いごこち　いいだろ！？</language>
+		<language name="JPN_KANJI" width="216">できれば　バスケットボール　サイズの
+モンスターボールを　持ち歩きたいな▽
+だって　でかいほうが　なかの
+ポケモンも　居心地　いいだろ！？</language>
+	</row>
+
 	<row id="TRID_FISHING_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ　かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
 	</row>
 
+	<row id="TRID_FISHING_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_FISHING_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
+	</row>
+
 	<row id="TRID_FISHING_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ　かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_FISHING_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_FISHING_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
 	</row>
 
 	<row id="TRID_WORKER2_01_TRMSG_FIGHT_START">
@@ -483,11 +774,43 @@
 トレーナー同士は　すぐ　勝負！▼</language>
 	</row>
 
+	<row id="TRID_WORKER2_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ガガガガガ……
+　ガガガガガ……　あなをほる……</language>
+		<language name="JPN_KANJI" width="216">ガガガガガ……
+　ガガガガガ……　あなをほる……</language>
+	</row>
+
+	<row id="TRID_WORKER2_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">ポケモンのわざ　あなをほる　は
+つかうと　いっしゅんで▽
+どうくつから　ぬけだせるんだ！</language>
+		<language name="JPN_KANJI" width="216">ポケモンのわざ　あなをほる　は
+つかうと　一瞬で▽
+洞窟から　ぬけだせるんだ！</language>
+	</row>
+
 	<row id="TRID_WORKER2_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ムキムキマッチョの　さぎょういん！
 じまんの　きんにくで　ぶっとばす！▼</language>
 		<language name="JPN_KANJI" width="216">ムキムキマッチョの　さぎょういん！
 自慢の　筋肉で　ぶっとばす！▼</language>
+	</row>
+
+	<row id="TRID_WORKER2_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">むう！
+ちょこざいな！</language>
+		<language name="JPN_KANJI" width="216">むう！
+ちょこざいな！</language>
+	</row>
+
+	<row id="TRID_WORKER2_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">まだ　こどもだと　おもって
+みくびっていたが……　いやはや▽
+きみは　りっぱな　トレーナーだな！</language>
+		<language name="JPN_KANJI" width="216">まだ　子供だと　思って
+見くびっていたが……　いやはや▽
+君は　立派な　トレーナーだな！</language>
 	</row>
 
 	<row id="TRID_WORKER2_03_TRMSG_FIGHT_START">
@@ -497,11 +820,43 @@
 工事も　勝負も　おてのもの▼</language>
 	</row>
 
+	<row id="TRID_WORKER2_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">おてのもの　でも　なかったかー！</language>
+		<language name="JPN_KANJI" width="216">おてのもの　でも　なかったかー！</language>
+	</row>
+
+	<row id="TRID_WORKER2_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">しょうぶには　まけたが
+こうじでは　ダレにも　まけないぞ！▼
+おまえにも　そういう
+ダレにも　まけないモノが　あるんだろ</language>
+		<language name="JPN_KANJI" width="216">勝負には　負けたが
+工事では　ダレにも　負けないぞ！▼
+おまえにも　そういう
+ダレにも　負けないモノが　あるんだろ</language>
+	</row>
+
 	<row id="TRID_WORKER2_04_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ちからしごとで　きたえた　おれたち！
 その　パワフルこうげき　うけてみろ！▼</language>
 		<language name="JPN_KANJI" width="216">力仕事で　鍛えた　おれたち！
 その　パワフル攻撃　受けてみろ！▼</language>
+	</row>
+
+	<row id="TRID_WORKER2_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ちからしごとで　きたえた　おれたち
+まけるときも　パワフル　だぜ！</language>
+		<language name="JPN_KANJI" width="216">力仕事で　鍛えた　おれたち！
+負けるときも　パワフル　だぜ！</language>
+	</row>
+
+	<row id="TRID_WORKER2_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">おっさん！　すきな　ポケモンと
+いつも　いっしょに　いられる▽
+しごとができて　しあわせ　なんだな！</language>
+		<language name="JPN_KANJI" width="216">おっさん！　好きな　ポケモンと
+いつも　一緒に　いられる▽
+仕事ができて　しあわせ　なんだな！</language>
 	</row>
 
 	<row id="TRID_ARTIST_01_TRMSG_FIGHT_START">
@@ -511,11 +866,41 @@
 ぼくの　さくひんに　してあげよう！▼</language>
 	</row>
 
+	<row id="TRID_ARTIST_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">えのぐの　しろを
+つかいきった　きぶんだ……</language>
+		<language name="JPN_KANJI" width="216">えのぐの　しろを
+つかいきった　きぶんだ……</language>
+	</row>
+
+	<row id="TRID_ARTIST_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">ぼくが　えがくのは
+もっとも　ポケモンが　かがやくとき！▽
+それが　ポケモンしょうぶ　なんだ！</language>
+		<language name="JPN_KANJI" width="216">ぼくが　えがくのは
+もっとも　ポケモンが　かがやくとき！▽
+それが　ポケモンしょうぶ　なんだ！</language>
+	</row>
+
 	<row id="TRID_BACKPACKERM_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">きのむくまま　かぜがふくまま
 しせんが　あうのも　うんめい　だよね▼</language>
 		<language name="JPN_KANJI" width="216">きのむくまま　かぜがふくまま
 しせんが　あうのも　うんめい　だよね▼</language>
+	</row>
+
+	<row id="TRID_BACKPACKERM_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">うぅっ
+むかいかぜ　か……</language>
+		<language name="JPN_KANJI" width="216">うぅっ
+むかいかぜ　か……</language>
+	</row>
+
+	<row id="TRID_BACKPACKERM_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">このまま　かぜにふかれて
+イッシュちほうを　とびまわりたい</language>
+		<language name="JPN_KANJI" width="216">このまま　かぜにふかれて
+イッシュちほうを　とびまわりたい</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_02_TRMSG_FIGHT_START">
@@ -525,11 +910,41 @@
 なにが　はいっていると　おもう？▼</language>
 	</row>
 
+	<row id="TRID_BACKPACKERW_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">まけたけれど　バッグの　なかみ
+また　ふえちゃった</language>
+		<language name="JPN_KANJI" width="216">まけたけれど　バッグの　なかみ
+また　ふえちゃった</language>
+	</row>
+
+	<row id="TRID_BACKPACKERW_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">バッグの　なかに　たくさん
+つめこんでいるのは　たびのおもいで▽
+あたしの　たからもの　なの！</language>
+		<language name="JPN_KANJI" width="216">バッグの　なかに　たくさん
+つめこんでいるのは　たびのおもいで▽
+あたしの　たからもの　なの！</language>
+	</row>
+
 	<row id="TRID_BAKER_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">よーし！　パンも　やけたし
 つぎは　あなたを　やいちゃうぞ▼</language>
 		<language name="JPN_KANJI" width="216">よーし！　パンも　やけたし
 つぎは　あなたを　やいちゃうぞ▼</language>
+	</row>
+
+	<row id="TRID_BAKER_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">あちちちち！
+わたしが　やかれちゃった</language>
+		<language name="JPN_KANJI" width="216">あちちちち！
+わたしが　やかれちゃった</language>
+	</row>
+
+	<row id="TRID_BAKER_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">できたてパンの　ふんわりした　におい
+あなたの　はなを　くすぐるでしょ！</language>
+		<language name="JPN_KANJI" width="216">できたてパンの　ふんわりした　におい
+あなたの　はなを　くすぐるでしょ！</language>
 	</row>
 
 	<row id="TRID_DANCER_01_TRMSG_FIGHT_START">
@@ -539,6 +954,22 @@
 クルっと　まわって　あなたの　ターン▼</language>
 	</row>
 
+	<row id="TRID_DANCER_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">クルクルクルクル……</language>
+		<language name="JPN_KANJI" width="216">クルクルクルクル……</language>
+	</row>
+
+	<row id="TRID_DANCER_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かろやかに　おどりながら
+しょうぶを　するのは　むずかしい▼
+だけど　ボクは　ダンサー！
+おどるのが　あたりまえ　なのさ！</language>
+		<language name="JPN_KANJI" width="216">かろやかに　おどりながら
+しょうぶを　するのは　むずかしい▼
+だけど　ボクは　ダンサー！
+おどるのが　あたりまえ　なのさ！</language>
+	</row>
+
 	<row id="TRID_JUGGLING_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">みせてやろう！　みせてやるぜ！
 オレとポケモンとで　きわめた　わざを▼</language>
@@ -546,11 +977,41 @@
 オレとポケモンとで　きわめた　わざを▼</language>
 	</row>
 
+	<row id="TRID_JUGGLING_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">みせられたぜ……
+おまえと　ポケモンの　わざ</language>
+		<language name="JPN_KANJI" width="216">みせられたぜ……
+おまえと　ポケモンの　わざ</language>
+	</row>
+
+	<row id="TRID_JUGGLING_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">ひとめぼれ　する　ぐらい
+きれいな　しょうぶって　あるよな？▼
+いまの　しょうぶが
+まさに　それ　だったぜ</language>
+		<language name="JPN_KANJI" width="216">ひとめぼれ　する　ぐらい
+きれいな　しょうぶって　あるよな？▼
+いまの　しょうぶが
+まさに　それ　だったぜ</language>
+	</row>
+
 	<row id="TRID_MUSICIAN_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ひびけっ！　おれの　メロディー！
 たたかえっ！　おれたちの　ポケモン！▼</language>
 		<language name="JPN_KANJI" width="216">ひびけっ！　おれの　メロディー！
 たたかえっ！　おれたちの　ポケモン！▼</language>
+	</row>
+
+	<row id="TRID_MUSICIAN_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ビョロビョビョーン……</language>
+		<language name="JPN_KANJI" width="216">ビョロビョビョーン……</language>
+	</row>
+
+	<row id="TRID_MUSICIAN_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かなしい　きぶんの　ときほど
+ごきげんな　きょくを　プレイするのさ</language>
+		<language name="JPN_KANJI" width="216">かなしい　きぶんの　ときほど
+ごきげんな　きょくを　プレイするのさ</language>
 	</row>
 
 	<row id="TRID_BOSS_02_TRMSG_FIGHT_LOSE">
@@ -577,11 +1038,39 @@
 第一歩を　ふみだしたぜ！！</language>
 	</row>
 
+	<row id="TRID_RIVAL_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">まだまだ！　やっと　ポケモンと
+たたかえるんだ！　おわらせるかよ！</language>
+		<language name="JPN_KANJI" width="216">まだまだ！　やっと　ポケモンと
+闘えるんだ！　終わらせるかよ！</language>
+	</row>
+
+	<row id="TRID_RIVAL_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……！
+これが　ポケモンしょうぶ　なんだ</language>
+		<language name="JPN_KANJI" width="216">……！
+これが　ポケモン勝負　なんだ</language>
+	</row>
+
 	<row id="TRID_RIVAL_02_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">いま！　オレたち！　トレーナーの
 だいいっぽを　ふみだしたぜ！！</language>
 		<language name="JPN_KANJI" width="216">いま！　オレたち！　トレーナーの
 第一歩を　ふみだしたぜ！！</language>
+	</row>
+
+	<row id="TRID_RIVAL_02_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">まだまだ！　やっと　ポケモンと
+たたかえるんだ！　おわらせるかよ！</language>
+		<language name="JPN_KANJI" width="216">まだまだ！　やっと　ポケモンと
+闘えるんだ！　終わらせるかよ！</language>
+	</row>
+
+	<row id="TRID_RIVAL_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……！
+これが　ポケモンしょうぶ　なんだ</language>
+		<language name="JPN_KANJI" width="216">……！
+これが　ポケモン勝負　なんだ</language>
 	</row>
 
 	<row id="TRID_RIVAL_03_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -591,11 +1080,39 @@
 第一歩を　ふみだしたぜ！！</language>
 	</row>
 
+	<row id="TRID_RIVAL_03_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">まだまだ！　やっと　ポケモンと
+たたかえるんだ！　おわらせるかよ！</language>
+		<language name="JPN_KANJI" width="216">まだまだ！　やっと　ポケモンと
+闘えるんだ！　終わらせるかよ！</language>
+	</row>
+
+	<row id="TRID_RIVAL_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……！
+これが　ポケモンしょうぶ　なんだ</language>
+		<language name="JPN_KANJI" width="216">……！
+これが　ポケモン勝負　なんだ</language>
+	</row>
+
 	<row id="TRID_SUPPORT_01_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">きゃっ！！　いったーい！！
 もう　まけないんだから！！</language>
 		<language name="JPN_KANJI" width="216">きゃっ！！　いったーい！！
 もう　負けないんだから！！</language>
+	</row>
+
+	<row id="TRID_SUPPORT_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">まだまだだよ　ポケモン！
+あたしと　いっしょに　がんばろ！！</language>
+		<language name="JPN_KANJI" width="216">まだまだだよ　ポケモン！
+あたしと　一緒に　がんばろ！！</language>
+	</row>
+
+	<row id="TRID_SUPPORT_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……どっちの　ポケモンも
+すごく　がんばったよね！！</language>
+		<language name="JPN_KANJI" width="216">……どっちの　ポケモンも
+すごく　がんばったよね！！</language>
 	</row>
 
 	<row id="TRID_SUPPORT_02_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -605,11 +1122,39 @@
 もう　負けないんだから！！</language>
 	</row>
 
+	<row id="TRID_SUPPORT_02_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">まだまだだよ　ポケモン！
+あたしと　いっしょに　がんばろ！！</language>
+		<language name="JPN_KANJI" width="216">まだまだだよ　ポケモン！
+あたしと　一緒に　がんばろ！！</language>
+	</row>
+
+	<row id="TRID_SUPPORT_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……どっちの　ポケモンも
+すごく　がんばったよね！！</language>
+		<language name="JPN_KANJI" width="216">……どっちの　ポケモンも
+すごく　がんばったよね！！</language>
+	</row>
+
 	<row id="TRID_SUPPORT_03_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">きゃっ！！　いったーい！！
 もう　まけないんだから！！</language>
 		<language name="JPN_KANJI" width="216">きゃっ！！　いったーい！！
 もう　負けないんだから！！</language>
+	</row>
+
+	<row id="TRID_SUPPORT_03_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">まだまだだよ　ポケモン！
+あたしと　いっしょに　がんばろ！！</language>
+		<language name="JPN_KANJI" width="216">まだまだだよ　ポケモン！
+あたしと　一緒に　がんばろ！！</language>
+	</row>
+
+	<row id="TRID_SUPPORT_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……どっちの　ポケモンも
+すごく　がんばったよね！！</language>
+		<language name="JPN_KANJI" width="216">……どっちの　ポケモンも
+すごく　がんばったよね！！</language>
 	</row>
 
 	<row id="TRID_BOSS_01_TRMSG_FIGHT_LOSE">
@@ -628,11 +1173,45 @@
 不思議と　騒ぎだす……▼</language>
 	</row>
 
+	<row id="TRID_ESPM_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……つよい！
+きみは　なにものだ！？</language>
+		<language name="JPN_KANJI" width="216">……強い！
+きみは　何者だ！？</language>
+	</row>
+
+	<row id="TRID_ESPM_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">この　いせきを　ちゅうしんに
+ながい　ねんげつを　かけて▽
+イッシュちほうに　ひとが　ふえたんだ</language>
+		<language name="JPN_KANJI" width="216">この　遺跡を　中心に
+長い年月を　かけて▽
+イッシュ地方に　人が　増えたんだ</language>
+	</row>
+
 	<row id="TRID_ESPW_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">この　ばしょに　いるだけで
 ふしぎな　ちからが　あふれてくる……▼</language>
 		<language name="JPN_KANJI" width="216">この　場所に　いるだけで
 不思議な　力が　あふれてくる……▼</language>
+	</row>
+
+	<row id="TRID_ESPW_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">きみにも　ふしぎな　ちからが
+みちているようね……</language>
+		<language name="JPN_KANJI" width="216">きみにも　不思議な　力が
+満ちているようね……</language>
+	</row>
+
+	<row id="TRID_ESPW_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">れきしのある　ばしょには
+ふしぎな　エネルギーが　のこる……▼
+わたしには　それが　わかるわ
+おおくの　かなしみに　よろこび……</language>
+		<language name="JPN_KANJI" width="216">歴史のある　場所には
+不思議な　エネルギーが　残る……▼
+わたしには　それが　わかるわ
+多くの　悲しみに　喜び……</language>
 	</row>
 
 	<row id="TRID_LEADER1A_01_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -642,9 +1221,37 @@
 オレの　ポケモンに！</language>
 	</row>
 
+	<row id="TRID_LEADER1A_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">えーっ！？　マジかよ！
+オレ　やばいじゃん！</language>
+		<language name="JPN_KANJI" width="216">えーっ！？　マジかよ！
+オレ　やばいじゃん！</language>
+	</row>
+
+	<row id="TRID_LEADER1A_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">うわーっ！　負けちゃったよ！？
+オマエ　めちゃくちゃ　スゴイじゃん！</language>
+		<language name="JPN_KANJI" width="216">うわーっ！　負けちゃったよ！？
+オマエ　めちゃくちゃ　スゴイじゃん！</language>
+	</row>
+
 	<row id="TRID_LEADER1B_01_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">そんなの　きくかよ！</language>
 		<language name="JPN_KANJI" width="216">そんなの　効くかよ！</language>
+	</row>
+
+	<row id="TRID_LEADER1B_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">まだまだ！
+ここから　きあいだぜ！</language>
+		<language name="JPN_KANJI" width="216">まだまだ！
+ここから　気合いだぜ！</language>
+	</row>
+
+	<row id="TRID_LEADER1B_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ぷすー！！
+いわゆる　もえつきた　じょうたいだ</language>
+		<language name="JPN_KANJI" width="216">ぷすー！！
+いわゆる　燃えつきた　状態だ</language>
 	</row>
 
 	<row id="TRID_LEADER1C_01_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -652,6 +1259,20 @@
 いい　こうげき　ですよね</language>
 		<language name="JPN_KANJI" width="216">なるほど！
 いい　攻撃　ですよね</language>
+	</row>
+
+	<row id="TRID_LEADER1C_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">すなおに　ピンチだと　みとめますが
+まだ　おわったわけでは　ありません</language>
+		<language name="JPN_KANJI" width="216">すなおに　ピンチだと　認めますが
+まだ　終わったわけでは　ありません</language>
+	</row>
+
+	<row id="TRID_LEADER1C_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">きみは……
+すばらしい　トレーナーですよね！</language>
+		<language name="JPN_KANJI" width="216">きみは……
+すばらしい　トレーナーですよね！</language>
 	</row>
 
 	<row id="TRID_WAITER_01_TRMSG_FIGHT_START">
@@ -665,6 +1286,22 @@
 味わって　いただきます▼</language>
 	</row>
 
+	<row id="TRID_WAITER_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">なんともまあ
+すばらしい　トレーナーさま　ですね！</language>
+		<language name="JPN_KANJI" width="216">なんともまあ
+素晴らしい　トレーナーさま　ですね！</language>
+	</row>
+
+	<row id="TRID_WAITER_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">タイプの　あいしょうを　きにせず
+つよく　きたえあげた　ポケモンで▽
+かちすすむのも　ありだと　おもいます</language>
+		<language name="JPN_KANJI" width="216">タイプの　相性を　気にせず
+強く　鍛えあげた　ポケモンで▽
+勝ち進むのも　ありだと　思います</language>
+	</row>
+
 	<row id="TRID_WAITRESS_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">サンヨウジム　じまんの
 トレーナー　フルコース！▽
@@ -674,11 +1311,41 @@
 ２人めは　わたくしで　ございます▼</language>
 	</row>
 
+	<row id="TRID_WAITRESS_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">わたくしとの　しょうぶ
+たのしんで　いただけましたか？</language>
+		<language name="JPN_KANJI" width="216">わたくしとの　勝負
+楽しんで　いただけましたか？</language>
+	</row>
+
+	<row id="TRID_WAITRESS_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">サンヨウジム　じまんの
+トレーナー　フルコース！▽
+さいごは　ジムリーダーです</language>
+		<language name="JPN_KANJI" width="216">サンヨウジム　自慢の
+トレーナー　フルコース！▽
+最後は　ジムリーダーです</language>
+	</row>
+
 	<row id="TRID_LEADER2_01_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">いまので　アンタの　つよさ
 じゅうぶんに　つたわってきたよ！</language>
 		<language name="JPN_KANJI" width="216">今ので　アンタの　強さ
 充分に　伝わってきたよ！</language>
+	</row>
+
+	<row id="TRID_LEADER2_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">こんな　じょうきょうでも
+かつ　しゅだんを　さぐるのさ！</language>
+		<language name="JPN_KANJI" width="216">こんな　状況でも
+勝つ　手段を　探るのさ！</language>
+	</row>
+
+	<row id="TRID_LEADER2_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">たいしたもんだよ
+アンタ　すごい　トレーナーだね！</language>
+		<language name="JPN_KANJI" width="216">たいしたもんだよ
+アンタ　すごい　トレーナーだね！</language>
 	</row>
 
 	<row id="TRID_SCHOOLB_04_TRMSG_FIGHT_START">
@@ -690,6 +1357,22 @@
 本の虫と　呼ばれた　ボク▼
 いっておきますが　強いですよ
 いろんなことを　知っていますから！</language>
+	</row>
+
+	<row id="TRID_SCHOOLB_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ほんのむし　といっても
+むしタイプの　ポケモンではないです</language>
+		<language name="JPN_KANJI" width="216">本の虫　といっても
+むしタイプの　ポケモンではないです</language>
+	</row>
+
+	<row id="TRID_SCHOOLB_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">おおくの　ほんを　よんでいけば
+みちが　きりひかれるんです▽
+このジムも　じんせいも！</language>
+		<language name="JPN_KANJI" width="216">多くの　本を　読んでいけば
+道が　切り開かれるんです▽
+このジムも　人生も！</language>
 	</row>
 
 	<row id="TRID_SCHOOLG_03_TRMSG_FIGHT_LOSE">
@@ -713,11 +1396,39 @@
 うおわ　スイッチ　はいったよ！！</language>
 	</row>
 
+	<row id="TRID_LEADER3_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">まさに　むしのいき……　だね
+いやいや　そんなことないよ！</language>
+		<language name="JPN_KANJI" width="216">まさに　むしのいき……　だね
+いやいや　そんなことないよ！</language>
+	</row>
+
+	<row id="TRID_LEADER3_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ぬうん……！？
+ひょっとして　おわり！？</language>
+		<language name="JPN_KANJI" width="216">ぬうん……！？
+ひょっとして　終わり！？</language>
+	</row>
+
 	<row id="TRID_LEADER4_01_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">アナタの　トレーナーとしての
 つよさ　つたわったわ……　ステキね</language>
 		<language name="JPN_KANJI" width="216">アナタの　トレーナーとしての
 強さ　伝わったわ……　ステキね</language>
+	</row>
+
+	<row id="TRID_LEADER4_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">ここから　アタシが　かてば
+すごく　もりあがるでしょ</language>
+		<language name="JPN_KANJI" width="216">ここから　アタシが　勝てば
+すごく　盛りあがるでしょ</language>
+	</row>
+
+	<row id="TRID_LEADER4_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">クラクラさせる　つもりが
+アナタに　しびれさせられたのね</language>
+		<language name="JPN_KANJI" width="216">クラクラさせる　つもりが
+アナタに　しびれさせられたのね</language>
 	</row>
 
 	<row id="TRID_PRINCE_01_TRMSG_FIGHT_LOSE">
@@ -738,6 +1449,26 @@
 ボクが　お相手　しよう！▼</language>
 	</row>
 
+	<row id="TRID_PRINCE_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ジェジェジェジェジェジェッ！
+ジェット　コースター！</language>
+		<language name="JPN_KANJI" width="216">ジェジェジェジェジェジェッ！
+ジェット　コースター！</language>
+	</row>
+
+	<row id="TRID_PRINCE_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">コースターのように　スピードあふれる
+たたかいかたを　めざしたが……▼
+だって　そうだろ？
+あいてより　はやく　うごければ▽
+ダメージをうけずに　かてるかも　だ！</language>
+		<language name="JPN_KANJI" width="216">コースターのように　スピードあふれる
+闘い方を　目指したが……▼
+だって　そうだろ？
+あいてより　早く　動ければ▽
+ダメージを受けずに　勝てるかも　だ！</language>
+	</row>
+
 	<row id="TRID_PRINCESS_01_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">まけたけれど　かんがえれば
 あたくし　まだ　つよくなれるのね……</language>
@@ -752,9 +1483,41 @@
 どことなく　カノコタウンっぽいね▼</language>
 	</row>
 
+	<row id="TRID_PRINCESS_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ファッションでは
+まさっていたはず　なのに……！？</language>
+		<language name="JPN_KANJI" width="216">ファッションでは
+勝っていたはず　なのに……！？</language>
+	</row>
+
+	<row id="TRID_PRINCESS_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">きらびやかな　ライモンの
+きらびやかな　ジムを　たばねる▽
+きらびやかすぎる　カミツレさん▽
+キミも　ファンに　なってほしいな！</language>
+		<language name="JPN_KANJI" width="216">きらびやかな　ライモンの
+きらびやかな　ジムを　束ねる▽
+きらびやかすぎる　カミツレさん▽
+キミも　ファンに　なってほしいな！</language>
+	</row>
+
 	<row id="TRID_LEADER5_01_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">……そうきたか</language>
 		<language name="JPN_KANJI" width="216">……そうきたか</language>
+	</row>
+
+	<row id="TRID_LEADER5_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">もう　おわり……　となげくか
+まだこれから！　とふんばるかだよな</language>
+		<language name="JPN_KANJI" width="216">もう　おわり……　と嘆くか
+まだこれから！　と踏ん張るかだよな</language>
+	</row>
+
+	<row id="TRID_LEADER5_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">まいったね……　いっておくが
+おれさま　てかげんは　してねえぞ</language>
+		<language name="JPN_KANJI" width="216">まいったね……　いっておくが
+おれさま　手加減は　してねえぞ</language>
 	</row>
 
 	<row id="TRID_LEADER6_01_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -762,6 +1525,20 @@
 アハ！　なんだか　こうふんしてきた！</language>
 		<language name="JPN_KANJI" width="216">ヒュー！　手強い　人だね
 アハ！　なんだか　興奮してきた！</language>
+	</row>
+
+	<row id="TRID_LEADER6_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
+		<language name="JPN" width="216">つぎに　くりだすのは
+とっておきの　わざ　なんだよ！</language>
+		<language name="JPN_KANJI" width="216">次に　繰りだすのは
+とっておきの　わざ　なんだよ！</language>
+	</row>
+
+	<row id="TRID_LEADER6_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">アナタと　たたかえたことで
+アタシ　つよくなれたよ！　ありがと！</language>
+		<language name="JPN_KANJI" width="216">アナタと　闘えたことで
+アタシ　強くなれたよ！　ありがと！</language>
 	</row>
 
 	<row id="TRID_PILOT_01_TRMSG_FIGHT_START">
@@ -773,6 +1550,22 @@
 半端なく　強い！　かかってきな！▼</language>
 	</row>
 
+	<row id="TRID_PILOT_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……ゆっくり　こうどが　さがる
+ちゃくりく　じゅんびを　します</language>
+		<language name="JPN_KANJI" width="216">……ゆっくり　高度が　下がる
+着陸　準備を　します</language>
+	</row>
+
+	<row id="TRID_PILOT_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">あこがれだった　パイロットになり
+ゆめが　げんじつに　かわる……▽
+その　おもみも　ここちいいもの　さ</language>
+		<language name="JPN_KANJI" width="216">あこがれだった　パイロットになり
+夢が　現実に　変わる……▽
+その重みも　心地よいもの　さ</language>
+	</row>
+
 	<row id="TRID_PILOT_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ねらいは　さだまった！▼
 わたしの　フライトテクニックで
@@ -780,6 +1573,24 @@
 		<language name="JPN_KANJI" width="216">ねらいは　定まった！▼
 わたしの　フライトテクニックで
 きみを　撃墜　してみせるさ！▼</language>
+	</row>
+
+	<row id="TRID_PILOT_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">なんと！？
+ねらいが　はずれてしまった</language>
+		<language name="JPN_KANJI" width="216">なんと！？
+ねらいが　はずれてしまった</language>
+	</row>
+
+	<row id="TRID_PILOT_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かならず　あたる　わざは
+ここいちばんで　たよりになる▼
+たとえば　つばめがえしや
+スピードスターが　そうだな！</language>
+		<language name="JPN_KANJI" width="216">かならず　当たる　わざは
+ここ一番で　頼りになる▼
+たとえば　つばめがえしや
+スピードスターが　そうだな！</language>
 	</row>
 
 	<row id="TRID_WORKER1_05_TRMSG_FIGHT_START">
@@ -795,6 +1606,20 @@
 ポケモンの　気持ちを　味わえ！▼</language>
 	</row>
 
+	<row id="TRID_WORKER1_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ふっとんだー！！</language>
+		<language name="JPN_KANJI" width="216">ふっとんだー！！</language>
+	</row>
+
+	<row id="TRID_WORKER1_05_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">ポケモンの　きもちを　かんがえ
+たたかうことで　より　つよくなる！▽
+しょうりが　ちかくなるんだ！</language>
+		<language name="JPN_KANJI" width="216">ポケモンの　気持ちを　考え
+闘うことで　より　強くなる！▽
+勝利が　近くなるんだ！</language>
+	</row>
+
 	<row id="TRID_WORKER1_06_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">おなじ　じかんを　すごすことで
 おたがい　なにを　かんがえているか▼
@@ -806,6 +1631,22 @@
 わたしの　ポケモン　なんです！▼</language>
 	</row>
 
+	<row id="TRID_WORKER1_06_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">たたかいの　さなか……
+あなたたちの　きずなが　みえた！？</language>
+		<language name="JPN_KANJI" width="216">闘いの　最中……
+あなたたちの　きずなが　みえた！？</language>
+	</row>
+
+	<row id="TRID_WORKER1_06_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">あなたと　あなたの　ポケモンも
+おなじ　じかんを　すごし▽
+きずなを　つよく　しているのですね</language>
+		<language name="JPN_KANJI" width="216">あなたと　あなたの　ポケモンも
+同じ　時間を　過ごし▽
+きずなを　強く　しているのですね</language>
+	</row>
+
 	<row id="TRID_WORKER1_07_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">なぜ　にもつを　ポケモンではなく
 かもつ　ひこうきに　はこばせるか▽
@@ -815,11 +1656,43 @@
 オレに　勝てたら　教えてやろう！▼</language>
 	</row>
 
+	<row id="TRID_WORKER1_07_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">あっぱれ！　おぬしは
+イッシュで　いちばん　かもな！</language>
+		<language name="JPN_KANJI" width="216">あっぱれ！　おぬしは
+イッシュで　一番　かもな！</language>
+	</row>
+
+	<row id="TRID_WORKER1_07_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">かもつ　ひこうきを　つかって
+たくさんの　にもつを　はこぶ！▽
+どうだ！　ポケモンに　やさしいだろ</language>
+		<language name="JPN_KANJI" width="216">貨物飛行機を　使って
+たくさんの　荷物を　運ぶ！▽
+どうだ！　ポケモンに　優しいだろ</language>
+	</row>
+
 	<row id="TRID_WORKER1_08_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">チェックは　パーフェクト！
 まける　ようそ　なんて　ない！▼</language>
 		<language name="JPN_KANJI" width="216">チェックは　パーフェクト！
 負ける　要素　なんて　ない！▼</language>
+	</row>
+
+	<row id="TRID_WORKER1_08_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">まさか！　たたかいかたに
+チェックもれが　あったのか！？</language>
+		<language name="JPN_KANJI" width="216">まさか！　闘いかたに
+チェック漏れが　あったのか！？</language>
+	</row>
+
+	<row id="TRID_WORKER1_08_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">チェックのあとに　また　チェック！▼
+だいじょうぶ！　という
+ゆだんが　じこのもと　なんだ！</language>
+		<language name="JPN_KANJI" width="216">チェックのあとに　また　チェック！▼
+大丈夫！　という
+油断が　事故のもと　なんだ！</language>
 	</row>
 
 	<row id="TRID_MINI_02_TRMSG_FIGHT_START">
@@ -833,6 +1706,20 @@
 ポケモン　鍛えましょ！▼</language>
 	</row>
 
+	<row id="TRID_MINI_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">すっごーい！　アナタ
+トレーナーの　さいのう　あるよ！</language>
+		<language name="JPN_KANJI" width="216">すっごーい！　アナタ
+トレーナーの　才能　あるよ！</language>
+	</row>
+
+	<row id="TRID_MINI_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">ジムリーダーにも　かちたいけれど
+アナタにも　かちたくなっちゃった！</language>
+		<language name="JPN_KANJI" width="216">ジムリーダーにも　勝ちたいけれど
+アナタにも　勝ちたくなっちゃった！</language>
+	</row>
+
 	<row id="TRID_TANPAN_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ジムリーダーに　かつのが
 オレの　もくひょう！▽
@@ -840,6 +1727,22 @@
 		<language name="JPN_KANJI" width="216">ジムリーダーに　勝つのが
 オレの　目標！▽
 そんな　オレに　勝てるのか！？▼</language>
+	</row>
+
+	<row id="TRID_TANPAN_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">まけたけど　がんばったよな
+オレの　ポケモン！</language>
+		<language name="JPN_KANJI" width="216">負けたけど　がんばったよな
+オレの　ポケモン！</language>
+	</row>
+
+	<row id="TRID_TANPAN_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">オレには　もくひょうが　ある！
+ポケモンが　いてくれる！▽
+だから　どこまでも　がんばれる！</language>
+		<language name="JPN_KANJI" width="216">オレには　目標が　ある！
+ポケモンが　いてくれる！▽
+だから　どこまでも　がんばれる！</language>
 	</row>
 
 	<row id="TRID_FOOTBALL_01_TRMSG_FIGHT_START">
@@ -851,6 +1754,18 @@
 ハット！　ハット！　ハット！▼</language>
 	</row>
 
+	<row id="TRID_FOOTBALL_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">さくせんしっぱい……！</language>
+		<language name="JPN_KANJI" width="216">さくせんしっぱい……！</language>
+	</row>
+
+	<row id="TRID_FOOTBALL_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">ポケモンどうしの　れんけいぶそくか
+オレじしんの　れんしゅうぶそく　か</language>
+		<language name="JPN_KANJI" width="216">ポケモンどうしの　れんけいぶそくか
+オレじしんの　れんしゅうぶそく　か</language>
+	</row>
+
 	<row id="TRID_TENNIS_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">テニスプレイヤーが
 どんな　ポケモンを　つかうか▽
@@ -858,6 +1773,20 @@
 		<language name="JPN_KANJI" width="216">テニスプレイヤーが
 どんな　ポケモンを　つかうか▽
 よそうが　つくかしら？▼</language>
+	</row>
+
+	<row id="TRID_TENNIS_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">あたしの　まけで　ゲームセット
+これは　よそうがい　ね……</language>
+		<language name="JPN_KANJI" width="216">あたしの　まけで　ゲームセット
+これは　よそうがい　ね……</language>
+	</row>
+
+	<row id="TRID_TENNIS_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">もっと　きびしい　コースを
+せめれば　よかったわ……</language>
+		<language name="JPN_KANJI" width="216">もっと　きびしい　コースを
+せめれば　よかったわ……</language>
 	</row>
 
 	<row id="TRID_TENNIS_02_TRMSG_FIGHT_START">
@@ -869,11 +1798,62 @@
 よそうが　つくかしら？▼</language>
 	</row>
 
+	<row id="TRID_TENNIS_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">あたしの　まけで　ゲームセット
+これは　よそうがい　ね……</language>
+		<language name="JPN_KANJI" width="216">あたしの　まけで　ゲームセット
+これは　よそうがい　ね……</language>
+	</row>
+
+	<row id="TRID_TENNIS_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">もっと　きびしい　コースを
+せめれば　よかったわ……</language>
+		<language name="JPN_KANJI" width="216">もっと　きびしい　コースを
+せめれば　よかったわ……</language>
+	</row>
+
 	<row id="TRID_FUTAGO_02_TRMSG_FIGHT_START_1">
 		<language name="JPN" width="216">ワンツー　ワンツー！
 いきをあわせて　ワンツーパンチ！▼</language>
 		<language name="JPN_KANJI" width="216">ワンツー　ワンツー！
 いきをあわせて　ワンツーパンチ！▼</language>
+	</row>
+
+	<row id="TRID_FUTAGO_02_TRMSG_FIGHT_LOSE_1">
+		<language name="JPN" width="216">ふたり　いきを　あわせて
+エーーーーーーーーっ！！</language>
+		<language name="JPN_KANJI" width="216">ふたり　いきを　あわせて
+エーーーーーーーーっ！！</language>
+	</row>
+
+	<row id="TRID_FUTAGO_02_TRMSG_FIGHT_AFTER_1">
+		<language name="JPN" width="216">２ひきの　ポケモンが　やることを
+わかっていたら　もっと　すごいのにね</language>
+		<language name="JPN_KANJI" width="216">２ひきの　ポケモンが　やることを
+わかっていたら　もっと　すごいのにね</language>
+	</row>
+
+	<row id="TRID_FUTAGO_02_TRMSG_FIGHT_START_2">
+		<language name="JPN" width="216">だれかと　しょうぶ　するまえに
+どうするか　うちあわせ　してるの▼</language>
+		<language name="JPN_KANJI" width="216">だれかと　しょうぶ　するまえに
+どうするか　うちあわせ　してるの▼</language>
+	</row>
+
+	<row id="TRID_FUTAGO_02_TRMSG_FIGHT_LOSE_2">
+		<language name="JPN" width="216">ふたり　いきを　あわせて
+エーーーーーーーーっ！！</language>
+		<language name="JPN_KANJI" width="216">ふたり　いきを　あわせて
+エーーーーーーーーっ！！</language>
+	</row>
+
+	<row id="TRID_FUTAGO_02_TRMSG_FIGHT_AFTER_2">
+		<language name="JPN" width="216">あたしが　きいたこと　あるのは
+みかたがね　うかんでいるときに▽
+じしんを　つかうと　いいんだって！</language>
+		<language name="JPN_KANJI" width="216">あたしが　おしえて　もらったのは
+みかたがね　うかんでいるときに▽
+じしんを　つかうと　いいんだって！</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_03_TRMSG_FIGHT_LOSE">
@@ -895,9 +1875,29 @@
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
 	</row>
 
+	<row id="TRID_MINI_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_MINI_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
+	</row>
+
 	<row id="TRID_RANGERM_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ　かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_RANGERM_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_RANGERM_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
 	</row>
 
 	<row id="TRID_RANGERM_02_TRMSG_FIGHT_START">
@@ -909,9 +1909,35 @@
 それが　ポケモンレンジャーだ！！▼</language>
 	</row>
 
+	<row id="TRID_RANGERM_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">おれの　やせいを　かんじたか？</language>
+		<language name="JPN_KANJI" width="216">おれの　やせいを　かんじたか？</language>
+	</row>
+
+	<row id="TRID_RANGERM_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">やせいに　とけこみすぎると
+ひとは　もちろん▽
+ポケモンにも　きづいてもらえない▽
+そこは　もんだい　なのだ</language>
+		<language name="JPN_KANJI" width="216">やせいに　とけこみすぎると
+ひとは　もちろん▽
+ポケモンにも　きづいてもらえない▽
+そこは　もんだい　なのだ</language>
+	</row>
+
 	<row id="TRID_RANGERW_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ　かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_RANGERW_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_RANGERW_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
 	</row>
 
 	<row id="TRID_RANGERW_02_TRMSG_FIGHT_START">
@@ -919,9 +1945,29 @@
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
 	</row>
 
+	<row id="TRID_RANGERW_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_RANGERW_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
+	</row>
+
 	<row id="TRID_SCHOOLB_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ　かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_SCHOOLB_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_SCHOOLB_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
 	</row>
 
 	<row id="TRID_SCHOOLG_02_TRMSG_FIGHT_START">
@@ -929,9 +1975,29 @@
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
 	</row>
 
+	<row id="TRID_SCHOOLG_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_SCHOOLG_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
+	</row>
+
 	<row id="TRID_TANPAN_03_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ　かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_TANPAN_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_TANPAN_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
 	</row>
 
 	<row id="TRID_WORKER1_01_TRMSG_FIGHT_START">
@@ -939,9 +2005,29 @@
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
 	</row>
 
+	<row id="TRID_WORKER1_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_WORKER1_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
+	</row>
+
 	<row id="TRID_WORKER1_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ　かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_WORKER1_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_WORKER1_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
 	</row>
 
 	<row id="TRID_WORKER1_03_TRMSG_FIGHT_START">
@@ -949,9 +2035,29 @@
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
 	</row>
 
+	<row id="TRID_WORKER1_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_WORKER1_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
+	</row>
+
 	<row id="TRID_WORKER1_04_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ　かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">戦闘前仮メッセージ▼</language>
+	</row>
+
+	<row id="TRID_WORKER1_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご　メッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後メッセージ</language>
+	</row>
+
+	<row id="TRID_WORKER1_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご　かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後仮メッセージ</language>
 	</row>
 
 	<flowchart-group-list>
