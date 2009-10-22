@@ -4298,6 +4298,11 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	NAMEIN_WORK	*p_wk = p_param;
 	STRBUF *p_src_str;
 
+	//一端キャンセルフラグをOFF
+	p_wk->p_param->cancel	= FALSE;
+
+
+
 	p_src_str	= GFL_STR_CreateCopyBuffer( p_wk->p_param->strbuf, HEAPID_NAME_INPUT );
 
 	//今回の文字列を返す
