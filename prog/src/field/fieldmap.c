@@ -1137,12 +1137,12 @@ BOOL FIELDMAP_SetPlayerItemCycle( FIELDMAP_WORK *fieldWork )
     
     if( form == PLAYER_MOVE_FORM_CYCLE )
     {
-      FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_NORMAL );
+      FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_REQBIT_NORMAL );
       return( TRUE );
     }
     else if( form == PLAYER_MOVE_FORM_NORMAL )
     {
-      FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_CYCLE );
+      FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_REQBIT_CYCLE );
       return( TRUE );
     }
   }

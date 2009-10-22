@@ -587,8 +587,13 @@ PLAYER_MOVE_FORM FIELD_PLAYER_GetOBJCodeToMoveForm( int sex, u16 code )
   GF_ASSERT( sex < 2 ); //PM_FEMALE
   for( ; i < PLAYER_DRAW_FORM_MAX; i++,tbl++ ){
     if( tbl->code == code ){
-      GF_ASSERT( tbl->move_form != PLAYER_MOVE_FORM_MAX );
-      return(tbl->move_form);
+      if( tbl->move_form != PLAYER_MOVE_FORM_MAX ){
+        return(tbl->move_form);
+      }
+      //PLAYER_MOVE_FORMが当てはまらないコードに対して
+      //この関数が呼ばれている(本来ありえない
+       GF_ASSERT( tbl->move_form != PLAYER_MOVE_FORM_MAX );
+       break;
     }
   }
   GF_ASSERT( 0 );
@@ -757,6 +762,40 @@ void FIELD_PLAYER_ChangeMoveForm(
 
 //--------------------------------------------------------------
 /**
+ * 自機の現在の動作状態で再セット
+ * @param fld_player FIELD_PLAYER
+ * @param form PLAYER_MOVE_FORM
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_ResetMoveForm( FIELD_PLAYER *fld_player )
+{
+  PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( fld_player );
+  FIELD_PLAYER_ChangeMoveForm( fld_player, form );
+}
+
+//--------------------------------------------------------------
+/**
+ * PLAYER_DRAW_FORMから自機のOBJコードのみ変更
+ * @param fld_player FIELD_PLAYER
+ * @param form PLAYER_MOVE_FORM
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_ChangeDrawForm(
+    FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM form )
+{
+  int sex = FIELD_PLAYER_GetSex( fld_player );
+  MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+  u16 code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, form );
+  
+  if( MMDL_GetOBJCode(mmdl) != code ){
+    MMDL_ChangeOBJCode( mmdl, code );
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * 自機波乗りアトリビュートチェック
  * @param fld_player
  * @param nattr
@@ -811,11 +850,17 @@ static const OBJCODE_FORM dataOBJCodeForm[2][PLAYER_DRAW_FORM_MAX] =
     {HERO,PLAYER_MOVE_FORM_NORMAL},
     {CYCLEHERO,PLAYER_MOVE_FORM_CYCLE},
     {SWIMHERO,PLAYER_MOVE_FORM_SWIM},
+    {GETHERO,PLAYER_MOVE_FORM_MAX},
+    {REPORTHERO,PLAYER_MOVE_FORM_MAX},
+    {PCHERO,PLAYER_MOVE_FORM_MAX},
   },
   { //女主人公
     {HEROINE,PLAYER_MOVE_FORM_NORMAL},
     {CYCLEHEROINE,PLAYER_MOVE_FORM_CYCLE},
     {SWIMHEROINE,PLAYER_MOVE_FORM_SWIM},
+    {GETHEROINE,PLAYER_MOVE_FORM_MAX},
+    {REPORTHEROINE,PLAYER_MOVE_FORM_MAX},
+    {PCHEROINE,PLAYER_MOVE_FORM_MAX},
   },
 };
 

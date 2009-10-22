@@ -14,6 +14,7 @@
 //======================================================================
 //	define
 //======================================================================
+#if 0 //FIELD_PLAYER‚ÖˆÚ“®
 //--------------------------------------------------------------
 /// FIELD_PLAYER_GRID_REQBIT
 //--------------------------------------------------------------
@@ -28,6 +29,7 @@ typedef enum
 }FIELD_PLAYER_GRID_REQBIT;
 
 #define FIELD_PLAYER_GRID_REQBIT_MAX (3)
+#endif
 
 //======================================================================
 //	struct
@@ -49,7 +51,7 @@ extern PLAYER_MOVE_VALUE FIELD_PLAYER_GRID_GetMoveValue(
     FIELD_PLAYER_GRID *gjiki, u16 dir );
 
 extern void FIELD_PLAYER_GRID_SetRequest(
-  FIELD_PLAYER_GRID *gjiki, FIELD_PLAYER_GRID_REQBIT req_bit );
+  FIELD_PLAYER_GRID *gjiki, u32 req_bit );
 extern void FIELD_PLAYER_GRID_UpdateRequest( FIELD_PLAYER_GRID *gjiki );
 
 extern BOOL FIELD_PLAYER_GRID_CheckStartMove(

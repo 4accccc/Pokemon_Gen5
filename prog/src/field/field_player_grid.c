@@ -99,7 +99,7 @@ struct _TAG_FIELD_PLAYER_GRID
   int move_state;
   
   FIELD_PLAYER_GRID_MOVEBIT move_bit;
-  FIELD_PLAYER_GRID_REQBIT req_bit;
+  FIELD_PLAYER_REQBIT req_bit;
   
   FIELD_PLAYER *fld_player;
   FIELDMAP_WORK *fieldWork;
@@ -250,7 +250,7 @@ static void gjikiSwim_SetMove_Hitch(
 
 //リクエスト
 static void (* const data_gjikiRequestProcTbl[
-    FIELD_PLAYER_GRID_REQBIT_MAX])( FIELD_PLAYER_GRID *gjiki );
+    FIELD_PLAYER_REQBIT_MAX])( FIELD_PLAYER_GRID *gjiki );
 
 //ヒットチェック
 static u32 gjiki_HitCheckMove(
@@ -306,7 +306,7 @@ FIELD_PLAYER_GRID * FIELD_PLAYER_GRID_Init(
     switch( form ){
     case PLAYER_MOVE_FORM_SWIM:
       FIELD_PLAYER_GRID_SetRequest(
-          gjiki, FIELD_PLAYER_GRID_REQBIT_SWIM );
+          gjiki, FIELD_PLAYER_REQBIT_SWIM );
       FIELD_PLAYER_GRID_UpdateRequest( gjiki );
       break;
     }
@@ -853,7 +853,6 @@ static PLAYER_SET gjikiCycle_CheckMoveStart_Stop(
       return( gjikiCycle_CheckMoveStart_Walk(
         gjiki,mmdl,key_trg,key_cont,dir,debug_flag) );
     }
-    
     return( PLAYER_SET_STOP );
   }
   
@@ -1910,12 +1909,12 @@ static void gjiki_PlayBGM( FIELD_PLAYER_GRID *gjiki )
 /**
  * 自機リクエスト 
  * @param gjiki FIELD_PLAYER_GRID
- * @param reqbit FIELD_PLAYER_GRID_REQBIT
+ * @param reqbit FIELD_PLAYER_REQBIT
  * @retval nothing
  */
 //--------------------------------------------------------------
 void FIELD_PLAYER_GRID_SetRequest(
-  FIELD_PLAYER_GRID *gjiki, FIELD_PLAYER_GRID_REQBIT req_bit )
+  FIELD_PLAYER_GRID *gjiki, FIELD_PLAYER_REQBIT req_bit )
 {
   gjiki->req_bit = req_bit;
 }
@@ -1930,9 +1929,9 @@ void FIELD_PLAYER_GRID_SetRequest(
 void FIELD_PLAYER_GRID_UpdateRequest( FIELD_PLAYER_GRID *gjiki )
 {
   int i = 0;
-  FIELD_PLAYER_GRID_REQBIT req_bit = gjiki->req_bit;
+  FIELD_PLAYER_REQBIT req_bit = gjiki->req_bit;
   
-  while( i < FIELD_PLAYER_GRID_REQBIT_MAX ){
+  while( i < FIELD_PLAYER_REQBIT_MAX ){
     if( (req_bit&0x01) ){
       data_gjikiRequestProcTbl[i]( gjiki );
     }
@@ -2032,13 +2031,65 @@ static void gjikiReq_SetSwim( FIELD_PLAYER_GRID *gjiki )
 }
 
 //--------------------------------------------------------------
+/**
+ * 自機リクエスト処理　動作形態にあわせた表示にする
+ * @param gjiki FIELD_PLAYER_GRID
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void gjikiReq_SetMoveFormToDrawForm( FIELD_PLAYER_GRID *gjiki )
+{
+  FIELD_PLAYER_ResetMoveForm( gjiki->fld_player );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト処理　アイテムゲット自機に変更
+ * @param gjiki FIELD_PLYER
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void gjikiReq_SetItemGetHero( FIELD_PLAYER_GRID *gjiki )
+{
+  FIELD_PLAYER_ChangeDrawForm( gjiki->fld_player, PLAYER_DRAW_FORM_ITEMGET );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト処理　PC預け自機に変更
+ * @param gjiki FIELD_PLYER
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void gjikiReq_SetReportHero( FIELD_PLAYER_GRID *gjiki )
+{
+  FIELD_PLAYER_ChangeDrawForm( gjiki->fld_player, PLAYER_DRAW_FORM_SAVEHERO );
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト処理　PC預け自機に変更
+ * @param gjiki FIELD_PLYER
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void gjikiReq_SetPCAzukeHero( FIELD_PLAYER_GRID *gjiki )
+{
+  FIELD_PLAYER_ChangeDrawForm( gjiki->fld_player, PLAYER_DRAW_FORM_PCHERO );
+}
+
+//--------------------------------------------------------------
 /// 自機リクエスト処理テーブル
 //--------------------------------------------------------------
-static void (* const data_gjikiRequestProcTbl[FIELD_PLAYER_GRID_REQBIT_MAX])( FIELD_PLAYER_GRID *gjiki ) =
+static void (* const data_gjikiRequestProcTbl[FIELD_PLAYER_REQBIT_MAX])( FIELD_PLAYER_GRID *gjiki ) =
 {
-  gjikiReq_SetNormal, //FIELD_PLAYER_GRID_REQBIT_NORMAL
-  gjikiReq_SetCycle, //FIELD_PLAYER_GRID_REQBIT_CYCLE
-  gjikiReq_SetSwim, //FIELD_PLAYER_GRID_REQBIT_SWIM
+  gjikiReq_SetNormal, //FIELD_PLAYER_REQBIT_NORMAL
+  gjikiReq_SetCycle, //FIELD_PLAYER_REQBIT_CYCLE
+  gjikiReq_SetSwim, //FIELD_PLAYER_REQBIT_SWIM
+  gjikiReq_SetMoveFormToDrawForm,
+  gjikiReq_SetItemGetHero,
+  gjikiReq_SetReportHero,
+  gjikiReq_SetPCAzukeHero,
 };
 
 //======================================================================

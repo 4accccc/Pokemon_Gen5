@@ -16,6 +16,8 @@
 #include "field_g3d_mapper.h"
 #include "map_attr.h"
 
+#include "field_player_code.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -61,6 +63,9 @@ typedef enum
   PLAYER_DRAW_FORM_NORMAL = 0, ///<自機二足歩行
   PLAYER_DRAW_FORM_CYCLE, ///<自機自転車移動
   PLAYER_DRAW_FORM_SWIM, ///<自機波乗り移動
+  PLAYER_DRAW_FORM_ITEMGET, ///<自機アイテムゲット
+  PLAYER_DRAW_FORM_SAVEHERO, ///<自機セーブ
+  PLAYER_DRAW_FORM_PCHERO, ///<自機PC預け
   PLAYER_DRAW_FORM_MAX,
 }PLAYER_DRAW_FORM;
 
@@ -79,6 +84,8 @@ typedef enum
 //======================================================================
 ///FIELD_PLAYER
 typedef struct _FIELD_PLAYER FIELD_PLAYER;
+///FIELD_PLAYER_REQBIT
+typedef u32 FIELD_PLAYER_REQBIT;
 
 //======================================================================
 //	extern
@@ -140,6 +147,9 @@ extern void FIELD_PLAYER_GetFrontGridPos(
 extern BOOL FIELD_PLAYER_CheckLiveMMdl( const FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_ChangeMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form );
+extern void FIELD_PLAYER_ResetMoveForm( FIELD_PLAYER *fld_player );
+extern void FIELD_PLAYER_ChangeDrawForm(
+    FIELD_PLAYER *fld_player, PLAYER_DRAW_FORM form );
 extern BOOL FIELD_PLAYER_CheckAttrNaminori(
     FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr );
 

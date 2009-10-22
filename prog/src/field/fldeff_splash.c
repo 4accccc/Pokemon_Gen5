@@ -126,6 +126,7 @@ static void splash_InitResource( FLDEFF_SPLASH *splash )
   
   splash->g3d_res_mdl	=
     GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_shibuki_nsbmd );
+  
   GFL_G3D_TransVramTexture( splash->g3d_res_mdl );
 
   splash->g3d_res_anm	=
@@ -195,14 +196,17 @@ static void splashTask_Init( FLDEFF_TASK *task, void *wk )
     GFL_G3D_RENDER_Create(
         work->head.eff_splash->g3d_res_mdl, 0,
         work->head.eff_splash->g3d_res_mdl );
+  
   work->obj_anm =
     GFL_G3D_ANIME_Create(
         work->obj_rnd, work->head.eff_splash->g3d_res_anm, 0 );
+  
   work->obj = GFL_G3D_OBJECT_Create(
       work->obj_rnd, &work->obj_anm, 1 );
   GFL_G3D_OBJECT_EnableAnime( work->obj, 0 );
   
-  FLDEFF_TASK_CallUpdate( task ); //即反映
+//即反映すると親がjointフラグがセットされていない状態。
+//  FLDEFF_TASK_CallUpdate( task );
 }
 
 //--------------------------------------------------------------
@@ -245,7 +249,7 @@ static void splashTask_Update( FLDEFF_TASK *task, void *wk )
     }
   }
   
-  if( GFL_G3D_OBJECT_IncAnimeFrame(work->obj,0,FX32_ONE) == FALSE ){
+  if( GFL_G3D_OBJECT_LoopAnimeFrame(work->obj,0,FX32_ONE) == FALSE ){
     if( work->head.joint == FALSE ){
       FLDEFF_TASK_CallDelete( task );
       return;

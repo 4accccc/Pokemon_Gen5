@@ -1918,7 +1918,7 @@ static GMEVENT_RESULT event_NaminoriEnd(
   case 1: //”gæ‚èƒ|ƒPƒ‚ƒ“Ø‚è—£‚µ
     task = FIELD_PLAYER_GRID_GetEffectTaskWork( gjiki );
     FLDEFF_NAMIPOKE_SetJointFlag( task, FALSE );
-    FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_GRID_REQBIT_NORMAL );
+    FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_REQBIT_NORMAL );
     FIELD_PLAYER_GRID_UpdateRequest( gjiki );
     {
       u16 ac = MMDL_ChangeDirAcmdCode( work->dir, AC_JUMP_U_1G_8F );
