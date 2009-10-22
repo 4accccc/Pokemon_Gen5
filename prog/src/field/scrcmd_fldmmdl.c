@@ -24,6 +24,8 @@
 #include "eventdata_local.h"
 #include "field/eventdata_sxy.h"
 
+#include "fieldmap_ctrl_grid.h"
+#include "field_player_grid.h"
 
 //======================================================================
 //  ツール関数
@@ -679,6 +681,36 @@ VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//======================================================================
+//  自機
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 自機リクエスト
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPlayerRequest( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fldparam = SCRIPT_GetFieldParam( sc );
+  u16 req = VMGetU16( core );
+  FIELDMAP_WORK *fieldmap = fldparam->fieldMap;
+  
+  if( FIELDMAP_GetMapControlType(fieldmap) == FLDMAP_CTRLTYPE_GRID ){
+    FIELDMAP_CTRL_GRID *gridmap = FIELDMAP_GetMapCtrlWork( fieldmap );
+    FIELD_PLAYER_GRID *gjiki =
+      FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridmap );
+    FIELD_PLAYER_GRID_SetRequest( gjiki, req );
+    FIELD_PLAYER_GRID_UpdateRequest( gjiki );
+  }else{
+    GF_ASSERT( 0 && "ERROR: GRID PLAYER REQ" );
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //======================================================================
 //

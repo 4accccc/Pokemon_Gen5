@@ -267,9 +267,11 @@
 //--------------------------------------------------------------
 ///	フィールド動作モデル 自機万歳専用描画ステータス
 //--------------------------------------------------------------
+#if 0 //wb null
 #define DRAW_STA_BANZAI 	0x00
 #define DRAW_STA_BANZAI_UKE	0x01
 #define DRAW_STA_MAX_BANZAI (DRAW_STA_BANZAI_UKE+1)
+#endif
 
 //======================================================================
 //	フィールド動作モデル アニメーションコマンドコード
@@ -465,8 +467,9 @@
 #define AC_RAIL_STAY_WALK_D_2F		0xb7 ///<下向きにその場歩き　2フレーム レール専用
 #define AC_RAIL_STAY_WALK_L_2F		0xb8 ///<左向きにその場歩き　2フレーム レール専用
 #define AC_RAIL_STAY_WALK_R_2F		0xb9 ///<右向きにその場歩き　2フレーム レール専用
+#define AC_HERO_ITEMGET     0xba ///<自機アイテムゲットアニメ
 
-#define ACMD_MAX				0xba ///<アニメーションコマンド最大数
+#define ACMD_MAX				0xbb ///<アニメーションコマンド最大数
 #define ACMD_END				0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT				0xff ///<非アニメーションコマンド
 

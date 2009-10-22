@@ -1306,6 +1306,8 @@ int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_RailStayWalkD_2F_Tbl,           // AC_RAIL_STAY_WALK_D_2F	
   DATA_AC_RailStayWalkL_2F_Tbl,           // AC_RAIL_STAY_WALK_L_2F	
   DATA_AC_RailStayWalkR_2F_Tbl,           // AC_RAIL_STAY_WALK_R_2F	
+  
+  DATA_AC_HeroItemGet_Tbl,              // AC_HERO_ITEMGET
 };
 
 //==============================================================================

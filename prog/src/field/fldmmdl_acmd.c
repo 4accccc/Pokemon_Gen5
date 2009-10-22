@@ -2778,6 +2778,8 @@ static int AC_PcBow_0( MMDL * mmdl )
 	AC_PC_BOW_WORK *work = MMDL_InitMoveCmdWork( mmdl, AC_PC_BOW_WORK_SIZE );
 #ifdef MMDL_PL_NULL
 	MMDL_SetDrawStatus( mmdl, DRAW_STA_PC_BOW );
+#else
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
 #endif
 	MMDL_IncAcmdSeq( mmdl );
 	
@@ -2894,10 +2896,45 @@ static int AC_HidePullOFF_1( MMDL * mmdl )
 //--------------------------------------------------------------
 typedef struct
 {
-	u32 frame;
-}AC_HERO_BANZAI_WORK;
+	u16 frame;
+  u16 frame_max;
+}AC_HERO_ANM_WORK;
 
-#define AC_HERO_BANZAI_WORK_SIZE (sizeof(AC_HERO_BANZAI_WORK))
+#define AC_HERO_ANM_WORK_SIZE (sizeof(AC_HERO_ANM_WORK))
+
+//--------------------------------------------------------------
+/**
+ * AC_HERO_ANM_WORK　初期化
+ * @param mmdl  MMDL*
+ * @param d_st 描画ステータス
+ * @param frame アニメフレーム
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void AC_InitHeroWaitAnmWork( MMDL *mmdl, u16 d_st, u16 frame )
+{
+	AC_HERO_ANM_WORK *work;
+  work = MMDL_InitMoveCmdWork( mmdl, AC_HERO_ANM_WORK_SIZE );
+  work->frame_max = frame;
+	MMDL_SetDrawStatus( mmdl, d_st);
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_HERO_ANM_WORK系　アニメフレーム待ち
+ * @param mmdl  MMDL*
+ * @retval  int TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_HeroWaitAnmFrame_1( MMDL *mmdl )
+{
+	AC_HERO_ANM_WORK *work = MMDL_GetMoveCmdWork( mmdl );
+  work->frame++;
+  if( work->frame >= work->frame_max ){
+	  MMDL_IncAcmdSeq( mmdl );
+  }
+  return( FALSE );
+}
 
 //--------------------------------------------------------------
 /**
@@ -2908,8 +2945,7 @@ typedef struct
 //--------------------------------------------------------------
 static int AC_HeroBanzai_0( MMDL * mmdl )
 {
-	AC_HERO_BANZAI_WORK *work = MMDL_InitMoveCmdWork( mmdl, AC_HERO_BANZAI_WORK_SIZE );
-	MMDL_SetDrawStatus( mmdl, DRAW_STA_BANZAI );
+  AC_InitHeroWaitAnmWork( mmdl, DRAW_STA_PCAZUKE_ANM0, 21 );
 	MMDL_IncAcmdSeq( mmdl );
 	return( FALSE );
 }
@@ -2923,33 +2959,23 @@ static int AC_HeroBanzai_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_HeroBanzaiUke_0( MMDL * mmdl )
 {
-	AC_HERO_BANZAI_WORK *work = MMDL_InitMoveCmdWork( mmdl, AC_HERO_BANZAI_WORK_SIZE );
-	MMDL_SetDrawStatus( mmdl, DRAW_STA_BANZAI_UKE );
+  AC_InitHeroWaitAnmWork( mmdl, DRAW_STA_PCAZUKE_ANM1, 21 );
 	MMDL_IncAcmdSeq( mmdl );
-	
 	return( FALSE );
 }
 
 //--------------------------------------------------------------
 /**
- * AC_HERO_BANZAI 1
+ * AC_HERO_ITEM_GET 0
  * @param	mmdl	MMDL *
- * @retval	int		TRUE=再帰
+ * @retval	int		TRUE=再起
  */
 //--------------------------------------------------------------
-static int AC_HeroBanzai_1( MMDL * mmdl )
+static int AC_HeroItemGet_0( MMDL * mmdl )
 {
-	AC_HERO_BANZAI_WORK *work = MMDL_GetMoveCmdWork( mmdl );
-	
-	work->frame++;
- 	
-	if( work->frame < (21) ){
-		return( FALSE );
-	}
-	
-//	MMDL_SetDrawStatus( mmdl, DRAW_STA_BANZAI_STOP );
+  AC_InitHeroWaitAnmWork( mmdl, DRAW_STA_PCAZUKE_ANM0, 2 );
 	MMDL_IncAcmdSeq( mmdl );
-	return( TRUE );
+	return( FALSE );
 }
 
 //======================================================================
@@ -4887,17 +4913,17 @@ int (* const DATA_AC_HidePullOFF_Tbl[])( MMDL * ) =
 int (* const DATA_AC_HeroBanzai_Tbl[])( MMDL * ) =
 {
 	AC_HeroBanzai_0,
-	AC_HeroBanzai_1,
+	AC_HeroWaitAnmFrame_1,
 	AC_End,
 };
 
 //--------------------------------------------------------------
-///	AC_HERO_BANZAI
+///	AC_HERO_BANZAI_UKE
 //--------------------------------------------------------------
 int (* const DATA_AC_HeroBanzaiUke_Tbl[])( MMDL * ) =
 {
 	AC_HeroBanzaiUke_0,
-	AC_HeroBanzai_1,
+	AC_HeroWaitAnmFrame_1,
 	AC_End,
 };
 
@@ -5387,6 +5413,16 @@ int (* const DATA_AC_MarkGyoeTWait_Tbl[])( MMDL * ) =
 {
 	AC_MarkGyoeTWait_0,
 	AC_Mark_1,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_HERO_ITEMGET
+//--------------------------------------------------------------
+int (* const DATA_AC_HeroItemGet_Tbl[])( MMDL * ) =
+{
+	AC_HeroItemGet_0,
+	AC_HeroWaitAnmFrame_1,
 	AC_End,
 };
 
