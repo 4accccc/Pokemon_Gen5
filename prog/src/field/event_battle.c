@@ -484,6 +484,7 @@ static BOOL BEW_IsLoseResult(BATTLE_EVENT_WORK * bew)
 //--------------------------------------------------------------
 static void BEW_reflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata)
 {
+  GAMEDATA_SetLastBattleResult( gamedata, bew->battle_param->result );
   //前作では貯金への反映、サファリボールカウントの反映、
   //いったん取っておいたPokeParamの反映などを行っていた
 }
