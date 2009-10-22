@@ -5,6 +5,6 @@
 #define _POKE_WAZA_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_WASURE_OYAJI (1)
+#define SCRID_WASURE_OYAJI (2260)
 
 #endif //_POKE_WAZA_DEF_H_
