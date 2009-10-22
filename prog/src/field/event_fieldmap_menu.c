@@ -983,7 +983,6 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
   switch( pBag->next_proc )
   {
   case BAG_NEXTPROC_EXIT:      //CGEARもどり
-  case BAG_NEXTPROC_SELL:     //ショップもどり
     FieldMap_SetExitSequence(mwk);
     return FALSE;
   case BAG_NEXTPROC_RETURN:      // めにゅーもどり

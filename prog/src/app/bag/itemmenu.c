@@ -748,7 +748,6 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       _CHANGE_STATE(pWork,NULL);
     }
     else if(BAG_MENU_URU==pWork->ret_code2){
-      pWork->ret_code = BAG_NEXTPROC_SELL;  //‚¤‚é
       _CHANGE_STATE(pWork,NULL);
     }
     else{
