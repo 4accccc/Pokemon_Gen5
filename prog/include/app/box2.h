@@ -15,7 +15,6 @@
 #include "poke_tool/pokeparty.h"
 #include "savedata/config.h"
 #include "box_mode.h"
-#include "gamesystem/gamesystem.h"	  // GAMESYS_WORK
 /*
 #include "savedata/savedata_def.h"
 //#include "system/procsys.h"
