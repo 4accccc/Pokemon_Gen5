@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-10-21T10:42:46"/>
+	<create user="iwasawa" host="W00157" date="2009-10-22T18:43:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="526"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="680"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -302,221 +302,28 @@
 	<row id="msg_shop_02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">その　ほかに　わたしどもで
 なにか　おちからに　なれることは？</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">その他に　私どもで
+何かお力に　なれる事は？</language>
 	</row>
 
 	<row id="msg_shop_03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">また　どうぞ！</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">また　どうぞ！</language>
 	</row>
 
 	<row id="msg_shop_menu01_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">かいに　きた</language>
-		<language name="JPN_KANJI" width="256">かいに　きた</language>
+		<language name="JPN_KANJI" width="256">買いにきた</language>
 	</row>
 
 	<row id="msg_shop_menu01_02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">うりに　きた</language>
-		<language name="JPN_KANJI" width="256">うりに　きた</language>
+		<language name="JPN_KANJI" width="256">売りにきた</language>
 	</row>
 
 	<row id="msg_shop_menu01_03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">なんでもないです</language>
 		<language name="JPN_KANJI" width="256">なんでもないです</language>
-	</row>
-
-	<row id="msg_wifi_club_01_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<comment>受付カウンターに話しかけたときのメッセージ
-
-・ＷｉーＦｉクラブへ　いく
-　仮ID、かつ登録が０ならば
-　→msg_wifi_club_01_05
-　本ID、かつ登録が０ならば
-　→msg_wifi_club_01_06
-　それ以外
-　→レポート確認
-　　はい　→レポート処理後、msg_wifi_club_01_04
-　　いいえ→msg_wifi_club_01_02
-・せつめいを　きく
-　→msg_wifi_club_01_07
-・やめる
-　→msg_wifi_club_01_02</comment>
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ポケモン　ＷｉーＦｉ　クラブ　へ
-ようこそ！▼
-ＷｉーＦｉコネクションを
-ごりよう　ですか？</language>
-		<language name="JPN_KANJI" width="256">ポケモン　ＷｉーＦｉ　クラブ　へ
-ようこそ！▼
-ＷｉーＦｉコネクションを
-ごりよう　ですか？</language>
-	</row>
-
-	<row id="msg_wifi_club_01_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>フィールドへもどる</comment>
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">それでは　また　おこしください</language>
-		<language name="JPN_KANJI" width="256">それでは　また　おこしください</language>
-	</row>
-
-	<row id="msg_wifi_club_01_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>Wi-Fi接続をするかどうかの確認メッセージ
-
-「はい」
-→レポートを書くかどうかの質問
-レポート書くかどうかの質問に、「いいえ」と
-答えた場合は、msg_wifi_club_01_02へ
-レポートを書いたあとは、msg_wifi_club_01_04へ
-「いいえ」
-→msg_wifi_club_01_02</comment>
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ＷｉーＦｉ　せつぞくを
-かいし　しますか？</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉ　せつぞくを
-かいし　しますか？</language>
-	</row>
-
-	<row id="msg_wifi_club_01_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>主人公がゲートを通って奥へ。
-受付の二人が、主人公のほうを向いて
-見送るような演出。
-扉の奥に入ったら、ブラックアウトして
-Wi-Fi P2P接続画面へ</comment>
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">それでは　こちらへ　どうぞ！▼</language>
-		<language name="JPN_KANJI" width="256">それでは　こちらへ　どうぞ！▼</language>
-	</row>
-
-	<row id="msg_wifi_club_01_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>・仮ＩＤで、ともだちてちょうに友達の登録がない場合
-の受付メッセージ
-メッセージ後、はい・いいえの選択
-「はい」
-　→レポート書くかどうか質問。
-　　レポートを書かない場合は msg_wifi_club_01_02へ
-　　レポートを書いたあとは、msg_wifi_club_01_04へ
-「いいえ」ならmsg_wifi_club_01_02</comment>
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">……あら？▼
-おきゃくさまは
-まだ　ともだちてちょうに▽
-おともだちを　とうろく　してませんね▼
-ＷｉーＦｉクラブは
-ともだちてちょうに▽
-おともだちを　とうろく　していないと▽
-ごりよう　できません▼
-おきゃくさまの　ともだちコードだけ
-うけとりますか？[2:00:１桁:0]</language>
-		<language name="JPN_KANJI" width="256">……あら？▼
-おきゃくさまは
-まだ　ともだちてちょうに▽
-おともだちを　とうろく　してませんね▼
-ＷｉーＦｉクラブは
-ともだちてちょうに▽
-おともだちを　とうろく　していないと▽
-ごりよう　できません▼
-おきゃくさまの　ともだちコードだけ
-うけとりますか？[2:00:１桁:0]</language>
-	</row>
-
-	<row id="msg_wifi_club_01_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>・本ＩＤで、ともだちてちょうに友達の登録がない場合
-の受付メッセージ
-フィールドへもどる</comment>
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">……あら？▼
-おきゃくさまは
-まだ　ともだちてちょうに▽
-おともだちを　とうろく　してませんね▼
-ＷｉーＦｉクラブは
-ともだちてちょうに▽
-おともだちを　とうろく　していないと▽
-ごりよう　できません▼
-おともだちを　とうろく　してから
-おこしください</language>
-		<language name="JPN_KANJI" width="256">……あら？▼
-おきゃくさまは
-まだ　ともだちてちょうに▽
-おともだちを　とうろく　してませんね▼
-ＷｉーＦｉクラブは
-ともだちてちょうに▽
-おともだちを　とうろく　していないと▽
-ごりよう　できません▼
-おともだちを　とうろく　してから
-おこしください</language>
-	</row>
-
-	<row id="msg_wifi_club_01_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>msg_wifi_club_01_01での選択肢の
-「せつめいを　きく」選択時</comment>
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ＷｉーＦｉクラブ　では
-ともだちてちょうに　とうろくした▽
-ひと　どうしで　ポケモンこうかんや▽
-つうしんたいせんを　たのしめます▼
-ここでの　つうしんたいせんは
-シングルと　ダブルの　２しゅるいで▼
-それぞれに　「フリー」「レベル５０」
-「レベル１００」を　えらべます▼
-「レベル５０」や「レベル１００」では
-さんかした　ポケモン　すべてが▽
-そのレベルに　そろえられます▼
-ＷｉーＦｉコネクションを
-ごりよう　ですか？</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉクラブ　では
-ともだちてちょうに　とうろくした▽
-ひと　どうしで　ポケモンこうかんや▽
-つうしんたいせんを　たのしめます▼
-ここでの　つうしんたいせんは
-シングルと　ダブルの　２しゅるいで▼
-それぞれに　「フリー」「レベル５０」
-「レベル１００」を　えらべます▼
-「レベル５０」や「レベル１００」では
-さんかした　ポケモン　すべてが▽
-そのレベルに　そろえられます▼
-ＷｉーＦｉコネクションを
-ごりよう　ですか？</language>
-	</row>
-
-	<row id="msg_wifi_club_01_err01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<comment>エラーメッセージ
-C-Gear入手前</comment>
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ただいま　じゅうびちゅう　です！
-また　あとで　おこしください</language>
-		<language name="JPN_KANJI" width="256">ただいま　じゅうびちゅう　です！
-また　あとで　おこしください</language>
-	</row>
-
-	<row id="msg_wifi_club_01_err02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<comment>エラーメッセージ
-ダメタマが手持ちにある</comment>
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">てもちに　つれていけない
-ポケモンが　います</language>
-		<language name="JPN_KANJI" width="256">てもちに　つれていけない
-ポケモンが　います</language>
-	</row>
-
-	<row id="msg_wifi_club_01_win01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>msg_wifi_club_01_01での選択肢</comment>
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">ＷｉーＦｉクラブへ　いく</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉクラブへ　いく</language>
-	</row>
-
-	<row id="msg_wifi_club_01_win02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>msg_wifi_club_01_01での選択肢</comment>
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">せつめいを　きく</language>
-		<language name="JPN_KANJI" width="256">せつめいを　きく</language>
-	</row>
-
-	<row id="msg_wifi_club_01_win03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>msg_wifi_club_01_01での選択肢</comment>
-		<attribute name="キャラ指定">受付の人</attribute>
-		<language name="JPN" width="256">やめる</language>
-		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<flowchart-group-list>
