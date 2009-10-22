@@ -46,11 +46,11 @@ enum
 enum
 {	
 	//è„âÊñ BG
-	PLT_BG_SCROLL_M	= 12,
-	PLT_BG_SELECT_M	= 13,
+	PLT_BG_SCROLL_M	= 11,
+	PLT_BG_SELECT_M	= 12,
 
 	//è„âÊñ OBJ
-	PLT_OBJ_M	= 0,
+	PLT_OBJ_M	= 2,
 };
 //BMPWINÉTÉCÉY
 #define SCROLL_BMPWIN_X	(1)
