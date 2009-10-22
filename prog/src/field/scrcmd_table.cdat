@@ -539,7 +539,7 @@
 
   DEF_CMD( EvCmdCallBagProc, EV_SEQ_CALL_BAG_PROC )
   DEF_CMD( EvCmdGetBagProcResult, EV_SEQ_GET_BAG_PROC_RESULT )
-  NO_CMD()
+  DEF_CMD( EvCmdCallBoxProc, EV_SEQ_CALL_BOX_PROC )
   NO_CMD()
   
   NO_CMD()

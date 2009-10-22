@@ -20,6 +20,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_heal_p01
 _EVENT_DATA    ev_union
+_EVENT_DATA    ev_pc
 _EVENT_DATA_END
 {
 DEFINE_LOCAL  LWK_POKERUS_STATUS
@@ -330,3 +331,19 @@ EVENT_START ev_union
   ENDIF
 }
 EVENT_END
+
+
+
+/**************************************************************/
+/*                                                            */
+/*                                                            */
+/*        ポケモンセンター　PC                                */
+/*                                                            */
+/*                                                            */
+/**************************************************************/
+EVENT_START ev_pc
+{
+  // TEST:
+  _VOICE_PLAY(1, 0)
+}
+_END 

@@ -380,7 +380,7 @@ t01r0102_poke_get_yes:
 	_OBJ_ANIME_WAIT()
 
 	//【仮】サポート曲再生。演出をつめる。サポートは問題ないが、ライバルＢＧＭの鳴らすタイミングが難しい。
-	_BGM_PLAY( SEQ_BGM_E_SUPPORT_M )
+	//_BGM_PLAY( SEQ_BGM_E_SUPPORT_M )
 
 	//サポート会話：勝負しましょ！
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0102_white_05, T01R0102_SUPPORT_01 )

@@ -32,6 +32,15 @@
 #include "app/bag.h"
 #include "../../../resource/fldmapdata/script/usescript.h"
 
+#include "app/box2.h"
+#include "event_fieldmap_control.h"   // for EVENT_FieldSubProc_Callback
+
+
+// ボックスプロセスデータとコールバック関数
+extern const GFL_PROC_DATA BOX2_ProcData;
+static void callback_BoxProc( void* work );
+
+
 //--------------------------------------------------------------
 /**
  * @brief フィールドマッププロセス生成
@@ -186,3 +195,43 @@ VMCMD_RESULT EvCmdGetBagProcResult( VMHANDLE *core, void *wk )
 }
 
 
+//--------------------------------------------------------------
+/**
+ * @brief ボックスプロセス終了後に呼ばれるコールバック関数
+ */
+//--------------------------------------------------------------
+static void callback_BoxProc( void* work )
+{
+  GFL_HEAP_FreeMemory( work );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ボックスプロセスを呼び出します
+ * @param   core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
+  BOX2_GFL_PROC_PARAM* box_param = NULL;
+  
+  // ボックスのプロセスパラメータを作成
+  box_param = GFL_HEAP_AllocMemory( heap_id, sizeof(BOX2_GFL_PROC_PARAM) );
+  box_param->sv_box = 0;
+  box_param->pokeparty = 0;
+  box_param->myitem = 0;
+  box_param->mystatus = 0;
+  box_param->cfg = 0;
+  box_param->zknMode = 0;
+  box_param->callMode = BOX_MODE_SEIRI;
+
+  // イベントを呼び出す
+  //SCRIPT_CallEvent( scw, EVENT_FieldSubProc_Callback(gsys, fieldmap, , index) );
+  return VMCMD_RESULT_SUSPEND;
+}

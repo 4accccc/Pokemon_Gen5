@@ -72,3 +72,11 @@ extern VMCMD_RESULT EvCmdCallBagProc( VMHANDLE *core, void *wk );
 //--------------------------------------------------------------
 extern VMCMD_RESULT EvCmdGetBagProcResult( VMHANDLE *core, void *wk );
 
+//--------------------------------------------------------------
+/**
+ * @brief   ボックスプロセスを呼び出します
+ * @param   core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk );

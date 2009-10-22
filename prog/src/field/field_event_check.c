@@ -72,6 +72,7 @@
 #include "field/field_comm/intrude_main.h"
 
 #include "../../../resource/fldmapdata/script/eggevent_scr_def.h"   // for SCRID_EGG_BIRTH
+#include "../../../resource/fldmapdata/script/pokecen_scr_def.h" // for SCRID_PC
 
 //======================================================================
 //======================================================================
@@ -2095,7 +2096,7 @@ typedef struct {
 static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
 {
   static const MAPATTR_EVENTDATA check_attr_data[] = {
-    { MAPATTR_VALUE_CheckPC,          0,  EVENTDATA_ID_NONE },
+    { MAPATTR_VALUE_CheckPC,          0,  SCRID_PC },
     { MAPATTR_VALUE_CheckMap,         0,  EVENTDATA_ID_NONE },
     { MAPATTR_VALUE_CheckTV,          0,  EVENTDATA_ID_NONE },
     { MAPATTR_VALUE_CheckBookShelf1,  0,  SCRID_BG_MSG_BOOK1_01 },
