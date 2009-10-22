@@ -3573,6 +3573,74 @@
   .endm
 
 //======================================================================
+//  サブプロセスコール関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * フィールドプロセスを生成する
+ */
+//--------------------------------------------------------------
+#define _FIELD_OPEN() _ASM_FIELD_OPEN
+
+  .macro _ASM_FIELD_OPEN
+  .short EV_SEQ_FIELD_OPEN
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * フィールドプロセスを終了する
+ */
+//--------------------------------------------------------------
+#define _FIELD_CLOSE() _ASM_FIELD_CLOSE
+
+  .macro _ASM_FIELD_CLOSE
+  .short EV_SEQ_FIELD_CLOSE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * サブプロセスワークを解放する
+ */
+//--------------------------------------------------------------
+#define _FREE_SUBPROC_WORK() _ASM_SUBPROC_WORK
+
+  .macro _ASM_SUBPROC_WORK
+  .short EV_SEQ_FREE_SUB_PROC_WORK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  バッグプロセスを呼び出す
+ *  @param  mode  呼び出しモード script_def.h SCR_BAGMODE_SELL他
+ *
+ *  サブプロセスワークを解放しないので、使用後に _FREE_SUBPROC_WORK()を呼び出すこと
+ */
+//--------------------------------------------------------------
+#define _CALL_BAG_PROC( mode ) _ASM_CALL_BAG_PROC mode
+
+  .macro  _ASM_CALL_BAG_PROC mode
+  .short  EV_SEQ_CALL_BAG_PROC
+  .short  \mode
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  バッグプロセスを呼び出しの結果を取得する
+ *  @param  ret_mode  バッグの終了モード　script_def.h SCR_PROC_RETMODE_EXIT 他
+ *
+ *  _FREE_SUBPROC_WORK()の前に呼ぶこと
+ */
+//--------------------------------------------------------------
+#define _GET_BAG_PROC_RESULT( ret_mode, ret_item ) \
+    _ASM_GET_BAG_PROC_RESULT ret_mode, ret_item
+
+  .macro  _ASM_GET_BAG_PROC_RESULT ret_mode, ret_item
+  .short  EV_SEQ_GET_BAG_PROC_RESULT
+  .short  \ret_mode
+  .short  \ret_item
+  .endm
+
+//======================================================================
 //  ショップ関連
 //======================================================================
 //--------------------------------------------------------------
@@ -3593,7 +3661,6 @@
 //--------------------------------------------------------------
 #define _FIX_SHOP_CALL( shop_id ) _ASM_SHOP_CALL shop_id
 
-
 //--------------------------------------------------------------
 /**
  * @def _CALL_SHOP_PROC_BUY
@@ -3608,21 +3675,6 @@
   .macro  _ASM_CALL_SHOP_PROC_BUY shop_id
   .short  EV_SEQ_CALL_SHOP_PROC_BUY
   .short  \shop_id
-  .endm
-
-//--------------------------------------------------------------
-/**
- * @def _CALL_SHOP_PROC_SELL
- * @brief ショップ売却イベント呼び出し
- * @param shop_id
- *
- * shop_scr.ev専用　ゾーンスクリプトから直接呼び出さないこと！
- */
-//--------------------------------------------------------------
-#define _CALL_SHOP_PROC_SELL( )  _ASM_CALL_SHOP_PROC_SELL
-
-  .macro  _ASM_CALL_SHOP_PROC_SELL
-  .short  EV_SEQ_CALL_SHOP_PROC_SELL
   .endm
 
 //======================================================================

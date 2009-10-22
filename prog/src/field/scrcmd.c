@@ -52,6 +52,7 @@
 #include "scrcmd_camera.h"
 #include "scrcmd_shop.h"
 #include "scrcmd_wifi.h"
+#include "scrcmd_proc.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

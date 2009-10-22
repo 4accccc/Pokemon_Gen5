@@ -980,6 +980,49 @@ void SCRIPT_SetScriptWorkParam( SCRIPT_WORK *sc, u16 prm0, u16 prm1, u16 prm2, u
   SCRIPT_SetEventWorkValue( sc, SCWK_PARAM3, prm3 );
 }
 
+//--------------------------------------------------------------
+/**
+ * サブプロセス用ワークのポインターアドレスを取得
+ * @param	sc SCRIPT_WORK
+ * @retval none
+ *
+ * 使い終わったら必ずNULLクリアすること！
+ */
+//--------------------------------------------------------------
+void** SCRIPT_SetSubProcWorkPointerAdrs( SCRIPT_WORK *sc )
+{
+  return &sc->subproc_work;
+}
+
+//--------------------------------------------------------------
+/**
+ * サブプロセス用ワークのポインターを取得
+ * @param	sc SCRIPT_WORK
+ * @retval none
+ *
+ * 使い終わったら必ずNULLクリアすること！
+ */
+//--------------------------------------------------------------
+void* SCRIPT_SetSubProcWorkPointer( SCRIPT_WORK *sc )
+{
+  return sc->subproc_work;
+}
+
+//--------------------------------------------------------------
+/**
+ * サブプロセス用ワーク領域の解放(ポインタがNULLでなければFree)
+ * @param	sc SCRIPT_WORK
+ * @retval none
+ */
+//--------------------------------------------------------------
+void SCRIPT_FreeSubProcWorkPointer( SCRIPT_WORK *sc )
+{
+  if(sc->subproc_work != NULL){
+    GFL_HEAP_FreeMemory(sc->subproc_work);
+    sc->subproc_work = NULL;
+  }
+}
+
 //======================================================================
 //	フラグ関連
 //======================================================================

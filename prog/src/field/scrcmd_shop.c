@@ -22,11 +22,16 @@
 
 FS_EXTERN_OVERLAY(pokelist);
 
+typedef struct _SHOP_EVENT_WORK{
+  void* bag_param;
+  u16*  ret_work;
+}SHOP_EVENT_WORK;
 
 //====================================================================
 // ■プロトタイプ宣言
 //====================================================================
 
+//--------------------------------------------------------------------
 /**
  * @brief ショップ購入イベント呼び出し 
  *
@@ -48,25 +53,6 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   }else{
     //固定ショップ呼び出し
   }
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//--------------------------------------------------------------------
-/**
- * @brief ショップ売却呼び出し 
- *
- * @param	core 仮想マシン制御構造体へのポインタ
- * @param wk   SCRCMD_WORKへのポインタ
- *
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------------
-VMCMD_RESULT EvCmdCallShopProcSell( VMHANDLE* core, void* wk )
-{
-  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
-  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-
   return VMCMD_RESULT_SUSPEND;
 }
 

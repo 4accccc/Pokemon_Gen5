@@ -39,7 +39,7 @@ DEFINE_LOCAL  lwk_shop_id
 //==============================================================
 ev_shop_counter:
 {
-  $lwk_shop_id = 0  //$SCWK_PARAM0
+  $lwk_shop_id = $SCWK_PARAM0
   _CALL sub_shop_main
 }
 _CHG_LOCAL_SCR
@@ -53,9 +53,9 @@ sub_shop_main:
   DEFINE_LOCAL  i_seq
   DEFINE_LOCAL  i_loop
 
-  _TALKWIN_OPEN()
   //ようこそ
-  _TALKMSG( msg_shop_01)
+  _TALKMSG( msg_shop_02 )
+  _TALKMSG( msg_shop_01 )
 
   $i_seq = SEQ_MENU
   $i_loop = TRUE
@@ -71,11 +71,11 @@ sub_shop_main:
     
     CASE SEQ_BUY THEN
       _CALL sub_shop_buy
-      $i_seq = SEQ_MENU_CONTINUE 
+      $i_seq = $reg_return 
     
     CASE SEQ_SELL THEN
       _CALL sub_shop_sell
-      $i_seq = SEQ_MENU_CONTINUE 
+      $i_seq = $reg_return 
 
     CASE SEQ_EXIT THEN
       $i_loop = FALSE
@@ -85,54 +85,6 @@ sub_shop_main:
   _TALKMSG( msg_shop_03 ) //またどうぞ
   _LAST_KEYWAIT()
   _TALKWIN_CLOSE()
-/*
-  //C-Gear取得チェック
-  IF FLAG_ON( FE_CGEAR_GET ) THEN
-    _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_err01 ) //また後でお越しください
-    _LAST_KEYWAIT()
-    _BALLOONWIN_CLOSE()
-    _RET
-  ENDIF
- 
-  //ダメタマチェック
-  _GET_PARTY_POKE_COUNT( i_ret, POKECOUNT_MODE_ONLY_DAME_EGG)
-  IF $i_ret != 0 THEN
-    _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_err02 ) //手持ちに連れて行けないポケモンがいます
-    _LAST_KEYWAIT()
-    _BALLOONWIN_CLOSE()
-    _RET
-  ENDIF
-
-  _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_01 ) //Wi-Fiクラブへようこそ
-  $i_seq = SEQ_MENU
-
-  $i_loop = TRUE
-  WHILE $i_loop == TRUE
-    SWITCH  $i_seq
-    CASE SEQ_MENU THEN //メニュー表示
-      _CALL sub_club_counter_menu
-      $i_seq = $reg_return
-
-    CASE SEQ_CLUB_EXP THEN
-      _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_07 ) //Wi-Fiクラブでは…
-      $i_seq = SEQ_MENU
-
-    CASE SEQ_CHECK_CONNECT THEN
-      _CALL sub_club_counter_check_connect
-      $i_seq = $reg_return
-
-    CASE SEQ_CONNECT THEN
-      _CALL sub_club_counter_connect
-      $i_seq = $reg_return
-
-    CASE SEQ_GOODBYE THEN
-      _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_02 ) //それではまたお越しください
-      _LAST_KEYWAIT()
-      _BALLOONWIN_CLOSE()
-      $i_loop = FALSE
-    ENDSWITCH
-  ENDWHILE
-*/
 }
 _RET
 
@@ -173,6 +125,7 @@ sub_shop_buy:
 //  _CAMERA_MOVE(0,0,0, (16*5),0,0, 30)
   _CALL_SHOP_PROC_BUY(lwk_shop_id)
 //  _CAMERA_RECV_MOVE(30)
+  $reg_return = SEQ_MENU_CONTINUE
 }
 _RET
 
@@ -181,86 +134,28 @@ _RET
 //==============================================================
 sub_shop_sell:
 {
-  _CALL_SHOP_PROC_SELL()
-}
-_RET
+  DEFINE_LOCAL  ret_mode
+  DEFINE_LOCAL  ret_item
 
-/*
-//==============================================================
-//サブルーチン：Wi-Fiコネクトチェック
-//==============================================================
-sub_club_counter_check_connect:
-{
-  DEFINE_LOCAL  i_ret
-  DEFINE_LOCAL  i_friend_num
-  DEFINE_LOCAL  i_id_state
-
-  //IDの状態チェック
-  $i_id_state = 0
-
-  //登録人数チェック
-  $i_friend_num = 0
-
-  IF $i_id_state == TRUE THEN
-    IF $i_friend_num == 0 THEN
-      _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_06 ) //友だちを登録していないと利用できません
-      _BALLOONWIN_CLOSE()
-      $reg_return = SEQ_GOODBYE
-    ELSE
-      $reg_return = SEQ_CONNECT
-    ENDIF
-    _RET
-  ENDIF
-
-  //仮IDを取得しますか？
-  _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_05 ) //自分のコードだけでも受け取りますか？
-  _YES_NO_WIN( i_ret )
-  _BALLOONWIN_CLOSE()
+  _BLACK_OUT( DISP_FADE_SPEED )
+  _DISP_FADE_END_CHECK()
+  _TALKWIN_CLOSE()
+  _FIELD_CLOSE()
   
-  //『はい』
-  IF $i_ret == 0 THEN
-    $reg_return = SEQ_CONNECT
+  _CALL_BAG_PROC( SCR_BAG_MODE_SELL )
+  _GET_BAG_PROC_RESULT( ret_mode, ret_item )
+  _FREE_SUBPROC_WORK()
+
+  _FIELD_OPEN()
+  _BLACK_IN( DISP_FADE_SPEED )
+  _DISP_FADE_END_CHECK()
+
+  IF $ret_mode == SCR_PROC_RETMODE_EXIT THEN
+    $reg_return = SEQ_EXIT
   ELSE
-    $reg_return = SEQ_GOODBYE
+    $reg_return = SEQ_MENU_CONTINUE
   ENDIF
 }
 _RET
 
-//==============================================================
-//サブルーチン：Wi-Fiコネクト
-//==============================================================
-sub_club_counter_connect:
-{
-  DEFINE_LOCAL  i_ret
-  DEFINE_LOCAL  i_friend_num
-  DEFINE_LOCAL  i_id_state
-
-  //Wi-Fi接続を開始しますか？
-  _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_03 )
-  _YES_NO_WIN( i_ret )
-  _BALLOONWIN_CLOSE()
-
-  IF $i_ret == 1 THEN
-    $reg_return = SEQ_GOODBYE
-    _RET
-  ENDIF
-
-  // レポートを書く
-  _REPORT_EVENT_CALL( i_ret )
-  // 書き込みに失敗
-  IF $i_ret != SCR_REPORT_OK THEN
-    $reg_return = SEQ_GOODBYE
-    _RET
-  ENDIF
-  
-  //接続　それではご案内します
-  _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_04 )
-  _AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-
-  $reg_return = SEQ_GOODBYE
-}
-_RET
-*/
-
-} //SHOP_MAIN_END
+} //SHOP_MAIN_EN

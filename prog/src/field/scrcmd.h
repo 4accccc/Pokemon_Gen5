@@ -34,6 +34,7 @@ extern const u32 ScriptCmdMax;
 extern u16 * SCRCMD_GetVMWork( VMHANDLE *core, SCRCMD_WORK *work );
 extern u16 SCRCMD_GetVMWorkValue( VMHANDLE * core, SCRCMD_WORK *work );
 
+
 #ifndef SCRCMD_PL_NULL
 extern BOOL EvCmdWaitSubProcEnd( VM_MACHINE * core );
 extern BOOL EvWaitSubProcAndFree( VM_MACHINE * core );

@@ -527,18 +527,37 @@
 
   //ショップ関連
   DEF_CMD( EvCmdCallShopProcBuy, EV_SEQ_CALL_SHOP_PROC_BUY )
-  DEF_CMD( EvCmdCallShopProcSell, EV_SEQ_CALL_SHOP_PROC_SELL )
+  NO_CMD()
   NO_CMD()
   NO_CMD()
   
+  //プロセスコール関連
+  DEF_CMD( EvCmdFieldOpen,EV_SEQ_FIELD_OPEN )
+  DEF_CMD( EvCmdFieldClose, EV_SEQ_FIELD_CLOSE )
+  DEF_CMD( EvCmdFreeSubProcWork, EV_SEQ_FREE_SUB_PROC_WORK )
+  NO_CMD()
+
+  DEF_CMD( EvCmdCallBagProc, EV_SEQ_CALL_BAG_PROC )
+  DEF_CMD( EvCmdGetBagProcResult, EV_SEQ_GET_BAG_PROC_RESULT )
+  NO_CMD()
+  NO_CMD()
+  
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+ 
   //Wi-Fiクラブ関連
   NO_CMD()
   NO_CMD()
   NO_CMD()
   NO_CMD()
-  NO_CMD()
   
-  NO_CMD()
   NO_CMD()
   NO_CMD()
   NO_CMD()

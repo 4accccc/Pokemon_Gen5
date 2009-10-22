@@ -301,4 +301,36 @@ extern void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
 //--------------------------------------------------------------
 extern void SCRIPT_SetScriptWorkParam( SCRIPT_WORK *sc, u16 prm0, u16 prm1, u16 prm2, u16 prm3 );
 
+//--------------------------------------------------------------
+/**
+ * サブプロセス用ワークのポインターアドレスを取得
+ * @param	sc SCRIPT_WORK
+ * @retval none
+ *
+ * 使い終わったら必ずNULLクリアすること！
+ */
+//--------------------------------------------------------------
+extern void** SCRIPT_SetSubProcWorkPointerAdrs( SCRIPT_WORK *sc );
+
+//--------------------------------------------------------------
+/**
+ * サブプロセス用ワークのポインターを取得
+ * @param	sc SCRIPT_WORK
+ * @retval none
+ *
+ * 使い終わったら必ずNULLクリアすること！
+ */
+//--------------------------------------------------------------
+extern void* SCRIPT_SetSubProcWorkPointer( SCRIPT_WORK *sc );
+
+//--------------------------------------------------------------
+/**
+ * サブプロセス用ワーク領域の解放(ポインタがNULLでなければFree)
+ * @param	sc SCRIPT_WORK
+ * @retval none
+ */
+//--------------------------------------------------------------
+extern void SCRIPT_FreeSubProcWorkPointer( SCRIPT_WORK *sc );
+
+
 #endif	/* SCRIPT_H */

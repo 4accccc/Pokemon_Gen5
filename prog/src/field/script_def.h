@@ -77,6 +77,13 @@
 //ショップのID定義
 #define SCR_SHOPID_NULL ( 0xFF )  //変動ショップ呼び出しID
 
+//サブプロセス(アプリ)の終了コード定義
+#define SCR_PROC_RETMODE_EXIT    (0) //一発終了
+#define SCR_PROC_RETMODE_NORMAL  (1) //通常終了
+
+//バッグプロセス呼び出しコード定義
+#define SCR_BAG_MODE_SELL  (0)
+
 //-----------------------------------------------------------------------------
 //曜日取得関数の戻り値
 //  _GET_WEEK
