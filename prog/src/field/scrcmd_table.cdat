@@ -357,9 +357,8 @@
   NO_CMD()
 
 
-  //ミュージカル関連
-  DEF_CMD( EvCmdMusicalCall, EV_SEQ_MUSICAL_CALL )
-  DEF_CMD( EvCmdMusicalTitleName, EV_SEQ_MUSICAL_TITLE_NAME )
+  NO_CMD()
+  NO_CMD()
   NO_CMD()
   NO_CMD()
 
@@ -562,6 +561,28 @@
   NO_CMD()
   NO_CMD()
   NO_CMD()
+
+  //ミュージカル関連
+  DEF_CMD( EvCmdMusicalCall, EV_SEQ_MUSICAL_CALL )
+  DEF_CMD( EvCmdMusicalTitleName, EV_SEQ_MUSICAL_TITLE_NAME )
+  NO_CMD()
+  NO_CMD()
+  
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
 
   END_CMD
   //スクリプトコマンドテーブル終了
