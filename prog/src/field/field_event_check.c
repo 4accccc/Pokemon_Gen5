@@ -233,12 +233,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
     id = EVENTDATA_CheckPosEvent( req.evdata, evwork, &pos );
     
     if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-      FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldWork );
-      PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( player );
-      if( form != PLAYER_MOVE_FORM_NORMAL ){
-        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
-        return event;
-      }
+      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
+      return event;
     }
 
    //座標接続チェック
