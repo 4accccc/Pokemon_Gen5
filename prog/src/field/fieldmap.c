@@ -1707,6 +1707,15 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 #define	PRO_MAT_Z_OFS	(310)
 static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
 {
+  {
+    s32 check;
+    //ラインズオーバーチェック
+    check = G3X_IsLineBufferUnderflow();
+    GF_ASSERT_MSG( check == 0, "LINES OVER" );
+    //ポリゴンリストRAM, 頂点RAMのオーバーフローチェック
+    check = G3X_IsListRamOverflow();
+    GF_ASSERT_MSG( check == 0, "POLY_VTX_OVER" );
+  }
 
 	FIELD_FOG_Reflect( fieldWork->fog );
 	FIELD_LIGHT_Reflect( fieldWork->light );
