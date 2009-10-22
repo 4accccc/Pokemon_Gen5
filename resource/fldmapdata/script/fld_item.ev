@@ -200,6 +200,10 @@ ev_itemget_flditem_true:
   //話しかけ対象のモンスターボールを消す
   _OBJ_DEL( SCWK_TARGET_OBJID )
   
+  _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_ITEMGET )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_itemget )
+  _OBJ_ANIME_WAIT()
+
   //アイテム追加
   _ADD_ITEM( SCWK_TEMP0, SCWK_TEMP1, SCWK_ANSWER )
   
@@ -218,6 +222,8 @@ ev_itemget_flditem_true:
   ELSE
     _CALL ev_itemget_flditem_no_wazam
   ENDIF
+  
+  _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM )
   _RET
 
 ev_itemget_flditem_true_2:  //成功終了処理その２
@@ -389,3 +395,12 @@ ev_itemget_fld_item_item_ausunopureeto:
   _CHG_COMMON_SCR SCRID_PLATE_MSG
   _RET
 */
+
+//--------------------------------------------------------------------
+//  アニメーションデータ
+//--------------------------------------------------------------------
+//自機ゲットポーズ
+_ANIME_LABEL  anm_hero_itemget
+  _ANIME_DATA AC_HERO_ITEMGET,1
+  _ANIME_DATA ACMD_END,0
+

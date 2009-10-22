@@ -1,9 +1,6 @@
-
 //======================================================================
 //                pokecen_scr.ev
-//
 //    スクリプトファイル：pokecen_scr用
-//
 //======================================================================
 
   .text
@@ -13,6 +10,7 @@
   //.include  "pokecen_scr.h"
 
   .include  "../../../prog/include/system/timezone.h" //時間帯定義
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -23,8 +21,6 @@
 _EVENT_DATA    ev_heal_p01
 _EVENT_DATA    ev_union
 _EVENT_DATA_END
-
-
 {
 DEFINE_LOCAL  LWK_POKERUS_STATUS
 DEFINE_LOCAL  LWK_TRAINER_CARD_STATUS
@@ -38,7 +34,6 @@ DEFINE_LOCAL  LWK_RECOVER_YESNO
 /*                                                            */
 /**************************************************************/
 EVENT_START   ev_heal_p01
-
   _TALK_OBJ_START()
 
   _GET_TRAINER_CARD_RANK( LWK_TRAINER_CARD_STATUS )
@@ -49,7 +44,7 @@ EVENT_START   ev_heal_p01
 
   ELSIF FLAG_OFF(FE_PC_GOLD) THEN
   //上位のトレーナーカードランクで、初来店の場合
-    _CALL sub_heal_gyoe                          //！表示、そ、そのカードは！～
+    _CALL sub_heal_gyoe         //！表示、そ、そのカードは！～
 
     _FLAG_SET( FE_PC_GOLD )
   ELSE
@@ -64,15 +59,24 @@ EVENT_START   ev_heal_p01
 
   IF $LWK_RECOVER_YESNO == 0 THEN
     //預ける場合
+    
+    _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_PC_AZUKE )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_azuke )
+    _OBJ_ANIME_WAIT()
 
     _BALLOONWIN_TALKOBJ_OPEN( msg_pc_heal_04 ) //それでは　おあずかりします
     
-    _CALL sub_heal_kaifuku_anime                      //回復アニメ呼び出し
-    _TEMOTI_POKEMON_KAIFUKU()                         //手持ちポケモン回復処理
+    _CALL sub_heal_kaifuku_anime    //回復アニメ呼び出し
+    _TEMOTI_POKEMON_KAIFUKU()       //手持ちポケモン回復処理
 
     _BALLOONWIN_CLOSE()
-
+    
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_uketori )
+    _OBJ_ANIME_WAIT()
+    _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM )
+    
     _CHECK_TEMOTI_POKERUS( LWK_POKERUS_STATUS )
+
     IF $LWK_POKERUS_STATUS == TRUE && FLAG_OFF( FE_PC_POKERUS )  THEN
     //ポケルス状態ポケモンがいて、その状態で初めての来店だったら
       _FLAG_SET( FE_PC_POKERUS )
@@ -125,20 +129,28 @@ _RET
 //--------------------------------------------------------------------
 //おじぎ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_heal_p01_bow
+_ANIME_LABEL  anm_heal_p01_bow
 //【仮】  ジョーイさんお辞儀アニメが未対応
-	//_ANIME_DATA	AC_PC_BOW,1
-	//_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	ACMD_END,0
+  //_ANIME_DATA  AC_PC_BOW,1
+  //_ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  AC_DIR_L,1
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  AC_DIR_U,1
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  AC_DIR_R,1
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  AC_DIR_D,1
+  _ANIME_DATA  AC_WAIT_4F,1
+  _ANIME_DATA  ACMD_END,0
 
+_ANIME_LABEL  anm_hero_azuke
+  _ANIME_DATA AC_HERO_BANZAI,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_hero_uketori
+  _ANIME_DATA AC_HERO_BANZAI_UKE,1
+  _ANIME_DATA ACMD_END,0
+ 
 /**************************************************************/
 //サブルーチン：トレーナーカードランク高い！
 /**************************************************************/
@@ -155,7 +167,7 @@ _RET
 //--------------------------------------------------------------------
 //  びっくりマーク表示
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_heal_p01_gyoe
+_ANIME_LABEL  anm_heal_p01_gyoe
   _ANIME_DATA AC_MARK_GYOE,1
   _ANIME_DATA ACMD_END, 0
 
@@ -180,16 +192,16 @@ _RET
 //--------------------------------------------------------------------
 //  左を向く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_heal_p01_turn_up
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_heal_p01_turn_up
+  _ANIME_DATA  AC_DIR_U,1
+  _ANIME_DATA  ACMD_END,0
 
 //--------------------------------------------------------------------
 //  下を向く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_heal_p01_turn_down
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_heal_p01_turn_down
+  _ANIME_DATA  AC_DIR_D,1
+  _ANIME_DATA  ACMD_END,0
 
 
 
