@@ -191,9 +191,12 @@ BOOL BTL_NET_IsInitialized( void )
   {
     if( BTL_NET_IsTimingSync(BTL_NET_TIMING_INITIALIZE) )
     {
+      BOOL result;
       TMP_SEND_BUFFER* tsb = &Sys->sendBuf[0];
       tsb->val32 = BTL_NET_SERVER_VERSION;
-      return GFL_NET_SendData( Sys->netHandle, CMD_NOTIFY_SERVER_VER, sizeof(*tsb), tsb );
+      result = GFL_NET_SendData( Sys->netHandle, CMD_NOTIFY_SERVER_VER, sizeof(*tsb), tsb );
+      BTL_Printf("ƒVƒ“ƒNƒ‚µ‚Ü‚µ‚½ ... result=%d\n", result);
+      return result;
     }
     return FALSE;
   }

@@ -127,11 +127,13 @@ static BOOL cleanup_alone_double( int* seq, void* work );
 static BOOL setup_alone_triple( int* seq, void* work );
 static BOOL setup_comm_single( int* seq, void* work );
 static BOOL setup_comm_double( int* seq, void* work );
+static BOOL setup_comm_triple( int* seq, void* work );
 static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int* seq );
+static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_start_server( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk );
 static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk );
@@ -144,7 +146,7 @@ static inline BtlPokePos getTripleFrontPos( BtlPokePos pos );
 static inline u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos );
 static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos, u8* clientID, u8* posIdx );
 static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos );
-static u8 PokeID_to_ClientID( u8 pokeID );
+static inline u8 PokeID_to_ClientID( u8 pokeID );
 static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModule );
 static BOOL PokeCon_IsExistClient( const BTL_POKE_CONTAINER* wk, u32 clientID );
 static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, const POKEPARTY* party_src, u8 clientID );
@@ -335,6 +337,9 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
       break;
     case BTL_RULE_DOUBLE:
       BTL_UTIL_SetupProc( bp, wk, setup_comm_double, NULL );
+      break;
+    case BTL_RULE_TRIPLE:
+      BTL_UTIL_SetupProc( bp, wk, setup_comm_triple, NULL );
       break;
     default:
       GF_ASSERT(0);
@@ -734,6 +739,49 @@ static BOOL setup_comm_double( int* seq, void* work )
   BTL_Printf(" setupSeq ... Done\n", (*seq) );
   return TRUE;
 }
+//--------------------------------------------------------------------------
+/**
+ * 通信／トリプルバトル：セットアップ
+ */
+//--------------------------------------------------------------------------
+static BOOL setup_comm_triple( int* seq, void* work )
+{
+  static const pSetupSeq funcs[] = {
+    NULL,
+    setupseq_comm_determine_server,
+    setupseq_comm_notify_party_data,
+    setupseq_comm_notify_player_data,
+    setupseq_comm_create_server_client_triple,
+    setupseq_comm_start_server,
+  };
+
+  BTL_MAIN_MODULE* wk = work;
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
+  if( (*seq) == 0 )
+  {
+    wk->numClients = 2;
+    wk->posCoverClientID[BTL_POS_1ST_0] = 0;
+    wk->posCoverClientID[BTL_POS_2ND_0] = 1;
+    wk->posCoverClientID[BTL_POS_1ST_1] = 0;
+    wk->posCoverClientID[BTL_POS_2ND_1] = 1;
+    wk->posCoverClientID[BTL_POS_1ST_2] = 0;
+    wk->posCoverClientID[BTL_POS_2ND_2] = 1;
+    (*seq)++;
+    return FALSE;
+  }
+  else if( (*seq) < NELEMS(funcs) ){
+    if( funcs[ *seq ]( wk, &wk->subSeq ) ){
+      wk->subSeq = 0;
+      ++(*seq);
+    }
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
+
 //----------------------------------------------------------------------------------
 /**
  * 通信対戦セットアップシーケンス：サーバ＆クライアントIDの確定
@@ -1007,6 +1055,45 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
         netID, numCoverPos, BTL_THINKER_UI, BAG_MODE, wk->heapID  );
 
   }
+  return TRUE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 通信対戦セットアップシーケンス：サーバ・クライアントモジュール構築（トリプル用）
+ *
+ * @param   wk
+ * @param   seq
+ *
+ * @retval  BOOL    終了時にTRUEを返す
+ */
+//----------------------------------------------------------------------------------
+static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int* seq )
+{
+  enum {
+    BAG_MODE = BBAG_MODE_SHOOTER,
+    NUM_COVERPOS = 3,
+  };
+
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+  u8 netID = GFL_NET_GetNetID( sp->netHandle );
+
+  // 自分がサーバ
+  if( wk->ImServer )
+  {
+    wk->server = BTL_SERVER_Create( wk, &wk->pokeconForServer, BAG_MODE, wk->heapID );
+
+    wk->client[netID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
+        netID, NUM_COVERPOS, BTL_THINKER_UI, BAG_MODE, wk->heapID );
+    BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), netID, NUM_COVERPOS );
+    BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, !netID, NUM_COVERPOS );
+  }
+  // 自分がサーバではない
+  else
+  {
+    wk->client[ netID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, netID, NUM_COVERPOS,
+    BTL_THINKER_UI, BAG_MODE, wk->heapID  );
+  }
+
   return TRUE;
 }
 //----------------------------------------------------------------------------------
