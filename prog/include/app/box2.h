@@ -41,8 +41,6 @@ typedef struct {
 
 	BOX_MODE	callMode;					// åƒÇ—èoÇµÉÇÅ[Éh
 
-	GAMESYS_WORK * gsyswk;			// âº
-
 /*
 	// [in] 
 	SAVEDATA * savedata;

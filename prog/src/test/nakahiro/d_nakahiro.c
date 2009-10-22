@@ -134,9 +134,6 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		wk->box_data.myitem    = GAMEDATA_GetMyItem( wk->gamedata );
 		wk->box_data.mystatus  = GAMEDATA_GetMyStatus( wk->gamedata );
 		wk->box_data.callMode  = BOX_MODE_SEIRI;
-
-		wk->box_data.gsyswk    = DEBUG_GameSysWorkPtrGet();
-
 		SetBoxPoke( wk );
 		SetPartyPoke( wk );
 		GFL_PROC_SysCallProc( FS_OVERLAY_ID(box), &BOX2_ProcData, &wk->box_data );
