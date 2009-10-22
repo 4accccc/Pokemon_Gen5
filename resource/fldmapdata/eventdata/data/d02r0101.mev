@@ -1,15 +1,15 @@
 #event data
-#save date:2009/10/21 14:39:00
+#save date:2009/10/21 22:30:06
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02r0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/21 14:39:00
+#save date:2009/10/21 22:30:06
 2
 #hold event type:
 1
 #hold event number:
-6
+16
 #event number: 0
 #type
 1
@@ -47,7 +47,7 @@ D02R0101_MOUNTMAN_01
 #OBJ CODE Number
 MOUNTMAN
 #MOVE CODE Number
-MV_RND
+MV_RND_H
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -55,7 +55,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_D02R0101_MOUNTMAN_01
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -63,11 +63,11 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
+1
 #Move Limit Z Number
-2
+0
 #position
-792 0 -856
+904 0 -840
 #event number: 2
 #type
 1
@@ -184,11 +184,301 @@ DIR_UP
 0
 #position
 328 0 -888
+#event number: 6
+#type
+1
+#ID name
+TR_FUTAGO_02_2
+#OBJ CODE Number
+BABYGIRL1
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_FUTAGO_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+776 0 -824
+#event number: 7
+#type
+1
+#ID name
+TR_FUTAGO_02
+#OBJ CODE Number
+BABYGIRL1
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_FUTAGO_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+792 0 -824
+#event number: 8
+#type
+1
+#ID name
+TR_MINI_03
+#OBJ CODE Number
+GIRL2
+#MOVE CODE Number
+MV_RND_H
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_MINI_03
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+936 0 -648
+#event number: 9
+#type
+1
+#ID name
+TR_RANGERM_02
+#OBJ CODE Number
+RANGERM
+#MOVE CODE Number
+MV_RND_UL
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_RANGERM_02
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+360 0 -408
+#event number: 10
+#type
+1
+#ID name
+TR_RANGERM_01
+#OBJ CODE Number
+RANGERM
+#MOVE CODE Number
+MV_RND_DR
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_RANGERM_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+424 0 -856
+#event number: 11
+#type
+1
+#ID name
+TR_RANGERW_01
+#OBJ CODE Number
+RANGERW
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_RANGERW_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-24 0 -504
+#event number: 12
+#type
+1
+#ID name
+TR_RANGERW_02
+#OBJ CODE Number
+RANGERW
+#MOVE CODE Number
+MV_RND_DR
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_RANGERW_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+56 0 -792
+#event number: 13
+#type
+1
+#ID name
+TR_SCHOOLB_02
+#OBJ CODE Number
+BOY3
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_SCHOOLB_02
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+5
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+968 0 -760
+#event number: 14
+#type
+1
+#ID name
+TR_SCHOOLG_02
+#OBJ CODE Number
+GIRL3
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_SCHOOLG_02
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+5
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+888 0 -408
+#event number: 15
+#type
+1
+#ID name
+TR_TANPAN_03
+#OBJ CODE Number
+BOY2
+#MOVE CODE Number
+MV_RND_DR
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_TANPAN_03
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+136 0 -920
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/21 14:39:00
+#save date:2009/10/21 22:30:06
 2
 #hold event type:
 1
@@ -198,7 +488,7 @@ DIR_UP
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/21 14:39:00
+#save date:2009/10/21 22:30:06
 2
 #hold event type:
 1
@@ -223,7 +513,7 @@ WK_SCENE_D02R0101
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/21 14:39:00
+#save date:2009/10/21 22:30:06
 2
 #hold event type:
 1

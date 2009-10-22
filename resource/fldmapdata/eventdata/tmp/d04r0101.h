@@ -10,5 +10,7 @@
 #ifndef ZONE_D04R0101_EVC_H
 #define ZONE_D04R0101_EVC_H
 
+#define TR_ESPW_01                         0
+#define TR_ESPM_01                         1
 
 #endif //ZONE_D04R0101_EVC_H
