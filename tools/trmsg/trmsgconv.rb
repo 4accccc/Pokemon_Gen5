@@ -57,9 +57,11 @@ end
   cnt = 0
 
   CSV.open( ARGV[ ARGV_READ_FILE ], 'r' ) {|row|
-    next if row[ 0 ] == nil
-    next if row[ 0 ].index("#") == 0
-    next if row[ 0 ].index("Åî") == 0
+    next if row[ 0 ] == nil && row[ 1 ] == nil
+    if row[ 0 ] != nil
+      next if row[ 0 ].index("#") == 0
+      next if row[ 0 ].index("Åî") == 0
+    end
     read_data[ cnt ] = row
     cnt += 1
   }
@@ -74,6 +76,7 @@ end
   tr_id = ""
 
   read_data.each {|row|
+    p row
     if row[ PARA::TR_ID ] != nil
       tr_id = row[ PARA::TR_ID ]
     end
