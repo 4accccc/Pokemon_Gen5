@@ -54,7 +54,6 @@ sub_shop_main:
   DEFINE_LOCAL  i_loop
 
   //ÇÊÇ§Ç±Çª
-  _TALKMSG( msg_shop_02 )
   _TALKMSG( msg_shop_01 )
 
   $i_seq = SEQ_MENU
@@ -105,15 +104,11 @@ sub_shop_menu:
 	//ÉÅÉjÉÖÅ[ï\é¶
 	_BMPMENU_START()
   
-  SWITCH $i_ret
-  CASE SEQ_BUY THEN
-    $reg_return = SEQ_BUY
-    _RET 
-  CASE SEQ_SELL THEN
-    $reg_return = SEQ_SELL
-    _RET
-  ENDSWITCH
-  $reg_return = SEQ_EXIT 
+  IF $i_ret == EV_WIN_B_CANCEL THEN
+    $reg_return = SEQ_EXIT
+  ELSE
+    $reg_return = $i_ret
+  ENDIF
 }
 _RET
 
