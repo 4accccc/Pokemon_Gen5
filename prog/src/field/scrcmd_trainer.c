@@ -1,6 +1,6 @@
 //======================================================================
 /**
- * @file	scr_trainer.c
+ * @file	scrcmd_trainer.c
  * @brief	スクリプトコマンド：トレーナー関連
  * @author	Satoshi Nohara
  * @date	06.06.26
