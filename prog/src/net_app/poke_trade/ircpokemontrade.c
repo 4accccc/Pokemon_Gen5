@@ -1886,6 +1886,13 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
   for(i=0;i<2;i++){
     pWork->bChangeOK[i]=FALSE;
   }
+
+  pWork->oldLine++;
+  pWork->bgscrollRenew = TRUE;
+  IRC_POKETRADE_TrayDisp(pWork);
+  IRC_POKETRADE_SendScreenBoxNameChar(pWork);
+  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
+
   _CHANGE_STATE(pWork,_touchStateCommon);
 
 }

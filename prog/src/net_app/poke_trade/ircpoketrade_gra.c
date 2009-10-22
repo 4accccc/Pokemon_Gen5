@@ -747,16 +747,19 @@ void IRC_POKETRADE_CursorEnable(IRC_POKEMON_TRADE* pWork,int line,int index)
 
 
 
-#if 0
-static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork)
+#if 1
+#include "tradehead.cdat"
+
+static BOOL _IsPokeLanguageMark(IRC_POKEMON_TRADE* pWork,int monsno)
 {
   if(pWork->selectMoji){
-    int i=pWork->selectMoji-1;
-  
-    GFL_MSG_GetString(  pWork->pMsgData, POKETRADE_STR_53+i, pWork->pStrBuf );
+    int i = pWork->selectMoji - 1;
 
-  //  pWork->selectMoji;
+    if(i==MonsterHeadLangTable[monsno]){
+      return TRUE;
+    }
   }
+  return FALSE;
 }
 #endif
 
@@ -771,11 +774,6 @@ static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_MANAGER* boxDat
 
 
   if(line == pWork->MainObjCursorLine){
-    for(j=0;j<_LING_LINENO_MAX;j++){
-      for(i=0;i<BOX_VERTICAL_NUM;i++){
-        GFL_CLACT_WK_SetDrawEnable(pWork->markIcon[j][i],FALSE);
-      }
-    }
     GFL_CLACT_WK_SetDrawEnable( pWork->markIcon[k][pWork->MainObjCursorIndex], TRUE );
   }
   
@@ -814,6 +812,9 @@ static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_MANAGER* boxDat
         GFL_CLACT_WK_SetPlttOffs( pWork->pokeIcon[k][i] , pltNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
         GFL_CLACT_WK_SetAutoAnmFlag( pWork->pokeIcon[k][i] , FALSE );
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
+      }
+      if(_IsPokeLanguageMark(pWork,monsno)){
+        GFL_CLACT_WK_SetDrawEnable( pWork->markIcon[k][i], TRUE );
       }
     }
   }
@@ -855,11 +856,18 @@ static int _boxScrollNum2Line(IRC_POKEMON_TRADE* pWork)
 
 void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,IRC_POKEMON_TRADE* pWork )
 {
-  int k,i,line = _boxScrollNum2Line(pWork);
+  int j,k,i,line = _boxScrollNum2Line(pWork);
 
   if( pWork->oldLine != line ){
     pWork->oldLine = line;
 
+    for(j=0;j<_LING_LINENO_MAX;j++){
+      for(i=0;i<BOX_VERTICAL_NUM;i++){
+        GFL_CLACT_WK_SetDrawEnable(pWork->markIcon[j][i],FALSE);
+      }
+    }
+
+    
     _Line2RingLineSet(pWork,line);
     _iconAllDrawDisable(pWork);  // アイコン表示を一旦消す
   
@@ -1867,47 +1875,6 @@ void IRC_POKETRADE_EndSubMojiBG(IRC_POKEMON_TRADE* pWork)
 
   
 }
-
-//------------------------------------------------------------------------------
-/**
- * @brief   選択中のポケモンにカーソルをあてる
- * @param   IRC_POKEMON_TRADE work
- * @retval  none
- */
-//------------------------------------------------------------------------------
-#if 0
-void IRC_POKETRADE_MainObjCursorDisp(IRC_POKEMON_TRADE* pWork)
-{
-  if(!pWork->curIcon[CELL_CUR_POKE_KEY]){
-    GFL_CLWK_DATA cellInitData;
-    cellInitData.pos_x = 0;
-    cellInitData.pos_y = 0;
-    cellInitData.anmseq = 0;
-    cellInitData.softpri = _CLACT_SOFTPRI_POKESEL;
-    cellInitData.bgpri = 1;
-    pWork->curIcon[CELL_CUR_POKE_KEY] = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                                pWork->cellRes[CHAR_SCROLLBAR],
-                                                                pWork->cellRes[PAL_SCROLLBAR],
-                                                                pWork->cellRes[ANM_SCROLLBAR],
-                                                                &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_KEY] , TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_KEY], TRUE );
-  }
-  {
-    GFL_CLACTPOS apos;
-
-    OHNO_Printf("m= %d\n",pWork->oldLine-pWork->MainObjCursorLine);
-    _pokeIcomPosCalc(pWork->MainObjCursorLine,
-                     pWork->oldLine-pWork->MainObjCursorLine , pWork->MainObjCursorIndex,
-                     pWork->BoxScrollNum,&apos);
-    apos.y+=4;
-    GFL_CLACT_WK_SetPos(pWork->curIcon[CELL_CUR_POKE_KEY], &apos, CLSYS_DRAW_SUB);
-  }
-
-  
-}
-#endif
-
 
 
 //------------------------------------------------------------------------------
