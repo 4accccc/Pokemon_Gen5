@@ -41,38 +41,103 @@ EVENT_START   ev_d01r0101_girl_01
 _TALK_OBJ_START()
 
 //状態により会話を分岐
+	IF $WK_SCENE_D01R0101 == 0 THEN
+		
+		//初回会話時にC01R0501のライバルと話したかチェックを行う
+		IF FLAG_ON( FE_C01R0501_RIVALTALK ) THEN
+		
+		//=========フラグワーク操作==========//
+	
+		//ジム前サングラスの消去
+		_FLAG_SET( FV_C01_GUIDE_01 )
 
-IF $WK_SCENE_D01R0101 == 0 THEN
-	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_01,D01R0101_GIRL_01)
+		//ジム前リーダーの開始
+		_FLAG_RESET( FV_C01_LEADER1_01 )
+
+		//===================================//
+		
+		ENDIF
+		
+		_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_01,D01R0101_GIRL_01)
+		_BALLOONWIN_CLOSE()
+		//ポケモン入手処理へジャンプ
+		_CALL ev_d01r0101_pokecount
+		
+	//2回目会話時
+	ELSIF $WK_SCENE_D01R0101 == 1 THEN
+		//ポケモン入手処理へジャンプ
+		_CALL ev_d01r0101_pokecount
+	ELSE
+	
+	//ポケモン受け取り済
+		_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_10,D01R0101_GIRL_01)
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*CALL：ポケモン入手処理                                */
+/**************************************************************/
+ev_d01r0101_pokecount:
+
 	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_02,D01R0101_GIRL_01)
 	//ポケモン必要か質問
 	DEFINE_LOCAL SCWK_ANSWER01
 	_YES_NO_WIN( SCWK_ANSWER01 )
+	_BALLOONWIN_CLOSE()
+	
 	//回答により分岐
 	IF $SCWK_ANSWER01 == 0 THEN
+
+
 		//手持ちポケモンをカウントして回答を分岐する
 		{
 		DEFINE_LOCAL POKE_COUNT
 		_GET_PARTY_POKE_COUNT (POKE_COUNT,POKECOUNT_MODE_TOTAL)
-		
+	
 		//手持ちがいっぱいなら
 		IF $POKE_COUNT == 6 THEN
 			_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_03,D01R0101_GIRL_01)
 			_BALLOONWIN_CLOSE()
 			//1回目の会話は繰り返さない用フラグ
 			$WK_SCENE_D01R0101 = 1
-			
+		
 		ELSE
-		//【仮処理】手持ちに空きがあれば（本来は持ちタイプで結果を分岐）
-			_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_05,D01R0101_GIRL_01)
-			_BALLOONWIN_CLOSE()
+		//手持ちに空きがあれば持ちタイプに合わせてポケモンを渡す
+			
+			IF $WK_SYS_FIRST_POKE_NO == MONSNO_HUSIGIDANE THEN
+				//最初の３匹で草タイプを選択した時の処理
+				_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_06,D01R0101_GIRL_01)
+				_BALLOONWIN_CLOSE()
+				_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_WANINOKO, 0, 0, 5, 0 )
+				
+			ELSIF $WK_SYS_FIRST_POKE_NO == MONSNO_HITOKAGE THEN	
+				//最初の３匹で炎タイプを選択した時の処理
+				_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_07,D01R0101_GIRL_01)
+				_BALLOONWIN_CLOSE()
+				_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_TIKORIITA, 0, 0, 5, 0 )
+				
+			ELSE
+				//最初の３匹で水タイプを選択した時の処理
+				_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_05,D01R0101_GIRL_01)
+				_BALLOONWIN_CLOSE()
+				_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_HINOARASI, 0, 0, 5, 0 )
+				
+			ENDIF
+		
+			//プレイヤーネームを格納
+			_PLAYER_NAME(0)
+		
+			//手に入れた
 			_TALKWIN_OPEN()
 			_TALKMSG(msg_d01r0101_girl_08)
 			_TALKMSG(msg_d01r0101_girl_09)
 			DEFINE_LOCAL NAME_YESNO01
 			_YES_NO_WIN( NAME_YESNO01 )
 			_TALKWIN_CLOSE()
-			
+		
 			//【仮処理】名づけるか分岐
 			IF $NAME_YESNO01 == 0 THEN
 				//はい
@@ -83,93 +148,39 @@ IF $WK_SCENE_D01R0101 == 0 THEN
 			ELSE
 				//いいえの場合はスキップ
 			ENDIF
-			
-			//会話終了
-			_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_10,D01R0101_GIRL_01)
-			_BALLOONWIN_CLOSE()
-			//対策ポケモン受け取り済フラグ
-			$WK_SCENE_D01R0101 = 2
-		ENDIF
-		}
-	
-	//いらない場合
-	ELSE
-	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_04,D01R0101_GIRL_01)
-	_BALLOONWIN_CLOSE()
-	//1回目の会話は繰り返さない用フラグ
-	$WK_SCENE_D01R0101 = 1
-	
-	ENDIF
-	
-//2回目会話時
-ELSIF $WK_SCENE_D01R0101 == 1 THEN
-	//ポケモン必要か質問
-	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_02,D01R0101_GIRL_01)
-	DEFINE_LOCAL SCWK_ANSWER02
-	_YES_NO_WIN( SCWK_ANSWER02 )
-	
-	//回答により分岐
-	IF $SCWK_ANSWER02 == 0 THEN
-		//手持ちポケモンをカウントして回答を分岐する
-		{
-		DEFINE_LOCAL POKE_COUNT
-		_GET_PARTY_POKE_COUNT (POKE_COUNT,POKECOUNT_MODE_TOTAL)
 		
-		//手持ちがいっぱいなら
-		IF $POKE_COUNT == 6 THEN
-			_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_03,D01R0101_GIRL_01)
-			_BALLOONWIN_CLOSE()
-			//1回目の会話は繰り返さない用フラグ
-			$WK_SCENE_D01R0101 = 1
-			
-		ELSE
-		//【仮処理】手持ちに空きがあれば（本来は持ちタイプで結果を分岐）
-			_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_05,D01R0101_GIRL_01)
-			_BALLOONWIN_CLOSE()
-			_TALKWIN_OPEN()
-			_TALKMSG(msg_d01r0101_girl_08)
-			_TALKMSG(msg_d01r0101_girl_09)
-			DEFINE_LOCAL NAME_YESNO02
-			_YES_NO_WIN( NAME_YESNO02 )
-			_TALKWIN_CLOSE()
-			
-			//【仮処理】名づけるか分岐
-			IF $NAME_YESNO02 == 0 THEN
-				//はい
-				_WHITE_OUT( 8 )
-				_DISP_FADE_END_CHECK()
-				_WHITE_IN( 8 )
-				_DISP_FADE_END_CHECK()
-			ELSE
-				//いいえの場合はスキップ
-			ENDIF
-			
 			//会話終了
 			_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_10,D01R0101_GIRL_01)
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			//対策ポケモン受け取り済フラグ
 			$WK_SCENE_D01R0101 = 2
 		ENDIF
 		}
-	
+
 	//いらない場合
 	ELSE
-	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_04,D01R0101_GIRL_01)
-	_BALLOONWIN_CLOSE()
+		_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_04,D01R0101_GIRL_01)
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		//1回目の会話は繰り返さない用フラグ
+		$WK_SCENE_D01R0101 = 1
 	
 	ENDIF
-ELSE
-  //ポケモン受け取り済
-	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_10,D01R0101_GIRL_01)
-	_BALLOONWIN_CLOSE()
-ENDIF
 
-EVENT_END
+_RET
 
 /**************************************************************/
 /*   D01R0101　サポート登場                                   */
 /**************************************************************/
 EVENT_START   ev_pos_d01r0101_support_01
+
+	//サポートOBJ生成
+	_FLAG_RESET(FV_D01R0101_SUPPORT_01)
+	_OBJ_ADD(D01R0101_SUPPORT)
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
 	
 	//サポート登場
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_01)
@@ -225,6 +236,7 @@ EVENT_START   ev_pos_d01r0101_support_03
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_03)
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_white_03,D01R0101_SUPPORT)
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
 	//ポケモンの鳴き声を聞くPOS起動
@@ -236,6 +248,9 @@ EVENT_END
 /*   D01R0101　POSを踏んで夢ポケモン鳴いて退場                */
 /**************************************************************/
 EVENT_START   ev_pos_d01r0101_support_04
+
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
 
 	//夢ポケモン鳴いて退場
 	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_poke_01,D01R0101_POKE_01)
@@ -255,6 +270,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_04)
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_white_04,D01R0101_SUPPORT)
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
 	//アイテム拾う前フラグ起動
@@ -267,6 +283,9 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_d01r0101_item_01
 
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+
 	//【仮】アイテム入手処理仮：だいじなもの非表示
 	_OBJ_DEL(D01R0101_ITEM_01)
 	_FLAG_RESET(D01R0101_ITEM_01)
@@ -275,6 +294,7 @@ EVENT_START   ev_d01r0101_item_01
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_05)
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_white_05,D01R0101_SUPPORT)
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
 	//夢イベント終了フラグ起動
@@ -296,10 +316,10 @@ _ANIME_LABEL	anm_d01r0101_support_01
 _ANIME_LABEL	anm_d01r0101_support_02
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	AC_WALK_U_8F,4
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_R,8
+	_ANIME_DATA	AC_DIR_L,8
+	_ANIME_DATA	AC_DIR_R,8
+	_ANIME_DATA	AC_DIR_L,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
