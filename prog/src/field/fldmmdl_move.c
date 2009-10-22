@@ -582,15 +582,24 @@ static void MMdl_MapAttrFootMarkProc_1(
 {
   if( old != MAPATTR_ERROR ){
     MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( old );
-  
-    if( (flag & MAPATTR_FLAGBIT_FOOTMARK) ){
-      FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
-      FOOTMARK_TYPE type = FOOTMARK_TYPE_HUMAN;
     
-      if( prm->footmark_type == MMDL_FOOTMARK_CYCLE ){
-        type = FOOTMARK_TYPE_CYCLE;
-      }
+    if( (flag & MAPATTR_FLAGBIT_FOOTMARK) ){
+      FOOTMARK_TYPE type;
+      FLDEFF_CTRL *fectrl = mmdl_GetFldEffCtrl( fmmdl );
+      MAPATTR_VALUE val = MAPATTR_GetAttrValue( old );
 
+      if( MAPATTR_VALUE_CheckSnowType(val) == FALSE ){
+        type = FOOTMARK_TYPE_HUMAN;
+        if( prm->footmark_type == MMDL_FOOTMARK_CYCLE ){
+          type = FOOTMARK_TYPE_CYCLE;
+        }
+      }else{
+        type = FOOTMARK_TYPE_HUMAN_SNOW;
+        if( prm->footmark_type == MMDL_FOOTMARK_CYCLE ){
+          type = FOOTMARK_TYPE_CYCLE_SNOW;
+        }
+      }
+      
       FLDEFF_FOOTMARK_SetMMdl( fmmdl, fectrl, type );
     }
   }

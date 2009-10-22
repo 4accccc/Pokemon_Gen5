@@ -493,3 +493,42 @@ BOOL MAPATTR_VALUE_CheckWaterFall( const MAPATTR_VALUE val )
 {
   return( val == 0x40 );
 }
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　深い雪
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckSnow( const MAPATTR_VALUE val )
+{
+  return( val == 0x0e );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　とても深い雪
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckDeepSnow( const MAPATTR_VALUE val )
+{
+  return( val == 0x0f );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　雪系アトリビュート
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckSnowType( const MAPATTR_VALUE val )
+{
+  if( MAPATTR_VALUE_CheckSnow(val) || MAPATTR_VALUE_CheckDeepSnow(val) ){
+    return( TRUE );
+  }
+  return( FALSE );
+}

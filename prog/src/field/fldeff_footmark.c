@@ -33,11 +33,29 @@ enum
   FOOTMARK_CYCLE_UR,                ///<自転車足跡 上右
   FOOTMARK_CYCLE_DL,                ///<自転車足跡 下左
   FOOTMARK_CYCLE_DR,                ///<自転車足跡 下右
-  FOOTMARK_MAX,                  ///<足跡最大数
+  FOOTMARK_MAX,                    ///<地面足跡最大数
+  
+  FOOTMARK_SNOW_WALK_UP = FOOTMARK_MAX,   ///<足跡　上
+  FOOTMARK_SNOW_WALK_DOWN,                ///<足跡　下
+  FOOTMARK_SNOW_WALK_LEFT,                ///<足跡　左
+  FOOTMARK_SNOW_WALK_RIGHT,              ///<足跡　右
+  FOOTMARK_SNOW_CYCLE_UD,                ///<自転車足跡 上下
+  FOOTMARK_SNOW_CYCLE_LR,                ///<自転車足跡 左右
+  FOOTMARK_SNOW_CYCLE_UL,                ///<自転車足跡 上左
+  FOOTMARK_SNOW_CYCLE_UR,                ///<自転車足跡 上右
+  FOOTMARK_SNOW_CYCLE_DL,                ///<自転車足跡 下左
+  FOOTMARK_SNOW_CYCLE_DR,                ///<自転車足跡 下右
+  FOOTMARK_SNOW_MAX,                  ///<雪足跡最大数
+  
+  FOOTMARK_ALL_MAX = FOOTMARK_SNOW_MAX, ///<全足跡最大数
 };
 
+///雪 足跡リソース位置
+#define FOOTMARK_SNOW_START (FOOTMARK_SNOW_WALK_UP)
+///自転車足跡リソース位置
 #define FOOTMARK_CYCLE_START (FOOTMARK_CYCLE_UD)
-#define FOOTMARK_MAX_CYCLE (FOOTMARK_MAX-FOOTMARK_CYCLE_START)
+///雪　自転車足跡リソース位置
+#define FOOTMARK_SNOW_CYCLE_START (FOOTMARK_SNOW_CYCLE_UD)
 
 #define FOOTMARK_OFFSPOS_Y (NUM_FX32(-8))
 #define FOOTMARK_OFFSPOS_Z (NUM_FX32(1))
@@ -61,9 +79,9 @@ struct _TAG_FLDEFF_FOOTMARK
 {
   FLDEFF_CTRL *fectrl;
   
-  GFL_G3D_RES *g3d_res_mdl[FOOTMARK_MAX];
-  GFL_G3D_RND *g3d_rnd[FOOTMARK_MAX];
-  GFL_G3D_OBJ *g3d_obj[FOOTMARK_MAX];
+  GFL_G3D_RES *g3d_res_mdl[FOOTMARK_ALL_MAX];
+  GFL_G3D_RND *g3d_rnd[FOOTMARK_ALL_MAX];
+  GFL_G3D_OBJ *g3d_obj[FOOTMARK_ALL_MAX];
 };
 
 //--------------------------------------------------------------
@@ -97,7 +115,7 @@ static int fmark_GetObject( FLDEFF_FOOTMARK *fmark,
     FOOTMARK_TYPE type, u16 now_dir, u16 old_dir, GFL_G3D_OBJ **outobj );
 
 static const FLDEFF_TASK_HEADER data_fmarkTaskHeader;
-static const u32 data_FootMarkArcIdx[FOOTMARK_MAX];
+static const u32 data_FootMarkArcIdx[FOOTMARK_ALL_MAX];
 static const u8 data_FootMarkCycleDirTbl[DIR_MAX4][DIR_MAX4];
 
 //======================================================================
@@ -155,7 +173,7 @@ static void fmark_InitResource( FLDEFF_FOOTMARK *fmark )
   const u32 *idx = data_FootMarkArcIdx;
   ARCHANDLE *handle = FLDEFF_CTRL_GetArcHandleEffect( fmark->fectrl );
   
-  for( i = 0; i < FOOTMARK_MAX; i++, idx++ )
+  for( i = 0; i < FOOTMARK_ALL_MAX; i++, idx++ )
   {
     fmark->g3d_res_mdl[i] =
       GFL_G3D_CreateResourceHandle( handle, *idx );
@@ -186,7 +204,7 @@ static void fmark_DeleteResource( FLDEFF_FOOTMARK *fmark )
 {
   int i;
   
-  for( i = 0; i < FOOTMARK_MAX; i++ )
+  for( i = 0; i < FOOTMARK_ALL_MAX; i++ )
   {
     GFL_G3D_OBJECT_Delete( fmark->g3d_obj[i] );
     GFL_G3D_RENDER_Delete( fmark->g3d_rnd[i] );
@@ -216,6 +234,15 @@ static int fmark_GetObject( FLDEFF_FOOTMARK *fmark,
     break;
   case FOOTMARK_TYPE_CYCLE:
     no = data_FootMarkCycleDirTbl[old_dir][now_dir];
+    *outobj = fmark->g3d_obj[no];
+    break;
+  case FOOTMARK_TYPE_HUMAN_SNOW:
+    no = FOOTMARK_SNOW_WALK_UP + now_dir;
+    *outobj = fmark->g3d_obj[no];
+    break;
+  case FOOTMARK_TYPE_CYCLE_SNOW:
+    no = data_FootMarkCycleDirTbl[old_dir][now_dir] - FOOTMARK_CYCLE_START;
+    no += FOOTMARK_SNOW_CYCLE_START;
     *outobj = fmark->g3d_obj[no];
     break;
   default:
@@ -367,8 +394,9 @@ static const FLDEFF_TASK_HEADER data_fmarkTaskHeader =
 //--------------------------------------------------------------
 ///	足跡imdテーブル　並びはFOOTMARK_WALK_UP等の値に一致
 //--------------------------------------------------------------
-static const u32 data_FootMarkArcIdx[FOOTMARK_MAX] =
+static const u32 data_FootMarkArcIdx[FOOTMARK_ALL_MAX] =
 {
+  //通常
 	NARC_fldeff_f_mark_u_nsbmd,
 	NARC_fldeff_f_mark_d_nsbmd,
 	NARC_fldeff_f_mark_l_nsbmd,
@@ -379,6 +407,17 @@ static const u32 data_FootMarkArcIdx[FOOTMARK_MAX] =
 	NARC_fldeff_c_mark_ur_nsbmd,
 	NARC_fldeff_c_mark_dl_nsbmd,
 	NARC_fldeff_c_mark_dr_nsbmd,
+  //雪
+	NARC_fldeff_nf_mark_u_nsbmd,
+	NARC_fldeff_nf_mark_d_nsbmd,
+	NARC_fldeff_nf_mark_l_nsbmd,
+	NARC_fldeff_nf_mark_r_nsbmd,
+	NARC_fldeff_nc_mark_u_nsbmd,
+	NARC_fldeff_nc_mark_l_nsbmd,
+	NARC_fldeff_nc_mark_ul_nsbmd,
+	NARC_fldeff_nc_mark_ur_nsbmd,
+	NARC_fldeff_nc_mark_dl_nsbmd,
+	NARC_fldeff_nc_mark_dr_nsbmd,
 };
 
 //--------------------------------------------------------------
