@@ -49,7 +49,17 @@ G3D_FE_MDL = kage.imd \
   c_mark_dr.imd \
   shibuki01.imd \
   ripple.imd \
-  shibuki.imd
+  shibuki.imd \
+  nf_mark_u.imd \
+  nf_mark_d.imd \
+  nf_mark_l.imd \
+  nf_mark_r.imd \
+  nc_mark_u.imd \
+  nc_mark_l.imd \
+  nc_mark_ul.imd \
+  nc_mark_ur.imd \
+  nc_mark_dl.imd \
+  nc_mark_dr.imd
 
 #---------------------------------------------------------------
 #	フィールドエフェクト　テクスチャ定義
