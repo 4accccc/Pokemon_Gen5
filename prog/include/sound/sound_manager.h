@@ -37,6 +37,7 @@ extern u32				SOUNDMAN_GetHierarchyPlayerSoundIdx( void );
 extern u32				SOUNDMAN_GetHierarchyPlayerPlayerNoIdx( void );
 extern NNSSndHandle*	SOUNDMAN_GetHierarchyPlayerSndHandle( void );
 extern int				SOUNDMAN_GetHierarchyPlayerSoundHeapLv( void );
+extern u32				SOUNDMAN_GetHierarchyPlayerSoundIdxByPlayerID( int playerID );
 // äKëwÉvÉåÅ[ÉÑÅ[èÛë‘ê›íË
 extern void				SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv( void );
 

@@ -13,6 +13,7 @@
 #include "arc_def.h"
 #include <isdbglib.h>
 
+#include "sound/sound_manager.h"
 #include "sound/pm_sndsys.h"
 #include "debug/gf_mcs.h"
 
@@ -23,8 +24,10 @@
 enum {
 	MCSRSDCOMM_REQHEAPSTATUS = 1,
 	MCSRSDCOMM_HEAPSTATUS,
+	MCSRSDCOMM_SNDHEAPSTATUS,
 	MCSRSDCOMM_REQVRAMSTATUS,
-	MCSRSDCOMM_VRAMSTATUS,
+	MCSRSDCOMM_VRAMIMGSTATUS,
+	MCSRSDCOMM_VRAMPLTSTATUS,
 };
 
 typedef struct {
@@ -73,33 +76,7 @@ void	GFL_MCS_Resident(void)
  *		あえてこの方法で実装する
  *
  */
-static u32	GetExistMemoryBlocksInfo( HEAPID heapID, u32 pBuf );
 //============================================================================================
-BOOL	GFL_MCS_Resident_SendHeapStatus(void)
-{
-	MCSRSDCOMM_HEADER* commHeader = (MCSRSDCOMM_HEADER*)MCSRSD_sendBuffer;
-	u32 sendSize;
-	int i;
-
-	commHeader->comm = MCSRSDCOMM_HEAPSTATUS;
-	commHeader->param = 0;
-	for(i=0; i<HEAPID_CHILD_MAX-1; i++){
-		if(GFI_HEAP_GetHeapTotalSize(i) != 0){ commHeader->param++; }
-	}
-	sendSize = sizeof(MCSRSDCOMM_HEADER_SIZE) + sizeof(u32);
-	GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
-
-	// ヒープ情報作成＆転送
-	for(i=0; i<HEAPID_CHILD_MAX-1; i++){
-		sendSize = GetExistMemoryBlocksInfo( i, (u32)MCSRSD_sendBuffer);
-		if(sendSize){
-			GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
-			//OS_Printf("send Heap Status %d, %d\n", i, sendSize);
-		}
-	}
-	return TRUE;
-}
-
 //----------------------------------------------------------------
 /**
  *  ユーザーメモリブロックヘッダ定義（サイズ:MEMHEADER_USERINFO_SIZE = 26 ）
@@ -131,6 +108,17 @@ typedef struct {
   char  name[ HEAPNAME_LEN ];				// ヒープ名
 	MCSDATA_HEAPBLOCKINFO	blockInfo;	// 各ブロック情報（以下ブロック数分）
 }MCSDATA_HEAPSTATUS;
+
+#define BGMPLAYER_NUM (6)	// ref. sound/sound_manager.h
+typedef struct {
+  u32		heapSize;											// ヒープ全体サイズ
+	u32		heapRemainsAfterSys;					// システムファイルロード後の残ヒープサイズ
+	u32		heapRemainsAfterPlayer;				// プレーヤー設定後の残ヒープサイズ
+	u32		heapRemainsAfterPresetSE;			// 常駐SE設定後の残ヒープサイズ
+	u32		sePlayerNum;									// 設定SEプレーヤー数
+	u32		totalFreeSize;								// 残りのヒープサイズ
+	u32		playerSoundID[BGMPLAYER_NUM];	// 現在使用されているBGMプレーヤー内容（soundID）
+}MCSDATA_SNDHEAPSTATUS;
 
 static int numMemoryTotal;
 
@@ -226,6 +214,50 @@ static const char* heapNameTable[HEAPID_CHILD_MAX] = {
   "HEAPID_NAGI_DEBUG_SUB",
   "HEAPID_OBATA_DEBUG",
 };
+
+static u32	GetExistMemoryBlocksInfo( HEAPID heapID, u32 pBuf );
+
+BOOL	GFL_MCS_Resident_SendHeapStatus(void)
+{
+	MCSRSDCOMM_HEADER* commHeader = (MCSRSDCOMM_HEADER*)MCSRSD_sendBuffer;
+	u32 sendSize;
+	int i;
+
+	commHeader->comm = MCSRSDCOMM_HEAPSTATUS;
+	commHeader->param = 0;
+	for(i=0; i<HEAPID_CHILD_MAX-1; i++){
+		if(GFI_HEAP_GetHeapTotalSize(i) != 0){ commHeader->param++; }
+	}
+	sendSize = sizeof(MCSRSDCOMM_HEADER_SIZE) + sizeof(u32);
+	GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
+
+	// ヒープ情報作成＆転送
+	for(i=0; i<HEAPID_CHILD_MAX-1; i++){
+		sendSize = GetExistMemoryBlocksInfo( i, (u32)MCSRSD_sendBuffer);
+		if(sendSize){
+			GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
+			//OS_Printf("send Heap Status %d, %d\n", i, sendSize);
+		}
+	}
+
+	commHeader->comm = MCSRSDCOMM_SNDHEAPSTATUS;
+	{
+		MCSDATA_SNDHEAPSTATUS* shs = (MCSDATA_SNDHEAPSTATUS*)&commHeader->param;
+		shs->heapSize = PMSND_GetSndHeapSize();
+		shs->heapRemainsAfterSys = PMSND_GetSndHeapRemainsAfterSys();
+		shs->heapRemainsAfterPlayer = PMSND_GetSndHeapRemainsAfterPlayer();
+		shs->heapRemainsAfterPresetSE = PMSND_GetSndHeapRemainsAfterPresetSE();
+		shs->sePlayerNum = PMSND_GetSEPlayerNum();
+		shs->totalFreeSize = PMSND_GetSndHeapFreeSize();
+		for(i=0; i<BGMPLAYER_NUM; i++){
+			shs->playerSoundID[i] = SOUNDMAN_GetHierarchyPlayerSoundIdxByPlayerID(i);	
+		}
+	}
+	sendSize = sizeof(MCSRSDCOMM_HEADER_SIZE) + sizeof(MCSDATA_SNDHEAPSTATUS);
+	GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
+
+	return TRUE;
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -333,7 +365,7 @@ static u32	GetExistMemoryBlocksInfo( HEAPID heapID, u32 pBuf )
 //============================================================================================
 /**
  *
- * @brief	VRAM情報取得
+ * @brief	テクスチャVRAM情報取得
  *
  */
 //============================================================================================
@@ -366,7 +398,7 @@ static const struct {
 	u16     blk1size;	// 12 bit shift
 	u16     blk2adrs;	// 12 bit shift
 	u16     blk2size;	// 12 bit shift
-} sTexStartAddrTable[16] = {
+} sTexImgStartAddrTable[16] = {
 	{0, 0, 0, 0},																										// GX_VRAM_TEX_NONE
 	{TEX_ADRSDEF_A, TEX_SIZEDEF_A,	0, 0},													// GX_VRAM_TEX_0_A
 	{TEX_ADRSDEF_B, TEX_SIZEDEF_B,	0, 0},													// GX_VRAM_TEX_0_B
@@ -385,47 +417,121 @@ static const struct {
 	{TEX_ADRSDEF_A, TEX_SIZEDEF_ABCD, 0, 0},												// GX_VRAM_TEX_0123_ABCD
 };
 
+#define TEXPLT_ADRSDEF_E		((u16)(HW_LCDC_VRAM_E >> 12))
+#define TEXPLT_ADRSDEF_F		((u16)(HW_LCDC_VRAM_F >> 12))
+#define TEXPLT_ADRSDEF_G		((u16)(HW_LCDC_VRAM_G >> 12))
+#define TEXPLT_SIZEDEF_E		((u16)(HW_VRAM_E_SIZE >> 12))
+#define TEXPLT_SIZEDEF_F		((u16)(HW_VRAM_F_SIZE >> 12))
+#define TEXPLT_SIZEDEF_G		((u16)(HW_VRAM_G_SIZE >> 12))
+#define TEXPLT_SIZEDEF_EF		((u16)((HW_VRAM_E_SIZE + HW_VRAM_G_SIZE) >> 12))
+#define TEXPLT_SIZEDEF_FG		((u16)((HW_VRAM_F_SIZE + HW_VRAM_G_SIZE) >> 12))
+#define TEXPLT_SIZEDEF_EFG	((u16)((HW_VRAM_E_SIZE + HW_VRAM_F_SIZE + HW_VRAM_G_SIZE) >> 12))
+
+static const struct {
+	u16     blk1adrs;	// 12 bit shift
+	u16     blk1size;	// 12 bit shift
+} sTexPltStartAddrTable[16] = {
+	{0, 0},																				// GX_VRAM_TEXPLTT_NONE
+	{TEXPLT_ADRSDEF_F,		TEXPLT_SIZEDEF_F},			// GX_VRAM_TEXPLTT_0_F
+	{TEXPLT_ADRSDEF_G,		TEXPLT_SIZEDEF_G},			// GX_VRAM_TEXPLTT_0_G
+	{TEXPLT_ADRSDEF_F,		TEXPLT_SIZEDEF_FG},			// GX_VRAM_TEXPLTT_01_FG
+	{TEXPLT_ADRSDEF_E,		TEXPLT_SIZEDEF_E},			// GX_VRAM_TEXPLTT_0123_E
+	{TEXPLT_ADRSDEF_E,		TEXPLT_SIZEDEF_EF},			// GX_VRAM_TEXPLTT_01234_EF
+	{0, 0},																				// dummy
+	{TEXPLT_ADRSDEF_E,	TEXPLT_SIZEDEF_EFG},			// GX_VRAM_TEXPLTT_012345_EFG
+};
+
 BOOL	GFL_MCS_Resident_SendTexVramStatus(void)
 {
 	MCSRSDCOMM_HEADER* commHeader = (MCSRSDCOMM_HEADER*)MCSRSD_sendBuffer;
 	MCSDATA_TEXVRAMSTATUS* vStatus;
-  u32 blk1adrs, blk2adrs, blk1size, blk2size;
 	u32 sendSize;
-	GXVRamTex stTex = (GXVRamTex)(0);
-	int i;
 
-	commHeader->comm = MCSRSDCOMM_VRAMSTATUS;
+	// VRAMイメージ転送
+	{
+		GXVRamTex stTexImg = (GXVRamTex)(0);
+		u32 blk1adrs, blk2adrs, blk1size, blk2size;
 
-	vStatus = (MCSDATA_TEXVRAMSTATUS*)&commHeader->param;
+		commHeader->comm = MCSRSDCOMM_VRAMIMGSTATUS;
+		vStatus = (MCSDATA_TEXVRAMSTATUS*)&commHeader->param;
 
-  //テクスチャスロットをLCDCスペースに割り振る + 現在の割り振り状態を取得
-  stTex = GX_ResetBankForTex();
-	vStatus->type = stTex;
+		//テクスチャスロットをLCDCスペースに割り振る + 現在の割り振り状態を取得
+		stTexImg = GX_ResetBankForTex();
+		// 定義データがそのままbitfieldとして使用できるのでそのまま代入
+		vStatus->type = stTexImg;
 
-	// VRAM情報作成＆転送
-	blk1adrs = (u32)sTexStartAddrTable[stTex].blk1adrs;
-	blk1size = (u32)sTexStartAddrTable[stTex].blk1size;
-	blk2adrs = (u32)sTexStartAddrTable[stTex].blk2adrs;
-	blk2size = (u32)sTexStartAddrTable[stTex].blk2size;
+		// VRAM情報作成＆転送
+		blk1adrs = (u32)sTexImgStartAddrTable[vStatus->type].blk1adrs;
+		blk1size = (u32)sTexImgStartAddrTable[vStatus->type].blk1size;
+		blk2adrs = (u32)sTexImgStartAddrTable[vStatus->type].blk2adrs;
+		blk2size = (u32)sTexImgStartAddrTable[vStatus->type].blk2size;
 
-	vStatus->size1 = blk1size;
-	vStatus->size2 = blk2size;
-	sendSize = sizeof(MCSRSDCOMM_HEADER_SIZE) + sizeof(MCSDATA_TEXVRAMSTATUS);
-	GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
-	OS_Printf("texvram status send %d, %d, %d\n", vStatus->type, vStatus->size1, vStatus->size2);
-			
-	if(vStatus->size1){
-		OS_Printf("texvram send 1\n");
-		GFL_MCS_Write(GFL_MCS_RESIDENT_ID, (void*)(blk1adrs << 12), (blk1size << 12));
+		vStatus->size1 = blk1size;
+		vStatus->size2 = blk2size;
+		sendSize = sizeof(MCSRSDCOMM_HEADER_SIZE) + sizeof(MCSDATA_TEXVRAMSTATUS);
+		GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
+
+		if(vStatus->size1){
+			//OS_Printf("texvram_img send 1\n");
+			GFL_MCS_Write(GFL_MCS_RESIDENT_ID, (void*)(blk1adrs << 12), (blk1size << 12));
+		}
+		if(vStatus->size2){
+			//OS_Printf("texvram_img send 2\n");
+			GFL_MCS_Write(GFL_MCS_RESIDENT_ID, (void*)(blk2adrs << 12), (blk2size << 12));
+		}
+		// テクスチャスロットの復帰
+		GX_SetBankForTex(stTexImg);
 	}
-	if(vStatus->size2){
-		OS_Printf("texvram send 2\n");
-		GFL_MCS_Write(GFL_MCS_RESIDENT_ID, (void*)(blk2adrs << 12), (blk2size << 12));
+	// VRAMパレット転送
+	{
+		GXVRamTexPltt stTexPlt = (GXVRamTexPltt)(0);
+		u32 blk1adrs, blk1size;
+
+		commHeader->comm = MCSRSDCOMM_VRAMPLTSTATUS;
+		vStatus = (MCSDATA_TEXVRAMSTATUS*)&commHeader->param;
+
+		//パレットスロットをLCDCスペースに割り振る + 現在の割り振り状態を取得
+		stTexPlt = GX_ResetBankForTexPltt();
+		// bitfieldデータとして変換する。
+		switch(stTexPlt){
+		default:
+		case GX_VRAM_TEXPLTT_NONE:
+			vStatus->type = 0;
+			break;
+		case GX_VRAM_TEXPLTT_0_F:
+			vStatus->type = 1;
+			break;
+		case GX_VRAM_TEXPLTT_0_G:
+			vStatus->type = 2;
+			break;
+		case GX_VRAM_TEXPLTT_01_FG:
+			vStatus->type = 3;
+			break;
+		case GX_VRAM_TEXPLTT_0123_E:
+			vStatus->type = 4;
+			break;
+		case GX_VRAM_TEXPLTT_01234_EF:
+			vStatus->type = 5;
+			break;
+		case GX_VRAM_TEXPLTT_012345_EFG:
+			vStatus->type = 7;
+			break;
+		}
+		// VRAM情報作成＆転送
+		blk1adrs = (u32)sTexPltStartAddrTable[vStatus->type].blk1adrs;
+		blk1size = (u32)sTexPltStartAddrTable[vStatus->type].blk1size;
+
+		vStatus->size1 = blk1size;
+		vStatus->size2 = 0;
+		sendSize = sizeof(MCSRSDCOMM_HEADER_SIZE) + sizeof(MCSDATA_TEXVRAMSTATUS);
+		GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sendSize);
+		if(vStatus->size1){
+			//OS_Printf("texvram_plt send 1\n");
+			GFL_MCS_Write(GFL_MCS_RESIDENT_ID, (void*)(blk1adrs << 12), (blk1size << 12));
+		}
+		// パレットスロットの復帰
+		GX_SetBankForTexPltt(stTexPlt);
 	}
-
-	// テクスチャスロットの復帰
-	GX_SetBankForTex(stTex);
-
 	return TRUE;
 }
 

@@ -111,6 +111,12 @@ static SOUNDMAN_PRESET_HANDLE*	systemPresetHandle;
 static SOUNDMAN_PRESET_HANDLE*	usrPresetHandle1;
 static PMSND_SEPLAYER_DATA			sePlayerData[SEPLAYER_MAX];
 //static OSMutex									sndTreadMutex;		
+//
+#ifdef PM_DEBUG
+static u32 heapRemainsAfterSys;
+static u32 heapRemainsAfterPlayer;
+static u32 heapRemainsAfterPresetSE;
+#endif
 
 #define THREAD_STACKSIZ		(0x1000)
 OSThread		soundLoadThread;
@@ -144,8 +150,14 @@ void	PMSND_Init( void )
 
 	// サウンドの設定
 	NNS_SndArcInitWithResult( &PmSoundArc, "wb_sound_data.sdat", PmSndHeapHandle, FALSE );
+#ifdef PM_DEBUG
+	heapRemainsAfterSys = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
+#endif
 	// サウンドプレーヤーの設定（サウンドデータに定義されているものを参照する）
 	NNS_SndArcPlayerSetup(PmSndHeapHandle);
+#ifdef PM_DEBUG
+	heapRemainsAfterPlayer = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
+#endif
 	// サウンド管理初期化
 	SOUNDMAN_Init(&PmSndHeapHandle);
 
@@ -168,10 +180,9 @@ void	PMSND_Init( void )
 	// 常駐サウンドデータ読み込み
 	systemPresetHandle = SOUNDMAN_PresetGroup(GROUP_GLOBAL);
 	usrPresetHandle1 = NULL;
-	{
-		u32 size = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
-		OS_Printf("setup Sound... size(%x) soundHeap remains(%x)\n", SOUND_HEAP_SIZE - size, size);
-	}
+#ifdef PM_DEBUG
+	heapRemainsAfterPresetSE = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
+#endif
 	debugBGMsetFlag = FALSE;
 }
 
@@ -214,6 +225,14 @@ void	PMSND_Exit( void )
  *
  */
 //============================================================================================
+#ifdef PM_DEBUG
+u32 PMSND_GetSndHeapSize( void )									{ return SOUND_HEAP_SIZE; }
+u32 PMSND_GetSndHeapRemainsAfterSys( void )				{ return heapRemainsAfterSys; }
+u32 PMSND_GetSndHeapRemainsAfterPlayer( void )		{ return heapRemainsAfterPlayer; }
+u32 PMSND_GetSndHeapRemainsAfterPresetSE( void )	{ return heapRemainsAfterPresetSE; }
+u32 PMSND_GetSEPlayerNum( void )									{ return SEPLAYER_MAX; }
+#endif
+
 u32 PMSND_GetSndHeapFreeSize( void )
 {
 	return NNS_SndHeapGetFreeSize(PmSndHeapHandle);

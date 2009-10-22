@@ -54,6 +54,14 @@ extern void	PMSND_Main( void );
 extern void	PMSND_Exit( void );
 
 //	èÓïÒéÊìæ
+#ifdef PM_DEBUG
+extern u32 PMSND_GetSndHeapSize( void );
+extern u32 PMSND_GetSndHeapRemainsAfterSys( void );
+extern u32 PMSND_GetSndHeapRemainsAfterPlayer( void );
+extern u32 PMSND_GetSndHeapRemainsAfterPresetSE( void );
+extern u32 PMSND_GetSEPlayerNum( void );
+#endif
+extern u32						PMSND_GetSndHeapSize( void );
 extern u32						PMSND_GetSndHeapFreeSize( void );
 extern NNSSndHandle*	PMSND_GetNowSndHandlePointer( void );
 extern NNSSndHandle*	PMSND_GetBGMhandlePointer( void );

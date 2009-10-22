@@ -191,6 +191,17 @@ int		SOUNDMAN_GetHierarchyPlayerSoundHeapLv( void )
 	return player->heapLvFull;
 }
 
+u32		SOUNDMAN_GetHierarchyPlayerSoundIdxByPlayerID( int playerID )
+{
+	PLAYER_HIERARCHY* player = &sndHierarchyArray[playerID];
+
+	if( playerID > sndHierarchyArrayPos ){ return 0; }
+	if( player->active == FALSE ){ return 0; }
+	if( player->soundIdx == PLAYER_HIERARCHY_EMPTY ){ return 0; }
+
+	return player->soundIdx;
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  *
