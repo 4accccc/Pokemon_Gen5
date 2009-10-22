@@ -559,6 +559,21 @@ void PMSDAT_SetDebug( PMS_DATA* pms )
 	pms->word[1] = 1041;
 }
 
+void PMSDAT_SetDebugRandomDeco( PMS_DATA* pms, HEAPID heapID )
+{ 
+	// ランダムにデコメ簡易会話データをつっこむ
+  int i;
+  u32 max;
+
+  max = get_include_word_max( pms->sentence_type, pms->sentence_id, heapID );
+
+	pms->sentence_type = GFL_STD_MtRand(4);
+	pms->sentence_id = GFL_STD_MtRand(5);
+  for( i=0; i<max; i++ )
+  {
+    PMSDAT_SetDeco( pms, i, GFL_STD_MtRand(10) + 1 );
+  }
+}
 
 void PMSDAT_SetDebugRandom( PMS_DATA* pms )
 {

@@ -325,6 +325,7 @@ extern void PMSDAT_ClearUnnecessaryWord( PMS_DATA* pms , const HEAPID heapID );
  */
 //------------------------------------------------------------------
 extern void PMSDAT_SetDebug( PMS_DATA* pms );   // 固定
+extern void PMSDAT_SetDebugRandomDeco( PMS_DATA* pms, HEAPID heapID ); //ランダムデコメ
 extern void PMSDAT_SetDebugRandom( PMS_DATA* pms ); // ランダム
 
 #endif

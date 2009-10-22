@@ -77,7 +77,7 @@ static u32 _obj_get_nanr( CLSYS_DRAW_TYPE vram_type );
 static void _obj_loadres( PMS_DRAW_OBJ* obj, u8 pltt_ofs, HEAPID heap_id );
 static void _obj_unloadres( PMS_DRAW_OBJ* obj );
 static GFL_CLWK* _obj_create( PMS_DRAW_OBJ* obj, HEAPID heap_id );
-static void _obj_set_deco( GFL_CLWK* act, GFL_BMPWIN* win, u8 width, u8 line, PMS_DECO_ID deco_id );
+static void _obj_set_deco( GFL_CLWK* act, GFL_BMPWIN* win, u8 width, u8 line, PMS_DECO_ID deco_id, GFL_POINT* offset );
 static void _unit_init( PMS_DRAW_UNIT* unit, PMS_DRAW_OBJ* obj, HEAPID heap_id );
 static void _unit_exit( PMS_DRAW_UNIT* unit );
 static BOOL _unit_main( PMS_DRAW_UNIT* unit, PRINT_QUE* que );
@@ -235,6 +235,8 @@ void PMS_DRAW_PrintOffset( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8
 
   GF_ASSERT( wk && win && pms );
   GF_ASSERT( id < wk->unit_num );
+
+  HOSAKA_Printf("print id=%d \n", id);
 
   _unit_print( &wk->unit[id], wk->print_que, wk->font, win, pms, offset, wk->heap_id );
     
@@ -460,7 +462,7 @@ static void _obj_loadres( PMS_DRAW_OBJ* obj, u8 pltt_ofs, HEAPID heap_id )
   handle	= GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, heap_id );
 
 	//リソース読みこみ
-	obj->obj_ncl	= GFL_CLGRP_PLTT_Register( handle, NARC_pmsi_pms2_obj_dekome_NCLR, obj->vram_type, 0x20*pltt_ofs, heap_id );
+	obj->obj_ncl	= GFL_CLGRP_PLTT_RegisterEx( handle, NARC_pmsi_pms2_obj_dekome_NCLR, obj->vram_type, 0x20*pltt_ofs, 0, PMS_DRAW_OBJ_PLTT_NUM, heap_id );
   obj->obj_ncg = GFL_CLGRP_CGR_Register( handle, NARC_pmsi_pms2_obj_dekome_NCGR, FALSE, obj->vram_type, heap_id );
   obj->obj_nce = GFL_CLGRP_CELLANIM_Register( handle, res_ncer, res_nanr, heap_id );
 
@@ -508,6 +510,7 @@ static GFL_CLWK* _obj_create( PMS_DRAW_OBJ* obj, HEAPID heap_id )
       );
 
   GFL_CLACT_WK_SetDrawEnable( act, FALSE );
+  GFL_CLACT_WK_SetAutoAnmFlag( act, TRUE );
 
   return act;
 }
@@ -519,11 +522,12 @@ static GFL_CLWK* _obj_create( PMS_DRAW_OBJ* obj, HEAPID heap_id )
  *	@param	GFL_CLWK* act
  *	@param	win
  *	@param	deco_id 
+ *	@param	offset 
  *
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-static void _obj_set_deco( GFL_CLWK* act, GFL_BMPWIN* win, u8 width, u8 line, PMS_DECO_ID deco_id )
+static void _obj_set_deco( GFL_CLWK* act, GFL_BMPWIN* win, u8 width, u8 line, PMS_DECO_ID deco_id, GFL_POINT* offset )
 {
   u8 frame;
   GFL_CLACTPOS pos;
@@ -531,15 +535,14 @@ static void _obj_set_deco( GFL_CLWK* act, GFL_BMPWIN* win, u8 width, u8 line, PM
   GF_ASSERT( deco_id > PMS_DECOID_NULL && deco_id < PMS_DECOID_MAX );
   
   frame = GFL_BMPWIN_GetFrame( win );
-  pos.x = GFL_BMPWIN_GetPosX( win ) * 8 + width;
-  pos.y = GFL_BMPWIN_GetPosY( win ) * 8 + line * 16;
+  pos.x = GFL_BMPWIN_GetPosX( win ) * 8 + width + offset->x;
+  pos.y = GFL_BMPWIN_GetPosY( win ) * 8 + line * 16 + offset->y;
 
   HOSAKA_Printf("pos=%d,%d line=%d width=%d \n",pos.x, pos.y, line, width);
 
   GFL_CLACT_WK_SetPos( act, &pos, BGFrameToVramType( frame ) );
   GFL_CLACT_WK_SetBgPri( act, GFL_BG_GetPriority( frame ) );
   GFL_CLACT_WK_SetAnmSeq( act, deco_id-1 ); // アニメは0オリジン
-  GFL_CLACT_WK_SetAutoAnmFlag( act, TRUE );
 }
 
 //-----------------------------------------------------------------------------
@@ -576,12 +579,7 @@ static void _unit_init( PMS_DRAW_UNIT* unit, PMS_DRAW_OBJ* obj, HEAPID heap_id )
 static void _unit_exit( PMS_DRAW_UNIT* unit )
 {
   int i;
-  GFL_BMPWIN* win;
 
-  win = unit->print_util.win;
-
-  GF_ASSERT( win );
-  
   for( i=0; i<PMS_WORD_MAX; i++ )
   {
     // アクター解放
@@ -667,7 +665,7 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
         line  = PRINTSYS_GetTagLine( buf, i );
 
         // デコメアクター設定
-        _obj_set_deco( unit->clwk[i], win, width, line, deco_id );
+        _obj_set_deco( unit->clwk[i], win, width, line, deco_id, offset );
 
         unit->b_clwk_deco[i] = TRUE;
       }

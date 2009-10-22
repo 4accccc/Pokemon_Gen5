@@ -1701,7 +1701,7 @@ static void UITemplate_PMSDRAW_Init( UI_TEMPLATE_MAIN_WORK* wk )
     {
       wk->pms_win[i] = GFL_BMPWIN_Create(
           BG_FRAME_TEXT_S,					// ＢＧフレーム
-          2, 0 + 6 * i,					  	// 表示座標(キャラ単位)
+          2+4*i, 0 + 6 * i,					  	// 表示座標(キャラ単位)
           28, 4,    							  // 表示サイズ
           15,												// パレット
           GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
@@ -1719,6 +1719,9 @@ static void UITemplate_PMSDRAW_Init( UI_TEMPLATE_MAIN_WORK* wk )
     PMSDAT_SetDeco( &pms, 0, PMS_DECOID_TANKS );
     PMSDAT_SetDeco( &pms, 1, PMS_DECOID_LOVE );
     PMS_DRAW_Print( wk->pms_draw, wk->pms_win[2], &pms ,2 );
+    
+    // 1の要素を2にコピー(移動表現などにご使用ください。)
+    PMS_DRAW_Copy( wk->pms_draw, 1, 2 );
   }
 }
 
@@ -1754,7 +1757,7 @@ static void UITemplate_PMSDRAW_Exit( UI_TEMPLATE_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void UITemplate_PMSDRAW_Proc( UI_TEMPLATE_MAIN_WORK* wk )
 {
-#if 0
+#if 1
   // SELECTでクリア
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
