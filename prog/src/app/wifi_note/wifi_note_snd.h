@@ -18,7 +18,7 @@
 
 // SE用定義
 //#define WIFINOTE_MOVE_SE		(SEQ_SE_SELECT)
-#define WIFINOTE_MOVE_SE		(SEQ_SE_BUTTON3)
+#define WIFINOTE_MOVE_SE		(SEQ_SE_SELECT1)  //仮
 
 #define WIFINOTE_MENU_MOVE_SE	(SEQ_SE_SELECT1)	// メニューの移動音
 
@@ -34,7 +34,7 @@
 
 #define WIFINOTE_MENU_BS_SE		(SEQ_SE_SELECT1)	// メニューのキャンセル
 
-#define WIFINOTE_CLEAN_SE		(SEQ_SE_UG_025)	// 消しゴムで消す音
+#define WIFINOTE_CLEAN_SE		(SEQ_SE_SELECT1)	// 消しゴムで消す音 仮
 
 //#define WIFINOTE_SCRLL_SE		(SEQ_SE_BOX02)	// スクロール音
 #define WIFINOTE_SCRLL_SE		(SEQ_SE_SELECT1)	// スクロール音
