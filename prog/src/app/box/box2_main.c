@@ -638,6 +638,14 @@ void BOX2MAIN_BgGraphicLoad( BOX2_SYS_WORK * syswk )
 		GFL_BG_FRAME0_M, BOX2MAIN_SYSWIN_CGX_POS,
 		BOX2MAIN_BG_PAL_TALKWIN, MENU_TYPE_SYSTEM, HEAPID_BOX_APP );
 
+	// フォントパレット
+	GFL_ARC_UTIL_TransVramPalette(
+		ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
+		BOX2MAIN_BG_PAL_TALKFNT*0x20, 0x20, HEAPID_BOX_APP );
+	GFL_ARC_UTIL_TransVramPalette(
+		ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+		BOX2MAIN_BG_PAL_SYSFNT_S*0x20, 0x20, HEAPID_BOX_APP );
+
 /*
 	BOX2_APP_WORK * appwk;
 	WINTYPE	wt;
@@ -780,7 +788,7 @@ void BOX2MAIN_YesNoWinInit( BOX2_SYS_WORK * syswk )
   syswk->app->ynList[1].type     = APP_TASKMENU_WIN_TYPE_NORMAL;
 
 	syswk->app->ynRes = APP_TASKMENU_RES_Create(
-												GFL_BG_FRAME0_M, BOX2MAIN_BG_PAL_TALKWIN,
+												GFL_BG_FRAME0_M, BOX2MAIN_BG_PAL_YNWIN,
 												syswk->app->font, syswk->app->que, HEAPID_BOX_APP );
 }
 

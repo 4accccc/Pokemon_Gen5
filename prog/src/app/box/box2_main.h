@@ -39,7 +39,7 @@
 //============================================================================================
 
 // BGパレット
-//#define	BOX2MAIN_BG_PAL_YNWIN	( 8 )		// はい・いいえウィンド（２本）
+#define	BOX2MAIN_BG_PAL_YNWIN		( 9 )		// はい・いいえウィンド
 #define	BOX2MAIN_BG_PAL_TALKWIN	( 10 )
 #define	BOX2MAIN_BG_PAL_TALKFNT	( 11 )
 #define	BOX2MAIN_BG_PAL_SELWIN	( 12 )		// 選択ボタン（２本）

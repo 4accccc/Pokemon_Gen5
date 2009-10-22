@@ -296,9 +296,13 @@
 #define	FCOL_N_BLUE				( PRINTSYS_LSB_Make(5,6,0) )				// フォントカラー：青抜
 #define	FCOL_N_RED				( PRINTSYS_LSB_Make(3,4,0) )				// フォントカラー：赤抜
 #define	FCOL_TRAYNAME			( PRINTSYS_LSB_Make(2,1,0) )				// フォントカラー：ボックス名
-#define	FCOL_SELWIN_OFF		( PRINTSYS_LSB_Make(14,15,0) )			// フォントカラー：ボタン非選択時
-#define	FCOL_YSTWIN				( PRINTSYS_LSB_Make(9,10,0) )				// フォントカラー：Ｙステータスボタン
-#define	FCOL_FRMBUTTN_OFF	( PRINTSYS_LSB_Make(9,10,FRMBUTTON_BG_COL) )	// フォントカラー：フレーム内ボタン
+//#define	FCOL_SELWIN_OFF		( PRINTSYS_LSB_Make(14,15,0) )			// フォントカラー：ボタン非選択時
+#define	FCOL_SELWIN_OFF		( PRINTSYS_LSB_Make(15,12,0) )			// フォントカラー：ボタン非選択時
+//#define	FCOL_YSTWIN				( PRINTSYS_LSB_Make(9,10,0) )				// フォントカラー：Ｙステータスボタン
+#define	FCOL_YSTWIN				( PRINTSYS_LSB_Make(10,15,0) )				// フォントカラー：Ｙステータスボタン
+#define	FCOL_RED_BUTTON		( PRINTSYS_LSB_Make(10,12,0) )				// フォントカラー：赤ボタン
+//#define	FCOL_FRMBUTTN_OFF	( PRINTSYS_LSB_Make(9,10,FRMBUTTON_BG_COL) )	// フォントカラー：フレーム内ボタン
+#define	FCOL_FRMBUTTN_OFF	( PRINTSYS_LSB_Make(10,15,FRMBUTTON_BG_COL) )	// フォントカラー：フレーム内ボタン
 #define	FCOL_SUB_WIN			( PRINTSYS_LSB_Make(1,2,0) )				// フォントカラー：上画面ウィンドウ用
 
 
@@ -311,8 +315,8 @@ enum {
 };
 */
 
-#define	POKE_NOMARK_PY	( 5 )		//「No.」表示Y座標
-#define	POKE_LVMARK_PY	( 5 )		// レベル表示Ｙ座標
+#define	POKE_NOMARK_PY	( 3 )		//「No.」表示Y座標
+#define	POKE_LVMARK_PY	( 3 )		// レベル表示Ｙ座標
 
 #define	TITLE_STR_PY	( 8 )	// タイトル表示Y座標
 
@@ -1132,7 +1136,7 @@ u32 BOX2BMP_PokeSkillWrite( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info )
 				GFL_BMP_Delete( rect );
 			}
 			StrPrint(
-				syswk->app, winID, man, info->waza[i], 0, 0, syswk->app->font, FCOL_SUB_WIN );
+				syswk->app, winID+i, man, info->waza[i], 0, 0, syswk->app->font, FCOL_SUB_WIN );
 		}
 		syswk->app->subdisp_waza_put = 1;
 
@@ -1373,7 +1377,7 @@ static void ButtonPut( BOX2_SYS_WORK * syswk, u32 winID, const u32 strID, u8 mod
 	}
 	PRINTTOOL_PrintColor(
 		&syswk->app->win[winID], syswk->app->que, 
-		px, 0, str, syswk->app->font, col, PRINTTOOL_MODE_CENTER );
+		px, 0, str, syswk->app->font, col, mode );
 	GFL_STR_DeleteBuffer( str );
 
 //	GFL_BMPWIN_TransVramCharacter( win );
@@ -1921,7 +1925,7 @@ static void PokeMoveButtonPut( BOX2_SYS_WORK * syswk, u32 winID, u32 strID )
 	str = GFL_MSG_CreateString( syswk->app->mman, strID );
 	PRINTTOOL_PrintColor(
 		&syswk->app->win[winID], syswk->app->que, 
-		sx*8/2, 4, str, syswk->app->font, FCOL_YSTWIN, PRINTTOOL_MODE_CENTER );
+		sx*8/2, 4, str, syswk->app->font, FCOL_RED_BUTTON, PRINTTOOL_MODE_CENTER );
 	GFL_STR_DeleteBuffer( str );
 
 //	GFL_BMPWIN_TransVramCharacter( win );
