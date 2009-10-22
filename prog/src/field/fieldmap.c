@@ -1707,15 +1707,19 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 #define	PRO_MAT_Z_OFS	(310)
 static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
 {
+#ifdef PM_DEBUG  
   {
     s32 check;
     //ラインズオーバーチェック
     check = G3X_IsLineBufferUnderflow();
-    GF_ASSERT_MSG( check == 0, "LINES OVER" );
+//    GF_ASSERT_MSG( check == 0, "LINES OVER" );
+    if (check) OS_Printf("LINES OVER\n");
     //ポリゴンリストRAM, 頂点RAMのオーバーフローチェック
     check = G3X_IsListRamOverflow();
-    GF_ASSERT_MSG( check == 0, "POLY_VTX_OVER" );
+//    GF_ASSERT_MSG( check == 0, "POLY_VTX_OVER" );
+    if (check) OS_Printf("POLY_VTX_OVER\n");
   }
+#endif  //PM_DEBUG
 
 	FIELD_FOG_Reflect( fieldWork->fog );
 	FIELD_LIGHT_Reflect( fieldWork->light );
@@ -1770,6 +1774,11 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
       FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 0);
     }else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
       FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 1);
+    }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
+/**
+      FLD3D_CI_FlySkyCameraDebug(
+          fieldWork->gsys, fieldWork->Fld3dCiPtr, fieldWork->camera_control, FIELDMAP_GetFieldPlayer(fieldWork) );
+*/          
     }
   }
 
