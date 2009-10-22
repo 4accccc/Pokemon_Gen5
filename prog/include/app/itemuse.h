@@ -35,7 +35,6 @@ enum BAG_NEXTPROC_ENUM
   BAG_NEXTPROC_DROPCYCLE,  //‚¨‚è‚é
   BAG_NEXTPROC_EVOLUTION,  //‚µ‚ñ‚©
   BAG_NEXTPROC_PALACEJUMP, //ƒpƒŒƒXˆÚ“®
-  BAG_NEXTPROC_SELL,       //‚¤‚é
 };
 
 
