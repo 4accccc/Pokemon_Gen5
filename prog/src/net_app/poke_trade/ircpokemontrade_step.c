@@ -71,6 +71,7 @@ static void	_FIELD_StartPaletteFade( _EFFTOOL_PAL_FADE_WORK* epfw, u8 start_evy,
 static _EFFTOOL_PAL_FADE_WORK* _createPaletteFade(GFL_G3D_RES* g3DRES,HEAPID heapID);
 static void	_freePaletteFade( _EFFTOOL_PAL_FADE_WORK* pwk );
 static void  _EFFTOOL_CalcPaletteFade( _EFFTOOL_PAL_FADE_WORK *epfw );
+static void _pokeMoveRenew(_POKEMCSS_MOVE_WORK* pPoke,int time, const VecFx32* pPos);
 static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, HEAPID heapID);
 static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove);
 
@@ -481,7 +482,18 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
     //移動設定
   }
 
-
+  if(pWork->anmCount == _POKE_APPEAR_START2){
+    VecFx32 apos;
+    apos.x = _POKEMON_PLAYER_UP_POSX;
+    apos.y = _POKEMON_PLAYER_UP_POSY;
+    apos.z = _POKEMON_PLAYER_UP_POSZ;
+    _pokeMoveRenew(pWork->pMoveMcss[0],_POKE_APPEAR_TIME2,&apos);
+    apos.x = _POKEMON_FRIEND_DOWN_POSX;
+    apos.y = _POKEMON_FRIEND_DOWN_POSY;
+    apos.z = _POKEMON_FRIEND_DOWN_POSZ;
+    _pokeMoveRenew(pWork->pMoveMcss[1],_POKE_APPEAR_TIME2,&apos);
+  }
+  
   if(_POKE_SIDEOUT_START == pWork->anmCount){
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
     pWork->pMoveMcss[0]=NULL;
@@ -519,7 +531,7 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
       apos.y = _POKEMON_PLAYER_SIDEIN_POSY;
       apos.z = _POKEMON_PLAYER_SIDEIN_POSZ;
       pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], _POKE_SIDEIN_TIME, &apos, pWork->heapID);
-      MCSS_SetAnmStopFlag(pWork->pokeMcss[0]);
+      //MCSS_SetAnmStopFlag(pWork->pokeMcss[0]);
     }
   }
   if(_POKE_SIDEIN_START+1 == pWork->anmCount){
@@ -545,7 +557,7 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
       apos.x *= _POKMEON_SCALE_SIZE;
       apos.y *= _POKMEON_SCALE_SIZE;
       MCSS_SetScale( pWork->pokeMcss[1], &apos );
-      MCSS_SetAnmStopFlag(pWork->pokeMcss[1]);
+      //MCSS_SetAnmStopFlag(pWork->pokeMcss[1]);
 
     }
   }
@@ -941,6 +953,26 @@ static void  _EFFTOOL_CalcPaletteFade( _EFFTOOL_PAL_FADE_WORK *epfw )
 
 //-------------------------------------------------
 /**
+ *	@brief      MCSS移動命令
+ *	@param[in,out]	_POKEMCSS_MOVE_WORK   移動ポインタ
+ *	@param[in]	time   移動時間
+ *	@param[in]	pPos    最終移動先
+ */
+//-------------------------------------------------
+
+static void _pokeMoveRenew(_POKEMCSS_MOVE_WORK* pPoke,int time, const VecFx32* pPos)
+{
+  {
+    VecFx32 apos;
+    MCSS_GetPosition(pPoke->pMcss, &apos);
+    pPoke->time = time;
+    GFL_STD_MemCopy(pPos, &pPoke->end, sizeof(VecFx32));
+    GFL_STD_MemCopy(&apos, &pPoke->start, sizeof(VecFx32));
+  }
+}
+
+//-------------------------------------------------
+/**
  *	@brief      MCSS移動命令作成
  *	@param[in]	pokeMcss   対象MCSS
  *	@param[in]	time   移動時間
@@ -954,16 +986,11 @@ static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const
   _POKEMCSS_MOVE_WORK* pPoke = GFL_HEAP_AllocClearMemory(heapID, sizeof(_POKEMCSS_MOVE_WORK));
 
   pPoke->pMcss = pokeMcss;
-  {
-    VecFx32 apos;
-    MCSS_GetPosition(pPoke->pMcss, &apos);
-    pPoke->time = time;
-    GFL_STD_MemCopy(pPos, &pPoke->end, sizeof(VecFx32));
-    GFL_STD_MemCopy(&apos, &pPoke->start, sizeof(VecFx32));
-  }
+  _pokeMoveRenew(pPoke,time,pPos);
   return pPoke;
 
 }
+
 //-------------------------------------------------
 /**
  *	@brief      MCSS移動命令実行

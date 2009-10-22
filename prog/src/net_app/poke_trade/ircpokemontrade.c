@@ -36,6 +36,7 @@
 
 #include "msg/msg_poke_trade.h"
 #include "msg/msg_chr.h"
+#include "msg/msg_trade_head.h"
 #include "ircbattle.naix"
 #include "trade.naix"
 #include "net_app/connect_anm.h"
@@ -1917,7 +1918,7 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
     // パネルスクロール
     if((x >=  64) && ((192) > x)){
       if((y >=  152+12) && ((176+12) > y)){
-        if(pWork->touckON){
+        if(pWork->touchON){
           pWork->BoxScrollNum -= (x - pWork->x)*2;
           if(0 > pWork->BoxScrollNum){
             pWork->BoxScrollNum+=TOTAL_DOT_MAX;
@@ -1937,10 +1938,10 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
     }
     pWork->x = x;
     pWork->y = y;
-    pWork->touckON = TRUE;
+    pWork->touchON = TRUE;
   }
   else{
-    pWork->touckON = FALSE;
+    pWork->touchON = FALSE;
   }
 
   TOUCHBAR_Main(pWork->pTouchWork);

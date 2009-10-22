@@ -40,7 +40,9 @@
 #define _POKEMON_DELETE_TIME   (5)     // 絵コンテ３番  ポケモンを消す
 
 #define _POKE_APPEAR_START   (470)   //絵コンテ８番  ポケモン登場 自分のは裏
-#define _POKE_APPEAR_TIME    (20)       //絵コンテ８番  ポケモン登場移動時間
+#define _POKE_APPEAR_TIME    (23)       //絵コンテ８番  ポケモン登場移動時間
+#define _POKE_APPEAR_START2   (485)   //絵コンテ９番     さらにゆっくり移動
+#define _POKE_APPEAR_TIME2   (40)       //絵コンテ９番  さらにゆっくり移動
 #define _POKE_SIDEOUT_START   (530)  //絵コンテ１０番  ポケモン左右に移動していく
 #define _POKE_SIDEOUT_TIME    (90)      //絵コンテ１０番  ポケモン登場移動時間
 #define _POKE_SIDEIN_START   (620)   //絵コンテ１１番  ポケモン左右に移動して戻ってくる
@@ -91,6 +93,7 @@
 #define _POKEMON_FRIEND_DOWN_POSY _MCSS_POS_Y( 0)              // 相手のポケモンのY
 #define _POKEMON_FRIEND_DOWN_POSZ _POKEMON_FRIEND_APPEAR_POSZ  // 相手のポケモンのZ
 
+
 //絵コンテ１０番
 #define _POKEMON_PLAYER_SIDEOUT_POSX _MCSS_POS_X(-140)           // 自分のポケモンのX
 #define _POKEMON_PLAYER_SIDEOUT_POSY _POKEMON_PLAYER_UP_POSY    // 自分のポケモンのY
@@ -125,4 +128,4 @@
 
 
 //手前のポケモンのサイズ
-#define _POKMEON_SCALE_SIZE   (1.2)
+#define _POKMEON_SCALE_SIZE   (1.5)

@@ -456,7 +456,7 @@ struct _IRC_POKEMON_TRADE{
   short oldLine; //Œ»İ‚Ì•`‰æLine XVƒgƒŠƒK
 
   BOOL bgscrollRenew;
-  BOOL touckON;
+  BOOL touchON;
   int bgscroll;
   int ringLineNo;
 

@@ -746,6 +746,20 @@ void IRC_POKETRADE_CursorEnable(IRC_POKEMON_TRADE* pWork,int line,int index)
 }
 
 
+
+#if 0
+static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork)
+{
+  if(pWork->selectMoji){
+    int i=pWork->selectMoji-1;
+  
+    GFL_MSG_GetString(  pWork->pMsgData, POKETRADE_STR_53+i, pWork->pStrBuf );
+
+  //  pWork->selectMoji;
+  }
+}
+#endif
+
 //ラインにあわせたポケモン表示
 static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_MANAGER* boxData ,int line, int k)
 {
