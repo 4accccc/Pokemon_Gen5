@@ -108,6 +108,8 @@
 #include "../../../prog/src/field/fldmmdl_code.h"
 #include "../../../prog/arc/fieldmap/fldmmdl_objcode.h"
 
+//Ž©‹@ŠÖ˜A
+#include "../../../prog/src/field/field_player_code.h"
 //•ûŒü
 #include "../../../prog/include/field/field_dir.h"
 
@@ -134,7 +136,6 @@
 #include "../../../prog/include/poke_tool/poketype_def.h"
 
 #if 0 //wb null
-
 #include "../../../include/pm_version.h"
 
 //include/field

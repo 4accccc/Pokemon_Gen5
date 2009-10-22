@@ -1293,6 +1293,20 @@
 	.short	\dir
 	.endm
 
+//--------------------------------------------------------------
+/**
+ * @def _PLAYER_REQUEST
+ * @brief 自機にリクエストを出す
+ * @param reqbit FIELD_PLAYER_REQBIT_NORMAL等
+ */
+//--------------------------------------------------------------
+#define _PLAYER_REQUEST( reqbit ) _ASM_PLAYER_REQUEST reqbit
+
+  .macro  _ASM_PLAYER_REQUEST reqbit
+  .short  EV_SEQ_PLAYER_REQUEST
+  .short  \reqbit
+  .endm
+
 //======================================================================
 //  動作モデル　イベント関連
 //======================================================================
@@ -2208,7 +2222,7 @@
  *  @param speed フェードスピード 0～
  */
 //--------------------------------------------------------------
-#define _WHITE_OUT( speed ) _DISP_FADE_START( DISP_FADE_WHITEOUT_MAIN,0,16,speed )
+#define _WHITE_OUT( speed ) _DISP_FADE_START( DISP_FADE_WHITEOUT,0,16,speed )
 
 //--------------------------------------------------------------
 /**
@@ -2217,7 +2231,7 @@
  *  @param speed フェードスピード 0～
  */
 //--------------------------------------------------------------
-#define _WHITE_IN( speed ) _DISP_FADE_START( DISP_FADE_WHITEOUT_MAIN,16,0,speed )
+#define _WHITE_IN( speed ) _DISP_FADE_START( DISP_FADE_WHITEOUT,16,0,speed )
 
 //--------------------------------------------------------------
 /**
@@ -2226,7 +2240,7 @@
  *  @param  speed フェードスピード 0～
  */
 //--------------------------------------------------------------
-#define _BLACK_OUT( speed ) _DISP_FADE_START( DISP_FADE_BLACKOUT_MAIN,0,16,speed )
+#define _BLACK_OUT( speed ) _DISP_FADE_START( DISP_FADE_BLACKOUT,0,16,speed )
 
 //--------------------------------------------------------------
 /**
@@ -2235,7 +2249,7 @@
  *  @param  speed フェードスピード 0～
  */
 //--------------------------------------------------------------
-#define _BLACK_IN( speed ) _DISP_FADE_START( DISP_FADE_BLACKOUT_MAIN,16,0,speed )
+#define _BLACK_IN( speed ) _DISP_FADE_START( DISP_FADE_BLACKOUT,16,0,speed )
 
 //======================================================================
 //  アイテム関連
