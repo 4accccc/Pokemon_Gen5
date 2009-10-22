@@ -13,7 +13,6 @@ SUBDIRS	=	wmi \
 			trmsg \
 			sound \
 			bag \
-		  trade \
 			test_layout \
 			test_graphic\
 			place_name \
@@ -88,6 +87,7 @@ SUBDIRS	=	wmi \
 			namein \
             box \
 			battle_championship \
+			trade \
 			waza_oshie \
 			sodateya
 

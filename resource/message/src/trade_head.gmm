@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-10-22T10:44:33"/>
+	<create user="ohno" host="W00141" date="2009-10-22T11:44:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,26 +334,31 @@
 
 
 	<row id="TRADE_HEAD_STR_01">
+		<comment>-</comment>
 		<language name="JPN" width="256">ア</language>
 		<language name="JPN_KANJI" width="256">ア</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_02">
+		<comment>-</comment>
 		<language name="JPN" width="256">イ</language>
 		<language name="JPN_KANJI" width="256">イ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_03">
+		<comment>-</comment>
 		<language name="JPN" width="256">ウ</language>
 		<language name="JPN_KANJI" width="256">ウ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_04">
+		<comment>-</comment>
 		<language name="JPN" width="256">エ</language>
 		<language name="JPN_KANJI" width="256">エ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_05">
+		<comment>-</comment>
 		<language name="JPN" width="256">オ</language>
 		<language name="JPN_KANJI" width="256">オ</language>
 	</row>
@@ -449,26 +454,31 @@
 	</row>
 
 	<row id="TRADE_HEAD_STR_21">
+		<comment>-</comment>
 		<language name="JPN" width="256">ナ</language>
 		<language name="JPN_KANJI" width="256">ナ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_22">
+		<comment>-</comment>
 		<language name="JPN" width="256">ニ</language>
 		<language name="JPN_KANJI" width="256">ニ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_23">
+		<comment>-</comment>
 		<language name="JPN" width="256">ヌ</language>
 		<language name="JPN_KANJI" width="256">ヌ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_24">
+		<comment>-</comment>
 		<language name="JPN" width="256">ネ</language>
 		<language name="JPN_KANJI" width="256">ネ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_25">
+		<comment>-</comment>
 		<language name="JPN" width="256">ノ</language>
 		<language name="JPN_KANJI" width="256">ノ</language>
 	</row>
@@ -493,8 +503,8 @@
 
 	<row id="TRADE_HEAD_STR_29">
 		<comment>ペ,ベ</comment>
-		<language name="JPN" width="256">へ</language>
-		<language name="JPN_KANJI" width="256">へ</language>
+		<language name="JPN" width="256">ヘ</language>
+		<language name="JPN_KANJI" width="256">ヘ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_30">
@@ -504,71 +514,85 @@
 	</row>
 
 	<row id="TRADE_HEAD_STR_31">
+		<comment>-</comment>
 		<language name="JPN" width="256">マ</language>
 		<language name="JPN_KANJI" width="256">マ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_32">
+		<comment>-</comment>
 		<language name="JPN" width="256">ミ</language>
 		<language name="JPN_KANJI" width="256">ミ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_33">
+		<comment>-</comment>
 		<language name="JPN" width="256">ム</language>
 		<language name="JPN_KANJI" width="256">ム</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_34">
+		<comment>-</comment>
 		<language name="JPN" width="256">メ</language>
 		<language name="JPN_KANJI" width="256">メ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_35">
+		<comment>-</comment>
 		<language name="JPN" width="256">モ</language>
 		<language name="JPN_KANJI" width="256">モ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_36">
+		<comment>-</comment>
 		<language name="JPN" width="256">ヤ</language>
 		<language name="JPN_KANJI" width="256">ヤ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_37">
+		<comment>-</comment>
 		<language name="JPN" width="256">ユ</language>
 		<language name="JPN_KANJI" width="256">ユ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_38">
+		<comment>-</comment>
 		<language name="JPN" width="256">ヨ</language>
 		<language name="JPN_KANJI" width="256">ヨ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_39">
+		<comment>-</comment>
 		<language name="JPN" width="256">ラ</language>
 		<language name="JPN_KANJI" width="256">ラ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_40">
+		<comment>-</comment>
 		<language name="JPN" width="256">リ</language>
 		<language name="JPN_KANJI" width="256">リ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_41">
+		<comment>-</comment>
 		<language name="JPN" width="256">ル</language>
 		<language name="JPN_KANJI" width="256">ル</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_42">
+		<comment>-</comment>
 		<language name="JPN" width="256">レ</language>
 		<language name="JPN_KANJI" width="256">レ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_43">
+		<comment>-</comment>
 		<language name="JPN" width="256">ロ</language>
 		<language name="JPN_KANJI" width="256">ロ</language>
 	</row>
 
 	<row id="TRADE_HEAD_STR_44">
+		<comment>-</comment>
 		<language name="JPN" width="256">ワ</language>
 		<language name="JPN_KANJI" width="256">ワ</language>
 	</row>
