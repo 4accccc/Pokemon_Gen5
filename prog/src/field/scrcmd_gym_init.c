@@ -47,7 +47,6 @@ VMCMD_RESULT EvCmdGymElec_Init( VMHANDLE *core, void *wk )
 {
   u16 *evt1,*evt2;
   SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   evt1 = SCRCMD_GetVMWork( core, work );
   evt2 = SCRCMD_GetVMWork( core, work );
@@ -71,7 +70,6 @@ VMCMD_RESULT EvCmdGymNormal_Init( VMHANDLE *core, void *wk )
 {
   u8 room_no;
   SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
   room_no = VMGetU16( core );
@@ -92,8 +90,10 @@ VMCMD_RESULT EvCmdGymNormal_Init( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGymAnti_Init( VMHANDLE *core, void *wk )
 {
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   GFL_OVERLAY_Load( FS_OVERLAY_ID(field_gym_init) );		//オーバーレイロード
-//  GYM_INIT_Normal(gsys, room_no);
+  GYM_INIT_Anti(gsys);
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(field_gym_init));		//オーバーレイアンロード
 
   return VMCMD_RESULT_CONTINUE;
