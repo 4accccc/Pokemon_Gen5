@@ -363,7 +363,7 @@ BOOL MAPATTR_VALUE_CheckShopShelf3( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckEncountGrassA1( const MAPATTR_VALUE val )
 {
-  return (val == 0x04);
+  return ( (val == 0x04) || (val == 0xa1) );  // 0xa1ÉåÅ[ÉãääÇËç~ÇËëêÇﬁÇÁ
 }
 
 //--------------------------------------------------------------
@@ -387,7 +387,7 @@ BOOL MAPATTR_VALUE_CheckEncountGrassA2( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckEncountGrassB1( const MAPATTR_VALUE val )
 {
-  return (val == 0x06);
+  return ( (val == 0x06) || (val == 0xa2) );  // 0xa2ÉåÅ[ÉãääÇËç~ÇËëêÇﬁÇÁÅ@ã≠
 }
 
 //--------------------------------------------------------------

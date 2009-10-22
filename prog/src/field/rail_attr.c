@@ -248,7 +248,11 @@ MAPATTR RAIL_ATTR_GetAttribute( const RAIL_ATTR_DATA* cp_work, const RAIL_LOCATI
 //-----------------------------------------------------------------------------
 BOOL RAIL_ATTR_VALUE_CheckSlipDown( const MAPATTR_VALUE val )
 {
-  return (val == 0xa0);
+  if( (val == 0xa0) || (val == 0xa1) || (val == 0xa2) )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 
