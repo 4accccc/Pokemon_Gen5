@@ -59,6 +59,13 @@ typedef enum
 #define NAMEIN_GROUP_LENGTH		( 7 )
 #endif
 
+// ボックス入力の長さ
+#if (PM_LANG==LANG_JAPAN)
+#define NAMEIN_BOX_LENGTH		( 8 )
+#else
+#define NAMEIN_BOX_LENGTH		( 8 )
+#endif
+
 //=============================================================================
 /**
  *	構造体
