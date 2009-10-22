@@ -1798,57 +1798,37 @@ static BOOL _isCursorInScreen(IRC_POKEMON_TRADE* pWork, int line)
 #define _NEXTPOS (_DOT_START_POS+(_BOXTRAY_MAX/2)+(_TEMOTITRAY_MAX/2)-_DOTMAX)
 
 static int centerPOS[BOX_MAX_TRAY+1]={
-    _DOT_START_POS,
     _NEXTPOS,
-    _NEXTPOS+(_BOXTRAY_MAX/2),
-    _NEXTPOS+(_BOXTRAY_MAX/2)*2,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*3,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*4,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*5,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*6,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*7,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*8,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*9,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*10,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*11,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*12,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*13,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*14,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*15,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*16,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*17,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*18,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*19,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*20,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*21,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*22,
-    _NEXTPOS+(_BOXTRAY_MAX/2)*23,
+    _NEXTPOS+(_BOXTRAY_MAX),
+    _NEXTPOS+(_BOXTRAY_MAX)*2,
+    _NEXTPOS+(_BOXTRAY_MAX)*3,
+    _NEXTPOS+(_BOXTRAY_MAX)*4,
+    _NEXTPOS+(_BOXTRAY_MAX)*5,
+    _NEXTPOS+(_BOXTRAY_MAX)*6,
+    _NEXTPOS+(_BOXTRAY_MAX)*7,
+    _NEXTPOS+(_BOXTRAY_MAX)*8,
+    _NEXTPOS+(_BOXTRAY_MAX)*9,
+    _NEXTPOS+(_BOXTRAY_MAX)*10,
+    _NEXTPOS+(_BOXTRAY_MAX)*11,
+    _NEXTPOS+(_BOXTRAY_MAX)*12,
+    _NEXTPOS+(_BOXTRAY_MAX)*13,
+    _NEXTPOS+(_BOXTRAY_MAX)*14,
+    _NEXTPOS+(_BOXTRAY_MAX)*15,
+    _NEXTPOS+(_BOXTRAY_MAX)*16,
+    _NEXTPOS+(_BOXTRAY_MAX)*17,
+    _NEXTPOS+(_BOXTRAY_MAX)*18,
+    _NEXTPOS+(_BOXTRAY_MAX)*19,
+    _NEXTPOS+(_BOXTRAY_MAX)*20,
+    _NEXTPOS+(_BOXTRAY_MAX)*21,
+    _NEXTPOS+(_BOXTRAY_MAX)*22,
+    _NEXTPOS+(_BOXTRAY_MAX)*23,
+    _DOT_START_POS,
  };
 
  
 
 static void _padLRFunc(IRC_POKEMON_TRADE* pWork)
 {
-  int i;
-  
-  if(GFL_UI_KEY_GetRepeat()==PAD_BUTTON_R ){   //ベクトルを監視
-    for(i=0;i < (BOX_MAX_TRAY+1) ; i++){
-      if(centerPOS[i] > pWork->BoxScrollNum){
-        pWork->BoxScrollNum = centerPOS[i];
-        PMSND_PlaySystemSE(POKETRADESE_CUR);
-        return;
-      }
-    }
-  }
-  if(GFL_UI_KEY_GetRepeat()==PAD_BUTTON_L ){   //ベクトルを監視
-    for(i = BOX_MAX_TRAY;i >= 0 ; i--){
-      if(centerPOS[i] < pWork->BoxScrollNum){
-        pWork->BoxScrollNum = centerPOS[i];
-        PMSND_PlaySystemSE(POKETRADESE_CUR);
-        return;
-      }
-    }
-  }
 }
 
 
@@ -1861,9 +1841,36 @@ static void _padLRFunc(IRC_POKEMON_TRADE* pWork)
 static void _padUDLRFunc(IRC_POKEMON_TRADE* pWork)
 {
   BOOL bChange=FALSE;
-  int num;
-  
-  if(GFL_UI_KEY_GetRepeat()==PAD_KEY_UP ){   //ベクトルを監視
+  int num,i;
+  int key = GFL_UI_KEY_GetRepeat();
+
+  if(key & PAD_BUTTON_R ){   //ベクトルを監視
+    for(i=0;i < (BOX_MAX_TRAY+1) ; i++){
+      if(centerPOS[i] > pWork->BoxScrollNum){
+        pWork->BoxScrollNum = centerPOS[i];
+        bChange=TRUE;
+        break;
+      }
+    }
+    if(!bChange){
+      pWork->BoxScrollNum = centerPOS[0];
+      bChange=TRUE;
+    }
+  }
+  else if(key & PAD_BUTTON_L ){   //ベクトルを監視
+    for(i = BOX_MAX_TRAY;i >= 0 ; i--){
+      if(centerPOS[i] < pWork->BoxScrollNum){
+        pWork->BoxScrollNum = centerPOS[i];
+        bChange=TRUE;
+        break;
+      }
+    }
+    if(!bChange){
+      pWork->BoxScrollNum = centerPOS[BOX_MAX_TRAY];
+      bChange=TRUE;
+    }
+  }
+  else if(GFL_UI_KEY_GetRepeat()==PAD_KEY_UP ){   //ベクトルを監視
     pWork->MainObjCursorIndex--;
     if(pWork->MainObjCursorIndex<0){
       pWork->MainObjCursorIndex=0;
@@ -1871,7 +1878,7 @@ static void _padUDLRFunc(IRC_POKEMON_TRADE* pWork)
     pWork->oldLine--;
     bChange=TRUE;
   }
-  if(GFL_UI_KEY_GetRepeat()==PAD_KEY_DOWN ){   //ベクトルを監視
+  else if(GFL_UI_KEY_GetRepeat()==PAD_KEY_DOWN ){   //ベクトルを監視
     pWork->MainObjCursorIndex++;
     if(pWork->MainObjCursorIndex >= BOX_VERTICAL_NUM){
       pWork->MainObjCursorIndex = BOX_VERTICAL_NUM-1;
@@ -1879,7 +1886,7 @@ static void _padUDLRFunc(IRC_POKEMON_TRADE* pWork)
     pWork->oldLine--;
     bChange=TRUE;
   }
-  if(GFL_UI_KEY_GetRepeat()==PAD_KEY_RIGHT ){   //ベクトルを監視
+  else if(GFL_UI_KEY_GetRepeat()==PAD_KEY_RIGHT ){   //ベクトルを監視
     pWork->MainObjCursorLine++;
     if(FALSE == _isCursorInScreen(pWork,pWork->MainObjCursorLine)){
       pWork->BoxScrollNum = _boxScrollLine2Num(pWork->MainObjCursorLine+1)-256;
@@ -1890,7 +1897,7 @@ static void _padUDLRFunc(IRC_POKEMON_TRADE* pWork)
     pWork->oldLine--;
     bChange=TRUE;
   }
-  if(GFL_UI_KEY_GetRepeat()==PAD_KEY_LEFT ){   //ベクトルを監視
+  else if(GFL_UI_KEY_GetRepeat()==PAD_KEY_LEFT ){   //ベクトルを監視
     pWork->MainObjCursorLine--;
     if(FALSE == _isCursorInScreen(pWork,pWork->MainObjCursorLine)){
       pWork->BoxScrollNum = _boxScrollLine2Num(pWork->MainObjCursorLine);
