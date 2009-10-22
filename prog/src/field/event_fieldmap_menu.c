@@ -204,6 +204,7 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk);
 static const BOOL FMenuReturnProc_PokeStatus(FMENU_EVENT_WORK* mwk);
 static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk);
 static const BOOL FMenuReturnProc_TownMap(FMENU_EVENT_WORK* mwk);
+static const BOOL FMenuReturnProc_Config(FMENU_EVENT_WORK* mwk);
 
 static void FMenuTakeFieldInfo(FMENU_EVENT_WORK* mwk);
 
@@ -247,7 +248,7 @@ static const FMENU_SUBPROC_DATA FldMapMenu_SubProcData[FMENU_APP_MAX] =
   { //  FMENU_APP_CONFIG,
     FS_OVERLAY_ID(config_panel) , 
     &ConfigPanelProcData ,
-    NULL
+    FMenuReturnProc_Config,
   },
   
   //孫呼びされるもの
@@ -714,14 +715,22 @@ static BOOL FMenuCallProc_Config( FMENU_EVENT_WORK *mwk )
 {
   //GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID, FLDMAPMENU_STR13);
   //GMEVENT_CallEvent(mwk->gmEvent, subevent);
-  GMEVENT * newEvent;
+ // GMEVENT * newEvent;
+	CONFIG_PANEL_PARAM	*config_panel;
   GAMEDATA *gameData = GAMESYSTEM_GetGameData( mwk->gmSys );
   SAVE_CONTROL_WORK *saveControl = GAMEDATA_GetSaveControlWork( gameData );
   CONFIG *config = SaveData_GetConfig( saveControl );
+	config_panel	= GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(CONFIG_PANEL_PARAM));
+/*
   newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
-      FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, config);
+      FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, config_panel);
   GMEVENT_CallEvent(mwk->gmEvent, newEvent);
-  mwk->state = FMENUSTATE_WAIT_RETURN;
+*/
+
+	mwk->subProcWork = config_panel;
+  mwk->subProcType = FMENU_APP_CONFIG;
+  mwk->state = FMENUSTATE_FIELD_FADEOUT;
+
   return TRUE;
 }
 
@@ -1079,6 +1088,25 @@ static const BOOL FMenuReturnProc_TownMap(FMENU_EVENT_WORK* mwk)
   FMenu_SetNextSubProc( mwk ,FMENU_APP_BAG , bag );
 
   return TRUE;
+}
+//--------------------------------------------------------------
+/**
+ * 子Proc後処理 コンフィグ
+ * @param mwk FMENU_EVENT_WORK
+ * @retval  BOOL  TRUE=別のProcを呼び出す(mwk->subProcTypeに次のprocを設定してください
+ *                FALSE=Fieldに戻る
+ */
+//--------------------------------------------------------------
+static const BOOL FMenuReturnProc_Config(FMENU_EVENT_WORK* mwk)
+{	
+	CONFIG_PANEL_PARAM	*config_panel;
+
+	config_panel	= mwk->subProcWork;
+
+	if(config_panel->is_exit){
+		FieldMap_SetExitSequence(mwk);
+	}
+	return FALSE;
 }
 
 

@@ -239,6 +239,7 @@ typedef enum
 	UI_INPUT_CONT_UP,		//キー上
 	UI_INPUT_CONT_DOWN,	//キー下
 	UI_INPUT_TRG_Y,	//キーY
+	UI_INPUT_TRG_X,	//キーX
 } UI_INPUT;
 
 //-------------------------------------
@@ -2123,6 +2124,10 @@ static void UI_Main( UI_WORK *p_wk )
 	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
 	{	
 		p_wk->input	= UI_INPUT_TRG_Y;
+	}
+	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+	{	
+		p_wk->input	= UI_INPUT_TRG_X;
 	}
 
 
