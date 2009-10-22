@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r05.h"
-  //.include  "r05.h"
+  .include  "r05.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,442 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r05
+_EVENT_DATA    ev_pos_r05_rival_01		//ライバル戦イベント
+_EVENT_DATA    ev_r05_champion_01
+_EVENT_DATA    ev_r05_boy3_01
+_EVENT_DATA    ev_r05_girl2_01
+_EVENT_DATA    ev_pos_r05_h02demo_01	//H02開通イベント
+_EVENT_DATA    ev_pos_r05_h02stop_01	//H02側ストッパーイベント
+_EVENT_DATA    ev_r05_cameraman_01
+_EVENT_DATA    ev_bg_r05_board_01
+_EVENT_DATA    ev_bg_r05_board_02
+_EVENT_DATA    ev_bg_r05_board_03
+_EVENT_DATA    ev_bg_r05_board_04
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_r05_flag_change:
-//  _END
+/************************************************************/
+/*					ライバルposイベント						*/
+/************************************************************/
+EVENT_START	ev_pos_r05_rival_01
+	//ライバル表示
+//	_FLAG_RESET( FV_R05_RIVAL )
+//	_OBJ_ADD( R05_RIVAL_01 )
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_r05:
-  //とりあえず最初のラベルだけ生成している
-  _END
+	//ライバル：主人公横へ
+	_OBJ_ANIME( R05_RIVAL_01, anm_rival_move_01 )
+	_OBJ_ANIME_WAIT()
+
+	//ライバル：主人公に勝負を挑む
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_01 , R05_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+
+	//トレーナー戦呼び出し　【仮】トレーナーIDが仮ID
+	IF $WK_SYS_FIRST_POKE_NO == MONSNO_HUSIGIDANE THEN
+		//初期３匹がほのおタイプなら
+		_TRAINER_BTL_SET( TRID_RIVAL_04,0 )
+	ELSIF $WK_SYS_FIRST_POKE_NO == MONSNO_ZENIGAME THEN
+		//初期３匹がみずタイプなら
+		_TRAINER_BTL_SET( TRID_RIVAL_05,0 )
+	ELSE
+		//初期３匹がくさタイプなら
+		_TRAINER_BTL_SET( TRID_RIVAL_06,0 )
+	ENDIF
+
+	//敗戦処理
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_LOSE THEN
+		_TRAINER_LOSE()
+	ENDIF
+
+	//ライバル：戦闘後メッセージ
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_02 , R05_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+
+	//ジムリーダー(カミツレ)表示
+	//_FLAG_RESET()
+	//_OBJ_ADD( id )
+
+	//カミツレ：主人公前へ
+	_OBJ_ANIME( R05_LEADER4_01, anm_leader_move_01 )
+	_OBJ_ANIME_WAIT()
+
+	//カミツレ：遅いから見にくれば…
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_leader_01 , R05_LEADER4_01 )
+	_BALLOONWIN_CLOSE()
+
+	//ライバル：そうです！
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_03 , R05_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+
+	//ライバル：主人公を見る
+	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_u )
+	_OBJ_ANIME_WAIT()
+
+	//ライバル：待たせちゃダメだろ
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_04 , R05_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+
+	//ライバル：リーダーを見る
+	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_l )
+	_OBJ_ANIME_WAIT()
+
+	//ライバル：さあ行きましょう
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_05 , R05_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+
+	//３人：広場の方へ　ライバルが途中でチャンプに気づく
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_01 )
+	_OBJ_ANIME( R05_RIVAL_01, anm_rival_walk_01 )
+	_OBJ_ANIME( R05_LEADER4_01, anm_leader_walk_01 )
+	_OBJ_ANIME_WAIT()
+
+	//ライバル：じいさんが…
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_06 , R05_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+
+	//カミツレ：振り向く
+	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_d )
+	_OBJ_ANIME_WAIT()
+
+	//カミツレ：そうね　強いんじゃない？
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_leader_02 , R05_LEADER4_01 )
+	_BALLOONWIN_CLOSE()
+
+	//ライバル：もと？
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_07 , R05_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+
+	//チャンプ：近づく
+	_OBJ_ANIME( R05_CHAMPION_01, anm_champion_come_01 )
+	_OBJ_ANIME_WAIT()
+
+	//チャンプ：どうした少年
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_champion_01 , R05_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+
+	//３人：チャンプを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_dir_r )
+	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_r )
+	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_r )
+	_OBJ_ANIME_WAIT()
+
+	//ライバル：なぜやめた？
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_08 , R05_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+
+	//チャンプ：人気がでない
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_champion_02 , R05_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+
+	//ライバル：ふざけるなよ
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_09 , R05_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+
+	//チャンプ：すまないが
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_champion_03 , R05_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+
+	//ライバル：いや……
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_10 , R05_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+
+	//カミツレ：アタシ　先行くね
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_leader_03 , R05_LEADER4_01 )
+	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_leader_04 , R05_LEADER4_01 )
+	_BALLOONWIN_CLOSE()
+
+	//チャンプ：
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_champion_04 , R05_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+
+	//カミツレ＆ライバル：先に行く
+	_OBJ_ANIME( R05_RIVAL_01, anm_rival_move_02 )
+	_OBJ_ANIME( R05_LEADER4_01, anm_leader_move_02 )
+	_OBJ_ANIME_WAIT()
+
+	//カミツレ＆ライバル：位置移動
+	_OBJ_POS_CHANGE( R05_LEADER4_01, 333, 0, 432, DIR_LEFT )
+	_OBJ_POS_CHANGE( R05_RIVAL_01, 335, 0, 433, DIR_LEFT )
+
+	//========================================//
+		//ライバル戦闘posイベントを無効、橋デモposイベントを有効
+		$LOCALWORK0 = 1
+	//========================================//
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//ライバル：主人公横へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_move_01
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ジムリーダー：主人公横へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader_move_01
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,11
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//振り向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_obj_dir_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_obj_dir_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_obj_dir_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_obj_dir_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//３人：広場へ歩く
+//--------------------------------------------------------------------
+//主人公
+_ANIME_LABEL	anm_player_walk_01
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+//ライバル
+_ANIME_LABEL	anm_rival_walk_01
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+//ジムリーダー
+_ANIME_LABEL	anm_leader_walk_01
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//チャンプ：近づく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_champion_come_01
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//カミツレ＆ライバル：先に行く
+//--------------------------------------------------------------------
+//ジムリーダー
+_ANIME_LABEL	anm_leader_move_02
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//ジムリーダー
+_ANIME_LABEL	anm_rival_move_02
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*						チャンピオン						*/
+/************************************************************/
+EVENT_START	ev_r05_champion_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_champion_04 )
+EVENT_END
+
+/************************************************************/
+/*							少年							*/
+/************************************************************/
+EVENT_START	ev_r05_boy3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_boy3_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							少女							*/
+/************************************************************/
+EVENT_START	ev_r05_girl2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_girl2_01 )
+EVENT_END
+
+
+/************************************************************/
+/*						橋開通posイベント					*/
+/************************************************************/
+EVENT_START	ev_pos_r05_h02demo_01
+	//カミツレ：その場歩き
+	_OBJ_ANIME( R05_LEADER4_01, anm_obj_dir_l )
+	_OBJ_ANIME_WAIT()
+
+	//カミツレ：さてと…
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_leader_05 , R05_LEADER4_01 )
+	_BALLOONWIN_CLOSE()
+
+	//【仮】H02デモ
+	_BLACK_OUT( DISP_FADE_SPEED )
+	_DISP_FADE_END_CHECK()
+	_BLACK_IN( DISP_FADE_SPEED )
+	_DISP_FADE_END_CHECK()
+
+	//カミツレ：ここで帰るけど　頑張ってね
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_leader_06 , R05_LEADER4_01 )
+	_BALLOONWIN_CLOSE()
+
+	//カミツレ：去る
+	_OBJ_ANIME( R05_LEADER4_01, anm_leader_goaway_01 )
+	_OBJ_ANIME_WAIT()
+
+	//カミツレ非表示
+	_OBJ_DEL( R05_LEADER4_01 )
+
+	//ライバル：いいや決めた！
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_11 , R05_RIVAL_01 )
+	_BALLOONWIN_CLOSE()
+
+	//ライバル：先に行く
+	_OBJ_ANIME( R05_RIVAL_01, anm_rival_goaway_01 )
+	_OBJ_ANIME_WAIT()
+
+	//ライバル非表示
+	_OBJ_DEL( R05_RIVAL_01 )
+
+	//========================================//
+
+	//posイベント無効
+	$LOCALWORK0 = 2
+
+	//ライバル＆ジムリーダー非表示フラグセット
+	_FLAG_SET( FV_R05_RIVAL )
+	_FLAG_SET( FV_R05_LEADER4 )
+
+	//C04ジムのジムリーダーを表示
+	_FLAG_RESET( FV_C04GYM0101_LEADER4 )
+
+	//========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//カミツレ：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader_goaway_01
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_goaway_01
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*						H02側ストッパー						*/
+/************************************************************/
+EVENT_START	ev_pos_r05_h02stop_01
+	//ストッパー：！マーク
+	_OBJ_ANIME( R05_CAMERAMAN_01, anm_obj_gyoe )
+	_OBJ_ANIME_WAIT()
+
+	//カメラマン：主人公前へ
+	_OBJ_ANIME( R05_CAMERAMAN_01, anm_camera_come_01 )
+	_OBJ_ANIME_WAIT()
+
+	//カメラマン：橋を渡りたいなら
+	_BALLOONWIN_OBJMSG_OPEN( msg_r05_cameraman_01 , R05_CAMERAMAN_01 )
+	_BALLOONWIN_CLOSE()
+
+	//主人公：一歩下がる
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01 )
+	_OBJ_ANIME( R05_CAMERAMAN_01, anm_camera_back_01 )
+	_OBJ_ANIME_WAIT()
+
+	//【仮】デバッグ用コミット禁止
+	$WK_SCENE_R05 = 1
+
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//！マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_obj_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//カメラマン：主人公前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_camera_come_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//カメラマン：戻る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_camera_back_01
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：一歩下がる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_back_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*					カメラマン（話しかけ）					*/
+/************************************************************/
+EVENT_START	ev_r05_cameraman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_cameraman_02 )
+EVENT_END
+
+
+/************************************************************/
+/*							看板							*/
+/************************************************************/
+EVENT_START	ev_bg_r05_board_01
+	_EASY_MSG( msg_r05_sign1_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							看板							*/
+/************************************************************/
+EVENT_START	ev_bg_r05_board_02
+	_EASY_MSG( msg_r05_sign2_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							看板							*/
+/************************************************************/
+EVENT_START	ev_bg_r05_board_03
+	_EASY_MSG( msg_r05_sign3_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							看板							*/
+/************************************************************/
+EVENT_START	ev_bg_r05_board_04
+	_EASY_MSG( msg_r05_sign4_01 )
+EVENT_END
+
 

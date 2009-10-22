@@ -2,13 +2,9 @@
 #ifndef ZONE_R05_EVD_H
 #define ZONE_R05_EVD_H
 
-#define DOOR_ID_R05_H02_EXIT03            0
-#define DOOR_ID_R05_H02_EXIT02            1
-#define DOOR_ID_R05_H02_EXIT01            2
-#define DOOR_ID_R05_C04_EXIT01            3
-#define DOOR_ID_R05_C04_EXIT02            4
-#define DOOR_ID_R05_C04_EXIT03            5
-#define DOOR_ID_R05_C04_EXIT04            6
+#define DOOR_ID_R05_C04R0701_EXIT01       0
+#define DOOR_ID_R05_C04R0701_EXIT03       1
+#define DOOR_ID_R05_C04R0701_EXIT02       2
 
 #endif //ZONE_R05_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -28,5 +24,11 @@
 #define TR_ARTIST_01                      10
 #define TR_MUSICIAN_01                    11
 #define TR_BACKPACKERW_02                 12
+#define R05_RIVAL_01                      13
+#define R05_CHAMPION_01                   14
+#define R05_BOY3_01                       15
+#define R05_GIRL2_01                      16
+#define R05_LEADER4_01                    17
+#define R05_CAMERAMAN_01                  18
 
 #endif //ZONE_R05_EVC_H

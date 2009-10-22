@@ -192,6 +192,9 @@ EVENT_START	ev_pos_c04_leader4_01
 	//posイベントを無効に
 	$WK_SCENE_C04 = 3
 
+	//ジムのカミツレを非表示
+	_FLAG_SET( FV_C04GYM0101_LEADER4 )
+
 //=====================================//
 
 EVENT_END

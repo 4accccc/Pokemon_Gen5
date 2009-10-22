@@ -586,10 +586,10 @@
 #define FV_C02_LEADER2                     562 /* 0x0232 C02フィールド：ジムリーダー（アロエ） */
 #define FV_C02_POSEVENT_01                 563 /* 0x0233 C02フィールド：友達とジムリーダー（アーティ）のバニッシュフラグ */
 #define FV_C02GYM0202_LEADER2              564 /* 0x0234 C02ジム：ジムリーダー（アロエ） */
-		/* not used   565(0x0235) */
-		/* not used   566(0x0236) */
-		/* not used   567(0x0237) */
-		/* not used   568(0x0238) */
+#define FV_C04GYM0101_LEADER4              565 /* 0x0235 ライモンシティジム：ジムリーダー（カミツレ） */
+#define FV_R05_RIVAL                       566 /* 0x0236 ５番道路：ライバル */
+#define FV_R05_LEADER4                     567 /* 0x0237 ５番道路：ジムリーダー（カミツレ） */
+#define FV_R05_CHAMPION                    568 /* 0x0238 ５番道路：チャンピオンと子供たち */
 		/* not used   569(0x0239) */
 		/* not used   570(0x023a) */
 		/* not used   571(0x023b) */

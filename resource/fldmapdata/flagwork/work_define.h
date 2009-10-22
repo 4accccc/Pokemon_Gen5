@@ -140,7 +140,7 @@
 #define WK_SCENE_D05                     16528 /* 0x4090 D05：イベント用ワーク */
 #define WK_SCENE_C05_TOBRIDGE            16529 /* 0x4091 C05：H02側ストッパーのPOS用ワーク */
 #define WK_SCENE_C02                     16530 /* 0x4092 C02フィールド：イベント用ワーク */
-		/* not used 16531(0x4093) */
+#define WK_SCENE_R05                     16531 /* 0x4093 ５番道路：イベント用ワーク */
 		/* not used 16532(0x4094) */
 		/* not used 16533(0x4095) */
 		/* not used 16534(0x4096) */

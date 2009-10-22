@@ -115,8 +115,8 @@ _ANIME_LABEL	anm_support_jump_d
 //主人公：サポート横へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_move_01
-	_ANIME_DATA	AC_WALK_U_8F,8
-	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,9
+	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -141,7 +141,7 @@ _ANIME_LABEL	anm_n_move_01
 //Ｎ：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_n_goaway_01
-	_ANIME_DATA	AC_WALK_U_8F,8
+	_ANIME_DATA	AC_WALK_D_8F,9
 	_ANIME_DATA	ACMD_END,0
 
 
