@@ -78,6 +78,7 @@
 #include "message.naix"
 #include "mictest.naix"	// アーカイブ
 #include "msg/msg_mictest.h"  // GMM
+#include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
 
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
@@ -141,6 +142,7 @@ enum
   PLTID_OBJ_ITEMICON_M = 11,
   PLTID_OBJ_POKE_M = 12,
   PLTID_OBJ_BALLICON_M = 13, // 1本使用
+	PLTID_OBJ_TOWNMAP_M	= 14,		
 	//サブOBJ
   PLTID_OBJ_PMS_DRAW = 0, // 2-5本使用 // @TODO 未定
 };
@@ -178,6 +180,10 @@ typedef struct
 #ifdef UI_TEMPLATE_TOUCHBAR
 	//タッチバー
 	TOUCHBAR_WORK							*touchbar;
+	//以下カスタムボタン使用する場合のサンプルリソース
+	u32												ncg_btn;
+	u32												ncl_btn;
+	u32												nce_btn;
 #endif //UI_TEMPLATE_TOUCHBAR
 
 #ifdef UI_TEMPLATE_MCSS
@@ -292,6 +298,9 @@ static void UITemplate_INFOWIN_Main( void );
 static TOUCHBAR_WORK * UITemplate_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID );
 static void UITemplate_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar );
 static void UITemplate_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar );
+//以下カスタムボタン使用サンプル用
+static TOUCHBAR_WORK * UITemplate_TOUCHBAR_InitEx( UI_TEMPLATE_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
+static void UITemplate_TOUCHBAR_ExitEx( UI_TEMPLATE_MAIN_WORK *wk );
 #endif //UI_TEMPLATE_TOUCHBAR
 
 #ifdef UI_TEMPLATE_MCSS
@@ -450,7 +459,7 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
 	//タッチバーの初期化
 	{	
 		GFL_CLUNIT	*clunit	= UI_TEMPLATE_GRAPHIC_GetClunit( wk->graphic );
-		wk->touchbar	= UITemplate_TOUCHBAR_Init( clunit, wk->heapID );
+		wk->touchbar	= UITemplate_TOUCHBAR_InitEx( wk, clunit, wk->heapID );
 	}
 #endif //UI_TEMPLATE_TOUCHBAR
 
@@ -600,7 +609,7 @@ static GFL_PROC_RESULT UITemplateProc_Exit( GFL_PROC *proc, int *seq, void *pwk,
 
 #ifdef UI_TEMPLATE_TOUCHBAR
 	//タッチバー
-	UITemplate_TOUCHBAR_Exit( wk->touchbar );
+	UITemplate_TOUCHBAR_ExitEx( wk );
 #endif //UI_TEMPLATE_TOUCHBAR
 
 #ifdef UI_TEMPLATE_INFOWIN
@@ -841,6 +850,111 @@ static void UITemplate_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar )
 {	
 	TOUCHBAR_Exit( touchbar );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBAR初期化	+ カスタムアイコン版
+ *
+ * @param  wk										ワーク
+ *	@param	GFL_CLUNIT *clunit	CLUNIT
+ *	@param	heapID							ヒープID
+ *
+ *	@return	TOUCHBAR_WORK
+ */
+//-----------------------------------------------------------------------------
+static TOUCHBAR_WORK * UITemplate_TOUCHBAR_InitEx( UI_TEMPLATE_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID )
+{	
+
+	//リソース読みこみ
+	//サンプルとしてタウンマップの拡大縮小アイコンをカスタムボタンに登録する
+	{	
+		ARCHANDLE *handle;
+		//ハンドル
+		handle	= GFL_ARC_OpenDataHandle( ARCID_TOWNMAP_GRAPHIC, heapID );
+		//リソース読みこみ
+		wk->ncg_btn	= GFL_CLGRP_CGR_Register( handle,
+					NARC_townmap_gra_tmap_obj_d_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+		wk->ncl_btn	= GFL_CLGRP_PLTT_RegisterEx( handle,
+				NARC_townmap_gra_tmap_bg_d_NCLR, CLSYS_DRAW_MAIN, PLTID_OBJ_TOWNMAP_M*0x20,
+				2, 2, heapID );	
+		wk->nce_btn	= GFL_CLGRP_CELLANIM_Register( handle,
+					NARC_townmap_gra_tmap_obj_d_NCER,
+				 	NARC_townmap_gra_tmap_obj_d_NANR, heapID );
+	
+		GFL_ARC_CloseDataHandle( handle ) ;
+	}
+
+	//タッチバーの設定
+	{	
+	//アイコンの設定
+	//数分作る
+	TOUCHBAR_SETUP	touchbar_setup;
+	TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
+	{	
+		{	
+			TOUCHBAR_ICON_RETURN,
+			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
+		},
+		{	
+			TOUCHBAR_ICON_CLOSE,
+			{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
+		},
+		{	
+			TOUCHBAR_ICON_CHECK,
+			{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y_CHECK }
+		},
+		{	
+			TOUCHBAR_ICON_CUTSOM1,	//カスタムボタン１を拡大縮小アイコンに,
+			{	TOUCHBAR_ICON_X_04, TOUCHBAR_ICON_Y },
+		},
+	};
+
+	//以下カスタムボタンならば入れなくてはいけない情報
+	touchbar_icon_tbl[3].cg_idx	=  wk->ncg_btn;				//キャラリソース
+	touchbar_icon_tbl[3].plt_idx	= wk->ncl_btn;				//パレットリソース
+	touchbar_icon_tbl[3].cell_idx	=	wk->nce_btn;				//セルリソース
+	touchbar_icon_tbl[3].active_anmseq	=	8;						//アクティブのときのアニメ
+	touchbar_icon_tbl[3].noactive_anmseq	=		12;						//ノンアクティブのときのアニメ
+	touchbar_icon_tbl[3].push_anmseq	=		10;						//押したときのアニメ（STOPになっていること）
+	touchbar_icon_tbl[3].key	=		PAD_BUTTON_START;		//キーで押したときに動作させたいならば、ボタン番号
+	touchbar_icon_tbl[3].se	=		0;									//押したときにSEならしたいならば、SEの番号
+
+	//設定構造体
+	//さきほどの窓情報＋リソース情報をいれる
+	GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
+
+	touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
+	touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
+	touchbar_setup.p_unit		= clunit;										//OBJ読み込みのためのCLUNIT
+	touchbar_setup.bar_frm	= BG_FRAME_BAR_M;						//BG読み込みのためのBG面
+	touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;			//BGﾊﾟﾚｯﾄ
+	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;			//OBJﾊﾟﾚｯﾄ
+	touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
+
+	return TOUCHBAR_Init( &touchbar_setup, heapID );
+	}
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBAR破棄	カスタムボタン版
+ *
+ *	@param	TOUCHBAR_WORK	*touchbar タッチバー
+ */
+//-----------------------------------------------------------------------------
+static void UITemplate_TOUCHBAR_ExitEx( UI_TEMPLATE_MAIN_WORK *wk )
+{	
+	//タッチバー破棄
+	TOUCHBAR_Exit( wk->touchbar );
+
+	//リソース破棄
+	{	
+		GFL_CLGRP_PLTT_Release( wk->ncl_btn );
+		GFL_CLGRP_CGR_Release( wk->ncg_btn );
+		GFL_CLGRP_CELLANIM_Release( wk->nce_btn );
+	}
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	TOUCHBARメイン処理

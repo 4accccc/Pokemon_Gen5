@@ -26,15 +26,20 @@
 //=====================================
 typedef enum
 {	
-	TOUCHBAR_ICON_CLOSE,
-	TOUCHBAR_ICON_RETURN,
-	TOUCHBAR_ICON_CUR_D,
-	TOUCHBAR_ICON_CUR_U,
-	TOUCHBAR_ICON_CUR_L,
-	TOUCHBAR_ICON_CUR_R,
-	TOUCHBAR_ICON_CHECK,
+	TOUCHBAR_ICON_CLOSE,	//×ボタン
+	TOUCHBAR_ICON_RETURN,	//←┘ボタン
+	TOUCHBAR_ICON_CUR_D,	//↓ボタン
+	TOUCHBAR_ICON_CUR_U,	//↑ボタン
+	TOUCHBAR_ICON_CUR_L,	//←ボタン
+	TOUCHBAR_ICON_CUR_R,	//→ボタン
+	TOUCHBAR_ICON_CHECK,	//ちぇっくボタン
 
-	TOUCHBAR_ICON_MAX,
+	TOUCHBAR_ICON_MAX,		//.c内で使用
+	TOUCHBAR_ICON_CUTSOM1	= TOUCHBAR_ICON_MAX,	//カスタムボタン１
+	TOUCHBAR_ICON_CUTSOM2,	//カスタムボタン２
+	TOUCHBAR_ICON_CUTSOM3,	//カスタムボタン３
+	TOUCHBAR_ICON_CUTSOM4,	//カスタムボタン４
+
 } TOUCHBAR_ICON;
 //-------------------------------------
 ///	下画面バー選択していない場合
@@ -85,7 +90,6 @@ typedef enum
 //アイコンの最大登録個数
 #define APBAR_ICON_REGISTER_MAX			(8)
 
-
 //=============================================================================
 /**
  *					構造体宣言
@@ -98,6 +102,17 @@ typedef struct
 {
 	TOUCHBAR_ICON			icon;
 	GFL_CLACTPOS			pos;
+
+	//以下、カスタムボタンのみ必要な情報です
+	u16	cg_idx;			// obj_graphic_manのキャラクタインデックス
+	u16	plt_idx;		// obj_graphic_manのパレットインデックス
+	u16	cell_idx;		// obj_graphic_manのセル　アニメインデックス
+	u16	active_anmseq;			// ボタンのアクティブ時アニメシーケンス
+	u16	noactive_anmseq;		// ボタンのノンアクティブ時アニメシーケンス
+	u16	push_anmseq;				// ボタンを押したときのアニメシーケンス
+	u32	key;								// 指定されたキーのボタンを押したときにアイコンも押されたことにする(PAD_KEY_UP等をいれてください ０だと行わない) 
+	u32	se;									// SE　0だと行わない
+
 } TOUCHBAR_ITEM_ICON;
 
 //-------------------------------------
@@ -111,7 +126,6 @@ typedef struct
 
 	//タッチバーで使用するモジュール
 	GFL_CLUNIT* p_unit;
-
 	
 	//リソース読み込み情報
 	u32 bar_frm;								//BGキャラ読み込みフレーム	AreaManでTOUCHBAR_BG_CHARAAREA_SIZE読みます
@@ -146,9 +160,21 @@ extern void TOUCHBAR_Exit( TOUCHBAR_WORK *p_wk );
 //=====================================
 extern void TOUCHBAR_Main( TOUCHBAR_WORK *p_wk );
 //-------------------------------------
-///	アイコントリガー情報	何もをしてない場合TOUCHBAR_SELECT_NONE
+///	アイコントリガー情報	何もしてない場合TOUCHBAR_SELECT_NONE
 //=====================================
 extern TOUCHBAR_ICON TOUCHBAR_GetTrg( const TOUCHBAR_WORK *cp_wk );
+//-------------------------------------
+///	全体の設定
+//(内部ではすべてのICONを設定しているだけなので、全体のフラグと個別のフラグは重複しています)
+//=====================================
+extern void TOUCHBAR_SetActiveAll( TOUCHBAR_WORK *p_wk, BOOL is_active );
+extern void TOUCHBAR_SetVisibleAll( TOUCHBAR_WORK *p_wk, BOOL is_visible );
+
+//=============================================================================
+/**
+ *	アイコン個別設定、取得
+ */
+//=============================================================================
 //-------------------------------------
 ///	アイコンアクティブ設定
 //		アクティブ、ノンアクティブでアニメが変わります
@@ -162,8 +188,13 @@ extern BOOL TOUCHBAR_GetActive( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon )
 extern void TOUCHBAR_SetVisible( TOUCHBAR_WORK *p_wk,  TOUCHBAR_ICON icon, BOOL is_visible );
 extern BOOL TOUCHBAR_GetVisible( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );
 //-------------------------------------
-///	チェックボックス用に現在のチェック取得
+///	SE設定
 //=====================================
-extern BOOL TOUCHBAR_GetCheck( const TOUCHBAR_WORK *cp_wk );
-
+extern void TOUCHBAR_SetSE( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, u32 se );
+extern u32 TOUCHBAR_GetSE( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );
+//-------------------------------------
+///	Key設定
+//=====================================
+extern void TOUCHBAR_SetUseKey( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, u32 key );
+extern u32 TOUCHBAR_GetUseKey( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );
 

@@ -24,14 +24,14 @@
 ///	リソース
 //=====================================
 //リソース
-enum
+typedef enum
 {	
 	TOUCHBAR_RES_COMMON_PLT,
 	TOUCHBAR_RES_COMMON_CHR,
 	TOUCHBAR_RES_COMMON_CEL,
 
 	TOUCHBAR_RES_MAX
-};
+}RES_TYPE;
 
 //-------------------------------------
 ///	シーケンス
@@ -49,26 +49,56 @@ enum
 #define TOUCHBAR_SE_DECIDE	(SEQ_SE_DECIDE1)
 #define TOUCHBAR_SE_Y_REG		(SEQ_SE_SYS_07)
 
+//-------------------------------------
+///	動作関数タイプ
+//=====================================
+typedef enum
+{
+	TOUCHBAR_ICON_MOVETYPE_PUSH,	//押されたら、押されるアニメになるボタン
+	TOUCHBAR_ICON_MOVETYPE_FLIP,	//押されたら、ONとOFFが切り替るボタン
+} TOUCHBAR_ICON_MOVETYPE;
+
+
 //=============================================================================
 /**
  *					構造体宣言
 */
 //=============================================================================
 //-------------------------------------
+///	アイコンワーク
+//=====================================
+typedef struct _ICON_WORK ICON_WORK;
+typedef void (*PUSH_FUNC)( ICON_WORK *p_wk );
+struct _ICON_WORK
+{
+	GFL_CLWK						*p_clwk;		
+	BOOL								is_active;		//アクティブか
+	u32									now_anmseq;		//現在のアニメ
+	PUSH_FUNC						push_func;		//押された時の動作
+	TOUCHBAR_ICON_MOVETYPE	movetype;	//動作タイプ
+	TOUCHBAR_ITEM_ICON			data;			//ボタン情報
+} ;
+//-------------------------------------
+///	共通リソース
+//=====================================
+typedef struct 
+{
+	u32				res[TOUCHBAR_RES_MAX];
+	u32				bg_frm;
+	GFL_ARCUTIL_TRANSINFO				chr_pos;
+} RES_WORK;
+
+//-------------------------------------
 ///	下画面バーメインワーク
 //=====================================
 struct _TOUCHBAR_WORK
 {
-	GFL_CLWK	*p_clwk[APBAR_ICON_REGISTER_MAX];
-	BOOL			is_active[APBAR_ICON_REGISTER_MAX];
+	s32				trg;			//押したアイコンのインデックス
+	u32				tbl_len;	//最大アイコンのテーブル長
+	u32				seq;			//シーケンス
 
-	u32				res[TOUCHBAR_RES_MAX];
-	u32				bg_frm;
-	GFL_ARCUTIL_TRANSINFO				chr_pos;
-	s32				trg;
-	u32				tbl_len;
-	u32				seq;
-	TOUCHBAR_ITEM_ICON	setup_tbl[0];
+	RES_WORK	res;			//共通リソース
+	ICON_WORK	icon[0];	//アイコン
 };
 
 //=============================================================================
@@ -76,65 +106,121 @@ struct _TOUCHBAR_WORK
  *					プロトタイプ宣言
 */
 //=============================================================================
-//リソース
-static void TouchBar_LoadResource( TOUCHBAR_WORK *p_wk, CLSYS_DRAW_TYPE	clsys_draw_type, PALTYPE bgplttype, APP_COMMON_MAPPING mapping, u8 bg_plt, u8 obj_plt, BOOL is_notload_bg, HEAPID heapID );
-static void TouchBar_UnLoadResource( TOUCHBAR_WORK *p_wk );
-//obj
-static void TouchBar_CreateObj( TOUCHBAR_WORK *p_wk, GFL_CLUNIT* p_unit, const TOUCHBAR_ITEM_ICON *cp_setup_tbl, u16 tbl_len, CLSYS_DEFREND_TYPE	clsys_def_type, HEAPID heapID );
-static void TouchBar_DeleteObj( TOUCHBAR_WORK *p_wk );
-//etc
-static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h,  u8 plt, BOOL compressedFlag, HEAPID heapID );
+//-------------------------------------
+///	アプリケーション
+//=====================================
+static ICON_WORK * Touchbar_Search( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON type );
+static const ICON_WORK * Touchbar_SearchConst( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON type );
+
+//-------------------------------------
+///	リソース
+//=====================================
+static void RES_Init( RES_WORK *p_wk, u8 frm, CLSYS_DRAW_TYPE	clsys_draw_type, PALTYPE bgplttype, APP_COMMON_MAPPING mapping, u8 bg_plt, u8 obj_plt, BOOL is_notload_bg, HEAPID heapID );
+static void RES_Exit( RES_WORK *p_wk );
+static u32 RES_GetResource( const RES_WORK *cp_wk, RES_TYPE type );
+static void RES_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h,  u8 plt, BOOL compressedFlag, HEAPID heapID );
+//-------------------------------------
+///	ICON
+//=====================================
+static void ICON_Init( ICON_WORK *p_wk, GFL_CLUNIT* p_unit, const RES_WORK *cp_res, const TOUCHBAR_ITEM_ICON *cp_setup,CLSYS_DEFREND_TYPE	clsys_def_type, HEAPID heapID );
+static void ICON_Exit( ICON_WORK *p_wk );
+static BOOL ICON_Main( ICON_WORK *p_wk );
+static BOOL ICON_IsMoveEnd( const ICON_WORK *cp_wk );
+static TOUCHBAR_ICON ICON_GetType( const ICON_WORK *cp_wk );
+static void ICON_SetVisible( ICON_WORK *p_wk, BOOL is_visible );
+static BOOL ICON_GetVisible( const ICON_WORK *cp_wk );
+static void ICON_SetActive( ICON_WORK *p_wk, BOOL is_active );
+static BOOL ICON_GetActive( const ICON_WORK *cp_wk );
+static void ICON_SetSE( ICON_WORK *p_wk, u32 se );
+static u32 ICON_GetSE( const ICON_WORK *cp_wk );
+static void ICON_SetKey( ICON_WORK *p_wk, u32 key );
+static u32 ICON_GetKey( const ICON_WORK *cp_wk );
+static void Icon_PushFuncNormal( ICON_WORK *p_wk );
+static void Icon_PushFuncFlip( ICON_WORK *p_wk );
 
 //=============================================================================
 /**
  *					データ
  */
 //=============================================================================
-#define ANMSEQ_ERROR	(0xFFFF)
-
 //-------------------------------------
-///	アニメシーケンステーブル
+///	アイコン情報
 //	TOUCHBAR_ICONと対応したアクティブテーブル
 //=====================================
-static const u16 sc_anmseq_active_tbl[]	=
+static const struct
 {	
-	APP_COMMON_BARICON_EXIT,
-	APP_COMMON_BARICON_RETURN,
-	APP_COMMON_BARICON_CURSOR_DOWN,
-	APP_COMMON_BARICON_CURSOR_UP,
-	APP_COMMON_BARICON_CURSOR_LEFT,
-	APP_COMMON_BARICON_CURSOR_RIGHT,
-	APP_COMMON_BARICON_CHECK_OFF,
-};
-//-------------------------------------
-///	アニメシーケンステーブル
-//	TOUCHBAR_ICONと対応したノンアクティブテーブル
-//=====================================
-static const u16 sc_anmseq_nonactive_tbl[]	=
+	u16 active_anmseq;
+	u16 noactive_anmseq;
+	u16 push_anmseq;
+	u16 se;
+	u32	key;
+	TOUCHBAR_ICON_MOVETYPE	movetype;
+} sc_common_icon_data[TOUCHBAR_ICON_MAX]	=
 {	
-	APP_COMMON_BARICON_EXIT_OFF,
-	APP_COMMON_BARICON_RETURN_OFF,
-	APP_COMMON_BARICON_CURSOR_DOWN_OFF,
-	APP_COMMON_BARICON_CURSOR_UP_OFF,
-	APP_COMMON_BARICON_CURSOR_LEFT_OFF,
-	APP_COMMON_BARICON_CURSOR_RIGHT_OFF,
-	ANMSEQ_ERROR,	//ない
+	//TOUCHBAR_ICON_CLOSE,	//×ボタン
+	{	
+		APP_COMMON_BARICON_EXIT,
+		APP_COMMON_BARICON_EXIT_OFF,
+		APP_COMMON_BARICON_EXIT_ON,
+		TOUCHBAR_SE_DECIDE,
+		PAD_BUTTON_X,
+		TOUCHBAR_ICON_MOVETYPE_PUSH,
+	},
+	//TOUCHBAR_ICON_RETURN,	//←┘ボタン
+	{	
+		APP_COMMON_BARICON_RETURN,
+		APP_COMMON_BARICON_RETURN_OFF,
+		APP_COMMON_BARICON_RETURN_ON,
+		TOUCHBAR_SE_DECIDE,
+		PAD_BUTTON_B,
+		TOUCHBAR_ICON_MOVETYPE_PUSH,
+	},
+	//TOUCHBAR_ICON_CUR_D,	//↓ボタン
+	{	
+		APP_COMMON_BARICON_CURSOR_DOWN,
+		APP_COMMON_BARICON_CURSOR_DOWN_OFF,
+		APP_COMMON_BARICON_CURSOR_DOWN_ON,
+		TOUCHBAR_SE_DECIDE,
+		PAD_KEY_DOWN,
+		TOUCHBAR_ICON_MOVETYPE_PUSH,
+	},
+	//TOUCHBAR_ICON_CUR_U,	//↑ボタン
+	{	
+		APP_COMMON_BARICON_CURSOR_UP,
+		APP_COMMON_BARICON_CURSOR_UP_OFF,
+		APP_COMMON_BARICON_CURSOR_UP_ON,
+		TOUCHBAR_SE_DECIDE,
+		PAD_KEY_UP,
+		TOUCHBAR_ICON_MOVETYPE_PUSH,
+	},
+	//TOUCHBAR_ICON_CUR_L,	//←ボタン
+	{	
+		APP_COMMON_BARICON_CURSOR_LEFT,
+		APP_COMMON_BARICON_CURSOR_LEFT_OFF,
+		APP_COMMON_BARICON_CURSOR_LEFT_ON,
+		TOUCHBAR_SE_DECIDE,
+		PAD_KEY_LEFT,
+		TOUCHBAR_ICON_MOVETYPE_PUSH,
+	},
+	//TOUCHBAR_ICON_CUR_R,	//→ボタ
+	{	
+		APP_COMMON_BARICON_CURSOR_RIGHT,
+		APP_COMMON_BARICON_CURSOR_RIGHT_OFF,
+		APP_COMMON_BARICON_CURSOR_RIGHT_ON,
+		TOUCHBAR_SE_DECIDE,
+		PAD_KEY_RIGHT,
+		TOUCHBAR_ICON_MOVETYPE_PUSH,
+	},
+	//TOUCHBAR_ICON_CHECK,	//ちぇっくボタン
+	{	
+		APP_COMMON_BARICON_CHECK_OFF,
+		APP_COMMON_BARICON_CHECK_NONE,
+		APP_COMMON_BARICON_CHECK_ON,
+		TOUCHBAR_SE_Y_REG,
+		PAD_BUTTON_Y,
+		TOUCHBAR_ICON_MOVETYPE_FLIP,
+	},
 };
-//-------------------------------------
-///	アニメシーケンステーブル
-//	TOUCHBAR_ICONと対応した押したテーブル
-//=====================================
-static const u16 sc_anmseq_on_tbl[]	=
-{	
-	APP_COMMON_BARICON_EXIT_ON,
-	APP_COMMON_BARICON_RETURN_ON,
-	APP_COMMON_BARICON_CURSOR_DOWN_ON,
-	APP_COMMON_BARICON_CURSOR_UP_ON,
-	APP_COMMON_BARICON_CURSOR_LEFT_ON,
-	APP_COMMON_BARICON_CURSOR_RIGHT_ON,
-	APP_COMMON_BARICON_CHECK_ON,					//チェックだけ別処理
-};
-
 
 
 //=============================================================================
@@ -161,24 +247,12 @@ extern TOUCHBAR_WORK * TOUCHBAR_Init( TOUCHBAR_SETUP *p_setup, HEAPID heapID )
 	{	
 		u32 size;
 
-		size	= sizeof(TOUCHBAR_WORK) + sizeof(TOUCHBAR_ITEM_ICON) * p_setup->item_num;
+		size	= sizeof(TOUCHBAR_WORK) + sizeof(ICON_WORK) * p_setup->item_num;
 		p_wk	= GFL_HEAP_AllocMemory( heapID, size );
 		GFL_STD_MemClear( p_wk, size );
-		p_wk->bg_frm	= p_setup->bar_frm;
-		p_wk->trg			= TOUCHBAR_SELECT_NONE;
+
 		p_wk->tbl_len	= p_setup->item_num;
 		p_wk->seq			= TOUCHBAR_SEQ_MAIN;
-
-		GFL_STD_MemCopy( p_setup->p_item, p_wk->setup_tbl, sizeof(TOUCHBAR_ITEM_ICON)*p_setup->item_num );
-	}
-
-	//アイコン設定
-	{	
-		int i;
-		for( i = 0;i < APBAR_ICON_REGISTER_MAX; i++ )
-		{	
-			p_wk->is_active[ i ]	= TRUE;
-		}
 	}
 
 	//リソース読みこみ
@@ -202,13 +276,17 @@ extern TOUCHBAR_WORK * TOUCHBAR_Init( TOUCHBAR_SETUP *p_setup, HEAPID heapID )
 		}
 
 		//リソース読み込み
-		TouchBar_LoadResource( p_wk, clsys_draw_type, bgplttype, 
+		RES_Init( &p_wk->res, p_setup->bar_frm, clsys_draw_type, bgplttype, 
 				p_setup->mapping, p_setup->bg_plt, p_setup->obj_plt, p_setup->is_notload_bg, heapID );
 	
-		//CLWK読み込み
-		TouchBar_CreateObj( p_wk, p_setup->p_unit, 
-				p_setup->p_item, p_setup->item_num, clsys_def_type, heapID );
-
+		//ICON設定
+		{	
+			int i;
+			for( i = 0; i < p_wk->tbl_len; i++ )
+			{	
+				ICON_Init( &p_wk->icon[i], p_setup->p_unit, &p_wk->res, &p_setup->p_item[i], clsys_draw_type, heapID );
+			}
+		}
 	}
 
 	return p_wk;
@@ -223,11 +301,17 @@ extern TOUCHBAR_WORK * TOUCHBAR_Init( TOUCHBAR_SETUP *p_setup, HEAPID heapID )
 //-----------------------------------------------------------------------------
 void TOUCHBAR_Exit( TOUCHBAR_WORK *p_wk )
 {	
-	//CLWK
-	TouchBar_DeleteObj( p_wk );
+	//ICON破棄
+	{	
+		int i;
+		for( i = 0; i < p_wk->tbl_len; i++ )
+		{	
+			ICON_Exit( &p_wk->icon[i] );
+		}
+	}
 
 	//リソース破棄
-	TouchBar_UnLoadResource( p_wk );
+	RES_Exit( &p_wk->res );
 	
 	//破棄
 	GFL_HEAP_FreeMemory( p_wk );
@@ -250,81 +334,29 @@ void TOUCHBAR_Main( TOUCHBAR_WORK *p_wk )
 		//タッチ検出
 		{	
 			int i;
-			u32 x, y;
 			p_wk->trg		= TOUCHBAR_SELECT_NONE;
 			for( i = 0; i < p_wk->tbl_len; i++ )
-			{	
-				const TOUCHBAR_ITEM_ICON *cp_setup	= &p_wk->setup_tbl[i];
-
-				BOOL	is_active;
-				BOOL	is_visible;
-
-				is_active	= p_wk->is_active[ cp_setup->icon ];
-				is_visible	= GFL_CLACT_WK_GetDrawEnable( p_wk->p_clwk[ cp_setup->icon ] );
-
-
-				if( is_active & is_visible )
+			{
+				if( ICON_Main( &p_wk->icon[ i ] ) )
 				{	
-					if( GFL_UI_TP_GetPointTrg( &x, &y ) )
-					{	
-						if( ((u32)( x - cp_setup->pos.x) <= (u32)(TOUCHBAR_ICON_WIDTH))
-								&	((u32)( y - cp_setup->pos.y) <= (u32)(TOUCHBAR_ICON_HEIGHT)))
-						{
-	
-							//チェックボックスだけ、ON,OFFで切り替る
-							if( cp_setup->icon == TOUCHBAR_ICON_CHECK )
-							{	
-								if( GFL_CLACT_WK_GetAnmSeq( p_wk->p_clwk[ cp_setup->icon ] ) == APP_COMMON_BARICON_CHECK_ON )
-								{	
-									GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[ cp_setup->icon ], APP_COMMON_BARICON_CHECK_OFF );
-								}
-								else
-								{	
-									GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[ cp_setup->icon ], APP_COMMON_BARICON_CHECK_ON );
-								}
-								PMSND_PlaySE( TOUCHBAR_SE_Y_REG );
-							}
-							else
-							{	
-								GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[ cp_setup->icon ], sc_anmseq_on_tbl[ cp_setup->icon ] );
-								PMSND_PlaySE( TOUCHBAR_SE_DECIDE );
-							}
-							p_wk->trg	= cp_setup->icon;
-							p_wk->seq	 = TOUCHBAR_SEQ_ANM;
-							break;
-						}
-					}
+					p_wk->trg	= i;
+					p_wk->seq	= TOUCHBAR_SEQ_ANM;
+					break;
 				}
-			}
-		}
-		//Yボタンでチェックが切り替る
-		if( p_wk->p_clwk[ TOUCHBAR_ICON_CHECK ] != NULL )
-		{	
-			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-			{	
-				if( GFL_CLACT_WK_GetAnmSeq( p_wk->p_clwk[ TOUCHBAR_ICON_CHECK ] ) == APP_COMMON_BARICON_CHECK_ON )
-				{	
-					GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[ TOUCHBAR_ICON_CHECK ], APP_COMMON_BARICON_CHECK_OFF );
-				}
-				else
-				{	
-					GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[ TOUCHBAR_ICON_CHECK ], APP_COMMON_BARICON_CHECK_ON );
-				}
-				PMSND_PlaySE( TOUCHBAR_SE_Y_REG );
-				p_wk->trg	= TOUCHBAR_ICON_CHECK;
-				p_wk->seq	 = TOUCHBAR_SEQ_ANM;
 			}
 		}
 		break;
 
 	case TOUCHBAR_SEQ_ANM:
-		if( GFL_CLACT_WK_CheckAnmActive(p_wk->p_clwk[ p_wk->trg ] ) )
+		//動作
+		if( ICON_IsMoveEnd( &p_wk->icon[ p_wk->trg ] ) )
 		{
 			p_wk->seq	 = TOUCHBAR_SEQ_TRG;
 		}
 		break;
 
 	case TOUCHBAR_SEQ_TRG:
+		//トリガを1フレームだけ伝える
 		p_wk->seq	 = TOUCHBAR_SEQ_MAIN;
 		break;
 	}
@@ -342,12 +374,44 @@ void TOUCHBAR_Main( TOUCHBAR_WORK *p_wk )
 TOUCHBAR_ICON TOUCHBAR_GetTrg( const TOUCHBAR_WORK *cp_wk )
 {	
 
-	if( cp_wk->seq	== TOUCHBAR_SEQ_TRG )
+	if( cp_wk->seq	== TOUCHBAR_SEQ_TRG && cp_wk->trg != TOUCHBAR_SELECT_NONE )
 	{	
-		return cp_wk->trg;
+		return ICON_GetType( &cp_wk->icon[ cp_wk->trg ] );
 	}
 
 	return TOUCHBAR_SELECT_NONE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBAR	全てのアイコンを設定
+ *
+ *	@param	TOUCHBAR_WORK *p_wk	ワーク
+ *	@param	is_active						アクティブ
+ */
+//-----------------------------------------------------------------------------
+void TOUCHBAR_SetActiveAll( TOUCHBAR_WORK *p_wk, BOOL is_active )
+{	
+	int i;
+	for( i = 0; i < p_wk->tbl_len; i++ )
+	{	
+		ICON_SetActive( &p_wk->icon[ i ], is_active );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBAR	全てのアイコンを表示設定
+ *
+ *	@param	TOUCHBAR_WORK *p_wk	ワーク
+ *	@param	is_active						表示
+ */
+//-----------------------------------------------------------------------------
+void TOUCHBAR_SetVisibleAll( TOUCHBAR_WORK *p_wk, BOOL is_visible )
+{	
+	int i;
+	for( i = 0; i < p_wk->tbl_len; i++ )
+	{	
+		ICON_SetVisible( &p_wk->icon[ i ], is_visible );
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -360,27 +424,13 @@ TOUCHBAR_ICON TOUCHBAR_GetTrg( const TOUCHBAR_WORK *cp_wk )
 //-----------------------------------------------------------------------------
 void TOUCHBAR_SetActive( TOUCHBAR_WORK *p_wk,  TOUCHBAR_ICON icon, BOOL is_active )
 {	
-	GF_ASSERT_MSG( icon < TOUCHBAR_ICON_MAX, "TOUCHBAR:対応していないICONですicon=%d\n", icon );
-	GF_ASSERT_MSG( p_wk->p_clwk[icon], "TOUCHBAR:登録されていないICONですicon=%d\n", icon);
+	ICON_WORK * p_icon;
+		
+	//指定アイコンを検索
+	p_icon	= Touchbar_Search( p_wk, icon );
 
-	
-	if( p_wk->is_active[ icon ] != is_active )
-	{	
-		u16 anm;
-		if( is_active )
-		{	
-			anm	= sc_anmseq_active_tbl[ icon ];
-		}
-		else
-		{	
-			anm	= sc_anmseq_nonactive_tbl[ icon ];
-		}
-		if( anm != ANMSEQ_ERROR )
-		{	
-			GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[ icon ], anm );
-		}
-		p_wk->is_active[ icon ] = is_active;
-	}
+	//設定
+	ICON_SetActive( p_icon, is_active );
 }
 //----------------------------------------------------------------------------
 /**	
@@ -394,10 +444,13 @@ void TOUCHBAR_SetActive( TOUCHBAR_WORK *p_wk,  TOUCHBAR_ICON icon, BOOL is_activ
 //-----------------------------------------------------------------------------
 BOOL TOUCHBAR_GetActive( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon )
 {	
-	GF_ASSERT_MSG( icon < TOUCHBAR_ICON_MAX, "TOUCHBAR:対応していないICONですicon=%d\n", icon );
-	GF_ASSERT_MSG( cp_wk->p_clwk[icon], "TOUCHBAR:登録されていないICONですicon=%d\n", icon);
+	const ICON_WORK * cp_icon;
+		
+	//指定アイコンを検索
+	cp_icon	= Touchbar_SearchConst( cp_wk, icon );
 
-	return cp_wk->is_active[ icon ];
+	//取得
+	return ICON_GetActive( cp_icon );
 }
 //----------------------------------------------------------------------------
 /**
@@ -410,10 +463,13 @@ BOOL TOUCHBAR_GetActive( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon )
 //-----------------------------------------------------------------------------
 void TOUCHBAR_SetVisible( TOUCHBAR_WORK *p_wk,  TOUCHBAR_ICON icon, BOOL is_visible )
 {	
-	GF_ASSERT_MSG( icon < TOUCHBAR_ICON_MAX, "TOUCHBAR:対応していないICONですicon=%d\n", icon );
-	GF_ASSERT_MSG( p_wk->p_clwk[icon], "TOUCHBAR:登録されていないICONですicon=%d\n", icon);
+	ICON_WORK * p_icon;
+		
+	//指定アイコンを検索
+	p_icon	= Touchbar_Search( p_wk, icon );
 
-	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[ icon ], is_visible );
+	//設定
+	ICON_SetVisible( p_icon, is_visible );
 }
 //----------------------------------------------------------------------------
 /**
@@ -427,36 +483,150 @@ void TOUCHBAR_SetVisible( TOUCHBAR_WORK *p_wk,  TOUCHBAR_ICON icon, BOOL is_visi
 //-----------------------------------------------------------------------------
 BOOL TOUCHBAR_GetVisible( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon )
 {	
-	GF_ASSERT_MSG( icon < TOUCHBAR_ICON_MAX, "TOUCHBAR:対応していないICONですicon=%d\n", icon );
-	GF_ASSERT_MSG( cp_wk->p_clwk[icon], "TOUCHBAR:登録されていないICONですicon=%d\n", icon);
-	return GFL_CLACT_WK_GetDrawEnable( cp_wk->p_clwk[ icon ] );
-}
+	const ICON_WORK * cp_icon;
+		
+	//指定アイコンを検索
+	cp_icon	= Touchbar_SearchConst( cp_wk, icon );
 
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR	チェックボックスの状況取得
- *
- *	@param	const TOUCHBAR_WORK *cp_wk	ワーク 
- *
- *	@retval	TRUEでチェックボックスON
- *	@retval	FALSEでチェックボックスOFF
- */
-//-----------------------------------------------------------------------------
-BOOL TOUCHBAR_GetCheck( const TOUCHBAR_WORK *cp_wk )
-{	
-	GF_ASSERT_MSG( cp_wk->p_clwk[ TOUCHBAR_ICON_CHECK ], "TOUCHBAR:Checkアイコンが登録されていません\n" );
-	return GFL_CLACT_WK_GetAnmSeq( cp_wk->p_clwk[ TOUCHBAR_ICON_CHECK ] ) == APP_COMMON_BARICON_CHECK_ON;
+	//取得
+	return ICON_GetVisible( cp_icon );
 }
-//=============================================================================
-/**
- *			static
- */
-//=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	リソース読み込み
+ *	@brief	TOUCHBAR	アイコンにSEを設定
  *
  *	@param	TOUCHBAR_WORK *p_wk	ワーク
+ *	@param	icon								アイコン
+ *	@param	se									SE
+ */
+//-----------------------------------------------------------------------------
+void TOUCHBAR_SetSE( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, u32 se )
+{	
+
+	ICON_WORK * p_icon;
+		
+	//指定アイコンを検索
+	p_icon	= Touchbar_Search( p_wk, icon );
+
+	//設定
+	ICON_SetSE( p_icon, se );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBAR	アイコンのSEを取得
+ *
+ *	@param	const TOUCHBAR_WORK *cp_wk	ワーク
+ *	@param	icon	アイコン
+ *
+ *	@return	SE
+ */
+//-----------------------------------------------------------------------------
+u32 TOUCHBAR_GetSE( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon )
+{	
+
+	const ICON_WORK * cp_icon;
+		
+	//指定アイコンを検索
+	cp_icon	= Touchbar_SearchConst( cp_wk, icon );
+
+	//取得
+	return ICON_GetSE( cp_icon );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBAR	アイコンにキー入力を設定
+ *
+ *	@param	TOUCHBAR_WORK *p_wk	ワーク
+ *	@param	icon								アイコン
+ *	@param	key									キー入力	PAD_KEY_UPやPAD_BUTTON_A等
+ */
+//-----------------------------------------------------------------------------
+void TOUCHBAR_SetUseKey( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, u32 key )
+{	
+
+	ICON_WORK * p_icon;
+		
+	//指定アイコンを検索
+	p_icon	= Touchbar_Search( p_wk, icon );
+
+	//設定
+	ICON_SetKey( p_icon, key );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBAR	アイコンからキー入力を取得
+ *
+ *	@param	const TOUCHBAR_WORK *cp_wk	ワーク
+ *	@param	icon												アイコン
+ *
+ *	@return	キー入力
+ */
+//-----------------------------------------------------------------------------
+u32 TOUCHBAR_GetUseKey( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon )
+{	
+
+	const ICON_WORK * cp_icon;
+		
+	//指定アイコンを検索
+	cp_icon	= Touchbar_SearchConst( cp_wk, icon );
+
+	//取得
+	return ICON_GetKey( cp_icon );
+}
+//=============================================================================
+/**
+ *	TOUCHBAR private
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アイコンの種類からオブジェクトをSearch
+ *
+ *	@param	TOUCHBAR_WORK *p_wk	ワーク
+ *	@param	type								探すアイコンのタイプ
+ *
+ *	@return	見つかったICON
+ */
+//-----------------------------------------------------------------------------
+static ICON_WORK * Touchbar_Search( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON type )
+{	
+	int i;
+	for( i = 0; i < p_wk->tbl_len; i++ )
+	{	
+		if( ICON_GetType( &p_wk->icon[ i ] ) == type )
+		{	
+			return &p_wk->icon[ i ];
+		}
+	}
+
+	GF_ASSERT_MSG( 0,"TOUCHBAR:指定したアイコンが見つかりませんでした%d", type );
+	return NULL;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アイコンの種類からオブジェクトをSearch	CONST版
+ *
+ *	@param	TOUCHBAR_WORK *p_wk	ワーク
+ *	@param	type								探すアイコンのタイプ
+ *
+ *	@return	見つかったICON
+ */
+//-----------------------------------------------------------------------------
+static const ICON_WORK * Touchbar_SearchConst( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON type )
+{	
+	return Touchbar_Search( (TOUCHBAR_WORK*)cp_wk, type );
+}
+//=============================================================================
+/**
+ *			RES
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リソース読みこみ
+ *
+ *	@param	TOUCHBAR_WORK *p_wk	ワーク
+ *	@param	frm								フレーム
  *	@param	clsys_draw_type		セル読み込みタイプ
  *	@param	PALTYPE bgplttype	パレット読み込み場所
  *	@param	mapping						セルマッピングモード
@@ -466,49 +636,54 @@ BOOL TOUCHBAR_GetCheck( const TOUCHBAR_WORK *cp_wk )
  *	@param	heapID						読み込みテンポラリ用ヒープID
  */
 //-----------------------------------------------------------------------------
-static void TouchBar_LoadResource( TOUCHBAR_WORK *p_wk, CLSYS_DRAW_TYPE	clsys_draw_type, PALTYPE bgplttype, APP_COMMON_MAPPING mapping, u8 bg_plt, u8 obj_plt, BOOL is_notload_bg, HEAPID heapID )
+static void RES_Init( RES_WORK *p_wk, u8 frm, CLSYS_DRAW_TYPE	clsys_draw_type, PALTYPE bgplttype, APP_COMMON_MAPPING mapping, u8 bg_plt, u8 obj_plt, BOOL is_notload_bg, HEAPID heapID )
 {	
-	ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heapID );
+	//クリアー
+	GFL_STD_MemClear( p_wk, sizeof(RES_WORK) );
+	p_wk->bg_frm	= frm;
 
-	//BG
-	if( !is_notload_bg )
 	{	
-		//領域の確保
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, APP_COMMON_GetBarPltArcIdx(),
-				bgplttype, bg_plt*0x20, TOUCHBAR_BG_PLT_NUM*0x20, heapID );
-		//確保した領域に読み込み
-		p_wk->chr_pos	= GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, APP_COMMON_GetBarCharArcIdx(), p_wk->bg_frm, TOUCHBAR_BG_CHARAAREA_SIZE, FALSE, heapID );
-		GF_ASSERT_MSG( p_wk->chr_pos != GFL_ARCUTIL_TRANSINFO_FAIL, "TOUCHBAR:BGキャラ領域が足りませんでした\n" );
-		//スクリーンはメモリ上に置いて、下部32*3だけ書き込み
-		ARCHDL_UTIL_TransVramScreenEx( p_handle, APP_COMMON_GetBarScrnArcIdx(), p_wk->bg_frm,
-				GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->chr_pos), TOUCHBAR_MENUBAR_X, TOUCHBAR_MENUBAR_Y, 32, 24, 
-				TOUCHBAR_MENUBAR_X, TOUCHBAR_MENUBAR_Y, TOUCHBAR_MENUBAR_W, TOUCHBAR_MENUBAR_H,
-				bg_plt, FALSE, heapID );
+		ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heapID );
+
+		//BG
+		if( !is_notload_bg )
+		{	
+			//領域の確保
+			GFL_ARCHDL_UTIL_TransVramPalette( p_handle, APP_COMMON_GetBarPltArcIdx(),
+					bgplttype, bg_plt*0x20, TOUCHBAR_BG_PLT_NUM*0x20, heapID );
+			//確保した領域に読み込み
+			p_wk->chr_pos	= GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, APP_COMMON_GetBarCharArcIdx(), p_wk->bg_frm, TOUCHBAR_BG_CHARAAREA_SIZE, FALSE, heapID );
+			GF_ASSERT_MSG( p_wk->chr_pos != GFL_ARCUTIL_TRANSINFO_FAIL, "TOUCHBAR:BGキャラ領域が足りませんでした\n" );
+			//スクリーンはメモリ上に置いて、下部32*3だけ書き込み
+			RES_UTIL_TransVramScreenEx( p_handle, APP_COMMON_GetBarScrnArcIdx(), p_wk->bg_frm,
+					GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->chr_pos), TOUCHBAR_MENUBAR_X, TOUCHBAR_MENUBAR_Y, 32, 24, 
+					TOUCHBAR_MENUBAR_X, TOUCHBAR_MENUBAR_Y, TOUCHBAR_MENUBAR_W, TOUCHBAR_MENUBAR_H,
+					bg_plt, FALSE, heapID );
+		}
+
+
+		//OBJ
+		//共通アイコンリソース	
+		p_wk->res[TOUCHBAR_RES_COMMON_PLT]	= GFL_CLGRP_PLTT_RegisterEx( p_handle,
+				APP_COMMON_GetBarIconPltArcIdx(), clsys_draw_type, obj_plt*0x20, 0, TOUCHBAR_OBJ_PLT_NUM, heapID );	
+		p_wk->res[TOUCHBAR_RES_COMMON_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
+				APP_COMMON_GetBarIconCharArcIdx(), FALSE, clsys_draw_type, heapID );
+
+		p_wk->res[TOUCHBAR_RES_COMMON_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
+				APP_COMMON_GetBarIconCellArcIdx(mapping),
+				APP_COMMON_GetBarIconAnimeArcIdx(mapping), heapID );
+
+		GFL_ARC_CloseDataHandle( p_handle );
 	}
-
-
-	//OBJ
-	//共通アイコンリソース	
-	p_wk->res[TOUCHBAR_RES_COMMON_PLT]	= GFL_CLGRP_PLTT_RegisterEx( p_handle,
-			APP_COMMON_GetBarIconPltArcIdx(), clsys_draw_type, obj_plt*0x20, 0, TOUCHBAR_OBJ_PLT_NUM, heapID );	
-	p_wk->res[TOUCHBAR_RES_COMMON_CHR]	= GFL_CLGRP_CGR_Register( p_handle,
-			APP_COMMON_GetBarIconCharArcIdx(), FALSE, clsys_draw_type, heapID );
-
-	p_wk->res[TOUCHBAR_RES_COMMON_CEL]	= GFL_CLGRP_CELLANIM_Register( p_handle,
-			APP_COMMON_GetBarIconCellArcIdx(mapping),
-			APP_COMMON_GetBarIconAnimeArcIdx(mapping), heapID );
-
-	GFL_ARC_CloseDataHandle( p_handle );
 }
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	リソース破棄
- *	
- *	@param	TOUCHBAR_WORK *p_wk ワーク
+ *
+ *	@param	RES_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void TouchBar_UnLoadResource( TOUCHBAR_WORK *p_wk )
+static void RES_Exit( RES_WORK *p_wk )
 {	
 	//OBJ
 	GFL_CLGRP_CELLANIM_Release( p_wk->res[TOUCHBAR_RES_COMMON_CEL] );
@@ -519,64 +694,24 @@ static void TouchBar_UnLoadResource( TOUCHBAR_WORK *p_wk )
 	GFL_BG_FreeCharacterArea(p_wk->bg_frm,
 			GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->chr_pos),
 			GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->chr_pos));
-}
 
-//----------------------------------------------------------------------------
-/**
- *	@brief	OBJ作成
- *
- *	@param	TOUCHBAR_WORK *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void TouchBar_CreateObj( TOUCHBAR_WORK *p_wk, GFL_CLUNIT* p_unit, const TOUCHBAR_ITEM_ICON *cp_setup_tbl, u16 tbl_len, CLSYS_DEFREND_TYPE	clsys_def_type, HEAPID heapID )
-{	
-	//CLWKの作成
-	int i;
-	GFL_CLWK_DATA				cldata;
-	const TOUCHBAR_ITEM_ICON	*cp_setup;
 
-	GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-
-	for( i = 0; i < tbl_len; i++ )
-	{	
-		cp_setup	= &cp_setup_tbl[i];
-		GF_ASSERT( cp_setup->icon < TOUCHBAR_ICON_MAX );
-		GF_ASSERT_MSG( i < APBAR_ICON_REGISTER_MAX, "TOUCHBAR：アイコン登録個数が超えています now%d max%d\n", i, APBAR_ICON_REGISTER_MAX );
-
-		cldata.pos_x	= cp_setup->pos.x;
-		cldata.pos_y	= cp_setup->pos.y;
-		cldata.anmseq	= sc_anmseq_active_tbl[ cp_setup->icon ];
-		//clwkはTOUCHBAR_ICON順にしておく
-		GF_ASSERT_MSG( p_wk->p_clwk[cp_setup->icon] == NULL, "TOUCHBAR:SETUP構造体に同じアイコンを定義しています\n" );
-		p_wk->p_clwk[cp_setup->icon]	= GFL_CLACT_WK_Create( p_unit, 
-				p_wk->res[TOUCHBAR_RES_COMMON_CHR],
-				p_wk->res[TOUCHBAR_RES_COMMON_PLT],
-				p_wk->res[TOUCHBAR_RES_COMMON_CEL],
-				&cldata,
-				clsys_def_type,
-				heapID
-				);
-
-		GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[cp_setup->icon], TRUE );
-	}
+	//クリアー
+	GFL_STD_MemClear( p_wk, sizeof(RES_WORK) );
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief	OBJ破棄
+ *	@brief	リソース取得
  *
- *	@param	TOUCHBAR_WORK *p_wk	ワーク
+ *	@param	const RES_WORK *cp_wk	ワーク
+ *	@param	type									タイプ
+ *
+ *	@return	リソース取得
  */
 //-----------------------------------------------------------------------------
-static void TouchBar_DeleteObj( TOUCHBAR_WORK *p_wk )
+static u32 RES_GetResource( const RES_WORK *cp_wk, RES_TYPE type )
 {	
-	int i;
-	for( i = 0; i < APBAR_ICON_REGISTER_MAX; i++ )
-	{	
-		if( p_wk->p_clwk[i] )
-		{	
-			GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
-		}
-	}
+	return cp_wk->res[ type ];
 }
 //----------------------------------------------------------------------------
 /**
@@ -600,7 +735,7 @@ static void TouchBar_DeleteObj( TOUCHBAR_WORK *p_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h, u8 plt, BOOL compressedFlag, HEAPID heapID )
+static void RES_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h, u8 plt, BOOL compressedFlag, HEAPID heapID )
 {	
 	void *p_src_arc;
 	NNSG2dScreenData* p_scr_data;
@@ -653,4 +788,329 @@ static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u3
 	GFL_HEAP_FreeMemory( p_src_arc );
 }	
 
+//=============================================================================
+/**
+ *			ICON
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON初期化
+ *
+ *	@param	ICON_WORK *p_wk								ワーク
+ *	@param	p_unit												CLWK作成用UNIT
+ *	@param	RES_WORK											共通リソース
+ *	@param	TOUCHBAR_ITEM_ICON *cp_setup	セットアップデータ
+ *	@param	HEAPID heapID									ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void ICON_Init( ICON_WORK *p_wk, GFL_CLUNIT* p_unit, const RES_WORK *cp_res, const TOUCHBAR_ITEM_ICON *cp_setup, CLSYS_DEFREND_TYPE	clsys_def_type, HEAPID heapID )
+{	
+	//クリア
+	GFL_STD_MemClear( p_wk ,sizeof(ICON_WORK) );
+	p_wk->data	= *cp_setup;
+	p_wk->is_active	= TRUE;
+	
+	//CLWK作成
+	{	
+		u32 cg, plt, cell;
+		GFL_CLWK_DATA				cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+		cldata.pos_x	= cp_setup->pos.x;
+		cldata.pos_y	= cp_setup->pos.y;
 
+		//タイプによってリソースやデータが違う
+		if( cp_setup->icon >= TOUCHBAR_ICON_CUTSOM1 )
+		{	
+			//カスタムアイコン
+			cg		= cp_setup->cg_idx;
+			plt		= cp_setup->plt_idx;
+			cell	= cp_setup->cell_idx;
+			p_wk->movetype	= TOUCHBAR_ICON_MOVETYPE_PUSH;
+		}
+		else
+		{	
+			//共通アイコン
+			cg		= RES_GetResource( cp_res, TOUCHBAR_RES_COMMON_CHR );
+			plt		= RES_GetResource( cp_res, TOUCHBAR_RES_COMMON_PLT );
+			cell	= RES_GetResource( cp_res, TOUCHBAR_RES_COMMON_CEL );
+
+			p_wk->data.active_anmseq		= sc_common_icon_data[ cp_setup->icon ].active_anmseq;
+			p_wk->data.noactive_anmseq	= sc_common_icon_data[ cp_setup->icon ].noactive_anmseq;
+			p_wk->data.push_anmseq			= sc_common_icon_data[ cp_setup->icon ].push_anmseq;
+			p_wk->data.key							= sc_common_icon_data[ cp_setup->icon ].key;
+			p_wk->data.se								= sc_common_icon_data[ cp_setup->icon ].se;
+			p_wk->movetype							= sc_common_icon_data[ cp_setup->icon ].movetype;
+		}
+		p_wk->now_anmseq	= p_wk->data.active_anmseq;
+		cldata.anmseq	= p_wk->now_anmseq;
+
+		//作成
+		p_wk->p_clwk	= GFL_CLACT_WK_Create( p_unit, cg, plt, cell, &cldata, clsys_def_type, heapID );
+		GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk, TRUE );
+
+	}
+
+		//動作タイプによって実行関数切り替え
+	{	
+		switch( p_wk->movetype )
+		{	
+		case TOUCHBAR_ICON_MOVETYPE_PUSH:	//押されたら、押されるアニメになるボタン
+			p_wk->push_func	= Icon_PushFuncNormal;
+			break;
+		case TOUCHBAR_ICON_MOVETYPE_FLIP:	//押されたら、ONとOFFが切り替るボタン
+			p_wk->push_func	= Icon_PushFuncFlip;
+			break;
+		default:
+			GF_ASSERT_MSG( 0, "TOUCHBAR:動作タイプが不適切です%d", p_wk->movetype );
+		}
+
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON破棄
+ *
+ *	@param	ICON_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void ICON_Exit( ICON_WORK *p_wk )
+{	
+	//CLWK破棄
+	GFL_CLACT_WK_Remove( p_wk->p_clwk );
+	//クリア
+	GFL_STD_MemClear( p_wk ,sizeof(ICON_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	メイン処理
+ *
+ *	@param	ICON_WORK *p_wk ワーク
+ *
+ *	@return	TRUE入力ON　FALSE入力OFF
+ */
+//-----------------------------------------------------------------------------
+static BOOL ICON_Main( ICON_WORK *p_wk )
+{	
+				
+	BOOL	is_visible;
+	BOOL	is_update;
+	u32 x, y;
+
+	is_update		= FALSE;
+	is_visible	= GFL_CLACT_WK_GetDrawEnable( p_wk->p_clwk );
+
+	//判定可能なときのみ
+	if( p_wk->is_active & is_visible )
+	{	
+		//タッチ判定
+		if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+		{	
+			if( ((u32)( x - p_wk->data.pos.x) <= (u32)(TOUCHBAR_ICON_WIDTH))
+					&	((u32)( y - p_wk->data.pos.y) <= (u32)(TOUCHBAR_ICON_HEIGHT)))
+			{
+				GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+				is_update	= TRUE;
+			}
+		}
+
+		//キー判定
+		if( p_wk->data.key != 0 )
+		{	
+			if( GFL_UI_KEY_GetTrg() & p_wk->data.key )
+			{	
+				GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
+				is_update	= TRUE;
+			}
+		}
+
+		//動作関数
+		if( is_update )
+		{	
+			p_wk->push_func( p_wk );
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	アニメの動作をチェック
+ *
+ *	@param	const ICON_WORK *cp_wk	ワーク
+ *
+ *	@return	TRUEで動作していない	FALSEで動作中
+ */
+//-----------------------------------------------------------------------------
+static BOOL ICON_IsMoveEnd( const ICON_WORK *cp_wk )
+{	
+	return !GFL_CLACT_WK_CheckAnmActive( cp_wk->p_clwk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	アイコンの種類
+ *
+ *	@param	const ICON_WORK *cp_wk ワーク
+ *
+ *	@return	アイコンの種類
+ */
+//-----------------------------------------------------------------------------
+static TOUCHBAR_ICON ICON_GetType( const ICON_WORK *cp_wk )
+{	
+	return	cp_wk->data.icon;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	表示設定
+ *
+ *	@param	ICON_WORK *p_wk	ワーク
+ *	@param	is_visible			TRUEで表示	FALSEで非表示
+ */
+//-----------------------------------------------------------------------------
+static void ICON_SetVisible( ICON_WORK *p_wk, BOOL is_visible )
+{	
+	GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, is_visible );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	表示取得
+ *
+ *	@param	const ICON_WORK *cp_wk	ワーク
+ *
+ *	@return	TRUE表示	FALSE非表示
+ */
+//-----------------------------------------------------------------------------
+static BOOL ICON_GetVisible( const ICON_WORK *cp_wk )
+{	
+	return GFL_CLACT_WK_GetDrawEnable( cp_wk->p_clwk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	アクティブ状態設定
+ *
+ *	@param	ICON_WORK *p_wk		ワーク
+ *	@param	is_active					TRUEでアクティブ状態	FALSEでノンアクティブ状態
+ */
+//-----------------------------------------------------------------------------
+static void ICON_SetActive( ICON_WORK *p_wk, BOOL is_active )
+{	
+	p_wk->is_active	= is_active;
+
+	if( is_active )
+	{	
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, p_wk->now_anmseq );
+	}
+	else
+	{	
+		GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, p_wk->data.noactive_anmseq );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	アクティブ判定取得
+ *
+ *	@param	const ICON_WORK *cp_wk	ワーク
+ *
+ *	@return	TRUEでアクティブ状態	FALSEでノンアクティブ状態
+ */
+//-----------------------------------------------------------------------------
+static BOOL ICON_GetActive( const ICON_WORK *cp_wk )
+{	
+	return cp_wk->is_active;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	SEを設定
+ *
+ *	@param	ICON_WORK *p_wk	ワーク
+ *	@param	se							SE
+ */
+//-----------------------------------------------------------------------------
+static void ICON_SetSE( ICON_WORK *p_wk, u32 se )
+{	
+	p_wk->data.se	= se;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	SEを取得
+ *
+ *	@param	const ICON_WORK *cp_wk	ワーク
+ *
+ *	@return	SE
+ */
+//-----------------------------------------------------------------------------
+static u32 ICON_GetSE( const ICON_WORK *cp_wk )
+{	
+	return cp_wk->data.se;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	キー入力をセット
+ *
+ *	@param	ICON_WORK *p_wk	ワーク
+ *	@param	key							キー入力	PAD_KEY_UP等
+ */
+//-----------------------------------------------------------------------------
+static void ICON_SetKey( ICON_WORK *p_wk, u32 key )
+{	
+	p_wk->data.key	= key;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	キー入力を取得
+ *
+ *	@param	const ICON_WORK *cp_wk	ワーク
+ *
+ *	@return	キー入力
+ */
+//-----------------------------------------------------------------------------
+static u32 ICON_GetKey( const ICON_WORK *cp_wk )
+{	
+	return cp_wk->data.key;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタンが押された時の動作関数	通常版
+ *
+ *	@param	ICON_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Icon_PushFuncNormal( ICON_WORK *p_wk )
+{	
+	//アニメを変え、音を鳴らす
+	p_wk->now_anmseq	= p_wk->data.push_anmseq;
+
+	GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, p_wk->now_anmseq );
+
+	if( p_wk->data.se != 0 )
+	{	
+		PMSND_PlaySE( p_wk->data.se );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタンが押された時の動作関数	フリップ版
+ *
+ *	@param	ICON_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Icon_PushFuncFlip( ICON_WORK *p_wk )
+{	
+	if( p_wk->now_anmseq == p_wk->data.active_anmseq )
+	{	
+		p_wk->now_anmseq	= p_wk->data.push_anmseq;
+	}
+	else
+	{	
+		p_wk->now_anmseq	= p_wk->data.active_anmseq;
+	}
+
+	GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, p_wk->now_anmseq );
+
+	if( p_wk->data.se != 0 )
+	{	
+		PMSND_PlaySE( p_wk->data.se );
+	}
+}
