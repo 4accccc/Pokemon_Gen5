@@ -133,3 +133,17 @@ extern void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id );
  */
 //-----------------------------------------------------------------------------
 extern BOOL PMS_DRAW_IsPrinting( PMS_DRAW_WORK* wk, u8 id );
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  表示ユニットを入れ替える
+ *
+ *	@param	PMS_DRAW_WORK* wk ワーク
+ *	@param	id1 入れ替え元
+ *	@param	id2 入れ替え先
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+extern void PMS_DRAW_Swap( PMS_DRAW_WORK* wk, u8 id1, u8 id2 );
+

@@ -295,6 +295,31 @@ BOOL PMS_DRAW_IsPrinting( PMS_DRAW_WORK* wk, u8 id )
   return wk->unit[id].b_useflag;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  表示ユニットを入れ替える
+ *
+ *	@param	PMS_DRAW_WORK* wk ワーク
+ *	@param	id1 入れ替え元
+ *	@param	id2 入れ替え先
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void PMS_DRAW_Swap( PMS_DRAW_WORK* wk, u8 id1, u8 id2 )
+{
+  PMS_DRAW_UNIT unit_temp;
+  
+  GF_ASSERT( wk );
+  GF_ASSERT( id1 < wk->unit_num );
+  GF_ASSERT( id2 < wk->unit_num );
+
+  // メモリスワップ
+  GFL_STD_MemCopy( &wk->unit[id2], &unit_temp, sizeof( PMS_DRAW_UNIT ) );
+  GFL_STD_MemCopy( &wk->unit[id1], &wk->unit[id2], sizeof( PMS_DRAW_UNIT ) );
+  GFL_STD_MemCopy( &unit_temp, &wk->unit[id1], sizeof( PMS_DRAW_UNIT ) );
+}
+
 
 //=============================================================================
 /**
