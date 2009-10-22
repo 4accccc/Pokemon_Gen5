@@ -76,6 +76,11 @@ enum {
 #define LIGHT_FADE_COUNT_MAX	( 60 )
 
 //-------------------------------------
+///	ライトテーブル最大数
+//=====================================
+#define LIGHT_TABLE_MAX_SIZE	( 16 )
+
+//-------------------------------------
 ///	カラーフェード
 //=====================================
 enum {
@@ -244,7 +249,7 @@ struct _FIELD_LIGHT {
 	
 	// データバッファ
 	u32			data_num;			// データ数
-	LIGHT_DATA* p_data;				// データ
+	LIGHT_DATA data[LIGHT_TABLE_MAX_SIZE];				// データ
 	u32			now_index;			// 今の反映インデックス
 	u16			default_lightno;
 	
@@ -386,7 +391,7 @@ FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, int rtc_second, FIELD_FOG_WORK* p
 	p_sys->now_index = FIELD_LIGHT_SearchNowIndex( p_sys, rtc_second );
 
 	// データ反映
-	GFL_STD_MemCopy( &p_sys->p_data[p_sys->now_index], &p_sys->reflect_data, sizeof(LIGHT_DATA) );
+	GFL_STD_MemCopy( &p_sys->data[p_sys->now_index], &p_sys->reflect_data, sizeof(LIGHT_DATA) );
 	p_sys->change = TRUE;
 
 	// フォグシステムを保存
@@ -447,26 +452,26 @@ void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
 		if( (p_sys->now_index - 1) < 0 ){
 			starttime = 0;
 		}else{
-			starttime = p_sys->p_data[ p_sys->now_index-1 ].endtime;
+			starttime = p_sys->data[ p_sys->now_index-1 ].endtime;
 		}
 
-		//OS_TPrintf( "starttime %d endtime %d now %d\n", starttime, p_sys->p_data[ p_sys->now_index ].endtime, rtc_second );
+		//OS_TPrintf( "starttime %d endtime %d now %d\n", starttime, p_sys->data[ p_sys->now_index ].endtime, rtc_second );
 		// 今のテーブルの範囲内じゃないかチェック
 		if( (starttime > rtc_second) ||
-			(p_sys->p_data[ p_sys->now_index ].endtime <= rtc_second) ){
+			(p_sys->data[ p_sys->now_index ].endtime <= rtc_second) ){
 
 			// 変更
 			p_sys->now_index  = (p_sys->now_index + 1) % p_sys->data_num;
 
 			// フェード設定
-			LIGHT_FADE_Init( &p_sys->fade, &p_sys->reflect_data, &p_sys->p_data[ p_sys->now_index ] );
+			LIGHT_FADE_Init( &p_sys->fade, &p_sys->reflect_data, &p_sys->data[ p_sys->now_index ] );
 		}
 		break;
 
 	// ライトフェード（外部指定データ）
 	case FIELD_LIGHT_SEQ_COLORFADE:	// カラーフェード（外部指定データ）
 		// 色にする
-		if( COLOR_FADE_Main( &p_sys->color_fade, &p_sys->fade, &p_sys->reflect_data, &p_sys->p_data[ p_sys->now_index ] ) ){
+		if( COLOR_FADE_Main( &p_sys->color_fade, &p_sys->fade, &p_sys->reflect_data, &p_sys->data[ p_sys->now_index ] ) ){
 			p_sys->seq = FIELD_LIGHT_SEQ_NORMAL;
 		}
 		break;
@@ -520,7 +525,7 @@ void FIELD_LIGHT_Change( FIELD_LIGHT* p_sys, u32 light_no, u32 heapID )
 	p_sys->now_index = FIELD_LIGHT_SearchNowIndex( p_sys, p_sys->time_second );
 
 	// フェード開始
-	LIGHT_FADE_Init( &p_sys->fade, &p_sys->reflect_data, &p_sys->p_data[ p_sys->now_index ] );
+	LIGHT_FADE_Init( &p_sys->fade, &p_sys->reflect_data, &p_sys->data[ p_sys->now_index ] );
 }
 
 //----------------------------------------------------------------------------
@@ -542,7 +547,7 @@ void FIELD_LIGHT_ChangeEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u32 heapID
 	p_sys->now_index = FIELD_LIGHT_SearchNowIndex( p_sys, p_sys->time_second );
 
 	// フェード開始
-	LIGHT_FADE_Init( &p_sys->fade, &p_sys->reflect_data, &p_sys->p_data[ p_sys->now_index ] );
+	LIGHT_FADE_Init( &p_sys->fade, &p_sys->reflect_data, &p_sys->data[ p_sys->now_index ] );
 }
 
 //----------------------------------------------------------------------------
@@ -563,7 +568,7 @@ void FIELD_LIGHT_ReLoadDefault( FIELD_LIGHT* p_sys, u32 heapID )
 	p_sys->now_index = FIELD_LIGHT_SearchNowIndex( p_sys, p_sys->time_second );
 
 	// フェード開始
-	LIGHT_FADE_Init( &p_sys->fade, &p_sys->reflect_data, &p_sys->p_data[ p_sys->now_index ] );
+	LIGHT_FADE_Init( &p_sys->fade, &p_sys->reflect_data, &p_sys->data[ p_sys->now_index ] );
 }
 
 //----------------------------------------------------------------------------
@@ -735,7 +740,7 @@ void FIELD_LIGHT_DEBUG_Control( FIELD_LIGHT* p_sys )
 		p_sys->debug_print_req = TRUE;
 
 		// データ反映
-		GFL_STD_MemCopy( &p_sys->p_data[p_sys->now_index], &p_sys->reflect_data, sizeof(LIGHT_DATA) );
+		GFL_STD_MemCopy( &p_sys->data[p_sys->now_index], &p_sys->reflect_data, sizeof(LIGHT_DATA) );
 		p_sys->change = TRUE;
 		
 	}else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
@@ -744,7 +749,7 @@ void FIELD_LIGHT_DEBUG_Control( FIELD_LIGHT* p_sys )
 		p_sys->debug_print_req = TRUE;
 
 		// データ反映
-		GFL_STD_MemCopy( &p_sys->p_data[p_sys->now_index], &p_sys->reflect_data, sizeof(LIGHT_DATA) );
+		GFL_STD_MemCopy( &p_sys->data[p_sys->now_index], &p_sys->reflect_data, sizeof(LIGHT_DATA) );
 		p_sys->change = TRUE;
 	}
 
@@ -1436,63 +1441,66 @@ static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u
 {
 	u32 size;
 	int i, j;
-	GF_ASSERT( !p_sys->p_data );
 
-	p_sys->p_data	= GFL_ARC_UTIL_LoadEx( arcid, dataid, FALSE, heapID, &size );
+  size = GFL_ARC_GetDataSize( arcid, dataid );
 	p_sys->data_num	= size / sizeof(LIGHT_DATA);
+  GF_ASSERT( p_sys->data_num < LIGHT_TABLE_MAX_SIZE );
+
+	GFL_ARC_LoadData( p_sys->data, arcid, dataid );
+
 
 	// 方向ベクトルの値を一応単位ベクトルにする。
 	for( i=0; i<p_sys->data_num; i++ ){
 		
 		for( j=0; j<4; j++ ){
-			VEC_Fx16Normalize( &p_sys->p_data[i].light_vec[j], &p_sys->p_data[i].light_vec[j] );
+			VEC_Fx16Normalize( &p_sys->data[i].light_vec[j], &p_sys->data[i].light_vec[j] );
 		}
 
 #ifdef DEBUG_LIGHT_AUTO
     // 時間の部分を上書き
-    p_sys->p_data[i].endtime = sc_DEBUG_LIGHT_AUTO_END_TIME[i];
+    p_sys->data[i].endtime = sc_DEBUG_LIGHT_AUTO_END_TIME[i];
 #endif
 
 #if 0
 		// データのデバック表示
 		OS_TPrintf( "data number %d\n", i );
-		OS_TPrintf( "endtime	%d\n", p_sys->p_data[i].endtime );
+		OS_TPrintf( "endtime	%d\n", p_sys->data[i].endtime );
 		for( j=0; j<4; j++ ){
-			OS_TPrintf( "light_flag %d\n", p_sys->p_data[i].light_flag[i] );
+			OS_TPrintf( "light_flag %d\n", p_sys->data[i].light_flag[i] );
 			OS_TPrintf( "light_color r=%d g=%d b=%d\n", 
-					(p_sys->p_data[i].light_color[i] & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
-					(p_sys->p_data[i].light_color[i] & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
-					(p_sys->p_data[i].light_color[i] & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
+					(p_sys->data[i].light_color[i] & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
+					(p_sys->data[i].light_color[i] & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
+					(p_sys->data[i].light_color[i] & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
 			OS_TPrintf( "light_vec x=0x%x y=0x%x z=0x%x\n", 
-					p_sys->p_data[i].light_vec[i].x,  
-					p_sys->p_data[i].light_vec[i].y,  
-					p_sys->p_data[i].light_vec[i].z );
+					p_sys->data[i].light_vec[i].x,  
+					p_sys->data[i].light_vec[i].y,  
+					p_sys->data[i].light_vec[i].z );
 		}
 
 		OS_TPrintf( "diffuse r=%d g=%d b=%d\n", 
-				(p_sys->p_data[i].diffuse & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
-				(p_sys->p_data[i].diffuse & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
-				(p_sys->p_data[i].diffuse & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
+				(p_sys->data[i].diffuse & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
+				(p_sys->data[i].diffuse & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
+				(p_sys->data[i].diffuse & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
 
 		OS_TPrintf( "ambient r=%d g=%d b=%d\n", 
-				(p_sys->p_data[i].ambient & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
-				(p_sys->p_data[i].ambient & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
-				(p_sys->p_data[i].ambient & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
+				(p_sys->data[i].ambient & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
+				(p_sys->data[i].ambient & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
+				(p_sys->data[i].ambient & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
 
 		OS_TPrintf( "specular r=%d g=%d b=%d\n", 
-				(p_sys->p_data[i].specular & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
-				(p_sys->p_data[i].specular & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
-				(p_sys->p_data[i].specular & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
+				(p_sys->data[i].specular & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
+				(p_sys->data[i].specular & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
+				(p_sys->data[i].specular & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
 
 		OS_TPrintf( "emission r=%d g=%d b=%d\n", 
-				(p_sys->p_data[i].emission & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
-				(p_sys->p_data[i].emission & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
-				(p_sys->p_data[i].emission & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
+				(p_sys->data[i].emission & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
+				(p_sys->data[i].emission & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
+				(p_sys->data[i].emission & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
 
 		OS_TPrintf( "fog_color r=%d g=%d b=%d\n", 
-				(p_sys->p_data[i].fog_color & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
-				(p_sys->p_data[i].fog_color & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
-				(p_sys->p_data[i].fog_color & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
+				(p_sys->data[i].fog_color & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
+				(p_sys->data[i].fog_color & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
+				(p_sys->data[i].fog_color & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
 #endif
 	}
 	
@@ -1507,10 +1515,6 @@ static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid, u
 //-----------------------------------------------------------------------------
 static void FIELD_LIGHT_ReleaseData( FIELD_LIGHT* p_sys )
 {
-	if( p_sys->p_data ){
-		GFL_HEAP_FreeMemory( p_sys->p_data );
-		p_sys->p_data = NULL;
-	}
 }
 
 //----------------------------------------------------------------------------
@@ -1529,7 +1533,7 @@ static s32	FIELD_LIGHT_SearchNowIndex( const FIELD_LIGHT* cp_sys, int rtc_second
 
 	for( i=0; i<cp_sys->data_num; i++ ){
 
-		if( cp_sys->p_data[i].endtime > rtc_second ){
+		if( cp_sys->data[i].endtime > rtc_second ){
 			return i;
 		}
 	}
