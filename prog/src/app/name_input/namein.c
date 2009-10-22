@@ -155,7 +155,7 @@ typedef enum
 ///	STRINPUT
 //=====================================
 //文字列長
-#define STRINPUT_STR_LEN			(NAMEIN_POKEMON_LENGTH)	//入力文字列長
+#define STRINPUT_STR_LEN			(NAMEIN_BOX_LENGTH)			//入力文字列長
 #define STRINPUT_CHANGE_LEN		(3)											//変換文字列長
 //BMPWINサイズ
 #define STRINPUT_BMPWIN_X			(8)
@@ -4303,26 +4303,40 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	//今回の文字列を返す
 	STRINPUT_CopyStr( &p_wk->strinput, p_wk->p_param->strbuf );
 
-	//以前の文字列と一致したならば、キャンセルとみなす
-	p_wk->p_param->cancel	= GFL_STR_CompareBuffer( p_src_str, p_wk->p_param->strbuf );
+	//以前の文字列と一致したもしくはならば、キャンセルとみなす
+	{	
+		if( GFL_STR_CompareBuffer( p_src_str, p_wk->p_param->strbuf ) )
+		{	
+			p_wk->p_param->cancel	= TRUE;
+		}
+	}
 
 	GFL_STR_DeleteBuffer( p_src_str );
 
-	//もし主人公入力で、入力数が0ならばデフォルト名を入れる
-	if( GFL_STR_GetBufferLength( p_wk->p_param->strbuf ) == 0
-			&& p_wk->p_param->mode == NAMEIN_MYNAME )
+	//入力数が0ならば
+	//主人公入力ならばデフォルト名をいれ、
+	//そのほかならキャンセルとみなす
+	if( GFL_STR_GetBufferLength( p_wk->p_param->strbuf ) == 0 )
 	{	
-		STRBUF *p_msg_str;
-		p_msg_str	= GFL_MSG_CreateString( p_wk->p_msg, 
-									NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
+		if( p_wk->p_param->mode == NAMEIN_MYNAME )
+		{	
+			STRBUF *p_msg_str;
+			p_msg_str	= GFL_MSG_CreateString( p_wk->p_msg, 
+					NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
 
-		GFL_STR_CopyBuffer( p_wk->p_param->strbuf, p_msg_str );
-		GFL_STR_DeleteBuffer( p_msg_str );
+			GFL_STR_CopyBuffer( p_wk->p_param->strbuf, p_msg_str );
+			GFL_STR_DeleteBuffer( p_msg_str );
 
-/*		GFL_MSG_GetString( p_wk->p_msg, 
-				NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ),
-				p_wk->p_param->strbuf );
-*/	}
+			/*		GFL_MSG_GetString( p_wk->p_msg, 
+						NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ),
+						p_wk->p_param->strbuf );
+						*/
+		}
+		else
+		{	
+			p_wk->p_param->cancel	= TRUE;
+		}
+	}
 
 	//終了
 	SEQ_End( p_seqwk );
