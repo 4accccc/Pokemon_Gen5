@@ -833,7 +833,7 @@ void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 
   
   //文字面描画
   {
-    STRBUF *buf_name, *buf_pms;
+    STRBUF *buf_name;
     GFL_POINT point = {0, 16};
     
     if(PMS_DRAW_IsPrinting(unisub->pmsdraw, write_pos) == TRUE){
@@ -850,10 +850,8 @@ void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 
     //友達手帳の名前  ※check　まだ未作成 2009.08.24(月)
     
     //簡易会話
-    buf_pms = PMSDAT_ToString(&chat->pmsdata, HEAPID_FIELDMAP);
     PMS_DRAW_PrintOffset(unisub->pmsdraw, unisub->bmpwin_chat[write_pos], 
       &chat->pmsdata, write_pos, &point);
-    GFL_STR_DeleteBuffer(buf_pms);
   }
 }
 
@@ -909,9 +907,7 @@ void _UniSub_Chat_DispCopy(UNION_SUBDISP_PTR unisub, u8 src_pos, u8 dest_pos)
   GFL_BG_LoadScreenV_Req(UNION_FRAME_S_PLATE);
   
   //BMPのコピー
-  GFL_BMP_Copy(GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[src_pos]), 
-    GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[dest_pos]));
-  GFL_BMPWIN_MakeTransWindow_VBlank(unisub->bmpwin_chat[dest_pos]);
+  PMS_DRAW_Copy(unisub->pmsdraw, src_pos, dest_pos);
 }
 
 //--------------------------------------------------------------
