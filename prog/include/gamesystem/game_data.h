@@ -455,6 +455,23 @@ extern FIELD_SOUND * GAMEDATA_GetFieldSound( GAMEDATA *gamedata );
 //--------------------------------------------------------------
 extern ENCOUNT_WORK* GAMEDATA_GetEncountWork( GAMEDATA *gamedata );
 
+//--------------------------------------------------------------
+/**
+ * @brief 最新の戦闘結果をセット
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @param btl_result  戦闘結果（include/battle/battle.hのBtlResult）
+ */
+//--------------------------------------------------------------
+extern void GAMEDATA_SetLastBattleResult( GAMEDATA * gamedata, u32 btl_result );
+//--------------------------------------------------------------
+/**
+ * @brief 最新の戦闘結果を取得
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @return  u32 最新の戦闘結果（include/battle/battle.hのBtlResult）
+ */
+//--------------------------------------------------------------
+extern u32 GAMEDATA_GetLastBattleResult( const GAMEDATA * gamedata );
+
 //==================================================================
 /**
  * @brief

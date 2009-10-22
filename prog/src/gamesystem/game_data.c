@@ -5,14 +5,14 @@
  * @author	tamada
  * @date	2008.11.04
  *
+ * @note
  * 基本的にゲーム進行データはセーブデータとして存在するが、
  * 通信時の複数プレイヤー情報やフィールドマップ情報などセーブデータに
  * のるとは限らない情報もある。
  * そのようなセーブデータ・非セーブデータへ並列にアクセスするインターフェイスを
  * 各パートごとに構成するとパートごとにアクセス手法が違ったり、また同じ機能の
  * ものが複数存在するなどプログラム全体の複雑さが増してしまう可能性が高い。
- * それを避けるため、共通インターフェイスを作ることによって簡略化する試み
- * …試みなので途中で方針を変えるかも。
+ * それを避けるため、共通インターフェイスを作ることによって簡略化する。
  */
 //=============================================================================
 
@@ -72,6 +72,8 @@ struct _GAMEDATA{
   FIELD_SOUND *field_sound; ///<フィールドサウンド管理
 
   FIELD_STATUS * fldstatus;  ///<フィールドマップ情報
+
+  u32 last_battle_result;   ///<最新のバトルの結果
 
   int fieldmap_walk_count; ///<フィールドマップ歩数カウント
   u8 season_id;				///<季節指定ID
@@ -654,7 +656,29 @@ ENCOUNT_WORK* GAMEDATA_GetEncountWork( GAMEDATA *gamedata )
 {
   return( gamedata->enc_work );
 }
+//--------------------------------------------------------------
+/**
+ * @brief 最新の戦闘結果を取得
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @return  u32 最新の戦闘結果（include/battle/battle.hのBtlResult）
+ */
+//--------------------------------------------------------------
+u32 GAMEDATA_GetLastBattleResult( const GAMEDATA * gamedata )
+{
+  return gamedata->last_battle_result;
+}
 
+//--------------------------------------------------------------
+/**
+ * @brief 最新の戦闘結果をセット
+ * @param   gamedata	GAMEDATAへのポインタ
+ * @param btl_result  戦闘結果（include/battle/battle.hのBtlResult）
+ */
+//--------------------------------------------------------------
+void GAMEDATA_SetLastBattleResult( GAMEDATA * gamedata, u32 btl_result )
+{
+  gamedata->last_battle_result = btl_result;
+}
 
 //============================================================================================
 //
