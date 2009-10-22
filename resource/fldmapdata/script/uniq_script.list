@@ -12,4 +12,5 @@ UNIQ_SCRIPTFILES	= \
   wifi_club_scr.ev \
   shop_scr.ev \
   eggevent_scr.ev \
-  poke_waza.ev
+  poke_waza.ev \
+  musical_scr.ev
