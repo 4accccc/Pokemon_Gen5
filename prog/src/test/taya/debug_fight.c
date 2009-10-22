@@ -34,6 +34,7 @@
 #include "savedata\save_tbl.h"
 #include "debug\debug_makepoke.h"
 #include "poke_tool\monsno_def.h"
+#include "battle\battle.h"
 
 
 // local includes ---------------------
@@ -56,8 +57,6 @@ enum {
   SAVEAREA_SIZE = 0x2000,
 
 };
-
-
 
 /*--------------------------------------------------------------------------*/
 /* Enums                                                                    */
@@ -227,6 +226,28 @@ static const struct {
   { SELITEM_SAVE,       38, LAYOUT_PARAM_LINE_Y4 },
 };
 
+
+/**
+ * BtlRule -> 対戦パラメータ変換テーブル
+ */
+static const struct {
+  u8  commFlag     : 1;
+  u8  wildFlag     : 1;
+  u8  enemyPokeReg : 6;   // 敵ポケ規定数（0なら自由）
+  u8  rule;
+}BtlTypeParams[] = {
+  { 0, 1, 1, BTL_RULE_SINGLE },   // BTLTYPE_SINGLE_WILD
+  { 0, 0, 0, BTL_RULE_SINGLE },   // BTLTYPE_SINGLE_TRAINER
+  { 1, 0, 0, BTL_RULE_SINGLE },   // BTLTYPE_SINGLE_COMM
+  { 0, 1, 2, BTL_RULE_DOUBLE },   // BTLTYPE_DOUBLE_WILD
+  { 0, 0, 0, BTL_RULE_DOUBLE },   // BTLTYPE_DOUBLE_TRAINER1,
+  { 0, 0, 0, BTL_RULE_DOUBLE },   // BTLTYPE_DOUBLE_TRAINER2,
+  { 1, 0, 0, BTL_RULE_DOUBLE },   // BTLTYPE_DOUBLE_COMM
+  { 1, 0, 0, BTL_RULE_DOUBLE },   // BTLTYPE_DOUBLE_COMM_DOUBLE
+  { 0, 0, 0, BTL_RULE_TRIPLE },   // BTLTYPE_TRIPLE_TRAINER
+  { 1, 0, 0, BTL_RULE_TRIPLE },   // BTLTYPE_TRIPLE_COMM
+};
+
 /*--------------------------------------------------------------------------*/
 /* Typedefs                                                                 */
 /*--------------------------------------------------------------------------*/
@@ -253,6 +274,7 @@ typedef struct {
  *  Main Work
  */
 struct _DEBUG_BTL_WORK {
+  GAMEDATA*       gameData;
   GFL_BMPWIN*     win;
   GFL_BMP_DATA*   bmp;
   GFL_MSGDATA*    mm;
@@ -261,10 +283,14 @@ struct _DEBUG_BTL_WORK {
   GFL_FONT*       fontHandle;
   PRINT_QUE*      printQue;
   PRINT_UTIL      printUtil[1];
+  SelectItem      selectItem;
+  POKEPARTY*      partyPlayer;
+  POKEPARTY*      partyFriend;
+  POKEPARTY*      partyEnemy1;
+  POKEPARTY*      partyEnemy2;
+  u8              fNetConnect;
   pMainProc       mainProc;
   int             mainSeq;
-  SelectItem      selectItem;
-  u8              fNetConnect;
   u8              prevItemStrWidth[ SELITEM_MAX ];
   PROCPARAM_DEBUG_MAKEPOKE  makePokeParam;
   BATTLE_SETUP_PARAM  setupParam;
@@ -335,11 +361,17 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
     GF_ASSERT_MSG( pp_size <= POKEPARA_SIZE, "PPSize=%d bytes", pp_size );
   }
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,     0x6000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,     0x9000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_VIEW,   0xb0000 );
 
   wk = GFL_PROC_AllocWork( proc, sizeof(DEBUG_BTL_WORK), HEAPID_BTL_DEBUG_SYS );
   GFL_STD_MemClear( wk, sizeof(DEBUG_BTL_WORK) );
+
+  wk->gameData = GAMEDATA_Create( HEAPID_BTL_DEBUG_SYS );
+  wk->partyPlayer = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
+  wk->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
+  wk->partyFriend = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
+  wk->partyEnemy2 = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
 
   initGraphicSystems( HEAPID_BTL_DEBUG_VIEW );
   createTemporaryModules( wk, HEAPID_BTL_DEBUG_VIEW );
@@ -584,10 +616,15 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
   pp = savework_GetPokeParaArea( saveData, POKEIDX_SELF_1 );
   PP_Setup( pp, MONSNO_GORIDARUMA, 5, 0 );
 
-  TAYA_Printf("btlType C=%d, Work=%p, pp=%p\n",saveData->btlType, saveData, pp);
-
   pp = savework_GetPokeParaArea( saveData, POKEIDX_ENEMY1_1 );
   PP_Setup( pp, MONSNO_GORIDARUMA, 5, 0 );
+
+  pp = savework_GetPokeParaArea( saveData, POKEIDX_FRIEND_1 );
+  PP_Setup( pp, MONSNO_PINBOO, 5, 0 );
+
+  pp = savework_GetPokeParaArea( saveData, POKEIDX_ENEMY2_1 );
+  PP_Setup( pp, MONSNO_PINBOO, 5, 0 );
+
 }
 
 static POKEMON_PARAM* savework_GetPokeParaArea( DEBUG_BTL_SAVEDATA* saveData, u32 pokeIdx )
@@ -597,6 +634,48 @@ static POKEMON_PARAM* savework_GetPokeParaArea( DEBUG_BTL_SAVEDATA* saveData, u3
     u32 ppSize = POKETOOL_GetWorkSize();
     return (POKEMON_PARAM*)&saveData->pokeParaArea[ pokeIdx*ppSize ];
   }
+}
+static void savework_SetParty( DEBUG_BTL_SAVEDATA* saveData, DEBUG_BTL_WORK* wk )
+{
+  POKEMON_PARAM* pp;
+  u32 i, max;
+
+  PokeParty_InitWork( wk->partyPlayer );
+  PokeParty_InitWork( wk->partyFriend );
+  PokeParty_InitWork( wk->partyEnemy1 );
+  PokeParty_InitWork( wk->partyEnemy2 );
+
+  for(i=POKEIDX_SELF_1; i<=POKEIDX_SELF_6; ++i)
+  {
+    pp = savework_GetPokeParaArea( saveData, i );
+    if( PP_Get(pp, ID_PARA_monsno, NULL) ){
+      PokeParty_Add( wk->partyPlayer, pp );
+    }
+  }
+  for(i=POKEIDX_FRIEND_1; i<=POKEIDX_FRIEND_6; ++i)
+  {
+    pp = savework_GetPokeParaArea( saveData, i );
+    if( PP_Get(pp, ID_PARA_monsno, NULL) ){
+      PokeParty_Add( wk->partyFriend, pp );
+    }
+  }
+
+  for(i=POKEIDX_ENEMY1_1; i<=POKEIDX_ENEMY1_6; ++i)
+  {
+    pp = savework_GetPokeParaArea( saveData, i );
+    if( PP_Get(pp, ID_PARA_monsno, NULL) ){
+      PokeParty_Add( wk->partyEnemy1, pp );
+    }
+  }
+  for(i=POKEIDX_ENEMY2_1; i<=POKEIDX_ENEMY2_6; ++i)
+  {
+    pp = savework_GetPokeParaArea( saveData, i );
+    if( PP_Get(pp, ID_PARA_monsno, NULL) ){
+      PokeParty_Add( wk->partyEnemy2, pp );
+    }
+  }
+
+
 }
 
 //----------------------------------------------------------------------------------
@@ -663,14 +742,7 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
 //----------------------------------------------------------------------------------
 static BOOL btltype_IsComm( BtlType type )
 {
-  if( (type == BTLTYPE_SINGLE_COMM)
-  ||  (type == BTLTYPE_DOUBLE_COMM)
-  ||  (type == BTLTYPE_DOUBLE_COMM_MULTI)
-  ||  (type == BTLTYPE_TRIPLE_COMM)
-  ){
-    return TRUE;
-  }
-  return FALSE;
+  return BtlTypeParams[ type ].commFlag;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -684,6 +756,14 @@ static BOOL btltype_IsComm( BtlType type )
 static BOOL btltype_IsMulti( BtlType type )
 {
   return ( type == BTLTYPE_DOUBLE_COMM_MULTI );
+}
+static BOOL btltype_IsWild( BtlType type )
+{
+  return BtlTypeParams[ type ].wildFlag;
+}
+static BtlRule btltype_GetRule( BtlType type )
+{
+  return BtlTypeParams[ type ].rule;
 }
 
 //----------------------------------------------------------------------------------
@@ -946,6 +1026,8 @@ static const GFLNetInitializeStruct NetInitParamMulti;
 
 static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq )
 {
+FS_EXTERN_OVERLAY(battle);
+
   enum {
     SEQ_INIT = 0,
     SEQ_COMM_START_1,
@@ -953,6 +1035,8 @@ static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq )
     SEQ_COMM_START_3,
     SEQ_COMM_START_4,
     SEQ_SETUP_START,
+    SEQ_BTL_START,
+    SEQ_BTL_RETURN,
   };
 
   enum {
@@ -962,6 +1046,8 @@ static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq )
   switch( *seq ){
   case SEQ_INIT:
     BATTLE_PARAM_Init( &wk->setupParam );
+    savework_SetParty( &wk->saveData, wk );
+
     changeScene_start( wk );
     if( btltype_IsComm(wk->saveData.btlType) ){
       (*seq) = SEQ_COMM_START_1;
@@ -979,7 +1065,6 @@ static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq )
       (*seq) = SEQ_COMM_START_2;
     }
     break;
-
   case SEQ_COMM_START_2:
     if( GFL_NET_IsInit() )
     {
@@ -988,17 +1073,92 @@ static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq )
       (*seq) = SEQ_COMM_START_3;
     }
     break;
-
   case SEQ_COMM_START_3:
-    if( wk->fNetConnect )
-    {
+    if( wk->fNetConnect ){
       GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), SYNC_ID );
       (*seq) = SEQ_COMM_START_4;
     }
     break;
-
   case SEQ_COMM_START_4:
+    if( GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), SYNC_ID) ){
+      (*seq) = SEQ_SETUP_START;
+    }
     break;
+
+  // バトルパラメータセット
+  case SEQ_SETUP_START:
+    if( btltype_IsWild(wk->saveData.btlType) )
+    {
+      BtlRule rule = btltype_GetRule( wk->saveData.btlType );
+      BP_SETUP_Wild( &wk->setupParam, wk->gameData, HEAPID_BTL_DEBUG_SYS, rule, wk->partyEnemy1,
+          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE );
+
+      PokeParty_Copy( wk->partyPlayer, wk->setupParam.partyPlayer );
+    }
+    else if( btltype_IsComm(wk->saveData.btlType) )
+    {
+      BtlRule rule = btltype_GetRule( wk->saveData.btlType );
+      GFL_NETHANDLE* netHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      switch( rule ){
+      case BTL_RULE_SINGLE:
+        BTL_SETUP_Single_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS );
+        break;
+      case BTL_RULE_DOUBLE:
+        if( !btltype_IsMulti(wk->saveData.btlType) ){
+          BTL_SETUP_Double_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS );
+        }else{
+          BTL_SETUP_Multi_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS,
+            GFL_NET_GetNetID(netHandle) );
+        }
+        break;
+      case BTL_RULE_TRIPLE:
+        BTL_SETUP_Triple_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS );
+        break;
+      }
+      if( wk->setupParam.partyPlayer ){
+        PokeParty_Copy( wk->partyPlayer, wk->setupParam.partyPlayer );
+      }else{
+        wk->setupParam.partyPlayer = wk->partyPlayer;
+      }
+    }
+    else
+    {
+      BtlRule rule = btltype_GetRule( wk->saveData.btlType );
+      TrainerID  trID = 1 + GFL_STD_MtRand( 50 ); // てきとーにランダムで
+      switch( rule ){
+      case BTL_RULE_SINGLE:
+        BTL_SETUP_Single_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
+          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID );
+        break;
+      case BTL_RULE_DOUBLE:
+        BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
+          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID );
+        break;
+      case BTL_RULE_TRIPLE:
+        BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
+          BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID );
+        break;
+      }
+      PokeParty_Copy( wk->partyPlayer, wk->setupParam.partyPlayer );
+    }
+    (*seq) = SEQ_BTL_START;
+    break;
+
+  case SEQ_BTL_START:
+    PMSND_PlayBGM( wk->setupParam.musicDefault );
+    GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, &wk->setupParam );
+    (*seq) = SEQ_BTL_RETURN;
+    break;
+
+  case SEQ_BTL_RETURN:
+    BATTLE_PARAM_Release( &wk->setupParam );
+    changeScene_recover( wk );
+    break;
+/*
+  extern void BP_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData, HEAPID heapID, const BtlRule rule,
+  const POKEPARTY* partyEnemy, const BtlLandForm landForm, const BtlWeather weather );
+*/
+
   }
   return FALSE;
 }
@@ -1023,25 +1183,22 @@ enum {
 // バトル用受信関数テーブル
 extern const NetRecvFuncTable BtlRecvFuncTable[];
 
-static const NetRecvFuncTable  testPacketTbl[] = {
-    { testPacketFunc, NULL },
-};
 
 typedef struct{
     int gameNo;   ///< ゲーム種類
-}TEST_BCON;
+}BTL_BCON;
 
-static TEST_BCON testBcon = { WB_NET_SERVICEID_DEBUG_BATTLE };
+static BTL_BCON btlBcon = { WB_NET_BATTLE_SERVICEID };
 
 ///< ビーコンデータ取得関数
 static void* testBeaconGetFunc( void* pWork )
 {
-  return &testBcon;
+  return &btlBcon;
 }
 ///< ビーコンデータサイズ取得関数
 static int testBeaconGetSizeFunc( void* pWork )
 {
-  return sizeof(testBcon);
+  return sizeof(btlBcon);
 }
 
 ///< ビーコンデータ比較関数
@@ -1058,8 +1215,8 @@ static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo )
  *  通信初期化パラメータ
  */
 static const GFLNetInitializeStruct NetInitParamNormal = {
-  testPacketTbl,        // 受信関数テーブル
-  NELEMS(testPacketTbl),    // 受信テーブル要素数
+  BtlRecvFuncTable,        // 受信関数テーブル
+  BTL_NETFUNCTBL_ELEMS,    // 受信テーブル要素数
   NULL,    ///< ハードで接続した時に呼ばれる
   NULL,    ///< ネゴシエーション完了時にコール
   NULL,           // ユーザー同士が交換するデータのポインタ取得関数
@@ -1094,7 +1251,7 @@ static const GFLNetInitializeStruct NetInitParamNormal = {
   FALSE,            // MP通信＝親子型通信モードかどうか
   FALSE,            // wifi通信を行うかどうか
   TRUE,           // 親が再度初期化した場合、つながらないようにする場合TRUE
-  WB_NET_SERVICEID_DEBUG_BATTLE,//GameServiceID
+  WB_NET_BATTLE_SERVICEID,//GameServiceID
 #if GFL_NET_IRC
   IRC_TIMEOUT_STANDARD, // 赤外線タイムアウト時間
 #endif
