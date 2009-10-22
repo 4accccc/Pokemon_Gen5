@@ -1,45 +1,16 @@
 #event data
-#save date:2009/10/19 23:36:22
+#save date:2009/10/22 19:19:17
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r01.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/19 23:36:22
+#save date:2009/10/22 19:19:17
 2
 #hold event type:
 1
 #hold event number:
-8
+7
 #event number: 0
-#type
-1
-#ID name
-R01_BOY1
-#OBJ CODE Number
-BOY1
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_R01_BOY1
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-1
-#Move Limit Z Number
-1
-#position
-568 0 -88
-#event number: 1
 #type
 1
 #ID name
@@ -68,7 +39,7 @@ DIR_DOWN
 2
 #position
 680 0 -248
-#event number: 2
+#event number: 1
 #type
 1
 #ID name
@@ -97,7 +68,7 @@ DIR_DOWN
 1
 #position
 552 0 -440
-#event number: 3
+#event number: 2
 #type
 1
 #ID name
@@ -126,7 +97,7 @@ DIR_RIGHT
 0
 #position
 568 0 -648
-#event number: 4
+#event number: 3
 #type
 1
 #ID name
@@ -155,7 +126,7 @@ DIR_LEFT
 0
 #position
 600 0 -648
-#event number: 5
+#event number: 4
 #type
 1
 #ID name
@@ -184,7 +155,7 @@ DIR_DOWN
 0
 #position
 584 0 -632
-#event number: 6
+#event number: 5
 #type
 1
 #ID name
@@ -213,7 +184,7 @@ DIR_DOWN
 0
 #position
 656 0 -32
-#event number: 7
+#event number: 6
 #type
 1
 #ID name
@@ -246,7 +217,7 @@ DIR_DOWN
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/19 23:36:22
+#save date:2009/10/22 19:19:17
 2
 #hold event type:
 1
@@ -262,12 +233,12 @@ BG_TALK_DIR_DOWN
 #Bg Script Name
 SCRID_BG_R01_BOARD_01
 #position
-568 0 88
+568 0 8
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/19 23:36:22
+#save date:2009/10/22 19:19:17
 2
 #hold event type:
 1
@@ -307,7 +278,7 @@ WK_SCENE_R01
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/19 23:36:22
+#save date:2009/10/22 19:19:17
 2
 #hold event type:
 1

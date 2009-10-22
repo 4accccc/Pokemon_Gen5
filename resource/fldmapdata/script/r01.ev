@@ -29,7 +29,6 @@
 //--------------------------------------------------------------
 
 _EVENT_DATA ev_r01_poke_getdemo
-_EVENT_DATA ev_r01_boy1
 _EVENT_DATA ev_r01_girl1
 _EVENT_DATA ev_r01_man1
 _EVENT_DATA ev_r01_poke_count_rivel
@@ -199,42 +198,6 @@ ev_dummy_end:
 //==================================//
 
 EVENT_END
-
-/**************************************************************/
-/*段差降りパフォーマンスの少年                                */
-/**************************************************************/
-EVENT_START   ev_r01_boy1
-  _TALK_OBJ_START()
-
-	IF $WK_SCENE_0907ROM06 == 0 THEN /* comment */
-		_BALLOONWIN_OBJMSG_OPEN(msg_r01_boy1_01,R01_BOY1)
-		_YES_NO_WIN( SCWK_ANSWER )
-		_BALLOONWIN_CLOSE() //会話ウィンドウを閉じます
-
-		IF $SCWK_ANSWER == 0 THEN
-			$WK_SCENE_0907ROM06 = 1
-			_BALLOONWIN_OBJMSG_OPEN(msg_r01_boy1_02,R01_BOY1)
-			_AB_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-			//段差を降りるアニメ+段差を降りるSE
-			_SE_PLAY( SEQ_SE_DANSA )
-			_OBJ_ANIME( R01_BOY1,test01anime )
-			_OBJ_ANIME_WAIT()
-			_SE_WAIT()
-
-			_TURN_HERO_SITE()
-			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_boy1_03)
-		ELSE
-			_OBJ_ANIME(R01_BOY1,test02anime)
-			_OBJ_ANIME_WAIT()
-			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_boy1_04)
-		ENDIF
-
-	ELSE
-			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r01_boy1_03)
-	ENDIF
-EVENT_END
-
 
 
 /**************************************************************/
