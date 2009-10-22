@@ -93,6 +93,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f *.scr
+	-rm -f *.NCER
 	-rm -f *.NCGR
 	-rm -f *.NSCR
 	-rm -f *.NCLR
