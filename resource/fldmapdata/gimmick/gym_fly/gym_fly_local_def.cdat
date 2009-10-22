@@ -93,19 +93,25 @@
 #define CAN9_ROT (1)	//反時計90度 左向き
 #define CAN10_ROT (2)	//反時計180度 下向き
 //大砲扉の開くフレーム
-#define CAN_UP_OP_FRM (15)	//基準大砲上向きのとき
-#define CAN_DOWN_OP_FRM (15)	//基準大砲下向きのとき
-#define CAN_LEFT_OP_FRM (30)	//基準大砲左向きのとき
-#define CAN_RIGHT_OP_FRM (30)	//基準大砲右向きのとき
+#define CAN_UP_OP_FRM (1)	//基準大砲上向きのとき
+#define CAN_DOWN_OP_FRM (1)	//基準大砲下向きのとき
+#define CAN_LEFT_OP_FRM (15)	//基準大砲左向きのとき
+#define CAN_RIGHT_OP_FRM (15)	//基準大砲右向きのとき
+//大砲扉の開ききるフレーム
+#define CAN_UP_OPED_FRM (15)	//基準大砲上向きのとき
+#define CAN_DOWN_OPED_FRM (15)	//基準大砲下向きのとき
+#define CAN_LEFT_OPED_FRM (30)	//基準大砲左向きのとき
+#define CAN_RIGHT_OPED_FRM (30)	//基準大砲右向きのとき
 //大砲扉の閉まりきるフレーム
 #define CAN_UP_CL_FRM (30)	//基準大砲上向きのとき
 #define CAN_DOWN_CL_FRM (30)	//基準大砲下向きのとき
 #define CAN_LEFT_CL_FRM (45)	//基準大砲左向きのとき
 #define CAN_RIGHT_CL_FRM (45)	//基準大砲右向きのとき
-//大砲が火を吹く
-#define CAN_FIRE_FRM (40)
-//打ち出し時自機表示フレーム(アニメデータ依存)
-#define SHOT_APP_FRM (41)
+//大砲が火を吹くフレーム
+#define CAN_UP_FIRE_FRM (69)
+#define CAN_DOWN_FIRE_FRM (69)
+#define CAN_RIGHT_FIRE_FRM (84)
+#define CAN_LEFT_FIRE_FRM (84)
 //大砲のを見るカメラのピッチ
 #define CAN1_PITCH (1368)
 #define CAN2_PITCH (1368)

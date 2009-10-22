@@ -23,6 +23,11 @@
 
 #include "../../../resource/fldmapdata/gimmick/gym_fly/gym_fly_local_def.cdat"
 
+#include "sound/pm_sndsys.h"
+
+#include "gym_fly_se_def.h"
+
+
 #define GYM_FLY_UNIT_IDX (0)
 #define GYM_FLY_TMP_ASSIGN_ID  (1)
 
@@ -183,8 +188,16 @@ static const u16 CanPos[CANNON_NUM_MAX][3] = {
   {CAN10_GX, CAN10_GY, CAN10_GZ},
 };
 
+//方向ごとの大砲扉が開きるフレーム
+static const u16 CanOpenedFrame[4] = {
+  CAN_UP_OPED_FRM,
+  CAN_DOWN_OPED_FRM,
+  CAN_RIGHT_OPED_FRM,
+  CAN_LEFT_OPED_FRM,
+};
+
 //方向ごとの大砲扉が開くフレーム
-static u16 CanOpenFrame[4] = {
+static const u16 CanOpenFrame[4] = {
   CAN_UP_OP_FRM,
   CAN_DOWN_OP_FRM,
   CAN_RIGHT_OP_FRM,
@@ -192,12 +205,21 @@ static u16 CanOpenFrame[4] = {
 };
 
 //方向ごとの大砲扉が閉まりきるフレーム
-static u16 CanClosedFrame[4] = {
+static const u16 CanClosedFrame[4] = {
   CAN_UP_CL_FRM,
   CAN_DOWN_CL_FRM,
   CAN_RIGHT_CL_FRM,
   CAN_LEFT_CL_FRM,
 };
+
+//方向ごとの大砲が火を吹くフレーム
+static const u16 CanFireFrame[4] = {
+  CAN_UP_FIRE_FRM,
+  CAN_DOWN_FIRE_FRM,
+  CAN_RIGHT_FIRE_FRM,
+  CAN_LEFT_FIRE_FRM,
+};
+
 
 //--リソース関連--
 //読み込む3Dリソース
@@ -448,7 +470,7 @@ BOOL test_GYM_FLY_Shot(GAMESYS_WORK *gsys);
 //--------------------------------------------------------------
 void GYM_FLY_Setup(FIELDMAP_WORK *fieldWork)
 {
-  u8 i;
+  u8 i,j;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
 
   //汎用ワーク確保
@@ -475,11 +497,11 @@ void GYM_FLY_Setup(FIELDMAP_WORK *fieldWork)
       MTX_RotY33(&status->rotate, FX_SinIdx(rad), FX_CosIdx(rad));
     }
     //1回再生設定
-    {
+    for (j=0;j<4;j++){
       EXP_OBJ_ANM_CNT_PTR anm;
-      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_FLY_UNIT_IDX, OBJ_CAN_1+i, 0);
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_FLY_UNIT_IDX, OBJ_CAN_1+i, j*2+0);
       FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
-      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_FLY_UNIT_IDX, OBJ_CAN_1+i, 1);
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_FLY_UNIT_IDX, OBJ_CAN_1+i, j*2+1);
      FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
     }
   }
@@ -766,14 +788,20 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       can_dir_idx = GetDirIdx(tmp->ShotDir, tmp->ShotIdx);
       anm_ofs = GetCannonAnmOfs(can_dir_idx);
       frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs);
+      //ドア開くＳＥ
+      if (frm/FX32_ONE == CanOpenFrame[can_dir_idx]){
+        PMSND_PlaySE(GYM_FLY_SE_OPEN);
+      }
+
       //オープンフレーム到達監視
-      if (frm >= CanOpenFrame[can_dir_idx]*FX32_ONE){
+      if (frm/FX32_ONE >= CanOpenedFrame[can_dir_idx]){
         //大砲アニメ停止
         {
           EXP_OBJ_ANM_CNT_PTR anm;
-          anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_FLY_UNIT_IDX, obj_idx, 0);
+          u8 anm_ofs = GetCannonAnmOfs(can_dir_idx);
+          anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs);
           FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
-          anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_FLY_UNIT_IDX, obj_idx, 1);
+          anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs+1);
           FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
         }
         //自機、大砲に入る
@@ -818,13 +846,19 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       //大砲アニメ再開
       {
         u8 obj_idx;
+        u8 anm_ofs;
+        u8 can_dir_idx;
         EXP_OBJ_ANM_CNT_PTR anm;
         obj_idx = tmp->ShotIdx;
-        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_FLY_UNIT_IDX, obj_idx, 0);
+        can_dir_idx = GetDirIdx(tmp->ShotDir, tmp->ShotIdx);
+        anm_ofs = GetCannonAnmOfs(can_dir_idx);
+        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs);
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
-        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_FLY_UNIT_IDX, obj_idx, 1);
+        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs+1);
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
       }
+      //ドア閉まるSE
+      PMSND_PlaySE(GYM_FLY_SE_CLOSE);
       (*seq)++;
     }
     break;
@@ -839,7 +873,8 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       anm_ofs = GetCannonAnmOfs(can_dir_idx);
       frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs);
       //発射フレーム到達チェック
-      if (frm >= CanClosedFrame[can_dir_idx]*FX32_ONE){
+      if (frm/FX32_ONE >= CanClosedFrame[can_dir_idx]){
+        OS_Printf("ドアクローズフレーム%d\n",frm/FX32_ONE);
         //フレーム読み取り開始
         tmp->FrameSetStart = 1;
         tmp->NowIcaAnmFrmIdx = 0;
@@ -848,6 +883,40 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
     }
     break;
   case 5:
+    {
+      u8 anm_ofs;
+      u8 obj_idx;
+      u8 can_dir_idx;
+      fx32 frm;
+      obj_idx = tmp->ShotIdx;
+      can_dir_idx = GetDirIdx(tmp->ShotDir, tmp->ShotIdx);
+      anm_ofs = GetCannonAnmOfs(can_dir_idx);
+      frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs);
+      OS_Printf("frm=%d\n",frm/FX32_ONE);
+
+      if (frm/FX32_ONE == CanFireFrame[can_dir_idx]){
+        //大砲発射ＳＥ
+        PMSND_PlaySE(GYM_FLY_SE_FIRE);
+        if (!tmp->TraceMode)    //フレーム設定の間違いで、既に自機トレースに突入している場合、処理しない
+        {
+          //カメラ振動リクエスト
+          ShakeCameraRequest(tmp);
+          //カメラモード変更
+          FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_TARGET_POS );
+        }
+        else{
+          GF_ASSERT_MSG(0,"既にカメラが自機に追いつこうとしている");
+        }
+        //自機表示
+        {
+          MMDL * mmdl;
+          FIELD_PLAYER *fld_player;
+          fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+          mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+          MMDL_SetStatusBitVanish(mmdl, FALSE);
+        }
+      }
+    }
     //大砲アニメ終了チェック＆フレーム読み取り終了チェック
     if (!tmp->FrameSetStart){
       //主人公最終位置セット
@@ -917,12 +986,15 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
 
     if(tmp->NowIcaAnmFrmIdx == tmp->TraceStart)
     {
+/**      
       if (tmp->NowIcaAnmFrmIdx <= CAN_FIRE_FRM){
         GF_ASSERT_MSG(0,"大砲がまだ火を吹いていないのに、自機に追いつこうとしている");
       }
+      
       if (tmp->NowIcaAnmFrmIdx <= SHOT_APP_FRM){
         GF_ASSERT_MSG(0,"自機まだ表示されてないのに、自機に追いつこうとしている");
       }
+*/      
       if (tmp->CamShake.Valid){
         GF_ASSERT_MSG(0,"カメラ振動中に、自機に追いつこうとしている");
         tmp->CamShake.Valid = FALSE;
@@ -934,17 +1006,7 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       //トレースモード突入
       tmp->TraceMode = 1;
     }
-    else if (tmp->NowIcaAnmFrmIdx == CAN_FIRE_FRM)        //大砲が火を吹くフレームの処理
-    {
-      if (!tmp->TraceMode)    //フレーム設定の間違いで、既に自機トレースに突入している場合、処理しない
-      {
-        //カメラ振動リクエスト
-        ShakeCameraRequest(tmp);
-        //カメラモード変更
-        FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_TARGET_POS );
-      }
-    }
-    
+/**    
     if (tmp->NowIcaAnmFrmIdx == SHOT_APP_FRM)      //自機を表示するフレームの処理
     {
       //自機表示
@@ -954,7 +1016,7 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       mmdl = FIELD_PLAYER_GetMMdl( fld_player );
       MMDL_SetStatusBitVanish(mmdl, FALSE);
     }
-
+*/
     //座標取得
     if ( ICA_ANIME_GetTranslateAt( tmp->IcaAnmPtr, &dst_vec, tmp->NowIcaAnmFrmIdx ) ){
       OS_Printf("%x %x %x\n",dst_vec.x,dst_vec.y,dst_vec.z);
@@ -970,6 +1032,8 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
     
     //終了チェック
     if ( tmp->NowIcaAnmFrmIdx >= tmp->MaxIcaAnmFrm ){
+      //到着ＳＥ
+      PMSND_PlaySE(GYM_FLY_SE_STAND);
       tmp->FrameSetStart = 0;
     }
 
