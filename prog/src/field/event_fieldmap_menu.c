@@ -1288,12 +1288,24 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
     break;
   case 1:
     if( FLDMSGWIN_CheckPrintTrans(work->msgWin) == TRUE ){
+      GAMEDATA_SaveAsyncStart(GAMESYSTEM_GetGameData(work->gsys));
       (*seq)++;
     } 
     break;
   case 2:
-    GAMEDATA_Save(GAMESYSTEM_GetGameData(GMEVENT_GetGameSysWork(event)));
-    (*seq)++;
+    {
+      SAVE_RESULT result;
+      result = GAMEDATA_SaveAsyncMain(GAMESYSTEM_GetGameData(work->gsys));
+      switch(result){
+     	case SAVE_RESULT_CONTINUE:
+    	case SAVE_RESULT_LAST:
+    	  break;
+  	  case SAVE_RESULT_OK:
+    	case SAVE_RESULT_NG:
+        (*seq)++;
+        break;
+      }
+    }
     break;
   case 3:
     FLDMSGWIN_Delete( work->msgWin );
