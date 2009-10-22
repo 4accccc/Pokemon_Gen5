@@ -57,8 +57,10 @@ BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MO
   bag->p_mystatus   = GAMEDATA_GetMyStatus( gmData );
   bag->p_bagcursor  = GAMEDATA_GetBagCursor( gmData );
   bag->p_myitem     = GAMEDATA_GetMyItem( gmData );
-  
-  GFL_STD_MemCopy(icwk , &bag->icwk, sizeof(ITEMCHECK_WORK));
+ 
+  if( icwk != NULL){
+    GFL_STD_MemCopy(icwk , &bag->icwk, sizeof(ITEMCHECK_WORK));
+  }
 
   bag->mode       = mode;
   bag->cycle_flg  = ( PLAYERWORK_GetMoveForm( GAMEDATA_GetMyPlayerWork(gmData) ) == PLAYER_MOVE_FORM_CYCLE );
