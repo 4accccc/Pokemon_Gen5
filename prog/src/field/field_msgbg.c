@@ -308,7 +308,7 @@ void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb )
     fmb->talkMsgWinSys = NULL;
   }
   
-	GFL_BG_FillCharacterRelease( fmb->bgFrame, 0x00, 0x20 );
+	GFL_BG_FillCharacterRelease( fmb->bgFrame, 1, 0 );
   GFL_BG_FreeBGControl( fmb->bgFrame );
 }
 

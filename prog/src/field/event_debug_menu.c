@@ -50,6 +50,7 @@
 #include "app/townmap.h"
 #include "net_app/worldtrade.h"
 #include "../ui/debug/ui_template.h"
+#include "savedata/shortcut.h"
 
 #include "field_sound.h"
 
@@ -178,6 +179,8 @@ static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk );
+
 //======================================================================
 //  デバッグメニューリスト
 //======================================================================
@@ -216,6 +219,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 	{	DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },
   { DEBUG_FIELD_STR45, debugMenuCallProc_Kairiki },
   { DEBUG_FIELD_STR46, debugMenuCallProc_ControlLinerCamera },
+	{	DEBUG_FIELD_STR47, debugMenu_ControlShortCut },
 };
 
 //--------------------------------------------------------------
@@ -3514,3 +3518,24 @@ static void DampCameraInfo(FIELD_CAMERA * cam)
   OS_Printf("%d,%d,%d,%d,%d,%d\n", pitch, yaw, len, target.x, target.y, target.z );
 }
 
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　Yボタン登録操作
+ * @param	wk	DEBUG_MENU_EVENT_WORK*	ワーク
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk )
+{	
+	int i;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+	SAVE_CONTROL_WORK *p_sv	= GAMEDATA_GetSaveControlWork(gdata);
+	SHORTCUT *p_shortcut_sv	= SaveData_GetShortCut( p_sv );
+	for( i = 0; i < SHORTCUT_ID_MAX; i++ )
+	{	
+		SHORTCUT_SetRegister( p_shortcut_sv, i, TRUE );
+	}
+	
+	return FALSE;
+}

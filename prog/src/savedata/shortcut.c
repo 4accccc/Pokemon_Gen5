@@ -134,7 +134,7 @@ void SHORTCUT_SetRegister( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, BOOL is_on )
 				break;
 			}
 		}
-		GF_ASSERT_MSG( i == SHORTCUT_ID_MAX, "SHORTCUT_IDÇ÷ÇÃìoò^Ç™ïsè\ï™\n" );
+		GF_ASSERT_MSG( i != SHORTCUT_ID_MAX, "SHORTCUT_IDÇ÷ÇÃìoò^Ç™ïsè\ï™\n" );
 
 		p_wk->data[ i ] = shortcutID;
 	}
@@ -198,6 +198,29 @@ SHORTCUT_ID SHORTCUT_GetType( const SHORTCUT *cp_wk, u8 idx )
 {	
 	GF_ASSERT_MSG( idx < SHORTCUT_ID_MAX, "ÉCÉìÉfÉbÉNÉXÇ™ç≈ëÂÇí¥Ç¶ÇƒÇ¢Ç‹Ç∑\n" );
 	return cp_wk->data[ idx ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ìoò^êîÇéÊìæ
+ *
+ *	@param	const SHORTCUT *cp_wk		ÉèÅ[ÉN
+ *
+ *	@return	ìoò^êî
+ */
+//-----------------------------------------------------------------------------
+u16 SHORTCUT_GetMax( const SHORTCUT *cp_wk )
+{	
+	int i;
+	int cnt = 0;
+	for( i = 0 ; i < SHORTCUT_ID_MAX; i++ )
+	{	
+		if( cp_wk->data[ i ] != SHORTCUT_ID_NULL )
+		{	
+			cnt++;
+		}
+	}
+
+	return cnt;
 }
 //----------------------------------------------------------------------------
 /**

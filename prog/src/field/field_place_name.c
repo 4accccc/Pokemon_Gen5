@@ -744,7 +744,7 @@ static void SetupBG( FIELD_PLACE_NAME* p_sys )
 		0,							// スクリーンバッファオフセット
 		GFL_BG_SCRSIZ_256x256,		// スクリーンサイズ
 		GX_BG_COLORMODE_16,			// カラーモード
-		GX_BG_SCRBASE_0x0800,		// スクリーンベースブロック
+		GX_BG_SCRBASE_0x1000,		// スクリーンベースブロック
 		GX_BG_CHARBASE_0x04000,		// キャラクタベースブロック
 		GFL_BG_CHRSIZ_256x256,		// キャラクタエリアサイズ
 		GX_BG_EXTPLTT_01,			// BG拡張パレットスロット選択

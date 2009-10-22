@@ -40,6 +40,7 @@
 #include "app/name_input.h"
 
 #include "savedata/irc_compatible_savedata.h"
+#include "savedata/shortcut.h"
 
 
 //=============================================================================
@@ -243,6 +244,7 @@ static void LISTDATA_CallProcSkyJump( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_Return( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListHome( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_NextListPage1( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_FullShortCutData( DEBUG_NAGI_MAIN_WORK *p_wk );
 //3d
 static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
@@ -318,6 +320,7 @@ enum
 	LISTDATA_SEQ_PROC_TEMPLATE,
 	LISTDATA_SEQ_PROC_POKE2DCHECK,
 	LISTDATA_SEQ_PROC_NAMEIN,
+	LISTDATA_SEQ_SHORTCUTDATA_FULL,
 
 	LISTDATA_SEQ_MAX,
 };
@@ -342,6 +345,7 @@ static const LISTDATA_FUNCTION	sc_list_funciton[]	=
 	LISTDATA_CallProcTemplate,
 	LISTDATA_CallProcPoke2DCheck,
 	LISTDATA_CallProcNamin,
+	LISTDATA_FullShortCutData,
 };
 
 //-------------------------------------
@@ -357,6 +361,9 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	},
 	{	
 		L"名前入力", LISTDATA_SEQ_PROC_NAMEIN,
+	},
+	{	
+		L"全部Yボタン",	LISTDATA_SEQ_SHORTCUTDATA_FULL,
 	},
 	{	
 		L"コンフィグ", LISTDATA_SEQ_PROC_CONFIG
@@ -438,7 +445,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void 
 	GFL_STD_MemClear( p_wk, sizeof(DEBUG_NAGI_MAIN_WORK) );
 
 	CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
-	p_wk->p_namein_param	= NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_POKEMON, 1, 0, NAMEIN_POKEMON_LENGTH, NULL );
+	p_wk->p_namein_param	= NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_BOX, 1, 0, NAMEIN_BOX_LENGTH, NULL );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -582,6 +589,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void 
 
 	case SEQ_RET_PROC:
 		CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
+		NAGI_Printf( "名前入力:cansel%d\n", p_wk->p_namein_param->cancel );
 		*p_seq	= SEQ_FADEOUT_START;
 		break;
 
@@ -1085,6 +1093,22 @@ static void LISTDATA_NextListHome( DEBUG_NAGI_MAIN_WORK *p_wk )
 static void LISTDATA_NextListPage1( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
 	DEBUG_NAGI_COMMAND_ChangeMenu( p_wk, sc_list_data_page1, NELEMS(sc_list_data_page1) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Yボタン全部登録
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_FullShortCutData( DEBUG_NAGI_MAIN_WORK *p_wk )
+{	
+	int i;
+	SHORTCUT *p_sv	= SaveData_GetShortCut( SaveControl_GetPointer() );
+	for( i = 0; i < SHORTCUT_ID_MAX; i++ )
+	{	
+		SHORTCUT_SetRegister( p_sv, i, TRUE );
+	}
 }
 //=============================================================================
 /**

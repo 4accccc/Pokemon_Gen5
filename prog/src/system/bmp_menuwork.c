@@ -95,9 +95,13 @@ void BmpMenuWork_ListAddArchiveString( BMP_MENULIST_DATA* list,
 
 	if( list )
 	{
+#if 0
 		u32 len = 32;	//msgdata‚©‚çˆø‚Á’£‚é‚Ì‚ª•K—v
 		list->str = GFL_STR_CreateBuffer( len, heap_id );
 		GFL_MSG_GetString( msgdata, strID, (STRBUF*)list->str );
+#else
+		list->str	= GFL_MSG_CreateString( msgdata, strID );
+#endif
 		list->param = param;
 	}
 }

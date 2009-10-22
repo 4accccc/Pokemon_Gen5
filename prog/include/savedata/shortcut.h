@@ -57,4 +57,5 @@ extern BOOL SHORTCUT_GetRegister( const SHORTCUT *cp_wk, SHORTCUT_ID shortcutID 
 //Yボタンメニューで取得、操作する関数
 //----------------------------------------------------------
 extern SHORTCUT_ID SHORTCUT_GetType( const SHORTCUT *cp_wk, u8 idx );
+u16 SHORTCUT_GetMax( const SHORTCUT *cp_wk );
 extern void SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx );

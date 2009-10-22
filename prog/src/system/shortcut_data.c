@@ -44,7 +44,7 @@ SHORTCUT_ID SHORTCUT_DATA_GetItemToShortcutID( u8 item )
 	{	
 	case ITEM_ZITENSYA:
 		return SHORTCUT_ID_ZITENSYA;
-
+#if 0
 	case ITEM_BORONOTURIZAO:
 		return SHORTCUT_ID_BORONOTURIZAO;
 
@@ -53,7 +53,14 @@ SHORTCUT_ID SHORTCUT_DATA_GetItemToShortcutID( u8 item )
 
 	case ITEM_SUGOITURIZAO:
 		return SHORTCUT_ID_SUGOITURIZAO;
-
+#else
+	case ITEM_BORONOTURIZAO:
+		/* fallthrough */
+	case ITEM_IITURIZAO:
+		/* fallthrough */
+	case ITEM_SUGOITURIZAO:
+		return SHORTCUT_ID_TURIZAO;
+#endif
 	case ITEM_TAUNMAPPU:
 		return SHORTCUT_ID_TOWNMAP;
 
