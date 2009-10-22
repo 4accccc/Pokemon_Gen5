@@ -2365,77 +2365,77 @@
 
 #define SYS_FLAG_AREA_START               2400 /* 0x0960  */
 
-#define SYS_FLAG_BAG_GET                  2400 /* 0x0960 バッグ入手 */
-#define SYS_FLAG_PAIR                     2401 /* 0x0961 連れ歩きフラグ */
-#define SYS_FLAG_KAIRIKI                  2402 /* 0x0962 かいりき状態フラグ */
-#define SYS_FLAG_FNOTE_GET                2403 /* 0x0963 冒険ノート入手 */
-#define SYS_FLAG_GAME_CLEAR               2404 /* 0x0964 ゲームクリアフラグ（殿堂入り時にセット） */
-#define SYS_FLAG_ONE_STEP                 2405 /* 0x0965 一歩動いたかフラグ */
-#define SYS_FLAG_COMM_COUNTER             2406 /* 0x0966 通信カウンター通過フラグ */
-#define SYS_FLAG_SAFARI_MODE              2407 /* 0x0967 サファリモードフラグ */
-#define SYS_FLAG_SAFARI_LTMODE            2408 /* 0x0968 サファリレイアウトモードフラグ */
+#define SYS_FLAG_GAME_CLEAR               2400 /* 0x0960 ゲームクリアフラグ（殿堂入り時にセット） */
+#define SYS_FLAG_FIRST_POKE_GET           2401 /* 0x0961 最初のポケモンを入手した */
+#define SYS_FLAG_ZUKAN_GET                2402 /* 0x0962 ずかんをもらった */
+		/* not used  2403(0x0963) */
+#define SYS_FLAG_KAIRIKI                  2404 /* 0x0964 かいりき状態フラグ */
+		/* not used  2405(0x0965) */
+		/* not used  2406(0x0966) */
+		/* not used  2407(0x0967) */
+		/* not used  2408(0x0968) */
 		/* not used  2409(0x0969) */
 		/* not used  2410(0x096a) */
-#define SYS_FLAG_D35R0103_AJITO_MECH01    2411 /* 0x096b アジトB2 電波発生装置奥 */
-#define SYS_FLAG_D35R0103_AJITO_MECH02    2412 /* 0x096c アジトB2 電波発生装置真ん中 */
-#define SYS_FLAG_D35R0103_AJITO_MECH03    2413 /* 0x096d アジトB2 電波発生装置手前 */
-#define SYS_FLAG_GTC_OPEN                 2414 /* 0x096e 施設：GTC */
-#define SYS_FLAG_BTOWER_OPEN              2415 /* 0x096f 施設：バトルタワー */
-#define SYS_FLAG_WIFI_USE                 2416 /* 0x0970 WiFiに繋いだ */
-#define SYS_FLAG_POKEPARK_MODE            2417 /* 0x0971 ポケパークモードフラグ */
-#define SYS_FLAG_CYCLINGROAD              2418 /* 0x0972 サイクリングロードモードフラグ */
-#define SYS_FLAG_FLASH                    2419 /* 0x0973 フラッシュ状態フラグ */
-#define SYS_FLAG_KIRIBARAI                2420 /* 0x0974 霧払い状態フラグ */
-#define SYS_FLAG_POKETCH_HOOK             2421 /* 0x0975 ポケッチ抑止フラグ */
-#define SYS_FLAG_MASAKI                   2422 /* 0x0976 マサキに会ったか */
-#define SYS_FLAG_AN_PUZZLE_LV1            2423 /* 0x0977 アンノーンパズルLV1 */
-#define SYS_FLAG_AN_PUZZLE_LV2            2424 /* 0x0978 アンノーンパズルLV2 */
-#define SYS_FLAG_AN_PUZZLE_LV3            2425 /* 0x0979 アンノーンパズルLV3 */
-#define SYS_FLAG_AN_PUZZLE_LV4            2426 /* 0x097a アンノーンパズルLV4 */
-#define SYS_FLAG_BTL_SEARCHER_USE         2427 /* 0x097b バトルサーチャーを使用中 */
-#define SYS_FLAG_BS_LV1                   2428 /* 0x097c バトルサーチャーLV1 */
-#define SYS_FLAG_BS_LV2                   2429 /* 0x097d バトルサーチャーLV2 */
-#define SYS_FLAG_BS_LV3                   2430 /* 0x097e バトルサーチャーLV3 */
-#define SYS_FLAG_BS_LV4                   2431 /* 0x097f バトルサーチャーLV4 */
-#define SYS_FLAG_BS_LV5                   2432 /* 0x0980 バトルサーチャーLV5 */
-#define SYS_FLAG_GYM_SE                   2433 /* 0x0981 タンバジムの滝音制御 */
-#define SYS_FLAG_STATUS_PKTH              2434 /* 0x0982 ステータス画面でポケスロンパフォーマンスを表示 */
-#define SYS_FLAG_UTSUGI_TOGEPII_HATCHED   2435 /* 0x0983 ウツギのトゲピー生まれてる */
-#define SYS_FLAG_TRANSFER_BYCYCLE         2436 /* 0x0984 自転車譲渡済み(電話イベント用) */
-#define SYS_FLAG_BOX_FULL_INI             2437 /* 0x0985 初めてボックスがいっぱいになった(電話イベント用) */
-#define SYS_FLAG_DEPOSIT                  2438 /* 0x0986 貯金システム */
-#define SYS_FLAG_JOHTO_ZUKAN_COMP         2439 /* 0x0987 ジョウト図鑑コンプリート(図鑑完成評価メッセージを聞いたか判定用) */
-#define SYS_FLAG_ZENKOKU_ZUKAN_COMP       2440 /* 0x0988 全国図鑑コンプリート(図鑑完成評価用メッセージを聞いたか判定用) */
-#define SYS_FLAG_ZUKAN_HYOUKA_OVER50      2441 /* 0x0989 図鑑評価(電話用) */
-#define SYS_FLAG_ZUKAN_HYOUKA_OVER100     2442 /* 0x098a 図鑑評価(電話用) */
-#define SYS_FLAG_ZUKAN_HYOUKA_OVER150     2443 /* 0x098b 図鑑評価(電話用) */
-#define SYS_FLAG_ZUKAN_HYOUKA_OVER200     2444 /* 0x098c 図鑑評価(電話用) */
-#define SYS_FLAG_ZUKAN_HYOUKA_OVER250     2445 /* 0x098d 図鑑評価(電話用) */
-#define SYS_FLAG_ZUKAN_HYOUKA_OVER300     2446 /* 0x098e 図鑑評価(電話用) */
-#define SYS_FLAG_ZUKAN_HYOUKA_OVER350     2447 /* 0x098f 図鑑評価(電話用) */
-#define SYS_FLAG_ZUKAN_HYOUKA_OVER400     2448 /* 0x0990 図鑑評価(電話用) */
-#define SYS_FLAG_ZUKAN_HYOUKA_OVER450     2449 /* 0x0991 図鑑評価(電話用) */
-#define SYS_FLAG_SODATEYA_EGG_GET_1ST     2450 /* 0x0992 初めてタマゴ発見(電話用) */
-#define SYS_FLAG_BGM_D22                  2451 /* 0x0993 BGM変更(虫取り大会) */
-#define SYS_FLAG_BGM_T04GYM0101           2452 /* 0x0994 BGM変更(ハナダジムロケット団イベント) */
-#define SYS_FLAG_BGM_R24                  2453 /* 0x0995 BGM変更(24版道路ロケット団戦闘後) */
-#define SYS_FLAG_MUSHITORI_MODE           2454 /* 0x0996 虫取り大会モードフラグ */
-#define SYS_FLAG_BONGCASE_EX              2455 /* 0x0997 ぼんぐりケース拡張フラグ */
-#define SYS_FLAG_MIC_TEL                  2456 /* 0x0998 マイクの電話用フラグ */
-#define SYS_FLAG_BGM_D10                  2457 /* 0x0999 BGM変更(パルパーク) */
-#define SYS_FLAG_NAMI_BGM_FORBIDDEN       2458 /* 0x099a 波乗り曲ならない */
-#define SYS_FLAG_BGM_D23                  2459 /* 0x099b BGM変更(ラジオ塔占拠中) */
-#define SYS_FLAG_LEAF_GET                 2460 /* 0x099c ポケモンが葉っぱを手に入れた */
-#define SYS_FLAG_SAFARI_BLOCK_CUSTOM      2461 /* 0x099d サファリのブロックカスタマイズを行ったか？ */
-#define SYS_FLAG_SODATEYA_TEL_ENABLE      2462 /* 0x099e そだてじいさんの電話有効・無効フラグ */
-#define SYS_FLAG_MIC_TEL_TOUDAI           2463 /* 0x099f マイクの電話用フラグ */
-#define SYS_FLAG_MIC_TEL_RAJITO           2464 /* 0x09a0 マイクの電話用フラグ */
-#define SYS_FLAG_MIC_TEL_TEIKIKEN         2465 /* 0x09a1 マイクの電話用フラグ */
-#define SYS_FLAG_MIC_TEL_KABIGON          2466 /* 0x09a2 マイクの電話用フラグ */
-#define SYS_FLAG_MIC_TEL_NATSUME          2467 /* 0x09a3 マイクの電話用フラグ */
-#define SYS_FLAG_MIC_TEL_BADGE16          2468 /* 0x09a4 マイクの電話用フラグ */
-#define SYS_FLAG_MIC_TEL_DENDOU           2469 /* 0x09a5 マイクの電話用フラグ */
-#define SYS_FLAG_KUTIBA_GYM_SE            2470 /* 0x09a6 クチバジムの電撃環境音制御 */
+		/* not used  2411(0x096b) */
+		/* not used  2412(0x096c) */
+		/* not used  2413(0x096d) */
+		/* not used  2414(0x096e) */
+		/* not used  2415(0x096f) */
+		/* not used  2416(0x0970) */
+		/* not used  2417(0x0971) */
+		/* not used  2418(0x0972) */
+		/* not used  2419(0x0973) */
+		/* not used  2420(0x0974) */
+		/* not used  2421(0x0975) */
+		/* not used  2422(0x0976) */
+		/* not used  2423(0x0977) */
+		/* not used  2424(0x0978) */
+		/* not used  2425(0x0979) */
+		/* not used  2426(0x097a) */
+		/* not used  2427(0x097b) */
+		/* not used  2428(0x097c) */
+		/* not used  2429(0x097d) */
+		/* not used  2430(0x097e) */
+		/* not used  2431(0x097f) */
+		/* not used  2432(0x0980) */
+		/* not used  2433(0x0981) */
+		/* not used  2434(0x0982) */
+		/* not used  2435(0x0983) */
+		/* not used  2436(0x0984) */
+		/* not used  2437(0x0985) */
+		/* not used  2438(0x0986) */
+		/* not used  2439(0x0987) */
+		/* not used  2440(0x0988) */
+		/* not used  2441(0x0989) */
+		/* not used  2442(0x098a) */
+		/* not used  2443(0x098b) */
+		/* not used  2444(0x098c) */
+		/* not used  2445(0x098d) */
+		/* not used  2446(0x098e) */
+		/* not used  2447(0x098f) */
+		/* not used  2448(0x0990) */
+		/* not used  2449(0x0991) */
+		/* not used  2450(0x0992) */
+		/* not used  2451(0x0993) */
+		/* not used  2452(0x0994) */
+		/* not used  2453(0x0995) */
+		/* not used  2454(0x0996) */
+		/* not used  2455(0x0997) */
+		/* not used  2456(0x0998) */
+		/* not used  2457(0x0999) */
+		/* not used  2458(0x099a) */
+		/* not used  2459(0x099b) */
+		/* not used  2460(0x099c) */
+		/* not used  2461(0x099d) */
+		/* not used  2462(0x099e) */
+		/* not used  2463(0x099f) */
+		/* not used  2464(0x09a0) */
+		/* not used  2465(0x09a1) */
+		/* not used  2466(0x09a2) */
+		/* not used  2467(0x09a3) */
+		/* not used  2468(0x09a4) */
+		/* not used  2469(0x09a5) */
+		/* not used  2470(0x09a6) */
 		/* not used  2471(0x09a7) */
 		/* not used  2472(0x09a8) */
 		/* not used  2473(0x09a9) */
