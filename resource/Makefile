@@ -89,7 +89,8 @@ SUBDIRS	=	wmi \
 			battle_championship \
 			trade \
 			waza_oshie \
-			sodateya
+			sodateya \
+			fld_shortcut_menu
 
 include $(RESOURCE_MACRO)
 

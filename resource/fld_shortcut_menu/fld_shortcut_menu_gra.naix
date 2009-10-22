@@ -1,0 +1,23 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fld_shortcut_menu_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FLD_SHORTCUT_MENU_GRA_NAIX_
+#define NARC_FLD_SHORTCUT_MENU_GRA_NAIX_
+
+enum {
+	NARC_fld_shortcut_menu_gra_bg_NCLR = 0,
+	NARC_fld_shortcut_menu_gra_insert_cursor_NCGR = 1,
+	NARC_fld_shortcut_menu_gra_obj_NANR = 2,
+	NARC_fld_shortcut_menu_gra_obj_NCER = 3,
+	NARC_fld_shortcut_menu_gra_obj_NCGR = 4,
+	NARC_fld_shortcut_menu_gra_obj_NCLR = 5
+};
+
+/* NARC_FLD_SHORTCUT_MENU_GRA_NAIX_ */
+#endif
