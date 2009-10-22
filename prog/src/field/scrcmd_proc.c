@@ -37,6 +37,7 @@
 
 
 // ボックスプロセスデータとコールバック関数
+FS_EXTERN_OVERLAY(box);
 extern const GFL_PROC_DATA BOX2_ProcData;
 static void callback_BoxProc( void* work );
 
@@ -200,9 +201,14 @@ VMCMD_RESULT EvCmdGetBagProcResult( VMHANDLE *core, void *wk )
  * @brief ボックスプロセス終了後に呼ばれるコールバック関数
  */
 //--------------------------------------------------------------
+typedef struct
+{
+  BOX2_GFL_PROC_PARAM* box_param;
+} CALLBACK_WORK;
 static void callback_BoxProc( void* work )
 {
-  GFL_HEAP_FreeMemory( work );
+  CALLBACK_WORK* cw = (CALLBACK_WORK*)work;
+  GFL_HEAP_FreeMemory( cw->box_param );
 }
 
 //--------------------------------------------------------------
@@ -217,21 +223,32 @@ VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
   SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK*   sv = GAMEDATA_GetSaveControlWork( gdata );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
   BOX2_GFL_PROC_PARAM* box_param = NULL;
+  CALLBACK_WORK* cw = NULL;
+  GMEVENT* event = NULL;
   
   // ボックスのプロセスパラメータを作成
-  box_param = GFL_HEAP_AllocMemory( heap_id, sizeof(BOX2_GFL_PROC_PARAM) );
-  box_param->sv_box = 0;
-  box_param->pokeparty = 0;
-  box_param->myitem = 0;
-  box_param->mystatus = 0;
-  box_param->cfg = 0;
-  box_param->zknMode = 0;
-  box_param->callMode = BOX_MODE_SEIRI;
+  box_param            = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(BOX2_GFL_PROC_PARAM) );
+  box_param->sv_box    = GAMEDATA_GetBoxManager( gdata );
+  box_param->pokeparty = GAMEDATA_GetMyPokemon( gdata );
+  box_param->myitem    = GAMEDATA_GetMyItem( gdata );
+  box_param->mystatus  = GAMEDATA_GetMyStatus( gdata );
+  box_param->cfg       = SaveData_GetConfig( sv );
+  box_param->zknMode   = 0;
+  box_param->callMode  = BOX_MODE_SEIRI;
+
+  // コールバックのパラメータを作成
+  cw = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(CALLBACK_WORK) );
+  cw->box_param = box_param;
 
   // イベントを呼び出す
-  //SCRIPT_CallEvent( scw, EVENT_FieldSubProc_Callback(gsys, fieldmap, , index) );
+  event = EVENT_FieldSubProc_Callback(
+      gsys, fieldmap, 
+      FS_OVERLAY_ID(box), &BOX2_ProcData, box_param, // 呼び出すプロセスを指定
+      callback_BoxProc, cw );  // コールバック関数と, その引数を指定
+  SCRIPT_CallEvent( scw, event );
   return VMCMD_RESULT_SUSPEND;
 }

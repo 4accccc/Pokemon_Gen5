@@ -343,7 +343,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_pc
 {
-  // TEST:
-  _VOICE_PLAY(1, 0)
+  // ボックス画面を呼び出す
+  _CALL_BOX_PROC()
 }
-_END 
+EVENT_END 
