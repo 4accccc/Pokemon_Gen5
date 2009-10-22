@@ -45,7 +45,7 @@ enum {
  * @return	ÉtÉåÅ[ÉÄÉèÅ[ÉÄ
  */
 //--------------------------------------------------------------------------------------------
-extern BGWINFRM_WORK * BGWINFRM_Create( u32 mode, u32 max, u32 heapID );
+extern BGWINFRM_WORK * BGWINFRM_Create( u32 mode, u32 max, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**

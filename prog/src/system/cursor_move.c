@@ -98,7 +98,7 @@ CURSORMOVE_WORK * CURSORMOVE_Create(
 					void * work,
 					BOOL cur_flg,
 					u8	cur_pos,
-					u32 heapID )
+					HEAPID heapID )
 {
  
 	CURSORMOVE_WORK * wk = GFL_HEAP_AllocMemory( heapID, sizeof(CURSORMOVE_WORK) );

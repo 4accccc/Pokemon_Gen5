@@ -146,11 +146,11 @@ extern PALETTE_FADE_PTR PaletteFadeInit(int heap_id);
 extern void PaletteFadeFree(PALETTE_FADE_PTR pfd);
 extern void PaletteFadeWorkAdrSet(PALETTE_FADE_PTR pfd, FADEREQ req, void * def_wk,
   void * trans_wk, u32 siz );
-extern void PaletteFadeWorkAllocSet(PALETTE_FADE_PTR pfd, FADEREQ req, u32 siz, u32 heap );
+extern void PaletteFadeWorkAllocSet(PALETTE_FADE_PTR pfd, FADEREQ req, u32 siz, HEAPID heap );
 extern void PaletteFadeWorkAllocFree(PALETTE_FADE_PTR pfd, FADEREQ req);
 extern void PaletteWorkSet(PALETTE_FADE_PTR pfd, const void * dat, FADEREQ req, u16 pos, u16 siz );
 extern void PaletteWorkSet_Arc(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx,
-  u32 heap, FADEREQ req, u32 trans_size, u16 pos);
+  HEAPID heap, FADEREQ req, u32 trans_size, u16 pos);
 extern void PaletteWorkSet_ArcHandle(PALETTE_FADE_PTR pfd, ARCHANDLE* handle, ARCDATID dataIdx,
   HEAPID heap, FADEREQ req, u32 trans_size, u16 pos);
 void PaletteWorkSet_VramCopy(PALETTE_FADE_PTR pfd, FADEREQ req, u16 pos, u32 trans_size);
@@ -162,7 +162,7 @@ extern u8 PaletteFadeReqWrite(PALETTE_FADE_PTR pfd, u16 req_bit, u16 fade_bit, s
 extern void PaletteFadeTrans(PALETTE_FADE_PTR pfd);
 extern u16 PaletteFadeCheck(PALETTE_FADE_PTR pfd);
 extern void PaletteTransSwitch(PALETTE_FADE_PTR pfd, u8 flag);
-extern void PaletteAreaClear( u16 bit, u32 heap );
+extern void PaletteAreaClear( u16 bit, HEAPID heap );
 extern void PaletteWork_Clear(PALETTE_FADE_PTR pfd, FADEREQ req, FADEBUF select,
   u16 clear_code, u16 start, u16 end);
 extern void PaletteTrans_AutoSet(PALETTE_FADE_PTR pfd, int on_off);
@@ -171,7 +171,7 @@ extern void SoftFade(const u16 *src, u16 *dest, u16 col_num, u8 evy, u16 next_rg
 extern void PaletteGrayScale(u16* pal, int pal_size);
 extern void PaletteGrayScaleFlip(u16* pal, int pal_size);
 extern void PaletteColorChange(u16* pal, int pal_size, int rp, int gp, int bp);
-extern void PokeColorChange(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, u32 heap,
+extern void PokeColorChange(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, HEAPID heap,
               FADEREQ req, u32 trans_size, u16 pos, int r, int g, int b);
 extern void SoftFadePfd(PALETTE_FADE_PTR pfd, FADEREQ req, u16 start_pos,
   u16 col_num, u8 evy, u16 next_rgb);
@@ -183,11 +183,11 @@ extern void PaletteWorkCopy(PALETTE_FADE_PTR pfd, FADEREQ src_req, u16 src_pos,
 extern u16 * PaletteWorkDefaultWorkGet( PALETTE_FADE_PTR pfd, FADEREQ type );
 extern u16 * PaletteWorkTransWorkGet( PALETTE_FADE_PTR pfd, FADEREQ type );
 extern u16 PaletteWork_ColorGet(PALETTE_FADE_PTR pfd, FADEREQ req, FADEBUF select, u16 color_pos);
-extern void PaletteWorkSetEx_Arc(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, u32 heap,
+extern void PaletteWorkSetEx_Arc(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, HEAPID heap,
   FADEREQ req, u32 trans_size, u16 pos, u16 read_pos);
 extern void PaletteWorkSetEx_ArcHandle(PALETTE_FADE_PTR pfd, ARCHANDLE* handle, ARCDATID dataIdx, HEAPID heap,
   FADEREQ req, u32 trans_size, u16 pos, u16 read_pos);
-extern void PaletteWorkSetEx_ArcWork(u32 fileIdx, u32 dataIdx, u32 heap, u32 trans_size,
+extern void PaletteWorkSetEx_ArcWork(u32 fileIdx, u32 dataIdx, HEAPID heap, u32 trans_size,
   u16 read_pos, void *dest);
 extern void PaletteFadeForceStop(PALETTE_FADE_PTR pfd);
 

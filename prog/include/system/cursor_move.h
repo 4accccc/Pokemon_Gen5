@@ -82,7 +82,7 @@ extern CURSORMOVE_WORK * CURSORMOVE_Create(
 					void * work,
 					BOOL cur_flg,
 					u8	cur_pos,
-					u32 heapID );
+					HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**

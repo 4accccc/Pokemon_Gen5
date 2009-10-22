@@ -64,7 +64,7 @@ typedef struct{
  * @return	none
  */
 //--------------------------------------------------------------
-extern void BmpWinFrame_CgxSet( u8 frmnum, u16 cgx, u8 win_num, u32 heap );
+extern void BmpWinFrame_CgxSet( u8 frmnum, u16 cgx, u8 win_num, HEAPID heap );
 
 //--------------------------------------------------------------
 /**
@@ -92,7 +92,7 @@ extern u32 BmpWinFrame_WinPalArcGet(void);
  */
 //--------------------------------------------------------------
 extern void BmpWinFrame_GraphicSet(
-	u8 frmnum, u16 cgx, u8 pal, u8 win_num, u32 heap );
+	u8 frmnum, u16 cgx, u8 pal, u8 win_num, HEAPID heap );
 
 //--------------------------------------------------------------
 /**
@@ -107,7 +107,7 @@ extern void BmpWinFrame_GraphicSet(
  * @return	GFL_ARCUTIL_TRANSINFO
  */
 //--------------------------------------------------------------
-extern GFL_ARCUTIL_TRANSINFO BmpWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 win_num, u32 heap );
+extern GFL_ARCUTIL_TRANSINFO BmpWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 win_num, HEAPID heap );
 
 //--------------------------------------------------------------
 /**
@@ -160,7 +160,7 @@ extern void BmpWinFrame_TransScreen(GFL_BMPWIN *win, u8 trans_sw);
  * @return	none
  */
 //--------------------------------------------------------------
-extern void TalkWinFrame_GraphicSet(u8 frmnum, u16 cgx, u8 pal, u8 win_num, u32 heap );
+extern void TalkWinFrame_GraphicSet(u8 frmnum, u16 cgx, u8 pal, u8 win_num, HEAPID heap );
 
 //--------------------------------------------------------------
 /**
@@ -175,7 +175,7 @@ extern void TalkWinFrame_GraphicSet(u8 frmnum, u16 cgx, u8 pal, u8 win_num, u32 
  * @return	GFL_ARCUTIL_TRANSINFO
  */
 //--------------------------------------------------------------
-extern GFL_ARCUTIL_TRANSINFO TalkWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 win_num, u32 heap );
+extern GFL_ARCUTIL_TRANSINFO TalkWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 win_num, HEAPID heap );
 
 //--------------------------------------------------------------
 /**
@@ -217,7 +217,7 @@ extern void TalkWinFrame_Clear( GFL_BMPWIN *win, u8 trans_sw );
  * @return	none
  */
 //--------------------------------------------------------------
-extern void BoardWinFrame_GraphicSet(u8 frmnum, u16 cgx, u8 pal, u8 type, u16 map, u32 heap );
+extern void BoardWinFrame_GraphicSet(u8 frmnum, u16 cgx, u8 pal, u8 type, u16 map, HEAPID heap );
 
 //--------------------------------------------------------------
 /**
@@ -232,7 +232,7 @@ extern void BoardWinFrame_GraphicSet(u8 frmnum, u16 cgx, u8 pal, u8 type, u16 ma
  * @return	GFL_ARCUTIL_TRANSINFO
  */
 //--------------------------------------------------------------
-extern GFL_ARCUTIL_TRANSINFO BoardWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 type, u16 map, u32 heap );
+extern GFL_ARCUTIL_TRANSINFO BoardWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 type, u16 map, HEAPID heap );
 
 //--------------------------------------------------------------
 /**

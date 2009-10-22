@@ -134,7 +134,7 @@ void PaletteFadeWorkAdrSet(PALETTE_FADE_PTR pfd, FADEREQ req, void * def_wk, voi
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void PaletteFadeWorkAllocSet(PALETTE_FADE_PTR pfd, FADEREQ req, u32 siz, u32 heap )
+void PaletteFadeWorkAllocSet(PALETTE_FADE_PTR pfd, FADEREQ req, u32 siz, HEAPID heap )
 {
 	void * def_wk;
 	void * trans_wk;
@@ -210,7 +210,7 @@ void PaletteWorkSet(PALETTE_FADE_PTR pfd, const void * dat, FADEREQ req, u16 pos
  * @param   read_pos		ロードしたパレットの読み込み開始位置(カラー単位)
  */
 //--------------------------------------------------------------
-void PaletteWorkSetEx_Arc(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, u32 heap, 
+void PaletteWorkSetEx_Arc(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, HEAPID heap, 
 	FADEREQ req, u32 trans_size, u16 pos, u16 read_pos)
 {
 	NNSG2dPaletteData *pal_data;
@@ -242,7 +242,7 @@ void PaletteWorkSetEx_Arc(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, u32 he
  * @param   pos				パレット転送開始位置(カラー単位)
  */
 //--------------------------------------------------------------
-void PaletteWorkSet_Arc(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, u32 heap, 
+void PaletteWorkSet_Arc(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, HEAPID heap, 
 	FADEREQ req, u32 trans_size, u16 pos)
 {
 	PaletteWorkSetEx_Arc(pfd, fileIdx, dataIdx, heap, req, trans_size, pos, 0);
@@ -368,7 +368,7 @@ void PaletteWorkSet_VramCopyEx(PALETTE_FADE_PTR pfd, FADEREQ req, u32 trans_size
  * @param   dest			ロードしたパレットの展開先へのポインタ
  */
 //--------------------------------------------------------------
-void PaletteWorkSetEx_ArcWork(u32 fileIdx, u32 dataIdx, u32 heap, u32 trans_size, 
+void PaletteWorkSetEx_ArcWork(u32 fileIdx, u32 dataIdx, HEAPID heap, u32 trans_size, 
 	u16 read_pos, void *dest)
 {
 	NNSG2dPaletteData *pal_data;
@@ -1039,7 +1039,7 @@ void PaletteTransSwitch(PALETTE_FADE_PTR pfd, u8 flag)
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void PaletteAreaClear( u16 bit, u32 heap )
+void PaletteAreaClear( u16 bit, HEAPID heap )
 {
 	void * buf;
 
@@ -1407,7 +1407,7 @@ void PaletteColorChange(u16* pal, int pal_size, int rp, int gp, int bp)
  *
  */
 //--------------------------------------------------------------
-void PokeColorChange(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, u32 heap, 
+void PokeColorChange(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, HEAPID heap, 
 					 FADEREQ req, u32 trans_size, u16 pos, int r, int g, int b)
 {
 	NNSG2dPaletteData *pal_data;
