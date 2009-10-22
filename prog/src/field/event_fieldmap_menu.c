@@ -40,7 +40,6 @@
 
 extern const GFL_PROC_DATA TownMap_ProcData;
 extern const GFL_PROC_DATA TrainerCardProcData;
-FS_EXTERN_OVERLAY(bag);
 FS_EXTERN_OVERLAY(poke_status);
 FS_EXTERN_OVERLAY(townmap);
 FS_EXTERN_OVERLAY(wifinote);

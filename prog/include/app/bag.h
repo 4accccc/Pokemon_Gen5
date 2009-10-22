@@ -71,6 +71,7 @@ typedef struct {
 
 // PROC’è‹`
 extern const GFL_PROC_DATA ItemMenuProcData;
+FS_EXTERN_OVERLAY( bag );
 
 //-----------------------------------------------------------------------------
 /**
