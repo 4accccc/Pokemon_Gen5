@@ -284,6 +284,8 @@ _TALK_OBJ_START()
 	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_hakaim1_02 , D02R0101_HAKAIM_01 )
 	_BALLOONWIN_CLOSE()
 	
+	_FLAG_RESET( FV_D02R0101_LEADER2 )
+	
 	//【仮】アーティ：画面左から現れる　演出仮
 	_OBJ_POS_CHANGE( D02R0101_LEADER3_01, 28, 0, 71, DIR_DOWN )
 	_OBJ_ANIME( D02R0101_LEADER3_01, anm_leader3_deru )
@@ -296,7 +298,6 @@ _TALK_OBJ_START()
 	_OBJ_ANIME_WAIT()
 	
 	//自機名！アーティ！　おつかれさん！！
-	_FLAG_RESET( FV_D02R0101_LEADER2 )
 	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG_OPEN( msg_d02r0101_leader2_01 , D02R0101_LEADER2_01 )
 	_BALLOONWIN_CLOSE()
@@ -341,8 +342,10 @@ _TALK_OBJ_START()
 	
 	//アーティ：その場歩き、アロエの方を見て
 	_OBJ_ANIME( D02R0101_LEADER3_01, anm_all_shitamiru )
-	_OBJ_ANIME( D02R0101_LEADER3_01, anm_all_staywalk )
 	_OBJ_ANIME( D02R0101_LEADER2_01, anm_all_uemiru )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( D02R0101_LEADER3_01, anm_all_staywalk )
 	_OBJ_ANIME_WAIT()
 	
 	//おいかけなくても　いいでしょ　ぬすまれた　ものは　とりかえしたし

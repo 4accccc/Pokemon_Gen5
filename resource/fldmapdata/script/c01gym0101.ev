@@ -493,6 +493,12 @@ EVENT_START		ev_c01gym0101_leader1_01
 	
 			//C01のＰＤＷ誘導イベント終了
 			$WK_SCENE_C01 = 1
+			
+			//D01R0101夢ポケモンイベントOBJ表示
+			_FLAG_SET( FV_D01R0101_POKE_01 )
+
+			//D01R0101ジム対策イベントOBJ非表示
+			_FLAG_RESET( FV_D01R0101_GIRL_01 )
 
 			//========================================//
 
@@ -585,6 +591,12 @@ EVENT_START		ev_c01gym0101_leader1_02
 	
 			//C01のＰＤＷ誘導イベント終了
 			$WK_SCENE_C01 = 1
+
+			//D01R0101夢ポケモンイベントOBJ表示
+			_FLAG_SET( FV_D01R0101_POKE_01 )
+
+			//D01R0101ジム対策イベントOBJ非表示
+			_FLAG_RESET( FV_D01R0101_GIRL_01 )
 
 			//========================================//
 			
@@ -701,6 +713,12 @@ EVENT_START		ev_c01gym0101_leader1_03
 			//C01のＰＤＷ誘導イベント終了
 			$WK_SCENE_C01 = 1
 
+			//D01R0101夢ポケモンイベントOBJ表示
+			_FLAG_SET( FV_D01R0101_POKE_01 )
+
+			//D01R0101ジム対策イベントOBJ非表示
+			_FLAG_RESET( FV_D01R0101_GIRL_01 )
+
 			//========================================//
 
 		//水タイプ選択じゃない場合
@@ -752,9 +770,13 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_01
 		
 		//草ボタン１踏んだアニメーション
 		_GYM_ANTI_SW_ON(5)
-	
+
+		//ＳＥ：カチッ　スイッチを踏む音
+		_SE_PLAY( SEQ_SE_FLD_44 )
+		_SE_WAIT()
+
 		//【仮】ＳＥ：ブッブー
-		_SE_PLAY( SEQ_SE_PC_LOGOFF )
+		_SE_PLAY( SEQ_SE_FLD_42 )
 		_SE_WAIT()
 		
 		//===========フラグワーク操作===========//
@@ -782,9 +804,13 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_01
 		
 		//炎ボタン１踏んだアニメーション
 		_GYM_ANTI_SW_ON(3)
-	
+
+		//ＳＥ：カチッ　スイッチを踏む音
+		_SE_PLAY( SEQ_SE_FLD_44 )
+		_SE_WAIT()
+
 		//【仮】ＳＥ：ブッブー
-		_SE_PLAY( SEQ_SE_PC_LOGOFF )
+		_SE_PLAY( SEQ_SE_FLD_42 )
 		_SE_WAIT()
 		
 		//===========フラグワーク操作===========//
@@ -809,8 +835,17 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_01
 	//分岐：炎カーテンが開いている？
 	//開いていない場合
 	IF $LOCALWORK11 == 0 THEN
+	
 		//水ボタン１踏んだアニメーション
 		_GYM_ANTI_SW_ON(1)
+
+		//ＳＥ：カチッ　スイッチを踏む音
+		_SE_PLAY( SEQ_SE_FLD_44 )
+		_SE_WAIT()
+
+		//【仮】ＳＥ：ピンポーンピンポーン
+		_SE_PLAY( SEQ_SE_FLD_41 )
+		_SE_WAIT()
 		
 		//透明OBJの移動
 		_OBJ_ANIME( C01GYM0101_CURTAIN_01A, anm_curtain_open_a )
@@ -821,13 +856,15 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_01
 		_OBJ_ANIME( C01GYM0101_CURTAIN_01F, anm_curtain_open_b )
 		_OBJ_ANIME( C01GYM0101_CURTAIN_01G, anm_curtain_open_b )
 		
+		//ＳＥ：カーテンが開く音
+		_SE_PLAY( SEQ_SE_FLD_43 )
+	
 		//炎カーテン開くアニメーション
 		_GYM_ANTI_OPEN_DOOR(0)
-		_OBJ_ANIME_WAIT()
-			
-		//【仮】ＳＥ：ピンポーンピンポーン
-		_SE_PLAY( SEQ_SE_PC_LOGIN )
+		
+
 		_SE_WAIT()
+		_OBJ_ANIME_WAIT()
 		
 		//===========フラグワーク操作===========//
 
@@ -871,7 +908,15 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_02
 	IF $LOCALWORK12 == 0 THEN
 	
 		//草ボタン２踏んだアニメーション
-		_GYM_ANTI_SW_ON(2)		
+		_GYM_ANTI_SW_ON(2)
+
+		//ＳＥ：カチッ　スイッチを踏む音
+		_SE_PLAY( SEQ_SE_FLD_44 )
+		_SE_WAIT()
+
+		//【仮】ＳＥ：ピンポーンピンポーン
+		_SE_PLAY( SEQ_SE_FLD_41 )
+		_SE_WAIT()		
 		
 		//透明OBJの移動
 		_OBJ_ANIME( C01GYM0101_CURTAIN_02A, anm_curtain_open_a )
@@ -882,14 +927,14 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_02
 		_OBJ_ANIME( C01GYM0101_CURTAIN_02F, anm_curtain_open_b )
 		_OBJ_ANIME( C01GYM0101_CURTAIN_02G, anm_curtain_open_b )
 			
-			
+		//ＳＥ：カーテンが開く音
+		_SE_PLAY( SEQ_SE_FLD_43 )
+
 		//水カーテン開くアニメーション
 		_GYM_ANTI_OPEN_DOOR(1)
-		_OBJ_ANIME_WAIT()
-			
-		//【仮】ＳＥ：ピンポーンピンポーン
-		_SE_PLAY( SEQ_SE_PC_LOGIN )
+		
 		_SE_WAIT()
+		_OBJ_ANIME_WAIT()
 
 		//===========フラグワーク操作===========//
 	
@@ -920,9 +965,13 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_02
 
 		//炎ボタン２踏んだアニメーション
 		_GYM_ANTI_SW_ON(6)
-		
+
+		//ＳＥ：カチッ　スイッチを踏む音
+		_SE_PLAY( SEQ_SE_FLD_44 )
+		_SE_WAIT()
+
 		//【仮】ＳＥ：ブッブー
-		_SE_PLAY( SEQ_SE_PC_LOGOFF )
+		_SE_PLAY( SEQ_SE_FLD_42 )
 		_SE_WAIT()
 		
 		//===========フラグワーク操作===========//
@@ -951,9 +1000,13 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_02
 		
 		//水ボタン２踏んだアニメーション
 		_GYM_ANTI_SW_ON(4)
-		
+
+		//ＳＥ：カチッ　スイッチを踏む音
+		_SE_PLAY( SEQ_SE_FLD_44 )
+		_SE_WAIT()
+
 		//【仮】ＳＥ：ブッブー
-		_SE_PLAY( SEQ_SE_PC_LOGOFF )
+		_SE_PLAY( SEQ_SE_FLD_42 )
 		_SE_WAIT()
 		
 		//===========フラグワーク操作===========//
@@ -982,9 +1035,13 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_03
 		
 		//草ボタン３踏んだアニメーション
 		_GYM_ANTI_SW_ON(8)
-		
+
+		//ＳＥ：カチッ　スイッチを踏む音
+		_SE_PLAY( SEQ_SE_FLD_44 )
+		_SE_WAIT()
+
 		//【仮】ＳＥ：ブッブー
-		_SE_PLAY( SEQ_SE_PC_LOGOFF )
+		_SE_PLAY( SEQ_SE_FLD_42 )
 		_SE_WAIT()
 		
 		//===========フラグワーク操作===========//
@@ -1014,6 +1071,14 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_03
 		//炎ボタン３踏んだアニメーション
 		_GYM_ANTI_SW_ON(0)
 
+		//ＳＥ：カチッ　スイッチを踏む音
+		_SE_PLAY( SEQ_SE_FLD_44 )
+		_SE_WAIT()
+
+		//【仮】ＳＥ：ピンポーンピンポーン
+		_SE_PLAY( SEQ_SE_FLD_41 )
+		_SE_WAIT()
+		
 		//透明OBJの移動
 		_OBJ_ANIME( C01GYM0101_CURTAIN_03A, anm_curtain_open_a )
 		_OBJ_ANIME( C01GYM0101_CURTAIN_03B, anm_curtain_open_a )
@@ -1022,14 +1087,15 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_03
 		_OBJ_ANIME( C01GYM0101_CURTAIN_03E, anm_curtain_open_b )
 		_OBJ_ANIME( C01GYM0101_CURTAIN_03F, anm_curtain_open_b )
 		_OBJ_ANIME( C01GYM0101_CURTAIN_03G, anm_curtain_open_b )
-		_OBJ_ANIME_WAIT()
-			
+
+		//ＳＥ：カーテンが開く音
+		_SE_PLAY( SEQ_SE_FLD_43 )			
+
 		//草カーテン開くアニメーション
 		_GYM_ANTI_OPEN_DOOR(2)
 			
-		//【仮】ＳＥ：ピンポーンピンポーン
-		_SE_PLAY( SEQ_SE_PC_LOGIN )
 		_SE_WAIT()
+		_OBJ_ANIME_WAIT()
 		
 		//===========フラグワーク操作===========//
 	
@@ -1057,12 +1123,16 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_03
 	
 	//開いていない場合
 	IF $LOCALWORK13 == 0 THEN
-		
+
 		//水ボタン３踏んだアニメーション
 		_GYM_ANTI_SW_ON(7)
 		
+		//ＳＥ：カチッ　スイッチを踏む音
+		_SE_PLAY( SEQ_SE_FLD_44 )
+		_SE_WAIT()
+		
 		//【仮】ＳＥ：ブッブー
-		_SE_PLAY( SEQ_SE_PC_LOGOFF )
+		_SE_PLAY( SEQ_SE_FLD_42 )
 		_SE_WAIT()
 		
 		//===========フラグワーク操作===========//

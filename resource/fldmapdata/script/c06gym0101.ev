@@ -85,7 +85,6 @@ _ANIME_LABEL	anm_player_shoot_l
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_shoot_d
-	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
@@ -203,7 +202,7 @@ _TALK_OBJ_START()
 	//ジムバッジを取得している場合
 	ELSE
 			//【仮】　フラグ未実装　D07のイベントを終了していない場合
-			IF FLAG_ON( FH_01 ) THEN
+			IF FLAG_OFF( FH_01 ) THEN
 			
 				//……そういえばなんだけど　セッカシティを　とんだとき
 				_BALLOONWIN_OBJMSG_OPEN( msg_c06gym0101_leader_06 , C06GYM0101_LEADER6_01 )

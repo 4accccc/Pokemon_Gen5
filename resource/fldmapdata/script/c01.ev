@@ -283,13 +283,13 @@ EVENT_START   ev_c01_glasses_01
 		//ライバルと話していない
 		IF FLAG_OFF( FE_C01R0501_RIVALTALK ) THEN
 			
-			//夢の跡地に行っていない
-			IF FLAG_OFF( FE_D01R0101_EVCLEAR ) THEN
-				_BALLOONWIN_TALKOBJ_OPEN( msg_c01_glasses_01 )
+			//夢の跡地に行っている
+			IF $WK_SCENE_D01R0101 >= 1 THEN
+				_BALLOONWIN_TALKOBJ_OPEN( msg_c01_glasses_02 )
 				_BALLOONWIN_CLOSE()
 			
 			ELSE
-				_BALLOONWIN_TALKOBJ_OPEN( msg_c01_glasses_02 )
+				_BALLOONWIN_TALKOBJ_OPEN( msg_c01_glasses_01 )
 				_BALLOONWIN_CLOSE()			
 			
 			ENDIF
