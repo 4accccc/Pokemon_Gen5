@@ -18,7 +18,6 @@
 #include "msg/msg_debug_makepoke.h"
 
 #include "debug/debug_makepoke.h"
-#include "debug/debug_wordsearch.h"  //DEBUG_WORDSEARCH_sub_search
 
 //--------------------------------------------------------------
 /**
@@ -606,6 +605,8 @@ static void COMPSKB_Setup( COMP_SKB_WORK* wk, GFL_SKB* skb, STRBUF* buf, u32 msg
 static void COMPSKB_Cleanup( COMP_SKB_WORK* wk );
 static BOOL COMPSKB_Main( COMP_SKB_WORK* wk );
 static u32 COMPSKB_GetWordIndex( const COMP_SKB_WORK* wk );
+static BOOL compskb_strncmp( const STRBUF* str1, const STRBUF* str2, u32 len );
+static u32 compskb_search( COMP_SKB_WORK* wk, const STRBUF* word, int org_idx, int* first_idx );
 static u32 personal_getparam( const POKEMON_PARAM* pp, PokePersonalParamID paramID );
 static u8 personal_get_tokusei_kinds( const POKEMON_PARAM* pp );
 static u16 personal_get_tokusei( const POKEMON_PARAM* pp, u8 idx );
@@ -1388,6 +1389,7 @@ static void COMPSKB_Cleanup( COMP_SKB_WORK* wk )
 static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
 {
   GflSkbReaction reaction = GFL_SKB_Main( wk->skb );
+  BOOL fSearchReq = FALSE;
 
   if( reaction != GFL_SKB_REACTION_NONE
   &&  reaction != GFL_SKB_REACTION_PAGE ){
@@ -1399,9 +1401,9 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
     return TRUE;
   case GFL_SKB_REACTION_INPUT:
     {
-      int idx = 0;
+      int idx;
       GFL_SKB_PickStr( wk->skb );
-      if( DEBUG_WORDSEARCH_sub_search(wk->msg, wk->fullword, wk->buf, -1, &idx) == 1 )
+      if( compskb_search(wk, wk->buf, -1, &idx) == 1 )
       {
         GFL_MSG_GetString( wk->msg, idx, wk->fullword );
         GFL_SKB_ReloadStr( wk->skb, wk->fullword );
@@ -1413,44 +1415,100 @@ static BOOL COMPSKB_Main( COMP_SKB_WORK* wk )
     }
     break;
   case GFL_SKB_REACTION_PAGE:
-    {
-      if( wk->searchingFlag == FALSE ){
-        GFL_SKB_PickStr( wk->skb );
-        GFL_STR_CopyBuffer( wk->subword, wk->buf );
-        wk->search_first_index = -1;
-        wk->index = -1;
-        wk->searchingFlag = TRUE;
-      }
-      {
-        int idx=0;
-        if( DEBUG_WORDSEARCH_sub_search(wk->msg, wk->fullword, wk->subword, wk->index, &idx) )
-        {
-          wk->index = idx;
-          if( wk->search_first_index == -1 ){
-            wk->search_first_index = idx;
-          }
-        }
-        else
-        {
-          wk->index = wk->search_first_index;
-        }
-
-        if( wk->index != -1 )
-        {
-          GFL_MSG_GetString( wk->msg, wk->index, wk->fullword );
-          GFL_SKB_ReloadStr( wk->skb, wk->fullword );
-        }
-
-      }
+    fSearchReq = TRUE;
+    break;
+  case GFL_SKB_REACTION_NONE:
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+      fSearchReq = TRUE;
     }
     break;
   }
+
+  if( fSearchReq )
+  {
+    if( wk->searchingFlag == FALSE ){
+      GFL_SKB_PickStr( wk->skb );
+      GFL_STR_CopyBuffer( wk->subword, wk->buf );
+      wk->search_first_index = -1;
+      wk->index = -1;
+      wk->searchingFlag = TRUE;
+    }
+    {
+      int idx;
+      if( compskb_search(wk, wk->subword, wk->index, &idx) )
+      {
+        wk->index = idx;
+        if( wk->search_first_index == -1 ){
+          wk->search_first_index = idx;
+        }
+      }
+      else
+      {
+        wk->index = wk->search_first_index;
+      }
+
+      if( wk->index != -1 )
+      {
+        GFL_MSG_GetString( wk->msg, wk->index, wk->fullword );
+        GFL_SKB_ReloadStr( wk->skb, wk->fullword );
+      }
+
+    }
+  }
+
   return FALSE;
 }
 static u32 COMPSKB_GetWordIndex( const COMP_SKB_WORK* wk )
 {
   return wk->index;
 }
+static BOOL compskb_strncmp( const STRBUF* str1, const STRBUF* str2, u32 len )
+{
+  if( GFL_STR_GetBufferLength(str1) < len ){
+    return FALSE;
+  }
+  if( GFL_STR_GetBufferLength(str2) < len ){
+    return FALSE;
+  }
+
+  {
+    const STRCODE *p1 = GFL_STR_GetStringCodePointer( str1 );
+    const STRCODE *p2 = GFL_STR_GetStringCodePointer( str2 );
+    u32 i;
+    for(i=0; i<len; ++i){
+      if( *p1++ != *p2++ ){ return FALSE; }
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+static u32 compskb_search( COMP_SKB_WORK* wk, const STRBUF* word, int org_idx, int* first_idx )
+{
+  u32 word_len = GFL_STR_GetBufferLength( word );
+  if( word_len )
+  {
+    u32 str_cnt, match_cnt, i;
+
+    *first_idx = -1;
+    match_cnt = 0;
+    str_cnt = GFL_MSG_GetStrCount( wk->msg );
+    i = (org_idx < 0)? 0 : org_idx+1;
+    while( i < str_cnt )
+    {
+      GFL_MSG_GetString( wk->msg, i, wk->fullword );
+      if( compskb_strncmp( word, wk->fullword, GFL_STR_GetBufferLength(word) ) ){
+        if( *first_idx == -1 ){
+          *first_idx = i;
+        }
+        ++match_cnt;
+      }
+      ++i;
+    }
+    return match_cnt;
+  }
+  return 0;
+}
+
 //==============================================================================================
 //  パーソナルデータアクセス
 //==============================================================================================
