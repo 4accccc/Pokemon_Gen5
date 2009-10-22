@@ -60,13 +60,12 @@ subdir:
 	@$(MAKE_SUBDIR)
 
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
-
 $(TDIR)/$(tname).cdat: $(MONSTERGMM) $(THEADGMM) headtable.rb makefile
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 	ruby headtable.rb $(MONSTERGMM) $(THEADGMM) $(CHANGELANG) $(tname).cdat
+endif
 	$(COPY) $(tname).cdat $(TDIR)
 
-endif
 
 #------------------------------------------------------------------------------
 #	make clean ルール
