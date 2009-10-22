@@ -14,6 +14,9 @@
 #define PROC_CYCLEHERO 3 //自転車自機専用
 #define PROC_SWIMHERO 4 //波乗り自機専用
 #define PROC_BLACT_ALANM 5 //汎用ビルボードアクター常にアニメ
+#define PROC_HERO_ITEMGET 6
+#define PROC_HERO_PCAZUKE 7
+#define PROC_BLACT_ONEANMLOOP 8
 
 //FOOTMARK 足跡種類で指定するシンボルです。
 #define FOOTMARK_NON 0 //足跡無し
