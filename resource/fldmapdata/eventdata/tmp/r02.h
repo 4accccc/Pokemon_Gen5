@@ -24,5 +24,6 @@
 #define R02_FLD_ITEM_01                    9
 #define R02_FLD_ITEM_03                   10
 #define R02_FLD_ITEM_02                   11
+#define R02_BOY1_01                       12
 
 #endif //ZONE_R02_EVC_H

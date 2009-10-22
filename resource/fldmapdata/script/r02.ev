@@ -25,9 +25,17 @@ _EVENT_DATA    ev_r02_girl2_01
 _EVENT_DATA	   ev_bg_r02_board1_01
 _EVENT_DATA	   ev_bg_r02_board2_01
 _EVENT_DATA	   ev_bg_r02_board3_01
+_EVENT_DATA		ev_r02_boy1_01
+_EVENT_DATA 	 ev_init_r02
 
 _EVENT_DATA_END
 
+//------------------------------注意--------------------------------//
+//																	//
+//	FH_16を使用しました。同マップ内の使用を禁止します。				//
+//				FH_16⇒段差説明イベント								//
+//																	//
+//------------------------------------------------------------------//
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -44,6 +52,65 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_r02_flag_change:
 //  _END
+/**************************************************************/
+/*            FIELD_INIT_LABEL                              　 */
+/**************************************************************/
+ev_init_r02:
+	
+
+_END
+/**************************************************************/
+/*段差降りパフォーマンスの少年                                */
+/**************************************************************/
+EVENT_START   ev_r02_boy1_01
+  _TALK_OBJ_START()
+	
+	IF FLAG_OFF( FH_16) THEN
+	
+		_BALLOONWIN_OBJMSG_OPEN(msg_r02_boy2a_01,R02_BOY1_01)
+		_YES_NO_WIN( SCWK_ANSWER )
+		_BALLOONWIN_CLOSE() //会話ウィンドウを閉じます
+	
+		IF $SCWK_ANSWER == 0 THEN
+			_FLAG_SET(FH_16)
+			_BALLOONWIN_OBJMSG_OPEN(msg_r02_boy2a_02,R02_BOY1_01)
+			_AB_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			//段差を降りるアニメ+段差を降りるSE
+			_SE_PLAY( SEQ_SE_DANSA )
+			_OBJ_ANIME( R02_BOY1_01,test01anime )
+			_OBJ_ANIME_WAIT()
+			_SE_WAIT()
+
+			_TURN_HERO_SITE()
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r02_boy2a_03)
+
+			
+		ELSE
+			_OBJ_ANIME(R02_BOY1_01,test02anime)
+			_OBJ_ANIME_WAIT()
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r02_boy2a_04)
+		ENDIF
+
+	ELSE
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r02_boy2a_03)
+	ENDIF
+EVENT_END
+
+//--------------------------------------------------------------------
+//段差説明少年:段差を飛び降りる                       
+//--------------------------------------------------------------------
+	_ANIME_LABEL test01anime
+	_ANIME_DATA AC_JUMP_D_2G_16F,1
+	_ANIME_DATA AC_WALK_D_16F,1			//<下に移動　16フレーム
+	_ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//段差説明少年:その場でジャンプ                       
+//--------------------------------------------------------------------
+	_ANIME_LABEL test02anime
+	_ANIME_DATA AC_STAY_JUMP_D_16F,3
+	_ANIME_DATA ACMD_END,0
 
 /************************************************************/
 /*				ライバル：草むら説明イベント				*/
