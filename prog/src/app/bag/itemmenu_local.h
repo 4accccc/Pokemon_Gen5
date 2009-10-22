@@ -238,6 +238,7 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _SUBLIST_SELECT_PAL   (10)  //サブメニューの選択パレット
 #define _SUBLIST_CANCEL_PAL   (11)  //サブメニューのキャンセルパレット
 #define _BUTTON_MSG_PAL   (12)  // メッセージフォント
+#define _SUBBUTTON_MSG_PAL   (0)  // メッセージフォント
 #define _BUTTON_WIN_PAL   (13)  // ウインドウ
 
 #define _PAL_WIN01_CELL (0)     // リストウィンドウ用パレット転送位置

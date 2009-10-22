@@ -429,8 +429,8 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     GFL_ARC_CloseDataHandle(p_handle);
   }
 
-  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
+// GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+//                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
@@ -619,7 +619,8 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemNum), 0 );
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemReport), 0 );
 
-  GFL_FONTSYS_SetDefaultColor();
+//  GFL_FONTSYS_SetDefaultColor();
+  GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
 
   if(wazano == 0){
     GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
@@ -706,9 +707,8 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
 {
   pWork->winWaza= GFL_BMPWIN_Create(
     ITEMREPORT_FRAME,
-    0, 19,
-    32, 5,
-    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+    0, 19, 32, 5,
+    _SUBBUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
   pWork->winNumFrame = GFL_BMPWIN_Create(
       GFL_BG_FRAME3_M,	
@@ -726,19 +726,19 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
     ITEMREPORT_FRAME,
     _UP_ITEMNAME_INITX, _UP_ITEMNAME_INITY,
     _UP_ITEMNAME_SIZEX, _UP_ITEMNAME_SIZEY,
-    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+    _SUBBUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
   pWork->winItemNum = GFL_BMPWIN_Create(
     ITEMREPORT_FRAME,
     _UP_ITEMNUM_INITX, _UP_ITEMNUM_INITY,
     _UP_ITEMNUM_SIZEX, _UP_ITEMNUM_SIZEY,
-    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+    _SUBBUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
   pWork->winItemReport = GFL_BMPWIN_Create(
     ITEMREPORT_FRAME,
     _UP_ITEMREPORT_INITX, _UP_ITEMREPORT_INITY,
     _UP_ITEMREPORT_SIZEX, _UP_ITEMREPORT_SIZEY,
-    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+    _SUBBUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
   GFL_BMPWIN_MakeScreen( pWork->winItemName );
   GFL_BMPWIN_MakeScreen( pWork->winItemNum );
@@ -1210,11 +1210,10 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
       GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[i] , TRUE );
     }
 
-    // うる画面のときは×マークとチェックボックスを非表示
+    // うる画面のときはチェックボックスを非表示
     if( pWork->mode == BAG_MODE_SELL )
     {
       GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_CHECK_BOX] , FALSE );
-      GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_EXIT] , FALSE );
     }
   }
 
@@ -1476,6 +1475,7 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   int hit = WT_WazaDataParaGet( wazano, ID_WTD_hitprobability );
 
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+
   if(wazano==0){
     GFL_BMPWIN_ClearScreen(pwin);
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, FALSE );
@@ -1490,6 +1490,9 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
 
   _wazaKindDisp(pWork,wazano);
   _wazaTypeDisp(pWork,wazano);
+  
+  // カラー指定
+  GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
 
   //タイプ
   GFL_MSG_GetString(  pWork->MsgManager, mes_bag_107, pWork->pStrBuf );

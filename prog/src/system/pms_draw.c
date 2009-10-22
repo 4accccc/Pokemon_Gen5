@@ -339,7 +339,7 @@ void PMS_DRAW_Copy( PMS_DRAW_WORK* wk, u8 id_src, u8 id_dst )
 
     // 元のOBJ座標を取得し、移動量を足しこむ
     GFL_CLACT_WK_GetPos( src->clwk[i], &pos, draw_type );
-    HOSAKA_Printf("newpos=%d %d diff=%d %d \n",pos.x, pos.y, pos_ofs.x, pos_ofs.y);
+//  HOSAKA_Printf("newpos=%d %d diff=%d %d \n",pos.x, pos.y, pos_ofs.x, pos_ofs.y);
     pos.x += pos_ofs.x * 8;
     pos.y += pos_ofs.y * 8;
   
@@ -352,6 +352,7 @@ void PMS_DRAW_Copy( PMS_DRAW_WORK* wk, u8 id_src, u8 id_dst )
   }
 
   // メンバコピー
+  // @TODO CLACTとBMPWINを保持しておいて構造体を丸ごとコピーするほうが保守性が高い。
   dst->print_util.transReq = src->print_util.transReq;
   dst->b_useflag = src->b_useflag;
   for( i=0; i<PMS_WORD_MAX; i++ )
