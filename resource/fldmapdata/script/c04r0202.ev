@@ -35,6 +35,10 @@ _EVENT_DATA_END
 //	ミュージカル台詞　開始時
 /**************************************************************/
 EVENT_START ev_c04r0202_mus_1st
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main )
+	_OBJ_ANIME_WAIT()
+	
 	_BALLOONWIN_OBJMSG_OPEN( msg_mus_01_001 , MMDL_ID_PLAYER )
 	_AB_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
@@ -56,4 +60,28 @@ EVENT_START ev_c04r0202_mus_3rd
 	_BALLOONWIN_OBJMSG_OPEN( msg_mus_03_001 , MMDL_ID_PLAYER )
 	_AB_KEYWAIT()     //キー待ち
 	_BALLOONWIN_CLOSE()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_main_to_start )
+	_OBJ_ANIME_WAIT()
+	
 EVENT_END
+
+
+/**************************************************************/
+//	移動　開始→待機位置
+/**************************************************************/
+_ANIME_LABEL anm_move_player_start_to_main
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA AC_WALK_U_8F,12
+	_ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA AC_WALK_R_8F,6
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_move_player_main_to_start
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_WALK_L_8F,6
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WALK_D_8F,12
+	_ANIME_DATA ACMD_END,0
+

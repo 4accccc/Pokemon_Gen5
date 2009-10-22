@@ -109,6 +109,27 @@ VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;;
 }
 
+//--------------------------------------------------------------
+/**
+ * ミュージカル：ミュージカル呼び出し
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMusicalTitleName( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
+  WORDSET **wordset    = SCRIPT_GetMemberWork( sc, ID_EVSCR_WORDSET );
+
+  u8 idx = VMGetU8(core);
+  
+  WORDSET_RegisterPlayerName( *wordset, idx, mystatus );
+  return VMCMD_RESULT_CONTINUE;
+}
 //======================================================================
 //  ミュージカル　イベント部分
 //======================================================================

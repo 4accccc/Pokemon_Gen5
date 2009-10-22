@@ -359,7 +359,7 @@
 
   //ミュージカル関連
   DEF_CMD( EvCmdMusicalCall, EV_SEQ_MUSICAL_CALL )
-  NO_CMD()
+  DEF_CMD( EvCmdMusicalTitleName, EV_SEQ_MUSICAL_TITLE_NAME )
   NO_CMD()
   NO_CMD()
 

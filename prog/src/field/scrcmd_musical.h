@@ -13,6 +13,7 @@
 //======================================================================
 #ifndef	__ASM_NO_DEF_ //アセンブラソースは無効に
 extern VMCMD_RESULT EvCmdMusicalCall( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdMusicalTitleName( VMHANDLE *core, void *wk );
 #endif	/* __ASM_NO_DEF_ */
 
 #endif	/* SCR_MUSICAL_H*/

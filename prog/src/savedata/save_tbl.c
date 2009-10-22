@@ -39,6 +39,7 @@
 #include "savedata/misc.h"
 #include "savedata/intrude_save.h"
 #include "savedata/shortcut.h"
+#include "savedata/musical_dist_save.h"
 
 //==============================================================================
 //	íËêîíËã`
@@ -402,8 +403,8 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_RecDl_2[] = {
 static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_Streaming[] = {
 	{
 		EXGMDATA_ID_STREAMING,
-		(FUNC_GET_SIZE)BattleRec_GetWorkSize,
-		(FUNC_INIT_WORK)BattleRec_WorkInit,
+		(FUNC_GET_SIZE)MUSICAL_DIST_SAVE_GetWorkSize,
+		(FUNC_INIT_WORK)MUSICAL_DIST_SAVE_InitWork,
 	},
 };
 
