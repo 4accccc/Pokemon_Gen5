@@ -955,12 +955,8 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 
   req->menuRequest = ((req->key_trg & PAD_BUTTON_X) != 0);
 
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
 	//ì¬’†‚¾‚ÆŽ~‚Ü‚Á‚½‚è‚·‚é‚Ì‚ÅAˆêŽž“I‚É“ü—Í•s‰Â‚É‚µ‚Ü‚·
  	req->convRequest = ((req->key_trg & PAD_BUTTON_Y) != 0);
-#else
-	req->convRequest =	0;
-#endif//DEBUG_ONLY_FOR_toru_nagihashi
   
   req->moveRequest = 0;
 
