@@ -820,7 +820,7 @@
  *  @param num 足す値
  */
 //--------------------------------------------------------------
-  .macro  _ADD_WK wk,num
+  .macro  _ASM_ADD_WK wk,num
   .short  EV_SEQ_ADD_WK
   .short  \wk
   .short  \num
@@ -833,7 +833,7 @@
  *  @param num 引く値
  */
 //--------------------------------------------------------------
-  .macro  _SUB_WK wk,num
+  .macro  _ASM_SUB_WK wk,num
   .short  EV_SEQ_SUB_WK
   .short  \wk
   .short  \num
@@ -1722,6 +1722,23 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _TRAINER_WIN
+ * @brief トレーナー戦勝利
+ *
+ * @note
+ * 実際にはフェード処理しか行っていませんが、
+ * 今後の拡張を考えてトレーナー戦処理に入れておいて下さい。
+ */
+//--------------------------------------------------------------
+#define _TRAINER_WIN() \
+    _ASM_TRAINER_WIN
+
+  .macro  _ASM_TRAINER_WIN
+  .short  EV_SEQ_TRAINER_WIN
+  .endm
+
+//--------------------------------------------------------------
+/**
  *  _TRAINER_LOSE トレーナー敗北
  *  @param none
  */
@@ -1730,19 +1747,24 @@
   _ASM_TRAINER_LOSE
 
   .macro  _ASM_TRAINER_LOSE
-  .short  EV_SEQ_LOSE
+  .short  EV_SEQ_TRAINER_LOSE
   .endm
 
 //--------------------------------------------------------------
 /**
- *  _TRAINER_LOSE_CHECK トレーナー敗北チェック
- *  @param ret_wk 結果格納先 0=敗北 1=勝利
+ *  @def  _TRAINER_LOSE_CHECK
+ *  @brief  トレーナー敗北チェック
+ *  @param ret_wk 結果格納先
+ *  
+ *  @retval SCR_BATTLE_WIN  勝利
+ *  @retval SCR_BATTLE_LOSE 敗北
  */
 //--------------------------------------------------------------
-#define _TRAINER_LOSE_CHECK( ret_wk ) _ASM_TRAINER_LOSE_CHECK ret_wk
+#define _TRAINER_LOSE_CHECK( ret_wk ) \
+    _ASM_TRAINER_LOSE_CHECK ret_wk
 
   .macro  _ASM_TRAINER_LOSE_CHECK ret_wk
-  .short  EV_SEQ_LOSE_CHECK
+  .short  EV_SEQ_TRAINER_LOSE_CHECK
   .short  \ret_wk
   .endm
 
@@ -1761,15 +1783,19 @@
 
 //--------------------------------------------------------------
 /**
- *  _LOSE_CHECK 敗北チェック
- *  @param ret_wk 結果格納先 0=敗北 1=勝利
+ *  @def  _WILD_LOSE_CHECK
+ *  @brief  野生ポケモン戦での敗北チェック
+ *  @param ret_wk 結果格納先
+ *  
+ *  @retval SCR_BATTLE_WIN  勝利
+ *  @retval SCR_BATTLE_LOSE 敗北
  */
 //--------------------------------------------------------------
-#define  _LOSE_CHECK(  ret_wk ) \
-  _ASM_LOSE_CHECK  ret_wk
+#define  _WILD_LOSE_CHECK(  ret_wk ) \
+  _ASM_WILD_LOSE_CHECK  ret_wk
 
-  .macro  _ASM_LOSE_CHECK  ret_wk
-  .short  EV_SEQ_LOSE_CHECK
+  .macro  _ASM_WILD_LOSE_CHECK  ret_wk
+  .short  EV_SEQ_WILD_LOSE_CHECK
   .short  \ret_wk
   .endm
 
