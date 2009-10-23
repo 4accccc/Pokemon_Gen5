@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c05pc0101_talkobj_middlewoman1
 _EVENT_DATA    ev_c05pc0101_talkobj_girl1
+_EVENT_DATA    ev_c05pc0101_shop
 _EVENT_DATA_END
 
 
@@ -34,12 +35,20 @@ _EVENT_DATA_END
 /*  C05PC0101 MIDDLEWOMAN1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c05pc0101_talkobj_middlewoman1
-  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05pc0101_middlewoman1_01)
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05pc0101_middlewoman1_01)
 EVENT_END
 
 /**************************************************************/
 /*  C05PC0101 GIRL1の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c05pc0101_talkobj_girl1
-  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05pc0101_girl1_01)
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05pc0101_girl1_01)
+EVENT_END
+
+/**************************************************************/
+/*  C05PC0101 SHOP呼び出し*/
+/**************************************************************/
+EVENT_START   ev_c05pc0101_shop
+	_TALK_OBJ_START()
+	_SHOP_CALL()
 EVENT_END

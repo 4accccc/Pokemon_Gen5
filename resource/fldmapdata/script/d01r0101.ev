@@ -58,6 +58,33 @@ _TALK_OBJ_START()
 		
 		ENDIF
 		
+		//最初に選択した三匹で台詞内にセットする名前を変える
+		IF $WK_SYS_FIRST_POKE_NO == MONSNO_HUSIGIDANE THEN
+			//最初の３匹で草タイプを選択した時の処理
+			
+			//0に選択ポケモンの名前をセット
+			_MONS_NAME(0,MONSNO_HUSIGIDANE)
+			//1に有効ポケモンの名前をセット
+			_MONS_NAME(1,MONSNO_WANINOKO)
+				
+		ELSIF $WK_SYS_FIRST_POKE_NO == MONSNO_HITOKAGE THEN	
+			//最初の３匹で炎タイプを選択した時の処理
+			
+			//0に選択ポケモンの名前をセット
+			_MONS_NAME(0,MONSNO_HITOKAGE)
+			//1に有効ポケモンの名前をセット
+			_MONS_NAME(1,MONSNO_HUSIGIDANE)
+			
+		ELSE
+			//最初の３匹で水タイプを選択した時の処理
+			
+			//0に選択ポケモンの名前をセット
+			_MONS_NAME(0,MONSNO_WANINOKO)
+			//1に有効ポケモンの名前をセット
+			_MONS_NAME(1,MONSNO_HITOKAGE)
+				
+		ENDIF
+		
 		_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_01,D01R0101_GIRL_01)
 		_BALLOONWIN_CLOSE()
 		//ポケモン入手処理へジャンプ
@@ -81,6 +108,40 @@ EVENT_END
 /*CALL：ポケモン入手処理                                */
 /**************************************************************/
 ev_d01r0101_pokecount:
+
+	//最初に選択した三匹で台詞内にセットする名前・タイプを変える
+	IF $WK_SYS_FIRST_POKE_NO == MONSNO_HUSIGIDANE THEN
+		//最初の３匹で草タイプを選択した時の処理
+		
+		//0に選択ポケモンの名前をセット
+		_MONS_NAME(0,MONSNO_HUSIGIDANE)
+		//1に有効ポケモンの名前をセット
+		_MONS_NAME(1,MONSNO_WANINOKO)
+		//手持ち苦手タイプ名セット
+		_POKETYPE_NAME(2,POKETYPE_HONOO)
+			
+	ELSIF $WK_SYS_FIRST_POKE_NO == MONSNO_HITOKAGE THEN	
+		//最初の３匹で炎タイプを選択した時の処理
+		
+		//0に選択ポケモンの名前をセット
+		_MONS_NAME(0,MONSNO_HITOKAGE)
+		//1に有効ポケモンの名前をセット
+		_MONS_NAME(1,MONSNO_HUSIGIDANE)
+		//手持ち苦手タイプ名セット
+		_POKETYPE_NAME(2, POKETYPE_MIZU)
+		
+		
+	ELSE
+		//最初の３匹で水タイプを選択した時の処理
+		
+		//0に選択ポケモンの名前をセット
+		_MONS_NAME(0,MONSNO_WANINOKO)
+		//1に有効ポケモンの名前をセット
+		_MONS_NAME(1,MONSNO_HITOKAGE)
+		//手持ち苦手タイプ名セット
+		_POKETYPE_NAME(2,POKETYPE_KUSA)
+				
+	ENDIF
 
 	_BALLOONWIN_OBJMSG_OPEN(msg_d01r0101_girl_02,D01R0101_GIRL_01)
 	//ポケモン必要か質問
@@ -137,14 +198,27 @@ ev_d01r0101_pokecount:
 			DEFINE_LOCAL NAME_YESNO01
 			_YES_NO_WIN( NAME_YESNO01 )
 			_TALKWIN_CLOSE()
-		
-			//【仮処理】名づけるか分岐
+			
+			//名づけるか分岐
 			IF $NAME_YESNO01 == 0 THEN
 				//はい
-				_WHITE_OUT( 8 )
-				_DISP_FADE_END_CHECK()
-				_WHITE_IN( 8 )
-				_DISP_FADE_END_CHECK()
+				
+			/*
+				//$POKE_COUNTに1を足して手持ちの最後尾の数を指定
+				$POKE_COUNT += 1
+				
+				//名前入力結果が格納されるローカル変数を定義
+				DEFINE_LOCAL SCWK_NAMEINPUT
+				
+				
+				//名前入力画面呼び出し
+				_PARTY_POKE_NAME_INPUT(SCWK_NAMEINPUT,$POKE_COUNT)
+			
+			*/
+				//仮処理
+				DEFINE_LOCAL SCWK_NAMEINPUT
+				_PARTY_POKE_NAME_INPUT(SCWK_NAMEINPUT,1)
+				
 			ELSE
 				//いいえの場合はスキップ
 			ENDIF

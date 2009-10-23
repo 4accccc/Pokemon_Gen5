@@ -12,7 +12,7 @@
 #define ZONE_C05PC0101_EVC_H
 
 #define C05PC0101_PCWOMAN                  0
-#define C05PC0101_SHOPM                    1
+#define C05PC0101_SHOPM_01                 1
 #define C05PC0101_MIDDLEWOMAN1             2
 #define C05PC0101_GIRL1                    3
 
