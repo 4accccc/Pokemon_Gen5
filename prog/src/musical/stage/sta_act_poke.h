@@ -73,7 +73,7 @@ const VecFx32* STA_POKE_GetRotOffset( STA_POKE_SYS *work , STA_POKE_WORK *pokeWo
 
 //アイテム使用
 void STA_POKE_UseItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , MUS_POKE_EQUIP_POS ePos );
-
+const BOOL STA_POKE_IsUsingItem( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
 
 #endif STA_ACT_POKE_H__
 

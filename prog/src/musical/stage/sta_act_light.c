@@ -151,7 +151,7 @@ static void STA_LIGHT_UpdateObjFunc( STA_LIGHT_SYS *work , STA_LIGHT_WORK *light
     cellPos.x = F32_CONST( lightWork->pos.x ) - scrOfs;
     cellPos.y = F32_CONST( lightWork->pos.y );
     GFL_CLACT_WK_SetPos( lightWork->lightCell , &cellPos , CLSYS_DEFREND_MAIN );
-    if( work->actWork != NULL && STA_ACT_GetUseItemPoke( work->actWork ) != MUSICAL_POKE_MAX )
+    if( work->actWork != NULL && STA_ACT_GetUseItemAttentionPoke( work->actWork ) != MUSICAL_POKE_MAX )
     {
     	GFL_CLACT_WK_SetDrawEnable( lightWork->lightCell, FALSE );
     }
@@ -166,7 +166,7 @@ static void STA_LIGHT_UpdateAttentionLight( STA_LIGHT_SYS *work )
 {
   if( work->attentinLightWork.type == ALT_NONE )
   {
-    if( STA_ACT_GetUseItemPoke( work->actWork ) != MUSICAL_POKE_MAX )
+    if( STA_ACT_GetUseItemAttentionPoke( work->actWork ) != MUSICAL_POKE_MAX )
     {
       //目立ってるやつがいる！
       GFL_CLWK_DATA	cellInitData;
@@ -184,7 +184,7 @@ static void STA_LIGHT_UpdateAttentionLight( STA_LIGHT_SYS *work )
   //elseが無いのは生成後に即動かすため
   if( work->attentinLightWork.type == ALT_CIRCLE )
   {
-    if( STA_ACT_GetUseItemPoke( work->actWork ) == MUSICAL_POKE_MAX )
+    if( STA_ACT_GetUseItemAttentionPoke( work->actWork ) == MUSICAL_POKE_MAX )
     {
       //目立ちタイム終了
     	GFL_CLACT_WK_Remove( work->attentinLightWork.lightCell );
@@ -195,7 +195,7 @@ static void STA_LIGHT_UpdateAttentionLight( STA_LIGHT_SYS *work )
       VecFx32 pokePos;
       GFL_CLACTPOS cellPos;
       STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
-      STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , STA_ACT_GetUseItemPoke( work->actWork ) );
+      STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , STA_ACT_GetUseItemAttentionPoke( work->actWork ) );
       const u16 scrOfs = STA_ACT_GetStageScroll( work->actWork );
       
       STA_POKE_GetPosition( pokeSys , pokeWork , &pokePos );

@@ -33,7 +33,14 @@
 //  enum
 //======================================================================
 #pragma mark [> enum
-
+typedef enum
+{
+  SBUP_RIGHT,
+  SBUP_LEFT,
+  SBUP_NONE,
+  
+  SBUP_MAX,
+}STA_BUTTON_USEITEM_POS;
 
 //======================================================================
 //  typedef struct
@@ -46,12 +53,14 @@ struct _STA_BUTTON_SYS
 
   MUSICAL_POKE_PARAM *musPoke;
   BOOL canUseButton;
+  STA_BUTTON_USEITEM_POS useItemPos;
 
   GFL_CLUNIT  *cellUnit;
   u32 pltIdx[2];
   u32 ncgIdx[2];
   u32 anmIdx[2];
 
+  BOOL      useButton[2];
   u16       equipItem[2];
   GFL_CLWK  *clwkButton[2];
   GFL_CLWK  *clwkButtonBase[2];
@@ -77,9 +86,13 @@ STA_BUTTON_SYS* STA_BUTTON_InitSystem( HEAPID heapId , ACTING_WORK* actWork , MU
   work->actWork = actWork;
   work->musPoke = musPoke;
   work->canUseButton = FALSE;
+  work->useItemPos = SBUP_NONE;
   
   work->equipItem[0] = work->musPoke->equip[MUS_POKE_EQU_HAND_R].itemNo;
   work->equipItem[1] = work->musPoke->equip[MUS_POKE_EQU_HAND_L].itemNo;
+
+  work->useButton[0] = FALSE;
+  work->useButton[1] = FALSE;
 
   STA_BUTTON_InitCell( work );
 
@@ -127,31 +140,38 @@ void STA_BUTTON_UpdateSystem( STA_BUTTON_SYS *work )
     };
     const int ret = GFL_UI_TP_HitTrg( hitTbl );
 
+    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ , 0 );
     if( ret != GFL_UI_TP_HIT_NONE )
     {
-      if( work->equipItem[ret] != MUSICAL_ITEM_INVALID )
+      if( work->equipItem[ret] != MUSICAL_ITEM_INVALID &&
+          work->useButton[ret] == FALSE )
       {
         if( ret == 0 )
         {
           STA_ACT_UseItemRequest( work->actWork , MUS_POKE_EQU_HAND_R );
-          if( work->equipItem[1] != MUSICAL_ITEM_INVALID )
-          {
-            GFL_CLACT_WK_SetDrawEnable( work->clwkButton[1], FALSE );
-            GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[1], FALSE );
-          }
         }
         else
         {
           STA_ACT_UseItemRequest( work->actWork , MUS_POKE_EQU_HAND_L );
-          if( work->equipItem[0] != MUSICAL_ITEM_INVALID )
-          {
-            GFL_CLACT_WK_SetDrawEnable( work->clwkButton[0], FALSE );
-            GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[0], FALSE );
-          }
         }
         G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ , -8 );
+        work->useButton[ret] = TRUE;
         work->canUseButton = FALSE;
+        work->useItemPos = ret;
       }
+    }
+  }
+  
+  if( work->useItemPos != SBUP_NONE )
+  {
+    if( STA_ACT_IsUsingItemSelf( work->actWork ) == FALSE )
+    {
+      work->canUseButton = TRUE;
+      GFL_CLACT_WK_SetDrawEnable( work->clwkButton[work->useItemPos], FALSE );
+      GFL_CLACT_WK_SetDrawEnable( work->clwkButtonBase[work->useItemPos], FALSE );
+
+      work->useItemPos = SBUP_NONE;
+      
     }
   }
 }
@@ -189,62 +209,6 @@ static void STA_BUTTON_InitCell( STA_BUTTON_SYS *work )
       GFL_CLWK_DATA cellInitData;
       MUS_ITEM_DATA_WORK* itemDataWork = MUS_ITEM_DATA_GetMusItemData( itemDataSys , work->equipItem[i] );
       const GFL_BBD_TEXSIZ texType = MUS_ITEM_DATA_GetTexType( itemDataWork );
-  /*
-      switch(texType)
-      {
-      case GFL_BBD_TEXSIZ_32x32:
-        if( i == 0 )
-        {
-          cellInitData.pos_x = 16;
-        }
-        else
-        {
-          cellInitData.pos_x = 240;
-        }
-        cellInitData.pos_y = 176;
-        baseAnm = 0;
-        break;
-
-      case GFL_BBD_TEXSIZ_32x64:
-        if( i == 0 )
-        {
-          cellInitData.pos_x = 16;
-        }
-        else
-        {
-          cellInitData.pos_x = 240;
-        }
-        cellInitData.pos_y = 160;
-        baseAnm = 1;
-        break;
-
-      case GFL_BBD_TEXSIZ_64x32:
-        if( i == 0 )
-        {
-          cellInitData.pos_x = 32;
-        }
-        else
-        {
-          cellInitData.pos_x = 224;
-        }
-        cellInitData.pos_y = 176;
-        baseAnm = 2;
-        break;
-      
-      default:
-        if( i == 0 )
-        {
-          cellInitData.pos_x = 16;
-        }
-        else
-        {
-          cellInitData.pos_x = 240;
-        }
-        cellInitData.pos_y = 176;
-        baseAnm = 0;
-        break;
-      }
-  */
       if( i == 0 )
       {
         cellInitData.pos_x = 32;

@@ -1304,6 +1304,19 @@ void STA_ACT_UseItem( ACTING_WORK *work , u8 pokeIdx , MUS_POKE_EQUIP_POS ePos )
   work->useItemFlg[pokeIdx] = TRUE;
   work->useItemPos[pokeIdx] = ePos;
 }
+
+//--------------------------------------------------------------
+//自分のアイテムの使用状態のチェック
+//--------------------------------------------------------------
+const BOOL STA_ACT_IsUsingItemSelf( ACTING_WORK *work )
+{
+  //演出と効果時間を両方見る
+  if( STA_POKE_IsUsingItem( work->pokeSys , work->pokeWork[work->playerIdx] ) == TRUE )
+  {
+    return TRUE;
+  }
+  return work->useItemFlg[work->playerIdx];
+}
 //--------------------------------------------------------------
 //アイテムの使用の更新
 //--------------------------------------------------------------
@@ -1525,7 +1538,7 @@ MUS_ITEM_DATA_SYS* STA_ACT_GetItemDataSys( ACTING_WORK *work )
 }
 
 //アイテム使用で目立っているポケモンの取得
-const u8 STA_ACT_GetUseItemPoke( ACTING_WORK *work )
+const u8 STA_ACT_GetUseItemAttentionPoke( ACTING_WORK *work )
 {
   return work->useItemPoke;
 }

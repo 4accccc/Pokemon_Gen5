@@ -24,11 +24,17 @@
 //  define
 //======================================================================
 #pragma mark [> define
-#define SCRIPT_TPrintf  ARI_TPrintf
-#define SCRIPT_Printf ARI_Printf
 
-//#define SCRIPT_PRINT_LABEL(str) SCRIPT_TPrintf("SCRIPT Frame[%4d] No[%d]%s\n",scriptWork->frame, SCRIPT_ENUM_ ## str ,#str);
-#define SCRIPT_PRINT_LABEL(str) 
+#if defined(DEBUG_ONLY_FOR_iwao_kazumasa)
+#define SCRIPT_TPrintf OS_TPrintf
+#define SCRIPT_Printf OS_Printf
+#else
+#define SCRIPT_TPrintf ARI_TPrintf
+#define SCRIPT_Printf ARI_Printf
+#endif
+
+#define SCRIPT_PRINT_LABEL(str) SCRIPT_TPrintf("SCRIPT Frame[%4d] No[%2d]%s\n",scriptWork->frame, SCRIPT_ENUM_ ## str ,#str);
+//#define SCRIPT_PRINT_LABEL(str) 
 
 #define ScriptFunc_GetValueS32() (VMGetU32(scriptWork->vmHandle))
 #define ScriptFunc_GetValuefx32() (VMGetU32(scriptWork->vmHandle))
