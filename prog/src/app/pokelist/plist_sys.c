@@ -2055,16 +2055,16 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
     }
     else
     {
-      hitTbl[PSSEL_RETURN].rect.top    = PLIST_BARICON_Y - 12;
-      hitTbl[PSSEL_RETURN].rect.bottom = PLIST_BARICON_Y + 12;
-      hitTbl[PSSEL_RETURN].rect.left   = PLIST_BARICON_RETURN_X_BAR - 12;
-      hitTbl[PSSEL_RETURN].rect.right  = PLIST_BARICON_RETURN_X_BAR + 12;
+      hitTbl[PSSEL_RETURN].rect.top    = PLIST_BARICON_Y;
+      hitTbl[PSSEL_RETURN].rect.bottom = PLIST_BARICON_Y + 24;
+      hitTbl[PSSEL_RETURN].rect.left   = PLIST_BARICON_RETURN_X_BAR;
+      hitTbl[PSSEL_RETURN].rect.right  = PLIST_BARICON_RETURN_X_BAR + 24;
       if( work->canExit == TRUE )
       {
-        hitTbl[PSSEL_EXIT  ].rect.top    = PLIST_BARICON_Y - 12;
-        hitTbl[PSSEL_EXIT  ].rect.bottom = PLIST_BARICON_Y + 12;
-        hitTbl[PSSEL_EXIT  ].rect.left   = PLIST_BARICON_EXIT_X - 12;
-        hitTbl[PSSEL_EXIT  ].rect.right  = PLIST_BARICON_EXIT_X + 12;
+        hitTbl[PSSEL_EXIT  ].rect.top    = PLIST_BARICON_Y;
+        hitTbl[PSSEL_EXIT  ].rect.bottom = PLIST_BARICON_Y + 24;
+        hitTbl[PSSEL_EXIT  ].rect.left   = PLIST_BARICON_EXIT_X;
+        hitTbl[PSSEL_EXIT  ].rect.right  = PLIST_BARICON_EXIT_X + 24;
       }
     }
     
