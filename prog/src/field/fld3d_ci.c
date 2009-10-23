@@ -78,6 +78,8 @@ typedef struct {
   FLD3D_CI_PTR CiPtr;
   FIELD_CAMERA * camera;
   FIELD_PLAYER * player;
+  FLDNOGRID_MAPPER* mapper;
+  const VecFx32 *Watch;
 }FLYSKY_EFF_WORK;
 #endif
 
@@ -661,11 +663,11 @@ static void DeleteRes(RES_SETUP_DAT *outDat)
 }
 
 #ifdef PM_DEBUG
-#define FLYSKY_CAM_MOVE_FRAME (30)
-
+#define FLYSKY_CAM_MOVE_FRAME (10)
 //--------------------------------------------------------------
 /**
  * @brief	空を飛ぶカメラアングルになるイベントを作成する
+ * @todo　この機能はこのファイルから切り離す
  *
  * @param	
  *
@@ -673,7 +675,8 @@ static void DeleteRes(RES_SETUP_DAT *outDat)
  *
  */
 //--------------------------------------------------------------
-void FLD3D_CI_FlySkyCameraDebug( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, FIELD_CAMERA *camera, FIELD_PLAYER * player )
+void FLD3D_CI_FlySkyCameraDebug(
+    GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, FIELD_CAMERA *camera, FIELD_PLAYER * player, FLDNOGRID_MAPPER* mapper )
 {
   FLYSKY_EFF_WORK *work;
   int size;
@@ -688,6 +691,7 @@ void FLD3D_CI_FlySkyCameraDebug( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, FIELD_CAM
     work->camera = camera;
     work->CiPtr = ptr;
     work->player = player;
+    work->mapper = mapper;
 
     GAMESYSTEM_SetEvent(gsys, event);
   }
@@ -700,6 +704,17 @@ static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
+    //現在ウォッチターゲットを保存
+    wk->Watch = FIELD_CAMERA_GetWatchTarget(wk->camera);
+    FIELD_CAMERA_StopTraceRequest(wk->camera);
+    (*seq)++;
+    break;
+  case 1:
+    if ( (wk->Watch != NULL) && FIELD_CAMERA_CheckTrace(wk->camera) ){
+      break;
+    }
+    //レールシステム更新ストップ
+    FLDNOGRID_MAPPER_SetRailCameraActive( wk->mapper, FALSE );
     //カメラパージ
     FIELD_CAMERA_FreeTarget(wk->camera);
     //現在のカメラ設定を保存
@@ -719,7 +734,8 @@ static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work )
       param.Core.TrgtPos = player_vec;
       param.Core.Fovy = 3640;
       param.Chk.Shift = TRUE;
-      param.Chk.Angle = TRUE;
+      param.Chk.Pitch = TRUE;
+      param.Chk.Yaw = FALSE;
       param.Chk.Dist = TRUE;
       param.Chk.Fovy = TRUE;
       param.Chk.Pos = TRUE;
@@ -727,11 +743,12 @@ static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work )
     }
     (*seq)++;
     /*none break*/
-  case 1:
+  case 2:
     //カメラ移動待ち
     if ( !FIELD_CAMERA_CheckMvFunc(wk->camera) )
     {
       GMEVENT *child;
+#if 0      
       {
         u16 pitch, yaw;
         fx32 len;
@@ -748,22 +765,37 @@ static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work )
         OS_Printf("%d,%d,%d,%d,%d,%d\n", pitch, yaw, len, target.x, target.y, target.z );
         OS_Printf("%d,%d,%d,%d\n", fovy, shift.x, shift.y, shift.z );
       }
+#endif      
       //カットイン演出開始
       child = CreateCutInEvt(wk->gsys, wk->CiPtr, 0);
       GMEVENT_CallEvent(event, child);
       (*seq)++;
     }
     break;
-  case 2:
-    //カメラ戻し
-    FIELD_CAMERA_RecvLinerParam(wk->camera, FLYSKY_CAM_MOVE_FRAME);
+  case 3:
+    {
+      FLD_CAM_MV_PARAM_CHK chk;
+      chk.Shift = TRUE;
+      chk.Pitch = TRUE;
+      chk.Yaw = FALSE;
+      chk.Dist = TRUE;
+      chk.Fovy = TRUE;
+      chk.Pos = TRUE;
+      //カメラ戻し
+      FIELD_CAMERA_RecvLinerParam(wk->camera, &chk, FLYSKY_CAM_MOVE_FRAME);
+    }
     (*seq)++;
     /*none break*/
-  case 3:
+  case 4:
     //カメラ戻し待ち
     if ( !FIELD_CAMERA_CheckMvFunc(wk->camera) ){
       //カメラバインド
-      FIELD_CAMERA_BindDefaultTarget(wk->camera);
+      if (wk->Watch != NULL){
+        FIELD_CAMERA_BindTarget(wk->camera, wk->Watch);
+      }
+      FIELD_CAMERA_RestartTrace(wk->camera);
+      //レールシステム更新開始
+      FLDNOGRID_MAPPER_SetRailCameraActive( wk->mapper, TRUE );
       //復帰データのクリア
       FIELD_CAMERA_ClearRecvCamParam(wk->camera);
       return GMEVENT_RES_FINISH;

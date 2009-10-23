@@ -15,6 +15,7 @@
 #ifdef PM_DEBUG
 #include "field_camera.h"
 #include "field_player.h"
+#include "field_nogrid_mapper.h"
 #endif
 
 typedef struct FLD3D_CI_tag * FLD3D_CI_PTR;
@@ -26,6 +27,6 @@ extern void FLD3D_CI_CallCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 i
 
 #ifdef PM_DEBUG
 extern void FLD3D_CI_FlySkyCameraDebug(
-    GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, FIELD_CAMERA *camera, FIELD_PLAYER * player );
+    GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, FIELD_CAMERA *camera, FIELD_PLAYER * player, FLDNOGRID_MAPPER *mapper);
 #endif
 
