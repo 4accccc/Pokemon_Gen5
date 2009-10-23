@@ -68,11 +68,9 @@ VMCMD_RESULT EvCmdGymElec_Init( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGymNormal_Init( VMHANDLE *core, void *wk )
 {
-  u8 room_no;
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  room_no = VMGetU16( core );
   GFL_OVERLAY_Load( FS_OVERLAY_ID(field_gym_init) );		//オーバーレイロード
   GYM_INIT_Normal(gsys);
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(field_gym_init));		//オーバーレイアンロード
