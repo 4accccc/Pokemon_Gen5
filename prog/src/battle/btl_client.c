@@ -2176,19 +2176,26 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
   switch( *seq ){
   case 0:
     {
-      u8 pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-      u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
-      BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, pos );
-
-      BTL_Printf("ポケ[%d] に経験値 %d\n", args[0], args[1] );
+      BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
       BPP_ReflectExp( bpp );
-      BTLV_EFFECT_CalcGaugeEXP( vpos, args[1] );
-      (*seq)++;
+
+      if( BTL_MAIN_CheckFrontPoke(wk->mainModule, wk->pokeCon, args[0]) )
+      {
+        u8 pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+        u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+
+        BTL_Printf("ポケ[%d] に経験値 %d\n", args[0], args[1] );
+        BPP_ReflectExp( bpp );
+        BTLV_EFFECT_CalcGaugeEXP( vpos, args[1] );
+        (*seq)++;
+      }
+      else{
+        return TRUE;
+      }
     }
     break;
   case 1:
-    if( !BTLV_EFFECT_CheckExecuteGauge() )
-    {
+    if( !BTLV_EFFECT_CheckExecuteGauge() ){
       return TRUE;
     }
     break;
@@ -2206,30 +2213,42 @@ static BOOL scProc_ACT_ExpLvup( BTL_CLIENT* wk, int* seq, const int* args )
   switch( *seq ){
   case 0:
     {
-      u8 pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-      u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
-      BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, pos );
-
+      BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
       BPP_ReflectExp( bpp );
       BPP_HpPlus( bpp, args[2] );
 
-      wk->strParam.args[0] = BPP_GetID( bpp );
-      wk->strParam.args[1] = args[1];
-      BTLV_EFFECT_CalcGaugeEXPLevelUp( vpos, bpp );
-      (*seq)++;
+      if( BTL_MAIN_CheckFrontPoke(wk->mainModule, wk->pokeCon, args[0]) )
+      {
+        u8 pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+        u8 vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+
+        BTLV_EFFECT_CalcGaugeEXPLevelUp( vpos, bpp );
+        (*seq)++;
+      }
+      else{
+        (*seq)+=2;
+      }
     }
     break;
   case 1:
     if( !BTLV_EFFECT_CheckExecuteGauge() )
     {
-      BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_LevelUp, wk->strParam.args );
       (*seq)++;
-      break;
     }
     break;
   case 2:
-    if( BTLV_WaitMsg(wk->viewCore) )
-    {
+      {
+        BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+
+        wk->strParam.args[0] = BPP_GetID( bpp );
+        wk->strParam.args[1] = args[1];
+
+        BTLV_StartMsgStd( wk->viewCore, BTL_STRID_STD_LevelUp, wk->strParam.args );
+        (*seq)++;
+      }
+      break;
+  case 3:
+    if( BTLV_WaitMsg(wk->viewCore) ){
       return TRUE;
     }
     break;

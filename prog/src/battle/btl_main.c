@@ -1755,6 +1755,9 @@ static inline u8 PokeID_to_ClientID( u8 pokeID )
   GF_ASSERT_MSG(0, "Illegal PokeID[%d]", pokeID);
   return 0;
 }
+
+
+
 //=============================================================================================
 /**
  * バトルポケモンIDをポケモン戦闘位置に変換
@@ -1762,7 +1765,7 @@ static inline u8 PokeID_to_ClientID( u8 pokeID )
  * @param   wk
  * @param   pokeID
  *
- * @retval  BtlPokePos    ポケモン戦闘位置
+ * @retval  BtlPokePos    ポケモン戦闘位置（戦闘に出ていなければBTL_POS_MAX）
  */
 //=============================================================================================
 BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u8 pokeID )
@@ -1780,7 +1783,7 @@ BtlPokePos BTL_MAIN_PokeIDtoPokePos( const BTL_MAIN_MODULE* wk, const BTL_POKE_C
     GF_ASSERT_MSG(0, " not fighting pokeID [%d]", pokeID );
   }
   GF_ASSERT_MSG(0, " not including pokeID [%d] (clientID=%d)", pokeID, clientID );
-  return 0;
+  return BTL_POS_MAX;
 }
 //=============================================================================================
 /**
@@ -2107,6 +2110,31 @@ const BTL_POKEPARAM* BTL_POKECON_GetPokeParamConst( const BTL_POKE_CONTAINER* wk
   GF_ASSERT_MSG(wk->pokeParam[pokeID], "pokeID=%d", pokeID);
 
   return wk->pokeParam[ pokeID ];
+}
+//=============================================================================================
+/**
+ * 戦闘に出ているポケモンかどうかを判定
+ *
+ * @param   pokeCon
+ * @param   pokeID
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_CheckFrontPoke( BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u8 pokeID )
+{
+  u8 clientID = PokeID_to_ClientID( pokeID );
+  int idx = PokeCon_FindPokemon( pokeCon, clientID, pokeID );
+  if( idx >= 0 )
+  {
+    BtlPokePos pos = BTL_MAIN_GetClientPokePos( wk, clientID, idx );
+    if( pos != BTL_POS_MAX )
+    {
+      const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParamConst( pokeCon, pokeID );
+      return !BPP_IsDead( bpp );
+    }
+  }
+  return FALSE;
 }
 
 
@@ -2513,6 +2541,35 @@ static void srcParty_RelrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID )
     BPP_SetSrcPP( bpp, PokeParty_GetMemberPointer(srcParty, i) );
   }
 }
+// バトルパーティの内容を、バトル開始時の順に並べ直した上でオリジナルパーティデータに反映させる
+static void srcParty_RelrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  POKEPARTY* srcParty = srcParty_Get( wk, clientID );
+  BTL_PARTY* btlParty = BTL_POKECON_GetPartyData( &wk->pokeconForClient, clientID );
+  u32 memberCount = PokeParty_GetPokeCount( srcParty );
+  const POKEMON_PARAM* pp;
+  BTL_POKEPARAM* bpp;
+  u32 orgPokeID, i, j;
+
+  PokeParty_InitWork( wk->tmpParty );
+  orgPokeID = ClientBasePokeID[ clientID ];
+
+  for(i=0; i<memberCount; ++i)
+  {
+    for(j=0; j<memberCount; ++j){
+      bpp = BTL_PARTY_GetMemberData( btlParty, j );
+      if( BPP_GetID(bpp) == (orgPokeID+i) )
+      {
+        BPP_ReflectPP( bpp );
+        pp = BPP_GetSrcData( bpp );
+        PokeParty_Add( wk->tmpParty, pp );
+        break;
+      }
+    }
+  }
+
+  PokeParty_Copy( wk->tmpParty, srcParty );
+}
 //----------------------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------------------
@@ -2530,7 +2587,7 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
   {
     POKEPARTY* srcParty;
 
-    srcParty_RelrectBtlParty( wk, wk->myClientID );
+    srcParty_RelrectBtlPartyStartOrder( wk, wk->myClientID );
     srcParty = srcParty_Get( wk, wk->myClientID );
     PokeParty_Copy( srcParty, wk->setupParam->partyPlayer );
   }
