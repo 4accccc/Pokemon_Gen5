@@ -14,5 +14,6 @@
 #ifndef ZONE_C04R0701_EVC_H
 #define ZONE_C04R0701_EVC_H
 
+#define C04R0701_RANGERM_01                0
 
 #endif //ZONE_C04R0701_EVC_H

@@ -30,7 +30,28 @@ _EVENT_DATA    ev_bg_r05_board_01
 _EVENT_DATA    ev_bg_r05_board_02
 _EVENT_DATA    ev_bg_r05_board_03
 _EVENT_DATA    ev_bg_r05_board_04
+_EVENT_DATA    ev_init_r05
 _EVENT_DATA_END
+
+
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_r05
+	//イベント状況によってOBJの表示位置を変更
+	IF $WK_SCENE_R05 == 2 THEN
+		//ライバル戦posイベント後
+		//カミツレ＆ライバル：位置移動
+		_OBJ_POS_CHANGE( R05_LEADER4_01, 333, 0, 432, DIR_LEFT )
+		_OBJ_POS_CHANGE( R05_RIVAL_01, 335, 0, 433, DIR_LEFT )
+
+	ELSIF $WK_SCENE_R05 == 3 THEN
+		//H02開通デモイベント後
+		//カメラマン（ストッパー）の位置を変更
+		_OBJ_POS_CHANGE( R05_CAMERAMAN_01, 333, 0, 431, DIR_DOWN )
+	ENDIF
+
+INIT_EVENT_END
 
 
 /************************************************************/
@@ -38,14 +59,19 @@ _EVENT_DATA_END
 /************************************************************/
 EVENT_START	ev_pos_r05_rival_01
 	//ライバル表示
-//	_FLAG_RESET( FV_R05_RIVAL )
-//	_OBJ_ADD( R05_RIVAL_01 )
+	_FLAG_RESET( FV_R05_RIVAL )
+	_OBJ_ADD( R05_RIVAL_01 )
 
 	//ライバル：主人公横へ
 	_OBJ_ANIME( R05_RIVAL_01, anm_rival_move_01 )
 	_OBJ_ANIME_WAIT()
 
+	//主人公：振り向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_dir_r )
+	_OBJ_ANIME_WAIT()
+
 	//ライバル：主人公に勝負を挑む
+	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG_OPEN( msg_r05_black_01 , R05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
@@ -72,8 +98,8 @@ EVENT_START	ev_pos_r05_rival_01
 	_BALLOONWIN_CLOSE()
 
 	//ジムリーダー(カミツレ)表示
-	//_FLAG_RESET()
-	//_OBJ_ADD( id )
+	_FLAG_RESET( FV_R05_LEADER4 )
+	_OBJ_ADD( R05_LEADER4_01 )
 
 	//カミツレ：主人公前へ
 	_OBJ_ANIME( R05_LEADER4_01, anm_leader_move_01 )
@@ -180,7 +206,7 @@ EVENT_START	ev_pos_r05_rival_01
 
 	//========================================//
 		//ライバル戦闘posイベントを無効、橋デモposイベントを有効
-		$LOCALWORK0 = 1
+		$WK_SCENE_R05 = 2
 	//========================================//
 
 EVENT_END
@@ -197,8 +223,8 @@ _ANIME_LABEL	anm_rival_move_01
 //ジムリーダー：主人公横へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader_move_01
-	_ANIME_DATA	AC_WALK_R_8F,3
-	_ANIME_DATA	AC_WALK_D_8F,11
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,12
 	_ANIME_DATA	AC_WALK_R_8F,4
 	_ANIME_DATA	ACMD_END,0
 
@@ -304,6 +330,10 @@ EVENT_START	ev_pos_r05_h02demo_01
 	//【仮】H02デモ
 	_BLACK_OUT( DISP_FADE_SPEED )
 	_DISP_FADE_END_CHECK()
+
+	//カメラマン（ストッパー）の位置を変更
+	_OBJ_POS_CHANGE( R05_CAMERAMAN_01, 331, 0, 431, DIR_LEFT )
+
 	_BLACK_IN( DISP_FADE_SPEED )
 	_DISP_FADE_END_CHECK()
 
@@ -332,7 +362,7 @@ EVENT_START	ev_pos_r05_h02demo_01
 	//========================================//
 
 	//posイベント無効
-	$LOCALWORK0 = 2
+	$WK_SCENE_R05 = 3
 
 	//ライバル＆ジムリーダー非表示フラグセット
 	_FLAG_SET( FV_R05_RIVAL )
@@ -381,10 +411,6 @@ EVENT_START	ev_pos_r05_h02stop_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01 )
 	_OBJ_ANIME( R05_CAMERAMAN_01, anm_camera_back_01 )
 	_OBJ_ANIME_WAIT()
-
-	//【仮】デバッグ用コミット禁止
-	$WK_SCENE_R05 = 1
-
 
 EVENT_END
 

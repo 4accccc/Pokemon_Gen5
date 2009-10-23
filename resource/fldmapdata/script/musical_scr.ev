@@ -10,3 +10,42 @@
   .include  "scr_seq_def.h"
   .include  "msg_musical_scr.h"
 
+//--------------------------------------------------------------
+//               スクリプト本体
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+//               スクリプトテーブル
+//--------------------------------------------------------------
+_EVENT_DATA		ev_musical_recept_single
+_EVENT_DATA_END
+
+
+/*************************************************************/
+/*						一人用　受付						 */
+/*************************************************************/
+EVENT_START	ev_musical_recept_single
+
+  _TALK_OBJ_START()
+
+	_BALLOONWIN_TALKOBJ_OPEN( msg_musical_test_01 )
+	_YES_NO_WIN( SCWK_ANSWER )
+	_BALLOONWIN_CLOSE()
+
+  IF $SCWK_ANSWER == 0 THEN
+
+    _BALLOONWIN_TALKOBJ_OPEN( msg_musical_test_02 )
+    _BALLOONWIN_CLOSE()
+
+    _MUSICAL_CALL() //ミュージカル呼び出し
+
+  ELSE
+
+    _BALLOONWIN_TALKOBJ_OPEN( msg_musical_test_03 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+

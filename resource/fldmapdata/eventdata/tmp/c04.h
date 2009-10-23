@@ -20,6 +20,7 @@
 #define DOOR_ID_C04_C04P01_EXIT04        15
 #define DOOR_ID_C04_C04P01_EXIT03        16
 #define DOOR_ID_C04_C04P01_EXIT02        17
+#define DOOR_ID_C04_C04PC0101_EXIT01     18
 
 #endif //ZONE_C04_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
