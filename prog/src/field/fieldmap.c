@@ -2240,7 +2240,7 @@ static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork )
 //==================================================================
 GAME_COMM_NO FIELDCOMM_CheckCommNo(GAME_COMM_SYS_PTR game_comm)
 {
-  GAME_COMM_NO comm_no = GameCommSys_BootCheck(GAME_COMM_SYS_PTR gcsp);
+  GAME_COMM_NO comm_no = GameCommSys_BootCheck(game_comm);
   switch(comm_no){
   case GAME_COMM_NO_NULL:                  //何も起動していない状態
   case GAME_COMM_NO_FIELD_BEACON_SEARCH:   //フィールド上でビーコンサーチ
