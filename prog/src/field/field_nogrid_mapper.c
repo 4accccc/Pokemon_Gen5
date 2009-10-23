@@ -284,7 +284,7 @@ BOOL FLDNOGRID_MAPPER_IsResistData( const FLDNOGRID_MAPPER* cp_mapper )
 void FLDNOGRID_MAPPER_Main( FLDNOGRID_MAPPER* p_mapper )
 {
   VecFx32 rail_pos;
-  BOOL camera_move;
+  BOOL camera_move = FALSE;
 
   // レールシステムメイン
   FIELD_RAIL_MAN_Update( p_mapper->p_railMan );
