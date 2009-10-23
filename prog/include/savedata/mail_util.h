@@ -5,16 +5,11 @@
  *	@date	06.02.09
  */
 
-#ifndef __H_MAIL_UTIL_H__
-#define __H_MAIL_UTIL_H__
+#pragma once
 
 ///定数定義
 #include "savedata/mail_def.h"
-
-#include "savedata/savedata_def.h"
-#include "system/pm_str.h"
-#include "system/pms_data.h"
-#include "poketool/poke_tool.h"
+#include "poke_tool/poke_tool.h"
 
 //------------------------------------------------------------
 /**
@@ -71,7 +66,7 @@ extern void MAIL_AddMailFormWork(MAIL_BLOCK* block,
 /**
  *	@brief	セーブデータブロックへのポインタを取得
  */
-extern MAIL_BLOCK* SaveData_GetMailBlock(SAVEDATA* sv);
+extern MAIL_BLOCK* SaveData_GetMailBlock(SAVE_CONTROL_WORK* sv);
 
 /**
  *	@brief	メールセーブデータブロックサイズ取得
@@ -183,7 +178,7 @@ extern BOOL MailData_Compare(MAIL_DATA* src1,MAIL_DATA* src2);
  *	@param	pos		メールを持たせるポケモンの手持ち内のポジション
  *	@param	save	セーブデータへのポインタ
  */
-extern void MailData_CreateFromSaveData(MAIL_DATA* dat,u8 design_no,u8 pos,SAVEDATA* save);
+extern void MailData_CreateFromSaveData(MAIL_DATA* dat,u8 design_no,u8 pos,SAVE_CONTROL_WORK* save);
 
 /**
  *	@brief	メールポケモンイベント専用メールデータ生成
@@ -197,7 +192,7 @@ extern void MailData_CreateFromSaveData(MAIL_DATA* dat,u8 design_no,u8 pos,SAVED
  *	@com	メモリをAllocして返すので、呼び出し側が解放すること！
  */
 extern MAIL_DATA* MailData_MailEventDataMake(POKEMON_PARAM* pp,
-	u8 design_no,u8 oya_sex,STRBUF* oya_name,u8 oya_id);
+	u8 design_no,u8 oya_sex,STRBUF* oya_name,u8 oya_id, HEAPID heapID);
 
 /**
  *	@brief	メールデータ　トレーナーIDアクセス
@@ -271,6 +266,5 @@ extern void MailData_SetMsgByIndex(MAIL_DATA* dat,PMS_DATA* pms,u8 index);
  */
 extern BOOL MailData_GetMsgStrByIndex(const MAIL_DATA* dat,u8 index,STRBUF* buf,int heapID);
 
-#endif	//__H_MAIL_UTIL_H__
 
 

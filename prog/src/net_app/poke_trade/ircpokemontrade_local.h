@@ -454,6 +454,8 @@ struct _IRC_POKEMON_TRADE{
   int underSelectIndex;  //まだ相手に見せてないポケモンIndex
   int underSelectBoxno;  //まだ相手に見せてないポケモンBox
   int pokemonsetCall;
+  int userNetCommand[2];
+
 
 
   BOOL bChangeOK[2];

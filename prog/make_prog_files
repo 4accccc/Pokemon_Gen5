@@ -23,6 +23,7 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/trainercard_data.c \
         savedata/system_data.c \
         savedata/record.c \
+				savedata/mail.c \
         savedata/c_gear_data.c \
         savedata/wifihistory.c \
         savedata/wifi_status.c \
@@ -825,90 +826,6 @@ SRCS_OVERLAY_DPW_COMMON   = libdpw/dpwi_encrypt.c \
               libdpw/dpwi_session.c \
 							libdpw/dpw_tr.c
 
-#### 古い通信プログラム WIFI広場以外使用禁止
-####===> SRCS_OVERLAY_DPW_COMMON
-####SRCS_OVERLAY_NETOLD = net_old/comm_ring_buff.c \
-#                      net_old/comm_dwc_rapcommon.c \
-#                      net_old/comm_command.c \
-#                      net_old/comm_queue.c \
-#                      net_old/comm_tool.c \
-#                      net_old/comm_system.c \
-#                      net_old/comm_info.c \
-#                      net_old/comm_local.c \
-##                      net_old/comm_wifihistory.c \
-#                      net_old/comm_state.c \
-#                      net_old/comm_dwc_rap.c \
-#                      net_old/comm_dwc_lobbylib.c \
-#                      net_old/com_dwc_warning.c \
-#                      net_old/com_error_warning_reset.c
-
-##Wi-Fi広場
-##===> SRCS_OVERLAY_NETOLD
-##LIB=>          libdwcbm.a
-##LIB=>          libdwcaccount.a
-##LIB=>          libdwcgschat.a
-##LIB=>          libdwcppwlobby.a
-##LIB=>          libdwcilobby.a
-###LIB=>          libdwcenc.a
-#SRCS_OVERLAY_WIFILOBBY_COMMON   = net_app/wifi_lobby/wifi_lobby.c \
-###                    net_app/wifi_lobby/wflby_system.c \
-###                    net_app/wifi_lobby/wflby_apl.c \
-###                    net_app/wifi_lobby/wflby_def.c \
-###                    net_app/wifi_lobby/lobby_news_data.c \
-###                  net/dwc_lobbylib.c \
-###                net_app/wifi_lobby/wflby_3dobj.c \
-###                    net_app/wifi_lobby/worldtimer_place.c
-
-####WIFILOBBY
-####===>SRCS_OVERLAY_WIFILOBBY_COMMON
-###SRCS_OVERLAY_WIFILOBBY_CONNECT    = net_app/wifi_lobby/wflby_connect.c
-
-####wifiロビーニュース
-####===> SRCS_OVERLAY_WIFILOBBY_COMMON
-###SRCS_OVERLAY_LOBBYNEWS =	net_app/wifi_lobby/lobby_news.c 
-
-####足跡ボード
-####===> SRCS_OVERLAY_WIFILOBBY_COMMON
-###SRCS_OVERLAY_FOOTPRINT_BOARD =	net_app/wifi_lobby/footprint_main.c \
-###								net_app/wifi_lobby/footprint_stamp.c \
-###								net_app/wifi_lobby/footprint_tool.c \
-###								net_app/wifi_lobby/footprint_comm.c \
-###								poke_tool/pokefoot.c
-
-####WIFILOBBY
-####===>SRCS_OVERLAY_WIFILOBBY_COMMON
-###SRCS_OVERLAY_WIFILOBBY_ANKETO   = net_app/wifi_lobby/wflby_anketo.c
-
-
-####WIFILOBBY
-####===>SRCS_OVERLAY_WIFILOBBY_COMMON
-###SRCS_OVERLAY_WORLDTIMER   = net_app/wifi_lobby/worldtimer.c
-
-####WIFILOBBY
-####===>SRCS_OVERLAY_WIFILOBBY_COMMON
-###SRCS_OVERLAY_WIFILOBBY_ROOM   = net_app/wifi_lobby/wflby_3dmatrix.c \
-###                  net_app/wifi_lobby/wflby_mapcont.c \
-###                  net_app/wifi_lobby/wflby_3dobjcont.c \
-###                  net_app/wifi_lobby/wflby_room.c \
-###                  net_app/wifi_lobby/wflby_camera.c \
-###                  net_app/wifi_lobby/wflby_3dmapobj.c \
-###                  net_app/wifi_lobby/wflby_3dmapobj_cont.c \
-###                  net_app/wifi_lobby/wflby_event.c \
-###                  net_app/wifi_lobby/wflby_ev_def.c \
-###                  net_app/wifi_lobby/wflby_ev_mg.c \
-###                  net_app/wifi_lobby/wflby_ev_talk.c \
-###                  net_app/wifi_lobby/wflby_gadget.c \
-###                  net_app/wifi_lobby/wflby_light.c \
-###                  net_app/wifi_lobby/wflby_timeevent.c \
-###                  net_app/wifi_lobby/wflby_fire.c \
-###                  net_app/wifi_lobby/wflby_ev_anketo.c \
-###                  net_app/wifi_lobby/wflby_float.c
-
-####wifiミニゲームツール
-####===> SRCS_OVERLAY_WIFILOBBY_COMMON
-###SRCS_OVERLAY_MINIGAME_COMMON = net_app/wifi_lobby/minigame_tool.c \
-###							   net_app/wifi_lobby/minigame_commcomand.c \
-###							   net_app/wifi_lobby/minigame_commcomand_func.c
 
 # WIFI2DMAP
 #####===> SRCS_OVERLAY_WIFILOBBY_ROOM

@@ -24,6 +24,7 @@
 #include "savedata/system_data.h"
 #include "savedata/record.h"
 #include "system/pms_word.h"
+#include "savedata/mail_util.h"
 #include "field/fldmmdl.h"
 #include "savedata/musical_save.h"
 #include "savedata/randommap_save.h"
@@ -282,7 +283,12 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		(FUNC_GET_SIZE)PMSW_GetSaveDataSize,
 		(FUNC_INIT_WORK)PMSW_InitSaveData,
 	},
-	{
+	{	//メールデータ
+		GMDATA_ID_MAILDATA,
+		(FUNC_GET_SIZE)MAIL_GetBlockWorkSize,
+		(FUNC_INIT_WORK)MAIL_Init,
+	},
+	{//動作モデル
 		GMDATA_ID_MMDL,
 		(FUNC_GET_SIZE)MMDL_SAVEDATA_GetWorkSize,
 		(FUNC_INIT_WORK)MMDL_SAVEDATA_Init,

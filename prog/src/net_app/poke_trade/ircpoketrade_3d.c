@@ -102,12 +102,6 @@ static void _demoExit()
 {
   // ライトセット破棄
   GFL_G3D_LIGHT_Delete( g_lightSet );
-
-  // 3Dシステム終了
-  GFL_G3D_Exit();
-
-  // BGL破棄
-  GFL_BG_Exit();
 }
 
 

@@ -639,19 +639,19 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
 static void _changeDemo_ModelTrade20(IRC_POKEMON_TRADE* pWork)
 {
 
-
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_49, pWork->pMessageStrBufEx );
-
   {
     POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
     WORDSET_RegisterPokeNickName( pWork->pWordSet, 1,  pp );
   }
-  WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx  );
+  WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx);
 
-
-  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME3_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
   IRC_POKETRADE_MessageWindowOpen(pWork);
   _setNextAnim(pWork, 0);
+
+  GFL_BG_SetVisible( GFL_BG_FRAME2_S , TRUE );
+  
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade21);
 
 }
@@ -792,6 +792,8 @@ static void _changeDemo_ModelTrade30(IRC_POKEMON_TRADE* pWork)
   IRC_POKETRADE_MessageWindowClose(pWork);
   IRC_POKETRADE_GraphicFreeVram(pWork);
 
+  GFL_BG_FillCharacterRelease(GFL_BG_FRAME2_S,1,0);
+  GFL_BG_FreeBGControl(GFL_BG_FRAME2_S);
   GFL_BG_FreeBGControl(GFL_BG_FRAME3_S);
 
   IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE_NORMAL);

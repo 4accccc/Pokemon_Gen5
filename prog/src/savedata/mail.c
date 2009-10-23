@@ -13,24 +13,26 @@
  *	5,ダミーワークエリアを開放する
  */
 
-#include "common.h"
-#include "savedata/savedata.h"
+#include "gflib.h"
+#include "savedata/save_tbl.h"
+
 #include "savedata/mail.h"
 #include "savedata/mail_local.h"
 #include "savedata/mystatus.h"
-#include "poketool/poke_tool.h"
-#include "poketool/pokeparty.h"
-#include "poketool/pokeicon.h"
+
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/pokeparty.h"
+#include "pokeicon/pokeicon.h"
+
 #include "system/pms_data.h"
-#include "system/buflen.h"
-#include "system/pm_str.h"
-#include "poketool/icongra/poke_icon.naix"
-#include "poketool/monsno.h"
-#include "gflib/strbuf_family.h"
+
+#include "poke_icon.naix"
+#include "poke_tool/monsno_def.h"
 
 ///ポケモンアイコンの最大CGXID(金銀でアイコンが増えるならここも変える必要がある)
 #define ICON_CGXID_MAX		(NARC_poke_icon_poke_icon_519_05_NCGR)
 
+#if 0
 ///プラチナ以降で追加されたポケモンのcgx_id変換テーブル
 ///(金銀でアイコンが増えるならこのテーブルも増やす必要がある)
 static const struct{
@@ -43,47 +45,47 @@ static const struct{
 	{
 		NARC_poke_icon_poke_icon_509_NCGR,
 		NARC_poke_icon_poke_icon_509_01_NCGR,
-		MONSNO_KIMAIRAN,
+		MONSNO_GIRATHINA,
 		1,
 	},
 	{
 		NARC_poke_icon_poke_icon_516_NCGR,
 		NARC_poke_icon_poke_icon_516_01_NCGR,
-		MONSNO_EURISU,
+		MONSNO_SHEIMI,
 		1,
 	},
 	{
 		NARC_poke_icon_poke_icon_519_NCGR,
 		NARC_poke_icon_poke_icon_519_01_NCGR,
-		MONSNO_PURAZUMA,
+		MONSNO_ROTOMU,
 		1,
 	},
 	{
 		NARC_poke_icon_poke_icon_519_NCGR,
 		NARC_poke_icon_poke_icon_519_02_NCGR,
-		MONSNO_PURAZUMA,
+		MONSNO_ROTOMU,
 		2,
 	},
 	{
 		NARC_poke_icon_poke_icon_519_NCGR,
 		NARC_poke_icon_poke_icon_519_03_NCGR,
-		MONSNO_PURAZUMA,
+		MONSNO_ROTOMU,
 		3,
 	},
 	{
 		NARC_poke_icon_poke_icon_519_NCGR,
 		NARC_poke_icon_poke_icon_519_04_NCGR,
-		MONSNO_PURAZUMA,
+		MONSNO_ROTOMU,
 		4,
 	},
 	{
 		NARC_poke_icon_poke_icon_519_NCGR,
 		NARC_poke_icon_poke_icon_519_05_NCGR,
-		MONSNO_PURAZUMA,
+		MONSNO_ROTOMU,
 		5,
 	},
 };
-
+#endif
 
 /**
  *	@brief	メールデータサイズ取得
@@ -103,11 +105,11 @@ void MailData_Clear(MAIL_DATA* dat)
 	
 	dat->writerID = 0;
 	dat->sex = PM_MALE;
-	dat->region = CasetteLanguage;
-	dat->version = CasetteVersion;
+	//dat->region = CasetteLanguage;    //@todo定義が無い
+//	dat->version = CasetteVersion; //@todo定義が無い
 	dat->design = MAIL_DESIGN_NULL;
 
-	PM_strclearEOM_(dat->name,BUFLEN_PERSON_NAME);
+  GFL_STD_MemFill16(dat->name, GFL_STR_GetEOMCode(),sizeof(dat->name));
 
 	for(i = 0;i < MAILDAT_ICONMAX;i++){
 		dat->icon[i].dat = MAIL_ICON_NULL;
@@ -145,7 +147,7 @@ MAIL_DATA* MailData_CreateWork(int heapID)
 {
 	MAIL_DATA* p;
 
-	p = sys_AllocMemoryLo(heapID,sizeof(MAIL_DATA));
+  p = GFL_HEAP_AllocMemoryLo(heapID,sizeof(MAIL_DATA)); //sys_AllocMemoryLo(heapID,sizeof(MAIL_DATA));
 	MailData_Clear(p);
 
 	return p;
@@ -179,7 +181,7 @@ BOOL MailData_Compare(MAIL_DATA* src1,MAIL_DATA* src2)
 		(src1->form_bit != src2->form_bit) ){
 		return FALSE;
 	}
-	if( PM_strcmp( src1->name,src2->name ) != 0){
+	if( GFL_STD_MemComp( src1->name,src2->name,sizeof(src1->name) ) != 0){
 		return FALSE;
 	}
 	for(i = 0;i < MAILDAT_ICONMAX;i++){
@@ -202,9 +204,9 @@ BOOL MailData_Compare(MAIL_DATA* src1,MAIL_DATA* src2)
  *	@param	pos		メールを持たせるポケモンの手持ち内のポジション
  *	@param	save	セーブデータへのポインタ
  */
-void MailData_CreateFromSaveData(MAIL_DATA* dat,u8 design_no,u8 pos,SAVEDATA* save)
+void MailData_CreateFromSaveData(MAIL_DATA* dat,u8 design_no,u8 pos,SAVE_CONTROL_WORK* save)
 {
-	u8	i,ct,pal,s;
+	u8	i,ct,pal=0,s;
 	u16	monsno;
 	u32 icon,egg,form;
 	MYSTATUS	*my;
@@ -219,7 +221,7 @@ void MailData_CreateFromSaveData(MAIL_DATA* dat,u8 design_no,u8 pos,SAVEDATA* sa
 	my = SaveData_GetMyStatus(save);
 
 	//自機の名前
-	PM_strcpy(dat->name,MyStatus_GetMyName(my));
+	GFL_STD_MemCopy(MyStatus_GetMyName(my),dat->name,sizeof(dat->name));
 	//性別
 	dat->sex = (u8)MyStatus_GetMySex(my);
 	//トレーナーID
@@ -229,16 +231,18 @@ void MailData_CreateFromSaveData(MAIL_DATA* dat,u8 design_no,u8 pos,SAVEDATA* sa
 	dat->form_bit = 0;
 	for(i=pos,ct = 0;i < PokeParty_GetPokeCount(party);i++){
 		pp = PokeParty_GetMemberPointer(party,i);
-		monsno = PokeParaGet(pp,ID_PARA_monsno,NULL);
-		egg = PokeParaGet(pp,ID_PARA_tamago_flag,NULL);
-		form = PokeParaGet(pp,ID_PARA_form_no,NULL);
-		icon = PokeIconCgxArcIndexGetByPP(pp);
+		monsno = PP_Get(pp,ID_PARA_monsno,NULL);
+		egg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
+		form = PP_Get(pp,ID_PARA_form_no,NULL);
+		//icon = PokeIconCgxArcIndexGetByPP(pp);
+    icon = POKEICON_GetCgxArcIndex( PP_GetPPPPointerConst(pp) );
 //		pal = PokeIconPaletteNumberGet(monsno,egg);
-		pal = PokeIconPalNumGet(monsno,form,egg);
+//		pal = PokeIconPalNumGet(monsno,form,egg);   //@todo  移植できてない
 		
 		dat->icon[ct].cgxID = (u16)icon;
 		dat->icon[ct].palID = pal;
-		//プラチナ以降で追加されたアイコンの場合のノーマルフォルム変換(フォルム番号は別領域へ退避)
+#if 0 //@todo 移植できてない
+    //プラチナ以降で追加されたアイコンの場合のノーマルフォルム変換(フォルム番号は別領域へ退避)
 		for(s = 0; s < NELEMS(MailIcon_CgxID_ConvTbl); s++){
 			if(MailIcon_CgxID_ConvTbl[s].form_cgx_id == dat->icon[ct].cgxID && 
 					MailIcon_CgxID_ConvTbl[s].form_no == form){
@@ -248,15 +252,12 @@ void MailData_CreateFromSaveData(MAIL_DATA* dat,u8 design_no,u8 pos,SAVEDATA* sa
 				break;
 			}
 		}
-
+#endif
 		ct++;
 		if(ct >= MAILDAT_ICONMAX){
 			break;
 		}
 	}
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_MAILDATA)
-	SVLD_SetCrc(GMDATA_ID_MAILDATA);
-#endif //CRC_LOADCHECK
 }
 
 /**
@@ -271,15 +272,15 @@ void MailData_CreateFromSaveData(MAIL_DATA* dat,u8 design_no,u8 pos,SAVEDATA* sa
  *	@com	メモリをAllocして返すので、呼び出し側が解放すること！
  */
 MAIL_DATA* MailData_MailEventDataMake(POKEMON_PARAM* pp,
-	u8 design_no,u8 oya_sex,STRBUF* oya_name,u8 oya_id)
+	u8 design_no,u8 oya_sex,STRBUF* oya_name,u8 oya_id, HEAPID heapID)
 {
-	MAIL_DATA* dat=MailData_CreateWork(HEAPID_BASE_APP);
+	MAIL_DATA* dat=MailData_CreateWork(heapID);
 
 	MailData_Clear(dat);
 	dat->design = design_no;
 
 	//名前
-	STRBUF_GetStringCode( oya_name, dat->name, BUFLEN_PERSON_NAME );
+	GFL_STD_MemCopy( oya_name, dat->name, BUFLEN_PERSON_NAME );
 
 	//性別
 	dat->sex = oya_sex;
@@ -302,15 +303,16 @@ MAIL_DATA* MailData_MailEventDataMake(POKEMON_PARAM* pp,
 	//ポケモンアイコン取得
 	dat->form_bit = 0;
 	{
-		u8	pal;
+		u8	pal=0;
 		u16	monsno;
 		u32 icon,egg,form;
 
-		monsno = PokeParaGet(pp,ID_PARA_monsno,NULL);
-		egg = PokeParaGet(pp,ID_PARA_tamago_flag,NULL);
-		form = PokeParaGet(pp,ID_PARA_form_no,NULL);
-		icon = PokeIconCgxArcIndexGetByPP(pp);
-		pal = PokeIconPalNumGet(monsno,form,egg);
+		monsno = PP_Get(pp,ID_PARA_monsno,NULL);
+		egg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
+		form = PP_Get(pp,ID_PARA_form_no,NULL);
+//		icon = PokeIconCgxArcIndexGetByPP(pp);
+    icon = POKEICON_GetCgxArcIndex( PP_GetPPPPointerConst(pp) );
+//		pal = PokeIconPalNumGet(monsno,form,egg);   @todo移植できてない
 		
 		dat->icon[0].cgxID = (u16)icon;
 		dat->icon[0].palID = pal;
@@ -332,9 +334,6 @@ u32	MailData_GetWriterID(const MAIL_DATA* dat)
 void MailData_SetWriterID(MAIL_DATA* dat,u32 id)
 {
 	dat->writerID = id;
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_MAILDATA)
-	SVLD_SetCrc(GMDATA_ID_MAILDATA);
-#endif //CRC_LOADCHECK
 }
 
 /**
@@ -349,10 +348,7 @@ STRCODE* MailData_GetWriterName(MAIL_DATA* dat)
  */
 void MailData_SetWriterName(MAIL_DATA* dat,STRCODE* name)
 {
-	PM_strcpy(dat->name,name);
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_MAILDATA)
-	SVLD_SetCrc(GMDATA_ID_MAILDATA);
-#endif //CRC_LOADCHECK
+	GFL_STD_MemCopy(dat->name,name, BUFLEN_PERSON_NAME);
 }
 
 /**
@@ -368,9 +364,6 @@ u8	MailData_GetWriterSex(const MAIL_DATA* dat)
 void MailData_SetWriterSex(MAIL_DATA* dat,const u8 sex)
 {
 	dat->sex = sex;
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_MAILDATA)
-	SVLD_SetCrc(GMDATA_ID_MAILDATA);
-#endif //CRC_LOADCHECK
 }
 
 /**
@@ -389,9 +382,6 @@ void MailData_SetDesignNo(MAIL_DATA* dat,const u8 design)
 		return;
 	}
 	dat->design = design;
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_MAILDATA)
-	SVLD_SetCrc(GMDATA_ID_MAILDATA);
-#endif //CRC_LOADCHECK
 }
 
 /**
@@ -407,9 +397,6 @@ u8	MailData_GetCountryCode(const MAIL_DATA* dat)
 void MailData_SetCountryCode(MAIL_DATA* dat,const u8 code)
 {
 	dat->region = code;
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_MAILDATA)
-	SVLD_SetCrc(GMDATA_ID_MAILDATA);
-#endif //CRC_LOADCHECK
 }
 
 /**
@@ -425,9 +412,6 @@ u8	MailData_GetCasetteVersion(const MAIL_DATA* dat)
 void MailData_SetCasetteVersion(MAIL_DATA* dat,const u8 version)
 {
 	dat->version = version;
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_MAILDATA)
-	SVLD_SetCrc(GMDATA_ID_MAILDATA);
-#endif //CRC_LOADCHECK
 }
 
 /**
@@ -446,6 +430,7 @@ u16	MailData_GetIconParamByIndex(const MAIL_DATA* dat,u8 index,u8 mode, u16 form
 	
 	if(index < MAILDAT_ICONMAX){
 		mi = dat->icon[index];
+#if 0   //@todo 移植できていない
 		//プラチナ以降で追加されたアイコンのフォルムIndexへ変換
 		for(s = 0; s < NELEMS(MailIcon_CgxID_ConvTbl); s++){
 			if(MailIcon_CgxID_ConvTbl[s].normal_cgx_id == mi.cgxID && 
@@ -456,6 +441,7 @@ u16	MailData_GetIconParamByIndex(const MAIL_DATA* dat,u8 index,u8 mode, u16 form
 				break;
 			}
 		}
+#endif
 		if(mi.cgxID > ICON_CGXID_MAX){
 			mi.cgxID = NARC_poke_icon_poke_icon_000_NCGR;
 			mi.palID = 0;
@@ -502,9 +488,6 @@ void MailData_SetMsgByIndex(MAIL_DATA* dat,PMS_DATA* pms,u8 index)
 		return;
 	}
 	PMSDAT_Copy(&dat->msg[index],pms);
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_MAILDATA)
-	SVLD_SetCrc(GMDATA_ID_MAILDATA);
-#endif //CRC_LOADCHECK
 }
 
 /**
@@ -546,12 +529,9 @@ static MAIL_DATA* mail_GetAddress(MAIL_BLOCK* bloc,MAILBLOCK_ID blockID,int data
 /**
  *	@brief	セーブデータブロックへのポインタを取得
  */
-MAIL_BLOCK* SaveData_GetMailBlock(SAVEDATA* sv)
+MAIL_BLOCK* SaveData_GetMailBlock(SAVE_CONTROL_WORK* sv)
 {
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_MAILDATA)
-	SVLD_CheckCrc(GMDATA_ID_MAILDATA);
-#endif //CRC_LOADCHECK
-	return SaveData_Get(sv,GMDATA_ID_MAILDATA);
+  return SaveControl_DataPtrGet( sv, GMDATA_ID_MAILDATA );
 }
 
 /**

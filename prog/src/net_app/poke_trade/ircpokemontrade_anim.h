@@ -128,4 +128,4 @@
 
 
 //手前のポケモンのサイズ
-#define _POKMEON_SCALE_SIZE   (1.5)
+#define _POKMEON_SCALE_SIZE   (1.2)

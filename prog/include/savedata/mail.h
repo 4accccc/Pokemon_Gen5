@@ -9,14 +9,12 @@
  *	savedata/mail_util.hをincludeしてください
  */
 
-#ifndef __MAIL_H__
-#define __MAIL_H__
+#pragma once
 
-#include "system/gamedata.h"
-//#include "system/buflen.h"
-#include "system/pm_str.h"
+#include <strbuf.h>
+#include "savedata/save_control.h"
+#include "buflen.h"
 #include "system/pms_data.h"
-
 ///定数定義
 #include "savedata/mail_def.h"
 ///メールデータ型
@@ -51,5 +49,5 @@ typedef struct _MAIL_DATA{
  */
 //=============================================================
 #include "savedata/mail_util.h"
-#endif	//__H_MAIL_H__
+
 

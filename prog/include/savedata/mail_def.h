@@ -5,8 +5,7 @@
  *	@date	06.02.09
  */
 
-#ifndef __H_MAIL_DEF_H__
-#define __H_MAIL_DEF_H__
+#pragma once
 
 #define MAIL_STOCK_PASOCOM	(20)	///<Êß¿ºÝ‚Å½Ä¯¸‚µ‚Ä’u‚¯‚é”
 #define MAIL_STOCK_MAX	(MAIL_STOCK_PASOCOM)
@@ -60,6 +59,5 @@ typedef union _MAIL_ICON{
 #define MAIL_ICONPRM_PAL	(1)
 #define MAIL_ICONPRM_ALL	(2)
 
-#endif	//__H_MAIL_DEF_H__
 
 
