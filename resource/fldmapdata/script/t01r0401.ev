@@ -74,9 +74,6 @@ EVENT_START   ev_t01r0401_scene_change_01
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_black_03,T01R0401_RIVAL_01 )  //ライバル
 	_BALLOONWIN_CLOSE()
 
-	//サポート：右を向く
-//	_OBJ_ANIME( T01R0401_SUPPORT_01, anm_ )
-
 	//ずかん？
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_white_02,T01R0401_SUPPORT_01 ) //サポート
 	_BALLOONWIN_CLOSE()
@@ -121,7 +118,8 @@ t01r0401_hakase2_yes:
 	_BALLOONWIN_CLOSE()
 
 //********************ポケモン図鑑入手処理*******************//
-	//【仮】ポケモン図鑑入手フラグが未実装
+	//ポケモン図鑑入手フラグをセット
+	_FLAG_SET( SYS_FLAG_ZUKAN_GET )
 
 	//ポケモンずかんを手に入れた！
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
