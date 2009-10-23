@@ -24,9 +24,9 @@ _EVENT_DATA		ev_c01_cleaningm_01
 _EVENT_DATA		ev_c01_breederw_01
 _EVENT_DATA		ev_c01_woman2_01
 _EVENT_DATA		ev_c01_babygirl1_01
-_EVENT_DATA		ev_c01_sign1_01
-_EVENT_DATA		ev_c01_sign2_01
-_EVENT_DATA		ev_c01_sign3_01
+_EVENT_DATA		ev_bg_c01_sign1_01
+_EVENT_DATA		ev_bg_c01_sign2_01
+_EVENT_DATA		ev_bg_c01_sign3_01
 _EVENT_DATA		ev_c01_oldman1_01
 _EVENT_DATA		ev_pos_c01_stop
 _EVENT_DATA		ev_c01_glasses_01
@@ -133,25 +133,21 @@ EVENT_END
 /**************************************************************/
 /*  C01 SIGN1用イベントスクリプト    		                  */
 /**************************************************************/
-EVENT_START   ev_c01_sign1_01
+EVENT_START   ev_bg_c01_sign1_01
 	_EASY_MSG( msg_c01_sign1_01 )
 EVENT_END
 
 /**************************************************************/
 /*  C01 SIGN2用イベントスクリプト  		                      */
 /**************************************************************/
-EVENT_START   ev_c01_sign2_01
+EVENT_START   ev_bg_c01_sign2_01
 	_EASY_MSG( msg_c01_sign2_01 )
-	
-	//【仮】動作確認
-	_FLAG_SET( FE_D01R0101_EVCLEAR )
-	
 EVENT_END
 
 /**************************************************************/
 /*  C01 SIGN3用イベントスクリプト		                      */
 /**************************************************************/
-EVENT_START   ev_c01_sign3_01
+EVENT_START   ev_bg_c01_sign3_01
 	_EASY_MSG( msg_c01_sign3_01 )
 EVENT_END
 

@@ -176,8 +176,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 		_OBJ_ANIME_WAIT()
 		
 	ENDIF
-	_OBJ_ANIME_WAIT()
-	
+
 	//コーン：その場ジャンプ
 	_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_leader_jump )
 	_OBJ_ANIME_WAIT()
@@ -269,6 +268,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 		
 		//コーン：一歩前へ
 		_OBJ_ANIME( C01GYM0101_LEADER1_01, anm_leader_walk )
+		_OBJ_ANIME_WAIT()
 		
 		//ということで　みずタイプの
 		_BALLOONWIN_OBJMSG_OPEN( msg_c01gym0101_leader1_05b , C01GYM0101_LEADER1_01 )
@@ -445,9 +445,9 @@ EVENT_START		ev_c01gym0101_leader1_01
 			//戦闘処理
 			_TRAINER_BTL_SET( TRID_LEADER1C_01, 0 )
 			//敗戦チェック
-			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+				_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 			IF $SCWK_ANSWER == 0 THEN
-			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+				_TRAINER_LOSE()//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 			ENDIF
 		
 			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
@@ -539,7 +539,7 @@ EVENT_START		ev_c01gym0101_leader1_02
 			//敗戦チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 			IF $SCWK_ANSWER == 0 THEN
-			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			_TRAINER_LOSE()//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 			ENDIF
 
 			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ
@@ -656,11 +656,11 @@ EVENT_START		ev_c01gym0101_leader1_03
 			_BALLOONWIN_CLOSE()
 
 			//戦闘処理
-			_TRAINER_BTL_SET( TRID_LEADER1A_01, 0 )
+			_TRAINER_BTL_SET( TRID_LEADER1B_01, 0 )
 			//敗戦チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 			IF $SCWK_ANSWER == 0 THEN
-			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			_TRAINER_LOSE()//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 			ENDIF
 
 			//すごいぜ！　おまえ！！　ポケモンリーグの　きまりだ

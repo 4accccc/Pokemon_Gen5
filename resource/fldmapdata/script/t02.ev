@@ -423,7 +423,7 @@ EVENT_START   ev_pos_t02_rival_speech
 	DEFINE_LOCAL	SPEECH_X
 	DEFINE_LOCAL	SPEECH_Z
 
-	//ライバル：近づく
+	//【仮】ライバル：近づく　場所が精確に決まっていない
 	_PLAYER_POS_GET( SPEECH_X,SPEECH_Z )		//主人公位置取得
 	IF $SPEECH_Z == 655 THEN
 		//Z軸が655なら
@@ -454,22 +454,21 @@ EVENT_START   ev_pos_t02_rival_speech
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
-	//群集：飛び跳ねる
+	//【仮】群集：飛び跳ねる　人を1人しか配置していない
 	_OBJ_ANIME( T02_BOODLE_01, anm_boodle_jump )
 	
-	//群集「えっ？」
+	//【仮】群集「えっ？」
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_boodle_01 , T02_BOODLE_01 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()	
 	_OBJ_ANIME_WAIT()
 
 	//われわれ　人間は　ポケモンと　ともに
-	//ゲーチス：左右に動く
+	//【仮】ゲーチス：左右に動く
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_sage2_02 , T02_SAGE_01 )
 	_OBJ_ANIME( T02_SAGE_01, anm_sage_move )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-
 	
 	//トレーナーは　ポケモンに　好き勝手　命令している
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_sage3_03 , T02_SAGE_01 )
@@ -477,7 +476,7 @@ EVENT_START   ev_pos_t02_rival_speech
 	_OBJ_ANIME_WAIT()
 	_AB_KEYWAIT()
 	
-	//群集「ざわざわ」
+	//【仮】群集「ざわざわ」
 	_OBJ_ANIME( T02_BOODLE_01, anm_boodle_jump )
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_boodle_02 , T02_BOODLE_01 )
 	_AB_KEYWAIT()
@@ -489,7 +488,7 @@ EVENT_START   ev_pos_t02_rival_speech
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
-	//群集「？」
+	//【仮】群集「？」
 	_OBJ_ANIME( T02_BOODLE_01, anm_boodle_jump )
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_boodle_03 , T02_BOODLE_01 )
 	_AB_KEYWAIT()
@@ -501,16 +500,16 @@ EVENT_START   ev_pos_t02_rival_speech
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
-	//ゲーチスを消す
+	//【仮】ゲーチスを消す
 	_FLAG_SET( FV_T02_SAGE )
 	_OBJ_DEL( T02_SAGE_01 )
 	
-	//団員を消す
+	//【仮】団員を消す
 	_FLAG_SET( FV_T02_HAKAI )
 	_OBJ_DEL( T02_HAKAIW_01 )
 	_OBJ_DEL( T02_HAKAIM_01 )
 	
-	//群集おじいさん：キョロキョロする
+	//【仮】群集おじいさん：キョロキョロする
 	//今の　演説　わしたちは　どうすれば　いいんだ
 	_OBJ_ANIME( T02_BOODLE_01, anm_boodle_jump )
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_boodle_04 , T02_BOODLE_01 )
@@ -518,7 +517,7 @@ EVENT_START   ev_pos_t02_rival_speech
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME_WAIT()
 	
-	//群集おにいさん：少し大きめにアクション、キョロキョロ、ジャンプ
+	//【仮】群集おにいさん：少し大きめにアクション、キョロキョロ、ジャンプ
 	//ポケモンを　解放って　そんな話　ありえないでしょ！
 	_OBJ_ANIME( T02_BOODLE_01, anm_boodle_jump )
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_boodle_05 , T02_BOODLE_01 )
@@ -547,7 +546,6 @@ EVENT_START   ev_pos_t02_rival_speech
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
-
 	//ライバル：Ｎの前に移動、その場ジャンプ
 	_OBJ_ANIME( T02_RIVAL_02, anm_rival_jump )
 	_OBJ_ANIME_WAIT()
@@ -575,29 +573,31 @@ EVENT_START   ev_pos_t02_rival_speech
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
-	//【仮】Ｎとポケモンしょうぶ。仮処理で画面フェードを入れています。
-	_WHITE_OUT( 8 )
-	_DISP_FADE_END_CHECK()
-	_WHITE_IN( 4 )
-	_DISP_FADE_END_CHECK()
+	//Ｎとポケモンしょうぶ。
+	_TRAINER_BTL_SET( TRID_BOSS_01, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == 0 THEN
+		_TRAINER_LOSE()//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
 
 	//……負けたか　ボクの　友達たち　ありがとう
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_boss_04 , T02_N_01 )
 	_AB_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
-	//Ｎ：２番道路へ移動
+	//【仮】Ｎ：２番道路へ移動
 	_OBJ_ANIME( T02_N_01, anm_n_bye )
 	_OBJ_ANIME_WAIT()
 
-	//【保留】ライバル：Ｎを目で追う
+	//【仮】ライバル：Ｎを目で追う
 	
-	//【保留】自機：Ｎを目で追う
+	//【仮】自機：Ｎを目で追う
 
 	//Ｎを消す
 	_OBJ_DEL( T02_N_01 )
 
-	//【保留】ライバル：Ｎの方を見た後、自機を見る
+	//【仮】ライバル：Ｎの方を見た後、自機を見る
 	
 	//なんか　オレのせいで　変な話に　なっちゃった
 	_BALLOONWIN_OBJMSG_OPEN( msg_t02_black_05 , T02_RIVAL_02 )

@@ -166,11 +166,11 @@ _TALK_OBJ_START()
 		_BALLOONWIN_CLOSE()
 		
 		//戦闘処理
-			_TRAINER_BTL_SET( TRID_LEADER1C_01, 0 )
+			_TRAINER_BTL_SET( TRID_LEADER6_01, 0 )
 		//敗戦チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == 0 THEN
-			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			_TRAINER_LOSE()//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF
 		
 		//ヒューッ！　あなた　すごいじゃん！

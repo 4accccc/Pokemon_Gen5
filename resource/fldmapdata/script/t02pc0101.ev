@@ -21,6 +21,7 @@ _EVENT_DATA		ev_t02pc0101_doctor_guide
 _EVENT_DATA		ev_t02pc0101_support_01
 _EVENT_DATA		ev_zone_t02pc0101					//現状未使用。field_init_labelとして再利用します。斉藤マ091003
 _EVENT_DATA		ev_t02pc0101_rival_01
+_EVENT_DATA		ev_t02pc0101_shop
 _EVENT_DATA_END
 
 
@@ -295,9 +296,16 @@ EVENT_START		ev_zone_t02pc0101
 EVENT_END
 
 /**************************************************************/
-/*  【仮】ライバル	R02の強草イベント後に出現 フラグ未設定	  */
+/*  ライバル												  */
 /**************************************************************/
 EVENT_START   ev_t02pc0101_rival_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02pc0101_black_01 )
 EVENT_END
 
+/************************************************************/
+/*						ショップ店員						*/
+/************************************************************/
+EVENT_START		ev_t02pc0101_shop
+	_TALK_OBJ_START()
+	_SHOP_CALL()
+EVENT_END
