@@ -1044,6 +1044,43 @@ static VMCMD_RESULT EvCmdTrainerFlagCheck( VMHANDLE * core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * セーブ・ウェイト処理
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitSave(VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
+  SAVE_RESULT result;
+
+  // 分割セーブ実行
+  result = GAMEDATA_SaveAsyncMain( gdata );
+
+  // 結果を返す
+  switch( result )
+  {
+  case SAVE_RESULT_CONTINUE:
+  case SAVE_RESULT_LAST:
+    return FALSE;
+  case SAVE_RESULT_OK:
+    {
+      u16* ret_wk = SCRCMD_GetVMWork( core, work );
+      *ret_wk = TRUE;
+    }
+    return TRUE;
+  case SAVE_RESULT_NG:
+    {
+      u16* ret_wk = SCRCMD_GetVMWork( core, work );
+      *ret_wk = FALSE;
+    }
+    return TRUE;
+  } 
+  return FALSE;
+}
+//--------------------------------------------------------------
+/**
  * @brief   セーブ機能呼び出し
  * @param  core    仮想マシン制御構造体へのポインタ
  * @return  VMCMD_RESULT
@@ -1053,13 +1090,14 @@ static VMCMD_RESULT EvCmdTrainerFlagCheck( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 static VMCMD_RESULT EvCmdReportCall( VMHANDLE * core, void *wk )
 {
-  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  SCRCMD_WORK *work = wk;
+  GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
 
-  /*
-   * 中身は未実装！！！！
-  */
-
-  *ret_wk = TRUE;
+  // 分割セーブ開始
+  GAMEDATA_SaveAsyncStart( gdata );
+  
+  // 毎フレーム処理
+  VMCMD_SetWait( core, EvWaitSave ); 
 
   return VMCMD_RESULT_SUSPEND;
 }
