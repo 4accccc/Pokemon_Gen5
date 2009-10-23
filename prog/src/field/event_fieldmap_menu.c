@@ -770,6 +770,7 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
       SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gmData );
       
       psData->ppd = (void*)plData->pp;
+      psData->game_data = gmData;
       psData->cfg = plData->cfg;
 
       psData->ppt = PST_PP_TYPE_POKEPARTY;
@@ -820,6 +821,7 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
       
       psData->ppd = (void*)plData->pp;
       psData->cfg = plData->cfg;
+      psData->game_data = gmData;
 
       psData->ppt = PST_PP_TYPE_POKEPARTY;
       psData->max = PokeParty_GetPokeCount( plData->pp );

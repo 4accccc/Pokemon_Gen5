@@ -603,6 +603,7 @@ static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
     OS_TPrintf("ポケモンステータス呼び出し\n");
     pstatus->ppd = (void*)plist->pp;
     pstatus->cfg = plist->cfg;
+    pstatus->game_data = GAMESYSTEM_GetGameData( gsys );
 
     pstatus->ppt = PST_PP_TYPE_POKEPARTY;
     pstatus->max = PokeParty_GetPokeCount( plist->pp );

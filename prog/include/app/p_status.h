@@ -10,6 +10,7 @@
 //======================================================================
 #pragma once
 
+#include "gamesystem/game_data.h"
 #include "poke_tool/pokeparty.h"
 #include "savedata/config.h"
 
@@ -21,6 +22,7 @@
 typedef struct {
   void * ppd;   // ポケモンデータ
   CONFIG * cfg; // コンフィグデータ
+  GAMEDATA *game_data; //ゲームデータ
 
   const STRCODE * player_name;  // 見ている人の名前
   u32 player_id;          // 見ている人のID

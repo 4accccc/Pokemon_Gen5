@@ -2984,6 +2984,7 @@ static int WO_SeqPstCall( WO_WORK * wk )
 
 	wk->psd.ppd  = wk->dat->pp;
 	wk->psd.cfg  = wk->dat->cfg;
+	wk->psd.game_data  = GAMESYSTEM_GetGameData( wk->dat->gsys );
 	wk->psd.ppt  = PST_PP_TYPE_POKEPARAM;
 	wk->psd.pos  = 0;
 	wk->psd.max  = 1;

@@ -81,6 +81,7 @@ int WorldTrade_Status_Init(WORLDTRADE_WORK *wk, int seq)
 
 	wk->statusParam.ppd  = WorldTrade_GetPokePtr(wk->param->myparty, wk->param->mybox, wk->BoxTrayNo, wk->BoxCursorPos);
 	wk->statusParam.cfg	 = wk->param->config;
+	wk->statusParam.game_data	 = GAMESYSTEM_GetGameData( wk->param->gamesys );
 
 	wk->statusParam.player_name	= MyStatus_GetMyName( wk->param->mystatus );
 	wk->statusParam.player_id		= MyStatus_GetID( wk->param->mystatus );

@@ -289,6 +289,7 @@ static void IRC_BATTLE_SUBPROC_InitStatusData( IRC_BATTLE_WORK *work , IRC_BATTL
   MYSTATUS *myStatus = GAMEDATA_GetMyStatus( work->initWork->gameData );
 
   psData->ppd = procWork->pokeParty;
+  psData->game_data = work->initWork->gameData;
   psData->cfg = SaveData_GetConfig(svWork);
 
   psData->player_name = MyStatus_GetMyName( myStatus );

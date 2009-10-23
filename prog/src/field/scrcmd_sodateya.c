@@ -489,6 +489,7 @@ static GMEVENT * EVENT_SodatePokeSelect(
   ps_data = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(PSTATUS_DATA) );
   ps_data->ppd = pl_data->pp;
   ps_data->cfg = pl_data->cfg;
+  ps_data->game_data = gdata;
   ps_data->ppt = PST_PP_TYPE_POKEPARTY;
   ps_data->max = PokeParty_GetPokeCount( party );
   ps_data->mode = PST_MODE_NORMAL;
