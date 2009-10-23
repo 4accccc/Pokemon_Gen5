@@ -33,6 +33,7 @@
 
 #include "trainer_eye_data.h"
 
+#include "event_gameover.h" //EVENT_NormalLose
 #if 0
 #include "battle/battle_common.h"	//↓インクルードに必要
 #include "ev_trainer.h"				//EvTrainer
@@ -573,42 +574,14 @@ VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * トレーナー敗北
+ * トレーナー勝利
  * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"1"
+ * @return	VMCMD_RESULT_SUSPEND
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdTrainerLose( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdTrainerWin( VMHANDLE * core, void *wk )
 {
-#if 0
-	EventCmd_NormalLose( core->event_work );
-	return 1;
-#else //wb kari
-  return 0;
-#endif
-}
-
-//--------------------------------------------------------------
-/**
- * トレーナー敗北チェック
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdTrainerLoseCheck( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	VMCMD_RESULT * win_flag	= SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_FLAG );
-	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
-#if 0 //pl null
-	*ret_wk = BattleParam_IsWinResult(*win_flag);
-	OS_Printf( "*ret_wk = %d\n", *ret_wk );
-	return 1;
-#else //wb kari
-  *ret_wk = 1; //仮で勝利固定
-  return 0;
-#endif
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------
@@ -654,7 +627,6 @@ VMCMD_RESULT EvCmdHaifuPokeRetryCheck( VMHANDLE *core, void *wk )
   return 0;
 #endif
 }
-
 //--------------------------------------------------------------
 /**
  * 手持ちチェック 2vs2が可能か取得

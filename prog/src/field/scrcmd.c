@@ -29,6 +29,7 @@
 #include "field_sound.h"
 #include "field_player.h"
 
+#include "event_gameover.h" //EVENT_NormalLose
 
 //#include "tr_tool/tr_tool.h"
 
@@ -1038,6 +1039,88 @@ static VMCMD_RESULT EvCmdTrainerFlagCheck( VMHANDLE * core, void *wk )
   core->cmp_flag = SCRIPT_CheckEventFlagTrainer( ev, flag );
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * 敗北チェック
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWildLoseCheck( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+
+  switch ( GAMEDATA_GetLastBattleResult(gdata) )
+  { 
+  case BTL_RESULT_WIN:
+    *ret_wk = SCR_BATTLE_WIN;
+    break;
+
+  default:
+    //トレーナー戦では勝ち・負け以外の条件はないはずだが、
+    //明確な「勝ち」以外はすべて敗北とする
+  case BTL_RESULT_LOSE:
+    *ret_wk = SCR_BATTLE_LOSE;
+    break;
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * トレーナー敗北
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	VMCMD_RESULT_SUSPEND
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTrainerLose( VMHANDLE *core, void *wk )
+{
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+
+  call_event = EVENT_NormalLose( gsys );
+  SCRIPT_EntryNextEvent( sc, call_event );
+
+  VM_End( core );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * トレーナー敗北チェック
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTrainerLoseCheck( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+
+  switch ( GAMEDATA_GetLastBattleResult(gdata) )
+  { 
+  case BTL_RESULT_WIN:
+    *ret_wk = SCR_BATTLE_WIN;
+    break;
+
+  default:
+    //トレーナー戦では勝ち・負け以外の条件はないはずだが、
+    //明確な「勝ち」以外はすべて敗北とする
+  case BTL_RESULT_LOSE:
+    *ret_wk = SCR_BATTLE_LOSE;
+    break;
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 
 //======================================================================
 //  その他
