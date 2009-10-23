@@ -105,6 +105,9 @@ _EVENT_DATA ev_TRID_SCHOOLB_04
 _EVENT_DATA ev_TRID_SCHOOLG_03
 _EVENT_DATA ev_TRID_SCIENTISTW_01
 _EVENT_DATA ev_TRID_BOSS_03
+_EVENT_DATA ev_TRID_RIVAL_07
+_EVENT_DATA ev_TRID_RIVAL_08
+_EVENT_DATA ev_TRID_RIVAL_09
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
 _EVENT_DATA_END
@@ -199,6 +202,9 @@ ev_TRID_SCHOOLB_04:
 ev_TRID_SCHOOLG_03:
 ev_TRID_SCIENTISTW_01:
 ev_TRID_BOSS_03:
+ev_TRID_RIVAL_07:
+ev_TRID_RIVAL_08:
+ev_TRID_RIVAL_09:
 
 //----------------------------------------------------------------------
 // scr_trainer/trainer_base.ev
@@ -269,7 +275,11 @@ ev_trainer_common_11:
   //戦闘呼び出し
   _TRAINER_BTL_SET( SCWK_TEMP0,0 )
   _TRAINER_LOSE_CHECK(  SCWK_ANSWER )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
+  IF $SCWK_ANSWER == SCR_BATTLE_WIN THEN
+    //_TRAINER_WIN()
+  ELSE
+    _TRAINER_LOSE()
+  ENDIF
 
   //これを外さないと、再戦トレーナーIDが書き換わってしまう！
   //トレーナーID取得(一応)
@@ -448,7 +458,12 @@ ev_trainer_type_single:
   
   _TRAINER_BTL_SET(  SCWK_TEMP0,0 )
   _TRAINER_LOSE_CHECK(  SCWK_ANSWER )
-  _IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
+  IF $SCWK_ANSWER == SCR_BATTLE_WIN THEN
+    //_TRAINER_WIN()
+  ELSE
+    _TRAINER_LOSE()
+  ENDIF
+  //_IFVAL_JUMP SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
 
   //トレーナーフラグセット
   _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER
@@ -492,7 +507,12 @@ ev_trainer_type_double:
 
   _TRAINER_BTL_SET  SCWK_TEMP0,SCWK_TEMP1
   _TRAINER_LOSE_CHECK SCWK_ANSWER
-  _IFVAL_JUMP      SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
+  IF $SCWK_ANSWER == SCR_BATTLE_WIN THEN
+    //_TRAINER_WIN()
+  ELSE
+    _TRAINER_LOSE()
+  ENDIF
+  //_IFVAL_JUMP      SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
 
   //トレーナーフラグセット
   _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER
@@ -555,7 +575,12 @@ ev_trainer_type_tag:
 
   _TRAINER_BTL_SET  SCWK_TEMP0,SCWK_TEMP1
   _TRAINER_LOSE_CHECK SCWK_ANSWER
-  _IFVAL_JUMP      SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
+  IF $SCWK_ANSWER == SCR_BATTLE_WIN THEN
+    //_TRAINER_WIN()
+  ELSE
+    _TRAINER_LOSE()
+  ENDIF
+  //_IFVAL_JUMP      SCWK_ANSWER,EQ,0,ev_trainer_battle_lose
 
   //トレーナーフラグセット
   _EYE_TRAINER_ID_GET  SCR_EYE_TR_0,SCWK_ANSWER

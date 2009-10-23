@@ -242,10 +242,10 @@
   DEF_CMD( EvCmdTrainerTypeGet, EV_SEQ_TRAINER_TYPE_GET )
   DEF_CMD( EvCmdTrainerBgmSet, EV_SEQ_TRAINER_BGM_SET )
 
-  DEF_CMD( EvCmdTrainerLose, EV_SEQ_LOSE )
-  DEF_CMD( EvCmdTrainerLoseCheck, EV_SEQ_LOSE_CHECK )
-  DEF_CMD( EvCmdSeacretPokeRetryCheck, EV_SEQ_SEACRET_POKE_RETRY_CHECK )
-  DEF_CMD( EvCmdHaifuPokeRetryCheck, EV_SEQ_HAIFU_POKE_RETRY_CHECK )
+  DEF_CMD( EvCmdTrainerLose, EV_SEQ_TRAINER_LOSE )
+  DEF_CMD( EvCmdTrainerLoseCheck, EV_SEQ_TRAINER_LOSE_CHECK )
+  DEF_CMD( EvCmdTrainerWin, EV_SEQ_TRAINER_WIN )
+  NO_CMD()
 
   DEF_CMD( EvCmd2vs2BattleCheck, EV_SEQ_2VS2_BATTLE_CHECK )
   DEF_CMD( EvCmdDebugBattleSet, EV_SEQ_DEBUG_BTL_SET )
@@ -583,6 +583,16 @@
   NO_CMD()
   NO_CMD()
 
+  //ポケモン戦関連
+  DEF_CMD( EvCmdSeacretPokeRetryCheck, EV_SEQ_SEACRET_POKE_RETRY_CHECK )
+  DEF_CMD( EvCmdHaifuPokeRetryCheck, EV_SEQ_HAIFU_POKE_RETRY_CHECK )
+  DEF_CMD( EvCmdWildLoseCheck, EV_SEQ_WILD_LOSE_CHECK )
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
 
   END_CMD
   //スクリプトコマンドテーブル終了

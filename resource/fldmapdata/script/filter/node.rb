@@ -485,9 +485,9 @@ module PmScript
       value = @val.sub(/\A\$/, "")
       case @op
       when "+="
-        puts "\t_ADD_WK\t#{varname}, #{value}"
+        puts "\t_ASM_ADD_WK\t#{varname}, #{value}"
       when "-="
-        puts "\t_SUB_WK\t#{varname}, #{value}"
+        puts "\t_ASM_SUB_WK\t#{varname}, #{value}"
       else
         raise CompileError, "#{@fname}:#{@lineno}: iregal operator #{@op}"
       end
