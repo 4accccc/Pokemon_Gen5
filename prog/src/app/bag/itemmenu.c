@@ -60,7 +60,7 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
 
 #include "bag_btnpos.h"  //バッグの絵のタッチエリア
 
-  {	21*_1CHAR,  24*_1CHAR,   1*_1CHAR,  3*_1CHAR },  //左
+  {	21*_1CHAR,  24*_1CHAR,   0*_1CHAR,  3*_1CHAR },  //左
   {	21*_1CHAR,  24*_1CHAR,  15*_1CHAR, 18*_1CHAR },  //右
   
   {	21*_1CHAR,  24*_1CHAR,  19*_1CHAR, 22*_1CHAR },  //ソート
@@ -723,7 +723,11 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       _CHANGE_STATE(pWork,_itemTrash);
     }
     else if(BAG_MENU_YAMERU==pWork->ret_code2){  //やめる
-      KTST_SetDraw( pWork, FALSE ); // タッチ遷移なので非表示に
+      // タッチ遷移なら非表示に
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+      {
+        KTST_SetDraw( pWork, FALSE ); 
+      }
       _CHANGE_STATE(pWork, _itemKindSelectMenu);
     }
     else if(BAG_MENU_TOUROKU==pWork->ret_code2){  //とうろく
@@ -2216,7 +2220,6 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
     }
     OS_Printf("menu_func[%d]=%08x\n", i,pWork->menu_func[i]);
   }
-
 
   GFL_HEAP_FreeMemory( itemdata );
 }

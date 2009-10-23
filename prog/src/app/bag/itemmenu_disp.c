@@ -6,51 +6,53 @@
  * @date	  2009.07.19
  */
 //============================================================================================
-
-
 #include <gflib.h>
 #include "net/network_define.h"
 #include "arc_def.h"
 
 #include "item/item.h"
 
-#include "app/app_menu_common.h"
 #include "app_menu_common.naix"
+#include "app/app_menu_common.h"
+#include "app/itemuse.h"
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_init.h"
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
-#include "system/bmp_winframe.h"
-
 #include "gamesystem/msgspeed.h"  //MSGSPEED_GetWait
+#include "savedata/mystatus.h"
 
-#include "message.naix"
-#include "bag.naix"
-#include "item_icon.naix"
+#include "system/bmp_winframe.h"
+#include "system/wipe.h"
+#include "system/main.h"			//GFL_HEAPID_APP参照
+
 #include "msg/msg_d_field.h"
 #include "msg/msg_bag.h"
+
 #include "print/printsys.h"
 #include "print/wordset.h"
+
 #include "field/fieldmap.h"
 #include "font/font.naix" //NARC_font_large_nftr
-#include "sound/pm_sndsys.h"
-#include "system/wipe.h"
+
 #include "waza_tool/waza_tool.h"
 #include "waza_tool/wazadata.h"
+
 #include "itemmenu.h"
 #include "itemmenu_local.h"
-#include "app/itemuse.h"
-#include "savedata/mystatus.h"
-#include "itemmenu_local.h"
+
+#include "sound/pm_sndsys.h"
+
+#include "bag.naix"
+#include "item_icon.naix"
+#include "message.naix"
 
 #include "msg/msg_itempocket.h"
 #include "bag_parts_d_NANR_LBLDEFS.h"
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-#include "system/main.h"			//GFL_HEAPID_APP参照
-
 
 enum
 { 
@@ -79,8 +81,6 @@ enum
 #define _ITEMICON_SCR_Y (8)
 
 #define ITEM_LIST_NUM (8)
-
-
 
 #define _BAR_CELL_CURSOR_EXIT (200-8)    //EXIT xボタン
 #define _BAR_CELL_CURSOR_RETURN (232-8) //RETURN Enterボタン
@@ -672,7 +672,9 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_ClearScreen(pWork->winItemName);
   GFL_BMPWIN_ClearScreen(pWork->winItemNum);
   GFL_BMPWIN_ClearScreen(pWork->winItemReport);
+
   GFL_BG_LoadScreenV_Req(ITEMREPORT_FRAME);
+
   GFL_BMPWIN_Delete(pWork->winItemName);
   GFL_BMPWIN_Delete(pWork->winItemReport);
   GFL_BMPWIN_Delete(pWork->winItemNum);
@@ -684,9 +686,9 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
   GFL_CLACT_WK_Remove( pWork->cellicon );
   GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
   GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
-  GFL_CLGRP_CELLANIM_Release(pWork->objRes[_CLACT_ANM]);
+  GFL_CLGRP_CELLANIM_Release( pWork->objRes[_CLACT_ANM] );
 
-  for( i=0 ; i < ITEM_LIST_NUM ; i++ ){
+  for( i=0; i < ITEM_LIST_NUM; i++ ){
     GFL_BMP_Delete(pWork->listBmp[i]);
   }
 
@@ -875,9 +877,7 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
 
   for( i=0 ; i < ITEM_LIST_NUM ; i++ )
   {
-    pWork->listRes[i] = GFL_CLGRP_CGR_Register(
-      archandle , NARC_bag_bag_win01_d_NCGR ,
-      FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
+    pWork->listRes[i] = GFL_CLGRP_CGR_Register(  archandle , NARC_bag_bag_win01_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
     pWork->listBmp[i] = GFL_BMP_Create( 12, 2, GFL_BMP_16_COLOR, pWork->heapID );
   }
 
@@ -1184,7 +1184,7 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
     const u8 anmIdxArr[] = { 4, 5, 6, 0, 1 };
     const u8 posXArr[] =
     {
-      8,
+      0,
       8*15,
       8*22-3,
       _BAR_CELL_CURSOR_EXIT,
@@ -1717,7 +1717,8 @@ void ITEMDISP_PocketMessage(FIELD_ITEMMENU_WORK* pWork,int newpocket)
 
   {  //センタリング
     u32 dot =PRINTSYS_GetStrWidth(pWork->pStrBuf, pWork->fontHandle, 0);
-    dot = (80 - dot )/2;
+    HOSAKA_Printf("dot=%d \n", dot);
+    dot = (_POCKETNAME_DISP_SIZEX*8 - dot )/2;
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->pocketNameWin), dot, 4, pWork->pStrBuf, pWork->fontHandle);
   }
 
