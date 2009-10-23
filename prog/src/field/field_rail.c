@@ -107,7 +107,7 @@ struct _FIELD_RAIL_WORK{
     const RAIL_LINE * line;
   };
   u16 active;
-	u16 pad;	
+	u16 area_over;	// レールグリッドのエリアをオーバーしているときTRUE
   /// LINEにいる間の、LINE上でのオフセット位置
   s32 line_ofs;
   s32 line_ofs_max;
@@ -774,7 +774,7 @@ BOOL FIELD_RAIL_MAN_CalcRailKeyPos(const FIELD_RAIL_MAN * man, const RAIL_LOCATI
   FIELD_RAIL_WORK_Update( man->calc_work );
   FIELD_RAIL_WORK_GetPos( man->calc_work, pos );
 
-  return FIELD_RAIL_WORK_IsLastAction( man->calc_work );
+  return FIELD_RAIL_WORK_CheckLocation( man->calc_work, &man->calc_work->now_location );
 }
 
 
@@ -804,14 +804,7 @@ BOOL FIELD_RAIL_MAN_CalcRailKeyLocation(const FIELD_RAIL_MAN * man, const RAIL_L
   FIELD_RAIL_WORK_Update( man->calc_work );
   FIELD_RAIL_WORK_GetLocation( man->calc_work, next_location );
 
-  move = FIELD_RAIL_WORK_IsLastAction( man->calc_work );
-
-  // その先には進めない
-  if( !move ){
-    // ロケーションを計算で求める
-    calcKeyLocation( man->calc_work, key, next_location );
-  }
-  return move;
+  return FIELD_RAIL_WORK_CheckLocation( man->calc_work, &man->calc_work->now_location );
 }
 
 
@@ -1064,6 +1057,7 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
   line_ofs_max  = getLineOfsMax( line, work->ofs_unit, work->rail_dat );
   width_ofs_max = getLineWidthOfsMax( line, line_ofs, line_ofs_max, work->rail_dat );
 
+  /*
   // いきなりオーバーしないように調整
   if( MATH_ABS(width_ofs) > width_ofs_max )
   {
@@ -1079,6 +1073,7 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
     GF_ASSERT( line_ofs_max > 0 );
     line_ofs = line_ofs_max - 1;
   }
+  //*/
   
   setLineData( work, line, key, line_ofs, width_ofs, line_ofs_max, width_ofs_max );
 
@@ -2037,9 +2032,11 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
 			return updateLine( work, nLine, nLine_ofs_max, key );
     }
 
+    // とりあえず　なし
     //行くあてがない…LINEそのまま、加算をとりけし
-    work->line_ofs -= count_up;
-    return RAIL_KEY_NULL;
+    //work->line_ofs -= count_up;
+    //return RAIL_KEY_NULL;
+    return key;
   }
   else if (key == getReverseKey(nLine->key))
   {//逆方向キーの場合
@@ -2154,9 +2151,12 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
     {
 			return updateLine( work, nLine, nLine_ofs_max, key );
     }
+
+    // とりあえず　なし
     //行くあてがない…LINEそのまま、減算を取り消し
-    work->line_ofs += count_up;
-    return RAIL_KEY_NULL;
+    //work->line_ofs += count_up;
+    //return RAIL_KEY_NULL;
+    return key;
   }
   else if (key == getClockwiseKey(nLine->key))
   {//時計回り隣方向キーの場合
@@ -2244,9 +2244,11 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
     {//範囲内の場合、終了
 			return updateLine( work, nLine, nLine_ofs_max, key );
     }
+    // とりあえずなし
     //中間地点の場合、行くあてがない場合…LINEそのまま、加算を取り消し
-    work->width_ofs = work->width_ofs_max;
-    return RAIL_KEY_NULL;
+    //work->width_ofs = work->width_ofs_max;
+    //return RAIL_KEY_NULL;
+    return key;
   }
   else if (key == getAntiClockwiseKey(nLine->key))
   {//反時計回り隣方向キーの場合
@@ -2334,9 +2336,12 @@ static RAIL_KEY updateLineMove_new(FIELD_RAIL_WORK * work, RAIL_KEY key, u32 cou
     {//範囲内の場合、終了
 			return updateLine( work, nLine, nLine_ofs_max, key );
     }
+
+    // とりあえずなし
     //中間地点の場合、行くあてがない場合…LINEそのまま、減算を取り消し
-    work->width_ofs = -work->width_ofs_max;
-    return RAIL_KEY_NULL;
+    //work->width_ofs = -work->width_ofs_max;
+    //return RAIL_KEY_NULL;
+    return key;
   }
   return RAIL_KEY_NULL;
 }
