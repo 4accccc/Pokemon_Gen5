@@ -187,6 +187,23 @@
 #define CAM12_TRACE_COST_FRM (6)
 #define CAM13_TRACE_COST_FRM (6)
 #define CAM14_TRACE_COST_FRM (6)
+//着地フレームオフセット（最終フレームからどれくらい前か）
+#define CAM1_STAND_FRM (0)
+#define CAM2_STAND_FRM (0)
+#define CAM3_STAND_FRM (0)
+#define CAM4_STAND_FRM (0)
+#define CAM5_STAND_FRM (0)
+#define CAM6_STAND_FRM (0)
+#define CAM7_STAND_FRM (0)
+#define CAM8_STAND_FRM (0)
+#define CAM9_STAND_FRM (0)
+#define CAM10_STAND_FRM (0)
+#define CAM11_STAND_FRM (0)
+#define CAM12_STAND_FRM (0)
+#define CAM13_STAND_FRM (0)
+#define CAM14_STAND_FRM (0)
+//壁当たりフレーム
+#define WALL_HIT_FRM (70)
 //カメラ振動数
 #define CAM_SHAKE_NUM (2)
 //カメラ振幅

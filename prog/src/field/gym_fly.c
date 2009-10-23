@@ -88,6 +88,9 @@
 
 #define ANM_BIN_DATA_NONE (0xffffffff)
 
+//壁ヒットのあるアニメーションインデックス
+#define WALL_HIT_ANM_IDX (11)
+
 typedef struct CAM_SHAKE_tag
 {
   BOOL Valid;
@@ -443,6 +446,24 @@ static const CAM_EFF_DAT CamEffData[SHOT_ANM_NUM] = {
   { CAN12_PITCH, CAN12_YAW, CAN12_ROT_COST_FRM, CAM12_TRACE_START_FRM, CAM12_TRACE_COST_FRM, 0 },
   { CAN13_PITCH, CAN13_YAW, CAN13_ROT_COST_FRM, CAM13_TRACE_START_FRM, CAM13_TRACE_COST_FRM, 0 },
   { CAN14_PITCH, CAN14_YAW, CAN14_ROT_COST_FRM, CAM14_TRACE_START_FRM, CAM14_TRACE_COST_FRM, 0 },
+};
+
+//着地ＳＥ
+static const u16 StandSeFrm[SHOT_ANM_NUM] = {
+  CAM1_STAND_FRM,
+  CAM2_STAND_FRM,
+  CAM3_STAND_FRM,
+  CAM4_STAND_FRM,
+  CAM5_STAND_FRM,
+  CAM6_STAND_FRM,
+  CAM7_STAND_FRM,
+  CAM8_STAND_FRM,
+  CAM9_STAND_FRM,
+  CAM10_STAND_FRM,
+  CAM11_STAND_FRM,
+  CAM12_STAND_FRM,
+  CAM13_STAND_FRM,
+  CAM14_STAND_FRM,
 };
 
 static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work );
@@ -817,7 +838,8 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
           param.Core.AnglePitch = CamEffData[cam_eff_idx].Pitch;
           param.Core.AngleYaw = CamEffData[cam_eff_idx].Yaw;
           param.Chk.Shift = FALSE;
-          param.Chk.Angle = TRUE;
+          param.Chk.Pitch = TRUE;
+          param.Chk.Yaw = TRUE;
           param.Chk.Dist = FALSE;
           param.Chk.Fovy = FALSE;
           FIELD_CAMERA_SetLinerParam(camera, &param, CamEffData[cam_eff_idx].RotCostFrame);
@@ -1000,9 +1022,17 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
         tmp->CamShake.Valid = FALSE;
       }
       //カメラモード変更
-      FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_DIRECT_POS );
-      FIELD_CAMERA_RecvLinerParam(camera, tmp->TraceCost);
-
+      FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+      {
+        FLD_CAM_MV_PARAM_CHK chk;
+        chk.Shift = TRUE;
+        chk.Pitch = TRUE;
+        chk.Yaw = TRUE;
+        chk.Dist = TRUE;
+        chk.Fovy = TRUE;
+        chk.Pos = FALSE;
+        FIELD_CAMERA_RecvLinerParam(camera, &chk, tmp->TraceCost);
+      }
       //トレースモード突入
       tmp->TraceMode = 1;
     }
@@ -1027,13 +1057,27 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       FIELD_PLAYER_SetPos( FIELDMAP_GetFieldPlayer( fieldWork ), &dst_vec );
     }
 
+    {
+      u8 shot_idx = tmp->ShotIdx;
+      u8 shot_dir_idx = GetDirIdxFromDir(tmp->ShotDir);
+      u16 cam_eff_idx = ShotData[shot_idx][shot_dir_idx].CamEffIdx;
+      //着地ＳＥ
+      if (tmp->NowIcaAnmFrmIdx == tmp->MaxIcaAnmFrm-1-StandSeFrm[cam_eff_idx]){
+        PMSND_PlaySE(GYM_FLY_SE_STAND);
+      }
+      //壁ヒットSE
+      if ( cam_eff_idx == WALL_HIT_ANM_IDX ){
+        if (tmp->NowIcaAnmFrmIdx == WALL_HIT_FRM){
+          PMSND_PlaySE(GYM_FLY_SE_WALL_HIT);
+        }
+      }
+    }
+
     //アニメフレーム更新
     tmp->NowIcaAnmFrmIdx++;
     
     //終了チェック
     if ( tmp->NowIcaAnmFrmIdx >= tmp->MaxIcaAnmFrm ){
-      //到着ＳＥ
-      PMSND_PlaySE(GYM_FLY_SE_STAND);
       tmp->FrameSetStart = 0;
     }
 
@@ -1176,4 +1220,3 @@ static void ShakeCameraFunc(CAM_SHAKE *shake, FIELD_CAMERA * camera)
     OS_Printf("shake_time = %d\n",shake->dummy);
   }
 }
-
