@@ -7,6 +7,5 @@
 //スクリプトデータID定義
 #define SCRID_C02GYM0202 (1)
 #define SCRID_C02GYM0202_LEADER2_01 (2)
-#define SCRID_C02GYM0202_AD_01 (3)
 
 #endif //_C02GYM0202_DEF_H_

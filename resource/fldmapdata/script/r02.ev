@@ -241,6 +241,9 @@ EVENT_START   ev_pos_r02_mama_01
 	_OBJ_ANIME( R02_MAMA_01,anm_mama_kuru)
 	_OBJ_ANIME_WAIT()
 	
+	//プレイヤーの名前の格納
+	_PLAYER_NAME(0)
+	
 	//ママ「やっと　おいついた」
 	_BALLOONWIN_OBJMSG_OPEN( msg_r02_mama_02, R02_MAMA_01)
 

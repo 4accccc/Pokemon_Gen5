@@ -18,5 +18,9 @@
 #define C02GYM0101_OLDMAN_01               3
 #define C02GYM0101_MAN1_01                 4
 #define C02GYM0101_GIRL3_01                5
+#define C02GYM0101_RIVAL_01                6
+#define C02GYM0101_SUPPOT_01               7
+#define C02GYM0101_BONE_01                 8
+#define C02GYM0101_BLACKSTONE_01           9
 
 #endif //ZONE_C02GYM0101_EVC_H

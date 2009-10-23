@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/22 17:43:02
+#save date:2009/10/23 11:14:49
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r02.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/22 17:43:02
+#save date:2009/10/23 11:14:49
 2
 #hold event type:
 1
@@ -391,7 +391,7 @@ DIR_DOWN
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/22 17:43:02
+#save date:2009/10/23 11:14:49
 2
 #hold event type:
 1
@@ -434,7 +434,7 @@ SCRID_BG_R02_BOARD3_01
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/22 17:43:02
+#save date:2009/10/23 11:14:49
 2
 #hold event type:
 1
@@ -469,12 +469,12 @@ WK_SCENE_R02
 #Pos Event Size Z
 4
 #position
-40 0 -424
+40 0 -376
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/22 17:43:02
+#save date:2009/10/23 11:14:49
 2
 #hold event type:
 1

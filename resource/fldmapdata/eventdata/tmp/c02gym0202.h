@@ -10,6 +10,5 @@
 #define ZONE_C02GYM0202_EVC_H
 
 #define C02GYM0202_LEADER2_01              0
-#define C02GYM0202_AD_01                   1
 
 #endif //ZONE_C02GYM0202_EVC_H

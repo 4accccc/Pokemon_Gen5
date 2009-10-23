@@ -1,15 +1,15 @@
 #event data
-#save date:2009/07/31 11:46:39
+#save date:2009/10/23 21:51:36
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/07/31 11:46:39
+#save date:2009/10/23 21:51:36
 2
 #hold event type:
 1
 #hold event number:
-5
+9
 #event number: 0
 #type
 1
@@ -155,11 +155,127 @@ DIR_LEFT
 0
 #position
 40 0 -168
+#event number: 5
+#type
+1
+#ID name
+C02_LEADER02_01
+#OBJ CODE Number
+LEADER2
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C02_LEADER2
+#Event Script Name
+SCRID_C02_LEADER02_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+328 0 40
+#event number: 6
+#type
+1
+#ID name
+C02_LEADER3_01
+#OBJ CODE Number
+LEADER3
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C02_POSEVENT_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+184 0 40
+#event number: 7
+#type
+1
+#ID name
+C02_RIVAL_02
+#OBJ CODE Number
+RIVEL
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C02_POSEVENT_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+168 0 56
+#event number: 8
+#type
+1
+#ID name
+C02_SUPPORT_01
+#OBJ CODE Number
+SUPPORT
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+328 0 152
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/07/31 11:46:39
+#save date:2009/10/23 21:51:36
 2
 #hold event type:
 1
@@ -169,17 +285,62 @@ DIR_LEFT
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/07/31 11:46:39
+#save date:2009/10/23 21:51:36
 2
 #hold event type:
 1
 #hold event number:
+3
+#event number: 0
+#Pos Event Label
+POS_C02_LEADER02_01
+#Pos Script Name
+SCRID_POS_C02_LEADER02_01
+#Event Trigger Work Name
+WK_SCENE_C02
+#Event Trigger Work Value
+3
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+328 0 120
+#event number: 1
+#Pos Event Label
+POS_C02_RIVAL_01
+#Pos Script Name
+SCRID_POS_C02_RIVAL_01
+#Event Trigger Work Name
+WK_SCENE_C02
+#Event Trigger Work Value
 0
+#Pos Event Size X
+1
+#Pos Event Size Z
+6
+#position
+664 0 -104
+#event number: 2
+#Pos Event Label
+POS_C02_BOSS_01
+#Pos Script Name
+SCRID_POS_C02_BOSS_01
+#Event Trigger Work Name
+WK_SCENE_C02
+#Event Trigger Work Value
+1
+#Pos Event Size X
+1
+#Pos Event Size Z
+1
+#position
+184 0 -120
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/07/31 11:46:39
+#save date:2009/10/23 21:51:36
 2
 #hold event type:
 1

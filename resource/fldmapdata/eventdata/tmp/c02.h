@@ -28,5 +28,9 @@
 #define C02_WOMAN2                         2
 #define C02_MAN2                           3
 #define C02_MIDDLEWOMAN2                   4
+#define C02_LEADER02_01                    5
+#define C02_LEADER3_01                     6
+#define C02_RIVAL_02                       7
+#define C02_SUPPORT_01                     8
 
 #endif //ZONE_C02_EVC_H

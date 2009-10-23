@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c02.h"
-  //.include  "c02.h"
+  .include  "c02.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -25,8 +25,12 @@ _EVENT_DATA    ev_c02_talkobj_middlewoman2
 _EVENT_DATA    ev_c02_talkobj_backpacker
 _EVENT_DATA    ev_c02_talkobj_accordion
 _EVENT_DATA    ev_c02_talkobj_sign1
+_EVENT_DATA		ev_pos_c02_leader02_01
+_EVENT_DATA		ev_init_c02
+_EVENT_DATA		ev_c02_leader02_01
+_EVENT_DATA		ev_pos_c02_rival_01
+_EVENT_DATA		ev_pos_c02_boss_01
 _EVENT_DATA_END
-
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
@@ -35,13 +39,646 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
+/*            ZONE_INIT_LABEL                              　 */
+/**************************************************************/
+INIT_EVENT_START	ev_init_c02
+	
+	//盗難事件イベント時、博物館でのイベントが終わった後は
+	//解決するまで、アロエを3番道路の近くに配置
+	
+	//盗難イベント中？
+	IF FLAG_ON(FE_MUSEUM_TOUNAN ) THEN
+	
+		//博物館前のジムリーダーの会話イベントは終わった？	
+		IF $WK_SCENE_C02  == 4 THEN 
+		
+		//アロエの位置をチェンジ
+		_OBJ_POS_CHANGE( C02_LEADER02_01 , 665, 0, 600, DIR_RIGHT )
+		
+		ENDIF
+	ENDIF
+	
+INIT_EVENT_END
+
+/**************************************************************/
+/*  C02 ライバルがポケセンまで案内してくれる				                     
+/**************************************************************/
+EVENT_START   ev_pos_c02_rival_01
+	
+	//ライバルを配置
+	_OBJ_POS_CHANGE( C02_RIVAL_02, 657, 0, 600, DIR_RIGHT )
+	
+	//主人公がライバルに気づく
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_01_kiduku )
+	_OBJ_ANIME_WAIT()
+	
+	//クロックがやってくる
+	_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_come )
+	_OBJ_ANIME_WAIT()
+	
+	//クロックが喋る
+	//クロック『あたらしい　まちについたら
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_black_01, C02_RIVAL_02 )
+    _BALLOONWIN_CLOSE()
+	
+	//クロックが歩いていく
+	_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_walk )
+	
+	//主人公もついていく
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_01_walk )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバルが振り向く
+	_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_turn1 )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバルポケセンについて喋る
+	//このまま　まっすぐ　すすめば
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_black_02, C02_RIVAL_02 )
+    _BALLOONWIN_CLOSE()
+	
+	//ライバルが画面端に消えていく
+	_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_saru )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル・サポート・アーティを非表示にする
+	_OBJ_DEL( C02_RIVAL_02 )
+	_OBJ_DEL( C02_SUPPORT_01 )
+	_OBJ_DEL( C02_LEADER3_01 )
+	
+	//==============フラグワーク操作==============//
+			
+	//C02のイベント
+	$WK_SCENE_C02 = 1
+	
+	//ライバル・サポート・アーティを消す
+	_FLAG_SET(FV_C02_POSEVENT_01)
+	
+	//============================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公:画面外からやってくる、ライバルに気づく                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_01_kiduku
+
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//主人公:ポケセンまで歩いていく                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_01_walk
+
+	_ANIME_DATA	AC_WALK_L_8F,26
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル:画面外からやってくる                            
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_01_come
+
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//ライバル:ポケセンまで歩いていく                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_01_walk
+
+	_ANIME_DATA	AC_WALK_L_8F,27
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル:主人行を向く                           
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_01_turn1
+
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//ライバル:画面外に消える                            
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_01_saru
+
+	_ANIME_DATA	AC_WALK_L_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*  C02 Nとの戦闘イベント				                     
+/**************************************************************/
+EVENT_START   ev_pos_c02_boss_01
+	
+	_OBJ_ADD_EX( 625, 599, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, BOSS, MV_DMY )
+	
+	//プレイヤーがNにきづく
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_02_kiduku)
+	_OBJ_ANIME_WAIT()
+	
+	//Nがやってくる
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_01)
+	_OBJ_ANIME_WAIT()
+	
+	//Nがしゃべる
+	//まよえる　トレーナーよ
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_boss_01, MMDL_ID_EVENTOBJ_00 )
+    _BALLOONWIN_CLOSE()
+	
+	//はい/いいえの選択
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER ==  0  THEN
+	
+		//Nが喋る・いいえの場合
+		//Ｎ『ボクを　からかっているね
+		_BALLOONWIN_OBJMSG_OPEN( msg_c02_boss_02, MMDL_ID_EVENTOBJ_00 )
+    	_BALLOONWIN_CLOSE()
+		
+	ELSE
+		//Nが喋る・はいの場合
+		//Ｎ『ボクに　さからうんだね
+    	_BALLOONWIN_OBJMSG_OPEN( msg_c02_boss_03, MMDL_ID_EVENTOBJ_00 )
+    	_BALLOONWIN_CLOSE()
+    	
+	ENDIF
+	
+	//Nとの戦闘
+	_CALL		ev_boss_btl
+	
+	//主人公がNのほうを向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_02_turn )
+	_OBJ_ANIME_WAIT()
+	
+	//Nが喋る
+	//Ｎ『いまの　ボクの　ともだちとでは
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_boss_04, MMDL_ID_EVENTOBJ_00 )
+    _BALLOONWIN_CLOSE()
+    
+	//Nが5歩移動
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//Nが喋る
+	//Ｎ『せかいには
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_boss_05, MMDL_ID_EVENTOBJ_00 )
+    _BALLOONWIN_CLOSE()
+	
+	//Nが画面外に移動する
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_03 )
+	_OBJ_ANIME_WAIT()
+	
+	//Nを消す
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//==============フラグワーク操作==============//
+			
+	//C02のイベントを進める
+	$WK_SCENE_C02 = 2
+	
+	//============================================//
+
+EVENT_END
+
+//Nとの戦闘
+ev_boss_btl:
+
+	_TRAINER_BTL_SET( TRID_BOSS_02, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == 0 THEN
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+
+_RET
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公:画面外からやってくる、Nに気づく                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_02_kiduku
+
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+	
+
+//--------------------------------------------------------------------
+//主人公:Nのほうを向く                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_02_turn
+
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//N:画面外からやってくる                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_01_walk_01
+
+	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+	
+	
+
+//--------------------------------------------------------------------
+//N:5歩移動する                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_01_walk_02
+
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//N:画面外に消える                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_01_walk_03
+
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*  C02 盗難事件イベント				                     */
+/**************************************************************/
+EVENT_START   ev_pos_c02_leader02_01
+	
+	//アロエがきょろきょろしている
+	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_kyorokyoro )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公の位置を調整
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
+	_OBJ_ANIME_WAIT()
+	
+	//アーティがやってくる
+	_OBJ_ANIME( C02_LEADER3_01, anm_leader03_come)
+	_OBJ_ANIME_WAIT()
+	
+	//アーティがしゃべる
+	//やあ　アロエさん
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader3_01 , C02_LEADER3_01 )
+    _BALLOONWIN_CLOSE()
+    
+	//アロエがアーティに気づく
+	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_bikkuri )
+	_OBJ_ANIME_WAIT()
+	
+	//アロエがアーティの方を向く
+	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_turn4 )
+	_OBJ_ANIME_WAIT()
+	
+	//アロエが喋る
+	//アロエ『あんた
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader2_01 , C02_LEADER02_01 )
+    _BALLOONWIN_CLOSE()
+    
+	//アロエが主人公を向く
+	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_turn1 )
+	_OBJ_ANIME_WAIT()
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	//アロエが主人公に喋る
+	//こいつさ　こうみえても
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader2_02, C02_LEADER02_01 )
+    _BALLOONWIN_CLOSE()
+	
+	//アロエがアーティのほうを向く
+	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_turn4 )
+	_OBJ_ANIME_WAIT()
+	
+	//アーティが喋る
+	//アーティ『……んうん？
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader3_02, C02_LEADER3_01 )
+    _BALLOONWIN_CLOSE()
+	
+	//アロエがジャンプ
+	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_jump1 )
+	_OBJ_ANIME_WAIT()
+	
+	//アロエが喋る
+	//アロエ『そうなんだよ！！
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader2_03 , C02_LEADER02_01)
+    _BALLOONWIN_CLOSE()
+	
+	//アロエが怒る
+	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_jump2 )
+	_OBJ_ANIME_WAIT()
+	
+	//サポートが博物館から出てくる
+	_OBJ_ANIME( C02_SUPPORT_01, anm_support_come )
+	_OBJ_ANIME_WAIT()
+	
+	//サポートが喋る
+	//ホワイティ『ねえねえ
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_white_01, C02_SUPPORT_01 )
+    _BALLOONWIN_CLOSE()
+	
+	//ライバルが出てくる
+	_OBJ_ANIME( C02_RIVAL_02, anm_rival_02_come )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバルが喋る
+	//ジムバッジ　てにいれたかよ？
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_black_03, C02_RIVAL_02 )
+    _BALLOONWIN_CLOSE()
+	
+	//アロエがサポート・ライバルを向く
+	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_turn4 )
+	_OBJ_ANIME_WAIT()
+	
+	//アロエが主人公を向く
+	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_turn2 )
+	_OBJ_ANIME_WAIT()
+	
+	//アロエが喋る
+	//なんなんだい　このこたちは…
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader2_04, C02_LEADER02_01 )
+    _BALLOONWIN_CLOSE()
+	
+	//アロエがR2に行こうとする
+	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_move )
+	_OBJ_ANIME_WAIT()
+    
+	//アロエがアーティを向く
+	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_turn3 )
+	_OBJ_ANIME_WAIT()
+	
+	//アロエが喋る
+	//そして　あんたたちは
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader2_06, C02_LEADER02_01 )
+    _BALLOONWIN_CLOSE()
+	
+	//アロエが3番道路に向かって走る
+	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_jump3 )
+	_OBJ_ANIME_WAIT()
+
+	//アロエが3番道路に向かって走る
+	_OBJ_ANIME( C02_LEADER02_01, anm_leader02_dush )
+	_OBJ_ANIME_WAIT()
+	
+	//アーティが喋る
+	//で　アーティと
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_leader3_03, C02_LEADER3_01 )
+    _BALLOONWIN_CLOSE()
+	
+	//アーティがD02に向かう
+	_OBJ_ANIME( C02_LEADER3_01, anm_leader03_walk )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公もD02 に向かおうとする。
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move2 )
+	_OBJ_ANIME_WAIT()
+	
+	//サポートがびっくり・主人公を立ち止める
+	_OBJ_ANIME( C02_SUPPORT_01, anm_player_tachidomeru  )
+	_OBJ_ANIME_WAIT()
+	
+	
+	//ライバルが主人公のほうを向く
+	_OBJ_ANIME( C02_RIVAL_02, anm_rival_02_turn )
+	_OBJ_ANIME_WAIT()
+	
+	//サポートが喋る
+	//これを　もっていってよ！
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_white_02, C02_SUPPORT_01 )
+    _BALLOONWIN_CLOSE()
+    
+    //【仮】ダウンジングマシンをくれる（MEなし）
+//	_ITEM_EVENT_KEYWAIT(ITEM_DAUZINGUMASIN, 1)
+	
+	//サポートが喋る
+	//ダウジングマシンを　つかうと
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02_white_03, C02_SUPPORT_01 )
+    _BALLOONWIN_CLOSE()
+    
+    //ライバルが喋る
+    _BALLOONWIN_OBJMSG_OPEN( msg_c02_black_04, C02_RIVAL_02 )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバルが博物館の中へ
+	_OBJ_ANIME( C02_RIVAL_02, anm_rival_02_back )
+	_OBJ_ANIME_WAIT()
+	
+	//サポートも博物館の中へ
+	_OBJ_ANIME( C02_SUPPORT_01, anm_support_back  )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル・サポート・アーティを消す
+	_OBJ_DEL( C02_RIVAL_02 )
+	_OBJ_DEL( C02_SUPPORT_01 )
+	_OBJ_DEL( C02_LEADER3_01 )
+	
+	//アロエの位置をチェンジ
+	_OBJ_POS_CHANGE( C02_LEADER02_01 , 665, 0, 600, DIR_RIGHT )
+	
+	//==============フラグワーク操作==============//
+		
+		//博物館前、盗難イベントを無効に
+		$WK_SCENE_C02 = 4
+		
+		//ライバル・サポート・アーティの出現フラグを消す
+		_FLAG_SET(FV_C02_POSEVENT_01)
+		
+		//ライバル・サポートが博物館に現れる
+		_FLAG_RESET(FV_C02GYM0101_FRIENDS)
+
+	//============================================//
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公:博物館から出てくる                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move
+	
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA AC_DIR_D,3	
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//主人公:アーティと一緒に、d02に行こうとする                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move2
+
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//アロエ:博物館の外で、きょろきょろしている                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader02_kyorokyoro
+	_ANIME_DATA AC_STAY_WALK_L_16F,1
+	_ANIME_DATA	AC_WALK_L_8F,2,1
+	_ANIME_DATA AC_STAY_WALK_R_16F,1
+	_ANIME_DATA	AC_WALK_R_8F,4,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//アロエ: びっくりマーク                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader02_bikkuri
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//アロエ: 主人公のほうを向く                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader02_turn1
+	_ANIME_DATA AC_DIR_U,1				
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//アロエ:アーティの方を向く                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader02_turn4
+	_ANIME_DATA AC_DIR_L,1				
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//アロエ:走る前にジャンプする                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader02_jump1
+	_ANIME_DATA AC_STAY_JUMP_D_8F,1				
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//アロエ: 怒ってジャンプする                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader02_jump2
+	_ANIME_DATA AC_STAY_JUMP_D_8F,2				
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//アロエ:    アロエ・走る前にジャンプ                          
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader02_jump3
+	_ANIME_DATA AC_STAY_JUMP_R_8F,1				
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//アロエ:アーティのほうを向く                               
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader02_turn2
+	_ANIME_DATA AC_DIR_U,1				
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//アロエ:サポート・ライバルのほうを向く                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader02_turn3
+	_ANIME_DATA AC_DIR_L,1			
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//アロエ:R03方向へ行こうとする                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader02_move
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//アロエ: R03方向へダッシュする                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader02_dush
+	_ANIME_DATA AC_WALK_R_2F,7,1			
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//アーティ: D02方向からやってくる                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader03_come
+	_ANIME_DATA	AC_WALK_R_8F,7,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//アーティ: D02方向へ向かう                          
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader03_walk
+	_ANIME_DATA	AC_WALK_L_8F,6,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル:  D02方向からやってくる                            
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_02_come
+	_ANIME_DATA	AC_WALK_R_8F,10,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル:  主人公のほうを向く                           
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_02_turn
+	_ANIME_DATA AC_DIR_D,1	
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//ライバル: 博物館に入る                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_02_back 
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//サポート:                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_support_come
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート:  主人公を呼び止める                            
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_tachidomeru
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート: 博物館に入る                               
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_support_back
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+	
+
+/**************************************************************/
+/*  C02 ジムリーダーアロエの会話用イベントスクリプト				                     */
+/**************************************************************/
+EVENT_START   ev_c02_leader02_01
+	
+	_TALK_OBJ_START()
+	//アロエ『こっちの　ほうには
+    _BALLOONWIN_OBJMSG_OPEN( msg_c02_leader2_07, C02_LEADER02_01 )
+    _LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
 /*  C02 WOMAN2の会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_c02_talkobj_woman2
 	_TALK_OBJ_START()
 	_BALLOONWIN_TALKOBJ_OPEN( msg_c02_woman2_01 )
 	_AB_KEYWAIT()
-  _BALLOONWIN_CLOSE()
+  	_BALLOONWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/

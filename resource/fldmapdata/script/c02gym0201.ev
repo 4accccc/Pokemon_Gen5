@@ -77,23 +77,30 @@ ev_zone_c02gym0201:
 /*            FIELD_INIT_LABEL                              　 */
 /**************************************************************/
 INIT_EVENT_START	ev_init_c02gym0201
+//ev_init_c02gym0201:
 
-//	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM2_01, 2, 0, 5, DIR_RIGHT )
 	
-	//なぞなぞ本棚前のトレーナーの位置
-/*	
+	//ストッパーとなっているトレーナーの位置を、本を読んだ段階に合わせて調整
+	
 	SWITCH $WK_SCENE_C02GYM0201
     CASE 3,4 THEN
+    	//なぞなぞ本棚前のトレーナーの位置
     	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM2_01, 2, 0, 5, DIR_RIGHT )
     	
  	CASE 5 THEN
+ 		//なぞなぞ本棚前のトレーナーの位置
     	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM2_01, 2, 0, 5 , DIR_RIGHT)
+    	
+    	//仕掛け本棚前のトレーナーの位置
     	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM1_01, 17, 0, 11 , DIR_LEFT)
 
 	CASE 6 THEN	
     	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM2_01, 2, 0, 5 , DIR_RIGHT)
+    	
+    	//仕掛け本棚前のトレーナーの位置
     	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM1_01, 17, 0, 11 , DIR_LEFT)
-
+		
+		//仕掛け本棚の当たり判定を持った、透明OBJの位置
     	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01A, 14, 0, 7 , DIR_UP)
     	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01B, 14, 0, 8 , DIR_UP)
     	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01C, 14, 0, 9 , DIR_UP)
@@ -113,7 +120,6 @@ INIT_EVENT_START	ev_init_c02gym0201
 
 
     ENDSWITCH
- */
 
 INIT_EVENT_END
 
@@ -130,7 +136,6 @@ ev_c02gym0201:
 EVENT_START		ev_pos_c02gym0201_sunglasses_01
     
     //サングラスが主人公に気づく。びっくりマーク
-    
     _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_obj_gyoe )
     _OBJ_ANIME_WAIT() 
     
@@ -217,14 +222,14 @@ EVENT_START		ev_pos_c02gym0201_sunglasses_01
 EVENT_END
 
 //--------------------------------------------------------------------
-//！マーク
+//サングラス：！マーク
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_obj_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------
-//	sunglasses_move　：POSでサングラス移動
+//	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_sunglasses_move_a 
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
@@ -234,7 +239,7 @@ _ANIME_LABEL	anm_obj_gyoe
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------
-//	sunglasses_move　：POSでサングラス移動
+//	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_sunglasses_move_b 
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
@@ -244,7 +249,7 @@ _ANIME_LABEL	anm_obj_gyoe
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	sunglasses_move　：POSでサングラス移動
+//	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_sunglasses_move_c 
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
@@ -254,7 +259,7 @@ _ANIME_LABEL	anm_obj_gyoe
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	sunglasses_move　：POSでサングラス移動
+//	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_sunglasses_move_d
 	_ANIME_DATA	AC_DIR_U,1
@@ -265,7 +270,7 @@ _ANIME_LABEL	anm_obj_gyoe
 	_ANIME_DATA	ACMD_END,0
 		
 //--------------------------------------------------------------
-//	sunglasses_move　：POSでサングラス移動
+//	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_sunglasses_move_e
 	_ANIME_DATA	AC_DIR_U,1
@@ -276,7 +281,7 @@ _ANIME_LABEL	anm_obj_gyoe
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	sunglasses_move　：POSでサングラス移動
+//	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_sunglasses_move_f
 	_ANIME_DATA	AC_DIR_U,1
@@ -402,7 +407,7 @@ EVENT_START		ev_c02gym0201_assitantm1_01
     	_BALLOONWIN_CLOSE()
     	
     	//トレーナー戦呼び出し
-/*
+
 		_TRAINER_BTL_SET( TRID_SCHOOLG_03, 0 )
 		
 		//敗戦チェック
@@ -410,7 +415,7 @@ EVENT_START		ev_c02gym0201_assitantm1_01
 		IF $SCWK_ANSWER == 0 THEN
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF
-*/
+
     	//対戦後メッセージ
     	
     	_BALLOONWIN_TALKOBJ_OPEN(msg_c02gym0101_girl3_03)
@@ -431,21 +436,20 @@ EVENT_START		ev_c02gym0201_assitantm1_01
 		_OBJ_ANIME_WAIT()
 		
     	CASE 13 THEN
-     	_OBJ_ANIME( C02GYM0201_ASSITANTM1_01, anm_tranier_move_d )
-		_OBJ_ANIME_WAIT()
+     		_OBJ_ANIME( C02GYM0201_ASSITANTM1_01, anm_tranier_move_d )
+			_OBJ_ANIME_WAIT()
      
     	ENDSWITCH
    		 }
    		 
-    	//対戦後のメッセーじにする為にワークを操作
+    	//対戦後のメッセージにする為にワークを操作
     	$WK_SCENE_C02GYM0201 = 5
     	
 	CASE 5,6 THEN	
 		//対戦が終了した場合
 		_TALK_OBJ_START()
-		
 		_BALLOONWIN_TALKOBJ_OPEN(msg_c02gym0101_girl3_03)
-		
+	
 		_LAST_KEYWAIT()
     	_BALLOONWIN_CLOSE()
     	
@@ -453,7 +457,7 @@ EVENT_START		ev_c02gym0201_assitantm1_01
 EVENT_END
 
 //--------------------------------------------------------------
-//	トレーナー、本棚から移動-横から話しかけ時
+//	トレーナー：本棚から移動-横から話しかけ時
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_tranier_move_c
 	_ANIME_DATA	AC_WALK_D_8F,1
@@ -463,7 +467,7 @@ _ANIME_LABEL	anm_tranier_move_c
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	トレーナー、本棚から移動-下から話しかけ時
+//	トレーナー：本棚から移動-下から話しかけ時
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_tranier_move_d
 	_ANIME_DATA	AC_WALK_L_8F,1
@@ -504,7 +508,7 @@ EVENT_START		ev_c02gym0201_assitantm2_01
     	_BALLOONWIN_CLOSE()
   	
     	//トレーナー戦呼び出し
-/*
+
 		_TRAINER_BTL_SET( TRID_SCIENTISTW_01, 0 )
 		
 		//敗戦チェック
@@ -512,7 +516,7 @@ EVENT_START		ev_c02gym0201_assitantm2_01
 		IF $SCWK_ANSWER == 0 THEN
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF
-*/
+
     	//対戦後メッセージ
     	_BALLOONWIN_TALKOBJ_OPEN(msg_c02gym0101_assitantw_03)
 		
@@ -1370,7 +1374,15 @@ EVENT_START		 ev_c02gym0201_book_01l
 			_TALKMSG   ( msg_c02gym0101_switch_01)
 			
 			//ギミック発動。本棚が横に移動する
+			
+			//本棚が動く音の開始
+			_SE_PLAY( SEQ_SE_FLD_36 )
+			
+			//本棚が動くアニメーション
 			_GYM_NORMAL_MOVE_WALL(0)
+			
+			//本棚が動く音の終了
+			_SE_WAIT()
 			
 			_OBJ_ANIME( C02GYM0201_BOOK_01A, anm_book_open )
 			_OBJ_ANIME( C02GYM0201_BOOK_01B, anm_book_open )

@@ -21,7 +21,6 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c02gym0202
 _EVENT_DATA    ev_c02gym0202_leader2_01
-_EVENT_DATA    ev_c02gym0202_ad_01
 _EVENT_DATA_END
 
 
@@ -53,21 +52,36 @@ EVENT_START	ev_c02gym0202_leader2_01
 	IF $SCWK_TEMP0 == 0 THEN
 		//バッジ入手前なら、ジムリーダー戦イベント
 		_CALL		ev_leader2_btl
-//		_CALL		ev_c02gym_tounan
+		
+		//盗難イベント開始l
+		_CALL		ev_c02gym_tounan
 
 //==============フラグワーク操作==============//
 			
 	_FLAG_SET( FE_MUSEUM_TOUNAN )	//盗難イベントの開始
+	_FLAG_SET( FV_C02GYM0202_LEADER2 ) //ジム2室目からジムリーダーを消す
 	_FLAG_RESET( FV_D02R0101_LEADER2 )	//盗難イベント用アーティ表示
 	_FLAG_SET( FV_D02R0101_HAKAI )		//ヤグルマの森ストッパーの解除
-	_FLAG_RESET( FV_D02R0101_LEADER2 )
+	_FLAG_RESET( FV_D02R0101_LEADER2 )	//D02のジムリーダー2を表示
 	
-	//============================================//
+	_FLAG_SET( FV_MUSEUM_TOUNAN )  //博物館内の骨と石がなくなる
+	
+	_FLAG_RESET(FV_C02_LEADER2)	//C02ジムリーダーアロエがC02町に出現
+	_FLAG_RESET(FV_C02_POSEVENT_01)	//ライバル・サポート・C03ジムリーダー・アーティがC02町に出現
+	
+	//盗難事件のPOSイベントを有効にする
+	//C02gym0101のイベント
+	$WK_SCENE_C02GYM0101  = 2 
+	
+	//C02のイベント
+	$WK_SCENE_C02 = 3
+	
+//============================================//
 
 	ELSE
 	
 	//【仮】盗難イベントの解決後
-	
+	//わざマシンを　もらったあと
 	_BALLOONWIN_TALKOBJ_OPEN( msg_c02gym0202_leader_06 )
 	_BALLOONWIN_CLOSE()
 
@@ -79,19 +93,21 @@ EVENT_END
 //ジムリーダー戦
 ev_leader2_btl:
 	//リーダー：戦闘前メッセージ
+	//いらっしゃい！
 	_BALLOONWIN_TALKOBJ_OPEN( msg_c02gym0202_leader_01 )
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
-//トレーナー戦呼び出し
 	_TRAINER_BTL_SET( TRID_LEADER2_01, 0 )
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
 	IF $SCWK_ANSWER == 0 THEN
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 
 	//リーダー：戦闘後メッセージ→続けてバッジ入手へ
+	//ほれぼれ　するような
 	_BALLOONWIN_TALKOBJ_OPEN( msg_c02gym0202_leader_02 )
 	_BALLOONWIN_CLOSE()
 
@@ -116,57 +132,133 @@ ev_leader2_btl:
 	_BALLOONWIN_TALKOBJ_OPEN( msg_c02gym0202_leader_05 )
 	_BALLOONWIN_CLOSE()
 	
-	//==============フラグワーク操作==============//
-	
-	//ジムリーダー夫がジム2室目に現れる
-//	_FLAG_RESET( FV_C02GYM0202_AD_01 )
-	
-	//============================================//
 _RET
 EVENT_END
-/*
+
 //盗難イベント開始
 ev_c02gym_tounan:
 	
-	//ジムリーダー夫：たいへんだよ！
+	//ジムリーダー夫を配置
+	_OBJ_ADD_EX( 5, 19, DIR_DOWN, MMDL_ID_EVENTOBJ_00, ASSISTANTM, MV_DMY )
 	
-	_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0202_ad_01 , C02GYM0202_AD_01 )
+	//ジムリーダー夫：たいへんだよ！
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0202_ad_01 , MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
 	
+	//主人公：びっくりして、振り向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_furimuku )
+	_OBJ_ANIME_WAIT()
+	
 	//ジムリーダー夫：地下室に入ってくる
-	_OBJ_ANIME( C02GYM0202_AD_01 anm_ad_01_come )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_ad_01_come )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公、びっくりして、横に飛び退く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_jump )
+	_OBJ_ANIME_WAIT()
+	
+	//間を作る為のウェイト
+	_TIME_WAIT  ( 16 )
+	
+	//アロエ：びっくりして、ジャンプする
+	_OBJ_ANIME( C02GYM0202_LEADER2_01, anm_leader_jump  )
 	_OBJ_ANIME_WAIT()
 	
 	//アロエ：なんだって！
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0202_leader_07 , C02GYM0202_LEADER2_01 )
+	
+	//間を作る為のウェイト
+	_TIME_WAIT  ( 16 )
+	
+	_BALLOONWIN_CLOSE()
+	
+	//ジムリーダー夫：ぶつかって、横に退く
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_ad_jump  )
+	_OBJ_ANIME_WAIT()
 	
 	//アロエ：博物館の方に走っていく
+	_OBJ_ANIME( C02GYM0202_LEADER2_01, anm_leader_dush )
+	_OBJ_ANIME_WAIT()
 	
-	//ジムリーダー夫：アロエを追いかけて、博物館に。
-	
-
-	
-	//==============フラグワーク操作==============//
-		_FLAG_SET( FV_C02GYM0202_AD_01 )
+	//間を作る為のウェイト
+	_TIME_WAIT  ( 32 )
 		
-	//============================================//
+	//ジムリーダー夫：アロエを追いかけて、博物館に。
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_ad_01_dush )
+	_OBJ_ANIME_WAIT()
+	
+	//ジムリーダー夫・アロエを消す
+	_OBJ_DEL( C02GYM0202_LEADER2_01 )
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 
 _RET
 EVENT_END
-*/
+
 //--------------------------------------------------------------
-//	ジムリーダー夫がジム2室目に入ってくる
+//	ジムリーダー夫:ジム2室目に入ってくる
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_ad_01_come 
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,3
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_U_4F,7
 	_ANIME_DATA	ACMD_END,0
 	
 
-/**************************************************************/
-/*     ジムリーダー　夫_副館長               　　　　　　　　*/
-/**************************************************************/
+//--------------------------------------------------------------
+//	主人公：びっくりして振り向く
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_player_furimuku
+	
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
 
-EVENT_START	ev_c02gym0202_ad_01
-EVENT_END
+//--------------------------------------------------------------
+//	主人公：びっくりして、横に飛び退く
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_player_jump 
+	
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA AC_JUMP_L_2G_16F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	リーダー：びっくりして、後ろに飛び退く
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_leader_jump  
+		
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ジムリーダー夫：ぶつかって、横に退く
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_ad_jump 
+	
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_JUMP_R_1G_8F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	リーダー：博物館に向かって走る
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_leader_dush 
+	
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	AC_WALK_D_2F,9
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	リーダー夫：博物館に向かって走る
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_ad_01_dush  
+	
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
+	_ANIME_DATA	AC_WALK_L_4F,1
+	_ANIME_DATA	AC_WALK_D_4F,7
+	_ANIME_DATA	ACMD_END,0
+	

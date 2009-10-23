@@ -23,14 +23,11 @@ _EVENT_DATA    ev_c02gym0101
 _EVENT_DATA    ev_c02gym0101_counter1_01
 _EVENT_DATA    ev_c02gym0101_counter2_01
 _EVENT_DATA    ev_c02gym0101_ad_01
-
-//_EVENT_DATA    ev_c02gym0101_leader_01
-//_EVENT_DATA    ev_c02gym0101_white_01
-//_EVENT_DATA    ev_c02gym0101_black_01
+_EVENT_DATA    ev_c02gym0101_suppot_01
+_EVENT_DATA    ev_c02gym0101_rival_01
 _EVENT_DATA    ev_c02gym0101_man1_01
 _EVENT_DATA    ev_c02gym0101_girl3_01
 _EVENT_DATA    ev_c02gym0101_oldman_01
-
 _EVENT_DATA    ev_bg_c02gym0101_plate_01
 _EVENT_DATA    ev_bg_c02gym0101_plate_02
 _EVENT_DATA    ev_bg_c02gym0101_plate_03
@@ -38,8 +35,8 @@ _EVENT_DATA    ev_bg_c02gym0101_plate_04
 _EVENT_DATA    ev_bg_c02gym0101_plate_05
 _EVENT_DATA    ev_bg_c02gym0101_plate_06
 _EVENT_DATA    ev_bg_c02gym0101_plate_07
-
 _EVENT_DATA    ev_pos_c02gym0101_ad_01
+_EVENT_DATA    ev_pos_c02gym0101_leader_01
 
 _EVENT_DATA_END
 
@@ -61,8 +58,20 @@ ev_c02gym0101:
 /*     博物館受付嬢 1                　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_c02gym0101_counter1_01
-
-	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_counter1_01)
+	
+	//盗難イベント中？
+	IF FLAG_ON( FE_MUSEUM_TOUNAN ) THEN
+		//盗難イベントが発生中
+		//いきなり　ポケモンで　おどろかされて……
+		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_counter1_02)
+	
+	ELSE
+		
+		//盗難イベントではない
+		//ポケモンジムへは
+		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_counter1_01)
+	
+	ENDIF 
 
 EVENT_END
 
@@ -71,18 +80,50 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c02gym0101_counter2_01
 	
-	//ようこそ！　シッポウはくぶつかん　へ
-
-	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_counter2_01)
-
+	//盗難イベント中？
+	IF FLAG_ON( FE_MUSEUM_TOUNAN ) THEN
+		//盗難イベントが発生中
+		//ドロボウは　すうにんで
+		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_counter2_02)
+	
+	ELSE
+		
+		//盗難イベントではない
+		//ようこそ！　シッポウはくぶつかん　へ
+		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_counter2_01)
+	
+	ENDIF 
+	
 EVENT_END
+
 /**************************************************************/
 /*     副館長												　*/
 /**************************************************************/
 EVENT_START		ev_c02gym0101_ad_01
-
-	//あの扉の　先が　ポケモンジムと　なっております
-  	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_ad_06 ) 
+	
+	//バッジを入手しているかどうか、チェック
+	 _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
+	
+	////盗難イベント中？
+	IF FLAG_ON( FE_MUSEUM_TOUNAN ) THEN
+		//盗難イベントが発生中
+		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_ad_07 ) 
+	
+	ELSE
+		//盗難イベントではない
+		//バッジを持ってる？
+		IF $SCWK_TEMP0 == 0 THEN
+			//持ってない
+			//あの扉の　先が
+			_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_ad_06)
+		
+		ELSE
+			//持ってる
+			//骨格標本って　不思議なんですよ
+			_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_ad_08)
+		
+		ENDIF 
+	ENDIF 
 
 EVENT_END
 /**************************************************************/
@@ -94,7 +135,6 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 	
 		//うーむ！　この　骨格標本は　いつみても……　ホレボレしますな
 		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_01, C02GYM0101_AD_01 )
-		
 		
 		//副館長：発言を終えるまで、溜める（ホレボレしている）
 		_TIME_WAIT  ( 8 ) 
@@ -189,9 +229,9 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		//あの扉の　先が　ポケモンジムと　なっております
 		_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_ad_06, C02GYM0101_AD_01 )
 		_TIME_WAIT  ( 8 ) 
-		_OBJ_ANIME_WAIT()
 		
 		_BALLOONWIN_CLOSE()
+		
 		//==============フラグワーク操作==============//
 		
 		//博物館案内イベントを無効にする
@@ -242,7 +282,7 @@ _ANIME_LABEL	anm_ad_idou_inseki
 	_ANIME_DATA	AC_WALK_L_8F,4,1
 	_ANIME_DATA	AC_WALK_U_8F,6,1
 	_ANIME_DATA	AC_WALK_L_8F,1,1
-	_ANIME_DATA	AC_WALK_U_8F,1,1
+	_ANIME_DATA	AC_WALK_U_8F,2,1
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0	
 	
@@ -278,7 +318,7 @@ _ANIME_LABEL	anm_player_idou_hone_dai
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_idou_inseki
 	_ANIME_DATA	AC_WALK_L_8F,5,1
-	_ANIME_DATA	AC_WALK_U_8F,6,1
+	_ANIME_DATA	AC_WALK_U_8F,7,1
 	_ANIME_DATA	AC_WALK_L_8F,1,1
 	_ANIME_DATA	ACMD_END,0	
 
@@ -293,33 +333,166 @@ _ANIME_LABEL	anm_player_idou_ishi
 //主人公:ジムの前まで移動                              
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_idou_jimu
-_ANIME_DATA	AC_WALK_R_8F,6,1
+	_ANIME_DATA	AC_WALK_R_8F,6,1
 	_ANIME_DATA	AC_WALK_U_8F,7,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公:ジムの前まで移動                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ad_turn
+	_ANIME_DATA	AC_DIR_D,1
+
+/**************************************************************/
+/*     ジムリーダーアロエが博物館を出て行く					*/
+/**************************************************************/
+EVENT_START		ev_pos_c02gym0101_leader_01
+	
+	//アロエと、ジムリーダー夫を配置する
+	_OBJ_ADD_EX( 12, 11, DIR_DOWN, MMDL_ID_EVENTOBJ_00, LEADER2, MV_DOWN )
+	_OBJ_POS_CHANGE( C02GYM0101_AD_01, 14, 0, 13, DIR_DOWN )
+	
+	//主人公が、アロエの元まで歩く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_idu_tounan )
+	_OBJ_ANIME_WAIT()
+	
+	//アロエが退場
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00, anm_leader_idou_tounan_a )
+	_OBJ_ANIME_WAIT()
+	
+	//アロエが喋る
+	//なんてこったい……
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_leader_01, MMDL_ID_EVENTOBJ_00 )
+	_BALLOONWIN_CLOSE()
+
+	//アロエが退場
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00, anm_leader_idou_tounan_b )
+	_OBJ_ANIME_WAIT()
+	
+	//ジムリーダー：消す
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//==============フラグワーク操作==============//
+		
+		//アロエが博物館を飛び出すイベントを無効にする
+		$WK_SCENE_C02GYM0101 = 3
+		
+	//============================================//
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公:アロエの近くまで移動                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_idu_tounan
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_D_4F,7,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//アロエ:博物館の外に退場                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader_idou_tounan_a
+	_ANIME_DATA	AC_WALK_D_32F,2,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA AC_WAIT_32F,1
+	_ANIME_DATA	AC_WALK_U_16F,1,1
+	_ANIME_DATA	AC_WALK_L_16F,6,1
+	_ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_U_32F,1,1
+	_ANIME_DATA AC_WAIT_32F,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	AC_WALK_D_32F,1,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//アロエ:博物館の外に退場                              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader_idou_tounan_b
+	_ANIME_DATA AC_STAY_JUMP_D_8F,2
+	_ANIME_DATA	AC_WALK_D_2F,10,1
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/
 /*     見物客その１　MAN1　             						*/
 /**************************************************************/
 EVENT_START		 ev_c02gym0101_man1_01
-
-	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_man1_01)
+	
+	//盗難イベント中？
+	IF FLAG_ON( FE_MUSEUM_TOUNAN ) THEN
+		//盗難イベントが発生中
+		//あわわわわ！
+		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_man1_02)
+	
+	ELSE
+		
+		//盗難イベント中でない
+		//世界各国の　珍しいモノ……
+		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_man1_01)
+	
+	ENDIF 
 EVENT_END
+
 /**************************************************************/
 /*     見物客その２　GIRL3               					　*/
 /**************************************************************/
 EVENT_START		 ev_c02gym0101_girl3_01
-
-	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_girl3_01)
+	
+	//盗難イベント中？
+	IF FLAG_ON( FE_MUSEUM_TOUNAN ) THEN
+		//盗難イベントが発生中
+		//泥棒たちの　あの　大胆な行動……
+		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_girl3_012)
+	
+	ELSE
+		//盗難イベント中でない
+		//ここの　ジムリーダーは　カセキや
+		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_girl3_01)
+	
+	ENDIF 
 	
 EVENT_END
+
 /**************************************************************/
 /*     見物客その３　OLDMAN1               					 */
 /**************************************************************/
 EVENT_START		 ev_c02gym0101_oldman_01
-
-	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_oldman_01)
+	
+	//盗難イベント中？
+	IF FLAG_ON( FE_MUSEUM_TOUNAN ) THEN
+		//盗難イベントが発生中
+		//あの　プラズマだん　というのは
+		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_oldman_02)
+	
+	ELSE
+		//盗難イベント中でない
+		//いん石と　一緒に　宇宙から来た
+		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_oldman_01)
+	
+	ENDIF 
 	
 EVENT_END
+
+/**************************************************************/
+/*     サポート	              					 				*/
+/**************************************************************/
+EVENT_START		 ev_c02gym0101_suppot_01
+	
+	//ドロボウだなんて
+	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_white_01)
+	
+EVENT_END
+
+/**************************************************************/
+/*     ライバル				               					 */
+/**************************************************************/
+EVENT_START		 ev_c02gym0101_rival_01
+	
+	//プラズマ団のせいで
+	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_black_01)
+	
+EVENT_END
+
 /**************************************************************/
 /*     展示物の解説プレート1               　　　　　　　　　*/
 /**************************************************************/
