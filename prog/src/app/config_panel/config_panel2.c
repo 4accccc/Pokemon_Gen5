@@ -302,8 +302,11 @@ typedef enum
 ///	PARETTLE_FADE
 //=====================================
 #define PLTFADE_SELECT_ADD	(0x400)
-#define PLTFADE_SELECT_STARTCOLOR GX_RGB( 7, 13, 20 )
-#define PLTFADE_SELECT_ENDCOLOR	GX_RGB( 12, 25, 30 )
+//#define PLTFADE_SELECT_STARTCOLOR GX_RGB( 7, 13, 20 )
+//#define PLTFADE_SELECT_ENDCOLOR	GX_RGB( 12, 25, 30 )
+
+#define PLTFADE_SELECT_STARTCOLOR GX_RGB( 9, 25, 31 )
+#define PLTFADE_SELECT_ENDCOLOR	GX_RGB( 31, 31, 31 )
 
 #define PLTFADE_DECIDESTR_ADD	(0x100)
 #define PLTFADE_DECIDESTR_STARTCOLOR GX_RGB( 13, 29, 19 )
@@ -453,6 +456,7 @@ typedef struct
 	GFL_MSGDATA			*p_msg;
 	APP_TASKMENU_ITEMWORK	item[ APPBAR_WIN_MAX-1 ];
 	APP_TASKMENU_WIN_WORK *p_win[ APPBAR_WIN_MAX-1 ];
+	GAMEDATA				*p_gdata;
 } APPBAR_WORK;
 //-------------------------------------
 ///	SCROLL
@@ -585,8 +589,7 @@ static BOOL MSGWND_IsEndMsg( const MSGWND_WORK* cp_wk );
 //-------------------------------------
 ///	APPBAR
 //=====================================
-static void APPBAR_Init( APPBAR_WORK *p_wk, GFL_CLUNIT *p_clunit,
-		GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, APP_TASKMENU_RES *p_res, HEAPID heapID );
+static void APPBAR_Init( APPBAR_WORK *p_wk, GFL_CLUNIT *p_clunit, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, APP_TASKMENU_RES *p_res, GAMEDATA *p_gdata,HEAPID heapID );
 static void APPBAR_Exit( APPBAR_WORK *p_wk );
 static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_WORK *cp_scroll );
 static BOOL APPBAR_IsDecide( const APPBAR_WORK *cp_wk, APPBAR_WIN_LIST *p_select );
@@ -1233,6 +1236,7 @@ static GFL_PROC_RESULT CONFIG_PROC_Init( GFL_PROC *p_proc,int *p_seq, void *p_pa
 				p_wk->p_que,
 				p_wk->p_msg,
 				p_wk->p_menures,
+				GAMESYSTEM_GetGameData(p_wk->p_param->p_gamesys),
 				HEAPID_CONFIG );
 		SCROLL_Init( &p_wk->scroll, 
 				GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_FONT_M),
@@ -1710,7 +1714,7 @@ static void GRAPHIC_BG_Main( GRAPHIC_BG_WORK *p_wk )
 {	
 	//選択色のパレットフェード
 	Graphic_Bg_PalletFadeMain( &p_wk->trans_color[0], &p_wk->pltfade_cnt[0],
-			PLTFADE_SELECT_ADD, CONFIG_BG_PAL_M_07, 1, PLTFADE_SELECT_STARTCOLOR, PLTFADE_SELECT_ENDCOLOR );
+			PLTFADE_SELECT_ADD, CONFIG_BG_PAL_M_07, 3, PLTFADE_SELECT_STARTCOLOR, PLTFADE_SELECT_ENDCOLOR );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2310,13 +2314,14 @@ static BOOL MSGWND_IsEndMsg( const MSGWND_WORK* cp_wk )
  *	@param	*p_clunit	ユニット
  *	@param  *p_font		フォント
  *	@param	p_que			プリントキュー
+ *	@param	p_msg			メッセージ
  *	@param	p_res			タスクメニュー用素材
+ *	@param	p_gdata		Yボタン登録のためにゲームデータ保持
  *	@param	heapID		ヒープ
  *
  */
 //-----------------------------------------------------------------------------
-static void APPBAR_Init( APPBAR_WORK *p_wk, GFL_CLUNIT *p_clunit,
-		GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, APP_TASKMENU_RES *p_res, HEAPID heapID )
+static void APPBAR_Init( APPBAR_WORK *p_wk, GFL_CLUNIT *p_clunit, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, APP_TASKMENU_RES *p_res, GAMEDATA *p_gdata, HEAPID heapID )
 {	
 	GFL_STD_MemClear( p_wk, sizeof(APPBAR_WORK) );
 	p_wk->select	= APPBAR_WIN_NULL;
@@ -2324,6 +2329,7 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, GFL_CLUNIT *p_clunit,
 	p_wk->p_que		= p_que;
 	p_wk->p_res		= p_res;
 	p_wk->p_msg		= p_msg;
+	p_wk->p_gdata	= p_gdata;
 
 	{
 		TOUCHBAR_ITEM_ICON	item[]	=
@@ -2356,8 +2362,17 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, GFL_CLUNIT *p_clunit,
 		p_wk->p_touch	= TOUCHBAR_Init( &setup, heapID );
 	}
 	
-
 	APPBAR_ReWrite( p_wk, heapID );
+
+	//Yボタン登録されていれば、アイコンをON
+	if( GAMEDATA_GetShortCut( p_wk->p_gdata, SHORTCUT_ID_CONFIG ))
+	{	
+		TOUCHBAR_SetFlip( p_wk->p_touch, TOUCHBAR_ICON_CHECK, TRUE );
+	}
+	else
+	{	
+		TOUCHBAR_SetFlip( p_wk->p_touch, TOUCHBAR_ICON_CHECK, FALSE );
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -2514,6 +2529,15 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
 	switch( TOUCHBAR_GetTrg( p_wk->p_touch ) )
 	{	
 	case TOUCHBAR_ICON_CHECK :
+
+		if( TOUCHBAR_GetFlip( p_wk->p_touch, TOUCHBAR_ICON_CHECK ) )
+		{	
+			GAMEDATA_SetShortCut( p_wk->p_gdata, SHORTCUT_ID_CONFIG, TRUE );
+		}
+		else
+		{	
+			GAMEDATA_SetShortCut( p_wk->p_gdata, SHORTCUT_ID_CONFIG, FALSE );
+		}
 		p_wk->select = APPBAR_WIN_NULL;
 		break;
 
@@ -2522,7 +2546,6 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
 		p_wk->is_decide	= TRUE;
 		break;
 	}
-
 }
 //----------------------------------------------------------------------------
 /**

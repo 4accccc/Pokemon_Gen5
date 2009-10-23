@@ -3017,6 +3017,7 @@ static BOOL debugMenuCallProc_DebugSkyJump( DEBUG_MENU_EVENT_WORK *p_wk )
 		p_player		= GAMEDATA_GetMyPlayerWork( p_gamedata );
 		p_sky->p_param->zoneID		= PLAYERWORK_getZoneID(p_player);
 		p_sky->p_param->escapeID	= GAMEDATA_GetEscapeLocation( p_gamedata )->zone_id;
+		p_sky->p_param->p_gamesys	= p_gamesys;
 	}
 	return TRUE;
 }

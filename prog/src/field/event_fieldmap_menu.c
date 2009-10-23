@@ -724,6 +724,7 @@ static BOOL FMenuCallProc_Config( FMENU_EVENT_WORK *mwk )
   SAVE_CONTROL_WORK *saveControl = GAMEDATA_GetSaveControlWork( gameData );
   CONFIG *config = SaveData_GetConfig( saveControl );
 	config_panel	= GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(CONFIG_PANEL_PARAM));
+	config_panel->p_gamesys	= mwk->gmSys;
 /*
   newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
       FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, config_panel);
@@ -1006,6 +1007,7 @@ static const BOOL FMenuReturnProc_Bag(FMENU_EVENT_WORK* mwk)
     {
       TOWNMAP_PARAM* pTown = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(TOWNMAP_PARAM) );
       pTown->mode			= TOWNMAP_MODE_MAP;
+			pTown->p_gamesys	= mwk->gmSys;
       FMenu_SetNextSubProc( mwk ,FMENU_APP_TOWNMAP , pTown );
     }
     return TRUE;

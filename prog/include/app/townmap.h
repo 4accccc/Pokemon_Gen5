@@ -10,7 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 #include <gflib.h>
-
+#include "gamesystem/gamesystem.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -56,6 +56,7 @@ typedef struct
 	u16							zoneID;		//[in/out]	[in]主人公が今いるゾーンID[out]空を飛ぶゾーンID
 	u16							escapeID;	//[in]			戻りゾーンID
 	GFL_POINT				grid;			//[out]			空を飛んだ先の座標
+	GAMESYS_WORK		*p_gamesys;//[in]			ゲームシステム
 } TOWNMAP_PARAM;
 
 

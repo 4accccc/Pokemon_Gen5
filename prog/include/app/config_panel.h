@@ -10,7 +10,7 @@
 
 #pragma once
 
-
+#include "gamesystem/gamesystem.h"
 #include "savedata/config.h"
 //-----------------------------------------------------------------------------
 //	コンフィグ画面用パラム
@@ -18,6 +18,7 @@
 typedef struct
 {	
 	BOOL is_exit;//[out]	TRUEでexitで終了 FALSEで通常終了
+	GAMESYS_WORK	*p_gamesys;
 }CONFIG_PANEL_PARAM;
 
 //-----------------------------------------------------------------------------

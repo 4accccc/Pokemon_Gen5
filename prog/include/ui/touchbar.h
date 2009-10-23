@@ -50,10 +50,10 @@ typedef enum
 ///	デフォルト位置
 //=====================================
 //バー
-#define TOUCHBAR_MENUBAR_X					(0)
-#define TOUCHBAR_MENUBAR_Y					(21)
-#define TOUCHBAR_MENUBAR_W					(32)
-#define TOUCHBAR_MENUBAR_H					(3)
+#define TOUCHBAR_MENUBAR_X				(0)
+#define TOUCHBAR_MENUBAR_Y				(21)
+#define TOUCHBAR_MENUBAR_W				(32)
+#define TOUCHBAR_MENUBAR_H				(3)
 //アイコン
 #define TOUCHBAR_ICON_Y						(168)
 #define TOUCHBAR_ICON_Y_CHECK			(172)
@@ -197,4 +197,10 @@ extern u32 TOUCHBAR_GetSE( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );
 //=====================================
 extern void TOUCHBAR_SetUseKey( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, u32 key );
 extern u32 TOUCHBAR_GetUseKey( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );
+//-------------------------------------
+///	Flip設定
+//	フリップ式ボタン（ON,OFF切り替え式ボタン）への設定
+//=====================================
+extern void TOUCHBAR_SetFlip( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, BOOL is_flip );
+extern BOOL TOUCHBAR_GetFlip( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon );
 

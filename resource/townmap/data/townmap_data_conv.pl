@@ -27,6 +27,7 @@ $ZONEID_FILENAME		=	"../../fldmapdata/zonetable/zone_id.h";
 $GMM_DIR						= "../../message/dst/";	#コンバート後のmsg_xxx.hのdefineを参照するため
 $GUIDGMM_FILENAME		=	"";
 $PLACEGMM_FILENAME	= "";
+$SYSFLAG_FILENAME		= "../../fldmapdata/flagwork/flag_define.h";
 
 #定義名取得のためのバッファ
 @ZONEID_BUFF				= ();		#ゾーンID用バッファ
@@ -34,6 +35,7 @@ $PLACEGMM_FILENAME	= "";
 @PLACEGMM_BUFF			=	();		#名所文字ID
 @TYPE_BUFF					= ();		#タイプ名	これだけheaderから取り出す
 @ZONE_SEARCH				= ();		#自分の場所を調べる方法
+@SYSFLAG_BUFF				= ();		#システムフラグ
 
 #取得したデータ
 @DATA_ZONEID				=	();		#ゾーンID
@@ -180,6 +182,7 @@ foreach $line ( @TOWNMAP_XLS_HEADER )
 &FILE_GetData( $ZONEID_FILENAME, \@ZONEID_BUFF );
 &FILE_GetData( $GUIDGMM_FILENAME, \@GUIDGMM_BUFF );
 &FILE_GetData( $PLACEGMM_FILENAME, \@PLACEGMM_BUFF );
+&FILE_GetData( $SYSFLAG_FILENAME, \@SYSFLAG_BUFF );
 
 #-------------------------------------
 #	データを取得
@@ -295,8 +298,16 @@ foreach $line ( @TOWNMAP_XLS_DATA )
 			#空を飛ぶ
 			elsif( $tag eq "#sky_flag" )
 			{
-				&UndefAssert( $w );
-				push( @DATA_SKY_FLAG, $w );
+				my $val;
+				if( $w eq "" )
+				{
+					$val	= $DATA_ERROR_VALUE;
+				}
+				else
+				{
+					$val	= &GetFlagNumber( $w );
+				}
+				push( @DATA_SKY_FLAG, $val );
 			}
 			#着地X
 			elsif( $tag eq "#warp_x" )
@@ -579,6 +590,28 @@ sub GetTypeNumber
 	{
 		#print( " $name == $data \n" );
 		if( $data =~ /$name\s*\(\s*([0-9]*)\)/ )
+		{
+			#print "ok\n";
+			return $1;
+		}
+	}
+
+	print( "$name not find\n" );
+	exit(1);
+}
+#-------------------------------------
+#	@brief	フラグの定義の数値を取得
+#	@param	定義名スカラー
+#	@retval	数値
+#=====================================
+sub GetFlagNumber
+{
+	my( $name ) = @_;
+
+	foreach $data ( @SYSFLAG_BUFF )
+	{
+		#print( " $name == $data \n" );
+		if( $data =~ /$name\s*([0-9]*)/ )
 		{
 			#print "ok\n";
 			return $1;

@@ -135,6 +135,8 @@ static void ICON_SetSE( ICON_WORK *p_wk, u32 se );
 static u32 ICON_GetSE( const ICON_WORK *cp_wk );
 static void ICON_SetKey( ICON_WORK *p_wk, u32 key );
 static u32 ICON_GetKey( const ICON_WORK *cp_wk );
+static void ICON_SetFlip( ICON_WORK *p_wk, BOOL is_flip );
+static BOOL ICON_GetFlip( const ICON_WORK *cp_wk );
 static void Icon_PushFuncNormal( ICON_WORK *p_wk );
 static void Icon_PushFuncFlip( ICON_WORK *p_wk );
 
@@ -572,6 +574,44 @@ u32 TOUCHBAR_GetUseKey( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon )
 
 	//取得
 	return ICON_GetKey( cp_icon );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBAR	フリップ式ボタンへの設定
+ *
+ *	@param	TOUCHBAR_WORK *p_wk	ワーク
+ *	@param	icon			アイコン
+ *	@param	is_flip		TRUEでフリップON（チェックされている）FALSEでOFF
+ */
+//-----------------------------------------------------------------------------
+void TOUCHBAR_SetFlip( TOUCHBAR_WORK *p_wk, TOUCHBAR_ICON icon, BOOL is_flip )
+{	
+	ICON_WORK * p_icon;
+		
+	//指定アイコンを検索
+	p_icon	= Touchbar_Search( p_wk, icon );
+
+	//設定
+	ICON_SetFlip( p_icon, is_flip );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	TOUCHBAR	フリップ式ボタンの取得
+ *
+ *	@param	TOUCHBAR_WORK *p_wk	ワーク
+ *	@param	icon			アイコン
+ *	@retval	is_flip		TRUEでフリップON（チェックされている）FALSEでOFF
+ */
+//-----------------------------------------------------------------------------
+BOOL TOUCHBAR_GetFlip( const TOUCHBAR_WORK *cp_wk, TOUCHBAR_ICON icon )
+{	
+	const ICON_WORK * cp_icon;
+		
+	//指定アイコンを検索
+	cp_icon	= Touchbar_SearchConst( cp_wk, icon );
+
+	//取得
+	return ICON_GetFlip( cp_icon );
 }
 //=============================================================================
 /**
@@ -1072,6 +1112,40 @@ static u32 ICON_GetKey( const ICON_WORK *cp_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief	ICON	フリップ設定
+ *
+ *	@param	ICON_WORK *p_wk	ワーク
+ *	@param	is_flip					TRUEでON	FALSEでOFF
+ *
+ */
+//-----------------------------------------------------------------------------
+static void ICON_SetFlip( ICON_WORK *p_wk, BOOL is_flip )
+{	
+	if( is_flip )
+	{	
+		p_wk->now_anmseq	= p_wk->data.push_anmseq;
+	}
+	else
+	{	
+		p_wk->now_anmseq	= p_wk->data.active_anmseq;
+	}	
+	GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, p_wk->now_anmseq );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ICON	フリップ取得
+ *
+ *	@param	const ICON_WORK *cp_wk ワーク
+ *
+ *	@return	TRUEでON	FALSEでOFF
+ */
+//-----------------------------------------------------------------------------
+static BOOL ICON_GetFlip( const ICON_WORK *cp_wk )
+{	
+	return cp_wk->now_anmseq	== cp_wk->data.push_anmseq;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief	ボタンが押された時の動作関数	通常版
  *
  *	@param	ICON_WORK *p_wk ワーク
@@ -1098,16 +1172,9 @@ static void Icon_PushFuncNormal( ICON_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void Icon_PushFuncFlip( ICON_WORK *p_wk )
 {	
-	if( p_wk->now_anmseq == p_wk->data.active_anmseq )
-	{	
-		p_wk->now_anmseq	= p_wk->data.push_anmseq;
-	}
-	else
-	{	
-		p_wk->now_anmseq	= p_wk->data.active_anmseq;
-	}
+	BOOL now_flip	= ICON_GetFlip( p_wk );
 
-	GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, p_wk->now_anmseq );
+	ICON_SetFlip( p_wk, !now_flip );
 
 	if( p_wk->data.se != 0 )
 	{	
