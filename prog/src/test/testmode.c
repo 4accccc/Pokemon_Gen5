@@ -948,6 +948,7 @@ extern void PM_MCS_EnableMcsRecv( void );
 static BOOL TESTMODE_ITEM_ConnectMCS( TESTMODE_WORK *work , const int idx )
 {
   GFL_MCS_Open();
+  TESTMODE_COMMAND_ChangeMenu( work , topMenu , NELEMS(topMenu) );
   return TRUE;
 }
 
