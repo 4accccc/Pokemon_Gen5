@@ -541,7 +541,7 @@ static BOOL debugMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk )
 	FIELDMAP_WORK *fieldWork = wk->fieldWork;
 	GAMESYS_WORK	*gameSys	= wk->gmSys;
 
-    EVENT_WiFiClub(gameSys, fieldWork, event);
+  EVENT_WiFiClubChange(gameSys, fieldWork, event);
 	return( TRUE );
 }
 

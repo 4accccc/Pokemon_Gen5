@@ -146,9 +146,7 @@ sub_shop_sell:
   _TALKWIN_CLOSE()
   _FIELD_CLOSE()
   
-  _CALL_BAG_PROC( SCR_BAG_MODE_SELL )
-  _GET_BAG_PROC_RESULT( ret_mode, ret_item )
-  _FREE_SUBPROC_WORK()
+  _CALL_BAG_PROC( SCR_BAG_MODE_SELL,ret_mode, ret_item )
 
   _FIELD_OPEN()
   _BLACK_IN( DISP_FADE_SPEED )

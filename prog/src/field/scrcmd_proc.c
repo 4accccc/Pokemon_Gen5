@@ -4,6 +4,14 @@
  * @brief   スクリプトコマンド用関数　各種アプリ呼び出し系(常駐)
  * @author  Miyuki Iwasawa 
  * @date    09.10.22
+ *
+ * フェード＆フィールド解放＆生成までをコモンのイベントシーケンス
+ * (EVENT_FieldSubProc,EVENT_FieldSubProc_Callbackなど)に任せる場合、プロセス呼び出しコマンド自体を
+ * 常駐に配置する必要がないので、scrcmd_proc_fld.c(フィールド常駐)に置いてください
+ *
+ * フェードやフィールドプロセスコントロールを自前で行うプロセス呼び出し法を取る必要がある場合
+ * このソースにおいてください。特に必要がなければ、常駐メモリ節約のため、EVENT_FieldSubProc等
+ * 用意されたプロセス呼び出しイベントを利用してください
  */
 //======================================================================
 #include <gflib.h>
@@ -29,18 +37,19 @@
 #include "event_fieldmap_control.h"
 
 #include "scrcmd_proc.h"
-#include "app/bag.h"
 #include "../../../resource/fldmapdata/script/usescript.h"
 
-#include "app/box2.h"
-#include "event_fieldmap_control.h"   // for EVENT_FieldSubProc_Callback
+#include "app/bag.h"
+
+////////////////////////////////////////////////////////////////
+//プロトタイプ
+////////////////////////////////////////////////////////////////
+static BOOL callproc_WaitSubProcEnd( VMHANDLE *core, void *wk );
 
 
-// ボックスプロセスデータとコールバック関数
-FS_EXTERN_OVERLAY(box);
-extern const GFL_PROC_DATA BOX2_ProcData;
-static void callback_BoxProc( void* work );
-
+////////////////////////////////////////////////////////////////
+//フィールド生成＆破棄
+////////////////////////////////////////////////////////////////
 
 //--------------------------------------------------------------
 /**
@@ -77,22 +86,73 @@ VMCMD_RESULT EvCmdFieldClose( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+////////////////////////////////////////////////////////////////
+//サブプロセス呼び出し
+////////////////////////////////////////////////////////////////
+
+/*
+ *  @brief  サブプロセスコールとWait関数のセットアップ(メモリ解放バージョン)
+ *
+ *  @param  core
+ *  @param  work
+ *  @param  ov_id         サブプロセスのオーバーレイID
+ *  @param  proc_data     サブプロセスの関数指定
+ *  @param  proc_work     サブプロセス用ワーク。NULL指定可
+ *  @param  callback      サブプロセス終了時に呼び出すコールバック関数ポインタ。NULL指定可
+ *  @param  callback_work 汎用ワーク。NULL指定可
+ *
+ *  注：callbackにNULLを指定した場合、サブプロセス終了時に
+ *  proc_workとcallback_workに対して GFL_HEAP_FreeMemory()を呼び出します。
+ *  callbackを指定した場合は、callback中で明示的に解放をしてください
+ */
+void EVFUNC_CallSubProc( VMHANDLE *core, SCRCMD_WORK *work,
+    FSOverlayID ov_id, const GFL_PROC_DATA * proc_data, void* proc_work,
+    void (*callback)(CALL_PROC_WORK* cpw), void* callback_work )
+{
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  void** scr_subproc_work = SCRIPT_SetSubProcWorkPointerAdrs( sc );
+
+  CALL_PROC_WORK* cpw = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(CALL_PROC_WORK));
+
+  cpw->proc_work = proc_work;
+  cpw->cb_work = callback_work;
+  cpw->cb_func = callback;
+  GAMESYSTEM_CallProc( gsys, ov_id, proc_data, proc_work ); 
+ 
+  *scr_subproc_work = cpw;
+  VMCMD_SetWait( core, callproc_WaitSubProcEnd );
+}
+
 //--------------------------------------------------------------
 /**
  * @brief サブプロセスの終了を待ちます(ワーク解放処理有り)
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  TRUE    終了
  * @retval  FALSE   待ち
+ *
+ * EVFUNC_CallSubProc()とセットのサブプロセスWait関数です
  */
 //--------------------------------------------------------------
-BOOL SCMD_WaitSubProcEnd( VMHANDLE *core, void *wk )
+static BOOL callproc_WaitSubProcEnd( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  CALL_PROC_WORK* cpw = (CALL_PROC_WORK*)SCRIPT_SetSubProcWorkPointer( sc );
 
 	if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
     return FALSE;
+  }
+  if(cpw->cb_func != NULL){
+    (cpw->cb_func)(cpw);
+  }else{
+    if(cpw->proc_work != NULL){
+      GFL_HEAP_FreeMemory(cpw->proc_work);
+    }
+    if(cpw->cb_work != NULL){
+      GFL_HEAP_FreeMemory(cpw->cb_work);
+    }
   }
   SCRIPT_FreeSubProcWorkPointer(sc);
 
@@ -105,7 +165,10 @@ BOOL SCMD_WaitSubProcEnd( VMHANDLE *core, void *wk )
  * @retval  TRUE    終了
  * @retval  FALSE   待ち
  *
- * ＊こちらで待った場合、明示的に EvCmdFreeSubProcWork( VMHANDLE *core, void *wk ) を使って解放すること
+ * ＊使用は玉田さんの許可制です。
+ * 　プロセスコールは原則として、呼び出し～戻り値取得までをOneコマンドで実現する設計にすること！
+ *   WaitSubProcEndにコールバックを指定できます
+ * ＊こちらで待った場合、明示的に EvCmdFreeSubProcWork( VMHANDLE *core, void *wk ) を使って解放してください
  */
 //--------------------------------------------------------------
 BOOL SCMD_WaitSubProcEndNonFree( VMHANDLE *core, void *wk )
@@ -125,6 +188,9 @@ BOOL SCMD_WaitSubProcEndNonFree( VMHANDLE *core, void *wk )
  * @brief 汎用サブプロセスワーク解放コマンド
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  VMCMD_RESULT
+ *
+ * ＊使用は玉田さんの許可制です。
+ * 　プロセスコールは原則として、呼び出し～戻り値取得までをOneコマンドで実現する設計にすること！
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdFreeSubProcWork( VMHANDLE *core, void *wk )
@@ -132,6 +198,31 @@ VMCMD_RESULT EvCmdFreeSubProcWork( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( (SCRCMD_WORK*)wk );
   SCRIPT_FreeSubProcWorkPointer(sc);
   return VMCMD_RESULT_SUSPEND;
+}
+
+
+////////////////////////////////////////////////////////////////
+//バッグプロセス呼び出し
+////////////////////////////////////////////////////////////////
+typedef struct _BAG_CALLBACK_WORK{
+  u16* ret_mode;
+  u16* ret_item;
+}BAG_CALLBACK_WORK;
+
+static void callback_BagProcFunc( CALL_PROC_WORK* cpw )
+{
+  BAG_PARAM* bp = (BAG_PARAM*)cpw->proc_work;
+  BAG_CALLBACK_WORK* bcw = (BAG_CALLBACK_WORK*)cpw->cb_work;
+
+  if(bp->next_proc == BAG_NEXTPROC_EXIT ){
+    *bcw->ret_mode = SCR_PROC_RETMODE_EXIT;
+  }else{
+    *bcw->ret_mode = SCR_PROC_RETMODE_NORMAL;
+  }
+  *bcw->ret_item = bp->ret_item;
+
+  GFL_HEAP_FreeMemory( cpw->cb_work );
+  GFL_HEAP_FreeMemory( cpw->proc_work );
 }
 
 //--------------------------------------------------------------
@@ -148,107 +239,26 @@ VMCMD_RESULT EvCmdCallBagProc( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  void** sub_wk = SCRIPT_SetSubProcWorkPointerAdrs( sc );
+  BAG_PARAM* bp;
+  BAG_CALLBACK_WORK* bcw;
 
   u16 mode = SCRCMD_GetVMWorkValue( core, work );
+  u16* ret_mode = SCRCMD_GetVMWork( core, work );
+  u16* ret_item = SCRCMD_GetVMWork( core, work );
 
   if( mode == SCR_BAG_MODE_SELL ){
     mode = BAG_MODE_SELL;
   }else{
     mode = BAG_MODE_FIELD;
   }
-  *sub_wk = (void*)BAG_CreateParam( SCRCMD_WORK_GetGameData( work ), NULL, mode );
+  bp = BAG_CreateParam( SCRCMD_WORK_GetGameData( work ), NULL, mode );
+  bcw = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(BAG_CALLBACK_WORK) );
+  bcw->ret_mode = ret_mode;
+  bcw->ret_item = ret_item;
+
+  EVFUNC_CallSubProc( core, work,
+    FS_OVERLAY_ID(bag), &ItemMenuProcData, bp, callback_BagProcFunc, bcw);
   
-  GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID(bag), &ItemMenuProcData, *sub_wk ); 
- 
-  VMCMD_SetWait( core, SCMD_WaitSubProcEndNonFree );
-
   return VMCMD_RESULT_SUSPEND;
 }
 
-//--------------------------------------------------------------
-/**
- * @brief   バッグプロセスのリターンコードを取得します
- * @param   core    仮想マシン制御構造体へのポインタ
- * @retval  VMCMD_RESULT
- *
- * ＊EvCmdFreeSubProcWork() の前に呼び出すこと
- *
- * バッグプロセスの終了モードと選択アイテムNoを返します
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGetBagProcResult( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  BAG_PARAM* bp = (BAG_PARAM*)(SCRIPT_SetSubProcWorkPointer( sc ));
-
-  u16* ret_mode = SCRCMD_GetVMWork( core, work );
-  u16* ret_item = SCRCMD_GetVMWork( core, work );
-
-  if(bp->next_proc == BAG_NEXTPROC_EXIT ){
-    *ret_mode = SCR_PROC_RETMODE_EXIT;
-  }else{
-    *ret_mode = SCR_PROC_RETMODE_NORMAL;
-  }
-  *ret_item = bp->ret_item;
-  return VMCMD_RESULT_SUSPEND;
-}
-
-
-//--------------------------------------------------------------
-/**
- * @brief ボックスプロセス終了後に呼ばれるコールバック関数
- */
-//--------------------------------------------------------------
-typedef struct
-{
-  BOX2_GFL_PROC_PARAM* box_param;
-} CALLBACK_WORK;
-static void callback_BoxProc( void* work )
-{
-  CALLBACK_WORK* cw = (CALLBACK_WORK*)work;
-  GFL_HEAP_FreeMemory( cw->box_param );
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   ボックスプロセスを呼び出します
- * @param   core    仮想マシン制御構造体へのポインタ
- * @retval  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
-  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
-  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK*   sv = GAMEDATA_GetSaveControlWork( gdata );
-  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  BOX2_GFL_PROC_PARAM* box_param = NULL;
-  CALLBACK_WORK* cw = NULL;
-  GMEVENT* event = NULL;
-  
-  // ボックスのプロセスパラメータを作成
-  box_param            = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(BOX2_GFL_PROC_PARAM) );
-  box_param->sv_box    = GAMEDATA_GetBoxManager( gdata );
-  box_param->pokeparty = GAMEDATA_GetMyPokemon( gdata );
-  box_param->myitem    = GAMEDATA_GetMyItem( gdata );
-  box_param->mystatus  = GAMEDATA_GetMyStatus( gdata );
-  box_param->cfg       = SaveData_GetConfig( sv );
-  box_param->zknMode   = 0;
-  box_param->callMode  = BOX_MODE_SEIRI;
-
-  // コールバックのパラメータを作成
-  cw = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(CALLBACK_WORK) );
-  cw->box_param = box_param;
-
-  // イベントを呼び出す
-  event = EVENT_FieldSubProc_Callback(
-      gsys, fieldmap, 
-      FS_OVERLAY_ID(box), &BOX2_ProcData, box_param, // 呼び出すプロセスを指定
-      callback_BoxProc, cw );  // コールバック関数と, その引数を指定
-  SCRIPT_CallEvent( scw, event );
-  return VMCMD_RESULT_SUSPEND;
-}

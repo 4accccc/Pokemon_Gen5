@@ -537,8 +537,8 @@
   NO_CMD()
 
   DEF_CMD( EvCmdCallBagProc, EV_SEQ_CALL_BAG_PROC )
-  DEF_CMD( EvCmdGetBagProcResult, EV_SEQ_GET_BAG_PROC_RESULT )
   DEF_CMD( EvCmdCallBoxProc, EV_SEQ_CALL_BOX_PROC )
+  NO_CMD()
   NO_CMD()
   
   NO_CMD()
@@ -552,9 +552,9 @@
   NO_CMD()
  
   //Wi-FiƒNƒ‰ƒuŠÖ˜A
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdWifiCheckMyGSID ,EV_SEQ_WIFI_CHECK_MY_GSID )
+  DEF_CMD( EvCmdWifiGetFriendNum, EV_SEQ_WIFI_GET_FRIEND_NUM )
+  DEF_CMD( EvCmdWifiClubEventCall, EV_SEQ_WIFI_CLUB_EVENT_CALL )
   NO_CMD()
   
   NO_CMD()

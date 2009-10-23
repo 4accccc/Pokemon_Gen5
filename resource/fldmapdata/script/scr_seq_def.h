@@ -3701,6 +3701,9 @@
 //--------------------------------------------------------------
 /**
  * サブプロセスワークを解放する
+ *
+ * ＊使用は玉田さんの許可制です。
+ * 　プロセスコールは原則として、呼び出し～戻り値取得までをOneコマンドで実現する設計にすること！
  */
 //--------------------------------------------------------------
 #define _FREE_SUBPROC_WORK() _ASM_SUBPROC_WORK
@@ -3713,30 +3716,18 @@
 /**
  *  バッグプロセスを呼び出す
  *  @param  mode  呼び出しモード script_def.h SCR_BAGMODE_SELL他
+ *  @param  ret_mode  バッグの終了モード　script_def.h SCR_PROC_RETMODE_EXIT 他
+ *  @param  ret_item  選択アイテムNo(0なら選択アイテム無し)
  *
  *  サブプロセスワークを解放しないので、使用後に _FREE_SUBPROC_WORK()を呼び出すこと
  */
 //--------------------------------------------------------------
-#define _CALL_BAG_PROC( mode ) _ASM_CALL_BAG_PROC mode
+#define _CALL_BAG_PROC( mode, ret_mode, ret_item ) \
+    _ASM_CALL_BAG_PROC mode, ret_mode, ret_item
 
-  .macro  _ASM_CALL_BAG_PROC mode
+  .macro  _ASM_CALL_BAG_PROC mode, ret_mode, ret_item
   .short  EV_SEQ_CALL_BAG_PROC
   .short  \mode
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  バッグプロセスを呼び出しの結果を取得する
- *  @param  ret_mode  バッグの終了モード　script_def.h SCR_PROC_RETMODE_EXIT 他
- *
- *  _FREE_SUBPROC_WORK()の前に呼ぶこと
- */
-//--------------------------------------------------------------
-#define _GET_BAG_PROC_RESULT( ret_mode, ret_item ) \
-    _ASM_GET_BAG_PROC_RESULT ret_mode, ret_item
-
-  .macro  _ASM_GET_BAG_PROC_RESULT ret_mode, ret_item
-  .short  EV_SEQ_GET_BAG_PROC_RESULT
   .short  \ret_mode
   .short  \ret_item
   .endm
@@ -3789,6 +3780,44 @@
   .short  EV_SEQ_CALL_SHOP_PROC_BUY
   .short  \shop_id
   .short  \ret_mode
+  .endm
+
+//======================================================================
+// WiFiクラブ関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief    GSIDが正しいかをチェックする
+ */
+//--------------------------------------------------------------
+#define _WIFI_CHECK_MY_GSID( ret_work ) _ASM_WIFI_CHECK_MY_GSID ret_work
+
+  .macro  _ASM_WIFI_CHECK_MY_GSID ret_work
+  .short  EV_SEQ_WIFI_CHECK_MY_GSID
+  .short  \ret_work
+  .endm
+
+//--------------------------------------------------------------------
+/**
+ * @brief   友だち手帳に登録されている人数を返す 
+ */
+//--------------------------------------------------------------------
+#define _WIFI_GET_FRIEND_NUM( ret_work ) _ASM_WIFI_GET_FRIEND_NUM ret_work
+
+  .macro  _ASM_WIFI_GET_FRIEND_NUM ret_work
+  .short  EV_SEQ_WIFI_GET_FRIEND_NUM
+  .short  \ret_work
+  .endm
+
+//--------------------------------------------------------------------
+/**
+ * @brief   Wi-Fiクラブイベントを呼び出す
+ */
+//--------------------------------------------------------------------
+#define _WIFI_CLUB_EVENT_CALL( ) _ASM_WIFI_CLUB_EVENT_CALL
+
+  .macro  _ASM_WIFI_CLUB_EVENT_CALL
+  .short  EV_SEQ_WIFI_CLUB_EVENT_CALL
   .endm
 
 //======================================================================

@@ -396,6 +396,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_screeneffects.c \
         field/scrcmd_shop.c \
         field/scrcmd_wifi.c \
+        field/scrcmd_proc_fld.c \
 				field/rail_editor.c \
         field/field_rail.c \
         field/field_rail_func.c \

@@ -126,7 +126,11 @@ sub_club_counter_menu:
 	_BMPMENU_START()
   _BALLOONWIN_CLOSE()
 
-  $reg_return = $i_ret
+  IF $i_ret == EV_WIN_B_CANCEL THEN
+    $reg_return = SEQ_GOODBYE
+  ELSE
+    $reg_return = $i_ret
+  ENDIF
 }
 _RET
 
@@ -140,14 +144,18 @@ sub_club_counter_check_connect:
   DEFINE_LOCAL  i_id_state
 
   //IDの状態チェック
-  $i_id_state = 0
+
+  _WIFI_CHECK_MY_GSID( i_id_state )
+ // $i_id_state = 0
 
   //登録人数チェック
-  $i_friend_num = 0
+  _WIFI_GET_FRIEND_NUM( i_friend_num )
+//  $i_friend_num = 1
 
   IF $i_id_state == TRUE THEN
     IF $i_friend_num == 0 THEN
       _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_06 ) //友だちを登録していないと利用できません
+      _AB_KEYWAIT()
       _BALLOONWIN_CLOSE()
       $reg_return = SEQ_GOODBYE
     ELSE
@@ -162,7 +170,7 @@ sub_club_counter_check_connect:
   _BALLOONWIN_CLOSE()
   
   //『はい』
-  IF $i_ret == 0 THEN
+  IF $i_ret == SCR_YES THEN
     $reg_return = SEQ_CONNECT
   ELSE
     $reg_return = SEQ_GOODBYE
@@ -184,7 +192,7 @@ sub_club_counter_connect:
   _YES_NO_WIN( i_ret )
   _BALLOONWIN_CLOSE()
 
-  IF $i_ret == 1 THEN
+  IF $i_ret == SCR_NO THEN
     $reg_return = SEQ_GOODBYE
     _RET
   ENDIF
@@ -202,6 +210,17 @@ sub_club_counter_connect:
   _AB_KEYWAIT()
   _BALLOONWIN_CLOSE()
 
+  //引率アニメ再生
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_wifi_club_p01 )
+  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_club_p01 )
+  _OBJ_ANIME_WAIT()
+
+  //エレベータアニメ再生
+
+
+  //クラブイベント呼び出し
+  _WIFI_CLUB_EVENT_CALL()
+
   $reg_return = SEQ_GOODBYE
 }
 _RET
@@ -212,7 +231,7 @@ _RET
 //サブルーチン：〆のメッセージ
 //==============================================================
 sub_club_counter_goodbye:
-  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_club_p01_bow ) //お辞儀アニメ
+  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_club_p01 ) //お辞儀アニメ
   _OBJ_ANIME_WAIT()
   _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_02 ) //それではまたお越しください
   _LAST_KEYWAIT()
@@ -220,9 +239,9 @@ sub_club_counter_goodbye:
 _RET
 
 //--------------------------------------------------------------------
-//おじぎ
+//通信部屋へ誘導
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_wifi_club_p01_bow
+_ANIME_LABEL	anm_wifi_club_p01
 //【仮】  ジョーイさんお辞儀アニメが未対応
 	//_ANIME_DATA	AC_PC_BOW,1
 	//_ANIME_DATA	AC_WAIT_4F,1
@@ -236,158 +255,3 @@ _ANIME_LABEL	anm_wifi_club_p01_bow
 	_ANIME_DATA	AC_WAIT_4F,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------------
-//  びっくりマーク表示
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_wifi_club_p01_gyoe
-  _ANIME_DATA AC_MARK_GYOE,1
-  _ANIME_DATA ACMD_END, 0
-
-/**************************************************************/
-//サブルーチン：回復アニメ
-/**************************************************************/
-sub_heal_kaifuku_anime:
-{
-  DEFINE_LOCAL  POKEMON_COUNT
-
-  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_club_p01_turn_up )
-  _OBJ_ANIME_WAIT()
-
-  _GET_PARTY_POKE_COUNT( POKEMON_COUNT, POKECOUNT_MODE_TOTAL )
-  _POKECEN_RECOVER_ANIME( POKEMON_COUNT )
-
-  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_club_p01_turn_down )
-  _OBJ_ANIME_WAIT()
-_RET
-}
-
-//--------------------------------------------------------------------
-//  左を向く
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_wifi_club_p01_turn_up
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//  下を向く
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_wifi_club_p01_turn_down
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
-
-
-
-
-
-
-/**************************************************************/
-/*                                                            */
-/*                                                            */
-/*        ポケモンセンター　ユニオン受付                      */
-/*                                                            */
-/*                                                            */
-/**************************************************************/
-/*
-
-EVENT_START ev_union
-{
-  DEFINE_LOCAL have_cgear // C-gearを持っているかどうか
-  DEFINE_LOCAL room_in    // ユニオンルームに入るかどうか
-  DEFINE_LOCAL explain    // 説明を受けるかどうか
-  DEFINE_LOCAL ret
-
-  // ローカル変数の初期化
-  _FLAG_SET( FE_CGEAR_GET )
-  _FLAG_CHECK( FE_CGEAR_GET, have_cgear )
-  $room_in    = FALSE
-  $explain    = FALSE
-
-
-  // C-gear持ってる場合
-  IF $have_cgear == TRUE THEN 
-    //「ユニオンルームにようこそ」
-    _TALK_OBJ_START()
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_01 ) 
-    // メニュー表示
-    _BMPMENU_INIT_EX( 1, 8, 0, 1, ret )
-    _BMPMENU_MAKE_LIST( msg_pc_union_menu_yes, msg_pc_union_menu_yes )
-    _BMPMENU_MAKE_LIST( msg_pc_union_menu_no, msg_pc_union_menu_no )
-    _BMPMENU_MAKE_LIST( msg_pc_union_menu_explain, msg_pc_union_menu_explain )
-    _BMPMENU_START() 
-    // 選択したら吹出しを閉じる
-    _BALLOONWIN_CLOSE() 
-    // 選択結果で分岐
-    SWITCH $ret 
-    CASE msg_pc_union_menu_yes THEN //-------『はい』
-     $room_in = TRUE
-    CASE msg_pc_union_menu_no THEN //--------『いいえ』
-      $room_in = FALSE
-    CASE msg_pc_union_menu_explain THEN //---『せつめいをきく』
-      $explain = TRUE 
-    ENDSWITCH
-  ENDIF
-
-  // C-gear持ってない場合
-  IF $have_cgear != TRUE THEN 
-    //「ただいま じゅんびちゅう です！」
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_06 ) 
-    _AB_KEYWAIT()
-    _BALLOONWIN_CLOSE()
-  ENDIF 
-
-  // 説明を聞く場合
-  IF $explain == TRUE THEN
-    //「へやにはいりますか？」
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_02 )
-    _YES_NO_WIN( ret )
-    _BALLOONWIN_CLOSE()
-    //『はい』
-    IF $ret == 0 THEN
-      $room_in = TRUE
-    ENDIF
-  ENDIF
-
-  // ユニオンルームに入る場合
-  IF $room_in == TRUE THEN
-    //「ワイヤレスつうしんをかいしします」
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_03 )
-    _YES_NO_WIN( ret )
-    _BALLOONWIN_CLOSE()
-    //『いいえ』
-    IF $ret == 1 THEN
-      $room_in = FALSE
-    ENDIF
-  ENDIF
-
-  // レポート処理
-  IF $room_in == TRUE THEN
-    // レポートを書く
-    _REPORT_EVENT_CALL( ret )
-    // 書き込みに失敗
-    IF $ret != SCR_REPORT_OK THEN
-      $room_in = FALSE
-    ENDIF
-  ENDIF
-
-  // 入場
-  IF $room_in == TRUE THEN
-    //「おたのしみ ください」
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_04 )
-    _AB_KEYWAIT()
-    _BALLOONWIN_CLOSE()
-    // @todo 移動アニメ
-    // @todo マップチェンジ
-  ENDIF
-
-  // キャンセルした場合
-  IF $room_in != TRUE THEN
-    //「また おこしください」
-    _BALLOONWIN_TALKOBJ_OPEN( msg_pc_union_05 )
-    _AB_KEYWAIT()
-    _BALLOONWIN_CLOSE()
-  ENDIF
-}
-EVENT_END
-
-*/

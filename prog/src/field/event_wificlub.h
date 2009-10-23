@@ -29,5 +29,6 @@ typedef struct {
 } EVENT_WIFICLUB_WORK;
 
 
-extern void EVENT_WiFiClub(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event);
+extern GMEVENT* EVENT_WiFiClub( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
+extern void EVENT_WiFiClubChange(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event);
 

@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////
 /**
  *
- * @brief  スクリプトコマンド：Wi-Fi関連
- * @file   scrcmd_wifi.c
+ * @brief  スクリプトコマンド：Wi-Fi関連(フィールド常駐)
+ * @file   scrcmd_wifi.h
  * @author iwasawa
  * @date   2009.10.20
  *
@@ -33,4 +33,16 @@ extern VMCMD_RESULT EvCmdWifiCheckMyGSID( VMHANDLE* core, void* wk );
  */
 //--------------------------------------------------------------------
 extern VMCMD_RESULT EvCmdWifiGetFriendNum( VMHANDLE* core, void* wk );
+
+//--------------------------------------------------------------------
+/**
+ * @brief   Wi-Fiクラブイベントを呼び出す
+ *
+ * @param	core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------------
+extern VMCMD_RESULT EvCmdWifiClubEventCall( VMHANDLE* core, void* wk );
 

@@ -111,19 +111,18 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
   return GMEVENT_RES_CONTINUE;
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void EVENT_WiFiClub(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event)
+/*
+ *  @brief  WiFiクラブ呼び出しパラメータセット
+ */
+static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
 {
-  GMEVENT * child_event;
   BATTLE_SETUP_PARAM * para;
   EVENT_WIFICLUB_WORK * dbw;
 
   if(GAME_COMM_NO_NULL!= GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys))){
     GameCommSys_ExitReq(GAMESYSTEM_GetGameCommSysPtr(gsys));
   }
-	
-  GMEVENT_Change( event, EVENT_WiFiClubMain, sizeof(EVENT_WIFICLUB_WORK) );
+
   dbw = GMEVENT_GetEventWork(event);
   dbw->ctrl = SaveControl_GetPointer();
   NET_PRINT("%x\n",(int)dbw->ctrl);
@@ -152,6 +151,30 @@ void EVENT_WiFiClub(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * even
     PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), para->partyPlayer);
   }
 }
+
+//------------------------------------------------------------------
+/*
+ *  @brief  WiFiクラブイベントコール
+ */
+//------------------------------------------------------------------
+GMEVENT* EVENT_WiFiClub( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
+{
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, EVENT_WiFiClubMain, sizeof(EVENT_WIFICLUB_WORK));
+  wifi_SetEventParam( event, gsys, fieldmap );
+
+  return event;
+}
+//------------------------------------------------------------------
+/*
+ *  @brief  WiFiクラブイベントチェンジ
+ */
+//------------------------------------------------------------------
+void EVENT_WiFiClubChange(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event)
+{
+  GMEVENT_Change( event, EVENT_WiFiClubMain, sizeof(EVENT_WIFICLUB_WORK) );
+  wifi_SetEventParam( event, gsys, fieldmap );
+}
+
 
 
 static void _battleParaFree(EVENT_WIFICLUB_WORK *dbw)
