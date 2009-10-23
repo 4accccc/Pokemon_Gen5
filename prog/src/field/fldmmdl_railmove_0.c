@@ -773,6 +773,7 @@ void MMDL_Rail_GetDirLineWay( const MMDL *mmdl, u16 dir, VecFx16* way )
   VEC_Set( &calc_vec, way->x, way->y, way->z );
   MTX_RotY33( &mtx, FX_SinIdx( rot ), FX_CosIdx( rot ) );
   MTX_MultVec33( &calc_vec, &mtx, &calc_vec );
+  VEC_Normalize( &calc_vec, &calc_vec );
   VEC_Fx16Set( way, calc_vec.x, calc_vec.y, calc_vec.z );
 }
 
