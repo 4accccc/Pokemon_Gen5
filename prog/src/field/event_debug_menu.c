@@ -1582,7 +1582,7 @@ static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
     if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
     {
       mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
-      FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( mapper, FALSE );
+      FLDNOGRID_MAPPER_SetRailCameraActive( mapper, FALSE );
     }
   }
 	return( TRUE );
@@ -1633,7 +1633,7 @@ static BOOL debugMenuCallProc_ControlTarget( DEBUG_MENU_EVENT_WORK *wk )
     if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
     {
       mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
-      FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( mapper, FALSE );
+      FLDNOGRID_MAPPER_SetRailCameraActive( mapper, FALSE );
     }
   }
 	return( TRUE );
@@ -1665,7 +1665,7 @@ static GMEVENT_RESULT debugMenuControlCamera(
       if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
       {
         mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
-        FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( mapper, TRUE );
+        FLDNOGRID_MAPPER_SetRailCameraActive( mapper, TRUE );
       }
     }
 	  return( GMEVENT_RES_FINISH );
@@ -3397,7 +3397,7 @@ static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk )
     if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
     {
       mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
-      FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( mapper, FALSE );
+      FLDNOGRID_MAPPER_SetRailCameraActive( mapper, FALSE );
     }
   }
 
@@ -3433,7 +3433,7 @@ static GMEVENT_RESULT debugMenuControlLinerCamera(
       if( FIELDMAP_GetMapControlType( work->fieldWork ) == FLDMAP_CTRLTYPE_NOGRID )
       {
         mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
-        FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( mapper, TRUE );
+        FLDNOGRID_MAPPER_SetRailCameraActive( mapper, TRUE );
       }
     }
     //バインド復帰

@@ -70,6 +70,13 @@ extern FLDNOGRID_MAPPER* FLDNOGRID_MAPPER_Create( u32 heapID, FIELD_CAMERA* p_ca
 extern void FLDNOGRID_MAPPER_Delete( FLDNOGRID_MAPPER* p_mapper );
 
 
+// ノーグリッドマップ処理の更新を制御
+// 全体の更新をストップ
+extern void FLDNOGRID_MAPPER_SetActive( FLDNOGRID_MAPPER* p_mapper, BOOL flag );
+extern BOOL FLDNOGRID_MAPPER_IsActive( const FLDNOGRID_MAPPER* cp_mapper );
+// カメラのみストップ
+extern void FLDNOGRID_MAPPER_SetRailCameraActive( FLDNOGRID_MAPPER* p_mapper, BOOL flag );
+
 // 情報の設定、破棄
 extern void FLDNOGRID_MAPPER_ResistData( FLDNOGRID_MAPPER* p_mapper, const FLDNOGRID_RESISTDATA* cp_data, u32 heapID );
 extern void FLDNOGRID_MAPPER_ResistDataArc( FLDNOGRID_MAPPER* p_mapper, u32 dataID, u32 heapID );
@@ -107,12 +114,6 @@ extern void FLDNOGRID_MAPPER_DEBUG_LoadRailBynary( FLDNOGRID_MAPPER* p_mapper, v
 extern void FLDNOGRID_MAPPER_DEBUG_LoadAreaBynary( FLDNOGRID_MAPPER* p_mapper, void* p_dat, u32 size );
 extern void FLDNOGRID_MAPPER_DEBUG_LoadAttrBynary( FLDNOGRID_MAPPER* p_mapper, void* p_dat, u32 size, u32 heapID );
 
-extern void FLDNOGRID_MAPPER_DEBUG_SetActive( FLDNOGRID_MAPPER* p_mapper, BOOL flag );
-extern BOOL FLDNOGRID_MAPPER_DEBUG_IsActive( const FLDNOGRID_MAPPER* cp_mapper );
-
-
-// カメラへの反映を切るには、FLDNOGRID_MAPPER_DEBUG_SetRailCameraActiveが必要です。
-extern void FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( FLDNOGRID_MAPPER* p_mapper, BOOL flag );
 
 extern FIELD_RAIL_MAN* FLDNOGRID_MAPPER_DEBUG_GetRailMan( const FLDNOGRID_MAPPER* cp_mapper );
 

@@ -1907,8 +1907,8 @@ static void RE_InitInputPoint_FreeNormal( DEBUG_RAIL_EDITOR* p_wk )
 
 	FIELD_CAMERA_BindDefaultTarget( p_camera );
 
-	FLDNOGRID_MAPPER_DEBUG_SetActive(p_mapper, FALSE);
-  FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive(p_mapper, FALSE);
+	FLDNOGRID_MAPPER_SetActive(p_mapper, FALSE);
+  FLDNOGRID_MAPPER_SetRailCameraActive(p_mapper, FALSE);
 
 	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
@@ -1943,8 +1943,8 @@ static void RE_InitInputPoint_FreeCircle( DEBUG_RAIL_EDITOR* p_wk )
 	fx32 len;
 	u32 linepos_set;
 
-	FLDNOGRID_MAPPER_DEBUG_SetActive(p_mapper, FALSE);
-  FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive(p_mapper, FALSE);
+	FLDNOGRID_MAPPER_SetActive(p_mapper, FALSE);
+  FLDNOGRID_MAPPER_SetRailCameraActive(p_mapper, FALSE);
 
 	FIELD_CAMERA_FreeTarget( p_camera );
 	
@@ -2004,8 +2004,8 @@ static void RE_InitInputPoint_Rail( DEBUG_RAIL_EDITOR* p_wk )
   FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
 
 	// レール移動
-  FLDNOGRID_MAPPER_DEBUG_SetActive( p_mapper, TRUE );
-  FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive(p_mapper, TRUE);
+  FLDNOGRID_MAPPER_SetActive( p_mapper, TRUE );
+  FLDNOGRID_MAPPER_SetRailCameraActive(p_mapper, TRUE);
 
 	FIELD_CAMERA_FreeTarget( p_camera );
 }
@@ -2020,8 +2020,8 @@ static void RE_InitInputCamera_Pos( DEBUG_RAIL_EDITOR* p_wk )
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_wk->p_fieldmap );
 	
 	// レール移動
-  FLDNOGRID_MAPPER_DEBUG_SetActive( p_mapper, FALSE );
-  FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive(p_mapper, FALSE);
+  FLDNOGRID_MAPPER_SetActive( p_mapper, FALSE );
+  FLDNOGRID_MAPPER_SetRailCameraActive(p_mapper, FALSE);
 
 	// カメラ操作は下画面で行う
 	subscreen = FIELDMAP_GetFieldSubscreenWork(p_wk->p_fieldmap);
@@ -2049,8 +2049,8 @@ static void RE_InitInputCamera_Target( DEBUG_RAIL_EDITOR* p_wk )
 	
 
 	// レール移動
-  FLDNOGRID_MAPPER_DEBUG_SetActive( p_mapper, FALSE );
-  FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive(p_mapper, FALSE);
+  FLDNOGRID_MAPPER_SetActive( p_mapper, FALSE );
+  FLDNOGRID_MAPPER_SetRailCameraActive(p_mapper, FALSE);
 
 	// カメラ操作は下画面で行う
 	subscreen = FIELDMAP_GetFieldSubscreenWork(p_wk->p_fieldmap);

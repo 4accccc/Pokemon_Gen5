@@ -47,9 +47,7 @@ struct _FLDNOGRID_MAPPER
   FLD_SCENEAREA*        p_areaMan;
   FLD_SCENEAREA_LOADER* p_areaLoader;
 
-#ifdef PM_DEBUG
-  BOOL debug_rail_camera_stop;
-#endif
+  BOOL rail_camera_stop;
 };
 
 //-----------------------------------------------------------------------------
@@ -102,6 +100,76 @@ void FLDNOGRID_MAPPER_Delete( FLDNOGRID_MAPPER* p_mapper )
   FIELD_RAIL_LOADER_Delete( p_mapper->p_railLoader );
 
   GFL_HEAP_FreeMemory( p_mapper );
+}
+
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アクティブ設定
+ *
+ *	@param	p_mapper    マッパー
+ *	@param	flag        フラグ
+ */
+//-----------------------------------------------------------------------------
+void FLDNOGRID_MAPPER_SetActive( FLDNOGRID_MAPPER* p_mapper, BOOL flag )
+{
+  GF_ASSERT( p_mapper );
+	FIELD_RAIL_MAN_SetActiveFlag(p_mapper->p_railMan, flag);
+	FLD_SCENEAREA_SetActiveFlag(p_mapper->p_areaMan, flag);
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アクティブ状態かチェック
+ *
+ *	@param	cp_mapper   マッパー
+ *
+ *	@retval TRUE    アクティブ
+ *	@retval FALSE   非アクティブ
+ */
+//-----------------------------------------------------------------------------
+BOOL FLDNOGRID_MAPPER_IsActive( const FLDNOGRID_MAPPER* cp_mapper )
+{
+  BOOL result;
+  BOOL result2;
+  
+  GF_ASSERT( cp_mapper );
+
+  result = FIELD_RAIL_MAN_GetActiveFlag( cp_mapper->p_railMan );
+
+  if( FLD_SCENEAREA_IsLoad( cp_mapper->p_areaMan ) )
+  {
+    result2 = FLD_SCENEAREA_GetActiveFlag( cp_mapper->p_areaMan );
+
+    GF_ASSERT( result2 == result );
+  }
+
+  return result;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールカメラを実行するか設定
+ *
+ *	@param	p_mapper  マッパー
+ *	@param	flag      フラグ
+ */
+//-----------------------------------------------------------------------------
+void FLDNOGRID_MAPPER_SetRailCameraActive( FLDNOGRID_MAPPER* p_mapper, BOOL flag )
+{
+  if( flag )
+  {
+    p_mapper->rail_camera_stop = FALSE;
+  }
+  else
+  {
+    p_mapper->rail_camera_stop = TRUE;
+  }
 }
 
 
@@ -220,9 +288,7 @@ void FLDNOGRID_MAPPER_Main( FLDNOGRID_MAPPER* p_mapper )
 
   // レールシステムメイン
   FIELD_RAIL_MAN_Update( p_mapper->p_railMan );
-#ifdef PM_DEBUG
-  if( p_mapper->debug_rail_camera_stop == FALSE )
-#endif
+  if( p_mapper->rail_camera_stop == FALSE )
   {
     camera_move = FIELD_RAIL_MAN_UpdateCamera( p_mapper->p_railMan );
   }
@@ -448,73 +514,6 @@ void FLDNOGRID_MAPPER_DEBUG_LoadAttrBynary( FLDNOGRID_MAPPER* p_mapper, void* p_
   RAIL_ATTR_Release( p_mapper->p_attr );
   
   RAIL_ATTR_DEBUG_LoadBynary( p_mapper->p_attr, p_dat, size, heapID );
-}
-
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  アクティブ設定
- *
- *	@param	p_mapper    マッパー
- *	@param	flag        フラグ
- */
-//-----------------------------------------------------------------------------
-void FLDNOGRID_MAPPER_DEBUG_SetActive( FLDNOGRID_MAPPER* p_mapper, BOOL flag )
-{
-  GF_ASSERT( p_mapper );
-	FIELD_RAIL_MAN_SetActiveFlag(p_mapper->p_railMan, flag);
-	FLD_SCENEAREA_SetActiveFlag(p_mapper->p_areaMan, flag);
-}
-
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  アクティブ状態かチェック
- *
- *	@param	cp_mapper   マッパー
- *
- *	@retval TRUE    アクティブ
- *	@retval FALSE   非アクティブ
- */
-//-----------------------------------------------------------------------------
-BOOL FLDNOGRID_MAPPER_DEBUG_IsActive( const FLDNOGRID_MAPPER* cp_mapper )
-{
-  BOOL result;
-  BOOL result2;
-  
-  GF_ASSERT( cp_mapper );
-
-  result = FIELD_RAIL_MAN_GetActiveFlag( cp_mapper->p_railMan );
-
-  if( FLD_SCENEAREA_IsLoad( cp_mapper->p_areaMan ) )
-  {
-    result2 = FLD_SCENEAREA_GetActiveFlag( cp_mapper->p_areaMan );
-
-    GF_ASSERT( result2 == result );
-  }
-
-  return result;
-}
-
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  レールカメラを実行するか設定
- *
- *	@param	p_mapper  マッパー
- *	@param	flag      フラグ
- */
-//-----------------------------------------------------------------------------
-void FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( FLDNOGRID_MAPPER* p_mapper, BOOL flag )
-{
-  if( flag )
-  {
-    p_mapper->debug_rail_camera_stop = FALSE;
-  }
-  else
-  {
-    p_mapper->debug_rail_camera_stop = TRUE;
-  }
 }
 
 
