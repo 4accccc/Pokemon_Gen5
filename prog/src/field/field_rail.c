@@ -527,6 +527,11 @@ BOOL FIELD_RAIL_MAN_UpdateCamera(FIELD_RAIL_MAN * man)
   {
     return FALSE;
   }
+
+  if( !man->user_active_flag )
+  {
+    return FALSE;
+  }
   
   if ( !work )
   {

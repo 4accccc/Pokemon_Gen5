@@ -1100,7 +1100,6 @@ extern void MMDL_GetOldRailLocation( const MMDL * fmmdl, RAIL_LOCATION* location
 // DIR方向のロケーションの取得　BOOLで移動できるかチェックを行う。
 // FALSEが帰ってきても、locationには、移動先のロケーションが入っている。
 // その値は、イベントチェックなどで使用している。
-// FALSEが帰ってきた値をSetLocationすると、動作不明になる。注意！！
 extern BOOL MMDL_GetRailFrontLocation( const MMDL *mmdl, RAIL_LOCATION* location );
 extern BOOL MMDL_GetRailDirLocation( const MMDL *mmdl, u16 dir, RAIL_LOCATION* location );
 extern void MMDL_Rail_UpdateGridPosDir( MMDL *mmdl, u16 dir );
