@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2009-10-20T12:45:07"/>
+	<create user="taya" host="W00146" date="2009-10-23T11:57:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -328,7 +328,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -356,18 +356,18 @@
 
 	<row id="BTL_STRID_STD_Encount_Wild1" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>野生シングルエンカウント</comment>
-		<language name="JPN" width="216">あっ！　やせいの　[1:01:ポケモン種族名:0]　が
+		<language name="JPN" width="216">あっ！　やせいの　[1:01:ポケモン種族名:0]が
 とびだした！</language>
-		<language name="JPN_KANJI" width="216">あっ！　野生の　[1:01:ポケモン種族名:0]　が
+		<language name="JPN_KANJI" width="216">あっ！　野生の　[1:01:ポケモン種族名:0]が
 飛び出した！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Encount_Wild2" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>野生ダブルエンカウント</comment>
-		<language name="JPN" width="216">あっ！　やせいの　[1:01:ポケモン種族名:0]　と
-[1:01:ポケモン種族名:1]　が　とびだした！</language>
-		<language name="JPN_KANJI" width="216">あっ！　野生の　[1:01:ポケモン種族名:0]　と
-[1:01:ポケモン種族名:1]　が　飛び出した！</language>
+		<language name="JPN" width="216">あっ！　やせいの　[1:01:ポケモン種族名:0]と
+[1:01:ポケモン種族名:1]が　とびだした！</language>
+		<language name="JPN_KANJI" width="216">あっ！　野生の　[1:01:ポケモン種族名:0]と
+[1:01:ポケモン種族名:1]が　飛び出した！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Encount_NPC1" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
@@ -418,6 +418,14 @@
 [1:02:ポケモンニックネーム:1]！</language>
 	</row>
 
+	<row id="BTL_STRID_STD_PutTriple" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>自分がくりだす　３体</comment>
+		<language name="JPN" width="216">ゆけっ！　[1:02:ポケモンニックネーム:0]！
+[1:02:ポケモンニックネーム:1]！　[1:02:ポケモンニックネーム:2]！</language>
+		<language name="JPN_KANJI" width="216">ゆけっ！　[1:02:ポケモンニックネーム:0]！
+[1:02:ポケモンニックネーム:1]！　[1:02:ポケモンニックネーム:2]！</language>
+	</row>
+
 	<row id="BTL_STRID_STD_PutSingle_NPC" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>ＮＰＣがくりだす　１体</comment>
 		<language name="JPN" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]は
@@ -436,6 +444,16 @@
 [1:02:ポケモンニックネーム:3]を　くりだした！</language>
 	</row>
 
+	<row id="BTL_STRID_STD_PutTriple_NPC" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>ＮＰＣがくりだす　３体</comment>
+		<language name="JPN" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]は
+[1:02:ポケモンニックネーム:2]と　[1:02:ポケモンニックネーム:3]と▽
+[1:02:ポケモンニックネーム:4]を　くりだした！</language>
+		<language name="JPN_KANJI" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]は
+[1:02:ポケモンニックネーム:2]と　[1:02:ポケモンニックネーム:3]と▽
+[1:02:ポケモンニックネーム:4]を　くりだした！</language>
+	</row>
+
 	<row id="BTL_STRID_STD_PutSingle_Player" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>相手プレイヤーがくり出す　１体</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]は
@@ -452,6 +470,16 @@
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]は
 [1:02:ポケモンニックネーム:1]と▽
 [1:02:ポケモンニックネーム:2]を　くりだした！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_PutTriple_Player" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>相手プレイヤーがくり出す　３体</comment>
+		<language name="JPN" width="216">[1:00:トレーナー名:0]は
+[1:02:ポケモンニックネーム:1]と　[1:02:ポケモンニックネーム:2]と▽
+[1:02:ポケモンニックネーム:3]を　くりだした！</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]は
+[1:02:ポケモンニックネーム:1]と　[1:02:ポケモンニックネーム:2]と▽
+[1:02:ポケモンニックネーム:3]を　くりだした！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_UseItem_Self" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
