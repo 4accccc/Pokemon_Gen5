@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/19 16:04:51
+#save date:2009/10/23 17:33:04
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t02pc0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/19 16:04:51
+#save date:2009/10/23 17:33:04
 2
 #hold event type:
 1
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_SHOP_START_TALK
+SCRID_T02PC0101_SHOP
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -198,7 +198,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_SHOP_START_TALK
+SCRID_T02PC0101_SHOP
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -217,7 +217,7 @@ DIR_LEFT
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/19 16:04:51
+#save date:2009/10/23 17:33:04
 2
 #hold event type:
 1
@@ -227,7 +227,7 @@ DIR_LEFT
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/19 16:04:51
+#save date:2009/10/23 17:33:04
 2
 #hold event type:
 1
@@ -237,7 +237,7 @@ DIR_LEFT
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/19 16:04:51
+#save date:2009/10/23 17:33:04
 2
 #hold event type:
 1
