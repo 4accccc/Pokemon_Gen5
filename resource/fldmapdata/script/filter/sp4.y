@@ -188,6 +188,7 @@ rule
 				| assign
 					{
 					}
+        | compound_assign
 				| callfunc
         | switch_stmt
         | while_stmt
@@ -418,6 +419,20 @@ rule
 					{
 						result = AssignNode.new(val[0], val[2], funcall)
 					}
+	#---------------------------------------------
+  # 「複合代入」は
+  #   
+  #   「変数参照」「複合代入演算子」「変数参照」
+  #   「変数参照」「複合代入演算子」「プライマリ」
+	#---------------------------------------------
+  compound_assign : VARREF OP_COMP_ASSIGN VARREF
+            {
+              result = CompoundAssignNode.new(val[0], val[2], val[1])
+            }
+          | VARREF OP_COMP_ASSIGN primary
+            {
+              result = CompoundAssignNode.new(val[0], val[2], val[1])
+            }
 
 	#---------------------------------------------
 	#	「命令文」は
@@ -644,6 +659,10 @@ def parse( f )
 				when /\A==/,/\A!=/,/\A\<=/,/\A\>=/,/\A>/,/\A</,/\A\&\&/,/\A\|\|/
           # 比較演算子
 					pushq [ $&, $& ]
+
+        when /\A\+=/, /\A\-=/
+          # 複合代入演算子
+          pushq [ :OP_COMP_ASSIGN, $& ]
 
 				when /\A\/\*.*/
           #C形式コメント開始

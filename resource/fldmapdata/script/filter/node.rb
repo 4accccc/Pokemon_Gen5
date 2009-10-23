@@ -472,6 +472,29 @@ module PmScript
 	end
 
   #---------------------------------------------
+  #---------------------------------------------
+  class CompoundAssignNode < Node
+    def initialize( vname, val, op )
+      @vname = vname
+      @val = val
+      @op = op
+    end
+
+    def compile( intp )
+      varname = @vname.sub(/\A\$/,"")
+      value = @val.sub(/\A\$/, "")
+      case @op
+      when "+="
+        puts "\t_ADD_WK\t#{varname}, #{value}"
+      when "-="
+        puts "\t_SUB_WK\t#{varname}, #{value}"
+      else
+        raise CompileError, "#{@fname}:#{@lineno}: iregal operator #{@op}"
+      end
+    end
+
+  end
+  #---------------------------------------------
   # ƒ[ƒJƒ‹•Ï”’è‹`
   #---------------------------------------------
 	class DefLocalVarNode < Node
