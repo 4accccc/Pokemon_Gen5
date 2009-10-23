@@ -327,6 +327,8 @@ EVENT_END
 //共通、ポケモン入手メッセージ
 t01r0102_poke_get_yes:
 
+	//==========ポケモン入手処理==============//
+
 	_TALKWIN_OPEN()
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
 	_TALKMSG(msg_t01r0102_ball_get_01)
@@ -339,6 +341,11 @@ t01r0102_poke_get_yes:
 	_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, SCWK_TEMP0, 0, 0, 5, 0 )
 
 	_TALKWIN_CLOSE()
+
+	//初期３体入手フラグ
+	_FLAG_SET( SYS_FLAG_FIRST_POKE_GET )
+
+	//========================================//
 
 	//【仮】ボールに近づく演出が未作成091002
 	//専用アプリになるか分からないため

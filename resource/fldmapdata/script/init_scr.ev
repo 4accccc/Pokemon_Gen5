@@ -103,8 +103,8 @@ init_flags:
 INIT_EVENT_START  ev_init_debug_script
   //初期化時のイベントフラグ設定は共通
 	_CALL	init_flags
-  //_FLAG_SET( SYS_FLAG_FIRST_POKE_GET )
-  //_FLAG_SET( SYS_FLAG_ZUKAN_GET )
+	_FLAG_SET( SYS_FLAG_FIRST_POKE_GET )
+	_FLAG_SET( SYS_FLAG_ZUKAN_GET )
 INIT_EVENT_END
 
 
