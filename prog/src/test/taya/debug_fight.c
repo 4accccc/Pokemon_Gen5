@@ -1115,11 +1115,10 @@ FS_EXTERN_OVERLAY(battle);
         BTL_SETUP_Triple_Comm( &wk->setupParam, wk->gameData, netHandle, BTL_COMM_DS );
         break;
       }
-      if( wk->setupParam.partyPlayer ){
-        PokeParty_Copy( wk->partyPlayer, wk->setupParam.partyPlayer );
-      }else{
-        wk->setupParam.partyPlayer = wk->partyPlayer;
+      if( wk->setupParam.partyPlayer == NULL ){
+        wk->setupParam.partyPlayer = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
       }
+      PokeParty_Copy( wk->partyPlayer, wk->setupParam.partyPlayer );
     }
     else
     {
@@ -1138,6 +1137,9 @@ FS_EXTERN_OVERLAY(battle);
         BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData, wk->partyEnemy1,
           BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, trID );
         break;
+      }
+      if( wk->setupParam.partyPlayer == NULL ){
+        wk->setupParam.partyPlayer = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
       }
       PokeParty_Copy( wk->partyPlayer, wk->setupParam.partyPlayer );
     }
