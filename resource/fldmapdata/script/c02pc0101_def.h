@@ -7,5 +7,6 @@
 //スクリプトデータID定義
 #define SCRID_C02PC0101_GIRL2_01 (1)
 #define SCRID_C02PC0101_BACKPACKERM_01 (2)
+#define SCRID_C02PC0101_SHOP (3)
 
 #endif //_C02PC0101_DEF_H_
