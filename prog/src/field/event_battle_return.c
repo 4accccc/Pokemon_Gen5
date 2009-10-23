@@ -64,5 +64,13 @@ static GFL_PROC_RESULT BtlRet_ProcQuit( GFL_PROC * proc, int * seq, void * pwk, 
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+  BTLRET_PARAM* param = pwk;
+
+  switch( *seq ){
+  case 0:
+    // @todo 図鑑（見たフラグ）をセットする
+    break;
+  }
+
   return GFL_PROC_RES_FINISH;
 }
