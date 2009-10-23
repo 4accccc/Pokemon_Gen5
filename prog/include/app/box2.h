@@ -62,3 +62,4 @@ typedef struct {
 
 // ボックスPROCデータ
 extern const GFL_PROC_DATA BOX2_ProcData;
+FS_EXTERN_OVERLAY(box);
