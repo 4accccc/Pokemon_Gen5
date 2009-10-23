@@ -84,6 +84,11 @@
 //バッグプロセス呼び出しコード定義
 #define SCR_BAG_MODE_SELL  (0)
 
+//フィールド通信切断処理イベントの結果
+#define SCR_FIELD_COMM_EXIT_OK      (0) //正常に通信切断処理が終わった
+#define SCR_FIELD_COMM_EXIT_CANCEL  (1) //切断処理をキャンセル
+#define SCR_FIELD_COMM_EXIT_ERROR   (2) //切断処理中になんらかのエラー
+
 //-----------------------------------------------------------------------------
 //曜日取得関数の戻り値
 //  _GET_WEEK

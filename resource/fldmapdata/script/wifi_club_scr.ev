@@ -26,14 +26,7 @@ _EVENT_DATA_END
 DEFINE_LOCAL  reg_return
 
 { //WIFI_CLUB_COUNTER
-
-DEFINE_LOCAL  LWK_POKERUS_STATUS
-DEFINE_LOCAL  LWK_TRAINER_CARD_STATUS
-DEFINE_LOCAL  LWK_RECOVER_YESNO
 DEFINE_LOCAL  lwk_return 
-DEFINE_LOCAL  LWK_STATE_SELECT
-DEFINE_LOCAL  LWK_FRIEND_NUM
-DEFINE_LOCAL  LWK_ID_STATE
 
 //==============================================================
 /// 
@@ -100,6 +93,13 @@ sub_club_counter_main:
 
     CASE SEQ_GOODBYE THEN
       _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_02 ) //それではまたお越しください
+      $i_seq = SEQ_EXIT
+   
+    CASE SEQ_RETRY THEN
+      _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_err03 ) //もう一度最初からやり直してください
+      $i_seq = SEQ_EXIT
+
+    CASE SEQ_EXIT THEN
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
       $i_loop = FALSE
@@ -204,7 +204,18 @@ sub_club_counter_connect:
     $reg_return = SEQ_GOODBYE
     _RET
   ENDIF
-  
+ 
+  //フィールド通信切断
+  _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
+
+  IF $i_ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
+    $reg_return = SEQ_GOODBYE
+    _RET
+  ELSIF $i_ret == SCR_FIELD_COMM_EXIT_ERROR THEN
+    $reg_return = SEQ_RETRY
+    _RET
+  ENDIF
+
   //接続　それではご案内します
   _BALLOONWIN_TALKOBJ_OPEN( msg_wifi_club_01_04 )
   _AB_KEYWAIT()

@@ -9,5 +9,7 @@
 #define SEQ_CHECK_CONNECT     (2)
 #define SEQ_CONNECT           (3)
 #define SEQ_GOODBYE           (10)
+#define SEQ_RETRY             (11)
+#define SEQ_EXIT              (12)
 #define SEQ_END               (0xFF)
 

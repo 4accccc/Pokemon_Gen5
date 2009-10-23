@@ -2506,6 +2506,9 @@
 /**
  * @def _FIELD_COMM_EXIT
  * @brief フィールドマップの通信を終了する
+ *
+ * コモン処理 _FIELD_COMM_EXIT_EVENT_CALL を作製してあります。
+ * 原則として単体での呼び出しはせず、コモン処理を呼んでください
  */
 //--------------------------------------------------------------
 #define _FIELD_COMM_EXIT() \
@@ -3926,6 +3929,17 @@
 //--------------------------------------------------------------
 #define _REPORT_EVENT_CALL( ret_wk )  \
     _ASM_REPORT_EVENT_CALL  ret_wk
+
+//--------------------------------------------------------------
+/**
+ * @def _FIELD_COMM_EXIT_EVENT_CALL
+ * @brief 簡易イベントコマンド：フィールド通信切断イベント呼び出し
+ * @param ret_wk  切断処理の戻り値を取得
+ *                SCR_FIELD_COMM_EXIT_OK:切断終了 SCR_FIELD_COMM_EXIT_NG:なんらかのエラーが発生
+ */
+//--------------------------------------------------------------
+#define _FIELD_COMM_EXIT_EVENT_CALL( ret_wk )  \
+    _ASM_FIELD_COMM_EXIT_EVENT_CALL  ret_wk
 
 //--------------------------------------------------------------
 /**

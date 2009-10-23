@@ -42,6 +42,22 @@
 
 //--------------------------------------------------------------
 /**
+ * フィールド通信切断イベント呼び出し
+ *
+ * @param ret_wk      結果を受け取るためのワーク
+ */
+//--------------------------------------------------------------
+  .macro _ASM_FIELD_COMM_EXIT_EVENT_CALL ret_wk
+  _PUSH_WORK  SCWK_PARAM0
+
+  _CHG_COMMON_SCR SCRID_FIELD_COMM_EXIT_EVENT_CALL
+  _ASM_LDWKVAL  \ret_wk, SCWK_PARAM0
+
+  _POP_WORK   SCWK_PARAM0
+  .endm
+
+//--------------------------------------------------------------
+/**
  * 簡易イベント入手イベント
  *
  * @param itemno        取得するアイテムナンバー

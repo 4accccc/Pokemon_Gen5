@@ -58,7 +58,7 @@ EVENT_START   ev_heal_p01
   _YES_NO_WIN( LWK_RECOVER_YESNO )
   _BALLOONWIN_CLOSE()
 
-  IF $LWK_RECOVER_YESNO == 0 THEN
+  IF $LWK_RECOVER_YESNO == SCR_YES THEN
     //預ける場合
     
     _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_PC_AZUKE )
@@ -279,7 +279,7 @@ EVENT_START ev_union
     _YES_NO_WIN( ret )
     _BALLOONWIN_CLOSE()
     //『はい』
-    IF $ret == 0 THEN
+    IF $ret == SCR_YES THEN
       $room_in = TRUE
     ENDIF
   ENDIF
@@ -291,14 +291,20 @@ EVENT_START ev_union
     _YES_NO_WIN( ret )
     _BALLOONWIN_CLOSE()
     //『いいえ』
-    IF $ret == 1 THEN
+    IF $ret == SCR_NO THEN
       $room_in = FALSE
     ENDIF
   ENDIF
 
   // フィールドマップ通信終了処理
   IF $room_in == TRUE THEN
-    _FIELD_COMM_EXIT()
+    _FIELD_COMM_EXIT_EVENT_CALL( ret )
+
+    IF $ret == SCR_FIELD_COMM_EXIT_CANCEL THEN
+      $room_in = FALSE
+    ELSIF $ret == SCR_FIELD_COMM_EXIT_ERROR THEN
+      $room_in = FALSE
+    ENDIF
   ENDIF
 
   // レポート処理
