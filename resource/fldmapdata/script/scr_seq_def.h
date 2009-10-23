@@ -2786,14 +2786,16 @@
  * @def _GET_PARTY_POKE_COUNT
  * @brief 手持ちポケモンの数を取得
  * @param ret_wk チェック結果を受け取るワーク
+ 	!!注意!!
+ 	返り値は「１」から始まります。手持ちのポジション指定は「0」始まりなので合わせて使う場合は注意。
  * @param count_mode 数え方指定(POKECOUNT_MODE_XXXX)
-		手持ちポケモン数カウントモード
-		POKECOUNT_MODE_TOTAL         (0)  // 手持ちの数
-		POKECOUNT_MODE_NOT_EGG       (1)  // タマゴを除く手持ちの数
-		POKECOUNT_MODE_BATTLE_ENABLE (2)  // 戦える(タマゴと瀕死を除いた)ポケモン数
-		POKECOUNT_MODE_ONLY_EGG      (3)  // タマゴの数(駄目タマゴを除く) 
-    POKECOUNT_MODE_ONLY_DAME_EGG (4)  // 駄目タマゴの数
- * @retval u16 手持ちポケモンの数
+ 		手持ちポケモン数カウントモード
+ 		POKECOUNT_MODE_TOTAL         (0)  // 手持ちの数
+ 		POKECOUNT_MODE_NOT_EGG       (1)  // タマゴを除く手持ちの数
+ 		POKECOUNT_MODE_BATTLE_ENABLE (2)  // 戦える(タマゴと瀕死を除いた)ポケモン数
+ 		POKECOUNT_MODE_ONLY_EGG      (3)  // タマゴの数(駄目タマゴを除く) 
+ 		POKECOUNT_MODE_ONLY_DAME_EGG (4)  // 駄目タマゴの数
+ 	* @retval u16 手持ちポケモンの数
  */
 //--------------------------------------------------------------
 #define _GET_PARTY_POKE_COUNT( ret_wk, count_mode ) \
