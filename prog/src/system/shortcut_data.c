@@ -38,12 +38,14 @@
  *	@return	SHORTCUT_ID	ショートカットID
  */
 //-----------------------------------------------------------------------------
-SHORTCUT_ID SHORTCUT_DATA_GetItemToShortcutID( u8 item )
+SHORTCUT_ID SHORTCUT_DATA_GetItemToShortcutID( u16 item )
 {	
 	
 #ifdef DEBUG_ONLY_FOR_toru_nagihashi
 #warning ITEM_ID add or changed//アイテムIDが変更したり追加されたりするはず
 #endif
+
+	NAGI_Printf( "アイテム変換 %d\n", item );
 
 	switch( item )
 	{	

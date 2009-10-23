@@ -52,4 +52,4 @@ typedef enum
  *					ŠO•”ŒöŠJ
 */
 //=============================================================================
-extern SHORTCUT_ID SHORTCUT_DATA_GetItemToShortcutID( u8 item );
+extern SHORTCUT_ID SHORTCUT_DATA_GetItemToShortcutID( u16 item );
