@@ -90,7 +90,8 @@ SUBDIRS	=	wmi \
 			trade \
 			waza_oshie \
 			sodateya \
-			fld_shortcut_menu
+			fld_shortcut_menu \
+			trtype_bgm
 
 include $(RESOURCE_MACRO)
 
