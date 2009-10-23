@@ -171,7 +171,7 @@ static BOOL callproc_WaitSubProcEnd( VMHANDLE *core, void *wk )
  * –‚±‚¿‚ç‚Å‘Ò‚Á‚½ê‡A–¾¦“I‚É EvCmdFreeSubProcWork( VMHANDLE *core, void *wk ) ‚ğg‚Á‚Ä‰ğ•ú‚µ‚Ä‚­‚¾‚³‚¢
  */
 //--------------------------------------------------------------
-BOOL SCMD_WaitSubProcEndNonFree( VMHANDLE *core, void *wk )
+BOOL EVFUNC_WaitSubProcEndNonFree( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );

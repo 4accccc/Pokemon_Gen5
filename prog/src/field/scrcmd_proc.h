@@ -77,7 +77,7 @@ extern void EVFUNC_CallSubProc( VMHANDLE *core, SCRCMD_WORK *work,
  * –‚±‚¿‚ç‚Å‘Ò‚Á‚½ê‡A–¾¦“I‚É EvCmdFreeSubProcWork( VMHANDLE *core, void *wk ) ‚ğg‚Á‚Ä‰ğ•ú‚µ‚Ä‚­‚¾‚³‚¢
  */
 //--------------------------------------------------------------
-extern BOOL SCMD_WaitSubProcEndNonFree( VMHANDLE *core, void *wk );
+extern BOOL EVFUNC_WaitSubProcEndNonFree( VMHANDLE *core, void *wk );
 
 //--------------------------------------------------------------
 /**
