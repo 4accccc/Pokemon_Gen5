@@ -700,6 +700,18 @@
 		<language name="JPN" width="216">Ｎ</language>
 	</row>
 
+	<row id="rival_07">
+		<language name="JPN" width="216">ライバル</language>
+	</row>
+
+	<row id="rival_08">
+		<language name="JPN" width="216">ライバル</language>
+	</row>
+
+	<row id="rival_09">
+		<language name="JPN" width="216">ライバル</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
