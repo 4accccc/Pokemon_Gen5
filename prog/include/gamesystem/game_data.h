@@ -559,7 +559,7 @@ extern void GAMEDATA_SetShortCut( GAMEDATA *gamedata, SHORTCUT_ID shortcutID, BO
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	Yボタン登録設定
+ *	@brief	Yボタン登録取得
  *
  *  @param  gamedata		GAMEDATAへのポインタ
  *  @param	shortcutID	Yボタン登録するID

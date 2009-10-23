@@ -40,6 +40,11 @@
 //-----------------------------------------------------------------------------
 SHORTCUT_ID SHORTCUT_DATA_GetItemToShortcutID( u8 item )
 {	
+	
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#warning ITEM_ID add or changed//アイテムIDが変更したり追加されたりするはず
+#endif
+
 	switch( item )
 	{	
 	case ITEM_ZITENSYA:
@@ -63,6 +68,15 @@ SHORTCUT_ID SHORTCUT_DATA_GetItemToShortcutID( u8 item )
 #endif
 	case ITEM_TAUNMAPPU:
 		return SHORTCUT_ID_TOWNMAP;
+	
+	case ITEM_BATORUREKOODAA:
+		return SHORTCUT_ID_BTLRECORDER;
+
+	case ITEM_TOMODATITETYOU:
+		return SHORTCUT_ID_FRIENDNOTE;
+
+	case ITEM_PARESUHEGOO:
+		return SHORTCUT_ID_PALACEGO;
 
 	default:
 		return SHORTCUT_ID_NULL;
