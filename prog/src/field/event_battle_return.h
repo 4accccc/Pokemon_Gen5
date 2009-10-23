@@ -26,4 +26,6 @@ typedef struct {
 /*--------------------------------------------------------------------------*/
 extern const GFL_PROC_DATA   BtlRet_ProcData;
 
+// オーバーレイモジュール宣言
+FS_EXTERN_OVERLAY(battle_return);
 

@@ -69,6 +69,18 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
   switch( *seq ){
   case 0:
     // @todo 図鑑（見たフラグ）をセットする
+
+    // 捕獲した
+    if( param->btlResult->result == BTL_RESULT_CAPTURE )
+    {
+      POKEPARTY* party  = GAMEDATA_GetMyPokemon( param->gameData );
+      POKEMON_PARAM* pp = PokeParty_GetMemberPointer(
+                            param->btlResult->partyEnemy1, param->btlResult->capturedPokeIdx );
+
+      if( PokeParty_GetPokeCount(party) < PokeParty_GetPokeCountMax(party) ){
+        PokeParty_Add( party, pp );
+      }
+    }
     break;
   }
 
