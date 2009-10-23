@@ -590,7 +590,7 @@
 #define FV_R05_RIVAL                       566 /* 0x0236 ５番道路：ライバル */
 #define FV_R05_LEADER4                     567 /* 0x0237 ５番道路：ジムリーダー（カミツレ） */
 #define FV_R05_CHAMPION                    568 /* 0x0238 ５番道路：チャンピオンと子供たち */
-		/* not used   569(0x0239) */
+#define FV_MUSEUM_TOUNAN                   569 /* 0x0239 博物館：盗難イベントで盗まれるもの */
 		/* not used   570(0x023a) */
 		/* not used   571(0x023b) */
 		/* not used   572(0x023c) */
