@@ -290,11 +290,13 @@ static GFL_PROC_RESULT MusicalEditProc_Main( GFL_PROC * proc, int * seq , void *
     //MusicalEdit_TermBgPokeEquip( work );
     //MusicalEdit_TermGraphic( work );
     STA_ACT_TermActing( work->actWork );
+    /*
     if( work->isInitMcs == TRUE )
     {
       MCS_Exit();
     }
-    return GFL_PROC_RES_FINISH;
+    */
+    *seq = STA_SEQ_INIT_ACTING;
     break;
   }
   
