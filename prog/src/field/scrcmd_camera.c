@@ -158,7 +158,8 @@ VMCMD_RESULT EvCmdCamera_Move( VMHANDLE *core, void *wk )
     param.Core.TrgtPos.y = VMGetU32( core );
     param.Core.TrgtPos.z = VMGetU32( core );
     param.Chk.Shift = FALSE;
-    param.Chk.Angle = TRUE;
+    param.Chk.Pitch = TRUE;
+    param.Chk.Yaw = TRUE;
     param.Chk.Dist = TRUE;
     param.Chk.Fovy = FALSE;
     param.Chk.Pos = TRUE;
@@ -185,8 +186,17 @@ VMCMD_RESULT EvCmdCamera_RecoverMove( VMHANDLE *core, void *wk )
   FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
 
   frame = VMGetU16( core );
-
-  FIELD_CAMERA_RecvLinerParam(camera, frame);
+  
+  {
+    FLD_CAM_MV_PARAM_CHK chk;
+    chk.Shift = TRUE;
+    chk.Pitch = TRUE;
+    chk.Yaw = TRUE;
+    chk.Dist = TRUE;
+    chk.Fovy = TRUE;
+    chk.Pos = TRUE;
+    FIELD_CAMERA_RecvLinerParam(camera, &chk, frame);
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
