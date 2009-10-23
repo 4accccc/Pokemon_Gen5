@@ -1504,6 +1504,61 @@ FIELD_RAIL_WORK* FIELD_RAIL_MAN_GetCalcRailWork( const FIELD_RAIL_MAN * man )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  安心なロケーションの取得
+ *
+ *	@param	man           マネージャ
+ *	@param	cp_location   変換前ロケーション
+ *	@param	p_ans         安心なロケーション格納先
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_MAN_CalcSafeLocation( const FIELD_RAIL_MAN * man, const RAIL_LOCATION* cp_location, RAIL_LOCATION* p_ans )
+{
+  RAIL_LOCATION location;
+  const RAIL_LINE* cp_line;
+  s32 line_ofs;
+  s32 width_ofs;
+  s32 line_ofs_max;
+  s32 width_ofs_max;
+  
+  GF_ASSERT( man );
+  GF_ASSERT( cp_location );
+  GF_ASSERT( p_ans );
+  GF_ASSERT( cp_location->type == FIELD_RAIL_TYPE_LINE );
+  GF_ASSERT( cp_location->rail_index < man->rail_dat.line_count );
+
+  location = *cp_location;
+  
+  *p_ans = location;
+
+  cp_line = &man->rail_dat.line_table[ location.rail_index ];
+
+  line_ofs    = RAIL_GRID_TO_OFS(location.line_grid);
+  width_ofs   = RAIL_GRID_TO_OFS(location.width_grid);
+  line_ofs_max    = getLineOfsMax( cp_line, man->rail_dat.ofs_unit, &man->rail_dat );
+  width_ofs_max   = getLineWidthOfsMax( cp_line, line_ofs, line_ofs_max, &man->rail_dat );
+
+  if( line_ofs >= line_ofs_max )
+  {
+    line_ofs = line_ofs_max - 1;
+    p_ans->line_grid = RAIL_OFS_TO_GRID( line_ofs );
+  }
+
+  if( MATH_ABS(width_ofs) > width_ofs_max )
+  {
+    if( width_ofs > 0 )
+    {
+      p_ans->width_grid = RAIL_OFS_TO_GRID( width_ofs_max );
+    }
+    else
+    {
+      p_ans->width_grid = RAIL_OFS_TO_GRID( -width_ofs_max );
+    }
+  }
+}
+
+
 
 //------------------------------------------------------------------
 //  FIELD_RAIL_WORKアクセス関数

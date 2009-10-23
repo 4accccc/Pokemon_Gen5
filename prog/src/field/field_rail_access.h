@@ -46,6 +46,9 @@ extern fx32 FIELD_RAIL_MAN_GetRailDatUnitSize( const FIELD_RAIL_MAN * man );
 // テンポラリレールワークの取得
 extern FIELD_RAIL_WORK* FIELD_RAIL_MAN_GetCalcRailWork( const FIELD_RAIL_MAN * man );
 
+// レールロケーションを、ラインの範囲内の値にする
+extern void FIELD_RAIL_MAN_CalcSafeLocation( const FIELD_RAIL_MAN * man, const RAIL_LOCATION* cp_location, RAIL_LOCATION* p_ans );
+
 //------------------------------------------------------------------
 //  FIELD_RAIL_WORKアクセス関数
 //------------------------------------------------------------------

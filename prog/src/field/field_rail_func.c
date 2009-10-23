@@ -536,6 +536,9 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_StraitLine( u32 rail_index, const FIELD_R
     }
     p_location->line_grid = RAIL_OFS_TO_GRID(front_ofs);
 
+    // レール範囲内のロケーションにする
+    FIELD_RAIL_MAN_CalcSafeLocation( cp_man, p_location, p_location );
+
     DEBUG_RAIL_Printf( "location width_grid [%d] line_grid [%d]\n", p_location->width_grid, p_location->line_grid );
 
     FIELD_RAIL_MAN_GetLocationPosition( cp_man, p_location, p_pos );
@@ -695,6 +698,9 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_CircleLine( u32 rail_index, const FIELD_R
         {
           p_location->width_grid = -RAIL_OFS_TO_GRID(cross_dist);
         }
+
+        // レール範囲内のロケーションにする
+        FIELD_RAIL_MAN_CalcSafeLocation( cp_man, p_location, p_location );
         FIELD_RAIL_MAN_GetLocationPosition( cp_man, p_location, p_pos );
 
         //DEBUG_RAIL_Printf( "OK width_grid[%d]\n", p_location->width_grid );
