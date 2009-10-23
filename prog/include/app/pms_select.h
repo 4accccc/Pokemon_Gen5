@@ -28,7 +28,7 @@ typedef struct _PMS_SELECT_WORK PMS_SELECT_WORK;
 //==============================================================
 typedef struct {
   // [IN]
-  int i;
+  int a;
   // [OUT]
   int ii;
 } PMS_SELECT_PARAM;

@@ -389,8 +389,17 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BAG, pWork->heapID );
 
     // 上画面パレット一括転送
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_bg_u_NCLR,
-                                      PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
+      GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_bg_u_NCLR, PALTYPE_SUB_BG, 0, 0, pWork->heapID );
+    
+    // 上画面パレット 男の場合一本目を上書き
+    {
+      u32 sex = MyStatus_GetMySex( pWork->mystatus );
+
+      if( sex == PTL_SEX_MALE )
+      {
+        GFL_ARCHDL_UTIL_TransVramPaletteEx( p_handle, NARC_bag_bag_bg_u_NCLR, PALTYPE_SUB_BG, 0x20, 0, 0x20, pWork->heapID );
+      }
+    }
 
     pWork->subbg = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_bag_bag_basebg_u_NCGR,
                                                                 GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
@@ -403,6 +412,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
     pWork->subbg2 = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_bag_bag_win01_02_u_NCGR,
                                                                  GFL_BG_FRAME1_S, 0, 0, pWork->heapID);
+    
     GFL_ARCHDL_UTIL_TransVramScreenCharOfs( p_handle, NARC_bag_bag_win01_u_NSCR,
                                             GFL_BG_FRAME1_S, 0,
                                             GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
@@ -919,7 +929,8 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
       pWork->cellRes[_NCG_CUR], pWork->cellRes[_PLT_CUR],  pWork->cellRes[_ANM_CUR],
       &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
-    GFL_CLACT_WK_SetDrawEnable( pWork->scrollCur , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->scrollCur, TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->scrollCur, TRUE );
   }
 
   //選択カーソル
@@ -937,6 +948,7 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
       &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
 
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur , TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkCur, TRUE );
   
     // タッチ起動 > カーソルをOFF
     if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
@@ -1007,7 +1019,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
     }
     {
       void * itemdata;
-      u8 backColor = 0xD;
+      u8 backColor = 0x0;
 
       itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
 

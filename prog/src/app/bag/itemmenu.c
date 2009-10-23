@@ -724,10 +724,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     }
     else if(BAG_MENU_YAMERU==pWork->ret_code2){  //やめる
       // タッチ遷移なら非表示に
-      if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
-      {
-        KTST_SetDraw( pWork, FALSE ); 
-      }
+      KTST_SetDraw( pWork, (GFL_UI_CheckTouchOrKey == GFL_APP_END_KEY) ); 
       _CHANGE_STATE(pWork, _itemKindSelectMenu);
     }
     else if(BAG_MENU_TOUROKU==pWork->ret_code2){  //とうろく
