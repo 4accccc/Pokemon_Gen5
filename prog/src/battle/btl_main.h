@@ -33,6 +33,7 @@ extern BtlPokePos BTL_MAIN_GetEnablePosEnd( const BTL_MAIN_MODULE* wk );
 extern POKEPARTY* BTL_MAIN_GetPlayerPokeParty( BTL_MAIN_MODULE* wk );
 extern u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk );
 extern u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID );
+extern void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos );
 
 //-------------------------
 extern void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume );

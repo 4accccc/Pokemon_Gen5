@@ -106,7 +106,7 @@ typedef enum {
   BTL_RESULT_DRAW,        ///< ひきわけ
   BTL_RESULT_RUN,         ///< 逃げた
   BTL_RESULT_RUN_ENEMY,   ///< 相手が逃げた（野生のみ）
-  BTL_RESULT_CATCH,       ///< 捕まえた（野生のみ）
+  BTL_RESULT_CAPTURE,     ///< 捕まえた（野生のみ）
 
 }BtlResult;
 
@@ -161,8 +161,10 @@ typedef struct {
   u16       musicDefault;   ///< デフォルト時のBGMナンバー
   u16       musicPinch;     ///< ピンチ時のBGMナンバー
 
+  //----- 以下、バトルの結果格納パラメータ ----
 
-  BtlResult   result;       ///< 勝敗結果
+  BtlResult   result;           ///< 勝敗結果
+  u8          capturedPokeIdx;  ///< 捕獲したポケモンのメンバー内インデックス（partyEnemy1 内）
 
 }BATTLE_SETUP_PARAM;
 

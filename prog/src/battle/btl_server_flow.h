@@ -135,6 +135,7 @@ extern WazaID BTL_SVFLOW_GetPrevExeWaza( BTL_SVFLOW_WORK* wk );
 //----------------------------
 extern void BTL_SVFLOW_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume );
 extern BOOL BTL_SVFLOW_IsStandAlonePlayerSide( BTL_SVFLOW_WORK* wk, u8 pokeID );
+extern BtlPokePos BTL_SVFLOW_GetCapturedPokePos( const BTL_SVFLOW_WORK* wk );
 
 
 /**

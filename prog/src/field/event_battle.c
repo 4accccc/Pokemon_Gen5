@@ -60,6 +60,7 @@ typedef struct {
   GAMESYS_WORK * gsys;
   FIELDMAP_WORK * fieldmap;
   BATTLE_SETUP_PARAM* battle_param;
+  BTLRET_PARAM        btlret_param;
   u16 timeWait;
   u16 bgmpush_off;
 }BATTLE_EVENT_WORK;
@@ -215,7 +216,9 @@ static GMEVENT_RESULT fieldBattleEvent(
     (*seq)++;
     break;
   case 3:
-    GMEVENT_CallProc( event, FS_OVERLAY_ID(battle_return), &BtlRet_ProcData, bew->battle_param );
+    bew->btlret_param.btlResult = bew->battle_param;
+    bew->btlret_param.gameData  = gamedata;
+    GMEVENT_CallProc( event, FS_OVERLAY_ID(battle_return), &BtlRet_ProcData, &bew->btlret_param );
     (*seq)++;
     break;
   case 4:
@@ -476,7 +479,7 @@ static BOOL BEW_IsLoseResult(BATTLE_EVENT_WORK * bew)
   case BTL_RESULT_DRAW:        ///< ひきわけ
   case BTL_RESULT_RUN:         ///< 逃げた
   case BTL_RESULT_RUN_ENEMY:   ///< 相手が逃げた（野生のみ）
-  case BTL_RESULT_CATCH:       ///< 捕まえた（野生のみ）
+  case BTL_RESULT_CAPTURE:     ///< 捕まえた（野生のみ）
     return FALSE;
   }
 }

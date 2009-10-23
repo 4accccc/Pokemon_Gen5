@@ -190,6 +190,7 @@ struct _BTL_SVFLOW_WORK {
   u8      wazaEff_EnableFlag;
   u8      wazaEff_TargetPokeID;
   u8      escapeClientID;
+  u8      getPokePos;
   u8      pokeDeadFlag[ BTL_POKEID_MAX ];
 
 
@@ -608,6 +609,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->prevExeWaza = WAZANO_NULL;
   wk->bagMode = bagMode;
   wk->escapeClientID = BTL_CLIENTID_NULL;
+  wk->getPokePos = BTL_POS_NULL;
   {
     BtlRule rule = BTL_MAIN_GetRule( mainModule );
     BTL_POSPOKE_InitWork( &wk->pospokeWork, wk->mainModule, wk->pokeCon, rule );
@@ -791,6 +793,19 @@ u8 BTL_SVFLOW_GetEscapeClientID( const BTL_SVFLOW_WORK* wk )
   return wk->escapeClientID;
 }
 
+//=============================================================================================
+/**
+ * 捕獲したポケモンの位置を取得
+ *
+ * @param   wk
+ *
+ * @retval  BtlPokePos
+ */
+//=============================================================================================
+BtlPokePos BTL_SVFLOW_GetCapturedPokePos( const BTL_SVFLOW_WORK* wk )
+{
+  return wk->getPokePos;
+}
 
 
 //----------------------------------------------------------------------------------
@@ -1826,12 +1841,22 @@ static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
       u8 yure_cnt, fSuccess;
 
       // @todo ここで捕獲成否チェック＆失敗なら揺れ数を計算する。今は適当。
-      yure_cnt = 3;
-      fSuccess = TRUE;
+      if( itemID == ITEM_MASUTAABOORU ){
+        yure_cnt = 3;
+        fSuccess = TRUE;
+      }else{
+        fSuccess = GFL_STD_MtRand(100) < 75;
+        if( fSuccess ){
+          yure_cnt = 3;
+        }else{
+          yure_cnt = GFL_STD_MtRand( 4 );
+        }
+      }
 
       SCQUE_PUT_ACT_BallThrow( wk->que, targetPos, yure_cnt, fSuccess );
       if( fSuccess ){
         wk->flowResult = SVFLOW_RESULT_POKE_GET;
+        wk->getPokePos = targetPos;
       }
     }
   }

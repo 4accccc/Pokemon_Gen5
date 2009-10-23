@@ -198,6 +198,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
       wk->heapID = HEAPID_BTL_SYSTEM;
       wk->setupParam = setup_param;
+      wk->setupParam->capturedPokeIdx = TEMOTI_POKEMAX;
       wk->escapeClientID = BTL_CLIENTID_NULL;
 
       BTL_NET_InitSystem( setup_param->netHandle, HEAPID_BTL_NET );
@@ -2330,6 +2331,24 @@ BAG_CURSOR* BTL_MAIN_GetBagCursorData( BTL_MAIN_MODULE* wk )
 {
   return wk->setupParam->bagCursor;
 }
+//=============================================================================================
+/**
+ * 捕獲したポケモン位置の通知を受け付け
+ *
+ * @param   wk
+ * @param   pos
+ */
+//=============================================================================================
+void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos )
+{
+  if( wk->setupParam->capturedPokeIdx != TEMOTI_POKEMAX )
+  {
+    u8 clientID, posIdx;
+    btlPos_to_cliendID_and_posIdx( wk, pos, &clientID, &posIdx );
+    wk->setupParam->capturedPokeIdx = posIdx;
+    BTL_Printf("捕獲ポケ位置=%d, Index=%d\n", pos, posIdx );
+  }
+}
 
 //---------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------
@@ -2518,7 +2537,11 @@ static void checkWinner( BTL_MAIN_MODULE* wk )
   // 種々メッセージのタグ解釈不備を解消すべし
   BtlResult result;
 
-  if( wk->escapeClientID != BTL_CLIENTID_NULL )
+  if( wk->setupParam->capturedPokeIdx != TEMOTI_POKEMAX )
+  {
+    result = BTL_RESULT_CAPTURE;
+  }
+  else if( wk->escapeClientID != BTL_CLIENTID_NULL )
   {
     result = (wk->escapeClientID == wk->myClientID)? BTL_RESULT_RUN : BTL_RESULT_RUN_ENEMY;
     BTL_Printf("逃げたクライアント=%d, 自分=%d\n", wk->escapeClientID, wk->myClientID);
