@@ -261,6 +261,7 @@ extern const GFL_G3D_CAMERA * FIELD_CAMERA_GetCameraPtr(const FIELD_CAMERA * cam
 extern void FIELD_CAMERA_BindTarget(FIELD_CAMERA * camera, const VecFx32 * watch_target);
 extern void FIELD_CAMERA_BindDefaultTarget(FIELD_CAMERA * camera);
 extern void FIELD_CAMERA_FreeTarget(FIELD_CAMERA * camera);
+extern const VecFx32 *FIELD_CAMERA_GetWatchTarget(FIELD_CAMERA * camera);
 extern BOOL FIELD_CAMERA_IsBindDefaultTarget( const FIELD_CAMERA * camera );
 
 //------------------------------------------------------------------
@@ -299,7 +300,7 @@ extern FIELD_CAMERA_AREA_CONT FIELD_CAMERA_GetCameraAreaCont( const FIELD_CAMERA
 extern void FIELD_CAMERA_SetRecvCamParam(FIELD_CAMERA * camera);
 extern void FIELD_CAMERA_ClearRecvCamParam(FIELD_CAMERA * camera);
 extern void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *param, const u16 inFrame);
-extern void FIELD_CAMERA_RecvLinerParam(FIELD_CAMERA * camera, const u16 inFrame);
+extern void FIELD_CAMERA_RecvLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM_CHK *chk, const u16 inFrame);
 extern void FIELD_CAMERA_SetMvFuncCallBack(FIELD_CAMERA * camera, CAMERA_CALL_BACK func, void *work);
 extern void FIELD_CAMERA_ClearMvFuncCallBack(FIELD_CAMERA * camera);
 extern BOOL FIELD_CAMERA_CheckMvFunc(FIELD_CAMERA * camera);

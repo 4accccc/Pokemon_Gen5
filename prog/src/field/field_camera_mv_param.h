@@ -30,7 +30,8 @@ typedef struct FLD_CAM_MV_PARAM_CORE_tag
 typedef struct FLD_CAM_MV_PARAM_CHK_tag
 {
   BOOL Shift;
-  BOOL Angle;
+  BOOL Pitch;
+  BOOL Yaw;
   BOOL Dist;
   BOOL Fovy;
   BOOL Pos;

@@ -74,7 +74,8 @@ typedef enum {
 //カメラの復帰情報
 typedef struct FLD_CAM_PUSH_PARAM_tag
 {
-  FIELD_CAMERA_MODE Mode;
+  FIELD_CAMERA_MODE BeforeMode;   //プッシュする前のモード
+//  FIELD_CAMERA_MODE PushMode;     //復帰情報をプッシュするときのモード
   FLD_CAM_MV_PARAM_CORE RecvParam;  //復帰情報
 }FLD_CAM_PUSH_PARAM;
 
@@ -215,6 +216,11 @@ static fx32 SubFuncFx(const fx32 *inSrc, const fx32 *inDst, const u16 inCostFrm,
 static u16 SubFuncU16(const u16 *inSrc, const u16 *inDst, const u16 inCostFrm, const u16 inNowFrm);
 
 
+#ifdef PM_DEBUG
+
+static void DumpCameraParam(FIELD_CAMERA * camera);
+
+#endif //PM_DEBUG
 
 //============================================================================================
 //============================================================================================
@@ -774,6 +780,13 @@ void FIELD_CAMERA_BindTarget(FIELD_CAMERA * camera, const VecFx32 * watch_target
 void FIELD_CAMERA_FreeTarget(FIELD_CAMERA * camera)
 {
 	camera->watch_target = NULL;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const VecFx32 *FIELD_CAMERA_GetWatchTarget(FIELD_CAMERA * camera)
+{
+	return camera->watch_target;
 }
 
 
@@ -1813,7 +1826,7 @@ static void RecvModeDirect(FIELD_CAMERA * camera)
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-void FIELD_CAMERA_SetRecvCamParam(FIELD_CAMERA * camera)
+void FIELD_CAMERA_SetRecvCamParam(FIELD_CAMERA * camera )
 {
   FLD_MOVE_CAM_DATA *data;
   FLD_CAM_PUSH_PARAM *push_param;
@@ -1831,9 +1844,17 @@ void FIELD_CAMERA_SetRecvCamParam(FIELD_CAMERA * camera)
   }
 
   //情報をプッシュ
-  push_param->Mode = camera->mode;
+  push_param->BeforeMode = camera->mode;
+  //補間移動はカメラ位置不定型のみのサポート
+  FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+  
   SetNowCameraParam(camera, &push_param->RecvParam);
-
+#if 0  
+#ifdef DEBUG_ONLY_FOR_saitou
+  OS_Printf("--DUMP_RECV_FIELD_CAMERA_PARAM--\n");
+  DumpCameraParam(camera);
+#endif
+#endif
   //プッシュしたフラグ
   data->PushFlg = TRUE;
 }
@@ -1851,14 +1872,7 @@ void FIELD_CAMERA_ClearRecvCamParam(FIELD_CAMERA * camera)
 {
   FLD_MOVE_CAM_DATA *data;
   FLD_CAM_PUSH_PARAM *push_param;
-#if 0 
-  static void (*const recv_func[FIELD_CAMERA_MODE_MAX])( FIELD_CAMERA * camera ) = 
-	{
-		RecvModeCamera,
-		RecvModeTarget,
-		RecvModeDirect,
-	};
-#endif
+
   if (camera == NULL){
     GF_ASSERT( 0 );
     return;
@@ -1872,11 +1886,8 @@ void FIELD_CAMERA_ClearRecvCamParam(FIELD_CAMERA * camera)
   
   push_param = &data->PushParam;
   //モードを復帰
-  FIELD_CAMERA_ChangeMode( camera, push_param->Mode );
-#if 0  
-  //復帰するモード別にパラメータを復帰
-  recv_func[push_param->Mode](camera);
-#endif
+  FIELD_CAMERA_ChangeMode( camera, push_param->BeforeMode );
+
   //プッシュフラグを落す
   data->PushFlg = FALSE;
 
@@ -1900,6 +1911,7 @@ void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *p
     GF_ASSERT( 0 );
     return;
   }
+
   //補間移動はカメラ位置不定型のみのサポート
   FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
@@ -1922,12 +1934,14 @@ void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *p
  *	@brief  リカバリー関数
  *
  *	@param	camera      カメラポインタ
+ *	@param  chk         復帰パラメータ
  *	@param  inFrame     フレーム
  *
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-void FIELD_CAMERA_RecvLinerParam(FIELD_CAMERA * camera, const u16 inFrame)
+void FIELD_CAMERA_RecvLinerParam(
+    FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM_CHK *chk, const u16 inFrame)
 {
   FLD_MOVE_CAM_DATA *data;
   if (camera == NULL){
@@ -1952,19 +1966,11 @@ void FIELD_CAMERA_RecvLinerParam(FIELD_CAMERA * camera, const u16 inFrame)
 
   SetNowCameraParam(camera, &data->SrcParam);
   data->DstParam = data->PushParam.RecvParam;
-  //現在のデフォルトターゲットの座標に復帰するようにする
-  if (camera->default_target != NULL){
-    data->DstParam.TrgtPos = *camera->default_target;
-  }else{
-    GF_ASSERT(0);
-  }
+
   data->NowFrm = 0;
   data->CostFrm = inFrame;
-  data->Chk.Shift = TRUE;
-  data->Chk.Angle = TRUE;
-  data->Chk.Dist = TRUE;
-  data->Chk.Fovy = TRUE;
-  data->Chk.Pos = TRUE;
+
+  data->Chk = *chk;
 
   //補間移動はカメラ位置不定型のみのサポート
   FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
@@ -2000,15 +2006,21 @@ static void LinerMoveFunc(FIELD_CAMERA * camera, void *work)
 
   src = &data->SrcParam;
   dst = &data->DstParam;
-  //アングル
-  if (data->Chk.Angle)
+  //アングルピッチ
+  if (data->Chk.Pitch)
   {
+///    OS_Printf("PITCH\n");
     camera->angle_pitch = SubFuncU16(&src->AnglePitch, &dst->AnglePitch, data->CostFrm, data->NowFrm);
+  }
+  //アングルヨー
+  if (data->Chk.Yaw)
+  {
     camera->angle_yaw = SubFuncU16(&src->AngleYaw, &dst->AngleYaw, data->CostFrm, data->NowFrm);
   }
   //座標
   if (data->Chk.Pos)
   {
+///    OS_Printf("POS\n");
     VecSubFunc(&src->TrgtPos, &dst->TrgtPos, data->CostFrm, data->NowFrm, &camera->target);
   }
   //視野角
@@ -2021,11 +2033,13 @@ static void LinerMoveFunc(FIELD_CAMERA * camera, void *work)
   //距離
   if (data->Chk.Dist)
   {
+///    OS_Printf("DIST\n");
     camera->angle_len = SubFuncFx(&src->Distance, &dst->Distance, data->CostFrm, data->NowFrm);
   }
   //オフセット（シフト）
   if (data->Chk.Shift)
   {
+///    OS_Printf("SHIFT\n");
     VecSubFunc(&src->Shift, &dst->Shift, data->CostFrm, data->NowFrm, &camera->target_offset);
   }
   //フレームが消費フレームに到達したか？
@@ -2034,6 +2048,10 @@ static void LinerMoveFunc(FIELD_CAMERA * camera, void *work)
     data->Valid = FALSE;
     //コールバッククリア
     FIELD_CAMERA_ClearMvFuncCallBack(camera);
+#ifdef DEBUG_ONLY_FOR_saitou
+    OS_Printf("--DUMP_END_FIELD_CAMERA_PARAM--\n");
+    DumpCameraParam(camera);
+#endif
   }
 }
 
@@ -2053,6 +2071,10 @@ static void LinerMoveFunc(FIELD_CAMERA * camera, void *work)
 static void VecSubFunc(
     const VecFx32 *inSrc, const VecFx32 *inDst, const u16 inCostFrm, const u16 inNowFrm, VecFx32 *outVec)
 {
+  if (!inCostFrm){
+    GF_ASSERT(0);
+    *outVec = *inDst;
+  }
   outVec->x = SubFuncFx(&inSrc->x, &inDst->x, inCostFrm, inNowFrm);
   outVec->y = SubFuncFx(&inSrc->y, &inDst->y, inCostFrm, inNowFrm);
   outVec->z = SubFuncFx(&inSrc->z, &inDst->z, inCostFrm, inNowFrm);
@@ -2072,10 +2094,30 @@ static void VecSubFunc(
 //-----------------------------------------------------------------------------
 static fx32 SubFuncFx(const fx32 *inSrc, const fx32 *inDst, const u16 inCostFrm, const u16 inNowFrm)
 {
+  long src = (long)*inSrc;
+  long dst = (long)*inDst;
+  long dif;
+  long tmp;
+  long val;
+  fx32 ans;
+
+  dif = dst - src;
+  tmp = (dif*inNowFrm);
+  val = tmp / inCostFrm;
+  ans = src+val;
+#if 0
   fx32 dif, val, ans;
+  fx32 tmp;
+
+  if (!inCostFrm){
+    GF_ASSERT(0);
+    return *inDst;
+  }
   dif = (*inDst) - (*inSrc);
-  val = (dif*inNowFrm)/inCostFrm;
+  tmp = (dif*inNowFrm);
+  val = tmp / inCostFrm;
   ans = (*inSrc)+val;
+#endif  
   return ans;
 }
 
@@ -2096,6 +2138,11 @@ static u16 SubFuncU16(const u16 *inSrc, const u16 *inDst, const u16 inCostFrm, c
   u16 dif, val;
   u16 ans;
   u16 samp_a, samp_b;
+
+  if (!inCostFrm){
+    GF_ASSERT(0);
+    return *inDst;
+  }
   samp_a = (*inDst) - (*inSrc);
   samp_b = 0x10000-samp_a;
 
@@ -2107,7 +2154,7 @@ static u16 SubFuncU16(const u16 *inSrc, const u16 *inDst, const u16 inCostFrm, c
     dif = samp_b;
     val = (dif*inNowFrm)/inCostFrm;
     ans = (*inSrc)-val;
-  }  
+  }
   return ans;
 }
 
@@ -2166,6 +2213,34 @@ BOOL FIELD_CAMERA_CheckMvFunc(FIELD_CAMERA * camera)
   return FALSE;
 }
 
+
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ情報のダンプ
+ *
+ *	@param  camera        カメラポインタ
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void DumpCameraParam(FIELD_CAMERA * camera)
+{
+  u16 pitch, yaw;
+  fx32 len;
+  u16 fovy;
+  VecFx32 shift, target;
+  pitch = FIELD_CAMERA_GetAnglePitch(camera);
+  yaw = FIELD_CAMERA_GetAngleYaw(camera);
+  len = FIELD_CAMERA_GetAngleLen(camera);
+  fovy = FIELD_CAMERA_GetFovy(camera);
+  FIELD_CAMERA_GetTargetOffset( camera, &shift );
+  FIELD_CAMERA_GetTargetPos( camera, &target );
+      
+  OS_Printf("%d,%d,%d,%d,%d,%d\n", pitch, yaw, len, target.x, target.y, target.z );
+  OS_Printf("%d,%d,%d,%d\n", fovy, shift.x, shift.y, shift.z );
+}
+#endif  //PM_DEBUG
 
 
 
