@@ -18,7 +18,7 @@
 
 #define NONDATA  (0xffff)
 
-#define	PRO_MAT_Z_OFS	(8*FX32_ONE)   //プロジェクションマトリックスによるデプスバッファ操作値
+#define	PRO_MAT_Z_OFS	(20*FX32_ONE)   //プロジェクションマトリックスによるデプスバッファ操作値
 
 
 typedef struct FLD3D_CI_tag
@@ -72,6 +72,15 @@ typedef struct {
   RES_SETUP_DAT SetupDat;
 }FLD3D_CI_EVENT_WORK;
 
+#ifdef PM_DEBUG
+typedef struct {
+  GAMESYS_WORK *gsys;
+  FLD3D_CI_PTR CiPtr;
+  FIELD_CAMERA * camera;
+  FIELD_PLAYER * player;
+}FLYSKY_EFF_WORK;
+#endif
+
 static void SetupResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCutInNo);
 static void SetupResourceCore(FLD3D_CI_PTR ptr, const GFL_G3D_UTIL_SETUP *inSetup);
 static void DeleteResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat);
@@ -88,6 +97,13 @@ static void Generate(FLD3D_CI_PTR ptr);    //@todo
 
 static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID inHeapID);
 static void DeleteRes(RES_SETUP_DAT *outDat);
+
+static GMEVENT *CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo);
+
+
+#ifdef PM_DEBUG
+static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work );
+#endif  //PM_DEBUG
 
 
 //--------------------------------------------------------------------------------------------
@@ -233,6 +249,15 @@ void FLD3D_CI_Draw( FLD3D_CI_PTR ptr )
 //カットイン呼び出し
 void FLD3D_CI_CallCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo )
 {
+  GMEVENT * event;
+  event = CreateCutInEvt(gsys, ptr, inCutInNo);
+  GAMESYSTEM_SetEvent(gsys, event);
+}
+
+//カットインイベント作成
+static GMEVENT *CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInNo)
+{
+  GMEVENT * event;
   FLD3D_CI_EVENT_WORK *work;
   int size;
 
@@ -241,15 +266,14 @@ void FLD3D_CI_CallCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 inCutInN
   ptr->CutInNo = inCutInNo;
   //イベント作成
   {
-    GMEVENT * event = GMEVENT_Create( gsys, NULL, CutInEvt, size );
+    event = GMEVENT_Create( gsys, NULL, CutInEvt, size );
 
     work = GMEVENT_GetEventWork(event);
     MI_CpuClear8( work, size );
     work->gsys = gsys;
     work->CiPtr = ptr;
-
-    GAMESYSTEM_SetEvent(gsys, event);
   }
+  return event;
 }
 
 //カットインイベント
@@ -636,5 +660,118 @@ static void DeleteRes(RES_SETUP_DAT *outDat)
   }
 }
 
+#ifdef PM_DEBUG
+#define FLYSKY_CAM_MOVE_FRAME (30)
+
+//--------------------------------------------------------------
+/**
+ * @brief	空を飛ぶカメラアングルになるイベントを作成する
+ *
+ * @param	
+ *
+ * @retval	none	
+ *
+ */
+//--------------------------------------------------------------
+void FLD3D_CI_FlySkyCameraDebug( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, FIELD_CAMERA *camera, FIELD_PLAYER * player )
+{
+  FLYSKY_EFF_WORK *work;
+  int size;
+  size = sizeof(FLYSKY_EFF_WORK);
+  //イベント作成
+  {
+    GMEVENT * event = GMEVENT_Create( gsys, NULL, DebugFlySkyEffEvt, size );
+
+    work = GMEVENT_GetEventWork(event);
+    MI_CpuClear8( work, size );
+    work->gsys = gsys;
+    work->camera = camera;
+    work->CiPtr = ptr;
+    work->player = player;
+
+    GAMESYSTEM_SetEvent(gsys, event);
+  }
+}
+
+static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work )
+{
+  FLYSKY_EFF_WORK *wk;
+  wk = work;
+
+  switch(*seq){
+  case 0:
+    //カメラパージ
+    FIELD_CAMERA_FreeTarget(wk->camera);
+    //現在のカメラ設定を保存
+    FIELD_CAMERA_SetRecvCamParam(wk->camera);
+    //カメラを空飛びカメラへ線形移動リクエスト
+    {
+      FLD_CAM_MV_PARAM param;
+      VecFx32 player_vec;
+      //主人公の3Ｄ座標を取得
+      FIELD_PLAYER_GetPos( wk->player, &player_vec );
+      param.Core.AnglePitch = 9688;
+      param.Core.AngleYaw = 0;
+      param.Core.Distance = 970752;
+      param.Core.Shift.x = 0;
+      param.Core.Shift.y = 16384;
+      param.Core.Shift.z = 0;
+      param.Core.TrgtPos = player_vec;
+      param.Core.Fovy = 3640;
+      param.Chk.Shift = TRUE;
+      param.Chk.Angle = TRUE;
+      param.Chk.Dist = TRUE;
+      param.Chk.Fovy = TRUE;
+      param.Chk.Pos = TRUE;
+      FIELD_CAMERA_SetLinerParam(wk->camera, &param, FLYSKY_CAM_MOVE_FRAME);
+    }
+    (*seq)++;
+    /*none break*/
+  case 1:
+    //カメラ移動待ち
+    if ( !FIELD_CAMERA_CheckMvFunc(wk->camera) )
+    {
+      GMEVENT *child;
+      {
+        u16 pitch, yaw;
+        fx32 len;
+        u16 fovy;
+        VecFx32 shift, target;
+        OS_Printf("--DUMP_FIELD_CAMERA_PARAM--\n");
+        pitch = FIELD_CAMERA_GetAnglePitch(wk->camera);
+        yaw = FIELD_CAMERA_GetAngleYaw(wk->camera);
+        len = FIELD_CAMERA_GetAngleLen(wk->camera);
+        fovy = FIELD_CAMERA_GetFovy(wk->camera);
+        FIELD_CAMERA_GetTargetOffset( wk->camera, &shift );
+        FIELD_CAMERA_GetTargetPos( wk->camera, &target );
+      
+        OS_Printf("%d,%d,%d,%d,%d,%d\n", pitch, yaw, len, target.x, target.y, target.z );
+        OS_Printf("%d,%d,%d,%d\n", fovy, shift.x, shift.y, shift.z );
+      }
+      //カットイン演出開始
+      child = CreateCutInEvt(wk->gsys, wk->CiPtr, 0);
+      GMEVENT_CallEvent(event, child);
+      (*seq)++;
+    }
+    break;
+  case 2:
+    //カメラ戻し
+    FIELD_CAMERA_RecvLinerParam(wk->camera, FLYSKY_CAM_MOVE_FRAME);
+    (*seq)++;
+    /*none break*/
+  case 3:
+    //カメラ戻し待ち
+    if ( !FIELD_CAMERA_CheckMvFunc(wk->camera) ){
+      //カメラバインド
+      FIELD_CAMERA_BindDefaultTarget(wk->camera);
+      //復帰データのクリア
+      FIELD_CAMERA_ClearRecvCamParam(wk->camera);
+      return GMEVENT_RES_FINISH;
+    }
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
 
 
+#endif  //PM_DEBUG

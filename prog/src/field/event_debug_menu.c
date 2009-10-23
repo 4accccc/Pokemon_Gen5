@@ -3507,15 +3507,22 @@ static void DampCameraInfo(FIELD_CAMERA * cam)
   u16 yaw;
   fx32 len;
   VecFx32 target;
+  u16 fovy;
+  VecFx32 shift;
 
-  OS_Printf("--DAMP_FIELD_CAMERA_PARAM--\n");
+  OS_Printf("--DUMP_FIELD_CAMERA_PARAM--\n");
 
   pitch = FIELD_CAMERA_GetAnglePitch(cam);
   yaw = FIELD_CAMERA_GetAngleYaw(cam);
   len = FIELD_CAMERA_GetAngleLen(cam);
+  fovy = FIELD_CAMERA_GetFovy(cam);
+  FIELD_CAMERA_GetTargetOffset( cam, &shift );
   FIELD_CAMERA_GetTargetPos( cam, &target );
 
   OS_Printf("%d,%d,%d,%d,%d,%d\n", pitch, yaw, len, target.x, target.y, target.z );
+#ifdef DEBUG_ONLY_FOR_saitou
+  OS_Printf("%d,%d,%d,%d\n", fovy, shift.x, shift.y, shift.z );
+#endif
 }
 
 //--------------------------------------------------------------
