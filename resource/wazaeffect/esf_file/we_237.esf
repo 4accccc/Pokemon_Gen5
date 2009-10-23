@@ -4,7 +4,6 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_237.spa
 #001
 %00
 BGのパレットフェード	すべて	0	13	2	0:0:0
-SE再生	SEQ_SE_W307_03	デフォルト	0	0	120	0	0
 カメラ移動	追従	攻撃側	16	0	8
 エフェクト終了待ち	すべて
 制御モード変更	継続
