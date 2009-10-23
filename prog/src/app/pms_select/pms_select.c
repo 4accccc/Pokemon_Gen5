@@ -298,6 +298,8 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 	{	
 		GFL_CLUNIT	*clunit	= PMS_SELECT_GRAPHIC_GetClunit( wk->graphic );
 		wk->touchbar	= PMSSelect_TOUCHBAR_InitEx( wk, clunit, wk->heapID );
+
+    TOUCHBAR_SetActive( wk->touchbar, TOUCHBAR_ICON_CLOSE, FALSE );
 	}
 #endif //PMS_SELECT_TOUCHBAR
 

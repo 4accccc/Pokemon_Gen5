@@ -23,6 +23,8 @@
 #include "gamesystem/msgspeed.h"  //MSGSPEED_GetWait
 #include "savedata/mystatus.h"
 
+#include "system/shortcut_data.h"
+
 #include "system/bmp_winframe.h"
 #include "system/wipe.h"
 #include "system/main.h"			//GFL_HEAPID_APPéQè∆
@@ -50,6 +52,8 @@
 
 #include "msg/msg_itempocket.h"
 #include "bag_parts_d_NANR_LBLDEFS.h"
+	
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -811,8 +815,8 @@ static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid)
     GFL_CLWK_DATA cellInitData;
 
 
-    cellInitData.pos_x = _ITEMICON_SCR_X * 8+16;
-    cellInitData.pos_y = _ITEMICON_SCR_Y * 8+16;
+    cellInitData.pos_x = _ITEMICON_SCR_X * 8 + 8 * 2 + 4;
+    cellInitData.pos_y = _ITEMICON_SCR_Y * 8 + 8 * 2;
     cellInitData.anmseq = 0;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;

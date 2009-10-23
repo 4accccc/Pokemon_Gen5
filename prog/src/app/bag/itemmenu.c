@@ -64,6 +64,7 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
   {	21*_1CHAR,  24*_1CHAR,  15*_1CHAR, 18*_1CHAR },  //右
   
   {	21*_1CHAR,  24*_1CHAR,  19*_1CHAR, 22*_1CHAR },  //ソート
+  {	21*_1CHAR,  24*_1CHAR,  22*_1CHAR, 24*_1CHAR },  //チェックボタン
 
   {	21*_1CHAR,  24*_1CHAR,  26*_1CHAR, 28*_1CHAR },  //x
   {	21*_1CHAR,  24*_1CHAR,  30*_1CHAR, 32*_1CHAR },  //リターン
@@ -136,6 +137,9 @@ static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork );
 static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
 static void BTN_StateChange( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
+static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos );
+static void SHORTCUT_SetPocket( FIELD_ITEMMENU_WORK* pWork );
+static void BTN_DrawCheckBox( FIELD_ITEMMENU_WORK* pWork );
 //static void BAG_ItemUseErrorMsgSet( MYSTATUS * myst, STRBUF * buf, u16 item, u32 err, FIELD_ITEMMENU_WORK * pWork );
 //u8 Bag_TalkMsgPrint( BAG_WORK * pWork, int type );
 //static int Bag_MenuUse( FIELD_ITEMMENU_WORK * pWork );
@@ -915,6 +919,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
       _pocketCursorChange(pWork, oldpocket, pWork->pocketno);
       // ソートボタン表示切替
       SORT_ModeReset( pWork );
+      BTN_DrawCheckBox( pWork );
       bChange = TRUE;
     }
   }
@@ -1973,7 +1978,132 @@ static void BTN_StateChange( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
   }
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ショートカット設定
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork
+ *	@param	pos 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
+{
+  if(pWork->pocketno == BAG_POKE_EVENT){
+    int length = ITEMMENU_GetItemPocketNumber( pWork );
+    ITEM_ST * item = ITEMMENU_GetItem( pWork, pos );
+    SHORTCUT_ID shortcut_id = SHORTCUT_DATA_GetItemToShortcutID( item->id );
+  
+    if(length <= pos){
+      return;
+    }
 
+    // 登録可能かチェック
+    {
+      void * itemdata;
+      int ret;
+      itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
+      ret = ITEM_GetBufParam( itemdata, ITEM_PRM_CNV );
+      GFL_HEAP_FreeMemory( itemdata );
+      if( ret == 0 ){
+        return;
+      }
+    }
+      
+    if(ITEMMENU_GetPosCnvButtonItem(pWork,item->id)!=-1){//チェックつき
+      GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, FALSE );
+      ITEMMENU_RemoveCnvButtonItem(pWork,item->id);
+    }
+    else{
+      GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, TRUE );
+      ITEMMENU_AddCnvButtonItem(pWork,item->id);
+    }
+
+    GFL_SOUND_PlaySE( SE_BAG_REGIST_Y );
+
+    _windowRewrite(pWork);
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ポケット位置からショートカットIDを取得
+ *
+ *	@param	int pocketno 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static SHORTCUT_ID SHORTCUT_GetPocket( int pocketno )
+{
+  SHORTCUT_ID id;
+
+  switch( pocketno )
+  {
+  case BAG_POKE_NORMAL:
+    id = SHORTCUT_ID_BAG_ITEM;
+    break;
+  case BAG_POKE_NUTS:
+    id = SHORTCUT_ID_BAG_NUTS;
+    break;
+  case BAG_POKE_DRUG:
+    id = SHORTCUT_ID_BAG_RECOVERY;
+    break;
+  case BAG_POKE_WAZA:
+    id = SHORTCUT_ID_BAG_WAZAMACHINE;
+    break;
+  case BAG_POKE_EVENT:
+    id = SHORTCUT_ID_BAG_IMPORTANT;
+    break;
+  default : GF_ASSERT(0);
+  }
+
+  return id;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ポケットのYボタン登録
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void SHORTCUT_SetPocket( FIELD_ITEMMENU_WORK* pWork )
+{
+  SHORTCUT_ID id;
+  BOOL is_active;
+
+  id = SHORTCUT_GetPocket( pWork->pocketno );
+  is_active = GAMEDATA_GetShortCut( pWork->gamedata, id );
+  is_active ^= 1; ///< 反転
+  GAMEDATA_SetShortCut( pWork->gamedata, id, is_active );
+
+  GFL_SOUND_PlaySE( SE_BAG_REGIST_Y );
+
+  BTN_DrawCheckBox( pWork );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  チェックボックス描画
+ *
+ *	@param	FIELD_ITEMMENU_WORK* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void BTN_DrawCheckBox( FIELD_ITEMMENU_WORK* pWork )
+{
+  SHORTCUT_ID id;
+  BOOL is_active;
+  id = SHORTCUT_GetPocket( pWork->pocketno );
+  is_active = GAMEDATA_GetShortCut( pWork->gamedata, id );
+
+  GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_CHECK_BOX ], 6 + is_active );
+}
 
 #if 0
 //--------------------------------------------------------------------------------------------
@@ -2353,6 +2483,9 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     // ソートボタン
     SORT_Button( pWork );
   }
+  else if(BUTTONID_CHECKBOX == bttnid){
+    SHORTCUT_SetPocket( pWork );
+  }
   else if(BUTTONID_EXIT == bttnid){
     pWork->ret_code = BAG_NEXTPROC_EXIT;
     _CHANGE_STATE(pWork, NULL);
@@ -2388,33 +2521,10 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     }
     return;
   }
+  // チェックボックス
   else if(bttnid >= BUTTONID_CHECK_AREA){
-    if(pWork->pocketno == BAG_POKE_EVENT){
-      int no = bttnid - BUTTONID_CHECK_AREA + pWork->oamlistpos + 1;
-      ITEM_ST * item = ITEMMENU_GetItem( pWork, no );
-      if(length <= no){
-        return;
-      }
-      {
-        void * itemdata;
-        int ret;
-        itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
-        ret = ITEM_GetBufParam( itemdata, ITEM_PRM_CNV );
-        GFL_HEAP_FreeMemory( itemdata );
-        if( ret == 0 ){
-          return;
-        }
-      }
-
-      if(ITEMMENU_GetPosCnvButtonItem(pWork,item->id)!=-1){//チェックつき
-        ITEMMENU_RemoveCnvButtonItem(pWork,item->id);
-      }
-      else{
-        ITEMMENU_AddCnvButtonItem(pWork,item->id);
-      }
-
-      _windowRewrite(pWork);
-    }
+    int no = bttnid - BUTTONID_CHECK_AREA + pWork->oamlistpos + 1;
+    SHORTCUT_SetEventItem( pWork, no );
   }
   
   if(pocketno != -1){
@@ -2423,8 +2533,9 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     pWork->pocketno = pocketno;
     // ソートボタン表示切替
     SORT_ModeReset( pWork );
+    BTN_DrawCheckBox( pWork );
     _windowRewrite(pWork);
-    // ポケット切替
+    
     KTST_SetDraw( pWork, FALSE );
   }
 
@@ -2493,6 +2604,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->heapID = HEAPID_ITEMMENU;
 
   // パラメータから取得
+  pWork->gamedata   = pParam->p_gamedata;
   pWork->mystatus   = pParam->p_mystatus;
   pWork->config     = pParam->p_config;
   pWork->pBagCursor = pParam->p_bagcursor;

@@ -128,6 +128,7 @@ typedef int (MenuFunc)(FIELD_ITEMMENU_WORK* wk);
 
 struct _FIELD_ITEMMENU_PARAM {
   // [IN] 初期化時に外部から受け渡されるメンバ
+  GAMEDATA            * gamedata;       ///< Yボタン登録に使用
   CONFIG              * config;              
   MYSTATUS            * mystatus;
   ITEMCHECK_WORK      * icwk;           ///< アイテムチェックワーク FMENU_EVENT_WORKからコピー
@@ -303,10 +304,11 @@ enum
 { 
   BUTTONID_ITEM_AREA_NUM = 6,   ///< アイテムエリアの項目数
   BUTTONID_CHECK_AREA_NUM = 6,  ///< チェックエリアの項目数
-  // 0-4 : バッグ
+  // 0-4 : バッグのポケット
   BUTTONID_LEFT = 5,
   BUTTONID_RIGHT,
   BUTTONID_SORT,
+  BUTTONID_CHECKBOX,
   BUTTONID_EXIT,
   BUTTONID_RETURN,
   BUTTONID_ITEM_AREA,
