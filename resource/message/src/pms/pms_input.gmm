@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00176" date="2009-10-23T21:00:02"/>
+	<create user="tetsuji_ohta" host="W00176" date="2009-10-23T21:09:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -435,6 +435,56 @@
 	<row id="select01_03">
 		<language name="JPN" width="216">やめる</language>
 		<language name="JPN_KANJI" width="216">やめる</language>
+	</row>
+
+	<row id="category_01">
+		<language name="JPN" width="216">ポケモン</language>
+		<language name="JPN_KANJI" width="216">ポケモン</language>
+	</row>
+
+	<row id="category_02">
+		<language name="JPN" width="216">ステータス</language>
+		<language name="JPN_KANJI" width="216">ステータス</language>
+	</row>
+
+	<row id="category_03">
+		<language name="JPN" width="216">トレーナー</language>
+		<language name="JPN_KANJI" width="216">トレーナー</language>
+	</row>
+
+	<row id="category_04">
+		<language name="JPN" width="216">ユニオン</language>
+		<language name="JPN_KANJI" width="216">ユニオン</language>
+	</row>
+
+	<row id="category_05">
+		<language name="JPN" width="216">あいさつ</language>
+		<language name="JPN_KANJI" width="216">あいさつ</language>
+	</row>
+
+	<row id="category_06">
+		<language name="JPN" width="216">ひと</language>
+		<language name="JPN_KANJI" width="216">ひと</language>
+	</row>
+
+	<row id="category_07">
+		<language name="JPN" width="216">せいかつ</language>
+		<language name="JPN_KANJI" width="216">せいかつ</language>
+	</row>
+
+	<row id="category_08">
+		<language name="JPN" width="216">きもち</language>
+		<language name="JPN_KANJI" width="216">きもち</language>
+	</row>
+
+	<row id="category_09">
+		<language name="JPN" width="216">わざ</language>
+		<language name="JPN_KANJI" width="216">わざ</language>
+	</row>
+
+	<row id="category_10">
+		<language name="JPN" width="216">ピクチャ</language>
+		<language name="JPN_KANJI" width="216">ピクチャ</language>
 	</row>
 
 	<flowchart-group-list>
