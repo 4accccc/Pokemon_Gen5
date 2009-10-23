@@ -832,6 +832,7 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
       u32 i;
 
       wk->myClientID = GFL_NET_GetNetID( sp->netHandle );
+      BTL_Printf("自分のクライアントID=%d\n", wk->myClientID);
       wk->myOrgPos = 0;
       for(i=0; i<NELEMS(wk->posCoverClientID); ++i)
       {

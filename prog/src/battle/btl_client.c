@@ -999,7 +999,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
       BTL_Printf("自分はふういんポケじゃありません\n");
       if( BPP_WAZA_SearchIdx(fuinPoke, waza) != PTL_WAZA_MAX )
       {
-        BTL_Printf("そのワザはふういんポケが持ってますので使えません\n");
+        BTL_Printf("そのワザ(%d)はふういんポケが持ってますので使えません\n", waza);
         if( strParam != NULL )
         {
           strParam->strID = BTL_STRID_SET_FuuinWarn;
