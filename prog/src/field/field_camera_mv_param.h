@@ -15,6 +15,8 @@ typedef struct FLD_CAM_MV_PARAM_CORE_tag
   VecFx32 CamPos;
   //ターゲット座標
   VecFx32 TrgtPos;
+  //オフセット（シフト）値
+  VecFx32 Shift;
   //アングル（モード依存）
   u16 AnglePitch;
   u16 AngleYaw;
@@ -31,6 +33,7 @@ typedef struct FLD_CAM_MV_PARAM_CHK_tag
   BOOL Angle;
   BOOL Dist;
   BOOL Fovy;
+  BOOL Pos;
 }FLD_CAM_MV_PARAM_CHK;
 
 typedef struct FLD_CAM_MV_PARAM_tag

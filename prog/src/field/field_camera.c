@@ -1026,7 +1026,38 @@ void FIELD_CAMERA_SetAngleLen(FIELD_CAMERA * camera, fx32 length )
 	camera->angle_len = length;
 }
 
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カメラ視野角操作　視野角取得
+ *	@param  camera    カメラポインタ
+ *
+ *	@return u16       視野角
+ */
+//-----------------------------------------------------------------------------
+u16 FIELD_CAMERA_GetFovy(const FIELD_CAMERA * camera )
+{
+  // パースをカメラの情報から取得
+  if( GFL_G3D_CAMERA_GetProjectionType(camera->g3Dcamera) == GFL_G3D_PRJPERS ){
+    return camera->fovy;
+  }else{
+    return 0;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カメラ視野角操作　視野角セット
+ *	@param  camera    カメラポインタ
+ *	@param  fovy       視野角
+ *
+ *	@return none
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetFovy(FIELD_CAMERA * camera, u16 fovy )
+{
+	camera->fovy = fovy;
+  GFL_G3D_CAMERA_SetfovySin( camera->g3Dcamera, FX_SinIdx( camera->fovy ) );
+  GFL_G3D_CAMERA_SetfovyCos( camera->g3Dcamera, FX_CosIdx( camera->fovy ) );
+}
 
 #ifdef  PM_DEBUG
 #include "test/camera_adjust_view.h"
@@ -1732,6 +1763,7 @@ static void SetNowCameraParam(const FIELD_CAMERA * inCamera, FLD_CAM_MV_PARAM_CO
   outParam->AngleYaw = inCamera->angle_yaw;
   outParam->Distance = inCamera->angle_len;
   outParam->Fovy = inCamera->fovy;
+  outParam->Shift = inCamera->target_offset;
 }
 
 #if 0
@@ -1932,6 +1964,7 @@ void FIELD_CAMERA_RecvLinerParam(FIELD_CAMERA * camera, const u16 inFrame)
   data->Chk.Angle = TRUE;
   data->Chk.Dist = TRUE;
   data->Chk.Fovy = TRUE;
+  data->Chk.Pos = TRUE;
 
   //補間移動はカメラ位置不定型のみのサポート
   FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
@@ -1974,7 +2007,7 @@ static void LinerMoveFunc(FIELD_CAMERA * camera, void *work)
     camera->angle_yaw = SubFuncU16(&src->AngleYaw, &dst->AngleYaw, data->CostFrm, data->NowFrm);
   }
   //座標
-  if (data->Chk.Shift)
+  if (data->Chk.Pos)
   {
     VecSubFunc(&src->TrgtPos, &dst->TrgtPos, data->CostFrm, data->NowFrm, &camera->target);
   }
@@ -1982,11 +2015,18 @@ static void LinerMoveFunc(FIELD_CAMERA * camera, void *work)
   if (data->Chk.Fovy)
   {
     camera->fovy = SubFuncU16(&src->Fovy, &dst->Fovy, data->CostFrm, data->NowFrm);
+    GFL_G3D_CAMERA_SetfovySin( camera->g3Dcamera, FX_SinIdx( camera->fovy ) );
+    GFL_G3D_CAMERA_SetfovyCos( camera->g3Dcamera, FX_CosIdx( camera->fovy ) );
   }
   //距離
   if (data->Chk.Dist)
   {
     camera->angle_len = SubFuncFx(&src->Distance, &dst->Distance, data->CostFrm, data->NowFrm);
+  }
+  //オフセット（シフト）
+  if (data->Chk.Shift)
+  {
+    VecSubFunc(&src->Shift, &dst->Shift, data->CostFrm, data->NowFrm, &camera->target_offset);
   }
   //フレームが消費フレームに到達したか？
   if(data->NowFrm >= data->CostFrm){
@@ -1997,7 +2037,19 @@ static void LinerMoveFunc(FIELD_CAMERA * camera, void *work)
   }
 }
 
-//差分計算関数
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ベクトル差分計算関数
+ *
+ *	@param	inSrc         開始ベクトル
+ *	@param  inDst         終了ベクトル
+ *	@param  inCostFrm     消費フレーム
+ *	@param  inNowFrm      現在フレーム
+ *	@param  outVec        格納バッファ
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
 static void VecSubFunc(
     const VecFx32 *inSrc, const VecFx32 *inDst, const u16 inCostFrm, const u16 inNowFrm, VecFx32 *outVec)
 {
@@ -2006,7 +2058,18 @@ static void VecSubFunc(
   outVec->z = SubFuncFx(&inSrc->z, &inDst->z, inCostFrm, inNowFrm);
 }
 
-//差分計算関数
+//----------------------------------------------------------------------------
+/**
+ *	@brief  固定小数型差分計算関数
+ *
+ *	@param	inSrc         開始値
+ *	@param  inDst         終了値
+ *	@param  inCostFrm     消費フレーム
+ *	@param  inNowFrm      現在フレーム
+ *
+ *	@retval fx32          計算結果
+ */
+//-----------------------------------------------------------------------------
 static fx32 SubFuncFx(const fx32 *inSrc, const fx32 *inDst, const u16 inCostFrm, const u16 inNowFrm)
 {
   fx32 dif, val, ans;
@@ -2016,7 +2079,18 @@ static fx32 SubFuncFx(const fx32 *inSrc, const fx32 *inDst, const u16 inCostFrm,
   return ans;
 }
 
-//差分計算関数
+//----------------------------------------------------------------------------
+/**
+ *	@brief  符号なし整数差分計算関数
+ *
+ *	@param	inSrc         開始値
+ *	@param  inDst         終了値
+ *	@param  inCostFrm     消費フレーム
+ *	@param  inNowFrm      現在フレーム
+ *
+ *	@retval u16           計算結果
+ */
+//-----------------------------------------------------------------------------
 static u16 SubFuncU16(const u16 *inSrc, const u16 *inDst, const u16 inCostFrm, const u16 inNowFrm)
 {
   u16 dif, val;

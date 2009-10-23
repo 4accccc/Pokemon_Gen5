@@ -55,7 +55,14 @@ VMCMD_RESULT EvCmdCamera_Start( VMHANDLE *core, void *wk )
     call_event = GMEVENT_Create( gsys, NULL, WaitTraceStopEvt, 0 );
     SCRIPT_CallEvent( sc, call_event );
   }
-
+#if 0
+  //終了チェックフラグをオン
+  {
+    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+    SCREND_CHECK_WK *chk = SCRIPT_GetScrEndChkWkPtr( sc );
+    chk->CameraEndCheck = 1;
+  }
+#endif
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 }
@@ -77,7 +84,14 @@ VMCMD_RESULT EvCmdCamera_End( VMHANDLE *core, void *wk )
   FIELD_CAMERA_ClearRecvCamParam(camera);
   //カメラトレース再開
   FIELD_CAMERA_RestartTrace(camera);
-
+#if 0
+  //終了チェックフラグをオフ
+  {
+    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+    SCREND_CHECK_WK *chk = SCRIPT_GetScrEndChkWkPtr( sc );
+    chk->CameraEndCheck = 0;
+  }
+#endif
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -143,10 +157,11 @@ VMCMD_RESULT EvCmdCamera_Move( VMHANDLE *core, void *wk )
     param.Core.TrgtPos.x = VMGetU32( core );
     param.Core.TrgtPos.y = VMGetU32( core );
     param.Core.TrgtPos.z = VMGetU32( core );
-    param.Chk.Shift = TRUE;
+    param.Chk.Shift = FALSE;
     param.Chk.Angle = TRUE;
     param.Chk.Dist = TRUE;
     param.Chk.Fovy = FALSE;
+    param.Chk.Pos = TRUE;
     frame = VMGetU16( core );
     FIELD_CAMERA_SetLinerParam(camera, &param, frame);
   }
