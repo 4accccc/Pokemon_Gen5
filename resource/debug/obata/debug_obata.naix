@@ -29,7 +29,9 @@ enum {
 	NARC_debug_obata_elboard_test_nsbmd = 15,
 	NARC_debug_obata_elboard_test_nsbtx = 16,
 	NARC_debug_obata_elboard_test_nsbta = 17,
-	NARC_debug_obata_elboard_test_nsbca = 18
+	NARC_debug_obata_elboard_test_nsbca = 18,
+	NARC_debug_obata_gelboard01_nsbmd = 19,
+	NARC_debug_obata_gelboard01_nsbta = 20
 };
 
 /* NARC_DEBUG_OBATA_NAIX_ */

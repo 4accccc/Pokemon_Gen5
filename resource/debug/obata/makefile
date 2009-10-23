@@ -45,7 +45,9 @@ CONVERTDATA = ica_test_data2.bin \
 							elboard_test.nsbmd \
 							elboard_test.nsbtx \
 							elboard_test.nsbta \
-							elboard_test.nsbca
+							elboard_test.nsbca \
+							gelboard01.nsbmd \
+							gelboard01.nsbta
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -83,6 +85,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g3dcvtr elboard_test.imd -etex
 	g3dcvtr elboard_test.ica
 	g3dcvtr elboard_test.ita
+	g3dcvtr gelboard01.imd
+	g3dcvtr gelboard01.ita
 endif
 
 
