@@ -185,6 +185,12 @@ void	STA_BG_DrawSystem( STA_BG_SYS *work )
 void	STA_BG_CreateBg( STA_BG_SYS* work , const u8 bgNo )
 {
   u8 i;
+
+	if( work->mdlRes != NULL )
+	{
+		STA_BG_DeleteBg( work );
+	}
+
 	work->mdlRes = GFL_G3D_CreateResourceArc( ARCID_STAGE_GRA, NARC_stage_gra_mus_stage01_nsbmd + bgNo ); 
 
 	work->anmRes[MUS_BG_ANM_ICA] = GFL_G3D_CreateResourceArc( ARCID_STAGE_GRA, NARC_stage_gra_mus_stage01_nsbta + bgNo ); 
@@ -227,6 +233,8 @@ void	STA_BG_DeleteBg( STA_BG_SYS* work )
   }
   GFL_G3D_FreeVramTexture( work->mdlRes );
   GFL_G3D_DeleteResource( work->mdlRes );
+  
+  work->mdlRes = NULL;
 }
 
 

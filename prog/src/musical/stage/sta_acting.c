@@ -381,8 +381,10 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
       
       //‰‰Œ€•—
       //STA_SCRIPT_SetScript( work->scriptSys , (void*)musicalScriptTestData );
-      work->scriptData = work->initWork->distData->scriptData;
-      STA_ACT_StartScript( work );
+      if( work->scriptData != NULL )
+      {
+        STA_ACT_StartScript( work );
+      }
     }
   }
   else

@@ -146,7 +146,10 @@ while index <= PROGRAM_NUM
     if( CompFileDate( fileName , scriptDataName ) == 1 )
       print( "conv[" + scriptDataName + "]\n" )
       #エディタ→アセンブラソース
-      system(SCRIPT_CONVERT + " " + fileName + " " + scriptAssemblerName + " " + SCRIPT_CONVERT_OPT )
+      #system(SCRIPT_CONVERT + " " + fileName + " " + scriptAssemblerName + " " + SCRIPT_CONVERT_OPT )
+      print(SCRIPT_CONVERT + " " + fileName + " " + SCRIPT_CONVERT_OPT + "\n" )
+      system(SCRIPT_CONVERT + " " + fileName + " " + SCRIPT_CONVERT_OPT )
+      system("cp *.s " + scriptAssemblerName )
       system(sfn(SCRIPT_MWAS) + " " + scriptAssemblerName + " -o " + scriptObjectName )
       system(sfn(SCRIPT_MWLD) + " -dis -o " + scriptElfName + " " + scriptObjectName )
       system(SCRIPT_ELF2BIN + " " + scriptElfName )

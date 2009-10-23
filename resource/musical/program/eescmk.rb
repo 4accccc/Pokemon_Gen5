@@ -181,9 +181,8 @@ end
 
 	ARGV_DEF_FILE = 0
 	ARGV_ESF_FILE = 1
-	ARGV_OUTPUT_FILE = 2
-	ARGV_INC_DIR = 3
-	ARGV_SW = 4
+	ARGV_INC_DIR = 2
+	ARGV_SW = 3
 
 	com_list = CommandList.new
 	com_num = 0
@@ -353,8 +352,7 @@ end
 			if split_data[ EFFNO_POS ][ 0 ].chr == "#"
         if num_str == nil
 				  num_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr + split_data[ EFFNO_POS ][ 3 ].chr
-          #write_file = "we_" + num_str + ".s"
-          write_file = ARGV[ ARGV_OUTPUT_FILE ]
+          write_file = "we_" + num_str + ".s"
         end
 				seq_table.clear
 				sequence.clear
@@ -521,9 +519,9 @@ end
 		}
 		if bin_list.size == count
 			bin_list << bin_list_tmp[ tmp_num ]
-      if( File::extname( bin_list_tmp[ tmp_num ] ) == ".NCGR" )
-			  bin_list << File::dirname( bin_list_tmp[ tmp_num ] ) + "\\" + File::basename( bin_list_tmp[ tmp_num ], ".NCGR" ) + ".NSCR"
-			  bin_list << File::dirname( bin_list_tmp[ tmp_num ] ) + "\\" + File::basename( bin_list_tmp[ tmp_num ], ".NCGR" ) + ".NCLR"
+      if( File::extname( bin_list_tmp[ tmp_num ] ) == ".NSCR" )
+			  bin_list << File::dirname( bin_list_tmp[ tmp_num ] ) + "\\" + File::basename( bin_list_tmp[ tmp_num ], ".NSCR" ) + ".NCGR"
+			  bin_list << File::dirname( bin_list_tmp[ tmp_num ] ) + "\\" + File::basename( bin_list_tmp[ tmp_num ], ".NSCR" ) + ".NCLR"
       end
 		end
 	}
@@ -543,7 +541,6 @@ end
 		}
 		#ファイルデータ書き出し
 		bin_list.size.times {|num|
-      p bin_list[ num ]
 			fp_r = open( bin_list[ num ], "rb" )
 			file.write fp_r.read
 			padding[ num ].times do
