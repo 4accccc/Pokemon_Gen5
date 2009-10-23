@@ -291,13 +291,13 @@ void FLDNOGRID_MAPPER_Main( FLDNOGRID_MAPPER* p_mapper )
   if( p_mapper->rail_camera_stop == FALSE )
   {
     camera_move = FIELD_RAIL_MAN_UpdateCamera( p_mapper->p_railMan );
-  }
 
-  // カメラが動いたとき＋バインドされているレールワークが動いたとき更新
-  if( camera_move || FIELD_RAIL_MAN_IsBindWorkMove( p_mapper->p_railMan ) )
-  {
-    FIELD_RAIL_MAN_GetBindWorkPos( p_mapper->p_railMan, &rail_pos );
-    FLD_SCENEAREA_Update( p_mapper->p_areaMan, &rail_pos );
+    // カメラが動いたとき＋バインドされているレールワークが動いたとき更新
+    if( camera_move || FIELD_RAIL_MAN_IsBindWorkMove( p_mapper->p_railMan ) )
+    {
+      FIELD_RAIL_MAN_GetBindWorkPos( p_mapper->p_railMan, &rail_pos );
+      FLD_SCENEAREA_Update( p_mapper->p_areaMan, &rail_pos );
+    }
   }
 }
 
