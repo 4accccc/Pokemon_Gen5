@@ -1775,10 +1775,8 @@ static void fldmap_G3D_Draw( FIELDMAP_WORK * fieldWork )
     }else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
       FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 1);
     }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
-/**
       FLD3D_CI_FlySkyCameraDebug(
           fieldWork->gsys, fieldWork->Fld3dCiPtr, fieldWork->camera_control, FIELDMAP_GetFieldPlayer(fieldWork) );
-*/          
     }
   }
 
