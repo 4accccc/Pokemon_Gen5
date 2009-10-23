@@ -20,7 +20,7 @@
  *  ＊デフォルトのパラメータで構造体を初期化します。バトルタイプに応じて、必要な初期化を追加で行ってください
  *  ＊必ず BATTLE_PARAM_Delete()で解放してください
  */
-extern BATTLE_SETUP_PARAM* BATTLE_PARAM_Create( int heapID );
+extern BATTLE_SETUP_PARAM* BATTLE_PARAM_Create( HEAPID heapID );
 
 /*
  *  @brief  戦闘パラメータワーク解放
