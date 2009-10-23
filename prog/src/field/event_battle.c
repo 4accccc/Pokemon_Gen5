@@ -34,8 +34,7 @@
 #include "field_sound.h"
 
 #include "event_gameover.h" //EVENT_NormalLose
-#include "field/field_comm/intrude_work.h"
-#include "field/field_comm/bingo_system.h"
+
 #include "event_battle_return.h"
 
 
@@ -44,48 +43,54 @@
 //======================================================================
 #define HEAPID_CORE GFL_HEAPID_APP
 
+enum {
+  BATTLE_BGM_FADEOUT_WAIT = 60,
+  BATTLE_BGM_FADEIN_WAIT = 60,
+};
 
 //======================================================================
 //  struct
 //======================================================================
 //--------------------------------------------------------------
-/// BATTLE_EVENT_WORK
+/**
+ * @struct  BATTLE_EVENT_WORK
+ * @brief 戦闘呼び出しイベントの制御ワーク定義
+ *
+ */
 //--------------------------------------------------------------
 typedef struct {
-  GAMESYS_WORK * gsys;
-  FIELDMAP_WORK * fieldmap;
+  GAMESYS_WORK * gsys;    ///<GAMESYS_WORKへのポインタ
+  GAMEDATA * gamedata;    ///<GAMEDATAへのポインタ（簡易アクセスのため）
+
+  ///戦闘呼び出し用パラメータへのポインタ
   BATTLE_SETUP_PARAM* battle_param;
+  ///戦闘後処理（ずかん追加画面、進化画面など）呼び出し用のパラメータ
   BTLRET_PARAM        btlret_param;
+
   u16 timeWait;
-  u16 bgmpush_off;
+  BOOL bgm_pushed_flag;
+  BOOL is_sub_event;
 }BATTLE_EVENT_WORK;
 
 //======================================================================
 //  proto
 //======================================================================
-//BATTLE_SETUP_PARAMのデバッグ生成処理
-static void BATTLE_SETUP_PARAM_DebugConstructer(BATTLE_SETUP_PARAM * para, GAMESYS_WORK * gsys);
-//POKEPARTYにポケモンを加える
-static const void addPartyPokemon(POKEPARTY * party, u16 monsno, u8 level, u16 id);
 
 static GMEVENT_RESULT fieldBattleEvent(
     GMEVENT * event, int *  seq, void * work );
-static GMEVENT_RESULT bingoBattleEvent(
-    GMEVENT * event, int *  seq, void * work );
-
-//debug
-static GMEVENT_RESULT DebugBattleEvent( GMEVENT * event, int *  seq, void * work );
-
-const u32 data_EncountPoke200905[];
-const u32 data_EncountPoke200905Max;
 
 
 static BOOL BEW_IsLoseResult(BATTLE_EVENT_WORK * bew);
 static void BEW_reflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata);
-static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, BATTLE_SETUP_PARAM* bp);
+static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM* bp);
 static void BEW_Destructor(BATTLE_EVENT_WORK * bew);
+
 //======================================================================
+//
+//
 //  フィールド　バトルイベント
+//
+//
 //======================================================================
 //--------------------------------------------------------------
 /**
@@ -104,7 +109,7 @@ GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BAT
       gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
 
   bew = GMEVENT_GetEventWork(event);
-  BEW_Initialize( bew, gsys, fieldmap, bp );
+  BEW_Initialize( bew, gsys, bp );
 
   return event;
 }
@@ -136,34 +141,9 @@ GMEVENT * EVENT_TrainerBattle(
     FIELD_ENCOUNT_SetTrainerBattleParam( enc, bp, tr_id, HEAPID_PROC );
   }
 
-  BEW_Initialize( bew, gsys, fieldmap, bp );
-  bew->bgmpush_off = TRUE; //視線イベントBGM時に退避済み
-
-  return event;
-}
-
-//--------------------------------------------------------------
-/**
- * ビンゴバトルイベント作成
- * @param gsys  GAMESYS_WORK
- * @param fieldmap FIELDMAP_WORK
- * @retval GMEVENT*
- */
-//--------------------------------------------------------------
-GMEVENT * EVENT_BingoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp )
-{
-  GMEVENT * event;
-  BATTLE_EVENT_WORK * bew;
-
-  event = GMEVENT_Create(
-      gsys, NULL, bingoBattleEvent, sizeof(BATTLE_EVENT_WORK) );
-
-  bew = GMEVENT_GetEventWork(event);
-  BEW_Initialize( bew, gsys, fieldmap, bp );
-
-  //侵入システムに現在の状態を通知
-  IntrudeWork_SetActionStatus(GAMESYSTEM_GetGameCommSysPtr(gsys), INTRUDE_ACTION_BINGO_BATTLE);
-  Bingo_Clear_BingoIntrusionBeforeBuffer(Bingo_GetBingoSystemWork(GameCommSys_GetAppWork(GAMESYSTEM_GetGameCommSysPtr(gsys))));
+  BEW_Initialize( bew, gsys, bp );
+  bew->bgm_pushed_flag = TRUE; //視線イベントBGM時に退避済み
+  bew->is_sub_event = TRUE;   //スクリプトから呼ばれる＝トップレベルのイベントでない
 
   return event;
 }
@@ -175,6 +155,11 @@ GMEVENT * EVENT_BingoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE
  * @param seq イベントシーケンス
  * @param wk イベントワーク
  * @retval GMEVENT_RESULT
+ *
+ * @todo
+ * 今は単一のイベントですべてのフィールド戦闘呼び出しを
+ * 実行しているが、バリエーションが増えたところで
+ * 分割するべきかどうかを検討する
  */
 //--------------------------------------------------------------
 static GMEVENT_RESULT fieldBattleEvent(
@@ -182,30 +167,27 @@ static GMEVENT_RESULT fieldBattleEvent(
 {
   BATTLE_EVENT_WORK * bew = work;
   GAMESYS_WORK * gsys = bew->gsys;
-  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  GAMEDATA * gamedata = bew->gamedata;
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 
   switch (*seq) {
   case 0:
     // 戦闘用ＢＧＭセット
-    if( bew->bgmpush_off == FALSE ){ //既に退避済み
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PushBGM( fsnd );
+    if( bew->bgm_pushed_flag == FALSE ){
+      FIELD_SOUND_PushBGM( GAMEDATA_GetFieldSound( gamedata ) );
+      bew->bgm_pushed_flag = TRUE;
     }
     PMSND_PlayBGM( bew->battle_param->musicDefault );
-    IWASAWA_Printf("mineParty %08x\n",bew->battle_param->partyPlayer);
     //エンカウントエフェクト
     GMEVENT_CallEvent( event,
-        EVENT_FieldEncountEffect(gsys,bew->fieldmap) );
+        EVENT_FieldEncountEffect(gsys,fieldmap) );
     (*seq)++;
     break;
   case 1:
-    IWASAWA_Printf("mineParty%d %08x\n",*seq,bew->battle_param->partyPlayer);
-    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, bew->fieldmap));
+    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
     (*seq)++;
     break;
   case 2:
-    IWASAWA_Printf("mineParty%d %08x\n",*seq,bew->battle_param->partyPlayer);
     //バトルプロセス呼び出し：プロセスが終了したらこのイベントに復帰する
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, bew->battle_param );
     (*seq)++;
@@ -217,9 +199,8 @@ static GMEVENT_RESULT fieldBattleEvent(
     (*seq)++;
     break;
   case 4:
-    IWASAWA_Printf( "mineParty%d %08x\n",*seq,bew->battle_param->partyPlayer );
-    bew->timeWait = 60; // 戦闘ＢＧＭフェードアウト
-    PMSND_FadeOutBGM( 60 );
+    bew->timeWait = BATTLE_BGM_FADEOUT_WAIT; // 戦闘ＢＧＭフェードアウト
+    PMSND_FadeOutBGM( BATTLE_BGM_FADEOUT_WAIT );
     (*seq) ++;
     break;
   case 5:
@@ -230,39 +211,42 @@ static GMEVENT_RESULT fieldBattleEvent(
     }
     break;
   case 6:
-    IWASAWA_Printf("mineParty%d %08x\n",*seq,bew->battle_param->partyPlayer);
+    if (bew->bgm_pushed_flag == TRUE) {
+      FIELD_SOUND_PopBGM( GAMEDATA_GetFieldSound( gamedata ) );
+      bew->bgm_pushed_flag = FALSE;
+    }
+
     //戦闘結果反映処理
     BEW_reflectBattleResult( bew, gamedata );
-    {
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PopBGM( fsnd );
-    }
 
     //勝ち負け判定
     if (BEW_IsLoseResult( bew) == TRUE )
     {
       //負けの場合、イベントはここで終了。
       //復帰イベントへと遷移する
-      BEW_Destructor( bew );
-      PMSND_PauseBGM( TRUE );
-      GMEVENT_ChangeEvent( event, EVENT_NormalLose(gsys) );
+      if (bew->is_sub_event == TRUE) {
+        PMSND_PauseBGM( TRUE );
+        BEW_Destructor( bew );
+        return GMEVENT_RES_FINISH;
+      } else {
+        PMSND_PauseBGM( TRUE );
+        BEW_Destructor( bew );
+        GMEVENT_ChangeEvent( event, EVENT_NormalLose(gsys) );
+        return GMEVENT_RES_CONTINUE;  //ChangeEventではFINISHさせてはいけない
+      }
     }
     else
     {
-      PMSND_FadeInBGM(60);
+      PMSND_FadeInBGM(BATTLE_BGM_FADEIN_WAIT);
       GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     }
-    IWASAWA_Printf("mineParty%d %08x\n",*seq,bew->battle_param->partyPlayer);
     (*seq) ++;
     break;
   case 7:
-    IWASAWA_Printf("mineParty%d %08x\n",*seq,bew->battle_param->partyPlayer);
-    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, bew->fieldmap, 0));
+    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
     (*seq) ++;
     break;
   case 8:
-    IWASAWA_Printf("mineParty%d %08x\n",*seq,bew->battle_param->partyPlayer);
     BEW_Destructor( bew );
     return GMEVENT_RES_FINISH;
   }
@@ -270,190 +254,14 @@ static GMEVENT_RESULT fieldBattleEvent(
   return GMEVENT_RES_CONTINUE;
 }
 
-//--------------------------------------------------------------
-/**
- * ビンゴバトルイベント
- * @param event GMEVENT
- * @param seq イベントシーケンス
- * @param wk イベントワーク
- * @retval GMEVENT_RESULT
- */
-//--------------------------------------------------------------
-#include "field/field_comm/bingo_system.h"
-static GMEVENT_RESULT bingoBattleEvent(
-    GMEVENT * event, int *  seq, void * work )
-{
-  GMEVENT_RESULT result;
-  BATTLE_EVENT_WORK * bew = work;
-  GAMESYS_WORK * gsys = bew->gsys;
 
-  result = fieldBattleEvent(event, seq, work);
-  if(result == GMEVENT_RES_FINISH){
-    //侵入システムに現在の状態を通知
-    IntrudeWork_SetActionStatus(GAMESYSTEM_GetGameCommSysPtr(gsys), INTRUDE_ACTION_FIELD);
-  }
-  return result;
-}
 
 //======================================================================
-//  フィールド　デバッグ　バトルイベント
+//
+//
+//
+//
 //======================================================================
-//--------------------------------------------------------------
-/**
- * デバッグイベント フィールドバトルイベント
- * @param gsys  GAMESYS_WORK
- * @param fieldmap FIELDMAP_WORK
- * @retval GMEVENT*
- */
-//--------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_Battle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
-{
-  GMEVENT * event;
-  BATTLE_SETUP_PARAM * bp;
-  BATTLE_EVENT_WORK * bew;
-
-  event = GMEVENT_Create(
-      gsys, NULL, DebugBattleEvent, sizeof(BATTLE_EVENT_WORK) );
-
-  bew = GMEVENT_GetEventWork(event);
-  bp = BATTLE_PARAM_Create(HEAPID_PROC);
-  BATTLE_SETUP_PARAM_DebugConstructer( bp, gsys );
-
-  BEW_Initialize( bew, gsys, fieldmap , bp );
-
-  bew->timeWait = 0;
-
-  return event;
-}
-
-//--------------------------------------------------------------
-/**
- * デバッグバトルイベント
- * @param event GMEVENT
- * @param seq イベントシーケンス
- * @param wk イベントワーク
- * @retval GMEVENT_RESULT
- */
-//--------------------------------------------------------------
-static GMEVENT_RESULT DebugBattleEvent( GMEVENT * event, int *  seq, void * work )
-{
-  BATTLE_EVENT_WORK * bew = work;
-  GAMESYS_WORK * gsys = bew->gsys;
-#if 0
-  switch (*seq) {
-  case 0:
-    GMEVENT_CallEvent(event,
-        EVENT_FieldSubProc(bew->gsys, bew->fieldmap,
-          FS_OVERLAY_ID(battle), &BtlProcData, &(bew->para))
-        );
-    (*seq) ++;
-    break;
-  case 1:
-    return GMEVENT_RES_FINISH;
-  }
-#endif
-  switch (*seq) {
-  case 0:
-    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, bew->fieldmap));
-    // 戦闘用ＢＧＭセット
-    {
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PushPlayEventBGM( fsnd, bew->battle_param->musicDefault );
-    }
-    (*seq)++;
-    break;
-  case 1:
-    //バトルプロセス呼び出し：プロセスが終了したらこのイベントに復帰する
-    GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, bew->battle_param );
-    (*seq)++;
-    break;
-  case 2:
-    // 戦闘ＢＧＭフェードアウト
-    bew->timeWait = 60;
-    PMSND_FadeOutBGM(60);
-    (*seq) ++;
-    break;
-  case 3:
-    if(bew->timeWait){
-      bew->timeWait--;
-    } else {
-      (*seq) ++;
-    }
-    break;
-  case 4:
-    GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
-    {
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      FIELD_SOUND *fsnd = GAMEDATA_GetFieldSound( gdata );
-      FIELD_SOUND_PopBGM( fsnd );
-    }
-    PMSND_FadeInBGM(60);
-    //
-    (*seq) ++;
-    break;
-  case 5:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, bew->fieldmap, 0));
-    (*seq) ++;
-    break;
-  case 6:
-    BEW_Destructor( bew );
-    return GMEVENT_RES_FINISH;
-  }
-
-  return GMEVENT_RES_CONTINUE;
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static const void addPartyPokemon(POKEPARTY * party, u16 monsno, u8 level, u16 id)
-{
-  POKEMON_PARAM * pp = PP_Create(monsno, level, id, HEAPID_CORE);
-  PokeParty_Add( party, pp);
-  GFL_HEAP_FreeMemory( pp );
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void BATTLE_SETUP_PARAM_DebugConstructer(BATTLE_SETUP_PARAM * para, GAMESYS_WORK * gsys)
-{
-  BATTLE_PARAM_Init(para);
-
-  para->engine = BTL_ENGINE_ALONE;
-  para->rule = BTL_RULE_SINGLE;
-  para->competitor = BTL_COMPETITOR_WILD;
-
-  para->netHandle = NULL;
-  para->commMode = BTL_COMM_NONE;
-  para->netID = 0;
-
-  //プレイヤーのパーティ
-  para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );
-  PokeParty_Copy(
-      GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)),
-      para->partyPlayer);
-
-  //1vs1時の敵AI, 2vs2時の１番目敵AI用
-  para->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_CORE );
-  addPartyPokemon( para->partyEnemy1, MONSNO_ARUSEUSU+1, 15, 3594 );
-  //PokeParty_Add( para->partyEnemy1, PP_Create(MONSNO_ARUSEUSU+1,15,3594,HEAPID_CORE) );
-
-  //2vs2時の味方AI（不要ならnull）
-  para->partyPartner = NULL;
-  //2vs2時の２番目敵AI用（不要ならnull）
-  para->partyEnemy2 = NULL;
-
-  //プレイヤーステータス add
-  para->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
-
-  //デフォルト時のBGMナンバー
-  para->musicDefault = SEQ_BGM_VS_NORAPOKE;
-  //ピンチ時のBGMナンバー
-  para->musicPinch = SEQ_BGM_BATTLEPINCH;
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
 //--------------------------------------------------------------
 /**
  * @brief 勝ち負け結果チェック
@@ -494,13 +302,14 @@ static void BEW_reflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, BATTLE_SETUP_PARAM* bp)
+static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM* bp)
 {
-  MI_CpuClear8( bew, sizeof(BATTLE_EVENT_WORK) );
+  GFL_STD_MemClear32( bew, sizeof(BATTLE_EVENT_WORK) );
   bew->gsys = gsys;
-  bew->fieldmap = fieldmap;
+  bew->gamedata = GAMESYSTEM_GetGameData( gsys );
   bew->battle_param = bp;
-  bew->bgmpush_off = FALSE;
+  bew->bgm_pushed_flag = FALSE;
+  bew->is_sub_event = FALSE;
   bew->timeWait = 0;
 }
 //--------------------------------------------------------------
@@ -510,34 +319,3 @@ static void BEW_Destructor(BATTLE_EVENT_WORK * bew)
   BATTLE_PARAM_Delete( bew->battle_param );
 }
 
-//======================================================================
-//  data
-//======================================================================
-//--------------------------------------------------------------
-/// ５月末用エンカウントポケモン一覧
-//--------------------------------------------------------------
-const u32 data_EncountPoke200905[] =
-{
-  494,//ピンボー
-  495,//モグリュー
-  496,//ゴリダルマ
-  497,//ワニメガネ
-  498,//ワニグラス
-//  499,//ワニバーン
-  500,//ハゴロムシ
-  501,//ハキシード
-//  502,//オノックス
-  503,//カーメント
-//  504,//バンビーナ
-  505,//バトロード
-  506,//プルンス
-  507,//コバト
-  508,//ライブラ
-  509,//バクパク
-  510,//ユリコネ
-  511,//オーバト
-  512,//パンチーヌ
-  513,//モコウモリ
-};
-
-const u32 data_EncountPoke200905Max = NELEMS(data_EncountPoke200905);

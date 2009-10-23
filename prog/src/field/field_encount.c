@@ -189,9 +189,6 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   encwork_SetPlayerPos( ewk, fplayer);
 
   //エンカウントイベント生成
-  if(enc_type == ENC_TYPE_BINGO){
-    return (void*)EVENT_BingoBattle( enc->gsys, enc->fwork, bp );
-  }
   return (void*)EVENT_WildPokeBattle( enc->gsys, enc->fwork, bp );
 }
 
