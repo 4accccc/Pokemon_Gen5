@@ -2231,6 +2231,28 @@ static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork )
 
 //==================================================================
 /**
+ * フィールドで実行されている通信Noを取得する
+ *
+ * @param   game_comm		    
+ *
+ * @retval  GAME_COMM_NO		実行している通信ゲーム番号
+ */
+//==================================================================
+GAME_COMM_NO FIELDCOMM_CheckCommNo(GAME_COMM_SYS_PTR game_comm)
+{
+  GAME_COMM_NO comm_no = GameCommSys_BootCheck(GAME_COMM_SYS_PTR gcsp);
+  switch(comm_no){
+  case GAME_COMM_NO_NULL:                  //何も起動していない状態
+  case GAME_COMM_NO_FIELD_BEACON_SEARCH:   //フィールド上でビーコンサーチ
+  case GAME_COMM_NO_INVASION:              //侵入
+    return comm_no;
+  }
+  GF_ASSERT_MSG(0, "comm_no = %d\n", comm_no); //フィールドで上記通信以外はありえない
+  return GAME_COMM_NO_INVASION;   //通信中という意味で侵入Noを返すようにする
+}
+
+//==================================================================
+/**
  * フィールド通信終了処理
  *
  * @param   game_comm		
