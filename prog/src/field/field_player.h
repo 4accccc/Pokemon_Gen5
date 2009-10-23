@@ -100,6 +100,7 @@ extern void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player );
 extern GMEVENT * FIELD_PLAYER_CheckMoveEvent( FIELD_PLAYER *fld_player,
     int key_trg, int key_cont, PLAYER_EVENTBIT evbit );
 
+
 //éQè∆ÅAê›íË
 extern void FIELD_PLAYER_GetPos(
 		const FIELD_PLAYER *fld_player, VecFx32 *pos );
@@ -145,6 +146,8 @@ extern void FIELD_PLAYER_GetDirPos(
 		const FIELD_PLAYER *fld_player, u16 dir, VecFx32 *pos );
 extern void FIELD_PLAYER_GetFrontGridPos(
 		const FIELD_PLAYER *fld_player, s16 *gx, s16 *gy, s16 *gz );
+extern void FIELD_PLAYER_GetDirWay( 
+    const FIELD_PLAYER *fld_player, u16 dir, VecFx32* way );
 extern BOOL FIELD_PLAYER_CheckLiveMMdl( const FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_ChangeMoveForm(
     FIELD_PLAYER *fld_player, PLAYER_MOVE_FORM form );

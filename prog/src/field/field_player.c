@@ -15,6 +15,8 @@
 
 #include "field_player_grid.h"
 
+#include "field/field_const.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -688,11 +690,18 @@ void FIELD_PLAYER_GetDirGridPos(
 {
 	const MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
 	
-	*gx = MMDL_GetGridPosX( fmmdl );
-	*gy = MMDL_GetGridPosY( fmmdl );
-	*gz = MMDL_GetGridPosZ( fmmdl );
-	*gx += MMDL_TOOL_GetDirAddValueGridX( dir );
-	*gz += MMDL_TOOL_GetDirAddValueGridZ( dir );
+  if( fld_player->map_type == FLDMAP_CTRLTYPE_GRID )
+  {
+    *gx = MMDL_GetGridPosX( fmmdl );
+    *gy = MMDL_GetGridPosY( fmmdl );
+    *gz = MMDL_GetGridPosZ( fmmdl );
+    *gx += MMDL_TOOL_GetDirAddValueGridX( dir );
+    *gz += MMDL_TOOL_GetDirAddValueGridZ( dir );
+  }
+  else
+  {
+    GF_ASSERT( fld_player->map_type == FLDMAP_CTRLTYPE_NOGRID );
+  }
 }
 
 //--------------------------------------------------------------
@@ -706,10 +715,33 @@ void FIELD_PLAYER_GetDirGridPos(
 void FIELD_PLAYER_GetDirPos(
 		const FIELD_PLAYER *fld_player, u16 dir, VecFx32 *pos )
 {
-  s16 gx,gy,gz;
-  FIELD_PLAYER_GetDirGridPos( fld_player, dir, &gx, &gy, &gz );
-  MMDL_TOOL_GetCenterGridPos( gx, gz, pos );
-  pos->y = GRID_SIZE_FX32( gy );
+  if( fld_player->map_type == FLDMAP_CTRLTYPE_GRID )
+  {
+    s16 gx,gy,gz;
+    FIELD_PLAYER_GetDirGridPos( fld_player, dir, &gx, &gy, &gz );
+    MMDL_TOOL_GetCenterGridPos( gx, gz, pos );
+    pos->y = GRID_SIZE_FX32( gy );
+  }
+  else
+  {
+    fx32 grid_size;
+    VecFx16 way;
+    RAIL_LOCATION location;
+    VecFx32 now_pos;
+    FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fld_player->fieldWork );
+    FIELD_RAIL_MAN* p_railman = FLDNOGRID_MAPPER_DEBUG_GetRailMan( p_mapper );
+
+    // 今の位置と、DIRキーの３D方向取得
+    MMDL_GetRailLocation( fld_player->fldmmdl, &location );
+    FIELD_RAIL_MAN_GetLocationPosition( p_railman, &location, &now_pos );
+    MMDL_Rail_GetDirLineWay( fld_player->fldmmdl, dir, &way );
+
+    // now_posからwayに１グリッド分進んだ先が次のポジション
+    grid_size = FIELD_RAIL_MAN_GetRailGridSize( p_railman );
+    pos->x = now_pos.x + FX_Mul( way.x, grid_size );
+    pos->y = now_pos.y + FX_Mul( way.x, grid_size );
+    pos->z = now_pos.z + FX_Mul( way.x, grid_size );
+  }
 }
 
 //--------------------------------------------------------------
@@ -728,6 +760,37 @@ void FIELD_PLAYER_GetFrontGridPos(
 	const MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
 	u16 dir = MMDL_GetDirDisp( fmmdl );
   FIELD_PLAYER_GetDirGridPos( fld_player, dir, gx, gy, gz );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自機のDIRの移動方向を取得
+ *
+ *	@param	fld_player    FIELD_PLAYER
+ *	@param	dir           DIR_～
+ *	@param	way           ３D移動方向
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_GetDirWay( 
+    const FIELD_PLAYER *fld_player, u16 dir, VecFx32* way )
+{
+  if( fld_player->map_type == FLDMAP_CTRLTYPE_GRID )
+  {
+    way->y = 0;
+    way->x = MMDL_TOOL_GetDirAddValueGridX( dir );
+    way->z = MMDL_TOOL_GetDirAddValueGridZ( dir );
+
+    way->x = GRID_TO_FX32( way->x );
+    way->z = GRID_TO_FX32( way->z );
+    VEC_Normalize( way, way );
+  }
+  else
+  {
+    VecFx16 way16;
+
+    MMDL_Rail_GetDirLineWay( fld_player->fldmmdl, dir, &way16 );
+    VEC_Set( way, way16.x, way16.y, way16.z );
+  }
 }
 
 //--------------------------------------------------------------
