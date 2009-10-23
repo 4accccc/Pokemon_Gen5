@@ -199,6 +199,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->heapID = HEAPID_BTL_SYSTEM;
       wk->setupParam = setup_param;
       wk->setupParam->capturedPokeIdx = TEMOTI_POKEMAX;
+
       wk->escapeClientID = BTL_CLIENTID_NULL;
 
       BTL_NET_InitSystem( setup_param->netHandle, HEAPID_BTL_NET );
@@ -398,7 +399,7 @@ static BOOL setup_alone_single( int* seq, void* work )
 {
   enum {
     #ifdef DEBUG_ONLY_FOR_taya
-    BAG_MODE = BBAG_MODE_SHOOTER,
+    BAG_MODE = BBAG_MODE_NORMAL,
     #else
      BAG_MODE = BBAG_MODE_NORMAL,
    #endif
@@ -2341,7 +2342,7 @@ BAG_CURSOR* BTL_MAIN_GetBagCursorData( BTL_MAIN_MODULE* wk )
 //=============================================================================================
 void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos )
 {
-  if( wk->setupParam->capturedPokeIdx != TEMOTI_POKEMAX )
+  if( wk->setupParam->capturedPokeIdx == TEMOTI_POKEMAX )
   {
     u8 clientID, posIdx;
     btlPos_to_cliendID_and_posIdx( wk, pos, &clientID, &posIdx );
@@ -2516,6 +2517,13 @@ static void srcParty_RelrectBtlParty( BTL_MAIN_MODULE* wk, u8 clientID )
 //
 //----------------------------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------------
+/**
+ * バトル内パーティデータを、結果としてセットアップパラメータに書き戻す
+ *
+ * @param   wk
+ */
+//----------------------------------------------------------------------------------
 static void reflectPartyData( BTL_MAIN_MODULE* wk )
 {
   if( wk->setupParam->competitor != BTL_COMPETITOR_COMM )
@@ -2525,6 +2533,17 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
     srcParty_RelrectBtlParty( wk, wk->myClientID );
     srcParty = srcParty_Get( wk, wk->myClientID );
     PokeParty_Copy( srcParty, wk->setupParam->partyPlayer );
+  }
+
+  if( wk->setupParam->competitor == BTL_COMPETITOR_WILD )
+  {
+    u8 clientID = BTL_MAIN_GetOpponentClientID( wk, wk->myClientID, 0 );
+    POKEPARTY* srcParty;
+
+    srcParty_RelrectBtlParty( wk, clientID );
+    srcParty = srcParty_Get( wk, clientID );
+    PokeParty_Copy( srcParty, wk->setupParam->partyEnemy1 );
+
   }
 }
 

@@ -2286,8 +2286,10 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
     {
       if( args[2] ){
         PMSND_PlayBGM( SEQ_ME_POKEGET );
+        (*seq)++;
+      }else{
+        (*seq) += 2;
       }
-      (*seq)++;
     }
     break;
   case 3:

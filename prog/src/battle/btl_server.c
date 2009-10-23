@@ -410,6 +410,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       case SVFLOW_RESULT_POKE_GET:
         {
           BtlPokePos pos = BTL_SVFLOW_GetCapturedPokePos( server->flowWork );
+          BTL_Printf("ƒ|ƒP•ß‚Ü‚¦‚Ü‚µ‚½ pos=%d\n", pos);
           BTL_MAIN_NotifyCapturedPokePos( server->mainModule, pos );
         }
         return TRUE;
