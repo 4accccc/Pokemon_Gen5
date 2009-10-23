@@ -419,4 +419,5 @@ extern void BmpMenuList_SetCursorBmp( BMPMENULIST_WORK *lw, u32 heapID );
 //--------------------------------------------------------------
 extern void* BmpMenuList_GetWorkPtr( BMPMENULIST_WORK *lw );
 
+
 #endif //__BMP_LIST_H__

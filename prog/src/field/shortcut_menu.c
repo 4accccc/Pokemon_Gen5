@@ -102,6 +102,12 @@ enum
 //GetInputの戻り値
 #define SCROLL_INPUT_NULL		(BMPMENULIST_NULL)
 #define SCROLL_INPUT_CANCEL (BMPMENULIST_CANCEL)
+//モード
+typedef enum
+{	
+	SCROLL_MOVE_NORMAL,
+	SCROLL_MOVE_INSERT,
+} SCROLL_MOVE_MODE;
 
 //-------------------------------------
 ///	SHORTCUTMENU
@@ -134,7 +140,14 @@ typedef struct
 	PRINT_QUE					*p_que;		//プリントキュー
 	PRINT_UTIL				util;			//プリント
 	u32								select;
+	u16								insert;		//挿入するカーソル
+	u16								dummy;
 	SHORTCUT					*p_sv;
+	SCROLL_MOVE_MODE	mode;	
+	GFL_CLWK					*p_clwk;
+	HEAPID						heapID;
+	GFL_MSGDATA				*p_msg;		//メッセージデータ
+	GFL_FONT					*p_font;	//フォント
 } SCROLL_WORK;
 
 //-------------------------------------
@@ -165,12 +178,14 @@ struct _SHORTCUTMENU_WORK
 //-------------------------------------
 ///	SCROLL
 //=====================================
-static void SCROLL_Init( SCROLL_WORK *p_wk, GFL_MSGDATA *p_msg, GFL_FONT *p_font, PRINT_QUE *p_que, SHORTCUT *p_sv, HEAPID heapID );
+static void SCROLL_Init( SCROLL_WORK *p_wk, GFL_MSGDATA *p_msg, GFL_FONT *p_font, PRINT_QUE *p_que, SHORTCUT *p_sv, GFL_CLWK *p_cursor, HEAPID heapID );
 static void SCROLL_Exit( SCROLL_WORK *p_wk );
 static void SCROLL_Main( SCROLL_WORK *p_wk );
 static BOOL SCROLL_PrintMain( SCROLL_WORK *p_wk );
 static u32 SCROLL_GetInput( const SCROLL_WORK *cp_wk );
 static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_wk, u32 param, u8 mode );
+static void Scroll_CreateList( SCROLL_WORK *p_wk, u16 list_bak, u16 cursor_bak, HEAPID heapID );
+static void Scroll_DeleteList( SCROLL_WORK *p_wk, u16 *p_list_bak, u16 *p_cursor_bak );
 
 //=============================================================================
 /**
@@ -237,6 +252,16 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( HEAPID heapID )
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 
+	//ワーク作成
+	{	
+		GFL_CLWK_DATA	cldata;
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+		cldata.pos_x	= 128;
+		cldata.pos_y	= 96;
+		p_wk->p_clwk	= GFL_CLACT_WK_Create( p_wk->p_unit, p_wk->res[RESID_CHR], p_wk->res[RESID_PLT], p_wk->res[RESID_CEL], &cldata, CLSYS_DRAW_MAIN, heapID );
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
+	}
+
 	//共通モジュール初期化
 	{	
 		p_wk->p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_shortcut_menu_dat, heapID );
@@ -248,7 +273,7 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( HEAPID heapID )
 	{	
 		SAVE_CONTROL_WORK *p_sv_ptr	= SaveControl_GetPointer();
 		SHORTCUT *p_shortcut_sv = SaveData_GetShortCut( p_sv_ptr );
-		SCROLL_Init( &p_wk->scroll, p_wk->p_msg, p_wk->p_font, p_wk->p_que, p_shortcut_sv, heapID );
+		SCROLL_Init( &p_wk->scroll, p_wk->p_msg, p_wk->p_font, p_wk->p_que, p_shortcut_sv, p_wk->p_clwk, heapID );
 		SCROLL_PrintMain( &p_wk->scroll );
 	}
 
@@ -268,6 +293,11 @@ void SHORTCUTMENU_Exit( SHORTCUTMENU_WORK *p_wk )
 	//モジュール破棄
 	{	
 		SCROLL_Exit( &p_wk->scroll );
+	}
+
+	//ワーク破棄
+	{	
+		GFL_CLACT_WK_Remove( p_wk->p_clwk );
 	}
 
 	//共通モジュール破棄
@@ -353,6 +383,7 @@ void SHORTCUTMENU_Main( SHORTCUTMENU_WORK *p_wk )
 
 	case MAINSEQ_CLOSE_START:	//閉じる開始
 
+		GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
 		p_wk->cnt	=	LISTMOVE_SYNC;
 		p_wk->seq	= MAINSEQ_CLOSE_WAIT;
 		break;
@@ -455,17 +486,20 @@ SHORTCUTMENU_INPUT SHORTCUTMENU_GetInput( const SHORTCUTMENU_WORK *cp_wk, SHORTC
  *	@param	*p_font						フォント
  *	@param	*p_que						キュー
  *	@param	p_sv							ショートカットセーブデータ
+ *	@param	p_cursor					カーソル
  *	@param	heapID						ヒープID
  */
 //-----------------------------------------------------------------------------
-static void SCROLL_Init( SCROLL_WORK *p_wk, GFL_MSGDATA *p_msg, GFL_FONT *p_font, PRINT_QUE *p_que, SHORTCUT *p_sv, HEAPID heapID )
+static void SCROLL_Init( SCROLL_WORK *p_wk, GFL_MSGDATA *p_msg, GFL_FONT *p_font, PRINT_QUE *p_que, SHORTCUT *p_sv, GFL_CLWK *p_cursor, HEAPID heapID )
 {	
-	u32 max;
-
 	//ワーククリア
 	GFL_STD_MemClear( p_wk, sizeof(SCROLL_WORK) );
-	p_wk->p_que	= p_que;
-	p_wk->p_sv	= p_sv;
+	p_wk->p_que		= p_que;
+	p_wk->p_sv		= p_sv;
+	p_wk->p_clwk	= p_cursor;
+	p_wk->heapID	= heapID;
+	p_wk->p_msg		= p_msg;
+	p_wk->p_font	= p_font;
 
 	//BMPWIN作成
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( BG_FRAME_SCROLL_M, 
@@ -476,9 +510,222 @@ static void SCROLL_Init( SCROLL_WORK *p_wk, GFL_MSGDATA *p_msg, GFL_FONT *p_font
 	//PRINT_UTILセットアップ
 	PRINT_UTIL_Setup( &p_wk->util, p_wk->p_bmpwin );
 
+	//リスト作成
+	Scroll_CreateList( p_wk, 0, 0, heapID );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スクロール	破棄
+ *
+ *	@param	SCROLL_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SCROLL_Exit( SCROLL_WORK *p_wk )
+{	
+	//リスト破棄
+	Scroll_DeleteList( p_wk, NULL, NULL );
+
+	//BMPWIN破棄
+	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
+
+	//ワーククリア
+	GFL_STD_MemClear( p_wk, sizeof(SCROLL_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スクロールメイン処理
+ *
+ *	@param	SCROLL_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SCROLL_Main( SCROLL_WORK *p_wk )
+{	
+	u32	select;
+	BOOL is_move_change	= FALSE;
+
+	//メイン
+	select	= BmpMenuList_Main( p_wk->p_list );
+
+	//モードによって違う
+	if( p_wk->mode == SCROLL_MOVE_NORMAL )
+	{
+		p_wk->select	= select;
+	}
+	else if( p_wk->mode == SCROLL_MOVE_INSERT )
+	{
+		if( select == SCROLL_INPUT_CANCEL )
+		{	
+			is_move_change	= TRUE;
+		}
+		else if( select != SCROLL_INPUT_NULL )
+		{	
+			u16 cursor_pos;
+			u16 cursor_bak;
+			u16 list_bak;
+			SHORTCUTMENU_INPUT insertID;
+			
+			insertID	= BmpMenuList_PosParamGet( p_wk->p_list, p_wk->insert );
+
+
+			//セーブデータへの挿入処理
+			BmpMenuList_DirectPosGet( p_wk->p_list, &cursor_pos );
+			SHORTCUT_Insert( p_wk->p_sv, insertID, cursor_pos );
+
+			NAGI_Printf( "挿入 cursor_pos%d insertID%d insert%d\n", cursor_pos, insertID, p_wk->insert );
+
+			//再設定
+			Scroll_DeleteList( p_wk, &list_bak, &cursor_bak );
+			Scroll_CreateList( p_wk, list_bak, cursor_bak, p_wk->heapID );
+
+			is_move_change	= TRUE;
+		}
+	}
+
+
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+	{	
+		is_move_change	= TRUE;
+	}
+
+	//モード切替
+	if( is_move_change )
+	{	
+		p_wk->mode ^= 1;
+		if( p_wk->mode == SCROLL_MOVE_NORMAL )
+		{	
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, FALSE );
+		}
+		else if( p_wk->mode == SCROLL_MOVE_INSERT )
+		{	
+			BmpMenuList_DirectPosGet( p_wk->p_list, &p_wk->insert );
+
+			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
+		}
+		Scroll_MoveCursorCallBack( p_wk->p_list, 0, 1 );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スクロールプリント処理
+ *
+ *	@param	SCROLL_WORK *p_wk		ワーク
+ *
+ * @retval  BOOL  転送が終わっている場合はTRUE／終わっていない場合はFALSE
+ */
+//-----------------------------------------------------------------------------
+static BOOL SCROLL_PrintMain( SCROLL_WORK *p_wk )
+{	
+	return PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	const SCROLL_WORK *cp_wk 
+ *
+ *	@retval	選択したいたら、		リストのインデックス
+ *	@retval	SCROLL_INPUT_NULL		選択中
+ *	@retval SCROLL_INPUT_CANCEL	キャンセル
+ *				
+ */
+//-----------------------------------------------------------------------------
+static u32 SCROLL_GetInput( const SCROLL_WORK *cp_wk )
+{	
+	return cp_wk->select;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カーソルが移動したときに呼ばれるコールバック
+ *
+ *	@param	BMPMENULIST_WORK * p_list	ワーク
+ *	@param	param										選択しているリストのパラメータ
+ *	@param	mode	1ならば初期化時	0ならばカーソル移動時
+ */
+//-----------------------------------------------------------------------------
+static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_list, u32 param, u8 mode )
+{	
+	u16 cursor;
+	u16 cursor_pos;
+	u32 yblk;
+	SCROLL_WORK *p_wk;
+
+	//ワーク取得
+	p_wk	= (SCROLL_WORK *)BmpListParamGet( p_list, BMPMENULIST_ID_WORK );
+
+	//カーソル位置をハイライトする処理
+	cursor	= BmpMenuList_CursorYGet( p_list ) / 8;
+	yblk		= BmpListParamGet( p_list, BMPMENULIST_ID_LINE_YBLK )/8;
+	BmpMenuList_DirectPosGet( p_list, &cursor_pos );
+
+	//NAGI_Printf( "yblk%d cursor%d\n", yblk, cursor );
+
+	if( p_wk->mode == SCROLL_MOVE_NORMAL )
+	{	
+		GFL_BG_ChangeScreenPalette( 
+				BG_FRAME_SCROLL_M, 
+				SCROLL_BMPWIN_X, 
+				SCROLL_BMPWIN_Y, 
+				SCROLL_BMPWIN_W, 
+				SCROLL_BMPWIN_H, 
+				PLT_BG_SCROLL_M
+				);
+		GFL_BG_ChangeScreenPalette( 
+				BG_FRAME_SCROLL_M, 
+				SCROLL_BMPWIN_X, 
+				SCROLL_BMPWIN_Y + cursor, 
+				SCROLL_BMPWIN_W, 
+				yblk,
+				PLT_BG_SELECT_M );
+
+		GFL_BG_LoadScreenReq( BG_FRAME_SCROLL_M );
+	}
+	else if( p_wk->mode == SCROLL_MOVE_INSERT )
+	{	
+		GFL_CLACTPOS	clpos;
+		clpos.x	= 128;
+		clpos.y	= (SCROLL_BMPWIN_Y + cursor)*8;
+		GFL_CLACT_WK_SetPos( p_wk->p_clwk, &clpos, CLSYS_DRAW_MAIN );
+
+		GFL_BG_ChangeScreenPalette( 
+				BG_FRAME_SCROLL_M, 
+				SCROLL_BMPWIN_X, 
+				SCROLL_BMPWIN_Y, 
+				SCROLL_BMPWIN_W, 
+				SCROLL_BMPWIN_H, 
+				PLT_BG_SCROLL_M
+				);
+#if 0
+		if( cursor_pos == p_wk->insert )
+		{	
+			GFL_BG_ChangeScreenPalette( 
+				BG_FRAME_SCROLL_M, 
+				SCROLL_BMPWIN_X, 
+				SCROLL_BMPWIN_Y + cursor, 
+				SCROLL_BMPWIN_W, 
+				yblk,
+				PLT_BG_SELECT_M );
+		}
+#endif
+		GFL_BG_LoadScreenReq( BG_FRAME_SCROLL_M );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リストを作成
+ *
+ *	@param	SCROLL_WORK *p_wk ワーク
+ *	@param	list_bak		リストバックアップ
+ *	@param	cursor_bak	カーソル位置バックアップ
+ *	@param	heapID						ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void Scroll_CreateList( SCROLL_WORK *p_wk, u16 list_bak, u16 cursor_bak, HEAPID heapID )
+{	
+	u32 max;
 	//セーブデータから読み取り
-	max	= SHORTCUT_GetMax( p_sv );
+	max	= SHORTCUT_GetMax( p_wk->p_sv );
 	NAGI_Printf( "Yボタン登録数%d\n", max );
+
 
 	//リストデータ作成
 	{	
@@ -488,14 +735,12 @@ static void SCROLL_Init( SCROLL_WORK *p_wk, GFL_MSGDATA *p_msg, GFL_FONT *p_font
 
 		for( i = 0; i < max ; i ++ )
 		{	
-			shorcutID	= SHORTCUT_GetType( p_sv, i );
-
-
+			shorcutID	= SHORTCUT_GetType( p_wk->p_sv, i );
 			BmpMenuWork_ListAddArchiveString( p_wk->p_data,
-					p_msg, msg_shortcut_menu_01_01+shorcutID, shorcutID, heapID );
+					p_wk->p_msg, msg_shortcut_menu_01_01+shorcutID, shorcutID, heapID );
 		}
 	}
-	
+
 	//リストメイン作成
 	{	
 		static const BMPMENULIST_HEADER sc_menulist_default	=
@@ -533,116 +778,33 @@ static void SCROLL_Init( SCROLL_WORK *p_wk, GFL_MSGDATA *p_msg, GFL_FONT *p_font
 		header.icon				= NULL;
 		header.win				= p_wk->p_bmpwin;
 		header.work				= p_wk;
-		header.msgdata		= p_msg;
+		header.msgdata		= p_wk->p_msg;
 		header.print_util	= &p_wk->util;
-		header.print_que	= p_que;
-		header.font_handle	= p_font;
+		header.print_que	= p_wk->p_que;
+		header.font_handle	= p_wk->p_font;
 
-		p_wk->p_list	= BmpMenuList_Set( &header, 0, 0, heapID );
+		p_wk->p_list	= BmpMenuList_Set( &header, list_bak, cursor_bak, heapID );
 	}
 }
+
 //----------------------------------------------------------------------------
 /**
- *	@brief	スクロール	破棄
+ *	@brief	リストを破棄
  *
  *	@param	SCROLL_WORK *p_wk ワーク
+ *	@param	p_list_bak		リストバックアップ
+ *	@param	p_cursor_bak	カーソル位置バックアップ
  */
 //-----------------------------------------------------------------------------
-static void SCROLL_Exit( SCROLL_WORK *p_wk )
+static void Scroll_DeleteList( SCROLL_WORK *p_wk, u16 *p_list_bak, u16 *p_cursor_bak )
 {	
-
 	//リスト破棄
 	{	
-		BmpMenuList_Exit( p_wk->p_list, NULL, NULL );
+		BmpMenuList_Exit( p_wk->p_list, p_list_bak, p_cursor_bak );
 	}
 
 	//リストデータ破棄
 	{	
 		BmpMenuWork_ListDelete( p_wk->p_data );
 	}
-
-	//BMPWIN破棄
-	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
-
-	//ワーククリア
-	GFL_STD_MemClear( p_wk, sizeof(SCROLL_WORK) );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	スクロールメイン処理
- *
- *	@param	SCROLL_WORK *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void SCROLL_Main( SCROLL_WORK *p_wk )
-{	
-	u32	select;
-	p_wk->select	= BmpMenuList_Main( p_wk->p_list );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	スクロールプリント処理
- *
- *	@param	SCROLL_WORK *p_wk		ワーク
- *
- * @retval  BOOL  転送が終わっている場合はTRUE／終わっていない場合はFALSE
- */
-//-----------------------------------------------------------------------------
-static BOOL SCROLL_PrintMain( SCROLL_WORK *p_wk )
-{	
-	return PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief
- *
- *	@param	const SCROLL_WORK *cp_wk 
- *
- *	@retval	選択したいたら、		リストのインデックス
- *	@retval	SCROLL_INPUT_NULL		選択中
- *	@retval SCROLL_INPUT_CANCEL	キャンセル
- *				
- */
-//-----------------------------------------------------------------------------
-static u32 SCROLL_GetInput( const SCROLL_WORK *cp_wk )
-{	
-	return cp_wk->select;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	カーソルが移動したときに呼ばれるコールバック
- *
- *	@param	BMPMENULIST_WORK * p_wk	ワーク
- *	@param	param										選択しているリストのパラメータ
- *	@param	mode	1ならば初期化時	0ならばカーソル移動時
- */
-//-----------------------------------------------------------------------------
-static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_wk, u32 param, u8 mode )
-{	
-	u16 cursor;
-	u32 yblk;
-
-	//カーソル位置をハイライトする処理
-	cursor	= BmpMenuList_CursorYGet( p_wk ) / 8;
-	yblk	= BmpListParamGet( p_wk, BMPMENULIST_ID_LINE_YBLK )/8;
-
-	NAGI_Printf( "yblk%d cursor%d\n", yblk, cursor );
-
-	GFL_BG_ChangeScreenPalette( 
-			BG_FRAME_SCROLL_M, 
-			SCROLL_BMPWIN_X, 
-			SCROLL_BMPWIN_Y, 
-			SCROLL_BMPWIN_W, 
-			SCROLL_BMPWIN_H, 
-			PLT_BG_SCROLL_M
-			);
-	GFL_BG_ChangeScreenPalette( 
-			BG_FRAME_SCROLL_M, 
-			SCROLL_BMPWIN_X, 
-			SCROLL_BMPWIN_Y + cursor, 
-			SCROLL_BMPWIN_W, 
-			yblk,
-			PLT_BG_SELECT_M );
-
-	GFL_BG_LoadScreenReq( BG_FRAME_SCROLL_M );
 }

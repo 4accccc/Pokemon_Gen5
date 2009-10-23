@@ -1312,4 +1312,3 @@ void* BmpMenuList_GetWorkPtr( BMPMENULIST_WORK *lw )
 {
 	return lw->hed.work;
 }
-

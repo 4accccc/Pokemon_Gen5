@@ -16,6 +16,12 @@
  *					定数宣言
 */
 //=============================================================================
+//-------------------------------------
+///	デバッグ
+//=====================================
+#ifdef PM_DEBUG
+#define DEBUG_PRINT_ON
+#endif //PM_DEBUG
 
 //=============================================================================
 /**
@@ -36,6 +42,20 @@ struct _SHORTCUT
 */
 //=============================================================================
 static void ShortCut_SortNull( SHORTCUT *p_wk );
+
+
+#ifdef DEBUG_PRINT_ON
+static inline void DEBUG_PrintData( SHORTCUT *p_wk )
+{	
+	int i;
+	for( i = 0; i < SHORTCUT_ID_MAX; i++ )
+	{	
+		NAGI_Printf( "data[%d]= %d \n", i, p_wk->data[ i ] );
+	}
+}
+#else
+#define DEBUG_PRINT_ON(x)	/*  */
+#endif
 
 //=============================================================================
 /**
@@ -235,16 +255,19 @@ u16 SHORTCUT_GetMax( const SHORTCUT *cp_wk )
 //-----------------------------------------------------------------------------
 void SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx )
 {	
-	u16 i;
+	s16 i;
 	u16 next;
 
 	GF_ASSERT_MSG( insert_idx < SHORTCUT_ID_MAX, "インデックスが最大を超えています\n" );
 	
 	//タイプを消す
 	SHORTCUT_SetRegister( p_wk, shortcutID, FALSE );
+	
+	NAGI_Printf( "消した後\n" );
+	DEBUG_PrintData( p_wk );
 
 	//挿入の以下を１つずつずらす
-	for( i = SHORTCUT_ID_MAX-1; i == insert_idx ; i-- )
+	for( i = SHORTCUT_ID_MAX-1; i >= insert_idx ; i-- )
 	{	
 		p_wk->data[ i ] = p_wk->data[ i - 1 ];
 	}
@@ -253,6 +276,8 @@ void SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx )
 	p_wk->data[ insert_idx ] = shortcutID;
 
 
+	NAGI_Printf( "挿入完了\n" );
+	DEBUG_PrintData( p_wk );
 }
 //=============================================================================
 /**
@@ -273,7 +298,7 @@ static void ShortCut_SortNull( SHORTCUT *p_wk )
 	u8 tmp;
 	for( i = 0; i < SHORTCUT_ID_MAX; i++ )
 	{
-		next	= MATH_CLAMP( i, 0, SHORTCUT_ID_MAX-1 );
+		next	= MATH_CLAMP( i+1, 1, SHORTCUT_ID_MAX-1 );
 		if( p_wk->data[ i ] == SHORTCUT_ID_NULL )
 		{	
 			tmp	= p_wk->data[ i ];
