@@ -133,10 +133,9 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
     work->calcPP = NULL;
   }
 
-  //@todo ショートカットを取得
   for( i=0;i<PPT_MAX;i++ )
   {
-    work->shortCutCheck[i] = FALSE;
+    work->shortCutCheck[i] = GAMEDATA_GetShortCut( work->psData->game_data, SHORTCUT_ID_PSTATUS_STATUS+i );
   }
 
   PSTATUS_InitGraphic( work );
@@ -216,7 +215,7 @@ const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work )
   //@todo ショートカットを反映
   for( i=0;i<PPT_MAX;i++ )
   {
-    //work->shortCutCheck[i];
+    GAMEDATA_SetShortCut( work->psData->game_data, SHORTCUT_ID_PSTATUS_STATUS+i , work->shortCutCheck[i] );
   }
 
   if( work->calcPP != NULL )
