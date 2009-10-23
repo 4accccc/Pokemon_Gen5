@@ -205,7 +205,7 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
 {
   int ePos;
   MUS_EDIT_LOCAL_WORK *work;
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x100000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x70000 );
 
   work = GFL_PROC_AllocWork( proc, sizeof(MUS_EDIT_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
   work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_STAGE , NULL );
@@ -214,6 +214,16 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
   MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_EREBUU  , HEAPID_MUSICAL_STAGE );
   MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_RUKARIO , HEAPID_MUSICAL_STAGE );
   
+  work->actInitWork->musPoke[0]->charaType = MUS_CHARA_PLAYER;
+
+
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STRM|HEAPDIR_MASK, 0x80000 );
+  work->actInitWork->distData = MUSICAL_SYSTEM_InitDistributeData( GFL_HEAPID_APP );
+  MUSICAL_SYSTEM_LoadDistributeData( work->actInitWork->distData , HEAPID_MUSICAL_STRM );
+
+  work->actInitWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_STAGE , work->actInitWork->distData );
+  MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_STAGE , work->actInitWork->progWork , work->actInitWork );
+
   //mcs—p‰Šú‰»
   work->heapId = HEAPID_MUSICAL_STAGE;
   work->mcsSeq = MSEQ_WAIT;
@@ -256,8 +266,9 @@ static GFL_PROC_RESULT MusicalEditProc_Main( GFL_PROC * proc, int * seq , void *
     
   case STA_SEQ_INIT_ACTING:
     work->actWork = STA_ACT_InitActing( work->actInitWork , HEAPID_MUSICAL_STAGE );
-    MusicalEdit_InitGraphic( work );
-    MusicalEdit_InitBgPokeEquip( work );
+    STA_ACT_EDITOR_SetEditorMode( work->actWork );
+    //MusicalEdit_InitGraphic( work );
+    //MusicalEdit_InitBgPokeEquip( work );
     *seq = STA_SEQ_LOOP_ACTING;
     break;
     
@@ -270,14 +281,14 @@ static GFL_PROC_RESULT MusicalEditProc_Main( GFL_PROC * proc, int * seq , void *
       {
         *seq = STA_SEQ_TERM_ACTING;
       }
-      MusicalEdit_UpdateTouch( work );
-      MusicalEdit_UpdatePokeData( work );
+      //MusicalEdit_UpdateTouch( work );
+      //MusicalEdit_UpdatePokeData( work );
     }
     break;
 
   case STA_SEQ_TERM_ACTING:
-    MusicalEdit_TermBgPokeEquip( work );
-    MusicalEdit_TermGraphic( work );
+    //MusicalEdit_TermBgPokeEquip( work );
+    //MusicalEdit_TermGraphic( work );
     STA_ACT_TermActing( work->actWork );
     if( work->isInitMcs == TRUE )
     {
@@ -689,6 +700,7 @@ static void MusicalEdit_UpdateTouch( MUS_EDIT_LOCAL_WORK *work )
 }
 
 #pragma mark [>mcs func
+
 
 static void MusicalEdit_McsMain( MUS_EDIT_LOCAL_WORK *work )
 {
@@ -1280,16 +1292,21 @@ static void MusicalSetting_UpdateTouch( MUS_EDIT_LOCAL_WORK *work )
       { GFL_UI_TP_HIT_END ,0,0,0},
     };
     const int ret = GFL_UI_TP_HitTrg( hitTbl );
+    const u8 befPokeNo = work->pokeNo;
     
     switch( ret )
     {
     case POKEBUT_NO_DOWN:
       ( work->pokeNo == 0 ? work->pokeNo = 3 : work->pokeNo-- );
       isReload = TRUE;
+      work->actInitWork->musPoke[befPokeNo]->charaType = MUS_CHARA_NPC;
+      work->actInitWork->musPoke[work->pokeNo]->charaType = MUS_CHARA_PLAYER;
       break;
     case POKEBUT_NO_UP:
       ( work->pokeNo == 3 ? work->pokeNo = 0 : work->pokeNo++ );
       isReload = TRUE;
+      work->actInitWork->musPoke[befPokeNo]->charaType = MUS_CHARA_NPC;
+      work->actInitWork->musPoke[work->pokeNo]->charaType = MUS_CHARA_PLAYER;
       break;
     case POKEBUT_POKE_DOWN2:
     case POKEBUT_POKE_DOWN:

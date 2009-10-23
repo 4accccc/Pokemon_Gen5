@@ -54,6 +54,7 @@ const BOOL STA_ACT_IsUsingItemSelf( ACTING_WORK *work );
 
 //エディタ用
 
+void	STA_ACT_EDITOR_SetEditorMode( ACTING_WORK *work );
 void	STA_ACT_EDITOR_SetScript( ACTING_WORK *work , void* data );
 void	STA_ACT_EDITOR_StartScript( ACTING_WORK *work );
 

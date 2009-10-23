@@ -166,6 +166,8 @@ struct _ACTING_WORK
   //通信時に送るリクエスト
   BOOL    useItemReq;
   MUS_POKE_EQUIP_POS useItemReqPos;
+  
+  BOOL isEditorMode;
 };
 
 //======================================================================
@@ -239,6 +241,7 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   work->makuOffset = 0;
   work->scriptData = NULL;
   work->mainSeq = AMS_FADEIN;
+  work->isEditorMode = FALSE;
   
   work->vblankFuncTcb = GFUser_VIntr_CreateTCB( STA_ACT_VBlankFunc , (void*)work , 64 );
   
@@ -389,48 +392,6 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
       stopScript = TRUE;
     }
   }
-/*
-  if( work->initWork->commWork != NULL )
-  {
-    static u32 isStartCnt = 0;
-    static BOOL isWait = FALSE;
-    MUS_COMM_WORK *commWork = work->initWork->commWork;
-    //if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
-    if( STA_SCRIPT_GetRunningScriptNum( work->scriptSys ) == 0 &&
-        isWait == FALSE )
-    {
-      MUS_COMM_SendTimingCommand( commWork , MUS_COMM_TIMMING_START_SCRIPT+isStartCnt );
-      isWait = TRUE;
-    }
-    
-    if( STA_SCRIPT_GetRunningScriptNum( work->scriptSys ) == 0 )
-    {
-      static u32 vcount = 0;
-      if( vcount != 0 )
-      {
-        u32 nowVCount = OS_GetVBlankCount();
-        OS_TPrintf("Script count[%d]\n",nowVCount-vcount);
-        vcount = 0;
-      }
-      if( MUS_COMM_CheckTimingCommand( commWork , MUS_COMM_TIMMING_START_SCRIPT+isStartCnt ) == TRUE )
-      {
-        if( work->scriptData != NULL )
-        {
-          GFL_HEAP_FreeMemory( work->scriptData );
-        }
-        work->scriptData = GFL_ARC_UTIL_Load( ARCID_MUSICAL_SCRIPT , NARC_musical_script_we_001_bin , FALSE , work->heapId );
-        STA_ACT_StartScript( work );
-        vcount = OS_GetVBlankCount(); 
-        isStartCnt++;
-        isWait = FALSE;
-        OS_TPrintf("-------------------------------\n");
-        OS_TPrintf("Start script[%d]\n",isStartCnt);
-        OS_TPrintf("-------------------------------\n");
-      }
-    }
-  }
-*/
-
 #endif
 
   switch( work->mainSeq )
@@ -474,16 +435,26 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
     break;
   
   case AMS_ACTING_START:
-    work->scriptData = work->initWork->distData->scriptData;
-    STA_ACT_StartScript( work );
-    work->mainSeq = AMS_ACTING_MAIN;
+    if( work->isEditorMode == FALSE )
+    {
+      work->scriptData = work->initWork->distData->scriptData;
+      STA_ACT_StartScript( work );
+      work->mainSeq = AMS_ACTING_MAIN;
+    }
     break;
   
   case AMS_ACTING_MAIN:
     if( STA_SCRIPT_GetRunningScriptNum( work->scriptSys ) == 0 )
     {
       work->scriptData = NULL;
-      work->mainSeq = AMS_FADEOUT;
+      if( work->isEditorMode == FALSE )
+      {
+        work->mainSeq = AMS_FADEOUT;
+      }
+      else
+      {
+        work->mainSeq = 0xFF;
+      }
     }
     break;
     
@@ -546,52 +517,6 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
     return ACT_RET_GO_END;
   }
 #endif //DEB_ARI
-#if DEB_ARI|1
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-  {
-    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ , -8 );
-    STA_BUTTON_SetCanUseButton( work->buttonSys , TRUE );
-    
-    /*
-    {
-      static testStaticNo = 0;
-      switch( testStaticNo )
-      {
-      case 0:
-        PMSND_PlaySE( SEQ_SE_MSCL_09 );
-        break;
-      case 1:
-        PMSND_PlaySE( SEQ_SE_MSCL_10 );
-        break;
-      case 2:
-        PMSND_PlaySE( SEQ_SE_MSCL_11 );
-        break;
-      case 3:
-        PMSND_PlaySE( SEQ_SE_MSCL_12 );
-        break;
-      case 4:
-        PMSND_PlaySE( SEQ_SE_MSCL_13 );
-        break;
-      case 5:
-        PMSND_PlaySE( SEQ_SE_SYS_04 );
-        break;
-      case 6:
-        PMSND_PlaySE( SEQ_SE_SAVE );
-        break;
-        
-      }
-      
-      testStaticNo++;
-      if( testStaticNo >= 7 )
-      {
-        testStaticNo = 0;
-      }
-    }
-    //*/
-
-  }
-#endif
-
   return ACT_RET_CONTINUE;
 }
 
@@ -1546,6 +1471,11 @@ const u8 STA_ACT_GetUseItemAttentionPoke( ACTING_WORK *work )
 //--------------------------------------------------------------
 //エディタ用
 //--------------------------------------------------------------
+void	STA_ACT_EDITOR_SetEditorMode( ACTING_WORK *work )
+{
+  work->isEditorMode = TRUE;
+}
+
 void  STA_ACT_EDITOR_SetScript( ACTING_WORK *work , void* data )
 {
   if( work->scriptData != NULL )

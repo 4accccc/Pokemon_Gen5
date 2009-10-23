@@ -31,8 +31,9 @@ SUBDIRS	=
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)/macro_define
-
-include	$(NITROSDK_ROOT)/build/buildtools/commondefs.cctype.CW
+include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
+include	$(COMMONDEFS_CCTYPE_CW)
+include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
 #リソースファイルの存在するディレクトリを指定
 RES_DIR = ./
