@@ -164,7 +164,7 @@ ev_d01r0101_pokecount:
 			_BALLOONWIN_CLOSE()
 			//1回目の会話は繰り返さない用フラグ
 			$WK_SCENE_D01R0101 = 1
-		
+				
 		ELSE
 		//手持ちに空きがあれば持ちタイプに合わせてポケモンを渡す
 			
@@ -203,21 +203,20 @@ ev_d01r0101_pokecount:
 			IF $NAME_YESNO01 == 0 THEN
 				//はい
 				
-			/*
 				//$POKE_COUNTに1を足して手持ちの最後尾の数を指定
-				$POKE_COUNT += 1
+				//$POKE_COUNT += 1
 				
 				//名前入力結果が格納されるローカル変数を定義
 				DEFINE_LOCAL SCWK_NAMEINPUT
 				
 				
 				//名前入力画面呼び出し
-				_PARTY_POKE_NAME_INPUT(SCWK_NAMEINPUT,$POKE_COUNT)
+				_PARTY_POKE_NAME_INPUT(SCWK_NAMEINPUT,POKE_COUNT)
 			
-			*/
+			
 				//仮処理
-				DEFINE_LOCAL SCWK_NAMEINPUT
-				_PARTY_POKE_NAME_INPUT(SCWK_NAMEINPUT,1)
+				//DEFINE_LOCAL SCWK_NAMEINPUT
+				//_PARTY_POKE_NAME_INPUT(SCWK_NAMEINPUT,1)
 				
 			ELSE
 				//いいえの場合はスキップ
