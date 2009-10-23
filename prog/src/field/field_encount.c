@@ -1,7 +1,7 @@
 //======================================================================
 /**
  * @file  field_encount.c
- * @brief	フィールド　エンカウント処理
+ * @brief フィールド　エンカウント処理
  * @author kagaya
  */
 //======================================================================
@@ -43,7 +43,7 @@
 #define WALK_COUNT_GLOBAL (8) ///<エンカウントしない歩数
 #define WALK_COUNT_MAX (0xffff) ///<歩数カウント最大
 #define NEXT_PERCENT (40) ///<エンカウントする基本確率
-#define	WALK_NEXT_PERCENT	(5) ///<歩数カウント失敗で次の処理に進む確率
+#define WALK_NEXT_PERCENT (5) ///<歩数カウント失敗で次の処理に進む確率
 
 #define LONG_GRASS_PERCENT (30) ///<長い草の中にいるときの加算確率
 #define CYCLE_PERCENT (30) ///<自転車に乗っているときの加算確率
@@ -104,10 +104,10 @@ FIELD_ENCOUNT * FIELD_ENCOUNT_Create( FIELDMAP_WORK *fwork )
 {
   HEAPID heapID;
   FIELD_ENCOUNT *enc;
-  
+
   heapID = FIELDMAP_GetHeapID( fwork );
   enc = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_ENCOUNT) );
-  
+
   enc->fwork = fwork;
   enc->gsys = FIELDMAP_GetGameSysWork( enc->fwork );
   enc->gdata = GAMESYSTEM_GetGameData( enc->gsys );
@@ -146,37 +146,37 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   ENCOUNT_WORK* ewk;
   ENCOUNT_LOCATION enc_loc;
   ENC_POKE_PARAM poke_tbl[FLD_ENCPOKE_NUM_MAX];
-  
+
   FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
-	ENCPOKE_FLD_PARAM fld_spa;
-   
+  ENCPOKE_FLD_PARAM fld_spa;
+
   //最後のエンカウントからのプレイヤーの歩数を加算
   ewk = GAMEDATA_GetEncountWork(enc->gdata);
   encwork_AddPlayerWalkCount( ewk, fplayer);
-  
+
   //ロケーションチェック
   enc_loc = enc_GetAttrLocation( enc );
   per = enc_GetLocationPercent( enc, enc_loc );
   if( per <= 0 ){
     return( NULL ); //確率0
   }
-  
+
   //ENCPOKE_FLD_PARAM作成
   ENCPOKE_SetEFPStruct( &fld_spa, enc->gdata, enc_loc, ENC_TYPE_NORMAL, FALSE );
   //道具＆特性によるエンカウント率変動
   per = ENCPOKE_EncProbManipulation( &fld_spa, enc->gdata, per);
- 
+
   if( enc_CheckEncount(enc,ewk,per) == FALSE ){ //エンカウントチェック
     return NULL;
   }
-  
+
   { //移動ポケモンチェック
 
   }
 
   //エンカウントデータ生成
   enc_num = ENCPOKE_GetNormalEncountPokeData( enc->encdata, &fld_spa, poke_tbl );
- 
+
   if( enc_num == 0 ){ //エンカウント失敗
     return NULL;
   }
@@ -184,7 +184,7 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   //バトルパラメータセット
   bp = BATTLE_PARAM_Create( HEAPID_BTLPARAM );
   enc_CreateBattleParam( enc, &fld_spa, bp, HEAPID_BTLPARAM, poke_tbl );
-  
+
   // プレイヤー座標更新＆歩数カウントクリア
   encwork_SetPlayerPos( ewk, fplayer);
 
@@ -210,7 +210,7 @@ static ENCOUNT_LOCATION enc_GetAttrLocation( FIELD_ENCOUNT *enc )
   FIELD_PLAYER *fplayer = FIELDMAP_GetFieldPlayer( enc->fwork );
   FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( enc->fwork );
   MAPATTR_FLAG attr_flag;
-  
+
   FIELD_PLAYER_GetPos( fplayer, &pos );
   attr = MAPATTR_GetAttribute( mapper, &pos );
 
@@ -227,11 +227,11 @@ static ENCOUNT_LOCATION enc_GetAttrLocation( FIELD_ENCOUNT *enc )
   if((attr_flag & MAPATTR_FLAGBIT_ENCOUNT) == FALSE ){
     return ENC_LOCATION_ERR;
   }
-  
+
   //エンカウントアトリビュートチェック
   {
     MAPATTR_VALUE attr_value = MAPATTR_GetAttrValue(attr);
-#ifdef DEBUG_WB_FORCE_GROUND    
+#ifdef DEBUG_WB_FORCE_GROUND
     attr_flag = 0; //@todo 仮　地上で固定
 #endif
 
@@ -282,7 +282,7 @@ static u32 enc_GetLocationPercent( FIELD_ENCOUNT *enc,ENCOUNT_LOCATION location 
 static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, u32 per )
 {
   u32 calc_per,next_per;
-  
+
   if( per > 100 ){ //100%
     per = 100;
   }
@@ -301,24 +301,24 @@ static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, u32 per )
   }
 #if 0   //091006時点では歩数によるエンカウント率補正はない
   calc_per = per << CALC_SHIFT;
-  
+
   if( enc_CheckEncountWalk(enc,calc_per) == FALSE ){
     enc_AddWalkCount( enc ); //歩数カウント
-    
+
     if( enc_GetPercentRand() >= WALK_NEXT_PERCENT ){ //5%で次の処理へ
       return( FALSE );
     }
   }
-  
+
   next_per = NEXT_PERCENT; //エンカウント基本確率
-    
-  { //日付による確率変動 
+
+  { //日付による確率変動
   }
-  
+
   if( next_per > 100 ){ //100%超えチェック
     next_per = 100;
   }
-  
+
   if( enc_GetPercentRand() < next_per ){ //確率チェック
     if( enc_GetPercentRand() >= per ){
       return( TRUE );
@@ -340,17 +340,17 @@ static BOOL enc_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_WORK* ewk, u32 per )
 static BOOL enc_CheckEncountWalk( FIELD_ENCOUNT *enc, u32 per )
 {
   per = (per/10) >> CALC_SHIFT;
-  
+
   if( per > WALK_COUNT_GLOBAL ){
     per = WALK_COUNT_GLOBAL;
   }
-  
+
   per = WALK_COUNT_GLOBAL - per;
-  
+
   if( enc_GetWalkCount(enc) >= per ){
     return( TRUE );
   }
-   
+
   return( FALSE );
 }
 #endif
@@ -375,16 +375,17 @@ static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* 
     int i;
     POKEPARTY* partyEnemy = PokeParty_AllocPartyWork( heapID );
     POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( heapID, POKETOOL_GetWorkSize() );
+    MYSTATUS* myStatus = GAMEDATA_GetMyStatus( gdata );
 
     for(i = 0;i < ((u8)(efp->enc_double_f)+1);i++){
       ENCPOKE_PPSetup( pp, efp, &inPokeTbl[i] );
       PokeParty_Add( partyEnemy, pp );
     }
     GFL_HEAP_FreeMemory( pp );
-  
+
     BP_SETUP_Wild( bsp, gdata, heapID, BTL_RULE_SINGLE+efp->enc_double_f,partyEnemy, efp->land_form, efp->weather );
   }
-  
+
   { //2vs2時の味方AI（不要ならnull）
     bsp->partyPartner = NULL;
   }
@@ -392,7 +393,7 @@ static void enc_CreateBattleParam( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PARAM* 
   { //2vs2時の２番目敵AI用（不要ならnull）
     bsp->partyEnemy2 = NULL;
   }
-  
+
   { //BGM設定
     //デフォルト時のBGMナンバー
 //  bsp->musicDefault = SEQ_WB_BA_TEST_250KB;
@@ -416,7 +417,7 @@ static void enc_CreateTrainerBattleParam(
 {
   GAMESYS_WORK *gsys = enc->gsys;
   GAMEDATA *gdata = enc->gdata;
- 
+
   BATTLE_PARAM_Init(param);
 
   { //各設定
@@ -433,15 +434,15 @@ static void enc_CreateTrainerBattleParam(
     param->partyPlayer = PokeParty_AllocPartyWork( heapID );
     PokeParty_Copy( GAMEDATA_GetMyPokemon(gdata), param->partyPlayer );
   }
-  
+
   { //対戦相手の手持ちポケモン生成
     param->partyEnemy1 = PokeParty_AllocPartyWork( heapID );
 
     param->trID = tr_id;
-    
+
     TT_EncountTrainerDataMake( param, heapID );
   }
-  
+
   { //2vs2時の味方AI（不要ならnull）
     param->partyPartner = NULL;
   }
@@ -449,11 +450,11 @@ static void enc_CreateTrainerBattleParam(
   { //2vs2時の２番目敵AI用（不要ならnull）
     param->partyEnemy2 = NULL;
   }
-  
+
   { //プレイヤーステータス
     param->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
   }
-  
+
   { //BGM設定
     //デフォルト時のBGMナンバー
 //  param->musicDefault = SEQ_WB_BA_TEST_250KB;
@@ -540,7 +541,7 @@ static void enc_ClearWalkCount( FIELD_ENCOUNT *enc )
 static void encwork_SetPlayerPos( ENCOUNT_WORK* ewk, const FIELD_PLAYER* player)
 {
   MMDL* mmdl = FIELD_PLAYER_GetMMdl( player );
-	
+
   MI_CpuClear8( &ewk->player, sizeof(EWK_PLAYER) );
 
   ewk->player.pos_x = MMDL_GetGridPosX( mmdl );

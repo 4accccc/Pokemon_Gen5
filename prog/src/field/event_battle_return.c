@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file  event_battle_return.c
- * @brief バトルからフィールドへの復帰管理
+ * @file    event_battle_return.c
+ * @brief   バトルからフィールドへの復帰管理
  * @author  taya
- * @date  2009.10.23
+ * @date    2009.10.23
  */
 //============================================================================================
 
@@ -13,11 +13,32 @@
 
 // global includes --------------------
 #include "system\main.h"
+#include "savedata\box_savedata.h"
+#include "app\name_input.h"
 
 // local includes --------------------
 #include "event_battle_return.h"
 
 
+/*--------------------------------------------------------------------------*/
+/* Consts                                                                   */
+/*--------------------------------------------------------------------------*/
+enum {
+  STRBUF_SIZE = 32,   ///< プレイヤー名を一時的に格納するためのバッファサイズ
+};
+
+/*--------------------------------------------------------------------------*/
+/* Main Work                                                                */
+/*--------------------------------------------------------------------------*/
+typedef struct {
+
+  NAMEIN_PARAM*     nameinParam;
+  STRBUF*           strbuf;
+  POKEMON_PARAM*    pp;
+
+  HEAPID  heapID;
+
+}BTLRET_WORK;
 
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
@@ -25,7 +46,6 @@
 static GFL_PROC_RESULT BtlRet_ProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT BtlRet_ProcQuit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
-
 
 
 /*--------------------------------------------------------------------------*/
@@ -45,6 +65,17 @@ const GFL_PROC_DATA   BtlRet_ProcData = {
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT BtlRet_ProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+  BTLRET_WORK* wk;
+
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTLRET_SYS, 0x1000 );
+
+  wk = GFL_PROC_AllocWork( proc, sizeof(BTLRET_WORK), HEAPID_BTLRET_SYS );
+
+  wk->strbuf = GFL_STR_CreateBuffer( STRBUF_SIZE, HEAPID_BTLRET_SYS );
+  wk->nameinParam = NULL;
+  wk->pp = NULL;
+  wk->heapID = HEAPID_BTLRET_SYS;
+
   return GFL_PROC_RES_FINISH;
 }
 //--------------------------------------------------------------------------
@@ -54,6 +85,12 @@ static GFL_PROC_RESULT BtlRet_ProcInit( GFL_PROC * proc, int * seq, void * pwk, 
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT BtlRet_ProcQuit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+  BTLRET_WORK* wk = mywk;
+
+  GFL_STR_DeleteBuffer( wk->strbuf );
+  GFL_PROC_FreeWork( proc );
+
+  GFL_HEAP_DeleteHeap( HEAPID_BTLRET_SYS );
   return GFL_PROC_RES_FINISH;
 }
 
@@ -64,30 +101,68 @@ static GFL_PROC_RESULT BtlRet_ProcQuit( GFL_PROC * proc, int * seq, void * pwk, 
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+  enum {
+    POKENAME_LEN_MAX = 5,
+  };
+  BTLRET_WORK*  wk = mywk;
   BTLRET_PARAM* param = pwk;
 
   switch( *seq ){
   case 0:
     {
-      POKEPARTY* party  = GAMEDATA_GetMyPokemon( param->gameData );
+      POKEPARTY* party    = GAMEDATA_GetMyPokemon( param->gameData );
+      MYSTATUS*  myStatus = GAMEDATA_GetMyStatus( param->gameData );
 
       PokeParty_Copy( param->btlResult->partyPlayer, party );
 
-      // @todo 図鑑（見たフラグ）をセットする
+      // @todo 図鑑フラグをセットする
 
       // 捕獲した
       if( param->btlResult->result == BTL_RESULT_CAPTURE )
       {
-        POKEMON_PARAM* pp = PokeParty_GetMemberPointer(
-                              param->btlResult->partyEnemy1, param->btlResult->capturedPokeIdx );
+        wk->pp = PokeParty_GetMemberPointer(
+                                param->btlResult->partyEnemy1, param->btlResult->capturedPokeIdx );
 
-        if( PokeParty_GetPokeCount(party) < PokeParty_GetPokeCountMax(party) ){
-          PokeParty_Add( party, pp );
-        }
+        // 親名セットしてるけど、本来はエンカウント前にフィールで設定すべき？-
+        MyStatus_CopyNameString( myStatus, wk->strbuf );
+        PP_Put( wk->pp, ID_PARA_oyaname, (u32)(wk->strbuf) );
+
+        // @todo 今は必ず名前入力させているが、いずれ確認画面を作る。
+        wk->nameinParam = NAMEIN_AllocParamPokemonByPP( wk->heapID, wk->pp, POKENAME_LEN_MAX, NULL );
+        GFL_PROC_SysCallProc( NO_OVERLAY_ID, &NameInputProcData, wk->nameinParam );
+        (*seq)++;
       }
     }
     break;
+
+  case 1:
+    if( !NAMEIN_IsCancel(wk->nameinParam) ){
+      NAMEIN_CopyStr( wk->nameinParam, wk->strbuf );
+      PP_Put( wk->pp, ID_PARA_nickname, (u32)(wk->strbuf) );
+    }
+    NAMEIN_FreeParam( wk->nameinParam );
+    wk->nameinParam = NULL;
+    (*seq)++;
+    break;
+
+  case 2:
+    {
+      POKEPARTY* party    = GAMEDATA_GetMyPokemon( param->gameData );
+
+      if( PokeParty_GetPokeCount(party) < PokeParty_GetPokeCountMax(party) ){
+        PokeParty_Add( party, wk->pp );
+      }else{
+        BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( param->gameData );
+        BOXDAT_PutPokemon( boxman, PP_GetPPPPointer(wk->pp) );
+      }
+    }
+    (*seq)++;
+    break;
+
+  default:
+    return GFL_PROC_RES_FINISH;
   }
 
-  return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_CONTINUE;
 }
+
