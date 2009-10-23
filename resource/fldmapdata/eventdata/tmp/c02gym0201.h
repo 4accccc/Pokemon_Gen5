@@ -13,7 +13,23 @@
 #define ZONE_C02GYM0201_EVC_H
 
 #define C02GYM0201_ASSITANTM2_01           0
-#define C02GYM0201_GLASSES_01              1
+#define C02GYM0201_SUNGLASSES_01           1
 #define C02GYM0201_ASSITANTM1_01           2
+#define C02GYM0201_BOOK_01D                3
+#define C02GYM0201_BOOK_01P                4
+#define C02GYM0201_BOOK_01H                5
+#define C02GYM0201_BOOK_01L                6
+#define C02GYM0201_BOOK_01E                7
+#define C02GYM0201_BOOK_01I                8
+#define C02GYM0201_BOOK_01M                9
+#define C02GYM0201_BOOK_01F               10
+#define C02GYM0201_BOOK_01J               11
+#define C02GYM0201_BOOK_01N               12
+#define C02GYM0201_BOOK_01G               13
+#define C02GYM0201_BOOK_01K               14
+#define C02GYM0201_BOOK_01O               15
+#define C02GYM0201_BOOK_01C               16
+#define C02GYM0201_BOOK_01B               17
+#define C02GYM0201_BOOK_01A               18
 
 #endif //ZONE_C02GYM0201_EVC_H

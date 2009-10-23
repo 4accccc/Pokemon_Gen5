@@ -21,15 +21,12 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c02gym0201
 _EVENT_DATA    ev_zone_c02gym0201
-
-_EVENT_DATA    ev_c02gym0201_glasses_01
-
+_EVENT_DATA    ev_pos_c02gym0201_sunglasses_01
+_EVENT_DATA    ev_c02gym0201_sunglasses_01
 _EVENT_DATA    ev_c02gym0201_assitantm1_01
 _EVENT_DATA    ev_c02gym0201_assitantm2_01
-
 _EVENT_DATA    ev_bg_c02gym0201_statue_01
 _EVENT_DATA    ev_bg_c02gym0201_statue_02
-
 _EVENT_DATA    ev_bg_c02gym0201_category_01
 _EVENT_DATA    ev_bg_c02gym0201_category_02
 _EVENT_DATA    ev_bg_c02gym0201_category_03
@@ -46,17 +43,28 @@ _EVENT_DATA    ev_bg_c02gym0201_category_13
 _EVENT_DATA    ev_bg_c02gym0201_category_14
 _EVENT_DATA    ev_bg_c02gym0201_category_15
 _EVENT_DATA    ev_bg_c02gym0201_category_16
-_EVENT_DATA    ev_bg_c02gym0201_category_17
-_EVENT_DATA    ev_bg_c02gym0201_category_18
-_EVENT_DATA    ev_bg_c02gym0201_category_19
-_EVENT_DATA    ev_bg_c02gym0201_category_20
 _EVENT_DATA    ev_bg_c02gym0201_category_21
 _EVENT_DATA    ev_bg_c02gym0201_category_22
 _EVENT_DATA    ev_bg_c02gym0201_category_23
 _EVENT_DATA    ev_bg_c02gym0201_category_24
-
+_EVENT_DATA  ev_c02gym0201_book_01a
+_EVENT_DATA  ev_c02gym0201_book_01b
+_EVENT_DATA  ev_c02gym0201_book_01c
+_EVENT_DATA  ev_c02gym0201_book_01d
+_EVENT_DATA  ev_c02gym0201_book_01e
+_EVENT_DATA  ev_c02gym0201_book_01f
+_EVENT_DATA  ev_c02gym0201_book_01g
+_EVENT_DATA  ev_c02gym0201_book_01h
+_EVENT_DATA  ev_c02gym0201_book_01i
+_EVENT_DATA  ev_c02gym0201_book_01j
+_EVENT_DATA  ev_c02gym0201_book_01k
+_EVENT_DATA  ev_c02gym0201_book_01l
+_EVENT_DATA  ev_c02gym0201_book_01m
+_EVENT_DATA  ev_c02gym0201_book_01n
+_EVENT_DATA  ev_c02gym0201_book_01o
+_EVENT_DATA  ev_c02gym0201_book_01p
+_EVENT_DATA  ev_init_c02gym0201
 _EVENT_DATA_END
-
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
@@ -66,6 +74,50 @@ ev_zone_c02gym0201:
   _END
 
 /**************************************************************/
+/*            FIELD_INIT_LABEL                              　 */
+/**************************************************************/
+INIT_EVENT_START	ev_init_c02gym0201
+
+//	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM2_01, 2, 0, 5, DIR_RIGHT )
+	
+	//なぞなぞ本棚前のトレーナーの位置
+/*	
+	SWITCH $WK_SCENE_C02GYM0201
+    CASE 3,4 THEN
+    	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM2_01, 2, 0, 5, DIR_RIGHT )
+    	
+ 	CASE 5 THEN
+    	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM2_01, 2, 0, 5 , DIR_RIGHT)
+    	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM1_01, 17, 0, 11 , DIR_LEFT)
+
+	CASE 6 THEN	
+    	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM2_01, 2, 0, 5 , DIR_RIGHT)
+    	_OBJ_POS_CHANGE( C02GYM0201_ASSITANTM1_01, 17, 0, 11 , DIR_LEFT)
+
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01A, 14, 0, 7 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01B, 14, 0, 8 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01C, 14, 0, 9 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01D, 14, 0, 10 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01E, 15, 0, 7 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01F, 15, 0, 8 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01G, 15, 0, 9 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01H, 15, 0, 10 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01I, 16, 0, 7 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01J, 16, 0, 8 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01K, 16, 0, 9 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01L, 16, 0, 10 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01M, 17, 0, 7 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01N, 17, 0, 8 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01O, 17, 0, 9 , DIR_UP)
+    	_OBJ_POS_CHANGE( C02GYM0201_BOOK_01P, 17, 0, 10 , DIR_UP)
+
+
+    ENDSWITCH
+ */
+
+INIT_EVENT_END
+
+/**************************************************************/
 /*                                                            */
 /**************************************************************/
 ev_c02gym0201:
@@ -73,82 +125,466 @@ ev_c02gym0201:
   _END
 
 /**************************************************************/
-/*     サングラス               　　　　　　　　　　　　　*/
+/*     サングラス:おいしい水をくれる               　　　　　*/
 /**************************************************************/
-EVENT_START		ev_c02gym0201_glasses_01
+EVENT_START		ev_pos_c02gym0201_sunglasses_01
     
-    $LOCALWORK15 =0
+    //サングラスが主人公に気づく。びっくりマーク
+    
+    _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_obj_gyoe )
+    _OBJ_ANIME_WAIT() 
+    
+    //サングラスが主人公に近づく
+    
+    { //ここからローカル変数の参照制限範囲開始
+    DEFINE_LOCAL  POSX   /* ローカル変数定義 */
+    DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
+
+    _PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+    
+    //プレイヤーが通る3グリッド分を用意
+    SWITCH $POSX
+    CASE 8 THEN
+     _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_sunglasses_move_a )
+     _OBJ_ANIME_WAIT()
+     
+    CASE 9 THEN
+     _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_sunglasses_move_b )
+     _OBJ_ANIME_WAIT()
+     
+    CASE 10 THEN
+     _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_sunglasses_move_c )
+     _OBJ_ANIME_WAIT()
+ 
+    ENDSWITCH
+    }
+  
+   //ジムバッジを持っているのかを判定
+   _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
     
 	//分岐処理・ジムバッジがあるか？
-	IF FLAG_OFF(FH_01) THEN
+	IF $SCWK_TEMP0 == 0 THEN
+	
 	//ジムバッジがない
-		_EASY_TALK_ITEM_EVENT(ITEM_OISIIMIZU, 1, FH_01, msg_c02gym0101_glasses_01, msg_c02gym0101_glasses_02, msg_c02gym0101_glasses_02 )	
+	
+	//はくぶつかんの　そのおくで　ちょうせんしゃを　まつ　ポケモンジム……
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_glasses_01,C02GYM0201_SUNGLASSES_01)
+	_BALLOONWIN_CLOSE()
+	
+	//【仮】おいしい水をくれる　MEなし
+	_ITEM_EVENT_KEYWAIT(ITEM_OISIIMIZU, 1)
+	
+	// ジムリーダーの　アロエさんは　ノーマルタイプの　ポケモンを　つかう
+	_BALLOONWIN_OBJMSG_OPEN( msg_c02gym0101_glasses_02,C02GYM0201_SUNGLASSES_01)
+	_BALLOONWIN_CLOSE()
+	
+	ENDIF
+	
+	//サングラス、元の位置に戻る
+	
+    { //ここからローカル変数の参照制限範囲開始
+    DEFINE_LOCAL  POSX   /* ローカル変数定義 */
+    DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
+
+    _PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+    
+    //プレイヤーが通る3グリッド分を用意
+    SWITCH $POSX
+    CASE 8 THEN
+     _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_sunglasses_move_d )
+     _OBJ_ANIME_WAIT()
+     
+    CASE 9 THEN
+     _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_sunglasses_move_e )
+     _OBJ_ANIME_WAIT()
+     
+    CASE 10 THEN
+     _OBJ_ANIME( C02GYM0201_SUNGLASSES_01,anm_sunglasses_move_f )
+     _OBJ_ANIME_WAIT()
+ 
+    ENDSWITCH
+    }
+    
+    //============フラグワーク操作=============//
+
+	//ガイドのおいしい水をくれるイベントを無効にする
+	$WK_SCENE_C02GYM0201 = 1
+	_FLAG_SET( FE_C02GYM_ITEM )
+
+	//========================================//
+    
+    
+EVENT_END
+
+//--------------------------------------------------------------------
+//！マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_obj_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	sunglasses_move　：POSでサングラス移動
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_sunglasses_move_a 
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	sunglasses_move　：POSでサングラス移動
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_sunglasses_move_b 
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	sunglasses_move　：POSでサングラス移動
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_sunglasses_move_c 
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	sunglasses_move　：POSでサングラス移動
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_sunglasses_move_d
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+		
+//--------------------------------------------------------------
+//	sunglasses_move　：POSでサングラス移動
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_sunglasses_move_e
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	sunglasses_move　：POSでサングラス移動
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_sunglasses_move_f
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/*     サングラス               　　　　　　　　　　　　　*/
+/**************************************************************/
+EVENT_START		ev_c02gym0201_sunglasses_01
+    
+    //おいしい水イベントが終わって、定位置での話しかけイベント
+    
+    //ジムバッジを持っているのかを判定
+   _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
+    
+	//分岐処理・ジムバッジがあるか？
+	IF $SCWK_TEMP0 == 0 THEN
+	
+	//ジムバッジがない
+	//ジムリーダーの　アロエさんは　ノーマルタイプの　ポケモンを　つかう
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0101_glasses_02 )
 	
 	//ジムバッジがある
 	ELSE
-	//きいたっすか？　へんな　やつらが　はくぶつかんに　どかどか　きて……
+	
+    //盗難イベントの処理
+		IF FLAG_ON( FE_MUSEUM_TOUNAN ) THEN
+		//盗難イベントが発生中
+		//きいたっすか？　へんな　やつらが　はくぶつかんに　どかどか　きて……
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0101_glasses_04 )
+	
+		ELSE
+		//盗難イベントが解決済み
+		//はじめて　ここに　来たときと
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0101_glasses_03 )
+		
+		ENDIF
 	ENDIF
-
 EVENT_END
 	
 /**************************************************************/
 /*     ポケモン像1               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_statue_01
+	
+	_TALKWIN_OPEN()
+		
+	//ジムバッジを持っているのかを判定
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
 
-	IF FLAG_OFF(FH_01) THEN
 	//ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
+	
 		_EASY_MSG ( msg_c02gym0101_statue_01 )
 	
-	ELSE
 	//ジムバッジを取得している場合
+	ELSE
+		_PLAYER_NAME( 0 )
 		_EASY_MSG( msg_c02gym0101_statue_02 )
 		
 	ENDIF
+	
+	_LAST_KEYWAIT()
+	_TALKWIN_CLOSE()
+	
 EVENT_END
 /**************************************************************/
 /*     ポケモン像2               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		ev_bg_c02gym0201_statue_02
 
-	IF FLAG_OFF(FH_01) THEN
-	//ジムバッジを取得していない場合
-		_TALKMSG ( msg_c02gym0101_statue_01 )
+	_TALKWIN_OPEN()
 	
-	ELSE
+	//ジムバッジを持っているのかを判定
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
+	
+	//ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
+	
+		_EASY_MSG ( msg_c02gym0101_statue_01 )
+	
 	//ジムバッジを取得している場合
-		_EASY_MSG( msg_c02gym0101_statue_02 )
+	ELSE
 		
+		_EASY_MSG( msg_c02gym0101_statue_02 )
+	
 	ENDIF
+		
+	_LAST_KEYWAIT()
+	_TALKWIN_CLOSE()
+	
 EVENT_END
 
 /**************************************************************/
 /*     ジムトレーナー（本棚ストッパー）1               　　　　*/
+/*     隠し扉前に配置されるトレーナー				   　　　　*/
 /**************************************************************/
 EVENT_START		ev_c02gym0201_assitantm1_01
-
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_assitantw_01)
+	
+	//読んだ本の状態によって、行動が分岐
+	SWITCH    $WK_SCENE_C02GYM0201
+	CASE 0,1,2,3 THEN		
 		
+		//振り向きなし
+		_TALK_START_TURN_NOT()
+		
+		//前段階の本（カテゴリー3を読んでいない場合）
+		_EASY_MSG( msg_c02gym0101_girl3_01 )
+    	
+	CASE 4 THEN	
+		
+		_TALK_OBJ_START()
+		
+		//前段階の本（カテゴリー3を読んでいる場合、対戦出来る。
+		_BALLOONWIN_TALKOBJ_OPEN(msg_c02gym0101_girl3_02)
+		
+		_LAST_KEYWAIT()
+    	_BALLOONWIN_CLOSE()
+    	
+    	//トレーナー戦呼び出し
+/*
+		_TRAINER_BTL_SET( TRID_SCHOOLG_03, 0 )
+		
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == 0 THEN
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF
+*/
+    	//対戦後メッセージ
+    	
+    	_BALLOONWIN_TALKOBJ_OPEN(msg_c02gym0101_girl3_03)
+		
+		_LAST_KEYWAIT()
+    	_BALLOONWIN_CLOSE()
+    	
+    	{ //ここからローカル変数の参照制限範囲開始
+   		 DEFINE_LOCAL  POSX   /* ローカル変数定義 */
+    	 DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
+
+    	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+    
+   		 //プレイヤーが通る3グリッド分を用意
+   		 SWITCH $POSX
+   		CASE 12 THEN
+     	_OBJ_ANIME( C02GYM0201_ASSITANTM1_01, anm_tranier_move_c )
+		_OBJ_ANIME_WAIT()
+		
+    	CASE 13 THEN
+     	_OBJ_ANIME( C02GYM0201_ASSITANTM1_01, anm_tranier_move_d )
+		_OBJ_ANIME_WAIT()
+     
+    	ENDSWITCH
+   		 }
+   		 
+    	//対戦後のメッセーじにする為にワークを操作
+    	$WK_SCENE_C02GYM0201 = 5
+    	
+	CASE 5,6 THEN	
+		//対戦が終了した場合
+		_TALK_OBJ_START()
+		
+		_BALLOONWIN_TALKOBJ_OPEN(msg_c02gym0101_girl3_03)
+		
+		_LAST_KEYWAIT()
+    	_BALLOONWIN_CLOSE()
+    	
+	ENDSWITCH
 EVENT_END
+
+//--------------------------------------------------------------
+//	トレーナー、本棚から移動-横から話しかけ時
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_tranier_move_c
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	トレーナー、本棚から移動-下から話しかけ時
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_tranier_move_d
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+	
 /**************************************************************/
-/*     ジムトレーナー（本棚ストッパー）2               　　　*/
+/*     ジムトレーナー（本棚ストッパー）2               　　　
+//なぞなぞのある本棚前のストッパー
 /**************************************************************/
 EVENT_START		ev_c02gym0201_assitantm2_01
 
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_girl3_01)
+	
+	//読んだ本の状態によって、行動が分岐
+	SWITCH    $WK_SCENE_C02GYM0201
+	CASE 0,1 THEN
+	//前段階の本を読んでいない場合、本に夢中で本棚からどいてくれない		
+		
+		//振り向きなし
+		_TALK_START_TURN_NOT()
+		//前段階の本（カテゴリー3を読んでいない場合）
+		
+		_EASY_MSG( msg_c02gym0101_assitantw_01 )
+		
+    	
+	CASE 2 THEN	
+	//前段階の本を読んでいる場合、対戦出来る。対戦後にどいてくれる
+		
+		_TALK_OBJ_START()
+		
+		//前段階の本（カテゴリー3を読んでいる場合）
+		_BALLOONWIN_TALKOBJ_OPEN(msg_c02gym0101_assitantw_02)
+		
+		_LAST_KEYWAIT()
+    	_BALLOONWIN_CLOSE()
+  	
+    	//トレーナー戦呼び出し
+/*
+		_TRAINER_BTL_SET( TRID_SCIENTISTW_01, 0 )
+		
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == 0 THEN
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF
+*/
+    	//対戦後メッセージ
+    	_BALLOONWIN_TALKOBJ_OPEN(msg_c02gym0101_assitantw_03)
+		
+		_LAST_KEYWAIT()
+    	_BALLOONWIN_CLOSE()
+    	
+    	{ //ここからローカル変数の参照制限範囲開始
+   		 DEFINE_LOCAL  POSX   /* ローカル変数定義 */
+    	 DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
 
+    	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+    
+   		 //プレイヤーが通る3グリッド分を用意
+   		 SWITCH $POSX
+   		 CASE 5 THEN
+     	_OBJ_ANIME( C02GYM0201_ASSITANTM2_01, anm_trainer_move_a )
+		_OBJ_ANIME_WAIT()
+     
+    	CASE 6 THEN
+     	_OBJ_ANIME( C02GYM0201_ASSITANTM2_01, anm_trainer_move_b )
+		_OBJ_ANIME_WAIT()
+     
+    	ENDSWITCH
+   		 }
+   		 
+    	//ワークの状態を、対戦後のメッセージを表示する為に変更
+    	$WK_SCENE_C02GYM0201 = 3
+    	
+	CASE 3,4,5,6 THEN	
+	//対戦が終了した場合は、ヒントメッセージを喋る
+		
+		_TALK_OBJ_START()
+		
+		_BALLOONWIN_TALKOBJ_OPEN(msg_c02gym0101_assitantw_03)
+		
+		_LAST_KEYWAIT()
+    	_BALLOONWIN_CLOSE()
+    	
+	ENDSWITCH
+    
 EVENT_END
 
+//--------------------------------------------------------------
+//	トレーナー、本棚から移動-左から話しかけ時
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_trainer_move_a
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	トレーナー、本棚から移動‐下から話しかけ時
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_trainer_move_b
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+	
 /**************************************************************/
 /*     本棚ジャンル1               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_01
 	
-	//本棚のジャンルを表示
 	_TALKWIN_OPEN()
+	
+	//本棚のジャンルを表示
 	_TALKMSG   ( msg_c02gym0101_category_01)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT1
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -175,7 +611,9 @@ EVENT_START		 ev_bg_c02gym0201_category_01
 		
 	ENDSWITCH
     
+    _LAST_KEYWAIT()
     _TALKWIN_CLOSE()
+    }
     
 EVENT_END
 
@@ -184,9 +622,11 @@ EVENT_END
 /*     本棚ジャンル2               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_02
-
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_01)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT2
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -212,7 +652,11 @@ EVENT_START		 ev_bg_c02gym0201_category_02
 	CASE 3THEN	
 		
 	ENDSWITCH
-
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+	}
+	
 EVENT_END
 
 
@@ -221,6 +665,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_03
 
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_01)
 	
 	DEFINE_LOCAL	BOOK_SELECT3
@@ -244,10 +689,24 @@ EVENT_START		 ev_bg_c02gym0201_category_03
 	CASE 1 THEN	
 		_TALKMSG   ( msg_c02gym0101_book_05)
 	CASE 2 THEN	
+	
+		
+		//2回、仕掛け前扉のトレーナーが動かないようにフラグ操作
+		IF $WK_SCENE_C02GYM0201 < 4 THEN
+		
+			//この本を読むと、仕掛け扉前のストッパーが動くフラグ
+			$WK_SCENE_C02GYM0201 = 4
+		
+		ENDIF
+		
 		_TALKMSG   ( msg_c02gym0101_book_06)
+		
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
 
 EVENT_END
 /**************************************************************/
@@ -255,6 +714,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_04
 
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_01)
 	
 	DEFINE_LOCAL	BOOK_SELECT4
@@ -282,15 +742,20 @@ EVENT_START		 ev_bg_c02gym0201_category_04
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル5               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_05
-
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_02)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT5
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -316,15 +781,21 @@ EVENT_START		 ev_bg_c02gym0201_category_05
 	CASE 3THEN	
 		
 	ENDSWITCH
-
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+	}
+	
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル6              　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_06
-
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_02)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT6
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -350,13 +821,22 @@ EVENT_START		 ev_bg_c02gym0201_category_06
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル7               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_07
-
+	
+	_TALKWIN_OPEN()
+	
+	_TALKMSG   ( msg_c02gym0101_category_02)
+	
+	{
 	DEFINE_LOCAL	BOOK_SELECT7
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -382,15 +862,21 @@ EVENT_START		 ev_bg_c02gym0201_category_07
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル8               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_08
-
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_02)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT8
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -414,17 +900,23 @@ EVENT_START		 ev_bg_c02gym0201_category_08
 	CASE 2 THEN	
 		_TALKMSG   ( msg_c02gym0101_book_12)
 	CASE 3THEN	
-		
+	
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル9               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_09
-
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_03)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT9
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -450,15 +942,21 @@ EVENT_START		 ev_bg_c02gym0201_category_09
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル10               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_10
-
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_03)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT10
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -484,15 +982,21 @@ EVENT_START		 ev_bg_c02gym0201_category_10
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル11               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_11
-
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_03)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT11
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -518,15 +1022,21 @@ EVENT_START		 ev_bg_c02gym0201_category_11
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル12               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_12
-
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_03)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT12
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -552,15 +1062,21 @@ EVENT_START		 ev_bg_c02gym0201_category_12
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル 13              　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_13
-
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_04)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT13
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -581,20 +1097,27 @@ EVENT_START		 ev_bg_c02gym0201_category_13
 		_TALKMSG   ( msg_c02gym0101_book_19)
 	CASE 1 THEN	
 		_TALKMSG   ( msg_c02gym0101_book_20)
+		
 	CASE 2 THEN	
 		_TALKMSG   ( msg_c02gym0101_book_21)
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル14               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_14
-
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_04)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT14
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -615,20 +1138,28 @@ EVENT_START		 ev_bg_c02gym0201_category_14
 		_TALKMSG   ( msg_c02gym0101_book_19)
 	CASE 1 THEN	
 		_TALKMSG   ( msg_c02gym0101_book_20)
+		
 	CASE 2 THEN	
 		_TALKMSG   ( msg_c02gym0101_book_21)
 	CASE 3THEN	
 		
 	ENDSWITCH
 	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
+	
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル15               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_15
-
+	
+	_TALKWIN_OPEN()
+	
 	_TALKMSG   ( msg_c02gym0101_category_04)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT15
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -649,17 +1180,17 @@ EVENT_START		 ev_bg_c02gym0201_category_15
 		_TALKMSG   ( msg_c02gym0101_book_22)
 	CASE 1 THEN	
 	
-		_TALKMSG   ( msg_c02gym0101_switch_01)
-		
-		_GYM_NORMAL_MOVE_WALL(0)
-		
-		_TALKMSG   ( msg_c02gym0101_switch_02)
+		_TALKMSG   ( msg_c02gym0101_book_23)
 		
 	CASE 2 THEN	
 		_TALKMSG   ( msg_c02gym0101_book_24)
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 	
 
 EVENT_END
@@ -668,8 +1199,10 @@ EVENT_END
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_16
 
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_04)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT16
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -695,15 +1228,21 @@ EVENT_START		 ev_bg_c02gym0201_category_16
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル17               　　　　　　　　　　　　　*/
+//
 /**************************************************************/
-EVENT_START		 ev_bg_c02gym0201_category_17
-
+EVENT_START		 ev_c02gym0201_book_01d	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_05)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT17
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -729,23 +1268,30 @@ EVENT_START		 ev_bg_c02gym0201_category_17
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル18               　　　　　　　　　　　　　*/
+//なぞなぞのある本棚前の、ストッパーを動かす本棚
 /**************************************************************/
-EVENT_START		 ev_bg_c02gym0201_category_18
-
+EVENT_START		 ev_c02gym0201_book_01h
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_05)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT18
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
 	_BMPMENU_INIT_EX( 1,1,0,0,BOOK_SELECT18 )
 	
 	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_25, 0 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_26, 1 )	
-    _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_27, 2 )	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_26, 1 )	
+	_BMPMENU_MAKE_LIST( msg_c02gym0101_headline_27, 2 )	
     _BMPMENU_MAKE_LIST( msg_c02gym0101_headline_37, 3 )	
 	
 	
@@ -755,23 +1301,44 @@ EVENT_START		 ev_bg_c02gym0201_category_18
 	//プレイヤーが選んだ本の内容を表示
 	SWITCH $BOOK_SELECT18
 	CASE 0 THEN		
+		
+		//次の本棚のトレーナが動くと、もう動かないようにする
+		IF $WK_SCENE_C02GYM0201 < 3 THEN
+		
+			//正解の本を読と、なぞなぞのある本棚前のストッパーを動かすフラグが立つ
+			$WK_SCENE_C02GYM0201 = 2
+			
+		ENDIF
+		
 		_TALKMSG   ( msg_c02gym0101_book_25)
+		
+		
 	CASE 1 THEN	
+		
 		_TALKMSG   ( msg_c02gym0101_book_26)
+		
 	CASE 2 THEN	
 		_TALKMSG   ( msg_c02gym0101_book_27)
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 
 EVENT_END
-/**************************************************************/
-/*     本棚ジャンル 19             　　　　　　　　　　　　　*/
-/**************************************************************/
-EVENT_START		 ev_bg_c02gym0201_category_19
 
+/**************************************************************/
+/*     本棚ジャンル 19   　          　　　　　　　　　　　　*/
+//	隠し扉が動く本がある本棚
+/**************************************************************/
+EVENT_START		 ev_c02gym0201_book_01l	
+
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_05)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT19
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -790,23 +1357,80 @@ EVENT_START		 ev_bg_c02gym0201_category_19
 	SWITCH $BOOK_SELECT19
 	CASE 0 THEN		
 		_TALKMSG   ( msg_c02gym0101_book_28)
+		
 	CASE 1 THEN	
 		_TALKMSG   ( msg_c02gym0101_book_29)
+		
 	CASE 2 THEN	
-		_TALKMSG   ( msg_c02gym0101_book_30)
+		
+		IF $WK_SCENE_C02GYM0201 == 5 THEN
+
+			//当たり判定を作っていた、透明OBJが移動
+			
+			_TALKMSG   ( msg_c02gym0101_switch_01)
+			
+			//ギミック発動。本棚が横に移動する
+			_GYM_NORMAL_MOVE_WALL(0)
+			
+			_OBJ_ANIME( C02GYM0201_BOOK_01A, anm_book_open )
+			_OBJ_ANIME( C02GYM0201_BOOK_01B, anm_book_open )
+			_OBJ_ANIME( C02GYM0201_BOOK_01C, anm_book_open )
+			_OBJ_ANIME( C02GYM0201_BOOK_01D, anm_book_open )
+			_OBJ_ANIME_WAIT()
+
+			_OBJ_ANIME( C02GYM0201_BOOK_01E, anm_book_open )
+			_OBJ_ANIME( C02GYM0201_BOOK_01F, anm_book_open )
+			_OBJ_ANIME( C02GYM0201_BOOK_01G, anm_book_open )
+			_OBJ_ANIME( C02GYM0201_BOOK_01H, anm_book_open )
+			_OBJ_ANIME_WAIT()
+			
+			_OBJ_ANIME( C02GYM0201_BOOK_01I, anm_book_open )
+			_OBJ_ANIME( C02GYM0201_BOOK_01J, anm_book_open )
+			_OBJ_ANIME( C02GYM0201_BOOK_01K, anm_book_open )
+			_OBJ_ANIME( C02GYM0201_BOOK_01L, anm_book_open )
+			_OBJ_ANIME_WAIT()
+			
+			_OBJ_ANIME( C02GYM0201_BOOK_01M, anm_book_open )
+			_OBJ_ANIME( C02GYM0201_BOOK_01N, anm_book_open )
+			_OBJ_ANIME( C02GYM0201_BOOK_01O, anm_book_open )
+			_OBJ_ANIME( C02GYM0201_BOOK_01P, anm_book_open )
+			_OBJ_ANIME_WAIT()
+			
+			//かいだんが　　あらわれた
+			_TALKMSG   ( msg_c02gym0101_switch_02)
+			
+			//本棚が1度しか動かなくする
+			$WK_SCENE_C02GYM0201 = 6
+		ELSE
+		
+			_TALKMSG   ( msg_c02gym0101_book_30)
+		
+		ENDIF
+		
 	CASE 3THEN	
 		
 	ENDSWITCH
 	
-
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 EVENT_END
+
+//--------------------------------------------------------------
+//		本棚が動く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_book_open
+	_ANIME_DATA	AC_WALK_R_2F,3
+	_ANIME_DATA	ACMD_END,0
+	
 /**************************************************************/
 /*     本棚ジャンル20               　　　　　　　　　　　　　*/
 /**************************************************************/
-EVENT_START		 ev_bg_c02gym0201_category_20
-
+EVENT_START		 ev_c02gym0201_book_01p	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_05)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT20
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -833,15 +1457,20 @@ EVENT_START		 ev_bg_c02gym0201_category_20
 		
 	ENDSWITCH
 	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+	}
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル21              　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_21
-
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_06)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT21
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -867,15 +1496,21 @@ EVENT_START		 ev_bg_c02gym0201_category_21
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル22               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_22
-
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_06)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT22
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -901,15 +1536,21 @@ EVENT_START		 ev_bg_c02gym0201_category_22
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル23              　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_23
-
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_06)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT23
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -935,15 +1576,21 @@ EVENT_START		 ev_bg_c02gym0201_category_23
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
 
 EVENT_END
 /**************************************************************/
 /*     本棚ジャンル24               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_24
-
+	
+	_TALKWIN_OPEN()
 	_TALKMSG   ( msg_c02gym0101_category_06)
 	
+	{
 	DEFINE_LOCAL	BOOK_SELECT24
 	
 	//三択のウィンドウの作成。本のタイトルを3つ表示する為。
@@ -969,5 +1616,59 @@ EVENT_START		 ev_bg_c02gym0201_category_24
 	CASE 3THEN	
 		
 	ENDSWITCH
+	
+	 _LAST_KEYWAIT()
+    _TALKWIN_CLOSE()
+    }
+EVENT_END
+/**************************************************************/
+/*     仕掛け本棚_透明OBJ						    		 */
+/**************************************************************/
+//中身は作らない。当たり判定を持たす為だけのダミー
+EVENT_START	ev_c02gym0201_book_01a
 
 EVENT_END
+
+EVENT_START	ev_c02gym0201_book_01b
+
+EVENT_END
+
+EVENT_START	ev_c02gym0201_book_01c
+
+EVENT_END
+
+EVENT_START	ev_c02gym0201_book_01e
+
+EVENT_END
+
+EVENT_START	ev_c02gym0201_book_01f
+
+EVENT_END
+
+EVENT_START	ev_c02gym0201_book_01g
+
+EVENT_END
+
+EVENT_START	ev_c02gym0201_book_01i
+
+EVENT_END
+
+EVENT_START	ev_c02gym0201_book_01j
+
+EVENT_END
+
+EVENT_START	ev_c02gym0201_book_01k
+
+EVENT_END
+
+EVENT_START	ev_c02gym0201_book_01m
+
+EVENT_END
+
+EVENT_START	ev_c02gym0201_book_01n
+
+EVENT_END
+EVENT_START	ev_c02gym0201_book_01o
+
+EVENT_END
+
