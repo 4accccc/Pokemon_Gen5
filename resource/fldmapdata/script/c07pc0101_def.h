@@ -5,6 +5,6 @@
 #define _C07PC0101_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C07PC0101 (1)
+#define SCRID_C07PC0101_SHOP (1)
 
 #endif //_C07PC0101_DEF_H_
