@@ -590,6 +590,11 @@ SRCS_OVERLAY_POKELIST = app/pokelist/pokelist.c \
 SRCS_OVERLAY_TRADE  = trade/trade.c \
         trade/trade_main.c
 
+# バトル->フィールド復帰
+#===> SRCS_OVERLAY_TAYA_DEBUG
+#===> SRCS_OVERLAY_SOGABE_DEBUG
+SRCS_OVERLAY_BATTLE_RETURN =	field/event_battle_return.c
+
 # バトル
 #===> SRCS_OVERLAY_TAYA_DEBUG
 #===> SRCS_OVERLAY_SOGABE_DEBUG
