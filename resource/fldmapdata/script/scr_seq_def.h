@@ -177,6 +177,7 @@
  */
 //--------------------------------------------------------------
   .macro  EVENT_END
+  .short  EV_SEQ_CHECK_SCR_END
   .short  EV_SEQ_COMMON_PROC_FIELD_EVENT_END
   .short  EV_SEQ_END
   .endm
