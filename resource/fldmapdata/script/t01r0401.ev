@@ -36,10 +36,6 @@ EVENT_START   ev_t01r0401_scene_change_01
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_01,T01R0401_HAKASE2_01 )
 	_BALLOONWIN_CLOSE()
 
-
-/*
-
-
 	//アララギ博士？どうしたんですか？
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_black_02,T01R0401_RIVAL_01 ) //ライバル
 	_BALLOONWIN_CLOSE()
@@ -86,10 +82,6 @@ EVENT_START   ev_t01r0401_scene_change_01
 	//さすがだね！
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_08,T01R0401_HAKASE2_01 )  //博士
 	_BALLOONWIN_CLOSE()
-
-
-*/
-
 
 	//【仮】演出予定：その場で一回転など
 
@@ -308,19 +300,18 @@ _ANIME_LABEL	anm_zukan_friends_look_01
 //ライバル：退室
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_zukan_rival_goaway_01
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_D_6F,2
+	_ANIME_DATA	AC_WALK_L_6F,1
+	_ANIME_DATA	AC_WALK_D_6F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //サポート：退室
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_zukan_support_goaway_01
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_WAIT_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 
