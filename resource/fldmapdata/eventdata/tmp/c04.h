@@ -2,18 +2,18 @@
 #ifndef ZONE_C04_EVD_H
 #define ZONE_C04_EVD_H
 
-#define DOOR_ID_C04_R04_EXIT01            0
-#define DOOR_ID_C04_R04_EXIT02            1
-#define DOOR_ID_C04_R04_EXIT04            2
-#define DOOR_ID_C04_R04_EXIT03            3
+#define DOOR_ID_C04_C04R0601_EXIT01       0
+#define DOOR_ID_C04_C04R0601_EXIT04       1
+#define DOOR_ID_C04_C04R0601_EXIT03       2
+#define DOOR_ID_C04_C04R0601_EXIT02       3
 #define DOOR_ID_C04_C04R0701_EXIT01       4
 #define DOOR_ID_C04_C04R0701_EXIT03       5
 #define DOOR_ID_C04_C04R0701_EXIT02       6
-#define DOOR_ID_C04_R16_EXIT01            7
-#define DOOR_ID_C04_R16_EXIT02            8
-#define DOOR_ID_C04_R16_EXIT03            9
-#define DOOR_ID_C04_R16_EXIT04           10
-#define DOOR_ID_C04_R16_EXIT05           11
+#define DOOR_ID_C04_C04R0801_EXIT01       7
+#define DOOR_ID_C04_C04R0801_EXIT05       8
+#define DOOR_ID_C04_C04R0801_EXIT04       9
+#define DOOR_ID_C04_C04R0801_EXIT03      10
+#define DOOR_ID_C04_C04R0801_EXIT02      11
 #define DOOR_ID_C04_C04R0301_EXIT01      12
 #define DOOR_ID_C04_C04P01_EXIT01        13
 #define DOOR_ID_C04_C04P01_EXIT05        14
