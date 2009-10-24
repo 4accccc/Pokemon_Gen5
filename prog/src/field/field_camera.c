@@ -90,7 +90,6 @@ typedef struct FLD_MOVE_CAM_DATA_tag
   BOOL PushFlg;
   BOOL Valid;   //線形補間中か？
   FLD_CAM_MV_PARAM_CHK Chk;
-  BOOL Bind;
   void *CallBackWorkPtr;
 }FLD_MOVE_CAM_DATA;
 
@@ -208,7 +207,7 @@ static void RecvModeTarget(FIELD_CAMERA * camera);
 static void RecvModeDirect(FIELD_CAMERA * camera);
 #endif
 static void LinerMoveFunc(FIELD_CAMERA * camera, void *work);
-
+static void DirectLinerMoveFunc(FIELD_CAMERA * camera, void *work);
 
 static void VecSubFunc(
     const VecFx32 *inSrc, const VecFx32 *inDst, const u16 inCostFrm, const u16 inNowFrm, VecFx32 *outVec);
@@ -1931,6 +1930,60 @@ void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *p
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  線形移動パラメータをセットして動作開始(ダイレクト型)
+ *
+ *	@param	camera      カメラポインタ
+ *	@param	inCamPos    カメラ位置
+ *	@param  inTrgtPos   ターゲット位置
+ *	@param  inFrame     フレーム
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetLinerParamDirect(
+    FIELD_CAMERA * camera,
+    const VecFx32 *inCamPos, const VecFx32 *inTrgtPos,
+    const FLD_CAM_MV_PARAM_CHK *inChk,
+    const u16 inFrame)
+{
+  FLD_MOVE_CAM_DATA *data;
+  
+  if (camera == NULL){
+    GF_ASSERT( 0 );
+    return;
+  }
+
+  //補間移動はダイレクト型のみのサポート
+  FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_DIRECT_POS );
+
+  data = &camera->MoveData;
+  SetNowCameraParam(camera, &data->SrcParam);
+  data->DstParam.CamPos = *inCamPos;
+  data->DstParam.TrgtPos = *inTrgtPos;
+  data->NowFrm = 0;
+  data->CostFrm = inFrame;
+  {
+    FLD_CAM_MV_PARAM_CHK chk;
+    //ダイレクト方式なので、位置と視野角と注視点オフセット以外は変化させない
+    chk.Pos = inChk->Pos;
+    chk.Fovy = inChk->Fovy;
+    chk.Shift = inChk->Shift;
+    chk.Pitch = FALSE;
+    chk.Yaw = FALSE;
+    chk.Dist = FALSE;
+
+    data->Chk = chk;
+  }
+
+  //コールバックをセット
+  camera->CallBack = DirectLinerMoveFunc;
+  //線形補間移動を開始
+  data->Valid = TRUE;
+
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  リカバリー関数
  *
  *	@param	camera      カメラポインタ
@@ -1971,9 +2024,6 @@ void FIELD_CAMERA_RecvLinerParam(
   data->CostFrm = inFrame;
 
   data->Chk = *chk;
-
-  //補間移動はカメラ位置不定型のみのサポート
-  FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
   //コールバックをセット
   camera->CallBack = LinerMoveFunc;
@@ -2035,6 +2085,65 @@ static void LinerMoveFunc(FIELD_CAMERA * camera, void *work)
   {
 ///    OS_Printf("DIST\n");
     camera->angle_len = SubFuncFx(&src->Distance, &dst->Distance, data->CostFrm, data->NowFrm);
+
+  }
+  //オフセット（シフト）
+  if (data->Chk.Shift)
+  {
+///    OS_Printf("SHIFT\n");
+    VecSubFunc(&src->Shift, &dst->Shift, data->CostFrm, data->NowFrm, &camera->target_offset);
+  }
+  //フレームが消費フレームに到達したか？
+  if(data->NowFrm >= data->CostFrm){
+    //移動実行中フラグオフ
+    data->Valid = FALSE;
+    //コールバッククリア
+    FIELD_CAMERA_ClearMvFuncCallBack(camera);
+#ifdef DEBUG_ONLY_FOR_saitou
+    OS_Printf("--DUMP_END_FIELD_CAMERA_PARAM--\n");
+    DumpCameraParam(camera);
+#endif
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  線形訪韓移動関数
+ *
+ *	@param	camera      カメラポインタ
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void DirectLinerMoveFunc(FIELD_CAMERA * camera, void *work)
+{
+  FLD_MOVE_CAM_DATA *data;
+  FLD_CAM_MV_PARAM_CORE *src;
+  FLD_CAM_MV_PARAM_CORE *dst;
+  data = &camera->MoveData;
+  
+  //リクエストがなければ処理はスルーする
+  if (!data->Valid){
+    return;
+  }
+  //フレーム消化
+  data->NowFrm++;
+
+  src = &data->SrcParam;
+  dst = &data->DstParam;
+  //座標
+  if (data->Chk.Pos)
+  {
+///    OS_Printf("POS\n");
+    VecSubFunc(&src->TrgtPos, &dst->TrgtPos, data->CostFrm, data->NowFrm, &camera->target);
+    VecSubFunc(&src->CamPos, &dst->CamPos, data->CostFrm, data->NowFrm, &camera->camPos);
+  }
+  //視野角
+  if (data->Chk.Fovy)
+  {
+    camera->fovy = SubFuncU16(&src->Fovy, &dst->Fovy, data->CostFrm, data->NowFrm);
+    GFL_G3D_CAMERA_SetfovySin( camera->g3Dcamera, FX_SinIdx( camera->fovy ) );
+    GFL_G3D_CAMERA_SetfovyCos( camera->g3Dcamera, FX_CosIdx( camera->fovy ) );
   }
   //オフセット（シフト）
   if (data->Chk.Shift)
@@ -2213,6 +2322,19 @@ BOOL FIELD_CAMERA_CheckMvFunc(FIELD_CAMERA * camera)
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ移動目的パラメータポインタを取得
+ *
+ *	@param	camera      カメラポインタ
+ *
+ *	@retval FLD_CAM_MV_PARAM_CORE パラメータポインタ
+ */
+//-----------------------------------------------------------------------------
+FLD_CAM_MV_PARAM_CORE *FIELD_CAMERA_GetMoveDstPrmPtr(FIELD_CAMERA * camera)
+{
+  return &camera->MoveData.DstParam;
+}
 
 #ifdef PM_DEBUG
 //----------------------------------------------------------------------------

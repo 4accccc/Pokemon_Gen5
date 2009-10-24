@@ -301,9 +301,14 @@ extern void FIELD_CAMERA_SetRecvCamParam(FIELD_CAMERA * camera);
 extern void FIELD_CAMERA_ClearRecvCamParam(FIELD_CAMERA * camera);
 extern void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *param, const u16 inFrame);
 extern void FIELD_CAMERA_RecvLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM_CHK *chk, const u16 inFrame);
+extern void FIELD_CAMERA_SetLinerParamDirect(FIELD_CAMERA * camera,
+                                            const VecFx32 *inCamPos, const VecFx32 *inTrgtPos,
+                                            const FLD_CAM_MV_PARAM_CHK *inChk,
+                                            const u16 inFrame);
 extern void FIELD_CAMERA_SetMvFuncCallBack(FIELD_CAMERA * camera, CAMERA_CALL_BACK func, void *work);
 extern void FIELD_CAMERA_ClearMvFuncCallBack(FIELD_CAMERA * camera);
 extern BOOL FIELD_CAMERA_CheckMvFunc(FIELD_CAMERA * camera);
+extern FLD_CAM_MV_PARAM_CORE *FIELD_CAMERA_GetMoveDstPrmPtr(FIELD_CAMERA * camera);
 
 //-----------------------------------------------------------------------------
 /**
