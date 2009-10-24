@@ -48,6 +48,14 @@ FS_EXTERN_OVERLAY(ui_common);
 */
 //=============================================================================
 //-------------------------------------
+///	デバッグ
+//=====================================
+#ifdef PM_DEBUG
+#define GAMESYS_NONE_MOVE	//ゲームシステムがなくても動く
+#endif //PM_DEBUG
+
+
+//-------------------------------------
 ///	パレット
 //=====================================
 enum
@@ -302,15 +310,8 @@ typedef enum
 ///	PARETTLE_FADE
 //=====================================
 #define PLTFADE_SELECT_ADD	(0x400)
-//#define PLTFADE_SELECT_STARTCOLOR GX_RGB( 7, 13, 20 )
-//#define PLTFADE_SELECT_ENDCOLOR	GX_RGB( 12, 25, 30 )
-
-#define PLTFADE_SELECT_STARTCOLOR GX_RGB( 9, 25, 31 )
-#define PLTFADE_SELECT_ENDCOLOR	GX_RGB( 31, 31, 31 )
-
-#define PLTFADE_DECIDESTR_ADD	(0x100)
-#define PLTFADE_DECIDESTR_STARTCOLOR GX_RGB( 13, 29, 19 )
-#define PLTFADE_DECIDESTR_ENDCOLOR	GX_RGB( 24, 29, 26 )
+#define PLTFADE_SELECT_STARTCOLOR GX_RGB( 7, 13, 20 )
+#define PLTFADE_SELECT_ENDCOLOR	GX_RGB( 12, 25, 30 )
 
 //-------------------------------------
 ///	APP
@@ -372,6 +373,9 @@ typedef struct
 	GXRgb									trans_color[2];
 	void									*ncg_buf;
 	NNSG2dCharacterData		*ncg_data;
+
+	GXRgb									plt_color[0x10];
+
 } GRAPHIC_BG_WORK;
 //-------------------------------------
 ///	OBJワーク
@@ -381,6 +385,8 @@ typedef struct
 	GFL_CLUNIT *p_clunit;
 	u32					reg_id[OBJRESID_MAX];
 	GFL_CLWK	 *p_clwk[CLWKID_MAX];
+	u16					anm_idx;
+	u16					dummy;
 } GRAPHIC_OBJ_WORK;
 //-------------------------------------
 ///	GRAPHICワーク
@@ -550,6 +556,7 @@ static GFL_CLWK	* GRAPHIC_GetClwk( const GRAPHIC_WORK *cp_wk, CLWKID id );
 static GFL_CLUNIT *GRAPHIC_GetUnit( const GRAPHIC_WORK *cp_wk );
 static GFL_BMPWIN * GRAPHIC_GetBmpwin( const GRAPHIC_WORK *cp_wk, BMPWINID id );
 static void GRAPHIC_PrintBmpwin( GRAPHIC_WORK *p_wk );
+static void GRAPHIC_StartPalleteFade( GRAPHIC_WORK *p_wk );
 static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work );
 //-------------------------------------
 ///	BG
@@ -559,6 +566,7 @@ static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk );
 static void GRAPHIC_BG_Main( GRAPHIC_BG_WORK *p_wk );
 static GFL_BMPWIN *GRAPHIC_BG_GetBmpwin( const GRAPHIC_BG_WORK *cp_wk, BMPWINID id );
 static void GRAPHIC_BG_PrintBmpwin( GRAPHIC_BG_WORK *p_wk );
+static void GRAPHIC_BG_StartPalletFade( GRAPHIC_BG_WORK *p_wk );
 static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk );
 static void Graphic_Bg_PalletFadeMain( u16 *p_buff, u16 *p_cnt, u16 add, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end );
 //-------------------------------------
@@ -1230,14 +1238,29 @@ static GFL_PROC_RESULT CONFIG_PROC_Init( GFL_PROC *p_proc,int *p_seq, void *p_pa
 			CONFIGPARAM_Init( &p_wk->pre, p_sv );
 		}
 		SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeOut );	//最初はFadeOutシーケンス
-		APPBAR_Init( &p_wk->appbar, 
+
+
+		{	
+			GAMEDATA *p_gdata;
+#ifdef GAMESYS_NONE_MOVE
+			if( p_wk->p_param->p_gamesys == NULL )
+			{	
+				OS_Printf( "\n!!!! GameSysPtr == NULL  !!!!\n" );
+				p_gdata	=	NULL;
+			}
+#else
+			p_gdata	= GAMESYSTEM_GetGameData(p_wk->p_param->p_gamesys);
+#endif //GAMESYS_NONE_MOVE
+
+			APPBAR_Init( &p_wk->appbar, 
 				GRAPHIC_GetUnit(&p_wk->graphic),
 				p_wk->p_font,
 				p_wk->p_que,
 				p_wk->p_msg,
 				p_wk->p_menures,
-				GAMESYSTEM_GetGameData(p_wk->p_param->p_gamesys),
+				p_gdata,
 				HEAPID_CONFIG );
+		}
 		SCROLL_Init( &p_wk->scroll, 
 				GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_FONT_M),
 				GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_WND_M),
@@ -1513,6 +1536,17 @@ static void GRAPHIC_PrintBmpwin( GRAPHIC_WORK *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief	フェード開始
+ *
+ *	@param	GRAPHIC_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_StartPalleteFade( GRAPHIC_WORK *p_wk )
+{	
+	GRAPHIC_BG_StartPalletFade( &p_wk->bg );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief	グラフィックVBLANK関数
  *
  *	@param	GRAPHIC_WORK *p_wk	ワーク
@@ -1630,6 +1664,18 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 
+	//パレット読みこみ保存
+	{	
+		void *p_buff;
+		u16 *p_raw_data;
+		NNSG2dPaletteData* p_plt_data;
+
+		p_buff	= GFL_ARC_UTIL_LoadPalette( ARCID_CONFIG_GRA, NARC_config_gra_est_bar_01_NCLR, &p_plt_data, heapID );
+		p_raw_data	= p_plt_data->pRawData;
+		GFL_STD_MemCopy( &p_raw_data[ 0x10 * CONFIG_BG_PAL_M_07] , p_wk->plt_color, sizeof(GXRgb)*0x10 );
+		GFL_HEAP_FreeMemory( p_buff );
+	}
+
 	//BMPWIN作成
 	{
 		int i;
@@ -1714,7 +1760,7 @@ static void GRAPHIC_BG_Main( GRAPHIC_BG_WORK *p_wk )
 {	
 	//選択色のパレットフェード
 	Graphic_Bg_PalletFadeMain( &p_wk->trans_color[0], &p_wk->pltfade_cnt[0],
-			PLTFADE_SELECT_ADD, CONFIG_BG_PAL_M_07, 3, PLTFADE_SELECT_STARTCOLOR, PLTFADE_SELECT_ENDCOLOR );
+			PLTFADE_SELECT_ADD, CONFIG_BG_PAL_M_07, 1, p_wk->plt_color[0xb], p_wk->plt_color[0xc] );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1809,6 +1855,17 @@ static void GRAPHIC_BG_PrintBmpwin( GRAPHIC_BG_WORK *p_wk )
 		GFL_MSG_Delete( p_msg );
 		GFL_FONT_Delete( p_font );
 	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Palletフェード開始
+ *
+ *	@param	GRAPHIC_BG_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void GRAPHIC_BG_StartPalletFade( GRAPHIC_BG_WORK *p_wk )
+{	
+	p_wk->pltfade_cnt[0]	= 0;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1939,7 +1996,7 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 					&cldata,
 					CLSYS_DEFREND_MAIN,
 					heapID );
-			GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
+			GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], FALSE );
 		}
 
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
@@ -2006,6 +2063,21 @@ static void GRAPHIC_OBJ_Exit( GRAPHIC_OBJ_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void GRAPHIC_OBJ_Main( GRAPHIC_OBJ_WORK *p_wk )
 {	
+	if( p_wk->anm_idx++ > 8*12 )
+	{	
+		p_wk->anm_idx	= 0;
+	}
+
+	//OBJのアニメを同期させる
+	{	
+		int i;
+		for( i = CLWKID_ITEM_TOP; i < CLWKID_ITEM_END; i++ )
+		{	
+			GFL_CLACT_WK_SetAnmIndex( p_wk->p_clwk[ i ], p_wk->anm_idx/12 );
+		}
+	}
+
+
 	GFL_CLACT_SYS_Main();
 
 }
@@ -2365,6 +2437,15 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, GFL_CLUNIT *p_clunit, GFL_FONT *p_fo
 	APPBAR_ReWrite( p_wk, heapID );
 
 	//Yボタン登録されていれば、アイコンをON
+	
+#ifdef GAMESYS_NONE_MOVE
+	if( p_wk->p_gdata == NULL )
+	{	
+		OS_Printf( "\n!!!! GameSysPtr == NULL  !!!!\n" );
+		return ;
+	}
+#endif //GAMESYS_NONE_MOVE
+
 	if( GAMEDATA_GetShortCut( p_wk->p_gdata, SHORTCUT_ID_CONFIG ))
 	{	
 		TOUCHBAR_SetFlip( p_wk->p_touch, TOUCHBAR_ICON_CHECK, TRUE );
@@ -2529,6 +2610,14 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
 	switch( TOUCHBAR_GetTrg( p_wk->p_touch ) )
 	{	
 	case TOUCHBAR_ICON_CHECK :
+
+#ifdef GAMESYS_NONE_MOVE
+		if( p_wk->p_gdata == NULL )
+		{	
+			OS_Printf( "\n!!!! GameSysPtr == NULL  !!!!\n" );
+			break;
+		}
+#endif //GAMESYS_NONE_MOVE
 
 		if( TOUCHBAR_GetFlip( p_wk->p_touch, TOUCHBAR_ICON_CHECK ) )
 		{	
@@ -2699,6 +2788,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 			if( Scroll_ChangePlt_Safe_IsOk(p_wk) )
 			{	
 				Scroll_ChangePlt( p_wk, TRUE );
+				GRAPHIC_StartPalleteFade( p_graphic );
 			}
 		}
 		break;
@@ -2728,6 +2818,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 		}
 		PMSND_PlaySE( CONFIG_SE_MOVE );
 		Scroll_ChangePlt( p_wk, TRUE );
+		GRAPHIC_StartPalleteFade( p_graphic );
 		break;
 
 	case UI_INPUT_CONT_DOWN:
@@ -2755,6 +2846,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 		}
 		PMSND_PlaySE( CONFIG_SE_MOVE );
 		Scroll_ChangePlt( p_wk, TRUE );
+		GRAPHIC_StartPalleteFade( p_graphic );
 		break;
 
 	case UI_INPUT_TOUCH:
@@ -2769,6 +2861,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 			//項目のタッチ
 			Scroll_TouchItem( p_wk, &trg_pos );
 			Scroll_ChangePlt( p_wk, TRUE );
+			GRAPHIC_StartPalleteFade( p_graphic );
 			is_info_update	= TRUE;
 			is_bmpprint_decide	= TRUE;
 		}
@@ -2780,6 +2873,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 			PMSND_PlaySE( CONFIG_SE_MOVE );
 			Scroll_SelectItem( p_wk, 1 );
 			Scroll_ChangePlt( p_wk, TRUE );
+			GRAPHIC_StartPalleteFade( p_graphic );
 			is_bmpprint_decide	= TRUE;
 		}
 		else
@@ -2795,6 +2889,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 			PMSND_PlaySE( CONFIG_SE_MOVE );
 			Scroll_SelectItem( p_wk, -1 );
 			Scroll_ChangePlt( p_wk, TRUE );
+			GRAPHIC_StartPalleteFade( p_graphic );
 			is_bmpprint_decide	= TRUE;
 		}
 		else if( p_wk->select == CONFIG_LIST_CANCEL )
@@ -3039,11 +3134,11 @@ static void Scroll_ChangePlt( SCROLL_WORK *p_wk, BOOL is_decide_draw )
 					//ONかOFFか
 					if( CONFIGPARAM_IsItemSetting( &p_wk->now, i ) )
 					{	
-						GFL_CLACT_WK_SetAnmSeq( p_wk->p_item[i], 3 );
+						GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_item[i], 3 );
 					}
 					else
 					{	
-						GFL_CLACT_WK_SetAnmSeq( p_wk->p_item[i], 2 );
+						GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_item[i], 2 );
 					}
 				}
 				else if( sc_item_info[i].list == j )
@@ -3051,11 +3146,11 @@ static void Scroll_ChangePlt( SCROLL_WORK *p_wk, BOOL is_decide_draw )
 					//ONかOFFか
 					if( CONFIGPARAM_IsItemSetting( &p_wk->now, i ) )
 					{	
-						GFL_CLACT_WK_SetAnmSeq( p_wk->p_item[i], 0 );
+						GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_item[i], 0 );
 					}
 					else
 					{	
-						GFL_CLACT_WK_SetAnmSeq( p_wk->p_item[i], 1 );
+						GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_item[i], 1 );
 					}
 				}
 			}

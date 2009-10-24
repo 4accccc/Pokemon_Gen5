@@ -171,6 +171,7 @@ typedef struct
 	WORLDTRADE_PARAM			gts_param;
 	TEMPLATE_PARAM				template_param;
 	NAMEIN_PARAM					*p_namein_param;
+	CONFIG_PANEL_PARAM		config_param;
 } DEBUG_NAGI_MAIN_WORK;
 
 //-------------------------------------
@@ -902,7 +903,7 @@ static void LISTDATA_CallProcGts( DEBUG_NAGI_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void LISTDATA_CallProcConfig( DEBUG_NAGI_MAIN_WORK *p_wk )
 {	
-	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, NULL );
+	DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, &p_wk->config_param );
 }
 //----------------------------------------------------------------------------
 /**

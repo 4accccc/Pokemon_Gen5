@@ -17,8 +17,8 @@
 //-----------------------------------------------------------------------------
 typedef struct
 {	
-	BOOL is_exit;//[out]	TRUEでexitで終了 FALSEで通常終了
-	GAMESYS_WORK	*p_gamesys;
+	BOOL is_exit;							//[out]	TRUEでexitで終了 FALSEで通常終了
+	GAMESYS_WORK	*p_gamesys;	//[in]	ゲームシステム
 }CONFIG_PANEL_PARAM;
 
 //-----------------------------------------------------------------------------

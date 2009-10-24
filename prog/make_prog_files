@@ -879,6 +879,13 @@ SRCS_OVERLAY_WORLDTRADE	= net_app/wifi_worldtrade/worldtrade.c \
 													net_app/wifi_worldtrade/worldtrade_upload.c \
 													net_app/wifi_worldtrade/worldtrade_adapter.c
 
+#	名木橋デバッグ
+#===> SRCS_OVERLAY_WORLDTRADE
+SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
+																test/nagihashi/debug_irc_name.c \
+																test/nagihashi/debug_template.c \
+																test/nagihashi/debug_poke2dcheck.c
+
 #ポケモンステータス
 #===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
@@ -931,14 +938,6 @@ SRCS_OVERLAY_MICTEST	= app/mictest/mictest.c
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_UI_DEBUG = ui/debug/ui_template.c \
 												ui/debug/ui_template_graphic.c
-
-#	名木橋デバッグ
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_UI_DEBUG
-SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
-																test/nagihashi/debug_irc_name.c \
-																test/nagihashi/debug_template.c \
-																test/nagihashi/debug_poke2dcheck.c
 
 # ボックス
 #===> SRCS_OVERLAY_POKE_STATUS
