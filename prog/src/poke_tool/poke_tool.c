@@ -21,7 +21,7 @@
 #include    "poke_tool_def.h"
 #include    "poke_personal_local.h"
 #include    "arc_def.h"
-
+#include    "savedata/mail_util.h"
 
 
 /*--------------------------------------------------------------------------*/
@@ -192,11 +192,14 @@ POKEMON_PARAM* PP_CreateByPPP( const POKEMON_PASO_PARAM* ppp, HEAPID heapID )
 //HP初期化
   PP_Put(pp,ID_PARA_hp,i);
   PP_Put(pp,ID_PARA_hpmax,i);
-//メールデータ  @@OO不明なので
-//  mail_data=MailData_CreateWork(HEAPID_BASE_SYSTEM);
-//  PP_Put(pp,ID_PARA_mail_data, mail_data);
-//  sys_FreeMemoryEz(mail_data);
-
+  //メールデータ
+#if 0
+  {
+    MAIL_DATA* mail_data = MailData_CreateWork(heapID);
+    PP_Put(pp,ID_PARA_mail_data, mail_data);
+    sys_FreeMemoryEz(mail_data);
+  }
+#endif
   PP_Renew(pp);
 
   return pp;
@@ -1674,7 +1677,7 @@ static  u32 pp_getAct( POKEMON_PARAM *pp, int id, void *buf )
 
 //メールとカスタムボール対応がまだです
 #ifdef DEBUG_ONLY_FOR_sogabe
-#warning MAIL_DATA and CB_CORE nothing
+#warning CB_CORE nothing
 #endif
   switch( id ){
   case ID_PARA_condition:
@@ -1708,7 +1711,7 @@ static  u32 pp_getAct( POKEMON_PARAM *pp, int id, void *buf )
     ret = pp->pcp.spedef;
     break;
   case ID_PARA_mail_data:
-//    MailData_Copy( &pp->pcp.mail_data, ( MAIL_DATA * )buf );
+    MailData_Copy( ( MAIL_DATA * )pp->pcp.mail_data, ( MAIL_DATA * )buf );
     ret = TRUE;
     break;
   case ID_PARA_cb_core:
@@ -2199,11 +2202,7 @@ static  void  pp_putAct( POKEMON_PARAM *pp, int paramID, u32 arg )
     pp->pcp.spedef = arg;
     break;
   case ID_PARA_mail_data:
-//メール処理ないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning MAIL_DATA Nothing
-#endif
-//    MailData_Copy( ( MAIL_DATA * )buf, &pp->pcp.mail_data );
+    MailData_Copy( ( MAIL_DATA * )arg, ( MAIL_DATA * )pp->pcp.mail_data );
     break;
   case ID_PARA_cb_core:
 //カスタムボール処理ないです

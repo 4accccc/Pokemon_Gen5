@@ -553,7 +553,7 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
   }
 
   {
-    Initialize( pWork, REEL_PANEL_OBJECT);
+  //  Initialize( pWork, REEL_PANEL_OBJECT);  //@todo
   }
   modelset[pWork->modelno].setCamera(pWork);
 

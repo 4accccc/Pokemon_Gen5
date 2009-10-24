@@ -62,7 +62,8 @@
 typedef enum {
   _NETCMD_SELECT_POKEMON = GFL_NET_CMD_IRCTRADE,
   _NETCMD_CHANGE_POKEMON,
-  _NETCMD_CHANGE_YESNO,
+  _NETCMD_EGG_AND_BATTLE,
+  _NETCMD_LOOKATPOKE,
   _NETCMD_CHANGE_CANCEL,
   _NETCMD_END,
   _NETCMD_SCROLLBAR,
@@ -71,14 +72,13 @@ typedef enum {
 
 static void _recvSelectPokemon(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvChangePokemon(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
-static void _recvChangeYesNo(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvChangeCancel(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvEnd(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 static void _touchState(IRC_POKEMON_TRADE* pWork);
 static u8* _setChangePokemonBuffer(int netID, void* pWork, int size);
 static void _changeWaitState(IRC_POKEMON_TRADE* pWork);
-static void _changeYesNoWaitState(IRC_POKEMON_TRADE* pWork);
+//static void _changeYesNoWaitState(IRC_POKEMON_TRADE* pWork);
 static void _endWaitState(IRC_POKEMON_TRADE* pWork);
 static BOOL _PokemonsetAndSendData(IRC_POKEMON_TRADE* pWork);
 static void _recvFriendScrollBar(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
@@ -86,16 +86,20 @@ static void _changeFinish(IRC_POKEMON_TRADE* pWork);
 static void _networkFriendsStandbyWait2(IRC_POKEMON_TRADE* pWork);
 static void _touchStateCommon(IRC_POKEMON_TRADE* pWork);
 static void _endCancelState(IRC_POKEMON_TRADE* pWork);
+static void _recvLookAtPoke(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvEggAndBattle(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _cancelPokemonSendDataNetwork(IRC_POKEMON_TRADE* pWork);
 
 
 
 ///通信コマンドテーブル
 static const NetRecvFuncTable _PacketTbl[] = {
-  {_recvSelectPokemon,   _setChangePokemonBuffer},    ///_NETCMD_SELECT_POKEMON
-  {_recvChangePokemon,   NULL},    ///_NETCMD_CHANGE_POKEMON
-  {_recvChangeYesNo,   NULL},    ///_NETCMD_CHANGE_YESNO
-  {_recvChangeCancel,   NULL},    ///
-  {_recvEnd, NULL},
+  {_recvSelectPokemon,   _setChangePokemonBuffer},    ///_NETCMD_SELECT_POKEMON 2 ポケモン見せ合う
+  {_recvChangePokemon,   NULL},    ///_NETCMD_CHANGE_POKEMON   3 こうかんけってい
+  {_recvEggAndBattle, NULL },     ///_NETCMD_EGG_AND_BATTLE  3 たまごと最後のバトルポケモン
+  {_recvLookAtPoke, NULL},       ///_NETCMD_LOOKATPOKE   2 ポケモン見せ合う
+  {_recvChangeCancel,   NULL},    ///_NETCMD_CHANGE_CANCEL  3 最後にキャンセルする
+  {_recvEnd, NULL},         //_NETCMD_END           1 おわり
   {_recvFriendScrollBar, NULL}, //_NETCMD_SCROLLBAR
 
 };
@@ -185,38 +189,6 @@ void IRCPOKETRADE_PokeDeleteMcss( IRC_POKEMON_TRADE *pWork,int no  )
   MCSS_Del(pWork->mcssSys,pWork->pokeMcss[no]);
   pWork->pokeMcss[no] = NULL;
 }
-
-
-static void _msgWindowCreate(IRC_POKEMON_TRADE* pWork,int strno)
-{
-  int i=0;
-  int frame = GFL_BG_FRAME2_S;
-
-  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
-
-  if(pWork->MessageWin){
-    return;
-  }
-  GFL_FONTSYS_SetDefaultColor();
-
-  pWork->MessageWin = GFL_BMPWIN_Create(
-    frame,
-    ((0x20-_BUTTON_WIN_WIDTH)/2), (0x18-(2+_BUTTON_WIN_HEIGHT)), _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT,
-    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->MessageWin), WINCLR_COL(FBMP_COL_WHITE) );
-  GFL_BMPWIN_MakeScreen(pWork->MessageWin);
-  GFL_BMPWIN_TransVramCharacter(pWork->MessageWin);
-  BmpWinFrame_Write( pWork->MessageWin, WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
-
-  GFL_MSG_GetString(  pWork->pMsgData, strno, pWork->pStrBuf );
-
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MessageWin), 4, 4, pWork->pStrBuf, pWork->pFontHandle);
-  GFL_BMPWIN_TransVramCharacter(pWork->MessageWin);
-  GFL_BG_LoadScreenV_Req( frame );
-
-}
-
 
 
 
@@ -343,8 +315,6 @@ static void _recvSelectPokemon(const int netID, const int size, const void* pDat
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
-
-  pWork->userNetCommand[netID]=_NETCMD_SELECT_POKEMON;
   if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return;//自分のは今は受け取らない
   }
@@ -354,39 +324,6 @@ static void _recvSelectPokemon(const int netID, const int size, const void* pDat
 
 }
 
-
-//
-//------------------------------------------------------------------------------
-/**
- * @brief  はいいいえウインドウをだす
- * _NETCMD_CHANGE_YESNO
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _recvChangeYesNo(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
-{
-  IRC_POKEMON_TRADE *pWork = pWk;
-  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
-  }
-  //はいいいえウインドウ
-
-  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_20, pWork->pMessageStrBuf );
-  IRC_POKETRADE_MessageWindowOpen(pWork);
-  
-  {
-    int msg[]={POKETRADE_STR_27, POKETRADE_STR_28};
-    IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
-  }
-  
-//  TouchYesNoStart(pWork->TouchSubWindowSys);
-  pWork->bTouchReset=TRUE;
-
-  _CHANGE_STATE(pWork,_changeYesNoWaitState);
-
-
-}
 
 //------------------------------------------------------------------------------
 /**
@@ -425,6 +362,28 @@ static void _recvChangeCancelFunc(IRC_POKEMON_TRADE *pWork)
   _CHANGE_STATE(pWork, _touchState);
 }
 
+//_NETCMD_LOOKATPOKE
+static void _recvLookAtPoke(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  IRC_POKEMON_TRADE *pWork = pWk;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  pWork->userNetCommand[netID] = _NETCMD_LOOKATPOKE;
+}
+
+//_NETCMD_EGG_AND_BATTLE
+static void _recvEggAndBattle(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  IRC_POKEMON_TRADE *pWork = pWk;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  pWork->userNetCommand[netID] = _NETCMD_EGG_AND_BATTLE;
+}
+
 //_NETCMD_CHANGE_CANCEL
 static void _recvChangeCancel(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
@@ -433,7 +392,6 @@ static void _recvChangeCancel(const int netID, const int size, const void* pData
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
-  _recvChangeCancelFunc(pWork);
   pWork->userNetCommand[netID] = _NETCMD_CHANGE_CANCEL;
 }
 
@@ -460,8 +418,6 @@ static void _recvChangePokemon(const int netID, const int size, const void* pDat
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
-  pWork->bChangeOK[netID] = TRUE;
-
   pWork->userNetCommand[netID] = _NETCMD_CHANGE_POKEMON;
 
 }
@@ -501,11 +457,16 @@ static void _noneState(IRC_POKEMON_TRADE* pWork)
 }
 
 ///ポケモン名をWINDOWに表示
-static void _pokeNickNameMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,IRC_POKEMON_TRADE* pWork)
+static void _pokeNickNameMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,BOOL bEgg,IRC_POKEMON_TRADE* pWork)
 {
-  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_30, pWork->pExStrBuf );
-  WORDSET_RegisterPokeNickName( pWork->pWordSet, 0,  pp );
-  WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
+  if(!bEgg){
+    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_30, pWork->pExStrBuf );
+    WORDSET_RegisterPokeNickName( pWork->pWordSet, 0,  pp );
+    WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
+  }
+  else{
+    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_07, pWork->pStrBuf );
+  }
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), x, y, pWork->pStrBuf, pWork->pFontHandle);
 }
 
@@ -767,6 +728,7 @@ static void _setPokemonStatusMessage(IRC_POKEMON_TRADE *pWork, int side,POKEMON_
   int frame = GFL_BG_FRAME3_M;
   int sidex[] = {1, 17};
  int xdotpos[]={0,128};
+  BOOL bEgg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
   
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
@@ -775,14 +737,14 @@ static void _setPokemonStatusMessage(IRC_POKEMON_TRADE *pWork, int side,POKEMON_
   }
   pWork->StatusWin[side] = GFL_BMPWIN_Create(frame,	sidex[side], 1, 15, 20,	_BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
 
-  _pokeNickNameMsgDisp(pp, pWork->StatusWin[side], 2*8, 0, pWork);
-  _pokeLvMsgDisp(pp, pWork->StatusWin[side], 16, 16, pWork);
-  _pokeSexMsgDisp(pp, pWork->StatusWin[side], 10*8, 0, pWork);
-  _pokePocketItemMsgDisp(pp, pWork->StatusWin[side], 16, 16*8, pWork);
-
-  UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS], pp, pWork->cellUnit,
-                                  xdotpos[side]+16, 16, CLSYS_DRAW_MAIN, pWork->heapID );
-
+  _pokeNickNameMsgDisp(pp, pWork->StatusWin[side], 2*8, 0, bEgg, pWork);
+  if(!bEgg){
+    _pokeLvMsgDisp(pp, pWork->StatusWin[side], 16, 16, pWork);
+    _pokeSexMsgDisp(pp, pWork->StatusWin[side], 10*8, 0, pWork);
+    _pokePocketItemMsgDisp(pp, pWork->StatusWin[side], 16, 16*8, pWork);
+    UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS], pp, pWork->cellUnit,
+                                    xdotpos[side]+16, 16, CLSYS_DRAW_MAIN, pWork->heapID );
+  }
   GFL_BMPWIN_TransVramCharacter(pWork->StatusWin[side]);
   GFL_BMPWIN_MakeScreen(pWork->StatusWin[side]);
   GFL_BG_LoadScreenV_Req( frame );
@@ -840,7 +802,7 @@ static void _PokemonReset(IRC_POKEMON_TRADE *pWork, int side )
 // 情報表示の変更 １まいめか２まいめがある
 static void _changePokemonMyStDisp(IRC_POKEMON_TRADE* pWork,int pageno,int leftright,POKEMON_PARAM* pp)
 {
-  int i,num,num2;
+  int i,num,num2,bEgg;
   int xwinpos[]={0,16};
   int xdotpos[]={0,128};
   {
@@ -854,43 +816,43 @@ static void _changePokemonMyStDisp(IRC_POKEMON_TRADE* pWork,int pageno,int leftr
       GFL_BMPWIN_Create(GFL_BG_FRAME2_S,
                         xwinpos[leftright], 0, 16 , 18, _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
   }
+  bEgg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
 
   if(pageno == 0){  //こうげきとか
     TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, TRUE);
     TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE);
 
-    UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
-                                    xdotpos[leftright]+16, 16, CLSYS_DRAW_SUB, pWork->heapID );
+    _pokeNickNameMsgDisp(pp,pWork->MyInfoWin, 32, 0, bEgg,pWork);
+    if(bEgg==FALSE){
+      _pokeLvMsgDisp(pp,pWork->MyInfoWin, 32 ,16,pWork);
+      _pokeHPSPEEDMsgDisp(pp,pWork->MyInfoWin, 8 ,32,pWork);
+      _pokePocketItemMsgDisp(pp,pWork->MyInfoWin, 4*8 ,16*8,pWork);
+      _pokeHpHpmaxMsgDisp(pp, pWork->MyInfoWin, 8*8,4*8, pWork);
+      _pokeATTACKSPEEDNumMsgDisp(pp, pWork->MyInfoWin, 10*8,6*8, pWork);
+      _pokeSexMsgDisp(pp, pWork->MyInfoWin, 12*8, 0, pWork);
 
-    _pokeNickNameMsgDisp(pp,pWork->MyInfoWin, 32, 0,pWork);
-    _pokeLvMsgDisp(pp,pWork->MyInfoWin, 32 ,16,pWork);
-    _pokeHPSPEEDMsgDisp(pp,pWork->MyInfoWin, 8 ,32,pWork);
-    _pokePocketItemMsgDisp(pp,pWork->MyInfoWin, 4*8 ,16*8,pWork);
-    _pokeHpHpmaxMsgDisp(pp, pWork->MyInfoWin, 8*8,4*8, pWork);
-    _pokeATTACKSPEEDNumMsgDisp(pp, pWork->MyInfoWin, 10*8,6*8, pWork);
-    _pokeSexMsgDisp(pp, pWork->MyInfoWin, 12*8, 0, pWork);
-
-    IRC_POKETRADE_ItemIconDisp(pWork, leftright, pp);
-    IRC_POKETRADE_PokerusIconDisp(pWork, leftright,FALSE, pp);
-    
+      IRC_POKETRADE_ItemIconDisp(pWork, leftright, pp);
+      IRC_POKETRADE_PokerusIconDisp(pWork, leftright,FALSE, pp);
+      UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
+                                      xdotpos[leftright]+16, 16, CLSYS_DRAW_SUB, pWork->heapID );
+    }
   }
   else{
-    IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
-    IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
     TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE);
     TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, TRUE);
-
     UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
-    _pokeTechniqueMsgDisp(pp, pWork->MyInfoWin, 2*8,0, pWork);
-    _pokeTechniqueListMsgDisp(pp, pWork->MyInfoWin, 2*8,2*8, pWork);
-    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_37, pWork->pStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 2*8, 10*8, pWork->pStrBuf, pWork->pFontHandle);
-    _pokePersonalMsgDisp(pp, pWork->MyInfoWin, 2*8, 12*8, pWork);
-    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_38, pWork->pStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 2*8, 14*8, pWork->pStrBuf, pWork->pFontHandle);
-    _pokeAttributeMsgDisp(pp, pWork->MyInfoWin, 2*8, 16*8, pWork);
-
-
+    IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
+    IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
+    if(bEgg==FALSE){
+      _pokeTechniqueMsgDisp(pp, pWork->MyInfoWin, 2*8,0, pWork);
+      _pokeTechniqueListMsgDisp(pp, pWork->MyInfoWin, 2*8,2*8, pWork);
+      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_37, pWork->pStrBuf );
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 2*8, 10*8, pWork->pStrBuf, pWork->pFontHandle);
+      _pokePersonalMsgDisp(pp, pWork->MyInfoWin, 2*8, 12*8, pWork);
+      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_38, pWork->pStrBuf );
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 2*8, 14*8, pWork->pStrBuf, pWork->pFontHandle);
+      _pokeAttributeMsgDisp(pp, pWork->MyInfoWin, 2*8, 16*8, pWork);
+    }
   }
 
   IRC_POKETRADE_SubStatusInit(pWork,pWork->x, pageno);  //画面BG表示
@@ -914,15 +876,39 @@ static void _resetPokemonMyStDisp(IRC_POKEMON_TRADE* pWork)
 }
 
 
+static BOOL _IsEggAndLastBattlePokemonChange(IRC_POKEMON_TRADE* pWork)
+{
+  POKEMON_PARAM* pp1 = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
+  POKEMON_PARAM* pp2 = IRC_POKEMONTRADE_GetRecvPP(pWork, 1); //相手のポケモン
+  BOOL bEgg1 = PP_Get(pp1,ID_PARA_tamago_flag,NULL);
+  BOOL bEgg2 = PP_Get(pp2,ID_PARA_tamago_flag,NULL);
+
+  if(1==PokeParty_GetBattlePokeNum(pWork->pMyParty) && !bEgg1 && bEgg2 && (pWork->selectBoxno==BOX_MAX_TRAY)){
+    return TRUE;
+  }
+  return FALSE;
+}
 
 
 //交換選択通信送信
 static void _changePokemonSendDataNetwork(IRC_POKEMON_TRADE* pWork)
 {
-  // 通信してなければ進む
-  if( !GFL_NET_IsInit() || GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGE_POKEMON,0,NULL)){
-
-    //相手からの返事を待つのでメッセージは待機中
+  BOOL bSend = FALSE;
+  
+  if( GFL_NET_IsInit() ){
+    if(_IsEggAndLastBattlePokemonChange(pWork)){
+      bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_EGG_AND_BATTLE,0,NULL);
+    }
+    else{
+      bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGE_POKEMON,0,NULL);
+    }
+  }
+  else{
+    pWork->userNetCommand[0]=_NETCMD_CHANGE_POKEMON;
+    pWork->userNetCommand[1]=_NETCMD_CHANGE_POKEMON;
+    bSend = TRUE;
+  }
+  if( bSend ){
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
     IRC_POKETRADE_MessageWindowOpen(pWork);
     _CHANGE_STATE(pWork,_changeWaitState);
@@ -932,9 +918,11 @@ static void _changePokemonSendDataNetwork(IRC_POKEMON_TRADE* pWork)
 // ステータス表示の変更
 static void _changePokemonStatusDisp(IRC_POKEMON_TRADE* pWork)
 {
-  int i,num,num2;
+  int i,num,num2,bEgg;
   POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, pWork->pokemonselectno);
 //  pWork->recvPoke[pWork->pokemonselectno];
+
+    bEgg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
 
   {//自分の位置調整
     VecFx32 apos;
@@ -956,7 +944,7 @@ static void _changePokemonStatusDisp(IRC_POKEMON_TRADE* pWork)
     GFL_BMPWIN_Create(GFL_BG_FRAME3_M,
                       1, 1, 31 , 24, _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
 
-  _pokeNickNameMsgDisp(pp,pWork->MyInfoWin, 16, 0,pWork);//ニックネーム
+  _pokeNickNameMsgDisp(pp,pWork->MyInfoWin, 16, 0,bEgg,pWork);//ニックネーム
   _pokeLvMsgDisp(pp,pWork->MyInfoWin, 8*12 , 0,pWork);
   _pokeSexMsgDisp(pp, pWork->MyInfoWin, 10*8, 0, pWork);
 
@@ -1127,7 +1115,7 @@ static void _changePokemonSendData(IRC_POKEMON_TRADE* pWork)
       _CHANGE_STATE(pWork, _pokemonStatusStart);
       break;
     case 2:  //もどる
-      _CHANGE_STATE(pWork, _touchState);
+      _CHANGE_STATE(pWork, _cancelPokemonSendDataNetwork);
       break;
     }
   }
@@ -1136,14 +1124,16 @@ static void _changePokemonSendData(IRC_POKEMON_TRADE* pWork)
 //こうかんにだす　通信相手の準備待ち
 static void _networkFriendsStandbyWait2(IRC_POKEMON_TRADE* pWork)
 {
-  if(IRC_POKETRADE_MessageEndCheck(pWork)){
-    {
-      int msg[]={POKETRADE_STR_05, POKETRADE_STR_04, POKETRADE_STR_06};
-      IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
-    }
-
-    _CHANGE_STATE(pWork,_changePokemonSendData);
+  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+    return;
   }
+  {
+    int msg[]={POKETRADE_STR_05, POKETRADE_STR_04, POKETRADE_STR_06};
+    IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
+  }
+  
+  _CHANGE_STATE(pWork,_changePokemonSendData);
+  
 }
 
 
@@ -1152,13 +1142,12 @@ static void _networkFriendsStandbyWait(IRC_POKEMON_TRADE* pWork)
 {
   int i;
 
-  if(IRC_POKETRADE_MessageEndCheck(pWork)){
+  int targetID = 1 - GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  
+  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
     return;
   }
-
   {
-    int targetID = 1 - GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-
     if(pWork->userNetCommand[targetID] == _NETCMD_END){
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_97, pWork->pMessageStrBuf );
       IRC_POKETRADE_MessageWindowOpen(pWork);
@@ -1166,30 +1155,28 @@ static void _networkFriendsStandbyWait(IRC_POKEMON_TRADE* pWork)
       return;
     }
   }
-  
-
-    
-  if(pWork->bPokemonSet[0] && pWork->bPokemonSet[1]){  //両方のポケモンがいる場合
-
+  if((pWork->userNetCommand[0]==_NETCMD_LOOKATPOKE) && (pWork->userNetCommand[1]==_NETCMD_LOOKATPOKE)){ 
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_20, pWork->pMessageStrBufEx );
     for(i=0;i<2;i++){
-      POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, i); //pWork->recvPoke[i];
+      POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, i);
       WORDSET_RegisterPokeNickName( pWork->pWordSet, i,  pp );
     }
     WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx  );
     IRC_POKETRADE_MessageWindowOpen(pWork);
     _CHANGE_STATE(pWork,_networkFriendsStandbyWait2);
   }
-  
 }
-
 
 // ポケモンデータを相手に送る
 static void _pokeSendDataState(IRC_POKEMON_TRADE* pWork)
 {
+  if(!GFL_NET_IsInit()){
+    pWork->userNetCommand[0]=_NETCMD_LOOKATPOKE;
+    pWork->userNetCommand[1]=_NETCMD_LOOKATPOKE;
+  }
 
-  if(_PokemonsetAndSendData(pWork)){
-      _CHANGE_STATE(pWork, _networkFriendsStandbyWait);// あいても選ぶまで待つ
+  if(!GFL_NET_IsInit() || GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_LOOKATPOKE, 0,NULL)){
+    _CHANGE_STATE(pWork, _networkFriendsStandbyWait);// あいても選ぶまで待つ
   }
 }
 
@@ -1206,6 +1193,7 @@ static void _changeMenuWait(IRC_POKEMON_TRADE* pWork)
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
 
       IRC_POKETRADE_MessageWindowOpen(pWork);
+
 
       _CHANGE_STATE(pWork, _pokeSendDataState);
 
@@ -1405,7 +1393,10 @@ static void _dispSubState(IRC_POKEMON_TRADE* pWork)
 //通信同期を取る
 static void _changeTimingDemoStart(IRC_POKEMON_TRADE* pWork)
 {
-  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START)){
+  if(!GFL_NET_IsInit()){
+    _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
+  }
+  else if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START)){
     _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
   }
 }
@@ -1414,23 +1405,45 @@ static void _changeTimingDemoStart(IRC_POKEMON_TRADE* pWork)
 static void _changeWaitState(IRC_POKEMON_TRADE* pWork)
 {
   int i;
-
+  int myID = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  int targetID = 1 - myID;
+  
   if(!IRC_POKETRADE_MessageEndCheck(pWork)){
     return;
   }
-  if(GFL_NET_IsInit()){
-    for(i=0;i<2;i++){
-      if(pWork->bChangeOK[i]==FALSE){  // 通信返事待ち
-        return;
-      }
+
+  switch(pWork->userNetCommand[myID]){
+  case _NETCMD_CHANGE_CANCEL:
+    if(pWork->userNetCommand[targetID]==_NETCMD_CHANGE_POKEMON || pWork->userNetCommand[targetID]==_NETCMD_EGG_AND_BATTLE){
+      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_97, pWork->pMessageStrBuf );
+      IRC_POKETRADE_MessageWindowOpen(pWork);
+      _CHANGE_STATE(pWork, _endCancelState);
     }
-  }
-  if(GFL_NET_IsInit()){
-    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START);
-    _CHANGE_STATE(pWork, _changeTimingDemoStart);
-  }
-  else{
-    _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
+    break;
+  case _NETCMD_CHANGE_POKEMON:
+    if(pWork->userNetCommand[targetID]==_NETCMD_CHANGE_POKEMON){
+      if(GFL_NET_IsInit()){
+        GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_TRADEDEMO_START);
+      }
+      _CHANGE_STATE(pWork, _changeTimingDemoStart);
+    }
+    else if(pWork->userNetCommand[targetID]==_NETCMD_EGG_AND_BATTLE ||
+            pWork->userNetCommand[targetID]==_NETCMD_CHANGE_CANCEL){
+      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_97, pWork->pMessageStrBuf );
+      IRC_POKETRADE_MessageWindowOpen(pWork);
+      _CHANGE_STATE(pWork, _endCancelState);
+    }
+    break;
+  case _NETCMD_EGG_AND_BATTLE:
+    if(pWork->userNetCommand[targetID]==_NETCMD_CHANGE_POKEMON || pWork->userNetCommand[targetID]==_NETCMD_EGG_AND_BATTLE||
+       pWork->userNetCommand[targetID]==_NETCMD_CHANGE_CANCEL){
+      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_98, pWork->pMessageStrBuf );
+      IRC_POKETRADE_MessageWindowOpen(pWork);
+      _CHANGE_STATE(pWork, _endCancelState);
+    }
+    break;
+  default:
+    break;
   }
 }
 
@@ -1464,17 +1477,22 @@ void IRC_POKMEONTRADE_ChangeFinish(IRC_POKEMON_TRADE* pWork)
 //キャンセルまち
 static void _cancelPokemonSendDataNetwork(IRC_POKEMON_TRADE* pWork)
 {
-  if(GFL_NET_IsInit()){
-    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGE_CANCEL,0,NULL)){
-      _CHANGE_STATE(pWork,_noneState);
-    }
+  if(!GFL_NET_IsInit()){
+    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_97, pWork->pMessageStrBuf );
+    IRC_POKETRADE_MessageWindowOpen(pWork);
+    _CHANGE_STATE(pWork, _endCancelState);
   }
-  else{
-    _recvChangeCancelFunc(pWork);
+  else if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGE_CANCEL,0,NULL)){
+    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
+    IRC_POKETRADE_MessageWindowOpen(pWork);
+    _CHANGE_STATE(pWork,_changeWaitState);
   }
 }
 
 
+
+
+#if 0
 //はいいいえの確認
 static void _changeYesNoWaitState(IRC_POKEMON_TRADE* pWork)
 {
@@ -1501,27 +1519,9 @@ static void _changeYesNoWaitState(IRC_POKEMON_TRADE* pWork)
     }
   }
 
-#if 0
-  
-  int result;
-  result = TOUCH_SW_Main( pWork->TouchSubWindowSys );
-  switch(result){				//こうかん
-  case TOUCH_SW_RET_YES:						//はい
-    if(pWork->bTouchReset){
-      TOUCH_SW_Reset( pWork->TouchSubWindowSys );
-      pWork->bTouchReset=FALSE;
-    }
-    _messageDelete(pWork);
-    _CHANGE_STATE(pWork,_changePokemonSendDataNetwork);
-    break;
-  case TOUCH_SW_RET_NO:						//いいえ
-    _CHANGE_STATE(pWork,_cancelPokemonSendDataNetwork);
-    break;
-  }
-#endif
 
 }
-
+#endif
 
 //キャンセル画面待ち
 static void _endCancelState(IRC_POKEMON_TRADE* pWork)
@@ -1531,7 +1531,7 @@ static void _endCancelState(IRC_POKEMON_TRADE* pWork)
   }
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
     IRC_POKETRADE_MessageWindowClear(pWork);
-    _CHANGE_STATE(pWork,_touchStateCommon);
+    _CHANGE_STATE(pWork,_touchState);
   }
 }
 
@@ -1544,7 +1544,7 @@ static void _endWaitStateNetwork2(IRC_POKEMON_TRADE* pWork)
   if((pWork->userNetCommand[0] == _NETCMD_END) && (pWork->userNetCommand[1] == _NETCMD_END)){
     _CHANGE_STATE(pWork, NULL);
   }
-  if(pWork->userNetCommand[targetID] == _NETCMD_SELECT_POKEMON){
+  if(pWork->userNetCommand[targetID] == _NETCMD_LOOKATPOKE){
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_04, pWork->pMessageStrBuf );
     IRC_POKETRADE_MessageWindowOpen(pWork);
     _CHANGE_STATE(pWork, _endCancelState);
@@ -1582,30 +1582,16 @@ static void _endWaitState(IRC_POKEMON_TRADE* pWork)
     pWork->pAppTask=NULL;
     switch(selectno){
     case 0:
-
-      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
+      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_06, pWork->pMessageStrBuf );
       IRC_POKETRADE_MessageWindowOpen(pWork);
-
       _CHANGE_STATE(pWork,_endWaitStateNetwork);
       break;
     case 1:
-      _CHANGE_STATE(pWork,_cancelPokemonSendDataNetwork);
+      IRC_POKETRADE_MessageWindowClear(pWork);
+      _CHANGE_STATE(pWork,_touchState);
       break;
     }
   }
-
-#if 0
-  int result;
-  result = TOUCH_SW_Main( pWork->TouchSubWindowSys );
-  switch(result){				//おわる
-  case TOUCH_SW_RET_YES:						//はい
-    _CHANGE_STATE(pWork,_endWaitStateNetwork);
-    break;
-  case TOUCH_SW_RET_NO:						//いいえ
-    _CHANGE_STATE(pWork,_cancelPokemonSendDataNetwork);
-    break;
-  }
-#endif
 
 }
 
@@ -2265,8 +2251,43 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
   }
 }
 
-FS_EXTERN_OVERLAY(ui_common);
 
+#if PM_DEBUG
+//--------------------------------------------------------------
+/**
+ * @brief   デバッグ用に適当に手持ちポケモンをAdd
+ * @param   gsys		
+ */
+//--------------------------------------------------------------
+static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus)
+{
+	POKEMON_PARAM *pp;
+	const STRCODE *name;
+  int i;
+	
+  while( PokeParty_GetPokeCount(party)){
+    PokeParty_Delete(party,0);
+  }
+
+  name = MyStatus_GetMyName( myStatus );
+  
+	pp = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
+  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
+	PokeParty_Add(party, pp);
+
+	PP_Setup(pp, MONSNO_YUMEBAKURA, 100, 123456);
+  PP_Put( pp , ID_PARA_tamago_flag , 1 );
+	PokeParty_Add(party, pp);
+	PokeParty_Add(party, pp);
+	PokeParty_Add(party, pp);
+	PokeParty_Add(party, pp);
+	PokeParty_Add(party, pp);
+	GFL_HEAP_FreeMemory(pp);
+}
+#endif
+
+FS_EXTERN_OVERLAY(ui_common);
 
 //------------------------------------------------------------------------------
 /**
@@ -2295,6 +2316,8 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
       pWork->pBox = GAMEDATA_GetBoxManager(pGameData);
       pWork->pMy = GAMEDATA_GetMyStatus( pGameData );
       pWork->pMyParty = GAMEDATA_GetMyPokemon(pGameData);
+      DEBUG_MyPokeAdd(pWork->pMyParty, pWork->pMy);
+
     }
 #if PM_DEBUG
     else{
@@ -2328,6 +2351,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
       }
 
       pWork->pMyParty = PokeParty_AllocPartyWork(pWork->heapID);
+      DEBUG_MyPokeAdd(pWork->pMyParty, pWork->pMy);
     }
 #endif
 

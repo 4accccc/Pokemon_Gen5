@@ -7,9 +7,10 @@
 
 #pragma once
 
-///’è”’è‹`
+///QÆ’è‹`
 #include "savedata/mail_def.h"
 #include "poke_tool/poke_tool.h"
+#include "system/pms_data.h"
 
 //------------------------------------------------------------
 /**

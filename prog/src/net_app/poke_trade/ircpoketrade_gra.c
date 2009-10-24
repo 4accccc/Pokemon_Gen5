@@ -690,6 +690,10 @@ static void _deletePokeIconResource(IRC_POKEMON_TRADE* pWork, int line)
 			GFL_CLACT_WK_Remove(pWork->pokeIcon[line][i]);
 			pWork->pokeIcon[line][i]=NULL;
 		}
+		if(pWork->markIcon[line][i]){
+			GFL_CLACT_WK_Remove(pWork->markIcon[line][i]);
+			pWork->markIcon[line][i]=NULL;
+		}
 	}
 }
 

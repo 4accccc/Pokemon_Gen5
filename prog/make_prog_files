@@ -680,6 +680,13 @@ SRCS_OVERLAY_IRCBATTLEMATCH = net_app/irc_match/ircbattlematch.c \
 								net_app/poke_trade/ircpoketrade_gra.c
 
 
+
+# IRCマッチングアプリケーション
+#===> SRCS_OVERLAY_IRCBATTLEMATCH
+SRCS_OVERLAY_APP_MAIL = app/mail/mailtool.c
+
+
+
 # 不思議な贈り物
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
