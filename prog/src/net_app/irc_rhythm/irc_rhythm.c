@@ -39,6 +39,9 @@
 // proc
 #include "net_app/irc_result.h"
 
+//sound
+#include "../irc_compatible/irc_compatible_snd.h"
+
 #ifdef PM_DEBUG
 //debug用
 #include "system/net_err.h"	//VRAM退避用アドレスを貰うため
@@ -407,7 +410,7 @@ typedef struct
 //	GFL_POINT		pos;
 	//押した時間
 	u32					prog_ms;	//経過時間
-	u32					diff_ms;	//差の時間
+	s32					diff_ms;	//差の時間
 } RHYTHMSEARCH_DATA;
 typedef struct
 {	
@@ -509,7 +512,7 @@ struct _RHYTHM_MAIN_WORK
 	RHYTHMNET_WORK	net;
 
 	//結果表示
-	RHYTHM_ONLYRESULT_WORK	onlyresult;
+	//RHYTHM_ONLYRESULT_WORK	onlyresult;
 
 	//背面ぴかぴか
 	BACKOBJ_WORK		backobj[BACKOBJ_SYS_NUM];
@@ -603,6 +606,7 @@ static void RHYTHMSEARCH_Exit( RHYTHMSEARCH_WORK *p_wk );
 static void RHYTHMSEARCH_Start( RHYTHMSEARCH_WORK *p_wk );
 static BOOL RHYTHMSEARCH_IsEnd( const RHYTHMSEARCH_WORK *cp_wk );
 static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk, const GFL_POINT *cp_pos );
+static void RHYTHMSEARCH_PlaySEByRhythmSpeed( const RHYTHMSEARCH_WORK *cp_wk );
 //net
 static void RHYTHMNET_Init( RHYTHMNET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc );
 static void RHYTHMNET_Exit( RHYTHMNET_WORK *p_wk );
@@ -2147,7 +2151,7 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		{	
 			BACKOBJ_StartEmit( &p_wk->backobj[BACKOBJ_SYS_MAIN], &trg_pos );
 			RHYTHMSEARCH_SetData( p_search, &sc_diamond_pos[i] );
-			break;
+			RHYTHMSEARCH_PlaySEByRhythmSpeed( p_search );
 		}
 	}
 
@@ -2155,6 +2159,7 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	if( RHYTHMSEARCH_IsEnd( p_search ) )
 	{	
 		MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_001, 0, 0 );
+		PMSND_PlaySE( IRCCOMMON_SE_IRC );
 		SEQ_Change( p_wk, SEQFUNC_Result );
 
 	}
@@ -2255,6 +2260,7 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_MSG_PRINT_END:
 		if( p_wk->cnt >= RESULT_SEND_CNT )
 		{	
+			PMSND_PlaySE( IRCMENU_SE_IRC_ON );
 			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_003, 0, 0 );
 			*p_seq	= SEQ_CALC;
 		}
@@ -2526,6 +2532,60 @@ static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk, const GFL_POINT *cp_p
 		//セットしたので次へ進める
 		p_wk->data_idx++;
 	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	リズムサーチ	今のリズムスピードにあったSEをならす
+ *
+ *	@param	const RHYTHMSEARCH_WORK *cp_wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void RHYTHMSEARCH_PlaySEByRhythmSpeed( const RHYTHMSEARCH_WORK *cp_wk )
+{	
+	u32 se;
+	if( cp_wk->data_idx < 2 )
+	{	
+		se	= IRCRHYTHM_SE_TAP_N;
+	}
+	else
+	{	
+		const s32 now	= cp_wk->data[ cp_wk->data_idx - 1 ].diff_ms;
+		const s32 pre	= cp_wk->data[ cp_wk->data_idx - 2 ].diff_ms;
+		const s32 diff	= now - pre;
+		if( 0 <= MATH_IAbs(diff) && MATH_IAbs(diff) < RANGE_RHYTHMSCORE_DIFF_01 )
+		{	
+			//大体同じ
+			se = IRCRHYTHM_SE_TAP_N;
+			NAGI_Printf( "初回SE %d\n", se );
+		}
+		else if( diff < 0  )
+		{	
+			//早い
+			if( MATH_IAbs(diff) < RANGE_RHYTHMSCORE_DIFF_03 )
+			{	
+				se = IRCRHYTHM_SE_TAP_F1;
+			}
+			else
+			{	
+				se	=IRCRHYTHM_SE_TAP_F2;
+			}
+		}
+		else
+		{	
+			//遅い
+			if( MATH_IAbs(diff) < RANGE_RHYTHMSCORE_DIFF_03 )
+			{	
+				se	= IRCRHYTHM_SE_TAP_S1;
+			}
+			else
+			{	
+				se	= IRCRHYTHM_SE_TAP_S2;
+			}
+		}
+		NAGI_Printf( "SE %d  diff %d\n", se, diff );
+	}
+	PMSND_PlaySE( se );
 }
 
 //=============================================================================

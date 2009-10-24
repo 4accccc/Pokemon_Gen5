@@ -38,6 +38,9 @@
 //savedata
 #include "savedata/irc_compatible_savedata.h"
 
+//sound
+#include "../irc_compatible/irc_compatible_snd.h"
+
 #ifdef PM_DEBUG
 //debug用
 #include "system/net_err.h"	//VRAM退避用アドレスを貰うため
@@ -54,8 +57,6 @@
 #endif //PM_DEBUG
 
 //#define OBJNUMBER_SCALE	//スケールする
-
-
 
 //-------------------------------------
 ///	マクロ
@@ -1558,6 +1559,7 @@ static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe, u8 x, u8 y, u8 w, u8 h, 
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( bgframe, x, y, w, h, plt, GFL_BMP_CHRAREA_GET_B );
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( TEXTSTR_BUFFER_LENGTH, heapID );
 	PRINT_UTIL_Setup( &p_wk->print_util, p_wk->p_bmpwin );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
 	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
 }
 //----------------------------------------------------------------------------
@@ -1959,12 +1961,14 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 #endif
 	case SEQ_START_SCALE:
 		SCALEBG_Start( &p_wk->scalebg, 90 );
+		PMSND_PlaySE( IRCRESULT_SE_HEART_UP );
 		*p_seq	= SEQ_WAIT_SCALE;
 		break;
 
 	case SEQ_WAIT_SCALE:
 		if( SCALEBG_IsEnd(&p_wk->scalebg) )
 		{	
+			PMSND_PlaySE( IRCRESULT_SE_HEART_ON );
 			OBJNUMBER_Start( &p_wk->number, 0 );
 			OBJNUMBER_Start( &p_wk->number, 1 );
 			OBJNUMBER_Start( &p_wk->number, 2 );
@@ -1994,6 +1998,7 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 
 	if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
 	{	
+		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );	
 		SEQ_End( p_wk );
 	}
 

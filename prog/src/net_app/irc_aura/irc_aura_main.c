@@ -39,6 +39,9 @@
 // proc
 #include "net_app/irc_result.h"
 
+//sound
+#include "../irc_compatible/irc_compatible_snd.h"
+
 #ifdef PM_DEBUG
 //debug用
 #include "system/net_err.h"	//VRAM退避用アドレスを貰うため
@@ -2681,6 +2684,7 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 			{	
 				TOUCH_EFFECT_SetVisible( p_touch, i, FALSE );
 			}
+			PMSND_StopSE();
 		}
 
 		GUIDE_SetVisible( GUIDE_VISIBLE_LEFT, HEAPID_IRCAURA );
@@ -2701,6 +2705,7 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
 				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_LEFT, TRUE );
 				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_LEFT, p_trg_left->x, p_trg_left->y );
+				PMSND_PlaySE( IRCAURA_SE_AURA );
 			}
 
 
@@ -2800,6 +2805,7 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
 				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, TRUE );
 				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_RIGHT, p_trg_right->x, p_trg_right->y );
+				PMSND_PlaySE( IRCAURA_SE_AURA );
 			}
 		}
 		else if( TP_GetRectCont( &sc_left, &pos ) )
@@ -2861,6 +2867,7 @@ static void SEQFUNC_TouchRight( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				int i;
 
 				MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_003, 0, 0 );
+				PMSND_PlaySE( IRCCOMMON_SE_IRC );
 				SEQ_Change( p_wk, SEQFUNC_Result );
 			}
 
@@ -2975,6 +2982,7 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_MSG_PRINT_END:
 		if( p_wk->cnt >= RESULT_SEND_CNT )
 		{	
+			PMSND_PlaySE( IRCMENU_SE_IRC_ON );
 			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_005, 0, 0 );
 			*p_seq	= SEQ_CALC;
 		}

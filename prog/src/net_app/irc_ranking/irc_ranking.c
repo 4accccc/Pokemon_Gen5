@@ -33,6 +33,9 @@
 //	common
 #include "app/app_menu_common.h"
 
+//sound
+#include "../irc_compatible/irc_compatible_snd.h"
+
 //	save
 #include "savedata/irc_compatible_savedata.h"
 
@@ -1135,6 +1138,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	if( APPBAR_GetTrg( &p_wk->appbar ) == APPBAR_SELECT_CLOSE
 			|| GFL_UI_KEY_GetCont() & PAD_BUTTON_B )
 	{	
+		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );	
 		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 	}
 
@@ -1899,7 +1903,13 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 		p_wk->is_move_req	= FALSE;
 		//張替えるチェック
 		if( p_wk->y	% SCROLL_REWITE_DISTANCE == 0 )
-		{	
+		{				
+
+			if( p_wk->top_bar != p_wk->y / SCROLL_REWITE_DISTANCE )
+			{	
+				PMSND_PlaySE( IRCRANK_SE_SLIDE );
+			}
+
 			//描画先頭バーを計算
 			p_wk->top_bar						= p_wk->y / SCROLL_REWITE_DISTANCE;
 			p_wk->rewrite_scr_pos_m	= SCROLL_MARGIN_SIZE_Y_M;

@@ -27,6 +27,9 @@
 
 #include "net_app/irc_appbar.h"
 
+//sound
+#include "../irc_compatible/irc_compatible_snd.h"
+
 //	archive
 #include "arc_def.h"
 #include "font/font.naix"
@@ -1646,6 +1649,7 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_MSG_STARTNET:
 		if(COMPATIBLE_IRC_InitWait( p_wk->p_param->p_irc ) )
 		{	
+			PMSND_PlaySE( IRCCOMMON_SE_IRC );
 			*p_seq	= SEQ_CONNECT;
 		}
 		break;
@@ -1740,6 +1744,7 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_MSG_CONNECT:
 		if( p_wk->cnt >= RESULT_SEND_CNT )
 		{	
+			PMSND_PlaySE( IRCMENU_SE_IRC_ON );
 			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_002, 0, 0  );
 			*p_seq	= SEQ_NEXTPROC;
 		}
@@ -1851,11 +1856,11 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 			switch( p_wk->select )
 			{	
 			case BTNID_COMATIBLE:
-				PMSND_PlaySystemSE( MENU_SE_DECIDE );
+				PMSND_PlaySE( IRCMENU_SE_DECIDE );
 				*p_seq	= SEQ_MSG;
 				break;
 			case BTNID_RANKING:
-				PMSND_PlaySystemSE( MENU_SE_DECIDE );
+				PMSND_PlaySE( IRCMENU_SE_DECIDE );
 				p_wk->p_param->select	= IRCMENU_SELECT_RANKING;
 				SEQ_Change( p_wk, SEQFUNC_NextProc );
 				break;

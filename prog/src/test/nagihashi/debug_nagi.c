@@ -395,7 +395,7 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 		L"運命値チェック", LISTDATA_SEQ_PROC_NAME_DEBUG,
 	},
 #endif
-#if 0
+#if 1
 	{	
 		L"ランキング", LISTDATA_SEQ_PROC_RANKING_DEBUG,
 	},
