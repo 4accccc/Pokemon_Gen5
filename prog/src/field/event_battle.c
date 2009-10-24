@@ -23,9 +23,9 @@
 #include "sound/pm_sndsys.h"
 
 #include "battle/battle.h"
-#include "poke_tool/monsno_def.h"
-#include "system/main.h" //GFL_HEAPID_APP参照
+#include "system/main.h" //HEAPID_PROC参照
 
+//#include "poke_tool/monsno_def.h"
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
 
@@ -37,12 +37,11 @@
 
 #include "event_battle_return.h"
 
+#include "script_def.h"   //SCR_BATTLE_～
 
 //======================================================================
 //  define
 //======================================================================
-#define HEAPID_CORE GFL_HEAPID_APP
-
 enum {
   BATTLE_BGM_FADEOUT_WAIT = 60,
   BATTLE_BGM_FADEIN_WAIT = 60,
@@ -64,12 +63,25 @@ typedef struct {
 
   ///戦闘呼び出し用パラメータへのポインタ
   BATTLE_SETUP_PARAM* battle_param;
+
   ///戦闘後処理（ずかん追加画面、進化画面など）呼び出し用のパラメータ
   BTLRET_PARAM        btlret_param;
 
+  ///タイミング用ワーク（主にBGMフェード制御）
   u16 timeWait;
+
+  ///BGMがすでに退避済みか？フラグ
   BOOL bgm_pushed_flag;
+
+  /** @brief  サブイベントかどうか？フラグ
+   * サブイベントの場合は、敗北処理など終了部分を呼び出し元から
+   * 呼び出してもらう必要があるため、フックする
+   */
   BOOL is_sub_event;
+
+  /** @brief  敗北処理がないバトルか？のフラグ */
+  BOOL is_no_lose;
+
 }BATTLE_EVENT_WORK;
 
 //======================================================================
@@ -119,16 +131,23 @@ GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BAT
  * フィールドトレーナーバトルイベント
  * @param gsys  GAMESYS_WORK
  * @param fieldmap FIELDMAP_WORK
+ * @param tr_id
+ * @param flags
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
 GMEVENT * EVENT_TrainerBattle(
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, int tr_id )
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, int tr_id, u32 flags )
 {
   GMEVENT * event;
   BATTLE_EVENT_WORK * bew;
   BATTLE_SETUP_PARAM* bp;
 
+  {
+    POKEPARTY * myparty = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys));
+    POKEMON_PARAM * pp = PokeParty_GetMemberPointer( myparty, 0 );
+    PP_Put( pp, ID_PARA_hp, 1 );
+  }
   event = GMEVENT_Create(
       gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
 
@@ -144,6 +163,10 @@ GMEVENT * EVENT_TrainerBattle(
   BEW_Initialize( bew, gsys, bp );
   bew->bgm_pushed_flag = TRUE; //視線イベントBGM時に退避済み
   bew->is_sub_event = TRUE;   //スクリプトから呼ばれる＝トップレベルのイベントでない
+  if ( (flags & SCR_BATTLE_MODE_NOLOSE) != 0 )
+  {
+    bew->is_no_lose = TRUE;
+  }
 
   return event;
 }
@@ -193,9 +216,11 @@ static GMEVENT_RESULT fieldBattleEvent(
     (*seq)++;
     break;
   case 3:
+#if 0
     bew->btlret_param.btlResult = bew->battle_param;
     bew->btlret_param.gameData  = gamedata;
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle_return), &BtlRet_ProcData, &bew->btlret_param );
+#endif
     (*seq)++;
     break;
   case 4:
@@ -220,7 +245,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     BEW_reflectBattleResult( bew, gamedata );
 
     //勝ち負け判定
-    if (BEW_IsLoseResult( bew) == TRUE )
+    if (bew->is_no_lose == FALSE && BEW_IsLoseResult( bew) == TRUE )
     {
       //負けの場合、イベントはここで終了。
       //復帰イベントへと遷移する
@@ -264,6 +289,43 @@ static GMEVENT_RESULT fieldBattleEvent(
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * @brief 「敗北処理」とするべきかどうかの判定
+ * @param result  バトルシステムが返す戦闘結果
+ * @param competitor  対戦相手の種類
+ * @return  BOOL  TRUEのとき、敗北処理をするべき
+ */
+//--------------------------------------------------------------
+BOOL FIELD_BATTLE_IsLoseResult(BtlResult result, BtlCompetitor competitor)
+{
+  enum {
+    RES_LOSE = 0,
+    RES_WIN,
+    RES_ERR,
+  };
+
+  static const u8 result_table[6][3] = {
+    //野生        トレーナー  通信
+    { RES_LOSE,   RES_LOSE,   RES_LOSE },   //BTL_RESULT_LOSE
+    { RES_WIN,    RES_WIN,    RES_WIN },    //BTL_RESULT_WIN
+    { RES_LOSE,   RES_LOSE,   RES_LOSE },   //BTL_RESULT_DRAW
+    { RES_WIN,    RES_ERR,    RES_LOSE },   //BTL_RESULT_RUN
+    { RES_WIN,    RES_ERR,    RES_WIN },    //BTL_RESULT_RUN_ENEMY
+    { RES_WIN,    RES_ERR,    RES_ERR },    //BTL_RESULT_CAPTURE
+  };
+
+  u8 lose_flag;
+  GF_ASSERT_MSG( result <= BTL_RESULT_CAPTURE, "想定外のBtlResult(%d)\n", result );
+  GF_ASSERT_MSG( competitor <= BTL_COMPETITOR_COMM, "想定外のBtlCompetitor(%d)\n", competitor);
+  lose_flag = result_table[result][competitor];
+  if( lose_flag == RES_ERR )
+  {
+    OS_Printf("バトルからありえない結果(Result=%d, Competitor=%d)\n", result, competitor );
+  }
+  return (lose_flag == RES_LOSE);
+}
+
+//--------------------------------------------------------------
+/**
  * @brief 勝ち負け結果チェック
  * @retval  TRUE  負けた
  * @retval  FALSE その他
@@ -271,25 +333,14 @@ static GMEVENT_RESULT fieldBattleEvent(
 //--------------------------------------------------------------
 static BOOL BEW_IsLoseResult(BATTLE_EVENT_WORK * bew)
 {
-  switch ((BtlResult)bew->battle_param->result)
-  {
-  case BTL_RESULT_LOSE:        ///< 負けた
-    return TRUE;
-  default:
-    GF_ASSERT_MSG(0, "想定外のBtlResult %d\n", bew->battle_param->result );
-    /* FALL THROUGH */
-  case BTL_RESULT_WIN:         ///< 勝った
-  case BTL_RESULT_DRAW:        ///< ひきわけ
-  case BTL_RESULT_RUN:         ///< 逃げた
-  case BTL_RESULT_RUN_ENEMY:   ///< 相手が逃げた（野生のみ）
-  case BTL_RESULT_CAPTURE:     ///< 捕まえた（野生のみ）
-    return FALSE;
-  }
+  return FIELD_BATTLE_IsLoseResult( bew->battle_param->result, bew->battle_param->competitor );
 }
 
 //--------------------------------------------------------------
 /**
  * @brief 戦闘結果反映処理
+ * @param bew   BATTLE_EVENT_WORKへのポインタ
+ * @param gamedata
  *
  * @todo  戦闘結果からずかんや手持ちポケモン状態などの反映処理を実装する
  */
@@ -300,7 +351,14 @@ static void BEW_reflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata
   //前作では貯金への反映、サファリボールカウントの反映、
   //いったん取っておいたPokeParamの反映などを行っていた
 }
+
 //--------------------------------------------------------------
+/**
+ * @brief BATTLE_EVENT_WORKの初期化処理
+ * @param bew   BATTLE_EVENT_WORKへのポインタ
+ * @param gsys
+ * @param bp
+ */
 //--------------------------------------------------------------
 static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM* bp)
 {
@@ -310,9 +368,15 @@ static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, BATTLE_
   bew->battle_param = bp;
   bew->bgm_pushed_flag = FALSE;
   bew->is_sub_event = FALSE;
+  bew->is_no_lose = FALSE;
   bew->timeWait = 0;
 }
+
 //--------------------------------------------------------------
+/**
+ * @brief BATTLE_EVENT_WORKの終了処理
+ * @param bew   BATTLE_EVENT_WORKへのポインタ
+ */
 //--------------------------------------------------------------
 static void BEW_Destructor(BATTLE_EVENT_WORK * bew)
 {

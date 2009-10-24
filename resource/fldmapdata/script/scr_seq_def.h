@@ -1595,7 +1595,8 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
- *  _TRAINER_ID_GET トレーナーID取得
+ *  @def  _TRAINER_ID_GET
+ *  @brief  トレーナーID取得
  *  @param wk ID格納先ワーク
  */
 //--------------------------------------------------------------
@@ -1609,7 +1610,8 @@
 
 //--------------------------------------------------------------
 /**
- *  _TRAINER_BTL_SET トレーナー戦闘呼び出し
+ *  @def  _TRAINER_BTL_SET
+ *  @brief  トレーナー戦闘呼び出し
  *  @param tr_id_0 トレーナーID0
  *  @param tr_id_1 トレーナーID1
  */
@@ -1621,11 +1623,30 @@
   .short  EV_SEQ_TRAINER_BTL_SET
   .short  \tr_id_0
   .short  \tr_id_1
+  .short  SCR_BATTLE_MODE_NONE
   .endm
 
 //--------------------------------------------------------------
 /**
- *  _TRAINER_MULTI_BTL_SET トレーナー戦闘（マルチバトル）呼び出し
+ *  @brief  トレーナー戦闘呼び出し（特殊指定あり）
+ *  @param tr_id_0 トレーナーID0
+ *  @param tr_id_1 トレーナーID1
+ */
+//--------------------------------------------------------------
+#define _TRAINER_BTL_SP_SET( tr_id0, tr_id1, flags ) \
+    _ASM_TRAINER_BTL_SP_SET tr_id0, tr_id1, flags
+  
+  .macro  _ASM_TRAINER_BTL_SP_SET  tr_id_0,tr_id_1 flags
+  .short  EV_SEQ_TRAINER_BTL_SET
+  .short  \tr_id_0
+  .short  \tr_id_1
+  .short  \flags
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def  _TRAINER_MULTI_BTL_SET
+ *  @brief  トレーナー戦闘（マルチバトル）呼び出し
  *  @param partner_id パートナーID
  *  @param tr_id_0 トレーナーID0
  *  @param tr_id_1 トレーナーID1

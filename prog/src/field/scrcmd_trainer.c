@@ -385,6 +385,7 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
 	VMCMD_RESULT *win_flag = SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_FLAG );
 	u16 tr_id_0 = SCRCMD_GetVMWorkValue( core, work );
 	u16 tr_id_1 = SCRCMD_GetVMWorkValue( core, work );
+  u16 flags = SCRCMD_GetVMWorkValue( core, work );
 	u16 partner_id;
   
 	partner_id = 0;
@@ -393,7 +394,7 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
     GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
     SCRIPT_FLDPARAM * fparam = SCRIPT_GetFieldParam( sc );
     GMEVENT *ev_battle =
-      EVENT_TrainerBattle( gsys, fparam->fieldMap, tr_id_0 );
+      EVENT_TrainerBattle( gsys, fparam->fieldMap, tr_id_0, flags );
     SCRIPT_CallEvent( sc, ev_battle );
   }
 	return VMCMD_RESULT_SUSPEND;

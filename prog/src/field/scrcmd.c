@@ -30,6 +30,7 @@
 #include "field_player.h"
 
 #include "event_gameover.h" //EVENT_NormalLose
+#include "event_battle.h"   //FIELD_BATTLE_IsLoseResult
 
 //#include "tr_tool/tr_tool.h"
 
@@ -1168,19 +1169,13 @@ VMCMD_RESULT EvCmdWildLoseCheck( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
 	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  BtlResult res = GAMEDATA_GetLastBattleResult(gdata);
 
-  switch ( GAMEDATA_GetLastBattleResult(gdata) )
-  { 
-  case BTL_RESULT_WIN:
-    *ret_wk = SCR_BATTLE_WIN;
-    break;
-
-  default:
-    //トレーナー戦では勝ち・負け以外の条件はないはずだが、
-    //明確な「勝ち」以外はすべて敗北とする
-  case BTL_RESULT_LOSE:
-    *ret_wk = SCR_BATTLE_LOSE;
-    break;
+  if (FIELD_BATTLE_IsLoseResult(res, BTL_COMPETITOR_WILD) == TRUE)
+  {
+    *ret_wk = SCR_BATTLE_RESULT_LOSE;
+  } else {
+    *ret_wk = SCR_BATTLE_RESULT_WIN;
   }
 
   return VMCMD_RESULT_CONTINUE;
@@ -1219,19 +1214,13 @@ VMCMD_RESULT EvCmdTrainerLoseCheck( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
 	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  BtlResult res = GAMEDATA_GetLastBattleResult(gdata);
 
-  switch ( GAMEDATA_GetLastBattleResult(gdata) )
-  { 
-  case BTL_RESULT_WIN:
-    *ret_wk = SCR_BATTLE_WIN;
-    break;
-
-  default:
-    //トレーナー戦では勝ち・負け以外の条件はないはずだが、
-    //明確な「勝ち」以外はすべて敗北とする
-  case BTL_RESULT_LOSE:
-    *ret_wk = SCR_BATTLE_LOSE;
-    break;
+  if (FIELD_BATTLE_IsLoseResult(res, BTL_COMPETITOR_TRAINER) == TRUE)
+  {
+    *ret_wk = SCR_BATTLE_RESULT_LOSE;
+  } else {
+    *ret_wk = SCR_BATTLE_RESULT_WIN;
   }
 
   return VMCMD_RESULT_CONTINUE;

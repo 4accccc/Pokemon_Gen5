@@ -70,10 +70,6 @@
 #define SCR_YES   (0) //YES_NO_WINの戻り値 「はい」を返した
 #define SCR_NO    (1) //YES_NO_WINの戻り値 「いいえ」を返した
 
-///TRAINER_LOSE_CHECK,NORMAL_LOSE_CHECK
-#define SCR_BATTLE_LOSE (0) //負け
-#define SCR_BATTLE_WIN  (1) //勝ち
-
 //ショップのID定義
 #define SCR_SHOPID_NULL ( 0xFF )  //変動ショップ呼び出しID
 
@@ -88,6 +84,16 @@
 #define SCR_FIELD_COMM_EXIT_OK      (0) //正常に通信切断処理が終わった
 #define SCR_FIELD_COMM_EXIT_CANCEL  (1) //切断処理をキャンセル
 #define SCR_FIELD_COMM_EXIT_ERROR   (2) //切断処理中になんらかのエラー
+
+//-----------------------------------------------------------------------------
+//  バトル関連
+//-----------------------------------------------------------------------------
+///TRAINER_LOSE_CHECK,NORMAL_LOSE_CHECK
+#define SCR_BATTLE_RESULT_LOSE (0) //負け
+#define SCR_BATTLE_RESULT_WIN  (1) //勝ち
+
+#define SCR_BATTLE_MODE_NONE    (0) //特にモード指定なし
+#define SCR_BATTLE_MODE_NOLOSE  (1) //負けないモード
 
 //-----------------------------------------------------------------------------
 //曜日取得関数の戻り値
