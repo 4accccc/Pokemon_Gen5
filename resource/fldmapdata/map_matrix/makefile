@@ -109,13 +109,9 @@ mklandlst:
 convxls:
 	$(CSV_CVTR) -p 1 map_matrix.xls
 	$(CSV_CVTR) -o blocknum.txt -p 2 map_matrix.xls
-	$(CSV_CVTR) -o field_zone.txt -p 3 map_matrix.xls
-	$(CSV_CVTR) -o field_land.txt -p 4 map_matrix.xls
-	$(CSV_CVTR) -o wb_spring.txt -p 5 map_matrix.xls
-	$(CSV_CVTR) -o wb_summer.txt -p 6 map_matrix.xls
-	$(CSV_CVTR) -o wb_autumn.txt -p 7 map_matrix.xls
-	$(CSV_CVTR) -o wb_winter.txt -p 8 map_matrix.xls
-	$(CSV_CVTR) -o test_field_zone.txt -p 9 map_matrix.xls
+	$(CSV_CVTR) -o field_land.txt -p 3 map_matrix.xls
+	$(CSV_CVTR) -o field_zone.txt -p 4 map_matrix.xls
+	$(CSV_CVTR) -o palace_zone.txt -p 5 map_matrix.xls
 
 #ëŒè€É\Å[ÉXàÍóóçÏê¨
 #
