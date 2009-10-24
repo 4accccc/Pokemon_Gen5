@@ -268,9 +268,10 @@ void _changeDemo_ModelTrade0(IRC_POKEMON_TRADE* pWork)
   pWork->pD2Fade->pal_start = 0;
   pWork->pD2Fade->pal_end = -16;
 
-  pWork->pModelFade = _createPaletteFade(GFL_G3D_UTIL_GetResHandle(pWork->g3dUtil,0), pWork->heapID);
-  _FIELD_StartPaletteFade( pWork->pModelFade, 0, 16, _POKEMON_CENTER_TIME/16, 0 );
-
+  if(pWork->modelno!=-1){
+    pWork->pModelFade = _createPaletteFade(GFL_G3D_UTIL_GetResHandle(pWork->g3dUtil,0), pWork->heapID);
+    _FIELD_StartPaletteFade( pWork->pModelFade, 0, 16, _POKEMON_CENTER_TIME/16, 0 );
+  }
 
   {
     VecFx32 pos={_POKEMON_PLAYER_CENTER_POSX,_POKEMON_PLAYER_CENTER_POSY, _POKEMON_PLAYER_CENTER_POSZ};
@@ -300,7 +301,9 @@ static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
 
   {  // フェード中
     _setFadeMask(pWork->pD2Fade);
-    _EFFTOOL_CalcPaletteFade(pWork->pModelFade);
+    if(pWork->pModelFade){
+      _EFFTOOL_CalcPaletteFade(pWork->pModelFade);
+    }
     _pokeMoveFunc(pWork->pMoveMcss[0]);
   }
 
@@ -313,9 +316,8 @@ static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
     GFL_DISP_GXS_SetVisibleControlDirect( 0 );
     IRC_POKETRADEDEMO_RemoveModel( pWork);
 
-    IRC_POKETRADEDEMO_End(pWork);
-    IRC_POKETRADEDEMO_Init(pWork);
-
+//    IRC_POKETRADEDEMO_End(pWork);
+//    IRC_POKETRADEDEMO_Init(pWork);
     
     for(i = 0;i< CELL_DISP_NUM;i++){
       if(pWork->curIcon[i]){
@@ -896,8 +898,10 @@ static _EFFTOOL_PAL_FADE_WORK* _createPaletteFade(GFL_G3D_RES* g3DRES,HEAPID hea
 //----------------------------------------
 static void	_freePaletteFade( _EFFTOOL_PAL_FADE_WORK* pwk )
 {
-  GFL_HEAP_FreeMemory( pwk->pData_dst );
-  GFL_HEAP_FreeMemory( pwk );
+  if(pwk){
+    GFL_HEAP_FreeMemory( pwk->pData_dst );
+    GFL_HEAP_FreeMemory( pwk );
+  }
 }
 
 

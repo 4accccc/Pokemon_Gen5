@@ -491,6 +491,7 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
     int i;
 
   pWork->unitIndex = UNIT_NULL;
+  pWork->modelno = -1;
 
   // ‰Šú‰»ˆ—
   _demoInit( pWork->heapID );

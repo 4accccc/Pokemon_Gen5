@@ -63,6 +63,9 @@
 #define _PARTICLE_DEMO5_START   (220)  ///モンスターボールが打ちあがるパーティクル開始
 #define _PARTICLE_DEMO6_START   (490)  ///パーティクル開始
 #define _PARTICLE_DEMO7_START   (1000)  ///パーティクル開始
+#define _PARTICLE_DEMO8_START   (300)  ///パーティクル開始
+#define _PARTICLE_DEMO9_START   (400)  ///パーティクル開始
+#define _PARTICLE_DEM10_START   (500)  ///パーティクル開始
 
 ///OAM登場のタイミング
 #define _OAM_POKECREATE_START   (20)  ///ポケモン＞ボールエフェクト
