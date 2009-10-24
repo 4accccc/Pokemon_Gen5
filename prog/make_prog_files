@@ -74,6 +74,7 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/game_event.c \
         gamesystem/game_data.c \
         gamesystem/msgspeed.c \
+        gamesystem/debug_data.c \
 	gamesystem/btl_setup.c \
         map/dp3format.c \
         field/zonedata.c \
@@ -84,6 +85,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/field_rail_loader.c \
         field/field_location.c \
         field/eventdata_system.c \
+        field/field_status.c \
         field/event_gameover.c \
         field/event_fieldmap_control.c \
         field/event_mapchange.c \
@@ -198,7 +200,6 @@ SRCS  +=    $(SOUNDSRC) \
         poke_tool/gauge_tool.c \
         system/gra_tool.c \
         field/field_comm/field_beacon_message.c \
-        field/field_status.c \
 				system/pokegra.c \
 				system/poke2dgra.c \
         system/nsbtx_to_clwk.c \

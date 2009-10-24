@@ -22,10 +22,8 @@
 #include "src/field/event_mapchange.h"
 #include "system/net_err.h"
 
-#include "poke_tool/monsno_def.h"
 #ifdef PM_DEBUG
-#include "item/item.h"  //デバッグアイテム生成用
-#include "waza_tool/wazano_def.h"  //デバッグポケ生成用
+#include "debug_data.h"
 #endif
 
 
@@ -84,8 +82,6 @@ static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK *
 static BOOL GameSystem_Main(GAMESYS_WORK * gsys);
 static void GameSystem_End(GAMESYS_WORK * gsys);
 static u32 GAMESYS_WORK_GetSize(void);
-static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys);
-static void DEBUG_MYITEM_MakeBag(MYITEM_PTR myitem, int heapID);
 
 
 //============================================================================================
@@ -127,18 +123,19 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 			GAMESYSTEM_SetEvent(gsys, event);
 		}
 		break;
-	case GAMEINIT_MODE_FIRST:
 	case GAMEINIT_MODE_DEBUG:
-		{
 #ifdef PM_DEBUG
+    //適当に手持ちポケモンをAdd
+    DEBUG_MyPokeAdd( GAMESYSTEM_GetGameData(gsys), GFL_HEAPID_APP );
+    //デバッグアイテム追加
+    DEBUG_MYITEM_MakeBag( GAMESYSTEM_GetGameData(gsys), GFL_HEAPID_APP );
+#endif //PM_DEBUG
+    /* FALL THROUGH */
+	case GAMEINIT_MODE_FIRST:
+    {
 			GMEVENT * event = DEBUG_EVENT_SetFirstMapIn(gsys, game_init);
 			GAMESYSTEM_SetEvent(gsys, event);
-			//適当に手持ちポケモンをAdd
-			DEBUG_MyPokeAdd(gsys);
-			//デバッグアイテム追加
-			DEBUG_MYITEM_MakeBag(GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(gsys)), GFL_HEAPID_APP);
-#endif //PM_DEBUG
-		}
+    }
 		break;
 	}
 #endif
@@ -511,133 +508,7 @@ void GAMESYSTEM_SetAlwaysNetFlag( GAMESYS_WORK * gsys, BOOL is_on )
 	GAMEDATA_SetAlwaysNetFlag(gsys->gamedata, is_on);
 }
 
-//--------------------------------------------------------------
-/**
- * @brief   デバッグ用に適当に手持ちポケモンをAdd
- * @param   gsys		
- */
-//--------------------------------------------------------------
-static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys)
-{
-  MYSTATUS *myStatus;
-	POKEPARTY *party;
-	POKEMON_PARAM *pp;
-	const STRCODE *name;
-	
-	party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys));
-  myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
-  name = MyStatus_GetMyName( myStatus );
-  
-	pp = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
-
-#ifdef DEBUG_ONLY_for_tamada
-	PP_Setup(pp, MONSNO_YUMEBAKURA, 2, 123456);
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
-  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
-	PokeParty_Add(party, pp);
-#else
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
-  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
-	PokeParty_Add(party, pp);
-
-	PP_Setup(pp, MONSNO_YUMEBAKURA, 100, 123456);
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
-  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
-	PokeParty_Add(party, pp);
-
-	PP_Setup(pp, MONSNO_KABITTI, 100, 123456);
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
-  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
-	PokeParty_Add(party, pp);
-
-  PP_Setup(pp, MONSNO_KABITTI, 100, 123456);
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
-  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
-  PP_SetWazaPos( pp , WAZANO_NAMINORI , 0 );
-  PP_SetWazaPos( pp , WAZANO_TAKINOBORI , 1 );
-  PP_SetWazaPos( pp , WAZANO_KAIRIKI , 2 );
-  PP_SetWazaPos( pp , WAZANO_IAIGIRI , 3 );
-	PokeParty_Add(party, pp);
-#endif
-
-	GFL_HEAP_FreeMemory(pp);
-}
-
 #ifdef PM_DEBUG
-//------------------------------------------------------------------
-/**
- * @brief	デバッグ用：適当に手持ちを生成する
- * @param	myitem	手持ちアイテム構造体へのポインタ
- */
-//------------------------------------------------------------------
-static const ITEM_ST DebugItem[] = {
-	{ ITEM_MASUTAABOORU,	111 },
-	{ ITEM_MONSUTAABOORU,	222 },
-	{ ITEM_SUUPAABOORU,		333 },
-	{ ITEM_HAIPAABOORU,		444 },
-	{ ITEM_PUREMIABOORU,	555 },
-	{ ITEM_DAIBUBOORU,		666 },
-	{ ITEM_TAIMAABOORU,		777 },
-	{ ITEM_RIPIITOBOORU,	888 },
-	{ ITEM_NESUTOBOORU,		999 },
-	{ ITEM_GOOZYASUBOORU,	100 },
-	{ ITEM_KIZUGUSURI,		123 },
-	{ ITEM_NEMUKEZAMASI,	456 },
-	{ ITEM_BATORUREKOODAA,  1},  // バトルレコーダー
-	{ ITEM_TAUNMAPPU,		1 },
-	{ ITEM_ZITENSYA,		1 },
-	{ ITEM_NANDEMONAOSI,	18 },
-	{ ITEM_PIIPIIRIKABAA,	18 },
-	{ ITEM_PIIPIIMAKKUSU,	18 },
-	{ ITEM_ANANUKENOHIMO, 50 },
-	{ ITEM_GOORUDOSUPUREE, 50 },
-	{ ITEM_DOKUKESI,		18 },		// どくけし
-	{ ITEM_YAKEDONAOSI,		19 },		// やけどなおし
-	{ ITEM_KOORINAOSI,		20 },		// こおりなおし
-	{ ITEM_MAHINAOSI,		22 },		// まひなおし
-	{ ITEM_EFEKUTOGAADO,	54 },		// エフェクトガード
-	{ ITEM_KURITHIKATTAA,	55 },		// クリティカッター
-	{ ITEM_PURASUPAWAA,		56 },		// プラスパワー
-	{ ITEM_DHIFENDAA,		57 },		// ディフェンダー
-	{ ITEM_SUPIIDAA,		58 },		// スピーダー
-	{ ITEM_YOKUATAARU,		59 },		// ヨクアタール
-	{ ITEM_SUPESYARUAPPU,	60 },		// スペシャルアップ
-	{ ITEM_SUPESYARUGAADO,	61 },		// スペシャルガード
-	{ ITEM_PIPPININGYOU,	62 },		// ピッピにんぎょう
-	{ ITEM_ENEKONOSIPPO,	63 },		// エネコのシッポ
-	{ ITEM_GENKINOKAKERA,	28 },		// げんきのかけら
-	{ ITEM_KAIHUKUNOKUSURI,	28 },		// げんきのかけら
-	{ ITEM_PIIPIIEIDO,	28 },
-	{ ITEM_PIIPIIEIDAA,	28 },
-	{ ITEM_DAAKUBOORU,	13 },		// ダークボール
-	{ ITEM_HIIRUBOORU,  14 },		// ヒールボール
-	{ ITEM_KUIKKUBOORU,	15 },		// クイックボール
-	{ ITEM_PURESYASUBOORU,	16 },	// プレシアボール
-	{ ITEM_TOMODATITETYOU,  1},  // ともだち手帳
-  {ITEM_PARESUHEGOO, 1}, // パレスへゴー
-	{ ITEM_POFINKEESU,  1},  // ポルトケース
-	{ ITEM_MOKOSINOMI,	50},	//モコシのみ
-	{ ITEM_GOSUNOMI,	50},	//ゴスのみ
-	{ ITEM_RABUTANOMI,	50},	//ラブタのみ
-
-  { ITEM_WAZAMASIN01,  328},		// わざマシン０１
-  {  ITEM_WAZAMASIN02	, 329 },		// わざマシン０２
-  {  ITEM_WAZAMASIN03	, 330 },		// わざマシン０３
-  {  ITEM_WAZAMASIN04	, 331 },		// わざマシン０４
-  {  ITEM_WAZAMASIN05	, 332 },		// わざマシン０５
-  
-};
-
-static void DEBUG_MYITEM_MakeBag(MYITEM_PTR myitem, int heapID)
-{
-	u32	i;
-
-	MYITEM_Init( myitem );
-	for( i=0; i<NELEMS(DebugItem); i++ ){
-		MYITEM_AddItem( myitem, DebugItem[i].id, DebugItem[i].no, heapID );
-	}
-}
-
 //==================================================================
 /**
  * デバッグ：ゲーム制御システム用ワーク取得
