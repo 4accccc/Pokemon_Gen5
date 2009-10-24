@@ -94,6 +94,8 @@
 typedef struct CAM_SHAKE_tag
 {
   BOOL Valid;
+  BOOL Finished;
+  BOOL TargetTraceSet;
   u8 Wait;
   u8 Count;
   u8 Num;
@@ -475,6 +477,7 @@ static u8 ChgDirIdxByRot(const u8 inDirIdx, const u8 inRotIdx);
 static u8 GetDirIdx(const u16 inDir, const u8 inShotIdx);
 
 static void ShakeCameraRequest(GYM_FLY_TMP *tmp);
+static void InitShakeCamera(CAM_SHAKE *shake);
 static void ShakeCameraFunc(CAM_SHAKE *shake, FIELD_CAMERA * camera);
 
 
@@ -723,6 +726,8 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
     {
       //カメラトレースを切る
       FIELD_CAMERA_StopTraceRequest(camera);
+      //カメラ振動パラメータ初期化
+      InitShakeCamera(&tmp->CamShake);
     }
     (*seq)++;
     break;
@@ -914,7 +919,7 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       can_dir_idx = GetDirIdx(tmp->ShotDir, tmp->ShotIdx);
       anm_ofs = GetCannonAnmOfs(can_dir_idx);
       frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, GYM_FLY_UNIT_IDX, obj_idx, anm_ofs);
-      OS_Printf("frm=%d\n",frm/FX32_ONE);
+///      OS_Printf("frm=%d\n",frm/FX32_ONE);
 
       if (frm/FX32_ONE == CanFireFrame[can_dir_idx]){
         //大砲発射ＳＥ
@@ -1006,21 +1011,69 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
 
     obj_idx = tmp->ShotIdx;
 
-    if(tmp->NowIcaAnmFrmIdx == tmp->TraceStart)
+    //座標取得
+    if ( ICA_ANIME_GetTranslateAt( tmp->IcaAnmPtr, &dst_vec, tmp->NowIcaAnmFrmIdx ) ){
+///      OS_Printf("%x %x %x\n",dst_vec.x,dst_vec.y,dst_vec.z);
+      dst_vec.x += (CanPos[obj_idx][0]*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE);
+      dst_vec.y += (CanPos[obj_idx][1]*FIELD_CONST_GRID_FX32_SIZE);
+      dst_vec.z += (CanPos[obj_idx][2]*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE);
+      //自機座標セット
+      FIELD_PLAYER_SetPos( FIELDMAP_GetFieldPlayer( fieldWork ), &dst_vec );
+    }
+
+    if ( tmp->CamShake.Finished )
     {
-/**      
-      if (tmp->NowIcaAnmFrmIdx <= CAN_FIRE_FRM){
-        GF_ASSERT_MSG(0,"大砲がまだ火を吹いていないのに、自機に追いつこうとしている");
+      //トレース前ならば、自機補足神経補間関数をコールするようにする
+      if ( tmp->NowIcaAnmFrmIdx < tmp->TraceStart )
+      {
+        VecFx32 target_pos;
+        FIELD_PLAYER *fld_player;
+        fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+        //自機の位置を取得
+        FIELD_PLAYER_GetPos( fld_player, &target_pos );
+        if (!tmp->CamShake.TargetTraceSet)
+        {
+          //主人公にカメラを合わせる線形補間関数をコール
+          VecFx32 cam_pos;
+          FLD_CAM_MV_PARAM_CHK chk;
+          int frame;
+
+          //ウォッチターゲットきりはなし
+          FIELD_CAMERA_FreeTarget(camera);
+        
+          //現在のカメラ位置を取得
+          FIELD_CAMERA_GetCameraPos( camera, &cam_pos);
+          
+          //変更は座標のみ
+          chk.Pos = TRUE;
+          chk.Fovy = FALSE;
+          chk.Shift = FALSE;
+          chk.Pitch = FALSE;
+          chk.Yaw = FALSE;
+          chk.Dist = FALSE;
+
+          frame = tmp->TraceStart - tmp->NowIcaAnmFrmIdx;
+          FIELD_CAMERA_SetLinerParamDirect(camera, &cam_pos, &target_pos, &chk, frame);
+          tmp->CamShake.TargetTraceSet = TRUE;  //セット
+        }
+        else
+        {
+          //カメラターゲットの更新(常に自機をターゲットにする)
+          FLD_CAM_MV_PARAM_CORE *param = FIELD_CAMERA_GetMoveDstPrmPtr(camera);
+          param->TrgtPos = target_pos;
+        }
       }
-      
-      if (tmp->NowIcaAnmFrmIdx <= SHOT_APP_FRM){
-        GF_ASSERT_MSG(0,"自機まだ表示されてないのに、自機に追いつこうとしている");
-      }
-*/      
+    } //endif ( tmp->CamShake.Finished )
+
+    if(tmp->NowIcaAnmFrmIdx == tmp->TraceStart)
+    { 
       if (tmp->CamShake.Valid){
         GF_ASSERT_MSG(0,"カメラ振動中に、自機に追いつこうとしている");
         tmp->CamShake.Valid = FALSE;
       }
+      //カメラバインド
+      FIELD_CAMERA_BindDefaultTarget(camera);
+
       //カメラモード変更
       FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
       {
@@ -1035,26 +1088,6 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       }
       //トレースモード突入
       tmp->TraceMode = 1;
-    }
-/**    
-    if (tmp->NowIcaAnmFrmIdx == SHOT_APP_FRM)      //自機を表示するフレームの処理
-    {
-      //自機表示
-      MMDL * mmdl;
-      FIELD_PLAYER *fld_player;
-      fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
-      mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-      MMDL_SetStatusBitVanish(mmdl, FALSE);
-    }
-*/
-    //座標取得
-    if ( ICA_ANIME_GetTranslateAt( tmp->IcaAnmPtr, &dst_vec, tmp->NowIcaAnmFrmIdx ) ){
-      OS_Printf("%x %x %x\n",dst_vec.x,dst_vec.y,dst_vec.z);
-      dst_vec.x += (CanPos[obj_idx][0]*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE);
-      dst_vec.y += (CanPos[obj_idx][1]*FIELD_CONST_GRID_FX32_SIZE);
-      dst_vec.z += (CanPos[obj_idx][2]*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE);
-      //自機座標セット
-      FIELD_PLAYER_SetPos( FIELDMAP_GetFieldPlayer( fieldWork ), &dst_vec );
     }
 
     {
@@ -1173,12 +1206,21 @@ static void ShakeCameraRequest(GYM_FLY_TMP *tmp)
 {
   CAM_SHAKE *shake;
   shake = &tmp->CamShake;
+  InitShakeCamera(shake);
   shake->Valid = TRUE;
+}
+
+static void InitShakeCamera(CAM_SHAKE *shake)
+{
+  shake->Valid = FALSE;
+  shake->Finished = FALSE;
+  shake->TargetTraceSet = FALSE;
   shake->Count = 0;
   shake->Wait = 0;
   shake->Num = 0;
   shake->dummy = 0;
 }
+
 
 //カメラ振動関数
 static void ShakeCameraFunc(CAM_SHAKE *shake, FIELD_CAMERA * camera)
@@ -1217,6 +1259,7 @@ static void ShakeCameraFunc(CAM_SHAKE *shake, FIELD_CAMERA * camera)
   if(shake->Num >= CAM_SHAKE_NUM){
     //振動フラグを落す
     shake->Valid = FALSE;
+    shake->Finished = TRUE;
     OS_Printf("shake_time = %d\n",shake->dummy);
   }
 }
