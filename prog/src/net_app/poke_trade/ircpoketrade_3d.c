@@ -513,6 +513,9 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
       case PTC_KIND_DEMO3:
       case PTC_KIND_DEMO6:
       case PTC_KIND_DEMO7:
+      case PTC_KIND_DEMO8:
+      case PTC_KIND_DEMO9:
+      case PTC_KIND_DEMO10:
         bCamera=FALSE;
         break;
       default:

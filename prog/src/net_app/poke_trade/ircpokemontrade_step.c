@@ -421,7 +421,7 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
     GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO4], DEMO_TEX004,  NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO4_START2){
-    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO8], DEMO_TEX004,  NULL, pWork);
+    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO11], DEMO_TEX004,  NULL, pWork);
   }
   if(pWork->anmCount == _PARTICLE_DEMO5_START){
     GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO5], DEMO_TEX005, _ballinEmitFunc, pWork);
@@ -431,6 +431,15 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
   }
   if(pWork->anmCount == _PARTICLE_DEMO7_START){
     GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO7], DEMO_TEX007,_balloutEmitFunc, pWork);
+  }
+  if(pWork->anmCount == _PARTICLE_DEMO8_START){
+    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO8], DEMO_TEX008,NULL, pWork);
+  }
+  if(pWork->anmCount == _PARTICLE_DEMO9_START){
+    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO9], DEMO_TEX009,NULL, pWork);
+  }
+  if(pWork->anmCount == _PARTICLE_DEM10_START){
+    GFL_PTC_CreateEmitterCallback(pWork->ptc[PTC_KIND_DEMO10], DEMO_TEX010,NULL, pWork);
   }
 
   /*  if(pWork->anmCount == _OAM_POKECREATE_START){
