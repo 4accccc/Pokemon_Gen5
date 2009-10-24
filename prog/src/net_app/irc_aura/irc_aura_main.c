@@ -2705,7 +2705,8 @@ static void SEQFUNC_StartGame( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
 				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_LEFT, TRUE );
 				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_LEFT, p_trg_left->x, p_trg_left->y );
-				PMSND_PlaySE( IRCAURA_SE_AURA );
+				//PMSND_PlaySE( IRCAURA_SE_AURA );
+				GFL_SNDTOOL_PlaySEwithPan( IRCAURA_SE_AURA, -127 );
 			}
 
 
@@ -2805,7 +2806,8 @@ static void SEQFUNC_TouchLeft( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 				p_touch	= GRAPHIC_GetTouchEffWk( &p_wk->grp );
 				TOUCH_EFFECT_SetVisible( p_touch, TOUCHEFFID_RIGHT, TRUE );
 				TOUCH_EFFECT_SetPos( p_touch, TOUCHEFFID_RIGHT, p_trg_right->x, p_trg_right->y );
-				PMSND_PlaySE( IRCAURA_SE_AURA );
+				//PMSND_PlaySE( IRCAURA_SE_AURA );
+				GFL_SNDTOOL_PlaySEwithPan( IRCAURA_SE_AURA, 127 );
 			}
 		}
 		else if( TP_GetRectCont( &sc_left, &pos ) )
