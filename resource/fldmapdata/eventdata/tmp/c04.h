@@ -22,6 +22,12 @@
 #define DOOR_ID_C04_C04P01_EXIT02        17
 #define DOOR_ID_C04_C04PC0101_EXIT01     18
 #define DOOR_ID_C04_C04R0201_EXIT01      19
+#define DOOR_ID_C04_C04R0101_EXIT01      20
+#define DOOR_ID_C04_C04R0501_EXIT01      21
+#define DOOR_ID_C04_C04R0401_EXIT01      22
+#define DOOR_ID_C04_C04R0901_EXIT01      23
+#define DOOR_ID_C04_C04R0901_EXIT03      24
+#define DOOR_ID_C04_C04R0901_EXIT02      25
 
 #endif //ZONE_C04_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
