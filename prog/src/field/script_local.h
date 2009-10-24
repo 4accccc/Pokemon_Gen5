@@ -23,6 +23,13 @@ typedef struct
   FIELDMAP_WORK *fieldMap;
 }SCRIPT_FLDPARAM;
 
+typedef struct
+{
+  GAMESYS_WORK *gsys;
+  SCREND_CHECK_WK *Chk;
+//  SCRIPT_WORK *sc;  <<必要であれば追加
+}SCREND_CHECK;
+
 //--------------------------------------------------------------
 // SCRIPTのメンバーID定義
 //--------------------------------------------------------------

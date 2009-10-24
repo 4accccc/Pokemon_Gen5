@@ -30,6 +30,48 @@
 
 static GMEVENT_RESULT WaitTraceStopEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WaitCamMovEvt( GMEVENT* event, int* seq, void* work );
+static void EndCamera(FIELD_CAMERA *camera, SCREND_CHECK_WK *chk);
+
+//--------------------------------------------------------------
+/**
+ * カメラ終了処理
+ * @param   camera   カメラポインタ
+ * @param   chk     チェック構造体
+ * @retval none
+ */
+//--------------------------------------------------------------
+static void EndCamera(FIELD_CAMERA *camera, SCREND_CHECK_WK *chk)
+{
+  //復帰パラメータをクリアする
+  FIELD_CAMERA_ClearRecvCamParam(camera);
+  //カメラトレース再開
+  FIELD_CAMERA_RestartTrace(camera);
+  //終了チェックフラグをオフ
+  chk->CameraEndCheck = 0;
+}
+
+//--------------------------------------------------------------
+/**
+ *スクリプト終了時カメラ終了チェック
+ * @param   end_chk     チェック構造体
+ * @param   seq     サブシーケンサ
+ * @retval  BOOL    TRUEでチェック終了
+ */
+//--------------------------------------------------------------
+BOOL SCREND_CheckEndCamera(SCREND_CHECK *end_check , int *seq)
+{
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(end_check->gsys);
+  FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
+  SCREND_CHECK_WK *chk = end_check->Chk;
+
+  //カメラ終了コマンド忘れをチェック
+  if (chk->CameraEndCheck){
+    GF_ASSERT_MSG(0,"カメラ終了コマンドがコールされていません");
+    //終了処理をコール
+    EndCamera(camera, chk);
+  }
+  return  TRUE;
+}
 
 //--------------------------------------------------------------
 /**
@@ -55,14 +97,12 @@ VMCMD_RESULT EvCmdCamera_Start( VMHANDLE *core, void *wk )
     call_event = GMEVENT_Create( gsys, NULL, WaitTraceStopEvt, 0 );
     SCRIPT_CallEvent( sc, call_event );
   }
-#if 0
   //終了チェックフラグをオン
   {
     SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
     SCREND_CHECK_WK *chk = SCRIPT_GetScrEndChkWkPtr( sc );
     chk->CameraEndCheck = 1;
   }
-#endif
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 }
@@ -80,18 +120,12 @@ VMCMD_RESULT EvCmdCamera_End( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
-  //復帰パラメータをクリアする
-  FIELD_CAMERA_ClearRecvCamParam(camera);
-  //カメラトレース再開
-  FIELD_CAMERA_RestartTrace(camera);
-#if 0
-  //終了チェックフラグをオフ
+
   {
     SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
     SCREND_CHECK_WK *chk = SCRIPT_GetScrEndChkWkPtr( sc );
-    chk->CameraEndCheck = 0;
+    EndCamera(camera, chk);
   }
-#endif
   return VMCMD_RESULT_CONTINUE;
 }
 

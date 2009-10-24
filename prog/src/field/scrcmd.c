@@ -83,6 +83,94 @@ const VMCMD_FUNC ScriptCmdTbl[];
 
 static const u8 ConditionTable[6][3];
 
+typedef BOOL (*SCR_END_CHECK_FUNC)(SCREND_CHECK *end_check, int *seq);
+
+#define FUNC_MAX ( NELEMS(CheckFuncTbl) )
+
+SCR_END_CHECK_FUNC CheckFuncTbl[] = {
+  SCREND_CheckEndCamera,
+  /*ここにスクリプト終了時のチェック関数を追加してください*/
+  NULL,   //テーブル終了検出用
+};
+
+typedef struct CHECK_WORK_tag
+{
+  SCREND_CHECK EndCheck;
+  int Seq;
+  int Next;
+  int FuncMax;
+}CHECK_WORK;
+
+static GMEVENT *CreateEndCheckEvt(SCRCMD_WORK *work);
+static GMEVENT_RESULT ScrCheckEvt( GMEVENT* event, int* seq, void* work );
+
+//--------------------------------------------------------------
+/**
+ * スクリプト終了時のコマンド記述忘れをチェックイベント
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT ScrCheckEvt( GMEVENT* event, int* seq, void* work )
+{
+  CHECK_WORK *check_wk;
+  SCR_END_CHECK_FUNC func;
+
+  check_wk = work;
+
+  do{
+    BOOL rc;
+    //ファンクション取得
+    func = CheckFuncTbl[check_wk->Next];
+    //ファンクションはＮＵＬＬか？（終了か？）
+    if (func == NULL) return GMEVENT_RES_FINISH;    //全ファンクション終了
+    //ファンクション実行
+    rc = func(&check_wk->EndCheck, &check_wk->Seq);
+    if (rc)
+    {
+      //ファンクション終了ならば次のファンクションへ
+      check_wk->Next++;
+      //次のファンクションのために、サブシーケンサを初期化
+      check_wk->Seq = 0;
+    }
+    else{
+      return GMEVENT_RES_CONTINUE;  //一度処理を返す
+    }
+  }while(check_wk->Next < check_wk->FuncMax);
+
+  //通常ここにくることはないが不測の事態のために。
+  return GMEVENT_RES_FINISH;
+
+}
+
+//--------------------------------------------------------------
+/**
+ * スクリプト終了時のコマンド記述忘れをチェックイベント作成
+ */
+//--------------------------------------------------------------
+static GMEVENT *CreateEndCheckEvt(SCRCMD_WORK *work)
+{
+  GMEVENT * event;
+  CHECK_WORK *check_wk;
+  int work_size;
+
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCREND_CHECK_WK *chk = SCRIPT_GetScrEndChkWkPtr( sc );
+
+  work_size = sizeof(CHECK_WORK);
+  //イベント作成
+  event = GMEVENT_Create( gsys, NULL, ScrCheckEvt, work_size );
+
+  check_wk = GMEVENT_GetEventWork( event );
+  //ワークの初期化
+  check_wk->EndCheck.gsys = gsys;
+  check_wk->EndCheck.Chk = chk;
+//  check_wk->EndCheck.sc = sc;
+  check_wk->Next = 0;
+  check_wk->Seq = 0;
+  check_wk->FuncMax = FUNC_MAX;
+  return event;
+}
+
 //======================================================================
 //  基本システム命令
 //======================================================================
@@ -916,6 +1004,34 @@ static VMCMD_RESULT EvCmdCommonProcFieldEventEnd( VMHANDLE * core, void *wk )
   SCRCMD_SUB_PauseClearAll( work );
 
   return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 終了時コマンド記述忘れチェック
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdCheckScrEnd( VMHANDLE * core, void *wk )
+{
+  SCREND_CHECK end_check;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCREND_CHECK_WK *chk = SCRIPT_GetScrEndChkWkPtr( sc );
+
+  //スクリプトチェックイベント作成
+  call_event = CreateEndCheckEvt(work);
+  if ( call_event == NULL ){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+  
+  SCRIPT_CallEvent( sc, call_event );
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //======================================================================

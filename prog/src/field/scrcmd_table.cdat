@@ -125,7 +125,7 @@
   //フィールドイベント共通処理
   DEF_CMD( EvCmdCommonProcFieldEventStart, EV_SEQ_COMMON_PROC_FIELD_EVENT_START )
   DEF_CMD( EvCmdCommonProcFieldEventEnd, EV_SEQ_COMMON_PROC_FIELD_EVENT_END )
-  NO_CMD()
+  DEF_CMD( EvCmdCheckScrEnd, EV_SEQ_CHECK_SCR_END)
   NO_CMD()
 
   NO_CMD()

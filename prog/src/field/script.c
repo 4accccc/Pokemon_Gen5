@@ -147,6 +147,8 @@ struct _TAG_SCRIPT_WORK
 	EV_TRAINER_EYE_HITDATA eye_hitdata[TRAINER_EYE_HITMAX];
 	
 	u16 scrTempWork[TEMP_WORK_SIZE];		//ワーク(ANSWORK,TMPWORKなどの代わり)
+
+  SCREND_CHECK_WK CheckWork;
 	
 
   /*
@@ -1449,4 +1451,16 @@ static u16 searchSceneScript( GAMEDATA * gamedata, const u8 * p, u8 key )
 	return SCRIPT_NOT_EXIST_ID;								//何も見つからなかった
 }
 
+
+//------------------------------------------------------------------
+/**
+ * @brief   スクリプト終了チェック構造体ポインタを返す
+ * @param	sc SCRIPT_WORK
+ * @retval work
+ */
+//------------------------------------------------------------------
+SCREND_CHECK_WK *SCRIPT_GetScrEndChkWkPtr( SCRIPT_WORK *sc )
+{
+  return &sc->CheckWork;
+}
 
