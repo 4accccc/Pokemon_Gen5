@@ -53,6 +53,7 @@ $SYSFLAG_FILENAME		= "../../fldmapdata/flagwork/flag_define.h";
 @DATA_SKY_FLAG			= ();		#空を飛ぶ
 @DATA_WARP_X				= ();		#到着X
 @DATA_WARP_Y				= ();		#到着Y
+@DATA_ARRIVE_FLAG		= ();		#到着フラグ
 @DATA_GUIDE					= ();		#ガイドID
 @DATA_PLACE1				= ();		#名所１ID
 @DATA_PLACE2				= ();		#名所２ID
@@ -298,16 +299,7 @@ foreach $line ( @TOWNMAP_XLS_DATA )
 			#空を飛ぶ
 			elsif( $tag eq "#sky_flag" )
 			{
-				my $val;
-				if( $w eq "" )
-				{
-					$val	= $DATA_ERROR_VALUE;
-				}
-				else
-				{
-					$val	= &GetFlagNumber( $w );
-				}
-				push( @DATA_SKY_FLAG, $val );
+				push( @DATA_SKY_FLAG, $w );
 			}
 			#着地X
 			elsif( $tag eq "#warp_x" )
@@ -318,6 +310,20 @@ foreach $line ( @TOWNMAP_XLS_DATA )
 			elsif( $tag eq "#warp_y" )
 			{
 				push( @DATA_WARP_Y, $w );
+			}
+			#到着フラグ
+			elsif( $tag eq "#arrive_flag" )
+			{
+				my $val;
+				if( $w eq "" )
+				{
+					$val	= $DATA_ERROR_VALUE;
+				}
+				else
+				{
+					$val	= &GetFlagNumber( $w );
+				}
+				push( @DATA_ARRIVE_FLAG, $val );
 			}
 			#ガイド文字
 			elsif( $tag eq "#guide" )
@@ -460,6 +466,7 @@ if(0)
 		print( "skyf=".$DATA_SKY_FLAG[$i]."\n" );
 		print( "warX=".$DATA_WARP_X[$i]."\n" );
 		print( "warY=".$DATA_WARP_Y[$i]."\n" );
+		print( "arrf=".$DATA_ARRIVE_FLAG[$i]."\n" );
 		print( "guid=".$DATA_GUIDE[$i]."\n" );
 		print( "pla1=".$DATA_PLACE1[$i]."\n" );
 		print( "pla2=".$DATA_PLACE2[$i]."\n" );
@@ -519,6 +526,7 @@ for( my $i = 0; $i < $DATA_LENGTH; $i++ )
 	print( FILEOUT pack( "S", $DATA_SKY_FLAG[$i] ) );
 	print( FILEOUT pack( "S", $DATA_WARP_X[$i] ) );
 	print( FILEOUT pack( "S", $DATA_WARP_Y[$i] ) );
+	print( FILEOUT pack( "S", $DATA_ARRIVE_FLAG[$i] ) );
 	print( FILEOUT pack( "S", $DATA_GUIDE[$i] ) );
 	print( FILEOUT pack( "S", $DATA_PLACE1[$i] ) );
 	print( FILEOUT pack( "S", $DATA_PLACE2[$i] ) );
@@ -611,15 +619,18 @@ sub GetFlagNumber
 	foreach $data ( @SYSFLAG_BUFF )
 	{
 		#print( " $name == $data \n" );
-		if( $data =~ /$name\s*([0-9]*)/ )
+		if( $data =~ /#define $name\s*([0-9]*)/ )
 		{
-			#print "ok\n";
+			print( " $name == $data \n" );
+			print "ok $1 \n";
 			return $1;
 		}
 	}
 
 	print( "$name not find\n" );
 	exit(1);
+
+	return $DATA_ERROR_VALUE;
 }
 #-------------------------------------
 #	@brief	配列の名前と一致したインデックスを返す

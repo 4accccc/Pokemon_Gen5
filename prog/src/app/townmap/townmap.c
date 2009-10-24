@@ -34,6 +34,9 @@
 #include "townmap_grh.h"
 #include "app/townmap.h"
 
+//sound
+#include "townmap_snd.h"
+
 //debug
 #include "debug/debugwin_sys.h"
 
@@ -49,6 +52,7 @@
 #define DEBUG_MENU_USE
 #define DEBUG_PRINT_USE
 #define DEBUG_POS_CHECK
+#define DEBUG_GAMESYS_NONE
 static GFL_POINT s_debug_pos	=
 {	
 	80, 25
@@ -603,7 +607,7 @@ static void CURSOR_SetPullEnable( CURSOR_WORK *p_wk, BOOL on_off );
 //-------------------------------------
 ///	PLACE
 //=====================================
-static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, const TOWNMAP_DATA *cp_data, const TOWNMAP_GRAPHIC_SYS *cp_grh, HEAPID heapID, BOOL is_debug );
+static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, const TOWNMAP_DATA *cp_data, const TOWNMAP_GRAPHIC_SYS *cp_grh, EVENTWORK *p_ev, HEAPID heapID, BOOL is_debug );
 static void PLACE_Exit( PLACE_WORK *p_wk );
 static void PLACE_Main( PLACE_WORK *p_wk );
 static void PLACE_Scale( PLACE_WORK *p_wk, fx32 scale, const GFL_POINT *cp_center_start, const GFL_POINT *cp_center_next );
@@ -617,7 +621,7 @@ static s32 PLACEDATA_GetParam( const PLACE_DATA *cp_wk, TOWNMAP_DATA_PARAM param
 static void PLACE_Active( PLACE_WORK *p_wk, const PLACE_DATA *cp_data );
 static void PLACE_NonActive( PLACE_WORK *p_wk );
 static const PLACE_DATA *PLACE_GetDataByZoneID( const PLACE_WORK *cp_wk, u16 zoneID, u16 escapeID );
-static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 data_idx, GFL_CLUNIT *p_clunit, u32 chr, u32 cel, u32 plt, HEAPID heapID, BOOL is_debug );
+static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 data_idx, GFL_CLUNIT *p_clunit, u32 chr, u32 cel, u32 plt, EVENTWORK *p_ev, HEAPID heapID, BOOL is_debug );
 static void PlaceData_Exit( PLACE_DATA *p_wk );
 static void PlaceData_SetVisible( PLACE_DATA *p_wk, BOOL is_visible );
 static BOOL PlaceData_IsHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_pos, const GFL_POINT *cp_wld_pos );
@@ -924,7 +928,26 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 					GFL_BG_SCROLL_Y_SET, -4 );
 
 	//場所作成
-	PLACE_Init( &p_wk->place, p_param->zoneID, p_param->escapeID, p_wk->p_data, p_wk->p_grh, HEAPID_TOWNMAP, FALSE );
+	{	
+		GAMEDATA	*p_gdata;
+		EVENTWORK	*p_ev;
+#ifdef DEBUG_GAMESYS_NONE
+		if( p_wk->p_param->p_gamesys == NULL )
+		{	
+			p_ev	= NULL;
+		}
+		else
+		{	
+			p_gdata	= GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
+			p_ev		= GAMEDATA_GetEventWork( p_gdata );
+		}
+#else
+		p_gdata	= GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
+		p_ev		= GAMEDATA_GetEventWork( p_gdata );
+#endif //DEBUG_GAMESYS_NONE
+		PLACE_Init( &p_wk->place, p_param->zoneID, p_param->escapeID, p_wk->p_data, p_wk->p_grh,
+				p_ev, HEAPID_TOWNMAP, FALSE );
+	}
 
 	//カーソル作成
 	CURSOR_Init( &p_wk->cursor, TOWNMAP_GRAPHIC_GetClwk( p_wk->p_grh, TOWNMAP_OBJ_CLWK_CURSOR ),
@@ -1414,6 +1437,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			{	
 				GFL_POINT wld;
 
+				PMSND_PlaySE( TOWNMAP_SE_SELECT );
 				INFO_Update( &p_wk->info, cp_data );
 				PLACE_Active( &p_wk->place, cp_data );
 				p_wk->cp_select	= cp_data;
@@ -1454,6 +1478,8 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 				p_wk->p_param->zoneID	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ZONE_ID );
 				p_wk->p_param->grid.x	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_WARP_X );
 				p_wk->p_param->grid.y	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_WARP_Y );
+
+				PMSND_PlaySE( TOWNMAP_SE_DECIDE );
 				SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 			}
 		}
@@ -1498,10 +1524,14 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 	{	
 	case APPBAR_SELECT_CLOSE:
 		p_wk->p_param->select	= TOWNMAP_SELECT_CLOSE;
+
+		PMSND_PlaySE( TOWNMAP_SE_CANCEL );
 		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 		break;
 	case APPBAR_SELECT_RETURN:
 		p_wk->p_param->select	= TOWNMAP_SELECT_RETURN;
+
+		PMSND_PlaySE( TOWNMAP_SE_CANCEL );
 		SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 		break;
 	case APPBAR_SELECT_SCALE_UP:
@@ -1537,6 +1567,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			APPBAR_SetActive( &p_wk->appbar, APPBAR_BARICON_SCALE_UP, FALSE );
 			APPBAR_SetActive( &p_wk->appbar, APPBAR_BARICON_SCALE_DOWN, TRUE );
 
+			PMSND_PlaySE( TOWNMAP_SE_SCALEUP );
 			p_wk->is_scale	= TRUE;
 		}
 		break;
@@ -1576,6 +1607,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			APPBAR_SetActive( &p_wk->appbar, APPBAR_BARICON_SCALE_DOWN, FALSE );
 			APPBAR_SetActive( &p_wk->appbar, APPBAR_BARICON_SCALE_UP, TRUE );
 
+			PMSND_PlaySE( TOWNMAP_SE_SCALEDOWN );
 			p_wk->is_scale	= FALSE;
 		}
 		break;
@@ -2471,7 +2503,7 @@ static void CURSOR_SetPullEnable( CURSOR_WORK *p_wk, BOOL on_off )
  *	@param	heapID								ヒープID
  */
 //-----------------------------------------------------------------------------
-static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, const TOWNMAP_DATA *cp_data, const TOWNMAP_GRAPHIC_SYS *cp_grh, HEAPID heapID, BOOL is_debug )
+static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, const TOWNMAP_DATA *cp_data, const TOWNMAP_GRAPHIC_SYS *cp_grh, EVENTWORK *p_ev, HEAPID heapID, BOOL is_debug )
 {	
 	//クリアー
 	GFL_STD_MemClear( p_wk, sizeof(PLACE_WORK) );
@@ -2498,16 +2530,17 @@ static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, cons
 	p_wk->p_place	= GFL_HEAP_AllocMemory( heapID, sizeof(PLACE_DATA) * p_wk->data_num );
 	GFL_STD_MemClear( p_wk->p_place, sizeof(PLACE_DATA) * p_wk->data_num );
 
-	//CLWK作成
+	//場所作成
 	{	
 		int i;
 		u32 chr, cel, plt;
+
 		//リソース取得
 		TOWNMAP_GRAPHIC_GetObjResource( cp_grh, &chr, &cel, &plt );
 		//初期化
 		for( i = 0; i < p_wk->data_num; i++ )
 		{	
-			PlaceData_Init( &p_wk->p_place[i], cp_data, i, p_wk->p_clunit, chr, cel, plt, heapID, is_debug );
+			PlaceData_Init( &p_wk->p_place[i], cp_data, i, p_wk->p_clunit, chr, cel, plt, p_ev, heapID, is_debug );
 		}
 	}
 
@@ -2959,7 +2992,7 @@ static const PLACE_DATA *PLACE_GetDataByZoneID( const PLACE_WORK *cp_wk, u16 zon
  *
  */
 //-----------------------------------------------------------------------------
-static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 data_idx, GFL_CLUNIT *p_clunit, u32 chr, u32 cel, u32 plt, HEAPID heapID, BOOL is_debug )
+static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 data_idx, GFL_CLUNIT *p_clunit, u32 chr, u32 cel, u32 plt, EVENTWORK *p_ev, HEAPID heapID, BOOL is_debug )
 {	
 	GF_ASSERT( data_idx < TOWNMAP_DATA_MAX );
 
@@ -2968,7 +3001,35 @@ static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 d
 	p_wk->cp_data			= cp_data;
 	p_wk->data_idx		= data_idx;
 	p_wk->scale				= FX32_ONE;
-	p_wk->is_arrive		= TRUE;	//とりあえず今はON
+
+	//到着フラグ取得
+	{	
+		u16 arrive_flag	= TOWNMAP_DATA_GetParam( p_wk->cp_data, p_wk->data_idx, TOWNMAP_DATA_PARAM_ARRIVE_FLAG );
+		if( arrive_flag != TOWNMAP_DATA_ERROR )
+		{	
+#ifdef DEBUG_GAMESYS_NONE
+			if( p_ev == NULL )
+			{	
+				p_wk->is_arrive	= TRUE;
+			}
+			else
+			{	
+				p_wk->is_arrive		= EVENTWORK_CheckEventFlag( p_ev, arrive_flag );
+			}
+#else
+			p_wk->is_arrive		= EVENTWORK_CheckEventFlag( p_ev, arrive_flag );
+#endif //DEBUG_GAMESYS_NONE
+		}
+		else
+		{	
+			p_wk->is_arrive		= FALSE;
+		}
+
+		if( is_debug )
+		{	
+			p_wk->is_arrive	= TRUE;
+		}
+	}	
 
 	//変更するデータを取得
 	{	

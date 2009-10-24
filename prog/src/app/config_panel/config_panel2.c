@@ -1248,6 +1248,10 @@ static GFL_PROC_RESULT CONFIG_PROC_Init( GFL_PROC *p_proc,int *p_seq, void *p_pa
 				OS_Printf( "\n!!!! GameSysPtr == NULL  !!!!\n" );
 				p_gdata	=	NULL;
 			}
+			else
+			{	
+				p_gdata	= GAMESYSTEM_GetGameData(p_wk->p_param->p_gamesys);
+			}
 #else
 			p_gdata	= GAMESYSTEM_GetGameData(p_wk->p_param->p_gamesys);
 #endif //GAMESYS_NONE_MOVE
