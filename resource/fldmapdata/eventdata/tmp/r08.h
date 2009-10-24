@@ -2,10 +2,7 @@
 #ifndef ZONE_R08_EVD_H
 #define ZONE_R08_EVD_H
 
-#define DOOR_ID_R08_R09_EXIT01            0
-#define DOOR_ID_R08_R09_EXIT04            1
-#define DOOR_ID_R08_R09_EXIT03            2
-#define DOOR_ID_R08_R09_EXIT02            3
+#define DOOR_ID_R08_R08R0201_EXIT01       0
 
 #endif //ZONE_R08_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

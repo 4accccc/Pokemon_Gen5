@@ -1,5 +1,5 @@
 #../data/c08.mev
-../tmp/c08.bin:../data/c08.mev $(UNIQ_SCRIPTHEADER) ../tmp/c08.h ../../script/c08_def.h ../../zonetable/zone_id.h ../tmp/r09.h ../../../../prog/include/field/eventdata_type.h ../tmp/r11.h 
+../tmp/c08.bin:../data/c08.mev $(UNIQ_SCRIPTHEADER) ../tmp/c08.h ../../script/c08_def.h ../../zonetable/zone_id.h ../tmp/c08r0501.h ../../../../prog/include/field/eventdata_type.h ../tmp/r11.h ../tmp/c08pc0101.h ../tmp/c08gym0101.h ../tmp/c08r0101.h ../tmp/c08r0201.h ../tmp/c08r0301.h ../tmp/c08r0401.h ../tmp/c08r0701.h ../tmp/c08r0601.h 
 	@echo ../data/c08.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c08.h ../../script/c08_def.h ../../zonetable/zone_id.h ../tmp/r09.h ../../../../prog/include/field/eventdata_type.h ../tmp/r11.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c08.h ../../script/c08_def.h ../../zonetable/zone_id.h ../tmp/c08r0501.h ../../../../prog/include/field/eventdata_type.h ../tmp/r11.h ../tmp/c08pc0101.h ../tmp/c08gym0101.h ../tmp/c08r0101.h ../tmp/c08r0201.h ../tmp/c08r0301.h ../tmp/c08r0401.h ../tmp/c08r0701.h ../tmp/c08r0601.h 
 

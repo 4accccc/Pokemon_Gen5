@@ -2,6 +2,7 @@
 #ifndef ZONE_R06R0203_EVD_H
 #define ZONE_R06R0203_EVD_H
 
+#define DOOR_ID_R06R0203_R06R0202_EXIT01  0
 
 #endif //ZONE_R06R0203_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r06r0203.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

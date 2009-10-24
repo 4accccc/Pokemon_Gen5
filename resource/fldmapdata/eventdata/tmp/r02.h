@@ -2,10 +2,12 @@
 #ifndef ZONE_R02_EVD_H
 #define ZONE_R02_EVD_H
 
-#define DOOR_ID_R02_EXIT01                0
-#define DOOR_ID_R02_EXIT02                1
-#define DOOR_ID_R02_EXIT03                2
-#define DOOR_ID_R02_EXIT04                3
+#define DOOR_ID_R02_R02R0101_EXIT01       0
+#define DOOR_ID_R02_R02R0101_EXIT03       1
+#define DOOR_ID_R02_R02R0101_EXIT02       2
+#define DOOR_ID_T02_R02R0101_EXIT01       3
+#define DOOR_ID_T02_R02R0101_EXIT03       4
+#define DOOR_ID_T02_R02R0101_EXIT02       5
 
 #endif //ZONE_R02_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

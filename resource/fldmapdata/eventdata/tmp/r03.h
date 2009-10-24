@@ -8,6 +8,8 @@
 #define DOOR_ID_R03_C02R0701_EXIT04       3
 #define DOOR_ID_R03_R03R0101_EXIT01       4
 #define DOOR_ID_R03_R03R0201_EXIT01       5
+#define DOOR_ID_R03_R03R0301_EXIT01       6
+#define DOOR_ID_R03_R03R0301_EXIT02       7
 
 #endif //ZONE_R03_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
