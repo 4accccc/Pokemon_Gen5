@@ -489,6 +489,25 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_mall02_00_00.nsbmd \
 	$(DIR_TEMP)/m_wbuill02_00_00.nsbmd \
 	$(DIR_TEMP)/m_bbuill02_00_00.nsbmd \
+	$(DIR_TEMP)/m_ncastle02_00_00.nsbmd \
+	$(DIR_TEMP)/m_ncastle03_00_00.nsbmd \
+	$(DIR_TEMP)/m_bsubway01_00_00.nsbmd \
+	$(DIR_TEMP)/m_bsubway02_00_00.nsbmd \
+	$(DIR_TEMP)/m_bsubway03_00_00.nsbmd \
+	$(DIR_TEMP)/m_un01_00_00.nsbmd \
+	$(DIR_TEMP)/m_furniture01_00_00.nsbmd \
+	$(DIR_TEMP)/m_ncastle04_00_00.nsbmd \
+	$(DIR_TEMP)/m_ncastle05_00_00.nsbmd \
+	$(DIR_TEMP)/m_ncastle05_01_00.nsbmd \
+	$(DIR_TEMP)/m_ncastle01_01_00.nsbmd \
+	$(DIR_TEMP)/m_ncastle06_00_00.nsbmd \
+	$(DIR_TEMP)/m_ncastle06_01_00.nsbmd \
+	$(DIR_TEMP)/m_ncastle06_00_01.nsbmd \
+	$(DIR_TEMP)/m_ncastle06_01_01.nsbmd \
+	$(DIR_TEMP)/m_ncastle07_00_00.nsbmd \
+	$(DIR_TEMP)/m_ncastle07_01_00.nsbmd \
+	$(DIR_TEMP)/m_ncastle08_00_00.nsbmd \
+	$(DIR_TEMP)/m_ncastle08_01_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd	$(DIR_TEMP)/C3_00_00.bhc \
 	$(DIR_TEMP)/C3_00_01.nsbmd	$(DIR_TEMP)/C3_00_01.bhc \
 	$(DIR_TEMP)/C3_01_00.nsbmd	$(DIR_TEMP)/C3_01_00.bhc \

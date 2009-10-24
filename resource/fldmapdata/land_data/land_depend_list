@@ -489,6 +489,25 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_mall02_00_00.3dppack \
 	$(DIR_OUTPUT)/m_wbuill02_00_00.3dppack \
 	$(DIR_OUTPUT)/m_bbuill02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_ncastle02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_ncastle03_00_00.3dppack \
+	$(DIR_OUTPUT)/m_bsubway01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_bsubway02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_bsubway03_00_00.3dppack \
+	$(DIR_OUTPUT)/m_un01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_furniture01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_ncastle04_00_00.3dppack \
+	$(DIR_OUTPUT)/m_ncastle05_00_00.3dppack \
+	$(DIR_OUTPUT)/m_ncastle05_01_00.3dppack \
+	$(DIR_OUTPUT)/m_ncastle01_01_00.3dppack \
+	$(DIR_OUTPUT)/m_ncastle06_00_00.3dppack \
+	$(DIR_OUTPUT)/m_ncastle06_01_00.3dppack \
+	$(DIR_OUTPUT)/m_ncastle06_00_01.3dppack \
+	$(DIR_OUTPUT)/m_ncastle06_01_01.3dppack \
+	$(DIR_OUTPUT)/m_ncastle07_00_00.3dppack \
+	$(DIR_OUTPUT)/m_ncastle07_01_00.3dppack \
+	$(DIR_OUTPUT)/m_ncastle08_00_00.3dppack \
+	$(DIR_OUTPUT)/m_ncastle08_01_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \
