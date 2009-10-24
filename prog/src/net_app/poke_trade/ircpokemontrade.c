@@ -2303,7 +2303,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
   
 	//オーバーレイ読み込み
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x110000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x140000 );
   GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
   {
     IRC_POKEMON_TRADE *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_POKEMON_TRADE ), HEAPID_IRCBATTLE );
@@ -2387,6 +2387,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
     IRC_POKETRADEDEMO_Init(pWork);
     DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );
     DEBUG_PAUSE_SetEnable( TRUE );
+    IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
 
   }
   
@@ -2532,6 +2533,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
     }
   }
   MCSS_Exit(pWork->mcssSys);
+  IRC_POKETRADEDEMO_RemoveModel( pWork);
   IRC_POKETRADEDEMO_End(pWork);
 
   IRC_POKETRADE_AllDeletePokeIconResource(pWork);
@@ -2555,8 +2557,8 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
   GFL_HEAP_FreeMemory(pWork->recvPoke[1]);
 
   GFL_TCB_DeleteTask( pWork->g3dVintr );
-  GFL_BG_Exit();
   GFL_BMPWIN_Exit();
+  GFL_BG_Exit();
 
   GFL_PROC_FreeWork(proc);
 
