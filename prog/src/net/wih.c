@@ -3578,7 +3578,10 @@ BOOL WH_End(NetDevEndCallback callback)
  *---------------------------------------------------------------------------*/
 u16 WH_GetCurrentAid(void)
 {
-	return _pWmInfo->sMyAid;
+  if(_pWmInfo){
+  	return _pWmInfo->sMyAid;
+  }
+  return 0;
 }
 
 /*---------------------------------------------------------------------------*
