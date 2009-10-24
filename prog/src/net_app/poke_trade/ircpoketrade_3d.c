@@ -622,7 +622,6 @@ void IRC_POKETRADEDEMO_End( IRC_POKEMON_TRADE* pWork )
 void IRC_POKETRADEDEMO_SetModel( IRC_POKEMON_TRADE* pWork, int modelno)
 {
   if(modelno != TRADE01_OBJECT){
-    pWork->modelno = modelno;
     return;
   }
   Initialize( pWork, modelno);
@@ -652,7 +651,7 @@ void IRC_POKETRADEDEMO_SetModel( IRC_POKEMON_TRADE* pWork, int modelno)
 //============================================================================================
 void IRC_POKETRADEDEMO_RemoveModel( IRC_POKEMON_TRADE* pWork)
 {
-  if(pWork->modelno != TRADE01_OBJECT){
+  if(pWork->modelno == -1){
     return;
   }
   Finalize(pWork);
