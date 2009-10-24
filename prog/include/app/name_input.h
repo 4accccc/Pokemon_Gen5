@@ -24,13 +24,13 @@
 typedef enum 
 {
 	NAMEIN_MYNAME = 0,	// 自分の名前	param1自分の性別
-	NAMEIN_POKEMON,		// ポケモンの名前 param1モンスター番号 param2フォルム番号
-	NAMEIN_BOX,			// ボックスの名前
-	NAMEIN_RIVALNAME,	// ライバルネーム
+	NAMEIN_POKEMON,			// ポケモンの名前 param1モンスター番号 param2フォルム番号
+	NAMEIN_BOX,					// ボックスの名前
+	NAMEIN_RIVALNAME,		// ライバルネーム
 	NAMEIN_FRIENDNAME,  // WIFIともだち手帳に書き込むともだちの名前 param1 フィールド３DOBJ
 //	NAMEIN_FRIENDCODE,	// ともだちコード
 //	NAMEIN_RANDOMGROUP, // 乱数の種グループの名前
-//	NAMEIN_STONE,		// 石碑(配布）
+//	NAMEIN_STONE,			// 石碑(配布）
 	NAMEIN_MAX,
 }NAMEIN_MODE;
 

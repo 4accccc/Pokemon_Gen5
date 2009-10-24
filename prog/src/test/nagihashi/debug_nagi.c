@@ -445,7 +445,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void 
 	GFL_STD_MemClear( p_wk, sizeof(DEBUG_NAGI_MAIN_WORK) );
 
 	CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
-	p_wk->p_namein_param	= NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_BOX, 1, 0, NAMEIN_BOX_LENGTH, NULL );
+	p_wk->p_namein_param	= NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_POKEMON, 1, 0, NAMEIN_BOX_LENGTH, NULL );
 
 	return GFL_PROC_RES_FINISH;
 }

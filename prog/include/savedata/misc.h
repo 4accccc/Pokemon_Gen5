@@ -12,6 +12,8 @@
 
 #include "savedata/save_control.h"
 
+#include "app/name_input.h"
+
 //=============================================================================
 /**
  *					’è”éŒ¾
@@ -49,8 +51,8 @@ extern MISC * SaveData_GetMisc( SAVE_CONTROL_WORK * p_sv);
 //‚»‚ê‚¼‚ê‚Ìæ“¾ŠÖ”
 //----------------------------------------------------------
 //–¼‘O“ü—Í
-extern void MISC_SetNameInMode( MISC *p_misc, u8 mode );
-extern u8 MISC_GetNameInMode( const MISC *cp_misc );
+extern void MISC_SetNameInMode( MISC *p_misc, NAMEIN_MODE mode, u8 input_type );
+extern u8 MISC_GetNameInMode( const MISC *cp_misc, NAMEIN_MODE mode );
 
 
 

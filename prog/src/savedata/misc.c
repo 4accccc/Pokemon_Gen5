@@ -29,9 +29,19 @@
 //=====================================
 struct _MISC
 {	
-	u8	namein_mode;
-	u8	dummy[3];
+	u8	namein_mode[NAMEIN_MAX];	//5つ
+	u8	dummy[3];									//追加する方はダミーつぶしてください
 };
+
+//=============================================================================
+/**
+ *	プロトタイプ
+ */
+//=============================================================================
+//-------------------------------------
+///	名前入力
+//=====================================
+static void MISC_InitNameIn( MISC *p_misc );
 
 //=============================================================================
 /**
@@ -59,6 +69,8 @@ int MISC_GetWorkSize( void )
 void MISC_Init( MISC *p_msc )
 {	
 	GFL_STD_MemClear( p_msc, sizeof(MISC) );
+
+	MISC_InitNameIn( p_msc );
 }
 
 //=============================================================================
@@ -106,11 +118,12 @@ MISC * SaveData_GetMisc( SAVE_CONTROL_WORK * p_sv)
  *
  *	@param	MISC *p_misc	MISC
  *	@param	mode					モード
+ *	@param	input_type		入力タイプ
  */
 //-----------------------------------------------------------------------------
-void MISC_SetNameInMode( MISC *p_misc, u8 mode )
+void MISC_SetNameInMode( MISC *p_misc, NAMEIN_MODE mode, u8 input_type )
 {	
-	p_misc->namein_mode	= mode;
+	p_misc->namein_mode[ mode ]	= input_type;
 }
 
 //----------------------------------------------------------------------------
@@ -118,13 +131,26 @@ void MISC_SetNameInMode( MISC *p_misc, u8 mode )
  *	@brief	名前入力のモード取得
  *
  *	@param	const MISC *cp_misc		MISC
+ *	@param	mode									モード
  *
- *	@return	モード
+ *	@return	入力タイプ
  */
 //-----------------------------------------------------------------------------
-u8 MISC_GetNameInMode( const MISC *cp_misc )
+u8 MISC_GetNameInMode( const MISC *cp_misc, NAMEIN_MODE mode )
 {	
-	return cp_misc->namein_mode;
+	return cp_misc->namein_mode[ mode ];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	名前入力の初期化
+ *
+ *	@param	MISC *p_misc ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MISC_InitNameIn( MISC *p_misc )
+{
+	p_misc->namein_mode[ NAMEIN_POKEMON ] = 1;
 }
 
 

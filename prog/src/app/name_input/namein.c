@@ -36,6 +36,7 @@
 #include "print/gf_font.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "print/global_msg.h"
 
 //	savedata
 #include "savedata/misc.h"
@@ -251,7 +252,7 @@ static const u8 sc_keymove_default[KEYMAP_KEYMOVE_BUFF_MAX]	=
 //モード切替移動
 #define KEYBOARD_CHANGEMOVE_START_Y			(0)
 #define KEYBOARD_CHANGEMOVE_END_Y				(-48)
-#define KEYBOARD_CHANGEMOVE_SYNC				(10)
+#define KEYBOARD_CHANGEMOVE_SYNC				(7)
 #define KEYBOARD_CHANGEMOVE_START_ALPHA	(16)
 #define KEYBOARD_CHANGEMOVE_END_ALPHA		(0)
 //状態
@@ -306,6 +307,16 @@ typedef enum
 //アイコンの座標
 #define ICON_POS_X	(46)
 #define ICON_POS_Y	(20)
+#define ICON_WIDTH	(32)
+#define ICON_HEIGHT	(32)
+
+//アイコンの動作
+#define ICON_MOVE_SYNC	(8)
+#define ICON_MOVE_Y			(12)
+#define ICON_MOVE_START	((0*0xffff) / 360)
+#define ICON_MOVE_END		((180*0xffff) / 360)
+#define ICON_MOVE_DIF		( ICON_MOVE_END - ICON_MOVE_START )
+
 //アイコンの種類
 typedef enum
 {
@@ -469,8 +480,11 @@ typedef struct
 	u32				plt;			//パレット登録ID
 	u32				ncg;			//キャラ登録ID
 	u32				cel;			//セル登録ID
+	BOOL			is_trg;		//トリガー入力
+	u32				seq;			//メインシーケンス
+	BOOL			is_move_start;//移動開始フラグ
+	u16				sync;					//移動シンク
 } ICON_WORK;
-
 //-------------------------------------
 ///	メインワーク
 //=====================================
@@ -563,6 +577,8 @@ static BOOL STRINPUT_PrintMain( STRINPUT_WORK *p_wk );
 static void STRINPUT_CopyStr( const STRINPUT_WORK *cp_wk, STRBUF *p_strbuf );
 static void STRINPUT_DeleteChangeStr( STRINPUT_WORK *p_wk );
 static void STRINPUT_DecideChangeStr( STRINPUT_WORK *p_wk );
+static void STRINPUT_Delete( STRINPUT_WORK *p_wk );
+static void STRINPUT_SetLongStr( STRINPUT_WORK *p_wk, const STRCODE *cp_code );
 static BOOL STRINPUT_IsInputEnd( const STRINPUT_WORK *cp_wk );
 static BOOL StrInput_ChangeStrToStr( STRINPUT_WORK *p_wk, BOOL is_shift );
 //-------------------------------------
@@ -595,6 +611,7 @@ static KEYBOARD_STATE KEYBOARD_GetState( const KEYBOARD_WORK *cp_wk );
 static KEYBOARD_INPUT KEYBOARD_GetInput( const KEYBOARD_WORK *cp_wk, STRCODE *p_str );
 static BOOL KEYBOARD_IsShift( const KEYBOARD_WORK *cp_wk );
 static BOOL KEYBOARD_PrintMain( KEYBOARD_WORK *p_wk );
+static NAMEIN_INPUTTYPE KEYBOARD_GetInputType( const KEYBOARD_WORK *cp_wk );
 static BOOL Keyboard_StartMove( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode );
 static BOOL Keyboard_MainMove( KEYBOARD_WORK *p_wk );
 static void Keyboard_ChangeMode( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode );
@@ -612,10 +629,15 @@ static BOOL MSGWND_PrintMain( MSGWND_WORK* p_wk );
 //=====================================
 static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, GFL_CLUNIT *p_unit, HEAPID heapID );
 static void ICON_Exit( ICON_WORK *p_wk );
+static void ICON_Main( ICON_WORK *p_wk );
+static BOOL ICON_IsTrg( const ICON_WORK *cp_wk );
+static void Icon_StartMove( ICON_WORK *p_wk );
+static BOOL Icon_MainMove( ICON_WORK *p_wk );
 //-------------------------------------
 ///	その他
 //=====================================
 static BOOL COLLISION_IsRectXPos( const GFL_RECT *cp_rect, const GFL_POINT *cp_pos );
+static STRBUF* DEFAULTNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode, HEAPID heapID );
 //-------------------------------------
 ///	SEQ
 //=====================================
@@ -708,6 +730,13 @@ NAMEIN_PARAM *NAMEIN_AllocParamPokemonByPP( HEAPID heapId, const POKEMON_PARAM *
 	p_param->mode			= NAMEIN_POKEMON;
 	p_param->wordmax	= wordmax;
 	p_param->pp				= pp;
+
+	//PPの場合引数を設定
+	if( p_param->pp )
+	{	
+		p_param->mons_no	= PP_Get( pp, ID_PARA_monsno, NULL );
+		p_param->form			= PP_Get( pp, ID_PARA_form_no, NULL );
+	}
 
 	//バッファ作成
 	p_param->strbuf	= GFL_STR_CreateBuffer( wordmax + 1, heapId );
@@ -803,7 +832,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 	{	
 		const MISC *cp_misc;
 		cp_misc	= SaveData_GetMisc( SaveControl_GetPointer() );
-		mode		= MISC_GetNameInMode( cp_misc );
+		mode		= MISC_GetNameInMode( cp_misc, p_param->mode );
 	}
 
 	//ヒープ作成
@@ -1505,9 +1534,8 @@ static void STRINPUT_Init( STRINPUT_WORK *p_wk, const STRBUF * cp_default_str, u
 		{	
 			clpos.x	= STRINPUT_BAR_START_X + x + i * STRINPUT_BAR_OFFSET_X;
 
-			GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], 0 );
+			GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], 1 );
 			GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[i], TRUE );
-			GFL_CLACT_WK_StopAnm( p_wk->p_clwk[i] );
 			GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, CLSYS_DEFREND_MAIN );
 			GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
 		}
@@ -1622,20 +1650,20 @@ static void STRINPUT_Main( STRINPUT_WORK *p_wk )
 			for( i = 0; i < p_wk->strlen; i++ )
 			{	
 				GFL_CLACT_WK_SetAnmFrame( p_wk->p_clwk[i], 0 );
-				GFL_CLACT_WK_StopAnm( p_wk->p_clwk[i] );
+				GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[ i ], 1 );
 				GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
 			}
 			for( ; i < OBJ_BAR_NUM; i++ )
 			{	
 				GFL_CLACT_WK_SetAnmFrame( p_wk->p_clwk[i], 0 );
-				GFL_CLACT_WK_StopAnm( p_wk->p_clwk[i] );
+				GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[ i ], 1 );
 				GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
 			}
 			for(i = 0; i <= p_wk->input_idx && i < p_wk->strlen; i++ )
 			{	
 				GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
 			}
-			GFL_CLACT_WK_StartAnm( p_wk->p_clwk[ p_wk->input_idx ] );
+			GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[ p_wk->input_idx ], 0 );
 		}
 
 		p_wk->is_update	= FALSE;
@@ -1857,6 +1885,46 @@ static void STRINPUT_DecideChangeStr( STRINPUT_WORK *p_wk )
 	}
 	p_wk->change_idx	= 0;
 	p_wk->change_str[ p_wk->change_idx ] = GFL_STR_GetEOMCode();
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	入力文字欄	入力されている文字を全て消去
+ *
+ *	@param	STRINPUT_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void STRINPUT_Delete( STRINPUT_WORK *p_wk )
+{	
+	int i;
+	if( p_wk->input_idx > 0 )
+	{	
+		p_wk->input_idx	= 0;
+		p_wk->input_str[ p_wk->input_idx ] = GFL_STR_GetEOMCode();
+		p_wk->is_update	= TRUE;
+	}	
+	STRINPUT_DeleteChangeStr( p_wk );
+	
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	入力文字欄
+ *
+ *	@param	STRINPUT_WORK *p_wk		ワーク
+ *	@param	STRCODE *cp_code			文字列
+ *
+ */
+//-----------------------------------------------------------------------------
+static void STRINPUT_SetLongStr( STRINPUT_WORK *p_wk, const STRCODE *cp_code )
+{	
+	while( *cp_code != GFL_STR_GetEOMCode() )
+	{	
+		if( !STRINPUT_SetStr( p_wk, *cp_code ))
+		{	
+			break;
+		}
+		cp_code++;
+	}
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -3176,13 +3244,6 @@ static void KEYBOARD_Exit( KEYBOARD_WORK *p_wk )
 	//キーアニメ破棄
 	KEYANM_Exit( &p_wk->keyanm );
 
-	//セーブデータ設定
-	{	
-		MISC *p_misc;
-		p_misc	= SaveData_GetMisc( SaveControl_GetPointer() );
-		MISC_SetNameInMode( p_misc, p_wk->mode );
-	}
-
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(KEYBOARD_WORK) );
 }
@@ -3471,6 +3532,19 @@ static BOOL KEYBOARD_IsShift( const KEYBOARD_WORK *cp_wk )
 static BOOL KEYBOARD_PrintMain( KEYBOARD_WORK *p_wk )
 {	
 	return PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	キーボード	入力モードを返す
+ *
+ *	@param	const KEYBOARD_WORK *cp_wk	ワーク
+ *
+ *	@return	入力モードを返す
+ */
+//-----------------------------------------------------------------------------
+static NAMEIN_INPUTTYPE KEYBOARD_GetInputType( const KEYBOARD_WORK *cp_wk )
+{	
+	return cp_wk->mode;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3965,7 +4039,7 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
 					CLWK_PLTTOFFS_MODE_OAM_COLOR );
 			break;
 		case ICON_TYPE_BOX:
-			GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, 1 );
+			GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, 2 );
 			break;
 		default:
 			GF_ASSERT(0);
@@ -3992,6 +4066,126 @@ static void ICON_Exit( ICON_WORK *p_wk )
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(ICON_WORK) );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アイコン	メイン処理
+ *
+ *	@param	ICON_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void ICON_Main( ICON_WORK *p_wk )
+{	
+	enum
+	{	
+		SEQ_MAIN,	//タッチ可能状態
+		SEQ_ANM,	//アイコンアニメ
+	};
+
+	switch( p_wk->seq )
+	{	
+	case SEQ_MAIN:
+		{	
+
+			u32 x, y;
+			GFL_CLACTPOS	clpos;
+			GFL_CLACT_WK_GetPos( p_wk->p_clwk, &clpos, CLSYS_DRAW_MAIN );
+
+			p_wk->is_trg	 = FALSE;
+
+			if( GFL_UI_TP_GetPointTrg( &x, &y) )
+			{	
+				GFL_POINT	pos;
+				GFL_RECT	rect;
+
+				rect.left		= clpos.x - ICON_WIDTH/2;
+				rect.top		= clpos.y - ICON_HEIGHT/2;
+				rect.right	= clpos.x + ICON_WIDTH/2;
+				rect.bottom	= clpos.y + ICON_HEIGHT/2;
+
+				pos.x	= x;
+				pos.y	= y;
+
+				if( COLLISION_IsRectXPos( &rect, &pos ) )
+				{
+					Icon_StartMove( p_wk );
+					p_wk->seq	= SEQ_ANM;
+				}
+			}
+		}
+		break;
+
+	case SEQ_ANM:
+		if( Icon_MainMove( p_wk ) )
+		{	
+			p_wk->is_trg	= TRUE;
+			p_wk->seq	= SEQ_MAIN;
+		}
+		break;
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アイコン入力状態
+ *
+ *	@param	const ICON_WORK *cp_wk	ワーク
+ *
+ *	@return	TRUE入力	FALSE入力していない
+ */
+//-----------------------------------------------------------------------------
+static BOOL ICON_IsTrg( const ICON_WORK *cp_wk )
+{	
+	return cp_wk->is_trg;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アイコン移動開始
+ *
+ *	@param	ICON_WORK *p_wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void Icon_StartMove( ICON_WORK *p_wk )
+{	
+	p_wk->sync	= 0;
+	p_wk->is_move_start	= TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アイコン移動処理
+ *
+ *	@param	ICON_WORK *p_wk ワーク
+ *
+ *	@return	TRUEアイコン移動終了	FALSEアイコン移動中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Icon_MainMove( ICON_WORK *p_wk )
+{	
+	if( p_wk->is_move_start )
+	{	
+		u16		now;
+		fx16	sin;
+		GFL_CLACTPOS	clpos;
+
+		now	= ICON_MOVE_START + ICON_MOVE_DIF * p_wk->sync++ / ICON_MOVE_SYNC;
+		sin	= FX_SinIdx( now );
+
+		clpos.x	= ICON_POS_X;
+		clpos.y	= ICON_POS_Y - ((ICON_MOVE_Y*sin) >> FX16_SHIFT);
+
+		GFL_CLACT_WK_SetPos( p_wk->p_clwk, &clpos, CLSYS_DRAW_MAIN );
+	
+		NAGI_Printf( "sin 0x%x y %d \n", sin, ((ICON_MOVE_Y*sin) >> FX16_SHIFT) );
+
+		if( p_wk->sync > ICON_MOVE_SYNC )
+		{	
+			p_wk->is_move_start	= FALSE;
+		}
+
+		return FALSE;
+	}
+
+	return TRUE;
+}
 //=============================================================================
 /**
  *		その他
@@ -4011,6 +4205,37 @@ static BOOL COLLISION_IsRectXPos( const GFL_RECT *cp_rect, const GFL_POINT *cp_p
 {	
 	return ( ((u32)( cp_pos->x - cp_rect->left) <= (u32)(cp_rect->right - cp_rect->left))
 						&	((u32)( cp_pos->y - cp_rect->top) <= (u32)(cp_rect->bottom - cp_rect->top)));
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デフォルト名	を作成し返す
+ *
+ *	@param  p_wk							ワーク
+ *	@param	NAMEIN_MODE mode	モード
+ *	@param	HEAPID						ヒープ
+ *	@retval	STRBUF
+ */
+//-----------------------------------------------------------------------------
+static STRBUF* DEFAULTNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode, HEAPID heapID )
+{	
+	STRBUF *p_msg_str;
+	switch( mode )
+	{	
+	case NAMEIN_MYNAME:
+		return GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
+
+	case NAMEIN_POKEMON:
+		return GFL_MSG_CreateString( GlobalMsg_PokeName, cp_wk->p_param->mons_no );
+
+	case NAMEIN_BOX:
+		return GFL_STR_CreateCopyBuffer( cp_wk->p_param->strbuf, heapID );
+
+	case NAMEIN_RIVALNAME:
+		//@todoライバル名
+		return GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
+	}
+
+	return NULL;
 }
 //=============================================================================
 /**
@@ -4264,7 +4489,24 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 			SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 			break;
 		case KEYBOARD_INPUT_NONE:				//何もしていない
-			/*  何もしない */
+	
+			//アイコンタッチしたら、デフォルト名を入れる
+			if( ICON_IsTrg( &p_wk->icon ) )
+			{	
+				STRBUF	*p_default;
+				p_default = DEFAULTNAME_CreateStr( p_wk, p_wk->p_param->mode, HEAPID_NAME_INPUT );
+
+				//一端全てけす
+				STRINPUT_Delete( &p_wk->strinput );
+
+				//デフォルト名入力
+				if( p_default != NULL )
+				{	
+					STRINPUT_SetLongStr( &p_wk->strinput, GFL_STR_GetStringCodePointer(p_default) );
+				}
+
+				GFL_STR_DeleteBuffer( p_default );
+			}
 			break;
 		case KEYBOARD_INPUT_SHIFT:			//シフト
 			/*  何もしない */
@@ -4281,6 +4523,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 	//メイン処理
 	KEYBOARD_Main( &p_wk->keyboard, &p_wk->strinput );
 	STRINPUT_Main( &p_wk->strinput );
+	ICON_Main( &p_wk->icon );
 }
 
 //----------------------------------------------------------------------------
@@ -4296,51 +4539,56 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {	
 	NAMEIN_WORK	*p_wk = p_param;
-	STRBUF *p_src_str;
 
 	//一端キャンセルフラグをOFF
 	p_wk->p_param->cancel	= FALSE;
 
 
-
-	p_src_str	= GFL_STR_CreateCopyBuffer( p_wk->p_param->strbuf, HEAPID_NAME_INPUT );
-
-	//今回の文字列を返す
-	STRINPUT_CopyStr( &p_wk->strinput, p_wk->p_param->strbuf );
-
-	//以前の文字列と一致したもしくはならば、キャンセルとみなす
+	//元の文字列と入力文字列の一致確認処理
+	//一致していればキャンセルとみなす
 	{	
-		if( GFL_STR_CompareBuffer( p_src_str, p_wk->p_param->strbuf ) )
-		{	
-			p_wk->p_param->cancel	= TRUE;
-		}
-	}
+		STRBUF *p_src_str;
+		p_src_str	= GFL_STR_CreateCopyBuffer( p_wk->p_param->strbuf, HEAPID_NAME_INPUT );
 
-	GFL_STR_DeleteBuffer( p_src_str );
+		//今回の文字列を返す
+		STRINPUT_CopyStr( &p_wk->strinput, p_wk->p_param->strbuf );
+
+		//以前の文字列と一致したもしくはならば、キャンセルとみなす
+		{	
+			if( GFL_STR_CompareBuffer( p_src_str, p_wk->p_param->strbuf ) )
+			{	
+				p_wk->p_param->cancel	= TRUE;
+			}
+		}
+		GFL_STR_DeleteBuffer( p_src_str );
+	}
 
 	//入力数が0ならば
 	//主人公入力ならばデフォルト名をいれ、
 	//そのほかならキャンセルとみなす
 	if( GFL_STR_GetBufferLength( p_wk->p_param->strbuf ) == 0 )
 	{	
-		if( p_wk->p_param->mode == NAMEIN_MYNAME )
+		if( p_wk->p_param->mode == NAMEIN_MYNAME ||
+				p_wk->p_param->mode == NAMEIN_RIVALNAME )
 		{	
-			STRBUF *p_msg_str;
-			p_msg_str	= GFL_MSG_CreateString( p_wk->p_msg, 
-					NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
-
-			GFL_STR_CopyBuffer( p_wk->p_param->strbuf, p_msg_str );
-			GFL_STR_DeleteBuffer( p_msg_str );
-
-			/*		GFL_MSG_GetString( p_wk->p_msg, 
-						NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ),
-						p_wk->p_param->strbuf );
-						*/
+			STRBUF	*p_default	= DEFAULTNAME_CreateStr( p_wk, p_wk->p_param->mode, HEAPID_NAME_INPUT );
+			GFL_STR_CopyBuffer( p_wk->p_param->strbuf, p_default );
+			GFL_STR_DeleteBuffer( p_default );
 		}
 		else
 		{	
 			p_wk->p_param->cancel	= TRUE;
 		}
+	}
+
+
+	//入力モードを保存する
+	{	
+		MISC *p_misc;
+		NAMEIN_INPUTTYPE input_type;
+		p_misc	= SaveData_GetMisc( SaveControl_GetPointer() );
+		input_type	= KEYBOARD_GetInputType( &p_wk->keyboard );
+		MISC_SetNameInMode( p_misc, p_wk->p_param->mode, input_type );
 	}
 
 	//終了
