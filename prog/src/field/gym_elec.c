@@ -1070,7 +1070,7 @@ GMEVENT *GYM_ELEC_ChangePoint(GAMESYS_WORK *gsys, const u8 inLeverIdx)
     return NULL;
   }
 
-  //イベントコール
+  //イベント作成
   event = GMEVENT_Create( gsys, NULL, ChangePointEvt, 0 );
     
   //操作予定レバーインデックスをセット
