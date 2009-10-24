@@ -18,6 +18,7 @@
 #include "fieldmap/zone_id.h"
 #include "intrude_types.h"
 #include "infowin\infowin.h"
+#include "intrude_main.h"
 
 
 //==============================================================================
@@ -205,23 +206,6 @@ static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos);
 //==============================================================================
 //  データ
 //==============================================================================
-///街の座標データ
-static const struct{
-  u16 zone_id;
-  u16 x;
-  u16 y;
-  u16 padding;
-}TownPosData[] = {
-  {ZONE_ID_C01, 7*8, 5*8,},
-  {ZONE_ID_C02, 0x10*8, 5*8},
-  {ZONE_ID_C03, 0x19*8, 5*8},
-  {ZONE_ID_C04, 2*8, 0xc*8},
-  {ZONE_ID_C05, 0x1e*8, 0xc*8},
-  {ZONE_ID_C06, 7*8, 0x13*8},
-  {ZONE_ID_C07, 0x10*8, 0x13*8},
-  {ZONE_ID_C08, 0x19*8, 0x13*8},
-};
-
 ///パレスをカーソルが指す場合の座標
 enum{
   PALACE_CURSOR_POS_X = 128,
@@ -540,11 +524,11 @@ static void _IntSub_ActorCreate_Town(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
   	BGPRI_ACTOR_COMMON,         //BGプライオリティ
   };
   
-  GF_ASSERT(NELEMS(TownPosData) == (INTSUB_ACTOR_TOWN_MAX - INTSUB_ACTOR_TOWN_0 + 1));
-  GF_ASSERT(NELEMS(TownPosData) == INTRUDE_TOWN_MAX);
+  GF_ASSERT(PALACE_TOWN_DATA_MAX == (INTSUB_ACTOR_TOWN_MAX - INTSUB_ACTOR_TOWN_0 + 1));
+  GF_ASSERT(PALACE_TOWN_DATA_MAX == INTRUDE_TOWN_MAX);
   for(i = INTSUB_ACTOR_TOWN_0; i <= INTSUB_ACTOR_TOWN_MAX; i++){
-    head.pos_x = TownPosData[i].x;
-    head.pos_y = TownPosData[i].y;
+    head.pos_x = PalaceTownData[i].subscreen_x;
+    head.pos_y = PalaceTownData[i].subscreen_y;
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
       &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
@@ -570,10 +554,10 @@ static void _IntSub_ActorCreate_SenkyoEff(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE 
   	BGPRI_ACTOR_COMMON,         //BGプライオリティ
   };
   
-  GF_ASSERT(NELEMS(TownPosData) == (INTSUB_ACTOR_SENKYO_EFF_MAX - INTSUB_ACTOR_SENKYO_EFF_0 + 1));
+  GF_ASSERT(PALACE_TOWN_DATA_MAX == (INTSUB_ACTOR_SENKYO_EFF_MAX - INTSUB_ACTOR_SENKYO_EFF_0 + 1));
   for(i = INTSUB_ACTOR_SENKYO_EFF_0; i <= INTSUB_ACTOR_SENKYO_EFF_MAX; i++){
-    head.pos_x = TownPosData[i].x;
-    head.pos_y = TownPosData[i].y;
+    head.pos_x = PalaceTownData[i].subscreen_x;
+    head.pos_y = PalaceTownData[i].subscreen_y;
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
       &head, CLSYS_DEFREND_SUB, HEAPID_FIELDMAP);
@@ -893,7 +877,7 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
   INTRUDE_STATUS *ist;
   s16 base_x;
   u8 palace_num[FIELD_COMM_MEMBER_MAX];
-  u8 town_num[NELEMS(TownPosData)];
+  u8 town_num[PALACE_TOWN_DATA_MAX];
   static const s8 TownWearOffset[] = {3, -3, 6, 0};   //最後の0は4BYTEアライメント
   static const s8 PalaceWearOffset[] = {0, 3, -3, 0}; //最後の0は4BYTEアライメント
   int town_no;
@@ -905,7 +889,7 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
   my_area = intcomm->intrude_status_mine.palace_area;
   pos_count = -1;
   
-  GFL_STD_MemClear(town_num, sizeof(town_num[0]) * NELEMS(TownPosData));
+  GFL_STD_MemClear(town_num, sizeof(town_num[0]) * PALACE_TOWN_DATA_MAX);
   GFL_STD_MemClear(palace_num, sizeof(palace_num[0]) * FIELD_COMM_MEMBER_MAX);
   GF_ASSERT(NELEMS(PalaceWearOffset) == FIELD_COMM_MEMBER_MAX);
   
@@ -1120,10 +1104,10 @@ static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos)
 {
   int i;
   
-  for(i = 0; i < NELEMS(TownPosData); i++){
-    if(TownPosData[i].zone_id == zone_id){
-      dest_pos->x = TownPosData[i].x;
-      dest_pos->y = TownPosData[i].y;
+  for(i = 0; i < PALACE_TOWN_DATA_MAX; i++){
+    if(PalaceTownData[i].reverse_zone_id == zone_id){
+      dest_pos->x = PalaceTownData[i].subscreen_x;
+      dest_pos->y = PalaceTownData[i].subscreen_y;
       return i;
     }
   }

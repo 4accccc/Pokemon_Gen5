@@ -22,6 +22,7 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_START = GFL_NET_CMD_FIELD,
   
   INTRUDE_CMD_SHUTDOWN = INTRUDE_CMD_START,   ///<切断
+  INTRUDE_CMD_MEMBER_NUM,                     ///<侵入参加人数
   INTRUDE_CMD_PROFILE_REQ,                    ///<プロフィール要求
   INTRUDE_CMD_PROFILE,                        ///<プロフィールデータ
   INTRUDE_CMD_PLAYER_STATUS,                  ///<侵入ステータス(現在情報)
@@ -47,6 +48,7 @@ extern const NetRecvFuncTable Intrude_CommPacketTbl[];
 //  外部関数宣言
 //==============================================================================
 extern BOOL IntrudeSend_Shutdown(void);
+extern BOOL IntrudeSend_MemberNum(INTRUDE_COMM_SYS_PTR intcomm, u8 member_num);
 extern BOOL IntrudeSend_ProfileReq(void);
 extern BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL IntrudeSend_PlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_STATUS *send_status);

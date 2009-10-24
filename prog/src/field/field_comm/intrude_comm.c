@@ -118,6 +118,7 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
 	intcomm->comm_status = INTRUDE_COMM_STATUS_INIT_START;
   intcomm->palace = PALACE_SYS_Alloc(HEAPID_APP_CONTROL, intcomm->game_comm);
   intcomm->cps = CommPlayer_Init(FIELD_COMM_MEMBER_MAX, invalid_parent->gsys, HEAPID_APP_CONTROL);
+  intcomm->member_num = 1;
   Intrude_InitTalkWork(intcomm, INTRUDE_NETID_NULL);
   Bingo_InitBingoSystem(Bingo_GetBingoSystemWork(intcomm));
 
@@ -183,9 +184,18 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
   
   switch(*seq){
   case 0:
+    //※check ハード接続コールバックが呼ばれないときがあるので、
+    //        接続人数が増えていたら同様のことをする暫定処理
+    if(GFL_NET_SystemGetConnectNum() > 1){
+      if(intcomm->comm_status < INTRUDE_COMM_STATUS_HARD_CONNECT){
+        intcomm->comm_status = INTRUDE_COMM_STATUS_HARD_CONNECT;
+      }
+    }
+
     if(intcomm->comm_status == INTRUDE_COMM_STATUS_HARD_CONNECT){
       if( GFL_NET_HANDLE_RequestNegotiation() == TRUE ){
         GAMEDATA_SetIntrudeMyID(gamedata, GFL_NET_SystemGetCurrentID());
+        intcomm->intrude_status_mine.palace_area = GFL_NET_SystemGetCurrentID();
         OS_TPrintf("ネゴシエーション送信\n");
         (*seq)++;
       }
@@ -203,6 +213,10 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     }
     break;
   case 2: //最初にやり取りする必要があるデータがあればここで。
+    //自分プロフィールを自分の受信バッファにセット
+    Intrude_SetSendProfileBuffer(intcomm);  //送信バッファに現在のデータをセット
+    Intrude_SetProfile(intcomm, GFL_NET_SystemGetCurrentID(), &intcomm->send_profile);
+    IntrudeSend_Profile(intcomm);           //送信
     intcomm->comm_status = INTRUDE_COMM_STATUS_UPDATE;
     (*seq)++;
     break;
@@ -323,7 +337,6 @@ void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
   
   IntrudeField_ConnectMap(fieldWork, invalid_parent->gsys, intcomm);
   CommPlayer_Pop(intcomm->cps);
-  PALACE_SYS_SetArea(intcomm->palace, intcomm->invalid_netid);
 }
 
 //==================================================================

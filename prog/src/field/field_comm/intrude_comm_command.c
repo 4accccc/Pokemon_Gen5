@@ -22,6 +22,7 @@
 //==============================================================================
 static u8 * _RecvHugeBuffer(int netID, void* pWork, int size);
 static void _IntrudeRecv_Shutdown(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_MemberNum(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_ProfileReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_Profile(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_PlayerStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -39,6 +40,7 @@ static void _IntrudeRecv_BingoIntrusionParam(const int netID, const int size, co
 ///ユニオン受信コマンドテーブル   ※INTRUDE_CMD_???と並びを同じにしておくこと！！
 const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_Shutdown, NULL},               //INTRUDE_CMD_SHUTDOWN
+  {_IntrudeRecv_MemberNum, NULL},              //INTRUDE_CMD_MEMBER_NUM
   {_IntrudeRecv_ProfileReq, NULL},             //INTRUDE_CMD_PROFILE_REQ
   {_IntrudeRecv_Profile, NULL},                //INTRUDE_CMD_PROFILE
   {_IntrudeRecv_PlayerStatus, NULL},           //INTRUDE_CMD_PLAYER_STATUS
@@ -121,6 +123,48 @@ BOOL IntrudeSend_Shutdown(void)
 //==============================================================================
 //--------------------------------------------------------------
 /**
+ * @brief   コマンド受信：侵入参加人数
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_MemberNum(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const u8 *member_num = pData;
+  
+	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return;   //自分のデータは受け取らない
+  }
+  intcomm->member_num = *member_num;
+  OS_TPrintf("member_num受信 %d\n", *member_num);
+}
+
+//==================================================================
+/**
+ * データ送信：侵入参加人数 (親機専用命令)
+ *
+ * @param   intcomm		
+ * @param   member_num		参加人数
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_MemberNum(INTRUDE_COMM_SYS_PTR intcomm, u8 member_num)
+{
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
+    INTRUDE_CMD_MEMBER_NUM, sizeof(member_num), &member_num, TRUE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
  * @brief   コマンド受信：プロフィールを要求
  * @param   netID      送ってきたID
  * @param   size       パケットサイズ
@@ -168,20 +212,14 @@ static void _IntrudeRecv_Profile(const int netID, const int size, const void* pD
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   const INTRUDE_PROFILE *recv_profile = pData;
-  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
-  MYSTATUS *myst;
-  OCCUPY_INFO *occupy;
   
-  myst = GAMEDATA_GetMyStatusPlayer(gamedata, netID);
-  MyStatus_Copy(&recv_profile->mystatus, myst);
-
-  occupy = GAMEDATA_GetOccupyInfo(gamedata, netID);
-  GFL_STD_MemCopy(&recv_profile->occupy, occupy, sizeof(OCCUPY_INFO));
-  
-  _IntrudeRecv_PlayerStatus(netID, size, &recv_profile->status, pWork, pNetHandle);
-  
-  intcomm->recv_profile |= 1 << netID;
-  OS_TPrintf("プロフィール受信　net_id=%d, recv_bit=%d\n", netID, intcomm->recv_profile);
+  if(netID >= intcomm->member_num){
+    //管理している人数よりも大きいIDから来た物は受け取らない。
+    //先に管理人数を受信してからでないとマップの繋がりが拡大できない。よって表示位置も不明になる
+    OS_TPrintf("PROFILE RECV 管理人数よりも大きいIDの為、無視 net_id=%d, member_num=%d\n", netID, intcomm->member_num);
+    return;
+  }
+  Intrude_SetProfile(intcomm, netID, recv_profile);
 }
 
 //==================================================================
@@ -225,42 +263,12 @@ static void _IntrudeRecv_PlayerStatus(const int netID, const int size, const voi
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   const INTRUDE_STATUS *recv_data = pData;
-  INTRUDE_STATUS *target_status;
-  int mission_no;
   
-	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
-    return;   //自分のデータは受け取らない
+	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) //自分のデータは受け取らない
+	    || (intcomm->recv_profile & (1 << netID)) == 0){  //プロフィール未受信は受け取らない
+    return;   
   }
-  target_status = &intcomm->intrude_status[netID];
-  GFL_STD_MemCopy(recv_data, target_status, sizeof(INTRUDE_STATUS));
-
-  //プレイヤーステータスにデータセット　※game_commに持たせているのを変えるかも
-  if(netID == 0){
-    mission_no = target_status->mission_no;
-  }
-  else{
-    mission_no = GameCommStatus_GetPlayerStatus_MissionNo(intcomm->game_comm, 0);
-    //mission_no = GameCommStatus_GetPlayerStatus_MissionNo(game_comm, GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()));
-  }
-  GameCommStatus_SetPlayerStatus(intcomm->game_comm, netID, target_status->zone_id,
-    target_status->palace_area, target_status->zone_id);
-
-  {//ゾーン違いによるアクター表示・非表示設定
-    PLAYER_WORK *my_player = GAMEDATA_GetMyPlayerWork(GameCommSys_GetGameData(intcomm->game_comm));
-    ZONEID my_zone_id = PLAYERWORK_getZoneID( my_player );
-    
-    if(target_status->zone_id != my_zone_id){
-      target_status->player_pack.vanish = TRUE;   //違うゾーンにいるので非表示
-    }
-    else if(ZONEDATA_IsPalace(target_status->zone_id) == FALSE
-        && target_status->palace_area != intcomm->intrude_status_mine.palace_area){
-      //通常フィールドの同じゾーンに居ても、侵入先ROMが違うなら非表示
-      target_status->player_pack.vanish = TRUE;
-    }
-    else{
-      target_status->player_pack.vanish = FALSE;
-    }
-  }
+  Intrude_SetPlayerStatus(intcomm, netID, recv_data);
 }
 
 //==================================================================
@@ -318,7 +326,7 @@ static void _IntrudeRecv_Talk(const int netID, const int size, const void* pData
 BOOL IntrudeSend_Talk(int send_net_id)
 {
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
-    INTRUDE_CMD_TALK, 0, NULL, FALSE, FALSE, NULL);
+    INTRUDE_CMD_TALK, 0, NULL, FALSE, FALSE, FALSE);
 }
 
 //==============================================================================
@@ -354,7 +362,7 @@ static void _IntrudeRecv_TalkAnswer(const int netID, const int size, const void*
 BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRUDE_TALK_STATUS answer)
 {
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
-    INTRUDE_CMD_TALK_ANSWER, sizeof(INTRUDE_TALK_STATUS), &answer, FALSE, FALSE, NULL);
+    INTRUDE_CMD_TALK_ANSWER, sizeof(INTRUDE_TALK_STATUS), &answer, FALSE, FALSE, FALSE);
 }
 
 //==============================================================================
@@ -390,7 +398,7 @@ static void _IntrudeRecv_BingoIntrusion(const int netID, const int size, const v
 BOOL IntrudeSend_BingoIntrusion(int send_net_id)
 {
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
-    INTRUDE_CMD_BINGO_INTRUSION, 0, NULL, FALSE, FALSE, NULL);
+    INTRUDE_CMD_BINGO_INTRUSION, 0, NULL, FALSE, FALSE, FALSE);
 }
 
 //==============================================================================
@@ -431,7 +439,7 @@ BOOL IntrudeSend_BingoIntrusionAnswer(int send_net_id, BINGO_INTRUSION_ANSWER an
 {
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_BINGO_INTRUSION_ANSWER, sizeof(BINGO_INTRUSION_ANSWER), 
-    &answer, FALSE, FALSE, NULL);
+    &answer, FALSE, FALSE, FALSE);
 }
 
 //==============================================================================
@@ -467,7 +475,7 @@ static void _IntrudeRecv_ReqBingoIntrusionParam(const int netID, const int size,
 BOOL IntrudeSend_ReqBingoBattleIntrusionParam(int send_net_id)
 {
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
-    INTRUDE_CMD_REQ_BINGO_INTRUSION_PARAM, 0, NULL, FALSE, FALSE, NULL);
+    INTRUDE_CMD_REQ_BINGO_INTRUSION_PARAM, 0, NULL, FALSE, FALSE, FALSE);
 }
 
 //==============================================================================
@@ -505,6 +513,6 @@ BOOL IntrudeSend_BingoBattleIntrusionParam(BINGO_SYSTEM *bingo, int send_net_id)
 {
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_BINGO_INTRUSION_PARAM, sizeof(BINGO_INTRUSION_PARAM), &bingo->intrusion_param, 
-    FALSE, FALSE, NULL);
+    FALSE, FALSE, FALSE);
 }
 

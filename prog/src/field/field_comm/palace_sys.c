@@ -202,7 +202,7 @@ void PALACE_SYS_Update(PALACE_SYS_PTR palace, PLAYER_WORK *plwork, FIELD_PLAYER 
     GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
     MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(gdata, 0);
     
-    _WindowPrint(palace, DM_MSG_PALACE000 + palace->mission_no, myst);
+//    _WindowPrint(palace, DM_MSG_PALACE000 + palace->mission_no, myst);
     palace->print_mission_no = palace->mission_no;
   }
 }
@@ -434,7 +434,7 @@ BOOL PALACE_DEBUG_CreateNumberAct(PALACE_SYS_PTR palace, HEAPID heap_id, FIELDMA
   palace->wordset = WORDSET_Create( heap_id );
   palace->strbuf_expand = GFL_STR_CreateBuffer(40, heap_id);
   
-  _WindowSetup(palace, fieldWork);
+//  _WindowSetup(palace, fieldWork);
   
   return TRUE;
 }
@@ -457,7 +457,7 @@ void PALACE_DEBUG_DeleteNumberAct(PALACE_SYS_PTR palace)
   GFL_STR_DeleteBuffer(palace->strbuf_expand);
   WORDSET_Delete( palace->wordset );
   
-  _WindowDelete(palace);
+//  _WindowDelete(palace);
   
   BmpOam_ActorDel(palace->bmpact);
   BmpOam_Exit(palace->bmpoam_sys);

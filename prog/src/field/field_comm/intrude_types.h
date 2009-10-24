@@ -116,6 +116,7 @@ typedef struct _INTRUDE_COMM_SYS{
   
   u8 answer_talk_ng_bit;      ///<話しかけられたが、対応できない場合のNG返事を返す(bit管理)
   u8 connect_map_count;       ///<連結したマップの数
-  u8 padding[2];
+  u8 member_num;              ///<参加人数(親機から受信)
+  u8 member_send_req;         ///<TRUE:参加人数の送信を行う
 }INTRUDE_COMM_SYS;
 

@@ -12,10 +12,52 @@
 
 
 //==============================================================================
+//  定数定義
+//==============================================================================
+///パレスタウンではないゾーンだという事を示すID
+#define PALACE_TOWN_TBLNO_NULL    (0xff)
+
+///Intrude_CheckSameZoneID関数の戻り値
+typedef enum{
+  CHECKSAME_SAME,           ///<同じゾーンにいる
+  CHECKSAME_SAME_REVERSE,   ///<表裏のゾーンにいる
+  CHECKSAME_NOT,            ///<違うゾーンにいる
+}CHECKSAME;
+
+enum{
+  PALACE_TOWN_SIDE_FRONT,       ///<表フィールド
+  PALACE_TOWN_SIDE_REVERSE,     ///<裏フィールド
+};
+
+///PalaceTownDataのデータ数
+#define PALACE_TOWN_DATA_MAX    (8)
+
+//==============================================================================
+//  構造体定義
+//==============================================================================
+///パレスの街データ構造体
+typedef struct{
+  u16 front_zone_id;        ///<表フィールドのゾーンID
+  u16 reverse_zone_id;      ///<裏フィールドのゾーンID
+  u8 subscreen_x;           ///<サブスクリーンの街の位置X
+  u8 subscreen_y;           ///<サブスクリーンの街の位置Y
+  u8 padding[2];
+}PALACE_TOWN_DATA;
+
+///パレスの街データ、検索結果
+typedef struct{
+  u16 zone_id;
+  u8 front_reverse;         ///<表、裏、どちらにいるか(PALACE_TOWN_SIDE_???)
+  u8 tblno;
+}PALACE_TOWN_RESULT;
+
+//==============================================================================
 //  外部関数宣言
 //==============================================================================
 extern void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm);
 extern FIELD_SUBSCREEN_MODE Intrude_SUBSCREEN_Watch(GAME_COMM_SYS_PTR game_comm, FIELD_SUBSCREEN_WORK *subscreen);
+extern BOOL Intrude_SearchPalaceTown(ZONEID zone_id, PALACE_TOWN_RESULT *result);
+extern CHECKSAME Intrude_CheckSameZoneID(const PALACE_TOWN_RESULT *result_a, const PALACE_TOWN_RESULT *result_b);
 
 //--------------------------------------------------------------
 //  ワークアクセス関数
@@ -23,7 +65,17 @@ extern FIELD_SUBSCREEN_MODE Intrude_SUBSCREEN_Watch(GAME_COMM_SYS_PTR game_comm,
 extern void Intrude_SetActionStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_ACTION action);
 extern void Intrude_SetSendProfileBuffer(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL Intrude_SetSendStatus(INTRUDE_COMM_SYS_PTR intcomm);
+extern void Intrude_SetProfile(
+  INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_PROFILE *profile);
+extern void Intrude_SetPlayerStatus(
+  INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_STATUS *sta);
 extern void Intrude_InitTalkWork(INTRUDE_COMM_SYS_PTR intcomm, int talk_netid);
 extern void Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id);
 extern void Intrude_SetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int net_id, INTRUDE_TALK_STATUS talk_status);
 extern INTRUDE_TALK_STATUS Intrude_GetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm);
+
+//==============================================================================
+//  データ
+//==============================================================================
+extern const PALACE_TOWN_DATA PalaceTownData[];
+

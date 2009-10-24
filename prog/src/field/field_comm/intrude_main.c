@@ -22,6 +22,9 @@
 #include "palace_sys.h"
 #include "intrude_main.h"
 #include "bingo_system.h"
+#include "fieldmap/zone_id.h"
+#include "field/zonedata.h"
+#include "intrude_field.h"
 
 
 //==============================================================================
@@ -35,7 +38,24 @@
 //==============================================================================
 static void Intrude_CheckProfileReq(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckTalkAnswerNG(INTRUDE_COMM_SYS_PTR intcomm);
+static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, const INTRUDE_STATUS *mine, INTRUDE_STATUS *target);
+static int Intrude_GetPalaceOffsetNo(const INTRUDE_COMM_SYS_PTR intcomm, int palace_area);
 
+//==============================================================================
+//  データ
+//==============================================================================
+///街の座標データ   ※テーブル数の増減をしたら必ずPALACE_TOWN_DATA_MAXの数も変えること！
+const PALACE_TOWN_DATA PalaceTownData[] = {
+  {ZONE_ID_C04, ZONE_ID_PLC04, 7*8, 5*8,},
+  {ZONE_ID_C05, ZONE_ID_PLC05, 0x10*8, 5*8},
+  {ZONE_ID_C06, ZONE_ID_PLC06, 0x19*8, 5*8},
+  {ZONE_ID_C07, ZONE_ID_PLC07, 2*8, 0xc*8},
+  {ZONE_ID_C08, ZONE_ID_PLC08, 0x1e*8, 0xc*8},
+  {ZONE_ID_T03, ZONE_ID_PLT03, 7*8, 0x13*8},
+  {ZONE_ID_T04, ZONE_ID_PLT04, 0x10*8, 0x13*8},
+  {ZONE_ID_C02, ZONE_ID_PLC10, 0x19*8, 0x13*8}, //※check C10が無いのでとりあえずC02
+};
+SDK_COMPILER_ASSERT(NELEMS(PalaceTownData) == PALACE_TOWN_DATA_MAX);
 
 
 //==============================================================================
@@ -52,6 +72,21 @@ static void Intrude_CheckTalkAnswerNG(INTRUDE_COMM_SYS_PTR intcomm);
 //==================================================================
 void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
 {
+  //参加人数が変わっているなら人数を送信(親機専用)
+  if(GFL_NET_IsParentMachine() == TRUE){
+    int now_member = GFL_NET_GetConnectNum();
+    if(now_member > intcomm->member_num){
+      intcomm->member_num = now_member;
+      intcomm->member_send_req = TRUE;
+    }
+  }
+  if(intcomm->member_send_req == TRUE){
+    if(IntrudeSend_MemberNum(intcomm, intcomm->member_num) == TRUE){
+      intcomm->member_send_req = FALSE;
+    }
+  }
+
+  
   //プロフィール要求リクエストを受けているなら送信
   if(intcomm->profile_req == TRUE){
     Intrude_SetSendProfileBuffer(intcomm);  //送信バッファに現在のデータをセット
@@ -82,7 +117,7 @@ static void Intrude_CheckProfileReq(INTRUDE_COMM_SYS_PTR intcomm)
     return;
   }
   
-  for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+  for(net_id = 0; net_id < intcomm->member_num; net_id++){
     if(GFL_NET_IsConnectMember(net_id) == TRUE 
         && (intcomm->recv_profile & (1 << net_id)) == 0){
       IntrudeSend_ProfileReq();
@@ -165,6 +200,209 @@ void Intrude_SetSendProfileBuffer(INTRUDE_COMM_SYS_PTR intcomm)
 
 //==================================================================
 /**
+ * プロフィールデータを受信バッファにセット
+ *
+ * @param   intcomm		
+ * @param   net_id		
+ * @param   profile		
+ */
+//==================================================================
+void Intrude_SetProfile(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_PROFILE *profile)
+{
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  MYSTATUS *myst;
+  OCCUPY_INFO *occupy;
+  
+  myst = GAMEDATA_GetMyStatusPlayer(gamedata, net_id);
+  MyStatus_Copy(&profile->mystatus, myst);
+
+  occupy = GAMEDATA_GetOccupyInfo(gamedata, net_id);
+  GFL_STD_MemCopy(&profile->occupy, occupy, sizeof(OCCUPY_INFO));
+  
+  Intrude_SetPlayerStatus(intcomm, net_id, &profile->status);
+  
+  intcomm->recv_profile |= 1 << net_id;
+  OS_TPrintf("プロフィール受信　net_id=%d, recv_bit=%d\n", net_id, intcomm->recv_profile);
+}
+
+//==================================================================
+/**
+ * ステータスデータを受信バッファにセット
+ *
+ * @param   intcomm		
+ * @param   net_id		
+ * @param   sta		
+ */
+//==================================================================
+void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_STATUS *sta)
+{
+  INTRUDE_STATUS *target_status;
+  int mission_no;
+  
+  target_status = &intcomm->intrude_status[net_id];
+  GFL_STD_MemCopy(sta, target_status, sizeof(INTRUDE_STATUS));
+
+  //プレイヤーステータスにデータセット　※game_commに持たせているのを変えるかも
+  if(net_id == 0){
+    mission_no = target_status->mission_no;
+  }
+  else{
+    mission_no = GameCommStatus_GetPlayerStatus_MissionNo(intcomm->game_comm, 0);
+    //mission_no = GameCommStatus_GetPlayerStatus_MissionNo(game_comm, GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()));
+  }
+  GameCommStatus_SetPlayerStatus(intcomm->game_comm, net_id, target_status->zone_id,
+    target_status->palace_area, target_status->zone_id);
+
+  //座標変換
+  if(net_id != GFL_NET_SystemGetCurrentID()){
+    Intrude_ConvertPlayerPos(intcomm, &intcomm->intrude_status_mine, target_status);
+  }
+
+#if 0 //違うゾーンでも表示するように変わった 2009.10.21(水)
+  {//ゾーン違いによるアクター表示・非表示設定
+    PLAYER_WORK *my_player = GAMEDATA_GetMyPlayerWork(GameCommSys_GetGameData(intcomm->game_comm));
+    ZONEID my_zone_id = PLAYERWORK_getZoneID( my_player );
+    
+    if(target_status->zone_id != my_zone_id){
+      target_status->player_pack.vanish = TRUE;   //違うゾーンにいるので非表示
+    }
+    else if(ZONEDATA_IsPalace(target_status->zone_id) == FALSE
+        && target_status->palace_area != intcomm->intrude_status_mine.palace_area){
+      //通常フィールドの同じゾーンに居ても、侵入先ROMが違うなら非表示
+      target_status->player_pack.vanish = TRUE;
+    }
+    else{
+      target_status->player_pack.vanish = FALSE;
+    }
+  }
+#endif
+}
+
+//==================================================================
+/**
+ * ゾーンIDに一致する侵入タウンを検索する
+ *
+ * @param   zone_id		サーチするゾーンID
+ * @param   result		結果代入先
+ *
+ * @retval  BOOL		TRUE:侵入タウンがあった。　FALSE:無かった
+ */
+//==================================================================
+BOOL Intrude_SearchPalaceTown(ZONEID zone_id, PALACE_TOWN_RESULT *result)
+{
+  int i;
+  
+  result->zone_id = zone_id;
+  for(i = 0; i < PALACE_TOWN_DATA_MAX; i++){
+    if(PalaceTownData[i].front_zone_id == zone_id){
+      result->front_reverse = PALACE_TOWN_SIDE_FRONT;
+    }
+    else if(PalaceTownData[i].reverse_zone_id == zone_id){
+      result->front_reverse = PALACE_TOWN_SIDE_REVERSE;
+    }
+    else{
+      continue;
+    }
+    result->tblno = i;
+    return TRUE;
+  }
+  result->tblno = PALACE_TOWN_TBLNO_NULL;
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * 同じゾーンにいるか判定(表裏ゾーン判定も行う)
+ *
+ * @param   result_a		
+ * @param   result_b		
+ *
+ * @retval  CHECKSAME		
+ */
+//==================================================================
+CHECKSAME Intrude_CheckSameZoneID(const PALACE_TOWN_RESULT *result_a, const PALACE_TOWN_RESULT *result_b)
+{
+  int town_ret_a, town_ret_b;
+  
+  if(result_a->zone_id == result_b->zone_id){
+    return CHECKSAME_SAME;
+  }
+  
+  if(result_a->front_reverse != result_b->front_reverse){
+    if(result_a->tblno == result_b->tblno){
+      return CHECKSAME_SAME_REVERSE;
+    }
+  }
+  return CHECKSAME_NOT;
+}
+
+//--------------------------------------------------------------
+/**
+ * 指定パレスエリアが左端から何個目のパレスなのかを取得する
+ *
+ * @param   intcomm		
+ * @param   palace_area		パレスエリア
+ *
+ * @retval  int		左から何個目のパレスか
+ */
+//--------------------------------------------------------------
+static int Intrude_GetPalaceOffsetNo(const INTRUDE_COMM_SYS_PTR intcomm, int palace_area)
+{
+  int start_area, offset_area;
+  
+  if(palace_area >= intcomm->member_num){
+    GF_ASSERT_MSG(0, "palace_area = %d, member_num = %d\n", palace_area, intcomm->member_num);
+    return 0;
+  }
+  
+  start_area = GAMEDATA_GetIntrudeMyID(GameCommSys_GetGameData(intcomm->game_comm));
+  offset_area = palace_area - start_area;
+  if(offset_area < 0){
+    offset_area += intcomm->member_num;
+  }
+  return offset_area;
+}
+
+//==================================================================
+/**
+ * 通信プレイヤーの座標をこちらの画面に合わせて変換する
+ *
+ * @param   mine		  
+ * @param   target		
+ */
+//==================================================================
+static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, const INTRUDE_STATUS *mine, INTRUDE_STATUS *target)
+{
+  PALACE_TOWN_RESULT result_a, result_b;
+  BOOL search_a, search_b;
+  CHECKSAME ret;
+  
+  Intrude_SearchPalaceTown(mine->zone_id, &result_a);
+  Intrude_SearchPalaceTown(target->zone_id, &result_b);
+  
+  ret = Intrude_CheckSameZoneID(&result_a, &result_b);
+  switch(ret){
+  case CHECKSAME_SAME:
+    if(ZONEDATA_IsPalace(mine->zone_id) == FALSE){
+      return; //同じゾーンにいるので変換の必要無し
+    }
+    //双方ともパレスにいるのでパレスエリアに合わせた座標変換
+    {
+      fx32 offset_x, map_len;
+      map_len = PALACE_MAP_LEN;
+      offset_x = target->player_pack.pos.x % map_len;
+      target->player_pack.pos.x 
+        = Intrude_GetPalaceOffsetNo(intcomm, target->palace_area) * map_len + offset_x;
+    }
+    break;
+  case CHECKSAME_SAME_REVERSE:  //表裏ゾーンにいるのでこのままでよい
+  case CHECKSAME_NOT:
+    return; //違うゾーンにいるのでこのままでよい
+  }
+}
+
+//==================================================================
+/**
  * 侵入ステータス送信バッファを更新
  *
  * @param   intcomm		
@@ -179,17 +417,11 @@ BOOL Intrude_SetSendStatus(INTRUDE_COMM_SYS_PTR intcomm)
   PLAYER_WORK *plWork = GAMEDATA_GetMyPlayerWork( gamedata );
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
   INTRUDE_STATUS *ist = &intcomm->intrude_status_mine;
-  int palace_area, mission_no;
+  int mission_no;
   
   send_req = CommPlayer_Mine_DataUpdate(intcomm->cps, &ist->player_pack);
   if(ist->zone_id != zone_id){
     ist->zone_id = zone_id;
-    send_req = TRUE;
-  }
-  
-  palace_area = PALACE_SYS_GetArea(intcomm->palace);
-  if(ist->palace_area != palace_area){
-    ist->palace_area = palace_area;
     send_req = TRUE;
   }
   
