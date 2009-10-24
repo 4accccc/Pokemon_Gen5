@@ -12,9 +12,9 @@
 #ifndef ZONE_T01_EVC_H
 #define ZONE_T01_EVC_H
 
-#define T01_BIGMAN                         0
+#define T01_MAN3_01                        0
 #define T01_WOMAN2_01                      1
-#define T01_BABYGIRL1                      2
+#define T01_BABYGIRL1_01                   2
 #define T01_SUPPORT_01                     3
 #define T01_RIVAL_01                       4
 

@@ -17,39 +17,24 @@
 //               スクリプトテーブル
 //　スクリプトデータとなるラベルを指定します
 //--------------------------------------------------------------
-_EVENT_DATA   ev_t01_talkobj_bigman
-_EVENT_DATA   ev_t01_talkobj_woman2_01
+_EVENT_DATA   ev_t01_man3_01
+_EVENT_DATA   ev_t01_woman2_01
 _EVENT_DATA   ev_t01_rival_01
-_EVENT_DATA   ev_t01_talkobj_babygirl1
+_EVENT_DATA   ev_t01_babygirl1_01
 _EVENT_DATA   ev_pos_t01_stopper_01
 _EVENT_DATA   ev_t01_support_01
+_EVENT_DATA   ev_bg_t01_board_01
+_EVENT_DATA   ev_bg_t01_board_02
+_EVENT_DATA   ev_bg_t01_board_03
+_EVENT_DATA   ev_bg_t01_board_04
+_EVENT_DATA   ev_bg_t01_board_05
 _EVENT_DATA_END //データ終端を指定しています。
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/*
- * 注意！(06.02.09現在)
- * ev_t01_SCRIPT_WORKを確保していないので、
- * SCWK_ANSWERなどのワークは使用することが出来ない！
- * LOCALWORK0などを使用するようにする！
- *
- * 共通スクリプトについては現状使用不可！
- * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
- * あまりつかわないかも？
- */
-/**************************************************************/
-//ev_t01_t01_flag_change:
-//  _END
-
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-
-/**************************************************************/
 /*  T01 BIGMANの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START	ev_t01_talkobj_bigman
+EVENT_START	ev_t01_man3_01
 	//科学のチカラってスゲー
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01_bigman_01 )
 EVENT_END
@@ -58,27 +43,27 @@ EVENT_END
 /*					女性：漢字/ひらがな切り替え				*/
 /************************************************************/
 //【仮】漢字・ひらがなチェックのコマンドが未実装
-EVENT_START   ev_t01_talkobj_woman2_01
+EVENT_START   ev_t01_woman2_01
 
 	_TALK_OBJ_START()
 
 	//漢字よりも平仮名が好き？
 	_BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman2_01 )
 	_YES_NO_WIN( SCWK_ANSWER )
-//	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_CLOSE()
 
 	IF $SCWK_ANSWER == 0 THEN
 		//はいの処理
 
 		_BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman2_02 )
-		_AB_KEYWAIT()
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		_CHG_LANGID()		//漢字ひらがな切り替え
 	ELSE
 		//いいえの処理
 
 		_BALLOONWIN_TALKOBJ_OPEN( msg_t01_woman2_03 )
-		_AB_KEYWAIT()
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	ENDIF
 
@@ -157,13 +142,9 @@ _ANIME_LABEL	anm_labo_player_move_01
 /************************************************************/
 /*						男の子								*/
 /************************************************************/
-EVENT_START   ev_t01_talkobj_babygirl1
-	_TALK_OBJ_START()
-
+EVENT_START   ev_t01_babygirl1_01
 	//たくさんのポケモンがいるんだって
-	_BALLOONWIN_TALKOBJ_OPEN( msg_t01_babygirl1_01 )
-	_AB_KEYWAIT()
- 	_BALLOONWIN_CLOSE()
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01_babygirl1_01 )
 EVENT_END
 
 
@@ -225,6 +206,40 @@ _ANIME_LABEL	anm_stopper_rival_goaway_01
 EVENT_START ev_t01_support_01
 	//まってたよ！
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01_white_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							看板ズ							*/
+/************************************************************/
+//ここはカノコタウン
+EVENT_START ev_bg_t01_board_01
+	_EASY_MSG( msg_t01_sign1_01 )
+EVENT_END
+
+
+//（主人公）の家
+EVENT_START ev_bg_t01_board_02
+	_PLAYER_NAME( 0 )
+	_EASY_MSG( msg_t01_sign2_01 )
+EVENT_END
+
+
+//ライバルの家
+EVENT_START ev_bg_t01_board_03
+	_EASY_MSG( msg_t01_sign3_01 )
+EVENT_END
+
+
+//サポートの家
+EVENT_START ev_bg_t01_board_04
+	_EASY_MSG( msg_t01_sign4_01 )
+EVENT_END
+
+
+//アララギ　ポケモン研究所
+EVENT_START ev_bg_t01_board_05
+	_EASY_MSG( msg_t01_sign5_01 )
 EVENT_END
 
 

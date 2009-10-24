@@ -19,20 +19,6 @@ _EVENT_DATA		ev_t01r0401_scene_change_01		//図鑑入手イベント
 _EVENT_DATA		ev_t01r0401_hakase2_01
 _EVENT_DATA_END
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/*
- * 注意！(06.02.09現在)
- * EV_SCRIPT_WORKを確保していないので、
- * SCWK_ANSWERなどのワークは使用することが出来ない！
- * LOCALWORK0などを使用するようにする！
- *
- * 共通スクリプトについては現状使用不可！
- * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
- * あまりつかわないかも？
- */
-/**************************************************************/
-
 
 /************************************************************/
 /*					SCENE_CHANGE_LABEL						*/
@@ -50,6 +36,10 @@ EVENT_START   ev_t01r0401_scene_change_01
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_01,T01R0401_HAKASE2_01 )
 	_BALLOONWIN_CLOSE()
 
+
+/*
+
+
 	//アララギ博士？どうしたんですか？
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_black_02,T01R0401_RIVAL_01 ) //ライバル
 	_BALLOONWIN_CLOSE()
@@ -62,9 +52,24 @@ EVENT_START   ev_t01r0401_scene_change_01
 	_OBJ_ANIME( T01R0401_HAKASE2_01,anm_zukan_doc_look_01 )
 	_OBJ_ANIME_WAIT()
 
-	//【仮】ニックネーム処理が未実装
+	//博士：もう勝負をしたんだね　ニックネームをつける？
+	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_03,T01R0401_HAKASE2_01 ) //博士
+	_YES_NO_WIN( SCWK_ANSWER )
+	_BALLOONWIN_CLOSE()
 
+	//はい/いいえで分岐
+	IF $SCWK_ANSWER == SCR_YES THEN
+		//はいの処理
 
+		//ニックネーム入力処理
+		_CALL		ev_name_input
+	ELSE
+		//いいえの処理
+
+		//ニックネームをつけないんだね
+		_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_06 , T01R0401_HAKASE2_01 )
+		_BALLOONWIN_CLOSE()
+	ENDIF
 
 	//ポケモンを進呈した理由だが…
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_07,T01R0401_HAKASE2_01 )  //博士
@@ -82,6 +87,10 @@ EVENT_START   ev_t01r0401_scene_change_01
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_08,T01R0401_HAKASE2_01 )  //博士
 	_BALLOONWIN_CLOSE()
 
+
+*/
+
+
 	//【仮】演出予定：その場で一回転など
 
 	//ポケモン図鑑とは！
@@ -92,30 +101,40 @@ EVENT_START   ev_t01r0401_scene_change_01
 	//冒険の旅に出かけるかい？
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
 	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_10,T01R0401_HAKASE2_01 )  //博士
-
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
 
-	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0401_hakase2_yes
-	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0401_hakase2_no
+	//はい/いいえで分岐
+	IF $SCWK_ANSWER == SCR_YES THEN
+		//はいの処理
+		
+		//よし！最高の返事だ！
+		_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_12,T01R0401_HAKASE2_01 ) 
+		_BALLOONWIN_CLOSE()
+		
+	ELSE
+		//いいえの処理
+		
+		//再質問にyesと答えるまでループ
+		DEFINE_LOCAL	ans_yes
+		$ans_yes = SCR_NO
 
-t01r0401_hakase2_no:
-	//そんな返事は聞きたくない！
-	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_11,T01R0401_HAKASE2_01 ) 
-	_AB_KEYWAIT()
+		WHILE $ans_yes == SCR_NO
+			//そんな言葉は聞きたくない　旅にでかけるよな？
+			_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_11 , T01R0401_HAKASE2_01 )
+			_YES_NO_WIN( ans_yes )
+			_BALLOONWIN_CLOSE()
+			
+			IF $ans_yes == SCR_YES THEN
+				//はいを選択なら
+				//いい返事だ！
+				_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_12 , T01R0401_HAKASE2_01 )
+				_BALLOONWIN_CLOSE()
+			ENDIF
 
-	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
-
-	//「はい」を選択するまで同じ質問を繰り返す
-	_IFVAL_JUMP SCWK_ANSWER,EQ,0,t01r0401_hakase2_yes
-	_IFVAL_JUMP SCWK_ANSWER,EQ,1,t01r0401_hakase2_no
-
-t01r0401_hakase2_yes:
-	//よし！最高の返事だ！
-	_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_12,T01R0401_HAKASE2_01 ) 
-	_BALLOONWIN_CLOSE()
+		ENDWHILE
+	
+	ENDIF
 
 //********************ポケモン図鑑入手処理*******************//
 	//ポケモン図鑑入手フラグをセット
@@ -191,11 +210,46 @@ t01r0401_hakase2_yes:
 EVENT_END
 
 
+//ニックネーム入力処理
+ev_name_input:
+	//【保留】繰り返し処理を入れるか保留
+
+	//ローカル変数を定義
+	{
+	DEFINE_LOCAL	NAME_RET
+
+
+	//名前入力画面呼び出し（インデックスは１匹しかいないはずなので固定値）
+	_PARTY_POKE_NAME_INPUT( NAME_RET, 1 )
+
+	//名前入力の有無で分岐
+	IF $NAME_RET == TRUE THEN
+		//入力アリ
+		
+		//～～と言うのか
+		_TEMOTI_NICK_NAME( 0, 1 )	//ニックネーム取得
+		_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_05 , T01R0401_HAKASE2_01 )
+		_BALLOONWIN_CLOSE()
+	
+	ELSE
+		//入力無し（キャンセル操作で戻ってきた）
+		
+		//ニックネームを　つけないんだね
+		_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_05 , T01R0401_HAKASE2_01 )
+		_BALLOONWIN_CLOSE()
+		
+	ENDIF
+
+	}
+	_RET
+
+
+
 //--------------------------------------------------------------------
 //３人：博士の手前まで移動
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_walk_01
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 //友達２人のアニメ
