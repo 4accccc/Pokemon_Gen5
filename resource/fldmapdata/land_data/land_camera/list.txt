@@ -192,4 +192,3 @@
 "ncastle06.bin"
 "ncastle07.bin"
 "ncastle08.bin"
-"palacefield.bin"
