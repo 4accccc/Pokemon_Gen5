@@ -65,6 +65,7 @@ typedef enum
   _TIMING_TRADEDEMO_START,
   _TIMING_SAVEST,
   _TIMING_SAVELAST,
+  _TIMING_SAVEEND,
  } NET_TIMING_ENUM;
 
 #define BOX_VERTICAL_NUM (5)
@@ -468,6 +469,7 @@ struct _IRC_POKEMON_TRADE{
   BOOL bParent;
   BOOL bTouchReset;
 
+  short speed;   ///< スクロール慣性速度
   short BoxScrollNum;   ///< ドット単位で位置を管理  8*20がBOX 8*12がてもち BOX_MAX_TRAY => 2880+96=2976
   short FriendBoxScrollNum;   ///< 上記の相手側の値
 

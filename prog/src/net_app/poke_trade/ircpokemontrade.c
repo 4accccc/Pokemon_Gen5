@@ -89,6 +89,7 @@ static void _endCancelState(IRC_POKEMON_TRADE* pWork);
 static void _recvLookAtPoke(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvEggAndBattle(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _cancelPokemonSendDataNetwork(IRC_POKEMON_TRADE* pWork);
+static void _scrollMainFunc(IRC_POKEMON_TRADE* pWork,BOOL bSE, BOOL bNetSend);
 
 
 
@@ -1950,16 +1951,43 @@ static void _padUDLRFunc(IRC_POKEMON_TRADE* pWork)
   if(bChange){
     pWork->bgscrollRenew = TRUE;
     PMSND_PlaySystemSE(POKETRADESE_CUR);
-
-    IRC_POKETRADE_TrayDisp(pWork);
-    IRC_POKETRADE_SendScreenBoxNameChar(pWork);
-    IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
-
-    
-    //IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
+    _scrollMainFunc(pWork,FALSE,TRUE);
   }
 
   
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief スクロールする実行関数
+ * @param IRC_POKEMON_TRADE* ワーク 
+ * @param bSE      SEならすかどうか
+ * @param bNetSend 通信位置を相手に送るかどうか
+ */
+//--------------------------------------------------------------------------------------------
+
+static void _scrollMainFunc(IRC_POKEMON_TRADE* pWork,BOOL bSE, BOOL bNetSend)
+{
+
+  if(0 > pWork->BoxScrollNum){
+    pWork->BoxScrollNum+=TOTAL_DOT_MAX;
+  }
+  if(TOTAL_DOT_MAX <= pWork->BoxScrollNum){
+    pWork->BoxScrollNum-=TOTAL_DOT_MAX;
+  }
+
+  IRC_POKETRADE_TrayDisp(pWork);
+  IRC_POKETRADE_SendScreenBoxNameChar(pWork);
+  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
+  
+  if(!PMSND_CheckPlaySE()){
+    PMSND_PlaySystemSE(POKETRADESE_RIBBON);
+  }
+  
+  if(GFL_NET_IsInit()){
+    // 特に失敗してもかまわない通信 相手に位置を知らせているだけ
+    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SCROLLBAR,4,&pWork->BoxScrollNum);
+  }
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1995,9 +2023,9 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
 
   pWork->oldLine++;
   pWork->bgscrollRenew = TRUE;
-  IRC_POKETRADE_TrayDisp(pWork);
-  IRC_POKETRADE_SendScreenBoxNameChar(pWork);
-  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
+
+  _scrollMainFunc(pWork,FALSE,FALSE);
+  
   _userNetCommandClear(pWork);
   pWork->bPokemonSet[0]=FALSE;
   pWork->bPokemonSet[1]=FALSE;
@@ -2005,6 +2033,9 @@ static void _touchState(IRC_POKEMON_TRADE* pWork)
   _CHANGE_STATE(pWork,_touchStateCommon);
 
 }
+
+
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2025,10 +2056,15 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
   if(GFL_UI_KEY_GetTrg()== PAD_BUTTON_DECIDE){
     pWork->underSelectBoxno = LINE2TRAY(pWork->MainObjCursorLine);
     pWork->underSelectIndex = LINE2POKEINDEX(pWork->MainObjCursorLine,pWork->MainObjCursorIndex);
-//    IRC_POKETRADE_SetCursorXY(pWork);
+    if(pWork->pCatchCLWK){
+      //今のつかんでる物を元の位置に戻す
+      GFL_CLACT_WK_SetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
+    }
+    //つかみ状態
+    pWork->pCatchCLWK = pWork->pokeIcon[pWork->MainObjCursorLine][pWork->MainObjCursorIndex];
+    GFL_CLACT_WK_GetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
     bDecided=TRUE;
   }
-
   if(IsTouchCLACTPosition(pWork)){
     bDecided=TRUE;
   }
@@ -2041,6 +2077,8 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
       return;
     }
     else{
+      GFL_CLACT_WK_SetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
+      pWork->pCatchCLWK=NULL;
       pWork->underSelectBoxno = -1;
       pWork->underSelectIndex = -1;
     }
@@ -2053,25 +2091,9 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
     if((x >=  64) && ((192) > x)){
       if((y >=  152+12) && ((176+12) > y)){
         if(pWork->touchON){
-          pWork->BoxScrollNum -= (x - pWork->x)*2;
-          if(0 > pWork->BoxScrollNum){
-            pWork->BoxScrollNum+=TOTAL_DOT_MAX;
-          }
-          if(TOTAL_DOT_MAX <= pWork->BoxScrollNum){
-            pWork->BoxScrollNum-=TOTAL_DOT_MAX;
-          }
-          IRC_POKETRADE_TrayDisp(pWork);
-          IRC_POKETRADE_SendScreenBoxNameChar(pWork);
-          IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
-
-          if(!PMSND_CheckPlaySE()){
-            PMSND_PlaySystemSE(POKETRADESE_RIBBON);
-          }
-          
-          if(GFL_NET_IsInit()){
-            // 特に失敗してもかまわない通信 相手に位置を知らせているだけ
-            GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SCROLLBAR,4,&pWork->BoxScrollNum);
-          }
+          pWork->speed = (x - pWork->x)*2;
+          pWork->BoxScrollNum -= pWork->speed;
+          _scrollMainFunc(pWork,TRUE,TRUE);
         }
       }
     }
@@ -2080,6 +2102,20 @@ static void _touchStateCommon(IRC_POKEMON_TRADE* pWork)
     pWork->touchON = TRUE;
   }
   else{
+    if(pWork->speed!=0){
+      int k=2;
+      while(k && pWork->speed){
+        if(pWork->speed < 0){
+          pWork->speed++;
+        }
+        if(pWork->speed > 0){
+          pWork->speed--;
+        }
+        k--;
+      }
+      pWork->BoxScrollNum -= pWork->speed;
+      _scrollMainFunc(pWork,TRUE,TRUE);
+    }
     pWork->touchON = FALSE;
   }
 
@@ -2210,11 +2246,9 @@ static void _dispInit(IRC_POKEMON_TRADE* pWork)
   IRC_POKETRADE_GraphicInitMainDisp(pWork);
 
 
-#if 1
   pWork->mcssSys = MCSS_Init( 2 , pWork->heapID );
   MCSS_SetTextureTransAdrs( pWork->mcssSys , 0x30000 );
   MCSS_SetOrthoMode( pWork->mcssSys );
-#endif
 
 
   GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
@@ -2333,7 +2367,6 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
       pWork->pMyParty = GAMEDATA_GetMyPokemon(pGameData);
       pWork->pMailBlock = SaveData_GetMailBlock(GAMEDATA_GetSaveControlWork(pGameData));
       DEBUG_MyPokeAdd(pWork->pMyParty, pWork->pMy, pWork->heapID);
-
     }
 #if PM_DEBUG
     else{

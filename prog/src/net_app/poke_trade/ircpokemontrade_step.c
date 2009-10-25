@@ -63,6 +63,7 @@ static void _changeDemo_ModelTrade23(IRC_POKEMON_TRADE* pWork);
 static void _changeDemo_ModelTrade24(IRC_POKEMON_TRADE* pWork);
 static void _changeDemo_ModelTrade25(IRC_POKEMON_TRADE* pWork);
 static void _changeDemo_ModelTrade30(IRC_POKEMON_TRADE* pWork);
+static void _changeDemo_ModelTrade26(IRC_POKEMON_TRADE* pWork);
 static void _changeTimingSaveStart(IRC_POKEMON_TRADE* pWork);
 static void _changeTimingSaveStart2(IRC_POKEMON_TRADE* pWork);
 static void _changeTimingSaveStart3(IRC_POKEMON_TRADE* pWork);
@@ -713,6 +714,8 @@ static void _changeDemo_ModelTrade23(IRC_POKEMON_TRADE* pWork)
   IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
   IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
 
+  //@todo i‰»ƒfƒ‚‚É‚Æ‚Ô
+
 
   {
     int id = 1-GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
@@ -815,6 +818,14 @@ static void _changeTimingSaveStart5(IRC_POKEMON_TRADE* pWork)
 static void _changeDemo_ModelTrade25(IRC_POKEMON_TRADE* pWork)
 {
   if(GAMEDATA_SaveAsyncMain(pWork->pGameData) == SAVE_RESULT_OK){
+    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVEEND);
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade26);
+  }
+}
+
+static void _changeDemo_ModelTrade26(IRC_POKEMON_TRADE* pWork)
+{
+  if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVEEND)){
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade30);
   }
 }
