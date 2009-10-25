@@ -143,11 +143,13 @@ GMEVENT * EVENT_TrainerBattle(
   BATTLE_EVENT_WORK * bew;
   BATTLE_SETUP_PARAM* bp;
 
+#if 0
   {
     POKEPARTY * myparty = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys));
     POKEMON_PARAM * pp = PokeParty_GetMemberPointer( myparty, 0 );
     PP_Put( pp, ID_PARA_hp, 1 );
   }
+#endif
   event = GMEVENT_Create(
       gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
 
@@ -216,6 +218,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     (*seq)++;
     break;
   case 3:
+    //•ßŠl‚µ‚È‚¢‚Æ–â‘è‚ª‹N‚«‚é‚½‚ßAC³
 #if 0
     bew->btlret_param.btlResult = bew->battle_param;
     bew->btlret_param.gameData  = gamedata;
