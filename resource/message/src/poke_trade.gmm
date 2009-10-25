@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2009-10-24T12:05:49"/>
+	<create user="ohno" host="W00141" date="2009-10-25T11:32:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="173" right="946" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="14" top="166" right="712" bottom="789" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="523"/>
@@ -894,6 +894,39 @@
 	<row id="POKETRADE_STR2_07">
 		<language name="JPN" width="256">たまご</language>
 		<language name="JPN_KANJI" width="256">たまご</language>
+	</row>
+
+	<row id="POKETRADE_STR2_08">
+		<language name="JPN" width="256">ポケモンが　もっている　メールを
+パソコンに　てんそう　しますか？</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　もっている　メールを
+パソコンに　てんそう　しますか？</language>
+	</row>
+
+	<row id="POKETRADE_STR2_09">
+		<language name="JPN" width="256">メールを　すてますが
+よろしい　ですか？</language>
+		<language name="JPN_KANJI" width="256">メールを　すてますが
+よろしい　ですか？</language>
+	</row>
+
+	<row id="POKETRADE_STR2_10">
+		<language name="JPN" width="256">メールボックスが　いっぱいです
+せいりしますか？</language>
+		<language name="JPN_KANJI" width="256">メールボックスが　いっぱいです
+せいりしますか？</language>
+	</row>
+
+	<row id="POKETRADE_STR2_11">
+		<language name="JPN" width="256">メールを　すてました</language>
+		<language name="JPN_KANJI" width="256">メールを　すてました</language>
+	</row>
+
+	<row id="POKETRADE_STR2_12">
+		<language name="JPN" width="256">とった　メールを　パソコンに
+てんそう　しました</language>
+		<language name="JPN_KANJI" width="256">とった　メールを　パソコンに
+てんそう　しました</language>
 	</row>
 
 	<flowchart-group-list>
