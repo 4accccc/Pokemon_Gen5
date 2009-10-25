@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-10-25T18:15:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="268"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,116 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d06r0201_white_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・表示後、1マークを出して
+　続けてmsg_d06r0201_white_02
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">？？？？？『でんきを　おびた　いしが
+まわりの　かべと　はんぱつしあって[BE:00:ページ切り替え（行送り）]
+ちゅうに　うかんでいるのね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">？？？？？『電気を　帯びた　石が
+周りの　壁と　反発しあって[BE:00:ページ切り替え（行送り）]
+宙に　浮かんでいるのね[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06r0201_white_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・表示後、画面奥からＮ登場
+・隣接してmsg_d06r0101_boss_01表示
+・仮メッセージ</comment>
+		<language name="JPN" width="256">……だれか　くるよ！？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……だれか　くるよ！？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06r0101_boss_01">
+		<comment>♂
+・はい/いいえの選択
+　どちらを選んだか保存しておく</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『いつも　いっしょに　いることで
+ポケモンへの　あいじょうが　めばえた……[BE:00:ページ切り替え（行送り）]
+いまも　そう　おもいこんでいますか？</language>
+		<language name="JPN_KANJI" width="256">Ｎ『いつも　一緒に　いることで
+ポケモンへの　愛情が　芽生える……[BE:00:ページ切り替え（行送り）]
+今も　そう　思いこんでいますか？</language>
+	</row>
+
+	<row id="msg_d06r0101_boss_02">
+		<comment>♂
+・はい選択時</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『……そう　しんじていないと
+こころが　ゆらぐから　かい？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『……そう　信じていないと
+心が　揺らぐから　かい？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06r0101_boss_03">
+		<comment>♂
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『そうか……
+いがいと　さめているんだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『そうか……
+意外と　冷めているんだ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06r0101_boss_04">
+		<comment>♂
+・画面奥へ移動
+・画面外に消えると
+　msg_d06r0201_white_03表示</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">……だいじょうぶ
+みがまえなくても　いいよ[BE:01:ページ切り替え（クリア）]
+あなたは　ここで
+たびだちの　きっかけを　つくった[BE:00:ページ切り替え（行送り）]
+ひとと　であう……[BE:01:ページ切り替え（クリア）]
+あらためて　この　たびの　いみを
+かんがえなおすと　いい[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……大丈夫
+身構えなくても　いいよ[BE:01:ページ切り替え（クリア）]
+あなたは　ここで
+旅立ちの　きっかけを　つくった[BE:00:ページ切り替え（行送り）]
+人と　出会う……[BE:01:ページ切り替え（クリア）]
+改めて　この　旅の意味を……
+考えなおすと　いい[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06r0201_white_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">友達♀
+サポート</attribute>
+		<language name="JPN" width="256">？？？？？『……あの　ひと
+ほんとうに　ポケモン　すきなのかな？[BE:01:ページ切り替え（クリア）]
+アハハ！
+なんだか　しんみりしちゃったね[BE:01:ページ切り替え（クリア）]
+あたしは　このあたりの
+ポケモン　つかまえるつもり[BE:00:ページ切り替え（行送り）]
+また　あとで　あおうね！</language>
+		<language name="JPN_KANJI" width="256">？？？？？『……あの　人
+本当に　ポケモン　好きなのかな？[BE:01:ページ切り替え（クリア）]
+アハハ！
+なんだか　しんみりしちゃったね[BE:01:ページ切り替え（クリア）]
+あたしは　このあたりの
+ポケモン　捕まえるつもり[BE:00:ページ切り替え（行送り）]
+また　あとで　会おうね！</language>
+	</row>
+
+	<row id="msg_d06r0201_white_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・msg_d06r0201_white_03表示後
+　電気意志の洞窟イベントクリアまで繰り返し（仮）</comment>
+		<language name="JPN" width="256">？？？？？『あたしは　このあたりの
+ポケモン　つかまえるつもり[BE:00:ページ切り替え（行送り）]
+また　あとで　あおうね！</language>
+		<language name="JPN_KANJI" width="256">？？？？？『あたしは　あたりの
+ポケモン　捕まえるつもり[BE:00:ページ切り替え（行送り）]
+また　あとで　会おうね！</language>
 	</row>
 
 	<flowchart-group-list>
