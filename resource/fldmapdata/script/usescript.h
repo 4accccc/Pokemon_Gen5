@@ -113,7 +113,8 @@
 //方向
 #include "../../../prog/include/field/field_dir.h"
 
-//src/field
+//スクリプトコマンドを通してスクリプトとプログラムの間で
+//だけ使用する値の定義
 #include "../../../prog/src/field/script_def.h"
 
 //イベントワーク、フラグ
@@ -128,6 +129,7 @@
 #include "../../../prog/include/item/itemsym.h"
 
 #include "../zonetable/zone_id.h"     //ゾーンID参照
+#include "../warpdata/warpdata.h"     //ワープID参照
 
 //トレーナーID
 #include "../../../prog/include/tr_tool/trno_def.h"

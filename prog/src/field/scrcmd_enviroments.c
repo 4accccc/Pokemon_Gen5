@@ -221,6 +221,7 @@ VMCMD_RESULT EvCmdGetBadgeCount( VMHANDLE * core, void *wk )
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  *
+ * @todo 書き込むデータサイズに応じて, その段階を返す
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetSaveDataStatus( VMHANDLE * core, void *wk )
@@ -245,3 +246,24 @@ VMCMD_RESULT EvCmdGetSaveDataStatus( VMHANDLE * core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 } 
+
+//--------------------------------------------------------------
+/**
+ * @brief ワープIDのセット
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ *
+ * @todo  どのレイヤーで不正な値のチェックを入れるか検討する
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetWarpID( VMHANDLE * core, void *wk )
+{
+  GAMEDATA*        gamedata = SCRCMD_WORK_GetGameData( wk );
+  u16 warp_id = SCRCMD_GetVMWorkValue( core, wk );
+
+  GAMEDATA_SetWarpID( gamedata, warp_id );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+

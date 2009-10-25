@@ -162,6 +162,43 @@
   DEF_CMD( EvCmdGoldWinUpdate, EV_SEQ_GOLD_WIN_UPDATE )
   NO_CMD()
   
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  //(はい )、いいえ　処理
+  DEF_CMD( EvCmdYesNoWin, EV_SEQ_YES_NO_WIN )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  //WORDSET関連
+  DEF_CMD( EvCmdPlayerName, EV_SEQ_PLAYER_NAME )
+  DEF_CMD( EvCmdItemName, EV_SEQ_ITEM_NAME )
+  DEF_CMD( EvCmdItemWazaName, EV_SEQ_ITEM_WAZA_NAME )
+  DEF_CMD( EvCmdWazaName, EV_SEQ_WAZA_NAME )
+
+  DEF_CMD( EvCmdPocketName, EV_SEQ_POCKET_NAME )
+  DEF_CMD( EvCmdPartyPokeMonsName, EV_SEQ_TEMOTI_MONS_NAME )
+  DEF_CMD( EvCmdPartyPokeNickName, EV_SEQ_TEMOTI_NICK_NAME )
+  DEF_CMD( EvCmdSodateyaPokeMonsName, EV_SEQ_SODATEYA_MONS_NAME )
+
+  DEF_CMD( EvCmdPokeTypeName, EV_SEQ_POKETYPE_NAME )
+  DEF_CMD( EvCmdMonsName, EV_SEQ_MONS_NAME )
+  NO_CMD()
+  NO_CMD()
+
+  DEF_CMD( EvCmdSodateyaPokeNickName, EV_SEQ_SODATEYA_NICK_NAME )
+  DEF_CMD( EvCmdNumber, EV_SEQ_NUMBER )
+  NO_CMD()
+  NO_CMD()
+  
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   //動作モデル
   DEF_CMD( EvCmdObjAnime, EV_SEQ_OBJ_ANIME )      
   DEF_CMD( EvCmdObjAnimeWait, EV_SEQ_OBJ_ANIME_WAIT )
@@ -189,37 +226,6 @@
   NO_CMD()
   NO_CMD()
   
-  //(はい )、いいえ　処理
-  DEF_CMD( EvCmdYesNoWin, EV_SEQ_YES_NO_WIN )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  
-  //WORDSET関連
-  DEF_CMD( EvCmdPlayerName, EV_SEQ_PLAYER_NAME )
-  DEF_CMD( EvCmdItemName, EV_SEQ_ITEM_NAME )
-  DEF_CMD( EvCmdItemWazaName, EV_SEQ_ITEM_WAZA_NAME )
-  DEF_CMD( EvCmdWazaName, EV_SEQ_WAZA_NAME )
-
-  DEF_CMD( EvCmdPocketName, EV_SEQ_POCKET_NAME )
-  DEF_CMD( EvCmdPartyPokeMonsName, EV_SEQ_TEMOTI_MONS_NAME )
-  DEF_CMD( EvCmdPartyPokeNickName, EV_SEQ_TEMOTI_NICK_NAME )
-  DEF_CMD( EvCmdSodateyaPokeMonsName, EV_SEQ_SODATEYA_MONS_NAME )
-
-  DEF_CMD( EvCmdPokeTypeName, EV_SEQ_POKETYPE_NAME )
-  DEF_CMD( EvCmdMonsName, EV_SEQ_MONS_NAME )
-  NO_CMD()
-
-  DEF_CMD( EvCmdSodateyaPokeNickName, EV_SEQ_SODATEYA_NICK_NAME )
-  DEF_CMD( EvCmdNumber, EV_SEQ_NUMBER )
-  NO_CMD()
-  NO_CMD()
-  
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-
   //視線トレーナー関連
   DEF_CMD( EvCmdEyeTrainerMoveSet, EV_SEQ_EYE_TRAINER_MOVE_SET )
   DEF_CMD( EvCmdEyeTrainerMoveSingle, EV_SEQ_EYE_TRAINER_MOVE_SINGLE )
@@ -252,6 +258,11 @@
   DEF_CMD( EvCmdBattleResultGet, EV_SEQ_BATTLE_RESULT_GET )
   NO_CMD()
 
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
   //トレーナーフラグ関連
   DEF_CMD( EvCmdTrainerFlagSet, EV_SEQ_TRAINER_FLAG_SET )
   DEF_CMD( EvCmdTrainerFlagReset, EV_SEQ_TRAINER_FLAG_RESET )
@@ -301,19 +312,9 @@
   NO_CMD()
   NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-
   //ポケモン鳴き声
   DEF_CMD( EvCmdVoicePlay, EV_SEQ_VOICE_PLAY )
   DEF_CMD( EvCmdVoiceWait, EV_SEQ_VOICE_WAIT )
-  NO_CMD()
-  NO_CMD()
-
-  NO_CMD()
-  NO_CMD()
   NO_CMD()
   NO_CMD()
 
@@ -350,12 +351,6 @@
   NO_CMD()
   NO_CMD()
   NO_CMD()
-
-  DEF_CMD( EvCmdChkPokeWaza, EV_SEQ_CHK_POKE_WAZA )
-  DEF_CMD( EvCmdChkPokeWazaGroup, EV_SEQ_CHK_POKE_WAZA_GROUP )
-  NO_CMD()
-  NO_CMD()
-
 
   NO_CMD()
   NO_CMD()
@@ -406,12 +401,27 @@
   DEF_CMD( EvCmdGetWeek, EV_SEQ_GET_WEEK )
   NO_CMD()
 
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   DEF_CMD( EvCmdGetBadgeFlag, EV_SEQ_GET_BADGE_FLAG )
   DEF_CMD( EvCmdSetBadgeFlag, EV_SEQ_SET_BADGE_FLAG )
   DEF_CMD( EvCmdGetBadgeCount, EV_SEQ_GET_BADGE_COUNT )
   NO_CMD()
 
-  DEF_CMD( EvCmdAddPokemonToParty, EV_SEQ_ADD_POKEMON_TO_PARTY )
+  DEF_CMD( EvCmdSetWarpID, EV_SEQ_SET_WARP_ID )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
   NO_CMD()
   NO_CMD()
   NO_CMD()
@@ -469,6 +479,22 @@
   DEF_CMD( EvCmdGetPokemonWazaID, EV_SEQ_GET_TEMOTI_WAZA_ID )
   DEF_CMD( EvCmdSetPokemonWaza, EV_SEQ_SET_TEMOTI_WAZA )
 
+  DEF_CMD( EvCmdAddPokemonToParty, EV_SEQ_ADD_POKEMON_TO_PARTY )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  DEF_CMD( EvCmdChkPokeWaza, EV_SEQ_CHK_POKE_WAZA )
+  DEF_CMD( EvCmdChkPokeWazaGroup, EV_SEQ_CHK_POKE_WAZA_GROUP )
+  NO_CMD()
+  NO_CMD()
+
+
   // ボックス関連
   DEF_CMD( EvCmdGetBoxPokeCount, EV_SEQ_GET_BOX_POKE_COUNT )
   NO_CMD()
@@ -507,8 +533,8 @@
   NO_CMD()
   NO_CMD()
   NO_CMD()
+
   NO_CMD()
-  
   NO_CMD()
   NO_CMD()
   NO_CMD()
@@ -524,6 +550,11 @@
   DEF_CMD( EvCmdCamera_WaitMove,   EV_SEQ_CAMERA_WAIT_MOVE )
   NO_CMD()
 
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
   //ショップ関連
   DEF_CMD( EvCmdCallShopProcBuy, EV_SEQ_CALL_SHOP_PROC_BUY )
   NO_CMD()

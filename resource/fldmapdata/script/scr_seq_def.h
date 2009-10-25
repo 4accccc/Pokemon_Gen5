@@ -2718,6 +2718,22 @@
     .short  \ret_wk
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief 全滅時戻り先の設定
+ * @param warp_id ワープ飛び先指定
+ *
+ * 全滅時、テレポート使用時の戻り先指定をおこなう。
+ * 指定可能な定義についてはresource/fldmapdata/warpdata/warpdata.hを参照。
+ */
+//--------------------------------------------------------------
+#define _SET_WARP_ID( warp_id )  \
+    _ASM_SET_WARP_ID warp_id
+
+    .macro  _ASM_SET_WARP_ID warp_id
+    .short  EV_SEQ_SET_WARP_ID
+    .short  \warp_id
+    .endm
 
 //======================================================================
 //

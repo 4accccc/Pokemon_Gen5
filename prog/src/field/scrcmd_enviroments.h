@@ -23,4 +23,5 @@ extern VMCMD_RESULT EvCmdGetBadgeFlag( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdSetBadgeFlag( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetBadgeCount( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetSaveDataStatus( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdSetWarpID( VMHANDLE * core, void *wk );
 
