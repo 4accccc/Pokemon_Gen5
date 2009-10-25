@@ -1252,6 +1252,18 @@ void IRC_POKETRADE_SetMainDispGraphic(IRC_POKEMON_TRADE* pWork)
   GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
   GFL_DISP_GXS_SetVisibleControlDirect(0);
 
+}
+
+ //------------------------------------------------------------------------------
+/**
+ * @brief   MainBGVram領域設定
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void IRC_POKETRADE_SetMainVram(IRC_POKEMON_TRADE* pWork)
+{
+ 
   {
     int frame = GFL_BG_FRAME3_M;
     GFL_BG_BGCNT_HEADER bgcntText = {
@@ -1381,26 +1393,7 @@ void IRC_POKETRADE_3DGraphicSetUp( IRC_POKEMON_TRADE* pWork )
     GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
                   0, pWork->heapID, Graphic_3d_SetUp );
 
-    //GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
-    
-#if 1
-
     pWork->pCamera   = GFL_G3D_CAMERA_CreateDefault( &cam_pos, &cam_target, pWork->heapID );
-#else    
-    //透視射影
-    pWork->pCamera =  GFL_G3D_CAMERA_Create( GFL_G3D_PRJORTH,
-                                             FX32_ONE*12.0f,
-                                             FX32_ONE*-12.0f,
-                                             FX32_ONE*-16.0f,
-                                             FX32_ONE*16.0f,
-                                             (FX32_ONE),
-                                             (FX32_ONE*300),
-                                             NULL,
-                                             &cam_pos,
-                                             &cam_up,
-                                             &cam_target,
-                                             pWork->heapID );
-#endif
 
     GFL_G3D_CAMERA_Switching( pWork->pCamera );
     //エッジマーキングカラーセット
@@ -1422,7 +1415,7 @@ void IRC_POKETRADE_3DGraphicSetUp( IRC_POKEMON_TRADE* pWork )
  */
 //--------------------------------------------------------------------------------------------
 
-void IRC_POKETRADE_SetSubDispGraphic(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_SetSubVram(IRC_POKEMON_TRADE* pWork)
 {
 
   {

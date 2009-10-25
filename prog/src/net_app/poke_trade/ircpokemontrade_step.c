@@ -686,7 +686,13 @@ static void _changeDemo_ModelTrade21(IRC_POKEMON_TRADE* pWork)
   if(pWork->anmCount < 100){
     return;
   }
-  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_50, pWork->pMessageStrBuf );
+
+  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_50, pWork->pMessageStrBufEx );
+  {
+    POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+    WORDSET_RegisterPokeNickName( pWork->pWordSet, 1,  pp );
+  }
+  WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx);
   IRC_POKETRADE_MessageWindowOpen(pWork);
   _setNextAnim(pWork, 0);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);
@@ -845,7 +851,7 @@ static void _changeDemo_ModelTrade30(IRC_POKEMON_TRADE* pWork)
 
   IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE_NORMAL);
 
-  IRC_POKETRADE_SetSubDispGraphic(pWork);
+  IRC_POKETRADE_SetSubVram(pWork);
 
   IRC_POKETRADE_InitBoxCursor(pWork);  // タスクバー
   IRC_POKETRADE_CreatePokeIconResource(pWork);  // ポケモンアイコンCLACT+リソース常駐化

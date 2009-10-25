@@ -93,7 +93,7 @@ typedef enum
 #define PLTID_OBJ_TYPEICON_M (8) // //3本
 #define PLTID_OBJ_BALLICON_M (12)  // 1本使用
 #define PLTID_OBJ_POKESTATE_M (13) //
-#define PLTID_OBJ_POKERUS_M (14) //
+#define PLTID_OBJ_POKERUS_M (15) //
 #define PLTID_OBJ_DEMO_M (7)
 
 
@@ -341,7 +341,6 @@ struct _IRC_POKEMON_TRADE{
   GFL_ARCUTIL_TRANSINFO bgchar;
 
 
-  TOUCH_SW_SYS			*TouchSubWindowSys;
   GFL_PTC_PTR ptc[PTC_KIND_NUM_MAX];
   GFL_PTC_PTR ptcOrthogonal;
 
@@ -463,9 +462,6 @@ struct _IRC_POKEMON_TRADE{
   int userNetCommand[2];
 
 
-
-  BOOL bChangeOK[2];
-
   BOOL bParent;
   BOOL bTouchReset;
 
@@ -518,7 +514,9 @@ extern void IRC_POKETRADE_SetSubdispGraphicDemo(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_GraphicFreeVram(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_SetMainDispGraphic(IRC_POKEMON_TRADE* pWork);
 extern void IRC_POKETRADE_ResetSubDispGraphic(IRC_POKEMON_TRADE* pWork);
-extern void IRC_POKETRADE_SetSubDispGraphic(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_SetSubVram(IRC_POKEMON_TRADE* pWork);
+extern void IRC_POKETRADE_SetMainVram(IRC_POKEMON_TRADE* pWork);
+
 extern void IRC_POKETRADE_3DGraphicSetUp( IRC_POKEMON_TRADE* pWork );
 extern void IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE type);
 extern void IRC_POKETRADE_CreatePokeIconResource(IRC_POKEMON_TRADE* pWork);
