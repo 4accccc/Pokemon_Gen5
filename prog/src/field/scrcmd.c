@@ -35,6 +35,7 @@
 //#include "tr_tool/tr_tool.h"
 
 
+#include "scrcmd_battle.h"
 #include "scrcmd_trainer.h"
 #include "scrcmd_sound.h"
 #include "scrcmd_musical.h"
@@ -1101,131 +1102,6 @@ static VMCMD_RESULT EvCmdLastKeyWait( VMHANDLE * core, void *wk )
   VMCMD_SetWait( core, evWaitLastKey );
   return VMCMD_RESULT_SUSPEND;
 }
-
-//======================================================================
-// トレーナーフラグ関連
-//======================================================================
-//--------------------------------------------------------------
-/**
- * トレーナーフラグのセット(トレーナーIDを渡す)
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdTrainerFlagSet( VMHANDLE * core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
-  u16 flag = SCRCMD_GetVMWorkValue(core,work);  //トレーナーIDを渡す！　ワークナンバーを渡すのはダメ！
-  SCRIPT_SetEventFlagTrainer( ev, flag );
-  KAGAYA_Printf( "トレーナーフラグセット ID=%d", flag );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * トレーナーフラグのリセット(トレーナーIDを渡す)
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdTrainerFlagReset( VMHANDLE * core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
-  u16 flag = SCRCMD_GetVMWorkValue(core,work);  //トレーナーIDを渡す！　ワークナンバーを渡すのはダメ！
-  SCRIPT_ResetEventFlagTrainer( ev, flag );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * トレーナーフラグのチェック(トレーナーIDを渡す)
- * @param  core    仮想マシン制御構造体へのポインタ
- * @return  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-static VMCMD_RESULT EvCmdTrainerFlagCheck( VMHANDLE * core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
-  u16 flag = SCRCMD_GetVMWorkValue(core,work);  //トレーナーIDを渡す！ ワークナンバーを渡すのはダメ！
-  core->cmp_flag = SCRIPT_CheckEventFlagTrainer( ev, flag );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * 敗北チェック
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdWildLoseCheck( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  BtlResult res = GAMEDATA_GetLastBattleResult(gdata);
-
-  if (FIELD_BATTLE_IsLoseResult(res, BTL_COMPETITOR_WILD) == TRUE)
-  {
-    *ret_wk = SCR_BATTLE_RESULT_LOSE;
-  } else {
-    *ret_wk = SCR_BATTLE_RESULT_WIN;
-  }
-
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * トレーナー敗北
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	VMCMD_RESULT_SUSPEND
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdTrainerLose( VMHANDLE *core, void *wk )
-{
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-
-  call_event = EVENT_NormalLose( gsys );
-  SCRIPT_EntryNextEvent( sc, call_event );
-
-  VM_End( core );
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//--------------------------------------------------------------
-/**
- * トレーナー敗北チェック
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdTrainerLoseCheck( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  BtlResult res = GAMEDATA_GetLastBattleResult(gdata);
-
-  if (FIELD_BATTLE_IsLoseResult(res, BTL_COMPETITOR_TRAINER) == TRUE)
-  {
-    *ret_wk = SCR_BATTLE_RESULT_LOSE;
-  } else {
-    *ret_wk = SCR_BATTLE_RESULT_WIN;
-  }
-
-  return VMCMD_RESULT_CONTINUE;
-}
-
 
 //======================================================================
 //  その他

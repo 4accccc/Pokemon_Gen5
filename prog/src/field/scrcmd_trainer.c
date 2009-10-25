@@ -33,7 +33,6 @@
 
 #include "trainer_eye_data.h"
 
-#include "event_gameover.h" //EVENT_NormalLose
 #if 0
 #include "battle/battle_common.h"	//↓インクルードに必要
 #include "ev_trainer.h"				//EvTrainer
@@ -578,6 +577,11 @@ VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
  * トレーナー勝利
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return	VMCMD_RESULT_SUSPEND
+ *
+ * @todo
+ * 現状はこれが呼ばれなくても正常動作している。
+ * 勝利時にスクリプトからOBJ操作などを行い、その後フェードインする。
+ * その際のフェードイン処理などが実装される予定。
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdTrainerWin( VMHANDLE * core, void *wk )
@@ -585,49 +589,6 @@ VMCMD_RESULT EvCmdTrainerWin( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
-//--------------------------------------------------------------
-/**
- * 隠しポケモン戦闘　再戦可不可チェック
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdSeacretPokeRetryCheck( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	VMCMD_RESULT* win_flag	= SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_FLAG );
-	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
-#if 0
-	*ret_wk = BattleParam_IsSeacretPokeRetry(*win_flag);
-	return 1;
-#else //wb kari
-  *ret_wk = 0;
-  return 0;
-#endif
-}
-
-//--------------------------------------------------------------
-/**
- * 配布ポケモン戦闘　再戦可不可チェック
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdHaifuPokeRetryCheck( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	VMCMD_RESULT* win_flag	= SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_FLAG );
-	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
-#if 0
-	*ret_wk = BattleParam_IsHaifuPokeRetry(*win_flag);
-	return 1;
-#else //wb kari
-  *ret_wk = 0;
-  return 0;
-#endif
-}
 //--------------------------------------------------------------
 /**
  * 手持ちチェック 2vs2が可能か取得
