@@ -8,6 +8,10 @@
  *
  * 2006.04.18 scr_tool.c,field_encount.cからゲームオーバー処理を持ってきて再構成した
  * 2009.09.20 HGSSから移植開始
+ *
+ * @todo
+ * ゲームオーバーメッセージをPROCにしたのでメモリが足りないときには
+ * 別オーバーレイ領域に引越しする
  */
 //============================================================================================
 #include <gflib.h>
@@ -82,14 +86,24 @@ typedef enum {
   REVIVAL_TYPE_POKECEN,   ///<ポケセンで復活
 }REVIVAL_TYPE;
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+typedef struct {
+  GAMESYS_WORK * gsys;
+  REVIVAL_TYPE rev_type;
+  const MYSTATUS * mystatus;
+}GAMEOVER_WORK;
+
+
+//==============================================================================================
+//==============================================================================================
 //----------------------------------------------------------------------------------------------
 //	構造体宣言
 //----------------------------------------------------------------------------------------------
 typedef struct{
-  GAMESYS_WORK * gsys;
-
   HEAPID heapID;
   REVIVAL_TYPE rev_type;
+  const MYSTATUS * mystatus;
 
 	GFL_MSGDATA* msgman;						//メッセージマネージャー
 	WORDSET* wordset;								//単語セット
@@ -97,7 +111,7 @@ typedef struct{
 
   PRINT_QUE *printQue;
   GFL_FONT * fontHandle;
-}GAME_OVER_WORK;
+}GAMEOVER_MSG_WORK;
 
 
 #define GAME_OVER_MSG_BUF_SIZE		(1024)			//メッセージバッファサイズ
@@ -108,14 +122,14 @@ enum { //コンパイルを通すためにとりあえず
   FLD_SYSFONT_PAL = 13,
 
   FBMP_COL_NULL = 0,
-  FBMP_COL_BLACK = 1,
+  FBMP_COL_BLACK = 0xf,
   FBMP_COL_BLK_SDW = 2,
 };
 //----------------------------------------------------------------------------------------------
 //	BMPウィンドウ
 //----------------------------------------------------------------------------------------------
 enum{
-	GAME_OVER_BMPWIN_FRAME	= GFL_BG_FRAME3_M,
+	GAME_OVER_BMPWIN_FRAME	= GFL_BG_FRAME0_M,
 	//GAME_OVER_BMPWIN_PX1	= 1,//2,
 	//GAME_OVER_BMPWIN_PY1	= 1,//2,
 	//GAME_OVER_BMPWIN_SX		= 29,//25,
@@ -133,17 +147,163 @@ enum{
 //----------------------------------------------------------------------------------------------
 //	プロトタイプ宣言
 //----------------------------------------------------------------------------------------------
-static GMEVENT * createGameOverEvent( GAMESYS_WORK * gsys, REVIVAL_TYPE rev_type );
-static GMEVENT_RESULT GMEVENT_GameOver( GMEVENT * event, int*seq, void * work );
-static void scr_msg_print( GAME_OVER_WORK* wk, u16 msg_id, u8 x, u8 y );
 
+static void setup_bg_sys( HEAPID heapID );
+static void release_bg_sys( void );
+static void scr_msg_print( GAMEOVER_MSG_WORK* wk, u16 msg_id, u8 x, u8 y );
+
+
+static GFL_PROC_RESULT GameOverMsgProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT GameOverMsgProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT GameOverMsgProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 
 //==============================================================================================
 //==============================================================================================
+static const GFL_PROC_DATA GameOverMsgProcData = {
+  GameOverMsgProc_Init,
+  GameOverMsgProc_Main,
+  GameOverMsgProc_End,
+};
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static void setup_bg_sys( GAME_OVER_WORK * wk )
+static GFL_PROC_RESULT GameOverMsgProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  GAMEOVER_MSG_WORK * gow;
+  const GAMEOVER_WORK * param = pwk;
+
+ 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMEOVER_MSG, 0x40000 );
+  gow = GFL_PROC_AllocWork(proc, sizeof(GAMEOVER_MSG_WORK), HEAPID_GAMEOVER_MSG);
+	GFL_STD_MemClear32( gow, sizeof(GAMEOVER_MSG_WORK) );
+  gow->heapID = HEAPID_GAMEOVER_MSG;
+  gow->rev_type = param->rev_type;
+  gow->mystatus = param->mystatus;
+  
+  return GFL_PROC_RES_FINISH;
+}
+  
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static GFL_PROC_RESULT GameOverMsgProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  GAMEOVER_MSG_WORK * wk = mywk;
+
+  int trg = GFL_UI_KEY_GetTrg();
+
+	switch( *seq ){
+  case 0:
+
+    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_WHITE);
+    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_WHITE);
+    WIPE_ResetWndMask(WIPE_DISP_MAIN);
+    WIPE_ResetWndMask(WIPE_DISP_SUB);
+
+    setup_bg_sys( wk->heapID );
+
+		wk->fontHandle = GFL_FONT_Create(
+			ARCID_FONT,
+      NARC_font_large_gftr, //新フォントID
+			GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+
+    wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
+    //メッセージデータマネージャー作成
+    wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+        ARCID_MESSAGE, NARC_message_gameover_dat, wk->heapID);
+    wk->wordset = WORDSET_Create( wk->heapID );
+
+    //ビットマップ追加
+    wk->bmpwin = GFL_BMPWIN_Create(
+      GAME_OVER_BMPWIN_FRAME,						//ウインドウ使用フレーム
+      GAME_OVER_BMPWIN_PX1,GAME_OVER_BMPWIN_PY1,	//ウインドウ領域の左上のX,Y座標（キャラ単位で指定）
+      GAME_OVER_BMPWIN_SX, GAME_OVER_BMPWIN_SY,	//ウインドウ領域のX,Yサイズ（キャラ単位で指定）
+      GAME_OVER_BMPWIN_PL,						//ウインドウ領域のパレットナンバー	
+      GAME_OVER_BMPWIN_CH							//ウインドウキャラ領域の開始キャラクタナンバー
+    );
+
+    if ( wk->rev_type == REVIVAL_TYPE_HOME )
+    { //自宅に戻るとき
+      scr_msg_print( wk, msg_all_dead_05, 0, 0 );
+    }
+    else
+    { //ポケセンに戻るとき
+      scr_msg_print( wk, msg_all_dead_04, 0, 0 );
+    }
+
+    GFL_BMPWIN_MakeTransWindow( wk->bmpwin );
+
+    (*seq) ++;
+    break;
+
+	//メッセージ転送待ち
+	case 1:
+    PRINTSYS_QUE_Main( wk->printQue );
+    if( PRINTSYS_QUE_IsFinished( wk->printQue ) == TRUE )
+    {
+      WIPE_SYS_Start(WIPE_PATTERN_M, WIPE_TYPE_FADEIN, WIPE_TYPE_MAX,
+          WIPE_FADE_WHITE, GAME_OVER_FADE_SYNC, WIPE_DEF_SYNC, wk->heapID);
+      G2_BlendNone();
+    }
+		(*seq)++;
+		break;
+
+	//メイン画面フェードイン待ち
+	case 2:
+		if (WIPE_SYS_EndCheck()) {
+			(*seq)++;
+		}
+		break;
+
+	//キー待ち
+	case 3:
+		if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
+			WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
+					WIPE_FADE_BLACK, GAME_OVER_FADE_SYNC, WIPE_DEF_SYNC, wk->heapID);
+			(*seq)++;
+		}
+		break;
+
+	//メイン画面フェードアウト待ち
+	case 4:
+		if (WIPE_SYS_EndCheck()) {
+
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmpwin), FBMP_COL_NULL );		//塗りつぶし
+
+			(*seq)++;
+		}
+		break;
+
+	//終了開放
+	case 5:
+		BmpWinFrame_Clear( wk->bmpwin, WINDOW_TRANS_ON );
+		GFL_BMPWIN_Delete( wk->bmpwin );
+
+		WORDSET_Delete( wk->wordset );
+		GFL_MSG_Delete( wk->msgman );
+		GFL_BG_FreeBGControl( GAME_OVER_BMPWIN_FRAME );
+
+    PRINTSYS_QUE_Delete( wk->printQue ); 
+    GFL_FONT_Delete( wk->fontHandle );
+
+    release_bg_sys();
+
+		return GFL_PROC_RES_FINISH;
+	}
+
+	return GFL_PROC_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static GFL_PROC_RESULT GameOverMsgProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  GFL_PROC_FreeWork( proc );
+  GFL_HEAP_DeleteHeap( HEAPID_GAMEOVER_MSG );
+  return GFL_PROC_RES_FINISH;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void setup_bg_sys( HEAPID heapID )
 {
 	static const GFL_DISP_VRAM SetBankData = {
 		GX_VRAM_BG_128_B,				// メイン2DエンジンのBG
@@ -167,165 +327,28 @@ static void setup_bg_sys( GAME_OVER_WORK * wk )
 	static const GFL_BG_BGCNT_HEADER header = {
 		0, 0, 0x800, 0,	// scrX, scrY, scrbufSize, scrbufofs,
 		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000,
+		GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,
 		GX_BG_EXTPLTT_01, 1, 0, 0, FALSE	// pal, pri, areaover, dmy, mosaic
 	};
 
+  GFL_BG_Init( heapID );
 	GFL_DISP_SetBank( &SetBankData );
 	GFL_BG_SetBGMode( &BGsys_data );
 	GFL_BG_SetBGControl( GAME_OVER_BMPWIN_FRAME, &header, GFL_BG_MODE_TEXT );
 
 	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_systemwin_nclr, PALTYPE_MAIN_BG, 
-																0x20*GAME_OVER_BMPWIN_PL, 0x20, wk->heapID );
+																0x20*GAME_OVER_BMPWIN_PL, 0x20, heapID );
 
 	GFL_BG_SetBackGroundColor(GAME_OVER_BMPWIN_FRAME,0x7FFF);
+
+  GFL_BMPWIN_Init( heapID );
 }
-
 //--------------------------------------------------------------
-/**
- * @brief	ゲームオーバー画面呼び出し
- *
- * @param	gsys	GAMESYS_WORKポインタ
- * @param event 親イベントのポインタ
- *
- * @retval	none
- */
 //--------------------------------------------------------------
-static GMEVENT * createGameOverEvent( GAMESYS_WORK * gsys, REVIVAL_TYPE rev_type )
+static void release_bg_sys( void )
 {
-  GMEVENT * event;
-	GAME_OVER_WORK* wk;
-
-  event = GMEVENT_Create( gsys, NULL, GMEVENT_GameOver, sizeof(GAME_OVER_WORK) );
-  wk = GMEVENT_GetEventWork( event );
-	if( wk == NULL ){
-		GF_ASSERT_MSG(0, "メモリ確保に失敗しました！" );
-	}
-	GFL_STD_MemClear32( wk, sizeof(GAME_OVER_WORK) );
-  wk->gsys = gsys;
-  wk->heapID = HEAPID_PROC;
-  wk->rev_type = rev_type;
-
-  return event;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief	ゲームオーバー画面メイン
- *
- * @param	tcb		TCB_PTR型
- * @param	work	ワーク
- *
- * @retval	none
- */
-//--------------------------------------------------------------
-static GMEVENT_RESULT GMEVENT_GameOver( GMEVENT * event, int*seq, void * work )
-{
-	GAME_OVER_WORK * wk = work;
-  int trg = GFL_UI_KEY_GetTrg();
-  GAMESYS_WORK * gsys = wk->gsys;
-  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
-
-	switch( *seq ){
-  case 0:
-
-    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_WHITE);
-    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_WHITE);
-    WIPE_ResetWndMask(WIPE_DISP_MAIN);
-    WIPE_ResetWndMask(WIPE_DISP_SUB);
-
-    setup_bg_sys(wk);
-
-		wk->fontHandle = GFL_FONT_Create(
-			ARCID_FONT,
-      NARC_font_large_gftr, //新フォントID
-			GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
-
-    wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
-    //メッセージデータマネージャー作成
-    wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_gameover_dat, wk->heapID);
-    wk->wordset = WORDSET_Create( wk->heapID );
-
-    //ビットマップ追加
-    wk->bmpwin = GFL_BMPWIN_Create(
-      GAME_OVER_BMPWIN_FRAME,						//ウインドウ使用フレーム
-      GAME_OVER_BMPWIN_PX1,GAME_OVER_BMPWIN_PY1,	//ウインドウ領域の左上のX,Y座標（キャラ単位で指定）
-      GAME_OVER_BMPWIN_SX, GAME_OVER_BMPWIN_SY,	//ウインドウ領域のX,Yサイズ（キャラ単位で指定）
-      GAME_OVER_BMPWIN_PL,						//ウインドウ領域のパレットナンバー	
-      GAME_OVER_BMPWIN_CH							//ウインドウキャラ領域の開始キャラクタナンバー
-    );
-
-    //主人公名セット
-    WORDSET_RegisterPlayerName( wk->wordset, 0, GAMEDATA_GetMyStatus(gamedata) );
-    {
-      if ( wk->rev_type == REVIVAL_TYPE_HOME )
-      { //自宅に戻るとき
-        scr_msg_print( wk, msg_all_dead_05, 0, 0 );
-      }
-      else
-      { //ポケセンに戻るとき
-        scr_msg_print( wk, msg_all_dead_04, 0, 0 );
-      }
-    }
-
-    GFL_BMPWIN_MakeTransWindow( wk->bmpwin );
-
-    (*seq) ++;
-    break;
-
-	case 1:
-    PRINTSYS_QUE_Main( wk->printQue );
-    if( PRINTSYS_QUE_IsFinished( wk->printQue ) == TRUE )
-    {
-      WIPE_SYS_Start(WIPE_PATTERN_M, WIPE_TYPE_FADEIN, WIPE_TYPE_MAX,
-          WIPE_FADE_WHITE, GAME_OVER_FADE_SYNC, WIPE_DEF_SYNC, wk->heapID);
-      G2_BlendNone();
-    }
-		(*seq)++;
-		break;
-
-	case 2:
-		if (WIPE_SYS_EndCheck()) {
-			(*seq)++;
-		}
-		break;
-
-	//キー待ち
-	case 3:
-		if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
-			WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
-					WIPE_FADE_BLACK, GAME_OVER_FADE_SYNC, WIPE_DEF_SYNC, wk->heapID);
-			(*seq)++;
-		}
-		break;
-
-	//メイン画面ブラックアウト待ち
-	case 4:
-		if (WIPE_SYS_EndCheck()) {
-
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmpwin), FBMP_COL_NULL );		//塗りつぶし
-
-			(*seq)++;
-		}
-		break;
-
-	//終了開放
-	case 5:
-		BmpWinFrame_Clear( wk->bmpwin, WINDOW_TRANS_ON );
-		GFL_BMPWIN_Delete( wk->bmpwin );
-
-		WORDSET_Delete( wk->wordset );
-		GFL_MSG_Delete( wk->msgman );
-		GFL_BG_FreeBGControl( GAME_OVER_BMPWIN_FRAME );
-
-    PRINTSYS_QUE_Delete( wk->printQue ); 
-    GFL_FONT_Delete( wk->fontHandle );
-		GFL_HEAP_FreeMemory( wk );
-
-		return GMEVENT_RES_FINISH;
-	}
-
-	return GMEVENT_RES_CONTINUE;
+  GFL_BMPWIN_Exit();
+  GFL_BG_Exit();
 }
 
 //--------------------------------------------------------------
@@ -340,7 +363,7 @@ static GMEVENT_RESULT GMEVENT_GameOver( GMEVENT * event, int*seq, void * work )
  * @retval	none
  */
 //--------------------------------------------------------------
-static void scr_msg_print( GAME_OVER_WORK* wk, u16 msg_id, u8 x, u8 y )
+static void scr_msg_print( GAMEOVER_MSG_WORK* wk, u16 msg_id, u8 x, u8 y )
 {
   PRINTSYS_LSB lsb = PRINTSYS_LSB_Make(FBMP_COL_BLACK,FBMP_COL_BLK_SDW,FBMP_COL_NULL);
 	STRBUF* tmp_buf = GFL_STR_CreateBuffer( GAME_OVER_MSG_BUF_SIZE, wk->heapID );
@@ -349,6 +372,9 @@ static void scr_msg_print( GAME_OVER_WORK* wk, u16 msg_id, u8 x, u8 y )
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmpwin), FBMP_COL_NULL );			//塗りつぶし
 
 	GFL_MSG_GetString( wk->msgman, msg_id, tmp_buf );
+
+  //主人公名セット
+  WORDSET_RegisterPlayerName( wk->wordset, 0, wk->mystatus );
 
 	WORDSET_ExpandStr( wk->wordset, tmp_buf2, tmp_buf );
   PRINTSYS_PrintQueColor( wk->printQue , GFL_BMPWIN_GetBmp( wk->bmpwin ) , x , y ,
@@ -361,23 +387,16 @@ static void scr_msg_print( GAME_OVER_WORK* wk, u16 msg_id, u8 x, u8 y )
 }
 
 
-//============================================================================================
-//============================================================================================
-//-----------------------------------------------------------------------------
-/**
- * @todo  とりあえずエラー回避のために作成した関数
- */
-//-----------------------------------------------------------------------------
-static u16 get_warp_id( GAMEDATA * gamedata )
-{
-  return GAMEDATA_GetWarpID( gamedata );
-}
 
+
+
+//============================================================================================
+//============================================================================================
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static REVIVAL_TYPE getRevType( GAMEDATA * gamedata )
 {
-  if(	WARPDATA_GetInitializeID() == get_warp_id(gamedata) ) {
+  if(	WARPDATA_GetInitializeID() == GAMEDATA_GetWarpID(gamedata) ) {
     return REVIVAL_TYPE_HOME;
   } else {
     return REVIVAL_TYPE_POKECEN;
@@ -391,18 +410,20 @@ static REVIVAL_TYPE getRevType( GAMEDATA * gamedata )
  * @retval	TRUE		イベント終了
  * @retval	FALSE		イベント継続中
  *
+ * @todo
+ * ポケセンでの復活処理を以前の仕様で作るためにはジョーイさんOBJの
+ * OBJIDを何らかの方法で取得し、アニメーションさせる必要がある
  */
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT GMEVENT_NormalGameOver(GMEVENT * event, int * seq, void *work)
 {
-  GAMESYS_WORK * gsys = GMEVENT_GetGameSysWork( event );
-  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  GAMEOVER_WORK * param = work;
 
 	switch (*seq) {
 	case 0:
 		//ワープIDで指定された戻り先へ
     //この中ではフィールド復帰処理は動作しない！
-    MAPCHG_GameOver( gsys );
+    MAPCHG_GameOver( param->gsys );
 		(*seq) ++;
 		break;
 
@@ -429,13 +450,13 @@ static GMEVENT_RESULT GMEVENT_NormalGameOver(GMEVENT * event, int * seq, void *w
 		SetBrightness( BRIGHTNESS_BLACK, PLANEMASK_ALL, MASK_SUB_DISPLAY);
 
 		//ゲームオーバー警告
-    //GMEVENT_CallEvent( event, createGameOverEvent( gsys, getRevType(gamedata) ) );
+    GMEVENT_CallProc( event, NO_OVERLAY_ID, &GameOverMsgProcData, param );
 		(*seq) ++;
 		break;
 
 	case 4:
 		//イベントコマンド：フィールドマッププロセス復帰
-    GMEVENT_CallEvent( event, EVENT_FieldOpen(gsys) );
+    GMEVENT_CallEvent( event, EVENT_FieldOpen(param->gsys) );
 		(*seq)++;
 		break;
 
@@ -447,7 +468,7 @@ static GMEVENT_RESULT GMEVENT_NormalGameOver(GMEVENT * event, int * seq, void *w
 		
 		//話しかけ対象のOBJを取得する処理が必要になる
 		//OS_Printf( "field_encount zone_id = %d\n", fsys->location->zone_id );
-    if ( getRevType( gamedata ) == REVIVAL_TYPE_HOME ) {
+    if ( param->rev_type == REVIVAL_TYPE_HOME ) {
 			//初期値のワープID＝＝最初の戻り先なので自分の家
 			SCRIPT_CallScript( event, SCRID_GAMEOVER_RECOVER_HOME, NULL, NULL, HEAPID_FIELDMAP );
 		}else{
@@ -475,8 +496,14 @@ static GMEVENT_RESULT GMEVENT_NormalGameOver(GMEVENT * event, int * seq, void *w
 //-----------------------------------------------------------------------------
 GMEVENT * EVENT_NormalLose( GAMESYS_WORK * gsys )
 {
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
 	GMEVENT * event;
-  event = GMEVENT_Create(gsys, NULL, GMEVENT_NormalGameOver, 0);
+  GAMEOVER_WORK * param;
+  event = GMEVENT_Create( gsys, NULL, GMEVENT_NormalGameOver, sizeof(GAMEOVER_WORK) );
+  param = GMEVENT_GetEventWork( event );
+  param->gsys = gsys;
+  param->rev_type = getRevType( gamedata );
+  param->mystatus = GAMEDATA_GetMyStatus( gamedata );
   return event;
 }
 
