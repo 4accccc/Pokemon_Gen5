@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-10-25T20:08:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,12 +235,12 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="231"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="274"/>
+			<message position="2" width="294"/>
 			<font default=" 0:large" position="5" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="35" top="189" right="740" bottom="809" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,11 +292,221 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d06r0301_boss_01">
+		<comment>♂
+・出口付近にpos設定
+　踏むとN出現
+・主人公に隣接してメッセージ表示
+・はい/いいえの選択肢表示
+　どちらを選んだか保存しておく</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『……ここで　であったのは
+たまたま　だと　おもうかい？</language>
+		<language name="JPN_KANJI" width="256">Ｎ『……ここで　出会ったのは
+たまたま　だと　思うかい？</language>
+	</row>
+
+	<row id="msg_d06r0301_boss_02">
+		<comment>♂
+・はい選択時
+・メッセージ表示後、トレーナー戦闘に</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『……かわいそうに[BE:01:ページ切り替え（クリア）]
+きみたちは
+ここにしか　すすめないように[BE:00:ページ切り替え（行送り）]
+コントロールされて　いたんだ[BE:01:ページ切り替え（クリア）]
+どうしてだか　あの　ひとは
+ボクと　キミを　きそわせたいらしい[BE:01:ページ切り替え（クリア）]
+さて……　どれだけ　つよくなったか
+ボクに　おしえてくれ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『……かわいそうに[BE:01:ページ切り替え（クリア）]
+キミたちは
+ここにしか　進めないように[BE:00:ページ切り替え（行送り）]
+コントロールされて　いたんだ[BE:01:ページ切り替え（クリア）]
+どうしてだか　あの　人は
+ボクと　キミを　競わせたいらしい[BE:01:ページ切り替え（クリア）]
+さて……　どれだけ　強くなったか
+ボクに　教えてくれ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06r0301_boss_03">
+		<comment>♂
+・いいえ選択時
+・メッセージ表示後、トレーナー戦闘に</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『……そう[BE:01:ページ切り替え（クリア）]
+きみたちは
+ここにしか　すすめないように[BE:00:ページ切り替え（行送り）]
+コントロールされていたんだ[BE:01:ページ切り替え（クリア）]
+どうしてだか　あの　ひとは
+ボクと　キミを　あわせたいらしい[BE:01:ページ切り替え（クリア）]
+さて……　どれだけ　つよくなったか
+ボクに　おしえてくれ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『……そう[BE:01:ページ切り替え（クリア）]
+キミたちは
+ここにしか　進めないように[BE:00:ページ切り替え（行送り）]
+コントロールされて　いたんだ[BE:01:ページ切り替え（クリア）]
+どうしてだか　あの　人は
+ボクと　キミを　競わせたいらしい[BE:01:ページ切り替え（クリア）]
+さて……　どれだけ　強くなったか
+ボクに　教えてくれ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06r0301_boss_04">
+		<comment>♂
+・戦闘後メッセージ
+・表示後、入り口（6番道路）方面から
+　博士の動作モデルが出現</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『……ふしぎだな[BE:01:ページ切り替え（クリア）]
+なぜ　キミのような　にんげんが
+ポケモンの　ちからを　ひきだせる？[BE:01:ページ切り替え（クリア）]
+キミも　えらばれた……
+そういう　ことなのか？[BE:01:ページ切り替え（クリア）]
+ん……？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『……不思議だな[BE:01:ページ切り替え（クリア）]
+なぜ　キミのような　人間が
+ポケモンの　力を　ひきだせる？[BE:01:ページ切り替え（クリア）]
+キミも　選ばれた……
+そういう　ことなのか？[BE:01:ページ切り替え（クリア）]
+ん……？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06r0301_hakase2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・主人公に隣接してメッセージ表示
+・続けてmsg_d06r0301_boss_05</comment>
+		<attribute name="キャラ指定">HAKASE2
+博士２</attribute>
+		<language name="JPN" width="256">アララギ『どうくつだと
+[1:00:トレーナー名:0]の　こえが　ひびくな[BE:01:ページ切り替え（クリア）]
+こえのするほうに　きてみたら
+ここに　でちゃったぞ[BE:00:ページ切り替え（行送り）]
+で　[1:00:トレーナー名:0]
+はなしているのは　だれだい？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『洞くつ　だと
+[1:00:トレーナー名:0]の　声が　響くな[BE:01:ページ切り替え（クリア）]
+声のする方に　来てみたら
+ここに　でちゃったぞ[BE:00:ページ切り替え（行送り）]
+で　[1:00:トレーナー名:0]
+話しているのは　だれだい？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06r0301_boss_05">
+		<comment>♂
+・続けてmsg_d06r0301_hakase2_02
+・ここで一人称が違うのはわざと</comment>
+		<language name="JPN" width="256">Ｎ『……アララギ　イチイか[BE:01:ページ切り替え（クリア）]
+はじめまして
+ワタクシの　なまえは　Ｎ[BE:01:ページ切り替え（クリア）]
+にんげんの　きめた
+かってな　ルールで[BE:00:ページ切り替え（行送り）]
+ポケモンを　ぶんるいし[BE:00:ページ切り替え（行送り）]
+あいてを　わかった　つもりになる……[BE:01:ページ切り替え（クリア）]
+そんな　ポケモンずかんが
+だいきらいな　モノです[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『……アララギ　イチイか[BE:01:ページ切り替え（クリア）]
+はじめまして
+ワタクシの　名前は　Ｎ[BE:01:ページ切り替え（クリア）]
+人間の　決めた
+勝手な　ルールで[BE:00:ページ切り替え（行送り）]
+ポケモンを　分類し[BE:00:ページ切り替え（行送り）]
+相手を　わかった　つもりになる……[BE:01:ページ切り替え（クリア）]
+そんな　ポケモン図鑑が
+大嫌いな　モノです[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06r0301_hakase2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けてmsg_d06r0301_boss_06
+</comment>
+		<attribute name="キャラ指定">HAKASE2
+博士２</attribute>
+		<language name="JPN" width="256">アララギ『ふむう
+ずいぶんと　きらわれているね[BE:01:ページ切り替え（クリア）]
+だが　きみの　いけんも
+かんがえの　ひとつなら[BE:01:ページ切り替え（クリア）]
+わたしの　おもうところも
+おなじく　かんがえの　ひとつだよ[BE:01:ページ切り替え（クリア）]
+ポケモンと　どう　つきあうべきか
+それは　ひとりひとりが　かんがえ[BE:00:ページ切り替え（行送り）]
+きめれば　いいだろう？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『ふむう
+ずいぶんと　嫌われているね[BE:01:ページ切り替え（クリア）]
+だが　君の　意見も
+考えの　一つなら[BE:01:ページ切り替え（クリア）]
+私の　思うところも
+同じく　考えの　一つだよ[BE:01:ページ切り替え（クリア）]
+ポケモンと　どう　付き合うべきか
+それは　一人一人が　考え[BE:00:ページ切り替え（行送り）]
+決めれば　いいだろう？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06r0301_boss_06">
+		<comment>♂
+・メッセージ表示後
+　出口方面に移動
+・続けてmsg_d06r0301_hakase2_03表示</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『……それでは
+まちがった　かんがえの　にんげんが[BE:00:ページ切り替え（行送り）]
+ポケモンを　くるしめる……[BE:01:ページ切り替え（クリア）]
+そんな　おろかな　かのうせいを
+ボクは　みすごすわけには　いかない！[BE:01:ページ切り替え（クリア）]
+だから　ボクは　ちからで　みせつける
+にんげんが　どうすればいいかを……[BE:01:ページ切り替え（クリア）]
+そうしなければ
+ポケモンは　すくわれないからね[BE:01:ページ切り替え（クリア）]
+では　また　あいましょう
+はかせに　[1:00:トレーナー名:0]……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｎ『……それでは
+間違った　考えの　人間が[BE:00:ページ切り替え（行送り）]
+ポケモンを　苦しめる……[BE:01:ページ切り替え（クリア）]
+そんな　愚かな　可能性を
+ボクは　見過ごすわけには　いかない！[BE:01:ページ切り替え（クリア）]
+だから　ボクは　力で　みせつける
+人間が　どうすればいいかを……[BE:01:ページ切り替え（クリア）]
+そうしなければ
+ポケモンは　救われないからね[BE:01:ページ切り替え（クリア）]
+では　また　会いましょう
+アララギ博士に　[1:00:トレーナー名:0]……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06r0301_hakase2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・Ｎの去ったほうを見ながら
+　メッセージ表示
+・続けて主人公と向き合って
+　msg_d06r0301_hakase2_04</comment>
+		<attribute name="キャラ指定">HAKASE2
+博士２</attribute>
+		<language name="JPN" width="256">アララギ『……まあ　いきなり
+わかってもらえるとは　おもわないけど[BE:01:ページ切り替え（クリア）]
+かれとは　また　あいたいな[BE:01:ページ切り替え（クリア）]
+すこしづつで　いい
+わたしの　いけんを　きいてほしいよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『……まあ　いきなり
+わかってもらえるとは　思わないが[BE:01:ページ切り替え（クリア）]
+彼とは　また　会いたいね[BE:01:ページ切り替え（クリア）]
+少しづつで　いい
+わたしの　意見を　聞いてほしいよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d06r0301_hakase2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　入り口（6番道路）方面に移動
+・画面外に消えると主人公、操作可能に
+
+※ポケモン研究所に動作モデル表示</comment>
+		<language name="JPN" width="256">では　[1:00:トレーナー名:0]
+けんきゅうじょに　もどるよ[BE:01:ページ切り替え（クリア）]
+ポケモンの　きげんに　ついて
+それなりに　はっけんも　あったしね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">では　[1:00:トレーナー名:0]
+けんきゅうじょに　もどるよ[BE:01:ページ切り替え（クリア）]
+ポケモンの　きげんに　ついて
+それなりに　はっけんも　あったしね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
