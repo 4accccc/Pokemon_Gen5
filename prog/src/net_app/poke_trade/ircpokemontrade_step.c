@@ -47,6 +47,8 @@
 #include "tradedemo.naix"
 
 #include "ircpokemontrade_local.h"
+#include "app/mailtool.h"
+
 #include "spahead.h"
 
 
@@ -74,6 +76,8 @@ static void  _EFFTOOL_CalcPaletteFade( _EFFTOOL_PAL_FADE_WORK *epfw );
 static void _pokeMoveRenew(_POKEMCSS_MOVE_WORK* pPoke,int time, const VecFx32* pPos);
 static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, HEAPID heapID);
 static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove);
+static void _saveStart(IRC_POKEMON_TRADE* pWork);
+static void _mailBoxStart(IRC_POKEMON_TRADE* pWork);
 
 
 
@@ -701,6 +705,9 @@ static void _changeDemo_ModelTrade22(IRC_POKEMON_TRADE* pWork)
 }
 
 
+
+
+
 static void _changeDemo_ModelTrade23(IRC_POKEMON_TRADE* pWork)
 {
   IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
@@ -708,24 +715,37 @@ static void _changeDemo_ModelTrade23(IRC_POKEMON_TRADE* pWork)
 
 
   {
-    int id = 1-GFL_NET_SystemGetCurrentID();
+    int id = 1-GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+    STATUS_RCV_PokeParam_RecoverAll(pWork->recvPoke[id]);
     //交換する
     // 相手のポケを自分の選んでいた場所に入れる
     if(pWork->selectBoxno == BOX_MAX_TRAY){ //もちものの交換の場合
       POKEPARTY* party = pWork->pMyParty;
-
-      STATUS_RCV_PokeParam_RecoverAll(pWork->recvPoke[id]);
-
       PokeParty_SetMemberData(party, pWork->selectIndex, pWork->recvPoke[id]);
     }
     else{
-      // @todo  メールがあったらボックスに
-      // @todo  メールボックスが満タンなら削除処理に
-      BOXDAT_PutPokemonPos(pWork->pBox, pWork->selectBoxno, pWork->selectIndex, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pWork->recvPoke[id]));
-      //_CHANGE_STATE(pWork,_mailBox);
+      // メールがあったらボックスに
+      _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
+      int item = PP_Get( pWork->recvPoke[id] , ID_PARA_item ,NULL);
+      if(ITEM_CheckMail(item)){
+        GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_08, pWork->pMessageStrBuf );
+        IRC_POKETRADE_MessageWindowOpen(pWork);
+        _CHANGE_STATE(pWork,_mailBoxStart);
+        return;
+      }
+      else{
+        BOXDAT_PutPokemonPos(pWork->pBox, pWork->selectBoxno,
+                             pWork->selectIndex, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pWork->recvPoke[id]));
+      }
     }
   }
+  _CHANGE_STATE(pWork,_saveStart);
+}
 
+
+
+static void _saveStart(IRC_POKEMON_TRADE* pWork)
+{
   if(!pWork->pGameData){
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade30); //ゲームデータの引渡しが無い場合セーブに行かない
     return;
@@ -736,7 +756,6 @@ static void _changeDemo_ModelTrade23(IRC_POKEMON_TRADE* pWork)
     _CHANGE_STATE(pWork, _changeTimingSaveStart);
   }
 }
-
 
 
 static void _changeTimingSaveStart(IRC_POKEMON_TRADE* pWork)
@@ -1053,6 +1072,195 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
   else{
     MCSS_SetPosition( pMove->pMcss ,&pMove->end );
   }
+}
+
+//-------------------------------------------------
+/**
+ *	@brief      メールをパソコンに入れた > セーブに向かう
+ *	@param[inout]	IRC_POKEMON_TRADE ワーク
+ */
+//-------------------------------------------------
+
+static void _mailSeqEnd(IRC_POKEMON_TRADE* pWork)
+{
+  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+    return;
+  }
+  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+    //ポケモンを格納
+    int id = 1-GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+    BOXDAT_PutPokemonPos(pWork->pBox, pWork->selectBoxno,
+                         pWork->selectIndex, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pWork->recvPoke[id]));
+    _CHANGE_STATE(pWork,_saveStart);  //セーブ処理に行く
+  }
+}
+
+
+//-------------------------------------------------
+/**
+ *	@brief    メールを捨てる確認
+ *	@param[inout]	_POKEMCSS_MOVE_WORK ワーク
+ */
+//-------------------------------------------------
+
+static void _mailTrashYesOrNo(IRC_POKEMON_TRADE* pWork)
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    IRC_POKETRADE_AppMenuClose(pWork);
+    IRC_POKETRADE_MessageWindowClear(pWork);
+    pWork->pAppTask=NULL;
+
+    switch(selectno){
+    case 0:  //はい
+      {
+        int id = 1-GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+        PP_Put(pWork->recvPoke[id], ID_PARA_item, ITEM_DUMMY_ID);
+      }
+      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_11, pWork->pMessageStrBuf );
+      IRC_POKETRADE_MessageWindowOpen(pWork);
+      _CHANGE_STATE(pWork,_mailSeqEnd);
+      break;
+    default: //いいえ
+      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_08, pWork->pMessageStrBuf );
+      IRC_POKETRADE_MessageWindowOpen(pWork);
+      _CHANGE_STATE(pWork,_mailBoxStart);
+      break;
+    }
+  }
+}
+
+
+//-------------------------------------------------
+/**
+ *	@brief    メールを捨てる確認
+ *	@param[inout]	_POKEMCSS_MOVE_WORK ワーク
+ */
+//-------------------------------------------------
+
+static void _mailTrash(IRC_POKEMON_TRADE* pWork)
+{
+  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+    return;
+  }
+  {
+    int msg[]={POKETRADE_STR_27, POKETRADE_STR_28};
+    IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
+  }
+  _CHANGE_STATE(pWork,_mailTrashYesOrNo);
+}
+
+
+//-------------------------------------------------
+/**
+ *	@brief    パソコンの整理確認
+ *	@param[inout]	_POKEMCSS_MOVE_WORK ワーク
+ */
+//-------------------------------------------------
+
+static void _mailPCArrangementYesOrNo(IRC_POKEMON_TRADE* pWork)
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    IRC_POKETRADE_AppMenuClose(pWork);
+    IRC_POKETRADE_MessageWindowClear(pWork);
+    pWork->pAppTask=NULL;
+
+    switch(selectno){
+    case 0:  //はい
+      //@todo PROC呼び出し
+      break;
+    default: //いいえ
+      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_09, pWork->pMessageStrBuf );
+      IRC_POKETRADE_MessageWindowOpen(pWork);
+      _CHANGE_STATE(pWork,_mailTrash);
+      break;
+    }
+  }
+}
+
+
+
+//-------------------------------------------------
+/**
+ *	@brief    パソコンの整理確認
+ *	@param[inout]	_POKEMCSS_MOVE_WORK ワーク
+ */
+//-------------------------------------------------
+
+static void _mailPCArrangement(IRC_POKEMON_TRADE* pWork)
+{
+  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+    return;
+  }
+  {
+    int msg[]={POKETRADE_STR_27, POKETRADE_STR_28};
+    IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
+  }
+  _CHANGE_STATE(pWork,_mailPCArrangementYesOrNo);
+}
+
+//-------------------------------------------------
+/**
+ *	@brief    パソコンにおくるかどうか パソコンがいっぱいならさらに分岐
+ *	@param[inout]	_POKEMCSS_MOVE_WORK ワーク
+ */
+//-------------------------------------------------
+
+static void _mailPCSendYesOrNo(IRC_POKEMON_TRADE* pWork)
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    IRC_POKETRADE_AppMenuClose(pWork);
+    IRC_POKETRADE_MessageWindowClear(pWork);
+    pWork->pAppTask=NULL;
+
+    switch(selectno){
+    case 0:  //はい
+      {
+        int friendID = 1-GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+        int ret = MailSys_MoveMailPoke2Paso(pWork->pMailBlock, pWork->recvPoke[friendID],pWork->heapID);
+#if DEBUG_ONLY_FOR_ohno
+        if(1){ //入らなかった
+#else
+        if(MAILDATA_NULLID==ret){ //入らなかった
+#endif
+          GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_10, pWork->pMessageStrBuf );
+          IRC_POKETRADE_MessageWindowOpen(pWork);
+          _CHANGE_STATE(pWork,_mailPCArrangement);
+        }
+        else{
+          GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_12, pWork->pMessageStrBuf );
+          IRC_POKETRADE_MessageWindowOpen(pWork);
+          _CHANGE_STATE(pWork,_mailSeqEnd);
+        }
+      }
+      break;
+    default: //いいえ
+      //@todo
+      break;
+    }
+  }
+}
+
+//-------------------------------------------------
+/**
+ *	@brief      メールの開始
+ *	@param[inout]	IRC_POKEMON_TRADE ワーク
+ */
+//-------------------------------------------------
+
+static void _mailBoxStart(IRC_POKEMON_TRADE* pWork)
+{
+  if(!IRC_POKETRADE_MessageEndCheck(pWork)){
+    return;
+  }
+  {
+    int msg[]={POKETRADE_STR_27, POKETRADE_STR_28};
+    IRC_POKETRADE_AppMenuOpen(pWork,msg,elementof(msg));
+  }
+  _CHANGE_STATE(pWork,_mailPCSendYesOrNo);
+
 }
 
 

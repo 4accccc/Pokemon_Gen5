@@ -2259,11 +2259,13 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
  * @param   gsys		
  */
 //--------------------------------------------------------------
-static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus)
+static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus,HEAPID heapID)
 {
 	POKEMON_PARAM *pp;
 	const STRCODE *name;
-  int i;
+  int i,itemno;
+  MAIL_DATA* pMail;
+  STRBUF* pStrBuf= GFL_STR_CreateBuffer( 128, heapID );
 	
   while( PokeParty_GetPokeCount(party)){
     PokeParty_Delete(party,0);
@@ -2274,6 +2276,15 @@ static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus)
 	pp = PP_Create(MONSNO_ONOKKUSU, 100, 123456, GFL_HEAPID_APP);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
+
+  MyStatus_SetMyNameFromString(myStatus, pStrBuf);
+
+  pMail=MailData_MailEventDataMake(pp, 1, MyStatus_GetMySex( myStatus ),pStrBuf,
+                                        123, heapID);
+	itemno = ITEM_MailNumGet(MailData_GetDesignNo(pMail));
+	PP_Put(pp,ID_PARA_mail_data,(u32)pMail);
+	PP_Put(pp,ID_PARA_item,itemno);
+
 	PokeParty_Add(party, pp);
 
 	PP_Setup(pp, MONSNO_YUMEBAKURA, 100, 123456);
@@ -2284,10 +2295,13 @@ static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus)
 	PokeParty_Add(party, pp);
 	PokeParty_Add(party, pp);
 	GFL_HEAP_FreeMemory(pp);
+	GFL_HEAP_FreeMemory(pMail);
+  GFL_HEAP_FreeMemory(pStrBuf);
 }
 #endif
 
 FS_EXTERN_OVERLAY(ui_common);
+FS_EXTERN_OVERLAY(app_mail);
 
 //------------------------------------------------------------------------------
 /**
@@ -2303,7 +2317,8 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
   
 	//オーバーレイ読み込み
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x140000 );
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x130000 ); //ほぼマックス
   GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
   {
     IRC_POKEMON_TRADE *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_POKEMON_TRADE ), HEAPID_IRCBATTLE );
@@ -2316,14 +2331,16 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
       pWork->pBox = GAMEDATA_GetBoxManager(pGameData);
       pWork->pMy = GAMEDATA_GetMyStatus( pGameData );
       pWork->pMyParty = GAMEDATA_GetMyPokemon(pGameData);
-      DEBUG_MyPokeAdd(pWork->pMyParty, pWork->pMy);
+      pWork->pMailBlock = SaveData_GetMailBlock(GAMEDATA_GetSaveControlWork(pGameData));
+      DEBUG_MyPokeAdd(pWork->pMyParty, pWork->pMy, pWork->heapID);
 
     }
 #if PM_DEBUG
     else{
       pWork->pBox = BOX_DAT_InitManager(pWork->heapID,SaveControl_GetPointer());
       pWork->pMy = MyStatus_AllocWork(pWork->heapID);
-
+      pWork->pMailBlock = GFL_HEAP_AllocClearMemory(pWork->heapID,MAIL_GetBlockWorkSize());
+      MAIL_Init(pWork->pMailBlock);
       {
         POKEMON_PARAM *pp;
         int i,j;
@@ -2351,7 +2368,7 @@ static GFL_PROC_RESULT IrcBattleFriendProcInit( GFL_PROC * proc, int * seq, void
       }
 
       pWork->pMyParty = PokeParty_AllocPartyWork(pWork->heapID);
-      DEBUG_MyPokeAdd(pWork->pMyParty, pWork->pMy);
+      DEBUG_MyPokeAdd(pWork->pMyParty, pWork->pMy,pWork->heapID);
     }
 #endif
 
@@ -2570,12 +2587,15 @@ static GFL_PROC_RESULT IrcBattleFriendProcEnd( GFL_PROC * proc, int * seq, void 
     BOX_DAT_ExitManager(pWork->pBox);
     GFL_HEAP_FreeMemory(pWork->pMy);
     GFL_HEAP_FreeMemory(pWork->pMyParty);
+    GFL_HEAP_FreeMemory(   pWork->pMailBlock );
+
   }
 #endif
 
   GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
 	//オーバーレイ破棄
 	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
 
   return GFL_PROC_RES_FINISH;
 }

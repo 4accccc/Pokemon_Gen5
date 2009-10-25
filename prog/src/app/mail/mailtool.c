@@ -194,7 +194,7 @@ void MailSys_ReleaseCallWork(MAIL_PARAM* wk)
  *	@retval	MAILDATA_NULLID	空きがないので転送できない
  *	@retval	"その他"　転送したデータID
  */
-int	MailSys_MoveMailPoke2Paso(MAIL_BLOCK* block,POKEMON_PARAM* poke,int heapID)
+int	MailSys_MoveMailPoke2Paso(MAIL_BLOCK* block,POKEMON_PARAM* poke,HEAPID heapID)
 {
 	int id;
 	int itemno = ITEM_DUMMY_DATA;
@@ -231,7 +231,7 @@ int	MailSys_MoveMailPoke2Paso(MAIL_BLOCK* block,POKEMON_PARAM* poke,int heapID)
  *	@retval	MAILDATA_NULLID IDが不正なのでなにもしなかった
  *	@retval	"その他"　転送したデータID
  */
-int	MailSys_MoveMailPaso2Poke(MAIL_BLOCK* block,u16 id,POKEMON_PARAM* poke,int heapID)
+int	MailSys_MoveMailPaso2Poke(MAIL_BLOCK* block,u16 id,POKEMON_PARAM* poke,HEAPID heapID)
 {
 	int itemno = ITEM_DUMMY_DATA;
 	MAIL_DATA* src = NULL;

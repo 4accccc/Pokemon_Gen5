@@ -143,7 +143,7 @@ BOOL MailData_IsEnable(MAIL_DATA* dat)
  *	＊呼び出し側が責任もって解放すること
  *	
  */
-MAIL_DATA* MailData_CreateWork(int heapID)
+MAIL_DATA* MailData_CreateWork(HEAPID heapID)
 {
 	MAIL_DATA* p;
 
@@ -502,7 +502,7 @@ void MailData_SetMsgByIndex(MAIL_DATA* dat,PMS_DATA* pms,u8 index)
  *	@li	bufに対して内部でメモリを確保しているので、呼び出し側が明示的に解放すること
  *	@li	FALSEが返った場合、bufはNULLクリアされる
  */
-BOOL MailData_GetMsgStrByIndex(const MAIL_DATA* dat,u8 index,STRBUF* buf,int heapID)
+BOOL MailData_GetMsgStrByIndex(const MAIL_DATA* dat,u8 index,STRBUF* buf,HEAPID heapID)
 {
 	if(index >= MAILDAT_MSGMAX){
 		buf = NULL;
@@ -614,7 +614,7 @@ int MAIL_GetEnableDataNum(MAIL_BLOCK* block,MAILBLOCK_ID blockID)
  *	＊内部でメモリを確保するので、呼び出し側が責任持って領域を開放すること
  *	＊無効IDを指定した場合、空データを返す
  */
-MAIL_DATA* MAIL_AllocMailData(MAIL_BLOCK* block,MAILBLOCK_ID blockID,int dataID,int heapID)
+MAIL_DATA* MAIL_AllocMailData(MAIL_BLOCK* block,MAILBLOCK_ID blockID,int dataID,HEAPID heapID)
 {
 	MAIL_DATA* src = NULL;
 	MAIL_DATA* dest;

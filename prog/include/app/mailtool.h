@@ -75,7 +75,7 @@ extern void MailSys_ReleaseCallWork(MAIL_PARAM* wk);
  *	@retval	MAILDATA_NULLID	空きがないので転送できない
  *	@retval	"その他"　転送したデータID
  */
-extern int	MailSys_MoveMailPoke2Paso(MAIL_BLOCK* block,POKEMON_PARAM* poke,int heapID);
+extern int	MailSys_MoveMailPoke2Paso(MAIL_BLOCK* block,POKEMON_PARAM* poke,HEAPID heapID);
 
 /**
  *	@brief	パソメールをポケモンに移動
@@ -83,7 +83,7 @@ extern int	MailSys_MoveMailPoke2Paso(MAIL_BLOCK* block,POKEMON_PARAM* poke,int h
  *	@retval	MAILDATA_NULLID IDが不正なのでなにもしなかった
  *	@retval	"その他"　転送したデータID
  */
-extern int	MailSys_MoveMailPaso2Poke(MAIL_BLOCK* block,u16 id,POKEMON_PARAM* poke,int heapID);
+extern int	MailSys_MoveMailPaso2Poke(MAIL_BLOCK* block,u16 id,POKEMON_PARAM* poke,HEAPID heapID);
 
 
 

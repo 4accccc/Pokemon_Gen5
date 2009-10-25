@@ -3074,11 +3074,12 @@ static void WH_StateOutInitialize(void *arg)
 
 #ifndef SDK_FINALROM
 	NET_PRINT("ライフタイム変更\n");
-	WM_SetLifeTime(_setLifeCallback,0xffff, 100, 5, 100);
+	WM_SetLifeTime(_setLifeCallback,0xffff, 0xffff, 0xffff, 0xffff);
 #else
 	// システム状態をアイドリング（待機中）に変更。
 	WH_ChangeSysState(WH_SYSSTATE_IDLE);
 #endif
+	WM_SetLifeTime(_setLifeCallback,0xffff, 0xffff, 0xffff, 0xffff);
 	// 次の状態をセットしないので、ここでシーケンスはいったん終了です。
 	// この状態で WH_Connect が呼ばれると接続作業に移行します。
 	if(_pWmInfo->callback)
@@ -3177,6 +3178,7 @@ static void WH_StateOutPowerOn(void *arg)
 	// システム状態をアイドリング（待機中）に変更。
 	WH_ChangeSysState(WH_SYSSTATE_IDLE);
 #endif
+	WM_SetLifeTime(_setLifeCallback,0xffff, 0xffff, 0xffff, 0xffff);
 
 	// 次の状態をセットしないので、ここでシーケンスはいったん終了です。
 	// この状態で WH_Connect が呼ばれると接続作業に移行します。

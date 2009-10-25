@@ -34,6 +34,7 @@
 #include "ui/ui_easy_clwk.h"
 //タッチバー
 #include "ui/touchbar.h"
+#include "savedata/mail_util.h"
 
 
 typedef enum
@@ -390,6 +391,7 @@ struct _IRC_POKEMON_TRADE{
 
   BOX_MANAGER* pBox;
   GAMEDATA* pGameData;
+  MAIL_BLOCK* pMailBlock;
   MYSTATUS* pMy;
   MYSTATUS* pFriend;
   POKEPARTY* pMyParty;
