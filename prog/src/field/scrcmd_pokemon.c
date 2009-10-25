@@ -111,7 +111,7 @@ VMCMD_RESULT EvCmdPokemonRecover( VMHANDLE * core, void *wk )
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
   POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
 
-  PokeParty_RecoverAll( party );
+  STATUS_RCV_PokeParty_RecoverAll( party );
 
   return VMCMD_RESULT_CONTINUE;
 }

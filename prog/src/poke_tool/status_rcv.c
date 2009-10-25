@@ -58,7 +58,7 @@ static u8 Friend_UpCheck( POKEMON_PARAM * pp, ITEMDATA * dat );
  * @retval	"FALSE = 使用不可"
  */
 //--------------------------------------------------------------------------------------------
-u8 StatusRecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
+u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
 {
 	ITEMDATA * dat;
 	s32	tmp[TEMP_BUFLEN];
@@ -323,11 +323,11 @@ u8 StatusRecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
  * @retval	"FALSE = 使用不可"
  */
 //--------------------------------------------------------------------------------------------
-u8 PokeParty_StatusRecoverCheck( POKEPARTY * party, u16 item, u8 pos1, u8 pos2, u32 heap_id )
+u8 STATUS_RCV_PokeParty_RecoverCheck( POKEPARTY * party, u16 item, u8 pos1, u8 pos2, u32 heap_id )
 {
 	POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, pos1 );
 
-	return StatusRecoverCheck( pp, item, pos2, heap_id );
+	return STATUS_RCV_RecoverCheck( pp, item, pos2, heap_id );
 }
 
 
@@ -345,7 +345,7 @@ u8 PokeParty_StatusRecoverCheck( POKEPARTY * party, u16 item, u8 pos1, u8 pos2, 
  * @retval	"FALSE = 使用不可"
  */
 //--------------------------------------------------------------------------------------------
-u8 StatusRecover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 heap_id )
+u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 heap_id )
 {
 	ITEMDATA * dat;
 	s32	tmp[TEMP_BUFLEN];
@@ -617,11 +617,11 @@ u8 StatusRecover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 heap_id 
  * @retval	"FALSE = 使用不可"
  */
 //--------------------------------------------------------------------------------------------
-u8 PokeParty_StatusRecover( POKEPARTY * party, u16 item, u8 pos1, u8 pos2, u16 place, u32 heap_id )
+u8 STATUS_RCV_PokeParty_Recover( POKEPARTY * party, u16 item, u8 pos1, u8 pos2, u16 place, u32 heap_id )
 {
 	POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, pos1 );
 
-	return StatusRecover( pp, item, pos2, place, heap_id );
+	return STATUS_RCV_Recover( pp, item, pos2, place, heap_id );
 }
 
 
@@ -915,7 +915,7 @@ static u8 Friend_Up( POKEMON_PARAM * pp, s32 now, s32 prm, u16 place, u32 heap )
 /**ポケモン回復処理(単体・全体
  */
 //--------------------------------------------------------------------------------------------
-void PokeParam_RecoverAll(POKEMON_PARAM * pp)
+void STATUS_RCV_PokeParam_RecoverAll(POKEMON_PARAM * pp)
 {
   int j;
 	u32 buf;
@@ -931,7 +931,9 @@ void PokeParam_RecoverAll(POKEMON_PARAM * pp)
 			PP_Recover(pp, j, PP_RCV_ALL);
 		}
 	}
-}void PokeParty_RecoverAll(POKEPARTY * party)
+}
+
+void STATUS_RCV_PokeParty_RecoverAll(POKEPARTY * party)
 {
 	int i,total;
 	POKEMON_PARAM * pp;
@@ -942,7 +944,7 @@ void PokeParam_RecoverAll(POKEMON_PARAM * pp)
 		if (PP_Get(pp, ID_PARA_poke_exist, NULL) == FALSE) {
 			continue;
 		}
-		PokeParam_RecoverAll( pp );
+		STATUS_RCV_PokeParam_RecoverAll( pp );
 	}
 }
 

@@ -31,7 +31,7 @@
  * @retval	"FALSE = 使用不可"
  */
 //--------------------------------------------------------------------------------------------
-extern u8 StatusRecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id );
+extern u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -47,7 +47,7 @@ extern u8 StatusRecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id
  * @retval	"FALSE = 使用不可"
  */
 //--------------------------------------------------------------------------------------------
-extern u8 PokeParty_StatusRecoverCheck(
+extern u8 STATUS_RCV_PokeParty_RecoverCheck(
 			POKEPARTY * party, u16 item, u8 pos1, u8 pos2, u32 heap_id );
 
 //--------------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ extern u8 PokeParty_StatusRecoverCheck(
  * @retval	"FALSE = 使用不可"
  */
 //--------------------------------------------------------------------------------------------
-extern u8 StatusRecover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 heap_id );
+extern u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 heap_id );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -81,7 +81,7 @@ extern u8 StatusRecover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 h
  * @retval	"FALSE = 使用不可"
  */
 //--------------------------------------------------------------------------------------------
-extern u8 PokeParty_StatusRecover(
+extern u8 STATUS_RCV_PokeParty_Recover(
 			POKEPARTY * party, u16 item, u8 pos1, u8 pos2, u16 place, u32 heap_id );
 
 
@@ -90,10 +90,10 @@ extern u8 PokeParty_StatusRecover(
  * 単体全回復
  */
 //--------------------------------------------------------------------------------------------
-extern void PokeParam_RecoverAll(POKEMON_PARAM * pp);
+extern void STATUS_RCV_PokeParam_RecoverAll(POKEMON_PARAM * pp);
 //--------------------------------------------------------------------------------------------
 /**
  * パーティー全回復
  */
 //--------------------------------------------------------------------------------------------
-extern void PokeParty_RecoverAll(POKEPARTY * party);
+extern void STATUS_RCV_PokeParty_RecoverAll(POKEPARTY * party);

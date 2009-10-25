@@ -714,7 +714,7 @@ static void _changeDemo_ModelTrade23(IRC_POKEMON_TRADE* pWork)
     if(pWork->selectBoxno == BOX_MAX_TRAY){ //‚à‚¿‚à‚Ì‚ÌŒðŠ·‚Ìê‡
       POKEPARTY* party = pWork->pMyParty;
 
-      PokeParam_RecoverAll(pWork->recvPoke[id]);
+      STATUS_RCV_PokeParam_RecoverAll(pWork->recvPoke[id]);
 
       PokeParty_SetMemberData(party, pWork->selectIndex, pWork->recvPoke[id]);
     }

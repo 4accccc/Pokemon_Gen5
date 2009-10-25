@@ -1039,7 +1039,7 @@ static void PLIST_InitMode( PLIST_WORK *work )
         work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, target);
 
         PLIST_ITEM_MSG_UseItemFunc( work );
-        StatusRecover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
+        STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
         PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
 
         work->nextMainSeq = work->mainSeq;
@@ -1218,13 +1218,13 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
       }
       else
       {
-        const BOOL canUse = StatusRecoverCheck( work->selectPokePara , work->plData->item , 0 , work->heapId );
+        const BOOL canUse = STATUS_RCV_RecoverCheck( work->selectPokePara , work->plData->item , 0 , work->heapId );
         if( canUse == TRUE )
         {
           PLIST_ITEM_MSG_UseItemFunc( work );
           
           //実際に適用
-          StatusRecover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
+          STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
           PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
           
           PMSND_PlaySystemSE( PLIST_SND_RECOVER );
@@ -2404,13 +2404,13 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
     if( work->plData->mode == PL_MODE_ITEMUSE )
     {
       //PP回復アイテムの選択
-      const BOOL canUse = StatusRecoverCheck( work->selectPokePara , work->plData->item , work->menuRet-PMIT_WAZA_1 , work->heapId );
+      const BOOL canUse = STATUS_RCV_RecoverCheck( work->selectPokePara , work->plData->item , work->menuRet-PMIT_WAZA_1 , work->heapId );
       if( canUse == TRUE )
       {
         PLIST_ITEM_MSG_UseItemFunc( work );
         
         //実際に消費と適用
-        StatusRecover( work->selectPokePara , work->plData->item , work->menuRet-PMIT_WAZA_1 , work->plData->place , work->heapId );
+        STATUS_RCV_Recover( work->selectPokePara , work->plData->item , work->menuRet-PMIT_WAZA_1 , work->plData->place , work->heapId );
         PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
         PMSND_PlaySystemSE( PLIST_SND_RECOVER );
       }

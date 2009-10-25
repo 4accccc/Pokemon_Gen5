@@ -374,7 +374,7 @@ const int PLIST_ITEM_CanUseDeathRecoverAllItem( PLIST_WORK *work )
   for( i=0;i<partyMax;i++ )
   {
     POKEMON_PARAM *pp = PokeParty_GetMemberPointer(work->plData->pp, i);
-    const BOOL canUse = StatusRecoverCheck( pp , work->plData->item , 0 , work->heapId );
+    const BOOL canUse = STATUS_RCV_RecoverCheck( pp , work->plData->item , 0 , work->heapId );
     if( canUse == TRUE )
     {
       return i;
@@ -586,7 +586,7 @@ static void PSTATUS_MSGCB_RecoverAllDeath_NextPoke( PLIST_WORK *work )
   work->selectPokePara = PokeParty_GetMemberPointer(work->plData->pp, target);
 
   PLIST_ITEM_MSG_UseItemFunc( work );
-  StatusRecover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
+  STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->place , work->heapId );
   PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
 }
 
