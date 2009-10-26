@@ -4101,4 +4101,14 @@
   .short EV_SEQ_CAMERA_WAIT_MOVE
   .endm
 
+//--------------------------------------------------------------
+/**
+ * 侵入コマンド　ミニモノリス設置
+ */
+//--------------------------------------------------------------
+#define _INTRUDE_MINIMONO_SETTING() _ASM_INTRUDE_MINIMONO_SETTING
+
+  .macro  _ASM_INTRUDE_MINIMONO_SETTING
+  .short  EV_SEQ_INTRUDE_MINIMONO_SETTING
+  .endm
 

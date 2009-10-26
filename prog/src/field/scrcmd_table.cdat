@@ -604,7 +604,8 @@
   NO_CMD()
   NO_CMD()
 
-  NO_CMD()
+  //êNì¸ä÷òA
+  DEF_CMD( EvCmdIntrudeMinimonoSetting, EV_SEQ_INTRUDE_MINIMONO_SETTING )
   NO_CMD()
   NO_CMD()
   NO_CMD()

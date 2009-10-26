@@ -6,5 +6,7 @@
 
 //スクリプトデータID定義
 #define SCRID_PLC10 (1)
+#define SCRID_INIT_PLC10 (2)
+#define SCRID_PLC10_MINIMONO (3)
 
 #endif //_PLC10_DEF_H_

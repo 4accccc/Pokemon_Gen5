@@ -25,6 +25,7 @@
 #include "fieldmap/zone_id.h"
 #include "field/zonedata.h"
 #include "intrude_field.h"
+#include "field/field_const.h"
 
 
 //==============================================================================
@@ -51,10 +52,10 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
     ZONE_ID_PLC04, 
     7*8, 3*8,
     {
-      6936, 16, 7448,
-      6856, 16, 7000,
-      6520, 16, 6984,
-      6488, 16, 7368,
+      6936/16, 7448/16, 16,
+      6856/16, 7000/16, 16,
+      6520/16, 6984/16, 16,
+      6488/16, 7368/16, 16,
     },
   },
   {
@@ -62,10 +63,10 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
     ZONE_ID_PLC05, 
     0x10*8, 3*8,
     {
-      3752, 0, 6952,
-      3320, 0, 6920,
-      2904, 0, 6920,
-      2952, 0, 6632,
+      3752/16,6952/16, 0, 
+      3320/16,6920/16, 0, 
+      2904/16,6920/16, 0, 
+      2952/16,6632/16, 0, 
     },
   },
   {
@@ -73,10 +74,10 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
     ZONE_ID_PLC06, 
     0x19*8, 3*8,
     {
-      1656, 0, 4888,
-      1688, 0, 4760,
-      1224, 0, 4824,
-      1304, 0, 4984,
+      1656/16,4888/16, 0, 
+      1688/16,4760/16, 0, 
+      1224/16,4824/16, 0, 
+      1304/16,4984/16, 0, 
     },
   },
   {
@@ -84,10 +85,10 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
     ZONE_ID_PLC07, 
     2*8, 0xa*8,
     {
-      2792, 32, 3112,
-      2792, 32, 2888,
-      2984, 0,  3208,
-      3336, 32, 3192,
+      2792/16, 3112/16, 32,
+      2792/16, 2888/16, 32,
+      2984/16, 3208/16, 0, 
+      3336/16, 3192/16, 32,
     },
   },
   {
@@ -95,10 +96,10 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
     ZONE_ID_PLC08, 
     0x1e*8, 0xa*8,
     {
-      6632, 33, 2856,
-      6952, 33, 2792,
-      6824, 33, 2472,
-      6472, 33, 2472,
+      6632/16, 2856/16, 33,
+      6952/16, 2792/16, 33,
+      6824/16, 2472/16, 33,
+      6472/16, 2472/16, 33,
     },
   },
   {
@@ -106,10 +107,10 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
     ZONE_ID_PLT03, 
     7*8, 0x11*8,
     {
-      10552, 80, 2824,
-      10488, 0, 3000,
-      10712, 0, 2728,
-      10584, 0, 2696,
+      10552/16, 2824/16, 80,
+      10488/16,3000/16, 0, 
+      10712/16,2728/16, 0, 
+      10584/16,2696/16, 0, 
     },
   },
   {
@@ -117,10 +118,10 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
     ZONE_ID_PLT04, 
     0x10*8, 0x11*8,
     {
-      11640, 16, 4824,
-      11816, 0, 4888,
-      12040, 0, 4840,
-      11688, 0, 4936,
+      11640/16, 4824/16, 16,
+      11816/16,4888/16, 0, 
+      12040/16,4840/16, 0, 
+      11688/16,4936/16, 0, 
     },
   },
   {
@@ -128,10 +129,10 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
     ZONE_ID_PLC10, 
     0x19*8, 0x11*8,
     {
-      10456, 0, 9448,
-      10104, 0, 9448,
-      10104, 0, 9608,
-      10616, 0, 9608,
+      10456/16,9448/16, 0, 
+      10104/16,9448/16, 0, 
+      10104/16,9608/16, 0, 
+      10616/16,9608/16, 0, 
     },
   },
 };
@@ -139,9 +140,9 @@ SDK_COMPILER_ASSERT(NELEMS(PalaceTownData) == PALACE_TOWN_DATA_MAX);
 
 ///パレスへワープしてきたときの出現座標
 static const VecFx32 PalaceWarpPos = {
-  1464*FX32_ONE,
+  1464/16,
   0*FX32_ONE,
-  440*FX32_ONE,
+  440/16,
 };
 
 //==============================================================================
@@ -686,8 +687,8 @@ void Intrude_GetPalaceTownRandPos(int town_tblno, VecFx32 *vec)
     return;
   }
   rand_no = GFUser_GetPublicRand0(PALACE_WARP_POS_PATERN);
-  vec->x = PalaceTownData[town_tblno].warp_pos[rand_no].x * FX32_ONE;
+  vec->x = GRID_TO_FX32( PalaceTownData[town_tblno].warp_pos[rand_no].gx );
   vec->y = PalaceTownData[town_tblno].warp_pos[rand_no].y * FX32_ONE;
-  vec->z = PalaceTownData[town_tblno].warp_pos[rand_no].z * FX32_ONE;
+  vec->z = GRID_TO_FX32( PalaceTownData[town_tblno].warp_pos[rand_no].gz );
   GF_ASSERT(vec->x != 0 || vec->y != 0 || vec->z != 0); //全部0は設定し忘れ
 }
