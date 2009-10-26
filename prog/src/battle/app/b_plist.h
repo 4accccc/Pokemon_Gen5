@@ -13,6 +13,7 @@
 #include "pm_define.h"
 #include "print/printsys.h"
 #include "poke_tool/pokeparty.h"
+#include "battle/battle.h"
 
 
 //============================================================================================
@@ -20,6 +21,8 @@
 //============================================================================================
 #define	BPL_SEL_EXIT			( 6 )	// キャンセル
 #define	BPL_SEL_WP_CANCEL	( 4 )	// 技忘れキャンセル（新しく覚える技位置）
+
+#define	BPL_CHANGE_SEL_NONE		( BPL_SEL_EXIT )	// ダブル/トリプルですでに選択されているポケモンがいないとき
 
 // リスト処理定義
 enum {
@@ -45,42 +48,42 @@ enum {
 
 // リストデータ
 typedef struct {
+	// [in]
 	POKEPARTY * pp;		// ポケモンデータ
-//	void * myitem;		// アイテムデータ
-
-//	BATTLE_WORK * bw;		// 戦闘用ワーク
 
 	GFL_FONT * font;
 
 	HEAPID	heap;			// ヒープID
 
-//	u8	fight_type;		// シングル／ダブル／マルチ
-	u8	multi_pos;		// マルチの立位置
-	u8	sel_poke;		// 選択されたポケモン or 戻る
-	u8	double_sel;		// ダブルバトルですでに選択されているポケモン
-	u8	ret_mode;		// 選択された処理
+	BtlRule	rule;			// シングル／ダブル／トリプル
 
-	u8	fight_poke1;	// 戦闘に出ているポケモン１
-	u8	fight_poke2;	// 戦闘に出ているポケモン２
+	u8	multi_pos;			// マルチの立ち位置
+	u8	change_sel[2];	// ダブル/トリプルですでに選択されているポケモン（いない場合はBPL_CHANGE_SEL_NONE）
+	u8	mode;						// リストモード
 
-	u32	skill_item_use[2];	// 技で使用不可
-
-	u16	hp_rcv;			// HP回復量
-
-	u16	item;			// アイテム
+	u16	item;				// アイテム
 	u16	chg_waza;		// いれかえ禁止技・新しく覚える技
 
-	s32 client_no;						// クライアントNo
-	u8	list_row[TEMOTI_POKEMAX];	// リストロウ
+	// [in & out]
+	u8	sel_poke;		// 選択されたポケモン or 戻る
 
-	u8	cursor_flg;		// カーソル表示フラグ
-
-	u8	bag_page;		// バッグのページ
-
+	// [out]
 	u8	sel_wp;			// 選択された技位置
-
-	u8	mode;			// リストモード
 	u8	end_flg;		// 終了フラグ
+
+
+
+//	void * myitem;		// アイテムデータ
+
+//	BATTLE_WORK * bw;		// 戦闘用ワーク
+
+//	u8	ret_mode;				// 選択された処理
+//	u32	skill_item_use[2];	// 技で使用不可
+//	u16	hp_rcv;			// HP回復量
+//	s32 client_no;						// クライアントNo
+//	u8	list_row[TEMOTI_POKEMAX];	// リストロウ
+//	u8	cursor_flg;		// カーソル表示フラグ
+//	u8	bag_page;		// バッグのページ
 
 }BPLIST_DATA;
 
