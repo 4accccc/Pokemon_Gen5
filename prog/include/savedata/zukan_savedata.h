@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	zukan_savedata.h
- * @brief	図鑑セーブデータアクセス処理群ヘッダ
- * @author	mori / tamada GAME FREAK inc.
- * @date	2009.10.26
+ * @file  zukan_savedata.h
+ * @brief 図鑑セーブデータアクセス処理群ヘッダ
+ * @author  mori / tamada GAME FREAK inc.
+ * @date  2009.10.26
  */
 //============================================================================================
 #ifndef __ZUKAN_SAVEDATA_H__
@@ -19,52 +19,52 @@
 //============================================================================================
 //============================================================================================
 enum{
-	ZUKANSAVE_RANDOM_PACHI = 0,		// パッチール個性乱数
+  ZUKANSAVE_RANDOM_PACHI = 0,   // パッチール個性乱数
 
-	// ポケモン性別取得用
-	ZUKANSAVE_SEX_FIRST = 0,
-	ZUKANSAVE_SEX_SECOND,
+  // ポケモン性別取得用
+  ZUKANSAVE_SEX_FIRST = 0,
+  ZUKANSAVE_SEX_SECOND,
 
-	// ZukanSave_GetPokeSexFlag系関数のエラーコード
-	ZUKANSAVE_GET_SEX_ERR	= 0xffffffff,	
-
-	
-	// 全国図鑑最大
-	ZUKANSAVE_ZENKOKU_MONSMAX		= MONSNO_END,
-	
-	// ジョウト図鑑最大数
-	ZUKANSAVE_JOHTO_MONSMAX	= ISSHU_MAX,
-
-	// 全国図鑑は捕まえた条件なのでマナフィーのチェックは必要になる(08.06.20)
-	// ゼンコク図鑑完成に必要なポケモンの数
-	ZUKANSAVE_ZENKOKU_COMP_NOPOKE_NUM = 9,	// 不必要なポケモン数
-	ZUKANSAVE_ZENKOKU_COMP_NUM	= ZUKANSAVE_ZENKOKU_MONSMAX - ZUKANSAVE_ZENKOKU_COMP_NOPOKE_NUM,
-
-	// ジョウト図鑑完成に必要なポケモンの数
-	ZUKANSAVE_JOHTO_COMP_NOPOKE_NUM = 2,	// 不必要なポケモン数
-	ZUKANSAVE_JOHTO_COMP_NUM	= ZUKANSAVE_JOHTO_MONSMAX - ZUKANSAVE_JOHTO_COMP_NOPOKE_NUM,
-		
+  // ZukanSave_GetPokeSexFlag系関数のエラーコード
+  ZUKANSAVE_GET_SEX_ERR = 0xffffffff,
 
 
-	// シーウシ　シードルゴ シェイミ　ギラティナの形状数
-	ZUKANSAVE_UMIUSHI_FORM_NUM = 2,	//(ここを変えただけではセーブ領域の方式やワークサイズは変わらないので、形状数が変わったときは内部も変更すること)
+  // 全国図鑑最大
+  ZUKANSAVE_ZENKOKU_MONSMAX   = MONSNO_END,
 
-	// ミノムッチ　ミノメス　ピチュー　形状数
-	ZUKANSAVE_MINOMUSHI_FORM_NUM = 3,	//(ここを変えただけではセーブ領域の方式やワークサイズは変わらないので、形状数が変わったときは内部も変更すること)
+  // ジョウト図鑑最大数
+  ZUKANSAVE_JOHTO_MONSMAX = ISSHU_MAX,
 
-	// デオキシスの形状数
-	ZUKANSAVE_DEOKISISU_FORM_NUM = 4,
-	ZUKANSAVE_DEOKISISU_FORM_SAVEDATA_CUTNUM = 2,	// デオキシスセーブ領域は、急遽　捕獲見たフラグのけつ1byteずづに割り振っています。各1byteにセーブできる形状の数です
-	POKEZUKAN_DEOKISISU_INIT = 0xf,	// 初期化時格納されている値
+  // 全国図鑑は捕まえた条件なのでマナフィーのチェックは必要になる(08.06.20)
+  // ゼンコク図鑑完成に必要なポケモンの数
+  ZUKANSAVE_ZENKOKU_COMP_NOPOKE_NUM = 9,  // 不必要なポケモン数
+  ZUKANSAVE_ZENKOKU_COMP_NUM  = ZUKANSAVE_ZENKOKU_MONSMAX - ZUKANSAVE_ZENKOKU_COMP_NOPOKE_NUM,
 
-	// ロトムの形状数
-	ZUKANSAVE_ROTOM_FORM_NUM = 6,	// (ここを変えただけではセーブ領域の方式やワークサイズは変わらないので、形状数が変わったときは内部も変更すること)
+  // ジョウト図鑑完成に必要なポケモンの数
+  ZUKANSAVE_JOHTO_COMP_NOPOKE_NUM = 2,  // 不必要なポケモン数
+  ZUKANSAVE_JOHTO_COMP_NUM  = ZUKANSAVE_JOHTO_MONSMAX - ZUKANSAVE_JOHTO_COMP_NOPOKE_NUM,
 
-	// ポワルンの形状数（セーブデータには関係ありません）
-	ZUKANSAVE_POWARUN_FORM_NUM = 4,
 
-	// チェリムの形状数（セーブデータには関係ありません）
-	ZUKANSAVE_CHERIMU_FORM_NUM = 2,
+
+  // シーウシ　シードルゴ シェイミ　ギラティナの形状数
+  ZUKANSAVE_UMIUSHI_FORM_NUM = 2, //(ここを変えただけではセーブ領域の方式やワークサイズは変わらないので、形状数が変わったときは内部も変更すること)
+
+  // ミノムッチ　ミノメス　ピチュー　形状数
+  ZUKANSAVE_MINOMUSHI_FORM_NUM = 3, //(ここを変えただけではセーブ領域の方式やワークサイズは変わらないので、形状数が変わったときは内部も変更すること)
+
+  // デオキシスの形状数
+  ZUKANSAVE_DEOKISISU_FORM_NUM = 4,
+  ZUKANSAVE_DEOKISISU_FORM_SAVEDATA_CUTNUM = 2, // デオキシスセーブ領域は、急遽　捕獲見たフラグのけつ1byteずづに割り振っています。各1byteにセーブできる形状の数です
+  POKEZUKAN_DEOKISISU_INIT = 0xf, // 初期化時格納されている値
+
+  // ロトムの形状数
+  ZUKANSAVE_ROTOM_FORM_NUM = 6, // (ここを変えただけではセーブ領域の方式やワークサイズは変わらないので、形状数が変わったときは内部も変更すること)
+
+  // ポワルンの形状数（セーブデータには関係ありません）
+  ZUKANSAVE_POWARUN_FORM_NUM = 4,
+
+  // チェリムの形状数（セーブデータには関係ありません）
+  ZUKANSAVE_CHERIMU_FORM_NUM = 2,
 };
 
 //----------------------------------------------------------
@@ -73,13 +73,13 @@ enum{
 typedef struct ZUKAN_SAVEDATA ZUKAN_SAVEDATA;
 
 //----------------------------------------------------------
-//	セーブデータ取得のための関数
+//  セーブデータ取得のための関数
 //----------------------------------------------------------
 extern ZUKAN_SAVEDATA * SaveData_GetZukanSave( SAVE_CONTROL_WORK * sv);
 
 
 //----------------------------------------------------------
-//	セーブデータシステムが依存する関数
+//  セーブデータシステムが依存する関数
 //----------------------------------------------------------
 extern int ZukanSave_GetWorkSize(void);
 extern ZUKAN_SAVEDATA * ZukanSave_AllocWork( HEAPID heapID );
@@ -96,8 +96,8 @@ extern u16 ZukanSave_GetJohtoPokeGetCount(const ZUKAN_SAVEDATA * zs);
 extern u16 ZukanSave_GetJohtoPokeSeeCount(const ZUKAN_SAVEDATA * zs);
 
 // ポケモン見た登録・ポケモン捕まえた登録
-extern void ZukanSave_SetPokeSee(ZUKAN_SAVEDATA * zs, POKEMON_PARAM * pp);
-extern void ZukanSave_SetPokeGet(ZUKAN_SAVEDATA * zs, POKEMON_PARAM * pp);
+extern void ZukanSave_SetPokeSee(ZUKAN_SAVEDATA * zs, const POKEMON_PARAM * pp);
+extern void ZukanSave_SetPokeGet(ZUKAN_SAVEDATA * zs, const POKEMON_PARAM * pp);
 
 // ゼンコク図鑑持っているときー＞全国用の各数字を返す
 // ジョウト図鑑しかもっていないときー＞ジョウト図鑑用の各数字を返す
@@ -152,7 +152,7 @@ extern void ZukanSave_Copy(const ZUKAN_SAVEDATA * from, ZUKAN_SAVEDATA * to);
 
 
 //----------------------------------------------------------
-//	デバッグ用
+//  デバッグ用
 //----------------------------------------------------------
 extern void Debug_ZukanSave_Make(ZUKAN_SAVEDATA * zs, int start, int end, BOOL see_flg, HEAPID heapId);
 extern void Debug_ZukanSave_Make_PM_LANG(ZUKAN_SAVEDATA * zs, int start, int end, BOOL see_flg, HEAPID heapId);
@@ -170,4 +170,4 @@ extern void *Index_Get_See_Flag_Offset(ZUKAN_SAVEDATA *zs);
 extern void *Index_Get_Sex_Flag_Offset(ZUKAN_SAVEDATA *zs);
 #endif
 
-#endif	// __ZUKAN_SAVEADATA_H__
+#endif  // __ZUKAN_SAVEADATA_H__
