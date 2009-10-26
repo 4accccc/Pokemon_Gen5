@@ -508,6 +508,9 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_ncastle07_01_00.3dppack \
 	$(DIR_OUTPUT)/m_ncastle08_00_00.3dppack \
 	$(DIR_OUTPUT)/m_ncastle08_01_00.3dppack \
+	$(DIR_OUTPUT)/m_soccer01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_live01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_live02_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \
