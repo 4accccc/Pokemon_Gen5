@@ -282,6 +282,16 @@ SCRIPT_FUNC_DEF( ScriptFinish )
   return SFT_SUSPEND;
 }
 
+//スクリプトの終了
+SCRIPT_FUNC_DEF( Label )
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  const s32 value = ScriptFunc_GetValueS32();
+  SCRIPT_PRINT_LABEL(Label);
+  OS_TPrintf("     LabelCommand[%d]\n",value);
+  return SFT_CONTINUE;
+}
+
 //指定フレーム待機
 SCRIPT_FUNC_DEF( FrameWait )
 {

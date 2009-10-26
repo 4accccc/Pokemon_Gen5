@@ -63,7 +63,8 @@
 #define SCRIPT_ENUM_StageStartMainPart   (44)
 #define SCRIPT_ENUM_StageFinishMainPart   (45)
 #define SCRIPT_ENUM_PokeActionComeNearToTop   (46)
-#define SEQ_END             (47)
+#define SCRIPT_ENUM_Label   (47)
+#define SEQ_END             (48)
 
 #ifndef __C_NO_DEF_
 
@@ -926,6 +927,21 @@
 
 
 #pragma mark [>Other Command
+//======================================================================
+/**
+ * @brief ■■■■■■ラベル■■■■■■
+ *
+ * #param_num 1
+ * @param labelNo ラベル番号
+ *
+ * #param VALUE_INT labelNo
+ */
+//======================================================================
+  .macro  ComSEQ_Label labelNo
+  .short  SCRIPT_ENUM_Label
+  .long \labelNo
+  .endm
+
 //======================================================================
 /**
  * @brief ミュージカル終了(ダミー

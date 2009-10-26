@@ -67,4 +67,5 @@ SCRIPT_FUNC_DEF( PokeAttentionOff )	//0 //注目ポケモン解除
 SCRIPT_FUNC_DEF( StageStartMainPart )	//0 //メインパート開始
 SCRIPT_FUNC_DEF( StageFinishMainPart )	//0 //メインパート終了
 SCRIPT_FUNC_DEF( PokeActionComeNearToTop )	//1 //トップのポケモンに寄る
+SCRIPT_FUNC_DEF( Label )	//1 //ラベル
 
