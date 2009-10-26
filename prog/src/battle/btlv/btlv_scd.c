@@ -113,6 +113,9 @@ struct _BTLV_SCD {
   SEL_TARGET_WORK   selTargetWork;
   u8                selTargetDone;
   u8                fActionPrevButton;
+  s8                fadeValue;
+  s8                fadeValueEnd;
+  s8                fadeStep;
 
   BtlAction  selActionResult;
   const BTLV_CORE* vcore;
@@ -196,6 +199,63 @@ void BTLV_SCD_Init( BTLV_SCD* wk )
   setupMainWin( wk );
 }
 
+//=============================================================================================
+/**
+ * フェードアウト開始
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_SCD_FadeOut( BTLV_SCD* wk )
+{
+  wk->fadeValue = 0;
+  wk->fadeValueEnd = -16;
+  wk->fadeStep = -1;
+}
+//=============================================================================================
+/**
+ * フェードイン開始
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_SCD_FadeIn( BTLV_SCD* wk )
+{
+  wk->fadeValue = -16;
+  wk->fadeValueEnd = 0;
+  wk->fadeStep = 1;
+}
+//=============================================================================================
+/**
+ * フェード（イン／アウト）進行
+ *
+ * @param   wk
+ *
+ * @retval  BOOL    TRUEで終了
+ */
+//=============================================================================================
+BOOL BTLV_SCD_FadeFwd( BTLV_SCD* wk )
+{
+  #if 0
+  if( wk->fadeStep )
+  {
+    wk->fadeValue += wk->fadeStep;
+    if( (wk->fadeStep < 0) && (wk->fadeValue <= wk->fadeValueEnd) ){
+      wk->fadeValue = wk->fadeValueEnd;
+      wk->fadeStep = 0;
+    }
+    else if((wk->fadeStep > 0) && (wk->fadeValue >= wk->fadeValueEnd) ){
+      wk->fadeValue = wk->fadeValueEnd;
+      wk->fadeStep = 0;
+    }
+    GXS_SetMasterBrightness( wk->fadeValue );
+  }
+  return (wk->fadeStep == 0);
+  #else
+  // @todo 直接輝度をいじるとバッグやらリストが対応していないのでとりあえずオフる
+  return TRUE;
+  #endif
+}
 void BTLV_SCD_Cleanup( BTLV_SCD* wk )
 {
   GFL_BMPWIN_Delete( wk->win );
@@ -337,7 +397,7 @@ static const GFL_UI_TP_HITTBL BattleMenuTouchData[] = {
   {0x13*8, 0x18*8, 0xb*8, 0x15*8},  //にげる
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
-static const BTLV_INPUT_KEYTBL  BattleMenuKeyData[] = { 
+static const BTLV_INPUT_KEYTBL  BattleMenuKeyData[] = {
   //UP                  DOWN                LEFT                RIGHT               B_BUTTON
   { BTLV_INPUT_NOMOVE,  -1,                 1,                  2,                  BTLV_INPUT_NOMOVE },  //たたかう
   { 0,                  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3                ,  BTLV_INPUT_NOMOVE },  //バッグ
@@ -355,7 +415,7 @@ static const GFL_UI_TP_HITTBL SkillMenuTouchDataNormal[] = {
   { 0x12*8, 0x18*8, 0x16*8, 255},      //キャンセル
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
-static const BTLV_INPUT_KEYTBL  SkillMenuKeyDataNormal[] = { 
+static const BTLV_INPUT_KEYTBL  SkillMenuKeyDataNormal[] = {
   //UP                  DOWN                LEFT                RIGHT               B_BUTTON
   { BTLV_INPUT_NOMOVE,  2,                  BTLV_INPUT_NOMOVE,  1                ,  4 },  //技1
   { BTLV_INPUT_NOMOVE,  3,                  0,                  BTLV_INPUT_NOMOVE,  4 },  //技2
@@ -375,7 +435,7 @@ static const GFL_UI_TP_HITTBL SkillMenuTouchData3vs3[] = {
   {0x12*8, 0x18*8, 0x00*8, 0x0a*8},   //移動
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
-static const BTLV_INPUT_KEYTBL  SkillMenuKeyData3vs3[] = { 
+static const BTLV_INPUT_KEYTBL  SkillMenuKeyData3vs3[] = {
   //UP                  DOWN                LEFT                RIGHT               B_BUTTON
   { BTLV_INPUT_NOMOVE,  2,                  BTLV_INPUT_NOMOVE,  1                ,  4 },  //技1
   { BTLV_INPUT_NOMOVE,  3,                  0,                  BTLV_INPUT_NOMOVE,  4 },  //技2

@@ -1,10 +1,10 @@
 //=============================================================================================
 /**
- * @file	btl_pokeselect.h
- * @brief	ポケモンWB バトルシステム	ポケモン選択画面用パラメータ等の定義
- * @author	taya
+ * @file  btl_pokeselect.h
+ * @brief ポケモンWB バトルシステム ポケモン選択画面用パラメータ等の定義
+ * @author  taya
  *
- * @date	2008.09.25	作成
+ * @date  2008.09.25  作成
  */
 //=============================================================================================
 #ifndef __BTL_POKESELECT_H__
@@ -15,42 +15,42 @@
 
 //------------------------------
 /**
- *	選択できない理由
+ *  選択できない理由
  */
 //------------------------------
 typedef enum {
-	BTL_POKESEL_CANT_NONE=0,		///< 選択できます
+  BTL_POKESEL_CANT_NONE=0,    ///< 選択できます
 
-	BTL_POKESEL_CANT_DEAD,			///< 死んでるから
-	BTL_POKESEL_CANT_FIGHTING,	///< 戦ってるから
-	BTL_POKESEL_CANT_SELECTED,	///< 同じターンでもう選ばれたから
+  BTL_POKESEL_CANT_DEAD,      ///< 死んでるから
+  BTL_POKESEL_CANT_FIGHTING,  ///< 戦ってるから
+  BTL_POKESEL_CANT_SELECTED,  ///< 同じターンでもう選ばれたから
 
 }BtlPokeselReason;
 
 //------------------------------------------------------
 /**
- *	ポケモン選択画面用パラメータ
+ *  ポケモン選択画面用パラメータ
  */
 //------------------------------------------------------
 typedef struct {
 
-	const BTL_PARTY*	party;				///< パーティデータ
-	u8								numSelect;		///< 選択するポケモン数
-	u8								prohibit[ BTL_PARTY_MEMBER_MAX ];
-	u8								aliveOnly;		///< TRUEだと生きているポケモンしか選べない
+  const BTL_PARTY*  party;        ///< パーティデータ
+  u8                numSelect;    ///< 選択するポケモン数
+  u8                prohibit[ BTL_PARTY_MEMBER_MAX ];
+  u8                aliveOnly;    ///< TRUEだと生きているポケモンしか選べない
 
 }BTL_POKESELECT_PARAM;
 
 //------------------------------------------------------
 /**
- *	結果格納用構造体
+ *  結果格納用構造体
  */
 //------------------------------------------------------
 typedef struct {
 
-	u8			selIdx[ BTL_POSIDX_MAX ];	///< 選択したポケモンの並び順（現在の並び順で先頭を0と数える）
-	u8			cnt;											///< 選択した数
-	u8			max;											///< 選択する数
+  u8      selIdx[ BTL_POSIDX_MAX ]; ///< 選択したポケモンの並び順（現在の並び順で先頭を0と数える）
+  u8      cnt;                      ///< 選択した数
+  u8      max;                      ///< 選択する数
 
 }BTL_POKESELECT_RESULT;
 
@@ -67,7 +67,7 @@ extern void BTL_POKESELECT_RESULT_Pop( BTL_POKESELECT_RESULT *result );
 extern BOOL BTL_POKESELECT_IsDone( const BTL_POKESELECT_RESULT* result );
 extern u8 BTL_POKESELECT_RESULT_GetCount( const BTL_POKESELECT_RESULT* result );
 extern u8 BTL_POKESELECT_RESULT_GetLast( const BTL_POKESELECT_RESULT* result );
-
+extern u8 BTL_POKESELECT_RESULT_Get( const BTL_POKESELECT_RESULT* result, u8 idx );
 
 extern BtlPokeselReason BTL_POKESELECT_CheckProhibit( const BTL_POKESELECT_PARAM* param, const BTL_POKESELECT_RESULT* result, u8 idx );
 

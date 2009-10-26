@@ -68,8 +68,10 @@ struct _BTLV_CORE {
   BtlAction             playerAction;
   BBAG_DATA             bagData;
   BPLIST_DATA           plistData;
+  BTL_POKESELECT_RESULT* pokeselResult;
   u8                    selectItemSeq;
   u8                    fActionPrevButton;
+
 
   GFL_TCBLSYS*  tcbl;
   BTLV_SCU*     scrnU;
@@ -490,14 +492,67 @@ void BTLV_UI_Restart( BTLV_CORE* core )
 }
 
 
-void BTLV_StartPokeSelect( BTLV_CORE* core, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result )
+void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result )
 {
-  BTLV_SCD_PokeSelect_Start( core->scrnD, param, result );
+  wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
+  wk->plistData.font = wk->fontHandle;
+  wk->plistData.heap = wk->heapID;
+  wk->plistData.mode = BPL_MODE_NORMAL;
+  wk->plistData.end_flg = FALSE;
+  wk->plistData.sel_poke = 0;
+  wk->plistData.rule = BTL_MAIN_GetRule( wk->mainModule );
+
+  {
+    u32 i, max = BTL_POKESELECT_RESULT_GetCount( result );
+    for(i=0; i<max; ++i)
+    {
+      if( i >= NELEMS(wk->plistData.change_sel) ){ break; }
+      wk->plistData.change_sel[i] = BTL_POKESELECT_RESULT_Get( result, i );
+    }
+    for( ; i<NELEMS(wk->plistData.change_sel); ++i){
+      wk->plistData.change_sel[i] = BPL_CHANGE_SEL_NONE;
+    }
+  }
+
+  wk->pokeselResult = result;
+  wk->selectItemSeq = 0;
+//  BTLV_SCD_PokeSelect_Start( core->scrnD, param, result );
 }
 
-BOOL BTLV_WaitPokeSelect( BTLV_CORE* core )
+BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
 {
-  return BTLV_SCD_PokeSelect_Wait( core->scrnD );
+  switch( wk->selectItemSeq ){
+  case 0:
+    BTLV_SCD_FadeOut( wk->scrnD );
+    wk->selectItemSeq++;
+    break;
+  case 1:
+    if( BTLV_SCD_FadeFwd(wk->scrnD) ){
+      BTLV_SCD_Cleanup( wk->scrnD );
+      BattlePokeList_TaskAdd( &wk->plistData );
+      wk->selectItemSeq++;
+    }
+    break;
+  case 2:
+    if( wk->plistData.end_flg )
+    {
+      if( wk->plistData.sel_poke != BPL_SEL_EXIT ){
+        BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_poke );
+      }
+      BTLV_SCD_Setup( wk->scrnD );
+      BTLV_SCD_FadeIn( wk->scrnD );
+      wk->selectItemSeq++;
+    }
+    break;
+  case 3:
+    if( BTLV_SCD_FadeFwd(wk->scrnD) ){
+      wk->selectItemSeq++;
+    }
+    break;
+  default:
+    return TRUE;
+  }
+  return FALSE;
 }
 //=============================================================================================
 /**
@@ -512,8 +567,6 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
 {
   if( wk->selectItemSeq == 0 )
   {
-    BTLV_SCD_Cleanup( wk->scrnD );
-
     wk->bagData.myitem = BTL_MAIN_GetItemDataPtr( wk->mainModule );
     wk->bagData.bagcursor = BTL_MAIN_GetBagCursorData( wk->mainModule );
     wk->bagData.mode = bagMode;
@@ -545,19 +598,28 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
 {
   switch( wk->selectItemSeq ){
   case 1:
-    wk->bagData.end_flg = FALSE;
-    wk->bagData.ret_item = ITEM_DUMMY_DATA;
-    BattleBag_TaskAdd( &wk->bagData );
+    BTLV_SCD_FadeOut( wk->scrnD );
     wk->selectItemSeq++;
     break;
 
   case 2:
+    if( BTLV_SCD_FadeFwd(wk->scrnD) ){
+      BTLV_SCD_Cleanup( wk->scrnD );
+
+      wk->bagData.end_flg = FALSE;
+      wk->bagData.ret_item = ITEM_DUMMY_DATA;
+      BattleBag_TaskAdd( &wk->bagData );
+      wk->selectItemSeq++;
+    }
+    break;
+
+  case 3:
     if( wk->bagData.end_flg ){
       wk->selectItemSeq++;
     }
     break;
 
- case 3:
+ case 4:
     if( (wk->bagData.ret_item != ITEM_DUMMY_DATA)
     &&  (wk->bagData.ret_page != BBAG_POKE_BALL)
     ){
@@ -570,7 +632,7 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
     }
     break;
 
-  case 4:
+  case 5:
     if( wk->plistData.end_flg ){
       if( wk->plistData.sel_poke != BPL_SEL_EXIT ){
         wk->selectItemSeq = 10;
@@ -582,8 +644,14 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
 
   case 10:
     BTLV_SCD_Setup( wk->scrnD );
-    wk->selectItemSeq = 0;
-    return TRUE;
+    BTLV_SCD_FadeIn( wk->scrnD );
+    wk->selectItemSeq++;
+    break;
+  case 11:
+    if( BTLV_SCD_FadeFwd(wk->scrnD) ){
+      wk->selectItemSeq = 0;
+      return TRUE;
+    }
   }
   return FALSE;
 }

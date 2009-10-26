@@ -164,11 +164,26 @@ u8 BTL_POKESELECT_RESULT_GetLast( const BTL_POKESELECT_RESULT* result )
   }
   else
   {
-    GF_ASSERT(0);
-    return 0;
+    return BTL_PARTY_MEMBER_MAX;
   }
 }
-
+//=============================================================================================
+/**
+ * 選んだポケモンの並び順を返す
+ *
+ * @param   result
+ * @param   idx       何番目に選んだ？
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_POKESELECT_RESULT_Get( const BTL_POKESELECT_RESULT* result, u8 idx )
+{
+  if( idx < result->cnt ){
+    return result->selIdx[ idx ];
+  }
+  return BTL_PARTY_MEMBER_MAX;
+}
 
 
 

@@ -81,5 +81,9 @@ extern void BTLV_SCD_ClearCommWaitInfo( BTLV_SCD* wk );
 
 extern BOOL BTLV_SCD_IsSelTargetDone( BTLV_SCD* wk );
 
+extern void BTLV_SCD_FadeOut( BTLV_SCD* wk );
+extern void BTLV_SCD_FadeIn( BTLV_SCD* wk );
+extern BOOL BTLV_SCD_FadeFwd( BTLV_SCD* wk );
+
 
 #endif

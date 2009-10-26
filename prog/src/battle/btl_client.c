@@ -577,13 +577,15 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
       if( BTL_POKESELECT_IsDone( &wk->pokeSelResult ) )
       {
         u8 idx = BTL_POKESELECT_RESULT_GetLast( &wk->pokeSelResult );
-        BTL_ACTION_SetChangeParam( &wk->actionParam[wk->procPokeIdx], wk->procPokeIdx, idx );
-        BTL_POKESELECT_PARAM_SetProhibit( &wk->pokeSelParam, BTL_POKESEL_CANT_SELECTED, idx );
-        (*seq) =  SEQ_CHECK_DONE;
+        if( idx <= BTL_PARTY_MEMBER_MAX ){
+          BTL_ACTION_SetChangeParam( &wk->actionParam[wk->procPokeIdx], wk->procPokeIdx, idx );
+          BTL_POKESELECT_PARAM_SetProhibit( &wk->pokeSelParam, BTL_POKESEL_CANT_SELECTED, idx );
+          (*seq) =  SEQ_CHECK_DONE;
+          break;
+        }
       }
-      else{
-        (*seq) = SEQ_SELECT_ACTION;
-      }
+
+      (*seq) = SEQ_SELECT_ACTION;
     }
     break;
 
