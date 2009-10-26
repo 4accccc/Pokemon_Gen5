@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-10-26T21:18:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="177"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,45 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
+	<row id="msg_t04_01_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・夏だけ出現</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t04_02_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・夏だけ出現</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t04_03_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・夏だけ出現</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t04_04_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・夏だけ出現</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t04_sign_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>看板分類：タウンマップ</comment>
+		<attribute name="キャラ指定">看板：街</attribute>
+		<language name="JPN" width="256">サマータウン
+なつだけ　いろづく　まち</language>
+		<language name="JPN_KANJI" width="256">サマータウン
+夏だけ　色づく　街</language>
 	</row>
 
 	<flowchart-group-list>
