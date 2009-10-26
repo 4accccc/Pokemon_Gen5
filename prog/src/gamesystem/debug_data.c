@@ -43,7 +43,7 @@ void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
 	pp = PP_Create(MONSNO_ONOKKUSU, 100, 123456, heapID);
 
 #ifdef DEBUG_ONLY_for_tamada
-	PP_Setup(pp, MONSNO_YUMEBAKURA, 2, 123456);
+	PP_Setup(pp, MONSNO_MUSYAANA, 2, 123456);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
@@ -52,17 +52,17 @@ void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
 
-	PP_Setup(pp, MONSNO_YUMEBAKURA, 100, 123456);
+	PP_Setup(pp, MONSNO_MUSYAANA, 100, 123456);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
 
-	PP_Setup(pp, MONSNO_KABITTI, 100, 123456);
+	PP_Setup(pp, MONSNO_TIRARAN, 100, 123456);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 	PokeParty_Add(party, pp);
 
-  PP_Setup(pp, MONSNO_KABITTI, 100, 123456);
+  PP_Setup(pp, MONSNO_TIRARAN, 100, 123456);
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)name );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
   PP_SetWazaPos( pp , WAZANO_NAMINORI , 0 );
