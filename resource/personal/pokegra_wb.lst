@@ -8127,6 +8127,7 @@ egg/pbwb_eggc_normal_m.ncg
 egg/pbwb_egg_normal.nce
 egg/pbwb_egg_normal.nmc
 egg/pmwb_egg_normal_n.ncl
+egg/pmwb_egg_normal_r.ncl
 egg/pfwb_egg_manafi_m.ncg
 egg/pfwb_eggc_manafi_m.ncg
 egg/pfwb_egg_manafi.nce
@@ -8136,4 +8137,5 @@ egg/pbwb_eggc_manafi_m.ncg
 egg/pbwb_egg_manafi.nce
 egg/pbwb_egg_manafi.nmc
 egg/pmwb_egg_manafi_n.ncl
+egg/pmwb_egg_manafi_r.ncl
 
