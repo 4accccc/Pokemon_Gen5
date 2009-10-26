@@ -29,7 +29,7 @@ static BOOL TESTMODE_ITEM_SelectFuncMusical( TESTMODE_WORK *work , const int idx
   MUSICAL_INIT_WORK *initWork;
 	initWork = GFL_HEAP_AllocMemory( GFL_HEAPID_APP|HEAPDIR_MASK , sizeof(MUSICAL_INIT_WORK));
 	initWork->saveCtrl = SaveControl_GetPointer();
-	initWork->pokePara = PP_Create( MONSNO_MOKOUMORI , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP|HEAPDIR_MASK );
+	initWork->pokePara = PP_Create( MONSNO_KOROMORI , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP|HEAPDIR_MASK );
   initWork->isComm = FALSE;
   initWork->gameComm = NULL;
   initWork->isDebug = TRUE;

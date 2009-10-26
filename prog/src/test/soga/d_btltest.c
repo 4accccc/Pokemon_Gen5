@@ -557,7 +557,7 @@ static  void  set_pokemon( SOGA_WORK *wk )
   else{
 #ifdef BTLV_MCSS_1vs1
 //1vs1
-    PP_SetupEx( pp, MONSNO_WANIGURASU, 0, 0, 0, 255 );
+    PP_SetupEx( pp, MONSNO_WARUBIRU, 0, 0, 0, 255 );
     PP_Put( pp, ID_PARA_id_no, 0x10 );
     BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_AA );
     BTLV_EFFECT_SetPokemon( pp, BTLV_MCSS_POS_BB );
