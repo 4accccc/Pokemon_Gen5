@@ -12,8 +12,9 @@
 
 #include "savedata/box_savedata.h"
 #include "savedata/myitem_savedata.h"
-#include "poke_tool/pokeparty.h"
 #include "savedata/config.h"
+#include "gamesystem/game_data.h"
+#include "poke_tool/pokeparty.h"
 #include "box_mode.h"
 /*
 #include "savedata/savedata_def.h"
@@ -30,6 +31,7 @@ typedef int BOX_MODE;
 // 外部設定データ
 typedef struct {
 	// [in]
+  GAMEDATA * gamedata;			  // ゲームデータ ( バッグ/ステータスのYボタン登録に使用 )
 	BOX_MANAGER * sv_box;				// ボックスセーブデータ
 	POKEPARTY * pokeparty;			// 手持ちモケモン
 	MYITEM_PTR	myitem;					// 所持アイテム（バッグで使用）

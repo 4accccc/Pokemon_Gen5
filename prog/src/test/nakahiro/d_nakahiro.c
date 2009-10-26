@@ -129,6 +129,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		break;
 
 	case MAIN_SEQ_BOX_CALL:
+		wk->box_data.gamedata  = wk->gamedata;
 		wk->box_data.sv_box    = GAMEDATA_GetBoxManager( wk->gamedata );
 		wk->box_data.pokeparty = GAMEDATA_GetMyPokemon( wk->gamedata );
 		wk->box_data.myitem    = GAMEDATA_GetMyItem( wk->gamedata );
