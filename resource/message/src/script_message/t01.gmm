@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-08T16:02:56"/>
+	<create user="matsumiya" host="W00207" date="2009-10-26T17:50:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -401,27 +401,24 @@
 あなたは　漢字が　好きなのね</language>
 	</row>
 
-	<row id="msg_t01_testmsg02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>はい・いいえ処理</comment>
+	<row id="msg_t01_testmsg02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>※削除予定
+はい・いいえ処理</comment>
 		<attribute name="キャラ指定">woman01</attribute>
-		<language name="JPN" width="256">あなた　ポケモン　すき？</language>
-		<language name="JPN_KANJI" width="256">あなた　ポケモン　好き？</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_t01_testmsg02_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_t01_testmsg02_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>はい</comment>
-		<language name="JPN" width="256">うれしい！
-あたしと　いっしょね</language>
-		<language name="JPN_KANJI" width="256">うれしい！
-あたしと　一緒ね</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_t01_testmsg02_02" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_t01_testmsg02_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>いいえ</comment>
-		<language name="JPN" width="256">そう……？
-なんだか　さみしいな……</language>
-		<language name="JPN_KANJI" width="256">そう……？
-なんだか　寂しい……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01_babygirl1_01">
@@ -457,16 +454,16 @@
 		<comment>BGメッセージ
 ・友達♂の名前は固定？</comment>
 		<attribute name="キャラ指定">看板：友達１</attribute>
-		<language name="JPN" width="256">ともだち♂の　いえ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]の　家</language>
+		<language name="JPN" width="256">ライバルの　いえ</language>
+		<language name="JPN_KANJI" width="256">ライバルの　家</language>
 	</row>
 
 	<row id="msg_t01_sign4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・友達♀の名前は固定？</comment>
 		<attribute name="キャラ指定">看板：友達２</attribute>
-		<language name="JPN" width="256">ともだち♀の　いえ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:2]の　家</language>
+		<language name="JPN" width="256">サポートの　いえ</language>
+		<language name="JPN_KANJI" width="256">サポートの　家</language>
 	</row>
 
 	<row id="msg_t01_sign5_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
