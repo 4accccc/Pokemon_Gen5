@@ -7,6 +7,7 @@
 
 #include "sound/wb_sound_data.sadl" //サウンドラベルファイル
 #include "gamesystem/btl_setup.h"
+#include "system/main.h"
 
 ///プロトタイプ
 void BATTLE_PARAM_Init( BATTLE_SETUP_PARAM* bp );
@@ -143,6 +144,9 @@ void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   POKEPARTY* partyEnemy, BtlLandForm landForm, BtlWeather weather, TrainerID trID )
 {
   setup_common( dst, gameData, landForm, weather );
+  
+  dst->partyPlayer = PokeParty_AllocPartyWork( HEAPID_PROC );
+  PokeParty_Copy( GAMEDATA_GetMyPokemon(gameData), dst->partyPlayer );
 
   dst->engine = BTL_ENGINE_ALONE;
   dst->competitor = BTL_COMPETITOR_TRAINER;
