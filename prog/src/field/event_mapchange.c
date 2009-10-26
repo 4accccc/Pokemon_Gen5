@@ -916,7 +916,7 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
   GF_ASSERT( fieldmap == NULL );
 
   //※check　スクリプトでマップ作成前に実行できるタイミングが出来れば、そこで行うようにしたい
-  if(ZONEDATA_IsPalaceField(loc_req->zone_id) == TRUE){
+  if(ZONEDATA_IsPalaceField(loc_req->zone_id) || ZONEDATA_IsBingo(loc_req->zone_id)){
     FIELD_STATUS_SetMapMode( GAMEDATA_GetFieldStatus( gamedata ), MAPMODE_INTRUDE );
     //GAMEDATA_SetMapMode(gamedata, MAPMODE_INTRUDE);
   }
