@@ -902,6 +902,8 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
       //発射フレーム到達チェック
       if (frm/FX32_ONE >= CanClosedFrame[can_dir_idx]){
         OS_Printf("ドアクローズフレーム%d\n",frm/FX32_ONE);
+        //大砲傾くＳＥ
+        PMSND_PlaySE(GYM_FLY_SE_CAN_MOVE);
         //フレーム読み取り開始
         tmp->FrameSetStart = 1;
         tmp->NowIcaAnmFrmIdx = 0;
