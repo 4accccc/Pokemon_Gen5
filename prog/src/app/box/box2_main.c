@@ -2958,11 +2958,9 @@ static void PokeInfoPutModeNormal( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * i
 	}
 	BOX2BGWFRM_SubDispWazaFrmOutPosSet( syswk->app->wfrm );
 
-/*
 	BOX2OBJ_PokeGraChange( syswk, info, BOX2OBJ_ID_POKEGRA );
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA+(syswk->app->pokegra_swap^1), TRUE );
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA+syswk->app->pokegra_swap, FALSE );
-*/
+//	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA+(syswk->app->pokegra_swap^1), TRUE );
+//	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA+syswk->app->pokegra_swap, FALSE );
 
 	BOX2OBJ_TypeIconChange( syswk->app, info );
 	BOX2BMP_PokeDataPut( syswk, info );
@@ -2989,11 +2987,11 @@ static void PokeInfoPutModeItem( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * inf
 		BOX2OBJ_ItemIconChangeSub( syswk->app, info->item );
 	}
 	BOX2BGWFRM_SubDispItemFrmOutPosSet( syswk->app->wfrm );
-/*
+
 	BOX2OBJ_PokeGraChange( syswk, info, BOX2OBJ_ID_POKEGRA );
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA+(syswk->app->pokegra_swap^1), TRUE );
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA+syswk->app->pokegra_swap, FALSE );
-*/
+//	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA+(syswk->app->pokegra_swap^1), TRUE );
+//	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA+syswk->app->pokegra_swap, FALSE );
+
 	BOX2OBJ_TypeIconChange( syswk->app, info );
 	BOX2BMP_PokeDataPut( syswk, info );
 
@@ -3065,11 +3063,11 @@ void BOX2MAIN_PokeInfoRewrite( BOX2_SYS_WORK * syswk, u32 pos )
 	ppp  = BOX2MAIN_PPPGet( syswk, syswk->tray, pos );
 	fast = PPP_FastModeOn( ppp );
 	info = PokeInfoDataMake( ppp );
-/*
+
 	BOX2OBJ_PokeGraChange( syswk, info, BOX2OBJ_ID_POKEGRA );
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA+(syswk->app->pokegra_swap^1), TRUE );
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA+syswk->app->pokegra_swap, FALSE );
-*/
+//	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA+(syswk->app->pokegra_swap^1), TRUE );
+//	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA+syswk->app->pokegra_swap, FALSE );
+
 	BOX2OBJ_TypeIconChange( syswk->app, info );
 	BOX2BMP_PokeDataPut( syswk, info );
 
@@ -3088,10 +3086,8 @@ void BOX2MAIN_PokeInfoRewrite( BOX2_SYS_WORK * syswk, u32 pos )
 //--------------------------------------------------------------------------------------------
 void BOX2MAIN_PokeInfoOff( BOX2_SYS_WORK * syswk )
 {
-/*
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA, FALSE );	// ポケグラオフ
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA2, FALSE );	// ポケグラオフ
-*/
+//	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA2, FALSE );	// ポケグラオフ
 	
 	// タイプアイコンオフ
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TYPEICON1, FALSE );	// ポケグラオフ
@@ -3335,7 +3331,7 @@ int BOX2MAIN_PokeStatusCall( BOX2_SYS_WORK * syswk )
 		pst->max = PokeParty_GetPokeCount( syswk->dat->pokeparty );
 		pst->pos = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
 	}
-	pst->game_data  = NULL; //GAMEDATAをお願いします
+	pst->game_data  = syswk->dat->gamedata;
 	pst->cfg        = syswk->dat->cfg;
 	pst->zukan_mode = syswk->dat->zknMode;
 	pst->mode       = PST_MODE_NORMAL;
@@ -3436,10 +3432,11 @@ int BOX2MAIN_BagCall( BOX2_SYS_WORK * syswk )
 	syswk->subProcFunc = GFL_PROC_Create( &BagProcData, syswk->subProcWork, HEAPID_BOX_SYS );
 //↑[GS_CONVERT_TAG]
 */
-	FS_EXTERN_OVERLAY(bag);
+//	FS_EXTERN_OVERLAY(bag);
 
-	BAG_PARAM * wk;
+	BAG_PARAM * wk = BAG_CreateParam( syswk->dat->gamedata, NULL, BAG_MODE_POKELIST );
 
+/*
 	wk = GFL_HEAP_AllocClearMemory( HEAPID_BOX_SYS, sizeof(BAG_PARAM) );
 
 	wk->p_config    = syswk->dat->cfg;
@@ -3449,6 +3446,7 @@ int BOX2MAIN_BagCall( BOX2_SYS_WORK * syswk )
 //	wk->icwk      = NULL;
 	wk->mode        = BAG_MODE_POKELIST;
   wk->cycle_flg   = FALSE;						   // 自転車はどっちでもいいハズ
+*/
 
 /*
 	wk->gsys     = syswk->dat->gsyswk;
@@ -3502,7 +3500,7 @@ int BOX2MAIN_BagExit( BOX2_SYS_WORK * syswk )
 	syswk->subRet = wk->ret_item;
 
 //	GFL_OVERLAY_Unload( FS_OVERLAY_ID(bag) );
-	GFL_HEAP_FreeMemory( wk->p_bagcursor );
+//	GFL_HEAP_FreeMemory( wk->p_bagcursor );
 	GFL_HEAP_FreeMemory( syswk->subProcWork );
 
 	return 0;

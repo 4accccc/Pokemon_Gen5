@@ -12,6 +12,7 @@
 
 #include "arc_def.h"
 #include "system/main.h"
+#include "system/poke2dgra.h"
 #include "poke_tool/monsno_def.h"
 #include "pokeicon/pokeicon.h"
 #include "item/item.h"
@@ -40,7 +41,7 @@
 #define	PALNUM_ITEMICON		( PALNUM_BOXOBJ + PALSIZ_BOXOBJ )			// パレット番号：アイテムアイコン
 #define	PALSIZ_ITEMICON		( 1 )																	// パレット数：アイテムアイコン
 
-#define	PALNUM_OUTLINE		( PALNUM_BOXOBJ + 2 )		// パレット番号：アウトラインカーソル
+#define	PALNUM_OUTLINE		( 2 )										// パレット番号：アウトラインカーソル（リソースのオフセット）
 #define	PLANUM_TRAYPOKE		( PALNUM_WPICON + 1 )		// パレット番号：トレイアイコンに表示するドット
 
 // サブパレット
@@ -48,6 +49,10 @@
 #define	PALSIZ_TYPEICON_S	( 3 )																			// パレット数：タイプアイコン
 #define	PALNUM_ITEMICON_S	( PALNUM_TYPEICON_S + PALSIZ_TYPEICON_S )	// パレット番号：アイテムアイコン
 #define	PALSIZ_ITEMICON_S	( 1 )																			// パレット数：アイテムアイコン
+#define	PALNUM_POKEGRA1_S	( PALNUM_ITEMICON_S + PALSIZ_ITEMICON_S )	// パレット番号：ポケグラ１
+#define	PALSIZ_POKEGRA1_S	( 1 )																			// パレット数：ポケグラ１
+#define	PALNUM_POKEGRA2_S	( PALNUM_POKEGRA1_S + PALSIZ_POKEGRA1_S )	// パレット番号：ポケグラ２
+#define	PALSIZ_POKEGRA2_S	( 1 )																			// パレット数：ポケグラ２
 
 /*
 // アクター表示フラグ
@@ -158,6 +163,7 @@ enum {
 #define	SUBDISP_ITEMICON_PX	( 18 )
 #define	SUBDISP_ITEMICON_PY	( 40 )
 
+#define	RES_LOAD_NONE		( 0xffffffff )		// リソースを読み込んでない場合
 
 
 
@@ -228,18 +234,6 @@ static const BOX_CLWK_DATA ClactParamTbl[] =
 		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
 		0, CLSYS_DRAW_MAIN,
 	},
-/*
-	{	// ポケモン
-		{ 140, 100, 0, 10, 1 },
-		BOX2MAIN_CHRRES_POKEGRA, BOX2MAIN_PALRES_POKEGRA, BOX2MAIN_CELRES_POKEGRA,
-		0, CLSYS_DRAW_SUB,
-	},
-	{	// ポケモン
-		{ 140, 100, 0, 10, 1 },
-		BOX2MAIN_CHRRES_POKEGRA, BOX2MAIN_PALRES_POKEGRA, BOX2MAIN_CELRES_POKEGRA,
-		0, CLSYS_DRAW_SUB,
-	},
-*/
 	{	// ボックス移動矢印（左）
 		{ 12, -21, BOX2OBJ_ANM_L_ARROW_OFF, 5, 1 },
 		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
@@ -297,7 +291,18 @@ static const BOX_CLWK_DATA ClactParamTbl[] =
 		{ 194, 48, 0, 0, 1 },
 		BOX2MAIN_CHRRES_TYPEICON2, BOX2MAIN_PALRES_TYPEICON, BOX2MAIN_CELRES_TYPEICON,
 		0, CLSYS_DRAW_SUB,
-	}
+	},
+
+	{	// ポケモン
+		{ 140, 100, 0, 10, 1 },
+		BOX2MAIN_CHRRES_POKEGRA, BOX2MAIN_PALRES_POKEGRA, BOX2MAIN_CELRES_POKEGRA,
+		0, CLSYS_DRAW_SUB,
+	},
+	{	// ポケモン
+		{ 140, 100, 0, 10, 1 },
+		BOX2MAIN_CHRRES_POKEGRA2, BOX2MAIN_PALRES_POKEGRA2, BOX2MAIN_CELRES_POKEGRA2,
+		0, CLSYS_DRAW_SUB,
+	},
 };
 
 // ポケモンアイコン
@@ -433,7 +438,7 @@ static void ClactResLoad( BOX2_APP_WORK * appwk )
 	PokeIconResLoad( appwk );
 	ItemIconDummyResLoad( appwk );
 
-//	PokeGraDummyResLoad( appwk );
+	PokeGraDummyResLoad( appwk );
 	TypeIconResLoad( appwk );
 
 /*
@@ -462,13 +467,19 @@ static void ClactResFree( BOX2_APP_WORK * appwk )
 	u32	i;
 
 	for( i=0; i<BOX2MAIN_CHRRES_MAX; i++ ){
-    GFL_CLGRP_CGR_Release( appwk->chrRes[i] );
+		if( appwk->chrRes[i] != RES_LOAD_NONE ){
+			GFL_CLGRP_CGR_Release( appwk->chrRes[i] );
+		}
 	}
 	for( i=0; i<BOX2MAIN_PALRES_MAX; i++ ){
-    GFL_CLGRP_PLTT_Release( appwk->palRes[i] );
+		if( appwk->palRes[i] != RES_LOAD_NONE ){
+	    GFL_CLGRP_PLTT_Release( appwk->palRes[i] );
+		}
 	}
 	for( i=0; i<BOX2MAIN_CELRES_MAX; i++ ){
-    GFL_CLGRP_CELLANIM_Release( appwk->celRes[i] );
+		if( appwk->celRes[i] != RES_LOAD_NONE ){
+	    GFL_CLGRP_CELLANIM_Release( appwk->celRes[i] );
+		}
 	}
 }
 
@@ -636,7 +647,9 @@ BOOL BOX2OBJ_AnmCheck( BOX2_APP_WORK * appwk, u32 id )
 //--------------------------------------------------------------------------------------------
 void BOX2OBJ_Vanish( BOX2_APP_WORK * appwk, u32 id, BOOL flg )
 {
-	GFL_CLACT_WK_SetDrawEnable( appwk->clwk[id], flg );
+	if( appwk->clwk[id] != NULL ){
+		GFL_CLACT_WK_SetDrawEnable( appwk->clwk[id], flg );
+	}
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1740,6 +1753,14 @@ void BOX2OBJ_PokeIconBlendSetItem( BOX2_SYS_WORK * syswk, u32 pos )
 //--------------------------------------------------------------------------------------------
 static void PokeGraDummyResLoad( BOX2_APP_WORK * appwk )
 {
+	appwk->chrRes[BOX2MAIN_CHRRES_POKEGRA] = RES_LOAD_NONE;
+	appwk->palRes[BOX2MAIN_PALRES_POKEGRA] = RES_LOAD_NONE;
+	appwk->celRes[BOX2MAIN_CELRES_POKEGRA] = RES_LOAD_NONE;
+
+	appwk->chrRes[BOX2MAIN_CHRRES_POKEGRA2] = RES_LOAD_NONE;
+	appwk->palRes[BOX2MAIN_PALRES_POKEGRA2] = RES_LOAD_NONE;
+	appwk->celRes[BOX2MAIN_CELRES_POKEGRA2] = RES_LOAD_NONE;
+
 /*
 	CATS_LoadResourceCharArc(
 		appwk->csp, appwk->crp,
@@ -1771,9 +1792,9 @@ static void PokeGraDummyResLoad( BOX2_APP_WORK * appwk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void PokeGraObjAdd( BOX2_SYS_WORK * syswk )
 {
-/*
 	BOX2_APP_WORK * appwk = syswk->app;
 
 	appwk->cap[BOX2OBJ_ID_POKEGRA]  = CATS_ObjectAdd_S_SubDistance(
@@ -1787,8 +1808,8 @@ static void PokeGraObjAdd( BOX2_SYS_WORK * syswk )
 
 	GFL_CLACT_UNIT_SetDrawEnableCap( appwk->cap[BOX2OBJ_ID_POKEGRA], ACT_OFF );
 	GFL_CLACT_UNIT_SetDrawEnableCap( appwk->cap[BOX2OBJ_ID_POKEGRA2], ACT_OFF );
-*/
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1864,6 +1885,103 @@ void BOX2OBJ_PokeGraChange( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info, u3
 
 	syswk->app->pokegra_swap ^= 1;
 */
+
+
+/*
+//ポケグラのアークハンドル
+//モンスター番号等から読む場合
+extern u32 POKE2DGRA_OBJ_PLTT_Register( ARCHANDLE *p_handle, int mons_no, int form_no, int sex, int rare, int dir, CLSYS_DRAW_TYPE vramType, u16 byteOffs, HEAPID heapID );
+extern u32 POKE2DGRA_OBJ_CGR_Register( ARCHANDLE *p_handle, int mons_no, int form_no, int sex, int rare, int dir, CLSYS_DRAW_TYPE vramType, HEAPID heapID );
+extern u32 POKE2DGRA_OBJ_CELLANM_Register( int mons_no, int form_no, int sex, int rare, int dir, APP_COMMON_MAPPING mapping, CLSYS_DRAW_TYPE vramType, HEAPID heapID );
+*/
+
+/*
+	ARCHANDLE * ah;
+	u32 * chrRes;
+	u32 * palRes;
+	u32 * celRes;
+	u16	pal;
+
+	if( syswk->app->clwk[BOX2OBJ_ID_POKEGRA] != NULL ){
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA, FALSE );
+	}
+	if( syswk->app->clwk[BOX2OBJ_ID_POKEGRA2] != NULL ){
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_POKEGRA2, FALSE );
+	}
+
+	if( syswk->app->pokegra_swap == 0 ){
+		chrRes = &syswk->app->chrRes[BOX2MAIN_CHRRES_POKEGRA];
+		palRes = &syswk->app->palRes[BOX2MAIN_PALRES_POKEGRA];
+		celRes = &syswk->app->celRes[BOX2MAIN_CELRES_POKEGRA];
+		pal = PALNUM_POKEGRA1_S * 0x20;
+	}else{
+		chrRes = &syswk->app->chrRes[BOX2MAIN_CHRRES_POKEGRA2];
+		palRes = &syswk->app->palRes[BOX2MAIN_PALRES_POKEGRA2];
+		celRes = &syswk->app->celRes[BOX2MAIN_CELRES_POKEGRA2];
+		pal = PALNUM_POKEGRA2_S * 0x20;
+		id += 1;
+	}
+
+	if( syswk->app->clwk[id] != NULL ){
+		GFL_CLACT_WK_Remove( syswk->app->clwk[id] );
+		GFL_CLGRP_CGR_Release( *chrRes );
+    GFL_CLGRP_PLTT_Release( *palRes );
+    GFL_CLGRP_CELLANIM_Release( *celRes );
+	}
+
+	ah = POKE2DGRA_OpenHandle( HEAPID_BOX_APP );
+
+	// フォルムとレアが必要！
+	*chrRes = POKE2DGRA_OBJ_CGR_Register( ah, info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
+	*palRes = POKE2DGRA_OBJ_PLTT_Register( ah, info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, CLSYS_DRAW_SUB, pal, HEAPID_BOX_APP );
+	*celRes = POKE2DGRA_OBJ_CELLANM_Register( info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_32K, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
+
+  GFL_ARC_CloseDataHandle( ah );
+
+	syswk->app->clwk[id] = ClactWorkCreate( syswk->app, &ClactParamTbl[id] );
+	BOX2OBJ_Vanish( syswk->app, id, TRUE );
+
+	syswk->app->pokegra_swap ^= 1;
+*/
+	ARCHANDLE * ah;
+	u32 * chrRes;
+	u32 * palRes;
+	u32 * celRes;
+	u16	pal;
+
+//	if( syswk->app->pokegra_swap == 0 ){
+		chrRes = &syswk->app->chrRes[BOX2MAIN_CHRRES_POKEGRA];
+		palRes = &syswk->app->palRes[BOX2MAIN_PALRES_POKEGRA];
+		celRes = &syswk->app->celRes[BOX2MAIN_CELRES_POKEGRA];
+		pal = PALNUM_POKEGRA1_S * 0x20;
+/*
+	}else{
+		chrRes = &syswk->app->chrRes[BOX2MAIN_CHRRES_POKEGRA2];
+		palRes = &syswk->app->palRes[BOX2MAIN_PALRES_POKEGRA2];
+		celRes = &syswk->app->celRes[BOX2MAIN_CELRES_POKEGRA2];
+		pal = PALNUM_POKEGRA2_S * 0x20;
+		id += 1;
+	}
+*/
+
+	if( syswk->app->clwk[id] != NULL ){
+		GFL_CLACT_WK_Remove( syswk->app->clwk[id] );
+		GFL_CLGRP_CGR_Release( *chrRes );
+    GFL_CLGRP_PLTT_Release( *palRes );
+    GFL_CLGRP_CELLANIM_Release( *celRes );
+	}
+
+	ah = POKE2DGRA_OpenHandle( HEAPID_BOX_APP );
+
+	// フォルムとレアが必要！
+	*chrRes = POKE2DGRA_OBJ_CGR_Register( ah, info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
+	*palRes = POKE2DGRA_OBJ_PLTT_Register( ah, info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, CLSYS_DRAW_SUB, pal, HEAPID_BOX_APP );
+	*celRes = POKE2DGRA_OBJ_CELLANM_Register( info->mons, 0, info->sex, 0, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_32K, CLSYS_DRAW_SUB, HEAPID_BOX_APP );
+
+  GFL_ARC_CloseDataHandle( ah );
+
+	syswk->app->clwk[id] = ClactWorkCreate( syswk->app, &ClactParamTbl[id] );
+	BOX2OBJ_Vanish( syswk->app, id, TRUE );
 }
 
 
@@ -2318,6 +2436,8 @@ void BOX2OBJ_ItemIconCursorAdd( BOX2_APP_WORK * appwk )
 		prm.dat.softpri = GFL_CLACT_WK_GetSoftPri( appwk->clwk[BOX2OBJ_ID_ITEMICON] ) + 1;
 		prm.dat.bgpri   = GFL_CLACT_WK_GetBgPri( appwk->clwk[BOX2OBJ_ID_ITEMICON] );
 		prm.chrRes      = BOX2MAIN_CHRRES_ITEMICON;
+		prm.palRes      = BOX2MAIN_PALRES_BOXOBJ;
+		prm.pal         = PALNUM_OUTLINE;
 
 //		appwk->obj_trans_stop = 1;
 		for( i=0; i<BOX2OBJ_PI_OUTLINE_MAX; i++ ){
@@ -2325,8 +2445,8 @@ void BOX2OBJ_ItemIconCursorAdd( BOX2_APP_WORK * appwk )
 			prm.dat.pos_y = y + PokeCursorYTbl[i];
 
 			appwk->clwk[BOX2OBJ_ID_OUTLINE+i] = ClactWorkCreate( appwk, &prm );
-			GFL_CLACT_WK_SetPlttOffs(
-				appwk->clwk[BOX2OBJ_ID_OUTLINE+i], PALNUM_OUTLINE, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+//			GFL_CLACT_WK_SetPlttOffs(
+//				appwk->clwk[BOX2OBJ_ID_OUTLINE+i], PALNUM_OUTLINE, CLWK_PLTTOFFS_MODE_OAM_COLOR );
 			BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_OUTLINE+i, FALSE );
 		}
 //		appwk->obj_trans_stop = 0;
@@ -2543,6 +2663,8 @@ void BOX2OBJ_PokeCursorAdd( BOX2_SYS_WORK * syswk )
 		prm.dat.softpri = GFL_CLACT_WK_GetSoftPri( appwk->clwk[posID] ) + 1;
 		prm.dat.bgpri   = GFL_CLACT_WK_GetBgPri( appwk->clwk[posID] );
 		prm.chrRes      = BOX2MAIN_CHRRES_POKEICON + posID - BOX2OBJ_ID_POKEICON;
+		prm.palRes      = BOX2MAIN_PALRES_BOXOBJ;
+		prm.pal         = PALNUM_OUTLINE;
 
 //		appwk->obj_trans_stop = 1;
 		for( i=0; i<BOX2OBJ_PI_OUTLINE_MAX; i++ ){
@@ -2550,8 +2672,8 @@ void BOX2OBJ_PokeCursorAdd( BOX2_SYS_WORK * syswk )
 			prm.dat.pos_y = y + PokeCursorYTbl[i];
 
 			appwk->clwk[BOX2OBJ_ID_OUTLINE+i] = ClactWorkCreate( appwk, &prm );
-			GFL_CLACT_WK_SetPlttOffs(
-				appwk->clwk[BOX2OBJ_ID_OUTLINE+i], PALNUM_OUTLINE, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+//			GFL_CLACT_WK_SetPlttOffs(
+//				appwk->clwk[BOX2OBJ_ID_OUTLINE+i], PALNUM_OUTLINE, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 		}
 //		appwk->obj_trans_stop = 0;
 	// キャラを書き換え

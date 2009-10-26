@@ -1089,15 +1089,7 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
 		}
 	}
 
-	if( GFL_UI_KEY_GetTrg() ){
-			OS_Printf( "‰Ÿ‚³‚ê‚½‚P\n" );
-	}
-
 	ret = BOX2UI_BoxArrangeMain( syswk );
-
-	if( GFL_UI_KEY_GetTrg() ){
-			OS_Printf( "‰Ÿ‚³‚ê‚½‚Q\n" );
-	}
 
 	switch( ret ){
 	case BOX2UI_ARRANGE_MAIN_NAME:		// 30: ƒ{ƒbƒNƒX–¼
@@ -1165,18 +1157,9 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_CLOSE_BTN, BOX2SEQ_MAINSEQ_ARRANGE_CLOSE_BUTTON );
 
 	case CURSORMOVE_NONE:				// “®ì‚È‚µ
-		if( GFL_UI_KEY_GetTrg() ){
-				OS_Printf( "‰Ÿ‚³‚ê‚½‚R\n" );
-		}
 		{
 			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-			if( GFL_UI_KEY_GetTrg() ){
-					OS_Printf( "‰Ÿ‚³‚ê‚½‚S\n" );
-			}
 			if( pos == BOX2UI_ARRANGE_MAIN_NAME ){
-				if( GFL_UI_KEY_GetTrg() ){
-					OS_Printf( "‰Ÿ‚³‚ê‚½‚T\n" );
-				}
 				if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
 //					Snd_SePlay( SE_BOX2_CHANGE_TRAY );
 					BOX2MAIN_PokeSelectOff( syswk );
@@ -1247,10 +1230,6 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
 			CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_MAIN_MOVE );
 			return TrayPokeGetKeyArrange( syswk, ret );
 		}
-	}
-
-	if( GFL_UI_KEY_GetTrg() ){
-		OS_Printf( "‰Ÿ‚³‚ê‚½‚U\n" );
 	}
 
 	return BOX2SEQ_MAINSEQ_ARRANGE_MAIN;

@@ -79,6 +79,7 @@ VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
   
   // ボックスのプロセスパラメータを作成
   box_param            = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(BOX2_GFL_PROC_PARAM) );
+  box_param->gamedata  = gdata;
   box_param->sv_box    = GAMEDATA_GetBoxManager( gdata );
   box_param->pokeparty = GAMEDATA_GetMyPokemon( gdata );
   box_param->myitem    = GAMEDATA_GetMyItem( gdata );
