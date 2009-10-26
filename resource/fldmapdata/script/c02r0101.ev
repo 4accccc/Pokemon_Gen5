@@ -20,10 +20,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 
-//【修正（村上くん）】大幅な修正が入りました。たいっへん申し訳ないですがGMMを確認してください。
-//【仮】PDW関連のイベントですので、安藤さんにバトンタッチします
 
-_EVENT_DATA    ev_c02r0101_talkobj_badman
+_EVENT_DATA    ev_c02r0101_furn_01
 _EVENT_DATA_END
 
 
@@ -34,12 +32,12 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*  C02R0101 BADMANの会話用イベントスクリプト*/
+/*  C02R0101 家具屋の会話用イベントスクリプト*/
 /**************************************************************/
 
-EVENT_START   ev_c02r0101_talkobj_badman
+EVENT_START   ev_c02r0101_furn_01
 
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c02r0101_badman_01) 
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c02r0101_furn_02) 
 
 EVENT_END
 

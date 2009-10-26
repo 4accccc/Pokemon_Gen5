@@ -11,6 +11,6 @@
 #ifndef ZONE_C02R0101_EVC_H
 #define ZONE_C02R0101_EVC_H
 
-#define C02R0101_BADMAN                    0
+#define C02R0101_FURN_01                   0
 
 #endif //ZONE_C02R0101_EVC_H
