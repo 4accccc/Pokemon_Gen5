@@ -44,6 +44,14 @@ static INTRUDE_COMM_SYS_PTR _GetIntrudeCommSys(GAME_COMM_SYS_PTR game_comm)
   return intcomm;
 }
 
+//==================================================================
+/**
+ * アクションステータスを設定
+ *
+ * @param   game_comm		
+ * @param   action		
+ */
+//==================================================================
 void IntrudeWork_SetActionStatus(GAME_COMM_SYS_PTR game_comm, INTRUDE_ACTION action)
 {
   INTRUDE_COMM_SYS_PTR intcomm = _GetIntrudeCommSys(game_comm);
@@ -55,3 +63,42 @@ void IntrudeWork_SetActionStatus(GAME_COMM_SYS_PTR game_comm, INTRUDE_ACTION act
   Intrude_SetActionStatus(intcomm, action);
   intcomm->send_status = TRUE;
 }
+
+//==================================================================
+/**
+ * ワープする街番号を設定
+ *
+ * @param   game_comm		
+ * @param   town_tblno		
+ */
+//==================================================================
+void Intrude_SetWarpTown(GAME_COMM_SYS_PTR game_comm, int town_tblno)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = _GetIntrudeCommSys(game_comm);
+  
+  if(intcomm == NULL){
+    return;
+  }
+  
+  intcomm->warp_town_tblno = town_tblno;
+}
+
+//==================================================================
+/**
+ * ワープ先の街番号を取得
+ *
+ * @param   game_comm		
+ *
+ * @retval  int		街番号(PALACE_TOWN_DATA_NULLの場合は無効)
+ */
+//==================================================================
+int Intrude_GetWarpTown(GAME_COMM_SYS_PTR game_comm)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = _GetIntrudeCommSys(game_comm);
+  
+  if(intcomm == NULL){
+    return PALACE_TOWN_DATA_NULL;
+  }
+  return intcomm->warp_town_tblno;
+}
+

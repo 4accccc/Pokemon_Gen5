@@ -19,6 +19,7 @@
 #include "intrude_types.h"
 #include "infowin\infowin.h"
 #include "intrude_main.h"
+#include "intrude_work.h"
 
 
 //==============================================================================
@@ -142,6 +143,12 @@ enum{
   INTSUB_BG_PAL_MAX = 5,
 };
 
+//--------------------------------------------------------------
+//  
+//--------------------------------------------------------------
+///街アイコンのタッチ判定の矩形ハーフサイズ
+#define TOWN_ICON_HITRANGE_HALF   (8)
+
 
 //==============================================================================
 //  構造体定義
@@ -201,15 +208,22 @@ static void _IntSub_ActorUpdate_PointNum(
   INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
 static u8 _IntSub_GetProfileRecvNum(INTRUDE_COMM_SYS_PTR intcomm);
 static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos);
+static void _SetRect(int x, int y, int half_size, GFL_RECT *rect);
+static BOOL _CheckRectHit(int x, int y, const GFL_RECT *rect);
+static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
 
 
 //==============================================================================
 //  データ
 //==============================================================================
-///パレスをカーソルが指す場合の座標
+///パレスアイコン座標
 enum{
-  PALACE_CURSOR_POS_X = 128,
-  PALACE_CURSOR_POS_Y = 96,
+  PALACE_ICON_POS_X = 128,      ///<パレスアイコン座標X
+  PALACE_ICON_POS_Y = 8*0xa,    ///<パレスアイコン座標Y
+  PALACE_ICON_HITRANGE_HALF = 16, ///<パレスアイコンのタッチ判定半径
+  
+  PALACE_CURSOR_POS_X = PALACE_ICON_POS_X,      ///<パレスアイコンをカーソルが指す場合の座標X
+  PALACE_CURSOR_POS_Y = PALACE_ICON_POS_Y - 20, ///<パレスアイコンをカーソルが指す場合の座標Y
 };
 
 ///エリアアイコン配置座標
@@ -218,7 +232,7 @@ enum{
   AREA_POST_RIGHT = 0x13 * 8,                         ///<配置座標範囲の右端X
   AREA_POST_WIDTH = AREA_POST_RIGHT - AREA_POST_LEFT, ///<配置座標範囲の幅
   
-  AREA_POST_Y = 24,                                    ///<配置座標Y
+  AREA_POST_Y = 8,                                    ///<配置座標Y
 };
 
 
@@ -257,7 +271,6 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   _IntSub_BGLoad(intsub, handle);
   _IntSub_ActorResouceLoad(intsub, handle);
   _IntSub_ActorCreate(intsub, handle);
-  INFOWIN_Init(INTRUDE_FRAME_S_BACKGROUND, 0xf, game_comm, HEAPID_FIELDMAP);
   
   GFL_ARC_CloseDataHandle(handle);
 
@@ -273,7 +286,6 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
 //==================================================================
 void INTRUDE_SUBDISP_Exit(INTRUDE_SUBDISP_PTR intsub)
 {
-  INFOWIN_Exit();
   _IntSub_ActorDelete(intsub);
   _IntSub_ActorResourceUnload(intsub);
   _IntSub_BGUnload(intsub);
@@ -308,6 +320,10 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
     area_occupy = GAMEDATA_GetOccupyInfo(gamedata, intcomm->intrude_status_mine.palace_area);
   }
   
+  //タッチ判定チェック
+  _IntSub_TouchUpdate(intcomm, intsub);
+  
+  //アクター更新
   _IntSub_ActorUpdate_Town(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_SenkyoEff(intsub, intcomm, area_occupy);
   _IntSub_ActorUpdate_Area(intsub, intcomm, area_occupy);
@@ -328,7 +344,7 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
 //==================================================================
 void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub)
 {
-  INFOWIN_Update();
+  ;
 }
 
 
@@ -369,7 +385,6 @@ static void _IntSub_SystemExit(INTRUDE_SUBDISP_PTR intsub)
 //--------------------------------------------------------------
 static void _IntSub_BGLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
 {
-  u32 start_char_area;
 	static const GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
   	{//INTRUDE_FRAME_S_BAR
   		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -393,11 +408,8 @@ static void _IntSub_BGLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
 	G2S_BlendNone();
 	
   //キャラ転送
-  start_char_area = GFL_BG_AllocCharacterArea(
-    INTRUDE_FRAME_S_BACKGROUND, 0x6000, GFL_BG_CHRAREA_GET_F);  //INFOWINと共存の為Allocする
-  GF_ASSERT(start_char_area == 0);
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
-    handle, NARC_palace_palace_bg_lz_NCGR, INTRUDE_FRAME_S_BACKGROUND, start_char_area, 
+    handle, NARC_palace_palace_bg_lz_NCGR, INTRUDE_FRAME_S_BACKGROUND, 0, 
     0, TRUE, HEAPID_FIELDMAP);
   
   //スクリーン転送
@@ -427,7 +439,6 @@ static void _IntSub_BGUnload(INTRUDE_SUBDISP_PTR intsub)
 {
 	GFL_BG_SetVisible( INTRUDE_FRAME_S_BAR, VISIBLE_OFF );
 	GFL_BG_SetVisible( INTRUDE_FRAME_S_BACKGROUND, VISIBLE_OFF );
-	GFL_BG_FreeCharacterArea(INTRUDE_FRAME_S_BACKGROUND, 0, 0x6000);
 	GFL_BG_FreeBGControl(INTRUDE_FRAME_S_BAR);
 	GFL_BG_FreeBGControl(INTRUDE_FRAME_S_BACKGROUND);
 }
@@ -1114,4 +1125,84 @@ static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos)
   dest_pos->x = PALACE_CURSOR_POS_X;
   dest_pos->y = PALACE_CURSOR_POS_Y;
   return 0xff;
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * 中心値と半径を指定してRECTを作成する
+ *
+ * @param   x		        中心値X
+ * @param   y		        中心値Y
+ * @param   half_size		半径
+ * @param   rect		    代入先
+ */
+//--------------------------------------------------------------
+static void _SetRect(int x, int y, int half_size, GFL_RECT *rect)
+{
+  rect->top = y - half_size;
+  rect->bottom = y + half_size;
+  rect->left = x - half_size;
+  rect->right = x + half_size;
+}
+
+//--------------------------------------------------------------
+/**
+ * 指定座標が矩形内に収まっているかヒットチェック
+ *
+ * @param   x		    座標X
+ * @param   y		    座標Y
+ * @param   rect		矩形
+ *
+ * @retval  BOOL		TRUE:ヒット。　FALSE:未ヒット
+ */
+//--------------------------------------------------------------
+static BOOL _CheckRectHit(int x, int y, const GFL_RECT *rect)
+{
+  if(rect->left < x && rect->right > x && rect->top < y && rect->bottom > y){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * タッチ判定
+ *
+ * @param   intcomm		
+ * @param   intsub		
+ */
+//--------------------------------------------------------------
+static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub)
+{
+  u32 x, y;
+  int i;
+  GFL_RECT rect;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(intsub->gsys);
+  FIELD_SUBSCREEN_WORK *subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
+  
+  if(GFL_UI_TP_GetPointTrg(&x, &y) == FALSE 
+      || FIELD_SUBSCREEN_GetAction( subscreen ) != FIELD_SUBSCREEN_ACTION_NONE){
+    return;
+  }
+  
+  for(i = 0; i < PALACE_TOWN_DATA_MAX; i++){
+    _SetRect(PalaceTownData[i].subscreen_x, PalaceTownData[i].subscreen_y, 
+      TOWN_ICON_HITRANGE_HALF, &rect);
+    if(_CheckRectHit(x, y, &rect) == TRUE){
+      Intrude_SetWarpTown(game_comm, i);
+      FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
+      return;
+    }
+  }
+
+  _SetRect(PALACE_ICON_POS_X, PALACE_ICON_POS_Y, PALACE_ICON_HITRANGE_HALF, &rect);
+  if(_CheckRectHit(x, y, &rect) == TRUE){
+    Intrude_SetWarpTown(game_comm, PALACE_TOWN_DATA_PALACE);
+    FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
+  }
 }

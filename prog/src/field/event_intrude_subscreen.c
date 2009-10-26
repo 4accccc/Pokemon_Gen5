@@ -13,6 +13,10 @@
 #include "field/field_subscreen.h"
 #include "event_intrude_subscreen.h"
 #include "fieldmap.h"
+#include "event_mapchange.h"
+#include "field_comm/intrude_types.h"
+#include "field_comm/intrude_main.h"
+#include "field_comm/intrude_work.h"
 
 
 //==============================================================================
@@ -115,5 +119,39 @@ static GMEVENT_RESULT ChangeIntrudeSubScreenEvent( GMEVENT *event, int *seq, voi
   }
   return GMEVENT_RES_CONTINUE;
 
+}
+
+
+//==============================================================================
+//  ワープイベント
+//==============================================================================
+//==================================================================
+/**
+ * 侵入によるサブスクリーン切り替えイベント起動
+ *
+ * @param   gsys		
+ * @param   fieldWork		
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+GMEVENT * EVENT_IntrudeTownWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+{
+  GMEVENT * event;
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  int town_tblno;
+  ZONEID warp_zone_id;
+  VecFx32 pos;
+  
+  town_tblno = Intrude_GetWarpTown(game_comm);
+  if(town_tblno == PALACE_TOWN_DATA_NULL){
+    return NULL;
+  }
+  
+  warp_zone_id = Intrude_GetPalaceTownZoneID(town_tblno);
+  Intrude_GetPalaceTownRandPos(town_tblno, &pos);
+  
+  event = DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, warp_zone_id, &pos, DIR_UP);
+  return event;
 }
 

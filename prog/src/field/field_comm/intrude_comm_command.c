@@ -264,8 +264,13 @@ static void _IntrudeRecv_PlayerStatus(const int netID, const int size, const voi
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   const INTRUDE_STATUS *recv_data = pData;
   
-	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) //自分のデータは受け取らない
-	    || (intcomm->recv_profile & (1 << netID)) == 0){  //プロフィール未受信は受け取らない
+	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){ //自分のデータは受け取らない
+    //グレースケール化の為、これだけセット
+    GameCommStatus_SetPlayerStatus(intcomm->game_comm, netID, recv_data->zone_id,
+      recv_data->palace_area, recv_data->mission_no);
+    return;
+  }
+  if((intcomm->recv_profile & (1 << netID)) == 0){  //プロフィール未受信は受け取らない
     return;   
   }
   Intrude_SetPlayerStatus(intcomm, netID, recv_data);

@@ -118,5 +118,8 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 connect_map_count;       ///<連結したマップの数
   u8 member_num;              ///<参加人数(親機から受信)
   u8 member_send_req;         ///<TRUE:参加人数の送信を行う
+  
+  u8 warp_town_tblno;         ///<ワープ先のテーブル番号
+  u8 padding[3];
 }INTRUDE_COMM_SYS;
 

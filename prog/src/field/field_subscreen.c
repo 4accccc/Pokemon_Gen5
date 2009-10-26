@@ -460,7 +460,9 @@ void FIELD_SUBSCREEN_SetAction( FIELD_SUBSCREEN_WORK* pWork , FIELD_SUBSCREEN_AC
 void FIELD_SUBSCREEN_GrantPermission( FIELD_SUBSCREEN_WORK* pWork )
 {
   if(pWork){
-		funcTable[pWork->mode].action_callback(pWork, pWork->action);
+    if(funcTable[pWork->mode].action_callback){
+  		funcTable[pWork->mode].action_callback(pWork, pWork->action);
+  	}
   }
 	FIELD_SUBSCREEN_SetAction(pWork, FIELD_SUBSCREEN_ACTION_NONE);
 }

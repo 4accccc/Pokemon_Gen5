@@ -16,3 +16,5 @@
 //  ŠO•”ŠÖ”éŒ¾
 //==============================================================================
 extern void IntrudeWork_SetActionStatus(GAME_COMM_SYS_PTR game_comm, INTRUDE_ACTION action);
+extern void Intrude_SetWarpTown(GAME_COMM_SYS_PTR game_comm, int town_tblno);
+extern int Intrude_GetWarpTown(GAME_COMM_SYS_PTR game_comm);

@@ -1471,6 +1471,10 @@ static GMEVENT * checkSubScreenEvent(
 			}
 		}
     break;
+  case FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP:
+    event = EVENT_IntrudeTownWarp(gsys, fieldWork);
+    break;
+    
 #if PM_DEBUG
   case FIELD_SUBSCREEN_ACTION_DEBUG_PALACEJUMP:
 		event = DEBUG_PalaceJamp(fieldWork , gsys, FIELDMAP_GetFieldPlayer(fieldWork));

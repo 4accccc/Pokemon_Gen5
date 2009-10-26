@@ -30,7 +30,14 @@ enum{
 };
 
 ///PalaceTownDataのデータ数
-#define PALACE_TOWN_DATA_MAX    (8)
+#define PALACE_TOWN_DATA_MAX      (8)
+///PalaceTownDataのパレス島を指定
+#define PALACE_TOWN_DATA_PALACE   (PALACE_TOWN_DATA_MAX)
+///PalaceTownDataの無効値
+#define PALACE_TOWN_DATA_NULL     (0xff)
+
+///パレスの裏フィールドへワープする時のワープ先座標のパターン数
+#define PALACE_WARP_POS_PATERN    (4)
 
 //==============================================================================
 //  構造体定義
@@ -41,7 +48,11 @@ typedef struct{
   u16 reverse_zone_id;      ///<裏フィールドのゾーンID
   u8 subscreen_x;           ///<サブスクリーンの街の位置X
   u8 subscreen_y;           ///<サブスクリーンの街の位置Y
-  u8 padding[2];
+  struct{
+    u16 x;
+    u16 y;
+    u16 z;
+  }warp_pos[PALACE_WARP_POS_PATERN];
 }PALACE_TOWN_DATA;
 
 ///パレスの街データ、検索結果
@@ -73,6 +84,8 @@ extern void Intrude_InitTalkWork(INTRUDE_COMM_SYS_PTR intcomm, int talk_netid);
 extern void Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id);
 extern void Intrude_SetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int net_id, INTRUDE_TALK_STATUS talk_status);
 extern INTRUDE_TALK_STATUS Intrude_GetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm);
+extern int Intrude_GetPalaceTownZoneID(int town_tblno);
+extern void Intrude_GetPalaceTownRandPos(int town_tblno, VecFx32 *vec);
 
 //==============================================================================
 //  データ
