@@ -1,15 +1,15 @@
 #event data
-#save date:2009/10/16 16:04:41
+#save date:2009/10/26 14:39:04
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01gym0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/16 16:04:41
+#save date:2009/10/26 14:39:04
 2
 #hold event type:
 1
 #hold event number:
-25
+27
 #event number: 0
 #type
 1
@@ -735,11 +735,69 @@ DIR_DOWN
 0
 #position
 -88 0 24
+#event number: 25
+#type
+1
+#ID name
+TR_WAITER_01
+#OBJ CODE Number
+WAITER
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_WAITER_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+6
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-104 0 -264
+#event number: 26
+#type
+1
+#ID name
+TR_WAITRESS_01
+#OBJ CODE Number
+WAITRESS
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_WAITRESS_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+6
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#position
+-8 0 -104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/16 16:04:41
+#save date:2009/10/26 14:39:04
 2
 #hold event type:
 1
@@ -771,7 +829,7 @@ SCRID_BG_C01GYM0101_POKEZOU
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/16 16:04:41
+#save date:2009/10/26 14:39:04
 2
 #hold event type:
 1
@@ -1471,7 +1529,7 @@ LOCALWORK14
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/16 16:04:41
+#save date:2009/10/26 14:39:04
 2
 #hold event type:
 1

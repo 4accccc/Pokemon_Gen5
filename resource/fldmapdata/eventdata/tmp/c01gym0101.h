@@ -36,5 +36,7 @@
 #define C01GYM0101_CURTAIN_03D            22
 #define C01GYM0101_CURTAIN_03C            23
 #define C01GYM0101_CURTAIN_03B            24
+#define TR_WAITER_01                      25
+#define TR_WAITRESS_01                    26
 
 #endif //ZONE_C01GYM0101_EVC_H
