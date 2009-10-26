@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="tanoue_reiko" host="W00192" date="2009-10-05T21:07:01" source="mus_stage02cmb.mb"/>
+	<create user="tanoue_reiko" host="W00192" date="2009-10-26T17:45:26" source="mus_stage03.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,40 +11,33 @@
 <body>
 
 <tex_pattern_info
-	frame_size="800"
+	frame_size="3000"
 	tool_start_frame="1"
-	tool_end_frame="800"
-	compress_material="off" material_size="23 23"
+	tool_end_frame="3000"
+	compress_material="on" material_size="17 17"
 />
 
-<tex_pattern_list_data image_size="4" palette_size="4">
-	<image_name index="0" name="stend.1"/>
-	<image_name index="1" name="stend.2"/>
-	<image_name index="2" name="stend.3"/>
-	<image_name index="3" name="stend.4"/>
-	<palette_name index="0" name="stend.1_pl"/>
-	<palette_name index="1" name="stend.2_pl"/>
-	<palette_name index="2" name="stend.3_pl"/>
-	<palette_name index="3" name="stend.4_pl"/>
+<tex_pattern_list_data image_size="2" palette_size="2">
+	<image_name index="0" name="sun02.1"/>
+	<image_name index="1" name="sun02.2"/>
+	<palette_name index="0" name="sun02.1_pl"/>
+	<palette_name index="1" name="sun02.2_pl"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="18">
-		0 39 79 119 199 239 279 317 357 397
-		477 517 556 595 635 675 755 795
+	<frame_idx size="2">
+		0 50
 	</frame_idx>
-	<image_idx size="18">
-		0 1 2 3 2 1 0 1 2 3
-		2 1 0 1 2 3 2 1
+	<image_idx size="2">
+		0 1
 	</image_idx>
-	<palette_idx size="18">
-		0 1 2 3 2 1 0 1 2 3
-		2 1 0 1 2 3 2 1
+	<palette_idx size="2">
+		0 1
 	</palette_idx>
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="1">
-	<tex_pattern_anm index="0" material_name="lambert67" data_size="18" data_head="0"/>
+	<tex_pattern_anm index="0" material_name="sun02_lm1" data_size="2" data_head="0"/>
 </tex_pattern_anm_array>
 
 </body>
