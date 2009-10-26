@@ -628,14 +628,16 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
       BTL_Printf("アイテム選択:%d\n", wk->plistData.item);
       wk->selectItemSeq++;
     }else{
-      wk->selectItemSeq = 10;
+      BTLV_SCD_FadeIn( wk->scrnD );
+      BTLV_SCD_Setup( wk->scrnD );
+      wk->selectItemSeq = 6;
     }
     break;
 
   case 5:
     if( wk->plistData.end_flg ){
-      BTLV_SCD_Setup( wk->scrnD );
       BTLV_SCD_FadeIn( wk->scrnD );
+      BTLV_SCD_Setup( wk->scrnD );
       wk->selectItemSeq++;
     }
     break;

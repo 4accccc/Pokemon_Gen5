@@ -52,8 +52,12 @@ typedef enum
 
 ///コマンド選択画面構成用のワーク
 typedef struct{
-  BTLV_INPUT_DIR_PARAM          bidp[ BTLV_INPUT_DIR_MAX ];
+  BTLV_INPUT_DIR_PARAM          bidp[ 2 ][ BTLV_INPUT_DIR_MAX ];
   BTLV_INPUT_CENTER_BUTTON_TYPE center_button_type;
+  BOOL                          trainer_flag;                    //対戦相手がトレーナーかどうか
+  int                           mons_no[ 3 ];   //繰り出しているポケモンナンバー
+  int                           form_no[ 3 ];   //繰り出しているポケモンのフォルムナンバー
+  BtlvMcssPos                   pos;
 }BTLV_INPUT_COMMAND_PARAM;
 
 typedef enum
@@ -85,14 +89,16 @@ enum
 
 typedef struct
 { 
-  int up;
-  int down;
-  int left;
-  int right;
-  int b_button;
+  s8 cur_pos[ 6 ];  //カーソルポジション
+  s8 up;            //上キーを押したときの移動先
+  s8 down;          //下キーを押したときの移動先
+  s8 left;          //左キーを押したときの移動先
+  s8 right;         //右キーを押したときの移動先
+  s8 a_button;      //Aボタンを押したときのどこを押したことにするか
+  s8 b_button;      //キャンセル可能かどうか
 }BTLV_INPUT_KEYTBL;
 
-#define BTLV_INPUT_NOMOVE ( 0x80000000 )
+#define BTLV_INPUT_NOMOVE ( -128 )
 
 extern  BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, HEAPID heapID );
 extern	void			        BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw );
@@ -101,6 +107,9 @@ extern  void              BTLV_INPUT_InitBG( BTLV_INPUT_WORK* biw );
 extern	void			        BTLV_INPUT_ExitBG( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_SetFrame( void );
 extern  void              BTLV_INPUT_FreeFrame( void );
+extern  void              BTLV_INPUT_SetFadeOut( BTLV_INPUT_WORK* biw );
+extern  void              BTLV_INPUT_SetFadeIn( BTLV_INPUT_WORK* biw );
+extern  BOOL              BTLV_INPUT_CheckFadeExecute( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, void* param );
 extern  int               BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl,
                                                  const BTLV_INPUT_KEYTBL* key_tbl );

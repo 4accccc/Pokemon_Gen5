@@ -135,8 +135,6 @@ static void setupMainWin( BTLV_SCD* wk );
 static void spstack_init( BTLV_SCD* wk );
 static void spstack_push( BTLV_SCD* wk, BPFunc initFunc, BPFunc loopFunc );
 static BOOL spstack_call( BTLV_SCD* wk );
-static void printBtn( BTLV_SCD* wk, u16 posx, u16 posy, u16 sizx, u16 sizy, u16 col, u16 strID );
-static void printBtnWaza( BTLV_SCD* wk, u16 btnIdx, u16 col, const STRBUF* str );
 static BOOL selectAction_init( int* seq, void* wk_adrs );
 static BOOL selectActionRoot_loop( int* seq, void* wk_adrs );
 static BOOL selectWaza_init( int* seq, void* wk_adrs );
@@ -184,11 +182,14 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
 
 void BTLV_SCD_Init( BTLV_SCD* wk )
 {
+#if 0
   if( BTL_MAIN_GetRule( wk->mainModule ) == BTL_RULE_TRIPLE ){
     wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_TRIPLE, wk->font, wk->heapID );
   }else{
     wk->biw = BTLV_INPUT_Init( BTLV_INPUT_TYPE_SINGLE, wk->font, wk->heapID );
   }
+#endif
+    wk->biw = BTLV_INPUT_Init( BTL_MAIN_GetRule( wk->mainModule ), wk->font, wk->heapID );
 
   ///<obj
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
@@ -211,6 +212,7 @@ void BTLV_SCD_FadeOut( BTLV_SCD* wk )
   wk->fadeValue = 0;
   wk->fadeValueEnd = -16;
   wk->fadeStep = -1;
+  BTLV_INPUT_SetFadeOut( wk->biw );
 }
 //=============================================================================================
 /**
@@ -224,6 +226,7 @@ void BTLV_SCD_FadeIn( BTLV_SCD* wk )
   wk->fadeValue = -16;
   wk->fadeValueEnd = 0;
   wk->fadeStep = 1;
+  BTLV_INPUT_SetFadeIn( wk->biw );
 }
 //=============================================================================================
 /**
@@ -236,34 +239,14 @@ void BTLV_SCD_FadeIn( BTLV_SCD* wk )
 //=============================================================================================
 BOOL BTLV_SCD_FadeFwd( BTLV_SCD* wk )
 {
-  #if 0
-  if( wk->fadeStep )
-  {
-    wk->fadeValue += wk->fadeStep;
-    if( (wk->fadeStep < 0) && (wk->fadeValue <= wk->fadeValueEnd) ){
-      wk->fadeValue = wk->fadeValueEnd;
-      wk->fadeStep = 0;
-    }
-    else if((wk->fadeStep > 0) && (wk->fadeValue >= wk->fadeValueEnd) ){
-      wk->fadeValue = wk->fadeValueEnd;
-      wk->fadeStep = 0;
-    }
-    GXS_SetMasterBrightness( wk->fadeValue );
-  }
-  return (wk->fadeStep == 0);
-  #else
-  // @todo 直接輝度をいじるとバッグやらリストが対応していないのでとりあえずオフる
-  return TRUE;
-  #endif
+  return !BTLV_INPUT_CheckFadeExecute( wk->biw );
 }
 void BTLV_SCD_Cleanup( BTLV_SCD* wk )
 {
   GFL_BMPWIN_Delete( wk->win );
-  BTLV_INPUT_ExitBG( wk->biw );
 }
 void BTLV_SCD_Setup( BTLV_SCD* wk )
 {
-  BTLV_INPUT_InitBG( wk->biw );
   setupMainWin( wk );
 }
 
@@ -387,110 +370,7 @@ BOOL BTLV_SCD_WaitTargetSelect( BTLV_SCD* wk )
   return spstack_call( wk );
 }
 
-
-///コマンド選択タッチパネル領域設定
-static const GFL_UI_TP_HITTBL BattleMenuTouchData[] = {
-  //UP DOWN LEFT RIGHT
-  {3*8, 0x12*8, 0*8, 255},      //たたかう
-  {0x12*8, 0x18*8, 0*8, 0xa*8},   //バッグ
-  {0x12*8, 0x18*8, 0x16*8, 255},  //ポケモン
-  {0x13*8, 0x18*8, 0xb*8, 0x15*8},  //にげる
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-static const BTLV_INPUT_KEYTBL  BattleMenuKeyData[] = {
-  //UP                  DOWN                LEFT                RIGHT               B_BUTTON
-  { BTLV_INPUT_NOMOVE,  -1,                 1,                  2,                  BTLV_INPUT_NOMOVE },  //たたかう
-  { 0,                  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3                ,  BTLV_INPUT_NOMOVE },  //バッグ
-  { 0,                  BTLV_INPUT_NOMOVE,  3,                  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE },  //ポケモン
-  { BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,                  2                ,  BTLV_INPUT_NOMOVE },  //にげる
-};
-
-///技選択タッチパネル領域設定
-static const GFL_UI_TP_HITTBL SkillMenuTouchDataNormal[] = {
-  //UP      DOWN    LEFT    RIGHT
-  { 0x04*8, 0x0a*8, 0x00*8, 0x10*8},   //技1
-  { 0x04*8, 0x0a*8, 0x10*8, 255},      //技2
-  { 0x0a*8, 0x10*8, 0x00*8, 0x10*8},   //技3
-  { 0x0a*8, 0x10*8, 0x10*8, 255},      //技4
-  { 0x12*8, 0x18*8, 0x16*8, 255},      //キャンセル
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-static const BTLV_INPUT_KEYTBL  SkillMenuKeyDataNormal[] = {
-  //UP                  DOWN                LEFT                RIGHT               B_BUTTON
-  { BTLV_INPUT_NOMOVE,  2,                  BTLV_INPUT_NOMOVE,  1                ,  4 },  //技1
-  { BTLV_INPUT_NOMOVE,  3,                  0,                  BTLV_INPUT_NOMOVE,  4 },  //技2
-  { 0,                  4,                  BTLV_INPUT_NOMOVE,  3                ,  4 },  //技3
-  { 1,                  4,                  2,                  BTLV_INPUT_NOMOVE,  4 },  //技4
-  { -2,                 BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4 },  //キャンセル
-};
-
-///技選択タッチパネル領域設定
-static const GFL_UI_TP_HITTBL SkillMenuTouchData3vs3[] = {
-  //UP    DOWN    LEFT    RIGHT
-  { 0x04*8, 0x0a*8, 0x00*8, 0x10*8},   //技1
-  { 0x04*8, 0x0a*8, 0x10*8, 255},      //技2
-  { 0x0a*8, 0x10*8, 0x00*8, 0x10*8},   //技3
-  { 0x0a*8, 0x10*8, 0x10*8, 255},      //技4
-  {0x12*8, 0x18*8, 0x16*8, 255},      //キャンセル
-  {0x12*8, 0x18*8, 0x00*8, 0x0a*8},   //移動
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-static const BTLV_INPUT_KEYTBL  SkillMenuKeyData3vs3[] = {
-  //UP                  DOWN                LEFT                RIGHT               B_BUTTON
-  { BTLV_INPUT_NOMOVE,  2,                  BTLV_INPUT_NOMOVE,  1                ,  4 },  //技1
-  { BTLV_INPUT_NOMOVE,  3,                  0,                  BTLV_INPUT_NOMOVE,  4 },  //技2
-  { 0,                  5,                  BTLV_INPUT_NOMOVE,  3                ,  4 },  //技3
-  { 1,                  4,                  2,                  BTLV_INPUT_NOMOVE,  4 },  //技4
-  { 3,                  BTLV_INPUT_NOMOVE,  5,                  BTLV_INPUT_NOMOVE,  4 },  //キャンセル
-  { 2,                  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4                ,  4 },  //移動
-};
-
-static const struct {
-    u8 x;
-    u8 y;
-    u8 w;
-    u8 h;
-}BtlPos[] = {
-  {   0,  0, 128, 96 },
-  { 128,  0, 128, 96 },
-  {   0, 96, 128, 96 },
-  { 128, 96, 128, 96 },
-};
-
-
-static void printBtn( BTLV_SCD* wk, u16 posx, u16 posy, u16 sizx, u16 sizy, u16 col, u16 strID )
-{
-  u32 strWidth, drawX, drawY;
-
-  GFL_BMP_Fill( wk->bmp, posx, posy, sizx, sizy, col );
-  BTL_STR_GetUIString( wk->strbuf, strID );
-  strWidth = PRINTSYS_GetStrWidth( wk->strbuf, wk->font, 0 );
-  drawX = posx + (sizx - strWidth) / 2;
-  drawY = posy + (sizy - 16) / 2;
-  PRINT_UTIL_Print( &wk->printUtil, wk->printQue, drawX, drawY, wk->strbuf, wk->font );
-}
-
-static void printBtnWaza( BTLV_SCD* wk, u16 btnIdx, u16 col, const STRBUF* str )
-{
-  u32 strWidth, drawX, drawY;
-  u8 posx, posy, sizx, sizy;
-
-  posx = BtlPos[btnIdx].x;
-  posy = BtlPos[btnIdx].y;
-  sizx = BtlPos[btnIdx].w;
-  sizy = BtlPos[btnIdx].h;
-
-  GFL_BMP_Fill( wk->bmp, posx, posy, sizx, sizy, col );
-
-  // soga
-  if( str == NULL ) return;
-
-  strWidth = PRINTSYS_GetStrWidth( wk->strbuf, wk->font, 0 );
-  drawX = posx + (sizx - strWidth) / 2;
-  drawY = posy + (sizy - 32) / 2;
-  PRINT_UTIL_Print( &wk->printUtil, wk->printQue, drawX, drawY, wk->strbuf, wk->font );
-}
-
+#include "data\command_sel.cdat"
 
 static BOOL selectAction_init( int* seq, void* wk_adrs )
 {
@@ -499,32 +379,92 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
   const BTL_PARTY* party;
   const BTL_POKEPARAM* bpp;
   const POKEMON_PARAM* pp;
-  u16 members, hp, i;
+  u16 members, hp, i, j;
 
   MI_CpuClear16( &bicp, sizeof( BTLV_INPUT_COMMAND_PARAM ) );
 
-  party = wk->playerParty;
-  members = BTL_PARTY_GetMemberCount( party );
-  BTL_Printf("members=%d\n", members);
+  bicp.pos = BTL_MAIN_BtlPosToViewPos( wk->mainModule,
+                                       BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID( wk->bpp ) ) );
 
-  for(i=0; i<members; ++i)
-  {
-    bpp = BTL_PARTY_GetMemberDataConst( party, i );
-    pp  = BPP_GetSrcData( bpp );
-    BTL_Printf("member[%d]=%p, %p\n", i, bpp, pp);
-    hp = PP_Get( pp, ID_PARA_hp, NULL );
-
-    if( hp )
-    {
-      if( PP_Get(pp, ID_PARA_condition, NULL) ){
-        bicp.bidp[ i ].status = BTLV_INPUT_STATUS_NG;
-      }
-      else{
-        bicp.bidp[ i ].status = BTLV_INPUT_STATUS_ALIVE;
+  for( j = 0 ; j < 2 ; j++ )
+  { 
+    if( j == 0 )
+    { 
+      //自分の手持ち
+      party = wk->playerParty;
+      members = BTL_PARTY_GetMemberCount( party );
+      BTL_Printf("members=%d\n", members);
+      switch( BTL_MAIN_GetRule( wk->mainModule ) ){ 
+      case BTL_RULE_SINGLE:    ///< シングル
+        bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_AA ) );
+        if( BPP_IsDead( bpp ) == FALSE )
+        { 
+          bicp.mons_no[ 0 ] = BPP_GetMonsNo( bpp );
+          bicp.form_no[ 0 ] = BPP_GetValue( bpp, BPP_FORM );
+        }
+        break;
+      case BTL_RULE_TRIPLE:    ///< トリプル
+        bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_E ) );
+        if( BPP_IsDead( bpp ) == FALSE )
+        { 
+          bicp.mons_no[ 2 ] = BPP_GetMonsNo( bpp );
+          bicp.form_no[ 2 ] = BPP_GetValue( bpp, BPP_FORM );
+        }
+      /* fallthru */
+      case BTL_RULE_DOUBLE:    ///< ダブル
+        bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_A ) );
+        if( BPP_IsDead( bpp ) == FALSE )
+        { 
+          bicp.mons_no[ 0 ] = BPP_GetMonsNo( bpp );
+          bicp.form_no[ 0 ] = BPP_GetValue( bpp, BPP_FORM );
+        }
+        bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_C ) );
+        if( BPP_IsDead( bpp ) == FALSE )
+        { 
+          bicp.mons_no[ 1 ] = BPP_GetMonsNo( bpp );
+          bicp.form_no[ 1 ] = BPP_GetValue( bpp, BPP_FORM );
+        }
+        bicp.pos = ( bicp.pos - BTLV_MCSS_POS_A ) / 2;
+        break;
+      default:
+        GF_ASSERT_MSG( 0, "知らない戦闘ルールです\n" );
+        break;
       }
     }
-    else{
-      bicp.bidp[ i ].status = BTLV_INPUT_STATUS_DEAD;
+    else
+    { 
+      if( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_WILD )
+      { 
+        break;
+      }
+      bicp.trainer_flag = TRUE;
+      //相手の手持ち
+      party = BTL_POKECON_GetPartyDataConst( wk->pokeCon,
+                                             BTL_MAIN_GetOpponentClientID( wk->mainModule,
+                                             BTL_MAIN_GetPlayerClientID( wk->mainModule ), 0 ) );
+      members = BTL_PARTY_GetMemberCount( party );
+      BTL_Printf("members=%d\n", members);
+    }
+
+    for(i=0; i<members; ++i)
+    {
+      bpp = BTL_PARTY_GetMemberDataConst( party, i );
+      pp  = BPP_GetSrcData( bpp );
+      BTL_Printf("member[%d]=%p, %p\n", i, bpp, pp);
+      hp = PP_Get( pp, ID_PARA_hp, NULL );
+
+      if( hp )
+      {
+        if( PP_Get( pp, ID_PARA_condition, NULL ) ){
+          bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_NG;
+        }
+        else{
+          bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_ALIVE;
+        }
+      }
+      else{
+        bicp.bidp[ j ][ i ].status = BTLV_INPUT_STATUS_DEAD;
+      }
     }
   }
 
@@ -705,35 +645,8 @@ enum {
   STW_BTNPOS_C_Y = STW_BTNPOS_A_Y,
 
 };
-static const GFL_UI_TP_HITTBL PokeSeleMenuTouch4Data[] = {
-  //UP DOWN LEFT RIGHT
-  { 12 * 8, 15 * 8,  1 * 8, 15 * 8 }, //ターゲットA
-  {  4 * 8, 11 * 8, 17 * 8, 31 * 8 }, //ターゲットB
-  { 12 * 8, 15 * 8, 17 * 8, 31 * 8 }, //ターゲットC
-  {  4 * 8, 11 * 8,  1 * 8, 15 * 8 }, //ターゲットD
-  { 16 * 8, 24 * 8, 22 * 8, 32 * 8 }, //キャンセル
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-static const GFL_UI_TP_HITTBL PokeSeleMenuTouch6Data[] = {
-  //UP      DOWN    LEFT    RIGHT
-  { 12 * 8, 15 * 8,  2 * 8, 10 * 8 }, //ターゲットA
-  {  5 * 8, 10 * 8, 22 * 8, 30 * 8 }, //ターゲットB
-  { 12 * 8, 15 * 8, 12 * 8, 20 * 8 }, //ターゲットC
-  {  5 * 8, 10 * 8, 12 * 8, 20 * 8 }, //ターゲットD
-  { 12 * 8, 15 * 8, 22 * 8, 30 * 8 }, //ターゲットE
-  {  5 * 8, 10 * 8,  2 * 8, 10 * 8 }, //ターゲットF
-  { 16 * 8, 24 * 8, 22 * 8, 32 * 8 }, //キャンセル
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-// ↑描画位置から上記テーブルインデックスを引くためのテーブル
-static const u8 STW_HitTblIndex[] = {
-  BTLV_MCSS_POS_A,
-  BTLV_MCSS_POS_B,
-  BTLV_MCSS_POS_C,
-  BTLV_MCSS_POS_D,
-  BTLV_MCSS_POS_E,
-  BTLV_MCSS_POS_F,
-};
+
+#include "data\target_sel.cdat"
 
 /*
 typedef struct {
@@ -978,18 +891,30 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
   case 0:
     {
       const GFL_UI_TP_HITTBL *touch_data;
+      const BTLV_INPUT_KEYTBL *key_data;
       int hit;
       u8  touch_max;
+      u8  pos = BTL_MAIN_BtlPosToViewPos( wk->mainModule,
+                                          BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(wk->bpp) ) );
+      u8  target = WAZADATA_GetTarget( wk->destActionParam->fight.waza );
+
+      GF_ASSERT( target < 14 );
+
+      pos = ( pos - BTLV_MCSS_POS_A ) / 2;
 
       if( BTL_MAIN_GetRule( wk->mainModule ) != BTL_RULE_TRIPLE ){
+        GF_ASSERT_MSG( ( ( pos > -1 ) && ( pos < 2 ) ), "pos:%d\n", pos );
         touch_data = PokeSeleMenuTouch4Data;
+        key_data = PokeSeleMenuKey4Data[ pos ][ target ];
         touch_max = 4;
       }else{
+        GF_ASSERT_MSG( ( ( pos > -1 ) && ( pos < 3 ) ), "pos:%d\n", pos );
         touch_data = PokeSeleMenuTouch6Data;
+        key_data = PokeSeleMenuKey6Data[ pos ][ target ];
         touch_max = 6;
       }
 
-      hit = BTLV_INPUT_CheckInput( wk->biw, touch_data, NULL );
+      hit = BTLV_INPUT_CheckInput( wk->biw, touch_data, key_data );
       if( hit != GFL_UI_TP_HIT_NONE )
       {
         BTL_Printf("hitBtn = %d\n", hit );

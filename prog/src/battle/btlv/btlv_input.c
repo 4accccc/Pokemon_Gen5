@@ -16,6 +16,8 @@
 #include "system/palanm.h"
 #include "system/bmp_oam.h"
 #include "infowin/infowin.h"
+#include "pokeicon/pokeicon.h"
+#include "system/sdkdef.h"
 
 #include "btlv_input.h"
 #include "data/btlv_input.cdat"
@@ -256,11 +258,30 @@ ALIGN4  static  const u16 WazaIconPos[][2] = {  //0:X, 1:Y
 //ボールゲージ座標定義
 enum
 {
-  BTLV_INPUT_BALLGAUGE_ENEMY_X = ( 128 + ( 8 * 3 ) - 4 ),
-  BTLV_INPUT_BALLGAUGE_ENEMY_Y = ( 6 * 8 ),
-  BTLV_INPUT_BALLGAUGE_MINE_X = ( 128 - ( 16 * 3 ) + 8 ),
-  BTLV_INPUT_BALLGAUGE_MINE_Y = ( 16 * 8 ) + 8,
+  BTLV_INPUT_BALLGAUGE_ENEMY_X        = ( 128 + ( 8 * 3 ) - 4 ),
+  BTLV_INPUT_BALLGAUGE_ENEMY_Y_CLOSE  = ( 8 * 6 ),                  //コマンド選択時
+  BTLV_INPUT_BALLGAUGE_ENEMY_Y_OPEN   = ( 8 * 3 ),                  //コマンド選択時以外
+  BTLV_INPUT_BALLGAUGE_MINE_X         = ( 128 - ( 16 * 3 ) + 8 ),
+//  BTLV_INPUT_BALLGAUGE_MINE_Y_CLOSE   = ( 8 * 16 ),                 //コマンド選択時
+//  BTLV_INPUT_BALLGAUGE_MINE_Y_OPEN    = ( 8 * 17 ),                 //コマンド選択時以外
+  BTLV_INPUT_BALLGAUGE_MINE_Y_CLOSE   = ( 8 * 17 ),                 //コマンド選択時
+  BTLV_INPUT_BALLGAUGE_MINE_Y_OPEN    = ( 8 * 17 ),                 //コマンド選択時以外
+
+  BALL_GAUGE_MOVE_VALUE               = 4,  //ボールゲージ移動量 
 };
+
+typedef enum
+{ 
+  BALL_GAUGE_TYPE_MINE = 0,
+  BALL_GAUGE_TYPE_ENEMY,
+  BALL_GAUGE_TYPE_MAX,
+}BALL_GAUGE_TYPE;
+
+typedef enum
+{ 
+  BALL_GAUGE_MOVE_OPEN = 0,
+  BALL_GAUGE_MOVE_CLOSE,
+}BALL_GAUGE_MOVE_DIR;
 
 //カーソルOBJ定義
 enum
@@ -273,10 +294,34 @@ enum
   BTLV_INPUT_CURSOR_RD_2,
   BTLV_INPUT_CURSOR_MAX,
 
-  BTLV_INPUT_CURSOR_LU_ANIME = 11,
+  BTLV_INPUT_CURSOR_LU_ANIME = 10,
   BTLV_INPUT_CURSOR_LD_ANIME,
   BTLV_INPUT_CURSOR_RU_ANIME,
   BTLV_INPUT_CURSOR_RD_ANIME,
+};
+
+//ポケモンアイコン定義
+enum
+{ 
+  BTLV_INPUT_POKE_ICON_SINGLE_X = 128,
+  BTLV_INPUT_POKE_ICON_SINGLE_Y = 112,  //128 + 12,
+  BTLV_INPUT_POKE_ICON_DOUBLE_X1 = 128 - 24,
+  BTLV_INPUT_POKE_ICON_DOUBLE_Y1 = BTLV_INPUT_POKE_ICON_SINGLE_Y,
+  BTLV_INPUT_POKE_ICON_DOUBLE_X2 = 128 + 24,
+  BTLV_INPUT_POKE_ICON_DOUBLE_Y2 = BTLV_INPUT_POKE_ICON_SINGLE_Y,
+  BTLV_INPUT_POKE_ICON_TRIPLE_X1 = 128 - 40,
+  BTLV_INPUT_POKE_ICON_TRIPLE_Y1 = BTLV_INPUT_POKE_ICON_SINGLE_Y,
+  BTLV_INPUT_POKE_ICON_TRIPLE_X2 = BTLV_INPUT_POKE_ICON_SINGLE_X, 
+  BTLV_INPUT_POKE_ICON_TRIPLE_Y2 = BTLV_INPUT_POKE_ICON_SINGLE_Y, 
+  BTLV_INPUT_POKE_ICON_TRIPLE_X3 = 128 + 40,
+  BTLV_INPUT_POKE_ICON_TRIPLE_Y3 = BTLV_INPUT_POKE_ICON_SINGLE_Y,
+  BTLV_INPUT_POKE_ICON_MAX = 3,
+};
+
+enum
+{ 
+  BTLV_INPUT_FADE_OUT = 1,
+  BTLV_INPUT_FADE_IN,
 };
 
 #define CURSOR_NOMOVE ( 0x0f )    //カーソルが一度も動いていないときのold_cursor_posの数値
@@ -309,7 +354,9 @@ struct _BTLV_INPUT_WORK
   u32                   cursor_pos          :4;
   u32                   old_cursor_pos      :4;
   u32                   cursor_decide       :1;
-  u32                                       :17;
+  u32                   trainer_flag        :1;
+  u32                   fade_flag           :2;
+  u32                                       :14;
 
   //OBJリソース
   u32                   objcharID;
@@ -324,6 +371,13 @@ struct _BTLV_INPUT_WORK
   //カーソルOBJ
   GFL_CLUNIT*           cursor_clunit;
   BTLV_INPUT_CLWK       cursor[ BTLV_INPUT_CURSOR_MAX ];
+
+  //ポケモンアイコン
+  u32                   pokeicon_charID[ BTLV_INPUT_POKE_ICON_MAX ];
+  u32                   pokeicon_plttID;
+  u32                   pokeicon_cellID;
+  GFL_CLUNIT*           pokeicon_clunit;
+  BTLV_INPUT_CLWK       pokeicon_wk[ BTLV_INPUT_POKE_ICON_MAX ];
 
   //技タイプアイコンOBJ
   u32                   wazatype_charID[ PTL_WAZA_MAX ];
@@ -389,6 +443,17 @@ typedef struct
 
 typedef struct
 {
+  BTLV_INPUT_WORK*  biw;
+  int               move_dir;    //移動方向
+}TCB_BALL_GAUGE_MOVE;
+
+typedef struct
+{
+  BTLV_INPUT_WORK*  biw;
+}TCB_FADE_ACT;
+
+typedef struct
+{
   const GFL_CLACTPOS  pos[ BUTTON_ANIME_MAX ];          //座標
   int                 anm_no[ BUTTON_ANIME_TYPE_MAX ];  //アニメーションナンバー
 }BUTTON_ANIME_PARAM;
@@ -415,19 +480,24 @@ static  void  SetupScreenAnime( BTLV_INPUT_WORK* biw, int index, SCREEN_ANIME_DI
 static  void  TCB_ScreenAnime( GFL_TCB* tcb, void* work );
 static  void  SetupButtonAnime( BTLV_INPUT_WORK* biw, BUTTON_TYPE type, BUTTON_ANIME_TYPE anm_type );
 static  void  TCB_ButtonAnime( GFL_TCB* tcb, void* work );
+static  void  SetupBallGaugeMove( BTLV_INPUT_WORK* biw, BALL_GAUGE_MOVE_DIR dir );
+static  void  TCB_BallGaugeMove( GFL_TCB* tcb, void* work );
+static  void  TCB_Fade( GFL_TCB* tcb, void* work );
 
 static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work );
 static  void  FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int *ret_char_len );
 static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_WAZA_PARAM *biwp );
 static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_SCENE_PARAM *bisp );
-static  void  BTLV_INPUT_ClearWazaScreen( BTLV_INPUT_WORK* biw );
+static  void  BTLV_INPUT_ClearScreen( BTLV_INPUT_WORK* biw );
 static  PRINTSYS_LSB  PP_FontColorGet( int pp, int pp_max );
-static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT_DIR_PARAM *bidp, int type );
+static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp );
+static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw );
+static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT_COMMAND_PARAM *bicp, BALL_GAUGE_TYPE type );
 static  void  BTLV_INPUT_DeleteBallGauge( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateCursorOBJ( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_DeleteCursorOBJ( BTLV_INPUT_WORK* biw );
 static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, int hit );
-static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl );
+static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl );
 static  inline  void  SePlaySelect( void );
 
 //============================================================================================
@@ -515,10 +585,18 @@ static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work )
 //============================================================================================
 void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
 {
+  //ＢＧモード設定
+  {
+    static const GFL_BG_SYS_HEADER sysHeader = {
+      GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_3D,
+    };
+    GFL_BG_SetBGMode( &sysHeader );
+  }
   biw->handle   = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, biw->heapID );
   biw->wazatype_clunit = GFL_CLACT_UNIT_Create( PTL_WAZA_MAX, 0, biw->heapID );
   biw->ballgauge_clunit = GFL_CLACT_UNIT_Create( TEMOTI_POKEMAX * 2, 0, biw->heapID );
   biw->cursor_clunit = GFL_CLACT_UNIT_Create( BTLV_INPUT_CURSOR_MAX, 0, biw->heapID );
+  biw->pokeicon_clunit = GFL_CLACT_UNIT_Create( BTLV_INPUT_POKE_ICON_MAX, 0, biw->heapID );
 
   BTLV_INPUT_SetFrame();
   BTLV_INPUT_LoadResource( biw );
@@ -555,6 +633,7 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
 {
   BTLV_INPUT_DeleteBallGauge( biw );
   BTLV_INPUT_DeleteCursorOBJ( biw );
+  BTLV_INPUT_DeletePokeIcon( biw );
 
   GFL_CLGRP_CGR_Release( biw->objcharID );
   GFL_CLGRP_CELLANIM_Release( biw->objcellID );
@@ -574,6 +653,7 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
   GFL_CLACT_UNIT_Delete( biw->wazatype_clunit );
   GFL_CLACT_UNIT_Delete( biw->ballgauge_clunit );
   GFL_CLACT_UNIT_Delete( biw->cursor_clunit );
+  GFL_CLACT_UNIT_Delete( biw->pokeicon_clunit );
 
   GFL_BMPWIN_Delete( biw->bmp_win );
 
@@ -610,6 +690,8 @@ void BTLV_INPUT_SetFrame( void )
 //============================================================================================
 /**
  *  @brief  下画面BGフレーム設定解放
+ *
+ *  @param[in]  biw   システム管理構造体のポインタ
  */
 //============================================================================================
 void BTLV_INPUT_FreeFrame( void )
@@ -624,6 +706,55 @@ void BTLV_INPUT_FreeFrame( void )
 
 //============================================================================================
 /**
+ *  @brief  下画面フェードアウトリクエスト
+ *
+ *  @param[in]  biw   システム管理構造体のポインタ
+ */
+//============================================================================================
+void BTLV_INPUT_SetFadeOut( BTLV_INPUT_WORK* biw )
+{ 
+  TCB_FADE_ACT* tfa = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_FADE_ACT ) );
+
+  PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_ALL, 0xffff, 1, 0, 16, 0, biw->tcbsys );
+  biw->fade_flag = BTLV_INPUT_FADE_OUT;
+
+  tfa->biw           = biw;
+  GFL_TCB_AddTask( biw->tcbsys, TCB_Fade, tfa, 0 );
+}
+
+//============================================================================================
+/**
+ *  @brief  下画面フェードインリクエスト
+ */
+//============================================================================================
+void BTLV_INPUT_SetFadeIn( BTLV_INPUT_WORK* biw )
+{ 
+  TCB_FADE_ACT* tfa = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_FADE_ACT ) );
+
+  BTLV_INPUT_InitBG( biw );
+  PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_ALL, 0xffff, 1, 16, 0, 0, biw->tcbsys );
+  biw->fade_flag = BTLV_INPUT_FADE_IN;
+
+  tfa->biw           = biw;
+  GFL_TCB_AddTask( biw->tcbsys, TCB_Fade, tfa, 0 );
+}
+
+//============================================================================================
+/**
+ *  @brief  下画面フェードチェック
+ *
+ *  @param[in]  biw   システム管理構造体のポインタ
+ *
+ *  @retval TRUE:フェード中 FALSE:フェード終了
+ */
+//============================================================================================
+BOOL BTLV_INPUT_CheckFadeExecute( BTLV_INPUT_WORK* biw )
+{ 
+  return ( biw->fade_flag != 0 );
+}
+
+//============================================================================================
+/**
  *  @brief  下画面生成
  *
  *  @param[in]  biw   システム管理構造体のポインタ
@@ -633,7 +764,7 @@ void BTLV_INPUT_FreeFrame( void )
 //============================================================================================
 void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, void* param )
 {
-  BTLV_INPUT_ClearWazaScreen( biw );
+  BTLV_INPUT_ClearScreen( biw );
 
   switch( type ){
   case BTLV_INPUT_SCRTYPE_STANDBY:
@@ -659,6 +790,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND )
       {
+        BTLV_INPUT_DeletePokeIcon( biw );
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Standby, ttw, 1 );
       }
       else
@@ -681,13 +813,20 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
         biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
       }
 
+      BTLV_INPUT_CreatePokeIcon( biw, bicp );
+
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA )
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Command, ttw, 1 );
       }
       else
       {
-        BTLV_INPUT_CreateBallGauge( biw, bicp->bidp, 0 );
+        BTLV_INPUT_CreateBallGauge( biw, bicp, BALL_GAUGE_TYPE_MINE );
+        if( bicp->trainer_flag )
+        { 
+          BTLV_INPUT_CreateBallGauge( biw, bicp, BALL_GAUGE_TYPE_ENEMY );
+        }
+        biw->trainer_flag = bicp->trainer_flag;
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Command, ttw, 1 );
       }
     }
@@ -706,6 +845,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       }
       else
       {
+        BTLV_INPUT_DeletePokeIcon( biw );
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Waza, ttw, 1 );
       }
     }
@@ -744,6 +884,9 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl,
 {
   int hit;
 
+  GF_ASSERT( tp_tbl != NULL );
+  GF_ASSERT( key_tbl != NULL );
+
   //下画面変形中は入力を無視
   if( biw->tcb_execute_flag )
   {
@@ -751,11 +894,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl,
   }
 
   hit = GFL_UI_TP_HitTrg( tp_tbl );
-  //** @TODO本来はいらない判定 */
-  if( key_tbl != NULL )
-  { 
-    hit = BTLV_INPUT_CheckKey( biw, tp_tbl, key_tbl, hit );
-  }
+  hit = BTLV_INPUT_CheckKey( biw, tp_tbl, key_tbl, hit );
 
   if( hit != GFL_UI_TP_HIT_NONE )
   {
@@ -788,12 +927,6 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
                                         GFL_BG_FRAME2_S, 0, 0, FALSE, biw->heapID );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, NARC_battgra_wb_battle_w_bg3_NCGR,
                                         GFL_BG_FRAME3_S, 0, 0x8000, FALSE, biw->heapID );
-//  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
-//                                  GFL_BG_FRAME0_S, 0, 0, FALSE, biw->heapID );
-//  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
-//                                   GFL_BG_FRAME1_S, 0, 0, FALSE, biw->heapID );
-//  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg2_NSCR,
-//                                  GFL_BG_FRAME2_S, 0, 0, FALSE, biw->heapID );
   GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg3_NSCR,
                                    GFL_BG_FRAME3_S, 0, 0, FALSE, biw->heapID );
   PaletteWorkSet_ArcHandle( BTLV_EFFECT_GetPfd(), biw->handle, NARC_battgra_wb_battle_w_bg_NCLR,
@@ -805,16 +938,17 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
                                                 NARC_battgra_wb_battle_w_obj_NANR, biw->heapID );
   biw->objplttID = GFL_CLGRP_PLTT_Register( biw->handle, NARC_battgra_wb_battle_w_obj_NCLR, CLSYS_DRAW_SUB, 0, biw->heapID );
   PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_SUB_OBJ,
-                           GFL_CLGRP_PLTT_GetAddr( biw->objplttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
+                           GFL_CLGRP_PLTT_GetAddr( biw->objplttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 8 );
 
   {
     ARCHANDLE*  hdl;
     int         i;
 
+    //技タイプアイコン
     hdl = GFL_ARC_OpenDataHandle( WazaTypeIcon_ArcIDGet(), biw->heapID );
     biw->wazatype_cellID = GFL_CLGRP_CELLANIM_Register( hdl, WazaTypeIcon_CellIDGet(), WazaTypeIcon_CellAnmIDGet(),
                                                         biw->heapID );
-    biw->wazatype_plttID = GFL_CLGRP_PLTT_Register( hdl, WazaTypeIcon_PlttIDGet(), CLSYS_DRAW_SUB, 0x20 * 3, biw->heapID );
+    biw->wazatype_plttID = GFL_CLGRP_PLTT_Register( hdl, WazaTypeIcon_PlttIDGet(), CLSYS_DRAW_SUB, 0x20 * 8, biw->heapID );
     PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_SUB_OBJ,
                              GFL_CLGRP_PLTT_GetAddr( biw->wazatype_plttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
     for( i = 0; i < PTL_WAZA_MAX ; i++ ){
@@ -907,6 +1041,7 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
     SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X, TTC2W_START_SCROLL_Y, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
     SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
+    SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_OPEN );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
@@ -942,6 +1077,7 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
     SetupScrollUp( ttw->biw, TTW2C_START_SCROLL_X, TTW2C_START_SCROLL_Y, TTW2C_SCROLL_SPEED, TTW2C_SCROLL_COUNT );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
     SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
+    SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_CLOSE );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
@@ -991,7 +1127,6 @@ static  void  TCB_TransformWaza2Dir( GFL_TCB* tcb, void* work )
     break;
   }
   */
-  GFL_BG_SetScroll( GFL_BG_FRAME2_S, GFL_BG_SCROLL_X_SET, 256 );
   if( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE )
   {
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1c_NSCR,
@@ -1386,6 +1521,104 @@ static  void  TCB_ButtonAnime( GFL_TCB* tcb, void* work )
   GFL_TCB_DeleteTask( tcb );
 }
 
+//============================================================================================
+/**
+ *  @brief  ボールゲージ移動処理セットアップ
+ *
+ *  @param[in]  dir  移動方向
+ */
+//============================================================================================
+static  void  SetupBallGaugeMove( BTLV_INPUT_WORK* biw, BALL_GAUGE_MOVE_DIR dir )
+{ 
+  TCB_BALL_GAUGE_MOVE* tbgm = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_BALL_GAUGE_MOVE ) );
+
+  tbgm->biw           = biw;
+  tbgm->move_dir      = dir;
+
+  GFL_TCB_AddTask( biw->tcbsys, TCB_BallGaugeMove, tbgm, 0 );
+}
+
+//============================================================================================
+/**
+ *  @brief  ボールゲージ移動処理タスク
+ */
+//============================================================================================
+static  void  TCB_BallGaugeMove( GFL_TCB* tcb, void* work )
+{ 
+  TCB_BALL_GAUGE_MOVE*  tbgm = ( TCB_BALL_GAUGE_MOVE * )work;
+  BTLV_INPUT_CLWK*      bib;
+  GFL_CLACTPOS          pos;
+  int                   i, type;
+  BOOL                  flag = FALSE;
+
+  static  int ball_gauge_move_param[ 2 ][ 2 ] = { 
+    //MINE
+    { BTLV_INPUT_BALLGAUGE_MINE_Y_OPEN, BTLV_INPUT_BALLGAUGE_MINE_Y_CLOSE },
+    //ENEMY
+    { BTLV_INPUT_BALLGAUGE_ENEMY_Y_OPEN, BTLV_INPUT_BALLGAUGE_ENEMY_Y_CLOSE },
+  };
+
+  for( type = BALL_GAUGE_TYPE_MINE ; type < BALL_GAUGE_TYPE_MAX ; type++ )
+  { 
+    int move_pos = ball_gauge_move_param[ type ][ tbgm->move_dir ];
+
+    if( type == BALL_GAUGE_TYPE_MINE )
+    { 
+      bib = tbgm->biw->ballgauge_mine;
+    }
+    else
+    { 
+      if( tbgm->biw->trainer_flag == 0 )
+      { 
+        break;
+      }
+      bib = tbgm->biw->ballgauge_enemy;
+    }
+    for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
+    { 
+      GF_ASSERT( bib[ i ].clwk != NULL );
+      GFL_CLACT_WK_GetPos( bib[ i ].clwk, &pos, CLSYS_DEFREND_SUB );
+      if( pos.y > move_pos )
+      { 
+        pos.y -= BALL_GAUGE_MOVE_VALUE;
+        flag = TRUE;
+      }
+      else if( pos.y < move_pos )
+      { 
+        pos.y += BALL_GAUGE_MOVE_VALUE;
+        flag = TRUE;
+      }
+      GFL_CLACT_WK_SetPos( bib[ i ].clwk, &pos, CLSYS_DEFREND_SUB );
+    }
+  }
+  if( flag == FALSE )
+  { 
+    GFL_HEAP_FreeMemory( tbgm );
+    GFL_TCB_DeleteTask( tcb );
+  }
+}
+
+//============================================================================================
+/**
+ *  @brief  画面フェード
+ */
+//============================================================================================
+static  void  TCB_Fade( GFL_TCB* tcb, void* work )
+{ 
+  TCB_FADE_ACT* tfa = ( TCB_FADE_ACT* )work;
+
+  if( PaletteFadeCheck( BTLV_EFFECT_GetPfd() ) == FALSE )
+  { 
+    if( tfa->biw->fade_flag == BTLV_INPUT_FADE_OUT )
+    { 
+      BTLV_INPUT_ExitBG( tfa->biw );
+    }
+    tfa->biw->fade_flag = 0;
+    GFL_HEAP_FreeMemory( tfa );
+    GFL_TCB_DeleteTask( tcb );
+  }
+}
+
 //--------------------------------------------------------------
 /**
  * @brief 文字列の長さを取得する
@@ -1712,19 +1945,20 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT
       },
     };
     GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, datID[ type ][ pos ][ bisp->waza_target ],
-                                     GFL_BG_FRAME2_S, 0x440, 0x40 * 14, FALSE, biw->heapID );
+                                     GFL_BG_FRAME2_S, 0x40, 0x40 * 14, FALSE, biw->heapID );
   }
 }
 
 //--------------------------------------------------------------
 /**
- * @brief   技選択画面クリア
+ * @brief   画面クリア（画面推移時に消さなければならないスクリーンを消す）
  */
 //--------------------------------------------------------------
-static  void  BTLV_INPUT_ClearWazaScreen( BTLV_INPUT_WORK* biw )
+static  void  BTLV_INPUT_ClearScreen( BTLV_INPUT_WORK* biw )
 {
   int i;
 
+  //技選択
   GFL_BMP_Clear( biw->bmp_data, 0x00 );
   GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
 
@@ -1736,6 +1970,9 @@ static  void  BTLV_INPUT_ClearWazaScreen( BTLV_INPUT_WORK* biw )
       biw->wazatype_wk[ i ] = NULL;
     }
   }
+
+  //攻撃対象選択
+	GFL_BG_FillScreen( GFL_BG_FRAME2_S, 0, 0, 2, 32, 14, 0 );
 }
 
 //--------------------------------------------------------------
@@ -1782,6 +2019,138 @@ static PRINTSYS_LSB PP_FontColorGet(int pp, int pp_max)
 
 //--------------------------------------------------------------
 /**
+ * @brief   ポケモンアイコン生成
+ *
+ * @param[in] biw   システム管理構造体のポインタ
+ * @param[in] bicp  ポケモンアイコン生成用パラメータのポインタ
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp )
+{ 
+    ARCHANDLE*  hdl;
+    int         i;
+    int         max = ( biw->type == BTLV_INPUT_TYPE_ROTATION ) ? 2 : biw->type + 1;
+    int         mask = 0;
+
+    hdl = GFL_ARC_OpenDataHandle( ARCID_POKEICON, biw->heapID );
+
+    biw->pokeicon_cellID = GFL_CLGRP_CELLANIM_Register( hdl, POKEICON_GetCellSubArcIndex(), POKEICON_GetAnmSubArcIndex(),
+                                                        biw->heapID );
+    biw->pokeicon_plttID = GFL_CLGRP_PLTT_RegisterComp( hdl, POKEICON_GetPalArcIndex(), CLSYS_DRAW_SUB,
+                                                        0x20 * 12, biw->heapID );
+    PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_SUB_OBJ,
+                             GFL_CLGRP_PLTT_GetAddr( biw->pokeicon_plttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
+
+    //ウインドウマスクでアイコンを暗くする実験
+    GXS_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
+    G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_ALL, TRUE );
+    G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_ALL, TRUE );
+    G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_ALL, FALSE );
+    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ, -8 );
+
+    for( i = 0; i < max ; i++ ){
+      if( bicp->mons_no[ i ] )
+      { 
+        GFL_CLWK_DATA obj_param = {
+          0, 0,   //x, y
+          0, 100, 0,  //アニメ番号、優先順位、BGプライオリティ
+        };
+        GFL_CLACTPOS pos[ 4 ][ 3 ] = {  
+          //SINGLE
+          { 
+            { BTLV_INPUT_POKE_ICON_SINGLE_X, BTLV_INPUT_POKE_ICON_SINGLE_Y },
+            { -1, -1 },
+            { -1, -1 },
+          },
+          //DOUBLE
+          { 
+            { BTLV_INPUT_POKE_ICON_DOUBLE_X1, BTLV_INPUT_POKE_ICON_DOUBLE_Y1 },
+            { BTLV_INPUT_POKE_ICON_DOUBLE_X2, BTLV_INPUT_POKE_ICON_DOUBLE_Y2 },
+            { -1, -1 },
+          },
+          //TRIPLE
+          { 
+            { BTLV_INPUT_POKE_ICON_TRIPLE_X1, BTLV_INPUT_POKE_ICON_TRIPLE_Y1 },
+            { BTLV_INPUT_POKE_ICON_TRIPLE_X2, BTLV_INPUT_POKE_ICON_TRIPLE_Y2 },
+            { BTLV_INPUT_POKE_ICON_TRIPLE_X3, BTLV_INPUT_POKE_ICON_TRIPLE_Y3 },
+          },
+          //ROTATION
+          { 
+            { BTLV_INPUT_POKE_ICON_DOUBLE_X1, BTLV_INPUT_POKE_ICON_DOUBLE_Y1 },
+            { BTLV_INPUT_POKE_ICON_DOUBLE_X2, BTLV_INPUT_POKE_ICON_DOUBLE_Y2 },
+            { -1, -1 },
+          },
+        };
+
+        biw->pokeicon_charID[ i ] = GFL_CLGRP_CGR_Register( hdl, 
+                                                            POKEICON_GetCgxArcIndexByMonsNumber( bicp->mons_no[ i ],
+                                                                                                 bicp->form_no[ i ],
+                                                                                                 FALSE ),
+                                                            FALSE, CLSYS_DRAW_SUB, biw->heapID );
+        biw->pokeicon_wk[ i ].clwk = GFL_CLACT_WK_Create( biw->pokeicon_clunit, biw->pokeicon_charID[ i ],
+                                                          biw->pokeicon_plttID, biw->pokeicon_cellID,
+                                                          &obj_param, CLSYS_DEFREND_SUB, biw->heapID );
+        GFL_CLACT_WK_SetPos( biw->pokeicon_wk[ i ].clwk, &pos[ biw->type ][ i ], CLSYS_DEFREND_SUB );
+        GFL_CLACT_WK_SetAutoAnmFlag( biw->pokeicon_wk[ i ].clwk, TRUE );
+        if( bicp->pos == i )
+        {  
+          GFL_CLACT_WK_SetAnmSeq( biw->pokeicon_wk[ i ].clwk, 1 );
+        }
+        else
+        { 
+          if( mask == 0 )
+          { 
+            G2S_SetWnd0Position( pos[ biw->type ][ i ].x - 16, pos[ biw->type ][ i ].y - 16, 
+                                 pos[ biw->type ][ i ].x + 16, pos[ biw->type ][ i ].y + 16 ); 
+          }
+          else
+          { 
+            G2S_SetWnd1Position( pos[ biw->type ][ i ].x - 16, pos[ biw->type ][ i ].y - 16, 
+                                 pos[ biw->type ][ i ].x + 16, pos[ biw->type ][ i ].y + 16 ); 
+          }
+        }
+        GFL_CLACT_WK_SetPlttOffs( biw->pokeicon_wk[ i ].clwk,
+                                  POKEICON_GetPalNum( bicp->mons_no[ i ], bicp->form_no[ i ], FALSE ),
+                                  CLWK_PLTTOFFS_MODE_OAM_COLOR );
+      }
+    }
+    GFL_ARC_CloseDataHandle( hdl );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ポケモンアイコン削除
+ *
+ * @param[in] biw   システム管理構造体のポインタ
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw )
+{ 
+  int i;
+
+  GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+  G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
+  G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
+  G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_NONE, 0 );
+
+  for( i = 0 ; i < 3 ; i++ )
+  {
+    if( biw->pokeicon_wk[ i ].clwk )
+    { 
+      GFL_CLACT_WK_Remove( biw->pokeicon_wk[ i ].clwk );
+      GFL_CLGRP_CGR_Release( biw->pokeicon_charID[ i ] );
+      biw->pokeicon_wk[ i ].clwk = NULL;
+    }
+  }
+
+  GFL_CLGRP_CELLANIM_Release( biw->pokeicon_cellID );
+  GFL_CLGRP_PLTT_Release( biw->pokeicon_plttID );
+
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   ボールゲージ生成
  *
  * @param[in] biw   システム管理構造体のポインタ
@@ -1789,7 +2158,7 @@ static PRINTSYS_LSB PP_FontColorGet(int pp, int pp_max)
  * @param[in] type  ボールゲージタイプ
  */
 //--------------------------------------------------------------
-static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT_DIR_PARAM *bidp, int type )
+static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT_COMMAND_PARAM *bicp, BALL_GAUGE_TYPE type )
 {
   BTLV_INPUT_CLWK*  bib;
   int               i;
@@ -1801,11 +2170,11 @@ static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT
     0, 0, 0,  //アニメ番号、優先順位、BGプライオリティ
   };
 
-  if( type )
+  if( type == BALL_GAUGE_TYPE_ENEMY )
   {
     bib = biw->ballgauge_enemy;
     pos.x = BTLV_INPUT_BALLGAUGE_ENEMY_X;
-    pos.y = BTLV_INPUT_BALLGAUGE_ENEMY_Y;
+    pos.y = BTLV_INPUT_BALLGAUGE_ENEMY_Y_CLOSE;
     pos_ofs = -8;
     anm_ofs = 4;
   }
@@ -1813,7 +2182,7 @@ static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT
   {
     bib = biw->ballgauge_mine;
     pos.x = BTLV_INPUT_BALLGAUGE_MINE_X;
-    pos.y = BTLV_INPUT_BALLGAUGE_MINE_Y;
+    pos.y = BTLV_INPUT_BALLGAUGE_MINE_Y_CLOSE;
     pos_ofs = 16;
     anm_ofs = 0;
   }
@@ -1825,7 +2194,7 @@ static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT
                                           &ballgauge, CLSYS_DEFREND_SUB, biw->heapID );
     GFL_CLACT_WK_SetPos( bib[ i ].clwk, &pos, CLSYS_DEFREND_SUB );
     GFL_CLACT_WK_SetAutoAnmFlag( bib[ i ].clwk, TRUE );
-    GFL_CLACT_WK_SetAnmSeq( bib[ i ].clwk, bidp[ i ].status + anm_ofs );
+    GFL_CLACT_WK_SetAnmSeq( bib[ i ].clwk, bicp->bidp[ type ][ i ].status + anm_ofs );
     pos.x += pos_ofs;
   }
 }
@@ -1835,8 +2204,6 @@ static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT
  * @brief   ボールゲージ削除
  *
  * @param[in] biw   システム管理構造体のポインタ
- * @param[in] bidp  ボールゲージ生成用パラメータのポインタ
- * @param[in] type  ボールゲージタイプ
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_DeleteBallGauge( BTLV_INPUT_WORK* biw )
@@ -1940,7 +2307,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
   if( biw->cursor_decide )
   { 
     biw->cursor_decide = 0;
-    BTLV_INPUT_PutCursorOBJ( biw, tp_tbl );
+    BTLV_INPUT_PutCursorOBJ( biw, tp_tbl, key_tbl );
     GFL_CLACT_UNIT_SetDrawEnable( biw->cursor_clunit, TRUE );
   }
 
@@ -1949,7 +2316,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
     biw->cursor_mode = 0;
     biw->cursor_pos = 0;
     biw->old_cursor_pos = CURSOR_NOMOVE;
-    BTLV_INPUT_PutCursorOBJ( biw, tp_tbl );
+    BTLV_INPUT_PutCursorOBJ( biw, tp_tbl, key_tbl );
     return hit;
   }
 
@@ -1957,7 +2324,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
   { 
     if( biw->cursor_mode )
     { 
-      int move_pos = BTLV_INPUT_NOMOVE;
+      s8 move_pos = BTLV_INPUT_NOMOVE;
       const BTLV_INPUT_KEYTBL* tbl = &key_tbl[ biw->cursor_pos ];
 
       switch( trg ){ 
@@ -1979,7 +2346,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
       }
       if( trg == PAD_BUTTON_A )
       { 
-        hit = biw->cursor_pos;
+        hit = tbl->a_button;
         decide_flag = TRUE;
       }
       else
@@ -2012,7 +2379,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
     { 
       biw->cursor_mode = 1;
     }
-    BTLV_INPUT_PutCursorOBJ( biw, tp_tbl );
+    BTLV_INPUT_PutCursorOBJ( biw, tp_tbl, key_tbl );
   }
 
   if( decide_flag == TRUE )
@@ -2034,35 +2401,52 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL*
  * @param[in] tp_tbl  タッチパネルテーブル（カーソルの表示位置決定に使用）
  */
 //--------------------------------------------------------------
-static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl )
+static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl )
 { 
   int i;
-  const GFL_UI_TP_HITTBL*  hit_tbl = &tp_tbl[ biw->cursor_pos ];
 
-  for( i = BTLV_INPUT_CURSOR_LU ; i <= BTLV_INPUT_CURSOR_RD ; i++ )
+  for( i = BTLV_INPUT_CURSOR_LU ; i < BTLV_INPUT_CURSOR_MAX ; i++ )
   { 
-    GFL_CLACTPOS pos;
+    const BTLV_INPUT_KEYTBL*  key = &key_tbl[ biw->cursor_pos ];
 
-    switch( i ){ 
-    case BTLV_INPUT_CURSOR_LU:
-      pos.x = hit_tbl->rect.left;
-      pos.y = hit_tbl->rect.top;
-      break;
-    case BTLV_INPUT_CURSOR_RU:
-      pos.x = hit_tbl->rect.right;
-      pos.y = hit_tbl->rect.top;
-      break;
-    case BTLV_INPUT_CURSOR_LD:
-      pos.x = hit_tbl->rect.left;
-      pos.y = hit_tbl->rect.bottom;
-      break;
-    case BTLV_INPUT_CURSOR_RD:
-      pos.x = hit_tbl->rect.right;
-      pos.y = hit_tbl->rect.bottom;
-      break;
+    if( key->cur_pos[ i ] >= 0 )
+    { 
+      const GFL_UI_TP_HITTBL*  hit = &tp_tbl[ key->cur_pos[ i ] ];
+      GFL_CLACTPOS pos;
+  
+      switch( i ){ 
+      case BTLV_INPUT_CURSOR_LU:
+        pos.x = hit->rect.left;
+        pos.y = hit->rect.top;
+        break;
+      case BTLV_INPUT_CURSOR_RU:
+        pos.x = hit->rect.right;
+        pos.y = hit->rect.top;
+        break;
+      case BTLV_INPUT_CURSOR_LD:
+        pos.x = hit->rect.left;
+        pos.y = hit->rect.bottom;
+        break;
+      case BTLV_INPUT_CURSOR_RD:
+        pos.x = hit->rect.right;
+        pos.y = hit->rect.bottom;
+        break;
+      case BTLV_INPUT_CURSOR_LD_2:
+        pos.x = hit->rect.left;
+        pos.y = hit->rect.bottom;
+        break;
+      case BTLV_INPUT_CURSOR_RD_2:
+        pos.x = hit->rect.right;
+        pos.y = hit->rect.bottom;
+        break;
+      }
+      GFL_CLACT_WK_SetDrawEnable( biw->cursor[ i ].clwk, biw->cursor_mode );
+      GFL_CLACT_WK_SetPos( biw->cursor[ i ].clwk, &pos, CLSYS_DEFREND_SUB );
     }
-    GFL_CLACT_WK_SetDrawEnable( biw->cursor[ i ].clwk, biw->cursor_mode );
-    GFL_CLACT_WK_SetPos( biw->cursor[ i ].clwk, &pos, CLSYS_DEFREND_SUB );
+    else
+    { 
+      GFL_CLACT_WK_SetDrawEnable( biw->cursor[ i ].clwk, FALSE );
+    }
   }
 }
 

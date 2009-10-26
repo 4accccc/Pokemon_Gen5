@@ -290,6 +290,17 @@ void BTLV_EFFECT_Damage( BtlvMcssPos target, WazaID waza )
 
   bew->tcb_execute_flag = 1;
 
+  if( WAZADATA_GetDamageType( waza ) == WAZADATA_DMG_PHYSIC )
+  { 
+    //物理ダメージ
+    BTLV_MCSS_SetPaletteFade( bew->bmw, target, 16, 16, 0, 0x0000 );
+  }
+  else
+  { 
+    //特殊ダメージ
+    BTLV_MCSS_SetPaletteFade( bew->bmw, target, 16, 16, 0, 0x7fff );
+  }
+
   GFL_TCB_AddTask( bew->tcb_sys, BTLV_EFFECT_TCB_Damage, bet, 0 );
 }
 //=============================================================================================
@@ -774,6 +785,7 @@ static  void  BTLV_EFFECT_TCB_Damage( GFL_TCB *tcb, void *work )
     BTLV_MCSS_SetVanishFlag( bew->bmw, bet->target, BTLV_MCSS_VANISH_OFF );
     bet->wait = BTLV_EFFECT_BLINK_WAIT;
     if( --bet->work == 0 ){
+      BTLV_MCSS_SetPaletteFade( bew->bmw, bet->target, 0, 0, 0, 0x7fff );
       bew->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( bet );
       GFL_TCB_DeleteTask( tcb );
