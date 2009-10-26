@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-06T12:52:45"/>
+	<create user="matsumiya" host="W00207" date="2009-10-26T20:16:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -313,13 +313,13 @@
 ・表示後、トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">ともだち♂「[1:00:トレーナー名:0]！　オレたちも
-サンヨウジムで　バッジを　もらったぜ！[BE:01:ページ切り替え（クリア）]
-なにが　いいたいか　わかるだろ？[BE:00:ページ切り替え（行送り）]
+サンヨウジムで　バッジを　もらったぜ！[BE:00:ページ切り替え（行送り）]
+なにが　いいたいか　わかるだろ？[BE:01:ページ切り替え（クリア）]
 そう　しょうぶ　しようぜ！</language>
 		<language name="JPN_KANJI" width="256">ともだち♂「[1:00:トレーナー名:0]！　オレたちも
-サンヨウジムで　バッジを　もらったぜ！[BE:01:ページ切り替え（クリア）]
-なにが　いいたいか　わかるだろ？[BE:00:ページ切り替え（行送り）]
-そう　しょうぶ　しようぜ！</language>
+サンヨウジムで　バッジを　もらったぜ！[BE:00:ページ切り替え（行送り）]
+なにが　いいたいか　わかるだろ？[BE:01:ページ切り替え（クリア）]
+そう　勝負しようぜ！</language>
 	</row>
 
 	<row id="msg_r03_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -331,9 +331,9 @@
 で　ともだち♀さ
 おまえも　たたかう……</language>
 		<language name="JPN_KANJI" width="256">ともだち♂『なるほどな
-そういう　たたかいかたも　あるか[BE:01:ページ切り替え（クリア）]
+そういう　闘い方も　あるか[BE:01:ページ切り替え（クリア）]
 で　ともだち♀さ
-おまえも　たたかう……</language>
+おまえも　闘う……</language>
 	</row>
 
 	<row id="msg_r03_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -362,9 +362,9 @@
 [1:00:トレーナー名:0]
 オレたちも　いこうぜ</language>
 		<language name="JPN_KANJI" width="256">ともだち♂『あいかわらず
-いい　みみ　してるんだな　あいつ[BE:01:ページ切り替え（クリア）]
+いい　耳してるんだな　あいつ[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]
-オレたちも　いこうぜ</language>
+オレたちも　行こうぜ</language>
 	</row>
 
 	<row id="msg_r03_babygirl1_01">
@@ -496,8 +496,8 @@
 だいの　おとなが
 なに　やってんだよ！</language>
 		<language name="JPN_KANJI" width="256">ともだち♂『おまえら……[BE:01:ページ切り替え（クリア）]
-だいの　おとなが
-なに　やってんだよ！</language>
+大の　大人が
+何　やってんだよ！</language>
 	</row>
 
 	<row id="msg_r03_hakaim_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -529,7 +529,7 @@
 あのこの　ポケモン　とりもどす！</language>
 		<language name="JPN_KANJI" width="256">ともだち♂『うるせえ！[BE:01:ページ切り替え（クリア）]
 [1:00:トレーナー名:0]　こいつら　ぶっとばして
-あのこの　ポケモン　とりもどす！</language>
+あの子の　ポケモン　とりもどす！</language>
 	</row>
 
 	<row id="msg_r03_hakaim_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -552,8 +552,8 @@
 どんな　りゆうでも
 ひとのモノ　とったら　どろぼう　だろ　</language>
 		<language name="JPN_KANJI" width="256">ともだち♂『うるせえ！[BE:01:ページ切り替え（クリア）]
-どんな　りゆうでも
-ひとのモノ　とったら　どろぼう　だろ　</language>
+どんな　理由でも
+ひとのモノ　とったら　ドロボウ　だろ　</language>
 	</row>
 
 	<row id="msg_r03_hakaim_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -565,7 +565,7 @@
 		<language name="JPN" width="256">プラズマだん『くっ……　いつか
 じぶんたちの　おろかさに　きづけ……</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『くっ……　いつか
-じぶんたちの　おろかさに　きづけ……</language>
+じぶんたちの　愚かさに　気づけ……</language>
 	</row>
 
 	<row id="msg_r03_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -578,7 +578,7 @@
 ありがとう
 [1:00:トレーナー名:0]！　ともだち♂！</language>
 		<language name="JPN_KANJI" width="256">ともだち♀『あたし
-この　ポケモン　かえしにいくね[BE:01:ページ切り替え（クリア）]
+この　ポケモン　返しにいくね[BE:01:ページ切り替え（クリア）]
 ありがとう
 [1:00:トレーナー名:0]！　ともだち♂！</language>
 	</row>
@@ -599,8 +599,8 @@
 ・画面外に消えると主人公、操作可能</comment>
 		<language name="JPN" width="256">オレ　このまま　シッポウシティに　いくよ
 だって　もう　めのまえ　だしな</language>
-		<language name="JPN_KANJI" width="256">オレ　このまま　シッポウシティに　いくよ
-だって　もう　めのまえ　だしな</language>
+		<language name="JPN_KANJI" width="256">オレ　このまま　シッポウシティに　行くよ
+だって　もう　目の前　だしな</language>
 	</row>
 
 	<row id="msg_r03_woman3_01">
