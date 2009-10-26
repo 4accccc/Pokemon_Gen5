@@ -2910,7 +2910,7 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
   myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gameSys));
   name = MyStatus_GetMyName( myStatus );
   
-	pp = PP_Create(MONSNO_REIBAAN, 100, 123456, HEAPID_FIELDMAP);
+	pp = PP_Create(MONSNO_WARUBIARU, 100, 123456, HEAPID_FIELDMAP);
 
 	{
 		int i,j;
