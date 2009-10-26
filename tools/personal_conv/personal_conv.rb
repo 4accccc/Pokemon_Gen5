@@ -690,6 +690,7 @@ end
 	fp_lst.print( "egg/pbwb_egg_normal.nce\n" )
 	fp_lst.print( "egg/pbwb_egg_normal.nmc\n" )
 	fp_lst.print( "egg/pmwb_egg_normal_n.ncl\n" )
+	fp_lst.print( "egg/pmwb_egg_normal_r.ncl\n" )
   fp_lst.print( "egg/pfwb_egg_manafi_m.ncg\n" )
 	fp_lst.print( "egg/pfwb_eggc_manafi_m.ncg\n" )
 	fp_lst.print( "egg/pfwb_egg_manafi.nce\n" )
@@ -699,6 +700,7 @@ end
 	fp_lst.print( "egg/pbwb_egg_manafi.nce\n" )
 	fp_lst.print( "egg/pbwb_egg_manafi.nmc\n" )
 	fp_lst.print( "egg/pmwb_egg_manafi_n.ncl\n" )
+	fp_lst.print( "egg/pmwb_egg_manafi_r.ncl\n" )
 
   fp_gra.close
   fp_lst.close
