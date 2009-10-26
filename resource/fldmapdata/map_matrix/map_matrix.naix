@@ -205,7 +205,10 @@ enum {
 	NARC_map_matrix_ncastle06_mat_bin = 191,
 	NARC_map_matrix_ncastle07_mat_bin = 192,
 	NARC_map_matrix_ncastle08_mat_bin = 193,
-	NARC_map_matrix_palacefield_mat_bin = 194
+	NARC_map_matrix_palacefield_mat_bin = 194,
+	NARC_map_matrix_soccer01_mat_bin = 195,
+	NARC_map_matrix_live01_mat_bin = 196,
+	NARC_map_matrix_ive02_mat_bin = 197
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */
