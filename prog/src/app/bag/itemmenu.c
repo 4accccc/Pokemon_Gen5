@@ -787,6 +787,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
 
 static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
 {
+
   {  //選んだアイテムのセット
     ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
     pWork->ret_item = ITEM_DUMMY_DATA;
@@ -855,9 +856,13 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // 決定
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE)
   {
-    // アイテムに対する動作選択画面へ
-    _CHANGE_STATE(pWork,_itemSelectState);
-    return;
+    // アイテム存在チェック
+    if( ITEMMENU_GetItemPocketNumber( pWork ) > 0 )
+    {
+      // アイテムに対する動作選択画面へ
+      _CHANGE_STATE(pWork,_itemSelectState);
+      return;
+    }
   }
 
   // キャンセル
@@ -2495,9 +2500,17 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     _CHANGE_STATE(pWork, NULL);
   }
   else if((bttnid >= BUTTONID_ITEM_AREA) && (bttnid < BUTTONID_CHECK_AREA)){
+    // アイテム選択シーケンスでの操作
     if(_itemKindSelectMenu == pWork->state){
       int backup = pWork->curpos;
       int nowno = ITEMMENU_GetItemIndex(pWork);
+
+      // アイテムがなかった場合
+      if( ITEMMENU_GetItemPocketNumber( pWork ) == 0 )
+      {
+        // 処理なし
+        return;
+      }
 
       if(pWork->curpos != (bttnid-BUTTONID_ITEM_AREA)){
         pWork->curpos = bttnid - BUTTONID_ITEM_AREA;
@@ -2512,6 +2525,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       _windowRewrite(pWork);
 
       KTST_SetDraw( pWork, FALSE );
+
       // 上画面だけは表示
       GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
       GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 , TRUE );
