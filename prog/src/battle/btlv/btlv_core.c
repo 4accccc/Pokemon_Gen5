@@ -540,8 +540,8 @@ BOOL BTLV_WaitPokeSelect( BTLV_CORE* wk )
       if( wk->plistData.sel_poke != BPL_SEL_EXIT ){
         BTL_POKESELECT_RESULT_Push( wk->pokeselResult, wk->plistData.sel_poke );
       }
-      BTLV_SCD_Setup( wk->scrnD );
       BTLV_SCD_FadeIn( wk->scrnD );
+      BTLV_SCD_Setup( wk->scrnD );
       wk->selectItemSeq++;
     }
     break;
