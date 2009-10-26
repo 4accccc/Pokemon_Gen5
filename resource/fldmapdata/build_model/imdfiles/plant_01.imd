@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-10-16T15:16:39"/>
+	<create user="fuchino" host="W00152" date="2009-10-24T17:55:35" source="plant_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2009-08-19T16:01:27" source="plant_01.mb"/>
+<original_create user="fuchino" host="W00152" date="2009-10-24T17:55:35" source="plant_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -22,7 +22,7 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="3 3"
-	output_texture="all"
+	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
@@ -44,21 +44,15 @@
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="plant_tex2"
-		width="8" height="32" original_width="8" original_height="32"
-		format="palette16"
+		width="8" height="16" original_width="8" original_height="16"
+		format="palette4"
 		color0_mode="color"
 		palette_name="plant_tex2_pl"
 		path="C:/home/wb_data3d/build_model/outdoor/plant_01/tex/plant_tex2.tga"
 	>
-		<bitmap size="64">
-			6666 6666 6666 6666 6666 6666 3333 3333
-			3333 3333 3333 3333 3333 3333 1111 1111
-			1111 1111 1111 1111 2222 2222 3333 3333
-			3333 3333 3333 3333 3333 3333 3333 3333
-			4444 4444 4444 4444 4444 4444 3333 3333
-			3333 3333 3333 3333 1111 1111 1111 1111
-			5555 5555 5555 5555 5555 5555 5555 5555
-			0000 0000 0000 0000 0000 0000 0000 0000
+		<bitmap size="16">
+			0000 0000 0000 0000 5555 aaaa aaaa aaaa
+			aaaa aaaa ffff ffff aaaa aaaa aaaa aaaa
 		</bitmap>
 	</tex_image>
 	<tex_image index="2" name="plant_tex4"
@@ -90,11 +84,11 @@
 			7756 7777 5657 a777 77aa 7555 7777 6657
 			7566 5577 6665 7755 5777 5666 7777 6665
 			5666 6655 6666 5556 6555 6666 5555 6666
-			6666 2666 6666 6666 6666 6666 6666 6666
-			6666 1266 6666 1266 6662 6666 6226 6666
-			6666 1126 6662 1326 6621 6666 2112 6666
-			6662 3112 2223 3332 6211 2666 1133 6622
-			2223 3333 3333 3333 2333 3222 3333 2233
+			6666 2666 6666 1266 6666 6666 6626 6666
+			6666 1266 6662 2166 6662 6666 6216 6666
+			6666 1126 6662 2126 6661 2666 2121 6666
+			6662 3112 1223 3311 6612 1266 1233 6622
+			2223 3333 3333 3333 2233 3322 3333 2233
 			3333 0333 3333 3333 3333 3333 3333 3333
 			3333 0003 3330 3333 0333 3330 3333 0333
 			0333 0000 3300 3333 0003 3300 3333 0033
@@ -109,8 +103,8 @@
 	<tex_palette index="0" name="h_kage_pl" color_size="8">
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="plant_tex2_pl" color_size="8">
-		054f 08a9 08ca 08cb 1572 29d1 3656 7fff
+	<tex_palette index="1" name="plant_tex2_pl" color_size="4">
+		0ceb 0cec 110d 112f
 	</tex_palette>
 	<tex_palette index="2" name="plant_tex4_pl" color_size="16">
 		0125 0546 0566 0587 0aae 0da8 0dc9 0e4b
@@ -143,7 +137,31 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="h_test_lm1"
+	<material index="1" name="plant_tex2_lm1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="25 25 25"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="clamp clamp"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="2" name="plant_tex4_lm1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -162,30 +180,6 @@
 		shininess_table_flag="off"
 		tex_image_idx="2" tex_palette_idx="2"
 		tex_tiling="repeat clamp"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="2" name="lambert4"
-		light0="on" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="25 25 25"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="1"
-		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
@@ -251,40 +245,40 @@
 			<primitive_array size="2">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
-					<tex st="1.937500 3.000000"/>
+					<tex st="1.937500 0.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-2.000000 2.500000 -4.000000"/>
-					<tex st="1.937500 24.000000"/>
+					<tex st="1.937500 16.000000"/>
 					<pos_xy xy="-2.000000 1.000000"/>
-					<tex st="0.062500 3.000000"/>
+					<tex st="0.062500 0.000000"/>
 					<pos_yz yz="2.500000 4.000000"/>
-					<tex st="0.062500 24.000000"/>
+					<tex st="0.062500 16.000000"/>
 					<pos_xy xy="-2.000000 1.000000"/>
-					<tex st="1.000000 3.000000"/>
+					<tex st="1.000000 0.000000"/>
 					<pos_xy xy="0.026611 2.500000"/>
-					<tex st="1.000000 24.000000"/>
+					<tex st="1.000000 16.000000"/>
 					<pos_xy xy="0.026611 1.000000"/>
-					<tex st="1.937500 3.000000"/>
+					<tex st="1.937500 0.000000"/>
 					<pos_xy xy="2.000000 2.500000"/>
-					<tex st="1.937500 24.000000"/>
+					<tex st="1.937500 16.000000"/>
 					<pos_xy xy="2.000000 1.000000"/>
-					<tex st="0.062500 3.000000"/>
+					<tex st="0.062500 0.000000"/>
 					<pos_yz yz="2.500000 -4.000000"/>
-					<tex st="0.062500 24.000000"/>
+					<tex st="0.062500 16.000000"/>
 					<pos_xy xy="2.000000 1.000000"/>
 				</primitive>
 				<primitive index="1" type="quad_strip" vertex_size="6">
-					<tex st="1.000000 3.000000"/>
+					<tex st="1.000000 0.000000"/>
 					<pos_xy xy="2.000000 2.500000"/>
-					<tex st="1.000000 24.000000"/>
+					<tex st="1.000000 16.000000"/>
 					<pos_xy xy="2.000000 1.000000"/>
-					<tex st="1.937500 3.000000"/>
+					<tex st="1.937500 0.000000"/>
 					<pos_xy xy="0.026611 2.500000"/>
-					<tex st="1.937500 24.000000"/>
+					<tex st="1.937500 16.000000"/>
 					<pos_xy xy="0.026611 1.000000"/>
-					<tex st="1.000000 3.000000"/>
+					<tex st="1.000000 0.000000"/>
 					<pos_xy xy="-2.000000 2.500000"/>
-					<tex st="1.000000 24.000000"/>
+					<tex st="1.000000 16.000000"/>
 					<pos_xy xy="-2.000000 1.000000"/>
 				</primitive>
 			</primitive_array>
@@ -384,40 +378,13 @@
 		volume_r="6.816406"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
-		<display index="1" material="1" polygon="2" priority="0"/>
-		<display index="2" material="2" polygon="1" priority="0"/>
+		<display index="1" material="1" polygon="1" priority="0"/>
+		<display index="2" material="2" polygon="2" priority="0"/>
 	</node>
 </node_array>
 
 <output_info vertex_size="52" polygon_size="18"
 	triangle_size="2" quad_size="16"/>
-
-<ex_nns_3dme>
-	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="3">
-		<ex_tex_image index="0" disp_pos="-120.000000 300.000000"/>
-		<ex_tex_image index="1" disp_pos="120.000000 300.000000"/>
-		<ex_tex_image index="2" disp_pos="0.000000 300.000000"/>
-	</ex_tex_image_array>
-	<ex_tex_palette_array size="3">
-		<ex_tex_palette index="0" disp_pos="-120.000000 360.000000"/>
-		<ex_tex_palette index="1" disp_pos="120.000000 360.000000"/>
-		<ex_tex_palette index="2" disp_pos="0.000000 360.000000"/>
-	</ex_tex_palette_array>
-	<ex_material_array size="3">
-		<ex_material index="0" disp_pos="-120.000000 240.000000"/>
-		<ex_material index="1" disp_pos="0.000000 240.000000"/>
-		<ex_material index="2" disp_pos="120.000000 240.000000"/>
-	</ex_material_array>
-	<ex_polygon_array size="3">
-		<ex_polygon index="0" disp_pos="-120.000000 180.000000"/>
-		<ex_polygon index="1" disp_pos="120.000000 180.000000"/>
-		<ex_polygon index="2" disp_pos="0.000000 180.000000"/>
-	</ex_polygon_array>
-	<ex_node_array size="1">
-		<ex_node index="0" disp_pos="0.000000 120.000000"/>
-	</ex_node_array>
-</ex_nns_3dme>
 
 </body>
 
