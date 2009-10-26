@@ -47,7 +47,7 @@
 static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar);
 static void IRC_POKETRADE_TrayExit(POKEMON_TRADE_WORK* pWork);
 static int _DotToLine(int pos);
-static void PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork );
+static void _PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork );
 static void IRC_POKETRADE_PokeIcomPosSet(POKEMON_TRADE_WORK* pWork);
 
 
@@ -112,14 +112,29 @@ void IRC_POKETRADE_GraphicInitMainDisp(POKEMON_TRADE_WORK* pWork)
                                          pWork->heapID);
 	GFL_ARC_CloseDataHandle( p_handle );
 
+}
 
-  
+//------------------------------------------------------------------
+/**
+ * @brief   メイン画面の開放処理
+ * @param   POKEMON_TRADE_WORK   ワークポインタ
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+void IRC_POKETRADE_MainGraphicExit(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->subchar){
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_M,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar),
+                             GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subchar ));
+  }
+  pWork->subchar = 0;
 }
 
 
 //------------------------------------------------------------------
 /**
- * $brief   初期化時のグラフィック初期化
+ * @brief   初期化時のグラフィック初期化
  * @param   POKEMON_TRADE_WORK   ワークポインタ
  * @retval  none
  */
@@ -147,13 +162,43 @@ void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
   
   IRC_POKETRADE_TrayInit(pWork,pWork->subchar2);
 
-  PokeIconCgxLoad( pWork );
+  _PokeIconCgxLoad( pWork );
   IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
 
 	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME2_S, _SUBLIST_NORMAL_PAL,
 			pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID );
 
+}
 
+void IRC_POKETRADE_SubGraphicExit(POKEMON_TRADE_WORK* pWork)
+{
+	APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
+  IRC_POKETRADE_TrayExit(pWork);
+  if(pWork->subchar1){
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1),
+                             GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subchar1 ));
+  }
+  if(pWork->subchar2){
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME3_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar2),
+                             GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subchar2 ));
+  }
+  if(pWork->bgchar){
+    GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
+                             GFL_ARCUTIL_TRANSINFO_GetSize( pWork->bgchar ));
+  }
+}
+
+
+//------------------------------------------------------------------
+/**
+ * $brief   COMMONセル初期化
+ * @param   POKEMON_TRADE_WORK   ワークポインタ
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+void IRC_POKETRADE_CommonCellInit(POKEMON_TRADE_WORK* pWork)
+{
 
   if(pWork->cellRes[PLT_COMMON]==0){
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), pWork->heapID );
@@ -174,32 +219,6 @@ void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
   
 }
 
-void IRC_POKETRADE_GraphicFreeVram(POKEMON_TRADE_WORK* pWork)
-{
-
-  if(pWork->subchar){
-    GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_M,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar),
-                             GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subchar ));
-  }
-  if(pWork->subchar1){
-    GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1),
-                             GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subchar1 ));
-  }
-  if(pWork->subchar2){
-    GFL_BG_FreeCharacterArea(GFL_BG_FRAME3_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar2),
-                             GFL_ARCUTIL_TRANSINFO_GetSize( pWork->subchar2 ));
-  }
-  if(pWork->bgchar){
-    GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
-                             GFL_ARCUTIL_TRANSINFO_GetSize( pWork->bgchar ));
-  }
-  pWork->subchar = 0;
-  pWork->subchar1 = 0;
-  pWork->subchar2 = 0;
-  pWork->bgchar = 0;
-  
-}
-
 
 
 void IRC_POKETRADE_G3dDraw(POKEMON_TRADE_WORK* pWork)
@@ -209,13 +228,6 @@ void IRC_POKETRADE_G3dDraw(POKEMON_TRADE_WORK* pWork)
 //  GFL_G3D_DRAW_DrawObject( pWork->pG3dObj, &pWork->status );
 }
 
-
-
-void IRC_POKETRADE_GraphicExit(POKEMON_TRADE_WORK* pWork)
-{
-	APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
-  IRC_POKETRADE_TrayExit(pWork);
-}
 
 
 void IRC_POKETRADE_SubStatusInit(POKEMON_TRADE_WORK* pWork,int pokeposx, int bgtype)
@@ -705,6 +717,13 @@ void IRC_POKETRADE_AllDeletePokeIconResource(POKEMON_TRADE_WORK* pWork)
     _deletePokeIconResource(pWork,i);
   }
 
+  GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_POKEICON] );
+
+  GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_POKEICON_GRAY]);
+
+  GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_POKEICON] );
+
+  
   GFL_HEAP_FreeMemory(pWork->pCharMem);
   pWork->pCharMem = NULL;
 }
@@ -1032,7 +1051,7 @@ static int _DotToLine(int pos)
  * @param	POKEMON_TRADE_WORK ワーク
  */
 //--------------------------------------------------------------------------------------------
-static void  PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
+static void  _PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
 {
   int i;
   void* pMem;
@@ -1044,7 +1063,7 @@ static void  PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
   GF_ASSERT(MONSNO_MAX < 650);
   pWork->pCharMem = GFL_HEAP_AllocMemory(pWork->heapID, 4*8*4*4*650 );
   
-  for(i=0;i < 500; i++){ //@todo フォルム違いを持ってくる必要あり アイコンリソース数が全然足りてない
+  for(i=0;i < MONSNO_MAX; i++){ //@todo フォルム違いを持ってくる必要あり
   
     arcIndex = POKEICON_GetCgxArcIndexByMonsNumber( i, 0, 0 );
     pMem = GFL_ARCHDL_UTIL_LoadBGCharacter(pokeicon_ah, arcIndex, FALSE, &pCharData, pWork->heapID);

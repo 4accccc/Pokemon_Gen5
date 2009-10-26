@@ -337,7 +337,10 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
     IRC_POKETRADE_ResetBoxNameWindow(pWork);
     IRCPOKETRADE_PokeDeleteMcss(pWork,1);
     IRC_POKETRADE_AllDeletePokeIconResource(pWork);
-    IRC_POKETRADE_GraphicFreeVram(pWork);
+
+    IRC_POKETRADE_MainGraphicExit(pWork);
+    IRC_POKETRADE_SubGraphicExit(pWork);
+    
     IRC_POKETRADE_ResetSubDispGraphic(pWork);
     IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,0);
     IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,1);
@@ -850,7 +853,8 @@ static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork)
 
   _pokemonCreateCLACTExit(pWork);
   IRC_POKETRADE_MessageWindowClose(pWork);
-  IRC_POKETRADE_GraphicFreeVram(pWork);
+
+//  IRC_POKETRADE_GraphicFreeVram(pWork);
 
   GFL_BG_FillCharacterRelease(GFL_BG_FRAME2_S,1,0);
   GFL_BG_FreeBGControl(GFL_BG_FRAME2_S);
