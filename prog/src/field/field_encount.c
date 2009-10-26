@@ -211,9 +211,7 @@ static ENCOUNT_LOCATION enc_GetAttrLocation( FIELD_ENCOUNT *enc )
   FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( enc->fwork );
   MAPATTR_FLAG attr_flag;
 
-  FIELD_PLAYER_GetPos( fplayer, &pos );
-  attr = MAPATTR_GetAttribute( mapper, &pos );
-
+  attr = FIELD_PLAYER_GetMapAttr( fplayer );
   if(MAPATTR_IsEnable(attr) == FALSE){
     return ENC_LOCATION_ERR;
   }
