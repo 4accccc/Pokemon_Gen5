@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-20T18:56:37"/>
+	<create user="matsumiya" host="W00207" date="2009-10-26T18:15:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="57" top="200" right="750" bottom="811" maximized="no" rayout="Vertical2">
+	<dialog left="36" top="207" right="729" bottom="818" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
+		<tag-palette left="788" top="101" right="1261" bottom="499" visible="yes"/>
 		<band id="0" index="1" style="0000" width="518"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="531"/>
@@ -458,19 +458,15 @@
 この　１ばんどうろで
 どれだけ　ポケモンを　つかまえたか[BE:00:ページ切り替え（行送り）]
 みんなで　きょうそう　しよう？[BE:01:ページ切り替え（クリア）]
-おなじ　ポケモンを
-なんびき　つかまえたか　じゃなくて[BE:01:ページ切り替え（クリア）]
-つかまえた　しゅるいの
-おおい　ひとが　かちね！[BE:01:ページ切り替え（クリア）]</language>
+とにかく　つかまえた　かずが
+おおい　ひとの　かちね！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ホワイティ『ちゃんと　聞いてよ
 なんなのよお　もう！？[BE:01:ページ切り替え（クリア）]
 この　１番道路で
 どれだけ　ポケモンを　捕まえるか[BE:00:ページ切り替え（行送り）]
 みんなで　競争しようよ？[BE:01:ページ切り替え（クリア）]
-同じ　ポケモンを
-何匹　捕まえたか　じゃなくて[BE:01:ページ切り替え（クリア）]
-捕まえた　種類の
-多い　人が　勝ちね！[BE:01:ページ切り替え（クリア）]</language>
+とにかく　捕まえた　数が
+多い　人の　勝ちね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -715,14 +711,14 @@
 
 	<row id="msg_r01_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">おとくな　けいじばん！▼
+		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
 せっかくの　であいです
-いろんな　ひとと　おはなしましょう！▼
+いろんな　ひとと　おはなしましょう！[BE:01:ページ切り替え（クリア）]
 きっと　みんなが　やくだつことを
 おしえてくれる　はずです！</language>
-		<language name="JPN_KANJI" width="256">お得な　掲示板！▼
+		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
 せっかくの　出会いです
-いろんな　人と　お話ましょう！▼
+いろんな　人と　お話ましょう！[BE:01:ページ切り替え（クリア）]
 きっと　みんなが　役立つことを
 教えてくれる　はずです！</language>
 	</row>
