@@ -131,6 +131,8 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         wk->nameinParam = NAMEIN_AllocParamPokemonByPP( wk->heapID, wk->pp, POKENAME_LEN_MAX, NULL );
         GFL_PROC_SysCallProc( NO_OVERLAY_ID, &NameInputProcData, wk->nameinParam );
         (*seq)++;
+      }else{
+        (*seq) = 3;
       }
     }
     break;

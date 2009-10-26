@@ -218,12 +218,9 @@ static GMEVENT_RESULT fieldBattleEvent(
     (*seq)++;
     break;
   case 3:
-    //•ßŠl‚µ‚È‚¢‚Æ–â‘è‚ª‹N‚«‚é‚½‚ßAC³
-#if 0
     bew->btlret_param.btlResult = bew->battle_param;
     bew->btlret_param.gameData  = gamedata;
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle_return), &BtlRet_ProcData, &bew->btlret_param );
-#endif
     (*seq)++;
     break;
   case 4:
