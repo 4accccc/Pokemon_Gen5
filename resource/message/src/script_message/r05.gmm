@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00178" date="2009-10-22T17:18:16"/>
+	<create user="matsumiya" host="W00207" date="2009-10-26T20:30:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -338,7 +338,7 @@
 ・続けて</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">？？？？？『そっ　そうです</language>
+		<language name="JPN" width="256">クロック『そっ　そうです[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">クロック『そっ　そうです[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -346,8 +346,12 @@
 		<comment>♂
 ・主人公と向き合ってメッセージ表示
 ・続けて</comment>
-		<language name="JPN" width="256">クロック『</language>
-		<language name="JPN_KANJI" width="256">・主人公　待たせちゃダメだろ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+カミツレさんを
+またせちゃ　ダメだろ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
+カミツレさんを
+待たせちゃ　ダメだろ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r05_black_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -356,8 +360,10 @@
 　カミツレとライバル、c05側に移動
 ・チャンピオンたちのそばに配置
 ・画面外に消えると主人公、操作可能</comment>
-		<language name="JPN" width="256">クロック『</language>
-		<language name="JPN_KANJI" width="256">・さあ行きましょう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">カミツレさん！
+さあ　いきましょう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">カミツレさん！
+さあ　行きましょう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r05_black_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -367,7 +373,9 @@
 ・このときカミツレと隣接</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">クロック『</language>
+		<language name="JPN" width="256">クロック『じいさんが
+こどもたちに　ポケモンを　おしえてる[BE:01:ページ切り替え（クリア）]
+あの　じいさん　つよいのかな[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">クロック『じいさんが
 子供たちに　ポケモンを　教えてる[BE:01:ページ切り替え（クリア）]
 あの　じいさん　強いのかな[BE:01:ページ切り替え（クリア）]</language>
@@ -378,7 +386,9 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『</language>
+		<language name="JPN" width="256">カミツレ『そうね　つよいんじゃない？[BE:01:ページ切り替え（クリア）]
+だって　チャンピオンだもの
+ただしくは　「もと」チャンピオンだけど[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">カミツレ『そうね　強いんじゃない？[BE:01:ページ切り替え（クリア）]
 だって　チャンピオンだもの
 ただしくは　「元」チャンピオンだけど[BE:01:ページ切り替え（クリア）]</language>
@@ -389,7 +399,7 @@
 ・</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">クロック『</language>
+		<language name="JPN" width="256">クロック『もと？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">クロック『もと？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -398,7 +408,9 @@
 ・ｃ04でカミツレ～に
 　配置</comment>
 		<attribute name="キャラ指定">CHAMPION</attribute>
-		<language name="JPN" width="256">チャンプ『</language>
+		<language name="JPN" width="256">？？？？？『どうした
+そこの　しょうねん[BE:00:ページ切り替え（行送り）]
+なにを　さわぐ？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">？？？？？『どうした
 そこの　少年　何を騒ぐ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -410,7 +422,8 @@
 ・続けて</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">クロック『</language>
+		<language name="JPN" width="256">クロック『なぜ？
+チャンピオンを　やめた？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">クロック『なぜ？
 チャンピオンを　やめた？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -421,7 +434,10 @@
 　メッセージ表示
 ・続けて</comment>
 		<attribute name="キャラ指定">CHAMPION</attribute>
-		<language name="JPN" width="256">チャンプ『</language>
+		<language name="JPN" width="256">？？？？？『シンオウや　ホウエンの
+チャンピオンのように[BE:00:ページ切り替え（行送り）]
+わかくて　かっこよくない……と[BE:00:ページ切り替え（行送り）]
+にんきが　でないからな……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">？？？？？『シンオウや　ホウエンの
 チャンピオンのように[BE:00:ページ切り替え（行送り）]
 わかくて　かっこよくない……と[BE:00:ページ切り替え（行送り）]
@@ -433,22 +449,30 @@
 ・続けて</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">クロック『</language>
+		<language name="JPN" width="256">クロック『ふざけるなよ！
+オレは　チャンピオン　めざして……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">クロック『ふざけるなよ！
-オレは　チャンピオン目指して～[BE:01:ページ切り替え（クリア）]</language>
+オレは　チャンピオン目指して……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r05_champion_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けて</comment>
 		<attribute name="キャラ指定">CHAMPION</attribute>
-		<language name="JPN" width="256">チャンプ『</language>
+		<language name="JPN" width="256">？？？？？『すまないが
+おおごえを　ださないでくれ[BE:00:ページ切り替え（行送り）]
+こどもたちが　おびえてしまう……[BE:01:ページ切り替え（クリア）]
+そうだな……　きみが　
+どういう　にんげんかも　しらずに[BE:00:ページ切り替え（行送り）]
+ちゃかして　わるかった[BE:01:ページ切り替え（クリア）]
+このとおり　あやまる[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">？？？？？『すまないが
 大声を　出さないでくれ[BE:00:ページ切り替え（行送り）]
 子供たちが　おびえてしまう……[BE:01:ページ切り替え（クリア）]
 そうだな
-君がどういう人間かも知らずに
-ちゃかして悪かった　このとおり謝る[BE:01:ページ切り替え（クリア）]</language>
+君が　どういう　人間かも知らずに[BE:00:ページ切り替え（行送り）]
+ちゃかして　悪かった[BE:01:ページ切り替え（クリア）]
+このとおり　謝る[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r05_black_10" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -456,10 +480,13 @@
 ・続けて</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">クロック『</language>
+		<language name="JPN" width="256">クロック『……いや
+こちらも　わるかったし……[BE:01:ページ切り替え（クリア）]
+……そうか　いま　ポケモンリーグに
+チャンピオン　いないのか……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">クロック『……いや
-（こちらも）
-そうか　今　ポケモンリーグに
+こちらも　悪かったし……[BE:01:ページ切り替え（クリア）]
+……そうか　今　ポケモンリーグに
 チャンピオン　いないのか……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -468,8 +495,10 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『</language>
-		<language name="JPN_KANJI" width="256">カミツレ『アタシ　先に行くけれど……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">カミツレ『アタシ
+さきに　いくけれど……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">カミツレ『アタシ
+先に　行くけれど……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r05_leader_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -477,19 +506,28 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『</language>
-		<language name="JPN_KANJI" width="256">カミツレ『おじいちゃんも　お元気で[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">カミツレ『じゃあね
+おじいちゃんも　おげんきで[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">カミツレ『じゃあね
+おじいちゃんも　お元気で[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r05_champion_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・msg_r05_leader_04から
+　再度話しかけたとき用
 ・この動作モデルは
 　c05ジムバッジ取得で削除</comment>
 		<attribute name="キャラ指定">CHAMPION</attribute>
-		<language name="JPN" width="256">チャンプ『</language>
-		<language name="JPN_KANJI" width="256">チャンプ『</language>
+		<language name="JPN" width="255">チャンプ『さあさ！[BE:01:ページ切り替え（クリア）]
+つよい　トレーナーになるには
+ポケモンと　なかよしに　なるのが[BE:00:ページ切り替え（行送り）]
+いちばんだよ　おまえたち！</language>
+		<language name="JPN_KANJI" width="256">チャンプ『さあさ！[BE:01:ページ切り替え（クリア）]
+強い　トレーナーになるには
+ポケモンと　仲良しになるのが[BE:00:ページ切り替え（行送り）]
+一番だよ　おまえたち！</language>
 	</row>
 
 	<row id="msg_r05_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -525,9 +563,16 @@
 </comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『</language>
-		<language name="JPN_KANJI" width="256">カミツレ『さてと　連絡～[BE:01:ページ切り替え（クリア）]
-（シーバーの効果音）
+		<language name="JPN" width="256">カミツレ『さてと　れんらく[BE:01:ページ切り替え（クリア）]
+（シーバーの効果音）[BE:01:ページ切り替え（クリア）]
+アタシですけど
+はねばしを　おろしてもらえるかしら？[BE:01:ページ切り替え（クリア）]
+アナタに　ちょうせんしたい　って
+トレーナーが　いるのだけれど[BE:01:ページ切り替え（クリア）]
+はい
+よろしく[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">カミツレ『さてと　連絡[BE:01:ページ切り替え（クリア）]
+（シーバーの効果音）[BE:01:ページ切り替え（クリア）]
 アタシですけど
 跳ね橋を　おろしてもらえるかしら？[BE:01:ページ切り替え（クリア）]
 アナタに挑戦したいって
@@ -544,7 +589,10 @@
 ・表示後、カミツレ、c04に戻る
 　動作モデルが画面外に行くと
 　msg_r05_black_11</comment>
-		<language name="JPN" width="256">カミツレ『</language>
+		<language name="JPN" width="256">カミツレ『アタシ　テレビとか
+しごとがあるから　ここでかえるけど[BE:01:ページ切り替え（クリア）]
+アナタたち
+ホドモエにいっても　がんばってよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">カミツレ『アタシ　テレビとか
 仕事があるから　ここで帰るけど[BE:01:ページ切り替え（クリア）]
 アナタたち
@@ -557,11 +605,15 @@
 　先にc05に</comment>
 		<attribute name="キャラ指定">ライバル
 友達♂</attribute>
-		<language name="JPN" width="256">クロック『</language>
+		<language name="JPN" width="256">クロック『いいや　きめた！[BE:01:ページ切り替え（クリア）]
+ぜんぶの　ジムバッジを　てにいれ
+そのまま　ポケモンリーグの[BE:00:ページ切り替え（行送り）]
+してんのう　ぜんいん　たおし[BE:00:ページ切り替え（行送り）]
+オレが　あたらしい　チャンピオンになる！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">クロック『いいや　決めた！[BE:01:ページ切り替え（クリア）]
 全部の　ジムバッジを手に入れ
-そのまま　ポケモンリーグの
-四天王を　全員　倒し
+そのまま　ポケモンリーグの[BE:00:ページ切り替え（行送り）]
+四天王を　全員　倒し[BE:00:ページ切り替え（行送り）]
 オレが新しいチャンピオンになる！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
