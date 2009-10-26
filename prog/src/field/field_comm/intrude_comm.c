@@ -249,7 +249,7 @@ BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork )
   switch(*seq){
   case 0:
     intcomm->comm_status = INTRUDE_COMM_STATUS_EXIT_START;
-    if(GFL_NET_IsParentMachine() == TRUE){
+    if(1){  //GFL_NET_IsParentMachine() == TRUE){
       if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_CMD_SHUTDOWN, 0, NULL) == TRUE){
         (*seq)++;
       }
