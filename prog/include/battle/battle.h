@@ -19,6 +19,7 @@
 
 #include "poke_tool/pokeparty.h"
 #include "tr_tool/trno_def.h"
+#include "savedata/zukan_savedata.h"
 #include "savedata/mystatus.h"
 #include "savedata/myitem_savedata.h"
 
@@ -156,6 +157,7 @@ typedef struct {
   const MYSTATUS*   statusPlayer; ///< プレイヤーのステータス
   MYITEM*           itemData;     ///< アイテムデータ
   BAG_CURSOR*       bagCursor;    ///< バッグカーソルデータ
+  ZUKAN_SAVEDATA*   zukanData;    ///< 図鑑データ
   TrainerID         trID;         ///<対戦相手トレーナーID（7/31ROMでトレーナーエンカウントを実現するための暫定）
 
   u16       musicDefault;   ///< デフォルト時のBGMナンバー
