@@ -12,8 +12,9 @@
 
 enum {
 	NARC_area_map_itp_tex_area00_itp_nsbtx = 0,
-	NARC_area_map_itp_tex_kawa_test_itp1_nsbtx = 1,
-	NARC_area_map_itp_tex_kawa_test_itp2_nsbtx = 2
+	NARC_area_map_itp_tex_hana01_anim_nsbtx = 1,
+	NARC_area_map_itp_tex_kawa_test_itp1_nsbtx = 2,
+	NARC_area_map_itp_tex_kawa_test_itp2_nsbtx = 3
 };
 
 /* NARC_AREA_MAP_ITP_TEX_NAIX_ */
