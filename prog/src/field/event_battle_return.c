@@ -101,9 +101,6 @@ static GFL_PROC_RESULT BtlRet_ProcQuit( GFL_PROC * proc, int * seq, void * pwk, 
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  enum {
-    POKENAME_LEN_MAX = 5,
-  };
   BTLRET_WORK*  wk = mywk;
   BTLRET_PARAM* param = pwk;
 
@@ -128,7 +125,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         PP_Put( wk->pp, ID_PARA_oyaname, (u32)(wk->strbuf) );
 
         // @todo 今は必ず名前入力させているが、いずれ確認画面を作る。
-        wk->nameinParam = NAMEIN_AllocParamPokemonByPP( wk->heapID, wk->pp, POKENAME_LEN_MAX, NULL );
+        wk->nameinParam = NAMEIN_AllocParamPokemonByPP( wk->heapID, wk->pp, NAMEIN_POKEMON_LENGTH, NULL );
         GFL_PROC_SysCallProc( NO_OVERLAY_ID, &NameInputProcData, wk->nameinParam );
         (*seq)++;
       }else{
