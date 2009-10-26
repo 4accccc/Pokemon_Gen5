@@ -14,6 +14,8 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+#include "savedata/save_control.h"
+
 // 簡易会話表示システム
 #include "system/pms_draw.h"
 
@@ -31,6 +33,8 @@
 //簡易CLWK読み込み＆開放ユーティリティー
 #include "ui/ui_easy_clwk.h"
 
+#include "ui/ui_scene.h"
+
 //タッチバー
 #include "ui/touchbar.h"
 
@@ -46,6 +50,11 @@
 #include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
 #include "message.naix"
 #include "msg/msg_pms_input.h"
+
+//SE
+#include "sound/pm_sndsys.h"
+
+#include "app/pms_input.h"
 
 //外部公開
 #include "app/pms_select.h"
@@ -64,20 +73,120 @@ FS_EXTERN_OVERLAY(ui_common);
  *								定数定義
  */
 //=============================================================================
+
+//--------------------------------------------------------------
+///	SE定義
+//==============================================================
 enum
 { 
-  PMS_SELECT_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
+  SE_DECIDE = SEQ_SE_DECIDE1, ///< 決定
 };
 
+enum
+{ 
+  PMS_SELECT_HEAP_SIZE = 0x20000,  ///< ヒープサイズ
+};
+
+//--------------------------------------------------------------
+///	シーケンス
+//==============================================================
+
+//--------------------------------------------------------------
+///	SceneFunc
+//==============================================================
+// プレート選択
+static BOOL ScenePlateSelect_Init( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL ScenePlateSelect_End( UI_SCENE_CNT_PTR cnt, void* work );
+// コマンド選択
+static BOOL SceneCmdSelect_Init( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneCmdSelect_Main( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneCmdSelect_End( UI_SCENE_CNT_PTR cnt, void* work );
+// コマンド > 決定
+static BOOL SceneDecide_Main( UI_SCENE_CNT_PTR cnt, void* work );
+// コマンド > 編集
+static BOOL SceneEdit_Main( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneEdit_End( UI_SCENE_CNT_PTR cnt, void* work );
+// コマンド > キャンセル
+static BOOL SceneCancel_Main( UI_SCENE_CNT_PTR cnt, void* work );
+
+//--------------------------------------------------------------
+///	SceneID
+//==============================================================
+typedef enum
+{ 
+  PMSS_SCENE_ID_PLATE_SELECT = 0, ///< プレート選択
+  PMSS_SCENE_ID_CMD_SELECT,       ///< メニュー
+  PMSS_SCENE_ID_DECIDE,           ///< けってい
+  PMSS_SCENE_ID_EDIT,             ///< へんしゅう
+  PMSS_SCENE_ID_CANCEL,           ///< やめる
+
+  PMSS_SCENE_ID_MAX,
+} PMSS_SCENE;
+
+//--------------------------------------------------------------
+///	SceneTable
+//==============================================================
+static const UI_SCENE_FUNC_SET c_scene_func_tbl[ PMSS_SCENE_ID_MAX ] = 
+{ 
+  // PMSS_SCENE_ID_PLATE_SELECT 
+  {
+    ScenePlateSelect_Init, 
+    NULL,
+    ScenePlateSelect_Main, 
+    NULL, 
+    ScenePlateSelect_End,
+  },
+  // PMSS_SCENE_ID_CMD_SELECT
+  {
+    SceneCmdSelect_Init,
+    NULL,
+    SceneCmdSelect_Main, 
+    NULL,
+    SceneCmdSelect_End,
+  },
+  // PMSS_SCENE_ID_DECIDE
+  {
+    NULL, NULL,
+    SceneDecide_Main,
+    NULL, NULL,
+  },
+  // PMSS_SCENE_ID_EDIT
+  {
+    NULL, NULL,
+    SceneEdit_Main,
+    NULL, 
+    SceneEdit_End,
+  },
+  // PMSS_SCENE_ID_CANCEL
+  {
+    NULL, NULL,
+    SceneCancel_Main,
+    NULL, NULL,
+  },
+};
+
+//--------------------------------------------------------------
+///	タスクメニューID
+//==============================================================
+enum
+{ 
+  TASKMENU_ID_DECIDE,
+  TASKMENU_ID_EDIT,
+  TASKMENU_ID_CANCEL,
+};
 
 //-------------------------------------
 ///	フレーム
 //=====================================
 enum
 {	
+  // MAIN
+	BG_FRAME_MENU_M	= GFL_BG_FRAME0_M,
 	BG_FRAME_BAR_M	= GFL_BG_FRAME1_M,
-	BG_FRAME_POKE_M	= GFL_BG_FRAME2_M,
+	BG_FRAME_TEXT_M	= GFL_BG_FRAME2_M,
 	BG_FRAME_BACK_M	= GFL_BG_FRAME3_M,
+  // SUB
 	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
   BG_FRAME_TEXT_S = GFL_BG_FRAME0_S, 
 };
@@ -97,16 +206,10 @@ enum
 
 	//メインOBJ
 	PLTID_OBJ_TOUCHBAR_M	= 0, // 3本使用
-	PLTID_OBJ_TYPEICON_M	= 3, // 3本使用
-  PLTID_OBJ_OAM_MAPMODEL_M = 6, // 1本使用
-  PLTID_OBJ_POKEICON_M = 7,     // 3本使用
-  PLTID_OBJ_POKEITEM_M = 10,    // 1本使用
-  PLTID_OBJ_ITEMICON_M = 11,
-  PLTID_OBJ_POKE_M = 12,
-  PLTID_OBJ_BALLICON_M = 13, // 1本使用
-	PLTID_OBJ_TOWNMAP_M	= 14,		
+  PLTID_OBJ_PMS_DRAW    = 3, // 5本使用 
+  PLTID_OBJ_BALLICON_M  = 13, // 1本使用
+	PLTID_OBJ_TOWNMAP_M	  = 14,		
 	//サブOBJ
-  PLTID_OBJ_PMS_DRAW = 0, // 2-5本使用 // @TODO 未定
 };
 
 //=============================================================================
@@ -124,7 +227,7 @@ typedef struct
 
 
 #ifdef PMS_SELECT_PMSDRAW
-#define PMS_SELECT_PMSDRAW_NUM (3) ///< 簡易会話の個数
+#define PMS_SELECT_PMSDRAW_NUM (4) ///< 簡易会話の個数
 #endif // PMS_SELECT_PMSDRAW 
 
 //--------------------------------------------------------------
@@ -132,6 +235,10 @@ typedef struct
 //==============================================================
 typedef struct 
 {
+  //[IN]
+  PMS_SELECT_PARAM* out_param;
+
+  //[PRIVATE]
   HEAPID heapID;
 
 	PMS_SELECT_BG_WORK				wk_bg;
@@ -161,16 +268,13 @@ typedef struct
 	APP_TASKMENU_WORK					*menu;
 #endif //PMS_SELECT_TASKMENU
 
-#ifdef	PMS_SELECT_PRINT_TOOL
-	//プリントユーティリティ
-	PRINT_UTIL								print_util;
-	u32												seq;
-#endif	//PMS_SELECT_PRINT_TOOL
-
 #ifdef PMS_SELECT_PMSDRAW
   GFL_BMPWIN*               pms_win[ PMS_SELECT_PMSDRAW_NUM ];
   PMS_DRAW_WORK*            pms_draw;
 #endif //PMS_SELECT_PMSDRAW
+
+  UI_SCENE_CNT_PTR          cntScene;
+  void*                     subproc_work;   ///< サブPROC用ワーク保存領域
 
 } PMS_SELECT_MAIN_WORK;
 
@@ -202,8 +306,6 @@ static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID );
 //-------------------------------------
 ///	タッチバー
 //=====================================
-static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID );
-static void PMSSelect_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar );
 static void PMSSelect_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar );
 //以下カスタムボタン使用サンプル用
 static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_InitEx( PMS_SELECT_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
@@ -240,6 +342,71 @@ const GFL_PROC_DATA ProcData_PMSSelect =
 	PMSSelectProc_Main,
 	PMSSelectProc_Exit,
 };
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	PMS_SELECT_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
+{ 
+	//描画設定初期化
+	wk->graphic	= PMS_SELECT_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
+
+	//BGリソース読み込み
+	PMSSelect_BG_LoadResource( &wk->wk_bg, wk->heapID );
+
+#ifdef PMS_SELECT_TOUCHBAR
+	//タッチバーの初期化
+	{	
+		GFL_CLUNIT	*clunit	= PMS_SELECT_GRAPHIC_GetClunit( wk->graphic );
+		wk->touchbar	= PMSSelect_TOUCHBAR_InitEx( wk, clunit, wk->heapID );
+	}
+#endif //PMS_SELECT_TOUCHBAR
+
+#ifdef PMS_SELECT_TASKMENU
+	//TASKMENUリソース読み込み＆初期化
+	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_MENU_M, PLTID_BG_TASKMENU_M, wk->font, wk->print_que, wk->heapID );
+#endif //PMS_SELECT_TASKMENU
+
+#ifdef PMS_SELECT_PMSDRAW  
+  PMSSelect_PMSDRAW_Init( wk );
+#endif //PMS_SELECT_PMSDRAW
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	PMS_SELECT_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk )
+{
+#ifdef PMS_SELECT_TASKMENU
+	//TASKMENUシステム＆リソース破棄
+	APP_TASKMENU_RES_Delete( wk->menu_res );	
+#endif //PMS_SELECT_TASKMENU
+
+#ifdef PMS_SELECT_TOUCHBAR
+	//タッチバー
+	PMSSelect_TOUCHBAR_ExitEx( wk );
+#endif //PMS_SELECT_TOUCHBAR
+
+#ifdef PMS_SELECT_PMSDRAW
+  PMSSelect_PMSDRAW_Exit( wk );
+#endif //PMS_SELECT_PMSDRAW
+
+	//描画設定破棄
+	PMS_SELECT_GRAPHIC_Exit( wk->graphic );
+}
+
 //=============================================================================
 /**
  *								PROC
@@ -276,44 +443,22 @@ static GFL_PROC_RESULT PMSSelectProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
   // 初期化
   wk->heapID = HEAPID_UI_DEBUG;
 	
-	//描画設定初期化
-	wk->graphic	= PMS_SELECT_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
-
 	//フォント作成
 	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 												GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
 	//メッセージ
-	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-			NARC_message_pms_input_dat, wk->heapID );
+	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pms_input_dat, wk->heapID );
 
 	//PRINT_QUE作成
 	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
 
-	//BGリソース読み込み
-	PMSSelect_BG_LoadResource( &wk->wk_bg, wk->heapID );
+  PMSSelect_GRAPHIC_Load( wk );
 
-#ifdef PMS_SELECT_TOUCHBAR
-	//タッチバーの初期化
-	{	
-		GFL_CLUNIT	*clunit	= PMS_SELECT_GRAPHIC_GetClunit( wk->graphic );
-		wk->touchbar	= PMSSelect_TOUCHBAR_InitEx( wk, clunit, wk->heapID );
+  // SCENE
+	wk->cntScene = UI_SCENE_CNT_Create( wk->heapID, c_scene_func_tbl, PMSS_SCENE_ID_MAX, wk );
 
-    TOUCHBAR_SetActive( wk->touchbar, TOUCHBAR_ICON_CLOSE, FALSE );
-	}
-#endif //PMS_SELECT_TOUCHBAR
-
-#ifdef PMS_SELECT_TASKMENU
-	//TASKMENUリソース読み込み＆初期化
-	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_BAR_M, PLTID_BG_TASKMENU_M, wk->font, wk->print_que, wk->heapID );
-	wk->menu			= PMSSelect_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
-#endif //PMS_SELECT_TASKMENU
-
-#ifdef PMS_SELECT_PMSDRAW  
-  PMSSelect_PMSDRAW_Init( wk );
-#endif //PMS_SELECT_PMSDRAW
-
-	//@todo	フェードシーケンスがないので
+	//@TODO	フェードシーケンスがないので
 	GX_SetMasterBrightness(0);
 	GXS_SetMasterBrightness(0);
 
@@ -337,7 +482,6 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 
 #ifdef PMS_SELECT_TASKMENU
 	//TASKMENUシステム＆リソース破棄
-	PMSSelect_TASKMENU_Exit( wk->menu );
 	APP_TASKMENU_RES_Delete( wk->menu_res );	
 #endif //PMS_SELECT_TASKMENU
 
@@ -359,8 +503,10 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 	//FONT
 	GFL_FONT_Delete( wk->font );
 
-	//描画設定破棄
-	PMS_SELECT_GRAPHIC_Exit( wk->graphic );
+  PMSSelect_GRAPHIC_UnLoad( wk );
+
+  // SCENE
+  UI_SCENE_CNT_Delete( wk->cntScene );
 
 	//PROC用メモリ解放
   GFL_PROC_FreeWork( proc );
@@ -386,22 +532,12 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	PMS_SELECT_MAIN_WORK* wk = mywk;
-
-  // デバッグボタンでアプリ終了
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
+	
+  // SCENE
+  if( UI_SCENE_CNT_Main( wk->cntScene ) )
   {
     return GFL_PROC_RES_FINISH;
   }
-
-#ifdef PMS_SELECT_TOUCHBAR
-	//タッチバーメイン処理
-	PMSSelect_TOUCHBAR_Main( wk->touchbar );
-#endif //PMS_SELECT_TOUCHBAR
-
-#ifdef PMS_SELECT_TASKMENU
-	//タスクメニューメイン処理
-	PMSSelect_TASKMENU_Main( wk->menu );
-#endif //PMS_SELECT_TASKMENU
 
 	//PRINT_QUE
 	PRINTSYS_QUE_Main( wk->print_que );
@@ -447,10 +583,15 @@ static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID )
 						BG_FRAME_BACK_S, 0, 0, 0, heapID );
 
 	//	----- 下画面 -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_pmsi_pms2_bg_main_NCGR,
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_pmsi_pms2_bg_back_NCGR,
 						BG_FRAME_BACK_M, 0, 0, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_pmsi_pms2_bg_main1_NSCR,
+	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_pmsi_pms2_bg_back01_NSCR,
 						BG_FRAME_BACK_M, 0, 0, 0, heapID );
+	
+  GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, NARC_pmsi_pms2_bg_back_NCGR,
+						BG_FRAME_TEXT_M, 0, 0, 0, heapID );
+	GFL_ARCHDL_UTIL_TransVramScreen(	handle, NARC_pmsi_pms2_bg_back01_NSCR,
+						BG_FRAME_TEXT_M, 0, 0, 0, heapID );
 
 	GFL_ARC_CloseDataHandle( handle );
 }
@@ -461,62 +602,6 @@ static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID )
  *	TOUCHBAR
  */
 //=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR初期化
- *
- *	@param	GFL_CLUNIT *clunit	CLUNIT
- *	@param	heapID							ヒープID
- *
- *	@return	TOUCHBAR_WORK
- */
-//-----------------------------------------------------------------------------
-static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID )
-{	
-	//アイコンの設定
-	//数分作る
-	TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
-	{	
-		{	
-			TOUCHBAR_ICON_RETURN,
-			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CLOSE,
-			{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CHECK,
-			{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y_CHECK },
-		},
-	};
-
-	//設定構造体
-	//さきほどの窓情報＋リソース情報をいれる
-	TOUCHBAR_SETUP	touchbar_setup;
-	GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
-
-	touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
-	touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
-	touchbar_setup.p_unit		= clunit;										//OBJ読み込みのためのCLUNIT
-	touchbar_setup.bar_frm	= BG_FRAME_BAR_M;						//BG読み込みのためのBG面
-	touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;			//BGﾊﾟﾚｯﾄ
-	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;			//OBJﾊﾟﾚｯﾄ
-	touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
-
-	return TOUCHBAR_Init( &touchbar_setup, heapID );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR破棄
- *
- *	@param	TOUCHBAR_WORK	*touchbar タッチバー
- */
-//-----------------------------------------------------------------------------
-static void PMSSelect_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar )
-{	
-	TOUCHBAR_Exit( touchbar );
-}
 
 //----------------------------------------------------------------------------
 /**
@@ -555,20 +640,13 @@ static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_InitEx( PMS_SELECT_MAIN_WORK *wk, GFL_
 	{	
 	//アイコンの設定
 	//数分作る
-	TOUCHBAR_SETUP	touchbar_setup;
+	TOUCHBAR_SETUP	touchbar_setup = {0};
+
 	TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
 	{	
 		{	
 			TOUCHBAR_ICON_RETURN,
 			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CLOSE,
-			{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CHECK,
-			{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y_CHECK }
 		},
 		{	
 			TOUCHBAR_ICON_CUTSOM1,	//カスタムボタン１を拡大縮小アイコンに,
@@ -577,26 +655,24 @@ static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_InitEx( PMS_SELECT_MAIN_WORK *wk, GFL_
 	};
 
 	//以下カスタムボタンならば入れなくてはいけない情報
-	touchbar_icon_tbl[3].cg_idx	=  wk->ncg_btn;				//キャラリソース
-	touchbar_icon_tbl[3].plt_idx	= wk->ncl_btn;				//パレットリソース
-	touchbar_icon_tbl[3].cell_idx	=	wk->nce_btn;				//セルリソース
-	touchbar_icon_tbl[3].active_anmseq	=	8;						//アクティブのときのアニメ
-	touchbar_icon_tbl[3].noactive_anmseq	=		12;						//ノンアクティブのときのアニメ
-	touchbar_icon_tbl[3].push_anmseq	=		10;						//押したときのアニメ（STOPになっていること）
-	touchbar_icon_tbl[3].key	=		PAD_BUTTON_START;		//キーで押したときに動作させたいならば、ボタン番号
-	touchbar_icon_tbl[3].se	=		0;									//押したときにSEならしたいならば、SEの番号
+	touchbar_icon_tbl[1].cg_idx	  = wk->ncg_btn;		//キャラリソース
+	touchbar_icon_tbl[1].plt_idx	= wk->ncl_btn;		//パレットリソース
+	touchbar_icon_tbl[1].cell_idx	=	wk->nce_btn;		//セルリソース
+	touchbar_icon_tbl[1].active_anmseq	  =	8;			//アクティブのときのアニメ
+	touchbar_icon_tbl[1].noactive_anmseq	=	12;			//ノンアクティブのときのアニメ
+	touchbar_icon_tbl[1].push_anmseq	    =	10;			//押したときのアニメ（STOPになっていること）
+	touchbar_icon_tbl[1].key	=	PAD_BUTTON_START;		//キーで押したときに動作させたいならば、ボタン番号
+	touchbar_icon_tbl[1].se	  = 0;									//押したときにSEならしたいならば、SEの番号
 
 	//設定構造体
 	//さきほどの窓情報＋リソース情報をいれる
-	GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
-
 	touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
 	touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
 	touchbar_setup.p_unit		= clunit;										//OBJ読み込みのためのCLUNIT
 	touchbar_setup.bar_frm	= BG_FRAME_BAR_M;						//BG読み込みのためのBG面
 	touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;			//BGﾊﾟﾚｯﾄ
 	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;			//OBJﾊﾟﾚｯﾄ
-	touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
+	touchbar_setup.mapping	= APP_COMMON_MAPPING_64K;	//マッピングモード
 
 	return TOUCHBAR_Init( &touchbar_setup, heapID );
 	}
@@ -650,13 +726,22 @@ static APP_TASKMENU_WORK * PMSSelect_TASKMENU_Init( APP_TASKMENU_RES *menu_res, 
 	APP_TASKMENU_ITEMWORK	item[3];
 	APP_TASKMENU_WORK			*menu;	
 
+  static u8 strtbl[] = {
+    str_decide,
+    str_edit,
+    str_cancel,
+  };
+
 	//窓の設定
 	for( i = 0; i < NELEMS(item); i++ )
 	{	
-		item[i].str	= GFL_MSG_CreateString( msg, 0 );	//文字列
+		item[i].str	      = GFL_MSG_CreateString( msg, strtbl[i] );	//文字列
 		item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;	//文字色
 		item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL;	//窓の種類
 	}
+	
+  // 「もどる」記号
+  item[2].type  = APP_TASKMENU_WIN_TYPE_RETURN,	//もどる記号が入った窓（←┘）←こんなの
 
 	//初期化
 	init.heapId		= heapID;
@@ -664,7 +749,7 @@ static APP_TASKMENU_WORK * PMSSelect_TASKMENU_Init( APP_TASKMENU_RES *menu_res, 
 	init.itemWork = item;
 	init.posType	= ATPT_RIGHT_DOWN;
 	init.charPosX	= 32;
-	init.charPosY = 21;
+	init.charPosY = 24;
 	init.w				= APP_TASKMENU_PLATE_WIDTH;
 	init.h				= APP_TASKMENU_PLATE_HEIGHT;
 
@@ -703,98 +788,6 @@ static void PMSSelect_TASKMENU_Main( APP_TASKMENU_WORK *menu )
 }
 #endif //PMS_SELECT_TASKMENU
 
-#ifdef	PMS_SELECT_PRINT_TOOL
-//=============================================================================
-/**
- *	PRINT_TOOL
- */
-//=============================================================================
-/*
-		・「HP ??/??」を表示するサンプルです
-		・BMPWINのサイズは 20 x 2 です
-		・現在のHP = 618, 最大HP = 999 とします
-		・サンプルメインが FALSE を返すと終了です
-*/
-
-// サンプルメイン
-static BOOL PrintTool_MainFunc( PMS_SELECT_MAIN_WORK * wk )
-{
-	switch( wk->seq ){
-	case 0:
-		PrintTool_AddBmpWin( wk );			// BMPWIN作成
-		PrintTool_PrintHP( wk );				// ＨＰ表示
-		PrintTool_ScreenTrans( wk );		// スクリーン転送
-		wk->seq = 1;
-		break;
-
-	case 1:
-		// プリント終了待ち
-		if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
-			wk->seq = 2;
-		}
-		break;
-
-	case 2:
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-			PrintTool_DelBmpWin( wk );		// BMPWIN削除
-			return FALSE;
-		}
-	}
-
-	PRINT_UTIL_Trans( &wk->print_util, wk->que );
-	return TRUE;
-}
-
-// BMPWIN作成
-static void PrintTool_AddBmpWin( PMS_SELECT_MAIN_WORK * wk )
-{
-	wk->print_util.win = GFL_BMPWIN_Create(
-													GFL_BG_FRAME0_M,					// ＢＧフレーム
-													1, 1,											// 表示座標
-													20, 2,										// 表示サイズ
-													15,												// パレット
-													GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
-}
-
-// BMPWIN削除
-static void PrintTool_DelBmpWin( PMS_SELECT_MAIN_WORK * wk )
-{
-		GFL_BMPWIN_Delete( wk->print_util.win );
-}
-
-// BMPWINスクリーン転送
-static void PrintTool_ScreenTrans( PMS_SELECT_MAIN_WORK * wk )
-{
-	GFL_BMPWIN_MakeScreen( wk->print_util.win );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->print_util.win) );
-}
-
-// ＨＰ表示
-static void PrintTool_PrintHP( PMS_SELECT_MAIN_WORK * wk )
-{
-	STRBUF * strbuf;
-
-	// BMPWIN内の座標(32,0)を基準に右詰めで「ＨＰ」と表示
-	PRINTTOOL_Print(
-				&wk->print_util,				// プリントユーティル ( BMPWIN )
-				wk->que,								// プリントキュー
-				32, 0,									// 表示基準座標
-				strbuf,									// 文字列（すでに「ＨＰ」が展開されているものとする）
-				wk->font,								// フォント
-				PRINTTOOL_MODE_RIGHT );	// 右詰
-
-	// BMPWIN内の座標(100,0)を「／」の中心にしてＨＰを表示 ( hp / mhp )
-	PRINTTOOL_PrintFraction(
-				&wk->print_util,				// プリントユーティル ( BMPWIN )
-				wk->que,								// プリントキュー
-				wk->font,								// フォント
-				100, 0,									// 表示基準座標
-				618,										// hp
-				999,										// mhp
-				wk->heapID );						// ヒープＩＤ
-}
-#endif	//PMS_SELECT_PRINT_TOOL
-
 #ifdef PMS_SELECT_PMSDRAW
 
 //-----------------------------------------------------------------------------
@@ -812,7 +805,7 @@ static void PMSSelect_PMSDRAW_Init( PMS_SELECT_MAIN_WORK* wk )
   
   clunit = PMS_SELECT_GRAPHIC_GetClunit( wk->graphic );
 
-  wk->pms_draw  = PMS_DRAW_Init( clunit, CLSYS_DRAW_SUB, wk->print_que, wk->font, 
+  wk->pms_draw  = PMS_DRAW_Init( clunit, CLSYS_DRAW_MAIN, wk->print_que, wk->font, 
       PLTID_OBJ_PMS_DRAW, PMS_SELECT_PMSDRAW_NUM ,wk->heapID );
   
   {
@@ -823,8 +816,8 @@ static void PMSSelect_PMSDRAW_Init( PMS_SELECT_MAIN_WORK* wk )
     for( i=0; i<PMS_SELECT_PMSDRAW_NUM; i++ )
     {
       wk->pms_win[i] = GFL_BMPWIN_Create(
-          BG_FRAME_TEXT_S,					// ＢＧフレーム
-          2+4*i, 0 + 6 * i,					  	// 表示座標(キャラ単位)
+          BG_FRAME_TEXT_M,					// ＢＧフレーム
+          2, 1 + 6 * i,			      	// 表示座標(キャラ単位)
           28, 4,    							  // 表示サイズ
           15,												// パレット
           GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
@@ -842,6 +835,10 @@ static void PMSSelect_PMSDRAW_Init( PMS_SELECT_MAIN_WORK* wk )
     PMSDAT_SetDeco( &pms, 0, PMS_DECOID_TANKS );
     PMSDAT_SetDeco( &pms, 1, PMS_DECOID_LOVE );
     PMS_DRAW_Print( wk->pms_draw, wk->pms_win[2], &pms ,2 );
+    
+    // 4個目 デコメ二個表示
+    PMSDAT_SetDebugRandomDeco( &pms, wk->heapID );
+    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[3], &pms ,3 );
     
     // 1の要素を2にコピー(移動表現などにご使用ください。)
     PMS_DRAW_Copy( wk->pms_draw, 1, 2 );
@@ -908,4 +905,280 @@ static void PMSSelect_PMSDRAW_Proc( PMS_SELECT_MAIN_WORK* wk )
 }
 
 #endif // PMS_SELECT_PMSDRAW
+
+//=============================================================================
+// SCENE
+//=============================================================================
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  プレート選択 初期化
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL ScenePlateSelect_Init( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  PMS_SELECT_MAIN_WORK* wk = work;
+
+  // 全て表示
+  TOUCHBAR_SetVisibleAll( wk->touchbar, TRUE );
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  プレート選択主処理
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL ScenePlateSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
+{ 
+  PMS_SELECT_MAIN_WORK* wk = work;
+
+  // デバッグボタンでアプリ終了
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
+  {
+    UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
+  }
+
+	//タッチバーメイン処理
+	PMSSelect_TOUCHBAR_Main( wk->touchbar );
+
+  // タッチバー入力
+  switch( TOUCHBAR_GetTrg( wk->touchbar ) )
+  {
+  case TOUCHBAR_ICON_RETURN :
+    UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
+    return TRUE;
+
+  // @TODO 左右と項目アイコン
+
+  case TOUCHBAR_ICON_CUTSOM1 :
+  case TOUCHBAR_SELECT_NONE :
+    break;
+
+  default : GF_ASSERT(0);
+  }
+    
+  // @TODO とりあえずXでメニューを開く
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+  {
+    UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_CMD_SELECT );
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  プレート選択 後処理
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL ScenePlateSelect_End( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  PMS_SELECT_MAIN_WORK* wk = work;
+  
+  // 全て消す
+  TOUCHBAR_SetVisibleAll( wk->touchbar, FALSE );
+
+  return TRUE;
+}
+  
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneCmdSelect_Init( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  PMS_SELECT_MAIN_WORK* wk = work;
+
+  wk->menu = PMSSelect_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  プレートに対するコマンド選択
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneCmdSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  PMS_SELECT_MAIN_WORK* wk = work;
+	
+  //タスクメニューメイン処理
+	PMSSelect_TASKMENU_Main( wk->menu );
+
+  if( APP_TASKMENU_IsFinish( wk->menu ) )
+  {
+    u8 pos = APP_TASKMENU_GetCursorPos( wk->menu );
+
+    switch( pos )
+    {
+    case TASKMENU_ID_DECIDE :
+      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_DECIDE );
+      break;
+    case TASKMENU_ID_EDIT :
+      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_EDIT );
+      break;
+    case TASKMENU_ID_CANCEL :
+      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_CANCEL );
+      break;
+    default : GF_ASSERT(0);
+    }
+
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneCmdSelect_End( UI_SCENE_CNT_PTR cnt, void* work )
+{ 
+  PMS_SELECT_MAIN_WORK* wk = work;
+
+	PMSSelect_TASKMENU_Exit( wk->menu );
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  けってい→終了
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneDecide_Main( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  へんしゅう→簡易会話入力
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneEdit_Main( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  PMSI_PARAM* pmsi;
+  PMS_SELECT_MAIN_WORK* wk = work;
+
+  PMSSelect_GRAPHIC_UnLoad( wk );
+
+  //@TODO セーブポインタグローバル参照
+  pmsi = PMSI_PARAM_Create(PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT, SaveControl_GetPointer(), wk->heapID );
+
+  // PROC切替 入力画面呼び出し
+  GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ProcData_PMSInput, pmsi );
+  wk->subproc_work = pmsi;
+ 
+  HOSAKA_Printf("call! \n");
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneEdit_End( UI_SCENE_CNT_PTR cnt, void* work )
+{ 
+  PMS_SELECT_MAIN_WORK* wk = work;
+  u8 seq = UI_SCENE_CNT_GetSubSeq( cnt );
+
+  switch( seq )
+  {
+  case 0:
+    HOSAKA_Printf("return! \n");
+    PMSI_PARAM_Delete( wk->subproc_work );
+    PMSSelect_GRAPHIC_Load( wk );
+
+    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0);
+    UI_SCENE_CNT_IncSubSeq( cnt );
+    break;
+
+  case 1:
+    // フェード待ち
+    if( GFL_FADE_CheckFade() == FALSE )
+    {
+      // 次のシーンをセット
+      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_PLATE_SELECT );
+      return TRUE;
+    }
+    break;
+
+  default : GF_ASSERT(0);
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  キャンセル→選択画面に戻る
+ *
+ *	@param	UI_SCENE_CNT_PTR cnt
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL SceneCancel_Main( UI_SCENE_CNT_PTR cnt, void* work )
+{
+  UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_PLATE_SELECT );
+
+  return TRUE;
+}
 
