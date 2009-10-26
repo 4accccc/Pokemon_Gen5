@@ -88,7 +88,7 @@
 #define EV_WIN_B_CANCEL (0xfffe)
 
 //フェード共通速度
-#define DISP_FADE_SPEED (8)
+#define DISP_FADE_SPEED (2)
 
 
 #define BAG_POCKET_NORMAL   0
