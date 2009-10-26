@@ -508,6 +508,9 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_ncastle07_01_00.nsbmd \
 	$(DIR_TEMP)/m_ncastle08_00_00.nsbmd \
 	$(DIR_TEMP)/m_ncastle08_01_00.nsbmd \
+	$(DIR_TEMP)/m_soccer01_00_00.nsbmd \
+	$(DIR_TEMP)/m_live01_00_00.nsbmd \
+	$(DIR_TEMP)/m_live02_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd	$(DIR_TEMP)/C3_00_00.bhc \
 	$(DIR_TEMP)/C3_00_01.nsbmd	$(DIR_TEMP)/C3_00_01.bhc \
 	$(DIR_TEMP)/C3_01_00.nsbmd	$(DIR_TEMP)/C3_01_00.bhc \
