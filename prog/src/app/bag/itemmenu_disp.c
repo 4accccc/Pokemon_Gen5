@@ -1026,7 +1026,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
   // ï∂éöêFéwíË
-  static u8 color_tbl[ ITEM_LIST_NUM ] = { 2, 1, 0, 0, 0, 0, 1, 2 };
+  static u8 color_tbl[ ITEM_LIST_NUM ] = { 1, 0, 0, 0, 0, 0, 0, 1 };
 
   for(i = 0; i< ITEM_LIST_NUM ; i++){
     ITEM_ST * item;
@@ -1058,9 +1058,6 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
         break;
       case 1:
         GFL_FONTSYS_SetColor( 0xd, 0xc, backColor );
-        break;
-      case 2:
-        GFL_FONTSYS_SetColor( 0xb, 0xa, backColor );
         break;
       default : GF_ASSERT(0);
       }
