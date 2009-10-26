@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-06-22T15:56:03"/>
+	<create user="tamada" host="W00139" date="2009-10-25T19:58:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,12 +307,12 @@
 
 	<dialog left="155" top="203" right="859" bottom="821" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="218" right="1280" bottom="616" visible="yes"/>
+		<tag-palette left="807" top="218" right="1280" bottom="616" visible="no"/>
 		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="696"/>
 		<band id="3" index="3" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -415,11 +415,11 @@ msg_all_dead_05（自宅）</comment>
 １－１：１ｓｔジム勝利後、ポケモンセンターの場合</comment>
 		<language name="JPN" width="256">つかれて　うごけなくなった　ひんしの
 ポケモンたちを　かばいながら
-[1:00:トレーナー名:1]は　いそいで
+[1:00:トレーナー名:0]は　いそいで
 ポケモンセンターに　もどるのであった</language>
 		<language name="JPN_KANJI" width="256">疲れて　動けなくなった　ひん死の
 ポケモンたちを　かばいながら
-[1:00:トレーナー名:1]は　急いで
+[1:00:トレーナー名:0]は　急いで
 ポケモンセンターに　戻るのであった</language>
 	</row>
 
@@ -436,11 +436,11 @@ msg_all_dead_05（自宅）</comment>
 ２：自宅</comment>
 		<language name="JPN" width="256">つかれて　うごけなくなった　ひんしの
 ポケモンたちを　かばいながら
-[1:00:トレーナー名:1]は　いそいで
+[1:00:トレーナー名:0]は　いそいで
 じたくに　もどるのであった</language>
 		<language name="JPN_KANJI" width="256">疲れて　動けなくなった　ひん死の
 ポケモンたちを　かばいながら
-[1:00:トレーナー名:1]は　急いで
+[1:00:トレーナー名:0]は　急いで
 自宅に　戻るのであった</language>
 	</row>
 
