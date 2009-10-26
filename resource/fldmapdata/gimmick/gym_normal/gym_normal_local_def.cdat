@@ -9,4 +9,4 @@
 
 //本棚のグリッド 位置定義
 #define WALL_GX (12)	//本棚Ｘ座標
-#define WALL_GZ (8)	//本棚Ｚ座標
+#define WALL_GZ (9)	//本棚Ｚ座標
