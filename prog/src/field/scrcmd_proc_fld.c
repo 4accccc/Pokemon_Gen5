@@ -91,7 +91,6 @@ VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
   // コールバックのパラメータを作成
   cw = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(BOX_CALLBACK_WORK) );
   cw->box_param = box_param;
-  cw->box_param = NULL;
 
   // イベントを呼び出す
   event = EVENT_FieldSubProc_Callback(
