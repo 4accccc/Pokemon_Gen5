@@ -101,7 +101,7 @@ void BTL_POKESELECT_RESULT_Push( BTL_POKESELECT_RESULT *result, u8 idx )
   }
   else
   {
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0, "cnt=%d, max=%d", result->cnt,result->max);
   }
 }
 //=============================================================================================

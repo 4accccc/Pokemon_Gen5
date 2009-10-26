@@ -514,6 +514,7 @@ void BTLV_StartPokeSelect( BTLV_CORE* wk, const BTL_POKESELECT_PARAM* param, BTL
     }
   }
 
+  BTL_POKESELECT_RESULT_Init( result, param );
   wk->pokeselResult = result;
   wk->selectItemSeq = 0;
 //  BTLV_SCD_PokeSelect_Start( core->scrnD, param, result );
