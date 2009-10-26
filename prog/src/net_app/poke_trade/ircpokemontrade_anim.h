@@ -13,63 +13,63 @@
 
 
 //時間に関する事
-#define _POKEMON_CENTER_TIME   (60)  ///ポケモンが真ん中による時間
+#define _POKEMON_CENTER_TIME   (42)  ///ポケモンが真ん中による時間
 
 
 //フェードに関する時間
-#define _POKEUP_WHITEOUT_START (380)       //絵コンテ６番モンスターボールが打ちあがった際のホワイトアウト
-#define _POKEUP_WHITEOUT_TIMER (29)       //絵コンテ６番モンスターボールが打ちあがった際のホワイトアウト時間 1/
-#define _POKEUP_WHITEIN_START  (430)      //絵コンテ７番ポケモン交換シーン前のフェードイン
-#define _POKEUP_WHITEIN_TIMER (30)        //絵コンテ７番ポケモン交換シーン前のフェードイン時間
+#define _POKEUP_WHITEOUT_START (266)       //絵コンテ６番モンスターボールが打ちあがった際のホワイトアウト
+#define _POKEUP_WHITEOUT_TIMER (20)       //絵コンテ６番モンスターボールが打ちあがった際のホワイトアウト時間 1/
+#define _POKEUP_WHITEIN_START  (301)      //絵コンテ７番ポケモン交換シーン前のフェードイン
+#define _POKEUP_WHITEIN_TIMER (21)        //絵コンテ７番ポケモン交換シーン前のフェードイン時間
 
-#define _POKECHANGE_WHITEOUT_START (930)  //絵コンテ１４番ポケモン交換シーンのホワイトアウト
-#define _POKECHANGE_WHITEOUT_TIMER (29)      //絵コンテ１４番ポケモン交換シーンのホワイトアウト時間
-#define _POKECHANGE_WHITEIN_START  (990)  //絵コンテ１５番ボールおち前のフェードイン
-#define _POKECHANGE_WHITEIN_TIMER (60)        //絵コンテ１５番ボールおち前のフェードイン時間
+#define _POKECHANGE_WHITEOUT_START (651)  //絵コンテ１４番ポケモン交換シーンのホワイトアウト
+#define _POKECHANGE_WHITEOUT_TIMER (20)      //絵コンテ１４番ポケモン交換シーンのホワイトアウト時間
+#define _POKECHANGE_WHITEIN_START  (693)  //絵コンテ１５番ボールおち前のフェードイン
+#define _POKECHANGE_WHITEIN_TIMER (42)        //絵コンテ１５番ボールおち前のフェードイン時間
 
-#define _POKESPLASH_WHITEOUT_START (1280)  //絵コンテ２０番ボールおちシーンのホワイトアウト
-#define _POKESPLASH_WHITEOUT_TIMER (29)       //絵コンテ２０番ボールおちシーンのホワイトアウト時間
+#define _POKESPLASH_WHITEOUT_START (896)  //絵コンテ２０番ボールおちシーンのホワイトアウト
+#define _POKESPLASH_WHITEOUT_TIMER (20)       //絵コンテ２０番ボールおちシーンのホワイトアウト時間
 
-#define _POKESPLASH_WHITEIN_START  (1390)  //絵コンテ２１番もう一回ボール落ちのフェードイン
-#define _POKESPLASH_WHITEIN_TIMER (30)        //絵コンテ２１番もう一回ボール落ちのフェードイン時間
+#define _POKESPLASH_WHITEIN_START  (973)  //絵コンテ２１番もう一回ボール落ちのフェードイン
+#define _POKESPLASH_WHITEIN_TIMER (21)        //絵コンテ２１番もう一回ボール落ちのフェードイン時間
 
-#define _DEMO_END (1740)   //デモが終わる最後のフレーム
+#define _DEMO_END (1218)   //デモが終わる最後のフレーム
 
 
 //ポケモンの動きに関する時間
-#define _POKEMON_DELETE_TIME   (5)     // 絵コンテ３番  ポケモンを消す
+#define _POKEMON_DELETE_TIME   (3)     // 絵コンテ３番  ポケモンを消す
 
-#define _POKE_APPEAR_START   (470)   //絵コンテ８番  ポケモン登場 自分のは裏
-#define _POKE_APPEAR_TIME    (20)       //絵コンテ８番  ポケモン登場移動時間
-#define _POKE_APPEAR_START2   (485)   //絵コンテ９番     さらにゆっくり移動
-#define _POKE_APPEAR_TIME2   (40)       //絵コンテ９番  さらにゆっくり移動
-#define _POKE_SIDEOUT_START   (525)  //絵コンテ１０番  ポケモン左右に移動していく
-#define _POKE_SIDEOUT_TIME    (65)      //絵コンテ１０番  ポケモン登場移動時間
-#define _POKE_SIDEIN_START   (620)   //絵コンテ１１番  ポケモン左右に移動して戻ってくる
-#define _POKE_SIDEIN_TIME    (200)     //絵コンテ１１番 ポケモン登場移動時間
-#define _POKE_LEAVE_START   (910)  //絵コンテ１３番  ポケモン退場
-#define _POKE_LEAVE_TIME    (10)      //絵コンテ１３番  ポケモン退場移動時間
+#define _POKE_APPEAR_START   (329)   //絵コンテ８番  ポケモン登場 自分のは裏
+#define _POKE_APPEAR_TIME    (14)       //絵コンテ８番  ポケモン登場移動時間
+#define _POKE_APPEAR_START2   (340)   //絵コンテ９番     さらにゆっくり移動
+#define _POKE_APPEAR_TIME2   (28)       //絵コンテ９番  さらにゆっくり移動
+#define _POKE_SIDEOUT_START   (368)  //絵コンテ１０番  ポケモン左右に移動していく
+#define _POKE_SIDEOUT_TIME    (46)      //絵コンテ１０番  ポケモン登場移動時間
+#define _POKE_SIDEIN_START   (434)   //絵コンテ１１番  ポケモン左右に移動して戻ってくる
+#define _POKE_SIDEIN_TIME    (140)     //絵コンテ１１番 ポケモン登場移動時間
+#define _POKE_LEAVE_START   (637)  //絵コンテ１３番  ポケモン退場
+#define _POKE_LEAVE_TIME    (7)      //絵コンテ１３番  ポケモン退場移動時間
 
-#define _POKEMON_CREATE_TIME   (1665)  ///絵コンテ２４番 交換終了してポケモン登場 
+#define _POKEMON_CREATE_TIME   (1166)  ///絵コンテ２４番 交換終了してポケモン登場 
 
 
 ///パーティクルのタイミング
-#define _BALL_PARTICLE_START   (1220)  ///モンスターボール激突 パーティクル開始
-#define _PARTICLE_DEMO2_START   (145)  ///demo_tex002パーティクル開始
-#define _PARTICLE_DEMO3_START   (220)  ///demo_tex003パーティクル開始
-#define _PARTICLE_DEMO3_START2  (1220)  ///パーティクル開始
-#define _PARTICLE_DEMO4_START   (20)     ///ポケモン＞ボールエフェクト
-#define _PARTICLE_DEMO4_START2   (1650)  ///ボール＞ポケモンエフェクト
-#define _PARTICLE_DEMO5_START   (220)  ///モンスターボールが打ちあがるパーティクル開始
-#define _PARTICLE_DEMO6_START   (490)  ///パーティクル開始
-#define _PARTICLE_DEMO7_START   (1000)  ///パーティクル開始
-#define _PARTICLE_DEMO8_START   (300)  ///パーティクル開始
-#define _PARTICLE_DEMO9_START   (400)  ///パーティクル開始
-#define _PARTICLE_DEM10_START   (500)  ///パーティクル開始
+#define _BALL_PARTICLE_START   (854)  ///モンスターボール激突 パーティクル開始
+#define _PARTICLE_DEMO2_START   (101)  ///demo_tex002パーティクル開始
+#define _PARTICLE_DEMO3_START   (154)  ///demo_tex003パーティクル開始
+#define _PARTICLE_DEMO3_START2  (854)  ///パーティクル開始
+#define _PARTICLE_DEMO4_START   (14)     ///ポケモン＞ボールエフェクト
+#define _PARTICLE_DEMO4_START2   (1155)  ///ボール＞ポケモンエフェクト
+#define _PARTICLE_DEMO5_START   (154)  ///モンスターボールが打ちあがるパーティクル開始
+#define _PARTICLE_DEMO6_START   (343)  ///パーティクル開始
+#define _PARTICLE_DEMO7_START   (700)  ///パーティクル開始
+#define _PARTICLE_DEMO8_START   (210)  ///パーティクル開始
+#define _PARTICLE_DEMO9_START   (280)  ///パーティクル開始
+#define _PARTICLE_DEM10_START   (350)  ///パーティクル開始
 
 ///OAM登場のタイミング
-#define _OAM_POKECREATE_START   (20)  ///ポケモン＞ボールエフェクト
-#define _OAM_POKECREATE_START2  (1645)  ///ボール＞ポケモンエフェクト
+#define _OAM_POKECREATE_START   (14)  ///ポケモン＞ボールエフェクト
+#define _OAM_POKECREATE_START2  (1151)  ///ボール＞ポケモンエフェクト
 
 
 

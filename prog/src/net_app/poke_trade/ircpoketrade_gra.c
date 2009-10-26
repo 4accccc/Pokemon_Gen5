@@ -682,10 +682,6 @@ static void _deletePokeIconResource(POKEMON_TRADE_WORK* pWork, int line)
   int i;
   
 	for( i = 0 ; i < BOX_VERTICAL_NUM ; i++ ){
-		if(pWork->pokeIconNcgRes[line][i]){
-			GFL_CLGRP_CGR_Release(pWork->pokeIconNcgRes[line][i]);
-			pWork->pokeIconNcgRes[line][i] = NULL;
-		}
 		if(pWork->pokeIcon[line][i]){
 			GFL_CLACT_WK_Remove(pWork->pokeIcon[line][i]);
 			pWork->pokeIcon[line][i]=NULL;
@@ -693,6 +689,10 @@ static void _deletePokeIconResource(POKEMON_TRADE_WORK* pWork, int line)
 		if(pWork->markIcon[line][i]){
 			GFL_CLACT_WK_Remove(pWork->markIcon[line][i]);
 			pWork->markIcon[line][i]=NULL;
+		}
+		if(pWork->pokeIconNcgRes[line][i]){
+			GFL_CLGRP_CGR_Release(pWork->pokeIconNcgRes[line][i]);
+			pWork->pokeIconNcgRes[line][i] = NULL;
 		}
 	}
 }
@@ -1028,13 +1028,8 @@ static int _DotToLine(int pos)
 
 //--------------------------------------------------------------------------------------------
 /**
- * ポケモンアイコンキャラデータをメモリに展開
- *
- * @param	appwk	ボックス画面アプリワーク
- * @param	ppp		POKEMON_PASO_PARAM
- * @param	chr		NNSG2dCharacterData
- *
- * @return	buf
+ * @brief ポケモンアイコンキャラデータをメモリに展開
+ * @param	POKEMON_TRADE_WORK ワーク
  */
 //--------------------------------------------------------------------------------------------
 static void  PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
@@ -1049,7 +1044,7 @@ static void  PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
   GF_ASSERT(MONSNO_MAX < 650);
   pWork->pCharMem = GFL_HEAP_AllocMemory(pWork->heapID, 4*8*4*4*650 );
   
-  for(i=0;i<MONSNO_MAX; i++){ //@todo フォルム違いを持ってくる必要あり
+  for(i=0;i < 500; i++){ //@todo フォルム違いを持ってくる必要あり アイコンリソース数が全然足りてない
   
     arcIndex = POKEICON_GetCgxArcIndexByMonsNumber( i, 0, 0 );
     pMem = GFL_ARCHDL_UTIL_LoadBGCharacter(pokeicon_ah, arcIndex, FALSE, &pCharData, pWork->heapID);
@@ -1066,7 +1061,8 @@ static void  PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
 //--------------------------------------------------------------------------------------------
 /**
  * @brief   リングバッファのライン番号を返す
- * @return	buf
+ * @param   line  ライン
+ * @return	ret   ラインを割った数
  */
 //--------------------------------------------------------------------------------------------
 

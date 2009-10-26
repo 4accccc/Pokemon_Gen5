@@ -5,7 +5,5 @@
 #define DEMO_TEX005		4
 #define DEMO_TEX006		5
 #define DEMO_TEX007		6
-#define DEMO_TEX008		7
-#define DEMO_TEX009		8
-#define DEMO_TEX010		9
-#define DERMO_TEX001		10
+#define DEMO_TEX009		7
+#define DERMO_TEX001		8

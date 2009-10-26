@@ -2031,7 +2031,7 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
   _PokemonReset(pWork,1);
 
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
-  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
+//  TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_R, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUR_L, FALSE );
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
@@ -2525,7 +2525,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
     DEBUG_PAUSE_SetEnable( TRUE );
 #endif
 
-    IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
+    //IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
 
     _CHANGE_STATE(pWork, _touchState);
   }
