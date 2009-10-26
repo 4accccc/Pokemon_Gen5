@@ -13,7 +13,8 @@
 #define R01_RIVAL                          2
 #define R01_HEROINE                        3
 #define R01_HAKASE2                        4
-#define R01_RIVEL02                        5
+#define R01_PRINCE_01                      5
 #define R01_HEROINE02                      6
+#define R01_RIVEL02                        7
 
 #endif //ZONE_R01_EVC_H

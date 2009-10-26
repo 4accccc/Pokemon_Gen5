@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/21 22:38:52
+#save date:2009/10/26 17:58:44
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d05r0101.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/21 22:38:52
+#save date:2009/10/26 17:58:44
 2
 #hold event type:
 1
@@ -38,7 +38,7 @@ DIR_DOWN
 #Move Limit Z Number
 0
 #position
-104 0 -456
+-120 0 -184
 #event number: 1
 #type
 1
@@ -55,7 +55,7 @@ FV_D05R0101_RIVAL_02
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_RIGHT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -67,7 +67,7 @@ DIR_RIGHT
 #Move Limit Z Number
 0
 #position
-200 0 56
+104 0 72
 #event number: 2
 #type
 1
@@ -96,7 +96,7 @@ DIR_LEFT
 #Move Limit Z Number
 0
 #position
-456 48 72
+200 48 152
 #event number: 3
 #type
 1
@@ -125,7 +125,7 @@ DIR_LEFT
 #Move Limit Z Number
 0
 #position
-456 48 56
+200 48 136
 #event number: 4
 #type
 1
@@ -154,7 +154,7 @@ DIR_LEFT
 #Move Limit Z Number
 0
 #position
-456 48 40
+200 48 120
 #event number: 5
 #type
 1
@@ -183,7 +183,7 @@ DIR_RIGHT
 #Move Limit Z Number
 0
 #position
-280 48 72
+40 48 136
 #event number: 6
 #type
 1
@@ -304,7 +304,7 @@ DIR_DOWN
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/21 22:38:52
+#save date:2009/10/26 17:58:44
 2
 #hold event type:
 1
@@ -314,7 +314,7 @@ DIR_DOWN
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/21 22:38:52
+#save date:2009/10/26 17:58:44
 2
 #hold event type:
 1
@@ -330,16 +330,16 @@ WK_SCENE_D05R0101
 #Event Trigger Work Value
 1
 #Pos Event Size X
-1
+2
 #Pos Event Size Z
-5
+1
 #position
-152 0 88
+104 2 40
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/21 22:38:52
+#save date:2009/10/26 17:58:44
 2
 #hold event type:
 1
