@@ -116,7 +116,7 @@ static const u16 musPokeArr[]=
 {
   MONSNO_PIKATYUU,
   MONSNO_PIKUSII,
-  MONSNO_REIBAAN,
+  MONSNO_WARUBIARU,
   MONSNO_ONOKKUSU,
   MONSNO_PURUNSU,
   
@@ -564,7 +564,7 @@ static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk,
       MUSICAL_STAGE_SetData_Player( work->actInitWork , 1 , work->musPoke );
       MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_ONOKKUSU , HEAPID_MUSICAL_PROC );
       MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_PIKATYUU  , HEAPID_MUSICAL_PROC );
-      MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_REIBAAN , HEAPID_MUSICAL_PROC );
+      MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_WARUBIARU , HEAPID_MUSICAL_PROC );
 
       MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_EAR_L , 7 , 0 , 0 );
       MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HEAD  ,15 , 0 , 1 );
