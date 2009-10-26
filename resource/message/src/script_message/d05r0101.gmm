@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-11T19:12:55"/>
+	<create user="matsumiya" host="W00207" date="2009-10-26T17:17:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,7 +362,7 @@
 中を　探索するか[BE:01:ページ切り替え（クリア）]　</language>
 	</row>
 
-	<row id="msg_d05r0101_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_d05r0101_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・POSを踏むと、コンテナ奥を見たまま
 　このメッセージ表示
@@ -379,7 +379,7 @@
 準備は　良いか？[1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_d05r0101_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_d05r0101_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、ライバル先導で
@@ -389,7 +389,7 @@
 		<language name="JPN_KANJI" width="256">じゃ　行くか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0101_black_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_d05r0101_black_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・再度話しかけたときはblack_03から</comment>
@@ -399,7 +399,7 @@
 ここで　待っているからさ</language>
 	</row>
 
-	<row id="msg_d05r0101_sage2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,,,,,,,,">
+	<row id="msg_d05r0101_sage2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・続けてblack_06
 ・ちなみにプラズマ団員は2人配置</comment>
@@ -411,7 +411,7 @@
 寒くて　かなわんぞ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0101_black_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_d05r0101_black_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・続けてsage2_02</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
@@ -425,7 +425,7 @@
 外まで　案内してやるよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0101_sage2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,,,,,,,,">
+	<row id="msg_d05r0101_sage2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・続けてhakaim_01</comment>
 		<attribute name="キャラ指定">SAGE2
@@ -442,7 +442,7 @@
 おまえたち　こやつらを　けちらせ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0101_hakaim_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d05r0101_hakaim_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・続けて_black_07</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
@@ -454,7 +454,7 @@
 といわけで　オレが　相手しよう！</language>
 	</row>
 
-	<row id="msg_d05r0101_black_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05r0101_black_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・メッセージ表示後、戦闘</comment>
 		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
@@ -464,7 +464,7 @@
 一人ずつ　片付けるぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0101_hakaim_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d05r0101_hakaim_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ
 ・続けてworkman_01</comment>
@@ -474,7 +474,7 @@
 震えていたら　勝てるわけ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0101_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d05r0101_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・プラズマ団との戦闘後に出現
 　主人公に隣接してメッセージ表示
@@ -498,7 +498,7 @@
 プラズマ団が　大挙してるんだ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0101_black_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05r0101_black_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♂
 ・主人公と向き合ってメッセージ表示
 ・表示後、画面暗転してd05の外に

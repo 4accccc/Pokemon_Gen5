@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-06T16:51:10"/>
+	<create user="matsumiya" host="W00207" date="2009-10-26T17:18:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="100"/>
+		<comment position="4" width="248"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="136">
 		</attribute>
@@ -336,10 +336,153 @@
 	</lock>
 
 
-	<row id="msg_d05r0201_test_01">
-		<comment>・冷凍コンテナ内部</comment>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d05r0201_black_03">
+		<comment>♂
+・POSを踏むと、コンテナ奥を見たまま
+　このメッセージ表示
+・はい/いいえ
+・はい→black_04
+　いいえ→black_05</comment>
+		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
+		<language name="JPN" width="256">クロック『……？
+この　おくにも　だれか　いるぞ[BE:01:ページ切り替え（クリア）]
+ひょっとしたら　プラズマだん　かもな
+じゅんびは　いいか？[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="256">クロック『……？
+この　奥にも　だれか　いるぞ[BE:01:ページ切り替え（クリア）]
+ひょっとしたら　プラズマ団かもな
+準備は　良いか？[1:00:トレーナー名:0]</language>
+	</row>
+
+	<row id="msg_d05r0201_black_04">
+		<comment>♂
+・はい選択時
+・メッセージ表示後、ライバル先導で
+　プラズマ団の手前まで移動
+・続けてsage2_01</comment>
+		<language name="JPN" width="256">じゃ　行くか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">じゃ　行くか[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d05r0201_black_05">
+		<comment>♂
+・いいえ選択時
+・再度話しかけたときはblack_03から</comment>
+		<language name="JPN" width="256">……じゅんびして　こいよ
+ここで　まっているからさ</language>
+		<language name="JPN_KANJI" width="256">……準備して　こいよ
+ここで　待っているからさ</language>
+	</row>
+
+	<row id="msg_d05r0201_sage2_01">
+		<comment>♂
+・続けてblack_06
+・ちなみにプラズマ団員は2人配置</comment>
+		<attribute name="キャラ指定">SAGE2
+プラズマ団七賢人</attribute>
+		<language name="JPN" width="256">？？？『おまえたち　ワタシをくるめ
+さむくて　かなわんぞ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">？？？『おまえたち　ワタシをくるめ
+寒くて　かなわんぞ……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d05r0201_black_06">
+		<comment>♂
+・続けてsage2_02</comment>
+		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
+		<language name="JPN" width="256">クロック『……やれやれ
+ほんとうに　かくれていたとは[BE:01:ページ切り替え（クリア）]
+さむいんだろ？
+そとまで　あんない　してやるよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">クロック『……やれやれ
+本当に　隠れていたとは[BE:01:ページ切り替え（クリア）]
+寒いんだろ？
+外まで　案内してやるよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d05r0201_sage2_02">
+		<comment>♂
+・続けてhakaim_01</comment>
+		<attribute name="キャラ指定">SAGE2
+プラズマ団七賢人</attribute>
+		<language name="JPN" width="256">？？？『おうより　あずかった
+だいじな　ポケモン[BE:01:ページ切り替え（クリア）]
+こんな　ところで
+キズつけるわけには　いかぬ[BE:01:ページ切り替え（クリア）]
+おまえたち　こやつらを　けちらせ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">？？？『王より　預かった
+大事な　ポケモン[BE:01:ページ切り替え（クリア）]
+こんな　ところで
+キズつけるわけには　いかぬ[BE:01:ページ切り替え（クリア）]
+おまえたち　こやつらを　けちらせ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d05r0201_hakaim_01">
+		<comment>♂
+・続けて_black_07</comment>
+		<attribute name="キャラ指定">ＨＡＫＡＩＭ
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『わかりました
+しちけんじん　さま！[BE:01:ページ切り替え（クリア）]
+といわけで　オレが　あいてしよう！</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『わかりました　七賢人さま！[BE:01:ページ切り替え（クリア）]
+といわけで　オレが　相手しよう！</language>
+	</row>
+
+	<row id="msg_d05r0201_black_07">
+		<comment>♂
+・メッセージ表示後、戦闘</comment>
+		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
+		<language name="JPN" width="256">クロック『[1:00:トレーナー名:0]！
+ひとりずつ　かたづけるぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">クロック『[1:00:トレーナー名:0]！
+一人ずつ　片付けるぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d05r0201_hakaim_02">
+		<comment>♂
+・戦闘後メッセージ
+・続けてworkman_01</comment>
+		<language name="JPN" width="256">プラズマだん『……こんなに　さむくて
+ふるえていたら　かてるわけ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……こんなに　寒くて
+震えていたら　勝てるわけ……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d05r0201_workman_01">
+		<comment>♂
+・プラズマ団との戦闘後に出現
+　主人公に隣接してメッセージ表示
+・続けてblack_08</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">たいへんだ！　プラズマだんが！[BE:01:ページ切り替え（クリア）]
+って　にげた　プラズマだん
+こんなところに　かくれていたのか[BE:00:ページ切り替え（行送り）]
+そいつらは　オレが　つれていくよ[BE:01:ページ切り替え（クリア）]
+それよりも　たいへんだ
+おまえたち　ちょっと　たすけてくれ！[BE:01:ページ切り替え（クリア）]
+ジムの　まえに
+プラズマだんが　いっぱい　いるんだ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">大変だ！　プラズマ団が！[BE:01:ページ切り替え（クリア）]
+って　逃げた　プラズマ団！？
+こんなところに　隠れていたのか[BE:00:ページ切り替え（行送り）]
+そいつらは　オレが　連れて行くよ[BE:01:ページ切り替え（クリア）]
+それよりも　大変だ
+おまえたち　ちょっと　助けてくれ！[BE:01:ページ切り替え（クリア）]
+ジムの前に
+プラズマ団が　大挙してるんだ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d05r0201_black_08">
+		<comment>♂
+・主人公と向き合ってメッセージ表示
+・表示後、画面暗転してd05の外に
+・コンテナ内のイベント関係のOBJ削除</comment>
+		<attribute name="キャラ指定">友達♂（ライバル）</attribute>
+		<language name="JPN" width="256">クロック『[1:00:トレーナー名:0]！
+なんだか　おもしろくなってきたぜ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">クロック『[1:00:トレーナー名:0]！
+なんだか　おもしろくなってきたぜ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
