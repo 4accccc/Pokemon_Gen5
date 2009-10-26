@@ -187,6 +187,9 @@ VMCMD_RESULT EvCmdDoorAnimeSet( VMHANDLE * core, void *wk )
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
  *
+ * @todo
+ * オブジェクト管理機構をどうするか？考える
+ * キーを持ったリスト構造でワーク管理する？
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdDoorAnimeWait( VMHANDLE * core, void *wk )
