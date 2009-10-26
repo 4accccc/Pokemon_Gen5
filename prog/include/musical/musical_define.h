@@ -81,6 +81,20 @@ typedef enum
   MUS_CHARA_INVALID,    //無効値
 }MUSICAL_CHARA_TYPE;
 
+//ミュ－ジカルの配点種類
+typedef enum
+{
+  MCT_COOL,
+  MCT_CUTE,
+  MCT_ELEGANT,
+  MCT_UNIQUE,
+  MCT_MAX,
+
+  MCT_RANDOM = MCT_MAX,   //ランダム配点分(データのみ存在
+  
+  MCT_DATA_MAX,
+}MUSICAL_CONDITION_TYPE;
+
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -134,14 +148,16 @@ typedef struct
 
 typedef struct
 {
-  u8 bgNo;    //背景番号
+  u32 bgNo   :5;    //背景番号
   u32 spotBit:4; //スポットライト対象(bit)
   u32 year   :7;
   u32 month  :5;  //これが０だったら無効データとみなす
   u32 day    :6;
+  u32 pad    :5;
   
   STRCODE title[MUSICAL_PROGRAM_NAME_MAX];
   MUSICAL_SHOT_POKE shotPoke[MUSICAL_POKE_MAX];
 }MUSICAL_SHOT_DATA;
+
 
 #endif MUSICAL_DEFINE_H__

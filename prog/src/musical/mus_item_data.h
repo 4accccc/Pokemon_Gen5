@@ -38,20 +38,6 @@ typedef enum
 	MUS_POKE_EQU_TYPE_INVALID,	//無効値
 }MUS_POKE_EQUIP_TYPE;
 
-//ミュ－ジカルの配点種類
-typedef enum
-{
-  MCT_COOL,
-  MCT_CUTE,
-  MCT_ELEGANT,
-  MCT_UNIQUE,
-  MCT_MAX,
-
-  MCT_RANDOM = MCT_MAX,   //ランダム配点分(データのみ存在
-  
-  MCT_DATA_MAX,
-}MUSICAL_CONDITION_TYPE;
-
 //ミュ－ジカルのアイテム使用タイプ
 typedef enum
 {

@@ -6,13 +6,20 @@
  * @date	2009/04/08
  */
 //============================================================================================
+#pragma once
 
-#ifndef MUSICAL_SAVE_H__
-#define MUSICAL_SAVE_H__
 
 #include "savedata/save_control.h"	//SAVE_CONTROL_WORK参照のため
 #include "musical/musical_define.h"
 
+//======================================================================
+//	define
+//======================================================================
+
+#define MUS_SAVE_ITEM_MAX (256)
+#define MUS_SAVE_ITEM_BIT_MAX (MUS_SAVE_ITEM_MAX/8)
+#define MUS_SAVE_ENTRY_NUM_MAX (65535)
+#define MUS_SAVE_FAN_NUM (5)
 
 //======================================================================
 //	typedef struct
@@ -31,6 +38,15 @@ typedef struct
 }MUSICAL_EQUIP_SAVE;
 
 typedef struct _MUSICAL_SAVE MUSICAL_SAVE;
+
+//ファン数値系
+typedef struct
+{
+  u8 type;          //種類
+  u8 presentType;   //プレゼント種類
+  u16 presentValue; //アイテム番号・グッズ番号
+}MUSICAL_FAN_STATE;
+
 
 
 //======================================================================
@@ -53,4 +69,20 @@ extern MUSICAL_EQUIP_SAVE* MUSICAL_SAVE_GetBefEquipData( MUSICAL_SAVE *musSave )
 
 extern BOOL MUSICAL_SAVE_IsValidMusicalShotData( MUSICAL_SAVE *musSave );
 extern MUSICAL_SHOT_DATA* MUSICAL_SAVE_GetMusicalShotData( MUSICAL_SAVE *musSave );
-#endif //MUSICAL_SAVE_H__
+
+extern const BOOL MUSICAL_SAVE_ChackHaveItem( MUSICAL_SAVE *musSave , const u8 itemNo );
+extern const BOOL MUSICAL_SAVE_ChackNewItem( MUSICAL_SAVE *musSave , const u8 itemNo );
+extern void MUSICAL_SAVE_AddItem( MUSICAL_SAVE *musSave , const u8 itemNo );
+extern void MUSICAL_SAVE_ResetNewItem( MUSICAL_SAVE *musSave , const u8 itemNo );
+extern MUSICAL_FAN_STATE* MUSICAL_SAVE_GetFanState( MUSICAL_SAVE *musSave , const u8 idx );
+
+extern const u16 MUSICAL_SAVE_GetEntryNum( const MUSICAL_SAVE *musSave );
+extern void MUSICAL_SAVE_AddEntryNum( MUSICAL_SAVE *musSave );
+extern const u16 MUSICAL_SAVE_GetTopNum( const MUSICAL_SAVE *musSave );
+extern void MUSICAL_SAVE_AddTopNum( MUSICAL_SAVE *musSave );
+extern const u8 MUSICAL_SAVE_GetBefCondition( MUSICAL_SAVE *musSave , const MUSICAL_CONDITION_TYPE conType );
+extern void MUSICAL_SAVE_SetBefCondition( MUSICAL_SAVE *musSave , const MUSICAL_CONDITION_TYPE conType , const u8 value );
+extern const u8 MUSICAL_SAVE_GetBefPoint( const MUSICAL_SAVE *musSave );
+extern void MUSICAL_SAVE_SetBefPoint( MUSICAL_SAVE *musSave , const u8 point );
+
+

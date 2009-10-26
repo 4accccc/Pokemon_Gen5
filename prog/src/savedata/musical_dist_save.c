@@ -40,13 +40,13 @@ struct _MUSICAL_DIST_SAVE
 #pragma mark [> proto
 int MUSICAL_DIST_SAVE_GetWorkSize(void)
 {
-  //‰¼ ƒe[ƒuƒ‹‚É‚·‚ç“o˜^‚µ‚Ä‚È‚¢
+  //‰¼
 	return sizeof(MUSICAL_DIST_SAVE);
 }
 
 void MUSICAL_DIST_SAVE_InitWork(MUSICAL_DIST_SAVE *musDistSave)
 {
-  //‰¼ ƒe[ƒuƒ‹‚É‚·‚ç“o˜^‚µ‚Ä‚È‚¢
+  //‰¼
   musDistSave->programDataSize = 0;
   musDistSave->messageDataSize = 0;
   musDistSave->scriptDataSize = 0;
@@ -55,12 +55,13 @@ void MUSICAL_DIST_SAVE_InitWork(MUSICAL_DIST_SAVE *musDistSave)
 
 MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_LoadData( SAVE_CONTROL_WORK *sv , HEAPID heapId )
 {
-  SaveControl_Extra_Load( sv , EXGMDATA_ID_STREAMING , heapId );
+  //SaveControl_Extra_Load( sv , EXGMDATA_ID_STREAMING , heapId );
+  return NULL;
 }
 
 void MUSICAL_DIST_SAVE_UnloadData( SAVE_CONTROL_WORK *sv )
 {
-  SaveControl_Extra_Unload( sv , EXGMDATA_ID_STREAMING );
+  //SaveControl_Extra_Unload( sv , EXGMDATA_ID_STREAMING );
 }
 
 #pragma mark [> proto
