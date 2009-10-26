@@ -44,7 +44,7 @@
 #define MUS_INFO_MSGWIN_WIDTH ( 30 )
 #define MUS_INFO_MSGWIN_HEIGHT ( 4 )
 
-#define MUS_INFO_YESNO_X ( 32-13 )
+#define MUS_INFO_YESNO_X ( 32-APP_TASKMENU_PLATE_WIDTH_YN_WIN )
 #define MUS_INFO_YESNO_Y ( 6 )
 #define MSU_INFO_YESNO_COLOR (PRINTSYS_LSB_Make(0xE,0xF,0))
 
@@ -416,6 +416,8 @@ static void MUS_SHOT_INFO_DispYesNo( MUS_SHOT_INFO_WORK *work )
   //initWork.msgHandle = work->msgHandle;
  // initWork.fontHandle = work->fontHandle;
 //  initWork.printQue = work->printQue;
+  initWork.w = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
+  initWork.h = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
 
   work->yesNoWork = APP_TASKMENU_OpenMenu( &initWork, work->takmenures );
   

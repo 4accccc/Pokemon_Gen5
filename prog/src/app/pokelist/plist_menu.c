@@ -154,6 +154,8 @@ void PLIST_MENU_OpenMenu_YesNo( PLIST_WORK *work , PLIST_MENU_WORK *menuWork )
   taskInitWork.posType = ATPT_RIGHT_DOWN;
   taskInitWork.charPosX = 32;
   taskInitWork.charPosY = 18;
+  taskInitWork.w = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
+  taskInitWork.h = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
   
   GFL_UI_SetTouchOrKey( work->ktst );
   menuWork->taskMenuWork = APP_TASKMENU_OpenMenu( &taskInitWork, work->taskres );

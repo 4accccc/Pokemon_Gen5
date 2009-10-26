@@ -522,7 +522,6 @@ static void PLIST_BATTLE_UpdateBattleParamIcon( PLIST_WORK *work , PLIST_BATTLE_
 //--------------------------------------------------------------
 void PLIST_BATTLE_OpenWaitingMessage( PLIST_WORK *work )
 {
-  PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR_BATTLE );
   PLIST_BATTLE_DispWaitingMessage( work );
 
   work->befSelectedNum = work->plData->comm_selected_num;
@@ -533,10 +532,14 @@ static void PLIST_BATTLE_DispWaitingMessage( PLIST_WORK *work )
   if( work->plData->comm_selected_num == 0 )
   {
     //’N‚àŒˆ‚ß‚Ä‚È‚¢
-    PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_06 );
   }
   else
   {
+    if( PLIST_MSG_IsOpenWindow( work , work->msgWork ) == FALSE )
+    {
+      PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR_BATTLE );
+    }
+    
     if( work->plData->comm_type == PL_COMM_SINGLE )
     {
       //››‚Í‘Ò‹@’†

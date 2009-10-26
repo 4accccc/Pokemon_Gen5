@@ -841,7 +841,6 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
   case PL_RET_NAMINORI:    // メニュー 技：なみのり
   case PL_RET_TAKINOBORI:  // メニュー 技：たきのぼり
   case PL_RET_KIRIBARAI:   // メニュー 技：きりばらい
-  case PL_RET_SORAWOTOBU:  // メニュー 技：そらをとぶ
   case PL_RET_KAIRIKI:     // メニュー 技：かいりき
   case PL_RET_IWAKUDAKI:   // メニュー 技：いわくだき
   case PL_RET_ROCKCLIMB:   // メニュー 技：ロッククライム
@@ -851,7 +850,6 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
   case PL_RET_AMAIKAORI:   // メニュー 技：あまいかおり
   case PL_RET_OSYABERI:    // メニュー 技：おしゃべり
     //ココで処理は無い
-    //@todo 空を飛ぶはマップへ
     mwk->selPoke = plData->ret_sel;
     mwk->selSkill = plData->ret_mode-PL_RET_IAIGIRI;
     FieldMap_SetExitSequence(mwk);
@@ -859,6 +857,16 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
     return FALSE;
     break;
 
+  case PL_RET_SORAWOTOBU:  // メニュー 技：そらをとぶ
+    {
+      TOWNMAP_PARAM* pTown = GFL_HEAP_AllocClearMemory( HEAPID_PROC , sizeof(TOWNMAP_PARAM) );
+      pTown->mode			= TOWNMAP_MODE_SKY;
+			pTown->p_gamesys	= mwk->gmSys;
+      FMenu_SetNextSubProc( mwk ,FMENU_APP_TOWNMAP , pTown );
+    }
+    return TRUE;
+    break;
+  
   default:
     return FALSE;
     break;

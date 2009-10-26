@@ -216,6 +216,19 @@ void PLIST_MSG_CloseWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
 }
 
 //--------------------------------------------------------------
+//	メッセージ ウィンドウ開閉確認
+//--------------------------------------------------------------
+const BOOL PLIST_MSG_IsOpenWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
+{
+  if( msgWork->winType == PMT_NONE )
+  {
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
+//--------------------------------------------------------------
 //	メッセージ 描画(瞬間表示
 //--------------------------------------------------------------
 void PLIST_MSG_DrawMessageNoWait( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , const u32 msgId )

@@ -83,7 +83,7 @@
 //動きの有効時間
 #define PSTATUS_SUB_TP_MOVE_TIME ( 20 )
 //アクションが確定するカウント量
-#define PSTATUS_SUB_ACTION_COUNT ( 20 )
+#define PSTATUS_SUB_ACTION_COUNT ( 10 )
 //アクションが終了するカウント
 #define PSTATUS_SUB_ACTION_END_COUNT ( 24 )
 
@@ -710,7 +710,8 @@ static void PSTATUS_SUB_SubActionUpdate( PSTATUS_WORK *work , PSTATUS_SUB_WORK *
   switch( subWork->subActState )
   {
   case PSSS_NONE:
-    if( subWork->isStartAction == FALSE )
+    //一旦終了後でも、ペンを離さず別のアクションへ行けるように変更
+    //if( subWork->isStartAction == FALSE )
     {
       if( subWork->tpWorkH.count > PSTATUS_SUB_ACTION_COUNT )
       {
@@ -722,7 +723,8 @@ static void PSTATUS_SUB_SubActionUpdate( PSTATUS_WORK *work , PSTATUS_SUB_WORK *
         subWork->subActState = PSSS_JUMP;
         PSTATUS_SUB_SubActionInitAction( work , subWork );
       }
-      if( subWork->tpWorkR.count > PSTATUS_SUB_ACTION_COUNT )
+      //回転の場合は、1/4で１カウントなのでチェックは２倍
+      if( subWork->tpWorkR.count > PSTATUS_SUB_ACTION_COUNT*2 )
       {
         subWork->subActState = PSSS_FLOAT;
         PSTATUS_SUB_SubActionInitAction( work , subWork );
@@ -956,9 +958,9 @@ static const BOOL PSTATUS_SUB_SubActionUpdateFloat( PSTATUS_WORK *work , PSTATUS
       if( isUpdate == FALSE )
       {
         //終了時落下は早く
-        if( subWork->subActValue >= PSTATUS_SUB_FLOAT_RATE )
+        if( subWork->subActValue >= PSTATUS_SUB_FLOAT_RATE*2 )
         {
-          subWork->subActValue -= PSTATUS_SUB_FLOAT_RATE;
+          subWork->subActValue -= PSTATUS_SUB_FLOAT_RATE*2;
         }
         else
         {

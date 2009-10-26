@@ -399,7 +399,7 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000,0x8000,
-      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+      GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 MAIN (“y‘ä
     static const GFL_BG_BGCNT_HEADER header_main2 = {
@@ -518,7 +518,7 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
     G3X_EdgeMarking( TRUE );
     
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO , GX_BUFFERMODE_Z );
-    GFL_BG_SetBGControl3D( 1 );
+    GFL_BG_SetBGControl3D( 0 );
   }
   //MCSS
   {
@@ -1536,7 +1536,8 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
       break;
     }
     
-    if( work->isEgg == FALSE )
+    if( work->isEgg == FALSE &&
+        work->psData->mode != PST_MODE_WAZAADD )
     {
       GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE2] , TRUE );
       GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE3] , TRUE );
