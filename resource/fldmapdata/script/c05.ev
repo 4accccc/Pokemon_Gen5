@@ -59,6 +59,8 @@ EVENT_START   ev_pos_c05_gymleader_01
 	_OBJ_ANIME(C05_WORKMAN_01,anm_c05_workman_01)
 	_OBJ_ANIME_WAIT()
 
+//【安藤】フラグとワーク操作の新ルールに対応しますか。
+
 	//===========フラグワーク操作===========//
 	
 	//***フラグ操作：ジムリーダーとの出会いイベント終了***

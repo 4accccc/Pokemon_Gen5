@@ -212,14 +212,14 @@ ev_name_input:
 
 
 	//名前入力画面呼び出し（インデックスは１匹しかいないはずなので固定値）
-	_PARTY_POKE_NAME_INPUT( NAME_RET, 1 )
+	_PARTY_POKE_NAME_INPUT( NAME_RET, 0 )
 
 	//名前入力の有無で分岐
 	IF $NAME_RET == TRUE THEN
 		//入力アリ
 		
 		//～～と言うのか
-		_TEMOTI_NICK_NAME( 0, 1 )	//ニックネーム取得
+		_TEMOTI_NICK_NAME( 0, 0 )	//ニックネーム取得
 		_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_05 , T01R0401_HAKASE2_01 )
 		_BALLOONWIN_CLOSE()
 	
@@ -227,7 +227,7 @@ ev_name_input:
 		//入力無し（キャンセル操作で戻ってきた）
 		
 		//ニックネームを　つけないんだね
-		_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_05 , T01R0401_HAKASE2_01 )
+		_BALLOONWIN_OBJMSG_OPEN( msg_t01r0401_hakase2_06 , T01R0401_HAKASE2_01 )
 		_BALLOONWIN_CLOSE()
 		
 	ENDIF
