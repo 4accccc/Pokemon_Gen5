@@ -44,6 +44,16 @@
 #include "pokeicon.dat"
 
 
+// ポケモンアイコンがないので、アルセウス以降のポケモンは？？？を表示します
+static u32 TestMonsConv( u32 mons )
+{
+	if( mons > MONSNO_ARUSEUSU ){
+		mons = 0;
+	}
+	return mons;
+}
+
+
 //--------------------------------------------------------------------------------------------
 /**
  * キャラのアーカイブインデックス取得 ( POKEMON_PASO_PARAM 版 )
@@ -113,6 +123,8 @@ u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons, u32 form_no, BOOL egg )
 			return NARC_poke_icon_poke_icon_tam_NCGR;
 		}
 	}
+
+	mons = TestMonsConv( mons );
 
 //	form_no = PokeFuseiFormNoCheck(mons, form_no);
 
@@ -241,6 +253,8 @@ const u8 POKEICON_GetPalNum( u32 mons, u32 form, BOOL egg )
 		}else if( mons == MONSNO_THERIMU ){
 			mons = POKEICON_GetTHERIMU + form - 1;
 		}
+	}else{
+		mons = TestMonsConv( mons );
 	}
 	return IconPalAtr[mons];
 }
