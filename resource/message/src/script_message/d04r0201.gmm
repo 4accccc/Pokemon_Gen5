@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00207" date="2009-10-26T22:11:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="177"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,62 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
+	<row id="msg_d04r0201_00_01">
+		<comment>♂
+・カセキ選択イベント
+・アイテム名による選択肢</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d04r0201_00_02">
+		<comment>♂
+・アイテム１選択</comment>
+		<language name="JPN" width="256">カセキその１　なんだね
+それは（ポケモンの　とくちょう）</language>
+		<language name="JPN_KANJI" width="256">カセキその１　なんだね
+それは（ポケモンの　特徴）</language>
+	</row>
+
+	<row id="msg_d04r0201_00_03">
+		<comment>♂
+・アイテム２選択</comment>
+		<language name="JPN" width="256">カセキその２　なんだね
+それは（ポケモンの　とくちょう）</language>
+		<language name="JPN_KANJI" width="256">カセキその２　なんだね
+それは（ポケモンの　特徴）</language>
+	</row>
+
+	<row id="msg_d04r0201_00_04">
+		<comment>♂
+・キャンセル時</comment>
+		<language name="JPN" width="256">あれれ……
+えんりょ　しなくて　いいのに</language>
+		<language name="JPN_KANJI" width="256">あれれ……
+遠慮しなくて　いいのに</language>
+	</row>
+
+	<row id="msg_d04r0201_00_05">
+		<comment>♂
+・キャンセル後、再度話しかけ</comment>
+		<language name="JPN" width="256">やっぱり　カセキが　きになる？[BE:01:ページ切り替え（クリア）]
+いいよ！　どちらか
+すきな　カセキを　えらびなよ</language>
+		<language name="JPN_KANJI" width="256">やっぱり　カセキが　気になる？[BE:01:ページ切り替え（クリア）]
+いいよ！　どちらか
+好きな　カセキを　選びなよ</language>
+	</row>
+
+	<row id="msg_d04r0201_00_06">
+		<comment>♂
+・カセキ入手後、再度話しかけ</comment>
+		<language name="JPN" width="256">シッポウシティの　はくぶつかん[BE:01:ページ切り替え（クリア）]
+あそこでなら　カセキを　ふくげんして
+ポケモンに　もどせるって　はなしだ</language>
+		<language name="JPN_KANJI" width="256">シッポウシティの　博物館[BE:01:ページ切り替え（クリア）]
+あそこでなら　カセキを　復元して
+ポケモンに　戻せるって　話だ</language>
 	</row>
 
 	<flowchart-group-list>
