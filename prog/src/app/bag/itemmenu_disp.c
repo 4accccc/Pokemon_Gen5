@@ -663,7 +663,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   else{
     GFL_MSG_GetString(  pWork->MsgManager, msg_bag_086, pWork->pStrBuf );
     WORDSET_RegisterNumber(pWork->WordSet, 0, ITEM_GetWazaMashineNo(item->id)+1,
-                           2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+                           2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     WORDSET_RegisterWazaName(pWork->WordSet, 1, wazano);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
@@ -672,7 +672,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
 
   WORDSET_RegisterNumber(pWork->WordSet, 0, item->no,
-                         3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+                         3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemNum), 0, _UP_ITEMNUM_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
 
@@ -1565,7 +1565,7 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   else{
     //‚¢‚è‚å‚­‚ÌŒ…”
     GFL_MSG_GetString(  pWork->MsgManager, mes_bag_100, pWork->pStrBuf );
-    WORDSET_RegisterNumber(pWork->WordSet, 0, pow, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+    WORDSET_RegisterNumber(pWork->WordSet, 0, pow, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
   }
@@ -1580,7 +1580,7 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   else{
     //‚ß‚¢‚¿‚ã‚¤‚ÌŒ…”
     GFL_MSG_GetString(  pWork->MsgManager, mes_bag_100, pWork->pStrBuf );
-    WORDSET_RegisterNumber(pWork->WordSet, 0, hit, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+    WORDSET_RegisterNumber(pWork->WordSet, 0, hit, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 24, pWork->pExpStrBuf, pWork->fontHandle);
   }
@@ -1590,7 +1590,7 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
 
   //PP‚ÌŒ…”
   GFL_MSG_GetString(  pWork->MsgManager, mes_bag_099, pWork->pStrBuf );
-  WORDSET_RegisterNumber(pWork->WordSet, 0, ppnum, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+  WORDSET_RegisterNumber(pWork->WordSet, 0, ppnum, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 29*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
 
@@ -1970,7 +1970,7 @@ void ITEMDISP_InputNumDisp(FIELD_ITEMMENU_WORK* pWork,int num)
   GFL_FONTSYS_SetColor( 0xf, 0xe, backColor );
   GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
   WORDSET_RegisterNumber(pWork->WordSet, 0, num,
-                         3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+                         3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
 
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winNumFrame), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
