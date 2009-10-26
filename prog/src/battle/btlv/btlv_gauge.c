@@ -289,9 +289,8 @@ void  BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw )
   { 
     BTLV_GAUGE_Del( bgw, pos );
   }
-  if( bgw->now_bgm_no != PMSND_GetBGMsoundNo() )
+  if( PMSND_GetBGMsoundNo() == SEQ_BGM_BATTLEPINCH )
   { 
-    OS_TPrintf("PopBGM\n");
     PMSND_PopBGM();
   }
   GFL_CLGRP_PLTT_Release( bgw->plttID );
@@ -1358,7 +1357,6 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
       bgw->bgm_fade_flag = 0;
       if( PMSND_GetBGMsoundNo() == SEQ_BGM_BATTLEPINCH )
       { 
-        OS_TPrintf("PopBGM\n");
         PMSND_PopBGM();
         PMSND_FadeInBGM( 24 );
       }
