@@ -42,7 +42,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/intrude_save.c \
 				savedata/misc.c \
 				savedata/shortcut.c \
-				savedata/musical_dist_save.c
+				savedata/musical_dist_save.c \
+				savedata/zukan_savedata.c
 
 
 #’ÊM‚Ìí’“
@@ -207,6 +208,7 @@ SRCS  +=    $(SOUNDSRC) \
         system/pms_draw.c \
         field/field_encount_st.c \
         field/field_skill.c \
+	app/waza_oshie/waza_oshie.c \
         field/scrcmd_network.c \
 				system/shortcut_data.c \
         field/scrcmd_camera.c \
@@ -982,7 +984,6 @@ SRCS_OVERLAY_CAMERA_TEST = test/ariizumi/camera_system.c \
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_DEV_IRC
-SRCS_OVERLAY_WAZA_OSHIE = app/waza_oshie/wo_main.c \
-			app/waza_oshie/waza_oshie.c
+SRCS_OVERLAY_WAZA_OSHIE = app/waza_oshie/wo_main.c
 
 

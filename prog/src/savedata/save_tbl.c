@@ -41,6 +41,7 @@
 #include "savedata/intrude_save.h"
 #include "savedata/shortcut.h"
 #include "savedata/musical_dist_save.h"
+#include "savedata/zukan_savedata.h"
 
 //==============================================================================
 //	定数定義
@@ -338,7 +339,7 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     (FUNC_GET_SIZE)SODATEYA_WORK_GetWorkSize,
     (FUNC_INIT_WORK)SODATEYA_WORK_InitWork,
   },
-	{
+	{ // かいりき岩場所テーブル
 		GMDATA_ID_ROCKPOS,
 		(FUNC_GET_SIZE)MMDL_ROCKPOS_GetWorkSize,
 		(FUNC_INIT_WORK)MMDL_ROCKPOS_Init,
@@ -353,12 +354,18 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		(FUNC_GET_SIZE)IntrudeSave_GetWorkSize,
 		(FUNC_INIT_WORK)IntrudeSave_WorkInit,
 	},
-	{	
-		//Yボタン登録セーブデータ
+	{	//Yボタン登録セーブデータ
 		GMDATA_ID_SHORTCUT,
 		(FUNC_GET_SIZE)SHORTCUT_GetWorkSize,
 		(FUNC_INIT_WORK)SHORTCUT_Init,
+	},
+	{	//ポケモン図鑑セーブデータ
+		GMDATA_ID_ZUKAN,
+		(FUNC_GET_SIZE)ZukanSave_GetWorkSize,
+		(FUNC_INIT_WORK)ZukanSave_Init,
 	}
+
+
 };
 
 //--------------------------------------------------------------

@@ -25,8 +25,8 @@
 
 ///セーブデータ識別ID
 enum{
-	GMDATA_ID_BOXDATA,	//ボックスデータグループ
-	GMDATA_ID_BOXTRAY_01,	//ボックストレーデータ
+	GMDATA_ID_BOXDATA,	      //ボックスデータグループ
+	GMDATA_ID_BOXTRAY_01,	    //ボックストレーデータ
 	GMDATA_ID_BOXTRAY_02,
 	GMDATA_ID_BOXTRAY_03,
 	GMDATA_ID_BOXTRAY_04,
@@ -50,36 +50,37 @@ enum{
 	GMDATA_ID_BOXTRAY_22,
 	GMDATA_ID_BOXTRAY_23,
 	GMDATA_ID_BOXTRAY_24,
-	GMDATA_ID_BOXTRAY_PALPARK,  //パルパーク用ボックス
-	GMDATA_ID_MYITEM,
-	GMDATA_ID_MYPOKE,
-	GMDATA_ID_PLAYER_DATA,
-	GMDATA_ID_SITUATION,
-	GMDATA_ID_WIFIHISTORY,      //Wi-Fi遊んだ履歴
-	GMDATA_ID_WIFILIST,         //ともだちコード
-	GMDATA_ID_WIFI_NEGOTIATION,  //Wi-Fiネゴシエーション用交換した人のPID
-  GMDATA_ID_CGEAR,    //C-GEAR
-	GMDATA_ID_TRCARD,		//トレーナーカード(サイン
-	GMDATA_ID_MYSTERYDATA,	//不思議な贈り物
-	GMDATA_ID_PERAPVOICE,	//ぺラップヴォイス
-	GMDATA_ID_SYSTEM_DATA,	//システムデータ
-	GMDATA_ID_RECORD,  		//レコード(スコア
-	GMDATA_ID_PMS,  		//簡易文
-  GMDATA_ID_MAILDATA,  //メールデータ
-	GMDATA_ID_MMDL,		//動作モデル
-	GMDATA_ID_MUSICAL,		//ミュージカル
-  GMDATA_ID_RANDOMMAP,  //ランダム生成マップ
-	GMDATA_ID_IRCCOMPATIBLE,	//相性チェック
-  GMDATA_ID_EVENT_WORK, //イベントワーク
-	GMDATA_ID_WORLDTRADEDATA,	//GTS
-  GMDATA_ID_REGULATION_DATA, //レギュレーション
-  GMDATA_ID_GIMMICK_WORK,    //ギミック
-  GMDATA_ID_BATTLE_BOX,    //バトルボックス
-  GMDATA_ID_SODATEYA_WORK,  // 育て屋ワーク
-  GMDATA_ID_ROCKPOS, //かいりき岩
-	GMDATA_ID_MISC,			//未分類
-	GMDATA_ID_INTRUDE,  //侵入
-	GMDATA_ID_SHORTCUT,	//Yボタン登録
+	GMDATA_ID_BOXTRAY_PALPARK,  // パルパーク用ボックス
+	GMDATA_ID_MYITEM,           // どうぐ
+	GMDATA_ID_MYPOKE,           // てもちポケモン
+	GMDATA_ID_PLAYER_DATA,      // プレイヤー関連セーブデータ
+	GMDATA_ID_SITUATION,        // フィールド状況データ
+	GMDATA_ID_WIFIHISTORY,      // Wi-Fi遊んだ履歴
+	GMDATA_ID_WIFILIST,         // ともだちコード
+	GMDATA_ID_WIFI_NEGOTIATION, // Wi-Fiネゴシエーション用交換した人のPID
+  GMDATA_ID_CGEAR,            // C-GEAR
+	GMDATA_ID_TRCARD,		        // トレーナーカード(サイン
+	GMDATA_ID_MYSTERYDATA,	    // 不思議な贈り物
+	GMDATA_ID_PERAPVOICE,	      // ぺラップヴォイス
+	GMDATA_ID_SYSTEM_DATA,	    // システムデータ
+	GMDATA_ID_RECORD,  		      // レコード(スコア
+	GMDATA_ID_PMS,  		        // 簡易文
+  GMDATA_ID_MAILDATA,         // メールデータ
+	GMDATA_ID_MMDL,		          // 動作モデル
+	GMDATA_ID_MUSICAL,		      // ミュージカル
+  GMDATA_ID_RANDOMMAP,        // ランダム生成マップ
+	GMDATA_ID_IRCCOMPATIBLE,	  // 相性チェック
+  GMDATA_ID_EVENT_WORK,       // イベントワーク
+	GMDATA_ID_WORLDTRADEDATA,	  // GTS
+  GMDATA_ID_REGULATION_DATA,  // レギュレーション
+  GMDATA_ID_GIMMICK_WORK,     // ギミック
+  GMDATA_ID_BATTLE_BOX,       // バトルボックス
+  GMDATA_ID_SODATEYA_WORK,    // 育て屋ワーク
+  GMDATA_ID_ROCKPOS,          // かいりき岩
+	GMDATA_ID_MISC,			        // 未分類(小さいデータの集まり）
+	GMDATA_ID_INTRUDE,          // 侵入
+	GMDATA_ID_SHORTCUT,	        // Yボタン登録
+	GMDATA_ID_ZUKAN,	          // ポケモン図鑑
   
 	GMDATA_ID_MAX,
 };
