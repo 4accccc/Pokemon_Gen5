@@ -37,7 +37,7 @@
 
 
 //ポケモンの動きに関する時間
-#define _POKEMON_DELETE_TIME   (3)     // 絵コンテ３番  ポケモンを消す
+#define _POKEMON_DELETE_TIME   (4)     // 絵コンテ３番  ポケモンを消す
 
 #define _POKE_APPEAR_START   (329)   //絵コンテ８番  ポケモン登場 自分のは裏
 #define _POKE_APPEAR_TIME    (14)       //絵コンテ８番  ポケモン登場移動時間

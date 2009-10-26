@@ -384,26 +384,24 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 
 
 
-
-
 static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 {
   _pokeMoveFunc(pWork->pMoveMcss[0]);
   _pokeMoveFunc(pWork->pMoveMcss[1]);
 
 
-  if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME-5)){
+  if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME-3)){
     //Ž©•ª‚ð”’‚­‚·‚é
     MCSS_SetPaletteFade( pWork->pokeMcss[0], 8, 8, 0, 0xffff );
   }
-  if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME-4)){
+  if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME-2)){
     //Ž©•ª‚ð”’‚­‚·‚é
     MCSS_SetPaletteFade( pWork->pokeMcss[0], 16, 16, 0, 0xffff );
   }
 
-  if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME-3)){
+  if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME-1)){
     _pokemonCreateCLACTInit(pWork);
-    //_pokemonCreateCLACTAdd(pWork);
+    _pokemonCreateCLACTAdd(pWork);
   }
   
   if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME)){
@@ -460,9 +458,9 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
   /*  if(pWork->anmCount == ANMCNTC(_OAM_POKECREATE_START)){
     _pokemonCreateCLACTAdd(pWork);
   }*/
-//  if(pWork->anmCount == ANMCNTC(_OAM_POKECREATE_START2)){
-  //  _pokemonCreateCLACTAdd(pWork);
-//  }
+  if(pWork->anmCount == ANMCNTC(_OAM_POKECREATE_START2)){
+    _pokemonCreateCLACTAdd(pWork);
+  }
   if(pWork->anmCount == ANMCNTC(_POKEUP_WHITEOUT_START)){
     _WIPE_SYS_StartRap(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
                        ANMCNTC(_POKEUP_WHITEOUT_TIMER), 1, pWork->heapID );
