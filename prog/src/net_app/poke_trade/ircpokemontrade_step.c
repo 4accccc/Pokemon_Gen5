@@ -14,7 +14,7 @@
 #include "net/network_define.h"
 #include "system\wipe.h"
 
-#include "ircpokemontrade.h"
+#include "net_app/pokemontrade.h"
 #include "system/main.h"
 
 #include "poke_icon.naix"
@@ -52,23 +52,23 @@
 #include "spahead.h"
 
 
-static void _changeDemo_ModelTrade0(IRC_POKEMON_TRADE* pWork);
-static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork);
-static void _changeDemo_ModelTrade2(IRC_POKEMON_TRADE* pWork);
-static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork);
-static void _changeDemo_ModelTrade20(IRC_POKEMON_TRADE* pWork);
-static void _changeDemo_ModelTrade21(IRC_POKEMON_TRADE* pWork);
-static void _changeDemo_ModelTrade22(IRC_POKEMON_TRADE* pWork);
-static void _changeDemo_ModelTrade23(IRC_POKEMON_TRADE* pWork);
-static void _changeDemo_ModelTrade24(IRC_POKEMON_TRADE* pWork);
-static void _changeDemo_ModelTrade25(IRC_POKEMON_TRADE* pWork);
-static void _changeDemo_ModelTrade30(IRC_POKEMON_TRADE* pWork);
-static void _changeDemo_ModelTrade26(IRC_POKEMON_TRADE* pWork);
-static void _changeTimingSaveStart(IRC_POKEMON_TRADE* pWork);
-static void _changeTimingSaveStart2(IRC_POKEMON_TRADE* pWork);
-static void _changeTimingSaveStart3(IRC_POKEMON_TRADE* pWork);
-static void _changeTimingSaveStart4(IRC_POKEMON_TRADE* pWork);
-static void _changeTimingSaveStart5(IRC_POKEMON_TRADE* pWork);
+static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade20(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade24(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade25(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade26(POKEMON_TRADE_WORK* pWork);
+static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork);
+static void _changeTimingSaveStart2(POKEMON_TRADE_WORK* pWork);
+static void _changeTimingSaveStart3(POKEMON_TRADE_WORK* pWork);
+static void _changeTimingSaveStart4(POKEMON_TRADE_WORK* pWork);
+static void _changeTimingSaveStart5(POKEMON_TRADE_WORK* pWork);
 static void _setFadeMask(_D2_PAL_FADE_WORK* pD2Fade);
 static void	_FIELD_StartPaletteFade( _EFFTOOL_PAL_FADE_WORK* epfw, u8 start_evy, u8 end_evy, u8 wait, u16 rgb );
 static _EFFTOOL_PAL_FADE_WORK* _createPaletteFade(GFL_G3D_RES* g3DRES,HEAPID heapID);
@@ -77,8 +77,8 @@ static void  _EFFTOOL_CalcPaletteFade( _EFFTOOL_PAL_FADE_WORK *epfw );
 static void _pokeMoveRenew(_POKEMCSS_MOVE_WORK* pPoke,int time, const VecFx32* pPos);
 static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, HEAPID heapID);
 static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove);
-static void _saveStart(IRC_POKEMON_TRADE* pWork);
-static void _mailBoxStart(IRC_POKEMON_TRADE* pWork);
+static void _saveStart(POKEMON_TRADE_WORK* pWork);
+static void _mailBoxStart(POKEMON_TRADE_WORK* pWork);
 
 
 
@@ -87,13 +87,13 @@ static void _mailBoxStart(IRC_POKEMON_TRADE* pWork);
 //------------------------------------------------------------------
 /**
  * @brief   次のシーンに必要な値をセット
- * @param   IRC_POKEMON_TRADE ワーク
+ * @param   POKEMON_TRADE_WORK ワーク
  * @param   _TRADE_SCENE_NO_E no シーン管理enum
  * @retval  none
  */
 //------------------------------------------------------------------
 
-static void _setNextAnim(IRC_POKEMON_TRADE* pWork, int timer)
+static void _setNextAnim(POKEMON_TRADE_WORK* pWork, int timer)
 {
   pWork->anmCount = timer;
 }
@@ -101,11 +101,11 @@ static void _setNextAnim(IRC_POKEMON_TRADE* pWork, int timer)
 //------------------------------------------------------------------
 /**
  * @brief   ポケモン登場CALCT素材INIT
- * @param   IRC_POKEMON_TRADE ワーク
+ * @param   POKEMON_TRADE_WORK ワーク
  * @retval  none
  */
 //------------------------------------------------------------------
-static void _pokemonCreateCLACTInit(IRC_POKEMON_TRADE* pWork)
+static void _pokemonCreateCLACTInit(POKEMON_TRADE_WORK* pWork)
 {
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADEDEMO, pWork->heapID );
 
@@ -129,12 +129,12 @@ static void _pokemonCreateCLACTInit(IRC_POKEMON_TRADE* pWork)
 //------------------------------------------------------------------
 /**
  * @brief   ポケモン登場CALCT素材Exit
- * @param   IRC_POKEMON_TRADE ワーク
+ * @param   POKEMON_TRADE_WORK ワーク
  * @retval  none
  */
 //------------------------------------------------------------------
 
-static void _pokemonCreateCLACTExit(IRC_POKEMON_TRADE* pWork)
+static void _pokemonCreateCLACTExit(POKEMON_TRADE_WORK* pWork)
 {
   GFL_CLACT_WK_Remove( pWork->pPokeCreateCLWK);
   GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_POKECREATE] );
@@ -149,11 +149,11 @@ static void _pokemonCreateCLACTExit(IRC_POKEMON_TRADE* pWork)
 //------------------------------------------------------------------
 /**
  * @brief   ポケモン登場CALCTをだす
- * @param   IRC_POKEMON_TRADE ワーク
+ * @param   POKEMON_TRADE_WORK ワーク
  * @retval  none
  */
 //------------------------------------------------------------------
-static void _pokemonCreateCLACTAdd(IRC_POKEMON_TRADE* pWork)
+static void _pokemonCreateCLACTAdd(POKEMON_TRADE_WORK* pWork)
 {
   if(pWork->pPokeCreateCLWK==NULL){
     GFL_CLWK_DATA cellInitData;
@@ -184,7 +184,7 @@ static void _WIPE_SYS_StartRap(int pattern, int wipe_m, int wipe_s, u16 color, i
 //MCSS終了の為のコールバック
 static void _McssAnmStop( u32 data, fx32 currentFrame )
 {
-  IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)data;
+  POKEMON_TRADE_WORK* pWork = (POKEMON_TRADE_WORK*)data;
 
   MCSS_SetAnmStopFlag( pWork->pokeMcss[0]);
   pWork->mcssStop[0] = TRUE;
@@ -197,7 +197,7 @@ static void _pEmitCBInFunc( GFL_EMIT_PTR pEmiter, unsigned int flag)
     return;
   }
   if(pEmiter ){
-    IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetUserData( pEmiter );
+    POKEMON_TRADE_WORK* pWork = (POKEMON_TRADE_WORK*)GFL_PTC_GetUserData( pEmiter );
     if( pWork->icaBallin){
       VecFx32 pos={0,0,0};
       ICA_ANIME_GetTranslate( pWork->icaBallin, &pos );
@@ -208,7 +208,7 @@ static void _pEmitCBInFunc( GFL_EMIT_PTR pEmiter, unsigned int flag)
 
 static void _ballinEmitFunc(GFL_EMIT_PTR pEmiter)
 {
-  IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetTempPtr();
+  POKEMON_TRADE_WORK* pWork = (POKEMON_TRADE_WORK*)GFL_PTC_GetTempPtr();
 
   GFL_PTC_SetUserData( pEmiter, pWork );
   GFL_PTC_SetCallbackFunc(pEmiter, &_pEmitCBInFunc);
@@ -221,7 +221,7 @@ static void _pEmitCBOutFunc( GFL_EMIT_PTR pEmiter, unsigned int flag)
     return;
   }
   if(pEmiter  ){
-    IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetUserData( pEmiter );
+    POKEMON_TRADE_WORK* pWork = (POKEMON_TRADE_WORK*)GFL_PTC_GetUserData( pEmiter );
     if(pWork->icaBallout){
       VecFx32 pos={0,0,0};
       ICA_ANIME_GetTranslate( pWork->icaBallout, &pos );
@@ -235,14 +235,14 @@ static void _pEmitCBOutFunc( GFL_EMIT_PTR pEmiter, unsigned int flag)
 
 static void _balloutEmitFunc(GFL_EMIT_PTR pEmiter)
 {
-  IRC_POKEMON_TRADE* pWork = (IRC_POKEMON_TRADE*)GFL_PTC_GetTempPtr();
+  POKEMON_TRADE_WORK* pWork = (POKEMON_TRADE_WORK*)GFL_PTC_GetTempPtr();
 
   GFL_PTC_SetUserData( pEmiter, pWork );
   GFL_PTC_SetCallbackFunc(pEmiter, &_pEmitCBOutFunc);
 }
 
 
-void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(IRC_POKEMON_TRADE* pWork)
+void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(POKEMON_TRADE_WORK* pWork)
 {
   VecFx32 apos;
   int i;
@@ -256,7 +256,7 @@ void IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove(IRC_POKEMON_TRADE* pWork)
 
 
 
-void _changeDemo_ModelTrade0(IRC_POKEMON_TRADE* pWork)
+void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
 {
   VecFx32 apos;
   int i;
@@ -300,7 +300,7 @@ void _changeDemo_ModelTrade0(IRC_POKEMON_TRADE* pWork)
 
 }
 
-static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
+static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
 {
   int i;
 
@@ -348,7 +348,7 @@ static void _changeDemo_ModelTrade1(IRC_POKEMON_TRADE* pWork)
   }
 }
 
-static void _changeDemo_ModelTrade2(IRC_POKEMON_TRADE* pWork)
+static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 {
   int i;
   
@@ -378,7 +378,7 @@ static void _changeDemo_ModelTrade2(IRC_POKEMON_TRADE* pWork)
 
 
 
-static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
+static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 {
   _pokeMoveFunc(pWork->pMoveMcss[0]);
   _pokeMoveFunc(pWork->pMoveMcss[1]);
@@ -658,7 +658,7 @@ static void _changeDemo_ModelTrade3(IRC_POKEMON_TRADE* pWork)
 }
 
 
-static void _changeDemo_ModelTrade20(IRC_POKEMON_TRADE* pWork)
+static void _changeDemo_ModelTrade20(POKEMON_TRADE_WORK* pWork)
 {
 
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_49, pWork->pMessageStrBufEx );
@@ -678,7 +678,7 @@ static void _changeDemo_ModelTrade20(IRC_POKEMON_TRADE* pWork)
 
 }
 
-static void _changeDemo_ModelTrade21(IRC_POKEMON_TRADE* pWork)
+static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork)
 {
   if(!IRC_POKETRADE_MessageEndCheck(pWork)){
     return;
@@ -699,7 +699,7 @@ static void _changeDemo_ModelTrade21(IRC_POKEMON_TRADE* pWork)
 
 }
 
-static void _changeDemo_ModelTrade22(IRC_POKEMON_TRADE* pWork)
+static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork)
 {
   if(!IRC_POKETRADE_MessageEndCheck(pWork)){
     return;
@@ -715,7 +715,7 @@ static void _changeDemo_ModelTrade22(IRC_POKEMON_TRADE* pWork)
 
 
 
-static void _changeDemo_ModelTrade23(IRC_POKEMON_TRADE* pWork)
+static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
 {
   IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
   IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
@@ -753,7 +753,7 @@ static void _changeDemo_ModelTrade23(IRC_POKEMON_TRADE* pWork)
 
 
 
-static void _saveStart(IRC_POKEMON_TRADE* pWork)
+static void _saveStart(POKEMON_TRADE_WORK* pWork)
 {
   if(!pWork->pGameData){
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade30); //ゲームデータの引渡しが無い場合セーブに行かない
@@ -767,7 +767,7 @@ static void _saveStart(IRC_POKEMON_TRADE* pWork)
 }
 
 
-static void _changeTimingSaveStart(IRC_POKEMON_TRADE* pWork)
+static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork)
 {
   if(!IRC_POKETRADE_MessageEndCheck(pWork)){
     return;
@@ -782,7 +782,7 @@ static void _changeTimingSaveStart(IRC_POKEMON_TRADE* pWork)
   }
 
 }
-static void _changeTimingSaveStart2(IRC_POKEMON_TRADE* pWork)
+static void _changeTimingSaveStart2(POKEMON_TRADE_WORK* pWork)
 {
   if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVEST)){
     GAMEDATA_SaveAsyncStart(pWork->pGameData);
@@ -790,7 +790,7 @@ static void _changeTimingSaveStart2(IRC_POKEMON_TRADE* pWork)
   }
 }
 
-static void _changeTimingSaveStart3(IRC_POKEMON_TRADE* pWork)
+static void _changeTimingSaveStart3(POKEMON_TRADE_WORK* pWork)
 {
   if(GAMEDATA_SaveAsyncMain(pWork->pGameData) == SAVE_RESULT_LAST){
     if(GFL_NET_IsInit()){
@@ -803,7 +803,7 @@ static void _changeTimingSaveStart3(IRC_POKEMON_TRADE* pWork)
   }
 }
 
-static void _changeTimingSaveStart4(IRC_POKEMON_TRADE* pWork)
+static void _changeTimingSaveStart4(POKEMON_TRADE_WORK* pWork)
 {
   pWork->saveStep--;
   if(pWork->saveStep<0){
@@ -814,14 +814,14 @@ static void _changeTimingSaveStart4(IRC_POKEMON_TRADE* pWork)
   }
 }
 
-static void _changeTimingSaveStart5(IRC_POKEMON_TRADE* pWork)
+static void _changeTimingSaveStart5(POKEMON_TRADE_WORK* pWork)
 {
   if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVELAST)){
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade25);
   }
 }
 
-static void _changeDemo_ModelTrade25(IRC_POKEMON_TRADE* pWork)
+static void _changeDemo_ModelTrade25(POKEMON_TRADE_WORK* pWork)
 {
   if(GAMEDATA_SaveAsyncMain(pWork->pGameData) == SAVE_RESULT_OK){
     GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVEEND);
@@ -829,14 +829,14 @@ static void _changeDemo_ModelTrade25(IRC_POKEMON_TRADE* pWork)
   }
 }
 
-static void _changeDemo_ModelTrade26(IRC_POKEMON_TRADE* pWork)
+static void _changeDemo_ModelTrade26(POKEMON_TRADE_WORK* pWork)
 {
   if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_SAVEEND)){
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade30);
   }
 }
 
-static void _changeDemo_ModelTrade30(IRC_POKEMON_TRADE* pWork)
+static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork)
 {
   GFL_DISP_GX_SetVisibleControlDirect( 0 );
   GFL_DISP_GXS_SetVisibleControlDirect( 0 );
@@ -1094,11 +1094,11 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
 //-------------------------------------------------
 /**
  *	@brief      メールをパソコンに入れた > セーブに向かう
- *	@param[inout]	IRC_POKEMON_TRADE ワーク
+ *	@param[inout]	POKEMON_TRADE_WORK ワーク
  */
 //-------------------------------------------------
 
-static void _mailSeqEnd(IRC_POKEMON_TRADE* pWork)
+static void _mailSeqEnd(POKEMON_TRADE_WORK* pWork)
 {
   if(!IRC_POKETRADE_MessageEndCheck(pWork)){
     return;
@@ -1120,7 +1120,7 @@ static void _mailSeqEnd(IRC_POKEMON_TRADE* pWork)
  */
 //-------------------------------------------------
 
-static void _mailTrashYesOrNo(IRC_POKEMON_TRADE* pWork)
+static void _mailTrashYesOrNo(POKEMON_TRADE_WORK* pWork)
 {
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
@@ -1155,7 +1155,7 @@ static void _mailTrashYesOrNo(IRC_POKEMON_TRADE* pWork)
  */
 //-------------------------------------------------
 
-static void _mailTrash(IRC_POKEMON_TRADE* pWork)
+static void _mailTrash(POKEMON_TRADE_WORK* pWork)
 {
   if(!IRC_POKETRADE_MessageEndCheck(pWork)){
     return;
@@ -1175,7 +1175,7 @@ static void _mailTrash(IRC_POKEMON_TRADE* pWork)
  */
 //-------------------------------------------------
 
-static void _mailPCArrangementYesOrNo(IRC_POKEMON_TRADE* pWork)
+static void _mailPCArrangementYesOrNo(POKEMON_TRADE_WORK* pWork)
 {
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
@@ -1205,7 +1205,7 @@ static void _mailPCArrangementYesOrNo(IRC_POKEMON_TRADE* pWork)
  */
 //-------------------------------------------------
 
-static void _mailPCArrangement(IRC_POKEMON_TRADE* pWork)
+static void _mailPCArrangement(POKEMON_TRADE_WORK* pWork)
 {
   if(!IRC_POKETRADE_MessageEndCheck(pWork)){
     return;
@@ -1224,7 +1224,7 @@ static void _mailPCArrangement(IRC_POKEMON_TRADE* pWork)
  */
 //-------------------------------------------------
 
-static void _mailPCSendYesOrNo(IRC_POKEMON_TRADE* pWork)
+static void _mailPCSendYesOrNo(POKEMON_TRADE_WORK* pWork)
 {
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
@@ -1263,11 +1263,11 @@ static void _mailPCSendYesOrNo(IRC_POKEMON_TRADE* pWork)
 //-------------------------------------------------
 /**
  *	@brief      メールの開始
- *	@param[inout]	IRC_POKEMON_TRADE ワーク
+ *	@param[inout]	POKEMON_TRADE_WORK ワーク
  */
 //-------------------------------------------------
 
-static void _mailBoxStart(IRC_POKEMON_TRADE* pWork)
+static void _mailBoxStart(POKEMON_TRADE_WORK* pWork)
 {
   if(!IRC_POKETRADE_MessageEndCheck(pWork)){
     return;

@@ -26,8 +26,7 @@
 #include "colosseum.h"
 #include "colosseum_tool.h"
 #include "app\pms_input.h"
-
-#include "net_app\poke_trade\ircpokemontrade.h"
+#include "net_app/pokemontrade.h"
 
 
 //==============================================================================
@@ -61,7 +60,7 @@ static BOOL SubEvent_Chat(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP_
 //--------------------------------------------------------------
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
-FS_EXTERN_OVERLAY(ircbattlematch);
+FS_EXTERN_OVERLAY(pokemon_trade);
 
 
 //==============================================================================
@@ -426,7 +425,7 @@ static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP
   switch(*seq){
   case 0:
     *child_event = EVENT_FieldSubProc(
-  	    gsys, fieldWork, FS_OVERLAY_ID(ircbattlematch), &IrcPokemonTradeProcData, pwk);
+  	    gsys, fieldWork, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeProcData, pwk);
     break;
   default:
     return TRUE;

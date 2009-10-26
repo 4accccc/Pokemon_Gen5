@@ -14,7 +14,7 @@
 
 #include "trade.naix"
 
-#include "ircpokemontrade.h"
+#include "net_app/pokemontrade.h"
 #include "ircpokemontrade_local.h"
 #include "msg/msg_poke_trade.h"
 #include "gamesystem/msgspeed.h"  //MSGSPEED_GetWait
@@ -60,8 +60,8 @@ static const GFL_G3D_LIGHT_DATA light_data[] = {
 static const GFL_G3D_LIGHTSET_SETUP light_setup = { light_data, NELEMS(light_data) };
 static GFL_G3D_LIGHTSET* g_lightSet;
 
-typedef void (MODEL3D_CAMERA_FUNC)(IRC_POKEMON_TRADE* pWork);
-typedef void (MODEL3D_MOVE_FUNC)(IRC_POKEMON_TRADE* pWork,GFL_G3D_OBJSTATUS* pStatus);
+typedef void (MODEL3D_CAMERA_FUNC)(POKEMON_TRADE_WORK* pWork);
+typedef void (MODEL3D_MOVE_FUNC)(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus);
 
 
 typedef struct 
@@ -173,7 +173,7 @@ static const GFL_G3D_UTIL_SETUP setup[] =
 };
 
 
-static void _cameraSetReel(IRC_POKEMON_TRADE* pWork)
+static void _cameraSetReel(POKEMON_TRADE_WORK* pWork)
 {
   VecFx32 campos;
   VecFx32 tarpos;
@@ -195,7 +195,7 @@ static void _cameraSetReel(IRC_POKEMON_TRADE* pWork)
   GFL_G3D_CAMERA_SetCamUp( pWork->camera, &tarpos );
 }
 
-static void _cameraSetTrade01(IRC_POKEMON_TRADE* pWork)
+static void _cameraSetTrade01(POKEMON_TRADE_WORK* pWork)
 {
   VecFx32 campos;
   VecFx32 tarpos;
@@ -221,7 +221,7 @@ static void _cameraSetTrade01(IRC_POKEMON_TRADE* pWork)
 }
 
 
-static void _moveSetReel(IRC_POKEMON_TRADE* pWork,GFL_G3D_OBJSTATUS* pStatus)
+static void _moveSetReel(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus)
 {
   int a;
 
@@ -282,7 +282,7 @@ static void _moveSetReel(IRC_POKEMON_TRADE* pWork,GFL_G3D_OBJSTATUS* pStatus)
   }
 }
 
-static void _moveSetTrade01(IRC_POKEMON_TRADE* pWork,GFL_G3D_OBJSTATUS* pStatus)
+static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus)
 {
   int a;
 
@@ -448,7 +448,7 @@ static const MODEL3D_SET_FUNCS modelset[] =
   { _cameraSetTrade01,_moveSetTrade01 },
 };
 
-static void _icaCameraDelete(IRC_POKEMON_TRADE* pWork)
+static void _icaCameraDelete(POKEMON_TRADE_WORK* pWork)
 {
   if(pWork->icaCamera){
     ICA_ANIME_Delete(pWork->icaCamera);
@@ -474,9 +474,9 @@ static void _icaCameraDelete(IRC_POKEMON_TRADE* pWork)
  * @brief プロトタイプ宣言
  */
 //============================================================================================
-static void Initialize( IRC_POKEMON_TRADE* pWork,int no );
-static void Finalize( IRC_POKEMON_TRADE* pWork );
-static void Draw( IRC_POKEMON_TRADE* pWork );
+static void Initialize( POKEMON_TRADE_WORK* pWork,int no );
+static void Finalize( POKEMON_TRADE_WORK* pWork );
+static void Draw( POKEMON_TRADE_WORK* pWork );
 
 
 //============================================================================================
@@ -484,7 +484,7 @@ static void Draw( IRC_POKEMON_TRADE* pWork );
  * @brief 初期化関数
  */
 //============================================================================================
-void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
+void IRC_POKETRADEDEMO_Init( POKEMON_TRADE_WORK* pWork )
 {
   VecFx32 campos;
   VecFx32 tarpos;
@@ -574,7 +574,7 @@ void IRC_POKETRADEDEMO_Init( IRC_POKEMON_TRADE* pWork )
  * @brief メイン関数
  */
 //============================================================================================
-void IRC_POKETRADEDEMO_Main( IRC_POKEMON_TRADE* pWork )
+void IRC_POKETRADEDEMO_Main( POKEMON_TRADE_WORK* pWork )
 {
   Draw( pWork );
 }
@@ -585,7 +585,7 @@ void IRC_POKETRADEDEMO_Main( IRC_POKEMON_TRADE* pWork )
  * @brief 終了関数
  */
 //============================================================================================
-void IRC_POKETRADEDEMO_End( IRC_POKEMON_TRADE* pWork )
+void IRC_POKETRADEDEMO_End( POKEMON_TRADE_WORK* pWork )
 {
   {
   	void *heap2 ,*heap[PTC_KIND_NUM_MAX];
@@ -623,7 +623,7 @@ void IRC_POKETRADEDEMO_End( IRC_POKEMON_TRADE* pWork )
  * @brief モデルをセットしなおす関数
  */
 //============================================================================================
-void IRC_POKETRADEDEMO_SetModel( IRC_POKEMON_TRADE* pWork, int modelno)
+void IRC_POKETRADEDEMO_SetModel( POKEMON_TRADE_WORK* pWork, int modelno)
 {
 //  if(modelno != TRADE01_OBJECT){
 //    return;
@@ -653,7 +653,7 @@ void IRC_POKETRADEDEMO_SetModel( IRC_POKEMON_TRADE* pWork, int modelno)
  * @brief モデルを消す関数
  */
 //============================================================================================
-void IRC_POKETRADEDEMO_RemoveModel( IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADEDEMO_RemoveModel( POKEMON_TRADE_WORK* pWork)
 {
   if(pWork->modelno == -1){
     return;
@@ -676,7 +676,7 @@ void IRC_POKETRADEDEMO_RemoveModel( IRC_POKEMON_TRADE* pWork)
  * @brief 初期化
  */
 //--------------------------------------------------------------------------------------------
-static void Initialize( IRC_POKEMON_TRADE* pWork, int modelno )
+static void Initialize( POKEMON_TRADE_WORK* pWork, int modelno )
 {
 
   // ユニット追加
@@ -714,7 +714,7 @@ static void Initialize( IRC_POKEMON_TRADE* pWork, int modelno )
  * @brief 終了
  */
 //--------------------------------------------------------------------------------------------
-static void Finalize( IRC_POKEMON_TRADE* pWork )
+static void Finalize( POKEMON_TRADE_WORK* pWork )
 {
 
   // ユニット破棄
@@ -734,7 +734,7 @@ static void Finalize( IRC_POKEMON_TRADE* pWork )
 //--------------------------------------------------------------------------------------------
 
 
-static void Draw( IRC_POKEMON_TRADE* pWork )
+static void Draw( POKEMON_TRADE_WORK* pWork )
 {
   static fx32 frame = 0;
   static fx32 anime_speed = FX32_ONE;  // 1/60での動作の為

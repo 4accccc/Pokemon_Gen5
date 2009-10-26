@@ -27,7 +27,7 @@
 #include "net_app/irc_match/ircbattlematch.h"
 #include "net_app/irc_match/ircbattlemenu.h"
 #include "net_app/friend_trade/ircbattlefriend.h"
-#include "net_app/poke_trade/ircpokemontrade.h"
+#include "net_app/pokemontrade.h"
 #include "net_app/irc_compatible.h"
 #include "sound/pm_sndsys.h"
 #include "battle/battle.h"
@@ -52,6 +52,7 @@ FS_EXTERN_OVERLAY(irc_compatible);
 FS_EXTERN_OVERLAY(battle);
 FS_EXTERN_OVERLAY(fieldmap);
 FS_EXTERN_OVERLAY(ircbattlematch);
+FS_EXTERN_OVERLAY(pokemon_trade);
 
 #define _LOCALMATCHNO (100)
 
@@ -246,7 +247,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
 
   case _CALL_TRADE:  //  ƒ|ƒPƒ‚ƒ“ŒðŠ·
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(ircbattlematch), &IrcPokemonTradeProcData, dbw);
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeProcData, dbw);
     (*seq)++;
     break;
   case _WAIT_TRADE:

@@ -672,19 +672,21 @@ SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
               net_app/wificlub/wifi_p2pmatchfour.c
 
 
-# IRCマッチングアプリケーション
+# IRCマッチングアプリケーション ともだちコード交換
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_IRCBATTLEMATCH = net_app/irc_match/ircbattlematch.c \
-                net_app/friend_trade/ircbattlefriend.c \
-								net_app/poke_trade/ircpokemontrade.c \
+                net_app/friend_trade/ircbattlefriend.c
+
+# ポケモン交換
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_POKEMON_TRADE = net_app/poke_trade/ircpokemontrade.c \
 								net_app/poke_trade/ircpokemontrade_step.c \
 								net_app/poke_trade/ircpoketrade_3d.c \
 								net_app/poke_trade/ircpoketrade_gra.c
 
 
-
-# IRCマッチングアプリケーション
-#===> SRCS_OVERLAY_IRCBATTLEMATCH
+# メールアプリケーション
+#===> SRCS_OVERLAY_POKEMON_TRADE
 SRCS_OVERLAY_APP_MAIL = app/mail/mailtool.c
 
 

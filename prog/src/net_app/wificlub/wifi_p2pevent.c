@@ -13,7 +13,8 @@
 #include "gamesystem/game_event.h"
 
 #include "net_app/wificlub/wifi_p2pmatch.h"
-#include "net_app/wificlub/wifi_p2pmatchfour.h"
+//#include "net_app/wificlub/wifi_p2pmatchfour.h"
+#include "net_app/pokemontrade.h"
 #include "wifi_p2pmatch_local.h"
 
 #include "net/dwc_rap.h"
@@ -48,6 +49,7 @@ const GFL_PROC_DATA WifiClubProcData = {
 FS_EXTERN_OVERLAY(wifi2dmap);
 FS_EXTERN_OVERLAY(battle);
 FS_EXTERN_OVERLAY(wificlub);
+FS_EXTERN_OVERLAY(pokemon_trade);
 #define _LOCALMATCHNO (100)
 //----------------------------------------------------------------
 // バトル用定義
@@ -113,9 +115,9 @@ enum{
 
 
 // WiFiP2PMatrch ４人接続画面人数制限定義
-static const u8 sc_P2P_FOUR_MATCH_MAX[ WFP2PMF_TYPE_NUM ] = {
-  3, 4, 4, 4
-};
+//static const u8 sc_P2P_FOUR_MATCH_MAX[ WFP2PMF_TYPE_NUM ] = {
+//  3, 4, 4, 4
+//};
 
 
 #define _BLOCK (0)
@@ -262,7 +264,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
     break;
   case P2P_TRADE:
-    //        EventCmd_UnionTrade(event);
+    GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokemon_trade), &PokemonTradeProcData, NULL);
     ep2p->seq++;
     break;
   case P2P_TRADE_END:
@@ -277,14 +279,10 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     return TRUE;
 
   case P2P_POFIN_WAIT:
-    //    P2P_FourWaitInit( ep2p, fsys, HEAPID_WORLD, WFP2PMF_TYPE_POFIN );
     ep2p->seq++;
     break;
 
   case P2P_POFIN_WAIT_END:
-    //        if( !FieldEvent_Cmd_WaitSubProcEnd(fsys) ){   //サブプロセス終了待ち
-    //          ep2p->seq = P2P_FourWaitEnd( ep2p );
-    //    }
     break;
 
   case P2P_POFIN:
@@ -376,7 +374,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     break;
 
   case P2P_BALLOON_WAIT:
-    P2P_FourWaitInit( ep2p, pClub->event , HEAPID_NETWORK, WFP2PMF_TYPE_BALLOON );
+//    P2P_FourWaitInit( ep2p, pClub->event , HEAPID_NETWORK, WFP2PMF_TYPE_BALLOON );
     ep2p->seq++;
     break;
 
@@ -504,7 +502,7 @@ static void P2P_FourWaitInit( EV_P2PEVENT_WORK* p_wk, GMEVENT* fsys, u32 heapID,
 
   p_work->type = type;
   p_work->comm_min = 2;
-  p_work->comm_max = sc_P2P_FOUR_MATCH_MAX[ type ];
+//  p_work->comm_max = sc_P2P_FOUR_MATCH_MAX[ type ];
   p_work->result = FALSE;
   p_work->vchat = FALSE;
   //  p_work->p_savedata = fsys->savedata;

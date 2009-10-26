@@ -15,7 +15,7 @@
 #include "trade.naix"
 #include "poke_icon.naix"
 
-#include "ircpokemontrade.h"
+#include "net_app/pokemontrade.h"
 #include "ircpokemontrade_local.h"
 #include "msg/msg_poke_trade.h"
 #include "gamesystem/msgspeed.h"  //MSGSPEED_GetWait
@@ -44,16 +44,16 @@
 
 
 
-static void IRC_POKETRADE_TrayInit(IRC_POKEMON_TRADE* pWork,int subchar);
-static void IRC_POKETRADE_TrayExit(IRC_POKEMON_TRADE* pWork);
+static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar);
+static void IRC_POKETRADE_TrayExit(POKEMON_TRADE_WORK* pWork);
 static int _DotToLine(int pos);
-static void PokeIconCgxLoad(IRC_POKEMON_TRADE* pWork );
-static void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork);
+static void PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork );
+static void IRC_POKETRADE_PokeIcomPosSet(POKEMON_TRADE_WORK* pWork);
 
 
 static int _Line2RingLineIconGet(int line);
-static void _Line2RingLineSet(IRC_POKEMON_TRADE* pWork,int add);
-static void _iconAllDrawDisable(IRC_POKEMON_TRADE* pWork);
+static void _Line2RingLineSet(POKEMON_TRADE_WORK* pWork,int add);
+static void _iconAllDrawDisable(POKEMON_TRADE_WORK* pWork);
 
 
 #define FIELD_CLSYS_RESOUCE_MAX		(100)
@@ -80,12 +80,12 @@ static const GFL_CLSYS_INIT fldmapdata_CLSYS_Init =
 //------------------------------------------------------------------
 /**
  * $brief   初期化時のグラフィック初期化
- * @param   IRC_POKEMON_TRADE   ワークポインタ
+ * @param   POKEMON_TRADE_WORK   ワークポインタ
  * @retval  none
  */
 //------------------------------------------------------------------
 
-void IRC_POKETRADE_GraphicInitMainDisp(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_GraphicInitMainDisp(POKEMON_TRADE_WORK* pWork)
 {
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
 
@@ -120,12 +120,12 @@ void IRC_POKETRADE_GraphicInitMainDisp(IRC_POKEMON_TRADE* pWork)
 //------------------------------------------------------------------
 /**
  * $brief   初期化時のグラフィック初期化
- * @param   IRC_POKEMON_TRADE   ワークポインタ
+ * @param   POKEMON_TRADE_WORK   ワークポインタ
  * @retval  none
  */
 //------------------------------------------------------------------
 
-void IRC_POKETRADE_GraphicInitSubDisp(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
 {
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
 
@@ -174,7 +174,7 @@ void IRC_POKETRADE_GraphicInitSubDisp(IRC_POKEMON_TRADE* pWork)
   
 }
 
-void IRC_POKETRADE_GraphicFreeVram(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_GraphicFreeVram(POKEMON_TRADE_WORK* pWork)
 {
 
   if(pWork->subchar){
@@ -202,7 +202,7 @@ void IRC_POKETRADE_GraphicFreeVram(IRC_POKEMON_TRADE* pWork)
 
 
 
-void IRC_POKETRADE_G3dDraw(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_G3dDraw(POKEMON_TRADE_WORK* pWork)
 {
 //		G3X_EdgeMarking( FALSE );
 //  GFL_G3D_CAMERA_Switching( pWork->p_camera );  
@@ -211,14 +211,14 @@ void IRC_POKETRADE_G3dDraw(IRC_POKEMON_TRADE* pWork)
 
 
 
-void IRC_POKETRADE_GraphicExit(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_GraphicExit(POKEMON_TRADE_WORK* pWork)
 {
 	APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
   IRC_POKETRADE_TrayExit(pWork);
 }
 
 
-void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork,int pokeposx, int bgtype)
+void IRC_POKETRADE_SubStatusInit(POKEMON_TRADE_WORK* pWork,int pokeposx, int bgtype)
 {
   int nscr[]={NARC_trade_wb_trade_stbg01_NSCR,NARC_trade_wb_trade_stbg02_NSCR};
   int frame = GFL_BG_FRAME0_S;
@@ -247,7 +247,7 @@ void IRC_POKETRADE_SubStatusInit(IRC_POKEMON_TRADE* pWork,int pokeposx, int bgty
 }
 
 
-void IRC_POKETRADE_SubStatusEnd(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_SubStatusEnd(POKEMON_TRADE_WORK* pWork)
 {
   int frame = GFL_BG_FRAME0_S;
 
@@ -261,13 +261,13 @@ void IRC_POKETRADE_SubStatusEnd(IRC_POKEMON_TRADE* pWork)
 
 }
 
-void IRC_POKETRADE_AppMenuClose(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_AppMenuClose(POKEMON_TRADE_WORK* pWork)
 {
   G2_BlendNone();
   APP_TASKMENU_CloseMenu(pWork->pAppTask);
 }
 
-void IRC_POKETRADE_AppMenuOpen(IRC_POKEMON_TRADE* pWork, int *menustr,int num)
+void IRC_POKETRADE_AppMenuOpen(POKEMON_TRADE_WORK* pWork, int *menustr,int num)
 {
   int i;
   APP_TASKMENU_INITWORK appinit;
@@ -295,7 +295,7 @@ void IRC_POKETRADE_AppMenuOpen(IRC_POKEMON_TRADE* pWork, int *menustr,int num)
 
 }
 
-void IRC_POKETRADE_MessageOpen(IRC_POKEMON_TRADE* pWork, int msgno)
+void IRC_POKETRADE_MessageOpen(POKEMON_TRADE_WORK* pWork, int msgno)
 {
 
 
@@ -305,7 +305,7 @@ void IRC_POKETRADE_MessageOpen(IRC_POKEMON_TRADE* pWork, int msgno)
 
 }
 
-void IRC_POKETRADE_MessageWindowOpen(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_MessageWindowOpen(POKEMON_TRADE_WORK* pWork)
 {
   GFL_BMPWIN* pwin;
 
@@ -334,7 +334,7 @@ void IRC_POKETRADE_MessageWindowOpen(IRC_POKEMON_TRADE* pWork)
 }
 
 
-void IRC_POKETRADE_MessageWindowClear(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_MessageWindowClear(POKEMON_TRADE_WORK* pWork)
 {
 
 	if(pWork->mesWin){
@@ -348,7 +348,7 @@ void IRC_POKETRADE_MessageWindowClear(IRC_POKEMON_TRADE* pWork)
 
 
 
-void IRC_POKETRADE_MessageWindowClose(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_MessageWindowClose(POKEMON_TRADE_WORK* pWork)
 {
   if(pWork->mesWin){
 		GFL_BMPWIN_Delete(pWork->mesWin);
@@ -365,7 +365,7 @@ void IRC_POKETRADE_MessageWindowClose(IRC_POKEMON_TRADE* pWork)
  */
 //------------------------------------------------------------------------------
 
-BOOL IRC_POKETRADE_MessageEndCheck(IRC_POKEMON_TRADE* pWork)
+BOOL IRC_POKETRADE_MessageEndCheck(POKEMON_TRADE_WORK* pWork)
 {
   if(pWork->pStream){
     int state = PRINTSYS_PrintStreamGetState( pWork->pStream );
@@ -403,7 +403,7 @@ BOOL IRC_POKETRADE_MessageEndCheck(IRC_POKEMON_TRADE* pWork)
  */
 //------------------------------------------------------------------------------
 
-static u16 _GetScr(int x , int y, IRC_POKEMON_TRADE* pWork)
+static u16 _GetScr(int x , int y, POKEMON_TRADE_WORK* pWork)
 {
   int x2=x;
 
@@ -419,7 +419,7 @@ static u16 _GetScr(int x , int y, IRC_POKEMON_TRADE* pWork)
 }
 
 
-void IRC_POKETRADE_TrayDisp(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_TrayDisp(POKEMON_TRADE_WORK* pWork)
 {
   int bgscr = pWork->BoxScrollNum / 8;  //マスの単位は画面スクロールを使う
   int frame = GFL_BG_FRAME3_S;
@@ -442,7 +442,7 @@ void IRC_POKETRADE_TrayDisp(IRC_POKEMON_TRADE* pWork)
 }
 
 
-static void IRC_POKETRADE_TrayInit(IRC_POKEMON_TRADE* pWork,int subchar)
+static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar)
 {
   // スクリーンを読み込んでおく
   pWork->scrTray = GFL_ARC_LoadDataAlloc( ARCID_POKETRADE, NARC_trade_wb_trade_bg02_NSCR, pWork->heapID);
@@ -463,7 +463,7 @@ static void IRC_POKETRADE_TrayInit(IRC_POKEMON_TRADE* pWork,int subchar)
 //  IRC_POKETRADE_TrayDisp(pWork);
 }
 
-static void IRC_POKETRADE_TrayExit(IRC_POKEMON_TRADE* pWork)
+static void IRC_POKETRADE_TrayExit(POKEMON_TRADE_WORK* pWork)
 {
   GFL_HEAP_FreeMemory( pWork->scrTray);
   GFL_HEAP_FreeMemory( pWork->scrTemoti);
@@ -476,7 +476,7 @@ static void IRC_POKETRADE_TrayExit(IRC_POKEMON_TRADE* pWork)
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_SendVramBoxNameChar(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_SendVramBoxNameChar(POKEMON_TRADE_WORK* pWork)
 {
   int i;
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
@@ -510,7 +510,7 @@ void IRC_POKETRADE_SendVramBoxNameChar(IRC_POKEMON_TRADE* pWork)
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_ResetBoxNameWindow(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_ResetBoxNameWindow(POKEMON_TRADE_WORK* pWork)
 {
   int i;
 
@@ -529,7 +529,7 @@ void IRC_POKETRADE_ResetBoxNameWindow(IRC_POKEMON_TRADE* pWork)
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_SendScreenBoxNameChar(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_SendScreenBoxNameChar(POKEMON_TRADE_WORK* pWork)
 {
   int bgscr,i,disp,x,y;
   int spos,pos = pWork->BoxScrollNum / 8;
@@ -589,13 +589,13 @@ void IRC_POKETRADE_SendScreenBoxNameChar(IRC_POKEMON_TRADE* pWork)
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモンアイコンリソースの作成
- * @param   IRC_POKEMON_TRADE
+ * @param   POKEMON_TRADE_WORK
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
 
-void IRC_POKETRADE_CreatePokeIconResource(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork)
 {
   //ポケアイコン用リソース
   //キャラクタは各プレートで
@@ -677,7 +677,7 @@ void IRC_POKETRADE_CreatePokeIconResource(IRC_POKEMON_TRADE* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _deletePokeIconResource(IRC_POKEMON_TRADE* pWork, int line)
+static void _deletePokeIconResource(POKEMON_TRADE_WORK* pWork, int line)
 {
   int i;
   
@@ -697,7 +697,7 @@ static void _deletePokeIconResource(IRC_POKEMON_TRADE* pWork, int line)
 	}
 }
 
-void IRC_POKETRADE_AllDeletePokeIconResource(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_AllDeletePokeIconResource(POKEMON_TRADE_WORK* pWork)
 {
   int i;
   
@@ -720,17 +720,17 @@ static void _calcPokeIconPos(int line,int index, GFL_CLACTPOS* pos)
 }
 
 
-static POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_MANAGER* boxData , int lineno, int verticalindex , IRC_POKEMON_TRADE* pWork, BOOL* bTemoti)
+static POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_MANAGER* boxData , int lineno, int verticalindex , POKEMON_TRADE_WORK* pWork, BOOL* bTemoti)
 {
   if(lineno >= HAND_HORIZONTAL_NUM){
-    int tray = LINE2TRAY(lineno);
-    int index = LINE2POKEINDEX(lineno, verticalindex);
+    int tray = IRC_TRADE_LINE2TRAY(lineno);
+    int index = IRC_TRADE_LINE2POKEINDEX(lineno, verticalindex);
     *bTemoti = FALSE;
     return IRCPOKEMONTRADE_GetPokeDataAddress(boxData, tray, index, pWork);
   }
 	else{
     if(verticalindex <3){
-      int index = lineno * 3 + verticalindex;
+      int index = lineno + verticalindex * 2;
       *bTemoti = TRUE;
       return IRCPOKEMONTRADE_GetPokeDataAddress(boxData, BOX_MAX_TRAY, index, pWork);
 		}
@@ -740,7 +740,7 @@ static POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_MANAGER* boxData , int lineno
 
 
 //カーソルの位置をセットする
-void IRC_POKETRADE_SetCursorXY(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_SetCursorXY(POKEMON_TRADE_WORK* pWork)
 {
   int k;
   GFL_CLACTPOS apos;
@@ -752,7 +752,7 @@ void IRC_POKETRADE_SetCursorXY(IRC_POKEMON_TRADE* pWork)
 }
 
 //ラインインデックスの位置にカーソル表示
-void IRC_POKETRADE_CursorEnable(IRC_POKEMON_TRADE* pWork,int line,int index)
+void IRC_POKETRADE_CursorEnable(POKEMON_TRADE_WORK* pWork,int line,int index)
 {
   int i,j;
 
@@ -776,7 +776,7 @@ void IRC_POKETRADE_CursorEnable(IRC_POKEMON_TRADE* pWork,int line,int index)
 #if 1
 #include "tradehead.cdat"
 
-static BOOL _IsPokeLanguageMark(IRC_POKEMON_TRADE* pWork,int monsno)
+static BOOL _IsPokeLanguageMark(POKEMON_TRADE_WORK* pWork,int monsno)
 {
   if(pWork->selectMoji){
     int i = pWork->selectMoji - 1;
@@ -790,7 +790,7 @@ static BOOL _IsPokeLanguageMark(IRC_POKEMON_TRADE* pWork,int monsno)
 #endif
 
 //ラインにあわせたポケモン表示
-static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_MANAGER* boxData ,int line, int k)
+static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxData ,int line, int k)
 {
   int i,j;
   
@@ -810,6 +810,7 @@ static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_MANAGER* boxDat
       int	fileNo,monsno,formno,bEgg,bTemoti;
       ppp = _getPokeDataAddress(boxData, line, i, pWork, &bTemoti);
       if(!ppp){
+        pWork->pokeIconLine[k][i] = 0xff;
         continue;
       }
       pWork->pokeIconLine[k][i] = line;
@@ -868,7 +869,7 @@ static void _createPokeIconResource(IRC_POKEMON_TRADE* pWork,BOX_MANAGER* boxDat
  */
 //------------------------------------------------------------------------------
 
-static int _boxScrollNum2Line(IRC_POKEMON_TRADE* pWork)
+static int _boxScrollNum2Line(POKEMON_TRADE_WORK* pWork)
 {
   int line,i;
   
@@ -891,7 +892,7 @@ static int _boxScrollNum2Line(IRC_POKEMON_TRADE* pWork)
 
 
 
-void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,IRC_POKEMON_TRADE* pWork )
+void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork )
 {
   int j,k,i,line = _boxScrollNum2Line(pWork);
 
@@ -969,7 +970,7 @@ static void _pokeIcomPosCalc(int line,int m , int vertical, int boxscrollnum,GFL
 #endif
 
 
-static void IRC_POKETRADE_PokeIcomPosSet(IRC_POKEMON_TRADE* pWork)
+static void IRC_POKETRADE_PokeIcomPosSet(POKEMON_TRADE_WORK* pWork)
 {
   int line, i, no, m, subnum=0;
   int x,y;
@@ -1036,7 +1037,7 @@ static int _DotToLine(int pos)
  * @return	buf
  */
 //--------------------------------------------------------------------------------------------
-static void  PokeIconCgxLoad(IRC_POKEMON_TRADE* pWork )
+static void  PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
 {
   int i;
   void* pMem;
@@ -1089,7 +1090,7 @@ static int _Line2RingLineIconGet(int line)
  */
 //--------------------------------------------------------------------------------------------
 
-static void _Line2RingLineSet(IRC_POKEMON_TRADE* pWork,int add)
+static void _Line2RingLineSet(POKEMON_TRADE_WORK* pWork,int add)
 {
   int ret;
 
@@ -1108,7 +1109,7 @@ static void _Line2RingLineSet(IRC_POKEMON_TRADE* pWork,int add)
  */
 //--------------------------------------------------------------------------------------------
 
-static void _iconAllDrawDisable(IRC_POKEMON_TRADE* pWork)
+static void _iconAllDrawDisable(POKEMON_TRADE_WORK* pWork)
 {
   int line,i;
   
@@ -1124,7 +1125,7 @@ static void _iconAllDrawDisable(IRC_POKEMON_TRADE* pWork)
 
 
 
-GFL_CLWK* IRC_POKETRADE_GetCLACT( IRC_POKEMON_TRADE* pWork , int x, int y, int* trayno, int* pokeindex, int* outline, int* outindex)
+GFL_CLWK* IRC_POKETRADE_GetCLACT( POKEMON_TRADE_WORK* pWork , int x, int y, int* trayno, int* pokeindex, int* outline, int* outindex)
 {
   GFL_CLACTPOS apos;
   int line,i,line2;
@@ -1138,10 +1139,17 @@ GFL_CLWK* IRC_POKETRADE_GetCLACT( IRC_POKEMON_TRADE* pWork , int x, int y, int* 
         if((apos.y <= y) && (y < (apos.y+24))){
 
           if(trayno!=NULL){//位置情報を得たい場合に計算
-
             line2 = pWork->pokeIconLine[line][i];
-            *trayno = LINE2TRAY(line2);
-            *pokeindex = LINE2POKEINDEX(line2, i);
+            if(line2==0xff){
+              return NULL;
+            }
+            if(-1 != IRC_TRADE_LINE2POKEINDEX(line2, i)){
+              *trayno = IRC_TRADE_LINE2TRAY(line2);
+              *pokeindex = IRC_TRADE_LINE2POKEINDEX(line2, i);
+            }
+            else{
+              return NULL;
+            }
           }
           if(outline != NULL){
             *outline =line2;
@@ -1166,7 +1174,7 @@ GFL_CLWK* IRC_POKETRADE_GetCLACT( IRC_POKEMON_TRADE* pWork , int x, int y, int* 
  */
 //--------------------------------------------------------------------------------------------
 
-void IRC_POKETRADE_SetSubdispGraphicDemo(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_SetSubdispGraphicDemo(POKEMON_TRADE_WORK* pWork)
 {
   int frame = GFL_BG_FRAME3_S;
 
@@ -1226,7 +1234,7 @@ void IRC_POKETRADE_SetSubdispGraphicDemo(IRC_POKEMON_TRADE* pWork)
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_SetMainDispGraphic(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_SetMainDispGraphic(POKEMON_TRADE_WORK* pWork)
 {
   {
     static const GFL_DISP_VRAM vramBank = {
@@ -1261,7 +1269,7 @@ void IRC_POKETRADE_SetMainDispGraphic(IRC_POKEMON_TRADE* pWork)
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_SetMainVram(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_SetMainVram(POKEMON_TRADE_WORK* pWork)
 {
  
   {
@@ -1380,7 +1388,7 @@ static void Graphic_3d_SetUp( void )
  *	@brief	環境セットアップコールバック関数
  */
 //-----------------------------------------------------------------------------
-void IRC_POKETRADE_3DGraphicSetUp( IRC_POKEMON_TRADE* pWork )
+void IRC_POKETRADE_3DGraphicSetUp( POKEMON_TRADE_WORK* pWork )
 {
   //3D系の初期化
   { //3D系の設定
@@ -1415,7 +1423,7 @@ void IRC_POKETRADE_3DGraphicSetUp( IRC_POKEMON_TRADE* pWork )
  */
 //--------------------------------------------------------------------------------------------
 
-void IRC_POKETRADE_SetSubVram(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_SetSubVram(POKEMON_TRADE_WORK* pWork)
 {
 
   {
@@ -1491,7 +1499,7 @@ void IRC_POKETRADE_SetSubVram(IRC_POKEMON_TRADE* pWork)
  */
 //--------------------------------------------------------------------------------------------
 
-void IRC_POKETRADE_ResetSubDispGraphic(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_ResetSubDispGraphic(POKEMON_TRADE_WORK* pWork)
 {
 
   GFL_BG_FillCharacterRelease(GFL_BG_FRAME0_S,1,0);
@@ -1528,7 +1536,7 @@ void IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE type)
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_InitBoxCursor(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_InitBoxCursor(POKEMON_TRADE_WORK* pWork)
 {
   u8 pltNum,i;
   GFL_CLACTPOS pos;
@@ -1572,12 +1580,12 @@ void IRC_POKETRADE_InitBoxCursor(IRC_POKEMON_TRADE* pWork)
 //------------------------------------------------------------------------------
 /**
  * @brief   上画面のステータス表示&下画面の選択アイコン表示
- * @param   IRC_POKEMON_TRADE work
+ * @param   POKEMON_TRADE_WORK work
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_SetMainStatusBG(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_SetMainStatusBG(POKEMON_TRADE_WORK* pWork)
 {
 
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
@@ -1595,13 +1603,13 @@ void IRC_POKETRADE_SetMainStatusBG(IRC_POKEMON_TRADE* pWork)
     cellInitData.anmseq = 3;
     cellInitData.softpri = _CLACT_SOFTPRI_SCROLL_BAR;
     cellInitData.bgpri = 1;
-    pWork->curIcon[CELL_CUR_SCROLLBAR] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+    pWork->curIcon[CELL_CUR_POKE_BASEPANEL] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                                 pWork->cellRes[CHAR_SCROLLBAR],
                                                                 pWork->cellRes[PAL_SCROLLBAR],
                                                                 pWork->cellRes[ANM_SCROLLBAR],
                                                                 &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_SCROLLBAR] , TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_BASEPANEL] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_POKE_BASEPANEL], TRUE );
 
 
     cellInitData.pos_x = _POKEMON_SELECT1_CELLX;
@@ -1673,19 +1681,19 @@ void IRC_POKETRADE_SetMainStatusBG(IRC_POKEMON_TRADE* pWork)
 //------------------------------------------------------------------------------
 /**
  * @brief   上画面のステータス開放 & 下画面の選択アイコン開放
- * @param   IRC_POKEMON_TRADE work
+ * @param   POKEMON_TRADE_WORK work
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_ResetMainStatusBG(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_ResetMainStatusBG(POKEMON_TRADE_WORK* pWork)
 {
   
-//  GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_SCROLLBAR]);
+  GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_BASEPANEL]);
   GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_SELECT]);
   GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_PLAYER]);
   GFL_CLACT_WK_Remove(pWork->curIcon[CELL_CUR_POKE_FRIEND]);
-//  pWork->curIcon[CELL_CUR_SCROLLBAR]=NULL;
+  pWork->curIcon[CELL_CUR_POKE_BASEPANEL]=NULL;
   pWork->curIcon[CELL_CUR_POKE_SELECT]=NULL;
   pWork->curIcon[CELL_CUR_POKE_PLAYER]=NULL;
   pWork->curIcon[CELL_CUR_POKE_FRIEND]=NULL;
@@ -1759,12 +1767,12 @@ static MojiTableStruct mojitbl[]={
 //------------------------------------------------------------------------------
 /**
  * @brief   下画面に文字入力板表示
- * @param   IRC_POKEMON_TRADE work
+ * @param   POKEMON_TRADE_WORK work
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_InitSubMojiBG(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_InitSubMojiBG(POKEMON_TRADE_WORK* pWork)
 {
 int i;
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
@@ -1807,12 +1815,12 @@ int i;
 //------------------------------------------------------------------------------
 /**
  * @brief   下画面に文字入力板表示終了
- * @param   IRC_POKEMON_TRADE work
+ * @param   POKEMON_TRADE_WORK work
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_EndSubMojiBG(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_EndSubMojiBG(POKEMON_TRADE_WORK* pWork)
 {
   int i;
   
@@ -1842,14 +1850,14 @@ void IRC_POKETRADE_EndSubMojiBG(IRC_POKEMON_TRADE* pWork)
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモンステータスにアイコン表示
- * @param   IRC_POKEMON_TRADE work
+ * @param   POKEMON_TRADE_WORK work
  * @param   side  画面表示  右なら１左なら０
  * @param   POKEMON_PARAM 
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_ItemIconDisp(IRC_POKEMON_TRADE* pWork,int side, POKEMON_PARAM* pp)
+void IRC_POKETRADE_ItemIconDisp(POKEMON_TRADE_WORK* pWork,int side, POKEMON_PARAM* pp)
 {
   // ポケアイコン用アイテムアイコン
   {
@@ -1911,14 +1919,14 @@ void IRC_POKETRADE_ItemIconReset(_ITEMMARK_ICON_WORK* pIM)
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモンステータスにアイコン表示
- * @param   IRC_POKEMON_TRADE work
+ * @param   POKEMON_TRADE_WORK work
  * @param   side  画面表示  右なら１左なら０
  * @param   POKEMON_PARAM 
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_PokerusIconDisp(IRC_POKEMON_TRADE* pWork,int side,int bMain, POKEMON_PARAM* pp)
+void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int bMain, POKEMON_PARAM* pp)
 {
   // ポケアイコン用アイテムアイコン
   IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
@@ -1966,13 +1974,13 @@ void IRC_POKETRADE_PokerusIconDisp(IRC_POKEMON_TRADE* pWork,int side,int bMain, 
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモンステータスにアイコン表示
- * @param   IRC_POKEMON_TRADE work
+ * @param   POKEMON_TRADE_WORK work
  * @param   POKEMON_PARAM  表示するポケモン
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_PokeStatusIconDisp(IRC_POKEMON_TRADE* pWork, POKEMON_PARAM* pp)
+void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* pp)
 {
   int i,type;
   UI_EASY_CLWK_RES_PARAM prm;
@@ -2034,12 +2042,12 @@ void IRC_POKETRADE_PokeStatusIconDisp(IRC_POKEMON_TRADE* pWork, POKEMON_PARAM* p
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモンステータスにアイコンの全部消去
- * @param   IRC_POKEMON_TRADE work
+ * @param   POKEMON_TRADE_WORK work
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_PokeStatusIconReset(IRC_POKEMON_TRADE* pWork)
+void IRC_POKETRADE_PokeStatusIconReset(POKEMON_TRADE_WORK* pWork)
 {
   int i;
   for(i = 0;i < _POKEMARK_MAX ; i++){
