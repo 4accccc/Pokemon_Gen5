@@ -2275,7 +2275,7 @@ FIELDCOMM_EXIT FIELDCOMM_ExitWait(GAME_COMM_SYS_PTR game_comm)
   if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL){
     return FIELDCOMM_EXIT_END;
   }
-  else if(GameCommSys_CheckSystemWaiting(game_comm) == TRUE){
+  else if(GameCommSys_CheckSystemWaiting(game_comm) == FALSE){
     GameCommSys_ExitReq(game_comm);
   }
   return FIELDCOMM_EXIT_CONTINUE;
