@@ -168,6 +168,10 @@ static void ControlParameter_CalcCamera( FIELD_CAMERA * camera, u16 key_cont );
 static void ControlParameter_CalcTarget( FIELD_CAMERA * camera, u16 key_cont );
 static void ControlParameter_Direct( FIELD_CAMERA * camera, u16 key_cont );
 
+static void ControlParameterInit_CalcCamera( FIELD_CAMERA * camera );
+static void ControlParameterInit_CalcTarget( FIELD_CAMERA * camera );
+static void ControlParameterInit_Direct( FIELD_CAMERA * camera );
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -305,13 +309,36 @@ void FIELD_CAMERA_Main( FIELD_CAMERA* camera, u16 key_cont)
  *	
  *	@param	camera		カメラ
  *	@param	mode			モード
+ *
+ *
+//	  変更時の注意点
+//	    各モードへの変更により、無効な情報の引継ぎを回避するため、
+//	    以下の情報が初期化されます。
+//      【FIELD_CAMERA_MODE_CALC_CAMERA_POS】
+//          FIELD_CAMERA_BindCamera()で設定したwatch_camera
+//          
+//      【FIELD_CAMERA_MODE_CALC_TARGET_POS】
+//          FIELD_CAMERA_BindTarget()で設定したwatch_target
+//          
+//      【FIELD_CAMERA_MODE_DIRECT_POS】
+//          アングル情報
  */
 //-----------------------------------------------------------------------------
 void FIELD_CAMERA_SetMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mode )
 {
+  static void (*pInit[])( FIELD_CAMERA* camera ) = 
+  {
+    ControlParameterInit_CalcCamera,
+    ControlParameterInit_CalcTarget,
+    ControlParameterInit_Direct,
+  };
+  
 	GF_ASSERT( camera );
 	GF_ASSERT( mode < FIELD_CAMERA_MODE_MAX );
 	camera->mode = mode;
+
+  // 各モードの初期化処理
+  pInit[ mode ]( camera );
 }
 
 //----------------------------------------------------------------------------
@@ -335,6 +362,18 @@ FIELD_CAMERA_MODE FIELD_CAMERA_GetMode( const FIELD_CAMERA * camera )
  *
  *	@param	camera
  *	@param	mode 
+ *
+//	  変更時の注意点
+//	    各モードへの変更により、無効な情報の引継ぎを回避するため、
+//	    以下の情報が初期化されます。
+//      【FIELD_CAMERA_MODE_CALC_CAMERA_POS】
+//          FIELD_CAMERA_BindCamera()で設定したwatch_camera
+//          
+//      【FIELD_CAMERA_MODE_CALC_TARGET_POS】
+//          FIELD_CAMERA_BindTarget()で設定したwatch_target
+//          
+//      【FIELD_CAMERA_MODE_DIRECT_POS】
+//          アングル情報
  */
 //-----------------------------------------------------------------------------
 void FIELD_CAMERA_ChangeMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mode )
@@ -350,7 +389,7 @@ void FIELD_CAMERA_ChangeMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mode )
   
   if( camera->mode != mode )
   {
-    camera->mode = mode;
+    FIELD_CAMERA_SetMode( camera, mode );
 
     pFunc[ camera->mode ]( camera );
   }
@@ -641,6 +680,49 @@ static void ControlParameter_Direct( FIELD_CAMERA * camera, u16 key_cont )
   updateCameraArea( camera );
   updateG3Dcamera(camera);
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ管理初期化　カメラ座標計算　
+ */
+//-----------------------------------------------------------------------------
+static void ControlParameterInit_CalcCamera( FIELD_CAMERA * camera )
+{
+  // watch_cameraとのバインドを解除
+  camera->watch_camera = NULL;
+  //OS_TPrintf( "move change CalcCamera watch_camera set NULL\n" );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ管理初期化  ターゲット座標計算
+ */
+//-----------------------------------------------------------------------------
+static void ControlParameterInit_CalcTarget( FIELD_CAMERA * camera )
+{
+  // watch_targetとのバインドを解除
+  camera->watch_target = NULL;
+  //OS_TPrintf( "move change CalcTarget watch_target set NULL\n" );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ管理処理  ダイレクト座標計算
+ *
+ *	@param	camera 
+ */
+//-----------------------------------------------------------------------------
+static void ControlParameterInit_Direct( FIELD_CAMERA * camera )
+{
+  // アングル情報の破棄
+  camera->angle_pitch = 0;
+  camera->angle_yaw = 0;
+  camera->angle_len = 0;
+  //OS_TPrintf( "move change Direct Angle set 0\n" );
+}
+
 
 
 //------------------------------------------------------------------

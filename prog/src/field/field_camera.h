@@ -145,6 +145,18 @@ extern void FIELD_CAMERA_Main( FIELD_CAMERA* camera, u16 key_cont);
 //============================================================================================
 //------------------------------------------------------------------
 //	カメラモードの変更
+//	  変更時の注意点
+//	    各モードへの変更により、無効な情報の引継ぎを回避するため、
+//	    以下の情報が初期化されます。
+//      【FIELD_CAMERA_MODE_CALC_CAMERA_POS】
+//          FIELD_CAMERA_BindCamera()で設定したwatch_camera
+//          
+//      【FIELD_CAMERA_MODE_CALC_TARGET_POS】
+//          FIELD_CAMERA_BindTarget()で設定したwatch_target
+//          
+//      【FIELD_CAMERA_MODE_DIRECT_POS】
+//          アングル情報
+//
 //------------------------------------------------------------------
 // カメラの計算モードを切り替えます。
 extern void FIELD_CAMERA_SetMode( FIELD_CAMERA * camera, FIELD_CAMERA_MODE mode );
