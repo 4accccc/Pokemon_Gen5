@@ -53,7 +53,9 @@
 
 //SE
 #include "sound/pm_sndsys.h"
+#include "pms_select_sound_def.h"
 
+// 入力画面
 #include "app/pms_input.h"
 
 //外部公開
@@ -73,14 +75,6 @@ FS_EXTERN_OVERLAY(ui_common);
  *								定数定義
  */
 //=============================================================================
-
-//--------------------------------------------------------------
-///	SE定義
-//==============================================================
-enum
-{ 
-  SE_DECIDE = SEQ_SE_DECIDE1, ///< 決定
-};
 
 enum
 { 
@@ -102,13 +96,9 @@ static BOOL ScenePlateSelect_End( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneCmdSelect_Init( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneCmdSelect_Main( UI_SCENE_CNT_PTR cnt, void* work );
 static BOOL SceneCmdSelect_End( UI_SCENE_CNT_PTR cnt, void* work );
-// コマンド > 決定
-static BOOL SceneDecide_Main( UI_SCENE_CNT_PTR cnt, void* work );
-// コマンド > 編集
-static BOOL SceneEdit_Main( UI_SCENE_CNT_PTR cnt, void* work );
-static BOOL SceneEdit_End( UI_SCENE_CNT_PTR cnt, void* work );
-// コマンド > キャンセル
-static BOOL SceneCancel_Main( UI_SCENE_CNT_PTR cnt, void* work );
+// 入力画面呼び出し＆復帰
+static BOOL SceneCallEdit_Main( UI_SCENE_CNT_PTR cnt, void* work );
+static BOOL SceneCallEdit_End( UI_SCENE_CNT_PTR cnt, void* work );
 
 //--------------------------------------------------------------
 ///	SceneID
@@ -117,9 +107,7 @@ typedef enum
 { 
   PMSS_SCENE_ID_PLATE_SELECT = 0, ///< プレート選択
   PMSS_SCENE_ID_CMD_SELECT,       ///< メニュー
-  PMSS_SCENE_ID_DECIDE,           ///< けってい
-  PMSS_SCENE_ID_EDIT,             ///< へんしゅう
-  PMSS_SCENE_ID_CANCEL,           ///< やめる
+  PMSS_SCENE_ID_CALL_EDIT,        ///< 入力画面呼び出し＆復帰
 
   PMSS_SCENE_ID_MAX,
 } PMSS_SCENE;
@@ -145,24 +133,12 @@ static const UI_SCENE_FUNC_SET c_scene_func_tbl[ PMSS_SCENE_ID_MAX ] =
     NULL,
     SceneCmdSelect_End,
   },
-  // PMSS_SCENE_ID_DECIDE
+  // PMSS_SCENE_ID_CALL_EDIT
   {
     NULL, NULL,
-    SceneDecide_Main,
-    NULL, NULL,
-  },
-  // PMSS_SCENE_ID_EDIT
-  {
-    NULL, NULL,
-    SceneEdit_Main,
+    SceneCallEdit_Main,
     NULL, 
-    SceneEdit_End,
-  },
-  // PMSS_SCENE_ID_CANCEL
-  {
-    NULL, NULL,
-    SceneCancel_Main,
-    NULL, NULL,
+    SceneCallEdit_End,
   },
 };
 
@@ -172,7 +148,7 @@ static const UI_SCENE_FUNC_SET c_scene_func_tbl[ PMSS_SCENE_ID_MAX ] =
 enum
 { 
   TASKMENU_ID_DECIDE,
-  TASKMENU_ID_EDIT,
+  TASKMENU_ID_CALL_EDIT,
   TASKMENU_ID_CANCEL,
 };
 
@@ -249,10 +225,6 @@ typedef struct
 #ifdef PMS_SELECT_TOUCHBAR
 	//タッチバー
 	TOUCHBAR_WORK							*touchbar;
-	//以下カスタムボタン使用する場合のサンプルリソース
-	u32												ncg_btn;
-	u32												ncl_btn;
-	u32												nce_btn;
 #endif //PMS_SELECT_TOUCHBAR
 
 	//フォント
@@ -300,6 +272,8 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 //-------------------------------------
 ///	汎用処理ユーティリティ
 //=====================================
+static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk );
+static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk );
 static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID );
 
 #ifdef PMS_SELECT_TOUCHBAR
@@ -308,8 +282,8 @@ static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID );
 //=====================================
 static void PMSSelect_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar );
 //以下カスタムボタン使用サンプル用
-static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_InitEx( PMS_SELECT_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
-static void PMSSelect_TOUCHBAR_ExitEx( PMS_SELECT_MAIN_WORK *wk );
+static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_Init( PMS_SELECT_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
+static void PMSSelect_TOUCHBAR_Exit( PMS_SELECT_MAIN_WORK *wk );
 #endif //PMS_SELECT_TOUCHBAR
 
 #ifdef PMS_SELECT_TASKMENU
@@ -342,70 +316,6 @@ const GFL_PROC_DATA ProcData_PMSSelect =
 	PMSSelectProc_Main,
 	PMSSelectProc_Exit,
 };
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief
- *
- *	@param	PMS_SELECT_MAIN_WORK* wk 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
-{ 
-	//描画設定初期化
-	wk->graphic	= PMS_SELECT_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
-
-	//BGリソース読み込み
-	PMSSelect_BG_LoadResource( &wk->wk_bg, wk->heapID );
-
-#ifdef PMS_SELECT_TOUCHBAR
-	//タッチバーの初期化
-	{	
-		GFL_CLUNIT	*clunit	= PMS_SELECT_GRAPHIC_GetClunit( wk->graphic );
-		wk->touchbar	= PMSSelect_TOUCHBAR_InitEx( wk, clunit, wk->heapID );
-	}
-#endif //PMS_SELECT_TOUCHBAR
-
-#ifdef PMS_SELECT_TASKMENU
-	//TASKMENUリソース読み込み＆初期化
-	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_MENU_M, PLTID_BG_TASKMENU_M, wk->font, wk->print_que, wk->heapID );
-#endif //PMS_SELECT_TASKMENU
-
-#ifdef PMS_SELECT_PMSDRAW  
-  PMSSelect_PMSDRAW_Init( wk );
-#endif //PMS_SELECT_PMSDRAW
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief
- *
- *	@param	PMS_SELECT_MAIN_WORK* wk 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk )
-{
-#ifdef PMS_SELECT_TASKMENU
-	//TASKMENUシステム＆リソース破棄
-	APP_TASKMENU_RES_Delete( wk->menu_res );	
-#endif //PMS_SELECT_TASKMENU
-
-#ifdef PMS_SELECT_TOUCHBAR
-	//タッチバー
-	PMSSelect_TOUCHBAR_ExitEx( wk );
-#endif //PMS_SELECT_TOUCHBAR
-
-#ifdef PMS_SELECT_PMSDRAW
-  PMSSelect_PMSDRAW_Exit( wk );
-#endif //PMS_SELECT_PMSDRAW
-
-	//描画設定破棄
-	PMS_SELECT_GRAPHIC_Exit( wk->graphic );
-}
 
 //=============================================================================
 /**
@@ -480,19 +390,7 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 { 
 	PMS_SELECT_MAIN_WORK* wk = mywk;
 
-#ifdef PMS_SELECT_TASKMENU
-	//TASKMENUシステム＆リソース破棄
-	APP_TASKMENU_RES_Delete( wk->menu_res );	
-#endif //PMS_SELECT_TASKMENU
-
-#ifdef PMS_SELECT_TOUCHBAR
-	//タッチバー
-	PMSSelect_TOUCHBAR_ExitEx( wk );
-#endif //PMS_SELECT_TOUCHBAR
-
-#ifdef PMS_SELECT_PMSDRAW
-  PMSSelect_PMSDRAW_Exit( wk );
-#endif //PMS_SELECT_PMSDRAW
+  PMSSelect_GRAPHIC_UnLoad( wk );
 
 	//メッセージ破棄
 	GFL_MSG_Delete( wk->msg );
@@ -502,8 +400,6 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 
 	//FONT
 	GFL_FONT_Delete( wk->font );
-
-  PMSSelect_GRAPHIC_UnLoad( wk );
 
   // SCENE
   UI_SCENE_CNT_Delete( wk->cntScene );
@@ -556,6 +452,71 @@ static GFL_PROC_RESULT PMSSelectProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
  *								static関数
  */
 //=============================================================================
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  グラフィック ロード
+ *	
+ *	@param	PMS_SELECT_MAIN_WORK* wk 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
+{ 
+	//描画設定初期化
+	wk->graphic	= PMS_SELECT_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
+
+	//BGリソース読み込み
+	PMSSelect_BG_LoadResource( &wk->wk_bg, wk->heapID );
+
+#ifdef PMS_SELECT_TOUCHBAR
+	//タッチバーの初期化
+	{	
+		GFL_CLUNIT	*clunit	= PMS_SELECT_GRAPHIC_GetClunit( wk->graphic );
+		wk->touchbar	= PMSSelect_TOUCHBAR_Init( wk, clunit, wk->heapID );
+	}
+#endif //PMS_SELECT_TOUCHBAR
+
+#ifdef PMS_SELECT_TASKMENU
+	//TASKMENUリソース読み込み＆初期化
+	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_MENU_M, PLTID_BG_TASKMENU_M, wk->font, wk->print_que, wk->heapID );
+#endif //PMS_SELECT_TASKMENU
+
+#ifdef PMS_SELECT_PMSDRAW  
+  PMSSelect_PMSDRAW_Init( wk );
+#endif //PMS_SELECT_PMSDRAW
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  グラフィック アンロード
+ *
+ *	@param	PMS_SELECT_MAIN_WORK* wk 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk )
+{
+
+#ifdef PMS_SELECT_TOUCHBAR
+	//タッチバー
+	PMSSelect_TOUCHBAR_Exit( wk );
+#endif //PMS_SELECT_TOUCHBAR
+
+#ifdef PMS_SELECT_TASKMENU
+	//TASKMENUシステム＆リソース破棄
+	APP_TASKMENU_RES_Delete( wk->menu_res );	
+#endif //PMS_SELECT_TASKMENU
+
+#ifdef PMS_SELECT_PMSDRAW
+  PMSSelect_PMSDRAW_Exit( wk );
+#endif //PMS_SELECT_PMSDRAW
+
+	//描画設定破棄
+	PMS_SELECT_GRAPHIC_Exit( wk->graphic );
+}
 //-----------------------------------------------------------------------------
 /**
  *	@brief  BG管理モジュール リソース読み込み
@@ -605,7 +566,7 @@ static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	TOUCHBAR初期化	+ カスタムアイコン版
+ *	@brief	TOUCHBAR初期化
  *
  * @param  wk										ワーク
  *	@param	GFL_CLUNIT *clunit	CLUNIT
@@ -614,31 +575,11 @@ static void PMSSelect_BG_LoadResource( PMS_SELECT_BG_WORK* wk, HEAPID heapID )
  *	@return	TOUCHBAR_WORK
  */
 //-----------------------------------------------------------------------------
-static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_InitEx( PMS_SELECT_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID )
+static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_Init( PMS_SELECT_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID )
 {	
-
-	//リソース読みこみ
-	//サンプルとしてタウンマップの拡大縮小アイコンをカスタムボタンに登録する
-	{	
-		ARCHANDLE *handle;
-		//ハンドル
-		handle	= GFL_ARC_OpenDataHandle( ARCID_TOWNMAP_GRAPHIC, heapID );
-		//リソース読みこみ
-		wk->ncg_btn	= GFL_CLGRP_CGR_Register( handle,
-					NARC_townmap_gra_tmap_obj_d_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
-		wk->ncl_btn	= GFL_CLGRP_PLTT_RegisterEx( handle,
-				NARC_townmap_gra_tmap_bg_d_NCLR, CLSYS_DRAW_MAIN, PLTID_OBJ_TOWNMAP_M*0x20,
-				2, 2, heapID );	
-		wk->nce_btn	= GFL_CLGRP_CELLANIM_Register( handle,
-					NARC_townmap_gra_tmap_obj_d_NCER,
-				 	NARC_townmap_gra_tmap_obj_d_NANR, heapID );
-	
-		GFL_ARC_CloseDataHandle( handle ) ;
-	}
-
 	//タッチバーの設定
-	{	
-	//アイコンの設定
+	
+  //アイコンの設定
 	//数分作る
 	TOUCHBAR_SETUP	touchbar_setup = {0};
 
@@ -648,21 +589,7 @@ static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_InitEx( PMS_SELECT_MAIN_WORK *wk, GFL_
 			TOUCHBAR_ICON_RETURN,
 			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
 		},
-		{	
-			TOUCHBAR_ICON_CUTSOM1,	//カスタムボタン１を拡大縮小アイコンに,
-			{	TOUCHBAR_ICON_X_04, TOUCHBAR_ICON_Y },
-		},
 	};
-
-	//以下カスタムボタンならば入れなくてはいけない情報
-	touchbar_icon_tbl[1].cg_idx	  = wk->ncg_btn;		//キャラリソース
-	touchbar_icon_tbl[1].plt_idx	= wk->ncl_btn;		//パレットリソース
-	touchbar_icon_tbl[1].cell_idx	=	wk->nce_btn;		//セルリソース
-	touchbar_icon_tbl[1].active_anmseq	  =	8;			//アクティブのときのアニメ
-	touchbar_icon_tbl[1].noactive_anmseq	=	12;			//ノンアクティブのときのアニメ
-	touchbar_icon_tbl[1].push_anmseq	    =	10;			//押したときのアニメ（STOPになっていること）
-	touchbar_icon_tbl[1].key	=	PAD_BUTTON_START;		//キーで押したときに動作させたいならば、ボタン番号
-	touchbar_icon_tbl[1].se	  = 0;									//押したときにSEならしたいならば、SEの番号
 
 	//設定構造体
 	//さきほどの窓情報＋リソース情報をいれる
@@ -675,8 +602,6 @@ static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_InitEx( PMS_SELECT_MAIN_WORK *wk, GFL_
 	touchbar_setup.mapping	= APP_COMMON_MAPPING_64K;	//マッピングモード
 
 	return TOUCHBAR_Init( &touchbar_setup, heapID );
-	}
-
 }
 //----------------------------------------------------------------------------
 /**
@@ -685,17 +610,10 @@ static TOUCHBAR_WORK * PMSSelect_TOUCHBAR_InitEx( PMS_SELECT_MAIN_WORK *wk, GFL_
  *	@param	TOUCHBAR_WORK	*touchbar タッチバー
  */
 //-----------------------------------------------------------------------------
-static void PMSSelect_TOUCHBAR_ExitEx( PMS_SELECT_MAIN_WORK *wk )
+static void PMSSelect_TOUCHBAR_Exit( PMS_SELECT_MAIN_WORK *wk )
 {	
 	//タッチバー破棄
 	TOUCHBAR_Exit( wk->touchbar );
-
-	//リソース破棄
-	{	
-		GFL_CLGRP_PLTT_Release( wk->ncl_btn );
-		GFL_CLGRP_CGR_Release( wk->ncg_btn );
-		GFL_CLGRP_CELLANIM_Release( wk->nce_btn );
-	}
 }
 
 //----------------------------------------------------------------------------
@@ -1042,13 +960,16 @@ static BOOL SceneCmdSelect_Main( UI_SCENE_CNT_PTR cnt, void* work )
     switch( pos )
     {
     case TASKMENU_ID_DECIDE :
-      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_DECIDE );
+      // けってい → 終了
+      UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
       break;
-    case TASKMENU_ID_EDIT :
-      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_EDIT );
+    case TASKMENU_ID_CALL_EDIT :
+      // へんしゅう → 入力画面呼び出し
+      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_CALL_EDIT );
       break;
     case TASKMENU_ID_CANCEL :
-      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_CANCEL );
+      // キャンセル → 選択に戻る
+      UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_PLATE_SELECT );
       break;
     default : GF_ASSERT(0);
     }
@@ -1080,22 +1001,6 @@ static BOOL SceneCmdSelect_End( UI_SCENE_CNT_PTR cnt, void* work )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  けってい→終了
- *
- *	@param	UI_SCENE_CNT_PTR cnt
- *	@param	work 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static BOOL SceneDecide_Main( UI_SCENE_CNT_PTR cnt, void* work )
-{
-  UI_SCENE_CNT_SetNextScene( cnt, UI_SCENE_ID_END );
-  return TRUE;
-}
-
-//-----------------------------------------------------------------------------
-/**
  *	@brief  へんしゅう→簡易会話入力
  *
  *	@param	UI_SCENE_CNT_PTR cnt
@@ -1104,7 +1009,7 @@ static BOOL SceneDecide_Main( UI_SCENE_CNT_PTR cnt, void* work )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL SceneEdit_Main( UI_SCENE_CNT_PTR cnt, void* work )
+static BOOL SceneCallEdit_Main( UI_SCENE_CNT_PTR cnt, void* work )
 {
   PMSI_PARAM* pmsi;
   PMS_SELECT_MAIN_WORK* wk = work;
@@ -1133,7 +1038,7 @@ static BOOL SceneEdit_Main( UI_SCENE_CNT_PTR cnt, void* work )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL SceneEdit_End( UI_SCENE_CNT_PTR cnt, void* work )
+static BOOL SceneCallEdit_End( UI_SCENE_CNT_PTR cnt, void* work )
 { 
   PMS_SELECT_MAIN_WORK* wk = work;
   u8 seq = UI_SCENE_CNT_GetSubSeq( cnt );
@@ -1165,20 +1070,4 @@ static BOOL SceneEdit_End( UI_SCENE_CNT_PTR cnt, void* work )
   return FALSE;
 }
 
-//-----------------------------------------------------------------------------
-/**
- *	@brief  キャンセル→選択画面に戻る
- *
- *	@param	UI_SCENE_CNT_PTR cnt
- *	@param	work 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static BOOL SceneCancel_Main( UI_SCENE_CNT_PTR cnt, void* work )
-{
-  UI_SCENE_CNT_SetNextScene( cnt, PMSS_SCENE_ID_PLATE_SELECT );
-
-  return TRUE;
-}
 

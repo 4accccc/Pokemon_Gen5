@@ -89,18 +89,16 @@ use constant  CATEGORY_CONV_MIX		=> 2;
 use constant  CATEGORY_CONV_MONSNO	=> 3;
 
 my @CategoryParam = (
-	[ 'ポケモン',		'01',	0,	CATEGORY_CONV_DIV,		SRC_MONSNAME,    0, 241  ],
-	[ 'ポケモン２',		'02',	0,	CATEGORY_CONV_DIV,		SRC_MONSNAME,  242,  -1  ],
-	[ 'わざ',			'03',	0,	CATEGORY_CONV_DIV,		SRC_WAZANAME,    0, 286  ],
-	[ 'わざ２',			'04',	0,	CATEGORY_CONV_DIV,		SRC_WAZANAME,  287,  -1  ],
-	[ 'ステータス',		'05',	1,	CATEGORY_CONV_MIX,		SRC_TOKUSEI, SRC_POKETYPE  ],
-	[ 'トレーナー',		'06',	1,	CATEGORY_CONV_NORMAL,	SRC_GROUP06  ],
-	[ 'ひと',			'07',	1,	CATEGORY_CONV_NORMAL,	SRC_GROUP07  ],
-	[ 'あいさつ',		'08',	0,	CATEGORY_CONV_NORMAL,	SRC_GROUP08  ],
-	[ 'せいかつ',		'09',	1,	CATEGORY_CONV_NORMAL,	SRC_GROUP09  ],
-	[ 'きもち',			'10',	1,	CATEGORY_CONV_NORMAL,	SRC_GROUP10  ],
-	[ 'なんかいことば',	'11',	0,	CATEGORY_CONV_NORMAL,	SRC_GROUP11  ],
-	[ 'ユニオン',		'12',	0,	CATEGORY_CONV_NORMAL,	SRC_GROUP12  ],
+	[ 'ポケモン',		'01',	0,	CATEGORY_CONV_NORMAL,		SRC_MONSNAME  ],
+	[ 'わざ',			'02',	0,	CATEGORY_CONV_NORMAL,		SRC_WAZANAME ],
+	[ 'ステータス',		'03',	1,	CATEGORY_CONV_MIX,		SRC_TOKUSEI, SRC_POKETYPE  ],
+	[ 'トレーナー',		'04',	1,	CATEGORY_CONV_NORMAL,	SRC_GROUP06  ],
+	[ 'ひと',			'05',	1,	CATEGORY_CONV_NORMAL,	SRC_GROUP07  ],
+	[ 'あいさつ',		'06',	0,	CATEGORY_CONV_NORMAL,	SRC_GROUP7  ],
+	[ 'せいかつ',		'07',	1,	CATEGORY_CONV_NORMAL,	SRC_GROUP09  ],
+	[ 'きもち',			'08',	1,	CATEGORY_CONV_NORMAL,	SRC_GROUP10  ],
+	[ 'なんかいことば',	'09',	0,	CATEGORY_CONV_NORMAL,	SRC_GROUP11  ],
+	[ 'ユニオン',		'10',	0,	CATEGORY_CONV_NORMAL,	SRC_GROUP12  ],
 );
 
 use constant CPELEM_TITLE			=>  0;
