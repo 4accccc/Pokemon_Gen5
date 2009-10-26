@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-06T12:49:41"/>
+	<create user="matsumiya" host="W00207" date="2009-10-26T18:23:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -320,7 +320,7 @@
 	<row id="msg_t02_hakaim_stop_01">
 		<comment>♂
 ・t02pc0101イベント終了までのストッパー</comment>
-		<attribute name="キャラ指定">？？？団員♂</attribute>
+		<attribute name="キャラ指定">プラズマ団員♂</attribute>
 		<language name="JPN" width="256">みなさま……　これから
 だいじな　おはなしを　します[BE:01:ページ切り替え（クリア）]
 もうしばらく　おまちください</language>
@@ -333,7 +333,7 @@
 		<comment>♀
 ・t02pc0101イベント終了までのストッパー
 ・話しかけたとき</comment>
-		<attribute name="キャラ指定">？？？団員♀</attribute>
+		<attribute name="キャラ指定">プラズマ団員♀</attribute>
 		<language name="JPN" width="256">ちょっと……
 いま　じゅんびちゅう　なんです[BE:01:ページ切り替え（クリア）]
 もうしばらく　おまちください</language>
@@ -348,7 +348,7 @@
 ・POSを踏んだとき
 ・メッセージ後、主人公の位置をもどす
 ※マップによっては不要</comment>
-		<attribute name="キャラ指定">？？？団員♀</attribute>
+		<attribute name="キャラ指定">プラズマ団員♀</attribute>
 		<language name="JPN" width="256">ちょっと……
 いま　じゅんびちゅう　なんです[BE:01:ページ切り替え（クリア）]
 もうしばらく　おまちください[BE:01:ページ切り替え（クリア）]</language>
@@ -829,21 +829,21 @@
 ということで　あたしの　かち！</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_10" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01_babygirl1_10" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,,">
 		<comment>三択ウインドウ用</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ほのお</language>
 		<language name="JPN_KANJI" width="256">ほのお</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_11" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01_babygirl1_11" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,,">
 		<comment>三択ウインドウ用</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">くさ</language>
 		<language name="JPN_KANJI" width="256">くさ</language>
 	</row>
 
-	<row id="msg_t01_babygirl1_12" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01_babygirl1_12" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,,">
 		<comment>三択ウインドウ用</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">みず</language>
