@@ -730,7 +730,6 @@ void MMDL_Rail_GetFrontWay( const MMDL *mmdl, VecFx16* way )
   GF_ASSERT( way );
 
   p_railwk = MMDL_GetRailWork( mmdl );
-  FIELD_RAIL_WORK_GetFrontWay( p_railwk, way );
 
   dir = MMDL_GetDirDisp( mmdl );
   MMDL_Rail_GetDirLineWay( mmdl, dir, way );
