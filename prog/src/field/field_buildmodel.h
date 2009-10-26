@@ -144,6 +144,14 @@ extern void FIELD_BMODEL_MAN_ResistMapObject
 (FIELD_BMODEL_MAN * man, GFL_G3D_MAP * g3Dmap, const PositionSt* objStatus, u32 objCount);
 
 //------------------------------------------------------------------
+/**
+ * @brief ヒープ指定の取得
+ * @param man
+ * @return  HEAPID  ヒープ指定
+ */
+//------------------------------------------------------------------
+extern HEAPID FIELD_BMODEL_MAN_GetHeapID(const FIELD_BMODEL_MAN * man);
+//------------------------------------------------------------------
 //------------------------------------------------------------------
 
 extern G3DMAPOBJST ** FIELD_BMODEL_MAN_CreateObjStatusList

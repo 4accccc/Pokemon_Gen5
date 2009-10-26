@@ -501,6 +501,18 @@ BOOL FIELD_BMODEL_MAN_GetSubModel(const FIELD_BMODEL_MAN * man,
   return TRUE;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief ヒープ指定の取得
+ * @param man
+ * @return  HEAPID  ヒープ指定
+ */
+//------------------------------------------------------------------
+HEAPID FIELD_BMODEL_MAN_GetHeapID(const FIELD_BMODEL_MAN * man)
+{
+  return man->heapID;
+}
+
 //============================================================================================
 //
 //    外部公開関数：
