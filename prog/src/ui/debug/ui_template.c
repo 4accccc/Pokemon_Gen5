@@ -1142,16 +1142,18 @@ static void UITemplate_TASKMENU_Main( APP_TASKMENU_WORK *menu )
 //-----------------------------------------------------------------------------
 static void UITemplate_TYPEICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heapID )
 {	
-  UI_EAYSY_CLWK_RES_PARAM prm;
+  UI_EASY_CLWK_RES_PARAM prm;
 
   prm.draw_type = CLSYS_DRAW_MAIN;
-  prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NONE;
+  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
   prm.arc_id    = APP_COMMON_GetArcId();
   prm.pltt_id   = APP_COMMON_GetPokeTypePltArcIdx();
   prm.ncg_id    = APP_COMMON_GetPokeTypeCharArcIdx(type);
   prm.cell_id   = APP_COMMON_GetPokeTypeCellArcIdx( APP_COMMON_MAPPING_128K );
   prm.anm_id    = APP_COMMON_GetPokeTypeAnimeArcIdx( APP_COMMON_MAPPING_128K );
   prm.pltt_line = PLTID_OBJ_TYPEICON_M;
+  prm.pltt_src_ofs  = 0;
+  prm.pltt_src_num = 3;
   
   UI_EASY_CLWK_LoadResource( &wk->clres_type_icon, &prm, unit, heapID );
 
@@ -1200,16 +1202,18 @@ static void UITemplate_TYPEICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
 //-----------------------------------------------------------------------------
 static void UITemplate_ITEM_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heapID )
 {	
-  UI_EAYSY_CLWK_RES_PARAM prm;
+  UI_EASY_CLWK_RES_PARAM prm;
 
   prm.draw_type = CLSYS_DRAW_MAIN;
-  prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NONE;
+  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
   prm.arc_id    = ARCID_ITEMICON;
   prm.pltt_id   = ITEM_GetIndex( item_id, ITEM_GET_ICON_PAL );
   prm.ncg_id    = ITEM_GetIndex( item_id, ITEM_GET_ICON_CGX );
   prm.cell_id   = NARC_item_icon_itemicon_NCER;
   prm.anm_id    = NARC_item_icon_itemicon_NANR;
   prm.pltt_line = PLTID_OBJ_ITEMICON_M;
+  prm.pltt_src_ofs  = 0;
+  prm.pltt_src_num = 1;
   
   UI_EASY_CLWK_LoadResource( &wk->clres_item_icon, &prm, unit, heapID );
 
@@ -1221,9 +1225,6 @@ static void UITemplate_ITEM_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u16 item
  *	@brief	どうぐアイコン破棄
  *
  *	@param	UI_TEMPLATE_MAIN_WORK *wk ワーク
-void UI_EASY_CLWK_LoadResource( UI_EASY_CLWK_RES* res, UI_EAYSY_CLWK_RES_PARAM* prm, GFL_CLUNIT* unit, HEAPID heapID );
-void UI_EASY_CLWK_UnLoadResource( UI_EASY_CLWK_RES* res );
-GFL_CLWK* UI_EASY_CLWK_CreateCLWK( UI_EASY_CLWK_RES* res, GFL_CLUNIT* unit, u8 px, u8 py, u8 anim, HEAPID heapID );
  *
  *	@retval none
  */
@@ -1261,10 +1262,10 @@ static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons
 {
   // ポケアイコン本体
   {
-    UI_EAYSY_CLWK_RES_PARAM prm;
+    UI_EASY_CLWK_RES_PARAM prm;
 
     prm.draw_type = CLSYS_DRAW_MAIN;
-    prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NCLR;
+    prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NCLR;
     prm.arc_id    = ARCID_POKEICON;
     prm.pltt_id   = POKEICON_GetPalArcIndex();
   //  prm.ncg_id    = POKEICON_GetCgxArcIndex(ppp);
@@ -1272,6 +1273,8 @@ static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons
     prm.cell_id   = POKEICON_GetCellArcIndex(); 
     prm.anm_id    = POKEICON_GetAnmArcIndex();
     prm.pltt_line = PLTID_OBJ_POKEICON_M;
+    prm.pltt_src_ofs  = 0;
+    prm.pltt_src_num = 3;
     
     UI_EASY_CLWK_LoadResource( &wk->clres_poke_icon, &prm, unit, heapID );
 
@@ -1292,16 +1295,18 @@ static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons
 
   // ポケアイコン用アイテムアイコン
   {
-    UI_EAYSY_CLWK_RES_PARAM prm;
+    UI_EASY_CLWK_RES_PARAM prm;
 
     prm.draw_type = CLSYS_DRAW_MAIN;
-    prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NONE;
+    prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
     prm.arc_id    = APP_COMMON_GetArcId();
     prm.pltt_id   = APP_COMMON_GetPokeItemIconPltArcIdx();
     prm.ncg_id    = APP_COMMON_GetPokeItemIconCharArcIdx();
     prm.cell_id   = APP_COMMON_GetPokeItemIconCellArcIdx( APP_COMMON_MAPPING_128K );
     prm.anm_id    = APP_COMMON_GetPokeItemIconAnimeArcIdx( APP_COMMON_MAPPING_128K );
     prm.pltt_line = PLTID_OBJ_POKEITEM_M;
+    prm.pltt_src_ofs  = 0;
+    prm.pltt_src_num = 1;
     
     UI_EASY_CLWK_LoadResource( &wk->clres_poke_item, &prm, unit, heapID );
 
@@ -1358,16 +1363,18 @@ static void UITemplate_POKE_ICON_DeleteCLWK( UI_TEMPLATE_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void UITemplate_OAM_MAPMODEL_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heapID )
 {	
-  UI_EAYSY_CLWK_RES_PARAM prm;
+  UI_EASY_CLWK_RES_PARAM prm;
 
   prm.draw_type = CLSYS_DRAW_MAIN;
-  prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NONE;
+  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
   prm.arc_id    = APP_COMMON_GetArcId();
   prm.pltt_id   = APP_COMMON_GetNull4x4PltArcIdx();
   prm.ncg_id    = APP_COMMON_GetNull4x4CharArcIdx();
   prm.cell_id   = APP_COMMON_GetNull4x4CellArcIdx( APP_COMMON_MAPPING_128K );
   prm.anm_id    = APP_COMMON_GetNull4x4AnimeArcIdx( APP_COMMON_MAPPING_128K );
   prm.pltt_line = PLTID_OBJ_OAM_MAPMODEL_M;
+  prm.pltt_src_ofs  = 0;
+  prm.pltt_src_num = 1;
 
   // リソース読み込み
   UI_EASY_CLWK_LoadResource( &wk->clres_oam_mmdl, &prm, unit, heapID );
@@ -1548,16 +1555,18 @@ static void UITemplate_POKE2D_DeleteCLWK( UI_TEMPLATE_MAIN_WORK *wk )
 //-----------------------------------------------------------------------------
 static void UITemplate_BALLICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK *wk, BALL_ID ballID, GFL_CLUNIT *unit, HEAPID heapID )
 {	
-  UI_EAYSY_CLWK_RES_PARAM prm;
+  UI_EASY_CLWK_RES_PARAM prm;
 
   prm.draw_type = CLSYS_DRAW_MAIN;
-  prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NONE;
+  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
   prm.arc_id    = APP_COMMON_GetArcId();
   prm.pltt_id   = APP_COMMON_GetBallPltArcIdx( ballID );
   prm.ncg_id    = APP_COMMON_GetBallCharArcIdx( ballID );
   prm.cell_id   = APP_COMMON_GetBallCellArcIdx( ballID, APP_COMMON_MAPPING_128K );
   prm.anm_id    = APP_COMMON_GetBallAnimeArcIdx( ballID, APP_COMMON_MAPPING_128K );
   prm.pltt_line = PLTID_OBJ_BALLICON_M;
+  prm.pltt_src_ofs  = 0;
+  prm.pltt_src_num = 1;
 
   // リソース読み込み
   UI_EASY_CLWK_LoadResource( &wk->clres_ball, &prm, unit, heapID );

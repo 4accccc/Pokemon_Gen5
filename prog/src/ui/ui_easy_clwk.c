@@ -58,23 +58,23 @@
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-void UI_EASY_CLWK_LoadResource( UI_EASY_CLWK_RES* res, UI_EAYSY_CLWK_RES_PARAM* prm, GFL_CLUNIT* unit, HEAPID heapID )
+void UI_EASY_CLWK_LoadResource( UI_EASY_CLWK_RES* res, UI_EASY_CLWK_RES_PARAM* prm, GFL_CLUNIT* unit, HEAPID heapID )
 {
   ARCHANDLE *handle;
 
-  BOOL comp_ncg = ( prm->comp_flg & UI_EAYSY_CLWK_RES_COMP_NCGR );
+  BOOL comp_ncg = ( prm->comp_flg & UI_EASY_CLWK_RES_COMP_NCGR );
   
   handle	= GFL_ARC_OpenDataHandle( prm->arc_id, heapID );
 
-  if( prm->comp_flg & UI_EAYSY_CLWK_RES_COMP_NCLR )
+  if( prm->comp_flg & UI_EASY_CLWK_RES_COMP_NCLR )
   {
     res->res_ncl	= GFL_CLGRP_PLTT_RegisterComp( handle,
         prm->pltt_id, prm->draw_type, prm->pltt_line*0x20, heapID );
   }
   else
   {
-    res->res_ncl	= GFL_CLGRP_PLTT_Register( handle,
-        prm->pltt_id, prm->draw_type, prm->pltt_line*0x20, heapID );
+    res->res_ncl	= GFL_CLGRP_PLTT_RegisterEx( handle,
+        prm->pltt_id, prm->draw_type, prm->pltt_line*0x20, prm->pltt_src_ofs, prm->pltt_src_num, heapID );
   }
 
   res->res_ncg	= GFL_CLGRP_CGR_Register( handle,

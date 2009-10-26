@@ -1854,7 +1854,7 @@ void IRC_POKETRADE_ItemIconDisp(IRC_POKEMON_TRADE* pWork,int side, POKEMON_PARAM
   // ポケアイコン用アイテムアイコン
   {
     _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
-    UI_EAYSY_CLWK_RES_PARAM prm;
+    UI_EASY_CLWK_RES_PARAM prm;
     int item = PP_Get( pp , ID_PARA_item ,NULL);
     int type = 0;
 
@@ -1866,15 +1866,16 @@ void IRC_POKETRADE_ItemIconDisp(IRC_POKEMON_TRADE* pWork,int side, POKEMON_PARAM
       type = 1;
     }
 
-    
     prm.draw_type = CLSYS_DRAW_SUB;
-    prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NONE;
+    prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
     prm.arc_id    = APP_COMMON_GetArcId();
     prm.pltt_id   = APP_COMMON_GetPokeItemIconPltArcIdx();
     prm.ncg_id    = APP_COMMON_GetPokeItemIconCharArcIdx();
     prm.cell_id   = APP_COMMON_GetPokeItemIconCellArcIdx( APP_COMMON_MAPPING_128K );
     prm.anm_id    = APP_COMMON_GetPokeItemIconAnimeArcIdx( APP_COMMON_MAPPING_128K );
     prm.pltt_line = PLTID_OBJ_POKEITEM_S;
+    prm.pltt_src_ofs = 0;
+    prm.pltt_src_num = 1;
     
     UI_EASY_CLWK_LoadResource( &pIM->clres_poke_item, &prm, pWork->cellUnit, pWork->heapID );
 
@@ -1924,7 +1925,7 @@ void IRC_POKETRADE_PokerusIconDisp(IRC_POKEMON_TRADE* pWork,int side,int bMain, 
   
   {
     _ITEMMARK_ICON_WORK* pIM = &pWork->aPokerusMark;
-    UI_EAYSY_CLWK_RES_PARAM prm;
+    UI_EASY_CLWK_RES_PARAM prm;
     int rus = PP_Get( pp , ID_PARA_pokerus ,NULL);
     int type = 0;
 
@@ -1938,13 +1939,15 @@ void IRC_POKETRADE_PokerusIconDisp(IRC_POKEMON_TRADE* pWork,int side,int bMain, 
     else{
       prm.draw_type = CLSYS_DRAW_SUB;
     }
-    prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NONE;
+    prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
     prm.arc_id    = APP_COMMON_GetArcId();
     prm.pltt_id   = APP_COMMON_GetStatusIconPltArcIdx();
     prm.ncg_id    = APP_COMMON_GetStatusIconCharArcIdx();
     prm.cell_id   = APP_COMMON_GetStatusIconCellArcIdx( APP_COMMON_MAPPING_128K );
     prm.anm_id    = APP_COMMON_GetStatusIconAnimeArcIdx( APP_COMMON_MAPPING_128K );
     prm.pltt_line = PLTID_OBJ_POKEITEM_S;
+    prm.pltt_src_ofs = 0;
+    prm.pltt_src_num = 1;
     
     UI_EASY_CLWK_LoadResource( &pIM->clres_poke_item, &prm, pWork->cellUnit, pWork->heapID );
 
@@ -1972,7 +1975,7 @@ void IRC_POKETRADE_PokerusIconDisp(IRC_POKEMON_TRADE* pWork,int side,int bMain, 
 void IRC_POKETRADE_PokeStatusIconDisp(IRC_POKEMON_TRADE* pWork, POKEMON_PARAM* pp)
 {
   int i,type;
-  UI_EAYSY_CLWK_RES_PARAM prm;
+  UI_EASY_CLWK_RES_PARAM prm;
   int mark = PP_Get( pp , ID_PARA_mark ,NULL);
   const int markpos[]= { 25, 26, 27, 28, 29, 30, 20, 21};
   const int marktbl[]= {
@@ -1996,13 +1999,15 @@ void IRC_POKETRADE_PokeStatusIconDisp(IRC_POKEMON_TRADE* pWork, POKEMON_PARAM* p
   IRC_POKETRADE_PokeStatusIconReset(pWork);
 
   prm.draw_type = CLSYS_DRAW_MAIN;
-  prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NONE;
+  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
   prm.arc_id    = APP_COMMON_GetArcId();
   prm.pltt_id   = APP_COMMON_GetPokeMarkPltArcIdx();
   prm.ncg_id    = APP_COMMON_GetPokeMarkCharArcIdx(APP_COMMON_MAPPING_128K);
   prm.cell_id   = APP_COMMON_GetPokeMarkCellArcIdx( APP_COMMON_MAPPING_128K );
   prm.anm_id    = APP_COMMON_GetPokeMarkAnimeArcIdx( APP_COMMON_MAPPING_128K );
   prm.pltt_line = PLTID_OBJ_POKESTATE_M;
+  prm.pltt_src_ofs = 0;
+  prm.pltt_src_num = 1;
 
   for(i = 0;i < _POKEMARK_MAX ; i++){
     _ITEMMARK_ICON_WORK* pIM = &pWork->aPokeMark[i];

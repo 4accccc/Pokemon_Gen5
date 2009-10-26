@@ -619,20 +619,22 @@ static void UITemplate_TYPEICON_DeleteCLWK( _TYPE_ICON_WORK *wk )
 //-----------------------------------------------------------------------------
 static void UITemplate_TYPEICON_CreateCLWK( _TYPE_ICON_WORK *wk, POKEMON_PARAM* pp, int side,GFL_CLUNIT *unit, int x,int y,int draw_type,  HEAPID heapID )
 {
-  UI_EAYSY_CLWK_RES_PARAM prm;
+  UI_EASY_CLWK_RES_PARAM prm;
   PokeType type = PP_Get(pp, ID_PARA_type1+side, NULL);
 
 
   UITemplate_TYPEICON_DeleteCLWK(wk);
 
   prm.draw_type = draw_type;
-  prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NONE;
+  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
   prm.arc_id    = APP_COMMON_GetArcId();
   prm.pltt_id   = APP_COMMON_GetPokeTypePltArcIdx();
   prm.ncg_id    = APP_COMMON_GetPokeTypeCharArcIdx(type);
   prm.cell_id   = APP_COMMON_GetPokeTypeCellArcIdx( APP_COMMON_MAPPING_128K );
   prm.anm_id    = APP_COMMON_GetPokeTypeAnimeArcIdx( APP_COMMON_MAPPING_128K );
   prm.pltt_line = PLTID_OBJ_TYPEICON_M;
+  prm.pltt_src_ofs  = 0;
+  prm.pltt_src_num = 3;
 
   UI_EASY_CLWK_LoadResource( &wk->clres_type_icon, &prm, unit, heapID );
 
@@ -674,7 +676,7 @@ static void UITemplate_BALLICON_CreateCLWK( _BALL_ICON_WORK* wk,
                                             POKEMON_PARAM* pp, GFL_CLUNIT *unit,
                                             int x ,int y, int drawtype, HEAPID heapID )
 {
-  UI_EAYSY_CLWK_RES_PARAM prm;
+  UI_EASY_CLWK_RES_PARAM prm;
   BALL_ID ballID;
 
   // @todo アイテム＞ボール変換ルーチン待ち
@@ -683,13 +685,15 @@ static void UITemplate_BALLICON_CreateCLWK( _BALL_ICON_WORK* wk,
   UITemplate_BALLICON_DeleteCLWK(wk);
 
   prm.draw_type = drawtype;
-  prm.comp_flg  = UI_EAYSY_CLWK_RES_COMP_NONE;
+  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
   prm.arc_id    = APP_COMMON_GetArcId();
   prm.pltt_id   = APP_COMMON_GetBallPltArcIdx( ballID );
   prm.ncg_id    = APP_COMMON_GetBallCharArcIdx( ballID );
   prm.cell_id   = APP_COMMON_GetBallCellArcIdx( ballID, APP_COMMON_MAPPING_128K );
   prm.anm_id    = APP_COMMON_GetBallAnimeArcIdx( ballID, APP_COMMON_MAPPING_128K );
   prm.pltt_line = PLTID_OBJ_BALLICON_M;
+  prm.pltt_src_ofs  = 0;
+  prm.pltt_src_num = 1;
 
   // リソース読み込み
   UI_EASY_CLWK_LoadResource( &wk->clres_ball, &prm, unit, heapID );
