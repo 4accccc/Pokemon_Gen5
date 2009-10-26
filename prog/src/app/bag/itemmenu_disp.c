@@ -67,19 +67,23 @@ enum
 #define ITEMREPORT_FRAME (GFL_BG_FRAME2_S)
 
 #define _UP_ITEMNAME_INITX (5)
-#define _UP_ITEMNAME_INITY (6)
+#define _UP_ITEMNAME_INITY (5)
 #define _UP_ITEMNAME_SIZEX (14)
 #define _UP_ITEMNAME_SIZEY (3)
+#define _UP_ITEMNAME_DOTOFS_Y (4)
 
 #define _UP_ITEMNUM_INITX (23)
-#define _UP_ITEMNUM_INITY (6)
+#define _UP_ITEMNUM_INITY (5)
 #define _UP_ITEMNUM_SIZEX (6)
 #define _UP_ITEMNUM_SIZEY (3)
+
+#define _UP_ITEMNUM_DOTOFS_Y (4)
 
 #define _UP_ITEMREPORT_INITX (2)
 #define _UP_ITEMREPORT_INITY (12)
 #define _UP_ITEMREPORT_SIZEX (26)
 #define _UP_ITEMREPORT_SIZEY (9)
+
 
 #define _ITEMICON_SCR_X (14)
 #define _ITEMICON_SCR_Y (8)
@@ -640,7 +644,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
     GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
     WORDSET_RegisterItemName(pWork->WordSet, 0, item->id);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 16, 0, pWork->pExpStrBuf, pWork->fontHandle);
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 16, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
   }
   else{
     GFL_MSG_GetString(  pWork->MsgManager, msg_bag_086, pWork->pStrBuf );
@@ -648,7 +652,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
                            2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
     WORDSET_RegisterWazaName(pWork->WordSet, 1, wazano);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
   }
 
   GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
@@ -656,7 +660,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   WORDSET_RegisterNumber(pWork->WordSet, 0, item->no,
                          3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemNum), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemNum), 0, _UP_ITEMNUM_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
 
 
   GFL_MSG_GetString(  pWork->MsgManagerItemInfo, item->id, pWork->pStrBuf );
