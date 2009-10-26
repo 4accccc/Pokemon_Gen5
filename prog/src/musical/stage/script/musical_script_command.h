@@ -62,7 +62,8 @@
 #define SCRIPT_ENUM_PokeAttentionOff   (43)
 #define SCRIPT_ENUM_StageStartMainPart   (44)
 #define SCRIPT_ENUM_StageFinishMainPart   (45)
-#define SEQ_END             (46)
+#define SCRIPT_ENUM_PokeActionComeNearToTop   (46)
+#define SEQ_END             (47)
 
 #ifndef __C_NO_DEF_
 
@@ -489,6 +490,21 @@
   .long \frame
   .long \startAngle
   .long \rotateAngle
+  .endm
+
+//======================================================================
+/**
+ * @brief ポケモンアクション：トップに寄る
+ *
+ * #param_num 1
+ * @param frame   フレーム数
+ *
+ * #param VALUE_INT frame
+ */
+//======================================================================
+  .macro  ComPokeActionComeNearToTop frame
+  .short  SCRIPT_ENUM_PokeActionComeNearToTop
+  .long \frame
   .endm
   
 #pragma mark [>Pokemon Manage Command

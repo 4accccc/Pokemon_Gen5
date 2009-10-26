@@ -910,7 +910,7 @@ SCRIPT_FUNC_DEF( PokeActionJump )
   const s32 pokeNoTemp = ScriptFunc_GetValueS32();
   const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
   const s32 interval = ScriptFunc_GetValueS32();
-  const s32 num = ScriptFunc_GetValuefx32();
+  const s32 num = ScriptFunc_GetValueS32();
   const fx32 height = ScriptFunc_GetValuefx32();
   u8  pokeNo;
 
@@ -1035,6 +1035,180 @@ static void SCRIPT_TCB_PokeAct_Rotate(  GFL_TCB *tcb, void *work )
     STA_POKE_SetRotate( pokeSys , rotWork->pokeWork , angle );
   }
 }
+
+//ポケモンアクション・トップへ寄る
+
+SCRIPT_FUNC_DEF( PokeActionComeNearToTop )
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  const s32 frame = ScriptFunc_GetValueS32();
+
+  STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
+  u8 topPoke;
+  VecFx32 topPos;
+  s8 ofsPosArr[4]={0,0,0,0}; //Topからの相対位置
+  u8 maxOfs = 0;
+  
+  SCRIPT_PRINT_LABEL(PokeActionComeNearToTop);
+  
+  //対象選択
+  {
+    u8 i;
+    u8 maxPoint = 0;
+    //最高点をチェック
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      if( maxPoint < STA_ACT_GetPokeEquipPoint( work->actWork , i ) )
+      {
+        maxPoint = STA_ACT_GetPokeEquipPoint( work->actWork , i );
+      }
+    }
+    //トップかのチェック
+    // todoトップが複数人いたらどうする？
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      if( maxPoint == STA_ACT_GetPokeEquipPoint( work->actWork , i ) )
+      {
+        topPoke = STA_ACT_GetPokeEquipPoint( work->actWork , i );
+      }
+    }
+  }
+  
+  topPoke = GFUser_GetPublicRand0(4);
+  OS_TPrintf("Top[%d]\n",topPoke);
+  //相対位置のチェック
+  {
+    u8 i;
+    fx32 posArr[4];
+    //座標収集
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      VecFx32 pos;
+      STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , i );
+      STA_POKE_GetPosition( pokeSys , pokeWork , &pos );
+      posArr[i] = pos.x;
+      if( i == topPoke )
+      {
+        topPos.x = pos.x;
+        topPos.y = pos.y;
+        topPos.z = pos.z;
+      }
+    }
+    //差分に変換
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      posArr[i] -= topPos.x;
+    }
+    //位置チェック
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      u8 j;
+      if( i == topPoke )
+      {
+        continue;
+      }
+      for( j=0;j<MUSICAL_POKE_MAX;j++ )
+      {
+        if( i == j )
+        {
+          continue;
+        }
+        if( posArr[i] > 0 && posArr[j] >= 0 &&
+            posArr[i] > posArr[j] )
+        {
+          ofsPosArr[i]++;
+        }
+        else
+        if( posArr[i] < 0 && posArr[j] <= 0 &&
+            posArr[i] < posArr[j] )
+        {
+          ofsPosArr[i]--;
+        }
+      }
+      //一番離れている距離
+      if( maxOfs < MATH_ABS(ofsPosArr[i]) )
+      {
+        maxOfs = MATH_ABS(ofsPosArr[i]);
+      }
+    }
+  }
+  
+  //動作設定
+  {
+    const fx32 COME_NEAR_VALUE = FX32_CONST(64.0f);
+    fx32 posXSum = 0; //カメラ中心計算用
+    u8 i;
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      VecFx32 subVec;
+      MOVE_POKE_VEC *movePoke = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_POKE_VEC ));
+      POKE_ACT_JUMP_WORK  *jumpWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(POKE_ACT_JUMP_WORK));
+      //水平移動
+      movePoke->scriptSys = work;
+      movePoke->pokeWork = STA_ACT_GetPokeWork( work->actWork , i );;
+      movePoke->moveWork.actWork = work->actWork;
+      movePoke->moveWork.step = 0;
+      STA_POKE_GetPosition( pokeSys , movePoke->pokeWork , &movePoke->moveWork.start );
+      movePoke->moveWork.end.x = topPos.x + COME_NEAR_VALUE * ofsPosArr[i];
+      movePoke->moveWork.end.y = movePoke->moveWork.start.y;
+      movePoke->moveWork.end.z = movePoke->moveWork.start.z;
+      movePoke->moveWork.frame = frame*MATH_ABS(ofsPosArr[i])/maxOfs;
+
+      movePoke->moveWork.stepVal.x = (movePoke->moveWork.end.x-movePoke->moveWork.start.x) / movePoke->moveWork.frame;
+      movePoke->moveWork.stepVal.y = (movePoke->moveWork.end.y-movePoke->moveWork.start.y) / movePoke->moveWork.frame;
+      movePoke->moveWork.stepVal.z = (movePoke->moveWork.end.z-movePoke->moveWork.start.z) / movePoke->moveWork.frame;
+
+//      OS_Printf("---------------------------------\n");
+//      OS_Printf("[%d]\n",movePoke->moveWork.frame);
+//      OS_Printf("[%.1f][%.1f][%.1f]\n",FX_FX32_TO_F32(movePoke->moveWork.start.x),FX_FX32_TO_F32(movePoke->moveWork.start.y),FX_FX32_TO_F32(movePoke->moveWork.start.z));
+//      OS_Printf("[%.1f][%.1f][%.1f]\n",FX_FX32_TO_F32(movePoke->moveWork.end.x),FX_FX32_TO_F32(movePoke->moveWork.end.y),FX_FX32_TO_F32(movePoke->moveWork.end.z));
+//      OS_Printf("[%.1f][%.1f][%.1f]\n",FX_FX32_TO_F32(movePoke->moveWork.stepVal.x),FX_FX32_TO_F32(movePoke->moveWork.stepVal.y),FX_FX32_TO_F32(movePoke->moveWork.stepVal.z));
+
+      movePoke->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MovePokeTCB , (void*)movePoke , SCRIPT_TCB_PRI_NORMAL );
+      
+      //ジャンプ
+      if( movePoke->moveWork.frame != 0 )
+      {
+        const fx32 height = FX32_CONST(8);
+        const u8 interval = 15;
+        const u8 mod = movePoke->moveWork.frame%interval;
+        const u8 num = movePoke->moveWork.frame/interval + (mod!=0?1:0);
+        jumpWork->scriptSys = work;
+        jumpWork->pokeWork = STA_ACT_GetPokeWork( work->actWork , i );
+        jumpWork->height = height;
+        
+        jumpWork->repeatWork.actWork = work->actWork;
+        jumpWork->repeatWork.step = 0;
+        jumpWork->repeatWork.interval = interval;
+        jumpWork->repeatWork.num = num;
+        
+        jumpWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_PokeAct_Jump , (void*)jumpWork , SCRIPT_TCB_PRI_NORMAL );
+      }
+      
+      //カメラ中心計算用処理
+      posXSum += movePoke->moveWork.end.x;
+
+    }
+    //カメラスクロール
+    {
+      MOVE_WORK_S32 *moveWork;
+      moveWork = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_WORK_S32 ));
+      moveWork->scriptSys = work;
+      moveWork->actWork = work->actWork;
+      moveWork->step = 0;
+      moveWork->start = STA_ACT_GetStageScroll( work->actWork );
+      moveWork->end = FX_FX32_TO_F32( posXSum/4 )-128;
+      moveWork->frame = frame;
+    
+      moveWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveStageTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
+      STA_ACT_SetForceScroll( work->actWork , TRUE );
+    }
+  }
+  
+  return SFT_CONTINUE;
+}
+
 #pragma mark [>PokemonManage
 //ポケモン動作番号予約
 SCRIPT_FUNC_DEF( PokeMngSetFlag )

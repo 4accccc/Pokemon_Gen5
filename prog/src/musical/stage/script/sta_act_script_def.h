@@ -96,41 +96,43 @@ typedef SCRIPT_FINISH_TYPE(*STA_SCRIPT_FUNC)(STA_SCRIPT_SYS *work,STA_SCRIPT_WOR
 //--------------------------------------------------------------
 //	スクリプトの関数
 //--------------------------------------------------------------
-STA_SCRIPT_TCB_OBJECT* STA_SCRIPT_CreateTcbTask( STA_SCRIPT_SYS *work , GFL_TCB_FUNC *func , void* tcbWork , u32 pri );
-void STA_SCRIPT_DeleteTcbTask( STA_SCRIPT_SYS *work , STA_SCRIPT_TCB_OBJECT *tcbObj );
+extern STA_SCRIPT_TCB_OBJECT* STA_SCRIPT_CreateTcbTask( STA_SCRIPT_SYS *work , GFL_TCB_FUNC *func , void* tcbWork , u32 pri );
+extern void STA_SCRIPT_DeleteTcbTask( STA_SCRIPT_SYS *work , STA_SCRIPT_TCB_OBJECT *tcbObj );
 
 //--------------------------------------------------------------
 //	スクリプト用機能関数
 //--------------------------------------------------------------
-void STA_ACT_StartMainPart( ACTING_WORK *work );
-void STA_ACT_FinishMainPart( ACTING_WORK *work );
-void	STA_ACT_LoadBg( ACTING_WORK *work , const u8 bgNo );
-void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 msgSpd );
-void STA_ACT_HideMessage( ACTING_WORK *work );
-void  STA_ACT_StartBgm(  ACTING_WORK *work );
-void  STA_ACT_StopBgm(  ACTING_WORK *work );
+extern void STA_ACT_StartMainPart( ACTING_WORK *work );
+extern void STA_ACT_FinishMainPart( ACTING_WORK *work );
+extern void	STA_ACT_LoadBg( ACTING_WORK *work , const u8 bgNo );
+extern void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 msgSpd );
+extern void STA_ACT_HideMessage( ACTING_WORK *work );
+extern void  STA_ACT_StartBgm(  ACTING_WORK *work );
+extern void  STA_ACT_StopBgm(  ACTING_WORK *work );
 
 //--------------------------------------------------------------
 //	スクリプト用に外部提供関数
 //--------------------------------------------------------------
-STA_POKE_SYS*	STA_ACT_GetPokeSys( ACTING_WORK *work );
-STA_POKE_WORK*	STA_ACT_GetPokeWork( ACTING_WORK *work , const u8 idx );
-void			STA_ACT_SetPokeWork( ACTING_WORK *work , STA_POKE_WORK *pokeWork , const u8 idx );
-STA_OBJ_SYS*	STA_ACT_GetObjectSys( ACTING_WORK *work );
-STA_OBJ_WORK*	STA_ACT_GetObjectWork( ACTING_WORK *work , const u8 idx );
-void			STA_ACT_SetObjectWork( ACTING_WORK *work , STA_OBJ_WORK *objWork , const u8 idx );
-STA_EFF_SYS*	STA_ACT_GetEffectSys( ACTING_WORK *work );
-STA_EFF_WORK*	STA_ACT_GetEffectWork( ACTING_WORK *work , const u8 idx );
-void			STA_ACT_SetEffectWork( ACTING_WORK *work , STA_EFF_WORK *effWork , const u8 idx );
-STA_LIGHT_SYS* 	STA_ACT_GetLightSys( ACTING_WORK *work );
-STA_LIGHT_WORK* STA_ACT_GetLightWork( ACTING_WORK *work , const u8 idx );
-void 			STA_ACT_SetLightWork( ACTING_WORK *work , STA_LIGHT_WORK *lightWork , const u8 idx );
-STA_AUDI_SYS* STA_ACT_GetAudienceSys( ACTING_WORK *work );
+extern STA_POKE_SYS*	STA_ACT_GetPokeSys( ACTING_WORK *work );
+extern STA_POKE_WORK*	STA_ACT_GetPokeWork( ACTING_WORK *work , const u8 idx );
+extern void			STA_ACT_SetPokeWork( ACTING_WORK *work , STA_POKE_WORK *pokeWork , const u8 idx );
+extern STA_OBJ_SYS*	STA_ACT_GetObjectSys( ACTING_WORK *work );
+extern STA_OBJ_WORK*	STA_ACT_GetObjectWork( ACTING_WORK *work , const u8 idx );
+extern void			STA_ACT_SetObjectWork( ACTING_WORK *work , STA_OBJ_WORK *objWork , const u8 idx );
+extern STA_EFF_SYS*	STA_ACT_GetEffectSys( ACTING_WORK *work );
+extern STA_EFF_WORK*	STA_ACT_GetEffectWork( ACTING_WORK *work , const u8 idx );
+extern void			STA_ACT_SetEffectWork( ACTING_WORK *work , STA_EFF_WORK *effWork , const u8 idx );
+extern STA_LIGHT_SYS* 	STA_ACT_GetLightSys( ACTING_WORK *work );
+extern STA_LIGHT_WORK* STA_ACT_GetLightWork( ACTING_WORK *work , const u8 idx );
+extern void 			STA_ACT_SetLightWork( ACTING_WORK *work , STA_LIGHT_WORK *lightWork , const u8 idx );
+extern STA_AUDI_SYS* STA_ACT_GetAudienceSys( ACTING_WORK *work );
 
-u16		STA_ACT_GetCurtainHeight( ACTING_WORK *work );
-void	STA_ACT_SetCurtainHeight( ACTING_WORK *work , const u16 height );
+extern u16		STA_ACT_GetCurtainHeight( ACTING_WORK *work );
+extern void	STA_ACT_SetCurtainHeight( ACTING_WORK *work , const u16 height );
 
-void STA_ACT_SetLightUpFlg( ACTING_WORK *work , const u8 pokeIdx , const BOOL flg );
-void STA_ACT_PlayTransEffect( ACTING_WORK *work , const u8 idx );
+extern void STA_ACT_SetLightUpFlg( ACTING_WORK *work , const u8 pokeIdx , const BOOL flg );
+extern void STA_ACT_PlayTransEffect( ACTING_WORK *work , const u8 idx );
+extern const u8 STA_ACT_GetPokeEquipPoint( ACTING_WORK *work , const u8 pokeNo );
+extern void STA_ACT_SetForceScroll( ACTING_WORK *work , const BOOL flg );
 
 #endif STA_ACT_SCRIPT_DEF_H__

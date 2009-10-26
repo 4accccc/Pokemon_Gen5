@@ -42,6 +42,7 @@
 #define MUS_PHOTO_FRAME_3D ( GFL_BG_FRAME0_M )
 #define MUS_PHOTO_FRAME_MSG ( GFL_BG_FRAME1_M )
 #define MUS_PHOTO_FRAME_CURTAIN ( GFL_BG_FRAME2_M )
+#define MUS_PHOTO_FRAME_MASK ( GFL_BG_FRAME3_M )
 
 #define MSU_PHOTO_DATE_POS_X (25)
 #define MSU_PHOTO_DATE_POS_Y (22)
@@ -246,7 +247,7 @@ static void MUS_SHOT_PHOTO_InitGraphic( MUS_SHOT_PHOTO_WORK *work )
       { GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
     GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT80K,
             0, work->heapId, NULL );
-    GFL_BG_SetBGControl3D( 2 ); //NNS_g3dInitの中で表示優先順位変わる・・・
+    GFL_BG_SetBGControl3D( 3 ); //NNS_g3dInitの中で表示優先順位変わる・・・
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
 
 
@@ -297,33 +298,63 @@ static void MUS_SHOT_PHOTO_InitGraphic( MUS_SHOT_PHOTO_WORK *work )
     static const GFL_BG_BGCNT_HEADER header_main1 = {
       0, 0, 0x800, 0, // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x4800, GX_BG_CHARBASE_0x08000,0x8000,
+      GX_BG_SCRBASE_0x4800, GX_BG_CHARBASE_0x00000,0x5000,
       GX_BG_EXTPLTT_01, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     // BG2 MAIN (幕
     static const GFL_BG_BGCNT_HEADER header_main2 = {
       0, 0, 0x2000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x5000, GX_BG_CHARBASE_0x00000,0x4000,
+      GX_BG_SCRBASE_0x5000, GX_BG_CHARBASE_0x08000,0x8000,
       GX_BG_EXTPLTT_01, 1, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    // BG3 MAIN (MASK
+    static const GFL_BG_BGCNT_HEADER header_main3 = {
+      0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x10000,0x08000,
+      GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     
     MUS_SHOT_PHOTO_SetupBgFunc( &header_main1, MUS_PHOTO_FRAME_MSG , GFL_BG_MODE_TEXT);
     MUS_SHOT_PHOTO_SetupBgFunc( &header_main2, MUS_PHOTO_FRAME_CURTAIN , GFL_BG_MODE_TEXT);
+    MUS_SHOT_PHOTO_SetupBgFunc( &header_main3, MUS_PHOTO_FRAME_MASK , GFL_BG_MODE_TEXT);
     GFL_BG_SetScroll( MUS_PHOTO_FRAME_CURTAIN , GFL_BG_SCROLL_Y_SET , ACT_CURTAIN_SCROLL_MAX );
   }
   //BG読み込み
   {
     ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_STAGE_GRA , work->heapId );
-    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_stage_gra_maku_NCLR , 
-                      PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle , NARC_stage_gra_maku_NCLR , 
+                      PALTYPE_MAIN_BG , ACT_PLT_BG_MAIN_MAKU*32 , ACT_PLT_BG_MAIN_MAKU*32 , 32 , work->heapId );
     GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_maku_NCGR ,
                       MUS_PHOTO_FRAME_CURTAIN , 0 , 0, FALSE , work->heapId );
     GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_maku_NSCR , 
                       MUS_PHOTO_FRAME_CURTAIN ,  0 , 0, FALSE , work->heapId );
+
+    GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle , NARC_stage_gra_dark_mask_NCLR , 
+                      PALTYPE_MAIN_BG , ACT_PLT_BG_MAIN_MASK*32 , ACT_PLT_BG_MAIN_MASK*32 , 32 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_stage_gra_dark_mask_NCGR ,
+                      MUS_PHOTO_FRAME_MASK , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_stage_gra_dark_mask_NSCR , 
+                      MUS_PHOTO_FRAME_MASK ,  0 , 0, FALSE , work->heapId );
+
     GFL_BG_LoadScreenReq(MUS_PHOTO_FRAME_CURTAIN);
+    GFL_BG_LoadScreenReq(MUS_PHOTO_FRAME_MASK);
     GFL_ARC_CloseDataHandle(arcHandle);
   }
+  //ライト用のアルファ設定
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3 , GX_BLEND_PLANEMASK_BG0 , 0 , 10 );
+  GX_SetVisibleWnd( GX_WNDMASK_OW );
+  G2_SetWndOBJInsidePlane( GX_WND_PLANEMASK_BG0 | 
+                           GX_WND_PLANEMASK_BG1 | 
+                           GX_WND_PLANEMASK_BG2 | 
+                           GX_WND_PLANEMASK_OBJ , TRUE );
+  G2_SetWndOutsidePlane(   GX_WND_PLANEMASK_BG0 | 
+                           GX_WND_PLANEMASK_BG1 | 
+                           GX_WND_PLANEMASK_BG2 | 
+                           GX_WND_PLANEMASK_BG3 | 
+                           GX_WND_PLANEMASK_OBJ , TRUE );
+
 }
 //--------------------------------------------------------------------------
 //  Bg初期化 機能部
@@ -341,6 +372,7 @@ static void MUS_SHOT_PHOTO_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 b
 //--------------------------------------------------------------
 static void MUS_SHOT_PHOTO_ExitGraphic( MUS_SHOT_PHOTO_WORK *work )
 {
+  GFL_BG_FreeBGControl( MUS_PHOTO_FRAME_MASK );
   GFL_BG_FreeBGControl( MUS_PHOTO_FRAME_MSG );
   GFL_BG_FreeBGControl( MUS_PHOTO_FRAME_CURTAIN );
   GFL_BBD_DeleteSys( work->bbdSys );

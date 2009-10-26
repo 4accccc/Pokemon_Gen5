@@ -273,14 +273,12 @@ static void MUSICAL_SHOT_InitGraphic( SHOT_LOCAL_WORK *work )
   
   {
     static const GFL_BG_SYS_HEADER sys_data = {
-        GX_DISPMODE_GRAPHICS, GX_BGMODE_3, GX_BGMODE_0, GX_BG0_AS_3D,
+        GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
     };
     GFL_BG_SetBGMode( &sys_data );
   }
   GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &vramBank ,work->heapId );
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
-  //ライト用のアルファ設定
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_OBJ , GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG3 , 4 , 31 );
 }
 
 //--------------------------------------------------------------

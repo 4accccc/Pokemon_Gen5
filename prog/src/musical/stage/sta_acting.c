@@ -108,6 +108,7 @@ struct _ACTING_WORK
   u16   scrollOffsetTrget;
   u16   makuOffset;
   u8    playerIdx;
+  BOOL  forceScroll;
   
   ACTING_MAIN_SEQ mainSeq;
   
@@ -242,7 +243,8 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   work->scriptData = NULL;
   work->mainSeq = AMS_FADEIN;
   work->isEditorMode = FALSE;
-  
+  work->forceScroll = FALSE;
+
   work->vblankFuncTcb = GFUser_VIntr_CreateTCB( STA_ACT_VBlankFunc , (void*)work , 64 );
   
   //Ž©ƒLƒƒƒ‰‚Ì‘I‘ð
@@ -570,7 +572,7 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
       GX_BG_SCRBASE_0x5000, GX_BG_CHARBASE_0x18000,0x8000,
       GX_BG_EXTPLTT_01, 1, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
-    // BG3 MAIN (”wŒi 256*16F
+    // BG3 MAIN (MASK
     static const GFL_BG_BGCNT_HEADER header_main3 = {
       0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
@@ -902,34 +904,37 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
   if( (GFL_UI_KEY_GetCont() & (PAD_KEY_RIGHT|PAD_KEY_LEFT)) == 0 )
 #endif
   {
-    s16 scroll;
-    VecFx32 pos;
-    u8 lookTarget;
-    
-    if( work->attentionPoke == MUSICAL_POKE_MAX )
+    if( work->forceScroll == FALSE )
     {
-      lookTarget = work->playerIdx;
-    }
-    else
-    {
-      lookTarget = work->attentionPoke;
-    }
-    
-    if( work->pokeWork[lookTarget] != NULL )
-    {
-      STA_POKE_GetPosition( work->pokeSys , work->pokeWork[lookTarget] , &pos );
-      scroll = FX_FX32_TO_F32( pos.x )-128;
-      if( scroll > ACT_BG_SCROLL_MAX )
+      s16 scroll;
+      VecFx32 pos;
+      u8 lookTarget;
+      
+      if( work->attentionPoke == MUSICAL_POKE_MAX )
       {
-        scroll = ACT_BG_SCROLL_MAX;
+        lookTarget = work->playerIdx;
       }
-      else if( scroll < 0 )
+      else
       {
-        scroll = 0;
+        lookTarget = work->attentionPoke;
       }
-      if( scroll != work->scrollOffset )
+      
+      if( work->pokeWork[lookTarget] != NULL )
       {
-        work->scrollOffsetTrget = scroll;
+        STA_POKE_GetPosition( work->pokeSys , work->pokeWork[lookTarget] , &pos );
+        scroll = FX_FX32_TO_F32( pos.x )-128;
+        if( scroll > ACT_BG_SCROLL_MAX )
+        {
+          scroll = ACT_BG_SCROLL_MAX;
+        }
+        else if( scroll < 0 )
+        {
+          scroll = 0;
+        }
+        if( scroll != work->scrollOffset )
+        {
+          work->scrollOffsetTrget = scroll;
+        }
       }
     }
   }
@@ -1456,7 +1461,7 @@ u16   STA_ACT_GetStageScroll( ACTING_WORK *work )
 }
 void  STA_ACT_SetStageScroll( ACTING_WORK *work , const u16 scroll )
 {
-  work->scrollOffset = scroll;
+  work->scrollOffsetTrget = scroll;
 }
 
 MUS_ITEM_DATA_SYS* STA_ACT_GetItemDataSys( ACTING_WORK *work )
@@ -1468,6 +1473,16 @@ MUS_ITEM_DATA_SYS* STA_ACT_GetItemDataSys( ACTING_WORK *work )
 const u8 STA_ACT_GetUseItemAttentionPoke( ACTING_WORK *work )
 {
   return work->useItemPoke;
+}
+
+const u8 STA_ACT_GetPokeEquipPoint( ACTING_WORK *work , const u8 pokeNo )
+{
+  return work->initWork->musPoke[pokeNo]->point;
+}
+
+void STA_ACT_SetForceScroll( ACTING_WORK *work , const BOOL flg )
+{
+  work->forceScroll = flg;
 }
 #pragma mark [> editor func
 //--------------------------------------------------------------
