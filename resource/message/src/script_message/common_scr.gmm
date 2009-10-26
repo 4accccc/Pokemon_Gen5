@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2009-10-21T10:27:29"/>
+	<create user="matsumiya" host="W00207" date="2009-10-26T20:44:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="217"/>
 		<band id="3" index="4" style="0000" width="478"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -563,9 +563,9 @@
 	<row id="msg_event_item_get_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>0＝主人公名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を[FF:00:色:2]
-[1:12:バッグのポケット名:2][FF:00:色:0]ポケット　に　しまった</language>
+[1:12:バッグのポケット名:2][FF:00:色:0]ポケットに　しまった</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を[FF:00:色:2]
-[1:12:バッグのポケット名:2][FF:00:色:0]ポケット　に　しまった</language>
+[1:12:バッグのポケット名:2][FF:00:色:0]ポケットに　しまった</language>
 	</row>
 
 	<row id="msg_event_item_get_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -575,9 +575,9 @@
 1＝道具名
 2＝バッグのポケット名（アイコン）</comment>
 		<language name="JPN">[1:00:トレーナー名:0]は　[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を[FF:00:色:2]
-[1:12:バッグのポケット名:2][FF:00:色:0]ポケット　に　しまった▼</language>
+[1:12:バッグのポケット名:2][FF:00:色:0]ポケットに　しまった▼</language>
 		<language name="JPN_KANJI">[1:00:トレーナー名:0]は　[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を[FF:00:色:2]
-[1:12:バッグのポケット名:2][FF:00:色:0]ポケット　に　しまった▼</language>
+[1:12:バッグのポケット名:2][FF:00:色:0]ポケットに　しまった▼</language>
 	</row>
 
 	<row id="msg_yen_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
