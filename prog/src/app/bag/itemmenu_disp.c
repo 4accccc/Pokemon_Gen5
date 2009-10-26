@@ -439,9 +439,23 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     //数字フレーム用パレット
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win05_d_NCLR,
                                       PALTYPE_MAIN_BG, PALOFS_NUM_FRAME*0x20, 1*0x20,  pWork->heapID);
+
+    // 男女でウィンドウカーソル用パレットを切替
+    {
+      u32 sex = MyStatus_GetMySex( pWork->mystatus );
+
+      if( sex == PTL_SEX_MALE )
+      {
+        GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win01_d_man_NCLR,
+                                        PALTYPE_MAIN_BG, 1*0x20, 2*0x20,  pWork->heapID);
+      }
+      else
+      {
+        GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win01_d_NCLR,
+                                        PALTYPE_MAIN_BG, 1*0x20, 2*0x20,  pWork->heapID);
+      }
+    }
     
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win01_d_NCLR,
-                                      PALTYPE_MAIN_BG, 1*0x20, 2*0x20,  pWork->heapID);
     
 
     GFL_ARC_CloseDataHandle(p_handle);
@@ -1011,6 +1025,8 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
+  // 文字色指定
+  static u8 color_tbl[ ITEM_LIST_NUM ] = { 2, 1, 0, 0, 0, 0, 1, 2 };
 
   for(i = 0; i< ITEM_LIST_NUM ; i++){
     ITEM_ST * item;
@@ -1025,6 +1041,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
     if((item==NULL) || (item->id==ITEM_DUMMY_DATA)){
       continue;
     }
+
     {
       void * itemdata;
       u8 backColor = 0x0;
@@ -1032,7 +1049,22 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
 
       GFL_BMP_Clear(pWork->listBmp[i], backColor );
-      GFL_FONTSYS_SetColor( 0xf, 0xe, backColor );
+
+      // 文字色指定。枠の外はグラデ
+      switch( color_tbl[i] )
+      {
+      case 0:
+        GFL_FONTSYS_SetColor( 0xf, 0xe, backColor );
+        break;
+      case 1:
+        GFL_FONTSYS_SetColor( 0xd, 0xc, backColor );
+        break;
+      case 2:
+        GFL_FONTSYS_SetColor( 0xb, 0xa, backColor );
+        break;
+      default : GF_ASSERT(0);
+      }
+
       GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
       WORDSET_RegisterItemName(pWork->WordSet, 0, item->id);
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
