@@ -285,18 +285,14 @@ static u32 setup_group_window( PMSIV_CATEGORY* wk, u32 charpos )
 			y += (CATEGORY_WIN_HEIGHT + CATEGORY_WIN_Y_MARGIN);
 		}
 
-		
-
 		if( PMSI_DATA_GetGroupEnableWordCount(wk->dwk, i) )
 		{
 			str = GFL_MSG_CreateString( msgman, pms_category_01+i );
-//			print_color = GF_PRINTCOLOR_MAKE(CATEGORY_WIN_COL_LETTER, CATEGORY_WIN_COL_SHADOW, CATEGORY_WIN_COL_GROUND);
 			GFL_FONTSYS_SetColor( CATEGORY_WIN_COL_LETTER, CATEGORY_WIN_COL_SHADOW, CATEGORY_WIN_COL_GROUND );
 		}
 		else
 		{
 			str = GFL_MSG_CreateString( msgman, pms_category_unknown );
-//			print_color = GF_PRINTCOLOR_MAKE(CATEGORY_WIN_UNKNOWN_COL_LETTER, CATEGORY_WIN_UNKNOWN_COL_SHADOW, CATEGORY_WIN_COL_GROUND);
 			GFL_FONTSYS_SetColor( CATEGORY_WIN_UNKNOWN_COL_LETTER, CATEGORY_WIN_UNKNOWN_COL_SHADOW, CATEGORY_WIN_COL_GROUND );
 		}
 
@@ -304,24 +300,16 @@ static u32 setup_group_window( PMSIV_CATEGORY* wk, u32 charpos )
 		win = GFL_BMPWIN_Create( FRM_MAIN_CATEGORY, x, y, 
 						CATEGORY_WIN_WIDTH, CATEGORY_WIN_HEIGHT, 
 						PALNUM_MAIN_CATEGORY,GFL_BMP_CHRAREA_GET_B );
-//		GF_BGL_BmpWinAdd(	&win, FRM_MAIN_CATEGORY, 
-//						x, y, CATEGORY_WIN_WIDTH, CATEGORY_WIN_HEIGHT,
-//						PALNUM_MAIN_CATEGORY, charpos );
 
 		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win),CATEGORY_WIN_COL_GROUND);
-//		GF_BGL_BmpWinDataFill( &win, CATEGORY_WIN_COL_GROUND );
 
 		print_xpos = ((CATEGORY_WIN_WIDTH*8)-PRINTSYS_GetStrWidth( str,fontHandle, 0))/2;
-//		GF_STR_PrintColor( &win, PMSI_FONT_CATEGORY, str, print_xpos, 0, MSG_NO_PUT, print_color, NULL );
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), print_xpos, 0, str,fontHandle );
 
-//		GF_BGL_BmpWinMakeScrn(&win);
 		GFL_BMPWIN_MakeScreen( win );
-		//GF_BGL_BmpWinCgxOn(&win);
 		GFL_BMPWIN_TransVramCharacter( win );
 
 		GFL_STR_DeleteBuffer(str);
-//		GFL_BMPWIN_Delete(win);
 		wk->winGroup[i] = win;
 
 		charpos += CATEGORY_WIN_CHARSIZE;

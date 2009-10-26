@@ -86,7 +86,7 @@ use constant TGM_SRC_ID			=> 9;
 use constant  CATEGORY_CONV_NORMAL	=> 0;
 use constant  CATEGORY_CONV_DIV		=> 1;
 use constant  CATEGORY_CONV_MIX		=> 2;
-use constant  CATEGORY_CONV_MONSNO	=> 3;
+#use constant  CATEGORY_CONV_MONSNO	=> 3;
 
 my @CategoryParam = (
 	[ 'ポケモン',		'01',	0,	CATEGORY_CONV_NORMAL,		SRC_MONSNAME  ],
@@ -94,7 +94,7 @@ my @CategoryParam = (
 	[ 'ステータス',		'03',	1,	CATEGORY_CONV_MIX,		SRC_TOKUSEI, SRC_POKETYPE  ],
 	[ 'トレーナー',		'04',	1,	CATEGORY_CONV_NORMAL,	SRC_GROUP06  ],
 	[ 'ひと',			'05',	1,	CATEGORY_CONV_NORMAL,	SRC_GROUP07  ],
-	[ 'あいさつ',		'06',	0,	CATEGORY_CONV_NORMAL,	SRC_GROUP7  ],
+	[ 'あいさつ',		'06',	0,	CATEGORY_CONV_NORMAL,	SRC_GROUP08  ],
 	[ 'せいかつ',		'07',	1,	CATEGORY_CONV_NORMAL,	SRC_GROUP09  ],
 	[ 'きもち',			'08',	1,	CATEGORY_CONV_NORMAL,	SRC_GROUP10  ],
 	[ 'なんかいことば',	'09',	0,	CATEGORY_CONV_NORMAL,	SRC_GROUP11  ],

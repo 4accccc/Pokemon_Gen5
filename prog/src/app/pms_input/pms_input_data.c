@@ -1,7 +1,7 @@
 //============================================================================================
 /**
 	* @file	pms_input_data.c
-	* @bfief	簡易会話入力画面（カテゴリ・イニシャル等のデータ管理）
+	* @brief	簡易会話入力画面（カテゴリ・イニシャル等のデータ管理）
 	* @author	taya
 	* @date	06.01.28
 	*/
@@ -20,6 +20,10 @@
 #include "pms_input.res"
 
 
+// @TODO とりあえず定義
+#define PMS_CATEGORY_PICTURE_MAX (10) ///< デコメ最大数
+
+
 #define  WORD_ENABLE_FLAG_SIZE		((PMS_WORDNUM_MAX>>3)+1)	// 単語１つ =1bit換算で
 
 #define  INITIAL_MAX	(NELEMS(PMS_InitialTable))
@@ -33,10 +37,12 @@ struct _PMS_INPUT_DATA {
 	const PMSI_PARAM*	input_param;
 	PMSW_MAN*			word_man;
 
+  // グループ
 	u32  GroupEnableWordCnt[ CATEGORY_GROUP_MAX ];
 	u32  GroupEnableWordPos[ CATEGORY_GROUP_MAX ];
 	PMS_WORD	GroupEnableWord[PMS_WORDNUM_MAX];
 
+  // イニシャル
 	u32  InitialEnableWordCnt[ INITIAL_MAX ];
 	u32  InitialEnableWordPos[ INITIAL_MAX ];
 	PMS_WORD  InitialEnableWord[ PMS_WORDNUM_MAX ];
@@ -55,6 +61,7 @@ static u32 CountupGruopPokemon( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, u
 static u32 CountupGruopSkill( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl );
 static u32 CountupGroupNankai( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl );
 static u32 CountupGroupAisatsu( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl );
+static u32 CountupGroupPicture( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl );
 static u32 CountupGruopDefault( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl );
 static u32 CountCategoryZero( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl );
 static void SetupInitialEnableFlag( PMS_INPUT_DATA* pmsi );
@@ -126,16 +133,17 @@ static const struct {
 	u32              tbl_elems;		///< 単語テーブル要素数
 }EnableWordCountupParam[] = {
 	{ CountupGruopPokemon,  PMS_CategoryTable_01,  PMS_Category_01_MaxNum },	// ポケモン
-	{ CountupGruopSkill,    PMS_CategoryTable_02,  PMS_Category_02_MaxNum },	// わざ
 	{ CountupGruopDefault,  PMS_CategoryTable_03,  PMS_Category_03_MaxNum },	// ステータス
+	{ CountupGruopSkill,    PMS_CategoryTable_02,  PMS_Category_02_MaxNum },	// わざ
 	{ CountupGruopDefault,  PMS_CategoryTable_04,  PMS_Category_04_MaxNum },	// トレーナー
-	{ CountupGruopDefault,  PMS_CategoryTable_05,  PMS_Category_05_MaxNum },	// ひと
+	{ CountupGruopDefault,  PMS_CategoryTable_10,  PMS_Category_10_MaxNum },	// ユニオン
 	{ CountupGroupAisatsu,  PMS_CategoryTable_06,  PMS_Category_06_MaxNum },	// あいさつ
+	{ CountupGruopDefault,  PMS_CategoryTable_05,  PMS_Category_05_MaxNum },	// ひと
 	{ CountupGruopDefault,  PMS_CategoryTable_07,  PMS_Category_07_MaxNum },	// せいかつ
 	{ CountupGruopDefault,  PMS_CategoryTable_08,  PMS_Category_08_MaxNum },	// きもち
-	{ CountupGroupNankai,   PMS_CategoryTable_09,  PMS_Category_09_MaxNum },	// なんかいことば
-	{ CountupGruopDefault,  PMS_CategoryTable_10,  PMS_Category_10_MaxNum },	// ユニオン
+	{ CountupGroupPicture,  PMS_CategoryTable_09,  PMS_CATEGORY_PICTURE_MAX },	// なんかいことば > PICTUREでフック
 };
+// @TODO 現状 09は無視
 
 /*====================================================================================================*/
 /*                                                                                                    */
@@ -144,7 +152,7 @@ static const struct {
 /*====================================================================================================*/
 //------------------------------------------------------------------
 /**
-	* 
+  *	@brief  グループ用のデータをセットアップ
 	*
 	* @param   pmsi		
 	*
@@ -178,6 +186,7 @@ static inline BOOL GetWordEnableFlag( const PMS_INPUT_DATA* data, u32 pos )
 
 static u32 CountupGruopPokemon( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl )
 {
+  // @TODO ずかんチェック
 /*
 	const ZUKAN_WORK* zw;
 	u32 i, cnt;
@@ -277,6 +286,12 @@ static u32 CountupGroupAisatsu( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, 
 		cnt++;
 	}
 	return cnt;
+}
+
+static u32 CountupGroupPicture( PMS_INPUT_DATA* pmsi, const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl )
+{
+  // @TODO 使用不定なのでとりあえずMAX
+  return 10;
 }
 
 static u32 CountupGruopDefault( PMS_INPUT_DATA* pmsi,  const PMS_WORD* src_tbl, u32 tbl_elems, PMS_WORD* dst_tbl )
