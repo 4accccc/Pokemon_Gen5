@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="tanoue_reiko" host="W00192" date="2009-10-05T21:05:55" source="mus_stage04c.mb"/>
+	<create user="tanoue_reiko" host="W00192" date="2009-10-26T16:25:55" source="mus_stage04.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -14,19 +14,19 @@
 	frame_size="240"
 	tool_start_frame="1"
 	tool_end_frame="240"
-	compress_material="on" material_size="9 9"
+	compress_material="on" material_size="24 24"
 />
 
 <tex_pattern_list_data image_size="2" palette_size="2">
-	<image_name index="0" name="leaf.1"/>
-	<image_name index="1" name="leaf.2"/>
-	<palette_name index="0" name="leaf.1_pl"/>
-	<palette_name index="1" name="leaf.2_pl"/>
+	<image_name index="0" name="wood01.1"/>
+	<image_name index="1" name="wood01.2"/>
+	<palette_name index="0" name="wood01.1_pl"/>
+	<palette_name index="1" name="wood01.2_pl"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>
 	<frame_idx size="2">
-		0 35
+		0 12
 	</frame_idx>
 	<image_idx size="2">
 		0 1
@@ -37,7 +37,7 @@
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="1">
-	<tex_pattern_anm index="0" material_name="lambert54" data_size="2" data_head="0"/>
+	<tex_pattern_anm index="0" material_name="wood01_lm1" data_size="2" data_head="0"/>
 </tex_pattern_anm_array>
 
 </body>
