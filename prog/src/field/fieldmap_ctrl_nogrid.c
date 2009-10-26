@@ -122,7 +122,7 @@ static void mapCtrlNoGrid_Create(
 #endif
 
 	FIELD_PLAYER_SetPos( fld_player, pos );
-	FIELD_PLAYER_SetDir( fld_player, 0 );
+	FIELD_PLAYER_SetDir( fld_player, dir );
 
 
 

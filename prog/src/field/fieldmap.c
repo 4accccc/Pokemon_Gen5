@@ -572,7 +572,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   
   {
     PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
-    const u16 dir = pw->direction;
+    const u16 dir = PLAYERWORK_getDirection_Type( pw );
     const VecFx32 *pos = &pw->position;
 
     //Ž©‹@ì¬
