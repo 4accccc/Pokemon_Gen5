@@ -272,12 +272,17 @@ GMEVENT * EVENT_FieldDoorInAnime
 static void getPlayerFrontPos(FIELDMAP_WORK * fieldmap, VecFx32 * pos)
 {
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
+  MMDL *fmmdl = FIELD_PLAYER_GetMMdl( player );
   u16 dir;
+
+  dir = MMDL_GetDirDisp( fmmdl );
+
+  FIELD_PLAYER_GetDirPos( player, dir, pos );
+#if 0
 
   FIELD_PLAYER_GetPos(player, pos);
   {
     MMDL *fmmdl = FIELD_PLAYER_GetMMdl( player );
-    dir = MMDL_GetDirDisp( fmmdl );
   }
 	switch( dir ) {
 	case DIR_UP:		pos->z -= FIELD_CONST_GRID_FX32_SIZE; break;
@@ -287,6 +292,7 @@ static void getPlayerFrontPos(FIELDMAP_WORK * fieldmap, VecFx32 * pos)
 	default:
                   GF_ASSERT(0);
   }
+#endif
 }
 
 

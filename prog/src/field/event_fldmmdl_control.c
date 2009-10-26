@@ -311,6 +311,24 @@ static const MMDL_ACMD_LIST anime_right_table[] = {
   AC_WALK_R_8F, 1,
   ACMD_END, 0
 };
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const MMDL_ACMD_LIST anime_rail_up_table[] = {
+  AC_RAIL_WALK_U_8F, 1,
+  ACMD_END, 0
+};
+static const MMDL_ACMD_LIST anime_rail_down_table[] = {
+  AC_RAIL_WALK_D_8F, 1,
+  ACMD_END, 0
+};
+static const MMDL_ACMD_LIST anime_rail_left_table[] = {
+  AC_RAIL_WALK_L_8F, 1,
+  ACMD_END, 0
+};
+static const MMDL_ACMD_LIST anime_rail_right_table[] = {
+  AC_RAIL_WALK_R_8F, 1,
+  ACMD_END, 0
+};
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -320,12 +338,26 @@ GMEVENT * EVENT_PlayerOneStepAnime( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldma
   FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
   MMDL *fmmdl = FIELD_PLAYER_GetMMdl( player );
   u16 dir = MMDL_GetDirDisp( fmmdl );
-  switch (dir) {
-  case DIR_UP:  tbl = anime_up_table; break;
-  case DIR_DOWN:  tbl = anime_down_table; break;
-  case DIR_LEFT:  tbl = anime_left_table; break;
-  case DIR_RIGHT:  tbl = anime_right_table; break;
+  
+  if( FIELDMAP_GetMapControlType( fieldmap ) == FLDMAP_CTRLTYPE_GRID )
+  {
+    switch (dir) {
+    case DIR_UP:  tbl = anime_up_table; break;
+    case DIR_DOWN:  tbl = anime_down_table; break;
+    case DIR_LEFT:  tbl = anime_left_table; break;
+    case DIR_RIGHT:  tbl = anime_right_table; break;
+    }
   }
+  else
+  {
+    switch (dir) {
+    case DIR_UP:  tbl = anime_rail_up_table; break;
+    case DIR_DOWN:  tbl = anime_rail_down_table; break;
+    case DIR_LEFT:  tbl = anime_rail_left_table; break;
+    case DIR_RIGHT:  tbl = anime_rail_right_table; break;
+    }
+  }
+  
   return EVENT_ObjAnime(gsys, fieldmap, MMDL_ID_PLAYER, (void*)tbl);
 }
 
