@@ -1,0 +1,431 @@
+
+//============================================================================================
+/**
+ * @file	target_sel.cdat
+ * @brief	攻撃対象選択用タッチパネル＆キー操作データテーブル
+ * @author	soga
+ * @date	2009.10.22
+ */
+//============================================================================================
+
+static const GFL_UI_TP_HITTBL PokeSeleMenuTouch4Data[] = {
+  //UP      DOWN    LEFT    RIGHT
+  { 11 * 8, 16 * 8,  0 * 8, 16 * 8 }, //ターゲットA
+  {  4 * 8, 11 * 8, 16 * 8, 255 },    //ターゲットB
+  { 11 * 8, 16 * 8, 16 * 8, 255 },    //ターゲットC
+  {  4 * 8, 11 * 8,  0 * 8, 16 * 8 }, //ターゲットD
+  { 18 * 8, 24 * 8, 22 * 8, 255},     //キャンセル
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+
+///< 自分以外１体（選択）& 自分以外１体（遠距離）
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey4Normal_L[] = {  
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 3,  3,  3,  3,  -1, -1 }, BTLV_INPUT_NOMOVE,  3,  BTLV_INPUT_NOMOVE,  1,  3,  4 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  0,  BTLV_INPUT_NOMOVE,  1,  4 },                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U   D   L                   R                   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, 1,  3,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  2,  4 },                  //2
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, -2, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  4 },  //3
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey4Normal_R[] = {  
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 3,  3,  3,  3,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  3,  4 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  3,  0,  BTLV_INPUT_NOMOVE,  1,  4 },                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U   D   L                   R                   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, 0,  3,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  4 },                  //2
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, -2, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  4 },  //3
+};
+
+///< 自分以外全て
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey4NoMine_L[] = { 
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 3,  1,  3,  2,  2,  -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3,  4 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  4 },  //1
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey4NoMine_R[] = { 
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 3,  1,  0,  1,  -1, 0 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3,  4 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  4 },  //1
+};
+
+///< 相手側１体（選択）
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey4EnemySel[] = {  
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 3,  3,  3,  3,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  3,  4 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  0,  BTLV_INPUT_NOMOVE,  1,  4 },                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  4 },  //2
+};
+
+///< 相手側全て & 敵側陣営
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey4Enemy[] = { 
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 3,  1,  3,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3,  4 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  4 },  //1
+};
+
+///< 自分のみ & 相手側１体ランダム & ゆびをふるなど特殊型
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey4Mine_L[] = {  
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  4 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  4 },  //1
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey4Mine_R[] = {  
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  2,  4 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  4 },  //1
+};
+
+///< 自分を含む味方１体（選択）
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey4MineSel[] = {  
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  0,  4 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  0,  BTLV_INPUT_NOMOVE,  2,  4 },                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  4 },  //2
+};
+
+///< 場に出ているポケモン全て
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey4All[] = { 
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 3,  1,  0,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3,  4 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  4 },  //1
+};
+
+///< 自分側陣営
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey4Mine[] = { 
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 0,  2,  0,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  4 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  4 },  //1
+};
+
+static const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey4Data[ 2 ][ 14 ] = {
+  { 
+    PokeSeleMenuKey4Normal_L,  ///< 自分以外１体（選択）
+    PokeSeleMenuKey4NoMine_L,  ///< 自分以外全て
+    PokeSeleMenuKey4EnemySel,  ///< 相手側１体（選択）
+    PokeSeleMenuKey4Enemy,     ///< 相手側全て
+    PokeSeleMenuKey4Mine_L,    ///< 相手側１体ランダム
+    PokeSeleMenuKey4MineSel,   ///< 自分を含む味方１体（選択）
+    PokeSeleMenuKey4Mine_R,    ///< 自分以外の味方１体（選択）
+    PokeSeleMenuKey4Mine_L,    ///< 自分のみ
+    PokeSeleMenuKey4All,       ///< 場に出ているポケモン全て
+    PokeSeleMenuKey4Mine,      ///< 自分側陣営
+    PokeSeleMenuKey4Enemy,     ///< 敵側陣営
+    PokeSeleMenuKey4All,       ///< 場全体（天候など）
+    PokeSeleMenuKey4Mine_L,    ///< ゆびをふるなど特殊型
+    PokeSeleMenuKey4Normal_L,  ///< 自分以外１体（遠距離）
+  },
+  { 
+    PokeSeleMenuKey4Normal_R,  ///< 自分以外１体（選択）
+    PokeSeleMenuKey4NoMine_R,  ///< 自分以外全て
+    PokeSeleMenuKey4EnemySel,  ///< 相手側１体（選択）
+    PokeSeleMenuKey4Enemy,     ///< 相手側全て
+    PokeSeleMenuKey4Mine_R,    ///< 相手側１体ランダム
+    PokeSeleMenuKey4MineSel,   ///< 自分を含む味方１体（選択）
+    PokeSeleMenuKey4Mine_L,    ///< 自分以外の味方１体（選択）
+    PokeSeleMenuKey4Mine_R,    ///< 自分のみ
+    PokeSeleMenuKey4All,       ///< 場に出ているポケモン全て
+    PokeSeleMenuKey4Mine,      ///< 自分側陣営
+    PokeSeleMenuKey4Enemy,     ///< 敵側陣営
+    PokeSeleMenuKey4All,       ///< 場全体（天候など）
+    PokeSeleMenuKey4Mine_R,    ///< ゆびをふるなど特殊型
+    PokeSeleMenuKey4Normal_R,  ///< 自分以外１体（遠距離）
+  },
+};
+
+static const GFL_UI_TP_HITTBL PokeSeleMenuTouch6Data[] = {
+  //UP      DOWN    LEFT    RIGHT
+  { 11 * 8, 16 * 8,  1 * 8, 11 * 8 }, //ターゲットA
+  {  4 * 8, 11 * 8, 21 * 8, 31 * 8 }, //ターゲットB
+  { 11 * 8, 16 * 8, 11 * 8, 21 * 8 }, //ターゲットC
+  {  4 * 8, 11 * 8, 11 * 8, 21 * 8 }, //ターゲットD
+  { 11 * 8, 16 * 8, 21 * 8, 31 * 8 }, //ターゲットE
+  {  4 * 8, 11 * 8,  1 * 8, 11 * 8 }, //ターゲットF
+  { 18 * 8, 24 * 8, 22 * 8, 255},      //キャンセル
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+
+///< 自分以外１体（選択）
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Normal_L[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 5,  5,  5,  5,  -1, -1 }, BTLV_INPUT_NOMOVE,  3,  BTLV_INPUT_NOMOVE,  1,  5,  6 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 3,  3,  3,  3,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  3,  6 },                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U   D   L                   R                   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, 1,  3,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  2,  6 },                  //2
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, -2, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //3
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Normal_C[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 5,  5,  5,  5,  -1, -1 }, BTLV_INPUT_NOMOVE,  3,  BTLV_INPUT_NOMOVE,  1,  5,  6 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R   A   B
+  { { 3,  3,  3,  3,  -1, -1 }, BTLV_INPUT_NOMOVE,  5,  0,  2,  3,  6 },                                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  4,  1,  BTLV_INPUT_NOMOVE,  1,  6 },                  //2
+  //  LU  RU  LD  RD  LD2 RD2   U   D   L                   R   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, 0,  5,  BTLV_INPUT_NOMOVE,  4,  0,  6 },                                  //3
+  //  LU  RU  LD  RD  LD2 RD2   U   D   L   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, 2,  5,  3,  BTLV_INPUT_NOMOVE,  4,  6 },                                  //4
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //5
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Normal_R[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 3,  3,  3,  3,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  3,  6 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  3,  0,  BTLV_INPUT_NOMOVE,  1,  6 },                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U   D   L                   R                   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, 0,  3,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  2,  6 },                  //2
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //3
+};
+
+///< 自分以外全て
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6NoMine_L[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 5,  3,  5,  2,  2,  -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  5,  6 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6NoMine_C[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 5,  1,  0,  4,  4,  0 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  5,  6 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6NoMine_R[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 3,  1,  0,  0,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3,  6 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
+};
+
+///< 相手側１体（選択）
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6EnemySel_L[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 5,  5,  5,  5,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  5,  6 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 3,  3,  3,  3,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  0,  BTLV_INPUT_NOMOVE,  3,  6 },                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //2
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6EnemySel_C[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 5,  5,  5,  5,  -1, -1 }, BTLV_INPUT_NOMOVE,  3,  BTLV_INPUT_NOMOVE,  1,  5,  6 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R   A   B
+  { { 3,  3,  3,  3,  -1, -1 }, BTLV_INPUT_NOMOVE,  3,  0,  2,  3,  6 },                                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  3,  1,  BTLV_INPUT_NOMOVE,  1,  6 },                  //2
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //3
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6EnemySel_R[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 3,  3,  3,  3,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  3,  6 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  0,  BTLV_INPUT_NOMOVE,  1,  6 },                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //2
+};
+
+///< 相手側全て
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Enemy_L[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 5,  3,  5,  3,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  5,  6 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
+};
+///< 敵側陣営
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Enemy_C[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 5,  1,  5,  1,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  5,  6 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Enemy_R[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 3,  1,  3,  1,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3,  6 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
+};
+
+///< 自分のみ & 相手側１体ランダム & ゆびをふるなど特殊型
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Mine_L[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 0,  0,  0,  0,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  6 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Mine_C[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 2,  2,  2,  2,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  2,  6 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Mine_R[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 4,  4,  4,  4,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  6 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
+};
+
+///< 自分を含む味方１体（選択）
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6MineSel[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  3,  BTLV_INPUT_NOMOVE,  1,  0,  6 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  3,  0,  2,  2,  6 },                                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, BTLV_INPUT_NOMOVE,  3,  1,  BTLV_INPUT_NOMOVE,  4,  6 },                  //2
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //3
+};
+
+///< 自分以外の味方１体（選択）
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Pair_L[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  2,  6 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  0,  BTLV_INPUT_NOMOVE,  4,  6 },                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //2
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Pair_C[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  0,  6 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  0,  BTLV_INPUT_NOMOVE,  4,  6 },                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //2
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Pair_R[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE,  1,  0,  6 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  2,  0,  BTLV_INPUT_NOMOVE,  2,  6 },                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //2
+};
+
+///< 場に出ているポケモン全て & 場全体（天候など）
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6All[] = { 
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 5,  1,  0,  4,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  5,  6 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
+};
+
+///< 自分側陣営
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Mine[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 0,  4,  0,  4,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  6 },  //0
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
+};
+
+///< 自分以外１体（遠距離）
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Long_L[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 5,  5,  5,  5,  -1, -1 }, BTLV_INPUT_NOMOVE,  5,  BTLV_INPUT_NOMOVE,  1,  5,  6 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R   A   B
+  { { 3,  3,  3,  3,  -1, -1 }, BTLV_INPUT_NOMOVE,  3,  0,  2,  3,  6 },                                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  4,  1,  BTLV_INPUT_NOMOVE,  1,  6 },                  //2
+  //  LU  RU  LD  RD  LD2 RD2   U   D   L                   R   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, 1,  5,  BTLV_INPUT_NOMOVE,  4,  2,  6 },                                  //3
+  //  LU  RU  LD  RD  LD2 RD2   U   D   L   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, 2,  5,  3,  BTLV_INPUT_NOMOVE,  4,  6 },                                  //4
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //5
+};
+static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Long_R[] = {
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R   A   B
+  { { 5,  5,  5,  5,  -1, -1 }, BTLV_INPUT_NOMOVE,  3,  BTLV_INPUT_NOMOVE,  1,  5,  6 },                  //0
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R   A   B
+  { { 3,  3,  3,  3,  -1, -1 }, BTLV_INPUT_NOMOVE,  4,  0,  2,  3,  6 },                                  //1
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R                   A   B
+  { { 1,  1,  1,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  5,  1,  BTLV_INPUT_NOMOVE,  1,  6 },                  //2
+  //  LU  RU  LD  RD  LD2 RD2   U   D   L                   R   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, 0,  5,  BTLV_INPUT_NOMOVE,  4,  0,  6 },                                  //3
+  //  LU  RU  LD  RD  LD2 RD2   U   D   L   R                   A   B
+  { { 2,  2,  2,  2,  -1, -1 }, 2,  5,  3,  BTLV_INPUT_NOMOVE,  2,  6 },                                  //4
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //5
+};
+
+static const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey6Data[ 3 ][ 14 ] = { 
+  { 
+    PokeSeleMenuKey6Normal_L,   ///< 自分以外１体（選択）
+    PokeSeleMenuKey6NoMine_L,   ///< 自分以外全て
+    PokeSeleMenuKey6EnemySel_L, ///< 相手側１体（選択）
+    PokeSeleMenuKey6Enemy_L,    ///< 相手側全て
+    PokeSeleMenuKey6Mine_L,     ///< 相手側１体ランダム
+    PokeSeleMenuKey6MineSel,    ///< 自分を含む味方１体（選択）
+    PokeSeleMenuKey6Pair_L,     ///< 自分以外の味方１体（選択）
+    PokeSeleMenuKey6Mine_L,     ///< 自分のみ
+    PokeSeleMenuKey6All,        ///< 場に出ているポケモン全て
+    PokeSeleMenuKey6Mine,       ///< 自分側陣営
+    PokeSeleMenuKey6Enemy_C,    ///< 敵側陣営
+    PokeSeleMenuKey6All,        ///< 場全体（天候など）
+    PokeSeleMenuKey6Mine_L,     ///< ゆびをふるなど特殊型
+    PokeSeleMenuKey6Long_L,     ///< 自分以外１体（遠距離）
+  },
+  { 
+    PokeSeleMenuKey6Normal_C,   ///< 自分以外１体（選択）
+    PokeSeleMenuKey6NoMine_C,   ///< 自分以外全て
+    PokeSeleMenuKey6EnemySel_C, ///< 相手側１体（選択）
+    PokeSeleMenuKey6Enemy_C,    ///< 相手側全て
+    PokeSeleMenuKey6Mine_C,     ///< 相手側１体ランダム
+    PokeSeleMenuKey6MineSel,    ///< 自分を含む味方１体（選択）
+    PokeSeleMenuKey6Pair_C,     ///< 自分以外の味方１体（選択）
+    PokeSeleMenuKey6Mine_C,     ///< 自分のみ
+    PokeSeleMenuKey6All,        ///< 場に出ているポケモン全て
+    PokeSeleMenuKey6Mine,       ///< 自分側陣営
+    PokeSeleMenuKey6Enemy_C,    ///< 敵側陣営
+    PokeSeleMenuKey6All,        ///< 場全体（天候など）
+    PokeSeleMenuKey6Mine_C,     ///< ゆびをふるなど特殊型
+    PokeSeleMenuKey6Normal_C,   ///< 自分以外１体（遠距離）
+  },
+  { 
+    PokeSeleMenuKey6Normal_R,   ///< 自分以外１体（選択）
+    PokeSeleMenuKey6NoMine_R,   ///< 自分以外全て
+    PokeSeleMenuKey6EnemySel_R, ///< 相手側１体（選択）
+    PokeSeleMenuKey6Enemy_R,    ///< 相手側全て
+    PokeSeleMenuKey6Mine_R,     ///< 相手側１体ランダム
+    PokeSeleMenuKey6MineSel,    ///< 自分を含む味方１体（選択）
+    PokeSeleMenuKey6Pair_R,     ///< 自分以外の味方１体（選択）
+    PokeSeleMenuKey6Mine_R,     ///< 自分のみ
+    PokeSeleMenuKey6All,        ///< 場に出ているポケモン全て
+    PokeSeleMenuKey6Mine,       ///< 自分側陣営
+    PokeSeleMenuKey6Enemy_C,    ///< 敵側陣営
+    PokeSeleMenuKey6All,        ///< 場全体（天候など）
+    PokeSeleMenuKey6Mine_R,     ///< ゆびをふるなど特殊型
+    PokeSeleMenuKey6Long_R,     ///< 自分以外１体（遠距離）
+  },
+};
+
+// ↑描画位置から上記テーブルインデックスを引くためのテーブル
+static const u8 STW_HitTblIndex[] = {
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_E,
+  BTLV_MCSS_POS_F,
+};
+
