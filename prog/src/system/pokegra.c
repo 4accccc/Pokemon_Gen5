@@ -16,6 +16,7 @@
 #include "pokegra/pokegra_wb.naix"
 
 //ポケツール
+#include "poke_tool/monsno_def.h"
 #include "poke_tool/poke_tool.h"
 
 //外部参照
@@ -287,36 +288,52 @@ static void PokeGra_GetFileOffset( int mons_no, int form_no, int sex, int rare, 
 	u32 file_start;
 	u32 file_offset;
 
-	//モンスターナンバーは１オリジン
-	//リソースは０オリジンのため、－１
-	mons_no	-= 1;
-
-	file_start	= POKEGRA_FILE_MAX * mons_no;
-	file_offset	= (dir == POKEGRA_DIR_FRONT) ? POKEGRA_FRONT_M_NCGR: POKEGRA_BACK_M_NCGR;
-
-	//本来は別フォルム処理を入れる@todo
+  if( mons_no == MONSNO_TAMAGO )
+  { 
+    GF_ASSERT( form_no < 2 );
+    if( form_no )
+    { 
+	    file_start = NARC_pokegra_wb_pfwb_egg_manafi_m_NCGR;
+    }
+    else
+    { 
+	    file_start = NARC_pokegra_wb_pfwb_egg_normal_m_NCGR;
+    }
+    file_offset = 0;
+    sex = PTL_SEX_MALE;
+  }
+  else
+  { 
+	  //モンスターナンバーは１オリジン
+	  //リソースは０オリジンのため、－１
+	  mons_no	-= 1;
+ 
+	  file_start	= POKEGRA_FILE_MAX * mons_no;
+	  file_offset	= (dir == POKEGRA_DIR_FRONT) ? POKEGRA_FRONT_M_NCGR: POKEGRA_BACK_M_NCGR;
+  
+	  //本来は別フォルム処理を入れる@todo
 #if defined(DEBUG_ONLY_FOR_sogabe) || defined(DEBUG_ONLY_FOR_toru_nagihashi)
 #warning Another Form Nothing
 #endif
-
-	//性別のチェック
-	switch( sex ){
-	case PTL_SEX_MALE:
-		break;
-	case PTL_SEX_FEMALE:
-		//オスメス書き分けしているかチェックする（サイズが０なら書き分けなし）
-		sex = ( GFL_ARC_GetDataSize( ARCID_POKEGRA, file_start + file_offset + 1 ) == 0 ) ? PTL_SEX_MALE : PTL_SEX_FEMALE;
-		break;
-	case PTL_SEX_UNKNOWN:
-		//性別なしは、オス扱いにする
-		sex = PTL_SEX_MALE;
-		break;
-	default:
-		//ありえない性別
-		GF_ASSERT(0);
-		break;
-	}
-
+  
+	  //性別のチェック
+	  switch( sex ){
+	  case PTL_SEX_MALE:
+		  break;
+	  case PTL_SEX_FEMALE:
+		  //オスメス書き分けしているかチェックする（サイズが０なら書き分けなし）
+		  sex = ( GFL_ARC_GetDataSize( ARCID_POKEGRA, file_start + file_offset + 1 ) == 0 ) ? PTL_SEX_MALE : PTL_SEX_FEMALE;
+		  break;
+	  case PTL_SEX_UNKNOWN:
+		  //性別なしは、オス扱いにする
+		  sex = PTL_SEX_MALE;
+		  break;
+	  default:
+		  //ありえない性別
+		  GF_ASSERT(0);
+		  break;
+	  }
+  }
 
 	//受け取り
 	if( p_mons_offset )
