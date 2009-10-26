@@ -313,7 +313,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 
 	      pos.x = FX_Mul( FX_Div( pos.x, w ), 128 * FX32_ONE );
 	      pos.y = FX_Mul( FX_Div( pos.y, w ),  96 * FX32_ONE );
-        pos.z = 0;
+        pos.z = -pos.z;
 
 				anim_pos.x = FX32_CONST( anim_SRT_mc.px );
 				anim_pos.y = FX32_CONST( -anim_SRT_mc.py );
