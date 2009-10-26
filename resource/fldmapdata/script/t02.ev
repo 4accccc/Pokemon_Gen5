@@ -5,7 +5,7 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../../prog/include/msg/script/msg_t02.h"
+  .include  "msg_t02.h"
   .include  "t02.h"
 
 //--------------------------------------------------------------
@@ -36,20 +36,7 @@ _EVENT_DATA	ev_t02_sign1_01
 _EVENT_DATA_END
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/*
- * 注意！(06.02.09現在)
- * EV_SCRIPT_WORKを確保していないので、
- * SCWK_ANSWERなどのワークは使用することが出来ない！
- * LOCALWORK0などを使用するようにする！
- *
- * 共通スクリプトについては現状使用不可！
- * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
- * あまりつかわないかも？
- */
 /**************************************************************/
-//ev_t02_flag_change:
-//  _END
 
 /**************************************************************/
 /*  BABYGIRL1_1	じゃんけん少女								  */
@@ -267,6 +254,8 @@ _ANIME_LABEL anm_hakai_modoru
 /*			アララギ博士　ポケセン前						*/
 /************************************************************/
 EVENT_START   ev_t02_hakase_guide
+  DEFINE_LOCAL  DOOR_ANIME_ID
+
 	//まちかねたぞ！
 	_TALK_OBJ_START()
 	_BALLOONWIN_TALKOBJ_OPEN( msg_t02_doctor_jr_01 )
@@ -274,6 +263,10 @@ EVENT_START   ev_t02_hakase_guide
 	_BALLOONWIN_CLOSE()
 		
 	//ポケモンセンターに消えていく
+  _DOOR_ANIME_CREATE( DOOR_ANIME_ID, 791, 658 )
+  _DOOR_ANIME_SET( DOOR_ANIME_ID, 0 )
+  _DOOR_ANIME_WAIT( DOOR_ANIME_ID )
+
 	_OBJ_ANIME( T02_HAKASE_GUIDE, anm_doctor_pokecen )
 	_OBJ_ANIME_WAIT()
 
@@ -281,8 +274,22 @@ EVENT_START   ev_t02_hakase_guide
 	_OBJ_DEL( T02_HAKASE_GUIDE )
 
 	//自機も一緒についていく
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_pokecen )
-	_OBJ_ANIME_WAIT()
+  _PLAYER_DIR_GET( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE DIR_UP THEN
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_pokecen_up )
+	  _OBJ_ANIME_WAIT()
+  CASE DIR_LEFT THEN
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_pokecen_left )
+	  _OBJ_ANIME_WAIT()
+  CASE DIR_RIGHT THEN
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_pokecen_right )
+	  _OBJ_ANIME_WAIT()
+  ENDSWITCH
+
+  _DOOR_ANIME_SET( DOOR_ANIME_ID, 1 )
+  _DOOR_ANIME_WAIT( DOOR_ANIME_ID )
+  _DOOR_ANIME_DELETE( DOOR_ANIME_ID )
 	
 	//ゾーンチェンジ
 	_MAP_CHANGE( ZONE_ID_T02PC0101, 7, 19, DIR_UP )
@@ -310,8 +317,22 @@ _ANIME_LABEL anm_doctor_pokecen
 //--------------------------------------------------------------
 //	自機、博士についていく
 //--------------------------------------------------------------
-_ANIME_LABEL anm_player_pokecen
+_ANIME_LABEL anm_player_pokecen_up
 	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+  _ANIME_DATA   AC_VANISH_ON, 1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_pokecen_left
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+  _ANIME_DATA   AC_VANISH_ON, 1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_player_pokecen_right
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+  _ANIME_DATA   AC_VANISH_ON, 1
 	_ANIME_DATA		ACMD_END,0
 
 /************************************************************/
