@@ -252,7 +252,7 @@ static void mapCtrlNoGrid_Main( FIELDMAP_WORK *fieldWork, VecFx32 *pos )
       FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( fieldWork );
       
       // カメラを動かさないで、主人公に向ける
-      FLDNOGRID_MAPPER_DEBUG_SetRailCameraActive( p_mapper, FALSE );
+      FLDNOGRID_MAPPER_SetRailCameraActive( p_mapper, FALSE );
 
       // アングルモードで、主人公を追うようにする。
       FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
