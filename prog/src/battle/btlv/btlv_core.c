@@ -574,6 +574,8 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.heap = wk->heapID;
     wk->bagData.energy = energy;
     wk->bagData.reserved_energy = reserved_energy;
+    wk->bagData.end_flg = FALSE;
+    wk->bagData.ret_item = ITEM_DUMMY_DATA;
 
     wk->plistData.pp = BTL_MAIN_GetPlayerPokeParty( wk->mainModule );
     wk->plistData.font = wk->fontHandle;
@@ -605,9 +607,6 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
   case 2:
     if( BTLV_SCD_FadeFwd(wk->scrnD) ){
       BTLV_SCD_Cleanup( wk->scrnD );
-
-      wk->bagData.end_flg = FALSE;
-      wk->bagData.ret_item = ITEM_DUMMY_DATA;
       BattleBag_TaskAdd( &wk->bagData );
       wk->selectItemSeq++;
     }
@@ -634,20 +633,13 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
 
   case 5:
     if( wk->plistData.end_flg ){
-      if( wk->plistData.sel_poke != BPL_SEL_EXIT ){
-        wk->selectItemSeq = 10;
-      }else{
-        wk->selectItemSeq = 1;
-      }
+      BTLV_SCD_Setup( wk->scrnD );
+      BTLV_SCD_FadeIn( wk->scrnD );
+      wk->selectItemSeq++;
     }
     break;
 
-  case 10:
-    BTLV_SCD_Setup( wk->scrnD );
-    BTLV_SCD_FadeIn( wk->scrnD );
-    wk->selectItemSeq++;
-    break;
-  case 11:
+  case 6:
     if( BTLV_SCD_FadeFwd(wk->scrnD) ){
       wk->selectItemSeq = 0;
       return TRUE;
