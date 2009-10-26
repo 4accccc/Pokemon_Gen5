@@ -33,7 +33,7 @@ typedef struct {
   u8  max;    // 最大数
   u8  pos;    // 何番目のデータか
 
-  u8  page_flg; // ページフラグ
+  u8  page;     //初期表示ページ  //PSTATUS_PAGE_TYPE //技モードでは無効
   u8  ret_sel;  // 選択された技位置
   u8  ret_mode;
   u16 waza;     //技追加時は技番号。0で選択モード
@@ -44,8 +44,8 @@ typedef struct {
 
   //PERAPVOICE    *perap;   // ぺラップの鳴き声データ
 
-  BOOL      ev_contest; // コンテスト用
-  BOOL      pokethlon;  // ポケスロンパフォーマンス画面表示かどうか
+//  BOOL      ev_contest; // コンテスト用
+//  BOOL      pokethlon;  // ポケスロンパフォーマンス画面表示かどうか
   BOOL      waza_chg; // 技を入れ替えたかどうか TRUE = 入れ替えた, FALSE = それ以外
 
   BOOL      canExitButton;  //X戻りが使えるか？
@@ -80,20 +80,17 @@ enum {
 };
 
 
-// ページID
-enum {
-  PST_PAGE_INFO_MEMO = 0, // 「ポケモンじょうほう」「トレーナーメモ」
-  PST_PAGE_PARAM_B_SKILL, // 「ポケモンのうりょく」「わざ説明」
-  PST_PAGE_RIBBON,    // 「きねんリボン」「ポケスロンパフォーマンス」
-  PST_PAGE_RET,     // 「もどる」
-  PST_PAGE_MAX,
-  PST_POKE1 = PST_PAGE_MAX,
-  PST_POKE2,
-  PST_POKE3,
-  PST_POKE4,
-  PST_POKE5,
-  PST_POKE6,
-};
+typedef enum
+{
+  PPT_INFO,     //ポケモン情報
+  PPT_SKILL,    //技
+  PPT_RIBBON,   //リボン
+  
+  PPT_SKILL_ADD,    //技系
+
+  PPT_MAX,
+}PSTATUS_PAGE_TYPE;
+
 //-----------------------------------------------
 //以上GSより移植(09/07/01)
 //-----------------------------------------------

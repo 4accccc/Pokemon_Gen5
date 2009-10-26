@@ -183,6 +183,7 @@ GMEVENT * EVENT_CreateWazaSelect(
   ps_data->mode = PST_MODE_WAZAADD;
   ps_data->max = PokeParty_GetPokeCount( party );
   ps_data->pos = pokePos;
+  ps_data->page = PPT_SKILL;
   ps_data->waza = 0;
   ps_data->canExitButton = FALSE;
 

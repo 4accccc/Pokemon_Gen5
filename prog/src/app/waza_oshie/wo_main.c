@@ -2975,11 +2975,13 @@ static int WO_SeqPstInit( WO_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int WO_SeqPstCall( WO_WORK * wk )
 {
+  /*
 	u8 page[] = {
 		PST_PAGE_PARAM_B_SKILL,		// u‚½‚½‚©‚¤‚í‚´v
 		PST_PAGE_MAX
 	};
-
+  */
+  
 	WO_DispExit( wk );
 
 	wk->psd.ppd  = wk->dat->pp;
@@ -2990,14 +2992,15 @@ static int WO_SeqPstCall( WO_WORK * wk )
 	wk->psd.max  = 1;
 	wk->psd.waza = WO_SelWazaGet( wk );
 	wk->psd.mode = PST_MODE_WAZAADD;
-	wk->psd.ev_contest = 1;
+	wk->psd.page = PPT_INFO;
+//	wk->psd.ev_contest = 1;
 
 	wk->psd.player_name	= MyStatus_GetMyName( wk->dat->myst );
 	wk->psd.player_id		= MyStatus_GetID( wk->dat->myst );
 	wk->psd.player_sex	=  MyStatus_GetMySex( wk->dat->myst );
 
 	wk->psd.zukan_mode = 0;
-	wk->psd.pokethlon  = FALSE;
+//	wk->psd.pokethlon  = FALSE;
 
 
 //	PokeStatus_PageSet( &wk->psd, page );

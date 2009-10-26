@@ -300,8 +300,8 @@ static void IRC_BATTLE_SUBPROC_InitStatusData( IRC_BATTLE_WORK *work , IRC_BATTL
   psData->mode = PST_MODE_NO_WAZACHG;
   psData->max = PokeParty_GetPokeCount(procWork->pokeParty);
   psData->pos = 0;
+  psData->page = PPT_INFO;
   
-  psData->page_flg = 0;
   psData->ret_sel = 0;
   psData->ret_mode = 0;
   psData->waza = 0;

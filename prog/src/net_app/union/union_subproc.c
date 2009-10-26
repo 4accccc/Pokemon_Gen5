@@ -608,6 +608,7 @@ static BOOL SubEvent_Pokelist(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
     pstatus->max = PokeParty_GetPokeCount( plist->pp );
     pstatus->mode = PST_MODE_NORMAL;
     pstatus->pos = plist->ret_sel;
+    pstatus->page = PPT_INFO;
     
 		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, pstatus);
 		(*seq) ++;

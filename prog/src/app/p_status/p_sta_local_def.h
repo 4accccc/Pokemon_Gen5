@@ -201,16 +201,6 @@ typedef enum
   SMES_FADEIN,
 }PSTATUS_MOSAIC_EFFECT_SEQ;
 
-typedef enum
-{
-  PPT_INFO,     //É|ÉPÉÇÉìèÓïÒ
-  PPT_SKILL,    //ãZ
-  PPT_RIBBON,   //ÉäÉ{Éì
-  
-  PPT_SKILL_ADD,    //ãZån
-
-  PPT_MAX,
-}PSTATUS_PAGE_TYPE;
 
 typedef struct _PSTATUS_SUB_WORK PSTATUS_SUB_WORK;
 typedef struct _PSTATUS_INFO_WORK PSTATUS_INFO_WORK;

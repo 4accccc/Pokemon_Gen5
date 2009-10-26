@@ -3331,6 +3331,7 @@ int BOX2MAIN_PokeStatusCall( BOX2_SYS_WORK * syswk )
 		pst->max = PokeParty_GetPokeCount( syswk->dat->pokeparty );
 		pst->pos = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
 	}
+	pst->page       = PPT_INFO;
 	pst->game_data  = syswk->dat->gamedata;
 	pst->cfg        = syswk->dat->cfg;
 	pst->zukan_mode = syswk->dat->zknMode;

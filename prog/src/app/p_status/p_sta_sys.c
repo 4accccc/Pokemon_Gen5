@@ -171,10 +171,28 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   }
   else
   {
-    work->page = PPT_INFO;
+    work->page = work->psData->page;
     PSTATUS_SUB_DispPage( work , work->subWork );
-    PSTATUS_INFO_DispPage( work , work->infoWork );
     PSTATUS_RIBBON_CreateRibbonBar( work , work->ribbonWork );
+    switch( work->page )
+    {
+    case PPT_INFO:
+      PSTATUS_INFO_DispPage( work , work->infoWork );
+      break;
+    case PPT_SKILL:
+      PSTATUS_SKILL_DispPage( work , work->skillWork );
+      break;
+    case PPT_RIBBON:
+      PSTATUS_RIBBON_DispPage( work , work->ribbonWork );
+      break;
+    default:
+      //091026 初期表示ページ追加に伴い
+      GF_ASSERT_MSG(0,"Status first page is invalid!![%d]\n",work->psData->page);
+      work->page = PPT_INFO;
+      PSTATUS_INFO_DispPage( work , work->infoWork );
+      break;
+
+    }
   }
   
 

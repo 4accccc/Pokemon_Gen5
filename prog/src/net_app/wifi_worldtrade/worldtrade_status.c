@@ -43,15 +43,15 @@
 
 
 // ステータス画面で表示するフラグの列（ビットテーブルにすればいいのに…）
+/*
 static const u8 StatusPageTable[]={
 	PST_PAGE_INFO_MEMO,		// 「ポケモンじょうほう」「トレーナーメモ」
 	PST_PAGE_PARAM_B_SKILL,	// 「ポケモンのうりょく」「わざ説明」
 	PST_PAGE_RIBBON,		// 「きねんリボン」
 	PST_PAGE_RET,			// 「もどる」
 	PST_PAGE_MAX
-
 };
-
+*/
 //============================================================================================
 //	プロセス関数
 //============================================================================================
@@ -94,12 +94,13 @@ int WorldTrade_Status_Init(WORLDTRADE_WORK *wk, int seq)
 	wk->statusParam.pos  = 0;
 	wk->statusParam.mode = PST_MODE_NO_WAZACHG;	// 技入れ替え禁止にする
 	wk->statusParam.waza = 0;
+  wk->statusParam.page = PPT_INFO;
 //	wk->statusParam.ev_contest = PokeStatus_ContestFlagGet(wk->param->savedata);
-	wk->statusParam.ev_contest = FALSE;
+//	wk->statusParam.ev_contest = FALSE;
 	//TODO
 	wk->statusParam.zukan_mode = wk->param->zukanmode;
 //	wk->statusParam.pokethlon  = PokeStatus_PerformanceFlagGet(wk->param->savedata);
-	wk->statusParam.pokethlon  = FALSE;
+//	wk->statusParam.pokethlon  = FALSE;
 	//TODO
 //	PokeStatus_PageSet( &wk->statusParam, StatusPageTable );
 //	PokeStatus_PlayerSet( &wk->statusParam, wk->param->mystatus );

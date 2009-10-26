@@ -493,6 +493,7 @@ static GMEVENT * EVENT_SodatePokeSelect(
   ps_data->ppt = PST_PP_TYPE_POKEPARTY;
   ps_data->max = PokeParty_GetPokeCount( party );
   ps_data->mode = PST_MODE_NORMAL;
+  ps_data->page = PPT_INFO;
   ps_data->pos = 0;
 
   // ƒCƒxƒ“ƒg¶¬

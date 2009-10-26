@@ -772,6 +772,7 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
       psData->ppd = (void*)plData->pp;
       psData->game_data = gmData;
       psData->cfg = plData->cfg;
+    	psData->page = PPT_INFO;
 
       psData->ppt = PST_PP_TYPE_POKEPARTY;
       psData->max = PokeParty_GetPokeCount( plData->pp );
@@ -828,6 +829,7 @@ static const BOOL FMenuReturnProc_PokeList(FMENU_EVENT_WORK* mwk)
       psData->mode = PST_MODE_WAZAADD;
       psData->pos = plData->ret_sel;
       psData->waza = plData->waza;
+    	psData->page = PPT_SKILL;
       
       mwk->selPoke = plData->ret_sel;
       mwk->selItem = plData->item;

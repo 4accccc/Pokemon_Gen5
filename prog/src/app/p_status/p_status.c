@@ -156,6 +156,7 @@ static GFL_PROC_RESULT PokeStatusProc_Init( GFL_PROC * proc, int * seq , void *p
         
       }
       psData->mode = PST_MODE_NORMAL;
+      psData->page = PPT_INFO;
       psData->canExitButton = TRUE;
       psData->game_data = GAMEDATA_Create( HEAPID_POKE_STATUS );
       
