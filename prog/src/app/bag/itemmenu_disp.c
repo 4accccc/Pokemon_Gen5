@@ -440,24 +440,12 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win05_d_NCLR,
                                       PALTYPE_MAIN_BG, PALOFS_NUM_FRAME*0x20, 1*0x20,  pWork->heapID);
 
-    // 男女でウィンドウカーソル用パレットを切替
-    {
-      u32 sex = MyStatus_GetMySex( pWork->mystatus );
-
-      if( sex == PTL_SEX_MALE )
-      {
-        GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win01_d_man_NCLR,
-                                        PALTYPE_MAIN_BG, 1*0x20, 2*0x20,  pWork->heapID);
-      }
-      else
-      {
-        GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win01_d_NCLR,
-                                        PALTYPE_MAIN_BG, 1*0x20, 2*0x20,  pWork->heapID);
-      }
-    }
+    // @TODO 消して良い？
+#if 0
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_bag_bag_win01_d_man_NCLR,
+                                      PALTYPE_MAIN_BG, 1*0x20, 2*0x20,  pWork->heapID);
+#endif
     
-    
-
     GFL_ARC_CloseDataHandle(p_handle);
   }
 
@@ -912,11 +900,25 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
     pWork->listRes[i] = GFL_CLGRP_CGR_Register(  archandle , NARC_bag_bag_win01_d_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
     pWork->listBmp[i] = GFL_BMP_Create( 12, 2, GFL_BMP_16_COLOR, pWork->heapID );
   }
+  
+  // 男女でウィンドウカーソル用パレットを切替
+  {
+    u32 sex = MyStatus_GetMySex( pWork->mystatus );
+    u32 res_nclr;
+    
+     if( sex == PTL_SEX_MALE )
+     {
+       res_nclr = NARC_bag_bag_win01_d_man_NCLR;
+     }
+     else
+     {
+       res_nclr = NARC_bag_bag_win01_d_NCLR;
+     }
+  
+     pWork->cellRes[_PLT_LIST] = GFL_CLGRP_PLTT_RegisterEx( archandle, res_nclr, CLSYS_DRAW_MAIN, _PAL_WIN01_CELL, 0, 1, pWork->heapID );
+  }
 
-  pWork->cellRes[_PLT_LIST] = GFL_CLGRP_PLTT_RegisterEx( 
-      archandle, NARC_bag_bag_win01_d_NCLR, CLSYS_DRAW_MAIN, 
-      _PAL_WIN01_CELL, 0, 1, pWork->heapID );
-
+    
   pWork->cellRes[_ANM_LIST] = GFL_CLGRP_CELLANIM_Register(
     archandle , NARC_bag_bag_win01_d_NCER, NARC_bag_bag_win01_d_NANR ,
     pWork->heapID  );
