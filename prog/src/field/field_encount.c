@@ -420,39 +420,11 @@ static void enc_CreateTrainerBattleParam(
 
   BATTLE_PARAM_Init(param);
 
-  { //各設定
-    param->engine = BTL_ENGINE_ALONE;
-    param->rule = BTL_RULE_SINGLE;
-    param->competitor = BTL_COMPETITOR_TRAINER;
-    param->netHandle = NULL;
-    param->commMode = BTL_COMM_NONE;
-    param->netID = 0;
-  }
-
-  { //プレイヤーパーティ追加
-    KAGAYA_Printf( "バトルパラム作成 HEAPID=%d\n", heapID );
-    param->partyPlayer = PokeParty_AllocPartyWork( heapID );
-    PokeParty_Copy( GAMEDATA_GetMyPokemon(gdata), param->partyPlayer );
-  }
+  BTL_SETUP_Single_Trainer( param, gdata, NULL, BTL_LANDFORM_GRASS, BTL_WEATHER_NONE, tr_id );
 
   { //対戦相手の手持ちポケモン生成
     param->partyEnemy1 = PokeParty_AllocPartyWork( heapID );
-
-    param->trID = tr_id;
-
     TT_EncountTrainerDataMake( param, heapID );
-  }
-
-  { //2vs2時の味方AI（不要ならnull）
-    param->partyPartner = NULL;
-  }
-
-  { //2vs2時の２番目敵AI用（不要ならnull）
-    param->partyEnemy2 = NULL;
-  }
-
-  { //プレイヤーステータス
-    param->statusPlayer = SaveData_GetMyStatus( SaveControl_GetPointer() );
   }
 
   { //BGM設定
