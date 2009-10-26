@@ -2367,7 +2367,7 @@ static void DEBUG_MyPokeAdd(POKEPARTY *party,MYSTATUS *myStatus,HEAPID heapID)
 
   PokeParty_Add(party, pp);
 
-  PP_Setup(pp, MONSNO_YUMEBAKURA, 100, 123456);
+  PP_Setup(pp, MONSNO_MUSYAANA, 100, 123456);
   PP_Put( pp , ID_PARA_tamago_flag , 1 );
   PokeParty_Add(party, pp);
   PokeParty_Add(party, pp);
