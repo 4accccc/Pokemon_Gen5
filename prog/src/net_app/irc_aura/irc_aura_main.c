@@ -388,6 +388,7 @@ typedef struct
 	GFL_G3D_ANM	*p_anm[G3D_MDL_ANM_MAX];
 	GFL_G3D_OBJSTATUS	status;
 	BOOL	is_visible;
+	BOOL	is_end_loop;
 } G3D_MDL_WORK;
 
 //-------------------------------------
@@ -660,9 +661,11 @@ static void Graphic_3d_SetUp( void );
 static void G3DMDL_Load( G3D_MDL_WORK *p_wk, ARCHANDLE *p_handle, const G3D_MDL_SETUP *cp_setup, HEAPID heapID );
 static void G3DMDL_UnLoad( G3D_MDL_WORK *p_wk );
 static void G3DMDL_Draw( G3D_MDL_WORK *p_wk );
+static BOOL G3DMDL_IsLoopEnd( const G3D_MDL_WORK *cp_wk );
 static void G3DMDL_SetPos( G3D_MDL_WORK *p_wk, const VecFx32 *cp_trans );
 static void G3DMDL_SetScale( G3D_MDL_WORK *p_wk, const VecFx32 *cp_scale );
 static void G3DMDL_SetVisible( G3D_MDL_WORK *p_wk, BOOL is_visible );
+static BOOL G3DMDL_GetVisible( const G3D_MDL_WORK *cp_wk );
 //MSG_WORK
 static void MSG_Init( MSG_WORK *p_wk, MSG_FONT_TYPE font, HEAPID heapID );
 static void MSG_Exit( MSG_WORK *p_wk );
@@ -1274,9 +1277,9 @@ static void GRAPHIC_Draw( GRAPHIC_WORK* p_wk )
 	//なし
 	NNS_G3dGeFlushBuffer();
 	//SDK系の3D描画
-
-	TOUCH_EFFECT_Draw( &p_wk->touch_eff );
 */
+	TOUCH_EFFECT_Draw( &p_wk->touch_eff );
+
 	GRAPHIC_3D_EndDraw( &p_wk->g3d );
 
 }
@@ -1760,14 +1763,6 @@ static void GRAPHIC_3D_StartDraw( GRAPHIC_3D_WORK *p_wk )
 	GFL_G3D_CAMERA_Switching( p_wk->p_camera );
 	GFL_G3D_DRAW_SetLookAt();
 
-	//描画
-	{	
-		int i;
-		for( i = 0; i < G3D_MDL_MAX; i++ )
-		{	
-			G3DMDL_Draw( &p_wk->mdl[i] );
-		}
-	}
 }
 
 //----------------------------------------------------------------------------
@@ -1966,13 +1961,29 @@ static void G3DMDL_Draw( G3D_MDL_WORK *p_wk )
 	if( p_wk->is_visible )
 	{	
 		int i;
+		int frame;
 		for( i = 0; i<G3D_MDL_ANM_MAX; i++ )
 		{
 			GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj, i, FX32_ONE);
 		}
+		GFL_G3D_OBJECT_GetAnimeFrame( p_wk->p_obj, 0, &frame );
+		p_wk->is_end_loop	=	frame == 0;
 
 		GFL_G3D_DRAW_DrawObject( p_wk->p_obj, &p_wk->status );
 	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アニメエンド
+ *
+ *	@param	const G3D_MDL_WORK *cp_wk		ワーク
+ *
+ *	@return	TRUEループ終了	FALSEループ中
+ */
+//-----------------------------------------------------------------------------
+static BOOL G3DMDL_IsLoopEnd( const G3D_MDL_WORK *cp_wk )
+{	
+	return cp_wk->is_end_loop;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2008,7 +2019,24 @@ static void G3DMDL_SetScale( G3D_MDL_WORK *p_wk, const VecFx32 *cp_scale )
 //-----------------------------------------------------------------------------
 static void G3DMDL_SetVisible( G3D_MDL_WORK *p_wk, BOOL is_visible )
 {	
-	p_wk->is_visible	= is_visible;
+	if( p_wk->is_visible != is_visible )
+	{	
+		GFL_G3D_OBJECT_ResetAnimeFrame( p_wk->p_obj, 0 );
+		p_wk->is_visible	= is_visible;
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	表示フラグ取得
+ *
+ *	@param	const G3D_MDL_WORK *cp_wk	ワーク 
+ *
+ *	@return	TRUEで表示	FALSEで非表示
+ */
+//-----------------------------------------------------------------------------
+static BOOL G3DMDL_GetVisible( const G3D_MDL_WORK *cp_wk )
+{	
+	return cp_wk->is_visible;
 }
 //=============================================================================
 /**
@@ -3606,10 +3634,9 @@ static void TOUCH_EFFECT_Exit( TOUCH_EFFECT_SYS *p_sys )
 //-----------------------------------------------------------------------------
 static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_SYS *p_sys )
 {	
-	int i, j;
-	VecFx32	scale;
+	int i;
 
-	for( j = 0; j < TOUCHEFFID_MAX; j++ )
+	for( i = 0; i < TOUCHEFFID_MAX; i++ )
 	{	
 
 		G3DMDL_Draw( p_sys->p_mdl[i] );
@@ -3631,6 +3658,18 @@ static void TOUCH_EFFECT_Draw( TOUCH_EFFECT_SYS *p_sys )
 			CIRCLE_Draw( &p_wk->c[i] );
 		}
 #endif
+	}
+	{	
+		if( G3DMDL_GetVisible( p_sys->p_mdl[TOUCHEFFID_LEFT] ) && 
+				G3DMDL_IsLoopEnd( p_sys->p_mdl[TOUCHEFFID_LEFT] ) )
+		{	
+			GFL_SNDTOOL_PlaySEwithPan( IRCAURA_SE_AURA, -127 );
+		}
+		if( G3DMDL_GetVisible( p_sys->p_mdl[TOUCHEFFID_RIGHT] ) && 
+		 G3DMDL_IsLoopEnd( p_sys->p_mdl[TOUCHEFFID_RIGHT] ) )
+		{	
+			GFL_SNDTOOL_PlaySEwithPan( IRCAURA_SE_AURA, 127 );
+		}
 	}
 }
 
