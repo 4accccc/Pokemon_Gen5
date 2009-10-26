@@ -779,7 +779,7 @@ BAG_CURSOR * MYITEM_BagCursorAlloc( HEAPID heapID )
 /**
  * @brief	フィールドバッグのカーソル位置取得
  * @param	wk		カーソルデータ
- * @param	pocket	ポケットID
+ * @param	pocket	ポケットID ITEMPOCKET_NORMALなど (item\itempocket_def.h)
  * @param	pos		カーソル位置取得場所
  * @param	scr		スクロールカウンタ取得場所
  * @return	none
