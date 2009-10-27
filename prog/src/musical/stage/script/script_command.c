@@ -1153,7 +1153,6 @@ SCRIPT_FUNC_DEF( PokeActionComeNearToTop )
     {
       VecFx32 subVec;
       MOVE_POKE_VEC *movePoke = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_POKE_VEC ));
-      POKE_ACT_JUMP_WORK  *jumpWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(POKE_ACT_JUMP_WORK));
       //…•½ˆÚ“®
       movePoke->scriptSys = work;
       movePoke->pokeWork = STA_ACT_GetPokeWork( work->actWork , i );;
@@ -1180,6 +1179,7 @@ SCRIPT_FUNC_DEF( PokeActionComeNearToTop )
       //ƒWƒƒƒ“ƒv
       if( movePoke->moveWork.frame != 0 )
       {
+        POKE_ACT_JUMP_WORK  *jumpWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(POKE_ACT_JUMP_WORK));
         const fx32 height = FX32_CONST(8);
         const u8 interval = 15;
         const u8 mod = movePoke->moveWork.frame%interval;

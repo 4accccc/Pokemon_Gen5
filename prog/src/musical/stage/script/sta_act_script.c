@@ -248,10 +248,23 @@ STA_SCRIPT_TCB_OBJECT* STA_SCRIPT_CreateTcbTask( STA_SCRIPT_SYS *work , GFL_TCB_
 {
   STA_SCRIPT_TCB_OBJECT *tcbObj = GFL_HEAP_AllocMemory( work->heapId , sizeof(STA_SCRIPT_TCB_OBJECT) );
   tcbObj->tcbTask = GFL_TCB_AddTask( work->tcbSys , func , tcbWork , pri );
-  tcbObj->tcbWork = tcbWork;
-  
-  NNS_FndAppendListObject( &work->tcbList , tcbObj );
-  return tcbObj;
+  if( tcbObj->tcbTask != NULL )
+  {
+    tcbObj->tcbWork = tcbWork;
+    
+    NNS_FndAppendListObject( &work->tcbList , tcbObj );
+    return tcbObj;
+  }
+  else
+  {
+    OS_TPrintf("*******************************************************\n");
+    OS_TPrintf("*******************************************************\n");
+    OS_TPrintf("TCB登録数オーバー! 同時に動かすものを減らしてください。\n");
+    OS_TPrintf("*******************************************************\n");
+    OS_TPrintf("*******************************************************\n");
+    GFL_HEAP_FreeMemory( tcbObj );
+    return NULL;
+  }
 }
 
 //--------------------------------------------------------------
