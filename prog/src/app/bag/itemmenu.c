@@ -991,25 +991,34 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
       return;
     }
   }
-
   // キャンセル
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL)
+  else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL)
   {
     pWork->ret_code = BAG_NEXTPROC_RETURN;
     _CHANGE_STATE(pWork,NULL);
     return;
   }
-
   // 強制終了
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_X)
+  else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_X)
   {
     pWork->ret_code = BAG_NEXTPROC_EXIT;
     _CHANGE_STATE(pWork,NULL);
     return;
   }
-
+  // 登録
+  else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y)
+  {
+    if( pWork->pocketno == BAG_POKE_EVENT )
+    {
+      SHORTCUT_SetEventItem( pWork, pWork->curpos );
+    }
+    else
+    {
+      SHORTCUT_SetPocket( pWork );
+    }
+  }
   // 並び替え
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT)
+  else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT)
   {
     GFL_STD_MemClear(pWork->ScrollItem, sizeof(pWork->ScrollItem));
     MYITEM_ITEM_STCopy(pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE);  //取得
@@ -2123,13 +2132,16 @@ static void BTN_StateChange( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
  *	@brief  ショートカット設定
  *
  *	@param	FIELD_ITEMMENU_WORK* pWork
- *	@param	pos 
+ *	@param	pos 表示上の位置
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
 static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
 {
+  // 表示上の位置から実体の位置へ座標変換
+  pos += pWork->oamlistpos + 1;
+  
   if(pWork->pocketno == BAG_POKE_EVENT){
     int length = ITEMMENU_GetItemPocketNumber( pWork );
     ITEM_ST * item = ITEMMENU_GetItem( pWork, pos );
@@ -2682,7 +2694,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   }
   // チェックボックス
   else if(bttnid >= BUTTONID_CHECK_AREA){
-    int no = bttnid - BUTTONID_CHECK_AREA + pWork->oamlistpos + 1;
+    int no = bttnid - BUTTONID_CHECK_AREA;
     SHORTCUT_SetEventItem( pWork, no );
   }
   
