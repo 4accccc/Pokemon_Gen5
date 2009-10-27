@@ -19,6 +19,8 @@
 
 #include "field/field_const.h"  //GRID_TO_FX32
 
+#include "field/field_dir.h"    //DIR_Å`
+
 //#include "fieldobj_code.h"		//DIR_UP DIR_DOWN
 //#include "ev_mapchange.h"		//DOOR_ID_JUMP_CODE
 
