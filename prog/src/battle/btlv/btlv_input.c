@@ -296,7 +296,7 @@ enum
   BTLV_INPUT_CURSOR_RD_2,
   BTLV_INPUT_CURSOR_MAX,
 
-  BTLV_INPUT_CURSOR_LU_ANIME = 10,
+  BTLV_INPUT_CURSOR_LU_ANIME = 0,
   BTLV_INPUT_CURSOR_LD_ANIME,
   BTLV_INPUT_CURSOR_RU_ANIME,
   BTLV_INPUT_CURSOR_RD_ANIME,
@@ -384,6 +384,10 @@ struct _BTLV_INPUT_WORK
   u32                   objcharID;
   u32                   objplttID;
   u32                   objcellID;
+
+  //カーソル
+  u32                   cur_charID;
+  u32                   cur_cellID;
 
   //ボールゲージOBJ
   GFL_CLUNIT*           ballgauge_clunit;
@@ -566,6 +570,8 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, HEAPID 
     biw->objcharID        = GFL_CLGRP_REGISTER_FAILED;
     biw->objplttID        = GFL_CLGRP_REGISTER_FAILED;
     biw->objcellID        = GFL_CLGRP_REGISTER_FAILED;
+    biw->cur_charID       = GFL_CLGRP_REGISTER_FAILED;
+    biw->cur_cellID       = GFL_CLGRP_REGISTER_FAILED;
     biw->pokeicon_plttID  = GFL_CLGRP_REGISTER_FAILED;
     biw->pokeicon_cellID  = GFL_CLGRP_REGISTER_FAILED;
     biw->wazatype_plttID  = GFL_CLGRP_REGISTER_FAILED;
@@ -705,6 +711,16 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
   { 
     GFL_CLGRP_CELLANIM_Release( biw->objcellID );
     biw->objcellID = GFL_CLGRP_REGISTER_FAILED;
+  }
+  if( biw->cur_charID != GFL_CLGRP_REGISTER_FAILED )
+  { 
+    GFL_CLGRP_CGR_Release( biw->cur_charID );
+    biw->cur_charID = GFL_CLGRP_REGISTER_FAILED;
+  }
+  if( biw->cur_cellID != GFL_CLGRP_REGISTER_FAILED )
+  { 
+    GFL_CLGRP_CELLANIM_Release( biw->cur_cellID );
+    biw->cur_cellID = GFL_CLGRP_REGISTER_FAILED;
   }
 
   {
@@ -1024,6 +1040,10 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
   biw->objplttID = GFL_CLGRP_PLTT_Register( biw->handle, NARC_battgra_wb_battle_w_obj_NCLR, CLSYS_DRAW_SUB, 0, biw->heapID );
   PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_SUB_OBJ,
                            GFL_CLGRP_PLTT_GetAddr( biw->objplttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 8 );
+  biw->cur_charID = GFL_CLGRP_CGR_Register( biw->handle, NARC_battgra_wb_battle_w_cursor_NCGR, FALSE,
+                                           CLSYS_DRAW_SUB, biw->heapID );
+  biw->cur_cellID = GFL_CLGRP_CELLANIM_Register( biw->handle, NARC_battgra_wb_battle_w_cursor_NCER,
+                                                NARC_battgra_wb_battle_w_cursor_NANR, biw->heapID );
 
   {
     ARCHANDLE*  hdl;
@@ -2444,7 +2464,7 @@ static  void  BTLV_INPUT_CreateCursorOBJ( BTLV_INPUT_WORK* biw )
   for( i = 0 ; i < BTLV_INPUT_CURSOR_MAX ; i++ )
   {
     GF_ASSERT( biw->cursor[ i ].clwk == NULL )
-    biw->cursor[ i ].clwk = GFL_CLACT_WK_Create( biw->cursor_clunit, biw->objcharID, biw->objplttID, biw->objcellID,
+    biw->cursor[ i ].clwk = GFL_CLACT_WK_Create( biw->cursor_clunit, biw->cur_charID, biw->objplttID, biw->cur_cellID,
                                                  &cursor, CLSYS_DEFREND_SUB, biw->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( biw->cursor[ i ].clwk, TRUE );
     GFL_CLACT_WK_SetAnmSeq( biw->cursor[ i ].clwk, anm_no[ i ] );
