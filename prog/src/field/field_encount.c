@@ -30,6 +30,7 @@
 #include "event_battle.h"
 #include "field_encount_local.h"
 
+#include "debug/debug_flg.h"
 #include "sound/wb_sound_data.sadl"
 
 //======================================================================
@@ -153,6 +154,12 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
   //最後のエンカウントからのプレイヤーの歩数を加算
   ewk = GAMEDATA_GetEncountWork(enc->gdata);
   encwork_AddPlayerWalkCount( ewk, fplayer);
+
+#ifdef PM_DEBUG
+  if( DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEncount) ){
+    return NULL;
+  }
+#endif
 
   //ロケーションチェック
   enc_loc = enc_GetAttrLocation( enc );

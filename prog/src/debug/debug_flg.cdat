@@ -13,7 +13,7 @@
 //取得時には DEBUG_FLG_定義名 で取得できます。
 
 //Page1
-DEBUG_FLG_DEF( EnableEncount , "EncountOff" )
+DEBUG_FLG_DEF( DisableEncount , "EncountOff" )
 DEBUG_FLG_DEF( TestFlg1 , "テスト1")
 DEBUG_FLG_DEF( TestFlg2 , "テスト2")
 DEBUG_FLG_DEF( TestFlg3 , "テスト3")
