@@ -197,7 +197,7 @@
 #define SCWK_AREA_END                    32799 /* 0x801f  */
 
 
-/* flags "user_work.xls" 32800 ～ 32831 */
+/* flags "user_work.xls" 32800 ～ 32863 */
 
 #define USERWK_AREA_START                32800 /* 0x8020  */
 
@@ -233,13 +233,45 @@
 #define USERWK_29                        32829 /* 0x803d イベント起動中のみ機能するフラグ */
 #define USERWK_30                        32830 /* 0x803e イベント起動中のみ機能するフラグ */
 #define USERWK_31                        32831 /* 0x803f イベント起動中のみ機能するフラグ */
+#define USERWK_32                        32832 /* 0x8040 イベント起動中のみ機能するフラグ */
+#define USERWK_33                        32833 /* 0x8041 イベント起動中のみ機能するフラグ */
+#define USERWK_34                        32834 /* 0x8042 イベント起動中のみ機能するフラグ */
+#define USERWK_35                        32835 /* 0x8043 イベント起動中のみ機能するフラグ */
+#define USERWK_36                        32836 /* 0x8044 イベント起動中のみ機能するフラグ */
+#define USERWK_37                        32837 /* 0x8045 イベント起動中のみ機能するフラグ */
+#define USERWK_38                        32838 /* 0x8046 イベント起動中のみ機能するフラグ */
+#define USERWK_39                        32839 /* 0x8047 イベント起動中のみ機能するフラグ */
+#define USERWK_40                        32840 /* 0x8048 イベント起動中のみ機能するフラグ */
+#define USERWK_41                        32841 /* 0x8049 イベント起動中のみ機能するフラグ */
+#define USERWK_42                        32842 /* 0x804a イベント起動中のみ機能するフラグ */
+#define USERWK_43                        32843 /* 0x804b イベント起動中のみ機能するフラグ */
+#define USERWK_44                        32844 /* 0x804c イベント起動中のみ機能するフラグ */
+#define USERWK_45                        32845 /* 0x804d イベント起動中のみ機能するフラグ */
+#define USERWK_46                        32846 /* 0x804e イベント起動中のみ機能するフラグ */
+#define USERWK_47                        32847 /* 0x804f イベント起動中のみ機能するフラグ */
+#define USERWK_48                        32848 /* 0x8050 イベント起動中のみ機能するフラグ */
+#define USERWK_49                        32849 /* 0x8051 イベント起動中のみ機能するフラグ */
+#define USERWK_50                        32850 /* 0x8052 イベント起動中のみ機能するフラグ */
+#define USERWK_51                        32851 /* 0x8053 イベント起動中のみ機能するフラグ */
+#define USERWK_52                        32852 /* 0x8054 イベント起動中のみ機能するフラグ */
+#define USERWK_53                        32853 /* 0x8055 イベント起動中のみ機能するフラグ */
+#define USERWK_54                        32854 /* 0x8056 イベント起動中のみ機能するフラグ */
+#define USERWK_55                        32855 /* 0x8057 イベント起動中のみ機能するフラグ */
+#define USERWK_56                        32856 /* 0x8058 イベント起動中のみ機能するフラグ */
+#define USERWK_57                        32857 /* 0x8059 イベント起動中のみ機能するフラグ */
+#define USERWK_58                        32858 /* 0x805a イベント起動中のみ機能するフラグ */
+#define USERWK_59                        32859 /* 0x805b イベント起動中のみ機能するフラグ */
+#define USERWK_60                        32860 /* 0x805c イベント起動中のみ機能するフラグ */
+#define USERWK_61                        32861 /* 0x805d イベント起動中のみ機能するフラグ */
+#define USERWK_62                        32862 /* 0x805e イベント起動中のみ機能するフラグ */
+#define USERWK_63                        32863 /* 0x805f イベント起動中のみ機能するフラグ */
 
-#define USERWK_AREA_END                  32831 /* 0x803f  */
+#define USERWK_AREA_END                  32863 /* 0x805f  */
 
 
 
 
-#define WORKS_TOTAL_MAX  32832 /* 0x8040 */
+#define WORKS_TOTAL_MAX  32864 /* 0x8060 */
 
 
 /* 自動生成フラグ定義ファイル 終了*/
