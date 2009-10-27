@@ -19,6 +19,8 @@
 #include "pokeicon/pokeicon.h"
 #include "system/sdkdef.h"
 
+#include "battle/btl_field.h"
+
 #include "btlv_input.h"
 #include "data/btlv_input.cdat"
 
@@ -318,6 +320,26 @@ enum
   BTLV_INPUT_POKE_ICON_MAX = 3,
 };
 
+//天候アイコン定義
+enum
+{ 
+  BTLV_INPUT_WEATHER_ICON_MAX = 2,
+
+  BTLV_INPUT_WEATHER_BASE = 14,   ///< 天候アイコン土台
+  BTLV_INPUT_WEATHER_SHINE,       ///< はれ
+  BTLV_INPUT_WEATHER_RAIN,        ///< あめ
+  BTLV_INPUT_WEATHER_SNOW,        ///< あられ
+  BTLV_INPUT_WEATHER_SAND,        ///< すなあらし
+  BTLV_INPUT_WEATHER_MIST,        ///< きり
+
+  BTLV_INPUT_WEATHER_X1 = 256 + 48,
+  BTLV_INPUT_WEATHER_X2 = 256 - 32,
+
+  BTLV_INPUT_WEATHER_Y = 32,
+
+  BTLV_INPUT_WEATHER_MOVE_SPEED = 8,
+};
+
 enum
 { 
   BTLV_INPUT_FADE_OUT = 1,
@@ -385,6 +407,10 @@ struct _BTLV_INPUT_WORK
   u32                   wazatype_cellID;
   GFL_CLUNIT*           wazatype_clunit;
   GFL_CLWK*             wazatype_wk[ PTL_WAZA_MAX ];
+
+  //天候アイコン
+  GFL_CLUNIT*           weather_clunit;
+  GFL_CLWK*             weather_wk[ BTLV_INPUT_WEATHER_ICON_MAX ];
 
   //フォント
   GFL_FONT*             font;
@@ -454,6 +480,11 @@ typedef struct
 
 typedef struct
 {
+  BTLV_INPUT_WORK*  biw;
+}TCB_WEATHER_ICON_MOVE;
+
+typedef struct
+{
   const GFL_CLACTPOS  pos[ BUTTON_ANIME_MAX ];          //座標
   int                 anm_no[ BUTTON_ANIME_TYPE_MAX ];  //アニメーションナンバー
 }BUTTON_ANIME_PARAM;
@@ -483,6 +514,7 @@ static  void  TCB_ButtonAnime( GFL_TCB* tcb, void* work );
 static  void  SetupBallGaugeMove( BTLV_INPUT_WORK* biw, BALL_GAUGE_MOVE_DIR dir );
 static  void  TCB_BallGaugeMove( GFL_TCB* tcb, void* work );
 static  void  TCB_Fade( GFL_TCB* tcb, void* work );
+static  void  TCB_WeatherIconMove( GFL_TCB* tcb, void* work );
 
 static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work );
 static  void  FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int *ret_char_len );
@@ -492,6 +524,8 @@ static  void  BTLV_INPUT_ClearScreen( BTLV_INPUT_WORK* biw );
 static  PRINTSYS_LSB  PP_FontColorGet( int pp, int pp_max );
 static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp );
 static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw );
+static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw );
+static  void  BTLV_INPUT_DeleteWeatherIcon( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT_COMMAND_PARAM *bicp, BALL_GAUGE_TYPE type );
 static  void  BTLV_INPUT_DeleteBallGauge( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateCursorOBJ( BTLV_INPUT_WORK* biw );
@@ -525,6 +559,26 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, GFL_FONT* font, HEAPID 
   biw->type = type;
 
   biw->old_cursor_pos = CURSOR_NOMOVE;
+
+  { 
+    int i;
+
+    biw->objcharID        = GFL_CLGRP_REGISTER_FAILED;
+    biw->objplttID        = GFL_CLGRP_REGISTER_FAILED;
+    biw->objcellID        = GFL_CLGRP_REGISTER_FAILED;
+    biw->pokeicon_plttID  = GFL_CLGRP_REGISTER_FAILED;
+    biw->pokeicon_cellID  = GFL_CLGRP_REGISTER_FAILED;
+    biw->wazatype_plttID  = GFL_CLGRP_REGISTER_FAILED;
+    biw->wazatype_cellID  = GFL_CLGRP_REGISTER_FAILED;
+    for( i = 0 ; i < BTLV_INPUT_POKE_ICON_MAX ; i++ )
+    { 
+      biw->pokeicon_charID[ i ] = GFL_CLGRP_REGISTER_FAILED;
+    }
+    for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
+    { 
+      biw->wazatype_charID[ i ] = GFL_CLGRP_REGISTER_FAILED;
+    }
+  }
 
   BTLV_INPUT_InitBG( biw );
 
@@ -597,6 +651,7 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
   biw->ballgauge_clunit = GFL_CLACT_UNIT_Create( TEMOTI_POKEMAX * 2, 0, biw->heapID );
   biw->cursor_clunit = GFL_CLACT_UNIT_Create( BTLV_INPUT_CURSOR_MAX, 0, biw->heapID );
   biw->pokeicon_clunit = GFL_CLACT_UNIT_Create( BTLV_INPUT_POKE_ICON_MAX, 0, biw->heapID );
+  biw->weather_clunit = GFL_CLACT_UNIT_Create( BTLV_INPUT_WEATHER_ICON_MAX, 0, biw->heapID );
 
   BTLV_INPUT_SetFrame();
   BTLV_INPUT_LoadResource( biw );
@@ -634,26 +689,53 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
   BTLV_INPUT_DeleteBallGauge( biw );
   BTLV_INPUT_DeleteCursorOBJ( biw );
   BTLV_INPUT_DeletePokeIcon( biw );
+  BTLV_INPUT_DeleteWeatherIcon( biw );
 
-  GFL_CLGRP_CGR_Release( biw->objcharID );
-  GFL_CLGRP_CELLANIM_Release( biw->objcellID );
-  GFL_CLGRP_PLTT_Release( biw->objplttID );
+  if( biw->objcharID != GFL_CLGRP_REGISTER_FAILED )
+  { 
+    GFL_CLGRP_CGR_Release( biw->objcharID );
+    biw->objcharID = GFL_CLGRP_REGISTER_FAILED;
+  }
+  if( biw->objplttID != GFL_CLGRP_REGISTER_FAILED )
+  { 
+    GFL_CLGRP_PLTT_Release( biw->objplttID );
+    biw->objplttID = GFL_CLGRP_REGISTER_FAILED;
+  }
+  if( biw->objcellID != GFL_CLGRP_REGISTER_FAILED )
+  { 
+    GFL_CLGRP_CELLANIM_Release( biw->objcellID );
+    biw->objcellID = GFL_CLGRP_REGISTER_FAILED;
+  }
 
   {
     int i;
 
     for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
     {
-      GFL_CLGRP_CGR_Release( biw->wazatype_charID[ i ] );
+      if( biw->wazatype_charID[ i ] != GFL_CLGRP_REGISTER_FAILED )
+      { 
+        GFL_CLGRP_CGR_Release( biw->wazatype_charID[ i ] );
+        biw->wazatype_charID[ i ] = GFL_CLGRP_REGISTER_FAILED;
+      }
     }
   }
-  GFL_CLGRP_CELLANIM_Release( biw->wazatype_cellID );
-  GFL_CLGRP_PLTT_Release( biw->wazatype_plttID );
+
+  if( biw->wazatype_cellID != GFL_CLGRP_REGISTER_FAILED )
+  { 
+    GFL_CLGRP_CELLANIM_Release( biw->wazatype_cellID );
+    biw->wazatype_cellID = GFL_CLGRP_REGISTER_FAILED;
+  }
+  if( biw->wazatype_plttID  != GFL_CLGRP_REGISTER_FAILED )
+  { 
+    GFL_CLGRP_PLTT_Release( biw->wazatype_plttID );
+    biw->wazatype_plttID = GFL_CLGRP_REGISTER_FAILED;
+  }
 
   GFL_CLACT_UNIT_Delete( biw->wazatype_clunit );
   GFL_CLACT_UNIT_Delete( biw->ballgauge_clunit );
   GFL_CLACT_UNIT_Delete( biw->cursor_clunit );
   GFL_CLACT_UNIT_Delete( biw->pokeicon_clunit );
+  GFL_CLACT_UNIT_Delete( biw->weather_clunit );
 
   GFL_BMPWIN_Delete( biw->bmp_win );
 
@@ -791,6 +873,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND )
       {
         BTLV_INPUT_DeletePokeIcon( biw );
+        BTLV_INPUT_DeleteWeatherIcon( biw );
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Standby, ttw, 1 );
       }
       else
@@ -814,6 +897,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       }
 
       BTLV_INPUT_CreatePokeIcon( biw, bicp );
+      BTLV_INPUT_CreateWeatherIcon( biw );
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA )
       {
@@ -846,6 +930,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       else
       {
         BTLV_INPUT_DeletePokeIcon( biw );
+        BTLV_INPUT_DeleteWeatherIcon( biw );
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Waza, ttw, 1 );
       }
     }
@@ -1619,6 +1704,30 @@ static  void  TCB_Fade( GFL_TCB* tcb, void* work )
   }
 }
 
+//============================================================================================
+/**
+ *  @brief  天候アイコン移動
+ */
+//============================================================================================
+static  void  TCB_WeatherIconMove( GFL_TCB* tcb, void* work )
+{ 
+  TCB_WEATHER_ICON_MOVE*  twim = ( TCB_WEATHER_ICON_MOVE* )work;
+  GFL_CLACTPOS  pos;
+
+  GFL_CLACT_WK_GetPos( twim->biw->weather_wk[ 0 ], &pos, CLSYS_DEFREND_SUB );
+  pos.x -= BTLV_INPUT_WEATHER_MOVE_SPEED;
+  GFL_CLACT_WK_SetPos( twim->biw->weather_wk[ 0 ], &pos, CLSYS_DEFREND_SUB );
+  GFL_CLACT_WK_GetPos( twim->biw->weather_wk[ 1 ], &pos, CLSYS_DEFREND_SUB );
+  pos.x -= BTLV_INPUT_WEATHER_MOVE_SPEED;
+  GFL_CLACT_WK_SetPos( twim->biw->weather_wk[ 1 ], &pos, CLSYS_DEFREND_SUB );
+
+  if( pos.x == BTLV_INPUT_WEATHER_X2 )
+  { 
+    GFL_HEAP_FreeMemory( twim );
+    GFL_TCB_DeleteTask( tcb );
+  }
+}
+
 //--------------------------------------------------------------
 /**
  * @brief 文字列の長さを取得する
@@ -2141,12 +2250,87 @@ static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw )
       GFL_CLACT_WK_Remove( biw->pokeicon_wk[ i ].clwk );
       GFL_CLGRP_CGR_Release( biw->pokeicon_charID[ i ] );
       biw->pokeicon_wk[ i ].clwk = NULL;
+      biw->pokeicon_charID[ i ] = GFL_CLGRP_REGISTER_FAILED;
     }
   }
 
-  GFL_CLGRP_CELLANIM_Release( biw->pokeicon_cellID );
-  GFL_CLGRP_PLTT_Release( biw->pokeicon_plttID );
+  if( biw->pokeicon_cellID != GFL_CLGRP_REGISTER_FAILED )
+  { 
+    GFL_CLGRP_CELLANIM_Release( biw->pokeicon_cellID );
+    biw->pokeicon_cellID = GFL_CLGRP_REGISTER_FAILED;
+  }
+  if( biw->pokeicon_plttID != GFL_CLGRP_REGISTER_FAILED )
+  { 
+    GFL_CLGRP_PLTT_Release( biw->pokeicon_plttID );
+    biw->pokeicon_plttID = GFL_CLGRP_REGISTER_FAILED;
+  }
+}
 
+//--------------------------------------------------------------
+/**
+ * @brief   天候アイコン生成
+ *
+ * @param[in] biw   システム管理構造体のポインタ
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw )
+{ 
+  BtlWeather  btl_weather = BTL_FIELD_GetWeather();
+  GFL_CLWK_DATA weather = {
+    0, 0,     //x, y
+    0, 0, 0,  //アニメ番号、優先順位、BGプライオリティ
+  };
+  int pal[] = { 0, 1, 3, 2, 1 };
+  int ofs_x[] = {   5, 0,  1,  1,   1 };
+  int ofs_y[] = { -12, 0, -8, -8, -12 };
+
+  if( btl_weather == BTL_WEATHER_NONE )
+  { 
+    return;
+  }
+
+  weather.pos_x = BTLV_INPUT_WEATHER_X1 + ofs_x[ btl_weather - 1 ];
+  weather.pos_y = BTLV_INPUT_WEATHER_Y + ofs_y[ btl_weather - 1 ];
+  biw->weather_wk[ 0 ] = GFL_CLACT_WK_Create( biw->weather_clunit, biw->objcharID, biw->objplttID, biw->objcellID,
+                                              &weather, CLSYS_DEFREND_SUB, biw->heapID );
+  GFL_CLACT_WK_SetAutoAnmFlag( biw->weather_wk[ 0 ], TRUE );
+  GFL_CLACT_WK_SetAnmSeq( biw->weather_wk[ 0 ], BTLV_INPUT_WEATHER_BASE + btl_weather);
+
+  weather.pos_x = BTLV_INPUT_WEATHER_X1;
+  weather.pos_y = BTLV_INPUT_WEATHER_Y;
+  biw->weather_wk[ 1 ] = GFL_CLACT_WK_Create( biw->weather_clunit, biw->objcharID, biw->objplttID, biw->objcellID,
+                                              &weather, CLSYS_DEFREND_SUB, biw->heapID );
+  GFL_CLACT_WK_SetAutoAnmFlag( biw->weather_wk[ 1 ], TRUE );
+  GFL_CLACT_WK_SetAnmSeq( biw->weather_wk[ 1 ], BTLV_INPUT_WEATHER_BASE );
+  GFL_CLACT_WK_SetPlttOffs( biw->weather_wk[ 1 ], pal[ btl_weather - 1 ], CLWK_PLTTOFFS_MODE_OAM_COLOR );
+
+  { 
+    TCB_WEATHER_ICON_MOVE*  twim = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_WEATHER_ICON_MOVE ) );
+    twim->biw = biw;
+
+    GFL_TCB_AddTask( biw->tcbsys, TCB_WeatherIconMove, twim, 0 );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   天候アイコン削除
+ *
+ * @param[in] biw   システム管理構造体のポインタ
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_DeleteWeatherIcon( BTLV_INPUT_WORK* biw )
+{ 
+  int i;
+
+  for( i = 0 ; i < BTLV_INPUT_WEATHER_ICON_MAX ; i++ )
+  { 
+    if( biw->weather_wk[ i ] )
+    { 
+      GFL_CLACT_WK_Remove( biw->weather_wk[ i ] );
+      biw->weather_wk[ i ] = NULL;
+    }
+  }
 }
 
 //--------------------------------------------------------------
