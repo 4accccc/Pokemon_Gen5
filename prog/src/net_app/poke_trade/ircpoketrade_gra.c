@@ -772,26 +772,6 @@ void IRC_POKETRADE_SetCursorXY(POKEMON_TRADE_WORK* pWork)
   pWork->y = apos.y;
 }
 
-//ラインインデックスの位置にカーソル表示
-void IRC_POKETRADE_CursorEnable(POKEMON_TRADE_WORK* pWork,int line,int index)
-{
-  int i,j;
-
-  for(j=0;j<_LING_LINENO_MAX;j++){
-    for(i=0;i<BOX_VERTICAL_NUM;i++){
-      GFL_CLACT_WK_SetDrawEnable(pWork->markIcon[j][i],FALSE);
-    }
-  }
-  if(_LING_LINENO_MAX <= line){
-    return;
-  }
-  if(BOX_VERTICAL_NUM <= index){
-    return;
-  }
-  
-  GFL_CLACT_WK_SetDrawEnable( pWork->markIcon[line ][index], TRUE );
-}
-
 
 
 #if 1

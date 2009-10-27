@@ -1238,6 +1238,22 @@ static void _changeMenuOpen(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+
+//ラインインデックスの位置にカーソル表示
+static void IRC_POKETRADE_CursorEnable(POKEMON_TRADE_WORK* pWork,int line,int index)
+{
+  int i,j,k;
+
+  pWork->MainObjCursorLine = line;   //OBJカーソルライン
+  pWork->MainObjCursorIndex = index;  //OBJカーソルインデックス
+  pWork->oldLine++;
+  pWork->bgscrollRenew = TRUE;
+  _scrollMainFunc(pWork,FALSE,FALSE);
+
+}
+
+
+
 static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork)
 {
   BOOL bChange=FALSE;;
@@ -1261,7 +1277,7 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork)
           pWork->workPokeIndex = 0;
           pWork->workBoxno = 0;
           bChange = TRUE;
-        }
+          }
       }
     }
   }

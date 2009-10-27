@@ -597,8 +597,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.y = _POKEMON_PLAYER_SIDEIN_POSY;
       apos.z = _POKEMON_PLAYER_SIDEIN_POSZ;
       pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], ANMCNTC(_POKE_SIDEIN_TIME), &apos, pWork->heapID);
-      pWork->pMoveMcss[0]->percent = _POKE_SIDEIN_PERCENT;
-      pWork->pMoveMcss[0]->add = _POKE_SIDEIN_PERCENTADD;
+      //pWork->pMoveMcss[0]->percent = _POKE_SIDEIN_PERCENT;
+      //pWork->pMoveMcss[0]->add = _POKE_SIDEIN_PERCENTADD;
      //MCSS_SetAnmStopFlag(pWork->pokeMcss[0]);
     }
   }
@@ -625,12 +625,19 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.x *= _POKMEON_SCALE_SIZE;
       apos.y *= _POKMEON_SCALE_SIZE;
       MCSS_SetScale( pWork->pokeMcss[1], &apos );
-      pWork->pMoveMcss[1]->percent = _POKE_SIDEIN_PERCENT;
-      pWork->pMoveMcss[1]->add = _POKE_SIDEIN_PERCENTADD;
+      //pWork->pMoveMcss[1]->percent = _POKE_SIDEIN_PERCENT;
+      //pWork->pMoveMcss[1]->add = _POKE_SIDEIN_PERCENTADD;
       //MCSS_SetAnmStopFlag(pWork->pokeMcss[1]);
 
     }
   }
+
+  if(ANMCNTC(_POKE_SIDEIN_START2) == pWork->anmCount){
+    _pokeMoveRenew(pWork->pMoveMcss[0],ANMCNTC(_POKE_SIDEIN_TIME2),&pWork->pMoveMcss[0]->end);
+    _pokeMoveRenew(pWork->pMoveMcss[1],ANMCNTC(_POKE_SIDEIN_TIME2),&pWork->pMoveMcss[1]->end);
+  }
+
+  
   if(ANMCNTC(_POKE_LEAVE_START) == pWork->anmCount){
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
     pWork->pMoveMcss[0]=NULL;
@@ -1072,6 +1079,7 @@ static void _pokeMoveRenew(_POKEMCSS_MOVE_WORK* pPoke,int time, const VecFx32* p
     VecFx32 apos;
     MCSS_GetPosition(pPoke->pMcss, &apos);
     pPoke->time = time;
+    pPoke->nowcount=0;
     GFL_STD_MemCopy(pPos, &pPoke->end, sizeof(VecFx32));
     GFL_STD_MemCopy(&apos, &pPoke->start, sizeof(VecFx32));
   }
@@ -1116,7 +1124,7 @@ static fx32 _movemath(fx32 st,fx32 en,_POKEMCSS_MOVE_WORK* pMove)
   re = re / pMove->time;
   if(pMove->percent != 0.0f){
     float ans = FX_FX32_TO_F32(re * pMove->nowcount);
-    ans = (1.0f-FX_FX16_TO_F32(FX_CosIdx(pMove->sins))) * ans;
+    ans = FX_FX32_TO_F32( FX_Sqrt( FX_SinIdx(pMove->sins) )) * ans;
     re = FX_F32_TO_FX32(ans);
     re = st + re;
   }

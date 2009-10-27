@@ -566,7 +566,6 @@ extern void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int
 extern void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* pp);
 extern void IRC_POKETRADE_PokeStatusIconReset(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SetCursorXY(POKEMON_TRADE_WORK* pWork);
-extern void IRC_POKETRADE_CursorEnable(POKEMON_TRADE_WORK* pWork,int line,int index);
 
 
 #if _TRADE_DEBUG

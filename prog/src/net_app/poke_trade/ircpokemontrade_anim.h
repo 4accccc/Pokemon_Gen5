@@ -44,13 +44,19 @@
 #define _POKE_APPEAR_TIME2   (28)       //絵コンテ９番  さらにゆっくり移動
 #define _POKE_SIDEOUT_START   (368)  //絵コンテ１０番  ポケモン左右に移動していく
 #define _POKE_SIDEOUT_TIME    (46)      //絵コンテ１０番  ポケモン登場移動時間
-#define _POKE_SIDEIN_START   (434)   //絵コンテ１１番  ポケモン左右に移動して戻ってくる
-#define _POKE_SIDEIN_TIME    (203)     //絵コンテ１１番 ポケモン登場移動時間
 
-#define _POKE_SIDEIN_PERCENT (0.1f)     
-#define _POKE_SIDEIN_PERCENTADD (0.0044334975f)
+
+#define _POKE_SIDEIN_START   (434)   //絵コンテ１１番  ポケモン左右に移動して戻ってくる
+#define _POKE_SIDEIN_TIME    (103)     //絵コンテ１１番 ポケモン登場移動時間
+
+#define _POKE_SIDEIN_START2   (504)   //絵コンテ１１番  さらにポケモン左右に移動して戻ってくる
+#define _POKE_SIDEIN_TIME2    (128)     //絵コンテ１１番 さらにポケモン登場移動時間
 
 #define _POKE_LEAVE_START   (637)  //絵コンテ１３番  ポケモン退場
+
+
+
+
 #define _POKE_LEAVE_TIME    (7)      //絵コンテ１３番  ポケモン退場移動時間
 
 #define _POKEMON_CREATE_TIME   (1166)  ///絵コンテ２４番 交換終了してポケモン登場 
