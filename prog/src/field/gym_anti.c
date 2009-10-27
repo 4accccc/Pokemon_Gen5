@@ -521,10 +521,12 @@ static GMEVENT_RESULT PushSwEvt( GMEVENT* event, int* seq, void* work )
         anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0);
 ///        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
         if (tmp->IsOn){
+          FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
           frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
           //押したスイッチインデックスを記憶
           gmk_sv_work->PushSwIdx = tmp->SwIdx;
         }else{
+          FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
           frm = 0;
           //押したスイッチインデックスをクリア
           gmk_sv_work->PushSwIdx = ANTI_SW_NUM_MAX;
