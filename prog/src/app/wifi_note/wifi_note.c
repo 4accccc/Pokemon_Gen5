@@ -5722,7 +5722,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
 //		GFL_PROC_LOCAL_Exit( p_wk->p_subproc );
 
 		// キャンセルチェック
-		if( p_wk->p_namein->cancel == 1 ){
+		if( p_wk->p_namein->cancel == 0 ){
 			// 次へ
 			GFL_PROC_LOCAL_CallProc( p_wk->p_subproc , NO_OVERLAY_ID ,
 				&CodeInput_ProcData, p_wk->p_codein );
