@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-09-09T18:08:51"/>
+	<create user="matsumiya" host="W00207" date="2009-10-27T12:00:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -326,16 +326,8 @@
 	</row>
 
 	<row id="msg_t02r0302_middleman1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">きみの　これからの　じんせいで
-いちばんの　パートナーとなれる[BE:00:ページ切り替え（行送り）]
-ポケモンに　であえることを[BE:00:ページ切り替え（行送り）]
-かってに　ねがわせてもらうよ[BE:01:ページ切り替え（クリア）]
-……じつは　もう　であっているのかな？</language>
-		<language name="JPN_KANJI" width="256">君の　これからの　人生で
-一番の　パートナーとなれる[BE:00:ページ切り替え（行送り）]
-ポケモンに　出会えることを[BE:00:ページ切り替え（行送り）]
-おじさん　勝手に　願わせてもらうよ[BE:01:ページ切り替え（クリア）]
-……実は　もう　出会っているのかな？</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t02r0302_poke_01">
