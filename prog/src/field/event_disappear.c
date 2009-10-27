@@ -16,6 +16,8 @@
 #include "fieldmap_tcb.h"
 #include "fldeff_kemuri.h"
 #include "fldeff_gyoe.h"
+#include "../../../resource/fldmapdata/camera_data/fieldcameraformat.h" // for FLD_CAMERA_PARAM
+#include "sound/pm_sndsys.h"
 
 
 //==========================================================================================
@@ -36,9 +38,10 @@
 //==========================================================================================
 typedef struct
 {
-  int                frame;   // フレーム数カウンタ
-  FIELDMAP_WORK* pFieldmap;   // 動作フィールドマップ
-  VecFx32    sandStreamPos;   // 流砂中心部の位置( 流砂イベントのみ使用 )
+  int                    frame;   // フレーム数カウンタ
+  FIELDMAP_WORK*     pFieldmap;   // 動作フィールドマップ
+  FIELD_CAMERA_MODE cameraMode;   // イベント開始時のカメラモード
+  VecFx32        sandStreamPos;   // 流砂中心部の位置( 流砂イベントのみ使用 )
 }
 EVENT_WORK;
 
@@ -106,6 +109,7 @@ GMEVENT* EVENT_DISAPPEAR_Warp( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WOR
 {
   GMEVENT*   event;
   EVENT_WORK* work;
+  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( fieldmap );
 
   // イベントを作成
   //event = GMEVENT_Create( gsys, parent, EVENT_FUNC_DISAPPEAR_Rotate, sizeof( EVENT_WORK ) );
@@ -136,17 +140,24 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Rotate( GMEVENT* event, int* seq, voi
 {
   EVENT_WORK*       ew = (EVENT_WORK*)work;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ew->pFieldmap );
+  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( ew->pFieldmap );
 
   switch( *seq )
   {
-  // 自機回転タスクの追加
+  // カメラモードの設定
   case 0:
+    ew->cameraMode = FIELD_CAMERA_GetMode( camera );
+    FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+    ++( *seq );
+    break;
+  // 自機回転タスクの追加
+  case 1:
     FIELDMAP_TCB_AddTask_RotatePlayer_SpeedUp( ew->pFieldmap, 120, 10 );    // 自機回転
     FIELDMAP_TCB_AddTask_CameraZoom( ew->pFieldmap, ZOOM_IN_FRAME, -ZOOM_IN_DIST ); // ズームイン
     ++( *seq );
     break;
   // フェードアウト開始
-  case 1:
+  case 2:
     if( 100 < ew->frame++ )
     {
       GFL_FADE_SetMasterBrightReq(
@@ -155,13 +166,18 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Rotate( GMEVENT* event, int* seq, voi
     }
     break;
   // タスクの終了待ち
-  case 2:
+  case 3:
     if( 120 < ew->frame++ )
     {
       ++( *seq );
     }
     break;
-  case 3:
+  // カメラモードの復帰
+  case 4:
+    FIELD_CAMERA_ChangeMode( camera, ew->cameraMode );
+    ++( *seq );
+    break;
+  case 5:
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
@@ -176,18 +192,25 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_RollingJump( GMEVENT* event, int* seq
 {
   EVENT_WORK*       ew = (EVENT_WORK*)work;
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ew->pFieldmap );
+  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( ew->pFieldmap );
 
   switch( *seq )
   {
-  // タスクの追加
+  // カメラモードの設定
   case 0:
+    ew->cameraMode = FIELD_CAMERA_GetMode( camera );
+    FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+    ++( *seq );
+    break;
+  // タスクの追加
+  case 1:
     FIELDMAP_TCB_AddTask_DisappearPlayer_LinearUp( ew->pFieldmap, 40, 10 );    // 自機移動
     FIELDMAP_TCB_AddTask_RotatePlayer_SpeedUp( ew->pFieldmap, 60, 20 );        // 自機回転
     FIELDMAP_TCB_AddTask_CameraZoom( ew->pFieldmap, 40, 50<<FX32_SHIFT );      // ズームアウト
     ++( *seq );
     break;
   // フェードアウト開始
-  case 1:
+  case 2:
     if( 40 < ew->frame++ )
     {
       FIELDMAP_TCB_AddTask_DisappearPlayer_LinearUp( ew->pFieldmap, 40, 800 );   // 自機移動
@@ -198,13 +221,18 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_RollingJump( GMEVENT* event, int* seq
     }
     break;
   // タスクの終了待ち
-  case 2:
+  case 3:
     if( 80 < ew->frame++ )
     {
       ++( *seq );
     }
     break;
-  case 3:
+  // カメラモードの復帰
+  case 4:
+    FIELD_CAMERA_ChangeMode( camera, ew->cameraMode );
+    ++( *seq );
+    break;
+  case 5:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -221,18 +249,26 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( ew->pFieldmap );
   MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player );
   FLDEFF_CTRL*  fectrl = FIELDMAP_GetFldEffCtrl( ew->pFieldmap );
+  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( ew->pFieldmap );
 
   switch( *seq )
   {
-  // タスクの追加
+  // カメラモードの設定
   case 0:
-    FIELDMAP_TCB_AddTask_MovePlayer( ew->pFieldmap, 60, &ew->sandStreamPos );  // 自機移動
+    ew->cameraMode = FIELD_CAMERA_GetMode( camera );
+    FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+    ++( *seq );
+    break;
+  // タスクの追加
+  case 1:
+    FIELDMAP_TCB_AddTask_MovePlayer( ew->pFieldmap, 120, &ew->sandStreamPos );  // 自機移動
     FLDEFF_GYOE_SetMMdlNonDepend( fectrl, mmdl, FLDEFF_GYOETYPE_GYOE, TRUE );
+    PMSND_PlaySE( SEQ_SE_FLD_15 );
     ew->frame = 0;
     ++( *seq );
     break;
   // タスク終了待ち&砂埃
-  case 1:
+  case 2:
     // 向きを変える
     {
       int key = GFL_UI_KEY_GetCont();
@@ -246,14 +282,14 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
     {
       FLDEFF_KEMURI_SetMMdl( mmdl, fectrl );
     }
-    if( 60 < ew->frame++ )
+    if( 120 < ew->frame++ )
     {
       ew->frame = 0;
       ++( *seq );
     }
     break;
   // タスクの追加
-  case 2:
+  case 3:
     MMDL_OnStatusBit( mmdl, MMDL_STABIT_SHADOW_VANISH );     // 影を消す
     FIELDMAP_TCB_AddTask_DisappearPlayer_LinearUp( ew->pFieldmap, 80, -50 );  // 自機移動
     FIELDMAP_TCB_AddTask_RotatePlayer( ew->pFieldmap, 80, 10 );               // 回転
@@ -261,7 +297,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
     ++( *seq );
     break;
   // フェードアウト開始
-  case 3:
+  case 4:
     if( 30 < ew->frame++ )
     {
       GFL_FADE_SetMasterBrightReq(
@@ -270,13 +306,18 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
     }
     break;
   // タスクの終了待ち
-  case 4:
+  case 5:
     if( 80 < ew->frame++ )
     {
       ++( *seq );
     }
     break;
-  case 5:
+  // カメラモードの復帰
+  case 6:
+    FIELD_CAMERA_ChangeMode( camera, ew->cameraMode );
+    ++( *seq );
+    break;
+  case 7:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
