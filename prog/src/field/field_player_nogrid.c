@@ -29,6 +29,22 @@
 #define MV_SPEED (2*FX32_ONE) ///<移動速度
 
 
+static const MMDL_HEADER data_MMdlHeader =
+{
+	MMDL_ID_PLAYER,	///<識別ID
+	HERO,	///<表示するOBJコード
+	MV_RAIL_DMY,	///<動作コード
+	0,	///<イベントタイプ
+	0,	///<イベントフラグ
+	0,	///<イベントID
+	0,	///<指定方向
+	0,	///<指定パラメタ 0
+	0,	///<指定パラメタ 1
+	0,	///<指定パラメタ 2
+	MOVE_LIMIT_NOT,	///<X方向移動制限
+	MOVE_LIMIT_NOT,	///<Z方向移動制限
+  MMDL_HEADER_POSTYPE_RAIL,
+};
 
 //--------------------------------------------------------------
 ///	PLAYER_MOVE
@@ -190,8 +206,7 @@ FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER* p_player, HEAPID 
   // 動作コードをレール動作に変更
   if( MMDL_GetMoveCode( p_wk->p_mmdl ) != MV_RAIL_DMY )
   {
-    //MMDL_OnStatusBit( p_wk->p_mmdl, MMDL_STABIT_RAIL_MOVE );
-    //MMDL_ChangeMoveCode( p_wk->p_mmdl, MV_RAIL_DMY );
+    MMDL_ChangeMoveParam( p_wk->p_mmdl, &data_MMdlHeader );
   }
 
 
@@ -236,6 +251,43 @@ void FIELD_PLAYER_NOGRID_Delete( FIELD_PLAYER_NOGRID* p_player )
   GFL_HEAP_FreeMemory( p_player );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  動作リセット　再構築
+ *
+ *	@param	p_player  プレイヤー
+ *	@param	cp_pos    再始動座標
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_NOGRID_Restart( FIELD_PLAYER_NOGRID* p_player, const RAIL_LOCATION* cp_pos )
+{
+  // 動作コードをレール動作に変更
+  if( MMDL_GetMoveCode( p_player->p_mmdl ) != MV_RAIL_DMY )
+  {
+    MMDL_ChangeMoveParam( p_player->p_mmdl, &data_MMdlHeader );
+  }
+
+
+  // レールワークの取得
+  p_player->p_railwork = MMDL_GetRailWork( p_player->p_mmdl );
+
+  // 位置を初期か
+  MMDL_SetRailLocation( p_player->p_mmdl, cp_pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  動作停止
+ *
+ *	@param	p_player  プレイヤー
+ *	@param	cp_pos    再始動座標
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_NOGRID_Stop( FIELD_PLAYER_NOGRID* p_player )
+{
+  p_player->p_railwork = NULL;
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -251,6 +303,8 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int k
 	u16 dir;
 	BOOL debug_flag;
   PLAYER_MOVE_FORM form;
+
+  GF_ASSERT( p_player->p_railwork );
 
   // FORM変更処理
   updateFormChange( p_player );
@@ -314,6 +368,25 @@ void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int k
 #endif
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ヒット移動チェック
+ *
+ *	@param	cp_player   プレイヤー
+ *
+ *	@retval TRUE  ヒット中
+ *	@retval FALSE ひっとしてない
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_PLAYER_NOGRID_IsHitch( const FIELD_PLAYER_NOGRID* cp_player )
+{
+  if( cp_player->move_state == PLAYER_MOVE_HITCH )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 
 //----------------------------------------------------------------------------
@@ -352,6 +425,7 @@ void FIELD_PLAYER_NOGRID_GetLocation( const FIELD_PLAYER_NOGRID* cp_player, RAIL
 //-----------------------------------------------------------------------------
 void FIELD_PLAYER_NOGRID_GetPos( const FIELD_PLAYER_NOGRID* cp_player, VecFx32* p_pos )
 {
+  GF_ASSERT( cp_player->p_railwork );
   FIELD_RAIL_WORK_GetPos( cp_player->p_railwork, p_pos );
 }
 
@@ -366,6 +440,7 @@ void FIELD_PLAYER_NOGRID_GetPos( const FIELD_PLAYER_NOGRID* cp_player, VecFx32* 
 //-----------------------------------------------------------------------------
 FIELD_RAIL_WORK* FIELD_PLAYER_NOGRID_GetRailWork( const FIELD_PLAYER_NOGRID* cp_player )
 {
+  GF_ASSERT( cp_player->p_railwork );
   return cp_player->p_railwork;
 }
 

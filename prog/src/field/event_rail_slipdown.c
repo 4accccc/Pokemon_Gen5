@@ -20,7 +20,7 @@
 #include "event_rail_slipdown.h"
 
 #include "field_nogrid_mapper.h"
-#include "fieldmap_ctrl_nogrid_work.h"
+#include "fieldmap_ctrl.h"
 
 #include "fldeff_kemuri.h"
 
@@ -65,7 +65,6 @@ enum
 typedef struct 
 {
   FLDNOGRID_MAPPER* p_mapper;
-  FIELDMAP_CTRL_NOGRID_WORK* p_nogrid_work;
   FIELD_PLAYER_NOGRID* p_nogrid_player;
   FIELD_RAIL_WORK* p_player_rail;
   FIELD_PLAYER* p_player;
@@ -120,8 +119,7 @@ GMEVENT* EVENT_RailSlipDown(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
   p_slipdown = GMEVENT_GetEventWork(event);
 
   p_slipdown->p_mapper          = FIELDMAP_GetFldNoGridMapper( fieldmap );
-  p_slipdown->p_nogrid_work     = FIELDMAP_GetMapCtrlWork( fieldmap );
-  p_slipdown->p_nogrid_player   = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( p_slipdown->p_nogrid_work );
+  p_slipdown->p_nogrid_player   = FIELDMAP_GetPlayerNoGrid( fieldmap );
   p_slipdown->p_player_rail     = FIELD_PLAYER_NOGRID_GetRailWork( p_slipdown->p_nogrid_player );
   p_slipdown->p_player          = FIELDMAP_GetFieldPlayer( fieldmap );
   p_slipdown->p_effctrl         = FIELDMAP_GetFldEffCtrl( fieldmap );

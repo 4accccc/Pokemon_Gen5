@@ -701,6 +701,7 @@ void PLAYERWORK_init(PLAYER_WORK * player)
   player->position.y = 0;
   player->position.z = 0;
   player->direction = 0;
+  player->pos_type = 0;
   player->mystatus.id = 0;
   player->mystatus.sex = 0;
   player->mystatus.region_code = 0;
@@ -737,6 +738,20 @@ void PLAYERWORK_setRailPosition(PLAYER_WORK * player, const RAIL_LOCATION * rail
 const RAIL_LOCATION * PLAYERWORK_getRailPosition(const PLAYER_WORK * player)
 {
   return &player->railposition;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void PLAYERWORK_setPosType(PLAYER_WORK * player, LOCATION_POS_TYPE pos_type)
+{
+  player->pos_type = pos_type;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+LOCATION_POS_TYPE PLAYERWORK_getPosType(const PLAYER_WORK * player)
+{
+  return player->pos_type;
 }
 
 //------------------------------------------------------------------

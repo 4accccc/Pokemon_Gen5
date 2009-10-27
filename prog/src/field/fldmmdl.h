@@ -879,7 +879,6 @@ extern void MMDL_InitPosition(
 extern void MMDL_InitGridPosition(
     MMDL * mmdl, s16 gx, s16 gy, s16 gz, u16 dir );
 extern void MMDL_ChangeMoveParam( MMDL *mmdl, const MMDL_HEADER *head );
-extern void MMDL_ChangeMoveCode( MMDL *mmdl, u16 code );
 extern void MMDL_ChangeOBJID( MMDL * mmdl, u16 id );
 extern void MMDL_InitCheckSameData(
     const MMDL *mmdl, MMDL_CHECKSAME_DATA *outData );

@@ -779,6 +779,12 @@ BOOL FIELD_RAIL_MAN_CalcRailKeyPos(const FIELD_RAIL_MAN * man, const RAIL_LOCATI
   FIELD_RAIL_WORK_Update( man->calc_work );
   FIELD_RAIL_WORK_GetPos( man->calc_work, pos );
 
+  // 変化があったか？
+  if( GFL_STD_MemComp( now_location, &man->calc_work->now_location, sizeof(RAIL_LOCATION) ) == 0 )
+  {
+    return FALSE;
+  }
+
   return FIELD_RAIL_WORK_CheckLocation( man->calc_work, &man->calc_work->now_location );
 }
 
@@ -809,6 +815,11 @@ BOOL FIELD_RAIL_MAN_CalcRailKeyLocation(const FIELD_RAIL_MAN * man, const RAIL_L
   FIELD_RAIL_WORK_Update( man->calc_work );
   FIELD_RAIL_WORK_GetLocation( man->calc_work, next_location );
 
+  // 変化があったか？
+  if( GFL_STD_MemComp( now_location, &man->calc_work->now_location, sizeof(RAIL_LOCATION) ) == 0 )
+  {
+    return FALSE;
+  }
   return FIELD_RAIL_WORK_CheckLocation( man->calc_work, &man->calc_work->now_location );
 }
 
@@ -994,6 +1005,10 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
   int width_ofs;
   int key;
 
+  // レール読み込まれているのか？
+  GF_ASSERT( work->rail_dat );
+
+
   RAIL_LOCATION_Dump(location);
   // 初期化
   clearRail( work, work->rail_dat );
@@ -1002,8 +1017,10 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
   
   if( location->type==FIELD_RAIL_TYPE_POINT )
   {
+    
     // 点初期化
     work->type          = FIELD_RAIL_TYPE_POINT;
+    GF_ASSERT( work->rail_dat->point_count > location->rail_index );
     work->point         = &work->rail_dat->point_table[ location->rail_index ];
 
     work->width_ofs_max = work->point->width_ofs_max[0];
@@ -1053,6 +1070,7 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
   {
     
     // ライン初期化
+    GF_ASSERT( work->rail_dat->line_count > location->rail_index );
     line        = &work->rail_dat->line_table[ location->rail_index ];
     line_ofs    = RAIL_GRID_TO_OFS(location->line_grid);
     width_ofs   = RAIL_GRID_TO_OFS(location->width_grid);

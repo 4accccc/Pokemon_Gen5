@@ -1149,6 +1149,10 @@ static void MMdl_RailCommon_Init( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl )
 //-----------------------------------------------------------------------------
 static void MMdl_RailCommon_Move( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl )
 {
+  RAIL_LOCATION location;
+  // 位置情報の保存
+  FIELD_RAIL_WORK_GetLocation( p_work->rail_wk, &location );
+  MMdl_RailCommon_SetSaveLocation( p_work, &location );
 }
 
 //----------------------------------------------------------------------------
@@ -1162,13 +1166,12 @@ static void MMdl_RailCommon_Delete( MV_RAIL_COMMON_WORK* p_work, MMDL * fmmdl )
 {
   const MMDLSYS* cp_sys = MMDL_GetMMdlSys( fmmdl );
   FLDNOGRID_MAPPER* p_mapper = MMDLSYS_GetNOGRIDMapper( cp_sys );
-  RAIL_LOCATION location;
 
 
-  // 位置情報の保存
-  FIELD_RAIL_WORK_GetLocation( p_work->rail_wk, &location );
-  MMdl_RailCommon_SetSaveLocation( p_work, &location );
   FLDNOGRID_MAPPER_DeleteRailWork( p_mapper, p_work->rail_wk );
+
+  // レールのフラグを破棄
+  MMDL_OffStatusBit( fmmdl, MMDL_STABIT_RAIL_MOVE );
 }
 
 //----------------------------------------------------------------------------

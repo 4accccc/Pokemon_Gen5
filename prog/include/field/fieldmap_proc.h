@@ -23,8 +23,20 @@ typedef enum
 {
 	FLDMAP_CTRLTYPE_GRID = 0, ///<グリッドタイプ
 	FLDMAP_CTRLTYPE_NOGRID, ///<非グリッドタイプ
+	FLDMAP_CTRLTYPE_HYBRID, ///<グリッド、非グリッドハイブリット
 	FLDMAP_CTRLTYPE_MAX,
 }FLDMAP_CTRLTYPE;
+
+
+//--------------------------------------------------------------
+///	フィールドマップ　ベースシステムタイプ
+//--------------------------------------------------------------
+typedef enum
+{
+	FLDMAP_BASESYS_GRID = 0,  ///<ベースシステム　グリッド移動
+	FLDMAP_BASESYS_RAIL,      ///<ベースシステム　レール移動
+	FLDMAP_BASESYS_MAX,
+}FLDMAP_BASESYS_TYPE;
 
 //======================================================================
 //	struct

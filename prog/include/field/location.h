@@ -16,8 +16,8 @@
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 typedef enum {
-	LOCATION_POS_TYPE_3D = 0,
-	LOCATION_POS_TYPE_RAIL,
+	LOCATION_POS_TYPE_3D = 0, // 3D
+	LOCATION_POS_TYPE_RAIL,   // RAIL
 
 	LOCATION_POS_TYPE_MAX,
 }LOCATION_POS_TYPE;

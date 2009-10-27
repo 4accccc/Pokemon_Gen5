@@ -47,6 +47,7 @@
 
 #include "field_encount.h"      //FIELD_ENCOUNT_CheckEncount
 
+#include "fieldmap_ctrl.h"
 #include "fieldmap_ctrl_grid.h"
 #include "fieldmap_ctrl_nogrid_work.h"
 #include "field_player_grid.h"
@@ -97,7 +98,6 @@ typedef struct {
   GAMESYS_WORK * gsys;        ///<ゲームシステムへのポインタ
   GAMEDATA * gamedata;        ///<ゲームデータへのポインタ
   EVENTDATA_SYSTEM *evdata;   ///<参照しているイベントデータ
-  BOOL isGridMap;             ///<グリッドマップかどうか？のフラグ
   u16 map_id;                 ///<現在のマップID
   //↑変化がないパラメータ　
 
@@ -258,38 +258,33 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 	
 //☆☆☆ステップチェック（一歩移動or振り向き）がここから
   //戦闘移行チェック
-  if( req.isGridMap ){
-  
-    { //ノーマルエンカウントイベント起動チェック
-      GMEVENT* enc_event = checkNormalEncountEvent( &req, gsys, fieldWork );
-      if(enc_event != NULL){
-        return enc_event;
-      }
+  { //ノーマルエンカウントイベント起動チェック
+    GMEVENT* enc_event = checkNormalEncountEvent( &req, gsys, fieldWork );
+    if(enc_event != NULL){
+      return enc_event;
     }
   }
   
 
   //看板イベントチェック
-  if( req.isGridMap ){
-    if( req.stepRequest ){
-      u16 id;
-      VecFx32 pos;
-      EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-      MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
-      u16 dir = MMDL_GetDirDisp( fmmdl );
+  if( req.stepRequest ){
+    u16 id;
+    VecFx32 pos;
+    EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
+    MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
+    u16 dir = MMDL_GetDirDisp( fmmdl );
+  
+    FIELD_PLAYER_GetPos( req.field_player, &pos );
+    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+  
+    {
+      //OBJ看板チェック
+    }
     
-      FIELD_PLAYER_GetPos( req.field_player, &pos );
-      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+    id = EVENTDATA_CheckTalkBoardEvent( req.evdata, evwork, &pos, dir );
     
-      {
-        //OBJ看板チェック
-      }
-      
-      id = EVENTDATA_CheckTalkBoardEvent( req.evdata, evwork, &pos, dir );
-      
-      if( id != EVENTDATA_ID_NONE ){
-        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
-      }
+    if( id != EVENTDATA_ID_NONE ){
+      event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
     }
   }
   
@@ -357,52 +352,49 @@ static GMEVENT * FIELD_EVENT_CheckNormal( GAMESYS_WORK *gsys, void *work )
 #endif
 
 	//フィールド話し掛けチェック
-	if(	req.isGridMap )
-	{
-		if( req.talkRequest )
-		{
-      { //OBJ話し掛け
-        MMDL *fmmdl_talk = getFrontTalkOBJ( &req, fieldWork );
-		  	if( fmmdl_talk != NULL )
-	  		{
-	  			u32 scr_id = MMDL_GetEventID( fmmdl_talk );
-  				MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
-          FIELD_PLAYER_GRID_ForceStop( req.field_player );
+  if( req.talkRequest )
+  {
+    { //OBJ話し掛け
+      MMDL *fmmdl_talk = getFrontTalkOBJ( &req, fieldWork );
+      if( fmmdl_talk != NULL )
+      {
+        u32 scr_id = MMDL_GetEventID( fmmdl_talk );
+        MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
+        FIELD_PLAYER_GRID_ForceStop( req.field_player );
 #ifdef DEBUG_ONLY_FOR_kagaya
-          if( MMDL_GetOBJCode(fmmdl_talk) == ROCK ){
-            scr_id = 10000;
-          }
+        if( MMDL_GetOBJCode(fmmdl_talk) == ROCK ){
+          scr_id = 10000;
+        }
 #endif
-  				return EVENT_FieldTalk( gsys, fieldWork,
-  					scr_id, fmmdl_player, fmmdl_talk, req.heapID );
-  			}
-	  	}
+        return EVENT_FieldTalk( gsys, fieldWork,
+          scr_id, fmmdl_player, fmmdl_talk, req.heapID );
+      }
+    }
+    
+    { //BG話し掛け
+      u16 id;
+      VecFx32 pos;
+      EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
+      MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
+      u16 dir = MMDL_GetDirDisp( fmmdl );
       
-      { //BG話し掛け
-        u16 id;
-        VecFx32 pos;
-        EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-        MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
-        u16 dir = MMDL_GetDirDisp( fmmdl );
-        
-        FIELD_PLAYER_GetPos( req.field_player, &pos );
-        MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-        id = EVENTDATA_CheckTalkBGEvent( req.evdata, evwork, &pos, dir );
-        
-        if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-          event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
-          return event;
-        }
+      FIELD_PLAYER_GetPos( req.field_player, &pos );
+      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+      id = EVENTDATA_CheckTalkBGEvent( req.evdata, evwork, &pos, dir );
+      
+      if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
+        return event;
+      }
+    }
+
+    { //BG Attribute 話しかけ
+      u16 id = checkTalkAttrEvent( &req, fieldWork );
+      if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
+        return event;
       }
 
-      { //BG Attribute 話しかけ
-        u16 id = checkTalkAttrEvent( &req, fieldWork );
-        if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-          event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
-          return event;
-        }
-
-      }
     }
   }
 
@@ -653,7 +645,6 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
   EV_REQUEST req;
 	GMEVENT *event;
 	FIELDMAP_WORK *fieldWork = work;
-  FIELDMAP_CTRL_NOGRID_WORK *mapctrl_work = FIELDMAP_GetMapCtrlWork( fieldWork );
   
   setupRequest( &req, gsys, fieldWork );
 
@@ -775,7 +766,7 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
       if( fmmdl_talk != NULL )
       {
         u32 scr_id = MMDL_GetEventID( fmmdl_talk );
-        FIELD_PLAYER_NOGRID* player_nogrid = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( mapctrl_work );
+        FIELD_PLAYER_NOGRID* player_nogrid = FIELDMAP_GetPlayerNoGrid( fieldWork );
         MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
         
         FIELD_PLAYER_NOGRID_ForceStop( player_nogrid );
@@ -911,6 +902,27 @@ GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work )
 	return NULL;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベント起動チェック：ハイブリッドマップ
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * FIELD_EVENT_CheckHybrid( GAMESYS_WORK *gsys, void *work )
+{
+	FIELDMAP_WORK *fieldWork = work;
+  u32 base_system;
+  
+  // 現在のBaseシステムを取得 
+  base_system = FIELDMAP_GetBaseSystemType( fieldWork );
+  
+  if( base_system == FLDMAP_BASESYS_GRID )
+  {
+    return FIELD_EVENT_CheckNormal( gsys, work );
+  }
+  return FIELD_EVENT_CheckNoGrid( gsys, work );
+}
+
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
@@ -928,10 +940,6 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   req->gamedata = GAMESYSTEM_GetGameData(gsys);
 	req->evdata = GAMEDATA_GetEventData(req->gamedata);
   req->map_id = FIELDMAP_GetZoneID(fieldWork);
-  { //グリッドマップかどうかの判定フラグセット
-    const DEPEND_FUNCTIONS *func_tbl = FIELDMAP_GetDependFunctions(fieldWork);
-    req->isGridMap = ( func_tbl->type == FLDMAP_CTRLTYPE_GRID );
-  }
 
   req->key_trg = GFL_UI_KEY_GetTrg();
   req->key_cont = GFL_UI_KEY_GetCont();
@@ -1368,8 +1376,7 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
   RAIL_LOCATION pos;
   int * firstID = FIELDMAP_GetFirstConnectID(fieldWork);
   FLDNOGRID_MAPPER* nogridMapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
-  FIELDMAP_CTRL_NOGRID_WORK* p_mapctrl_work = FIELDMAP_GetMapCtrlWork( fieldWork );
-  FIELD_PLAYER_NOGRID* p_nogrid_player = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( p_mapctrl_work );
+  FIELD_PLAYER_NOGRID* p_nogrid_player = FIELDMAP_GetPlayerNoGrid( fieldWork );
   const CONNECT_DATA* cnct;
 
   // @TODO ３D座標のイベントとレール座標のイベントを併用しているため複雑
@@ -1789,10 +1796,8 @@ static GMEVENT_RESULT event_NaminoriStart(
 
   FIELD_PLAYER *fld_player =
     FIELDMAP_GetFieldPlayer( work->fieldWork );
-  FIELDMAP_CTRL_GRID *gridMap =
-    FIELDMAP_GetMapCtrlWork( work->fieldWork );
   FIELD_PLAYER_GRID *gjiki =
-    FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+    FIELDMAP_GetPlayerGrid( work->fieldWork );
   PLAYER_MOVE_FORM form =
     FIELD_PLAYER_GetMoveForm( fld_player );
   MMDL *mmdl =
@@ -1936,10 +1941,8 @@ static GMEVENT_RESULT event_NaminoriEnd(
 
   FIELD_PLAYER *fld_player =
     FIELDMAP_GetFieldPlayer( work->fieldWork );
-  FIELDMAP_CTRL_GRID *gridMap =
-    FIELDMAP_GetMapCtrlWork( work->fieldWork );
   FIELD_PLAYER_GRID *gjiki =
-    FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+    FIELDMAP_GetPlayerGrid( work->fieldWork );
   PLAYER_MOVE_FORM form =
     FIELD_PLAYER_GetMoveForm( fld_player );
   MMDL *mmdl =
@@ -2017,10 +2020,8 @@ static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
     MAPATTR_FLAG attr_flag;
     MAPATTR_VALUE attr_value;
     FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fieldWork );
-    FIELDMAP_CTRL_GRID *gridMap =
-      FIELDMAP_GetMapCtrlWork( fieldWork );
     FIELD_PLAYER_GRID *gjiki =
-      FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+      FIELDMAP_GetPlayerGrid( fieldWork );
     u16 dir = FIELD_PLAYER_GRID_GetKeyDir( gjiki, req->key_cont );
     
     if( dir != DIR_NOT )

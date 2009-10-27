@@ -160,6 +160,7 @@ void SaveData_SituationDataUpdate(SAVE_CONTROL_WORK *sv, const PLAYER_WORK *pw)
 	st->plsv.position = pw->position;
 	st->plsv.railposition = pw->railposition;
 	st->plsv.direction = pw->direction;
+  st->plsv.pos_type = pw->pos_type;
 }
 
 //--------------------------------------------------------------
@@ -178,6 +179,7 @@ void SaveData_SituationDataLoad(SAVE_CONTROL_WORK *sv, PLAYER_WORK *pw)
 	pw->position = st->plsv.position;
 	pw->railposition = st->plsv.railposition;
 	pw->direction = st->plsv.direction;
+	pw->pos_type = st->plsv.pos_type;
 }
 
 //--------------------------------------------------------------

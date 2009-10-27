@@ -79,6 +79,7 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/debug_data.c \
 	gamesystem/btl_setup.c \
         map/dp3format.c \
+				field/field_data.c \
         field/zonedata.c \
         field/areadata.c \
         field/warpdata.c \
@@ -331,7 +332,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/field_buildmodel.c \
         field/field_bmanime_tool.c \
 				field/field_g3d_mapper.c \
-				field/field_data.c \
 				field/field_camera.c \
 				field/field_msgbg.c \
 				field/mapdatafunc/field_func_mapeditor_file.c \
@@ -378,6 +378,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
 				field/field_player_nogrid.c \
 				field/fieldmap_ctrl_nogrid.c \
 				field/fieldmap_ctrl_nogrid_work.c \
+				field/fieldmap_ctrl_hybrid.c \
 				field/field_ground_anime.c \
 				field/texanm_sys.c \
         field/event_entrance_effect.c \

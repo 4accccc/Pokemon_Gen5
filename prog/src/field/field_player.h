@@ -93,7 +93,7 @@ typedef u32 FIELD_PLAYER_REQBIT;
 //作成、削除、更新
 extern FIELD_PLAYER * FIELD_PLAYER_Create(
     PLAYER_WORK *playerWork, FIELDMAP_WORK *fieldWork,
-		const VecFx32 *pos, int sex, FLDMAP_CTRLTYPE type, HEAPID heapID );
+		const VecFx32 *pos, int sex, HEAPID heapID );
 extern void FIELD_PLAYER_Delete( FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player );

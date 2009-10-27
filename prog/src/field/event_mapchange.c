@@ -823,7 +823,6 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 	
 	//開始位置セット
 	MakeNewLocation(evdata, loc_req, &loc);
-//  MakeNewRailLocation(gamedata, evdata, loc_req, &railLoc); // MakeNewLocation DefaultPosでレール位置が設定されるように変更
 
 	//特殊接続出入口に出た場合は、前のマップの出入口位置を記憶しておく
 	if (loc.type == LOCATION_TYPE_SPID) {
@@ -840,9 +839,10 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 
     if( LOCATION_GetPosType( &loc ) == LOCATION_POS_TYPE_3D ){
   		PLAYERWORK_setPosition(mywork, &loc.location_pos.pos);
+      PLAYERWORK_setPosType( mywork, LOCATION_POS_TYPE_3D );
     }else{
-
 	  	PLAYERWORK_setRailPosition(mywork, &loc.location_pos.railpos);
+      PLAYERWORK_setPosType( mywork, LOCATION_POS_TYPE_RAIL );
     }
 	}
 

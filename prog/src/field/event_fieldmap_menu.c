@@ -38,6 +38,7 @@
 #include "app/townmap.h" //TOWNMAP_PARAM
 #include "app/wifi_note.h" //
 
+#include "fieldmap_ctrl.h"
 #include "fieldmap_ctrl_grid.h"
 #include "field_player_grid.h"
 
@@ -1300,10 +1301,8 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
           
           if( FIELD_PLAYER_CheckChangeEventDrawForm(fld_player) == TRUE ){
             MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-            FIELDMAP_CTRL_GRID *gridmap =
-              FIELDMAP_GetMapCtrlWork( work->fieldWork );
             FIELD_PLAYER_GRID *gjiki =
-              FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridmap );
+              FIELDMAP_GetPlayerGrid( work->fieldWork );
             FIELD_PLAYER_GRID_SetRequest( gjiki, FIELD_PLAYER_REQBIT_REPORT );
             FIELD_PLAYER_GRID_UpdateRequest( gjiki );
   
@@ -1350,10 +1349,8 @@ static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
         FIELDMAP_GetFieldPlayer( work->fieldWork );
 
       if( FIELD_PLAYER_CheckChangeEventDrawForm(fld_player) == TRUE ){
-        FIELDMAP_CTRL_GRID *gridmap =
-          FIELDMAP_GetMapCtrlWork( work->fieldWork );
         FIELD_PLAYER_GRID *gjiki =
-          FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridmap );
+          FIELDMAP_GetPlayerGrid( work->fieldWork );
         FIELD_PLAYER_GRID_SetRequest(
             gjiki, FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM );
         FIELD_PLAYER_GRID_UpdateRequest( gjiki );

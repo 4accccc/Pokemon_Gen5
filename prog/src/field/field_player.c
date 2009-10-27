@@ -47,8 +47,6 @@ struct _FIELD_PLAYER
   PLAYER_MOVE_FORM move_form;
 #endif
   
-  FLDMAP_CTRLTYPE map_type;
-
   PLAYER_MOVE_STATE move_state;
   PLAYER_MOVE_VALUE move_value;
 	
@@ -88,7 +86,7 @@ static const OBJCODE_FORM dataOBJCodeForm[2][PLAYER_DRAW_FORM_MAX];
 //--------------------------------------------------------------
 FIELD_PLAYER * FIELD_PLAYER_Create(
     PLAYER_WORK *playerWork, FIELDMAP_WORK *fieldWork,
-		const VecFx32 *pos, int sex, FLDMAP_CTRLTYPE type, HEAPID heapID )
+		const VecFx32 *pos, int sex, HEAPID heapID )
 {
 	MMDLSYS *fmmdlsys;
 	FIELD_PLAYER *fld_player;
@@ -98,7 +96,6 @@ FIELD_PLAYER * FIELD_PLAYER_Create(
 	fld_player->fieldWork = fieldWork;
   fld_player->gsys = FIELDMAP_GetGameSysWork( fieldWork );
 	fld_player->pos = *pos;
-  fld_player->map_type = type;
 
 	FLDMAPPER_GRIDINFODATA_Init( &fld_player->gridInfoData );
 	
@@ -183,11 +180,16 @@ void FIELD_PLAYER_Update( FIELD_PLAYER *fld_player )
 	PLAYERWORK_setPosition( fld_player->playerWork, &pos );
 
   // ƒŒ[ƒ‹“ÆŽ©‚ÌXVˆ—
-  if( fld_player->map_type == FLDMAP_CTRLTYPE_NOGRID )
+  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
+  {
+	  PLAYERWORK_setPosType( fld_player->playerWork, LOCATION_POS_TYPE_3D );
+  }
+  else
   {
     RAIL_LOCATION location;
     MMDL_GetRailLocation( fld_player->fldmmdl, &location );
 	  PLAYERWORK_setRailPosition( fld_player->playerWork, &location );
+	  PLAYERWORK_setPosType( fld_player->playerWork, LOCATION_POS_TYPE_RAIL );
   }
 }
 
@@ -206,7 +208,8 @@ GMEVENT * FIELD_PLAYER_CheckMoveEvent( FIELD_PLAYER *fld_player,
 {
   GMEVENT *event = NULL;
   
-  if( fld_player->map_type == FLDMAP_CTRLTYPE_GRID ){
+  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
+  {
     event = FIELD_PLAYER_GRID_CheckMoveEvent(
         fld_player, key_trg, key_cont, evbit );
   }
@@ -503,7 +506,7 @@ MAPATTR FIELD_PLAYER_GetMapAttr( const FIELD_PLAYER *fld_player )
 {
   MAPATTR attr;
   
-  if( fld_player->map_type == FLDMAP_CTRLTYPE_GRID )
+  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
   {
     VecFx32 pos;  
     FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fld_player->fieldWork );
@@ -511,7 +514,7 @@ MAPATTR FIELD_PLAYER_GetMapAttr( const FIELD_PLAYER *fld_player )
     FIELD_PLAYER_GetPos( fld_player, &pos );
     attr = MAPATTR_GetAttribute( mapper, &pos );
   }
-  else if( fld_player->map_type == FLDMAP_CTRLTYPE_NOGRID )
+  else if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_RAIL )
   {
     RAIL_LOCATION location;
     const MMDL * mmdl = FIELD_PLAYER_GetMMdl( (FIELD_PLAYER*)fld_player );
@@ -538,7 +541,7 @@ MAPATTR FIELD_PLAYER_GetDirMapAttr( const FIELD_PLAYER *fld_player, u16 dir )
 {
   MAPATTR attr;
   
-  if( fld_player->map_type == FLDMAP_CTRLTYPE_GRID )
+  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
   {
     VecFx32 pos;  
     FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fld_player->fieldWork );
@@ -546,7 +549,7 @@ MAPATTR FIELD_PLAYER_GetDirMapAttr( const FIELD_PLAYER *fld_player, u16 dir )
     FIELD_PLAYER_GetDirPos( fld_player, dir, &pos );
     attr = MAPATTR_GetAttribute( mapper, &pos );
   }
-  else if( fld_player->map_type == FLDMAP_CTRLTYPE_NOGRID )
+  else if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_RAIL )
   {
     RAIL_LOCATION location;
     MMDL * mmdl = FIELD_PLAYER_GetMMdl( fld_player );
@@ -690,7 +693,7 @@ void FIELD_PLAYER_GetDirGridPos(
 {
 	const MMDL *fmmdl = FIELD_PLAYER_GetMMdl( fld_player );
 	
-  if( fld_player->map_type == FLDMAP_CTRLTYPE_GRID )
+  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
   {
     *gx = MMDL_GetGridPosX( fmmdl );
     *gy = MMDL_GetGridPosY( fmmdl );
@@ -700,7 +703,7 @@ void FIELD_PLAYER_GetDirGridPos(
   }
   else
   {
-    GF_ASSERT( fld_player->map_type == FLDMAP_CTRLTYPE_NOGRID );
+    GF_ASSERT_MSG( 0, "FIELD_PLAYER_GetDirGridPos BaseSystem Rail\n" );
   }
 }
 
@@ -715,7 +718,7 @@ void FIELD_PLAYER_GetDirGridPos(
 void FIELD_PLAYER_GetDirPos(
 		const FIELD_PLAYER *fld_player, u16 dir, VecFx32 *pos )
 {
-  if( fld_player->map_type == FLDMAP_CTRLTYPE_GRID )
+  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
   {
     s16 gx,gy,gz;
     FIELD_PLAYER_GetDirGridPos( fld_player, dir, &gx, &gy, &gz );
@@ -774,7 +777,7 @@ void FIELD_PLAYER_GetFrontGridPos(
 void FIELD_PLAYER_GetDirWay( 
     const FIELD_PLAYER *fld_player, u16 dir, VecFx32* way )
 {
-  if( fld_player->map_type == FLDMAP_CTRLTYPE_GRID )
+  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
   {
     way->y = 0;
     way->x = MMDL_TOOL_GetDirAddValueGridX( dir );

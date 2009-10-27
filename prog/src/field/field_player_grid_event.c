@@ -14,6 +14,7 @@
 #include "sound/pm_sndsys.h"
 #include "sound/wb_sound_data.sadl"
 
+#include "fieldmap_ctrl.h"
 #include "fieldmap_ctrl_grid.h"
 #include "field_player_grid.h"
 #include "map_attr.h"
@@ -64,13 +65,11 @@ GMEVENT * FIELD_PLAYER_GRID_CheckMoveEvent( FIELD_PLAYER *fld_player,
   MMDL *mmdl;
   GMEVENT *event;
   FIELDMAP_WORK *fieldmap;
-  FIELDMAP_CTRL_GRID *gridmap;
   FIELD_PLAYER_GRID *gjiki;
   
   event = NULL;
   fieldmap = FIELD_PLAYER_GetFieldMapWork( fld_player );
-  gridmap = FIELDMAP_GetMapCtrlWork( fieldmap );
-  gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridmap );
+  gjiki = FIELDMAP_GetPlayerGrid( fieldmap );
   mmdl = FIELD_PLAYER_GetMMdl( fld_player );
   dir = FIELD_PLAYER_GRID_GetKeyDir( gjiki, key_cont );
   
@@ -418,8 +417,7 @@ GFL_TCB * FIELD_PLAYER_GRID_SetEventNaminoriStart(
   work->fld_player = fld_player;
   
   {
-    FIELDMAP_CTRL_GRID *gridmap = FIELDMAP_GetMapCtrlWork( work->fieldmap );
-    work->gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridmap );
+    work->gjiki = FIELDMAP_GetPlayerGrid( work->fieldmap );
   }
   
   {
@@ -601,8 +599,7 @@ GFL_TCB * FIELD_PLAYER_GRID_SetEventTakinobori(
   work->fieldmap = FIELD_PLAYER_GetFieldMapWork( fld_player );
   
   {
-    FIELDMAP_CTRL_GRID *gridMap = FIELDMAP_GetMapCtrlWork( work->fieldmap );
-    work->gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+    work->gjiki = FIELDMAP_GetPlayerGrid( work->fieldmap );
   }
   
   {

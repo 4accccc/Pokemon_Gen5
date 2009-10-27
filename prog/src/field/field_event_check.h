@@ -16,6 +16,7 @@
 extern GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work );
 extern GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work );
 extern GMEVENT * FIELD_EVENT_CheckNoGrid( GAMESYS_WORK *gsys, void *work );
+extern GMEVENT * FIELD_EVENT_CheckHybrid( GAMESYS_WORK *gsys, void *work );
 
 extern void FIELD_EVENT_ChangeNaminoriStart( GMEVENT *event,
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );

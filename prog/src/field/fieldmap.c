@@ -84,8 +84,10 @@
 
 #include "field_sound.h"
 
+#include "fieldmap_ctrl.h"
 #include "fieldmap_ctrl_grid.h"
 #include "fieldmap_ctrl_nogrid_work.h"
+#include "fieldmap_ctrl_hybrid.h"
 
 #include "field_gimmick.h"
 #include "gmk_tmp_wk.h"
@@ -578,27 +580,13 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     {
       MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
       int sex = MyStatus_GetMySex( mystatus );
-      FLDMAP_CTRLTYPE type = fieldWork->func_tbl->type;
       fieldWork->field_player = FIELD_PLAYER_Create(
-          pw, fieldWork, pos, sex, type, fieldWork->heapID );
+          pw, fieldWork, pos, sex, fieldWork->heapID );
     }
 
     //登録テーブルごとに個別の初期化処理を呼び出し
     fieldWork->now_pos = *pos;
     fieldWork->func_tbl->create_func(fieldWork, &fieldWork->now_pos, dir);
-
-    //レールマップの場合は、↑上記でレールに関する初期化が終わった後に
-    //保存した位置を反映する
-    if (FIELDMAP_GetMapControlType(fieldWork) == FLDMAP_CTRLTYPE_NOGRID)
-    { 
-      FIELDMAP_CTRL_NOGRID_WORK* p_mapctrl_work = FIELDMAP_GetMapCtrlWork( fieldWork );
-      FIELD_PLAYER_NOGRID* p_nogrid_player = FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( p_mapctrl_work );
-      const RAIL_LOCATION * railLoc = PLAYERWORK_getRailPosition( pw );
-
-      FIELD_PLAYER_NOGRID_SetLocation( p_nogrid_player, railLoc );
-      FIELD_PLAYER_NOGRID_GetPos( p_nogrid_player, &fieldWork->now_pos );
-      FIELD_PLAYER_SetPos( fieldWork->field_player, &fieldWork->now_pos );
-    }
 
     FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
     
@@ -737,6 +725,9 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   else if( FIELDMAP_GetMapControlType( fieldWork ) == FLDMAP_CTRLTYPE_NOGRID ){
     GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckNoGrid, fieldWork );
   }
+  else if( FIELDMAP_GetMapControlType( fieldWork ) == FLDMAP_CTRLTYPE_HYBRID ){
+    GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckHybrid, fieldWork );
+  }
   else{
     GAMESYSTEM_EVENT_EntryCheckFunc( gsys, FIELD_EVENT_CheckNormal_Wrap, fieldWork );
   }
@@ -864,7 +855,10 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   //イベント起動チェックを停止する
   GAMESYSTEM_EVENT_EntryCheckFunc(gsys, NULL, NULL);
   
-  { //アクターが持つプレイヤー現在位置をPLAYER_WORKに反映する
+  //アクターが持つプレイヤー現在位置をPLAYER_WORKに反映する
+  FIELD_PLAYER_Update( fieldWork->field_player );
+#if 0
+  { 
     VecFx32 player_pos;
     PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
     FIELD_PLAYER_GetPos(fieldWork->field_player, &player_pos);
@@ -881,6 +875,7 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
     FIELD_PLAYER_NOGRID_GetLocation( p_nogrid_player, &railLoc );
     PLAYERWORK_setRailPosition(pw, &railLoc);
   }
+#endif
 
 	// フィールドマップ用制御タスクシステム
 	FLDMAPFUNC_Sys_Delete( fieldWork->fldmapFuncSys );
@@ -1131,11 +1126,9 @@ BOOL FIELDMAP_SetPlayerItemCycle( FIELDMAP_WORK *fieldWork )
   {
     PLAYER_MOVE_FORM form;
     FIELD_PLAYER_GRID *gjiki;
-    FIELDMAP_CTRL_GRID *gridMap;
     
     form = FIELD_PLAYER_GetMoveForm( fieldWork->field_player );
-    gridMap = FIELDMAP_GetMapCtrlWork( fieldWork );
-    gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+    gjiki = FIELDMAP_GetPlayerGrid( fieldWork );
     
     if( form == PLAYER_MOVE_FORM_CYCLE )
     {
@@ -1467,11 +1460,102 @@ FIELD_ENCOUNT * FIELDMAP_GetEncount( FIELDMAP_WORK * fieldWork )
 FLDMAP_CTRLTYPE FIELDMAP_GetMapControlType( FIELDMAP_WORK *fieldWork )
 {
   GF_ASSERT( fieldWork );
-  if( ZONEDATA_IsRailMap( fieldWork->map_id ) )
+  GF_ASSERT( fieldWork->func_tbl );
+  return fieldWork->func_tbl->type;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  グリッドプレイヤーワークの取得
+ *
+ *	@param	fieldWork ワーク
+ *
+ *	@retval グリッドプレイヤーワーク
+ *	@retval NULL  ないばあい
+ */
+//-----------------------------------------------------------------------------
+FIELD_PLAYER_GRID* FIELDMAP_GetPlayerGrid( const FIELDMAP_WORK *fieldWork )
+{
+  GF_ASSERT( fieldWork );
+  GF_ASSERT( fieldWork->func_tbl );
+
+  if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID )
   {
-    return FLDMAP_CTRLTYPE_NOGRID;
+    FIELDMAP_CTRL_GRID* p_gridwk = fieldWork->mapCtrlWork;
+    return FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( p_gridwk );
   }
-  return FLDMAP_CTRLTYPE_GRID;
+  else if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_HYBRID )
+  {
+    FIELDMAP_CTRL_HYBRID* p_hybridwk = fieldWork->mapCtrlWork;
+    return FIELDMAP_CTRL_HYBRID_GetFieldPlayerGrid( p_hybridwk );
+  }
+  else
+  {
+    GF_ASSERT( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_GRID );
+  }
+  return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ノングリッドプレイヤーワークの取得
+ *
+ *	@param	fieldWork   ワーク
+ *
+ *	@retval ノングリッドプレイヤーワーク
+ *	@retval NULL  ない場合
+ */
+//-----------------------------------------------------------------------------
+FIELD_PLAYER_NOGRID* FIELDMAP_GetPlayerNoGrid( const FIELDMAP_WORK *fieldWork )
+{
+  GF_ASSERT( fieldWork );
+  GF_ASSERT( fieldWork->func_tbl );
+
+  if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_NOGRID )
+  {
+    FIELDMAP_CTRL_NOGRID_WORK* p_nogridwk = fieldWork->mapCtrlWork;
+    return FIELDMAP_CTRL_NOGRID_WORK_GetNogridPlayerWork( p_nogridwk );
+  }
+  else if( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_HYBRID )
+  {
+    FIELDMAP_CTRL_HYBRID* p_hybridwk = fieldWork->mapCtrlWork;
+    return FIELDMAP_CTRL_HYBRID_GetFieldPlayerNoGrid( p_hybridwk );
+  }
+  else
+  {
+    GF_ASSERT( fieldWork->func_tbl->type == FLDMAP_CTRLTYPE_NOGRID );
+  }
+  return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在のベースシステムタイプを取得
+ *
+ *	@param	fieldWork   フィールドワーク
+ *
+ *	@retval FLDMAP_BASESYS_GRID = 0,  ///<ベースシステム　グリッド移動
+ *	@retval FLDMAP_BASESYS_RAIL,      ///<ベースシステム　レール移動
+ */
+//-----------------------------------------------------------------------------
+FLDMAP_BASESYS_TYPE FIELDMAP_GetBaseSystemType( const FIELDMAP_WORK *fieldWork )
+{
+  static const u8 MAPCTRL_BASESYS_TYPE[] = 
+  {
+    FLDMAP_BASESYS_GRID,
+    FLDMAP_BASESYS_RAIL,
+    FLDMAP_BASESYS_MAX,   ///<HYBRIDは、ワークから取得する
+  };
+
+  GF_ASSERT( fieldWork );
+  GF_ASSERT( fieldWork->func_tbl );
+  
+  if( MAPCTRL_BASESYS_TYPE[ fieldWork->func_tbl->type ] == FLDMAP_BASESYS_MAX )
+  {
+
+    return FLDMAP_BASESYS_GRID;
+  }
+  return MAPCTRL_BASESYS_TYPE[ fieldWork->func_tbl->type ];
 }
 
 //--------------------------------------------------------------

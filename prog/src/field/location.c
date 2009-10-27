@@ -23,6 +23,8 @@
 
 #include "field_rail.h"
 
+#include "field_data.h"
+
 //#include "mapdefine.h"		//ZONE_ID_～
 //#include "fieldobj_code.h"	//DIR_DOWN
 
@@ -208,8 +210,9 @@ void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
 	loc->zone_id = zone_id;
 	loc->exit_id = DOOR_ID_JUMP_CODE;
 	loc->dir_id = 0;
-  if( ZONEDATA_IsRailMap(zone_id) )
+  if( FIELDDATA_GetFieldCtrlType(zone_id) == FLDMAP_CTRLTYPE_NOGRID )
   {
+    // レール用初期化
     ZONEDATA_DEBUG_GetStartRailPos(zone_id, &pos);
     loc->location_pos.type = LOCATION_POS_TYPE_RAIL;
     loc->location_pos.railpos.type        = FIELD_RAIL_TYPE_LINE;
@@ -219,6 +222,7 @@ void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
   }
   else
   {
+    // グリッド用初期化
     ZONEDATA_DEBUG_GetStartPos(zone_id, &pos);
     loc->location_pos.type = LOCATION_POS_TYPE_3D;
     loc->location_pos.pos = pos;

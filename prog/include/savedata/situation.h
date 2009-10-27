@@ -29,6 +29,8 @@ typedef struct{
 	VecFx32 position;
   RAIL_LOCATION railposition;
 	s16 direction;
+  u8 pos_type;       ///<LOCATION_POS_TYPE
+  u8 pad;
 }PLAYERWORK_SAVE;
 
 

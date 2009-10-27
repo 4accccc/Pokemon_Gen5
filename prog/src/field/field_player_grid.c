@@ -14,6 +14,7 @@
 #include "sound/pm_sndsys.h"
 #include "sound/wb_sound_data.sadl"
 
+#include "fieldmap_ctrl.h"
 #include "fieldmap_ctrl_grid.h"
 #include "field_player_grid.h"
 #include "map_attr.h"
@@ -2328,8 +2329,7 @@ static void gjiki_OffMoveBitStep( FIELD_PLAYER_GRID *gjiki )
 void FIELD_PLAYER_GRID_ForceStop( FIELD_PLAYER *fld_player )
 {
   FIELDMAP_WORK *fieldWork = FIELD_PLAYER_GetFieldMapWork( fld_player );
-  FIELDMAP_CTRL_GRID *gridMap = FIELDMAP_GetMapCtrlWork( fieldWork );
-  FIELD_PLAYER_GRID *gjiki = FIELDMAP_CTRL_GRID_GetFieldPlayerGrid( gridMap );
+  FIELD_PLAYER_GRID *gjiki = FIELDMAP_GetPlayerGrid( fieldWork );
 
   if( gjiki->move_state == PLAYER_MOVE_HITCH ){
     MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );

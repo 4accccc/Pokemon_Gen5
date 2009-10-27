@@ -51,11 +51,6 @@
 //	struct
 //======================================================================
 
-static const RAIL_LOCATION locationStart = {
-  FIELD_RAIL_TYPE_POINT,
-  0,
-};
-
 
 
 //======================================================================
@@ -112,8 +107,14 @@ static void mapCtrlNoGrid_Create(
   }
 
   // ロケーションの設定
-  FIELD_PLAYER_NOGRID_SetLocation( p_ngrid_player, &locationStart );
-  FIELD_PLAYER_NOGRID_GetPos( p_ngrid_player, pos );
+  {
+    PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork(
+        GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(fieldWork)) );
+    const RAIL_LOCATION * railLoc = PLAYERWORK_getRailPosition( player );
+    // プレイヤーワークからロケーションを設定
+    FIELD_PLAYER_NOGRID_SetLocation( p_ngrid_player, railLoc );
+    FIELD_PLAYER_NOGRID_GetPos( p_ngrid_player, pos );
+  }
 //
 	
 #ifdef DEBUG_PEOPLE_ANGLE_CUT

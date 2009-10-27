@@ -35,9 +35,15 @@ typedef struct _FIELD_PLAYER_NOGRID FIELD_PLAYER_NOGRID;
 extern FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER* p_player, HEAPID heapID );
 extern void FIELD_PLAYER_NOGRID_Delete( FIELD_PLAYER_NOGRID* p_player );
 
+// 動作リセット　再構築
+extern void FIELD_PLAYER_NOGRID_Restart( FIELD_PLAYER_NOGRID* p_player, const RAIL_LOCATION* cp_pos );
+extern void FIELD_PLAYER_NOGRID_Stop( FIELD_PLAYER_NOGRID* p_player );
+
 // 動作
 extern void FIELD_PLAYER_NOGRID_Move( FIELD_PLAYER_NOGRID* p_player, int key_trg, int key_cont );
 
+// 移動不可能ヒットチェック
+extern BOOL FIELD_PLAYER_NOGRID_IsHitch( const FIELD_PLAYER_NOGRID* cp_player );
 
 // 各種パラメータの設定・取得
 extern void FIELD_PLAYER_NOGRID_SetLocation( FIELD_PLAYER_NOGRID* p_player, const RAIL_LOCATION* cp_location );

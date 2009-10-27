@@ -20,6 +20,7 @@
 
 #include "fieldmap_ctrl_grid.h"
 #include "fieldmap_ctrl_nogrid.h"
+#include "fieldmap_ctrl_hybrid.h"
 
 typedef struct {
 	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
@@ -74,6 +75,21 @@ const DEPEND_FUNCTIONS * FIELDDATA_GetFieldFunctions(u16 mapid)
 {
 	u16 resid = MapID2ResistID(mapid);
 	return resistMapTbl[resid].dep_funcs;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ZONEIDのマップコントロールタイプを取得
+ *
+ *	@param	mapid ゾーンID
+ *
+ *	@return マップコントロールタイプ
+ */
+//-----------------------------------------------------------------------------
+FLDMAP_CTRLTYPE FIELDDATA_GetFieldCtrlType(u16 mapid)
+{
+	u16 resid = MapID2ResistID(mapid);
+	return resistMapTbl[resid].dep_funcs->type;
 }
 
 //============================================================================================
@@ -369,6 +385,27 @@ const SCENE_DATA resistMapTbl[] = {
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 
 		},
 		&FieldMapCtrl_GridFunctions,
+		TRUE,
+	},
+
+  //RSC_HYBRID = 14,
+	{	//グリッド、レールハイブリッド
+		{
+			FLDMAPPER_FILETYPE_NORMAL,
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      2,3,
+      FLDMAPPER_MODE_SCROLL_NONE, 
+			ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			{0,2},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE,	// 
+		},
+		&FieldMapCtrl_HybridFunctions,
 		TRUE,
 	},
 };

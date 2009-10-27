@@ -13,7 +13,7 @@ extern "C" {
 
 #include "savedata/mystatus.h"
 #include "savedata/mystatus_local.h"
-#include "field/rail_location.h"
+#include "field/location.h"
 
 //======================================================================
 //  define
@@ -47,7 +47,7 @@ typedef struct {
   RAIL_LOCATION railposition;
 	u16 direction;        ///<回転角度のRadian値　（0～0xffff）
   u8 palace_area;       ///<※check　パレステストの為、一時的にここに配置
-  u8 padding;
+  u8 pos_type;       ///<LOCATION_POS_TYPE
 	MYSTATUS mystatus;
   PLAYER_MOVE_FORM move_form;
 }PLAYER_WORK;
@@ -98,6 +98,33 @@ extern void PLAYERWORK_setRailPosition(PLAYER_WORK * player, const RAIL_LOCATION
  */
 //--------------------------------------------------------------
 extern const RAIL_LOCATION * PLAYERWORK_getRailPosition(const PLAYER_WORK * player);
+
+//--------------------------------------------------------------
+/**
+ * @brief	座標タイプを設定する
+ * @param	player	PLAYER_WORKへのポインタ
+ * @param	pos_type 座標タイプ LOCATION_POS_TYPE
+ */
+//--------------------------------------------------------------
+extern void PLAYERWORK_setPosType(PLAYER_WORK * player, LOCATION_POS_TYPE pos_type);
+
+//--------------------------------------------------------------
+/**
+ * @brief	座標タイプを取得する
+ * @param	player	PLAYER_WORKへのポインタ
+ * @return	LOCATION_POS_TYPE 座標タイプ
+ */
+//--------------------------------------------------------------
+extern LOCATION_POS_TYPE PLAYERWORK_getPosType(const PLAYER_WORK * player);
+
+//--------------------------------------------------------------
+/**
+ * @brief	位置を取得する
+ * @param	player	PLAYER_WORKへのポインタ
+ * @param	zoneid	マップを指定する値
+ */
+//--------------------------------------------------------------
+extern void PLAYERWORK_setZoneID(PLAYER_WORK * player, ZONEID zoneid);
 
 //--------------------------------------------------------------
 /**

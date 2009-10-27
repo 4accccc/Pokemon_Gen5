@@ -133,6 +133,11 @@ sub getNaixIndex
   my( $buff, $sarch ) = @_;
   my( $sarch_one, $sarch_count );
 
+  if( $sarch =~ /NONE/ )
+  {
+    return $NONE_NUM;
+  }
+
   $sarch_count = 0;
   foreach $sarch_one ( @$buff )
   {
@@ -145,7 +150,7 @@ sub getNaixIndex
   }
 
   print( "$sarch none\n" );
-  return $NONE_NUM;
+  exit(1);
 }
 
 
