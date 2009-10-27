@@ -25,6 +25,7 @@
 #include "poke_tool/poke_personal.h"
 #include "tr_tool/tr_tool.h"
 #include "item/itemsym.h"
+#include "savedata/encount_sv.h"
 
 #include "enc_pokeset.h"
 
@@ -89,6 +90,8 @@ static const ENC_PROB_CALC_FUNC DATA_EncProbCalcFuncTable[ENCPROB_CALCTYPE_MAX] 
 void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
     const ENCOUNT_LOCATION location, const ENCOUNT_TYPE enc_type,const BOOL fishing_f)
 {
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork((GAMEDATA*)gdata);
+
   MI_CpuClear8(outEfp,sizeof(ENCPOKE_FLD_PARAM));
 
   //エンカウトロケーションとタイプチェック
@@ -107,7 +110,8 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
   outEfp->weather = BTL_WEATHER_NONE;
 
   //プレイヤーのIDセット
-  outEfp->myID = 3539; //@todo
+  outEfp->my = GAMEDATA_GetMyStatus( (GAMEDATA*)gdata );
+  outEfp->myID = MyStatus_GetID(outEfp->my);
 
   //先頭ポケモンのパラメータチェック
   {
@@ -128,7 +132,9 @@ void ENCPOKE_SetEFPStruct(ENCPOKE_FLD_PARAM* outEfp, const GAMEDATA* gdata,
     }
   }
   //フラグチェック
-  outEfp->spray_f = FALSE;
+  if ( !EncDataSave_CanUseSpray( EncDataSave_GetSaveDataPtr(save) ) ){
+    outEfp->spray_f = TRUE;
+  }
   outEfp->enc_force_f = FALSE;
   outEfp->companion_f = FALSE;
   outEfp->enc_double_f = FALSE;
@@ -259,6 +265,9 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
 
     PP_SetupEx( pp, poke->monsNo, poke->level, efp->myID, PTL_SETUP_POW_AUTO, p_rnd );
   }
+  //親の性別と名前をPut
+  PP_Put( pp, ID_PARA_oyasex, MyStatus_GetMySex(efp->my) );
+  PP_Put( pp, ID_PARA_oyaname_raw, (u32)MyStatus_GetMyName(efp->my) );
 
   POKE_PERSONAL_CloseHandle( personal );
 }
@@ -556,6 +565,8 @@ static void eps_EncPokeItemSet(POKEMON_PARAM* pp,
 
 /*
  *  @brief  個性乱数計算
+ *
+ *  @todo
  */
 static u32 eps_EncPokeCalcPersonalRand(
     const ENCPOKE_FLD_PARAM* efp, const POKEMON_PERSONAL_DATA*  personal,const ENC_POKE_PARAM* poke )
@@ -578,6 +589,7 @@ static u32 eps_EncPokeCalcPersonalRand(
   do{
     if(poke->rare){
       p_rnd = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
+      break;
     }else{
       p_rnd = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
     }

@@ -13,16 +13,16 @@
 #include "system/gfl_use.h"
 //#include "field/move_pokemon_def.h"
 
-#define MOVE_POKE_MAX (1) ///@todo
+#define MOVE_POKE_MAX (3) ///@todo
 
 //自機のゾーン足跡
 typedef struct PLAYER_ZONE_HIST_tag
 {
-	int beforeZone;	//前回ゾーン
-	int oldZone;	//前々回ゾーン
+	u16 beforeZone;	//前回ゾーン
+	u16 oldZone;	  //前々回ゾーン
 }PLAYER_ZONE_HIST;
 
-//移動ポケモンデータ
+//移動ポケモンデータ(20)
 typedef struct MV_POKE_DATA_tag{
 
 	int zoneID;			//ゾーンＩＤ
@@ -404,16 +404,31 @@ void EncDataSave_SetMovePokeDataParam(MPD_PTR outMPData, const u8 inParamID, con
 
 //==============================================================================
 /**
- * スプレー有効歩数を格納したメンバのポインタを取得
+ * スプレー有効歩数をセットする
+ *
+ * @param	inEncData		エンカウント関連セーブポインタ
+ */
+//==============================================================================
+void EncDataSave_SetSprayCnt(ENC_SV_PTR inEncData,u8 count)
+{
+	inEncData->SprayCount = count;
+}
+
+//==============================================================================
+/**
+ * スプレー有効歩数を１ずつ減らす
  *
  * @param	inEncData		エンカウント関連セーブポインタ
  *
- * @return	u8*				スプレー有効歩数ポインタ
+ * @return	u8				減算後のスプレー有効歩数
  */
 //==============================================================================
-u8 *EncDataSave_GetSprayCnt(ENC_SV_PTR inEncData)
+u8 EncDataSave_DecSprayCnt(ENC_SV_PTR inEncData)
 {
-	return &(inEncData->SprayCount);
+  if(inEncData->SprayCount > 0){
+    inEncData->SprayCount--;
+  }
+	return inEncData->SprayCount;
 }
 
 //==============================================================================

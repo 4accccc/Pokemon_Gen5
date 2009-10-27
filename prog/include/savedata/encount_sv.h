@@ -47,6 +47,7 @@ extern u32 EncDataSave_GetMovePokeDataParam(const MPD_PTR inMPData,
 extern void EncDataSave_SetMovePokeDataParam(	MPD_PTR outMPData,
 												const u8 inParamID,
 												const u32 inVal	);
-extern u8 *EncDataSave_GetSprayCnt(ENC_SV_PTR inEncData);
+extern void EncDataSave_SetSprayCnt(ENC_SV_PTR inEncData,u8 count);
+extern u8 EncDataSave_DecSprayCnt(ENC_SV_PTR inEncData);
 extern BOOL EncDataSave_CanUseSpray(ENC_SV_PTR inEncData);
 

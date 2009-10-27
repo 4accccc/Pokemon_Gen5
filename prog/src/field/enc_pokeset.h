@@ -51,7 +51,8 @@ typedef struct _ENCPOKE_FLD_PARAM
   u8  mons_chr; //性格チェック
 	
   u32 myID; //プレイヤーのトレーナーＩＤ
-  
+  MYSTATUS* my;
+
   //各種フラグ
   u32 fishing_f:1;    ///<釣りエンカウントフラグ
 	u32 spray_f:1;     ///<スプレーチェックするかのフラグ	TRUE:チェックする

@@ -71,8 +71,10 @@
 #include "waza_tool/wazano_def.h"
 #include "field/field_comm/intrude_main.h"
 
+#include "savedata/encount_sv.h"
 #include "../../../resource/fldmapdata/script/eggevent_scr_def.h"   // for SCRID_EGG_BIRTH
 #include "../../../resource/fldmapdata/script/pokecen_scr_def.h" // for SCRID_PC
+#include "../../../resource/fldmapdata/script/field_ev_scr_def.h" // for SCRID_FLE_EV_SPRAY_EFFECT_END
 
 //======================================================================
 //======================================================================
@@ -123,6 +125,8 @@ typedef struct {
 //======================================================================
 //event
 static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork);
+static GMEVENT* CheckSodateya( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
+static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static void updatePartyEgg( POKEPARTY* party );
 static BOOL checkPartyEgg( POKEPARTY* party );
 
@@ -1007,23 +1011,17 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
   HEAPID     heap_id = FIELDMAP_GetHeapID( fieldWork );
   GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( fieldWork ); 
   GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
-  POKEPARTY*   party = GAMEDATA_GetMyPokemon( gdata );
-  SODATEYA* sodateya = FIELDMAP_GetSodateya( fieldWork );
   GMEVENT*     event = NULL;
 
-  // 育て屋: 経験値加算, 子作り判定など1歩分の処理
-  SODATEYA_BreedPokemon( sodateya ); 
+  //育て屋チェック
+  event  = CheckSodateya( fieldWork, gsys, gdata );
+  if( event != NULL) return event;
 
-  // 手持ちタマゴ: 孵化カウンタ更新
-  updatePartyEgg( party );
+  //虫除けスプレーチェック
+  event = CheckSpray( fieldWork, gsys, gdata );
+  if( event != NULL) return event;
 
-  // 手持ちタマゴ: 孵化チェック
-  if( checkPartyEgg( party ) )
-  {
-    event = SCRIPT_SetEventScript( gsys, SCRID_EGG_BIRTH, NULL, heap_id );
-  }
-
-  return event;
+  return NULL;
 }
 
 //--------------------------------------------------------------
@@ -1076,6 +1074,49 @@ static BOOL checkPartyEgg( POKEPARTY* party )
     }
   } 
   return FALSE;
+}
+
+/*
+ *  @brief  育て屋イベントチェック
+ */
+static GMEVENT* CheckSodateya( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata )
+{
+  HEAPID       heap_id = FIELDMAP_GetHeapID( fieldWork );
+  POKEPARTY*   party = GAMEDATA_GetMyPokemon( gdata );
+  SODATEYA*    sodateya = FIELDMAP_GetSodateya( fieldWork );
+
+  // 育て屋: 経験値加算, 子作り判定など1歩分の処理
+  SODATEYA_BreedPokemon( sodateya ); 
+
+  // 手持ちタマゴ: 孵化カウンタ更新
+  updatePartyEgg( party );
+
+  // 手持ちタマゴ: 孵化チェック
+  if( checkPartyEgg( party ) )
+  {
+    return SCRIPT_SetEventScript( gsys, SCRID_EGG_BIRTH, NULL, heap_id );
+  }
+  return NULL;
+}
+
+//==============================================================================
+/**
+ * 1歩ごとのスプレー効果減算
+ */
+//==============================================================================
+static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata )
+{
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork(gdata);
+	u8 spray;
+
+	//セーブデータ取得
+	spray = EncDataSave_DecSprayCnt(EncDataSave_GetSaveDataPtr(save));
+  //減算した結果0になったら効果切れメッセージ
+	if( spray==0 ){
+		OS_Printf("スプレー効果切れ\n");
+     return SCRIPT_SetEventScript( gsys, SCRID_FLD_EV_SPRAY_EFFECT_END, NULL, FIELDMAP_GetHeapID( fieldWork ));
+	}
+	return NULL;
 }
 
 //======================================================================
