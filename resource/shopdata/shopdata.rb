@@ -26,8 +26,11 @@ require "csv"
 hash       = Hash.new	# どうぐリスト
 namelist   = Array.new	# 配列名
 maxlist    = Array.new	# 配列MAX名
+outbuf	   = ""
 line_count = 0
 
+#STDERR.print("エラー\n")
+#exit(1)
 
 
 #---------------------------------------
@@ -59,46 +62,60 @@ reader.shift
 reader.shift
 
 # ファイルヘッダ出力
-printf( "//====================================================================\n")
-printf( "//    ショップデータ\n")
-printf( "//\n")
-printf( "//\n")
-printf( "// ●fs_item.xlsをresource/shopdata/でコンバートして出力しています\n")
-printf( "//\n")
-printf( "//====================================================================\n\n")
+outbuf += sprintf( "//====================================================================\n")
+outbuf += sprintf( "//    ショップデータ\n")
+outbuf += sprintf( "//\n")
+outbuf += sprintf( "//\n")
+outbuf += sprintf( "// ●fs_item.xlsをresource/shopdata/でコンバートして出力しています\n")
+outbuf += sprintf( "//\n")
+outbuf += sprintf( "//====================================================================\n\n")
 
 # CSVデータから出力
 reader.each { |row|
-	printf( "// %s\n", row[0] )
-	printf( "static const u16 %s[] = {\n", row[1].to_s )
+	outbuf += sprintf( "// %s\n", row[0] )
+	outbuf += sprintf( "static const u16 %s[] = {\n", row[1].to_s )
 	namelist << row[1].to_s
 
 	# どうぐデータ出力
 	(row.length-2).times{|i|
 		if row[i+2]==nil then
-			printf("\t\t0xffff,\n")
+			outbuf += sprintf("\t\t0xffff,\n")
 		else
-			printf("\t\t%s,\n", hash[row[i+2].to_s])
+			if hash[row[i+2].to_s]!=nil then
+				outbuf += sprintf("\t\t%s,\n", hash[row[i+2].to_s])
+			else
+				STDERR.print( ""+row[0]+"の行、「"+row[i+2].to_s+"」と言うどうぐは存在しません\n")
+				exit(1)
+			end
 		end
 	}
-	printf("};\n")
-	printf("#define %s_MAX	(NELEMS(%s))\n\n", row[1].to_s.upcase,row[1].to_s)
+	outbuf += sprintf("};\n")
+	outbuf += sprintf("#define %s_MAX	(NELEMS(%s))\n\n", row[1].to_s.upcase,row[1].to_s)
 	maxlist << sprintf( "%s_MAX",row[1].to_s.upcase,row[1].to_s )
 }
 reader.close
 
 # 一括アクセス用に配列ポインタの配列を定義
-printf("\n\n// 一括アクセス用配列定義\n")
-printf("static const u16 *shop_data_table[]={\n")
+outbuf += sprintf("\n\n// 一括アクセス用配列定義\n")
+outbuf += sprintf("static const u16 *shop_data_table[]={\n")
 namelist.each{ |name|
-	printf("\t%s,\n", name)
+	outbuf += sprintf("\t%s,\n", name)
 }
-printf("};\n")
+outbuf += sprintf("};\n")
+
 
 # 各ショップのアイテム数の配列化
-printf("\n\n// 各ショップ販売最大数取得用\n")
-printf("static const u8 shop_itemnum_table[]={\n")
+outbuf += sprintf("\n\n// 各ショップ販売最大数取得用\n")
+outbuf += sprintf("static const u8 shop_itemnum_table[]={\n")
 maxlist.each{ |maxdef|
-	printf("\t%s,\n", maxdef)
+	outbuf += sprintf("\t%s,\n", maxdef)
 }
-printf("};\n")
+outbuf += sprintf("};\n")
+
+
+#溜めたテキストデータを出力
+file = File.open(ARGV[2],"w")
+file.printf(outbuf)
+file.close
+
+exit(0)
