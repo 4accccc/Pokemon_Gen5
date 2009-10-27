@@ -22,6 +22,9 @@ SEASON_SUMMER = 2
 SEASON_AUTUMN = 3
 SEASON_WINTER = 4
 
+FORM_RND_CODE_STR = "-"
+FORM_RND_CODE = 31
+
 ##############################################
 #グローバル変数定義
 
@@ -77,7 +80,11 @@ class CEncTable
 
   #フォルム取得
   def form_get str_form
-    form = str_form == "" ? 0 : str_form.to_i
+    if str_form == FORM_RND_CODE_STR then
+      form = FORM_RND_CODE
+    else
+      form = str_form == "" ? 0 : str_form.to_i
+    end
     return form
   end
 

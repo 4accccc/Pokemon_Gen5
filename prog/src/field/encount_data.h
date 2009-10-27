@@ -22,6 +22,8 @@
 
 #define ENC_MONS_NUM_MAX          (ENC_MONS_NUM_BINGO)  ///<現状ビンゴが最大
 
+#define ENC_MONS_FORM_RND_CODE    (0x1F)  //フォルムをランダムで決める特殊コード
+
 ///エンカウントロケーションID
 typedef enum{
  ENC_LOCATION_GROUND_L,

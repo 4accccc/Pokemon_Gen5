@@ -426,6 +426,7 @@ static u32 eps_GetEncountTable( const ENCOUNT_DATA *inData, ENCPOKE_FLD_PARAM* i
  */
 static void eps_SetPokeParam(const ENC_COMMON_DATA* data,ENC_POKE_PARAM* outPoke)
 {
+  u8 form_max;
   s16 lv_diff = data->maxLevel - data->minLevel;
 
   MI_CpuClear8(outPoke,sizeof(ENC_POKE_PARAM));
@@ -436,7 +437,15 @@ static void eps_SetPokeParam(const ENC_COMMON_DATA* data,ENC_POKE_PARAM* outPoke
   outPoke->level = data->minLevel + (eps_GetPercentRand() % (lv_diff+1));
 
   outPoke->monsNo = data->monsNo;
-  outPoke->form = data->form;
+
+  form_max = POKETOOL_GetPersonalParam( data->monsNo, 0, POKEPER_ID_form_max );
+  if(data->form == ENC_MONS_FORM_RND_CODE ){
+    outPoke->form = GFUser_GetPublicRand0(form_max);  //全フォルムからランダム
+  }else if(data->form >= form_max){
+    outPoke->form = 0;
+  }else{
+    outPoke->form = data->form;
+  }
 }
 
 /**
@@ -451,6 +460,9 @@ static u8 eps_LotFixTypeEncount(const ENCPOKE_FLD_PARAM* efp,const ENC_COMMON_DA
   u8 idx_tbl[ENC_MONS_NUM_MAX];
 
   for(i = 0;i < efp->tbl_num;i++){
+    if( enc_data[i].form == ENC_MONS_FORM_RND_CODE ){
+      continue; //フォルムがランダムコードの場合は特性適用しない
+    }
     type1 = POKETOOL_GetPersonalParam(enc_data[i].monsNo, enc_data[i].form, POKEPER_ID_type1 );
     type2 = POKETOOL_GetPersonalParam(enc_data[i].monsNo, enc_data[i].form, POKEPER_ID_type2 );
     if((type1 == type)||(type2 == type)){
