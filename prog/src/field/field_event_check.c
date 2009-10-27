@@ -1107,12 +1107,12 @@ static GMEVENT* CheckSodateya( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GA
 static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata )
 {
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork(gdata);
-	u8 spray;
+	u8 end_f;
 
 	//セーブデータ取得
-	spray = EncDataSave_DecSprayCnt(EncDataSave_GetSaveDataPtr(save));
+	end_f = EncDataSave_DecSprayCnt(EncDataSave_GetSaveDataPtr(save));
   //減算した結果0になったら効果切れメッセージ
-	if( spray==0 ){
+	if( end_f ){
 		OS_Printf("スプレー効果切れ\n");
      return SCRIPT_SetEventScript( gsys, SCRID_FLD_EV_SPRAY_EFFECT_END, NULL, FIELDMAP_GetHeapID( fieldWork ));
 	}

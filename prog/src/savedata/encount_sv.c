@@ -420,15 +420,18 @@ void EncDataSave_SetSprayCnt(ENC_SV_PTR inEncData,u8 count)
  *
  * @param	inEncData		エンカウント関連セーブポインタ
  *
- * @return	u8				減算後のスプレー有効歩数
+ * @return	BOOL				スプレー効果が切れたかどうか
  */
 //==============================================================================
-u8 EncDataSave_DecSprayCnt(ENC_SV_PTR inEncData)
+BOOL EncDataSave_DecSprayCnt(ENC_SV_PTR inEncData)
 {
   if(inEncData->SprayCount > 0){
     inEncData->SprayCount--;
+    if(inEncData->SprayCount == 0){
+      return TRUE;
+    }
   }
-	return inEncData->SprayCount;
+	return FALSE;
 }
 
 //==============================================================================
