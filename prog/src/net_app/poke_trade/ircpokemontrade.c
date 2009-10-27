@@ -871,6 +871,8 @@ static void _changePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pageno,int left
 static void _resetPokemonMyStDisp(POKEMON_TRADE_WORK* pWork)
 {
   UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
+  IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
+  IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
   if(pWork->MyInfoWin){
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0 );
     GFL_BMPWIN_ClearScreen(pWork->MyInfoWin);
@@ -1273,7 +1275,8 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
 {
   BOOL bExit=FALSE;
   BOOL bChange=FALSE;
-  int selectno=0;
+  int selectno=-1;
+  u32 x,y;
 
   TOUCHBAR_Main(pWork->pTouchWork);
   switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
@@ -1300,8 +1303,15 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     break;
   }
 
-  if(IsTouchCLACTPosition(pWork)){
-    bChange = TRUE;
+  if(GFL_UI_TP_GetPointTrg(&x, &y)==TRUE){
+    if(IsTouchCLACTPosition(pWork)){
+      bChange = TRUE;
+    }
+    else{
+      if((y >=  2*8) && ((18*8) > y)){
+        bExit = TRUE;  //とじる
+      }
+    }
   }
 
   if(bChange){
@@ -1326,7 +1336,8 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
       GFL_CLACT_WK_SetPos( pWork->pCatchCLWK, &pos, CLSYS_DRAW_SUB);
     }
   }
-  {
+
+  if(bExit==FALSE){
     u32 x,y;
 
     if(GFL_UI_TP_GetCont()==FALSE){ //タッチパネルを離した

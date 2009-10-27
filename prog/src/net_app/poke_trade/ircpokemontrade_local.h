@@ -272,6 +272,7 @@ typedef struct
   int   nowcount;	   ///<  現在の進行時間
   float   percent;   ///< 加速する計算
   float   add;   ///< 変化率
+  int sins;
   VecFx32  start;      ///< 開始位置
   VecFx32  end;        ///< 終わり位置
 }_POKEMCSS_MOVE_WORK;

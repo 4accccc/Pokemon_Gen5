@@ -321,6 +321,10 @@ static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
     VecFx32 pos={_POKEMON_PLAYER_CENTER_POSX,_POKEMON_PLAYER_CENTER_POSY, _POKEMON_PLAYER_CENTER_POSZ};
     pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], ANMCNTC(_POKEMON_CENTER_TIME), &pos, pWork->heapID);
   }
+  {
+    VecFx32 pos={_POKEMON_FRIEND_CENTER_POSX,_POKEMON_FRIEND_CENTER_POSY, _POKEMON_FRIEND_CENTER_POSZ};
+    pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[1], ANMCNTC(_POKEMON_CENTER_TIME*2), &pos, pWork->heapID);
+  }
 
   MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
 
@@ -349,6 +353,7 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
       _EFFTOOL_CalcPaletteFade(pWork->pModelFade);
     }
     _pokeMoveFunc(pWork->pMoveMcss[0]);
+    _pokeMoveFunc(pWork->pMoveMcss[1]);
   }
 
 
@@ -381,6 +386,8 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
     pWork->pModelFade = NULL;
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
     pWork->pMoveMcss[0]=NULL;
+    GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
+    pWork->pMoveMcss[1]=NULL;
     _setNextAnim(pWork, 0);
 
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade2);
@@ -1108,11 +1115,14 @@ static fx32 _movemath(fx32 st,fx32 en,_POKEMCSS_MOVE_WORK* pMove)
   re = en - st;
   re = re / pMove->time;
   if(pMove->percent != 0.0f){
-    float ans = FX_FX32_TO_F32(re);
-    ans = pMove->percent * ans;
+    float ans = FX_FX32_TO_F32(re * pMove->nowcount);
+    ans = (1.0f-FX_FX16_TO_F32(FX_CosIdx(pMove->sins))) * ans;
     re = FX_F32_TO_FX32(ans);
+    re = st + re;
   }
-  re = st + re * pMove->nowcount;
+  else{
+    re = st + re * pMove->nowcount;
+  }
   return re;
 }
 
@@ -1133,7 +1143,7 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
     apos.x = _movemath(pMove->start.x, pMove->end.x ,pMove);
     apos.y = _movemath(pMove->start.y, pMove->end.y ,pMove);
     apos.z = _movemath(pMove->start.z, pMove->end.z ,pMove);
-
+/*
     if(pMove->percent != 0.0f){
       if(pMove->percent < 1.0f){
         pMove->percent+=pMove->add;
@@ -1147,7 +1157,9 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
         }
       }
     }
+   */
 
+    pMove->sins += (0x4000/pMove->time);
     
     MCSS_SetPosition( pMove->pMcss ,&apos );
   }

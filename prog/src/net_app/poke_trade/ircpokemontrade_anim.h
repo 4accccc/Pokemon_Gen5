@@ -83,6 +83,11 @@
 #define _POKEMON_PLAYER_CENTER_POSY _MCSS_POS_Y(-20)   // 自分のポケモンが真ん中に移動する際のY
 #define _POKEMON_PLAYER_CENTER_POSZ _MCSS_POS_Z( 10)   // 自分のポケモンが真ん中に移動する際のZ
 
+#define _POKEMON_FRIEND_CENTER_POSX _MCSS_POS_X(  0)   // 相手のポケモンが真ん中に移動する際のX
+#define _POKEMON_FRIEND_CENTER_POSY _MCSS_POS_Y(-40)   // 相手のポケモンが真ん中に移動する際のY
+#define _POKEMON_FRIEND_CENTER_POSZ _MCSS_POS_Z(-10)   // 相手のポケモンが真ん中に移動する際のZ
+
+
 //絵コンテ８番の最初の位置
 #define _POKEMON_PLAYER_APPEAR_POSX _MCSS_POS_X( -50)  // 自分のポケモンのX
 #define _POKEMON_PLAYER_APPEAR_POSY _MCSS_POS_Y(-150)  // 自分のポケモンのY
@@ -104,7 +109,7 @@
 #define _POKEMON_PLAYER_SIDEOUT_POSX _MCSS_POS_X(-140)           // 自分のポケモンのX
 #define _POKEMON_PLAYER_SIDEOUT_POSY _POKEMON_PLAYER_UP_POSY    // 自分のポケモンのY
 #define _POKEMON_PLAYER_SIDEOUT_POSZ _MCSS_POS_Z(0)    // 自分のポケモンのZ
-#define _POKEMON_FRIEND_SIDEOUT_POSX _MCSS_POS_X(140)           // 相手のポケモンのX
+#define _POKEMON_FRIEND_SIDEOUT_POSX _MCSS_POS_X(130)           // 相手のポケモンのX
 #define _POKEMON_FRIEND_SIDEOUT_POSY _POKEMON_FRIEND_DOWN_POSY  // 相手のポケモンのY
 #define _POKEMON_FRIEND_SIDEOUT_POSZ _MCSS_POS_Z(0)  // 相手のポケモンのZ
 
