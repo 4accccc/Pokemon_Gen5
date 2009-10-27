@@ -307,14 +307,14 @@ static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
   _setNextAnim(pWork, 0);
 
   pWork->pD2Fade = GFL_HEAP_AllocClearMemory(pWork->heapID, sizeof(_D2_PAL_FADE_WORK));
-  pWork->pD2Fade->pal_fade_time = ANMCNTC(_POKEMON_CENTER_TIME);
+  pWork->pD2Fade->pal_fade_time = ANMCNTC(_POKEMON_CENTER_TIME/3);
   pWork->pD2Fade->pal_fade_nowcount = 0;
   pWork->pD2Fade->pal_start = 0;
   pWork->pD2Fade->pal_end = -16;
 
   if(pWork->modelno!=-1){
     pWork->pModelFade = _createPaletteFade(GFL_G3D_UTIL_GetResHandle(pWork->g3dUtil,0), pWork->heapID);
-    _FIELD_StartPaletteFade( pWork->pModelFade, 0, 16, ANMCNTC(_POKEMON_CENTER_TIME)/16, 0 );
+    _FIELD_StartPaletteFade( pWork->pModelFade, 0, 16, ANMCNTC(_POKEMON_CENTER_TIME/3)/16, 0 );
   }
 
   {
@@ -328,7 +328,7 @@ static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
 
   MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
 
-  MCSS_SetPaletteFade( pWork->pokeMcss[1], 0, 16, ANMCNTC(_POKEMON_CENTER_TIME)/16, 0 );
+  MCSS_SetPaletteFade( pWork->pokeMcss[1], 0, 16, ANMCNTC(_POKEMON_CENTER_TIME/3)/16, 0 );
   IRC_POKETRADE_MessageWindowClose(pWork);
 
   GFL_BG_SetBackGroundColor(GFL_BG_FRAME1_M ,0);
