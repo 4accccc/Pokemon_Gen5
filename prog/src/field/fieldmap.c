@@ -385,7 +385,7 @@ static void InitGmkTmpWork(GMK_TMP_WORK *tmpWork);
 FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 {
 	FIELDMAP_WORK *fieldWork;
-	
+
 	fieldWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELDMAP_WORK) );
 	fieldWork->heapID = heapID;
 	fieldWork->gamemode = GAMEMODE_BOOT;
@@ -418,7 +418,7 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
 {
   GAMESYS_WORK *gsys = fieldWork->gsys;
-  
+
   //エリアデータ
   AREADATA_Delete( fieldWork->areadata );
 
@@ -551,8 +551,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res );
 
   //NOGRIDマップデータ登録
-  if (FIELDMAP_GetMapControlType(fieldWork) == FLDMAP_CTRLTYPE_NOGRID)
-  {
+  if (ZONEDATA_GetRailDataID(fieldWork->map_id) != ZONEDATA_NO_RAILDATA_ID ){
     FLDNOGRID_MAPPER_ResistDataArc( fieldWork->nogridMapper, ZONEDATA_GetRailDataID( fieldWork->map_id ), fieldWork->heapID );  
   }
   

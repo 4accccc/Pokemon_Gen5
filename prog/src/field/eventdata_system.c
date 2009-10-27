@@ -439,15 +439,12 @@ int EVENTDATA_SearchConnectIDByRailLocation(const EVENTDATA_SYSTEM * evdata, con
 	int i;
 	const CONNECT_DATA * cnct = evdata->connect_data;
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
-    if( cnct->pos_type == EVENTDATA_POSTYPE_RAIL )
+    if( ConnectData_RPOS_IsHit( cnct, rail_location ) )
     {
-      if( ConnectData_RPOS_IsHit( cnct, rail_location ) )
-      {
-        TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
-        
-        //TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,pos->x, y,pos->y, z,pos->z);
-        return i;
-      }
+      TAMADA_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
+      
+      //TAMADA_Printf("CNCT:x %d(%08x), y %d(%08x), z %d(%08x)\n",x,pos->x, y,pos->y, z,pos->z);
+      return i;
     }
 	}
 	return EXIT_ID_NONE;
@@ -1102,7 +1099,12 @@ static BOOL ConnectData_GPOS_IsHit( const CONNECT_DATA* cp_data, const VecFx32* 
   int x, y, z;
   
   GF_ASSERT( cp_data );
-  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_GRID );
+
+  // レールは反応しない
+  if( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL )
+  {
+    return FALSE;
+  }
 
   // グリッドポジション取得
   cp_gpos = (const CONNECT_DATA_GPOS *)cp_data->pos_buf;
@@ -1165,7 +1167,13 @@ static BOOL ConnectData_RPOS_IsHit( const CONNECT_DATA* cp_data, const RAIL_LOCA
   const CONNECT_DATA_RPOS * cp_pos;
   
   GF_ASSERT( cp_data );
-  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL );
+
+  // グリッドは反応しない
+  if( cp_data->pos_type == EVENTDATA_POSTYPE_GRID )
+  {
+    return FALSE;
+  }
+  
 
   cp_pos = (const CONNECT_DATA_RPOS *)cp_data->pos_buf;
 
@@ -1228,7 +1236,11 @@ static BOOL BGTalkData_GPOS_IsHit( const BG_TALK_DATA* cp_data, const VecFx32* c
 
   GF_ASSERT( cp_data );
   GF_ASSERT( cp_pos );
-  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_GRID );
+  
+  if( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL )
+  {
+    return FALSE;
+  }
 
   cp_gpos = (const BG_TALK_DATA_GPOS*)cp_data->pos_buf; 
 
@@ -1286,7 +1298,11 @@ static BOOL BGTalkData_RPOS_IsHit( const BG_TALK_DATA* cp_data, const RAIL_LOCAT
   const BG_TALK_DATA_RPOS * cp_pos;
   
   GF_ASSERT( cp_data );
-  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL );
+
+  if( cp_data->pos_type == EVENTDATA_POSTYPE_GRID )
+  {
+    return FALSE;
+  }
 
   cp_pos = (const BG_TALK_DATA_RPOS *)cp_data->pos_buf;
 
@@ -1348,7 +1364,11 @@ static BOOL PosEventData_GPOS_IsHit( const POS_EVENT_DATA* cp_data, const VecFx3
 
   GF_ASSERT( cp_data );
   GF_ASSERT( cp_pos );
-  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_GRID );
+
+  if( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL )
+  {
+    return FALSE;
+  }
 
   cp_gpos = (const POS_EVENT_DATA_GPOS*)cp_data->pos_buf; 
 
@@ -1409,7 +1429,11 @@ static BOOL PosEventData_RPOS_IsHit( const POS_EVENT_DATA* cp_data, const RAIL_L
   const POS_EVENT_DATA_RPOS * cp_pos;
   
   GF_ASSERT( cp_data );
-  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_RAIL );
+
+  if( cp_data->pos_type == EVENTDATA_POSTYPE_GRID )
+  {
+    return FALSE;
+  }
 
   cp_pos = (const POS_EVENT_DATA_RPOS *)cp_data->pos_buf;
 
