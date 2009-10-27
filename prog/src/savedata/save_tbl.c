@@ -8,6 +8,7 @@
 //==============================================================================
 #include <gflib.h>
 #include <backup_system.h>
+#include "gamesystem/game_data.h"
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
 #include "savedata/box_savedata.h"

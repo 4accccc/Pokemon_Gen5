@@ -15,6 +15,7 @@
 #include "poke_tool/monsno_def.h"
 #include "app/box2.h"
 
+#include "arc_def.h"  //ARCID_MESSAGE
 #include "message.naix"
 #include "msg/msg_d_nakahiro.h"
 

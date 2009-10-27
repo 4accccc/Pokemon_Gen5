@@ -10,6 +10,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 
+#include "arc_def.h"
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 
