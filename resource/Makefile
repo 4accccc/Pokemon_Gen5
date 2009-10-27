@@ -90,6 +90,7 @@ SUBDIRS	=	wmi \
 			trade \
 			waza_oshie \
 			sodateya \
+			shopdata \
 			fld_shortcut_menu \
 			trtype_bgm
 
