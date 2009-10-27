@@ -1444,12 +1444,18 @@
 	</row>
 
 	<row id="TRID_SCHOOLB_04_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">おおくの　ほんを　よんでいけば
-みちが　きりひかれるんです▽
-このジムも　じんせいも！</language>
-		<language name="JPN_KANJI" width="216">多くの　本を　読んでいけば
-道が　切り開かれるんです▽
-このジムも　人生も！</language>
+		<language name="JPN" width="216">この　ジムはですね
+ジムリーダーおすすめの　ほんを▽
+さがしていくと　さきに　すすめます▼
+ちなみに　さいしょの　おすすめは
+「ポケモン　えかきうた」です▽
+じどうしょの　ほんだなに　ありますよ</language>
+		<language name="JPN_KANJI" width="216">この　ジムはですね
+ジムリーダーお薦めの　本を▽
+読んでいくと　先に　進めます▼
+ちなみに　最初の　お薦めは
+「ポケモン　えかきうた」です▽
+児童書の　本棚に　ありますよ</language>
 	</row>
 
 	<row id="TRID_SCHOOLG_03_TRMSG_FIGHT_LOSE">
