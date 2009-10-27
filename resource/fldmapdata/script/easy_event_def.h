@@ -182,12 +182,15 @@
  * @param shop_id      ƒVƒ‡ƒbƒvID
  */
 //--------------------------------------------------------------
-  .macro _ASM_SHOP_CALL shop_id
+  .macro _ASM_SHOP_CALL shop_id,greeting_f
   _PUSH_WORK  SCWK_PARAM0
+  _PUSH_WORK  SCWK_PARAM1
 
   _ASM_LDWKVAL  SCWK_PARAM0, \shop_id
+  _ASM_LDWKVAL  SCWK_PARAM1, \greeting_f
   _CHG_COMMON_SCR SCRID_SHOP_COUNTER
 
+  _POP_WORK   SCWK_PARAM0
   _POP_WORK   SCWK_PARAM0
   .endm
 

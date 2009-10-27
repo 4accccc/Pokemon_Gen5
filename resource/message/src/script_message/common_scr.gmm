@@ -722,6 +722,22 @@
 		<language name="JPN_KANJI">セーブデータ　書き込み中　３</language>
 	</row>
 
+	<row id="msg_common_fldcomm_exit_01">
+		<comment>フィールド通信切断処理</comment>
+		<language name="JPN">パレスに　せつぞくちゅう　です
+せつだんして　よろしいですか？</language>
+		<language name="JPN_KANJI">パレスに　接続中です
+切断して　よろしいですか？</language>
+	</row>
+
+	<row id="msg_common_fldcomm_exit_02">
+		<comment>フィールド通信切断処理</comment>
+		<language name="JPN">パレスから　せつだん　します
+しばらく　おまちください</language>
+		<language name="JPN_KANJI">パレスから　切断します
+しばらく　お待ちください</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

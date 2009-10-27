@@ -311,6 +311,11 @@
 		<language name="JPN_KANJI" width="256">また　どうぞ！</language>
 	</row>
 
+	<row id="msg_shop_greeting" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="256">いらっしゃいませ！</language>
+		<language name="JPN_KANJI" width="256">いらっしゃいませ！</language>
+	</row>
+
 	<row id="msg_shop_menu01_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">かいに　きた</language>
 		<language name="JPN_KANJI" width="256">買いにきた</language>

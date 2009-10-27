@@ -12,6 +12,21 @@
 
 //--------------------------------------------------------------------
 /**
+ * @brief   フィールドの通信状態を取得する
+ *
+ * @param	core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT
+ *
+ * コマンドの戻り値 game_comm.h GAME_COMM_NO_NULL 他
+ */
+//--------------------------------------------------------------------
+extern VMCMD_RESULT EvCmdGetFieldCommNo( VMHANDLE* core, void* wk );
+
+
+//--------------------------------------------------------------------
+/**
  * @brief    GSIDが正しいかをチェックする
  *
  * @param	core 仮想マシン制御構造体へのポインタ
@@ -33,7 +48,6 @@ extern VMCMD_RESULT EvCmdWifiCheckMyGSID( VMHANDLE* core, void* wk );
  */
 //--------------------------------------------------------------------
 extern VMCMD_RESULT EvCmdWifiGetFriendNum( VMHANDLE* core, void* wk );
-
 //--------------------------------------------------------------------
 /**
  * @brief   Wi-Fiクラブイベントを呼び出す

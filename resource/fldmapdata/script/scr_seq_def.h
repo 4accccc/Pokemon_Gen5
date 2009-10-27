@@ -2552,6 +2552,23 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_FIELD_COMM_NO
+ * @brief フィールドの通信状態を返す
+ *
+ * コモン処理 _FIELD_COMM_EXIT_EVENT_CALL の中で使います
+ * 原則として単体での呼び出しはせず、コモン処理を呼んでください
+ */
+//--------------------------------------------------------------
+#define _GET_FIELD_COMM_NO( ret_work ) \
+    _ASM_GET_FIELD_COMM_NO  ret_work
+
+  .macro  _ASM_GET_FIELD_COMM_NO  ret_work
+  .short  EV_SEQ_GET_FIELD_COMM_NO
+  .short  \ret_work
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @def _FIELD_COMM_EXIT
  * @brief フィールドマップの通信を終了する
  *
@@ -2559,11 +2576,12 @@
  * 原則として単体での呼び出しはせず、コモン処理を呼んでください
  */
 //--------------------------------------------------------------
-#define _FIELD_COMM_EXIT() \
-    _ASM_FIELD_COMM_EXIT
+#define _FIELD_COMM_EXIT( ret_work ) \
+    _ASM_FIELD_COMM_EXIT  ret_work
 
-  .macro  _ASM_FIELD_COMM_EXIT
+  .macro  _ASM_FIELD_COMM_EXIT  ret_work
   .short  EV_SEQ_FIELD_COMM_EXIT
+  .short  \ret_work
   .endm
 
 //======================================================================
@@ -3821,9 +3839,12 @@
  * @def _SHOP_CALL
  * @brief 簡易イベントコマンド：ショップイベント呼び出し
  * @param shop_id
+ *
+ * ＊GREETING_LESSは話しかけ時の「いらっしゃいませ」の挨拶無し
  */
 //--------------------------------------------------------------
-#define _SHOP_CALL( ) _ASM_SHOP_CALL  SCR_SHOPID_NULL 
+#define _SHOP_CALL( ) _ASM_SHOP_CALL  SCR_SHOPID_NULL,TRUE 
+#define _SHOP_CALL_GREETING_LESS( ) _ASM_SHOP_CALL  SCR_SHOPID_NULL,FALSE
 
 //--------------------------------------------------------------
 /**
@@ -3832,7 +3853,8 @@
  * @param shop_id
  */
 //--------------------------------------------------------------
-#define _FIX_SHOP_CALL( shop_id ) _ASM_SHOP_CALL shop_id
+#define _FIX_SHOP_CALL( shop_id ) _ASM_SHOP_CALL shop_id,TRUE
+#define _FIX_SHOP_CALL_GREETING_LESS( shop_id ) _ASM_SHOP_CALL shop_id,FALSE
 
 //--------------------------------------------------------------
 /**

@@ -31,6 +31,29 @@
 
 //--------------------------------------------------------------------
 /**
+ * @brief   フィールドの通信状態を取得する
+ *
+ * @param	core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT
+ *
+ * コマンドの戻り値 game_comm.h GAME_COMM_NO_NULL 他
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdGetFieldCommNo( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  
+  u16*  ret_work = SCRCMD_GetVMWork( core, work );
+  *ret_work = FIELDCOMM_CheckCommNo( GAMESYSTEM_GetGameCommSysPtr(gsys) );
+  IWASAWA_Printf("FieldComm CheckCommNo = %d\n",*ret_work);
+	return VMCMD_RESULT_SUSPEND;		///<コマンド実行を中断して制御を返す
+}
+
+//--------------------------------------------------------------------
+/**
  * @brief    GSIDが正しいかをチェックする
  *
  * @param	core 仮想マシン制御構造体へのポインタ

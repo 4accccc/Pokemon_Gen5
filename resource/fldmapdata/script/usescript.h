@@ -137,6 +137,10 @@
 //ポケモンのタイプ指定ID
 #include "../../../prog/include/poke_tool/poketype_def.h"
 
+//フィールド通信の種類定義
+#include "../../../prog/include/gamesystem/game_comm.h"
+
+
 #if 0 //wb null
 #include "../../../include/pm_version.h"
 

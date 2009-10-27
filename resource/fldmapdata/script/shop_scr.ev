@@ -29,6 +29,7 @@ DEFINE_LOCAL  reg_return
 { //SHOP_MAIN
 
 DEFINE_LOCAL  lwk_shop_id
+DEFINE_LOCAL  lwk_greeting
 
 //==============================================================
 /// 
@@ -40,6 +41,14 @@ DEFINE_LOCAL  lwk_shop_id
 ev_shop_counter:
 {
   $lwk_shop_id = $SCWK_PARAM0
+  
+  IF $SCWK_PARAM1 == TRUE THEN
+    //à•éAÅuÇ¢ÇÁÇ¡ÇµÇ·Ç¢Ç‹ÇπÅv
+    _BALLOONWIN_TALKOBJ_OPEN( msg_shop_greeting )
+    _AB_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
+
   _CALL sub_shop_main
 }
 _CHG_LOCAL_SCR
@@ -121,9 +130,7 @@ sub_shop_buy:
 
   $ret_mode = SCR_PROC_RETMODE_NORMAL
 
-//  _CAMERA_MOVE(0,0,0, (16*5),0,0, 30)
   _CALL_SHOP_PROC_BUY( lwk_shop_id, ret_mode )
-//  _CAMERA_RECV_MOVE(30)
   
   IF $ret_mode == SCR_PROC_RETMODE_EXIT THEN
     $reg_return = SEQ_EXIT

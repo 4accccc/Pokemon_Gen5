@@ -8,8 +8,23 @@
 //==============================================================================
 #pragma once
 
+//==============================================================================
+//  スクリプトと共有する定数定義
+//==============================================================================
+///実行しているゲーム種類
+#define GAME_COMM_NO_NULL                 (0)   ///<何も起動していない状態
+#define GAME_COMM_NO_FIELD_BEACON_SEARCH  (1)   ///<フィールド上でビーコンサーチ
+#define GAME_COMM_NO_INVASION             (2)   ///<侵入
+#define GAME_COMM_NO_UNION                (3)   ///<ユニオンルーム
+#define GAME_COMM_NO_MAX                  (4)
+
+//=========================================================================
+//アセンブラでincludeされている場合は、下の宣言を無視できるようにifndefで囲んである
+#ifndef	__ASM_NO_DEF_
+
 #include "gamesystem/game_data.h"
 
+typedef int GAME_COMM_NO; ///GAME_COMM_NO_XXXの定義値を返す型
 
 //==============================================================================
 //  定数定義
@@ -22,16 +37,6 @@ typedef enum{
   GAME_COMM_STATUS_WIFI,              ///<Wi-Fi通信
   GAME_COMM_STATUS_IRC,               ///<赤外線通信
 }GAME_COMM_STATUS;
-
-
-///実行しているゲーム種類
-typedef enum{
-  GAME_COMM_NO_NULL,                  ///<何も起動していない状態
-  
-  GAME_COMM_NO_FIELD_BEACON_SEARCH,   ///<フィールド上でビーコンサーチ
-  GAME_COMM_NO_INVASION,              ///<侵入
-  GAME_COMM_NO_UNION,                 ///<ユニオンルーム
-}GAME_COMM_NO;
 
 
 ///インフォメーションメッセージ内のwordset最大数
@@ -86,3 +91,4 @@ extern u8 GameCommStatus_GetPlayerStatus_InvasionNetID(GAME_COMM_SYS_PTR gcsp, i
 extern BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *dest_msg);
 
 
+#endif  //__ASM_NO_DEF_

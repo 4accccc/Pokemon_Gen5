@@ -13,7 +13,6 @@
 //--------------------------------------------------------------------
 _EVENT_DATA		ev_dummy
 _EVENT_DATA		ev_heal_p01_dummy
-_EVENT_DATA		ev_shop_start_talk
 _EVENT_DATA   ev_item_event_success
 _EVENT_DATA   ev_item_event_fail
 _EVENT_DATA   ev_easy_item_event
@@ -44,19 +43,6 @@ EVENT_START   ev_heal_p01_dummy
 	_BALLOONWIN_TALKOBJ_OPEN( msg_common_pc_heal_01 )
 	_LAST_KEYWAIT()
  	_BALLOONWIN_CLOSE()
-EVENT_END
-
-/********************************************************************/
-//  ショップ「いらっしゃい」
-/********************************************************************/
-EVENT_START   ev_shop_start_talk
-  _TALK_START_SE_PLAY()
-//	_BALLOONWIN_TALKOBJ_OPEN( msg_shop_01 )
-//	_LAST_KEYWAIT()
-// 	_BALLOONWIN_CLOSE()
-/*
-	_CHG_LOCAL_SCR	//ローカルスクリプトに切り替え
-*/
 EVENT_END
 
 //====================================================================
@@ -413,13 +399,42 @@ ev_report_event_call:
 */
 //====================================================================
 ev_field_comm_exit_event_call:
-{ 
-  _FIELD_COMM_EXIT()
-
-  $SCWK_PARAM0 = SCR_FIELD_COMM_EXIT_OK
+{
+  _CALL sub_field_comm_exit_main
 	_CHG_LOCAL_SCR													//ローカルスクリプトに切り替え
 }
 _END
 
+sub_field_comm_exit_main:
+{
+  DEFINE_LOCAL  i_comm_no
+  DEFINE_LOCAL  i_ret
+  
+  _GET_FIELD_COMM_NO( i_comm_no )
+
+  IF $i_comm_no == GAME_COMM_NO_NULL THEN
+    $SCWK_PARAM0 = SCR_FIELD_COMM_EXIT_OK
+    _RET
+  ENDIF
+
+  IF $i_comm_no == GAME_COMM_NO_INVASION THEN
+    //パレス時は同意を得るまで切断しない
+    _TALKMSG( msg_common_fldcomm_exit_01)
+    _YES_NO_WIN( i_ret )
+
+    IF $i_ret == SCR_NO THEN
+      $SCWK_PARAM0 = SCR_FIELD_COMM_EXIT_CANCEL
+      _RET
+    ENDIF
+    _TALKMSG( msg_common_fldcomm_exit_02)
+    _FIELD_COMM_EXIT( i_ret )
+    _TALKWIN_CLOSE()
+  ELSE
+    _FIELD_COMM_EXIT( i_ret )
+  ENDIF
+  
+  $SCWK_PARAM0 = $i_ret
+}
+_RET
 
 

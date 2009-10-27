@@ -530,7 +530,7 @@
 
   // í êMä÷òA
   DEF_CMD( EvCmdFieldCommExitWait,  EV_SEQ_FIELD_COMM_EXIT )
-  NO_CMD()
+  DEF_CMD( EvCmdGetFieldCommNo, EV_SEQ_GET_FIELD_COMM_NO )
   NO_CMD()
   NO_CMD()
 
