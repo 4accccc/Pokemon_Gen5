@@ -45,12 +45,11 @@ extern const NetRecvFuncTable BtlRecvFuncTable[];
 #define	HEAPID_CORE GFL_HEAPID_APP
 
 enum _EVENT_IRCBATTLE {
-  _FIELD_FADEOUT,
+  _FIELD_CLOSE,
   _CALL_WIFICLUB,
   _WAIT_WIFICLUB,
   _WAIT_NET_END,
   _FIELD_OPEN,
-  _FIELD_FADEIN,
   _FIELD_END
 };
 
@@ -68,7 +67,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
 
 
   switch (*seq) {
-  case _FIELD_FADEOUT:
+  case _FIELD_CLOSE:
 
     if(GAME_COMM_NO_NULL == GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys)))
     {
@@ -96,10 +95,6 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
   case _FIELD_OPEN:
 		_battleParaFree(dbw);
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
-    (*seq) ++;
-    break;
-  case _FIELD_FADEIN:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, dbw->fieldmap, 0));
     (*seq) ++;
     break;
   case _FIELD_END:
