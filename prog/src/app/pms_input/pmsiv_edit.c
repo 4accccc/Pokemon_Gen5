@@ -311,7 +311,6 @@ void PMSIV_EDIT_Delete( PMSIV_EDIT* wk )
 	GFL_BMPWIN_Delete(wk->win_edit[1]);
 	GFL_BMPWIN_Delete(wk->win_msg[0]);
 	GFL_BMPWIN_Delete(wk->win_msg[1]);
-	GFL_BMPWIN_Delete(wk->win_yesno);
 
 	//YesNoボタンシステムワーク解放
 	TOUCH_SW_FreeWork( wk->ynbtn_wk);
@@ -350,71 +349,44 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 	charpos /= 0x20;
 
 	//↑までのcharaposはBmpWinを保持して後方確保なので無視
-	charpos = 0;
-// BitmapWindow setup
-//	GF_BGL_BmpWinAdd(	bgl, &wk->win_edit[0], FRM_MAIN_EDITAREA, 
-//						EDITAREA_WIN_X, EDITAREA_WIN_Y, EDITAREA_WIN_WIDTH, EDITAREA_WIN_HEIGHT,
-//						PALNUM_MAIN_EDITAREA, charpos );
+
+  charpos = 0;
+
 	wk->win_edit[0] = GFL_BMPWIN_Create( FRM_MAIN_EDITAREA, EDITAREA_WIN_X, EDITAREA_WIN_Y, 
 						EDITAREA_WIN_WIDTH, EDITAREA_WIN_HEIGHT, 
 						PALNUM_MAIN_EDITAREA,GFL_BMP_CHRAREA_GET_B );
-//	GF_BGL_BmpWinAdd(	bgl, &wk->win_edit[1], FRM_SUB_EDITAREA, 
-//						EDITAREA_WIN_X, EDITAREA_WIN_Y, EDITAREA_WIN_WIDTH, EDITAREA_WIN_HEIGHT,
-//						PALNUM_MAIN_EDITAREA, charpos );
 	wk->win_edit[1] = GFL_BMPWIN_Create( FRM_SUB_EDITAREA, EDITAREA_WIN_X, EDITAREA_WIN_Y, 
 						EDITAREA_WIN_WIDTH, EDITAREA_WIN_HEIGHT, 
 						PALNUM_MAIN_EDITAREA,GFL_BMP_CHRAREA_GET_B );
 	charpos += EDITAREA_WIN_CHARSIZE;
 
-//	GF_BGL_BmpWinAdd(	bgl, &wk->win_msg[0], FRM_MAIN_EDITAREA, 
-//						MESSAGE_WIN_X, MESSAGE_WIN_Y, MESSAGE_WIN_WIDTH, MESSAGE_WIN_HEIGHT,
-//						PALNUM_MAIN_CATEGORY, charpos );
 	wk->win_msg[0] = GFL_BMPWIN_Create( FRM_MAIN_EDITAREA, MESSAGE_WIN_X, MESSAGE_WIN_Y, 
 						MESSAGE_WIN_WIDTH, MESSAGE_WIN_HEIGHT, 
 						PALNUM_MAIN_CATEGORY,GFL_BMP_CHRAREA_GET_B );
-//	GF_BGL_BmpWinAdd(	bgl, &wk->win_msg[1], FRM_MAIN_EDITAREA, 
-//						MESSAGE_WIN_X, MESSAGE_WIN_Y, MESSAGE_WIN_WIDTH-8, MESSAGE_WIN_HEIGHT,
-//						PALNUM_MAIN_CATEGORY, charpos );
 	wk->win_msg[1] = GFL_BMPWIN_Create( FRM_MAIN_EDITAREA, MESSAGE_WIN_X, MESSAGE_WIN_Y,
 						MESSAGE_WIN_WIDTH-8, MESSAGE_WIN_HEIGHT, 
 						PALNUM_MAIN_CATEGORY,GFL_BMP_CHRAREA_GET_B );
 	charpos += MESSAGE_WIN_CHARSIZE;
 
-
-//	GF_BGL_BmpWinAdd(	bgl, &wk->win_yesno, FRM_MAIN_EDITAREA, 
-//						YESNO_WIN_X, YESNO_WIN_Y, YESNO_WIN_WIDTH, YESNO_WIN_HEIGHT,
-//						PALNUM_MAIN_CATEGORY, charpos );
-	wk->win_yesno = GFL_BMPWIN_Create( FRM_MAIN_EDITAREA, YESNO_WIN_X, YESNO_WIN_Y,
-						YESNO_WIN_WIDTH, YESNO_WIN_HEIGHT, 
-						PALNUM_MAIN_CATEGORY,GFL_BMP_CHRAREA_GET_B );
 	wk->yesno_win_cgx = charpos;
 	charpos += TOUCH_SW_USE_CHAR_NUM;//YESNO_WIN_CHARSIZE;
 
 	//YesNoボタンシステムワーク確保
 	wk->ynbtn_wk = TOUCH_SW_AllocWork(HEAPID_PMS_INPUT_VIEW);
 
-// window frame setup
-//	ArcUtil_BgCharSet( ARC_WINFRAME, NARC_winframe_system_ncgr, bgl,
-//				FRM_MAIN_EDITAREA, charpos, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	BmpWinFrame_CgxSet( FRM_MAIN_EDITAREA , charpos , MENU_TYPE_SYSTEM , HEAPID_PMS_INPUT_VIEW );
 
 	wk->yesnowin_frame_charpos = charpos;
 	charpos += MENU_WIN_CGX_SIZ;
 
-//	ArcUtil_PalSet( ARC_WINFRAME, NARC_winframe_system_nclr, PALTYPE_MAIN_BG, PALNUM_MAIN_SYSWIN*0x20,
-//		0x20, HEAPID_PMS_INPUT_VIEW );
-//
-//	TalkWinGraphicSet( bgl, FRM_MAIN_EDITAREA, charpos, PALNUM_MAIN_TALKWIN,
-//						PMSI_GetTalkWindowType( wk->mwk ),
-//						HEAPID_PMS_INPUT_VIEW );
-
 	wk->msgwin_cgx = charpos;
 	BmpWinFrame_GraphicSet( FRM_MAIN_EDITAREA,charpos,PALNUM_MAIN_TALKWIN,
 							MENU_TYPE_SYSTEM,HEAPID_PMS_INPUT_VIEW );
 
+#ifdef USE_SYSWIN
 	wk->win_message = &wk->win_msg[0];
-	//BmpTalkWinScreenSet( wk->win_message, charpos, PALNUM_MAIN_TALKWIN );
 	BmpWinFrame_Write( *wk->win_message, WINDOW_TRANS_OFF ,charpos, PALNUM_MAIN_TALKWIN );
+#endif
 
 	GFL_BMPWIN_MakeScreen( wk->win_edit[0] );
 	GFL_BMPWIN_MakeScreen( wk->win_edit[1] );
@@ -423,12 +395,9 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 
 	setup_wordarea_pos(wk);
 	PMSIV_EDIT_UpdateEditArea( wk );
-	PMSIV_EDIT_SetSystemMessage( wk, PMSIV_MSG_GUIDANCE );
 
 	// PMSIV_EDIT_UpdateEditArea で単語数が確定するので、その後に。
 	setup_obj( wk );
-
-//	GF_BGL_LoadScreenReq( bgl, FRM_MAIN_EDITAREA );
 }
 
 static void pmsiv_edit_hblank(GFL_TCB *, void *vwork)
@@ -897,21 +866,22 @@ u32 PMSIV_EDIT_GetWordPosMax( const PMSIV_EDIT* wk )
 	*/
 void PMSIV_EDIT_ChangeSMsgWin(PMSIV_EDIT* wk,u8 mode)
 {
+#ifndef USE_SYSWIN
+  return; 
+#endif
+
 	//スクリーンをいったんクリア
-	
 	GFL_BG_FillScreen(FRM_MAIN_EDITAREA,0x0000,0,20,24,4,GFL_BG_SCRWRT_PALIN);
 
-//	GF_BGL_BmpWinOff(wk->win_message);
 	GFL_BMPWIN_ClearScreen( *wk->win_message );
 	wk->win_message = &(wk->win_msg[mode]);	
 	
-	//BmpTalkWinScreenSet( wk->win_message, wk->msgwin_cgx, PALNUM_MAIN_TALKWIN );
 	BmpWinFrame_Write( *wk->win_message, WINDOW_TRANS_OFF ,wk->msgwin_cgx, PALNUM_MAIN_TALKWIN );
 }
 
 //------------------------------------------------------------------
 /**
-	* 
+	* 下画面システムメッセージウィンドウに文字列表示
 	*
 	* @param   wk		
 	*
@@ -920,8 +890,12 @@ void PMSIV_EDIT_ChangeSMsgWin(PMSIV_EDIT* wk,u8 mode)
 void PMSIV_EDIT_SetSystemMessage( PMSIV_EDIT* wk, u32 msg_type )
 {
 	GFL_FONT *fontHandle = fontHandle = PMSIView_GetFontHandle(wk->vwk);
-//	GF_BGL_BmpWinDataFill( wk->win_message, MESSAGE_WIN_COL_GROUND);
-	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(*wk->win_message),MESSAGE_WIN_COL_GROUND);
+	
+#ifndef USE_SYSWIN
+  return; 
+#endif
+  
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(*wk->win_message),MESSAGE_WIN_COL_GROUND);
 
 	switch( msg_type ){
 	case PMSIV_MSG_GUIDANCE:
@@ -933,10 +907,6 @@ void PMSIV_EDIT_SetSystemMessage( PMSIV_EDIT* wk, u32 msg_type )
 			//FIXME 何を入れる？
 			//WORDSET_RegisterItemPocketWithIcon( wordset, 0, 0 );
 			GFL_MSG_GetString( wk->msgman, info00 + PMSI_GetGuidanceType(wk->mwk), wk->tmpbuf );
-			//WORDSET_ExpandStr( wordset, exbuf, wk->tmpbuf );
-			//GF_STR_PrintColor( wk->win_message, PMSI_FONT_MESSAGE, exbuf, 0, 0, MSG_NO_PUT,
-			//		GF_PRINTCOLOR_MAKE(MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND),
-			//		NULL);
 			GFL_FONTSYS_SetColor( MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND);
 			PRINTSYS_Print( GFL_BMPWIN_GetBmp(*wk->win_message), 0, 0, wk->tmpbuf,fontHandle );
 
@@ -953,34 +923,24 @@ void PMSIV_EDIT_SetSystemMessage( PMSIV_EDIT* wk, u32 msg_type )
 
 	case PMSIV_MSG_CONFIRM_DECIDE:
 		GFL_MSG_GetString( wk->msgman, msg_00, wk->tmpbuf );
-//		GF_STR_PrintColor( wk->win_message, PMSI_FONT_MESSAGE, wk->tmpbuf, 0, 0, MSG_NO_PUT,
-//				GF_PRINTCOLOR_MAKE(MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND),
-//				NULL);
 		GFL_FONTSYS_SetColor( MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND);
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp(*wk->win_message), 0, 0, wk->tmpbuf,fontHandle );
 		break;
 
 	case PMSIV_MSG_WARN_INPUT:
 		GFL_MSG_GetString( wk->msgman, msg_01, wk->tmpbuf );
-//		GF_STR_PrintColor( wk->win_message, PMSI_FONT_MESSAGE, wk->tmpbuf, 0, 0, MSG_NO_PUT,
-//				GF_PRINTCOLOR_MAKE(MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND),
-//				NULL);
 		GFL_FONTSYS_SetColor( MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND);
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp(*wk->win_message), 0, 0, wk->tmpbuf,fontHandle );
 		break;
 
 	case PMSIV_MSG_CONFIRM_CANCEL:
 		GFL_MSG_GetString( wk->msgman, msg_02, wk->tmpbuf );
-//		GF_STR_PrintColor( wk->win_message, PMSI_FONT_MESSAGE, wk->tmpbuf, 0, 0, MSG_NO_PUT,
-//				GF_PRINTCOLOR_MAKE(MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND),
-//				NULL);
 		GFL_FONTSYS_SetColor( MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND);
 		PRINTSYS_Print( GFL_BMPWIN_GetBmp(*wk->win_message), 0, 0, wk->tmpbuf,fontHandle );
 		break;
 
 	}
 
-//	GF_BGL_BmpWinOn( wk->win_message );
 	GFL_BMPWIN_MakeScreen( *wk->win_message );
 	GFL_BMPWIN_TransVramCharacter( *wk->win_message );
 }
@@ -1089,24 +1049,6 @@ static void set_cursor_anm( PMSIV_EDIT* wk, BOOL active_flag )
 
 void PMSIV_EDIT_DispYesNoWin( PMSIV_EDIT* wk, int cursor_pos )
 {
-#if 0
-	GF_BGL_BmpWinDataFill( &wk->win_yesno, YESNOWIN_COL_GROUND );
-
-	MSGMAN_GetString( wk->msgman, str_yes, wk->tmpbuf );
-	GF_STR_PrintColor( &wk->win_yesno, PMSI_FONT_YESNO, wk->tmpbuf, YESNOWIN_STR_OX, YESNOWIN_STR_OY, MSG_NO_PUT,
-			GF_PRINTCOLOR_MAKE(MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND),
-			NULL);
-
-	MSGMAN_GetString( wk->msgman, str_no, wk->tmpbuf );
-	GF_STR_PrintColor( &wk->win_yesno, PMSI_FONT_YESNO, wk->tmpbuf, YESNOWIN_STR_OX, YESNOWIN_STR_OY+YESONOWIN_LINE_HEIGHT, MSG_NO_PUT,
-			GF_PRINTCOLOR_MAKE(MESSAGE_WIN_COL_LETTER, MESSAGE_WIN_COL_SHADOW, MESSAGE_WIN_COL_GROUND),
-			NULL);
-
-	BmpMenuWinWrite( &wk->win_yesno, FALSE, wk->yesnowin_frame_charpos, PALNUM_MAIN_SYSWIN );
-	BMPCURSOR_Print( wk->bmp_cursor, &wk->win_yesno, YESNOWIN_CURSOR_OX, YESNOWIN_CURSOR_OY+(cursor_pos*YESONOWIN_LINE_HEIGHT) );
-
-	GF_BGL_BmpWinOn( &wk->win_yesno );
-#else
 	TOUCH_SW_PARAM param;
 
 	MI_CpuClear8(&param,sizeof(TOUCH_SW_PARAM));
@@ -1119,7 +1061,6 @@ void PMSIV_EDIT_DispYesNoWin( PMSIV_EDIT* wk, int cursor_pos )
 	param.kt_st = *wk->p_key_mode;
 	param.key_pos = cursor_pos;
 	TOUCH_SW_Init( wk->ynbtn_wk, &param );
-#endif
 }
 
 int PMSIV_EDIT_WaitYesNoBtn(PMSIV_EDIT* wk)
@@ -1153,21 +1094,5 @@ int PMSIV_EDIT_WaitYesNoBtn(PMSIV_EDIT* wk)
 #endif
 	TOUCH_SW_Reset( wk->ynbtn_wk);
 	return ret;
-}
-
-void PMSIV_EDIT_MoveYesNoCursor( PMSIV_EDIT* wk, int pos )
-{
-//	GF_BGL_BmpWinFill( &wk->win_yesno, YESNOWIN_COL_GROUND, 0, 0, YESNOWIN_STR_OX, YESNO_WIN_HEIGHT*8 );
-	GFL_BMP_Fill( GFL_BMPWIN_GetBmp( wk->win_yesno ) , 0, 0, YESNOWIN_STR_OX, YESNO_WIN_HEIGHT*8 ,YESNOWIN_COL_GROUND );
-	//TODO Util系が必要
-//	BMPCURSOR_Print( wk->bmp_cursor, &wk->win_yesno, YESNOWIN_CURSOR_OX, YESNOWIN_CURSOR_OY+(pos*YESONOWIN_LINE_HEIGHT) );
-}
-
-void PMSIV_EDIT_EraseYesNoWin( PMSIV_EDIT* wk )
-{
-//	BmpMenuWinClear( &wk->win_yesno, FALSE );
-	BmpWinFrame_Clear( wk->win_yesno, WINDOW_TRANS_OFF );
-//	GF_BGL_BmpWinOff( &wk->win_yesno );
-	GFL_BMPWIN_ClearScreen( wk->win_yesno );
 }
 
